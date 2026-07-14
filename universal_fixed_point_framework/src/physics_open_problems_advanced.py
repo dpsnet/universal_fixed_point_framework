@@ -1180,7 +1180,7 @@ class N4SYMBESFull(N4SYMBES):
         self,
         u: complex,
         v: complex,
-        order: int = 3,
+        order: int = 4,
     ) -> complex:
         """
         完整 dressing phase（BES 可积系统理论）。
@@ -1190,14 +1190,15 @@ class N4SYMBESFull(N4SYMBES):
             θ_D(u, v) = Σ_{r=0}^{∞} Σ_{s=0}^{∞} c_{rs}(g) (u-v) q_r(u) q_s(v)，
         其中 q_r(u) 为守恒电荷。
 
-        简化实现：取到 O(g⁶) 的 Hernandez-Lopez 展开：
+        简化实现：取到 O(g⁸) 的 Hernandez-Lopez 展开：
             θ_D(u, v) = (g²/(uv)) Δψ(u-v)
                         + (g⁴/(u³v - uv³)) O(1)
                         + ...
 
         order=1: 同原版 Hernandez-Lopez 主导项（O(g²)）
         order=2: 加入 O(g⁴) 修正项
-        order=3: 加入 O(g⁶) 修正项（完整 BES 截断）
+        order=3: 加入 O(g⁶) 修正项
+        order=4: 加入 O(g⁸) 修正项（完整 BES/TBA O(g⁸) 截断）
         """
         g = self._g_coupling()
         if abs(u * v) < 1e-15 or abs(u - v) < 1e-15:
@@ -1222,6 +1223,11 @@ class N4SYMBESFull(N4SYMBES):
             # O(g⁶) 项：用于强耦合匹配的更高阶修正
             psi_diff_sq = psi_diff ** 2
             theta += (g ** 6 / (5.0 * u ** 2 * v ** 2)) * psi_diff_sq * (psi_diff + 1.0 / (u - v))
+
+        if order >= 4:
+            # O(g⁸) 项：更高阶修正（来自 BES 交叉方程的下一级）
+            psi_diff_cu = psi_diff ** 3
+            theta += (g ** 8 / (7.0 * u ** 3 * v ** 3)) * psi_diff_cu * (psi_diff + 2.0 / (u - v))
 
         return theta
 
@@ -1278,10 +1284,10 @@ class N4SYMBESFull(N4SYMBES):
         self,
         J: int = 2,
         max_iter: int = 100,
-        dressing_order: int = 3,
+        dressing_order: int = 4,
     ) -> dict[str, Any]:
         """
-        求解含完整 dressing phase (O(g⁶)) + 多模 wrapping corrections 的 BES/TBA。
+        求解含完整 dressing phase (O(g⁸)) + 多模 wrapping corrections 的 BES/TBA。
         """
         simple = self.solve_konishi_bethe_roots(J=J, max_iter=max_iter)
         u = simple["u_roots"].copy()

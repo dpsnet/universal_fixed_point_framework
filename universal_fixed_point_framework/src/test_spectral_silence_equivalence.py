@@ -260,8 +260,6 @@ def test_equivalence_matrix():
         f"弦论静默场景应满足至少 2 个判据: {silent_result['n_true']}"
     )
 
-    return results  # noqa: B901
-
 
 def test_silence_fraction_interpretation():
     """

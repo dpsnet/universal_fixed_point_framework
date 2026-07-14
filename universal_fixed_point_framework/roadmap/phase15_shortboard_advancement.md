@@ -4,7 +4,7 @@
 
 **日期**：2026-07-14
 
-**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 中不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广已完成。Phase 15C 全部完成。Phase 15D-1（D 函子耗散扩展）、Phase 15D-2（NS-LB 显式最优常数严格证明）已完成。新增独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）和 Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）。全仓库测试 230 passed, 2 xfailed（新增测试文件 `test_kerr_newman_qnm.py`）。
+**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 全部完成（不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广、BES/TBA O(g⁸)）。Phase 15C 全部完成。Phase 15D-1（D 函子耗散扩展）、Phase 15D-2（NS-LB 显式最优常数严格证明）已完成。新增独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）、Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）和 BES/TBA O(g⁸) 测试（`test_bes_tba_o8.py` + 3 测试）。全仓库测试 233 passed, 2 xfailed。
 
 **审计报告**：详见 `phase15_shortboard_audit_20260714.md`，对理论短板分析文档进行了全面审计，评估了各短板的缓解程度并提出了后续推进计划。
 
@@ -63,7 +63,7 @@ Phase 15 的根本任务是从 "增量式推进" 转向 "系统性补短板"—�
 | **NS-LB 常数 c 的变分优化** | 一.2.1 | ✅ 完成：Frostman 常数变分原理、对偶问题求解、稳定性验证（`ns_lb_constant_optimization.py`） |
 | **Feng-Wang 凹性证明** | 一.2.3 | ✅ 完成：理论证明框架（变分原理 + 熵凹性）、数值验证（`feng_wang_concavity.py`） |
 | **Kerr-Newman 推广** | 二.3.3 | ✅ 完成：KerrNewmanQNM 类（继承 FullTeukolskyQNM），电荷修正视界位置，双重 homotopy 策略，3 测试 | `kerr_newman_qnm.py` |
-| **BES/TBA O(g⁸)** | 二.4.1 | 更高精度谱 |
+| **BES/TBA O(g⁸)** | 二.4.1 | ✅ 完成：在 `_dressing_phase_full` 中添加 O(g⁸) 修正项，默认阶数升级为 4，3 测试 | `physics_open_problems_advanced.py`, `test_bes_tba_o8.py` |
 | **不变量的充要性提升** | 三.2 | ✅ 完成：动力学相容性检查 + 完备性缺口分析（4 测试） |
 
 ### Phase 15C（中周期：中等影响）
@@ -122,30 +122,36 @@ Phase 15A 全部 6 项任务进展：
 Phase 15B 进展：
 
 7. ~~**不变量的充要性提升**~~ ✅ **已完成**（动力学相容性检查 + 完备性缺口分析，4 测试）
+8. ~~**D 函子定义域扩展定理**~~ ✅ **已完成**（投影值谱测度 PVM、连续谱对象、谱积分实现，11 测试）
+9. ~~**Freyd 放宽条件构造**~~ ✅ **已完成**（有限极限保持、ε-解集条件、弱伴随关系）
+10. ~~**NS-LB 常数 c 的变分优化**~~ ✅ **已完成**（Frostman 常数变分原理、对偶问题求解）
+11. ~~**Feng-Wang 凹性证明**~~ ✅ **已完成**（理论证明框架 + 数值验证）
+12. ~~**Kerr-Newman 推广**~~ ✅ **已完成**（KerrNewmanQNM 类、电荷修正视界、双重 homotopy，3 测试）
+13. ~~**BES/TBA O(g⁸)**~~ ✅ **已完成**（dressing phase O(g⁸) 修正、默认阶数升级，3 测试）
 
 Phase 15C 进展：
 
-8. ~~**轨道函子群表示谱理论**~~ ✅ **已完成**（等价类 + 同谱判定 + 谱荷 + 表示签名，5 测试；Paper I §3.5.1）
+14. ~~**轨道函子群表示谱理论**~~ ✅ **已完成**（等价类 + 同谱判定 + 谱荷 + 表示签名，5 测试；Paper I §3.5.1）
 
-9. ~~**误差预算体系**~~ ✅ **已完成**（Rec→Spec→预言→实验 全链路误差预算，11 测试；`error_budget.py`）
+15. ~~**误差预算体系**~~ ✅ **已完成**（Rec→Spec→预言→实验 全链路误差预算，11 测试；`error_budget.py`）
 
-10. ~~**Clifford 旋量模结构**~~ ✅ **已完成**（原始幂等元 + 左理想性质 + 旋量模谱定理，9 测试；Paper I §6.4）
+16. ~~**Clifford 旋量模结构**~~ ✅ **已完成**（原始幂等元 + 左理想性质 + 旋量模谱定理，9 测试；Paper I §6.4）
 
-11. ~~**EFT 逆重构唯一性**~~ ✅ **已完成**（完备静默条件下唯一性定理 + 非唯一性边界分析，8 测试；`eft_equivalence_framework.py`）
+17. ~~**EFT 逆重构唯一性**~~ ✅ **已完成**（完备静默条件下唯一性定理 + 非唯一性边界分析，8 测试；`eft_equivalence_framework.py`）
 
 ---
 
 Phase 15D 进展：
 
-12. ~~**D 函子耗散扩展**~~ ✅ **已完成**（非自伴算子伪谱理论 + 耗散半群框架 + Henon 映射耗散版本，10 测试；`d_functor_dissipative_extension.py`）
+18. ~~**D 函子耗散扩展**~~ ✅ **已完成**（非自伴算子伪谱理论 + 耗散半群框架 + Henon 映射耗散版本，10 测试；`d_functor_dissipative_extension.py`）
 
-13. ~~**NS-LB 显式最优常数严格证明**~~ ✅ **已完成**（Frostman 引理严格证明 + 对偶问题求解 + 显式常数推导，10 测试；`ns_lb_strict_proof.py`）
+19. ~~**NS-LB 显式最优常数严格证明**~~ ✅ **已完成**（Frostman 引理严格证明 + 对偶问题求解 + 显式常数推导，10 测试；`ns_lb_strict_proof.py`）
 
-14. ~~**纤维丛非零曲率联络**~~ ✅ **已完成**（Levi-Civita 联络 + 规范场 + 曲率张量 + 平行移动 + 环绕 + Clifford 联络，10 测试；`nonzero_curvature_connection.py`）
+20. ~~**纤维丛非零曲率联络**~~ ✅ **已完成**（Levi-Civita 联络 + 规范场 + 曲率张量 + 平行移动 + 环绕 + Clifford 联络，10 测试；`nonzero_curvature_connection.py`）
 
-15. ~~**谱静默测度论公理化定义**~~ ✅ **已完成**（A1-A4 公理体系 + S1-S4 判据独立性与完备性证明 + 综合静默度，19 测试；`spectral_silence_axiomatization.py`）
+21. ~~**谱静默测度论公理化定义**~~ ✅ **已完成**（A1-A4 公理体系 + S1-S4 判据独立性与完备性证明 + 综合静默度，19 测试；`spectral_silence_axiomatization.py`）
 
-16. ~~**D 函子扩张 IFS 扩展**~~ ✅ **已完成**（扩张 IFS 逆系统构造、不稳定流形理论、双曲谱对象、D 函子映射，14 测试；`d_functor_expansion_if.py`）
+22. ~~**D 函子扩张 IFS 扩展**~~ ✅ **已完成**（扩张 IFS 逆系统构造、不稳定流形理论、双曲谱对象、D 函子映射，14 测试；`d_functor_expansion_if.py`）
 
 ---
 
