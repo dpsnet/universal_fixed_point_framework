@@ -1,0 +1,26 @@
+# 因果集离散时空实例假设元数据
+
+instance_name: Causal set discrete spacetime
+source: causal_set_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_elements * log(1 + n_relations)
+  comment: induced by causal-set element count and number of causal relations
+
+key_assumptions:
+  - Minkowski spacetime Poisson sprinkling produces a discrete causal order.
+  - Future cardinality of each element serves as the spectral source.
+  - Prototype uses uniform sprinkling and c=1 lightcone ordering.
+  - Random seed fixed for reproducibility.
+
+framework_interfaces:
+  rec_object: causal_set_instance.CausalSetInstance.to_rec_object
+  spectral_object: causal_set_instance.CausalSetInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_causal_set
+
+validation_tests:
+  - test_causal_set_instance.py

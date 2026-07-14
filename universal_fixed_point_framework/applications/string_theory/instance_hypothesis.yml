@@ -1,0 +1,25 @@
+# 弦论拓扑递归实例假设元数据
+
+instance_name: String topological recursion / Regge spectrum
+source: string_scattering_amplitude.py
+layer: model_hypothesis
+
+clifford_signature: [9, 1]
+gauge_group: null
+
+orbit_functor:
+  base_formula: dim_C(M_{g,n}) / alpha_prime
+  comment: induced by string world-sheet moduli space symmetry
+
+key_assumptions:
+  - Eynard-Orantin topological recursion on a spectral curve.
+  - Regge trajectory m_n^2 = (n - 1) / α' for string modes.
+  - Spectral curve y^2 = x^2 - a^2 as minimal model.
+
+framework_interfaces:
+  rec_object: string_instance.StringInstance.to_rec_object
+  spectral_object: string_instance.StringInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_string
+
+validation_tests:
+  - test_string_instance.py

@@ -1,0 +1,26 @@
+# AdS/CFT 共形算子谱实例假设元数据
+
+instance_name: AdS/CFT primary operator scaling dimensions
+source: ads_cft_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: central_charge * log(1 + n_operators)
+  comment: induced by holographic degrees of freedom and operator count
+
+key_assumptions:
+  - 2D CFT is described by central charge c and primary operators (h, \bar h).
+  - Scaling dimension Δ = h + \bar h serves as the spectral source.
+  - Prototype uses a synthetic low-dimension primary spectrum (identity, vectors, stress tensor).
+  - Custom operator dimensions can be supplied for any concrete CFT.
+
+framework_interfaces:
+  rec_object: ads_cft_instance.AdSCFTInstance.to_rec_object
+  spectral_object: ads_cft_instance.AdSCFTInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_ads_cft
+
+validation_tests:
+  - test_ads_cft_instance.py

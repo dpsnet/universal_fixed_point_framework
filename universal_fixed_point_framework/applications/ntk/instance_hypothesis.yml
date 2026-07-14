@@ -1,0 +1,26 @@
+# 神经网络 NTK 实例假设元数据
+
+instance_name: Neural Tangent Kernel lazy training
+source: cifar10_ntk_experiment.py / optimized_ntk_computation.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_samples / spectral_degeneracy
+  comment: induced by network architecture and initialization symmetry
+
+key_assumptions:
+  - Infinite-width MLP in lazy training regime.
+  - Training dynamics dominated by the NTK Θ.
+  - Gradient descent update θ_{t+1} = (I - η Θ) θ_t + η y.
+  - NTK spectrum follows a power-law decay λ_k ∝ k^{-1}.
+
+framework_interfaces:
+  rec_object: ntk_instance.NTKInstance.to_rec_object
+  spectral_object: ntk_instance.NTKInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_ntk
+
+validation_tests:
+  - test_ntk_instance.py

@@ -1,0 +1,25 @@
+# 引力测地线分形实例假设元数据
+
+instance_name: Gravitational geodesic deviation
+source: schwarzschild_geodesic_verification.py / kerr_geodesic_verification.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: spacetime_dim x isotropic_orbits
+  comment: induced by spacetime isometry group
+
+key_assumptions:
+  - Discretized Schwarzschild or Kerr background.
+  - Geodesic deviation equation d²ξ/dτ² = K(τ) ξ.
+  - Lyapunov exponents encode local instability and fractal spectrum.
+
+framework_interfaces:
+  rec_object: geodesic_instance.GeodesicInstance.to_rec_object
+  spectral_object: geodesic_instance.GeodesicInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_gravitational
+
+validation_tests:
+  - test_geodesic_instance.py

@@ -1,0 +1,26 @@
+# 圈量子引力面积谱实例假设元数据
+
+instance_name: Loop Quantum Gravity area spectrum
+source: lqg_instance.py
+layer: model_hypothesis
+
+clifford_signature: [3, 1]
+gauge_group: SU(2)
+
+orbit_functor:
+  base_formula: n_edges / immirzi
+  comment: induced by spin-network edge count and Immirzi parameter
+
+key_assumptions:
+  - Spin-network edges carry SU(2) irreducible representations labelled by spin j.
+  - Area operator eigenvalues A_j = 8πγ√(j(j+1)) in Planck units.
+  - Immirzi parameter γ = 0.274 as default (from black-hole entropy fit).
+  - Finite edge count approximates the continuous spin-network spectrum.
+
+framework_interfaces:
+  rec_object: lqg_instance.LQGInstance.to_rec_object
+  spectral_object: lqg_instance.LQGInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_loop_quantum_gravity
+
+validation_tests:
+  - test_lqg_instance.py

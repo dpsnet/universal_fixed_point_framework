@@ -1,0 +1,26 @@
+# 非交换几何（谱三元组）实例假设元数据
+
+instance_name: Noncommutative geometry spectral triple
+source: ncg_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_points * log(1 + S_Lambda(D))
+  comment: induced by Hilbert-space dimension and spectral action
+
+key_assumptions:
+  - Finite-dimensional spectral triple (A, H, D) with Hermitian Dirac operator D.
+  - Spectrum source is |D| or D^2 eigenvalues.
+  - Spectral action approximated as S_Lambda(D) = sum_i exp(-(lambda_i / Lambda)^2).
+  - Default eigenvalues are 0, 1, 2, ..., n-1 for prototype demonstration.
+
+framework_interfaces:
+  rec_object: ncg_instance.NCGInstance.to_rec_object
+  spectral_object: ncg_instance.NCGInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_noncommutative_geometry
+
+validation_tests:
+  - test_ncg_instance.py

@@ -1,0 +1,25 @@
+# BSM 新费米子实例假设元数据
+
+instance_name: BSM vector-like fermion spectrum
+source: bsm_instance.py
+layer: model_hypothesis
+
+clifford_signature: [1, 7]
+gauge_group: SM x U(1)_X
+
+orbit_functor:
+  base_formula: representation_dim for non-Abelian; |charge| for U(1)_X
+  comment: determined by the new gauge-group orbit
+
+key_assumptions:
+  - Add a vector-like fermion sector charged under U(1)_X.
+  - Keep SM mass-prediction machinery unchanged; only extend sector weights.
+  - New fermion masses scale with the extended sector measure and generation contraction.
+
+framework_interfaces:
+  rec_object: bsm_instance.BSMInstance.to_rec_object
+  spectral_object: bsm_instance.BSMInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_bsm
+
+validation_tests:
+  - test_bsm_instance.py

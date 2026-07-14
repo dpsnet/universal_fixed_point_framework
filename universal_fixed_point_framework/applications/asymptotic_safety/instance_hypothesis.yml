@@ -1,0 +1,26 @@
+# 渐近安全 RG 不动点实例假设元数据
+
+instance_name: Asymptotic safety RG fixed point
+source: asymptotic_safety_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_couplings * log(1 + sum(critical_exponents))
+  comment: induced by number of couplings and critical exponents at UV fixed point
+
+key_assumptions:
+  - UV fixed point satisfies beta(g*) = 0.
+  - Stability matrix eigenvalues give critical exponents theta_i.
+  - Spectrum source is |Re(theta_i)|.
+  - Prototype provides synthetic critical exponents; real FRG data can be supplied.
+
+framework_interfaces:
+  rec_object: asymptotic_safety_instance.AsymptoticSafetyInstance.to_rec_object
+  spectral_object: asymptotic_safety_instance.AsymptoticSafetyInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_asymptotic_safety
+
+validation_tests:
+  - test_asymptotic_safety_instance.py

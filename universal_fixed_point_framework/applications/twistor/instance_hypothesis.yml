@@ -1,0 +1,26 @@
+# 扭量理论散射运动学实例假设元数据
+
+instance_name: Twistor scattering kinematics
+source: twistor_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_particles * log(1 + n_particles)
+  comment: induced by number of external massless legs and twistor data richness
+
+key_assumptions:
+  - 4D massless momenta are represented by spinors p_{alpha dot alpha} = lambda_alpha tilde lambda_{dot alpha}.
+  - Right-handed spinors set equal to left-handed spinors (up to a phase) to ensure real null momenta.
+  - Spectrum source is the magnitude of angle spinor brackets |<ij>|.
+  - String scattering amplitude linkage uses string_scattering_amplitude module.
+
+framework_interfaces:
+  rec_object: twistor_instance.TwistorInstance.to_rec_object
+  spectral_object: twistor_instance.TwistorInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_twistor
+
+validation_tests:
+  - test_twistor_instance.py

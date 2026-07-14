@@ -1,0 +1,26 @@
+# TQFT / 任意子融合范畴实例假设元数据
+
+instance_name: TQFT / anyon fusion category
+source: tqft_instance.py
+layer: model_hypothesis
+
+clifford_signature: null
+gauge_group: null
+
+orbit_functor:
+  base_formula: n_anyons * log(1 + d_total^2)
+  comment: induced by anyon count and total quantum dimension
+
+key_assumptions:
+  - Modular tensor category / anyon fusion rules provide quantum dimensions d_i.
+  - Default models: Ising [1, sqrt(2), 1] and Fibonacci [1, phi].
+  - User can supply arbitrary topological invariants for custom models.
+  - Quantum dimensions are positive real numbers.
+
+framework_interfaces:
+  rec_object: tqft_instance.TQFTInstance.to_rec_object
+  spectral_object: tqft_instance.TQFTInstance.to_spectral_object
+  orbit_weight: orbit_functor.OrbitFunctor.on_tqft
+
+validation_tests:
+  - test_tqft_instance.py
