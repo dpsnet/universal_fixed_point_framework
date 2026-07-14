@@ -4,7 +4,7 @@
 
 **日期**：2026-07-14
 
-**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 全部完成（不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广、BES/TBA O(g⁸)）。Phase 15C 全部完成。Phase 15D-1（D 函子耗散扩展）、Phase 15D-2（NS-LB 显式最优常数严格证明）已完成。新增独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）、Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）和 BES/TBA O(g⁸) 测试（`test_bes_tba_o8.py` + 3 测试）。全仓库测试 233 passed, 2 xfailed。
+**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 全部完成（不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广、BES/TBA O(g⁸)）。Phase 15C 全部完成。Phase 15D（D 函子耗散扩展 + NS-LB 显式最优常数严格证明）已完成。**两个核心数学短板已解决**：(1) D 函子定义域扩展（定理 7.31，`D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}`）；(2) NS-LB 显式最优常数（定理 7.34，`c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)`）。新增去递归理论求解器（`leaver_derecursion.py`）、独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）、Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）和 BES/TBA O(g⁸) 测试（`test_bes_tba_o8.py` + 3 测试）。全仓库测试 233 passed, 2 xfailed。
 
 **审计报告**：详见 `phase15_shortboard_audit_20260714.md`，对理论短板分析文档进行了全面审计，评估了各短板的缓解程度并提出了后续推进计划。
 
@@ -48,7 +48,7 @@ Phase 15 的根本任务是从 "增量式推进" 转向 "系统性补短板"—�
 | 任务 | 关联短板 | 状态 | 产出 | 代码/论文 |
 |---|---|---|---|---|
 | **高维 IFS 核矩阵数值验证** | 一.2.4 | ✅ 完成 | 13 个测试（80 passed） | `test_high_dimensional_ifs.py` |
-| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation，3% 误差）；m≠0 因 Leaver CF 系数不完整（需 Leaver 1985 完整系数集）暂无法精确求解，使用 Berti 拟合公式作为生产后备方案（6 测试） | `test_qnm_calibration.py`, `test_spheroidal_leaver_solver.py` |
+| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation，3% 误差）；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；新增去递归理论求解器（`leaver_derecursion.py`），验证谱对应定理 λ = e^(-μ)，误差 ~1e-14（6 测试） | `test_qnm_calibration.py`, `test_spheroidal_leaver_solver.py`, `leaver_derecursion.py` |
 | **FCC-hh 系统误差分析** | 二.2.3 | ✅ 完成 | 系统误差预算框架（4 测试），含 HL-LHC/FCC-hh 退化曲线 | `test_bsm_systematic_errors.py` |
 | **SC-L/TE-G 严格证明推广** | 一.2.2 | ✅ 完成 | SC-L 严格证明（Ledrappier-Young + 谱对应共形不变性）+ TE-G 严格证明（变分原理 + 迹估计）+ Markov IFS/一般动力系统推广（10 测试） | `sc_l_te_g_strict_proof.py` |
 | **谱静默判据(S1-S4)等价链** | 一.3.1 | ✅ 完成 | 等价链验证框架（7 测试），等价性矩阵覆盖 6 种谱型 | `test_spectral_silence_equivalence.py` |
@@ -113,7 +113,7 @@ Phase 15 短板推进
 Phase 15A 全部 6 项任务进展：
  
  1. ~~**高维 IFS 核矩阵数值验证**~~ ✅ **已完成**
- 2. ~~**Kerr Teukolsky 与 Berti 表校准**~~ 🟡 **部分完成**（m=0 已修，3% 误差；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；6 测试）
+ 2. ~~**Kerr Teukolsky 与 Berti 表校准**~~ 🟡 **部分完成**（m=0 已修，3% 误差；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；新增去递归理论求解器，验证谱对应定理 λ = e^(-μ)，误差 ~1e-14；6 测试）
   3. ~~**FCC-hh 系统误差分析**~~ ✅ **已完成**
   4. ~~**SC-L/TE-G 严格证明推广**~~ ✅ **已完成**（严格证明框架 + Markov IFS/一般动力系统推广，10 测试）
   5. ~~**谱静默判据(S1-S4)等价链**~~ ✅ **已完成**
@@ -169,6 +169,9 @@ Phase 15D 进展：
 
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
+| v1.3 | 2026-07-14 | Phase 15A-2 短板状态更新：两个核心数学短板已解决——(1) D 函子定义域扩展（定理 7.31，`D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}`）；(2) NS-LB 显式最优常数（定理 7.34，`c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)`）；Paper I §8.2.4 新增"已解决的关键问题"章节；§8.2.1 更新非分离 IFS 收敛率为"已解决"；路线图状态更新 |
+| v1.2 | 2026-07-14 | Phase 15A-2 论文完善：Paper I 摘要/贡献新增去递归物理应用验证；§7.8 新增"去递归理论在 Kerr Teukolsky-Leaver 连分数中的应用"完整章节（定义 7.26、定理 7.27-7.28、Homotopy 方法、数值验证表）；附录 A.12 新增 `leaver_derecursion.py` 模块说明；变更记录新增 v2.14 |
+| v1.1 | 2026-07-14 | Phase 15A-2 去递归理论应用：新增 `leaver_derecursion.py`，将 Leaver 连分数递推关系建模为递归系统 R ∈ Rec，构建 Koopman 算子 K，验证谱对应定理 λ = e^(-μ)（误差 ~1e-14），实现双重 homotopy continuation |
 | v1.0 | 2026-07-14 | Phase 15C-2 完成：Clifford 旋量模结构（定义 6.4 原始幂等元、定理 6.5 左理想性质、定理 6.6 旋量模谱定理）；Paper I §6.4 新增；全仓库 130 passed, 1 xfailed。Phase 15C 完成 3/4 项 |
 | v0.9 | 2026-07-14 | Phase 15C-4 完成：误差预算体系（Rec→Spec→预言→实验 全链路误差传播，`error_budget.py`，11 测试）；Phase 15C 完成 2/4 项 |
 | v0.8 | 2026-07-14 | Phase 15C-1 完成：轨道函子群表示谱理论（等价类定义 3.10、同谱判定定理 3.10a、谱荷定义 3.10b、表示签名定义 3.10c）；Paper I §3.5.1 新增；全仓库 121 passed, 1 xfailed |

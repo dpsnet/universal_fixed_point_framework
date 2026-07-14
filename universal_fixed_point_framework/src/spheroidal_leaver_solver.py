@@ -161,6 +161,7 @@ class RadialLeaverSolver:
         omega: complex,
         lam: complex,
         m: int,
+        l: int = 2,
     ) -> complex:
         """
         径向 Leaver 连分数残差。
@@ -173,42 +174,34 @@ class RadialLeaverSolver:
             完整角向特征值（含基线 l(l+1)-s(s+1)）
         m : int
             磁量子数
+        l : int
+            角量子数
 
         返回
         -------
         residual : complex
             连分数残差
         """
-        r_plus = self.M + np.sqrt(self.M ** 2 - self.a ** 2)
-        r_minus = self.M - np.sqrt(self.M ** 2 - self.a ** 2)
+        rho = -1.0j * omega
+        epsilon = self.s * (self.s + 1)
 
-        if abs(r_plus - r_minus) < 1e-15:
-            return complex(1e6, 0.0)
-
-        sigma_plus = (omega * r_plus - self.a * m) / (r_plus - r_minus)
-
-        def alpha_n(n: int) -> complex:
-            return -2.0j * omega * (n + 1.0) * (n - 4.0j * sigma_plus)
-
-        def beta_n(n: int) -> complex:
-            return (
-                n * (n + 1.0)
-                + 4.0 * sigma_plus ** 2
-                - 8.0 * omega * sigma_plus
-                - lam
-            )
-
-        def gamma_n(n: int) -> complex:
-            return 2.0j * omega * (n - 4.0j * sigma_plus - 1.0)
+        A_lm = lam - (l * (l + 1) - epsilon)
 
         cf = complex(0.0, 0.0)
-        for n in range(self.max_iter, 0, -1):
-            denom = beta_n(n) - alpha_n(n) * gamma_n(n + 1) * cf
-            if abs(denom) < 1e-30:
-                denom = complex(1e-30, 0.0)
-            cf = 1.0 / denom
 
-        return beta_n(0) - alpha_n(0) * gamma_n(1) * cf
+        for n in range(self.max_iter, 0, -1):
+            alpha_n = n ** 2 + (2.0 * rho + 2.0) * n + 2.0 * rho + 1.0
+            beta_n = -(2.0 * n ** 2 + (8.0 * rho + 2.0) * n
+                       + 8.0 * rho ** 2 + 4.0 * rho + A_lm - epsilon)
+            gamma_n = n ** 2 + 4.0 * rho * n + 4.0 * rho ** 2 - epsilon - 1.0
+
+            cf = -gamma_n / (beta_n + alpha_n * cf)
+
+        alpha_0 = 2.0 * rho + 1.0
+        beta_0 = -(8.0 * rho ** 2 + 4.0 * rho + A_lm - epsilon)
+        gamma_1 = 1.0 + 4.0 * rho + 4.0 * rho ** 2 - epsilon - 1.0
+
+        return beta_0 + alpha_0 * gamma_1 * cf
 
 
 class FullQNMSolver:

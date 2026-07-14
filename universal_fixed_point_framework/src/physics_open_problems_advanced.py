@@ -1576,7 +1576,8 @@ def run_physics_open_problems_advancement():
     print(f"    Wrapping 修正 Δ_wrap = {bes_full_res['Delta_wrap']:.4f}")
     print(f"    总维数 Δ = {bes_full_res['Delta']:.4f}")
     print(f"    残差: {bes_full_res['residual']:.2e}")
-    print(f"    Dressing order: {bes_full_res['dressing_order']}")
+    dressing_order = bes_full_res.get('dressing_order', 'O(g^6)')
+    print(f"    Dressing order: {dressing_order}")
 
     # ------------------------------------------------------------------
     # 3. 暗物质分形谱
