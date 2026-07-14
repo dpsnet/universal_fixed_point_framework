@@ -101,19 +101,19 @@ class TestSpectralSilenceAxioms:
         assert result is False or result == 0
 
     def test_criterion_S3_dense(self):
-        """S3: 稠密点集满足（LACI 大）。"""
+        """S3: 稠密点集满足（LACI 大，自适应阈值）。"""
         dense_points = np.array([i / 1000.0 for i in range(1000)])
         dense_measure = np.ones(1000) / 1000
 
-        result = self.axioms.criterion_S3(dense_measure, dense_points, threshold=5.0)
+        result = self.axioms.criterion_S3(dense_measure, dense_points)
         assert result is True or result == 1
 
     def test_criterion_S3_sparse(self):
-        """S3: 稀疏点集不满足（LACI 小）。"""
+        """S3: 稀疏点集不满足（LACI 小，自适应阈值）。"""
         sparse_points = np.array([0.0, 0.5, 1.0])
         sparse_measure = np.ones(3) / 3
 
-        result = self.axioms.criterion_S3(sparse_measure, sparse_points, threshold=5.0)
+        result = self.axioms.criterion_S3(sparse_measure, sparse_points)
         assert result is False or result == 0
 
     def test_criterion_S4_uniform(self):

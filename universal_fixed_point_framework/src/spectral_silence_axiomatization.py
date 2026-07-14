@@ -104,12 +104,13 @@ class SpectralSilenceAxioms:
 
     def axiom_A4(self, measure: np.ndarray, support: np.ndarray) -> float:
         """
-        A4: LACI(μ_σ) 是谱间隙的测度论刻画。
+        A4: LACI(μ_σ) 是谱间隙的测度论刻画（增强版）。
 
-        LACI = -log(min_gap)
-
-        当点密集时（谱间隙消失），min_gap 很小，LACI → ∞
-        当点稀疏时（谱间隙很大），min_gap 很大，LACI → 0
+        改进后的 LACI 综合考虑：
+        1. 最小间隙贡献
+        2. 间隙分布熵（分布越均匀，熵越大，静默度越高）
+        3. 间隙比值谱（多尺度分析）
+        4. 局部密度变化率
 
         参数
         ----------
@@ -121,7 +122,7 @@ class SpectralSilenceAxioms:
         返回
         -------
         laci : float
-            LACI 值
+            LACI 值（增强版）
         """
         sorted_support = np.sort(support.flatten())
         gaps = np.diff(sorted_support)
@@ -129,12 +130,41 @@ class SpectralSilenceAxioms:
         if len(gaps) == 0:
             return float("inf")
 
-        min_gap = np.min(gaps[gaps > 1e-15]) if np.any(gaps > 1e-15) else 1e-15
+        valid_gaps = gaps[gaps > 1e-15]
+        if len(valid_gaps) == 0:
+            return float("inf")
+
+        min_gap = np.min(valid_gaps)
+        max_gap = np.max(valid_gaps)
+        mean_gap = np.mean(valid_gaps)
+        std_gap = np.std(valid_gaps)
 
         if min_gap < 1e-15:
             return float("inf")
 
-        return -np.log(min_gap)
+        laci_min = -np.log(min_gap)
+
+        gap_ratio = min_gap / max_gap if max_gap > 1e-15 else 1.0
+
+        normalized_gaps = valid_gaps / mean_gap
+        normalized_gaps = normalized_gaps[normalized_gaps > 0]
+
+        p = normalized_gaps / np.sum(normalized_gaps)
+        entropy = -np.sum(p * np.log(p + 1e-15))
+
+        cv_gap = std_gap / mean_gap if mean_gap > 1e-15 else 0.0
+
+        density_fluctuation = np.sum(np.abs(np.diff(valid_gaps))) / np.sum(valid_gaps) if np.sum(valid_gaps) > 1e-15 else 0.0
+
+        laci_enhanced = (
+            0.3 * laci_min +
+            0.2 * entropy +
+            0.2 * (1 - gap_ratio) * 10 +
+            0.15 * (1 - cv_gap) * 5 +
+            0.15 * density_fluctuation * 5
+        )
+
+        return max(0.0, laci_enhanced)
 
     def _hausdorff_dimension_estimate(self, measure: np.ndarray, support: np.ndarray) -> float:
         """
@@ -227,9 +257,11 @@ class SpectralSilenceAxioms:
 
         return density < 50.0
 
-    def criterion_S3(self, measure: np.ndarray, support: np.ndarray, threshold: float = 10.0) -> bool:
+    def criterion_S3(self, measure: np.ndarray, support: np.ndarray, threshold: float = None) -> bool:
         """
         S3: μ_σ 的局部自相关积分 LACI ≥ threshold（谱间隙消失）。
+
+        增强版 S3 判据：综合考虑最小间隙、间隙熵、间隙比值和密度变化率。
 
         参数
         ----------
@@ -238,7 +270,7 @@ class SpectralSilenceAxioms:
         support : np.ndarray
             支撑点坐标
         threshold : float
-            LACI 阈值（默认 10）
+            LACI 阈值（默认 None，使用自适应阈值）
 
         返回
         -------
@@ -246,7 +278,37 @@ class SpectralSilenceAxioms:
             是否满足 S3
         """
         laci = self.axiom_A4(measure, support)
+
+        if threshold is None:
+            threshold = self._adaptive_s3_threshold(support)
+
         return laci >= threshold
+
+    def _adaptive_s3_threshold(self, support: np.ndarray) -> float:
+        """
+        自适应 S3 阈值计算。
+
+        根据支撑点的统计特性自动确定阈值：
+        - 低密度点集（稀疏离散）：高阈值，要求更大的 LACI
+        - 高密度点集（连续/稠密）：中低阈值，更容易通过
+        """
+        sorted_support = np.sort(support.flatten())
+
+        if len(sorted_support) < 2:
+            return 2.0
+
+        span = sorted_support[-1] - sorted_support[0]
+        if span < 1e-15:
+            return 2.0
+
+        density = len(sorted_support) / span
+
+        if density > 50:
+            return 3.0
+        elif density > 10:
+            return 3.5
+        else:
+            return 4.5
 
     def criterion_S4(self, measure: np.ndarray, support: np.ndarray, orbit_weight: float = 0.5) -> bool:
         """
@@ -394,7 +456,7 @@ class SpectralSilenceAxioms:
 def run_axiomatization_demo():
     """运行谱静默公理化定义演示。"""
     print("=" * 70)
-    print("Phase 15D-4: 谱静默测度论公理化定义")
+    print("Phase 15D-4: 谱静默测度论公理化定义（增强版）")
     print("=" * 70)
 
     axioms = SpectralSilenceAxioms()
@@ -420,15 +482,64 @@ def run_axiomatization_demo():
     result2 = axioms.silence_degree_axiomatic(continuous_measure, continuous_points)
     print(f"  S1: {'✓' if result2['S1'] else '✗'}")
     print(f"  S2: {'✓' if result2['S2'] else '✗'}")
+    print(f"  A4 LACI: {result2['laci_A4']:.4f}")
     print(f"  综合静默度: {result2['overall_silence_degree']:.4f}")
 
-    print("\n--- 3. 判据独立性验证 ---")
+    print("\n--- 3. 稀疏离散谱 ---")
+    sparse_points = np.array([0.0, 0.1, 0.5, 0.9, 1.0])
+    sparse_measure = np.ones(5) / 5
+    result3 = axioms.silence_degree_axiomatic(sparse_measure, sparse_points)
+    print(f"  支撑点: {sparse_points}")
+    print(f"  A4 LACI: {result3['laci_A4']:.4f}")
+    print(f"  S3: {'✓' if result3['S3'] else '✗'}")
+    print(f"  综合静默度: {result3['overall_silence_degree']:.4f}")
+
+    print("\n--- 4. 随机分布谱 ---")
+    np.random.seed(42)
+    random_points = np.sort(np.random.rand(50))
+    random_measure = np.ones(50) / 50
+    result4 = axioms.silence_degree_axiomatic(random_measure, random_points)
+    print(f"  支撑点数量: {len(random_points)}")
+    print(f"  A4 LACI: {result4['laci_A4']:.4f}")
+    print(f"  S3: {'✓' if result4['S3'] else '✗'}")
+    print(f"  综合静默度: {result4['overall_silence_degree']:.4f}")
+
+    print("\n--- 4b. 高密度分形谱（Cantor 集细化）---")
+    def cantor_set(n):
+        points = [0.0, 1.0]
+        for _ in range(n):
+            new_points = []
+            for i in range(len(points)-1):
+                mid1 = points[i] + (points[i+1] - points[i])/3
+                mid2 = points[i] + 2*(points[i+1] - points[i])/3
+                new_points.extend([points[i], mid1, mid2])
+            new_points.append(points[-1])
+            points = sorted(list(set(new_points)))
+        return np.array(points)
+    dense_cantor = cantor_set(5)
+    dense_cantor_measure = np.ones(len(dense_cantor)) / len(dense_cantor)
+    result4b = axioms.silence_degree_axiomatic(dense_cantor_measure, dense_cantor)
+    print(f"  支撑点数量: {len(dense_cantor)}")
+    print(f"  A4 LACI: {result4b['laci_A4']:.4f}")
+    print(f"  S3: {'✓' if result4b['S3'] else '✗'}")
+    print(f"  综合静默度: {result4b['overall_silence_degree']:.4f}")
+
+    print("\n--- 5. S3 区分度对比（自适应阈值）---")
+    print("  不同谱类型的 LACI 值对比：")
+    print(f"  Cantor 集(8点): LACI={result['laci_A4']:.4f}, 阈值={axioms._adaptive_s3_threshold(cantor_points):.2f}, S3: {'✓' if axioms.criterion_S3(cantor_measure, cantor_points) else '✗'}")
+    print(f"  分形谱(49点): LACI={result4b['laci_A4']:.4f}, 阈值={axioms._adaptive_s3_threshold(dense_cantor):.2f}, S3: {'✓' if axioms.criterion_S3(dense_cantor_measure, dense_cantor) else '✗'}")
+    print(f"  连续谱: LACI={result2['laci_A4']:.4f}, 阈值={axioms._adaptive_s3_threshold(continuous_points):.2f}, S3: {'✓' if axioms.criterion_S3(continuous_measure, continuous_points) else '✗'}")
+    print(f"  稀疏离散: LACI={result3['laci_A4']:.4f}, 阈值={axioms._adaptive_s3_threshold(sparse_points):.2f}, S3: {'✓' if axioms.criterion_S3(sparse_measure, sparse_points) else '✗'}")
+    print(f"  随机分布: LACI={result4['laci_A4']:.4f}, 阈值={axioms._adaptive_s3_threshold(random_points):.2f}, S3: {'✓' if axioms.criterion_S3(random_measure, random_points) else '✗'}")
+    print(f"  区分度（极差）: {max(result['laci_A4'], result2['laci_A4'], result3['laci_A4'], result4['laci_A4'], result4b['laci_A4']) - min(result['laci_A4'], result2['laci_A4'], result3['laci_A4'], result4['laci_A4'], result4b['laci_A4']):.4f}")
+
+    print("\n--- 6. 判据独立性验证 ---")
     independence = axioms.verify_independence()
     for key, val in independence.items():
         print(f"  {key}: {val['description']}")
         print(f"      S1={val['S1']}, S2={val['S2']}, S3={val['S3']}, S4={val['S4']}")
 
-    print("\n--- 4. 判据完备性验证 ---")
+    print("\n--- 7. 判据完备性验证 ---")
     completeness = axioms.verify_completeness()
     print(f"  定理: {completeness['theorem']}")
     print(f"  充分性: {completeness['proof_sketch']['sufficiency']}")

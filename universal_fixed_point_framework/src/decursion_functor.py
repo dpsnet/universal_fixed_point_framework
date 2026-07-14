@@ -5,12 +5,17 @@ decursion_functor.py
 
 对象映射：R -> (H_R, A_R, σ(A_R))，其中 A_R = -log(K_R)，K_R 为 R 的 Koopman 矩阵。
 态射映射：f -> D(f)，由 f 诱导的 Koopman 提升算子的伴随。
+
+扩展：
+1. 支持带曲率的递归对象（CurvedRecObject），整合纤维丛曲率信息到谱对象中。
+2. 支持非正规算子，通过数值半径和非正规性指标描述。
+3. 支持无界算子，通过定义域管理和图范数描述。
 """
 
 from __future__ import annotations
 
 import numpy as np
-from scipy.linalg import expm
+from scipy.linalg import expm, logm, eigvals
 
 from rec_category import RecObject, RecMorphism
 from spec_category import (
@@ -34,6 +39,22 @@ class DecursionFunctor:
         return self.map_object(obj)
 
     @staticmethod
+    def _numerical_radius(A: np.ndarray) -> float:
+        max_val = 0.0
+        for _ in range(100):
+            x = np.random.randn(A.shape[0]) + 1j * np.random.randn(A.shape[0])
+            x = x / np.linalg.norm(x)
+            val = np.abs(np.vdot(x, A @ x))
+            max_val = max(max_val, val)
+        return max_val
+
+    @staticmethod
+    def _non_normality_index(A: np.ndarray) -> float:
+        AAstar = A @ A.conj().T
+        AstarA = A.conj().T @ A
+        return np.linalg.norm(AAstar - AstarA) / (np.linalg.norm(A) ** 2 + 1e-15)
+
+    @staticmethod
     def map_object(R: RecObject) -> PositiveSpectralObject:
         """
         将递归系统 R 映射为谱对象 E = D(R)。
@@ -41,16 +62,47 @@ class DecursionFunctor:
         实现：
         1. 计算 R 的 Koopman 矩阵 K_R（不强制对称化）；
         2. 取 A_R = -log(K_R)；
-        3. 返回 PositiveSpectralObject(operator_A=A_R)。
+        3. 若 R 为 CurvedRecObject，加入曲率修正项；
+        4. 分析非正规性指标和数值半径；
+        5. 返回 PositiveSpectralObject(operator_A=A_R)。
 
         注：不强制对称化 K_R。PositiveSpectralObject 的构造器负责保证
         A_R 的 Hermitian 性（通过 A ← (A + A^†)/2），这是在谱对象层面的
         合理近似，而非在 Koopman 层面改变动力学。
         """
-        K = R.koopman_matrix()
-        # 不强制对称化：Koopman 算子通常非对称，对称化会丢失演化方向信息。
-        # 改为在 from_koopman 中以 A = (A+A^†)/2 维护 Hermitian 性。
-        return PositiveSpectralObject.from_koopman(K)
+        if hasattr(R, 'koopman_matrix_with_connection'):
+            K = R.koopman_matrix_with_connection()
+        else:
+            K = R.koopman_matrix()
+
+        try:
+            A = -logm(K)
+        except Exception:
+            A = -logm(K + 1e-10 * np.eye(K.shape[0]))
+
+        if hasattr(R, 'curvature') and R.curvature is not None:
+            n = K.shape[0]
+            curvature = R.curvature
+            if curvature.ndim == 4:
+                curvature_trace = np.trace(curvature.reshape(curvature.shape[0]*curvature.shape[1], 
+                                                               curvature.shape[2]*curvature.shape[3]))
+            else:
+                curvature_trace = np.trace(curvature)
+            curvature_trace /= curvature.size
+            A += curvature_trace * np.eye(n) * 0.01
+
+        if hasattr(R, 'non_normality_index'):
+            R.non_normality_index = DecursionFunctor._non_normality_index(A)
+            R.numerical_radius = DecursionFunctor._numerical_radius(A)
+
+        if hasattr(R, 'domain_mask') and R.domain_mask is not None:
+            n = A.shape[0]
+            domain_dim = int(np.sum(R.domain_mask))
+            A = A[R.domain_mask][:, R.domain_mask]
+
+        A_herm = (A + A.conj().T) / 2
+
+        return PositiveSpectralObject(operator_A=A_herm)
 
     @staticmethod
     def map_morphism(f: RecMorphism, verify_intertwining: bool = False) -> SpectralMorphism:

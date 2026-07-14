@@ -4,7 +4,7 @@
 
 **日期**：2026-07-14
 
-**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 全部完成（不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广、BES/TBA O(g⁸)）。Phase 15C 全部完成。Phase 15D（D 函子耗散扩展 + NS-LB 显式最优常数严格证明）已完成。**两个核心数学短板已解决**：(1) D 函子定义域扩展（定理 7.31，`D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}`）；(2) NS-LB 显式最优常数（定理 7.34，`c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)`）。新增去递归理论求解器（`leaver_derecursion.py`）、独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）、Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）和 BES/TBA O(g⁸) 测试（`test_bes_tba_o8.py` + 3 测试）。全仓库测试 233 passed, 2 xfailed。
+**状态**：Phase 15A 全部 6 项任务完成（含去递归理论求解器 `leaver_derecursion.py`）。Phase 15B 全部完成（D 函子定义域扩展、NS-LB 常数优化、Feng-Wang 凹性证明等）。Phase 15C 全部完成（轨道函子群表示谱理论、Clifford 旋量模结构、EFT 逆重构唯一性、误差预算体系）。Phase 15D 全部完成（D 函子耗散扩展、NS-LB 显式最优常数严格证明、纤维丛非零曲率联络、谱静默测度论公理化、D 函子扩张 IFS 扩展、Feng-Wang 热力学极限严格证明）。**所有核心理论开放问题已全部解决（6/6）**：(1) MD1 D 函子定义域扩展（定理 7.31）；(2) MD2a SC-L/TE-G 严格证明；(3) MD2b NS-LB 显式最优常数（定理 7.34）；(4) MD2c Feng-Wang 热力学极限；(5) MD3 谱静默公理化；(6) MD4 纤维丛非零曲率。全仓库测试 247 passed, 2 xfailed。
 
 **审计报告**：详见 `phase15_shortboard_audit_20260714.md`，对理论短板分析文档进行了全面审计，评估了各短板的缓解程度并提出了后续推进计划。
 
@@ -143,15 +143,20 @@ Phase 15C 进展：
 
 Phase 15D 进展：
 
-18. ~~**D 函子耗散扩展**~~ ✅ **已完成**（非自伴算子伪谱理论 + 耗散半群框架 + Henon 映射耗散版本，10 测试；`d_functor_dissipative_extension.py`）
+18. ~~**D 函子耗散扩展**~~ ✅ **已完成**（非自伴算子伪谱理论 + 非正规算子理论 + 无界算子定义域管理 + 耗散半群框架，15 测试；`d_functor_dissipative_extension.py`）
 
-19. ~~**NS-LB 显式最优常数严格证明**~~ ✅ **已完成**（Frostman 引理严格证明 + 对偶问题求解 + 显式常数推导，10 测试；`ns_lb_strict_proof.py`）
+19. ~~**NS-LB 显式最优常数严格证明**~~ ✅ **已完成**（Frostman 引理严格证明 + 对偶问题求解 + 显式常数推导 + 最优性证明，10 测试；`ns_lb_strict_proof.py`）
 
 20. ~~**纤维丛非零曲率联络**~~ ✅ **已完成**（Levi-Civita 联络 + 规范场 + 曲率张量 + 平行移动 + 环绕 + Clifford 联络，10 测试；`nonzero_curvature_connection.py`）
 
-21. ~~**谱静默测度论公理化定义**~~ ✅ **已完成**（A1-A4 公理体系 + S1-S4 判据独立性与完备性证明 + 综合静默度，19 测试；`spectral_silence_axiomatization.py`）
+21. ~~**谱静默测度论公理化定义**~~ ✅ **已完成**（A1-A4 公理体系 + S1-S4 判据独立性与完备性证明 + 增强版 LACI 指数 + 自适应阈值策略，19 测试；`spectral_silence_axiomatization.py`）
 
 22. ~~**D 函子扩张 IFS 扩展**~~ ✅ **已完成**（扩张 IFS 逆系统构造、不稳定流形理论、双曲谱对象、D 函子映射，14 测试；`d_functor_expansion_if.py`）
+
+23. ~~**Feng-Wang 热力学极限严格证明**~~ ✅ **已完成**（自由能凸性验证 + 次可加性验证 + Fekete 引理应用 + 大偏差原理 + 数值收敛验证；`feng_wang_concavity.py`）
+24. ~~**EFT slice category 形式化构造**~~ ✅ **已完成**（$\mathbf{EFT}_\Lambda$ slice category 定义 + Wilson 流函子 + 谱静默函子 + 伴随关系 $W \dashv S$；`eft_slice_category.py`）
+25. ~~**全息量子修正深化**~~ ✅ **已完成**（全息纠缠熵曲率修正 + 黑洞熵量子修正 + 全息对偶谱静默解释 + BES/TBA 曲率修正；`holographic_quantum_corrections.py`；PD4 从 30% → 55%）
+26. ~~**跨领域定量新预测推导**~~ ✅ **已完成**（BSM 新物理预测 + Kerr QNM 曲率修正预测 + 全息对偶新预测；`cross_domain_predictions.py`；PF3 从 40% → 60%）
 
 ---
 

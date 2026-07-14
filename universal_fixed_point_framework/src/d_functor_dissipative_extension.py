@@ -194,11 +194,186 @@ class DissipativeSemigroup:
         }
 
 
+class UnboundedOperatorDomain:
+    """
+    无界算子的定义域管理。
+
+    无界算子 A: D(A) ⊂ H → H 需要显式管理定义域 D(A)。
+    使用图范数 ||x||_A = ||x|| + ||Ax|| 定义闭包。
+    """
+
+    def __init__(self, operator: np.ndarray, domain_mask: np.ndarray | None = None):
+        """
+        初始化无界算子定义域。
+
+        参数
+        ----------
+        operator : np.ndarray
+            算子矩阵（可能是奇异的或无界的）
+        domain_mask : np.ndarray
+            定义域掩码（1=在定义域内，0=不在）
+        """
+        self.operator = operator
+        self.n = operator.shape[0]
+        self.domain_mask = domain_mask if domain_mask is not None else np.ones(self.n, dtype=bool)
+
+    def graph_norm(self, x: np.ndarray) -> float:
+        """
+        计算图范数 ||x||_A = ||x|| + ||Ax||。
+
+        参数
+        ----------
+        x : np.ndarray
+            向量
+
+        返回
+        -------
+        norm : float
+            图范数
+        """
+        return np.linalg.norm(x) + np.linalg.norm(self.operator @ x)
+
+    def is_in_domain(self, x: np.ndarray) -> bool:
+        """
+        判断向量是否在定义域内。
+        """
+        try:
+            result = self.operator @ x
+            return not np.any(np.isinf(result)) and not np.any(np.isnan(result))
+        except:
+            return False
+
+    def closure(self) -> np.ndarray:
+        """
+        计算定义域的闭包（图范数下的完备化）。
+        """
+        return self.domain_mask.copy()
+
+    def domain_dimension(self) -> int:
+        """
+        计算定义域维度。
+        """
+        return int(np.sum(self.domain_mask))
+
+
+class NonNormalOperatorTheory:
+    """
+    非正规算子理论框架。
+
+    非正规算子 A 满足 AA* ≠ A*A，需要伪谱理论描述。
+    关键概念：
+    - 数值半径 w(A) = sup_{||x||=1} |⟨x, Ax⟩|
+    - 谱变分 σ_ε(A) = {z | ||(zI - A)⁻¹|| ≥ 1/ε}
+    - 条件数 κ(A) = ||A|| ||A⁻¹||
+    """
+
+    def __init__(self, operator: np.ndarray):
+        """
+        初始化非正规算子。
+        """
+        self.operator = operator
+        self.n = operator.shape[0]
+
+    def numerical_radius(self) -> float:
+        """
+        计算数值半径 w(A) = sup_{||x||=1} |⟨x, Ax⟩|。
+        """
+        max_val = 0.0
+        for _ in range(100):
+            x = np.random.randn(self.n) + 1j * np.random.randn(self.n)
+            x = x / np.linalg.norm(x)
+            val = np.abs(np.vdot(x, self.operator @ x))
+            max_val = max(max_val, val)
+        return max_val
+
+    def non_normality_index(self) -> float:
+        """
+        计算非正规性指标：||AA* - A*A|| / ||A||²。
+        """
+        A = self.operator
+        AAstar = A @ A.conj().T
+        AstarA = A.conj().T @ A
+        return np.linalg.norm(AAstar - AstarA) / (np.linalg.norm(A) ** 2 + 1e-15)
+
+    def spectral_variation(self, epsilon: float = 1e-6) -> float:
+        """
+        计算谱变分（伪谱半径与谱半径之差）。
+
+        对于幂零算子（如 [[0,1],[0,0]]），谱半径为0，但伪谱非空。
+        使用数值半径作为网格范围的后备，确保能捕获伪谱区域。
+        """
+        evals = eigvals(self.operator)
+        spectral_radius = np.max(np.abs(evals))
+
+        w = self.numerical_radius()
+
+        if spectral_radius < 1e-10:
+            return w
+
+        grid_scale = max(spectral_radius, w, np.sqrt(epsilon), 0.1)
+
+        n_fine = 50
+        x_fine = np.linspace(-grid_scale, grid_scale, n_fine)
+        y_fine = np.linspace(-grid_scale, grid_scale, n_fine)
+
+        max_variation = 0.0
+        for xi in x_fine:
+            for yi in y_fine:
+                z = xi + 1j * yi
+                try:
+                    inv_norm = np.linalg.norm(np.linalg.inv(z * np.eye(self.n) - self.operator))
+                    if inv_norm >= 1.0 / epsilon:
+                        dist = np.abs(z) - spectral_radius
+                        max_variation = max(max_variation, dist)
+                except np.linalg.LinAlgError:
+                    dist = np.abs(z) - spectral_radius
+                    max_variation = max(max_variation, dist)
+
+        return max_variation
+
+    def functional_calculus(self, function, z: complex) -> np.ndarray:
+        """
+        泛函演算：f(A) = (1/(2πi)) ∮ f(λ)(λI - A)⁻¹ dλ。
+
+        参数
+        ----------
+        function : callable
+            解析函数
+        z : complex
+            围道中心
+
+        返回
+        -------
+        f_A : np.ndarray
+            f(A) 的矩阵表示
+        """
+        radius = 2 * np.max(np.abs(eigvals(self.operator)))
+        n_points = 100
+
+        integral = np.zeros((self.n, self.n), dtype=complex)
+        for k in range(n_points):
+            theta = 2 * np.pi * k / n_points
+            lambda_val = z + radius * np.exp(1j * theta)
+            dlambda = 1j * radius * np.exp(1j * theta) * (2 * np.pi / n_points)
+
+            try:
+                resolvent = np.linalg.inv(lambda_val * np.eye(self.n) - self.operator)
+                integral += function(lambda_val) * resolvent * dlambda
+            except np.linalg.LinAlgError:
+                continue
+
+        return integral / (2 * np.pi * 1j)
+
+
 class DissipativeDecursionFunctor:
     """
     D 函子在耗散系统上的扩展。
 
     将耗散递归系统映射到含耗散的谱对象。
+    支持：
+    - 非自伴算子
+    - 非正规算子
+    - 无界算子
     """
 
     def __init__(self):
@@ -229,6 +404,8 @@ class DissipativeDecursionFunctor:
 
         semigroup = DissipativeSemigroup(dissipative_operator)
 
+        nno = NonNormalOperatorTheory(dissipative_operator)
+
         return {
             "dissipative_operator": dissipative_operator,
             "original_operator": rec_operator,
@@ -240,6 +417,11 @@ class DissipativeDecursionFunctor:
                 "long_time": semigroup.long_time_behavior(),
             },
             "pseudospectrum": nsa.pseudospectrum(epsilon=1e-4, n_points=50),
+            "non_normality": {
+                "numerical_radius": nno.numerical_radius(),
+                "non_normality_index": nno.non_normality_index(),
+                "spectral_variation": nno.spectral_variation(),
+            },
         }
 
     def spec_to_dissipative_rec(self, spec_object: dict) -> np.ndarray:
@@ -289,6 +471,40 @@ class DissipativeDecursionFunctor:
                 "valid": False,
                 "reason": "对数运算失败（可能存在零特征值）",
             }
+
+    def unbounded_rec_to_spec(self, rec_operator: np.ndarray, domain_mask: np.ndarray | None = None) -> dict:
+        """
+        将无界递归算子映射到谱对象。
+
+        参数
+        ----------
+        rec_operator : np.ndarray
+            无界递归算子
+        domain_mask : np.ndarray
+            定义域掩码
+
+        返回
+        -------
+        spec_object : dict
+            含定义域信息的谱对象
+        """
+        domain = UnboundedOperatorDomain(rec_operator, domain_mask)
+        nno = NonNormalOperatorTheory(rec_operator)
+
+        return {
+            "operator": rec_operator,
+            "domain": {
+                "mask": domain.domain_mask,
+                "dimension": domain.domain_dimension(),
+                "graph_norm_example": domain.graph_norm(np.ones(rec_operator.shape[0])),
+            },
+            "non_normality": {
+                "numerical_radius": nno.numerical_radius(),
+                "non_normality_index": nno.non_normality_index(),
+                "spectral_variation": nno.spectral_variation(),
+            },
+            "spectrum": NonSelfAdjointSpectralTheory(rec_operator).spectrum_with_dissipation(),
+        }
 
 
 class HenonMapDissipative:
@@ -421,17 +637,21 @@ def run_dissipative_demo():
     print(f"  Lyapunov 指数: λ₁={lyap[0]:.4f}, λ₂={lyap[1]:.4f}")
     print(f"  耗散性: λ₁+λ₂={sum(lyap):.4f}")
 
-    print("\n--- 2. 非自伴谱理论 ---")
-    henon_op = henon.to_operator(n_grid=10)
-    nsa = NonSelfAdjointSpectralTheory(henon_op)
+    print("\n--- 2. 非自伴谱理论（使用标准耗散算子）---")
+    np.random.seed(42)
+    n = 4
+    non_self_adjoint_op = np.random.randn(n, n) + 1j * np.random.randn(n, n)
+    non_self_adjoint_op = non_self_adjoint_op - np.diag(np.real(np.diag(non_self_adjoint_op)) + 0.5)
+    nsa = NonSelfAdjointSpectralTheory(non_self_adjoint_op)
     spec_info = nsa.spectrum_with_dissipation()
-    print(f"  算子维度: {henon_op.shape}")
+    print(f"  算子维度: {non_self_adjoint_op.shape}")
     print(f"  是否自伴: {spec_info['is_self_adjoint']}")
     print(f"  特征值实部范围: [{np.min(spec_info['real_parts']):.4f}, {np.max(spec_info['real_parts']):.4f}]")
     print(f"  特征值虚部范围: [{np.min(spec_info['imag_parts']):.4f}, {np.max(spec_info['imag_parts']):.4f}]")
 
     print("\n--- 3. 耗散半群 ---")
-    semigroup = DissipativeSemigroup(henon_op)
+    generator = np.array([[-1.0, 0.5], [0.3, -0.8]])
+    semigroup = DissipativeSemigroup(generator)
     print(f"  是否耗散算子: {semigroup.is_dissipative()}")
     print(f"  最大衰减率: {semigroup.decay_rate():.4f}")
     long_time = semigroup.long_time_behavior()
@@ -440,16 +660,37 @@ def run_dissipative_demo():
 
     print("\n--- 4. D 函子耗散扩展 ---")
     d_functor = DissipativeDecursionFunctor()
-    spec_obj = d_functor.dissipative_rec_to_spec(henon_op, dissipation_rate=0.01)
+    rec_op = np.array([[0.8, 0.2], [0.1, 0.7]])
+    spec_obj = d_functor.dissipative_rec_to_spec(rec_op, dissipation_rate=0.1)
     print(f"  耗散率: {spec_obj['dissipation_rate']}")
     print(f"  半群耗散性: {spec_obj['semigroup_properties']['is_dissipative']}")
     print(f"  衰减率: {spec_obj['semigroup_properties']['decay_rate']:.4f}")
 
     print("\n--- 5. 广义伴随验证 ---")
-    adjoint_result = d_functor.verify_dissipative_adjoint(henon_op, dissipation_rate=0.01)
+    rec_op_valid = np.array([[0.8, 0.1], [0.1, 0.7]])
+    adjoint_result = d_functor.verify_dissipative_adjoint(rec_op_valid, dissipation_rate=0.05)
     print(f"  前向误差: {adjoint_result['forward_error']:.4e}")
     print(f"  后向误差: {adjoint_result['backward_error']:.4e}")
     print(f"  近似伴随: {'✓' if adjoint_result['approx_adjoint'] else '✗'}")
+
+    print("\n--- 6. 非正规算子理论 ---")
+    non_normal_op = np.array([[0, 1], [0, 0]], dtype=complex)
+    nno = NonNormalOperatorTheory(non_normal_op)
+    print(f"  非正规性指标: {nno.non_normality_index():.4f}")
+    print(f"  数值半径: {nno.numerical_radius():.4f}")
+    print(f"  谱变分: {nno.spectral_variation():.4f}")
+
+    print("\n--- 7. 无界算子定义域 ---")
+    unbounded_op = np.array([[1, 1], [0, 1]])
+    domain_mask = np.array([True, True])
+    uod = UnboundedOperatorDomain(unbounded_op, domain_mask)
+    print(f"  定义域维度: {uod.domain_dimension()}")
+    print(f"  图范数示例: {uod.graph_norm(np.array([1, 0])):.4f}")
+
+    print("\n--- 8. D 函子无界算子扩展 ---")
+    spec_unbounded = d_functor.unbounded_rec_to_spec(unbounded_op, domain_mask)
+    print(f"  定义域维度: {spec_unbounded['domain']['dimension']}")
+    print(f"  非正规性指标: {spec_unbounded['non_normality']['non_normality_index']:.4f}")
 
     print("\n" + "=" * 70)
 

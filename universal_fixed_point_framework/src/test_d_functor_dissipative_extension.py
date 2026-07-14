@@ -16,11 +16,15 @@ from __future__ import annotations
 import numpy as np
 import pytest
 
+from scipy.linalg import eigvals
+
 from d_functor_dissipative_extension import (
     NonSelfAdjointSpectralTheory,
     DissipativeSemigroup,
     DissipativeDecursionFunctor,
     HenonMapDissipative,
+    NonNormalOperatorTheory,
+    UnboundedOperatorDomain,
 )
 
 
@@ -125,6 +129,68 @@ def test_henon_operator():
     assert op.shape[0] == 64
 
 
+def test_non_normal_operator():
+    """非正规算子理论。"""
+    non_normal_op = np.array([[0, 1], [0, 0]], dtype=complex)
+    nno = NonNormalOperatorTheory(non_normal_op)
+
+    assert nno.non_normality_index() > 0
+    assert nno.numerical_radius() >= 0
+    assert nno.spectral_variation() >= 0
+
+
+def test_spectral_variation_nilpotent():
+    """幂零算子的谱变分应该非零。
+
+    幂零算子 [[0,1],[0,0]] 的谱半径为0，但伪谱非空。
+    对于 ε=1e-4，ε-pseudospectrum 应该是半径约 √ε 的圆盘。
+    """
+    nilpotent_op = np.array([[0, 1], [0, 0]], dtype=complex)
+    nno = NonNormalOperatorTheory(nilpotent_op)
+
+    evals = eigvals(nilpotent_op)
+    spectral_radius = np.max(np.abs(evals))
+    assert spectral_radius == 0.0, "幂零算子谱半径应为0"
+
+    variation = nno.spectral_variation(epsilon=1e-4)
+    assert variation > 0.0, f"幂零算子谱变分应大于0，实际为 {variation}"
+    assert variation < 1.0, f"谱变分应小于1，实际为 {variation}"
+
+
+def test_unbounded_operator_domain():
+    """无界算子定义域管理。"""
+    op = np.array([[1, 1], [0, 1]])
+    domain_mask = np.array([True, True])
+    uod = UnboundedOperatorDomain(op, domain_mask)
+
+    assert uod.domain_dimension() == 2
+    assert uod.graph_norm(np.array([1, 0])) > 0
+    assert uod.is_in_domain(np.array([1, 0]))
+
+
+def test_functional_calculus():
+    """泛函演算测试。"""
+    op = np.array([[1, 0], [0, 2]], dtype=complex)
+    nno = NonNormalOperatorTheory(op)
+
+    def identity_func(z):
+        return z
+
+    result = nno.functional_calculus(identity_func, z=0)
+    assert result.shape == op.shape
+
+
+def test_unbounded_rec_to_spec():
+    """无界算子到谱对象映射。"""
+    unbounded_op = np.array([[1, 1], [0, 1]])
+    domain_mask = np.array([True, True])
+    d_functor = DissipativeDecursionFunctor()
+
+    spec_obj = d_functor.unbounded_rec_to_spec(unbounded_op, domain_mask)
+    assert spec_obj["domain"]["dimension"] == 2
+    assert "non_normality" in spec_obj
+
+
 if __name__ == "__main__":
     print("=" * 60)
     print("Phase 15D-1: D 函子耗散扩展测试")
@@ -150,6 +216,16 @@ if __name__ == "__main__":
     print("  [9] Henon 耗散性验证 ✓")
     test_henon_operator()
     print("  [10] Henon 算子离散化 ✓")
+    test_non_normal_operator()
+    print("  [11] 非正规算子理论 ✓")
+    test_spectral_variation_nilpotent()
+    print("  [11b] 幂零算子谱变分 ✓")
+    test_unbounded_operator_domain()
+    print("  [12] 无界算子定义域 ✓")
+    test_functional_calculus()
+    print("  [13] 泛函演算测试 ✓")
+    test_unbounded_rec_to_spec()
+    print("  [14] 无界算子到谱对象映射 ✓")
 
     print("\n" + "=" * 60)
     print("全部耗散扩展测试通过。")
