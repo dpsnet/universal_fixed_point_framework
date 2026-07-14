@@ -41,6 +41,7 @@
 | `ns_lb_strict_proof.py` | NS-LB 显式最优常数严格证明：Frostman 引理严格证明、对偶问题求解、显式常数推导、变分原理验证 | ✅ 已完成 |
 | `nonzero_curvature_connection.py` | 纤维丛非零曲率联络：Levi-Civita 联络、规范场、曲率张量、平行移动、环绕、Clifford 联络、Dirac 算子 | ✅ 已完成 |
 | `spectral_silence_axiomatization.py` | 谱静默测度论公理化定义：A1-A4 公理体系、S1-S4 判据独立性与完备性证明、综合静默度计算 | ✅ 已完成 |
+| `d_functor_expansion_if.py` | D 函子扩张 IFS 扩展：扩张 IFS 逆系统构造、不稳定流形理论、双曲谱对象、D 函子映射 | ✅ 已完成 |
 | `ns_lb_constant_optimization.py` | NS-LB 常数变分优化：Frostman 常数变分原理、对偶问题求解、稳定性验证 | ✅ 已完成 |
 | `feng_wang_concavity.py` | Feng-Wang 凹性证明：理论证明框架（变分原理 + 熵凹性）、数值验证 | ✅ 已完成 |
 | `attractor_distance.py` | LACI 诊断与吸引子距离计算 | ✅ 已完成 |
