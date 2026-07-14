@@ -122,7 +122,7 @@ universal_fixed_point_framework/
 - **Phase 11 纤维丛接入**：已完成。证明当前 Rec⇄Spec 框架通过轨道函子、遗忘函子、η 自然变换隐式编码完整纤维丛结构（底空间=Rec、纤维=Spec、结构群=轨道权重、联络=η）。SM SU(3) 规范群由轨道权重 w=3 直接决定。
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
-- **Phase 15 理论短板推进**：✅ 进行中。Phase 15A 完成 5/6 项，Phase 15B 完成 5/7 项，Phase 15C 完成 4/4 项，Phase 15D 完成 3/3 项。全仓库 189 个测试通过，1 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
+- **Phase 15 理论短板推进**：✅ 进行中。Phase 15A 完成 5/6 项，Phase 15B 完成 5/7 项，Phase 15C 完成 4/4 项，Phase 15D 完成 5/5 项。全仓库 208 个测试通过，1 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
 
 ## 七、已完善的深层次问题
 

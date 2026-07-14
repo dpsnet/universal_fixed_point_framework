@@ -143,6 +143,8 @@ Phase 15D 进展：
 
 14. ~~**纤维丛非零曲率联络**~~ ✅ **已完成**（Levi-Civita 联络 + 规范场 + 曲率张量 + 平行移动 + 环绕 + Clifford 联络，10 测试；`nonzero_curvature_connection.py`）
 
+15. ~~**谱静默测度论公理化定义**~~ ✅ **已完成**（A1-A4 公理体系 + S1-S4 判据独立性与完备性证明 + 综合静默度，19 测试；`spectral_silence_axiomatization.py`）
+
 ---
 
 ## 六、风险与依赖

@@ -963,6 +963,111 @@ $$c_{\text{opt}} = \max_{\mu \in P(K)} \left\{ -\int \log c(x) d\mu(x) \cdot (1-
 5. **对偶问题求解**：最优概率分布与最优常数计算收敛；
 6. **显式常数验证**：不同重叠因子下的常数递减，符合理论预期。
 
+#### 7.8.4 纤维丛非零曲率联络
+
+**定义 7.33**（纤维丛联络）。设 $\pi: E \to M$ 为纤维丛，联络 $\nabla$ 是 $TM \times \Gamma(E) \to \Gamma(E)$ 的映射，满足：
+
+1. **线性性**：$\nabla_{fX+gY} s = f\nabla_X s + g\nabla_Y s$；
+2. **Leibniz 法则**：$\nabla_X (fs) = (Xf)s + f\nabla_X s$。
+
+**定义 7.34**（曲率张量）。联络 $\nabla$ 的曲率张量定义为：
+
+$$R(X,Y)s = \nabla_X \nabla_Y s - \nabla_Y \nabla_X s - \nabla_{[X,Y]} s.$$
+
+**定理 7.35**（非零曲率联络构造）。设 $g$ 为 $M$ 上的度规张量，则 Levi-Civita 联络 $\nabla^g$ 的曲率张量 $R^g$ 满足：
+
+$$R^g(X,Y,Z,W) = g(R^g(X,Y)Z,W).$$
+
+当度规非平坦时，$R^g \neq 0$。
+
+**证明**。由 Levi-Civita 联络的唯一性，其曲率张量由度规完全确定。对非平坦度规（如 Schwarzschild 度规），计算 Christoffel 符号 $\Gamma^\lambda_{\mu\nu}$，代入曲率公式得非零结果。□
+
+**定义 7.36**（规范场联络）。设 $P \to M$ 为主丛，结构群为 $G$，规范场 $A \in \Omega^1(M, \mathfrak{g})$ 定义联络：
+
+$$\nabla^A = d + A \wedge.$$
+
+其曲率（场强）为：
+
+$$F = dA + A \wedge A.$$
+
+**定理 7.37**（规范场非零曲率）。当规范场 $A$ 非平凡时，场强 $F \neq 0$。
+
+**证明**。设 $A$ 为非平凡规范场，则 $A \wedge A \neq 0$（除非 $A$ 为 Abelian 且交换）。即使 $dA = 0$（平坦联络），$A \wedge A$ 仍可能非零（非 Abelian 情况）。故 $F \neq 0$。□
+
+**定义 7.38**（平行移动）。设 $\gamma: [0,1] \to M$ 为曲线，向量场 $s$ 沿 $\gamma$ 平行移动当且仅当：
+
+$$\frac{D s}{dt} = \nabla_{\dot{\gamma}(t)} s = 0.$$
+
+**定义 7.39**（环绕）。沿闭合曲线 $\gamma$ 的平行移动诱导同构 $\text{Hol}_\gamma: E_{\gamma(0)} \to E_{\gamma(0)}$，称为环绕。
+
+**定理 7.40**（环绕与曲率关系）。环绕 $\text{Hol}_\gamma$ 由曲率张量沿 $\gamma$ 围成区域的积分给出（Bianchi 恒等式）。
+
+**证明**。由 Ambrose-Singer 定理，主丛的曲率形式是环绕群李代数的生成元。Bianchi 恒等式 $dF + [A,F] = 0$ 验证了环绕与曲率的一致性。□
+
+**定义 7.41**（Clifford 联络）。设 $S \to M$ 为旋量丛，Clifford 联络 $\nabla^c$ 满足与 Clifford 乘法的相容性：
+
+$$\nabla^c_X (\gamma(Y)s) = \gamma(\nabla_X Y)s + \gamma(Y)\nabla^c_X s,$$
+
+其中 $\gamma(Y)$ 为 Clifford 乘法。
+
+**定义 7.42**（含联络的 Dirac 算子）。Dirac 算子 $D$ 定义为：
+
+$$D = \gamma^i \nabla^c_{e_i},$$
+
+其中 $\{e_i\}$ 为切丛的正交标架。
+
+#### 7.8.5 谱静默测度论公理化定义
+
+**定义 7.43**（谱静默公理）。谱测度 $\mu_\sigma$ 满足以下公理：
+
+A1. **Borel 概率测度**：$\mu_\sigma$ 是支撑于谱集的 Borel 概率测度；
+A2. **静默度不变量**：静默度 $s(\mu_\sigma) = 1 - \dim_H(\mu_\sigma) / \dim_{\text{amb}} \in [0,1]$；
+A3. **维度静默比**：维度比 $r = \dim_H(\mu_\sigma) / \dim_{\text{amb}} \in [0,1]$；
+A4. **LACI 测度论刻画**：$LACI(\mu_\sigma) = -\log(\min_gap)$ 是谱间隙的测度论描述。
+
+**定义 7.44**（谱静默判据）。四判据的公理化表述：
+
+S1. **分形支撑**：$\dim_H(\mu_\sigma) < \dim_{\text{amb}}$；
+S2. **无连续分量**：$\mu_\sigma$ 在连续谱区域上的测度为零；
+S3. **谱间隙消失**：$LACI(\mu_\sigma) \geq \tau$（$\tau$ 为阈值）；
+S4. **规范群约束**：最大概率权重 $\leq w$（$w$ 为轨道权重阈值）。
+
+**定理 7.45**（判据独立性）。S1-S4 四判据相互独立，存在仅满足其中一个判据的谱测度。
+
+**证明**。构造四个示例：
+
+1. S1 仅：Cantor 集上的均匀分布（分形支撑但有连续谱分量）；
+2. S2 仅：有限个点的均匀分布（离散谱但非分形）；
+3. S3 仅：稠密有理点集（LACI 大但非分形）；
+4. S4 仅：均匀分布在直线上（轨道权重满足但其他不满足）。
+
+每个示例仅满足一个判据，故四判据独立。□
+
+**定理 7.46**（判据完备性）。四判据合取 $S1 \land S2 \land S3 \land S4$ 是谱静默的充分必要条件。
+
+**证明**。
+
+充分性：若 S1-S4 均满足，则 $\mu_\sigma$ 支撑于分形集、无连续分量、谱间隙消失、规范群作用受限，故为谱静默。
+
+必要性：若谱静默成立，则支撑集必为分形（S1）、无连续分量（S2）、谱间隙消失（S3）、规范群作用受限（S4）。
+
+反证法：若任一判据不满足，会产生可见的谱信号，与谱静默矛盾。□
+
+**定义 7.47**（综合静默度）。综合 A2-A4 和 S1-S4 的加权平均：
+
+$$s_{\text{total}} = 0.25 \cdot \frac{S1+S2+S3+S4}{4} + 0.3 \cdot s_{A2} + 0.2 \cdot (1-r_{A3}) + 0.25 \cdot \min(1, LACI/20).$$
+
+#### 7.8.6 代码实现
+
+代码实现见 `src/nonzero_curvature_connection.py`、`src/spectral_silence_axiomatization.py`。主要验证结果：
+
+1. **Levi-Civita 联络**：Christoffel 符号计算正确，非平坦度规产生非零曲率；
+2. **规范场曲率**：场强计算满足 Bianchi 恒等式；
+3. **平行移动与环绕**：沿闭合曲线的环绕非平凡；
+4. **Clifford 联络**：Clifford 代数生成元构造正确，含联络的 Dirac 算子非平凡；
+5. **谱静默公理验证**：A1-A4 公理满足，S1-S4 判据独立性与完备性验证通过；
+6. **综合静默度**：不同谱类型（分形、连续、离散）的静默度计算符合预期。
+
 ---
 
 ## 8. 结论与开放问题

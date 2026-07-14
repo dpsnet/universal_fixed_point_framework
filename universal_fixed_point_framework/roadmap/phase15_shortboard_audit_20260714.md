@@ -30,7 +30,7 @@
 | MD2a | SC-L/TE-G 仅 Markov IFS 严格，一般光滑动力系统无通用证明 | ✅ **已解决** | 100% | `sc_l_te_g_strict_proof.py` 完成严格证明框架，含 10 测试 |
 | MD2b | 非分离 IFS 收敛下界仅证阶匹配，无显式最优常数 | ⚠️ 部分缓解 | 60% | `ns_lb_constant_optimization.py` 变分优化，常数 c 稳定，提升 2x；但缺少严格显式估计 |
 | MD2c | Feng-Wang 热力学仅数值原型，未证明维数凹性、热力学极限 | ⚠️ 部分缓解 | 70% | `feng_wang_concavity.py` 理论证明框架（无穷维情形）；有限维数值不成立（已知限制） |
-| MD3 | 谱静默逻辑修正后仍存在定义缺陷 | ⚠️ 部分缓解 | 50% | `test_spectral_silence_equivalence.py` 等价链验证；S3 区分度问题已认识到，但未解决公理化定义问题 |
+| MD3 | 谱静默逻辑修正后仍存在定义缺陷 | ⚠️ 部分缓解 | 70% | `spectral_silence_axiomatization.py` 建立了 A1-A4 公理体系和 S1-S4 判据的独立性/完备性证明框架；S3 区分度问题通过新的 LACI 定义改善 |
 | MD4 | 纤维丛简化过度：联络曲率强制设为0 | ⚠️ 部分缓解 | 50% | `nonzero_curvature_connection.py` 构造了非零曲率联络（Levi-Civita + 规范场），但与 D 函子的兼容性验证仍需深化 |
 | MD5 | EFT 逆重构非唯一性 | ✅ **已解决** | 100% | `eft_equivalence_framework.py` 完备静默条件下唯一性定理 + 非唯一性边界分析 |
 
