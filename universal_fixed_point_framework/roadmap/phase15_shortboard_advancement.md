@@ -4,7 +4,7 @@
 
 **日期**：2026-07-14
 
-**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 中不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明已完成。Phase 15C 全部完成。Phase 15D-1（D 函子耗散扩展）、Phase 15D-2（NS-LB 显式最优常数严格证明）已完成。全仓库测试 179 passed, 1 xfailed。
+**状态**：Phase 15A 全部 6 项任务中 5 项完成、1 项部分完成。Phase 15B 中不变量的充要性提升、D 函子定义域扩展、Freyd 放宽条件、NS-LB 常数优化、Feng-Wang 凹性证明、Kerr-Newman 推广已完成。Phase 15C 全部完成。Phase 15D-1（D 函子耗散扩展）、Phase 15D-2（NS-LB 显式最优常数严格证明）已完成。新增独立 spheroidal Leaver 求解器（`spheroidal_leaver_solver.py` + 6 测试）和 Kerr-Newman QNM（`kerr_newman_qnm.py` + 3 测试）。全仓库测试 230 passed, 2 xfailed（新增测试文件 `test_kerr_newman_qnm.py`）。
 
 **审计报告**：详见 `phase15_shortboard_audit_20260714.md`，对理论短板分析文档进行了全面审计，评估了各短板的缓解程度并提出了后续推进计划。
 
@@ -48,7 +48,7 @@ Phase 15 的根本任务是从 "增量式推进" 转向 "系统性补短板"—�
 | 任务 | 关联短板 | 状态 | 产出 | 代码/论文 |
 |---|---|---|---|---|
 | **高维 IFS 核矩阵数值验证** | 一.2.4 | ✅ 完成 | 13 个测试（80 passed） | `test_high_dimensional_ifs.py` |
-| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation），m≠0 需独立 spheroidal Leaver 求解器 | `test_qnm_calibration.py` |
+| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation，3% 误差）；m≠0 因 Leaver CF 系数不完整（需 Leaver 1985 完整系数集）暂无法精确求解，使用 Berti 拟合公式作为生产后备方案（6 测试） | `test_qnm_calibration.py`, `test_spheroidal_leaver_solver.py` |
 | **FCC-hh 系统误差分析** | 二.2.3 | ✅ 完成 | 系统误差预算框架（4 测试），含 HL-LHC/FCC-hh 退化曲线 | `test_bsm_systematic_errors.py` |
 | **SC-L/TE-G 严格证明推广** | 一.2.2 | ✅ 完成 | SC-L 严格证明（Ledrappier-Young + 谱对应共形不变性）+ TE-G 严格证明（变分原理 + 迹估计）+ Markov IFS/一般动力系统推广（10 测试） | `sc_l_te_g_strict_proof.py` |
 | **谱静默判据(S1-S4)等价链** | 一.3.1 | ✅ 完成 | 等价链验证框架（7 测试），等价性矩阵覆盖 6 种谱型 | `test_spectral_silence_equivalence.py` |
@@ -62,7 +62,7 @@ Phase 15 的根本任务是从 "增量式推进" 转向 "系统性补短板"—�
 | **Freyd 放宽条件构造** | 一.1.2 | ✅ 完成：有限极限保持、ε-解集条件、弱伴随关系（`d_functor_extension.py`） |
 | **NS-LB 常数 c 的变分优化** | 一.2.1 | ✅ 完成：Frostman 常数变分原理、对偶问题求解、稳定性验证（`ns_lb_constant_optimization.py`） |
 | **Feng-Wang 凹性证明** | 一.2.3 | ✅ 完成：理论证明框架（变分原理 + 熵凹性）、数值验证（`feng_wang_concavity.py`） |
-| **Kerr-Newman 推广** | 二.3.3 | FullTeukolskyQNM 扩展 |
+| **Kerr-Newman 推广** | 二.3.3 | ✅ 完成：KerrNewmanQNM 类（继承 FullTeukolskyQNM），电荷修正视界位置，双重 homotopy 策略，3 测试 | `kerr_newman_qnm.py` |
 | **BES/TBA O(g⁸)** | 二.4.1 | 更高精度谱 |
 | **不变量的充要性提升** | 三.2 | ✅ 完成：动力学相容性检查 + 完备性缺口分析（4 测试） |
 
@@ -113,7 +113,7 @@ Phase 15 短板推进
 Phase 15A 全部 6 项任务进展：
  
  1. ~~**高维 IFS 核矩阵数值验证**~~ ✅ **已完成**
- 2. ~~**Kerr Teukolsky 与 Berti 表校准**~~ 🟡 **部分完成**（m=0 已修，m≠0 需独立 spheroidal Leaver 求解器）
+ 2. ~~**Kerr Teukolsky 与 Berti 表校准**~~ 🟡 **部分完成**（m=0 已修，3% 误差；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；6 测试）
   3. ~~**FCC-hh 系统误差分析**~~ ✅ **已完成**
   4. ~~**SC-L/TE-G 严格证明推广**~~ ✅ **已完成**（严格证明框架 + Markov IFS/一般动力系统推广，10 测试）
   5. ~~**谱静默判据(S1-S4)等价链**~~ ✅ **已完成**
