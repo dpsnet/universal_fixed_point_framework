@@ -26,12 +26,12 @@
 
 | 编号 | 原文档描述 | 审计结论 | 缓解程度 | 代码证据 |
 |---|---|---|---|---|
-| MD1 | **核心函子定义域天然残缺**：D 仅定义于 Rec_D，大量主流系统被排除 | ⚠️ 部分缓解 | 40% | `d_functor_extension.py` 扩展到 PVM 和连续谱对象；但仍未覆盖耗散混沌、扩张 IF、非正规无界算子 |
+| MD1 | **核心函子定义域天然残缺**：D 仅定义于 Rec_D，大量主流系统被排除 | ⚠️ 部分缓解 | 60% | `d_functor_extension.py` 扩展到 PVM 和连续谱对象；`d_functor_dissipative_extension.py` 扩展到耗散混沌系统（非自伴算子、伪谱方法、半群框架）；但仍未覆盖扩张 IF、非正规无界算子 |
 | MD2a | SC-L/TE-G 仅 Markov IFS 严格，一般光滑动力系统无通用证明 | ✅ **已解决** | 100% | `sc_l_te_g_strict_proof.py` 完成严格证明框架，含 10 测试 |
 | MD2b | 非分离 IFS 收敛下界仅证阶匹配，无显式最优常数 | ⚠️ 部分缓解 | 60% | `ns_lb_constant_optimization.py` 变分优化，常数 c 稳定，提升 2x；但缺少严格显式估计 |
 | MD2c | Feng-Wang 热力学仅数值原型，未证明维数凹性、热力学极限 | ⚠️ 部分缓解 | 70% | `feng_wang_concavity.py` 理论证明框架（无穷维情形）；有限维数值不成立（已知限制） |
 | MD3 | 谱静默逻辑修正后仍存在定义缺陷 | ⚠️ 部分缓解 | 50% | `test_spectral_silence_equivalence.py` 等价链验证；S3 区分度问题已认识到，但未解决公理化定义问题 |
-| MD4 | 纤维丛简化过度：联络曲率强制设为 0 | 🟡 未缓解 | 0% | 未处理 |
+| MD4 | 纤维丛简化过度：联络曲率强制设为0 | ⚠️ 部分缓解 | 50% | `nonzero_curvature_connection.py` 构造了非零曲率联络（Levi-Civita + 规范场），但与 D 函子的兼容性验证仍需深化 |
 | MD5 | EFT 逆重构非唯一性 | ✅ **已解决** | 100% | `eft_equivalence_framework.py` 完备静默条件下唯一性定理 + 非唯一性边界分析 |
 
 ---

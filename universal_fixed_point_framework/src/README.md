@@ -39,6 +39,7 @@
 | `d_functor_extension.py` | D 函子定义域扩展 + Freyd 放宽条件：投影值谱测度 PVM、连续谱对象、谱积分、有限极限保持、ε-解集条件、弱伴随关系 | ✅ 已完成 |
 | `d_functor_dissipative_extension.py` | D 函子耗散扩展：非自伴算子伪谱理论、耗散半群框架（Hille-Yosida）、广义伴随关系、Henon 映射耗散版本 | ✅ 已完成 |
 | `ns_lb_strict_proof.py` | NS-LB 显式最优常数严格证明：Frostman 引理严格证明、对偶问题求解、显式常数推导、变分原理验证 | ✅ 已完成 |
+| `nonzero_curvature_connection.py` | 纤维丛非零曲率联络：Levi-Civita 联络、规范场、曲率张量、平行移动、环绕、Clifford 联络、Dirac 算子 | ✅ 已完成 |
 | `ns_lb_constant_optimization.py` | NS-LB 常数变分优化：Frostman 常数变分原理、对偶问题求解、稳定性验证 | ✅ 已完成 |
 | `feng_wang_concavity.py` | Feng-Wang 凹性证明：理论证明框架（变分原理 + 熵凹性）、数值验证 | ✅ 已完成 |
 | `attractor_distance.py` | LACI 诊断与吸引子距离计算 | ✅ 已完成 |

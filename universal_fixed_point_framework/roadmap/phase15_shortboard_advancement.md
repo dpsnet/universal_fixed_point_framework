@@ -141,6 +141,8 @@ Phase 15D 进展：
 
 13. ~~**NS-LB 显式最优常数严格证明**~~ ✅ **已完成**（Frostman 引理严格证明 + 对偶问题求解 + 显式常数推导，10 测试；`ns_lb_strict_proof.py`）
 
+14. ~~**纤维丛非零曲率联络**~~ ✅ **已完成**（Levi-Civita 联络 + 规范场 + 曲率张量 + 平行移动 + 环绕 + Clifford 联络，10 测试；`nonzero_curvature_connection.py`）
+
 ---
 
 ## 六、风险与依赖
