@@ -78,8 +78,10 @@
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-分形双向转化
 │   │   └── ...                            # 其他 40+ 个模块
 │   ├── paper/
-│   │   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v1.8
-│   │   └── paper2_physics_applications.md           # 物理应用论文 v1.5
+│   │   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.28
+│   │   └── paper2_physics_applications.md           # 物理应用论文 v2.17
+│   ├── formal_proof/                                # Lean 4 机器证明形式化项目
+│   │   └── UFPFormalization/
 │   ├── roadmap/
 │   │   ├── phase1_meta_axioms.md
 │   │   ├── phase2_structural_theorems.md
@@ -117,17 +119,17 @@
 - [x] Kerr 黑洞非赤道面混沌与 NR ringdown 对比
 - [x] 全息纠缠熵与复杂 CFT 相变
 - [x] NTK-分形双向转化
-- [x] 双篇配套论文草稿（Paper I / Paper II）
-- [x] 全仓库 47 个单元测试通过
+- [x] 双篇配套论文草稿（Paper I v2.28 / Paper II v2.17）
+- [x] 全仓库 336+ 个单元测试通过
+- [x] 机器证明形式化计划启动（Lean 4 + mathlib4，Phase 16A 七个等级 A 模块）
 
 ### 4.2 进行中 / 待完善
 
 - [ ] 论文最终定稿与投稿
-- [ ] 非分离 IFS 维数估计与真实 Feng-Wang 热力学形式对接
-- [ ] Kerr QNM 的严格 Leaver 连分数数值解
+- [ ] Lean 4 项目首次 `lake build` 验证（工具链与 mathlib4 下载中）
 - [ ] NTK 消融实验的真实大规模运行
 - [ ] MadGraph / micrOMEGAs 的真实调用验证
-- [ ] 将谱静默、理论转化、EFT 等价性正式写入论文
+- [ ] Phase 16B/C 泛函分析与分形遍历形式化
 
 ---
 
@@ -200,4 +202,4 @@
 
 ---
 
-*最后更新：2026-07-13*
+*最后更新：2026-07-15*

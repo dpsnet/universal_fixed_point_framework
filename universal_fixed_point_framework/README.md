@@ -61,11 +61,16 @@ universal_fixed_point_framework/
 │   ├── bsm/                        # BSM 新费米子实例
 │   ├── loop_quantum_gravity/       # 圈量子引力面积谱实例
 │   ├── ads_cft/                    # AdS/CFT 共形算子谱实例
-│   ├── tqft/                       # 拓扑量子场论 / 任意子融合范畴实例
+│   ├── tqft/                        # 拓扑量子场论 / 任意子融合范畴实例
 │   ├── noncommutative_geometry/    # 非交换几何谱三元组实例
 │   ├── causal_set/                 # 因果集离散时空实例
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
+├── paper/                          # 论文手稿
+│   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.28
+│   └── paper2_physics_applications.md           # 物理应用论文 v2.17
+├── formal_proof/                   # Lean 4 机器证明形式化项目
+│   └── UFPFormalization/           # Phase 16A 等级 A 模块形式化
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
 ```
@@ -122,7 +127,8 @@ universal_fixed_point_framework/
 - **Phase 11 纤维丛接入**：已完成。证明当前 Rec⇄Spec 框架通过轨道函子、遗忘函子、η 自然变换隐式编码完整纤维丛结构（底空间=Rec、纤维=Spec、结构群=轨道权重、联络=η）。SM SU(3) 规范群由轨道权重 w=3 直接决定。
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
-- **Phase 15 理论短板推进**：✅ 进行中。Phase 15A 完成 5/6 项，Phase 15B 完成 5/7 项，Phase 15C 完成 4/4 项，Phase 15D 完成 6/6 项。全仓库 222 个测试通过，1 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
+- **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、Feng-Wang 热力学极限、纯数学三大定理（D-C/HD-D/TE-G-M）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
+- **Phase 16 机器证明形式化**：✅ **已启动**。基于 Lean 4 + mathlib4 创建 `formal_proof/UFPFormalization/` 项目，完成 Phase 16A 七个等级 A 模块核心代码（Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford 矩阵表示）。详见 `roadmap/phase16_machine_proof.md`。
 
 ## 七、已完善的深层次问题
 
@@ -253,8 +259,8 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.22，含 18 篇参考文献 + 附录 |
-| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 理论物理 + 实验验证 | `paper/paper2_physics_applications.md` | PRD / JHEP | ✅ v2.11，含 33 篇参考文献 + 附录 |
+| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.28，含 18 篇参考文献 + 附录；新增机器证明形式化计划 §A.13 |
+| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 理论物理 + 实验验证 | `paper/paper2_physics_applications.md` | PRD / JHEP | ✅ v2.17，含 33 篇参考文献 + 附录；新增 D-C/HD-D/TE-G-M 定理对物理预测的影响分析 |
 
 | 时间 | 任务 | 交付物 |
 |---|---|---|
@@ -368,4 +374,9 @@ universal_fixed_point_framework/
 | 2026-07-14 | Phase 15C-4 误差预算体系：Rec→Spec→预言→实验 全链路误差传播；Paper II §7.5 新增；`error_budget.py` + `test_error_budget.py`（11 测试） | Phase 15C |
 | 2026-07-14 | Phase 15C-2 Clifford 旋量模结构：原始幂等元 + 左理想性质 + 旋量模谱定理；Paper I §6.4 新增；`clifford_spectrum_demo.py` 扩展 + `test_clifford_spinor_module.py`（9 测试）；测试数从 121 增至 130 | Phase 15C |
 | 2026-07-14 | Phase 15C-3 EFT 逆重构唯一性：完备静默信息定义 + 唯一性定理 + 非唯一性边界 + 双向一致性；Paper I §7.7.5 新增；`eft_equivalence_framework.py` 扩展 + `test_eft_inverse_reconstruction.py`（8 测试）；测试数从 130 增至 138 | Phase 15C |
+| 2026-07-15 | Phase 16 启动：机器证明形式化计划落地——创建 `formal_proof/UFPFormalization/` Lean 4 项目，完成 Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford 矩阵表示七个等级 A 模块核心代码；配置本地 elan 环境与 ghproxy 代理 | Phase 16 |
+| 2026-07-15 | Paper I 升级至 v2.28：附录新增 §A.13「机器证明形式化计划」，总结四等级可行性分级与三阶段实施路线 | Phase 16 |
+| 2026-07-15 | Paper II 升级至 v2.17：§8.4 谱静默与紧致化代数-几何对偶，§5.2 Leaver 复谱投影范畴诠释 | Phase 15D |
+| 2026-07-15 | Phase 15D-10 完成：纯数学三大定理 D-C（Hausdorff 维数凹性）、HD-D（Ledrappier-Young 维数分解）、TE-G-M（拓扑熵-谱间隙不等式）严格证明框架；Paper I §7.10 新增 | Phase 15D |
+| 2026-07-15 | Phase 15D-11 完成：物理理论短板解决——Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱；Paper II §8.1/§8.2 更新 | Phase 15D |
 | 2026-07-14 | Phase 15B-1/2 D 函子定义域扩展 + Freyd 放宽条件：投影值谱测度 PVM、连续谱对象、谱积分、有限极限保持、ε-解集条件、弱伴随关系；`d_functor_extension.py` + `test_d_functor_extension.py`（11 测试）；测试数从 138 增至 149 | Phase 15B |

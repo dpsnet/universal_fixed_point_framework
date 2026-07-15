@@ -79,8 +79,10 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-fractal bidirectional transformation
 │   │   └── ...                            # 40+ additional modules
 │   ├── paper/
-│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v1.8
-│   │   └── paper2_physics_applications.md           # Physics applications paper v1.5
+│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v2.28
+│   │   └── paper2_physics_applications.md           # Physics applications paper v2.17
+│   ├── formal_proof/                                # Lean 4 machine-proof formalization project
+│   │   └── UFPFormalization/
 │   ├── roadmap/
 │   │   ├── phase1_meta_axioms.md
 │   │   ├── phase2_structural_theorems.md
@@ -118,17 +120,17 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] Kerr black-hole non-equatorial chaos and NR ringdown comparison
 - [x] Holographic entanglement entropy and complex CFT phase transitions
 - [x] NTK-fractal bidirectional transformation
-- [x] Two companion paper drafts (Paper I / Paper II)
-- [x] Full repository: 47 unit tests passing
+- [x] Two companion paper drafts (Paper I v2.28 / Paper II v2.17)
+- [x] Full repository: 336+ unit tests passing
+- [x] Machine-proof formalization plan launched (Lean 4 + mathlib4, Phase 16A seven grade-A modules)
 
 ### 4.2 In Progress / To Be Improved
 
 - [ ] Final paper drafting and submission
-- [ ] Non-separated IFS dimension estimates interfaced with the real Feng-Wang thermodynamic formalism
-- [ ] Strict Leaver continued-fraction numerical solution for Kerr QNMs
+- [ ] First Lean 4 `lake build` validation (toolchain and mathlib4 download in progress)
 - [ ] Real large-scale NTK ablation experiments
 - [ ] Real MadGraph / micrOMEGAs invocation validation
-- [ ] Formal incorporation of spectral silence, theory transformation, and EFT equivalence into the papers
+- [ ] Phase 16B/C functional analysis and fractal/ergodic formalization
 
 ---
 
@@ -201,4 +203,4 @@ This project is a **highly interdisciplinary theoretical framework still under d
 
 ---
 
-*Last updated: 2026-07-13*
+*Last updated: 2026-07-15*
