@@ -102,6 +102,8 @@
 | `math_open_problems_advanced.py` | 非分离 IFS 收敛率下界 + 奇异连续谱-Lyapunov 关联 + Feng-Wang/Ruelle/最优条件转移算子 + 拓扑熵-谱间隙不等式 + Markov IFS 严格框架 + Koopman TE-G 推广 | ✅ 已完成 |
 | `numerical_engineering_open_problems.py` | MadGraph/micrOMEGAs 调用接口 + 双星引力波仿真 | ✅ 已完成 |
 | `physics_open_problems_advanced.py` | Kerr 全局量子谱（含 Leaver 简化/精确/自洽 Teukolsky） + N=4 SYM（含强耦合/BES/O(g⁶) BES/TBA） + 暗物质分形谱 | ✅ 已完成 |
+| `leaver_corrected_solver.py` | 校正后的 Leaver QNM 求解器：正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包一致 | ✅ 已完成 |
+| `leaver_spectral_derecursion.py` | 去递归谱计算求解器：连分数迭代→三对角矩阵特征值问题，Koopman 算子谱分析，三路径对照验证，谱对应定理验证；"两弦法"逆迭代优化（Thomas+Rayleigh），多吸引子谱优势定理 | ✅ 已完成 |
 | `error_budget.py` | 误差预算体系：Rec→Spec→预言→实验 全链路误差传播（ErrorSource/ErrorBudget + Rec/Spec/预言/RKHS/G_N 误差估计 + 误差链传播） | ✅ 已完成 |
 
 ## 测试
@@ -132,6 +134,7 @@
 | **Paper II §2-3**：标准模型、GR+SM 统一 | `sm_mass_2loop.py`、`unification_conjecture_demo.py`、`gn_emergence_derivation.py` |
 | **Paper II §4**：BSM 物理与实验 | `bsm_predictions.py`、`bsm_signatures.py`、`bsm_hllhc_fcc_study.py`、`bsm_relic_calibration.py`、`bsm_experiment_validation.py`、`bsm_precision_interface.py` |
 | **Paper II §5**：Kerr 黑洞与引力波 | `kerr_fractal_entropy.py`、`kerr_nonequatorial_chaos.py` |
+| **Paper I §7.8**：去递归理论在 Kerr Leaver 连分数中的应用 | `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py`、`leaver_derecursion.py` |
 | **Paper II §8.2/A.12**：开放问题推进（Kerr 量子谱、N=4 SYM、暗物质分形谱、MadGraph/micrOMEGAs、双星引力波） | `physics_open_problems_advanced.py`、`numerical_engineering_open_problems.py` |
 | **Paper II §6-7**：全息纠缠熵、CFT、理论转化应用 | `holographic_entropy.py`、`cft_entanglement_verification.py`、`complex_cft_phase_transition.py`、`transformation_simulation_interface.py`、`ntk_fractal_bidirectional.py`、`theory_taxonomy.py`、`eft_equivalence_framework.py`、`math_phys_unification.py`、`philosophical_foundations.py` |
 | **Paper II §7.5**：误差预算体系 | `error_budget.py` |
@@ -142,6 +145,8 @@
 
 | 日期 | 更新内容 | 新增模块 |
 |---|---|---|
+| 2026-07-15 | 去递归深化："两弦法"逆迭代优化（Thomas算法 + Rayleigh商，O(N³)→O(N)），多吸引子谱优势定理（平衡点K≈3） | `leaver_spectral_derecursion.py` 增强 |
+| 2026-07-15 | 去递归理论实质验证：新增 `leaver_corrected_solver.py`（正确二次多项式系数）和 `leaver_spectral_derecursion.py`（谱分解方法），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率 | `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py` |
 | 2026-07-13 | 同步 Paper I v2.5：§5.6 谱静默定理深化、§7.7 理论转化/EFT/弦图演算方法论系统化 | 论文对应关系更新 |
 | 2026-07-13 | 数学严格化深化：`math_open_problems_advanced.py` 新增 Feng-Wang 热力学形式；`physics_open_problems_advanced.py` 新增 Leaver 连分数 Kerr QNM、强耦合 N=4 SYM；测试数从 47 增至 52 | 开放问题推进 |
 | 2026-07-13 | 数学严格化再深化：`math_open_problems_advanced.py` 新增 Ruelle 精确转移算子、拓扑熵-谱间隙不等式；`physics_open_problems_advanced.py` 新增 Leaver 精确系数、N=4 SYM 简化 BES/TBA；测试数从 52 增至 57 | 开放问题推进 |

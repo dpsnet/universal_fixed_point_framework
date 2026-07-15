@@ -253,7 +253,7 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.13，含 18 篇参考文献 + 附录 |
+| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.22，含 18 篇参考文献 + 附录 |
 | Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 理论物理 + 实验验证 | `paper/paper2_physics_applications.md` | PRD / JHEP | ✅ v2.11，含 33 篇参考文献 + 附录 |
 
 | 时间 | 任务 | 交付物 |

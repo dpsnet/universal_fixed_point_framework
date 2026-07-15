@@ -146,17 +146,18 @@ class LeaverDerecursionSolver:
             beta_n = n * (n + 1.0) + 4.0 * sigma_plus ** 2 - 8.0 * omega * sigma_plus - lam
             gamma_n = 2.0j * omega * (n - 4.0j * sigma_plus - 1.0)
 
-            denom = beta_n - gamma_n * cf
+            denom = beta_n - alpha_n * gamma_n * cf
             if abs(denom) < 1e-30:
                 denom = complex(1e-30, 0.0)
-            cf = alpha_n / denom
+            cf = 1.0 / denom
 
             cf_history.append(cf)
 
         alpha_0 = -2.0j * omega * 1.0 * (0 - 4.0j * sigma_plus)
         beta_0 = 0 * (0 + 1.0) + 4.0 * sigma_plus ** 2 - 8.0 * omega * sigma_plus - lam
+        gamma_1 = 2.0j * omega * (1 - 4.0j * sigma_plus - 1.0)
 
-        residual = beta_0 - alpha_0 * cf
+        residual = beta_0 - alpha_0 * gamma_1 * cf
 
         spectral_gap = self._estimate_spectral_gap(cf_history)
 

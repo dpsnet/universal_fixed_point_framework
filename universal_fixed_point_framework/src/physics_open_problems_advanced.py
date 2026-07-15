@@ -966,13 +966,16 @@ class FullTeukolskyQNM:
                 self.r_plus = self.M + np.sqrt(self.M ** 2 - self.a ** 2)
                 self.r_minus = self.M - np.sqrt(self.M ** 2 - self.a ** 2)
 
-                for m_step in m_steps[1:]:
-                    for _ in range(max_iter // (2 * max(abs(target_m), 1) + 2)):
-                        f = self.leaver_residual_full(omega, l, m_step)
+                m_fine_steps = np.linspace(0, target_m, max(abs(target_m) * 10 + 1, 21))
+                
+                for m_step in m_fine_steps[1:]:
+                    m_int = int(round(m_step))
+                    for _ in range(max_iter // (2 * len(m_fine_steps) + 2)):
+                        f = self.leaver_residual_full(omega, l, m_int)
                         if abs(f) < 1e-10:
                             break
-                        f_re = self.leaver_residual_full(omega + eps, l, m_step)
-                        f_im = self.leaver_residual_full(omega + 1j * eps, l, m_step)
+                        f_re = self.leaver_residual_full(omega + eps, l, m_int)
+                        f_im = self.leaver_residual_full(omega + 1j * eps, l, m_int)
                         df_dre = (f_re - f) / eps
                         df_dim = (f_im - f) / eps
                         try:
@@ -980,10 +983,10 @@ class FullTeukolskyQNM:
                             delta = np.linalg.solve(jacobian, -np.array([f.real, f.imag]))
                         except np.linalg.LinAlgError:
                             delta = -0.01 * np.array([f.real, f.imag])
-                        step = 1.0
+                        step = 0.5
                         for _ in range(10):
                             omega_new = omega + step * complex(delta[0], delta[1])
-                            if abs(self.leaver_residual_full(omega_new, l, m_step)) < abs(f) * (1.0 + 1e-6):
+                            if abs(self.leaver_residual_full(omega_new, l, m_int)) < abs(f) * (1.0 + 1e-6):
                                 omega = omega_new
                                 break
                             step *= 0.5
@@ -996,6 +999,35 @@ class FullTeukolskyQNM:
             omega = complex(omega_guess)
 
         final_residual = self.leaver_residual_full(omega, l, target_m)
+        
+        if omega.imag > -1e-10 and abs(final_residual) > 1e-6:
+            omega_fallback = complex(omega.real, -abs(omega.imag + 0.1))
+            for _ in range(max_iter):
+                f = self.leaver_residual_full(omega_fallback, l, target_m)
+                if abs(f) < 1e-10:
+                    break
+                f_re = self.leaver_residual_full(omega_fallback + eps, l, target_m)
+                f_im = self.leaver_residual_full(omega_fallback + 1j * eps, l, target_m)
+                df_dre = (f_re - f) / eps
+                df_dim = (f_im - f) / eps
+                try:
+                    jacobian = np.array([[df_dre.real, df_dim.real], [df_dre.imag, df_dim.imag]])
+                    delta = np.linalg.solve(jacobian, -np.array([f.real, f.imag]))
+                except np.linalg.LinAlgError:
+                    delta = -0.01 * np.array([f.real, f.imag])
+                step = 0.5
+                for _ in range(10):
+                    omega_new = omega_fallback + step * complex(delta[0], delta[1])
+                    if omega_new.imag > 0:
+                        omega_new = complex(omega_new.real, -1e-10)
+                    if abs(self.leaver_residual_full(omega_new, l, target_m)) < abs(f) * (1.0 + 1e-6):
+                        omega_fallback = omega_new
+                        break
+                    step *= 0.5
+            if omega_fallback.imag < -1e-10 and abs(self.leaver_residual_full(omega_fallback, l, target_m)) < abs(final_residual):
+                omega = omega_fallback
+                final_residual = self.leaver_residual_full(omega, l, target_m)
+        
         return {
             "omega": omega,
             "l": l,

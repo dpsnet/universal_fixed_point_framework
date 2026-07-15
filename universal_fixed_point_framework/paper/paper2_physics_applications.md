@@ -484,14 +484,11 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
    - 已实现 `BinaryGWWaveform`：PN inspiral + ISCO merger + QNM ringdown + 简化 SNR；
    - **未竞**：接入 SEOBNRv4/IMRPhenom 或 LALSuite，与真实 LIGO 数据做完整 inspiral-merger-ringdown 对比。
 
-3. **Kerr 全局量子谱严格解析**（已推进）：
+3. **Kerr 全局量子谱严格解析**（已推进 → 去递归验证完成）：
    - 已实现近似 QNM 频率、Bohr-Sommerfeld 量子化、超辐射判据、谱对应 $\lambda_n = e^{-\mu_n}$；
-   - **新增 Leaver 连分数求解器原型**：
-     - 简化系数版：基于视界展开主导项构造三项递推；
-     - **精确系数版**：采用 Leaver (1985) 标准系数形式；
-     - **完整 Teukolsky-Leaver 求解器**（`FullTeukolskyQNM`）：使用 spheroidal 特征值 $\lambda_{slm}$ 的自洽迭代（替代级数近似）。
-      三者均实现向后收敛连分数与 Newton-Raphson 零点搜索。
-    - **未竞**：与 Berti-Cardoso-Will 数值表系统校准。
+   - **校正后的 Leaver 求解器**（`leaver_corrected_solver.py`）：采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）；
+   - **去递归谱计算求解器**（`leaver_spectral_derecursion.py`）：将连分数迭代转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；实现"两弦法"逆迭代（Thomas 算法 + Rayleigh 商）将单特征值求解从 $O(N^3)$ 降至 $O(N)$；证明多吸引子场景下谱方法效率优势（平衡点 $K \approx 3$，见 Paper I 定理 7.27b/c）；
+   - **未竞**：与 Berti-Cardoso-Will 数值表系统校准；实现 spheroidal 特征值的独立 Leaver 连分数求解。
 
 4. **$N=4$ SYM 高精度谱方程**（已推进）：
    - 已实现 1/2 BPS、Konishi、BMN 能级与框架 $\eta_R$ 精确匹配；
