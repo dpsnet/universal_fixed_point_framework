@@ -24,3 +24,13 @@ models/*.pkl
 mnist.npz
 p2p-snn-paper.pdf
 data/
+universal_fixed_point_framework/formal_proof/UFPFormalization/.elan/tmp/glean_Windows_x86_64.zip
+
+# Lean / Lake
+/.elan
+/.lake
+/build
+/lake-packages/
+
+# 编辑器
+.lean4-info/
