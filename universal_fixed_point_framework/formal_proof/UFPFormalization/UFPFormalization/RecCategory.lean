@@ -32,4 +32,11 @@ instance recCategory : Category.{u, u+1} RecObj where
   comp_id := by intros; rfl
   assoc := by intros; rfl
 
+@[simp]
+lemma RecHom.id_toFun (X : RecObj) : ((𝟙 X) : RecHom X X).toFun = id := rfl
+
+@[simp]
+lemma RecHom.comp_toFun {X Y Z : RecObj} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    ((f ≫ g) : RecHom X Z).toFun = g.toFun ∘ f.toFun := rfl
+
 end UFPFormalization

@@ -10,16 +10,17 @@ noncomputable def spectralMap (mu : ℂ) : ℂ := Complex.exp (-mu)
     Uses the principal branch of the complex logarithm. -/
 noncomputable def spectralInv (lambda : ℂ) : ℂ := -Complex.log lambda
 
-/-- On the principal branch, -log(e^{-mu}) = mu for mu with imaginary part in [-π, π).
-    Proof admitted in the Level-A prototype. -/
+/-- On the principal branch, -log(e^{-mu}) = mu for mu with imaginary part in [-π, π). -/
 theorem spectralInv_leftInv {mu : ℂ} (h : mu.im ∈ Set.Ico (-Real.pi) Real.pi) :
     spectralInv (spectralMap mu) = mu := by
-  sorry
+  simp [spectralInv, spectralMap]
+  rw [Complex.log_exp (show -Real.pi < (-mu).im by simp; linarith [h.1, h.2])
+                      (show (-mu).im ≤ Real.pi by simp; linarith [h.1, h.2])]
+  simp
 
-/-- e^{-(-log lambda)} = lambda for non-zero lambda.
-    Proof admitted in the Level-A prototype. -/
+/-- e^{-(-log lambda)} = lambda for non-zero lambda. -/
 theorem spectralMap_rightInv {lambda : ℂ} (h : lambda ≠ 0) :
     spectralMap (spectralInv lambda) = lambda := by
-  sorry
+  simp [spectralInv, spectralMap, Complex.exp_log h]
 
 end UFPFormalization

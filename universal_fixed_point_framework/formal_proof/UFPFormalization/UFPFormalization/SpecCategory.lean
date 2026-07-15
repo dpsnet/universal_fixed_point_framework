@@ -39,4 +39,11 @@ instance specCategory : Category.{0, 0} SpecObj where
     ext i j
     exact congr_arg (fun M => M i j) (Matrix.mul_assoc f.P g.P h.P)
 
+@[simp]
+lemma SpecHom.id_P (X : SpecObj) : ((𝟙 X) : SpecHom X X).P = 1 := rfl
+
+@[simp]
+lemma SpecHom.comp_P {X Y Z : SpecObj} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    ((f ≫ g) : SpecHom X Z).P = f.P * g.P := rfl
+
 end UFPFormalization

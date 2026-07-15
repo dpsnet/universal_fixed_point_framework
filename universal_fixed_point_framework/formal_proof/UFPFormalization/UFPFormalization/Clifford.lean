@@ -44,30 +44,25 @@ private lemma sum_fin_two {α : Type} [AddCommMonoid α] (f : Fin 2 → α) :
 theorem e_01_sq : e_01 * e_01 = 1 := by
   funext i j
   fin_cases i <;> fin_cases j <;> simp [e_01, Matrix.mul_apply, sum_fin_two]
-  all_goals norm_num
 
 /-- Verification that e_10 squares to minus the identity. -/
 theorem e_10_sq : e_10 * e_10 = -1 := by
   funext i j
   fin_cases i <;> fin_cases j <;> simp [e_10, Matrix.mul_apply, sum_fin_two]
-  all_goals norm_num
 
 /-- The two Cl(2,0) generators anticommute. -/
 theorem e_20_anticomm : e1_20 * e2_20 = - (e2_20 * e1_20) := by
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e1_20, e2_20, Matrix.mul_apply, sum_fin_two, Complex.I_mul_I]
-  all_goals norm_num
+  fin_cases i <;> fin_cases j <;> simp [e1_20, e2_20, Matrix.mul_apply, sum_fin_two]
 
 /-- Verification that e1_20 squares to the identity. -/
 theorem e1_20_sq : e1_20 * e1_20 = 1 := by
   funext i j
   fin_cases i <;> fin_cases j <;> simp [e1_20, Matrix.mul_apply, sum_fin_two]
-  all_goals norm_num
 
 /-- Verification that e2_20 squares to the identity. -/
 theorem e2_20_sq : e2_20 * e2_20 = 1 := by
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e2_20, Matrix.mul_apply, sum_fin_two, Complex.I_mul_I]
-  all_goals norm_num
+  fin_cases i <;> fin_cases j <;> simp [e2_20, Matrix.mul_apply, sum_fin_two]
 
 end UFPFormalization

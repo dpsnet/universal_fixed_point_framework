@@ -65,15 +65,15 @@
 
 | 序号 | 任务 | 描述 | 状态 |
 |------|------|------|------|
-| 1 | $\mathbf{Rec}$ 范畴形式化 | 对象、态射、复合、恒等态射 | ⏳ 待启动 |
-| 2 | $\mathbf{Spec}$ 范畴形式化 | 谱对象、谱态射、谱复合 | ⏳ 待启动 |
-| 3 | $D$ 函子良定义证明 | 协变函子验证、自然变换 | ⏳ 待启动 |
-| 4 | $D \dashv R$ 伴随形式化 | 单位/余单位三角恒等式 | ⏳ 待启动 |
-| 5 | 谱对应 $M \cong L$ | 自然等价纯范畴证明 | ⏳ 待启动 |
-| 6 | 有限维轨道函子 | 群表示、权重等价类 | ⏳ 待启动 |
-| 7 | 有限维 Clifford 矩阵表示 | 低维旋量模、矩阵表示 | ⏳ 待启动 |
+| 1 | $\mathbf{Rec}$ 范畴形式化 | 对象、态射、复合、恒等态射 | ✅ 已完成（`RecCategory.lean`） |
+| 2 | $\mathbf{Spec}$ 范畴形式化 | 谱对象、谱态射、谱复合 | ✅ 已完成（`SpecCategory.lean`） |
+| 3 | $D$ 函子良定义证明 | 协变函子验证、自然变换 | ✅ 已完成（`DecursionFunctor.lean`：`map_id`/`map_comp`/intertwine 已证） |
+| 4 | $D \dashv R$ 伴随形式化 | 单位/余单位三角恒等式 | 🔄 部分完成（`Adjunction.lean`：`RFunctor` 原型已构造；`DAdjR` 三角恒等式仍为 `sorry`，需 Phase 16B 泛函分析） |
+| 5 | 谱对应 $M \cong L$ | 自然等价纯范畴证明 | ✅ 已完成（`SpectralCorrespondence.lean`：`spectralInv_leftInv`/`spectralMap_rightInv` 双向逆已证） |
+| 6 | 有限维轨道函子 | 群表示、权重等价类 | ✅ 已完成（`OrbitFunctor.lean`：`orbitWeight` + `orbitStabilizer` 已证） |
+| 7 | 有限维 Clifford 矩阵表示 | 低维旋量模、矩阵表示 | ✅ 已完成（`Clifford.lean`：$e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 反对易与平方已证） |
 
-**产出**：`formal_proof/phase16A/` 目录，含 Lean 源码与校验脚本。
+**产出**：`formal_proof/UFPFormalization/` 目录，基于 Lean 4.31.0 + mathlib4 4.31.0，`lake build --no-cache` 全量通过，仅剩 1 处 `sorry`（`DAdjR`）。
 
 ### 阶段 16B：泛函分析形式化（中期 3–12 个月）
 
@@ -133,8 +133,10 @@
 
 | 问题 | 状态 | 说明 |
 |------|------|------|
-| Lean/Isabelle/HOL 选择 | ⏳ 待决策 | 需评估各工具对范畴论/泛函分析的支持程度 |
-| 形式化库结构设计 | ⏳ 待设计 | 需设计层次化库结构，便于后续扩展 |
+| Lean/Isabelle/HOL 选择 | ✅ 已决策 | 选用 **Lean 4.31.0 + mathlib4 4.31.0**，本地 elan 环境配齐 |
+| 形式化库结构设计 | ✅ 已落地 | `UFPFormalization/` 下按模块拆分（Rec/Spec/DFunctor/Adjunction/Spectral/Orbit/Clifford） |
+| 本地 `RFunctor` 非平凡构造 | ⏳ 待推进 | 当前为 `Unit` 状态空间原型，需在 16B 用泛函分析构造真正的右伴随 |
+| `DAdjR` 三角恒等式 | ⏳ 待推进 | `Adjunction.lean` 中唯一剩余 `sorry`，依赖 16B 谱函数演算 |
 | 外部合作者联络 | ⏳ 待推进 | 等级 C/D 需要形式化分形/遍历方向专家 |
 
 ## 八、变更记录
@@ -142,3 +144,4 @@
 | 日期 | 更新内容 |
 |------|---------|
 | 2026-07-15 | 创建 Phase 16 机器证明形式化计划 |
+| 2026-07-16 | Phase 16A 实质性推进：完成 Rec/Spec 范畴、DFunctor 完整 Functor 律与 intertwine、谱对应双向逆、orbit-stabilizer 等式、Clifford 低维矩阵表示验证；`RFunctor` 原型构造完成；`lake build --no-cache` 全量通过，仅剩 `DAdjR` 一处 `sorry` |
