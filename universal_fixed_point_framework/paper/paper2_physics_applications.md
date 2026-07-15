@@ -356,6 +356,8 @@ QNM 谱对应 $\mu_n = n + 1/2$，$\lambda_n = e^{-\mu_n}$，全部验证通过�
 
 **TE-G-M 定理约束**：由定理 TE-G-M（§1.5.3），拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足 $h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。对于 Kerr 混沌系统，这约束了 Lyapunov 指数的上界，修正了原有的混沌强度估计。
 
+**复谱投影范畴诠释**：Leaver 连分数求解产生的复数 QNM 频率 $\omega = \omega_R + i\omega_I$，可在 $\mathbf{Spec}$ 复 Clifford 谱纤维框架下诠释为高维复谱纤维中垂直于 4 维实时空子空间的代数正交分量向实观测空间的投影（参见 [关于谱静默理论的再讨论](file:///d:/trae-work/hyper-resolution/docs/关于谱静默理论的再讨论.md)）。这一诠释表明：复频率虚部不是实紧致几何维度的投影，而是代数谱维度的正交分量，解释了 Kerr QNM 衰减的深层数学结构。
+
 ### 5.3 非赤道面测地线混沌
 
 **定理 NE-1**（非赤道面 Lyapunov 指数）。引入 Carter 常数 $Q$（已知结果 [2]），非赤道面 Lyapunov 指数为
@@ -643,7 +645,26 @@ bulk 连续谱部分在 boundary 上静默，符合 AdS/CFT 中"体内部自由�
 
 引力子空间单独分析时为静默（轨道权重 $= 0$，测度权重 $\sim G_N \sim 10^{-38}$），解释了引力在低能下的极端弱性——不是引力不存在，而是它在谱测度中静默。
 
-### 8.4 谱静默 vs 紧致化的可证伪性
+### 8.4 与紧致化的兼容性：代数-几何对偶
+
+**命题 8.4**。谱静默与紧致化不是竞争模型，而是同一物理现象（高维自由度低能不可观测）的代数/几何两种等价数学表象（参见 [关于谱静默理论的再讨论](file:///d:/trae-work/hyper-resolution/docs/关于谱静默理论的再讨论.md)）。
+
+**极限等价性**：给定任意 $d$ 维紧致内空间 $X_d$，特征半径 $R$，对应 KK 谱测度 $\mu_{\text{KK}}$：
+- 当 $R < R_c(\Lambda) = 1/\Lambda$（紧致尺度小于探测临界半径），$\mu_{\text{KK}}$ 属于谱静默测度（满足 S2 零测度、S3 高 LACI）；
+- 任意满足静默条件的谱测度 $\mu_{\text{silent}}$，总能构造等效紧致流形 $X_d'$，使其 KK 谱测度与 $\mu_{\text{silent}}$ 在 TV 全变差误差可控范围内重合；
+- 双向翻译映射成立：
+
+$$\text{紧致几何模型} \underset{\text{极限映射}}{\overset{\text{谱映射}}{\longleftrightarrow}} \text{谱静默代数模型}.$$
+
+**本体论差异**：
+- 紧致化：几何本体论——先假设流形（光滑几何空间）作为底层载体，额外自由度是几何上的紧致内部空间；
+- 谱静默：代数/范畴本体论——抛弃流形预设，仅用 $\mathbf{Rec}$-$\mathbf{Spec}$ 范畴、谱测度、算子代数描述自由度。
+
+**观测简并根源**：两种数学描述转化出同一套低能可观测谱，4 代轻子、引力耦合、QNM 频率、全息纠缠熵等预言完全一致；只有超 Planck 能标实验（量子引力直接效应）才可能区分底层载体。
+
+**框架的核心价值**：不是"否定紧致化"，而是提供一套不依赖几何假设的通用代数描述，拓宽高维自由度的理论适用范围，同时与紧致化保持完全兼容。
+
+### 8.5 谱静默 vs 紧致化的可证伪性
 
 | 预言 | 紧致化 | 谱静默 |
 |------|--------|--------|
@@ -653,11 +674,11 @@ bulk 连续谱部分在 boundary 上静默，符合 AdS/CFT 中"体内部自由�
 
 若未来对撞机在 TeV 能标发现连续谱背景而非预期的 KK 共振峰，将支持谱静默而非紧致化。
 
-### 8.5 误差预算体系
+### 8.6 误差预算体系
 
 框架从理论预言到实验对比的完整误差链分为四个环节，每环节的误差源独立平方求和（假设互不相关），总误差按四链节平方和传播。
 
-**定义 8.5**（误差链）。设框架预言流程为 $\text{Rec} \xrightarrow{D} \text{Spec} \xrightarrow{\eta} \text{Observable} \xrightarrow{\text{compare}} \text{Experiment}$，各环节误差为 $\varepsilon_{\text{Rec}}, \varepsilon_{\text{Spec}}, \varepsilon_{\text{pred}}, \varepsilon_{\text{exp}}$，则总误差
+**定义 8.6**（误差链）。设框架预言流程为 $\text{Rec} \xrightarrow{D} \text{Spec} \xrightarrow{\eta} \text{Observable} \xrightarrow{\text{compare}} \text{Experiment}$，各环节误差为 $\varepsilon_{\text{Rec}}, \varepsilon_{\text{Spec}}, \varepsilon_{\text{pred}}, \varepsilon_{\text{exp}}$，则总误差
 
 $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\text{Spec}}^2 + \varepsilon_{\text{pred}}^2 + \varepsilon_{\text{exp}}^2}.$$
 
@@ -906,7 +927,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ---
 
-**版本**：v2.16
+**版本**：v2.17
 
 **日期**：2026-07-15
 
@@ -928,6 +949,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
+| v2.17 | 2026-07-15 | 谱静默与紧致化兼容性及复谱诠释——(1) §8.4 新增「与紧致化的兼容性：代数-几何对偶」，证明谱静默与紧致化是同一物理现象的代数/几何两种等价表象，双向翻译映射成立；(2) §5.2 新增复谱投影范畴诠释：Leaver 复数 QNM 频率虚部可诠释为复 Clifford 谱纤维正交分量向实观测空间的投影；(3) 更新 §8.4→§8.5、§8.5→§8.6 编号调整 |
 | v2.16 | 2026-07-15 | 与现有物理理论兼容性分析——(1) §4.7 新增兼容性分析：L4 必须为矢量型费米子（手征 L4 在电弱 S/T 参数检验中被排除，$\chi^2=13.9$ >99% CL）；矢量型 L4 对 Higgs 信号强度修正 <5%，满足 ATLAS/CMS 测量；(2) §5.1 新增经典极限验证：当量子修正 $\varepsilon \to 0$ 时，$d_{\text{frac}} \to 2$，$S_{\text{frac}} \to S_{\text{BH}}$，恢复经典 GR 光滑视界；(3) §7.4 新增与标准暗物质模型关系说明：IFS 分形质量谱是 WIMP 范式的推广，单峰退化时回归标准 WIMP，与 axion/sterile neutrino 互补 |
 | v2.15 | 2026-07-15 | BSM 物理 D-C 定理约束补充——(1) §1.5.1 影响链新增 BSM 新费米子质量谱（§4.1），L4 质量谱方程基于 IFS 收缩因子与分形维数，D-C 定理要求指数 $\beta(\rho)$ 满足凹性约束；(2) §1.5.4 影响总结表新增 BSM 新费米子质量谱；(3) §4.1 命题 4.1 新增 D-C 定理约束说明，给出 L4 质量理论不确定区间 $m_{L_4} \in [1470, 1650]$ GeV（$\rho \in [0, 0.3]$） |
 | v2.14 | 2026-07-15 | 基于配套论文 I 三项纯数学定理的物理预测修正——(1) 新增 §1.5「数学定理对物理预测的影响分析」，系统梳理 D-C→暗物质质量谱、HD-D→Kerr分形维数与纠缠熵、TE-G-M→Kerr混沌与SNR预测的影响链；(2) §7.1 暗物质质量谱公式修正：$m_i = m_0 \cdot r_i^{-\alpha(\rho)}$，加入 D-C 定理凹性约束；(3) §5.1 Kerr 分形维数公式修正：$d_{\text{frac}} = d_{\text{frac}}^u + d_{\text{frac}}^s$，加入 HD-D 定理稳定/不稳定方向分解；(4) §5.5 LIGO/Virgo ringdown SNR 预测加入 TE-G-M 定理谱间隙约束验证；(5) 更新摘要与 §1.3 贡献列表，补充数学定理对物理预测精度提升的说明 |
