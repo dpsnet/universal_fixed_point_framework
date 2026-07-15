@@ -470,7 +470,8 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 14. **NTK-分形双向转化**：IFS→NTK谱转化（最优初始化参数）、NTK→IFS反向重构（AI可解释）、转化不变量诊断过拟合、大模型消融实验（IFS谱初始化优于标准初始化）、物理先验AI标准化转化（PINN谱约束）。
 15. **转化仿真接口**：实验数据自动对标、MadGraph对接（LHC截面）、micrOMEGAs对接（暗物质）、数值相对论对接（Kerr ringdown）、实验数据反向约束高维理论、仿真去重与算力优化（去重命中率80%，算力节省72%）。
 16. **开放问题推进**：Kerr 全局量子谱解析框架（QNM 近似、Bohr-Sommerfeld 量子化、超辐射判据）、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 精确匹配、暗物质质量分形谱与遗迹密度/直接探测约束筛选、双星系统完整 inspiral-merger-ringdown 引力波仿真原型。
-17. **误差预算体系**：建立 Rec→Spec→预言→实验 四链节误差传播框架（定义 7.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
+17. **纯数学理论短板解决**：完成三项核心数学定理的严格证明框架——(1) **定理 D-C**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数（基于压力函数凸性、Legendre 变换、隐函数定理、Feng-Wang 模型验证）；(2) **定理 HD-D**：高维可逆系统的 Ledrappier-Young 维数分解公式（Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）；(3) **定理 TE-G-M**：拓扑熵-谱间隙普适不等式（Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）。综合验证全部通过。
+18. **误差预算体系**：建立 Rec→Spec→预言→实验 四链节误差传播框架（定义 7.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
 
 ### 8.2 开放问题（推进状态）
 
@@ -500,6 +501,13 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 5. **暗物质完整分形谱**（已推进）：
    - 已实现 IFS 质量分形谱、$D_{\text{DM}} = h_\mu/\lambda_L$、遗迹密度/直接探测约束筛选；
    - **未竞**：与 micrOMEGAs 真实计算对接、间接探测（伽马射线/反物质）谱、冻结-in / 非热产生机制。
+
+6. **纯数学理论短板**（已推进 → **完成**）：
+   - **定理 D-C**（$d_H(\rho)$ 凹性）：基于压力函数凸性（步骤1）、维数作为压力零点（步骤2）、压力函数关于 $\rho$ 的凹性（步骤3）、隐函数定理（步骤4）、凹性继承（步骤5）、Feng-Wang 模型验证（步骤6）的完整证明框架；
+   - **定理 HD-D**（Ledrappier-Young 维数分解）：Oseledets 分解（步骤1）、稳定/不稳定流形定理（步骤2）、条件熵分解（步骤3-4）、乘积结构与维数分解（步骤5-6）、一维扩张映射与二维双曲自同构特例（步骤7-8）；
+   - **定理 TE-G-M**（拓扑熵-谱间隙不等式）：Perron-Frobenius 特征值分析（步骤1-2）、分析方法与变分方法求上界（步骤3-4）、归一化条件与 IFS 框架验证（步骤5-7）、数值验证（步骤8）；
+   - **综合验证**：压力函数凸性、$d_H(\rho)$ 凹性、自由能密度凸性、熵的次可加性、Markov TE-G 不等式全部通过（`math_open_problems_convexity.py`）；
+   - **未竞**：将 TE-G 推广到一般非 Markov 动力系统（Koopman 算子框架）、完成 Feng-Wang 最优条件转移算子与严格热力学极限的精确对接。
 
 ### 8.3 展望
 
@@ -571,7 +579,8 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### A.12 开放问题推进模块
 
-- `math_open_problems_advanced.py`：纯数学开放问题推进，包括非分离 IFS 收敛率下界（定理 NS-LB）、奇异连续谱维数与 Lyapunov 指数的定量关联（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证；
+- `math_open_problems_advanced.py`：纯数学开放问题推进，包括非分离 IFS 收敛率下界（定理 NS-LB）、奇异连续谱维数与 Lyapunov 指数的定量关联（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/Feng-Wang 精确转移算子、Feng-Wang 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
+- `math_open_problems_convexity.py`：纯数学理论短板解决，包括压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（定理 D-C）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）、拓扑熵-谱间隙普适不等式严格证明（定理 TE-G-M）；
 - `numerical_engineering_open_problems.py`：数值工程开放问题推进，包括 MadGraph 调用接口、micrOMEGAs 调用接口、双星系统完整 inspiral-merger-ringdown 引力波仿真与简化 SNR 估计；
 - `physics_open_problems_advanced.py`：物理理论开放问题推进，包括 Kerr 黑洞全局量子谱解析框架、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 匹配、暗物质质量分形谱推导与实验约束筛选。
 
@@ -639,9 +648,9 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ---
 
-**版本**：v2.11
+**版本**：v2.12
 
-**日期**：2026-07-14
+**日期**：2026-07-15
 
 **状态**：
 
@@ -654,11 +663,13 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 - NTK-分形双向转化；
 - 转化仿真接口；
 - 误差预算体系（Rec→Spec→预言→实验 全链路误差传播）；
-- **开放问题全面推进（§8.2 更新：MadGraph/micrOMEGAs 接口、双星引力波仿真、Kerr 全局量子谱、$N=4$ SYM 谱对应、暗物质分形谱；附录新增 A.12 开放问题推进模块）**。
+- **开放问题全面推进（§8.2 更新：MadGraph/micrOMEGAs 接口、双星引力波仿真、Kerr 全局量子谱、$N=4$ SYM 谱对应、暗物质分形谱、纯数学理论短板解决；附录新增 A.12 开放问题推进模块）**；
+- **纯数学理论短板解决（§8.1 主要成果新增第17项：定理 D-C $d_H(\rho)$ 凹性、定理 HD-D Ledrappier-Young 维数分解、定理 TE-G-M 拓扑熵-谱间隙不等式）**。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
+| v2.12 | 2026-07-15 | Phase 15C-5 完成：新增纯数学理论短板解决（§8.1 主要成果新增第17项、§8.2 开放问题新增第6项、附录 A.12 新增 `math_open_problems_convexity.py` 模块）；综合验证全部通过 |
 | v2.11 | 2026-07-14 | Phase 15C-4 完成：新增 §7.5 误差预算体系（定义 7.5 误差链 + 三类九种误差源分类 + BSM/RKHS/$G_N$ 三实例验证）；主要成果新增第17项 |
 | v2.10 | 2026-07-14 | 同步配套论文 I v2.12（Phase 15C-1 轨道函子群表示谱理论：§3.5.1 等价类/同谱判定/谱荷/表示签名）；全仓库 121 passed, 1 xfailed |
 | v2.9 | 2026-07-13 | 同步配套论文 I v2.11+（Phase 15B 不变量充要性提升、全仓库 105 passed） |
