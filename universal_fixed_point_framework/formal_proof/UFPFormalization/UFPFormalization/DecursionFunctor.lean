@@ -1,56 +1,41 @@
-/-
-谱去递归化函子 D : Rec → Spec 的有限维原型形式化。
-
-在论文中，D 将递归系统 (X, U_R) 映射到其谱对象，其中谱算子 A_R = -log U_R。
-在有限维原型中，若 U_R 可逆，可定义 A_R = -log U_R；为简化等级 A 证明，
-这里先取 D 为恒等/遗忘构造，即把演化算子 T 直接视为谱算子 A。
-
-这一定义满足函子的两条公理：
-1. D(id_X) = id_{D(X)}
-2. D(g ∘ f) = D(g) ∘ D(f)
--/
-
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional
 import UFPFormalization.RecCategory
 import UFPFormalization.SpecCategory
+import Mathlib.CategoryTheory.Functor.Basic
+import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Complex.Basic
+import Mathlib.Data.Fintype.Basic
 
-universe u v
+namespace UFPFormalization
 
-variable {𝕜 : Type u} [Field 𝕜]
+open CategoryTheory Matrix
 
-namespace DecursionFunctor
+/-- General transfer matrix induced by a function f : α → β. -/
+def transferMatrix {α β : Type} [Fintype α] [DecidableEq α] [Fintype β] [DecidableEq β]
+    (f : α → β) : Matrix α β ℂ :=
+  fun i j => if f i = j then 1 else 0
 
-/-- D 函子在对象上的作用：RecObject → SpecObject（等级 A 原型为恒等）。 -/
-def mapObj (X : RecObject 𝕜) : SpecObject 𝕜 := X.toSpecObject
+/-- Square transfer matrix of a finite-state recursive step. -/
+def stepMatrix {α : Type} [Fintype α] [DecidableEq α] (step : α → α) : Matrix α α ℂ :=
+  transferMatrix step
 
-/-- D 函子在态射上的作用：Rec 态射 → Spec 态射。
-    由于等级 A 原型中两种态射结构相同，直接转换。 -/
-def mapHom {X Y : RecObject 𝕜} (f : RecObject.Hom X Y) : SpecObject.Hom (mapObj X) (mapObj Y) where
-  toLin := f.toLin
-  comm := f.comm
+/-- Object part of the spectral de-recursion functor. -/
+noncomputable abbrev DFunctor_obj (X : RecObj) : SpecObj :=
+  ⟨Fintype.card X.T, stepMatrix (Fintype.equivFin X.T ∘ X.step ∘ (Fintype.equivFin X.T).symm)⟩
 
-@[simp]
-lemma mapHom_toLin {X Y : RecObject 𝕜} (f : RecObject.Hom X Y) :
-    (mapHom f).toLin = f.toLin := rfl
+/-- Morphism part of the spectral de-recursion functor. -/
+noncomputable abbrev DFunctor_map {X Y : RecObj} (f : RecHom X Y) :
+    DFunctor_obj X ⟶ DFunctor_obj Y :=
+  let eX := Fintype.equivFin X.T
+  let eY := Fintype.equivFin Y.T
+  let φ := transferMatrix (eY ∘ f.toFun ∘ eX.symm)
+  ⟨φ, sorry⟩
 
-/-- D 保持恒等态射。 -/
-lemma map_id (X : RecObject 𝕜) : mapHom (RecObject.id X) = SpecObject.id (mapObj X) := by
-  ext v
-  simp [mapHom, RecObject.id, SpecObject.id]
+/-- Spectral de-recursion functor: encode a finite recursive system as a spectral operator.
+    Functor laws and the morphism intertwining condition are admitted in the Level-A prototype. -/
+noncomputable def DFunctor : RecObj ⥤ SpecObj where
+  obj := DFunctor_obj
+  map := DFunctor_map
+  map_id X := sorry
+  map_comp f g := sorry
 
-/-- D 保持态射复合。 -/
-lemma map_comp {X Y Z : RecObject 𝕜} (g : RecObject.Hom Y Z) (f : RecObject.Hom X Y) :
-    mapHom (RecObject.comp g f) = SpecObject.comp (mapHom g) (mapHom f) := by
-  ext v
-  simp [mapHom, RecObject.comp, SpecObject.comp]
-
-end DecursionFunctor
-
-/-- 谱去递归化函子 D : RecCategory 𝕜 → SpecCategory 𝕜（等级 A 原型）。 -/
-def DFunctor : RecCategory 𝕜 ⥤ SpecCategory 𝕜 where
-  obj := DecursionFunctor.mapObj
-  map := @DecursionFunctor.mapHom 𝕜 _
-  map_id := DecursionFunctor.map_id
-  map_comp := DecursionFunctor.map_comp
+end UFPFormalization

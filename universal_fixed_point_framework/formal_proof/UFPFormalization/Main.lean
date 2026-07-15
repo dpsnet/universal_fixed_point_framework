@@ -1,4 +1,6 @@
-import UFPFormalization
+import UFPFormalization.Basic
+
+open UFPFormalization.Basic
 
 def main : IO Unit :=
-  IO.println "UFPFormalization: Phase 16A machine proof library loaded."
+  IO.println s!"{hello}"
