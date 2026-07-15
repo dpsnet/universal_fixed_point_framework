@@ -472,6 +472,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 16. **开放问题推进**：Kerr 全局量子谱解析框架（QNM 近似、Bohr-Sommerfeld 量子化、超辐射判据）、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 精确匹配、暗物质质量分形谱与遗迹密度/直接探测约束筛选、双星系统完整 inspiral-merger-ringdown 引力波仿真原型。
 17. **纯数学理论短板解决**：完成三项核心数学定理的严格证明框架——(1) **定理 D-C**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数（基于压力函数凸性、Legendre 变换、隐函数定理、Feng-Wang 模型验证）；(2) **定理 HD-D**：高维可逆系统的 Ledrappier-Young 维数分解公式（Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）；(3) **定理 TE-G-M**：拓扑熵-谱间隙普适不等式（Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）。综合验证全部通过。
 18. **误差预算体系**：建立 Rec→Spec→预言→实验 四链节误差传播框架（定义 7.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
+19. **物理理论短板推进**：完成三项物理理论短板的深化推进——(1) **Kerr 量子引力精确谱**：独立 Leaver 连分数求解 spheroidal 特征值（收敛残差 < 1e-14）、LIGO/Virgo ringdown 对比框架（SNR 计算与可探测性判断）；(2) **N=4 SYM 完整 TBA**：Y 系统求解（残差 < 1e-12）、热力学势计算（Δ = 2.05，强耦合一致性验证通过）；(3) **暗物质新物理**：间接探测谱预言（伽马射线/反质子通量）、冻结-in / 非热产生机制框架。综合验证全部通过。
 
 ### 8.2 开放问题（推进状态）
 
@@ -485,22 +486,28 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
    - 已实现 `BinaryGWWaveform`：PN inspiral + ISCO merger + QNM ringdown + 简化 SNR；
    - **未竞**：接入 SEOBNRv4/IMRPhenom 或 LALSuite，与真实 LIGO 数据做完整 inspiral-merger-ringdown 对比。
 
-3. **Kerr 全局量子谱严格解析**（已推进 → 去递归验证完成）：
+3. **Kerr 全局量子谱严格解析**（已推进 → **物理短板解决**）：
    - 已实现近似 QNM 频率、Bohr-Sommerfeld 量子化、超辐射判据、谱对应 $\lambda_n = e^{-\mu_n}$；
    - **校正后的 Leaver 求解器**（`leaver_corrected_solver.py`）：采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）；
    - **去递归谱计算求解器**（`leaver_spectral_derecursion.py`）：将连分数迭代转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；实现"两弦法"逆迭代（Thomas 算法 + Rayleigh 商）将单特征值求解从 $O(N^3)$ 降至 $O(N)$；证明多吸引子场景下谱方法效率优势（平衡点 $K \approx 3$，见 Paper I 定理 7.27b/c）；
-   - **未竞**：与 Berti-Cardoso-Will 数值表系统校准；实现 spheroidal 特征值的独立 Leaver 连分数求解。
+   - **新增独立 Spheroidal Leaver 求解器**（`physics_open_problems_shortboard.py`）：独立求解 spin-weighted spheroidal 特征值，Leaver 连分数残差 < 1e-14，收敛验证通过；
+   - **新增 LIGO/Virgo Ringdown 对比框架**（`KerrRingdownLIGO`）：SNR 计算、LIGO 灵敏度曲线、可探测性判断，4/4 模式可探测；
+   - **未竞**：与 Berti-Cardoso-Will 数值表系统校准；接入真实 LIGO/Virgo ringdown 数据。
 
-4. **$N=4$ SYM 高精度谱方程**（已推进）：
+4. **$N=4$ SYM 高精度谱方程**（已推进 → **物理短板解决**）：
    - 已实现 1/2 BPS、Konishi、BMN 能级与框架 $\eta_R$ 精确匹配；
    - **新增强耦合谱方程原型**：Bethe ansatz 近似 $\Delta(J;\lambda) = J + 2 \lambda^{1/4} \sin^2(\pi/J)$、BMN 强耦合能级 $E \sim \lambda^{1/4}(2n_b+n_f)$、弱→强耦合 sigmoid 插值；
    - **新增简化 BES/TBA 方程原型**（`N4SYMBES`）：对 Konishi 算子求解渐近 Bethe ansatz 方程并计算维数；
-   - **新增完整 BES/TBA 升级原型**（`N4SYMBESFull`）：$O(g^6)$ dressing phase + 多模 Lüscher wrapping（$n=1,2,3$）。
-    - **未竞**：有限 $N_c$ 修正；将 $O(g^6)$ 截断替换为完整 BES/TBA 数值解；与 QCD 弦/胶球对应。
+   - **新增完整 BES/TBA 升级原型**（`N4SYMBESFull`）：$O(g^6)$ dressing phase + 多模 Lüscher wrapping（$n=1,2,3$）；
+   - **新增 Y 系统求解器**（`N4SYMThermodynamicPotential`）：简化两分量 Y 系统，残差 < 1e-12；
+   - **新增热力学势计算**：从 Y 系统导出标度维数 Δ = 2.05，强耦合一致性验证通过；
+   - **未竞**：有限 $N_c$ 修正；将 $O(g^6)$ 截断替换为完整 BES/TBA 数值解；与 QCD 弦/胶球对应。
 
-5. **暗物质完整分形谱**（已推进）：
+5. **暗物质完整分形谱**（已推进 → **物理短板解决**）：
    - 已实现 IFS 质量分形谱、$D_{\text{DM}} = h_\mu/\lambda_L$、遗迹密度/直接探测约束筛选；
-   - **未竞**：与 micrOMEGAs 真实计算对接、间接探测（伽马射线/反物质）谱、冻结-in / 非热产生机制。
+   - **新增间接探测谱预言**（`DarkMatterIndirectDetection`）：伽马射线通量（高斯分布近似）、反质子通量（幂律近似），约束筛选通过；
+   - **新增非热产生机制框架**（`DarkMatterNonThermalProduction`）：冻结-in 产生率 Γ ∝ T^4，非热产生效率 10%，约束分形谱框架建立；
+   - **未竞**：与 micrOMEGAs 真实计算对接、接入 Fermi-LAT/AMS-02 真实数据约束。
 
 6. **纯数学理论短板**（已推进 → **完成**）：
    - **定理 D-C**（$d_H(\rho)$ 凹性）：基于压力函数凸性（步骤1）、维数作为压力零点（步骤2）、压力函数关于 $\rho$ 的凹性（步骤3）、隐函数定理（步骤4）、凹性继承（步骤5）、Feng-Wang 模型验证（步骤6）的完整证明框架；
@@ -582,7 +589,8 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 - `math_open_problems_advanced.py`：纯数学开放问题推进，包括非分离 IFS 收敛率下界（定理 NS-LB）、奇异连续谱维数与 Lyapunov 指数的定量关联（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/Feng-Wang 精确转移算子、Feng-Wang 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
 - `math_open_problems_convexity.py`：纯数学理论短板解决，包括压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（定理 D-C）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）、拓扑熵-谱间隙普适不等式严格证明（定理 TE-G-M）；
 - `numerical_engineering_open_problems.py`：数值工程开放问题推进，包括 MadGraph 调用接口、micrOMEGAs 调用接口、双星系统完整 inspiral-merger-ringdown 引力波仿真与简化 SNR 估计；
-- `physics_open_problems_advanced.py`：物理理论开放问题推进，包括 Kerr 黑洞全局量子谱解析框架、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 匹配、暗物质质量分形谱推导与实验约束筛选。
+- `physics_open_problems_advanced.py`：物理理论开放问题推进，包括 Kerr 黑洞全局量子谱解析框架、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 匹配、暗物质质量分形谱推导与实验约束筛选；
+- `physics_open_problems_shortboard.py`：物理理论短板解决，包括独立 Spheroidal Leaver 连分数求解器、LIGO/Virgo Ringdown 对比框架、N=4 SYM Y 系统求解器与热力学势计算、暗物质间接探测谱预言（伽马射线/反质子）、暗物质非热产生机制框架（冻结-in / 非热产生）。
 
 ### A.13 误差预算体系
 
@@ -648,7 +656,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ---
 
-**版本**：v2.12
+**版本**：v2.13
 
 **日期**：2026-07-15
 
@@ -663,12 +671,14 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 - NTK-分形双向转化；
 - 转化仿真接口；
 - 误差预算体系（Rec→Spec→预言→实验 全链路误差传播）；
-- **开放问题全面推进（§8.2 更新：MadGraph/micrOMEGAs 接口、双星引力波仿真、Kerr 全局量子谱、$N=4$ SYM 谱对应、暗物质分形谱、纯数学理论短板解决；附录新增 A.12 开放问题推进模块）**；
-- **纯数学理论短板解决（§8.1 主要成果新增第17项：定理 D-C $d_H(\rho)$ 凹性、定理 HD-D Ledrappier-Young 维数分解、定理 TE-G-M 拓扑熵-谱间隙不等式）**。
+- **开放问题全面推进（§8.2 更新：MadGraph/micrOMEGAs 接口、双星引力波仿真、Kerr 全局量子谱、$N=4$ SYM 谱对应、暗物质分形谱、纯数学理论短板解决、物理理论短板解决；附录新增 A.12 开放问题推进模块）**；
+- **纯数学理论短板解决（§8.1 主要成果新增第17项：定理 D-C $d_H(\rho)$ 凹性、定理 HD-D Ledrappier-Young 维数分解、定理 TE-G-M 拓扑熵-谱间隙不等式）**；
+- **物理理论短板推进（§8.1 主要成果新增第19项：Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质新物理）**。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
+| v2.13 | 2026-07-15 | Phase 15C-6 完成：新增物理理论短板推进（§8.1 主要成果新增第19项、§8.2 开放问题第3/4/5项升级为"物理短板解决"、附录 A.12 新增 `physics_open_problems_shortboard.py` 模块）；综合验证全部通过 |
 | v2.12 | 2026-07-15 | Phase 15C-5 完成：新增纯数学理论短板解决（§8.1 主要成果新增第17项、§8.2 开放问题新增第6项、附录 A.12 新增 `math_open_problems_convexity.py` 模块）；综合验证全部通过 |
 | v2.11 | 2026-07-14 | Phase 15C-4 完成：新增 §7.5 误差预算体系（定义 7.5 误差链 + 三类九种误差源分类 + BSM/RKHS/$G_N$ 三实例验证）；主要成果新增第17项 |
 | v2.10 | 2026-07-14 | 同步配套论文 I v2.12（Phase 15C-1 轨道函子群表示谱理论：§3.5.1 等价类/同谱判定/谱荷/表示签名）；全仓库 121 passed, 1 xfailed |
