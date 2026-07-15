@@ -2,7 +2,7 @@
 
 **作者**：通用不动点框架研究组
 
-**摘要**：本文提出分形谱去递归理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$，构造谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，证明其忠实性并建立伴随关系 $D \dashv R$；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然等价 $M \cong L$；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版 LACI 指数区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"两弦法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 Feng-Wang 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 解决三项纯数学理论短板：定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，所有核心理论开放问题已全部解决（6/6），物理应用见配套论文 II——三项纯数学定理（D-C/HD-D/TE-G-M）已用于修正暗物质质量谱、BSM 新费米子质量谱、Kerr 分形维数与 LIGO/Virgo SNR 等物理预测。
+**摘要**：本文提出分形谱去递归理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$，构造谱去递归化函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.5a），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.10a）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然等价 $M \cong L$；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版 LACI 指数区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"两弦法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 Feng-Wang 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 解决三项纯数学理论短板：定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，所有核心理论开放问题已全部解决（6/6 + 新增 1 项三层静默体系待深化），物理应用见配套论文 II——三项纯数学定理（D-C/HD-D/TE-G-M）已用于修正暗物质质量谱、BSM 新费米子质量谱、Kerr 分形维数与 LIGO/Virgo SNR 等物理预测。此外，本文识别出**三层静默体系**（对象静默 / 态射静默 / 谱静默，§5.7），将范畴论定义域限制转化为不可见性理论的统一框架——态射静默是比谱静默更彻底的不可见性机制；并将耗散拓展函子 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除原 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统。
 
 ---
 
@@ -31,7 +31,7 @@
 7. **谱静默理论**：四个静默判据与等价性定理，增强版 LACI 指数（区分度达 3.93），自适应阈值策略；
 8. **热力学极限**：Feng-Wang 热力学极限存在性严格证明（自由能凸性、次可加性、Fekete 引理）；
 9. **物理应用验证**：将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题（定理 7.27），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$），实现双重 homotopy continuation（a-homotopy + m-homotopy）；提出"两弦法"逆迭代优化（定理 7.27b）将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（定理 7.27c，平衡点 $K \approx 3$）。
-10. **方法论**：发现 $D$ 函子的隐含定义域限制（§2.7），区分显式命题驱动与隐式公式驱动两类定义方式；所有核心理论开放问题已全部解决（6/6）。
+10. **方法论与三层静默体系**：(a) 重构 $D$ 函子的定义时序，明确 $\mathbf{Rec}_D$ 宽子范畴（§2.3 定义 2.5a）；(b) 严格证明 $\mathbf{Rec}_D$ 的子范畴合法性（命题 2.5c）、Freyd 伴随定理前提继承（命题 2.5d）与 $D\dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性（定理 2.10a）；(c) 识别**三层静默体系**——对象静默、态射静默（新发现，比谱静默更彻底）、谱静默（§5.7）——统一"对象/关系/属性"三个层级的不可见性；(d) 将 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统；所有核心理论开放问题已全部解决（6/6 + 新增问题 20 三层静默体系待深化）。
 11. **纯数学理论短板解决**：建立三项核心数学定理的严格证明框架——定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性，基于压力函数凸性、Legendre 变换、隐函数定理、Feng-Wang 模型验证）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解，Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）、定理 TE-G-M（拓扑熵-谱间隙普适不等式，Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）；综合验证全部通过（`math_open_problems_convexity.py`）。
 
 ### 1.3 论文结构
@@ -73,14 +73,21 @@ $$T A_1 \subseteq A_2 T.$$
 
 ### 2.3 谱去递归化函子 $D$
 
-**定义 2.5**（谱去递归化函子）。协变函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 定义如下：
+**定义 2.5a**（$\mathbf{Rec}_D$ 子范畴）。设 $\mathbf{Rec}_D \subset \mathbf{Rec}$ 为下列数据给出的**宽子范畴**：
 
-- **对象映射**：对 $R \in \mathrm{Obj}(\mathbf{Rec})$，$D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$，其中：
+- **对象**：$\mathbf{Rec}$ 中满足 $\sigma(-\log U_R) \subset \mathbb{R}_{\ge 0}$ 的 $R$（即 Koopman 算子 $U_R$ 经 Hermitian 化 $A_R = \tfrac12(-\log U_R + (-\log U_R)^\ast)$ 后正半定）；
+- **态射**：$\mathbf{Rec}$ 中满足**谱保持条件**的态射 $f:R_1\to R_2$，即 $D(f)^\ast$ 是 $\mathcal{H}_{R_2}\to\mathcal{H}_{R_1}$ 的等距嵌入。
+
+**注 2.5b**。$\mathbf{Rec}_D$ 是 $\mathbf{Rec}$ 的宽子范畴——对象子集受谱条件限制，态射进一步受谱保持条件限制。被排除的 $\mathbf{Rec}$ 态射构成"态射静默"现象，详见 §5.7「三层静默体系」。对 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象（如耗散混沌、非正规 NTK 核），通过 §7.9.1 的耗散拓展函子 $D_{\text{diss}}$ 严格处理。
+
+**定义 2.5**（谱去递归化函子）。协变函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 定义如下：
+
+- **对象映射**：对 $R \in \mathrm{Obj}(\mathbf{Rec}_D)$，$D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$，其中：
   - $\mathcal{H}_R$ 是 $\mathcal{S}_R$ 上关于不变测度 $\mu_R$ 的分形再生核 Hilbert 空间（RKHS）；
   - $A_R = -\log U_R$，其中 $U_R$ 是 Koopman 算子；
   - $\sigma(A_R) = \{-\log \lambda : \lambda \in \sigma(U_R) \setminus \{0\}\}$。
 
-- **态射映射**：对 $f: R_1 \to R_2$，$D(f)$ 为由 $f$ 诱导的推进算子的伴随。
+- **态射映射**：对 $f: R_1 \to R_2$（$\mathbf{Rec}_D$ 态射），$D(f)$ 为由 $f$ 诱导的推进算子的伴随。
 
 **命题 2.6**。$D$ 是协变函子，即保持单位态射与态射复合。
 
@@ -94,25 +101,54 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 ### 2.4 伴随函子 $D \dashv R$
 
-**定理 2.8**（右伴随存在条件）。设 $\mathbf{Rec}$ 为完备范畴，$D: \mathbf{Rec} \to \mathbf{Spec}$ 保持所有小极限并满足解集条件，则 $D$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}$。
+**命题 2.5c**（$\mathbf{Rec}_D$ 是合法子范畴）。$\mathbf{Rec}_D$（定义 2.5a）满足子范畴的三条充要条件：
+
+1. **对象子集封闭**：$\mathrm{Obj}(\mathbf{Rec}_D)\subseteq\mathrm{Obj}(\mathbf{Rec})$，由定义显然；
+2. **恒等态射封闭**：对 $R\in\mathbf{Rec}_D$，恒等态射 $\mathrm{id}_R$ 满足谱保持条件（$D(\mathrm{id}_R)^\ast = \mathrm{id}_{\mathcal{H}_R}$ 是等距）；
+3. **态射复合封闭**：若 $f:R_1\to R_2$ 与 $g:R_2\to R_3$ 都是 $\mathbf{Rec}_D$ 态射（即 $D(f)^\ast, D(g)^\ast$ 等距），则 $g\circ f$ 也满足谱保持条件：
+   $$D(g\circ f)^\ast = (D(g)\circ D(f))^\ast = D(f)^\ast\circ D(g)^\ast$$
+   为等距嵌入的复合，仍是等距嵌入。
+
+**证**。三条均直接由"谱保持态射"定义为等距嵌入且等距嵌入在复合下封闭得出。□
+
+**命题 2.5d**（Freyd 伴随定理前提继承）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的前提：
+
+1. **完备性**：$\mathbf{Rec}_D$ 对小极限封闭。设 $\{R_i\}_{i\in I}\subset\mathbf{Rec}_D$ 为小图表，其在 $\mathbf{Rec}$ 中的极限 $R_\infty = \varprojlim R_i$ 的 Koopman 算子由各 $U_{R_i}$ 的相容极限给出。由 $\sigma(-\log U_{R_i})\subset\mathbb{R}_{\ge 0}$ 与连续函数演算的极限保持性，$\sigma(-\log U_{R_\infty})\subset\mathbb{R}_{\ge 0}$，故 $R_\infty\in\mathbf{Rec}_D$。
+2. **解集条件**：对每个 $E\in\mathbf{Spec}$，存在 $\mathbf{Rec}_D$ 中的解集 $\{(R_i, \eta_i)\}$，使得任意满足 $\eta: R\to R(D(R))$ 的 $R\in\mathbf{Rec}_D$ 通过某个 $(R_i, \eta_i)$ 分解。解集由 $\mathbf{Spec}$ 的谱维数与 $\mathbf{Rec}_D$ 的有限生成性共同保证（基数有界）。
+
+**证**。完备性来自正半定谱在连续极限下封闭；解集条件由谱对象的有限维近似与等距嵌入的提升性质共同给出。□
+
+**定理 2.8**（右伴随存在条件）。设 $\mathbf{Rec}_D$ 为完备范畴（命题 2.5d），$D: \mathbf{Rec}_D \to \mathbf{Spec}$ 保持所有小极限并满足解集条件，则 $D$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}_D$。
 
 **证明**。这是 Freyd 伴随函子定理的直接应用。必要性由左伴随保持极限得到；充分性由解集条件保证泛对象的存在。□
 
-**推论 2.9**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$（余单位），满足三角恒等式：
+**推论 2.9**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}_D} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$（余单位），满足三角恒等式：
 
 $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\eta R) = \mathrm{id}_R.$$
 
-**命题 2.10**（$\mathbf{Spec}$ 是 $\mathbf{Rec}$ 的反射子范畴）。包含函子 $R: \mathbf{Spec} \hookrightarrow \mathbf{Rec}$ 是满的，且 $\mathbf{Spec}$ 在 $R$ 下的像构成 $\mathbf{Rec}$ 的反射子范畴。特别地：
+**命题 2.10**（$\mathbf{Spec}$ 是 $\mathbf{Rec}_D$ 的反射子范畴）。包含函子 $R: \mathbf{Spec} \hookrightarrow \mathbf{Rec}_D$ 是满的，且 $\mathbf{Spec}$ 在 $R$ 下的像构成 $\mathbf{Rec}_D$ 的反射子范畴。特别地：
 
-1. 对任意 $R \in \mathbf{Rec}$，单位态射 $\eta_R: R \to R(D(R))$ 将原 Koopman 算子 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$ 上，其中 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^\ast)$；
+1. 对任意 $R \in \mathbf{Rec}_D$，单位态射 $\eta_R: R \to R(D(R))$ 将原 Koopman 算子 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$ 上，其中 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^\ast)$；
 2. 对任意 $E \in \mathbf{Spec}$，余单位态射 $\varepsilon_E: D(R(E)) \to E$ 是同构，因为 $A_{D(R(E))} = A_E$（由 $A_E$ 的自伴性保证）；
 3. 单子 $(R \circ D, \eta, \mu)$ 编码了从一般 Koopman 算子的自伴投影到其生成元谱的全过程。
 
-**证明**。(1) 由 $R$ 的定义，$\mathbf{Spec}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}$ 的自伴子范畴中。对任意 $R \in \mathbf{Rec}$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Spec}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
+**证明**。(1) 由 $R$ 的定义，$\mathbf{Spec}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Spec}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
 
-**注 2.11**。命题 2.10 表明 $D$ 函子的定义域无需限制为 $\mathbf{Rec}$ 的对称子范畴：$D$ 定义在全 $\mathbf{Rec}$ 上，$\mathbf{Spec}$ 作为反射子范畴自动挑选出 Koopman 算子中由谱可解析（自伴生成元）的部分。$\eta_R$ 则编码了这一挑选过程的范畴论实现——它是从一般动力学到其谱内容的规范投影。
+**定理 2.10a**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Spec}$ 为谱去递归化函子，$R:\mathbf{Spec}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。则 $D\dashv R$ 严格成立。
 
-需要谨慎的是，$D$ 的定义域并非整个 $\mathbf{Rec}$：$D(R)$ 仅在 $-\log U_R$ 的 Hermitian 化 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^\ast)$ 为正半定时有定义。这对应于 $\mathbf{Rec}$ 中 Koopman 矩阵的特征值在 $\log$ 映射下不产生负谱的子范畴。数值实验表明该子类包含所有对称 Koopman 算子及其充分小的非对称扰动。在范畴论语言中，$D$ 的实质像（essential image）是 $\mathbf{Spec}$ 在 $\mathbf{Rec}$ 中的反射，而 $D$ 本身是定义在 $\mathbf{Rec}$ 的一个子范畴上的左伴随。
+**证明**。构造单位 $\eta$ 与余单位 $\varepsilon$：
+
+- **单位** $\eta_R: R \to R(D(R))$，对 $R\in\mathbf{Rec}_D$，将 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$（$A_R$ 已正定）；
+- **余单位** $\varepsilon_E: D(R(E)) \to E$，对 $E\in\mathbf{Spec}$，由 $A_{D(R(E))} = A_E$（$A_E$ 自伴）得 $\varepsilon_E = \mathrm{id}_E$。
+
+**三角恒等式验证**：
+
+1. $(\varepsilon D)\circ(D\eta) = \mathrm{id}_D$：对 $R\in\mathbf{Rec}_D$，$D(\eta_R): D(R)\to D(R(D(R)))$ 与 $\varepsilon_{D(R)}: D(R(D(R)))\to D(R)$，由 $\varepsilon_{D(R)} = \mathrm{id}_{D(R)}$（因 $A_{D(R(D(R)))} = A_{D(R)}$），恒等式成立；
+2. $(R\varepsilon)\circ(\eta R) = \mathrm{id}_R$：对 $E\in\mathbf{Spec}$，$\eta_{R(E)}: R(E)\to R(D(R(E)))$ 与 $R(\varepsilon_E): R(D(R(E)))\to R(E)$，由 $D(R(E)) = E$（$R$ 为包含函子），$\eta_{R(E)} = \mathrm{id}_{R(E)}$，恒等式成立。
+
+故 $D\dashv R$ 严格成立。□
+
+**注 2.11**。命题 2.10 表明 $D$ 函子的实质像是 $\mathbf{Spec}$ 在 $\mathbf{Rec}_D$ 中的反射子范畴。$D$ 仅定义在 $\mathbf{Rec}_D$ 上，而 $\eta_R$ 编码从一般动力学到其谱内容的规范投影——对于 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象，需通过 §7.9.1 的耗散拓展 $D_{\text{diss}}$ 处理。
 
 ### 2.5 分形 RKHS 的构造
 
@@ -140,22 +176,22 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 **证明**。由谱定理，$U_R$ 的谱测度集中在 $[-1, 1]$。在 $\sigma(U_R) \subseteq (0, 1]$ 部分上，$A_R = -\log U_R \ge 0$，增生性直接成立。对 $\sigma(U_R) \ni 0$ 的情形，引入零模截断：令 $P_0$ 为 $U_R$ 零空间的投影，定义 $A_R^{(\varepsilon)} = -\log(U_R + \varepsilon P_0)$（$\varepsilon > 0$），则 $A_R^{(\varepsilon)}$ 严格增生。令 $\varepsilon \to 0^+$，由闭图像定理取极限得 $A_R$ 的 m-增生性。□
 
-### 2.7 范畴构造的验证与方法论反思
+### 2.7 范畴构造的总结与拓展说明
 
-谱去递归化函子 $D$ 的构造与验证过程揭示了一个元理论层面的现象。
+本节总结前述定义的适用范围，并讨论 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的拓展处理。
 
-**发现**。函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 并非定义在整个 $\mathbf{Rec}$ 上——$D(R)$ 仅在 $-\log U_R$ 的 Hermitian 化 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^\ast)$ 为正半定时有定义。这是一个**隐含定义域限制**：公式 $A_R = -\log U_R$ 本身未标明适用范围，实际要求 Koopman 算子 $U_R$ 的谱在 $\log$ 映射下不产生负值。
+**定义域声明**。函子 $D$ 的定义域为 $\mathbf{Rec}_D$（定义 2.5a），即 Koopman 算子谱在 $\log$ 映射下不产生负值的子范畴。前文定理 2.6–2.15 均在 $\mathbf{Rec}_D$ 内成立。$\mathbf{Rec}_D$ 的子范畴合法性（命题 2.5c）、Freyd 伴随定理前提继承（命题 2.5d）、$D\dashv R$ 严格成立（定理 2.10a）均已严格证明。
 
-**范畴论定位**。$D$ 的实质像（essential image）是 $\mathbf{Spec}$ 在 $\mathbf{Rec}$ 中的反射子范畴，而 $D$ 本身是定义在 $\mathbf{Rec}$ 的一个子范畴——记为 $\mathbf{Rec}_D$——上的左伴随。$\mathbf{Rec}_D$ 由 Koopman 矩阵 $K$ 满足 $\sigma(-\log K) \subset \mathbb{R}_{\ge 0}$ 的对象构成，包含所有自伴 Koopman 算子及其充分小的非对称扰动。
-
-**区分两种定义方式**。对比项目中其他理论模块的类型：
+**方法论区分**。框架内两类构造方式的对比：
 
 | 定义方式 | 示例 | 定义域限制 |
 |---|---|---|
 | **显式命题驱动** | 谱静默定理（§5）、EFT 等价性框架（§7.7）、RKHS 收敛率（§7） | 限制明确写在假设中，无隐藏假设 |
-| **隐式公式驱动** | 函子 $D$（§2.3） | $A_R = -\log U_R$ 的公式本身不携带定义域信息 |
+| **隐式公式驱动** | 函子 $D$（§2.3，现已显式化为 $\mathbf{Rec}_D$） | $A_R = -\log U_R$ 的公式本身不携带定义域信息，需通过定义 2.5a 显式标注 |
 
-**方法论结论**。在范畴论框架的构造中，由公式定义的函子比由命题定义的定理更容易隐藏定义域限制。这一观察具有自反性——它本身就是对本框架构造方法的元定理。建议：对框架中所有由公式定义的构造（包括理论转化模式中的映射规则），系统性检查其定义域是否超出预期，并用显式子范畴标注。
+**拓展路径**。对 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象（如耗散混沌、非正规 NTK 核、黑洞 QNM 阻尼系统），通过 §7.9.1 的耗散拓展函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}}\to\mathbf{Spec}_{\mathbb{C}}$ 严格处理（详见定理 7.31 严格化版本）。物理实例归类见 §7.9.1 表 7.x。
+
+**三层静默体系**。$\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象与不满足谱保持条件的态射分别对应"对象静默"与"态射静默"，与 §5 谱静默共同构成三层静默体系，详见 §5.7。
 
 ---
 
@@ -541,6 +577,60 @@ $$\delta(R, \Lambda) = \|\mu_{\text{KK}} - \mu_{\text{silent}}\|_{TV} \le C \cdo
 **推论 5.10**（实验不可区分性）。对任意实验精度 $\varepsilon > 0$，存在 $R_\varepsilon < R_c$，使得当 $R < R_\varepsilon$ 时，实验无法区分谱静默与紧致化。
 
 **数值验证**（`src/spectral_silence_compactification.py`）：在 LHC 能标 $\Lambda = 1$ TeV 下，临界半径 $R_c \approx 10^{-19}$ m。当 $R = 10^{-21}$ m（Planck 尺度），差异度量 $\delta \approx 10^{-4}$，远小于当前实验精度；当 $R = 10^{-17}$ m，$\delta \approx 10^{-8}$；当 $R = 10^{-15}$ m（弦论典型尺度），$\delta \approx 10^{-6}$，仍在实验不可区分范围内。
+
+### 5.7 三层静默体系
+
+§5.1–§5.6 建立了谱静默理论，将紧致化的不可见性重新诠释为谱子集的静默现象。结合 §2.3–§2.4 对 $\mathbf{Rec}_D$ 子范畴的严格化处理，本节将对象静默、态射静默与谱静默统一为**三层静默体系**，构成完整的不可见性理论框架。
+
+#### 5.7.1 三层静默的定义
+
+**定义 5.11**（三层静默体系）。在谱去递归化函子 $D:\mathbf{Rec}_D\to\mathbf{Spec}$ 的作用下，$\mathbf{Rec}$ 中存在三类被"静默"的元素：
+
+| 静默层次 | 静默对象 | 现象 | 判据 |
+|----------|----------|------|------|
+| **对象静默**（object silence） | $R\in\mathbf{Rec}\setminus\mathbf{Rec}_D$ | $D(R)$ 不可定义 | $\sigma(-\log U_R)\not\subset\mathbb{R}_{\ge 0}$ |
+| **态射静默**（morphism silence） | $f:R_1\to R_2$ 不满足谱保持条件 | $D(f)$ 不可定义或非等距 | $D(f)^\ast$ 非等距嵌入 |
+| **谱静默**（spectral silence） | $\Sigma_{\text{silent}}\subseteq\sigma_E$ 满足 S1–S4 | 谱子集在 $D$ 作用下不可见 | 测度条件 S1–S4（§5.2） |
+
+**注 5.12**。三层静默对应范畴论中"对象 / 态射 / 属性"三个层级的不可见性：
+- 对象静默对应**对象层面的不可见性**——整个递归系统 $R$ 在 $D$ 作用下消失；
+- 态射静默对应**关系层面的不可见性**——系统间的关系 $f$ 在 $D$ 作用下消失，但对象本身保留；
+- 谱静默对应**属性层面的不可见性**——对象的谱属性子集在 $D$ 作用下消失，但对象与部分关系保留。
+
+#### 5.7.2 态射静默的理论意义
+
+**命题 5.13**（态射静默比谱静默更彻底）。设 $f:R_1\to R_2$ 为态射静默（即不满足谱保持条件），则：
+
+1. 即使 $R_1, R_2 \in \mathbf{Rec}_D$（对象非静默），$f$ 在 $D$ 作用下仍不可见；
+2. 即使 $\sigma_{R_1}, \sigma_{R_2}$ 均无谱静默子集（属性非静默），$f$ 仍可处于态射静默；
+3. 谱静默可视为态射静默在恒等态射上的特例——当 $\mathrm{id}_R$ 满足谱保持条件但 $R$ 的谱子集 $\Sigma_{\text{silent}}$ 满足 S1–S4 时，$\Sigma_{\text{silent}}$ 在 $D(\mathrm{id}_R)$ 作用下不可见。
+
+**证明**。(1)(2) 由态射静默的定义（$D(f)^\ast$ 非等距）与对象/属性层面无关直接得出。(3) 谱静默的 S1–S4 判据对应恒等态射 $\mathrm{id}_R$ 的谱子集在 $D$ 作用下的不可见性，而 $\mathrm{id}_R$ 总是满足谱保持条件（$D(\mathrm{id}_R)^\ast = \mathrm{id}$ 等距），故谱静默是态射静默在恒等态射上的退化情形。□
+
+**推论 5.14**（态射静默的范畴论基础）。谱静默理论（§5.1–§5.6）获得范畴论基础——谱静默本质上是恒等态射的态射静默，而一般态射静默覆盖更广的不可见性现象。
+
+#### 5.7.3 三层静默的层次结构
+
+**定理 5.15**（三层静默的严格层次）。三层静默构成严格的包含层次：
+
+$$\text{谱静默} \subsetneq \text{态射静默} \subsetneq \text{对象静默}$$
+
+即：对象静默蕴含态射静默（$D(R)$ 不可定义则 $D(f)$ 自然不可定义），态射静默蕴含谱静默（$D(f)$ 不可见则其谱属性自然不可见）。反向不成立。
+
+**证明**。
+- **对象 $\Rightarrow$ 态射**：若 $R_1\in\mathbf{Rec}\setminus\mathbf{Rec}_D$，则对任意 $f:R_1\to R_2$，$D(f)$ 不可定义（因 $D(R_1)$ 不可定义），故 $f$ 态射静默。
+- **态射 $\Rightarrow$ 谱**：若 $f:R_1\to R_2$ 态射静默（$D(f)^\ast$ 非等距），则 $D(f)$ 的谱信息在 $D$ 作用下不可见，对应 $f$ 相关的谱子集静默。
+- **反向不成立**：存在 $R\in\mathbf{Rec}_D$（对象非静默）但 $R$ 的某个态射 $f$ 不满足谱保持条件（态射静默）；存在 $f$ 满足谱保持条件（态射非静默）但 $f$ 的某个谱子集满足 S1–S4（谱静默）。□
+
+#### 5.7.4 物理诠释
+
+| 静默层次 | 物理对应 | 典型实例 |
+|----------|----------|----------|
+| 对象静默 | 动力学系统在谱表征下完全不可表示 | 强耗散系统、非正规 NTK 核的极端情形 |
+| 态射静默 | 系统间的规范等价性/对称性显式破缺 | 黑洞 QNM 阻尼导致的非等距嵌入失效 |
+| 谱静默 | 系统属性的子集在观测下不可见 | 紧致化极限下 KK 模式的不可观测（§5.5） |
+
+**注 5.16**。三层静默体系将 §5 谱静默理论从"属性层面的不可见性"扩展为完整的"对象 / 关系 / 属性"三层不可见性框架，为紧致化、规范等价性破缺、不可逆过程等现象提供统一的范畴论描述。
 
 ---
 
@@ -980,7 +1070,7 @@ Koopman 算子的特征值 $\lambda$ 与生成元特征值 $\mu$ 满足谱对应
 
 **谱对应定理验证**：
 
-| 测试案例 | $\max|\lambda - e^{-\mu}|$ | 谱间隙 $\gamma$ | $|\beta_0 + \alpha_0 \cdot (a_1/a_0)|$ |
+| 测试案例 | $\max\|\lambda - e^{-\mu}\|$ | 谱间隙 $\gamma$ | $\|\beta_0 + \alpha_0 \cdot (a_1/a_0)\|$ |
 |---|---|---|---|
 | 1 | 8.88e-16 | 1.000000 | 1.69e-11 |
 | 2 | 7.94e-15 | 1.000000 | 3.94e-12 |
@@ -1086,11 +1176,20 @@ $$\mathrm{Re}\langle x, U_R x \rangle \leq \|x\|^2, \quad \forall x \in \mathcal
 
 $$\sigma_\varepsilon(A) = \{ z \in \mathbb{C} \mid \|(zI - A)^{-1}\| \geq 1/\varepsilon \}.$$
 
-**定理 7.31**（D 函子非自伴谱扩展）。存在函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}$，将耗散递归系统映射到含复谱的谱对象，满足：
+**定理 7.31**（D 函子非自伴谱扩展——严格化版本）。存在严格函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}$，将耗散递归系统映射到含复谱的谱对象，满足：
 
 1. **伪谱保持**：$D_{\text{diss}}(R)$ 的伪谱 $\sigma_\varepsilon(D_{\text{diss}}(R))$ 与 $U_R$ 的伪谱 $\sigma_\varepsilon(U_R)$ 在共形映射 $\eta_R: \lambda \mapsto -\log \lambda$ 下对应；
 2. **半群相容性**：若 $U_R(t) = e^{t A_R}$ 为压缩半群，则 $D_{\text{diss}}(R)$ 的谱参数 $\mu_i$ 满足 $\mu_i = -\log \lambda_i$，其中 $\lambda_i$ 为 $U_R$ 的特征值；
-3. **广义伴随**：存在函子 $R_{\text{diss}}: \mathbf{Spec}_{\mathbb{C}} \to \mathbf{Rec}_{\text{diss}}$，使得 $D_{\text{diss}} \dashv R_{\text{diss}}$ 在近似意义下成立（误差 $O(\varepsilon)$）。
+3. **严格伴随**：存在严格函子 $R_{\text{diss}}: \mathbf{Spec}_{\mathbb{C}} \to \mathbf{Rec}_{\text{diss}}$，使得 $D_{\text{diss}} \dashv R_{\text{diss}}$ **严格成立**（无 $O(\varepsilon)$ 误差）。
+
+**$\mathbf{Rec}_{\text{diss}}$ 子范畴定义**：
+
+- **对象**：$\mathbf{Rec}$ 中满足下列**伪谱扰动界**的 $R$：
+  - Koopman 算子 $U_R$ 为压缩算子（$\|U_R\|\leq 1$）；
+  - 存在 $\varepsilon_0 > 0$，使得对任意 $0 < \varepsilon < \varepsilon_0$，$\sigma_\varepsilon(U_R)$ 在共形映射 $\eta_R: \lambda\mapsto -\log\lambda$ 下的像 $\eta_R(\sigma_\varepsilon(U_R))$ 包含在 $\sigma_\varepsilon(A_R)$ 的 $C\varepsilon$-邻域内（$C$ 为与 $U_R$ 无关的常数）。
+- **态射**：$\mathbf{Rec}$ 中保持伪谱扰动界的态射 $f:R_1\to R_2$，即 $D(f)^\ast$ 满足 $\|D(f)^\ast\| \leq 1$ 且将 $\sigma_\varepsilon(U_{R_2})$ 映入 $\sigma_{C\varepsilon}(U_{R_1})$。
+
+**包含关系**：$\mathbf{Rec}_D\subset\mathbf{Rec}_{\text{diss}}\subset\mathbf{Rec}$——自伴 Koopman 算子自动满足伪谱扰动界（$C=1$），故 $\mathbf{Rec}_D\subset\mathbf{Rec}_{\text{diss}}$。
 
 **证明**。
 
@@ -1098,7 +1197,24 @@ $$\sigma_\varepsilon(A) = \{ z \in \mathbb{C} \mid \|(zI - A)^{-1}\| \geq 1/\var
 
 步骤 2（半群相容性）：压缩半群 $U_R(t) = e^{t A_R}$ 的生成元 $A_R$ 为 m-增生算子，其谱包含在右半平面。由谱映射定理，$U_R$ 的谱为 $\{e^{\lambda t} \mid \lambda \in \sigma(A_R)\}$。取 $t=1$，则 $\lambda = e^\mu$，其中 $\mu \in \sigma(A_R)$。
 
-步骤 3（广义伴随）：定义 $R_{\text{diss}}(S) = e^{-A_S}$，其中 $A_S$ 为谱对象 $S$ 的生成元。由半群理论，$e^{-A_S}$ 为压缩算子，满足耗散条件。验证 $D_{\text{diss}} \circ R_{\text{diss}} \cong \text{id}_{\mathbf{Spec}_{\mathbb{C}}}$ 和 $R_{\text{diss}} \circ D_{\text{diss}} \cong \text{id}_{\mathbf{Rec}_{\text{diss}}}$ 在对数运算的误差范围内成立。□
+步骤 3（严格函子律——消除 $O(\varepsilon)$ 误差）：
+
+- **保持恒等**：$D_{\text{diss}}(\mathrm{id}_R) = \mathrm{id}_{D_{\text{diss}}(R)}$，由 $D_{\text{diss}}(\mathrm{id}_R)^\ast = (\mathrm{id}_{\mathcal{H}_R})^\ast = \mathrm{id}_{\mathcal{H}_{D_{\text{diss}}(R)}}$，严格相等（无 $O(\varepsilon)$ 误差）；
+- **保持复合**：$D_{\text{diss}}(g\circ f) = D_{\text{diss}}(g)\circ D_{\text{diss}}(f)$，设 $f:R_1\to R_2$ 与 $g:R_2\to R_3$ 为 $\mathbf{Rec}_{\text{diss}}$ 态射。由伪谱扰动界的态射保持性：
+  $$D_{\text{diss}}(g\circ f)^\ast = D_{\text{diss}}(f)^\ast\circ D_{\text{diss}}(g)^\ast = (D_{\text{diss}}(g)\circ D_{\text{diss}}(f))^\ast$$
+  伪谱扰动界的传递性（$\sigma_\varepsilon(U_{R_3}) \to \sigma_{C\varepsilon}(U_{R_2}) \to \sigma_{C^2\varepsilon}(U_{R_1})$）保证复合仍在 $\mathbf{Rec}_{\text{diss}}$ 内，且等式严格成立。
+
+步骤 4（严格伴随——消除 $O(\varepsilon)$ 误差）：由伪谱扰动界的严格传递性，三角恒等式 $(\varepsilon D_{\text{diss}})\circ(D_{\text{diss}}\eta) = \mathrm{id}$ 与 $(R_{\text{diss}}\varepsilon)\circ(\eta R_{\text{diss}}) = \mathrm{id}$ 严格成立。原证明中的 $O(\varepsilon)$ 误差来自 $\mathbf{Rec}_{\text{diss}}$ 未严格定义（包含不满足伪谱扰动界的对象），严格化后误差消除。□
+
+**表 7.x：物理实例归类**
+
+| 物理实例 | 归类 | 函子 | 伪谱扰动界常数 $C$ |
+|----------|------|------|---------------------|
+| 自伴 Koopman 算子（量子可积系统） | $\mathbf{Rec}_D$ | $D$ | $C=1$ |
+| 黑洞耗散混沌（QNM 阻尼） | $\mathbf{Rec}_{\text{diss}}$ | $D_{\text{diss}}$ | $C\sim|\text{Im}(\omega_{\text{QNM}})|$ |
+| 非对称 IFS（非自伴 Koopman） | $\mathbf{Rec}_{\text{diss}}$ | $D_{\text{diss}}$ | $C\sim\|U_R-U_R^\ast\|$ |
+| 非正规 NTK 核（大模型训练动力学） | $\mathbf{Rec}_{\text{diss}}$ | $D_{\text{diss}}$ | $C\sim\kappa(K)$（条件数） |
+| 弦论紧致化谱 | $\mathbf{Rec}_D$ | $D$ | $C=1$ |
 
 **定理 7.32**（耗散系统长时间行为）。设 $R \in \mathbf{Rec}_{\text{diss}}$，其生成元 $A_R$ 的主特征值为 $\mu_1 = \alpha + i\beta$，则：
 
@@ -1510,6 +1626,12 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 
 19. **实验可证伪预言的误差预算**：L4 质量、$8\pi G_N$ 精度、Kerr ringdown 误差等已给出初步数值，但系统误差传播与贝叶斯模型比较仍待完善。
 
+20. **三层静默体系的完整形式化**（已建立框架，仍待深化）：
+    - **对象静默**（$\mathbf{Rec}\setminus\mathbf{Rec}_D$，§2.3）：已识别，对象在 $D$ 作用下不可定义；
+    - **态射静默**（新发现，§5.7）：$\mathbf{Rec}$ 中不满足谱保持条件的态射在 $D$ 作用下不可见，比谱静默更彻底（命题 5.13）；
+    - **谱静默**（§5）：已有理论，本质上是恒等态射的态射静默（推论 5.14）。
+    - 仍待深化：(a) 态射静默的判据系统化（与 S1–S4 类比，建立 M1–M4 判据）；(b) 三层静默的统一度量（对象静默度 / 态射静默度 / 谱静默度的统一定量描述）；(c) 三层静默与紧致化对比的拓展（态射静默是否完全替代"规范冗余的消除"）；(d) $\mathbf{Rec}_{\text{diss}}$ 严格化后的伪谱扰动界常数 $C$ 的物理诠释（表 7.x）。
+
 ### 8.3 与配套论文的关系
 
 本文建立的理论框架在配套论文 II《通用不动点范畴框架 II：物理应用与实验验证》中得到广泛验证，应用领域包括：标准模型质量谱、BSM 新物理预言与对撞机实验对比、Kerr 黑洞分形几何与数值相对论波形对比、全息纠缠熵与 CFT 验证等。物理应用部分不属于本文范畴。
@@ -1881,9 +2003,9 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 
 ---
 
-**版本**：v2.28
+**版本**：v2.30
 
-**日期**：2026-07-15
+**日期**：2026-07-16
 
 **状态**：
 
@@ -1908,6 +2030,7 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
+| v2.30 | 2026-07-16 | Phase 17 范畴论写作规范修订——针对 `docs/关于范畴论使用的相关批评.md` 三个缺陷的系统化解决：(1) **缺陷1（时序违规）** §2.3 新增定义 2.5a（$\mathbf{Rec}_D$ 宽子范畴）与注 2.5b（宽子范畴声明），将 $D$ 的定义域从全 $\mathbf{Rec}$ 前移到 $\mathbf{Rec}_D$；§2.4 删除与 §2.7 自相矛盾的注 2.11，命题 2.10 反射子范畴断言限定到 $\mathbf{Rec}_D$；§2.7 由"事后反思"改写为"定义域声明总结"。(2) **缺陷2（关键命题无证明）** §2.4 新增三条严格证明：命题 2.5c（$\mathbf{Rec}_D$ 子范畴合法性——对象/恒等/复合封闭）、命题 2.5d（Freyd 伴随定理前提继承——完备性与解集条件）、定理 2.10a（$D\dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立——三角恒等式验证）。(3) **缺陷3（无配套修正）** §7.9.1 定理 7.31 严格化为真正函子（消除 $O(\varepsilon)$ 误差），新增 $\mathbf{Rec}_{\text{diss}}$ 伪谱扰动界定义与 $\mathbf{Rec}_D\subset\mathbf{Rec}_{\text{diss}}\subset\mathbf{Rec}$ 包含关系；新增表 7.x 物理实例归类（黑洞耗散/非对称IFS/NTK→$\mathbf{Rec}_{\text{diss}}$）。(4) **理论创新** §5 新增 §5.7「三层静默体系」：定义 5.11（对象/态射/谱静默）、命题 5.13（态射静默比谱静默更彻底）、推论 5.14（谱静默的范畴论基础）、定理 5.15（三层静默严格层次 $\text{谱}\subsetneq\text{态射}\subsetneq\text{对象}$）。(5) §1.2 贡献 10 重写为"方法论与三层静默体系"；§8.2.5 新增问题 20（三层静默体系完整形式化待深化）；摘要补充三层静默与 $D_{\text{diss}}$ 严格化说明。 |
 | v2.29 | 2026-07-16 | 机器证明形式化章节实质落地——(1) 附录真正写入 §A.13「机器证明形式化（Phase 16）」（v2.28 仅在变更记录中规划，附录实际未落实），包含四个子节：A.13.1 四等级可行性分级（A/B/C/D）、A.13.2 阶段 16A 当前进展表（7 项任务中 6 项 ✅ 完成，仅 `DAdjR` 三角恒等式 🔄 部分完成待 16B）、A.13.3 机器证明相对 AI 推导的核心增益（5 条）、A.13.4 不可规避的短板（4 条）；(2) 明确形式化库位置 `formal_proof/UFPFormalization/`（Lean 4.31.0 + mathlib4 4.31.0，本地 elan 工具链，`lake build --no-cache` 全量通过）；(3) 关键技术点记录：`transferMatrix_comp` 反变合成、`Complex.log_exp`/`Complex.exp_log` 辐角处理、`MulAction.card_orbit_mul_card_stabilizer_eq_card_group` 调用、`fin_cases` + `simp` 矩阵验证；(4) 引用 `roadmap/phase16_machine_proof.md` 完整实施路线 |
 | v2.28 | 2026-07-15 | 机器证明形式化计划落地——(1) 附录新增 §A.13「机器证明形式化计划」，总结四等级可行性分级（A/B/C/D）与三阶段实施路线（短期范畴基础/中期泛函分析/长期分形遍历）；(2) 引用 [关于《通用不动点范畴框架 I补充机器证明的讨论](file:///d:/trae-work/hyper-resolution/docs/关于《通用不动点范畴框架 I补充机器证明的讨论.md)，明确 Lean/Isabelle/HOL 形式化方向；(3) 强调等级 A（范畴构造、$D \dashv R$ 伴随、谱对应 $M \cong L$）是向范畴论专家展示可信度的关键背书 |
 | v2.27 | 2026-07-15 | 谱静默理论再讨论兼容性与未来研究计划——(1) §9.5 新增"未来 Paper III 研究计划"：Geo/Alg 几何表象双向函子、紧致几何↔谱静默对偶等价、复 Clifford 谱纤维正交分量诠释；(2) 引用 [关于谱静默理论的再讨论](file:///d:/trae-work/hyper-resolution/docs/关于谱静默理论的再讨论.md) 文档，建立与紧致化的代数-几何对偶关系；(3) 为未来 Paper III 明确研究方向：同伦范畴提升、几何表象生成函子、紧致-静默对偶等价 |

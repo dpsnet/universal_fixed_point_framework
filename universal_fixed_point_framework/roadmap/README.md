@@ -12,6 +12,8 @@
 - `phase13_theory_transformation.md`：理论转化推进计划（四大发展主线：纯数学完备化、量子引力统一、跨学科AI融合、实验工程落地）。
 - `phase14_open_problems_advancement.md`：Paper I §8.2 开放问题推进计划（纯数学/数值工程/物理理论三类问题的代码实现与下一步严格化方向）。
 - `phase15_shortboard_advancement.md`：理论短板推进计划——基于 `docs/理论短板分析.md` 的 79 项短板逐项评估，规划 5 阶段推进路线图（Phase 15A-D）。
+- `phase16_machine_proof.md`：机器证明形式化计划——基于 Lean 4 + mathlib4 的范畴论形式化背书，规划四等级可行性分级（A/B/C/D）与三阶段实施路线（16A 范畴基础/16B 泛函分析/16C 分形遍历）。
+- `phase17_category_revision_plan.md`：范畴论写作规范修订计划——针对 `docs/关于范畴论使用的相关批评.md` 的三个缺陷（定义时序违规、关键命题无证明、无配套修正），规划 $\mathbf{Rec}_D$ 宽子范畴严格化、$D_{\text{diss}}$ 真正函子化、三层静默体系（对象/态射/谱）理论创新。
 
 ## 当前优先级
 
@@ -170,3 +172,5 @@ Phase 9 开放问题已全面推进：奇异连续谱系统刻画（谱维数谱
 | 2026-07-13 | D 函子代码质量修复 + 理论更新：移除 Koopman 强制对称化（Rec 扩展为完整范畴），新增反射子范畴命题 2.10 与注 2.11；logm fallback；忠实性测试加强；交织验证选项；Callable 误差估计 | Code Quality |
 | 2026-07-13 | Phase 15 启动：基于 docs/理论短板分析.md 系统评估 79 项短板，创建 phase15_shortboard_advancement.md（5 阶段路线图） | Phase 15 |
 | 2026-07-13 | Phase 15A-1 完成：新增 test_high_dimensional_ifs.py（13 项测试），全仓库测试从 67 增至 80 | Phase 15A |
+| 2026-07-16 | 新增 Phase 16：机器证明形式化计划（Lean 4 + mathlib4，四等级分级，三阶段路线） | Phase 16 |
+| 2026-07-16 | 新增 Phase 17：范畴论写作规范修订计划，从 `docs/关于范畴论写作规范批评的修订方案.md` 整理归并——针对三个缺陷规划 $\mathbf{Rec}_D$ 宽子范畴严格化、$D_{\text{diss}}$ 真正函子化、三层静默体系理论创新 | Phase 17 |
