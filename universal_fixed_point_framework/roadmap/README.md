@@ -17,7 +17,9 @@
 - `phase18_fundamental_resolution_plan.md`：框架顶层设计根本矛盾解决计划——针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然等价失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与物理硬伤（P1-P4），规划辫子自然等价、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案。**✅ 全部 22 项已完成**。
 - `phase19_paper3_spectral_classification.md`：**Paper III 推进计划**——谱去递归函子的谱分类完备性定理，覆盖 $\mathbf{Rec}_D$/$\mathbf{Rec}_{\text{diss}}$/$\mathbf{Rec}\setminus\mathbf{Rec}_D$ 三层结构。
 - `phase20_paper4_stretched_d_brane.md`：**Paper IV 推进计划**——$D$ 函子对 Stretched Horizon 与 D-brane 的谱等价性证明，扩展至弦论对偶统一。**🆕 新建**。
-- `phase21_paper5_spectral_dynamics.md`：**Phase 21：Paper V 谱动力学推进计划**——谱流方程定义、力统一公式、逆平方律谱几何、对称性破缺推导、量子化（Quantization.lean + NormalOrdering.lean）、β函数精确匹配、数学严格化（CategoryGeometry.lean）、类GR场方程涌现、宇宙学谱动力学（FLRW谱方程 + 原初扰动 + 暗能量）。**✅ 19/19 全部完成**。
+- `phase21_paper5_spectral_dynamics.md`：**Phase 21：Paper V 谱动力学推进计划**——谱流方程定义、力统一公式、逆平方律谱几何、对称性破缺推导、量子化、β函数精确匹配、数学严格化、类GR场方程涌现、宇宙学谱动力学。**✅ 19/19 全部完成**。
+- `phase22_spectral_dynamics_deepening.md`：**Phase 22：谱动力学深化**——$\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展、非平衡谱热力学、黑洞视界谱动力学、奇点谱消解、谱流体动力学。**✅ 概念框架全部完成**。
+- `phase23_26_papers_VI_IX.md`：**Phase 23–26：新论文规划**——Paper VI 谱流体动力学（**✅ v0.1**）、Paper VII 非平衡谱热力学（**✅ v0.1**）、Paper VIII 黑洞视界谱动力学（**✅ v0.1**）、Paper IX 奇点谱消解与量子宇宙学（**✅ v0.1**）。**全部完成**。
 
 ## 当前优先级
 
