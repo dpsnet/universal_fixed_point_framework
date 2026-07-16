@@ -37,6 +37,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - **Spectral correspondence natural equivalence** $\eta_R: \mu \mapsto e^{-\mu}$: a natural bijection between compression spectra and operator spectra.
 - **Orbit functor** $O$: encodes symmetry weights under gauge-group actions.
 - **Universal fixed-point equation** $\mathcal{F}[\mathcal{V}] = \mathcal{V}$: a unified form of subsystem fixed-point equations.
+- **Dual-track Koopman operator**: unconditional definition on $\ell^\infty(X)$ + spectral correspondence on $L^2$/$C(X)$ (`DynSys.lean`)
+- **Lean 4 formalization**: 24 modules zero diagnostics, 15/19 functional modules fully proven, covering spectral classification/IC verification/IFS/ergodic theory/thermodynamic formalism
 
 ### 2.3 Key Physical Correspondences
 
