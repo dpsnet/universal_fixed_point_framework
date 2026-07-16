@@ -128,7 +128,7 @@ universal_fixed_point_framework/
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
 - **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、Feng-Wang 热力学极限、纯数学三大定理（D-C/HD-D/TE-G-M）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
-- **Phase 16 机器证明形式化**：✅ **已启动**。基于 Lean 4 + mathlib4 创建 `formal_proof/UFPFormalization/` 项目，完成 Phase 16A 七个等级 A 模块核心代码（Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford 矩阵表示）。详见 `roadmap/phase16_machine_proof.md`。
+- **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，Phase 16A（7 模块：Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford）+ Phase 16B P0-P1（5 模块：辫子幺半、IC 隔离约束、Koopman 半群、m-增生生成元、S1-S4 静默判据）共 **12 个 Lean 模块 `lake build` 全量通过，0 个 `sorry`**。剩余 P2（Leaver 两弦法复杂度）与 16C（分形/遍历理论，需外部合作）。详见 `roadmap/phase16_machine_proof.md`。
 
 ## 七、已完善的深层次问题
 

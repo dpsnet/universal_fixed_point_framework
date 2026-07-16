@@ -8,3 +8,5 @@ import UFPFormalization.OrbitFunctor
 import UFPFormalization.Clifford
 import UFPFormalization.Braided
 import UFPFormalization.IsolationConstraints
+import UFPFormalization.OperatorTheory
+import UFPFormalization.Silence

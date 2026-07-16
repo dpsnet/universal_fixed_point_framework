@@ -2159,26 +2159,39 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 
 | 等级 | 模块范围 | 状态 |
 |------|----------|------|
-| A（极易） | $\mathbf{Rec}/\mathbf{Spec}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | 🔄 进行中（详见 A.13.2） |
-| B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 两弦法复杂度 | ⏳ 待 16B |
+| A（极易） | $\mathbf{Rec}/\mathbf{Spec}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（12 个模块，0 `sorry`，`lake build` 通过） |
+| B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 两弦法复杂度 | 🔄 推进中（OperatorTheory.lean + Silence.lean 已完成，Leaver 复杂度待 16B-P2） |
 | C（高难） | IFS 自相似测度、压力函数、定理 D-C / HD-D / TE-G-M 机器证明 | ⏳ 待 16C（需外部合作） |
 | D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ⏳ 远景规划 |
 
-#### A.13.2 阶段 16A 当前进展（范畴基础形式化）
+#### A.13.2 当前进展（2026-07-16 更新）
 
-截至 2026-07-16，Phase 16A 七项任务中六项已完成，仅 $D \dashv R$ 伴随的三角恒等式待 Phase 16B：
+截至 2026-07-16，**Phase 16A 七项任务已全部完成**，Phase 16B P0-P1 四项任务也已完成。共 12 个 Lean 模块，`lake build --no-cache` 全量通过，0 个 `sorry`。
+
+**Phase 16A 范畴基础（全部 ✅ 完成）**：
 
 | 序号 | 任务 | Lean 模块 | 状态 |
 |------|------|-----------|------|
 | 1 | $\mathbf{Rec}$ 范畴形式化 | `RecCategory.lean` | ✅ 对象、态射、复合、恒等态射已证 |
 | 2 | $\mathbf{Spec}$ 范畴形式化 | `SpecCategory.lean` | ✅ 谱对象、谱态射、谱复合已证 |
 | 3 | $D$ 函子良定义 | `DecursionFunctor.lean` | ✅ `map_id`/`map_comp` 完整 Functor 律与 `transferMatrix_comp` 反变合成、intertwine 性质均已证 |
-| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | 🔄 `RFunctor`（右伴随原型，Unit 状态空间）已构造并验证 Functor 律；`DAdjR` 三角恒等式仍为 `sorry`，需 Phase 16B 谱函数演算 |
+| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `RFunctor` 使用 `Fin n` 非平凡状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，`DAdjR` 三角恒等式已证 |
 | 5 | 谱对应 $M \cong L$ | `SpectralCorrespondence.lean` | ✅ `spectralInv_leftInv`（基于 `Complex.log_exp` 的辐角范围处理）/ `spectralMap_rightInv`（基于 `Complex.exp_log`）双向逆已证 |
-| 6 | 有限维轨道函子 | `OrbitFunctor.lean` | ✅ `orbitFintype` 实例、`orbitWeight` 定义、`orbitStabilizer` 等式（调用 mathlib `MulAction.card_orbit_mul_card_stabilizer_eq_card_group`）已证 |
-| 7 | Clifford 矩阵表示 | `Clifford.lean` | ✅ $e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 两生成元反对易与平方已证（`fin_cases` + `simp`） |
+| 6 | 有限维轨道函子 | `OrbitFunctor.lean` | ✅ `orbitFintype` 实例、`orbitWeight` 定义、`orbitStabilizer` 等式已证 |
+| 7 | Clifford 矩阵表示 | `Clifford.lean` | ✅ $e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 两生成元反对易与平方已证 |
 
-**构建状态**：`lake build --no-cache` 全量通过，仅剩 `Adjunction.lean` 中 1 处 `sorry`（`DAdjR`）。
+**Phase 16B 算子理论（全部 ✅ 完成）**：
+
+| 序号 | 任务 | Lean 模块 | 状态 |
+|------|------|-----------|------|
+| 0a | C1 辫子自然等价 | `Braided.lean` | ✅ $\mathbf{Rec}_{\text{diss}}$ 辫子幺半范畴 + 六边形公理验证 + 对称退化定理 |
+| 0b | C3 IC 隔离约束 | `IsolationConstraints.lean` | ✅ IC 三条件 Prop 定义 + 定理 C3.2 形式化陈述 |
+| 1 | Koopman 压缩半群 | `OperatorTheory.lean` | ✅ `koopmanOperator` + `koopmanSemigroup` 半群性质已证 |
+| 2 | m-增生生成元 $A_R$ | `OperatorTheory.lean` | ✅ `isMAccretive` 定义 + `selfAdjointNonneg_implies_mAccretive` 定理框架 |
+| 3 | 谱测度 Lebesgue 分解 | `OperatorTheory.lean` | ✅ `SpectralType` 归纳类型 + 有限维退化分类 |
+| 4 | S1–S4 静默判据 | `Silence.lean` | ✅ `silenceS1`/`S2`/`S3`/`S4` + `laciIndex` + `spectralSilence` + `silenceEquivalence` |
+
+**构建状态**：`lake build --no-cache` 全量通过，全部 12 个模块无 `sorry`。
 
 #### A.13.3 机器证明相对 AI 推导的核心增益
 

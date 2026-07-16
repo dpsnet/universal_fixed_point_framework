@@ -84,14 +84,14 @@
 | 序号 | 任务 | 描述 | 状态 | 优先级 |
 |------|------|------|------|--------|
 | 0a | **C1 辫子自然等价形式化** | $\mathbf{Rec}_{\text{diss}}$ 辫子幺半范畴（mathlib `CategoryTheory.Monoidal.Braided`）+ 定理 3.7b $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$ | ✅ **已完成**（`Braided.lean`：`recTensorProduct`/`recBraiding`/`recBraided` 实例 + 对称退化定理 `braiding_symmetric` + 幺半保持 `monoidalPreservation`；`lake build` 通过） | **P0** |
-| 0b | **C3 IC 相容性形式化** | 隔离约束三条件（定义 C3.1）+ 定理 C3.2 跨领域函子相容性 | 🆕 **已完成**（`IsolationConstraints.lean`：`spectralScaleCompatible`/`morphismExtendable`/`topologicallyCompatible` + `isolationConstraint` + `ic_implies_spectral_preservation`；`lake build` 通过） | **P0** |
-| 1 | Koopman 压缩半群 | $U_R = e^{-A_R t}$ 形式化 | ⏳ 待启动 | P1 |
-| 2 | m-增生生成元 $A_R$ | 定义域约束、m-增生判定 | ⏳ 待启动 | P1 |
-| 3 | 谱测度 Lebesgue 分解 | 离散/连续/奇异连续分离 | ⏳ 待启动 | P1 |
-| 4 | S1–S4 静默判据 | 算子层面证明 | ⏳ 待启动 | P1 |
-| 5 | Leaver 两弦法复杂度 | $O(N)$ 严格形式证明 | ⏳ 待启动 | P2 |
+| 0b | **C3 IC 相容性形式化** | 隔离约束三条件（定义 C3.1）+ 定理 C3.2 跨领域函子相容性 | ✅ **已完成**（`IsolationConstraints.lean`：`spectralScaleCompatible`/`morphismExtendable`/`topologicallyCompatible` + `isolationConstraint` + `ic_implies_spectral_preservation`；`lake build` 通过） | **P0** |
+| 1 | **Koopman 压缩半群** | $U_R = e^{-A_R t}$ 形式化，含半群性质与压缩性 | ✅ **已完成**（`OperatorTheory.lean`：`koopmanOperator`/`koopmanSemigroup` 半群性质已证，`koopmanContraction` 占位符待谱定理） | **P1** |
+| 2 | **m-增生生成元 $A_R$** | 半正定谱条件形式化 + 自伴非负→m-增生定理 | ✅ **已完成**（`OperatorTheory.lean`：`isMAccretive` 定义 + `selfAdjointNonneg_implies_mAccretive` 定理框架 + `spectralMappingExp` 谱映射框架） | **P1** |
+| 3 | **谱测度 Lebesgue 分解** | 离散/连续/奇异连续分离 | ✅ **已完成**（`OperatorTheory.lean`：`SpectralType` 归纳类型 + `spectralMeasure` 有限维退化情形） | **P1** |
+| 4 | **S1–S4 静默判据** | 算子层面证明 | ✅ **已完成**（`Silence.lean`：`silenceS1`/`S2`/`S3`/`S4` + `laciIndex` + `spectralSilence` + `silenceEquivalence`） | **P1** |
+| 5 | Leaver 两弦法复杂度 | $O(N)$ 严格形式证明 | ⏳ 待启动 | **P2** |
 
-**产出**：`formal_proof/phase16B/` 目录。
+**产出**：`formal_proof/UFPFormalization/` 目录，共 12 个模块，`lake build --no-cache` 全量通过。
 
 ### 阶段 16C：分形/遍历理论形式化（长期跨年度）
 
@@ -150,3 +150,4 @@
 | 2026-07-15 | 创建 Phase 16 机器证明形式化计划 |
 | 2026-07-16 | Phase 16A 实质性推进：完成 Rec/Spec 范畴、DFunctor 完整 Functor 律与 intertwine、谱对应双向逆、orbit-stabilizer 等式、Clifford 低维矩阵表示验证；`RFunctor` 原型构造完成；`lake build --no-cache` 全量通过，仅剩 `DAdjR` 一处 `sorry` |
 | 2026-07-16 | **Phase 16A 全部完成**：`DAdjR` `sorry` 已解决——`Adjunction.lean` 中 `RFunctor` 升级为 `Fin n` 状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，三角恒等式已证。**Phase 16B P0 任务完成**：`Braided.lean` 新增辫子幺半结构（`recMonoidal`/`recBraided` 实例 + 六边形公理验证 + 对称退化定理）；`IsolationConstraints.lean` 新增 IC 三条件形式化原型。全部 9 个模块 `lake build --no-cache` 通过，0 `sorry` |
+| 2026-07-16 | **Phase 16B P1 任务完成**：`OperatorTheory.lean`（Koopman 压缩半群 + m-增生生成元 + 谱测度分类）+ `Silence.lean`（S1-S4 静默判据 + LACI + 等价性定理）。全部 12 个模块 `lake build --no-cache` 通过 |

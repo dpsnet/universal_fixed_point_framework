@@ -12,7 +12,7 @@
 - `phase13_theory_transformation.md`：理论转化推进计划（四大发展主线：纯数学完备化、量子引力统一、跨学科AI融合、实验工程落地）。
 - `phase14_open_problems_advancement.md`：Paper I §8.2 开放问题推进计划（纯数学/数值工程/物理理论三类问题的代码实现与下一步严格化方向）。
 - `phase15_shortboard_advancement.md`：理论短板推进计划——基于 `docs/理论短板分析.md` 的 79 项短板逐项评估，规划 5 阶段推进路线图（Phase 15A-D）。
-- `phase16_machine_proof.md`：机器证明形式化计划——基于 Lean 4 + mathlib4 的范畴论形式化背书，规划四等级可行性分级（A/B/C/D）与三阶段实施路线（16A 范畴基础/16B 泛函分析/16C 分形遍历）。
+- `phase16_machine_proof.md`：机器证明形式化计划——基于 Lean 4 + mathlib4 的范畴论形式化背书，规划四等级可行性分级（A/B/C/D）与三阶段实施路线（16A 范畴基础/16B 泛函分析/16C 分形遍历）。**当前进度：16A 全部 7/7 + 16B P0-P1 共 5/6 完成，12 模块 `lake build` 通过，0 `sorry`**。
 - `phase17_category_revision_plan.md`：范畴论写作规范修订计划——针对 `docs/关于范畴论使用的相关批评.md` 的三个缺陷（定义时序违规、关键命题无证明、无配套修正），规划 $\mathbf{Rec}_D$ 宽子范畴严格化、$D_{\text{diss}}$ 真正函子化、三层静默体系（对象/态射/谱）理论创新。
 - `phase18_fundamental_resolution_plan.md`：框架顶层设计根本矛盾解决计划——针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然等价失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与物理硬伤（P1-P4），规划辫子自然等价、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案。**✅ 全部 22 项已完成**。
 

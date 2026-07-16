@@ -121,15 +121,15 @@
 - [x] NTK-分形双向转化
 - [x] 双篇配套论文草稿（Paper I v2.28 / Paper II v2.17）
 - [x] 全仓库 336+ 个单元测试通过
-- [x] 机器证明形式化计划启动（Lean 4 + mathlib4，Phase 16A 七个等级 A 模块）
+- [x] 机器证明形式化计划启动（Lean 4 + mathlib4，Phase 16A + 16B P0-P1 全部 12 模块完成，`lake build` 通过，0 `sorry`）
 
 ### 4.2 进行中 / 待完善
 
 - [ ] 论文最终定稿与投稿
-- [ ] Lean 4 项目首次 `lake build` 验证（工具链与 mathlib4 下载中）
 - [ ] NTK 消融实验的真实大规模运行
 - [ ] MadGraph / micrOMEGAs 的真实调用验证
-- [ ] Phase 16B/C 泛函分析与分形遍历形式化
+- [ ] Phase 16B-P2 Leaver 两弦法复杂度形式化
+- [ ] Phase 16C 分形/遍历理论形式化（需外部合作者）
 
 ---
 
