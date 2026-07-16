@@ -11,3 +11,4 @@ import UFPFormalization.IsolationConstraints
 import UFPFormalization.OperatorTheory
 import UFPFormalization.Silence
 import UFPFormalization.LeaverComplexity
+import UFPFormalization.ErgodicTheory
