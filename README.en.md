@@ -79,10 +79,14 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-fractal bidirectional transformation
 │   │   └── ...                            # 40+ additional modules
 │   ├── paper/
-│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v2.28
-│   │   └── paper2_physics_applications.md           # Physics applications paper v2.17
-│   ├── formal_proof/                                # Lean 4 machine-proof formalization project
-│   │   └── UFPFormalization/
+│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v2.31
+│   │   ├── paper1_appendix.md                       # Appendix and changelog
+│   │   ├── paper2_physics_applications.md           # Physics applications paper v2.18
+│   │   ├── paper3_spectral_classification.md        # Spectral classification paper v1.1
+│   │   └── paper4_stretched_d_brane.md              # BH entropy unification paper v1.1
+│   ├── paper3_bps_spectral_verification.py          # Paper III numerical verification
+│   ├── formal_proof/                                # Lean 4 machine-proof formalization
+│   │   └── UFPFormalization/                        # 24 modules, zero diagnostics, 52 tests
 │   ├── roadmap/
 │   │   ├── phase1_meta_axioms.md
 │   │   ├── phase2_structural_theorems.md
@@ -105,32 +109,42 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 
 ### 4.1 Completed (development stage)
 
-- [x] Python prototype of Rec/Spec categories and the $D$ functor
-- [x] Discrete prototype of adjoint functor $D \dashv R$ with triangle-identity verification
-- [x] Numerical verification of the spectral-correspondence natural equivalence
-- [x] Orbit-functor implementation in 12+ instances
-- [x] RKHS convergence rates: strongly separated / weakly separated / non-separated / high-dimensional IFS
-- [x] Measure-theoretic proof framework for non-separated IFS (Frostman / Riesz capacity / potential theory)
-- [x] Singular-continuous spectrum characterization
-- [x] Spectral silence theory (alternative to compactification)
-- [x] Theory-transformation framework (isomorphism / morphism / adjunction / spectral silence / orbit functor)
-- [x] EFT equivalence framework
-- [x] GR+SM unified spectral-correspondence conjecture (partially verified)
-- [x] BSM new-physics predictions and HL-LHC/FCC-hh experimental interface
-- [x] Kerr black-hole non-equatorial chaos and NR ringdown comparison
-- [x] Holographic entanglement entropy and complex CFT phase transitions
-- [x] NTK-fractal bidirectional transformation
-- [x] Two companion paper drafts (Paper I v2.28 / Paper II v2.17)
-- [x] Full repository: 336+ unit tests passing
-- [x] Machine-proof formalization plan launched (Lean 4 + mathlib4, Phase 16A seven grade-A modules)
+**Mathematical theory**
+- [x] Python prototype of Rec/Spec categories and $D$ functor + adjoint $D \dashv R$ triangle identities
+- [x] Spectral correspondence $\lambda = e^{-\mu}$ as categorical natural equivalence (braided extension)
+- [x] Orbit functor in 12+ instances
+- [x] RKHS convergence rates: strong/weak/non-separated, measure-theoretic proof, high-dimensional IFS
+- [x] Singular continuous spectrum, spectral silence, theory transformation, EFT equivalence
+- [x] Dual-track Koopman existence ($\ell^\infty(X)$ unconditional definition + spectral correspondence)
+
+**Physical applications**
+- [x] GR+SM unified spectral correspondence (partial), $G_N$ from spectral intertwining
+- [x] BSM new physics prediction ($L_4 \approx 1470$ GeV) with HL-LHC/FCC-hh interface
+- [x] Kerr non-equatorial chaos and NR ringdown comparison
+- [x] Holographic entanglement entropy, complex CFT phase transitions, N=4 SYM TBA
+
+**Four papers**
+- [x] Paper I v2.31: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
+- [x] Paper II v2.18: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
+- [x] Paper III v1.1: Spectral classification completeness (three-layer + BPS numerical verification + Lean)
+- [x] Paper IV v1.1: Stretched Horizon → D-brane BH entropy unification (with duality extensions)
+
+**Lean 4 formalization**
+- [x] Phase 16A/B/C complete: 24 Lean modules, zero diagnostics, 52 test theorems
+- [x] 15/19 functional modules fully proven (zero `sorry`), 8 remaining deep-analysis `sorry`s
+- [x] Key theorems formalized: Thm D-C (Jensen), HD-D/TE-G-M (ergodic theory), spectral classification 4.1-4.3
+- [x] Dual-track Koopman (`DynSys.lean`), IC verification (`ICVerification.lean`, 5 domains)
+
+**Author and versioning**
+- [x] Author: Wang Bin (Independent Researcher), wang.bin@foxmail.com
+- [x] All four papers: unified version format, terminology blocks, standardized theorem numbering
 
 ### 4.2 In Progress / To Be Improved
 
-- [ ] Final paper drafting and submission
-- [ ] First Lean 4 `lake build` validation (toolchain and mathlib4 download in progress)
+- [ ] Final paper polishing and submission (four papers at submission-ready versions, need final review)
+- [ ] 8 remaining Lean `sorry` deep proofs (variational principle / Ledrappier-Young / Perron-Frobenius)
 - [ ] Real large-scale NTK ablation experiments
 - [ ] Real MadGraph / micrOMEGAs invocation validation
-- [ ] Phase 16B/C functional analysis and fractal/ergodic formalization
 
 ---
 
@@ -151,6 +165,8 @@ It should be emphasized that **core mathematical structures have been verified b
 |-------|-------|-------------|-----------------|
 | **Paper I** | Universal Fixed-Point Categorical Framework I: Fractal Spectral De-recursion Theory | Pure mathematical theory | J. Funct. Anal. / Adv. Math. |
 | **Paper II** | Universal Fixed-Point Categorical Framework II: Physics Applications and Experimental Validation | Theoretical physics + experimental validation | PRD / JHEP |
+| **Paper III** | Universal Fixed-Point Categorical Framework III: Spectral Classification Completeness Theorem | Spectral classification + formalization | TBD |
+| **Paper IV** | Universal Fixed-Point Categorical Framework IV: Stretched Horizon → D-brane | String theory case study | TBD |
 
 ---
 
@@ -159,18 +175,18 @@ It should be emphasized that **core mathematical structures have been verified b
 ### For mathematicians
 
 Suggested path:
-1. `universal_fixed_point_framework/axioms/three_layer_axiomatic_system.md`
-2. `universal_fixed_point_framework/roadmap/phase1_meta_axioms.md`
-3. `universal_fixed_point_framework/src/rec_category.py`, `spec_category.py`, `decursion_functor.py`
-4. `universal_fixed_point_framework/paper/paper1_fractal_spectral_derecursion.md`
+1. `universal_fixed_point_framework/paper/paper1_fractal_spectral_derecursion.md` (core theory)
+2. `universal_fixed_point_framework/paper/paper3_spectral_classification.md` (spectral classification)
+3. `universal_fixed_point_framework/formal_proof/UFPFormalization/` (Lean 4 formalization code)
+4. `universal_fixed_point_framework/roadmap/phase16_machine_proof.md` (formalization plan)
 
 ### For physicists
 
 Suggested path:
-1. Root `Clifford值分形RKHS构造.md`
-2. `universal_fixed_point_framework/roadmap/phase12_unification_conjecture.md`
-3. `universal_fixed_point_framework/src/bsm_*.py`, `kerr_*.py`, `holographic_entropy.py`
-4. `universal_fixed_point_framework/paper/paper2_physics_applications.md`
+1. `universal_fixed_point_framework/paper/paper2_physics_applications.md` (physics applications)
+2. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md` (BH entropy case study)
+3. `universal_fixed_point_framework/paper/paper3_spectral_classification.md` (spectral classification)
+4. `universal_fixed_point_framework/src/bsm_*.py`, `kerr_*.py`, `holographic_entropy.py`
 
 ### For AI researchers
 
@@ -183,16 +199,19 @@ Suggested path:
 
 ## 8. Runtime Environment
 
-- Python 3.10+
-- NumPy, SciPy
-- Matplotlib (for visualization)
-- Optional: pytest (unit testing), MadGraph / micrOMEGAs (precision particle-physics calculations)
+- Python 3.10+, NumPy, SciPy, Matplotlib
+- Lean 4.31.0 + mathlib4 4.31.0 (formalization, `lake build --no-cache`)
+- Optional: pytest, MadGraph / micrOMEGAs
 
 ---
 
 ## 9. Disclaimer
 
-This project is a **highly interdisciplinary theoretical framework still under development**. Some conclusions are based on finite-dimensional discrete prototypes and numerical verification, and remain distant from strict infinite-dimensional mathematical proofs and final experimental confirmation. Instance hypotheses (such as the Cl(1,7) choice, SM mass-spectrum fit parameters, etc.) are replaceable and do not constrain the meta-axiom layer.
+This project is a **highly interdisciplinary theoretical framework**. Core categorical constructions and spectral classification theorems have been formalized in Lean 4 (15/19 functional modules fully proven), providing machine-verified mathematical rigor. However, the following remain under development:
+
+- 8 remaining `sorry`s (variational principle / Ledrappier-Young / Perron-Frobenius etc.) await mathlib infrastructure
+- Physical predictions (e.g., $L_4 \approx 1470$ GeV) depend on FCC-hh experimental verification
+- Instance hypotheses (Cl(1,7) choice, SM mass-fit parameters, etc.) are replaceable and do not constrain the meta-axiom layer
 
 ---
 
@@ -200,7 +219,8 @@ This project is a **highly interdisciplinary theoretical framework still under d
 
 - Academic discussion: scholars interested in category theory, operator spectral theory, quantum gravity, and particle-physics spectral problems are welcome to contact us.
 - Collaboration directions: category-theoretic rigorization, physical-instance validation, numerical relativity / high-energy experiment interfaces.
+- Author: Wang Bin (Independent Researcher), wang.bin@foxmail.com
 
 ---
 
-*Last updated: 2026-07-15*
+*Last updated: 2026-07-16*

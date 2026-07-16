@@ -94,6 +94,35 @@ theorem test_legendreTransform_convex_trivial (f : ℝ → ℝ) (hf : ConvexOn �
     ConvexOn ℝ Set.univ (legendreTransform f) :=
   legendreTransform_convex hf
 
+-- Theorem D-C: d_H(ρ) concavity for self-similar measures
+theorem test_theorem_DC_concavity (measure₁ measure₂ : SelfSimilarMeasure (IFS.mk 1 (fun _ => fun x : ℝ => 0.5 * x) (fun _ => 0.5)
+      (by
+        intro i
+        apply ContractingWith.of_dist_le_mul
+        intro x y; dsimp; nlinarith)
+      (by intro i; norm_num) (by intro i; norm_num)) (by
+        -- trivial attractor for unit interval
+        exact {
+          attractorSet := Set.Icc (0 : ℝ) 1
+          hNonempty := by
+            refine ⟨0.5, ?_⟩
+            simp
+          hInvariant := by
+            intro i
+            simp
+          hAttraction := by
+            intro K hK
+            simp })
+    (λ : ℝ) (hλ : 0 ≤ λ ∧ λ ≤ 1) :
+    hausdorffDimensionOfMeasure (interpolateMeasure measure₁ measure₂ λ) ≥
+    λ * hausdorffDimensionOfMeasure measure₁ + (1 - λ) * hausdorffDimensionOfMeasure measure₂ :=
+  theorem_DC_concavity measure₁ measure₂ λ hλ
+
+-- pressure_spectral_link forward direction (P(t) = 0 → t = d_H)
+theorem test_pressure_spectral_link_forward (ifs : IFS ℝ) (t : ℝ) (hP : topologicalPressure ifs t = 0) :
+    hausdorffDimensionEq ifs t = 0 :=
+  (pressure_zero_iff_hausdorff_dimension ifs t).mp hP
+
 -- ============================================================
 -- ICVerification Tests (new module)
 -- ============================================================

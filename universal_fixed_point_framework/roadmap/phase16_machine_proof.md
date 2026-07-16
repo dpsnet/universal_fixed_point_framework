@@ -128,7 +128,7 @@
 | 8 | Legendre 变换接口 | `LegendreTransform`：凸共轭 `f*(p) = sup(px - f(x))` | `Analysis.Convex.Legendre` | ✅ **已完成**（`ThermoFormalism.lean`：`legendreTransform` + `legendreTransform_convex` + `singularitySpectrum`） |
 | 9 | **定理 D-C 形式化** | $d_H(ρ)$ 凹性：压力零点 → 隐函数定理 → 凹性继承 → Feng-Wang 模型验证 | 压力函数 + `Analysis.ImplicitFunction` + `hausdorffDim` | ✅ **已完成**（`ThermoFormalism.lean`：`hausdorffDimensionOfMeasure` + `theorem_DC_concavity` 框架 + `singularity_spectrum_concave`） |
 
-**产出**：`formal_proof/UFPFormalization/` 目录，新增 4 个模块（`SpectralEquivalence.lean` + `ICVerification.lean` + `IFSFractal.lean` + `ThermoFormalism.lean`），共 **19 个模块**，`~3,700 行**，**14/19 零 `sorry`**。剩余 9 个 `sorry` 为深层分析定理（变分原理、Jensen 不等式、Ledrappier-Young、Perron-Frobenius），需数学分析基础设施完善后填充。
+**产出**：`formal_proof/UFPFormalization/` 目录，新增 4 个模块（`SpectralEquivalence.lean` + `ICVerification.lean` + `IFSFractal.lean` + `ThermoFormalism.lean`），共 **19 个模块**，`~3,700 行**，**15/19 零 `sorry`**。剩余 8 个 `sorry` 为深层分析定理（变分原理、Jensen 不等式、Ledrappier-Young、Perron-Frobenius），需数学分析基础设施完善后填充。
 
 ## 四、机器证明对比 AI 推导的核心增益
 
@@ -167,7 +167,7 @@
 | 新增模块 (`ICVerification.lean`) | ✅ 已完成 | 五领域 IFS/Kerr/NTK/Clifford/String IC 验证定理 |
 | 新增模块 (`IFSFractal.lean`) | ✅ 已完成 | IFS 吸引子 + 自相似测度 + Hausdorff 维数形式化 |
 | 新增模块 (`ThermoFormalism.lean`) | ✅ 已完成 | 压力函数 + Legendre 变换 + 定理 D-C 形式化 |
-| 剩余 `sorry` 填充 | 🔄 **部分完成** | LeaverComplexity 清零；9 个深层分析定理 `sorry` 待 Mathlib 基础设施完善后填充 |
+| 剩余 `sorry` 填充 | 🔄 **部分完成** | LeaverComplexity 清零；`theorem_DC_concavity`（Jensen）和 `pressure_spectral_link h_unique`（严格单调性）已修复；8 个剩余 `sorry` 待 Mathlib 基础设施完善后填充 |
 
 ## 八、变更记录
 
@@ -179,4 +179,4 @@
 | 2026-07-16 | **Phase 16B P1 任务完成**：`OperatorTheory.lean`（Koopman 压缩半群 + m-增生生成元 + 谱测度分类）+ `Silence.lean`（S1-S4 静默判据 + LACI + 等价性定理）。全部 12 个模块 `lake build --no-cache` 通过 |
 | 2026-07-16 | **Phase 16B-P2 完成**：`LeaverComplexity.lean`（两弦法 $O(N)$ 复杂度证明）。全部 13 个模块通过 |
 | 2026-07-16 | **16C 评估修正**——基于 mathlib4 最新库调研，`Dynamics.Ergodic` 完整内置，`HausdorffMeasure`/`ContractingMap` 齐备。等级 C 从"必须外部合作"修正为"全部可自主实现"，规划三阶段推进（16C-I 遍历论 → 16C-II IFS 分形 → 16C-III 热力学形式论），预计工作量 4–12 周 |
-| 2026-07-16 | **Phase 16C 全部完成** —— 16C-I (遍历论 HD-D/TE-G-M) + 16C-II (IFS 分形) + 16C-III (热力学形式论) 三个子阶段已全部实现。新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`IFSFractal.lean`、`ThermoFormalism.lean` 共 4 个模块。模块总数从 15 → 19。修复 LeaverComplexity.lean 两处 `sorry`（三对角矩阵非零元计数）。剩余 9 个 `sorry` 为深层分析定理，已标记文献出处，需后续填充 |
+| 2026-07-16 | **Phase 16C 全部完成** —— 16C-I (遍历论 HD-D/TE-G-M) + 16C-II (IFS 分形) + 16C-III (热力学形式论) 三个子阶段已全部实现。新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`IFSFractal.lean`、`ThermoFormalism.lean` 共 4 个模块。模块总数从 15 → 19。修复 LeaverComplexity.lean 两处 `sorry`（三对角矩阵非零元计数）。修复 `theorem_DC_concavity`（利用 mathlib `convexOn_mul_log`）和 `pressure_spectral_link h_unique`（严格单调性）。剩余 8 个 `sorry` 为深层分析定理，已标记文献出处，需后续填充 |

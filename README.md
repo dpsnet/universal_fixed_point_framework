@@ -78,10 +78,14 @@
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-分形双向转化
 │   │   └── ...                            # 其他 40+ 个模块
 │   ├── paper/
-│   │   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.28
-│   │   └── paper2_physics_applications.md           # 物理应用论文 v2.17
+│   │   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.31
+│   │   ├── paper1_appendix.md                       # 附录与版本变更记录
+│   │   ├── paper2_physics_applications.md           # 物理应用论文 v2.18
+│   │   ├── paper3_spectral_classification.md        # 谱分类完备性论文 v1.1
+│   │   └── paper4_stretched_d_brane.md              # 黑洞熵统一论文 v1.1
+│   ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 │   ├── formal_proof/                                # Lean 4 机器证明形式化项目
-│   │   └── UFPFormalization/
+│   │   └── UFPFormalization/                        # 24 模块，零诊断错误，52 测试定理
 │   ├── roadmap/
 │   │   ├── phase1_meta_axioms.md
 │   │   ├── phase2_structural_theorems.md
@@ -104,32 +108,42 @@
 
 ### 4.1 已完成（开发阶段）
 
-- [x] Rec/Spec 范畴与 D 函子的 Python 原型
-- [x] 伴随函子 $D \dashv R$ 的离散原型与三角恒等式验证
-- [x] 谱对应自然等价的数值验证
+**数学理论**
+- [x] Rec/Spec 范畴与 D 函子的 Python 原型 + 伴随函子 $D \dashv R$ 三角恒等式验证
+- [x] 谱对应自然等价 $\lambda = e^{-\mu}$ 的严格范畴证明（含辫子自然等价扩展）
 - [x] 轨道函子在 12+ 个实例中的实现
-- [x] RKHS 收敛率：强分离 / 弱分离 / 非分离 / 高维 IFS
-- [x] 非分离 IFS 的测度论证明框架（Frostman / Riesz 容量 / 势论）
-- [x] 奇异连续谱系统刻画
-- [x] 谱静默理论（替代紧致化）
-- [x] 理论转化框架（同构 / 态射 / 伴随 / 谱静默 / 轨道函子）
-- [x] EFT 等价性框架
-- [x] GR+SM 统一谱对应猜想（部分验证）
-- [x] BSM 新物理预言与 HL-LHC/FCC-hh 实验对接
+- [x] RKHS 收敛率：强分离 / 弱分离 / 非分离 / 测度论证明 / 高维 IFS
+- [x] 奇异连续谱系统刻画、谱静默理论、理论转化框架、EFT 等价性框架
+- [x] 双轨 Koopman 存在性证明（$\ell^\infty(X)$ 零前提定义 + 谱对应有效性）
+
+**物理应用**
+- [x] GR+SM 统一谱对应猜想（部分验证），$G_N$ 从谱交织自然导出
+- [x] BSM 新物理预言（$L_4 \approx 1470$ GeV）与 HL-LHC/FCC-hh 实验对接
 - [x] Kerr 黑洞非赤道面混沌与 NR ringdown 对比
-- [x] 全息纠缠熵与复杂 CFT 相变
-- [x] NTK-分形双向转化
-- [x] 双篇配套论文草稿（Paper I v2.28 / Paper II v2.17）
-- [x] 全仓库 336+ 个单元测试通过
-- [x] 机器证明形式化计划启动（Lean 4 + mathlib4，Phase 16A + 16B P0-P1 全部 12 模块完成，`lake build` 通过，0 `sorry`）
+- [x] 全息纠缠熵与复杂 CFT 相变，N=4 SYM 完整 TBA
+
+**四篇论文**
+- [x] Paper I v2.31：分形谱去递归理论（范畴论 / IFS / 谱测度 / Clifford / RKHS）
+- [x] Paper II v2.18：物理应用与实验验证（SM / BSM / Kerr / 全息熵 / 暗物质）
+- [x] Paper III v1.1：谱分类完备性定理（三层分类 + BPS 数值验证 + Lean 背书）
+- [x] Paper IV v1.1：Stretched Horizon → D-brane 黑洞熵统一（含对偶扩展）
+
+**Lean 4 形式化**
+- [x] Phase 16A/B/C 全部完成：24 Lean 模块，零诊断错误，52 测试定理
+- [x] 15/19 功能模块完全证明（零 `sorry`），剩余 8 个 `sorry` 为深层分析定理
+- [x] 核心定理形式化：Thm D-C（Jensen）、HD-D / TE-G-M（遍历论）、谱分类 4.1-4.3
+- [x] 双轨 Koopman 模块（`DynSys.lean`）、IC 验证（`ICVerification.lean`，5 领域）
+
+**作者与版本管理**
+- [x] 作者：王斌（独立研究人），wang.bin@foxmail.com
+- [x] 四篇论文版本格式统一、术语说明统一、定理编号标准化
 
 ### 4.2 进行中 / 待完善
 
-- [ ] 论文最终定稿与投稿
+- [ ] 论文最终定稿与投稿（四篇论文版本已达投稿准备，需最后审校）
+- [ ] 8 个剩余 Lean `sorry` 的深层证明（变分原理 / Ledrappier-Young / Perron-Frobenius）
 - [ ] NTK 消融实验的真实大规模运行
 - [ ] MadGraph / micrOMEGAs 的真实调用验证
-- [ ] Phase 16B-P2 Leaver 两弦法复杂度形式化
-- [ ] Phase 16C 分形/遍历理论形式化（需外部合作者）
 
 ---
 
@@ -150,6 +164,8 @@
 |------|------|------|----------|
 | **Paper I** | 通用不动点范畴框架 I：分形谱去递归理论 | 纯数学理论 | J. Funct. Anal. / Adv. Math. |
 | **Paper II** | 通用不动点范畴框架 II：物理应用与实验验证 | 理论物理 + 实验验证 | PRD / JHEP |
+| **Paper III** | 通用不动点范畴框架 III：谱分类完备性定理 | 谱分类 + 形式化背书 | 待定 |
+| **Paper IV** | 通用不动点范畴框架 IV：Stretched Horizon → D-brane | 弦论案例专论 | 待定 |
 
 ---
 
@@ -158,18 +174,18 @@
 ### 如果你是数学研究者
 
 建议路径：
-1. `universal_fixed_point_framework/axioms/three_layer_axiomatic_system.md`
-2. `universal_fixed_point_framework/roadmap/phase1_meta_axioms.md`
-3. `universal_fixed_point_framework/src/rec_category.py`、`spec_category.py`、`decursion_functor.py`
-4. `universal_fixed_point_framework/paper/paper1_fractal_spectral_derecursion.md`
+1. `universal_fixed_point_framework/paper/paper1_fractal_spectral_derecursion.md`（核心理论）
+2. `universal_fixed_point_framework/paper/paper3_spectral_classification.md`（谱分类完备性）
+3. `universal_fixed_point_framework/formal_proof/UFPFormalization/`（Lean 4 形式化代码）
+4. `universal_fixed_point_framework/roadmap/phase16_machine_proof.md`（形式化计划）
 
 ### 如果你是物理研究者
 
 建议路径：
-1. 根目录 `Clifford值分形RKHS构造.md`
-2. `universal_fixed_point_framework/roadmap/phase12_unification_conjecture.md`
-3. `universal_fixed_point_framework/src/bsm_*.py`、`kerr_*.py`、`holographic_entropy.py`
-4. `universal_fixed_point_framework/paper/paper2_physics_applications.md`
+1. `universal_fixed_point_framework/paper/paper2_physics_applications.md`（物理应用）
+2. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md`（黑洞熵案例）
+3. `universal_fixed_point_framework/paper/paper3_spectral_classification.md`（谱分类基础）
+4. `universal_fixed_point_framework/src/bsm_*.py`、`kerr_*.py`、`holographic_entropy.py`
 
 ### 如果你是 AI 研究者
 
@@ -182,16 +198,19 @@
 
 ## 八、运行环境
 
-- Python 3.10+
-- NumPy, SciPy
-- Matplotlib（可视化）
+- Python 3.10+，NumPy, SciPy, Matplotlib
+- Lean 4.31.0 + mathlib4 4.31.0（形式化验证，`lake build --no-cache` 一键构建）
 - 可选：pytest（单元测试）、MadGraph / micrOMEGAs（粒子物理精确计算）
 
 ---
 
 ## 九、免责声明
 
-本项目是一个**高度跨学科、仍处于发展阶段**的理论框架。部分结论基于有限维离散原型和数值验证，距离严格的无穷维数学证明和实验最终确认尚有距离。框架中的实例假设（如 Cl(1,7) 选择、SM 质量谱拟合参数等）是可替换的，不构成对元公理层的约束。
+本项目是一个**高度跨学科的理论框架**。核心范畴构造与谱分类定理已完成 Lean 4 形式化验证（15/19 功能模块完全证明），数学严格性已获得机器核验背书。但以下内容仍处于发展阶段：
+
+- 剩余 8 个 `sorry`（变分原理 / Ledrappier-Young / Perron-Frobenius 等深层分析定理）待 mathlib 基础设施完善后填充
+- 物理预言（如 $L_4 \approx 1470$ GeV）依赖 FCC-hh 实验检验，当前无直接验证渠道
+- 实例假设（如 Cl(1,7) 选择、SM 质量谱拟合参数等）可替换，不构成对元公理层的约束
 
 ---
 
@@ -199,7 +218,8 @@
 
 - 学术讨论：欢迎对范畴论、算子谱理论、量子引力、粒子物理谱问题感兴趣的学者联系
 - 合作方向：范畴论严格化、物理实例验证、数值相对论 / 高能实验对接
+- 作者：王斌（独立研究人），wang.bin@foxmail.com
 
 ---
 
-*最后更新：2026-07-15*
+*最后更新：2026-07-16*

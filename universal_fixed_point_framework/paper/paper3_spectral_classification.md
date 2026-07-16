@@ -3,7 +3,7 @@
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **摘要**：
-本文证明谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 对所有递归系统——包括自伴系统（$\mathbf{Rec}_D$）、耗散/混沌系统（$\mathbf{Rec}_{\text{diss}}$）和被静默系统（$\mathbf{Rec}\setminus\mathbf{Rec}_D$）——建立了一个**完备的谱分类**：$\mathbf{Rec}$ 中的对象在 $D$ 下的像完全决定了它们的谱等价类。该完备性由谱对应定理（$M \cong_{\text{br}} L$）、辫子幺半结构定理和隔离约束相容性定理（IC）联合保证。核心定理（4.1-4.3）及跨领域 IC 验证已在 Lean 4 中完成形式化（$19$ 模块，~$3,\!700$ 行，$14/19$ 零 `sorry`），为该谱分类的数学严格性提供了机器核验背书。
+本文证明谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 对所有递归系统——包括自伴系统（$\mathbf{Rec}_D$）、耗散/混沌系统（$\mathbf{Rec}_{\text{diss}}$）和被静默系统（$\mathbf{Rec}\setminus\mathbf{Rec}_D$）——建立了一个**完备的谱分类**：$\mathbf{Rec}$ 中的对象在 $D$ 下的像完全决定了它们的谱等价类。该完备性由谱对应定理（$M \cong_{\text{br}} L$）、辫子幺半结构定理和隔离约束相容性定理（IC）联合保证。核心定理（4.1-4.3）及跨领域 IC 验证已在 Lean 4 中完成形式化（$19$ 模块，~$3,\!700$ 行，$15/19$ 零 `sorry`），为该谱分类的数学严格性提供了机器核验背书。
 
 具体而言：
 1. **自伴完全分类**：$\mathbf{Rec}_D$ 中任意两个对象 $R_1, R_2$ 满足 $D(R_1) \cong D(R_2)$ 当且仅当它们在 Koopman 算子谱层面等价（定理 4.1）。
@@ -140,7 +140,7 @@ $$S_{\text{BH}} = \dim_{\text{spec}} D(R_{\text{BH}})$$
 | `Braided.lean` | 定理 2.3：辫子幺半结构 + 六边形公理验证 | ✅ 零 `sorry` |
 | `IsolationConstraints.lean` | 定义 2.4：IC 三条件形式化 + 定理 2.5 相容性 | ✅ 零 `sorry` |
 
-**验证状态**：14/19 模块完全证明（零 `sorry`），剩余 9 个 `sorry` 均为深层分析定理（变分原理、Ledrappier-Young、Jensen 不等式），需 mathlib 分析库进一步完善后填充。详见 [Phase 16 机器证明计划](../roadmap/phase16_machine_proof.md)。
+**验证状态**：15/19 模块完全证明（零 `sorry`），剩余 8 个 `sorry` 均为深层分析定理（变分原理、Ledrappier-Young、Jensen 不等式），需 mathlib 分析库进一步完善后填充。详见 [Phase 16 机器证明计划](../roadmap/phase16_machine_proof.md)。
 
 ### 4.5 数值验证（BPS 黑洞谱匹配）
 
@@ -275,7 +275,7 @@ Cl ───→ D(Cl) ──┤     谱等价！
 《通用不动点范畴框架》系列论文 III，谱去递归函子的谱分类完备性定理，含 20 篇参考文献。主要内容：
 - 三层谱分类完备性定理（定理 4.1-4.3）
 - 跨领域 IC 全覆盖定理（定理 4.3）
-- 14/19 个 Lean 4 形式化模块零 `sorry` 完成机器核验
+- 15/19 个 Lean 4 形式化模块零 `sorry` 完成机器核验
 - BPS 黑洞谱匹配数值验证（`paper3_bps_spectral_verification.py`，谱距离 0.00）
 - §4.4 形式化验证状态（19 模块，~3,700 行）
 - §4.5 数值验证（BPS 黑洞参数扫描 M = 0.5 ~ 10.0 全部通过）

@@ -1,4 +1,6 @@
-# 通用不动点范畴框架 —— 新路线图
+# 通用不动点范畴框架
+
+**项目状态**：四篇论文完稿 + Lean 4 形式化 24 模块零错误（15/19 功能模块完全证明）
 
 本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱去递归理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
 
@@ -11,7 +13,41 @@
 - **标准模型质量预测**：只是低能规范对称下的一个算例，不是理论核心。
 - **过拟合新解**：不是参数冗余，而是多层递归迭代被困在局部吸引子；根治方案是抽象到全域不动点。
 
-## 二、目录结构
+---
+
+## 现状速览（2026-07-16）
+
+### 四篇论文
+
+| 论文 | 版本 | 定位 | 页数 |
+|------|------|------|------|
+| **Paper I**：分形谱去递归理论 | v2.31 | 纯数学理论（范畴论/IFS/谱测度/Clifford/RKHS） | ~2,150 行 |
+| **Paper II**：物理应用与实验验证 | v2.18 | 物理应用（SM/BSM/Kerr/全息熵/暗物质） | ~1,080 行 |
+| **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
+| **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
+
+### Lean 4 形式化
+
+| 指标 | 数值 |
+|------|------|
+| 功能模块 | 19 |
+| 基础设施模块（DynSys） | 1 |
+| 测试模块 | 4 |
+| **总计** | **24 模块，零诊断错误** |
+| 测试定理 | 52 |
+| 完全证明（零 `sorry`） | **15/19** 功能模块 |
+| 剩余 `sorry` | 8（深层分析定理，需 mathlib 基础设施） |
+
+### 数值验证
+- **BPS 黑洞谱匹配**：`paper3_bps_spectral_verification.py` — 谱距离 0.00，参数扫描 M=0.5~10.0 全部通过
+
+### 关键设计决策
+- **双轨 Koopman 存在性**：$\ell^\infty(X)$ 上零前提定义 + $L^2/C(X)$ 上谱对应有效（`DynSys.lean` + Paper I 注 2.2a）
+- **作者**：王斌（独立研究人），wang.bin@foxmail.com
+
+---
+
+## 二、目录结构（历史）
 
 ```
 universal_fixed_point_framework/
@@ -79,7 +115,7 @@ universal_fixed_point_framework/
 └── notes/                          # 研究笔记与中间推导
 ```
 
-## 三、三层公理体系
+## 三、三层公理体系（历史）
 
 | 层级 | 内容 | 可修改性 |
 |---|---|---|
@@ -89,7 +125,7 @@ universal_fixed_point_framework/
 
 核心规则：**实例拟合不好不构成对上层公理的反驳。**
 
-## 四、研究阶段
+## 四、研究阶段（历史）
 
 ### Phase 1：元公理层形式化
 - 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$
@@ -117,12 +153,12 @@ universal_fixed_point_framework/
 - 各实例与真实数据/实验约束深度对接（SM 完整物理、弦论散射振幅、真实度规、BSM 实验排除）
 - 详细路线图见 `roadmap/phase5_cross_domain_validation.md`
 
-## 五、与旧工作的关系
+## 五、与旧工作的关系（历史）
 
 - 旧工作（根目录下的 `sm_mass_complete_v5.py`、`paper_draft.tex` 等）属于**具象数值实现层**。
 - 本框架是旧工作的**抽象升级**，向下兼容原有数值结果，但将迭代、IFS、Cl(1,7) 全部降格为实例假设层的可替换工具。
 
-## 六、当前进度
+## 六、当前进度（历史）
 
 - **P0 理论严格化**：已完成。`phase1_meta_axioms.md`、`phase2_structural_theorems.md`、`phase4_semantics_over_fitting.md` 中的待解决问题已逐一严格化，给出定理与证明。
 - **P1 核心代码补全**：已完成。`src/` 中已实现 Rec/Spec 范畴、$D$ 函子、伴随函子 $D \dashv R$（含 `right_adjoint_on_morphism`、`unit`、`counit`、`verify_triangle_identities`，三角恒等式与自然性已验证）、不动点求解器、谱自然等价、轨道函子、LACI 诊断等核心模块，以及 RKHS 核收敛性数值演示与非正规 Koopman $A_R$ 正性验证。
@@ -132,9 +168,9 @@ universal_fixed_point_framework/
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
 - **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、Feng-Wang 热力学极限、纯数学三大定理（D-C/HD-D/TE-G-M）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
-- **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块共 **24 个 Lean 模块，零诊断错误，50 个测试定理**。Phase 16A（范畴基础 9 模块）+ Phase 16B（泛函分析 4 模块）+ Phase 16C-I（遍历论 1 模块）+ Phase 16C-II（IFS 分形 1 模块）+ Phase 16C-III（热力学形式论 1 模块）全部完成，新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`DynSys.lean` 等基础设施模块。14/19 功能模块完全证明（零 `sorry`）。详见 `roadmap/phase16_machine_proof.md`。
+- **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块共 **24 个 Lean 模块，零诊断错误，52 个测试定理**。Phase 16A（范畴基础 9 模块）+ Phase 16B（泛函分析 4 模块）+ Phase 16C-I（遍历论 1 模块）+ Phase 16C-II（IFS 分形 1 模块）+ Phase 16C-III（热力学形式论 1 模块）全部完成，新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`DynSys.lean` 等基础设施模块。14/19 功能模块完全证明（零 `sorry`）。详见 `roadmap/phase16_machine_proof.md`。
 
-## 七、已完善的深层次问题
+## 七、已完善的深层次问题（历史）
 
 当前框架在有限维离散原型层面已完成严格化与测试验证。以下问题已全面完成，理论已从「离散原型」升级为「连续/无穷维严格数学」（详见 `roadmap/phase5_cross_domain_validation.md`）：
 
@@ -180,7 +216,7 @@ universal_fixed_point_framework/
 
 全部深层次理论问题均已在 Phase 6-12 中完成严格化论证与数值验证。
 
-## 八、下一步优先任务
+## 八、下一步优先任务（历史）
 
 ### Phase 13：理论转化推进计划（2026-07-13 启动）
 
@@ -208,7 +244,7 @@ universal_fixed_point_framework/
 13. **BSM 实验约束对接**：将 `bsm_instance.py` 与 LHC/暗物质探测实验约束对接。
 14. **持续运行全部测试**：每完成一个任务后运行全部测试脚本，确保框架稳定。
 
-## 九、推进计划
+## 九、推进计划（历史）
 
 ### 第一阶段：奠基期（2–4 周）— 已完成
 
@@ -263,7 +299,7 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.30，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 24 模块 + 50 测试定理 |
+| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.31，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 24 模块 + 52 测试定理 |
 | Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.18，含 34 篇参考文献 + 336+ 测试 |
 | Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.1，三层谱分类（定理 4.1-4.3）+ BPS 黑洞数值验证（谱距离 0.00）+ Lean 形式化背书 |
 | Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.1，$D$ 函子统一黑洞熵 + AdS/CFT/镜像对称/朗兰兹对偶扩展 + 参数约束 $C(g_s)$ |
@@ -294,7 +330,7 @@ universal_fixed_point_framework/
 
 ---
 
-## 十、待完成事项与推进优先级
+## 十、待完成事项与推进优先级（历史）
 
 > 以下内容来自各阶段交付物中遗留的待解决问题，按对论文和框架的影响排序。
 

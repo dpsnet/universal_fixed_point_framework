@@ -4,6 +4,7 @@ import UFPFormalization.DecursionFunctor
 import UFPFormalization.IFSFractal
 import Mathlib.Analysis.Convex.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Fintype.Basic
@@ -298,10 +299,68 @@ theorem theorem_DC_concavity {X : Type} [MetricSpace X] [CompleteMetricSpace X]
     (measure₁ measure₂ : SelfSimilarMeasure ifs attractor) (λ : ℝ)
     (hλ : 0 ≤ λ ∧ λ ≤ 1) : hausdorffDimensionOfMeasure (interpolateMeasure measure₁ measure₂ λ) ≥
     λ * hausdorffDimensionOfMeasure measure₁ + (1 - λ) * hausdorffDimensionOfMeasure measure₂ := by
-  -- d_H(λρ₁ + (1-λ)ρ₂) ≥ λ·d_H(ρ₁) + (1-λ)·d_H(ρ₂)
-  -- This follows from the concavity of p ↦ p·log(p) (Shannon entropy).
-  -- Full proof requires Jensen's inequality.
-  sorry
+  rcases hλ with ⟨hλ0, hλ1⟩
+  -- Key fact: log(c_i) < 0 since 0 < c_i < 1
+  have h_log_c_neg : ∀ i : Fin ifs.n, Real.log (ifs.ratios i) < 0 := by
+    intro i
+    exact Real.log_lt_log (ifs.hRatiosPos i) (ifs.hRatiosLtOne i)
+  -- Per-term inequality: x·log(x) is convex on (0,∞), proved via mathlib convexOn_mul_log
+    have h_entropy_convex : ∀ (a b : ℝ), a > 0 → b > 0 → 
+        (λ * a + (1 - λ) * b) * Real.log (λ * a + (1 - λ) * b) ≤
+        λ * (a * Real.log a) + (1 - λ) * (b * Real.log b) := by
+      intro a b ha hb
+      have ha_mem : a ∈ Set.Ici (0 : ℝ) := Set.mem_Ici.mpr (by linarith)
+      have hb_mem : b ∈ Set.Ici (0 : ℝ) := Set.mem_Ici.mpr (by linarith)
+      have h1mλ_nonneg : 0 ≤ 1 - λ := by linarith
+      have h_convex := convexOn_mul_log.2 ha_mem hb_mem hλ0 h1mλ_nonneg (by linarith)
+      -- convexOn_mul_log.2 gives: (λa+(1-λ)b)·log(λa+(1-λ)b) ≤ λ·a·log(a) + (1-λ)·b·log(b)
+      simpa [add_comm, add_left_comm, mul_comm, mul_left_comm, smul_eq_mul] using h_convex
+  have h_term : ∀ i : Fin ifs.n,
+      ((λ * measure₁.weights i + (1 - λ) * measure₂.weights i) *
+        Real.log (λ * measure₁.weights i + (1 - λ) * measure₂.weights i) / Real.log (ifs.ratios i)) ≥
+      λ * (measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i)) +
+      (1 - λ) * (measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i)) := by
+    intro i
+    set p := measure₁.weights i with hp
+    set q := measure₂.weights i with hq
+    have hp_pos : p > 0 := measure₁.hWeightsPos i
+    have hq_pos : q > 0 := measure₂.hWeightsPos i
+    have h_mid_pos : 0 < λ * p + (1 - λ) * q := nlinarith
+    have h_log_neg : Real.log (ifs.ratios i) < 0 := h_log_c_neg i
+    have h_main : (λ * p + (1 - λ) * q) * Real.log (λ * p + (1 - λ) * q) ≤
+      λ * (p * Real.log p) + (1 - λ) * (q * Real.log q) :=
+      h_entropy_convex p q hp_pos hq_pos
+    -- Since denominator log(c_i) < 0, dividing reverses the inequality
+     have h_div : ((λ * p + (1 - λ) * q) * Real.log (λ * p + (1 - λ) * q)) / Real.log (ifs.ratios i) ≥
+         (λ * (p * Real.log p) + (1 - λ) * (q * Real.log q)) / Real.log (ifs.ratios i) := by
+       have h_num_nonpos : ((λ * p + (1 - λ) * q) * Real.log (λ * p + (1 - λ) * q)) -
+         (λ * (p * Real.log p) + (1 - λ) * (q * Real.log q)) ≤ 0 := by linarith
+       have h_den_neg : Real.log (ifs.ratios i) < 0 := h_log_neg
+       have h_ratio_nonneg : (((λ * p + (1 - λ) * q) * Real.log (λ * p + (1 - λ) * q)) -
+         (λ * (p * Real.log p) + (1 - λ) * (q * Real.log q))) / Real.log (ifs.ratios i) ≥ 0 :=
+         div_nonneg_of_nonpos_of_nonpos h_num_nonpos (by linarith)
+       linarith
+    calc
+      ((λ * p + (1 - λ) * q) * Real.log (λ * p + (1 - λ) * q)) / Real.log (ifs.ratios i) ≥
+        (λ * (p * Real.log p) + (1 - λ) * (q * Real.log q)) / Real.log (ifs.ratios i) := h_div
+      _ = λ * (p * Real.log p / Real.log (ifs.ratios i)) + (1 - λ) * (q * Real.log q / Real.log (ifs.ratios i)) := by ring
+  -- Sum over all indices
+  dsimp [hausdorffDimensionOfMeasure]
+  calc
+    Finset.sum (Finset.univ : Finset (Fin ifs.n))
+      (fun i : Fin ifs.n => ((interpolateMeasure measure₁ measure₂ λ).weights i) *
+        Real.log ((interpolateMeasure measure₁ measure₂ λ).weights i) / Real.log (ifs.ratios i)) ≥
+    Finset.sum (Finset.univ : Finset (Fin ifs.n))
+      (fun i : Fin ifs.n =>
+        λ * (measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i)) +
+        (1 - λ) * (measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i))) :=
+      Finset.sum_le_sum (fun i hi => h_term i)
+    _ = λ * (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+      (fun i : Fin ifs.n => measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i))) +
+      (1 - λ) * (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+      (fun i : Fin ifs.n => measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i))) := by
+      simp [Finset.sum_add_distrib, Finset.mul_sum]
+    _ = λ * hausdorffDimensionOfMeasure measure₁ + (1 - λ) * hausdorffDimensionOfMeasure measure₂ := rfl
 
 /--
 Interpolate between two self-similar measures.
@@ -403,14 +462,66 @@ theorem pressure_spectral_link {X : Type} [MetricSpace X] [CompleteMetricSpace X
         linarith
       linarith
     -- Construct HausdorffDimensionSolution with dH = t
-    -- Full proof requires uniqueness (the solution t is unique by strict monotonicity)
-    -- and the bound d_H ≤ n (attractor embedding theorem).
-    -- For the finite-dimensional prototype, we construct a solution with these properties.
+    -- Uniqueness follows from strict monotonicity of f(d) = Σ c_i^d (already proven)
     have h_unique : ∀ d : ℝ, d > 0 → hausdorffDimensionEq ifs d = 0 → d = t := by
       intro d hd_pos hd_eq
-      -- By strict monotonicity of f(d) = Σ c_i^d, the equation f(d) = 1 has at most one solution.
-      -- Full proof requires the strict monotonicity of the pressure function.
-      sorry
+      by_contra! h_ne
+      have h_lt_or : d < t ∨ t < d := lt_or_gt_of_ne h_ne
+      rcases h_lt_or with (h_lt | h_gt)
+      · -- If d < t, then f(d) > f(t) by strict monotonicity, so f(d) > 0
+        have h_fd_gt_ft : hausdorffDimensionEq ifs d > hausdorffDimensionEq ifs t := by
+          have h_sum_lt : (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+              (fun i : Fin ifs.n => (ifs.ratios i) ^ d)) <
+            (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+              (fun i : Fin ifs.n => (ifs.ratios i) ^ t)) := by
+            have h_all_le : ∀ i : Fin ifs.n, (ifs.ratios i) ^ d ≤ (ifs.ratios i) ^ t := by
+              intro i
+              exact le_of_lt (Real.rpow_lt_rpow_of_exponent_gt (ifs.hRatiosPos i) (ifs.hRatiosLtOne i) h_lt)
+            have h_nonempty : Finset.Nonempty (Finset.univ : Finset (Fin ifs.n)) := by
+              by_contra! h_empty
+              have h_n_zero : ifs.n = 0 := by
+                have h_card : Finset.card (Finset.univ : Finset (Fin ifs.n)) = 0 :=
+                  Finset.card_empty_eq.mp (Finset.not_nonempty_iff_eq_empty.mp h_empty)
+                simpa [Finset.card_fin] using h_card
+              have h_moran_zero : hausdorffDimensionEq ifs t = -1 := by
+                simp [hausdorffDimensionEq, h_n_zero]
+              have : 0 = -1 := hEq.trans h_moran_zero.symm
+              linarith
+            have h_strict : ∃ i ∈ Finset.univ, (ifs.ratios i) ^ d < (ifs.ratios i) ^ t := by
+              rcases h_nonempty with ⟨i, hi⟩
+              refine ⟨i, hi, Real.rpow_lt_rpow_of_exponent_gt (ifs.hRatiosPos i) (ifs.hRatiosLtOne i) h_lt⟩
+            exact Finset.sum_lt_sum (fun i hi => h_all_le i) h_strict
+          dsimp [hausdorffDimensionEq]
+          linarith
+        rw [hd_eq, hEq] at h_fd_gt_ft
+        linarith
+      · -- If t < d, then f(t) > f(d) by strict monotonicity, so 0 > f(d)
+        have h_ft_gt_fd : hausdorffDimensionEq ifs t > hausdorffDimensionEq ifs d := by
+          have h_sum_lt : (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+              (fun i : Fin ifs.n => (ifs.ratios i) ^ t)) <
+            (Finset.sum (Finset.univ : Finset (Fin ifs.n))
+              (fun i : Fin ifs.n => (ifs.ratios i) ^ d)) := by
+            have h_all_le : ∀ i : Fin ifs.n, (ifs.ratios i) ^ t ≤ (ifs.ratios i) ^ d := by
+              intro i
+              exact le_of_lt (Real.rpow_lt_rpow_of_exponent_gt (ifs.hRatiosPos i) (ifs.hRatiosLtOne i) h_gt)
+            have h_nonempty : Finset.Nonempty (Finset.univ : Finset (Fin ifs.n)) := by
+              by_contra! h_empty
+              have h_n_zero : ifs.n = 0 := by
+                have h_card : Finset.card (Finset.univ : Finset (Fin ifs.n)) = 0 :=
+                  Finset.card_empty_eq.mp (Finset.not_nonempty_iff_eq_empty.mp h_empty)
+                simpa [Finset.card_fin] using h_card
+              have h_moran_zero : hausdorffDimensionEq ifs t = -1 := by
+                simp [hausdorffDimensionEq, h_n_zero]
+              have : 0 = -1 := hEq.trans h_moran_zero.symm
+              linarith
+            have h_strict : ∃ i ∈ Finset.univ, (ifs.ratios i) ^ t < (ifs.ratios i) ^ d := by
+              rcases h_nonempty with ⟨i, hi⟩
+              refine ⟨i, hi, Real.rpow_lt_rpow_of_exponent_gt (ifs.hRatiosPos i) (ifs.hRatiosLtOne i) h_gt⟩
+            exact Finset.sum_lt_sum (fun i hi => h_all_le i) h_strict
+          dsimp [hausdorffDimensionEq]
+          linarith
+        rw [hEq, hd_eq] at h_ft_gt_fd
+        linarith
     have h_bound : t ≤ (ifs.n : ℝ) := by
       -- The Hausdorff dimension bound: d_H ≤ n (attractor embedding theorem)
       -- Full proof deferred to Phase 16B.

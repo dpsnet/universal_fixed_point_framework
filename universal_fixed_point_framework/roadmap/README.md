@@ -15,7 +15,7 @@
 - `phase16_machine_proof.md`：机器证明形式化计划——基于 Lean 4 + mathlib4 的范畴论形式化背书，规划四等级可行性分级（A/B/C/D）与三阶段实施路线（16A 范畴基础/16B 泛函分析/16C 分形遍历）。**当前进度：16A 全部 7/7 + 16B P0-P1 共 5/6 完成，12 模块 `lake build` 通过，0 `sorry`**。
 - `phase17_category_revision_plan.md`：范畴论写作规范修订计划——针对 `docs/关于范畴论使用的相关批评.md` 的三个缺陷（定义时序违规、关键命题无证明、无配套修正），规划 $\mathbf{Rec}_D$ 宽子范畴严格化、$D_{\text{diss}}$ 真正函子化、三层静默体系（对象/态射/谱）理论创新。
 - `phase18_fundamental_resolution_plan.md`：框架顶层设计根本矛盾解决计划——针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然等价失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与物理硬伤（P1-P4），规划辫子自然等价、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案。**✅ 全部 22 项已完成**。
-- `phase19_paper3_spectral_equivalence.md`：**Paper III 推进计划**——谱去递归函子的谱分类完备性定理，覆盖 $\mathbf{Rec}_D$/$\mathbf{Rec}_{\text{diss}}$/$\mathbf{Rec}\setminus\mathbf{Rec}_D$ 三层结构。
+- `phase19_paper3_spectral_classification.md`：**Paper III 推进计划**——谱去递归函子的谱分类完备性定理，覆盖 $\mathbf{Rec}_D$/$\mathbf{Rec}_{\text{diss}}$/$\mathbf{Rec}\setminus\mathbf{Rec}_D$ 三层结构。
 - `phase20_paper4_stretched_d_brane.md`：**Paper IV 推进计划**——$D$ 函子对 Stretched Horizon 与 D-brane 的谱等价性证明，扩展至弦论对偶统一。**🆕 新建**。
 
 ## 当前优先级

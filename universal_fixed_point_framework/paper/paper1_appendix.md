@@ -104,7 +104,7 @@
 
 #### A.13.2 当前进展（2026-07-16 更新）
 
-截至 2026-07-16，**Phase 16A/B/C 已全部完成**。共 **19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块 = 24 个 Lean 模块，零诊断错误，50 个测试定理**。14/19 功能模块完全证明（零 `sorry`），剩余 9 个 `sorry` 为深层分析定理（变分原理、Ledrappier-Young、Jensen 不等式），需 mathlib 分析库进一步完善后填充。
+截至 2026-07-16，**Phase 16A/B/C 已全部完成**。共 **19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块 = 24 个 Lean 模块，零诊断错误，52 个测试定理**。15/19 功能模块完全证明（零 `sorry`），剩余 8 个 `sorry` 为深层分析定理（变分原理、Ledrappier-Young、Jensen 不等式），需 mathlib 分析库进一步完善后填充。
 
 **Phase 16A 范畴基础（全部 ✅ 完成）**：
 
@@ -216,7 +216,7 @@
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
-| v2.31 | 2026-07-16 | Phase 16C 全部完成：16C-I 遍历论（HD-D/TE-G-M）+ 16C-II IFS 分形层 + 16C-III 热力学形式论；新增 SpectralEquivalence.lean、ICVerification.lean、IFSFractal.lean、ThermoFormalism.lean、DynSys.lean 共 5 个模块；Lean 总数从 12 → 24 模块；新增 4 个测试文件（50 测试定理）；14/19 功能模块零 `sorry`；Paper I 新增 §9.7 批评回应 + 注 2.2a 双轨 Koopman |
+| v2.31 | 2026-07-16 | Phase 16C 全部完成：16C-I 遍历论（HD-D/TE-G-M）+ 16C-II IFS 分形层 + 16C-III 热力学形式论；新增 SpectralEquivalence.lean、ICVerification.lean、IFSFractal.lean、ThermoFormalism.lean、DynSys.lean 共 5 个模块；Lean 总数从 12 → 24 模块；新增 4 个测试文件（52 测试定理）；15/19 功能模块零 `sorry`（修复 theorem_DC_concavity 和 pressure_spectral_link h_unique）；Paper I 新增 §9.7 批评回应 + 注 2.2a 双轨 Koopman |
 | v2.30 | 2026-07-16 | Phase 17 范畴论写作规范修订——针对 `docs/关于范畴论使用的相关批评.md` 三个缺陷的系统化解决：(1) **缺陷1（时序违规）** §2.3 新增定义 2.5a（$\mathbf{Rec}_D$ 宽子范畴）与注 2.5b（宽子范畴声明），将 $D$ 的定义域从全 $\mathbf{Rec}$ 前移到 $\mathbf{Rec}_D$；§2.4 删除与 §2.7 自相矛盾的注 2.11，命题 2.10 反射子范畴断言限定到 $\mathbf{Rec}_D$；§2.7 由"事后反思"改写为"定义域声明总结"。(2) **缺陷2（关键命题无证明）** §2.4 新增三条严格证明：命题 2.5c（$\mathbf{Rec}_D$ 子范畴合法性——对象/恒等/复合封闭）、命题 2.5d（Freyd 伴随定理前提继承——完备性与解集条件）、定理 2.10a（$D\dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立——三角恒等式验证）。(3) **缺陷3（无配套修正）** §7.9.1 定理 7.31 严格化为真正函子（消除 $O(\varepsilon)$ 误差），新增 $\mathbf{Rec}_{\text{diss}}$ 伪谱扰动界定义与 $\mathbf{Rec}_D\subset\mathbf{Rec}_{\text{diss}}\subset\mathbf{Rec}$ 包含关系；新增表 7.x 物理实例归类（黑洞耗散/非对称IFS/NTK→$\mathbf{Rec}_{\text{diss}}$）。(4) **理论创新** §5 新增 §5.7「三层静默体系」：定义 5.11（对象/态射/谱静默）、命题 5.13（态射静默比谱静默更彻底）、推论 5.14（谱静默的范畴论基础）、定理 5.15（三层静默严格层次 $\text{谱}\subsetneq\text{态射}\subsetneq\text{对象}$）。(5) §1.2 贡献 10 重写为"方法论与三层静默体系"；§8.2.5 新增问题 20（三层静默体系完整形式化待深化）；摘要补充三层静默与 $D_{\text{diss}}$ 严格化说明。 |
 | v2.29 | 2026-07-16 | 机器证明形式化章节实质落地 |
 | ... | ... | （完整变更记录见 paper1 正文末尾） |
