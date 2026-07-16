@@ -12,3 +12,4 @@ import UFPFormalization.OperatorTheory
 import UFPFormalization.Silence
 import UFPFormalization.LeaverComplexity
 import UFPFormalization.ErgodicTheory
+import UFPFormalization.DomainExtension

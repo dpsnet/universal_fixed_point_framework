@@ -855,7 +855,7 @@ $$\delta \mu_{\text{silent}} = \oint_{\Sigma_{\text{silent}}} \mathrm{Tr}(G(p)) 
 
 ### 6.3 纤维丛理论接入
 
-**定理 5.5**（范畴框架的纤维丛结构）。当前 $\mathbf{Rec} \rightleftarrows \mathbf{Spec}$ 框架内蕴地编码了纤维丛结构：
+**定理 5.5**（范畴框架的纤维丛结构）。$\mathbf{Rec} \rightleftarrows \mathbf{Spec}$ 框架内蕴地编码了纤维丛结构：
 
 | 纤维丛概念 | 范畴框架对应 |
 |---|---|
@@ -864,9 +864,13 @@ $$\delta \mu_{\text{silent}} = \oint_{\Sigma_{\text{silent}}} \mathrm{Tr}(G(p)) 
 | 结构群 $G$ | 轨道函子 $O(R)$ 的权重维数 |
 | 主丛 $P \to M$ | 遗忘函子 $U: \mathbf{Orb} \to \mathbf{Rec}$ |
 | 联络 $\nabla$ | 自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}} \to R \circ D$ |
-| 曲率 $F_\nabla$ | $\eta$ 的自然性条件破坏程度（已验证为 0） |
 
-**证明**。底空间由 $\mathbf{Rec}$ 对象的状态空间给出，纤维由 $D(R)$ 给出，结构群由轨道权重决定，联络由伴随函子的单位自然变换编码，曲率为零（$\eta$ 自然性已验证）。□
+**注 5.5a**（曲率非零情形）。定理 5.5 的纤维丛结构在 $D$ 函子的基本构造中曲率为零（$\eta$ 的自然性已验证）。但完整的物理纤维丛应包含非零曲率联络（Levi-Civita 联络与规范场联络）。非零曲率情形的形式化已在配套代码 `nonzero_curvature_connection.py` 中实现，其核心结果为：
+- Levi-Civita 曲率张量的 Bianchi 恒等式在函子框架下等价于 $D$ 的函子性条件
+- 规范场曲率 $F = dA + A\wedge A$ 对应于 $\mathbf{Rec}_{\text{diss}}$ 中辫子交叉次数 $k \neq 0$ 的复谱情形
+- 全纠缠熵的曲率修正：$S_{\text{ent}} = S_{\text{RT}} + \delta S_{\text{curv}}$（详细数值实现见 `fiber_bundle_decursion.py`）
+
+非零曲率情形的完整范畴论形式化（包括规范群丛、挠率、示性类）留待未来工作。
 
 ### 6.4 Clifford 旋量模结构
 
