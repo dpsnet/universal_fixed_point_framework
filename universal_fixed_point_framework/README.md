@@ -259,8 +259,10 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.28，含 18 篇参考文献 + 附录；新增机器证明形式化计划 §A.13 |
-| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 理论物理 + 实验验证 | `paper/paper2_physics_applications.md` | PRD / JHEP | ✅ v2.17，含 33 篇参考文献 + 附录；新增 D-C/HD-D/TE-G-M 定理对物理预测的影响分析 |
+| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.30，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 13 模块 |
+| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.17，含 33 篇参考文献 + 336+ 测试 |
+| Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_equivalence.md` | 待定 | ✅ v1.0，证明 D 函子对 Rec 全域的三层谱分类完备性 |
+| Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.0，D 函子统一黑洞熵的两条弦论推导路径 |
 
 | 时间 | 任务 | 交付物 |
 |---|---|---|

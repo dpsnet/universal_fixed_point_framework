@@ -15,6 +15,8 @@
 - `phase16_machine_proof.md`：机器证明形式化计划——基于 Lean 4 + mathlib4 的范畴论形式化背书，规划四等级可行性分级（A/B/C/D）与三阶段实施路线（16A 范畴基础/16B 泛函分析/16C 分形遍历）。**当前进度：16A 全部 7/7 + 16B P0-P1 共 5/6 完成，12 模块 `lake build` 通过，0 `sorry`**。
 - `phase17_category_revision_plan.md`：范畴论写作规范修订计划——针对 `docs/关于范畴论使用的相关批评.md` 的三个缺陷（定义时序违规、关键命题无证明、无配套修正），规划 $\mathbf{Rec}_D$ 宽子范畴严格化、$D_{\text{diss}}$ 真正函子化、三层静默体系（对象/态射/谱）理论创新。
 - `phase18_fundamental_resolution_plan.md`：框架顶层设计根本矛盾解决计划——针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然等价失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与物理硬伤（P1-P4），规划辫子自然等价、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案。**✅ 全部 22 项已完成**。
+- `phase19_paper3_spectral_equivalence.md`：**Paper III 推进计划**——谱去递归函子的谱分类完备性定理，覆盖 $\mathbf{Rec}_D$/$\mathbf{Rec}_{\text{diss}}$/$\mathbf{Rec}\setminus\mathbf{Rec}_D$ 三层结构。
+- `phase20_paper4_stretched_d_brane.md`：**Paper IV 推进计划**——$D$ 函子对 Stretched Horizon 与 D-brane 的谱等价性证明，扩展至弦论对偶统一。**🆕 新建**。
 
 ## 当前优先级
 
@@ -29,8 +31,11 @@
 Phase 9 开放问题已全面推进：奇异连续谱系统刻画（谱维数谱系 + 物理意义 + 谱对应保持谱型）、连续谱 LACI 计算、LACI 阈值维数依赖均已完成。新增测度论收敛率证明（NS-1M~NS-3M）与高维 IFS 推广。
 
 - **论文拆分（2026-07-13）**：原论文拆分为两篇独立论文
-  - Paper I：《通用不动点范畴框架 I：分形谱去递归理论》v1.5 — 纯数学理论，含 18 篇参考文献 + 5 个理论深化模块（测度论收敛率/奇异连续谱/高维IFS/谱静默/理论转化）
-  - Paper II：《通用不动点范畴框架 II：物理应用与实验验证》v1.4 — 物理应用，含 33 篇参考文献 + 附录代码
+  - Paper I：《通用不动点范畴框架 I：分形谱去递归理论》v2.30 — 纯数学理论
+  - Paper II：《通用不动点范畴框架 II：物理应用与实验验证》v2.17 — 物理应用
+- **论文 III-IV（2026-07-16 新增）**：
+  - Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》v1.0 — $D$ 函子对 $\mathbf{Rec}$ 全域的三层谱分类完备性
+  - Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》v1.0 — $D$ 函子统一黑洞熵的两条弦论推导路径
 
 > **2026-07-13 开放问题推进更新**：Paper I §8.2 原有 3 个开放问题已全面推进，新增配套代码模块：`math_open_problems_advanced.py`、`numerical_engineering_open_problems.py`、`physics_open_problems_advanced.py`。全仓库 47 个单元测试通过。
 >
