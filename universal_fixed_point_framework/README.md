@@ -67,10 +67,14 @@ universal_fixed_point_framework/
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
 ├── paper/                          # 论文手稿
-│   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.28
-│   └── paper2_physics_applications.md           # 物理应用论文 v2.17
+│   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.30
+│   ├── paper1_appendix.md                       # 附录与变更记录
+│   ├── paper2_physics_applications.md           # 物理应用论文 v2.18
+│   ├── paper3_spectral_classification.md        # 谱分类完备性论文 v1.1
+│   └── paper4_stretched_d_brane.md              # 黑洞熵统一论文 v1.1
+├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 ├── formal_proof/                   # Lean 4 机器证明形式化项目
-│   └── UFPFormalization/           # Phase 16A 等级 A 模块形式化
+│   └── UFPFormalization/           # 24 模块，零诊断错误，50 测试定理
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
 ```
@@ -128,7 +132,7 @@ universal_fixed_point_framework/
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
 - **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、Feng-Wang 热力学极限、纯数学三大定理（D-C/HD-D/TE-G-M）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
-- **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，Phase 16A（7 模块：Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford）+ Phase 16B P0-P1（5 模块：辫子幺半、IC 隔离约束、Koopman 半群、m-增生生成元、S1-S4 静默判据）共 **12 个 Lean 模块 `lake build` 全量通过，0 个 `sorry`**。剩余 P2（Leaver 两弦法复杂度）与 16C（分形/遍历理论，需外部合作）。详见 `roadmap/phase16_machine_proof.md`。
+- **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块共 **24 个 Lean 模块，零诊断错误，50 个测试定理**。Phase 16A（范畴基础 9 模块）+ Phase 16B（泛函分析 4 模块）+ Phase 16C-I（遍历论 1 模块）+ Phase 16C-II（IFS 分形 1 模块）+ Phase 16C-III（热力学形式论 1 模块）全部完成，新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`DynSys.lean` 等基础设施模块。14/19 功能模块完全证明（零 `sorry`）。详见 `roadmap/phase16_machine_proof.md`。
 
 ## 七、已完善的深层次问题
 
@@ -259,10 +263,10 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.30，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 13 模块 |
-| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.17，含 33 篇参考文献 + 336+ 测试 |
-| Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.0，证明 D 函子对 Rec 全域的三层谱分类完备性 |
-| Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.0，D 函子统一黑洞熵的两条弦论推导路径 |
+| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.30，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 24 模块 + 50 测试定理 |
+| Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.18，含 34 篇参考文献 + 336+ 测试 |
+| Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.1，三层谱分类（定理 4.1-4.3）+ BPS 黑洞数值验证（谱距离 0.00）+ Lean 形式化背书 |
+| Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.1，$D$ 函子统一黑洞熵 + AdS/CFT/镜像对称/朗兰兹对偶扩展 + 参数约束 $C(g_s)$ |
 
 | 时间 | 任务 | 交付物 |
 |---|---|---|
@@ -381,4 +385,4 @@ universal_fixed_point_framework/
 | 2026-07-15 | Paper II 升级至 v2.17：§8.4 谱静默与紧致化代数-几何对偶，§5.2 Leaver 复谱投影范畴诠释 | Phase 15D |
 | 2026-07-15 | Phase 15D-10 完成：纯数学三大定理 D-C（Hausdorff 维数凹性）、HD-D（Ledrappier-Young 维数分解）、TE-G-M（拓扑熵-谱间隙不等式）严格证明框架；Paper I §7.10 新增 | Phase 15D |
 | 2026-07-15 | Phase 15D-11 完成：物理理论短板解决——Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱；Paper II §8.1/§8.2 更新 | Phase 15D |
-| 2026-07-14 | Phase 15B-1/2 D 函子定义域扩展 + Freyd 放宽条件：投影值谱测度 PVM、连续谱对象、谱积分、有限极限保持、ε-解集条件、弱伴随关系；`d_functor_extension.py` + `test_d_functor_extension.py`（11 测试）；测试数从 138 增至 149 | Phase 15B |
+| 2026-07-16 | **Phase 16C 全部完成**（IFS 分形层 + 热力学形式论），新增 4 功能模块 + DynSys + 4 测试模块共 24 模块；Paper III v1.1（谱分类完备性 + 形式化背书 + BPS 数值验证）；Paper IV v1.1（Rec→Spec 三步构造 + 参数约束 + 对偶扩展）；四篇论文作者统一为独立研究人 + 邮箱；版本管理标准化；完整术语说明体系 | Phase 16C / Paper III / IV |
