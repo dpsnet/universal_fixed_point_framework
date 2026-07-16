@@ -22,6 +22,8 @@ import UFPFormalization.SilenceHierarchy
 import UFPFormalization.ICDecidable
 import UFPFormalization.SpectralDynamics
 import UFPFormalization.Quantization
+import UFPFormalization.NormalOrdering
+import UFPFormalization.CategoryGeometry
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory
