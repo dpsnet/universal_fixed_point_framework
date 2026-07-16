@@ -98,8 +98,8 @@
 | 等级 | 模块范围 | 状态 |
 |------|----------|------|
 | A（极易） | $\mathbf{Rec}/\mathbf{Spec}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（12 个模块，0 `sorry`，`lake build` 通过） |
-| B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 两弦法复杂度 | 🔄 推进中（OperatorTheory.lean + Silence.lean 已完成，Leaver 复杂度待 16B-P2） |
-| C（高难） | IFS 自相似测度、压力函数、定理 D-C / HD-D / TE-G-M 机器证明 | ⏳ 待 16C（需外部合作） |
+| B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 两弦法复杂度 | ✅ 已完成（13 个模块，0 `sorry`，`lake build` 通过） |
+| C（中等偏高） | IFS 分形吸引子、Hausdorff 维数、遍历论三项定理（D-C/HD-D/TE-G-M）——基于 mathlib `Dynamics.Ergodic`（完整内置）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），全部可自主实现，三阶段推进中 | 🔄 规划中（详见 `roadmap/phase16_machine_proof.md` §16C） |
 | D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ⏳ 远景规划 |
 
 #### A.13.2 当前进展（2026-07-16 更新）

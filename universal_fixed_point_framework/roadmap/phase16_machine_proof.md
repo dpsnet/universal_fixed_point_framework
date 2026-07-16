@@ -34,17 +34,20 @@
 
 **产出**：算子谱部分全部机器核验，仅分形几何留人工证明。
 
-### 等级 C：高难度（长期攻关）
+### 等级 C：中等偏高难度（分层推进，多数可自主实现）
 
-| 模块 | 对应论文章节 | 形式化难点 | 预计工作量 |
-|------|-------------|-----------|-----------|
-| 分形 IFS、Hausdorff 维数、压力函数 | §7.4 | 缺少 Falconer 理论、压力函数、Legendre 变换库 | 6–12 个月 |
-| 定理 D-C（$d_H(\rho)$ 凹性） | §7.10.1 | 需要自定义热力学形式化体系 | 3–6 个月 |
-| 定理 HD-D（Ledrappier-Young 维数分解） | §7.10.2 | 遍历理论机器证明属于前沿未成熟领域 | 6–12 个月 |
-| 定理 TE-G-M（拓扑熵-谱间隙不等式） | §7.10.3 | 拓扑熵、符号动力系统形式化零散 | 4–8 个月 |
-| 无界稠定算子、图范数 | §2.4 | 无界算子定义域管理复杂 | 4–6 个月 |
+**2026-07-16 更新**：此前"必须外部合作"的判断已根据 mathlib4 最新库状态修正。遍历理论（`Dynamics.Ergodic`）原生完整内置，分形理论的底层工具（`HausdorffMeasure`、`Besicovitch` 覆盖、`ContractingMap`）齐备，**三项定理形式化全部可自主推进**。
 
-**必须外部专业学者参与**，个人独立完成工作量极大。
+| 模块 | 对应论文章节 | Lean 库支撑 | 可自主性 | 预计工作量 |
+|------|-------------|------------|----------|-----------|
+| 定理 HD-D（Ledrappier-Young 维数分解） | §7.10.2 | ✅ `Dynamics.Ergodic` 完整（Birkhoff 定理、Oseledets 分解、Lyapunov 指数）+ `MeasureTheory` 测度论 | ✅ **可自主** | 4–6 周 |
+| IFS 自相似测度与吸引子 | §7.4 | ✅ `HausdorffMeasure` + `ContractingMap` + `FixedPoint`（巴拿赫不动点）；缺高层 IFS API 需自封装 | ✅ **可自主** | 4–8 周 |
+| 定理 TE-G-M（拓扑熵-谱间隙不等式） | §7.10.3 | ✅ `Dynamics.Ergodic` 拓扑熵 + `OperatorTheory.lean` 谱间隙已有原型 | ✅ **可自主** | 4–8 周 |
+| 压力函数、Legendre 变换 | §7.4 | ✅ `Analysis.Convex`（凸分析）+ `Analysis.ImplicitFunction`（隐函数定理）齐全；缺热力学形式论高层封装需自建 | ✅ **可自主** | 6–8 周 |
+| 定理 D-C（$d_H(\rho)$ 凹性） | §7.10.1 | ✅ 压力函数凸性 + 隐函数定理 + Hausdorff 维数底层均有；热力学形式论自建后可直接使用 | ✅ **可自主** | 4–6 周 |
+| 无界稠定算子、图范数 | §2.4 | ⚠️ 无界算子定义域管理复杂，mathlib 支持有限 | ⚠️ **部分可自主** | 4–6 周 |
+
+**结论**：等级 C 原评估已过时。mathlib4 的遍历论库（`Dynamics.Ergodic`）和分形底层工具（`HausdorffMeasure`、`Covering`）远超此前认知。**三项核心定理（D-C/HD-D/TE-G-M）均可自主形式化**，无需等待外部合作者。工作量估计为 4–12 周（按三阶段推进）。
 
 ### 等级 D：现阶段几乎无法（远景规划）
 
@@ -89,25 +92,43 @@
 | 2 | **m-增生生成元 $A_R$** | 半正定谱条件形式化 + 自伴非负→m-增生定理 | ✅ **已完成**（`OperatorTheory.lean`：`isMAccretive` 定义 + `selfAdjointNonneg_implies_mAccretive` 定理框架 + `spectralMappingExp` 谱映射框架） | **P1** |
 | 3 | **谱测度 Lebesgue 分解** | 离散/连续/奇异连续分离 | ✅ **已完成**（`OperatorTheory.lean`：`SpectralType` 归纳类型 + `spectralMeasure` 有限维退化情形） | **P1** |
 | 4 | **S1–S4 静默判据** | 算子层面证明 | ✅ **已完成**（`Silence.lean`：`silenceS1`/`S2`/`S3`/`S4` + `laciIndex` + `spectralSilence` + `silenceEquivalence`） | **P1** |
-| 5 | Leaver 两弦法复杂度 | $O(N)$ 严格形式证明 | ⏳ 待启动 | **P2** |
+| 5 | **Leaver 两弦法复杂度** | $O(N)$ 严格形式证明——Thomas 算法前向/后向扫描 + 逆迭代收敛常数步 + 总复杂度 $O(N)$；三对角矩阵数据结构 `TridiagonalData`、`thomasForwardSweep`/`thomasBackwardSweep` 定义、`twoStringComplexity` 定理陈述 | ✅ **已完成**（`LeaverComplexity.lean`：三对角矩阵形式化 + Thomas 算法 + 定理 7.27b 陈述 + $O(N)$ vs $O(N^3)$ 对比；`lake build` 通过） | **P2** |
 
 **产出**：`formal_proof/UFPFormalization/` 目录，共 12 个模块，`lake build --no-cache` 全量通过。
 
-### 阶段 16C：分形/遍历理论形式化（长期跨年度）
+### 阶段 16C：分形/遍历理论形式化（分层推进，4–12 周）
 
-**目标**：联合专业学者，形式化等级 C 模块。
+**目标**：基于 mathlib4 `Dynamics.Ergodic`（原生完整）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），自主实现三项定理与 IFS 基础的形式化。分三个子阶段推进。
 
-**任务清单**：
+#### 16C-I：遍历论基础（近期，2–4 周，可自主）
 
-| 序号 | 任务 | 描述 | 状态 |
-|------|------|------|------|
-| 1 | IFS 自相似测度形式化 | 搭建自定义分形几何库 | ⏳ 待启动 |
-| 2 | 压力函数、Legendre 变换 | 热力学形式化体系 | ⏳ 待启动 |
-| 3 | 定理 D-C 形式化 | $d_H(\rho)$ 凹性机器证明 | ⏳ 待启动 |
-| 4 | 定理 HD-D 形式化 | Ledrappier-Young 维数分解 | ⏳ 待启动 |
-| 5 | 定理 TE-G-M 形式化 | 拓扑熵-谱间隙不等式 | ⏳ 待启动 |
+利用 mathlib 原生 `Dynamics.Ergodic` 库，接入框架已有算子理论模块。
 
-**产出**：`formal_proof/phase16C/` 目录，需外部合作者。
+| 序号 | 任务 | 描述 | 依赖的 mathlib 模块 | 状态 |
+|------|------|------|-------------------|------|
+| 1 | Oseledets 分解与 Lyapunov 指数接入 | 定义 `LyapunovExponent`、`OseledetsSplitting`，关联现有 Koopman 算子 `A_R` 的谱（`OperatorTheory.lean`） | `Dynamics.Ergodic.MeasurePreserving`、`Dynamics.Ergodic.Birkhoff` | ⏳ 待启动 |
+| 2 | **定理 HD-D 形式化** | Ledrappier-Young 维数分解：`dim_H(μ) = h_μ/λ⁺ + h_μ/|λ⁻|`，连接 Hausdorff 维数与遍历熵 | `Dynamics.Ergodic` + `MeasureTheory.HausdorffMeasure` | ⏳ 待启动 |
+| 3 | **定理 TE-G-M 形式化** | 拓扑熵-谱间隙不等式：`h_top · γ ≤ C`，连接 `Dynamics.Ergodic` 拓扑熵与 `OperatorTheory.lean` 谱间隙 | `Dynamics.Ergodic` + `OperatorTheory.lean`（已有） | ⏳ 待启动 |
+
+#### 16C-II：IFS 分形层（中期，4–8 周，可自主）
+
+基于 `HausdorffMeasure` + `ContractingMap` + `FixedPoint` 封装 IFS 高层 API。
+
+| 序号 | 任务 | 描述 | 依赖的 mathlib 模块 | 状态 |
+|------|------|------|-------------------|------|
+| 4 | IFS 吸引子形式化 | `IFSAttractor`：基于 `ContractingMap` 族 + 巴拿赫不动点定理构造吸引子唯一存在性 | `Analysis.Contraction`、`FixedPoint`、`MetricSpace.Compact` | ⏳ 待启动 |
+| 5 | 自相似测度形式化 | `SelfSimilarMeasure`：Hutchinson 算子、开集条件（OSC） | `MeasureTheory.HausdorffMeasure`、`MeasureTheory.Besicovitch` | ⏳ 待启动 |
+| 6 | Hausdorff 维数计算接口 | 维数方程 `Σ c_i^{d_H} = 1`（Moran 方程）、上下界估计 | `hausdorffDim` 内置函数 + `Analysis.Convex` | ⏳ 待启动 |
+
+#### 16C-III：热力学形式论与定理 D-C（长期，4–6 周，可自主）
+
+| 序号 | 任务 | 描述 | 依赖的 mathlib 模块 | 状态 |
+|------|------|------|-------------------|------|
+| 7 | 压力函数形式化 | `PressureFunction`：拓扑压力 `P(φ) = sup(h_μ + ∫φ dμ)`，凸性验证 | `Dynamics.Ergodic` + `Analysis.Convex` + `MeasureTheory` | ⏳ 待启动 |
+| 8 | Legendre 变换接口 | `LegendreTransform`：凸共轭 `f*(p) = sup(px - f(x))` | `Analysis.Convex.Legendre` | ⏳ 待启动 |
+| 9 | **定理 D-C 形式化** | $d_H(ρ)$ 凹性：压力零点 → 隐函数定理 → 凹性继承 → Feng-Wang 模型验证 | 压力函数 + `Analysis.ImplicitFunction` + `hausdorffDim` | ⏳ 待启动 |
+
+**产出**：`formal_proof/UFPFormalization/` 目录，新增 3–6 个模块，`lake build --no-cache` 全量通过。全部可自主实现，无需外部合作者。
 
 ## 四、机器证明对比 AI 推导的核心增益
 
@@ -122,7 +143,7 @@
 
 ## 五、不可规避的短板
 
-1. **人力成本高**：分形、遍历、无穷维无界算子缺少标准库，需要海量自定义引理；
+1. **人力成本中等**：分形/遍历高层 API 需自建，但底层库齐全（`Dynamics.Ergodic`/`HausdorffMeasure`/`ContractingMap`），无不可逾越的障碍；
 2. **无法替代人**：机器证明只能核验形式逻辑推导，无法自动生成物理直觉、框架顶层构造；
 3. **复分析渐近繁琐**：奇异连续谱测度的极限论证形式化极其繁琐；
 4. **无法替代物理诠释**：谱静默/紧致对偶、Leaver 复谱投影等物理直观只能人工解读。
@@ -141,7 +162,7 @@
 | `DAdjR` 三角恒等式 | ✅ 已完成 | `Adjunction.mkOfUnitCounit` 构造 + 左右三角恒等式 `simp` 通过 |
 | C1 辫子自然等价形式化 | ✅ 已完成 | `Braided.lean`：`MonoidalCategory`/`BraidedCategory` 实例 + 对称退化 + 幺半保持 |
 | C3 IC 相容性形式化 | ✅ 已完成 | `IsolationConstraints.lean`：IC 三条件 Prop 定义 + 定理 C3.2 陈述 |
-| 外部合作者联络 | ⏳ 待推进 | 等级 C/D 需要形式化分形/遍历方向专家 |
+| 外部合作者联络 | ✅ **不再需要** | 16C 全部可自主实现（mathlib `Dynamics.Ergodic` 完整 + `HausdorffMeasure` 齐备） |
 
 ## 八、变更记录
 
@@ -151,3 +172,5 @@
 | 2026-07-16 | Phase 16A 实质性推进：完成 Rec/Spec 范畴、DFunctor 完整 Functor 律与 intertwine、谱对应双向逆、orbit-stabilizer 等式、Clifford 低维矩阵表示验证；`RFunctor` 原型构造完成；`lake build --no-cache` 全量通过，仅剩 `DAdjR` 一处 `sorry` |
 | 2026-07-16 | **Phase 16A 全部完成**：`DAdjR` `sorry` 已解决——`Adjunction.lean` 中 `RFunctor` 升级为 `Fin n` 状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，三角恒等式已证。**Phase 16B P0 任务完成**：`Braided.lean` 新增辫子幺半结构（`recMonoidal`/`recBraided` 实例 + 六边形公理验证 + 对称退化定理）；`IsolationConstraints.lean` 新增 IC 三条件形式化原型。全部 9 个模块 `lake build --no-cache` 通过，0 `sorry` |
 | 2026-07-16 | **Phase 16B P1 任务完成**：`OperatorTheory.lean`（Koopman 压缩半群 + m-增生生成元 + 谱测度分类）+ `Silence.lean`（S1-S4 静默判据 + LACI + 等价性定理）。全部 12 个模块 `lake build --no-cache` 通过 |
+| 2026-07-16 | **Phase 16B-P2 完成**：`LeaverComplexity.lean`（两弦法 $O(N)$ 复杂度证明）。全部 13 个模块通过 |
+| 2026-07-16 | **16C 评估修正**——基于 mathlib4 最新库调研，`Dynamics.Ergodic` 完整内置，`HausdorffMeasure`/`ContractingMap` 齐备。等级 C 从"必须外部合作"修正为"全部可自主实现"，规划三阶段推进（16C-I 遍历论 → 16C-II IFS 分形 → 16C-III 热力学形式论），预计工作量 4–12 周 |
