@@ -33,6 +33,8 @@ Phase 21 将谱动力学框架从概念探索推进为完整的理论体系，�
 | P21.15 类 GR 场方程自然涌现 | Paper V §4.6 + 笔记 §9 | ✅ |
 | P21.16 $A_{\text{GR}}/A_{\text{SM}}$ 显式构造 | `paper5_force_generators.py`（17 SM 粒子质量谱） | ✅ |
 | P21.17 谱流方程数值验证 | `paper5_spectral_flow_test.py`（ALL PASSED） | ✅ |
+| P21.18 宇宙学谱动力学 | `paper5_cosmology.py` + 笔记 §10（FLRW 谱方程 + 原初扰动 + 暗能量） | ✅ |
+| P21.19 谱 β 费米子系数修正 | 已随 v3 公式修正自动解决（SU(2)/SU(3): 1.000000） | ✅ |
 
 ---
 

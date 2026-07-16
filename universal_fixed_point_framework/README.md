@@ -1,6 +1,6 @@
 # 通用不动点范畴框架
 
-**项目状态**：五篇论文（4 篇完稿 + 1 篇概念框架 v0.5）+ Lean 4 形式化 30 模块零错误（20/25 功能模块完全证明）
+**项目状态**：五篇论文（4 篇完稿 + 1 篇概念框架 v0.8）+ Lean 4 形式化 30 模块零错误（20/25 功能模块完全证明）
 
 | 指标 | 数值 |
 |------|------|
@@ -34,7 +34,7 @@
 | **Paper II**：物理应用与实验验证 | v2.18 | 物理应用（SM/BSM/Kerr/全息熵/暗物质） | ~1,080 行 |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
-| **Paper V**：力的谱动力学 | v0.5 | 概念框架：谱流方程 + 逆平方律 + 对称性破缺推导 + 量子化 + LQG 对应 | ~260 行 |
+| **Paper V**：力的谱动力学 | v0.8 | 概念框架：谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + LQG 对应 + 类GR涌现 + 宇宙学 | ~290 行 |
 
 ### Lean 4 形式化
 
@@ -127,6 +127,7 @@ universal_fixed_point_framework/
 ├── paper5_beta_functions.py                    # Paper V β函数匹配 (v3)
 ├── paper5_normal_ordering.py                   # Paper V 正规排序数值验证
 ├── paper5_u1_beta.py                           # Paper V U(1) β函数匹配
+├── paper5_cosmology.py                         # Paper V 宇宙学谱动力学 (FLRW + n_s + DE)
 ├── formal_proof/                   # Lean 4 机器证明形式化项目
 │   └── UFPFormalization/           # 30 模块，零诊断错误，68 测试定理
 ├── roadmap/                        # 分阶段路线图文档
