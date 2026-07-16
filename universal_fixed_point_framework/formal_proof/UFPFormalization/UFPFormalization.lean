@@ -17,3 +17,8 @@ import UFPFormalization.ErgodicTheory
 import UFPFormalization.DomainExtension
 import UFPFormalization.IFSFractal
 import UFPFormalization.ThermoFormalism
+import UFPFormalization.DynSys
+import UFPFormalization.TestSpectralEquivalence
+import UFPFormalization.TestCategoryTheory
+import UFPFormalization.TestOperatorTheory
+import UFPFormalization.TestApplications

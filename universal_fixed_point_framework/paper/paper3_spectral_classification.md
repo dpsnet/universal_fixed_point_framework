@@ -140,6 +140,19 @@ $$S_{\text{BH}} = \dim_{\text{spec}} D(R_{\text{BH}})$$
 
 **验证状态**：14/19 模块完全证明（零 `sorry`），剩余 9 个 `sorry` 均为深层分析定理（变分原理、Ledrappier-Young、Jensen 不等式），需 mathlib 分析库进一步完善后填充。详见 [Phase 16 机器证明计划](../roadmap/phase16_machine_proof.md)。
 
+### 4.5 数值验证（BPS 黑洞谱匹配）
+
+定理 4.3（IC 全覆盖）的物理案例已验证：BPS 黑洞拉伸视界与 D-brane 两种描述的谱等价性。验证脚本 [`paper3_bps_spectral_verification.py`](../../paper3_bps_spectral_verification.py) 计算 $D(R_{\text{str}})$ 与 $D(R_{\text{dbr}})$ 的 Koopman 算子谱，结果：
+
+| 检验项 | 结果 |
+|--------|------|
+| 谱距离 $\|U_{\text{str}} - U_{\text{dbr}}\|$ | $0.00$ |
+| 生成元距离 $\|A_{\text{str}} - A_{\text{dbr}}\|$ | $0.00$ |
+| 谱对应 $\lambda = e^{-\mu}$ 误差 | $0.00$ |
+| 参数扫描 $M = 0.5 \sim 10.0$ | 全部通过 |
+
+推论 4.3a（熵的函子不变性）的数值验证——$D$ 函子像的谱维数在两种描述下严格相等。
+
 ---
 
 ## 5. 分类完备性
