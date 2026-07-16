@@ -923,6 +923,24 @@ $$\sigma_S(A|_S) = \sigma_\mathrm{Cl}(A).$$
 4. **旋量谱 = 全谱**：随机自伴 $A = \sum c_i \gamma_i$ 的旋量谱与全 Clifford 谱完全一致；
 5. **$\mathrm{Cl}(1,7)$ 旋量模**：8 维 Majorana 旋量，幂等性验证通过。
 
+### 6.5 $\mathrm{Cl}(1,7)$ 统一框架下的反常抵消
+
+本节补充 $\mathrm{Cl}(1,7)$ 统一框架中引力-规范混合反常的显式推导——这是框架声明"GR 与 SM 通过 $\mathrm{Cl}(1,7)$ 统一"时必须验证的自洽性条件。
+
+**定义 6.7**（反常抵消条件）。在 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 统一框架下，设 $F$ 为 $\mathrm{Cl}(1,7)$ 值规范场曲率，$R$ 为 Riemann 曲率，引力-规范混合反常由下列三项之和给出：
+
+$$A = A_{\text{gauge}} + A_{\text{grav}} + A_{\text{mixed}}.$$
+
+**命题 6.8**（Cl(1,7) 统一的反常抵消）。在 $\mathrm{Cl}(1,7)$ 统一框架下，引力-规范混合反常通过下列条件抵消：
+
+1. **规范反常**：$\mathrm{Tr}(F \wedge F \wedge F) = 0$——标准模型规范群 $SU(3)_C \times SU(2)_L \times U(1)_Y$ 满足 $\pi_3(G) = 0$，故 $\int \mathrm{Tr}(F^3) = 0$，无规范反常；
+2. **引力反常**：$\mathrm{Tr}(R \wedge R) = 0$——在 $\dim M = 4$ 时，4-形式 $\mathrm{Tr}(R \wedge R)$ 的积分恒为零（Gauss-Bonnet 项在 4 维为拓扑不变量，不贡献反常）；
+3. **混合反常**：$\mathrm{Tr}(F \wedge R) = 0$——需 $\mathrm{Cl}(1,7)$ 表示的显式验证。在 $M_8(\mathbb{R})$ 表示中，$\mathrm{Tr}(F) = 0$（$F$ 为无迹 $\mathfrak{so}(1,7)$ 生成元），故 $\mathrm{Tr}(F \wedge R) = \mathrm{Tr}(F) \cdot \mathrm{Tr}(R) = 0$。
+
+**证明**。(1) 由规范群无反常条件直接得出：$SU(3)$ 与 $SU(2)$ 的 $\pi_3 = 0$，$U(1)$ 的三角反常可通过电荷赋值消除。(2) $\dim M = 4$ 时 $\mathrm{Tr}(R \wedge R)$ 的积分为 Euler 示性数的 $32\pi^2$ 倍，不产生混合反常。(3) $\mathrm{Cl}(1,7)$ 的矩阵表示 $M_8(\mathbb{R})$ 中所有生成元均为无迹矩阵，故 $\mathrm{Tr}(F) = 0$，$\mathrm{Tr}(F \wedge R) = 0$ 自动满足。□
+
+**注 6.9**（意义与局限）。上述抵消条件是 $\mathrm{Cl}(1,7)$ 统一框架自洽性的最低要求。完整的反常分析需考虑 (a) $\mathrm{Cl}(1,7)$ 值的 Wess-Zumino 项；(b) 规范反常的高阶圈图修正；(c) 与 BSM 第四代轻子相关的混合反常，（a）-（c）留待未来 Paper III 严格处理。
+
 ---
 
 ## 7. RKHS 收敛率理论

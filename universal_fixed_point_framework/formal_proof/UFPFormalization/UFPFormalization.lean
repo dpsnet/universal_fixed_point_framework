@@ -6,3 +6,5 @@ import UFPFormalization.Adjunction
 import UFPFormalization.SpectralCorrespondence
 import UFPFormalization.OrbitFunctor
 import UFPFormalization.Clifford
+import UFPFormalization.Braided
+import UFPFormalization.IsolationConstraints
