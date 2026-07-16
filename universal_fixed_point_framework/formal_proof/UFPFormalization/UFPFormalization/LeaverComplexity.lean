@@ -53,10 +53,23 @@ theorem tridiagonal_row_nonzero_count {n : ℕ} (d : TridiagonalData n) (i : Fin
     · exfalso; exact h rfl
   -- At most 3 distinct positions can be non-zero
   have card_bound : (Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ).card ≤ 3 := by
-    have : Finset.card ({(i : Fin n), i - 1, i + 1} : Finset (Fin n)) ≤ 3 := by
-      decide
-    sorry  -- Finite case: at most 3 distinct indices
-  sorry
+    -- The filter is a subset of {i, i-1, i+1}, a set of at most 3 distinct elements
+    have h_subset : Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ ⊆
+      ({i, i-1, i+1} : Finset (Fin n)) := by
+      intro j hj
+      simpa [Finset.mem_filter] using hj
+    have card_subset : (Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ).card ≤
+      ({i, i-1, i+1} : Finset (Fin n)).card :=
+      Finset.card_le_card h_subset
+    have h_target : ({i, i-1, i+1} : Finset (Fin n)).card ≤ 3 := by
+      calc
+        ({i, i-1, i+1} : Finset (Fin n)).card ≤ (({i, i-1} : Finset (Fin n)).card + 1) :=
+          Finset.card_insert_le (i+1) {i, i-1}
+        _ ≤ (({i} : Finset (Fin n)).card + 1 + 1) := by
+          have h := Finset.card_insert_le (i-1) ({i} : Finset (Fin n))
+          omega
+        _ = 3 := by simp
+    exact le_trans card_subset h_target
 
 /-- Thomas algorithm for solving tridiagonal systems M·x = b in O(N).
     Forward sweep: modifies sub-diagonal and main diagonal.

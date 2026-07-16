@@ -8,8 +8,12 @@ import UFPFormalization.OrbitFunctor
 import UFPFormalization.Clifford
 import UFPFormalization.Braided
 import UFPFormalization.IsolationConstraints
+import UFPFormalization.SpectralEquivalence
+import UFPFormalization.ICVerification
 import UFPFormalization.OperatorTheory
 import UFPFormalization.Silence
 import UFPFormalization.LeaverComplexity
 import UFPFormalization.ErgodicTheory
 import UFPFormalization.DomainExtension
+import UFPFormalization.IFSFractal
+import UFPFormalization.ThermoFormalism

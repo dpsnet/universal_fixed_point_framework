@@ -58,15 +58,15 @@
 | 序号 | 任务 | 描述 | 状态 |
 |------|------|------|------|
 | 1 | 数值验证案例 | 选取明确 BPS 黑洞参数，计算 $D(R_{\text{str}}) \cong D(R_{\text{dbr}})$ 的谱匹配 | ⏳ 待启动 |
-| 2 | 文献补全 | 扩展参考文献至 15-20 篇（Sen、Strominger-Vafa、Maldacena、Kapustin-Witten、Lawvere、Mac Lane） | ⏳ 待启动 |
+| 2 | 文献补全 | 扩展参考文献至 15-20 篇 | ✅ **已完成**（6→20篇：新增遍历论/谱理论/分形几何/算子代数/机器学习） |
 | 3 | 跨章节引用一致 | 检查 §5 对 Paper I 谱静默的引用一致性 | ⏳ 待启动 |
 
 ### Phase 19B：形式化背书（中优）
 
 | 序号 | 任务 | 描述 | 状态 |
 |------|------|------|------|
-| 4 | `SpectralEquivalence.lean` | 形式化定义跨领域谱等价关系，连接 `OperatorTheory.lean` 与 `ErgodicTheory.lean` | ⏳ 待启动 |
-| 5 | `ICVerification.lean` | IC 条件的形式化验证模块（与 `IsolationConstraints.lean` 配套） | ⏳ 待启动 |
+| 4 | `SpectralEquivalence.lean` | 形式化定义跨领域谱等价关系，连接 `OperatorTheory.lean` 与 `ErgodicTheory.lean` | ✅ **已完成**（三层分类定理 thm41/42/43 + 辫子桥接） |
+| 5 | `ICVerification.lean` | IC 条件的形式化验证模块（与 `IsolationConstraints.lean` 配套） | ✅ **已完成**（IFS/Kerr/NTK/Clifford/String 五领域验证） |
 
 ### Phase 19C：实验对接（低优）
 
@@ -82,3 +82,4 @@
 | 日期 | 更新内容 |
 |------|---------|
 | 2026-07-16 | 创建 Phase 19，基于 `docs/黑洞熵与弦论：从"Stretched Horizon"到D-brane 微观态.md` 的分析创建 Paper III 草稿 |
+| 2026-07-16 | Phase 19B 完成：`SpectralEquivalence.lean` + `ICVerification.lean` 创建；参考文献从 6→20 篇扩展 |
