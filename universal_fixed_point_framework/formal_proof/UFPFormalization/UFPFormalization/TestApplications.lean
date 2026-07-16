@@ -124,6 +124,47 @@ theorem test_pressure_spectral_link_forward (ifs : IFS ℝ) (t : ℝ) (hP : topo
   (pressure_zero_iff_hausdorff_dimension ifs t).mp hP
 
 -- ============================================================
+-- SpectralDynamics Tests
+-- ============================================================
+
+-- Spectral flow preserves the solution form
+theorem test_spectralFlow_definition (A₀ A_F : Matrix (Fin 2) (Fin 2) ℂ) (t : ℝ) :
+    spectralFlow A₀ A_F t = (Real.exp (t • A_F)) * A₀ * (Real.exp (-t • A_F)) := rfl
+
+-- Force independence criterion: a force is independent of itself
+theorem test_force_independent_self {n : ℕ} (A_F : Matrix (Fin n) (Fin n) ℂ) :
+    forcesIndependent A_F A_F := by
+  rw [forcesIndependent]
+
+-- Unified force formula is the spectral flow with combined generators
+theorem test_unified_force_formula (A₀ : Matrix (Fin 2) (Fin 2) ℂ) (t : ℝ) :
+    spectralFlow A₀ ((0 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) t =
+    (Real.exp (t • ((0 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)))) * A₀ *
+    (Real.exp (-t • ((0 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)))) := by
+  rfl
+
+-- A_GR with trivial intertwiner gives back A_SM
+theorem test_A_GR_trivial : A_GR (1 : Matrix (Fin 2) (Fin 2) ℂ) (1 : Matrix (Fin 2) (Fin 2) ℂ) =
+    (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  calc
+    A_GR (1 : Matrix (Fin 2) (Fin 2) ℂ) (1 : Matrix (Fin 2) (Fin 2) ℂ)
+        = (1 : Matrix (Fin 2) (Fin 2) ℂ) * (1 : Matrix (Fin 2) (Fin 2) ℂ) * (1 : Matrix (Fin 2) (Fin 2) ℂ)⁻¹ := rfl
+    _ = 1 := by simp
+
+-- ============================================================
+-- SilenceHierarchy Tests
+-- ============================================================
+
+-- In the finite prototype, spectral silence implies morphism silence (vacuously)
+theorem test_spectralSilence_implies_morphismSilence (R : RecObj) :
+    spectralSilence (DFunctor.obj R).A → morphismSilence (𝟙 R) :=
+  spectralSilence_implies_morphismSilence R
+
+-- The silence hierarchy is decidable for finite prototypes
+theorem test_ICDecidable (R₁ R₂ : RecObj) : Decidable (isolationConstraint R₁ R₂) := by
+  infer_instance
+
+-- ============================================================
 -- ICVerification Tests (new module)
 -- ============================================================
 

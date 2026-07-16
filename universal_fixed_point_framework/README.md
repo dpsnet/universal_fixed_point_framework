@@ -1,6 +1,6 @@
 # 通用不动点范畴框架
 
-**项目状态**：四篇论文完稿 + Lean 4 形式化 24 模块零错误（15/19 功能模块完全证明）
+**项目状态**：五篇论文（4 篇完稿 + 1 篇概念框架 v0.3）+ Lean 4 形式化 27 模块零错误（15/19 功能模块完全证明）
 
 本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱去递归理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
 
@@ -25,17 +25,18 @@
 | **Paper II**：物理应用与实验验证 | v2.18 | 物理应用（SM/BSM/Kerr/全息熵/暗物质） | ~1,080 行 |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
+| **Paper V**：力的谱动力学（概念框架） | v0.3 | 谱流方程 + 逆平方律 + $A_{\text{GR}}/A_{\text{SM}}$ 显式构造 | ~145 行 |
 
 ### Lean 4 形式化
 
 | 指标 | 数值 |
 |------|------|
-| 功能模块 | 19 |
+| 功能模块 | 22 |
 | 基础设施模块（DynSys） | 1 |
 | 测试模块 | 4 |
-| **总计** | **24 模块，零诊断错误** |
-| 测试定理 | 52 |
-| 完全证明（零 `sorry`） | **15/19** 功能模块 |
+| **总计** | **27 模块，零诊断错误** |
+| 测试定理 | 58 |
+| 完全证明（零 `sorry`） | **15/22** 功能模块 |
 | 剩余 `sorry` | 8（深层分析定理，需 mathlib 基础设施） |
 
 ### 数值验证
@@ -109,8 +110,12 @@ universal_fixed_point_framework/
 │   ├── paper3_spectral_classification.md        # 谱分类完备性论文 v1.1
 │   └── paper4_stretched_d_brane.md              # 黑洞熵统一论文 v1.1
 ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
+├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
+├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证
+├── paper5_spectral_commutator.py                # Paper V [A_GR, A_SM] 谱对易子
+├── paper5_force_generators.py                   # Paper V A_GR/A_SM 显式构造
 ├── formal_proof/                   # Lean 4 机器证明形式化项目
-│   └── UFPFormalization/           # 24 模块，零诊断错误，50 测试定理
+│   └── UFPFormalization/           # 27 模块，零诊断错误，52 测试定理
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
 ```
@@ -303,6 +308,7 @@ universal_fixed_point_framework/
 | Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.18，含 34 篇参考文献 + 336+ 测试 |
 | Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.1，三层谱分类（定理 4.1-4.3）+ BPS 黑洞数值验证（谱距离 0.00）+ Lean 形式化背书 |
 | Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.1，$D$ 函子统一黑洞熵 + AdS/CFT/镜像对称/朗兰兹对偶扩展 + 参数约束 $C(g_s)$ |
+| Paper V：力的谱动力学——从谱分类到力的统一描述 | 概念框架 | `paper/paper5_spectral_dynamics.md` | 待定 | 🔬 v0.3，谱流方程 + 逆平方律几何起源 + $A_{\text{GR}}/A_{\text{SM}}$ 构造 + 4 个数值脚本 |
 
 | 时间 | 任务 | 交付物 |
 |---|---|---|

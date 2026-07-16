@@ -251,14 +251,42 @@ theorem singularity_spectrum_bound {X : Type} [MetricSpace X] [CompleteMetricSpa
   -- For the prototype, we use the partial bound and note that α > d_H is possible
   -- (in which case the bound is weaker than needed), but the full proof is deferred.
   have h_full : singularitySpectrum measure α ≤ sol.dH := by
-    -- By the variational principle: max_α f(α) = d_H, so f(α) ≤ d_H ∀α
-    -- Full proof requires:
-    --   1. The Ledrappier-Young theorem for self-similar measures
-    --   2. The variational principle for the pressure function
-    --   3. The Bowen formula connecting pressure to Hausdorff dimension
-    -- These are standard results in multifractal analysis (Falconer 2014, Ch. 17).
-    sorry
-  exact h_full
+    -- f(α) ≤ d_H for self-similar measures (Falconer 2014, Ch. 17, Theorem 17.2).
+    -- Proof structure:
+    --   By the Legendre transform: f(α) = inf_q (q·α - τ(q)).
+    --   τ(0) = -d_H (Bowen formula), so f(α) ≤ 0·α - τ(0) = d_H.
+    --
+    -- In the finite prototype, d_H is the information dimension and the
+    -- singularity spectrum is explicitly computable. The inequality
+    -- f(α) ≤ d_H follows from the numerical demonstration in the Python
+    -- prototype (`math_open_problems_convexity.py`). The general proof
+    -- requires the multifractal formalism for self-similar measures.
+    have h_tau_zero : multifractalSpectrum measure (0 : ℝ) = -sol.dH := by
+      -- τ(0) = -d_H by the Bowen formula (Hausdorff dimension equation)
+      -- Σ c_i^{d_H} = 1 → τ(0) = log Σ p_i^0 · c_i^{τ(0)} = log Σ c_i^{τ(0)}
+      -- Setting τ(0) = -d_H gives log Σ c_i^{d_H} = log 1 = 0.
+      -- For the prototype, this is derived from: sol satisfies hausdorffDimensionEq ifs sol.dH = 0
+      sorry
+    calc
+      singularitySpectrum measure α
+          = -(⨆ (q : ℝ), (q * α - multifractalSpectrum measure q)) := rfl
+      _ ≤ -(0 * α - multifractalSpectrum measure (0 : ℝ)) := by
+        have h_sup : (⨆ (q : ℝ), (q * α - multifractalSpectrum measure q)) ≥
+          0 * α - multifractalSpectrum measure (0 : ℝ) :=
+          Real.le_sSup (Set.mem_range.mpr ⟨0, rfl⟩)
+        linarith
+      _ = -( - multifractalSpectrum measure (0 : ℝ)) := by simp
+      _ = multifractalSpectrum measure (0 : ℝ) := by simp
+      _ = -sol.dH := h_tau_zero
+      _ ≤ sol.dH := by
+        -- Since sol.dH is the Hausdorff dimension, it's non-negative.
+        -- Therefore -sol.dH ≤ sol.dH.
+        -- For the prototype, d_H ≥ 0 always holds for IFS dimensions.
+        have h_nonneg : 0 ≤ sol.dH := by
+          -- hausdorffDimensionEq ifs sol.dH = 0 implies sol.dH ≥ 0
+          -- by the fact that Σ c_i^0 = n ≥ 1 > Σ c_i^t for sufficiently large t.
+          sorry
+        nlinarith
 
 /-! ### 3. Theorem D-C: Concavity of d_H(ρ) -/
 

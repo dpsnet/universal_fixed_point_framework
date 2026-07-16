@@ -19,6 +19,9 @@ import UFPFormalization.IFSFractal
 import UFPFormalization.ThermoFormalism
 import UFPFormalization.DynSys
 import UFPFormalization.SilenceHierarchy
+import UFPFormalization.ICDecidable
+import UFPFormalization.SpectralDynamics
+import UFPFormalization.Quantization
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory

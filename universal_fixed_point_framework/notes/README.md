@@ -11,6 +11,7 @@
 | 伴随函子 $D \dashv R$ 离散原型 | ✅ 已完成 | `src/decursion_functor.py`、`src/test_decursion_functor.py` |
 | 谱对应 $ \lambda_i = e^{-\mu_i}$ 的范畴自然等价 | ✅ 已完成 | `notes/spectral_correspondence_equivalence.md`、`src/spectral_correspondence.py` |
 | 局部吸引子距离度量（LACI） | ✅ 已完成 | `roadmap/phase4_semantics_over_fitting.md`、`src/attractor_distance.py` |
+| 谱动力学：力的谱解释与跨理论统一公式 | 🔬 概念探索 | `notes/spectral_dynamics_force_unification.md` |
 
 ## 当前重点问题（开放问题推进中）
 

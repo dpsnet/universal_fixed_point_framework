@@ -169,6 +169,7 @@ It should be emphasized that **core mathematical structures have been verified b
 | **Paper II** | Universal Fixed-Point Categorical Framework II: Physics Applications and Experimental Validation | Theoretical physics + experimental validation | PRD / JHEP |
 | **Paper III** | Universal Fixed-Point Categorical Framework III: Spectral Classification Completeness Theorem | Spectral classification + formalization | TBD |
 | **Paper IV** | Universal Fixed-Point Categorical Framework IV: Stretched Horizon → D-brane | String theory case study | TBD |
+| **Paper V** | Universal Fixed-Point Categorical Framework V: Spectral Dynamics of Forces (concept) | Theoretical physics | TBD v0.4 |
 
 ---
 
