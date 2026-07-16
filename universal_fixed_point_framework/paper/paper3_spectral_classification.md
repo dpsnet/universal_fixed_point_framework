@@ -261,3 +261,25 @@ Cl ───→ D(Cl) ──┤     谱等价！
 ### 机器学习理论
 - [19] Jacot, A.; Gabriel, F. & Hongler, C. (2018). "Neural tangent kernel: Convergence and generalization in neural networks." *NeurIPS*.
 - [20] Hayou, S.; Doucet, A. & Rousseau, J. (2019). "On the impact of the activation function on deep neural networks training." *ICML*.
+
+---
+
+**版本**：v1.1
+
+**日期**：2026-07-16
+
+**状态**：
+
+《通用不动点范畴框架》系列论文 III，谱去递归函子的谱分类完备性定理，含 20 篇参考文献。主要内容：
+- 三层谱分类完备性定理（定理 4.1-4.3）
+- 跨领域 IC 全覆盖定理（定理 4.3）
+- 14/19 个 Lean 4 形式化模块零 `sorry` 完成机器核验
+- BPS 黑洞谱匹配数值验证（`paper3_bps_spectral_verification.py`，谱距离 0.00）
+- §4.4 形式化验证状态（19 模块，~3,700 行）
+- §4.5 数值验证（BPS 黑洞参数扫描 M = 0.5 ~ 10.0 全部通过）
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.0 | 2026-07-16 | 初始版本 |
+| v1.1 | 2026-07-16 | 新增 §4.4 形式化验证（Lean 4 模块状态）、§4.5 数值验证（BPS 黑洞谱匹配）、7.2 开放问题第 4-5 项；参考文献从 6 篇扩展至 20 篇；文件名从 `paper3_spectral_equivalence.md` 更名为 `paper3_spectral_classification.md` |
