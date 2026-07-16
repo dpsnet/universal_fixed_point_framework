@@ -106,9 +106,9 @@
 
 | 序号 | 任务 | 描述 | 依赖的 mathlib 模块 | 状态 |
 |------|------|------|-------------------|------|
-| 1 | Oseledets 分解与 Lyapunov 指数接入 | 定义 `LyapunovExponent`、`OseledetsSplitting`，关联现有 Koopman 算子 `A_R` 的谱（`OperatorTheory.lean`） | `Dynamics.Ergodic.MeasurePreserving`、`Dynamics.Ergodic.Birkhoff` | ⏳ 待启动 |
-| 2 | **定理 HD-D 形式化** | Ledrappier-Young 维数分解：`dim_H(μ) = h_μ/λ⁺ + h_μ/|λ⁻|`，连接 Hausdorff 维数与遍历熵 | `Dynamics.Ergodic` + `MeasureTheory.HausdorffMeasure` | ⏳ 待启动 |
-| 3 | **定理 TE-G-M 形式化** | 拓扑熵-谱间隙不等式：`h_top · γ ≤ C`，连接 `Dynamics.Ergodic` 拓扑熵与 `OperatorTheory.lean` 谱间隙 | `Dynamics.Ergodic` + `OperatorTheory.lean`（已有） | ⏳ 待启动 |
+| 1 | Oseledets 分解与 Lyapunov 指数接入 | 定义 `LyapunovExponent`、`OseledetsSplitting`，关联现有 Koopman 算子 `A_R` 的谱（`OperatorTheory.lean`） | ✅ **已完成**（`ErgodicTheory.lean`：`lyapunovExponent`/`OseledetsSplitting` + `koopmanLyapunovConnection`）|
+| 2 | **定理 HD-D 形式化** | Ledrappier-Young 维数分解：`dim_H(μ) = h_μ/λ⁺ + h_μ/|λ⁻|`，连接 Hausdorff 维数与遍历熵 | ✅ **已完成**（`ErgodicTheory.lean`：`theoremHD_D` + `measureEntropy` + `hausdorffDimensionMeasure` + `kerrFractalDimension` 推论） |
+| 3 | **定理 TE-G-M 形式化** | 拓扑熵-谱间隙不等式：`h_top · γ ≤ C`，连接 `Dynamics.Ergodic` 拓扑熵与 `OperatorTheory.lean` 谱间隙 | ✅ **已完成**（`ErgodicTheory.lean`：`theoremTE_GM` + `spectralGap` + `topologicalEntropy` + `kerrSpectralGapConstraint` 推论） |
 
 #### 16C-II：IFS 分形层（中期，4–8 周，可自主）
 
