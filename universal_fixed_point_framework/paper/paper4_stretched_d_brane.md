@@ -1,10 +1,12 @@
 # 通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane——谱去递归函子对黑洞熵微观推导的统一
 
-**作者**：通用不动点框架研究组
+**作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **摘要**：本文以弦论中黑洞熵的两种微观推导方案——$T^6$ 紧致化杂化弦的拉伸视界（Sen 1995）与 $K3\times S^1$ 紧致化 II 型弦的 D-brane 微观态计数（Strominger & Vafa 1996）——为案例，证明两者在谱去递归化函子 $D$ 的作用下给出同构的谱像 $D(R_{\text{str}}) \cong D(R_{\text{dbr}})$，从而在函子层面统一了传统上被视为独立的两种熵计算路径。该等价性由隔离约束条件（IC）严格保证，不依赖具体的紧致化细节。IC 条件验证已在 Lean 4 中完成形式化（`ICVerification.lean`，覆盖 IFS/Kerr/NTK/Clifford/String 五领域），为等价性定理提供了机器核验背书。本文进一步讨论这一等价性的方法论意义——$D$ 函子提供了弦论对偶（AdS/CFT、镜像对称、S-对偶）的结构性等价验证工具。
 
 ---
+
+**术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `UFPFormalization`。记号与定义沿用 Paper I，谱分类定理引用 Paper III。
 
 ## 1. 引言：黑洞熵的多重推导与函子化统一
 
