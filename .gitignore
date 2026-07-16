@@ -35,3 +35,4 @@ lake-packages/
 # 编辑器
 .lean4-info/
 tmp/
+lean-4.32.0-windows.tar.zst
