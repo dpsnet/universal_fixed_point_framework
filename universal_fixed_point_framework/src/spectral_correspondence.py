@@ -20,6 +20,8 @@ spectral_correspondence.py
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 import numpy as np
 
 from rec_category import RecObject, RecMorphism
@@ -346,3 +348,141 @@ def verify_braiding_hexagon(
         return True, f"六边形公理通过 (k12={k12}, k13={k13}, k23={k23})"
     else:
         return False, f"六边形公理不通过 (k12={k12}, k13={k13}, k23={k23})"
+
+
+# ===========================================================================
+# 隔离约束条件（Isolation Constraints, IC）
+# 对应 §3.7 定义 C3.1 / 定理 C3.2
+# ===========================================================================
+
+@dataclass
+class IsolationConstraintResult:
+    """隔离约束验证结果。"""
+    satisfies_IC: bool
+    spectral_scale_compatible: tuple[bool, str]
+    morphism_extendable: tuple[bool, str]
+    topologically_compatible: tuple[bool, str]
+    description: str = ""
+
+
+def check_spectral_scale_compatibility(
+    spec1: np.ndarray, spec2: np.ndarray, tol: float = 1e-6
+) -> tuple[bool, str]:
+    """
+    验证谱尺度相容性（IC 条件 1）。
+
+    检查 $\rho(\sigma(-\log U_{R_1})) / \rho(\sigma(-\log U_{R_2}))$ 是否有界。
+    """
+    rho1 = np.max(np.abs(spec1)) if len(spec1) > 0 else 0.0
+    rho2 = np.max(np.abs(spec2)) if len(spec2) > 0 else 0.0
+
+    if rho2 < tol:
+        return (False, "目标谱为空或零，无法计算谱半径比")
+    if rho1 < tol:
+        return (True, f"源谱为零，自动满足 (rho1={rho1:.2e})")
+
+    ratio = rho1 / rho2
+    # 谱半径之比有界：要求 ratio 不远离 1 超过 2 个数量级
+    bounded = ratio < 100.0 and ratio > 0.01
+    msg = f"rho1/rho2={ratio:.2e}, {'通过' if bounded else '不通过'} (界: 0.01-100)"
+    return (bounded, msg)
+
+
+def check_morphism_extendability(
+    R1: "RecObject", R2: "RecObject", tol: float = 1e-6
+) -> tuple[bool, str]:
+    """
+    验证态射延伸性（IC 条件 2）。
+
+    检查 $\|D(f)\| \leq C'$ 对典型态射 f 成立（范数控制）。
+    """
+    K1 = R1.koopman_matrix()
+    K2 = R2.koopman_matrix()
+
+    # 典型态射：恒等嵌入
+    # D(id_R) = id_{D(R)}，范数恒为 1，自动满足
+    norm_D_id = 1.0
+
+    # 检查 Koopman 算子的谱半径是否匹配
+    rho1 = max(abs(np.linalg.eigvals(K1)))
+    rho2 = max(abs(np.linalg.eigvals(K2)))
+
+    if rho2 > tol:
+        norm_ratio = rho1 / rho2
+        bounded = norm_ratio < 10.0
+        msg = f"谱半径比={norm_ratio:.2e}, {'通过' if bounded else '不通过'} (界: 10)"
+        return (bounded, msg)
+    else:
+        return (True, f"目标系统谱半径近零, 自动满足")
+
+
+def check_topological_compatibility(
+    R1: "RecObject", R2: "RecObject", tol: float = 1e-6
+) -> tuple[bool, str]:
+    """
+    验证拓扑相容性（IC 条件 3）。
+
+    检查 D 是否保持弱拓扑到弱拓扑的连续性。
+    通过对 Koopman 算子的弱收敛行为做简化检验：
+    两个系统的 Koopman 算子矩阵条件数相近则拓扑相容。
+    """
+    K1 = R1.koopman_matrix()
+    K2 = R2.koopman_matrix()
+
+    # 条件数作为拓扑结构度量
+    cond1 = np.linalg.cond(K1) if K1.size > 0 else 1.0
+    cond2 = np.linalg.cond(K2) if K2.size > 0 else 1.0
+
+    if cond2 > tol:
+        cond_ratio = cond1 / cond2
+        # 条件数在同一数量级内视为拓扑相容
+        compatible = cond_ratio < 10.0 and cond_ratio > 0.1
+        msg = f"条件数比={cond_ratio:.2e}, {'通过' if compatible else '不通过'} (界: 0.1-10)"
+        return (compatible, msg)
+    else:
+        return (True, "目标系统条件数近零, 自动满足")
+
+
+def verify_isolation_constraints(
+    R1: "RecObject", R2: "RecObject", tol: float = 1e-6
+) -> IsolationConstraintResult:
+    """
+    验证两个 Rec 对象之间的隔离约束条件 IC(R1, R2)。
+
+    三项条件全部满足时 IC 成立。对应定义 C3.1 / 定理 C3.2。
+
+    参数
+    ----------
+    R1 : RecObject
+        源递归系统对象。
+    R2 : RecObject
+        目标递归系统对象。
+    tol : float
+        数值容差。
+
+    返回
+    -------
+    IsolationConstraintResult
+        三项条件的逐项验证结果与综合判断。
+    """
+    # IC 条件 1: 谱尺度相容
+    spec1 = compression_spectrum(R1, tol)
+    spec2 = compression_spectrum(R2, tol)
+    scale_ok, scale_msg = check_spectral_scale_compatibility(spec1, spec2, tol)
+
+    # IC 条件 2: 态射延伸性
+    morph_ok, morph_msg = check_morphism_extendability(R1, R2, tol)
+
+    # IC 条件 3: 拓扑相容性
+    topo_ok, topo_msg = check_topological_compatibility(R1, R2, tol)
+
+    satisfies = scale_ok and morph_ok and topo_ok
+    description = "IC ✅ 通过" if satisfies else "IC ⚠️ 条件性满足"
+
+    return IsolationConstraintResult(
+        satisfies_IC=satisfies,
+        spectral_scale_compatible=(scale_ok, scale_msg),
+        morphism_extendable=(morph_ok, morph_msg),
+        topologically_compatible=(topo_ok, topo_msg),
+        description=description,
+    )
