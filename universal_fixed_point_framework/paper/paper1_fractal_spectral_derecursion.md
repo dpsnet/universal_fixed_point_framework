@@ -2,7 +2,7 @@
 
 **作者**：通用不动点框架研究组
 
-**摘要**：本文提出分形谱去递归理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$，构造谱去递归化函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.5a），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.10a）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然等价 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然等价 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版 LACI 指数区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"两弦法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 Feng-Wang 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，所有核心理论开放问题已全部解决（6/6 + 新增 1 项四层静默体系待深化），物理应用见配套论文 II——三项纯数学定理（D-C/HD-D/TE-G-M）已用于修正暗物质质量谱、BSM 新费米子质量谱、Kerr 分形维数与 LIGO/Virgo SNR 等物理预测。此外，本文识别出**四层静默体系**（对象静默 / 态射静默 / 谱静默 / 辫子静默，§5.7），将范畴论定义域限制转化为不可见性理论的统一框架——态射静默是比谱静默更彻底的不可见性机制，辫子静默是复耗散系统中谱静默的拓扑缠绕推广；并将耗散拓展函子 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除原 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统。
+**摘要**：本文提出分形谱去递归理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$，构造谱去递归化函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.3.1），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.4.5）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然等价 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然等价 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版 LACI 指数区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"两弦法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 Feng-Wang 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，所有核心理论开放问题已全部解决（6/6 + 新增 1 项四层静默体系待深化），物理应用见配套论文 II——三项纯数学定理（D-C/HD-D/TE-G-M）已用于修正暗物质质量谱、BSM 新费米子质量谱、Kerr 分形维数与 LIGO/Virgo SNR 等物理预测。此外，本文识别出**四层静默体系**（对象静默 / 态射静默 / 谱静默 / 辫子静默，§5.7），将范畴论定义域限制转化为不可见性理论的统一框架——态射静默是比谱静默更彻底的不可见性机制，辫子静默是复耗散系统中谱静默的拓扑缠绕推广；并将耗散拓展函子 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除原 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统。
 
 ---
 
@@ -31,13 +31,13 @@
 7. **谱静默理论**：四个静默判据与等价性定理，增强版 LACI 指数（区分度达 3.93），自适应阈值策略；
 8. **热力学极限**：Feng-Wang 热力学极限存在性严格证明（自由能凸性、次可加性、Fekete 引理）；
 9. **物理应用验证**：将去递归理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题（定理 7.27），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$），实现双重 homotopy continuation（a-homotopy + m-homotopy）；提出"两弦法"逆迭代优化（定理 7.27b）将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（定理 7.27c，平衡点 $K \approx 3$）。
-10. **方法论与四层静默体系**：(a) 重构 $D$ 函子的定义时序，明确 $\mathbf{Rec}_D$ 宽子范畴（§2.3 定义 2.5a）；(b) 严格证明 $\mathbf{Rec}_D$ 的子范畴合法性（命题 2.5c）、Freyd 伴随定理前提继承（命题 2.5d）与 $D\dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性（定理 2.10a）；(c) 识别**四层静默体系**——对象静默、态射静默（新发现，比谱静默更彻底）、谱静默、辫子静默（新发现，复耗散系统中谱静默的拓扑缠绕推广，§5.7）——统一"对象/关系/属性/辫子同伦"四个层级的不可见性；(d) 将 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统；所有核心理论开放问题已全部解决（6/6 + 新增问题 20 四层静默体系待深化）。
+10. **方法论与四层静默体系**：(a) 重构 $D$ 函子的定义时序，明确 $\mathbf{Rec}_D$ 宽子范畴（§2.3 定义 2.3.1）；(b) 严格证明 $\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）与 $D\dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性（定理 2.4.5）；(c) 识别**四层静默体系**——对象静默、态射静默（新发现，比谱静默更彻底）、谱静默、辫子静默（新发现，复耗散系统中谱静默的拓扑缠绕推广，§5.7）——统一"对象/关系/属性/辫子同伦"四个层级的不可见性；(d) 将 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统；所有核心理论开放问题已全部解决（6/6 + 新增问题 20 四层静默体系待深化）。
 11. **纯数学理论短板解决**：基于 Falconer (2014)、Ledrappier & Young (1985)、Ruelle (1978) 的经典工作，在本框架的统一范畴论体系内严格化三项核心数学定理——定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性，基于压力函数凸性 + Legendre 变换 + 隐函数定理 + Feng-Wang 模型验证）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解，Oseledets 分解 + 稳定/不稳定流形定理 + 条件熵分解 + 乘积结构）、定理 TE-G-M（拓扑熵-谱间隙普适不等式，Markov IFS 严格框架 + Perron-Frobenius 特征值分析 + IFS 框架验证）。三定理本身的数学内容为已有结论的严格化重组，框架的**真正创新点**在于：(a) 三定理在分形 RKHS + 遍历理论 + 拓扑动力系统的统一范畴框架内首次被系统组织为关联体系；(b) 将三定理应用于 Kerr QNM、暗物质质量谱、BSM 费米子质量谱等物理预测的具体化。综合验证全部通过（`math_open_problems_convexity.py`）。
 12. **跨领域函子相容性与隔离约束**：针对 IFS/Kerr/NTK/Clifford 四类对象的态射、内积、拓扑不同问题，引入隔离约束条件 IC（谱尺度相容、态射延伸性、拓扑相容性，定义 C3.1），证明 IC 满足时 $D$ 函子严格保持跨领域态射与结构不变量（定理 C3.2），诚实标注条件性满足的实例对（命题 C3.3）。
 
 ### 1.3 论文结构
 
-第 2 节建立递归系统范畴与谱范畴，构造谱去递归化函子 $D$（§2.7 包含方法论反思）；第 3 节推导全域不动点方程与谱对应自然等价（§3.7 新增跨领域函子相容性与隔离约束条件）；第 4 节扩展到连续谱与谱测度理论；第 5 节建立谱静默与高维不可见性理论；第 6 节建立 Clifford 值谱与纤维丛理论；第 7 节给出 RKHS 收敛率理论、算子性质、理论转化/EFT等价性框架与纯数学理论短板解决（定理 D-C、HD-D、TE-G-M）；第 8 节总结与开放问题；第 9 节讨论哲学与基础科学意义。§1.4 阐明本框架与现有范畴动力系统文献的关系。
+第 2 节建立递归系统范畴与谱范畴，构造谱去递归化函子 $D$（§2.8 包含方法论反思）；第 3 节推导全域不动点方程与谱对应自然等价（§3.7 新增跨领域函子相容性与隔离约束条件）；第 4 节扩展到连续谱与谱测度理论；第 5 节建立谱静默与高维不可见性理论；第 6 节建立 Clifford 值谱与纤维丛理论；第 7 节给出 RKHS 收敛率理论、算子性质、理论转化/EFT等价性框架与纯数学理论短板解决（定理 D-C、HD-D、TE-G-M）；第 8 节总结与开放问题；第 9 节讨论哲学与基础科学意义。§1.4 阐明本框架与现有范畴动力系统文献的关系。
 
 ### 1.4 与现有范畴动力系统文献的关系
 
@@ -88,14 +88,14 @@ $$T A_1 \subseteq A_2 T.$$
 
 ### 2.3 谱去递归化函子 $D$
 
-**定义 2.5a**（$\mathbf{Rec}_D$ 子范畴）。设 $\mathbf{Rec}_D \subset \mathbf{Rec}$ 为下列数据给出的**宽子范畴**：
+**定义 2.3.1**（$\mathbf{Rec}_D$ 子范畴）。设 $\mathbf{Rec}_D \subset \mathbf{Rec}$ 为下列数据给出的**宽子范畴**：
 
 - **对象**：$\mathbf{Rec}$ 中满足 $\sigma(-\log U_R) \subset \mathbb{R}_{\ge 0}$ 的 $R$（即 Koopman 算子 $U_R$ 经 Hermitian 化 $A_R = \tfrac12(-\log U_R + (-\log U_R)^\ast)$ 后正半定）；
 - **态射**：$\mathbf{Rec}$ 中满足**谱保持条件**的态射 $f:R_1\to R_2$，即 $D(f)^\ast$ 是 $\mathcal{H}_{R_2}\to\mathcal{H}_{R_1}$ 的等距嵌入。
 
-**注 2.5b**。$\mathbf{Rec}_D$ 是 $\mathbf{Rec}$ 的宽子范畴——对象子集受谱条件限制，态射进一步受谱保持条件限制。被排除的 $\mathbf{Rec}$ 态射构成"态射静默"现象，详见 §5.7「四层静默体系」。对 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象（如耗散混沌、非正规 NTK 核），通过 §7.9.1 的耗散拓展函子 $D_{\text{diss}}$ 严格处理。
+**注 2.3.1**。$\mathbf{Rec}_D$ 是 $\mathbf{Rec}$ 的宽子范畴——对象子集受谱条件限制，态射进一步受谱保持条件限制。被排除的 $\mathbf{Rec}$ 态射构成"态射静默"现象，详见 §5.7「四层静默体系」。对 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象（如耗散混沌、非正规 NTK 核），通过 §7.9.1 的耗散拓展函子 $D_{\text{diss}}$ 严格处理。
 
-**定义 2.5**（谱去递归化函子）。协变函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 定义如下：
+**定义 2.3.2**（谱去递归化函子）。协变函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 定义如下：
 
 - **对象映射**：对 $R \in \mathrm{Obj}(\mathbf{Rec}_D)$，$D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$，其中：
   - $\mathcal{H}_R$ 是 $\mathcal{S}_R$ 上关于不变测度 $\mu_R$ 的分形再生核 Hilbert 空间（RKHS）；
@@ -104,9 +104,9 @@ $$T A_1 \subseteq A_2 T.$$
 
 - **态射映射**：对 $f: R_1 \to R_2$（$\mathbf{Rec}_D$ 态射），$D(f)$ 为由 $f$ 诱导的推进算子的伴随。
 
-**命题 2.6**。$D$ 是协变函子，即保持单位态射与态射复合。
+**命题 2.3.3**。$D$ 是协变函子，即保持单位态射与态射复合。
 
-**定理 2.7**（$D$ 的忠实性）。设 $K_{R_2}$ 为 universal kernel（或至少 $\mathcal{H}_{R_2}$ 能分离 $\mathcal{S}_{R_2}$ 的点）。若 $f, g: R_1 \to R_2$ 满足 $D(f) = D(g)$，则 $f = g$。
+**定理 2.3.4**（$D$ 的忠实性）。设 $K_{R_2}$ 为 universal kernel（或至少 $\mathcal{H}_{R_2}$ 能分离 $\mathcal{S}_{R_2}$ 的点）。若 $f, g: R_1 \to R_2$ 满足 $D(f) = D(g)$，则 $f = g$。
 
 **证明**。$D(f) = D(g)$ 意味着它们作为有界算子相同，取伴随得 $D(f)^\ast = D(g)^\ast$。由定义，对任意 $h \in \mathcal{H}_{R_2}$ 与 $x \in \mathcal{S}_{R_1}$，
 
@@ -116,7 +116,7 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 ### 2.4 伴随函子 $D \dashv R$
 
-**命题 2.5c**（$\mathbf{Rec}_D$ 是合法子范畴）。$\mathbf{Rec}_D$（定义 2.5a）满足子范畴的三条充要条件：
+**命题 2.4.1**（$\mathbf{Rec}_D$ 是合法子范畴）。$\mathbf{Rec}_D$（定义 2.3.1）满足子范畴的三条充要条件：
 
 1. **对象子集封闭**：$\mathrm{Obj}(\mathbf{Rec}_D)\subseteq\mathrm{Obj}(\mathbf{Rec})$，由定义显然；
 2. **恒等态射封闭**：对 $R\in\mathbf{Rec}_D$，恒等态射 $\mathrm{id}_R$ 满足谱保持条件（$D(\mathrm{id}_R)^\ast = \mathrm{id}_{\mathcal{H}_R}$ 是等距）；
@@ -126,7 +126,7 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 **证**。三条均直接由"谱保持态射"定义为等距嵌入且等距嵌入在复合下封闭得出。□
 
-**命题 2.5d**（Freyd 伴随定理前提继承——显式构造版）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提。以下依次给出完备性的显式构造（命题 C2.1）、解集条件的可表函子构造（命题 C2.2）与 Freyd 定理的完整应用（定理 C2.3）。
+**命题 2.4.2**（Freyd 伴随定理前提继承——显式构造版）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提。以下依次给出完备性的显式构造（命题 C2.1）、解集条件的可表函子构造（命题 C2.2）与 Freyd 定理的完整应用（定理 C2.3）。
 
 **命题 C2.1**（$\mathbf{Rec}_D$ 的小极限显式构造）。设 $\{R_i\}_{i \in I} \subset \mathbf{Rec}_D$ 为小图表，$I$ 为小范畴。其在 $\mathbf{Rec}$ 中的极限 $R_\infty = \varprojlim R_i$ 显式构造为：
 
@@ -141,7 +141,7 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 **命题 C2.2**（解集的可表构造）。对每个 $E \in \mathbf{Spec}$，存在可表函子 $G_E: \mathbf{Rec}_D \to \mathbf{Set}$，$G_E(R) = \mathrm{Hom}_{\mathbf{Spec}}(E, D(R))$，其代表对象为 $R_E = R(E)$（包含函子的像）。解集条件等价于 $G_E$ 的可表性。
 
-**证明**。由 $D \dashv R$（定理 2.10a 在 $\mathbf{Rec}_D$ 上严格成立），$\mathrm{Hom}_{\mathbf{Spec}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集 $\{(R(E), \eta_{R(E)})\}$ 的基数由 $\mathbf{Spec}$ 的小性保证（谱对象集合为集合而非真类）。□
+**证明**。由 $D \dashv R$（定理 2.4.5 在 $\mathbf{Rec}_D$ 上严格成立），$\mathrm{Hom}_{\mathbf{Spec}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集 $\{(R(E), \eta_{R(E)})\}$ 的基数由 $\mathbf{Spec}$ 的小性保证（谱对象集合为集合而非真类）。□
 
 **定理 C2.3**（Freyd 伴随定理完整应用）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提：
 
@@ -151,11 +151,11 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 故 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}_D$。□
 
-**推论 2.9**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}_D} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$（余单位），满足三角恒等式：
+**推论 2.4.3**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}_D} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$（余单位），满足三角恒等式：
 
 $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\eta R) = \mathrm{id}_R.$$
 
-**命题 2.10**（$\mathbf{Spec}$ 是 $\mathbf{Rec}_D$ 的反射子范畴）。包含函子 $R: \mathbf{Spec} \hookrightarrow \mathbf{Rec}_D$ 是满的，且 $\mathbf{Spec}$ 在 $R$ 下的像构成 $\mathbf{Rec}_D$ 的反射子范畴。特别地：
+**命题 2.4.4**（$\mathbf{Spec}$ 是 $\mathbf{Rec}_D$ 的反射子范畴）。包含函子 $R: \mathbf{Spec} \hookrightarrow \mathbf{Rec}_D$ 是满的，且 $\mathbf{Spec}$ 在 $R$ 下的像构成 $\mathbf{Rec}_D$ 的反射子范畴。特别地：
 
 1. 对任意 $R \in \mathbf{Rec}_D$，单位态射 $\eta_R: R \to R(D(R))$ 将原 Koopman 算子 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$ 上，其中 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^\ast)$；
 2. 对任意 $E \in \mathbf{Spec}$，余单位态射 $\varepsilon_E: D(R(E)) \to E$ 是同构，因为 $A_{D(R(E))} = A_E$（由 $A_E$ 的自伴性保证）；
@@ -163,7 +163,7 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
 
 **证明**。(1) 由 $R$ 的定义，$\mathbf{Spec}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Spec}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
 
-**定理 2.10a**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Spec}$ 为谱去递归化函子，$R:\mathbf{Spec}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。则 $D\dashv R$ 严格成立。
+**定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Spec}$ 为谱去递归化函子，$R:\mathbf{Spec}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。则 $D\dashv R$ 严格成立。
 
 **证明**。构造单位 $\eta$ 与余单位 $\varepsilon$：
 
@@ -177,13 +177,13 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
 
 故 $D\dashv R$ 严格成立。□
 
-**注 2.11**。命题 2.10 表明 $D$ 函子的实质像是 $\mathbf{Spec}$ 在 $\mathbf{Rec}_D$ 中的反射子范畴。$D$ 仅定义在 $\mathbf{Rec}_D$ 上，而 $\eta_R$ 编码从一般动力学到其谱内容的规范投影——对于 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象，需通过 §7.9.1 的耗散拓展 $D_{\text{diss}}$ 处理。
+**注 2.4.6**。命题 2.4.4 表明 $D$ 函子的实质像是 $\mathbf{Spec}$ 在 $\mathbf{Rec}_D$ 中的反射子范畴。$D$ 仅定义在 $\mathbf{Rec}_D$ 上，而 $\eta_R$ 编码从一般动力学到其谱内容的规范投影——对于 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象，需通过 §7.9.1 的耗散拓展 $D_{\text{diss}}$ 处理。
 
-### 2.4a $\mathbf{Rec}_{\text{diss}}$ 的辫子幺半结构
+### 2.5 $\mathbf{Rec}_{\text{diss}}$ 的辫子幺半结构
 
 本节为耗散递归系统范畴 $\mathbf{Rec}_{\text{diss}}$（定义见 §7.9.1 定义 7.29）赋予辫子幺半范畴结构。该结构是 §3.4.2 辫子自然等价与 §5.7.5 辫子静默的范畴论基础。
 
-**定义 2.11a**（$\mathbf{Rec}_{\text{diss}}$ 的辫子幺半结构）。$\mathbf{Rec}_{\text{diss}}$ 赋予下列辫子幺半范畴结构：
+**定义 2.5.1**（$\mathbf{Rec}_{\text{diss}}$ 的辫子幺半结构）。$\mathbf{Rec}_{\text{diss}}$ 赋予下列辫子幺半范畴结构：
 
 1. **张量积**：$(R_1, U_{R_1}) \otimes (R_2, U_{R_2}) = (R_1 \times R_2, \; U_{R_1} \otimes U_{R_2})$，Koopman 算子的张量积给出幺半积；
 2. **单位对象**：$I = (\{\ast\}, U_I = 1)$，即单点状态空间的平凡递归系统；
@@ -192,15 +192,15 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
    $$k(R_1, R_2) = \left\lfloor \frac{\omega_{I,1} - \omega_{I,2}}{2\pi} \right\rfloor$$
    正好对应 $\exp$ 的 $2\pi i k$ 周期。
 
-**命题 2.11b**（辫子相容性）。定义 2.11a 的辫子结构满足辫子幺半范畴的六边形公理（hexagon identities），且对耗散系统退化为对称辫子（symmetric braid）当且仅当 $U_R$ 自伴（$\omega_I = 0$）。
+**命题 2.5.2**（辫子相容性）。定义 2.5.1 的辫子结构满足辫子幺半范畴的六边形公理（hexagon identities），且对耗散系统退化为对称辫子（symmetric braid）当且仅当 $U_R$ 自伴（$\omega_I = 0$）。
 
 **证明**。六边形公理由张量积的结合性与辫子态射的辫子关系（braid relation）直接验证：（1）左六边形恒等式 $\sigma_{R_1 \otimes R_2, R_3} = (\sigma_{R_1, R_3} \otimes \mathrm{id}_{R_2}) \circ (\mathrm{id}_{R_1} \otimes \sigma_{R_2, R_3})$ 在分量张量积上逐点成立；（2）右六边形恒等式 $\sigma_{R_1, R_2 \otimes R_3} = (\mathrm{id}_{R_2} \otimes \sigma_{R_1, R_3}) \circ (\sigma_{R_1, R_2} \otimes \mathrm{id}_{R_3})$ 类似验证。退化性：当 $\omega_I = 0$，$k = 0$，辫子退化为对称翻转 $\sigma^2 = \mathrm{id}$，与 $\mathbf{Rec}_D$ 的自伴子范畴一致。□
 
-**注 2.11c**。上述辫子结构是 $\mathbf{Rec}_{\text{diss}}$ 上**内蕴**的——它由耗散系统的复谱特征直接诱导，而非外部附加。辫子交叉次数 $k$ 在 $\exp$ 映射下对应于 $\pi_1(\mathbb{C}^\ast) \cong \mathbb{Z}$ 的生成元，将 $\exp$ 的核 $2\pi i\mathbb{Z}$ 从 1-范畴层面的"非单射缺陷"提升为辫子范畴层面的"内蕴交叉特征"。——详见 §3.4.2 定理 3.7b 的辫子自然等价与 §5.7.5 的辫子静默诠释。
+**注 2.5.3**。上述辫子结构是 $\mathbf{Rec}_{\text{diss}}$ 上**内蕴**的——它由耗散系统的复谱特征直接诱导，而非外部附加。辫子交叉次数 $k$ 在 $\exp$ 映射下对应于 $\pi_1(\mathbb{C}^\ast) \cong \mathbb{Z}$ 的生成元，将 $\exp$ 的核 $2\pi i\mathbb{Z}$ 从 1-范畴层面的"非单射缺陷"提升为辫子范畴层面的"内蕴交叉特征"。——详见 §3.4.2 定理 3.7b 的辫子自然等价与 §5.7.5 的辫子静默诠释。
 
-### 2.5 分形 RKHS 的构造
+### 2.6 分形 RKHS 的构造
 
-**定义 2.12**（分形 RKHS）。对递归系统 $R$，定义 Mercer 型核：
+**定义 2.6.1**（分形 RKHS）。对递归系统 $R$，定义 Mercer 型核：
 
 $$K_R(x,y) = \sum_{n=0}^\infty w_n \, \overline{\Phi_R^n(x)} \cdot \Phi_R^n(y),$$
 
@@ -208,11 +208,11 @@ $$K_R(x,y) = \sum_{n=0}^\infty w_n \, \overline{\Phi_R^n(x)} \cdot \Phi_R^n(y),$
 
 $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
-**命题 2.13**。若 $K_R$ 是 universal kernel，则 $\mathcal{H}_R$ 在 $C(X_R)$ 中稠密，且点求值泛函 $f \mapsto f(x)$ 在 $\mathcal{H}_R$ 上连续。
+**命题 2.6.2**。若 $K_R$ 是 universal kernel，则 $\mathcal{H}_R$ 在 $C(X_R)$ 中稠密，且点求值泛函 $f \mapsto f(x)$ 在 $\mathcal{H}_R$ 上连续。
 
-### 2.6 $A_R$ 的基本性质
+### 2.7 $A_R$ 的基本性质
 
-**定理 2.14**（$A_R$ 的闭稠定性与正性）。设 $U_R$ 是 $L^2(X_R,\mu_R)$ 上的正规算子，且 $\sigma(U_R) \subseteq \{\lambda \in \mathbb{C} : |\lambda| \le 1\}$。定义 $A_R = -\log U_R$，则：
+**定理 2.7.1**（$A_R$ 的闭稠定性与正性）。设 $U_R$ 是 $L^2(X_R,\mu_R)$ 上的正规算子，且 $\sigma(U_R) \subseteq \{\lambda \in \mathbb{C} : |\lambda| \le 1\}$。定义 $A_R = -\log U_R$，则：
 
 1. $A_R$ 是闭稠定算子；
 2. 若 $\sigma(U_R) \subseteq (0,1]$ 且 $U_R$ 自伴，则 $A_R$ 是正算子；
@@ -220,22 +220,22 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 **证明**。(1) 由正规算子的 Borel 函数演算，$-\log \lambda$ 在 $\{\lambda : |\lambda| \le 1\} \setminus \{0\}$ 上有限 a.e.，故 $A_R$ 闭稠定。(2) 当 $U_R$ 自伴且 $\sigma(U_R) \subseteq (0,1]$ 时，$\psi(\lambda) = -\log \lambda$ 非负，故 $\langle f, A_R f \rangle \ge 0$。(3) 由函数演算直接得 $e^{-t A_R} = U_R^t$。□
 
-**命题 2.15**（m-增生性）。若 $U_R$ 是 $L^2(X_R, \mu_R)$ 上的自伴压缩算子（$\|U_R\| \le 1$，$U_R = U_R^\ast$），则 $A_R = -\log U_R$ 是 m-增生算子，即对所有 $\lambda > 0$，$(A_R + \lambda I)^{-1}$ 存在且 $\|(A_R + \lambda I)^{-1}\| \le 1/\lambda$。
+**命题 2.7.2**（m-增生性）。若 $U_R$ 是 $L^2(X_R, \mu_R)$ 上的自伴压缩算子（$\|U_R\| \le 1$，$U_R = U_R^\ast$），则 $A_R = -\log U_R$ 是 m-增生算子，即对所有 $\lambda > 0$，$(A_R + \lambda I)^{-1}$ 存在且 $\|(A_R + \lambda I)^{-1}\| \le 1/\lambda$。
 
 **证明**。由谱定理，$U_R$ 的谱测度集中在 $[-1, 1]$。在 $\sigma(U_R) \subseteq (0, 1]$ 部分上，$A_R = -\log U_R \ge 0$，增生性直接成立。对 $\sigma(U_R) \ni 0$ 的情形，引入零模截断：令 $P_0$ 为 $U_R$ 零空间的投影，定义 $A_R^{(\varepsilon)} = -\log(U_R + \varepsilon P_0)$（$\varepsilon > 0$），则 $A_R^{(\varepsilon)}$ 严格增生。令 $\varepsilon \to 0^+$，由闭图像定理取极限得 $A_R$ 的 m-增生性。□
 
-### 2.7 范畴构造的总结与拓展说明
+### 2.8 范畴构造的总结与拓展说明
 
 本节总结前述定义的适用范围，并讨论 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的拓展处理。
 
-**定义域声明**。函子 $D$ 的定义域为 $\mathbf{Rec}_D$（定义 2.5a），即 Koopman 算子谱在 $\log$ 映射下不产生负值的子范畴。前文定理 2.6–2.15 均在 $\mathbf{Rec}_D$ 内成立。$\mathbf{Rec}_D$ 的子范畴合法性（命题 2.5c）、Freyd 伴随定理前提继承（命题 2.5d）、$D\dashv R$ 严格成立（定理 2.10a）均已严格证明。
+**定义域声明**。函子 $D$ 的定义域为 $\mathbf{Rec}_D$（定义 2.3.1），即 Koopman 算子谱在 $\log$ 映射下不产生负值的子范畴。前文定理 2.3.4–2.7.2 均在 $\mathbf{Rec}_D$ 内成立。$\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）、$D\dashv R$ 严格成立（定理 2.4.5）均已严格证明。
 
 **方法论区分**。框架内两类构造方式的对比：
 
 | 定义方式 | 示例 | 定义域限制 |
 |---|---|---|
 | **显式命题驱动** | 谱静默定理（§5）、EFT 等价性框架（§7.7）、RKHS 收敛率（§7） | 限制明确写在假设中，无隐藏假设 |
-| **隐式公式驱动** | 函子 $D$（§2.3，现已显式化为 $\mathbf{Rec}_D$） | $A_R = -\log U_R$ 的公式本身不携带定义域信息，需通过定义 2.5a 显式标注 |
+| **隐式公式驱动** | 函子 $D$（§2.3，现已显式化为 $\mathbf{Rec}_D$） | $A_R = -\log U_R$ 的公式本身不携带定义域信息，需通过定义 2.3.1 显式标注 |
 
 **拓展路径**。对 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象（如耗散混沌、非正规 NTK 核、黑洞 QNM 阻尼系统），通过 §7.9.1 的耗散拓展函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}}\to\mathbf{Spec}_{\mathbb{C}}$ 严格处理（详见定理 7.31 严格化版本）。物理实例归类见 §7.9.1 表 7.x。
 
@@ -296,7 +296,7 @@ $$d_{\mathcal{S}_R}(\Phi_R(S(x)), \Phi_R(S(y))) \le c \, d_{\mathcal{S}_R}(x,y),
 
 则对每个 $R \in \mathbf{Rec}_D$，映射 $\eta_R: \mu \mapsto e^{-\mu}$ 给出自然变换 $\eta: M_0 \Longrightarrow L_0$，且在每个对象上都是双射，因此 $M_0 \cong L_0$。
 
-**证明**。对 $\mathbf{Rec}_D$ 中的态射 $f: R_1 \to R_2$，需验证 $\eta_{R_2} \circ M_0(f) = L_0(f) \circ \eta_{R_1}$。由 $D$ 的函子性（命题 2.6 在 $\mathbf{Rec}_D$ 上成立），$D(f)$ 保持谱交织条件，故 $\sigma(D(f)(A_{R_1})) = \sigma(A_{R_2})$。由谱映射定理，$\sigma(e^{-D(f)(A_{R_1})}) = e^{-\sigma(D(f)(A_{R_1}))} = e^{-\sigma(A_{R_2})} = \sigma(e^{-A_{R_2}})$。因此 $\eta_R$ 是自然变换。双射性由 $\mu \in \mathbb{R}_{\ge 0}$ 时 $\lambda = e^{-\mu}$ 的可逆性保证。$\square$
+**证明**。对 $\mathbf{Rec}_D$ 中的态射 $f: R_1 \to R_2$，需验证 $\eta_{R_2} \circ M_0(f) = L_0(f) \circ \eta_{R_1}$。由 $D$ 的函子性（命题 2.3.3 在 $\mathbf{Rec}_D$ 上成立），$D(f)$ 保持谱交织条件，故 $\sigma(D(f)(A_{R_1})) = \sigma(A_{R_2})$。由谱映射定理，$\sigma(e^{-D(f)(A_{R_1})}) = e^{-\sigma(D(f)(A_{R_1}))} = e^{-\sigma(A_{R_2})} = \sigma(e^{-A_{R_2}})$。因此 $\eta_R$ 是自然变换。双射性由 $\mu \in \mathbb{R}_{\ge 0}$ 时 $\lambda = e^{-\mu}$ 的可逆性保证。$\square$
 
 #### 3.4.2 复耗散情形：辫子幺半范畴中的自然等价（首选）
 
@@ -305,7 +305,7 @@ $$d_{\mathcal{S}_R}(\Phi_R(S(x)), \Phi_R(S(y))) \le c \, d_{\mathcal{S}_R}(x,y),
 - $M^{\text{br}}(R) = \{(\mu, k) \mid \mu \in \sigma(-\log U_R), \; k \in \mathbb{Z}\}$（分支对数谱，$k$ 为辫子分支指标）；
 - $L^{\text{br}}(R) = \{(\lambda, k) \mid \lambda \in \sigma(U_R), \; k \in \mathbb{Z}\}$（分支指数谱，$k$ 为辫子分支指标）。
 
-则对每个 $R \in \mathbf{Rec}_{\text{diss}}$，映射 $\eta_R^{\text{br}}: (\mu, k) \mapsto (e^{-\mu - 2\pi i k}, k)$ 给出**辫子自然等价** $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$。在辫子幺半范畴层面，$\exp$ 的非单射性被辫子交叉（§2.4a 定义 2.11a）吸收，严格成立自然同构。
+则对每个 $R \in \mathbf{Rec}_{\text{diss}}$，映射 $\eta_R^{\text{br}}: (\mu, k) \mapsto (e^{-\mu - 2\pi i k}, k)$ 给出**辫子自然等价** $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$。在辫子幺半范畴层面，$\exp$ 的非单射性被辫子交叉（§2.5 定义 2.5.1）吸收，严格成立自然同构。
 
 **证明**。需验证自然性与辫子同构性。
 
@@ -321,7 +321,7 @@ $$d_{\mathcal{S}_R}(\Phi_R(S(x)), \Phi_R(S(y))) \le c \, d_{\mathcal{S}_R}(x,y),
 
 3. **满射性**：对任意 $(\lambda, k) \in L^{\text{br}}(R)$，取 $\mu = -\log \lambda - 2\pi i k$（主值 $\log$ 加分支修正），则 $\eta_R^{\text{br}}(\mu, k) = (\lambda, k)$。
 
-4. **辫子同构性**：$\eta_R^{\text{br}}$ 保持辫子结构——辫子交叉次数 $k$ 在 $\eta_R^{\text{br}}$ 作用下不变，且与 §2.4a 定义 2.11a 的辫子态射相容。因此 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$ 为辫子自然等价。$\square$
+4. **辫子同构性**：$\eta_R^{\text{br}}$ 保持辫子结构——辫子交叉次数 $k$ 在 $\eta_R^{\text{br}}$ 作用下不变，且与 §2.5 定义 2.5.1 的辫子态射相容。因此 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$ 为辫子自然等价。$\square$"
 
 #### 3.4.3 退化情形：分支自然等价（退路）
 
@@ -351,7 +351,7 @@ $$d_{\mathcal{S}_R}(\Phi_R(S(x)), \Phi_R(S(y))) \le c \, d_{\mathcal{S}_R}(x,y),
 
 **证明**。弦图拉直方程由伴随的单位-余单位定义直接给出：单位 $\eta$ 的"杯"与余单位 $\varepsilon$ 的"帽"相互抵消，中间的线段拉直为恒等。在辫子范畴中，允许交叉存在；拉直过程中交叉次数 $k$ 被辫子关系保持（辫子同伦不改变总交叉数），故恒等式在辫子范畴层面严格成立。$\square$
 
-**推论 3.7g**（辫子三角恒等式与定理 2.10a 的等价性）。定理 2.10a 中 $D \dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性，是定理 3.7f 在辫子退化为对称（$k=0$）时的特例。
+**推论 3.7g**（辫子三角恒等式与定理 2.4.5 的等价性）。定理 2.4.5 中 $D \dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性，是定理 3.7f 在辫子退化为对称（$k=0$）时的特例。
 
 ### 3.5 轨道函子 $O$
 
@@ -454,7 +454,7 @@ $$\mathrm{LACI}(v_{num}) = \frac{\rho(v_{num})}{\rho_{ref}} + \frac{\Delta(v_{nu
 
 **注 C3.4**（条件性标注）。IC 条件性满足的对（Kerr↔NTK、弦论↔SM）需要显式参数匹配或能标分离条件，不能无条件统一。在配套论文 II 的物理应用章节（§7）中，每个应用前均需标注其 IC 验证状态（见 §7.x 各小节）。
 
-**注 C3.5**（与四层静默的关系）。隔离约束的 (3) 拓扑相容性在复耗散情形下退化为辫子相容性（§2.4a 命题 2.11b），将跨领域函子相容性与 C1 辫子结构统一——当 $U_R$ 的伪谱扰动界常数 $C \geq C_{\text{crit}}$ 时，辫子结构退化，IC 条件性满足的对可能进一步缩减。
+**注 C3.5**（与四层静默的关系）。隔离约束的 (3) 拓扑相容性在复耗散情形下退化为辫子相容性（§2.5 命题 2.5.2），将跨领域函子相容性与 C1 辫子结构统一——当 $U_R$ 的伪谱扰动界常数 $C \geq C_{\text{crit}}$ 时，辫子结构退化，IC 条件性满足的对可能进一步缩减。
 
 ---
 
@@ -612,7 +612,7 @@ $$\text{Silence}(E) = \frac{|\{i \in \{1,2,3,4\} : \text{(S}i\text{) 满足}\}|}
 3. **LACI 图像**：高维 LACI 在低维限制下发生跳变（MEDIUM → HIGH）。
 
 **证明**。
-- (1)⇒(2)：设 $\Sigma_{\text{silent}} \subseteq \sigma_{E_{\text{high}}}$ 为满足 (S2) 的静默子集。由 $D$ 的忠实性（定理 2.7），$D(f)^*|_{\mathcal{H}_{\Sigma}} = 0$ 当且仅当 $f$ 将低维映射到高维的"不可见"部分。(S2) 保证零测度的谱成分在低维投影中权重为零，故 $D(f)^*$ 在该子空间上为零。
+- (1)⇒(2)：设 $\Sigma_{\text{silent}} \subseteq \sigma_{E_{\text{high}}}$ 为满足 (S2) 的静默子集。由 $D$ 的忠实性（定理 2.3.4），$D(f)^*|_{\mathcal{H}_{\Sigma}} = 0$ 当且仅当 $f$ 将低维映射到高维的"不可见"部分。(S2) 保证零测度的谱成分在低维投影中权重为零，故 $D(f)^*$ 在该子空间上为零。
 - (2)⇒(3)：设 $D(f)^*|_{\mathcal{H}_{\Sigma}} = 0$。由 LACI 定义（§3.6），谱间隙 $\gamma$ 在零测度子集上必定为零（否则有限权重子集会有非平凡投影），故 LACI 发散。
 - (3)⇒(1)：LACI 从 MEDIUM 跳变为 HIGH 意味着 $\gamma$ 从正变为零，但 LACI 发散本身不保证 (S2) 零测度（仅保证 (S3)）。因此该方向仅在零测度条件补充下成立。
 
@@ -782,13 +782,13 @@ $$\text{谱静默} \subsetneq \text{态射静默} \subsetneq \text{对象静默}
 
 #### 5.7.5 第四层静默：辫子静默（braided / Geflecht silence）
 
-复耗散系统（$\mathbf{Rec}_{\text{diss}}$）的辫子幺半结构（§2.4a 定义 2.11a）带来一种新的不可见性机制——**辫子静默**（braided silence，德文 Geflecht-Stille）。辫子静默是谱静默在辫子范畴层面的拓扑缠绕推广。
+复耗散系统（$\mathbf{Rec}_{\text{diss}}$）的辫子幺半结构（§2.5 定义 2.5.1）带来一种新的不可见性机制——**辫子静默**（braided silence，德文 Geflecht-Stille）。辫子静默是谱静默在辫子范畴层面的拓扑缠绕推广。
 
 **定义 5.17**（辫子静默）。设 $R_1, R_2 \in \mathbf{Rec}_{\text{diss}}$，其辫子交叉次数 $k(R_1, R_2) = \lfloor (\omega_{I,1} - \omega_{I,2})/(2\pi) \rfloor$。若 $k(R_1, R_2) \neq 0$ 但满足**辫子静默判据**：
 
 - **B1（交叉不可分辨性）**：$|k(R_1, R_2)| \leq K_{\text{crit}}$（临界交叉数以下，辫子同伦类不可分辨）；
 - **B2（辐角湮灭）**：存在 $n > 0$ 使得 $n \cdot (\omega_{I,1} - \omega_{I,2}) \equiv 0 \pmod{2\pi}$（辐角差经整数倍后湮灭）；
-- **B3（辫子-谱静默退化）**：当 $R_1, R_2$ 的辫子结构退化（$C \geq C_{\text{crit}}$，命题 2.11b 退化情形）时，辫子静默扁平化为谱静默 §5.2 的 S1--S4 判据。
+- **B3（辫子-谱静默退化）**：当 $R_1, R_2$ 的辫子结构退化（$C \geq C_{\text{crit}}$，命题 2.5.2 退化情形）时，辫子静默扁平化为谱静默 §5.2 的 S1--S4 判据。
 
 则称 $R_1, R_2$ 之间的辫子交叉在 $D_{\text{diss}}$ 作用下处于**辫子静默**——不同辫子同伦类间的谱差异在 $D_{\text{diss}}$ 的谱映射下不可见。
 
@@ -1421,7 +1421,7 @@ $$\sigma_\varepsilon(A) = \{ z \in \mathbb{C} \mid \|(zI - A)^{-1}\| \geq 1/\var
 
 步骤 4（严格伴随——消除 $O(\varepsilon)$ 误差）：由伪谱扰动界的严格传递性，三角恒等式 $(\varepsilon D_{\text{diss}})\circ(D_{\text{diss}}\eta) = \mathrm{id}$ 与 $(R_{\text{diss}}\varepsilon)\circ(\eta R_{\text{diss}}) = \mathrm{id}$ 严格成立。原证明中的 $O(\varepsilon)$ 误差来自 $\mathbf{Rec}_{\text{diss}}$ 未严格定义（包含不满足伪谱扰动界的对象），严格化后误差消除。□
 
-**注 7.31a（辫子结构下的谱对应）**。定理 7.31 与 §3.4.2 定理 3.7b 的辫子自然等价相容：$D_{\text{diss}}$ 的伪谱保持（条件 1）在 §2.4a 的辫子幺半结构下提升为辫子函子性——$D_{\text{diss}}$ 保持张量积与辫子态射，将 $\mathbf{Rec}_{\text{diss}}$ 的辫子结构映射为 $\mathbf{Spec}_{\mathbb{C}}$ 上的相应辫子结构。$\mathbf{Rec}_{\text{diss}}$ 上的辫子交叉次数 $k(R_1, R_2) = \lfloor (\omega_{I,1} - \omega_{I,2})/(2\pi) \rfloor$ 在 $D_{\text{diss}}$ 作用下保持不变，因此定理 3.7b 的 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$ 是 $D_{\text{diss}}$ 函子性的直接推论——在辫子范畴层面，$\exp$ 的非单射性被辫子交叉吸收，严格成立自然同构。
+**注 7.31a（辫子结构下的谱对应）**。定理 7.31 与 §3.4.2 定理 3.7b 的辫子自然等价相容：$D_{\text{diss}}$ 的伪谱保持（条件 1）在 §2.5 的辫子幺半结构下提升为辫子函子性——$D_{\text{diss}}$ 保持张量积与辫子态射，将 $\mathbf{Rec}_{\text{diss}}$ 的辫子结构映射为 $\mathbf{Spec}_{\mathbb{C}}$ 上的相应辫子结构。$\mathbf{Rec}_{\text{diss}}$ 上的辫子交叉次数 $k(R_1, R_2) = \lfloor (\omega_{I,1} - \omega_{I,2})/(2\pi) \rfloor$ 在 $D_{\text{diss}}$ 作用下保持不变，因此定理 3.7b 的 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$ 是 $D_{\text{diss}}$ 函子性的直接推论——在辫子范畴层面，$\exp$ 的非单射性被辫子交叉吸收，严格成立自然同构。
 
 **表 7.x：物理实例归类**
 
@@ -1848,7 +1848,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
     - **态射静默**（新发现，§5.7）：$\mathbf{Rec}$ 中不满足谱保持条件的态射在 $D$ 作用下不可见，比谱静默更彻底（命题 5.13）；
     - **谱静默**（§5）：已有理论，本质上是恒等态射的态射静默（推论 5.14）；
     - **辫子静默**（新增，§5.7.5 定义 5.17）：复耗散系统中谱静默的拓扑缠绕推广，辫子交叉次数 $k$ 在 $D_{\text{diss}}$ 谱映射下不可分辨。
-    - 仍待深化：(a) 态射静默的判据系统化（与 S1–S4 类比，建立 M1–M4 判据）；(b) 四层静默的统一度量（对象静默度 / 态射静默度 / 谱静默度 / 辫子静默度的统一定量描述）；(c) 四层静默与紧致化对比的拓展（态射静默是否完全替代"规范冗余的消除"，辫子静默的拓扑缠绕是否对应紧致化中的绕数守恒）；(d) $\mathbf{Rec}_{\text{diss}}$ 严格化后的伪谱扰动界常数 $C$ 与辫子退化判据 $C_{\text{crit}}$ 的确定（命题 2.11b 退化条件）；(e) 辫子静默判据 B1–B3 的数值验证与临界交叉数 $K_{\text{crit}}$ 的确定。
+    - 仍待深化：(a) 态射静默的判据系统化（与 S1–S4 类比，建立 M1–M4 判据）；(b) 四层静默的统一度量（对象静默度 / 态射静默度 / 谱静默度 / 辫子静默度的统一定量描述）；(c) 四层静默与紧致化对比的拓展（态射静默是否完全替代"规范冗余的消除"，辫子静默的拓扑缠绕是否对应紧致化中的绕数守恒）；(d) $\mathbf{Rec}_{\text{diss}}$ 严格化后的伪谱扰动界常数 $C$ 与辫子退化判据 $C_{\text{crit}}$ 的确定（命题 2.5.2 退化条件）；(e) 辫子静默判据 B1–B3 的数值验证与临界交叉数 $K_{\text{crit}}$ 的确定。
 
 ### 8.3 与配套论文的关系
 

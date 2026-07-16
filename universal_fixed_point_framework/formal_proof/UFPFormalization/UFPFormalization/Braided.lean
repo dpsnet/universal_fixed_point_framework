@@ -13,7 +13,7 @@ open CategoryTheory
 # Braided monoidal structure on Rec
 
 This file defines the braided monoidal structure on the recursive-system category
-(§2.4a Definition 2.11a in the paper).
+(§2.5 Definition 2.11a in the paper).
 
 The tensor product of two recursive systems is the product of their state spaces
 with the product evolution rule. The braiding swaps the factors, with the
