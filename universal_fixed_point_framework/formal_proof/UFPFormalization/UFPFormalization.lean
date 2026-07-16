@@ -18,6 +18,7 @@ import UFPFormalization.DomainExtension
 import UFPFormalization.IFSFractal
 import UFPFormalization.ThermoFormalism
 import UFPFormalization.DynSys
+import UFPFormalization.SilenceHierarchy
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory
