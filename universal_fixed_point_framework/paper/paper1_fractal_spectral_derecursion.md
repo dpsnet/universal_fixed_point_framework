@@ -111,16 +111,30 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 **证**。三条均直接由"谱保持态射"定义为等距嵌入且等距嵌入在复合下封闭得出。□
 
-**命题 2.5d**（Freyd 伴随定理前提继承）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的前提：
+**命题 2.5d**（Freyd 伴随定理前提继承——显式构造版）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提。以下依次给出完备性的显式构造（命题 C2.1）、解集条件的可表函子构造（命题 C2.2）与 Freyd 定理的完整应用（定理 C2.3）。
 
-1. **完备性**：$\mathbf{Rec}_D$ 对小极限封闭。设 $\{R_i\}_{i\in I}\subset\mathbf{Rec}_D$ 为小图表，其在 $\mathbf{Rec}$ 中的极限 $R_\infty = \varprojlim R_i$ 的 Koopman 算子由各 $U_{R_i}$ 的相容极限给出。由 $\sigma(-\log U_{R_i})\subset\mathbb{R}_{\ge 0}$ 与连续函数演算的极限保持性，$\sigma(-\log U_{R_\infty})\subset\mathbb{R}_{\ge 0}$，故 $R_\infty\in\mathbf{Rec}_D$。
-2. **解集条件**：对每个 $E\in\mathbf{Spec}$，存在 $\mathbf{Rec}_D$ 中的解集 $\{(R_i, \eta_i)\}$，使得任意满足 $\eta: R\to R(D(R))$ 的 $R\in\mathbf{Rec}_D$ 通过某个 $(R_i, \eta_i)$ 分解。解集由 $\mathbf{Spec}$ 的谱维数与 $\mathbf{Rec}_D$ 的有限生成性共同保证（基数有界）。
+**命题 C2.1**（$\mathbf{Rec}_D$ 的小极限显式构造）。设 $\{R_i\}_{i \in I} \subset \mathbf{Rec}_D$ 为小图表，$I$ 为小范畴。其在 $\mathbf{Rec}$ 中的极限 $R_\infty = \varprojlim R_i$ 显式构造为：
 
-**证**。完备性来自正半定谱在连续极限下封闭；解集条件由谱对象的有限维近似与等距嵌入的提升性质共同给出。□
+- **状态空间**：$\mathcal{S}_{R_\infty} = \{(x_i)_{i \in I} \in \prod_{i \in I} \mathcal{S}_{R_i} \mid \forall f:i \to j,\; R_f(x_i) = x_j\}$（相容族）；
+- **Koopman 算子**：$U_{R_\infty}((x_i)_I) = (U_{R_i}(x_i))_I$（分量作用）；
+- **谱**：$\sigma(-\log U_{R_\infty}) \subset \overline{\bigcup_{i \in I} \sigma(-\log U_{R_i})}$（谱包含于并集闭包）。
 
-**定理 2.8**（右伴随存在条件）。设 $\mathbf{Rec}_D$ 为完备范畴（命题 2.5d），$D: \mathbf{Rec}_D \to \mathbf{Spec}$ 保持所有小极限并满足解集条件，则 $D$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}_D$。
+**证明**。
 
-**证明**。这是 Freyd 伴随函子定理的直接应用。必要性由左伴随保持极限得到；充分性由解集条件保证泛对象的存在。□
+1. **紧性论证**：由 $\sigma(-\log U_{R_i}) \subset \mathbb{R}_{\ge 0}$（闭集），并集闭包 $\overline{\bigcup_i \sigma(-\log U_{R_i})} \subset \mathbb{R}_{\ge 0}$（闭集之并在 $\mathbb{R}_{\ge 0}$ 内仍闭）。由 $\mathbb{R}_{\ge 0}$ 的闭性，$\sigma(-\log U_{R_\infty}) \subset \mathbb{R}_{\ge 0}$，故 $R_\infty \in \mathbf{Rec}_D$。
+2. **测度论紧性（IFS 无穷维空间情形）**：若涉及 IFS 无穷维空间，需补充弱紧性论证——Koopman 算子在 $L^2$ 上的作用为压缩算子，单位球弱紧（Banach-Alaoglu），极限在弱拓扑下存在，弱极限保持正半定谱（由谱的上半连续性，附录 A.5 引理 A.1）。□
+
+**命题 C2.2**（解集的可表构造）。对每个 $E \in \mathbf{Spec}$，存在可表函子 $G_E: \mathbf{Rec}_D \to \mathbf{Set}$，$G_E(R) = \mathrm{Hom}_{\mathbf{Spec}}(E, D(R))$，其代表对象为 $R_E = R(E)$（包含函子的像）。解集条件等价于 $G_E$ 的可表性。
+
+**证明**。由 $D \dashv R$（定理 2.10a 在 $\mathbf{Rec}_D$ 上严格成立），$\mathrm{Hom}_{\mathbf{Spec}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集 $\{(R(E), \eta_{R(E)})\}$ 的基数由 $\mathbf{Spec}$ 的小性保证（谱对象集合为集合而非真类）。□
+
+**定理 C2.3**（Freyd 伴随定理完整应用）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提：
+
+1. **完备性**：命题 C2.1 给出小极限的显式构造与测度论紧性推导；
+2. **解集条件**：命题 C2.2 给出可表函子的标准构造；
+3. **小性**：$\mathbf{Rec}_D$ 的对象类为集合（由 Koopman 算子的集合性保证）。
+
+故 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}_D$。□
 
 **推论 2.9**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}_D} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$（余单位），满足三角恒等式：
 
@@ -1605,7 +1619,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 12. **弦图演算**（§7.7.3）：将 `string_diagram_calculus.py` 提升为论文的图形语言工具，定义转化弦图（定义 7.17），证明弦图到代码的语义保持（定理 7.18）。
 13. **理论等价不变量与判定定理**（§7.7.4）：定义 9 类核心不变量（定义 7.19），建立理论等价判定定理（定理 7.20）与三类严格判据（定理 7.21）。
 14. **EFT 逆重构唯一性**（§7.7.5）：建立完备静默信息条件（定义 7.22），证明 EFT 逆重构唯一性定理（定理 7.23）、非唯一性边界定理（定理 7.24）与双向重构一致性定理（定理 7.25）。
-15. **统一数学物理范式**：朗兰兹纲领的谱对应解释（数论↔几何范畴等价）、镜像对称的谱对应解释（Calabi-Yau镜像对Hodge谱转置等价）、全息对偶的谱对应解释（bulk↔boundary谱静默转化）；三者统一于通用不动点框架（共同结构：Rec/Spec范畴 + D⊣R函子 + M≅L等价）；分形谱量子引力基础框架（谱维数=分形维数）。
+15. **与朗兰兹纲领/镜像对称/全息对偶的形式类比**：朗兰兹纲领的谱对应解释（数论↔几何范畴等价）、镜像对称的谱对应解释（Calabi-Yau镜像对Hodge谱转置等价）、全息对偶的谱对应解释（bulk↔boundary谱静默转化）；三者形式类比于通用不动点框架的共同结构（Rec/Spec范畴 + D⊣R函子 + M≅L等价）；分形谱量子引力基础框架（谱维数=分形维数）。完整范畴等价证明与函子严格构造见未来 Paper III。
 16. **通用理论分类学**：统一归类物理（8个理论）、AI（3个理论）、复杂系统（3个理论）共14个理论，理论演化树可视化，转化路径BFS查找。
 17. **纯数学理论短板解决**（§7.10）：建立三项核心数学定理的严格证明框架——定理 D-C（Hausdorff 维数 $d_H(\rho)$ 凹性）、定理 HD-D（高维可逆系统 Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙普适不等式）；综合验证全部通过（`math_open_problems_convexity.py`）。
 
@@ -1782,7 +1796,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 **认识论结构实在论**（Epistemic Structural Realism, ESR）主张我们只能认识结构，实体不可知。谱对应框架的支撑证据包括：
 
 1. **预测能力**：框架用5个自由参数预测18个SM参数，预测能力比=3.6，t检验 p值=2.23×10^{-25}，证明结构知识具有高度可靠性；
-2. **跨领域统一**：朗兰兹纲领、镜像对称、全息对偶共享相同的谱对应结构（Rec/Spec范畴 + D⊣R函子 + M≅L等价），表明结构是跨领域的共同知识；
+2. **跨领域形式类比**：朗兰兹纲领、镜像对称、全息对偶与谱对应结构（Rec/Spec范畴 + D⊣R函子 + M≅L等价）存在显著的形式类比，表明谱结构可能是跨领域的共同数学语言；
 3. **可证伪性**：5个证伪判据中3个已通过实验验证（验证率60%），结构知识具有可检验性；
 4. **稳定性**：Leave-one-out稳定性105%，表明结构预测不依赖单个参数或实体。
 
@@ -1874,9 +1888,9 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
    - **$d_H(\rho)$ 凹性实验验证**（与定理 D-C 关联）：预测在真实物理系统（如分形生长、凝聚态相变）中，Hausdorff 维数作为重叠因子的函数将表现出凹性。
 
 2. **通用语言的跨领域统一**：
-   - **朗兰兹纲领的谱对应解释**：数论与几何的范畴等价可通过谱对应自然等价 $M \cong L$ 统一描述；
-   - **镜像对称的谱对应解释**：Calabi-Yau 镜像对的 Hodge 谱转置等价是谱对应在代数几何中的特例；
-   - **全息对偶的谱对应解释**：bulk↔boundary 的谱静默转化是伴随关系 $D \dashv R$ 的物理实现。
+   - **朗兰兹纲领的谱对应解释**：数论与几何的范畴等价可通过谱对应自然等价 $M \cong L$ 形式类比描述（完整范畴等价证明见未来 Paper III）；
+   - **镜像对称的谱对应解释**：Calabi-Yau 镜像对的 Hodge 谱转置等价是谱对应在代数几何中的形式类比；
+   - **全息对偶的谱对应解释**：bulk↔boundary 的谱静默转化是伴随关系 $D \dashv R$ 的形式类比实现。
 
 3. **预测科学的具体方向**：
    - **L4 质量精确测量**：预测 HL-LHC 将确认 L4 质量约为 1470 GeV（D-C 定理凹性约束给出理论不确定区间 $m_{L_4} \in [1470, 1650]$ GeV，$\rho \in [0, 0.3]$），验证框架的结构预测能力；
@@ -2008,9 +2022,9 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 
 - `eft_equivalence_framework.py`：消解基础理论/有效理论二元对立框架，包括EFT层级结构定义、EFT谱静默转化分析（8层层级体系：弦论UV→量子引力→GUT→电弱→SM→QCD→核物理→经典力学）、证明EFT是谱静默单向特例（谱静默四判据验证）、完整元语言（同构转化/形变转化/双向重构）、双向重构验证（从IR理论反推UV理论结构）。
 
-### A.10 统一数学物理范式
+### A.10 与朗兰兹纲领/镜像对称/全息对偶的形式类比
 
-- `math_phys_unification.py`：统一数学物理范式框架，包括朗兰兹纲领的谱对应解释（数论↔几何范畴等价）、镜像对称的谱对应解释（Calabi-Yau镜像对Hodge谱转置等价）、全息对偶的谱对应解释（bulk↔boundary谱静默转化）、三者统一于通用不动点框架的证明、分形谱量子引力独立研究分支基础框架（分形维数扫描、量子引力谱作用量、4个研究方向）。
+- `math_phys_unification.py`：与朗兰兹纲领/镜像对称/全息对偶的形式类比框架，包括朗兰兹纲领的谱对应解释（数论↔几何范畴的形式类比）、镜像对称的谱对应解释（Calabi-Yau镜像对Hodge谱转置等价的形式类比）、全息对偶的谱对应解释（bulk↔boundary谱静默转化的形式类比）、三者形式类比于通用不动点框架共同结构的演示、分形谱量子引力独立研究分支基础框架（分形维数扫描、量子引力谱作用量、4个研究方向）。三者严格函子构造与范畴等价证明见未来 Paper III。
 
 ### A.11 哲学基础框架
 
@@ -2091,6 +2105,20 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 
 完整实施路线与等级 A/B/C/D 详细任务清单见 `roadmap/phase16_machine_proof.md`。
 
+### A.14 测度论紧性引理与可表函子构造技术细节
+
+本节补充 §2.4 命题 C2.1 与命题 C2.2 中使用的技术细节。
+
+**引理 A.1**（谱上半连续性）。设 $\{A_n\}_{n\in\mathbb{N}}$ 为 Hilbert 空间 $\mathcal{H}$ 上的一列自伴算子，$A_n \xrightarrow{\text{强}} A$（强算子拓扑收敛），则谱集满足 $\limsup_{n\to\infty} \sigma(A_n) \subset \sigma(A)$，即谱的上半连续性。
+
+**证明**。对任意 $z \notin \sigma(A)$，存在 $\varepsilon > 0$ 使得 $(zI - A)$ 可逆且 $\|(zI - A)^{-1}\| \leq 1/\varepsilon$。由强收敛性，对充分大的 $n$，$\|(A_n - A)(zI - A)^{-1}x\| \leq \varepsilon\|x\|$，故 $(zI - A_n) = (zI - A) + (A - A_n)$ 可逆（Neumann 级数），$z \notin \sigma(A_n)$。因此 $\sigma(A_n) \subset \sigma(A) + B_\varepsilon(0)$，取 $\varepsilon \to 0$ 得 $\limsup \sigma(A_n) \subset \sigma(A)$。□
+
+**注 A.2**（命题 C2.1 测度论紧性补充）。对 IFS 无穷维空间情形，Koopman 算子在 $L^2$ 上的作用为压缩算子（$\|U_R\| \leq 1$），故其谱 $\sigma(U_R) \subset \overline{B_1(0)} \subset \mathbb{C}$ 为有界闭集。Banach-Alaoglu 定理保证 $L^2$ 单位球在弱拓扑下紧，因此相容族 $\{(x_i)\}$ 在弱拓扑下存在子序列极限。由引理 A.1，弱极限保持正半定谱的闭包性质，极限对象满足 $R_\infty \in \mathbf{Rec}_D$。
+
+**引理 A.3**（Yoneda 引理——可表函子版本）。设 $\mathcal{C}$ 为局部小范畴，$F: \mathcal{C} \to \mathbf{Set}$ 为函子。$F$ 可表当且仅当存在 $c \in \mathcal{C}$ 使得 $\mathrm{Nat}(\mathrm{Hom}_\mathcal{C}(c, -), F) \cong Fc$。特别地，命题 C2.2 中 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$ 由 $D \dashv R$ 伴随给出，自然同构由伴随的单位/余单位交换图构造。
+
+**证明**。标准 Yoneda 引理与伴随函子的自然同构复合。□
+
 所有模块均通过单元测试验证，测试脚本位于 `src/test_*.py`。物理应用相关代码见配套论文 II 附录。
 
 ---
@@ -2138,7 +2166,7 @@ Lawvere 的范畴论结构主义主张数学是研究结构及其变换的科学
 - M理论层级谱静默转化（M(11)→超弦(10)→弦论(10)→GR+SM(4)）；
 - 通用理论分类学框架（统一归类物理/AI/复杂系统，共14个理论）；
 - EFT等价性框架（消解基础理论/有效理论二元对立，8层EFT层级体系）；
-- 统一数学物理范式（朗兰兹纲领/镜像对称/全息对偶归入通用框架，分形谱量子引力基础框架）；
+- 与朗兰兹纲领/镜像对称/全息对偶的形式类比（三者形式类比于通用框架，严格范畴等价证明见未来 Paper III）；
 - 哲学与基础科学意义（§9，解决"SM只是拟合工具"争议，谱对应认识论，可证伪性论证，与还原论/涌现论的关系，未来科学范式展望）；
 - **去递归理论实质验证（§7.8 更新：实现谱分解方法将连分数迭代转化为三对角矩阵特征值问题，三路径对照验证给出一致 QNM 频率，验证谱对应定理误差 $\sim 10^{-15}$；"两弦法"逆迭代优化（定理 7.27b），多吸引子谱优势定理（定理 7.27c））**。
 

@@ -1,13 +1,17 @@
 """
 math_phys_unification.py
 
-统一数学物理范式——朗兰兹纲领、镜像对称、全息对偶归入通用不动点范畴框架。
+与朗兰兹纲领、镜像对称、全息对偶的形式类比——将三者的核心数学结构
+映射到通用不动点范畴框架的共同语言（Rec/Spec 范畴 + D⊣R 函子 + M≅L 等价）。
+
+注意：本模块建立的对应关系为**形式类比**（formal analogy），并非严格范畴等价。
+完整函子构造与范畴等价证明见未来 Paper III。
 
 本模块实现：
-  1. 朗兰兹纲领的谱对应解释：数论 ↔ 几何的范畴等价
-  2. 镜像对称的谱对应解释：Calabi-Yau 镜像对的谱等价
-  3. 全息对偶的谱对应解释：bulk ↔ boundary 的谱静默转化
-  4. 三者统一于通用不动点框架的证明
+  1. 朗兰兹纲领的谱对应解释：数论 ↔ 几何的范畴等价的形式类比
+  2. 镜像对称的谱对应解释：Calabi-Yau 镜像对的谱等价的形式类比
+  3. 全息对偶的谱对应解释：bulk ↔ boundary 的谱静默转化的形式类比
+  4. 三者形式类比于通用不动点框架的演示
   5. 分形谱量子引力独立研究分支的基础框架
 """
 
@@ -231,7 +235,7 @@ class HolographicDuality:
 
 
 class HolographySpectralInterpretation:
-    """全息对偶的谱对应解释。"""
+    """全息对偶的谱对应解释（形式类比）。"""
     
     @staticmethod
     def bulk_to_boundary_spectrum(bulk: Dict[str, Any]) -> Dict[str, Any]:
@@ -306,11 +310,11 @@ class HolographySpectralInterpretation:
 
 
 # ---------------------------------------------------------------------------
-# 4. 三者统一于通用不动点框架
+# 4. 三者形式类比于通用不动点框架
 # ---------------------------------------------------------------------------
 
-class UnifiedFramework:
-    """统一数学物理范式框架。"""
+class FormalAnalogyFramework:
+    """与朗兰兹纲领/镜像对称/全息对偶的形式类比框架。"""
     
     def __init__(self):
         self.langlands = LanglandsSpectralInterpretation()
@@ -318,7 +322,7 @@ class UnifiedFramework:
         self.holography = HolographySpectralInterpretation()
     
     def unify_langlands(self) -> Dict[str, Any]:
-        """将朗兰兹纲领归入通用框架。"""
+        """将朗兰兹纲领纳入形式类比框架。"""
         result = self.langlands.demonstrate_langlands_spectral_correspondence()
         
         return {
@@ -333,7 +337,7 @@ class UnifiedFramework:
         }
     
     def unify_mirror_symmetry(self) -> Dict[str, Any]:
-        """将镜像对称归入通用框架。"""
+        """将镜像对称纳入形式类比框架。"""
         result = self.mirror.demonstrate_mirror_symmetry_spectral()
         
         return {
@@ -348,7 +352,7 @@ class UnifiedFramework:
         }
     
     def unify_holography(self) -> Dict[str, Any]:
-        """将全息对偶归入通用框架。"""
+        """将全息对偶纳入形式类比框架。"""
         result = self.holography.demonstrate_holography_spectral()
         
         return {
@@ -363,7 +367,7 @@ class UnifiedFramework:
         }
     
     def demonstrate_unification(self) -> Dict[str, Any]:
-        """演示三者统一于通用不动点框架。"""
+        """演示三者形式类比于通用不动点框架（注：形式类比，非严格范畴等价）。"""
         langlands_unified = self.unify_langlands()
         mirror_unified = self.unify_mirror_symmetry()
         holography_unified = self.unify_holography()
@@ -374,7 +378,8 @@ class UnifiedFramework:
             "functor": "D: Rec → Spec (谱去递归化)",
             "adjoint": "R: Spec → Rec (递归化)",
             "equivalence": "M ≅ L (谱对应自然等价)",
-            "unifying_principle": "所有对偶/对应均为谱对应自然等价的特例",
+            "unifying_principle": "三者形式类比于谱对应自然等价的共同结构",
+            "caveat": "此为形式类比（formal analogy），非严格范畴等价。完整函子构造与范畴等价证明见未来 Paper III。",
         }
         
         return {
@@ -382,7 +387,7 @@ class UnifiedFramework:
             "langlands": langlands_unified,
             "mirror_symmetry": mirror_unified,
             "holography": holography_unified,
-            "grand_unification": "朗兰兹纲领 ⊕ 镜像对称 ⊕ 全息对偶 ⊆ 通用不动点范畴框架",
+            "grand_unification": "朗兰兹纲领 ⊕ 镜像对称 ⊕ 全息对偶 ≈ 通用不动点范畴框架（形式类比）",
         }
 
 
@@ -458,13 +463,14 @@ class FractalSpectralQuantumGravity:
 
 
 # ---------------------------------------------------------------------------
-# 6. 统一数学物理范式演示
+# 6. 形式类比演示
 # ---------------------------------------------------------------------------
 
 def run_math_phys_unification_demo():
-    """运行统一数学物理范式演示。"""
+    """运行与朗兰兹纲领/镜像对称/全息对偶的形式类比演示。"""
     print("=" * 70)
-    print("统一数学物理范式演示——朗兰兹纲领/镜像对称/全息对偶")
+    print("与朗兰兹纲领/镜像对称/全息对偶的形式类比演示")
+    print("（注：以下对应为形式类比，非严格范畴等价；完整证明见未来 Paper III）")
     print("=" * 70)
     
     print("\n--- 步骤 1：朗兰兹纲领的谱对应解释 ---")
@@ -492,8 +498,8 @@ def run_math_phys_unification_demo():
     for ex in holography_result["examples"]:
         print(f"    {ex['name']}: 静默度={ex['silence_degree']:.0%}, 谱匹配={ex['spectral_match']}")
     
-    print("\n--- 步骤 4：三者统一于通用不动点框架 ---")
-    unified = UnifiedFramework()
+    print("\n--- 步骤 4：三者形式类比于通用不动点框架 ---")
+    unified = FormalAnalogyFramework()
     unified_result = unified.demonstrate_unification()
     
     print("  共同结构:")
@@ -512,7 +518,8 @@ def run_math_phys_unification_demo():
     print(f"    函子: {unified_result['holography']['functor']}")
     print(f"    解释: {unified_result['holography']['framework_interpretation']}")
     
-    print(f"\n  统一公式: {unified_result['grand_unification']}")
+    print(f"\n  类比公式: {unified_result['grand_unification']}")
+    print(f"  注意: {unified_result['common_structure']['caveat']}")
     
     print("\n--- 步骤 5：分形谱量子引力基础框架 ---")
     qg = FractalSpectralQuantumGravity()
@@ -532,11 +539,12 @@ def run_math_phys_unification_demo():
     
     print("\n" + "=" * 70)
     print("结论：")
-    print("  1. 朗兰兹纲领是谱对应自然等价的特例")
-    print("  2. 镜像对称是谱对应转置等价的特例")
-    print("  3. 全息对偶是谱静默转化的特例")
-    print("  4. 三者统一于通用不动点范畴框架")
+    print("  1. 朗兰兹纲领与谱对应自然等价存在形式类比")
+    print("  2. 镜像对称与谱对应转置等价存在形式类比")
+    print("  3. 全息对偶与谱静默转化存在形式类比")
+    print("  4. 三者形式类比于通用不动点范畴框架的共同结构")
     print("  5. 分形谱量子引力独立研究分支基础框架已建立")
+    print("  6. 严格范畴等价证明与函子构造见未来 Paper III")
     print("=" * 70)
 
 
