@@ -20,6 +20,7 @@
 - `phase21_paper5_spectral_dynamics.md`：**Phase 21：Paper V 谱动力学推进计划**——谱流方程定义、力统一公式、逆平方律谱几何、对称性破缺推导、量子化、β函数精确匹配、数学严格化、类GR场方程涌现、宇宙学谱动力学。**✅ 19/19 全部完成**。
 - `phase22_spectral_dynamics_deepening.md`：**Phase 22：谱动力学深化**——$\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展、非平衡谱热力学、黑洞视界谱动力学、奇点谱消解、谱流体动力学。**✅ 概念框架全部完成**。
 - `phase23_26_papers_VI_IX.md`：**Phase 23–26：新论文规划**——Paper VI 谱流体动力学（**✅ v0.1**）、Paper VII 非平衡谱热力学（**✅ v0.1**）、Paper VIII 黑洞视界谱动力学（**✅ v0.1**）、Paper IX 奇点谱消解与量子宇宙学（**✅ v0.1**）。**全部完成**。
+- `phase27_spectral_dynamics_completion.md`：**Phase 27：谱动力学完善四方向**——多圈重整化（双圈β+DS修正 ✅）、暗物质完整谱模型（3候选 WIMP奇迹 ✅）、非线性大尺度宇宙修正（F₂核+1-loop SPT ✅）、黑洞蒸发完整演化定量描述（Page曲线 0.647 ✅）。**✅ 4/4 全部完成**。
 
 ## 当前优先级
 

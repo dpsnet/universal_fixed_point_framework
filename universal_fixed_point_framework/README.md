@@ -1,6 +1,6 @@
 # 通用不动点范畴框架
 
-**项目状态**：五篇论文（4 篇完稿 + 1 篇概念框架 v0.8）+ Lean 4 形式化 30 模块零错误（20/25 功能模块完全证明）
+**项目状态**：九篇论文（4 篇完稿 + Paper V v1.0 完整版 + 4 篇子论文 v0.1）+ Lean 4 形式化 30 模块零错误（20/25 功能模块完全证明）
 
 | 指标 | 数值 |
 |------|------|
@@ -34,7 +34,11 @@
 | **Paper II**：物理应用与实验验证 | v2.18 | 物理应用（SM/BSM/Kerr/全息熵/暗物质） | ~1,080 行 |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
-| **Paper V**：力的谱动力学 | v0.8 | 概念框架：谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + LQG 对应 + 类GR涌现 + 宇宙学 | ~290 行 |
+| **Paper V**：力的谱动力学 | v1.0 | 谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + β匹配 + 宇宙学 + 暗物质 + 黑洞蒸发 | ~295 行 |
+| **Paper VI**：谱流体动力学 | v0.1 | N-S谱流方程 + K41 $k^{-5/3}$ 谱涌现 + 跨尺度截断 | ~180 行 |
+| **Paper VII**：非平衡谱热力学 | v0.1 | 谱熵增定理 + Onsager关系 + 涨落定理 + 时间箭头 | ~160 行 |
+| **Paper VIII**：黑洞视界谱动力学 | v0.1 | Hawking温度谱公式 + BH熵谱公式 + QNM + 信息持守 | ~215 行 |
+| **Paper IX**：奇点谱消解与量子宇宙学 | v0.1 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 | ~170 行 |
 
 ### Lean 4 形式化
 
@@ -47,6 +51,7 @@
 | 测试定理 | 68 |
 | 完全证明（零 `sorry`） | **20/25** 功能模块 |
 | 剩余 `sorry` | 12（深层分析定理，需 mathlib 基础设施） |
+| 数值验证脚本 | **27** |
 
 ### 数值验证
 - **BPS 黑洞谱匹配**：`paper3_bps_spectral_verification.py` — 谱距离 0.00，参数扫描 M=0.5~10.0 全部通过
@@ -127,9 +132,18 @@ universal_fixed_point_framework/
 ├── paper5_beta_functions.py                    # Paper V β函数匹配 (v3)
 ├── paper5_normal_ordering.py                   # Paper V 正规排序数值验证
 ├── paper5_u1_beta.py                           # Paper V U(1) β函数匹配
-├── paper5_cosmology.py                         # Paper V 宇宙学谱动力学 (FLRW + n_s + DE)
-├── formal_proof/                   # Lean 4 机器证明形式化项目
-│   └── UFPFormalization/           # 30 模块，零诊断错误，68 测试定理
+ ├── paper5_cosmology.py                         # Paper V 宇宙学谱动力学 (FLRW + n_s + DE)
+ ├── paper22_spectral_entropy.py                 # Phase 22 谱熵产生率 (ΔS=0.054>0)
+ ├── paper22_fluid_dynamics.py                   # Phase 22 谱流体动力学 (K41谱)
+ ├── paper22_horizon_spectrum.py                 # Phase 22 黑洞视界谱 (S_BH匹配 0.00%)
+ ├── paper27_hawking_evaporation.py              # Phase 27 黑洞蒸发 (Page 0.647)
+ ├── paper27_dark_matter_spectral.py             # Phase 27 暗物质 (WIMP奇迹 Ωh²=0.12)
+ ├── paper27_beta_multiloop.py                   # Phase 27 双圈β对比
+ ├── paper27_dyson_schwinger.py                  # Phase 27 DS顶点修正
+ ├── paper27_fermion_twoloop.py                  # Phase 27 费米子双圈β
+ ├── paper27_lss_nonlinear_v2.py                 # Phase 27 非线性LSS (F₂核)
+ ├── formal_proof/                   # Lean 4 机器证明形式化项目
+ │   └── UFPFormalization/           # 30 模块，零诊断错误，68 测试定理
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
 ```
