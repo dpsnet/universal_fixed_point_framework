@@ -151,7 +151,7 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 
 ## 参考文献
 
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v0.8
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
 - [VI] Paper VI：《谱流体动力学：从湍流谱到谱流几何》，v0.1
 - Evans, D.J., Cohen, E.G.D. & Morriss, G.P. (1993). "Probability of second law violations in shearing steady states." *Phys. Rev. Lett.* 71, 2401.
 - Crooks, G.E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." *Phys. Rev. E* 60, 2721.

@@ -281,7 +281,7 @@ $$\langle |\delta A_k|^2 \rangle \propto k^{n_s-1}$$
 ## 参考文献
 
 - [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.31
-- [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》，v2.18
+- [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》，v2.19
 - [III] Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》，v1.1
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
 

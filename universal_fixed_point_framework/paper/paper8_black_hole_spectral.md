@@ -209,16 +209,16 @@ QNM 频率的实部分裂为 $\omega_{lm} = m\Omega_H + \Delta\lambda_{\min} \cd
 ## 参考文献
 
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v0.8
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
 - [VII] Paper VII：《非平衡谱热力学：谱熵、涨落与时间箭头》，v0.1
 - Hawking, S.W. (1975). "Particle creation by black holes." *Commun. Math. Phys.* 43, 199.
 - Bekenstein, J.D. (1973). "Black holes and entropy." *Phys. Rev. D* 7, 2333.
 
 ---
 
-**版本**：v0.1
+**版本**：v0.2
 
-**日期**：2026-07-16
+**日期**：2026-07-17
 
 **状态**：
 
@@ -229,8 +229,10 @@ QNM 频率的实部分裂为 $\omega_{lm} = m\Omega_H + \Delta\lambda_{\min} \cd
 - 信息持守（定理 5.1）：谱不变性消解信息悖论
 - Page 曲线的谱计算
 - Kerr 推广与 Paper IV 交叉验证
+- D28.2 数值交叉验证（`paper28_dfunctor_entropy_unify.py` 6/6）
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v0.2 | 2026-07-17 | 新增 D28.2 交叉验证段落（§6.2）；Paper V 引用 v0.8→v1.0 |
 | v0.1 | 2026-07-16 | 初始版本：Hawking 温度 + BH 熵 + QNM + 信息持守 + Kerr 推广 |

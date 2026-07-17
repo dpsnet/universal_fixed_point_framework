@@ -171,7 +171,7 @@ K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何
 
 ## 参考文献
 
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v0.8
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
 - Kolmogorov, A.N. (1941). "The local structure of turbulence in incompressible viscous fluid for very large Reynolds numbers." *Dokl. Akad. Nauk SSSR* 30, 301.
 - Yakhot, V. & Orszag, S.A. (1986). "Renormalization group analysis of turbulence." *J. Sci. Comput.* 1, 3.
 
