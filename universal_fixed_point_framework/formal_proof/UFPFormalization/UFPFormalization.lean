@@ -24,6 +24,10 @@ import UFPFormalization.SpectralDynamics
 import UFPFormalization.Quantization
 import UFPFormalization.NormalOrdering
 import UFPFormalization.CategoryGeometry
+import UFPFormalization.HigherRecCategory
+import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherDecursionFunctor
+import UFPFormalization.InfinityCategory
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory

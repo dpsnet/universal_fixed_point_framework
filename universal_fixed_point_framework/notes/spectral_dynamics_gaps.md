@@ -1,20 +1,24 @@
 # 谱动力学待完善四方向
 
-> **状态更新 (2026-07-17)**：Phase 27 + Phase 28 已全部完成 ✅
+> **状态更新 (2026-07-17)**：Phases 27–29 已全部完成 ✅
 > 
-> **Phase 27**：
+> **Phase 27**（谱动力学深化）：
 > - 双圈 β 匹配 SU(2)/SU(3) 精确匹配 ✅（`paper27_fermion_twoloop.py`）
 > - 暗物质 3 候选 + relic density ✅（`paper27_dark_matter_spectral.py`）
 > - 黑洞蒸发完整演化 + Page 曲线 ✅（`paper27_hawking_evaporation.py`）
 > - 非线性 LSS F₂ 核 + 1-loop SPT ✅（`paper27_lss_nonlinear_v2.py`）
 >
-> **Phase 28**：
-> - D28.1 谱动力学原初功率谱 ✅（`paper28_inflation_powerspectra.py` 6/6）
+> **Phase 28**（数值验证与高阶范畴）：
+> - D28.1 原初功率谱 ✅（`paper28_inflation_powerspectra.py` 6/6）
 > - D28.2 Paper IV vs VIII 熵统一 ✅（`paper28_dfunctor_entropy_unify.py` 6/6）
 > - D28.3 量子反弹引力波谱 ✅（`paper28_bounce_gravitational_waves.py` 6/6）
 > - D28.4 高阶范畴严格化 ✅（`paper28_higher_category_formalization.py` 8/8）
 >
-> **Phase 28 全部完成 ✅**。下一步进入 Phase 29。
+> **Phase 29**（形式化整合）：
+> - P29.1 Lean 4 高阶范畴 ✅（4 新模块: HigherRec/Spec/DecursionFunctor/InfinityCategory）
+> - P29.2 Paper II 谱动力学整合 ✅（v2.18→v2.19）
+> - P29.3 全谱系版本统一 ✅（4 处引用修正 + Paper VIII v0.1→v0.2）
+> - P29.4 熵产生率严格证明 ✅（`paper29_entropy_production_proof.py` 7/7）
 >
 > 以下为原始差距分析，保留以供参考。
 

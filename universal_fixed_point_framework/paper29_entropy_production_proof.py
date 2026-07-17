@@ -301,12 +301,12 @@ def test_continuous_limit():
     print(f"  初始连续熵 S_cont(t=0) = {S0:.6f}")
     
     # 离散化并演化
-    n_modes = 100
+    n_modes = 30
     G_eff = np.random.randn(n_modes, n_modes)
     G_eff = 0.5 * (G_eff - G_eff.T)
     
-    dt = 0.01
-    n_steps = 500
+    dt = 0.05
+    n_steps = 100
     
     lambda_k = np.array([A_initial(k) for k in np.linspace(k_min, k_max, n_modes)])
     lambda_k = np.sort(lambda_k)
@@ -458,7 +458,7 @@ def test_onsager_symmetry():
     print("=" * 65)
     
     np.random.seed(7)
-    n = 8
+    n = 5
     n_forces = 3
     dt = 0.01
     

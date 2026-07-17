@@ -986,7 +986,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### 配套论文
 
-- [I] 配套论文 I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.30+，2026-07-16。数学基础：范畴论、谱去递归化函子 $D$、$\mathbf{Rec}_D$ 宽子范畴、$D\dashv R$ 严格伴随、三层静默体系（对象/态射/谱）、辫子自然等价、隔离约束条件、谱对应自然等价 $M \cong L$、轨道函子群表示谱理论、连续谱测度理论、Feng-Wang 热力学形式、Clifford 旋量模结构、Clifford 值谱理论、RKHS 收敛率定理、理论转化与 EFT 等价性框架。Lean 4 形式化：24 模块（含测试），~3,700 行，15/19 零 `sorry`。
+- [I] 配套论文 I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.31，2026-07-16。数学基础：范畴论、谱去递归化函子 $D$、$\mathbf{Rec}_D$ 宽子范畴、$D\dashv R$ 严格伴随、三层静默体系（对象/态射/谱）、辫子自然等价、隔离约束条件、谱对应自然等价 $M \cong L$、轨道函子群表示谱理论、连续谱测度理论、Feng-Wang 热力学形式、Clifford 旋量模结构、Clifford 值谱理论、RKHS 收敛率定理、理论转化与 EFT 等价性框架。Lean 4 形式化：24 模块（含测试），~3,700 行，15/19 零 `sorry`。
 - [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》（本文）。
 - [III] Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》，2026-07-16。核心定理 4.1-4.3（三层谱分类），已在 Lean 4 中完成形式化（`SpectralEquivalence.lean`、`ICVerification.lean`）。
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1，2026-07-16。D 函子统一黑洞熵（Schwarzschild/RN/Kerr）。
