@@ -216,12 +216,13 @@ $k_b = a_b H_b$ 是反弹特征尺度，$A_b \sim 2$ 是放大因子。
 - [D28.1] D28.1 谱动力学功率谱：`paper28_inflation_powerspectra.py`，6 项检查全部通过
 - [D28.2] D28.2 Paper IV 交叉验证：`paper28_dfunctor_entropy_unify.py`，6 项检查全部通过
 - [D28.3] D28.3 反弹引力波谱：`paper28_bounce_gravitational_waves.py`，6 项检查全部通过
+- [D28.4] D28.4 高阶范畴严格化：`paper28_higher_category_formalization.py`，8 项检查全部通过
 - Ashtekar, A. & Bojowald, M. (2005). "Quantum geometry and the Schwarzschild singularity." *Class. Quant. Grav.* 22, 3349.
 - Planck Collaboration (2020). "Planck 2018 results. VI. Cosmological parameters." *A&A* 641, A6.
 
 ---
 
-**版本**：v0.4
+**版本**：v0.5
 
 **日期**：2026-07-17
 
@@ -238,11 +239,13 @@ $k_b = a_b H_b$ 是反弹特征尺度，$A_b \sim 2$ 是放大因子。
 - 完整原初功率谱：$n_s=0.9606$, $r=0.0042$, $\alpha_s=-8.2\times10^{-5}$
 - 反弹引力波谱：$\Delta^2_T(k) = \Delta^2_T^{(0)}(k) \times T_{\text{bounce}}(k/k_b)$
 - D 函子-谱间隙熵统一交叉验证
-- 数值验证：`paper28_quantum_bounce.py`（7/7）+ `paper28_inflation_powerspectra.py`（6/6）+ `paper28_dfunctor_entropy_unify.py`（6/6）+ `paper28_bounce_gravitational_waves.py`（6/6）
+- Rec₂/Spec₂ 2-范畴 + $D_2$ 2-函子 + ∞-范畴切空间（D28.4）
+- 数值验证：`paper28_quantum_bounce.py`（7/7）+ `paper28_inflation_powerspectra.py`（6/6）+ `paper28_dfunctor_entropy_unify.py`（6/6）+ `paper28_bounce_gravitational_waves.py`（6/6）+ `paper28_higher_category_formalization.py`（8/8）
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v0.5 | 2026-07-17 | D28.4 高阶范畴严格化：新增 `paper28_higher_category_formalization.py`（8/8）；更新参考文献；更新状态 |
 | v0.4 | 2026-07-17 | D28.3 反弹引力波谱：新增 §5.3 完整分析（反弹转移函数 + 频谱特征表 + 可检验性分析 + 5.3/5.4 节重编号）；新增 `paper28_bounce_gravitational_waves.py`（6/6）；更新参考文献；更新状态 |
 | v0.3 | 2026-07-17 | D28.1 完整功率谱：§4.4 扩展含 5 项预言表 + 谱流方程线性化 + $A_{\text{GR}}$ 谱势起源；新增 `paper28_inflation_powerspectra.py`（6/6）；更新参考文献 |
 | v0.2 | 2026-07-17 | 新增有效 Friedmann 方程（§5.2）；新增黑洞蒸发-反弹连接（§4.3）；更新 LQG R²=0.999984；新增数值验证脚本 `paper28_quantum_bounce.py`；更新引用版本；结论扩展为 8 项 |

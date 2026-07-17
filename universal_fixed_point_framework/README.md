@@ -6,7 +6,7 @@
 |------|------|
 | 论文总数 | 9 篇（Paper V v1.0，Paper IX v0.4） |
 | Phase 27 深化方向 | 4/4 完成（β双圈/暗物质/黑洞蒸发/非线性LSS） |
-| Phase 28 数值验证 | 3/4 完成（D28.1–D28.3，4 脚本 24/24 检查通过） |
+| Phase 28 数值验证 | 4/4 完成（D28.1–D28.4，5 脚本 37/37 检查通过） |
 | Lean 功能模块 | 25 |
 | 基础设施模块（DynSys） | 1 |
 | 测试模块 | 4 |
@@ -42,7 +42,7 @@
 | **Paper VI**：谱流体动力学 | v0.1 | N-S谱流方程 + K41 $k^{-5/3}$ 谱涌现 + 跨尺度截断 | ~180 行 |
 | **Paper VII**：非平衡谱热力学 | v0.1 | 谱熵增定理 + Onsager关系 + 涨落定理 + 时间箭头 | ~160 行 |
 | **Paper VIII**：黑洞视界谱动力学 | v0.2 | Hawking温度谱公式 + BH熵谱公式 + QNM + 信息持守 + D函子交叉验证 | ~220 行 |
-| **Paper IX**：奇点谱消解与量子宇宙学 | v0.4 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 + 原初功率谱 + 反弹引力波谱 + D函子熵统一 | ~250 行 |
+| **Paper IX**：奇点谱消解与量子宇宙学 | v0.5 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 + 原初功率谱 + 反弹引力波谱 + D函子熵统一 + 高阶范畴 | ~250 行 |
 
 ### Lean 4 形式化
 
@@ -66,14 +66,14 @@
 | P27.3 多圈重整化 | `paper27_fermion_twoloop.py`（SU(2)/SU(3) 精确匹配） | ✅ |
 | P27.4 非线性大尺度修正 | `paper27_lss_nonlinear_v2.py`（F₂核+1-loop SPT） | ✅ |
 
-### Phase 28 数值验证（D28.1–D28.3 完成 ✅）
+### Phase 28 数值验证（全部完成 ✅）
 
 | 方向 | 交付物 | 状态 |
 |------|--------|------|
 | D28.1 原初扰动功率谱 | `paper28_inflation_powerspectra.py`（$n_s=0.9606$, $r=0.0042$, $\alpha_s=-8.2\times10^{-5}$）| ✅ 6/6 |
 | D28.2 Paper IV vs VIII 熵统一 | `paper28_dfunctor_entropy_unify.py`（Schwarzschild/RN/Kerr 统一验证）| ✅ 6/6 |
 | D28.3 量子反弹引力波谱 | `paper28_bounce_gravitational_waves.py`（Ω_GW频谱 + 可探测性分析）| ✅ 6/6 |
-| D28.4 高阶范畴严格化 | 深化笔记 §A（2-范畴/∞-范畴）| 🔄 待推进 |
+| D28.4 高阶范畴严格化 | `paper28_higher_category_formalization.py`（Rec₂/Spec₂ 2-范畴 + D₂ 2-函子 4 公理 + ∞-范畴切空间）| ✅ 8/8 |
 
 ### 关键数值结果
 
@@ -89,7 +89,7 @@
 ### 数值验证脚本
 - **Phase 22**：`paper22_spectral_entropy.py`（ΔS=0.054>0），`paper22_horizon_spectrum.py`（S_BH精确 0.00%），`paper22_fluid_dynamics.py`
 - **Phase 27**：`paper27_hawking_evaporation.py`，`paper27_dark_matter_spectral.py`，`paper27_fermion_twoloop.py`，`paper27_lss_nonlinear_v2.py`，`paper27_beta_multiloop.py`，`paper27_dyson_schwinger.py`
-- **Phase 28**：`paper28_quantum_bounce.py`（7/7），`paper28_inflation_powerspectra.py`（6/6），`paper28_dfunctor_entropy_unify.py`（6/6），`paper28_bounce_gravitational_waves.py`（6/6）
+- **Phase 28**：`paper28_quantum_bounce.py`（7/7），`paper28_inflation_powerspectra.py`（6/6），`paper28_dfunctor_entropy_unify.py`（6/6），`paper28_bounce_gravitational_waves.py`（6/6），`paper28_higher_category_formalization.py`（8/8）
 - **其他**：`paper5_cosmology.py`，`paper5_beta_functions.py`，`paper5_force_generators.py`，`paper3_bps_spectral_verification.py` 等
 
 ### 关键设计决策
