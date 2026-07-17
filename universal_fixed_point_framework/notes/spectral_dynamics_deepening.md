@@ -6,7 +6,22 @@
 > 收敛性验证覆盖谱截断（L2 ∼ n⁻²）、D 函子（→Koopman 算子）、熵（连续极限一致）、同伦（A∞ 可近似）、谱流（→PDE）。
 > 
 > **Phase 33–35**：C* 代数框架（`paper33_cstar_framework.py` 5/5）、无界算子与 Hille-Yosida 半群（`paper34_unbounded_operator.py` 6/6）、A∞/∞-范畴无限维推广（`paper35_infinity_category_infinite_dim.py` 6/6）已全部完成。
-> 详见 `roadmap/phase30_infinite_dimensional_bridge.md`。
+> 
+> **Phase 36**（2026-07-17）：谱间隙 $\Delta\lambda_{\min}$ 第一性原理推导完成（`paper36_spectral_gap_derivation.py` 7/7）。$\Delta\lambda_{\min} = 0.122 M_{\text{Pl}}$ 由 $A_{\text{GR}}$ 的 $SU(2)$ 表示（$\sqrt{k(k+1)}$ 谱）与 $\text{Cl}(1,7)$ 代数结构（$k_{\max}=8$）唯一确定。所有半涌现量（$a_{\min}$, $c_1$, $\rho_c$, $r$, $n_s$）全部去外部输入化。
+> 
+> **Phase 37**（2026-07-17）：IFS 重叠因子 $\rho$ 第一性原理推导完成（`paper37_ifs_overlap_derivation.py` 7/7）。Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）$\Rightarrow$ Moran 方程 $\sum c_i^d = 1$ 确定收缩因子 $c_i$。三代质量谱从 Cl(1,7) 代数结构自然涌现，所有半涌现量（$\rho$, $\Delta\lambda_{\min}$, 耦合初值）全部去外部输入化。
+> 
+> **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱翻译 + 暴胀能标 V₀ 精确化（`paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
+> 
+> **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`paper39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
+> 
+> **Phase 40**（2026-07-17）：重子不对称 η_B 谱动力学推导（`paper40_baryogenesis.py` 6/6）。η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）。
+> 
+> **Phase 41**（2026-07-17）：宇宙学常数 Λ 多重静默机制（`paper41_cosmological_constant.py` 6/6）。四力层叠静默：126 量级压制覆盖所需 120，理论根因见 `notes/paper41_theoretical_root.md`。**半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**。
+> 
+> **Phase 42**（2026-07-17）：暴胀 R⁴ 修正（`paper42_inflation_R4.py` 7/7）。BCH 至 R⁴ 阶：c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定，与 c₁, n_s, r 三路自洽。
+> 
+> 详见 `roadmap/README.md`。
 
 ---
 

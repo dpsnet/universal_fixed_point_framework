@@ -230,7 +230,7 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
+- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.34。无界算子与 Hille-Yosida 半群（§2.10）；**Phase 36：谱间隙 Δλ_min = 0.122 M_Pl 由 Cl(1,7) + SU(2) 第一性原理导出（§A.15.7）。**
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。
 - [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、信息持守。
@@ -240,7 +240,7 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 
 ---
 
-**版本**：v1.0
+**版本**：v1.1
 
 **日期**：2026-07-17
 
@@ -254,11 +254,13 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 - Page 曲线的谱计算
 - Kerr 推广与 Paper IV 交叉验证
 - D28.2 数值交叉验证（`paper28_dfunctor_entropy_unify.py` 6/6）
+- **v1.1 升级**：Phase 36 谱间隙 Δλ_min = 0.122 M_Pl 由第一性原理导出（Paper I §A.15.7），不再为自由参数；配套论文 I 引用更新至 v2.34；版本号对齐
 - **v1.0 升级**：新增 §2.4 Hille-Yosida 蒸发半群（定理 2.2）、§7.1 极端极限与连续谱（推论 7.1）；参考文献扩展（Paper I/IX）；版本号对齐 Paper I v2.32 / Paper V v1.1 / Paper VII v1.0
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.1 | 2026-07-17 | 同步 Phase 36：谱间隙 Δλ_min 由 Cl(1,7)+SU(2) 第一性原理导出（Paper I §A.15.7）；配套论文 I 引用更新至 v2.34 |
 | v1.0 | 2026-07-17 | 升级至完整版：新增 §2.4 Hille-Yosida 蒸发半群、§7.1 极端极限连续谱；参考文献扩展；版本号对齐 |
 | v0.2 | 2026-07-17 | 新增 D28.2 交叉验证段落（§6.2）；Paper V 引用 v0.8→v1.0 |
 | v0.1 | 2026-07-16 | 初始版本：Hawking 温度 + BH 熵 + QNM + 信息持守 + Kerr 推广 |

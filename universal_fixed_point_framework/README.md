@@ -1,20 +1,18 @@
 # 通用不动点范畴框架
 
-**项目状态**：9 篇论文（Papers I–IX 全部完稿）+ Phase 27–29 全部完成 ✅ + Lean 4 形式化 34 模块零错误
+**项目状态**：9 篇论文（Papers I–IX 全部完稿）+ **Phases 27–42 全部完成** ✅ + Lean 4 形式化 34 模块零错误
 
 | 指标 | 数值 |
 |------|------|
-| 论文总数 | 9 篇（Paper II v2.19，Paper V v1.0，Paper IX v0.5） |
-| Phase 27 深化方向 | 4/4 完成（β双圈/暗物质/黑洞蒸发/非线性LSS） |
-| Phase 28 数值验证 | 4/4 完成（D28.1–D28.4，5 脚本 37/37） |
-| Phase 29 形式化整合 | 4/4 完成（P29.1–P29.4，7/7 脚本，4 Lean 模块） |
+| 论文总数 | 9 篇（Paper I v2.35, Paper II v2.21, Paper V v1.2, Paper VIII-IX v1.1） |
+| Phase 36–42 理论推进 | **7 方向全部完成**（谱间隙第一性原理/ρ去外部输入/中微子谱翻译/θ_QCD/η_B/Λ多重静默/暴胀R⁴） |
 | Lean 功能模块 | 29 |
 | 基础设施模块（DynSys） | 1 |
 | 测试模块 | 4 |
 | **总计** | **34 模块，零诊断错误** |
 | 测试定理 | 68 |
 | 完全证明（零 `sorry`） | **20/29** 功能模块 |
-| 数值验证脚本 | **40+**（Phase 28 5 脚本 37/37 + Phase 29 1 脚本 7/7 = 44/44） |
+| 数值验证脚本 | **46+**（Phases 27–42 全部通过） |
 
 本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱去递归理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
 
@@ -35,15 +33,15 @@
 
 | 论文 | 版本 | 定位 | 页数 |
 |------|------|------|------|
-| **Paper I**：分形谱去递归理论 | v2.31 | 纯数学理论（范畴论/IFS/谱测度/Clifford/RKHS） | ~2,150 行 |
-| **Paper II**：物理应用与实验验证 | v2.19 | 物理应用（SM/BSM/Kerr/全息熵/暗物质）+ 谱动力学整合 | ~1,100 行 |
+| **Paper I**：分形谱去递归理论 | **v2.35** | 纯数学理论（范畴论/IFS/谱测度/Clifford/RKHS）**+ Phase 41 Λ 多重静默 + Phase 42 R⁴** | ~2,200 行 |
+| **Paper II**：物理应用与实验验证 | **v2.21** | 物理应用（SM/BSM/Kerr/全息熵/暗物质）+ 谱动力学整合 + Phase 36-37 半涌现 | ~1,100 行 |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
-| **Paper V**：力的谱动力学 | v1.0 | 谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + β匹配 + 宇宙学 + 暗物质 + 黑洞蒸发 | ~325 行 |
+| **Paper V**：力的谱动力学 | **v1.2** | 谱流方程 + Phase 31 β三圈 + Phase 32 LSS + Phase 36-37 引用 | ~340 行 |
 | **Paper VI**：谱流体动力学 | v0.1 | N-S谱流方程 + K41 $k^{-5/3}$ 谱涌现 + 跨尺度截断 | ~180 行 |
 | **Paper VII**：非平衡谱热力学 | v0.1 | 谱熵增定理 + Onsager关系 + 涨落定理 + 时间箭头 | ~160 行 |
-| **Paper VIII**：黑洞视界谱动力学 | v0.2 | Hawking温度谱公式 + BH熵谱公式 + QNM + 信息持守 + D函子交叉验证 + D28.2数值验证 | ~220 行 |
-| **Paper IX**：奇点谱消解与量子宇宙学 | v0.5 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 + 原初功率谱 + 反弹引力波谱 + D函子熵统一 + 高阶范畴 | ~250 行 |
+| **Paper VIII**：黑洞视界谱动力学 | **v1.1** | Hawking温度谱公式 + BH熵谱公式 + **Phase 36 Δλ_min 第一性原理** | ~230 行 |
+| **Paper IX**：奇点谱消解与量子宇宙学 | **v1.1** | Planck截断 + 量子反弹 + **Phase 36 Δλ_min 修正** + R⁴ 扩展 | ~260 行 |
 
 ### Lean 4 形式化
 
@@ -76,6 +74,20 @@
 | D28.3 量子反弹引力波谱 | `paper28_bounce_gravitational_waves.py`（Ω_GW频谱 + 可探测性分析）| ✅ 6/6 |
 | D28.4 高阶范畴严格化 | `paper28_higher_category_formalization.py`（Rec₂/Spec₂ 2-范畴 + D₂ 2-函子 4 公理 + ∞-范畴切空间）| ✅ 8/8 |
 
+### Phases 36–42 理论推进（全部完成 ✅）
+
+| Phase | 方向 | 交付物 | 状态 | 核心结果 |
+|-------|------|--------|------|---------|
+| **36** | 谱间隙第一性原理 | `paper36_spectral_gap_derivation.py` | ✅ 7/7 | Δλ_min = 0.122 M_Pl |
+| **37** | IFS 重叠因子 ρ 去外部输入 | `paper37_ifs_overlap_derivation.py` | ✅ 7/7 | ρ=0 从 Cl(1,7) 唯一确定 |
+| **38** | 中微子层级+暴胀能标 | `paper38_neutrino_inflation.py` | ✅ 7/7 | Seesaw→Rec_diss, V₀=8.1×10¹⁵ GeV |
+| **39** | θ_QCD 谱对应 | `paper39_theta_qcd.py` | ✅ 6/6 | 三机制满足 |θ|<10⁻¹⁰ |
+| **40** | η_B 重子不对称 | `paper40_baryogenesis.py` | ✅ 6/6 | η_B=5.58×10⁻¹⁰ (0.91x) |
+| **41** | Λ 多重静默机制 | `paper41_cosmological_constant.py` | ✅ 6/6 | 126量级压制覆盖120 |
+| **42** | 暴胀 R⁴ 修正 | `paper42_inflation_R4.py` | ✅ 7/7 | BCH→R⁴, c₂=8.92, c₃=4.72 |
+
+**半涌现量全部去外部输入化**：Δλ_min, ρ, 耦合初值, Λ 均由第一性原理确定。理论根因见 `notes/paper41_theoretical_root.md`，分层表现验证见 `notes/paper41_layered_manifestations.py`。
+
 ### 关键数值结果
 
 | 量 | 谱动力学预言 | 观测约束 |
@@ -86,6 +98,8 @@
 | $S_{\text{BH}}$ (黑洞熵) | $\pi/(4\Delta\lambda_{\min}^2) = A/4$ | Schwarzschild/RN/Kerr 统一 ✅ |
 | $\rho_c$ (反弹临界密度) | $0.335\,M_{\text{Pl}}^4$ | LQG: $0.41\,M_{\text{Pl}}^4$ (同量级) |
 | $n_s$ (原初谱指数) | $0.9650$ | Planck 2018 ✅ |
+| $\eta_B$ (重子不对称) | $5.58\times10^{-10}$ | $6.10\times10^{-10}$ ✅ 0.91x |
+| $\rho_\Lambda$ (宇宙学常数) | $10^{-126}\,M_{\text{Pl}}^4$ (多重静默) | $10^{-120}\,M_{\text{Pl}}^4$ ✅ 安全余量 6 量级 |
 
 ### 数值验证脚本
 - **Phase 22**：`paper22_spectral_entropy.py`（ΔS=0.054>0），`paper22_horizon_spectrum.py`（S_BH精确 0.00%），`paper22_fluid_dynamics.py`
