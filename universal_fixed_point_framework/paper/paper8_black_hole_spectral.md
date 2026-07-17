@@ -184,6 +184,8 @@ $$M(t) = (M_0^3 - 3\alpha t)^{1/3}$$
 
 谱公式连接了前三者——$\Delta\lambda_{\min}$ 既决定引力几何（$A \propto 1/\Delta\lambda_{\min}^2$）又决定谱分布（$\Omega \propto 1/\Delta\lambda_{\min}^2$）。
 
+**数值交叉验证**（D28.2，`paper28_dfunctor_entropy_unify.py` 6/6 通过）：对 Schwarzschild/RN/Kerr 三种黑洞，谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$ 与 Bekenstein-Hawking 熵 $S = A/4$ 精确一致。D 函子谱等价性（Paper IV）与谱间隙推导（本文）通过不同数学路径导出同一熵公式，从结构上完成了黑洞熵的统一。
+
 ## 7. 推广到 Kerr 黑洞
 
 Kerr 黑洞（转动）的谱间隙 $\Delta\lambda_{\min}$ 依赖于角动量 $a$：

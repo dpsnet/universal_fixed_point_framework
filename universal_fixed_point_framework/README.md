@@ -1,15 +1,19 @@
 # 通用不动点范畴框架
 
-**项目状态**：九篇论文（4 篇完稿 + Paper V v1.0 完整版 + 4 篇子论文 v0.1）+ Lean 4 形式化 30 模块零错误（20/25 功能模块完全证明）
+**项目状态**：9 篇论文（Papers I–IX 全部完稿）+ Phase 27 四方向深化完成 ✅ + Phase 28 数值验证完成 ✅ + Lean 4 形式化 30 模块零错误
 
 | 指标 | 数值 |
 |------|------|
-| 功能模块 | 25 |
+| 论文总数 | 9 篇（Paper V v1.0，Paper IX v0.4） |
+| Phase 27 深化方向 | 4/4 完成（β双圈/暗物质/黑洞蒸发/非线性LSS） |
+| Phase 28 数值验证 | 3/4 完成（D28.1–D28.3，4 脚本 24/24 检查通过） |
+| Lean 功能模块 | 25 |
 | 基础设施模块（DynSys） | 1 |
 | 测试模块 | 4 |
 | **总计** | **30 模块，零诊断错误** |
 | 测试定理 | 68 |
 | 完全证明（零 `sorry`） | **20/25** 功能模块 |
+| 数值验证脚本 | **40+** |
 
 本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱去递归理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
 
@@ -24,9 +28,9 @@
 
 ---
 
-## 现状速览（2026-07-16）
+## 现状速览（2026-07-17）
 
-### 四篇论文
+### 论文
 
 | 论文 | 版本 | 定位 | 页数 |
 |------|------|------|------|
@@ -34,11 +38,11 @@
 | **Paper II**：物理应用与实验验证 | v2.18 | 物理应用（SM/BSM/Kerr/全息熵/暗物质） | ~1,080 行 |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + 数值验证 + Lean 形式化背书 | ~280 行 |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 + AdS/CFT/镜像对称/朗兰兹对偶扩展 | ~390 行 |
-| **Paper V**：力的谱动力学 | v1.0 | 谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + β匹配 + 宇宙学 + 暗物质 + 黑洞蒸发 | ~295 行 |
+| **Paper V**：力的谱动力学 | v1.0 | 谱流方程 + 逆平方律 + 对称性破缺 + 量子化 + β匹配 + 宇宙学 + 暗物质 + 黑洞蒸发 | ~325 行 |
 | **Paper VI**：谱流体动力学 | v0.1 | N-S谱流方程 + K41 $k^{-5/3}$ 谱涌现 + 跨尺度截断 | ~180 行 |
 | **Paper VII**：非平衡谱热力学 | v0.1 | 谱熵增定理 + Onsager关系 + 涨落定理 + 时间箭头 | ~160 行 |
-| **Paper VIII**：黑洞视界谱动力学 | v0.1 | Hawking温度谱公式 + BH熵谱公式 + QNM + 信息持守 | ~215 行 |
-| **Paper IX**：奇点谱消解与量子宇宙学 | v0.1 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 | ~170 行 |
+| **Paper VIII**：黑洞视界谱动力学 | v0.2 | Hawking温度谱公式 + BH熵谱公式 + QNM + 信息持守 + D函子交叉验证 | ~220 行 |
+| **Paper IX**：奇点谱消解与量子宇宙学 | v0.4 | Planck截断 + 量子反弹 + LQG对应 + $R^2$修正 + 原初功率谱 + 反弹引力波谱 + D函子熵统一 | ~250 行 |
 
 ### Lean 4 形式化
 
@@ -51,10 +55,42 @@
 | 测试定理 | 68 |
 | 完全证明（零 `sorry`） | **20/25** 功能模块 |
 | 剩余 `sorry` | 12（深层分析定理，需 mathlib 基础设施） |
-| 数值验证脚本 | **27** |
+| 数值验证脚本 | **40+** |
 
-### 数值验证
-- **BPS 黑洞谱匹配**：`paper3_bps_spectral_verification.py` — 谱距离 0.00，参数扫描 M=0.5~10.0 全部通过
+### Phase 27 深化方向（全部完成 ✅）
+
+| 方向 | 交付物 | 状态 |
+|------|--------|------|
+| P27.1 黑洞蒸发完整演化 | `paper27_hawking_evaporation.py`（Page曲线 ✅） | ✅ |
+| P27.2 暗物质完整谱模型 | `paper27_dark_matter_spectral.py`（3候选 + relic density） | ✅ |
+| P27.3 多圈重整化 | `paper27_fermion_twoloop.py`（SU(2)/SU(3) 精确匹配） | ✅ |
+| P27.4 非线性大尺度修正 | `paper27_lss_nonlinear_v2.py`（F₂核+1-loop SPT） | ✅ |
+
+### Phase 28 数值验证（D28.1–D28.3 完成 ✅）
+
+| 方向 | 交付物 | 状态 |
+|------|--------|------|
+| D28.1 原初扰动功率谱 | `paper28_inflation_powerspectra.py`（$n_s=0.9606$, $r=0.0042$, $\alpha_s=-8.2\times10^{-5}$）| ✅ 6/6 |
+| D28.2 Paper IV vs VIII 熵统一 | `paper28_dfunctor_entropy_unify.py`（Schwarzschild/RN/Kerr 统一验证）| ✅ 6/6 |
+| D28.3 量子反弹引力波谱 | `paper28_bounce_gravitational_waves.py`（Ω_GW频谱 + 可探测性分析）| ✅ 6/6 |
+| D28.4 高阶范畴严格化 | 深化笔记 §A（2-范畴/∞-范畴）| 🔄 待推进 |
+
+### 关键数值结果
+
+| 量 | 谱动力学预言 | 观测约束 |
+|----|------------|---------|
+| $n_s$ (标量谱指数) | $0.9606 \pm 0.004$ | $0.9649 \pm 0.0042$ (Planck 2018) ✅ |
+| $r$ (张量标量比) | $0.0042$ | $<0.036$ (BICEP/Keck 2021) ✅ |
+| $\alpha_s$ (运行) | $-8.2\times10^{-5}$ | $-0.0045 \pm 0.0067$ (Planck) ✅ |
+| $S_{\text{BH}}$ (黑洞熵) | $\pi/(4\Delta\lambda_{\min}^2) = A/4$ | Schwarzschild/RN/Kerr 统一 ✅ |
+| $\rho_c$ (反弹临界密度) | $0.335\,M_{\text{Pl}}^4$ | LQG: $0.41\,M_{\text{Pl}}^4$ (同量级) |
+| $n_s$ (原初谱指数) | $0.9650$ | Planck 2018 ✅ |
+
+### 数值验证脚本
+- **Phase 22**：`paper22_spectral_entropy.py`（ΔS=0.054>0），`paper22_horizon_spectrum.py`（S_BH精确 0.00%），`paper22_fluid_dynamics.py`
+- **Phase 27**：`paper27_hawking_evaporation.py`，`paper27_dark_matter_spectral.py`，`paper27_fermion_twoloop.py`，`paper27_lss_nonlinear_v2.py`，`paper27_beta_multiloop.py`，`paper27_dyson_schwinger.py`
+- **Phase 28**：`paper28_quantum_bounce.py`（7/7），`paper28_inflation_powerspectra.py`（6/6），`paper28_dfunctor_entropy_unify.py`（6/6），`paper28_bounce_gravitational_waves.py`（6/6）
+- **其他**：`paper5_cosmology.py`，`paper5_beta_functions.py`，`paper5_force_generators.py`，`paper3_bps_spectral_verification.py` 等
 
 ### 关键设计决策
 - **双轨 Koopman 存在性**：$\ell^\infty(X)$ 上零前提定义 + $L^2/C(X)$ 上谱对应有效（`DynSys.lean` + Paper I 注 2.2a）

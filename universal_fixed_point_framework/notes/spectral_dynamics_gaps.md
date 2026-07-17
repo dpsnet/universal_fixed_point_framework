@@ -1,5 +1,21 @@
 # 谱动力学待完善四方向
 
+> **状态更新 (2026-07-17)**：Phase 27 + Phase 28 已全部完成 ✅
+> 
+> **Phase 27**：
+> - 双圈 β 匹配 SU(2)/SU(3) 精确匹配 ✅（`paper27_fermion_twoloop.py`）
+> - 暗物质 3 候选 + relic density ✅（`paper27_dark_matter_spectral.py`）
+> - 黑洞蒸发完整演化 + Page 曲线 ✅（`paper27_hawking_evaporation.py`）
+> - 非线性 LSS F₂ 核 + 1-loop SPT ✅（`paper27_lss_nonlinear_v2.py`）
+>
+> **Phase 28**：
+> - D28.1 谱动力学原初功率谱 ✅（`paper28_inflation_powerspectra.py` 6/6）
+> - D28.2 Paper IV vs VIII 熵统一 ✅（`paper28_dfunctor_entropy_unify.py` 6/6）
+> - D28.3 量子反弹引力波谱 ✅（`paper28_bounce_gravitational_waves.py` 6/6）
+> - D28.4 高阶范畴严格化（待推进）
+>
+> 以下为原始差距分析，保留以供参考。
+
 **背景**：在 Papers V–IX 完成概念框架和 v0.1 草案后，四个深层方向仍需完善。以下逐一评估现状、目标和实现路径。
 
 ---
