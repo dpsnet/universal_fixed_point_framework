@@ -135,6 +135,23 @@ $$n_s - 1 = 2\eta - 6\epsilon$$
 
 **谱动力学与标准慢滚暴胀的区别**：$n_s \approx 0.965$ 非独立预言，与标准慢滚暴胀一致。但谱动力学提供了 $A_{\text{GR}}$ 谱势的物理起源——$R^2$ 修正（§5）的自然推论，而非唯象选取势的形式。谱指数运行 $\alpha_s$ 的量级 $10^{-4}$ 过小，当前和近期实验无法区分，需下一代 CMB 实验（CMB-S4）达到 $\sigma(\alpha_s) \sim 10^{-3}$ 才可能检验。
 
+### 4.5 非线性 LSS 与谱流宇宙学完备性
+
+谱流对易子 $[A_{\text{GR}}, A_t]$ 的 BCH 展开在二阶生成 SPT 模式耦合核 $F_2$（`paper32_lss_nonlinear_v3.py`，7/7 通过），建立从量子反弹到非线性大尺度结构的完整宇宙学链：
+
+$$ \underbrace{a(t) \to a_{\min}}_{\text{谱量子反弹（§4.1）}} \xrightarrow{\text{暴胀}} \underbrace{\delta A_k \to P_L(k)}_{\text{原初谱（§4.4）}} \xrightarrow{\text{引力坍缩}} \underbrace{P_{\text{NL}}(k) = P_L(k) + P_{22}(k) + P_{13}(k)}_{\text{非线性 LSS}} $$
+
+**定理 4.2**（谱流宇宙学完备性）。从 Planck 截断到非线性大尺度结构的完整宇宙学演化，均由同一谱流方程 $dA_t/dt = [A_{\text{GR}}, A_t]$ 的不同阶展开描述：
+
+| 阶数 | 展开 | 物理现象 | 可检验性 |
+|------|------|----------|----------|
+| 0 阶 | $A_t^0$ | Planck 截断 $\lambda_{\max} \sim M_{\text{Pl}}$ | 🔄 量子引力 |
+| 1 阶 | $[A_{\text{GR}}, A_t]$ | 线性 FLRW + 原初功率谱 $n_s=0.961$ | ✅ Planck |
+| 2 阶 | $[A_{\text{GR}}, [A_{\text{GR}}, A_t]]$ | 非线性 LSS $F_2$ 核, $k_{\text{NL}}=0.161$ | ✅ DESI/Euclid |
+| 3 阶 | $[A_{\text{GR}}, [A_{\text{GR}}, [A_{\text{GR}}, A_t]]]$ | 双谱 $B(k_1,k_2,k_3)$、高阶修正 | 🔄 未来巡天 |
+
+**证明**。各阶展开对应 BCH 公式的不同截断。0 阶即 $A_{\text{GR}}$ 本身的谱离散化（定理 2.2）。1 阶是谱流方程的标准形式（Paper V §2.1），线性化给出 FLRW 动力学。2 阶对易子通过函数演算映射到 SPT $F_2$ 核（`paper32_lss_nonlinear_v3.py` 定理 7.4）。3 阶及以上给出高阶关联函数。□
+
 ## 5. 高阶曲率修正
 
 ### 5.1 BCH 展开与 $R^2$ 项
@@ -209,20 +226,22 @@ $k_b = a_b H_b$ 是反弹特征尺度，$A_b \sim 2$ 是放大因子。
 
 ## 参考文献
 
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
-- [VIII] Paper VIII：《黑洞视界的谱动力学：熵、辐射与信息》，v0.2（含 Phase 27 黑洞蒸发扩展）
+- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）、C* 代数框架（§2.9）。
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、FLRW 谱方程。
+- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞视界的谱动力学》，v1.0。谱间隙 $\Delta\lambda_{\min}$、Hille-Yosida 蒸发半群。
 - [P27.1] Phase 27.1 黑洞蒸发完整演化：`paper27_hawking_evaporation.py`，数值验证 Page 曲线
 - [P28] Phase 28 数值验证：`paper28_quantum_bounce.py`，7 项交叉检查全部通过
 - [D28.1] D28.1 谱动力学功率谱：`paper28_inflation_powerspectra.py`，6 项检查全部通过
 - [D28.2] D28.2 Paper IV 交叉验证：`paper28_dfunctor_entropy_unify.py`，6 项检查全部通过
 - [D28.3] D28.3 反弹引力波谱：`paper28_bounce_gravitational_waves.py`，6 项检查全部通过
 - [D28.4] D28.4 高阶范畴严格化：`paper28_higher_category_formalization.py`，8 项检查全部通过
+- [P32] Phase 32 非线性 LSS：`paper32_lss_nonlinear_v3.py`，7/7 通过（$k_{\text{NL}}=0.161$ h/Mpc）
 - Ashtekar, A. & Bojowald, M. (2005). "Quantum geometry and the Schwarzschild singularity." *Class. Quant. Grav.* 22, 3349.
 - Planck Collaboration (2020). "Planck 2018 results. VI. Cosmological parameters." *A&A* 641, A6.
 
 ---
 
-**版本**：v0.5
+**版本**：v1.0
 
 **日期**：2026-07-17
 
@@ -241,10 +260,12 @@ $k_b = a_b H_b$ 是反弹特征尺度，$A_b \sim 2$ 是放大因子。
 - D 函子-谱间隙熵统一交叉验证
 - Rec₂/Spec₂ 2-范畴 + $D_2$ 2-函子 + ∞-范畴切空间（D28.4）
 - 数值验证：`paper28_quantum_bounce.py`（7/7）+ `paper28_inflation_powerspectra.py`（6/6）+ `paper28_dfunctor_entropy_unify.py`（6/6）+ `paper28_bounce_gravitational_waves.py`（6/6）+ `paper28_higher_category_formalization.py`（8/8）
+- **v1.0 升级**：新增 §4.5 谱流宇宙学完备性（定理 4.2，连接非线性 LSS）；参考文献扩展（Paper I/32）；版本号对齐 Paper I v2.32 / Paper V v1.1 / Paper VIII v1.0
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.0 | 2026-07-17 | 升级至完整版：新增 §4.5 谱流宇宙学完备性（定理 4.2，从 Planck 截断到非线性 LSS 的完整链）；参考文献扩展；版本号对齐 |
 | v0.5 | 2026-07-17 | D28.4 高阶范畴严格化：新增 `paper28_higher_category_formalization.py`（8/8）；更新参考文献；更新状态 |
 | v0.4 | 2026-07-17 | D28.3 反弹引力波谱：新增 §5.3 完整分析（反弹转移函数 + 频谱特征表 + 可检验性分析 + 5.3/5.4 节重编号）；新增 `paper28_bounce_gravitational_waves.py`（6/6）；更新参考文献；更新状态 |
 | v0.3 | 2026-07-17 | D28.1 完整功率谱：§4.4 扩展含 5 项预言表 + 谱流方程线性化 + $A_{\text{GR}}$ 谱势起源；新增 `paper28_inflation_powerspectra.py`（6/6）；更新参考文献 |

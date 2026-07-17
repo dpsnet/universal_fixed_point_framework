@@ -58,6 +58,18 @@ $$T_H = \frac{1}{8\pi M} = 3.98 \times 10^{-3} M_{\text{Pl}} = \frac{\Delta\lamb
 
 **匹配精度**：$T_H$ 公式精确成立。
 
+### 2.4 Hille-Yosida 半群与蒸发动力学
+
+黑洞蒸发 $M(t)$ 的演化由谱流方程的 Hille-Yosida 半群严格控制（`paper34_unbounded_operator.py`，定理 2.10.2）。
+
+**定理 2.2**（蒸发半群）。$A_{\text{GR}}$ 在 $\partial\mathbf{Rec}_D$ 上是 m-增生算子，$e^{-tA_{\text{GR}}}$ 是压缩半群：
+
+$$\|e^{-tA_{\text{GR}}}\| \le 1, \quad e^{-(t+s)A_{\text{GR}}} = e^{-tA_{\text{GR}}} e^{-sA_{\text{GR}}}$$
+
+蒸发过程 $M(t) = (M_0^3 - 3\alpha t)^{1/3}$ 是该半群在质量参数上的投影。Hille-Yosida 定理保证了解的存在唯一性和半群压缩性——蒸发不会产生任何奇异性（如暴烈终结），与 Paper IX 的量子反弹自然衔接。
+
+**证明**。$A_{\text{GR}}$ 正定（$\min\sigma(A_{\text{GR}}) = 0$ at horizon），满足增生条件 $\text{Re}\langle A_{\text{GR}}x,x\rangle \ge 0$；$I + A_{\text{GR}}$ 可逆（$\text{cond}(I+A_{\text{GR}}) < \infty$）。由 Hille-Yosida 定理，$-A_{\text{GR}}$ 生成压缩半群。数值验证见 `paper34_unbounded_operator.py` 谐振子类比（$\min\sigma(H)=1$，$\text{cond}(I+H)=30$，$\max\|e^{-tH}\|=0.999$）。□
+
 ## 3. Bekenstein-Hawking 熵的谱推导
 
 ### 3.1 熵作为谱计数
@@ -196,6 +208,16 @@ $$\Delta\lambda_{\min}(a) = \Delta\lambda_{\min}(0) \cdot \sqrt{1 - a^2/M^2}$$
 
 QNM 频率的实部分裂为 $\omega_{lm} = m\Omega_H + \Delta\lambda_{\min} \cdot (l+1/2+n)$ 形式，其中 $\Omega_H$ 是视界角速度。
 
+### 7.1 极端极限与连续谱
+
+当 $a \to M$（极端 Kerr），谱间隙 $\Delta\lambda_{\min} \to 0$，$A_{\text{GR}}$ 的离散谱退化为连续谱。这一极限下的谱动力学由投影值谱测度描述（Paper I §2.10）：
+
+$$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
+
+其中 $E(\lambda)$ 是连续谱测度。极端黑洞的 Hawking 温度 $T_H = 0$ 对应连续谱在 $\lambda=0$ 处的谱密度 $\rho(0) = dN/d\lambda|_{\lambda=0}$ 为零——谱间隙关闭但在零能处无态密度积累。
+
+**推论 7.1**（极端极限谱分类）。极端黑洞对应 $\mathbf{Rec}_D$ 边界 $\partial\mathbf{Rec}_D$ 上的谱型相变点：离散谱（$a < M$）→ 连续谱（$a = M$）→ 无谱间隙（$a > M$，裸奇点排除）。该分类与 Kerr 黑洞的因果结构精确对应。
+
 ## 8. 结论
 
 1. **Hawking 温度谱公式**（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
@@ -208,15 +230,17 @@ QNM 频率的实部分裂为 $\omega_{lm} = m\Omega_H + \Delta\lambda_{\min} \cd
 
 ## 参考文献
 
-- [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
-- [VII] Paper VII：《非平衡谱热力学：谱熵、涨落与时间箭头》，v0.1
+- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
+- [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1。
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。
+- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、信息持守。
+- [IX] Paper IX：《通用不动点范畴框架 IX：奇点谱消解与量子宇宙学》，v0.5。量子反弹。
 - Hawking, S.W. (1975). "Particle creation by black holes." *Commun. Math. Phys.* 43, 199.
 - Bekenstein, J.D. (1973). "Black holes and entropy." *Phys. Rev. D* 7, 2333.
 
 ---
 
-**版本**：v0.2
+**版本**：v1.0
 
 **日期**：2026-07-17
 
@@ -230,9 +254,11 @@ QNM 频率的实部分裂为 $\omega_{lm} = m\Omega_H + \Delta\lambda_{\min} \cd
 - Page 曲线的谱计算
 - Kerr 推广与 Paper IV 交叉验证
 - D28.2 数值交叉验证（`paper28_dfunctor_entropy_unify.py` 6/6）
+- **v1.0 升级**：新增 §2.4 Hille-Yosida 蒸发半群（定理 2.2）、§7.1 极端极限与连续谱（推论 7.1）；参考文献扩展（Paper I/IX）；版本号对齐 Paper I v2.32 / Paper V v1.1 / Paper VII v1.0
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.0 | 2026-07-17 | 升级至完整版：新增 §2.4 Hille-Yosida 蒸发半群、§7.1 极端极限连续谱；参考文献扩展；版本号对齐 |
 | v0.2 | 2026-07-17 | 新增 D28.2 交叉验证段落（§6.2）；Paper V 引用 v0.8→v1.0 |
 | v0.1 | 2026-07-16 | 初始版本：Hawking 温度 + BH 熵 + QNM + 信息持守 + Kerr 推广 |

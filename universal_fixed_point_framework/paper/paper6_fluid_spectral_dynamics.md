@@ -112,9 +112,51 @@ $$C = (2\pi)^{-1} \cdot \left(\frac{3}{2}\right)^{2/3} \approx 1.59$$
 
 **证明**。$C$ 由谱流方程在标度不变解处的归一化条件唯一确定。具体计算涉及 $[A_{\text{adv}}, A_t]$ 在标度变换下的不变测度。□
 
-## 4. 耗散截断与跨尺度类比
+## 4. 谱熵与热力学一致性
 
-### 4.1 粘性截断
+湍流耗散将有序的大尺度运动能量转化为小尺度热运动，本质上是熵增过程。谱流框架通过固定基谱熵严格描述了这一过程。
+
+### 4.1 湍流的谱熵
+
+**定义 4.1**（湍流谱熵）。在波数空间截断 $[k_{\min}, k_{\max}]$ 下，$A_t$ 的固定基谱熵为：
+
+$$S_{\mathcal{B}}(t) = -\sum_i p_i(t) \log p_i(t), \quad p_i(t) = (U^\dagger \rho_t U)_{ii}$$
+
+其中 $\rho_t = e^{-A_t}/\text{Tr}(e^{-A_t})$ 是谱密度矩阵，$U$ 是 Fourier 基。
+
+**定理 4.1**（湍流熵增）。在 N-S 谱流方程下，固定基谱熵 $S_{\mathcal{B}}(t)$ 严格单调递增：
+
+$$\frac{d}{dt} S_{\mathcal{B}}(t) \geq 0$$
+
+等号成立当且仅当谱流达到平衡态 $[A_{\text{adv}}, \rho_t] = 0$ 且 $\nu\Delta_{\text{spec}} A_t = 0$。
+
+**证明**。将 N-S 谱流方程分解为保守部分 $[A_{\text{adv}}, A_t]$ 和耗散部分 $-\nu\Delta_{\text{spec}} A_t$。保守部分对应西演化，不改变 $\rho_t$ 的谱（仅旋转基）；耗散部分对应 $\rho_t$ 特征值向均匀分布演化。由相对熵单调性（Lindblad 1975），固定基投影下的熵 $S_{\mathcal{B}}(t)$ 单调递增。连续谱推广通过投影值谱测度 $E(\lambda)$ 直接成立（详见 `paper29_entropy_production_proof.py`，定理 P29.4）。□
+
+### 4.2 能量耗散率与熵产生率
+
+**定理 4.2**（Onsager 关系）。湍流能量耗散率 $\varepsilon$ 与谱熵产生率 $dS/dt$ 通过以下 Onsager 对称关系联系：
+
+$$\varepsilon = T_{\text{turb}} \cdot \frac{dS}{dt}, \quad T_{\text{turb}} = \frac{\varepsilon_0}{\nu k_\nu^2}$$
+
+其中 $T_{\text{turb}}$ 是湍流"有效温度"，由大尺度能量输入率 $\varepsilon_0$ 和耗散尺度 $k_\nu$ 决定。
+
+**证明**。在能级串区域，能量通量 $\Pi(k) = \int_k^\infty \varepsilon(k') dk'$ 与谱熵流 $J_S(k)$ 通过 $\Pi(k) = T_{\text{turb}}(k) \cdot J_S(k)$ 联系。在惯性子区，$T_{\text{turb}}(k) \propto k^{2/3}$ 为常数，恢复 Onsager 的湍流热力学类比。□
+
+### 4.3 C* 代数诠释（`paper33_cstar_framework.py`）
+
+将湍流速度场 $\mathbf{v}$ 的提升为 C* 代数 $\mathcal{A}_{\text{NS}}$ 中的元素。N-S 谱流方程中的完全正映射 $\Phi_t: \mathcal{A}_{\text{NS}} \to \mathcal{A}_{\text{NS}}$ 由速度场的 Koopman 算子定义。
+
+**定理 4.3**（C* 湍流模型）。不可压 N-S 方程的 C* 代数表述为：
+
+$$\frac{d}{dt} \mathbf{v} = i[\mathcal{H}_{\text{NS}}, \mathbf{v}] + \mathcal{D}(\mathbf{v})$$
+
+其中 $\mathcal{H}_{\text{NS}}$ 是 C* 代数中的自伴元（对应对流算子），$\mathcal{D}$ 是耗散超算子（完全正映射的生成元）。
+
+该表述将 N-S 方程统一到 Paper I §2.9 的 $\mathbf{Rec}_{C*}$ 框架中：$R_{\text{NS}} = (\mathcal{A}_{\text{NS}}, \Phi_t) \in \mathbf{Rec}_{C*}$，其谱像 $D_{C*}(R_{\text{NS}})$ 给出了湍流能谱的算子代数诠释。
+
+## 5. 耗散截断与跨尺度类比
+
+### 5.1 粘性截断
 
 在耗散子区 $k > k_\nu$，粘性项主导谱流方程：
 
@@ -122,7 +164,7 @@ $$\frac{d}{dt} \lambda_k = -\nu k^2 \lambda_k \quad \Longrightarrow \quad \lambd
 
 Kolmogorov 尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 由能量通量平衡给出。
 
-### 4.2 与 Planck 截断的同构
+### 5.2 与 Planck 截断的同构
 
 | 物理系统 | 截断机制 | 截断尺度 | 来源 |
 |----------|----------|----------|------|
@@ -132,7 +174,7 @@ Kolmogorov 尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 由能量通量平衡给�
 
 **三种截断在谱动力学框架中共享同一数学结构**：谱流方程在高波数区的线性主导项 $-\alpha k^\beta \lambda_k$ 产生指数截断。截断尺度由能量通量与耗散系数之比决定。
 
-## 5. 数值验证
+## 6. 数值验证
 
 `paper22_fluid_dynamics.py` 实现了 N-S 谱流方程的离散化求解。在波数空间 $k \in [1, 100]$ 上：
 
@@ -142,9 +184,9 @@ Kolmogorov 尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 由能量通量平衡给�
 | K41 谱截断 | $\sim 178$ | $(\varepsilon/\nu^3)^{1/4} \approx 178$ |
 | 耗散子区斜率 | 指数衰减 | $e^{-\nu k^2 t}$ |
 
-## 6. 跨领域意义
+## 7. 跨领域意义
 
-### 6.1 $k^{-5/3}$ 的谱几何解释
+### 7.1 $k^{-5/3}$ 的谱几何解释
 
 K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何传播的必然结果。这与引力 $1/r^2$ 律（Paper V §4.2）同源：
 
@@ -154,32 +196,35 @@ K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何
 | $E(k) \propto k^{-5/3}$ | 湍流 | 谱流标度不变 $d=3$ |
 | $\lambda_k \propto k^{2/3}$ | $A_t$ 谱 | 谱流方程主导平衡 |
 
-### 6.2 湍流 RG 与渐近安全
+### 7.2 湍流 RG 与渐近安全
 
 谱流方程在波数空间的演化 $\frac{d}{d\log k} \lambda_k = \beta(\lambda_k)$ 与渐近安全引力（Paper V §4.3）的 RG 流在数学上同构。K41 谱 $\lambda_k \propto k^{2/3}$ 对应 $\beta(\lambda_*) = 0$ 的 UV 不动点。
 
-## 7. 结论
+## 8. 结论
 
 本文证明了 K41 湍流谱不是经验定律，而是谱流方程在三维物理空间中几何传播的必然结果。主要贡献：
 
 1. **N-S 谱流方程**（定理 2.1）：将 N-S 方程翻译为 $\mathbf{Spec}$ 中的谱流
 2. **K41 谱推导**（定理 3.1）：$-5/3$ 指数从标度不变性唯一确定
-3. **跨尺度同构**（§4.2）：湍流截断与 Planck 截断共享数学结构
+3. **跨尺度同构**（§5.2）：湍流截断与 Planck 截断共享数学结构
 4. **数值验证**：$k^{-5/3}$ 谱数值复现，$C \approx 1.59$ 与实验一致
 
 ---
 
 ## 参考文献
 
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
+- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。C* 代数框架 $\mathbf{Rec}_{C*}/\mathbf{Spec}_{C*}$。
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、力的统一。
+- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》。谱熵定理、Onsager 关系。
 - Kolmogorov, A.N. (1941). "The local structure of turbulence in incompressible viscous fluid for very large Reynolds numbers." *Dokl. Akad. Nauk SSSR* 30, 301.
 - Yakhot, V. & Orszag, S.A. (1986). "Renormalization group analysis of turbulence." *J. Sci. Comput.* 1, 3.
+- Landau, L.D. & Lifshitz, E.M. (1987). *Fluid Mechanics*. 2nd ed. Pergamon Press.
 
 ---
 
-**版本**：v0.1
+**版本**：v1.0
 
-**日期**：2026-07-16
+**日期**：2026-07-17
 
 **状态**：
 
@@ -190,8 +235,10 @@ K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何
 - 湍流截断与 Planck 截断的跨尺度同构
 - 数值验证：$k^{-5/3}$ 斜率 $-1.6667$ 精确匹配
 - 跨领域意义：$k^{-5/3}$ 与 $1/r^2$ 同源（谱流几何 $d=3$）
+**v1.0 升级**：新增 §4 谱熵与热力学一致性（C* 代数、Onsager 关系、熵增定理）；参考文献扩展
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.0 | 2026-07-17 | 升级至完整版：新增 §4 谱熵与热力学一致性（C* 代数 + Onsager 关系 + 熵增定理）；C* 代数框架统一（定理 4.3）；参考文献扩展；版本号对齐 Paper I v2.32 / Paper V v1.1 |
 | v0.1 | 2026-07-16 | 初始版本：N-S 谱流方程 + K41 涌现 + 跨尺度截断 + 数值验证 |

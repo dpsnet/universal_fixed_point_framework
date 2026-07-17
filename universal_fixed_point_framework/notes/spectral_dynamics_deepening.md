@@ -2,6 +2,12 @@
 
 **背景**：本文档在谱动力学基础框架（§1–§10）之上，推进四个深层理论方向。
 
+> **Phase 30 更新**：有限维→无限维桥梁已建立（`paper30_infinite_dimensional_bridge.py`，6/6 通过 ✅）。
+> 收敛性验证覆盖谱截断（L2 ∼ n⁻²）、D 函子（→Koopman 算子）、熵（连续极限一致）、同伦（A∞ 可近似）、谱流（→PDE）。
+> 
+> **Phase 33–35**：C* 代数框架（`paper33_cstar_framework.py` 5/5）、无界算子与 Hille-Yosida 半群（`paper34_unbounded_operator.py` 6/6）、A∞/∞-范畴无限维推广（`paper35_infinity_category_infinite_dim.py` 6/6）已全部完成。
+> 详见 `roadmap/phase30_infinite_dimensional_bridge.md`。
+
 ---
 
 ## A. $\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展

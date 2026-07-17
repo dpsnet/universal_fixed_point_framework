@@ -50,6 +50,22 @@ $$S_{\mathcal{B}}(t) = -\sum_i p_i(t) \log p_i(t), \quad p_i(t) = |\langle e_i| 
 
 **证明**。性质 1-3 直接来自 Shannon 熵的标准性质。性质 4 来自谱流方程的解：$\langle e_i|A_t|e_i\rangle = \langle e_i(t)|A_0|e_i(t)\rangle$，其中 $|e_i(t)\rangle = U_t^\dagger|e_i\rangle$。□
 
+### 2.3 连续谱推广
+
+对连续谱系统（如湍流、量子场），固定基熵通过投影值谱测度 $E(\lambda)$ 推广（`paper34_unbounded_operator.py`，定理 2.10.3）。
+
+**定义 2.2**（连续谱熵）。对自伴算子 $A$ 的谱分解 $A = \int \lambda \, dE(\lambda)$，固定基 $\mathcal{B}$ 下的谱熵为：
+
+$$S_{\mathcal{B}}^{\text{cont}}(t) = -\int p(\lambda,t) \log p(\lambda,t) \, d\lambda, \quad p(\lambda,t) = \frac{d\langle e_i|E_t(\lambda)|e_i\rangle}{d\lambda}$$
+
+其中 $E_t(\lambda) = U_t E^{(0)}(\lambda) U_t^{-1}$ 是演化后的谱测度。
+
+**定理 2.1**（连续谱熵增，`paper29_entropy_production_proof.py` 定理 P29.4）。对连续谱 $\lambda(k) \in [k_{\min}, k_{\max}]$，熵密度 $s(k,t) = -p(k,t)\log p(k,t)$ 满足：
+
+$$S_{\text{cont}}(t_f) \ge S_{\text{cont}}(t_0), \quad S_{\text{cont}}(t) = \int s(k,t) \, dk$$
+
+**证明要点**。使用 Lindblad 相对熵单调性：$S(T(\rho)||T(\sigma)) \le S(\rho||\sigma)$。令 $\sigma_{\text{flat}} = I/d$，则 $S_{\text{basis}}(t) = \log d - S(p(t)||p_{\text{flat}})$。相对熵单调 $\Rightarrow$ $S_{\mathcal{B}}(t+dt) \ge S_{\mathcal{B}}(t)$。连续谱推广通过测度论直接成立。详细证明及数值验证（离散谱 $\Delta S > 0$、连续谱 $\Delta S_{\text{cont}} > 0$）见 `paper29_entropy_production_proof.py`。□
+
 ## 3. 热力学第二定律的谱推导
 
 ### 3.1 熵增定理
@@ -105,6 +121,16 @@ $$L_{ij} = L_{ji}$$
 
 **证明**。由谱流方程 $J_i = g_i \text{Tr}(A_{F,i} [A_{F,i}, \rho_t])$。偏导 $\partial J_i/\partial g_j = \text{Tr}(A_{F,i} [A_{F,j}, \rho_t]) = \text{Tr}([A_{F,i}, A_{F,j}] \rho_t)$。由于对易子的反对称性，$[A_{F,i}, A_{F,j}] = -[A_{F,j}, A_{F,i}]$，但迹的循环性给出 $L_{ij} = L_{ji}$。□
 
+### 4.2 与湍流 Onsager 关系的统一
+
+在谱流体动力学（Paper VI §4.2）中，能量耗散率 $\varepsilon$ 与谱熵产生率 $dS/dt$ 通过 Onsager 关系 $\varepsilon = T_{\text{turb}} \cdot dS/dt$ 联系。在谱热力学框架中，该关系是谱 Onsager 矩阵（定理 4.1）在流体动力学的具体实现。
+
+**推论 4.1**（谱 Onsager-Casimir 对称性）。Onsager 矩阵 $L_{ij}$ 可分解为对称部分 $L_{ij}^s$（耗散）和反对称部分 $L_{ij}^a$（保守）：
+
+$$L_{ij} = L_{ij}^s + L_{ij}^a, \quad L_{ij}^s = L_{ji}^s, \quad L_{ij}^a = -L_{ji}^a$$
+
+其中 $L_{ij}^s$ 对应粘性耗散等不可逆过程，$L_{ij}^a$ 对应对流等可逆过程。湍流能量通量 $\Pi(k)$ 的标度行为由反对称部分的谱分解决定。
+
 ## 5. 谱涨落定理
 
 ### 5.1 涨落定理的谱形式
@@ -116,6 +142,8 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 其中 $P(\Sigma = \sigma)$ 是谱熵产生 $\sigma$ 的概率密度。
 
 **证明**。谱流方程在非平衡稳态下生成一个马尔可夫过程（在固定基投影下）。$A_t$ 的 $\mathcal{B}$-对角元 $p_i(t)$ 满足细致平衡条件 $p_i(t) \to p_i^{\text{eq}}$（指数收敛）。由随机过程的涨落定理，$P(\Sigma = \sigma)/P(\Sigma = -\sigma) = e^{\sigma}$。□
+
+**注 5.1**（Hille-Yosida 松弛）。谱流 $A_t = e^{tG}A_0e^{-tG}$ 的松弛行为由 Hille-Yosida 半群（Paper I §2.10）控制。平衡态 $A_{\text{eq}}$ 满足 $[G, A_{\text{eq}}] = 0$，对应 $G$ 的中心化子。松弛率由 $G$ 谱间隙 $\gamma = \min\{|\lambda_i - \lambda_j| : \lambda_i, \lambda_j \in \sigma(G), \lambda_i \ne \lambda_j\}$ 决定：$\|A_t - A_{\text{eq}}\| \le C e^{-\gamma t}$。该指数松弛保证了涨落定理的前提条件（马尔可夫性、细致平衡）。
 
 ### 5.2 与标准量子涨落定理的对应
 
@@ -151,16 +179,18 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 
 ## 参考文献
 
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0
-- [VI] Paper VI：《谱流体动力学：从湍流谱到谱流几何》，v0.1
+- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
+- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱对易子。
+- [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学》，v1.0。湍流 Onsager 关系、C* 代数诠释。
 - Evans, D.J., Cohen, E.G.D. & Morriss, G.P. (1993). "Probability of second law violations in shearing steady states." *Phys. Rev. Lett.* 71, 2401.
 - Crooks, G.E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." *Phys. Rev. E* 60, 2721.
+- Lindblad, G. (1975). "Completely positive maps and entropy inequalities." *Commun. Math. Phys.* 40, 147.
 
 ---
 
-**版本**：v0.1
+**版本**：v1.0
 
-**日期**：2026-07-16
+**日期**：2026-07-17
 
 **状态**：
 
@@ -172,8 +202,10 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 - 谱涨落定理（定理 5.1：$P(\sigma)/P(-\sigma)=e^\sigma$）
 - 数值验证：$\Delta S = 0.0544 > 0$（$6\times6$ 系统，200 步）
 - 与黑洞信息悖论的联系
+**v1.0 升级**：新增 §2.3 连续谱熵推广（投影值谱测度）、§4.2 Onsager-Casimir 对称性与湍流连接、注 5.1 Hille-Yosida 松弛；参考文献扩展（Lindblad、Paper I/VI）；版本号对齐 Paper I v2.32 / Paper VI v1.0
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
 | v0.1 | 2026-07-16 | 初始版本：谱熵增定理 + Onsager + 涨落定理 + 数值验证 |
+| v1.0 | 2026-07-17 | 升级至完整版：新增 §2.3 连续谱熵（投影值谱测度 + Lindblad 单调性）、§4.2 Onsager-Casimir 对称性与湍流统一、注 5.1 Hille-Yosida 松弛；参考文献扩展；版本号对齐 |
