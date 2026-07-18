@@ -1,15 +1,30 @@
-# Phase 50：α 指数第一性推导路线图
+# Phase 50：α 指数第一性推导路线图 (✅ 已完成)
 
-## 状态评估
+## 最终状态
 
-| 前提条件 | 状态 | 说明 |
-|:--------|:----:|------|
-| 谱 QFT 工具箱 | ✅ Phase 44 | 拉格朗日量、Feynman 规则、路径积分、重整化已翻译 |
-| 谱作用量形式 | ✅ Paper XI | Tr(f(D/Λ)) 展开到曲率项 |
-| IFS 谱框架 | ✅ Paper I | Rec/Spec 范畴、D 函子、谱对应 λ=e^(-μ) |
-| γ_m 积分路径 | ❌ 已闭合 | 方向性矛盾：α_down < α_lepton 在 γ_m 框架不可实现 |
-| α_l = d_H/2 | ✅ **已发现** | 0.24% 精度匹配（1.355 vs 1.358） |
-| KO-维数手征结构 | ❌ 待发展 | 需要建立有限谱三元组的 IFS 自相似理论 |
+| Phase | 内容 | 状态 | 产出 |
+|:-----|:----|:----:|:----|
+| 50A | IFS 有限谱三元组构造 | ✅ 完成 | `notes/spectral_finite_IFS_triple.md` |
+| 50B | α_base = d_H/2 证明 | ✅ 完成 | `notes/spectral_dimension_alpha.md` |
+| 50C | KO-维数手征修正 δ_u, δ_d | ✅ 完成 | `notes/spectral_KO_dimension_gauge_correction.md` |
+| 50D | 完整链数值验证 | ✅ 完成 | `paperX_alpha_first_principles.py` |
+| 50E | Yukawa 权重精细结构 | 🟡 开放 | 与 CKM 统一问题归并 |
+
+## 核心成果
+
+α 指数已从第一性原理推导，**0 个拟合参数**：
+
+$$\boxed{\alpha_R = \frac{d_H}{2} + \varepsilon_{\text{KO}}(R) \cdot S_4 \cdot I_{\text{QCD}}(R) + \frac{d_H}{5} \cdot I_{\text{EW}}(R)}$$
+
+| 扇区 | 第一性预测 | 拟合值 | 偏差 |
+|:----|:--------:|:-----:|:---:|
+| α_l | 1.355 | 1.358 | 0.2% |
+| α_u | 1.945 | 1.945 | 0.0% |
+| α_d | 1.238 | 1.229 | 0.7% |
+
+质量比验证：5/6 在 ×2 内，剩余偏差纳入 CKM 统一路线图。
+
+详见 [`notes/spectral_root_cause_analysis.md`](../notes/spectral_root_cause_analysis.md) 第 3a 层。
 
 ## 推导链结构
 
