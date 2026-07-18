@@ -35,6 +35,11 @@ SCRIPTS = [
     ("paperX_fixed_basis_entropy.py",     "固定基熵"),
     ("paperX_page_curve.py",              "Page 曲线"),
     ("paperX_resource_measures.py",       "资源度量"),
+
+    # === Zero-Parameter / PMNS 新脚本 ===
+    ("paperX_zero_parameter_check.py",         "零参数推导链 (8/8 检查)"),
+    ("paperX_zero_parameter_all_fermions.py",  "全费米子零参数质量预测"),
+    ("paperX_pmns_diagonalization.py",         "PMNS 完整数值对角化 (4/4 检查)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -46,6 +51,8 @@ def extract_checks(output):
         r'(\d+)\s*/\s*(\d+)\s*检查通过',
         r'(\d+)/(\d+)\s*checks?\s*pass',
         r'(\d+)/(\d+)\s*[过通]',
+        r'汇总:\s*(\d+)\s*/\s*(\d+)',           # paperX_zero_parameter_check.py
+        r'验证:\s*(\d+)\s*/\s*(\d+)',           # paperX_zero_parameter_all_fermions.py
     ]
     for p in patterns:
         m = re.search(p, output)

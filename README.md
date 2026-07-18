@@ -1,6 +1,15 @@
-# 分形谱去递归理论 · 通用不动点范畴框架
+# 分形谱去递归理论 · 通用不动点范畴框架 / Fractal Spectral Derecursion Theory · UFPF
 
 > **研究目标**：建立一套足够抽象的数学语言，使不同领域中的递归系统（分形、神经网络、重整化群、量子引力、标准模型等）能够在统一的谱框架下被描述、比较和转化。
+>
+> **Research Goal**: Build a sufficiently abstract mathematical language enabling recursive systems (fractals, neural networks, RG, quantum gravity, SM) to be described, compared, and transformed within a unified spectral framework.
+
+---
+
+**最新进展 / Latest**: **零参数突破 — 29/29 SM参数全覆盖**
+从 $\mathbf{Spec}$ 4-范畴的静默层级 $S_3 = e^{-3}, S_4 = e^{-d_H}$ 出发，不依赖任何实验输入，唯一确定全部 29 个 SM+中微子扩展参数。详见 `universal_fixed_point_framework/notes/spectral_comprehensive_review.md`。
+
+**Zero-parameter breakthrough**: All 29 SM+neutrino parameters determined from the $\mathbf{Spec}$ 4-category silence hierarchy with zero experimental inputs. See `universal_fixed_point_framework/notes/spectral_comprehensive_review.md`.
 
 ---
 

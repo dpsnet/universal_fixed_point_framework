@@ -227,6 +227,32 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
   - 笔记：`notes/spectral_fluid_dynamics.md`
   - 论文：已合并至 Paper VI v2.0（增强版，原 Paper XIII 独特内容已整合至 §§2.2, 7.2）
 
+### D5: 零自由参数质量预测（→ Paper I §A.15.8, Paper XI §8.5, 新笔记 + 3 脚本）
+
+**突破口**：Cl(1,7) 代数本身不能区分三代（SU(3) 基本权重全等长），但 Spec 4-范畴的静默层级在 IFS 递归深度上的投影唯一确定收缩因子：
+
+$$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k, \quad S_3=e^{-3},\; S_4=e^{-d_H}$$
+
+- **上型夸克**（α=1.945）：m_u/m_t=1.5e-5 (偏差 ×1.2), m_c/m_t=0.0052 (×1.4)
+- **下型夸克**（α=1.229）：m_d/m_b=9.0e-4 (×1.3), m_s/m_b=0.036 (×1.6)
+- **带电轻子**（α=1.358）：m_e/m_τ=4.3e-4 (×1.5), m_μ/m_τ=0.025 (×2.4)
+- **Yukawa 分裂**：谱统一 y_t=y_b 在 M_Pl，SM RGE 跑动到 M_Z 产生 y_b/y_t≈0.024
+- **PMNS 矩阵**：sin²θ₂₃匹配 ×1.5，θ₁₂在因子 3 内，θ₁₃需精细 See-saw
+- **产出**：
+  - 笔记：`notes/spectral_zero_parameter_derivation.md`（含 §§9-11 全费米子扩展）
+  - 脚本：`paperX_zero_parameter_check.py`（8/8 通过）、`paperX_zero_parameter_all_fermions.py`、`paperX_yukawa_splitting.py`、`paperX_pmns_derivation.py`
+  - 论文：Paper I §A.15.8 更新（字段来源从"反推"改为"范畴静默预测"）
+  - 论文：Paper XI §8.5 更新（新增零输入质量预测段落）
+
+### D6: 全费米子扩展 + PMNS 精细机制 + 强 CP 谱解（→ Paper XI §§7.5, 8.4-8.6）
+
+- **全费米子零参数预测**：将 u/c/t、d/s/b、e/μ/τ 全部 9 个质量比的零输入预测写入 Paper XI §8.4
+- **PMNS θ₁₃ 精细机制**：从双重 Higgs 耦合下的特征基旋转解释 θ₁₃（偏差 ×2.0）
+- **强 CP 问题谱解**：谱生成元自伴性 → θ_QCD = 0；辫子静默轴子 → |θ_QCD| < 10⁻¹⁰
+- **产出**：
+  - 笔记：`notes/spectral_PMNS_theta13.md`, `notes/spectral_strong_CP.md`
+  - 论文：Paper XI §7.5 增强（自伴性论证）、§8.4 全表更新、§8.6 PMNS θ₁₃ 段落新增
+
 ---
 
 ## 八、里程碑与通过标准
@@ -300,3 +326,10 @@ Phase 0                    Phase 1                    Phase 2                   
 | `notes/spectral_graviton_3loop.md` | Phase 4 | 笔记 → Paper XII §9.3 |
 | `notes/spectral_AdS_CFT.md` | Phase 4 | 笔记 → Paper XII §9.4 |
 | `notes/spectral_fluid_dynamics.md` | Phase 4 | 笔记 → Paper VI (增强版) |
+| `notes/spectral_zero_parameter_derivation.md` | Phase 4 | 笔记（零参数预测全记录）|
+| `paperX_zero_parameter_check.py` | Phase 4 | 数值脚本（8/8 通过）|
+| `paperX_zero_parameter_all_fermions.py` | Phase 4 | 数值脚本（全费米子扩展）|
+| `paperX_yukawa_splitting.py` | Phase 4 | 数值脚本（Yukawa 分裂）|
+| `paperX_pmns_derivation.py` | Phase 4 | 数值脚本（PMNS 矩阵）|
+| `notes/spectral_PMNS_theta13.md` | Phase 4 | 笔记（θ₁₃ 精细机制）|
+| `notes/spectral_strong_CP.md` | Phase 4 | 笔记（强 CP 谱解）|
