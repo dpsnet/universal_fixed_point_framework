@@ -467,12 +467,12 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 |:----|:----|:----:|
 | `notes/spectral_rheology_lorentz_isomorphism.md` v0.1 | 笔记 | ✅ |
 | `notes/spectral_rheology_lorentz_isomorphism.md` v0.2 | 笔记（严格化） | ⏳ |
-| `notes/spectral_rheo_boundary.md` | 笔记（$\partial\mathbf{Rec}_D^{\text{rheo}}$） | ⏳ |
-| `notes/spectral_rheology_experiments.md` | 笔记（实验设计） | ⏳ |
-| `notes/spectral_critical_unification.md` | 笔记（跨领域统一） | ⏳ |
-| `src/rheology_lorentz_checker.py` | 代码 | ⏳ |
-| `src/non_newtonian_k41.py` | 代码 | ⏳ |
-| `paper/paper6_fluid_spectral_dynamics.md` v2.1 | Paper VI 增强版 | ⏳ |
+| `notes/spectral_rheo_boundary.md` v0.1 | 笔记（$\partial\mathbf{Rec}_D^{\text{rheo}}$ 严格化，主定理 E1-E3） | ✅ |
+| `notes/spectral_rheology_experiments.md` v0.1 | 笔记（5 个实验设计） | ✅ |
+| `notes/spectral_critical_unification.md` v0.1 | 笔记（跨领域统一，主定理 F1-F5） | ✅ |
+| `src/rheology_lorentz_checker.py` | 代码（DST 临界硬化指数比对） | ✅ 已运行 |
+| `src/non_newtonian_k41.py` | 代码（非牛顿 K41 谱修正） | ✅ 已运行 |
+| `paper/paper6_fluid_spectral_dynamics.md` v2.1 | Paper VI 增强版 | ✅ |
 
 ### 7.4 验证标准
 
@@ -543,12 +543,15 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 |:------|:----|:--------|:----:|
 | M1 | Phase 51A：6 篇笔记完成（含流变同构笔记） | 2026-07-19 | ✅ |
 | M2 | Phase 51B：研究路径保留（本文件） | 2026-07-19 | ✅ |
-| M3 | Phase 51C：Paper XVI 草稿 v0.1 | 2026-07-19 | ✅ |
-| M4 | Phase 51C：Paper XVI 完整版 v1.0 | M3 后 | ⏳ |
-| M5 | Phase 51D：LIV 系数数值计算 | M4 后 | ⏳ |
-| M6 | Phase 51E：弯曲时空扩展 | M5 后 | ⏳ |
-| M7 | Phase 51F：流变同构严格化 + Paper VI v2.1 | M4 后 | 🚧 已启动 F1 笔记 v0.1 |
-| M8 | Phase 51F：流变实验对接（DST/K41） | M7 后 | ⏳ |
+| M3 | Phase 51C：Paper XVI 草稿 v0.1 → v0.2 → v0.3（含流变同构 §11.4 + 跨领域统一 §11.5，19 个主定理） | 2026-07-19 | ✅ Paper XVI v0.3 发布 |
+| M4 | Phase 51C：Paper XVI 完整版 v1.0（23 主定理 + LIV 数值验证 + 跨领域统一 + 弯曲时空扩展） | 2026-07-19 | ✅ v1.0 正式发布 |
+| M5 | Phase 51D：LIV 系数数值计算（lorentz_liv_calculator.py + rec_d_boundary_perturbation.py + 数值笔记） | 2026-07-19 | ✅ 全部实验约束一致，ζ₃≈ξ₃ 验证通过 |
+| M6 | Phase 51E：弯曲时空扩展（Paper XVI v0.4 §10 深化，主定理 20-23） | 2026-07-19 | ✅ Paper XVI v0.4 发布 |
+| M7 | Phase 51F F1-F5：流变同构 + 谱边界严格化 + 跨领域统一 + Paper VI v2.2 | 2026-07-19 | ✅ Paper VI v2.2 发布（含 F2 严格化 + F5 统一） |
+| M8 | Phase 51F F2：流变 $\partial\mathbf{Rec}_D$ 严格化（主定理 E1-E3） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.1 整合 |
+| M9 | Phase 51F F3：流变实验对接（DST/K41） | 2026-07-19 | ✅ 脚本 + 实验设计完成 |
+| M10 | Phase 51F F5：跨领域统一扩展（声子/极化/量子相变/NTK，主定理 F1-F5） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.2 + Paper XVI §11.5 整合 |
+| M11 | Phase 51F-F3：实际实验执行（DST 流变仪、PIV 湍流谱） | M9 后 | ⏳ 6-18 个月 |
 
 ---
 
@@ -558,6 +561,12 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 |:----|:----|:----|
 | 2026-07-19 | 创建 Phase 51：Lorentz 谱动力学与 Paper XVI 推进路线图；Phase 51A-B 完成 | Phase 51A-B |
 | 2026-07-19 | 新增 Phase 51F：流变谱动力学与跨领域同构；新增主定理 11-14；新增路径 K/L/M；新增流变-Paper VI 衔接明细；更新里程碑 M7/M8 | Phase 51F |
+| 2026-07-19 | Paper XVI 更新至 v0.2（新增 §11.4 流变同构，14 个主定理）；Paper VI 更新至 v2.1（新增 §8 非牛顿流变谱动力学）；里程碑 M3/M7 标记完成 | Paper XVI v0.2 + Paper VI v2.1 |
+| 2026-07-19 | Phase 51F F2/F3/F5 完成：新增 3 篇笔记（流变谱边界严格化、实验设计、跨领域统一）；新增 2 个数值脚本（DST 比对、非牛顿 K41）；新增主定理 E1-E3、F1-F5；里程碑 M8/M9/M10 标记完成 | Phase 51F F2/F3/F5 |
+| 2026-07-19 | Paper XVI 更新至 v0.3（新增 §11.5 跨领域统一，主定理 15-19，共 19 个主定理）；Paper VI 更新至 v2.2（新增 §9 流变谱边界严格化与跨领域统一，主定理 E1-E3 + F5）；F2/F5 研究成果整合入正式论文；里程碑 M3/M7/M8/M10 更新状态 | Paper XVI v0.3 + Paper VI v2.2 |
+| 2026-07-19 | Paper XVI 更新至 v0.4（深化 §10 弯曲时空扩展，新增主定理 20-23，共 23 个主定理）；§10 从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱翻译、典型时空谱结构、Λ 谱起源、量子引力视角）；里程碑 M6 标记完成 | Paper XVI v0.4 + M6 |
+| 2026-07-19 | Phase 51D 完成：创建 lorentz_liv_calculator.py（LIV 系数计算模块）、rec_d_boundary_perturbation.py（∂Rec_D 谱边界扰动模拟）、spectral_lorentz_liv_numerics.md（数值验证笔记）；全部 5 个实验约束 ✓ 一致（Fermi LAT/GW170817/Auger/IceCube/IXPE）；ζ₃≈ξ₃ 验证通过（解析层面 ζ₃/ξ₃ = 1+10⁻¹⁷）；η₃=±5×10⁻⁸ 为最有可检验性预言；里程碑 M5 标记完成 | Phase 51D + M5 |
+| 2026-07-19 | Paper XVI v1.0 正式发布：新增 §9.7 数值验证（五类 LIV 预言数值结果、实验约束对比、ζ₃≈ξ₃ 验证、离散谱结构、可检验性排序）；修正 §11.4.4 猜想标记；重构 §12 开放问题（新增已完成进展表、严格化需求表、跨领域扩展方向、临界现象哲学）；主定理 23 个保持不变；里程碑 M4 标记完成 | Paper XVI v1.0 + M4 |
 
 ---
 
@@ -572,6 +581,9 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 - `notes/spectral_lorentz_predictions.md` — 实验预言
 - `notes/spectral_lorentz_curved_spacetime.md` — 弯曲时空扩展
 - `notes/spectral_rheology_lorentz_isomorphism.md` — **流变-Lorentz 同构（Phase 51F 启动笔记）**
+- `notes/spectral_rheo_boundary.md` — **流变谱边界严格化（主定理 E1-E3）**
+- `notes/spectral_rheology_experiments.md` — **流变实验设计（5 个实验）**
+- `notes/spectral_critical_unification.md` — **跨领域统一（主定理 F1-F5）**
 - `notes/spectral_lorentz_axiom.md` — 现有 A7 公理（参考）
 
 ### 11.2 相关 Paper

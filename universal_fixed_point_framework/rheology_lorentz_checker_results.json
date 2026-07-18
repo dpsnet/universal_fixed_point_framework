@@ -1,0 +1,84 @@
+{
+  "data": {
+    "label": "DST 玉米淀粉悬浮液",
+    "source": "synthetic (UFPF 预测 + 5% noise, alpha_true=0.5)",
+    "n_points": 40,
+    "gamma_dot_range": [
+      0.1,
+      11.499999999999998
+    ],
+    "eta_range": [
+      0.09025311868517237,
+      0.36146382497070323
+    ]
+  },
+  "fits": {
+    "A_relativistic": {
+      "model": "A: relativistic (alpha=1/2 fixed)",
+      "params": {
+        "eta_0": 0.10011755243135638,
+        "gamma_dot_c": 11.980711676160931
+      },
+      "param_errors": {
+        "eta_0": 0.0008142903240800391,
+        "gamma_dot_c": 0.049988393735457694
+      },
+      "chi2": 26.462580481232404,
+      "dof": 38,
+      "red_chi2": 0.6963836968745369,
+      "aic": 30.462580481232404,
+      "bic": 33.840339389460276,
+      "n_params": 2
+    },
+    "B_power_law": {
+      "model": "B: power-law (alpha free)",
+      "params": {
+        "eta_0": 0.09808149666242806,
+        "gamma_dot_c": 11.58690165485015,
+        "alpha": 0.2668645196630601
+      },
+      "param_errors": {
+        "eta_0": 0.0009483568991397322,
+        "gamma_dot_c": 0.03568184017989447,
+        "alpha": 0.020423720814983358
+      },
+      "chi2": 26.562057738546898,
+      "dof": 37,
+      "red_chi2": 0.7178934523931594,
+      "aic": 32.5620577385469,
+      "bic": 37.6286961008887,
+      "n_params": 3
+    },
+    "C_wyart_cates": {
+      "model": "C: Wyart-Cates friction saturation",
+      "params": {
+        "eta_s": 0.09520755659352886,
+        "eta_inf": 5.361064998395511,
+        "gamma_star": 999.9999999987655
+      },
+      "param_errors": {
+        "eta_s": 0.0013118452295972469,
+        "eta_inf": 133.26064039641366,
+        "gamma_star": 25499.79498237896
+      },
+      "chi2": 202.7548102635246,
+      "dof": 37,
+      "red_chi2": 5.479859736852016,
+      "aic": 208.7548102635246,
+      "bic": 213.82144862586642,
+      "n_params": 3
+    }
+  },
+  "alpha_test": {
+    "predicted_alpha": 0.5,
+    "fitted_alpha": 0.2668645196630601,
+    "alpha_error": 0.020423720814983358,
+    "z_score": -11.414936702714122,
+    "p_value": 0.0,
+    "ci_low": 0.22683476243539163,
+    "ci_high": 0.3068942768907285,
+    "confidence": 0.95,
+    "verdict": "拒绝 H0 (alpha != 1/2)"
+  },
+  "best_model_aic": "A: relativistic (alpha=1/2 fixed)"
+}
