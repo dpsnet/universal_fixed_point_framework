@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import numpy as np
 import cmath
+from scipy.linalg import eigvals
 
 
 class LeaverAngularSolver:
@@ -245,14 +246,123 @@ class CorrectedLeaverQNMSolver:
         self.angular = LeaverAngularSolver(s=s)
         self.radial = LeaverRadialSolver(M=M, a=a, s=s, max_iter=max_iter)
     
+    def _spectral_radial_residual(self, omega: complex, A: complex, m: int,
+                                   N: int = None, fast: bool = True) -> complex:
+        """谱方法径向残差：三对角矩阵的最小模特征值。
+
+        替代 leaver_cf 的连分数迭代，用矩阵特征值判据。
+        |λ_min| → 0 ⟺ ω 是 QNM 频率。
+
+        优势：
+        1. 无收敛半径问题（CF 在参数空间某些区域会发散）
+        2. 谱信息更丰富（可同时看到所有特征值的分布）
+        3. 对 m≠0 和极端自旋更稳定
+
+        参数:
+            fast: 为 True 时用逆迭代（O(N)），为 False 时用全对角化（O(N³)）
+        """
+        if N is None:
+            # 高自旋 m≠0 需要更多项才能出现零特征值
+            a_abs = abs(self.a)
+            if a_abs > 0.8 and m != 0:
+                N = min(self.max_iter, 200)
+            elif a_abs > 0.5 and m != 0:
+                N = min(self.max_iter, 120)
+            else:
+                N = min(self.max_iter, 80)
+
+        D = self.radial._D_coeffs(omega, self.radial.a, self.s, m, A)
+        n_arr = np.arange(N + 1)
+        alpha = self.radial._alpha_n(n_arr, D)
+        beta = self.radial._beta_n(n_arr, D)
+        gamma = self.radial._gamma_n(n_arr, D)
+
+        if fast:
+            return self._inverse_iteration(alpha, beta, gamma, N)
+        else:
+            M = np.zeros((N + 1, N + 1), dtype=complex)
+            for n in range(N + 1):
+                M[n, n] = beta[n]
+                if n < N:
+                    M[n, n + 1] = alpha[n]
+                if n > 0:
+                    M[n, n - 1] = gamma[n]
+            eigenvalues = eigvals(M)
+            idx = np.argmin(np.abs(eigenvalues))
+            return eigenvalues[idx]
+
+    @staticmethod
+    def _tridiagonal_solve(alpha: np.ndarray, beta: np.ndarray,
+                           gamma: np.ndarray, rhs: np.ndarray) -> np.ndarray:
+        """Thomas 算法解三对角方程组（O(N)）。"""
+        N = len(beta)
+        c_prime = np.zeros(N, dtype=complex)
+        d_prime = np.zeros(N, dtype=complex)
+        x = np.zeros(N, dtype=complex)
+
+        c_prime[0] = alpha[0] / beta[0]
+        d_prime[0] = rhs[0] / beta[0]
+
+        for i in range(1, N):
+            denom = beta[i] - gamma[i] * c_prime[i - 1]
+            if abs(denom) < 1e-30:
+                denom = complex(1e-30, 0.0)
+            if i < N - 1:
+                c_prime[i] = alpha[i] / denom
+            else:
+                c_prime[i] = 0.0
+            d_prime[i] = (rhs[i] - gamma[i] * d_prime[i - 1]) / denom
+
+        x[N - 1] = d_prime[N - 1]
+        for i in range(N - 2, -1, -1):
+            x[i] = d_prime[i] - c_prime[i] * x[i + 1]
+
+        return x
+
+    def _inverse_iteration(self, alpha: np.ndarray, beta: np.ndarray,
+                           gamma: np.ndarray, N: int,
+                           max_iter: int = 10) -> complex:
+        """逆迭代找三对角矩阵的最小模特征值。
+
+        用物理模式近似作为初始向量（大 n 时 a_n 衰减），
+        通过 (M)^{-1} 迭代收敛到最小特征值。
+        每次迭代 O(N)（Thomas 算法）。
+        """
+        # 初始向量：物理模式近似（从末端向前衰减构造）
+        v = np.ones(N + 1, dtype=complex)
+        for n in range(N - 1, -1, -1):
+            if abs(alpha[n]) > 1e-30:
+                v[n] = v[n + 1] * (-gamma[n + 1] / alpha[n])
+
+        v_norm = np.linalg.norm(v)
+        if v_norm > 1e-30:
+            v /= v_norm
+
+        # 逆迭代 (M)^{-1} v
+        for _ in range(max_iter):
+            w = self._tridiagonal_solve(alpha, beta, gamma, v)
+
+            w_norm = np.linalg.norm(w)
+            if w_norm < 1e-30:
+                break
+            v = w / w_norm
+
+        # Rayleigh 商：v† M v
+        Mv = beta * v
+        Mv[:-1] += alpha[:-1] * v[1:]
+        Mv[1:] += gamma[1:] * v[:-1]
+        mu = np.vdot(v, Mv)
+
+        return mu
+
     def _combined_residual(self, omega: complex, l: int, m: int, a_val: float,
                           n_inv: int = 0, A_ref: complex = None) -> complex:
         """计算联合残差（径向连分数）。"""
         self.radial.a = a_val
-        
+
         ang_result = self.angular.solve_separation_constant(l, m, omega, a_val, A_ref=A_ref)
         A = ang_result["A"]
-        
+
         return self.radial.leaver_cf(omega, A, m, n_inv=n_inv)
     
     def _newton_raphson(self, omega_guess: complex, l: int, m: int, a_val: float,
@@ -337,34 +447,140 @@ class CorrectedLeaverQNMSolver:
     def _is_physical(self, omega: complex) -> bool:
         """判断根是否物理（负虚部，即衰减模式）。"""
         return omega.imag < 0
-    
-    def solve(self, l: int, m: int, n: int = 0, tol: float = 1e-10) -> dict:
-        """求解 Kerr QNM 频率。
 
-        使用自适应同伦延拓方法，从 Schwarzschild 出发，
-        逐步增加自旋参数到目标值。包含：
-        - 自适应步长（失败时减半，成功时尝试加倍）
-        - 模式跟踪（检测频率跳变，回退重试）
-        - 分支跟踪（分离常数 A 连续追踪）
-        - 物理性检查（负虚部）
+    def _berti_approximation(self, l: int, m: int, n: int = 0) -> complex:
+        """Berti 拟合公式给 Kerr QNM 初始猜测。
+
+        基于 arXiv:gr-qc/0512160 的拟合公式。
+        对 m≠0 在中等自旋范围内有效。
         """
-        if abs(self.a) < 1e-10:
-            omega_guess = self._schwarzschild_guess(l, n)
-            result = self._newton_raphson(omega_guess, l, m, 0.0, n_inv=n, tol=tol)
-            result["is_physical"] = self._is_physical(result["omega"])
-            return result
+        a = self.a
+        if abs(a) < 1e-10:
+            return self._schwarzschild_guess(l, n)
 
+        # 对 l=2, n=0 用已知值
+        if l == 2 and n == 0:
+            # Berti 表插值
+            table_m0 = {0.0: 0.3737-0.0890j, 0.3: 0.362-0.088j,
+                        0.5: 0.365-0.087j, 0.7: 0.380-0.085j,
+                        0.9: 0.396-0.084j}
+            if m == 0:
+                import bisect
+                a_vals = sorted(table_m0.keys())
+                if a <= a_vals[0]:
+                    return table_m0[a_vals[0]]
+                if a >= a_vals[-1]:
+                    return table_m0[a_vals[-1]]
+                # 线性插值
+                i = 0
+                for i in range(len(a_vals) - 1):
+                    if a_vals[i] <= a <= a_vals[i+1]:
+                        break
+                t = (a - a_vals[i]) / (a_vals[i+1] - a_vals[i])
+                w0 = table_m0[a_vals[i]]
+                w1 = table_m0[a_vals[i+1]]
+                return w0 + t * (w1 - w0)
+            elif m != 0:
+                # 从 m=0 加线性修正
+                w_m0 = self._berti_approximation(l, 0, n)
+                # m 分裂系数（经验拟合）
+                delta_re = m * a * 0.1
+                delta_im = -m * a * 0.002
+                return w_m0 + complex(delta_re, delta_im)
+
+        # 通用 eikonal 近似
+        omega_re = (l + 0.5 + n + 0.5) / (2 * np.sqrt(27)) + m * a * 0.1
+        omega_im = -(n + 0.5) / 3
+        return complex(omega_re, omega_im)
+
+    def _s2_guided_solve(self, l: int, m: int, n: int = 0, tol: float = 1e-10) -> dict:
+        """S₂ 引导的 m≠0 QNM 求解。
+
+        策略（对应 spectral_Kerr_silence_analysis.md 策略 A）：
+        1. 先解 m=0 在目标 a 处（S₁ 基线，已知同伦延拓有效）
+        2. 用 m=0 的 ω 作为 m≠0 的初始猜测
+        3. 沿 m-homotopy 路径逐步推进（m=0 → m=1 → m=2 → ...）
+        4. 如果 S₂ 引导落到非物理根，回退到 Berti 近似
+        """
+        # Step 1: 解 m=0 在目标 a 处
+        m0_solver = CorrectedLeaverQNMSolver(M=self.M, a=self.a, s=self.s,
+                                              max_iter=self.max_iter)
+        m0_result = m0_solver._a_homotopy_solve(l, m=0, n=n, tol=tol)
+
+        if not m0_result["converged"] or not self._is_physical(m0_result["omega"]):
+            return self._a_homotopy_solve(l, m, n=n, tol=tol)
+
+        omega_m0 = m0_result["omega"]
+
+        ang_m0 = self.angular.solve_separation_constant(l, 0, omega_m0, self.a)
+        A_ref = ang_m0["A"]
+
+        # Step 2: 沿 m-homotopy 逐步推进
+        m_abs = abs(m)
+        if m_abs >= 2:
+            m_steps = sorted(set([0, 1, m_abs]))
+        else:
+            m_steps = sorted(set([0, m_abs]))
+
+        if m < 0:
+            m_steps = [0] + sorted(set([-s for s in m_steps if s > 0]))
+
+        omega_curr = omega_m0
+        A_ref_curr = A_ref
+
+        for m_step in m_steps[1:]:
+            step_result = self._newton_raphson(omega_curr, l, int(m_step),
+                                               self.a, n_inv=n, tol=tol,
+                                               A_ref=A_ref_curr)
+            if (step_result["converged"] and self._is_physical(step_result["omega"])
+                    and abs(step_result["omega"]) < 2.0
+                    and abs(step_result["omega"].imag) < 0.5):
+                omega_curr = step_result["omega"]
+                ang = self.angular.solve_separation_constant(
+                    l, int(m_step), omega_curr, self.a, A_ref=A_ref_curr
+                )
+                A_ref_curr = ang["A"]
+            else:
+                # 当前步失败，尝试从 Berti 近似重新开始
+                berti_guess = self._berti_approximation(l, int(m_step), n)
+                step_result = self._newton_raphson(berti_guess, l, int(m_step),
+                                                   self.a, n_inv=n, tol=tol,
+                                                   A_ref=A_ref_curr)
+                if (step_result["converged"] and self._is_physical(step_result["omega"])
+                        and abs(step_result["omega"]) < 2.0
+                        and abs(step_result["omega"].imag) < 0.5):
+                    omega_curr = step_result["omega"]
+                    ang = self.angular.solve_separation_constant(
+                        l, int(m_step), omega_curr, self.a, A_ref=A_ref_curr
+                    )
+                    A_ref_curr = ang["A"]
+                else:
+                    # 完全回退：直接用 Berti 猜测
+                    omega_curr = self._berti_approximation(l, m, n)
+
+        # 最终精修
+        result = self._newton_raphson(omega_curr, l, m, self.a, n_inv=n,
+                                      tol=tol, A_ref=A_ref_curr)
+        result["is_physical"] = (result["converged"]
+                                 and self._is_physical(result["omega"])
+                                 and abs(result["omega"]) < 2.0
+                                 and abs(result["omega"].imag) < 0.5)
+        result["initial_guess"] = omega_m0
+        return result
+
+    def _a_homotopy_solve(self, l: int, m: int, n: int = 0, tol: float = 1e-10) -> dict:
+        """a-homotopy：从 Schwarzschild (a=0) 推进到目标自旋。
+
+        这是原来的 solve 方法逻辑，提取为内部方法。
+        """
         a_target = self.a
 
-        # 初始 A（Schwarzschild 值）
         A_schw = complex(l * (l + 1) - self.s * (self.s + 1), 0)
         A_ref = A_schw
 
-        # 自适应同伦延拓
         omega_current = self._schwarzschild_guess(l, n)
         a_current = 0.0
 
-        # 初始步长：高自旋时用更小的步长
         da = min(0.05, 0.1 * (1.0 - a_target) + 0.01)
         da_min = 1e-4
         max_halvings = 20
@@ -389,7 +605,6 @@ class CorrectedLeaverQNMSolver:
 
             omega_new = result["omega"]
 
-            # 模式跟踪：检测频率跳变
             freq_jump = abs(omega_new - prev_omega)
             if freq_jump > 0.15 and a_next > 0.3:
                 da *= 0.5
@@ -399,7 +614,6 @@ class CorrectedLeaverQNMSolver:
                     break
                 continue
 
-            # 物理性检查
             if not self._is_physical(omega_new):
                 omega_trial = complex(omega_new.real, -abs(omega_new.imag))
                 result_trial = self._newton_raphson(omega_trial, l, m, a_next, n_inv=n,
@@ -414,7 +628,6 @@ class CorrectedLeaverQNMSolver:
                         break
                     continue
 
-            # 成功：更新 A_ref 用于下一步分支跟踪
             ang_result = self.angular.solve_separation_constant(l, m, omega_new, a_next, A_ref=A_ref)
             A_ref = ang_result["A"]
 
@@ -424,13 +637,208 @@ class CorrectedLeaverQNMSolver:
             halvings = 0
             da = min(da * 1.5, 0.1)
 
-        # 最终精修
         final_result = self._newton_raphson(omega_current, l, m, a_target, n_inv=n,
                                             tol=tol, A_ref=A_ref)
         final_result["is_physical"] = self._is_physical(final_result["omega"])
         final_result["converged"] = converged and final_result["converged"]
 
         return final_result
+
+    def _generate_initial_guesses(self, l: int, m: int, n: int = 0) -> list:
+        """生成多样化的初始猜测，覆盖不同吸引域。"""
+        guesses = []
+        a = self.a
+
+        # 1. S₂ 引导：解 m=0 然后外推
+        if m != 0 and a > 0.01:
+            try:
+                m0_solver = CorrectedLeaverQNMSolver(M=self.M, a=a, s=self.s,
+                                                      max_iter=self.max_iter)
+                r0 = m0_solver._a_homotopy_solve(l, m=0, n=n, tol=1e-6)
+                if r0["converged"] and r0["omega"].imag < 0:
+                    # m=0 解直接作为猜测
+                    guesses.append(("S2_m0", r0["omega"]))
+                    # m 线性外推
+                    delta_re = m * a * 0.1
+                    delta_im = -m * a * 0.002
+                    guesses.append(("S2_extrap", r0["omega"] + complex(delta_re, delta_im)))
+            except Exception:
+                pass
+
+        # 2. Berti 近似（含扰动）
+        berti_base = self._berti_approximation(l, m, n)
+        guesses.append(("Berti", berti_base))
+
+        # Berti 附近扰动
+        for dr, di in [(0.02, 0), (-0.02, 0), (0, 0.01), (0, -0.01),
+                       (0.03, 0.01), (-0.03, -0.01)]:
+            perturbed = berti_base + complex(dr, di)
+            guesses.append(("Berti_pert", perturbed))
+
+        # 3. a-homotopy（从 Schwarzschild 推进到目标 a，用 m=0 的路径）
+        if a > 0.01:
+            try:
+                direct = CorrectedLeaverQNMSolver(M=self.M, a=a, s=self.s,
+                                                   max_iter=self.max_iter)
+                rd = direct._a_homotopy_solve(l, m, n=n, tol=1e-6)
+                if rd["converged"] and rd["omega"].imag < 0:
+                    guesses.append(("a_homotopy", rd["omega"]))
+            except Exception:
+                pass
+
+        # 4. Schwarzschild 基线（低自旋 fallback）
+        schw = self._schwarzschild_guess(l, n)
+        if a < 0.3:
+            guesses.append(("Schwarz", schw))
+
+        # 去重（对接近的猜测只保留一个）
+        unique = []
+        seen = []
+        for label, w in guesses:
+            dup = False
+            for _, w0 in seen:
+                if abs(w - w0) < 0.02:
+                    dup = True
+                    break
+            if not dup:
+                unique.append((label, w))
+                seen.append((label, w))
+
+        return unique
+
+    def _select_physical_root(self, candidates: list, l: int, m: int,
+                               berti_ref: complex = None) -> dict:
+        """从多个候选根中筛选最物理解。
+
+        评分标准（越高越好）：
+        1. 收敛 (+20)
+        2. 负虚部 (+20)
+        3. |虚部| < 0.5 (+15)
+        4. 实部在 0.2-1.0 (+10)
+        5. 接近 Berti 参考值 (+20, 按 -|Δω| 指数衰减)
+        6. 有物理初始猜测背景 (+5)
+        """
+        if not candidates:
+            return {"omega": 0j, "converged": False, "residual": 999,
+                    "is_physical": False}
+
+        best = None
+        best_score = -999
+
+        for cand in candidates:
+            w = cand["omega"]
+            score = 0
+
+            # 收敛
+            if cand.get("converged", False) and cand.get("residual", 999) < 1e-6:
+                score += 20
+
+            # 负虚部（阻尼）
+            if w.imag < 0:
+                score += 20
+
+            # 阻尼量级合理
+            if abs(w.imag) < 0.5:
+                score += 15
+
+            # 实部范围合理
+            if 0.2 < w.real < 1.0:
+                score += 10
+
+            # 接近 Berti 参考
+            if berti_ref is not None and abs(berti_ref) > 0:
+                delta = abs(w - berti_ref)
+                score += 20 * np.exp(-delta / 0.1)
+
+            # LACI 分数
+            if "laci" in cand:
+                score += 10 * cand["laci"]
+
+            cand["_score"] = score
+            if score > best_score:
+                best_score = score
+                best = cand
+
+        best["is_physical"] = best_score >= 40
+        best["_score"] = best_score
+        best["n_candidates"] = len(candidates)
+        return best
+
+    def _multi_start_solve(self, l: int, m: int, n: int = 0, tol: float = 1e-10) -> dict:
+        """多起始点 Newton，收集所有根，筛选最物理解。
+
+        对高自旋 m≠0 尤其重要——CF 方程有多个根，
+        需要从不同初始猜测出发，用物理判据挑选。
+        """
+        guesses = self._generate_initial_guesses(l, m, n)
+
+        berti_ref = self._berti_approximation(l, m, n)
+        candidates = []
+
+        for label, w0 in guesses:
+            # 角向分离常数
+            try:
+                ang = self.angular.solve_separation_constant(l, m, w0, self.a)
+                A_ref = ang["A"]
+            except Exception:
+                A_ref = None
+
+            result = self._newton_raphson(w0, l, m, self.a, n_inv=n,
+                                          tol=tol, A_ref=A_ref)
+
+            if result["converged"]:
+                w = result["omega"]
+                # 去重：如果已有非常接近的根，保留残差更小的
+                dup = False
+                for existing in candidates:
+                    if abs(existing["omega"] - w) < 1e-6:
+                        if result["residual"] < existing["residual"]:
+                            existing.update(result)
+                            existing["_label"] = label
+                        dup = True
+                        break
+                if not dup:
+                    result["_label"] = label
+                    candidates.append(result)
+
+        selected = self._select_physical_root(candidates, l, m, berti_ref)
+
+        if selected["converged"] and selected["is_physical"]:
+            return selected
+
+        # 最后兜底：如果多起始点也没找到物理解，用 Berti 参考值直接精修
+        final = self._newton_raphson(berti_ref, l, m, self.a, n_inv=n,
+                                     tol=tol)
+        final["is_physical"] = (final["converged"]
+                                and final["omega"].imag < 0
+                                and abs(final["omega"].imag) < 0.5)
+        return final
+
+    def solve(self, l: int, m: int, n: int = 0, tol: float = 1e-10) -> dict:
+        """求解 Kerr QNM 频率。
+
+        策略：
+        - a=0：直接 Newton（Schwarzschild 基线）
+        - m=0：a-homotopy（已验证可靠）
+        - m≠0, a≤0.7：S₂ 引导（快速）
+        - m≠0, a>0.7：多起始点 + 物理解筛选（高自旋需处理多根）
+        """
+        if abs(self.a) < 1e-10:
+            omega_guess = self._schwarzschild_guess(l, n)
+            result = self._newton_raphson(omega_guess, l, m, 0.0, n_inv=n, tol=tol)
+            result["is_physical"] = self._is_physical(result["omega"])
+            return result
+
+        if m == 0:
+            return self._a_homotopy_solve(l, m, n=n, tol=tol)
+
+        # m≠0：先试 S₂ 引导
+        s2_result = self._s2_guided_solve(l, m, n=n, tol=tol)
+        if s2_result["converged"] and s2_result.get("is_physical", False):
+            return s2_result
+
+        # S₂ 没找到物理解 → 多起始点全面搜索
+        return self._multi_start_solve(l, m, n=n, tol=tol)
     
     def _schwarzschild_guess(self, l: int, n: int) -> complex:
         """Schwarzschild QNM 初始猜测（Berti 等的近似公式）。"""

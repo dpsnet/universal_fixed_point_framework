@@ -21,16 +21,30 @@
 | **根因分析** | ✅ 已完成 | `notes/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/spectral_comprehensive_review.md` |
 | **独有实验预言汇总** | ✅ 已完成 | `notes/spectral_unique_predictions.md` |
+| **跨领域谱对应——复杂系统** | ✅ → **Paper XIII** | `paper/paper13_spectral_complex_systems.md` |
+| **凝聚态物理谱翻译** | ✅ → **Paper XIV** | `paper/paper14_spectral_condensed_matter.md` |
+| **量子化学谱翻译** | ✅ → **Paper XV** | `paper/paper15_spectral_quantum_chemistry.md` |
+| **S₁→S₂ 方案转换因子 Z_i** | 🟡 框架建立 | `notes/spectral_Zi_scheme_conversion.md` |
+| **超荷 Y 的 Cl(1,7) 代数推导** | ✅ 已完成 | `notes/spectral_hypercharge_derivation.md` |
+| **See-saw 谱算子推导** | ✅ 已完成 | `notes/spectral_see_saw_operator.md` |
+| **多重静默通用方法论** | ✅ 已完成 | `notes/spectral_multi_silence_methodology.md` |
+| **Kerr QNM 多重静默分析** | ✅ 已完成 | `notes/spectral_Kerr_silence_analysis.md` |
+| **Higgs VEV 多重静默分析** | ✅ 已完成 | `notes/spectral_Higgs_silence_analysis.md` |
+| **中微子质量层级多重静默分析** | ✅ 已完成 | `notes/spectral_neutrino_hierarchy_silence.md` |
+| **暗物质遗迹密度多重静默分析** | ✅ 已完成 | `notes/spectral_dark_matter_silence.md` |
 
 See `spectral_comprehensive_review.md` for a self-contained derivation chain from first principles to all 29 SM parameters.
 
+**笔记→论文覆盖率：57/57（100%），详见 `notes_to_papers_audit.md`。**
+**多重静默理论笔记：8 篇，详见 `spectral_root_cause_analysis.md`。**
+
 ## 当前重点问题（开放问题推进中）
 
-1. **非分离 IFS 收敛率下界常数 $c$ 的显式最优估计**：已有定理 NS-LB 框架，需优化常数并建立重叠度热力学形式；见 `src/math_open_problems_advanced.py`、`roadmap/phase6_rkhs_construction.md`。
-2. **Kerr 全局量子谱严格解析**：已有 QNM 近似框架，需完整 Leaver 连分数求解器与 spin-weighted spheroidal harmonics 高精度方法；见 `src/physics_open_problems_advanced.py`。
-3. **$N=4$ SYM 强耦合谱方程**：已有弱耦合/BMN 匹配，需有限 $N_c$ 与强耦合下可积系统谱方程；见 `src/physics_open_problems_advanced.py`。
-4. **MadGraph/micrOMEGAs 真实安装联调**：已有接口层与解析回退，需在真实工具安装上端到端验证；见 `src/numerical_engineering_open_problems.py`。
-5. **双星引力波全波形与 LALSuite 对接**：已有原型波形，需接入 SEOBNRv4/IMRPhenom；见 `src/numerical_engineering_open_problems.py`。
+1. **规范引力混合修正（Paper XII §9.3 β₃^(spec)）**：三圈 β 函数中的规范-引力混合项可使 M_Pl 处耦合偏移 ~5-15%；见 `src/spectral_rge_running.py`、`notes/spectral_root_cause_analysis.md` §4a。
+2. **GUT 能标门限修正**：在 M_GUT ∼ 2×10¹⁶ GeV 处若存在新物理（seesaw 中微子质量），引入额外态射通道改变 β 系数。
+3. **Kerr m≠0 Leaver 求解器收敛**：角向求解已收敛，径向 Leaver 系数约定需调试；见 `src/kerr_s2_guided_solver.py`、`notes/spectral_Kerr_silence_analysis.md`。
+4. **谱方案 → MS-bar 方案转换因子 Z_i**：S₂ 层 DS 减除对易子框架已建立，Z_i 的显式解析公式待推导；见 `notes/spectral_Zi_scheme_conversion.md`。
+5. **暗物质 α_DM 的第一原理推导**：谱静默粒子在 A_GR 谱结构中的精确范畴维数；见 `notes/spectral_dark_matter_silence.md`。
 
 ## 文件命名约定
 
