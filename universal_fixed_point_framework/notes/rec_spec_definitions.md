@@ -426,3 +426,11 @@ class SpectralMorphism:
 
 - v0.1（2026-07-12）：初稿，定义 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 的对象、态射、复合与单位，提出待澄清问题。
 - v0.2（2026-07-12）：严格化同构标准：Rec 同构要求同胚且逆为态射；Spec 同构要求有界可逆且逆满足谱交织，强标准下为酉算子。
+
+---
+
+## 7. 相关论文
+
+本文档定义的 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 范畴是以下论文的范畴论基础：
+
+- **Paper X**：`paper/paper10_spectral_quantum.md` — 在 $\mathbf{Spec}$ 范畴中建立了量子测量的 M1-M4 公理系统。其中 M1（谱投影公理）直接使用本文 §3 中 $\mathbf{Spec}$ 对象的投影态射结构；M2（谱流动力学公理）使用本文 §3.2 中态射的谱交织条件。详见 Paper X §2。

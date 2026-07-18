@@ -1914,6 +1914,8 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 
 本文建立的理论框架在配套论文 II《通用不动点范畴框架 II：物理应用与实验验证》中得到广泛验证，应用领域包括：标准模型质量谱、BSM 新物理预言与对撞机实验对比、Kerr 黑洞分形几何与数值相对论波形对比、全息纠缠熵与 CFT 验证等。物理应用部分不属于本文范畴。
 
+**Paper X**（`paper/paper10_spectral_quantum.md`）在本文建立的 $\mathbf{Rec}/\mathbf{Spec}$ 范畴基础上，将框架应用于量子基础问题——建立了量子测量的 M1–M4 公理系统，统一解释了波函数坍缩、纠缠、延迟选择、Kochen-Specker 语境性、量子达尔文主义和量子资源理论。Paper X 的核心谱流方程 $dA_t/dt = [A_{\text{int}}, A_t] + \kappa(\mathcal{D}(A_t)-A_t)$ 是本文 §2 谱流方程在测量构型下的具体化。
+
 ---
 
 ## 9. 哲学与基础科学意义
