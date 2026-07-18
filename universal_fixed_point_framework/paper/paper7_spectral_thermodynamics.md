@@ -182,6 +182,8 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 - [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱对易子。
 - [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学》，v1.0。湍流 Onsager 关系、C* 代数诠释。
+- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
+- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
 - Evans, D.J., Cohen, E.G.D. & Morriss, G.P. (1993). "Probability of second law violations in shearing steady states." *Phys. Rev. Lett.* 71, 2401.
 - Crooks, G.E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." *Phys. Rev. E* 60, 2721.
 - Lindblad, G. (1975). "Completely positive maps and entropy inequalities." *Commun. Math. Phys.* 40, 147.
@@ -190,7 +192,7 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 
 **版本**：v1.0
 
-**日期**：2026-07-17
+**日期**：2026-07-18
 
 **状态**：
 
@@ -202,10 +204,10 @@ $$\frac{P(\Sigma = \sigma)}{P(\Sigma = -\sigma)} = e^{\sigma}$$
 - 谱涨落定理（定理 5.1：$P(\sigma)/P(-\sigma)=e^\sigma$）
 - 数值验证：$\Delta S = 0.0544 > 0$（$6\times6$ 系统，200 步）
 - 与黑洞信息悖论的联系
-**v1.0 升级**：新增 §2.3 连续谱熵推广（投影值谱测度）、§4.2 Onsager-Casimir 对称性与湍流连接、注 5.1 Hille-Yosida 松弛；参考文献扩展（Lindblad、Paper I/VI）；版本号对齐 Paper I v2.32 / Paper VI v1.0
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v0.1 | 2026-07-16 | 初始版本：谱熵增定理 + Onsager + 涨落定理 + 数值验证 |
-| v1.0 | 2026-07-17 | 升级至完整版：新增 §2.3 连续谱熵（投影值谱测度 + Lindblad 单调性）、§4.2 Onsager-Casimir 对称性与湍流统一、注 5.1 Hille-Yosida 松弛；参考文献扩展；版本号对齐 |
+| v1.0 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
+| v1.0 | 2026-07-17 | 新增 §2.3 连续谱熵、§4.2 Onsager-Casimir 对称性、注 5.1 Hille-Yosida 松弛 |
+| v0.1 | 2026-07-16 | 初始版本 |

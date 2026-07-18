@@ -7,9 +7,9 @@ Paper X: CHSH S 值 vs 退相干强度 — 实验退相干曲线对比
   将谱动力量子纠缠模型的理论预测与经典 Bell 实验数据定量对比。
   
   扫描三种噪声模型下 CHSH S 值的退化曲线：
-    1. Werner 白噪声:   ρ(p) = p|Φ⁺⟩⟨Φ⁺| + (1-p)I/4
-    2. 相位退相干:     ρ(γ) = (1-γ)|Φ⁺⟩⟨Φ⁺| + γ·(Z⊗I)|Φ⁺⟩⟨Φ⁺|(Z⊗I)
-    3. 振幅阻尼:       ρ(λ) = (1-λ)|Φ⁺⟩⟨Φ⁺| + λ·|00⟩⟨00| (简化)
+    1. Werner 白噪声:   ρ(p) = p|Phi +><Phi +| + (1-p)I/4
+    2. 相位退相干:     ρ(gamma ) = (1-gamma )|Phi +><Phi +| + gamma ·(Z⊗I)|Phi +><Phi +|(Z⊗I)
+    3. 振幅阻尼:       ρ(lambda ) = (1-lambda )|Phi +><Phi +| + lambda ·|00><00| (简化)
   
   并与 Aspect 1982、Weihs 1998 等实验的观测 S 值匹配，
   提取等效噪声参数。
@@ -24,7 +24,7 @@ from typing import Dict, List, Tuple
 # ============================================================
 
 def bell_state() -> np.ndarray:
-    """Bell 态 |Φ⁺⟩ = (|00⟩ + |11⟩)/√2"""
+    """Bell 态 |Phi +> = (|00> + |11>)/sqrt 2"""
     psi = np.zeros(4, dtype=complex)
     psi[0] = psi[3] = 1.0 / np.sqrt(2)
     return np.outer(psi, psi.conj())
@@ -33,12 +33,12 @@ def bell_state() -> np.ndarray:
 def chsh_S(rho: np.ndarray) -> float:
     """
     CHSH S 值，基于关联矩阵 T 的优化计算。
-    S_max = 2√(λ₁² + λ₂²), 其中 λ_i 是 T^T T 的特征值。
+    S_max = 2sqrt (lambda 1^2 + lambda 2^2), 其中 lambda _i 是 T^T T 的特征值。
     """
     sigma = [
-        np.array([[1, 0], [0, -1]], dtype=complex),   # σ_z
-        np.array([[0, 1], [1,  0]], dtype=complex),   # σ_x
-        np.array([[0, -1j], [1j, 0]], dtype=complex), # σ_y
+        np.array([[1, 0], [0, -1]], dtype=complex),   # sigma _z
+        np.array([[0, 1], [1,  0]], dtype=complex),   # sigma _x
+        np.array([[0, -1j], [1j, 0]], dtype=complex), # sigma _y
     ]
     T = np.zeros((3, 3))
     for i in range(3):
@@ -55,7 +55,7 @@ def chsh_S(rho: np.ndarray) -> float:
 # ============================================================
 
 def werner_S(p: float) -> float:
-    """Werner 态 CHSH: S(p) = 2√2 · p (解析)"""
+    """Werner 态 CHSH: S(p) = 2sqrt 2 · p (解析)"""
     return 2.0 * np.sqrt(2) * p
 
 
@@ -71,10 +71,10 @@ def dephasing_S(gamma: float) -> float:
 
 def amplitude_damping_S(lam: float) -> float:
     """
-    振幅阻尼信道（简化）：ρ(λ) = (1-λ)|Φ⁺⟩⟨Φ⁺| + λ|00⟩⟨00|
+    振幅阻尼信道（简化）：ρ(lambda ) = (1-lambda )|Phi +><Phi +| + lambda |00><00|
     
-    λ=0 → 最大纠缠 Bell 态
-    λ=0 → 完全退相干到 |00⟩（可分离）
+    lambda =0 -> 最大纠缠 Bell 态
+    lambda =0 -> 完全退相干到 |00>（可分离）
     """
     rho_bell = bell_state()
     rho_00 = np.zeros((4, 4), dtype=complex)
@@ -92,7 +92,7 @@ EXPERIMENTS: Dict[str, Dict] = {
         "S_value": 2.70,
         "S_error": 0.05,
         "noise_model": "werner",
-        "p_equiv": 0.955,       # S = 2√2 · p → p = S/(2√2)
+        "p_equiv": 0.955,       # S = 2sqrt 2 · p -> p = S/(2sqrt 2)
         "type": "光子极化",
         "distance_m": 12,
         "year": 1982,
@@ -200,9 +200,9 @@ def match_experiment(S_exp: float, noise_model: str = "werner") -> float:
 
 def main():
     print("\n")
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Paper X: CHSH S 值 vs 退相干强度 — 实验对比           ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("================================================================")
+    print("=  Paper X: CHSH S 值 vs 退相干强度 — 实验对比           =")
+    print("================================================================")
     
     # -------------------------------------------------------
     # A. 三种噪声模型的 CHSH 退化曲线
@@ -220,9 +220,9 @@ def main():
         print(f"  {p:10.2f} {result['S_werner'][i]:10.4f} "
               f"{result['S_dephasing'][i]:10.4f} {result['S_amplitude'][i]:10.4f}")
     
-    print(f"\n  量子极限 (S=2√2): {2*np.sqrt(2):.4f}")
+    print(f"\n  量子极限 (S=2sqrt 2): {2*np.sqrt(2):.4f}")
     print(f"  Bell 不等式边界: 2.0000")
-    print(f"  CHSH 违反区间: S ∈ (2, 2√2]")
+    print(f"  CHSH 违反区间: S ∈ (2, 2sqrt 2]")
     
     # -------------------------------------------------------
     # B. 实验数据与理论匹配
@@ -231,12 +231,12 @@ def main():
     print("  B. 经典 Bell 实验数据与 Werner 模型匹配")
     print(f"{'='*72}")
     
-    print(f"\n  {'实验':<28s} {'S_obs':>8s} {'σ':>6s} {'p_eq':>7s} {'距离':>7s}")
+    print(f"\n  {'实验':<28s} {'S_obs':>8s} {'sigma ':>6s} {'p_eq':>7s} {'距离':>7s}")
     print(f"  {'-'*58}")
     for name, data in EXPERIMENTS.items():
         p_eq = match_experiment(data['S_value'], "werner")
         S_theory = werner_S(p_eq)
-        print(f"  {name:<28s} {data['S_value']:>8.2f} ±{data['S_error']:>.2f} "
+        print(f"  {name:<28s} {data['S_value']:>8.2f} +/-{data['S_error']:>.2f} "
               f"{p_eq:>7.4f} {data['distance_m']:>7d}m")
     
     # -------------------------------------------------------
@@ -248,10 +248,10 @@ def main():
     
     thresholds = [
         ('纠缠"出生"(Werner p=1/3)', 1/3, werner_S(1/3)),
-        ("CHSH 违反 (Werner p=1/√2)", 1/np.sqrt(2), werner_S(1/np.sqrt(2))),
+        ("CHSH 违反 (Werner p=1/sqrt 2)", 1/np.sqrt(2), werner_S(1/np.sqrt(2))),
         ("最大纠缠 (Werner p=1)", 1, werner_S(1)),
-        ("退相干死亡 (γ=0.5)", 0.5, dephasing_S(0.5)),
-        ("振幅阻尼死亡 (λ=1)", 1.0, amplitude_damping_S(1.0)),
+        ("退相干死亡 (gamma =0.5)", 0.5, dephasing_S(0.5)),
+        ("振幅阻尼死亡 (lambda =1)", 1.0, amplitude_damping_S(1.0)),
     ]
     
     print(f"\n  {'阈值类型':<30s} {'参数值':>10s} {'S_CHSH':>10s}")
@@ -271,7 +271,7 @@ def main():
     max_dev_name = ""
     max_dev_val = 0.0
     
-    print(f"\n  {'实验':<28s} {'S_obs':>8s} {'S_theory':>10s} {'ΔS':>8s} {'偏差%':>8s}")
+    print(f"\n  {'实验':<28s} {'S_obs':>8s} {'S_theory':>10s} {'Delta S':>8s} {'偏差%':>8s}")
     print(f"  {'-'*64}")
     for name, data in EXPERIMENTS.items():
         S_obs = data['S_value']
@@ -297,10 +297,10 @@ def main():
     
     checks = [
         ("Werner 模型 S(0) = 0", abs(werner_S(0.0)) < 1e-10),
-        ("Werner 模型 S(1) = 2√2", abs(werner_S(1.0) - 2*np.sqrt(2)) < 1e-10),
-        ("退相干 S(0) = 2√2", abs(dephasing_S(0.0) - 2*np.sqrt(2)) < 1e-6),
+        ("Werner 模型 S(1) = 2sqrt 2", abs(werner_S(1.0) - 2*np.sqrt(2)) < 1e-10),
+        ("退相干 S(0) = 2sqrt 2", abs(dephasing_S(0.0) - 2*np.sqrt(2)) < 1e-6),
         ("退相干 S(0.5) ~ 2", dephasing_S(0.5) < 2.001),
-        ("振幅阻尼 S(0) = 2√2", abs(amplitude_damping_S(0.0) - 2*np.sqrt(2)) < 1e-6),
+        ("振幅阻尼 S(0) = 2sqrt 2", abs(amplitude_damping_S(0.0) - 2*np.sqrt(2)) < 1e-6),
         ("振幅阻尼 S(1) = 2", abs(amplitude_damping_S(1.0) - 2.0) < 1e-6),
         (f"实验平均偏差 < 5% ({avg_dev:.2f}%)", avg_dev < 5.0),
     ]
@@ -309,15 +309,15 @@ def main():
     print(f"\n  {'检查项':<50s} {'状态':<10s}")
     print(f"  {'-'*60}")
     for desc, ok in checks:
-        print(f"  {desc:<50s} {'✅' if ok else '❌'}")
+        print(f"  {desc:<50s} {'[PASS]' if ok else '[FAIL]'}")
     
     print(f"\n  {n_pass}/{len(checks)} 检查通过")
     print(f"\n  核心结论:")
-    print(f"    • Werner 模型: S(p) = 2√2 · p, 阈值 p = 1/√2 ≈ 0.707")
-    print(f"    • 退相干模型: S(γ) 单调递减, 死亡于 γ = 0.5")
-    print(f"    • 与实验对比: {n_exp_used} 组实验, 平均偏差 {avg_dev:.2f}%")
-    print(f"    • 最大偏差: {max_dev_name} ({max_dev_val:.2f}%)")
-    print(f"    • 所有实验等效 p 均远高于 1/√2 → Bell 违反可观测 ✅")
+    print(f"    * Werner 模型: S(p) = 2sqrt 2 · p, 阈值 p = 1/sqrt 2 ~ 0.707")
+    print(f"    * 退相干模型: S(gamma ) 单调递减, 死亡于 gamma  = 0.5")
+    print(f"    * 与实验对比: {n_exp_used} 组实验, 平均偏差 {avg_dev:.2f}%")
+    print(f"    * 最大偏差: {max_dev_name} ({max_dev_val:.2f}%)")
+    print(f"    * 所有实验等效 p 均远高于 1/sqrt 2 -> Bell 违反可观测 [PASS]")
     print()
 
 

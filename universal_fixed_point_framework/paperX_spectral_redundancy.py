@@ -10,8 +10,8 @@ Paper X — 拓展: 谱冗余度扫描
 方法：
   1. 系统 S (2~4 维) 与环境碎片 {E_k} 耦合
   2. 每个碎片在特定基下"记录"系统信息
-  3. 计算谱冗余度 R_δ(P_i) = #{碎片包含 δ-信息}
-  4. 扫描 R_qc = Δλ_sys/κ 与 R_δ 的定量关系
+  3. 计算谱冗余度 R_delta (P_i) = #{碎片包含 delta -信息}
+  4. 扫描 R_qc = Delta lambda _sys/κ 与 R_delta  的定量关系
   5. 验证：最大谱冗余度投影 = M4 选择的分支 i^*
 """
 
@@ -22,7 +22,7 @@ import numpy as np
 # ============================================================
 
 def system_pointer_states(dim: int = 2) -> np.ndarray:
-    """系统指针态 {|i⟩} (M4 的谱投影)"""
+    """系统指针态 {|i>} (M4 的谱投影)"""
     psi_list = []
     for i in range(dim):
         psi = np.zeros(dim, dtype=complex)
@@ -67,12 +67,12 @@ def compute_spectral_redundancy(dim: int = 2, n_fragments: int = 10,
     计算每个指针态的谱冗余度。
     
     环境碎片测量基围绕"偏好方向"分布，模拟系统-环境交互的基选择。
-    preferred_bias 控制偏好的强度（0 = 无偏好，1 = 完全偏好 |0⟩）。
+    preferred_bias 控制偏好的强度（0 = 无偏好，1 = 完全偏好 |0>）。
     
     Parameters
     ----------
     preferred_bias : float
-        碎片测量基偏好 |0⟩ 的程度 (0~1)
+        碎片测量基偏好 |0> 的程度 (0~1)
     """
     redundancies = np.zeros(dim)
     
@@ -163,15 +163,15 @@ def scan_redundancy_vs_fragments() -> dict:
 
 def main():
     print("\n")
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Paper X — 拓展: 谱冗余度扫描                          ║")
-    print("║  量子达尔文主义的谱动力学版本                              ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("================================================================")
+    print("=  Paper X — 拓展: 谱冗余度扫描                          =")
+    print("=  量子达尔文主义的谱动力学版本                              =")
+    print("================================================================")
     
     # -------------------------------------------------------
     # A. 单次冗余度计算演示
     # -------------------------------------------------------
-    print(f"\n  A. 单一配置演示 (dim=2, 碎片=20, δ=0.2, 噪声=0.02, bias=0.7)")
+    print(f"\n  A. 单一配置演示 (dim=2, 碎片=20, delta =0.2, 噪声=0.02, bias=0.7)")
     print(f"{'='*72}")
     
     r_demo = compute_spectral_redundancy(dim=2, n_fragments=20,
@@ -180,7 +180,7 @@ def main():
     nf = r_demo['n_fragments']
     print(f"\n  指针态 0 的谱冗余度: {r_demo['redundancies'][0]:.0f}/{nf} 碎片")
     print(f"  指针态 1 的谱冗余度: {r_demo['redundancies'][1]:.0f}/{nf} 碎片")
-    print(f"  M4 选择指针态: |{r_demo['selected_pointer']}⟩")
+    print(f"  M4 选择指针态: |{r_demo['selected_pointer']}>")
     print(f"  等效 R_qc = 1/κ = {r_demo['r_qc']:.2f}")
     
     # -------------------------------------------------------
@@ -198,15 +198,15 @@ def main():
     print(f"\n{'='*72}")
     print("  C. 客观性所需最少碎片数")
     print(f"{'='*72}")
-    print(f"  (条件: 最大冗余度 - 次大冗余度 ≥ 2)")
+    print(f"  (条件: 最大冗余度 - 次大冗余度 >= 2)")
     
     thresholds = scan_redundancy_vs_fragments()
     
     # 首次客观的碎片数
     first_obj = next((t for t in thresholds if t['objective']), None)
     if first_obj:
-        print(f"\n  → 客观性在 {first_obj['n_fragments']} 个碎片时成立")
-        print(f"  → 等价条件: 环境碎片数 > 5 ~ R_qc 阈值")
+        print(f"\n  -> 客观性在 {first_obj['n_fragments']} 个碎片时成立")
+        print(f"  -> 等价条件: 环境碎片数 > 5 ~ R_qc 阈值")
     
     # -------------------------------------------------------
     # D. 汇总
@@ -217,8 +217,8 @@ def main():
     
     checks = [
         ("最大冗余度指针态被选择", True),
-        ("噪声低/κ大 → 冗余度高", True),
-        ("碎片数 > 5 → 客观性成立", first_obj and first_obj['n_fragments'] >= 3),
+        ("噪声低/κ大 -> 冗余度高", True),
+        ("碎片数 > 5 -> 客观性成立", first_obj and first_obj['n_fragments'] >= 3),
         ("冗余度差随碎片数增长", True),
         ("R_qc 与冗余度正相关", True),
     ]
@@ -227,15 +227,15 @@ def main():
     print(f"\n  {'检查项':<50s} {'状态':<10s}")
     print(f"  {'-'*60}")
     for desc, ok in checks:
-        print(f"  {desc:<50s} {'✅' if ok else '❌'}")
+        print(f"  {desc:<50s} {'[PASS]' if ok else '[FAIL]'}")
     
     print(f"\n  {n_pass}/{len(checks)} 检查通过")
     print(f"\n  核心结论:")
-    print(f"    • 谱冗余度 = 环境碎片中能可靠区分指针态的计数")
-    print(f"    • M4 选择 = 谱冗余度最大的投影")
-    print(f"    • 碎片数 > 5 时冗余度差足够大 → 客观性成立")
-    print(f"    • 噪声低 (κ大) → 冗余度高 → 经典性更强")
-    print(f"    • 这与 R_qc = Δλ_sys/κ > 5 的判据一致 ✅")
+    print(f"    * 谱冗余度 = 环境碎片中能可靠区分指针态的计数")
+    print(f"    * M4 选择 = 谱冗余度最大的投影")
+    print(f"    * 碎片数 > 5 时冗余度差足够大 -> 客观性成立")
+    print(f"    * 噪声低 (κ大) -> 冗余度高 -> 经典性更强")
+    print(f"    * 这与 R_qc = Delta lambda _sys/κ > 5 的判据一致 [PASS]")
     print()
 
 

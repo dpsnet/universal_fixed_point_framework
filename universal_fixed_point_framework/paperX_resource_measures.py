@@ -4,15 +4,15 @@ Paper X — 拓展: 量子资源测度 vs 谱流
 ======================================
 
 验证量子资源理论的谱动力学翻译：
-  R1：相干性在谱流下指数衰减（dC/dt = -κ·C）✅
-  R2：谱资源守恒律 R_tot = Σ λ_i·ω(P_i) 守恒 ✅
-  R3：资源转化效率由 κ 和 ‖G‖ 控制 ✅
+  R1：相干性在谱流下指数衰减（dC/dt = -κ·C）[PASS]
+  R2：谱资源守恒律 R_tot = Sigma  lambda _i·omega (P_i) 守恒 [PASS]
+  R3：资源转化效率由 κ 和 ‖G‖ 控制 [PASS]
 
 支持的资源测度：
   - 谱相干性 C(ρ) = ‖A - D(A)‖_F
   - Concurrence（纠缠）
-  - 纯度 γ(ρ) = Tr(ρ²)
-  - 线性熵 S_L(ρ) = 1 - Tr(ρ²)
+  - 纯度 gamma (ρ) = Tr(ρ^2)
+  - 线性熵 S_L(ρ) = 1 - Tr(ρ^2)
 """
 
 import numpy as np
@@ -40,25 +40,25 @@ def concurrence(rho: np.ndarray) -> float:
 
 
 def purity(A: np.ndarray) -> float:
-    """纯度 γ(ρ) = Tr(ρ²)"""
+    """纯度 gamma (ρ) = Tr(ρ^2)"""
     return float(np.real(np.trace(A @ A)))
 
 
 def linear_entropy(A: np.ndarray) -> float:
-    """线性熵 S_L(ρ) = 1 - Tr(ρ²)"""
+    """线性熵 S_L(ρ) = 1 - Tr(ρ^2)"""
     return max(0.0, 1.0 - purity(A))
 
 
 def spectral_resource_total(A: np.ndarray) -> float:
-    """总谱资源 R_tot = Σ λ_i · ω(P_i)
+    """总谱资源 R_tot = Sigma  lambda _i · omega (P_i)
     
-    其中 ω(P_i) = Tr(P_i A P_i) 是轨道函子谱权重。
+    其中 omega (P_i) = Tr(P_i A P_i) 是轨道函子谱权重。
     定理 R3: 在幺正谱流下守恒。
     """
     evals, evecs = np.linalg.eigh(A)
     evals = np.maximum(evals, 0.0)
-    # 谱权重 = Tr(P_i A P_i) = λ_i 对纯态
-    # 更一般: ω(P_i) = Tr(P_i A P_i) = ⟨i|A|i⟩
+    # 谱权重 = Tr(P_i A P_i) = lambda _i 对纯态
+    # 更一般: omega (P_i) = Tr(P_i A P_i) = <i|A|i>
     weights = np.real(np.diag(evecs.conj().T @ A @ evecs))
     return float(np.sum(evals * weights))
 
@@ -89,7 +89,7 @@ def spectral_flow_kappa(A0: np.ndarray, G: np.ndarray, t: float,
 
 
 def bell_state() -> np.ndarray:
-    """Bell 态 |Φ⁺⟩"""
+    """Bell 态 |Phi +>"""
     psi = np.zeros(4, dtype=complex)
     psi[0] = psi[3] = 1.0 / np.sqrt(2)
     return np.outer(psi, psi.conj())
@@ -163,9 +163,9 @@ def scan_entanglement_under_flow(n_steps: int = 200) -> Dict:
 
 def main():
     print("\n")
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Paper X — 拓展: 量子资源测度 vs 谱流                  ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("================================================================")
+    print("=  Paper X — 拓展: 量子资源测度 vs 谱流                  =")
+    print("================================================================")
     
     # -------------------------------------------------------
     # A. 资源衰减 vs κ
@@ -195,7 +195,7 @@ def main():
     # B. 谱资源守恒
     # -------------------------------------------------------
     print(f"\n{'='*72}")
-    print("  B. 谱资源守恒律 R_tot = Σ λ_i·ω(P_i)")
+    print("  B. 谱资源守恒律 R_tot = Sigma  lambda _i·omega (P_i)")
     print(f"{'='*72}")
     
     print(f"\n  {'t':>6s} {'κ=0 R_tot':>10s} {'κ=1 R_tot':>10s}")
@@ -213,8 +213,8 @@ def main():
     # 非幺正时资源可能不守恒（开放系统）
     conservation_check_1 = abs(r1_final - r0_init) > 0.01
     
-    print(f"\n  幺正 (κ=0): R_tot 守恒偏差 = {abs(r0_final-r0_init):.6f} {'✅' if conservation_check_0 else '❌'}")
-    print(f"  开放 (κ=1): R_tot 变化 = {abs(r1_final-r0_init):.4f} {'✅' if conservation_check_1 else '❌'}")
+    print(f"\n  幺正 (κ=0): R_tot 守恒偏差 = {abs(r0_final-r0_init):.6f} {'[PASS]' if conservation_check_0 else '[FAIL]'}")
+    print(f"  开放 (κ=1): R_tot 变化 = {abs(r1_final-r0_init):.4f} {'[PASS]' if conservation_check_1 else '[FAIL]'}")
     
     # -------------------------------------------------------
     # C. 纠缠 + 相干性在谱流下
@@ -254,14 +254,14 @@ def main():
     print(f"\n  {'检查项':<50s} {'状态':<10s}")
     print(f"  {'-'*60}")
     for desc, ok in checks:
-        print(f"  {desc:<50s} {'✅' if ok else '❌'}")
+        print(f"  {desc:<50s} {'[PASS]' if ok else '[FAIL]'}")
     
     print(f"\n  {n_pass}/{len(checks)} 检查通过")
     print(f"\n  核心结论:")
-    print(f"    • 相干性 C(t) = C(0)·exp(-kappa*t) 指数衰减 ✅")
-    print(f"    • R_tot = Σ λ_i·ω(P_i) 在幺正谱流下守恒 ✅")
-    print(f"    • κ 控制相干性→纯度的转化效率 ✅")
-    print(f"    • 谱流是通用的资源转化器 ✅")
+    print(f"    * 相干性 C(t) = C(0)·exp(-kappa*t) 指数衰减 [PASS]")
+    print(f"    * R_tot = Sigma  lambda _i·omega (P_i) 在幺正谱流下守恒 [PASS]")
+    print(f"    * κ 控制相干性->纯度的转化效率 [PASS]")
+    print(f"    * 谱流是通用的资源转化器 [PASS]")
     print()
 
 

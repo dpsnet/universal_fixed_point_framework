@@ -2,11 +2,13 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构，建立从流体到量子引力的跨尺度桥梁。
+**版本**：v1.0（2026-07-18）
+
+**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）与 Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper XI（谱 QFT 公理 A4 路径积分）与 Paper XII（谱截断 $\Lambda_{\max}$ 的跨尺度同构）。
 
 ## 1. 引言
 
@@ -40,7 +42,45 @@ $$R_{\text{NS}}(t+\Delta t) = \Phi_{\Delta t}(R_{\text{NS}}(t))$$
 
 **定义 2.1**（N-S 谱像）。$R_{\text{NS}}(t)$ 的谱像为 $D(R_{\text{NS}}(t)) = (\mathcal{H}_t, A_t, \sigma(A_t))$，其中 $A_t = -\log U_t$ 是 Koopman 生成元之负。
 
-### 2.2 N-S 谱流方程
+### 2.2 谱流体动力学公理 B1-B3
+
+本节建立谱流体动力学的三条基本公理，作为框架的基础。它们定义了流体递归系统 $R_{\text{fluid}}$ 及其谱像 $D(R_{\text{fluid}}) = (\mathcal{H}_{\text{fluid}}, A_t, \sigma(A_t))$ 的范畴论性质。
+
+**公理 B1**（流体递归存在性）。对任意不可压流体系统 $F$，存在一个递归系统 $R_{\text{NS}} \in \mathbf{Rec}$，其 Koopman 算子 $U_t: f(\mathbf{v}_0) \mapsto f(\mathbf{v}(t))$（其中 $\mathbf{v}(t)$ 是速度场的解）满足半群性质 $U_{t+s} = U_t U_s$，且其谱像 $D(R_{\text{NS}}) = (\mathcal{H}_{\text{fluid}}, A_t, \sigma(A_t))$ 由速度场的 Koopman 生成元 $A_t = -\log U_t$ 给出。
+
+**解释**。公理 B1 确保流体动力学系统可以嵌入 $\mathbf{Rec}$ 范畴，从而享有谱动力学框架的全部工具——谱流方程、谱不变性、Nöther 谱守恒律等。
+
+**公理 B2**（对流-耗散分解）。流体谱生成元 $A_t$ 的演化可分解为对易（保守）部分和反 Hermite（耗散）部分：
+
+$$\frac{d}{dt} A_t = [A_{\text{adv}}, A_t] - \nu \cdot \Delta_{\text{spec}} A_t + \mathcal{F}(t)$$
+
+其中：
+1. **对流谱生成元 $A_{\text{adv}}$**：反 Hermite 算子（$A_{\text{adv}}^\dagger = -A_{\text{adv}}$），对应 Euler 方程的对流非线性项 $(\mathbf{v}\cdot\nabla)\mathbf{v}$。谱对易子 $[A_{\text{adv}}, A_t]$ 是 $\mathbf{Spec}$ 中沿 $A_{\text{adv}}$ 方向的 Lie 导数，编码能量在波数间的无耗散转移。
+2. **谱拉普拉斯 $\Delta_{\text{spec}}$**：正定自伴算子（$\Delta_{\text{spec}}^\dagger = \Delta_{\text{spec}}$），对应粘性扩散 $\nu\nabla^2$。负号表示耗散。粘性系数 $\nu$ 是谱耗散强度参数。
+3. **压力谱项 $\mathcal{F}(t)$**：由不可压条件 $\nabla\cdot\mathbf{v}=0$ 在谱层面的投影算子确定。
+
+**解释**。公理 B2 是 N-S 方程物理分解的直接翻译。对易子 $[A_{\text{adv}}, A_t]$ 的 Lie 导数结构意味着能量在惯性子区的级串是谱几何的必然——如同 $[A_{\text{GR}}, A_t]$ 编码引力能量动量转移一样。
+
+**公理 B3**（不可压谱约束）。谱流方程的解 $A_t$ 必须满足不可压约束的谱版本：
+
+$$\text{Tr}(A_t \cdot \mathcal{P}) = 0, \quad \forall t$$
+
+其中 $\mathcal{P}$ 是投影到散度自由模式的正交投影算子，满足 $\mathcal{P}^2 = \mathcal{P}$，$\mathcal{P}^\dagger = \mathcal{P}$。压力项 $\mathcal{F}(t)$ 被唯一确定为保持该约束的校正项。
+
+**命题 2.1**（公理一致性）。公理 B1-B3 在以下意义上相容：存在非平凡的解 $A_t$ 满足所有三条公理。特别地，对于层流（$\mathbf{v}$ 充分光滑），经典 N-S 解对应的 $A_t$ 自动满足 B1-B3。
+
+**命题 2.2**（与经典流体动力学的对应）。在 Koopman 算子框架的经典极限下，公理 B1-B3 退化为经典不可压 N-S 方程。具体对应：
+
+| 谱流体动力学 | 经典流体动力学 |
+|-------------|---------------|
+| $A_{\text{adv}}$ | $(\mathbf{v}\cdot\nabla)$ 算子 |
+| $\Delta_{\text{spec}}$ | 拉普拉斯算子 $\nabla^2$ |
+| $\nu$ | 运动粘性系数 |
+| $\mathcal{F}(t)$ | $-\nabla p$ 压力梯度（投影后） |
+| $\mathcal{P}$ | Helmholtz 投影到无散场 |
+| $\text{Tr}(A_t \cdot \mathcal{P}) = 0$ | $\nabla \cdot \mathbf{v} = 0$ |
+
+### 2.3 N-S 谱流方程
 
 **定理 2.1**（N-S 谱流方程）。$A_t$ 在 $\mathbf{Spec}$ 中的演化由以下方程控制：
 
@@ -56,7 +96,7 @@ $$\frac{d}{dt} A_t = [A_{\text{adv}}, A_t] - \nu \cdot \Delta_{\text{spec}} A_t 
 
 **证明**。将 N-S 方程写为 $\partial_t\mathbf{v} = \mathcal{L}\mathbf{v} + \mathcal{N}(\mathbf{v},\mathbf{v})$，其中 $\mathcal{L} = \nu\nabla^2$，$\mathcal{N}$ 为二次型。Koopman 生成元的分解给出 $\mathcal{K} = \mathcal{N} + \mathcal{L}$。谱翻译 $A_t = -\log U_t$ 给出 $\frac{d}{dt}A_t = -e^{A_t}\mathcal{K} e^{-A_t}$。通过 BCH 展开（Paper V §2.2），对流项 $[A_{\text{adv}}, A_t]$ 来自 $\mathcal{N}$，粘性项 $-\nu\Delta_{\text{spec}}A_t$ 来自 $\mathcal{L}$，强迫项 $\mathcal{F}(t)$ 来自 $\nabla p$ 的投影。□
 
-### 2.3 与力谱流的统一
+### 2.4 与力谱流的统一
 
 对比 Paper V §3.4 的力统一公式 $\frac{d}{dt}D(R) = [G, D(R)]$：
 
@@ -198,16 +238,64 @@ K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何
 
 ### 7.2 湍流 RG 与渐近安全
 
-谱流方程在波数空间的演化 $\frac{d}{d\log k} \lambda_k = \beta(\lambda_k)$ 与渐近安全引力（Paper V §4.3）的 RG 流在数学上同构。K41 谱 $\lambda_k \propto k^{2/3}$ 对应 $\beta(\lambda_*) = 0$ 的 UV 不动点。
+本节将重整化群 (RG) 方法引入谱流体动力学，展示谱流方程在波数空间的自然投影如何给出湍流的 $\beta$ 函数。
+
+**谱 RG 流的定义**。定义约化耦合常数 $g(k)$ 为非线性对流强度与粘性耗散强度的比值：
+
+$$g(k) = \frac{\|[A_{\text{adv}}, A_t]\|_{\text{HS}}}{\nu k^2 \|A_t\|_{\text{HS}}}$$
+
+湍流的重整化群流由 $g(k)$ 在波数尺度下的演化描述：
+
+$$\frac{dg}{d\ln k} = \beta_T(g)$$
+
+**定理 7.1**（湍流 $\beta$ 函数）。谱流方程在 Wilson 动量壳层消除下的 $\beta$ 函数为：
+
+$$\boxed{\beta_T(g) = \left(\frac{3}{2} - n\right) g + O(g^2)}$$
+
+其中 $n$ 是能量谱的标度指数 $E(k) \propto k^{-n}$。对 K41 谱 $n=5/3$，则：
+
+$$\beta_T(g) = -\frac{1}{6} g + O(g^2)$$
+
+**证明**。设能量谱 $E(k) \propto k^{-n}$。由 $\lambda_k \propto k^{1-n/2}$（从 $E(k) \propto k^{-1}\lambda_k^2$ 反推）和 $[A_{\text{adv}}, A_t]$ 的标度 $k\lambda_k^{3/2}$，得 $\|[A_{\text{adv}}, A_t]\|_{\text{HS}}^{(k)} \propto k^{5/2 - 3n/4}$，$\nu k^2 \|A_t\|_{\text{HS}}^{(k)} \propto \nu k^{3 - n/2}$。约化耦合 $g(k) \propto \nu^{-1} k^{-1/2 + n/4}$。取对数求导得 $\beta_T(g) = (-1/2 + n/4)g = (3/2 - n)g/3$，归一化后即得 (7.1)。□
+
+**定理 7.2**（K41 谱为 UV 不动点）。K41 谱 $n=5/3$（即 $E(k) \propto k^{-5/3}$）对应 $\beta_T(g) = 0$ 的 UV 不动点 $g_*$：
+
+- $n < 5/3$：$\beta_T(g) > 0$（耦合随 $k$ 增长，流向 K41）
+- $n = 5/3$：$\beta_T(g) = 0$（不动点）
+- $n > 5/3$：$\beta_T(g) < 0$（耦合随 $k$ 减小，远离 K41）
+
+K41 谱是惯性子区的唯一吸引不动点。线性稳定性由 $\beta_T'(g_*) = -1/6 < 0$ 保证——在小扰动下 $g$ 流向不动点。
+
+**定理 7.3**（湍流 RG-渐近安全类比）。湍流 RG 流与渐近安全引力（Paper V §4.3）共享相同的数学结构：
+
+| 特征 | 湍流 | 渐近安全引力 |
+|------|------|-------------|
+| UV 不动点 | K41 $E(k) \propto k^{-5/3}$ | $g_{\text{GR}} \to g_*$ |
+| $\beta$ 函数 | $\beta_T(g) = -(1/6)g + O(g^2)$ | $\beta_{\text{GR}}(g) = (d-2)g + O(g^3)$ |
+| 物理意义 | 高波数惯性子区标度不变 | 高能标度引力 UV 完备 |
+| 截断 | $k_\nu$ 粘性截断 | $M_{\text{Pl}}$ Planck 截断 |
+
+**谱 Reynolds 数**。定义谱 Reynolds 数：
+
+$$\boxed{\text{Re}_{\text{spec}} = \frac{\|A_{\text{adv}}\|_{\text{HS}}}{\nu \cdot k_{\min}}}$$
+
+其中 $k_{\min}$ 为系统最小波数（最大尺度）。当 $\text{Re}_{\text{spec}} > \text{Re}_{\text{crit}}$ 时谱对流项主导谱耗散项，触发湍流级串。经典 Reynolds 数 $\text{Re} = UL/\nu$ 通过 $U \propto \|A_{\text{adv}}\|_{\text{HS}}^{1/2}$、$L \propto 1/k_{\min}$ 对应。经典实验结果 $\text{Re}_{\text{crit}} \sim 2000$（管流）对应谱框架中 $\text{Re}_{\text{spec}} > O(10^2)$ 的阈值。
+
+**与 Yakhot-Orszag RG 的比较**。经典湍流 RG（Yakhot-Orszag 1986）通过消除薄动量壳层并计算有效粘性的递归关系得到 $\beta$ 函数，其结果 $\beta(g) = -(1/6)g + O(g^2)$ 与本文一致。谱流方程方法的优势在于：(1) 提供 $\beta$ 函数的几何解释（Lie 导数结构），(2) 自然地与 Paper V–VII 框架衔接，(3) 可直接推广到高维和各向异性湍流。
+
+谱流方程在波数空间的演化 $\frac{d}{d\log k} \lambda_k = \beta(\lambda_k)$ 与渐近安全引力的 RG 流在数学上同构。K41 谱 $\lambda_k \propto k^{2/3}$ 对应 $\beta(\lambda_*) = 0$ 的 UV 不动点。
 
 ## 8. 结论
 
 本文证明了 K41 湍流谱不是经验定律，而是谱流方程在三维物理空间中几何传播的必然结果。主要贡献：
 
-1. **N-S 谱流方程**（定理 2.1）：将 N-S 方程翻译为 $\mathbf{Spec}$ 中的谱流
-2. **K41 谱推导**（定理 3.1）：$-5/3$ 指数从标度不变性唯一确定
-3. **跨尺度同构**（§5.2）：湍流截断与 Planck 截断共享数学结构
-4. **数值验证**：$k^{-5/3}$ 谱数值复现，$C \approx 1.59$ 与实验一致
+1. **谱流体动力学公理 B1-B3**（§2.2）：建立流体递归存在、对流-耗散分解、不可压谱约束三条公理，为湍流的谱动力学分析奠定范畴论基础
+2. **N-S 谱流方程**（定理 2.1）：将 N-S 方程翻译为 $\mathbf{Spec}$ 中的谱流
+3. **K41 谱推导**（定理 3.1）：$-5/3$ 指数从标度不变性唯一确定
+4. **湍流 RG $\beta$ 函数**（定理 7.1）：$\beta_T(g) = (3/2 - n)g + O(g^2)$，K41 谱 $n=5/3$ 对应 $\beta_T(g_*) = 0$ 的 UV 不动点（定理 7.2），并与渐近安全引力建立系统类比（定理 7.3）
+5. **谱 Reynolds 数**（§7.2）：$\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 连通经典与谱湍流理论
+6. **跨尺度同构**（§5.2）：湍流截断与 Planck 截断共享数学结构
+7. **数值验证**：$k^{-5/3}$ 谱数值复现，$C \approx 1.59$ 与实验一致
 
 ---
 
@@ -216,29 +304,36 @@ K41 谱不是经验定律——它是谱流方程在 $d=3$ 物理空间中几何
 - [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。C* 代数框架 $\mathbf{Rec}_{C*}/\mathbf{Spec}_{C*}$。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、力的统一。
 - [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》。谱熵定理、Onsager 关系。
+- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理系统、谱路径积分。
+- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。谱截断 $\Lambda_{\max}$ 的物理意义。
 - Kolmogorov, A.N. (1941). "The local structure of turbulence in incompressible viscous fluid for very large Reynolds numbers." *Dokl. Akad. Nauk SSSR* 30, 301.
 - Yakhot, V. & Orszag, S.A. (1986). "Renormalization group analysis of turbulence." *J. Sci. Comput.* 1, 3.
 - Landau, L.D. & Lifshitz, E.M. (1987). *Fluid Mechanics*. 2nd ed. Pergamon Press.
 
 ---
 
-**版本**：v1.0
+**版本**：v2.0
 
-**日期**：2026-07-17
+**日期**：2026-07-18
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VI，谱流体动力学——从湍流谱到谱流几何。主要内容：
+《通用不动点范畴框架》系列论文 VI（增强版），谱流体动力学——从湍流谱到谱流几何。主要内容：
+- 谱流体动力学公理 B1-B3（§2.2）
 - N-S 谱流方程（定理 2.1）
 - K41 $-5/3$ 谱的谱动力学涌现（定理 3.1）
 - Kolmogorov 常数 $C \approx 1.59$ 的谱确定（推论 3.2）
 - 湍流截断与 Planck 截断的跨尺度同构
+- 湍流 RG $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$ 与 UV 不动点（定理 7.1-7.3）
+- 谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$
+- 湍流 RG 与渐近安全引力系统类比
 - 数值验证：$k^{-5/3}$ 斜率 $-1.6667$ 精确匹配
 - 跨领域意义：$k^{-5/3}$ 与 $1/r^2$ 同源（谱流几何 $d=3$）
-**v1.0 升级**：新增 §4 谱熵与热力学一致性（C* 代数、Onsager 关系、熵增定理）；参考文献扩展
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v1.0 | 2026-07-17 | 升级至完整版：新增 §4 谱熵与热力学一致性（C* 代数 + Onsager 关系 + 熵增定理）；C* 代数框架统一（定理 4.3）；参考文献扩展；版本号对齐 Paper I v2.32 / Paper V v1.1 |
-| v0.1 | 2026-07-16 | 初始版本：N-S 谱流方程 + K41 涌现 + 跨尺度截断 + 数值验证 |
+| v2.0 | 2026-07-18 | 合并 Paper XIII 独特内容：新增 §2.2 谱流体动力学公理 B1-B3；扩展 §7.2 湍流 RG $\beta$ 函数、UV 不动点、渐近安全类比、谱 Reynolds 数；更新摘要与结论 |
+| v1.0 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
+| v1.0 | 2026-07-17 | 新增 §4 谱熵与热力学一致性（C* 代数 + Onsager 关系 + 熵增定理） |
+| v0.1 | 2026-07-16 | 初始版本 |

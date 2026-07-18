@@ -9,9 +9,9 @@ Paper X — 拓展: 信息悖论的谱模拟 (Page 曲线)
 
 谱动力学翻译：
   1. 黑洞 B + 辐射 R 构成复合谱对象 A_BR
-  2. 蒸发 = M2 谱流：dA/dt = [A_GR, A] + γ·(D(A)-A)
+  2. 蒸发 = M2 谱流：dA/dt = [A_GR, A] + gamma ·(D(A)-A)
   3. 随着蒸发，BH 维度减小，辐射维度增大
-  4. 纠缠熵 S_ent(t) 先增后减 → Page 曲线
+  4. 纠缠熵 S_ent(t) 先增后减 -> Page 曲线
   5. 信息守恒: I_tot(t) = S_B(t) + S_off(t) = const
 
 模型：
@@ -24,7 +24,7 @@ from scipy.linalg import norm
 
 
 def bell_pair(dim: int) -> np.ndarray:
-    """最大纠缠态 (|00⟩ + |11⟩ + ... + |d-1,d-1⟩)/√d"""
+    """最大纠缠态 (|00> + |11> + ... + |d-1,d-1>)/sqrt d"""
     psi = np.zeros(dim * dim, dtype=complex)
     for i in range(dim):
         psi[i * dim + i] = 1.0 / np.sqrt(dim)
@@ -62,7 +62,7 @@ def compute_page_curve(n_bh_initial: int = 10, n_steps: int = 200) -> dict:
     
     # 简化的纠缠熵模型：基于 qubit 计数
     # Page 曲线: S_ent = min(n_BH, n_rad) · ln(2) (对纯态)
-    # 加上退相干修正: γ 使熵在蒸发后期偏离理想 Page 曲线
+    # 加上退相干修正: gamma  使熵在蒸发后期偏离理想 Page 曲线
     
     times = np.linspace(0, 1, n_steps)
     n_rad_max = n_bh_initial
@@ -86,14 +86,14 @@ def compute_page_curve(n_bh_initial: int = 10, n_steps: int = 200) -> dict:
         s_ideal = n_min * np.log(2)
         entropies_ideal.append(s_ideal)
         
-        # 弱退相干 (γ=0.05): 后期轻微偏离
+        # 弱退相干 (gamma =0.05): 后期轻微偏离
         gamma_w = 0.05
         n_min_eff_w = n_min * (1 - gamma_w * (1 - np.exp(-t * 3)))
         entropies_dephased_weak.append(max(0, min(n_bh_int * np.log(2),
                                                    n_rad_int * np.log(2),
                                                    n_min_eff_w * np.log(2))))
         
-        # 强退相干 (γ=0.3): 明显偏离
+        # 强退相干 (gamma =0.3): 明显偏离
         gamma_s = 0.3
         n_min_eff_s = n_min * (1 - gamma_s * (1 - np.exp(-t * 3)))
         entropies_dephased_strong.append(max(0, min(n_bh_int * np.log(2),
@@ -126,9 +126,9 @@ def compute_page_curve(n_bh_initial: int = 10, n_steps: int = 200) -> dict:
 
 def main():
     print("\n")
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Paper X — 拓展: 信息悖论的谱模拟 (Page 曲线)          ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("================================================================")
+    print("=  Paper X — 拓展: 信息悖论的谱模拟 (Page 曲线)          =")
+    print("================================================================")
     
     # -------------------------------------------------------
     # A. Page 曲线
@@ -189,7 +189,7 @@ def main():
     
     checks = [
         ("Page 曲线先增后减", max(result['entropy_ideal']) > result['entropy_ideal'][-1]),
-        ("Page 时间 ≈ 0.5", abs(result['page_time_numerical'] - 0.5) < 0.05),
+        ("Page 时间 ~ 0.5", abs(result['page_time_numerical'] - 0.5) < 0.05),
         ("信息守恒: I_BH + I_rad 恒定", True),
         ("退相干使最大熵降低", max(result['entropy_strong']) < max(result['entropy_weak'])),
         ("跨维度 Page 时间稳定", True),
@@ -199,15 +199,15 @@ def main():
     print(f"\n  {'检查项':<50s} {'状态':<10s}")
     print(f"  {'-'*60}")
     for desc, ok in checks:
-        print(f"  {desc:<50s} {'✅' if ok else '❌'}")
+        print(f"  {desc:<50s} {'[PASS]' if ok else '[FAIL]'}")
     
     print(f"\n  {n_pass}/{len(checks)} 检查通过")
     print(f"\n  核心结论:")
-    print(f"    • Page 曲线在谱动力学框架中自然出现")
-    print(f"    • 纠缠熵先增后减，Page 时间 ≈ 0.5")
-    print(f"    • 退相干使最大熵降低但不改变曲线拓扑")
-    print(f"    • 信息 I_BH + I_rad 守恒 → 信息悖论消解")
-    print(f"    • 与 Paper VIII 的谱消解一致 ✅")
+    print(f"    * Page 曲线在谱动力学框架中自然出现")
+    print(f"    * 纠缠熵先增后减，Page 时间 ~ 0.5")
+    print(f"    * 退相干使最大熵降低但不改变曲线拓扑")
+    print(f"    * 信息 I_BH + I_rad 守恒 -> 信息悖论消解")
+    print(f"    * 与 Paper VIII 的谱消解一致 [PASS]")
     print()
 
 

@@ -8,13 +8,13 @@ Paper X — 修复: 固定基热力学熵扫描 v2
 
 v2 改进：
   用**确定性基对齐**替代随机基，消除统计噪声。
-  生成一组基 {B_θ}，与 G 本征基的错位角 θ 从 0 到 π/2 扫描。
+  生成一组基 {B_θ}，与 G 本征基的错位角 θ 从 0 到 pi /2 扫描。
   
   预测：
-  1. θ=0（本征基）→ 熵产生率最大
-  2. θ 增大 → 熵产生率单调递减
+  1. θ=0（本征基）-> 熵产生率最大
+  2. θ 增大 -> 熵产生率单调递减
   3. κ=0 时 θ 依赖性消失（纯幺正演化）
-  4. κ 越大 → θ 依赖性越强
+  4. κ 越大 -> θ 依赖性越强
 """
 
 import numpy as np
@@ -42,7 +42,7 @@ def rotated_basis(theta: float, dim: int) -> np.ndarray:
     """
     basis = np.eye(dim, dtype=complex)
     c, s = np.cos(theta), np.sin(theta)
-    # 在 (|0⟩, |1⟩) 平面旋转
+    # 在 (|0>, |1>) 平面旋转
     basis[0, 0] = c
     basis[1, 0] = -s
     basis[0, 1] = s
@@ -72,7 +72,7 @@ def spectral_flow_kappa(A0: np.ndarray, G: np.ndarray, t: float,
 
 
 def entropy_in_basis(rho: np.ndarray, basis: np.ndarray) -> float:
-    """在基 B 下的谱熵 S_B(ρ) = -Σ ⟨b_i|ρ|b_i⟩ log ⟨b_i|ρ|b_i⟩"""
+    """在基 B 下的谱熵 S_B(ρ) = -Sigma  <b_i|ρ|b_i> log <b_i|ρ|b_i>"""
     dim = rho.shape[0]
     probs = np.array([np.real(b.conj() @ rho @ b) for b in basis.T])
     probs = np.maximum(probs, 1e-30)
@@ -129,7 +129,7 @@ def scan_alignment_dependence(dim: int = 4, kappa: float = 0.5,
     
     n_early = int(1.0 / dt)  # t < 1 为"早期"
     
-    print(f"\n  {'θ(rad)':>8s} {'θ/θ_max':>8s} {'dS/dt 早期':>12s} {'dS/dt 全程':>12s} {'ΔS(t=3)':>10s}")
+    print(f"\n  {'θ(rad)':>8s} {'θ/θ_max':>8s} {'dS/dt 早期':>12s} {'dS/dt 全程':>12s} {'Delta S(t=3)':>10s}")
     print(f"  {'-'*52}")
     
     for theta in thetas:
@@ -156,8 +156,8 @@ def scan_alignment_dependence(dim: int = 4, kappa: float = 0.5,
     
     # 正确物理：W 型对称性
     #   核心特征（对噪声不敏感）：
-    #   1. θ=0 与 θ=π/2 熵产率恒等（都是 G 本征基）
-    #   2. 中间区域 (θ≈π/4) 低于两端
+    #   1. θ=0 与 θ=pi /2 熵产率恒等（都是 G 本征基）
+    #   2. 中间区域 (θ~pi /4) 低于两端
     #   3. 形状随 κ 变化但端点和中间的关系保持
     
     n_thetas = len(thetas)
@@ -173,7 +173,7 @@ def scan_alignment_dependence(dim: int = 4, kappa: float = 0.5,
     mid_avg = np.mean(early_rates[third:-third]) if third < n_thetas - third else 0
     is_w_shape = (left_avg > mid_avg) and (right_avg > mid_avg)  # W 型：两端高于中间
     
-    # 最小值在 π/4 附近
+    # 最小值在 pi /4 附近
     min_idx = int(np.argmin(early_rates))
     theta_min = thetas[min_idx]
     at_pi_4 = abs(theta_min - np.pi/4) < 0.4
@@ -198,7 +198,7 @@ def scan_kappa(dim: int = 4) -> Dict:
     kappas = [0.0, 0.1, 0.5, 1.0, 2.0, 5.0]
     results = []
     
-    print(f"\n  {'κ':>6s} {'θ=0 产率':>10s} {'θ=π/2 产率':>12s} {'W型':>8s} {'等高':>8s} {'θ_min':>8s}")
+    print(f"\n  {'κ':>6s} {'θ=0 产率':>10s} {'θ=pi /2 产率':>12s} {'W型':>8s} {'等高':>8s} {'θ_min':>8s}")
     print(f"  {'-'*55}")
     
     for k in kappas:
@@ -224,10 +224,10 @@ def scan_kappa(dim: int = 4) -> Dict:
 
 def main():
     print("\n")
-    print("╔══════════════════════════════════════════════════════════════╗")
-    print("║  Paper X — 修复: 固定基热力学熵扫描 v2                 ║")
-    print("║  确定性基错位角扫描 — 熵产生率 vs θ                    ║")
-    print("╚══════════════════════════════════════════════════════════════╝")
+    print("================================================================")
+    print("=  Paper X — 修复: 固定基热力学熵扫描 v2                 =")
+    print("=  确定性基错位角扫描 — 熵产生率 vs θ                    =")
+    print("================================================================")
     
     # -------------------------------------------------------
     # A. 单次扫描：熵产生率 vs 错位角
@@ -238,10 +238,10 @@ def main():
     
     result = scan_alignment_dependence(dim=4, kappa=0.5)
     
-    print(f"\n  → W 型（两端高中间低）: {result['is_w_shape']}")
-    print(f"  → θ=0 与 θ=π/2 等高: {result['rate_eq']}")
-    print(f"  → 熵产率最小在 θ={result['theta_min']:.3f} (预期 π/4 附近)")
-    print(f"  → G 本征基是 W 型结构的对称中心 ✅")
+    print(f"\n  -> W 型（两端高中间低）: {result['is_w_shape']}")
+    print(f"  -> θ=0 与 θ=pi /2 等高: {result['rate_eq']}")
+    print(f"  -> 熵产率最小在 θ={result['theta_min']:.3f} (预期 pi /4 附近)")
+    print(f"  -> G 本征基是 W 型结构的对称中心 [PASS]")
     
     w_check = result['is_w_shape']
     eq_check = result['rate_eq']
@@ -260,7 +260,7 @@ def main():
     k0_w = kappa_results[0]['is_w_shape']
     k5_w = kappa_results[-1]['is_w_shape']
     
-    # κ>0 时 θ=π/4 最小值稳定
+    # κ>0 时 θ=pi /4 最小值稳定
     pi4_stable = all(r['at_pi_4'] for r in kappa_results if r['kappa'] > 0)
     
     # -------------------------------------------------------
@@ -276,7 +276,7 @@ def main():
                                        n_steps=200, t_max=3.0)
         dim_results[dim] = r
         print(f"  dim={dim}: W型={r['is_w_shape']}, "
-              f"θ_min={r['theta_min']:.3f}" + (" ✅" if r['is_w_shape'] else ""))
+              f"θ_min={r['theta_min']:.3f}" + (" [PASS]" if r['is_w_shape'] else ""))
     
     w_count = sum(1 for r in dim_results.values() if r['is_w_shape'])
     w_majority = w_count >= 3  # 大多数维度通过
@@ -289,11 +289,11 @@ def main():
     print(f"{'='*72}")
     
     checks = [
-        ("W 型: 两端(θ≈0,π/2)熵产率 > 中间(θ≈π/4)", w_check),
-        ("θ=0 与 θ=π/2 熵产率严格等高", eq_check),
-        ("熵产率最小在 θ=π/4 附近", result['at_pi_4']),
+        ("W 型: 两端(θ~0,pi /2)熵产率 > 中间(θ~pi /4)", w_check),
+        ("θ=0 与 θ=pi /2 熵产率严格等高", eq_check),
+        ("熵产率最小在 θ=pi /4 附近", result['at_pi_4']),
         ("κ=0 时 W 型保持（基本对称性）", k0_w),
-        ("κ>0 时 θ=π/4 最小值稳定", pi4_stable),
+        ("κ>0 时 θ=pi /4 最小值稳定", pi4_stable),
         ("跨维度 (dim=2~8) W 型占多数", w_majority),
     ]
     
@@ -301,16 +301,16 @@ def main():
     print(f"\n  {'检查项':<50s} {'状态':<10s}")
     print(f"  {'-'*60}")
     for desc, ok in checks:
-        print(f"  {desc:<50s} {'✅' if ok else '❌'}")
+        print(f"  {desc:<50s} {'[PASS]' if ok else '[FAIL]'}")
     
     print(f"\n  {n_pass}/{len(checks)} 检查通过")
     print(f"\n  核心结论:")
-    print(f"    • 熵产生率 vs θ 呈 W 型对称: rate(θ) = rate(π/2-θ) ✅")
-    print(f"    • θ=0 (G 本征基) 和 θ=π/2 (同基重标) 熵产率相等 ✅")
-    print(f"    • θ=π/4 (最大错位) 熵产率最小 — 本征基在结构上被区分 ✅")
-    print(f"    • κ=0 时对称性保持 — 测量交互 κ 不是对称性的源 ✅")
-    print(f"    • 跨维度 (dim=2~8) W 型稳定 ✅")
-    print(f"    → 物理基选择问题: G 本征基是熵产生率 W 型结构的对称中心")
+    print(f"    * 熵产生率 vs θ 呈 W 型对称: rate(θ) = rate(pi /2-θ) [PASS]")
+    print(f"    * θ=0 (G 本征基) 和 θ=pi /2 (同基重标) 熵产率相等 [PASS]")
+    print(f"    * θ=pi /4 (最大错位) 熵产率最小 — 本征基在结构上被区分 [PASS]")
+    print(f"    * κ=0 时对称性保持 — 测量交互 κ 不是对称性的源 [PASS]")
+    print(f"    * 跨维度 (dim=2~8) W 型稳定 [PASS]")
+    print(f"    -> 物理基选择问题: G 本征基是熵产生率 W 型结构的对称中心")
     print()
 
 

@@ -191,7 +191,7 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 
 #### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`paper41_cosmological_constant.py`）
 
-$\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整解答。理论根因见 `notes/paper41_theoretical_root.md`，分层表现验证见 `notes/paper41_layered_manifestations.py`。
+$\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整解答。
 
 **三路必然推论**（非假设、非拟合）：
 
@@ -217,7 +217,7 @@ $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整�
 | 观测所需 | $\log_{10} \approx -120$ | Planck 2018 |
 | **安全余量** | **6 量级** | **S₂ 有效耦合 RG 跑动不确定性 ✅** |
 
-**6 量级来源**（`notes/paper41_positive_contributions.py`）：$S_2 = e^{-2\pi/\alpha_{\text{eff}}}$，$\alpha_{\text{eff}}$ 在 Planck 能标的 RG 跑动引入 $\pm 0.02$ 不确定度（$\alpha \in [0.08, 0.12]$），$\alpha$ 变化 $+6.2\%$（$\alpha \to 0.1062$）→ 总压制从 126 变至 120。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。
+**6 量级来源**：$S_2 = e^{-2\pi/\alpha_{\text{eff}}}$，$\alpha_{\text{eff}}$ 在 Planck 能标的 RG 跑动引入 $\pm 0.02$ 不确定度（$\alpha \in [0.08, 0.12]$），$\alpha$ 变化 $+6.2\%$（$\alpha \to 0.1062$）→ 总压制从 126 变至 120。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。
 
 #### A.15.10 暴胀 $R^4$ 修正（Phase 42，`paper42_inflation_R4.py`）
 
