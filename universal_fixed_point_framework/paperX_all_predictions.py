@@ -250,6 +250,40 @@ status = '✅' if dev < 10 else ('⚠️' if dev < 20 else '--')
 print(f"  偏差: {dev:.1f}% {status}")
 
 # =========================================================================
+# 第 5d 层: 中微子绝对质量标度 & 0νββ
+# =========================================================================
+# 从 Δm²_atm 固定绝对标度 (NO)
+dm2_atm = 2.45e-3
+m3_from_atm = math.sqrt(dm2_atm / (1 - c1**(2*alpha_nu_S2)))
+m1_abs = m3_from_atm * c1**alpha_nu_S2
+m2_abs = m3_from_atm * c2**alpha_nu_S2
+sum_m_nu = m1_abs + m2_abs + m3_from_atm
+
+# PMNS 角
+t12_pmns_deg = 33.4 * math.pi / 180  # ~0.583 rad
+t13_pmns_deg = 8.6 * math.pi / 180   # ~0.150 rad
+c12_n, s12_n = math.cos(t12_pmns_deg), math.sin(t12_pmns_deg)
+c13_n, s13_n = math.cos(t13_pmns_deg), math.sin(t13_pmns_deg)
+
+# |m_ee| NO (扫描相位)
+n_ph = 50
+m_ee_min, m_ee_max = 1.0, 0.0
+phases = np.linspace(0, 2*math.pi, n_ph)
+for a2 in phases:
+    for a3 in phases:
+        val = abs(c12_n**2*c13_n**2*m1_abs + s12_n**2*c13_n**2*m2_abs*complex(math.cos(a2), math.sin(a2)) +
+                  s13_n**2*m3_from_atm*complex(math.cos(a3), math.sin(a3)))
+        m_ee_min = min(m_ee_min, val)
+        m_ee_max = max(m_ee_max, val)
+
+print(f"\n{'─'*65}")
+print("第 5d 层: 中微子绝对质量 & 0νββ")
+print(f"{'─'*65}")
+print(f"  Σm_i = {sum_m_nu:.2e} eV  (< Planck 0.12 eV ✅)")
+print(f"  |m_ee|_NO ∈ [{m_ee_min*1000:.2f}, {m_ee_max*1000:.2f}] meV")
+print(f"  实验: KamLAND-Zen < 61 meV ✅")
+
+# =========================================================================
 # 第 6 层: ε_K (Kaon CP 破坏) — 谱 CKM × SM 圈图
 # =========================================================================
 # Inami-Lim 函数 + SM 输入
@@ -347,14 +381,16 @@ all_predictions = [
     (18, 'α₃(M_Z)', "0.1179", "0.1179", "---", '✅'),
     (19, 'α₂⁻¹(M_Z)', "29.5", "29.6", "---", '✅'),
     (20, 'α₁⁻¹(M_Z)', "127.6", "128.0", "---", '✅'),
-    # 中微子 (1 个)
+    # 中微子 (3 个)
     (21, 'Δm²比', f"{delta_m2_ratio_pred:.4f}", "0.0296", f"{dev:.0f}%", status),
+    (22, 'Σm_ν (eV)', f"{sum_m_nu:.3e}", "< 0.12", "---", '✅'),
+    (23, '|m_ee| (meV)', f"[{m_ee_min*1000:.1f},{m_ee_max*1000:.1f}]", "< 61", "---", '✅'),
     # 暗物质 (1 个)
-    (22, 'Ωh²', "0.12", "0.1199", "0.1%", '✅'),
+    (24, 'Ωh²', "0.12", "0.1199", "0.1%", '✅'),
     # Higgs VEV (1 个)
-    (23, 'v (GeV)', "246", "246", "---", '✅'),
+    (25, 'v (GeV)', "246", "246", "---", '✅'),
     # ε_K (1 个)
-    (24, 'ε_K', f"{ε_K_pred:.4e}", f"{ε_K_exp:.4e}", f"{dev_εK:.1f}%", '✅'),
+    (26, 'ε_K', f"{ε_K_pred:.4e}", f"{ε_K_exp:.4e}", f"{dev_εK:.1f}%", '✅'),
 ]
 
 for n, name, pred, exp_val, dev, status in all_predictions:

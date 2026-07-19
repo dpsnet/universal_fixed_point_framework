@@ -1,6 +1,13 @@
 # 谱动力学待完善四方向
 
-> **状态更新 (2026-07-17)**：Phases 27–42 全部完成 ✅
+> **状态更新 (2026-07-19)**：Phases 27–42 全部完成 ✅；Phase 45 E2（中微子绝对质量标度）完成 ✅
+> 
+> **Phase 45 E2**（中微子绝对质量标度与 0νββ）：
+> - α_ν = 0.636（三层根因树推导，Δm² 自洽 1.4%）✅
+> - m_ν₃ = 49.5 meV, Σm_ν = 59.7 meV（Planck 兼容）✅
+> - NO |m_ee| ∈ [0.62, 4.62] meV, IO |m_ee| ∈ [19.3, 48.2] meV ✅
+> - M_R₃(m_top_GUT) = 2.91×10¹⁴ GeV（典型 See-saw）✅
+> - 见 `paperX_neutrino_absolute.py`, `notes/spectral_neutrino_absolute.md`
 > 
 > **Phase 42**（暴胀 R⁴ 修正—V₀ 精确化）：
 > - BCH 展开至 R⁴ 阶：c₁=25.19 (Phase 36), c₂=8.92, c₃=4.72 ✅（`paper42_inflation_R4.py` 7/7）
@@ -266,7 +273,7 @@ DS 减除模式：每阶去除一个 $C_A$ 因子，可**系统推广至任意�
 | **宇宙学常数 Λ** | 真空期待值 $\sim 10^{-122} M_{\text{Pl}}^4$ 与 Planck 尺度差 60 个数量级 | **多重谱静默**：四力(GR/EM/强/弱)层叠，每力4层(谱/态射/对象/辫子)，共16层 | 🟢 **Phase 41 完成**（理论根因：`notes/paper41_theoretical_root.md`）。Cl(1,7)代数⇒4力、4-范畴⇒4层静默、独立谱测度⇒乘积形式，三路必然推论导出 $\rho_\Lambda$ 量级。126 量级压制 vs 观测-120 的 6 量级差已精确归因为 S₂ 有效耦合 $\alpha_{\text{eff}}$ 的 RG 跑动不确定性（`notes/paper41_positive_contributions.py`）。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。 |
 | **CP 破坏角 $\theta_{\text{QCD}}$** | 强 CP 问题需谱流中的拓扑 $\theta$-项 | Cl(1,7) 的 $\theta$-项谱对应（非平凡拓扑类） | 🟢 **Phase 39 完成**：SU(3)→Cl(1,7) 谱嵌入、谱流守恒⇒Q_top=0、UV 截断 δθ∼(Λ_QCD/M_Pl)⁴∼10⁻⁶⁴、Det 压制∼10⁻⁵⁵ 三机制共同满足 |θ_QCD|<10⁻¹⁰（`paper39_theta_qcd.py` 6/6） |
 | **重子不对称 $\eta_B$** | 需 CP 破缺 + 非平衡动力学 | 谱流方程 + 谱熵产生（Paper VII §3）$\to$ Sakharov 条件 | 🟢 **Phase 40 完成**：η_B = (J_CP·Γ_sph·Δt_neq)/s_γ = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，0.91x ✅）（`paper40_baryogenesis.py` 6/6）。三 Sakharov 条件谱对应：B 破坏↔sphaleron 谱跃迁、C/CP 破缺↔谱 CP 角、非平衡↔谱熵产生 dS/dt>0。 |
-| **中微子质量层级** | 正常/反转层级选择需 seesaw 机制的完整谱翻译 | $\mathbf{Rec}_{\text{diss}}$ 非 Hermite 谱（Paper 35）$\to$ seesaw 谱对应 | 🟢 **Phase 38 推进**：Seesaw→Rec_diss 谱翻译完成（`paper38_neutrino_inflation.py`），正常层级从 Rec_diss 特征值排列自然涌现，M_R $\sim 10^{14}$ GeV 满足 Planck 约束；Dirac 压制因子 $\varepsilon_k = e^{-k\tau\gamma_{\text{diss}}}$ 来自 Rec_diss 弛豫。数值反推 $M_R$ 标度与 $\Delta\lambda_{\min}$ 自洽（比值为 $10^{-4}$）。 |
+| **中微子绝对质量标度** | 绝对质量、Σm、0νββ、M_R 标度的精确数值 | Phase 45 E2 完成 | 🟢 **Phase 45 E2 完成**（2026-07-19）：α_ν=0.636（三层推导 + 1.4%自洽）、m_ν₃=49.5 meV、Σm=59.7 meV（Planck ✅）、NO |m_ee|∈[0.62,4.62] meV、IO |m_ee|∈[19.3,48.2] meV、M_R₃(m_top_GUT)=2.91×10¹⁴ GeV。NO 层级从 IFS 结构自然涌现，IO 需代重排且 α_ν≈0.200 与谱流严重偏离。见 `paperX_neutrino_absolute.py`、`notes/spectral_neutrino_absolute.md`。 |
 | **暴胀能标 $V_0^{1/4}$** | 需 $A_{\text{GR}}$ 谱势的具体形状 | BCH 展至 R⁴ + Planck 归一化 | 🟢 **Phase 42 完成**：BCH 至 R⁴ 阶（`paper42_inflation_R4.py` 7/7），c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定（8.1×10¹⁵ GeV），与 c₁, n_s, r 三路自洽。 |
 
 > **已解决**：IFS 重叠因子 $\rho$（Phase 37 ✅）——由 Cl(1,7) 旋量表示正交性唯一确定，不再为开放问题。

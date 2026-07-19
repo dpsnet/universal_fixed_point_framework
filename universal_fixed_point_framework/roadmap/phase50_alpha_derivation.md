@@ -29,7 +29,7 @@ $$\boxed{\alpha_R = \frac{d_H}{2} + \varepsilon_{\text{KO}}(R) \cdot S_4 \cdot I
 - PMNS 四参数 ($\theta_{23}, \theta_{12}, \theta_{13}, \delta_{\text{CP}}$) ✅
 - $\varepsilon_K$ 交叉验证 (4.0%) ✅
 - GUT 单化与质子寿命 (M_GUT $\approx$ M_Pl) ✅
-- 全部 24 个预测, 0 拟合参数, p $\approx$ 0 ✅
+- 全部 26 个预测, 0 拟合参数, p $\approx$ 0 ✅
 
 ## 推导链结构
 
@@ -152,7 +152,7 @@ Step 4: 数值验证
 
 **验证标准**：
 - $\alpha_u, \alpha_d, \alpha_l$ 预测与拟合值偏差 < 1%
-- 导出 CKM/PMNS/ε_K/GUT 全部 24 个预测
+- 导出 CKM/PMNS/ε_K/GUT 全部 26 个预测
 - 0 个拟合自由参数
 
 **依赖**：

@@ -218,6 +218,28 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 
 **推论 7.1**（极端极限谱分类）。极端黑洞对应 $\mathbf{Rec}_D$ 边界 $\partial\mathbf{Rec}_D$ 上的谱型相变点：离散谱（$a < M$）→ 连续谱（$a = M$）→ 无谱间隙（$a > M$，裸奇点排除）。该分类与 Kerr 黑洞的因果结构精确对应。
 
+### 7.2 黑洞内部物质谱形态
+
+谱框架对黑洞内部物质的描述不同于经典广义相对论的"奇点压碎"图像。穿过视界后，谱流参数 $r$（径向坐标）变为类时，$A_{\text{GR}}$ 的谱经历相变：
+
+**定理 7.2**（内部离散谱）。在 Schwarzschild 黑洞内部 ($r < 2M$)，$A_{\text{GR}}$ 的谱从连续（QNM）变为离散：
+
+$$E_n = E_0 \cdot S_4^n, \quad n = 0, 1, \dots, N_{\max}$$
+
+其中 $E_0 = M_{\text{Pl}}^2/M_{\text{BH}}$ 为视界处最大能量尺度，$S_4 = e^{-d_H}$ 为辫子静默因子。截断 $N_{\max} = A/(4l_{\text{Pl}}^2)$ 由 Planck 尺度决定。
+
+**物理图像**：黑洞内部物质不"被奇点压碎"，而是被分解为 $A_{\text{GR}}$ 的离散本征模 $|\psi_n\rangle$，满足：
+
+$$A_{\text{GR}}|\psi_n\rangle = E_n|\psi_n\rangle$$
+
+每个模携带能量 $E_n$ 和谱相位 $\varphi_n$。信息编码在模相位的谱关联 $I_{\text{corr}} = \sum \varphi_n\varphi_n^*$ 中，与 Hawking 辐射的谱关联构成信息守恒三元组：
+
+$$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{const}$$
+
+**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Spec}$ 分支。数值验证见 `paperX_bh_interior_spectral.py`。
+
+**推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `paperX_page_curve.py`。
+
 ## 8. 结论
 
 1. **Hawking 温度谱公式**（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
@@ -225,6 +247,7 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 3. **QNM 频谱**（定理 4.1）：$\omega_n = \Delta\lambda_{\min} \cdot (l+1/2+n-i\gamma_n)$
 4. **信息持守**（定理 5.1）：$\sigma(A_t)=\sigma(A_0)$ 消解信息悖论
 5. **Page 曲线自然涌现**：$S_{\mathcal{B}}(t)$ 先增后减
+6. **内部物质谱描述**（定理 7.2）：离散模 $E_n = E_0 S_4^n$，奇点=谱边界反射
 
 
 
