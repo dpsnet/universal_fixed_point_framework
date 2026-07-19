@@ -67,18 +67,18 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + Lean 形式化 | ✅ |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 | ✅ |
 | **Paper V**：力的谱动力学 | **v1.3** | 谱流方程 + **零参数突破引用** | ✅ |
-| **Paper VI**：谱流体动力学 | **v2.0** | N-S谱流方程 + K41谱湍流RG (合并Paper XIII) | ✅ |
+| **Paper VI**：谱流体动力学 | **v2.2** | N-S谱流方程 + K41谱湍流RG (合并Paper XIII) | ✅ |
 | **Paper VII**：非平衡谱热力学 | v1.0 | 谱熵增定理 + Onsager关系 | ✅ |
-| **Paper VIII**：黑洞视界谱动力学 | **v1.1** | Hawking温度 + BH熵 + Phase 36 | ✅ |
-| **Paper IX**：奇点谱消解与量子宇宙学 | **v1.2** | Planck截断 + 量子反弹 + **§6 理论根因8子节** | ✅ |
+| **Paper VIII**：黑洞视界谱动力学 | **v1.2** | Hawking温度 + BH熵 + 内部谱 + Phase 36 | ✅ |
+| **Paper IX**：奇点谱消解与量子宇宙学 | **v1.3** | Planck截断 + 量子反弹 + **§6 理论根因8子节** | ✅ |
 | **Paper X**：谱动力学中的量子测量 | **v1.2** | M1-M4公理 + **§12 实验提案 + §9-10 定理证明** | ✅ |
 | **Paper XI：谱量子场论** | **v2.0** | **核心论文**：A1-A7公理 + **零参数预测 + 29参数审计 + 强CP** | ✅ |
-| **Paper XII**：谱量子引力 | **v1.2** | Kerr度规 + 三圈β + **谱AdS/CFT** | ✅ |
+| **Paper XII**：谱量子引力 | v1.0 | Kerr度规 + 三圈β + **谱AdS/CFT** | ✅ |
 | **Paper XIII** | — | 已合并至 Paper VI | ╳ |
 | **Paper XIV**：谱凝聚态物理 | v1.0 | 跨领域应用 | ✅ |
-| **Paper XV**：谱量子化学 | v1.0 | 跨领域应用 | ✅ |
+| **Paper XV**：谱量子化学 | v1.1 | 跨领域应用 | ✅ |
 | **Paper XVI**：Lorentz 变换的谱动力学 | **v1.0** | 相对论谱动力学 | ✅ |
-| **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.0** | **24 项零参数预测，Fisher p≈0** | ✅ |
+| **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.0** | **26 项零参数预测，Fisher p≈0** | ✅ |
 
 ### Lean 4 形式化
 
