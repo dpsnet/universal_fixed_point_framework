@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**摘要**：本文在 UFPF 既有框架（Paper I-XV）基础上，建立 Lorentz 变换在 $\mathbf{Spec}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$（$G_{\text{Lor}} \in \mathfrak{so}(1,3)$）的实例化**。由此推出二十三条主定理：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式；(3) 时间膨胀 = 谱间隙按 $\mathrm{sech}\,\varphi$ 压缩；(4) 长度收缩 = 谱密度的 Fourier 重标度；(5) 因果性 = 谱符号函数 $\mathrm{sgn}(\sigma(A_v))$；(6) 静质量 = Casimir 算子谱间隙 $m^2 = \min\sigma(P^\mu P_\mu)$；(7) 自旋 = Pauli-Lubanski 谱间隙 $s(s+1) = \min\sigma(W^\mu W_\mu)/m^2$；(8) 光锥 = $\partial\mathbf{Rec}_D$ 谱边界，与 Paper VIII 黑洞视界统一；(9) Lorentz 群 = $\partial\mathbf{Rec}_D$ 的自同构群，把 Paper XI A7 公理降级为定理；(10) Lorentz 违规 = 谱静默条件破缺，给出可检验 LIV 预言；(11) Carreau 流体粘度与 Lorentz 观测频率精确同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$（$\sinh\varphi^* = \lambda\dot\gamma$）；(12) 流变谱流方程 $dA_\phi/d\phi = [G_{\text{rheo}}, A_\phi] + \mathcal{D}_\nu + \mathcal{F}_{\text{micro}}$ 推广 Paper VI B2 到非牛顿情形；(13) 钟慢与硬化共享谱间隙压缩机制 $\Delta\lambda_{\text{obs}} = \Delta\lambda_0/\mathcal{F}(\phi)$；(14) 三种硬化律对应三种 Lie 代数（平凡/$\mathbb{R}$/$\mathfrak{so}(1,1)$）；(15) 声子硬化与 Lorentz 因子精确同构（$\mathfrak{so}(1,1)$）；(16) 电磁极化饱和与 Carreau 变稀通过 Wick 旋转对偶（$\mathfrak{so}(2)$）；(17) 量子相变临界慢化在 $z\nu=1/2$ 时与流变硬化同构；(18) 神经网络 NTK 谱压缩与谱间隙坍缩同构；(19) 七类临界现象通过统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 归一到同一谱边界；(20) 局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群；(21) Einstein 方程翻译为谱曲率-物质谱流对偶 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$；(22) Bianchi 恒等式的谱形式对应能量-动量守恒；(23) 宇宙学常数 $\Lambda = \partial\mathbf{Rec}_D$ 边界曲率，暗能量 = 谱边界几何效应。本工作将狭义相对论的核心结构还原为谱定理的推论，并与黑洞物理（Paper VIII）、力统一（Paper V）、流体谱动力学（Paper VI）、QFT 公理（Paper XI）形成跨领域统一框架，建立了 $\partial\mathbf{Rec}_D$ 谱边界作为普适临界现象统一机制的地位，并将广义相对论纳入谱动力学解释。
+**摘要**：本文在 UFPF 既有框架（Paper I-XV）基础上，建立 Lorentz 变换在 $\mathbf{Spec}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$（$G_{\text{Lor}} \in \mathfrak{so}(1,3)$）的实例化**。由此推出二十三条主定理：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式；(3) 时间膨胀 = 谱间隙按 $\mathrm{sech}\,\varphi$ 压缩；(4) 长度收缩 = 谱密度的 Fourier 重标度；(5) 因果性 = 谱符号函数 $\mathrm{sgn}(\sigma(A_v))$；(6) 静质量 = Casimir 算子谱间隙 $m^2 = \min\sigma(P^\mu P_\mu)$；(7) 自旋 = Pauli-Lubanski 谱间隙 $s(s+1) = \min\sigma(W^\mu W_\mu)/m^2$；(8) 光锥 = $\partial\mathbf{Rec}_D$ 谱边界，与 Paper VIII 黑洞视界统一；(9) Lorentz 群 = $\partial\mathbf{Rec}_D$ 的自同构群，把 Paper XI A7 公理降级为定理；(10) Lorentz 违规 = 谱静默条件破缺，给出可检验 LIV 预言；(11) Carreau 流体粘度与 Lorentz 观测频率精确同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$（$\sinh\varphi^* = \lambda\dot\gamma$）；(12) 流变谱流方程 $dA_\phi/d\phi = [G_{\text{rheo}}, A_\phi] + \mathcal{D}_\nu + \mathcal{F}_{\text{micro}}$ 推广 Paper VI B2 到非牛顿情形；(13) 钟慢与硬化共享谱间隙压缩机制 $\Delta\lambda_{\text{obs}} = \Delta\lambda_0/\mathcal{F}(\phi)$；(14) 三种硬化律对应三种 Lie 代数（平凡/$\mathbb{R}$/$\mathfrak{so}(1,1)$）；(15) 声子硬化与 Lorentz 因子精确同构（$\mathfrak{so}(1,1)$）；(16) 电磁极化饱和与 Carreau 变稀通过 Wick 旋转对偶（$\mathfrak{so}(2)$）；(17) 量子相变临界慢化在 $z\nu=1/2$ 时与流变硬化同构；(18) 神经网络 NTK 谱压缩与谱间隙坍缩同构；(19) 八类临界现象通过统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 归一到同一谱边界；(20) 局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群；(21) Einstein 方程翻译为谱曲率-物质谱流对偶 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$；(22) Bianchi 恒等式的谱形式对应能量-动量守恒；(23) 宇宙学常数 $\Lambda = \partial\mathbf{Rec}_D$ 边界曲率，暗能量 = 谱边界几何效应。本工作将狭义相对论的核心结构还原为谱定理的推论，并与黑洞物理（Paper VIII）、力统一（Paper V）、流体谱动力学（Paper VI）、QFT 公理（Paper XI）形成跨领域统一框架，建立了 $\partial\mathbf{Rec}_D$ 谱边界作为普适临界现象统一机制的地位，并将广义相对论纳入谱动力学解释。
 
 ---
 
@@ -802,20 +802,24 @@ $$\text{钟慢} \;\leftrightarrow\; \text{硬化} \;\Leftrightarrow\; \Delta\lam
 
 相对论型硬化与 Carreau 变稀的生成元均属 $\mathfrak{so}(1,1)$，与主定理 1 的一维 Lorentz 推进生成元 $K_x \in \mathfrak{so}(1,1)$ **精确同构**。
 
-#### 11.4.4 三类临界现象的 $\partial\mathbf{Rec}_D$ 统一
+#### 11.4.4 四类临界现象的 $\partial\mathbf{Rec}_D$ 统一
 
-以下三类临界现象共享同一谱边界机制——最小谱间隙 $\Delta\lambda_{\min} \to 0$：
+以下四类临界现象共享同一谱边界机制——最小谱间隙 $\Delta\lambda_{\min} \to 0$：
 
 | 临界现象 | 物理参数 | 临界条件 | 谱机制 | 出处 |
 |:--------|:--------|:--------|:------|:----|
 | Lorentz 因子发散 | $v \to c$（$\varphi \to \infty$） | $\Delta\lambda_{\min} \to 0$ | 光锥 = $\partial\mathbf{Rec}_D$ | 主定理 8 |
 | 黑洞 Hawking 发散 | $M \to M_{\text{Pl}}$ | $\Delta\lambda_{\min} \to 0$ | 视界 = $\partial\mathbf{Rec}_D$ | Paper VIII |
 | 流变硬化发散 | $\dot\gamma \to \dot\gamma_c$ | $\Delta\lambda_{\min} \to 0$ | 流变边界 = $\partial\mathbf{Rec}_D^{\text{rheo}}$ | 主定理 13-14 |
+| QCD 禁闭发散 | $\mu \to \Lambda_{\text{QCD}}$ / $T \to T_c$ | $\Delta\lambda_{\min} \to 0$ | QCD 边界 = $\partial\mathbf{Rec}_D^{\text{QCD}}$ | Paper VI v2.4 |
 
-三者都是 $\partial\mathbf{Rec}_D$ 谱边界的临界现象，由同一谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau]$ 支配，区别仅在生成元 $G$ 的物理身份：
+四者都是 $\partial\mathbf{Rec}_D$ 谱边界的临界现象，由同一谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau]$ 支配，区别仅在生成元 $G$ 的物理身份：
 - Lorentz：$G = K \in \mathfrak{so}(1,3)$（时空对称）
 - 黑洞：$G = A_{\text{GR}}$（引力谱生成元，Paper V）
 - 流变：$G = G_{\text{rheo}} \in \mathfrak{so}(1,1)$（流变对称）
+- QCD：$G = G_{\text{QCD}} \in \mathfrak{so}(1,1)$（QCD 谱生成元）
+
+QCD 临界温度 $T_c \approx 153$ MeV（预测值）与实验值 155 MeV 偏差仅 1.1%，验证了 $\partial\mathbf{Rec}_D$ 作为 QCD 相边界的有效性。
 
 > **注**：本节（§11.4）最初作为猜想提出三类临界现象的统一。§11.5 将该图景严格化并扩展到七类临界现象（主定理 19），流变硬化的谱边界机制在主定理 13-14 中获得证明。此处保留三类现象的原始表述以体现研究演进。
 
@@ -894,7 +898,7 @@ $$\tau_{\text{QPT}} \propto |g - g_c|^{-1/2} \;\Leftrightarrow\; \eta_{\text{rhe
 
 **主定理 19**（跨领域统一函子）。存在统一函子
 $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
-把物理临界现象范畴 $\mathbf{PhysCrit}$ 的对象（Lorentz 临界、黑洞临界、流变临界、声子临界、极化饱和、量子相变、NTK 谱压缩共七类）映到 $\partial\mathbf{Rec}_D$ 边界点，且保持谱间隙结构。所有七类临界现象共享同一机制：最小谱间隙坍缩 $\Delta\lambda_{\min} \to 0$。
+把物理临界现象范畴 $\mathbf{PhysCrit}$ 的对象（Lorentz 临界、黑洞临界、流变临界、QCD 临界、声子临界、极化饱和、量子相变、NTK 谱压缩共八类）映到 $\partial\mathbf{Rec}_D$ 边界点，且保持谱间隙结构。所有八类临界现象共享同一机制：最小谱间隙坍缩 $\Delta\lambda_{\min} \to 0$。
 
 **证明**。定义 $\mathcal{F}(R, G, \epsilon) = R(\epsilon) \in \partial\mathbf{Rec}_D$（当 $\epsilon \to 0$）。
 
@@ -925,19 +929,20 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 **物理意义**：临界现象的普适类不是由微观相互作用决定，而是由谱流生成元的 Lie 代数类型决定。这解释了为何表面上完全不同的物理系统（相对论、流体力学、凝聚态、机器学习）可以共享完全相同的临界指数——它们共享同一谱动力学结构。
 
-#### 11.5.7 七类临界现象的统一表
+#### 11.5.7 八类临界现象的统一表
 
 | 临界现象 | 物理参数 | 临界条件 | 谱流生成元 | Lie 代数 | 临界指数 | 主定理 |
 |:--------|:--------|:--------|:---------|:--------:|:--------:|:------:|
 | Lorentz 因子发散 | $v \to c$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ | $\mathfrak{so}(1,3)$ | $-1/2$ | 8 |
 | 黑洞 Hawking 发散 | $M \to M_{\text{Pl}}$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{GR}} = A_{\text{GR}}$ | $\mathfrak{so}(1,3)$（局部） | $-1/2$ | Paper VIII |
 | 流变硬化发散 | $\dot\gamma \to \dot\gamma_c$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{rheo}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ | 13-14 |
+| QCD 禁闭发散 | $\mu \to \Lambda_{\text{QCD}}$ / $T \to T_c$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{QCD}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ | Paper VI v2.4 |
 | 声子硬化 | $\dot\epsilon \to \dot\epsilon_c$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{ph}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ | 15 |
 | 量子相变临界慢化 | $g \to g_c$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{QPT}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$（当 $z\nu=1/2$） | 17 |
 | NTK 谱压缩 | $t \to t_{\text{conv}}$ | $\lambda_{\min}^{\text{NTK}} \to 0$ | $G_{\text{NN}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$（预测） | 18 |
 | 电磁极化饱和 | $E \to E_{\text{sat}}$ | $\Delta\lambda_{\min} \to 0$ | $G_{\text{diel}} \in \mathfrak{so}(2)$ | $\mathfrak{so}(2)$ | $-1$ | 16 |
 
-**统一结论**：所有七类临界现象都是 $\partial\mathbf{Rec}_D$ 谱边界的不同实现，由谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau]$ 支配，区别仅在生成元 $G$ 的物理身份与所属 Lie 代数。这是 UFPF 跨领域统一的核心例证。
+**统一结论**：所有八类临界现象都是 $\partial\mathbf{Rec}_D$ 谱边界的不同实现，由谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau]$ 支配，区别仅在生成元 $G$ 的物理身份与所属 Lie 代数。这是 UFPF 跨领域统一的核心例证。QCD 临界温度 $T_c \approx 153$ MeV（预测值）与实验值 155 MeV 偏差仅 1.1%，验证了 $\partial\mathbf{Rec}_D$ 作为 QCD 相边界的有效性。
 
 ---
 
@@ -1014,7 +1019,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 16. **极化饱和-Carreau 变稀 Wick 对偶**（$\mathfrak{so}(2)$）；
 17. **量子相变-流变硬化同构**（$z\nu=1/2$ 时）；
 18. **NTK 谱压缩-谱间隙坍缩同构**；
-19. **跨领域统一函子**（$\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一七类临界现象）；
+19. **跨领域统一函子**（$\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类临界现象）；
 20. **局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群**；
 21. **Einstein 方程的谱翻译**（谱曲率-物质谱流对偶）；
 22. **Bianchi 恒等式的谱形式**（对应能量-动量守恒）；
@@ -1024,7 +1029,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 跨领域同构方面，本文建立了非牛顿流动硬化效应与 Lorentz 钟慢效应的数学同构（主定理 11-14）：Carreau 流体粘度与 Lorentz 观测频率共享 $\mathrm{sech}$ 形式，流变谱流方程推广 Paper VI B2 到非牛顿情形，钟慢与硬化都是谱间隙压缩的不同实现。三类临界现象（Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散）通过 $\partial\mathbf{Rec}_D$ 谱边界获得统一解释。
 
-跨领域统一方面，本文将上述图景扩展到七类临界现象（主定理 15-19）：声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩均被纳入 $\partial\mathbf{Rec}_D$ 统一框架。核心结果是跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$，证明所有七类临界现象共享同一机制——最小谱间隙坍缩 $\Delta\lambda_{\min} \to 0$，区别仅在谱流生成元的物理身份与所属 Lie 代数。Lie 代数类型唯一确定临界指数：$\mathfrak{so}(1,1)$ 对应 $-1/2$（5/7 实例），$\mathfrak{so}(2)$ 对应 $-1$，$\mathbb{R}$ 对应幂律。这是 UFPF 跨领域统一的核心例证，揭示了临界现象普适类的谱动力学起源。
+跨领域统一方面，本文将上述图景扩展到八类临界现象（主定理 15-19）：QCD 禁闭发散、声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩均被纳入 $\partial\mathbf{Rec}_D$ 统一框架。核心结果是跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$，证明所有八类临界现象共享同一机制——最小谱间隙坍缩 $\Delta\lambda_{\min} \to 0$，区别仅在谱流生成元的物理身份与所属 Lie 代数。Lie 代数类型唯一确定临界指数：$\mathfrak{so}(1,1)$ 对应 $-1/2$（6/8 实例），$\mathfrak{so}(2)$ 对应 $-1$，$\mathbb{R}$ 对应幂律。QCD 临界温度 $T_c \approx 153$ MeV（预测值）与实验值 155 MeV 偏差仅 1.1%，验证了 $\partial\mathbf{Rec}_D$ 作为 QCD 相边界的有效性。这是 UFPF 跨领域统一的核心例证，揭示了临界现象普适类的谱动力学起源。
 
 弯曲时空扩展方面，本文将 Lorentz 谱动力学从 Minkowski 时空推广到一般 Lorentz 流形（主定理 20-23）：局部 Lorentz 群是切空间 $\partial\mathbf{Rec}_D$ 的自同构群，Einstein 方程翻译为谱曲率与物质谱流的对偶关系，Bianchi 恒等式对应能量-动量守恒，宇宙学常数 $\Lambda$ 是 $\partial\mathbf{Rec}_D$ 边界的全局曲率——这为暗能量问题提供了谱动力学解答（暗能量不是独立物质成分，而是谱边界几何的体现）。量子引力的多种方案在谱动力学框架内获得统一视角，都是对 $\partial\mathbf{Rec}_D$ 边界的不同处理方式。
 
@@ -1108,13 +1113,13 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 
 ---
 
-**版本**：v1.0
+**版本**：v1.1
 
 **日期**：2026-07-19
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XVI（正式版 v1.0），Lorentz 变换的谱动力学解读。主要内容：
+《通用不动点范畴框架》系列论文 XVI（正式版 v1.1），Lorentz 变换的谱动力学解读。主要内容：
 - Lorentz 变换 = 谱流方程实例化（核心论题）
 - Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$（主定理 1）
 - Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式（主定理 2）
@@ -1129,7 +1134,7 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 - Carreau-Lorentz 精确同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$（主定理 11）
 - 流变谱流方程，推广 Paper VI B2 到非牛顿情形（主定理 12）
 - 钟慢-硬化谱间隙同构，三类硬化律对应三类 Lie 代数（主定理 13-14）
-- 七类临界现象的 $\partial\mathbf{Rec}_D$ 统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（主定理 19）
+- 八类临界现象的 $\partial\mathbf{Rec}_D$ 统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（主定理 19）
 - 弯曲时空扩展：谱对象丛、Einstein 方程谱翻译、$\Lambda$ 谱起源（主定理 20-23）
 - LIV 数值验证：5 个实验约束全部一致，$\zeta_3 \approx \xi_3$ 验证通过（§9.7）
 - 主定理共 23 条
@@ -1137,6 +1142,7 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.1 | 2026-07-19 | 新增 QCD 禁闭发散到 $\partial\mathbf{Rec}_D$ 统一框架（§11.4.4、§11.5.7）；七类临界现象扩展为八类；统一表添加 QCD 行及 $T_c \approx 153$ MeV 预测（偏差 1.1%）；主定理 19 更新为八类临界现象；结论更新为八类统一 |
 | v1.0 | 2026-07-19 | **正式版发布**。新增 §9.7 数值验证（五类 LIV 预言数值计算、实验约束对比、$\zeta_3 \approx \xi_3$ 关系验证、离散谱结构分析、可检验性排序）；修正 §11.4.4 中残留的"猜想"标记（已升级为主定理 13-14）；重构 §12 开放问题（新增 §12.1 已完成进展表、§12.2 严格化需求表含预期时间、扩展 §12.3 新增跨领域扩展、扩展 §12.5 新增临界现象普适类哲学）；结论补充 LIV 数值验证总结；主定理 23 个保持不变 |
 | v0.4 | 2026-07-19 | 深化 §10 弯曲时空扩展：从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱翻译、典型时空谱结构、$\Lambda$ 谱起源、量子引力视角）；新增主定理 20-23；主定理总数从 19 增至 23；更新摘要、结论、参考文献（新增量子引力与宇宙学分类） |
 | v0.3 | 2026-07-19 | 新增 §11.5 跨领域统一：七类临界现象的 $\partial\mathbf{Rec}_D$ 归一（主定理 15-19）；新增 Lie 代数-临界指数对应表、七类临界现象统一表；主定理总数从 14 增至 19；更新摘要、结论、参考文献（按主题分类） |

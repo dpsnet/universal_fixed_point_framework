@@ -177,6 +177,8 @@ Phase 9 开放问题已全面推进：奇异连续谱系统刻画（谱维数谱
 
 | 日期 | 更新内容 | 关联阶段 |
 |---|---|---|
+| 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散与 $T_c$ 谱推导）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，Yukawa 特征值修正解决 $m_\mu/m_\tau$ 偏差） | Phase 51 |
+| 2026-07-18 | 新增 Phase 44：谱 QFT 工具箱构建路线图 | Phase 44 |
 | 2026-07-13 | 新增 Phase 13：理论转化推进计划 | Phase 13 |
 | 2026-07-13 | 更新 Paper I v1.8（新增 M理论层级谱静默转化） | Phase 13 |
 | 2026-07-13 | 更新 Paper II v1.5（新增理论转化完整数值库与弦图演算） | Phase 13 |

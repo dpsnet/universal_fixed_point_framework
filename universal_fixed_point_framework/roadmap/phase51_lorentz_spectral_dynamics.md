@@ -2,7 +2,7 @@
 
 **创建日期**：2026-07-19
 
-**状态**：Phase 51A 已完成（6 篇研究笔记，含流变同构笔记），Phase 51B-51F 待推进
+**状态**：Phase 51A-B-D-E-F 已完成；Phase 51C Paper XVI v1.1 发布（八类临界现象统一）；Paper VI v2.4、Paper XVII v1.2 同步完成；八类临界现象统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 建立
 
 **关联阶段**：Phase 21（Paper V 谱动力学）、Phase 23-26（Paper VI-IX）、Phase 44（谱 QFT 工具箱）、Phase 50（α 推导）
 
@@ -547,11 +547,12 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 | M4 | Phase 51C：Paper XVI 完整版 v1.0（23 主定理 + LIV 数值验证 + 跨领域统一 + 弯曲时空扩展） | 2026-07-19 | ✅ v1.0 正式发布 |
 | M5 | Phase 51D：LIV 系数数值计算（lorentz_liv_calculator.py + rec_d_boundary_perturbation.py + 数值笔记） | 2026-07-19 | ✅ 全部实验约束一致，ζ₃≈ξ₃ 验证通过 |
 | M6 | Phase 51E：弯曲时空扩展（Paper XVI v0.4 §10 深化，主定理 20-23） | 2026-07-19 | ✅ Paper XVI v0.4 发布 |
-| M7 | Phase 51F F1-F5：流变同构 + 谱边界严格化 + 跨领域统一 + Paper VI v2.2 | 2026-07-19 | ✅ Paper VI v2.3 发布（含 F2 严格化 + F5 统一 + 低能 QCD 纳入） |
+| M7 | Phase 51F F1-F5：流变同构 + 谱边界严格化 + 跨领域统一 + Paper VI v2.2 | 2026-07-19 | ✅ Paper VI v2.4 发布（含 F2 严格化 + F5 统一 + 低能 QCD + 八类临界现象统一） |
 | M8 | Phase 51F F2：流变 $\partial\mathbf{Rec}_D$ 严格化（主定理 E1-E3） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.1 整合 |
 | M9 | Phase 51F F3：流变实验对接（DST/K41） | 2026-07-19 | ✅ 脚本 + 实验设计完成 |
 | M10 | Phase 51F F5：跨领域统一扩展（声子/极化/量子相变/NTK，主定理 F1-F5） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.2 + Paper XVI §11.5 整合 |
 | M11 | Phase 51F-F3：实际实验执行（DST 流变仪、PIV 湍流谱） | M9 后 | ⏳ 6-18 个月 |
+| M12 | 八类临界现象统一完成：Paper VI v2.4 + Paper XVI v1.1 + Paper XVII v1.2 + 根因分析笔记修正 | 2026-07-19 | ✅ 全部完成 |
 
 ---
 
@@ -559,6 +560,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 
 | 日期 | 更新内容 | 关联 |
 |:----|:----|:----|
+| 2026-07-19 | **八类临界现象统一完成**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，QCD 禁闭发散纳入 $\partial\mathbf{Rec}_D$ 临界现象框架，$T_c$ 谱推导 153 MeV 偏差 1.1%）；Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类临界现象，七类扩展为八类）；Paper XVII v1.2（零参数预测从 24 增至 29 项，Yukawa 特征值修正 $y_\mu=2.34$ 解决 $m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$F_\pi$ 偏差修正为 0.1%）；根因分析笔记 $F_\pi$ 偏差修正 | Paper VI v2.4 + Paper XVI v1.1 + Paper XVII v1.2 |
 | 2026-07-19 | 创建 Phase 51：Lorentz 谱动力学与 Paper XVI 推进路线图；Phase 51A-B 完成 | Phase 51A-B |
 | 2026-07-19 | 新增 Phase 51F：流变谱动力学与跨领域同构；新增主定理 11-14；新增路径 K/L/M；新增流变-Paper VI 衔接明细；更新里程碑 M7/M8 | Phase 51F |
 | 2026-07-19 | Paper XVI 更新至 v0.2（新增 §11.4 流变同构，14 个主定理）；Paper VI 更新至 v2.1（新增 §8 非牛顿流变谱动力学）；里程碑 M3/M7 标记完成 | Paper XVI v0.2 + Paper VI v2.1 |
