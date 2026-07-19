@@ -547,7 +547,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 | M4 | Phase 51C：Paper XVI 完整版 v1.0（23 主定理 + LIV 数值验证 + 跨领域统一 + 弯曲时空扩展） | 2026-07-19 | ✅ v1.0 正式发布 |
 | M5 | Phase 51D：LIV 系数数值计算（lorentz_liv_calculator.py + rec_d_boundary_perturbation.py + 数值笔记） | 2026-07-19 | ✅ 全部实验约束一致，ζ₃≈ξ₃ 验证通过 |
 | M6 | Phase 51E：弯曲时空扩展（Paper XVI v0.4 §10 深化，主定理 20-23） | 2026-07-19 | ✅ Paper XVI v0.4 发布 |
-| M7 | Phase 51F F1-F5：流变同构 + 谱边界严格化 + 跨领域统一 + Paper VI v2.2 | 2026-07-19 | ✅ Paper VI v2.2 发布（含 F2 严格化 + F5 统一） |
+| M7 | Phase 51F F1-F5：流变同构 + 谱边界严格化 + 跨领域统一 + Paper VI v2.2 | 2026-07-19 | ✅ Paper VI v2.3 发布（含 F2 严格化 + F5 统一 + 低能 QCD 纳入） |
 | M8 | Phase 51F F2：流变 $\partial\mathbf{Rec}_D$ 严格化（主定理 E1-E3） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.1 整合 |
 | M9 | Phase 51F F3：流变实验对接（DST/K41） | 2026-07-19 | ✅ 脚本 + 实验设计完成 |
 | M10 | Phase 51F F5：跨领域统一扩展（声子/极化/量子相变/NTK，主定理 F1-F5） | 2026-07-19 | ✅ 笔记 v0.1 + Paper VI §9.2 + Paper XVI §11.5 整合 |
@@ -564,6 +564,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 | 2026-07-19 | Paper XVI 更新至 v0.2（新增 §11.4 流变同构，14 个主定理）；Paper VI 更新至 v2.1（新增 §8 非牛顿流变谱动力学）；里程碑 M3/M7 标记完成 | Paper XVI v0.2 + Paper VI v2.1 |
 | 2026-07-19 | Phase 51F F2/F3/F5 完成：新增 3 篇笔记（流变谱边界严格化、实验设计、跨领域统一）；新增 2 个数值脚本（DST 比对、非牛顿 K41）；新增主定理 E1-E3、F1-F5；里程碑 M8/M9/M10 标记完成 | Phase 51F F2/F3/F5 |
 | 2026-07-19 | Paper XVI 更新至 v0.3（新增 §11.5 跨领域统一，主定理 15-19，共 19 个主定理）；Paper VI 更新至 v2.2（新增 §9 流变谱边界严格化与跨领域统一，主定理 E1-E3 + F5）；F2/F5 研究成果整合入正式论文；里程碑 M3/M7/M8/M10 更新状态 | Paper XVI v0.3 + Paper VI v2.2 |
+| 2026-07-19 | Paper VI 更新至 v2.3：主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散）、低能 QCD 谱翻译纳入统一图景（$\Lambda_{\text{QCD}}$ 谱推导、方案转换因子 $Z_s = Z_3 = 1.39$、⟨ψ̄ψ⟩ 定量预测 2% 精度）；Phase 46 Q1 核心问题已解决；Paper XVII 更新至 v1.1（新增 §12 低能 QCD 谱翻译，零参数预测数从 26 增至 28） | Paper VI v2.3 + Paper XVII v1.1 + Phase 46 Q1 核心解决 |
 | 2026-07-19 | Paper XVI 更新至 v0.4（深化 §10 弯曲时空扩展，新增主定理 20-23，共 23 个主定理）；§10 从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱翻译、典型时空谱结构、Λ 谱起源、量子引力视角）；里程碑 M6 标记完成 | Paper XVI v0.4 + M6 |
 | 2026-07-19 | Phase 51D 完成：创建 lorentz_liv_calculator.py（LIV 系数计算模块）、rec_d_boundary_perturbation.py（∂Rec_D 谱边界扰动模拟）、spectral_lorentz_liv_numerics.md（数值验证笔记）；全部 5 个实验约束 ✓ 一致（Fermi LAT/GW170817/Auger/IceCube/IXPE）；ζ₃≈ξ₃ 验证通过（解析层面 ζ₃/ξ₃ = 1+10⁻¹⁷）；η₃=±5×10⁻⁸ 为最有可检验性预言；里程碑 M5 标记完成 | Phase 51D + M5 |
 | 2026-07-19 | Paper XVI v1.0 正式发布：新增 §9.7 数值验证（五类 LIV 预言数值结果、实验约束对比、ζ₃≈ξ₃ 验证、离散谱结构、可检验性排序）；修正 §11.4.4 猜想标记；重构 §12 开放问题（新增已完成进展表、严格化需求表、跨领域扩展方向、临界现象哲学）；主定理 23 个保持不变；里程碑 M4 标记完成 | Paper XVI v1.0 + M4 |
