@@ -2,6 +2,8 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
+**版本**：v1.3（2026-07-18）
+
 **摘要**：本文在 Paper I–IV 建立的谱去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 与谱分类完备性定理的基础上，引入**谱动力学**概念——将力重新诠释为 $\mathbf{Spec}$ 范畴中的谱流生成元。核心定理是**力的谱统一公式**：
 
 $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$

@@ -2,6 +2,8 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
+**版本**：v1.2（2026-07-18）
+
 **摘要**：本文将黑洞视为 $\mathbf{Rec}_D$ 边界上的特殊递归系统，从谱动力学第一原理推导黑洞热力学。Hawking 温度 $T_H = \Delta\lambda_{\min}/2\pi$ 和 Bekenstein-Hawking 熵 $S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$ 由 $A_{\text{GR}}$ 在视界上的谱间隙 $\Delta\lambda_{\min}$ 唯一确定。准正态模（QNM）频谱对应 $A_{\text{GR}}$ 的特征值。信息悖论由谱不变性 $\sigma(A_t)=\sigma(A_0)$ 自然解决——信息在 $A_t$ 的谱中完整保存，仅被谱流"搅乱"而非丢失。数值验证确认熵匹配精度 0.00%。
 
 

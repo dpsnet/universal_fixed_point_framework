@@ -2,6 +2,8 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
+**版本**：v1.3（2026-07-18）
+
 **摘要**：广义相对论的奇点问题在谱动力学框架中得到自然解决——$A_{\text{GR}}$ 的离散谱结构在 Planck 尺度提供内在截断 $\|A_{\text{GR}}\|_{\text{HS}} \le \lambda_{\max} \sim M_{\text{Pl}}$，将经典奇点替换为有限谱截断。宇宙在大爆炸处经历量子反弹 $a(t) \to a_{\min}>0$，反弹尺度由谱间隙 $\Delta\lambda_{\min}$ 决定。该机制与 LQG 面积谱量化（R²=0.999984）和 FLRW 宇宙学（$n_s\approx0.965$）定量一致。数值验证脚本 `paper28_quantum_bounce.py` 完成 7 项交叉检查（谱截断、LQG 拟合、量子反弹、$R^2$ 修正、原初谱指数、黑洞蒸发连接、有效 Friedmann 方程），全部通过。
 
 

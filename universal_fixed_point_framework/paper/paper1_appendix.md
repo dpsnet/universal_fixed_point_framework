@@ -2,6 +2,8 @@
 
 > 本附录为 `paper1_fractal_spectral_derecursion.md` 的独立附录文件，包含代码实现清单、机器证明形式化进展与技术引理。正文中的引用直接指向本文件对应章节。
 
+**版本**：v2.34（2026-07-17）
+
 ## A. 代码实现
 
 本文理论框架的完整代码实现位于 `universal_fixed_point_framework/src/`，与本文直接相关的核心模块如下：
@@ -370,7 +372,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 - [17] Rogers, C.A. (1998). *Hausdorff Measures*. 2nd ed. Cambridge University Press.（Hausdorff 测度）
 - [18] Mattila, P. (1995). *Geometry of Sets and Measures in Euclidean Spaces: Fractals and Rectifiability*. Cambridge University Press.（分形几何与测度论）
 
-## 版本信息与变更记录
+---
 
 **版本**：v2.34
 
@@ -384,7 +386,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
-|---|---|---|
+|------|------|----------|
 | v2.35 | 2026-07-17 | 新增 §A.15.9 Phase 41 多重静默 Λ（理论根因+分层表现）；§A.15.10 Phase 42 暴胀 R⁴ 修正；半涌现量全部去外部输入化 |
 | v2.34 | 2026-07-17 | 新增 §A.15.8 Phase 37 IFS 重叠因子推导；版本号同步；半涌现量全部去外部输入化 |
 | v2.33 | 2026-07-17 | 新增 §A.15.7 Phase 36 谱间隙第一性原理推导 |

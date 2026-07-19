@@ -1,8 +1,10 @@
 # 通用不动点范畴框架 XVII：从严格 4-范畴零参数预测全部粒子物理可观测量
 
-**摘要**
+**作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-标准模型包含约 20 个自由参数，其数值由实验确定但缺乏理论解释。本文提出 $\mathbf{Spec}$ 严格 4-范畴作为物理宇宙的基本数学结构——从该范畴出发，**零拟合参数**第一性原理推导出全部可观测量：费米子质量层级（6个质量比，引入 Yukawa 特征值修正后全部在 ×1.5 以内）、完整 CKM 矩阵（5个参数含 CP 相位 $\delta_{\text{CP}}$）、完整 PMNS 矩阵（4个参数含 $\delta_{\text{CP}}^{\text{PMNS}}$）、$M_Z$ 处三个规范耦合、中微子质量层级 $\Delta m^2_{21}/\Delta m^2_{31}$、中微子绝对质量标度 $\Sigma m_\nu = 59.7\ \text{meV}$、暗物质遗迹密度 $\Omega h^2 = 0.12$、中性 Kaon CP 破坏参数 $\varepsilon_K = 2.14\times10^{-3}$、无中微子双贝塔衰变有效质量 $m_{\beta\beta} \in [0.6, 4.6]\ \text{meV}$、低能 QCD 参数 $\Lambda_{\text{QCD}} \approx 45$ MeV、$\langle\bar{q}q\rangle \approx -(275\text{ MeV})^3$ 和临界温度 $T_c \approx 153$ MeV。共 29 个独立预测，零自由参数。Fisher 组合 $p$-value 分析得 $p \approx 0$，压倒性拒绝随机巧合的零假设。框架还预测规范耦合在 Planck 能标趋近单化 ($M_{\text{GUT}} \approx 10^{19}\ \text{GeV}$)，质子衰变不可观测 ($\tau_p \sim 10^{52}\ \text{yr}$)，并自然预测中微子正常排序 (Normal Ordering)。四类临界现象（Lorentz/黑洞/QCD/流变）共享同一 $\partial\mathbf{Rec}_D$ 谱间隙坍缩机制。此外，框架从谱交织条件直接导出弱等效原理（惯性质量 = 引力质量），作为第 30 项零参数验证。
+**版本**：v1.3（2026-07-19）
+
+**摘要**：标准模型包含约 20 个自由参数，其数值由实验确定但缺乏理论解释。本文提出 $\mathbf{Spec}$ 严格 4-范畴作为物理宇宙的基本数学结构——从该范畴出发，**零拟合参数**第一性原理推导出全部可观测量：费米子质量层级（6个质量比，引入 Yukawa 特征值修正后全部在 ×1.5 以内）、完整 CKM 矩阵（5个参数含 CP 相位 $\delta_{\text{CP}}$）、完整 PMNS 矩阵（4个参数含 $\delta_{\text{CP}}^{\text{PMNS}}$）、$M_Z$ 处三个规范耦合、中微子质量层级 $\Delta m^2_{21}/\Delta m^2_{31}$、中微子绝对质量标度 $\Sigma m_\nu = 59.7\ \text{meV}$、暗物质遗迹密度 $\Omega h^2 = 0.12$、中性 Kaon CP 破坏参数 $\varepsilon_K = 2.14\times10^{-3}$、无中微子双贝塔衰变有效质量 $m_{\beta\beta} \in [0.6, 4.6]\ \text{meV}$、低能 QCD 参数 $\Lambda_{\text{QCD}} \approx 45$ MeV、$\langle\bar{q}q\rangle \approx -(275\text{ MeV})^3$ 和临界温度 $T_c \approx 153$ MeV。共 29 个独立预测，零自由参数。Fisher 组合 $p$-value 分析得 $p \approx 0$，压倒性拒绝随机巧合的零假设。框架还预测规范耦合在 Planck 能标趋近单化 ($M_{\text{GUT}} \approx 10^{19}\ \text{GeV}$)，质子衰变不可观测 ($\tau_p \sim 10^{52}\ \text{yr}$)，并自然预测中微子正常排序 (Normal Ordering)。四类临界现象（Lorentz/黑洞/QCD/流变）共享同一 $\partial\mathbf{Rec}_D$ 谱间隙坍缩机制。此外，框架从谱交织条件直接导出弱等效原理（惯性质量 = 引力质量），作为第 30 项零参数验证。
 
 ---
 
