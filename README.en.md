@@ -178,7 +178,7 @@ It should be emphasized that **core mathematical structures have been verified b
 | **Paper IX** | Singularity Spectral Resolution & Quantum Cosmology | QG + cosmology | **v1.3** ✅ |
 | **Paper X** | Quantum Measurement in Spectral Dynamics | Quantum measurement | **v1.2** ✅ |
 | **Paper XI** | Spectral Quantum Field Theory | **Core paper** | **v2.0** ✅ |
-| **Paper XII** | Spectral Quantum Gravity | Quantum gravity | v1.0 ✅ |
+| **Paper XII** | Spectral Quantum Gravity | Quantum gravity | **v1.1** ✅ |
 | **Paper XIII** | Fluid Spectral Dynamics (merged into Paper VI) | Cross-disciplinary | ╳ |
 | **Paper XIV** | Spectral Condensed Matter Physics | Condensed matter | v1.0 ✅ |
 | **Paper XV** | Spectral Quantum Chemistry | Quantum chemistry | v1.1 ✅ |

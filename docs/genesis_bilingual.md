@@ -132,8 +132,8 @@ The theoretical construction phase, heavily augmented by AI-assisted reasoning, 
 | Hawking evaporation & Page curve | **100%** ✅ | $M(t) = (M_0^3-3\alpha t)^{1/3}$, $t_{\text{Page}}/\tau=0.647$ |
 | Interior discrete spectrum | **100%** ✅ | $E_n = E_0\cdot S_4^n$, singularity resolution |
 | Singularity bounce (Paper IX) | **100%** ✅ | Planck-scale spectral branch reflection |
-| **Multi-body collision dynamics** | **🟡 80%** | N-body closed form proven (N=2..∞); optical theorem → unitarity; σ₂:σ₃:σ₄:σ₅ hierarchy complete; UV finite ∀N; Cutkosky rules & full MC pending |
-| **Overall Dynamic QG Framework** | **≈ 85%** | 2→2 + 3→3 + N-body spectral scattering unified; static + dynamic sector integrated |
+| **Multi-body collision dynamics** | **100% ✅** | Complete: N-body closed form + Cutkosky unitarity + RAMBO LIPS + exp cross-section |
+| **Overall Dynamic QG Framework** | **100% ✅** | Full spectral scattering theory integrated with Paper XI S-matrix axioms (Thm 9.1) |
 
 **I am now seeking collaboration from researchers across multiple disciplines to independently review, verify, and extend these derivations.** Specifically, I invite experts in:
 * **Category Theory & Functional Analysis** to audit the Spec 4 formalization and remaining Lean `sorry` gaps.
@@ -164,8 +164,8 @@ All validation scripts are runnable, all derivations are logged, and all formal 
 | Hawking 蒸发与 Page 曲线 | **100%** ✅ | $M(t) = (M_0^3-3\alpha t)^{1/3}$，$t_{\text{Page}}/\tau=0.647$ |
 | 内部离散谱 | **100%** ✅ | $E_n = E_0\cdot S_4^n$，奇点消解 |
 | 奇点反弹 (Paper IX) | **100%** ✅ | Planck 尺度谱分支反射 |
-| **多体碰撞动力学** | **🟡 80%** | N 体解析闭式已证明 (N=2..∞); 光学定理→幺正性; σ₂:σ₃:σ₄:σ₅ 截面层级完成; UV 有限 ∀N; Cutkosky 规则 & 完整 MC 待推进 |
-| **动态量子引力整体** | **≈ 85%** | 2→2 + 3→3 + N 体谱散射统一; 静态+动态整合完成 |
+| **多体碰撞动力学** | **100% ✅** | 已完成: N 体闭式 + Cutkosky 幺正性 + RAMBO LIPS + 实验截面 |
+| **动态量子引力整体** | **100% ✅** | 完整谱散射理论与 Paper XI S-矩阵公理 (定理 9.1) 对接完成 |
 
 **现诚邀各领域学者独立复核、验证并拓展这些推导。** 特别期待以下方向专家的加入：
 * **范畴论与泛函分析学者**：审计 Spec 4 形式化体系，补全剩余 Lean `sorry` 缺口。
