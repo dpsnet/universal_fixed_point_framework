@@ -36,3 +36,4 @@ lake-packages/
 .lean4-info/
 tmp/
 lean-4.32.0-windows.tar.zst
+/.trae/
