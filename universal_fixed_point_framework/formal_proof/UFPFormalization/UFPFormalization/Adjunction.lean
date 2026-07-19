@@ -4,7 +4,7 @@ import UFPFormalization.DecursionFunctor
 import UFPFormalization.SpectralCorrespondence
 import Mathlib.CategoryTheory.Adjunction.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.LinearAlgebra.Matrix.Spectrum
+import Mathlib.Analysis.Matrix.Spectrum
 
 namespace UFPFormalization
 

@@ -4,7 +4,7 @@ import UFPFormalization.DecursionFunctor
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.NormedSpace.Exponential
+import Mathlib.Analysis.Normed.Algebra.Exponential
 
 namespace UFPFormalization
 

@@ -28,6 +28,7 @@ import UFPFormalization.HigherRecCategory
 import UFPFormalization.HigherSpecCategory
 import UFPFormalization.HigherDecursionFunctor
 import UFPFormalization.InfinityCategory
+import UFPFormalization.StaticTopologyFormalization
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory
