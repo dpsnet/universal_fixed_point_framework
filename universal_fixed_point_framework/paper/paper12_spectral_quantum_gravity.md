@@ -381,9 +381,34 @@ $$\beta(G_N) = 2G_N + \frac{c}{16\pi^2} G_N^2 \Lambda^2,$$
 
 其中 $c$ 是来自物质圈图贡献的系数。在谱截断 $\Lambda \to M_{\text{Pl}}$ 时，$G_N$ 跑动自然终止于谱边界。
 
-### 8.7 交叉验证
+### 8.7 Wick 转动作为谱等价桥
 
--Yukawa 耦合跑动（$y_t$ 从 Planck 的 0.50 跑动到 $M_Z$ 的 0.70）与标准模型预期一致
+Wick 转动 $t = i\tau$ 在谱框架中获得了新的诠释：它是**静态↔动态谱等价桥**（Paper XIX §6.2）在量子引力中的核心实现。
+
+**定理 8.1**（Wick 转动 = 谱等价桥）。Wick 转动建立了 Lorentz 动态系统 $R_{\text{L}}$ 与 Euclidean 静态背景 $R_{\text{E}}$ 之间的谱等价：
+
+| 侧 | 系统 | $\mathbf{Rec}$ 对象 | 谱像 |
+|:--:|:----|:------------------|:----:|
+| 动态侧 | Minkowski QFT | $(M_{1,3}, \Phi_{\text{L}}, \mathbb{R}, \mu)$ | $D(R_{\text{L}})$ 有 Lorentz 谱 |
+| 静态侧 | Euclidean 流形 | $(M_4, \mathrm{id}, \mathbb{R}_{\ge 0}, \mu)$ | $D^{\text{id}}(M_4)$ 有 Laplace 谱 |
+
+等价机制：解析延拓 $t = i\tau$ 满足 Paper XIX 谱等价桥定理的全部四个条件：
+- S1（连续谱）：$\checkmark$——Wick 转动后谱为 $[0,\infty)$ 连续
+- S2（零测度）：$\checkmark$——测度等价保持
+- S3（无间隙）：$\checkmark$——$E \in [0,\infty)$ 无间隙
+- S4（零轨道权重）：$\checkmark$——虚时方向在静态极限下权重为零
+
+**推论 8.1a**（Euclidean 路径积分 = 静态延拓的谱像）。$Z_{\text{E}} = \int \mathcal{D}\phi\, e^{-S_E[\phi]}$ 的谱版本为 $Z_{\text{spec}} = \operatorname{Tr}_{\mathbf{Spec}} e^{-\beta D^{\text{id}}(M_4)}$，其中 $D^{\text{id}}$ 是静态谱几何函子（Paper XIX §3.3），$\beta$ 是逆温度。这一对应将有限温场论整合入谱框架：
+- $T = 0$（基态）：纯 Wick 转动，$D(R_{\text{L}}) \cong D^{\text{id}}(M_4)$
+- $T > 0$（有限温）：Euclidean 时间紧致化 $S^1_\beta$，$D^{\text{id}}(S^1_\beta \times M_3)$ 分解为 Matsubara 模式与空间谱的直和
+
+**推论 8.1b**（黑洞热力学的静态极限）。通过 $\tau$ 周期性 $\beta = 8\pi M$（Gibbons-Hawking），Kerr 黑洞的谱流在 $a \to 0$ 极限下冻结为 Schwarzschild 静态背景：
+$$\lim_{a \to 0} D(R_{\text{Kerr}}) \cong D^{\text{id}}(M_{\text{Schwarzschild}})$$
+这是 Paper XIX 冻结过程（定理 6.3）在黑洞物理中的具体实现——旋转生成元 $G_{\text{rot}} \to 0$ 导致谱流退化。
+
+### 8.8 交叉验证
+
+- Yukawa 耦合跑动（$y_t$ 从 Planck 的 0.50 跑动到 $M_Z$ 的 0.70）与标准模型预期一致
 - 高斯不动点 ($g \to 0$) 在 $\Lambda \to M_{\text{Pl}}$ 极限下恢复：$\beta(g \to 0) \to 0$
 - 跑动方向正确：U(1) 耦合去 IR 减小，SU(2)/SU(3) 去 IR 增大（渐近自由）
 
@@ -679,16 +704,17 @@ $$\langle \mathcal{O}(x)\mathcal{O}(x') \rangle_{\text{CFT}}^{\text{spec}} \xrig
 
 ---
 
-**版本**：v1.1
+**版本**：v1.2
 
 **日期**：2026-07-19
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XII（增强版 v1.1），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。6 核心脚本 44/44 检查通过。
+《通用不动点范畴框架》系列论文 XII（增强版 v1.2），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。v1.2 新增 §8.7 Wick 转动作为谱等价桥。6 核心脚本 44/44 检查通过。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.2 | 2026-07-19 | **谱等价桥**：新增 §8.7 Wick 转动作为谱等价桥（Paper XIX §6.2 在 QG 中的应用），将 Euclidean 路径积分重新诠释为静态延拓的谱像 |
 | v1.1 | 2026-07-19 | 新增 §4.4 N 体谱散射统一闭式、§4.5 谱 Cutkosky 规则与幺正性、§4.6 实验截面；更新摘要与数值脚本表；44/44 检查通过 |
 | v1.0 | 2026-07-18 | 初始版本：整合 $A_{\text{GR}}$ 谱、引力子传播子、Planck 2→2 散射、BH 视界/奇点/蒸发。§8 跨尺度 RG 流完整展开。§9.2 Kerr 度规全谱分解、§9.3 三圈 $\beta$ 函数、§9.4 谱 AdS/CFT 对应。2 核心脚本 12/12 + 跨 RG 4/4 = 16/16 检查通过。 |

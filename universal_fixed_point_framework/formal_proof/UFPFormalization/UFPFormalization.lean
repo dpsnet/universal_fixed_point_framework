@@ -29,6 +29,13 @@ import UFPFormalization.HigherSpecCategory
 import UFPFormalization.HigherDecursionFunctor
 import UFPFormalization.InfinityCategory
 import UFPFormalization.StaticTopologyFormalization
+import UFPFormalization.NoiseCategory
+import UFPFormalization.MultiSilenceMethodology
+import UFPFormalization.PhysicalSilenceAnalysis
+import UFPFormalization.ForceUnification
+import UFPFormalization.YukawaIFSWeights
+import UFPFormalization.InfinityReflection
+import UFPFormalization.GelfandDuality
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory

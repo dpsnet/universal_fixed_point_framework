@@ -242,6 +242,27 @@ $$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{cons
 
 **推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `paperX_page_curve.py`。
 
+### 7.3 静态极限与恒等延拓
+
+当 Kerr 黑洞旋转消失时（$a \to 0$），谱流冻结为 Schwarzschild 静态度量。这一极限是 Paper XIX 恒等延拓框架（$\mathbf{Rec}_{\text{id}}$）在黑洞物理中的精确实现。
+
+**定理 7.3**（Kerr→Schwarzschild 的谱冻结）。旋转生成元 $G_{\text{rot}} = [A_{\text{GR}}, \mathcal{L}_\phi]$ 在 $a \to 0$ 时趋于零，谱流方程退化为：
+$$\lim_{a \to 0} \frac{d}{dt} D(R_{\text{Kerr}}) = 0$$
+
+此时 $D(R_{\text{Kerr}})$ 的谱像收敛到 $D^{\text{id}}(M_{\text{Schwarzschild}})$——即 Schwarzschild 时空作为 $\mathbf{Rec}_{\text{id}}$ 对象的谱几何像。
+
+| 参数 | 动态 Kerr | 静态极限 $a \to 0$ | $\mathbf{Rec}_{\text{id}}$ 对应 |
+|:----|:---------:|:-----------------:|:----------------------------:|
+| 谱间隙 | $\Delta\lambda_{\min}(a) = \Delta\lambda_{\min}(0)\sqrt{1-a^2/M^2}$ | $\Delta\lambda_{\min} = 0.122 M_{\text{Pl}}$ | S3 判定：❌ 有间隙 |
+| Hawking 温度 | $T_H(a) = \Delta\lambda_{\min}(a)/(2\pi)$ | $T_H = 0$（冻结）| 谱流退化 |
+| 视界 | $r_+ \neq r_-$ | $r_+ = r_- = 2M$ | $D^{\text{id}}$ 谱几何 |
+| 态密度 | 连续 QNM | 离散 Laplace 谱 | S1 判定：❌ 离散 |
+| 信息编码 | Hawking 辐射关联 | 恒等延拓谱不变 | 信息持守 |
+
+**推论 7.3a**（静态极限的静默分类）。根据 Paper XIX §5.1，Schwarzschild 静态极限的恒等延拓是**弱静默对象**（S2+S4 满足，S1+S3 不满足），因其离散 Laplace 谱有正间隙。这一分类与 Schwarzschild 黑洞具有非零 Bekenstein-Hawking 熵的事实自洽——弱静默对象仍有可分辨的谱结构。
+
+**推论 7.3b**（冻结过程 = Page 曲线的终点）。黑洞蒸发的终点（残骸质量 $M \to M_{\text{Pl}}$）对应谱流的完全冻结——$A_{\text{GR}}$ 的离散谱在 $\partial\mathbf{Rec}_D$ 边界处停止演化，残余的 Planck 质量黑洞作为 $\mathbf{Rec}_{\text{id}}$ 对象存在。这与 Paper XIX 的冻结过程（定理 6.3）一致：$G(t) \to 0 \implies dA/dt \to 0$。
+
 ## 8. 结论
 
 1. **Hawking 温度谱公式**（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
@@ -267,23 +288,25 @@ $$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{cons
 
 ---
 
-**版本**：v1.2
+**版本**：v1.3
 
-**日期**：2026-07-18
+**日期**：2026-07-19
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。主要内容：
+《通用不动点范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。v1.3 新增 §7.3 静态极限与恒等延拓（Paper XIX 冻结过程在 Kerr→Schwarzschild 中的实现）。主要内容：
 - Hawking 温度谱公式（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
 - BH 熵谱公式（定理 3.1）：$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$，数值匹配 0.0000%
 - QNM 频谱（定理 4.1）：$\omega_n$ 由谱间隙决定
 - 信息持守（定理 5.1）：谱不变性消解信息悖论
 - Page 曲线的谱计算
 - Kerr 推广与 Paper IV 交叉验证
+- 静态极限恒等延拓（§7.3：Kerr→Schwarzschild 的谱冻结与弱静默分类）
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.3 | 2026-07-19 | **范畴论深化**：新增 §7.3 静态极限与恒等延拓（Kerr→Schwarzschild 谱冻结、弱静默分类、Page 曲线终点）|
 | v1.2 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
 | v1.1 | 2026-07-17 | 同步 Phase 36：谱间隙 Δλ_min 第一性原理导出 |
 | v1.0 | 2026-07-17 | 新增 §2.4 Hille-Yosida 蒸发半群、§7.1 极端极限连续谱 |

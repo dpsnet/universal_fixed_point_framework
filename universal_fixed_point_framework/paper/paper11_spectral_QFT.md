@@ -715,7 +715,7 @@ $$\boxed{2\operatorname{Im} \mathcal{M}^{\text{spec}}(i \to i) = \sum_n \int d\P
 
 $$2\operatorname{Im} T_{\text{spec}} = T_{\text{spec}}^\dagger T_{\text{spec}}.$$
 
-**第四步：完备性关系。**  
+**第四步：完备性关系。**
 谱光学定理的中间态求和在 $\mathbf{Spec}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
 
 $$I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \; |n\rangle \langle n|,$$
@@ -728,7 +728,7 @@ $$\sum_n \int d\Pi_n^{\text{spec}} \; \langle i | T_{\text{spec}}^\dagger | n \r
 
 $$T_{\text{spec}} - T_{\text{spec}}^\dagger = i T_{\text{spec}}^\dagger T_{\text{spec}}.$$
 
-**第五步：幺正性的结论。**  
+**第五步：幺正性的结论。**
 由 $S_{\text{spec}} = I + i T_{\text{spec}}$ 计算：
 
 $$
@@ -754,6 +754,23 @@ $$
 | Cutkosky 规则 | $\phi^4$ 单圈 $s$-道 | $\operatorname{Disc}$ 精确匹配 |
 | 光学定理 | 结构恒等式 | 严格成立 |
 | Källén-Lehmann 求和规则 | $\int \rho = Z + \int \rho_{\text{cont}}$ | $0.902 + 0.098 = 1.000$ |
+
+### 9.8 Schwinger-Keldysh 谱等价桥
+
+Schwinger-Keldysh（闭合时间路径）形式主义将量子场的实时演化表示为正向和反向时间路径上的路径积分。在 $\mathbf{Spec}$ 范畴框架中，这一形式主义获得了新的诠释——它是**噪声↔确定性谱等价桥**（Paper XIX §8.5）在量子场论中的精确实现。
+
+**定理 9.2**（SK 谱等价桥）。Schwinger-Keldysh 路径积分中的噪声核 $G_K(\omega)$ 与 Feynman 传播子虚部 $\operatorname{Im} G_R(\omega)$ 之间存在谱等价关系：
+$$\operatorname{Im} G_R(\omega) = \frac{1}{2} \tanh\left(\frac{\beta\omega}{2}\right) G_K(\omega)$$
+这正是 Paper XIX 噪声↔确定性谱等价桥在 QFT 中的具体形式——$\Sigma$-$D(N) \cong D(R)$ 的量子场论版本。
+
+| SK 概念 | $\Sigma$-$\mathbf{Rec}$/$\mathbf{Rec}$ 对应 | Paper XIX 对应 |
+|:-------|:------------------------------------------|:--------------:|
+| 噪声核 $G_K$（涨落谱） | 噪声直和 $N = \bigoplus_i R_{\text{local},i}$ | §8.5 噪声侧 |
+| Feynman 传播子 $\operatorname{Im} G_R$（响应谱） | 确定性系统 $R \in \mathbf{Rec}$ | §8.5 确定性侧 |
+| 涨落-耗散关系 | $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对 | §8.3 定理 8.5 |
+| 闭时路径 = 正向+反向演化 | 冻结-解冻过程 $G(t) = G_R \to 0 \to G_R$ | §6.3 定理 6.3-6.4 |
+
+**推论 9.2**（实时 QFT 的谱统一）：零温 ($T=0$) 下 Schwinger-Keldysh 形式退化为标准 Feynman 传播子，对应于 $\eta = 0$（纯确定性极限）；有限温 ($T>0$) 下噪声核激活，对应于 $\eta > 0$（混合系统）。临界噪声强度 $\eta_c$ 对应量子-经典转变温度 $T^* \sim \Delta\lambda_{\min}$。
 
 ---
 
@@ -812,13 +829,13 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 ---
 
-**版本**：v2.0
+**版本**：v2.1
 
-**日期**：2026-07-18
+**日期**：2026-07-19
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XI（增强版 v2.0），谱量子场论的公理、翻译与数值验证——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序等逐一翻译为谱语言。6 数值脚本合计 36/36 检查通过。
+《通用不动点范畴框架》系列论文 XI（增强版 v2.1），谱量子场论的公理、翻译与数值验证——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序等逐一翻译为谱语言。v2.1 新增 §9.8 Schwinger-Keldysh 谱等价桥。6 数值脚本合计 36/36 检查通过。
 
 **变更记录**：
 
@@ -826,6 +843,7 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 |------|------|----------|
 | v1.0 | 2026-07-18 | 初稿完成：10 章 + 附录 C，~400 行。含 A1-A6 公理、标量/旋量/规范/Higgs 谱翻译、Feynman 规则（7/7）、路径积分/$\beta$ 函数（4/4）、BRST/鬼场/Ward（6/6）、手性/反常消去（7/7）、完整 SM（8/8）、**§9 谱 QFT 形式化**（LSZ/Cutkosky/光学定理/Källén-Lehmann, 4/4）。**附录 C**：$\alpha$ 谱推导完整内容（6 节）。6 数值脚本合计 36/36 检查通过。 |
 | v1.1 | 2026-07-18 | 补充三大理论节：**§2.8** A7 谱 Lorentz 协变公理（定义 2.7）；**§9.5** 谱规范的 LSZ 公式（BRST 上同调投射）；**§9.6** S 矩阵幺正性的完整谱证明（定理 9.1）。原 §2.8→§2.9，原 §9.5→§9.7。更新 §10.1 总结、§10.3 开放问题标记为 [已完成]。 |
+| v2.1 | 2026-07-19 | **噪声谱桥**：新增 §9.8 Schwinger-Keldysh 谱等价桥（SK = 噪声↔确定性谱等价桥在 QFT 中的实现，$\operatorname{Im}G_R = \frac12\tanh(\beta\omega/2)G_K$，连接 Paper XIX §8.5）|
 | v2.0 | 2026-07-18 | **全参数谱覆盖与论文全面升级**：**(a)** 新增附录 D（29 参数谱覆盖审计，15/29 严格零参数预测，29/29 全部覆盖）；**(b)** 摘要全面更新，增加强 CP 解（§7.5）和 PMNS θ₁₃ 谱起源（§8.6）的显式阐述；**(c)** §1.3 结构表更新为包含所有新章节（A7/强 CP/CKM/See-saw/真空稳定性/谱规范 LSZ/幺正性证明/附录 A-D）；**(d)** §1.1 动机段增加附录 D 交叉引用；**(e)** §10.3 开放问题表增加 3 个已解决项（强 CP、PMNS θ₁₃）和 1 个待完成项（PMNS CP 相），已解决项总数增至 6 个。 |
 
 ---

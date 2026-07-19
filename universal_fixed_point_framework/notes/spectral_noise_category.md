@@ -523,7 +523,7 @@ $$\Sigma\text{-}D(N) \cong D(R) \quad \text{在 } \Sigma\text{-}\mathbf{Spec} \t
 #### 17.5.1 噪声强度参数 $\eta$
 
 **定义 17.4**（噪声强度参数）。对 $\mathbf{Rec}$ 对象 $R \in \mathbf{Rec}$ 和噪声系统 $N \in \Sigma$-$\mathbf{Rec}$，定义 $\eta \in [0, \infty)$ 为噪声-确定性混合参数：
-- $\eta = 0$：纯确定性系统 $R$ 
+- $\eta = 0$：纯确定性系统 $R$
 - $\eta = \infty$：纯噪声 $N$
 - $0 < \eta < \infty$：混合系统 $R_\eta = R \oplus \eta \cdot N$
 
@@ -619,25 +619,26 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 [1] `docs/展开机器证明后的关于理论范围的讨论.md` — 关于白噪声、静态拓扑与 $\mathbf{Rec}$ 范畴边界的完整哲学讨论.
 [2] Paper I: $\mathbf{Rec}$ 范畴四元组定义与 $D$ 函子构造.
 [3] `notes/spectral_multi_silence_methodology.md` — 多层静默理论.
-[4] `notes/spectral_rheology_experiments.md` — 实验信号噪声处理（SNR 分析）.    
+[4] `notes/spectral_rheology_experiments.md` — 实验信号噪声处理（SNR 分析）.
 [5] Paper XIII: 复杂系统谱翻译（含噪声项 $dW_{\text{spec}}$）.
 [6] Mandelbrot, B. B. & Van Ness, J. W. (1968). Fractional Brownian motions, fractional noises and applications. *SIAM Review*, 10(4), 422–437.
 [7] Press, W. H. (1978). Flicker noises in astronomy and elsewhere. *Comments on Astrophysics*, 7(4), 103–119.
 
 ---
 
-**版本**：v0.8
+**版本**：v0.9
 
 **日期**：2026-07-19
 
 **状态**：
 
-《通用不动点范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位。v0.8 新增 §17.8 噪声↔确定性谱等价桥的现有物理样本（Johnson-Nyquist/Brown/Kubo/量子光学/临界动态/Landau-Lifshitz/Schwinger-Keldysh）。v0.7 新增 §17 噪声与确定性系统的双向转化理论。
+《通用不动点范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位。v0.9 新增不可数直和推广分析、$\eta$ 谱流实验预言（谱间隙闭合奇异性）与色噪声 $\alpha \leftrightarrow \gamma$ 实验验证方案。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v0.9 | 2026-07-19 | **开放问题推进**：不可数直和推广分析（范畴论可行，需非可分 Hilbert 空间）+ $\eta$ 谱流实验预言（$\eta_c$ 处谱间隙闭合 $T_1\approx T_2$）+ 色噪声 $\alpha\leftrightarrow\gamma$ 实验验证方案（$\delta$ 振荡 $A_{\text{osc}}\sim10^{-3}$ 可观测）|
 | v0.8 | 2026-07-19 | **物理样本**：新增 §17.8 噪声↔确定性谱等价桥的八个现有物理样本（Johnson-Nyquist/Kubo/量子光学/临界标度/Landau-Lifshitz/Schwinger-Keldysh）|
 | v0.7 | 2026-07-19 | **双向转化**：新增 §17 噪声↔确定性双向转化理论（$\mathcal{S}el$ 选择函子 + $\mathcal{E}xt$ 统计提取函子 + $\mathcal{D}iss$ 溶解函子 + 谱等价桥定理 17.6 + $\eta$ 噪声谱流方程定理 17.7-17.8）|
 | v0.6 | 2026-07-19 | **命名修正**：§12 静默条件 C1–C4→S1–S4，§15 ∞-Rec/∞-Spec 统一重命名为 Σ-Rec/Σ-Spec |
