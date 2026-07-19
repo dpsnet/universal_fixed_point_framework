@@ -1781,9 +1781,28 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 
 ### 8.2 开放问题（推进状态）
 
-本文原有开放问题已在配套代码实现中得到显著推进。以下分三类列出当前状态与下一步方向。
+本文原有开放问题已在配套代码实现中得到显著推进。以下先给出框架全景总览（§8.2.1），再分类列出推进状态（§8.2.2–§8.2.4）。
 
-#### 8.2.1 纯数学：已推进与未竞问题
+#### 8.2.1 框架全景：$\mathbf{Rec}/\mathbf{Spec}$ 的统一相图
+
+本文建立的 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架（$D \dashv R$ 伴随对、谱对应自然等价、谱静默理论）是 $\mathbf{Rec}/\mathbf{Spec}$ 框架的核心。在此基础之上，系列论文 XIX 将框架扩展至两类被本文明确排除的系统——静态拓扑（无内禀演化）与随机噪声（无全局确定性映射）——通过两个额外的伴随对 $\mathcal{L} \dashv \iota$（静态-动态转化）和 $\mathcal{S}el \dashv \mathcal{D}iss$（噪声-确定性转化）实现。
+
+三个伴随对构成统一的三层嵌套结构：
+
+$$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}el \dashv \mathcal{D}iss}$$
+
+所有物理系统按演化强度 $G$（谱流生成元）和噪声强度 $\eta$ 分布于二维相图中：
+
+| 区域 | $G$ | $\eta$ | 范畴归属 | 代表系统 |
+|:---:|:---:|:------:|:--------|:--------|
+| 纯动力学 | $\neq 0$ | $=0$ | $\mathbf{Rec}$（本文）| IFS、Koopman、RG 流 |
+| 含噪动力学 | $\neq 0$ | $<\eta_c$ | 混合 $\mathbf{Rec}$ | 耗散混沌、含噪 NTK |
+| 静态拓扑 | $=0$ | $=0$ | $\mathbf{Rec}_{\text{id}}$（Paper XIX）| 紧致流形、稳态时空 |
+| 纯噪声 | $=0$ | $>\eta_c$ | $\Sigma$-$\mathbf{Rec}$（Paper XIX）| 白噪声、$1/f$ 噪声 |
+
+框架的完备性由定理 13.1（Paper XIX）保证：任意动力学系统可通过 $\mathcal{L}$ 静态化、任意静态系统可通过 $\mathcal{D}yn$ 动态化、任意确定性系统可通过 $\mathcal{D}iss$ 溶解为噪声、任意噪声可通过 $\mathcal{S}el$ 提取确定性信号。所有转化过程的边界面由本文的谱静默条件 S1–S4 刻画。完整相图与证明见 Paper XIX §13。**不存在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴之外的物理系统。**
+
+#### 8.2.2 纯数学：已推进与未竞问题
 
 1. **非分离 IFS 收敛率的下界匹配**（推进中 → 已解决）。
    已建立**定理 NS-LB**：基于 packing number 与 minimax 信息论下界，证明对任意 $N$ 点样本，至少存在一个特征值满足
@@ -1808,7 +1827,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
    **已解决**：高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）：Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构、一维扩张映射与二维双曲自同构特例。
    **已解决**：拓扑熵-谱间隙普适不等式（定理 TE-G-M）：Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证。
 
-#### 8.2.2 数值工程：接口层已建立
+#### 8.2.3 数值工程：接口层已建立
 
 3. **MadGraph / micrOMEGAs 完整调用**（推进中 → 接口完成）。
    已实现 `MadGraphInterface` 与 `MicrOmegasInterface`：
@@ -1825,7 +1844,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
    - 简化 SNR 估计（aLIGO 近似 PSD）。
    **未竞问题**：接入 SEOBNRv4/IMRPhenom 等拟合波形、与 LALSuite 接口、含潮汐形变（NS）的双星系统。
 
-#### 8.2.3 物理理论：实例假设扩展
+#### 8.2.4 物理理论：实例假设扩展
 
 5. **Kerr 全局量子谱完整解析**（推进中 → 解析框架完成）。
    已实现 `KerrGlobalSpectrum`：
@@ -1863,7 +1882,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
    - 遗迹密度 $\Omega h^2$ 与直接探测截面约束筛选候选质量。
    **未竞问题**：与 micrOMEGAs 真实计算对接、间接探测（伽马射线/反物质）谱、冻结-in / 非热产生机制。
 
-#### 8.2.4 已解决的关键问题
+#### 8.2.5 已解决的关键问题
 
 8. **D 函子定义域扩展**（已解决）。
    已建立**定理 7.31**（D 函子非自伴谱扩展）：构造函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}$，将耗散递归系统映射到含复谱的谱对象，满足伪谱保持、半群相容性与广义伴随条件。进一步扩展到**非正规算子**（数值半径 $w(A)$、非正规性指标 $\|AA^* - A^*A\|/\|A\|^2$、谱变分）和**无界算子**（定义域管理、图范数 $\|x\|_A = \|x\| + \|Ax\|$）。主框架 `decursion_functor.py` 已整合这些扩展，支持 `non_normality_index` 和 `domain_mask` 属性的递归对象。14 项测试全部通过，广义伴随验证误差 < 1e-16。
@@ -1889,7 +1908,7 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 15. **拓扑熵-谱间隙普适不等式**（已解决）。
     已建立**定理 TE-G-M**：对归一化的 Markov IFS 和 IFS，$h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。证明框架包含：(1) 拓扑熵 $h_{\text{top}} = \log(\lambda_1)$（Perron-Frobenius 定理）；(2) 谱间隙 $\gamma = 1 - |\lambda_2|/\lambda_1$；(3) 分析方法与变分方法求上界；(4) 归一化条件（压缩比 $c_i < 1$ 提供自然约束）；(5) IFS 框架验证（$h_{\text{top}} = -\sum p_i \log p_i$，$\gamma = 1 - c_2/c_1$）；(6) 数值验证（广泛参数范围内 $h_{\text{top}} \cdot \gamma \leq 1$）。
 
-#### 8.2.5 仍待深化的新开放问题
+#### 8.2.6 仍待深化的新开放问题
 
 16. **高维 IFS 收敛率的数值验证**：已建立高维收敛率的解析框架（维数相变图、高维切换点公式），但高维核矩阵的大规模数值验证与上界紧性测试仍待推进。
 

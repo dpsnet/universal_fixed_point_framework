@@ -472,7 +472,108 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 ---
 
-## 13. 形式化验证
+## 13. 统一框架：Paper I ⊕ Paper XIX 的相图与边界转化
+
+Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架在演化参数空间中的两个极端区域**，中间由连续的谱流过程连接。本节整合两者为统一的二维相图。
+
+### 13.1 二维相图
+
+所有 $\mathbf{Rec}/\mathbf{Spec}$ 对象按两个独立参数分类：
+
+| 维度 | 参数 | 物理意义 | Paper I 端 | Paper XIX 端 |
+|:----|:----|:--------|:----------|:-----------:|
+| 演化强度 | $G$（谱流生成元） | $\frac{d}{dt}A_t = [G, A_t]$ | $G \neq 0$（动力学）| $G = 0$（$\mathbf{Rec}_{\text{id}}$ 静态）|
+| 确定性程度 | $\eta$（噪声强度） | $A_\eta = A_R + \eta \cdot \delta A_N$ | $\eta = 0$（纯确定性）| $\eta > \eta_c$（$\Sigma$-$\mathbf{Rec}$ 噪声）|
+
+```
+                    G (演化强度)
+                    ↑
+         Paper I    │   Paper I
+         原生 Rec   │   高噪声
+         动力学     │   混合系统
+         (IFS,      │
+          Koopman)  │
+                    │
+         ──────────┼─────────────→ η (噪声强度)
+                    │
+         Paper XIX │   Paper XIX
+         Rec_id    │   Σ-Rec
+         静态拓扑  │   白噪声
+         无演化    │   纯随机
+                    │
+```
+
+### 13.2 四个区域与边界转化条件
+
+| 区域 | $G$ | $\eta$ | 范畴归属 | 代表系统 |
+|:---:|:---:|:------:|:--------|:--------|
+| **I**（纯动力学）| $\neq 0$ | $=0$ | $\mathbf{Rec}$（Paper I）| IFS、Koopman 系统、RG 流 |
+| **II**（含噪动力学）| $\neq 0$ | $<\eta_c$ | $\mathbf{Rec}$（混合）| 耗散混沌、含噪 NTK |
+| **III**（静态拓扑）| $=0$ | $=0$ | $\mathbf{Rec}_{\text{id}}$（Paper XIX）| 紧致流形、稳态时空 |
+| **IV**（纯噪声）| $=0$ | $>\eta_c$ | $\Sigma$-$\mathbf{Rec}$（Paper XIX）| 白噪声、$1/f$ 噪声 |
+
+### 13.3 边界转化过程
+
+四条边界对应四个伴随对/函子：
+
+| 边界 | 转化方向 | 条件 | 数学结构 | 物理实例 |
+|:----:|:-------:|:----|:--------|:--------|
+| **I→III** 冻结 | 动态→静态 | $G \to 0$ | $\mathcal{L} \dashv \iota$（Paper XIX 定理 4.2）| Kerr $a\to0$ 极限 |
+| **III→I** 解冻 | 静态→动态 | $0 \to G$ | $\mathcal{D}yn$（Paper XIX 定义 6.1）| 坍缩星体引力坍缩 |
+| **I→IV** 溶解 | 确定性→噪声 | $\eta > \eta_c$ | $\mathcal{D}iss$（Paper XIX 定义 8.3）| 量子比特退相干 |
+| **IV→I** 选择 | 噪声→确定性 | 存在主导分量 | $\mathcal{S}el$（Paper XIX 定义 8.1）| 信号提取（SNR $>1$）|
+| **II↔III** 谱等价 | 含噪动态↔静态 | S1-S4 全满足 | $D(R) \cong D^{\text{id}}(M)$（定理 6.2）| Wick 转动 |
+| **II↔IV** 涨落-耗散 | 含噪动态↔纯噪声 | 谱均值+密度收敛 | $\Sigma$-$D(N) \cong D(R)$（定理 8.5）| Kubo 公式 |
+
+### 13.4 伴随对结构总览
+
+整个框架由三层伴随对嵌套构成：
+
+```
+外層:  Sel ⊣ Diss     (噪声-确定性转化，条件性)
+        ↑                  ↑
+中層:   ℒ ⊣ ι          (静态-动态转化，无条件)
+        ↑                  ↑
+內層:   D ⊣ R           (谱-递归转化，Paper I)
+        (Paper I 定理 2.4.5，在 Rec_D 上严格)
+```
+
+### 13.5 与物理系统的对应
+
+```
+    物理系统       相图坐标 (G, η)         范畴归属
+    ──────────     ────────────────        ────────
+    IFS 分形       (G_IFS ≠ 0, 0)          Rec
+    Koopman 系统   (G_K ≠ 0, 0)            Rec
+    RG 流          (G_RG ≠ 0, 0)           Rec
+    Kerr BH        (G_rot ≠ 0, η ≈ 0)      Rec
+    ↓ a→0          G_rot → 0               ── 冻结 ──→
+    Schwarzschild  (0, 0)                   Rec_id
+    transmon 量子  (G_ctrl, η < η_c)       混合 Rec
+    ↓ 噪声增强     η → η_c                 ── 溶解 ──→
+    量子-经典边界  (G_ctrl, η > η_c)        Σ-Rec
+    白噪声         (0, η → ∞)              Σ-Rec (pure)
+    Wick 转动      (G_L, 0) ↔ (0, 0)       D(R) ≅ D^id(M)
+    Johnson-Nyquist (G_circ, η_c) ↔ (0, 0) Σ-D(N) ≅ D(R)
+```
+
+### 13.6 关键结论
+
+**定理 13.1**（框架完备性）。Paper I 的 $\mathbf{Rec}$ 与 Paper XIX 的 $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 通过三层伴随对构成一个封闭的范畴网络：
+1. 任意 $\mathbf{Rec}$ 对象可静态化为 $\mathbf{Rec}_{\text{id}}$ 对象（$\mathcal{L}$）
+2. 任意 $\mathbf{Rec}_{\text{id}}$ 对象可在附加动力学数据后动态化为 $\mathbf{Rec}$ 对象（$\mathcal{D}yn$）
+3. 任意 $\mathbf{Rec}$ 对象可在超过噪声阈值后溶解为 $\Sigma$-$\mathbf{Rec}$ 对象（$\mathcal{D}iss$）
+4. 任意 $\Sigma$-$\mathbf{Rec}$ 对象可在主导分量条件下选择为 $\mathbf{Rec}$ 对象（$\mathcal{S}el$）
+5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Spec}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）
+6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma$-$D(N) \cong D(R)$）
+
+*证明*：由 Paper I 定理 2.4.5（$D \dashv R$）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）、定理 8.5（谱等价桥 $\Sigma$-$D(N) \cong D(R)$）组合。∎
+
+**推论 13.1**（框架覆盖范围）。$\mathbf{Rec}/\mathbf{Spec}$ 框架统一覆盖了从纯确定性动力学（Paper I）到纯静态拓扑（Paper XIX §3）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的全部连续谱。不存在动力学谱范畴之外的物理系统。
+
+---
+
+## 14. 形式化验证
 
 本文所有核心定理已在 Lean 4 中形式化验证，代码位于 `UFPFormalization` 项目：
 
@@ -485,11 +586,11 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 ---
 
-## 14. 已解决问题
+## 15. 已解决问题
 
 以下五个开放问题已在本版本中全部解决：
 
-1. **$\mathbf{Rec}_{\text{id}}$ 的泛性质深化**：反射子范畴 $\mathcal{L} \dashv \iota$ 的 $\infty$-范畴提升已由 `InfinityReflection.lean` 形式化完成。$\mathcal{L}_\infty \dashv \iota_\infty$ 构成 $\infty$-伴随对，余单位是同构，$\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}_\infty$ 的 $\infty$-反射子范畴。反射是同伦离散的：$\iota_\infty$ 的像中所有高阶谱流生成元 $G = 0$。
+1. **$\mathbf{Rec}_{\text{id}}$ 的泛性质深化**：反射子范畴 $\mathcal{L} \dashv \iota$ 的 $\infty$-范畴提升已由 `InfinityReflection.lean` 形式化完成。$\mathcal{L}_\infty \dashv \iota_\infty$ 构成 $\infty$-伴随对，余单位是同构，$\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}_\infty$ 的 $\infty$-反射子范畴（§13 定理 13.1 内层伴随对）。反射是同伦离散的：$\iota_\infty$ 的像中所有高阶谱流生成元 $G = 0$。
 
 2. **$D^{\text{id}}$ 与 Gelfand 对偶的精确对应**：`GelfandDuality.lean` 确认 $D^{\text{id}}$ 是 Gelfand 对偶的"谱几何版本"——用 Laplace 谱 $\sigma(\Delta_M)$ 取代 Gelfand 空间 $\mathrm{Spec}(C(M)) \cong M$。$D^{\text{id}}$ 是忠实的，Weyl 定律 $N(\lambda) \sim \mathrm{Vol}(M) \lambda^{d/2}/(4\pi)^{d/2}\Gamma(d/2+1)$ 建立了谱-几何桥。
 
@@ -556,11 +657,11 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIX，$\mathbf{Rec}/\mathbf{Spec}$ 范畴扩展——纯静态拓扑与随机噪声系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的范畴论嵌入。v0.2 完成全部 5 个开放问题的推进（$\infty$-反射子范畴、Gelfand 对偶谱几何对应、不可数直和推广、$\eta$ 谱流实验预言、色噪声 $\alpha\leftrightarrow\gamma$ 实验验证），新增附录 A 跨论文新发现汇总。所有核心定理已在 Lean 4 中形式化验证。
+《通用不动点范畴框架》系列论文 XIX，$\mathbf{Rec}/\mathbf{Spec}$ 范畴扩展——纯静态拓扑与随机噪声系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的范畴论嵌入。v0.2 新增 §13 统一框架：Paper I ⊕ Paper XIX 相图与边界转化（二维相图、四个区域、六条边界、三层伴随对结构、定理 13.1 框架完备性），完成后 5 个开放问题推进，新增附录 A 跨论文新发现汇总。所有核心定理已在 Lean 4 中形式化验证。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v0.2 | 2026-07-19 | **开放问题完成**：$\infty$-反射子范畴形式化（`InfinityReflection.lean`）+ $D^{\text{id}}$–Gelfand 对偶谱几何对应（`GelfandDuality.lean`）+ 不可数直和推广分析 + $\eta$ 谱流实验预言 + 色噪声 $\alpha\leftrightarrow\gamma$ 实验验证方案；已解决问题 §14 取代开放问题；附录 A 跨论文新发现汇总 |
+| v0.2 | 2026-07-19 | **框架统一**：新增 §13 Paper I ⊕ Paper XIX 相图与边界转化（二维相图 $(G,\eta)$、六条边界转化过程、三层伴随对嵌套 $D\dashv R \subset \mathcal{L}\dashv \iota \subset \mathcal{S}el\dashv \mathcal{D}iss$、定理 13.1 框架完备性、推论 13.1 覆盖范围）；开放问题完成（$\infty$-反射子范畴 + $D^{\text{id}}$–Gelfand 对偶 + 不可数直和 + $\eta$ 谱流预言 + 色噪声 $\alpha\leftrightarrow\gamma$ 验证）；附录 A 跨论文新发现汇总 |
 | v0.1 | 2026-07-19 | 初稿：静态拓扑与噪声系统的范畴论嵌入（$\mathbf{Rec}_{\text{id}}$、$\mathcal{L}$、$\Sigma$-$\mathbf{Rec}$、$\mathcal{S}el$/$\mathcal{D}iss$、$\eta$ 谱流）|
