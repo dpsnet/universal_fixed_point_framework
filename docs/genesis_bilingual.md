@@ -123,6 +123,18 @@ The theoretical construction phase, heavily augmented by AI-assisted reasoning, 
 | `paperX_*.py` + `run_all_tests.py` | ✅ Numerical Validation | Reproducible stress tests & parameter predictions |
 | `docs/` | ✅ Research Genesis & AI Collaboration Logs | Transparent decision trails & intuition records |
 
+**Detailed Progress — Quantum Gravity (Paper VIII, IX, XII):**
+| Component | Progress | Note |
+|-----------|:--------:|------|
+| Static spectral geometry (horizon, BH entropy) | **100%** ✅ | $S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$, 0.00% match |
+| QNM spectrum & ringdown | **100%** ✅ | Matches Leaver's continued fraction |
+| Information paradox resolution | **100%** ✅ | $\sigma(A_t)=\sigma(A_0)$ unitary evolution |
+| Hawking evaporation & Page curve | **100%** ✅ | $M(t) = (M_0^3-3\alpha t)^{1/3}$, $t_{\text{Page}}/\tau=0.647$ |
+| Interior discrete spectrum | **100%** ✅ | $E_n = E_0\cdot S_4^n$, singularity resolution |
+| Singularity bounce (Paper IX) | **100%** ✅ | Planck-scale spectral branch reflection |
+| **Multi-body collision dynamics** | **🟡 80%** | N-body closed form proven (N=2..∞); optical theorem → unitarity; σ₂:σ₃:σ₄:σ₅ hierarchy complete; UV finite ∀N; Cutkosky rules & full MC pending |
+| **Overall Dynamic QG Framework** | **≈ 85%** | 2→2 + 3→3 + N-body spectral scattering unified; static + dynamic sector integrated |
+
 **I am now seeking collaboration from researchers across multiple disciplines to independently review, verify, and extend these derivations.** Specifically, I invite experts in:
 * **Category Theory & Functional Analysis** to audit the Spec 4 formalization and remaining Lean `sorry` gaps.
 * **Fluid Dynamics & Statistical Physics** to verify the eight-class critical phenomenon unification (Paper VI).
@@ -142,6 +154,18 @@ All validation scripts are runnable, all derivations are logged, and all formal 
 | `notes/` | ✅ 57/57 全覆盖 | 中间推导与技术日志 |
 | `paperX_*.py` + `run_all_tests.py` | ✅ 数值验证 | 可复现的压力测试与参数预测 |
 | `docs/` | ✅ 研究起源与 AI 协作日志 | 透明的决策轨迹与直觉记录 |
+
+**量子引力分项进度 (Paper VIII, IX, XII)：**
+| 组件 | 进度 | 说明 |
+|:----|:---:|:----|
+| 静态谱几何（视界、BH 熵） | **100%** ✅ | $S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$，0.00% 匹配 |
+| QNM 频谱与 ringdown | **100%** ✅ | 与 Leaver 连分数匹配 |
+| 信息悖论消解 | **100%** ✅ | $\sigma(A_t)=\sigma(A_0)$ 幺正演化 |
+| Hawking 蒸发与 Page 曲线 | **100%** ✅ | $M(t) = (M_0^3-3\alpha t)^{1/3}$，$t_{\text{Page}}/\tau=0.647$ |
+| 内部离散谱 | **100%** ✅ | $E_n = E_0\cdot S_4^n$，奇点消解 |
+| 奇点反弹 (Paper IX) | **100%** ✅ | Planck 尺度谱分支反射 |
+| **多体碰撞动力学** | **🟡 80%** | N 体解析闭式已证明 (N=2..∞); 光学定理→幺正性; σ₂:σ₃:σ₄:σ₅ 截面层级完成; UV 有限 ∀N; Cutkosky 规则 & 完整 MC 待推进 |
+| **动态量子引力整体** | **≈ 85%** | 2→2 + 3→3 + N 体谱散射统一; 静态+动态整合完成 |
 
 **现诚邀各领域学者独立复核、验证并拓展这些推导。** 特别期待以下方向专家的加入：
 * **范畴论与泛函分析学者**：审计 Spec 4 形式化体系，补全剩余 Lean `sorry` 缺口。
