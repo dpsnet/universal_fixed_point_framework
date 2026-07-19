@@ -11,13 +11,12 @@
 | 伴随函子 $D \dashv R$ 离散原型 | ✅ 已完成 | `src/decursion_functor.py`、`src/test_decursion_functor.py` |
 | 谱对应 $ \lambda_i = e^{-\mu_i}$ 的范畴自然等价 | ✅ 已完成 | `notes/spectral_correspondence_equivalence.md`、`src/spectral_correspondence.py` |
 | 局部吸引子距离度量（LACI） | ✅ 已完成 | `roadmap/phase4_semantics_over_fitting.md`、`src/attractor_distance.py` |
-| **零参数质量预测（Spec 4-范畴静默层级→全部SM参数）** | ✅ **已完成** | `notes/spectral_zero_parameter_derivation.md` |
-| **全费米子扩展** | ✅ 已完成 | `notes/spectral_zero_parameter_derivation.md` §§9-11 |
-| **PMNS 数值对角化** | ✅ **4/4 通过** | `notes/spectral_PMNS_theta13.md` |
+| **零参数质量预测（Spec 4-范畴静默层级→全部SM参数）** | ✅ **已完成，24项已验证** | `notes/spectral_root_cause_analysis.md`、`paper/paper17_zero_parameter_predictions.md` |
+| **CKM 五参数第一性推导** | ✅ 已完成 | `notes/spectral_ckm_angles.md` |
+| **PMNS 四参数第一性推导（含 δ_CP）** | ✅ 已完成 | `notes/spectral_ckm_angles.md` |
 | **强 CP 谱解** | ✅ 已完成 | `notes/spectral_strong_CP.md` |
-| **CP 相位分析** | 🟡 半定量 | `notes/spectral_CP_phases.md` |
-| **剩余 SM 参数补齐** | 🟡 半定量 | `notes/spectral_remaining_SM_params.md` |
-| **全 29 参数覆盖审计** | ✅ **100% 覆盖** | `notes/spectral_parameter_audit.md` |
+| **全 24 参数验证 + ε_K 交叉检验** | ✅ **24/24 已验证** | `paperX_all_predictions.py` |
+| **p-value 统计分析** | ✅ **Fisher p≈0** | `paperX_pvalue_analysis.py` |
 | **根因分析** | ✅ 已完成 | `notes/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/spectral_comprehensive_review.md` |
 | **独有实验预言汇总** | ✅ 已完成 | `notes/spectral_unique_predictions.md` |

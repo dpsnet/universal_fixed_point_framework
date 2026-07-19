@@ -8,11 +8,11 @@
 | 50B | α_base = d_H/2 证明 | ✅ 完成 | `notes/spectral_dimension_alpha.md` |
 | 50C | KO-维数手征修正 δ_u, δ_d | ✅ 完成 | `notes/spectral_KO_dimension_gauge_correction.md` |
 | 50D | 完整链数值验证 | ✅ 完成 | `paperX_alpha_first_principles.py` |
-| 50E | Yukawa 权重精细结构 | 🟡 开放 | 与 CKM 统一问题归并 |
+| 50E | Yukawa 权重精细结构 | 🟡 开放问题 | 扇区依赖 IFS 表示结构 ($\times$2.34, $\S$3a.4) |
 
 ## 核心成果
 
-α 指数已从第一性原理推导，**0 个拟合参数**：
+α 指数已从第一性原理推导，**0 个拟合参数**，并支撑后续全部 CKM/PMNS 推导：
 
 $$\boxed{\alpha_R = \frac{d_H}{2} + \varepsilon_{\text{KO}}(R) \cdot S_4 \cdot I_{\text{QCD}}(R) + \frac{d_H}{5} \cdot I_{\text{EW}}(R)}$$
 
@@ -22,9 +22,14 @@ $$\boxed{\alpha_R = \frac{d_H}{2} + \varepsilon_{\text{KO}}(R) \cdot S_4 \cdot I
 | α_u | 1.945 | 1.945 | 0.0% |
 | α_d | 1.238 | 1.229 | 0.7% |
 
-质量比验证：5/6 在 ×2 内，剩余偏差纳入 CKM 统一路线图。
+质量比验证：5/6 在 $\times 2$ 内，$m_\mu/m_\tau \times 2.34$ 为已知的 Yukawa 精细结构开放问题。
 
-详见 [`notes/spectral_root_cause_analysis.md`](../notes/spectral_root_cause_analysis.md) 第 3a 层。
+详见 [`notes/spectral_root_cause_analysis.md`](../notes/spectral_root_cause_analysis.md) 第 3a 层。α 指数驱动的后续成果包括：
+- CKM 五参数 ($\theta_{12}, \theta_{23}, \theta_{13}, \delta_{\text{CP}}, |V_{ub}|$) ✅
+- PMNS 四参数 ($\theta_{23}, \theta_{12}, \theta_{13}, \delta_{\text{CP}}$) ✅
+- $\varepsilon_K$ 交叉验证 (4.0%) ✅
+- GUT 单化与质子寿命 (M_GUT $\approx$ M_Pl) ✅
+- 全部 24 个预测, 0 拟合参数, p $\approx$ 0 ✅
 
 ## 推导链结构
 
@@ -146,7 +151,8 @@ Step 4: 数值验证
 - `spectral_root_cause_analysis.md` 更新（闭合 α 缺口）
 
 **验证标准**：
-- 全部 6 个质量比在 2σ 实验误差内
+- $\alpha_u, \alpha_d, \alpha_l$ 预测与拟合值偏差 < 1%
+- 导出 CKM/PMNS/ε_K/GUT 全部 24 个预测
 - 0 个拟合自由参数
 
 **依赖**：

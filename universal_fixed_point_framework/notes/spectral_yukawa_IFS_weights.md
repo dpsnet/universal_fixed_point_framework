@@ -76,6 +76,19 @@ $$\Phi(X) = \lambda X$$
 
 **关键瓶颈**：步骤 1 需要将 $\mathbb{Z}_3$ 生成元 $U_i$ 具体化来自 $M_3(\mathbb{C})$ 代数的幺正表示。
 
+## 6. 后续探索（2026-07-19）
+
+Phase 51A 证明超算子方程 $\Phi(M) = M$ 无解。进一步的旋转分析证明：
+- 幺正旋转 $U_f^\dagger D_F U_f$ **不改变特征值**——$y_i = 1$ 是精确的 IFS 预测
+- $\times 2.34$ 偏差不能由基旋转消除
+
+**新理解**：偏差可能来自：
+1. **扇区依赖的 IFS 收缩因子**——轻子和夸克的规范量子数不同，IFS 表示空间维数不同
+2. **RG 跑动**——$y_\tau$ 和 $y_\mu$ 从 Planck 到 $M_Z$ 的跑动不同
+3. **谱流非微扰效应**——$D_F$ 的手征结构导致有效 Yukawa 耦合的修正
+
+**当前状态**：已识别的开放问题，根源在于 IFS 有限谱三元组中不同扇区的详细表示结构。纳入统一路线图。见 [`paperX_yukawa_rotation.py`](../../paperX_yukawa_rotation.py) 和 [`paperX_yukawa_eigenvalue_pattern.py`](../../paperX_yukawa_eigenvalue_pattern.py)。
+
 ---
 
 ## 6. 参考文献

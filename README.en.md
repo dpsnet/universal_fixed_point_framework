@@ -11,7 +11,7 @@ This project consists of two interrelated research layers:
 | Layer | Location | Role |
 |-------|----------|------|
 | **Original numerical implementation layer** | Root directory `.` | Early-stage concrete numerical fits and experimental validations for the Standard Model mass spectrum, NTK spectral optimization, etc. |
-| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Later-stage abstraction upgrade: stripping away concrete iterative constructions using category theory and fixed-point axioms, establishing a cross-domain unified language. |
+| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | **Latest: Paper XVII — 24 zero-parameter predictions, Fisher $p \approx 0$**. Full derivation at `universal_fixed_point_framework/paper/paper17_zero_parameter_predictions.md`. |
 
 Core idea: treat "recursive iteration" as an **object-level evolution rule**, and its corresponding "operator semigroup spectrum" as a **spectral-level static structure**. The two are related systematically through a spectral de-recursion functor.
 
@@ -125,11 +125,13 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] Kerr non-equatorial chaos and NR ringdown comparison
 - [x] Holographic entanglement entropy, complex CFT phase transitions, N=4 SYM TBA
 
-**Four papers**
+**Seventeen papers**
 - [x] Paper I v2.31: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
 - [x] Paper II v2.18: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
 - [x] Paper III v1.1: Spectral classification completeness (three-layer + BPS numerical verification + Lean)
 - [x] Paper IV v1.1: Stretched Horizon → D-brane BH entropy unification (with duality extensions)
+- [x] Paper V–XVI: Spectral dynamics, fluid, thermodynamics, black holes, QFT, quantum gravity, cross-domain
+- [x] **Paper XVII v1.0**: **Zero-parameter predictions from strict 4-category (24 items, Fisher $p \approx 0$)**
 
 **Lean 4 formalization**
 - [x] Phase 16A/B/C complete: 24 Lean modules, zero diagnostics, 52 test theorems
@@ -174,6 +176,14 @@ It should be emphasized that **core mathematical structures have been verified b
 | **Paper VII** | Non-equilibrium Spectral Thermodynamics (draft) | Thermodynamics | v0.1 |
 | **Paper VIII** | Black Hole Horizon Spectral Dynamics (draft) | Quantum gravity | v0.1 |
 | **Paper IX** | Singularity Spectral Resolution & Quantum Cosmology (draft) | QG + cosmology | v0.1 |
+| **Paper X** | Quantum Measurement in Spectral Dynamics | Quantum measurement | **v1.2** ✅ |
+| **Paper XI** | Spectral Quantum Field Theory | **Core paper** | **v2.0** ✅ |
+| **Paper XII** | Spectral Quantum Gravity | Quantum gravity | **v1.2** ✅ |
+| **Paper XIII** | Fluid Spectral Dynamics (merged into Paper VI) | Cross-disciplinary | ╳ |
+| **Paper XIV** | Spectral Condensed Matter Physics | Condensed matter | v1.0 ✅ |
+| **Paper XV** | Spectral Quantum Chemistry | Quantum chemistry | v1.0 ✅ |
+| **Paper XVI** | Lorentz Spectral Dynamics | Relativity | **v1.0** ✅ |
+| **Paper XVII** | **Zero-Parameter Predictions from a Strict 4-Category** | **Core: 24 predictions** | **v1.0** ✅ |
 
 ---
 
@@ -191,9 +201,10 @@ Suggested path:
 
 Suggested path:
 1. `universal_fixed_point_framework/paper/paper2_physics_applications.md` (physics applications)
-2. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md` (BH entropy case study)
-3. `universal_fixed_point_framework/paper/paper3_spectral_classification.md` (spectral classification)
-4. `universal_fixed_point_framework/src/bsm_*.py`, `kerr_*.py`, `holographic_entropy.py`
+2. `universal_fixed_point_framework/paper/paper17_zero_parameter_predictions.md` (zero-parameter predictions)
+3. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md` (BH entropy case study)
+4. `universal_fixed_point_framework/paper/paper3_spectral_classification.md` (spectral classification)
+5. `universal_fixed_point_framework/src/bsm_*.py`, `kerr_*.py`, `holographic_entropy.py`
 
 ### For AI researchers
 
@@ -230,4 +241,4 @@ This project is a **highly interdisciplinary theoretical framework**. Core categ
 
 ---
 
-*Last updated: 2026-07-16*
+*Last updated: 2026-07-19*

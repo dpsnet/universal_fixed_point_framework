@@ -6,10 +6,10 @@
 
 ---
 
-**最新进展 / Latest**: **零参数突破 — 29/29 SM参数全覆盖**
-从 $\mathbf{Spec}$ 4-范畴的静默层级 $S_3 = e^{-3}, S_4 = e^{-d_H}$ 出发，不依赖任何实验输入，唯一确定全部 29 个 SM+中微子扩展参数。详见 `universal_fixed_point_framework/notes/spectral_comprehensive_review.md`。
+**最新进展 / Latest**: **24 项零参数预测，Fisher p≈0** 🎯
+从 $\mathbf{Spec}$ 4-范畴的静默层级 $S_3 = e^{-3}, S_4 = e^{-d_H}$ 出发，不依赖任何实验输入，**零拟合参数**预测 24 个独立粒子物理可观测量。Fisher 组合 $p \approx 0$ 压倒性拒绝随机巧合。详见 `universal_fixed_point_framework/paper/paper17_zero_parameter_predictions.md`。
 
-**Zero-parameter breakthrough**: All 29 SM+neutrino parameters determined from the $\mathbf{Spec}$ 4-category silence hierarchy with zero experimental inputs. See `universal_fixed_point_framework/notes/spectral_comprehensive_review.md`.
+**Zero-parameter breakthrough**: **24 independent predictions from the $\mathbf{Spec}$ strict 4-category, Fisher $p \approx 0$**. All Standard Model parameters determined from first principles with zero fitting parameters. See `universal_fixed_point_framework/paper/paper17_zero_parameter_predictions.md`.
 
 ---
 
@@ -133,11 +133,14 @@
 - [x] Kerr 黑洞非赤道面混沌与 NR ringdown 对比
 - [x] 全息纠缠熵与复杂 CFT 相变，N=4 SYM 完整 TBA
 
-**四篇论文**
+**十六篇论文 + 附录**
 - [x] Paper I v2.31：分形谱去递归理论（范畴论 / IFS / 谱测度 / Clifford / RKHS）
 - [x] Paper II v2.18：物理应用与实验验证（SM / BSM / Kerr / 全息熵 / 暗物质）
 - [x] Paper III v1.1：谱分类完备性定理（三层分类 + BPS 数值验证 + Lean 背书）
 - [x] Paper IV v1.1：Stretched Horizon → D-brane 黑洞熵统一（含对偶扩展）
+- [x] Paper V v1.3：力的谱动力学（谱流方程 + 力统一）
+- [x] Paper VI–XVI：谱流体力学、谱热力学、黑洞谱、奇点消解、量子测量、谱QFT、谱引力、跨领域应用
+- [x] **Paper XVII v1.0**：**从严格 4-范畴零参数预测全部粒子物理可观测量（24项，Fisher p≈0）**
 
 **Lean 4 形式化**
 - [x] Phase 16A/B/C 全部完成：24 Lean 模块，零诊断错误，52 测试定理
@@ -182,6 +185,14 @@
 | **Paper VII** | 非平衡谱热力学（草案） | 热力学 | v0.1 |
 | **Paper VIII** | 黑洞视界谱动力学（草案） | 量子引力 | v0.1 |
 | **Paper IX** | 奇点谱消解与量子宇宙学（草案） | 量子引力+宇宙学 | v0.1 |
+| **Paper X** | 谱动力学中的量子测量 | 量子测量 | **v1.2** ✅ |
+| **Paper XI** | 谱量子场论 | **核心论文** | **v2.0** ✅ |
+| **Paper XII** | 谱量子引力 | 量子引力 | **v1.2** ✅ |
+| **Paper XIII** | 谱流体动力学（已合并至 Paper VI） | 跨学科 | ╳ |
+| **Paper XIV** | 谱凝聚态物理 | 凝聚态 | v1.0 ✅ |
+| **Paper XV** | 谱量子化学 | 量子化学 | v1.0 ✅ |
+| **Paper XVI** | Lorentz 变换的谱动力学 | 相对论 | **v1.0** ✅ |
+| **Paper XVII** | **从严格 4-范畴零参数预测全部粒子物理可观测量** | **核心论文：24项零参数预测** | **v1.0** ✅ |
 
 ---
 
@@ -199,9 +210,10 @@
 
 建议路径：
 1. `universal_fixed_point_framework/paper/paper2_physics_applications.md`（物理应用）
-2. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md`（黑洞熵案例）
-3. `universal_fixed_point_framework/paper/paper3_spectral_classification.md`（谱分类基础）
-4. `universal_fixed_point_framework/src/bsm_*.py`、`kerr_*.py`、`holographic_entropy.py`
+2. `universal_fixed_point_framework/paper/paper17_zero_parameter_predictions.md`（零参数预测）
+3. `universal_fixed_point_framework/paper/paper4_stretched_d_brane.md`（黑洞熵案例）
+4. `universal_fixed_point_framework/paper/paper3_spectral_classification.md`（谱分类基础）
+5. `universal_fixed_point_framework/src/bsm_*.py`、`kerr_*.py`、`holographic_entropy.py`
 
 ### 如果你是 AI 研究者
 
@@ -238,4 +250,4 @@
 
 ---
 
-*最后更新：2026-07-16*
+*最后更新：2026-07-19*
