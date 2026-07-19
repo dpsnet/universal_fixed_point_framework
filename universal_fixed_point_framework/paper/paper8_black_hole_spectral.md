@@ -236,7 +236,7 @@ $$A_{\text{GR}}|\psi_n\rangle = E_n|\psi_n\rangle$$
 
 $$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{const}$$
 
-**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Spec}$ 分支。数值验证见 `paperX_bh_interior_spectral.py`。
+**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Spec}$ 分支。数值验证见 `paperX_bh_interior_spectral.py` 和 `paperX_bh_interior_deep.py`（6/6 ✅，含谱流匹配、信息守恒、Page 曲线、奇点反射）。
 
 **推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `paperX_page_curve.py`。
 

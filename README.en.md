@@ -81,9 +81,9 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-fractal bidirectional transformation
 │   │   └── ...                            # 40+ additional modules
 │   ├── paper/
-│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v2.31
+│   │   ├── paper1_fractal_spectral_derecursion.md   # Mathematical theory paper v2.35
 │   │   ├── paper1_appendix.md                       # Appendix and changelog
-│   │   ├── paper2_physics_applications.md           # Physics applications paper v2.18
+│   │   ├── paper2_physics_applications.md           # Physics applications paper v2.22
 │   │   ├── paper3_spectral_classification.md        # Spectral classification paper v1.1
 │   │   └── paper4_stretched_d_brane.md              # BH entropy unification paper v1.1
 │   ├── paper3_bps_spectral_verification.py          # Paper III numerical verification
@@ -126,8 +126,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] Holographic entanglement entropy, complex CFT phase transitions, N=4 SYM TBA
 
 **Seventeen papers**
-- [x] Paper I v2.31: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
-- [x] Paper II v2.18: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
+- [x] Paper I v2.35: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
+- [x] Paper II v2.22: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
 - [x] Paper III v1.1: Spectral classification completeness (three-layer + BPS numerical verification + Lean)
 - [x] Paper IV v1.1: Stretched Horizon → D-brane BH entropy unification (with duality extensions)
 - [x] Paper V–XVI: Spectral dynamics, fluid, thermodynamics, black holes, QFT, quantum gravity, cross-domain
@@ -171,19 +171,19 @@ It should be emphasized that **core mathematical structures have been verified b
 | **Paper II** | Universal Fixed-Point Categorical Framework II: Physics Applications and Experimental Validation | Theoretical physics + experimental validation | PRD / JHEP |
 | **Paper III** | Universal Fixed-Point Categorical Framework III: Spectral Classification Completeness Theorem | Spectral classification + formalization | TBD |
 | **Paper IV** | Universal Fixed-Point Categorical Framework IV: Stretched Horizon → D-brane | String theory case study | TBD |
-| **Paper V** | Universal Fixed-Point Categorical Framework V: Spectral Dynamics of Forces (complete) | Theoretical physics | **v1.0** ✅ |
-| **Paper VI** | Fluid Spectral Dynamics (draft) | Cross-disciplinary | v0.1 |
-| **Paper VII** | Non-equilibrium Spectral Thermodynamics (draft) | Thermodynamics | v0.1 |
-| **Paper VIII** | Black Hole Horizon Spectral Dynamics (draft) | Quantum gravity | v0.1 |
-| **Paper IX** | Singularity Spectral Resolution & Quantum Cosmology (draft) | QG + cosmology | v0.1 |
+| **Paper V** | Universal Fixed-Point Categorical Framework V: Spectral Dynamics of Forces (complete) | Theoretical physics | **v1.3** ✅ |
+| **Paper VI** | Fluid Spectral Dynamics | Cross-disciplinary | **v2.2** ✅ |
+| **Paper VII** | Non-equilibrium Spectral Thermodynamics | Thermodynamics | **v1.0** ✅ |
+| **Paper VIII** | Black Hole Horizon Spectral Dynamics | Quantum gravity | **v1.2** ✅ |
+| **Paper IX** | Singularity Spectral Resolution & Quantum Cosmology | QG + cosmology | **v1.3** ✅ |
 | **Paper X** | Quantum Measurement in Spectral Dynamics | Quantum measurement | **v1.2** ✅ |
 | **Paper XI** | Spectral Quantum Field Theory | **Core paper** | **v2.0** ✅ |
-| **Paper XII** | Spectral Quantum Gravity | Quantum gravity | **v1.2** ✅ |
+| **Paper XII** | Spectral Quantum Gravity | Quantum gravity | v1.0 ✅ |
 | **Paper XIII** | Fluid Spectral Dynamics (merged into Paper VI) | Cross-disciplinary | ╳ |
 | **Paper XIV** | Spectral Condensed Matter Physics | Condensed matter | v1.0 ✅ |
-| **Paper XV** | Spectral Quantum Chemistry | Quantum chemistry | v1.0 ✅ |
+| **Paper XV** | Spectral Quantum Chemistry | Quantum chemistry | v1.1 ✅ |
 | **Paper XVI** | Lorentz Spectral Dynamics | Relativity | **v1.0** ✅ |
-| **Paper XVII** | **Zero-Parameter Predictions from a Strict 4-Category** | **Core: 24 predictions** | **v1.0** ✅ |
+| **Paper XVII** | **Zero-Parameter Predictions from a Strict 4-Category** | **Core: 26 predictions** | **v1.0** ✅ |
 
 ---
 
