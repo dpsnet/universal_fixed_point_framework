@@ -49,6 +49,18 @@ See `spectral_comprehensive_review.md` for a self-contained derivation chain fro
 
 - `YYYYMMDD_topic.md`：按日期记录的研究笔记。
 
+## 教学辅助文档
+
+| 文档 | 说明 |
+|:----|:----|
+| `spectral_dynamics_high_school_physics.md` | 谱动力学视角下的初高中物理知识，教学化整理，不包含新的可检验预言 |
+
+## 第一性推导
+
+| 文档 | 说明 |
+|:----|:----|
+| `spectral_dynamics_first_principles_derivation.md` | 从谱动力学第一原理推导牛顿力学：惯性质量谱起源、$F = ma$ 第一性推导、三维空间必然性、$1/r^2$ 规律、$G_N$ 谱推导 |
+
 ## 相关索引
 
 - 路线图：`roadmap/phase14_open_problems_advancement.md`

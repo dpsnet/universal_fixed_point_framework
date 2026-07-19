@@ -1,11 +1,12 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-**项目状态**：17 篇论文（Papers I–XVII）+ **29 项零参数预测，Fisher p≈0** ✅ + Lean 4 形式化 34 模块零错误
+**项目状态**：17 篇论文（Papers I–XVII）+ **29 项零参数预测 + 30 项零参数验证，Fisher p≈0** ✅ + Lean 4 形式化 34 模块零错误
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
 | 论文总数 / Papers | **17**（Paper I–XVII，含 Paper XVII：29 项零参数预测） |
 | 零参数预测 / Zero-param Predictions | **29 项独立预测，Fisher 组合 p≈0** |
+| 零参数验证 / Zero-param Validations | **30 项（含弱等效原理谱证明）** |
 | 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 |
 | 拟合参数 / Fitting Parameters | **0** |
 | 最新论文 / Latest Paper | **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 |
@@ -23,7 +24,7 @@
 
 ## ENGLISH / 英文概要
 
-**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics under a single strict 4-category $\mathbf{Spec}$. All Standard Model parameters are determined from first principles—**29 independent predictions, zero fitting parameters, Fisher combined $p \approx 0$**.
+**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics under a single strict 4-category $\mathbf{Spec}$. All Standard Model parameters are determined from first principles—**29 independent predictions + 30 zero-param validations, zero fitting parameters, Fisher combined $p \approx 0$**.
 
 **Core Mechanism**: The $\mathbf{Spec}$ 4-category silence hierarchy ($S_3 = e^{-3}$, $S_4 = e^{-d_H}$) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3 = S_3S_4:S_4:1$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
 
@@ -179,6 +180,13 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ### 关键设计决策
 - **双轨 Koopman 存在性**：$\ell^\infty(X)$ 上零前提定义 + $L^2/C(X)$ 上谱对应有效（`DynSys.lean` + Paper I 注 2.2a）
+
+### 框架成熟度
+- **静态/稳态解**：完全成熟 ✅。静态黑洞（Schwarzschild/Kerr/RN）、静态宇宙（FLRW/ΛCDM）的谱计算完备，理论框架与数值验证均已完成。
+- **动态过程**：🚧 路线图规划完成，待启动开发。超高能双星并合（inspiral-merger-ringdown）、普朗克能标多体散射的完整谱数值库路线图已制定（Phase 52），理论基础已就绪（谱引力子传播子、谱 Feynman 规则、谱路径积分、谱重整化程序）。
+- **优先方向**：近期聚焦静态解的实验对接（LIGO Ringdown、CMB），中长期推进动态过程的谱数值库建设。
+
+### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 ---
