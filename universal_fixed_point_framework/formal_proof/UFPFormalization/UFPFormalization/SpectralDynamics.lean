@@ -85,19 +85,45 @@ Proof: d/dt Tr(A_S·A_t) = Tr(A_S·[A_F, A_t]) = Tr([A_S, A_F]·A_t) = 0.
 theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ)
     (h_commutes : A_S * A_F = A_F * A_S) : 
     Matrix.trace (A_S * spectralFlow A₀ A_F t) = Matrix.trace (A_S * A₀) := by
-  -- A_t = U·A₀·U⁻¹, so A_S·A_t = A_S·U·A₀·U⁻¹
-  -- If [A_S, A_F] = 0, then U = exp(t·A_F) commutes with A_S, so A_S·U = U·A_S
-  -- Therefore Tr(A_S·A_t) = Tr(U·A_S·A₀·U⁻¹) = Tr(A_S·A₀) by cyclic property
+  -- U = exp(t·A_F), Uinv = exp(-t·A_F)
+  set U := Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
+  set Uinv := Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
+  -- A_S commutes with U (and Uinv) because it commutes with A_F
+  have h_comm_U : A_S * U = U * A_S := by
+    have h_comm_tA : A_S * (t • A_F) = (t • A_F) * A_S := by
+      calc
+        A_S * (t • A_F) = t • (A_S * A_F) := by simp [mul_smul_comm]
+        _ = t • (A_F * A_S) := by rw [h_commutes]
+        _ = (t • A_F) * A_S := by simp [smul_mul_assoc]
+    have h_comm_tA' : Commute A_S (t • A_F : Matrix (Fin n) (Fin n) ℂ) := ⟨h_comm_tA⟩
+    exact h_comm_tA'.exp_right
+  have h_comm_Uinv : A_S * Uinv = Uinv * A_S := by
+    have h_comm_neg_tA : A_S * (-t • A_F) = (-t • A_F) * A_S := by
+      calc
+        A_S * (-t • A_F) = -(t • (A_S * A_F)) := by simp [mul_smul_comm]
+        _ = -(t • (A_F * A_S)) := by rw [h_commutes]
+        _ = (-t • A_F) * A_S := by simp [smul_mul_assoc]
+    have h_comm_neg_tA' : Commute A_S (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := ⟨h_comm_neg_tA⟩
+    exact h_comm_neg_tA'.exp_right
+  -- Uinv * U = 1 by exp(-X) * exp(X) = exp(0) = 1
+  have h_Uinv_U : Uinv * U = (1 : Matrix (Fin n) (Fin n) ℂ) := by
+    calc
+      Uinv * U = Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) * Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
+      _ = Real.exp ((-t • A_F) + (t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
+        rw [Matrix.exp_add_of_commute (-t • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) ?_]
+        exact ((Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right).symm
+      _ = Real.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by ring
+      _ = 1 := by simp
   calc
     Matrix.trace (A_S * spectralFlow A₀ A_F t)
-        = Matrix.trace (A_S * ((Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ)) * A₀ *
-          (Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ)))) := rfl
-    _ = Matrix.trace ((Real.exp (-t • A_F)) * A_S * (Real.exp (t • A_F)) * A₀) := by
-      -- Using cyclic property of trace and commutativity of A_S, A_F
-      sorry
-    _ = Matrix.trace (A_S * A₀) := by
-      -- By trace cyclicity: Tr(X·A₀·X⁻¹) = Tr(A₀)
-      sorry
+        = Matrix.trace (A_S * (U * A₀ * Uinv)) := rfl
+    _ = Matrix.trace (A_S * U * A₀ * Uinv) := by simp [Matrix.mul_assoc]
+    _ = Matrix.trace (Uinv * (A_S * U * A₀)) := by rw [Matrix.trace_mul_comm]
+    _ = Matrix.trace (Uinv * A_S * U * A₀) := by simp [Matrix.mul_assoc]
+    _ = Matrix.trace (A_S * Uinv * U * A₀) := by rw [h_comm_Uinv, h_comm_U]
+    _ = Matrix.trace (A_S * (Uinv * U) * A₀) := by simp [Matrix.mul_assoc]
+    _ = Matrix.trace (A_S * (1 : Matrix (Fin n) (Fin n) ℂ) * A₀) := by rw [h_Uinv_U]
+    _ = Matrix.trace (A_S * A₀) := by simp
 
 /--
 Force independence criterion: [A_{F,i}, A_{F,j}] = 0 iff forces i and j

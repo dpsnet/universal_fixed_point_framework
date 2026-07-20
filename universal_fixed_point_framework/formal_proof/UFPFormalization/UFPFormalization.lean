@@ -27,7 +27,12 @@ import UFPFormalization.CategoryGeometry
 import UFPFormalization.HigherRecCategory
 import UFPFormalization.HigherSpecCategory
 import UFPFormalization.HigherDecursionFunctor
+import UFPFormalization.AInfinityAlgebra
 import UFPFormalization.InfinityCategory
+import UFPFormalization.RecInfinity
+import UFPFormalization.SpecInfinity
+import UFPFormalization.DInfinityFunctor
+import UFPFormalization.SpectralFlowHomotopy
 import UFPFormalization.StaticTopologyFormalization
 import UFPFormalization.NoiseCategory
 import UFPFormalization.MultiSilenceMethodology

@@ -2,7 +2,7 @@
 
 > 本附录为 `paper1_fractal_spectral_derecursion.md` 的独立附录文件，包含代码实现清单、机器证明形式化进展与技术引理。正文中的引用直接指向本文件对应章节。
 
-**版本**：v2.34（2026-07-17）
+**版本**：v2.43（2026-07-20）
 
 ## A. 代码实现
 
@@ -125,7 +125,7 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 - **无界谱流**：$dA_t/dt = [G, A_t]$ 保持谱不变性 $\sigma(A_t) = \sigma(H)$（偏差 $7.82\times10^{-14}$）
 - **截断收敛**：Hermite 基 $n\to\infty$ 下低阶本征值 $n=4$ 即收敛
 
-#### A.15.4 A∞/∞-范畴无限维推广（Phase 30.4，`paper35_infinity_category_infinite_dim.py`）
+#### A.15.4 A∞/∞-范畴无限维推广（Phase 30.4 / Phase 31.1）
 
 将谱流方程诠释为 L∞ 代数/∞-范畴结构：
 
@@ -133,6 +133,19 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 - **$\mathbf{Spec}_\infty$ Banach 流形**：$T_A\mathbf{Spec}_\infty = \{[G,A] : G \in \text{End}(H)\}$，指数映射 $\exp_A: T_A \to \mathbf{Spec}_\infty$ 由 $\exp(G)\cdot A\cdot\exp(-G)$ 给出
 - **Killing 向量场**：四力生成元 $\{A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}\}$ 是 $\mathbf{Spec}_\infty$ 上的 Killing 场
 - **同伦截断收敛**：$n\to\infty$ 下 $m_1, m_2$ 收敛
+
+**Lean 4 形式化进展（Phase 31.1，2026-07-20）**：
+
+| 模块 | 内容 | 状态 |
+|:----|:----|:----:|
+| `AInfinityAlgebra.lean` | A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式 | ✅ 已实现并通过 `lake build` |
+| `InfinityCategory.lean` | Spec_∞ 切空间、Killing 向量场、统一谱流方程、切向量 = m_1 定理 | ✅ 已实现并通过 `lake build` |
+| `RecInfinity.lean` | Rec_∞ 对象与 ∞-态射 | ✅ 已实现并通过 `lake build` |
+| `SpecInfinity.lean` | Spec_∞ 对象与 ∞-态射 | ✅ 已实现并通过 `lake build` |
+| `DInfinityFunctor.lean` | D_∞ : Rec_∞ → Spec_∞ 的 ∞-函子性框架 | ✅ 已实现并通过 `lake build` |
+| `SpectralFlowHomotopy.lean` | 谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释 | ✅ 已实现并通过 `lake build` |
+
+Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过。核心定理（D_∞ 函子性、谱流 ODE、同伦等价、切向量 = m_1、Killing 条件、Spec₂ 交换律）以 `sorry` 占位，待后续严格证明。
 
 #### A.15.5 三圈 β 函数匹配（Phase 31，`paper31_threeloop_beta.py`）
 
@@ -285,7 +298,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | A（极易） | $\mathbf{Rec}/\mathbf{Spec}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（24 个模块，零诊断错误，50 个测试定理） |
 | B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、辫子幺半结构、IC 隔离约束 | ✅ 已完成 |
 | C（中等偏高） | IFS 分形吸引子、Hausdorff 维数、遍历论三项定理（D-C/HD-D/TE-G-M）、热力学形式论（压力函数/Legendre 变换/定理 D-C）——基于 mathlib `Dynamics.Ergodic`（完整内置）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），已全部自主实现 | ✅ **全部完成**（Phase 16C-I/II/III 三个子阶段，详见 `roadmap/phase16_machine_proof.md`） |
-| D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ✅ **Phase 30.4 数值推进**（`paper35_infinity_category_infinite_dim.py` 6/6） |
+| D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ✅ **Phase 30.4 数值推进**（`paper35_infinity_category_infinite_dim.py` 6/6）；**Phase 31.1 Lean 4 骨架已实现并通过 `lake build`**（六个模块：`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`），核心定理证明以 `sorry` 占位 |
 
 #### A.16.2 当前进展（2026-07-16 更新）
 
@@ -380,13 +393,17 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 I，分形谱去递归理论，含 18 篇参考文献。主要新增内容：
+《通用不动点范畴框架》系列论文 I（增强版 v2.41），分形谱去递归理论，含 18 篇参考文献。主要新增内容：
 
 - **Phase 36 谱间隙第一性原理推导**：$\Delta\lambda_{\min}$ 由 SU(2) + Cl(1,7) 唯一固定为 $0.122\,M_{\text{Pl}}$，半涌现量全部去外部输入化。
+- **v2.41 框架根本扩展规划**：新增 §8.3.3 开放问题 20–23（高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广），对应路线图 `roadmap/phase31_fundamental_extensions.md` 与研究笔记 `notes/spectral_higher_infinity_category_formalization.md`、`spectral_bes_tba_full_solution.md`、`spectral_dns_turbulence_validation.md`、`spectral_non_markov_te_gm.md`。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.43 | 2026-07-20 | 同步 Paper I v2.43：Phase 31.1 六个 Lean 4 模块通过 `lake build` 编译，修复类型一致性、命名空间、矩阵乘法解析、`noncomputable` 标记与 `HigherSpecCategory.lean` 字段名不一致问题；给 `SpecTwoMorphism`/`SpecInfMorphism` 添加 `@[ext]`；更新 §A.15.4 进展状态；版本号同步至 v2.43 |
+| v2.42 | 2026-07-20 | 同步 Paper I v2.42：Phase 31.1 高阶 ∞-范畴完整形式化推进，新增六个 Lean 4 模块（AInfinityAlgebra.lean、InfinityCategory.lean、RecInfinity.lean、SpecInfinity.lean、DInfinityFunctor.lean、SpectralFlowHomotopy.lean）并加入 `UFPFormalization.lean` 统一导入；修复 Lean 4 工具链环境（全局 settings.toml 损坏）；更新 §A.15.4 ∞-范畴形式化进展；版本号同步至 v2.42 |
+| v2.41 | 2026-07-20 | 同步 Paper I v2.41：§5.8 范畴转化与闭环五层结构、框架普适性声明、§8.3.3 新增开放问题 20–23；版本号同步至 v2.41 |
 | v2.35 | 2026-07-17 | 新增 §A.15.9 Phase 41 多重静默 Λ（理论根因+分层表现）；§A.15.10 Phase 42 暴胀 R⁴ 修正；半涌现量全部去外部输入化 |
 | v2.34 | 2026-07-17 | 新增 §A.15.8 Phase 37 IFS 重叠因子推导；版本号同步；半涌现量全部去外部输入化 |
 | v2.33 | 2026-07-17 | 新增 §A.15.7 Phase 36 谱间隙第一性原理推导 |

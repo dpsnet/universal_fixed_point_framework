@@ -20,6 +20,7 @@
 - `phase21_paper5_spectral_dynamics.md`：**Phase 21：Paper V 谱动力学推进计划**——谱流方程定义、力统一公式、逆平方律谱几何、对称性破缺推导、量子化、β函数精确匹配、数学严格化、类GR场方程涌现、宇宙学谱动力学。**✅ 19/19 全部完成**。
 - `phase50_alpha_derivation.md`：**Phase 50：α 指数第一性推导路线图**——IFS 有限谱三元组 → α_base = d_H/2 → KO-维数手征修正 → 质量比验证。**✅ 全部完成，50E Yukawa 精细结构为开放问题**。
 - `phase51_ckm_unification.md`：**Phase 51：CKM/PMNS 统一路线图**——J 生成元旋转 → CKM 五参数 → PMNS 四参数 → ε_K → GUT/质子衰变。**✅ 全部完成**。
+- `phase31_fundamental_extensions.md`：**Phase 31：框架根本扩展**——高阶 ∞-范畴完整 Lean 4 形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广。**🆕 新建（2026-07-20）**。
 - `phase52_dynamic_spectrum_library.md`：**Phase 52：动态过程谱数值库开发**——超高能双星并合（inspiral-merger-ringdown 全阶段谱计算）、普朗克能标多体散射（量子引力尺度散射振幅谱）、实验对接（LIGO/Virgo/KAGRA）。**⏳ 路线图已制定，待启动开发**。
 - `phase22_spectral_dynamics_deepening.md`：**Phase 22：谱动力学深化**——$\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展、非平衡谱热力学、黑洞视界谱动力学、奇点谱消解、谱流体动力学。**✅ 概念框架全部完成**。
 - `phase23_26_papers_VI_IX.md`：**Phase 23–26：新论文规划**——Paper VI 谱流体动力学（**✅ v0.1**）、Paper VII 非平衡谱热力学（**✅ v0.1**）、Paper VIII 黑洞视界谱动力学（**✅ v0.1**）、Paper IX 奇点谱消解与量子宇宙学（**✅ v0.1**）。**全部完成**。
@@ -185,6 +186,7 @@ Phase 9 开放问题已全面推进：奇异连续谱系统刻画（谱维数谱
 |---|---|---|
 | 2026-07-19 | **动态过程谱数值库开发**：创建 Phase 52 路线图，覆盖超高能双星并合（inspiral-merger-ringdown 全阶段）与普朗克能标多体散射，规划 4 阶段 16 周开发计划 | Phase 52 |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散与 $T_c$ 谱推导）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，Yukawa 特征值修正解决 $m_\mu/m_\tau$ 偏差） | Phase 51 |
+| 2026-07-20 | 新增 Phase 31：框架根本扩展——高阶 ∞-范畴完整 Lean 4 形式化、完整 BES/TBA 高阶圈数值解、有限 $N_c$ 修正、DNS 湍流 $k^{-5/3}$ 预言验证、非 Markov TE-G-M 推广；同步在 Paper I §8.3.3 新增开放问题 20–23 | Phase 31 |
 | 2026-07-18 | 新增 Phase 44：谱 QFT 工具箱构建路线图 | Phase 44 |
 | 2026-07-13 | 新增 Phase 13：理论转化推进计划 | Phase 13 |
 | 2026-07-13 | 更新 Paper I v1.8（新增 M理论层级谱静默转化） | Phase 13 |
