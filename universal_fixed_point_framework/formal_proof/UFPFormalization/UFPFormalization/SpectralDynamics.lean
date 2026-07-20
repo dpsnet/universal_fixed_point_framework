@@ -4,6 +4,7 @@ import UFPFormalization.DecursionFunctor
 import UFPFormalization.DynSys
 import UFPFormalization.OperatorTheory
 import UFPFormalization.Silence
+import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 
@@ -191,13 +192,32 @@ Corresponding to the four fundamental forces:
   - A_weak: weak force generator (SU(2) Lie algebra)
 
 In the finite prototype, these are n×n complex matrices.
+IMPORTANT: A_weak and A_strong must be NON-COMMUTING matrices to correctly
+represent SU(2) and SU(3) Lie algebras. Previously they were defined as
+scalar matrices (g • 1), which made their Lie algebra commutative—
+a structural contradiction. Now they use explicit non-commuting generators.
 -/
+
+/-- Pauli matrix σ_x = [[0,1],[1,0]] (SU(2) generator). -/
+noncomputable def pauliX : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![0, 1; 1, 0]
+
+/-- Pauli matrix σ_y = [[0,-i],[i,0]] (SU(2) generator). -/
+noncomputable def pauliY : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![0, -I; I, 0]
+
+/-- Pauli matrix σ_z = [[1,0],[0,-1]] (SU(2) generator). -/
+noncomputable def pauliZ : Matrix (Fin 2) (Fin 2) ℂ :=
+  !![1, 0; 0, -1]
 
 /--
 Gravitational force generator A_GR.
 From the spectral intertwining condition (Paper II §3):
   A_GR · T = T · A_SM
 where T is the intertwining operator and A_SM is the SM generator.
+
+In the categorical framework (CategoryGeometry.lean), A_GR = ad(G)(A) = [G, A]
+is the adjoint action of the spectral flow generator G at the Rec_D boundary.
 
 The spectrum is real: σ(A_GR) ⊂ ℝ (graviton mass = 0).
 -/
@@ -213,20 +233,54 @@ noncomputable def A_EM {n : ℕ} (α : ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   α • (1 : Matrix (Fin n) (Fin n) ℂ)
 
 /--
-Strong force generator A_strong.
-Associated with SU(3) gauge group.
-Satisfies the SU(3) Lie algebra: [A_a, A_b] = i·f_abc·A_c.
+Strong force generator A_strong as an SU(3) non-commuting generator.
+Associated with SU(3) gauge group: [A_a, A_b] = i·f_abc·A_c.
+
+Takes explicit generators t₁,…,t₈ (Gell-Mann matrices in 3×3 rep)
+and coupling constants g₁,…,g₈.
+For the default 3×3 representation, use A_strong_default.
 -/
-noncomputable def A_strong {n : ℕ} (g : ℂ) : Matrix (Fin n) (Fin n) ℂ :=
-  g • (1 : Matrix (Fin n) (Fin n) ℂ)
+noncomputable def A_strong {n : ℕ} (ts : Fin 8 → Matrix (Fin n) (Fin n) ℂ) (gs : Fin 8 → ℂ) :
+    Matrix (Fin n) (Fin n) ℂ :=
+  ∑ i : Fin 8, gs i • ts i
 
 /--
-Weak force generator A_weak.
-Associated with SU(2) gauge group.
-Satisfies the SU(2) Lie algebra: [A_a, A_b] = i·ε_abc·A_c.
+Default strong force generator in 3×3 SU(3) representation using Gell-Mann matrices.
 -/
-noncomputable def A_weak {n : ℕ} (g : ℂ) : Matrix (Fin n) (Fin n) ℂ :=
-  g • (1 : Matrix (Fin n) (Fin n) ℂ)
+noncomputable def A_strong_default (g₁ g₂ g₃ g₄ g₅ g₆ g₇ g₈ : ℂ) : Matrix (Fin 3) (Fin 3) ℂ :=
+  A_strong (fun i => match i with
+    | 0 => !![0, 1, 0; 1, 0, 0; 0, 0, 0]
+    | 1 => !![0, -I, 0; I, 0, 0; 0, 0, 0]
+    | 2 => !![1, 0, 0; 0, -1, 0; 0, 0, 0]
+    | 3 => !![0, 0, 1; 0, 0, 0; 1, 0, 0]
+    | 4 => !![0, 0, -I; 0, 0, 0; I, 0, 0]
+    | 5 => !![0, 0, 0; 0, 0, 1; 0, 1, 0]
+    | 6 => !![0, 0, 0; 0, 0, -I; 0, I, 0]
+    | 7 => !![1, 0, 0; 0, 1, 0; 0, 0, -2] / Real.sqrt 3)
+    (fun i => match i with
+      | 0 => g₁ | 1 => g₂ | 2 => g₃ | 3 => g₄
+      | 4 => g₅ | 5 => g₆ | 6 => g₇ | 7 => g₈)
+
+/--
+Weak force generator as an SU(2) non-commuting generator.
+Associated with SU(2) gauge group: [A_a, A_b] = i·ε_abc·A_c.
+
+PREVIOUSLY defined as g • 1 (scalar, commutative) which CONTRADICTED
+the SU(2) Lie algebra structure. Now uses explicit non-commuting generators.
+
+Takes three generators t₁,t₂,t₃ (Pauli matrices in 2×2 rep) and couplings.
+For the default 2×2 representation, see A_weak_default.
+-/
+noncomputable def A_weak {n : ℕ} (t₁ t₂ t₃ : Matrix (Fin n) (Fin n) ℂ) (g₁ g₂ g₃ : ℂ) :
+    Matrix (Fin n) (Fin n) ℂ :=
+  g₁ • t₁ + g₂ • t₂ + g₃ • t₃
+
+/--
+Default weak force generator in 2×2 SU(2) representation using Pauli matrices.
+  A_weak_default(g₁,g₂,g₃) = g₁·σ_x + g₂·σ_y + g₃·σ_z
+-/
+noncomputable def A_weak_default (g₁ g₂ g₃ : ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  A_weak pauliX pauliY pauliZ g₁ g₂ g₃
 
 /--
 Theorem 3.4 (Unified Force Formula): The spectral flow equation

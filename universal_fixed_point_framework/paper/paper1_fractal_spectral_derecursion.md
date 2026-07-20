@@ -903,6 +903,20 @@ $$F_t(A) = e^{t\cdot\text{ad}_G}(A) = \sum_{i=0}^{\infty} \frac{t^i}{i!}\,\text{
 | 现象 | 谱子集在 $D$ 作用下不可见 | 谱流演化完全退化，$F_t(A)\equiv A$ |
 | ∞-范畴 | 谱静默子集上 $\mathbf{Spec}_\infty$ 结构退化 | $\mathbf{Spec}_\infty$ 端射在静默边界下闭合 |
 
+**注 5.29**（谱流静默的层次定位与深化方向）。谱流静默 **不构成第五层静默**，而是贯穿四层体系的**桥接原理**（bridging principle），其与各层的对应关系见注 5.28 表。核心结构贡献为**动态桥接定理**：
+
+$$[A,G]=0 \quad \Longrightarrow \quad \text{S3(谱静默)} \;\wedge\; \text{id}_A\text{(态射静默)}$$
+
+该定理将谱静默 S3（谱间隙消失）与态射静默 M-判据通过谱流的动力学退化连接起来。谱流静默在层次结构中的精确位置推测为：
+
+$$\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}$$
+
+该严格包含的证明以及以下深化方向列为开放问题（§8.3）：
+
+1. **谱流静默的严格层次定位**：证明 $[A,G]=0$ 与 S3 的等价/包含关系在 $\mathbf{Spec}_\infty$ 中的精确条件；
+2. **$[A,G]\neq0$ 的谱流演算**：当静默破缺时，谱流 $\infty$-端射需要什么额外结构才能闭合？这是 $\mathbf{Spec}_\infty$ 高阶 coherence 条件的核心；
+3. **连续静默度**：是否可引入 $\delta_{\text{silence}} = \|[A,G]\|$ 来量化谱流静默的破缺程度，从而将静默从离散分类（静默/非静默）扩展为连续参数？（已在 Paper XIX §16 方向三中部分形式化 → `Silence.lean`：$\delta_{\text{silence}}=0 \iff [A,G]=0$ 已证明，$\delta_{\text{silence}}\leq 2\|A\|\|G\|$ 待证）
+
 #### 5.7.7 态射静默判据与统一静默度
 
 Paper XIX §15 在范畴扩展的基础上（静态拓扑 $\mathbf{Rec}_{\text{id}}$ 与随机系统 $\Sigma$-$\mathbf{Rec}$ 的嵌入），将四层静默体系从定性框架严格化为定义+定理体系：态射静默 M1–M4 判据、四层统一静默度 $\mathcal{S}$、紧致化对比拓展、伪谱扰动界 $C$ 与辫子退化判据 $C_{\text{crit}} = \pi/K_{\text{crit}}$。静默体系在此过程中扮演了**范畴转化边界面**的关键角色——决定系统何时从一个范畴"消失"并出现在另一个范畴中。
@@ -1397,18 +1411,19 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 ---
 
-**版本**：v2.43
+**版本**：v2.44
 
-**日期**：2026-07-20
+**日期**：2026-07-21
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 I（增强版 v2.43），分形谱去递归理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.40 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。
+《通用不动点范畴框架》系列论文 I（增强版 v2.44），分形谱去递归理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.40 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。v2.44 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明（`Function.iterate_succ_apply` 在 Mathlib 4.31 中的方向为 `f^[n+1] x = f^[n] (f x)`，原证明以反向预期构建，已重写为 `h_iterate_zero` 辅助引理 + `rw [h_ad_zero]` 方式）；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的完整定义与两个核心引理证明；(c) §5.7.6 第 3 项（连续静默度）添加指向 Paper XIX §16 方向三 Lean 形式化的交叉引用。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.44 | 2026-07-21 | **(a) 修复 `SpectralFlowHomotopy.lean` 归纳法证明**：`h_iter_ge_one` 类型错误——`Function.iterate_succ_apply` 在 Mathlib 4.31 中为 `f^[n+1] x = f^[n] (f x)`，原证明以反向方向构建，重写为 `h_iterate_zero` 辅助引理 + `rw [h_ad_zero]` 方式完成，谱流静默模块全量通过编译；**(b) 连续静默度 $\delta_{\text{silence}}$**：`Silence.lean` 新增 `frobeniusNorm`、`deltaSilence` 定义，`frobeniusNorm_eq_zero_iff` 与 `deltaSilence_eq_zero_iff` 已证明，`deltaSilence_bound` 待证；**(c) 跨论文引用更新**：§5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用；版本号 v2.43 → v2.44。 |
 | v2.43 | 2026-07-20 | **Phase 31.1 高阶 ∞-范畴 Lean 4 形式化骨架完成并通过编译**：修复六个模块（`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`）的类型一致性、命名空间冲突、矩阵乘法解析与 `noncomputable` 标记问题；修复 `HigherSpecCategory.lean` 中 `.matrix` → `.P` 的字段名不一致及 `specExchangeLaw` 参数错误；给 `SpecTwoMorphism` 与 `SpecInfMorphism` 添加 `@[ext]`；**全部模块通过 `lake build`**；开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"；同步更新版本号至 v2.43 及状态描述。 |
 | v2.42 | 2026-07-20 | **推进 Phase 31.1 高阶 ∞-范畴完整形式化**：在 Lean 4 中实现六个模块——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架）、`InfinityCategory.lean`（Spec_∞ 切空间与 Killing 场）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程的 ∞-同伦解释）；全部加入 `UFPFormalization.lean` 统一导入；**修复 Lean 4 工具链环境**（全局 `C:\Users\qinxi\.elan\settings.toml` 损坏导致 `lake build` 报错，已重写）；**开放问题 20 状态升级**为"部分解决，骨架已实现"；同步更新版本号至 v2.42 及状态描述。 |
 | v2.41 | 2026-07-20 | §5.8 范畴转化与闭环大幅扩展：新增 5.8.3 统一相图与边界转化（二维相图 + 四个区域 + 六条边界转化过程）、5.8.4 伴随对结构总览（三层嵌套图示）、5.8.5 框架完备性（定理 5.32 + 推论 5.32）；**框架普适性提升**：摘要末尾追加框架可覆盖所有以集合为底层对象的数学系统、§1.2 新增"框架普适性"独立段落、推论 5.32 扩展为数学系统覆盖声明（包括代数/几何/组合/逻辑四类结构）；**新增 §8.3.3 开放问题 20–23**：高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广；同步更新版本号至 v2.41 及状态描述。 |

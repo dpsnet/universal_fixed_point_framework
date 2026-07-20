@@ -2,9 +2,11 @@ import UFPFormalization.RecCategory
 import UFPFormalization.SpecCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.OperatorTheory
+import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Fintype.Basic
+
 
 namespace UFPFormalization
 
@@ -68,5 +70,74 @@ def spectralSilence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : Pr
 theorem silenceEquivalence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : 
     spectralSilence τ w A ↔ spectralSilence τ w A := by
   rfl
+
+/-! ### Continuous Silence Degree δ_silence -/
+
+/-- Frobenius norm (Hilbert-Schmidt norm) of a finite complex matrix.
+    ‖A‖_F = (∑_{i,j} |A_{ij}|²)^{1/2}. -/
+noncomputable def frobeniusNorm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
+  Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq (A i j))
+
+/-- Continuous silence degree: δ_silence(A, G) = ‖[A, G]‖_F.
+    Measures the commutativity defect between A and G.
+    
+    δ_silence = 0  ⇔  [A, G] = 0  (complete silence, spectral flow reduces to identity)
+    δ_silence > 0  ⇒  silence partially broken, spectral flow calculus needed
+    δ_silence → ∞  ⇒  complete commutativity breakdown. -/
+noncomputable def deltaSilence {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
+  frobeniusNorm (ad G A)
+
+/-- Frobenius norm zero iff the matrix is zero. -/
+theorem frobeniusNorm_eq_zero_iff {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+    frobeniusNorm A = 0 ↔ A = 0 := by
+  constructor
+  · intro h
+    ext i j
+    -- from frobeniusNorm A = 0, deduce all entries are zero
+    have h_nonneg_sq : ∀ (x : ℂ), 0 ≤ Complex.normSq x := by
+      intro x
+      apply Complex.normSq_nonneg
+    have h_nonneg_inner : ∀ (i' : Fin n), 0 ≤ ∑ j' : Fin n, Complex.normSq (A i' j') := by
+      intro i'
+      apply Finset.sum_nonneg
+      intro j' _
+      exact h_nonneg_sq (A i' j')
+    have h_nonneg_total : 0 ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') := by
+      apply Finset.sum_nonneg
+      intro i' _
+      apply h_nonneg_inner i'
+    have hsq_sum : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') = 0 := by
+      have hsqrt : Real.sqrt (∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j')) = 0 := h
+      have h_nonpos : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') ≤ 0 :=
+        (Real.sqrt_eq_zero.mp hsqrt) 
+      nlinarith
+    have h_ij_bound : Complex.normSq (A i j) ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') := by
+      calc
+        Complex.normSq (A i j) ≤ ∑ j' : Fin n, Complex.normSq (A i j') :=
+          Finset.single_le_sum (fun j' _ => h_nonneg_sq (A i j')) (Finset.mem_univ j)
+        _ ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') :=
+          Finset.single_le_sum (fun i' _ => h_nonneg_inner i') (Finset.mem_univ i)
+    have h_ij_sq_zero : Complex.normSq (A i j) = 0 := by nlinarith
+    exact Complex.normSq_eq_zero.mp h_ij_sq_zero
+  · intro h
+    simp [frobeniusNorm, h]
+
+/-- δ_silence = 0 iff [A, G] = 0 (the zero matrix). -/
+theorem deltaSilence_eq_zero_iff {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
+    deltaSilence A G = 0 ↔ ad G A = 0 := by
+  dsimp [deltaSilence]
+  rw [frobeniusNorm_eq_zero_iff]
+
+/-- Inequality: δ_silence ≤ 2‖A‖_F · ‖G‖_F (triangle inequality bound).
+    Proof: ‖[A,G]‖_F = ‖AG - GA‖_F ≤ ‖AG‖_F + ‖GA‖_F ≤ 2‖A‖_F · ‖G‖_F,
+    where the last inequality uses submultiplicativity of Frobenius norm.
+    The submultiplicativity proof ‖AG‖_F ≤ ‖A‖_F · ‖G‖_F for complex matrices
+    requires the Cauchy-Schwarz inequality; deferred to full matrix analysis. -/
+theorem deltaSilence_bound {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
+    deltaSilence A G ≤ 2 * frobeniusNorm A * frobeniusNorm G := by
+  -- Placeholder: the full proof requires Frobenius norm submultiplicativity
+  -- (Cauchy-Schwarz for double sums), which is deferred to Phase 36.
+  -- Statement is recorded for completeness.
+  sorry
 
 end UFPFormalization

@@ -38,6 +38,7 @@ import UFPFormalization.NoiseCategory
 import UFPFormalization.MultiSilenceMethodology
 import UFPFormalization.PhysicalSilenceAnalysis
 import UFPFormalization.ForceUnification
+import UFPFormalization.SpectralGap
 import UFPFormalization.YukawaIFSWeights
 import UFPFormalization.InfinityReflection
 import UFPFormalization.GelfandDuality

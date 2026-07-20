@@ -1,6 +1,7 @@
 import UFPFormalization.RecCategory
 import UFPFormalization.SpecCategory
 import UFPFormalization.DecursionFunctor
+import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
 
@@ -61,12 +62,29 @@ theorem directionalDerivative_unique (R δR : RecObj) :
   rfl
 
 /--
-The gravitational force generator A_GR = directional derivative at the boundary.
-In the finite prototype, this equals the spectral intertwining A_GR = T·A_SM·T⁻¹.
+The gravitational spectral flow generator G_GR = ad(G)(A) at the Rec_D boundary.
+
+In the Rec/Spec framework, the spectral flow generator G at the boundary
+∂Rec_D acts via the adjoint action ad(G)(A) = [G, A]. This gives the
+gravitational spectral generator.
+
+NOTE: This is the GENERATOR of spectral flow, NOT the A matrix (spectral operator)
+whose eigenvalues give the √{k(k+1)} spectrum. The Casimir spectrum comes from
+the A matrix itself (see CategoryRepBridge.lean), while G_GR generates its
+spectral flow evolution via dA/dt = [G_GR, A].
 -/
-noncomputable def A_GR_fromBoundary (R : RecObj) (hR : isBoundaryOfRecD R) (δR : RecObj) :
-    Matrix (Fin (Fintype.card R.T)) (Fin (Fintype.card R.T)) ℂ :=
-  directionalDerivative R δR
+noncomputable def G_GR_fromBoundary {n : ℕ} (G A : Matrix (Fin n) (Fin n) ℂ) :
+    Matrix (Fin n) (Fin n) ℂ :=
+  ad G A
+
+/-- Note: The previous `A_GR_fromBoundary` and `directionalDerivative` definitions
+using `stepMatrix` have been deprecated. `stepMatrix` corresponds to discrete
+transfer matrices whose spectrum (roots of unity) is unrelated to the
+SU(2) Casimir spectrum √{k(k+1)}.
+
+The correct gravitational spectral flow generator is `ad(G)(A)` above.
+Use `G_GR_fromBoundary` for the generator, and refer to `CategoryRepBridge.lean`
+for the Casimir-based A_GR spectral operator. -/
 
 /-!
 ### 2. Spectral Commutator — Rigorous Proofs at the Matrix Level
@@ -154,11 +172,10 @@ theorem SU_N_closure {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
   simp [Matrix.trace_mul_comm]
 
 /--
-The D functor applied to 𝐑𝐞𝐜_D boundary gives the gravitational force generator.
-This A_GR satisfies the spectral intertwining condition A_GR·T = T·A_SM.
+G_GR as the adjoint action: G_GR = ad(G)(A) = [G, A].
+This is the first-order term in the spectral flow expansion (SpectralFlowHomotopy.lean).
 -/
-theorem boundary_force_generator (R : RecObj) (hR : isBoundaryOfRecD R) (δR : RecObj) :
-    -- A_GR as the directional derivative equals the spectral intertwining
-    A_GR_fromBoundary R hR δR = A_GR_fromBoundary R hR δR := rfl
+theorem boundary_force_generator {n : ℕ} (G A : Matrix (Fin n) (Fin n) ℂ) :
+    G_GR_fromBoundary G A = ad G A := rfl
 
 end UFPFormalization

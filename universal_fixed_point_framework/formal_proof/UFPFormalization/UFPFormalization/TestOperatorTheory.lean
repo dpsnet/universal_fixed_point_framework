@@ -23,9 +23,10 @@ Covers: OperatorTheory, Silence, SpectralCorrespondence, LeaverComplexity, DynSy
 -- ============================================================
 
 -- Koopman operator is a contraction (‖U_R‖ ≤ 1)
-theorem test_koopman_is_contraction {X : Type} (sys : DynSys X) (f : X → ℂ) :
-    ⨆ x : X, ‖koopmanLinfty sys f x‖ ≤ ⨆ x : X, ‖f x‖ :=
-  koopmanLinfty_norm_le_one sys f
+theorem test_koopman_is_contraction {X : Type} [Nonempty X] (sys : DynSys X) (f : X → ℂ)
+    (h_bdd : BddAbove (Set.range (fun x : X => norm (f x)))) :
+    iSup (fun x : X => norm (koopmanLinfty sys f x)) ≤ iSup (fun x : X => norm (f x)) :=
+  koopmanLinfty_norm_le_one sys f h_bdd
 
 -- The spectral measure classification exists
 theorem test_spectral_type_exists : Nonempty SpectralType :=
@@ -83,8 +84,12 @@ theorem test_RecObj_to_DynSys (R : RecObj) (f : R.T → ℂ) (x : R.T) :
     koopmanLinfty (RecObjToDynSys R) f x = f (R.step x) := rfl
 
 -- DynSys Koopman is always a contraction
-theorem test_DynSys_contraction (X : Type) (sys : DynSys X) :
-    ⨆ x : X, ‖koopmanLinfty sys (fun _ => (0 : ℂ)) x‖ ≤ ⨆ x : X, ‖(0 : ℂ)‖ :=
-  koopmanLinfty_norm_le_one sys (fun _ => 0)
+theorem test_DynSys_contraction (X : Type) [Nonempty X] (sys : DynSys X) :
+    iSup (fun x : X => norm (koopmanLinfty sys (fun _ => (0 : ℂ)) x)) ≤ iSup (fun x : X => norm ((0 : ℂ))) :=
+  koopmanLinfty_norm_le_one sys (fun _ => 0) (by
+    refine ⟨0, ?_⟩
+    intro y hy
+    rcases hy with ⟨x, rfl⟩
+    simp)
 
 end UFPFormalization.Test

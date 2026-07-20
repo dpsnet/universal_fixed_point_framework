@@ -107,36 +107,42 @@ noncomputable def spectralFlowInfEndo (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin
         have h_ad_zero : ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) X.A = 0 := by
           dsimp [ad]
           rw [h_silence, sub_self]
+        have h_iterate_zero : ∀ m : ℕ, (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[m] (0 : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) = 0 := by
+          intro m
+          induction m with
+          | zero => simp
+          | succ m ih =>
+            rw [Function.iterate_succ_apply]
+            have h_ad_zero_0 : ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) (0 : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) = 0 := by
+              simp [ad]
+            rw [h_ad_zero_0, ih]
         have h_iter_ge_one : ∀ k : ℕ, 1 ≤ k → (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[k] X.A = 0 := by
           intro k hk
-          induction' k with k ih
-          · linarith
-          · rw [Function.iterate_succ', Function.comp_apply, h_ad_zero]
-            -- (ad G)^[k+1](X.A) = ad G ((ad G)^[k] (X.A)) = ad G(0) = 0
-            -- Need to know ad G(0) = 0
-            have h_ad_zero' : ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) (0 : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) = 0 := by
-              simp [ad]
-            rcases k with (rfl | k')
-            · -- k = 0, but hk says 1 ≤ 0 → contradiction
-              linarith
-            · -- k = k'+1 ≥ 1, so (ad G)^[k](X.A) = 0 by IH
-              have h_prev : (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[k'] X.A = 0 := ih (by omega)
-              simp [h_prev, ad]
-        have h_flow_eq_A : spectralFlowMap X.n G X.A t N = X.A := by
-          dsimp [spectralFlowMap]
-          -- spectralFlowMap = Σ_{i=0}^{N-1} (t^i/i!) • (ad G)^[i] X.A
-          -- = (t^0/0!) • (ad G)^[0] X.A + Σ_{i=1}^{N-1} (t^i/i!) • (ad G)^[i] X.A
-          -- = X.A + 0 = X.A
-          calc
-            ∑ i ∈ Finset.range N, ((t^i / Nat.factorial i : ℝ) : ℂ) • (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[i] X.A
-                = X.A + ∑ i ∈ Finset.Ico 1 N, ((t^i / Nat.factorial i : ℝ) : ℂ) • (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[i] X.A := by
-              rcases N with (rfl | N')
+          induction k with
+          | zero => omega
+          | succ k ih =>
+            rw [Function.iterate_succ_apply, h_ad_zero]
+            exact h_iterate_zero k
+        have h_comm : spectralFlowMap X.n G X.A t N * X.A = X.A * spectralFlowMap X.n G X.A t N := by
+          by_cases hN : N = 0
+          · subst hN; simp [spectralFlowMap]
+          · have h_pos_N : 0 < N := by omega
+            have h_flow_eq_A : spectralFlowMap X.n G X.A t N = X.A := by
+              dsimp [spectralFlowMap]
+              have h_nonzero_terms_zero : ∀ i ∈ Finset.range N, i ≠ 0 → ((t^i / Nat.factorial i : ℝ) : ℂ) • (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[i] X.A = 0 := by
+                intro i hi hi_ne
+                have hi_ge1 : 1 ≤ i := by omega
+                simp [h_iter_ge_one i hi_ge1]
+              refine (Finset.sum_eq_single 0 ?_ ?_).trans ?_
+              · intro i hi hi_ne
+                have hi_ge1 : 1 ≤ i := by
+                  have hi_range : i < N := Finset.mem_range.1 hi
+                  omega
+                simp [h_iter_ge_one i hi_ge1]
+              · intro h0_not_mem
+                exact (h0_not_mem (Finset.mem_range.mpr h_pos_N)).elim
               · simp
-              · simp [Finset.sum_range_succ, Finset.Ico_succ_singleton, Function.iterate_zero]
-            _ = X.A + 0 := by
-              refine congrArg (fun x => X.A + x) ?_
-              simp [Finset.sum_eq_zero_of_forall_eq_zero, h_iter_ge_one]
-            _ = X.A := by simp
-        simpa [h_flow_eq_A] }
+            simp [h_flow_eq_A]
+        exact h_comm }
 
 end UFPFormalization

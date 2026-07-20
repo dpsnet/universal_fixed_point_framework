@@ -208,6 +208,8 @@ $$
 
 **核心结论**：$\Delta\lambda_{\min}$ 不再为自由参数。所有半涌现量（反弹尺度、R² 系数、BH 热力学）全部去外部输入化。
 
+**形式化验证**。上述推导链已在 Lean 4 中完成形式化（`SpectralGap.lean`），覆盖 SU(2) 特征值谱定义、解析公式 $\Delta\lambda_{\min} = (\sqrt{6} - \sqrt{2})/\sqrt{k_{\max}(k_{\max}+1)}$、$k_{\max}=8$ 的群论约束、以及 $c_1 = 3/(8\Delta\lambda^2)$、$\rho_c = 8\pi/(3c_1)$ 等导出常数的定理链。数值验证 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 依赖浮点库（`paper36_spectral_gap_derivation.py`，双精度 64 位验证通过）。
+
 #### A.15.8 IFS 收缩因子第一性原理推导（Phase 37，`paper37_ifs_overlap_derivation.py` 补充）
 
 半涌现量 $\rho$（IFS 重叠因子）去外部输入化，三代质量谱从 $\mathbf{Spec}$ 4-范畴的静默层级结构自然涌现（7/7 验证通过）。
