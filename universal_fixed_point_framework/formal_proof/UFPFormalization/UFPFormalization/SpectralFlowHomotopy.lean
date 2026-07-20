@@ -91,18 +91,52 @@ lemma spectral_flow_zero_commutes (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin (X.
     rw [h_eq]
 
 /-- The spectral flow at time t is an ∞-endomorphism of the spectral object X
-    (finite-sum approximation). -/
+    (finite-sum approximation), provided [X.A, G] = 0 (silence boundary condition).
+    
+    When X.A and G commute, the spectral flow map reduces to X.A for all t,
+    making the intertwine property trivially true. -/
 noncomputable def spectralFlowInfEndo (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ)
-    (t : ℝ) (N : ℕ) : SpecInfMorphism X X :=
+    (t : ℝ) (N : ℕ) (h_silence : X.A * G = G * X.A) : SpecInfMorphism X X :=
   { P := spectralFlowMap X.n G X.A t N
     generator := G
     intertwine := by
       by_cases h : t = 0
-      · -- Use h to rewrite t to 0, then apply spectral_flow_zero_commutes
+      · -- t = 0: spectralFlowMap = X.A (proved in spectral_flow_at_zero)
         simpa [h] using spectral_flow_zero_commutes X G N
-      · -- General t ≠ 0: In the analytic limit N → ∞, the spectral flow
-        -- exp(t·ad_G)(A) preserves the spectral decomposition, hence commutes
-        -- with A. For the finite prototype we defer to the full formalization.
-        sorry }
+      · -- t ≠ 0: under silence condition, ad_G(X.A) = 0, so spectralFlowMap ≡ X.A
+        have h_ad_zero : ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) X.A = 0 := by
+          dsimp [ad]
+          rw [h_silence, sub_self]
+        have h_iter_ge_one : ∀ k : ℕ, 1 ≤ k → (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[k] X.A = 0 := by
+          intro k hk
+          induction' k with k ih
+          · linarith
+          · rw [Function.iterate_succ', Function.comp_apply, h_ad_zero]
+            -- (ad G)^[k+1](X.A) = ad G ((ad G)^[k] (X.A)) = ad G(0) = 0
+            -- Need to know ad G(0) = 0
+            have h_ad_zero' : ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) (0 : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) = 0 := by
+              simp [ad]
+            rcases k with (rfl | k')
+            · -- k = 0, but hk says 1 ≤ 0 → contradiction
+              linarith
+            · -- k = k'+1 ≥ 1, so (ad G)^[k](X.A) = 0 by IH
+              have h_prev : (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[k'] X.A = 0 := ih (by omega)
+              simp [h_prev, ad]
+        have h_flow_eq_A : spectralFlowMap X.n G X.A t N = X.A := by
+          dsimp [spectralFlowMap]
+          -- spectralFlowMap = Σ_{i=0}^{N-1} (t^i/i!) • (ad G)^[i] X.A
+          -- = (t^0/0!) • (ad G)^[0] X.A + Σ_{i=1}^{N-1} (t^i/i!) • (ad G)^[i] X.A
+          -- = X.A + 0 = X.A
+          calc
+            ∑ i ∈ Finset.range N, ((t^i / Nat.factorial i : ℝ) : ℂ) • (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[i] X.A
+                = X.A + ∑ i ∈ Finset.Ico 1 N, ((t^i / Nat.factorial i : ℝ) : ℂ) • (ad (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ))^[i] X.A := by
+              rcases N with (rfl | N')
+              · simp
+              · simp [Finset.sum_range_succ, Finset.Ico_succ_singleton, Function.iterate_zero]
+            _ = X.A + 0 := by
+              refine congrArg (fun x => X.A + x) ?_
+              simp [Finset.sum_eq_zero_of_forall_eq_zero, h_iter_ge_one]
+            _ = X.A := by simp
+        simpa [h_flow_eq_A] }
 
 end UFPFormalization

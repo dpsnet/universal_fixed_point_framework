@@ -141,13 +141,24 @@ where p_i are the weights and c_i are the contraction ratios.
 
 τ(q) is a convex function of q, and its Legendre transform gives
 the singularity spectrum f(α) of the invariant measure.
+
+For the correct definition:
+  τ(q) uniquely solves Σ p_i^q · c_i^{τ(q)} = 1.
+  
+Key special cases:
+  • τ(1) = 0  because Σ p_i · c_i^0 = Σ p_i = 1 (total mass).
+  • τ(0) = -d_H  where d_H is the Hausdorff dimension (Bowen formula),
+    because Σ c_i^{-d_H} = 1 by the Moran equation Σ c_i^{d_H} = 1.
+
+In the finite prototype, the placeholder returns q as a stand-in.
+The full root-finding is deferred to the numerical Python prototype
+and the implicit function theorem.
 -/
 noncomputable def multifractalSpectrum {X : Type} [MetricSpace X] [CompleteMetricSpace X]
     {ifs : IFS X} {attractor : Attractor ifs} (measure : SelfSimilarMeasure ifs attractor)
     (q : ℝ) : ℝ :=
   -- τ(q) is defined implicitly by Σ p_i^q · c_i^{τ(q)} = 1
-  -- In the finite-dimensional prototype, we solve via Newton's method.
-  -- The full analytic proof requires the implicit function theorem.
+  -- Placeholder: returns q (satisfies the equation only when q=1 with c_i^0=1)
   if h : (Finset.sum (Finset.univ : Finset (Fin ifs.n))
     (fun i : Fin ifs.n => (measure.weights i) ^ q * (ifs.ratios i) ^ 0)) > 0 then
     q

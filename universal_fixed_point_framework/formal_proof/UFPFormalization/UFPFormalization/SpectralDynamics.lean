@@ -12,6 +12,12 @@ open Matrix
 
 namespace UFPFormalization
 
+/--
+The set of eigenvalues of a finite complex matrix: λ ∈ eigenvalues(A) ⇔ det(A - λ·I) = 0.
+-/
+def Matrix.eigenvalues {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Set ℂ :=
+  {λ | (A - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det = 0}
+
 /-!
 # Spectral Dynamics (Phase 16C Extension)
 
@@ -70,12 +76,40 @@ so A_t and A₀ are similar, hence σ(A_t) = σ(A₀).
 theorem spectral_invariance {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) (λ : ℂ)
     (h : λ ∈ Matrix.eigenvalues (A₀ : Matrix (Fin n) (Fin n) ℂ)) :
     λ ∈ Matrix.eigenvalues (spectralFlow A₀ A_F t) := by
-  -- A_t = U·A₀·U⁻¹ has the same eigenvalues as A₀ by similarity
-  have h_similar : spectralFlow A₀ A_F t =
-    (Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ))⁻¹ * spectralFlow A₀ A_F t *
-    (Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ)) := by
-    simp [spectralFlow]
-  sorry  -- Full proof requires eigenvalue similarity theorem
+  -- A_t = U·A₀·U⁻¹ where U = exp(t·A_F), U⁻¹ = exp(-t·A_F)
+  set U := Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
+  set Uinv := Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
+  have h_inv : U * Uinv = (1 : Matrix (Fin n) (Fin n) ℂ) := by
+    calc
+      U * Uinv = Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) * Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
+      _ = Real.exp ((t • A_F) + (-t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
+        rw [Matrix.exp_add_of_commute (t • A_F : Matrix (Fin n) (Fin n) ℂ)
+          (-t • A_F : Matrix (Fin n) (Fin n) ℂ) ?_]
+        exact ((Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right).symm
+      _ = Real.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by ring
+      _ = 1 := by simp
+  have h_similar : spectralFlow A₀ A_F t = U * A₀ * Uinv := rfl
+  have h_ident : U * (A₀ - λ • (1 : Matrix (Fin n) (Fin n) ℂ)) * Uinv =
+      spectralFlow A₀ A_F t - λ • (1 : Matrix (Fin n) (Fin n) ℂ) := by
+    calc
+      U * (A₀ - λ • 1) * Uinv = (U * A₀ - λ • U) * Uinv := by
+        simp [Matrix.mul_sub, Matrix.mul_smul_comm]
+      _ = U * A₀ * Uinv - λ • (U * Uinv) := by
+        simp [Matrix.sub_mul, Matrix.smul_mul_assoc, Matrix.mul_assoc]
+      _ = spectralFlow A₀ A_F t - λ • 1 := by simp [h_similar, h_inv]
+  have h_det_eq : (spectralFlow A₀ A_F t - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det =
+      (A₀ - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det := by
+    calc
+      (spectralFlow A₀ A_F t - λ • 1).det = (U * (A₀ - λ • 1) * Uinv).det := by rw [h_ident]
+      _ = det U * (A₀ - λ • 1).det * det Uinv := by
+        simp [Matrix.det_mul, Matrix.mul_assoc]
+      _ = (det U * det Uinv) * (A₀ - λ • 1).det := by ring
+      _ = (U * Uinv).det * (A₀ - λ • 1).det := by rw [← Matrix.det_mul, Matrix.mul_assoc]
+      _ = (1 : Matrix (Fin n) (Fin n) ℂ).det * (A₀ - λ • 1).det := by rw [h_inv]
+      _ = (A₀ - λ • 1).det := by simp
+  -- λ ∈ eigenvalues(A_t) ⇔ det(A_t - λI) = 0 ⇔ det(A₀ - λI) = 0 ⇔ λ ∈ eigenvalues(A₀)
+  rw [Matrix.eigenvalues, Set.mem_setOf_eq, h_det_eq]
+  exact h
 
 /--
 Nöther conservation: Tr(A_S·A_t) is constant if [A_S, A_F] = 0.

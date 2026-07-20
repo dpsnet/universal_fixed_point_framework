@@ -1,8 +1,14 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Set.Basic
-import Mathlib.Topology.Basic
+import Mathlib.Data.Complex.Basic
+import Mathlib.Order.SetNotation
+import Mathlib.Analysis.Normed.Group.Basic
+import Mathlib.Analysis.Complex.Norm
+import Mathlib.Analysis.Convex.Basic
 import UFPFormalization.RecCategory
 import UFPFormalization.SpecCategory
+
+open Set
 
 namespace UFPFormalization
 
@@ -47,25 +53,30 @@ noncomputable def koopmanLinfty {X : Type u} (sys : DynSys X)
 The Koopman operator is a bounded linear operator on ℓ∞(X) with norm ‖U‖ = 1.
 Proof: |Uf(x)| = |f(Φ(x))| ≤ ‖f‖∞, so ‖Uf‖∞ ≤ ‖f‖∞, hence ‖U‖ ≤ 1.
 -/
-theorem koopmanLinfty_norm_le_one {X : Type u} (sys : DynSys X) (f : X → ℂ) :
-    ⨆ x : X, ‖koopmanLinfty sys f x‖ ≤ ⨆ x : X, ‖f x‖ := by
-  apply ciSup_le
-  intro x
-  dsimp [koopmanLinfty]
-  -- |f(Φ(x))| ≤ sup_{y} |f(y)|
-  have h : ‖f (sys.Φ x)‖ ≤ ⨆ (y : X), ‖f y‖ := by
-    apply Real.le_sSup
-    refine ⟨sys.Φ x, ?_⟩
-    rfl
-  exact h
+theorem koopmanLinfty_norm_le_one {X : Type u} [Nonempty X] (sys : DynSys X) (f : X → ℂ) 
+    (h_bdd : BddAbove (Set.range (fun x : X => norm (f x)))) :
+    iSup (fun x : X => norm (koopmanLinfty sys f x)) ≤ iSup (fun x : X => norm (f x)) := by
+  -- For each x, |U_R f(x)| = |f(Φ(x))| ≤ sup_y |f(y)|
+  have h_bound : ∀ x : X, norm (koopmanLinfty sys f x) ≤ iSup (fun (y : X) => norm (f y)) := by
+    intro x
+    rw [koopmanLinfty]
+    have mem : norm (f (sys.Φ x)) ∈ Set.range (fun (y : X) => norm (f y)) := ⟨sys.Φ x, rfl⟩
+    calc
+      norm (f (sys.Φ x)) ≤ sSup (Set.range (fun (y : X) => norm (f y))) :=
+        le_csSup h_bdd mem
+      _ = iSup (fun (y : X) => norm (f y)) := rfl
+  -- Apply ciSup_le': if ∀ x, f_koop(x) ≤ S, then iSup f_koop ≤ S
+  exact ciSup_le' h_bound
 
 /--
 The Koopman operator is always a contraction: ‖U_R‖ ≤ 1.
-This holds for ANY dynamical system.
+This holds for any system with bounded f (finite state space or general ℓ∞). 
+For the finite prototype (RecObj → DynSys), h_bdd is automatically satisfied.
 -/
-theorem koopmanLinfty_is_contraction {X : Type u} (sys : DynSys X) :
-    ∀ f : X → ℂ, ⨆ x : X, ‖koopmanLinfty sys f x‖ ≤ ⨆ x : X, ‖f x‖ :=
-  koopmanLinfty_norm_le_one sys
+theorem koopmanLinfty_is_contraction {X : Type u} [Nonempty X] (sys : DynSys X)
+    (h_bdd : ∀ f : X → ℂ, BddAbove (Set.range (fun x : X => norm (f x)))) :
+    ∀ f : X → ℂ, iSup (fun x : X => norm (koopmanLinfty sys f x)) ≤ iSup (fun x : X => norm (f x)) :=
+  fun f => koopmanLinfty_norm_le_one sys f (h_bdd f)
 
 /--
 The spectrum of the ℓ∞ Koopman operator is always contained in the

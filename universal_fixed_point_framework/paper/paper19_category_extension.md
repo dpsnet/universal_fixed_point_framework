@@ -592,6 +592,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 | `MultiSilenceMethodology.lean` | S₁–S₄ 数值因子、`SilenceDecomposition` 结构、5 步分析流水线、四种已解案例 | §5 |
 | `PhysicalSilenceAnalysis.lean` | Higgs VEV、Kerr QNM、暴胀张量谱、暗物质 relic 密度的静默分析 | §6.4, §8.5 |
 | `SilenceHierarchyDeepened.lean` | M1–M4 判据、四层静默度算符 $\mathcal{S}$、$C_{\text{crit}}$ 辫子退化判据、B1–B3 数值验证流程、$K_{\text{crit}}$ Kerr 标定、Fibonacci Wilson-辫子对应、BTZ $C_{\text{crit}}$ 稳定性、Tangherlini $K_{\text{crit}}^{(D)}$ 维度标定 | §15.1–§15.6, Thm 15.1–15.9 |
+| `SpectralFlowHomotopy.lean` | 谱流 ∞-端射在静默边界 $[A,G]=0$ 下的形式化定义与交换性证明、谱流方程有限和恒等式 | Paper I §2.11, 注 5.28 |
 
 ---
 
