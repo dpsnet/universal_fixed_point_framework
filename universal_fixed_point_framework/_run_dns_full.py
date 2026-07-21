@@ -1,30 +1,58 @@
 """
-DNS 湍流数值验证 v3 — 修复能谱归一化 + 平衡 forcing
-  48³, nu=0.005, force_amp=0.5, T=30
+DNS 湍流数值验证 v4.5 — 日志持久化 + 稳态延长
+  64³, Re_λ=200, force_amp=0.03, T=80
 """
 import sys; sys.path.insert(0, '.')
 import time
 import numpy as np
+from pathlib import Path
 from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrumAnalyzer
 
+# ============================================================
+# 配置与日志持久化
+# ============================================================
+OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR.mkdir(exist_ok=True)
+RUN_TAG = f"v4_5_N64_Re200_fa0.03_T80_{int(time.time())}"
+LOG_FILE = OUTPUT_DIR / f"{RUN_TAG}.log"
+NPZ_FILE = OUTPUT_DIR / f"{RUN_TAG}.npz"
+
+class TeeLogger:
+    """同时输出到终端和日志文件"""
+    def __init__(self, filepath):
+        self.file = open(filepath, 'w', encoding='utf-8')
+        self.stdout = sys.stdout
+    def write(self, message):
+        self.stdout.write(message)
+        self.file.write(message)
+        self.file.flush()
+    def flush(self):
+        self.stdout.flush()
+        self.file.flush()
+
+sys.stdout = TeeLogger(LOG_FILE)
+
 cfg = DNSConfig(
-    N=48,
-    Re_lambda=100.0,
-    nu=0.005,           # 较高粘度，维持稳态
-    dt=0.004,           # 时间步长
-    T_total=30.0,       # 延长积分以达稳态
-    T_stats_start=10.0, # 晚一些开始统计
-    force_kf=2.0,       # 窄 forcing 范围
-    force_amp=0.5,      # 平衡振幅 (原1.0过强)
+    N=64,                  # 更高分辨率以解析惯性区
+    Re_lambda=200.0,       # 提高雷诺数以拓展惯性区
+    nu=1/200.0,            # ν = 0.005，与 Re_λ 匹配
+    dt=0.004,              # 时间步长
+    T_total=80.0,          # 更长积分以达到统计稳态
+    T_stats_start=40.0,    # 稳态后半段开始统计
+    force_kf=2.0,          # 大尺度 forcing
+    force_amp=0.03,        # 进一步降低 forcing，抑制能量持续增长
 )
 
 print("=" * 65)
-print(f"DNS 湍流 k^-5/3 验证 v3")
+print(f"DNS 湍流 k^-5/3 验证 v4.5")
 print(f"  分辨率: {cfg.N}³ = {cfg.N**3:,}")
-print(f"  nu = {cfg.nu}, dt = {cfg.dt}")
+print(f"  Re_λ = {cfg.Re_lambda:.0f}, ν = {cfg.nu:.6f}")
+print(f"  dt = {cfg.dt}")
 print(f"  T_total = {cfg.T_total}, 统计起始: t={cfg.T_stats_start}")
 print(f"  force_amp = {cfg.force_amp}, force_kf = {cfg.force_kf}")
 print(f"  能谱归一化: 已修正")
+print(f"  日志文件: {LOG_FILE}")
+print(f"  数据文件: {NPZ_FILE}")
 print("=" * 65)
 
 t0 = time.time()
@@ -52,9 +80,9 @@ analyzer = EnergySpectrumAnalyzer(k, Ek_avg, epsilon=epsilon_avg, nu=cfg.nu)
 analysis = analyzer.to_dict()
 fit = analysis["fit"]
 
-# 打印能谱数据（前几个模式）
+# 打印能谱数据
 print(f"\n能谱 E(k):")
-for ki in range(1, min(15, len(k))):
+for ki in range(1, min(25, len(k))):
     print(f"  k={ki}: E(k)={Ek_avg[ki]:.6e}")
 
 print(f"\n{'='*65}")
@@ -76,15 +104,16 @@ if "slope" in fit:
     else:
         print(f"  状态: ❌")
 
-    # 补偿谱
     print(f"\n  补偿谱 k^(5/3) E(k) (期望平坦):")
     comp = analyzer.compensated_spectrum()
-    for ki in range(1, min(12, len(k))):
+    for ki in range(1, min(20, len(k))):
         print(f"    k={ki}: {comp[ki]:.6e}")
 
 if fit.get("C_K") is not None:
     print(f"\n[2/3] Kolmogorov 常数")
     print(f"  C_K = {fit['C_K']:.3f} (文献 1.5)")
+    C_K_dev = abs(fit['C_K'] - 1.5) / 1.5 * 100
+    print(f"  偏差: {C_K_dev:.1f}%")
 
 silence = analysis.get("silence")
 if silence:
@@ -99,3 +128,27 @@ n_pass = sum([
 ])
 print(f"\n验证: {n_pass}/3")
 print(f"耗时: {elapsed:.1f}s")
+
+# 保存完整结果到 NPZ
+energy_history = np.array(dns.energy_history)
+dissipation_history = np.array(dns.dissipation_history)
+np.savez(
+    NPZ_FILE,
+    k=k,
+    Ek_avg=Ek_avg,
+    energy_history=energy_history,
+    dissipation_history=dissipation_history,
+    cfg_N=cfg.N,
+    cfg_Re_lambda=cfg.Re_lambda,
+    cfg_nu=cfg.nu,
+    cfg_dt=cfg.dt,
+    cfg_T_total=cfg.T_total,
+    cfg_force_amp=cfg.force_amp,
+    cfg_force_kf=cfg.force_kf,
+    slope=slope if "slope" in fit else np.nan,
+    slope_err=slope_err if "slope" in fit else np.nan,
+    C_K=fit.get("C_K", np.nan),
+    S_spec=silence["S_spec"] if silence else np.nan,
+    k_nu=silence["k_nu"] if silence else np.nan,
+)
+print(f"\n结果已保存: {NPZ_FILE}")
