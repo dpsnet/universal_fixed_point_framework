@@ -591,6 +591,8 @@ $$ds^2 = -\left(1-\frac{2GM}{r}\right)dt^2 + \left(1-\frac{2GM}{r}\right)^{-1}dr
 
 **证明思路**。由 Paper VIII 定理 3.1（黑洞视界 = $\partial\mathbf{Rec}_D$），视界处 $\Delta\lambda_{\min} = 0$。视界外，类时 Killing 向量存在，谱间隙为正。视界内，Killing 向量变为类空，时间与空间坐标交换，谱间隙变为复数，对应 Lorentz 违规区。$\square$
 
+**注 10.2**（算符范围）。此处 $\Delta\lambda_{\min} \in \mathbb{C}$ 描述的是全时空 $A_{\text{GR}}$ 算子——视界内 $\partial_t$ 类空导致 $A_{\text{GR}}$ 不再正自伴，谱间隙自然变为复数。这与 Paper VIII §7.2 注 7.1 不矛盾：将 $A_{\text{GR}}$ 投影到物质子空间后，$P_{\text{matter}} A_{\text{GR}} P_{\text{matter}}$ 恢复自伴性并给出实离散谱 $E_n = E_0 S_4^n$。复谱（全算子）与实离散谱（物质子空间）是同一物理在不同算子层面的表现。
+
 **推论 10.7**（视界内的 Lorentz 违规）。视界内部（$r < 2GM$）的物理系统处于 $\mathbf{Rec} \setminus \mathbf{Rec}_D$，对应 Lorentz 违规。具体表现为：时间与空间坐标交换（$r$ 变为时间方向）、谱流方向反转、局部因果结构改变。这一预测可在黑洞合并引力波信号的"环降"阶段检验。
 
 #### 10.3.2 Kerr 时空

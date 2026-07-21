@@ -222,9 +222,11 @@ $$A_{\text{GR}}(a=M) = \int_0^\infty \lambda \, dE(\lambda)$$
 
 ### 7.2 黑洞内部物质谱形态
 
-谱框架对黑洞内部物质的描述不同于经典广义相对论的"奇点压碎"图像。穿过视界后，谱流参数 $r$（径向坐标）变为类时，$A_{\text{GR}}$ 的谱经历相变：
+谱框架对黑洞内部物质的描述不同于经典广义相对论的"奇点压碎"图像。穿过视界后，谱流参数 $r$（径向坐标）变为类时，$A_{\text{GR}}$ 的谱经历相变。
 
-**定理 7.2**（内部离散谱）。在 Schwarzschild 黑洞内部 ($r < 2M$)，$A_{\text{GR}}$ 的谱从连续（QNM）变为离散：
+**注 7.1**（算符区分）。需注意区分两个不同的算子：全时空 $A_{\text{GR}}$ 在视界内因 $\partial_t$ 变为类空而不再正自伴，其谱间隙 $\Delta\lambda_{\min}$ 变为复数（Paper XVI 命题 10.6，$\mathbf{Rec}\setminus\mathbf{Rec}_D$）。但将 $A_{\text{GR}}$ 投影到物质子空间后，$P_{\text{matter}} A_{\text{GR}} P_{\text{matter}}$ 因静默因子压制而恢复自伴性，给出实离散谱——以下定理描述的是后者。
+
+**定理 7.2**（内部离散谱）。在 Schwarzschild 黑洞内部 ($r < 2M$)，$A_{\text{GR}}$ 的物质子空间投影谱从连续（QNM）变为离散：
 
 $$E_n = E_0 \cdot S_4^n, \quad n = 0, 1, \dots, N_{\max}$$
 
