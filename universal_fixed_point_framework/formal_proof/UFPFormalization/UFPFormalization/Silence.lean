@@ -67,7 +67,7 @@ def spectralSilence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : Pr
 /-- Theorem 5.4 (Silence Equivalence): The four criteria are equivalent
     to the original definition of spectral silence.
     In the finite-dimensional prototype, this is trivial. -/
-theorem silenceEquivalence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : 
+theorem silenceEquivalence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) :
     spectralSilence τ w A ↔ spectralSilence τ w A := by
   rfl
 
@@ -80,7 +80,7 @@ noncomputable def frobeniusNorm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ
 
 /-- Continuous silence degree: δ_silence(A, G) = ‖[A, G]‖_F.
     Measures the commutativity defect between A and G.
-    
+
     δ_silence = 0  ⇔  [A, G] = 0  (complete silence, spectral flow reduces to identity)
     δ_silence > 0  ⇒  silence partially broken, spectral flow calculus needed
     δ_silence → ∞  ⇒  complete commutativity breakdown. -/
@@ -109,7 +109,7 @@ theorem frobeniusNorm_eq_zero_iff {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
     have hsq_sum : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') = 0 := by
       have hsqrt : Real.sqrt (∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j')) = 0 := h
       have h_nonpos : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') ≤ 0 :=
-        (Real.sqrt_eq_zero.mp hsqrt) 
+        (Real.sqrt_eq_zero.mp hsqrt)
       nlinarith
     have h_ij_bound : Complex.normSq (A i j) ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') := by
       calc
@@ -131,13 +131,36 @@ theorem deltaSilence_eq_zero_iff {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
 /-- Inequality: δ_silence ≤ 2‖A‖_F · ‖G‖_F (triangle inequality bound).
     Proof: ‖[A,G]‖_F = ‖AG - GA‖_F ≤ ‖AG‖_F + ‖GA‖_F ≤ 2‖A‖_F · ‖G‖_F,
     where the last inequality uses submultiplicativity of Frobenius norm.
-    The submultiplicativity proof ‖AG‖_F ≤ ‖A‖_F · ‖G‖_F for complex matrices
-    requires the Cauchy-Schwarz inequality; deferred to full matrix analysis. -/
+    The submultiplicativity proof ‖XY‖_F ≤ ‖X‖_F · ‖Y‖_F for complex matrices
+    requires the Cauchy-Schwarz inequality; deferred to full matrix analysis.
+
+    Reference: Mathlib lemma `frobenius_norm_mul` (Analysis/Matrix/Normed.lean) gives
+    the general proof. Our custom `frobeniusNorm` matches the Mathlib definition,
+    so the same result applies. -/
 theorem deltaSilence_bound {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
     deltaSilence A G ≤ 2 * frobeniusNorm A * frobeniusNorm G := by
-  -- Placeholder: the full proof requires Frobenius norm submultiplicativity
-  -- (Cauchy-Schwarz for double sums), which is deferred to Phase 36.
-  -- Statement is recorded for completeness.
-  sorry
+  -- Goal: frobeniusNorm(ad(G)(A)) ≤ 2·frobeniusNorm(A)·frobeniusNorm(G)
+  -- ad(G)(A) = G*A - A*G
+  dsimp [deltaSilence, ad]
+  -- frobeniusNorm(G*A - A*G) ≤ frobeniusNorm(G*A) + frobeniusNorm(A*G) (triangle inequality)
+  -- frobeniusNorm(G*A) ≤ frobeniusNorm(G)·frobeniusNorm(A) (submultiplicativity)
+  -- frobeniusNorm(A*G) ≤ frobeniusNorm(A)·frobeniusNorm(G)
+  -- Combined: ≤ 2·frobeniusNorm(A)·frobeniusNorm(G)
+  -- Full proof requires Frobenius norm submultiplicativity (Cauchy-Schwarz for double sums).
+  have h_submul : ∀ (X Y : Matrix (Fin n) (Fin n) ℂ), frobeniusNorm (X * Y) ≤ frobeniusNorm X * frobeniusNorm Y := by
+    intro X Y
+    -- Placeholder: the submultiplicativity proof is deferred.
+    -- In Mathlib: `frobenius_norm_mul` in `Analysis/Matrix/Normed.lean`
+    -- For the finite prototype, we accept the inequality as a known matrix norm property.
+    sorry
+  have h_triangle : frobeniusNorm (G * A - A * G) ≤ frobeniusNorm (G * A) + frobeniusNorm (A * G) := by
+    -- Triangle inequality: ‖X - Y‖_F ≤ ‖X‖_F + ‖Y‖_F
+    -- For the Frobenius norm ‖Z‖_F = sqrt(sum |Z_ij|²), this follows from Minkowski inequality.
+    -- We use the fact that |a-b|² ≤ (|a|+|b|)² for complex a,b, giving the result entrywise.
+    -- Placeholder: full proof deferred.
+    sorry
+  have h_mul_comm : frobeniusNorm (A * G) * frobeniusNorm G ≤ frobeniusNorm A * (frobeniusNorm G * frobeniusNorm G) := by
+    nlinarith
+  nlinarith
 
 end UFPFormalization

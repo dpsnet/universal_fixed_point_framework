@@ -40,6 +40,9 @@ SCRIPTS = [
     ("paperX_zero_parameter_check.py",         "零参数推导链 (8/8 检查)"),
     ("paperX_zero_parameter_all_fermions.py",  "全费米子零参数质量预测"),
     ("paperX_pmns_diagonalization.py",         "PMNS 完整数值对角化 (4/4 检查)"),
+
+    # === Phase P31.3: DNS 湍流 k^{-5/3} 高精度验证 ===
+    ("paperX_dns_turbulence.py",               "DNS 湍流 -5/3 能谱验证"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

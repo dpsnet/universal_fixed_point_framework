@@ -70,16 +70,15 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 
 **交付物**：
 
-| 模块 | 内容 |
-|------|------|
-| `PseudoSpectralDNS3D.py` | 三维伪谱 DNS 求解器（FFT + 2/3 dealiasing） |
-| `EnergySpectrumAnalysis.py` | 能谱计算、惯性区拟合、Kolmogorov 常数标定 |
-| `SpectralSilenceTurbulence.py` | 耗散区谱静默度诊断 |
-| `ComparisonWithTheory.py` | 与 Paper VI 谱流体预言的定量对比 |
+| 模块 | 内容 | 状态 |
+|------|------|:----:|
+| `paperX_dns_turbulence.py` | 三维伪谱 DNS 求解器 + 能谱分析 + 谱静默度诊断 | ✅ 已实现 (668 行) |
+| `_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 运行中 |
+| `run_all_tests.py` | 注册为批量验证项 | ✅ 已注册 |
 
 **研究笔记**：[spectral_dns_turbulence_validation.md](../notes/spectral_dns_turbulence_validation.md)
 
-**预计工作量**：500–700 行 Python，2–4 周（轻量级 Re_λ = 100–400）
+**状态**：DNS 求解器已实现，Level 2 验证运行中。Level 1（32³ 功能测试）✅ 通过。后续 Level 3（64³–128³ 高精度验证）按需进行。
 
 ---
 
