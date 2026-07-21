@@ -977,13 +977,13 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 ### 12.3 扩展方向
 
-1. **弯曲时空深化**：从局部 Lorentz 群到全局微分同胚，与广义相对论完全对接，建立 Einstein 方程的谱动力学严格证明；
-2. **de Sitter / Anti-de Sitter**：宇宙学常数 $\Lambda \neq 0$ 时 $\partial\mathbf{Rec}_D$ 的修正，AdS/CFT 的谱动力学推导；
-3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Spec}$ 中的谱提升，$q$ 形参的物理意义；
-4. **超对称扩展**：超 Poincaré 群作为 $\partial\mathbf{Rec}_D$ 的超对称扩张，超荷算子的谱起源；
-5. **黑洞信息悖论**：Page 曲线在 $\partial\mathbf{Rec}_D$ 上的谱推导，信息丢失与谱保真性的关系；
-6. **量子引力统一**：弦论/LQG/渐近安全/因果集作为 $\partial\mathbf{Rec}_D$ 的不同处理方式的统一框架；
-7. **跨领域临界现象扩展**：将 $\partial\mathbf{Rec}_D$ 统一框架扩展到更多物理系统（玻色-爱因斯坦凝聚、量子混沌、自组织临界等）。
+1. **弯曲时空深化（部分完成）**：局部 Lorentz 群的谱动力学已建立（本文），但到全局微分同胚的推广以及 Einstein 方程的严格谱动力学证明尚未完成；
+2. **de Sitter / Anti-de Sitter**：宇宙学常数 $\Lambda \neq 0$ 时 $\partial\mathbf{Rec}_D$ 的修正，AdS/CFT 的谱动力学推导（未处理）；
+3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Spec}$ 中的谱提升，$q$ 形参的物理意义（未处理）；
+4. **超对称扩展**：超 Poincaré 群作为 $\partial\mathbf{Rec}_D$ 的超对称扩张，超荷算子的谱起源（未处理）；
+5. **黑洞信息悖论（已解决）**：已在 Paper VIII §5 中通过谱不变性 $\sigma(A_t)=\sigma(A_0)$ 解决——信息在 $A_t$ 的谱中完整保存，固定基观测下的熵增来自信息从对角元到非对角元的转移。Page 曲线的谱计算见 Paper VIII §5.3，无需岛规则或复制虫洞。
+6. **量子引力统一（部分完成）**：弦论已注册为 $\mathrm{Cl}(9,1)$ 实例（Paper II §2.3），与 $\mathrm{Cl}(1,7)$ 的 IC 投影关系已建立（Paper XX §5.1）；LQG 面积谱与谱间隙数值一致（Paper XX §1.4，R²=0.999984）。渐近安全与因果集尚未纳入框架。将四者统一为 $\partial\mathbf{Rec}_D$ 的不同投影的统一框架仍待构建。
+7. **跨领域临界现象扩展（部分完成）**：$\partial\mathbf{Rec}_D$ 框架已应用于流体湍流（Paper VI）、复杂系统（Paper XIII）、凝聚态（Paper XIV）和量子化学（Paper XV）。玻色-爱因斯坦凝聚、量子混沌、自组织临界等尚未纳入。
 
 ### 12.4 实验对接展望
 
