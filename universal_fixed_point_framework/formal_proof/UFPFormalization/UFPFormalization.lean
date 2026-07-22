@@ -45,4 +45,5 @@ import UFPFormalization.GelfandDuality
 import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory
+import UFPFormalization.TempRGFiber
 import UFPFormalization.TestApplications

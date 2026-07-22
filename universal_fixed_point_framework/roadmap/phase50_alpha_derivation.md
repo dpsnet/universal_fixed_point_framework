@@ -4,9 +4,9 @@
 
 | Phase | 内容 | 状态 | 产出 |
 |:-----|:----|:----:|:----|
-| 50A | IFS 有限谱三元组构造 | ✅ 完成 | `notes/spectral_finite_IFS_triple.md` |
-| 50B | α_base = d_H/2 证明 | ✅ 完成 | `notes/spectral_dimension_alpha.md` |
-| 50C | KO-维数手征修正 δ_u, δ_d | ✅ 完成 | `notes/spectral_KO_dimension_gauge_correction.md` |
+| 50A | IFS 有限谱三元组构造 | ✅ 完成 | `notes/10_gauge_RG/spectral_finite_IFS_triple.md` |
+| 50B | α_base = d_H/2 证明 | ✅ 完成 | `notes/10_gauge_RG/spectral_dimension_alpha.md` |
+| 50C | KO-维数手征修正 δ_u, δ_d | ✅ 完成 | `notes/10_gauge_RG/spectral_KO_dimension_gauge_correction.md` |
 | 50D | 完整链数值验证 | ✅ 完成 | `paperX_alpha_first_principles.py` |
 | 50E | Yukawa 权重精细结构 | 🟡 开放问题 | 扇区依赖 IFS 表示结构 ($\times$2.34, $\S$3a.4) |
 
@@ -24,7 +24,7 @@ $$\boxed{\alpha_R = \frac{d_H}{2} + \varepsilon_{\text{KO}}(R) \cdot S_4 \cdot I
 
 质量比验证：5/6 在 $\times 2$ 内，$m_\mu/m_\tau \times 2.34$ 为已知的 Yukawa 精细结构开放问题。
 
-详见 [`notes/spectral_root_cause_analysis.md`](../notes/spectral_root_cause_analysis.md) 第 3a 层。α 指数驱动的后续成果包括：
+详见 [`notes/01_qcd_higgs/spectral_root_cause_analysis.md`](../notes/01_qcd_higgs/spectral_root_cause_analysis.md) 第 3a 层。α 指数驱动的后续成果包括：
 - CKM 五参数 ($\theta_{12}, \theta_{23}, \theta_{13}, \delta_{\text{CP}}, |V_{ub}|$) ✅
 - PMNS 四参数 ($\theta_{23}, \theta_{12}, \theta_{13}, \delta_{\text{CP}}$) ✅
 - $\varepsilon_K$ 交叉验证 (4.0%) ✅
@@ -63,7 +63,7 @@ Step 4: 数值验证
 **输入**：
 - Connes 标准模型谱三元组 (A_F, H_F, D_F)
 - Paper I §6 IFS 谱理论
-- `notes/spectral_alpha_exponent.md` 现有推导
+- `notes/01_qcd_higgs/spectral_alpha_exponent.md` 现有推导
 
 **工作内容**：
 1. 将有限代数 A_F = C ⊕ H ⊕ M₃(C) 嵌入 IFS 结构
@@ -72,7 +72,7 @@ Step 4: 数值验证
 4. 证明 D_F 特征值标度律 = c_i^α
 
 **产出**：
-- `notes/spectral_finite_IFS_triple.md` — IFS 有限谱三元组构造
+- `notes/10_gauge_RG/spectral_finite_IFS_triple.md` — IFS 有限谱三元组构造
 - `notes/proof_IFS_eigenvalue_scaling.md` — 特征值标度律证明
 
 **验证标准**：
@@ -97,7 +97,7 @@ Step 4: 数值验证
 4. 分析证明误差来源（0.24%偏差的解释）
 
 **产出**：
-- `notes/spectral_dimension_alpha.md` — 谱维数 → α 的严格推导
+- `notes/10_gauge_RG/spectral_dimension_alpha.md` — 谱维数 → α 的严格推导
 - 数值验证脚本 `paperX_alpha_spectral_dimension.py`
 
 **验证标准**：
@@ -106,7 +106,7 @@ Step 4: 数值验证
 
 **依赖**：
 - Phase 50A
-- `notes/spectral_alpha_silence.md`（当前探索记录）
+- `notes/10_gauge_RG/spectral_alpha_silence.md`（当前探索记录）
 
 ### Phase 50C：KO-维数手征修正 δ_u, δ_d（理论推导）
 
@@ -122,7 +122,7 @@ Step 4: 数值验证
 4. 推导 δ_d 的显式公式（预期含符号翻转）
 
 **产出**：
-- `notes/spectral_KO_dimension_gauge_correction.md`
+- `notes/10_gauge_RG/spectral_KO_dimension_gauge_correction.md`
 - 闭合形式 δ_u, δ_d 公式
 
 **验证标准**：
@@ -186,8 +186,8 @@ Phase 50A (2-3周)     Phase 50B (1-2周)     Phase 50C (3-4周)     Phase 50D (
 
 ## 相关资源
 
-- `notes/spectral_alpha_exponent.md` — γ_m 路径的现有推导（已弃用，仅作参考）
-- `notes/spectral_alpha_silence.md` — 当前探索记录（含已闭合路径和发现）
+- `notes/01_qcd_higgs/spectral_alpha_exponent.md` — γ_m 路径的现有推导（已弃用，仅作参考）
+- `notes/10_gauge_RG/spectral_alpha_silence.md` — 当前探索记录（含已闭合路径和发现）
 - `paperX_alpha_exponent_v2.py` — γ_m 积分数值脚本
 - Paper XI (`paper11_spectral_QFT.md`) — 谱 QFT 形式化基础
 - Paper I §6 — Clifford 值谱与纤维丛理论

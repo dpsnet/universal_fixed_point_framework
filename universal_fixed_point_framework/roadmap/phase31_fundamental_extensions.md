@@ -40,7 +40,7 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 
 **预计工作量**：骨架已实现并通过编译；剩余 `sorry` 填充约 300–500 行 Lean 4，1–2 周
 
-**研究笔记**：[spectral_higher_infinity_category_formalization.md](../notes/spectral_higher_infinity_category_formalization.md)
+**研究笔记**：[spectral_higher_infinity_category_formalization.md](../notes/00_foundations/spectral_higher_infinity_category_formalization.md)
 
 
 ---
@@ -58,7 +58,7 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 | `KonishiContinuous.py` | Konishi 算子弱→强耦合连续曲线 |
 | `FiniteNcCorrection.py` | $1/N_c^2$ 展开的首阶修正 |
 
-**研究笔记**：[spectral_bes_tba_full_solution.md](../notes/spectral_bes_tba_full_solution.md)
+**研究笔记**：[spectral_bes_tba_full_solution.md](../notes/99_archive/spectral_bes_tba_full_solution.md)
 
 **预计工作量**：600–800 行 Python，4–6 周
 
@@ -76,7 +76,7 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 | `_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 运行中 |
 | `run_all_tests.py` | 注册为批量验证项 | ✅ 已注册 |
 
-**研究笔记**：[spectral_dns_turbulence_validation.md](../notes/spectral_dns_turbulence_validation.md)
+**研究笔记**：[spectral_dns_turbulence_validation.md](../notes/05_condensed_matter/spectral_dns_turbulence_validation.md)
 
 **状态**：DNS 求解器已实现，Level 2 验证运行中。Level 1（32³ 功能测试）✅ 通过。后续 Level 3（64³–128³ 高精度验证）按需进行。
 
@@ -92,7 +92,7 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 2. **泛函分析路线**：Ruelle-Perron-Frobenius 拟紧算子 + Ruelle 不等式 + Ledrappier-Young 维数分解
 3. **谱框架路线**：将 $h_{\text{top}} \cdot \gamma \leq C$ 诠释为"$\mathbf{Spec}$ 对象不能同时具有高复杂度和高分辨率"
 
-**研究笔记**：[spectral_non_markov_te_gm.md](../notes/spectral_non_markov_te_gm.md)
+**研究笔记**：[spectral_non_markov_te_gm.md](../notes/09_experimental/spectral_non_markov_te_gm.md)
 
 **预计工作量**：理论证明 + 数值验证，6–10 周
 

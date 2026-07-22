@@ -398,7 +398,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 《通用不动点范畴框架》系列论文 I（增强版 v2.41），分形谱去递归理论，含 18 篇参考文献。主要新增内容：
 
 - **Phase 36 谱间隙第一性原理推导**：$\Delta\lambda_{\min}$ 由 SU(2) + Cl(1,7) 唯一固定为 $0.122\,M_{\text{Pl}}$，半涌现量全部去外部输入化。
-- **v2.41 框架根本扩展规划**：新增 §8.3.3 开放问题 20–23（高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广），对应路线图 `roadmap/phase31_fundamental_extensions.md` 与研究笔记 `notes/spectral_higher_infinity_category_formalization.md`、`spectral_bes_tba_full_solution.md`、`spectral_dns_turbulence_validation.md`、`spectral_non_markov_te_gm.md`。
+- **v2.41 框架根本扩展规划**：新增 §8.3.3 开放问题 20–23（高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广）。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |

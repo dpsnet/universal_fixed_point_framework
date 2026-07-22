@@ -339,7 +339,7 @@ Track B（实证产出）：  从谱边界扰动 → LIV 系数推导 → 与 Fe
 
 - `src/lorentz_liv_calculator.py` — LIV 系数计算模块
 - `src/rec_d_boundary_perturbation.py` — $\partial\mathbf{Rec}_D$ 扰动模拟
-- `notes/spectral_lorentz_liv_numerics.md` — 数值验证笔记
+- `notes/04_lorentz_gravity/spectral_lorentz_liv_numerics.md` — 数值验证笔记
 
 ### 5.3 验证标准
 
@@ -412,7 +412,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
   - Carreau-Lorentz 精确同构的算子级证明（不只是代数替换）
   - 流变谱流方程从 Koopman 算子 BCH 展开的严格推导
   - 三种硬化律的 Lie 代数分类的范畴论形式化
-- **产出**：`notes/spectral_rheology_lorentz_isomorphism.md` v0.2（严格化版本）
+- **产出**：`notes/05_condensed_matter/spectral_rheology_lorentz_isomorphism.md` v0.2（严格化版本）
 - **依赖**：Paper V（BCH 展开）、Paper VI（B1-B3 公理）
 
 #### F2: 流变 ∂Rec_D 谱边界猜想（猜想 E）的证明尝试
@@ -422,7 +422,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
   - 临界剪切率 $\dot\gamma_c$ 对应 $\Delta\lambda_{\min} \to 0$ 的严格证明
   - 流变 Lorentz 群 $SO^+_{\text{rheo}}(1,1) \cong SO^+(1,1)$（猜想 F）的证明
   - 三类临界现象（Lorentz/黑洞/流变）的统一范畴论刻画
-- **产出**：`notes/spectral_rheo_boundary.md`（新笔记）
+- **产出**：`notes/05_condensed_matter/spectral_rheo_boundary.md`（新笔记）
 - **依赖**：Paper VIII（$\partial\mathbf{Rec}_D$）、本阶段 F1
 
 #### F3: 流变实验对接
@@ -437,7 +437,7 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 - **产出**：
   - `src/rheology_lorentz_checker.py` — 临界硬化指数数据比对脚本
   - `src/non_newtonian_k41.py` — 非牛顿 K41 谱修正数值模拟
-  - `notes/spectral_rheology_experiments.md` — 实验设计笔记
+  - `notes/05_condensed_matter/spectral_rheology_experiments.md` — 实验设计笔记
 - **依赖**：F1 完成、DST/Carreau 实验数据（Wyart-Cates 2014、Carreau 1972）
 
 #### F4: Paper VI 增强版（v2.1）
@@ -458,18 +458,18 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
   - 电磁材料极化饱和与 Lorentz 速度极限
   - 量子相变临界慢化与流变硬化
   - 神经网络训练弛豫（NTK 谱）与流变弛豫
-- **产出**：`notes/spectral_critical_unification.md`（新笔记，跨领域统一）
+- **产出**：`notes/05_condensed_matter/spectral_critical_unification.md`（新笔记，跨领域统一）
 - **依赖**：F1-F4 完成
 
 ### 7.3 产出清单
 
 | 产出 | 类型 | 状态 |
 |:----|:----|:----:|
-| `notes/spectral_rheology_lorentz_isomorphism.md` v0.1 | 笔记 | ✅ |
-| `notes/spectral_rheology_lorentz_isomorphism.md` v0.2 | 笔记（严格化） | ⏳ |
-| `notes/spectral_rheo_boundary.md` v0.1 | 笔记（$\partial\mathbf{Rec}_D^{\text{rheo}}$ 严格化，主定理 E1-E3） | ✅ |
-| `notes/spectral_rheology_experiments.md` v0.1 | 笔记（5 个实验设计） | ✅ |
-| `notes/spectral_critical_unification.md` v0.1 | 笔记（跨领域统一，主定理 F1-F5） | ✅ |
+| `notes/05_condensed_matter/spectral_rheology_lorentz_isomorphism.md` v0.1 | 笔记 | ✅ |
+| `notes/05_condensed_matter/spectral_rheology_lorentz_isomorphism.md` v0.2 | 笔记（严格化） | ⏳ |
+| `notes/05_condensed_matter/spectral_rheo_boundary.md` v0.1 | 笔记（$\partial\mathbf{Rec}_D^{\text{rheo}}$ 严格化，主定理 E1-E3） | ✅ |
+| `notes/05_condensed_matter/spectral_rheology_experiments.md` v0.1 | 笔记（5 个实验设计） | ✅ |
+| `notes/05_condensed_matter/spectral_critical_unification.md` v0.1 | 笔记（跨领域统一，主定理 F1-F5） | ✅ |
 | `src/rheology_lorentz_checker.py` | 代码（DST 临界硬化指数比对） | ✅ 已运行 |
 | `src/non_newtonian_k41.py` | 代码（非牛顿 K41 谱修正） | ✅ 已运行 |
 | `paper/paper6_fluid_spectral_dynamics.md` v2.1 | Paper VI 增强版 | ✅ |
@@ -577,17 +577,17 @@ Paper VI（Newton 流体）                Phase 51F（非牛顿流体）
 
 ### 11.1 研究笔记（Phase 51A 产出）
 
-- `notes/spectral_lorentz_dynamics.md` — 核心笔记
-- `notes/spectral_lorentz_kinematics.md` — 运动学补遗
-- `notes/spectral_lorentz_causality.md` — 因果结构
-- `notes/spectral_lorentz_symmetry_breaking.md` — 对称破缺
-- `notes/spectral_lorentz_predictions.md` — 实验预言
-- `notes/spectral_lorentz_curved_spacetime.md` — 弯曲时空扩展
-- `notes/spectral_rheology_lorentz_isomorphism.md` — **流变-Lorentz 同构（Phase 51F 启动笔记）**
-- `notes/spectral_rheo_boundary.md` — **流变谱边界严格化（主定理 E1-E3）**
-- `notes/spectral_rheology_experiments.md` — **流变实验设计（5 个实验）**
-- `notes/spectral_critical_unification.md` — **跨领域统一（主定理 F1-F5）**
-- `notes/spectral_lorentz_axiom.md` — 现有 A7 公理（参考）
+- `notes/04_lorentz_gravity/spectral_lorentz_dynamics.md` — 核心笔记
+- `notes/04_lorentz_gravity/spectral_lorentz_kinematics.md` — 运动学补遗
+- `notes/04_lorentz_gravity/spectral_lorentz_causality.md` — 因果结构
+- `notes/04_lorentz_gravity/spectral_lorentz_symmetry_breaking.md` — 对称破缺
+- `notes/04_lorentz_gravity/spectral_lorentz_predictions.md` — 实验预言
+- `notes/04_lorentz_gravity/spectral_lorentz_curved_spacetime.md` — 弯曲时空扩展
+- `notes/05_condensed_matter/spectral_rheology_lorentz_isomorphism.md` — **流变-Lorentz 同构（Phase 51F 启动笔记）**
+- `notes/05_condensed_matter/spectral_rheo_boundary.md` — **流变谱边界严格化（主定理 E1-E3）**
+- `notes/05_condensed_matter/spectral_rheology_experiments.md` — **流变实验设计（5 个实验）**
+- `notes/05_condensed_matter/spectral_critical_unification.md` — **跨领域统一（主定理 F1-F5）**
+- `notes/04_lorentz_gravity/spectral_lorentz_axiom.md` — 现有 A7 公理（参考）
 
 ### 11.2 相关 Paper
 

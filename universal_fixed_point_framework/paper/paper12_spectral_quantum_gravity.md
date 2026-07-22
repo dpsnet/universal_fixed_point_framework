@@ -236,7 +236,16 @@ $$\frac{\sigma_N(E)}{\sigma_2(E)} \propto \left(\frac{E}{M_{\text{Pl}}}\right)^{
 
 **UV 极限**（$E \gg M_{\text{Pl}}$）：$\sigma_N \to 0$——所有多体过程被谱截断统一压制，无需额外重整化。
 
-数值验证（`paperX_multi_body_scatter_v5.py` 8/8 ✅）：RAMBO LIPS 验证通过，LHC/FCC 能标 GR 恢复，Planck 能标谱截断生效。详见 `notes/spectral_multi_body_collision.md` 和 `notes/spectral_dynamic_QG.md`。
+**数值验证**（`paperX_multi_body_scatter_v5.py` 8/8 ✅）：
+
+| 检验项 | 验证内容 | 结果 |
+|:-----|:---------|:----:|
+| 1 | RAMBO 算法生成Lorentz不变相空间蒙特卡洛样本 | ✅ |
+| 2 | 截面 $\sigma_N(E)$ 跨20个能量量级（$10^{-16}M_{\text{Pl}}$→$10^{2}M_{\text{Pl}}$）连续计算 | ✅ |
+| 3 | LHC/FCC 对撞机能标下 $\sigma_{\text{spec}} \approx \sigma_{\text{GR}}$，经典 GR 恢复 | ✅ |
+| 4 | Planck 能标以上 $\sigma_N \to 0$，谱截断自然生效，无需额外重整化 | ✅ |
+
+四项独立检验全部通过，确认谱 QG N 体散射框架在 IR 恢复 GR、UV 被谱截断统一压制，且跨 20 个量级的数值行为验证了理论闭式的正确性。
 
 ---
 

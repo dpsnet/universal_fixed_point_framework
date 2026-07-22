@@ -4,10 +4,10 @@
 
 | Phase | 内容 | 状态 | 产出 |
 |:-----|:----|:----:|:----|
-| 51A | 超算子方程探索 | ✅ 完成 (结构性无解) | `notes/spectral_phase51a_result.md` |
-| 51B | J 生成元旋转 → CKM | ✅ 完成 | `notes/spectral_J_gen_rotation.md` |
-| 51C | CKM θ₁₃ + δ_CP | ✅ 完成 | `notes/spectral_ckm_angles.md` §2.4-2.6 |
-| 51D | PMNS 四参数 | ✅ 完成 | `notes/spectral_ckm_angles.md` §3 |
+| 51A | 超算子方程探索 | ✅ 完成 (结构性无解) | `notes/12_phase_results/spectral_phase51a_result.md` |
+| 51B | J 生成元旋转 → CKM | ✅ 完成 | `notes/02_ckm_pmns_flavor/spectral_J_gen_rotation.md` |
+| 51C | CKM θ₁₃ + δ_CP | ✅ 完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` §2.4-2.6 |
+| 51D | PMNS 四参数 | ✅ 完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` §3 |
 | 51E | ε_K 交叉验证 | ✅ 完成 | `paperX_epsilon_K.py` |
 | 51F | GUT/质子衰变 | ✅ 完成 | `paperX_gut_unification.py` |
 | 50E | Yukawa 精细结构 | 🟡 开放 | 扇区依赖 IFS 表示结构 |
@@ -45,11 +45,11 @@
 
 ## 开放问题
 
-**Yukawa 精细结构** (§3a.4)：m_μ/m_τ ×2.34 偏差，来源为扇区依赖的 IFS 表示结构。详见 [`notes/spectral_yukawa_IFS_weights.md`](../notes/spectral_yukawa_IFS_weights.md) §6。
+**Yukawa 精细结构** (§3a.4)：m_μ/m_τ ×2.34 偏差，来源为扇区依赖的 IFS 表示结构。详见 [`notes/02_ckm_pmns_flavor/spectral_yukawa_IFS_weights.md`](../notes/02_ckm_pmns_flavor/spectral_yukawa_IFS_weights.md) §6。
 
 ## 参考文献
 
-1. `notes/spectral_ckm_angles.md` — CKM/PMNS 完整推导
-2. `notes/spectral_root_cause_analysis.md` — 全链根因分析
+1. `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` — CKM/PMNS 完整推导
+2. `notes/01_qcd_higgs/spectral_root_cause_analysis.md` — 全链根因分析
 3. `paperX_all_predictions.py` — 完整数值验证脚本
-4. `notes/spectral_yukawa_IFS_weights.md` — Yukawa 精细结构
+4. `notes/02_ckm_pmns_flavor/spectral_yukawa_IFS_weights.md` — Yukawa 精细结构

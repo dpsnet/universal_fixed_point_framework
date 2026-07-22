@@ -41,7 +41,7 @@ c₁ → ρ_c = 8π/(3·c₁)               [✅ 已形式化]
 
 ## 1. 阶段划分与依赖关系
 
-> **状态：✅ 全部完成（2026-07-21）**。全部 5 个子阶段于同一日内连续执行完成，所有 Lean 模块编译通过（2452 作业），全链零 `sorry`。详见 `notes/category_to_rep_bridge_53A.md`~`53E.md` 五篇笔记。
+> **状态：✅ 全部完成（2026-07-21）**。全部 5 个子阶段于同一日内连续执行完成，所有 Lean 模块编译通过（2452 作业），全链零 `sorry`。详见 `notes/11_transition_bridges/category_to_rep_bridge_53A.md`~`53E.md` 五篇笔记。
 
 ```mermaid
 Phase 53A ──────→ Phase 53B ──────→ Phase 53C ──────→ Phase 53D ──────→ Phase 53E
@@ -85,7 +85,7 @@ Phase 53A ──────→ Phase 53B ──────→ Phase 53C ──
 **实际结果**（2026-07-21，✅ 已完成）：
 - 采用路径 A：`stepMatrix` 路径被废弃，`A_GR_fromBoundary` → 重写为 `G_GR_fromBoundary = ad(G)(A)`
 - 关键概念澄清：区分**谱流生成元** G_GR 与**谱算子** A_GR（Casimir）——前者是 `ad(G)(A)`，后者的特征值给出 √{k(k+1)}
-- 详见 `notes/category_to_rep_bridge_53A.md` 与 `CategoryGeometry.lean` 的修改
+- 详见 `notes/11_transition_bridges/category_to_rep_bridge_53A.md` 与 `CategoryGeometry.lean` 的修改
 
 ### 2.2 问题 ②b：A_weak 标量矩阵矛盾
 
@@ -108,7 +108,7 @@ Phase 53A ──────→ Phase 53B ──────→ Phase 53C ──
 
 ### 2.3 具体任务清单
 
-- [x] 撰写笔记 `notes/category_to_rep_bridge_53A.md` 记录 A_GR 定义统一的分析与决策
+- [x] 撰写笔记 `notes/11_transition_bridges/category_to_rep_bridge_53A.md` 记录 A_GR 定义统一的分析与决策
 - [x] 修复 `CategoryGeometry.lean`：重新定义 `A_GR_fromBoundary` → `G_GR_fromBoundary = ad(G)(A)`
 - [x] 修复 `SpectralDynamics.lean`：重新定义 `A_weak` 为非对易形式；添加 Pauli 矩阵
 - [x] 确保修复后的编译通过（`lake build`）
@@ -140,7 +140,7 @@ Phase 53A ──────→ Phase 53B ──────→ Phase 53C ──
 
 ### 3.2 具体任务清单
 
-- [x] 撰写笔记 `notes/category_to_rep_bridge_53B.md` 记录 SU(2) 涌现定理的完整推导（含概念澄清）
+- [x] 撰写笔记 `notes/11_transition_bridges/category_to_rep_bridge_53B.md` 记录 SU(2) 涌现定理的完整推导（含概念澄清）
 - [x] 创建 Lean 模块 `CategoryRepBridge.lean`：SU(2) 结构、Casimir、谱定理
 - [x] 证明 `[A_i, A_j] = iε_{ijk} A_k` 结构常数（`pauliSU2` 实例 + `spin1SU2` 实例）
 - [x] 证明 Casimir 算子 `C₂ = ∑ A_i²` 在 j=1/2 和 j=1 表示中的特征值
@@ -180,7 +180,7 @@ noncomputable def agEigenvalue (k k_max : ℕ) : ℝ :=
 
 ### 4.2 具体任务清单
 
-- [x] 撰写笔记 `notes/category_to_rep_bridge_53C.md`
+- [x] 撰写笔记 `notes/11_transition_bridges/category_to_rep_bridge_53C.md`
 - [x] 将 `agEigenvalue` 与 Casimir 特征值关联（`CategoryRepBridge.lean`）
 - [x] 证明 `agEigenvalue = √{k(k+1)}/√{k_max(k_max+1)} = √{j(j+1)}/√{j_max(j_max+1)}`
 - [x] 验证 j=0, 1/2, 1 的 Casimir 特征值（0, 3/4, 2）
@@ -227,7 +227,7 @@ theorem kmax_from_cl17 (h : Cl(1,7) ≅ Matrix (Fin 8) (Fin 8) ℝ) : k_max = 8 
 
 ### 5.3 具体任务清单
 
-- [x] 撰写笔记 `notes/category_to_rep_bridge_53D.md`（含 Bott 周期表分析）
+- [x] 撰写笔记 `notes/11_transition_bridges/category_to_rep_bridge_53D.md`（含 Bott 周期表分析）
 - [x] 扩展 `Clifford.lean`：Cl(1,7) 生成元维数、分类陈述、`cl17_rep_dim = 8`、`kmax_from_cl17_rep`
 - [x] 陈述 Cl(1,7) ≅ M₈(ℝ) 定理（`cl17_to_M8` 类型别名 + Bott 周期表推导过程）
 - [x] 重写 `kmax_from_cl17` 从常量改为 `cl17_rep_dim`（由 Clifford.lean 定义的维数）

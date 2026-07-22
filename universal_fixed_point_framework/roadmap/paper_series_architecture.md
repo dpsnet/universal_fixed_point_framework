@@ -17,7 +17,14 @@ Paper XIX ── 范畴扩展：静态拓扑与随机系统 (v0.8)
   ├── §3: Rec_id ≅ Riemann (静态流形)
   ├── §4: 静态化函子 ℒ ⊣ ι
   ├── §7: Σ-Rec (噪声/随机系统)
-  └── §15: 四层静默体系深化 + §16 开放方向
+  ├── §15: 四层静默体系深化 + §16 开放方向
+  └── §17: Temp/RG 纤维范畴体系（新增 v0.8）
+        ├── Temp、RG 范畴定义
+        ├── 谱丛 Bun(Temp,Spec)、Bun(RG,Spec)
+        ├── 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$
+        ├── 与 $(G,\eta)$ 相图的第三维度集成
+        ├── QCD 实例 (Tc/Λ_QCD, a=0.729)
+        └── BCS/Hawking-Page 扩展框架
 ```
 
 ---
@@ -183,6 +190,11 @@ Paper XX     谱间隙第一性推导：Rec/Spec → SU(2) → Cl(1,7) → Δλ_
 Paper XXI    旋量表示与 IFS 多重分形谱                      [📝 待规划]
 Paper XXII   费米子质量谱的范畴论推导                        [📝 待规划]
 
+── 纤维范畴扩展 ──
+Paper XXI    或 Paper XIX §17 增补：Temp/RG 纤维范畴体系     [⏳ Phase 54]
+             (QCD + BCS + Hawking-Page 物理验证后决定)
+             [Phase 54 路线图已就位，待启动推进]
+
 ── 统一 ──
 Paper XXX    β_s 公式与三扇区交汇                            [📝 待规划]
 ```
@@ -194,6 +206,8 @@ Paper XXX    β_s 公式与三扇区交汇                            [📝 待�
 ```
 Paper I ───→ Paper XIX ─→ Paper XX (引力扇区)
    │               │
+   │               ├──→ §17 Temp/RG ──→ 独立 Paper XXI 或增补
+   │               │       (Phase 54)
    ├──→ Paper V ──→ Paper VIII, IX (规范扇区)
    │       │
    │       └──→ Paper 50, 51 (旋量扇区)
@@ -214,5 +228,7 @@ Paper I ───→ Paper XIX ─→ Paper XX (引力扇区)
 ## 5. 下一步行动
 
 按依赖关系，最优先的是 **Paper XX（引力扇区，谱间隙第一性推导）**。这是整个统一树中唯一完全形式化（全链零 `sorry`）但尚未整理成文的部分。
+
+**并行推进**：**Phase 54（Temp/RG 纤维范畴验证）**——先验证 BCS 试点（1-4 天），确认 Temp/RG 框架的跨领域普适性后再决定是否独立成篇。Phase 54 路线图已就位于 `phase54_temp_rg_fiber_categories.md`。
 
 是否立即开始起草 Paper XX？预计可单日内完成初稿（所有数学内容已就位，只需组织成论文格式）。

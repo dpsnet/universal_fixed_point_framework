@@ -34,13 +34,13 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 - E1b: PMNS δ_CP ← IFS 谱流相位 $\delta_{\text{CP}} = \alpha_{\text{base}} \times \pi = d_H/2 \times \pi$
 - E1c: Majorana 相位 α₁, α₂ ← A_νR 谱相位（待深入）
 
-**产出**：`notes/spectral_CP_phases.md` + `notes/spectral_ckm_angles.md` + `spectral_root_cause_analysis.md` 第 5 层
+**产出**：`notes/02_ckm_pmns_flavor/spectral_CP_phases.md` + `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` + `spectral_root_cause_analysis.md` 第 5 层
 
 **验证标准**：CKM δ_CP 在 1.0–1.5 rad 范围内（✓ 1.180），PMNS δ_CP 在 1.0–1.5π rad 范围内（✓ 1.355π）。
 
 ### E2: 中微子质量绝对标度 ✅ 已完成
 
-**产出**：`notes/spectral_neutrino_absolute.md` + `paperX_neutrino_absolute.py`
+**产出**：`notes/03_neutrino/spectral_neutrino_absolute.md` + `paperX_neutrino_absolute.py`
 
 **成果**：
 - α_ν = 0.636（三层根因树推导，Δm² 自洽 1.4%）
@@ -58,7 +58,7 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 - E3b: 两圈 RGE 修正
 - E3c: 谱流耦合权重的精确公式
 
-**产出**：`notes/spectral_root_cause_analysis.md` 第 4a 层
+**产出**：`notes/01_qcd_higgs/spectral_root_cause_analysis.md` 第 4a 层
 
 ### E4: 完整 RGE 链验证 ✅ 已完成
 
@@ -69,7 +69,7 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 - E4b: 耦合常数跑动一致性检验
 - E4c: 谱间隙边界条件自洽性
 
-**产出**：`notes/spectral_root_cause_analysis.md` 第 4a 层
+**产出**：`notes/01_qcd_higgs/spectral_root_cause_analysis.md` 第 4a 层
 
 ---
 
