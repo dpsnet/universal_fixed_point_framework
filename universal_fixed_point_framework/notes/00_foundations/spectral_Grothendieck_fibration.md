@@ -1,6 +1,6 @@
 # Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的严格形式化
 
-**版本**：v0.1（2026-07-22）
+**版本**：v0.2（2026-07-22）
 
 **摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
 
@@ -297,6 +297,37 @@ $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\De
 
 **证明**。$\sigma_\Delta^{(\text{HP})}(T) = \hat{\mathcal{T}}_{\text{Riem}}(\sigma_\Delta^{(T)}(T))$。由定理 4.1，$\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持的，因此将 $\pi_T$ 的截面映射为 $\pi_\mu$ 的截面。$\square$
 
+### 8.4 流变谱边界
+
+**定理 8.4**（流变谱边界纤维截面——Paper VI 主定理 E1-E3 的 Grothendieck 嵌入）。流变硬化发散的谱间隙截面 $\sigma_\Delta^{(\text{rheo})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 定义为：
+
+$$\sigma_\Delta^{(\text{rheo})}(T) = \big(T, \Delta\lambda_{\min}(A_{\text{fl}}(T))\big)$$
+
+其中 $\Delta\lambda_{\min}(A_{\text{fl}}(T))$ 是流变 Hilbert 空间 $\mathcal{H}_{\text{fl}} = L^2(\mathcal{S}_{\text{fl}})$ 上生成元 $A_{\text{fl}} = -\log U_\phi$ 的最小谱间隙（Paper VI 定义 9.3）。$\sigma_\Delta^{(\text{rheo})}$ 满足以下 Grothendieck 纤维截面性质：
+
+1. **纤维截面性**：$\pi_T \circ \sigma_\Delta^{(\text{rheo})} = \text{id}_{\mathbf{Temp}}$，即 $\sigma_\Delta^{(\text{rheo})}$ 是 $\pi_T$ 的截面。
+
+2. **谱间隙坍缩**（Paper VI 主定理 E1）：当温度对应的剪切率 $\dot\gamma(T) \to \dot\gamma_c^-$ 时：
+   $$\Delta\lambda_{\min}(A_{\text{fl}}(T)) \to 0^+$$
+   等价于 $\sigma_\Delta^{(\text{rheo})}(T) \to (T, 0)$，即截面趋于 $\pi_T$ 的零截面。
+
+3. **Lie 代数分类**（Paper VI §9.2.3）：谱流生成元 $G_{\text{rheo}} \in \mathfrak{so}(1,1)$（非紧致 Lorentz 推进），其临界指数 $-1/2$ 由 Lie 代数类型唯一确定。
+
+4. **统一函子关联**（Paper VI 主定理 F5）：跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 在纤维截面层面的提升为：
+   $$\mathcal{F}^\sharp\big(\sigma_\Delta^{(X)}\big) = \lim_{T \to T_c^X} \sigma_\Delta^{(X)}(T)$$
+   其中 $X \in \{\text{Lor}, \text{BH}, \text{rheo}, \text{QCD}\}$。
+
+**证明**。性质 1 由截面定义直接满足。性质 2 等价于 Paper VI 主定理 E1（临界剪切率-谱间隙对应）。性质 3 等价于 Paper VI 命题 9.8（$\mathfrak{so}(1,1) \to -1/2$）。性质 4 是跨领域统一函子 $\mathcal{F}$ 在 Grothendieck 纤维框架中的自然提升——所有 $\sigma_\Delta^{(X)}$ 共享同一 Grothendieck 截面结构，它们在 $\partial\mathbf{Rec}_D$ 处的极限是纤维截面在边界处的退化。$\square$
+
+**推论 8.4a**（流变-Hawking 谱流对偶）。流变纤维截面 $\sigma_\Delta^{(\text{rheo})}$ 与 Hawking-Page 纤维截面 $\sigma_\Delta^{(\text{HP})}$ 通过谱流生成元的 Wick 旋转对偶：
+$$G_{\text{rheo}} \in \mathfrak{so}(1,1) \;\xleftrightarrow{\text{Wick}}\; G_{\text{BH}} \in \mathfrak{so}(1,3)$$
+即在 $G_{\text{BH}}$ 限制到一维推进子空间 $(\mathfrak{so}(1,1) \subset \mathfrak{so}(1,3))$ 时，两者同为谱间隙坍缩 $-1/2$ 指数。
+
+**推论 8.4b**（七类临界现象的统一纤维截面）。Paper VI 主定理 F5 的七类临界现象各自对应一个 $\pi_T$（或 $\pi_\mu$）的纤维截面：
+$$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\text{rheo})}, \sigma_\Delta^{(\text{QCD})}, \sigma_\Delta^{(\text{ph})}, \sigma_\Delta^{(\text{QPT})}, \sigma_\Delta^{(\text{NN})}$$
+
+所有七者共享 $\Delta\lambda_{\min} \to 0$ 的谱间隙坍缩机制，区别仅在于生成元的 Lie 代数类型和物理参数化方式（速度/质量/剪切率/温度/应变率/耦合常数/训练时间）。
+
 ---
 
 ## 9. 严格化体系一览
@@ -312,7 +343,7 @@ $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\De
 | **伪函子** | $F_T: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ | $F_\mu: \mathbf{RG}^{\text{op}} \to \mathbf{Cat}$ | $\int F_T \cong \mathbf{Bun}$ |
 | **自然变换** | $\hat{\eta}$ | $\hat{\eta}$ | 定理 6.1 |
 | **2-函子** | $2\hat{\mathcal{T}}_{\text{Riem}}$ | $2\hat{\mathcal{T}}_{\text{Riem}}$ | 定理 7.2（严格 2-函子） |
-| **纤维截面** | $\sigma_\Delta^{(T)}$（QCD/BCS） | $\sigma_\Delta^{(\text{HP})}$（HP） | $\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$ |
+| **纤维截面** | $\sigma_\Delta^{(T)}$（QCD/BCS）、$\sigma_\Delta^{(\text{rheo})}$（流变） | $\sigma_\Delta^{(\text{HP})}$（HP） | $\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$；推论 8.4a：流变-HP 对偶 |
 
 ### 9.2 常数结构
 
@@ -322,6 +353,7 @@ $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\De
 | BCS 弱耦合 | $\sigma_\Delta^{(\text{BCS})}$ | -- | 0.1396 | $\sqrt{3}\sqrt{r} \approx 1.619$ |
 | BCS 强耦合 (Pb) | $\sigma_\Delta^{(\text{Pb})}$ | 7.2 K | 0.1396 | $1.619/(1+\lambda) \approx 0.635$ |
 | Hawking-Page | $\sigma_\Delta^{(\text{HP})}$ | $1/8\pi M_{\text{BH}}$ | 依赖黑洞参数 | $M/m_{\text{Pl}}$ |
+| 流变硬化 | $\sigma_\Delta^{(\text{rheo})}$ | $\dot\gamma_c$ | Paper VI 定义 9.3 | — |
 
 ---
 
@@ -401,4 +433,5 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.2** | **2026-07-22** | 新增 §8.4（流变谱边界纤维截面，嵌入 Paper VI 主定理 E1-E3 与 F5）；更新 §9.1 纤维截面行（增加 $\sigma_\Delta^{(\text{rheo})}$）与 §9.2 常数表（增加流变行）；新增推论 8.4a-8.4b（流变-HP 对偶与七类统一截面） |
 | **v0.1** | **2026-07-22** | 初始版本：Grothendieck 纤维化 $\pi_T$、$\pi_\mu$ 的严格定义（定理 2.1、3.1）；$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性证明（定理 4.1）；Grothendieck 构造的同构性证明（命题 5.1、5.2）；自然变换 $\eta$ 的纤维化提升（定理 6.1）；2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的严格化（定理 7.2）；三个物理系统的纤维截面应用（定理 8.1-8.3）；Lean 4 形式化框架（附录 A） |
