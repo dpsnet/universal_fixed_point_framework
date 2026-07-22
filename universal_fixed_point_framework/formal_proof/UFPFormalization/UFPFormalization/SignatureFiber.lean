@@ -7,7 +7,7 @@ Three components:
   3. IC base-change functor unifying the triple projection
 
 Based on:
-  spectral_signature_fibration.md v0.1
+  spectral_signature_fibration.md v0.3
   Clifford.lean (Cl(1,7) classification)
   IsolationConstraints.lean (IC conditions)
   TempRGFiber.lean (CartesianLiftData pattern)

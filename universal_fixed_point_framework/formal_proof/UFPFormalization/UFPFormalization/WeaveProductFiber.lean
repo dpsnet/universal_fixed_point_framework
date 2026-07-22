@@ -7,7 +7,7 @@ Three components:
   3. ∂Rec_D gluing condition (spectral weave constraint)
 
 Based on:
-  spectral_weave_product_fibration.md v0.1
+  spectral_weave_product_fibration.md v0.2
   spectral_BCS_weave.md v0.9
   TempRGFiber.lean (π_T, π_μ patterns)
 -/

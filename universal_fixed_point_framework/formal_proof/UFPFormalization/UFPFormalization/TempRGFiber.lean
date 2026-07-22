@@ -7,9 +7,9 @@ Three components:
   3. Fibered functor T̂_Riem : Bun(Temp, Spec) → Bun(RG, Spec)
 
 Based on the mathematical framework in
+  spectral_Grothendieck_fibration.md v0.5
   spectral_T_category.md v0.1
   spectral_Riem_functoriality.md v0.2
-  spectral_Grothendieck_fibration.md v0.1
 -/
 
 import Mathlib.CategoryTheory.Category.Basic

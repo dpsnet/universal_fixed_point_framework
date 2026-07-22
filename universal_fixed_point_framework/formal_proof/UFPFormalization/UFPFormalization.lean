@@ -50,4 +50,10 @@ import UFPFormalization.NoiseFiber
 import UFPFormalization.SignatureFiber
 import UFPFormalization.WeaveProductFiber
 import UFPFormalization.WeaveBCS
+import UFPFormalization.CuprateDistribution
+import UFPFormalization.KerrFiber
+import UFPFormalization.EFTCodomainFiber
+import UFPFormalization.FlavorFiber
+import UFPFormalization.ContextualitySheaf
+import UFPFormalization.SpacetimeStack
 import UFPFormalization.TestApplications
