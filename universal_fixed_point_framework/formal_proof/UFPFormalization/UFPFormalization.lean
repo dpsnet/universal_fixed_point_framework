@@ -56,4 +56,5 @@ import UFPFormalization.EFTCodomainFiber
 import UFPFormalization.FlavorFiber
 import UFPFormalization.ContextualitySheaf
 import UFPFormalization.SpacetimeStack
+import UFPFormalization.TotalParameterFiber
 import UFPFormalization.TestApplications

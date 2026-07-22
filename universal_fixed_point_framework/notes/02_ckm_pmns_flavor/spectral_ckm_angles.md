@@ -1,5 +1,9 @@
 # 混合角度的谱几何解释
 
+**版本**：v0.3（2026-07-23）
+
+**关联形式化**：CKM 混合矩阵的 Grothendieck 纤维范畴形式化见 [`FlavorFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/FlavorFiber.lean)（Phase 55F-F3）。$\theta_{12} = d_H/12$、$\theta_{23} = 1/24$、$\theta_{13} = d_H/720$ 已在 Lean 中形式化，$\delta_{CP}$ 作为 $u \to d \to \nu \to e \to u$ 闭回路的和乐实现。
+
 ## 1. 根因：$J$ 代空间投影旋转
 
 CKM 和 PMNS 混合矩阵来自实结构 $J$ 在代空间 $\mathbb{C}^3$ 上的投影在不同扇区之间的相对旋转。
