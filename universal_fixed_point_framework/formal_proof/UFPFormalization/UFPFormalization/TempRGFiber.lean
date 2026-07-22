@@ -15,7 +15,6 @@ Based on the mathematical framework in
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.CategoryTheory.NatTrans
-import Mathlib.CategoryTheory.Category.Kleisli
 import Mathlib.CategoryTheory.Adjunction.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic
@@ -59,16 +58,16 @@ structure RGHom (X Y : RGObj) where
 instance tempCategory : Category TempObj where
   Hom X Y := TempHom X Y
   id X := ⟨1, by linarith, by simp⟩
-  comp f g := ⟨g.r * f.r, mul_pos g.r_pos f.r_pos, by
+  comp {X Y Z} f g := ⟨g.r * f.r, mul_pos g.r_pos f.r_pos, by
     calc
       (g.r * f.r) * X.T = g.r * (f.r * X.T) := by ring
       _ = g.r * Y.T := by rw [f.eq]
       _ = Z.T := g.eq
     ⟩
   id_comp := by
-    intro X Y f; ext; simp; ring
+    intro X Y f; ext; simp
   comp_id := by
-    intro X Y f; ext; simp; ring
+    intro X Y f; ext; simp
   assoc := by
     intro W X Y Z f g h
     ext; ring
@@ -76,16 +75,16 @@ instance tempCategory : Category TempObj where
 instance rgCategory : Category RGObj where
   Hom X Y := RGHom X Y
   id X := ⟨1, by linarith, by simp⟩
-  comp f g := ⟨g.s * f.s, mul_pos g.s_pos f.s_pos, by
+  comp {X Y Z} f g := ⟨g.s * f.s, mul_pos g.s_pos f.s_pos, by
     calc
       (g.s * f.s) * X.μ = g.s * (f.s * X.μ) := by ring
       _ = g.s * Y.μ := by rw [f.eq]
       _ = Z.μ := g.eq
     ⟩
   id_comp := by
-    intro X Y f; ext; simp; ring
+    intro X Y f; ext; simp
   comp_id := by
-    intro X Y f; ext; simp; ring
+    intro X Y f; ext; simp
   assoc := by
     intro W X Y Z f g h
     ext; ring
@@ -124,26 +123,43 @@ noncomputable def TInvFunctor : RGObj ⥤ TempObj where
   map_id X := rfl
   map_comp f g := rfl
 
-/-- Unit of the isomorphism: 𝒯⁻¹∘𝒯 ≅ id_Temp. -/
+/-- Unit of the isomorphism: 𝟭 Temp ≅ 𝒯 ⋙ 𝒯⁻¹. -/
 noncomputable def TUnitIso : 𝟭 TempObj ≅ TFunctor ⋙ TInvFunctor where
-  hom := { app := λ X => ⟨1, by norm_num, by simp⟩ }
-  inv := { app := λ X => ⟨1, by norm_num, by simp⟩ }
+  hom :=
+    { app := fun X => ⟨1, by norm_num, by simp [TFunctor, TInvFunctor]⟩
+      naturality := fun {X Y} f => by
+        apply TempHom.ext
+        simp [TFunctor, TInvFunctor] }
+  inv :=
+    { app := fun X => ⟨1, by norm_num, by simp [TFunctor, TInvFunctor]⟩
+      naturality := fun {X Y} f => by
+        apply TempHom.ext
+        simp [TFunctor, TInvFunctor] }
+  hom_inv_id := by
+    apply NatTrans.ext; funext X; apply TempHom.ext; simp
+  inv_hom_id := by
+    apply NatTrans.ext; funext X; apply TempHom.ext; simp
 
-/-- Counit of the isomorphism: 𝒯∘𝒯⁻¹ ≅ id_RG. -/
-noncomputable def TCounitIso : TFunctor ⋙ TInvFunctor ≅ 𝟭 TempObj :=
-  (NatIso.ofComponents fun X =>
-    { hom := ⟨1, by norm_num, by simp⟩
-      inv := ⟨1, by norm_num, by simp⟩ })
+/-- Counit of the isomorphism: 𝒯⁻¹ ⋙ 𝒯 ≅ 𝟭 RG. -/
+noncomputable def TCounitIso : TInvFunctor ⋙ TFunctor ≅ 𝟭 RGObj where
+  hom :=
+    { app := fun X => ⟨1, by norm_num, by simp [TFunctor, TInvFunctor]⟩
+      naturality := fun {X Y} f => by
+        apply RGHom.ext
+        simp [TFunctor, TInvFunctor] }
+  inv :=
+    { app := fun X => ⟨1, by norm_num, by simp [TFunctor, TInvFunctor]⟩
+      naturality := fun {X Y} f => by
+        apply RGHom.ext
+        simp [TFunctor, TInvFunctor] }
+  hom_inv_id := by
+    apply NatTrans.ext; funext X; apply RGHom.ext; simp
+  inv_hom_id := by
+    apply NatTrans.ext; funext X; apply RGHom.ext; simp
 
-/-- The adjoint equivalence 𝒯 ⊣ 𝒯⁻¹ (they are actually inverses). -/
-noncomputable def TAdjEquiv : TFunctor ⊣ TInvFunctor :=
-  Adjunction.mkOfUnitCounit
-    { unit := TUnitIso.hom
-      counit := TCounitIso.hom
-      left_triangle := by
-        ext X; dsimp [TUnitIso, TCounitIso]; simp
-      right_triangle := by
-        ext X; dsimp [TUnitIso, TCounitIso]; simp }
+/-- The category equivalence TempCat ≌ RGCat. -/
+noncomputable def TempIsoRG : TempObj ≌ RGObj :=
+  CategoryTheory.Equivalence.mk TFunctor TInvFunctor TUnitIso TCounitIso
 
 /-! =========================================================
     Section 3: Spectral Bundle Total Category
@@ -163,11 +179,13 @@ structure SpecFiberRG (μ : RGObj) where
   A : Matrix (Fin n) (Fin n) ℂ
 
 /-- Total category Bun(Temp, Spec): pairs (T, spectral data over T). -/
+@[ext]
 structure SpectralBundleTemp where
   base : TempObj
   fiberData : SpecFiberTemp base
 
 /-- Total category Bun(RG, Spec): pairs (μ, spectral data over μ). -/
+@[ext]
 structure SpectralBundleRG where
   base : RGObj
   fiberData : SpecFiberRG base
@@ -193,17 +211,17 @@ instance bundleTempCategory : Category SpectralBundleTemp where
     { baseMap := 𝟙 X.base
       fiberMap := 1
       commut := by simp }
-  comp f g :=
+  comp {X Y Z} f g :=
     { baseMap := f.baseMap ≫ g.baseMap
       fiberMap := f.fiberMap * g.fiberMap
       commut := by
         calc
           (f.fiberMap * g.fiberMap) * Z.fiberData.A
-              = f.fiberMap * (g.fiberMap * Z.fiberData.A) := by ring
+              = f.fiberMap * (g.fiberMap * Z.fiberData.A) := Matrix.mul_assoc _ _ _
           _ = f.fiberMap * (Y.fiberData.A * g.fiberMap) := by rw [g.commut]
-          _ = (f.fiberMap * Y.fiberData.A) * g.fiberMap := by ring
+          _ = (f.fiberMap * Y.fiberData.A) * g.fiberMap := (Matrix.mul_assoc _ _ _).symm
           _ = (X.fiberData.A * f.fiberMap) * g.fiberMap := by rw [f.commut]
-          _ = X.fiberData.A * (f.fiberMap * g.fiberMap) := by ring
+          _ = X.fiberData.A * (f.fiberMap * g.fiberMap) := Matrix.mul_assoc _ _ _
     }
   id_comp := by
     intro X Y f
@@ -219,7 +237,7 @@ instance bundleTempCategory : Category SpectralBundleTemp where
     intro W X Y Z f g h
     apply BundleTempHom.ext
     · simp
-    · ring
+    · exact Matrix.mul_assoc _ _ _
 
 instance bundleRGategory : Category SpectralBundleRG where
   Hom X Y := BundleRGHom X Y
@@ -227,16 +245,16 @@ instance bundleRGategory : Category SpectralBundleRG where
     { baseMap := 𝟙 X.base
       fiberMap := 1
       commut := by simp }
-  comp f g :=
+  comp {X Y Z} f g :=
     { baseMap := f.baseMap ≫ g.baseMap
       fiberMap := f.fiberMap * g.fiberMap
       commut := by
         calc
-          (f.fiberMap * g.fiberMap) * Z.fiberData.A = f.fiberMap * (g.fiberMap * Z.fiberData.A) := by ring
+          (f.fiberMap * g.fiberMap) * Z.fiberData.A = f.fiberMap * (g.fiberMap * Z.fiberData.A) := Matrix.mul_assoc _ _ _
           _ = f.fiberMap * (Y.fiberData.A * g.fiberMap) := by rw [g.commut]
-          _ = (f.fiberMap * Y.fiberData.A) * g.fiberMap := by ring
+          _ = (f.fiberMap * Y.fiberData.A) * g.fiberMap := (Matrix.mul_assoc _ _ _).symm
           _ = (X.fiberData.A * f.fiberMap) * g.fiberMap := by rw [f.commut]
-          _ = X.fiberData.A * (f.fiberMap * g.fiberMap) := by ring
+          _ = X.fiberData.A * (f.fiberMap * g.fiberMap) := Matrix.mul_assoc _ _ _
     }
   id_comp := by
     intro X Y f
@@ -252,7 +270,7 @@ instance bundleRGategory : Category SpectralBundleRG where
     intro W X Y Z f g h
     apply BundleRGHom.ext
     · simp
-    · ring
+    · exact Matrix.mul_assoc _ _ _
 
 @[simp]
 lemma BundleTempHom.id_baseMap (X : SpectralBundleTemp) :
@@ -275,14 +293,14 @@ lemma BundleRGHom.comp_baseMap {X Y Z : SpectralBundleRG} (f : X ⟶ Y) (g : Y �
    ========================================================= -/
 
 /-- Projection π_T : Bun(Temp, Spec) → TempCat. -/
-noncomputable def π_T : SpectralBundleTemp ⥤ TempObj where
+abbrev π_T : SpectralBundleTemp ⥤ TempObj where
   obj b := b.base
   map f := f.baseMap
   map_id X := rfl
   map_comp f g := rfl
 
 /-- Projection π_μ : Bun(RG, Spec) → RGCat. -/
-noncomputable def π_μ : SpectralBundleRG ⥤ RGObj where
+abbrev π_μ : SpectralBundleRG ⥤ RGObj where
   obj b := b.base
   map f := f.baseMap
   map_id X := rfl
@@ -300,41 +318,50 @@ structure CartesianLiftData {E B : Type u} [Category E] [Category B] (p : E ⥤ 
   lift_base {e : E} {b' : B} (f : b' ⟶ p.obj e) : p.obj (lift f) = b'
   cartesian_morphism {e : E} {b' : B} (f : b' ⟶ p.obj e) : lift f ⟶ e
   cartesian_base {e : E} {b' : B} (f : b' ⟶ p.obj e) :
-    p.map (cartesian_morphism f) = f
+    p.map (cartesian_morphism f) = eqToHom (lift_base f) ≫ f
   cartesian_universal {e : E} {b' : B} (f : b' ⟶ p.obj e) (Z : E) (h : Z ⟶ e)
-    (w : p.obj Z ⟶ b') (h_comp : p.map h = f ≫ w) : Z ⟶ lift f
+    (w : p.obj Z ⟶ b') (h_comp : p.map h = w ≫ f) : Z ⟶ lift f
   cartesian_universal_prop {e : E} {b' : B} (f : b' ⟶ p.obj e) (Z : E) (h : Z ⟶ e)
-    (w : p.obj Z ⟶ b') (h_comp : p.map h = f ≫ w) :
-    h = cartesian_morphism f ≫ cartesian_universal f Z h w h_comp
+    (w : p.obj Z ⟶ b') (h_comp : p.map h = w ≫ f) :
+    h = cartesian_universal f Z h w h_comp ≫ cartesian_morphism f
   cartesian_universal_base {e : E} {b' : B} (f : b' ⟶ p.obj e) (Z : E) (h : Z ⟶ e)
-    (w : p.obj Z ⟶ b') (h_comp : p.map h = f ≫ w) :
-    p.map (cartesian_universal f Z h w h_comp) = w
+    (w : p.obj Z ⟶ b') (h_comp : p.map h = w ≫ f) :
+    p.map (cartesian_universal f Z h w h_comp) = w ≫ eqToHom (lift_base f).symm
 
 /-- A Grothendieck fibration is a functor equipped with Cartesian lift data. -/
-structure GrothendieckFibration (E B : Type u) [Category E] [Category B] (p : E ⥤ B) where
+class GrothendieckFibration {E B : Type u} [Category E] [Category B] (p : E ⥤ B) where
   cartesianLiftData : CartesianLiftData p
+
+/-- Reducible helper: the lifted object over a new base point for Bun(Temp, Spec).
+    In this finite prototype the spectral flow preserves the matrix A
+    (identity pullback under temperature dilation). -/
+abbrev liftTempObj (e : SpectralBundleTemp) (b' : TempObj) : SpectralBundleTemp :=
+  { base := b'
+    fiberData := { n := e.fiberData.n, A := e.fiberData.A } }
+
+/-- Reducible helper: the lifted object over a new base point for Bun(RG, Spec). -/
+abbrev liftRGObj (e : SpectralBundleRG) (b' : RGObj) : SpectralBundleRG :=
+  { base := b'
+    fiberData := { n := e.fiberData.n, A := e.fiberData.A } }
+
+-- sanity checks on definitional unfolding
+example (e : SpectralBundleTemp) (b' : TempObj) : (liftTempObj e b').base = b' := rfl
+example (e : SpectralBundleTemp) : (π_T.obj e) = e.base := rfl
+example (Z e : SpectralBundleTemp) (h : Z ⟶ e) : π_T.map h = h.baseMap := rfl
 
 /-- π_T admits a Grothendieck fibration structure.
     Given a target (T₂, {λ_i}) and a base map f : T₁ → T₂, we construct the
     lift (T₁, f*{λ_i}) where f*{λ_i} is the spectral data pulled back through
     the spectral flow map. -/
 noncomputable def π_T_cartesianLift : CartesianLiftData π_T where
-  lift {e} {b'} f :=
-    { base := b'
-      fiberData :=
-        { n := e.fiberData.n
-          A := e.fiberData.A  -- In this finite prototype, spectral flow
-                              -- preserves the matrix A under temperature
-                              -- dilation (identity pullback)
-        }
-    }
-  lift_base f := rfl
+  lift {e} {b'} _f := liftTempObj e b'
+  lift_base _f := rfl
   cartesian_morphism {e} {b'} f :=
     { baseMap := f
       fiberMap := 1
       commut := by simp
     }
-  cartesian_base f := rfl
+  cartesian_base _f := by simp
   cartesian_universal {e} {b'} f Z h w h_comp :=
     { baseMap := w
       fiberMap := h.fiberMap
@@ -342,45 +369,25 @@ noncomputable def π_T_cartesianLift : CartesianLiftData π_T where
     }
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     apply BundleTempHom.ext
-    · -- base component: h.baseMap = (fiberMap f, which is 1) ≫ w
-      -- but we need h.baseMap = f ≫ w, which is given by h_comp
-      -- Actually h_comp says π_T.map h = f ≫ w
-      -- i.e., h.baseMap = f ≫ w
-      -- And cartesian_morphism f has baseMap = f
-      -- universal has baseMap = w
-      -- So cartesian_morphism f ≫ universal = (f, 1) ≫ (w, h.fiberMap)
-      -- The base comp: f ≫ w = h.baseMap  (by h_comp)
-      -- We use h_comp directly
-      have h_base := congrArg id h_comp
-      -- h_comp is: p.map h = f ≫ w  which means h.baseMap = f ≫ w
-      -- But we can't infer this equation directly
-      -- Let's rewrite: h_comp says π_T.map h = f ≫ w
-      -- π_T.map h = h.baseMap by definition of π_T
-      -- So h_comp gives: h.baseMap = f ≫ w
-      simpa using h_comp
-    · -- fiber component
-      simp
-  cartesian_universal_base {e} {b'} f Z h w h_comp := rfl
+    · -- base component: h.baseMap = w ≫ f, given by h_comp (π_T.map h = h.baseMap)
+      simpa [π_T] using h_comp
+    · -- fiber component: h.fiberMap = h.fiberMap * 𝟙
+      exact (Matrix.mul_one h.fiberMap).symm
+  cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
 
-noncomputable def π_T_fibration : GrothendieckFibration π_T :=
+noncomputable instance π_T_fibration : GrothendieckFibration π_T :=
   { cartesianLiftData := π_T_cartesianLift }
 
 /-- π_μ admits a Grothendieck fibration structure, dual to π_T. -/
 noncomputable def π_μ_cartesianLift : CartesianLiftData π_μ where
-  lift {e} {b'} f :=
-    { base := b'
-      fiberData :=
-        { n := e.fiberData.n
-          A := e.fiberData.A
-        }
-    }
-  lift_base f := rfl
+  lift {e} {b'} _f := liftRGObj e b'
+  lift_base _f := rfl
   cartesian_morphism {e} {b'} f :=
     { baseMap := f
       fiberMap := 1
       commut := by simp
     }
-  cartesian_base f := rfl
+  cartesian_base _f := by simp
   cartesian_universal {e} {b'} f Z h w h_comp :=
     { baseMap := w
       fiberMap := h.fiberMap
@@ -388,11 +395,11 @@ noncomputable def π_μ_cartesianLift : CartesianLiftData π_μ where
     }
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     apply BundleRGHom.ext
-    · simpa using h_comp
-    · simp
-  cartesian_universal_base {e} {b'} f Z h w h_comp := rfl
+    · simpa [π_μ] using h_comp
+    · exact (Matrix.mul_one h.fiberMap).symm
+  cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
 
-noncomputable def π_μ_fibration : GrothendieckFibration π_μ :=
+noncomputable instance π_μ_fibration : GrothendieckFibration π_μ :=
   { cartesianLiftData := π_μ_cartesianLift }
 
 /-! =========================================================
@@ -417,12 +424,18 @@ noncomputable def T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
     }
   map_id X := by
     apply BundleRGHom.ext
-    · simp
-    · simp
+    · -- base map: TFunctor.map (𝟙 X.base) = 𝟙 (T_hat_Riem.obj X).base
+      apply RGHom.ext
+      simp [TFunctor, RGHom.id_s]
+    · -- fiber map
+      rfl
   map_comp f g := by
     apply BundleRGHom.ext
-    · simp
-    · simp
+    · -- base map commutes with composition
+      apply RGHom.ext
+      simp [TFunctor, RGHom.comp_s]
+    · -- fiber map
+      rfl
 
 /-- T̂_Riem is base-faithful: the induced base map equals TFunctor applied to base. -/
 theorem T_hat_Riem_base_commutes (X : SpectralBundleTemp) :
@@ -431,35 +444,246 @@ theorem T_hat_Riem_base_commutes (X : SpectralBundleTemp) :
 theorem T_hat_Riem_map_base_commutes {X Y : SpectralBundleTemp} (f : X ⟶ Y) :
     π_μ.map (T_hat_Riem.map f) = TFunctor.map (π_T.map f) := rfl
 
-/-- T̂_Riem preserves Cartesian morphisms.
+/-- T̂_Riem preserves Cartesian morphisms (component-wise formulation).
     In this finite prototype, Cartesian lifts are mapped to Cartesian lifts
     because the spectral flow is identity on the fibers. -/
 theorem T_hat_Riem_preserves_cartesian {e : SpectralBundleTemp} {b' : TempObj}
     (f : b' ⟶ π_T.obj e) :
-    T_hat_Riem.map (π_T_cartesianLift.cartesian_morphism f) =
-    π_μ_cartesianLift.cartesian_morphism (TFunctor.map f) := by
-  apply BundleRGHom.ext
-  · simp
-  · simp
+    T_hat_Riem.obj (π_T_cartesianLift.lift f) =
+      π_μ_cartesianLift.lift (e := T_hat_Riem.obj e) (b' := TFunctor.obj b') (TFunctor.map f) ∧
+    (T_hat_Riem.map (π_T_cartesianLift.cartesian_morphism f)).baseMap.s =
+      (π_μ_cartesianLift.cartesian_morphism (e := T_hat_Riem.obj e) (b' := TFunctor.obj b')
+        (TFunctor.map f)).baseMap.s ∧
+    (T_hat_Riem.map (π_T_cartesianLift.cartesian_morphism f)).fiberMap =
+      (π_μ_cartesianLift.cartesian_morphism (e := T_hat_Riem.obj e) (b' := TFunctor.obj b')
+        (TFunctor.map f)).fiberMap := by
+  constructor
+  · -- sources are equal: both are ⟨TFunctor.obj b', ⟨e.fiberData.n, e.fiberData.A⟩⟩
+    apply SpectralBundleRG.ext
+    · -- base: ⟨b'.T, b'.pos⟩ = ⟨b'.T, b'.pos⟩
+      rfl
+    · -- fiberData (HEq; types coincide by the base equality above)
+      rfl
+  constructor
+  · -- base map s-field equality: both equal f.r
+    rfl
+  · -- fiber map equality: both equal 𝟙
+    rfl
+
+/-! =========================================================
+    Section 6.5: Splitting of the Cleavages (Note Prop 2.2)
+   ========================================================= -/
+
+/-- The cleavage of π_T is split on identities: the lift of 𝟙 is the object itself
+    (Prop 2.2, part 1). -/
+theorem π_T_cleavage_id {e : SpectralBundleTemp} :
+    π_T_cartesianLift.lift (𝟙 (π_T.obj e)) = e := by
+  apply SpectralBundleTemp.ext
+  · rfl
+  · rfl
+
+/-- The Cartesian morphism over 𝟙 has identity base component. -/
+theorem π_T_cleavage_id_cartesian_base {e : SpectralBundleTemp} :
+    (π_T_cartesianLift.cartesian_morphism (𝟙 (π_T.obj e))).baseMap = 𝟙 e.base := rfl
+
+/-- The Cartesian morphism over 𝟙 has identity fiber component. -/
+theorem π_T_cleavage_id_cartesian_fiber {e : SpectralBundleTemp} :
+    (π_T_cartesianLift.cartesian_morphism (𝟙 (π_T.obj e))).fiberMap =
+      (1 : Matrix (Fin e.fiberData.n) (Fin e.fiberData.n) ℂ) := rfl
+
+/-- The cleavage of π_T is split on composition: the lift of g ∘ f equals the lift
+    of f computed over the lifted object of g (Prop 2.2, part 2). -/
+theorem π_T_cleavage_comp {e : SpectralBundleTemp} {b₀ b₁ : TempObj}
+    (f : b₀ ⟶ b₁) (g : b₁ ⟶ π_T.obj e) :
+    π_T_cartesianLift.lift (f ≫ g) =
+      π_T_cartesianLift.lift (e := π_T_cartesianLift.lift g) f := rfl
+
+/-- The Cartesian morphism over g ∘ f has the expected base component. -/
+theorem π_T_cleavage_comp_cartesian_base {e : SpectralBundleTemp} {b₀ b₁ : TempObj}
+    (f : b₀ ⟶ b₁) (g : b₁ ⟶ π_T.obj e) :
+    (π_T_cartesianLift.cartesian_morphism (f ≫ g)).baseMap = f ≫ g := rfl
+
+/-- The Cartesian morphism over g ∘ f has fiber component 𝟙 = 𝟙 * 𝟙,
+    matching the composite of the individual Cartesian morphisms. -/
+theorem π_T_cleavage_comp_cartesian_fiber {e : SpectralBundleTemp} {b₀ b₁ : TempObj}
+    (f : b₀ ⟶ b₁) (g : b₁ ⟶ π_T.obj e) :
+    (π_T_cartesianLift.cartesian_morphism (f ≫ g)).fiberMap =
+      (π_T_cartesianLift.cartesian_morphism (e := π_T_cartesianLift.lift g) f).fiberMap *
+        (π_T_cartesianLift.cartesian_morphism g).fiberMap :=
+  (Matrix.one_mul 1).symm
+
+/-- RG dual: cleavage of π_μ is split on identities. -/
+theorem π_μ_cleavage_id {e : SpectralBundleRG} :
+    π_μ_cartesianLift.lift (𝟙 (π_μ.obj e)) = e := by
+  apply SpectralBundleRG.ext
+  · rfl
+  · rfl
+
+/-- RG dual: Cartesian morphism over 𝟙 has identity base component. -/
+theorem π_μ_cleavage_id_cartesian_base {e : SpectralBundleRG} :
+    (π_μ_cartesianLift.cartesian_morphism (𝟙 (π_μ.obj e))).baseMap = 𝟙 e.base := rfl
+
+/-- RG dual: Cartesian morphism over 𝟙 has identity fiber component. -/
+theorem π_μ_cleavage_id_cartesian_fiber {e : SpectralBundleRG} :
+    (π_μ_cartesianLift.cartesian_morphism (𝟙 (π_μ.obj e))).fiberMap =
+      (1 : Matrix (Fin e.fiberData.n) (Fin e.fiberData.n) ℂ) := rfl
+
+/-- RG dual: cleavage of π_μ is split on composition. -/
+theorem π_μ_cleavage_comp {e : SpectralBundleRG} {b₀ b₁ : RGObj}
+    (f : b₀ ⟶ b₁) (g : b₁ ⟶ π_μ.obj e) :
+    π_μ_cartesianLift.lift (f ≫ g) =
+      π_μ_cartesianLift.lift (e := π_μ_cartesianLift.lift g) f := rfl
+
+/-- RG dual: Cartesian morphism over g ∘ f has fiber component 𝟙 = 𝟙 * 𝟙. -/
+theorem π_μ_cleavage_comp_cartesian_fiber {e : SpectralBundleRG} {b₀ b₁ : RGObj}
+    (f : b₀ ⟶ b₁) (g : b₁ ⟶ π_μ.obj e) :
+    (π_μ_cartesianLift.cartesian_morphism (f ≫ g)).fiberMap =
+      (π_μ_cartesianLift.cartesian_morphism (e := π_μ_cartesianLift.lift g) f).fiberMap *
+        (π_μ_cartesianLift.cartesian_morphism g).fiberMap :=
+  (Matrix.one_mul 1).symm
+
+/-! =========================================================
+    Section 6.6: Fiber Categories ≅ Spec (Note Prop 2.3, Prop 3.1)
+   ========================================================= -/
+
+/-- Morphisms in the Spec fiber category at T (spectral transformations
+    intertwining the matrices). -/
+@[ext]
+structure SpecFiberTempHom {T : TempObj} (X Y : SpecFiberTemp T) where
+  mat : Matrix (Fin X.n) (Fin Y.n) ℂ
+  commut : mat * Y.A = X.A * mat
+
+instance specFiberTempCategory (T : TempObj) : Category (SpecFiberTemp T) where
+  Hom X Y := SpecFiberTempHom X Y
+  id X := ⟨1, by simp⟩
+  comp f g := ⟨f.mat * g.mat, by
+    calc (f.mat * g.mat) * Z.A = f.mat * (g.mat * Z.A) := Matrix.mul_assoc _ _ _
+      _ = f.mat * (Y.A * g.mat) := by rw [g.commut]
+      _ = (f.mat * Y.A) * g.mat := (Matrix.mul_assoc _ _ _).symm
+      _ = (X.A * f.mat) * g.mat := by rw [f.commut]
+      _ = X.A * (f.mat * g.mat) := Matrix.mul_assoc _ _ _⟩
+  id_comp := by intro X Y f; ext; exact Matrix.one_mul _
+  comp_id := by intro X Y f; ext; exact Matrix.mul_one _
+  assoc := by intro W X Y Z f g h; ext; exact Matrix.mul_assoc _ _ _
+
+/-- Morphisms in the Spec fiber category at μ (RG dual). -/
+@[ext]
+structure SpecFiberRGHom {μ : RGObj} (X Y : SpecFiberRG μ) where
+  mat : Matrix (Fin X.n) (Fin Y.n) ℂ
+  commut : mat * Y.A = X.A * mat
+
+instance specFiberRGCateogry (μ : RGObj) : Category (SpecFiberRG μ) where
+  Hom X Y := SpecFiberRGHom X Y
+  id X := ⟨1, by simp⟩
+  comp f g := ⟨f.mat * g.mat, by
+    calc (f.mat * g.mat) * Z.A = f.mat * (g.mat * Z.A) := Matrix.mul_assoc _ _ _
+      _ = f.mat * (Y.A * g.mat) := by rw [g.commut]
+      _ = (f.mat * Y.A) * g.mat := (Matrix.mul_assoc _ _ _).symm
+      _ = (X.A * f.mat) * g.mat := by rw [f.commut]
+      _ = X.A * (f.mat * g.mat) := Matrix.mul_assoc _ _ _⟩
+  id_comp := by intro X Y f; ext; exact Matrix.one_mul _
+  comp_id := by intro X Y f; ext; exact Matrix.mul_one _
+  assoc := by intro W X Y Z f g h; ext; exact Matrix.mul_assoc _ _ _
+
+/-- The fiber of Bun(Temp, Spec) over T: bundle objects based at T. -/
+def FiberAtTemp (T : TempObj) := { X : SpectralBundleTemp // X.base = T }
+
+/-- Vertical morphisms in the fiber over T. -/
+@[ext]
+structure FiberAtTempHom {T : TempObj} (X Y : FiberAtTemp T) where
+  fiberMap : Matrix (Fin X.1.fiberData.n) (Fin Y.1.fiberData.n) ℂ
+  commut : fiberMap * Y.1.fiberData.A = X.1.fiberData.A * fiberMap
+
+instance fiberAtTempCategory (T : TempObj) : Category (FiberAtTemp T) where
+  Hom X Y := FiberAtTempHom X Y
+  id X := ⟨1, by simp⟩
+  comp f g := ⟨f.fiberMap * g.fiberMap, by
+    calc (f.fiberMap * g.fiberMap) * Z.1.fiberData.A
+          = f.fiberMap * (g.fiberMap * Z.1.fiberData.A) := Matrix.mul_assoc _ _ _
+      _ = f.fiberMap * (Y.1.fiberData.A * g.fiberMap) := by rw [g.commut]
+      _ = (f.fiberMap * Y.1.fiberData.A) * g.fiberMap := (Matrix.mul_assoc _ _ _).symm
+      _ = (X.1.fiberData.A * f.fiberMap) * g.fiberMap := by rw [f.commut]
+      _ = X.1.fiberData.A * (f.fiberMap * g.fiberMap) := Matrix.mul_assoc _ _ _⟩
+  id_comp := by intro X Y f; ext; exact Matrix.one_mul _
+  comp_id := by intro X Y f; ext; exact Matrix.mul_one _
+  assoc := by intro W X Y Z f g h; ext; exact Matrix.mul_assoc _ _ _
+
+/-- The fiber of Bun(RG, Spec) over μ. -/
+def FiberAtRG (μ : RGObj) := { X : SpectralBundleRG // X.base = μ }
+
+/-- Vertical morphisms in the fiber over μ. -/
+@[ext]
+structure FiberAtRGHom {μ : RGObj} (X Y : FiberAtRG μ) where
+  fiberMap : Matrix (Fin X.1.fiberData.n) (Fin Y.1.fiberData.n) ℂ
+  commut : fiberMap * Y.1.fiberData.A = X.1.fiberData.A * fiberMap
+
+instance fiberAtRGCategory (μ : RGObj) : Category (FiberAtRG μ) where
+  Hom X Y := FiberAtRGHom X Y
+  id X := ⟨1, by simp⟩
+  comp f g := ⟨f.fiberMap * g.fiberMap, by
+    calc (f.fiberMap * g.fiberMap) * Z.1.fiberData.A
+          = f.fiberMap * (g.fiberMap * Z.1.fiberData.A) := Matrix.mul_assoc _ _ _
+      _ = f.fiberMap * (Y.1.fiberData.A * g.fiberMap) := by rw [g.commut]
+      _ = (f.fiberMap * Y.1.fiberData.A) * g.fiberMap := (Matrix.mul_assoc _ _ _).symm
+      _ = (X.1.fiberData.A * f.fiberMap) * g.fiberMap := by rw [f.commut]
+      _ = X.1.fiberData.A * (f.fiberMap * g.fiberMap) := Matrix.mul_assoc _ _ _⟩
+  id_comp := by intro X Y f; ext; exact Matrix.one_mul _
+  comp_id := by intro X Y f; ext; exact Matrix.mul_one _
+  assoc := by intro W X Y Z f g h; ext; exact Matrix.mul_assoc _ _ _
+
+/-- The equivalence Spec_T ≌ (fiber of Bun(Temp, Spec) over T) (Note Prop 2.3). -/
+noncomputable def specFiberTempEquivFiber (T : TempObj) : SpecFiberTemp T ≌ FiberAtTemp T where
+  functor :=
+    { obj := fun X => ⟨⟨T, X⟩, rfl⟩
+      map := fun φ => ⟨φ.mat, φ.commut⟩
+      map_id := fun X => rfl
+      map_comp := fun f g => rfl }
+  inverse :=
+    { obj := fun X => X.2 ▸ X.1.fiberData
+      map := fun φ => ⟨φ.fiberMap, φ.commut⟩
+      map_id := fun X => rfl
+      map_comp := fun f g => rfl }
+  unitIso := NatIso.ofComponents (fun X => Iso.refl _)
+  counitIso := NatIso.ofComponents (fun X =>
+    { hom := ⟨1, by simp⟩
+      inv := ⟨1, by simp⟩ })
+
+/-- RG dual: Spec_μ ≌ (fiber of Bun(RG, Spec) over μ) (Note Prop 3.1). -/
+noncomputable def specFiberRGEquivFiber (μ : RGObj) : SpecFiberRG μ ≌ FiberAtRG μ where
+  functor :=
+    { obj := fun X => ⟨⟨μ, X⟩, rfl⟩
+      map := fun φ => ⟨φ.mat, φ.commut⟩
+      map_id := fun X => rfl
+      map_comp := fun f g => rfl }
+  inverse :=
+    { obj := fun X => X.2 ▸ X.1.fiberData
+      map := fun φ => ⟨φ.fiberMap, φ.commut⟩
+      map_id := fun X => rfl
+      map_comp := fun f g => rfl }
+  unitIso := NatIso.ofComponents (fun X => Iso.refl _)
+  counitIso := NatIso.ofComponents (fun X =>
+    { hom := ⟨1, by simp⟩
+      inv := ⟨1, by simp⟩ })
 
 /-! =========================================================
     Section 7: 2-Category Structure (Strict 2-Category 2Bun)
    ========================================================= -/
 
 /-- 1-morphism in 2Bun: a fibered functor between two fibrations. -/
-structure FiberedFunctor (p : SpectralBundleTemp ⥤ TempObj) (q : SpectralBundleRG ⥤ RGObj)
-    [GrothendieckFibration p] [GrothendieckFibration q] where
+structure FiberedFunctor (p : SpectralBundleTemp ⥤ TempObj) (q : SpectralBundleRG ⥤ RGObj) where
   F : SpectralBundleTemp ⥤ SpectralBundleRG
   base_map : SpectralBundleTemp → RGObj
   base_commutes : ∀ X, q.obj (F.obj X) = base_map X  -- π_μ(F(X)) = base_map(X)
 
 /-- 2-morphism in 2Bun: a natural transformation between fibered functors. -/
-structure FiberedNaturalTransformation (p q : SpectralBundleTemp ⥤ TempObj)
-    (F G : SpectralBundleTemp ⥤ SpectralBundleRG)
-    [GrothendieckFibration p] [GrothendieckFibration q]
+structure FiberedNaturalTransformation (p : SpectralBundleTemp ⥤ TempObj) (q : SpectralBundleRG ⥤ RGObj)
     (hF : FiberedFunctor p q)
     (hG : FiberedFunctor p q) where
-  η : F ⟶ G
-  fiber_restricted : ∀ X, π_μ.map (η.app X) = 𝟙 (hF.base_map X)
+  base_map_eq : hF.base_map = hG.base_map
+  η : hF.F ⟶ hG.F
+  fiber_restricted : ∀ X,
+    let base_eq : hF.base_map X = hG.base_map X := congr_fun base_map_eq X
+    q.map (η.app X) = eqToHom (hF.base_commutes X) ≫ 𝟙 (hF.base_map X) ≫
+      eqToHom (base_eq.trans (hG.base_commutes X).symm)
 
 end UFPFormalization

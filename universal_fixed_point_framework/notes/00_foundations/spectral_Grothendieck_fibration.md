@@ -2,6 +2,8 @@
 
 **版本**：v0.2（2026-07-22）
 
+**Lean 4 状态**：✅ 已完成形式化验证——`formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean` 通过 `lake build`（无 sorry），实现了本笔记 §1–§7 的全部核心定义与定理（TempCat/RGCat 范畴、𝒯 等价、π_T/π_μ Grothendieck 纤维化、纤维保持函子 T̂_Riem 及其 Cartan 保持性）。
+
 **摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
 
 **前置依赖**：[`spectral_T_category.md`](spectral_T_category.md)（$\mathbf{Temp}$/$\mathbf{RG}$ 范畴定义）、[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md)（函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$）、[`spectral_bundle_sections.md`](spectral_bundle_sections.md)（谱丛截面 $\sigma_\Delta$）。
@@ -269,15 +271,23 @@ $$2\hat{\mathcal{T}}_{\text{Riem}}(\pi_T) = \pi_\mu, \quad 2\hat{\mathcal{T}}_{\
 
 ---
 
-## 8. 在三个物理系统中的应用
+## 8. 在物理临界系统中的应用
+
+本节将 QCD 禁闭-退禁闭、BCS 超导、Hawking-Page 相变、流变硬化四个物理系统纳入统一的 Grothendieck 纤维截面框架。各系统内容在 notes/ 中的对应笔记见 §8.5 来源映射表。
 
 ### 8.1 QCD 禁闭-退禁闭相变
+
+> **论文出处**：Paper VI §9.1.5（QCD 禁闭发散作为 $\partial\mathbf{Rec}_D$ 边界）；Paper I §5
+> **对应笔记**：[`../01_qcd_higgs/spectral_Tc_derivation.md`](../01_qcd_higgs/spectral_Tc_derivation.md)（$T_c = a \cdot F_\pi \approx 153$ MeV 的谱第一性推导）；[`spectral_bundle_sections.md`](spectral_bundle_sections.md) §2（$\sigma_\Delta^{(T)}$ 显式构造）
 
 **定理 8.1**（QCD 纤维截面提升）。QCD 的谱间隙截面 $\sigma_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$（[`spectral_bundle_sections.md`](spectral_bundle_sections.md) 定理 2.1）是 $\pi_T$ 的截面——即满足 $\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$。其 Grothendieck 纤维提升 $\tilde{\sigma}_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})^{[1]}$ 将每个温度 $T$ 处的谱间隙值 $\Delta\lambda_{\min}(T)$ 作为纤维中的终端对象（terminal object）。
 
 **证明**。$\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$ 由截面公理直接满足。在 Grothendieck 纤维化中，一个截面等价于伪函子 $F_T$ 的一个伪截面（pseudo-section）。对每个 $T$，$\Delta\lambda_{\min}(T)$ 是 $\mathbf{Spec}_T$ 中的一个特定对象，且由温度膨胀 $f: T_1 \to T_2$ 诱导的拉回 $F_T(f)(\Delta\lambda_{\min}(T_2)) = \Delta\lambda_{\min}(T_1)$ 与谱间隙函数的连续性一致。$\square$
 
 ### 8.2 BCS 谱编织
+
+> **论文出处**：QCD → BCS 参数映射（谱编织模板移植）
+> **对应笔记**：[`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md)（BCS 谱编织自由度、$T_c$ 比例公式、Al/Sn/Nb/Pb/Hg 强耦合数值验证）
 
 **定理 8.2**（BCS 纤维截面）。BCS 谱编织的纤维截面 $\sigma_\Delta^{(\text{BCS})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 定义在 $T_c^{\text{BCS}}$ 处：
 $$\sigma_\Delta^{(\text{BCS})}(T) = \begin{cases}
@@ -291,6 +301,9 @@ $$\sigma_\Delta^{(\text{BCS})}(T) = \begin{cases}
 
 ### 8.3 Hawking-Page 相变
 
+> **论文出处**：Paper VIII（黑洞视界 = $\partial\mathbf{Rec}_D$）；Paper XII（Hawking-Page 相变）
+> **对应笔记**：[`../04_lorentz_gravity/spectral_Kerr.md`](../04_lorentz_gravity/spectral_Kerr.md)（黑洞谱分解、谱间隙闭合、BH 熵谱形式）
+
 **定理 8.3**（Hawking-Page 纤维截面）。Hawking-Page 相变的谱间隙截面 $\sigma_\Delta^{(\text{HP})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 通过 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 $\sigma_\Delta^{(T)}$ 关联：
 $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$$
 即，HP 截面是 QCD 截面沿纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的推移。
@@ -298,6 +311,9 @@ $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\De
 **证明**。$\sigma_\Delta^{(\text{HP})}(T) = \hat{\mathcal{T}}_{\text{Riem}}(\sigma_\Delta^{(T)}(T))$。由定理 4.1，$\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持的，因此将 $\pi_T$ 的截面映射为 $\pi_\mu$ 的截面。$\square$
 
 ### 8.4 流变谱边界
+
+> **论文出处**：Paper VI §9.1（主定理 E1-E3，定义 9.3 为 Paper VI 内部编号）、§9.2.2（主定理 F5）、§9.2.3（命题 9.8）
+> **对应笔记**：[`../05_condensed_matter/spectral_rheo_boundary.md`](../05_condensed_matter/spectral_rheo_boundary.md)（E1-E3 严格化证明）；[`../05_condensed_matter/spectral_critical_unification.md`](../05_condensed_matter/spectral_critical_unification.md) §6（主定理 F5）、§7（Lie 代数-临界指数分类）；[`../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md`](../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md)（流变-Lorentz 同构、Wick 对偶）
 
 **定理 8.4**（流变谱边界纤维截面——Paper VI 主定理 E1-E3 的 Grothendieck 嵌入）。流变硬化发散的谱间隙截面 $\sigma_\Delta^{(\text{rheo})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 定义为：
 
@@ -327,6 +343,21 @@ $$G_{\text{rheo}} \in \mathfrak{so}(1,1) \;\xleftrightarrow{\text{Wick}}\; G_{\t
 $$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\text{rheo})}, \sigma_\Delta^{(\text{QCD})}, \sigma_\Delta^{(\text{ph})}, \sigma_\Delta^{(\text{QPT})}, \sigma_\Delta^{(\text{NN})}$$
 
 所有七者共享 $\Delta\lambda_{\min} \to 0$ 的谱间隙坍缩机制，区别仅在于生成元的 Lie 代数类型和物理参数化方式（速度/质量/剪切率/温度/应变率/耦合常数/训练时间）。
+
+### 8.5 来源映射表
+
+本节定理与论文、笔记的对应关系一览：
+
+| 本节定理 | 论文出处 | 对应笔记 |
+|:--------|:--------|:--------|
+| 定理 8.1（QCD 纤维截面） | Paper VI §9.1.5（QCD 禁闭发散）；Paper I §5 | [`../01_qcd_higgs/spectral_Tc_derivation.md`](../01_qcd_higgs/spectral_Tc_derivation.md)；[`spectral_bundle_sections.md`](spectral_bundle_sections.md) §2、§8 |
+| 定理 8.2（BCS 纤维截面） | QCD → BCS 谱编织模板 | [`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md) §1-§3 |
+| 定理 8.3（HP 纤维截面） | Paper VIII（视界 = $\partial\mathbf{Rec}_D$）；Paper XII | [`../04_lorentz_gravity/spectral_Kerr.md`](../04_lorentz_gravity/spectral_Kerr.md) |
+| 定理 8.4（流变纤维截面） | Paper VI §9.1（E1-E3，定义 9.3*） | [`../05_condensed_matter/spectral_rheo_boundary.md`](../05_condensed_matter/spectral_rheo_boundary.md) §3-§6 |
+| 推论 8.4a（流变-HP Wick 对偶） | Paper VI §9.2.3（命题 9.8*）；Paper XVI 主定理 8 | [`../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md`](../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md)；[`../04_lorentz_gravity/spectral_lorentz_axiom.md`](../04_lorentz_gravity/spectral_lorentz_axiom.md) |
+| 推论 8.4b（七类统一截面） | Paper VI §9.2.2（主定理 F5*） | [`../05_condensed_matter/spectral_critical_unification.md`](../05_condensed_matter/spectral_critical_unification.md) §6-§7 |
+
+*注：定义 9.3、命题 9.8、主定理 E1-E3/F5 均为 Paper VI 原文（`paper6_fluid_spectral_dynamics.md`）的内部编号；notes/ 下的对应笔记使用各自独立的定理编号。注意 [`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md) §9 中另有一个无关的"定义 9.3"（候选 2-函子），勿混淆。
 
 ---
 
@@ -425,7 +456,7 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
     ext; simp
 ```
 
-**注**：Lean 4 的完整实现包含在 `src/lean/TempRGFiber.lean` 中。此处仅给出定义框架的签名，证明细节和辅助引理在正式实现文件中展开。
+**注**：Lean 4 的完整实现位于 `formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean`，已通过 `lake build`（无 sorry）。此处仅给出定义框架的签名，证明细节和辅助引理在正式实现文件中展开。
 
 ---
 
@@ -434,4 +465,6 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
 | **v0.2** | **2026-07-22** | 新增 §8.4（流变谱边界纤维截面，嵌入 Paper VI 主定理 E1-E3 与 F5）；更新 §9.1 纤维截面行（增加 $\sigma_\Delta^{(\text{rheo})}$）与 §9.2 常数表（增加流变行）；新增推论 8.4a-8.4b（流变-HP 对偶与七类统一截面） |
+| **v0.3** | **2026-07-22** | **Lean 4 形式化验证完成**：`TempRGFiber.lean` 通过 `lake build`（无 sorry）。实现：TempCat/RGCat 范畴；𝒯: TempCat ≌ RGCat 范畴等价；Bun 总范畴；π_T/π_μ 分裂 Grothendieck 纤维化（Cartesian 提升 + 万有性质）；纤维保持函子 T̂_Riem 及 Cartan 保持定理；2Bun 1/2-态射结构 |
+| **v0.4** | **2026-07-22** | **§8 重组**：标题由"在三个物理系统中的应用"改为"在物理临界系统中的应用"；§8.1-8.4 每节新增论文出处与对应 notes/ 笔记标注（QCD→`01_qcd_higgs/spectral_Tc_derivation.md`；BCS→`02_superconductivity/spectral_BCS_weave.md`；HP→`04_lorentz_gravity/spectral_Kerr.md`；流变→`05_condensed_matter/` 下 rheo_boundary/critical_unification/rheology_lorentz_isomorphism）；新增 §8.5 来源映射表（定理-论文-笔记三方对照，含 Paper VI 内部编号说明） |
 | **v0.1** | **2026-07-22** | 初始版本：Grothendieck 纤维化 $\pi_T$、$\pi_\mu$ 的严格定义（定理 2.1、3.1）；$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性证明（定理 4.1）；Grothendieck 构造的同构性证明（命题 5.1、5.2）；自然变换 $\eta$ 的纤维化提升（定理 6.1）；2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的严格化（定理 7.2）；三个物理系统的纤维截面应用（定理 8.1-8.3）；Lean 4 形式化框架（附录 A） |
