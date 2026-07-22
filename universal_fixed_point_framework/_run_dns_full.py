@@ -1,6 +1,6 @@
 """
-DNS 湍流数值验证 v4.5 — 日志持久化 + 稳态延长
-  64³, Re_λ=200, force_amp=0.03, T=80
+DNS 湍流数值验证 v6.1 — 恒定能量注入率 forcing + 提高 ε
+  64³, Re_λ=200, force_type='energy_injection', ε_target=1.0, T=20
 """
 import sys; sys.path.insert(0, '.')
 import time
@@ -13,7 +13,7 @@ from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrum
 # ============================================================
 OUTPUT_DIR = Path('dns_output')
 OUTPUT_DIR.mkdir(exist_ok=True)
-RUN_TAG = f"v4_5_N64_Re200_fa0.03_T80_{int(time.time())}"
+RUN_TAG = f"v6_1_N64_Re200_einj_1.0_T20_{int(time.time())}"
 LOG_FILE = OUTPUT_DIR / f"{RUN_TAG}.log"
 NPZ_FILE = OUTPUT_DIR / f"{RUN_TAG}.npz"
 
@@ -33,22 +33,25 @@ class TeeLogger:
 sys.stdout = TeeLogger(LOG_FILE)
 
 cfg = DNSConfig(
-    N=64,                  # 更高分辨率以解析惯性区
-    Re_lambda=200.0,       # 提高雷诺数以拓展惯性区
-    nu=1/200.0,            # ν = 0.005，与 Re_λ 匹配
-    dt=0.004,              # 时间步长
-    T_total=80.0,          # 更长积分以达到统计稳态
-    T_stats_start=40.0,    # 稳态后半段开始统计
-    force_kf=2.0,          # 大尺度 forcing
-    force_amp=0.03,        # 进一步降低 forcing，抑制能量持续增长
+    N=64,
+    Re_lambda=200.0,
+    nu=1/200.0,
+    dt=0.004,
+    T_total=20.0,          # 快速测试
+    T_stats_start=10.0,
+    force_kf=2.0,
+    force_amp=1.0,         # 目标能量注入率 ε_target（提高 20 倍）
+    force_type="energy_injection",
+    target_energy=0.5,
 )
 
 print("=" * 65)
-print(f"DNS 湍流 k^-5/3 验证 v4.5")
+print(f"DNS 湍流 k^-5/3 验证 v6.1 — 恒定能量注入率 forcing + 提高 ε")
 print(f"  分辨率: {cfg.N}³ = {cfg.N**3:,}")
 print(f"  Re_λ = {cfg.Re_lambda:.0f}, ν = {cfg.nu:.6f}")
 print(f"  dt = {cfg.dt}")
 print(f"  T_total = {cfg.T_total}, 统计起始: t={cfg.T_stats_start}")
+print(f"  force_type = {cfg.force_type}")
 print(f"  force_amp = {cfg.force_amp}, force_kf = {cfg.force_kf}")
 print(f"  能谱归一化: 已修正")
 print(f"  日志文件: {LOG_FILE}")
@@ -145,6 +148,7 @@ np.savez(
     cfg_T_total=cfg.T_total,
     cfg_force_amp=cfg.force_amp,
     cfg_force_kf=cfg.force_kf,
+    cfg_force_type=cfg.force_type,
     slope=slope if "slope" in fit else np.nan,
     slope_err=slope_err if "slope" in fit else np.nan,
     C_K=fit.get("C_K", np.nan),
