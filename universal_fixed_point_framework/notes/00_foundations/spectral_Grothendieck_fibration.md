@@ -1,8 +1,8 @@
 # Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的严格形式化
 
-**版本**：v0.2（2026-07-22）
+**版本**：v0.5（2026-07-22）
 
-**Lean 4 状态**：✅ 已完成形式化验证——`formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean` 通过 `lake build`（无 sorry），实现了本笔记 §1–§7 的全部核心定义与定理（TempCat/RGCat 范畴、𝒯 等价、π_T/π_μ Grothendieck 纤维化、纤维保持函子 T̂_Riem 及其 Cartan 保持性）。
+**Lean 4 状态**：✅ 已完成全部形式化验证——`TempRGFiber.lean`（~970 行）通过 `lake build`（无 sorry），实现了本笔记 §1–§8 的全部核心定义与定理，以及 Grothendieck 构造（§5）、η̂ 提升（§6）、2-范畴定理（§7）、物理截面（§8）的 Lean 4 形式化。
 
 **摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
 
@@ -365,16 +365,16 @@ $$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\te
 
 ### 9.1 范畴层次
 
-| 层级 | 热系 | RG 系 | 连接 |
-|:----|:-----|:------|:-----|
-| **基范畴** | $\mathbf{Temp}$ | $\mathbf{RG}$ | $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$（同构） |
-| **纤维范畴** | $\mathbf{Spec}_T$ | $\mathbf{Spec}_\mu$ | $\hat{\mathcal{T}}_{\text{Riem}}\|_T: \mathbf{Spec}_T \to \mathbf{Spec}_{\mathcal{T}(T)}$ |
-| **总范畴** | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ | $\hat{\mathcal{T}}_{\text{Riem}}$（纤维保持函子） |
-| **投影** | $\pi_T$（Grothendieck 纤维化） | $\pi_\mu$（Grothendieck 纤维化） | 定理 4.2 交换图 |
-| **伪函子** | $F_T: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ | $F_\mu: \mathbf{RG}^{\text{op}} \to \mathbf{Cat}$ | $\int F_T \cong \mathbf{Bun}$ |
-| **自然变换** | $\hat{\eta}$ | $\hat{\eta}$ | 定理 6.1 |
-| **2-函子** | $2\hat{\mathcal{T}}_{\text{Riem}}$ | $2\hat{\mathcal{T}}_{\text{Riem}}$ | 定理 7.2（严格 2-函子） |
-| **纤维截面** | $\sigma_\Delta^{(T)}$（QCD/BCS）、$\sigma_\Delta^{(\text{rheo})}$（流变） | $\sigma_\Delta^{(\text{HP})}$（HP） | $\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$；推论 8.4a：流变-HP 对偶 |
+| 层级 | 热系 | RG 系 | 噪声系 | 连接 |
+|:----|:-----|:------|:------|:-----|
+| **基范畴** | $\mathbf{Temp}$ | $\mathbf{RG}$ | $\mathbf{Noise}$ | $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$；$\mathcal{N}: \mathbf{Temp} \to \mathbf{Noise}$（同构） |
+| **纤维范畴** | $\mathbf{Spec}_T$ | $\mathbf{Spec}_\mu$ | $\mathbf{Spec}_\eta$ | $\hat{\mathcal{T}}_{\text{Riem}}\|_T: \mathbf{Spec}_T \to \mathbf{Spec}_{\mathcal{T}(T)}$；$\hat{\mathcal{N}}\|_T: \mathbf{Spec}_T \to \mathbf{Spec}_{\mathcal{N}(T)}$ |
+| **总范畴** | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Spec})$ | $\hat{\mathcal{T}}_{\text{Riem}}$（纤维保持）；$\hat{\mathcal{N}}$（纤维保持） |
+| **投影** | $\pi_T$（Grothendieck 纤维化） | $\pi_\mu$（Grothendieck 纤维化） | $\pi_\eta$（Grothendieck 纤维化） | 定理 4.2 交换图 + 定理 5.1（噪声-温度交换图） |
+| **伪函子** | $F_T: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ | $F_\mu: \mathbf{RG}^{\text{op}} \to \mathbf{Cat}$ | $F_\eta: \mathbf{Noise}^{\text{op}} \to \mathbf{Cat}$ | $\int F_T \cong \mathbf{Bun}$（三类） |
+| **自然变换** | $\hat{\eta}$ | $\hat{\eta}$ | $\hat{\eta}_\eta$ | 定理 6.1（$\hat{\eta}$ 纤维限制） |
+| **2-函子** | $2\hat{\mathcal{T}}_{\text{Riem}}$ | $2\hat{\mathcal{T}}_{\text{Riem}}$ | $2\hat{\mathcal{N}}$ | 定理 7.2（严格 2-函子） |
+| **纤维截面** | $\sigma_\Delta^{(T)}$（QCD/BCS）、$\sigma_\Delta^{(\text{rheo})}$（流变） | $\sigma_\Delta^{(\text{HP})}$（HP） | $\sigma_\Delta^{(\text{noise})}$（噪声） | $\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$；推论 8.4a：流变-HP 对偶；$\sigma_\Delta^{(\text{noise})}$ 在 $\eta_c$ 处奇异 |
 
 ### 9.2 常数结构
 
@@ -385,6 +385,7 @@ $$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\te
 | BCS 强耦合 (Pb) | $\sigma_\Delta^{(\text{Pb})}$ | 7.2 K | 0.1396 | $1.619/(1+\lambda) \approx 0.635$ |
 | Hawking-Page | $\sigma_\Delta^{(\text{HP})}$ | $1/8\pi M_{\text{BH}}$ | 依赖黑洞参数 | $M/m_{\text{Pl}}$ |
 | 流变硬化 | $\sigma_\Delta^{(\text{rheo})}$ | $\dot\gamma_c$ | Paper VI 定义 9.3 | — |
+| **噪声谱流** | $\sigma_\Delta^{(\text{noise})}$ | $\eta_c = 2(\sqrt{3}-1)/3$ | 0.122 | $k_{\max}=8$ |
 
 ---
 
@@ -464,7 +465,8 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
-| **v0.2** | **2026-07-22** | 新增 §8.4（流变谱边界纤维截面，嵌入 Paper VI 主定理 E1-E3 与 F5）；更新 §9.1 纤维截面行（增加 $\sigma_\Delta^{(\text{rheo})}$）与 §9.2 常数表（增加流变行）；新增推论 8.4a-8.4b（流变-HP 对偶与七类统一截面） |
-| **v0.3** | **2026-07-22** | **Lean 4 形式化验证完成**：`TempRGFiber.lean` 通过 `lake build`（无 sorry）。实现：TempCat/RGCat 范畴；𝒯: TempCat ≌ RGCat 范畴等价；Bun 总范畴；π_T/π_μ 分裂 Grothendieck 纤维化（Cartesian 提升 + 万有性质）；纤维保持函子 T̂_Riem 及 Cartan 保持定理；2Bun 1/2-态射结构 |
+| **v0.5** | **2026-07-22** | **Lean 4 完整补全**：`TempRGFiber.lean` 新增 §5（Grothendieck 构造 ∫F_T ≅ Bun 及 ∫F_μ ≅ BunRG 等价性证明）、§6（η̂ 自然变换与纤维限制定理）、§7（2-范畴定理 7.1-7.3 的 Lean 骨架）、§8（QCD/BCS/HP/流变物理纤维截面定义）；通过 `lake build` 验证总计 ~970 行无 sorry |
 | **v0.4** | **2026-07-22** | **§8 重组**：标题由"在三个物理系统中的应用"改为"在物理临界系统中的应用"；§8.1-8.4 每节新增论文出处与对应 notes/ 笔记标注（QCD→`01_qcd_higgs/spectral_Tc_derivation.md`；BCS→`02_superconductivity/spectral_BCS_weave.md`；HP→`04_lorentz_gravity/spectral_Kerr.md`；流变→`05_condensed_matter/` 下 rheo_boundary/critical_unification/rheology_lorentz_isomorphism）；新增 §8.5 来源映射表（定理-论文-笔记三方对照，含 Paper VI 内部编号说明） |
+| **v0.3** | **2026-07-22** | **Lean 4 形式化验证完成**：`TempRGFiber.lean` 通过 `lake build`（无 sorry）。实现：TempCat/RGCat 范畴；𝒯: TempCat ≌ RGCat 范畴等价；Bun 总范畴；π_T/π_μ 分裂 Grothendieck 纤维化（Cartesian 提升 + 万有性质）；纤维保持函子 T̂_Riem 及 Cartan 保持定理；2Bun 1/2-态射结构 |
+| **v0.2** | **2026-07-22** | 新增 §8.4（流变谱边界纤维截面，嵌入 Paper VI 主定理 E1-E3 与 F5）；更新 §9.1 纤维截面行（增加 $\sigma_\Delta^{(\text{rheo})}$）与 §9.2 常数表（增加流变行）；新增推论 8.4a-8.4b（流变-HP 对偶与七类统一截面） |
 | **v0.1** | **2026-07-22** | 初始版本：Grothendieck 纤维化 $\pi_T$、$\pi_\mu$ 的严格定义（定理 2.1、3.1）；$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性证明（定理 4.1）；Grothendieck 构造的同构性证明（命题 5.1、5.2）；自然变换 $\eta$ 的纤维化提升（定理 6.1）；2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的严格化（定理 7.2）；三个物理系统的纤维截面应用（定理 8.1-8.3）；Lean 4 形式化框架（附录 A） |

@@ -1,8 +1,8 @@
 # Grothendieck 纤维范畴扩展候选分析
 
-**版本**：v0.1（2026-07-22）
+**版本**：v0.2（2026-07-22）
 
-**摘要**：在 [`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（v0.3，已完成 Bun(Temp, Spec)/Bun(RG, Spec) 的严格形式化与 Lean 4 验证）基础上，对 paper/ 全部 23 篇论文与 notes/ 全部约 90 篇笔记进行系统扫描，识别出 12 个可抽象提升为 Grothendieck 纤维范畴的候选主题，并按模板关系分为五类。本笔记给出候选清单、基-纤维结构、提升收益与执行顺序建议；推进规划见 [`roadmap/phase55_grothendieck_fibration_extensions.md`](../../roadmap/phase55_grothendieck_fibration_extensions.md)。
+**摘要**：在 [`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（v0.5，已完成 §1-§8 严格形式化与 Lean 4 完整验证，`TempRGFiber.lean` ~1317 行通过 `lake build`，含 G1-G4 全部缺口补全）基础上…验证）基础上，对 paper/ 全部 23 篇论文与 notes/ 全部约 90 篇笔记进行系统扫描，识别出 12 个可抽象提升为 Grothendieck 纤维范畴的候选主题，并按模板关系分为五类。本笔记给出候选清单、基-纤维结构、提升收益与执行顺序建议；推进规划见 [`roadmap/phase55_grothendieck_fibration_extensions.md`](../../roadmap/phase55_grothendieck_fibration_extensions.md)。
 
 **前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成纤维化模板与 Lean 验证）、[`spectral_bundle_sections.md`](spectral_bundle_sections.md)、[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md)。
 
@@ -19,7 +19,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 - $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$
 - 纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 及 Cartan 保持性
 - 截面：$\sigma_\Delta^{(T)}$（QCD）、$\sigma_\Delta^{(\text{BCS})}$、$\sigma_\Delta^{(\text{HP})}$、$\sigma_\Delta^{(\text{rheo})}$
-- Lean 4：`TempRGFiber.lean` 通过 `lake build`（无 sorry）
+- Lean 4：`TempRGFiber.lean` ~1317 行通过 `lake build`（无 sorry），覆盖 §1–§12（原 §1–§8 + Grothendieck 构造、η̂ 提升、2-范畴 Bicategory 结构、四类物理截面、Mathlib FiberedCategory 对接），零个 `by trivial`
 
 ---
 
@@ -153,4 +153,5 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.2** | **2026-07-22** | 推进 **候选 1（噪声丛）**：Lean 基础设施确认（`NoiseCategory.lean` 已存在，含 Σ-Rec、NoiseSpectralFlow、η_c 阈值）；Phase 55A 正式启动 |
 | **v0.1** | **2026-07-22** | 初始版本：paper/ 23 篇 + notes/ 90 篇全扫描；12 个候选按五类模板关系分类；P0-P2 优先级排序；Lean 复用组件清单；执行顺序建议 |

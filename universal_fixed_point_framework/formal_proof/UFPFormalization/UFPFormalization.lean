@@ -46,4 +46,8 @@ import UFPFormalization.TestSpectralEquivalence
 import UFPFormalization.TestCategoryTheory
 import UFPFormalization.TestOperatorTheory
 import UFPFormalization.TempRGFiber
+import UFPFormalization.NoiseFiber
+import UFPFormalization.SignatureFiber
+import UFPFormalization.WeaveProductFiber
+import UFPFormalization.WeaveBCS
 import UFPFormalization.TestApplications

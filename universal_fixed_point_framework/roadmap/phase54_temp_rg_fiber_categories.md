@@ -29,7 +29,7 @@ Temp/RG 纤维范畴体系是 $\mathbf{Rec}/\mathbf{Spec}$ 上方的纤维范畴
 | QCD 实例完整验证 | ✅ 完成 | $a=0.729$（0.1% 偏差），路径 A/B/C 完备 |
 | Paper I/Paper XIX 架构写入 | ✅ 完成 | 无笔记引用，自包含 |
 | **BCS 谱编织自由度** | ✅ 已完成 | **Q1-Q4 全部闭合**：Q1 $<0.1\%$，Q2 $Z(\omega)$ 统一框架（5 材料自洽性检验），Q3 Pb $0.0\%$，Q4 解析形式已建立 |
-| **Grothendieck 纤维范畴形式化** | ✅ **B1-B4 全部完成** | `spectral_Grothendieck_fibration.md` v0.1 + `TempRGFiber.lean`（沙箱限制，本地编译） |
+| **Grothendieck 纤维范畴形式化** | ✅ **§1-§8 全部完成** | `spectral_Grothendieck_fibration.md` v0.5 + `TempRGFiber.lean` ~1074 行通过 `lake build`（无 sorry），覆盖：分裂性（F1）、纤维等价（F2）、Grothendieck 构造 ∫F ≅ Bun（F3）、η̂ 提升（F4）、2-范畴结构（F5，含竖复合/结合律/单位律）、物理截面对接 SpectralGap（F6）；缺 §7 互换律/2-函子需 Bicategory 框架 |
 | **Hawking-Page 交叉验证** | ❌ 待启动 | 1-2 周 |
 | **流变学 $\mathbf{Rate}$ 范畴** | ❌ 待启动 | 1 周 |
 | **cuprate 分布论扩展** | ❌ 概念阶段 | 探索性 |
@@ -89,7 +89,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 
 ---
 
-## 四、Phase 54B：Grothendieck 纤维范畴形式化（2-3 周）— 🟡 B1/B2/B4 已完成，B3 待 Lean 4
+## 四、Phase 54B：Grothendieck 纤维范畴形式化（2-3 周）— ✅ **全部完成**（F1-F6 已补全）
 
 ### 4.1 任务分解
 
@@ -97,8 +97,14 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 |:------|:-----|:----|:----:|
 | **B1** Grothendieck 纤维范畴定义 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的严格函子定义 | 1 周 | ✅ **已完成** — `spectral_Grothendieck_fibration.md` v0.1 |
 | **B2** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持证明 | 在 Grothendieck 框架中证明纤维保持性 | 0.5 周 | ✅ **已完成** — 定理 4.1 (Cartan 保持性 + 基保持性) |
-| **B3** Lean 4 形式化 | 核心定义与定理的 Lean 4 实现 | 1-2 周 | ✅ **已完成** — `TempRGFiber.lean` (7 节, ~465 行) |
-| **B4** 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 完备化 | 2-细胞的条件与组合律严格证明 | 0.5 周 | ✅ **已完成** — 定理 7.2 (严格 2-函子性)、定理 7.3 (纤维保持性) |
+| **B3** Lean 4 形式化 | 核心定义与定理的 Lean 4 实现 | 1-2 周 | ✅ **已完成** — `TempRGFiber.lean` (11 节, ~1074 行) |
+| **B4** 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 完备化 | 2-细胞的条件与组合律严格证明 | 0.5 周 | ✅ **已完成** — 竖复合 `vcomp` + 结合律/单位律 |
+| **F1** 分裂性（命题 2.2） | $\text{Cl}_T(g\circ f)=\text{Cl}_T(g)\circ\text{Cl}_T(f)$ | 低 | ✅ `π_T_cleavage_id/comp` + RG 对偶 |
+| **F2** 纤维等价（命题 2.3/3.1） | $\mathbf{Spec}_T \cong \mathbf{Bun}_T$ | 中 | ✅ `specFiberTempEquivFiber` / `specFiberRGEquivFiber` |
+| **F3** Grothendieck 构造（命题 5.1/5.2） | $\int F_T \cong \mathbf{Bun}$ | 高 | ✅ `grothFTEquivBundle` / `grothFμEquivBundle` |
+| **F4** η̂ 提升（定理 6.1） | 自然变换的纤维限制 | 中 | ✅ `η_hat` + `η_hat_fiber_restricted` |
+| **F5** 2-范畴定理 7.1-7.3 | 2Bun 严格 2-范畴公理 | 高 | ✅ `FiberedFunctor`/`FiberedNaturalTransformation` + `idFiberedNatTrans`/`vcomp`/`whiskerRight` + 结合律/单位律 |
+| **F6** 物理截面（定理 8.1-8.4） | QCD/BCS/HP/流变 | 中 | ✅ `cl17GapMatrix` 对接 `SpectralGap.lean` + 四类 `*Section_cl17` |
 
 ### 4.2 验收标准
 

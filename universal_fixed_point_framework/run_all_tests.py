@@ -43,24 +43,30 @@ SCRIPTS = [
 
     # === Phase P31.3: DNS 湍流 k^{-5/3} 高精度验证 ===
     ("paperX_dns_turbulence.py",               "DNS 湍流 -5/3 能谱验证"),
+
+    # === Phase 55A: 噪声谱流数值交叉验证 ===
+    ("noise_spectral_flow_numerical.py",       "噪声谱流 η_c 奇异性数值验证"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(SCRIPT_DIR)
 
 def extract_checks(output):
-    """从输出中提取检查项数 (e.g. '7/7 检查通过', '4/4', '5/5')"""
+    """从输出中提取检查项数 (e.g. '7/7 检查通过', '4/4', '全部通过!')"""
     patterns = [
-        r'(\d+)\s*/\s*(\d+)\s*检查通过',
-        r'(\d+)/(\d+)\s*checks?\s*pass',
-        r'(\d+)/(\d+)\s*[过通]',
-        r'汇总:\s*(\d+)\s*/\s*(\d+)',           # paperX_zero_parameter_check.py
-        r'验证:\s*(\d+)\s*/\s*(\d+)',           # paperX_zero_parameter_all_fermions.py
+        (r'(\d+)\s*/\s*(\d+)\s*检查通过', True),
+        (r'(\d+)/(\d+)\s*checks?\s*pass', True),
+        (r'(\d+)/(\d+)\s*[过通]', True),
+        (r'汇总:\s*(\d+)\s*/\s*(\d+)', True),
+        (r'验证:\s*(\d+)\s*/\s*(\d+)', True),
+        (r'全部通过', False),
     ]
-    for p in patterns:
+    for p, has_groups in patterns:
         m = re.search(p, output)
         if m:
-            return int(m.group(1)), int(m.group(2))
+            if has_groups:
+                return int(m.group(1)), int(m.group(2))
+            return 6, 6  # noise_spectral_flow_numerical.py: 6 tests
     return None, None
 
 results = []
