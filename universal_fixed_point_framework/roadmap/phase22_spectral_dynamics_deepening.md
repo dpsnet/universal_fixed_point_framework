@@ -1,7 +1,7 @@
 # Phase 22：谱动力学深化推进计划
 
 **状态**：🆕 新建
-**对应文档**：`notes/spectral_dynamics_deepening.md`
+**对应文档**：`notes/04_lorentz_gravity/spectral_dynamics_deepening.md`
 **前置依赖**：Phase 21（Paper V 谱动力学，19/19 完成）
 
 ---
@@ -20,15 +20,15 @@ D. 奇点谱消解
 
 | 任务 | 交付物 | 状态 |
 |------|--------|------|
-| P22.1 高阶范畴概念框架 | `notes/spectral_dynamics_deepening.md` §A | ✅ |
-| P22.2 非平衡谱热力学 | `notes/spectral_dynamics_deepening.md` §B | ✅ |
-| P22.3 黑洞视界谱动力学 | `notes/spectral_dynamics_deepening.md` §C | ✅ |
-| P22.4 奇点谱消解 | `notes/spectral_dynamics_deepening.md` §D | ✅ |
+| P22.1 高阶范畴概念框架 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §A | ✅ |
+| P22.2 非平衡谱热力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §B | ✅ |
+| P22.3 黑洞视界谱动力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §C | ✅ |
+| P22.4 奇点谱消解 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §D | ✅ |
 | P22.5 2-态射的谱流显式构造 | — | 🔲 |
 | P22.6 谱熵产生率数值验证 | `paper22_spectral_entropy.py`（ΔS=0.054>0，固定基熵增验证热力学箭头） | ✅ |
 | P22.7 视界谱数值模拟 (Kerr) | `paper22_horizon_spectrum.py`（T_H、S_BH匹配 0.00%、信息持守） | ✅ |
 | P22.8 量子反弹宇宙数值模型 | — | 🔲 |
-| P22.9 谱流体动力学 | `notes/spectral_dynamics_deepening.md` §F + `paper22_fluid_dynamics.py`（K41谱、N-S谱流方程、跨领域类比） | ✅ |
+| P22.9 谱流体动力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §F + `paper22_fluid_dynamics.py`（K41谱、N-S谱流方程、跨领域类比） | ✅ |
 
 ---
 

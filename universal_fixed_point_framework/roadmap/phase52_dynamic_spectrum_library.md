@@ -25,8 +25,8 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
 ### 现有理论基础
 
 - **谱引力子传播子**：✅ 已完成（`paperX_graviton_propagator.py`）
-- **谱 Feynman 规则**：✅ 已完成（`notes/spectral_feynman_rules.md`）
-- **谱路径积分**：✅ 已完成（`notes/spectral_path_integral.md`）
+- **谱 Feynman 规则**：✅ 已完成（`notes/00_foundations/spectral_feynman_rules.md`）
+- **谱路径积分**：✅ 已完成（`notes/00_foundations/spectral_path_integral.md`）
 - **谱重整化程序**：✅ 已完成（`paperX_spectral_renormalization.py`）
 - **普朗克尺度散射振幅**：🚧 进行中（`paperX_planck_scattering.py`）
 

@@ -1,6 +1,6 @@
 # Phase 1：元公理层形式化
 
-> 本阶段目标：在 [notes/rec_spec_definitions.md](../notes/rec_spec_definitions.md) 所定义的 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 基础上，严格构造谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，证明其为协变函子，并在合理条件下证明忠实性。本文件对应推进计划「第一阶段第 1–2 周」的交付物。
+> 本阶段目标：在 [notes/00_foundations/rec_spec_definitions.md](../notes/00_foundations/rec_spec_definitions.md) 所定义的 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 基础上，严格构造谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，证明其为协变函子，并在合理条件下证明忠实性。本文件对应推进计划「第一阶段第 1–2 周」的交付物。
 
 ---
 

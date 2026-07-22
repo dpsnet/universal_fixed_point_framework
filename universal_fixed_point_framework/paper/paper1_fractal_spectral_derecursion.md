@@ -45,6 +45,8 @@
 
 第 2 节建立递归系统范畴与谱范畴，构造谱去递归化函子 $D$（§2.8 包含方法论反思）；第 3 节推导全域不动点方程与谱对应自然等价（§3.7 新增跨领域函子相容性与隔离约束条件）；第 4 节扩展到连续谱与谱测度理论；第 5 节建立谱静默与高维不可见性理论；第 6 节建立 Clifford 值谱与纤维丛理论。原 §7（RKHS 收敛率、EFT 等价性框架、Kerr 应用、耗散扩展、纯数学定理 D-C/HD-D/TE-G-M）已移至伴生文件 `paper1_rkhs_and_applications.md`；原 §9（哲学与基础科学意义）已移至伴生文件 `paper1_philosophy.md`。第 8 节总结与开放问题。§1.4 阐明本框架与现有范畴动力系统文献的关系。附录、参考文献与版本变更记录见 `paper1_appendix.md`。
 
+**跨论文定位**：本文的 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架位于 UFPF 体系底层（递归系统 → 谱数据）。在其上方，Temp/RG 纤维范畴体系（Paper XIX §17）将温度参数空间 $\mathbf{Temp}$ 与 RG 标度参数空间 $\mathbf{RG}$ 构造为 $\mathbf{Spec}$ 上的纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$，通过谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 建立纤维保持对应。Temp/RG **不是** $\mathbf{Rec}$ 的子范畴（对象为实数参数而非递归系统），而是 $\mathbf{Rec}/\mathbf{Spec}$ 的纤维范畴扩展——参数化 $\mathbf{Rec}$ 对象如何接近 $\partial\mathbf{Rec}_D$ 边界。该体系与 Paper XIX 的范畴扩展（静态拓扑 $\mathbf{Rec}_{\text{id}}$、随机系统 $\Sigma$-$\mathbf{Rec}$）共同构成 UFPF 的完整上层架构，其整合详见后续论文。
+
 ### 1.4 与现有范畴动力系统文献的关系
 
 本框架的自创术语（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子等）可能使读者感到陌生。为帮助定位，本节梳理框架与现有文献的关键映射关系。
@@ -1411,18 +1413,19 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 ---
 
-**版本**：v2.44
+**版本**：v2.45
 
-**日期**：2026-07-21
+**日期**：2026-07-22
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 I（增强版 v2.44），分形谱去递归理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.40 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。v2.44 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明（`Function.iterate_succ_apply` 在 Mathlib 4.31 中的方向为 `f^[n+1] x = f^[n] (f x)`，原证明以反向预期构建，已重写为 `h_iterate_zero` 辅助引理 + `rw [h_ad_zero]` 方式）；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的完整定义与两个核心引理证明；(c) §5.7.6 第 3 项（连续静默度）添加指向 Paper XIX §16 方向三 Lean 形式化的交叉引用。
+《通用不动点范畴框架》系列论文 I（增强版 v2.45），分形谱去递归理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.40 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。v2.44 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的完整定义与两个核心引理证明；(c) §5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用。v2.45 (a) §1.3 新增跨论文定位段落，阐明 Temp/RG 纤维范畴体系与 $\mathbf{Rec}/\mathbf{Spec}$ 的架构关系（非子范畴，而是上方纤维范畴扩展）；(b) 版本号 v2.44 → v2.45。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.45 | 2026-07-22 | **(a) 架构定位更新**：§1.3 新增跨论文定位段落，阐明 Temp/RG 纤维范畴体系与 $\mathbf{Rec}/\mathbf{Spec}$ 的架构关系——Temp/RG 不是 $\mathbf{Rec}$ 的子范畴，而是上方的纤维范畴扩展，参数化 $\mathbf{Rec}$ 对象如何接近 $\partial\mathbf{Rec}_D$ 边界；同时引用 Paper XIX 的范畴扩展，定位三者共同构成 UFPF 完整上层架构；**(b)** 版本号 v2.44 → v2.45。 |
 | v2.44 | 2026-07-21 | **(a) 修复 `SpectralFlowHomotopy.lean` 归纳法证明**：`h_iter_ge_one` 类型错误——`Function.iterate_succ_apply` 在 Mathlib 4.31 中为 `f^[n+1] x = f^[n] (f x)`，原证明以反向方向构建，重写为 `h_iterate_zero` 辅助引理 + `rw [h_ad_zero]` 方式完成，谱流静默模块全量通过编译；**(b) 连续静默度 $\delta_{\text{silence}}$**：`Silence.lean` 新增 `frobeniusNorm`、`deltaSilence` 定义，`frobeniusNorm_eq_zero_iff` 与 `deltaSilence_eq_zero_iff` 已证明，`deltaSilence_bound` 待证；**(c) 跨论文引用更新**：§5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用；版本号 v2.43 → v2.44。 |
 | v2.43 | 2026-07-20 | **Phase 31.1 高阶 ∞-范畴 Lean 4 形式化骨架完成并通过编译**：修复六个模块（`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`）的类型一致性、命名空间冲突、矩阵乘法解析与 `noncomputable` 标记问题；修复 `HigherSpecCategory.lean` 中 `.matrix` → `.P` 的字段名不一致及 `specExchangeLaw` 参数错误；给 `SpecTwoMorphism` 与 `SpecInfMorphism` 添加 `@[ext]`；**全部模块通过 `lake build`**；开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"；同步更新版本号至 v2.43 及状态描述。 |
 | v2.42 | 2026-07-20 | **推进 Phase 31.1 高阶 ∞-范畴完整形式化**：在 Lean 4 中实现六个模块——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架）、`InfinityCategory.lean`（Spec_∞ 切空间与 Killing 场）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程的 ∞-同伦解释）；全部加入 `UFPFormalization.lean` 统一导入；**修复 Lean 4 工具链环境**（全局 `C:\Users\qinxi\.elan\settings.toml` 损坏导致 `lake build` 报错，已重写）；**开放问题 20 状态升级**为"部分解决，骨架已实现"；同步更新版本号至 v2.42 及状态描述。 |
