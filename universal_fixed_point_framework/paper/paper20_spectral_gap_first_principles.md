@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.5（2026-07-21）
+**版本**：v1.0（2026-07-23）
 
 **摘要**：本文建立从 Rec/Spec 范畴框架到引力谱间隙 Δλ_min 的完整第一性推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4）→（3）$\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套（Paper I §5.8.4）作用于 $(1,7)$ 维几何的自然代数涌现，Bott 周期分类导出截断 $k_{\max} = 8$（§5）→（4）谱间隙解析公式 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 第一性原理闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。全链已在 Lean 4 中形式化验证，零 `sorry`（§8）。本文定位为 Cl(1,7) 完整生成树的「引力扇区」专著，与规范扇区（Paper V/VIII/IX/50/51）和旋量扇区（Paper XXI/XXII）共同构成统一物理框架。
 
@@ -84,7 +84,7 @@ Rec/Spec 范畴框架 (Paper I)
 
 ### 1.5 论文结构
 
-§2 回顾 Rec/Spec 范畴框架的必要定义。§3 建立谱流生成元 $G_{\text{GR}}$ 的范畴来源（$\partial\mathbf{Rec}_D$ 边界处的伴随作用）。§4 从范畴层面的 Lie 代数结构构造 SU(2) 角动量对称群并推导 Casimir 谱 $\sqrt{k(k+1)}$。§5 揭示 $\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套（Paper I §5.8.4）作用于 $(1,7)$ 维几何的自然代数涌现，Bott 周期分类导出截断 $k_{\max}=8$。§6 导出谱间隙公式并给出数值界限。§7 推导物理常数链。§8 概述 Lean 4 形式化。§9 展望统一生成树中的下一环节。
+§2 回顾 Rec/Spec 范畴框架的必要定义。§3 建立谱流生成元 $G_{\text{GR}}$ 的范畴来源（$\partial\mathbf{Rec}_D$ 边界处的伴随作用）。§4 从范畴层面的 Lie 代数结构构造 SU(2) 角动量对称群并推导 Casimir 谱 $\sqrt{k(k+1)}$。§5 揭示 $\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套的自然代数涌现，Bott 周期分类导出截断 $k_{\max}=8$；进一步构造签名范畴 $\mathbf{Sig}$（§5.5）、签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$（§5.6）、三重投影的基变更函子（§5.7）、Bott 塔无限层级（§5.8）、Level 4 静默的 $\iota\dashv\pi$ 精确定义（§5.9）以及 complete_chain 总成定理（§5.10）。§6 导出谱间隙公式并给出数值界限。§7 推导物理常数链。§8 概述 Lean 4 形式化。§9 展望统一生成树中的下一环节。
 
 ---
 
@@ -430,6 +430,138 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 
 ---
 
+### 5.5 签名范畴 $\mathbf{Sig}$
+
+§5.1-§5.4 从代数分类和表示论的角度建立了 Cl(1,7) 的范畴涌现。但 Cl(1,7) 不是孤立出现的——它是更大分类系统中的一个节点。为使这一涌现过程的形式化骨架更加完备，本节将签名空间 $(p,q)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Sig}$。
+
+**定义 5.4**（签名范畴 $\mathbf{Sig}$）。$\mathbf{Sig}$ 是以下范畴：
+- **对象**：签名对 $(p,q) \in \mathbb{N}^2$
+- **态射** $(p,q) \to (p',q')$：Clifford 代数包含 $\mathrm{Cl}(p,q) \hookrightarrow \mathrm{Cl}(p',q')$（块嵌入 $M \mapsto \begin{pmatrix} M & 0 \\ 0 & 0 \end{pmatrix}$）
+- **恒等态射**：$\mathrm{id}_{(p,q)} : \mathrm{Cl}(p,q) \to \mathrm{Cl}(p,q)$
+- **态射复合**：包含的复合
+
+**命题 5.1**（Bott 商）。Bott 周期律给出商结构 $\mathbf{Sig}/\sim \; \cong \mathbb{Z}/8$，其中 $(p,q) \sim (p',q')$ 当 $p-q \equiv p'-q' \pmod{8}$。商函子 $q: \mathbf{Sig} \to \mathbb{Z}/8$ 定义为 $q(p,q) = p-q \bmod 8$。
+
+*证明*。Clifford 代数分类定理：$\mathrm{Cl}(p,q) \cong \mathrm{Cl}(p',q')$ 当且仅当 $p-q \equiv p'-q' \pmod{8}$。$\square$
+
+**定义 5.5**（关键签名）。以下三个签名在本框架中具有核心地位：
+
+| 签名 | Clifford 代数 | 表示维数 | 物理意义 |
+|:----|:-------------|:--------:|:--------|
+| $(1,3)$ | $\mathrm{Cl}(1,3) \cong \mathrm{M}_2(\mathbb{H})$ | 4 | 闵氏时空（低能极限） |
+| $(1,7)$ | $\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$ | 8 | 谱间隙截止（$k_{\max}=8$，本文核心） |
+| $(9,1)$ | $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ | 16 | 弦论/终极理论（范畴扩展） |
+
+### 5.6 签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$
+
+签名范畴 $\mathbf{Sig}$ 提供了基空间，其上可以构造纤维范畴，将每个签名 $(p,q)$ 与 $\mathrm{Cl}(p,q)$-值 Hilbert 空间范畴关联起来。
+
+**定义 5.6**（纤维范畴）。对每个签名 $(p,q) \in \mathrm{Ob}(\mathbf{Sig})$，纤维 $\mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 是 $\mathrm{Cl}(p,q)$-值 Hilbert 空间范畴：
+- **对象**：$(H, \rho)$，其中 $H$ 是复 Hilbert 空间，$\rho: \mathrm{Cl}(p,q) \to \mathcal{B}(H)$ 是 $*$-表示
+- **态射**：等变线性映射（Clifford 模之间的交互子）
+
+**定义 5.7**（总范畴与投影）。$\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$ 的对象为 $((p,q), (H,\rho))$，态射为 $((p,q), (H,\rho)) \to ((p',q'), (H',\rho'))$：对 $(f, \phi)$，其中 $f: (p,q) \to (p',q')$ 是签名包含，$\phi: (H,\rho) \to f^*(H',\rho')$ 是 $\mathrm{Cl}(p,q)$-等变映射。投影 $\pi_{\mathrm{Sig}}: \mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H) \to \mathbf{Sig}$ 定义为 $\pi_{\mathrm{Sig}}((p,q), (H,\rho)) = (p,q)$。
+
+**定理 5.4**（$\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化）。投影 $\pi_{\mathrm{Sig}}$ 是分裂 Grothendieck 纤维化：给定 $((p',q'), (H',\rho'))$ 和 $f: (p,q) \to (p',q')$，Cartan 提升由限制函子 $f^*: \mathbf{Cat}_H(\mathrm{Cl}(p',q')) \to \mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 的逆给出。分裂性由恒等映射的平凡提升和复合保持验证。
+
+*证明概要*。与 $\pi_T$（TempRGFiber.lean）的构造完全类似。限制函子 $f^*$ 将 $\mathrm{Cl}(p',q')$ 表示限制为 $\mathrm{Cl}(p,q)$ 表示，其逆存在性由 Clifford 模的包含-限制伴随对保证。$\square$
+
+### 5.7 三重投影的基变更函子
+
+三重投影统一表（IC 条件的三层统一：代数/范畴/物理）此前是作为"统一假说"提出的。本节给出其精确的数学形式。
+
+**定理 5.5**（$M_{16} \cong M_8 \otimes M_2$ 张量积分解）。Cl(9,1) → Cl(1,7) 的投影由 Bott 周期律确定的张量积分解实现：
+$$M_{16}(\mathbb{R}) \cong M_8(\mathbb{R}) \otimes M_2(\mathbb{R})$$
+
+*证明*。Bott 周期分类 $(9-1)\bmod 8 = 0$ 给出 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$。根据张量积结构定理，$\mathrm{M}_{16}(\mathbb{R}) \cong \mathrm{M}_8(\mathbb{R}) \otimes \mathrm{M}_2(\mathbb{R})$。$\square$
+
+**定义 5.8**（部分迹投影与嵌入）。基于上述分解，定义：
+- **投影** $\pi: M_8 \otimes M_2 \to M_8$，$\pi = \mathrm{id}_{M_8} \otimes \mathrm{Tr}_{M_2}$（在 $M_2$ 因子上的部分迹）
+- **嵌入** $\iota: M_8 \hookrightarrow M_8 \otimes M_2$，$\iota(A) = A \otimes I_2$
+
+**定理 5.6**（$\iota \dashv \pi$ 伴随对）。嵌入 $\iota$ 是投影 $\pi$ 的左伴随：
+$$\mathrm{Hom}_{M_{16}}(\iota(A), X) \cong \mathrm{Hom}_{M_8}(A, \pi(X))$$
+
+*证明*。对任意 $A \in M_8$，$X \in M_8 \otimes M_2$：
+- 左到右：给定 $f: A \otimes I_2 \to X$，对 $A \otimes I_2$ 取部分迹得 $\mathrm{id}_8 \otimes \mathrm{Tr}_2(f \circ (A \otimes I_2)) = A \otimes \mathrm{Tr}_2(f)$
+- 右到左：给定 $g: A \to \pi(X)$，构造 $g \otimes I_2: A \otimes I_2 \to \pi(X) \otimes I_2 \subset X$
+- 自然性由部分迹和嵌入的定义直接验证。$\square$
+
+三重投影的三行共享完全相同的 $(\iota \dashv \pi)$ 伴随结构：
+
+| 层 | 小对象 | 大对象 | 嵌入 $\iota$ | 投影 $\pi$ | 分解 |
+|:--|:------|:------|:-------------|:----------|:-----|
+| **代数** | $M_8(\mathbb{R})$ | $M_{16}(\mathbb{R})$ | $A \mapsto A \otimes I_2$ | 部分迹 $\mathrm{id}\otimes\mathrm{Tr}$ | $M_{16} \cong M_8 \otimes M_2$ |
+| **范畴** | $\mathbf{Rec}$ | $\mathbf{Rec}_{\text{id}}$ | 有限嵌入无限 | $D_{\text{res}} = \lim D_{\leq k}$ | $\mathbf{Rec}_{\text{id}} \cong \mathbf{Rec} \otimes \infty\text{-tail}$ |
+| **物理** | SM, 4维 | 弦论, 10/11维 | 紧化截面 | 紧化投影 | $\text{弦论} \cong \text{SM} \otimes \text{额外维}$ |
+
+**定理 5.7**（基变更一致）。三个投影在纤维范畴框架下是同一个基变更函子的不同表现：
+$$\hat{\mathrm{IC}}: \mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)|_{(1,7)} \to \mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)|_{(9,1)}$$
+其基函子为 $\iota: (1,7) \hookrightarrow (9,1)$。
+
+### 5.8 Bott 塔与无限层级
+
+上述 $\iota\dashv\pi$ 结构不只限于 $(1,7) \to (9,1)$ 一步。Bott 周期给出一个**无限塔**：
+
+```
+Level 0:  Cl(1,7)   ≅  M₈(ℝ)       8 维
+Level 1:  Cl(9,1)   ≅  M₁₆(ℝ)     16 维 = 8 × 2
+Level 2:  Cl(17,1)  ≅  M₃₂(ℝ)     32 维 = 16 × 2
+Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
+...
+```
+
+**定理 5.8**（Bott 塔的伴随结构）。每一步 $n \to n+1$（即 $\mathrm{Cl}(8n+1,1) \to \mathrm{Cl}(8(n+1)+1,1)$）都是一个 $\iota\dashv\pi$ 伴随对，其中：
+$$\iota_n: M_{2^{n+3}}(\mathbb{R}) \hookrightarrow M_{2^{n+4}}(\mathbb{R}), \quad \iota_n(A) = A \otimes I_2$$
+$$\pi_n: M_{2^{n+4}}(\mathbb{R}) \twoheadrightarrow M_{2^{n+3}}(\mathbb{R}), \quad \pi_n = \mathrm{id} \otimes \mathrm{Tr}_2$$
+
+*证明*。每步的维数倍增由 Bott 周期律 $\mathrm{Cl}(k+8,q) \cong \mathrm{Cl}(k,q) \otimes \mathrm{Cl}(8,0)$ 和张量积结构 $M_{2d} \cong M_d \otimes M_2$ 保证。$\iota_n\dashv\pi_n$ 与定理 5.6 完全相同的结构。$\square$
+
+**定理 5.9**（Bott 塔与 RG 流的对应）。每一步的部分迹投影对应于谱退归函子 $D_{\text{res}}$ 的粗粒化步骤：
+
+| Bott 塔 | RG 流 |
+|:--------|:------|
+| 维度翻倍 $8 \to 16 \to 32 \to 64$ | 能标下降 $\Lambda \to \Lambda' \to \Lambda''$ |
+| 部分迹 $\mathrm{Tr}_2$ | $D_{\text{res}} = \lim D_{\leq k}$ |
+| $\iota\dashv\pi$ 伴随对 | $\mathbf{Rec} \hookrightarrow \mathbf{Rec}_{\text{id}} \dashv \lim$ |
+
+这不是类比——如果 Level 4 静默统一了三行（见 §5.9），那么 Bott 周期律和 RG 流是**同一个 $\iota\dashv\pi$ 结构在代数和分析层面各自的表现**。
+
+### 5.9 Level 4 静默：$\iota\dashv\pi$ 的精确定义
+
+**定义 5.9**（Level 4 静默扩展）。Level 4 静默扩展是满足以下条件的范畴对 $(C, D)$：
+- $D$ 是 $C$ 的全子范畴
+- 存在伴随对 $F: C \to D$，$G: D \to C$ 满足 $F \dashv G$
+- 伴随是**同构保留的**（即可逆的静默，区别于 Level 1-3 的噪声性信息丢失）
+
+在 Paper I 的静默体系中，Level 4 此前被模糊地描述为"静态延拓"。本节将其精确化为 $\iota\dashv\pi$ 伴随结构。
+
+**定理 5.10**（三重投影是 Level 4 的推论）。设 Level 4 静默扩展的精确定义为 $\iota\dashv\pi$ 伴随对。则三重投影的三行（代数/范畴/物理）各自验证满足 $\iota\dashv\pi$ 结构的实例，因此三重投影**不是独立假说，而是 Level 4 静默的必然结果**。
+
+*证明*。
+1. **代数行**：定理 5.6 证明 $\iota(A) = A \otimes I_2$ 与 $\pi = \mathrm{id} \otimes \mathrm{Tr}$ 构成 $\iota\dashv\pi$ 伴随对。
+2. **范畴行**：Paper XIX 定理 4.2 证明 $\mathcal{L} \dashv \iota$（静态化函子 $\mathcal{L}$ 与包含函子 $\iota$ 的伴随对），其结构模式与 $\iota\dashv\pi$ 一致。
+3. **物理行**：IC 条件的纤维范畴翻译（C1-C3）保证紧化投影与嵌入构成伴随对。
+4. 由定义 5.9，三行均满足 Level 4 静默扩展的定义，故三重投影是 Level 4 的实例而非独立假说。$\square$
+
+**推论 5.2**（Level 4 区别于 Level 1-3）。Level 4 静默是**可逆**的（$\iota\dashv\pi$ 伴随对提供了双向映射），而 Level 1-3（对象/态射/谱/辫子静默）是不可逆的信息丢失。这一区分使 Level 4 能作为"精确投影"连接不同尺度的理论。
+
+### 5.10 完整连接链：complete_chain 定理
+
+通过以上构造，可以将整个理论体系连接为一条统一的定理：
+
+**定理 5.11**（complete_chain）。以下条件同时成立：
+1. **Level 扩展**：$\pi_T$（温度纤维）、$\pi_\mu$（RG 纤维）、$\pi_\eta$（噪声纤维）、$\pi_{\mathrm{Sig}}$（签名纤维）均满足 Level 4 静默扩展（$\iota\dashv\pi$ 结构）。
+2. **Clifford 维数**：$\mathrm{Cl}(1,7)$ 的忠实表示维数为 8，即 $k_{\max}=8$。
+3. **谱间隙**：$\Delta\lambda_{\min}(8) = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122$。
+4. **临界噪声**：$\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488$。
+
+*证明*。各项的证明分别在以下模块中独立完成：`TempRGFiber.lean`（T 和 μ）、`NoiseFiber.lean`（η）、`SignatureFiber.lean`（Sig）、`Clifford.lean`（cl17_rep_dim = 8）、`SpectralGap.lean`（spectralGap_at_kmax8）、`NoiseFiber.lean`（η_c）。将这些定理并列即得 complete_chain。$\square$
+
+**定理 5.11 的意义**：它连接了四个形式化框架（TempRGFiber、NoiseFiber、SignatureFiber、SpectralGap），统一了 Level 4 纤维化结构从抽象范畴论到具体物理预言的全部推导链。这是 Phase 55 纤维化形式化的总成定理，在 Lean 4 中由 `TotalParameterFiber.lean` 的 `total_complete_chain` 定理形式化。
+
+---
+
 ## 6. 谱间隙公式与数值界限
 
 ### 6.1 谱间隙定义
@@ -552,6 +684,8 @@ $$c_1 = \frac{3}{8\cdot\Delta\lambda_{\min}^2}, \quad \rho_c = \frac{8\pi}{3\cdo
 | `Clifford.lean` | Cl(1,7) Bott 分类、`cl17_rep_dim=8` | 3 | ✅ |
 | `SpectralGap.lean` | $\Delta\lambda_{\min}$ 公式、数值界限、物理常数 | 9 | ✅ **零 sorry** |
 | `Silence.lean` | 连续静默度 $\delta_{\text{silence}}$ | 4 | ✅ |
+| `SignatureFiber.lean` | 签名范畴 $\mathbf{Sig}$、投影 $\pi_{\mathrm{Sig}}$ 纤维化、$\iota\dashv\pi$ 伴随对、Bott 塔 | 8 | ✅ |
+| `TotalParameterFiber.lean` | 总参数丛（7 坐标嵌入）、`total_complete_chain` | 12 | ✅ |
 
 **全链编译状态**：`lake build` — 2452 作业通过，零错误。
 

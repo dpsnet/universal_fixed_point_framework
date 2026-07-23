@@ -382,30 +382,31 @@ noncomputable def forgetSpin : SpinPreservingKerrObj ⥤ KerrObj where
   map_id X := rfl
   map_comp f g := rfl
 
+/-- Spin-preserving spectral Kerr bundle: a spectral bundle whose
+    base morphisms are restricted to spin-preserving ones (r_a = r_M). -/
+structure SpinPreservingSpectralBundle where
+  bundle : SpectralBundleKerr
+
+instance spCat : Category SpinPreservingSpectralBundle where
+  Hom X Y := { f : BundleKerrHom X.bundle Y.bundle // f.baseMap.r_a = f.baseMap.r_M }
+  id X := ⟨𝟙 X.bundle, by simp⟩
+  comp f g := ⟨f.1 ≫ g.1, by
+    have hf : f.1.baseMap.r_a = f.1.baseMap.r_M := f.2
+    have hg : g.1.baseMap.r_a = g.1.baseMap.r_M := g.2
+    simp [hf, hg]⟩
+  id_comp _ := by ext; simp
+  comp_id _ := by ext; simp
+  assoc _ _ _ := by ext; simp
+
 /-- The fibered functor Ĥ : Bun(Kerr, Spec) → Bun(Temp, Spec) on the
-    spin-preserving subcategory. Maps Kerr spectral gap → temperature via T_H = gap/(2π).
-    The base functor is H_functor_spin. -/
-noncomputable def H_hat_spin : SpectralBundleKerr ⥤ SpectralBundleTemp where
+    spin-preserving subcategory. Maps Kerr spectral gap → temperature via T_H = gap/(2π). -/
+noncomputable def H_hat_spin : SpinPreservingSpectralBundle ⥤ SpectralBundleTemp where
   obj X :=
-    { base := H_functor_spin.obj ⟨X.base⟩
-      fiberData := { n := 1, A := !![X.fiberData.gap] }
+    { base := H_functor_spin.obj ⟨X.bundle.base⟩
+      fiberData := { n := 1, A := !![X.bundle.fiberData.gap] }
     }
   map f :=
-    { baseMap := H_functor_spin.map ⟨f.baseMap, by
-        -- H_hat_spin is defined on the full SpectralBundleKerr but restricts
-        -- the base map to SpinPreservingKerrHom. This means the functor is
-        -- only Cartesian-preserving when f.baseMap is spin-preserving.
-        -- In the finite prototype, this is always true for physically relevant
-        -- Kerr scaling morphisms.
-        exact (by
-          -- The spin-preserving condition r_a = r_M must hold for the base map.
-          -- We assert it as a property of the Kerr morphism.
-          have : f.baseMap.r_a = f.baseMap.r_M := by
-            -- In general, this is not provable. The functor is defined on
-            -- the subcategory where this holds. For arbitrary Kerr morphisms,
-            -- base map is treated as identity-type (same spin parameter).
-            sorry
-          exact this)⟩
+    { baseMap := H_functor_spin.map ⟨f.1.baseMap, f.2⟩
       fiberMap := 1
       commut := by simp
     }

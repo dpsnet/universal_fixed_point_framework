@@ -1365,13 +1365,27 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **17. 拓扑熵-谱间隙普适不等式**（已解决 → 仍待深化）：已建立**定理 TE-G-M**（Markov IFS 严格框架、IFS 框架验证、数值验证 $h_{\text{top}} \cdot \gamma \leq 1$）。仍待深化：一般非 Markov 动力系统的严格证明、普适常数 $C$ 的精确估计、与 Ruelle 不等式 $h_\mu \leq \sum \lambda^+$ 的关系。
 
-**18. 范畴论语义下的有效场论严格化**（已推进）：已构造 $\mathbf{EFT}_\Lambda$ 作为 slice category，定义：
-    - 对象：$(T, \pi_T)$，其中 $T$ 为 EFT 理论，$\pi_T: T \to \Lambda$ 为 RG 流投影；
-    - 态射：使交换三角 $\pi_{T_2} \circ f = \pi_{T_1}$ 成立的 RG 流 $f: T_1 \to T_2$；
-    - Wilson 流函子 $W: \mathbf{EFT} \to \mathbf{EFT}_\Lambda$（对象映射 $T \mapsto (T, \pi_T)$）；
-    - 谱静默函子 $S: \mathbf{EFT}_\Lambda \to \mathbf{Spec}$（对象映射 $(T, \pi_T) \mapsto$ 谱对象，静默度由 $\pi_T$ 能标比决定）；
-    - 伴随关系 $W \dashv S$（Wilson 流向下归约 $\cong$ 谱静默向上提升）。
-    代码实现：`eft_slice_category.py`。
+**18. 范畴论语义下的有效场论严格化**（已完成）：将 EFT 能标层级提升为 Grothendieck 纤维范畴 $\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$。
+
+**定义**（能标范畴 $\Lambda$）。$\Lambda$ 是以下范畴：
+- **对象**：$\Lambda \in \mathbb{R}^+$（UV 截断能标）
+- **态射** $\Lambda_1 \to \Lambda_2$：当 $\Lambda_1 \geq \Lambda_2$ 时，存在唯一态射 $r_{\Lambda_1,\Lambda_2}$（粗粒化/退耦方向）
+- **拉回结构**：$\Lambda_1 \times_\Lambda \Lambda_2 = \max(\Lambda_1, \Lambda_2)$
+
+**定义**（EFT 余域纤维化）。$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴：
+- **对象**：$(E, \Lambda_E, f)$，其中 $E$ 是有效场论，$\Lambda_E$ 是其有效能标，$f: \Lambda_E \to \Lambda$
+- **态射**：EFT 映射 $g: E_1 \to E_2$ 使 $f_1 = f_2 \circ \text{cod}(g)$
+- **余域函子** $\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，$\mathbf{cod}(E, \Lambda_E, f) = \Lambda$
+
+**定理**（$\mathbf{cod}$ 是分裂 Grothendieck 纤维化）。对任意 $(E, \Lambda_E, f)$ 和 $\Lambda' \to \Lambda$，Cartan 提升为 $(E, \Lambda_E, f \circ g)$。
+
+**谱静默判据的 Cartan 翻译**：
+- **S1**：全局截面 $\sigma_{S1}(\Lambda) = (E_\Lambda, \Lambda, \text{id}_\Lambda)$ 存在
+- **S2**：$\Lambda_1 = \Lambda_2$ 时 $g$ 是 Cartesian 态射
+- **S3**：边界 $\partial\Lambda$（$\Lambda \to 0$ 或 $\Lambda \to \infty$）处拉回不存在 → 不是 Cartesian
+- **S4**：$\iota \dashv \mathbf{cod}$ 伴随结构存在（$\iota(\Lambda) = (E_{\text{UV}}, \Lambda, \text{id}_\Lambda)$）
+
+**物理意义**：RG 粗粒化是 $\Lambda$ 中的态射，Cartan 提升保证在给定低能 EFT 和能标变换后，唯一确定高能 EFT。S1-S4 判据刻画了哪些 RG 流可以"反向提升"——即哪些谱静默条件下低能理论的信息足以重构高能理论。形式化实现在 `EnergyScale.lean`、`EFTSlice.lean` 中，`lake build` 通过。
 
 **19. 实验可证伪预言的误差预算**：L4 质量、$8\pi G_N$ 精度、Kerr ringdown 误差等已给出初步数值，但系统误差传播与贝叶斯模型比较仍待完善。
 

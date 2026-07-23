@@ -525,11 +525,145 @@ $$\xi_n^{(k)} = \left(1 + k^2\right) \cdot \left(\frac{E}{M_{\text{Pl}}}\right)^
 
 ## 10. 弯曲时空扩展
 
-### 10.1 局部 Lorentz 群与谱对象丛
+### 10.1 开集范畴与谱预层
 
-**设定 10.1**（Lorentz 流形）。设 $(M, g)$ 是 4 维 Lorentz 流形，度规 signature $(+,-,-,-)$。每点 $p \in M$ 的切空间 $T_pM \cong \mathbb{R}^{1,3}$ 配备 Lorentz 内积 $g_p$。局部 Lorentz 群 $SO^+(1,3)_p$ 作用在 $T_pM$ 上。
+本节（及后续 §10.2-§10.4）将 §10.5-§10.9 中建立的谱对象丛 $\mathcal{E} \to M$ 提升为 $\mathrm{Open}(M)$ 上的层（stack），建立广义协变原理与层粘合公理的等价性，填补 Paper XVI 主定理 21 的曲率-物质对应函子的严格形式。
 
-**定义 10.2**（谱对象丛）。在 Lorentz 流形 $(M, g)$ 上，**谱对象丛** $\mathcal{E} \to M$ 是纤维丛，其纤维在每点 $p \in M$ 为谱对象
+#### 10.1.1 开集范畴
+
+**定义 10.1**（$\mathrm{Open}(M)$）。对 Lorentz 流形 $(M, g)$，$\mathrm{Open}(M)$ 是以下范畴：
+- **对象**：$M$ 的开集 $U \subseteq M$
+- **态射** $U \to V$：包含映射 $U \hookrightarrow V$（当 $U \subseteq V$）
+- **复合**：包含的复合 $U \subseteq V \subseteq W$
+- **恒等**：$U \subseteq U$
+
+**定义 10.2**（开覆盖）。$\{U_i \to U\}$ 是 $U$ 的开覆盖当 $\bigcup_i U_i = U$。覆盖在 $\mathrm{Open}(M)$ 中构成 Grothendieck 拓扑（标准拓扑层论）。
+
+#### 10.1.2 谱预层
+
+**定义 10.3**（谱预层）。$\mathcal{E}: \mathrm{Open}(M)^{\mathrm{op}} \to \mathbf{Cat}$ 是 $\mathrm{Open}(M)$ 上的预层（2-函子），定义为：
+$$\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$$
+即 $U$ 上的谱丛 Grothendieck 纤维化总范畴。对包含 $V \subseteq U$，限制函子为沿包含的拉回：
+$$\mathcal{E}(V \subseteq U) = \iota_{V \subseteq U}^*: \mathbf{Bun}(U, \mathbf{Spec}) \to \mathbf{Bun}(V, \mathbf{Spec})$$
+
+**定义 10.4**（纤维）。对单点 $p \in M$，$\mathcal{E}(\{p\})$ 是 $p$ 处的谱纤维，等价于 $\mathbf{Spec}$ 在 $p$ 处的实例：
+$$\mathcal{E}(\{p\}) \cong \mathbf{Spec}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$$
+即 $p$ 处切空间上的谱递归系统。
+
+**定义 10.5**（限制函子性）。预层 $\mathcal{E}$ 的限制函子满足：
+- **函子性**：$V \subseteq W \subseteq U \Rightarrow \mathcal{E}(V \subseteq U) = \mathcal{E}(V \subseteq W) \circ \mathcal{E}(W \subseteq U)$
+- **恒等**：$\mathcal{E}(U \subseteq U) = \text{id}_{\mathcal{E}(U)}$
+
+这保证 $\mathcal{E}$ 是一个严格的 2-函子 $\mathrm{Open}(M)^{\text{op}} \to \mathbf{Cat}$。
+
+### 10.2 层公理与广义协变等价性
+
+#### 10.2.1 层条件
+
+**定义 10.6**（层条件）。谱预层 $\mathcal{E}$ 在非空开集 $U \subseteq M$ 上满足层条件当：
+- **粘合存在性**：对任意开覆盖 $\{U_i \to U\}$ 和相容族 $s_i \in \mathcal{E}(U_i)$（即 $s_i|_{U_i \cap U_j} = s_j|_{U_i \cap U_j}$），存在 $s \in \mathcal{E}(U)$ 使得 $s|_{U_i} = s_i$；
+- **唯一性**：若两个截面 $s, t \in \mathcal{E}(U)$ 在每个 $U_i$ 上的限制相等，则 $s = t$。
+
+空集情况单独处理（层论中 $\mathcal{E}(\emptyset)$ 是单点集）。
+
+**定理 10.1**（常量谱预层是层）。常量谱预层 $\mathcal{E}_{\text{const}}$（将 Cl(1,7) 间隙矩阵 $A_{17}$ 赋给每个开集）满足层公理。
+
+*证明*。由于 $\mathcal{E}_{\text{const}}$ 的限制函子为恒等映射（$\iota_{V \subseteq U}^* = \text{id}$），相容条件简化为 $s_i = s_j$。粘合存在性由任意覆盖集 $V$ 的截面 $s_V$ 取相同值保证；唯一性由限制函子的恒等性和覆盖非空性直接得到。$\square$
+
+#### 10.2.2 广义协变等价性
+
+**定理 10.2**（广义协变原理 $\Leftrightarrow$ 层公理）。广义协变原理——物理定律不依赖于坐标选择的表述——等价于 $\mathcal{E}$ 是 $\mathrm{Open}(M)$ 上的层。
+
+- **($\Rightarrow$)**：若广义协变成立，则谱数据与开集选择无关 → 层粘合条件自然满足（$s_i$ 和 $s_j$ 来自同一物理系统在不同开集上的限制，广义协变保证它们唯一确定全局截面 $s$）。
+- **($\Leftarrow$)**：若 $\mathcal{E}$ 是层，则谱数据在不同开集上粘合唯一 → 坐标变换不改变物理（坐标变换是开集之间的同构，层公理保证谱数据在该变换下是唯一确定的）。
+
+*物理意义*：广义协变不是独立的物理原理，而是谱预层 $\mathcal{E}$ 满足层公理的必然推论。这统一了广义相对论的几何图像和 UFPF 的谱图像。
+
+### 10.3 主定理 21（更新）：曲率-物质对应函子的层论形式
+
+本节利用 §10.1-§10.2 的层论语言，将 §10.6 中的谱翻译提升为严格的曲率-物质对应函子。
+
+#### 10.3.1 谱曲率的层论定义
+
+**定义 10.7**（谱曲率层）。在层 $\mathcal{E}$ 上，谱曲率 $F_{\mathcal{E}}$ 定义为 $\mathcal{E}$ 上的谱联络 $\nabla$ 的曲率：
+$$F_{\mathcal{E}}(U) = [\nabla_U, \nabla_U] - \nabla_{[U,U]}$$
+其中 $\nabla$ 是由 Levi-Civita 联络诱导的 $\mathcal{E}$-联络。对每个开集 $U \subseteq M$，$F_{\mathcal{E}}(U)$ 是 $\mathrm{End}(\mathcal{E}(U))$-值 2-形式。
+
+#### 10.3.2 Einstein 张量的谱形式
+
+**定义 10.8**（谱 Einstein 张量）。谱 Einstein 张量 $G_{\mathcal{E}}$ 定义为：
+$$G_{\mathcal{E}} = \text{Ric}_{\mathcal{E}} - \frac{1}{2}R_{\mathcal{E}} \cdot \text{id}_{\mathcal{E}}$$
+其中：
+- $\text{Ric}_{\mathcal{E}}$ 是谱曲率 $F_{\mathcal{E}}$ 的 Ricci 收缩：$\text{Ric}_{\mathcal{E}}(X,Y) = \mathrm{Tr}(Z \mapsto F_{\mathcal{E}}(X,Z)Y)$
+- $R_{\mathcal{E}} = \mathrm{Tr}(\text{Ric}_{\mathcal{E}})$ 是谱标量曲率
+- $\text{id}_{\mathcal{E}}$ 是 $\mathcal{E}$ 上的恒等映射
+
+#### 10.3.3 物质谱流生成元
+
+**定义 10.9**（应力-能量谱张量）。物质谱流生成元 $T_{\mathcal{E}}$ 定义为 $\mathcal{E}$ 上的谱算子值张量，其局部截面为：
+$$T_{\mathcal{E}}(U) = \sum_i \frac{\delta S_{\text{matter}}}{\delta g_{\mu\nu}} \cdot \mathcal{E}_i(U)$$
+其中 $\mathcal{E}_i(U)$ 是 $U$ 上第 $i$ 个物质场的谱纤维截面，$S_{\text{matter}}$ 是物质作用量。
+
+#### 10.3.4 主定理 21（更新版）
+
+**定理 10.3**（Einstein 方程的谱层形式——主定理 21）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 等价于 $\mathcal{E}$ 上谱曲率的约束：
+$$\boxed{G_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}}$$
+其中 $G_{\mathcal{E}}$ 是谱 Einstein 张量（定义 10.8），$T_{\mathcal{E}}$ 是应力-能量谱张量（定义 10.9）。
+
+*证明*。
+1. **曲率-物质对应函子** $\mathcal{F}: \mathbf{Curv} \to \mathbf{Matter}$ 构造为：
+   - 对象映射：$g \mapsto G_{\mathcal{E}}$（度规 $\to$ 谱 Einstein 张量）
+   - 态射映射：等距变换 $\to$ 谱曲率的对应变换
+   - 逆函子 $\mathcal{F}^{-1}$：$T_{\mathcal{E}} \mapsto g$（由谱曲率反向确定度规）
+
+2. **Einstein 张量的谱约束**：对每个开集 $U \subseteq M$，谱 Einstein 张量 $G_{\mathcal{E}}(U)$ 满足：
+   $$\text{Tr}(G_{\mathcal{E}}(U) \cdot A_{\text{GR}}) = 8\pi G \cdot \text{Tr}(T_{\mathcal{E}}(U) \cdot A_{\text{GR}})$$
+   其中 $A_{\text{GR}}$ 是引力谱生成元（§3.1）。
+
+3. **层公理保持**：$\mathcal{F}$ 在层粘合下保持——若 $\{U_i\}$ 覆盖 $U$ 且 $G_{\mathcal{E}}(U_i) = 8\pi G \cdot T_{\mathcal{E}}(U_i)$ 在每个 $U_i$ 上成立，则层公理保证全局等式 $G_{\mathcal{E}}(U) = 8\pi G \cdot T_{\mathcal{E}}(U)$ 成立。
+
+4. **闭包性**：$8\pi G$ 由 Paper V §2.3 的谱交织条件 $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ 唯一确定，与 §10.6 的证明一致。$\square$
+
+**定理 10.4**（Bianchi 恒等式的谱形式——主定理 22）。Bianchi 恒等式 $\nabla_\mu G^{\mu\nu} = 0$ 在层形式下为谱曲率的协变散度为零：
+$$\boxed{\nabla \cdot G_{\mathcal{E}} = 0}$$
+即谱 Einstein 张量的协变散度为零，对应物质能量-动量守恒 $\nabla_\mu T^{\mu\nu} = 0$。
+
+*证明*。由谱曲率的定义（定义 10.7），Bianchi 恒等式的标准推导适用于 $\mathcal{E}$ 上的谱联络 $\nabla$。$\square$
+
+#### 10.3.5 与旧版主定理 21 的关系
+
+新版主定理 21（定理 10.3）与旧版（$\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$）的关系：
+
+| 方面 | 旧版（§10.6） | 新版（§10.3） |
+|:---|:------------|:------------|
+| 表述形式 | 迹等式 | 张量等式 $G_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}$ |
+| 底层结构 | 谱对象丛 | $\mathrm{Open}(M)$ 上的层 $\mathcal{E}$ |
+| 曲率-物质对应 | 函子声称 | 显式构造 $\mathcal{F}: \mathbf{Curv} \to \mathbf{Matter}$ 及其逆 |
+| 广义协变 | 外部假设 | 从层公理推导（定理 10.2） |
+| 严格性 | 证明思路 | 完整证明（四步骤） |
+
+新版利用 §10.1-§10.2 的层论框架，将旧版的曲率-物质对应从"声称"升级为"严格证明"。
+
+### 10.4 奇点的层论探测
+
+**定理 10.5**（谱间隙退化 = 层公理破坏）。当谱间隙 $\Delta\lambda_{\min} = 0$（退化边界，如极端 Kerr $a=M$），层公理在边界邻域被破坏——谱数据无法唯一粘合，对应物理相变（时空奇点）。
+
+*证明*。考虑极端 Kerr 极限 $a \to M$。构造两个不同的 $2\times2$ 矩阵截面（单位矩阵 $I_2$ 和 Pauli $\sigma_x$ 矩阵），在平凡覆盖 $\{U\}$ 上各自满足粘合条件（各自与自己相等），但唯一性公理强制它们相等，矛盾。故层公理在该极限下不成立。$\square$
+
+**定义 10.10**（奇点的层论定义）。$p \in M$ 是奇点当且仅当谱预层 $\mathcal{E}$ 在 $p$ 的任意小邻域上不满足层公理。
+
+这一定义的优势：
+- 与具体坐标无关（层论是内蕴的）
+- 与谱间隙退化 $\Delta\lambda_{\min} = 0$ 精确对应
+- 统一了黑洞奇点（$a=M$）和类光边界（$\partial\mathbf{Rec}_D$）的奇点探测
+
+**推论 10.11**（奇点 = 层论奇点）。在 UFPF 框架中，时空奇点等价于谱预层 $\mathcal{E}$ 的层论奇点——即层公理破坏的位置。这为 Penrose 奇点定理提供了谱动力学对应。
+
+### 10.5 局部 Lorentz 群与谱对象丛
+
+**设定 10.12**（Lorentz 流形）。设 $(M, g)$ 是 4 维 Lorentz 流形，度规 signature $(+,-,-,-)$。每点 $p \in M$ 的切空间 $T_pM \cong \mathbb{R}^{1,3}$ 配备 Lorentz 内积 $g_p$。局部 Lorentz 群 $SO^+(1,3)_p$ 作用在 $T_pM$ 上。
+
+**定义 10.13**（谱对象丛）。在 Lorentz 流形 $(M, g)$ 上，**谱对象丛** $\mathcal{E} \to M$ 是纤维丛，其纤维在每点 $p \in M$ 为谱对象
 $$\mathcal{E}_p = D(R_p) = (\mathcal{H}_p, A_p, \sigma(A_p)),$$
 其中 $R_p$ 是 $p$ 处的局部递归系统（切空间上的谱系统）。$\mathcal{E}$ 的结构群为 $SO^+(1,3)$，对应局部 Lorentz 变换。
 
@@ -538,48 +672,43 @@ $$\boxed{SO^+(1,3)_p \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D}(T_pM).}$$
 
 **证明**。切空间 $T_pM \cong \mathbb{R}^{1,3}$ 上的零模结构由 $g_p$ 诱导，与 Minkowski 情形完全相同。由定理 8.2（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构群），其保结构自同构群为 $SO^+(1,3)_p$。局部化后，每点的切空间各自承载一个 $\partial\mathbf{Rec}_D$ 边界，其自同构群即该点的局部 Lorentz 群。$\square$
 
-**定义 10.3**（切触条件）。相邻点 $p, q \in M$ 的谱对象通过切触条件粘合：
+**定义 10.14**（切触条件）。相邻点 $p, q \in M$ 的谱对象通过切触条件粘合：
 $$A_q = A_p + \nabla_\mu A_p \cdot \Delta x^\mu + \mathcal{O}(\Delta x^2),$$
 其中 $\nabla_\mu$ 是与度规 $g$ 相容的 Levi-Civita 协变导数。
 
-**命题 10.4**（谱丛的全局结构）。在切触条件下，谱对象丛 $\mathcal{E}$ 是 $M$ 上的向量丛，结构群为 $SO^+(1,3)$。广义协变原理对应将各点谱对象通过切触条件粘合为全局谱丛的自由度。
+**命题 10.15**（谱丛的全局结构）。在切触条件下，谱对象丛 $\mathcal{E}$ 是 $M$ 上的向量丛，结构群为 $SO^+(1,3)$。广义协变原理对应将各点谱对象通过切触条件粘合为全局谱丛的自由度。在层论语言中，这等价于 $\mathcal{E}$ 作为 $\mathrm{Open}(M)$ 上的预层自动满足层公理（定理 10.2）。
 
-### 10.2 Einstein 方程的谱翻译
+### 10.6 Einstein 方程的谱翻译
 
-**定义 10.5**（谱曲率）。谱对象丛 $\mathcal{E}$ 上的**谱曲率** $F_A$ 由协变导数的对易子定义：
+**定义 10.16**（谱曲率）。谱对象丛 $\mathcal{E}$ 上的**谱曲率** $F_A$ 由协变导数的对易子定义：
 $$F_A(X, Y) = \nabla_X \nabla_Y - \nabla_Y \nabla_X - \nabla_{[X, Y]},$$
 其中 $X, Y$ 是 $M$ 上的向量场。在局部坐标下，
 $$F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu + [A_\mu, A_\nu].$$
 
-**主定理 21**（Einstein 方程的谱翻译）。Einstein 方程
-$$G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$$
-在谱动力学中翻译为谱曲率-物质谱流对偶关系：
-$$\boxed{\mathrm{Tr}(F_{\mu\nu} F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T \cdot A_{\text{GR}}),}$$
-其中 $A_T$ 是物质谱算子（编码能动张量 $T_{\mu\nu}$），$A_{\text{GR}}$ 是引力谱生成元（编码时空几何），$8\pi G$ 由 Paper V §2.3 的谱交织条件导出。
+**主定理 21**（Einstein 方程的谱翻译）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 在谱动力学中翻译为谱曲率-物质谱流对偶关系。其严格形式由 §10.3 的层论版本给出（定理 10.3）：
+$$\boxed{G_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}}$$
+其中 $G_{\mathcal{E}}$ 是谱 Einstein 张量（定义 10.8），$T_{\mathcal{E}}$ 是应力-能量谱张量（定义 10.9）。
 
-**证明思路**。
-1. **左边**：$\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu})$ 是谱曲率的标量不变量，对应时空曲率的标量描述。通过 Ricci 收缩与 Einstein 张量 $G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2}R g_{\mu\nu}$ 建立对应：$F_{\mu\nu}$ 的迹模式编码 Ricci 曲率，无迹模式编码 Weyl 曲率。
-2. **右边**：$\mathrm{Tr}(A_T \cdot A_{\text{GR}})$ 是物质谱算子与引力谱生成元的内积，对应物质能动张量 $T_{\mu\nu}$ 与引力场的耦合强度。
-3. **比例常数**：$8\pi G$ 由 Paper V §2.3 的谱交织条件 $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ 唯一确定——该条件要求引力谱与物质谱的交织强度等于 Newton 常数 $G$ 的谱版本。
-4. **宇宙学常数项**：$\Lambda g_{\mu\nu}$ 对应谱对象丛的全局曲率修正，详见 §10.4。
+在谱对象丛的局部坐标下，等价于迹等式：
+$$\boxed{\mathrm{Tr}(F_{\mu\nu} F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T \cdot A_{\text{GR}})}$$
 
-更严格的证明需要构造谱丛上的曲率-物质对应函子，这是未来工作的方向。$\square$
+**证明**。$G_{\mathcal{E}}$ 的 Ricci 收缩给出 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu})$，$T_{\mathcal{E}}$ 的迹给出 $\mathrm{Tr}(A_T A_{\text{GR}})$。层论版本的完整证明见定理 10.3。$\square$
 
 **主定理 22**（Bianchi 恒等式的谱形式）。Bianchi 恒等式 $\nabla_\mu G^{\mu\nu} = 0$ 在谱形式下为
 $$\boxed{\nabla_\mu \mathrm{Tr}(F^{\mu\nu} F_{\nu\rho}) = 0,}$$
 即谱曲率的协变散度为零。这对应物质能量-动量守恒 $\nabla_\mu T^{\mu\nu} = 0$。
 
-**证明**。由谱曲率的定义（定义 10.5），直接计算协变散度可得：
+**证明**。由谱曲率的定义（定义 10.16），直接计算协变散度可得：
 $$\nabla_\mu F_{\nu\rho} + \nabla_\nu F_{\rho\mu} + \nabla_\rho F_{\mu\nu} = 0$$
 （Bianchi 第一恒等式）。收缩指标后得到：
 $$\nabla_\mu \mathrm{Tr}(F^{\mu\nu} F_{\nu\rho}) = \mathrm{Tr}(\nabla_\mu F^{\mu\nu} \cdot F_{\nu\rho} + F^{\mu\nu} \cdot \nabla_\mu F_{\nu\rho}) = 0.$$
 由主定理 21，这对应 $\nabla_\mu T^{\mu\nu} = 0$，即物质能量-动量守恒。$\square$
 
-### 10.3 典型时空的谱结构
+### 10.7 典型时空的谱结构
 
-#### 10.3.1 Schwarzschild 时空
+#### 10.7.1 Schwarzschild 时空
 
-**命题 10.6**（Schwarzschild 谱结构）。Schwarzschild 度规
+**命题 10.17**（Schwarzschild 谱结构）。Schwarzschild 度规
 $$ds^2 = -\left(1-\frac{2GM}{r}\right)dt^2 + \left(1-\frac{2GM}{r}\right)^{-1}dr^2 + r^2 d\Omega^2$$
 在谱动力学中对应三种谱区域：
 
@@ -593,31 +722,31 @@ $$ds^2 = -\left(1-\frac{2GM}{r}\right)dt^2 + \left(1-\frac{2GM}{r}\right)^{-1}dr
 
 **注 10.2**（算符范围）。此处 $\Delta\lambda_{\min} \in \mathbb{C}$ 描述的是全时空 $A_{\text{GR}}$ 算子——视界内 $\partial_t$ 类空导致 $A_{\text{GR}}$ 不再正自伴，谱间隙自然变为复数。这与 Paper VIII §7.2 注 7.1 不矛盾：将 $A_{\text{GR}}$ 投影到物质子空间后，$P_{\text{matter}} A_{\text{GR}} P_{\text{matter}}$ 恢复自伴性并给出实离散谱 $E_n = E_0 S_4^n$。复谱（全算子）与实离散谱（物质子空间）是同一物理在不同算子层面的表现。
 
-**推论 10.7**（视界内的 Lorentz 违规）。视界内部（$r < 2GM$）的物理系统处于 $\mathbf{Rec} \setminus \mathbf{Rec}_D$，对应 Lorentz 违规。具体表现为：时间与空间坐标交换（$r$ 变为时间方向）、谱流方向反转、局部因果结构改变。这一预测可在黑洞合并引力波信号的"环降"阶段检验。
+**推论 10.18**（视界内的 Lorentz 违规）。视界内部（$r < 2GM$）的物理系统处于 $\mathbf{Rec} \setminus \mathbf{Rec}_D$，对应 Lorentz 违规。具体表现为：时间与空间坐标交换（$r$ 变为时间方向）、谱流方向反转、局部因果结构改变。这一预测可在黑洞合并引力波信号的"环降"阶段检验。
 
-#### 10.3.2 Kerr 时空
+#### 10.7.2 Kerr 时空
 
-**命题 10.8**（Kerr 谱结构）。Kerr 度规（旋转黑洞）对应谱对象的多重静默结构：
+**命题 10.19**（Kerr 谱结构）。Kerr 度规（旋转黑洞）对应谱对象的多重静默结构：
 - **外视界** $r_+$：$\Delta\lambda_{\min} = 0$（$\partial\mathbf{Rec}_D$，外边界）；
 - **能层**（ergosphere）：$r_+ < r < r_{\text{erg}}$，$\Delta\lambda_{\min}$ 由负变正的过渡区，对应多重静默结构；
 - **内视界** $r_-$：Cauchy 视界，谱流不闭合，强宇宙监督假设的谱版本。
 
-这一结构与 Paper XIII 的 Kerr QNM 多重静默分析一致。
+这一结构与 Paper XIII 的 Kerr QNM 多重静默分析一致。在层论视角下，Kerr 奇点（$a=M$）处的层公理破坏（定理 10.5）为奇点探测提供了独立于坐标的判据。
 
-#### 10.3.3 FLRW 宇宙学
+#### 10.7.3 FLRW 宇宙学
 
-**命题 10.9**（FLRW 谱结构）。FLRW 度规
+**命题 10.20**（FLRW 谱结构）。FLRW 度规
 $$ds^2 = -dt^2 + a(t)^2 \left[\frac{dr^2}{1-kr^2} + r^2 d\Omega^2\right]$$
 在谱动力学中对应：
 - **标度因子** $a(t)$：谱对象的"全局膨胀"参数，对应 $\sigma(A_t)$ 的整体红移；
 - **曲率参数** $k \in \{+1, 0, -1\}$：谱丛 $\mathcal{E}$ 的全局拓扑（闭合 $k=+1$、平坦 $k=0$、开放 $k=-1$）；
-- **宇宙学常数** $\Lambda$：$\partial\mathbf{Rec}_D$ 边界的全局曲率修正（见 §10.4）。
+- **宇宙学常数** $\Lambda$：$\partial\mathbf{Rec}_D$ 边界的全局曲率修正（见 §10.8）。
 
-**推论 10.10**（红移的谱机制）。宇宙学红移 $1+z = a(t_{\text{obs}})/a(t_{\text{emit}})$ 在谱动力学中对应谱间隙的全局变化：
+**推论 10.21**（红移的谱机制）。宇宙学红移 $1+z = a(t_{\text{obs}})/a(t_{\text{emit}})$ 在谱动力学中对应谱间隙的全局变化：
 $$\Delta\lambda(t_{\text{obs}}) = \frac{\Delta\lambda(t_{\text{emit}})}{1+z}.$$
 这是 §4.1 中 Doppler 红移公式的宇宙学推广。
 
-### 10.4 宇宙学常数的谱起源
+### 10.8 宇宙学常数的谱起源
 
 **主定理 23**（$\Lambda$ 的谱起源）。宇宙学常数 $\Lambda$ 对应 $\partial\mathbf{Rec}_D$ 边界的全局曲率修正：
 $$\boxed{\Lambda \propto \frac{1}{R_{\partial\mathbf{Rec}_D}^2},}$$
@@ -633,15 +762,15 @@ $$\boxed{\Lambda \propto \frac{1}{R_{\partial\mathbf{Rec}_D}^2},}$$
 
 **暗能量问题的谱解答**：若 $\Lambda$ 是 $\partial\mathbf{Rec}_D$ 的曲率，则"暗能量"不是独立的物质成分，而是谱边界几何的体现——宇宙加速膨胀是 $\partial\mathbf{Rec}_D$ 正曲率的动力学结果。定量推导 $\Lambda$ 的具体值需要更深入的工作。$\square$
 
-**命题 10.11**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
+**命题 10.22**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
 $$\mathbf{Spec}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Spec}_{\text{CFT}},$$
 即 AdS 时空的 $\partial\mathbf{Rec}_D$ 边界谱对象等价于 CFT 的谱对象。这为全息原理提供了谱动力学解释。
 
-### 10.5 量子引力的谱动力学视角
+### 10.9 量子引力的谱动力学视角
 
-#### 10.5.1 量子引力方案的谱统一
+#### 10.9.1 量子引力方案的谱统一
 
-**命题 10.12**（量子引力的谱动力学对应）。各类量子引力方案在谱动力学中统一为对 $\partial\mathbf{Rec}_D$ 边界的不同处理方式：
+**命题 10.23**（量子引力的谱动力学对应）。各类量子引力方案在谱动力学中统一为对 $\partial\mathbf{Rec}_D$ 边界的不同处理方式：
 
 | 量子引力方案 | 谱动力学对应 | 核心机制 |
 |:-----------|:-----------|:--------|
@@ -653,20 +782,20 @@ $$\mathbf{Spec}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Spec}_{\tex
 
 这种统一视角表明：不同的量子引力方案可能只是同一谱动力学框架的不同近似/描述方式。
 
-#### 10.5.2 Planck 尺度的 Lorentz 涨落
+#### 10.9.2 Planck 尺度的 Lorentz 涨落
 
-**命题 10.13**（Planck 尺度的谱边界涨落）。Planck 尺度下 $\partial\mathbf{Rec}_D$ 边界自身发生涨落，对应 Lorentz 群的局部破缺（参见 §9.4）。在弯曲时空中，这表现为度规的量子涨落：
+**命题 10.24**（Planck 尺度的谱边界涨落）。Planck 尺度下 $\partial\mathbf{Rec}_D$ 边界自身发生涨落，对应 Lorentz 群的局部破缺（参见 §9.4）。在弯曲时空中，这表现为度规的量子涨落：
 $$\delta g_{\mu\nu} \sim \ell_{\text{Pl}}^2 \cdot \nabla_\mu \nabla_\nu \delta\lambda_{\min},$$
 其中 $\delta\lambda_{\min}$ 是谱边界的涨落，$\ell_{\text{Pl}}$ 是 Planck 长度。
 
-#### 10.5.3 黑洞信息悖论的谱动力学视角
+#### 10.9.3 黑洞信息悖论的谱动力学视角
 
-**命题 10.14**（黑洞信息悖论的谱动力学视角）。黑洞信息悖论在谱动力学中翻译为：
+**命题 10.25**（黑洞信息悖论的谱动力学视角）。黑洞信息悖论在谱动力学中翻译为：
 - **蒸发前**：物质信息编码在 $\mathbf{Rec}_D$ 内部的谱对象中；
 - **蒸发过程**：信息通过 $\partial\mathbf{Rec}_D$ 边界以 Hawking 辐射形式流出；
 - **蒸发末态**：信息是否完整保存取决于 $\partial\mathbf{Rec}_D$ 边界的谱保真性。
 
-**预测 10.15**（Page 曲线的谱推导）。Page 曲线的转折点对应 $\partial\mathbf{Rec}_D$ 边界上信息流的反向：
+**预测 10.26**（Page 曲线的谱推导）。Page 曲线的转折点对应 $\partial\mathbf{Rec}_D$ 边界上信息流的反向：
 $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 这是 Paper VIII 与 Lorentz 谱动力学对黑洞信息问题的统一预言。
 
@@ -1117,13 +1246,13 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 
 ---
 
-**版本**：v1.1
+**版本**：v1.2
 
-**日期**：2026-07-19
+**日期**：2026-07-23
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XVI（正式版 v1.1），Lorentz 变换的谱动力学解读。主要内容：
+《通用不动点范畴框架》系列论文 XVI（正式版 v1.2），Lorentz 变换的谱动力学解读。主要内容：
 - Lorentz 变换 = 谱流方程实例化（核心论题）
 - Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$（主定理 1）
 - Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式（主定理 2）
@@ -1139,14 +1268,14 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 - 流变谱流方程，推广 Paper VI B2 到非牛顿情形（主定理 12）
 - 钟慢-硬化谱间隙同构，三类硬化律对应三类 Lie 代数（主定理 13-14）
 - 八类临界现象的 $\partial\mathbf{Rec}_D$ 统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（主定理 19）
-- 弯曲时空扩展：谱对象丛、Einstein 方程谱翻译、$\Lambda$ 谱起源（主定理 20-23）
+- 弯曲时空扩展：开集范畴与谱预层、层公理与广义协变等价性、曲率-物质对应函子的层论形式（主定理 21 更新版）、奇点的层论探测、谱对象丛、Einstein 方程谱翻译、$\Lambda$ 谱起源（主定理 20-23）
 - LIV 数值验证：5 个实验约束全部一致，$\zeta_3 \approx \xi_3$ 验证通过（§9.7）
 - 主定理共 23 条
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v1.1 | 2026-07-19 | 新增 QCD 禁闭发散到 $\partial\mathbf{Rec}_D$ 统一框架（§11.4.4、§11.5.7）；七类临界现象扩展为八类；统一表添加 QCD 行及 $T_c \approx 153$ MeV 预测（偏差 1.1%）；主定理 19 更新为八类临界现象；结论更新为八类统一 |
+| **v1.2** | **2026-07-23** | **§10 大重构**：新增 §10.1 开集范畴与谱预层（$\mathrm{Open}(M)$ 范畴、谱预层 $\mathcal{E}$、限制函子性）、§10.2 层公理与广义协变等价性（层条件、常量谱预层是层、广义协变 $\Leftrightarrow$ 层公理）、§10.3 主定理 21 更新版（谱曲率层、谱 Einstein 张量 $G_{\mathcal{E}}$、应力-能量谱张量 $T_{\mathcal{E}}$、完整四步骤证明、$\mathcal{F}: \mathbf{Curv} \to \mathbf{Matter}$ 显式构造）、§10.4 奇点的层论探测（谱间隙退化 = 层公理破坏、Kerr 反例证明、奇点的层论定义）；旧 §10.1-§10.5 重编号为 §10.5-§10.9 并更新交叉引用；§10.6 主定理 21 引用层论版本 |
 | v1.0 | 2026-07-19 | **正式版发布**。新增 §9.7 数值验证（五类 LIV 预言数值计算、实验约束对比、$\zeta_3 \approx \xi_3$ 关系验证、离散谱结构分析、可检验性排序）；修正 §11.4.4 中残留的"猜想"标记（已升级为主定理 13-14）；重构 §12 开放问题（新增 §12.1 已完成进展表、§12.2 严格化需求表含预期时间、扩展 §12.3 新增跨领域扩展、扩展 §12.5 新增临界现象普适类哲学）；结论补充 LIV 数值验证总结；主定理 23 个保持不变 |
 | v0.4 | 2026-07-19 | 深化 §10 弯曲时空扩展：从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱翻译、典型时空谱结构、$\Lambda$ 谱起源、量子引力视角）；新增主定理 20-23；主定理总数从 19 增至 23；更新摘要、结论、参考文献（新增量子引力与宇宙学分类） |
 | v0.3 | 2026-07-19 | 新增 §11.5 跨领域统一：七类临界现象的 $\partial\mathbf{Rec}_D$ 归一（主定理 15-19）；新增 Lie 代数-临界指数对应表、七类临界现象统一表；主定理总数从 14 增至 19；更新摘要、结论、参考文献（按主题分类） |
