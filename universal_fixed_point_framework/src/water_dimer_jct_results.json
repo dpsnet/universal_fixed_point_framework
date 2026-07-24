@@ -1,0 +1,24 @@
+{
+  "model": "fragment-orbital water dimer J_CT(R)",
+  "version": "v1.0",
+  "date": "2026-07-24",
+  "R_eq": 2.91,
+  "J_eq_eV": 0.8,
+  "J_eq_err_eV": 0.3,
+  "alpha_Ainv": 2.270225742315142,
+  "l_corr_A": 0.44095210184462075,
+  "l_corr_std_A": 0.019563576525104015,
+  "l_corr_CI_68": [
+    0.42124151805923893,
+    0.46016707423925407
+  ],
+  "l_corr_SF_pred_A": 0.5,
+  "l_corr_bias_pct": 11.80957963107585,
+  "n_bootstrap": 10000,
+  "zeta_O2p": 2.27,
+  "Delta_E_screened_eV": 7.808988764044944,
+  "angular_factor": 0.6156614753256583,
+  "l_corr_lit_fit_A": 0.5144833350519755,
+  "status": "analytical_model_complete",
+  "recommendation": "Proceed to CASSCF calculation in proper QM environment"
+}

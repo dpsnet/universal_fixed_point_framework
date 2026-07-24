@@ -1,0 +1,26 @@
+{
+  "model": "STO-CI first-principles water dimer J_CT(R)",
+  "version": "v1.0",
+  "date": "2026-07-24",
+  "method": "STO-2p analytical overlap + Mulliken approx + 2x2 CI",
+  "reference": "Roothaan/Mulliken STO overlap formulas (JCP 1949)",
+  "zeta_O2p": 2.27,
+  "R_eq": 2.91,
+  "angular_factor": 0.6156614753256583,
+  "J_eq_eV": 0.8,
+  "J_eq_err_eV": 0.3,
+  "l_corr_STO_CI_A": 0.776220758612392,
+  "l_corr_std_A": 0.03869337592879842,
+  "l_corr_CI_68": [
+    0.7372460761529852,
+    0.8142160169568847
+  ],
+  "l_corr_lit_fit_A": 0.5144833350519755,
+  "l_corr_SF_pred_A": 0.5,
+  "bias_STO_CI_pct": 55.244151722478406,
+  "bias_lit_fit_pct": 2.896667010395104,
+  "alpha_STO_CI_Ainv": 1.2912884035324428,
+  "n_bootstrap": 10000,
+  "status": "first_principles_verification_complete",
+  "verification_type": "analytical_STO_overlap_no_QM_software_required"
+}

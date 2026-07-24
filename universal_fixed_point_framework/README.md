@@ -76,10 +76,10 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | **Paper XI：谱量子场论** | **v2.0** | **核心论文**：A1-A7公理 + **零参数预测 + 29参数审计 + 强CP** | ✅ |
 | **Paper XII**：谱量子引力 | **v1.1** | Kerr度规 + 三圈β + N体散射 + **谱AdS/CFT** | ✅ |
 | **Paper XIII** | — | 已合并至 Paper VI | ╳ |
-| **Paper XIV**：谱凝聚态物理 | v1.0 | 跨领域应用 | ✅ |
+| **Paper XIV**：谱凝聚态物理 | **v1.3** | IQHE临界指数过渡+双参数RGE+倾斜磁场+Lifshitz转变 | ✅ |
 | **Paper XV**：谱量子化学 | v1.1 | 跨领域应用 | ✅ |
 | **Paper XVI**：Lorentz 变换的谱动力学 | **v1.1** | 相对论谱动力学 + 八类临界现象统一函子 | ✅ |
-| **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.2** | **29 项零参数预测，Fisher p≈0** | ✅ |
+| **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.8** | **29 项零参数预测，Fisher p≈0 + 电荷量子化谱定理** | ✅ |
 
 ### Lean 4 形式化
 
@@ -133,7 +133,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | D1 谱 QFT 形式化 | Paper XI §2.8(A7), §9.5-9.6 | Lorentz 协变公理 + LSZ公式 + 幺正性证明 |
 | D2 SM参数第一原理 | Paper XI §8.5-8.7 + 附录D | **CKM/中微子/真空稳定性 + 29参数审计** |
 | D3 谱量子引力深化 | Paper XII §9.2-9.4 | Kerr谱分解 + 三圈β + AdS/CFT |
-| D4 谱流体动力学 | Paper VI v2.4 | N-S谱流方程 + K41 + 湍流RG + 八类临界现象统一 (合并) |
+| D4 谱流体动力学 | Paper VI v2.5 | N-S谱流方程 + K41 + 湍流RG + 九类临界现象统一（含IQHE新增） |
 | **D5 零参数质量预测** | **Paper I §A.15.8, Paper XI §8.4** | **$c_i$ 从静默层级唯一确定，9费米子质量比零输入** |
 | D6 全费米子扩展+强CP | Paper XI §§7.5, 8.4 | 全部29参数覆盖，15/29严格零参数 |
 | 验证脚本 | paperX_zero_parameter_check.py (8/8) | 完整推导链自动化验证 |
@@ -558,6 +558,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
+| 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+去递归+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，$m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$T_c$ 预测 153 MeV 偏差 1.1%，$F_\pi$ 偏差 0.1%） |
 | 2026-07-18 | **零参数突破**：29/29 SM参数全覆盖，15/29严格零参数预测。新增 Phase 44 D1-D6 全部完成。中英文双语首部。Papers X-XIII 全部完稿。 |
 | 2026-07-17 | Phase 36-42 全部完成；数值脚本 46+；Papers I-IX 全部完稿 |

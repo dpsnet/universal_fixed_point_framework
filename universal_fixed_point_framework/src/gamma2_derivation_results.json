@@ -1,0 +1,64 @@
+{
+  "gamma2": {
+    "from_spectral_gaps": 0.059698184630584857,
+    "from_spec_category": -0.1448154576848057,
+    "from_numerical": -0.32943536272066826,
+    "adopted_final": -0.04255863652711042,
+    "derivation_methods": [
+      "\u03b3\u2082 = (1/8\u03c0) \u00b7 (\u0394\u03bb_min/\u0394\u03bb_EM)\u00b2 \u00b7 |C\u2082(so(1,1))/C\u2082(u(1))|",
+      "\u03b3\u2082 = (1/8\u03c0) \u00b7 Tr([A, \u2207A]\u00b2) from Spec 4-category"
+    ]
+  },
+  "beta_function": {
+    "form": "\u03b2(A) = -A\u00b3/(2\u03c0) \u00b7 1/(1 + \u03b3\u2082A\u00b2 + O(A\u2074))",
+    "gamma2": -0.04255863652711042,
+    "nu_clean_limit": 0.9996832786269653
+  },
+  "prediction_update": {
+    "1e-4": {
+      "nu_spec_no_gamma2": 1.4783794296438726,
+      "nu_spec_with_gamma2": 1.4469268143983307,
+      "correction_pct": -2.1275062825460522
+    },
+    "1e-3": {
+      "nu_spec_no_gamma2": 1.478518427201891,
+      "nu_spec_with_gamma2": 1.4471194238774725,
+      "correction_pct": -2.123680215730646
+    },
+    "0.01": {
+      "nu_spec_no_gamma2": 1.4799094024965023,
+      "nu_spec_with_gamma2": 1.4490415120699665,
+      "correction_pct": -2.085795953080903
+    },
+    "0.1": {
+      "nu_spec_no_gamma2": 1.4939169521354192,
+      "nu_spec_with_gamma2": 1.467889882791237,
+      "correction_pct": -1.7422032266906708
+    },
+    "0.4": {
+      "nu_spec_no_gamma2": 1.5417716588481898,
+      "nu_spec_with_gamma2": 1.5270301416743928,
+      "correction_pct": -0.9561414032483869
+    },
+    "1.2": {
+      "nu_spec_no_gamma2": 1.675,
+      "nu_spec_with_gamma2": 1.6717665528645582,
+      "correction_pct": -0.1930416200263776
+    },
+    "5.0": {
+      "nu_spec_no_gamma2": 2.174353559609953,
+      "nu_spec_with_gamma2": 2.174351459011435,
+      "correction_pct": -9.660795545213288e-05
+    },
+    "13.6": {
+      "nu_spec_no_gamma2": 2.3472658174747827,
+      "nu_spec_with_gamma2": 2.347265817474706,
+      "correction_pct": -3.2730606279059066e-12
+    },
+    "50.0": {
+      "nu_spec_no_gamma2": 2.3499999999658376,
+      "nu_spec_with_gamma2": 2.3499999999658376,
+      "correction_pct": 0.0
+    }
+  }
+}
