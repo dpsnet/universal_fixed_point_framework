@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.5（2026-07-23）
+**版本**：v2.6（2026-07-25）
 
 **摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学。v2.2 严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3）并建立跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景。v2.4 将 F5 统一表扩展至八类临界现象（新增声子硬化、电磁极化饱和、量子相变临界慢化、NTK 谱压缩），$T_c$ 谱推导 153 MeV（偏差 1.1%）。v2.5 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表，建立量子 Hall 拓扑相变与 $\partial\mathbf{Rec}_D$ 谱边界的新联系。
 
@@ -542,6 +542,8 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 - **Paper XI**：`paper/paper11_spectral_QFT.md` — 谱 QFT 公理系统
 - **Paper XII**：`paper/paper12_spectral_quantum_gravity.md` — 谱量子引力
 - **Paper XVI**：`paper/paper16_lorentz_spectral_dynamics.md` — Lorentz 谱动力学（v0.3）
+- **Paper XXIV-A**：`notes/02_superconductivity/spectral_mu_star_derivation.md` — Bun(Corr) 闭式定理在连续谱中的推广（强耦合超导 μ* 消除）
+- **Paper XXIV-B**：`notes/06_quantum_chem_pv/spectral_hh2_bond_rigidity_paper.md` — H+H₂ 谱键刚性第一性原理推导（Hückel 参数消除）
 
 ### 标准文献
 
@@ -608,6 +610,8 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| **v2.6** | **2026-07-25** | **更新 UFPF 内部参考文献**：新增 Paper XXIV-A（超导 μ* 消除）和 Paper XXIV-B（谱键刚性） |
+| v2.5 | 2026-07-23 | 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表、临界指数的 Lie 代数分类；更新摘要、§1.3 目录结构；参考文献增加 IQHE 标准文献 |
 | v2.4 | 2026-07-19 | $T_c$ 临界温度谱推导（1.1% 精度）纳入主定理 E3 统一表；添加特征可观测量列；更新 §9.1.5 统一表描述 |
 | v2.3 | 2026-07-19 | 低能 QCD 谱翻译纳入统一图景：主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散）、$\Lambda_{\text{QCD}}$ 谱推导（方案转换因子 $Z_s = Z_3 = 1.39$）、⟨ψ̄ψ⟩ 定量预测（2% 精度）；更新 §9.1.5 统一表 |
 | v2.2 | 2026-07-19 | 新增 §9 流变谱边界严格化与跨领域统一：主定理 E1-E3（流变谱边界严格化）、主定理 F5（跨领域统一函子、七类临界现象归一）、临界指数的 Lie 代数分类；更新摘要、结论、参考文献（按主题分类） |

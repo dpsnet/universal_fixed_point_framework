@@ -5,6 +5,7 @@
 **摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartan 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Spec})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
 
 **前置依赖**：Paper XV（量子化学谱翻译）、Paper XXI（Grothendieck 纤维化综合）、`spectral_quantum_chemistry.md`（量子化学谱翻译笔记）。
+**延伸方法论**：`spectral_fibration_methodology.md` v1.0（量子化学多层次精细纤维拆分方法论）——基于 Paper XV 和 Paper XXI 建立的系统纤维化分解 8 步协议，将 Bun(Reac)/Bun(IntraIonic)/Bun(Ionic) 扩展为 7 层嵌套链（含 Bun(Corr)/Bun(Vib)/Bun(Solv)/Bun(Spin)），提供层次分类树、精度判据、自然变换检验和跨界粘合机制。
 
 ---
 

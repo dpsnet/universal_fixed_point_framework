@@ -1,15 +1,15 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-**项目状态**：17 篇论文（Papers I–XVII）+ **29 项零参数预测 + 30 项零参数验证，Fisher p≈0** ✅ + Lean 4 形式化 34 模块零错误
+**项目状态**：25 篇论文（Papers I–XXIV-B）+ **29 项零参数预测 + 30 项零参数验证，Fisher p≈0** ✅ + Lean 4 形式化 34 模块零错误
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
-| 论文总数 / Papers | **17**（Paper I–XVII，含 Paper XVII：29 项零参数预测） |
+| 论文总数 / Papers | **25**（Paper I–XXIV-B，含 Paper XVII：29 项零参数预测） |
 | 零参数预测 / Zero-param Predictions | **29 项独立预测，Fisher 组合 p≈0** |
 | 零参数验证 / Zero-param Validations | **30 项（含弱等效原理谱证明）** |
-| 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 |
+| 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 |
 | 拟合参数 / Fitting Parameters | **0** |
-| 最新论文 / Latest Paper | **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 |
+| 最新论文 / Latest Papers | **Paper XXIV-A**：BCS μ*消除（Bun(Corr)连续谱推广）、**Paper XXIV-B**：H+H₂ 谱键刚性第一性原理推导 |
 | Phase 36–42 理论推进 | **7 方向全部完成** |
 | Phase 44 谱 QFT 工具箱 | **10/10 工具全部完成** |
 | Lean 功能模块 | 29 |
@@ -57,7 +57,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ---
 
-## 现状速览（2026-07-18）
+## 现状速览（2026-07-25）
 
 ### 论文
 
@@ -77,9 +77,17 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | **Paper XII**：谱量子引力 | **v1.1** | Kerr度规 + 三圈β + N体散射 + **谱AdS/CFT** | ✅ |
 | **Paper XIII** | — | 已合并至 Paper VI | ╳ |
 | **Paper XIV**：谱凝聚态物理 | **v1.3** | IQHE临界指数过渡+双参数RGE+倾斜磁场+Lifshitz转变 | ✅ |
-| **Paper XV**：谱量子化学 | v1.1 | 跨领域应用 | ✅ |
+| **Paper XV**：谱量子化学 | **v1.3** | 量子化学谱翻译 + Bun(Corr)闭式定理 + 谱键刚性 | ✅ |
 | **Paper XVI**：Lorentz 变换的谱动力学 | **v1.1** | 相对论谱动力学 + 八类临界现象统一函子 | ✅ |
 | **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.8** | **29 项零参数预测，Fisher p≈0 + 电荷量子化谱定理** | ✅ |
+| **Paper XVIII**：从谱第一原理推导牛顿力学 | **v1.1** | 谱惯性质量、F=ma、逆平方律、弱等效原理的第一性推导 | ✅ |
+| **Paper XIX**：Rec/Spec 范畴扩展 | **v1.0** | 静态拓扑与随机系统的范畴论嵌入 + 四层静默深化 | ✅ |
+| **Paper XX**：谱间隙第一性推导 | **v1.0** | 从 Rec/Spec 经 SU(2) Casimir 与 Cl(1,7) 到引力谱间隙 Δλ_min | ✅ |
+| **Paper XXI**：Grothendieck 纤维化综合 | **v0.1** | 总参数丛 + 6个纤维化实例 + 物理截面实例化 | ✅ |
+| **Paper XXII**：量子化学精细纤维拆分方法论 | **v0.6** | 7层纤维化 + 全栈交叉验证 + ℓ_corr不变量 | ✅ |
+| **Paper XXIII**：CH₃CHO n→π* 谱流第一性原理推导 | **v0.3** | 谱流方程 + 7层全链推导 (3.958 eV, 3.5%) | ✅ |
+| **Paper XXIV-A**：Bun(Corr)闭式定理→连续谱推广 (BCS μ*) | **v1.3** | μ*_spec闭式公式, 6材料验证(Al/Sn/Pb/Hg/Nb/MgB₂), 多带+相对论修正 | ✅ |
+| **Paper XXIV-B**：H+H₂ 谱键刚性第一性原理推导 | **v1.0** | 消除Hückel经验参数β₀, α₀ | ✅ |
 
 ### Lean 4 形式化
 

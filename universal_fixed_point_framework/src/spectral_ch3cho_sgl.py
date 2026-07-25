@@ -303,7 +303,7 @@ output = {
         'deviation': {
             'd_phi_deg': float(d_phi),
             'd_theta_deg': float(d_theta),
-            'has_implicit_channel': has_deviation,
+            'has_implicit_channel': bool(has_deviation),
         },
     },
 }
