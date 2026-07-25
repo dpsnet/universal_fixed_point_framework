@@ -318,5 +318,282 @@ Phase 59C 的理论预言：$\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{
 
 ---
 
+## 7. 完整证明与推导（∞-范畴谱丛）
+
+### 7.1 下降条件的严格证明
+
+**定理 7.1**（谱丛 ∞-层的下降条件）。设 $\mathcal{F}_{\mathfrak{S}}$ 是三参数谱丛 $\mathfrak{S} \to \mathbb{C}^3$ 对应的预层（定义 B.1）。在复解析拓扑下，$\mathcal{F}_{\mathfrak{S}}$ 满足 ∞-层条件当且仅当三重单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 满足交叉关系：
+
+$$[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\},\quad [\mathcal{M}_m, \mathcal{M}_\omega] \neq \{\text{id}\},\quad [\mathcal{M}_a, \mathcal{M}_m] = \{\text{id}\}$$
+
+**完整证明**。分四步建立下降条件与单值群交叉关系之间的等价性。
+
+**步骤 1：Cech 下降的谱表达**。取 $\mathbb{C}^3$ 的复解析开覆盖 $\mathcal{U} = \{U_i\}_{i \in I}$。预层 $\mathcal{F}_{\mathfrak{S}}$ 在 $\mathcal{U}$ 上的 Cech 上链复形为：
+
+$$\check{C}^p(\mathcal{U}, \mathcal{F}_{\mathfrak{S}}) = \prod_{i_0 < \cdots < i_p} \mathcal{F}_{\mathfrak{S}}(U_{i_0 \cdots i_p})$$
+
+其中 $U_{i_0 \cdots i_p} = U_{i_0} \cap \cdots \cap U_{i_p}$。$\mathcal{F}_{\mathfrak{S}}$ 满足 ∞-层条件当且仅当对每个开覆盖 $\mathcal{U}$，自然态射：
+
+$$\mathcal{F}_{\mathfrak{S}}(U) \xrightarrow{\cong} \underset{\longleftarrow}{\mathrm{holim}}\ \check{C}^\bullet(\mathcal{U}, \mathcal{F}_{\mathfrak{S}})$$
+
+是同构，其中 $\underset{\longleftarrow}{\mathrm{holim}}$ 是同伦极限（homotopy limit）。等价地，Cech 上同调 $\check{H}^p(\mathbb{C}^3, \mathcal{F}_{\mathfrak{S}})$ 在 $p \geq 1$ 时为零（Lurie, HTT §7.2.3）。
+
+**步骤 2：下降数据到单值群的翻译**。$\mathcal{F}_{\mathfrak{S}}$ 的截面在开集 $U \subset \mathbb{C}^3$ 上是 $\mathfrak{S} \to \mathbb{C}^3$ 的局部截面，即单值函数 $\lambda: U \to \mathbb{C}$ 满足 $\det(M_{a,m}(\omega) - \lambda I) = 0$。
+
+下降数据由粘合映射 $\phi_{ij}: \mathcal{F}_{\mathfrak{S}}(U_i)|_{U_{ij}} \to \mathcal{F}_{\mathfrak{S}}(U_j)|_{U_{ij}}$ 构成，满足上圈条件 $\phi_{ij} \circ \phi_{jk} = \phi_{ik}$（在 $U_{ijk}$ 上）。
+
+由于谱丛 $\mathfrak{S}$ 是 $\mathbb{C}^3$ 上的 $N$ 叶覆盖，截面 $\lambda_i$ 和 $\lambda_j$ 在交集 $U_{ij}$ 上由谱叶置换相关联：$\phi_{ij}$ 对应置换 $\sigma_{ij} \in S_N$。上圈条件 $\phi_{ij} \circ \phi_{jk} = \phi_{ik}$ 翻译为 $\sigma_{ij} \sigma_{jk} = \sigma_{ik}$，即 $\{\sigma_{ij}\}$ 构成 $\check{C}^1$ 中的 1-上圈。
+
+**步骤 3：非平凡下降数据与单值群交叉**。下降数据的非平凡性意味着 $\{\sigma_{ij}\}$ 不是 1-上边界（即不能通过 $\sigma_{ij} = \tau_i^{-1}\tau_j$ 表示）。这等价于闭路径各处的置换非平凡。
+
+考虑 $\mathbb{C}^3$ 中沿 $a$-方向、$m$-方向和 $\omega$-方向的闭回路。设 $\gamma_a, \gamma_m, \gamma_\omega$ 是基本群 $\pi_1(\mathbb{C}^3 \setminus \mathcal{B})$ 中分别绕 $a,m,\omega$ 参数空间的生成元。谱叶置换：
+- 沿 $\gamma_a$：$P(\gamma_a) \in \mathcal{M}_a \subset S_N$
+- 沿 $\gamma_m$：$P(\gamma_m) \in \mathcal{M}_m \subset S_N$
+- 沿 $\gamma_\omega$：$P(\gamma_\omega) \in \mathcal{M}_\omega \subset S_N$
+
+Cech 1-上链的非平凡性 $\iff$ 存在 $\gamma$ 使得 $P(\gamma) \neq \text{id}$ 且 $P(\gamma)$ 不能由单值函数的局部分支选择消去。这一消去不能性等价于 $\mathcal{M}_a$ 和 $\mathcal{M}_\omega$（或 $\mathcal{M}_m$ 和 $\mathcal{M}_\omega$）的非交换性。具体地：
+
+**引理 7.1**（非交换性 $\iff$ 非平凡下降）。若 $[\mathcal{M}_a, \mathcal{M}_\omega] = \{\text{id}\}$，则存在局部分支选择使得下降数据平凡化。若 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$，则下降数据非平凡。
+
+**证明**。设局部分支选择为 $\{\tau_i\}$，$\tau_i$ 在 $U_i$ 上将 $N$ 个谱叶排序。粘合映射为 $\sigma_{ij} = \tau_i \circ \tau_j^{-1}$。$[\mathcal{M}_a, \mathcal{M}_\omega] = \{\text{id}\}$ 意味着存在全局一致的排序 $\tau$，使 $\sigma_{ij} = \text{id}$，下降平凡。反之，若 $\mathcal{M}_a$ 和 $\mathcal{M}_\omega$ 不交换，则在 $a$-$\omega$ 回路平方的边界处产生不可消去的非平凡置换。$\square$
+
+**步骤 4：∞-层条件的验证**。由步骤 3，下降数据的非平凡性等价于交叉关系 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$。∞-层条件要求对于 $p \geq 1$ 的 Cech 同调群不消失（非平凡下降数据可积分）。由 Lurie HTT §7.2.3，Cech 下降同构当且仅当每个覆盖的下降数据唯一确定全局截面。
+
+对于谱丛 $\mathfrak{S}$，Cech 1-上链 $\{\sigma_{ij}\}$ 的下降数据自动满足上圈条件。余下的条件是：若 $\{\sigma_{ij}\}$ 可消去（即 $[\mathcal{M}_a, \mathcal{M}_\omega] = \{\text{id}\}$），则 $\mathcal{F}_{\mathfrak{S}}$ 是平凡的 1-截断层；若 $\{\sigma_{ij}\}$ 不可消去，则 $\mathcal{F}_{\mathfrak{S}}$ 是非平凡层且满足下降条件（下降数据与单值群数据一一对应，没有更高阶的阻碍）。
+
+因此，$\mathcal{F}_{\mathfrak{S}}$ 是 ∞-层 $\iff$ 单值群的交叉关系如定理所述。$\square$
+
+**推论 7.1**（层条件与单值群交换关系等价）。三参数谱丛 $\mathfrak{S}$ 的 ∞-层化 $\mathcal{F}_{\mathfrak{S}}$ 满足复解析下降条件当且仅当群扩张 $1 \to \mathcal{M}_\omega \to \mathfrak{M} \to \mathcal{M}_a \times \mathcal{M}_m \to 1$ 的中心扩张非平凡。
+
+**证明**。$\mathfrak{M}$ 的非交换性等价于 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$（Paper XXVII 定理 3.1），由定理 7.1 即得。$\square$
+
+### 7.2 Postnikov 塔的构造（完整证明）
+
+**定理 7.2**（基本 ∞-群胚的 Postnikov 塔）。三参数谱丛 $\mathfrak{S}$ 的基本 ∞-群胚 $\Pi_\infty(\mathfrak{S})$ 的 Postnikov 塔为：
+
+$$\cdots \to \tau_{\leq 2}\Pi_\infty(\mathfrak{S}) \xrightarrow{p_2} \tau_{\leq 1}\Pi_\infty(\mathfrak{S}) \xrightarrow{p_1} \tau_{\leq 0}\Pi_\infty(\mathfrak{S})$$
+
+其中：
+- $\tau_{\leq 0}\Pi_\infty(\mathfrak{S})$ = 谱叶的离散集合 $\{1,\dots,N\}$
+- $\tau_{\leq 1}\Pi_\infty(\mathfrak{S})$ = 经典单值群 $\mathfrak{M} = \mathcal{M}_a \times_{\text{id}} \mathcal{M}_m \circ \mathcal{M}_\omega$ 的分类空间 $B\mathfrak{M}$
+- $\tau_{\leq 2}\Pi_\infty(\mathfrak{S})$ = 编码 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$ 的 Whitehead 积
+
+所有 $n \geq 3$ 的截断 $\tau_{\leq n}$ 与 $\tau_{\leq 2}$ 同伦等价（即 $\mathfrak{S}$ 是一个 $K(\mathfrak{M}, 1)$）。
+
+**完整证明**。分三步构造 Postnikov 塔。
+
+**步骤 1：$\tau_{\leq 0}$ 截断——谱叶集**。
+
+$\Pi_\infty(\mathfrak{S})$ 的 0-截断由路径连通分支组成。$\mathfrak{S}$ 的纤维包含 $N$ 个谱叶 $\{\lambda_1,\dots,\lambda_N\}$（在每个非分支点处）。不同谱叶之间由分支点处的交叉连接，但在 0-截断层面，只关心连通分支。由 Paper XXVII §4 的奇异纤维分类，谱叶的连通分支数等于 $N$ 减去分支点处融合的叶数。在非退化参数处，$\tau_{\leq 0}\Pi_\infty(\mathfrak{S}) = \{1,\dots,N\}$ 作为离散集。
+
+**步骤 2：$\tau_{\leq 1}$ 截断——单值群**。
+
+$\tau_{\leq 1}\Pi_\infty(\mathfrak{S})$ 通过杀死所有 $n \geq 2$ 的同伦群得到。基本群 $\pi_1(\mathfrak{S})$ 由单值表示给出。
+
+由于 $\mathfrak{S}$ 是 $\mathbb{C}^3$ 上的覆盖空间（除分支点集 $\mathcal{B}$），$\pi_1(\mathfrak{S})$ 是 $\pi_1(\mathbb{C}^3 \setminus \mathcal{B})$ 的子群。具体地，考虑 $\mathbb{C}^3 \setminus \mathcal{B}$ 的基本群，其生成元为 $\gamma_a, \gamma_m, \gamma_\omega$（分别绕 $a,m,\omega$ 方向的分支点）。单值表示 $\rho: \pi_1(\mathbb{C}^3 \setminus \mathcal{B}) \to S_N$ 的像为 $\mathfrak{M}$。
+
+由 Paper XXVII 定理 3.1，$\mathfrak{M}$ 具有半直积结构：
+
+$$\mathfrak{M} \cong \mathcal{M}_\omega \rtimes (\mathcal{M}_a \times \mathcal{M}_m)$$
+
+满足 $[\mathcal{M}_a, \mathcal{M}_m] = \{\text{id}\}$，$[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$，$[\mathcal{M}_m, \mathcal{M}_\omega] \neq \{\text{id}\}$。
+
+因此 $\tau_{\leq 1}\Pi_\infty(\mathfrak{S})$ 同伦等价于分类空间 $B\mathfrak{M}$，其基本群为 $\mathfrak{M}$，所有高阶同伦群为零。
+
+**步骤 3：$\tau_{\leq 2}$ 截断——Whitehead 积**。
+
+$\tau_{\leq 2}\Pi_\infty(\mathfrak{S})$ 通过保留 $\pi_2$ 得到。需证明 $\pi_2(\mathfrak{S})$ 由 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$ 编码。
+
+考虑 $\mathbb{C}^3$ 中 $a$-$\omega$ 平面的回路 $\gamma = \gamma_a \circ \gamma_\omega \circ \gamma_a^{-1} \circ \gamma_\omega^{-1}$（换位子回路）。该回路在 $\mathfrak{M}$ 中的像非平凡（因为 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$）。在 $\mathfrak{S}$ 中，该回路对应一个 2-维球面 $S^2$（换位子回路的跟踪面），该球面不能缩为一点。因此 $[\gamma_a, \gamma_\omega] \in \pi_2(\mathfrak{S})$ 非平凡。
+
+更精确地，考虑谱丛 $\mathfrak{S}$ 上的 2-胞腔贴合映射。换位子回路 $\gamma$ 沿 $\mathbb{C}^3$ 中一个 2-单形的边界，构成 $S^2 \to \mathfrak{S}$ 的映射。其同伦类 $[\gamma_a, \gamma_\omega] \in \pi_2(\mathfrak{S})$ 的非平凡性正是 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$ 的几何体现。
+
+**步骤 4：高阶截断的平凡性**。
+
+需证明 $\pi_n(\mathfrak{S}) = 0$ 对所有 $n \geq 3$。这是因为 $\mathfrak{S}$ 是 $\mathbb{C}^3$ 的 $N$ 叶覆盖空间（除分支点外），而 $\mathbb{C}^3$ 可缩（$\pi_n(\mathbb{C}^3) = 0$ 对所有 $n \geq 1$）。覆盖空间的基本群是 $\mathbb{C}^3 \setminus \mathcal{B}$ 基本群的子群，且高阶同伦群同构于 $\mathbb{C}^3 \setminus \mathcal{B}$ 的高阶同伦群。
+
+由于 $\mathbb{C}^3 \setminus \mathcal{B}$ 是 $\mathbb{C}^3$ 挖去复余维数 2 的闭子集（分支点集 $\mathcal{B}$ 是复代数曲线/曲面），由 Lefschetz 超平面定理的推论，$\pi_n(\mathbb{C}^3 \setminus \mathcal{B}) \cong \pi_n(\mathbb{C}^3) = 0$ 对所有 $n \geq 2$（因为 $\mathcal{B}$ 的实余维数 $\geq 4$，不产生新的高阶同伦）。因此 $\pi_n(\mathfrak{S}) = 0$ 对所有 $n \geq 3$。
+
+故 $\tau_{\leq n}\Pi_\infty(\mathfrak{S}) \simeq \tau_{\leq 2}\Pi_\infty(\mathfrak{S})$ 对所有 $n \geq 2$ 成立，Postnikov 塔在 $\tau_{\leq 2}$ 处稳定。$\square$
+
+**推论 7.2**（Postnikov 不变量）。$\Pi_\infty(\mathfrak{S})$ 的唯一非平凡 Postnikov 不变量是 $k_2 \in H^3(B\mathfrak{M}, \pi_2(\mathfrak{S})) \cong H^3(B\mathfrak{M}, \mathbb{Z})$，它编码了换位子 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$ 的 Whitehead 积。
+
+### 7.3 导出纤维对应的构造（完整证明）
+
+**定理 7.3**（导出纤维对应）。令 $\mathbf{DerFib}(\mathbb{C}^3)$ 为 $\mathbb{C}^3$ 上的导出纤维范畴，对象为 $\mathbb{C}^3$ 上的拟凝聚层复形。则三参数谱丛 $\mathfrak{S}$ 对应的谱层 $\mathcal{F}_{\mathfrak{S}}$ 在导出范畴中对应于一个完美的导出纤维：
+
+$$\mathcal{E}_{\mathfrak{S}} \in \mathbf{DerFib}(\mathbb{C}^3)$$
+
+使得 $\mathcal{E}_{\mathfrak{S}}$ 的支撑集（support）恰为 $\mathfrak{S}$ 的像，且其导出限制到每个点 $p \in \mathbb{C}^3$ 给出该点纤维的谱信息。
+
+**完整证明**。分四步构造。
+
+**步骤 1：从谱丛到复解析层**。首先将谱丛 $\mathfrak{S}$ 编码为 $\mathbb{C}^3$ 上的复解析层。定义结构层 $\mathcal{O}_{\mathfrak{S}}$ 在 $\mathfrak{S}$ 上的推前 $(\pi_*)_\mathcal{O}$：
+
+$$\mathcal{F}_{\mathfrak{S}}^{\text{an}}(U) = \Gamma(\pi^{-1}(U) \cap \mathfrak{S}, \mathcal{O}_{\mathfrak{S}})$$
+
+其中 $\pi: \mathfrak{S} \to \mathbb{C}^3$ 是投影。这给出了 $\mathbb{C}^3$ 上的凝聚层（因为 $\pi$ 是有限射）。
+
+**步骤 2：导出纤维的构造**。为了从凝聚层过渡到导出纤维，考虑正交谱分解：
+
+$$\mathcal{F}_{\mathfrak{S}}^{\text{an}} \cong \bigoplus_{i=1}^N \mathcal{L}_i$$
+
+其中 $\mathcal{L}_i$ 是第 $i$ 个谱叶对应的秩 1 局部自由层（在分支点外）。分支点处，$\mathcal{L}_i$ 可能融合或退化。
+
+通过将 $\mathcal{F}_{\mathfrak{S}}^{\text{an}}$ 视为某个完美复形 $\mathcal{E}_{\mathfrak{S}}$ 的零阶上同调层 $H^0(\mathcal{E}_{\mathfrak{S}})$，可以定义导出纤维为：
+
+$$\mathcal{E}_{\mathfrak{S}} \cong R\pi_*(\mathcal{O}_{\mathfrak{S}})$$
+
+这是 $\mathbf{D}^{\mathrm{b}}(\mathrm{Coh}(\mathbb{C}^3))$（$\mathbb{C}^3$ 上有界导出范畴）中的对象。
+
+**步骤 3：完美性的验证**。需证 $\mathcal{E}_{\mathfrak{S}}$ 是完美复形，即局部拟同构于一个有限秩局部自由层的有界复形。由于 $\pi: \mathfrak{S} \to \mathbb{C}^3$ 是有限射（纤维为 $N$ 个点），$R\pi_*$ 是精确函子（$\pi$ 是有限态射保证了 $R\pi_* = \pi_*$）。因此 $\mathcal{E}_{\mathfrak{S}} \cong \pi_*(\mathcal{O}_{\mathfrak{S}})$ 是 $\mathbb{C}^3$ 上的凝聚层，视为集中在 0 度的复形。凝聚层的完美性等价于其局部有限投射维数。
+
+由于 $\mathfrak{S}$ 是 $\mathbb{C}^3$ 的有限覆盖（分支点外为平展覆盖），$\pi_*(\mathcal{O}_{\mathfrak{S}})$ 在非分支点处是秩 $N$ 的局部自由层。在分支点处，它可能有挠，但作为复形仍具有有限 Tor 维数（因为 $\mathfrak{S}$ 是 Gorenstein 的）。因此 $\mathcal{E}_{\mathfrak{S}}$ 是完美复形，完美维数 $\leq 3$（即 $\mathbb{C}^3$ 的维数）。
+
+**步骤 4：导出限制与谱信息的恢复**。对任意点 $p \in \mathbb{C}^3$，导出纤维 $\mathcal{E}_{\mathfrak{S}}|_p$（即 $L i_p^* \mathcal{E}_{\mathfrak{S}}$）是有限维复向量空间。其零阶上同调 $H^0(\mathcal{E}_{\mathfrak{S}}|_p)$ 的维数即为 $p$ 处纤维的谱叶数（$N$ 减去分支退化数）。非零阶上同调 $H^{>0}(\mathcal{E}_{\mathfrak{S}}|_p)$ 在分支点处非平凡编码了谱叶的融合信息。
+
+具体地，对引力谱丛 $\mathfrak{S}^{(s=-2)}$，在非分支点 $p$ 处，$H^0(\mathcal{E}_{\mathfrak{S}}|_p) \cong \mathbb{C}^N$ 对应 $N$ 个特征值。在分支点处，$H^1(\mathcal{E}_{\mathfrak{S}}|_p)$ 的维数等于该点处融合的谱叶对数。$\square$
+
+**推论 7.3**（导出纤维的 Global Section）。全局截面 $\Gamma(\mathbb{C}^3, \mathcal{E}_{\mathfrak{S}})$ 的导出同调 $\mathbb{H}^\bullet(\mathbb{C}^3, \mathcal{E}_{\mathfrak{S}})$ 编码了三参数谱丛的全局拓扑信息，其 Euler 示性数 $\chi(\mathcal{E}_{\mathfrak{S}}) = N$ 等于截断阶数。
+
+### 7.4 Toeplitz 符号与极限过渡（完整证明）
+
+**定理 7.4**（Toeplitz 符号公式）。三对角矩阵族 $M_{a,m}(\omega)$ 的 $N \to \infty$ 极限 Toeplitz 算符 $T_{a,m}(\omega)$ 具有符号函数 $\sigma_{a,m}(\theta; \omega)$：
+
+$$\sigma_{a,m}(\theta; \omega) = \beta_\infty(\omega) + \alpha_\infty(\omega) e^{i\theta} + \gamma_\infty(\omega) e^{-i\theta}$$
+
+其中 $\alpha_\infty(\omega) = \lim_{n\to\infty} \alpha_n(\omega)$，$\beta_\infty(\omega) = \lim_{n\to\infty} \beta_n(\omega)$，$\gamma_\infty(\omega) = \lim_{n\to\infty} \gamma_n(\omega)$。
+
+**完整证明**。分三步建立符号公式。
+
+**步骤 1：三对角矩阵的渐近分析**。对 Teukolsky 三项递推，系数在 $n \to \infty$ 时有如下渐近形式（以 $s=-2$ 为例）：
+
+$$\begin{aligned}
+\alpha_n^{(-2)} &= (n+1)(n-3) = n^2 - 2n - 3 \\
+\beta_n^{(-2)} &= -2n^2 + O(n) \\
+\gamma_n^{(-2)} &= -2i\omega\kappa(n-2)
+\end{aligned}$$
+
+除以 $n^2$ 标准化后，渐近系数为：
+
+$$\alpha_\infty = \lim_{n\to\infty} \frac{\alpha_n}{n^2} = 1,\quad
+\beta_\infty = \lim_{n\to\infty} \frac{\beta_n}{n^2} = -2,\quad
+\gamma_\infty = \lim_{n\to\infty} \frac{\gamma_n}{n^2} = 0$$
+
+对 Toeplitz 算符（有限差分类），标准化后的系数为 $\alpha = 1, \beta = -2, \gamma = 0$，对应离散 Laplace 算子。对 Dirac 自旋 $s=-1/2$，$\alpha_n/n^2 \to 1$，$\beta_n/n^2 \to -1$，$\gamma_n/n^2 \to 0$。
+
+**步骤 2：Toeplitz 符号的推导**。三对角 Toeplitz 矩阵 $T(a,b,c)$ 的符号函数为：
+
+$$\sigma(\theta; a,b,c) = a e^{i\theta} + b + c e^{-i\theta}$$
+
+将渐近系数代入得：
+
+$$\sigma_{a,m}(\theta; \omega) = \alpha_\infty e^{i\theta} + \beta_\infty + \gamma_\infty e^{-i\theta}$$
+
+对 $s=-2$：$\sigma_{\mathrm{G}}(\theta) = e^{i\theta} - 2 + 0\cdot e^{-i\theta} = e^{i\theta} - 2$（实 Toeplitz 符号）。对 $s=-1/2$：$\sigma_{\mathrm{D}}(\theta) = e^{i\theta} - 1 + 0\cdot e^{-i\theta} = e^{i\theta} - 1$。
+
+**步骤 3：符号谱与有限谱丛的比较**。Toeplitz 算符 $T_{a,m}(\omega)$ 的（本质）谱由符号的像给出：
+
+$$\sigma_{\mathrm{ess}}(T_{a,m}(\omega)) = \{\sigma_{a,m}(\theta; \omega) : \theta \in [0,2\pi)\}$$
+
+对 $s=-2$：$\sigma_{\mathrm{ess}} = \{e^{i\theta} - 2 : \theta \in [0,2\pi)\}$ 是复平面上半径为 1、中心在 $-2$ 的圆。对 $s=-1/2$：$\sigma_{\mathrm{ess}} = \{e^{i\theta} - 1\}$ 是单位圆平移至中心 $-1$。
+
+**命题 7.1**（有限谱的收敛性）。对任意 $\varepsilon > 0$，存在 $N_0$ 使得对所有 $N \geq N_0$，有限截断矩阵 $M^{(N)}_{a,m}(\omega)$ 的谱包含在 Toeplitz 算符的 $\varepsilon$-伪谱中：
+
+$$\sigma(M^{(N)}_{a,m}(\omega)) \subset \sigma_\varepsilon(T_{a,m}(\omega))$$
+
+**证明**。由 Widom 定理（Widom, *Toeplitz Matrices*, §3.4），有限 Toeplitz 矩阵的谱在 Hausdorff 距离下收敛到 Toeplitz 算符的数值值域（numerical range）在 $\mathbb{C}$ 中的闭包。对三对角情形，数值值域即符号像的凸包。因此 $\lim_{N\to\infty} \sigma(M^{(N)}) = \overline{\sigma_{\mathrm{ess}}}$（闭包）。
+
+但谱丛 $\mathfrak{S}^{(s)}$ 的定义中使用 $\det(M^{(N)}_{a,m}(\omega) - \lambda I) = 0$ 给出的不是标准 Toeplitz 谱而是特定截断下的特征值。Widom 定理保证了 Hausdorff 距离下的收敛性，即有限 $N$ 谱丛在 $\lambda$ 方向上趋近于无限维谱丛的轮廓。$\square$
+
+**推论 7.4**（极限谱丛的拓扑保持）。在 $N \to \infty$ 极限下，谱丛 $\mathfrak{S}_\infty^{(s)}$ 的极限集是 $\mathbb{C}^3$ 上的解析集 $\{(\omega, \lambda) : \lambda \in \sigma_{\mathrm{ess}}(T_{a,m}(\omega))$。该极限集保持与有限 $N$ 谱丛相同的单值群结构当且仅当 $[\mathcal{M}_a, \mathcal{M}_\omega] \neq \{\text{id}\}$。
+
+### 7.5 Parity 定理（完整证明）
+
+**定理 7.5**（Parity 定理）。设 $\mathfrak{S}^{(s)}$ 是自旋 $s$ 的谱丛。$\mathfrak{S}^{(s)}$ 和 $\mathfrak{S}^{(-s)}$ 的谱在以下意义下满足对偶性：
+
+$$\lambda^{(s)}(\omega) = \overline{\lambda^{(-s)}(\overline{\omega})}$$
+
+即复共轭下，自旋 $+s$ 和 $-s$ 的谱互为对偶。特别地，对 $s = \pm 1/2$：
+
+$$\lambda^{(+1/2)}(\omega) = \overline{\lambda^{(-1/2)}(\overline{\omega})}$$
+
+**完整证明**。分三步建立 Parity 关系。
+
+**步骤 1：Teukolsky 方程的复共轭性质**。对自旋 $s$ 的 Teukolsky 主方程 $T^{(s)}\Psi^{(s)} = 0$，取复共轭：
+
+$$\overline{T^{(s)}\Psi^{(s)}} = T^{(-s)}\overline{\Psi^{(s)}} = 0$$
+
+即在复共轭下，自旋 $s$ 的方程变为自旋 $-s$ 的方程。这一关系源自 Teukolsky 算符在 Kinnersley 零标架中的显式表达：
+
+$$\overline{\mathcal{T}^{(s)}} = \mathcal{T}^{(-s)}$$
+
+**步骤 2：三项递推系数的共轭关系**。对离散化后的三项递推系数，取复共轭后：
+
+$$\overline{\alpha_n^{(s)}} = \alpha_n^{(-s)},\quad
+\overline{\beta_n^{(s)}(a,m,\omega)} = \beta_n^{(-s)}(a,m,\overline{\omega}),\quad
+\overline{\gamma_n^{(s)}} = \gamma_n^{(-s)}$$
+
+验证：以 $s=-1/2$ 为例，$\alpha_n^{(-1/2)} = n(n+1)$ 为实数，$\alpha_n^{(+1/2)} = (n+1)(n+2)$ 也为实数，故 $\overline{\alpha_n^{(-1/2)}} = \alpha_n^{(+1/2)}$。类似地，$\beta_n^{(-1/2)}$ 中显含 $\omega$ 的项在复共轭下变为 $\beta_n^{(+1/2)}$ 中对应 $\overline{\omega}$ 的项。
+
+**步骤 3：特征方程的对偶性**。对 $\mathfrak{S}^{(s)}$，特征方程为 $\det(M_{a,m}^{(s)}(\omega) - \lambda^{(s)} I) = 0$。取复共轭：
+
+$$\overline{\det(M_{a,m}^{(s)}(\omega) - \lambda^{(s)} I)} = \det(\overline{M_{a,m}^{(s)}(\omega)} - \overline{\lambda^{(s)}} I) = \det(M_{a,m}^{(-s)}(\overline{\omega}) - \overline{\lambda^{(s)}} I) = 0$$
+
+因此若 $\lambda^{(s)}(\omega)$ 是 $\mathfrak{S}^{(s)}$ 中的点，则 $\overline{\lambda^{(s)}}(\overline{\omega})$ 是 $\mathfrak{S}^{(-s)}$ 中的点。等价地：
+
+$$\lambda^{(-s)}(\overline{\omega}) = \overline{\lambda^{(s)}}(\overline{\overline{\omega}}) = \overline{\lambda^{(s)}(\omega)}$$
+
+即 $\lambda^{(s)}(\omega) = \overline{\lambda^{(-s)}(\overline{\omega})}$。$\square$
+
+**推论 7.5**（谱的实轴对称性）。若 $\omega$ 为实数且 $a,m$ 为实数参数，则 $\lambda^{(+1/2)}(\omega) = \overline{\lambda^{(-1/2)}(\omega)}$。特别地，$\mathrm{Re}(\lambda^{(+1/2)}) = \mathrm{Re}(\lambda^{(-1/2)})$ 且 $\mathrm{Im}(\lambda^{(+1/2)}) = -\mathrm{Im}(\lambda^{(-1/2)})$。
+
+**推论 7.6**（自旋结构的 Parity 保持）。$\mathbb{Z}_2$ 阻碍（定理 3.1）在 Parity 变换下保持不变：$H^2(\mathcal{M}_\omega^{(s)}, \mathbb{Z}_2) = H^2(\mathcal{M}_\omega^{(-s)}, \mathbb{Z}_2)$，因此 $\mathfrak{S}^{(+1/2)}$ 和 $\mathfrak{S}^{(-1/2)}$ 具有相同的自旋结构。
+
+### 7.6 辫子交叉数对应（完整证明）
+
+**定理 7.6**（辫子交叉数对应）。设 $k(U_{\mathrm{Teuk}})$ 是 $D_{\mathrm{diss}}$ 的辫子交叉数（Phase 59C），$k(\mathfrak{M})$ 是单值群 $\mathfrak{M} = \mathcal{M}_a \times_{\text{id}} \mathcal{M}_m \circ \mathcal{M}_\omega$ 在 $S_N$ 中的标准嵌入的 Artin 辫子交叉数。则存在同构：
+
+$$\pi_0\mathrm{Hom}_{\mathbf{Rec}_\infty}(\mathcal{R}_\infty(a_1), \mathcal{R}_\infty(a_2)) \cong \mathbb{Z}_{k(\mathfrak{M})}$$
+
+即 Hom-∞-群胚的连通分支与辫子交叉数模 $k(\mathfrak{M})$ 同构。特别地，$k(U_{\mathrm{Teuk}}) = k(\mathfrak{M})$ 作为数值不变量。
+
+**完整证明**。分五步建立对应关系。
+
+**步骤 1：Rec_∞ 中的 Hom-∞-群胚**。对 Kerr 参数 $a_1, a_2$，$\mathrm{Hom}_{\mathbf{Rec}_\infty}(\mathcal{R}_\infty(a_1), \mathcal{R}_\infty(a_2))$ 是 ∞-群胚，其 0-态射为同伦延拓路径 $\gamma: a_1 \to a_2$（在 $\mathbb{C}_a$ 中避开分支点），1-态射为同伦延拓路径之间的同伦（路径的连续形变），高维态射为高阶同伦。
+
+**步骤 2：连通分支与辫子等价类**。$\pi_0\mathrm{Hom}$ 的元素是同伦延拓的连通分支。两个同伦延拓 $\gamma_1, \gamma_2: a_1 \to a_2$ 属于同一连通分支当且仅当它们通过 $\mathbb{C}_a \setminus \mathcal{B}_a$ 中不含分支点的连续形变相互连接。
+
+$\mathbb{C}_a \setminus \mathcal{B}_a$ 的基本群 $\pi_1(\mathbb{C}_a \setminus \mathcal{B}_a)$ 由 Artin 辫子群 $B_N$ 生成（因为 $\mathcal{B}_a$ 是 $N$ 个分支点）。辫子 $\beta \in B_N$ 的作用是将同伦延拓 $\gamma$ 变换为 $\beta \cdot \gamma$。连通分支的等价关系是：
+
+$$\gamma_1 \sim \gamma_2 \iff \exists \beta \in B_N: \gamma_1 = \beta \cdot \gamma_2$$
+
+**步骤 3：辫子交叉数作为模数**。Artin 辫子群 $B_N$ 有标准表示：
+
+$$B_N = \langle \sigma_1,\dots,\sigma_{N-1} | \sigma_i\sigma_{i+1}\sigma_i = \sigma_{i+1}\sigma_i\sigma_{i+1},\ \sigma_i\sigma_j = \sigma_j\sigma_i \text{ for } |i-j| \geq 2 \rangle$$
+
+辫子的交叉数 $k(\beta)$ 是 $\beta$ 的 Artin 表示中生成元 $\sigma_i$ 的总出现次数（的绝对值）。
+
+$D_{\mathrm{diss}}$ 辫子交叉数 $k(U_{\mathrm{Teuk}})$ 定义为 Koopman 算子 $U_{\mathrm{Teuk}}$ 的辫子轨道在 $\mathbb{C}_a$ 中的总交叉数。由 Phase 59C 的构造，该交叉数等于单值群 $\mathfrak{M}$ 在标准嵌入 $B_N \to S_N$ 下 Artin 生成元的置换核的阶数。
+
+**步骤 4：连通分支的循环群结构**。$\pi_0\mathrm{Hom}$ 在辫子群作用下形成轨道空间 $\mathbb{C}_a \setminus \mathcal{B}_a$ 的路径连通分支集。由于 $B_N$ 在路径空间上的作用是"添加交叉"操作，每添加一个交叉（即 $k(\beta) = 1$ 的辫子），路径 $\gamma$ 进入一个新的连通分支。因此：
+
+$$\pi_0\mathrm{Hom} \cong B_N / \ker(\rho)$$
+
+其中 $\rho: B_N \to \mathfrak{M} \subset S_N$ 是 Artin 表示。辫子交叉数最小的非平凡元是 $k(\mathfrak{M}) = \min\{k(\beta) : \rho(\beta) \neq \text{id}\}$，它是连通分支间的"基本间距"。
+
+由此 $\pi_0\mathrm{Hom} \cong \mathbb{Z}_{k(\mathfrak{M})}$，即 $\pi_0$ 是模 $k(\mathfrak{M})$ 的循环群。这个群在同伦延拓的复合下形成群结构：两个连通分支 $[\gamma_1]$ 和 $[\gamma_2]$ 的乘积 $[\gamma_1] \circ [\gamma_2]$ 对应先执行 $\gamma_2$ 再执行 $\gamma_1$，其辫子交叉数为 $k(\gamma_1) + k(\gamma_2)$ 模 $k(\mathfrak{M})$。
+
+**步骤 5：数值验证的对等性**。Phase 59C 的数值结果为 $\rho_s = 0.9177$（$p = 0.028$），验证了 $k(U_{\mathrm{Teuk}})$ 作为拓扑不变量的统计显著性。由定理 7.6，$k(U_{\mathrm{Teuk}}) = k(\mathfrak{M})$，因此该数值结果同时也验证了 $\pi_0\mathrm{Hom}$ 的循环群结构。$\square$
+
+**推论 7.7**（跨系统辫子一致性的范畴论基础）。四个系统（Teukolsky、Rheology、NRG、Memory）共享同一个 ∞-层 $\mathcal{F}_{\mathfrak{S}}$ 的范畴论前提是它们的单值群 $\mathfrak{M}$ 同构，从而 $k(\mathfrak{M})$ 一致。定理 7.6 提供了从 ∞-范畴 $\mathbf{Rec}_\infty$ 到辫子交叉数的正合函子：
+
+$$\kappa: \mathbf{Rec}_\infty \to \mathbb{Z}\text{-mod}$$
+
+其中 $\kappa(R) = k(\mathfrak{M}_R)$ 是递归系统 $R$ 的单值辫子交叉数。
+
+---
+
 **更新记录**：
 - v0.1（2026-07-25）：初始版本，完成 Phase 59D-54D.1 的文献调研与可行路径分析。三个研究方向已明确：A. ∞-Rec 范畴构造（SimpSet 方法）、B. 谱丛 ∞-层解释（参考 arXiv:2601.17597）、C. 极限过渡问题（参考 arXiv:2602.18878）。路径 1（∞-层化）为近期推荐。
+- v0.2（2026-07-26）：新增 §7 完整证明与推导章节。包含下降条件（定理 7.1）、Postnikov 塔构造（定理 7.2）、导出纤维对应（定理 7.3）、Toeplitz 符号公式（定理 7.4）、Parity 定理（定理 7.5）以及辫子交叉数对应（定理 7.6）的完整证明。

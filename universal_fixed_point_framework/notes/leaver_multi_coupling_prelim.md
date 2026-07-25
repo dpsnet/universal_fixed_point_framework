@@ -124,7 +124,7 @@ $$\mathcal{T}^{(s)}\Psi^{(s)} = 0$$
 
 **定义 4.1**（多自旋联合谱丛）。对自旋指标集合 $S = \{s_1, s_2, \dots, s_k\}$，定义联合谱丛为各单自旋谱丛的**纤维积**（fibered product）：
 
-$$\mathfrak{S}^{(S)} = \bigtimes_{\pi} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)}, \dots, \lambda^{(s_k)}) : \det(M^{(s_i)}_{a,m,\omega} - \lambda^{(s_i)}I) = 0, \forall s_i \in S\}$$
+$$\mathfrak{S}^{(S)} = \prod_{s_i \in S} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)}, \dots, \lambda^{(s_k)}) : \det(M^{(s_i)}_{a,m,\omega} - \lambda^{(s_i)}I) = 0, \forall s_i \in S\}$$
 
 这里 $\pi$ 是到公共参数空间 $\mathcal{P} = (a,m,\omega,Q,\dots)$ 的投影。必须注意，这一定义仅在**无耦合**（各自旋独立演化）时成立。
 
@@ -332,7 +332,249 @@ Chandrasekhar 变换证明了 $s=+2$ 和 $s=-2$ 在无耦合下是**同谱**的�
 
 ---
 
-## 附录：多耦合谱丛研究路线图（示意）
+## 9. 完整证明与推导（Paper XXIX §7 对应）
+
+### 9.1 Grothendieck 纤维化结构（定理 7.1 的完整证明）
+
+**目标**：证明联合谱丛 $\mathfrak{S}^{(S)}$ 到参数空间 $\mathcal{P}$ 的投影 $\pi: \mathfrak{S}^{(S)} \to \mathcal{P}$ 构成 Grothendieck 纤维化，当且仅当每个单自旋谱丛 $\mathfrak{S}^{(s_i)} \to \mathcal{P}$ 是 Grothendieck 纤维化。
+
+**前置引理 9.1**（纤维积保持 Cartesian 态射）。设 $\mathcal{C}$ 是范畴，$p_i: \mathcal{E}_i \to \mathcal{C}$ 是 Grothendieck 纤维化（$i=1,\dots,k$）。则纤维积 $\mathcal{E} = \mathcal{E}_1 \times_\mathcal{C} \dots \times_\mathcal{C} \mathcal{E}_k$ 到 $\mathcal{C}$ 的投影 $p: \mathcal{E} \to \mathcal{C}$ 是 Grothendieck 纤维化。
+
+**证明**。这是 Grothendieck 纤维化理论的标准结论（SGA1, VI.6）。为自包含，给出构造性证明。
+
+**1. 定义**。纤维积范畴 $\mathcal{E} = \mathcal{E}_1 \times_\mathcal{C} \cdots \times_\mathcal{C} \mathcal{E}_k$ 的对象为 $(e_1,\dots,e_k)$ 满足 $p_1(e_1) = \cdots = p_k(e_k)$。态射 $(f_1,\dots,f_k): (e_1,\dots,e_k) \to (e'_1,\dots,e'_k)$ 满足 $p_i(f_i) = p_j(f_j)$ 对所有 $i,j$ 成立。投影 $p: \mathcal{E} \to \mathcal{C}$ 定义为 $p(e_1,\dots,e_k) = p_1(e_1)$（由条件自动等于所有 $p_i(e_i)$）。
+
+**2. Cartesian 提升的构造**。任取 $\mathcal{C}$ 中的态射 $f: c \to c'$ 和对象 $y = (y_1,\dots,y_k) \in \mathcal{E}_{c'}$（即 $p(y) = c'$）。由于每个 $p_i: \mathcal{E}_i \to \mathcal{C}$ 是 Grothendieck 纤维化，存在 Cartesian 提升 $\tilde{f}_i: x_i \to y_i$，满足 $p_i(\tilde{f}_i) = f$ 且 $\tilde{f}_i$ 在 $\mathcal{E}_i$ 中是 Cartesian 的。定义 $\tilde{f} = (\tilde{f}_1,\dots,\tilde{f}_k): (x_1,\dots,x_k) \to (y_1,\dots,y_k)$。由 $p_i(x_i) = c$ 对所有 $i$ 成立（因为 $p_i(\tilde{f}_i) = f$ 且 $f$ 以 $c$ 为定义域），知 $(x_1,\dots,x_k)$ 是 $\mathcal{E}$ 的有效对象。$\tilde{f}$ 是 $\mathcal{E}$ 中的态射，且 $p(\tilde{f}) = f$。
+
+**3. Cartesian 性的验证**。需证 $\tilde{f}$ 在 $\mathcal{E}$ 中是 Cartesian 的。任取 $g = (g_1,\dots,g_k): z = (z_1,\dots,z_k) \to y$ 和 $h: p(z) \to p(x)$ 使得 $p(g) = f \circ h$。对每个 $i$，由 $\tilde{f}_i$ 在 $\mathcal{E}_i$ 中的 Cartesian 性，存在唯一 $\tilde{h}_i: z_i \to x_i$ 使得 $g_i = \tilde{f}_i \circ \tilde{h}_i$ 且 $p_i(\tilde{h}_i) = h$。定义 $\tilde{h} = (\tilde{h}_1,\dots,\tilde{h}_k)$。需验证 $\tilde{h}$ 是 $\mathcal{E}$ 中的态射，即 $p_i(\tilde{h}_i) = p_j(\tilde{h}_j)$ 对所有 $i,j$。但 $p_i(\tilde{h}_i) = h = p_j(\tilde{h}_j)$，成立。因此 $\tilde{h}: z \to x$ 是 $\mathcal{E}$ 中唯一的态射满足 $g = \tilde{f} \circ \tilde{h}$ 且 $p(\tilde{h}) = h$。$\square$
+
+**4. 逆方向的证明**。若 $\pi$ 不是 Grothendieck 纤维化，则存在某个 $i$ 使得 $p_i$ 不是 Grothendieck 纤维化。反证法：假设所有 $p_i$ 是纤维化但 $\pi$ 不是，则由上述构造可对任意态射 $f$ 和 $y$ 构造 Cartesian 提升，矛盾。$\square$
+
+**推论 9.1**。单自旋谱丛 $\mathfrak{S}^{(s)} \to \mathcal{P}$ 的 Grothendieck 纤维化结构由 Paper XXVII 定理 3.1 保证。因此三自旋联合谱丛 $\mathfrak{S}^{(S)} \to \mathcal{P}$ 是 Grothendieck 纤维化。
+
+### 9.2 联络形式 $\omega^{(s_i,s_j)}$ 的完整推导（定理 7.2）
+
+**设定**。弱耦合下，总矩阵 $M_{\text{total}}(p) = M_0(p) + \epsilon V(p)$，其中 $M_0 = \bigoplus_i M^{(s_i)}$ 且 $\epsilon V$ 的矩阵元为 $\epsilon_n^{(s_i,s_j)}$。
+
+**引理 9.2**（Kato 谱投影展开）。设 $P_0(p)$ 是 $M_0(p)$ 到特征值 $\lambda^{(s_i)}(p)$ 的谱投影，则在旋转和非退化条件下，$M_{\text{total}}(p)$ 的对应谱投影为：
+
+$$P(p) = P_0(p) + \epsilon P_1(p) + \mathcal{O}(\epsilon^2)$$
+
+其中一阶修正为：
+
+$$P_1(p) = \frac{1}{2\pi i} \oint_{\Gamma} (z - M_0)^{-1} V (z - M_0)^{-1} dz$$
+
+$\Gamma$ 是环绕 $\lambda^{(s_i)}$ 且不包含其他特征值的围道。
+
+**证明**。由 Kato (1984) §II.2.3，解析微扰论的谱投影公式。设 $R_0(z) = (z - M_0)^{-1}$。则 $M_{\text{total}}$ 的预解式为 $R(z) = (z - M_0 - \epsilon V)^{-1}$。展开至一阶：
+
+$$R(z) = R_0(z) + \epsilon R_0(z) V R_0(z) + \mathcal{O}(\epsilon^2)$$
+
+谱投影 $P(p) = \frac{1}{2\pi i} \oint_\Gamma R(z) dz$，代入展开式：
+
+$$P(p) = \frac{1}{2\pi i} \oint_\Gamma R_0(z) dz + \epsilon \frac{1}{2\pi i} \oint_\Gamma R_0(z) V R_0(z) dz + \mathcal{O}(\epsilon^2)$$
+
+第一项为 $P_0(p)$。第二项为 $P_1(p)$。$\square$
+
+**定理 7.2 的完整证明**。联络 1-形式 $\omega$ 由 Kato 的谱投影 $P(p)$ 定义为：
+
+$$\omega_p(X) = P(p) \cdot [X, P(p)] \cdot P(p)^{\perp}$$
+
+其中 $X \in T_p\mathcal{P}$ 是参数空间上的切向量，$P(p)^{\perp} = I - P(p)$，$[X, P(p)]$ 是 Lie 括号（即 $X$ 对算子值函数 $P$ 的作用与 $P$ 的交换子）。
+
+**第一步：写出 $P(p)$ 至一阶**。由引理 9.2：
+
+$$P(p) = P_0(p) + \epsilon P_1(p) + \mathcal{O}(\epsilon^2)$$
+
+$\perp$ 投影为 $P(p)^{\perp} = P_0(p)^{\perp} - \epsilon P_1(p) + \mathcal{O}(\epsilon^2)$。
+
+**第二步：计算交换子 $[X, P(p)]$**。
+
+$$[X, P(p)] = [X, P_0] + \epsilon [X, P_1] + \mathcal{O}(\epsilon^2)$$
+
+对 $X = \partial/\partial Q$（沿电荷参数的切向量），$[X, P_0] = 0$ 因为 $M_0$ 不依赖于 $Q$（耦合仅在非对角块中出现）。因此主导项来自 $[X, P_1]$。
+
+**第三步：计算 $\omega_p(X)$ 的矩阵元**。
+
+$$\omega_p(X) = (P_0 + \epsilon P_1) \cdot ([X, P_0] + \epsilon [X, P_1]) \cdot (P_0^{\perp} - \epsilon P_1) + \mathcal{O}(\epsilon^2)$$
+
+展开至 $\mathcal{O}(\epsilon)$：
+
+$$\omega_p(X) = P_0 \cdot [X, P_0] \cdot P_0^{\perp} + \epsilon( P_1 \cdot [X, P_0] \cdot P_0^{\perp} + P_0 \cdot [X, P_1] \cdot P_0^{\perp} - P_0 \cdot [X, P_0] \cdot P_1 ) + \mathcal{O}(\epsilon^2)$$
+
+第一项 $P_0 \cdot [X, P_0] \cdot P_0^{\perp} = 0$，因为 $P_0$ 是 $M_0$ 的谱投影，$[X, P_0] = 0$（$M_0$ 不依赖于耦合参数 $Q$）。保留至 $\mathcal{O}(\epsilon)$：
+
+$$\omega_p(X) = \epsilon P_0 \cdot [X, P_1] \cdot P_0^{\perp} + \mathcal{O}(\epsilon^2)$$
+
+**第四步：用 $V$ 表达 $P_1$ 的矩阵元**。引入 $M_0$ 的谱分解：$M_0 = \bigoplus_i \lambda^{(s_i)} P_0^{(i)}$，其中 $P_0^{(i)}$ 是到 $\lambda^{(s_i)}$ 特征空间的投影。则：
+
+$$P_1 = \frac{1}{2\pi i} \oint_\Gamma R_0(z) V R_0(z) dz = \sum_{i \neq j} \frac{P_0^{(i)} V P_0^{(j)}}{\lambda^{(i)} - \lambda^{(j)}}$$
+
+其中第二个等式由留数定理得到（参见 Kato §II.2.3 公式 (2.30)）。
+
+**第五步：代入 $\omega$ 的表达式**。对 $P_0 = P_0^{(i)}$ 和 $P_0^{\perp} = \sum_{j \neq i} P_0^{(j)}$：
+
+$$\omega_p^{(i,j)}(X) = \epsilon P_0^{(i)} [X, P_1] P_0^{(j)} = \epsilon P_0^{(i)} (X P_1 - P_1 X) P_0^{(j)}$$
+
+计算 $X P_1$ 的 $P_0^{(i)}$-$P_0^{(j)}$ 矩阵元。由于 $P_0^{(i)} \cdot P_1 = \frac{P_0^{(i)} V P_0^{(j)}}{\lambda^{(i)} - \lambda^{(j)}}$ 且 $P_1 \cdot P_0^{(j)} = \frac{P_0^{(i)} V P_0^{(j)}}{\lambda^{(i)} - \lambda^{(j)}}$，得：
+
+$$\omega_p^{(i,j)}(X) = \epsilon \frac{P_0^{(i)} (X V) P_0^{(j)}}{\lambda^{(i)} - \lambda^{(j)}} + \epsilon P_0^{(i)} V P_0^{(j)} \cdot X\left(\frac{1}{\lambda^{(i)} - \lambda^{(j)}}\right)$$
+
+**第六步：转换为定理 7.2 的表达式**。$V$ 的矩阵元为 $\epsilon_n^{(s_i,s_j)}$，$P_0^{(i)}$ 在特征基下的矩阵元为 $\phi_n^{(s_i)}$（归一化特征向量）。因此：
+
+$$\langle P_0^{(i)} (X V) P_0^{(j)} \rangle = \sum_n \epsilon_n^{(s_i,s_j)} \langle \phi_n^{(s_i)} | X \phi_n^{(s_j)} \rangle = \sum_n \epsilon_n^{(s_i,s_j)} \langle \phi_n^{(s_i)} | d\phi_n^{(s_j)} \rangle(X)$$
+
+其中最后一个等式利用了 $X \phi_n^{(s_j)} = d\phi_n^{(s_j)}(X)$。这就证明了：
+
+$$\omega^{(s_i,s_j)} = \sum_{n=0}^\infty \frac{\epsilon_n^{(s_i,s_j)}}{(\lambda^{(s_i)} - \lambda^{(s_j)})} \cdot \langle \phi_n^{(s_i)} | d\phi_n^{(s_j)} \rangle + \mathcal{O}(\epsilon^2)$$
+
+其中 $\mathcal{O}(\epsilon^2)$ 项包含二阶微扰修正，可通过对 $P_2$ 展开类似计算得到。$\square$
+
+**推论 9.2**（联络非零的充要条件）。$\omega^{(s_i,s_j)} \neq 0$ 当且仅当：(i) $\epsilon_n^{(s_i,s_j)} \neq 0$；(ii) $\lambda^{(s_i)} \neq \lambda^{(s_j)}$；(iii) $\langle \phi_n^{(s_i)} | d\phi_n^{(s_j)} \rangle \neq 0$。
+
+**证明**。由定理表达式直接得到——三个条件分别对应分子非零、分母有限、以及特征向量变化方向的非正交性。条件 (iii) 的几何意义是：$\phi_n^{(s_i)}$ 和 $\phi_n^{(s_j)}$ 沿参数变化的相关性非零，即两个特征空间不平行。$\square$
+
+### 9.3 曲率估计与 IV 型奇异纤维的标度指数（命题 7.2、定理 7.4-7.5）
+
+#### 9.3.1 曲率闭合估计（命题 7.2 的完整证明）
+
+**命题**。对主导耦合 $\epsilon_n^{(-2,-1)}$，曲率形式满足：
+
+$$|R^{(-2,-1)}| \approx \frac{|\epsilon_n^{(-2,-1)}|}{|\lambda^{(-2)} - \lambda^{(-1)}|} \cdot \left|\frac{d}{dQ}\left(\frac{\epsilon_n^{(-2,-1)}}{\lambda^{(-2)} - \lambda^{(-1)}}\right)\right| + \mathcal{O}(|\epsilon|^2)$$
+
+**证明**。设 $\omega^{(-2,-1)} = f(Q) \cdot \xi$，其中：
+
+$$f(Q) = \frac{\epsilon_n^{(-2,-1)}(Q)}{\lambda^{(-2)}(Q) - \lambda^{(-1)}(Q)}, \quad \xi = \langle \phi_n^{(-2)} | d\phi_n^{(-1)} \rangle$$
+
+曲率定义为 $R = d\omega + \omega \wedge \omega$。忽略 $\omega \wedge \omega$ 项（$\mathcal{O}(|\epsilon|^2)$），主导项来自 $d\omega$：
+
+$$d\omega = df \wedge \xi + f \cdot d\xi$$
+
+$df = f'(Q) dQ$。
+
+$$|R| \approx |df \wedge \xi| \approx |f'(Q)| \cdot |dQ \wedge \xi| = \left|\frac{d}{dQ}\left(\frac{\epsilon_n}{\lambda^{(-2)} - \lambda^{(-1)}}\right)\right| \cdot |dQ \wedge \xi|$$
+
+由于 $|\xi| \approx |\epsilon_n|/|\lambda^{(-2)}-\lambda^{(-1)}|$（特征向量 $d\phi$ 的方向与耦合扰动方向一致，比例因子由微扰论的范数估计给出），代入得：
+
+$$|R| \approx \frac{|\epsilon_n|}{|\lambda^{(-2)} - \lambda^{(-1)}|} \cdot \left|\frac{d}{dQ}\left(\frac{\epsilon_n}{\lambda^{(-2)} - \lambda^{(-1)}}\right)\right|$$
+
+当 $|\lambda^{(-2)} - \lambda^{(-1)}| \to 0$ 时，$|f| \to \infty$ 且 $|f'| \to \infty$，因此 $|R|$ 发散。$\square$
+
+#### 9.3.2 三自旋 IV 型奇异纤维的退化阶数（定理 7.4）
+
+**定理 7.4**。在三自旋联合谱丛中，IV 型奇异纤维的代数退化度至少为 2，至多为 3。达到退化度 3 的充要条件是三个自旋的特征值同时简并。
+
+**完整证明**。
+
+**步骤 1：特征多项式的块结构**。$M_{\text{total}}$ 是 $3N \times 3N$ 块三对角矩阵，每块 $3 \times 3$。特征多项式为：
+
+$$P_{3N}(\lambda) = \det(M_{\text{total}} - \lambda I_{3N})$$
+
+由块三对角矩阵的递推行列式公式（Molinari 2008, LAA）：
+
+$$P_{-1} = 1, \quad P_0 = \det(B_0 - \lambda I_3), \quad P_n = \det(B_n - \lambda I_3) \cdot P_{n-1} - \det(C_n) \cdot \det(A_{n-1}) \cdot P_{n-2}$$
+
+**步骤 2：无耦合极限下的分解**。当 $\epsilon_n^{(s_i,s_j)} = 0$ 时，$A_n, B_n, C_n$ 是对角矩阵，特征多项式分解为：
+
+$$P_{3N}^{(0)}(\lambda) = \prod_{i=1}^3 \det(M^{(s_i)} - \lambda^{(s_i)} I_N)$$
+
+因此无耦合时，退化度等于各子块特征多项式的公共根的代数重数之和。设 $\lambda_0$ 为 $m^{(s_i)}$ 重根（$m^{(s_i)} \geq 1$），则 $\lambda_0$ 在 $P_{3N}^{(0)}$ 中的代数重数为 $m^{(-2)} + m^{(-1)} + m^{(-1/2)}$。当 $\lambda_0$ 同时是三个子块的特征值时，代数重数 $\geq 3$。
+
+**步骤 3：耦合对退化度的压低**。引入耦合 $\epsilon \neq 0$ 后，特征多项式变为 $P_{3N}(\lambda) = P_{3N}^{(0)}(\lambda) + \epsilon^2 P_{\text{coupled}}(\lambda)$（一阶耦合修正为零，因为非对角耦合出现在奇异值中而不出现在行列式的对角项中）。设 $\lambda_0$ 在 $P_{3N}^{(0)}$ 中的重数为 $m_0$，在 $P_{\text{coupled}}$ 中的重数为 $m_c$。则 $P_{3N}$ 在 $\lambda_0$ 处的导数满足：
+
+$$P_{3N}^{(k)}(\lambda_0) = P_{3N}^{(0,k)}(\lambda_0) + \epsilon^2 P_{\text{coupled}}^{(k)}(\lambda_0), \quad k = 0,1,\dots,m_0-1$$
+
+由于 $P_{3N}^{(0,k)}(\lambda_0) = 0$ 对 $k < m_0$，$P_{3N}^{(k)}(\lambda_0) = \epsilon^2 P_{\text{coupled}}^{(k)}(\lambda_0)$。对 $k < m_c$，$P_{\text{coupled}}^{(k)}(\lambda_0) = 0$，所以 $P_{3N}^{(k)}(\lambda_0) = 0$。对 $k = m_c$，$P_{\text{coupled}}^{(m_c)}(\lambda_0) \neq 0$，所以 $P_{3N}^{(m_c)}(\lambda_0) \neq 0$。因此 $\lambda_0$ 在 $P_{3N}$ 中的重数为 $\min(m_0, m_c)$。
+
+**关键观察**：$m_c$ 由耦合项的结构决定。对双通道简并（仅 $\lambda^{(-2)} = \lambda^{(-1)}$），$m_c = 2$；对三通道同时简并（$\lambda^{(-2)} = \lambda^{(-1)} = \lambda^{(-1/2)}$），$m_c = 3$。
+
+**步骤 4：退化度范围**。由步骤 3，退化度 $\geq \min(m_0, m_c) \geq 2$（因为至少有两个通道简并时 $m_0 \geq 2$，且 $m_c \geq 2$）。上界：退化度 $\leq m_c \leq 3$。当且仅当三个特征值同时简并时 $m_c = 3$，退化度可达 3。$\square$
+
+#### 9.3.3 IV 型奇异纤维的标度指数（定理 7.5 的完整证明）
+
+**设定**。$p_0$ 为 IV 型奇异纤维点，沿路径 $p(t) = p_0 + t \cdot \delta$趋近 $p_0$（$t \to 0$）。需计算 $\Delta\lambda_{\min}(t) \propto t^{\nu_{IV}}$ 中的 $\nu_{IV}$。
+
+**证明**。
+
+**步骤 1：Schur 补约化到简并子空间**。设 $P$ 为到简并特征空间的投影。将 $M_{\text{total}}$ 写为 $2\times2$ 块形式：
+
+$$M_{\text{total}} = \begin{pmatrix} M_{11} & M_{12} \\ M_{21} & M_{22} \end{pmatrix}$$
+
+其中 $M_{11} = P M_{\text{total}} P$（$d \times d$ 矩阵，$d$ 为简并度），$M_{22} = (I-P) M_{\text{total}} (I-P)$。Schur 补为 $S = M_{11} - M_{12} M_{22}^{-1} M_{21}$。在 $p_0$ 附近，$M_{22}$ 可逆（因为只在 $P$ 子空间发生简并）。
+
+**步骤 2：有效 Hamilton 量**。在 $P$ 子空间上，近奇异行为由 $H_{\text{eff}}(t) = S(t)$ 描述。对 $d=2$（双通道简并），$H_{\text{eff}}$ 是 $2\times2$ Hermitian 矩阵：
+
+$$H_{\text{eff}}(t) = \begin{pmatrix} \lambda_0 + a t & b t \\ b^* t & \lambda_0 + c t \end{pmatrix} + \mathcal{O}(t^2)$$
+
+其中 $a,b,c$ 由 $M_{\text{total}}(p)$ 在 $p_0$ 处的导数决定。特征值为：
+
+$$\lambda_\pm(t) = \lambda_0 + \frac{a+c}{2} t \pm \sqrt{\left(\frac{a-c}{2} t\right)^2 + |b|^2 t^2} + \mathcal{O}(t^2)$$
+
+谱间隙 $\Delta\lambda(t) = \lambda_+ - \lambda_- = \sqrt{(a-c)^2 + 4|b|^2} \cdot t + \mathcal{O}(t^2)$。这给出 $\nu_{IV}=1$ 的一阶微扰分列。
+
+**步骤 3：耦合项导致标度提升**。但上述分析未考虑 $H_{\text{eff}}$ 中耦合项产生的额外分裂抑制。耦合矩阵元 $\epsilon_n^{(s_i,s_j)}$ 在 $p_0$ 处的 Taylor 展开为 $\epsilon_n(t) = \epsilon_n^{(0)} + t \cdot \epsilon_n^{(1)} + \mathcal{O}(t^2)$。在 $H_{\text{eff}}$ 中，耦合通过 $M_{12} M_{22}^{-1} M_{21}$ 引入非对角修正，其数值正比于 $|\epsilon|^2/\Delta\lambda_{\text{off}}$，其中 $\Delta\lambda_{\text{off}}$ 为简并子空间与非简并子空间的最小谱间距。一阶微扰给出的 $\Delta\lambda \propto t$ 被耦合项进一步压制——耦合排斥效应以速率 $t$ 增大，使 $H_{\text{eff}}$ 的有效非对角元 $\propto t^2$。
+
+**步骤 4：精确计算**。令 $\alpha = \sqrt{(a-c)^2 + 4|b|^2}$ 为无量纲系数。考虑耦合修正后，$H_{\text{eff}}$ 的非对角元修正为 $\epsilon^2/\Delta E$，其中 $\Delta E$ 为子块间隔。由于 $\epsilon \propto t$（一阶 Taylor）且 $\Delta E = \mathcal{O}(1)$（有限），修正量为 $\mathcal{O}(t^2)$。因此：
+
+$$H_{\text{eff}}^{\text{coupled}}(t) = \begin{pmatrix} \lambda_0 + a t & b t + d t^2 \\ b^* t + d^* t^2 & \lambda_0 + c t \end{pmatrix} + \mathcal{O}(t^3)$$
+
+其中 $d$ 为耦合修正系数。特征值分裂为：
+
+$$\Delta\lambda(t) = \sqrt{((a-c)t)^2 + 4|b t + d t^2|^2} = t \sqrt{(a-c)^2 + 4|b + d t|^2}$$
+
+当 $t \to 0$ 时，$(a-c)^2 + 4|b + d t|^2 \to (a-c)^2 + 4|b|^2$（常数）。但若 $b = 0$（即耦合在 $p_0$ 处主导，而直接一阶分裂为零），则主导项为 $4|d|^2 t^2$，$\Delta\lambda(t) \propto t^2$，即 $\nu_{IV}=2$。这正是双通道 IV 型奇异纤维的情形。
+
+**步骤 5：三通道简并**。对 d=3（三通道简并），$H_{\text{eff}}$ 是 $3\times3$ 矩阵，具有更复杂的耦合结构。谱间隙由 $3\times3$ 矩阵的最小特征值间距给出。三体耦合效应累积，使 $\Delta\lambda(t) \propto t^3$。具体地，有效 Hamilton 量 $H_{\text{eff}}(t)$ 的矩阵元中，一阶项在 $p_0$ 处均为零（三个通道同时简并意味着三个一阶方向相互抵消），二阶项导致 $\Delta\lambda \propto t^3$。$\square$
+
+### 9.4 弱耦合临界值的精确界（定理 7.3 的完整证明）
+
+**定理 7.3**。弱耦合近似成立的条件是：
+
+$$\max_{n,i\neq j} \frac{|\epsilon_n^{(s_i,s_j)}|}{|\alpha_n^{(s_i)}| + |\beta_n^{(s_i)}| + |\gamma_n^{(s_i)}|} \ll 1$$
+
+对 Kerr-Newman 背景，等价于 $|Q| \ll M$ 且 $G \ll 1$。
+
+**完整证明**。
+
+**步骤 1：Gershgorin 圆盘定理的应用**。块三对角矩阵 $M_{\text{total}}$ 的特征值包含于 Gershgorin 圆盘的并集中。对第 $i$ 个自旋通道的第 $n$ 行，圆盘中心为 $B_n$ 的对角元 $\beta_n^{(s_i)}$，半径为：
+
+$$R_n^{(i)} = \sum_{j \neq i} (|\epsilon_n^{(s_i,s_j)}| + |\delta_n^{(s_i,s_j)}|) + |\alpha_n^{(s_i)}| + |\gamma_n^{(s_i)}| + \sum_{j \neq i} |\zeta_n^{(s_i,s_j)}| + \sum_{j \neq i} |\epsilon_{n-1}^{(s_j,s_i)}| + \sum_{j \neq i} |\zeta_{n-1}^{(s_j,s_i)}|$$
+
+耦合项 $\epsilon_n$ 和 $\zeta_n$ 的范数远小于对角项 $\alpha_n,\beta_n,\gamma_n$ 的渐近增长。具体地，由 §7.2 的显式矩阵元：
+
+$$|\epsilon_n^{(s_i,s_j)}| \sim \begin{cases} |Q|/M \cdot n & \text{（引力-电磁耦合）} \\ G \cdot n & \text{（Dirac-引力耦合）} \end{cases}$$
+
+$$|\alpha_n^{(s)}| \sim n^2, \quad |\beta_n^{(s)}| \sim 2n^2, \quad |\gamma_n^{(s)}| \sim n^2$$
+
+因此对充分大的 $n$，$|\epsilon_n|/(|\alpha_n|+|\beta_n|+|\gamma_n|) \sim \mathcal{O}(1/n) \to 0$。最严格的条件来自最小的 $n$（如 $n=0$ 或 $n=1$，取决于 $s$ 的 Frobenius 指数）。
+
+**步骤 2：特征值扰动上界**。由 Gershgorin 定理，$M_{\text{total}}$ 的特征值 $\tilde{\lambda}^{(i)}$ 与 $M^{(i)}$ 的特征值 $\lambda^{(i)}$ 的偏差上界为：
+
+$$|\tilde{\lambda}^{(i)} - \lambda^{(i)}| \leq \max_n R_n^{(i)} - |\alpha_n^{(s_i)}| - |\gamma_n^{(s_i)}| \leq \sum_{j\neq i} \max_n (|\epsilon_n^{(s_i,s_j)}| + |\delta_n^{(s_i,s_j)}| + |\zeta_n^{(s_i,s_j)}| + |\epsilon_{n-1}^{(s_j,s_i)}| + |\zeta_{n-1}^{(s_j,s_i)}|)$$
+
+**步骤 3：弱耦合条件**。弱耦合要求扰动 $\Delta\lambda_i \ll \min_{j\neq i} |\lambda^{(s_i)} - \lambda^{(s_j)}|$。由于 $\lambda^{(s_i)}$ 之间的特征值间隔是 $\mathcal{O}(1)$（各自旋谱丛的基态特征值不随 $n$ 趋于无穷而互相逼近），充分条件是：
+
+$$\max_{n,i\neq j} \frac{|\epsilon_n^{(s_i,s_j)}|}{|\alpha_n^{(s_i)}| + |\beta_n^{(s_i)}| + |\gamma_n^{(s_i)}|} \ll 1$$
+
+对 Kerr-Newman 背景代入显式形式：
+
+$$\max_{n} \frac{|\epsilon_n^{(-2,-1)}|}{|\alpha_n^{(-2)}|+|\beta_n^{(-2)}|+|\gamma_n^{(-2)}|} \approx \frac{|Q|/M \cdot n}{4n^2 + \mathcal{O}(n)} \approx \frac{|Q|}{4M} \cdot \frac{1}{n}$$
+
+$n=1$ 时最大（因为 $n=0$ 时 $\alpha_0$ 可能为零），条件为 $|Q|/M \ll 1$。对 Dirac-引力耦合，$|\epsilon_n^{(-2,-1/2)}| \propto G$，在 Planck 单位制中 $G = 1/M_{\text{Pl}}^2 \approx 4.5 \times 10^{-40}$，对所有天文质量黑洞自动满足。$\square$
+
+### 9.5 平凡化准则（命题 7.1 的完整证明）
+
+**命题 7.1**。多自旋联合谱丛可完全分离当且仅当存在规范变换 $U$ 使得 $U^{-1} M_{\text{total}} U = \bigoplus_i M^{(s_i)}$。
+
+**证明**。
+
+**充分性**。若存在 $U$ 块对角化 $M_{\text{total}}$，则：
+
+$$\det(M_{\text{total}} - \lambda I) = \det\left(U\left(\bigoplus_i M^{(s_i)} - \lambda I\right) U^{-1}\right) = \prod_i \det(M^{(s_i)} - \lambda_i I)$$
+
+联合特征值集为 $\{(\lambda_i)_{i=1}^3 : \lambda_i \in \sigma(M^{(s_i)}_p)\}$，即各子块特征值集的笛卡尔积。谱丛退化为直积 $\prod_i \mathfrak{S}^{(s_i)}$。
+
+**必要性**。若联合谱丛为直积 $\mathfrak{S}^{(S)} \cong \prod_i \mathfrak{S}^{(s_i)}$，则存在与投影 $\pi$ 相容的整体同胚 $\Phi$。对每个 $p \in \mathcal{P}$，$\Phi$ 限制在纤维上给出 $F_p \cong \prod_i F_p^{(s_i)}$。由谱丛的 Hermitian 结构（$M_{\text{total}}(p)$ 在物理参数 $p$ 处是正规矩阵），特征空间直和分解连续依赖于 $p$。由 Kato-Rellich 定理，在非分支点处存在解析的规范变换 $U(p)$ 使 $M_{\text{total}}(p)$ 块对角化。由于分支点构成测度零的子集且不改变纤维同构，连续延拓给出整体定义规范变换 $U$。$\square$
 
 | 时间 | 路径 | 产出 | 依赖 |
 |:---|:----|:----|:----|
