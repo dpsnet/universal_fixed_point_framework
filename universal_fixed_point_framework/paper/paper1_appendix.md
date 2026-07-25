@@ -72,9 +72,10 @@
 - `math_open_problems_convexity.py`：纯数学理论短板解决——压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（定理 D-C）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）、拓扑熵-谱间隙普适不等式严格证明（定理 TE-G-M）；
 - `numerical_engineering_open_problems.py`：数值工程开放问题推进——MadGraph 调用接口（process/run card 自动生成、截面解析、解析回退）、micrOMEGAs 调用接口（relic density / SI / SD 解析、SLHA 自动生成、解析回退）、双星系统完整 inspiral-merger-ringdown 引力波仿真与简化 SNR 估计；
 - `physics_open_problems_advanced.py`：物理理论开放问题推进——Kerr 黑洞全局量子谱解析框架（QNM、Bohr-Sommerfeld 量子化、超辐射判据）、$N=4$ SYM 单迹/BMN/保护算子谱与框架谱对应匹配、暗物质质量分形谱推导与实验约束筛选；
-- `leaver_corrected_solver.py`：校正后的 Leaver QNM 求解器——采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向方程用谱方法（矩阵特征值），径向方程用连分数（n_inv 反转形式提高稳定性），同伦延拓 + Newton-Raphson 求根，与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）；
-- `leaver_spectral_derecursion.py`：去递归谱计算求解器——将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$），CF 残差关系 $\beta_0 + \alpha_0 \cdot (a_1/a_0) = 0$ 通过谱方法验证（误差 $\sim 10^{-11}$），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$）；
-- `leaver_derecursion.py`：早期版本——使用乘积形式系数（已被 `leaver_corrected_solver.py` 修正），保留作为历史参考；
+- `src/dynamic_spectrum/leaver_unified_solver.py`：**最终版 Leaver QNM 统一求解器**——基于分形谱去递归理论，整合四层核心：(1) DerecursionAnalyzer（Koopman 算子谱分析 + 谱对应 $\lambda = e^{-\mu}$），(2) LeaverResidual（修正 Leaver 连分数系数，乘积形式 + 二次多项式双验证），(3) LACIEvaluator（不动点残差 + 分散度 + 谱间隙物理根选择），(4) LeaverUnifiedSolver（双重 Homotopy Continuation：自旋 $a$ + 磁量子数 $m$）。**替代了以下已归档的探索性实现**：
+  - `leaver_corrected_solver.py`（已归档至 `src/_archive/leaver_deprecated/`）：校正后的 Leaver QNM 求解器，采用 Cook-Zalutskiy 二次多项式系数，角向谱方法 + 径向连分数 + 同伦延拓 + Newton-Raphson，与 qnm 包结果一致（差值 $\sim 10^{-11}$）；
+  - `leaver_spectral_derecursion.py`（已归档）：去递归谱计算求解器——将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；
+  - `leaver_derecursion.py`（已归档）：早期版本，使用乘积形式系数；
 - `nonzero_curvature_connection.py`：非零曲率纤维丛联络构造——Levi-Civita 联络与规范场联络的统一框架、曲率张量计算、Bianchi 恒等式验证、Clifford 规范场构造；
 - `fiber_bundle_decursion.py`：曲率感知的去递归函子——`CurvedRecObject`（含联络与曲率的递归对象）、`CurvedDecursionFunctor`（曲率修正的谱对象构造）、`KerrFiberBundle`（Kerr 时空纤维丛模型）；
 - `spectral_silence_axiomatization.py`：谱静默测度论公理化定义——A1-A4 公理体系（Borel 概率测度、静默度不变量、维度静默比、LACI 指数）、S1-S4 判据的独立性与完备性证明框架、增强版 LACI（综合最小间隙、间隙熵、间隙比值谱、密度变化率）、自适应阈值策略（根据点密度动态调整 S3 阈值）；

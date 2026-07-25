@@ -113,7 +113,7 @@ $$Z_i = \frac{\alpha_i(M_Z)}{\alpha_i^{(0)}(M_{\text{Pl}}) \cdot [1 - b_1^{(i)}\
 
 ### 4.3 Kerr QNM 改进详情
 
-基于 S₂ 态射 $[A_{\text{GR}}, \mathcal{L}_\phi]$ 的分析，对 `CorrectedLeaverQNMSolver` 实施了两项改进（`leaver_corrected_solver.py`）：
+基于 S₂ 态射 $[A_{\text{GR}}, \mathcal{L}_\phi]$ 的分析，对最终版 Leaver QNM 求解器（`src/dynamic_spectrum/leaver_unified_solver.py`，替代已归档的 `leaver_corrected_solver.py`）实施了两项改进：
 
 **改进 1：S₂ 引导的 m-homotopy（`_s2_guided_solve`）**
 - 先解 m=0 在目标 a 处（标准 a-homotopy）

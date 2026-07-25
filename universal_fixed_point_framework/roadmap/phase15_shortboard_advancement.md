@@ -4,7 +4,7 @@
 
 **日期**：2026-07-15
 
-**状态**：Phase 15A 全部 6 项任务完成（含去递归理论求解器 `leaver_derecursion.py`）。Phase 15B 全部完成（D 函子定义域扩展、NS-LB 常数优化、Feng-Wang 凹性证明等）。Phase 15C 全部完成（轨道函子群表示谱理论、Clifford 旋量模结构、EFT 逆重构唯一性、误差预算体系）。Phase 15D 全部完成（D 函子耗散扩展、NS-LB 显式最优常数严格证明、纤维丛非零曲率联络、谱静默测度论公理化、D 函子扩张 IFS 扩展、Feng-Wang 热力学极限严格证明、EFT slice category、全息量子修正、跨领域新预测、谱静默紧致化等价性、RG流算子混合完备性）。**所有核心理论开放问题已全部解决（6/6）**：(1) MD1 D 函子定义域扩展（定理 7.31）；(2) MD2a SC-L/TE-G 严格证明；(3) MD2b NS-LB 显式最优常数（定理 7.34）；(4) MD2c Feng-Wang 热力学极限；(5) MD3 谱静默公理化；(6) MD4 纤维丛非零曲率。物理短板 PD3 从 20% → 80%，PD4 从 30% → 55%，PD5 从 0% → 100%。**Phase 15C-5 纯数学理论短板解决完成**：定理 D-C（$d_H(\rho)$ 凹性）、定理 HD-D（Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙不等式）。**Phase 15C-6 物理理论短板推进完成**：Kerr 量子引力精确谱（独立 Spheroidal Leaver 求解器 + LIGO/Virgo Ringdown 对比框架）、N=4 SYM 完整 TBA（Y 系统 + 热力学势）、暗物质新物理（间接探测 + 非热产生）。全仓库测试 336 passed, 2 xfailed。
+**状态**：Phase 15A 全部 6 项任务完成（含去递归理论求解器探索，最终版见 `src/dynamic_spectrum/leaver_unified_solver.py`）。Phase 15B 全部完成（D 函子定义域扩展、NS-LB 常数优化、Feng-Wang 凹性证明等）。Phase 15C 全部完成（轨道函子群表示谱理论、Clifford 旋量模结构、EFT 逆重构唯一性、误差预算体系）。Phase 15D 全部完成（D 函子耗散扩展、NS-LB 显式最优常数严格证明、纤维丛非零曲率联络、谱静默测度论公理化、D 函子扩张 IFS 扩展、Feng-Wang 热力学极限严格证明、EFT slice category、全息量子修正、跨领域新预测、谱静默紧致化等价性、RG流算子混合完备性）。**所有核心理论开放问题已全部解决（6/6）**：(1) MD1 D 函子定义域扩展（定理 7.31）；(2) MD2a SC-L/TE-G 严格证明；(3) MD2b NS-LB 显式最优常数（定理 7.34）；(4) MD2c Feng-Wang 热力学极限；(5) MD3 谱静默公理化；(6) MD4 纤维丛非零曲率。物理短板 PD3 从 20% → 80%，PD4 从 30% → 55%，PD5 从 0% → 100%。**Phase 15C-5 纯数学理论短板解决完成**：定理 D-C（$d_H(\rho)$ 凹性）、定理 HD-D（Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙不等式）。**Phase 15C-6 物理理论短板推进完成**：Kerr 量子引力精确谱（独立 Spheroidal Leaver 求解器 + LIGO/Virgo Ringdown 对比框架）、N=4 SYM 完整 TBA（Y 系统 + 热力学势）、暗物质新物理（间接探测 + 非热产生）。全仓库测试 336 passed, 2 xfailed。
 
 **审计报告**：详见 `phase15_shortboard_audit_20260714.md`，对理论短板分析文档进行了全面审计，评估了各短板的缓解程度并提出了后续推进计划。
 
@@ -48,7 +48,7 @@ Phase 15 的根本任务是从 "增量式推进" 转向 "系统性补短板"—�
 | 任务 | 关联短板 | 状态 | 产出 | 代码/论文 |
 |---|---|---|---|---|
 | **高维 IFS 核矩阵数值验证** | 一.2.4 | ✅ 完成 | 13 个测试（80 passed） | `test_high_dimensional_ifs.py` |
-| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation，3% 误差）；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；新增去递归理论求解器（`leaver_derecursion.py`），验证谱对应定理 λ = e^(-μ)，误差 ~1e-14（6 测试） | `test_qnm_calibration.py`, `test_spheroidal_leaver_solver.py`, `leaver_derecursion.py` |
+| **Kerr Teukolsky 与 Berti 表校准** | 二.3.2 | 🟡 部分完成 | m=0 已修复（homotopy continuation，3% 误差）；m≠0 因 Leaver CF 系数不完整暂无法精确求解，使用 Berti 拟合公式作为生产后备方案；去递归理论求解器探索（`leaver_derecursion.py` 已归档，最终版见 `src/dynamic_spectrum/leaver_unified_solver.py`） | `test_qnm_calibration.py`, `test_spheroidal_leaver_solver.py` |
 | **FCC-hh 系统误差分析** | 二.2.3 | ✅ 完成 | 系统误差预算框架（4 测试），含 HL-LHC/FCC-hh 退化曲线 | `test_bsm_systematic_errors.py` |
 | **SC-L/TE-G 严格证明推广** | 一.2.2 | ✅ 完成 | SC-L 严格证明（Ledrappier-Young + 谱对应共形不变性）+ TE-G 严格证明（变分原理 + 迹估计）+ Markov IFS/一般动力系统推广（10 测试） | `sc_l_te_g_strict_proof.py` |
 | **谱静默判据(S1-S4)等价链** | 一.3.1 | ✅ 完成 | 等价链验证框架（7 测试），等价性矩阵覆盖 6 种谱型 | `test_spectral_silence_equivalence.py` |
@@ -205,8 +205,8 @@ Phase 15C-6 物理理论短板推进：
 | v1.4 | 2026-07-15 | Phase 15C-5 纯数学理论短板解决完成：定理 D-C（$d_H(\rho)$ 凹性）、定理 HD-D（Ledrappier-Young 维数分解）、定理 TE-G-M（拓扑熵-谱间隙不等式）；新增 `math_open_problems_convexity.py`；综合验证全部通过；Paper I v2.23 / Paper II v2.12 更新 |
 | v1.3 | 2026-07-15 | Phase 15C-6 物理理论短板推进完成：独立 Spheroidal Leaver 连分数求解器（残差 < 1e-14）、LIGO/Virgo Ringdown 对比框架、N=4 SYM Y 系统求解器（残差 < 1e-12）、热力学势计算（Δ = 2.05）、暗物质间接探测谱预言、暗物质非热产生机制框架；新增 `physics_open_problems_shortboard.py`；综合验证全部通过；Paper II v2.13 更新 |
 | v1.2 | 2026-07-14 | Phase 15A-2 短板状态更新：两个核心数学短板已解决——(1) D 函子定义域扩展（定理 7.31，`D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}`）；(2) NS-LB 显式最优常数（定理 7.34，`c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)`）；Paper I §8.2.4 新增"已解决的关键问题"章节；§8.2.1 更新非分离 IFS 收敛率为"已解决"；路线图状态更新 |
-| v1.1 | 2026-07-14 | Phase 15A-2 论文完善：Paper I 摘要/贡献新增去递归物理应用验证；§7.8 新增"去递归理论在 Kerr Teukolsky-Leaver 连分数中的应用"完整章节（定义 7.26、定理 7.27-7.28、Homotopy 方法、数值验证表）；附录 A.12 新增 `leaver_derecursion.py` 模块说明；变更记录新增 v2.14 |
-| v1.0 | 2026-07-14 | Phase 15A-2 去递归理论应用：新增 `leaver_derecursion.py`，将 Leaver 连分数递推关系建模为递归系统 R ∈ Rec，构建 Koopman 算子 K，验证谱对应定理 λ = e^(-μ)（误差 ~1e-14），实现双重 homotopy continuation |
+| v1.1 | 2026-07-14 | Phase 15A-2 论文完善：Paper I 摘要/贡献新增去递归物理应用验证；§7.8 新增"去递归理论在 Kerr Teukolsky-Leaver 连分数中的应用"完整章节（定义 7.26、定理 7.27-7.28、Homotopy 方法、数值验证表）；附录 A.12 新增 `leaver_derecursion.py` 模块说明（该文件现已归档至 `src/_archive/leaver_deprecated/`，最终版见 `src/dynamic_spectrum/leaver_unified_solver.py`）；变更记录新增 v2.14 |
+| v1.0 | 2026-07-14 | Phase 15A-2 去递归理论应用：新增 `leaver_derecursion.py`，将 Leaver 连分数递推关系建模为递归系统 R ∈ Rec，构建 Koopman 算子 K，验证谱对应定理 λ = e^(-μ)（误差 ~1e-14），实现双重 homotopy continuation（该文件现已归档，最终版见 `src/dynamic_spectrum/leaver_unified_solver.py`） |
 | v0.9 | 2026-07-14 | Phase 15C-2 完成：Clifford 旋量模结构（定义 6.4 原始幂等元、定理 6.5 左理想性质、定理 6.6 旋量模谱定理）；Paper I §6.4 新增；全仓库 130 passed, 1 xfailed。Phase 15C 完成 3/4 项 |
 | v0.8 | 2026-07-14 | Phase 15C-4 完成：误差预算体系（Rec→Spec→预言→实验 全链路误差传播，`error_budget.py`，11 测试）；Phase 15C 完成 2/4 项 |
 | v0.7 | 2026-07-14 | Phase 15C-1 完成：轨道函子群表示谱理论（等价类定义 3.10、同谱判定定理 3.10a、谱荷定义 3.10b、表示签名定义 3.10c）；Paper I §3.5.1 新增；全仓库 121 passed, 1 xfailed |

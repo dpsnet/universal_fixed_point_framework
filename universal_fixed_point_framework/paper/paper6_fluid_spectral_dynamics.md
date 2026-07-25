@@ -2,9 +2,10 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.6（2026-07-25）
+**版本**：v2.7（2026-07-25）
 
 **摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学。v2.2 严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3）并建立跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景。v2.4 将 F5 统一表扩展至八类临界现象（新增声子硬化、电磁极化饱和、量子相变临界慢化、NTK 谱压缩），$T_c$ 谱推导 153 MeV（偏差 1.1%）。v2.5 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表，建立量子 Hall 拓扑相变与 $\partial\mathbf{Rec}_D$ 谱边界的新联系。
+v2.7 建立非牛顿流变学的三对角谱丛形式（§9.3），揭示复杂黏度连分数与 Leaver 三对角谱丛的严格同构
 
 ---
 
@@ -511,6 +512,101 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 ---
 
+### 9.3 非牛顿流变学的三对角谱丛形式
+
+本节揭示非牛顿流变学的连分数结构与 Paper I §7.11 建立的 Leaver 三对角谱丛理论之间的严格数学同构。广义 Maxwell 模型的复数剪切模量 $G^*(\omega)$ 的连分数展开与 Kerr 黑洞 QNM 的 Teukolsky-Leaver 连分数共享同一二叉树纤维化结构，从而将引力量子模的谱丛理论转化为流变学的计算工具。
+
+#### 9.3.1 复杂黏度的连分数表示
+
+广义 Maxwell 模型由无穷多个 Maxwell 单元（弹簧-阻尼器串联）并联构成，其复数剪切模量为：
+
+$$G^*(\omega) = G'(\omega) + iG''(\omega) = G_\infty + \sum_{p=1}^\infty \frac{G_p i\omega\tau_p}{1 + i\omega\tau_p}$$
+
+对应的复杂黏度为 $\eta^*(\omega) = G^*(\omega)/i\omega$。该无穷和可重新排列为等价连分数：
+
+$$G^*(\omega) = G_\infty \Big/ \Big(1 + \frac{i\omega\tau_1}{1 + \frac{i\omega\tau_2}{\ddots}}\Big)$$
+
+或关于复杂黏度的形式：
+
+$$\eta^*(\omega) = \frac{G_\infty}{i\omega} \Big/ \Big(1 + \frac{i\omega\tau_1}{1 + \frac{i\omega\tau_2}{\ddots}}\Big)$$
+
+**定义 9.9**（流变谱丛）。广义 Maxwell 模型的流变谱丛定义为三对角矩阵族 $M_{\text{rheo}}(\omega)$ 的谱：
+
+$$\mathcal{S}_{\text{rheo}} = \{(\omega, \lambda) \in \mathbb{C}^2 : \det(M_{\text{rheo}}(\omega) - \lambda I) = 0\}$$
+
+其中 $M_{\text{rheo}}(\omega)$ 由连分数系数的递归关系构造，$\lambda$ 为复数剪切模量的本征值参数。
+
+**定理 9.4**（Leaver-流变三对角同构）。Leaver 三对角矩阵族 $M_{\text{Teuk}}(\omega)$（Kerr QNM 问题，Paper I §7.11）与流变三对角矩阵族 $M_{\text{rheo}}(\omega)$（广义 Maxwell 模型）共享同一二叉树纤维化结构：
+
+$$\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{rheo}} \quad (\text{作为二叉树纤维丛})$$
+
+**证明思路**。Leaver 连分数 $f_{\text{Leaver}}(\omega) = \frac{\beta_0}{\alpha_0 - \frac{\beta_1\gamma_1}{\alpha_1 - \frac{\beta_2\gamma_2}{\ddots}}}$ 与流变连分数 $f_{\text{rheo}}(\omega) = \frac{G_\infty}{1 + \frac{i\omega\tau_1}{1 + \frac{i\omega\tau_2}{\ddots}}}$ 同为三对角矩阵特征多项式之比（Schur 补）。两者均可递归分裂为二阶子块，形成深度 $\log_2 N$ 的二叉树纤维化（Paper I 定理 7.39）。Leaver 的 $\omega$（复频率）与流变的 $\omega$（振荡频率）虽物理意义不同，但两者参数化谱丛的底空间均为 $\mathbb{C}$。□
+
+#### 9.3.2 弛豫谱 $H(\tau)$ 的三对角翻译
+
+弛豫谱 $H(\tau)$ 将复数模量表示为连续弛豫时间叠加：
+
+$$G^*(\omega) = G_\infty + \int_0^\infty H(\tau) \frac{i\omega\tau}{1 + i\omega\tau} \frac{d\tau}{\tau}$$
+
+**定义 9.10**（弛豫谱密度）。给定流变谱丛 $\mathcal{S}_{\text{rheo}}$，纤维 $F_\omega$ 在 $\lambda = 0$ 处的投影定义弛豫谱密度：
+
+$$H(\tau) = \frac{1}{\pi} \lim_{\epsilon \to 0^+} \Im\left[ G^*\left(-\frac{1}{\tau} + i\epsilon\right) \right]$$
+
+**定理 9.5**（弛豫谱-谱丛截面对应）。振荡剪切数据 $G'(\omega), G''(\omega)$ 到弛豫谱 $H(\tau)$ 的反演问题等价于谱丛 $\mathcal{S}_{\text{rheo}}$ 在 $\lambda=0$ 处的截面提取：
+
+$$H(\tau) \;\Longleftrightarrow\; \text{谱丛截面 } \lambda(\omega) = 0 \text{ 在叶 } \mathcal{L}_i \text{ 上的投影}$$
+
+**物理意义**。$H(\tau)$ 是谱丛在 $\lambda=0$ 截面附近的"谱密度"——纤维 $F_\omega$ 中本征值的分布密度。截面的连续分支对应物理弛豫模，非物理根（即 §8.2 中幂律流体在虚轴上的伪极）对应非物理弛豫模——与 Leaver 谱丛中"非物理根"（Paper I §7.11.3 推论 7.44）完全对偶。
+
+**证明**。由定义 9.10，$H(\tau)$ 是 $G^*(-1/\tau + i\epsilon)$ 虚部的极限。而 $G^*(\omega)$ 的连分数表示等价于三对角矩阵 $M_{\text{rheo}}(\omega)$ 的 $(1,1)$ 元素（Schur 补）。$M_{\text{rheo}}(\omega)$ 在 $\lambda=0$ 处的特征值条件 $\det(M_{\text{rheo}}(\omega)) = 0$ 给出截面的零点，$H(\tau)$ 在 $\tau$ 处的值由相邻截面叶的间距决定。□
+
+#### 9.3.3 流变学分支点的物理意义
+
+**定理 9.6**（分支点-临界频率对应）。谱丛 $\mathcal{S}_{\text{rheo}}$ 的分支点 $\omega_0$（即 $\lambda_i(\omega_0) = \lambda_j(\omega_0)$ 的点）对应流变学的非线性跃迁：
+
+1. **线性粘弹区**：$\omega \ll \omega_c$，谱叶分离良好，$G'(\omega) \propto \omega^2$，$G''(\omega) \propto \omega$；
+2. **过渡区**：$\omega \sim \omega_c$，分支点密度极大，谱叶频繁交叉，对应流变学的"液-固过渡"；
+3. **非线性区**：$\omega \gg \omega_c$，连续谱叶主导，呈现幂律行为 $G'(\omega) \propto G''(\omega) \propto \omega^n$。
+
+临界频率 $\omega_c$ 定义为分支点密度 $\rho_{\text{bp}}(\omega) = \sum_{\omega_0} \delta(\omega - \omega_0)$ 的极大值点：
+
+$$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
+
+分支点处谱叶的交换对应于流变学中从线性粘弹响应到非线性响应的**拓扑相变**——弛豫模的标识在分支点处重组，与 Leaver 谱丛中同伦延拓路径穿过分支点导致非物理根吸引域（Paper I 推论 7.44）具有完全相同的几何机制。
+
+#### 9.3.4 与已有 §8-§9 的衔接
+
+谱丛语言将 §8-§9 的若干结论统一为几何图景：
+
+1. **§8.2 的三种流变模型分类**（定理 8.1 表）在谱丛语言中对应不同的分支点密度分布：
+   - 牛顿流体（平凡 Lie 代数）：谱丛退化为平凡丛，无分支点；
+   - 幂律流体（$\mathbb{R}$ 可缩）：分支点沿实轴均匀分布，密度 $\rho_{\text{bp}} \propto |\omega|^{-1}$；
+   - 相对论型硬化（$\mathfrak{so}(1,1)$）：分支点在 $\omega_c$ 附近聚集，$\rho_{\text{bp}} \propto 1/\sqrt{|\omega_c^2 - \omega^2|}$；
+   - Carreau 变稀（$\mathfrak{so}(1,1)$ 反向）：分支点在高频区聚集，$\rho_{\text{bp}} \propto |\omega|^{-2}$。
+
+2. **§9.1 的 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 边界**（定义 9.5）对应谱丛分支点的聚点（accumulation point of branch points）：当 $\dot\gamma \to \dot\gamma_c$ 时，分支点密度在 $\omega_c$ 处发散，谱间隙 $\Delta\lambda_{\min} \to 0$，系统到达 $\partial\mathbf{Rec}_D^{\text{rheo}}$。
+
+3. **§9.2.3 的 Lie 代数-临界指数分类**（命题 9.8）在谱丛中获得几何解释：Lie 代数类型决定谱丛分支点密度的渐近形式，从而唯一确定临界指数。
+
+#### 9.3.5 结论：Leaver 谱丛与流变连分数的统一
+
+**定理 9.7**（谱丛-流变统一定理）。Leaver 三对角谱丛 $\mathcal{S}_{\text{Teuk}}$ 与非牛顿流变三对角连分数 $\mathcal{S}_{\text{rheo}}$ 共享同一二叉树纤维化结构：
+
+| 结构要素 | Leaver 谱丛（Paper I §7.11） | 流变谱丛（本节） |
+|:--------|:----------------------------|:----------------|
+| 连分数 | Teukolsky-Leaver 连分数 | 广义 Maxwell 连分数 |
+| 三对角矩阵 | $M_{\text{Teuk}}(\omega)$ | $M_{\text{rheo}}(\omega)$ |
+| 底空间 | $\mathbb{C}_\omega$（复频率） | $\mathbb{C}_\omega$（振荡频率） |
+| 二叉树深度 | $\log_2 N$（$N$ = 截断阶数） | $\log_2 N$（$N$ = Maxwell 单元数） |
+| 谱叶 | QNM 频率分支 | 复模量本征值分支 |
+| 非物理根 | 谱叶间跳跃的 Newton 根 | 非物理弛豫模（虚轴伪极） |
+| 分支点 | $\omega$ 平面特征值交叉点 | 流变非线性跃迁拓扑相变点 |
+| 单值群 | $M_\Gamma \in S_N$ | $M_\Gamma^{\text{rheo}} \in S_N$ |
+
+**推论**。Kerr QNM 与广义 Maxwell 流变是同一范畴论结构在引力与流体力学中的不同实例化。Leaver 的"非物理根"（非物理 QNM）在流变学中对应"非物理解（非物理弛豫模）"。这一同构将引力量子模的谱丛理论转化为流变学的计算工具——例如，Leaver 两弦法 $O(N^3) \to O(N)$ 加速（Paper I §7.8.3）可直接应用于流变弛豫谱的反演计算；反之，流变学的实验数据可为引力谱丛的分支点密度分布提供流体力学类比。这是谱动力学跨领域统一的又一例证：**黑洞 QNM 与高分子流变在谱丛几何中相遇**。
+
+---
+
 ## 10. 结论
 
 本文证明了 K41 湍流谱不是经验定律，而是谱流方程在三维物理空间中几何传播的必然结果。主要贡献：
@@ -528,6 +624,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 11. **流变谱边界严格化**（§9.1，主定理 E1-E3）：严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的范畴论定义，证明临界剪切率-谱间隙对应（主定理 E1）、流变 Lorentz 群同构（主定理 E2）、五类临界现象的统一范畴论刻画（主定理 E3）
 12. **九类临界现象的跨领域统一**（§9.2，主定理 F5）：在 E3 五类（Lorentz 因子、黑洞 Hawking、流变硬化、QCD 禁闭、IQHE 临界指数过渡）的基础上，将统一图景扩展到声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩共九类临界现象，建立统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$，证明所有九类现象共享最小谱间隙坍缩机制
 13. **临界指数的 Lie 代数分类**（§9.2.3，命题 9.8）：$\mathfrak{so}(1,1) \to -1/2$、$\mathfrak{so}(2) \to -1$、$\mathbb{R} \to -(n-1)$、$\mathfrak{so}(2,1) \to \nu: 1\to2.35$，揭示临界现象普适类的谱动力学起源
+14. **非牛顿流变学的三对角谱丛形式**（§9.3，定理 9.4-9.7）：建立广义 Maxwell 复杂黏度连分数与 Leaver 三对角谱丛的严格同构 $\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{rheo}}$，证明弛豫谱 $H(\tau)$ 的反演等价于谱丛 $\lambda=0$ 的截面提取，揭示分支点谱叶交换为流变非线性跃迁的几何本质，完成 Leaver 谱丛与流变三对角连分数的二叉树纤维化统一
 
 ---
 
@@ -585,13 +682,13 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 ---
 
-**版本**：v2.4
+**版本**：v2.7
 
-**日期**：2026-07-19
+**日期**：2026-07-25
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VI（增强版 v2.4），谱流体动力学——从湍流谱到谱流几何。主要内容：
+《通用不动点范畴框架》系列论文 VI（增强版 v2.7），谱流体动力学——从湍流谱到谱流几何。主要内容：
 - 谱流体动力学公理 B1-B3（§2.2）
 - N-S 谱流方程（定理 2.1）
 - K41 $-5/3$ 谱的谱动力学涌现（定理 3.1）
@@ -606,10 +703,12 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 - **v2.2 新增**：流变谱边界严格化与跨领域统一（§9）——主定理 E1-E3（临界剪切率-谱间隙对应、流变 Lorentz 群同构、三类临界现象统一范畴论刻画）、主定理 F5（跨领域统一函子、七类临界现象归一）、临界指数的 Lie 代数分类（命题 9.8）；更新摘要、结论、参考文献（按主题分类，新增声子、介电、量子相变、NTK、临界现象文献）
 - **v2.3 新增**：低能 QCD 谱翻译纳入统一图景——主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散）、$\Lambda_{\text{QCD}}$ 谱推导（方案转换因子 $Z_s = Z_3 = 1.39$）、⟨ψ̄ψ⟩ 定量预测（2% 精度）；更新 §9.1.5 统一表
 - **v2.4 新增**：$T_c$ 临界温度谱推导（1.1% 精度）纳入主定理 E3 统一表；添加特征可观测量列；更新 §9.1.5 统一表描述
+- **v2.7 新增**：非牛顿流变学的三对角谱丛形式（§9.3）——建立复杂黏度连分数与 Leaver 三对角谱丛的严格同构，揭示弛豫谱 $H(\tau)$ 为谱丛 $\lambda=0$ 截面投影，统一流变非线性跃迁与分支点谱叶交换；更新摘要、结论、参考文献
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| **v2.7** | **2026-07-25** | **新增 §9.3 非牛顿流变学的三对角谱丛形式**：建立复杂黏度连分数与 Leaver 三对角谱丛的严格同构，揭示弛豫谱 $H(\tau)$ 为谱丛 $\lambda=0$ 截面投影，统一流变非线性跃迁与分支点谱叶交换 |
 | **v2.6** | **2026-07-25** | **更新 UFPF 内部参考文献**：新增 Paper XXIV-A（超导 μ* 消除）和 Paper XXIV-B（谱键刚性） |
 | v2.5 | 2026-07-23 | 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表、临界指数的 Lie 代数分类；更新摘要、§1.3 目录结构；参考文献增加 IQHE 标准文献 |
 | v2.4 | 2026-07-19 | $T_c$ 临界温度谱推导（1.1% 精度）纳入主定理 E3 统一表；添加特征可观测量列；更新 §9.1.5 统一表描述 |

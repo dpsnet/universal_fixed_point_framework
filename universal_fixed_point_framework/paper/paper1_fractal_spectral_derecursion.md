@@ -1352,8 +1352,9 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
        其中 $\sigma_+ = (\omega r_+ - am)/(r_+ - r_-)$。
      - **完整 Teukolsky-Leaver 求解器**（`FullTeukolskyQNM`）：实现 **spheroidal 特征值 $\lambda_{slm}$ 的自洽迭代**（在连分数计算中做 $\lambda$ 内循环 Newton 步），替代级数近似；三种求解器（简化/精确/完整）均实现向后收敛连分数。
   **未竞问题**：与 Berti-Cardoso-Will 数值表进行系统对比校准；实现 spheroidal 特征值的独立 Leaver 连分数求解。
-   - **去递归谱计算求解器**（`leaver_spectral_derecursion.py`）：将连分数迭代计算转化为三对角矩阵特征值问题（定理 7.27），实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率（差值 $\sim 10^{-12}$），CF 残差关系通过谱方法验证（误差 $\sim 10^{-11}$）；实现"两弦法"逆迭代（Thomas 算法 + Rayleigh 商）将单特征值求解从 $O(N^3)$ 降至 $O(N)$；验证多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$，定理 7.27c）。
-   - **校正后的 Leaver 求解器**（`leaver_corrected_solver.py`）：采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包结果完全一致。
+   - **最终版：去递归谱统一求解器**（`src/dynamic_spectrum/leaver_unified_solver.py`）：整合去递归谱分析（DerecursionAnalyzer：Koopman 算子谱分析 + 谱对应 $\lambda = e^{-\mu}$）、修正 Leaver 系数（LeaverResidual：乘积形式 + 二次多项式双验证）、LACI 物理根选择判据（LACIEvaluator：残差 + 分散度 + 谱间隙）、双重 Homotopy Continuation（自旋 $a$ + 磁量子数 $m$）。**替代以下已归档的探索性实现**：
+   - `leaver_spectral_derecursion.py`（已归档至 `src/_archive/leaver_deprecated/`）：将连分数迭代计算转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出 QNM 频率（差值 $\sim 10^{-12}$），实现"两弦法"逆迭代将单特征值求解从 $O(N^3)$ 降至 $O(N)$；
+   - `leaver_corrected_solver.py`（已归档）：校正后的 Leaver 求解器——采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包结果完全一致。
 
 **6. $N=4$ SYM 高精度定量匹配**（谱对应完成，未竞完整解）。
    已实现 `N4SYMSpectrum`：

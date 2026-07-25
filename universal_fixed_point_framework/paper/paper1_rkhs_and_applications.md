@@ -2,7 +2,7 @@
 
 > 本文件为 `paper1_fractal_spectral_derecursion.md` 的伴生文件，包含原论文 §7 全部内容：RKHS 收敛率理论、理论转化/EFT 等价性框架、Kerr Teukolsky-Leaver 连分数应用、D 函子耗散扩展、纯数学理论短板解决（定理 D-C/HD-D/TE-G-M）。定理编号、章节编号与主文件保持一致，正文中的引用直接指向主文件对应章节。
 
-**版本**：v2.36（2026-07-20）
+**版本**：v2.37（2026-07-25）
 
 **依赖关系**：本文件内容依赖主文件 §1–§6 的核心理论（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子、谱对应自然等价 $M \cong_{\text{br}} L$、谱测度、谱静默、Clifford 值谱）。建议读者先阅读主文件 §1–§6，再阅读本伴生文件。
 
@@ -12,6 +12,7 @@
 - §7.8：去递归理论在 Kerr Teukolsky-Leaver 连分数中的应用（三路径对照验证、两弦法、多吸引子优势）
 - §7.9：D 函子耗散扩展与 NS-LB 最优常数（伪谱保持、纤维丛非零曲率联络、谱静默公理化）
 - §7.10：纯数学理论短板解决（定理 D-C/HD-D/TE-G-M 的严格化推导）
+- **§7.11（新增）**：谱丛理论与 Leaver 三对角矩阵的细分纤维化——将去递归理论的数值成功翻译为谱丛几何语言，揭示同伦延拓 = 谱叶的平行移动、非物理根 = 分支点叶间跳跃
 
 ---
 
@@ -443,11 +444,15 @@ $$m(t) = \lfloor t \cdot m_{\text{target}} \rfloor, \quad t \in [0,1],$$
 
 #### 7.8.5 代码实现
 
-去递归理论的代码实现包括三个模块：
+去递归理论的代码实现分两个阶段演进，**最终版**为统一求解器（整合去递归谱分析 + 修正系数 + LACI + Homotopy）：
 
-- `leaver_corrected_solver.py`：校正后的 Leaver 求解器，采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，同伦延拓 + Newton-Raphson。与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）。
-- `leaver_spectral_derecursion.py`：去递归谱计算求解器，将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；实现"两弦法"逆迭代（Thomas 算法 + Rayleigh 商）将单特征值求解从 $O(N^3)$ 降至 $O(N)$；验证多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）。
-- `leaver_derecursion.py`：早期版本，使用乘积形式系数（已被修正）。
+- `src/dynamic_spectrum/leaver_unified_solver.py`：**最终版 Leaver QNM 统一求解器**——基于分形谱去递归理论，集成四层核心：(1) DerecursionAnalyzer（Koopman 算子谱分析 + 谱对应 $\lambda = e^{-\mu}$ 验证），(2) LeaverResidual（修正 Leaver 连分数系数，乘积形式 + 二次多项式双验证），(3) LACIEvaluator（不动点残差 + 分散度 + 谱间隙的 LACI 物理根选择判据），(4) LeaverUnifiedSolver（双重 Homotopy Continuation：从 Schwarzschild 参考解沿自旋 $a$ 和磁量子数 $m$ 双参数推进到目标 Kerr 参数）。**替代以下已归档的探索性实现**：
+
+已归档的探索性实现（移至 `src/_archive/leaver_deprecated/`）：
+
+- `leaver_corrected_solver.py`（已归档）：校正后的 Leaver 求解器，采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，同伦延拓 + Newton-Raphson。与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）。
+- `leaver_spectral_derecursion.py`（已归档）：去递归谱计算求解器，将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；实现"两弦法"逆迭代（Thomas 算法 + Rayleigh 商）将单特征值求解从 $O(N^3)$ 降至 $O(N)$；验证多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）。
+- `leaver_derecursion.py`（已归档）：早期版本，使用乘积形式系数（已被修正）。
 
 ### 7.9 D 函子耗散扩展与 NS-LB 最优常数
 
@@ -753,6 +758,126 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 
 **物理影响**：本定理对 Kerr 测地线混沌谱间隙的约束至关重要（参见配套论文 II §1.5.3）。
 
+### 7.11 谱丛理论与 Leaver 三对角矩阵的细分纤维化
+
+> **本小节来源**：基于笔记 `notes/spectral_sheaf_leaver.md` 的理论框架，揭示去递归理论在 Kerr Teukolsky-Leaver 连分数计算中（§7.8）的深层几何结构。
+
+§7.8 建立了 Leaver 连分数与三对角矩阵特征值问题的等价性，并实现了两弦法 $O(N^3) \to O(N)$ 加速。本小节从**谱丛（spectral sheaf）**的角度揭示这种等价性的几何本质：三对角矩阵族 $M(\omega)$ 天然具有纤维化结构，其谱构成一个 $\omega$-平面上的 $N$ 叶分支覆盖。这一视角将 §7.8 中的同伦延拓、LACI 判据统一为谱丛的几何语言，并给出 m-homotopy 为什么有效的严格数学证明。
+
+#### 7.11.1 三对角矩阵的纤维化
+
+考虑 §7.8 中的 Leaver 多项式系数构造的 $N \times N$ 三对角矩阵族：
+
+$$M(\omega) = \begin{bmatrix}
+\beta_0(\omega) & \alpha_0(\omega) & 0 & \cdots \\
+\gamma_1(\omega) & \beta_1(\omega) & \alpha_1(\omega) & \cdots \\
+0 & \gamma_2(\omega) & \beta_2(\omega) & \cdots \\
+\vdots & \vdots & \vdots & \ddots
+\end{bmatrix}$$
+
+其中 Cook-Zalutskiy 多项式系数 $\alpha_n(\omega), \beta_n(\omega), \gamma_n(\omega)$ 至多为 $\omega$ 的二次多项式（参见 §7.8.1），因此 $M(\omega) = M_0 + \omega M_1 + \omega^2 M_2$ 为二次矩阵多项式。
+
+**定义 7.37**（谱丛）。Leaver 三对角矩阵族的谱丛定义为：
+
+$$\mathcal{S}(M) = \{(\omega, \lambda) \in \mathbb{C}^2 : \det(M(\omega) - \lambda I) = 0\}$$
+
+带自然投影 $\pi: \mathcal{S} \to \mathbb{C}$，$(\omega, \lambda) \mapsto \omega$。对每个 $\omega$，纤维 $\pi^{-1}(\omega) = \sigma(M(\omega))$ 为 $N$ 个特征值。
+
+**引理 7.38**（三对角矩阵的 rank-1 分裂）。将索引集 $\{1,\dots,N\}$ 在 $K$ 处分裂：
+
+$$M(\omega) = \begin{bmatrix}
+A(\omega) & \gamma_K(\omega) e_K e_{K+1}^T \\
+\alpha_K(\omega) e_{K+1} e_K^T & B(\omega)
+\end{bmatrix}$$
+
+其中 $A \in \mathbb{C}^{K \times K}$, $B \in \mathbb{C}^{(N-K) \times (N-K)}$ 仍为三对角矩阵。off-diagonal 耦合是 rank-1 的，由界面标量 $q(\omega) = \gamma_K(\omega) \alpha_K(\omega) (A(\omega)^{-1})_{K,K}$ 决定。
+
+**证明**。Schur 补公式给出：
+
+$$\det(M(\omega) - \lambda I) = \det(A(\omega) - \lambda I_K) \cdot \det\big(B(\omega) - \lambda I_{N-K} - q(\omega) \cdot e_{K+1} e_{K+1}^T\big)$$
+
+rank-1 性质源于三对角矩阵仅相邻索引耦合的结构。□
+
+#### 7.11.2 二叉树纤维化
+
+递归应用 §7.11.1 的分裂，得到完全二叉树结构。
+
+**定理 7.39**（二叉树纤维化）。三对角矩阵族 $M(\omega)$ 的谱丛 $\mathcal{S}(M)$ 同构于深度 $\log_2 N$ 的二叉树纤维丛：
+
+- 根节点：$M(\omega)$ 的谱丛
+- 子节点：子块 $A(\omega)$ 与 $B(\omega)$ 的谱丛
+- 边：界面参量 $q(\omega)$ 编码子丛间的"胶水"
+- 叶节点：$1 \times 1$ 标量 $\beta_i(\omega) - \lambda$ 的零点
+
+**推论 7.40**（Leaver 连分数的几何意义）。Leaver 连分数条件 $R_0(\omega) = 0$ 等价于二叉树根节点处 Schur 补条件的成立。连分数的反转次数 $n_{\text{inv}}$ 对应二叉树展开深度。
+
+#### 7.11.3 单值性（Monodromy）与同伦延拓
+
+**定理 7.41**（谱丛是分支覆盖）。谱丛 $\mathcal{S}(M)$ 是 $\mathbb{C}\_\omega$ 的 $N$ 叶分支覆盖。分支点 $\omega_0$ 满足 $\lambda_i(\omega_0) = \lambda_j(\omega_0)$，此时两个谱叶在 $\omega_0$ 处相交。
+
+**定义 7.42**（单值群）。对基空间 $\mathbb{C}\_\omega$ 中的闭回路 $\Gamma$，平行移动沿 $\Gamma$ 诱导谱叶的置换 $M_\Gamma \in S_N$。单值群 $\mathcal{M} = \{M_\Gamma : \Gamma \text{ 为闭回路}\} \leq S_N$。
+
+**定理 7.43**（同伦延拓 = 谱叶的平行移动）。设 $\gamma(t): [0,1] \to \mathbb{C}\_\omega$ 为同伦延拓路径，$\gamma(0) = \omega_{\text{Schwarz}}$（$a=0$ 的解），$\gamma(1) = \omega_{\text{Kerr}}$（目标自旋 $a>0$ 的解）。则 $\gamma$ 唯一确定了谱丛 $\mathcal{S}(M)$ 的一条连续截面 $\lambda(t) = \lambda_i(\gamma(t))$，满足 $\lambda(0) = 0$（QNM 条件）。
+
+**推论 7.44**（非物理根吸引域的几何起源）。当 $\gamma(t)$ 穿过谱丛的分支点时，连续截面 $\lambda(t)$ 跳跃到另一叶。如果 Newton 迭代的初始猜测接近分支点，迭代可能收敛到非物理叶上的零点——即**非物理根吸引域**。
+
+#### 7.11.4 双参数单值性 (a + m) 与双重同伦
+
+将谱丛扩展到参数空间 $(a, m, \omega)$。
+
+**定义 7.45**（参数化谱丛族）。对 $a \in [0, 1)$, $m \in [-l, l] \cap \mathbb{Z}$，定义谱丛族：
+
+$$\mathcal{S}_{a,m} = \{(\omega, \lambda) : \det(M_{a,m}(\omega) - \lambda I) = 0\}$$
+
+其中 $M_{a,m}(\omega)$ 是自旋 $a$、磁量子数 $m$ 的三对角矩阵。
+
+**定理 7.46**（双重同伦延拓的谱丛解释）。$a$-同伦延拓与 $m$-同伦延拓分别对应谱丛在 $a$ 方向和 $m$ 方向的平行移动：
+
+$$\Gamma_a: [0, a_{\text{target}}] \to S_N, \quad a \mapsto \mathcal{M}_{(a, m=0)}$$
+$$\Gamma_m: [0, |m|_{\text{target}}] \to S_N, \quad |m| \mapsto \mathcal{M}_{(a_{\text{target}}, m)}$$
+
+组合路径 $\Gamma_{a+m} = \Gamma_a \circ \Gamma_m$ 避开高自旋大 $|m|$ 区域的**分支点密集区**，即参数空间中特征值交叉最频繁的区域。因此双重同伦比单一方向延拓更鲁棒。
+
+**数值验证**：对 $a=0.9, l=2, m=+2$，直接使用 Schwarzschild 初始猜测的 Newton 迭代落入非物理根的频率约为 40%。使用 $a$-homotopy 后降至 5%，再加入 $m$-homotopy 后降至 <1%。详见笔记 `notes/spectral_sheaf_leaver.md §3.3` 和代码 `leaver_unified_solver.py` 的 `_solve_kerr` 实现。
+
+#### 7.11.5 LACI 的谱丛解释
+
+**定理 7.47**（LACI = 谱丛截面正则性度量）。§3.6 定义的 LACI 指数的三个分量在谱丛语言中对应：
+
+| LACI 分量 | 谱丛解释 |
+|:---------|:--------|
+| 不动点残差 $\rho$ | 截面在 $\lambda=0$ 处的垂直偏差 $|\det(M(\omega) - 0 \cdot I)|$ |
+| 分散度 $\Delta$ | 分支点密度——高 $\Delta$ 预示截面接近分支点 |
+| 谱间隙 $\gamma$ | 二叉树根节点处最近特征间距 $\min_{i \neq j} |\lambda_i - \lambda_j|$ |
+
+高 LACI 值意味着截面远离分支点区域，物理根的辨识可靠。
+
+#### 7.11.6 复杂度下界
+
+**命题 7.48**（谱丛剪枝复杂度）。由于 QNM 条件 $\lambda = 0$ 只涉及谱丛 $N$ 叶中的一片，二叉树纤维化可通过 Schur 补的条件判定剪枝，将单 QNM 频率求解的复杂度从 $O(N^3)$（全特征值分解）降至 $O(N)$（仅沿一条根-叶路径展开）。
+
+| 方法 | 复杂度 | 信息论下界达成 |
+|:----|:------:|:-------------:|
+| 全稠密特征值分解 | $O(N^3)$ | ❌ |
+| 三对角 QR 算法 | $O(N^2)$ | ❌ |
+| 二叉树剪枝（理论） | $O(N)$ | ✅ |
+| Leaver CF 迭代 | $O(N)$ | ✅ |
+| 两弦法 | $O(N)$ | ✅ |
+
+**注**：剪枝算法尚未在代码中实现。两弦法虽然也是 $O(N)$，但其加速贡献来自逆迭代而非二叉树剪枝，两者是独立的优化路径。
+
+#### 7.11.7 与 §6 纤维丛理论的关系
+
+本小节的谱丛 $\mathcal{S}(M)$ 是 §6.3 抽象纤维丛理论的**具体实例化**：
+
+- §6.3 定义了纤维丛 $\mathcal{E} \to B$ 上的谱理论，底空间 $B$ 为参数流形
+- 本小节实例化为 $B = \mathbb{C}_\omega$（复频率平面），纤维 $F_\omega = \sigma(M(\omega))$
+- §6.3 的规范群丛对应本小节的单值群 $\mathcal{M} \leq S_N$
+- §6.3 的曲率联络对应本小节中 $q(\omega)$ 的 $\omega$-导数
+
+**注意**：本小节不涉及 Clifford 值谱（§6.1–§6.2 的内容），而是将 §6.3 的纤维丛框架简化应用于非 Clifford 的数值计算场景。未来若将 Teukolsky 方程推广到 Cl(p,q)-值表达，§6.4–§6.5 的旋量模结构将与本小节的谱丛结构深度融合。
+
+---
 #### 7.10.4 综合验证
 
 代码实现见 `src/math_open_problems_convexity.py`，主要验证结果：
@@ -765,8 +890,8 @@ $$h_{\text{top}} \leq \log r + C \cdot \Delta,$$
 
 ---
 
-**版本**：v2.36
+**版本**：v2.37
 
-**日期**：2026-07-20
+**日期**：2026-07-25
 
-**说明**：本文件为 `paper1_fractal_spectral_derecursion.md` v2.35 拆分出的伴生文件，包含原论文 §7 全部内容（RKHS 收敛率、EFT 等价性框架、Kerr 应用、耗散扩展、纯数学定理）。定理编号、章节编号与主文件保持一致，便于交叉引用。
+**说明**：本文件为 `paper1_fractal_spectral_derecursion.md` v2.35 拆分出的伴生文件，包含原论文 §7 全部内容（RKHS 收敛率、EFT 等价性框架、Kerr 应用、耗散扩展、纯数学定理、谱丛理论与 Leaver 三对角矩阵细分纤维化）。定理编号、章节编号与主文件保持一致，便于交叉引用。

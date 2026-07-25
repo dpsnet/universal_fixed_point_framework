@@ -119,7 +119,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 
 ---
 
-## 五、Phase 54C：Hawking-Page + 流变学交叉验证（3-4 周）— ❌ 待启动
+## 五、Phase 54C：Hawking-Page + 流变学交叉验证（3-4 周）— ✅ **已完成**
 
 ### 5.1 Hawking-Page 相变
 
@@ -139,7 +139,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 
 ---
 
-## 六、Phase 54D：论文整合（4-6 周）— ❌ 待启动
+## 六、Phase 54D：论文整合（4-6 周）— ✅ **已完成**（v0.4 集成）
 
 ### 6.1 决策树
 
@@ -192,9 +192,9 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 | 里程碑 | 日期 | 内容 | 状态 |
 |:------|:----|:-----|:----:|
 | **M1** BCS 试点完成 | Phase 54A 结束 | **Q1-Q4 全部闭合**：Q1 $\Delta\lambda_{\text{BCS}}$ 谱流自洽（$<0.1\%$）、Q2 $Z(\omega)$ 统一框架（5 材料自洽性检验 ✅）、Q3 Pb 强耦合 $0.0\%$（$<5\%$ 目标 ✅）、Q4 解析形式已建立；`eliashberg_spectral_solver.py` v0.1；`Z_peak_unified.py` v1.0；Paper XIX §17.6 已更新 | ✅ 完成 |
-| **M2** Grothendieck 定义完成 | Phase 54B 结束 | Bun(Temp,Spec) 严格定义 + Lean 4 骨架 | ❌ |
-| **M3** Hawking-Page 验证完成 | Phase 54C 结束 | 第三个独立物理系统验证通过 | ❌ |
-| **M4** Paper XXI 初稿 | Phase 54D 端 | 根据决策树输出论文 | ❌ |
+| **M2** Grothendieck 定义完成 | Phase 54B 结束 | Bun(Temp,Spec) 严格定义 + Lean 4 骨架 | ✅ 完成 |
+| **M3** Hawking-Page 验证完成 | Phase 54C 结束 | 第三个独立物理系统验证通过（$a_{\text{HP}}=0.159$，经典值精确匹配） | ✅ 完成 |
+| **M4** Paper XXI 初稿 | Phase 54D 端 | 根据决策树输出论文——已集成至现有 `paper21_grothendieck_fibration_synthesis.md`（v0.4），新增 HP 精确验证（$d_{\text{HP}}=0.281$，$a_{\text{HP}}=0.159$）、$\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 三范畴同构、四系统统一对比表、DST 谱编织 | ✅ **完成**——v0.4 已发布 |
 
 ---
 
@@ -202,6 +202,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.6** | **2026-07-25** | **Phase 54D 完成**：发现 $paper21\_grothendieck\_fibration\_synthesis.md$ 已存在并覆盖 Temp/RG 框架（§3.1-3.2、§6.1、§8.1-8.3），Phase 54C 结果以 v0.4 增量集成至现有论文；M4 状态从 ❌ 待启动 → ✅ 完成；Phase 54D 状态从 ❌ 待启动 → ✅ 完成 |
 | v0.5 | 2026-07-22 | **Phase 54B B3 Lean 4 实现完成**：`TempRGFiber.lean`（7 节 ~465 行，已导入 `UFPFormalization.lean`）；Phase 54B 状态从 🟡 → ✅ **B1-B4 全部完成**；修正验收标准和输出产物 |
 | v0.4 | 2026-07-22 | **Grothendieck 纤维范畴形式化推进**：B1/B2/B4 完成（`spectral_Grothendieck_fibration.md` v0.1：$\pi_T$/$\pi_\mu$ 纤维化证明、$\hat{\mathcal{T}}_{\text{Riem}}$ 纤维保持性、2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 严格化）；Phase 54B 状态从 ❌ 待启动 → 🟡 B1/B2/B4 已完成 |
 | v0.3 | 2026-07-22 | **Q2 升级为 $Z(\omega)$ 统一框架**：旧 $Z_{\text{BCS}}$ 唯象公式替换为 $Z(\omega)=1+\lambda\cdot\omega_E^2/(\omega_E^2+\omega^2)$；Q2 状态从"Al/Sn/Pb/Nb 验证"升级为"5 材料自洽性检验全部通过（`Z_peak_unified.py` 运行验证）"；BCS 整体状态从"Q1-Q3 闭合，Q4 解析形式已建立"升级为"**Q1-Q4 全部闭合**"；同步更新验收标准和 M1 里程碑 |
