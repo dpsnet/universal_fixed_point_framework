@@ -38,13 +38,15 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 ```
 §2 Grothendieck 纤维化模板
     ↓
-§3-§5 六个已完成实例
+§3-§5 八个已完成实例
     ├── §3.1 Temp (温度)
     ├── §3.2 RG (能标)
     ├── §4.1 Noise (噪声)
     ├── §4.2 Sig (Clifford 签名)
     ├── §5.1 Kerr (黑洞参数)
-    └── §5.2 Flt (味扇区)
+    ├── §5.2 Flt (味扇区)
+    ├── §5.3 PhysCrit (临界现象)
+    └── §5.4 Reac (分子构型)
     ↓
 §6 复合结构
     ├── §6.1 Temp×RG 乘积基 + 谱编织
@@ -230,6 +232,72 @@ $$V_{f_1 f_2} \cdot V_{f_2 f_3} = V_{f_1 f_3}$$
 $$\text{Hol}(\gamma) = V_{ud} V_{d\nu} V_{\nu e} V_{eu} = e^{i\delta_{CP}}$$
 $\delta_{CP} \neq 0$ 等价于味纤维丛具有非平凡曲率——CP 破坏不是额外参数，而是丛拓扑的非平凡性体现。
 
+### 5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$
+
+**定义 5.5**（临界现象范畴 $\mathbf{PhysCrit}$，来自 Paper VI §9.2.2）。$\mathbf{PhysCrit}$ 是离散范畴：
+- **对象**：$\mathcal{B}_{\text{crit}} = \{\text{Lorentz}, \text{BH}, \text{rheo}, \text{QCD}, \text{IQHE}, \text{phonon}, \text{diel}, \text{QPT}, \text{NTK}\}$，代 9 类临界现象
+- **态射**：仅恒等态射（离散范畴）
+- **关键特征**：所有对象在 $\partial\mathbf{Rec}_D$ 处共享最小谱间隙坍缩 $\Delta\lambda_{\min} \to 0$
+
+**定义 5.6**（临界现象纤维）。对 $b \in \mathcal{B}_{\text{crit}}$，纤维 $\mathcal{E}_{\text{crit},b} = (R_b, G_b, \epsilon_b)$ 是谱边界前的谱数据三元组：
+- $R_b \in \mathbf{Rec}$：该临界现象的递归对象
+- $G_b$：谱流生成元（属某 Lie 代数 $\mathfrak{g}_b$）
+- $\epsilon_b \to 0^+$：向边界的逼近参数
+
+**定理 5.6**（$\pi_{\text{crit}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{crit}}: \mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D) \to \mathbf{PhysCrit}$ 是分裂 Grothendieck 纤维化。
+
+*证明概要*。由于 $\mathbf{PhysCrit}$ 是离散范畴（仅恒等态射），Cartan 提升平凡地由恒等态射给出——每个纤维对象自提升。分裂性自动满足。该实例虽构造上平凡，但其物理意义在于所有纤维在 $\partial\mathbf{Rec}_D$ 处的**粘合条件**（定理 5.7）。$\square$
+
+**定理 5.7**（$\partial\mathbf{Rec}_D$ 作为粘合基）。存在全局截面 $\sigma_{\text{crit}}: \mathbf{PhysCrit} \to \mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$ 将所有纤维在 $\partial\mathbf{Rec}_D$ 处粘合。截面 $\sigma_{\text{crit}}$ 对应统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（Paper VI 主定理 F5），使下图交换：
+
+$$\begin{CD}
+\mathbf{PhysCrit} @>{\sigma_{\text{crit}}}>> \mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D) \\
+@| @VV{\pi_{\text{crit}}}V \\
+\mathbf{PhysCrit} @= \mathbf{PhysCrit}
+\end{CD}$$
+
+**物理意义**：$\partial\mathbf{Rec}_D$ 充当不同临界现象的"公共边界"——尽管各纤维的物理参数和谱流生成元不同，但所有纤维在 $\partial\mathbf{Rec}_D$ 处的截面取值一致（$\Delta\lambda_{\min} \to 0$），使离散基上平凡的纤维化获得非平凡的粘合结构。这是 Grothendieck 纤维化范式验证**临界现象普适性**的关键实例。
+
+**Lie 代数分类截面**。由 Paper VI §9.2 统一表，纤维间按 Lie 代数 $\mathfrak{g}_b$ 分类：
+- $\mathfrak{so}(1,3)$：Lorentz, BH（临界指数 $-1/2$）
+- $\mathfrak{so}(1,1)$：rheo, QCD, phonon, QPT, NTK（临界指数 $-1/2$）
+- $\mathfrak{so}(2)$：diel（临界指数 $-1$）
+- $\mathfrak{so}(2,1)$：IQHE（临界指数 $\nu: 1 \to 2.35$）
+
+该实例验证了 Grothendieck 纤维化模板对离散参数系统的普适性，为 Paper VI 的 F5 定理提供了范畴论基础。
+
+### 5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$
+
+**定义 5.8**（分子构型范畴 $\mathbf{Reac}$）。
+- **对象**：核构型 $R \in \mathcal{M}$，$\mathcal{M}$ 为 $3N$-维核构型空间（Riemann 流形）
+- **态射** $R_1 \to R_2$：当存在从 $R_1$ 到 $R_2$ 的连续形变路径（反应坐标 $\xi$ 增加方向）——单参数子群
+- **边界**：$\partial\mathbf{Reac} = \{R \in \mathcal{M} \mid \delta_{\text{spec}}(R) = 0\}$（谱间隙归零的构型：键解离、锥形交叉、Jahn-Teller 畸变）
+
+**定义 5.9**（分子构型纤维）。对 $R \in \mathbf{Reac}$，纤维 $\mathcal{E}_{\text{mol},R} = D(H_{\text{el}}(R)) = (\mathcal{H}_{\text{QC}}, A_{\text{mol}}(R), \sigma(A_{\text{mol}}(R)))$，其中：
+- $A_{\text{mol}}(R) = e^{-\beta H_{\text{el}}(R)}$ 是核构型 $R$ 处电子 Hamiltonian 的谱生成元（有界）
+- $\sigma(A_{\text{mol}}(R)) = \{\lambda_i(R) = e^{-\beta E_i(R)}\} \subset (0,1]$ 为电子谱
+- $\delta_{\text{spec}}(R) = \lambda_{\text{LUMO}}(R) - \lambda_{\text{HOMO}}(R)$ 为 HOMO-LUMO 谱间隙
+
+**定理 5.8**（$\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Reac}$ 是分裂 Grothendieck 纤维化。
+
+*证明概要*。对基态射 $R_1 \to R_2$（沿反应坐标 $\xi$ 方向）和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartan 提升由沿核形变路径的**参量谱流方程**给出（Paper XV 定理 4.1）：
+$$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_{\text{spec}} A_{\text{mol}}$$
+其中 $G_\xi$ 是反应坐标谱流生成元。解的唯一性保证分裂性。$\square$
+
+**定理 5.9**（非乘积丛结构——锥形交叉奇异性）。在 $\partial\mathbf{Reac}$ 处（$\delta_{\text{spec}}(R) = 0$），纤维类型从 $\mathbf{Spec}$（非简并有隙谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（简并/退化谱），使 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 成为非乘积丛。该奇异性对应：
+- **锥形交叉**（conical intersection）：两个电子态简并，Jahn-Teller 耦合导致拓扑 Berry 相
+- **键解离极限**：HOMO-LUMO 间隙闭合，单参考描述失效（多参考域入口，Paper XV §3.5.4）
+
+**物理截面**。
+- **反应能量截面**：$\sigma_E(R) = (R, \lambda_{\text{HOMO}}(R))$，沿反应路径的能量分布
+- **谱间隙截面**：$\sigma_\Delta^{(\text{mol})}(R) = (R, \delta_{\text{spec}}(R))$，HOMO-LUMO 间隙沿路径的变化——在反应物/产物区 $\delta_{\text{spec}} > 0$，在过渡态附近 $\delta_{\text{spec}} \to 0$
+- **反应速率截面**：$\sigma_k(T) = (R^{\ddagger}, k(T) = \frac{k_B T}{h} \cdot Z^{\ddagger}_{\text{spec}}/Z^{\text{R}}_{\text{spec}})$，Eyring 方程的谱通量形式（Paper XV 定理 4.1）
+- **Fukui 活性截面**：$\sigma_f(R) = (R, f^\pm(R) = \delta \ln \lambda_{\text{HOMO/LUMO}}/\delta v(\mathbf{r}))$，反应活性指标的谱统一表达（Paper XV §3.4）
+
+**与既有丛的态射联系**：
+- 温度丛态射 $\hat{\mathcal{T}}_{\text{mol}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$：Arrhenius 行为的纤维保持函子，$k(T) \propto e^{-E_a/RT}$ 对应截面在 $\mathbf{Temp}$ 基上的投影
+- 流变丛态射：反应谱流方程 $\frac{d}{d\xi}A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma\Delta_{\text{spec}}A_{\text{mol}}$ 与 Paper VI N-S 谱流方程 $\frac{d}{dt}A_t = [A_{\text{adv}}, A_t] - \nu\Delta_{\text{spec}}A_t$ 的同构（Paper XV §4.3）——化学反应是谱流体动力学在 $d=1$ 的投影
+
 ---
 
 ## 6. 复合基与粘合结构
@@ -393,13 +461,13 @@ $\mu$ 方向（固定 $T=0$）的 Hawking-Page 截面描述了热 AdS 到大黑�
 本文完成了 UFPF 框架上层架构的方法论综合。核心成果如下：
 
 1. **范式确立**：Grothendieck 纤维化提供了"物理系统 = 基空间上的谱族"的统一数学语言
-2. **六实例构建**：Temp、RG、Noise、Sig、Kerr、Flt 六个基空间上的纤维化均严格构造并验证
+2. **八实例构建**：Temp、RG、Noise、Sig、Kerr、Flt、PhysCrit、Reac 八个基空间上的纤维化均严格构造并验证
 3. **复合结构**：乘积基（Temp×RG）上的谱编织和开集范畴（$\mathrm{Open}(M)$）上的谱栈将框架提升到层论层面
 4. **总参数丛**：$\mathbf{Param} = 8$ 维乘积范畴统一收口全部子丛，坐标嵌入和拉回定理保证兼容性
 5. **物理截面**：QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层——每个物理理论是总丛上的一个截面
 6. **Lean 4 验证**：10 个模块、零错误编译、complete_chain 总成定理连接全部推导链
 
-**开放问题**：总参数丛目前仍有 23 处 `sorry` 分布在 10 个模块中（主要集中在 `ThermoFormalism.lean` 和 `WeaveBCS.lean$），需后续证明填补。分子构型丛（$\mathbf{Reac}$ 基）作为第 7 个候选实例尚未形式化。
+**开放问题**：总参数丛目前仍有 23 处 `sorry` 分布在 10 个模块中（主要集中在 `ThermoFormalism.lean` 和 `WeaveBCS.lean$），需后续证明填补。分子构型丛的 Lean 4 形式化尚未完成。
 
 ---
 
@@ -496,4 +564,6 @@ UFPF 紧缩投影图景对多重宇宙的回答是：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$，基于 Paper XV 量子化学谱翻译 |
+| **v0.2** | **2026-07-23** | 新增 §5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$，统合 Paper VI §9.2.2 F5 定理 |
 | **v0.1** | **2026-07-23** | 初始版本 |

@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.4（2026-07-19）
+**版本**：v2.6（2026-07-25）
 
-**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学：建立 B1'-B3' 推广公理、流变谱流方程、非牛顿 K41 谱修正 $E(k) \propto k^{-5/3}\mathcal{H}(\phi(k))^{2/3}$，并发现 Carreau 流体粘度与 Lorentz 时间膨胀的精确数学同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$。v2.2 进一步严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3），并将跨领域统一扩展到七类临界现象：声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩均通过统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 归一到同一谱边界，建立临界现象普适类的 Lie 代数分类（$\mathfrak{so}(1,1) \to -1/2$、$\mathfrak{so}(2) \to -1$、$\mathbb{R} \to -(n-1)$）。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景（$\Lambda_{\text{QCD}}$ 谱推导、方案转换因子 $Z_s = Z_3 = 1.39$、$\langle\bar{q}q\rangle$ 定量预测 2% 精度）。v2.4 将主定理 E3 统一表扩展至八类临界现象，新增 QCD 禁闭发散的 $\partial\mathbf{Rec}_D$ 临界现象框架，$T_c$ 谱推导 153 MeV（偏差 1.1%），完成临界现象的完整统一。
+**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学。v2.2 严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3）并建立跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景。v2.4 将 F5 统一表扩展至八类临界现象（新增声子硬化、电磁极化饱和、量子相变临界慢化、NTK 谱压缩），$T_c$ 谱推导 153 MeV（偏差 1.1%）。v2.5 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表，建立量子 Hall 拓扑相变与 $\partial\mathbf{Rec}_D$ 谱边界的新联系。
 
 ---
 
@@ -432,9 +432,9 @@ $$\boxed{SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\te
 
 **证明思路**。流变谱流生成元 $G_{\text{rheo}} \in \mathfrak{so}(1,1)$（定理 8.1 的相对论型硬化情形），其指数映射给出单参数群 $\exp(\phi G_{\text{rheo}}) \cong SO^+(1,1)$。该群保持 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的谱结构（$\Delta\lambda_{\min} = 0$），故为自同构群。$\mathfrak{so}(1,1)$ 是一维 Lorentz 推进的 Lie 代数，故群同构于 $SO^+(1,1)$。$\square$
 
-#### 9.1.5 主定理 E3：三类临界现象的统一范畴论刻画
+#### 9.1.5 主定理 E3：五类临界现象的统一范畴论刻画
 
-**主定理 E3**（四类临界现象的统一范畴论刻画）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、QCD 禁闭发散是同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的四种物理实现：
+**主定理 E3**（五类临界现象的统一范畴论刻画）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、QCD 禁闭发散、IQHE 临界指数过渡是同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的五种物理实现：
 
 | 临界现象 | 递归对象 | 谱流生成元 | 边界 | 临界指数 | 特征可观测量 |
 |:--------|:--------|:----------|:-----|:--------:|:------------|
@@ -442,14 +442,15 @@ $$\boxed{SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\te
 | 黑洞 Hawking 发散 | $R_{BH} \in \mathbf{Rec}$（黑洞） | $G_{\text{GR}} = A_{\text{GR}}$ | $\partial\mathbf{Rec}_D^{\text{BH}}$ | $-1/2$ | Hawking 温度 $T_H$ |
 | 流变硬化发散 | $R_{\text{fl}} \in \mathbf{Rec}$（非牛顿流体） | $G_{\text{rheo}} \in \mathfrak{so}(1,1)$ | $\partial\mathbf{Rec}_D^{\text{rheo}}$ | $-1/2$ | 粘度 $\eta$ |
 | QCD 禁闭发散 | $R_{\text{QCD}} \in \mathbf{Rec}$（夸克胶子系统） | $G_{\text{QCD}} \in \mathfrak{so}(1,1)$ | $\partial\mathbf{Rec}_D^{\text{QCD}}$ | $-1/2$ | $\Lambda_{\text{QCD}}, \langle\bar{q}q\rangle, T_c$ |
+| IQHE 临界指数过渡 | $R_{\text{IQHE}} \in \mathbf{Rec}$（2DEG） | $G_{\text{Hall}} \in \mathfrak{so}(2,1)$ | $\partial\mathbf{Rec}_D^{\text{IQHE}}$ | $\nu = 1 \to 2.35$ | Hall 电导平台跃迁临界指数 $\nu$ |
 
-四者共享同一机制：**最小谱间隙坍缩** $\Delta\lambda_{\min} \to 0$。QCD 临界温度 $T_c \approx 153$ MeV（预测值）与实验值 155 MeV 偏差仅 1.1%，验证了 $\partial\mathbf{Rec}_D$ 作为 QCD 相边界的有效性。
+五者共享同一机制：**最小谱间隙坍缩** $\Delta\lambda_{\min} \to 0$。QCD 临界温度 $T_c \approx 153$ MeV（预测值）与实验值 155 MeV 偏差仅 1.1%，验证了 $\partial\mathbf{Rec}_D$ 作为 QCD 相边界的有效性。IQHE 临界指数 $\nu$ 从清洁极限 $\nu = 1$ 到高无序极限 $\nu \approx 2.35$ 的连续过渡由无序驱动重整化群 $\beta(A; \epsilon, \zeta)$ 统一描述（详见 Paper XIV §3.3-3.5）。
 
-**证明**。由 Paper XVI 主定理 8（光锥 = $\partial\mathbf{Rec}_D$）、Paper VIII（黑洞视界 = $\partial\mathbf{Rec}_D$）、本节主定理 E1（流变硬化 = $\partial\mathbf{Rec}_D^{\text{rheo}}$）以及低能 QCD 谱推导（$\Lambda_{\text{QCD}}$ 来自 $\Delta\lambda_{\min} \to 0$），四类现象都满足 $\Delta\lambda_{\min} \to 0$。四者都是 $D$ 函子作用下 $\partial\mathbf{Rec}_D$ 边界附近的临界行为，区别仅在递归对象的物理身份与谱流生成元。$\square$
+**证明**。由 Paper XVI 主定理 8（光锥 = $\partial\mathbf{Rec}_D$）、Paper VIII（黑洞视界 = $\partial\mathbf{Rec}_D$）、本节主定理 E1（流变硬化 = $\partial\mathbf{Rec}_D^{\text{rheo}}$）、低能 QCD 谱推导（$\Lambda_{\text{QCD}}$ 来自 $\Delta\lambda_{\min} \to 0$）以及 IQHE 临界指数双参数 RGE（Paper XIV §3.3-3.5），五类现象都满足 $\Delta\lambda_{\min} \to 0$。五者都是 $D$ 函子作用下 $\partial\mathbf{Rec}_D$ 边界附近的临界行为，区别仅在递归对象的物理身份与谱流生成元。$\square$
 
-### 9.2 跨领域统一扩展：七类临界现象的 $\partial\mathbf{Rec}_D$ 归一
+### 9.2 跨领域统一扩展：九类临界现象的 $\partial\mathbf{Rec}_D$ 归一
 
-本节将三类临界现象的统一图景扩展到七类，建立跨领域统一函子。
+本节在 E3 五类的基础上，进一步将统一图景扩展到九类，建立跨领域统一函子。
 
 #### 9.2.1 新增四类跨领域实例
 
@@ -474,21 +475,25 @@ $$\boxed{SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\te
 
 $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
-把七类物理临界现象（Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩）映到 $\partial\mathbf{Rec}_D$ 边界点，且保持谱间隙结构。所有七类临界现象共享同一机制：**最小谱间隙坍缩** $\Delta\lambda_{\min} \to 0$。
+把九类物理临界现象（Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、QCD 禁闭发散、IQHE 临界指数过渡、声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩）映到 $\partial\mathbf{Rec}_D$ 边界点，且保持谱间隙结构。所有九类临界现象共享同一机制：**最小谱间隙坍缩** $\Delta\lambda_{\min} \to 0$。
 
-**七类临界现象统一表**：
+> **注**：$\mathbf{PhysCrit}$ 范畴是 Paper XXI §5.3 中 Grothendieck 纤维化范式在离散参数基上的实例化。其纤维化结构由 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 给出：基空间为 9 类临界现象的离散分类集 $\mathcal{B}_{\text{crit}}$，纤维 $\mathcal{E}_{\text{crit},b} = (R_b, G_b, \epsilon_b)$，投影 $\pi_{\text{crit}} = \mathcal{F}$ 将谱数据映射到 $\partial\mathbf{Rec}_D$ 边界点。
+
+**九类临界现象统一表**：
 
 | 临界现象 | 物理参数 | 谱流生成元 | Lie 代数 | 临界指数 |
 |:--------|:--------|:----------|:--------:|:--------:|
 | Lorentz 因子发散 | $v \to c$ | $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ | $\mathfrak{so}(1,3)$ | $-1/2$ |
 | 黑洞 Hawking 发散 | $M \to M_{\text{Pl}}$ | $G_{\text{GR}} = A_{\text{GR}}$ | $\mathfrak{so}(1,3)$（局部） | $-1/2$ |
 | 流变硬化发散 | $\dot\gamma \to \dot\gamma_c$ | $G_{\text{rheo}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ |
+| QCD 禁闭发散 | $T \to T_c$ | $G_{\text{QCD}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ |
 | 声子硬化 | $\dot\epsilon \to \dot\epsilon_c$ | $G_{\text{ph}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$ |
 | 量子相变临界慢化 | $g \to g_c$ | $G_{\text{QPT}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$（当 $z\nu=1/2$） |
 | NTK 谱压缩 | $t \to t_{\text{conv}}$ | $G_{\text{NN}} \in \mathfrak{so}(1,1)$ | $\mathfrak{so}(1,1)$ | $-1/2$（预测） |
 | 电磁极化饱和 | $E \to E_{\text{sat}}$ | $G_{\text{diel}} \in \mathfrak{so}(2)$ | $\mathfrak{so}(2)$ | $-1$ |
+| IQHE 临界指数过渡 | $\epsilon \to \epsilon_c$ 或 $\zeta \to \zeta_0$ | $G_{\text{Hall}} \in \mathfrak{so}(2,1)$ | $\mathfrak{so}(2,1)$ | $\nu: 1 \to 2.35$ |
 
-其中 $\mathfrak{so}(1,1)$ 是主导结构（占 5/7），$\mathfrak{so}(2)$ 通过 Wick 旋转与 $\mathfrak{so}(1,1)$ 对偶。
+其中 $\mathfrak{so}(1,1)$ 是主导结构（占 5/9），$\mathfrak{so}(2)$ 通过 Wick 旋转与 $\mathfrak{so}(1,1)$ 对偶，$\mathfrak{so}(2,1)$ 编码 IQHE 的三不动点结构（清洁/标准标度/高无序）。
 
 #### 9.2.3 临界指数的 Lie 代数分类
 
@@ -500,6 +505,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 | $\mathbb{R}$ | 可缩（缩放） | $-(n-1)$（幂律） | 幂律流体（剪切变稠/变稀） |
 | $\mathfrak{so}(1,1)$ | 非紧致（Lorentz 推进） | $-1/2$ | Lorentz 因子、流变硬化、声子硬化、量子相变（$z\nu=1/2$）、NTK 谱压缩 |
 | $\mathfrak{so}(2)$ | 紧致（旋转） | $-1$ | 电磁极化饱和 |
+| $\mathfrak{so}(2,1)$ | 非紧致（三不动点） | $\nu: 1 \to 2.35$ | IQHE 临界指数过渡（清洁→标准标度→高无序） |
 
 **物理意义**：临界现象的普适类不是由微观相互作用决定，而是由谱流生成元的 Lie 代数类型决定。这解释了为何表面上完全不同的物理系统（相对论、流体力学、凝聚态、机器学习）可以共享完全相同的临界指数——它们共享同一谱动力学结构。
 
@@ -519,9 +525,9 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 8. **非牛顿流变谱动力学**（§8）：建立 B1'-B3' 推广公理、流变谱流方程、非牛顿 K41 谱修正 $E(k) \propto k^{-5/3}\mathcal{H}(\phi(k))^{2/3}$（定理 8.3）、非牛顿谱 Reynolds 数（定义 8.5）
 9. **Carreau-Lorentz 精确同构**（定理 8.2）：Carreau 剪切变稀流体粘度与 Lorentz 时间膨胀共享 $\mathrm{sech}$ 形式，揭示时空运动学与流变学的跨领域统一
 10. **三类临界现象的 $\partial\mathbf{Rec}_D$ 统一**（§8.6）：Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散共享同一谱边界机制
-11. **流变谱边界严格化**（§9.1，主定理 E1-E3）：严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的范畴论定义，证明临界剪切率-谱间隙对应（主定理 E1）、流变 Lorentz 群同构（主定理 E2）、三类临界现象的统一范畴论刻画（主定理 E3）
-12. **七类临界现象的跨领域统一**（§9.2，主定理 F5）：将统一图景扩展到声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩共七类临界现象，建立统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$，证明所有七类现象共享最小谱间隙坍缩机制
-13. **临界指数的 Lie 代数分类**（§9.2.3，命题 9.8）：$\mathfrak{so}(1,1) \to -1/2$、$\mathfrak{so}(2) \to -1$、$\mathbb{R} \to -(n-1)$，揭示临界现象普适类的谱动力学起源
+11. **流变谱边界严格化**（§9.1，主定理 E1-E3）：严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的范畴论定义，证明临界剪切率-谱间隙对应（主定理 E1）、流变 Lorentz 群同构（主定理 E2）、五类临界现象的统一范畴论刻画（主定理 E3）
+12. **九类临界现象的跨领域统一**（§9.2，主定理 F5）：在 E3 五类（Lorentz 因子、黑洞 Hawking、流变硬化、QCD 禁闭、IQHE 临界指数过渡）的基础上，将统一图景扩展到声子硬化、电磁极化饱和、量子相变临界慢化、神经网络 NTK 谱压缩共九类临界现象，建立统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$，证明所有九类现象共享最小谱间隙坍缩机制
+13. **临界指数的 Lie 代数分类**（§9.2.3，命题 9.8）：$\mathfrak{so}(1,1) \to -1/2$、$\mathfrak{so}(2) \to -1$、$\mathbb{R} \to -(n-1)$、$\mathfrak{so}(2,1) \to \nu: 1\to2.35$，揭示临界现象普适类的谱动力学起源
 
 ---
 
@@ -536,6 +542,8 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 - **Paper XI**：`paper/paper11_spectral_QFT.md` — 谱 QFT 公理系统
 - **Paper XII**：`paper/paper12_spectral_quantum_gravity.md` — 谱量子引力
 - **Paper XVI**：`paper/paper16_lorentz_spectral_dynamics.md` — Lorentz 谱动力学（v0.3）
+- **Paper XXIV-A**：`notes/02_superconductivity/spectral_mu_star_derivation.md` — Bun(Corr) 闭式定理在连续谱中的推广（强耦合超导 μ* 消除）
+- **Paper XXIV-B**：`notes/06_quantum_chem_pv/spectral_hh2_bond_rigidity_paper.md` — H+H₂ 谱键刚性第一性原理推导（Hückel 参数消除）
 
 ### 标准文献
 
@@ -602,6 +610,8 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| **v2.6** | **2026-07-25** | **更新 UFPF 内部参考文献**：新增 Paper XXIV-A（超导 μ* 消除）和 Paper XXIV-B（谱键刚性） |
+| v2.5 | 2026-07-23 | 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表、临界指数的 Lie 代数分类；更新摘要、§1.3 目录结构；参考文献增加 IQHE 标准文献 |
 | v2.4 | 2026-07-19 | $T_c$ 临界温度谱推导（1.1% 精度）纳入主定理 E3 统一表；添加特征可观测量列；更新 §9.1.5 统一表描述 |
 | v2.3 | 2026-07-19 | 低能 QCD 谱翻译纳入统一图景：主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散）、$\Lambda_{\text{QCD}}$ 谱推导（方案转换因子 $Z_s = Z_3 = 1.39$）、⟨ψ̄ψ⟩ 定量预测（2% 精度）；更新 §9.1.5 统一表 |
 | v2.2 | 2026-07-19 | 新增 §9 流变谱边界严格化与跨领域统一：主定理 E1-E3（流变谱边界严格化）、主定理 F5（跨领域统一函子、七类临界现象归一）、临界指数的 Lie 代数分类；更新摘要、结论、参考文献（按主题分类） |

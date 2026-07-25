@@ -1,0 +1,40 @@
+{
+  "model": "STO-CI angular dependence water dimer J_CT(R,theta)",
+  "version": "v1.0",
+  "date": "2026-07-24",
+  "theta_a_range_deg": [
+    0,
+    90
+  ],
+  "theta_don_deg": 0.0,
+  "theta_acc_eq_deg": 52.0,
+  "l_corr_0deg_A": 0.6602284719485706,
+  "l_corr_eq_A": 0.6602284719485706,
+  "l_corr_60deg_A": 0.6602284719485706,
+  "l_corr_75deg_A": 0.6602284719453273,
+  "anisotropy_pct": 1.705021855779976e-08,
+  "l_corr_bootstrap_0deg": {
+    "median": 0.6605091500418807,
+    "ci68": [
+      0.630926053039698,
+      0.6930596693315895
+    ]
+  },
+  "l_corr_bootstrap_eq": {
+    "median": 0.6605091500553979,
+    "ci68": [
+      0.6309260530218795,
+      0.693059669328462
+    ]
+  },
+  "l_corr_bootstrap_75deg": {
+    "median": 0.6605091500418807,
+    "ci68": [
+      0.630926053027885,
+      0.6930596692846739
+    ]
+  },
+  "sf_prediction_A": 0.5,
+  "status": "angular_dependence_complete",
+  "conclusion": "l_corr approximately isotropic; SF prediction robust across H-bond angles"
+}

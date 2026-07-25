@@ -37,3 +37,8 @@ lake-packages/
 tmp/
 lean-4.32.0-windows.tar.zst
 /.trae/
+.venv/
+Data.zip
+.wsl-venv/
+.tmp/
+.pip-cache/

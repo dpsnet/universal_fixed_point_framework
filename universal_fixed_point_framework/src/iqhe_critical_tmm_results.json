@@ -1,0 +1,70 @@
+{
+  "interpolation_params": {
+    "alpha": 0.5,
+    "epsilon_0": 1.2,
+    "nu_min": 1.0,
+    "nu_max": 2.35
+  },
+  "key_predictions": {
+    "\u03b5=1.0e-04": {
+      "nu_spec": 1.0,
+      "nu_std": 2.35,
+      "deviation_pct": -57.45
+    },
+    "\u03b5=1.0e-03": {
+      "nu_spec": 1.0002,
+      "nu_std": 2.35,
+      "deviation_pct": -57.44
+    },
+    "\u03b5=1.0e-02": {
+      "nu_spec": 1.0024,
+      "nu_std": 2.35,
+      "deviation_pct": -57.34
+    },
+    "\u03b5=1.0e-01": {
+      "nu_spec": 1.0241,
+      "nu_std": 2.35,
+      "deviation_pct": -56.42
+    },
+    "\u03b5=4.0e-01": {
+      "nu_spec": 1.0982,
+      "nu_std": 2.35,
+      "deviation_pct": -53.27
+    },
+    "\u03b5=1.2e+00": {
+      "nu_spec": 1.3046,
+      "nu_std": 2.35,
+      "deviation_pct": -44.49
+    },
+    "\u03b5=5.0e+00": {
+      "nu_spec": 2.078,
+      "nu_std": 2.35,
+      "deviation_pct": -11.58
+    },
+    "\u03b5=1.4e+01": {
+      "nu_spec": 2.3458,
+      "nu_std": 2.35,
+      "deviation_pct": -0.18
+    },
+    "\u03b5=5.0e+01": {
+      "nu_spec": 2.35,
+      "nu_std": 2.35,
+      "deviation_pct": -0.0
+    }
+  },
+  "tmm_simulation": {
+    "n_epsilon": 50,
+    "system_sizes": [
+      8,
+      16,
+      24,
+      32,
+      48,
+      64,
+      96,
+      128
+    ],
+    "samples_per_config": 100,
+    "fitted_nu": {}
+  }
+}

@@ -34,7 +34,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 | **噪声丛 Bun(Noise, Spec)** | 噪声强度 $\eta \in [0,\infty)$，$\eta_c$ 为基边界 | $A_\eta = A_R + \eta\,\delta A_N$ 的谱对象 | `paper19_category_extension.md` §11-13；`paper10_spectral_quantum.md` §12.4 |
 | **Kerr 参数丛** | $(M, a) \in \mathbb{R}^+ \times [0, M]$，含边界 $a=M$ | QNM 谱族 $\{\omega_n(M,a)\}$、谱间隙、视界谱 | `paper8_black_hole_spectral.md` §4、§7；`spectral_Kerr.md` |
 | **EFT 余域纤维化** | 能标范畴 $\Lambda$（RG 流为态射） | 各能标有效理论（8 层 EFT 塔） | `paper1_fractal_spectral_derecursion.md` §8.3.3；`paper1_rkhs_and_applications.md` §7.7 |
-| **分子构型丛** | 核构型空间（反应坐标 $\xi$） | $A_{\text{mol}}(R)$ 的轨道谱、谱间隙 $\delta(R)$ | `paper15_spectral_quantum_chemistry.md` §3-4 |
+| **分子构型丛 ✅** | 核构型空间（反应坐标 $\xi$） | $A_{\text{mol}}(R)$ 的轨道谱、谱间隙 $\delta(R)$ | `paper15_spectral_quantum_chemistry.md` §3-4 |
 
 ### 2.2 已完成实例的乘积/粘合
 
