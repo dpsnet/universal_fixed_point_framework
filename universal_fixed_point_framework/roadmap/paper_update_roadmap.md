@@ -20,6 +20,14 @@
 | **P2** | Paper X | ✅ 完成 | **v1.3→v1.4** | $\eta_c$ 解析推导完整步骤；$\tau(\eta)\propto 1/(\eta_c-\eta)$ 发散证明；Peres-Mermin 方构造 |
 | **P2** | Paper I | ✅ 完成 | §8.3.3 更新 | EFT 能标范畴定义；codomain 函子 Grothendieck 纤维化；S1-S4 Cartan 翻译 |
 
+### 新论文（Phase 59，理论框架已完成，待数值验证更新）
+
+| 优先级 | 论文 | 状态 | 版本 | 更新计划 |
+|:-----:|:-----|:----:|:----:|:--------|
+| **P3** | Paper XXVII（Leaver 谱丛理论） | ⏳ 理论框架完成 | v1.0 | Phase 59F.1（β_EM）+ 59F.6（跨自旋 LACI）→ 更新 §12 |
+| **P3** | Paper XXVIII（Kerr-Newman 耦合谱丛） | ⏳ 理论框架完成 | v0.1 | Phase 59F.5（Q=0 退化 + 小 Q 测试）→ 更新 §6 |
+| **P3** | Paper XXIX（Dirac 谱丛与自旋结构） | ⏳ 理论框架完成 | v0.1 | Phase 59F.2（基准表）+ 59F.3（β_D）+ 59F.4（Z2 阻碍验证）→ 更新 §3, §5, §6 |
+
 ---
 
 ## 二、各论文需写入的具体内容
