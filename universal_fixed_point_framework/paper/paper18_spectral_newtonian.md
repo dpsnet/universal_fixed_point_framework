@@ -4,11 +4,11 @@
 
 **版本**：v1.1（2026-07-19）
 
-**摘要**：本文在 UFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Spec}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Spec}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Spec}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Spec}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，无自由参数。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、零参数预测（Paper XVII）形成完整的跨领域统一框架。
+**摘要**：本文在 UFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Sp}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Sp}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Sp}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Sp}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，无自由参数。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、零参数预测（Paper XVII）形成完整的跨领域统一框架。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper III（谱分类完备性定理）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）、Paper XVII（静默因子、IFS 收缩比、$d_H = 2.7095$）。本文使用自然单位制 $\hbar = c = 1$，但保留 $\hbar$ 在关键公式中以显示量纲。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper III（谱分类完备性定理）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）、Paper XVII（静默因子、IFS 收缩比、$d_H = 2.7095$）。本文使用自然单位制 $\hbar = c = 1$，但保留 $\hbar$ 在关键公式中以显示量纲。
 
 ---
 
@@ -16,13 +16,13 @@
 
 ### 1.1 从翻译到推导
 
-UFPF 框架的 Paper V 完成了"翻译阶段"——将已知力定律改写成谱流方程的形式。具体地，力被重新诠释为 $\mathbf{Spec}$ 范畴中谱流的生成元，统一公式为：
+UFPF 框架的 Paper V 完成了"翻译阶段"——将已知力定律改写成谱流方程的形式。具体地，力被重新诠释为 $\mathbf{Sp}$ 范畴中谱流的生成元，统一公式为：
 
 $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 其中 $A_{F,i}$ 是第 $i$ 种力的谱生成元，$g_i$ 是耦合常数。这一翻译揭示了牛顿力学、麦克斯韦电动力学、广义相对论与规范场论共享的谱动力学结构。
 
-然而，翻译阶段回答的是"物理定律在谱语言中长什么样"，而非"物理定律为什么必然成立"。本文推进到**推导阶段**——从 $\mathbf{Spec}$ 4-范畴的第一原理出发，**独立导出**牛顿力学的核心定律：
+然而，翻译阶段回答的是"物理定律在谱语言中长什么样"，而非"物理定律为什么必然成立"。本文推进到**推导阶段**——从 $\mathbf{Sp}$ 4-范畴的第一原理出发，**独立导出**牛顿力学的核心定律：
 
 - 惯性质量为什么存在？为什么等于 $\hbar / \Delta\lambda_{\text{min}}$？
 - $F = ma$ 为什么必然成立？从范畴动力学如何推导？
@@ -33,7 +33,7 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 ### 1.2 推导链概览
 
 ```
-$\mathbf{Spec}$ 4-范畴结构
+$\mathbf{Sp}$ 4-范畴结构
     ↓
 谱间隙 $\Delta\lambda_{\text{min}}$ → 惯性质量 $m = \hbar / \Delta\lambda_{\text{min}}$ (定理 2.1, §2)
     ↓
@@ -208,9 +208,9 @@ $$\frac{d}{dt} \lambda_i(t) = \langle i(t) | [G(t), D(R(t))] | i(t) \rangle = \s
 
 ## 4. 三维空间与逆平方律的谱几何推导
 
-### 4.1 $\mathbf{Spec}$ 4-范畴的态射空间结构
+### 4.1 $\mathbf{Sp}$ 4-范畴的态射空间结构
 
-**定义 4.1**（$\mathbf{Spec}$ 的层次结构）。$\mathbf{Spec}$ 是严格 4-范畴，其层次结构为：
+**定义 4.1**（$\mathbf{Sp}$ 的层次结构）。$\mathbf{Sp}$ 是严格 4-范畴，其层次结构为：
 
 | 层次 | 内容 | 物理对应 |
 |:----|:----|:--------|
@@ -220,17 +220,17 @@ $$\frac{d}{dt} \lambda_i(t) = \langle i(t) | [G(t), D(R(t))] | i(t) \rangle = \s
 | 3-态射 | 辫子结构 $\sigma: \alpha \Rightarrow \beta$ | 拓扑相互作用 |
 | 4-态射 | Coherence 同构 | 范畴等价 |
 
-**命题 4.1**（1-态射空间的代数结构）。$\mathbf{Spec}$ 的 1-态射空间 $\text{Hom}(A, B)$ 构成一个 Lie 代数，其 Lie 括号由态射的合成诱导。
+**命题 4.1**（1-态射空间的代数结构）。$\mathbf{Sp}$ 的 1-态射空间 $\text{Hom}(A, B)$ 构成一个 Lie 代数，其 Lie 括号由态射的合成诱导。
 
 ### 4.2 空间维度的 IFS 映射数定理
 
-**引理 4.1**（范畴层数与 IFS 映射数的对应）。在 $\mathbf{Spec}$ 严格 4-范畴中，IFS 的生成映射数 $N_{\text{IFS}}$ 等于非对象态射层数：
+**引理 4.1**（范畴层数与 IFS 映射数的对应）。在 $\mathbf{Sp}$ 严格 4-范畴中，IFS 的生成映射数 $N_{\text{IFS}}$ 等于非对象态射层数：
 
 $$N_{\text{IFS}} = n - 1 = 3$$
 
-其中 $n = 4$ 是 $\mathbf{Spec}$ 的严格范畴层数。
+其中 $n = 4$ 是 $\mathbf{Sp}$ 的严格范畴层数。
 
-**证明**。在 $\mathbf{Spec}$ 严格 4-范畴中，存在 4 层结构：对象 (0-态射)、1-态射、2-态射、3-态射、4-态射（coherence）。IFS 的递归结构投影掉对象层（对应谱生成算子的不动点/真空），仅保留态射层作为主动生成元：
+**证明**。在 $\mathbf{Sp}$ 严格 4-范畴中，存在 4 层结构：对象 (0-态射)、1-态射、2-态射、3-态射、4-态射（coherence）。IFS 的递归结构投影掉对象层（对应谱生成算子的不动点/真空），仅保留态射层作为主动生成元：
 
 - $f_1$（深度 2 映射）↔ 1-态射（时空平移生成元）
 - $f_2$（深度 1 映射）↔ 2-态射（规范相互作用生成元）
@@ -246,7 +246,7 @@ $$\boxed{d = N_{\text{IFS}} = 3}$$
 
 **推论 4.1a**（IFS 映射数与引力定律的维度依赖）。$1/r^2$ 规律来自谱强度在 $d = 3$ 维空间中的通量守恒，如果 $d \neq 3$，引力定律将为 $1/r^{d-1}$。
 
-**推论 4.1b**（费米子代数与空间维度的统一起源）。$N_{\text{gen}} = 3$（来自 Cl(1,7) 旋量表示分解）与 $d = 3$ 数值一致，是 $\mathbf{Spec}$ 4-范畴结构的同一数学事实的两个表现。
+**推论 4.1b**（费米子代数与空间维度的统一起源）。$N_{\text{gen}} = 3$（来自 Cl(1,7) 旋量表示分解）与 $d = 3$ 数值一致，是 $\mathbf{Sp}$ 4-范畴结构的同一数学事实的两个表现。
 
 ### 4.3 时间的独立起源：谱流参数
 
@@ -256,7 +256,7 @@ $$\frac{d}{dt} D(R(t)) = [G(t), D(R(t))]$$
 
 时间 $t$ 是递归系统 $R(t) \in \mathbf{Rec}_D$ 沿 IFS 迭代的自然参数——每一次 IFS 迭代对应谱流中的一个时间步。
 
-**命题 4.2**（时间的独立性）。在 $\mathbf{Spec}$ 框架中，时间 $t$ 是谱流参数，不属于 1-态射空间 $\text{Hom}(A, A)$。因此 $\dim(\text{Hom}(A, A)) = d = 3$（仅空间维度），总时空为 $3 + 1$ 维。
+**命题 4.2**（时间的独立性）。在 $\mathbf{Sp}$ 框架中，时间 $t$ 是谱流参数，不属于 1-态射空间 $\text{Hom}(A, A)$。因此 $\dim(\text{Hom}(A, A)) = d = 3$（仅空间维度），总时空为 $3 + 1$ 维。
 
 **证明**。由定理 4.1，空间维数 $d = 3$ 来自 IFS 映射数。谱流参数 $t$ 作为 $\mathbf{Rec}_D$ 中递归系统的演化指标，独立于 $\text{Hom}(A, A)$ 的 Lie 代数结构。谱流方程中，左边 $\frac{d}{dt}$ 是外部演化参数（时间），右边 $[G(t), \cdot]$ 是 $\text{Hom}(A, A)$ 上的对易子作用（空间生成元），两者在范畴结构中的角色不同。□
 
@@ -282,7 +282,7 @@ $$\frac{1}{r^2} \frac{d}{dr} \left(r^2 \rho_{\text{spec}}(r)\right) = 0$$
 
 $$d_H \approx \ln(3 \times 5) = \ln(N_{\text{IFS}} \times N_{\text{layers}})$$
 
-其中 $N_{\text{IFS}} = 3$ 是 IFS 映射数（= 空间维度 $d$），$N_{\text{layers}} = 5$ 是 $\mathbf{Spec}$ 的层次总数（$k = 0,1,2,3,4$）。
+其中 $N_{\text{IFS}} = 3$ 是 IFS 映射数（= 空间维度 $d$），$N_{\text{layers}} = 5$ 是 $\mathbf{Sp}$ 的层次总数（$k = 0,1,2,3,4$）。
 
 **精度验证**：$\ln 15 = 2.70805$，$d_H = 2.7095$，偏差 $0.05\%$。
 
@@ -442,13 +442,13 @@ $$m_{\text{eff}} = m_0 \left(1 + \epsilon^2\right)$$
 
 ### 9.1 低能额外维度的严格排除
 
-**定理 9.1**（谱框架排除低能额外维度——主定理 9）。在 $\mathbf{Spec}$ 框架中，空间维度 $d = 3$ 由 $\mathbf{Spec}$ 4-范畴的严格结构唯一确定。**低于 Planck 尺度的任何额外空间维度均被谱框架排除**。
+**定理 9.1**（谱框架排除低能额外维度——主定理 9）。在 $\mathbf{Sp}$ 框架中，空间维度 $d = 3$ 由 $\mathbf{Sp}$ 4-范畴的严格结构唯一确定。**低于 Planck 尺度的任何额外空间维度均被谱框架排除**。
 
 **证明**。证明分为三个步骤：
 
-*(i) 范畴论约束*。$\mathbf{Spec}$ 4-范畴由以下结构唯一确定：1 个对象层（$\mathbf{Spec}_0$：谱流的不动点），3 层非对象态射（$\mathbf{Spec}_1$：态射层；$\mathbf{Spec}_2$：2-态射层；$\mathbf{Spec}_3$：3-态射层）。由定理 4.1，IFS 映射数 $N_{\text{IFS}}$ 严格等于非对象态射层数：$N_{\text{IFS}} = 3 \Longrightarrow d = 3$。
+*(i) 范畴论约束*。$\mathbf{Sp}$ 4-范畴由以下结构唯一确定：1 个对象层（$\mathbf{Sp}_0$：谱流的不动点），3 层非对象态射（$\mathbf{Sp}_1$：态射层；$\mathbf{Sp}_2$：2-态射层；$\mathbf{Sp}_3$：3-态射层）。由定理 4.1，IFS 映射数 $N_{\text{IFS}}$ 严格等于非对象态射层数：$N_{\text{IFS}} = 3 \Longrightarrow d = 3$。
 
-*(ii) 添加额外维度的谱流矛盾*。假设存在 $n > 0$ 个额外维度。则谱流生成元 $G(t)$ 需扩展为 $G'(t) = G(t) \oplus \bigoplus_{k=1}^n G_k^{\text{(extra)}}(t)$。但 $\mathbf{Spec}$ 4-范畴的谱流积分结构要求对易子 $[G_i, G_j]$ 的闭合性仅在 3 个生成元下成立（引理 4.1 的 Lie 代数论证）。对于 $n \geq 1$：$\sum_{i,j=0}^{2+n} [G_i, G_j] \not\subseteq \mathfrak{spec}_3$，即对易子空间超出 $\mathbf{Spec}$ 3-态射层，违反 4-范畴的严格闭包公理。
+*(ii) 添加额外维度的谱流矛盾*。假设存在 $n > 0$ 个额外维度。则谱流生成元 $G(t)$ 需扩展为 $G'(t) = G(t) \oplus \bigoplus_{k=1}^n G_k^{\text{(extra)}}(t)$。但 $\mathbf{Sp}$ 4-范畴的谱流积分结构要求对易子 $[G_i, G_j]$ 的闭合性仅在 3 个生成元下成立（引理 4.1 的 Lie 代数论证）。对于 $n \geq 1$：$\sum_{i,j=0}^{2+n} [G_i, G_j] \not\subseteq \mathfrak{spec}_3$，即对易子空间超出 $\mathbf{Sp}$ 3-态射层，违反 4-范畴的严格闭包公理。
 
 *(iii) 数值自洽性检验*。由 $d_H \approx \ln(3 \times 5)$ 的关系，$e^{d_H} \approx 15.03$。若 $n > 0$，应有 $d_H \approx \ln(5(3+n))$，解得 $n \approx 0.01$，与 $n = 0$ 严格一致。□
 
@@ -570,7 +570,7 @@ $$m_{\text{gravitational}} = \text{Tr}(T^\dagger A_{\text{GR}} T)$$
 
 ### 11.2 等价性的谱证明
 
-**定理 11.1**（弱等效原理的谱证明——主定理 11）。在 $\mathbf{Spec}$ 框架中，惯性质量与引力质量等价：
+**定理 11.1**（弱等效原理的谱证明——主定理 11）。在 $\mathbf{Sp}$ 框架中，惯性质量与引力质量等价：
 
 $$\boxed{m_{\text{inertial}} = m_{\text{gravitational}}}$$
 
@@ -588,19 +588,19 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 ### 12.1 完整推导链总结
 
-本文从 $\mathbf{Spec}$ 4-范畴的单一数学假设出发，完整导出了牛顿力学的全部核心定律：
+本文从 $\mathbf{Sp}$ 4-范畴的单一数学假设出发，完整导出了牛顿力学的全部核心定律：
 
 | 主定理 | 内容 | 谱来源 | 推导依赖 |
 |:-----|:----|:------|:--------|
 | 1 | $F = ma$ | 谱流方程 + Magnus 展开 | $\mathbf{Rec}_D$ 范畴结构 |
-| 2 | $d = 3$ | $N_{\text{IFS}}$ = 非对象态射层数 | $\mathbf{Spec}$ 4-范畴 |
+| 2 | $d = 3$ | $N_{\text{IFS}}$ = 非对象态射层数 | $\mathbf{Sp}$ 4-范畴 |
 | 3 | $1/r^2$ 律 | 三维通量守恒 | 定理 2 + 谱流几何 |
 | 4 | 引力弱性 | 谱交织精度 $\epsilon$ | Paper II 谱交织 |
 | 5 | $F_{12} = -F_{21}$ | 对易子反对称性 | $\mathbf{Rec}_D$ 对称性 |
 | 6 | 能量守恒 | 迹循环性 | 谱流方程 |
 | 7 | 动量守恒 | 平移不变对易 | 谱流方程 |
 | 8 | $\delta m/m_0 = \epsilon^2$ | Magnus 展开量子修正 | 谱交织非对易性 |
-| 9 | 低能 $n=0$ | 4-范畴闭包公理 | $\mathbf{Spec}$ 结构 |
+| 9 | 低能 $n=0$ | 4-范畴闭包公理 | $\mathbf{Sp}$ 结构 |
 | 10 | $\beta = 4\pi\epsilon/3$ | 谱交织残差横向传播 | 谱交织 + 通量守恒 |
 | 11 | $m_{\text{inertial}} = m_{\text{grav}}$ | 谱交织条件 迹 | $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ |
 
@@ -631,9 +631,9 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 ### 12.4 开放问题
 
-1. **$d_H = \ln(3 \times 5)$ 的严格证明**：从 $\mathbf{Spec}$ 4-范畴的 coherence 定理出发，证明 $d_H = \ln(N_{\text{IFS}} \times N_{\text{layers}})$ 是精确数学关系而非近似。
+1. **$d_H = \ln(3 \times 5)$ 的严格证明**：从 $\mathbf{Sp}$ 4-范畴的 coherence 定理出发，证明 $d_H = \ln(N_{\text{IFS}} \times N_{\text{layers}})$ 是精确数学关系而非近似。
 
-2. **$\hbar$ 的范畴起源**：谱间隙 $\Delta\lambda_{\text{min}}$ 到物理质量 $m = \hbar/\Delta\lambda_{\text{min}}$ 的转换中，$\hbar$ 是否是 $\mathbf{Spec}$ 4-范畴的内蕴结构常数？能否从范畴结构导出 $\hbar$ 的数值？
+2. **$\hbar$ 的范畴起源**：谱间隙 $\Delta\lambda_{\text{min}}$ 到物理质量 $m = \hbar/\Delta\lambda_{\text{min}}$ 的转换中，$\hbar$ 是否是 $\mathbf{Sp}$ 4-范畴的内蕴结构常数？能否从范畴结构导出 $\hbar$ 的数值？
 
 3. **弯曲时空中的时空混合**：在平直时空下时间作为谱流参数的推导是精确的，但在弯曲时空中时间与空间的区分不是全局的。完整谱弯曲时空框架（Phase 52）需证明谱流参数与 1-态射在局域惯性系中线性组合为 4 维洛伦兹流形。
 
@@ -643,7 +643,7 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 ## 参考文献
 
-[1] UFPF Paper I: 分形谱去递归函子与谱对应定理.
+[1] UFPF Paper I: 分形谱化函子与谱对应定理.
 [2] UFPF Paper II: 谱分类的物理应用.
 [3] UFPF Paper III: 谱分类完备性定理.
 [4] UFPF Paper V: 力的谱动力学——从谱分类到力的统一描述.

@@ -10,7 +10,7 @@
 物理实在由严格 4-范畴 **Spec** 描述（Paper I §2）。**Spec** 的对象层携带两种静默结构：
 
 - **对象静默**：三代费米子产生 3 重简并，静默因子 $S_3 = e^{-N_{\text{gen}}} = e^{-3}$
-- **辫子静默**：分形 Hausdorff 维数 $d_H \approx 2.7095$（D-C 定理），静默因子 $S_4 = e^{-d_H}$
+- **辫子静默**：分形 Hausdorff 维数 $d_H \approx 2.7095$（Hausdorff 维数凹性定理），静默因子 $S_4 = e^{-d_H}$
 
 这两个因子是后续一切数值预测的**唯二代数输入**——它们并非拟合参数，而是 **Spec** 范畴定义的直接推论（见 `notes/00_foundations/rec_spec_definitions.md`）。
 
@@ -48,7 +48,7 @@ Higgs VEV $v \approx 246$ GeV 由电弱对称性破缺的谱条件 $m_W = g_2 v/
 
 三个规范耦合 $g_1, g_2, g_3$ 不由实验输入，而是从 Cl(1,7) 代数约束的谱间隙推导（Paper XI 附录 C 及 `notes/10_gauge_RG/spectral_alpha_derivation.md`）：
 
-- 谱对应自然等价 $M \cong L$ 给出 $\lambda_i = e^{-\mu_i}$
+- 谱对应自然同构 $M \cong L$ 给出 $\lambda_i = e^{-\mu_i}$
 - 电磁谱算子 $A_{\text{EM}}$ 的最低非平凡谱间隙 $\Delta\lambda_{\min}^{(\text{EM})} \approx 0.0229$（$\dim=32$ 截断）
 - GUT 归一化 $C_{\text{GUT}} = 3/5$ + 从 $M_{\text{GUT}}$ 到 $M_Z$ 的 RGE 跑动给出 $\alpha^{-1}(M_Z) \approx 128.0$（实验 127.95，偏差 < 0.1%）
 - 三个耦合的谱间隙比例由 Cl(1,7) 根系权重决定（Paper XI §C.5 表）
@@ -74,7 +74,7 @@ $$\sin\theta_{12} \approx 0.225,\quad \sin\theta_{23} \approx 0.042,\quad \sin\t
 
 强 CP 问题在谱框架中获得简洁解答（Paper XI §7.5 及 `notes/01_qcd_higgs/spectral_strong_CP.md`）：
 
-**Spec** 中所有谱生成元 $A_{F,i}$ 都是自伴算子（Paper I §2.3）。自伴性在拓扑项上的直接推论是物理真空对应的 $A_{\text{gauge}}$ 满足 $A_{\text{gauge}} = A_{\text{gauge}}^\dagger$，其谱分解自动给出 $\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0$，因此 $\theta_{\text{QCD}} = 0$。这一结果**无需轴子或额外对称性**——轴子作为 $\mathbf{Spec}$ 4-范畴中辫子静默 $S_4$ 的自然产物，提供进一步的动态松弛保障（$|\theta_{\text{QCD}}| < 10^{-10}$）。
+**Spec** 中所有谱生成元 $A_{F,i}$ 都是自伴算子（Paper I §2.3）。自伴性在拓扑项上的直接推论是物理真空对应的 $A_{\text{gauge}}$ 满足 $A_{\text{gauge}} = A_{\text{gauge}}^\dagger$，其谱分解自动给出 $\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0$，因此 $\theta_{\text{QCD}} = 0$。这一结果**无需轴子或额外对称性**——轴子作为 $\mathbf{Sp}$ 4-范畴中辫子静默 $S_4$ 的自然产物，提供进一步的动态松弛保障（$|\theta_{\text{QCD}}| < 10^{-10}$）。
 
 ---
 

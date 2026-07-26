@@ -19,8 +19,8 @@ $$\Gamma_{\text{spec}}^{\Lambda}[\Phi_{\text{cl}}] = -i \ln Z_{\text{spec}}^{\La
 ### 1.2 Wetterich 方程的谱版本
 
 标准精确 RG 方程（Wetterich 方程）的谱版本为：
-$$\boxed{\partial_t \Gamma_k^{\text{spec}} = \frac{1}{2} \operatorname{Tr}_{\mathbf{Spec}} \left[ \frac{\partial_t R_k}{\Gamma_k^{(2)} + R_k} \right]},$$
-其中 $t = \ln(k/\Lambda)$ 是 RG 时间，$R_k$ 是谱截断函数，$\operatorname{Tr}_{\mathbf{Spec}}$ 是 $\mathbf{Spec}$ 范畴中的谱迹。
+$$\boxed{\partial_t \Gamma_k^{\text{spec}} = \frac{1}{2} \operatorname{Tr}_{\mathbf{Sp}} \left[ \frac{\partial_t R_k}{\Gamma_k^{(2)} + R_k} \right]},$$
+其中 $t = \ln(k/\Lambda)$ 是 RG 时间，$R_k$ 是谱截断函数，$\operatorname{Tr}_{\mathbf{Sp}}$ 是 $\mathbf{Sp}$ 范畴中的谱迹。
 
 ### 1.3 与标准 RG 的对应
 

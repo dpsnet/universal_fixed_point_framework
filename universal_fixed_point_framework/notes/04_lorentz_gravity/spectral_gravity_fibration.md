@@ -34,7 +34,7 @@ $$\mathbf{Bun}(\mathrm{Horizon}) \hookleftarrow \mathbf{Bun}(\mathrm{Exterior}) 
 | $\mathbf{Bun}(\mathrm{Horizon})$ | $r_+ \sim GM$ | 视界谱、Hawking 温度 | $\lambda_{\mathrm{horizon}}^{(\pm)}$ | $r_+^{-1}$ | $10^{-3}\text{--}10^{20}$ eV |
 | $\mathbf{Bun}(\mathrm{Exterior})$ | $r > r_+$ | Kerr QNM、谱震荡 | $\omega_{lmn}(M,a)$ | $r^{-1}$ | $\sim T_H$ |
 | $\mathbf{Bun}(\mathrm{Interior})$ | $0 < r < r_+$ | 内部谱、Cauchy 视界 | $\lambda_{\mathrm{int}}(r)$ | $(r_+ - r)^{-1}$ | $\sim M_{\mathrm{Pl}}^2/M$ |
-| $\mathbf{Bun}(\mathrm{Quantum\_Core})$ | $\sim l_{\mathrm{Pl}}$ | 量子反弹、谱编织 | $\Delta\lambda_{\mathrm{quantum}}$ | $l_{\mathrm{Pl}}$ | $\sim M_{\mathrm{Pl}}$ |
+| $\mathbf{Bun}(\mathrm{Quantum\_Core})$ | $\sim l_{\mathrm{Pl}}$ | 量子反弹、谱粘合 | $\Delta\lambda_{\mathrm{quantum}}$ | $l_{\mathrm{Pl}}$ | $\sim M_{\mathrm{Pl}}$ |
 | $\mathbf{Bun}(\mathrm{Singularity})$ | $r \to 0$ | 奇点解析 | 极限谱 $\to 0$ | $\Lambda_{\mathrm{UV}}$ | $> M_{\mathrm{Pl}}$ |
 
 ### 1.3 反向纤维化方向的谱交织条件修正
@@ -76,7 +76,7 @@ $$\Delta\lambda_{\min}^{(\mathrm{Kerr})}(M,a) = \Delta\lambda_{\min}^{(\mathrm{S
 
 ### 2.3 谱间隙-温度丛态射
 
-根据 `spectral_kerr_fibration.md` 定理 4.1，存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$：
+根据 `spectral_kerr_fibration.md` 定理 4.1，存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$：
 
 $$T_H(M,a) = \frac{\Delta\lambda_{\min}^{(\mathrm{Kerr})}(M,a)}{2\pi}$$
 
@@ -107,7 +107,7 @@ $$T_H(M,a) = \frac{\Delta\lambda_{\min}^{(\mathrm{Kerr})}(M,a)}{2\pi}$$
 
 ### 3.2 与 Kerr 参数丛的对应
 
-根据 `spectral_kerr_fibration.md` §2，外部时空谱层可视为 Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 在固定 $(M,a)$ 处的纤维投影。该丛的 Grothendieck 纤维化结构（`spectral_kerr_fibration.md` 定理 3.1）保证了 QNM 谱沿参数方向的连续 Cartan 提升。
+根据 `spectral_kerr_fibration.md` §2，外部时空谱层可视为 Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 在固定 $(M,a)$ 处的纤维投影。该丛的 Grothendieck 纤维化结构（`spectral_kerr_fibration.md` 定理 3.1）保证了 QNM 谱沿参数方向的连续 Cartan 提升。
 
 ### 3.3 QNM 谱结构
 
@@ -180,13 +180,13 @@ $$E_n = E_0 \cdot S_4^n, \quad n = 0, 1, \dots, N_{\max}$$
 
 量子核心层的谱生成元来自 Planck 尺度量子修正。该层对应 $r \sim l_{\mathrm{Pl}}$ 区域，经典广义相对论失效，需量子引力描述。
 
-### 5.2 谱编织条件 $B(i)$
+### 5.2 谱粘合条件 $B(i)$
 
-量子核心处谱在 Planck 标度的交织结构形式化为谱编织条件 $B(i)$：
+量子核心处谱在 Planck 标度的交织结构形式化为谱粘合条件 $B(i)$：
 
 $$B(i): \quad [A_{\mathrm{QG}}, \pi_{\mathrm{QC}\leftarrow\mathrm{Sing}}]_{\mathrm{HS}} < \varepsilon_{\mathrm{QG}} \sim \left(\frac{l_{\mathrm{Pl}}}{r_+}\right)^2$$
 
-其中 $A_{\mathrm{QG}}$ 是量子引力谱算子。对于太阳质量黑洞 $\varepsilon_{\mathrm{QG}} \sim 10^{-76}$，谱编织自动满足。对于原初黑洞 $r_+ \sim l_{\mathrm{Pl}}$，$\varepsilon_{\mathrm{QG}} \sim 1$，完整量子引力理论不可避免。
+其中 $A_{\mathrm{QG}}$ 是量子引力谱算子。对于太阳质量黑洞 $\varepsilon_{\mathrm{QG}} \sim 10^{-76}$，谱粘合自动满足。对于原初黑洞 $r_+ \sim l_{\mathrm{Pl}}$，$\varepsilon_{\mathrm{QG}} \sim 1$，完整量子引力理论不可避免。
 
 ### 5.3 与 Paper VIII 的对应
 
@@ -301,7 +301,7 @@ $$\lim_{r \to 0} \sigma(A_{\mathrm{GR}}(r)) = \{0\}$$
 
 ### Q3: Kerr 参数丛与空间分层丛间的粘贴条件
 
-Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$（`spectral_kerr_fibration.md`）以 $(M,a)$ 为基，而本笔记的空间分层丛以径向坐标 $r$ 为基。两个丛的粘贴条件为：在固定 $(M,a)$ 处，$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 的纤维数据给出 $\mathbf{Bun}(\mathrm{Horizon})$ 和 $\mathbf{Bun}(\mathrm{Exterior})$ 的谱截面。但 $\mathbf{Bun}(\mathrm{Interior})$ 内部随 $r$ 的谱流如何从 Kerr 参数丛的纤维结构中派生？这涉及丛的**垂直-水平分解**需要明确的形式化。
+Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$（`spectral_kerr_fibration.md`）以 $(M,a)$ 为基，而本笔记的空间分层丛以径向坐标 $r$ 为基。两个丛的粘贴条件为：在固定 $(M,a)$ 处，$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 的纤维数据给出 $\mathbf{Bun}(\mathrm{Horizon})$ 和 $\mathbf{Bun}(\mathrm{Exterior})$ 的谱截面。但 $\mathbf{Bun}(\mathrm{Interior})$ 内部随 $r$ 的谱流如何从 Kerr 参数丛的纤维结构中派生？这涉及丛的**垂直-水平分解**需要明确的形式化。
 
 ### Q4: 引力波观测对谱交织条件的约束
 
@@ -312,7 +312,7 @@ LIGO/Virgo/KAGRA 的 Ringdown 观测能否检验 $\mathbf{Bun}(\mathrm{Exterior}
 
 ### Q5: 极端极限下非乘积丛结构的影响
 
-`spectral_kerr_fibration.md` 和 Paper VIII §7.4.5 指出 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 在 $a \to M$ 时发生纤维类型跳变（离散谱 $\to$ 简并谱）。这一非乘积丛结构如何影响反向纤维化链？在 $a=M$ 处，$\mathbf{Bun}(\mathrm{Horizon})$ 的谱间隙闭合，可能导致 $\mathbf{Bun}(\mathrm{Horizon}) \to \mathbf{Bun}(\mathrm{Exterior})$ 的谱交织条件退化——这与极端黑洞的"零温度"极限一致。
+`spectral_kerr_fibration.md` 和 Paper VIII §7.4.5 指出 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 在 $a \to M$ 时发生纤维类型跳变（离散谱 $\to$ 简并谱）。这一非乘积丛结构如何影响反向纤维化链？在 $a=M$ 处，$\mathbf{Bun}(\mathrm{Horizon})$ 的谱间隙闭合，可能导致 $\mathbf{Bun}(\mathrm{Horizon}) \to \mathbf{Bun}(\mathrm{Exterior})$ 的谱交织条件退化——这与极端黑洞的"零温度"极限一致。
 
 ---
 
@@ -326,4 +326,4 @@ LIGO/Virgo/KAGRA 的 Ringdown 观测能否检验 $\mathbf{Bun}(\mathrm{Exterior}
 
 | 版本 | 日期 | 变更内容 |
 |:----|:----|:--------|
-| v0.1 | 2026-07-25 | 初稿。完整构建 5 层反向纤维化链：$\mathbf{Bun}(\mathrm{Horizon})$（§2，视界谱层，含 Hawking 温度截面）、$\mathbf{Bun}(\mathrm{Exterior})$（§3，外部 QNM 谱层，与 Kerr 丛对应）、$\mathbf{Bun}(\mathrm{Interior})$（§4，内部谱层，含 Cauchy 视界）、$\mathbf{Bun}(\mathrm{Quantum\_Core})$（§5，量子核心层，含谱编织条件与 Bohr-Sommerfeld 面积谱）、$\mathbf{Bun}(\mathrm{Singularity})$（§6，奇点解析层，与 Paper IX 对应）。§7 给出完整层间谱交织条件汇总表和收敛性讨论。§8 列出 5 个开放问题。 |
+| v0.1 | 2026-07-25 | 初稿。完整构建 5 层反向纤维化链：$\mathbf{Bun}(\mathrm{Horizon})$（§2，视界谱层，含 Hawking 温度截面）、$\mathbf{Bun}(\mathrm{Exterior})$（§3，外部 QNM 谱层，与 Kerr 丛对应）、$\mathbf{Bun}(\mathrm{Interior})$（§4，内部谱层，含 Cauchy 视界）、$\mathbf{Bun}(\mathrm{Quantum\_Core})$（§5，量子核心层，含谱粘合条件与 Bohr-Sommerfeld 面积谱）、$\mathbf{Bun}(\mathrm{Singularity})$（§6，奇点解析层，与 Paper IX 对应）。§7 给出完整层间谱交织条件汇总表和收敛性讨论。§8 列出 5 个开放问题。 |

@@ -61,7 +61,7 @@ $$\ell_{\mathcal{D}} = \arg\min_{\ell > 0} \left\| \ln\left(\frac{\langle A \ran
 
 其中 $\langle A \rangle (R)$ 是谱算子的空间关联函数，$\langle A \rangle_0$ 是 $R=0$ 处的值。
 
-> **证明要点**：Paper VI §4 中 $\ell_{\mathrm{corr}} = 0.5$ Å 的推导基于谱丛不变量定理——谱重叠衰减在所有丛方向上是各向同性的。该定理的证明只依赖于 $\mathbf{Spec}$ 对象的谱测度性质，不依赖量子化学的具体细节，因此可以推广到任意满足谱测度正则性的领域 $\mathcal{D}$。唯一性来自 $L^2$ 变分问题的凸性。
+> **证明要点**：Paper VI §4 中 $\ell_{\mathrm{corr}} = 0.5$ Å 的推导基于谱丛不变量定理——谱重叠衰减在所有丛方向上是各向同性的。该定理的证明只依赖于 $\mathbf{Sp}$ 对象的谱测度性质，不依赖量子化学的具体细节，因此可以推广到任意满足谱测度正则性的领域 $\mathcal{D}$。唯一性来自 $L^2$ 变分问题的凸性。
 
 **推论 2（$\ell_{\mathcal{D}}$ 对照表）**：五大领域的 $\ell_{\mathcal{D}}$ 替换值：
 
@@ -157,7 +157,7 @@ $$[A_{\chi}, \pi_{\chi\leftarrow h}]_{\mathrm{HS}} < \varepsilon_{\mathrm{QCD}} 
 | $\mathbf{Bun}(\mathrm{Horizon})$ | $r_+ \sim GM$ | 视界谱、Hawking 温度 | $\lambda_{\mathrm{horizon}}^{(\pm)}$ |
 | $\mathbf{Bun}(\mathrm{Exterior})$ | $r > r_+$ | Kerr QNM、谱震荡 | $\omega_{lmn}(M,a)$ |
 | $\mathbf{Bun}(\mathrm{Interior})$ | $0 < r < r_+$ | 内部谱、Cauchy 视界 | $\lambda_{\mathrm{int}}(r)$ |
-| $\mathbf{Bun}(\mathrm{Quantum\_Core})$ | $\sim l_{\mathrm{Pl}}$ | 量子反弹、谱编织 | $\Delta\lambda_{\mathrm{quantum}}$ |
+| $\mathbf{Bun}(\mathrm{Quantum\_Core})$ | $\sim l_{\mathrm{Pl}}$ | 量子反弹、谱粘合 | $\Delta\lambda_{\mathrm{quantum}}$ |
 | $\mathbf{Bun}(\mathrm{Singularity})$ | $r \to 0$ | 奇点解析 | 极限谱 $\to 0$ |
 
 ### 3.2 不变量替换
@@ -346,7 +346,7 @@ $$\Phi_{\mathrm{time}}: \mathbf{Causal}(t_1 < \cdots < t_m) \to \mathbf{BunFib}(
 - $\mathrm{Cosmo}$：6层时间-纤维化链 $\mathbf{Bun}_{\mathrm{Cosmo}}$
 - $\mathrm{QC}$：7层量子化学链 $\mathbf{Bun}_{\mathrm{QC}}$（Paper XXII）
 
-态射 $\mathrm{Hom}_{\mathbf{Domains}}(\mathcal{D}_i, \mathcal{D}_j)$ 为领域间谱映射，由满足下列条件的 $\mathbf{Spec}$ 层上连续函数 $f: \partial\mathbf{Rec}_D^{\mathcal{D}_i} \to \partial\mathbf{Rec}_D^{\mathcal{D}_j}$ 构成：
+态射 $\mathrm{Hom}_{\mathbf{Domains}}(\mathcal{D}_i, \mathcal{D}_j)$ 为领域间谱映射，由满足下列条件的 $\mathbf{Sp}$ 层上连续函数 $f: \partial\mathbf{Rec}_D^{\mathcal{D}_i} \to \partial\mathbf{Rec}_D^{\mathcal{D}_j}$ 构成：
 1. $f$ 将 $\mathcal{D}_i$ 的每层谱间隙映射为 $\mathcal{D}_j$ 的对应层谱间隙；
 2. $f$ 保持谱交织条件序：若 $[A_k^{(i)}, \pi_{k\leftarrow k+1}^{(i)}]_{\mathrm{HS}} < \varepsilon_k^{(i)}$，则 $[f(A_k^{(i)}), f(\pi_{k\leftarrow k+1}^{(i)})]_{\mathrm{HS}} < \varepsilon_k^{(j)}$；
 3. $f$ 将 $\ell_{\mathcal{D}_i}$ 映射为 $\ell_{\mathcal{D}_j}$（$\ell_{\mathrm{corr}}$ 替换的函子性）。
@@ -354,11 +354,11 @@ $$\Phi_{\mathrm{time}}: \mathbf{Causal}(t_1 < \cdots < t_m) \to \mathbf{BunFib}(
 恒等态射 $\mathrm{id}_{\mathcal{D}}$ 为恒等谱映射。态射合成由函数复合给出。
 
 **定理 4（嵌入函子 $\Phi$ 的严格构造）**：存在满忠实嵌入函子：
-$$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$$
+$$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$$
 
 其作用为：
 - **对象映射**：$\Phi(\mathcal{D}) = \mathcal{F}_{\mathcal{D}}$，其中 $\mathcal{F}_{\mathcal{D}}$ 是 $\mathcal{D}$ 的嵌套纤维化链在 $\partial\mathbf{Rec}_D$ 上的总截面（由各层谱生成元 $A_k$、投影算子 $\pi_{k\leftarrow k+1}$、谱交织条件 $\varepsilon_k$ 和 $\ell_{\mathcal{D}}$ 打包而成）。
-- **态射映射**：$\Phi(f): \Phi(\mathcal{D}_i) \to \Phi(\mathcal{D}_j)$ 为 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 中的丛态射，使得以下图表交换：
+- **态射映射**：$\Phi(f): \Phi(\mathcal{D}_i) \to \Phi(\mathcal{D}_j)$ 为 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 中的丛态射，使得以下图表交换：
   $$
   \begin{array}{ccc}
   \Phi(\mathcal{D}_i) & \xrightarrow{\Phi(f)} & \Phi(\mathcal{D}_j) \\
@@ -367,7 +367,7 @@ $$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})
   \end{array}
   $$
 - **忠实性**：$\Phi$ 是忠实的，因为谱映射 $f$ 唯一确定丛态射 $\Phi(f)$（由 $\mathcal{F}_{\mathcal{D}_i}$ 的截面构造唯一性保证）。
-- **满性**：$\Phi$ 是满的，因为任何 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 中的丛态射都诱导一个满足定义 2 条件的领域间谱映射。
+- **满性**：$\Phi$ 是满的，因为任何 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 中的丛态射都诱导一个满足定义 2 条件的领域间谱映射。
 
 > **证明概要与数值验证**：
 > 1. 定义域已给出（定义2），指标化 $\Phi$ 作用明确。
@@ -377,14 +377,14 @@ $$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})
 >    - $\mathcal{F}_{\mathrm{CM}}$：`spectral_condensed_fibration.py` ✅
 >    - $\mathcal{F}_{\mathrm{Flv}}$：`spectral_flavor_fibration.py` ✅
 >    - $\mathcal{F}_{\mathrm{Cosmo}}$：`spectral_cosmo_fibration.py` ✅
-> 3. 满忠实性依赖于 $\mathbf{Spec}$ 对象的唯一性定理（Paper I §4），该定理保证谱映射与丛态射的一一对应。
+> 3. 满忠实性依赖于 $\mathbf{Sp}$ 对象的唯一性定理（Paper I §4），该定理保证谱映射与丛态射的一一对应。
 > 4. 谱交织条件的保持由定理1的缩放律和定理3的方向一致性保证。$\square$
 
 ### 7.2 截面粘贴条件（截面粘贴定理）
 
 **定义 3（截面粘贴）**：设 $\mathcal{D}_1, \mathcal{D}_2 \in \mathbf{Ob}(\mathbf{Domains})$，若存在能标区间 $\mathcal{U} \subseteq \partial\mathbf{Rec}_D$ 使得 $\mathcal{F}_{\mathcal{D}_1}|_{\mathcal{U}}$ 和 $\mathcal{F}_{\mathcal{D}_2}|_{\mathcal{U}}$ 均有定义（即在 $\mathcal{U}$ 对应的能标范围内两个领域都活跃），则定义粘贴映射：
 $$\mathrm{Paste}_{\mathcal{D}_1,\mathcal{D}_2}: \mathcal{F}_{\mathcal{D}_1}|_{\mathcal{U}} \to \mathcal{F}_{\mathcal{D}_2}|_{\mathcal{U}}$$
-当且仅当对所有 $\lambda \in \mathcal{U}$：$\mathcal{F}_{\mathcal{D}_1}(\lambda) = \mathcal{F}_{\mathcal{D}_2}(\lambda)$（模 $\mathbf{Spec}$ 同构）。
+当且仅当对所有 $\lambda \in \mathcal{U}$：$\mathcal{F}_{\mathcal{D}_1}(\lambda) = \mathcal{F}_{\mathcal{D}_2}(\lambda)$（模 $\mathbf{Sp}$ 同构）。
 
 **定理 5（截面粘贴定理）**：在 $\mathbf{Domains}$ 中，以下 4 对领域的截面在指定能标区间存在自然粘贴：
 
@@ -395,7 +395,7 @@ $$\mathrm{Paste}_{\mathcal{D}_1,\mathcal{D}_2}: \mathcal{F}_{\mathcal{D}_1}|_{\m
 | 引力/黑洞 / 宇宙学 | $M_{\mathrm{Pl}}$ | $\mathcal{F}_{\mathrm{GR}}|_{\mathrm{Quantum\_Core}} \cong \mathcal{F}_{\mathrm{Cosmo}}|_{\mathrm{Quantum\_Cosmo}}$ | 量子核心-量子宇宙学同一性猜想 |
 | QCD / 引力 | $M_{\mathrm{Pl}}$ | $\mathcal{F}_{\mathrm{QCD}}|_{\mathrm{UV}} \cong \mathcal{F}_{\mathrm{GR}}|_{\mathrm{Singularity}}$ | 谱框架裸耦合在 Planck 标度的涌现 |
 
-> **证明**：由定理 4（$\Phi$ 的满忠实性），各领域截面在 $\partial\mathbf{Rec}_D$ 上的限制唯一确定丛态射。粘贴条件 $\mathcal{F}_{\mathcal{D}_1}|_{\mathcal{U}} \cong \mathcal{F}_{\mathcal{D}_2}|_{\mathcal{U}}$ 等价于要求这两个限制截面在 $\mathbf{Spec}$ 同构意义下相等。对于前两对粘贴，数值一致性已在 Paper VI 和 spectral_low_energy_QCD.md 中验证。第三对（量⼦核心-量子宇宙学）为猜想，尚无数值验证。第四对对应 UV 层的谱框架统一。$\square$
+> **证明**：由定理 4（$\Phi$ 的满忠实性），各领域截面在 $\partial\mathbf{Rec}_D$ 上的限制唯一确定丛态射。粘贴条件 $\mathcal{F}_{\mathcal{D}_1}|_{\mathcal{U}} \cong \mathcal{F}_{\mathcal{D}_2}|_{\mathcal{U}}$ 等价于要求这两个限制截面在 $\mathbf{Sp}$ 同构意义下相等。对于前两对粘贴，数值一致性已在 Paper VI 和 spectral_low_energy_QCD.md 中验证。第三对（量⼦核心-量子宇宙学）为猜想，尚无数值验证。第四对对应 UV 层的谱框架统一。$\square$
 
 ### 7.3 统一对比表（6领域完全版）
 

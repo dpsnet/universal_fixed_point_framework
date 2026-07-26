@@ -15,8 +15,8 @@
 $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物理可观测量} = \text{纤维截面}$$
 
 已验证实例：
-- $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$（分裂 Grothendieck 纤维化）
-- $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$
+- $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$（分裂 Grothendieck 纤维化）
+- $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$
 - 纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 及 Cartan 保持性
 - 截面：$\sigma_\Delta^{(T)}$（QCD）、$\sigma_\Delta^{(\text{BCS})}$、$\sigma_\Delta^{(\text{HP})}$、$\sigma_\Delta^{(\text{rheo})}$
 - Lean 4：`TempRGFiber.lean` ~1317 行通过 `lake build`（无 sorry），覆盖 §1–§12（原 §1–§8 + Grothendieck 构造、η̂ 提升、2-范畴 Bicategory 结构、四类物理截面、Mathlib FiberedCategory 对接），零个 `by trivial`
@@ -40,7 +40,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 | 候选 | 结构 | 来源 |
 |:----|:-----|:-----|
-| **谱编织 Temp×RG 乘积基** | Bun(Temp)、Bun(RG) 是二维参数丛沿两坐标方向的拉回；谱编织约束 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 是两拉回在 $\partial\mathbf{Rec}_D$ 上的粘合；cuprate 分布值截面 $\sigma_\Delta^{(c)}$ 引入分布对象 | `spectral_Tc_derivation.md` §6；`spectral_BCS_weave.md` §8（已排队等待） |
+| **谱粘合 Temp×RG 乘积基** | Bun(Temp)、Bun(RG) 是二维参数丛沿两坐标方向的拉回；谱粘合约束 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 是两拉回在 $\partial\mathbf{Rec}_D$ 上的粘合；cuprate 分布值截面 $\sigma_\Delta^{(c)}$ 引入分布对象 | `spectral_Tc_derivation.md` §6；`spectral_BCS_weave.md` §8（已排队等待） |
 
 ### 2.3 推广到新基范畴类型
 
@@ -60,7 +60,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 | 候选 | 结构 | 亮点 | 来源 |
 |:----|:-----|:-----|:-----|
-| **测量本征丛/语境性层** | 基 = 语境覆盖 $\{\mathbf{Spec}_{\text{com}}\}$（交换子范畴族）；纤维 = $\{0,1\}$ 真值赋值 | **K-S 定理 = 预层无全局截面**（Abramsky–Brandenburger 框架的天然现身）；定理潜力最大 | `spectral_measurement.md`（公理 M1-M4）；`spectral_contextuality_experiment.md` §1-2 |
+| **测量本征丛/语境性层** | 基 = 语境覆盖 $\{\mathbf{Sp}_{\text{com}}\}$（交换子范畴族）；纤维 = $\{0,1\}$ 真值赋值 | **K-S 定理 = 预层无全局截面**（Abramsky–Brandenburger 框架的天然现身）；定理潜力最大 | `spectral_measurement.md`（公理 M1-M4）；`spectral_contextuality_experiment.md` §1-2 |
 
 ---
 
@@ -88,7 +88,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 - **纤维**：$\mathcal{E}_p = D(R_p) = (H_p, A_p, \sigma(A_p))$，结构群 $\mathrm{SO}^+(1,3)$
 - **收益**：**主定理 21（Einstein 方程谱翻译）自述需要"曲率-物质对应函子"——此缺口只有纤维范畴语言能填**；广义协变原理严格等同于层粘合公理
 
-#### 候选 4：谱编织 Temp×RG 乘积基
+#### 候选 4：谱粘合 Temp×RG 乘积基
 
 - **结构**：已完成两个纤维化的乘积推广 + $\partial\mathbf{Rec}_D$ 上的拉回方图粘合
 - **收益**：BCS 笔记 §8.4 已明确排队（"需先完成 Phase 54B"）；cuprate 分布值截面引入分布对象级扩展
@@ -143,7 +143,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 1. **候选 1**（噪声 η 丛）— Paper XIX 脚手架最全，paper10 的可检验预言直接受益
 2. **候选 2**（Clifford/IC）— 与近期 Cl(1,7)⊂Cl(9,1) 工作直接衔接，Lean 基础最现成
-3. **候选 4**（谱编织乘积基）— BCS 笔记已排队等待
+3. **候选 4**（谱粘合乘积基）— BCS 笔记已排队等待
 4. **候选 3**（时空谱丛）— 填 Paper XVI 主定理 21 的洞
 5. **候选 7/8**（味丛/语境性层）— 可独立成新定理
 

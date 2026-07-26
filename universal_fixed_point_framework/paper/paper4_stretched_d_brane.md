@@ -1,10 +1,10 @@
-# 通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane——谱去递归函子对黑洞熵微观推导的统一
+# 通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.1（2026-07-16）
 
-**摘要**：本文以弦论中黑洞熵的两种微观推导方案——$T^6$ 紧致化杂化弦的拉伸视界（Sen 1995）与 $K3\times S^1$ 紧致化 II 型弦的 D-brane 微观态计数（Strominger & Vafa 1996）——为案例，证明两者在谱去递归化函子 $D$ 的作用下给出同构的谱像 $D(R_{\text{str}}) \cong D(R_{\text{dbr}})$，从而在函子层面统一了传统上被视为独立的两种熵计算路径。该等价性由隔离约束条件（IC）严格保证，不依赖具体的紧致化细节。IC 条件验证已在 Lean 4 中完成形式化（`ICVerification.lean`，覆盖 IFS/Kerr/NTK/Clifford/String 五领域），为等价性定理提供了机器核验背书。本文进一步讨论这一等价性的方法论意义——$D$ 函子提供了弦论对偶（AdS/CFT、镜像对称、S-对偶）的结构性等价验证工具。
+**摘要**：本文以弦论中黑洞熵的两种微观推导方案——$T^6$ 紧致化杂化弦的拉伸视界（Sen 1995）与 $K3\times S^1$ 紧致化 II 型弦的 D-brane 微观态计数（Strominger & Vafa 1996）——为案例，证明两者在谱化函子 $D$ 的作用下给出同构的谱像 $D(R_{\text{str}}) \cong D(R_{\text{dbr}})$，从而在函子层面统一了传统上被视为独立的两种熵计算路径。该等价性由隔离约束条件（IC）严格保证，不依赖具体的紧致化细节。IC 条件验证已在 Lean 4 中完成形式化（`ICVerification.lean`，覆盖 IFS/Kerr/NTK/Clifford/String 五领域），为等价性定理提供了机器核验背书。本文进一步讨论这一等价性的方法论意义——$D$ 函子提供了弦论对偶（AdS/CFT、镜像对称、S-对偶）的结构性等价验证工具。
 
 ---
 
@@ -25,8 +25,8 @@ BPS 极端黑洞熵的弦论推导存在两条独立路径：
 
 配套论文 I 建立了：
 
-- $\mathbf{Rec}$ 范畴（递归系统）与 $\mathbf{Spec}$ 范畴（谱对象）
-- 谱去递归化函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$
+- $\mathbf{Rec}$ 范畴（递归系统）与 $\mathbf{Sp}$ 范畴（谱对象）
+- 谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$
 - 隔离约束条件 IC（定义 C3.1）与相容性定理（定理 C3.2）
 
 本文的核心主张：**$D$ 函子能够证明拉伸视界与 D-brane 在谱层面等价**。
@@ -99,13 +99,13 @@ $$S_{\text{dbr}}(g_s) = 2\pi\sqrt{N} = \frac{2\pi Q_L}{g_s\sqrt{2}}.$$
 
 **定理 3.2**（拉伸视界与 D-brane 的谱等价性）。在 IC 条件下，
 
-$$D(R_{\text{str}}) \cong D(R_{\text{dbr}}) \quad \text{在 } \mathbf{Spec} \text{ 中}.$$
+$$D(R_{\text{str}}) \cong D(R_{\text{dbr}}) \quad \text{在 } \mathbf{Sp} \text{ 中}.$$
 
 **证明**。由引理 3.1 确定 IC 成立后，直接应用定理 C3.2 即得谱等价性。□
 
 ### 3.3 熵的函子不变性（参数约束推论）
 
-**定理 3.3**（熵的函子不变性）。$D(R_{\text{str}}) \cong D(R_{\text{dbr}})$（定理 3.2）意味着在 $\mathbf{Spec}$ 范畴中两者的谱数据完全相同。特别地，谱维数 $\dim_{\text{spec}} D(R) = \mathrm{Tr}(e^{-A_R})$ 是 $D$ 函子像的固有属性，在同构下不变：
+**定理 3.3**（熵的函子不变性）。$D(R_{\text{str}}) \cong D(R_{\text{dbr}})$（定理 3.2）意味着在 $\mathbf{Sp}$ 范畴中两者的谱数据完全相同。特别地，谱维数 $\dim_{\text{spec}} D(R) = \mathrm{Tr}(e^{-A_R})$ 是 $D$ 函子像的固有属性，在同构下不变：
 
 $$\dim_{\text{spec}} D(R_{\text{str}}) = \dim_{\text{spec}} D(R_{\text{dbr}}).$$
 
@@ -201,7 +201,7 @@ CFT$_d$ 边界理论定义在 $\partial(\text{AdS}_{d+1})$ 上：
 
 **定理 4.2**（AdS/CFT 谱等价）。在 IC 条件下：
 
-$$D(R_{\text{bulk}}) \cong D(R_{\text{boundary}}) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
+$$D(R_{\text{bulk}}) \cong D(R_{\text{boundary}}) \quad \text{在 } \mathbf{Sp} \text{ 中}$$
 
 **证明**。由引理 4.1 确定 IC 成立后，直接应用定理 C3.2。□
 
@@ -254,7 +254,7 @@ $R_B$ 是对偶 Calabi-Yau 流形 $X^\vee$ 上的 B-模型（复几何）：
 
 **定理 4.6**（镜像对称谱等价）。在 IC 条件下：
 
-$$D(R_A) \cong D(R_B) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
+$$D(R_A) \cong D(R_B) \quad \text{在 } \mathbf{Sp} \text{ 中}$$
 
 **证明**。直接应用定理 C3.2。□
 
@@ -298,7 +298,7 @@ $$D(R_A) \cong D(R_B) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
 
 **定理 4.9**（朗兰兹谱等价）。在 IC 条件下：
 
-$$D(R_{\text{数论}}) \cong D(R_{\text{自守}}) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
+$$D(R_{\text{数论}}) \cong D(R_{\text{自守}}) \quad \text{在 } \mathbf{Sp} \text{ 中}$$
 
 **证明**。直接应用定理 C3.2。□
 
@@ -351,9 +351,9 @@ $$
 
 ## 参考文献
 
-- [1] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》
+- [1] Paper I：《通用不动点范畴框架 I：分形谱化理论》
 - [2] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》
-- [3] Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》
+- [3] Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》
 - [4] Sen, A. (1995). "Black hole entropy and the string theory stretched horizon." *arXiv:9504147*.
 - [5] Strominger, A. & Vafa, C. (1996). "Microscopic origin of the Bekenstein-Hawking entropy." *arXiv:9601029*.
 ### 弦论黑洞熵
@@ -380,7 +380,7 @@ $$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 IV，从 Stretched Horizon 到 D-brane——谱去递归函子对黑洞熵微观推导的统一，含 15 篇参考文献。主要内容：
+《通用不动点范畴框架》系列论文 IV，从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一，含 15 篇参考文献。主要内容：
 - 两套方案的 Rec → Spec 显式三步构造（离散化 → Koopman 矩阵 → 谱维数极限推导熵公式）
 - IC 验证与谱等价性（定理 3.1-3.3）
 - 熵的函子不变性约束 $C(g_s)$

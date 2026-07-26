@@ -123,7 +123,7 @@ Leaver 连续分数的截断误差 $\varepsilon_N$ 与谱间隙 $\Delta\lambda_{
 
 $$\varepsilon_N \propto e^{-cN}, \quad c = \Phi(\Delta\lambda_{\min})$$
 
-其中 $\Phi$ 是谱丛"谱对应"函数。由去递归理论的核心对应 $\lambda = e^{-\mu}$，截断衰减率 $c$ 由 $\Delta\lambda_{\min}$ 通过谱对应 $\lambda = e^{-\mu}$ 决定。
+其中 $\Phi$ 是谱丛"谱对应"函数。由谱化理论的核心对应 $\lambda = e^{-\mu}$，截断衰减率 $c$ 由 $\Delta\lambda_{\min}$ 通过谱对应 $\lambda = e^{-\mu}$ 决定。
 
 **定理 3.1**（截断误差-谱间隙对应）。对 Kerr QNM 三对角谱丛：
 

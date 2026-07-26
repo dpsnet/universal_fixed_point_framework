@@ -1,6 +1,6 @@
 # 谱 SU(2) 范畴涌现：为什么是 SU(2)？
 
-> 本文推导 $A_{\text{GR}}$ 的 Lie 代数结构被 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架唯一锁定为 $\mathfrak{su}(2)$。
+> 本文推导 $A_{\text{GR}}$ 的 Lie 代数结构被 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架唯一锁定为 $\mathfrak{su}(2)$。
 
 ---
 
@@ -12,7 +12,7 @@ Paper XX 的核心推导链为：
 三层伴随对嵌套 → 谱流生成元 G_GR = ad(G)(A) → SU(2) Casimir 谱 λ_k ∝ √{k(k+1)} → 谱间隙 Δλ_min → ...
 ```
 
-其中"SU(2) Casimir 谱"是推导的**中间节点**，但迄今以**输入**而非**输出**出现。本文填补的空白：从 $\mathbf{Rec}/\mathbf{Spec}$ 范畴架构出发，证明 $A_{\text{GR}}$ 的 Lie 代数必须是 $\mathfrak{su}(2)$，而非其他 Lie 代数。
+其中"SU(2) Casimir 谱"是推导的**中间节点**，但迄今以**输入**而非**输出**出现。本文填补的空白：从 $\mathbf{Rec}/\mathbf{Sp}$ 范畴架构出发，证明 $A_{\text{GR}}$ 的 Lie 代数必须是 $\mathfrak{su}(2)$，而非其他 Lie 代数。
 
 ---
 
@@ -30,7 +30,7 @@ $A_{\text{GR}}$ 是谱流方程中的核心生成元。若 $A_{\text{GR}}$ 对�
 
 ### C2：紧形式（谱有界性）
 
-$\mathbf{Spec}$ 范畴中的谱对象 $D(R)$ 具有有界谱（来自 Rec 对象在 D 函子下的紧性保持）。$A_{\text{GR}}$ 作为谱生成元，其谱是有界的，这意味着其 Lie 代数对应的群必须是紧的。
+$\mathbf{Sp}$ 范畴中的谱对象 $D(R)$ 具有有界谱（来自 Rec 对象在 D 函子下的紧性保持）。$A_{\text{GR}}$ 作为谱生成元，其谱是有界的，这意味着其 Lie 代数对应的群必须是紧的。
 
 **推论 2.2**（紧实形式）。$\mathfrak{g}_{\text{GR}}$ 是紧实 Lie 代数（对应紧 Lie 群的 Lie 代数）。
 
@@ -130,7 +130,7 @@ $$[A_{\text{GR}}, X] = 0,\quad \forall X \in \mathfrak{g}_{\text{GR}}$$
 
 ## 6. 结论
 
-从 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架出发，通过五个约束条件（非平凡谱流、紧形式、唯一谱间隙、实谱、Casimir 型结构），$A_{\text{GR}}$ 的 Lie 代数被唯一锁定为 $\mathfrak{su}(2)$。该推导填补了 Paper XX 推导链中"SU(2) 从何而来"的逻辑缺口，使整条推导链不再以 SU(2) 为输入，而以范畴约束为输入。
+从 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架出发，通过五个约束条件（非平凡谱流、紧形式、唯一谱间隙、实谱、Casimir 型结构），$A_{\text{GR}}$ 的 Lie 代数被唯一锁定为 $\mathfrak{su}(2)$。该推导填补了 Paper XX 推导链中"SU(2) 从何而来"的逻辑缺口，使整条推导链不再以 SU(2) 为输入，而以范畴约束为输入。
 
 **核心定理**（$A_{\text{GR}}$ Lie 代数锁定）：
 

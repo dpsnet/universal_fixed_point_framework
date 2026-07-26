@@ -1,14 +1,14 @@
-# 非 Markov 系统 TE-G-M 不等式严格推广证明研究笔记
+# 非 Markov 系统 拓扑熵–谱间隙不等式严格推广证明研究笔记
 
 **日期**：2026-07-20
-**关联**：Paper I §8.3.3 第 17 项；Paper I 定理 TE-G-M；Paper II §1.5.3
+**关联**：Paper I §8.3.3 第 17 项；Paper I 拓扑熵–谱间隙不等式定理；Paper II §1.5.3
 **状态**：Markov IFS 已证明，一般非 Markov 动力系统推广待严格证明
 
 ---
 
 ## 1. 问题陈述
 
-**定理 TE-G-M**（Markov IFS 版本）：对归一化的 Markov IFS，拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足
+**拓扑熵–谱间隙不等式定理**（Markov IFS 版本）：对归一化的 Markov IFS，拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足
 
 $$h_{\text{top}} \cdot \gamma \leq C, \quad C \leq 1$$
 
@@ -36,7 +36,7 @@ $$h_{\text{top}} \cdot \gamma \leq C, \quad C \leq 1$$
 利用 Axiom A 吸引子的 Markov 近似：
 
 1. **构造 Markov 划分序列**：对任意 $\varepsilon > 0$，存在有限 Markov 划分 $\mathcal{P}_\varepsilon$，其符号动力与原系统之间的时间重分误差 $< \varepsilon$
-2. **近似系统的 TE-G-M**：对每个 $\varepsilon$ 近似系统，TE-G-M 成立
+2. **近似系统的 拓扑熵–谱间隙不等式**：对每个 $\varepsilon$ 近似系统，拓扑熵–谱间隙不等式 成立
 3. **取极限 $\varepsilon \to 0$**：证明 $h_{\text{top}} \cdot \gamma$ 在极限下保持上界
 
 关键引理：拓扑熵和谱间隙在 Markov 近似下的**上半连续性**。
@@ -47,7 +47,7 @@ $$h_{\text{top}} \cdot \gamma \leq C, \quad C \leq 1$$
 
 - 谱间隙 $\gamma = 1 - |\lambda_2|/\lambda_1$，其中 $\lambda_1$ 为主导特征值
 - Ruelle 不等式：$h_\mu \leq \sum_{\lambda_i > 0} \lambda_i \cdot d_i$
-- 结合 Ledrappier-Young 维数分解（定理 HD-D）
+- 结合 Ledrappier-Young 维数分解（Ledrappier-Young 维数分解定理）
 
 目标不等式可重写为：
 
@@ -57,17 +57,17 @@ $$h_{\text{top}} \cdot \left(1 - \frac{|\lambda_2|}{\lambda_1}\right) \leq C$$
 
 ### 3.3 谱框架证明路线
 
-在 $\mathbf{Rec}/\mathbf{Spec}$ 框架内：
+在 $\mathbf{Rec}/\mathbf{Sp}$ 框架内：
 
 - 拓扑熵 $h_{\text{top}}$ 对应 $D(R)$ 的谱测度增长率
-- 谱间隙 $\gamma$ 对应 $\mathbf{Spec}$ 对象的主导/次主导特征值分离
+- 谱间隙 $\gamma$ 对应 $\mathbf{Sp}$ 对象的主导/次主导特征值分离
 - 不等式 $h_{\text{top}} \cdot \gamma \leq C$ 可解释为"谱复杂度 × 谱分辨率有界"
 
-这给出了 TE-G-M 的**范畴论诠释**：$\mathbf{Spec}$ 对象不能同时具有高复杂度和高分辨率。
+这给出了 拓扑熵–谱间隙不等式 的**范畴论诠释**：$\mathbf{Sp}$ 对象不能同时具有高复杂度和高分辨率。
 
 ## 4. 预期结果
 
-**猜想 TE-G-M'**：对具有 SRB 测度的 C² Axiom A 吸引子，存在仅依赖于相空间维数 $d$ 和双曲性参数的常数 $C(d) \leq 1$，使得
+**猜想 拓扑熵–谱间隙不等式'**：对具有 SRB 测度的 C² Axiom A 吸引子，存在仅依赖于相空间维数 $d$ 和双曲性参数的常数 $C(d) \leq 1$，使得
 
 $$h_{\text{top}} \cdot \gamma \leq C(d)$$
 
@@ -75,4 +75,4 @@ $$h_{\text{top}} \cdot \gamma \leq C(d)$$
 
 ## 5. 与论文关联
 
-证明此猜想后，Paper I 定理 TE-G-M 可从 Markov IFS 推广到一般非 Markov 动力系统，Paper I §8.3.3 第 17 项"仍待深化"可升级为"完全解决"或部分解决。
+证明此猜想后，Paper I 拓扑熵–谱间隙不等式定理 可从 Markov IFS 推广到一般非 Markov 动力系统，Paper I §8.3.3 第 17 项"仍待深化"可升级为"完全解决"或部分解决。

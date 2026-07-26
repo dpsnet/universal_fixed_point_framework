@@ -4,13 +4,13 @@
 
 **版本**：v2.8（2026-07-25）
 
-**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Spec}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学。v2.2 严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3）并建立跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景。v2.4 将 F5 统一表扩展至八类临界现象（新增声子硬化、电磁极化饱和、量子相变临界慢化、NTK 谱压缩），$T_c$ 谱推导 153 MeV（偏差 1.1%）。v2.5 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表，建立量子 Hall 拓扑相变与 $\partial\mathbf{Rec}_D$ 谱边界的新联系。
+**摘要**：本文在 Paper V 建立的谱动力学框架基础上，将不可压 Navier-Stokes 方程翻译为 $\mathbf{Sp}$ 范畴中的谱流方程。首先建立谱流体动力学三条基本公理 B1-B3（流体递归存在、对流-耗散分解、不可压谱约束），为湍流的谱动力学分析奠定范畴论基础。核心结果是 Kolmogorov 湍流谱 $E(k) \propto k^{-5/3}$ 不是经验定律，而是谱流在三维物理空间中几何传播的必然结果——与引力 $1/r^2$ 律同源。进一步证明湍流截断尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 与 Planck 截断的数学结构同构。引入湍流重整化群 $\beta$ 函数 $\beta_T(g) = (3/2 - n)g + O(g^2)$，证明 K41 谱 $n=5/3$ 对应 UV 不动点 $\beta_T(g_*) = 0$，并与渐近安全引力建立系统类比。谱 Reynolds 数 $\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 的提出连通了经典与谱湍流理论。v2.1 扩展到非牛顿流变学。v2.2 严格化流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$（主定理 E1-E3）并建立跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$。v2.3 将主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散），低能 QCD 谱翻译纳入统一图景。v2.4 将 F5 统一表扩展至八类临界现象（新增声子硬化、电磁极化饱和、量子相变临界慢化、NTK 谱压缩），$T_c$ 谱推导 153 MeV（偏差 1.1%）。v2.5 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表，建立量子 Hall 拓扑相变与 $\partial\mathbf{Rec}_D$ 谱边界的新联系。
 v2.7 建立非牛顿流变学的三对角谱丛形式（§9.3），揭示复杂黏度连分数与 Leaver 三对角谱丛的严格同构。
 v2.8 完成流变学谱丛工程化的数值验证：三对角矩阵结构正确性（对称性与带宽）、弛豫谱反演精度（无噪声 G* 预测误差 10^{-32} 级、有噪声 0.06%）、谱丛反演 vs Tikhonov 正则化的显著优势（误差比 0.3%），为谱丛理论的工程化应用提供计算基础。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper XI（谱 QFT 公理 A4 路径积分）与 Paper XII（谱截断 $\Lambda_{\max}$ 的跨尺度同构）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper XI（谱 QFT 公理 A4 路径积分）与 Paper XII（谱截断 $\Lambda_{\max}$ 的跨尺度同构）。
 
 ## 1. 引言
 
@@ -57,7 +57,7 @@ $$R_{\text{NS}}(t+\Delta t) = \Phi_{\Delta t}(R_{\text{NS}}(t))$$
 $$\frac{d}{dt} A_t = [A_{\text{adv}}, A_t] - \nu \cdot \Delta_{\text{spec}} A_t + \mathcal{F}(t)$$
 
 其中：
-1. **对流谱生成元 $A_{\text{adv}}$**：反 Hermite 算子（$A_{\text{adv}}^\dagger = -A_{\text{adv}}$），对应 Euler 方程的对流非线性项 $(\mathbf{v}\cdot\nabla)\mathbf{v}$。谱对易子 $[A_{\text{adv}}, A_t]$ 是 $\mathbf{Spec}$ 中沿 $A_{\text{adv}}$ 方向的 Lie 导数，编码能量在波数间的无耗散转移。
+1. **对流谱生成元 $A_{\text{adv}}$**：反 Hermite 算子（$A_{\text{adv}}^\dagger = -A_{\text{adv}}$），对应 Euler 方程的对流非线性项 $(\mathbf{v}\cdot\nabla)\mathbf{v}$。谱对易子 $[A_{\text{adv}}, A_t]$ 是 $\mathbf{Sp}$ 中沿 $A_{\text{adv}}$ 方向的 Lie 导数，编码能量在波数间的无耗散转移。
 2. **谱拉普拉斯 $\Delta_{\text{spec}}$**：正定自伴算子（$\Delta_{\text{spec}}^\dagger = \Delta_{\text{spec}}$），对应粘性扩散 $\nu\nabla^2$。负号表示耗散。粘性系数 $\nu$ 是谱耗散强度参数。
 3. **压力谱项 $\mathcal{F}(t)$**：由不可压条件 $\nabla\cdot\mathbf{v}=0$ 在谱层面的投影算子确定。
 
@@ -84,7 +84,7 @@ $$\text{Tr}(A_t \cdot \mathcal{P}) = 0, \quad \forall t$$
 
 ### 2.3 N-S 谱流方程
 
-**定理 2.1**（N-S 谱流方程）。$A_t$ 在 $\mathbf{Spec}$ 中的演化由以下方程控制：
+**定理 2.1**（N-S 谱流方程）。$A_t$ 在 $\mathbf{Sp}$ 中的演化由以下方程控制：
 
 $$\frac{d}{dt} A_t = [A_{\text{adv}}, A_t] - \nu \cdot \Delta_{\text{spec}} A_t + \mathcal{F}(t)$$
 
@@ -430,13 +430,13 @@ $$\boxed{\dot\gamma \to \dot\gamma_c^- \;\Leftrightarrow\; \eta(\dot\gamma) \to 
 
 **主定理 E2**（流变 Lorentz 群同构）。流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的保结构自同构群与一维 Lorentz 群同构：
 
-$$\boxed{SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}}) \cong SO^+(1,1).}$$
+$$\boxed{SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}}) \cong SO^+(1,1).}$$
 
 **证明思路**。流变谱流生成元 $G_{\text{rheo}} \in \mathfrak{so}(1,1)$（定理 8.1 的相对论型硬化情形），其指数映射给出单参数群 $\exp(\phi G_{\text{rheo}}) \cong SO^+(1,1)$。该群保持 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的谱结构（$\Delta\lambda_{\min} = 0$），故为自同构群。$\mathfrak{so}(1,1)$ 是一维 Lorentz 推进的 Lie 代数，故群同构于 $SO^+(1,1)$。$\square$
 
 #### 9.1.5 主定理 E3：五类临界现象的统一范畴论刻画
 
-**主定理 E3**（五类临界现象的统一范畴论刻画）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、QCD 禁闭发散、IQHE 临界指数过渡是同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的五种物理实现：
+**主定理 E3**（五类临界现象的统一范畴论刻画）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散、QCD 禁闭发散、IQHE 临界指数过渡是同一函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的五种物理实现：
 
 | 临界现象 | 递归对象 | 谱流生成元 | 边界 | 临界指数 | 特征可观测量 |
 |:--------|:--------|:----------|:-----|:--------:|:------------|
@@ -604,7 +604,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 | 分支点 | $\omega$ 平面特征值交叉点 | 流变非线性跃迁拓扑相变点 |
 | 单值群 | $M_\Gamma \in S_N$ | $M_\Gamma^{\text{rheo}} \in S_N$ |
 
-**推论**。Kerr QNM 与广义 Maxwell 流变是同一范畴论结构在引力与流体力学中的不同实例化。Leaver 的"非物理根"（非物理 QNM）在流变学中对应"非物理解（非物理弛豫模）"。这一同构将引力量子模的谱丛理论转化为流变学的计算工具——例如，Leaver 两弦法 $O(N^3) \to O(N)$ 加速（Paper I §7.8.3）可直接应用于流变弛豫谱的反演计算；反之，流变学的实验数据可为引力谱丛的分支点密度分布提供流体力学类比。这是谱动力学跨领域统一的又一例证：**黑洞 QNM 与高分子流变在谱丛几何中相遇**。
+**推论**。Kerr QNM 与广义 Maxwell 流变是同一范畴论结构在引力与流体力学中的不同实例化。Leaver 的"非物理根"（非物理 QNM）在流变学中对应"非物理解（非物理弛豫模）"。这一同构将引力量子模的谱丛理论转化为流变学的计算工具——例如，Leaver 双初始向量逆迭代法 $O(N^3) \to O(N)$ 加速（Paper I §7.8.3）可直接应用于流变弛豫谱的反演计算；反之，流变学的实验数据可为引力谱丛的分支点密度分布提供流体力学类比。这是谱动力学跨领域统一的又一例证：**黑洞 QNM 与高分子流变在谱丛几何中相遇**。
 
 #### 9.3.6 数值验证
 
@@ -612,7 +612,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 
 **验证架构**：
 - `_rheo_to_tridiag.py`：广义 Maxwell 模型的正问题求解器与三对角矩阵生成器
-- `_rheo_sheaf_inversion.py`：谱丛反演器（Prony-NNLS 初值估计 + Trust-Region 优化 + LACI 物理筛选）
+- `_rheo_sheaf_inversion.py`：谱丛反演器（Prony-NNLS 初值估计 + Trust-Region 优化 + 局部吸引子捕获指数（Local Attractor Capture Index, LACI）物理筛选）
 - `tests/test_rheo_sheaf.py`：五项验收测试
 
 **测试结果**：
@@ -644,7 +644,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 本文证明了 K41 湍流谱不是经验定律，而是谱流方程在三维物理空间中几何传播的必然结果。主要贡献：
 
 1. **谱流体动力学公理 B1-B3**（§2.2）：建立流体递归存在、对流-耗散分解、不可压谱约束三条公理，为湍流的谱动力学分析奠定范畴论基础
-2. **N-S 谱流方程**（定理 2.1）：将 N-S 方程翻译为 $\mathbf{Spec}$ 中的谱流
+2. **N-S 谱流方程**（定理 2.1）：将 N-S 方程翻译为 $\mathbf{Sp}$ 中的谱流
 3. **K41 谱推导**（定理 3.1）：$-5/3$ 指数从标度不变性唯一确定
 4. **湍流 RG $\beta$ 函数**（定理 7.1）：$\beta_T(g) = (3/2 - n)g + O(g^2)$，K41 谱 $n=5/3$ 对应 $\beta_T(g_*) = 0$ 的 UV 不动点（定理 7.2），并与渐近安全引力建立系统类比（定理 7.3）
 5. **谱 Reynolds 数**（§7.2）：$\text{Re}_{\text{spec}} = \|A_{\text{adv}}\|_{\text{HS}} / (\nu \cdot k_{\min})$ 连通经典与谱湍流理论
@@ -665,7 +665,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 
 ### UFPF 内部
 
-- **Paper I**：`paper/paper1_fractal_spectral_derecursion.md` — 分形谱去递归理论
+- **Paper I**：`paper/paper1_fractal_spectral_derecursion.md` — 分形谱化理论
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱动力学
 - **Paper VII**：`paper/paper7_spectral_thermodynamics.md` — 非平衡谱热力学
 - **Paper VIII**：`paper/paper8_black_hole_spectral.md` — 黑洞视界谱动力学

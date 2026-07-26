@@ -1,6 +1,6 @@
 # 低能 QCD 的谱翻译
 
-**目标**：将 QCD 禁闭、手征对称性破缺、$\chi$PT 翻译为 $\mathbf{Spec}$ 范畴语言，并与 $\partial\mathbf{Rec}_D$ 谱边界机制建立联系。
+**目标**：将 QCD 禁闭、手征对称性破缺、$\chi$PT 翻译为 $\mathbf{Sp}$ 范畴语言，并与 $\partial\mathbf{Rec}_D$ 谱边界机制建立联系。
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 **日期**：2026-07-19
@@ -46,7 +46,7 @@ $$\frac{d}{d\tau}A_{\text{QCD}}(\tau) = [G_{\text{RG}}, A_{\text{QCD}}(\tau)],$$
 
 **"如何"**：QCD 的红外不动点对应 $\partial\mathbf{Rec}_D$ 谱边界。当能标 $\mu \to \Lambda_{\text{QCD}}$，QCD 谱系统穿越 $\partial\mathbf{Rec}_D$，谱间隙 $\Delta\lambda_{\min} \to 0$，耦合常数 $\alpha_s \to \infty$，产生禁闭效应。
 
-**"为何"**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Spec}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界——$\Delta\lambda_{\min} \to 0$ 是谱对象从稳定到不稳定的普遍标志。QCD 的红外不动点、Lorentz 的光速极限、黑洞的视界、流变的临界剪切率，都是 $\partial\mathbf{Rec}_D$ 的不同物理实例。
+**"为何"**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Sp}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界——$\Delta\lambda_{\min} \to 0$ 是谱对象从稳定到不稳定的普遍标志。QCD 的红外不动点、Lorentz 的光速极限、黑洞的视界、流变的临界剪切率，都是 $\partial\mathbf{Rec}_D$ 的不同物理实例。
 
 ### 2.1 红外不动点与谱间隙闭合
 
@@ -201,7 +201,7 @@ $$\Delta\lambda_{\chi\text{SB}} \equiv \min \sigma(A_{\text{QCD}}) = \Lambda_{\t
 
 手征凝聚 $\langle\bar{q}q\rangle$ 在谱语言中为谱迹：
 
-$$\langle\bar{q}q\rangle = -\frac{1}{V} \operatorname{Tr}_{\mathbf{Spec}}(S_F(\lambda)) = -\frac{1}{V} \sum_{\lambda \in \sigma(A)} \frac{1}{\lambda + m_q + i\varepsilon}.$$
+$$\langle\bar{q}q\rangle = -\frac{1}{V} \operatorname{Tr}_{\mathbf{Sp}}(S_F(\lambda)) = -\frac{1}{V} \sum_{\lambda \in \sigma(A)} \frac{1}{\lambda + m_q + i\varepsilon}.$$
 
 在 $m_q \to 0$ 极限下，利用 Banks-Casher 关系：
 
@@ -379,7 +379,7 @@ $$m_\pi \approx 140\ \text{MeV},$$
 
 手征微扰论（$\chi$PT）是 QCD 在低能区的有效场论，以 Goldstone 玻色子为自由度。
 
-**谱翻译**：Goldstone 玻色子 $\pi^a$ 是 $\mathbf{Spec}$ 中的周期谱对象，其谱作用量为：
+**谱翻译**：Goldstone 玻色子 $\pi^a$ 是 $\mathbf{Sp}$ 中的周期谱对象，其谱作用量为：
 
 $$\mathcal{L}_{\chi\text{PT}}^{\text{spec}} = \frac{F_\pi^2}{4} \operatorname{Tr}_{\mathcal{H}_\pi}([A_\pi, U]^\dagger [A_\pi, U]) + \frac{F_\pi^2}{4} \operatorname{Tr}_{\mathcal{H}_\pi}(\chi^\dagger U + U^\dagger \chi),$$
 

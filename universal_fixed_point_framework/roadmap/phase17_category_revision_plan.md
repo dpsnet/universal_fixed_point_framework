@@ -15,9 +15,9 @@
 
 | 位置 | 当前声明 | 问题 |
 |------|----------|------|
-| §2.3 定义 2.5 | $D: \mathbf{Rec} \to \mathbf{Spec}$ 全域协变函子 | 未同步声明定义域限制 |
+| §2.3 定义 2.5 | $D: \mathbf{Rec} \to \mathbf{Sp}$ 全域协变函子 | 未同步声明定义域限制 |
 | §2.4 注 2.11 | "$D$ 函子的定义域无需限制为 $\mathbf{Rec}$ 的对称子范畴：$D$ 定义在全 $\mathbf{Rec}$ 上" | **与 §2.7 直接自相矛盾** |
-| §2.4 命题 2.10 | $\mathbf{Spec}$ 是 $\mathbf{Rec}$ 的反射子范畴 | 反射子范畴断言过早，且未在 $\mathbf{Rec}_D$ 上证明 |
+| §2.4 命题 2.10 | $\mathbf{Sp}$ 是 $\mathbf{Rec}$ 的反射子范畴 | 反射子范畴断言过早，且未在 $\mathbf{Rec}_D$ 上证明 |
 | §2.7 | 事后发现"$D$ 并非定义在整个 $\mathbf{Rec}$ 上" | 后置补约束，违反"定义第一条同步写明子范畴"的标准范式 |
 
 ### 2.2 缺陷2：关键范畴命题无证明
@@ -30,7 +30,7 @@
 
 ### 2.3 缺陷3：无配套修正
 
-- §2.3 定义 2.5 未修正为 $D: \mathbf{Rec}_D \to \mathbf{Spec}$；
+- §2.3 定义 2.5 未修正为 $D: \mathbf{Rec}_D \to \mathbf{Sp}$；
 - 前文定理（2.7、2.8、2.14、2.15 等）未补充"仅在 $\mathbf{Rec}_D$ 内成立"前提；
 - §7.31 的 $D_{\text{diss}}$ 仅"近似意义下成立（误差 $O(\varepsilon)$）"，未严格化为真正函子；
 - 物理实例（黑洞耗散混沌、非对称IFS、非正规NTK核）未诚实归类到 $\mathbf{Rec}_{\text{diss}}$。
@@ -41,7 +41,7 @@
 
 **修订原则**：若构造映射存在约束，必须在定义第一条同步写明子范畴、筛选条件，不允许先给出全域形式再后文追加隐藏限制。
 
-**§2.3 修订**：将定义 2.5 重构为 $D:\mathbf{Rec}_D\to\mathbf{Spec}$，前置定义 2.5a（$\mathbf{Rec}_D$ 子范畴）与注 2.5b（宽子范畴声明）。
+**§2.3 修订**：将定义 2.5 重构为 $D:\mathbf{Rec}_D\to\mathbf{Sp}$，前置定义 2.5a（$\mathbf{Rec}_D$ 子范畴）与注 2.5b（宽子范畴声明）。
 
 **§2.4 修订**：删除自相矛盾的注 2.11，改为 $\mathbf{Rec}_D$ 反射；命题 2.10 的反射子范畴断言限定到 $\mathbf{Rec}_D$。
 
@@ -70,19 +70,19 @@ $\mathbf{Rec}_D$ 满足子范畴的三条充要条件：
 $\mathbf{Rec}_D$ 满足 Freyd 伴随定理的前提：
 
 1. **完备性**：$\mathbf{Rec}_D$ 对小极限封闭。设 $\{R_i\}_{i\in I}\subset\mathbf{Rec}_D$ 为小图表，其在 $\mathbf{Rec}$ 中的极限 $R_\infty = \varprojlim R_i$ 的 Koopman 算子由各 $U_{R_i}$ 的相容极限给出。由 $\sigma(-\log U_{R_i})\subset\mathbb{R}_{\ge 0}$ 与连续函数演算的极限保持性，$\sigma(-\log U_{R_\infty})\subset\mathbb{R}_{\ge 0}$，故 $R_\infty\in\mathbf{Rec}_D$。
-2. **解集条件**：对每个 $E\in\mathbf{Spec}$，存在 $\mathbf{Rec}_D$ 中的解集 $\{(R_i, \eta_i)\}$，使得任意满足 $\eta: R\to R(D(R))$ 的 $R\in\mathbf{Rec}_D$ 通过某个 $(R_i, \eta_i)$ 分解。解集由 $\mathbf{Spec}$ 的谱维数与 $\mathbf{Rec}_D$ 的有限生成性共同保证（基数有界）。
+2. **解集条件**：对每个 $E\in\mathbf{Sp}$，存在 $\mathbf{Rec}_D$ 中的解集 $\{(R_i, \eta_i)\}$，使得任意满足 $\eta: R\to R(D(R))$ 的 $R\in\mathbf{Rec}_D$ 通过某个 $(R_i, \eta_i)$ 分解。解集由 $\mathbf{Sp}$ 的谱维数与 $\mathbf{Rec}_D$ 的有限生成性共同保证（基数有界）。
 
 #### 证明3：$D\dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立
 
-设 $D:\mathbf{Rec}_D\to\mathbf{Spec}$ 为谱去递归化函子，$R:\mathbf{Spec}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。构造单位 $\eta$ 与余单位 $\varepsilon$：
+设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。构造单位 $\eta$ 与余单位 $\varepsilon$：
 
 - **单位** $\eta_R: R \to R(D(R))$，对 $R\in\mathbf{Rec}_D$，将 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$（$A_R$ 已正定）；
-- **余单位** $\varepsilon_E: D(R(E)) \to E$，对 $E\in\mathbf{Spec}$，由 $A_{D(R(E))} = A_E$（$A_E$ 自伴）得 $\varepsilon_E = \mathrm{id}_E$。
+- **余单位** $\varepsilon_E: D(R(E)) \to E$，对 $E\in\mathbf{Sp}$，由 $A_{D(R(E))} = A_E$（$A_E$ 自伴）得 $\varepsilon_E = \mathrm{id}_E$。
 
 **三角恒等式验证**：
 
 1. $(\varepsilon D)\circ(D\eta) = \mathrm{id}_D$：对 $R\in\mathbf{Rec}_D$，由 $\varepsilon_{D(R)} = \mathrm{id}_{D(R)}$（因 $A_{D(R(D(R)))} = A_{D(R)}$），恒等式成立；
-2. $(R\varepsilon)\circ(\eta R) = \mathrm{id}_R$：对 $E\in\mathbf{Spec}$，由 $D(R(E)) = E$（$R$ 为包含函子），$\eta_{R(E)} = \mathrm{id}_{R(E)}$，恒等式成立。
+2. $(R\varepsilon)\circ(\eta R) = \mathrm{id}_R$：对 $E\in\mathbf{Sp}$，由 $D(R(E)) = E$（$R$ 为包含函子），$\eta_{R(E)} = \mathrm{id}_{R(E)}$，恒等式成立。
 
 故 $D\dashv R$ 严格成立。
 
@@ -168,7 +168,7 @@ $\mathbf{Rec}_D$ 满足 Freyd 伴随定理的前提：
 
 | 序号 | 章节 | 操作 | 工作量 |
 |------|------|------|--------|
-| 1 | §2.3 定义 2.5 | 重构为 $D:\mathbf{Rec}_D\to\mathbf{Spec}$，前置定义 2.5a 与注 2.5b | 中 |
+| 1 | §2.3 定义 2.5 | 重构为 $D:\mathbf{Rec}_D\to\mathbf{Sp}$，前置定义 2.5a 与注 2.5b | 中 |
 | 2 | §2.4 注 2.11 | 删除自相矛盾断言，改为 $\mathbf{Rec}_D$ 反射 | 小 |
 | 3 | §2.4 命题 2.10 | 反射子范畴断言限定到 $\mathbf{Rec}_D$ | 小 |
 | 4 | §2.4 新增命题 | 三条证明：子范畴合法 / Freyd 前提 / $D\dashv R$ 严格 | 大 |

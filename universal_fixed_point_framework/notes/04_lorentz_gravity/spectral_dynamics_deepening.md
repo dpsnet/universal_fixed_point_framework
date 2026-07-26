@@ -25,11 +25,11 @@
 
 ---
 
-## A. $\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展
+## A. $\mathbf{Rec}/\mathbf{Sp}$ 高阶范畴拓展
 
 ### A.1 动机
 
-当前 $\mathbf{Rec}$ 和 $\mathbf{Spec}$ 是普通范畴（1-范畴）。态射是线性的、复合是严格的。这不足以描述：
+当前 $\mathbf{Rec}$ 和 $\mathbf{Sp}$ 是普通范畴（1-范畴）。态射是线性的、复合是严格的。这不足以描述：
 - 谱流方程的高阶对称性（2-态射）
 - 重整化群流的函子间自然变换
 - 弦论中的对偶等价（范畴等价的高阶提升）
@@ -42,7 +42,7 @@ $$\alpha_t: f(R)_t \to g(R)_t, \quad \forall t \in \mathbb{R}$$
 
 使得谱流方程沿 $\alpha$ 自然：$\frac{d}{dt} \alpha_t = [G, \alpha_t]$。
 
-**定理 A.1**（$D$ 的 2-函子提升）。$D: \mathbf{Rec} \to \mathbf{Spec}$ 可唯一提升为 2-函子 $D_2: \mathbf{Rec}_2 \to \mathbf{Spec}_2$，保 2-态射复合。
+**定理 A.1**（$D$ 的 2-函子提升）。$D: \mathbf{Rec} \to \mathbf{Sp}$ 可唯一提升为 2-函子 $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$，保 2-态射复合。
 
 **证明**。$D_2$ 在 2-态射上的作用由 $D_2(\alpha)_t = D(\alpha_t)$ 定义。自然性由 $D$ 的函子性保证。□
 
@@ -59,9 +59,9 @@ $$\alpha_t: f(R)_t \to g(R)_t, \quad \forall t \in \mathbb{R}$$
 
 在 ∞-范畴 $\mathbf{Rec}_\infty$ 中，谱流方程成为态射空间的切向量场：
 
-$$\frac{d}{dt} A_t \in T_{A_t} \mathbf{Spec}_\infty$$
+$$\frac{d}{dt} A_t \in T_{A_t} \mathbf{Sp}_\infty$$
 
-力的谱解释获得微分几何诠释——$A_{F,i}$ 是 $\mathbf{Spec}_\infty$ 上的 Killing 向量场，谱流方程是沿这些向量场的 Lie 导数。
+力的谱解释获得微分几何诠释——$A_{F,i}$ 是 $\mathbf{Sp}_\infty$ 上的 Killing 向量场，谱流方程是沿这些向量场的 Lie 导数。
 
 ---
 
@@ -143,7 +143,7 @@ $$S_{\text{BH}} = \frac{A}{4l_P^2} = \frac{\pi}{4\Delta \lambda_{\min}^2}$$
 
 $$\sigma(A_t) = \sigma(A_0), \quad \forall t$$
 
-因此初始信息未丢失——它在 $A_t$ 的谱中完整保存，但随 $A_t$ 在 $\mathbf{Spec}$ 中的演化被"搅乱"（谱纠缠而非谱丢失）。
+因此初始信息未丢失——它在 $A_t$ 的谱中完整保存，但随 $A_t$ 在 $\mathbf{Sp}$ 中的演化被"搅乱"（谱纠缠而非谱丢失）。
 
 **证明**。谱不变性 $\sigma(A_t) = \sigma(A_0)$ 是 $A_t = U A_0 U^{-1}$ 的直接推论（$U$ 是幺正的谱流算子）。□
 

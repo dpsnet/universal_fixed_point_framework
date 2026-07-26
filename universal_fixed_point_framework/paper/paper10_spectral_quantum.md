@@ -4,11 +4,11 @@
 
 **版本**：v1.2（2026-07-18）
 
-**摘要**：本文在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），并以此为基础统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。M1–M4 并非为量子测量临时引入的假设，而是谱动力学已有结构的测量语境化：M1 来自 $\mathbf{Spec}$ 范畴的谱分解定义（Paper I），M2 来自谱流方程（Paper V）与固定基谱熵（Paper VII）的统一，M3 来自谱对应自然等价（Paper I）与轨道函子（Paper VIII），M4 来自态射静默（Paper I）、Loschmidt 消解（Paper VII）与 Page 曲线（Paper VIII）的交汇。核心结果包括：(1) 测量谱流方程的解析解 $A_{ij}(t) = A_{ij}(0)e^{-(\kappa+i\Delta E_{ij})t}$，导出坍缩时间 $\tau_{\text{collapse}} = \ln(1/\varepsilon)/\kappa$——与谱间隙无关，仅依赖退相干率；(2) 纠缠是谱对象的**结构不可分解性**，Werner 噪声下 concurrence 阈值为 $p = 1/3$，CHSH 违反阈值为 $p = 1/\sqrt{2}$；(3) 延迟选择消解为**态射选择**而非因果回溯；(4) 量子-经典边界的定量判据 $R_{\text{qc}} = \Delta\lambda_{\text{sys}}/\kappa \gtrsim 5$；(5) Kochen-Specker 语境性等价于 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$；(6) 量子资源理论作为 $\mathbf{Spec}$ 上的函子 $R: \mathbf{Spec} \to \mathbb{R}_{\ge 0}$。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。谱动力学是唯一**原生范畴论框架**的量子诠释，在范畴论严格性、测量问题消解和实验契合度三个维度上全面领先现有诠释。
+**摘要**：本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），并以此为基础统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。M1–M4 并非为量子测量临时引入的假设，而是谱动力学已有结构的测量语境化：M1 来自 $\mathbf{Sp}$ 范畴的谱分解定义（Paper I），M2 来自谱流方程（Paper V）与固定基谱熵（Paper VII）的统一，M3 来自谱对应自然同构（Paper I）与轨道函子（Paper VIII），M4 来自态射静默（Paper I）、Loschmidt 消解（Paper VII）与 Page 曲线（Paper VIII）的交汇。核心结果包括：(1) 测量谱流方程的解析解 $A_{ij}(t) = A_{ij}(0)e^{-(\kappa+i\Delta E_{ij})t}$，导出坍缩时间 $\tau_{\text{collapse}} = \ln(1/\varepsilon)/\kappa$——与谱间隙无关，仅依赖退相干率；(2) 纠缠是谱对象的**结构不可分解性**，Werner 噪声下 concurrence 阈值为 $p = 1/3$，CHSH 违反阈值为 $p = 1/\sqrt{2}$；(3) 延迟选择消解为**态射选择**而非因果回溯；(4) 量子-经典边界的定量判据 $R_{\text{qc}} = \Delta\lambda_{\text{sys}}/\kappa \gtrsim 5$；(5) Kochen-Specker 语境性等价于 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$；(6) 量子资源理论作为 $\mathbf{Sp}$ 上的函子 $R: \mathbf{Sp} \to \mathbb{R}_{\ge 0}$。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。谱动力学是唯一**原生范畴论框架**的量子诠释，在范畴论严格性、测量问题消解和实验契合度三个维度上全面领先现有诠释。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D \dashv R$）。数值代码见 `paperX_*.py`（共 7 脚本，合计 40/40 检查通过）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `paperX_*.py`（共 7 脚本，合计 40/40 检查通过）。
 
 ---
 
@@ -28,7 +28,7 @@
 
 ### 1.2 核心论题
 
-> **论题 1**（量子测量的谱解释）。波函数坍缩、 Born 规则、量子纠缠和延迟选择均可统一为 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架中谱结构的自然涌现。无需非定域隐变量、多世界或回溯因果。
+> **论题 1**（量子测量的谱解释）。波函数坍缩、 Born 规则、量子纠缠和延迟选择均可统一为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架中谱结构的自然涌现。无需非定域隐变量、多世界或回溯因果。
 
 ### 1.3 论文结构
 
@@ -72,23 +72,23 @@
 
 **量子达尔文主义**。Zurek[2003-2009]提出指针态在环境中多份复制导致经典客观性。本文的谱冗余度（§9.3）提供了该理论的范畴论表述，并将冗余度与 M4 分支选择直接对应。
 
-**量子资源理论**。Chitambar-Gour[2019]给出资源理论的系统综述。本文的贡献在于将资源测度统一为 $\mathbf{Spec}$ 上的函子，并证明谱流是通用资源转化器。
+**量子资源理论**。Chitambar-Gour[2019]给出资源理论的系统综述。本文的贡献在于将资源测度统一为 $\mathbf{Sp}$ 上的函子，并证明谱流是通用资源转化器。
 
-**语境性**。Kochen-Specker[1967]定理证明了量子的语境性。本文的 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$ 表述是将语境性翻译为非对易代数结构的第一个范畴论版本。
+**语境性**。Kochen-Specker[1967]定理证明了量子的语境性。本文的 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$ 表述是将语境性翻译为非对易代数结构的第一个范畴论版本。
 
 ---
 
 ## 2. 谱测量公理
 
-谱动力学在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子测量建立四条严格公理。
+谱动力学在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立四条严格公理。
 
 ### 2.1 公理 M1（谱投影公理）
 
-在 $\mathbf{Spec}$ 范畴中，每个测量过程对应一个投影态射族 $\{P_i: E \to E\}_{i \in I}$，满足：
+在 $\mathbf{Sp}$ 范畴中，每个测量过程对应一个投影态射族 $\{P_i: E \to E\}_{i \in I}$，满足：
 
 - (i) $P_i \circ P_i = P_i$（幂等性）
 - (ii) $P_i \circ P_j = 0$ 当 $i \neq j$（正交性）
-- (iii) $\bigcirc_{i \in I} P_i = \mathrm{id}_E$（完备性，$\bigcirc$ 为 $\mathbf{Spec}$ 中的余乘积）
+- (iii) $\bigcirc_{i \in I} P_i = \mathrm{id}_E$（完备性，$\bigcirc$ 为 $\mathbf{Sp}$ 中的余乘积）
 
 其中 $E = (\mathcal{H}, A_M, \sigma(A_M))$ 是测量构型谱对象。投影 $P_i$ 对应 $A_M$ 的谱分解：
 $$A_M = \sum_i \lambda_i P_i, \quad \lambda_i \in \sigma(A_M).$$
@@ -107,7 +107,7 @@ $$A_\infty = \lim_{t\to\infty} A_t = \sum_i p_i P_i, \quad p_i = \frac{\|P_i\psi
 
 测量结果为本征值 $\lambda_i$ 的概率由轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$ 的谱权重给出：
 $$p_i = \frac{\omega_E(P_i)}{\sum_{j \in I} \omega_E(P_j)} = |\langle \lambda_i | \psi \rangle|^2,$$
-其中 $\omega_E(P_i) = \operatorname{Tr}(P_i \rho P_i)$。Born 概率在谱去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 下保持：
+其中 $\omega_E(P_i) = \operatorname{Tr}(P_i \rho P_i)$。Born 概率在谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 下保持：
 $$p_i(R_{\text{mes}}) = p_i(D(R_{\text{mes}})),$$
 即测量概率是函子不变量。
 
@@ -131,15 +131,15 @@ M1–M4 统一消解标准测量问题的三个困惑：
 
 M1–M4 不是为量子测量临时引入的假设，而是谱动力学已有结构的测量语境化：
 
-**M1（谱投影态射）** 直接来自 $\mathbf{Spec}$ 范畴定义（Paper I 定义 2.3）：谱分解 $A = \sum \lambda_i P_i$ 中投影算子 $\{P_i\}$ 的幂等性、正交性和完备性是谱交织条件 $T A_1 \subseteq A_2 T$ 在 $T = P_i$ 时的本有属性。M1 只是将这一固有结构提升为测量公理。
+**M1（谱投影态射）** 直接来自 $\mathbf{Sp}$ 范畴定义（Paper I 定义 2.3）：谱分解 $A = \sum \lambda_i P_i$ 中投影算子 $\{P_i\}$ 的幂等性、正交性和完备性是谱交织条件 $T A_1 \subseteq A_2 T$ 在 $T = P_i$ 时的本有属性。M1 只是将这一固有结构提升为测量公理。
 
 **M2（谱流动力学）** 是两个已有结构的叠加：对易子项 $[A_{\text{int}}, A_t]$ 取自 Paper V §2.1 力的谱流方程 $dA_t/dt = \sum g_i [A_{F,i}, A_t]$；对角化项 $\kappa(\mathcal{D}(A) - A)$ 取自 Paper VII §2.1 固定基谱熵的概念——$\mathcal{D}(A) = \sum P_i A P_i$ 正是 Paper VII 中定义 $S_B(\rho)$ 所需的固定基投影。M2 将幺正谱流（Paper V）和固定基熵增（Paper VII）统一为单一方程，用 $\kappa$ 控制两者的竞争。
 
-**M3（Born 规则）** 的函子不变量表述来源于两个谱动力学结构：谱对应自然等价 $M \cong L$（Paper I 定理 3.7a）将压缩算子特征值 $\lambda_i$ 与生成元特征值 $\mu_i$ 的对应升级为范畴自然等价；轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$（Paper VIII）将递归系统映射到谱轨道集。谱权重 $\omega(P_i) = \operatorname{Tr}(P_i \rho P_i)$ 在此框架中是 $M$ 函子数值与 $O$ 函子轨道结构的交汇点。
+**M3（Born 规则）** 的函子不变量表述来源于两个谱动力学结构：谱对应自然同构 $M \cong L$（Paper I 定理 3.7a）将压缩算子特征值 $\lambda_i$ 与生成元特征值 $\mu_i$ 的对应升级为范畴自然同构；轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$（Paper VIII）将递归系统映射到谱轨道集。谱权重 $\omega(P_i) = \operatorname{Tr}(P_i \rho P_i)$ 在此框架中是 $M$ 函子数值与 $O$ 函子轨道结构的交汇点。
 
-**M4（谱分支选择）** 来源于 Paper I §5.7 的态射静默概念：$\mathbf{Rec}$ 中不满足谱保持条件的态射在谱去递归函子 $D$ 作用下不可见。分支拓扑权重 $w(\lambda_i)$ 的表达式正是态射静默判据的逆用——$w(\lambda_i)$ 大的分支对应 $D$ 保留的谱信息，小的分支对应 $D$ 静默掉的信息。分支选择的不可逆性对应 Paper VII §3.3 Loschmidt 消解中固定基在时间反演下不变的结构。Page 曲线（Paper VIII §5.3）的熵增-熵减反转——蒸发早期信息"流向外"、晚期"流回"——与 M4 的 $i^* = \arg\max w(\lambda_i)$ 选择机制共享相同的分支拓扑结构。
+**M4（谱分支选择）** 来源于 Paper I §5.7 的态射静默概念：$\mathbf{Rec}$ 中不满足谱保持条件的态射在谱化函子 $D$ 作用下不可见。分支拓扑权重 $w(\lambda_i)$ 的表达式正是态射静默判据的逆用——$w(\lambda_i)$ 大的分支对应 $D$ 保留的谱信息，小的分支对应 $D$ 静默掉的信息。分支选择的不可逆性对应 Paper VII §3.3 Loschmidt 消解中固定基在时间反演下不变的结构。Page 曲线（Paper VIII §5.3）的熵增-熵减反转——蒸发早期信息"流向外"、晚期"流回"——与 M4 的 $i^* = \arg\max w(\lambda_i)$ 选择机制共享相同的分支拓扑结构。
 
-**总结**：M1 来自 $\mathbf{Spec}$ 范畴定义，M2 来自 Paper V + Paper VII，M3 来自 Paper I + Paper VIII，M4 来自 Paper I + Paper VII + Paper VIII。四条公理没有一条是无中生有的——它们是整套谱动力学框架在量子测量问题上的自然应用。
+**总结**：M1 来自 $\mathbf{Sp}$ 范畴定义，M2 来自 Paper V + Paper VII，M3 来自 Paper I + Paper VIII，M4 来自 Paper I + Paper VII + Paper VIII。四条公理没有一条是无中生有的——它们是整套谱动力学框架在量子测量问题上的自然应用。
 
 ---
 
@@ -203,7 +203,7 @@ $$\boxed{R_{\text{qc}} = \frac{\Delta\lambda_{\text{sys}}}{\kappa} \gtrsim 5 \;\
 
 ### 4.1 谱纠缠的定义
 
-**定义 1**（谱纠缠）。复合系统的谱生成元 $A_{\text{AB}} \in \mathbf{Spec}$ 称为**可分解**的，若存在 $A_A, A_B \in \mathbf{Spec}$ 使得：
+**定义 1**（谱纠缠）。复合系统的谱生成元 $A_{\text{AB}} \in \mathbf{Sp}$ 称为**可分解**的，若存在 $A_A, A_B \in \mathbf{Sp}$ 使得：
 $$A_{\text{AB}} \cong A_A \otimes I_B + I_A \otimes A_B + A_{\text{ent}}.$$
 当 $A_{\text{ent}} \neq 0$ 时，系统**纠缠**。
 
@@ -255,10 +255,10 @@ Wheeler 延迟选择实验中最反直觉的部分：实验者**事后**的选�
 
 ### 5.2 谱动力学回答
 
-**定理 4**（延迟选择的非回溯性）。在 $\mathbf{Spec}$ 范畴中，$A_t$ 的谱数据在所有 $t$ 时刻已同时编码路径基和动基信息。两个态射：
+**定理 4**（延迟选择的非回溯性）。在 $\mathbf{Sp}$ 范畴中，$A_t$ 的谱数据在所有 $t$ 时刻已同时编码路径基和动基信息。两个态射：
 $$\text{测路径}\; P_{\text{which}} : A_t \to P_{\text{which}} A_t P_{\text{which}}$$
 $$\text{测干涉}\; P_{\text{int}} : A_t \to P_{\text{int}} A_t P_{\text{int}}$$
-在 $\mathbf{Spec}$ 中**同时存在**——实验者的"选择"只是决定调用哪个态射。
+在 $\mathbf{Sp}$ 中**同时存在**——实验者的"选择"只是决定调用哪个态射。
 
 **消解**：
 
@@ -339,7 +339,7 @@ Werner 模型最符合实验数据（偏差 $< 0.1\%$），说明现实实验中
 
 ### 7.2 范畴论兼容性
 
-| 诠释 | $\mathbf{Rec}/\mathbf{Spec}$ 表达 | 瓶颈 |
+| 诠释 | $\mathbf{Rec}/\mathbf{Sp}$ 表达 | 瓶颈 |
 |:----|:-----------------------------:|------|
 | Copenhagen | $\nexists$ | 拒绝形式化形而上学 |
 | Bohmian | $\exists$ 部分 | 非定域性破坏态射条件 |
@@ -365,7 +365,7 @@ Werner 模型最符合实验数据（偏差 $< 0.1\%$），说明现实实验中
 
 ### 8.1 核心结论
 
-本文在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立了量子测量的严格公理系统 M1–M4，并统一解释了四大量子基础问题：
+本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立了量子测量的严格公理系统 M1–M4，并统一解释了四大量子基础问题：
 
 | 问题 | 谱动力学回答 | 数值验证 |
 |------|------------|:--------:|
@@ -382,7 +382,7 @@ Werner 模型最符合实验数据（偏差 $< 0.1\%$），说明现实实验中
 
 谱动力学与现有诠释的根本区别在于：
 
-1. **原生范畴化**：非将现有诠释映射到范畴论，而是从 $\mathbf{Rec}/\mathbf{Spec}$ 出发构造诠释
+1. **原生范畴化**：非将现有诠释映射到范畴论，而是从 $\mathbf{Rec}/\mathbf{Sp}$ 出发构造诠释
 2. **无额外假设**：坍缩、Born 规则、随机性均为 M1–M4 的推论，非外部公设
 3. **定量预测**：坍缩时间、纠缠阈值、量子-经典边界均为可检验数值预言
 
@@ -394,31 +394,31 @@ Werner 模型最符合实验数据（偏差 $< 0.1\%$），说明现实实验中
 
 ### 9.1 Kochen-Specker 语境性
 
-**定理 5**（语境性 = 非对易性）。在 $\mathbf{Spec}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Spec} = \mathbf{Spec}_{\text{com}}$。Kochen-Specker 定理等价于：
+**定理 5**（语境性 = 非对易性）。在 $\mathbf{Sp}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Sp} = \mathbf{Sp}_{\text{com}}$。Kochen-Specker 定理等价于：
 
-$$\boxed{\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}}$$
+$$\boxed{\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}}$$
 
-语境性的源是 $\mathbf{Spec}$ 态射的非对易代数结构。这与其他诠释的本质区别：
+语境性的源是 $\mathbf{Sp}$ 态射的非对易代数结构。这与其他诠释的本质区别：
 
 | 诠释 | 语境性解释 | 评价 |
 |------|----------|------|
 | Copenhagen | "测量创造结果" | 未解释为何存在 |
 | Bohmian | 导波非定域 → 表观语境性 | 引入非定域隐变量 |
 | Many-Worlds | 分支间无通信 | 未触及核心 |
-| **谱动力学** | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** | **范畴结构推论** |
+| **谱动力学** | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** | **范畴结构推论** |
 
 #### 定理 5 的证明
 
-**定理 C1**（语境性 = 非对易性，完整表述）。设 $v: \text{Obj}(\mathbf{Spec}) \to \{0,1\}$ 为真值赋值函数，满足对任意交换谱生成元 $A,B$ 有 $v(A+B) = v(A) + v(B)$ 和 $v(f(A)) = f(v(A))$。则当 $\dim\mathcal{H} \ge 3$ 时，$v$ 不存在。
+**定理 C1**（语境性 = 非对易性，完整表述）。设 $v: \text{Obj}(\mathbf{Sp}) \to \{0,1\}$ 为真值赋值函数，满足对任意交换谱生成元 $A,B$ 有 $v(A+B) = v(A) + v(B)$ 和 $v(f(A)) = f(v(A))$。则当 $\dim\mathcal{H} \ge 3$ 时，$v$ 不存在。
 
-**证明**。在 $\mathbf{Spec}$ 范畴中，考虑一个三维 Hilbert 空间 $\mathcal{H} \cong \mathbb{C}^3$ 上的谱对象 $E = (\mathcal{H}, A, \sigma(A))$。选取三个两两交换的谱投影 $P_1, P_2, P_3$，满足：
+**证明**。在 $\mathbf{Sp}$ 范畴中，考虑一个三维 Hilbert 空间 $\mathcal{H} \cong \mathbb{C}^3$ 上的谱对象 $E = (\mathcal{H}, A, \sigma(A))$。选取三个两两交换的谱投影 $P_1, P_2, P_3$，满足：
 $$P_1 + P_2 + P_3 = \mathrm{id}_E, \quad P_i P_j = \delta_{ij} P_i.$$
 
-Kochen-Specker 定理的标准结论是：不存在从 $\mathcal{B}(\mathcal{H})$ 到 $\{0,1\}$ 的函数同时满足（i）每个投影被赋值为 0 或 1 且（ii）对正交投影集恰有一个被赋值为 1。在 $\mathbf{Spec}$ 框架中，这一事实等价于：真值赋值函子 $v: \text{Obj}(\mathbf{Spec}) \to \{0,1\}$ 无法一致定义，因为 $\mathbf{Spec}$ 包含非对易态射——即谱交织条件 $T A_1 \subseteq A_2 T$ 不要求 $T$ 与 $A_1$ 交换。当 $[T, A_1] \neq 0$ 时，$T$ 定义了不同语境间的态射，而 $v$ 在不同语境下给出不一致赋值。因此 K-S 定理等价于：
-$$\boxed{\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}}$$
-其中 $\mathbf{Spec}_{\text{com}}$ 是 $\mathbf{Spec}$ 的交换子范畴。□
+Kochen-Specker 定理的标准结论是：不存在从 $\mathcal{B}(\mathcal{H})$ 到 $\{0,1\}$ 的函数同时满足（i）每个投影被赋值为 0 或 1 且（ii）对正交投影集恰有一个被赋值为 1。在 $\mathbf{Sp}$ 框架中，这一事实等价于：真值赋值函子 $v: \text{Obj}(\mathbf{Sp}) \to \{0,1\}$ 无法一致定义，因为 $\mathbf{Sp}$ 包含非对易态射——即谱交织条件 $T A_1 \subseteq A_2 T$ 不要求 $T$ 与 $A_1$ 交换。当 $[T, A_1] \neq 0$ 时，$T$ 定义了不同语境间的态射，而 $v$ 在不同语境下给出不一致赋值。因此 K-S 定理等价于：
+$$\boxed{\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}}$$
+其中 $\mathbf{Sp}_{\text{com}}$ 是 $\mathbf{Sp}$ 的交换子范畴。□
 
-**推论 C1.1**（语境性的谱起源）。非对易态射 $[T, A_1] \neq 0$ 的存在性——即 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$——是量子语境性的充要条件。语境性并非量子力学的"古怪"特征，而是 $\mathbf{Spec}$ 范畴中非交换代数结构的直接推论。
+**推论 C1.1**（语境性的谱起源）。非对易态射 $[T, A_1] \neq 0$ 的存在性——即 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$——是量子语境性的充要条件。语境性并非量子力学的"古怪"特征，而是 $\mathbf{Sp}$ 范畴中非交换代数结构的直接推论。
 
 #### Peres-Mermin 方的显式构造
 
@@ -452,11 +452,11 @@ A_3 B_3 C_3 &= (\sigma_x \otimes \sigma_x)(\sigma_y \otimes \sigma_y)(\sigma_z \
 
 因此，若存在非语境真值赋值函数 $v: \text{Obs} \to \{\pm 1\}$，则行乘积要求所有 9 个 $v(A_i),v(B_i),v(C_i)$ 的乘积为 $+1$（因每行乘积为 $+1$），而列乘积要求同一组值的乘积为 $-1$（因每列乘积为 $-1$），矛盾。故非语境隐变量模型不存在。
 
-**推论 9.1**（Peres-Mermin 方的 $\mathbf{Spec}$ 翻译）。在 $\mathbf{Spec}$ 框架中，Peres-Mermin 方对应于 $3\times3$ 谱对象构成的态射网络 $\{E_{ij}\}_{i,j=1,2,3}$，其中 $E_{ij} = (\mathcal{H}_{ij}, A_{ij}, \sigma(A_{ij}))$，$\mathcal{H}_{ij} \cong \mathbb{C}^4$（两个 qubit）。行和列分别对应不同的语境——在 $\mathbf{Spec}_{\text{com}}$（交换子范畴）中矛盾消失，而在 $\mathbf{Spec}$（非交换）中矛盾必然存在。这为 K-S 定理的 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$ 表述提供了一个具体例证。
+**推论 9.1**（Peres-Mermin 方的 $\mathbf{Sp}$ 翻译）。在 $\mathbf{Sp}$ 框架中，Peres-Mermin 方对应于 $3\times3$ 谱对象构成的态射网络 $\{E_{ij}\}_{i,j=1,2,3}$，其中 $E_{ij} = (\mathcal{H}_{ij}, A_{ij}, \sigma(A_{ij}))$，$\mathcal{H}_{ij} \cong \mathbb{C}^4$（两个 qubit）。行和列分别对应不同的语境——在 $\mathbf{Sp}_{\text{com}}$（交换子范畴）中矛盾消失，而在 $\mathbf{Sp}$（非交换）中矛盾必然存在。这为 K-S 定理的 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$ 表述提供了一个具体例证。
 
 ### 9.2 PBR 定理与态实在性
 
-**定理 6**（$\mathbf{Spec}$ 对象的 ψ-ontic 性）。$\mathbf{Spec}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——PBR 定理在 $\mathbf{Spec}$ 框架中自动满足，因为谱数据 $\sigma(A)$ 唯一确定物理实在，不存在 ψ-epistemic 模型的空间。
+**定理 6**（$\mathbf{Sp}$ 对象的 ψ-ontic 性）。$\mathbf{Sp}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——PBR 定理在 $\mathbf{Sp}$ 框架中自动满足，因为谱数据 $\sigma(A)$ 唯一确定物理实在，不存在 ψ-epistemic 模型的空间。
 
 | 诠释 | ψ-ontic? | PBR 兼容？ | 额外假设 |
 |:----|:--------:|:---------:|:-------:|
@@ -468,17 +468,17 @@ A_3 B_3 C_3 &= (\sigma_x \otimes \sigma_x)(\sigma_y \otimes \sigma_y)(\sigma_z \
 
 #### 定理 6 的证明
 
-**定理 P1**（$\mathbf{Spec}$ 对象的实在性，完整表述）。设 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 为谱去递归函子。$\mathbf{Spec}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——即 PBR 定理在 $\mathbf{Spec}$ 框架中自动满足。
+**定理 P1**（$\mathbf{Sp}$ 对象的实在性，完整表述）。设 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 为谱化函子。$\mathbf{Sp}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——即 PBR 定理在 $\mathbf{Sp}$ 框架中自动满足。
 
-**证明**。PBR 定理的核心假设是"存在不同的隐变量状态 $\lambda$ 可以概率性地产生相同的量子态"。在 $\mathbf{Spec}$ 框架中，这一假设不成立，原因如下：
+**证明**。PBR 定理的核心假设是"存在不同的隐变量状态 $\lambda$ 可以概率性地产生相同的量子态"。在 $\mathbf{Sp}$ 框架中，这一假设不成立，原因如下：
 
-1. **谱数据唯一确定性**：$\mathbf{Spec}$ 对象 $E = (\mathcal{H}, A, \sigma(A))$ 中，谱数据 $\sigma(A)$ 是 $A$ 的谱分解的固有属性——$A = \sum_i \lambda_i P_i$，其中 $\lambda_i \in \sigma(A)$。给定 $A$，$\sigma(A)$ 唯一决定，不存在"隐变量"额外结构的空间。
+1. **谱数据唯一确定性**：$\mathbf{Sp}$ 对象 $E = (\mathcal{H}, A, \sigma(A))$ 中，谱数据 $\sigma(A)$ 是 $A$ 的谱分解的固有属性——$A = \sum_i \lambda_i P_i$，其中 $\lambda_i \in \sigma(A)$。给定 $A$，$\sigma(A)$ 唯一决定，不存在"隐变量"额外结构的空间。
 
 2. **轨道函子的确定性**：轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$（Paper VIII）的谱权重 $\omega(P_i) = \|P_i \psi\|^2$ 由 $A$ 唯一决定。不存在两个不同的谱对象 $E_1 \neq E_2$ 能产生相同的谱权重分布。
 
-3. **函子不变量**：Born 规则 $p_i = \omega(P_i) / \sum_j \omega(P_j)$ 是函子不变量（M3），在谱去递归函子 $D$ 下保持。若 $\psi$-epistemic 模型存在，则需存在不同隐变量分布产生相同 Born 概率——这与 $D$ 的函子保持性矛盾。
+3. **函子不变量**：Born 规则 $p_i = \omega(P_i) / \sum_j \omega(P_j)$ 是函子不变量（M3），在谱化函子 $D$ 下保持。若 $\psi$-epistemic 模型存在，则需存在不同隐变量分布产生相同 Born 概率——这与 $D$ 的函子保持性矛盾。
 
-因此，$\mathbf{Spec}$ 框架中不存在 $\psi$-epistemic 模型的空间——谱数据定义唯一的物理实在。□
+因此，$\mathbf{Sp}$ 框架中不存在 $\psi$-epistemic 模型的空间——谱数据定义唯一的物理实在。□
 
 **注**。这意味着谱动力学的本体论立场是唯一与 PBR 定理兼容的量子基础框架之一（与 Bohmian 和 MWI 并列，但与 QBism 和 Copenhagen 不兼容），且**无需额外假设**（Bohmian 需导波，MWI 需无限分支）。
 
@@ -571,7 +571,7 @@ $$\tau \ge \frac{\pi}{2\kappa \|\mathcal{D}\|} \cdot \frac{\|A_0 - \mathcal{D}(A
 | 随机性 | 公设 | 导波 | 分支 | 相对 | 信念 | **M4 定理** |
 | 纠缠 | 困惑 | 非定域 | 分支 | 关系 | 信念 | **结构** |
 | 延迟选择 | 回溯 | 导波 | 分支 | 关系 | 无问题 | **态射选择** |
-| **语境性** | 未解 | 表观 | 未触及 | 关系 | 主观 | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** |
+| **语境性** | 未解 | 表观 | 未触及 | 关系 | 主观 | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** |
 | **PBR** | ❌ | ✅ | ✅ | 🟡 | ❌ | **✅ 无额外** |
 | **经典客观性** | 未解 | 导波 | 概率 | 关系 | 主观 | **谱冗余** |
 | **速度极限** | 经验 | 导波 | 分支 | 关系 | 无 | **定理 8** |
@@ -581,11 +581,11 @@ $$\tau \ge \frac{\pi}{2\kappa \|\mathcal{D}\|} \cdot \frac{\|A_0 - \mathcal{D}(A
 
 ## 10. 量子资源理论的谱翻译
 
-量子资源理论在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架中获得统一表述。
+量子资源理论在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架中获得统一表述。
 
 ### 10.1 资源 = 谱不变量
 
-**定义 7**（资源函子）。设 $\mathcal{C} \subseteq \mathbf{Spec}$ 为资源理论定义的全子范畴。**资源函子** $R: \mathcal{C} \to \mathbb{R}_{\ge 0}$ 满足：
+**定义 7**（资源函子）。设 $\mathcal{C} \subseteq \mathbf{Sp}$ 为资源理论定义的全子范畴。**资源函子** $R: \mathcal{C} \to \mathbb{R}_{\ge 0}$ 满足：
 
 1. **单调性**：对态射 $T: E_1 \to E_2$，$R(E_2) \le R(E_1)$（资源不增）
 2. **归一化**：$R(E) = 0$ 当且仅当 $E$ 是自由态
@@ -593,7 +593,7 @@ $$\tau \ge \frac{\pi}{2\kappa \|\mathcal{D}\|} \cdot \frac{\|A_0 - \mathcal{D}(A
 
 #### 自由操作的特征化
 
-在 $\mathbf{Spec}$ 中，自由操作 $T: E \to E'$ 必须满足谱交织条件 $T A \subseteq A' T$。不同的资源理论选择不同的 $\mathcal{C} \subseteq \mathbf{Spec}$ 和不同的态射约束：
+在 $\mathbf{Sp}$ 中，自由操作 $T: E \to E'$ 必须满足谱交织条件 $T A \subseteq A' T$。不同的资源理论选择不同的 $\mathcal{C} \subseteq \mathbf{Sp}$ 和不同的态射约束：
 
 | 资源理论 | 自由态条件 | 自由态射约束 |
 |---------|-----------|------------|
@@ -602,7 +602,7 @@ $$\tau \ge \frac{\pi}{2\kappa \|\mathcal{D}\|} \cdot \frac{\|A_0 - \mathcal{D}(A
 | **魔力** | $A \in \text{STAB}$（稳定子态） | $T$ 为 Clifford 操作 |
 | **失谐** | $[A_A \otimes I_B, A] = 0$（经典关联） | 局域测量态射 |
 
-自由操作在 $\mathbf{Spec}$ 中构成资源理论的全子范畴 $\mathcal{C}_{\text{free}} \subseteq \mathcal{C}$，其中每个态射都保持自由态条件。
+自由操作在 $\mathbf{Sp}$ 中构成资源理论的全子范畴 $\mathcal{C}_{\text{free}} \subseteq \mathcal{C}$，其中每个态射都保持自由态条件。
 
 ### 10.2 资源分类与谱测度
 
@@ -630,7 +630,7 @@ $$\mathcal{C}_B(A_t)^2 = \sum_{i \neq j} |A_{ij}(t)|^2 = \sum_{i \neq j} |A_{ij}
 
 #### 资源关系与谱表达式
 
-不同量子资源之间存在层级依赖关系，在 $\mathbf{Spec}$ 框架中可统一表达：
+不同量子资源之间存在层级依赖关系，在 $\mathbf{Sp}$ 框架中可统一表达：
 
 | 资源 | 与相干性的关系 | 谱表达式 |
 |------|--------------|---------|
@@ -658,7 +658,7 @@ $$\mathcal{C}_B(A_t)^2 = \sum_{i \neq j} |A_{ij}(t)|^2 = \sum_{i \neq j} |A_{ij}
 
 #### 定理 R2：资源转化的谱流实现
 
-**定理 R2**（资源转化由谱流实现）。设 $A_1, A_2 \in \mathbf{Spec}$ 为两个资源态。存在谱流从 $A_1$ 到 $A_2$ 当且仅当存在生成元 $G$ 和作用时间 $t \ge 0$ 使得：
+**定理 R2**（资源转化由谱流实现）。设 $A_1, A_2 \in \mathbf{Sp}$ 为两个资源态。存在谱流从 $A_1$ 到 $A_2$ 当且仅当存在生成元 $G$ 和作用时间 $t \ge 0$ 使得：
 $$A_2 = e^{-tG} A_1 e^{tG}.$$
 
 资源转化效率由谱流时间 $\tau$ 约束：
@@ -678,7 +678,7 @@ $$\sigma(A_t) = \sigma(A_0), \quad \forall t \ge 0.$$
 
 #### 资源层级结构
 
-不同资源在 $\mathbf{Spec}$ 中形成严格的层级结构，从最基础到最特殊：
+不同资源在 $\mathbf{Sp}$ 中形成严格的层级结构，从最基础到最特殊：
 
 ```
           纯度 γ(A)           ← 最基础（所有态都有）
@@ -699,16 +699,16 @@ $$\sigma(A_t) = \sigma(A_0), \quad \forall t \ge 0.$$
 
 与谱热力学（Paper VII）的对应：
 
-| 热力学 | 资源理论 | $\mathbf{Spec}$ 对应 |
+| 热力学 | 资源理论 | $\mathbf{Sp}$ 对应 |
 |-------|---------|-------------------|
-| 自由能 $F$ | 资源测度 $R$ | 函子 $R: \mathbf{Spec} \to \mathbb{R}_{\ge 0}$ |
+| 自由能 $F$ | 资源测度 $R$ | 函子 $R: \mathbf{Sp} \to \mathbb{R}_{\ge 0}$ |
 | 热平衡态 | 自由态 | $R(A) = 0$ |
 | 熵增 | 资源衰减 | $R(A_t) \le R(A_0)$ |
 | 卡诺效率 | 转化效率 | $\eta = \Delta R / R_0$ |
 
 #### 谱分类总表
 
-以下总表系统总结了 $\mathbf{Spec}$ 范畴中五种量子资源的完整谱分类：
+以下总表系统总结了 $\mathbf{Sp}$ 范畴中五种量子资源的完整谱分类：
 
 | 资源类型 | 谱不变量 | 自由操作 | 典型测度 | 数值验证 |
 |:--------|---------|---------|---------|:-------:|
@@ -730,9 +730,9 @@ $$\sigma(A_t) = \sigma(A_0), \quad \forall t \ge 0.$$
 | 谱坍缩时间的直接实验测量 | 实验设计 | 超导量子比特平台，$\tau \sim \mu$s 量级 |
 | 量子引力的谱翻译 | 理论扩展 | Paper V 谱流与 Paper VIII 黑洞熵的结合 |
 | 无限维谱测量的严格化 | 数学基础 | 无界算子的 Hille-Yosida 半群理论 |
-| 语境性的多体推广 | 范畴形式化 | K-S 定理在 $\mathbf{Spec}$ 中的严格范畴论证明 |
+| 语境性的多体推广 | 范畴形式化 | K-S 定理在 $\mathbf{Sp}$ 中的严格范畴论证明 |
 | 谱冗余的数值扫描 | 数值实验 | 环境碎片数与 $R_{\text{qc}}$ 阈值的定量关系 |
-| 魔力（magic）的谱不变量 | 理论 | 利用 $\mathbf{Spec}$ 的 Clifford 模结构 |
+| 魔力（magic）的谱不变量 | 理论 | 利用 $\mathbf{Sp}$ 的 Clifford 模结构 |
 | 资源转化最优控制 | 数值 | 扫描 $\kappa, G$ 参数空间寻找最优转化路径 |
 | 资源守恒律的实验检验 | 实验 | 超导量子比特平台验证 $R_{\text{tot}}$ 守恒 |
 
@@ -851,60 +851,60 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 ### 12.2 Kochen-Specker 语境性实验匹配
 
-#### 12.2.1 KS 定理的 $\mathbf{Spec}$ 翻译回顾
+#### 12.2.1 KS 定理的 $\mathbf{Sp}$ 翻译回顾
 
-**定理 C1**（语境性 = 非对易性）。在 $\mathbf{Spec}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Spec} = \mathbf{Spec}_{\text{com}}$。Kochen-Specker 定理等价于：
+**定理 C1**（语境性 = 非对易性）。在 $\mathbf{Sp}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Sp} = \mathbf{Sp}_{\text{com}}$。Kochen-Specker 定理等价于：
 
-$$\boxed{\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}}$$
+$$\boxed{\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}}$$
 
-| 概念 | 标准量子力学 | $\mathbf{Spec}$ 范畴翻译 |
+| 概念 | 标准量子力学 | $\mathbf{Sp}$ 范畴翻译 |
 |------|------------|------------------------|
 | 可观测量 | Hermitian 算子 $A$ | 谱对象 $E = (\mathcal{H}, A, \sigma(A))$ |
 | 相容性 | $[A, B] = 0$ | 态射 $T: E_A \to E_B$ 满足谱交织 |
-| 测量语境 | 同时对角化集 | $\mathbf{Spec}$ 的交换子范畴 $\mathbf{Spec}_{\text{com}}$ |
-| 非语境性假设 | 真值函数 $v$ 与语境无关 | $\exists\, v: \text{Obj}(\mathbf{Spec}) \to \{0,1\}$ 一致 |
-| K-S 定理 | 不存在这样的 $v$ (dim $\ge$ 3) | $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$ |
+| 测量语境 | 同时对角化集 | $\mathbf{Sp}$ 的交换子范畴 $\mathbf{Sp}_{\text{com}}$ |
+| 非语境性假设 | 真值函数 $v$ 与语境无关 | $\exists\, v: \text{Obj}(\mathbf{Sp}) \to \{0,1\}$ 一致 |
+| K-S 定理 | 不存在这样的 $v$ (dim $\ge$ 3) | $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$ |
 
 #### 12.2.2 语境性机制分解
 
-在 $\mathbf{Spec}$ 框架下，语境性的核心机制分解为三层：
+在 $\mathbf{Sp}$ 框架下，语境性的核心机制分解为三层：
 
-1. **交换子范畴 $\mathbf{Spec}_{\text{com}}$**：由所有可同时对角化的谱对象构成。在其中真值赋值 $v$ 存在且唯一。
+1. **交换子范畴 $\mathbf{Sp}_{\text{com}}$**：由所有可同时对角化的谱对象构成。在其中真值赋值 $v$ 存在且唯一。
 
 2. **非对易态射**：$T: E_1 \to E_2$ 满足 $T A_1 = A_2 T$ 但 $[T, A_1] \neq 0$。当两个谱对象通过非对易态射连接时，它们属于不同语境。
 
-3. **语境性违反**：真值赋值函数 $v$ 的定义域是 $\text{Obj}(\mathbf{Spec})$，但对 $P_i \circ P_j \neq P_j \circ P_i$ 的投影对，$v(P_i)$ 和 $v(P_j)$ 无法同时满足功能兼容性条件。
+3. **语境性违反**：真值赋值函数 $v$ 的定义域是 $\text{Obj}(\mathbf{Sp})$，但对 $P_i \circ P_j \neq P_j \circ P_i$ 的投影对，$v(P_i)$ 和 $v(P_j)$ 无法同时满足功能兼容性条件。
 
 **语境性的谱判据**：
-- 若所有谱态射可交换，则 $\mathbf{Spec} = \mathbf{Spec}_{\text{com}}$，无语境性
-- 若存在至少一对非交换谱态射，则 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$，语境性必然出现
+- 若所有谱态射可交换，则 $\mathbf{Sp} = \mathbf{Sp}_{\text{com}}$，无语境性
+- 若存在至少一对非交换谱态射，则 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$，语境性必然出现
 - 非对易谱生成元的数量 $N_{\text{nc}}$ 越大，语境性结构越丰富
 
 #### 12.2.3 Yu-Oh 2012 实验匹配
 
 Yu 和 Oh (2012) 构造了基于 13 个投影算子的 K-S 不等式，具有更高的噪声鲁棒性。
 
-| 特性 | Yu-Oh 2012 | $\mathbf{Spec}$ 匹配 |
+| 特性 | Yu-Oh 2012 | $\mathbf{Sp}$ 匹配 |
 |------|-----------|---------------------|
-| 向量数 | 13 个 Rank-1 投影（$\mathbb{R}^3$） | 13 个谱投影 $P_i \in \text{Obj}(\mathbf{Spec})$，$\dim = 3$ |
-| 语境数 | 10 个相容可观测量集 | 10 个 $\mathbf{Spec}_{\text{com}}$ 子范畴 |
+| 向量数 | 13 个 Rank-1 投影（$\mathbb{R}^3$） | 13 个谱投影 $P_i \in \text{Obj}(\mathbf{Sp})$，$\dim = 3$ |
+| 语境数 | 10 个相容可观测量集 | 10 个 $\mathbf{Sp}_{\text{com}}$ 子范畴 |
 | 不等式 | $\sum_i \langle P_i \rangle \leq \alpha$ | $\sum_i v(P_i) \leq \alpha$ 在经典真值赋值下成立 |
 | 量子违反 | 对量子态 $|\psi\rangle$，$\sum_i \langle P_i|\psi\rangle > \alpha$ | 不存在 $v$ 满足所有 $P_i$ 的一致赋值 |
 | 噪声容忍 | 约 6.7% 白噪声仍可观测违反 | 对应 M2 谱流中 $\kappa$ 对坍缩保真度的影响 |
-| $\mathbf{Spec}$ 定位 | — | 13 个投影属于 3 个非交换方向集，$N_{\text{nc}} = 3$ |
+| $\mathbf{Sp}$ 定位 | — | 13 个投影属于 3 个非交换方向集，$N_{\text{nc}} = 3$ |
 
 #### 12.2.4 Kulikov 2020 超导实验匹配
 
 Kulikov 等人 (2020) 在超导量子处理器上实现了 Peres-Mermin 不等式的直接检验。
 
-| 特性 | Kulikov 2020 | $\mathbf{Spec}$ 匹配 |
+| 特性 | Kulikov 2020 | $\mathbf{Sp}$ 匹配 |
 |------|-------------|---------------------|
 | 系统 | 3 个超导 transmon 量子比特 | $\mathcal{H} = \mathbb{C}^8$，$\dim = 8$ ($2^3$) |
 | 可观测量 | 9 个 Pauli 乘积（Peres 正方形） | 9 个谱对象 $E_{ij}$，$i,j=1,2,3$ |
-| 语境 | 3 行 $\times$ 3 列测量 | 3+3 个 $\mathbf{Spec}_{\text{com}}$ 子范畴 |
-| 量子违反 | 观测到 $S = 3.02 > 2$（经典界） | $v: \text{Obj}(\mathbf{Spec}) \to \{0,1\}$ 不存在 |
+| 语境 | 3 行 $\times$ 3 列测量 | 3+3 个 $\mathbf{Sp}_{\text{com}}$ 子范畴 |
+| 量子违反 | 观测到 $S = 3.02 > 2$（经典界） | $v: \text{Obj}(\mathbf{Sp}) \to \{0,1\}$ 不存在 |
 | 实验误差 | 保真度 99.5% | M2 谱流中 $\kappa$ 控制退相干率 |
-| $\mathbf{Spec}$ 定位 | — | Peres 正方形 = $3 \times 3$ 谱对象构成的态射网络 |
+| $\mathbf{Sp}$ 定位 | — | Peres 正方形 = $3 \times 3$ 谱对象构成的态射网络 |
 
 #### 12.2.5 实验对比总表
 
@@ -922,7 +922,7 @@ $$\boxed{S_{\text{KS}} \propto f(N_{\text{nc}}), \quad f(N) = \alpha \sqrt{N} + 
 
 其中 $S_{\text{KS}}$ 是 K-S 不等式违反强度，$N_{\text{nc}}$ 是非对易谱生成元的数量。
 
-**理论依据**：在 $\mathbf{Spec}$ 范畴中，每个非对易谱生成元对 $(A_i, A_j)$ 贡献一个自由度。约束数量 $M$ 与 $N_{\text{nc}}$ 成正比：$M \approx \binom{N_{\text{nc}}}{2}$。经典界与量子界的差距随约束数量增加而增大：$S_{\text{KS}} \propto \sqrt{M} \propto \sqrt{N_{\text{nc}}}$。
+**理论依据**：在 $\mathbf{Sp}$ 范畴中，每个非对易谱生成元对 $(A_i, A_j)$ 贡献一个自由度。约束数量 $M$ 与 $N_{\text{nc}}$ 成正比：$M \approx \binom{N_{\text{nc}}}{2}$。经典界与量子界的差距随约束数量增加而增大：$S_{\text{KS}} \propto \sqrt{M} \propto \sqrt{N_{\text{nc}}}$。
 
 #### 12.2.7 现有实验数据验证
 
@@ -935,7 +935,7 @@ $$\boxed{S_{\text{KS}} \propto f(N_{\text{nc}}), \quad f(N) = \alpha \sqrt{N} + 
 
 #### 12.2.8 三个可检验猜想
 
-通过构造不同 $N_{\text{nc}}$ 的 $\mathbf{Spec}$ 态射网络，可数值预测 K-S 不等式违反强度：
+通过构造不同 $N_{\text{nc}}$ 的 $\mathbf{Sp}$ 态射网络，可数值预测 K-S 不等式违反强度：
 
 1. **低 $N_{\text{nc}}$ 区域** ($N_{\text{nc}} = 2, 3$)：小规模系统，已在 Peres-Mermin、Yu-Oh 中验证
 2. **中 $N_{\text{nc}}$ 区域** ($N_{\text{nc}} = 4, 5$)：需更大维度 Hilbert 空间或更多量子比特
@@ -943,7 +943,7 @@ $$\boxed{S_{\text{KS}} \propto f(N_{\text{nc}}), \quad f(N) = \alpha \sqrt{N} + 
 
 #### 12.2.9 实验配置建议
 
-基于 $\mathbf{Spec}$ 框架预测，以下配置可最大化语境性违反：
+基于 $\mathbf{Sp}$ 框架预测，以下配置可最大化语境性违反：
 
 ```
 配置 A: Yu-Oh 型 (dim=3, N_nc=3)
@@ -1084,7 +1084,7 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 [3] Weihs, G., et al. "Violation of Bell's Inequality under Strict Einstein Locality Conditions." *Physical Review Letters* 81, 5039 (1998).
 [4] Giustina, M., et al. "Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons." *Physical Review Letters* 115, 250401 (2015).
 [5] Hensen, B., et al. "Loophole-Free Bell Inequality Violation Using Electron Spins Separated by 1.3 km." *Nature* 526, 682 (2015).
-[6] Wheeler, J. A. "The 'Past' and the 'Delayed-Choice' Double-Slit Experiment." In *Mathematical Foundations of Quantum Theory* (1978).
+[6] Wheeler, J. A. "The 'Past' and the 'DelayeHausdorff 维数凹性hoice' Double-Slit Experiment." In *Mathematical Foundations of Quantum Theory* (1978).
 [7] Walborn, S. P., et al. "Quantum Erasure in Double-Slit Interferometer with Which-Path Detectors." *Physical Review A* 65, 033818 (2002).
 [8] Werner, R. F. "Quantum States with Einstein-Podolsky-Rosen Correlations Admitting a Hidden-Variable Model." *Physical Review A* 40, 4277 (1989).
 [9] Rovelli, C. "Relational Quantum Mechanics." *International Journal of Theoretical Physics* 35, 1637 (1996).
@@ -1107,13 +1107,13 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 X（增强版 v1.4），谱动力学中的量子测量与量子基础——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。v1.4 新增 §12.4.0 $\eta_c$ 完整解析推导（从 $A_\eta = A_R + \eta\cdot\delta A_N$ 到 $\eta_c = 2(\sqrt{3}-1)/3$）、Peres-Mermin 方显式构造（9 个可观测量、行列乘积矛盾、$\mathbf{Spec}$ 翻译）。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。
+《通用不动点范畴框架》系列论文 X（增强版 v1.4），谱动力学中的量子测量与量子基础——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。v1.4 新增 §12.4.0 $\eta_c$ 完整解析推导（从 $A_\eta = A_R + \eta\cdot\delta A_N$ 到 $\eta_c = 2(\sqrt{3}-1)/3$）、Peres-Mermin 方显式构造（9 个可观测量、行列乘积矛盾、$\mathbf{Sp}$ 翻译）。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| **v1.4** | **2026-07-23** | **η_c 解析推导 + Peres-Mermin 方构造**：新增 §12.4.0 $\eta_c$ 完整解析推导（$A_\eta = A_R + \eta\cdot\delta A_N$，$\delta A_N|_{2\times2} = \sigma_z/k_{\max}$，间隙闭合条件 $\lambda_1(\eta_c)=\lambda_2(\eta_c)$，$\eta_c = 4\Delta\lambda_{\min} = 2(\sqrt{3}-1)/3$）；坍缩时间 $\tau(\eta) \propto 1/(\eta_c-\eta)$ 线性发散证明；§9.1 新增 Peres-Mermin 方显式构造（9 个可观测量、6 个语境、行乘积 $+I$ vs 列乘积 $-I$ 矛盾、$\mathbf{Spec}$ 翻译）|
-| v1.2 | 2026-07-18 | 新增 §12 实验提案与可检验预言：§12.1 坍缩时间实验提案（$\tau$公式、三模型对比、五步实验步骤、$\tau$数值估计、GRW可区分性、挑战与缓解）；§12.2 KS语境性实验匹配（$\mathbf{Spec}$翻译、机制分解、Yu-Oh/Kulikov实验匹配、$N_{\text{nc}}$预测、实验配置建议）；§12.3 多平台实验路线图（五提案对比总表、近期优先推荐）。共新增约250行。 |
+| **v1.4** | **2026-07-23** | **η_c 解析推导 + Peres-Mermin 方构造**：新增 §12.4.0 $\eta_c$ 完整解析推导（$A_\eta = A_R + \eta\cdot\delta A_N$，$\delta A_N|_{2\times2} = \sigma_z/k_{\max}$，间隙闭合条件 $\lambda_1(\eta_c)=\lambda_2(\eta_c)$，$\eta_c = 4\Delta\lambda_{\min} = 2(\sqrt{3}-1)/3$）；坍缩时间 $\tau(\eta) \propto 1/(\eta_c-\eta)$ 线性发散证明；§9.1 新增 Peres-Mermin 方显式构造（9 个可观测量、6 个语境、行乘积 $+I$ vs 列乘积 $-I$ 矛盾、$\mathbf{Sp}$ 翻译）|
+| v1.2 | 2026-07-18 | 新增 §12 实验提案与可检验预言：§12.1 坍缩时间实验提案（$\tau$公式、三模型对比、五步实验步骤、$\tau$数值估计、GRW可区分性、挑战与缓解）；§12.2 KS语境性实验匹配（$\mathbf{Sp}$翻译、机制分解、Yu-Oh/Kulikov实验匹配、$N_{\text{nc}}$预测、实验配置建议）；§12.3 多平台实验路线图（五提案对比总表、近期优先推荐）。共新增约250行。 |
 | v1.1 | 2026-07-18 | 新增 §1.4 数值脚本总览表、§1.5 相关工作段、§2.6 谱动力学根源追溯、附录 A 笔记代码索引。摘要扩展至八大基础问题并标注谱动力学来源。参考文献从 10 篇扩展至 17 篇。 |
 | v1.0 | 2026-07-18 | 初稿完成：11 章，~590 行。含 M1-M4 公理、坍缩时间推导、纠缠结构解释、延迟选择态射解释、实验对比（7 组 Bell 实验 0.03% 偏差）、六大诠释范畴论对比、四个拓展方向（K-S/PBR/达尔文/速度极限）、十维全景对比、量子资源理论 |

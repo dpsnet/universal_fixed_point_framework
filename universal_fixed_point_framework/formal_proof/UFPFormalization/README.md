@@ -1,6 +1,6 @@
 # UFPFormalization — 通用不动点范畴框架机器证明库
 
-本目录包含论文 **《通用不动点范畴框架 I：分形谱去递归理论》** 的机器证明（形式化证明）代码，基于 **Lean 4.31.0 + mathlib4**。
+本目录包含论文 **《通用不动点范畴框架 I：分形谱化理论》** 的机器证明（形式化证明）代码，基于 **Lean 4.31.0 + mathlib4**。
 
 ## 项目结构
 
@@ -16,7 +16,7 @@ UFPFormalization/
 └── UFPFormalization/
     ├── Basic.lean                # 最小可构建原型
     ├── RecCategory.lean          # Rec 范畴（mathlib 版本）
-    ├── SpecCategory.lean         # Spec 范畴（mathlib 版本）
+    ├── SpecCategory.lean         # Sp 范畴（mathlib 版本）
     ├── DecursionFunctor.lean     # D : Rec → Spec 函子（完整 Functor 律证明）
     ├── Adjunction.lean           # D ⊣ R 伴随关系（R 为原型，DAdjR 仍 sorry）
     ├── SpectralCorrespondence.lean # 谱对应 η(μ)=e^{-μ} 双向逆证明
@@ -32,7 +32,7 @@ UFPFormalization/
 |------|------|------|
 | 最小可构建原型 | `Basic.lean` | ✅ 完成 |
 | Rec 范畴 | `RecCategory.lean` | ✅ 完成 |
-| Spec 范畴 | `SpecCategory.lean` | ✅ 完成 |
+| Sp 范畴 | `SpecCategory.lean` | ✅ 完成 |
 | D 函子 | `DecursionFunctor.lean` | ✅ Functor 律 + intertwine 已证 |
 | D ⊣ R 伴随 | `Adjunction.lean` | 🔄 RFunctor 原型；DAdjR 三角恒等式 sorry |
 | 谱对应 M ≅ L | `SpectralCorrespondence.lean` | ✅ 双向逆已证 |
@@ -90,11 +90,11 @@ lake build --no-cache
 
 ### Phase 16B：泛函分析形式化
 
-- Koopman 压缩半群、$A_R$ 的 m-增生生成元、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 两弦法复杂度等。
+- Koopman 压缩半群、$A_R$ 的 m-增生生成元、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 双初始向量逆迭代法复杂度等。
 
 ### Phase 16C：分形/遍历理论形式化
 
-- IFS 自相似测度、压力函数、定理 D-C / HD-D / TE-G-M 等（需外部合作）。
+- IFS 自相似测度、压力函数、定理 Hausdorff 维数凹性 / Ledrappier-Young 维数分解 / 拓扑熵–谱间隙不等式 等（需外部合作）。
 
 ## 变更记录
 

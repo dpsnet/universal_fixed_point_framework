@@ -175,7 +175,7 @@ def truncation_error_scan(a=0.9, l=2, m=2, N_min=20, N_max=100, step=5):
 2. **$N_{\min}$ 准则**：$N = 40$–$80$ 对大多数 Kerr QNM 计算可达双精度
 3. **自适应策略**：可通过 $N$ 扫描验证收敛，动态调整截断深度
 4. **谱丛解释**：衰减率 $c$ 在谱丛语言中正是谱叶沿 Riemann 面的衰变指数 $\mu_{\min}$
-5. **两弦法适用性**：由收敛阶证明（`leaver_convergence_proof.md`），截断误差 $\ll$ RQI 收敛阈值时，两弦法不受截断影响
+5. **双初始向量逆迭代法适用性**：由收敛阶证明（`leaver_convergence_proof.md`），截断误差 $\ll$ RQI 收敛阈值时，双初始向量逆迭代法不受截断影响
 
 ---
 

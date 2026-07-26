@@ -1,14 +1,14 @@
 # 谱动力学量子基础的四个拓展方向
 
 本文在 Paper X（M1–M4 测量公理）的基础上，向四个未覆盖的量子基础热点拓展：
-1. **Kochen-Specker 语境性** — $\mathbf{Spec}$ 非对易性的直接推论
-2. **PBR 定理** — $\mathbf{Spec}$ 对象作为 ψ-ontic 实在的严格辩护
+1. **Kochen-Specker 语境性** — $\mathbf{Sp}$ 非对易性的直接推论
+2. **PBR 定理** — $\mathbf{Sp}$ 对象作为 ψ-ontic 实在的严格辩护
 3. **量子达尔文主义** — M4 分支选择作为环境印记的谱版本
 4. **量子速度极限** — $\tau = \ln(1/\varepsilon)/\kappa$ 的泛化
 
 ---
 
-## 1. Kochen-Specker 语境性的 $\mathbf{Spec}$ 翻译
+## 1. Kochen-Specker 语境性的 $\mathbf{Sp}$ 翻译
 
 ### 1.1 标准表述
 
@@ -21,15 +21,15 @@ Kochen-Specker 定理（1967）证明：在维数 $\ge 3$ 的 Hilbert 空间中�
 
 ### 1.2 谱动力学翻译
 
-**$\mathbf{Spec}$ 中的语境**。在 $\mathbf{Spec}$ 范畴中，一个测量语境对应一个**交换谱生成元集** $\{A_i\}_{i \in I}$ 满足 $[A_i, A_j] = 0 \,\forall i,j$。所有可同时对角化的谱对象构成 $\mathbf{Spec}$ 的交换子范畴 $\mathbf{Spec}_{\text{com}}$。
+**$\mathbf{Sp}$ 中的语境**。在 $\mathbf{Sp}$ 范畴中，一个测量语境对应一个**交换谱生成元集** $\{A_i\}_{i \in I}$ 满足 $[A_i, A_j] = 0 \,\forall i,j$。所有可同时对角化的谱对象构成 $\mathbf{Sp}$ 的交换子范畴 $\mathbf{Sp}_{\text{com}}$。
 
-**定理 C1**（语境性 = 非对易性）。在 $\mathbf{Spec}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Spec} = \mathbf{Spec}_{\text{com}}$。K-S 定理等价于：
+**定理 C1**（语境性 = 非对易性）。在 $\mathbf{Sp}$ 中，非语境隐变量模型存在当且仅当所有谱生成元可同时对角化——即 $\mathbf{Sp} = \mathbf{Sp}_{\text{com}}$。K-S 定理等价于：
 
-$$\boxed{\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}}$$
+$$\boxed{\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}}$$
 
-**证明**。设 $v: \text{Obj}(\mathbf{Spec}) \to \{0,1\}$ 为真值赋值函数。对任意 $E = (\mathcal{H}, A, \sigma(A))$，若 $\dim \mathcal{H} \ge 3$，则存在三个两两交换的谱投影 $P_1, P_2, P_3$ 使得 $P_1 \circ P_2 \circ P_3 = \text{id}_E$，但 $v$ 无法同时为它们分配一致的真值。这与 $\mathbf{Spec}$ 中非对易态射的存在性等价。□
+**证明**。设 $v: \text{Obj}(\mathbf{Sp}) \to \{0,1\}$ 为真值赋值函数。对任意 $E = (\mathcal{H}, A, \sigma(A))$，若 $\dim \mathcal{H} \ge 3$，则存在三个两两交换的谱投影 $P_1, P_2, P_3$ 使得 $P_1 \circ P_2 \circ P_3 = \text{id}_E$，但 $v$ 无法同时为它们分配一致的真值。这与 $\mathbf{Sp}$ 中非对易态射的存在性等价。□
 
-**推论 C1.1**（语境性的谱起源）。语境性的源是 $\mathbf{Spec}$ 态射的**非对易性**——即谱交织条件 $T A_1 \subseteq A_2 T$ 不要求 $T$ 与 $A_1$ 交换。当 $[T, A_1] \neq 0$ 时，$T$ 定义了不同语境间的态射。
+**推论 C1.1**（语境性的谱起源）。语境性的源是 $\mathbf{Sp}$ 态射的**非对易性**——即谱交织条件 $T A_1 \subseteq A_2 T$ 不要求 $T$ 与 $A_1$ 交换。当 $[T, A_1] \neq 0$ 时，$T$ 定义了不同语境间的态射。
 
 ### 1.3 与标准诠释的对比
 
@@ -38,9 +38,9 @@ $$\boxed{\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}}$$
 | Copenhagen | "测量创造结果" | 未解释为何语境性存在 |
 | Bohmian | 导波非定域 → 表观语境性 | 非定域隐变量 |
 | Many-Worlds | 分支间无通信 | 未触及语境性核心 |
-| **谱动力学** | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** | **语境性是范畴结构的直接推论** |
+| **谱动力学** | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** | **语境性是范畴结构的直接推论** |
 
-**谱动力学的独特优势**：其他诠释试图"解释掉"语境性（归因于非定域、多世界等），谱动力学直接**推导**语境性——它源于 $\mathbf{Spec}$ 态射的非对易代数结构，是范畴内在属性，无需额外假设。
+**谱动力学的独特优势**：其他诠释试图"解释掉"语境性（归因于非定域、多世界等），谱动力学直接**推导**语境性——它源于 $\mathbf{Sp}$ 态射的非对易代数结构，是范畴内在属性，无需额外假设。
 
 ### 1.4 数值演示：非对易性 → 语境性
 
@@ -64,7 +64,7 @@ print("→ 无法同时固定两组本征向量的真值 → 语境性")
 
 ---
 
-## 2. PBR 定理与 $\mathbf{Spec}$ 对象的实在性
+## 2. PBR 定理与 $\mathbf{Sp}$ 对象的实在性
 
 ### 2.1 PBR 定理概要
 
@@ -72,13 +72,13 @@ Pusey-Barrett-Rudolph（2012）定理证明：如果两个不同量子态有重�
 
 ### 2.2 谱动力学翻译
 
-**定理 P1**（$\mathbf{Spec}$ 对象的实在性）。设 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 为谱去递归函子。$\mathbf{Spec}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——即 PBR 定理在 $\mathbf{Spec}$ 中自动满足。
+**定理 P1**（$\mathbf{Sp}$ 对象的实在性）。设 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 为谱化函子。$\mathbf{Sp}$ 的对象 $E = (\mathcal{H}, A, \sigma(A))$ 是 ψ-ontic 的——即 PBR 定理在 $\mathbf{Sp}$ 中自动满足。
 
-**证明**。PBR 定理的核心假设是"存在不同的隐变量状态 $\lambda$ 可以概率性地产生相同的量子态"。在 $\mathbf{Spec}$ 框架中：
+**证明**。PBR 定理的核心假设是"存在不同的隐变量状态 $\lambda$ 可以概率性地产生相同的量子态"。在 $\mathbf{Sp}$ 框架中：
 - 谱对象 $A$ 的谱数据 $\sigma(A)$ 是**唯一确定**的——不存在"隐变量"额外结构
 - 轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$ 的谱权重 $\omega(P_i) = \|P_i\psi\|^2$ 由 $A$ 唯一决定
 
-因此，$\mathbf{Spec}$ 框架中不存在 $\psi$-epistemic 模型的空间——谱数据定义唯一的物理实在。□
+因此，$\mathbf{Sp}$ 框架中不存在 $\psi$-epistemic 模型的空间——谱数据定义唯一的物理实在。□
 
 **注**。这意味著谱动力学的本体论立场是**唯一与 PBR 定理兼容**的量子基础框架之一（与 Bohmian 和 MWI 并列，但与 QBism 和 Copenhagen 不兼容）。
 
@@ -90,7 +90,7 @@ Pusey-Barrett-Rudolph（2012）定理证明：如果两个不同量子态有重�
 | QBism | 否（信念） | ❌ | 主观主义 |
 | Bohmian | 是（导波） | ✅ | 额外隐变量 |
 | Many-Worlds | 是（全域波函数） | ✅ | 无限分支 |
-| **谱动力学** | **是（$\mathbf{Spec}$ 对象）** | **✅** | **无额外假设** |
+| **谱动力学** | **是（$\mathbf{Sp}$ 对象）** | **✅** | **无额外假设** |
 
 ---
 
@@ -206,8 +206,8 @@ print(f"→ 谱极限适用于非幺正过程，M-T 不适用")
 | 纠缠非定域 | 结构不可分解性，$\infty$ 但信息 $\le c$ | Paper X §4 | ✅ |
 | 延迟选择 | 态射选择，非因果回溯 | Paper X §5 | ✅ Kim 1999 |
 | 量子-经典边界 | $R_{\text{qc}} \gtrsim 5$ | Paper X §3 | ✅ |
-| **语境性 (K-S)** | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** | **本文 §1** | **✅ 概念** |
-| **态实在性 (PBR)** | **$\mathbf{Spec}$ 对象是 ψ-ontic** | **本文 §2** | **解析** |
+| **语境性 (K-S)** | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** | **本文 §1** | **✅ 概念** |
+| **态实在性 (PBR)** | **$\mathbf{Sp}$ 对象是 ψ-ontic** | **本文 §2** | **解析** |
 | **经典客观性** | **谱冗余 = M4 分支的环境印记** | **本文 §3** | **概念** |
 | **速度极限** | **$\tau \ge \|A_0-A_\infty\|_F\pi/(2\|G\|\cdot\|A_0A_\infty\|_F)$** | **本文 §4** | **✅ 数值** |
 
@@ -220,7 +220,7 @@ print(f"→ 谱极限适用于非幺正过程，M-T 不适用")
 | 随机性 | 公设 | 导波 | 分支 | 相对 | 信念 | **M4 定理** |
 | 纠缠 | 困惑 | 非定域 | 分支 | 关系 | 信念 | **结构** |
 | 延迟选择 | 回溯危机 | 导波 | 分支 | 关系 | 无问题 | **态射选择** |
-| **语境性 (KS)** | 未解 | 表观 | 未触及 | 关系 | 主观 | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** |
+| **语境性 (KS)** | 未解 | 表观 | 未触及 | 关系 | 主观 | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** |
 | **PBR 兼容** | ❌ | ✅ | ✅ | 🟡 | ❌ | **✅ + 无额外假设** |
 | **经典客观性** | 未解 | 导波 | 概率 | 关系 | 主观 | **谱冗余** |
 | **速度极限** | 经验 | 导波 | 分支 | 关系 | 无 | **泛化定理 S1** |
@@ -232,7 +232,7 @@ print(f"→ 谱极限适用于非幺正过程，M-T 不适用")
 
 | 方向 | 推进思路 | 难度 |
 |------|---------|:----:|
-| 语境性的多体推广 | K-S 定理在 $\mathbf{Spec}$ 中的严格范畴论证明 | 🟡 |
+| 语境性的多体推广 | K-S 定理在 $\mathbf{Sp}$ 中的严格范畴论证明 | 🟡 |
 | 谱冗余的数值扫描 | 环境碎片数与 $R_{\text{qc}}$ 阈值的定量关系 | 🟢 |
 | 谱速度极限的实验验证 | 超导量子比特平台测量谱流速度 | 🔴 |
 | 谱语境性的实验检验 | 与 Yu-Oh 等 K-S 实验的定量对比 | 🟡 |

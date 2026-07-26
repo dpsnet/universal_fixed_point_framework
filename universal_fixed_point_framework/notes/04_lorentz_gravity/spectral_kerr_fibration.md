@@ -1,8 +1,8 @@
-# Kerr 参数谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 的 Grothendieck 纤维化
+# Kerr 参数谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 的 Grothendieck 纤维化
 
 **版本**：v0.1（2026-07-23）
 
-**摘要**：本笔记将 Kerr 黑洞参数空间 $(M, a)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Kerr}$，构造 QNM 谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 及其投影 $\pi_{M,a}$。核心结构包括：(1) $\mathbf{Kerr}$ 参数范畴——对象为 $(M, a)$（$M > 0$，$0 \leq a \leq M$），态射为质量和角动量的联合膨胀；(2) 纤维数据——QNM 频率族 $\{\omega_{lmn}(M,a)\}$、视界谱 $\lambda_{\text{horizon}}^{(\pm)}(M,a)$、谱间隙 $\Delta\lambda_{\min}^{(\text{Kerr})}(M,a)$；(3) 极端极限 $a \to M$ 下的纤维类型跳变（离散谱→退化谱）——这是非乘积丛刻画；(4) 与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 的丛态射（Hawking 温度-谱间隙关系 $T_H(a) = \Delta\lambda_{\min}(a)/2\pi$）。
+**摘要**：本笔记将 Kerr 黑洞参数空间 $(M, a)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Kerr}$，构造 QNM 谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 及其投影 $\pi_{M,a}$。核心结构包括：(1) $\mathbf{Kerr}$ 参数范畴——对象为 $(M, a)$（$M > 0$，$0 \leq a \leq M$），态射为质量和角动量的联合膨胀；(2) 纤维数据——QNM 频率族 $\{\omega_{lmn}(M,a)\}$、视界谱 $\lambda_{\text{horizon}}^{(\pm)}(M,a)$、谱间隙 $\Delta\lambda_{\min}^{(\text{Kerr})}(M,a)$；(3) 极端极限 $a \to M$ 下的纤维类型跳变（离散谱→退化谱）——这是非乘积丛刻画；(4) 与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的丛态射（Hawking 温度-谱间隙关系 $T_H(a) = \Delta\lambda_{\min}(a)/2\pi$）。
 
 **前置依赖**：[`spectral_Kerr.md`](spectral_Kerr.md)（Kerr 全谱分解）、[`spectral_Kerr_silence_analysis.md`](spectral_Kerr_silence_analysis.md)（四层静默分析）、`spectral_Grothendieck_fibration.md`（已完成 $\pi_T$/$\pi_\mu$ 模板）。
 
@@ -25,7 +25,7 @@
 **定义 1.2**（极端边界）。$\partial\mathbf{Kerr}_{\text{ext}} = \{(M, a) \in \mathbf{Kerr} \mid a = M\}$。在极端边界上：
 - 内外视界重合：$r_+ = r_- = M$
 - 谱间隙闭合：$\Delta\lambda_{\min}^{(\text{Kerr})}(a = M) = 0$
-- 纤维类型从 $\mathbf{Spec}$（离散谱）跳变到 $\mathbf{Spec}_{\text{deg}}$（简并谱）
+- 纤维类型从 $\mathbf{Sp}$（离散谱）跳变到 $\mathbf{Sp}_{\text{deg}}$（简并谱）
 
 ### 1.3 与 $\mathbf{Temp}$ 的态射
 
@@ -36,18 +36,18 @@ $$\mathcal{H}(M, a) = T_H(M, a) = \frac{\hbar}{2\pi} \cdot \frac{\sqrt{M^2 - a^2
 
 ---
 
-## 2. Kerr 谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$
+## 2. Kerr 谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$
 
 ### 2.1 纤维数据
 
-**定义 2.1**（Kerr 纤维）。对每个参数点 $(M, a) \in \mathbf{Kerr}$，纤维 $\mathbf{Spec}_{(M,a)}$ 包含：
+**定义 2.1**（Kerr 纤维）。对每个参数点 $(M, a) \in \mathbf{Kerr}$，纤维 $\mathbf{Sp}_{(M,a)}$ 包含：
 - **QNM 谱**：$\{\omega_{lmn}(M, a)\}$，其中 $l$ 是角量子数，$m$ 是磁量子数，$n$ 是径向量子数
 - **视界谱**：$\lambda_{\text{horizon}}^{(\pm)}(M, a) = M \pm \sqrt{M^2 - a^2}$
 - **谱间隙**：$\Delta\lambda_{\min}^{(\text{Kerr})}(M, a) = \Delta\lambda_{\min}^{(\text{Schwarz})} \cdot \left(1 - \frac{a^2}{M^2}\right)$（慢转近似）
 
 ### 2.2 总范畴
 
-**定义 2.2**（总范畴 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$）。
+**定义 2.2**（总范畴 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$）。
 - **对象**：$((M, a), \{\omega_{lmn}\})$，其中 $(M, a) \in \mathbf{Kerr}$，$\{\omega_{lmn}\}$ 是 QNM 谱数据
 - **态射** $(f, \phi): ((M_1, a_1), \{\omega^{(1)}\}) \to ((M_2, a_2), \{\omega^{(2)}\})$：
   - $f: (M_1, a_1) \to (M_2, a_2)$ 是参数膨胀
@@ -55,12 +55,12 @@ $$\mathcal{H}(M, a) = T_H(M, a) = \frac{\hbar}{2\pi} \cdot \frac{\sqrt{M^2 - a^2
 
 ### 2.3 投影函子
 
-**定义 2.3**（投影 $\pi_{M,a}$）。$\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Kerr}$ 定义为：
+**定义 2.3**（投影 $\pi_{M,a}$）。$\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Kerr}$ 定义为：
 $$\pi_{M,a}((M, a), \{\omega\}) = (M, a), \quad \pi_{M,a}(f, \phi) = f$$
 
 ### 2.4 谱间隙截面
 
-**定义 2.4**（谱间隙截面）。$\sigma_{\Delta}^{(\text{Kerr})}: \mathbf{Kerr} \to \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 定义为：
+**定义 2.4**（谱间隙截面）。$\sigma_{\Delta}^{(\text{Kerr})}: \mathbf{Kerr} \to \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 定义为：
 $$\sigma_{\Delta}^{(\text{Kerr})}(M, a) = ((M, a), \Delta\lambda_{\min}^{(\text{Kerr})}(M, a))$$
 
 该截面满足 $\pi_{M,a} \circ \sigma_{\Delta}^{(\text{Kerr})} = \text{id}_{\mathbf{Kerr}}$。
@@ -79,10 +79,10 @@ $$f^*\omega_{lmn} = \omega_{lmn}(M_1, a_1) \text{ (Kerr QNM 方程在参数 $(M_
 
 ### 3.2 非乘积丛结构
 
-**定理 3.2**（非乘积丛）。$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 是一个**非乘积丛**——当 $a \to M$ 时，纤维类型从 $\mathbf{Spec}$（离散 QNM 谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（退化视界谱）：
+**定理 3.2**（非乘积丛）。$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 是一个**非乘积丛**——当 $a \to M$ 时，纤维类型从 $\mathbf{Sp}$（离散 QNM 谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（退化视界谱）：
 $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M - a) \cdot \delta\omega_{lm}$$
 
-跳变点处谱间隙闭合、QNM 虚部消失、视界简并，使得 $a > M$ 时无物理 Kerr 黑洞（裸奇点）。该结构使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 成为普通向量丛无法表达的范畴对象。
+跳变点处谱间隙闭合、QNM 虚部消失、视界简并，使得 $a > M$ 时无物理 Kerr 黑洞（裸奇点）。该结构使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为普通向量丛无法表达的范畴对象。
 
 ---
 
@@ -90,14 +90,14 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 
 ### 4.1 Hawking 温度映射
 
-**定理 4.1**（温度-谱间隙丛态射）。存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$，其基函子为 $\mathcal{H}: \mathbf{Kerr} \to \mathbf{Temp}$（定理 1.1），使得：
+**定理 4.1**（温度-谱间隙丛态射）。存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$，其基函子为 $\mathcal{H}: \mathbf{Kerr} \to \mathbf{Temp}$（定理 1.1），使得：
 $$T_H(M, a) = \frac{\Delta\lambda_{\min}^{(\text{Kerr})}(M, a)}{2\pi}$$
 
 该函子建立了 Kerr 谱间隙闭包与 Hawking 温度之间的严格对应。
 
 ### 4.2 温度-角动量联合参数
 
-**定义 4.2**（联合参数丛）。定义乘积基 $\mathbf{Temp} \times \mathbf{Kerr}$ 上的联合谱丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{Kerr}, \mathbf{Spec})$，其对象为 $((T, M, a), \{\omega(T, M, a)\})$。
+**定义 4.2**（联合参数丛）。定义乘积基 $\mathbf{Temp} \times \mathbf{Kerr}$ 上的联合谱丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{Kerr}, \mathbf{Sp})$，其对象为 $((T, M, a), \{\omega(T, M, a)\})$。
 
 限制函子给出两个方向的拉回：沿 $\mathbf{Temp}$（固定 Kerr 参数）和沿 $\mathbf{Kerr}$（固定温度）。
 
@@ -113,11 +113,11 @@ $$T_H(M, a) = \frac{\Delta\lambda_{\min}^{(\text{Kerr})}(M, a)}{2\pi}$$
 | 谱间隙 | $\Delta\lambda_{\min}^{(0)} = 0.122$ | $0$ | 闭合 |
 | 表面引力 | $\kappa = 1/4M$ | $0$ | 消失 |
 | QNM 虚部 | $\text{Im}(\omega_{220}) = -0.0890$ | $0$ | 无穷寿命 |
-| 纤维类型 | $\mathbf{Spec}$ | $\mathbf{Spec}_{\text{deg}}$ | **跳变** |
+| 纤维类型 | $\mathbf{Sp}$ | $\mathbf{Sp}_{\text{deg}}$ | **跳变** |
 
 ### 5.2 非乘积丛的范畴论意义
 
-极端边界的纤维类型跳变使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 成为非乘积丛——这是 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$（乘积丛）的根本不同。在范畴论中，这意味着 $\pi_{M,a}$ 不是一个平凡的 Grothendieck 纤维化——虽然在普通点处有 Cartan 提升，但沿 $\partial\mathbf{Kerr}_{\text{ext}}$ 的全局截面不存在连续延拓。
+极端边界的纤维类型跳变使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为非乘积丛——这是 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$（乘积丛）的根本不同。在范畴论中，这意味着 $\pi_{M,a}$ 不是一个平凡的 Grothendieck 纤维化——虽然在普通点处有 Cartan 提升，但沿 $\partial\mathbf{Kerr}_{\text{ext}}$ 的全局截面不存在连续延拓。
 
 ---
 

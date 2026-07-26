@@ -88,13 +88,13 @@ $$\mathbf{cod} \circ \iota = \text{id}_\Lambda, \quad \iota(\Lambda) = (E_{\text
 
 ---
 
-## 4. 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的关系
+## 4. 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系
 
-EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的关系通过谱退归函子 $D_{\text{res}}$ 建立：
+EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过谱退归函子 $D_{\text{res}}$ 建立：
 
-**定理 4.1**（EFT ↔ 谱对应）。存在纤维保持函子 $\hat{D}: \mathbf{EFT}/\Lambda \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$，将 EFT $E_\Lambda$ 映射为 $\Lambda$ 处的谱数据 $D_{\text{res}}(E_\Lambda)$。
+**定理 4.1**（EFT ↔ 谱对应）。存在纤维保持函子 $\hat{D}: \mathbf{EFT}/\Lambda \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$，将 EFT $E_\Lambda$ 映射为 $\Lambda$ 处的谱数据 $D_{\text{res}}(E_\Lambda)$。
 
-该对应使 S1-S4 的谱静默判据与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中的截面性质一致。
+该对应使 S1-S4 的谱静默判据与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中的截面性质一致。
 
 ---
 

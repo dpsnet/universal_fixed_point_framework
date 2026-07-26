@@ -82,15 +82,15 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 
 ---
 
-### P31.4 非 Markov 系统 TE-G-M 不等式严格推广
+### P31.4 非 Markov 系统 拓扑熵–谱间隙不等式严格推广
 
-**动机**：定理 TE-G-M 当前仅对 Markov IFS 严格证明，需推广至一般非 Markov 动力系统（Axiom A 吸引子、非一致双曲系统、耗散混沌）。
+**动机**：拓扑熵–谱间隙不等式定理 当前仅对 Markov IFS 严格证明，需推广至一般非 Markov 动力系统（Axiom A 吸引子、非一致双曲系统、耗散混沌）。
 
 **理论路线**：
 
 1. **几何化路线**：Markov 划分序列近似 + 上半连续性引理
 2. **泛函分析路线**：Ruelle-Perron-Frobenius 拟紧算子 + Ruelle 不等式 + Ledrappier-Young 维数分解
-3. **谱框架路线**：将 $h_{\text{top}} \cdot \gamma \leq C$ 诠释为"$\mathbf{Spec}$ 对象不能同时具有高复杂度和高分辨率"
+3. **谱框架路线**：将 $h_{\text{top}} \cdot \gamma \leq C$ 诠释为"$\mathbf{Sp}$ 对象不能同时具有高复杂度和高分辨率"
 
 **研究笔记**：[spectral_non_markov_te_gm.md](../notes/09_experimental/spectral_non_markov_te_gm.md)
 
@@ -104,7 +104,7 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 P31.1 (高阶形式化) 依赖 Phase 29/30
 P31.2 (BES/TBA)    依赖 Paper II §6.7 现有原型
 P31.3 (DNS 湍流)   依赖 Paper VI 谱流体动力学
-P31.4 (TE-G-M 推广) 依赖定理 TE-G-M + 定理 HD-D
+P31.4 (拓扑熵–谱间隙不等式 推广) 依赖拓扑熵–谱间隙不等式定理 + Ledrappier-Young 维数分解定理
 ```
 
 ## 与论文的对应关系

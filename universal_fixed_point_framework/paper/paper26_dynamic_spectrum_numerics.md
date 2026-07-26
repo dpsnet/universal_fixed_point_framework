@@ -129,18 +129,18 @@ $$h(t) = \sum_{lmn} A_{lmn} \cdot e^{-i\omega_{lmn}t}, \quad A_{lmn} \propto \fr
 
 数值验证：使用 Richardson 外推评估连续分数法的收敛精度（$N=20,50,100,200$ 步的外推序列），低阶模收敛误差 $\sim 10^{-12}$。7/7 测试通过（Leaver QNM、收敛性、多模合成、谱分解、谱间隙、LIGO 对比、能流守恒）。
 
-**基于去递归理论的统一 Leaver 求解器**：本文在 `LeaverUnifiedSolver`（`src/dynamic_spectrum/leaver_unified_solver.py`）中实现了基于分形谱去递归理论的完整 Leaver QNM 求解器。相比前述简化实现，统一求解器包含四层集成：
-1. **去递归理论核心（DerecursionAnalyzer）**：将三项递推系统 $R \in \text{Rec}$ 映射为 Koopman 算子 $K$，计算谱分布 $\sigma(K)$ 和谱间隙 $\gamma = 1 - \rho(K)$，验证谱对应 $\lambda = e^{-\mu}$。
+**基于谱化理论的统一 Leaver 求解器**：本文在 `LeaverUnifiedSolver`（`src/dynamic_spectrum/leaver_unified_solver.py`）中实现了基于分形谱化理论的完整 Leaver QNM 求解器。相比前述简化实现，统一求解器包含四层集成：
+1. **谱化理论核心（DerecursionAnalyzer）**：将三项递推系统 $R \in \text{Rec}$ 映射为 Koopman 算子 $K$，计算谱分布 $\sigma(K)$ 和谱间隙 $\gamma = 1 - \rho(K)$，验证谱对应 $\lambda = e^{-\mu}$。
 2. **修正 Leaver 连分数系数（LeaverResidual）**：同时实现乘积形式和二次多项式形式的 Teukolsky 径向方程系数，对 Schwarzschild ($a=0$) 两者等价，对 Kerr ($a>0$) 使用多项式形式；角向 spin-weighted spheroidal 特征值 $\lambda_{slm}$ 通过 **矩阵谱方法**（MatrixAngularSolver）求解，替代原 Leaver CF Newton-Raphson 迭代，确保高自旋 $m \neq 0$ 模式下与 Cook-Zalutskiy 参考表自洽。
-3. **LACI 物理根选择判据（LACIEvaluator）**：综合不动点残差 $\rho$、收敛分散度 $\Delta$ 和谱间隙 $\gamma$，定义 LACI 指数 $\text{LACI} = \rho/\rho_{\text{ref}} + \Delta/\Delta_{\text{ref}} + 1/(\gamma/\gamma_{\text{ref}} + \varepsilon)$，自动选择物理根。
+3. **局部吸引子捕获指数（Local Attractor Capture Index, LACI）物理根选择判据（LACIEvaluator）**：综合不动点残差 $\rho$、收敛分散度 $\Delta$ 和谱间隙 $\gamma$，定义 LACI 指数 $\text{LACI} = \rho/\rho_{\text{ref}} + \Delta/\Delta_{\text{ref}} + 1/(\gamma/\gamma_{\text{ref}} + \varepsilon)$，自动选择物理根。
 4. **双重 Homotopy Continuation**：从 Schwarzschild 参考解出发，沿自旋 $a$ 和磁量子数 $m$ 双参数逐步推进到目标 Kerr 参数。
-5. **两弦法快速谱求解（TridiagonalSpectralSolver）**：将 Leaver 三项递推系数 $\{\alpha_n, \beta_n, \gamma_n\}$ 构造为三对角矩阵 $M$，将 QNM 频率条件 $R_0(\omega)=0$ 转化为 $M$ 的最小模特征值问题。使用 **反幂迭代（shift=0）** 在 $O(N)$ 内收敛到最小特征值，替代全对角化 $O(N^3)$ 方案。
+5. **双初始向量逆迭代法快速谱求解（TridiagonalSpectralSolver）**：将 Leaver 三项递推系数 $\{\alpha_n, \beta_n, \gamma_n\}$ 构造为三对角矩阵 $M$，将 QNM 频率条件 $R_0(\omega)=0$ 转化为 $M$ 的最小模特征值问题。使用 **反幂迭代（shift=0）** 在 $O(N)$ 内收敛到最小特征值，替代全对角化 $O(N^3)$ 方案。
 
-**去递归理论定量验证**：在 Kerr QNM 频率处构造角向 Koopman 算子 $K$，谱对应 $\lambda = e^{-\mu}$ 的验证误差达 $\sim 10^{-14}$（机器精度级），严格证明去递归理论的核心谱对应定理在黑洞 QNM 计算中成立。LACI 判据在 $a \in [0,0.9]$, $l=2,3$, $m=0,\pm1,\pm2$ 的 8 个模式中 **100% 正确识别物理根**，全部模式相对 COOK_REF_TABLE 误差 $< 1.5\times10^{-6}$，残差 $< 10^{-10}$。
+**谱化理论定量验证**：在 Kerr QNM 频率处构造角向 Koopman 算子 $K$，谱对应 $\lambda = e^{-\mu}$ 的验证误差达 $\sim 10^{-14}$（机器精度级），严格证明谱化理论的核心谱对应定理在黑洞 QNM 计算中成立。LACI 判据在 $a \in [0,0.9]$, $l=2,3$, $m=0,\pm1,\pm2$ 的 8 个模式中 **100% 正确识别物理根**，全部模式相对 COOK_REF_TABLE 误差 $< 1.5\times10^{-6}$，残差 $< 10^{-10}$。
 
 **理论进阶**：上述数值成功的深层几何结构已在 Paper I RKHS §7.11 中形式化为**谱丛理论**：三对角矩阵族 $M(\omega)$ 的谱构成 $\omega$-平面的 $N$ 叶分支覆盖，同伦延拓对应谱叶的平行移动，非物理根吸引域对应分支点的叶间跳跃。双重同伦延拓 (a + m) 通过避开高自旋大 $|m|$ 区域的分支点密集区实现鲁棒收敛。该谱丛结构已证明不限于 Kerr QNM——非牛顿流变学（Paper VI §9.3）、NRG Wilson 链（Paper XIV §5.7.1）和记忆函数（Paper XIV §5.7.2）均与 Teukolsky 谱丛同构：$\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{Rheo}} \cong \mathcal{S}_{\text{NRG}} \cong \mathcal{S}_{\text{Mem}}$（四系统连分数与三对角矩阵直接求逆的偏差均 < $10^{-15}$，证实跨领域谱丛同构）。详见 Paper I RKHS §7.11.8。
 
-**两弦法的算法创新**：两弦法的名称源于几何类比——用"两根弦的垂线交点找圆心"来描述 Rayleigh 商迭代的收敛过程。具体而言，对三项递推系数构建的 $N\times N$ 三对角矩阵：
+**双初始向量逆迭代法的算法创新**：双初始向量逆迭代法的名称源于几何类比——用"两根弦的垂线交点找圆心"来描述 Rayleigh 商迭代的收敛过程。具体而言，对三项递推系数构建的 $N\times N$ 三对角矩阵：
 
 $$M = \begin{pmatrix}
 \beta_0 & \alpha_0 & 0 & \cdots & 0 \\
@@ -150,7 +150,7 @@ $$M = \begin{pmatrix}
 0 & 0 & 0 & \cdots & \beta_{N-1}
 \end{pmatrix}$$
 
-QNM 频率条件 $R_0(\omega) = 0$ 等价于 $\det M = 0$，即 $0$ 是 $M$ 的特征值。两弦法通过反幂迭代（求解 $Mw = v$，$\forall v$）在 $O(N)$ 内收敛到最小模特征值：
+QNM 频率条件 $R_0(\omega) = 0$ 等价于 $\det M = 0$，即 $0$ 是 $M$ 的特征值。双初始向量逆迭代法通过反幂迭代（求解 $Mw = v$，$\forall v$）在 $O(N)$ 内收敛到最小模特征值：
 
 $$
 \text{弦 1: 初始向量 } v^{(0)}, \quad
@@ -160,7 +160,7 @@ $$
 
 每步使用 Thomas 算法求解三对角方程组，复杂度 $O(N)$，通常 **3-5 步**即可收敛。相比标准连分数方法的优势：
 
-| 维度 | 标准 Leaver 连分数 | 两弦法 |
+| 维度 | 标准 Leaver 连分数 | 双初始向量逆迭代法 |
 |:----:|:------------------:|:------:|
 | 收敛速度 | 二次收敛 (Newton) | 三次收敛 (Rayleigh 商) |
 | 残差计算 | $O(N)$ 连分数递推 | $O(N)$ Thomas 三对角求解 |
@@ -168,9 +168,9 @@ $$
 | 数值稳定性 | 反演递推 $S_n=1/R_n$ 在低阶模可能发散 | Thomas 算法 + 重正交化，稳定 |
 | 附加产出 | 仅 QNM 频率 | 特征向量（展开系数 $a_n$ 序列）+ 谱间隙 |
 
-数值验证：对 Schwarzschild $(a=0)$ 基模 $(l=2,m=0,n=0)$，两弦法给出 $\omega = 0.373672 - 0.088962i$，与 Berti (2006) 拟合表相对误差 $1.16\times10^{-6}$，残差 $9.54\times10^{-12}$，仅需 2 次 Newton 迭代。计算耗时 960ms vs 标准 Newton 法 1380ms（加速比 1.4x）。对 Kerr $(a=0.5)$ 模式，加速比达 **3-9x**（自旋和磁量子数越大，标准法的同伦延拓越耗时，两弦法的优势越显著）。
+数值验证：对 Schwarzschild $(a=0)$ 基模 $(l=2,m=0,n=0)$，双初始向量逆迭代法给出 $\omega = 0.373672 - 0.088962i$，与 Berti (2006) 拟合表相对误差 $1.16\times10^{-6}$，残差 $9.54\times10^{-12}$，仅需 2 次 Newton 迭代。计算耗时 960ms vs 标准 Newton 法 1380ms（加速比 1.4x）。对 Kerr $(a=0.5)$ 模式，加速比达 **3-9x**（自旋和磁量子数越大，标准法的同伦延拓越耗时，双初始向量逆迭代法的优势越显著）。
 
-**两弦法与去递归理论的关系**：两弦法使用多项式形式的 Leaver 系数（Cook & Zalutskiy 2014 形式），其三项递推系数 $\alpha_n, \beta_n, \gamma_n$ 是 $n$ 的二次多项式，确保 $M(\omega)$ 在 QNM 频率处奇异。这与去递归理论使用 Koopman 算子 $K$ 分析递推系统 $R \in \text{Rec}$ 的谱结构是**互补的**——去递归理论提供物理根选择（谱间隙 $\gamma$、谱对应 $\lambda = e^{-\mu}$），两弦法提供快速收敛算法。两者在 `LeaverUnifiedSolver` 中统一：去递归分析 + LACI 判据选取初始猜测，两弦法快速收敛到精确解。
+**双初始向量逆迭代法与谱化理论的关系**：双初始向量逆迭代法使用多项式形式的 Leaver 系数（Cook & Zalutskiy 2014 形式），其三项递推系数 $\alpha_n, \beta_n, \gamma_n$ 是 $n$ 的二次多项式，确保 $M(\omega)$ 在 QNM 频率处奇异。这与谱化理论使用 Koopman 算子 $K$ 分析递推系统 $R \in \text{Rec}$ 的谱结构是**互补的**——谱化理论提供物理根选择（谱间隙 $\gamma$、谱对应 $\lambda = e^{-\mu}$），双初始向量逆迭代法提供快速收敛算法。两者在 `LeaverUnifiedSolver` 中统一：谱化分析 + LACI 判据选取初始猜测，双初始向量逆迭代法快速收敛到精确解。
 
 ### 3.4 全波形谱合成（A4）
 
@@ -340,10 +340,10 @@ Phase 52 全部 12 个数值模块共 **72 项**单项测试全部通过：
 |------|------|----------|
 | **v1.7** | **2026-07-25** | **§3.3 扩展谱丛跨领域同构**：新增 $\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{Rheo}} \cong \mathcal{S}_{\text{NRG}} \cong \mathcal{S}_{\text{Mem}}$ 同构证明引用（Paper I RKHS §7.11.8），引用四系统数值交叉验证结果（偏差 < $10^{-15}$） |
 | **v1.6** | **2026-07-25** | **§3.3 新增谱丛理论参考文献**：引用 Paper I RKHS §7.11 说明数值成功的深层几何结构（谱丛、谱叶、单值性、分支点） |
-| **v1.5** | **2026-07-25** | **§3.3 补充去递归理论定量验证**：新增谱对应定理验证数据（误差 $\sim 10^{-14}$）、LACI 100% 识别率、8 模式精度统计（相对误差 $<1.5\times10^{-6}$） |
+| **v1.5** | **2026-07-25** | **§3.3 补充谱化理论定量验证**：新增谱对应定理验证数据（误差 $\sim 10^{-14}$）、LACI 100% 识别率、8 模式精度统计（相对误差 $<1.5\times10^{-6}$） |
 | **v1.4** | **2026-07-25** | **角向求解方法升级**：LeaverResidual.refine_angular_eigenvalue 从 Leaver CF Newton-Raphson 迭代替换为矩阵谱方法（MatrixAngularSolver），解决高自旋 m≠0 模式 λ 偏差问题；全模式验证（Schwarzschild a=0 + Kerr a=0.5/0.7/0.9, l=2, m=0,±1,±2）相对误差均 < 1e-5 |
-| **v1.3** | **2026-07-25** | **§3.3 新增两弦法快速谱求解**：新增 TridiagonalSpectralSolver 实现，将 Leaver 三项递推转化为三对角矩阵最小特征值问题，用反幂迭代（O(N) Thomas 算法 + Rayleigh 商）实现 Schwarzschild QNM 1.4x 加速（残差 9.54e-12）、Kerr 模式 3-9x 加速；多项式形式系数确保矩阵在 QNM 频率处奇异 |
-| **v1.2** | **2026-07-25** | **§3.3 补充去递归统一求解器**：新增基于分形谱去递归理论的 `LeaverUnifiedSolver` 描述，含去递归理论核心（DerecursionAnalyzer）、修正 Leaver 系数（LeaverResidual）、LACI 物理根选择判据（LACIEvaluator）、双重 Homotopy Continuation；废弃的探索性 Leaver 实现文件移至 `_archive/leaver_deprecated/` |
+| **v1.3** | **2026-07-25** | **§3.3 新增双初始向量逆迭代法快速谱求解**：新增 TridiagonalSpectralSolver 实现，将 Leaver 三项递推转化为三对角矩阵最小特征值问题，用反幂迭代（O(N) Thomas 算法 + Rayleigh 商）实现 Schwarzschild QNM 1.4x 加速（残差 9.54e-12）、Kerr 模式 3-9x 加速；多项式形式系数确保矩阵在 QNM 频率处奇异 |
+| **v1.2** | **2026-07-25** | **§3.3 补充谱化统一求解器**：新增基于分形谱化理论的 `LeaverUnifiedSolver` 描述，含谱化理论核心（DerecursionAnalyzer）、修正 Leaver 系数（LeaverResidual）、LACI 物理根选择判据（LACIEvaluator）、双重 Homotopy Continuation；废弃的探索性 Leaver 实现文件移至 `_archive/leaver_deprecated/` |
 | **v1.1** | **2026-07-25** | **修正 §3.3 Leaver 连续分数法**：递推关系改为对展开系数 $a_n$ 的形式 $\alpha_n a_{n+1} + \beta_n a_n + \gamma_n a_{n-1} = 0$，补充连续分数展开式 $R_0(\omega)$、反演递推（de-recursion） $S_n = 1/R_n$ 及 Newton 迭代公式 |
 | **v1.0** | **2026-07-25** | **初始版本**：Phase 52 动态过程谱数值库的全面综述，含双星并合（§3）、多体散射（§4）、计算工具（§5） |
 

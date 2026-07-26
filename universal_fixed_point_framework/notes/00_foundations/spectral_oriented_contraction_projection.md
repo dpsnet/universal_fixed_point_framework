@@ -48,9 +48,9 @@ Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
 |:--|:-----|:-----|:-------|
 | 1 | **谱间隙截断** | $\Delta\lambda_{\min} > 0$ 压制 $k > k_{\max}$ 的高维激发 | Paper XX §6 |
 | 2 | **四层静默筛选** | S1-S4 在谱/态射/对象/辫子四层屏蔽不可达自由度 | Paper I §5.7 |
-| 3 | **Grothendieck 纤维投影** | $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Spec}) \to \mathcal{B}$ 将谱族投影到可观测参数 | Paper XXI §2 |
+| 3 | **Grothendieck 纤维投影** | $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Sp}) \to \mathcal{B}$ 将谱族投影到可观测参数 | Paper XXI §2 |
 
-三层叠加的效果是：**无限 Clifford 代数 $\to$ $\mathbf{Rec}_\infty$ 递归对象 $\to$ $\mathbf{Spec}$ 有限谱对象**，每一步都丢弃一部分不可观测自由度。
+三层叠加的效果是：**无限 Clifford 代数 $\to$ $\mathbf{Rec}_\infty$ 递归对象 $\to$ $\mathbf{Sp}$ 有限谱对象**，每一步都丢弃一部分不可观测自由度。
 
 ---
 
@@ -69,7 +69,7 @@ Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
 仍属于紧缩投影区，但静默层级较低、谱间隙较小或闭合：
 - **极端 Kerr 边界**（$a \to M$）：$\Delta\lambda_{\min} \to 0$，QNM 虚部消失，层公理破缺（Paper VIII §7.4）
 - **原初暴涨 Planck 尺度**：引力子三圈 $\beta$ 函数修正（Paper XII §10）
-- **QCD 相变临界区**：$\partial\mathbf{Rec}_D$ 边界处的谱编织（Paper XIX §17.10）
+- **QCD 相变临界区**：$\partial\mathbf{Rec}_D$ 边界处的谱粘合（Paper XIX §17.10）
 - **噪声临界 $\eta_c$**：谱间隙闭合处的坍缩时间发散（Paper X §12.4）
 - **Cuprate 赝能隙**：分布截面揭示的边界宽化（Paper XIX §17.10）
 - **味代数 CKM/PMNS**：转移函数的 cocycle 结构（Paper XVII §7.3）
@@ -94,8 +94,8 @@ Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
 |:---------------|:----------|:---------|
 | $\mathrm{Cl}(\infty,\infty)$ 无限代数 | $\mathbf{Rec}_\infty$ 无穷递归对象 | — |
 | 定向紧缩 | $\mathcal{L}$ 静态化 + $\mathcal{D}iss$ 溶解 + 静默筛选 | 三重压缩函子 |
-| 投影区 | $\mathbf{Spec}$ 有限谱对象（$D$ 函子像） | $D: \mathbf{Rec} \to \mathbf{Spec}$ |
-| 可见/间接宇宙 | 所有 $\mathbf{Bun}(\mathcal{B}, \mathbf{Spec})$ 的截面并集 | $\pi_\mathcal{B}$ 纤维投影 |
+| 投影区 | $\mathbf{Sp}$ 有限谱对象（$D$ 函子像） | $D: \mathbf{Rec} \to \mathbf{Sp}$ |
+| 可见/间接宇宙 | 所有 $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$ 的截面并集 | $\pi_\mathcal{B}$ 纤维投影 |
 
 ### 3.2 跨领域印证
 
@@ -134,7 +134,7 @@ Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
 
 ### 6.1 问题
 
-投影结构 $\Pi_0: V_\infty \to \mathbf{Spec}$ 的构造依赖于对 Clifford 旋量基的一组特定选择（如手征投影方向、时间箭头、能标截断顺序）。自然产生一个问题：**能否将投影区旋转到另一个方向？是否会生成一套极坐标变换形式的平行理论？**
+投影结构 $\Pi_0: V_\infty \to \mathbf{Sp}$ 的构造依赖于对 Clifford 旋量基的一组特定选择（如手征投影方向、时间箭头、能标截断顺序）。自然产生一个问题：**能否将投影区旋转到另一个方向？是否会生成一套极坐标变换形式的平行理论？**
 
 ### 6.2 旋转操作的定义
 
@@ -142,11 +142,11 @@ Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
 
 $$A_U = U A_0 U^\dagger, \quad U \in U(8)$$
 
-旋转后的投影定义为 $\Pi_U = \Pi_0 \circ U$，旋转函子 $\mathcal{U}: \mathbf{Spec}_0 \to \mathbf{Spec}_U$ 满足 $\mathcal{U} \circ D_0 = D_U \circ \mathcal{U}_R$。
+旋转后的投影定义为 $\Pi_U = \Pi_0 \circ U$，旋转函子 $\mathcal{U}: \mathbf{Sp}_0 \to \mathbf{Sp}_U$ 满足 $\mathcal{U} \circ D_0 = D_U \circ \mathcal{U}_R$。
 
 ### 6.3 关键结论
 
-**定理 6.1**（旋转等价的范畴形式）。$\mathcal{U}$ 是范畴等价：$\mathbf{Spec}_U \cong \mathbf{Spec}_0$。
+**定理 6.1**（旋转等价的范畴形式）。$\mathcal{U}$ 是范畴等价：$\mathbf{Sp}_U \cong \mathbf{Sp}_0$。
 
 *证明*。$U$ 是酉算子，$A_U = U A_0 U^\dagger$ 保谱 $\sigma(A_U) = \sigma(A_0)$，保谱间隙 $\Delta\lambda_{\min}$，保 Bott 周期分类。所有范畴构造（$D$ 函子、伴随对、Grothendieck 纤维化）在酉共轭下不变。$\square$
 
@@ -161,7 +161,7 @@ $$A_U = U A_0 U^\dagger, \quad U \in U(8)$$
 
 ### 6.4 旋转产生什么？
 
-因 $\mathcal{U}$ 是范畴等价，$\mathbf{Spec}_U$ 不包含 $\mathbf{Spec}_0$ 没有的新定理或新物理预言。旋转的效果是：
+因 $\mathcal{U}$ 是范畴等价，$\mathbf{Sp}_U$ 不包含 $\mathbf{Sp}_0$ 没有的新定理或新物理预言。旋转的效果是：
 
 | 变化的内容 | 不变的内容 |
 |:----------|:----------|
@@ -180,7 +180,7 @@ $$A_U = U A_0 U^\dagger, \quad U \in U(8)$$
 | 数量 | $\sim 10^{500}$ 个不等价真空 | **全部等价**（通过 $\mathcal{U}$ 可逆翻译） |
 | 内部一致性 | 各瓣不自洽 | **全部范畴等价** |
 | 物理后果 | 不同真空有不同物理常数 | **物理常数完全相同** |
-| 是否存在选择问题 | 需要选择"我们的真空" | **无选择——所有旋转指向同一 $\mathbf{Spec}$ 像** |
+| 是否存在选择问题 | 需要选择"我们的真空" | **无选择——所有旋转指向同一 $\mathbf{Sp}$ 像** |
 
 **核心结论**：UFPF 不存在弦论式的景观问题。所有 $U(8)$ 旋转都通过 $\mathcal{U}$ 函子与原版范畴等价——它们不是平行宇宙，而是同一物理宇宙的不同坐标参数化。
 
@@ -201,16 +201,16 @@ $$A_U = U A_0 U^\dagger, \quad U \in U(8)$$
 
 **$\Sigma$-$\mathbf{Rec}$ 统计副本**（Paper XIX §7）：$\Sigma$-$\mathbf{Rec} = \bigoplus_i R_{\text{local}, i}$ 是噪声系统的可数直和。每个直和项可理解为一次噪声实现——但这些**不是分离的宇宙**，而是同一宇宙内不同统计涨落的数学表示。
 
-**不同静默规则的理论可能性**：若存在不同的 S1-S4 阈值或不同的 $k_{\max}$，可能产生真正不同的 $\mathbf{Spec}$ 投影区。但 UFPF 框架内 $k_{\max}=8$ 由 Cl(1,7) 的 Bott 分类唯一确定，$\Delta\lambda_{\min}$ 由 SU(2) Casimir 谱唯一确定——**不存在可一致构造的替代规则**。
+**不同静默规则的理论可能性**：若存在不同的 S1-S4 阈值或不同的 $k_{\max}$，可能产生真正不同的 $\mathbf{Sp}$ 投影区。但 UFPF 框架内 $k_{\max}=8$ 由 Cl(1,7) 的 Bott 分类唯一确定，$\Delta\lambda_{\min}$ 由 SU(2) Casimir 谱唯一确定——**不存在可一致构造的替代规则**。
 
 ### 7.3 本体论意义
 
 UFPF 的紧缩投影图景将宇宙的"唯一性"从外部假设提升为数学定理：
 
-1. **唯一基空间**：$\mathbf{Spec}$ 范畴公理唯一确定谱对象的结构
+1. **唯一基空间**：$\mathbf{Sp}$ 范畴公理唯一确定谱对象的结构
 2. **唯一代数**：Cl(1,7) 由 Bott 分类和谱间隙条件唯一锁定
 3. **唯一数值**：29 个物理参数的零参数预测闭合推导链
-4. **唯一投影区**：所有 $U(8)$ 旋转都落在同一 $\mathbf{Spec}$ 像（范畴等价）
+4. **唯一投影区**：所有 $U(8)$ 旋转都落在同一 $\mathbf{Sp}$ 像（范畴等价）
 
 这回答了多重宇宙理论无法回答的问题：**"为什么我们的宇宙的物理常数是这个值？"**——因为在 UFPF 框架内，不存在"另一个值"可以被一致地构造出来。
 
@@ -218,5 +218,5 @@ UFPF 的紧缩投影图景将宇宙的"唯一性"从外部假设提升为数学�
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
-| **v0.2** | **2026-07-23** | **新增 §6 旋转自由度**：$U(8)$ 酉旋转的范畴等价定理（$\mathbf{Spec}_U \cong \mathbf{Spec}_0$）、不变量清单、与弦论景观的根本区分；**新增 §7 多重宇宙问题**：UFPF 排除和不排除的多重宇宙类型、$\Sigma$-$\mathbf{Rec}$ 统计副本、宇宙唯一性的数学基础 |
+| **v0.2** | **2026-07-23** | **新增 §6 旋转自由度**：$U(8)$ 酉旋转的范畴等价定理（$\mathbf{Sp}_U \cong \mathbf{Sp}_0$）、不变量清单、与弦论景观的根本区分；**新增 §7 多重宇宙问题**：UFPF 排除和不排除的多重宇宙类型、$\Sigma$-$\mathbf{Rec}$ 统计副本、宇宙唯一性的数学基础 |
 | **v0.1** | **2026-07-23** | 初始版本 |

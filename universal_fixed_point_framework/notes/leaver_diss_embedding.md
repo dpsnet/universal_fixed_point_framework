@@ -31,7 +31,7 @@ Koopman 算子的谱对应 $\sigma(K) = \{e^{-\mu}\}$，其中 $\mu$ 为递推�
 
 **命题 1.1**（Koopman 算子的压缩性）。Kerr QNM 的 Koopman 算子 $U_{\text{Teuk}}$ 满足 $\|U_{\text{Teuk}}\| \leq 1$，当且仅当 QNM 频率 $\omega$ 处于阻尼状态（$\text{Im}(\omega) < 0$）。
 
-**证明**。由去递归理论的核心对应（Paper I §3.5, Theorem 3.5, Eq. 3.5.6）：
+**证明**。由谱化理论的核心对应（Paper I §3.5, Theorem 3.5, Eq. 3.5.6）：
 
 $$\sigma(U_{\text{Teuk}}) = \{e^{-\mu_i}\}_{i=1}^{2N}$$
 
@@ -141,7 +141,7 @@ $$k(D_{\text{diss}}(U_{\text{Teuk}})) = k(U_{\text{Teuk}})$$
 
 **证明**。
 
-**步骤 1**（$D_{\text{diss}}$ 的函子性）。$D_{\text{diss}}$ 是 $\mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}$ 的函子（定理 7.31）。函子保持同伦类（即保持闭回路的谱叶置换群结构）。
+**步骤 1**（$D_{\text{diss}}$ 的函子性）。$D_{\text{diss}}$ 是 $\mathbf{Rec}_{\text{diss}} \to \mathbf{Sp}$ 的函子（定理 7.31）。函子保持同伦类（即保持闭回路的谱叶置换群结构）。
 
 **步骤 2**（辫子交叉数的置换群定义）。辫子交叉数 $k$ 是单值群 $\mathcal{M}$ 中元素的最小生成元长度。沿闭回路 $L$，单值群元素 $g_L \in \mathcal{M}$。$k(g_L)$ 是 $g_L$ 在生成元 $\{\sigma_i\}$ 下的最小长度。
 

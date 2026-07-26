@@ -16,7 +16,7 @@
 
 ### 1.2 过拟合 = 局部吸引子捕获
 
-在分形谱去递归理论中，一个递归系统 $R$ 可能存在多个不动点：
+在分形谱化理论中，一个递归系统 $R$ 可能存在多个不动点：
 
 - **全域不动点** $V_\ast$：唯一、全局、与具体数据集无关。
 - **局部吸引子** $V_{loc}$：仅对应当前数据集的局部数值特征。
@@ -230,7 +230,7 @@ $$\mathcal{V}_{SM} = \mathcal{F}[\mathcal{V}_{SM}],$$
 此外，为方便与抽象框架对接，新增了两个便捷接口：
 
 - `diagnose_rec_object_from_instance(rec: RecObject)`：直接对 Rec 对象计算 LACI，自动求解 Hutchinson 不变测度。
-- `diagnose_spectral_object(spec: PositiveSpectralObject)`：直接对 Spec 对象计算 LACI，将其 Koopman 矩阵 $K = e^{-A}$ 视为转移矩阵。
+- `diagnose_spectral_object(spec: PositiveSpectralObject)`：直接对 Sp 对象计算 LACI，将其 Koopman 矩阵 $K = e^{-A}$ 视为转移矩阵。
 
 ### 5.2 SM 实例验证
 
@@ -253,5 +253,5 @@ $$\mathcal{V}_{SM} = \mathcal{F}[\mathcal{V}_{SM}],$$
 ## 6. 版本记录
 
 - v0.1（2026-07-12）：初稿，提出过拟合 = 局部吸引子捕获，定义 LACI 综合判据。
-- v0.2（2026-07-12）：严格化 LACI 三项的几何意义；补充 `attractor_distance.py` 的 Rec/Spec 便捷接口与 SM 实例验证说明。
+- v0.2（2026-07-12）：严格化 LACI 三项的几何意义；补充 `attractor_distance.py` 的 Rec/Sp 便捷接口与 SM 实例验证说明。
 - v0.3（2026-07-12）：将 LACI 提升为数学定理（定理 2.1、2.2）；严格化全域不动点方程与局部吸引子的关系（定理 4.1、4.2）。

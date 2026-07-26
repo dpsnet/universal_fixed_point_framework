@@ -4,7 +4,7 @@
 
 **版本**：v2.23（2026-07-19）
 
-**摘要**：本文将分形谱去递归理论（配套论文 I）建立的数学框架（含隔离约束条件的跨领域函子相容性）应用于多个物理领域，验证其在隔离约束下的统一描述能力。基于配套论文 I 新增的三项纯数学定理（定理 D-C：$d_H(\rho)$ 凹性；定理 HD-D：Ledrappier-Young 维数分解；定理 TE-G-M：拓扑熵-谱间隙普适不等式），对物理预测进行了严格修正。核心应用包括：(1) 标准模型三代费米子质量谱预测（RMSE(log) = 0.367）；(2) 通过 $\mathrm{Cl}(1,7)$ 值算子实现引力与标准模型的统一谱对应，自然导出牛顿引力常数 $G_N$（谱交织精度 $8.12 \times 10^{-17}$）；(3) BSM 第 4 代轻子预言（$m_{L_4} \approx 1470$ GeV）与 LHC/HL-LHC/FCC-hh 实验深度对接（HL-LHC $Z = 2.13\sigma$ 证据，FCC-hh $Z = 14.75\sigma$ 发现）；(4) Kerr 黑洞分形几何与量子引力精确谱（HD-D 定理修正分形维数、TE-G-M 定理约束谱间隙、独立 Leaver 连分数求解器残差 < 1e-14、LIGO/Virgo ringdown SNR 1808~13253）；(5) N=4 SYM 全息纠缠熵验证与完整 TBA（定理 HE-1~HE-4、CFT-1~CFT-3，Y 系统求解残差 < 1e-12，热力学势导出 Δ = 2.05）；(6) 暗物质新物理（D-C 定理修正 IFS 分形质量谱、间接探测伽马射线/反质子通量预言、冻结-in / 非热产生机制）；(7) 谱静默物理实例（弦论10→4维静默比60%、全息bulk→boundary静默比92.6%、GR+SM引力子空间静默度50%）；(8) 理论转化验证（五种转化模式，M理论层级谱静默转化）；(9) EFT等价性框架（消解基础理论/有效理论二元对立）；(10) 与朗兰兹纲领/镜像对称/全息对偶的形式类比（三者形式类比纳入通用框架，严格范畴等价证明见未来 Paper III）。**谱动力学扩展**（Papers V–IX）：谱流方程统一四种力（引力/电磁/强/弱）、谱动力学黑洞热力学（$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$）、奇点谱消解（Planck 截断 + 量子反弹）、原初功率谱（$n_s = 0.9606$，$r = 0.0042$）、双圈 β 函数精确匹配（SU(2)/SU(3)）、暗物质谱模型（3 候选）。数学基础见配套论文 I《通用不动点范畴框架 I：分形谱去递归理论》。
+**摘要**：本文将分形谱化理论（配套论文 I）建立的数学框架（含隔离约束条件的跨领域函子相容性）应用于多个物理领域，验证其在隔离约束下的统一描述能力。基于配套论文 I 新增的三项纯数学定理（Hausdorff 维数凹性定理：$d_H(\rho)$ 凹性；Ledrappier-Young 维数分解定理：Ledrappier-Young 维数分解；拓扑熵–谱间隙不等式定理：拓扑熵-谱间隙普适不等式），对物理预测进行了严格修正。核心应用包括：(1) 标准模型三代费米子质量谱预测（RMSE(log) = 0.367）；(2) 通过 $\mathrm{Cl}(1,7)$ 值算子实现引力与标准模型的统一谱对应，自然导出牛顿引力常数 $G_N$（谱交织精度 $8.12 \times 10^{-17}$）；(3) BSM 第 4 代轻子预言（$m_{L_4} \approx 1470$ GeV）与 LHC/HL-LHC/FCC-hh 实验深度对接（HL-LHC $Z = 2.13\sigma$ 证据，FCC-hh $Z = 14.75\sigma$ 发现）；(4) Kerr 黑洞分形几何与量子引力精确谱（Ledrappier-Young 维数分解定理修正分形维数、拓扑熵–谱间隙不等式定理约束谱间隙、独立 Leaver 连分数求解器残差 < 1e-14、LIGO/Virgo ringdown SNR 1808~13253）；(5) N=4 SYM 全息纠缠熵验证与完整 TBA（定理 HE-1~HE-4、CFT-1~CFT-3，Y 系统求解残差 < 1e-12，热力学势导出 Δ = 2.05）；(6) 暗物质新物理（Hausdorff 维数凹性定理修正 IFS 分形质量谱、间接探测伽马射线/反质子通量预言、冻结-in / 非热产生机制）；(7) 谱静默物理实例（弦论10→4维静默比60%、全息bulk→boundary静默比92.6%、GR+SM引力子空间静默度50%）；(8) 理论转化验证（五种转化模式，M理论层级谱静默转化）；(9) EFT等价性框架（消解基础理论/有效理论二元对立）；(10) 与朗兰兹纲领/镜像对称/全息对偶的形式类比（三者形式类比纳入通用框架，严格范畴等价证明见未来 Paper III）。**谱动力学扩展**（Papers V–IX）：谱流方程统一四种力（引力/电磁/强/弱）、谱动力学黑洞热力学（$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$）、奇点谱消解（Planck 截断 + 量子反弹）、原初功率谱（$n_s = 0.9606$，$r = 0.0042$）、双圈 β 函数精确匹配（SU(2)/SU(3)）、暗物质谱模型（3 候选）。数学基础见配套论文 I《通用不动点范畴框架 I：分形谱化理论》。
 
 ---
 
@@ -14,7 +14,7 @@
 
 ### 1.1 研究背景
 
-配套论文 I [1] 建立了分形谱去递归理论的完整数学框架，核心包括：递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$，谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，谱对应自然等价 $\lambda_i = e^{-\mu_i}$，以及分形 RKHS 收敛率理论（定理 NS-1~NS-3）。本文聚焦该框架的物理应用，展示其在多个物理领域的统一描述能力。
+配套论文 I [1] 建立了分形谱化理论的完整数学框架，核心包括：递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$，谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$，谱对应自然同构 $\lambda_i = e^{-\mu_i}$，以及分形 RKHS 收敛率理论（定理 NS-1~NS-3）。本文聚焦该框架的物理应用，展示其在多个物理领域的统一描述能力。
 
 ### 1.2 物理动机
 
@@ -24,7 +24,7 @@
 2. **理论与实验的脱节**：新物理预言往往缺乏与对撞机实验数据的深度对接；
 3. **跨尺度关联缺失**：从夸克质量到黑洞几何，从全息对偶到拓扑相，缺乏连接不同能标/尺度的统一框架。
 
-本文展示分形谱去递归理论为上述挑战提供了新的数学语言。
+本文展示分形谱化理论为上述挑战提供了新的数学语言。
 
 ### 1.3 本文贡献
 
@@ -32,13 +32,13 @@
 
 1. **GR+SM 统一谱对应**：通过 $\mathrm{Cl}(1,7)$ 值算子实现引力与标准模型的统一，$8\pi G_N$ 因子从谱交织条件自然导出；
 2. **BSM 新物理预言与实验对接**：第 4 代轻子 $L_4$（~1470 GeV）的衰变分支比、LHC 排除限、HL-LHC/FCC-hh 发现显著性完整计算；
-3. **Kerr 黑洞分形几何与量子引力精确谱**：基于 HD-D 定理修正的分形维数（稳定/不稳定方向分解）、TE-G-M 定理约束的谱间隙、独立 Spheroidal Leaver 连分数求解器（残差 < 1e-14）、LIGO/Virgo ringdown 对比框架（SNR 1808~13253）；
+3. **Kerr 黑洞分形几何与量子引力精确谱**：基于 Ledrappier-Young 维数分解定理修正的分形维数（稳定/不稳定方向分解）、拓扑熵–谱间隙不等式定理约束的谱间隙、独立 Spheroidal Leaver 连分数求解器（残差 < 1e-14）、LIGO/Virgo ringdown 对比框架（SNR 1808~13253）；
 4. **全息纠缠熵与 N=4 SYM 完整 TBA**：N=4 SYM、Ising CFT、N=2 SCFT、拓扑相、Hawking-Page 相变的系统验证、Y 系统求解器（残差 < 1e-12）、热力学势计算（Δ = 2.05）；
-5. **暗物质新物理**：基于 D-C 定理修正的 IFS 分形质量谱（$\alpha(\rho)$ 凹性约束）、间接探测伽马射线/反质子通量预言、冻结-in / 非热产生机制框架；
+5. **暗物质新物理**：基于 Hausdorff 维数凹性定理修正的 IFS 分形质量谱（$\alpha(\rho)$ 凹性约束）、间接探测伽马射线/反质子通量预言、冻结-in / 非热产生机制框架；
 6. **谱静默与理论转化**：弦论/全息/GR+SM 静默比验证、五种理论转化模式、M理论层级谱静默转化；
 7. **EFT 等价性框架**：消解基础理论/有效理论二元对立、8 层 EFT 层级体系验证；
 8. **与朗兰兹纲领/镜像对称/全息对偶的形式类比**：朗兰兹纲领、镜像对称、全息对偶的谱对应形式类比解释；
-9. **数学定理对物理预测的严格修正**：系统分析三项纯数学定理（D-C/HD-D/TE-G-M）对六项物理预测的定量影响，建立数学定理与物理预测之间的精确对应关系。
+9. **数学定理对物理预测的严格修正**：系统分析三项纯数学定理（Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）对六项物理预测的定量影响，建立数学定理与物理预测之间的精确对应关系。
 
 ### 1.4 论文结构
 
@@ -48,41 +48,41 @@
 
 配套论文 I [1] 新增三项纯数学定理（§7.10），对本文物理预测具有重要约束作用：
 
-#### 1.5.1 定理 D-C（$d_H(\rho)$ 凹性）的影响
+#### 1.5.1 Hausdorff 维数凹性定理（$d_H(\rho)$ 凹性）的影响
 
-**定理 D-C**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数。
+**Hausdorff 维数凹性定理**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数。
 
 **影响链**：
-- **暗物质 IFS 分形质量谱**（§7.1）：质量谱指数 $\alpha$ 依赖 Hausdorff 维数，D-C 定理要求 $\alpha(\rho)$ 是 $\rho$ 的凹函数，修正了原公式 $m_i = m_0 \cdot r_i^{-\alpha}$ 中 $\alpha$ 为常数的假设；
-- **BSM 新费米子质量谱**（§4.1）：L4 质量由框架质量谱方程预测，该方程基于 IFS 收缩因子与分形维数（`bsm_predictions.py`），D-C 定理要求质量谱指数 $\beta$ 随重叠因子 $\rho$ 呈凹性变化，修正了原公式中 $\beta$ 为常数的假设；
+- **暗物质 IFS 分形质量谱**（§7.1）：质量谱指数 $\alpha$ 依赖 Hausdorff 维数，Hausdorff 维数凹性定理要求 $\alpha(\rho)$ 是 $\rho$ 的凹函数，修正了原公式 $m_i = m_0 \cdot r_i^{-\alpha}$ 中 $\alpha$ 为常数的假设；
+- **BSM 新费米子质量谱**（§4.1）：L4 质量由框架质量谱方程预测，该方程基于 IFS 收缩因子与分形维数（`bsm_predictions.py`），Hausdorff 维数凹性定理要求质量谱指数 $\beta$ 随重叠因子 $\rho$ 呈凹性变化，修正了原公式中 $\beta$ 为常数的假设；
 - **引力-物质统一纠缠熵**（§6.5）：分形维数的凹性约束了统一熵的非线性行为；
 - **谱静默度计算**（§8）：维度静默比的计算需考虑凹性约束。
 
-#### 1.5.2 定理 HD-D（Ledrappier-Young 维数分解）的影响
+#### 1.5.2 Ledrappier-Young 维数分解定理（Ledrappier-Young 维数分解）的影响
 
-**定理 HD-D**：高维可逆系统的 Hausdorff 维数满足 $\dim_H(\mu) = \sum_{\lambda_i > 0} h_\mu/\lambda_i + \sum_{\lambda_i < 0} h_\mu/|\lambda_i|$。
+**Ledrappier-Young 维数分解定理**：高维可逆系统的 Hausdorff 维数满足 $\dim_H(\mu) = \sum_{\lambda_i > 0} h_\mu/\lambda_i + \sum_{\lambda_i < 0} h_\mu/|\lambda_i|$。
 
 **影响链**：
-- **Kerr 视界分形维数**（§5.1）：原公式 $d_{\text{frac}} = 2 - \varepsilon(1-a^2/M^2)$ 未考虑稳定/不稳定方向分解，HD-D 定理要求加入 Lyapunov 指数方向的维数分解；
+- **Kerr 视界分形维数**（§5.1）：原公式 $d_{\text{frac}} = 2 - \varepsilon(1-a^2/M^2)$ 未考虑稳定/不稳定方向分解，Ledrappier-Young 维数分解定理要求加入 Lyapunov 指数方向的维数分解；
 - **全息纠缠熵标度**（§6.4）：纠缠熵标度 $S_A \sim N^{1 - d_{\text{frac}}/d_{\text{amb}}}$ 需考虑稳定/不稳定方向的贡献；
 - **非赤道面测地线混沌**（§5.3）：Lyapunov 指数与分形维数的关系需重新推导。
 
-#### 1.5.3 定理 TE-G-M（拓扑熵-谱间隙不等式）的影响
+#### 1.5.3 拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙不等式）的影响
 
-**定理 TE-G-M**：对归一化的 Markov IFS，$h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。
+**拓扑熵–谱间隙不等式定理**：对归一化的 Markov IFS，$h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。
 
 **影响链**：
-- **Kerr 测地线混沌**（§5.2-5.3）：混沌系统的谱间隙受 TE-G-M 不等式约束，修正了原有的 Lyapunov 指数估计；
-- **Hawking-Page 全息相变**（§6.9）：谱间隙跳变比 $\Delta\lambda_{\text{conf}}/\Delta\lambda_{\text{deconf}} = 2.83\times$ 需验证是否满足 TE-G-M 不等式；
+- **Kerr 测地线混沌**（§5.2-5.3）：混沌系统的谱间隙受 拓扑熵–谱间隙不等式约束，修正了原有的 Lyapunov 指数估计；
+- **Hawking-Page 全息相变**（§6.9）：谱间隙跳变比 $\Delta\lambda_{\text{conf}}/\Delta\lambda_{\text{deconf}} = 2.83\times$ 需验证是否满足 拓扑熵–谱间隙不等式；
 - **LIGO/Virgo ringdown SNR 预测**（§5.5）：谱间隙约束影响 QNM 频率的精度估计，进而影响 SNR 预测。
 
 #### 1.5.4 影响总结
 
 | 数学定理 | 受影响的物理预测 | 修正类型 |
 |----------|------------------|----------|
-| D-C 凹性 | 暗物质质量谱、BSM 新费米子质量谱、纠缠熵、谱静默度 | $\alpha(\rho)$/$\beta(\rho)$ 从常数变为凹函数 |
-| HD-D 维数分解 | Kerr 分形维数、纠缠熵标度、Lyapunov 指数 | 加入稳定/不稳定方向分解 |
-| TE-G-M 不等式 | Kerr 混沌、Hawking-Page 相变、SNR 预测 | 谱间隙上界约束 |
+| Hausdorff 维数凹性 | 暗物质质量谱、BSM 新费米子质量谱、纠缠熵、谱静默度 | $\alpha(\rho)$/$\beta(\rho)$ 从常数变为凹函数 |
+| Ledrappier-Young 维数分解 | Kerr 分形维数、纠缠熵标度、Lyapunov 指数 | 加入稳定/不稳定方向分解 |
+| 拓扑熵–谱间隙不等式 | Kerr 混沌、Hawking-Page 相变、SNR 预测 | 谱间隙上界约束 |
 
 以下各节将根据上述数学定理对物理预测进行修正。
 
@@ -90,7 +90,7 @@
 
 ## 2. 实例假设层：跨领域验证
 
-框架的数学基础（范畴 $\mathbf{Rec}$、$\mathbf{Spec}$、函子 $D$、谱对应 $\lambda = e^{-\mu}$）已在配套论文 I [1] 中建立。本节展示其在物理实例中的应用。各实例的跨领域函子相容性由配套论文 I §3.7 **隔离约束条件**（IC）保证——以下每个实例前标注其 IC 验证状态（IC ✅ 表示无条件满足，IC ⚠️ 表示条件性满足，需附加参数匹配条件）。
+框架的数学基础（范畴 $\mathbf{Rec}$、$\mathbf{Sp}$、函子 $D$、谱对应 $\lambda = e^{-\mu}$）已在配套论文 I [1] 中建立。本节展示其在物理实例中的应用。各实例的跨领域函子相容性由配套论文 I §3.7 **隔离约束条件**（IC）保证——以下每个实例前标注其 IC 验证状态（IC ✅ 表示无条件满足，IC ⚠️ 表示条件性满足，需附加参数匹配条件）。
 
 ### 2.1 标准模型 = Cl(1,7) 低能实例（IC ✅ IFS↔Clifford 无条件满足）
 
@@ -109,7 +109,7 @@
 **假设 2.3**。在无限宽度神经网络的惰性训练极限下，选取：
 
 - 递归系统 $R_{NN}$ 为神经网络参数梯度下降动态；
-- 谱去递归化像 $D(R_{NN})$ 为神经正切核（NTK）的谱演化；
+- 谱化像 $D(R_{NN})$ 为神经正切核（NTK）的谱演化；
 - 轨道函子 $O$ 由网络架构与初始化分布决定。
 
 **命题 2.4**。NTK 的谱对应 $\lambda_i = e^{-\mu_i}$ 在惰性训练极限下严格成立。
@@ -237,13 +237,13 @@ $$\frac{|\epsilon_{\text{推导}} - \epsilon_{\text{框架}}|}{\epsilon_{\text{�
 
 LHC 13 TeV 对产生截面 $\sigma(pp \to L_4 \bar{L}_4) \approx 54$ pb。
 
-**D-C 定理约束**：由配套论文 I [1] 定理 D-C（§1.5.1），L4 质量谱方程基于 IFS 收缩因子 $c_i$ 与分形维数 $d_H(\rho)$ 计算（`bsm_predictions.py`），质量谱指数 $\beta(\rho)$ 依赖重叠因子 $\rho$ 且满足凹性约束：
+**Hausdorff 维数凹性定理约束**：由配套论文 I [1] Hausdorff 维数凹性定理（§1.5.1），L4 质量谱方程基于 IFS 收缩因子 $c_i$ 与分形维数 $d_H(\rho)$ 计算（`bsm_predictions.py`），质量谱指数 $\beta(\rho)$ 依赖重叠因子 $\rho$ 且满足凹性约束：
 
 $$\beta\left(\frac{\rho_1+\rho_2}{2}\right) \geq \frac{\beta(\rho_1)+\beta(\rho_2)}{2}.$$
 
 当前 L4 质量 1470 GeV 对应完全分离情形（$\rho=0$）的基准预测。**Phase 37 已从 Cl(1,7) 代数结构第一性原理导出 $\rho = 0$（分离 IFS）**（详见配套论文 I §A.15.8），即 L4 质量等于基准预测值 1470 GeV，不再有 $\rho$ 带来的理论不确定区间。该预测与当前 LHC 排除限（1300 GeV）仍保持安全余量。
 
-**零参数推导的统一框架**：Paper I §A.15.8 进一步从 $\mathbf{Spec}$ 4-范畴的静默层级（$S_3 = e^{-3}$ 对象静默，$S_4 = e^{-d_H}$ 辫子静默）唯一确定了 IFS 收缩因子 $\{c_1, c_2, c_3\} = \{0.0033, 0.0666, 0.9998\}$，不再需要从质量比反推。该框架实现了全部 9 个费米子质量比的零输入预测（平均偏差 $\times 1.37$），详见 Paper XI §8.4 和附录 D。
+**零参数推导的统一框架**：Paper I §A.15.8 进一步从 $\mathbf{Sp}$ 4-范畴的静默层级（$S_3 = e^{-3}$ 对象静默，$S_4 = e^{-d_H}$ 辫子静默）唯一确定了 IFS 收缩因子 $\{c_1, c_2, c_3\} = \{0.0033, 0.0666, 0.9998\}$，不再需要从质量比反推。该框架实现了全部 9 个费米子质量比的零输入预测（平均偏差 $\times 1.37$），详见 Paper XI §8.4 和附录 D。
 
 ### 4.2 衰变分支比与实验签名
 
@@ -388,15 +388,15 @@ BSM 第四代轻子预言需同时满足质子寿命、重子生成与轻子味�
 
 > **IC 验证**：Kerr QNM 通过 $\mathrm{Cl}(1,7)$ 框架与谱对应衔接，IC ✅ Kerr↔Clifford 无条件满足（QNM 谱有限、Leaver 矩阵化成立）；与 NTK/IFS 的跨领域比较标注为 IC ⚠️（需参数匹配或截断条件）。
 
-### 5.1 Kerr 视界分形维数与熵（HD-D 定理修正）
+### 5.1 Kerr 视界分形维数与熵（Ledrappier-Young 维数分解定理修正）
 
-**命题 5.1**（Kerr 视界分形维数，HD-D 定理修正）。基于配套论文 I [1] 定理 HD-D（Ledrappier-Young 维数分解），Kerr 黑洞视界分形维数为
+**命题 5.1**（Kerr 视界分形维数，Ledrappier-Young 维数分解定理修正）。基于配套论文 I [1] Ledrappier-Young 维数分解定理（Ledrappier-Young 维数分解），Kerr 黑洞视界分形维数为
 
 $$d_{\text{frac}} = d_{\text{frac}}^u + d_{\text{frac}}^s,$$
 
 其中 $d_{\text{frac}}^u$ 为不稳定方向分形维数，$d_{\text{frac}}^s$ 为稳定方向分形维数。
 
-**HD-D 定理分解**：由定理 HD-D（§1.5.2），高维可逆系统的 Hausdorff 维数满足
+**Ledrappier-Young 维数分解定理分解**：由Ledrappier-Young 维数分解定理（§1.5.2），高维可逆系统的 Hausdorff 维数满足
 
 $$\dim_H(\mu) = \frac{h_\mu}{\lambda_L^{(+)}} + \frac{h_\mu}{|\lambda_L^{(-)}|},$$
 
@@ -414,7 +414,7 @@ $$d_{\text{frac}} = 2 \cdot \frac{h_{\text{geo}}}{\lambda_L}.$$
 
 $$S_{\text{frac}} = S_{\text{BH}} \cdot \left(1 - \frac{\varepsilon(1-a^2/M^2)}{2}\right) \cdot \frac{d_{\text{frac}}}{2}.$$
 
-**修正影响**：原公式 $d_{\text{frac}} = 2 - \varepsilon(1-a^2/M^2)$ 未考虑稳定/不稳定方向分解，HD-D 定理修正后，分形维数明确依赖于 Lyapunov 指数的方向分解，为黑洞熵的分形解释提供了更精确的理论基础。
+**修正影响**：原公式 $d_{\text{frac}} = 2 - \varepsilon(1-a^2/M^2)$ 未考虑稳定/不稳定方向分解，Ledrappier-Young 维数分解定理修正后，分形维数明确依赖于 Lyapunov 指数的方向分解，为黑洞熵的分形解释提供了更精确的理论基础。
 
 **经典极限验证**：分形维数修正严格满足经典广义相对论极限。当量子修正参数 $\varepsilon \to 0$ 时：
 - 测地线混沌减弱，测度熵 $h_{\text{geo}} \to 0$，Lyapunov 指数 $\lambda_L \to 0$；
@@ -431,9 +431,9 @@ $$r_{\text{IFS}} = e^{-\lambda_L}.$$
 
 QNM 谱对应 $\mu_n = n + 1/2$，$\lambda_n = e^{-\mu_n}$，全部验证通过。
 
-**TE-G-M 定理约束**：由定理 TE-G-M（§1.5.3），拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足 $h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。对于 Kerr 混沌系统，这约束了 Lyapunov 指数的上界，修正了原有的混沌强度估计。
+**拓扑熵–谱间隙不等式定理约束**：由拓扑熵–谱间隙不等式定理（§1.5.3），拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足 $h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。对于 Kerr 混沌系统，这约束了 Lyapunov 指数的上界，修正了原有的混沌强度估计。
 
-**复谱投影范畴诠释**：Leaver 连分数求解产生的复数 QNM 频率 $\omega = \omega_R + i\omega_I$，可在 $\mathbf{Spec}$ 复 Clifford 谱纤维框架下诠释为高维复谱纤维中垂直于 4 维实时空子空间的代数正交分量向实观测空间的投影（参见 [关于谱静默理论的再讨论](file:///d:/trae-work/hyper-resolution/docs/关于谱静默理论的再讨论.md)）。这一诠释表明：复频率虚部不是实紧致几何维度的投影，而是代数谱维度的正交分量，解释了 Kerr QNM 衰减的深层数学结构。
+**复谱投影范畴诠释**：Leaver 连分数求解产生的复数 QNM 频率 $\omega = \omega_R + i\omega_I$，可在 $\mathbf{Sp}$ 复 Clifford 谱纤维框架下诠释为高维复谱纤维中垂直于 4 维实时空子空间的代数正交分量向实观测空间的投影（参见 [关于谱静默理论的再讨论](file:///d:/trae-work/hyper-resolution/docs/关于谱静默理论的再讨论.md)）。这一诠释表明：复频率虚部不是实紧致几何维度的投影，而是代数谱维度的正交分量，解释了 Kerr QNM 衰减的深层数学结构。
 
 ### 5.3 非赤道面测地线混沌
 
@@ -465,7 +465,7 @@ $$\omega_{I,n} = -\kappa \mu_n, \quad \mu_n = n + 1/2.$$
 - Newton-Raphson 迭代求解特征值 $\lambda$，收敛判据 $|f(\lambda)| < 10^{-15}$；
 - 与 Berti-Cardoso-Will QNM 表 [25] 对比，m=0 模式误差 < 3%。
 
-**命题 5.4**（LIGO/Virgo Ringdown 对比框架，TE-G-M 定理约束）。建立完整的 ringdown 波形振幅计算、LIGO 灵敏度曲线建模、SNR 估计与可探测性判断框架（`KerrRingdownLIGO`）：
+**命题 5.4**（LIGO/Virgo Ringdown 对比框架，拓扑熵–谱间隙不等式定理约束）。建立完整的 ringdown 波形振幅计算、LIGO 灵敏度曲线建模、SNR 估计与可探测性判断框架（`KerrRingdownLIGO`）：
 
 | 模式 (l, m, n) | 衰减率 $\mu$ | 角频率 $\omega$ | SNR | 可探测？ |
 |---|---|---|---|---|
@@ -474,7 +474,7 @@ $$\omega_{I,n} = -\kappa \mu_n, \quad \mu_n = n + 1/2.$$
 | (2, 1, 0) | 0.128 | 0.599 | 3612 | ✅ |
 | (3, 3, 0) | 0.199 | 0.693 | 1808 | ✅ |
 
-**TE-G-M 定理约束**：由定理 TE-G-M（§1.5.3），拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足 $h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。对于 Kerr QNM 谱，谱间隙 $\gamma = 1 - |\lambda_2|/\lambda_1$ 受此不等式约束，修正了 QNM 频率的精度估计。验证表明，当前 SNR 预测满足 TE-G-M 约束，可探测性结论保持不变。
+**拓扑熵–谱间隙不等式定理约束**：由拓扑熵–谱间隙不等式定理（§1.5.3），拓扑熵 $h_{\text{top}}$ 与谱间隙 $\gamma$ 满足 $h_{\text{top}} \cdot \gamma \leq C$（$C \leq 1$）。对于 Kerr QNM 谱，谱间隙 $\gamma = 1 - |\lambda_2|/\lambda_1$ 受此不等式约束，修正了 QNM 频率的精度估计。验证表明，当前 SNR 预测满足 拓扑熵–谱间隙不等式 约束，可探测性结论保持不变。
 
 4/4 模式均在 LIGO/Virgo 灵敏度范围内可探测，主导模式 (2,2,0) SNR > 13000，信号显著。
 
@@ -598,23 +598,23 @@ $$\lambda_{\text{topo}} = e^{-\log D} = \frac{1}{D},$$
 
 $$\frac{\Delta\lambda_{\text{conf}}}{\Delta\lambda_{\text{deconf}}} = 2.83\times,$$
 
-对应 LACI 判据（配套论文 I [1] §3.6）从 LOW 跳至 HIGH，标志着限制相→解限制相的转变。
+对应局部吸引子捕获指数（Local Attractor Capture Index, LACI）判据（配套论文 I [1] §3.6）从 LOW 跳至 HIGH，标志着限制相→解限制相的转变。
 
 ---
 
 ## 7. 暗物质新物理：间接探测与非热产生
 
-> **IC 验证**：暗物质 IFS 分形质量谱基于 D-C 定理，IC ✅ IFS↔Clifford 无条件满足（谱半径同阶、核函数线性映射、弱拓扑一致）。
+> **IC 验证**：暗物质 IFS 分形质量谱基于 Hausdorff 维数凹性定理，IC ✅ IFS↔Clifford 无条件满足（谱半径同阶、核函数线性映射、弱拓扑一致）。
 
 ### 7.1 IFS 分形质量谱
 
-**命题 7.1**（暗物质分形质量谱，D-C 定理修正）。基于 IFS 压缩比分布与配套论文 I [1] 定理 D-C（$d_H(\rho)$ 凹性），暗物质质量谱满足
+**命题 7.1**（暗物质分形质量谱，Hausdorff 维数凹性定理修正）。基于 IFS 压缩比分布与配套论文 I [1] Hausdorff 维数凹性定理（$d_H(\rho)$ 凹性），暗物质质量谱满足
 
 $$m_i = m_0 \cdot r_i^{-\alpha(\rho)},$$
 
 其中 $m_0$ 为基准质量，$r_i$ 为 IFS 压缩比，$\alpha(\rho)$ 为依赖重叠因子 $\rho$ 的分形谱指数。
 
-**D-C 定理约束**：由定理 D-C（§1.5.1），Hausdorff 维数 $d_H(\rho)$ 是 $\rho$ 的凹函数，因此分形谱指数满足
+**Hausdorff 维数凹性定理约束**：由Hausdorff 维数凹性定理（§1.5.1），Hausdorff 维数 $d_H(\rho)$ 是 $\rho$ 的凹函数，因此分形谱指数满足
 
 $$\alpha(\rho) = \frac{d_H(\rho)}{d_{\text{amb}}} \cdot \alpha_0,$$
 
@@ -624,7 +624,7 @@ $$\alpha\left(\frac{\rho_1 + \rho_2}{2}\right) \geq \frac{\alpha(\rho_1) + \alph
 
 **谱对应**：$\lambda_i = e^{-\mu_i}$，$\mu_i \propto \log(m_i/m_0)$（`physics_open_problems_shortboard.py`）。
 
-**修正影响**：原公式假设 $\alpha$ 为常数，D-C 定理修正后，$\alpha$ 随重叠因子 $\rho$ 变化，导致质量谱的非线性行为更加丰富，为暗物质质量分布提供了更精确的理论约束。
+**修正影响**：原公式假设 $\alpha$ 为常数，Hausdorff 维数凹性定理修正后，$\alpha$ 随重叠因子 $\rho$ 变化，导致质量谱的非线性行为更加丰富，为暗物质质量分布提供了更精确的理论约束。
 
 ### 7.2 间接探测谱预言
 
@@ -711,14 +711,14 @@ $$\alpha(\rho, 1\text{TeV}) = 0.5 + \frac{0.1}{4\pi^2} \ln\left(\frac{10^{3}}{10
 
 RG 修正使质量谱指数下降 $\sim 15\%$，导致暗物质质量谱在低能标下比经典 IFS 预测更"平坦"。这一效应应在未来直接探测实验（XENONnT 升级、DARWIN）的能谱分析中可检验。
 
-**注 7.9**。RG 改进分形质量谱保持了与 D-C 定理（$\alpha(\rho)$ 凹性）的兼容性——RG 修正 $\delta\alpha_{\text{RG}}(\mu)$ 与 $\rho$ 解耦，故凹性在 RG 流作用下保持不变。完整二圈 RG 分析与对暗物质遗迹密度的定量影响留待后续研究。
+**注 7.9**。RG 改进分形质量谱保持了与 Hausdorff 维数凹性定理（$\alpha(\rho)$ 凹性）的兼容性——RG 修正 $\delta\alpha_{\text{RG}}(\mu)$ 与 $\rho$ 解耦，故凹性在 RG 流作用下保持不变。完整二圈 RG 分析与对暗物质遗迹密度的定量影响留待后续研究。
 
 ### 7.6 参数空间扫描
 
 暗物质分形质量谱的参数空间（$m_0, \alpha, \rho$）扫描：
 
 - **2D 扫描（$m_0$ vs $\alpha$）**：基准质量 $m_0 \in [10, 1000]$ GeV、指数 $\alpha \in [0.2, 0.8]$ 范围内，满足间接探测约束（Fermi-LAT/AMS-02）的允许区域集中于 $\alpha \in [0.4, 0.6]$；
-- **2D 扫描（$\alpha$ vs $\rho$）**：重叠因子 $\rho \in [0, 0.5]$、指数 $\alpha$ 的 D-C 凹性约束 $\alpha''(\rho) \leq 0$ 在参数平面上定义了一个凸允许区域；
+- **2D 扫描（$\alpha$ vs $\rho$）**：重叠因子 $\rho \in [0, 0.5]$、指数 $\alpha$ 的 Hausdorff 维数凹性约束 $\alpha''(\rho) \leq 0$ 在参数平面上定义了一个凸允许区域；
 - **3D 联合（$m_0 \times \alpha \times \rho$）**：允许空间呈椭球形，框架基准预测 $m_0 = 100$ GeV、$\alpha = 0.5$、$\rho = 0$ 位于椭球中心。RG 修正使允许空间向低 $\alpha$ 方向偏移约 15%（§7.5）。
 - **直接探测对比**：预测的 $\sigma_{SI}$ 在 XENONnT/LZ 上限以下，未来 DARWIN 实验可检验 $\gtrsim 80\%$ 的参数空间。
 
@@ -785,7 +785,7 @@ $$\text{紧致几何模型} \underset{\text{极限映射}}{\overset{\text{谱映
 
 **本体论差异**：
 - 紧致化：几何本体论——先假设流形（光滑几何空间）作为底层载体，额外自由度是几何上的紧致内部空间；
-- 谱静默：代数/范畴本体论——抛弃流形预设，仅用 $\mathbf{Rec}$-$\mathbf{Spec}$ 范畴、谱测度、算子代数描述自由度。
+- 谱静默：代数/范畴本体论——抛弃流形预设，仅用 $\mathbf{Rec}$-$\mathbf{Sp}$ 范畴、谱测度、算子代数描述自由度。
 
 **观测简并根源**：两种数学描述转化出同一套低能可观测谱，4 代轻子、引力耦合、QNM 频率、全息纠缠熵等预言完全一致；只有超 Planck 能标实验（量子引力直接效应）才可能区分底层载体。
 
@@ -831,7 +831,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### 9.1 主要成果
 
-本文展示了分形谱去递归理论（配套论文 I [1]）在多个物理领域的应用，主要成果包括：
+本文展示了分形谱化理论（配套论文 I [1]）在多个物理领域的应用，主要成果包括：
 
 **（A）标准模型与统一**
 
@@ -870,7 +870,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 18. **通用理论分类学**：统一归类物理（8个理论）、AI（3个理论）、复杂系统（3个理论）共14个理论，理论演化树可视化，转化路径BFS查找。
 19. **NTK-分形双向转化**：IFS→NTK谱转化（最优初始化参数）、NTK→IFS反向重构（AI可解释）、转化不变量诊断过拟合、大模型消融实验（IFS谱初始化优于标准初始化）、物理先验AI标准化转化（PINN谱约束）。
 20. **转化仿真接口**：实验数据自动对标、MadGraph对接（LHC截面）、micrOMEGAs对接（暗物质）、数值相对论对接（Kerr ringdown）、实验数据反向约束高维理论、仿真去重与算力优化（去重命中率80%，算力节省72%）。
-21. **纯数学理论短板解决**：完成三项核心数学定理的严格证明框架——(1) **定理 D-C**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数（基于压力函数凸性、Legendre 变换、隐函数定理、Feng-Wang 模型验证）；(2) **定理 HD-D**：高维可逆系统的 Ledrappier-Young 维数分解公式（Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）；(3) **定理 TE-G-M**：拓扑熵-谱间隙普适不等式（Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）。综合验证全部通过。
+21. **纯数学理论短板解决**：完成三项核心数学定理的严格证明框架——(1) **Hausdorff 维数凹性定理**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数（基于压力函数凸性、Legendre 变换、隐函数定理、IFS 模型验证）；(2) **Ledrappier-Young 维数分解定理**：高维可逆系统的 Ledrappier-Young 维数分解公式（Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）；(3) **拓扑熵–谱间隙不等式定理**：拓扑熵-谱间隙普适不等式（Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）。综合验证全部通过。
 22. **误差预算体系**：建立 Rec→Spec→预言→实验 四链节误差传播框架（定义 8.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
 
 ### 9.2 开放问题（推进状态）
@@ -899,10 +899,10 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 以下三项纯数学理论短板已通过新增 `math_open_problems_convexity.py` 模块完成解决：
 
 4. **纯数学理论短板** ✅ **已完成**：
-   - **定理 D-C**（$d_H(\rho)$ 凹性）：基于压力函数凸性、Legendre 变换、隐函数定理、Feng-Wang 模型验证；
-   - **定理 HD-D**（Ledrappier-Young 维数分解）：Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构；
-   - **定理 TE-G-M**（拓扑熵-谱间隙不等式）：Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证；
-   - **未竞**：将 TE-G 推广到一般非 Markov 动力系统（Koopman 算子框架）；完成 Feng-Wang 最优条件转移算子与严格热力学极限的精确对接。
+   - **Hausdorff 维数凹性定理**（$d_H(\rho)$ 凹性）：基于压力函数凸性、Legendre 变换、隐函数定理、IFS 模型验证；
+   - **Ledrappier-Young 维数分解定理**（Ledrappier-Young 维数分解）：Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构；
+   - **拓扑熵–谱间隙不等式定理**（拓扑熵-谱间隙不等式）：Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证；
+   - **未竞**：将 TE-G 推广到一般非 Markov 动力系统（Koopman 算子框架）；完成 IFS 最优条件转移算子与严格热力学极限的精确对接。
 
 #### 剩余开放问题
 
@@ -928,7 +928,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### 9.4 展望
 
-1. **数学严格化**：完成非分离 IFS 收敛率下界常数 $c$ 的显式最优估计；将 Feng-Wang 最优条件转移算子的权重公式与严格热力学极限对接；完成 TE-G 的严格证明；完成高维 IFS 大规模数值紧性测试。
+1. **数学严格化**：完成非分离 IFS 收敛率下界常数 $c$ 的显式最优估计；将 IFS 最优条件转移算子的权重公式与严格热力学极限对接；完成 TE-G 的严格证明；完成高维 IFS 大规模数值紧性测试。
 2. **量子引力精确谱**：与 Berti-Cardoso-Will 数值表系统校准；接入真实 LIGO/Virgo ringdown 数据；实现完整的 inspiral-merger-ringdown 引力波仿真。
 3. **全息与规范理论**：将 $O(g^6)$ 截断的 dressing phase 替换为完整 BES/TBA 数值解；探索 BMN 矩阵模型与框架谱对应的严格极限；建立 QCD 弦/胶球谱与框架的对应。
 4. **暗物质与新物理**：与 micrOMEGAs/MadGraph 真实安装联调；接入 Fermi-LAT/AMS-02 真实数据约束；完成暗物质间接探测谱与实际实验数据的系统对比。
@@ -997,8 +997,8 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### A.12 开放问题推进模块
 
-- `math_open_problems_advanced.py`：纯数学开放问题推进，包括非分离 IFS 收敛率下界（定理 NS-LB）、奇异连续谱维数与 Lyapunov 指数的定量关联（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/Feng-Wang 精确转移算子、Feng-Wang 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
-- `math_open_problems_convexity.py`：纯数学理论短板解决，包括压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（定理 D-C）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）、拓扑熵-谱间隙普适不等式严格证明（定理 TE-G-M）；
+- `math_open_problems_advanced.py`：纯数学开放问题推进，包括非分离 IFS 收敛率下界（定理 NS-LB）、奇异连续谱维数与 Lyapunov 指数的定量关联（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/IFS 精确转移算子、IFS 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
+- `math_open_problems_convexity.py`：纯数学理论短板解决，包括压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（Hausdorff 维数凹性定理）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（Ledrappier-Young 维数分解定理）、拓扑熵-谱间隙普适不等式严格证明（拓扑熵–谱间隙不等式定理）；
 - `numerical_engineering_open_problems.py`：数值工程开放问题推进，包括 MadGraph 调用接口、micrOMEGAs 调用接口、双星系统完整 inspiral-merger-ringdown 引力波仿真与简化 SNR 估计；
 - `physics_open_problems_advanced.py`：物理理论开放问题推进，包括 Kerr 黑洞全局量子谱解析框架、$N=4$ SYM 单迹/BMN/保护算子谱与框架 $\eta_R$ 匹配、暗物质质量分形谱推导与实验约束筛选；
 - `physics_open_problems_shortboard.py`：物理理论短板解决，包括独立 Spheroidal Leaver 连分数求解器、LIGO/Virgo Ringdown 对比框架、N=4 SYM Y 系统求解器与热力学势计算、暗物质间接探测谱预言（伽马射线/反质子）、暗物质非热产生机制框架（冻结-in / 非热产生）。
@@ -1015,9 +1015,9 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 
 ### 配套论文
 
-- [I] 配套论文 I：《通用不动点范畴框架 I：分形谱去递归理论》，**v2.34**，2026-07-17。数学基础：范畴论、谱去递归化函子 $D$、$\mathbf{Rec}_D$ 宽子范畴、$D\dashv R$ 严格伴随、三层静默体系（对象/态射/谱）、辫子自然等价、隔离约束条件、谱对应自然等价 $M \cong L$、轨道函子群表示谱理论、连续谱测度理论、Feng-Wang 热力学形式、Clifford 旋量模结构、Clifford 值谱理论、RKHS 收敛率定理、理论转化与 EFT 等价性框架。**Phase 30–37 全谱系**：无限维桥梁、C* 代数、无界算子、A∞/∞-范畴、三圈 β、非线性 LSS、谱间隙 $\Delta\lambda_{\min}$ 第一性原理推导、**IFS 重叠因子 $\rho$ 从 Cl(1,7) 唯一确定**。Lean 4 形式化：24 模块 + Phase 29 高阶范畴 4 模块，~4,200 行。
+- [I] 配套论文 I：《通用不动点范畴框架 I：分形谱化理论》，**v2.34**，2026-07-17。数学基础：范畴论、谱化函子 $D$、$\mathbf{Rec}_D$ 宽子范畴、$D\dashv R$ 严格伴随、三层静默体系（对象/态射/谱）、辫子自然同构、隔离约束条件、谱对应自然同构 $M \cong L$、轨道函子群表示谱理论、连续谱测度理论、IFS 热力学形式、Clifford 旋量模结构、Clifford 值谱理论、RKHS 收敛率定理、理论转化与 EFT 等价性框架。**Phase 30–37 全谱系**：无限维桥梁、C* 代数、无界算子、A∞/∞-范畴、三圈 β、非线性 LSS、谱间隙 $\Delta\lambda_{\min}$ 第一性原理推导、**IFS 重叠因子 $\rho$ 从 Cl(1,7) 唯一确定**。Lean 4 形式化：24 模块 + Phase 29 高阶范畴 4 模块，~4,200 行。
 - [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》（本文）。
-- [III] Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》，2026-07-16。核心定理 4.1-4.3（三层谱分类），已在 Lean 4 中完成形式化（`SpectralEquivalence.lean`、`ICVerification.lean`）。
+- [III] Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》，2026-07-16。核心定理 4.1-4.3（三层谱分类），已在 Lean 4 中完成形式化（`SpectralEquivalence.lean`、`ICVerification.lean`）。
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1，2026-07-16。D 函子统一黑洞熵（Schwarzschild/RN/Kerr）。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.0，2026-07-17。谱流方程、四种力的谱生成元、双圈 β 函数匹配（SU(2)/SU(3) 精确匹配）、宇宙学谱动力学、暗物质谱模型、黑洞蒸发演化。
 - [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学》，v0.1，2026-07-16。N-S 谱流方程、K41 $k^{-5/3}$ 谱涌现。
@@ -1100,12 +1100,12 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 | v2.18 | 2026-07-16 | 同步 Paper III 及形式化进展——(1) 配套论文引用新增 Paper III 及 Lean 4 形式化状态（19 模块，~3,700 行）；(2) 贡献第 17 项「严格范畴等价证明见未来 Paper III」更新为「见配套 Paper III，已通过 Lean 4 形式化验证」；(3) 注 7.9「留待未来 Paper III」更新为「留待后续研究」；(4) 附录 A.8 同步更新形式化引用 |
 | v2.17 | 2026-07-15 | 谱静默与紧致化兼容性及复谱诠释——(1) §8.4 新增「与紧致化的兼容性：代数-几何对偶」，证明谱静默与紧致化是同一物理现象的代数/几何两种等价表象，双向翻译映射成立；(2) §5.2 新增复谱投影范畴诠释：Leaver 复数 QNM 频率虚部可诠释为复 Clifford 谱纤维正交分量向实观测空间的投影；(3) 更新 §8.4→§8.5、§8.5→§8.6 编号调整 |
 | v2.16 | 2026-07-15 | 与现有物理理论兼容性分析——(1) §4.7 新增兼容性分析：L4 必须为矢量型费米子（手征 L4 在电弱 S/T 参数检验中被排除，$\chi^2=13.9$ >99% CL）；矢量型 L4 对 Higgs 信号强度修正 <5%，满足 ATLAS/CMS 测量；(2) §5.1 新增经典极限验证：当量子修正 $\varepsilon \to 0$ 时，$d_{\text{frac}} \to 2$，$S_{\text{frac}} \to S_{\text{BH}}$，恢复经典 GR 光滑视界；(3) §7.4 新增与标准暗物质模型关系说明：IFS 分形质量谱是 WIMP 范式的推广，单峰退化时回归标准 WIMP，与 axion/sterile neutrino 互补 |
-| v2.15 | 2026-07-15 | BSM 物理 D-C 定理约束补充——(1) §1.5.1 影响链新增 BSM 新费米子质量谱（§4.1），L4 质量谱方程基于 IFS 收缩因子与分形维数，D-C 定理要求指数 $\beta(\rho)$ 满足凹性约束；(2) §1.5.4 影响总结表新增 BSM 新费米子质量谱；(3) §4.1 命题 4.1 新增 D-C 定理约束说明，给出 L4 质量理论不确定区间 $m_{L_4} \in [1470, 1650]$ GeV（$\rho \in [0, 0.3]$） |
-| v2.14 | 2026-07-15 | 基于配套论文 I 三项纯数学定理的物理预测修正——(1) 新增 §1.5「数学定理对物理预测的影响分析」，系统梳理 D-C→暗物质质量谱、HD-D→Kerr分形维数与纠缠熵、TE-G-M→Kerr混沌与SNR预测的影响链；(2) §7.1 暗物质质量谱公式修正：$m_i = m_0 \cdot r_i^{-\alpha(\rho)}$，加入 D-C 定理凹性约束；(3) §5.1 Kerr 分形维数公式修正：$d_{\text{frac}} = d_{\text{frac}}^u + d_{\text{frac}}^s$，加入 HD-D 定理稳定/不稳定方向分解；(4) §5.5 LIGO/Virgo ringdown SNR 预测加入 TE-G-M 定理谱间隙约束验证；(5) 更新摘要与 §1.3 贡献列表，补充数学定理对物理预测精度提升的说明 |
+| v2.15 | 2026-07-15 | BSM 物理 Hausdorff 维数凹性定理约束补充——(1) §1.5.1 影响链新增 BSM 新费米子质量谱（§4.1），L4 质量谱方程基于 IFS 收缩因子与分形维数，Hausdorff 维数凹性定理要求指数 $\beta(\rho)$ 满足凹性约束；(2) §1.5.4 影响总结表新增 BSM 新费米子质量谱；(3) §4.1 命题 4.1 新增 Hausdorff 维数凹性定理约束说明，给出 L4 质量理论不确定区间 $m_{L_4} \in [1470, 1650]$ GeV（$\rho \in [0, 0.3]$） |
+| v2.14 | 2026-07-15 | 基于配套论文 I 三项纯数学定理的物理预测修正——(1) 新增 §1.5「数学定理对物理预测的影响分析」，系统梳理 Hausdorff 维数凹性→暗物质质量谱、Ledrappier-Young 维数分解→Kerr分形维数与纠缠熵、拓扑熵–谱间隙不等式→Kerr混沌与SNR预测的影响链；(2) §7.1 暗物质质量谱公式修正：$m_i = m_0 \cdot r_i^{-\alpha(\rho)}$，加入 Hausdorff 维数凹性定理凹性约束；(3) §5.1 Kerr 分形维数公式修正：$d_{\text{frac}} = d_{\text{frac}}^u + d_{\text{frac}}^s$，加入 Ledrappier-Young 维数分解定理稳定/不稳定方向分解；(4) §5.5 LIGO/Virgo ringdown SNR 预测加入 拓扑熵–谱间隙不等式定理谱间隙约束验证；(5) 更新摘要与 §1.3 贡献列表，补充数学定理对物理预测精度提升的说明 |
 | v2.13 | 2026-07-15 | Phase 15C-6 完成：新增物理理论短板推进（§8.1 主要成果新增第19项、§8.2 开放问题第3/4/5项升级为"物理短板解决"、附录 A.12 新增 `physics_open_problems_shortboard.py` 模块）；综合验证全部通过 |
 | v2.12 | 2026-07-15 | Phase 15C-5 完成：新增纯数学理论短板解决（§8.1 主要成果新增第17项、§8.2 开放问题新增第6项、附录 A.12 新增 `math_open_problems_convexity.py` 模块）；综合验证全部通过 |
 | v2.11 | 2026-07-14 | Phase 15C-4 完成：新增 §7.5 误差预算体系（定义 7.5 误差链 + 三类九种误差源分类 + BSM/RKHS/$G_N$ 三实例验证）；主要成果新增第17项 |
-| v2.10 | 2026-07-14 | 同步配套论文 I v2.12（Phase 15C-1 轨道函子群表示谱理论：§3.5.1 等价类/同谱判定/谱荷/表示签名）；全仓库 121 passed, 1 xfailed |
+| v2.10 | 2026-07-14 | 同步配套论文 I v2.12（Phase 15C-1 轨道函子群表示谱理论：§3.5.1 等价类/同谱判定/谱权范数/表示签名）；全仓库 121 passed, 1 xfailed |
 | v2.9 | 2026-07-13 | 同步配套论文 I v2.11+（Phase 15B 不变量充要性提升、全仓库 105 passed） |
 | v2.8 | 2026-07-13 | 同步配套论文 I v2.11（谱静默等价链修正、Phase 15A 短板推进）；更新 §8.2/§8.3 未竞问题状态 |
 | v2.7 | 2026-07-13 | 理论知识修复：同步配套论文 I v2.10（D 函子不再要求对称 Rec，新增反射子范畴命题 2.10 与 §2.7 方法论反思）；更新 §8.2/§8.3 未竞问题状态 |

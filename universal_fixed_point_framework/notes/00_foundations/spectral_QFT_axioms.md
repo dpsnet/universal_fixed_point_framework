@@ -8,7 +8,7 @@
 
 ## 公理 A1：谱场存在公理
 
-**定义**。对每个量子场 $\phi(x)$，存在对应的谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Spec}$，其中：
+**定义**。对每个量子场 $\phi(x)$，存在对应的谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Sp}$，其中：
 - $\mathcal{H}_\phi$ 是场的 Hilbert 空间
 - $A_\phi$ 是谱算子（场的"谱生成元"）
 - $\sigma(A_\phi) \subset \mathbb{R}$ 是 $A_\phi$ 的谱
@@ -113,7 +113,7 @@ $$\beta(\lambda) = \left.\frac{d\lambda}{d\ln\Lambda}\right|_{\text{physical}}.$
 
 | 问题 | 难度 | 说明 |
 |:----|:----:|------|
-| 谱场的 Lorentz 协变变换规则 | 🟡 | 需将 Lorentz 群作用翻译为 $\mathbf{Spec}$ 范畴态射 |
+| 谱场的 Lorentz 协变变换规则 | 🟡 | 需将 Lorentz 群作用翻译为 $\mathbf{Sp}$ 范畴态射 |
 | 谱版本的自旋-统计定理 | 🔴 | 谱 $\mathbb{Z}_2$ 分级结构 |
 | 谱 CPT 定理 | 🔴 | 谱时间反演态射的存在性 |
 | 谱 LSZ 约化公式 | 🟡 | 从谱关联函数到 S-矩阵的提取 |

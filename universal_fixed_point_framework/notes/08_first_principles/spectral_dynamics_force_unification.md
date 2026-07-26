@@ -6,19 +6,19 @@
 
 **摘要**：本概念文档提出"力 = 谱流生成元"的诠释，将牛顿力学、麦克斯韦电动力学、广义相对论与规范场论中的力定律统一表述为 $\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$ 的谱流方程。该统一公式是对已知力定律的**谱语言翻译**——它揭示了四个力定律共享的数学结构：力的作用等价于谱对象沿 $A_F$ 方向的李导数流。
 
-**阶段状态**：翻译阶段已完成。第一性推导阶段见 `spectral_dynamics_first_principles_derivation.md`——从 $\mathbf{Spec}$ 4-范畴结构出发独立导出牛顿力学核心定律（惯性质量谱起源、$F = ma$ 第一性推导、三维空间必然性、$1/r^2$ 规律、$G_N$ 谱推导）。
+**阶段状态**：翻译阶段已完成。第一性推导阶段见 `spectral_dynamics_first_principles_derivation.md`——从 $\mathbf{Sp}$ 4-范畴结构出发独立导出牛顿力学核心定律（惯性质量谱起源、$F = ma$ 第一性推导、三维空间必然性、$1/r^2$ 规律、$G_N$ 谱推导）。
 
 ---
 
 ## 1. 谱动力学的基本设定
 
-设 $R(t)$ 为随时间演化的递归系统，$D(R(t)) = (\mathcal{H}_t, A_t, \sigma(A_t))$ 为其谱像。**谱动力学**研究 $A_t$ 在 $\mathbf{Spec}$ 中的轨迹：
+设 $R(t)$ 为随时间演化的递归系统，$D(R(t)) = (\mathcal{H}_t, A_t, \sigma(A_t))$ 为其谱像。**谱动力学**研究 $A_t$ 在 $\mathbf{Sp}$ 中的轨迹：
 
-$$A_t = D(R(t)) \in \mathrm{Obj}(\mathbf{Spec})$$
+$$A_t = D(R(t)) \in \mathrm{Obj}(\mathbf{Sp})$$
 
-### 1.1 谱动力学范畴 $\mathbf{Spec}_{\text{dyn}}$
+### 1.1 谱动力学范畴 $\mathbf{Sp}_{\text{dyn}}$
 
-**定义 1.1**（谱动力学范畴）。$\mathbf{Spec}_{\text{dyn}}$ 的对象是光滑路径 $\gamma: \mathbb{R} \to \mathbf{Spec}$，记作 $\gamma(t) = (\mathcal{H}_t, A_t, \sigma(A_t))$，其中 $A_t$ 对 $t$ 可微。态射 $\eta: \gamma_1 \to \gamma_2$ 是 $\mathbf{Spec}$ 态射族 $\eta_t: \gamma_1(t) \to \gamma_2(t)$ 满足：
+**定义 1.1**（谱动力学范畴）。$\mathbf{Sp}_{\text{dyn}}$ 的对象是光滑路径 $\gamma: \mathbb{R} \to \mathbf{Sp}$，记作 $\gamma(t) = (\mathcal{H}_t, A_t, \sigma(A_t))$，其中 $A_t$ 对 $t$ 可微。态射 $\eta: \gamma_1 \to \gamma_2$ 是 $\mathbf{Sp}$ 态射族 $\eta_t: \gamma_1(t) \to \gamma_2(t)$ 满足：
 
 $$\frac{d}{dt} \eta_t = [G_2, \eta_t] - \eta_t [G_1, \cdot]$$
 
@@ -40,7 +40,7 @@ $$\frac{d}{dt} A_t = -\frac{d}{dt} \log U_{R(t)} = -\mathcal{L}_t$$
 
 ### 1.3 谱对易子的几何意义
 
-对易子 $[A_{F}, A_t]$ 是 $\mathbf{Spec}$ 中沿 $A_F$ 方向的 **Lie 导数**：
+对易子 $[A_{F}, A_t]$ 是 $\mathbf{Sp}$ 中沿 $A_F$ 方向的 **Lie 导数**：
 
 $$[A_F, A_t] = \mathcal{L}_{A_F} A_t = \lim_{\varepsilon \to 0} \frac{e^{\varepsilon A_F} A_t e^{-\varepsilon A_F} - A_t}{\varepsilon}$$
 
@@ -170,7 +170,7 @@ $$A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}} \quad \Longleftrightarrow \quad 
 
 $$A_{\text{SM}} = g_1 A_{U(1)} \oplus g_2 A_{SU(2)} \oplus g_3 A_{SU(3)}$$
 
-谱流方程给出规范势的 Yoruba 形式——力的传递通过 $A_{SU(N)}$ 在 $\mathbf{Spec}$ 中的流实现。
+谱流方程给出规范势的 Yoruba 形式——力的传递通过 $A_{SU(N)}$ 在 $\mathbf{Sp}$ 中的流实现。
 
 **→ 规范力的 Yukawa 形式是谱流方程在矩阵 Lie 代数下的特例。**
 
@@ -193,7 +193,7 @@ $$\frac{d}{dt} D(R) = \sum_{i \in \{G, W, S, EM\}} g_i \cdot [A_{F,i}, D(R)]$$
 |----------|-------------|------|
 | Paper II §3: $G_N$ 从谱交织导出 | 引力的谱生成元 $A_{\text{GR}}$ 已确定 | ✅ 已有 |
 | Paper II §3.7: IC 条件 | IC 保证 $[A_{F,i}, A_t]$ 定义良好 | ✅ 已有 |
-| Paper III §4.3: 跨领域 IC 全覆盖 | 谱流方程在同一 $\mathbf{Spec}$ 中运行 | ✅ 已有 |
+| Paper III §4.3: 跨领域 IC 全覆盖 | 谱流方程在同一 $\mathbf{Sp}$ 中运行 | ✅ 已有 |
 | 谱流方程 $\frac{d}{dt}A = [A_F, A]$ | 力的统一公式 | 🆕 本篇 |
 
 ## 5. 诚实的局限性
@@ -279,7 +279,7 @@ $$[A_{\text{GR}}, A_{\text{SM}}] = A_{\text{GR}} A_{\text{SM}} - A_{\text{SM}} A
 
 **谱几何推导**：
 
-设 $A_F$ 为力的谱生成元。谱强度 $\|[A_F, A_t]\|_{\text{HS}}$ 随距离 $r$ 的衰减由 $\mathbf{Spec}$ 中谱流的几何传播决定。
+设 $A_F$ 为力的谱生成元。谱强度 $\|[A_F, A_t]\|_{\text{HS}}$ 随距离 $r$ 的衰减由 $\mathbf{Sp}$ 中谱流的几何传播决定。
 
 谱流在 $d$ 维空间中沿径向传播时，谱强度密度 $\rho_{\text{spec}}(r)$ 满足守恒方程：
 
@@ -293,7 +293,7 @@ $$\|[A_F, A_t]\|_{\text{HS}} \propto \frac{1}{r^2}$$
 
 $$F_{\text{grav}} \propto \frac{G_N m_1 m_2}{r^2}, \qquad F_{\text{Coulomb}} \propto \frac{q_1 q_2}{4\pi\varepsilon_0 r^2}$$
 
-**结论**：$1/r^2$ 规律不是偶然的——它是 $\mathbf{Spec}$ 中谱流在 3+1 维时空中的几何传播的必然结果。如果时空维数 $d \neq 3$，力的衰减律将相应变化。这是谱动力学的第一个"独立预言"——它**解释了**逆平方律的起源，而不是将其作为公理接受。
+**结论**：$1/r^2$ 规律不是偶然的——它是 $\mathbf{Sp}$ 中谱流在 3+1 维时空中的几何传播的必然结果。如果时空维数 $d \neq 3$，力的衰减律将相应变化。这是谱动力学的第一个"独立预言"——它**解释了**逆平方律的起源，而不是将其作为公理接受。
 
 **数值验证**（`paper5_inverse_square_law.py`）：通量守恒偏差 d=1: 0.00e+00, d=2: 3.85e-17, d=3: **3.68e-17**。三个维度的通量守恒均达到机器精度，确认 $\rho(r) \propto 1/r^{d-1}$ 是谱流在 $d$ 维空间中几何传播的必然结果。
 
@@ -337,9 +337,9 @@ $$\mu_U^{\text{spec}} = \mu_U^{\text{GUT}} \pm 10\%$$
 | 弦论：额外维度 | $A_{F,i}$ 高能谱成分的谱静默（Paper I §5） | 紧致化不是几何的，而是谱的 |
 | LQG：自旋网络 | $A_{\text{GR}}$ 在 Planck 尺度的离散谱 | 面积/体积量子化 = 谱生成元的特征值离散化 |
 | 渐近安全：UV 不动点 | $\frac{d}{dt} A_{\text{GR}} = [G, A_{\text{GR}}]$ 的 RG 不动点 | 渐近安全是谱流方程的一个特解 |
-| 因果集：离散时空 | $\mathbf{Spec}$ 中路径 $\gamma(t)$ 的因果序 | 因果结构 = $\mathbf{Spec}_{\text{dyn}}$ 中态射的时序 |
+| 因果集：离散时空 | $\mathbf{Sp}$ 中路径 $\gamma(t)$ 的因果序 | 因果结构 = $\mathbf{Sp}_{\text{dyn}}$ 中态射的时序 |
 
-**核心信息**：谱动力学不是替代这些理论，而是提供了一个**翻译层**——将不同的量子引力方案统一为 $\mathbf{Spec}$ 中谱流的不同边界条件。
+**核心信息**：谱动力学不是替代这些理论，而是提供了一个**翻译层**——将不同的量子引力方案统一为 $\mathbf{Sp}$ 中谱流的不同边界条件。
 
 ---
 

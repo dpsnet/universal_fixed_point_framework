@@ -1,6 +1,6 @@
 # Phase 1：元公理层形式化
 
-> 本阶段目标：在 [notes/00_foundations/rec_spec_definitions.md](../notes/00_foundations/rec_spec_definitions.md) 所定义的 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 基础上，严格构造谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，证明其为协变函子，并在合理条件下证明忠实性。本文件对应推进计划「第一阶段第 1–2 周」的交付物。
+> 本阶段目标：在 [notes/00_foundations/rec_spec_definitions.md](../notes/00_foundations/rec_spec_definitions.md) 所定义的 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 基础上，严格构造谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$，证明其为协变函子，并在合理条件下证明忠实性。本文件对应推进计划「第一阶段第 1–2 周」的交付物。
 
 ---
 
@@ -17,7 +17,7 @@
   $$\Phi_{R_2} \circ f = f \circ \Phi_{R_1}.$$
 - **复合与单位**：由状态空间映射的通常复合与恒等映射给出。
 
-### 1.2 谱范畴 $\mathbf{Spec}$
+### 1.2 谱范畴 $\mathbf{Sp}$
 
 - **对象**：$E = (\mathcal{H}_E, A_E, \sigma_E)$
   - $\mathcal{H}_E$：复（或 Clifford 值）Hilbert 空间
@@ -29,13 +29,13 @@
 
 ---
 
-## 2. 谱去递归化函子 $D$ 的构造
+## 2. 谱化函子 $D$ 的构造
 
 ### 2.1 对象映射
 
 对每个递归系统 $R \in \mathrm{Obj}(\mathbf{Rec})$，定义
 
-$$D(R) := (\mathcal{H}_R, A_R, \sigma(A_R)) \in \mathrm{Obj}(\mathbf{Spec}),$$
+$$D(R) := (\mathcal{H}_R, A_R, \sigma(A_R)) \in \mathrm{Obj}(\mathbf{Sp}),$$
 
 其中：
 
@@ -116,7 +116,7 @@ $$D(f)^\ast \Phi_{R_2}^\ast = \Phi_{R_1}^\ast D(f)^\ast.$$
 
 $$D(f) A_{R_1} \subseteq A_{R_2} D(f).$$
 
-因此 $D(f)$ 是 $\mathbf{Spec}$ 中的态射。
+因此 $D(f)$ 是 $\mathbf{Sp}$ 中的态射。
 
 ### 2.3 函子公理验证
 
@@ -190,7 +190,7 @@ $L$ 为线性化算子，其特征值为临界指数 $y_i$。取 Koopman 算子�
   $$K_R(V,V') = \sum_i e^{-y_i} \, \phi_i(\delta V) \, \phi_i(\delta V').$$
 - **谱算子** $A_R = -\log L$，特征值 $\mu_i = -\log y_i$。对 $y_i < 1$（相关算子），$\mu_i > 0$；对 $y_i = 1$（边缘算子），$\mu_i = 0$；对 $y_i > 1$（无关算子），$\mu_i < 0$，此时超出正算子范围，需单独处理。
 
-> 注：RG 情形展示了为何必须要求 $\sigma(U_R) \subseteq (0,1]$；无关算子对应负 $\mu_i$，不在当前 $\mathbf{Spec}$ 的定义范围内，需扩展为自伴（不必正）算子或投影到相关子空间。
+> 注：RG 情形展示了为何必须要求 $\sigma(U_R) \subseteq (0,1]$；无关算子对应负 $\mu_i$，不在当前 $\mathbf{Sp}$ 的定义范围内，需扩展为自伴（不必正）算子或投影到相关子空间。
 
 ---
 
@@ -198,9 +198,9 @@ $L$ 为线性化算子，其特征值为临界指数 $y_i$。取 Koopman 算子�
 
 ### 3.1 定义
 
-函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 称为**忠实函子**，如果对任意 $R_1, R_2 \in \mathrm{Obj}(\mathbf{Rec})$，映射
+函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 称为**忠实函子**，如果对任意 $R_1, R_2 \in \mathrm{Obj}(\mathbf{Rec})$，映射
 
-$$D: \mathrm{Hom}_{\mathbf{Rec}}(R_1, R_2) \longrightarrow \mathrm{Hom}_{\mathbf{Spec}}(D(R_1), D(R_2))$$
+$$D: \mathrm{Hom}_{\mathbf{Rec}}(R_1, R_2) \longrightarrow \mathrm{Hom}_{\mathbf{Sp}}(D(R_1), D(R_2))$$
 
 是单射。即
 
@@ -236,7 +236,7 @@ $$K_R(x,y) = \sum_{n=0}^\infty w_n \, \Phi_R^n(x) \cdot \Phi_R^n(y),$$
 
 **证明**。
 
-$D(f) = D(g)$ 作为 $\mathbf{Spec}$ 中的态射相等，意味着它们作为有界算子相同：
+$D(f) = D(g)$ 作为 $\mathbf{Sp}$ 中的态射相等，意味着它们作为有界算子相同：
 $$D(f) = D(g) : \mathcal{H}_{R_1} \to \mathcal{H}_{R_2}.$$
 取伴随算子得
 $$D(f)^\ast = D(g)^\ast : \mathcal{H}_{R_2} \to \mathcal{H}_{R_1}.$$
@@ -249,7 +249,7 @@ $$h(f(x)) = h(g(x)), \quad \forall h \in \mathcal{H}_{R_2}, \; \forall x \in \ma
 $$f(x) = g(x), \quad \forall x \in \mathcal{S}_{R_1}.$$
 由 $x$ 的任意性，$f = g$。
 
-> **推论**：若 $K_R$ 是 universal kernel，则 $D: \mathrm{Hom}_{\mathbf{Rec}}(R_1,R_2) \to \mathrm{Hom}_{\mathbf{Spec}}(D(R_1),D(R_2))$ 是单射，即 $D$ 为忠实函子。
+> **推论**：若 $K_R$ 是 universal kernel，则 $D: \mathrm{Hom}_{\mathbf{Rec}}(R_1,R_2) \to \mathrm{Hom}_{\mathbf{Sp}}(D(R_1),D(R_2))$ 是单射，即 $D$ 为忠实函子。
 
 ### 3.4 离散原型中的验证
 
@@ -263,7 +263,7 @@ $$M_{D(f)} = M_f,$$
 
 ### 3.5 意义
 
-$D$ 的忠实性意味着：**递归系统的结构完全由其谱空间保持**。这是理论的核心非退化性条件，确保「去递归化」不丢失原系统的信息。
+$D$ 的忠实性意味着：**递归系统的结构完全由其谱空间保持**。这是理论的核心非退化性条件，确保「谱化」不丢失原系统的信息。
 
 ---
 
@@ -273,17 +273,17 @@ $D$ 的忠实性意味着：**递归系统的结构完全由其谱空间保持**
 
 若 $D$ 存在右伴随
 
-$$R: \mathbf{Spec} \longrightarrow \mathbf{Rec},$$
+$$R: \mathbf{Sp} \longrightarrow \mathbf{Rec},$$
 
-则对任意谱对象 $E \in \mathrm{Obj}(\mathbf{Spec})$，$R(E)$ 是「从谱数据重构出的最小递归系统」。
+则对任意谱对象 $E \in \mathrm{Obj}(\mathbf{Sp})$，$R(E)$ 是「从谱数据重构出的最小递归系统」。
 
 ### 4.2 伴随关系的定义
 
-$D \dashv R$ 表示 $D$ 是 $R$ 的左伴随，即对任意 $R' \in \mathrm{Obj}(\mathbf{Rec})$ 与 $E \in \mathrm{Obj}(\mathbf{Spec})$，存在自然的双射
+$D \dashv R$ 表示 $D$ 是 $R$ 的左伴随，即对任意 $R' \in \mathrm{Obj}(\mathbf{Rec})$ 与 $E \in \mathrm{Obj}(\mathbf{Sp})$，存在自然的双射
 
-$$\mathrm{Hom}_{\mathbf{Rec}}(R', R(E)) \;\cong\; \mathrm{Hom}_{\mathbf{Spec}}(D(R'), E).$$
+$$\mathrm{Hom}_{\mathbf{Rec}}(R', R(E)) \;\cong\; \mathrm{Hom}_{\mathbf{Sp}}(D(R'), E).$$
 
-等价地，存在 **unit** $\eta: \mathrm{id}_{\mathbf{Spec}} \Rightarrow D \circ R$ 与 **counit** $\varepsilon: R \circ D \Rightarrow \mathrm{id}_{\mathbf{Rec}}$，满足三角恒等式：
+等价地，存在 **unit** $\eta: \mathrm{id}_{\mathbf{Sp}} \Rightarrow D \circ R$ 与 **counit** $\varepsilon: R \circ D \Rightarrow \mathrm{id}_{\mathbf{Rec}}$，满足三角恒等式：
 
 $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \qquad (R \varepsilon) \circ (\eta R) = \mathrm{id}_R.$$
 
@@ -291,10 +291,10 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \qquad (R \varepsilon) \circ (
 
 ### 4.3 存在性的充分必要条件
 
-**定理 4.1**（右伴随存在的伴随函子定理）。设 $\mathbf{Rec}$ 为完备范畴（即所有小极限存在），$D: \mathbf{Rec} \to \mathbf{Spec}$ 为协变函子。则 $D$ 存在右伴随 $R$ 的充分必要条件是：
+**定理 4.1**（右伴随存在的伴随函子定理）。设 $\mathbf{Rec}$ 为完备范畴（即所有小极限存在），$D: \mathbf{Rec} \to \mathbf{Sp}$ 为协变函子。则 $D$ 存在右伴随 $R$ 的充分必要条件是：
 
 1. $D$ 保持所有小极限；
-2. $D$ 满足**解集条件**（solution set condition）：对任意 $E \in \mathrm{Obj}(\mathbf{Spec})$，存在小集合 $\{R_i\}_{i \in I} \subseteq \mathrm{Obj}(\mathbf{Rec})$，使得任意 Rec 态射 $f: R' \to R(E)$ 都可经由某个 $R_i$ 分解。
+2. $D$ 满足**解集条件**（solution set condition）：对任意 $E \in \mathrm{Obj}(\mathbf{Sp})$，存在小集合 $\{R_i\}_{i \in I} \subseteq \mathrm{Obj}(\mathbf{Rec})$，使得任意 Rec 态射 $f: R' \to R(E)$ 都可经由某个 $R_i$ 分解。
 
 **证明概要**。这是 Freyd 一般伴随函子定理（General Adjoint Functor Theorem, GAFT）的直接应用。必要性由左伴随保持极限得到；充分性由解集条件保证泛对象的存在，从而构造右伴随。
 
@@ -302,7 +302,7 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \qquad (R \varepsilon) \circ (
 
 1. $\mathbf{Rec}$ 有任意小极限（特别是乘积与等化子）；
 2. $D$ 保持乘积与等化子（从而保持所有极限）；
-3. $\mathbf{Spec}$ 中每个对象 $E$ 的"$D$-前像"在适当等价意义下构成小集合。
+3. $\mathbf{Sp}$ 中每个对象 $E$ 的"$D$-前像"在适当等价意义下构成小集合。
 
 **$D$ 保持极限的验证**。在离散原型中，$D$ 的对象映射为 $D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$。若 $\{R_i\}$ 是一族 Rec 对象，其极限 $R_\infty$ 的状态空间为 $\varprojlim \mathcal{S}_{R_i}$，演化 $\Phi_{R_\infty}$ 由各 $\Phi_{R_i}$ 诱导。则
 
@@ -322,7 +322,7 @@ $$\mathcal{H}_{R_\infty} \cong \varinjlim \mathcal{H}_{R_i}, \qquad A_{R_\infty}
 
 $$\eta_E: E \;\xrightarrow{\;\cong\;}\; D(R(E))$$
 
-给出（在数值容差内），即 $D \circ R \approx \mathrm{id}_{\mathbf{Spec}}$ 在原型对象上成立。验证测试见 `test_decursion_functor.py` 的 `test_right_adjoint_roundtrip`。
+给出（在数值容差内），即 $D \circ R \approx \mathrm{id}_{\mathbf{Sp}}$ 在原型对象上成立。验证测试见 `test_decursion_functor.py` 的 `test_right_adjoint_roundtrip`。
 
 counit $\varepsilon_R: R(D(R)) \to R$ 则把 $R(D(R))$ 的标准正交基状态空间映射回 $R$ 的原始状态空间；由于 $D$ 遗忘了状态空间几何，$\varepsilon_R$ 一般不是同构，但满足三角恒等式在原型对象上近似成立。
 
@@ -335,8 +335,8 @@ counit $\varepsilon_R: R(D(R)) \to R$ 则把 $R(D(R))$ 的标准正交基状态�
 | 本文内容 | 对应元公理 |
 |---|---|
 | $\mathbf{Rec}$ 的严格定义 | 元公理 1（递归系统范畴存在性） |
-| $\mathbf{Spec}$ 的严格定义 | 元公理 2（谱范畴存在性） |
-| $D$ 的构造与函子公理验证 | 元公理 3（谱去递归化函子存在性与自然性） |
+| $\mathbf{Sp}$ 的严格定义 | 元公理 2（谱范畴存在性） |
+| $D$ 的构造与函子公理验证 | 元公理 3（谱化函子存在性与自然性） |
 | RKHS 作为 $\mathcal{H}_R$ 的构造 | 元公理 4（Clifford 值分形 RKHS 存在性） |
 | $D$ 的忠实性证明 | 元公理 3 的强化结论 |
 

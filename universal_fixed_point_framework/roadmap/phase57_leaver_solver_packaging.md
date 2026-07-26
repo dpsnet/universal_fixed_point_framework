@@ -12,11 +12,11 @@
 
 | 维度 | `qnm` 包 | 本求解器 |
 |:----|:---------|:--------|
-| 核心算法 | 标准 Leaver CF + 角向矩阵法 | 去递归理论 + 双重同伦(a+m) + LACI + 两弦法 |
+| 核心算法 | 标准 Leaver CF + 角向矩阵法 | 谱化理论 + 双重同伦(a+m) + LACI + 双初始向量逆迭代法 |
 | Kerr 高自旋 | Newton 迭代，初始猜测敏感 | 双重同伦延拓，自动避开非物理根 |
 | 物理根选择 | 手动 | LACI 自动选择 |
 | 角向-径向耦合 | 分步 | 集成自洽（矩阵角向 + 径向多项式） |
-| 加速策略 | 无 | 两弦法 O(N) 谱残差 |
+| 加速策略 | 无 | 双初始向量逆迭代法 O(N) 谱残差 |
 | Berti 表偏差 | 未处理 | COOK_REF_TABLE 显式替代 |
 
 ### 目标用户
@@ -67,9 +67,9 @@
 ### UFPF 内部依赖处理
 
 当前 `LeaverUnifiedSolver` 引用了 UFPF 框架的：
-- `DerecursionAnalyzer`（去递归理论核心）
+- `DerecursionAnalyzer`（谱化理论核心）
 - `LACIEvaluator`（LACI 判据）
-- `TridiagonalSpectralSolver`（两弦法）
+- `TridiagonalSpectralSolver`（双初始向量逆迭代法）
 
 **方案 A**（推荐）：将这三个类提取为独立模块，剥离 UFPF 范畴论表述，保留数值算法核心。
 

@@ -4,7 +4,7 @@
 
 **版本**：v1.8（2026-07-23）
 
-**摘要**：标准模型包含约 20 个自由参数，其数值由实验确定但缺乏理论解释。本文提出 $\mathbf{Spec}$ 严格 4-范畴作为物理宇宙的基本数学结构——从该范畴出发，**零拟合参数**第一性原理推导出全部可观测量：电荷谱 $\{+2/3, -1/3, 0, -1, +1\}$ 来自 $\text{Cl}(1,7)$ 旋量表示（定理 5.0）；费米子质量层级（6个质量比，通过 Higgs-费米子谱交织子构造 $y_i^{(f)} = \sum_k\|U_{ki}\|^2 \lambda_H^{(k)}$ 实现三扇区全部完美拟合偏差<0.01%——上型夸克通过 Formula B$^\beta$ 谱幂推广修复）、完整 CKM 矩阵（5个参数含 CP 相位 $\delta_{\text{CP}}$）、完整 PMNS 矩阵（4个参数含 $\delta_{\text{CP}}^{\text{PMNS}}$）、$M_Z$ 处三个规范耦合、中微子质量层级 $\Delta m^2_{21}/\Delta m^2_{31}$、中微子绝对质量标度 $\Sigma m_\nu = 59.7\ \text{meV}$、暗物质遗迹密度 $\Omega h^2 = 0.12$、中性 Kaon CP 破坏参数 $\varepsilon_K = 2.14\times10^{-3}$、无中微子双贝塔衰变有效质量 $m_{\beta\beta} \in [0.6, 4.6]\ \text{meV}$、低能 QCD 参数 $\Lambda_{\text{QCD}} \approx 45$ MeV、$\langle\bar{q}q\rangle \approx -(275\text{ MeV})^3$ 和临界温度 $T_c \approx 153$ MeV。共 29 个独立预测，零自由参数。Fisher 组合 $p$-value 分析得 $p \approx 0$，压倒性拒绝随机巧合的零假设。框架还预测规范耦合在 Planck 能标趋近单化 ($M_{\text{GUT}} \approx 10^{19}\ \text{GeV}$)，质子衰变不可观测 ($\tau_p \sim 10^{52}\ \text{yr}$)，并自然预测中微子正常排序 (Normal Ordering)。四类临界现象（Lorentz/黑洞/QCD/流变）共享同一 $\partial\mathbf{Rec}_D$ 谱间隙坍缩机制。此外，框架从谱交织条件直接导出弱等效原理（惯性质量 = 引力质量），作为第 30 项零参数验证。核心进展：$\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}})$ 的第一性原理推导完成；$\alpha_u$ 从 1.945 修正为 1.983；谱投影 $y_i$ 的闭合公式已建立；上型夸克结构性偏差通过 Formula B$^\beta$（$\beta = \alpha_u/\alpha_v = 1.0531$）完美修复；$U_{Hf}$ 混合角 $\theta_{ij}^{(f)}$ 的解析闭合公式 $\tan^2\theta_{ij} = (r_{ij} - r_\lambda)/(1 - r_{ij}r_\lambda)$ 已导出，从"数值拟合"降格为"解析预测"（偏差 $<0.005$ rad）；$\text{Cl}(1,7)$ 电荷量子化谱定理已建立。Phase 46 Q2 全部子项闭合。
+**摘要**：标准模型包含约 20 个自由参数，其数值由实验确定但缺乏理论解释。本文提出 $\mathbf{Sp}$ 严格 4-范畴作为物理宇宙的基本数学结构——从该范畴出发，**零拟合参数**第一性原理推导出全部可观测量：电荷谱 $\{+2/3, -1/3, 0, -1, +1\}$ 来自 $\text{Cl}(1,7)$ 旋量表示（定理 5.0）；费米子质量层级（6个质量比，通过 Higgs-费米子谱交织子构造 $y_i^{(f)} = \sum_k\|U_{ki}\|^2 \lambda_H^{(k)}$ 实现三扇区全部完美拟合偏差<0.01%——上型夸克通过 Formula B$^\beta$ 谱幂推广修复）、完整 CKM 矩阵（5个参数含 CP 相位 $\delta_{\text{CP}}$）、完整 PMNS 矩阵（4个参数含 $\delta_{\text{CP}}^{\text{PMNS}}$）、$M_Z$ 处三个规范耦合、中微子质量层级 $\Delta m^2_{21}/\Delta m^2_{31}$、中微子绝对质量标度 $\Sigma m_\nu = 59.7\ \text{meV}$、暗物质遗迹密度 $\Omega h^2 = 0.12$、中性 Kaon CP 破坏参数 $\varepsilon_K = 2.14\times10^{-3}$、无中微子双贝塔衰变有效质量 $m_{\beta\beta} \in [0.6, 4.6]\ \text{meV}$、低能 QCD 参数 $\Lambda_{\text{QCD}} \approx 45$ MeV、$\langle\bar{q}q\rangle \approx -(275\text{ MeV})^3$ 和临界温度 $T_c \approx 153$ MeV。共 29 个独立预测，零自由参数。Fisher 组合 $p$-value 分析得 $p \approx 0$，压倒性拒绝随机巧合的零假设。框架还预测规范耦合在 Planck 能标趋近单化 ($M_{\text{GUT}} \approx 10^{19}\ \text{GeV}$)，质子衰变不可观测 ($\tau_p \sim 10^{52}\ \text{yr}$)，并自然预测中微子正常排序 (Normal Ordering)。四类临界现象（Lorentz/黑洞/QCD/流变）共享同一 $\partial\mathbf{Rec}_D$ 谱间隙坍缩机制。此外，框架从谱交织条件直接导出弱等效原理（惯性质量 = 引力质量），作为第 30 项零参数验证。核心进展：$\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}})$ 的第一性原理推导完成；$\alpha_u$ 从 1.945 修正为 1.983；谱投影 $y_i$ 的闭合公式已建立；上型夸克结构性偏差通过 Formula B$^\beta$（$\beta = \alpha_u/\alpha_v = 1.0531$）完美修复；$U_{Hf}$ 混合角 $\theta_{ij}^{(f)}$ 的解析闭合公式 $\tan^2\theta_{ij} = (r_{ij} - r_\lambda)/(1 - r_{ij}r_\lambda)$ 已导出，从"数值拟合"降格为"解析预测"（偏差 $<0.005$ rad）；$\text{Cl}(1,7)$ 电荷量子化谱定理已建立。Phase 46 Q2 全部子项闭合。
 
 ---
 
@@ -14,11 +14,11 @@
 
 传统解决路径是寻求含更少参数的更基本理论，通常通过大统一 (GUT)、超对称 (SUSY) 或额外维度。这些方法虽减少了自由参数数，但通常仍需多个未定常数。
 
-本文提出根本不同的路径。我们主张物理宇宙由严格 4-范畴 $\mathbf{Spec}$ 描述。从这一单一数学假设出发，**全部**标准模型参数以零自由参数被预测。推导链为纯数学步骤：
+本文提出根本不同的路径。我们主张物理宇宙由严格 4-范畴 $\mathbf{Sp}$ 描述。从这一单一数学假设出发，**全部**标准模型参数以零自由参数被预测。推导链为纯数学步骤：
 
 $$
 \begin{aligned}
-\mathbf{Spec}\text{ 4-范畴} &\longrightarrow \text{静默因子 } S_3, S_4 \\
+\mathbf{Sp}\text{ 4-范畴} &\longrightarrow \text{静默因子 } S_3, S_4 \\
 &\longrightarrow \text{IFS 收缩比 } c_1:c_2:c_3 \\
 &\longrightarrow \text{谱维数指数 } \alpha_f \\
 &\longrightarrow \text{费米子质量比 } m_i/m_j \\
@@ -31,13 +31,13 @@ $$
 
 ---
 
-## 2. $\mathbf{Spec}$ 4-范畴与静默因子
+## 2. $\mathbf{Sp}$ 4-范畴与静默因子
 
 ### 2.1 严格 $n$-范畴与 Coherence
 
 严格 $n$-范畴包含对象、1-态射（对象间）、2-态射（1-态射间），直至 $n$-态射。在严格 $n$-范畴中，合成严格结合且单位严格。弱 $n$-范畴的 Coherence 定理表明每个弱 $n$-范畴等价于一个严格 $n$-范畴。
 
-**定义 2.1** ($\mathbf{Spec}$ 4-范畴). $\mathbf{Spec}$ 是严格 4-范畴，其对象为谱生成算子，1-态射为谱流，2-态射为规范相互作用，3-态射为辫子结构，4-态射为 Coherence 同构。
+**定义 2.1** ($\mathbf{Sp}$ 4-范畴). $\mathbf{Sp}$ 是严格 4-范畴，其对象为谱生成算子，1-态射为谱流，2-态射为规范相互作用，3-态射为辫子结构，4-态射为 Coherence 同构。
 
 ### 2.2 静默因子
 
@@ -45,7 +45,7 @@ $$
 
 **命题 2.1** (静默因子). 在严格 $n$-范畴中，$k$-态射的幅度被压制因子 $S_k = e^{-k}$。
 
-对 $\mathbf{Spec}$，相关静默因子为第 3 和第 4 层的：
+对 $\mathbf{Sp}$，相关静默因子为第 3 和第 4 层的：
 
 $$
 S_3 = e^{-N_{\text{gen}}}, \qquad S_4 = e^{-d_H}
@@ -149,7 +149,7 @@ $$\boxed{m_i^{(u)} = (y_i^{(u)})^{\beta_u} \cdot M_{\text{Pl}} \cdot \eta_{\text
 
 （注意 $\beta > 1$：$\lambda_H$ 原始展宽 $2.14\times10^{-5}$ 需压缩至目标 $m_u/m_t = 1.27\times10^{-5}$，因此 $\beta > 1$ 而非 $\beta < 1$。）
 
-**定理 4.3**（$\beta$ 的范畴论必然性）。在 $\mathbf{Spec}$ 严格 4-范畴中，设 $A_H$（Higgs，IFS 指数 $\alpha_v$）与 $A_f$（费米子，IFS 指数 $\alpha_f$）由谱交织子 $\mathcal{I}$ 连接。严格 $n$-范畴的 Coherence 定理 [Paper XVI §2.1] 保证态射合成严格结合，谱流沿 $\mathcal{I}$ 的合成满足指数律：
+**定理 4.3**（$\beta$ 的范畴论必然性）。在 $\mathbf{Sp}$ 严格 4-范畴中，设 $A_H$（Higgs，IFS 指数 $\alpha_v$）与 $A_f$（费米子，IFS 指数 $\alpha_f$）由谱交织子 $\mathcal{I}$ 连接。严格 $n$-范畴的 Coherence 定理 [Paper XVI §2.1] 保证态射合成严格结合，谱流沿 $\mathcal{I}$ 的合成满足指数律：
 
 $$\Phi_f(t) = \mathcal{I} \circ \Phi_H(t) \equiv \Phi_H(t)^{\beta_f}$$
 
@@ -157,7 +157,7 @@ $$\Phi_f(t) = \mathcal{I} \circ \Phi_H(t) \equiv \Phi_H(t)^{\beta_f}$$
 
 $$\boxed{\alpha_f = \alpha_v \cdot \beta_f \quad \Longrightarrow \quad \beta_f = \frac{\alpha_f}{\alpha_v}} \tag{4.8}$$
 
-因此 $\beta_f$ 是 $\mathbf{Spec}$ 范畴结构强制的谱转移指数，非数值拟合参数。数值上，由零参数链 $d_H = 2.7095 \to \alpha_{\text{base}} = d_H/2 \to \alpha_f$（定理 4.2）$\to \beta_f$（定理 4.3）确定，全链无自由参数。
+因此 $\beta_f$ 是 $\mathbf{Sp}$ 范畴结构强制的谱转移指数，非数值拟合参数。数值上，由零参数链 $d_H = 2.7095 \to \alpha_{\text{base}} = d_H/2 \to \alpha_f$（定理 4.2）$\to \beta_f$（定理 4.3）确定，全链无自由参数。
 
 **当 $\beta_f \neq 1$ 的必要条件**：定理 4.3 给出所有扇区的 $\beta_f = \alpha_f/\alpha_v$。但轻子（$\alpha_l=1.358$，$|\alpha_l-\alpha_v|=0.525$）和下型夸克（$\alpha_d=1.229$，$|\alpha_d-\alpha_v|=0.654$）满足 $\beta_f=1$（即退化为 Formula B），因为大 $|\alpha_f-\alpha_v|$ 下 $U_{Hf}$ 矩阵的非对角元已提供充分谱展宽调节。仅当 $|\alpha_f-\alpha_v| \lesssim 0.1$（上型夸克）时 $U_{Hf} \to I$，$\beta_f \neq 1$ 才显式出现。
 
@@ -264,7 +264,7 @@ $$\boxed{\tan^2\theta_{ij}^{(f)} = \frac{r_{ij}^{(f)} - r_\lambda^{(ij)}}{1 - r_
 
 **上型夸克的结构性偏差—已修复**：上型夸克的偏差源于 $\lambda_H^{(1)}/\lambda_H^{(3)} = 2.14\times10^{-5}$ 大于所需的 $m_u/m_t = 1.27\times10^{-5}$。由于 $y_i$ 是 $\lambda_H$ 的凸组合，Formula B 下 $m_u/m_t$ 存在 +68% 的理论偏差下限（优化后降至 +30%）。
 
-修复方案：**Formula B$^\beta$ 谱幂推广** $m_i = (y_i)^{\beta_u} \cdot M_{\text{Pl}} \cdot \eta_{\text{RG}}$，其中 $\beta_u = \alpha_u^{\text{eff}}/\alpha_v = 1.983/1.883 \approx 1.0531$ 来自 $\mathbf{Spec}$ 严格 4-范畴的谱流合成律（定理 4.3 和 §4.3 式 (4.7-4.8)）。当 $\beta = \alpha_u^{\text{eff}}/\alpha_v$ 时，上型夸克完美拟合（偏差 <0.01%），且 $\eta_{\text{RG}}^{(u)}$ 自动等于 $\eta_{\text{ref}} = v/(\sqrt{2}M_{\text{Pl}})$，$\eta_{\text{RG}}^{(u)}/\eta_{\text{ref}} = 1.0027$。
+修复方案：**Formula B$^\beta$ 谱幂推广** $m_i = (y_i)^{\beta_u} \cdot M_{\text{Pl}} \cdot \eta_{\text{RG}}$，其中 $\beta_u = \alpha_u^{\text{eff}}/\alpha_v = 1.983/1.883 \approx 1.0531$ 来自 $\mathbf{Sp}$ 严格 4-范畴的谱流合成律（定理 4.3 和 §4.3 式 (4.7-4.8)）。当 $\beta = \alpha_u^{\text{eff}}/\alpha_v$ 时，上型夸克完美拟合（偏差 <0.01%），且 $\eta_{\text{RG}}^{(u)}$ 自动等于 $\eta_{\text{ref}} = v/(\sqrt{2}M_{\text{Pl}})$，$\eta_{\text{RG}}^{(u)}/\eta_{\text{ref}} = 1.0027$。
 
 ### 5.4 Yukawa 投影模式
 
@@ -493,7 +493,7 @@ Fisher 组合检验：$\chi^2 = 367.7$ (df = 46)，$p \approx 0$。中位 $p$-va
 
 ## 11. 结论
 
-$\mathbf{Spec}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子物理可观测量，$p \approx 0$ 排除随机巧合。框架还预测正常中微子排序、$m_{\beta\beta} \in [0.6, 4.6]$ meV (NO)、$\Sigma m_\nu \approx 59.7$ meV 和不可观测的质子衰变。
+$\mathbf{Sp}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子物理可观测量，$p \approx 0$ 排除随机巧合。框架还预测正常中微子排序、$m_{\beta\beta} \in [0.6, 4.6]$ meV (NO)、$\Sigma m_\nu \approx 59.7$ meV 和不可观测的质子衰变。
 
 **关键进展**：$U_{Hf}$ 混合角 $\theta_{ij}^{(f)}$ 的解析闭合公式（定理 5.5）已导出，$\theta_{23}$ 预测与完整 3×3 求解偏差 $<0.005$ rad。Phase 46 Q2（电荷量子化、谱交织子、$\eta_{\text{RG}}$ 谱推导、Formula B$^\beta$、$U_{Hf}$ 解析角）全部闭合。
 
@@ -539,7 +539,7 @@ $T_c$ 的正确公式为 $T_c = a \cdot \Lambda_{\text{QCD}}$。系数 $a$ 由�
 
 #### 12.5.1 D9 谱织约束
 
-**D9 公式**（谱编织临界嵌入等距条件）。系数 $a$ 由以下公式确定：
+**D9 公式**（谱粘合临界嵌入等距条件）。系数 $a$ 由以下公式确定：
 $$a_0 = \left( \frac{d_{\text{eff}}}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{\Delta\lambda_3} \right)^{1/3}$$
 
 其中：
@@ -606,7 +606,7 @@ $T_c$ 对应 $\partial\mathbf{Rec}_D$ 的温度阈值——当 $T \to T_c$，热
 
 ### 12.7 弱等效原理的谱证明（第 30 项零参数验证）
 
-弱等效原理（惯性质量 = 引力质量）是广义相对论的基石，但在传统框架中是一个假设。在 $\mathbf{Spec}$ 框架中，它可以从谱交织条件直接导出。
+弱等效原理（惯性质量 = 引力质量）是广义相对论的基石，但在传统框架中是一个假设。在 $\mathbf{Sp}$ 框架中，它可以从谱交织条件直接导出。
 
 **谱惯性质量**定义为谱间隙的倒数（Paper XVIII §11.1）：
 
@@ -636,11 +636,11 @@ $$m_{\text{inertial}} = m_{\text{gravitational}}$$
 
 ## 13. 结论（扩展）
 
-$\mathbf{Spec}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子物理可观测量，$p \approx 0$ 排除随机巧合。框架还预测正常中微子排序、$m_{\beta\beta} \in [0.6, 4.6]$ meV (NO)、$\Sigma m_\nu \approx 59.7$ meV 和不可观测的质子衰变。此外，框架从谱交织条件直接导出弱等效原理（第 30 项零参数验证）。
+$\mathbf{Sp}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子物理可观测量，$p \approx 0$ 排除随机巧合。框架还预测正常中微子排序、$m_{\beta\beta} \in [0.6, 4.6]$ meV (NO)、$\Sigma m_\nu \approx 59.7$ meV 和不可观测的质子衰变。此外，框架从谱交织条件直接导出弱等效原理（第 30 项零参数验证）。
 
 **v1.6 新增进展**：
 1. **上型夸克结构性偏差完美修复**（§4.3, §5.3）：通过 Formula B$^\beta$ 谱幂推广（$\beta_u = \alpha_u^{\text{eff}}/\alpha_v = 1.0531$），上型夸克实现完美拟合（偏差 <0.01%）。$\beta$ 值的三个层次已建立：
-   - **范畴论根源**：$\beta_f = \alpha_f/\alpha_v$ 来自 $\mathbf{Spec}$ 严格 4-范畴谱流合成律（定理 3.1），是范畴结构必然性，非数值拟合
+   - **范畴论根源**：$\beta_f = \alpha_f/\alpha_v$ 来自 $\mathbf{Sp}$ 严格 4-范畴谱流合成律（定理 3.1），是范畴结构必然性，非数值拟合
    - **零参数链**：$d_H = 2.7095 \to \alpha_{\text{base}} = d_H/2 \to \alpha_f$（KO 公式）$\to \beta = \alpha_f/\alpha_v$，全链无自由参数
    - **系统性偏移**：$\alpha_u^{\text{eff}} = 1.983$ 较 KO 预测 $\alpha_u^{\text{KO}} = 1.945$ 偏移 2.0%，源于 IFS 基对齐效应（$\delta_{\text{align}} \approx 0.038$），系统性能而非拟合
    - 在 $\beta = \alpha_u^{\text{eff}}/\alpha_v$ 时，$\eta_{\text{RG}}^{(u)}$ 自动等于 $\eta_{\text{ref}}$（偏差 0.27%），满足谱框架自洽性
@@ -676,7 +676,7 @@ $\mathbf{Spec}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子
 - GUT 单化 $M_{\text{GUT}} \approx 10^{19}$ GeV、质子衰变不可观测
 - **v1.8 新增**：电磁电荷量子化谱定理（§5.0）——$\text{Cl}(1,7)$ 旋量表示强制电荷谱 $\{+2/3, -1/3, 0, -1, +1\}$，谱间隙 $\Delta\lambda_{\min}^{(\text{EM})}=0.0229$ 保护离散性；电荷量子化从"Phase 46 Q2 已闭合项"升级为独立定理 5.0 及其完整推导；摘要更新
 - **v1.7 新增**：$U_{Hf}$ 解析混合角推导（§5.5）——定理 5.5 闭合公式 $\tan^2\theta_{ij} = (r_{ij} - r_\lambda)/(1 - r_{ij}r_\lambda)$ 实现零参数解析预测，三步对角化框架，$\theta_{23}$ 偏差 $<0.005$ rad；混合角从"数值优化"降格为"解析预测"；零参数链完整闭合：$d_H \to c_i \to \lambda_H \to \alpha_f \to m_i/m_j \to \theta_{ij}$；摘要、§11 更新开放问题已关闭
-- **v1.6 新增**：上型夸克结构性偏差通过 Formula B$^\beta$ 完美修复——$\beta_u = \alpha_u/\alpha_v = 1.0531$ 来自 $\mathbf{Spec}$ 严格 4-范畴谱流合成律（定理 3.1，范畴论必然性，非数值拟合）；§4.3 全面重写——根因（IFS 基对齐偏移 $\delta_{\text{align}} \approx 0.038$）、$\beta > 1$ 修正（原为 $\beta < 1$）、零参数链 $d_H \to \beta$；三扇区全部完美拟合（偏差 <0.01%）
+- **v1.6 新增**：上型夸克结构性偏差通过 Formula B$^\beta$ 完美修复——$\beta_u = \alpha_u/\alpha_v = 1.0531$ 来自 $\mathbf{Sp}$ 严格 4-范畴谱流合成律（定理 3.1，范畴论必然性，非数值拟合）；§4.3 全面重写——根因（IFS 基对齐偏移 $\delta_{\text{align}} \approx 0.038$）、$\beta > 1$ 修正（原为 $\beta < 1$）、零参数链 $d_H \to \beta$；三扇区全部完美拟合（偏差 <0.01%）
 - **v1.5 新增**：§5 重写为谱交织子框架——谱 Yukawa 闭合公式 $y_i = \sum_k \|U_{ki}\|^2 \lambda_H^{(k)}$、质量公式修正为 Formula B、η_RG 谱推导 $\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}})$、三扇区拟合（轻子/下型完美拟合，上型结构性偏差）；§7 重写为味扇区纤维范畴形式化——$\mathbf{Flt}$ 离散范畴、实结构投影 $J_f$、转移函数与 cocycle 条件（么正性 = cocycle）、$\delta_{CP}$ 和乐表示；§4.3 $\alpha_u$ 修正为 1.983；§11、§13 更新开放问题
 - **v1.3 新增**：弱等效原理谱证明（§12.7）——从谱交织条件直接导出惯性质量 = 引力质量，作为第 30 项零参数验证
 - **v1.2 新增**：Yukawa 特征值修正（§5）——引入 $y_i$ 后所有质量比偏差在 ×1.5 以内；$T_c$ 谱推导（§12.5）——预测值 153 MeV，偏差 1.1%
@@ -687,7 +687,7 @@ $\mathbf{Spec}$ 严格 4-范畴框架以零自由参数预测 29 个独立粒子
 |------|------|----------|
 | **v1.8** | **2026-07-23** | **电荷量子化谱定理独立定理**：§5.0 新增——定理 5.0：$\text{Cl}(1,7)$ 旋量表示强制电荷谱 $\{+2/3, -1/3, 0, -1, +1\}$，$\Delta\lambda_{\min}^{(\text{EM})}=0.0229$ 保护离散性；电荷量子化从"Phase 46 Q2 已闭合项"升级为独立定理 5.0；摘要、版本记录更新 |
 | **v1.7** | **2026-07-23** | **$U_{Hf}$ 解析混合角推导完成**：§5.5 新增——定理 5.5 闭合公式 $\tan^2\theta_{ij} = (r_{ij} - r_\lambda)/(1 - r_{ij}r_\lambda)$ 实现混合角零参数解析预测；三步对角化框架（2-3→1-3→1-2）；$\theta_{23}$ 解析预测与完整 3×3 数值求解偏差 $<0.005$ rad；上型夸克 $U \to I$ 极限确认识别。混合角从"数值优化"降格为"解析预测"；§5.3 重写——解析公式 + 对比表；§11 开放问题已关闭；摘要更新；零参数链完整闭合：$d_H \to c_i \to \lambda_H \to \alpha_f \to m_i/m_j \to \theta_{ij}$；Phase 46 Q2 全部子项闭合 |
-| **v1.6** | **2026-07-23** | **上型夸克结构性偏差完美修复**：§4.3 全面重写——IFS 基对齐效应根因、$\beta > 1$ 修正（原 $\beta < 1$）、零参数链 $d_H \to \beta$、范畴论必然性（谱流合成律）；Formula B$^\beta$ 谱幂推广（$\beta_u = \alpha_u^{\text{eff}}/\alpha_v = 1.0531$，来自 $\mathbf{Spec}$ 严格 4-范畴）；三扇区全部完美拟合（偏差 <0.01%）；§5.3 更新为上型夸克偏差已修复；§11、§13 开放问题移除上型夸克问题；版本记录更新 |
+| **v1.6** | **2026-07-23** | **上型夸克结构性偏差完美修复**：§4.3 全面重写——IFS 基对齐效应根因、$\beta > 1$ 修正（原 $\beta < 1$）、零参数链 $d_H \to \beta$、范畴论必然性（谱流合成律）；Formula B$^\beta$ 谱幂推广（$\beta_u = \alpha_u^{\text{eff}}/\alpha_v = 1.0531$，来自 $\mathbf{Sp}$ 严格 4-范畴）；三扇区全部完美拟合（偏差 <0.01%）；§5.3 更新为上型夸克偏差已修复；§11、§13 开放问题移除上型夸克问题；版本记录更新 |
 | **v1.5** | **2026-07-23** | **谱交织子框架 + η_RG 谱推导**：§5 完全重写——谱 Yukawa 闭合公式 $y_i^{(f)} = \sum_k \|U_{ki}\|^2 \lambda_H^{(k)}$、质量公式修正为 Formula B $(m_i = y_i \cdot M_{\text{Pl}} \cdot \eta_{\text{RG}})$、η_RG 谱推导 $\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}})$、三扇区拟合（轻子/下型偏差<0.01%，上型结构性偏差+30%）；$\alpha_u$ 修正为 1.983；§7 重写为味扇区纤维范畴形式化；§11、§13 更新开放问题 |
 | v1.4 | 2026-07-19 | 修复 §12.7 研究笔记引用，替换为 Paper XVIII §11.1 交叉引用；论文全部引用保持自包含 |
 | v1.3 | 2026-07-19 | 新增弱等效原理谱证明（§12.7）——从谱交织条件直接导出惯性质量 = 引力质量，作为第 30 项零参数验证；更新摘要、结论（扩展）、版本信息 |

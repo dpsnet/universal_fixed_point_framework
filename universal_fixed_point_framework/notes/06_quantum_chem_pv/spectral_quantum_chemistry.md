@@ -8,7 +8,7 @@
 
 ---
 
-## 1. Schrödinger 方程在 Spec 中的翻译
+## 1. Schrödinger 方程在 Sp 中的翻译
 
 量子化学的基石——定态 Schrödinger 方程 $H\psi = E\psi$——在谱框架中被翻译为谱生成元的本征值问题。令 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$ 为分子 Hamiltonian 的谱像，则：
 

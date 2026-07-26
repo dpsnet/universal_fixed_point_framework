@@ -90,7 +90,7 @@ python test_sm_instance.py # 运行接口测试
 
 ## 待完成
 
-- [ ] 中微子质量 Spec 对象集成（当前 `to_spectral_object` 仅含 9 个带电费米子）。
+- [ ] 中微子质量 Sp 对象集成（当前 `to_spectral_object` 仅含 9 个带电费米子）。
 - [ ] CKM/PMNS 混合矩阵的递归描述与预测。
 - [x] 实例假设层的元数据说明文件 `instance_hypothesis.yml`。
 - [x] 与 `src/fixed_point_solver.py` 初步集成（扇区测度与质量谱的不动点求解）。

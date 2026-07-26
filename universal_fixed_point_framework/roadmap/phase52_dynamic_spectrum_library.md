@@ -135,7 +135,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 多模叠加谱分析（波形合成 + 谱分解 + 谱间隙恢复）✅
   - 与 LIGO 观测数据的对比框架（匹配滤波 + SNR + 参数估计）✅
 - **产出**：`src/dynamic_spectrum/binary_ringdown_spectrum.py` + `src/dynamic_spectrum/leaver_unified_solver.py` + `notes/dynamic_binary_ringdown.md`
-- **验证**：7/7 测试通过（Leaver QNM、收敛性、多模合成、谱分解、谱间隙、LIGO对比、铃荡能流）；统一求解器集成去递归理论 + 修正 Leaver 系数 + LACI + Homotopy Continuation
+- **验证**：7/7 测试通过（Leaver QNM、收敛性、多模合成、谱分解、谱间隙、LIGO对比、铃荡能流）；统一求解器集成谱化理论 + 修正 Leaver 系数 + LACI + Homotopy Continuation
 - **依赖**：A2 完成、QNM 求解器（已有）
 
 ### B3: 普朗克能标多体散射——圈图修正谱 ✅ (2026-07-25)
@@ -275,7 +275,7 @@ Phase 52A ──→ Phase 52B ──→ Phase 52C ──→ Phase 52D
 | `src/dynamic_spectrum/binary_inspiral_spectrum.py` | 后牛顿谱展开 |
 | `src/dynamic_spectrum/binary_merger_spectrum.py` | 合并阶段谱演化 |
 | `src/dynamic_spectrum/binary_ringdown_spectrum.py` | 铃荡阶段谱分析 |
-| `src/dynamic_spectrum/leaver_unified_solver.py` | Leaver QNM 统一求解器（去递归+修正系数+LACI+同伦延拓） |
+| `src/dynamic_spectrum/leaver_unified_solver.py` | Leaver QNM 统一求解器（谱化+修正系数+LACI+同伦延拓） |
 | `src/dynamic_spectrum/binary_full_waveform.py` | 全波形谱合成 ✅ |
 | `src/dynamic_spectrum/planck_scattering_2to2.py` | 2→2 散射谱 |
 | `src/dynamic_spectrum/planck_scattering_2ton.py` | 2→N 散射谱 |
@@ -301,7 +301,7 @@ Phase 52A ──→ Phase 52B ──→ Phase 52C ──→ Phase 52D
 
 | 日期 | 更新内容 | 关联 |
 |:----|:----|:----|
-| 2026-07-25 | **代码整合与清理**：基于去递归理论的统一 Leaver 求解器 `LeaverUnifiedSolver` 定位为最终版本（集成 DerecursionAnalyzer + LeaverResidual + LACIEvaluator + Homotopy Continuation）；废弃的 32 个探索性 Leaver 实现/测试/诊断文件移入 `src/_archive/leaver_deprecated/`；`binary_ringdown_spectrum.py` 新增 `qnm_frequency_unified()` 和 `qnm_spectrum_unified()` 适配器函数；更新 Paper XXVI v1.2（§3.3 补充去递归求解器描述）和 dynamic_binary_ringdown.md v0.2（§1.3 新增去递归求解器节） | Phase 52C |
+| 2026-07-25 | **代码整合与清理**：基于谱化理论的统一 Leaver 求解器 `LeaverUnifiedSolver` 定位为最终版本（集成 DerecursionAnalyzer + LeaverResidual + LACIEvaluator + Homotopy Continuation）；废弃的 32 个探索性 Leaver 实现/测试/诊断文件移入 `src/_archive/leaver_deprecated/`；`binary_ringdown_spectrum.py` 新增 `qnm_frequency_unified()` 和 `qnm_spectrum_unified()` 适配器函数；更新 Paper XXVI v1.2（§3.3 补充谱化求解器描述）和 dynamic_binary_ringdown.md v0.2（§1.3 新增谱化求解器节） | Phase 52C |
 | 2026-07-25 | **Phase 52A 完成**：C1 谱数值框架（SpectralOperator/SpectralMatrix/SpectralEvolutionSolver/SpectralCutoff/SpectralAccuracy 5/5 测试通过）、A1 后牛顿谱展开（PN 哈密顿量谱分解 + dE/df 谱表示 + 参数扫描 5/5 测试通过）、B1 普朗克散射谱（谱引力子传播子 + 2→2 谱振幅 + UV 正则化 6/6 测试通过）；创建研究笔记 dynamic_binary_inspiral.md v0.1 和 dynamic_planck_scattering.md v0.1 | Phase 52A |
 | 2026-07-25 | **Phase 52B: B2 完成** — 2→N 普朗克散射谱（N-体相空间谱表示 + 2→3/2→4 软因子振幅 + 末态谱分布 + 谱级联 7/7 测试通过）；更新 dynamic_planck_scattering.md v0.2 | Phase 52B |
 | 2026-07-25 | **Phase 52B: C2 完成** — 并行计算加速（GPU加速器CPU降级模式 + 分布式求解器多进程/串行降级 + 内存优化 LRU/分块/稀疏/mmap 6/6 测试通过） | Phase 52B |

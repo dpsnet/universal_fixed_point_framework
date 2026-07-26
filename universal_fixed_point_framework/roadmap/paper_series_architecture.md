@@ -4,11 +4,11 @@
 
 ---
 
-## 0. 根基：Rec/Spec 范畴框架
+## 0. 根基：Rec/Sp 范畴框架
 
 ```
-Paper I  ── 分形谱去递归理论 (v2.44)
-  ├── §1-4: Rec/Spec 范畴定义、D 函子、伴随对
+Paper I  ── 分形谱化理论 (v2.44)
+  ├── §1-4: Rec/Sp 范畴定义、D 函子、伴随对
   ├── §5: 四层静默体系 (S1-S4, 态射/对象/谱/辫子)
   ├── §5.7.6: 谱流静默 — [Phase 53A, 53B 待整合]
   └── §8: 开放问题清单 → 驱动所有后续论文
@@ -21,7 +21,7 @@ Paper XIX ── 范畴扩展：静态拓扑与随机系统 (v0.8)
   └── §17: Temp/RG 纤维范畴体系（新增 v0.8）
         ├── Temp、RG 范畴定义
         ├── 谱丛 Bun(Temp,Spec)、Bun(RG,Spec)
-        ├── 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$
+        ├── 谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$
         ├── 与 $(G,\eta)$ 相图的第三维度集成
         ├── QCD 实例 (Tc/Λ_QCD, a=0.729)
         └── BCS/Hawking-Page 扩展框架
@@ -113,7 +113,7 @@ Coset so(1,7)/(su(4)⊕su(2)ₗ⊕su(2)ᵣ) [7]
 | 章 | 内容 | 来源 | 状态 |
 |:--:|:-----|:----|:----:|
 | §1 | 引言：Cl(1,7) 代数根源与完整生成树 | 本篇总纲 | 📝 待写 |
-| §2 | Rec/Spec 范畴框架概要 | Paper I 引用 | ✅ 引用 |
+| §2 | Rec/Sp 范畴框架概要 | Paper I 引用 | ✅ 引用 |
 | §3 | 谱流生成元的范畴来源：G_GR = ad(G)(A) | Phase 53A | ✅ |
 | §4 | SU(2) Casimir 谱与 √{k(k+1)} | Phase 53B-53C | ✅ |
 | §5 | Cl(1,7) Bott 分类与 k_max = 8 | Phase 53D | ✅ |
@@ -164,7 +164,7 @@ Cl(1,7) 旋量表示 [8]
 ## 3. 论文系列总谱
 
 ```
-Paper I      根基：Rec/Spec 范畴框架                        [✅ v2.44]
+Paper I      根基：Rec/Sp 范畴框架                        [✅ v2.44]
 Paper II     物理应用                                      [✅ v2.22]
   │              ├── GR+SM 统一谱交织精度 ε 已从 Cl(1,7) 第一性原理导出
   │              │   (ε = 4 × v_EW/M_Pl = 8.068×10^{-17}, 偏差 0.64%)
@@ -183,7 +183,7 @@ Paper 50     α 指数第一性推导 (Phase 50)                   [✅]
 Paper 51     CKM/PMNS 统一 (Phase 51)                      [✅]
 
 ── 引力扇区 ──
-Paper XX     谱间隙第一性推导：Rec/Spec → SU(2) → Cl(1,7) → Δλ_min    [📝 v0.2 初稿]
+Paper XX     谱间隙第一性推导：Rec/Sp → SU(2) → Cl(1,7) → Δλ_min    [📝 v0.2 初稿]
              (Phase 53A-53E + SpectralGap + CategoryRepBridge)
 
 ── 旋量扇区 ──

@@ -32,13 +32,13 @@ $$
 
 ### 1.1 一段被遗忘的修正
 
-2018 年，在一个与化学反应无关的上下文中——脉冲神经网络（SNN）的训练效率问题——我们注意到了递归系统的"去递归"结构。这个结构被形式化为一个函子：
+2018 年，在一个与化学反应无关的上下文中——脉冲神经网络（SNN）的训练效率问题——我们注意到了递归系统的"谱化"结构。这个结构被形式化为一个函子：
 
-$$D: \mathbf{Rec}_D \to \mathbf{Spec}$$
+$$D: \mathbf{Rec}_D \to \mathbf{Sp}$$
 
 它将递归动力学映射为谱数据。起初这只是一个人工智能中的数学技巧，一个"巧妙但无关紧要的变形"。
 
-直到有人注意到：如果把这个谱去递归函子应用到一个具体的化学反应 H + H₂ → H₂ + H 上，传统过渡态理论（TST）的反应速率需要乘上一个修正因子：
+直到有人注意到：如果把这个谱化函子应用到一个具体的化学反应 H + H₂ → H₂ + H 上，传统过渡态理论（TST）的反应速率需要乘上一个修正因子：
 
 $$\mathcal{F}_{\text{spec}} = \frac{\langle \psi_{\text{H}_3}^{\ddagger} | \bar{A}_{\text{spec}} | \psi_{\text{H}_3}^{\ddagger} \rangle}{\langle \psi_{\text{H}_3}^{\ddagger} | \bar{A}_{\text{classical}} | \psi_{\text{H}_3}^{\ddagger} \rangle}$$
 
@@ -166,7 +166,7 @@ $$\ell_{\text{corr}} \propto \frac{1}{\sqrt{\gamma \cdot \lambda_G}} \approx \pi
 框架的核心思想很简单：将不同耦合机制视为**不同的纤维化层级**：
 
 $$
-\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec}) \hookrightarrow \mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Spec}) \hookrightarrow \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp}) \hookrightarrow \mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Sp}) \hookrightarrow \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})
 $$
 
 每个层级有自己的谱流方程和 RG 不动点。$\ell_{\text{corr}}$ 是该不动点的特征值——不动点不同，$\ell$ 取不同但离散的值。这就是为什么：

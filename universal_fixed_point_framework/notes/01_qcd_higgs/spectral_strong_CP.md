@@ -1,6 +1,6 @@
 # 强 CP 问题的谱解
 
-**目标**：从 $\mathbf{Spec}$ 范畴结构推导 $\theta_{\text{QCD}} = 0$ 或 $\ll 10^{-10}$。
+**目标**：从 $\mathbf{Sp}$ 范畴结构推导 $\theta_{\text{QCD}} = 0$ 或 $\ll 10^{-10}$。
 
 ## 1. 问题
 
@@ -10,7 +10,7 @@ $$\mathcal{L}_{\text{QCD}} = -\frac{1}{4} G_{\mu\nu}^a G^{a\mu\nu} + \bar{q}(i\g
 
 中子电偶极矩实验给出 $|\theta_{\text{QCD}}| < 10^{-10}$——这就是强 CP 问题：为什么 $\theta_{\text{QCD}}$ 如此之小？
 
-## 2. Spec 范畴中的 θ 项
+## 2. Sp 范畴中的 θ 项
 
 在谱语言中，QCD θ 项对应规范曲率的谱迹：
 
@@ -20,13 +20,13 @@ $$\mathcal{L}_\theta^{\text{spec}} = \theta \cdot \frac{g^2}{32\pi^2} \operatorn
 
 ## 3. 自伴性 → θ = 0
 
-在 $\mathbf{Spec}$ 范畴中，所有谱生成元 $A_{F,i}$ 都是**自伴算子**（Paper I §2.3）。自伴性在谱拓扑项上的直接推论是：
+在 $\mathbf{Sp}$ 范畴中，所有谱生成元 $A_{F,i}$ 都是**自伴算子**（Paper I §2.3）。自伴性在谱拓扑项上的直接推论是：
 
 $$\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0 \quad \text{当 } A_{\text{gauge}} = A_{\text{gauge}}^\dagger$$
 
-**证明**：谱规范曲率 $\mathcal{F}$ 由 $A_{\text{gauge}}$ 的谱分解决定。若 $A_{\text{gauge}}$ 是自伴的，则其特征值全为实数。谱拓扑荷（Pontryagin 指数）$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int \operatorname{Tr}(\mathcal{F} \wedge \mathcal{F})$ 是特征值的交替和。在 $\mathbf{Spec}$ 的 $\mathbb{Z}_2$ 分级下，自伴算子的谱分解自动满足 $Q_{\text{top}} = 0$，因此 $\theta_{\text{QCD}} = 0$。
+**证明**：谱规范曲率 $\mathcal{F}$ 由 $A_{\text{gauge}}$ 的谱分解决定。若 $A_{\text{gauge}}$ 是自伴的，则其特征值全为实数。谱拓扑荷（Pontryagin 指数）$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int \operatorname{Tr}(\mathcal{F} \wedge \mathcal{F})$ 是特征值的交替和。在 $\mathbf{Sp}$ 的 $\mathbb{Z}_2$ 分级下，自伴算子的谱分解自动满足 $Q_{\text{top}} = 0$，因此 $\theta_{\text{QCD}} = 0$。
 
-**数值验证**（`paperX_spectral_chiral.py`）：BPST 单瞬子的谱拓扑荷 $Q_{\text{top}} = 0.99998 \neq 0$，说明瞬子本身贡献非零——但瞬子对应非自伴的规范连接。在 $\mathbf{Spec}$ 中，物理真空对应的 $A_{\text{gauge}}$ 是自伴的，因此物理 $\theta$ 角为零。
+**数值验证**（`paperX_spectral_chiral.py`）：BPST 单瞬子的谱拓扑荷 $Q_{\text{top}} = 0.99998 \neq 0$，说明瞬子本身贡献非零——但瞬子对应非自伴的规范连接。在 $\mathbf{Sp}$ 中，物理真空对应的 $A_{\text{gauge}}$ 是自伴的，因此物理 $\theta$ 角为零。
 
 ## 4. 与 Peccei-Quinn 机制的关系
 
@@ -34,7 +34,7 @@ $$\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0 \quad \te
 
 $$\mathcal{L}_a^{\text{spec}} = \frac12 \operatorname{Tr}_{\mathcal{H}_a}([A_a, a]^2) + \frac{a}{f_a} \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F})$$
 
-谱框架更进一步：轴子不是为解决强 CP 问题人为引入的场，而是 $\mathbf{Spec}$ 4-范畴中辫子静默 $S_4$ 的自然产物。$\theta_{\text{QCD}}$ 被 $S_4$ 压制到 $<10^{-10}$。
+谱框架更进一步：轴子不是为解决强 CP 问题人为引入的场，而是 $\mathbf{Sp}$ 4-范畴中辫子静默 $S_4$ 的自然产物。$\theta_{\text{QCD}}$ 被 $S_4$ 压制到 $<10^{-10}$。
 
 ## 5. 压制因子
 

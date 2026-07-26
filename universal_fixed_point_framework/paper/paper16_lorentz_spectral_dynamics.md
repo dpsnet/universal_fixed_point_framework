@@ -4,11 +4,11 @@
 
 **版本**：v1.1（2026-07-19）
 
-**摘要**：本文在 UFPF 既有框架（Paper I-XV）基础上，建立 Lorentz 变换在 $\mathbf{Spec}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$（$G_{\text{Lor}} \in \mathfrak{so}(1,3)$）的实例化**。由此推出二十三条主定理：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式；(3) 时间膨胀 = 谱间隙按 $\mathrm{sech}\,\varphi$ 压缩；(4) 长度收缩 = 谱密度的 Fourier 重标度；(5) 因果性 = 谱符号函数 $\mathrm{sgn}(\sigma(A_v))$；(6) 静质量 = Casimir 算子谱间隙 $m^2 = \min\sigma(P^\mu P_\mu)$；(7) 自旋 = Pauli-Lubanski 谱间隙 $s(s+1) = \min\sigma(W^\mu W_\mu)/m^2$；(8) 光锥 = $\partial\mathbf{Rec}_D$ 谱边界，与 Paper VIII 黑洞视界统一；(9) Lorentz 群 = $\partial\mathbf{Rec}_D$ 的自同构群，把 Paper XI A7 公理降级为定理；(10) Lorentz 违规 = 谱静默条件破缺，给出可检验 LIV 预言；(11) Carreau 流体粘度与 Lorentz 观测频率精确同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$（$\sinh\varphi^* = \lambda\dot\gamma$）；(12) 流变谱流方程 $dA_\phi/d\phi = [G_{\text{rheo}}, A_\phi] + \mathcal{D}_\nu + \mathcal{F}_{\text{micro}}$ 推广 Paper VI B2 到非牛顿情形；(13) 钟慢与硬化共享谱间隙压缩机制 $\Delta\lambda_{\text{obs}} = \Delta\lambda_0/\mathcal{F}(\phi)$；(14) 三种硬化律对应三种 Lie 代数（平凡/$\mathbb{R}$/$\mathfrak{so}(1,1)$）；(15) 声子硬化与 Lorentz 因子精确同构（$\mathfrak{so}(1,1)$）；(16) 电磁极化饱和与 Carreau 变稀通过 Wick 旋转对偶（$\mathfrak{so}(2)$）；(17) 量子相变临界慢化在 $z\nu=1/2$ 时与流变硬化同构；(18) 神经网络 NTK 谱压缩与谱间隙坍缩同构；(19) 八类临界现象通过统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 归一到同一谱边界；(20) 局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群；(21) Einstein 方程翻译为谱曲率-物质谱流对偶 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$；(22) Bianchi 恒等式的谱形式对应能量-动量守恒；(23) 宇宙学常数 $\Lambda = \partial\mathbf{Rec}_D$ 边界曲率，暗能量 = 谱边界几何效应。本工作将狭义相对论的核心结构还原为谱定理的推论，并与黑洞物理（Paper VIII）、力统一（Paper V）、流体谱动力学（Paper VI）、QFT 公理（Paper XI）形成跨领域统一框架，建立了 $\partial\mathbf{Rec}_D$ 谱边界作为普适临界现象统一机制的地位，并将广义相对论纳入谱动力学解释。
+**摘要**：本文在 UFPF 既有框架（Paper I-XV）基础上，建立 Lorentz 变换在 $\mathbf{Sp}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$（$G_{\text{Lor}} \in \mathfrak{so}(1,3)$）的实例化**。由此推出二十三条主定理：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间，可加性来自 $\tanh$ 加法公式；(3) 时间膨胀 = 谱间隙按 $\mathrm{sech}\,\varphi$ 压缩；(4) 长度收缩 = 谱密度的 Fourier 重标度；(5) 因果性 = 谱符号函数 $\mathrm{sgn}(\sigma(A_v))$；(6) 静质量 = Casimir 算子谱间隙 $m^2 = \min\sigma(P^\mu P_\mu)$；(7) 自旋 = Pauli-Lubanski 谱间隙 $s(s+1) = \min\sigma(W^\mu W_\mu)/m^2$；(8) 光锥 = $\partial\mathbf{Rec}_D$ 谱边界，与 Paper VIII 黑洞视界统一；(9) Lorentz 群 = $\partial\mathbf{Rec}_D$ 的自同构群，把 Paper XI A7 公理降级为定理；(10) Lorentz 违规 = 谱静默条件破缺，给出可检验 LIV 预言；(11) Carreau 流体粘度与 Lorentz 观测频率精确同构 $\eta/\eta_0 = \mathrm{sech}\,\varphi^*$（$\sinh\varphi^* = \lambda\dot\gamma$）；(12) 流变谱流方程 $dA_\phi/d\phi = [G_{\text{rheo}}, A_\phi] + \mathcal{D}_\nu + \mathcal{F}_{\text{micro}}$ 推广 Paper VI B2 到非牛顿情形；(13) 钟慢与硬化共享谱间隙压缩机制 $\Delta\lambda_{\text{obs}} = \Delta\lambda_0/\mathcal{F}(\phi)$；(14) 三种硬化律对应三种 Lie 代数（平凡/$\mathbb{R}$/$\mathfrak{so}(1,1)$）；(15) 声子硬化与 Lorentz 因子精确同构（$\mathfrak{so}(1,1)$）；(16) 电磁极化饱和与 Carreau 变稀通过 Wick 旋转对偶（$\mathfrak{so}(2)$）；(17) 量子相变临界慢化在 $z\nu=1/2$ 时与流变硬化同构；(18) 神经网络 NTK 谱压缩与谱间隙坍缩同构；(19) 八类临界现象通过统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 归一到同一谱边界；(20) 局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群；(21) Einstein 方程翻译为谱曲率-物质谱流对偶 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$；(22) Bianchi 恒等式的谱形式对应能量-动量守恒；(23) 宇宙学常数 $\Lambda = \partial\mathbf{Rec}_D$ 边界曲率，暗能量 = 谱边界几何效应。本工作将狭义相对论的核心结构还原为谱定理的推论，并与黑洞物理（Paper VIII）、力统一（Paper V）、流体谱动力学（Paper VI）、QFT 公理（Paper XI）形成跨领域统一框架，建立了 $\partial\mathbf{Rec}_D$ 谱边界作为普适临界现象统一机制的地位，并将广义相对论纳入谱动力学解释。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）、Paper III（谱对应等价性）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）、Paper XI（A1-A7 谱 QFT 公理系统，特别是 A7 Lorentz 协变公理）、Paper XIII（多重静默理论）。度规符号约定 $\eta = \mathrm{diag}(+,-,-,-)$，光速 $c = 1$（自然单位）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper III（谱对应等价性）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）、Paper XI（A1-A7 谱 QFT 公理系统，特别是 A7 Lorentz 协变公理）、Paper XIII（多重静默理论）。度规符号约定 $\eta = \mathrm{diag}(+,-,-,-)$，光速 $c = 1$（自然单位）。
 
 ---
 
@@ -29,7 +29,7 @@ UFPF 框架在 Paper XI A7 公理中已规定 QFT 场 $\Phi(\lambda)$ 在 Lorent
 ### 1.2 核心论题
 
 本文证明：**Lorentz 变换是谱流方程在时空对称群上的限制**。具体地，对 Lorentz 群 $SO^+(1,3)$ 的 Lie 代数 $\mathfrak{so}(1,3)$，存在谱生成元嵌入
-$$\iota_{\text{Lor}}: \mathfrak{so}(1,3) \hookrightarrow \mathrm{Gen}(\mathbf{Spec}),$$
+$$\iota_{\text{Lor}}: \mathfrak{so}(1,3) \hookrightarrow \mathrm{Gen}(\mathbf{Sp}),$$
 
 使得任意 Lorentz 变换 $\Lambda = \exp(\omega_{\mu\nu}M^{\mu\nu}/2) \in SO^+(1,3)$ 对应谱流
 $$\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau],\quad G_{\text{Lor}} = \iota_{\text{Lor}}\left(\tfrac12\omega_{\mu\nu}M^{\mu\nu}\right),$$
@@ -37,7 +37,7 @@ $$\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau],\quad G_{\text{Lor}} = \iota_
 解为 $A_\tau = U_\tau A_0 U_\tau^{-1}$，$U_\tau = e^{\tau G_{\text{Lor}}}$。Lorentz 不变性由 Paper V 定理 2.2（谱流不变性）保证：$\sigma(A_\tau) = \sigma(A_0)$。
 
 进一步，Lorentz 群本身可从 $\partial\mathbf{Rec}_D$ 谱边界推导：
-$$SO^+(1,3) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}),$$
+$$SO^+(1,3) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}),$$
 
 即 Lorentz 群是 $\partial\mathbf{Rec}_D$ 谱边界的保结构自同构群。这把 Paper XI A7 公理从"独立公理"降级为"$\partial\mathbf{Rec}_D$ 自同构定理"。
 
@@ -54,30 +54,30 @@ $$SO^+(1,3) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}),$$
 Lorentz 群 $SO^+(1,3)$ 的 Lie 代数 $\mathfrak{so}(1,3)$ 由 6 个生成元构成：3 个空间旋转 $J_i$ 与 3 个 Lorentz 推进 $K_i$，对易关系为
 $$[J_i, J_j] = \varepsilon_{ijk} J_k,\quad [J_i, K_j] = \varepsilon_{ijk} K_k,\quad [K_i, K_j] = -\varepsilon_{ijk} J_k.$$
 
-**定义 2.1**（Lorentz 谱生成元嵌入）。Lorentz 谱生成元嵌入 $\iota_{\text{Lor}}: \mathfrak{so}(1,3) \to \mathrm{Gen}(\mathbf{Spec})$ 是 Lie 代数同态，把 $\mathfrak{so}(1,3)$ 的生成元 $J_i, K_i$ 映为 $\mathbf{Spec}$ 中的反 Hermite 谱生成元：
+**定义 2.1**（Lorentz 谱生成元嵌入）。Lorentz 谱生成元嵌入 $\iota_{\text{Lor}}: \mathfrak{so}(1,3) \to \mathrm{Gen}(\mathbf{Sp})$ 是 Lie 代数同态，把 $\mathfrak{so}(1,3)$ 的生成元 $J_i, K_i$ 映为 $\mathbf{Sp}$ 中的反 Hermite 谱生成元：
 $$\iota_{\text{Lor}}(J_i) =: \mathcal{J}_i,\quad \iota_{\text{Lor}}(K_i) =: \mathcal{K}_i,$$
 
 满足 $\mathcal{J}_i^\dagger = -\mathcal{J}_i$，$\mathcal{K}_i^\dagger = -\mathcal{K}_i$（反 Hermite 性保证 $U_\tau = e^{\tau\mathcal{G}}$ 为幺正算子，谱流保谱）。Lie 代数同态条件：
 $$[\mathcal{J}_i, \mathcal{J}_j] = \varepsilon_{ijk}\mathcal{J}_k,\quad [\mathcal{J}_i, \mathcal{K}_j] = \varepsilon_{ijk}\mathcal{K}_k,\quad [\mathcal{K}_i, \mathcal{K}_j] = -\varepsilon_{ijk}\mathcal{J}_k.$$
 
-**注 2.1**（同态的非平凡性）。$\iota_{\text{Lor}}$ 不是恒等映射——它把抽象 Lie 代数元映为 $\mathbf{Spec}$ 中的具体算子。其存在性由 Wigner-Bargmann 表示定理保证：Lorentz 群在 Hilbert 空间上的么正表示存在，且其 Lie 代数表示满足上述对易关系。
+**注 2.1**（同态的非平凡性）。$\iota_{\text{Lor}}$ 不是恒等映射——它把抽象 Lie 代数元映为 $\mathbf{Sp}$ 中的具体算子。其存在性由 Wigner-Bargmann 表示定理保证：Lorentz 群在 Hilbert 空间上的么正表示存在，且其 Lie 代数表示满足上述对易关系。
 
 ### 2.2 主定理 1：Lorentz 谱流方程
 
-**定理 2.1**（Lorentz 谱流方程——主定理 1）。设物理可观测量 $A$ 在 $\mathbf{Spec}$ 中的谱像为 $D(A) = (\mathcal{H}, A, \sigma(A))$。Lorentz 变换 $\Lambda(\boldsymbol{\theta}, \boldsymbol{\varphi}) = \exp(\boldsymbol{\theta}\cdot\mathbf{J} + \boldsymbol{\varphi}\cdot\mathbf{K}) \in SO^+(1,3)$ 作用于 $A$ 上对应谱流：
+**定理 2.1**（Lorentz 谱流方程——主定理 1）。设物理可观测量 $A$ 在 $\mathbf{Sp}$ 中的谱像为 $D(A) = (\mathcal{H}, A, \sigma(A))$。Lorentz 变换 $\Lambda(\boldsymbol{\theta}, \boldsymbol{\varphi}) = \exp(\boldsymbol{\theta}\cdot\mathbf{J} + \boldsymbol{\varphi}\cdot\mathbf{K}) \in SO^+(1,3)$ 作用于 $A$ 上对应谱流：
 
 $$\boxed{\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau],\quad G_{\text{Lor}} = \boldsymbol{\theta}\cdot\boldsymbol{\mathcal{J}} + \boldsymbol{\varphi}\cdot\boldsymbol{\mathcal{K}}}$$
 
 其中 $\tau$ 为谱流参数（在纯旋转时 $\tau = |\boldsymbol{\theta}|$ 为旋转角；在纯推进时 $\tau = |\boldsymbol{\varphi}|$ 为 rapidity）。解为：
 $$A_\tau = U_\tau A_0 U_\tau^{-1},\quad U_\tau = e^{\tau G_{\text{Lor}}}.$$
 
-**证明**。由 $\iota_{\text{Lor}}$ 是 Lie 代数同态，$\exp(\tau G_{\text{Lor}}) = \iota_{\text{Lor}}(\exp(\tau\omega_{\mu\nu}M^{\mu\nu}/2))$ 是 Lorentz 群在 $\mathbf{Spec}$ 中的实现。$G_{\text{Lor}}$ 反 Hermite $\Rightarrow$ $U_\tau$ 幺正 $\Rightarrow$ $A_\tau = U_\tau A_0 U_\tau^{-1}$ 是相似变换。谱流方程由直接对 $\tau$ 求导得到：$\frac{d}{d\tau}A_\tau = G_{\text{Lor}} A_\tau - A_\tau G_{\text{Lor}} = [G_{\text{Lor}}, A_\tau]$。□
+**证明**。由 $\iota_{\text{Lor}}$ 是 Lie 代数同态，$\exp(\tau G_{\text{Lor}}) = \iota_{\text{Lor}}(\exp(\tau\omega_{\mu\nu}M^{\mu\nu}/2))$ 是 Lorentz 群在 $\mathbf{Sp}$ 中的实现。$G_{\text{Lor}}$ 反 Hermite $\Rightarrow$ $U_\tau$ 幺正 $\Rightarrow$ $A_\tau = U_\tau A_0 U_\tau^{-1}$ 是相似变换。谱流方程由直接对 $\tau$ 求导得到：$\frac{d}{d\tau}A_\tau = G_{\text{Lor}} A_\tau - A_\tau G_{\text{Lor}} = [G_{\text{Lor}}, A_\tau]$。□
 
 **注 2.2**（与 Paper V 力谱流的同构）。Lorentz 谱流方程与 Paper V 的力谱流方程 $\frac{d}{dt}A_t = \sum_i g_i [A_{F,i}, A_t]$ 共享 Lie 导数结构 $[G, A_t]$。区别仅在生成元的物理身份：力谱流的 $A_{F,i}$ 是相互作用的谱生成元，Lorentz 谱流的 $\mathcal{J}_i, \mathcal{K}_i$ 是时空对称性的谱生成元。这一同构揭示：**时空对称性与基本力共享同一谱动力学根源**。
 
 ### 2.3 主定理 2：Lorentz 不变性 = 谱不变性
 
-**定理 2.2**（Lorentz 不变性的谱刻画——主定理 2）。对任意 Lorentz 变换 $\Lambda \in SO^+(1,3)$ 与任意可观测量 $A \in \mathrm{Obj}(\mathbf{Spec})$，
+**定理 2.2**（Lorentz 不变性的谱刻画——主定理 2）。对任意 Lorentz 变换 $\Lambda \in SO^+(1,3)$ 与任意可观测量 $A \in \mathrm{Obj}(\mathbf{Sp})$，
 
 $$\boxed{\sigma(A_\tau) = \sigma(A_0),\quad \forall \tau.}$$
 
@@ -85,7 +85,7 @@ $$\boxed{\sigma(A_\tau) = \sigma(A_0),\quad \forall \tau.}$$
 
 **证明**。由定理 2.1，$A_\tau = U_\tau A_0 U_\tau^{-1}$ 是幺正相似变换。幺正相似变换保持算子的谱（包括离散特征值、连续谱、重数），故 $\sigma(A_\tau) = \sigma(A_0)$。□
 
-**推论 2.3**（Lorentz 不变量 = 谱不动点）。Lorentz 不变量在 $\mathbf{Spec}$ 中对应 Lorentz 谱流的不动点：$A$ 是 Lorentz 不变量 $\Leftrightarrow$ $[G_{\text{Lor}}, A] = 0$ 对所有 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 成立。
+**推论 2.3**（Lorentz 不变量 = 谱不动点）。Lorentz 不变量在 $\mathbf{Sp}$ 中对应 Lorentz 谱流的不动点：$A$ 是 Lorentz 不变量 $\Leftrightarrow$ $[G_{\text{Lor}}, A] = 0$ 对所有 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 成立。
 
 **证明**。$A$ 在 Lorentz 流下不变 $\Leftrightarrow$ $\frac{d}{d\tau}A_\tau = 0$ $\Leftrightarrow$ $[G_{\text{Lor}}, A] = 0$。□
 
@@ -251,7 +251,7 @@ $$\boxed{m^2 = \min\sigma(M^2) =: \Delta\lambda_M.}$$
 
 **证明**。$M^2_\tau = U_\tau M^2_0 U_\tau^{-1}$ 是幺正相似，保谱。□
 
-**注 6.5**（质量的范畴论地位）。$M^2$ 是 Lorentz 谱流的**不动点**，$M^2 \in \mathrm{Fix}(\mathbf{Spec}^{SO^+(1,3)})$。Lorentz 不变量 = Lorentz 谱流的不动点——这是 Wigner 分类的谱基础。
+**注 6.5**（质量的范畴论地位）。$M^2$ 是 Lorentz 谱流的**不动点**，$M^2 \in \mathrm{Fix}(\mathbf{Sp}^{SO^+(1,3)})$。Lorentz 不变量 = Lorentz 谱流的不动点——这是 Wigner 分类的谱基础。
 
 ### 6.3 主定理 7：自旋 = 谱间隙
 
@@ -312,7 +312,7 @@ $$\boxed{v^\mu \text{ 类光} \Leftrightarrow R_v \in \partial\mathbf{Rec}_D.}$$
 - 光子轨道（类光）：$\Delta\lambda_{\min} = 0$，位于 $\partial\mathbf{Rec}_D$ 上；
 - 黑洞视界：$\Delta\lambda_{\min} = 0$，位于 $\partial\mathbf{Rec}_D$ 上。
 
-> **物理意义**：光锥与黑洞视界在 $\mathbf{Spec}$ 范畴中是同一类谱边界——它们都是"信息流出"的临界点。光子刚好不能逃离类光轨道（其能量在远距离衰减为红移），物质刚好不能逃离黑洞视界。两者共享 $\partial\mathbf{Rec}_D$ 的谱边界条件。
+> **物理意义**：光锥与黑洞视界在 $\mathbf{Sp}$ 范畴中是同一类谱边界——它们都是"信息流出"的临界点。光子刚好不能逃离类光轨道（其能量在远距离衰减为红移），物质刚好不能逃离黑洞视界。两者共享 $\partial\mathbf{Rec}_D$ 的谱边界条件。
 
 ### 7.3 Hawking 温度与红移的统一
 
@@ -324,8 +324,8 @@ $$\boxed{v^\mu \text{ 类光} \Leftrightarrow R_v \in \partial\mathbf{Rec}_D.}$$
 
 ### 7.4 因果锥的谱定义
 
-**定义 7.5**（谱因果锥）。对 $E = (\mathcal{H}, A, \sigma(A)) \in \mathbf{Spec}$，
-$$\mathcal{C}(E) := \left\{E' \in \mathbf{Spec} : \exists T: E \to E',\, \sigma(T) \subset \mathbb{R}_{\ge 0}\right\}.$$
+**定义 7.5**（谱因果锥）。对 $E = (\mathcal{H}, A, \sigma(A)) \in \mathbf{Sp}$，
+$$\mathcal{C}(E) := \left\{E' \in \mathbf{Sp} : \exists T: E \to E',\, \sigma(T) \subset \mathbb{R}_{\ge 0}\right\}.$$
 
 **命题 7.6**（因果锥 = Lorentz 因果未来）。在 Minkowski 时空 $\mathbb{R}^{1,3}$ 中，$\mathcal{C}(E) = J^+(E)$。
 
@@ -333,15 +333,15 @@ $$\mathcal{C}(E) := \left\{E' \in \mathbf{Spec} : \exists T: E \to E',\, \sigma(
 
 ### 7.5 质量壳与 Lorentz 轨道
 
-**定义 7.7**（质量壳）。$\mathcal{M}_m := \left\{E \in \mathbf{Spec} : \sigma(M^2) = \{m^2\}\right\}$。
+**定义 7.7**（质量壳）。$\mathcal{M}_m := \left\{E \in \mathbf{Sp} : \sigma(M^2) = \{m^2\}\right\}$。
 
-**命题 7.8**（质量壳 = Lorentz 轨道）。Lorentz 群在 $\mathbf{Spec}$ 中的轨道恰好是质量壳：
+**命题 7.8**（质量壳 = Lorentz 轨道）。Lorentz 群在 $\mathbf{Sp}$ 中的轨道恰好是质量壳：
 $$\mathcal{O}_{\text{Lor}}(E) = \mathcal{M}_m, \quad m^2 = \min\sigma(M^2_E).$$
 
 **证明**。Lorentz 群作用于 $\mathcal{M}_m$ 上传递（任意两个具有相同 $m$ 的四动量可通过 Lorentz 变换联系），故轨道等于质量壳。□
 
-**推论 7.9**（Wigner 分类的范畴论形式）。整个 $\mathbf{Spec}$ 分解为 Lorentz 不变的质量壳不交并：
-$$\mathrm{Fix}_{\text{Lor}}(\mathbf{Spec}) = \bigsqcup_{m \ge 0} \mathcal{M}_m.$$
+**推论 7.9**（Wigner 分类的范畴论形式）。整个 $\mathbf{Sp}$ 分解为 Lorentz 不变的质量壳不交并：
+$$\mathrm{Fix}_{\text{Lor}}(\mathbf{Sp}) = \bigsqcup_{m \ge 0} \mathcal{M}_m.$$
 
 这是 Wigner 分类"粒子 = Poincaré 不可约表示"的范畴论形式。
 
@@ -352,10 +352,10 @@ $$\mathrm{Fix}_{\text{Lor}}(\mathbf{Spec}) = \bigsqcup_{m \ge 0} \mathcal{M}_m.$
 ### 8.1 主定理 9：Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构
 
 **定义 8.1**（谱边界自同构）。$\partial\mathbf{Rec}_D$ 的保结构自同构群定义为
-$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) := \left\{F: \mathbf{Spec}|_{\partial\mathbf{Rec}_D} \to \mathbf{Spec}|_{\partial\mathbf{Rec}_D} \,:\, F \text{ 范畴等价},\, \Delta\lambda_{\min}(F(E)) = 0\right\}.$$
+$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) := \left\{F: \mathbf{Sp}|_{\partial\mathbf{Rec}_D} \to \mathbf{Sp}|_{\partial\mathbf{Rec}_D} \,:\, F \text{ 范畴等价},\, \Delta\lambda_{\min}(F(E)) = 0\right\}.$$
 
 **定理 8.2**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构——主定理 9）。在 4 维时空中，
-$$\boxed{\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3).}$$
+$$\boxed{\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3).}$$
 
 **证明思路**。$\partial\mathbf{Rec}_D$ 上的谱对象由"零模"刻划（$\Delta\lambda_{\min} = 0$）。零模的几何结构在 4 维时空中由 Lorentz 度规 $\eta = \mathrm{diag}(+,-,-,-)$ 诱导——零向量 $v^\mu$ 满足 $\eta_{\mu\nu}v^\mu v^\nu = 0$。保持零模结构的线性变换恰好是 Lorentz 群 $O(1,3)$；要求 proper 与 orthochronous 限制到 $SO^+(1,3)$。□
 
@@ -395,9 +395,9 @@ Diff(M)                  SU(3)×SU(2)×U(1)    SO⁺(1,3)
 **A7 定理**（Lorentz 协变 = $\partial\mathbf{Rec}_D$ 自同构）。QFT 场 $\Phi(\lambda)$ 的 Lorentz 协变变换法则
 $$\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$$
 
-由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
+由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
 
-**证明思路**。由定理 8.2，$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec})$。范畴自同构作用在 $\mathbf{Spec}$ 对象上给出 $U(\Lambda)$，作用在场算子 $\Phi(\lambda)$ 上给出 Lorentz 协变变换。□
+**证明思路**。由定理 8.2，$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp})$。范畴自同构作用在 $\mathbf{Sp}$ 对象上给出 $U(\Lambda)$，作用在场算子 $\Phi(\lambda)$ 上给出 Lorentz 协变变换。□
 
 > **降级的意义**：A7 从"独立公理"降级为"谱边界自同构定理"，与 Paper VII 中"熵增公理"降级为"谱流定理"、Paper VIII 中"Hawking 公式"降级为"$\partial\mathbf{Rec}_D$ 边界定理"的处理方式一致。这是 UFPF 的统一方法：**公理 → 谱定理**。
 
@@ -542,12 +542,12 @@ $$\xi_n^{(k)} = \left(1 + k^2\right) \cdot \left(\frac{E}{M_{\text{Pl}}}\right)^
 #### 10.1.2 谱预层
 
 **定义 10.3**（谱预层）。$\mathcal{E}: \mathrm{Open}(M)^{\mathrm{op}} \to \mathbf{Cat}$ 是 $\mathrm{Open}(M)$ 上的预层（2-函子），定义为：
-$$\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$$
+$$\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Sp})$$
 即 $U$ 上的谱丛 Grothendieck 纤维化总范畴。对包含 $V \subseteq U$，限制函子为沿包含的拉回：
-$$\mathcal{E}(V \subseteq U) = \iota_{V \subseteq U}^*: \mathbf{Bun}(U, \mathbf{Spec}) \to \mathbf{Bun}(V, \mathbf{Spec})$$
+$$\mathcal{E}(V \subseteq U) = \iota_{V \subseteq U}^*: \mathbf{Bun}(U, \mathbf{Sp}) \to \mathbf{Bun}(V, \mathbf{Sp})$$
 
-**定义 10.4**（纤维）。对单点 $p \in M$，$\mathcal{E}(\{p\})$ 是 $p$ 处的谱纤维，等价于 $\mathbf{Spec}$ 在 $p$ 处的实例：
-$$\mathcal{E}(\{p\}) \cong \mathbf{Spec}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$$
+**定义 10.4**（纤维）。对单点 $p \in M$，$\mathcal{E}(\{p\})$ 是 $p$ 处的谱纤维，等价于 $\mathbf{Sp}$ 在 $p$ 处的实例：
+$$\mathcal{E}(\{p\}) \cong \mathbf{Sp}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$$
 即 $p$ 处切空间上的谱递归系统。
 
 **定义 10.5**（限制函子性）。预层 $\mathcal{E}$ 的限制函子满足：
@@ -763,7 +763,7 @@ $$\boxed{\Lambda \propto \frac{1}{R_{\partial\mathbf{Rec}_D}^2},}$$
 **暗能量问题的谱解答**：若 $\Lambda$ 是 $\partial\mathbf{Rec}_D$ 的曲率，则"暗能量"不是独立的物质成分，而是谱边界几何的体现——宇宙加速膨胀是 $\partial\mathbf{Rec}_D$ 正曲率的动力学结果。定量推导 $\Lambda$ 的具体值需要更深入的工作。$\square$
 
 **命题 10.22**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
-$$\mathbf{Spec}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Spec}_{\text{CFT}},$$
+$$\mathbf{Sp}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Sp}_{\text{CFT}},$$
 即 AdS 时空的 $\partial\mathbf{Rec}_D$ 边界谱对象等价于 CFT 的谱对象。这为全息原理提供了谱动力学解释。
 
 ### 10.9 量子引力的谱动力学视角
@@ -1108,7 +1108,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 
 1. **弯曲时空深化（部分完成）**：局部 Lorentz 群的谱动力学已建立（本文），但到全局微分同胚的推广以及 Einstein 方程的严格谱动力学证明尚未完成；
 2. **de Sitter / Anti-de Sitter**：宇宙学常数 $\Lambda \neq 0$ 时 $\partial\mathbf{Rec}_D$ 的修正，AdS/CFT 的谱动力学推导（未处理）；
-3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Spec}$ 中的谱提升，$q$ 形参的物理意义（未处理）；
+3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Sp}$ 中的谱提升，$q$ 形参的物理意义（未处理）；
 4. **超对称扩展**：超 Poincaré 群作为 $\partial\mathbf{Rec}_D$ 的超对称扩张，超荷算子的谱起源（未处理）；
 5. **黑洞信息悖论（已解决）**：已在 Paper VIII §5 中通过谱不变性 $\sigma(A_t)=\sigma(A_0)$ 解决——信息在 $A_t$ 的谱中完整保存，固定基观测下的熵增来自信息从对角元到非对角元的转移。Page 曲线的谱计算见 Paper VIII §5.3，无需岛规则或复制虫洞。
 6. **量子引力统一（部分完成）**：弦论已注册为 $\mathrm{Cl}(9,1)$ 实例（Paper II §2.3），与 $\mathrm{Cl}(1,7)$ 的 IC 投影关系已建立（Paper XX §5.1）；LQG 面积谱与谱间隙数值一致（Paper XX §1.4，R²=0.999984）。渐近安全与因果集尚未纳入框架。将四者统一为 $\partial\mathbf{Rec}_D$ 的不同投影的统一框架仍待构建。
@@ -1176,7 +1176,7 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 
 ### UFPF 内部
 
-- **Paper I**：`paper/paper1_fractal_spectral_derecursion.md` — 分形谱去递归理论
+- **Paper I**：`paper/paper1_fractal_spectral_derecursion.md` — 分形谱化理论
 - **Paper II**：`paper/paper2_physics_applications.md` — 物理应用与实验验证
 - **Paper III**：`paper/paper3_spectral_classification.md` — 谱分类完备性定理
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱动力学

@@ -4,7 +4,7 @@
 
 **摘要**：本笔记证明 SM 中所有费米子的电荷量子化（$Q \in \{+2/3, -1/3, 0, -1, +1\}$）是 Cl(1,7) 代数在谱框架中的必然结果，而非独立假设。核心步骤：(1) 谱间隙比约束规范群的代数结构——U(1) 谱间隙 $\Delta\lambda_{\min}^{(1)} = 0.0996$ 由 Cl(1,7) 根系权重唯一确定；(2) 电荷算符 $Q_{\text{EM}} = T^3 + Y$ 是谱空间上的线性泛函，其本征值谱由 Cartan 子代数的谱分解唯一给出；(3) 电荷量子化的"为什么"归约到 Cl(1,7) 旋量表示在标准模型群嵌入下的分支规则——量子数 $Q$ 取值集是此分支的紧致性约束。最后讨论电荷单元的谱起源，及其对电子绝对质量 $m_e$ 从第一性原理确定的路径。
 
-**前置依赖**：[`spectral_hypercharge_derivation.md`](../10_gauge_RG/spectral_hypercharge_derivation.md)（SM 超荷的 Cl(1,7) 推导）、[`spectral_gap_first_principles.md`](../10_gauge_RG/spectral_gap_first_principles.md)（规范谱间隙比）、Paper I（Rec/Spec 范畴）、Paper XI（谱 QFT）。
+**前置依赖**：[`spectral_hypercharge_derivation.md`](../10_gauge_RG/spectral_hypercharge_derivation.md)（SM 超荷的 Cl(1,7) 推导）、[`spectral_gap_first_principles.md`](../10_gauge_RG/spectral_gap_first_principles.md)（规范谱间隙比）、Paper I（Rec/Sp 范畴）、Paper XI（谱 QFT）。
 
 ---
 
@@ -22,9 +22,9 @@
 
 ### 1.2 谱框架中"电荷"的定义
 
-在谱框架中，物理可观测量是谱空间 $\mathbf{Spec}$ 中的谱数据 $\{\lambda_i\}$（Paper I 定义 2.1）。电磁电荷 $Q$ 不是外部赋予的量子数，而是谱生成元 $A_{\text{EM}}$ 的谱分解产生的**谱本征值**：
+在谱框架中，物理可观测量是谱空间 $\mathbf{Sp}$ 中的谱数据 $\{\lambda_i\}$（Paper I 定义 2.1）。电磁电荷 $Q$ 不是外部赋予的量子数，而是谱生成元 $A_{\text{EM}}$ 的谱分解产生的**谱本征值**：
 
-$$Q_{\text{EM}}: \mathcal{H}_{\text{SM}} \to \mathbb{R}, \quad Q_{\text{EM}} = \operatorname{Tr}_{\mathbf{Spec}}(A_{\text{EM}} \cdot P_{\text{EM}})$$
+$$Q_{\text{EM}}: \mathcal{H}_{\text{SM}} \to \mathbb{R}, \quad Q_{\text{EM}} = \operatorname{Tr}_{\mathbf{Sp}}(A_{\text{EM}} \cdot P_{\text{EM}})$$
 
 其中 $P_{\text{EM}}$ 是电磁投影算符。电荷量子化的"为什么"等价于：**$Q_{\text{EM}}$ 的谱为何由离散集 $\{\pm 2/3, \pm 1/3, 0, \pm 1\}$ 组成？**
 
@@ -213,7 +213,7 @@ $$y_e \leq \frac{2\sqrt{2}}{3} \cdot \frac{\Delta\lambda_{\min}^{(\text{EM})}}{\
 | **Higgs-费米子谱交织子显式构造** | ✅ | **v0.5** 谱 Yukawa 闭合公式 $y_i^{(f)} = \sum_k\|U_{ki}\|^2 \lambda_H^{(k)}$ |
 | **$y_e, y_\mu, y_\tau$ 的第一性原理推导** | ✅ | 谱投影公式 + U 矩阵旋转，$y_e=2.71\times10^{-4}$ |
 | **$m_e$ 绝对值的零参数预测** | ✅ | $m_e = 0.511$ MeV，偏差 $<0.01\%$ |
-| **夸克扇区扩展** | ✅ | 下型 Formula B 完美拟合；上型 Formula B$^\beta$ 完美拟合（$\beta=\alpha_u/\alpha_v=1.053$，来自 $\mathbf{Spec}$ 4-范畴合成律） |
+| **夸克扇区扩展** | ✅ | 下型 Formula B 完美拟合；上型 Formula B$^\beta$ 完美拟合（$\beta=\alpha_u/\alpha_v=1.053$，来自 $\mathbf{Sp}$ 4-范畴合成律） |
 | **$\eta_{\text{RG}}$ 谱推导** | ✅ | $\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}}) = 1.426\times10^{-17}$ |
 | **三扇区全部完美拟合** | ✅ | 轻子、上型、下型偏差 $<0.01\%$ |
 
@@ -251,7 +251,7 @@ Phase 46 Q2 (已完成)
 **下一步可选方向**：
 - **A**: **✅ 已完成**——$U_{Hf}$ 解析角推导
 - **B**: **已完成**——Q2c 凝聚态物理谱翻译
-  - BCS 超导谱编织自由度 ✅ `spectral_BCS_weave.md` v0.9
+  - BCS 超导谱粘合自由度 ✅ `spectral_BCS_weave.md` v0.9
   - Cuprate 赝能隙分布截面 ✅ `spectral_cuprate_distribution.md` v0.1
   - 量子 Hall 陈数拓扑序谱翻译 ✅ `spectral_quantum_Hall_topology.md` v0.1
 - **C**: 静默因子严格化——$\eta_{\text{RG}}^{(f)}$ 的 $\prod_i F_{S_i}^{(f)}$ 的严格谱框架推导
@@ -262,7 +262,7 @@ Phase 46 Q2 (已完成)
 
 - [spectral_hypercharge_derivation.md](../10_gauge_RG/spectral_hypercharge_derivation.md)：SM 超荷的 Cl(1,7) 推导
 - [spectral_gap_first_principles.md](../10_gauge_RG/spectral_gap_first_principles.md)：规范谱间隙比
-- Paper I §3：Rec/Spec 范畴与谱对应
+- Paper I §3：Rec/Sp 范畴与谱对应
 - Paper XI 附录 C：精细结构常数的谱推导
 - Paper XVII：零参数预测清单
 - `spectral_Higgs_silence_analysis.md`：Higgs VEV 的四层静默推导

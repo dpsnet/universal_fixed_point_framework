@@ -1,8 +1,8 @@
-# LACI 公理化：从启发式指标到定理系的升级
+# 局部吸引子捕获指数（Local Attractor Capture Index, LACI）公理化：从启发式指标到定理系的升级
 
 **版本**：v0.1（2026-07-25）
 
-**摘要**：LACI（Local Attractor Capture Index）原是用于 Leaver 连续分数法物理根选择的启发式指标，在 Kerr QNM 计算中经验证具有 100% 正确识别率。本笔记将 LACI 的三个分量（不动点残差 $\rho$、分散度 $\Delta$、谱间隙 $\gamma$）置于谱丛几何框架下进行公理化，建立三个核心定理，将 LACI 升级为有严格数学支撑的物理根选择判据。
+**摘要**：局部吸引子捕获指数（Local Attractor Capture Index, LACI）原是用于 Leaver 连续分数法物理根选择的启发式指标，在 Kerr QNM 计算中经验证具有 100% 正确识别率。本笔记将 LACI 的三个分量（不动点残差 $\rho$、分散度 $\Delta$、谱间隙 $\gamma$）置于谱丛几何框架下进行公理化，建立三个核心定理，将 LACI 升级为有严格数学支撑的物理根选择判据。
 
 ---
 
@@ -16,7 +16,7 @@ $$\mathcal{S}(M) = \{(\omega, \lambda) \in \mathbb{C}^2 : \det(M(\omega) - \lamb
 
 带自然投影 $\pi: \mathcal{S} \to \mathbb{C}$，$(\omega, \lambda) \mapsto \omega$。纤维 $\pi^{-1}(\omega) = \sigma(M(\omega))$ 为 $N$ 个特征值。物理根条件 $\det M(\omega) = 0$ 等价于截面 $\lambda = 0$ 上的点 $(\omega, 0) \in \mathcal{S}$。
 
-**定义 1.1**（LACI 三元组）。对候选频率 $\omega \in \mathbb{C}$，定义：
+**定义 1.1**（局部吸引子捕获指数三元组）。对候选频率 $\omega \in \mathbb{C}$，定义：
 
 $$\begin{aligned}
 \rho(\omega) &= |\det(M(\omega) - 0 \cdot I)| = |R_0(\omega)| \cdot \prod_{i=1}^{N-1} |\beta_i^{\text{eff}}(\omega)| \quad &\text{（不动点残差）} \\
@@ -24,7 +24,7 @@ $$\begin{aligned}
 \gamma(\omega) &= 1 - \frac{\sigma_2}{\sigma_1} \quad (\sigma_1 \geq \sigma_2 \text{ 为 Jacobian 奇异值}) \quad &\text{（残差 Jacobian 的谱间隙）}
 \end{aligned}$$
 
-**定义 1.2**（LACI 指数）。给定参考值 $\rho_{\text{ref}}, \Delta_{\text{ref}}, \gamma_{\text{ref}}$ 和正则化参数 $\varepsilon > 0$：
+**定义 1.2**（局部吸引子捕获指数）。给定参考值 $\rho_{\text{ref}}, \Delta_{\text{ref}}, \gamma_{\text{ref}}$ 和正则化参数 $\varepsilon > 0$，定义**局部吸引子捕获指数**（Local Attractor Capture Index, LACI）：
 
 $$\text{LACI}(\omega) = \frac{\rho(\omega)}{\rho_{\text{ref}}} + \frac{\Delta(\omega)}{\Delta_{\text{ref}}} + \frac{1}{\gamma(\omega)/\gamma_{\text{ref}} + \varepsilon}$$
 

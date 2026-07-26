@@ -26,7 +26,7 @@ $$\mathbf{Bun}(\mathrm{Hydro}) \hookrightarrow \mathbf{Bun}(\mathrm{Rheo}) \hook
 
 ### 1.2 共享边界核心机制
 
-Paper VI 已将 8 类临界现象统一在 $\partial\mathbf{Rec}_D$ 边界下（参见 spectral_critical_unification.md）。凝聚态/流体系统所有 5 层的临界现象均对应同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的不同投影：
+Paper VI 已将 8 类临界现象统一在 $\partial\mathbf{Rec}_D$ 边界下（参见 spectral_critical_unification.md）。凝聚态/流体系统所有 5 层的临界现象均对应同一函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的不同投影：
 
 $$\forall\, \mathcal{L}_i \in \{\mathrm{Hydro},\mathrm{Rheo},\mathrm{SC},\mathrm{QH},\mathrm{QPT}\},\quad \lim_{\text{参数} \to \text{临界}} D(R_{\mathcal{L}_i}) \to \partial\mathbf{Rec}_D$$
 

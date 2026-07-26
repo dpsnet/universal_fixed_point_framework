@@ -4,7 +4,7 @@
 
 ## 谱 Yukawa 算符
 
-在 $\mathbf{Spec}$ 范畴中，上型和下型 Yukawa 矩阵 $Y_u$ 和 $Y_d$ 是作用在味道 Hilbert 空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符：
+在 $\mathbf{Sp}$ 范畴中，上型和下型 Yukawa 矩阵 $Y_u$ 和 $Y_d$ 是作用在味道 Hilbert 空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符：
 
 $$Y_u: \mathcal{H}_{\text{flavor}} \longrightarrow \mathcal{H}_{\text{flavor}},\qquad Y_d: \mathcal{H}_{\text{flavor}} \longrightarrow \mathcal{H}_{\text{flavor}}.$$
 

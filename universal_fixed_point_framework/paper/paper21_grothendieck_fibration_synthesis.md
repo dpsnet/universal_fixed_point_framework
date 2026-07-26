@@ -4,7 +4,7 @@
 
 **版本**：v0.5（2026-07-25）
 
-**摘要**：本文综合统一不动点框架中全部 Grothendieck 纤维化构造，将"物理系统是基空间（参数/对称性/几何）上的谱族"这一范式严格化。核心成果为**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Spec}) \to \mathbf{Param}$——一个 Grothendieck 纤维化，其基空间为 8 个独立参数方向的乘积范畴，其截面编码全部物理可观测量的谱数据。本文系统呈现：(1) Grothendieck 纤维化模板（基-纤维-投影-Cartan 提升-截面框架）；(2) 6 个已完成实例（Temp、RG、Noise、Sig、Kerr、Flt）的详细构造；(3) 两个复合结构（Temp×RG 乘积基谱编织、$\mathrm{Open}(M)$ 上的谱栈）及其粘合条件；(4) 总参数丛作为所有实例的统一收口，含 7 个坐标嵌入和 complete_chain 总成定理；(5) Lean 4 形式化实现总览（10 个模块、零错误编译）；(6) 物理截面（QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层）作为丛截面的实例化。
+**摘要**：本文综合统一不动点框架中全部 Grothendieck 纤维化构造，将"物理系统是基空间（参数/对称性/几何）上的谱族"这一范式严格化。核心成果为**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp}) \to \mathbf{Param}$——一个 Grothendieck 纤维化，其基空间为 8 个独立参数方向的乘积范畴，其截面编码全部物理可观测量的谱数据。本文系统呈现：(1) Grothendieck 纤维化模板（基-纤维-投影-Cartan 提升-截面框架）；(2) 6 个已完成实例（Temp、RG、Noise、Sig、Kerr、Flt）的详细构造；(3) 两个复合结构（Temp×RG 乘积基谱粘合、$\mathrm{Open}(M)$ 上的谱栈）及其粘合条件；(4) 总参数丛作为所有实例的统一收口，含 7 个坐标嵌入和 complete_chain 总成定理；(5) Lean 4 形式化实现总览（10 个模块、零错误编译）；(6) 物理截面（QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层）作为丛截面的实例化。
 
 ---
 
@@ -23,11 +23,11 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 
 ### 1.3 研究缘起
 
-本文综合的纤维化构造并非源于先验的数学计划，而是从$\mathbf{Rec}/\mathbf{Spec}$范畴框架的物理应用中自然生长出来的。
+本文综合的纤维化构造并非源于先验的数学计划，而是从$\mathbf{Rec}/\mathbf{Sp}$范畴框架的物理应用中自然生长出来的。
 
-**起点**。框架最初源于一个工程问题：脉冲神经网络（SNN）的递归训练效率极低。核心直觉是递归迭代不是时间循环而是**维度演化**，应存在"去递归"机制直接将系统映射到全局吸引子。这一直觉形式化为$D: \mathbf{Rec}_D \to \mathbf{Spec}$函子——谱去递归化。
+**起点**。框架最初源于一个工程问题：脉冲神经网络（SNN）的递归训练效率极低。核心直觉是递归迭代不是时间循环而是**维度演化**，应存在"谱化"机制直接将系统映射到全局吸引子。这一直觉形式化为$D: \mathbf{Rec}_D \to \mathbf{Sp}$函子——谱化。
 
-**从谱对象到谱族**。当$D$函子的谱像$\mathbf{Spec}$被赋予物理诠释（$A_R = -\log U_R$对应谱算子），一个意外的发现是温度$T$、能标$\mu$、噪声强度$\eta$等参数也承载谱数据——它们不是孤立的谱对象，而是参数化的**谱族**。Grothendieck纤维化为"谱族"提供了严格的数学语言。
+**从谱对象到谱族**。当$D$函子的谱像$\mathbf{Sp}$被赋予物理诠释（$A_R = -\log U_R$对应谱算子），一个意外的发现是温度$T$、能标$\mu$、噪声强度$\eta$等参数也承载谱数据——它们不是孤立的谱对象，而是参数化的**谱族**。Grothendieck纤维化为"谱族"提供了严格的数学语言。
 
 **从个体纤维化到总参数丛**。随着Temp、RG、Noise、Sig、Kerr、Flt六个独立纤维化的完成，一个统一的图像浮现：它们都是同一总参数丛在不同坐标方向上的拉回。总参数丛$\pi_{\mathbf{Param}}$（本文§7）是这一统一的严格形式，complete_chain定理（§9.2）是其顶点。
 
@@ -49,7 +49,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
     └── §5.4 Reac (分子构型)
     ↓
 §6 复合结构
-    ├── §6.1 Temp×RG 乘积基 + 谱编织
+    ├── §6.1 Temp×RG 乘积基 + 谱粘合
     └── §6.2 Open(M) 谱栈 + 层公理
     ↓
 §7 总参数丛 (统一收口)
@@ -62,10 +62,10 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 ### 1.4 记号约定
 
 全文沿用 UFPF 标准记号：
-- $\mathbf{Spec}$：谱范畴（对象 $(\mathcal{H}, A, \sigma(A))$）
+- $\mathbf{Sp}$：谱范畴（对象 $(\mathcal{H}, A, \sigma(A))$）
 - $\mathbf{Rec}$：递归系统范畴
-- $\mathbf{Bun}(\mathcal{B}, \mathbf{Spec})$：基 $\mathcal{B}$ 上的谱丛总范畴
-- $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Spec}) \to \mathcal{B}$：投影
+- $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$：基 $\mathcal{B}$ 上的谱丛总范畴
+- $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Sp}) \to \mathcal{B}$：投影
 - $\dashv$：伴随对记号
 - $\partial\mathbf{Rec}_D$：谱边界（谱间隙归零的位置）
 
@@ -89,7 +89,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 |:----|:-----|:-----|
 | 1 | 定义基范畴 $\mathcal{B}$ | 参数空间，对象 = 参数值，态射 = 参数变换 |
 | 2 | 定义纤维范畴 $\mathcal{E}_b$ | 参数 $b$ 处的谱数据范畴 |
-| 3 | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Spec})$ | 对象 $= (b, e_b)$，态射 $= (f, \phi)$ |
+| 3 | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$ | 对象 $= (b, e_b)$，态射 $= (f, \phi)$ |
 | 4 | 定义投影 $\pi_\mathcal{B}$ | 遗忘谱数据，保留参数 |
 | 5 | 构造 Cartan 提升 | 给定基态射 $f$ 和纤维目标，构造提升态射 |
 | 6 | 验证分裂性 | 恒等保持、复合保持 |
@@ -101,16 +101,16 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 
 ## 3. 一维参数基（可直接实例化）
 
-### 3.1 温度谱丛 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$
+### 3.1 温度谱丛 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$
 
 **定义 3.1**（温度范畴 $\mathbf{Temp}$）。
 - **对象**：$T \in [0, \infty)$，物理温度
 - **态射** $T_1 \to T_2$：当 $T_1 \geq T_2$（系统冷却方向）
 - **恒等**：$\text{id}_T = (T \to T)$
 
-**定义 3.2**（温度纤维）。对 $T \in \mathbf{Temp}$，纤维 $\mathbf{Spec}_T$ 是温度 $T$ 处的谱对象范畴——对象为 $(\mathcal{H}_T, A_T, \sigma(A_T))$，其中 $A_T$ 的谱随 $T$ 连续变化。
+**定义 3.2**（温度纤维）。对 $T \in \mathbf{Temp}$，纤维 $\mathbf{Sp}_T$ 是温度 $T$ 处的谱对象范畴——对象为 $(\mathcal{H}_T, A_T, \sigma(A_T))$，其中 $A_T$ 的谱随 $T$ 连续变化。
 
-**定理 3.1**（$\pi_T$ 是分裂 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
+**定理 3.1**（$\pi_T$ 是分裂 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
 
 *证明概要*。Cartan 提升由热谱流方程 $\frac{d}{dT} A_T = [G_{\text{th}}(T), A_T]$ 的连续性给出。对基态射 $T_1 \to T_2$（$T_1 \geq T_2$）和纤维目标 $(T_2, A_{T_2})$，提升为从 $T_2$ 到 $T_1$ 沿热谱流的反向积分。分裂性来自热谱流方程解的唯一性。$\square$
 
@@ -118,28 +118,28 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 - **QCD 谱间隙截面**：$\sigma_\Delta^{(T)}(T) = (T, \Delta\lambda_{\min}(T))$，其中 $\Delta\lambda_{\min}(T) = \Delta\lambda_{\min}^{(0)}\sqrt{1-T^2/T_c^2}$，$T_c = 153$ MeV
 - **BCS 谱间隙截面**：$\sigma_\Delta^{(\text{BCS})}(T) = (T, \Delta_0\sqrt{1-T/T_c})$，$\Delta_0 \approx 1.764 T_c$
 
-### 3.2 RG 谱丛 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$
+### 3.2 RG 谱丛 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$
 
 **定义 3.3**（RG 范畴 $\mathbf{RG}$）。
 - **对象**：$\mu \in (0, \infty)$，RG 标度
 - **态射** $\mu_1 \to \mu_2$：当 $\mu_1 \geq \mu_2$（粗粒化/退耦方向）
 - **恒等**：$\text{id}_\mu = (\mu \to \mu)$
 
-**定义 3.4**（RG 纤维）。对 $\mu \in \mathbf{RG}$，纤维 $\mathbf{Spec}_\mu$ 是标度 $\mu$ 处的谱对象范畴。
+**定义 3.4**（RG 纤维）。对 $\mu \in \mathbf{RG}$，纤维 $\mathbf{Sp}_\mu$ 是标度 $\mu$ 处的谱对象范畴。
 
-**定理 3.2**（$\pi_\mu$ 是分裂 Grothendieck 纤维化）。投影 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$ 是分裂 Grothendieck 纤维化。
+**定理 3.2**（$\pi_\mu$ 是分裂 Grothendieck 纤维化）。投影 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$ 是分裂 Grothendieck 纤维化。
 
 *证明概要*。结构与 $\pi_T$ 完全对称。Cartan 提升由 RG 谱流方程 $\mu \frac{d}{d\mu} A_\mu = [G_{\text{RG}}(\mu), A_\mu]$ 的连续性给出。$\square$
 
-**谱丛黎曼函子**。Temp 与 RG 之间通过 **谱丛黎曼函子** $\hat{\mathcal{T}}_{\text{Riem}}$ 连接——这是一个纤维保持函子：
-$$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$$
+**谱纤维丛上的 Riemann 函子**。Temp 与 RG 之间通过 **谱纤维丛上的 Riemann 函子** $\hat{\mathcal{T}}_{\text{Riem}}$ 连接——这是一个纤维保持函子：
+$$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$$
 其基函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 在物理上对应 RG 流方程（如 QCD 的 $\Lambda_{\text{QCD}} \cdot (T_c/T)^\gamma$）。
 
 ---
 
 ## 4. 具边界的参数基
 
-### 4.1 噪声谱丛 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Spec})$
+### 4.1 噪声谱丛 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$
 
 **定义 4.1**（噪声范畴 $\mathbf{Noise}$）。
 - **对象**：$\eta \in [0, \infty)$，噪声强度
@@ -154,7 +154,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \t
 $$\frac{d\lambda_i}{d\eta} = \langle\psi_{\lambda_i}(\eta) | \delta A_N | \psi_{\lambda_i}(\eta) \rangle$$
 积分该公式得到沿 $\eta$ 方向的谱流，提升的万有性由谱流的唯一性保证。$\square$
 
-**定理 4.2**（$\eta_c$ 奇异性）。在 $\eta = \eta_c$ 处，纤维类型从 $\mathbf{Spec}$（有隙谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（退化谱）。这使 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Spec})$ 成为非乘积丛。
+**定理 4.2**（$\eta_c$ 奇异性）。在 $\eta = \eta_c$ 处，纤维类型从 $\mathbf{Sp}$（有隙谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（退化谱）。这使 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 成为非乘积丛。
 
 **物理截面**。
 - 坍缩时间截面：$\tau(\eta) = \tau_0/(1-\eta/\eta_c)$，在 $\eta \to \eta_c$ 处发散
@@ -192,7 +192,7 @@ $$\mathrm{Cl}(1,7) \to \mathrm{Cl}(9,1) \to \mathrm{Cl}(17,1) \to \cdots$$
 
 ## 5. 离散与有界参数基
 
-### 5.1 Kerr 参数谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$
+### 5.1 Kerr 参数谱丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$
 
 **定义 5.1**（Kerr 参数范畴 $\mathbf{Kerr}$）。
 - **对象**：$(M, a) \in \mathbb{R}^+ \times [0, M]$（黑洞质量 $M$、单位角动量 $a$）
@@ -203,11 +203,11 @@ $$\mathrm{Cl}(1,7) \to \mathrm{Cl}(9,1) \to \mathrm{Cl}(17,1) \to \cdots$$
 
 **定理 5.1**（$\pi_{M,a}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化，Cartan 提升由 Kerr QNM 方程沿参数方向的连续性给出。
 
-**定理 5.2**（非乘积丛结构）。在极端边界 $a=M$ 处纤维类型从 $\mathbf{Spec}$（离散 QNM 谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（退化视界谱），使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 成为非乘积丛。
+**定理 5.2**（非乘积丛结构）。在极端边界 $a=M$ 处纤维类型从 $\mathbf{Sp}$（离散 QNM 谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（退化视界谱），使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为非乘积丛。
 
 **物理截面**。
 - 谱间隙截面：$\sigma_\Delta^{(\text{Kerr})}(M,a) = ((M,a), \Delta\lambda_{\min}^{(0)}\sqrt{1-a^2/M^2})$
-- Hawking 温度丛态射：$\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 满足 $T_H = \Delta\lambda_{\min}^{(\text{Kerr})}/(2\pi)$
+- Hawking 温度丛态射：$\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 满足 $T_H = \Delta\lambda_{\min}^{(\text{Kerr})}/(2\pi)$
 - 熵的谱求和形式：$S_{\text{spec}} = \sum_{\lambda < \lambda_h} \ln(1/\lambda)$，在 $a=0$ 时退化为 $4\pi M^2$
 
 ### 5.2 味谱丛 $\mathbf{Bun}(\mathbf{Flt}, \mathbb{C}^3_{\text{gen}})$
@@ -275,11 +275,11 @@ $$\begin{CD}
 | **HP** | $\mathfrak{sl}(2,\mathbb{R})$ | $\sqrt{2}\sqrt{0.0395} \approx 0.281$ | **0.0395** | **0.159** | ✅ **理论验证** |
 | **DST** | $\mathfrak{so}(1,1)^2$ | $2\sqrt{0.4433} \approx 1.332$ | **0.4433** | **0.435** | **✅ 第一性原理推导** |
 
-HP 的谱编织自由度 $d_{\text{HP}} = 0.281$ 由近视界 $SL(2,\mathbb{R})$ 对称代数的 Casimir 结构确定，比例因子 $a_{\text{HP}} = 0.159$ 与经典的 $T_{\text{HP}} \cdot M_{\text{HP}} = 1/(2\pi)$ 精确匹配（偏差 $2.78\times10^{-17}$）。$d$ 值从 QCD (4.667) → BCS (1.619) → HP (0.281) 系统递减，反映从多通道物质自由度到纯几何相变自由度的简化趋势，HP 的 $d<1$ 表明几何相变的谱编织是一种"亚自由度"贡献。
+HP 的谱粘合自由度 $d_{\text{HP}} = 0.281$ 由近视界 $SL(2,\mathbb{R})$ 对称代数的 Casimir 结构确定，比例因子 $a_{\text{HP}} = 0.159$ 与经典的 $T_{\text{HP}} \cdot M_{\text{HP}} = 1/(2\pi)$ 精确匹配（偏差 $2.78\times10^{-17}$）。$d$ 值从 QCD (4.667) → BCS (1.619) → HP (0.281) 系统递减，反映从多通道物质自由度到纯几何相变自由度的简化趋势，HP 的 $d<1$ 表明几何相变的谱粘合是一种"亚自由度"贡献。
 
-DST 的 $\mathbf{Rate}$ 范畴以应变率 $\dot\gamma \in (0,\infty)$ 为对象，$\text{Hom}_{\mathbf{Rate}}(\dot\gamma_1, \dot\gamma_2) = \{h: \dot\gamma_1 \to \dot\gamma_2 \mid \dot\gamma_2 = s \cdot \dot\gamma_1, s \in \mathbb{R}^+\}$，满足 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 的三范畴同构。DST 的谱编织自由度 $d_{\text{DST}} = 2\sqrt{r_{\text{DST}}}$ 需双通道耦合（剪切-法向应力耦合 + 颗粒接触网络），$r_{\text{DST}}$ 由 3D 渗透阈值处的接触网络谱维数 $d_s = 4/3$ 封闭：$d_{\text{DST}} = d_s$，得 $r_{\text{DST}} = 0.443$，$a_{\text{DST}} = 0.435$。粘度发散指数 $\nu_{\text{DST}} = 1/2$ 来自 $\partial\mathbf{Rec}_D$ 边界处的平均场临界指数，与实验观测一致。数值验证脚本见 `src/dynamic_spectrum/dst_spectral_weave.py`。
+DST 的 $\mathbf{Rate}$ 范畴以应变率 $\dot\gamma \in (0,\infty)$ 为对象，$\text{Hom}_{\mathbf{Rate}}(\dot\gamma_1, \dot\gamma_2) = \{h: \dot\gamma_1 \to \dot\gamma_2 \mid \dot\gamma_2 = s \cdot \dot\gamma_1, s \in \mathbb{R}^+\}$，满足 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 的三范畴同构。DST 的谱粘合自由度 $d_{\text{DST}} = 2\sqrt{r_{\text{DST}}}$ 需双通道耦合（剪切-法向应力耦合 + 颗粒接触网络），$r_{\text{DST}}$ 由 3D 渗透阈值处的接触网络谱维数 $d_s = 4/3$ 封闭：$d_{\text{DST}} = d_s$，得 $r_{\text{DST}} = 0.443$，$a_{\text{DST}} = 0.435$。粘度发散指数 $\nu_{\text{DST}} = 1/2$ 来自 $\partial\mathbf{Rec}_D$ 边界处的平均场临界指数，与实验观测一致。数值验证脚本见 `src/dynamic_spectrum/dst_spectral_weave.py`。
 
-### 5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$
+### 5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$
 
 **定义 5.8**（分子构型范畴 $\mathbf{Reac}$）。
 - **对象**：核构型 $R \in \mathcal{M}$，$\mathcal{M}$ 为 $3N$-维核构型空间（Riemann 流形）
@@ -291,13 +291,13 @@ DST 的 $\mathbf{Rate}$ 范畴以应变率 $\dot\gamma \in (0,\infty)$ 为对象
 - $\sigma(A_{\text{mol}}(R)) = \{\lambda_i(R) = e^{-\beta E_i(R)}\} \subset (0,1]$ 为电子谱
 - $\delta_{\text{spec}}(R) = \lambda_{\text{LUMO}}(R) - \lambda_{\text{HOMO}}(R)$ 为 HOMO-LUMO 谱间隙
 
-**定理 5.8**（$\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Reac}$ 是分裂 Grothendieck 纤维化。
+**定理 5.8**（$\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Reac}$ 是分裂 Grothendieck 纤维化。
 
 *证明概要*。对基态射 $R_1 \to R_2$（沿反应坐标 $\xi$ 方向）和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartan 提升由沿核形变路径的**参量谱流方程**给出（Paper XV 定理 4.1）：
 $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_{\text{spec}} A_{\text{mol}}$$
 其中 $G_\xi$ 是反应坐标谱流生成元。解的唯一性保证分裂性。$\square$
 
-**定理 5.9**（非乘积丛结构——锥形交叉奇异性）。在 $\partial\mathbf{Reac}$ 处（$\delta_{\text{spec}}(R) = 0$），纤维类型从 $\mathbf{Spec}$（非简并有隙谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（简并/退化谱），使 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 成为非乘积丛。该奇异性对应：
+**定理 5.9**（非乘积丛结构——锥形交叉奇异性）。在 $\partial\mathbf{Reac}$ 处（$\delta_{\text{spec}}(R) = 0$），纤维类型从 $\mathbf{Sp}$（非简并有隙谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（简并/退化谱），使 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 成为非乘积丛。该奇异性对应：
 - **锥形交叉**（conical intersection）：两个电子态简并，Jahn-Teller 耦合导致拓扑 Berry 相
 - **键解离极限**：HOMO-LUMO 间隙闭合，单参考描述失效（多参考域入口，Paper XV §3.5.4）
 
@@ -308,28 +308,28 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 - **Fukui 活性截面**：$\sigma_f(R) = (R, f^\pm(R) = \delta \ln \lambda_{\text{HOMO/LUMO}}/\delta v(\mathbf{r}))$，反应活性指标的谱统一表达（Paper XV §3.4）
 
 **与既有丛的态射联系**：
-- 温度丛态射 $\hat{\mathcal{T}}_{\text{mol}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$：Arrhenius 行为的纤维保持函子，$k(T) \propto e^{-E_a/RT}$ 对应截面在 $\mathbf{Temp}$ 基上的投影
+- 温度丛态射 $\hat{\mathcal{T}}_{\text{mol}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$：Arrhenius 行为的纤维保持函子，$k(T) \propto e^{-E_a/RT}$ 对应截面在 $\mathbf{Temp}$ 基上的投影
 - 流变丛态射：反应谱流方程 $\frac{d}{d\xi}A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma\Delta_{\text{spec}}A_{\text{mol}}$ 与 Paper VI N-S 谱流方程 $\frac{d}{dt}A_t = [A_{\text{adv}}, A_t] - \nu\Delta_{\text{spec}}A_t$ 的同构（Paper XV §4.3）——化学反应是谱流体动力学在 $d=1$ 的投影
 
 ---
 
 ## 6. 复合基与粘合结构
 
-### 6.1 Temp×RG 乘积基与谱编织
+### 6.1 Temp×RG 乘积基与谱粘合
 
 **定义 6.1**（乘积范畴 $\mathbf{Temp} \times \mathbf{RG}$）。
 - **对象**：$(T, \mu)$，温度和 RG 标度的有序对
 - **态射**：逐分量复合
 - **坐标嵌入**：$\iota_T: \mathbf{Temp} \to \mathbf{Temp} \times \mathbf{RG}$（固定 $\mu$），$\iota_\mu: \mathbf{RG} \to \mathbf{Temp} \times \mathbf{RG}$（固定 $T$）
 
-**定义 6.2**（对角子范畴 $\mathbf{Diag}$）。$\mathbf{Diag} \subset \mathbf{Temp} \times \mathbf{RG}$ 是满足谱编织条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 的子范畴。其态射满足 $(f, \mathcal{T}(f))$，其中 $\mathcal{T}$ 是谱丛黎曼函子的基函子。
+**定义 6.2**（对角子范畴 $\mathbf{Diag}$）。$\mathbf{Diag} \subset \mathbf{Temp} \times \mathbf{RG}$ 是满足谱粘合条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 的子范畴。其态射满足 $(f, \mathcal{T}(f))$，其中 $\mathcal{T}$ 是谱纤维丛上的 Riemann 函子的基函子。
 
-**定义 6.3**（编织自然变换）。$\theta_X: \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*(X)) \cong \iota_\mu^*(X)$ 是 $\mathbf{Diag}$ 上的自然同构，编织方图的交换性由谱编织条件保证。
+**定义 6.3**（编织自然变换）。$\theta_X: \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*(X)) \cong \iota_\mu^*(X)$ 是 $\mathbf{Diag}$ 上的自然同构，编织方图的交换性由谱粘合条件保证。
 
-**定理 6.1**（编织截面存在性）。$\mathbf{Temp} \times \mathbf{RG}$ 上的谱编织截面 $\sigma_{\text{weave}}$ 满足：
+**定理 6.1**（编织截面存在性）。$\mathbf{Temp} \times \mathbf{RG}$ 上的谱粘合截面 $\sigma_{\text{weave}}$ 满足：
 $$\pi_{T\mu} \circ \sigma_{\text{weave}} = \text{id}_{\mathbf{Temp} \times \mathbf{RG}}, \quad \theta \circ \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*\sigma) = \iota_\mu^*\sigma$$
 
-物理上，谱编织截面编码了 QCD、BCS 和 Hawking-Page 等临界现象的统一图像——它们都是同一常量截面沿不同坐标方向拉回的特例。
+物理上，谱粘合截面编码了 QCD、BCS 和 Hawking-Page 等临界现象的统一图像——它们都是同一常量截面沿不同坐标方向拉回的特例。
 
 **三范畴同构扩展**。Phase 54C 进一步证明了 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 的三范畴同构，其中 $\mathbf{Rate}$ 是流变学应变率参数的范畴（对象 $\dot\gamma \in (0,\infty)$，态射为应变率膨胀 $\dot\gamma \to s\dot\gamma$）。这表明乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 可扩展为 $\mathbf{Temp} \times \mathbf{RG} \times \mathbf{Rate}$，三个正交参数方向通过相同的 $\mathfrak{so}(1,1)$ 生成元结构控制谱流行为。该扩展揭示了一个普遍原理：**任何以正实数为参数的物理系统，只要其参数变换构成乘法群 $\mathbb{R}^+$，其谱流行为由同一个 $\mathfrak{so}(1,1)$ 生成元结构控制**。这解释了温变、标度变、应变率变在谱框架中共享相同的数学结构。
 
@@ -356,7 +356,7 @@ $$\pi_{T\mu} \circ \sigma_{\text{weave}} = \text{id}_{\mathbf{Temp} \times \math
 - **对象**：$M$ 的开集 $U \subseteq M$
 - **态射**：包含映射 $U \hookrightarrow V$（$U \subseteq V$）
 
-**定义 6.5**（谱预层）。$\mathcal{E}: \mathrm{Open}(M)^{\text{op}} \to \mathbf{Cat}$ 定义为 $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$。对包含 $V \subseteq U$，限制函子为沿包含的拉回 $\iota_{V \subseteq U}^*$。
+**定义 6.5**（谱预层）。$\mathcal{E}: \mathrm{Open}(M)^{\text{op}} \to \mathbf{Cat}$ 定义为 $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Sp})$。对包含 $V \subseteq U$，限制函子为沿包含的拉回 $\iota_{V \subseteq U}^*$。
 
 **定义 6.6**（层条件）。谱预层 $\mathcal{E}$ 在非空开集 $U$ 上满足层条件，若：
 - **粘合存在性**：对开覆盖 $\{U_i\}$ 和相容族 $s_i \in \mathcal{E}(U_i)$，存在 $s \in \mathcal{E}(U)$ 使得 $s|_{U_i}=s_i$
@@ -401,7 +401,7 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 
 ### 7.3 总投影与纤维化
 
-**定义 7.2**（总参数丛）。$\mathbf{Bun}(\mathbf{Param}, \mathbf{Spec})$ 是 $\mathbf{Param}$ 上的谱丛总范畴，$\pi_{\mathbf{Param}}$ 是其投影。
+**定义 7.2**（总参数丛）。$\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$ 是 $\mathbf{Param}$ 上的谱丛总范畴，$\pi_{\mathbf{Param}}$ 是其投影。
 
 **定理 7.1**（$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化）。$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化——其 Cartan 提升由各分量 Cartan 提升的乘积给出。
 
@@ -446,13 +446,13 @@ $$a = \left( \frac{d_A C_2 + d_q}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{\D
 
 ### 8.2 BCS 截面
 
-BCS 超导是 Temp/RG 框架跨领域普适性的关键验证。BCS 谱编织自由度 $d_{\text{BCS}} = N(0)V_{\text{BCS}}$ 代入 D9 公式：
+BCS 超导是 Temp/RG 框架跨领域普适性的关键验证。BCS 谱粘合自由度 $d_{\text{BCS}} = N(0)V_{\text{BCS}}$ 代入 D9 公式：
 $$a_{\text{SC}} = \left( \frac{d_A C_2 + d_{\text{BCS}}}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{\Delta\lambda_3} \right)^{1/3} \approx 0.567$$
 与标准 BCS 理论值 $a_{\text{BCS}} = 1/1.764 \approx 0.567$ 精确一致（偏差 $< 0.1\%$）。
 
-### 8.3 Hawking-Page 截面与谱编织
+### 8.3 Hawking-Page 截面与谱粘合
 
-Hawking-Page 截面 $\sigma_{\text{HP}}$ 描述了热 AdS 到大黑洞的热力学相变，是 Temp/RG 框架对引力系统的关键验证。其谱编织自由度由近视界对称代数 $\mathfrak{sl}(2,\mathbb{R})$ 决定：
+Hawking-Page 截面 $\sigma_{\text{HP}}$ 描述了热 AdS 到大黑洞的热力学相变，是 Temp/RG 框架对引力系统的关键验证。其谱粘合自由度由近视界对称代数 $\mathfrak{sl}(2,\mathbb{R})$ 决定：
 
 $$d_{\text{HP}} = g_{\text{HP}} \cdot \sqrt{\frac{C_2(\mathfrak{sl}(2,\mathbb{R})_{\text{fund}})}{C_2(\mathfrak{so}(1,1))}} \cdot \sqrt{r_{\text{HP}}} = \sqrt{2}\sqrt{r_{\text{HP}}}$$
 
@@ -462,9 +462,9 @@ $$a_{\text{HP}} = \left( \frac{1 + \sqrt{2}\sqrt{r_{\text{HP}}}}{4\pi} \cdot r_{
 
 $$\Rightarrow r_{\text{HP}} = 0.0395, \quad d_{\text{HP}} = 0.281, \quad \Delta\lambda_{\text{HP}} = \frac{\Delta\lambda_{\min}}{r_{\text{HP}}} \approx 3.09$$
 
-谱框架的 $a_{\text{HP}}$ 与经典值 $T_{\text{HP}} \cdot M_{\text{HP}} = 1/(2\pi)$ 精确匹配（偏差 $2.78\times10^{-17}$），证明了谱框架对引力相变系统的适用性。$d_{\text{HP}} < 1$ 表明几何相变的谱编织是"亚自由度"的——唯一的自由度来自近视界 $SL(2,\mathbb{R})$ 对称性的一个生成元方向，与引力系统"自由度匮乏"的物理直觉一致。HP 的谱间隙 $\Delta\lambda_{\text{HP}} \approx 3.09$ 比 $\Delta\lambda_{\min}$ 大一个量级以上，这是引力相变系统的特征：超大质量黑洞的视界曲率极低，对应的谱间距极大。
+谱框架的 $a_{\text{HP}}$ 与经典值 $T_{\text{HP}} \cdot M_{\text{HP}} = 1/(2\pi)$ 精确匹配（偏差 $2.78\times10^{-17}$），证明了谱框架对引力相变系统的适用性。$d_{\text{HP}} < 1$ 表明几何相变的谱粘合是"亚自由度"的——唯一的自由度来自近视界 $SL(2,\mathbb{R})$ 对称性的一个生成元方向，与引力系统"自由度匮乏"的物理直觉一致。HP 的谱间隙 $\Delta\lambda_{\text{HP}} \approx 3.09$ 比 $\Delta\lambda_{\min}$ 大一个量级以上，这是引力相变系统的特征：超大质量黑洞的视界曲率极低，对应的谱间距极大。
 
-语境性层 $\mathcal{S}: \mathbf{Cov} \to \{0,1\}$ 将 Kochen-Specker 定理翻译为：谱预层 $\mathcal{S}$ 在 $\dim\mathcal{H} \geq 3$ 时没有全局截面。Peres-Mermin 方提供了具体实例：9 个可观测量、6 个语境，行乘积 $+I$ vs 列乘积 $-I$ 的矛盾等价于 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$。
+语境性层 $\mathcal{S}: \mathbf{Cov} \to \{0,1\}$ 将 Kochen-Specker 定理翻译为：谱预层 $\mathcal{S}$ 在 $\dim\mathcal{H} \geq 3$ 时没有全局截面。Peres-Mermin 方提供了具体实例：9 个可观测量、6 个语境，行乘积 $+I$ vs 列乘积 $-I$ 的矛盾等价于 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$。
 
 ### 8.4 流变学 $\mathbf{Rate}$ 范畴与 DST 截面
 
@@ -476,7 +476,7 @@ $$\Rightarrow r_{\text{HP}} = 0.0395, \quad d_{\text{HP}} = 0.281, \quad \Delta\
 $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\gamma)]$$
 其中 $G_{\text{rate}}(\dot\gamma) \in \mathfrak{so}(1,1)$，由 Lorentz 同构保证。
 
-**DST 谱编织**。DST 谱编织自由度 $d_{\text{DST}} = 2\sqrt{r_{\text{DST}}}$，因子 $2$ 来自剪切-法向应力耦合与颗粒接触网络的双通道耦合。DST 的临界标度律 $\eta(\dot\gamma) \propto |\dot\gamma - \dot\gamma_c|^{-\nu_{\text{DST}}}$ 中 $\nu_{\text{DST}} = 1/2$ 来自 $\partial\mathbf{Rec}_D$ 边界处的平均场临界指数，与实验观测一致。DST 的 $\mathbf{Rate} \cong \mathbf{Temp}$ 同构建立了"应变率硬化 $\leftrightarrow$ 时间膨胀"的精确数学对应：硬化因子 $\gamma_{\text{rheo}}(\dot\gamma)$ 与相对论 $\gamma_{\text{rel}}(v)$ 通过 rapidity 参数共享相同的双曲正切函数形式。
+**DST 谱粘合**。DST 谱粘合自由度 $d_{\text{DST}} = 2\sqrt{r_{\text{DST}}}$，因子 $2$ 来自剪切-法向应力耦合与颗粒接触网络的双通道耦合。DST 的临界标度律 $\eta(\dot\gamma) \propto |\dot\gamma - \dot\gamma_c|^{-\nu_{\text{DST}}}$ 中 $\nu_{\text{DST}} = 1/2$ 来自 $\partial\mathbf{Rec}_D$ 边界处的平均场临界指数，与实验观测一致。DST 的 $\mathbf{Rate} \cong \mathbf{Temp}$ 同构建立了"应变率硬化 $\leftrightarrow$ 时间膨胀"的精确数学对应：硬化因子 $\gamma_{\text{rheo}}(\dot\gamma)$ 与相对论 $\gamma_{\text{rel}}(v)$ 通过 rapidity 参数共享相同的双曲正切函数形式。
 
 **当前状态**：$r_{\text{DST}} = 0.443$ 已通过 3D 渗透理论的接触网络谱维数 $d_s = 4/3$ 完成第一性原理封闭（封闭条件 $d_{\text{DST}} = d_s$），得 $a_{\text{DST}} = 0.435$。DST 验证状态从 ⚠️ 半经验升级为 ✅ **第一性原理推导**。数值推导脚本见 `src/dynamic_spectrum/dst_spectral_weave.py`。
 
@@ -519,7 +519,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 
 1. **范式确立**：Grothendieck 纤维化提供了"物理系统 = 基空间上的谱族"的统一数学语言
 2. **八实例构建**：Temp、RG、Noise、Sig、Kerr、Flt、PhysCrit、Reac 八个基空间上的纤维化均严格构造并验证
-3. **复合结构**：乘积基（Temp×RG）上的谱编织和开集范畴（$\mathrm{Open}(M)$）上的谱栈将框架提升到层论层面
+3. **复合结构**：乘积基（Temp×RG）上的谱粘合和开集范畴（$\mathrm{Open}(M)$）上的谱栈将框架提升到层论层面
 4. **总参数丛**：$\mathbf{Param} = 8$ 维乘积范畴统一收口全部子丛，坐标嵌入和拉回定理保证兼容性
 5. **物理截面**：QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层——每个物理理论是总丛上的一个截面
 6. **Lean 4 验证**：10 个模块、零错误编译、complete_chain 总成定理连接全部推导链
@@ -549,7 +549,7 @@ Level 2:  Cl(17,1)  ≅  M₃₂(ℝ)     32 维   = 16 × 2
 |:--|:-----|:------------|
 | 谱间隙截断 | $\Delta\lambda_{\min} > 0$ 压制 $k > k_{\max}$ 的高维激发 | 超出 Planck 能标的模式 |
 | 四层静默 | S1-S4 在谱/态射/对象/辫子层的屏蔽 | 不可激发的自由度 |
-| 纤维投影 | $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Spec}) \to \mathcal{B}$ | 超出观测参数空间的部分 |
+| 纤维投影 | $\pi_\mathcal{B}: \mathbf{Bun}(\mathcal{B}, \mathbf{Sp}) \to \mathcal{B}$ | 超出观测参数空间的部分 |
 
 **物理宇宙的两层**。紧缩投影区内，物理宇宙自然分为：
 
@@ -581,22 +581,22 @@ Level 2:  Cl(17,1)  ≅  M₃₂(ℝ)     32 维   = 16 × 2
 
 一个自然的问题是：**能否将投影区旋转到另一个方向？是否会生成一套极坐标变换形式的平行理论？**
 
-在 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 的表示空间上，酉群 $U(8)$ 通过共轭作用 $A_U = U A_0 U^\dagger$，旋转后投影定义为 $\Pi_U = \Pi_0 \circ U$。旋转函子 $\mathcal{U}: \mathbf{Spec}_0 \to \mathbf{Spec}_U$ 满足 $\mathcal{U} \circ D_0 = D_U \circ \mathcal{U}_R$。
+在 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 的表示空间上，酉群 $U(8)$ 通过共轭作用 $A_U = U A_0 U^\dagger$，旋转后投影定义为 $\Pi_U = \Pi_0 \circ U$。旋转函子 $\mathcal{U}: \mathbf{Sp}_0 \to \mathbf{Sp}_U$ 满足 $\mathcal{U} \circ D_0 = D_U \circ \mathcal{U}_R$。
 
-**定理 11.1**（旋转等价）。$\mathcal{U}$ 是范畴等价：$\mathbf{Spec}_U \cong \mathbf{Spec}_0$。
+**定理 11.1**（旋转等价）。$\mathcal{U}$ 是范畴等价：$\mathbf{Sp}_U \cong \mathbf{Sp}_0$。
 
 *证明*。$U$ 是酉算子，$A_U = U A_0 U^\dagger$ 保谱 $\sigma(A_U) = \sigma(A_0)$，保谱间隙 $\Delta\lambda_{\min}$，保 Bott 周期分类。所有范畴构造在酉共轭下不变。$\square$
 
 **推论 11.1**（$U(8)$ 旋转不变量）。Bott $\mathbb{Z}/8$ 周期、$\Delta\lambda_{\min}$、S1-S4 判据、Grothendieck 纤维化、全部伴随对、$k_{\max}=8$、签名 $(1,7)$ 在 $U(8)$ 下不变。
 
-因 $\mathbf{Spec}_U \cong \mathbf{Spec}_0$，旋转不产生新定理或新物理预言——效果仅限于旋量基的参数化方式（如 Cartesian → 极坐标）。这是**坐标等价版本**，而非独立平行宇宙。
+因 $\mathbf{Sp}_U \cong \mathbf{Sp}_0$，旋转不产生新定理或新物理预言——效果仅限于旋量基的参数化方式（如 Cartesian → 极坐标）。这是**坐标等价版本**，而非独立平行宇宙。
 
 | 方面 | 弦论景观 | UFPF 旋转自由度 |
 |:-----|:--------|:----------------|
 | 来源 | 不同 Calabi-Yau 紧致化 | **同一 Clifford 代数的酉基变换** |
 | 数量 | $\sim 10^{500}$ 个不等价真空 | **全部等价**（$\mathcal{U}$ 可逆翻译） |
 | 物理后果 | 不同真空有不同物理常数 | **物理常数完全相同** |
-| 选择问题 | 需要选择"我们的真空" | **无选择——所有旋转指向同一 $\mathbf{Spec}$ 像** |
+| 选择问题 | 需要选择"我们的真空" | **无选择——所有旋转指向同一 $\mathbf{Sp}$ 像** |
 
 ### 11.5 多重宇宙问题
 
@@ -609,7 +609,7 @@ UFPF 紧缩投影图景对多重宇宙的回答是：
 | 气泡宇宙（不同物理常数） | ❌ | 紧缩规则全域统一 |
 | 暴涨多视界 | ⚠️ | 不同 Hubble 体积共享同一套紧缩规则，物理常数相同 |
 
-宇宙的"唯一性"被提升为数学定理：$\mathbf{Spec}$ 范畴公理唯一确定谱对象结构，Cl(1,7) 由 Bott 分类唯一锁定，29 个物理参数的零参数预测闭合全链。不存在"另一个值"或"另一套规则"可被一致构造。
+宇宙的"唯一性"被提升为数学定理：$\mathbf{Sp}$ 范畴公理唯一确定谱对象结构，Cl(1,7) 由 Bott 分类唯一锁定，29 个物理参数的零参数预测闭合全链。不存在"另一个值"或"另一套规则"可被一致构造。
 
 ### 11.6 本体论地位
 
@@ -623,6 +623,6 @@ UFPF 紧缩投影图景对多重宇宙的回答是：
 |:----|:----|:--------|
 | **v0.5** | **2026-07-25** | **DST 第一性原理计算完成**：$r_{\text{DST}}=0.443$（从 3D 渗透谱维数 $d_s=4/3$ 封闭），$a_{\text{DST}}=0.435$；DST 状态从 ⚠️ 半经验 → ✅ 第一性原理推导；四系统统一表 DST 行填入确定值 |
 | **v0.4** | **2026-07-25** | Phase 54C 集成：§5.3 新增 HP/DST 精确数值验证（$d_{\text{HP}}=0.281$，$a_{\text{HP}}=0.159$）及四系统统一对比表；§6.1 新增 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 三范畴同构扩展和完整编织参数表；§7.5 新增 DST 截面行及验证等级列；§8.3 扩展 HP 精确验证详情（$r_{\text{HP}}=0.0395$，$\Delta\lambda_{\text{HP}}=3.09$，经典值 $2.78\times10^{-17}$ 偏差）；新增 §8.4 流变学 $\mathbf{Rate}$ 范畴与 DST 截面 |
-| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$，基于 Paper XV 量子化学谱翻译 |
+| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，基于 Paper XV 量子化学谱翻译 |
 | **v0.2** | **2026-07-23** | 新增 §5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$，统合 Paper VI §9.2.2 F5 定理 |
 | **v0.1** | **2026-07-23** | 初始版本 |

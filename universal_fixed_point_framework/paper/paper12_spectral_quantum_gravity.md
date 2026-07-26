@@ -4,11 +4,11 @@
 
 **版本**：v1.7（2026-07-21）
 
-**摘要**：本文在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立谱量子引力（Spectral Quantum Gravity, SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。核心贡献包括：(1) 基于 Cl(1,7) 代数构造 $A_{\text{GR}}$ 离散谱（$\lambda_k \propto \sqrt{k(k+1)}$），谱间隙 $\Delta\lambda_{\min} = 0.122\,M_{\text{Pl}}$（Paper XX 第一性原理推导）；(2) 构建谱引力子传播子 $G_{\text{spec}}(k) = \sum_i w_i(k)/(k_i^2 - m^2)$，验证红外极限还原 $1/k^2$（GR），紫外极限被 $\lambda_{\max}$ 指数压制（UV 有限）；(3) 计算 Planck 尺度 $2\to2$ 散射振幅，推广至 **N 体散射的统一解析闭式** $M_{\text{spec}}^{(N)}(E) = \kappa^{N-2} N!\,[G_{\text{spec}}(E^2/N)]^{N(N-1)/2} e^{-(NE/\lambda_{\max})^2}$，证明对所有 $N$ 和 $E$ 的 UV 有限性；(4) 导出 **谱 Cutkosky 规则** $\text{Disc}[M^{(N)}] = i\sum_k \int M^{(k)}M^{(N-k)\dagger}$，证明谱 S-矩阵满足完整幺正性 $SS^\dagger = I$；(5) 通过 RAMBO 算法实现 Lorentz 不变相空间蒙特卡洛积分，给出从 LHC ($\sim 10^{-15}M_{\text{Pl}}$) 到 Planck 标度的完整截面能标依赖；(6) 将谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 从人工正则化器升级为物理边界——谱截断即是量子引力本身的结构特征；(7) 整合黑洞视界谱动力学（Paper VIII）与奇点谱消解（Paper IX），建立完整的黑洞演化谱描述；(8) 给出黑洞蒸发 Page 曲线的谱动力学推导（$\tau_{\text{Page}} \approx 0.5\tau_{\text{evap}}$）；(9) 构建从 Planck 到 QCD 的跨尺度单链 RG 流；(10) 推广至 Kerr 度规的全谱分解，覆盖旋转黑洞的视界谱动力学与极端极限；(11) 推导谱引力子自相互作用至三圈 $\beta$ 函数，证明谱截断 $\Lambda_{\max}$ 保证 UV 有限性；(12) 建立谱 AdS/CFT 对应，揭示谱截断的全息诠释作为边界 CFT 的天然 UV 正则化器；(13) 导出谱原初引力波修正（§12），证明 SQG 在 CMB 以下能标以 $<10^{-100}$ 精度还原标准暴涨，在 Planck 能标附近预言无参数谱截断结构。所有理论预测均通过数值验证（6 核心脚本合计 44/44 检查通过），确立了谱量子引力作为 $\mathbf{Spec}$ 范畴中广义相对论的自然量子扩展。
+**摘要**：本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（Spectral Quantum Gravity, SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。核心贡献包括：(1) 基于 Cl(1,7) 代数构造 $A_{\text{GR}}$ 离散谱（$\lambda_k \propto \sqrt{k(k+1)}$），谱间隙 $\Delta\lambda_{\min} = 0.122\,M_{\text{Pl}}$（Paper XX 第一性原理推导）；(2) 构建谱引力子传播子 $G_{\text{spec}}(k) = \sum_i w_i(k)/(k_i^2 - m^2)$，验证红外极限还原 $1/k^2$（GR），紫外极限被 $\lambda_{\max}$ 指数压制（UV 有限）；(3) 计算 Planck 尺度 $2\to2$ 散射振幅，推广至 **N 体散射的统一解析闭式** $M_{\text{spec}}^{(N)}(E) = \kappa^{N-2} N!\,[G_{\text{spec}}(E^2/N)]^{N(N-1)/2} e^{-(NE/\lambda_{\max})^2}$，证明对所有 $N$ 和 $E$ 的 UV 有限性；(4) 导出 **谱 Cutkosky 规则** $\text{Disc}[M^{(N)}] = i\sum_k \int M^{(k)}M^{(N-k)\dagger}$，证明谱 S-矩阵满足完整幺正性 $SS^\dagger = I$；(5) 通过 RAMBO 算法实现 Lorentz 不变相空间蒙特卡洛积分，给出从 LHC ($\sim 10^{-15}M_{\text{Pl}}$) 到 Planck 标度的完整截面能标依赖；(6) 将谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 从人工正则化器升级为物理边界——谱截断即是量子引力本身的结构特征；(7) 整合黑洞视界谱动力学（Paper VIII）与奇点谱消解（Paper IX），建立完整的黑洞演化谱描述；(8) 给出黑洞蒸发 Page 曲线的谱动力学推导（$\tau_{\text{Page}} \approx 0.5\tau_{\text{evap}}$）；(9) 构建从 Planck 到 QCD 的跨尺度单链 RG 流；(10) 推广至 Kerr 度规的全谱分解，覆盖旋转黑洞的视界谱动力学与极端极限；(11) 推导谱引力子自相互作用至三圈 $\beta$ 函数，证明谱截断 $\Lambda_{\max}$ 保证 UV 有限性；(12) 建立谱 AdS/CFT 对应，揭示谱截断的全息诠释作为边界 CFT 的天然 UV 正则化器；(13) 导出谱原初引力波修正（§12），证明 SQG 在 CMB 以下能标以 $<10^{-100}$ 精度还原标准暴涨，在 Planck 能标附近预言无参数谱截断结构。所有理论预测均通过数值验证（6 核心脚本合计 44/44 检查通过），确立了谱量子引力作为 $\mathbf{Sp}$ 范畴中广义相对论的自然量子扩展。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D \dashv R$）与 Paper XI（谱 QFT 公理 A1–A6）。配套数值代码见 `paperX_graviton_propagator.py`、`paperX_planck_scattering.py`。本文为 Paper VIII（黑洞视界谱动力学）与 Paper IX（奇点谱消解）的上层整合，后者为本文 §5–6 提供细化的黑洞与奇点描述。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）与 Paper XI（谱 QFT 公理 A1–A6）。配套数值代码见 `paperX_graviton_propagator.py`、`paperX_planck_scattering.py`。本文为 Paper VIII（黑洞视界谱动力学）与 Paper IX（奇点谱消解）的上层整合，后者为本文 §5–6 提供细化的黑洞与奇点描述。
 
 ---
 
@@ -20,7 +20,7 @@
 
 ### 1.2 核心论题
 
-> **论题 1**（谱量子引力等价性）。GR 的经典极限与量子修正均可翻译为 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中 $A_{\text{GR}}$ 离散谱的谱分解。谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 不是人工插入的正则化器，而是 $A_{\text{GR}}$ 谱有界性的自然结果。量子引力效应 = 谱截断效应。
+> **论题 1**（谱量子引力等价性）。GR 的经典极限与量子修正均可翻译为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中 $A_{\text{GR}}$ 离散谱的谱分解。谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 不是人工插入的正则化器，而是 $A_{\text{GR}}$ 谱有界性的自然结果。量子引力效应 = 谱截断效应。
 
 ### 1.3 论文结构
 
@@ -59,7 +59,7 @@ $^\dagger$ 同时归属于 Paper XI。
 
 ### 2.1 构造
 
-**定义 2.1**（$A_{\text{GR}}$ 谱算子）。谱引力算子 $A_{\text{GR}} \in \mathbf{Spec}$ 由 Cl(1,7) 代数约束给出，其离散谱为：
+**定义 2.1**（$A_{\text{GR}}$ 谱算子）。谱引力算子 $A_{\text{GR}} \in \mathbf{Sp}$ 由 Cl(1,7) 代数约束给出，其离散谱为：
 
 $$\lambda_k = \lambda_{\max} \cdot \frac{\sqrt{k(k+1)}}{\sqrt{k_{\max}(k_{\max}+1)}}, \quad k = 1, 2, \ldots, k_{\max}.$$
 
@@ -255,7 +255,7 @@ $$\frac{\sigma_N(E)}{\sigma_2(E)} \propto \left(\frac{E}{M_{\text{Pl}}}\right)^{
 
 ### 5.1 视界谱条件
 
-黑洞视界作为 $\mathbf{Spec}$ 中的谱边界：
+黑洞视界作为 $\mathbf{Sp}$ 中的谱边界：
 
 $$\lambda_{\text{horizon}} = \frac{1}{4M^2} \quad (\text{Schwarzschild}),$$
 
@@ -321,9 +321,9 @@ $$P_{\text{spec}}(\omega) = \frac{1}{e^{\omega/T_H} - 1} \cdot \Theta(\lambda_{\
 
 谱精确 RG 方程（Wetterich 方程的谱版本）：
 
-$$\partial_t \Gamma_k^{\text{spec}} = \frac{1}{2} \operatorname{Tr}_{\mathbf{Spec}} \left[ \frac{\partial_t R_k}{\Gamma_k^{(2)} + R_k} \right],$$
+$$\partial_t \Gamma_k^{\text{spec}} = \frac{1}{2} \operatorname{Tr}_{\mathbf{Sp}} \left[ \frac{\partial_t R_k}{\Gamma_k^{(2)} + R_k} \right],$$
 
-其中 $t = \ln(k/\Lambda)$ 是 RG 时间，$R_k$ 是谱截断函数，$\operatorname{Tr}_{\mathbf{Spec}}$ 是 $\mathbf{Spec}$ 范畴中的谱迹。
+其中 $t = \ln(k/\Lambda)$ 是 RG 时间，$R_k$ 是谱截断函数，$\operatorname{Tr}_{\mathbf{Sp}}$ 是 $\mathbf{Sp}$ 范畴中的谱迹。
 
 谱路径积分的显式定义提供了该方程的基础。谱生成泛函为：
 
@@ -439,7 +439,7 @@ Wick 转动 $t = i\tau$ 在谱框架中获得了新的诠释：它是**静态↔
 - S3（无间隙）：$\checkmark$——$E \in [0,\infty)$ 无间隙
 - S4（零轨道权重）：$\checkmark$——虚时方向在静态极限下权重为零
 
-**推论 8.1a**（Euclidean 路径积分 = 静态延拓的谱像）。$Z_{\text{E}} = \int \mathcal{D}\phi\, e^{-S_E[\phi]}$ 的谱版本为 $Z_{\text{spec}} = \operatorname{Tr}_{\mathbf{Spec}} e^{-\beta D^{\text{id}}(M_4)}$，其中 $D^{\text{id}}$ 是静态谱几何函子（Paper XIX §3.3），$\beta$ 是逆温度。这一对应将有限温场论整合入谱框架：
+**推论 8.1a**（Euclidean 路径积分 = 静态延拓的谱像）。$Z_{\text{E}} = \int \mathcal{D}\phi\, e^{-S_E[\phi]}$ 的谱版本为 $Z_{\text{spec}} = \operatorname{Tr}_{\mathbf{Sp}} e^{-\beta D^{\text{id}}(M_4)}$，其中 $D^{\text{id}}$ 是静态谱几何函子（Paper XIX §3.3），$\beta$ 是逆温度。这一对应将有限温场论整合入谱框架：
 - $T = 0$（基态）：纯 Wick 转动，$D(R_{\text{L}}) \cong D^{\text{id}}(M_4)$
 - $T > 0$（有限温）：Euclidean 时间紧致化 $S^1_\beta$，$D^{\text{id}}(S^1_\beta \times M_3)$ 分解为 Matsubara 模式与空间谱的直和
 
@@ -470,7 +470,7 @@ $$ds^2 = -\left(1 - \frac{2Mr}{\Sigma}\right)dt^2 - \frac{4aMr\sin^2\theta}{\Sig
 
 其中 $\Sigma = r^2 + a^2\cos^2\theta$，$\Delta = r^2 - 2Mr + a^2$，$a = J/M$ 为单位质量的角动量。
 
-**定义 9.1**（Kerr 谱生成元）。谱生成元 $A_{\text{Kerr}}$ 在 $\mathbf{Spec}$ 范畴中扩展 $A_{\text{GR}}$：
+**定义 9.1**（Kerr 谱生成元）。谱生成元 $A_{\text{Kerr}}$ 在 $\mathbf{Sp}$ 范畴中扩展 $A_{\text{GR}}$：
 
 $$A_{\text{Kerr}} = A_{\text{GR}} + \delta A_{\text{rot}}(a), \quad \delta A_{\text{rot}}(a) = \frac{a}{M} \cdot \mathcal{L}_\phi,$$
 
@@ -498,7 +498,7 @@ $$\left[\frac{1}{\sin\theta}\frac{d}{d\theta}\left(\sin\theta\frac{d}{d\theta}\r
 
 $$A_{\text{Kerr}} = \sum_{s,l,m} \lambda_{slm} P_{slm}, \quad \lambda_{slm} = {}_{s}E_{lm}(a\omega),$$
 
-其中 $P_{slm}$ 是 $\mathbf{Spec}$ 范畴中的谱投影。对于慢转情形 $a\omega \ll 1$，特征值展开为：
+其中 $P_{slm}$ 是 $\mathbf{Sp}$ 范畴中的谱投影。对于慢转情形 $a\omega \ll 1$，特征值展开为：
 
 $${}_{s}E_{lm} = l(l+1) - s^2 - a\omega\left(\frac{2s^2m}{l(l+1)}\right) + O(a^2\omega^2).$$
 
@@ -588,9 +588,9 @@ $$\boxed{\beta_3(G_N) = \beta_1(G_N) + \beta_2(G_N) + \beta_3^{\text{(spec)}}}.$
 
 谱修正 $\beta_3^{\text{(spec)}}$ 来源于 $A_{\text{GR}}$ 谱生成元的对易子结构：
 
-$$\beta_3^{\text{(spec)}} = \frac{g_{\text{spec}}^2}{16\pi^2} \cdot \mathcal{C}, \quad \mathcal{C} = \operatorname{Tr}_{\mathbf{Spec}}[A_{\text{GR}}, [A_{\text{GR}}, \Pi_{\text{ghost}}]],$$
+$$\beta_3^{\text{(spec)}} = \frac{g_{\text{spec}}^2}{16\pi^2} \cdot \mathcal{C}, \quad \mathcal{C} = \operatorname{Tr}_{\mathbf{Sp}}[A_{\text{GR}}, [A_{\text{GR}}, \Pi_{\text{ghost}}]],$$
 
-其中 $g_{\text{spec}}$ 是谱耦合常数，$\Pi_{\text{ghost}}$ 是鬼场谱投影，$\operatorname{Tr}_{\mathbf{Spec}}$ 是 $\mathbf{Spec}$ 范畴中的谱迹。
+其中 $g_{\text{spec}}$ 是谱耦合常数，$\Pi_{\text{ghost}}$ 是鬼场谱投影，$\operatorname{Tr}_{\mathbf{Sp}}$ 是 $\mathbf{Sp}$ 范畴中的谱迹。
 
 具体展开形式：
 
@@ -634,11 +634,11 @@ AdS/CFT 对应是全息原理最重要的具体实现。本节的谱版本将 $A
 
 $$\partial(\text{AdS}_{\text{spec}}) = \left\{ \Lambda = \Lambda_{\max} \right\},$$
 
-其中 $\Lambda$ 是谱 RG 标度（§8），$\Lambda_{\max} = M_{\text{Pl}}$ 是谱截断。该边界是 $\mathbf{Spec}$ 范畴中的谱边界，而非几何边界。
+其中 $\Lambda$ 是谱 RG 标度（§8），$\Lambda_{\max} = M_{\text{Pl}}$ 是谱截断。该边界是 $\mathbf{Sp}$ 范畴中的谱边界，而非几何边界。
 
 谱 bulk 算符 $A_{\text{bulk}}$ 作用于谱 bulk Hilbert 空间 $\mathcal{H}_{\text{bulk}}$：
 
-$$A_{\text{bulk}} \in \mathbf{Spec}(\mathcal{H}_{\text{bulk}}), \quad A_{\text{bulk}} = \sum_i \lambda_i P_i^{\text{bulk}}.$$
+$$A_{\text{bulk}} \in \mathbf{Sp}(\mathcal{H}_{\text{bulk}}), \quad A_{\text{bulk}} = \sum_i \lambda_i P_i^{\text{bulk}}.$$
 
 ### 11.2 谱全息字典
 
@@ -711,7 +711,7 @@ $$\langle \mathcal{O}(x)\mathcal{O}(x') \rangle_{\text{CFT}}^{\text{spec}} \xrig
 
 在 §11.1-11.6 建立的谱 AdS/CFT 对应基础上，以下四个方向已综合跨论文成果推进解决。
 
-**方向 1：非对易修正**。$A_{\text{bulk}}$ 的对易子结构编码非对易几何的全息对应。$\mathbf{Spec}$ 范畴本身满足 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$（Paper X 定理 C1），因此 $[A_{\text{bulk}}, A_{\text{bulk}}'] \neq 0$ 是范畴的固有属性，而非额外假设。$A_{\text{bulk}}$ 的对易子代数同构于非对易几何的坐标代数（非对易参数 $\Theta^{ij} \propto \epsilon \cdot \delta^{ij}$），其通过谱 GKPW 关系映射到边界 CFT 的 OPE 系数 $C_{ij}^k = \text{Tr}(P_i^{\text{bulk}} P_j^{\text{bulk}} P_k^{\text{bulk}})$。非对易对 AdS 传播子的修正由谱交织精度 $\epsilon$ 控制，量级 $\sim 10^{-16}$，在 Planck 标度附近可感知。
+**方向 1：非对易修正**。$A_{\text{bulk}}$ 的对易子结构编码非对易几何的全息对应。$\mathbf{Sp}$ 范畴本身满足 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$（Paper X 定理 C1），因此 $[A_{\text{bulk}}, A_{\text{bulk}}'] \neq 0$ 是范畴的固有属性，而非额外假设。$A_{\text{bulk}}$ 的对易子代数同构于非对易几何的坐标代数（非对易参数 $\Theta^{ij} \propto \epsilon \cdot \delta^{ij}$），其通过谱 GKPW 关系映射到边界 CFT 的 OPE 系数 $C_{ij}^k = \text{Tr}(P_i^{\text{bulk}} P_j^{\text{bulk}} P_k^{\text{bulk}})$。非对易对 AdS 传播子的修正由谱交织精度 $\epsilon$ 控制，量级 $\sim 10^{-16}$，在 Planck 标度附近可感知。
 
 **方向 2：有限 $N$ 修正**。谱截断 $k_{\max}=8$（Paper XX §5-6，来自 Cl(1,7) Bott 分类）决定边界 CFT 的有效秩 $N = (k_{\max}+1)(k_{\max}+2)/2 = 45$。$k_{\max}$ 有限产生谱传播子的 $1/N$ 修正 $\delta K_{\text{spec}}^{1/N} / K_{\text{spec}} = 2/(k_{\max}+3) = 2/11$，该修正在当前实验精度下不可观测（LIGO ringdown 修正 $<10^{-16}$），但在未来 Einstein Telescope 的 Planck 标度附近处于可探测边界。
 
@@ -859,7 +859,7 @@ SQG 的可检验预言横跨粒子物理、量子引力、黑洞物理和宇宙�
 
 ## 13. 结论
 
-本文在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立了谱量子引力的完整体系：
+本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立了谱量子引力的完整体系：
 
 | 模块 | 验证 | 来源 |
 |:----|:----|:----|
@@ -883,7 +883,7 @@ SQG 的可检验预言横跨粒子物理、量子引力、黑洞物理和宇宙�
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XII（增强版 v1.7），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。v1.7 将 §12.6 可检验预言从仅 PGW 扩展为 SQG 全体可检验预言表，新增 A1-A8 共 8 项已利用现有开放数据验证的预言（规范耦合、QCD 参数、PGW 红外还原、BH 熵、Page 曲线、弱等效原理、暗物质、CKM/PMNS），以及 B1-B6 共 6 项需未来实验预言，并添加"现有开放数据约束"和"理论区分力"列。v1.6 重构 §9-13 章节结构。v1.5 全面修订 §8 跨尺度 RG 流。6 核心脚本 44/44 检查通过。
+《通用不动点范畴框架》系列论文 XII（增强版 v1.7），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。v1.7 将 §12.6 可检验预言从仅 PGW 扩展为 SQG 全体可检验预言表，新增 A1-A8 共 8 项已利用现有开放数据验证的预言（规范耦合、QCD 参数、PGW 红外还原、BH 熵、Page 曲线、弱等效原理、暗物质、CKM/PMNS），以及 B1-B6 共 6 项需未来实验预言，并添加"现有开放数据约束"和"理论区分力"列。v1.6 重构 §9-13 章节结构。v1.5 全面修订 §8 跨尺度 RG 流。6 核心脚本 44/44 检查通过。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
@@ -892,7 +892,7 @@ SQG 的可检验预言横跨粒子物理、量子引力、黑洞物理和宇宙�
 | v1.6 | 2026-07-21 | **章节结构重构**：§9-§13 重编号，将原结论下三大理论扩展提升为独立章节——§9 Kerr 度规全谱分解、§10 三圈 β 函数、§11 谱 AdS/CFT 对应；原 §10 原初引力波重编号为 §12；结论移至 §13。更新全部内部跨引用、目录表、定理编号及版本记录 |
 | v1.5 | 2026-07-21 | **§8 跨尺度 RG 全面修订**：§8.2 引入四层静默 Z-因子方法论（$Z_1=3.67, Z_2=2.12, Z_3=1.44$）；§8.3 重构为方法 A（简化单圈）与方法 B（完整方法论）对比结构，新增 Paper XI 精确值表；§8.5 更新 $y_t(M_Z)=0.71$（4.1%）；§8.8 更新交叉验证引用精确值（RMS 2.6%） |
 | v1.4 | 2026-07-21 | **实验可证伪性推进**：新增 §12 谱原初引力波谱修正理论推导，包含标准暴涨张量功率谱回顾（§12.1）、谱传播子张量修正展开（§12.2、定理 12.1）、6 频段修正量级定量表（§12.3）、修正一致性关系（§12.4、定理 12.2）、Planck 能标谱结构（§12.5）、5 项可检验预言总结（§12.6）、与弦论/LQG/渐近安全对比（§12.7） |
-| v1.3 | 2026-07-21 | **谱 AdS/CFT 四个扩展方向推进**：§11.7 从"开放方向"转化为完整内容——(1) 非对易修正（$[A_{\text{bulk}},A_{\text{bulk}}'] = i\Theta$ 来自 $\mathbf{Spec}\neq\mathbf{Spec}_{\text{com}}$，OPE 系数的谱投影公式）；(2) 有限 $N$ 修正（$k_{\max}=8\to N=45$，$1/N$ 修正 $2/11$）；(3) 谱纠缠熵（Area_spec 定义，Ryû–Takayanagi 谱版本，$k_{\max}$ 修正 $1/12$）；(4) 全息谱熵（$S_{\text{bulk}}^{\text{spec}} = S_{\text{EE}}^{\text{CFT}}$，谱热力学二律与涨落定理） |
+| v1.3 | 2026-07-21 | **谱 AdS/CFT 四个扩展方向推进**：§11.7 从"开放方向"转化为完整内容——(1) 非对易修正（$[A_{\text{bulk}},A_{\text{bulk}}'] = i\Theta$ 来自 $\mathbf{Sp}\neq\mathbf{Sp}_{\text{com}}$，OPE 系数的谱投影公式）；(2) 有限 $N$ 修正（$k_{\max}=8\to N=45$，$1/N$ 修正 $2/11$）；(3) 谱纠缠熵（Area_spec 定义，Ryû–Takayanagi 谱版本，$k_{\max}$ 修正 $1/12$）；(4) 全息谱熵（$S_{\text{bulk}}^{\text{spec}} = S_{\text{EE}}^{\text{CFT}}$，谱热力学二律与涨落定理） |
 | v1.2 | 2026-07-19 | **谱等价桥**：新增 §8.7 Wick 转动作为谱等价桥（Paper XIX §6.2 在 QG 中的应用），将 Euclidean 路径积分重新诠释为静态延拓的谱像 |
 | v1.1 | 2026-07-19 | 新增 §4.4 N 体谱散射统一闭式、§4.5 谱 Cutkosky 规则与幺正性、§4.6 实验截面；更新摘要与数值脚本表；44/44 检查通过 |
 | v1.0 | 2026-07-18 | 初始版本：整合 $A_{\text{GR}}$ 谱、引力子传播子、Planck 2→2 散射、BH 视界/奇点/蒸发。§8 跨尺度 RG 流完整展开。§9 Kerr 度规全谱分解、§10 三圈 $\beta$ 函数、§11 谱 AdS/CFT 对应。2 核心脚本 12/12 + 跨 RG 4/4 = 16/16 检查通过。 |

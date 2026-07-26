@@ -5,7 +5,7 @@
 ## 定位
 
 - 将有限维谱三元组 $(\mathcal{A}, \mathcal{H}, D)$ 的 Dirac 本征值视为递归系统 $R_{NCG} \in \mathbf{Rec}$。
-- 其去递归化像 $D(R_{NCG})$ 给出 Dirac 谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
+- 其谱化像 $D(R_{NCG})$ 给出 Dirac 谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
 
 ## 文件
 

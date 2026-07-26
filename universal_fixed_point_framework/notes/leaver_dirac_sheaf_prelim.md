@@ -469,7 +469,7 @@ $$\|A \otimes B\| = \|A\| \cdot \|B\|$$
 
 $$\|U_{\otimes}\| = \|U^{(-2)} \otimes U^{(-1/2)}\| = \|U^{(-2)}\| \cdot \|U^{(-1/2)}\| \leq 1 \cdot 1 = 1$$
 
-**步骤 3：$\mathbf{Rec}_{\mathrm{diss}}$ 范畴封闭性**。压缩性是 $\mathbf{Rec}_{\mathrm{diss}}$ 范畴的定义性条件之一（Paper XXVII §5.2）。满足压缩性意味着 $U_{\otimes}$ 可接受 $D_{\mathrm{diss}}$ 函子的作用，得到对应的谱对象 $D_{\mathrm{diss}}(U_{\otimes}) \in \mathbf{Spec}$。因此 $\mathbf{Rec}_{\mathrm{diss}}$ 在张量积操作下封闭。$\square$
+**步骤 3：$\mathbf{Rec}_{\mathrm{diss}}$ 范畴封闭性**。压缩性是 $\mathbf{Rec}_{\mathrm{diss}}$ 范畴的定义性条件之一（Paper XXVII §5.2）。满足压缩性意味着 $U_{\otimes}$ 可接受 $D_{\mathrm{diss}}$ 函子的作用，得到对应的谱对象 $D_{\mathrm{diss}}(U_{\otimes}) \in \mathbf{Sp}$。因此 $\mathbf{Rec}_{\mathrm{diss}}$ 在张量积操作下封闭。$\square$
 
 **命题 4.2**（伪谱扰动界的张量积扩展，完整证明）。张量积谱丛的伪谱扰动界 $\varepsilon_{\otimes}$ 满足：
 

@@ -9,7 +9,7 @@
 | $\mathbf{Rec}$ 的严格定义（复合律、单位律、结合律） | ✅ 已完成 | `roadmap/phase1_meta_axioms.md`、`src/rec_category.py` |
 | $D$ 的忠实性证明 | ✅ 已完成 | `roadmap/phase1_meta_axioms.md` 定理 3.4 |
 | 伴随函子 $D \dashv R$ 离散原型 | ✅ 已完成 | `src/decursion_functor.py`、`src/test_decursion_functor.py` |
-| 谱对应 $ \lambda_i = e^{-\mu_i}$ 的范畴自然等价 | ✅ 已完成 | `notes/00_foundations/spectral_correspondence_equivalence.md`、`src/spectral_correspondence.py` |
+| 谱对应 $ \lambda_i = e^{-\mu_i}$ 的范畴自然同构 | ✅ 已完成 | `notes/00_foundations/spectral_correspondence_equivalence.md`、`src/spectral_correspondence.py` |
 | 局部吸引子距离度量（LACI） | ✅ 已完成 | `roadmap/phase4_semantics_over_fitting.md`、`src/attractor_distance.py` |
 | **零参数质量预测（Spec 4-范畴静默层级→全部SM参数）** | ✅ **已完成，29项已验证** | `notes/01_qcd_higgs/spectral_root_cause_analysis.md`、`paper/paper17_zero_parameter_predictions.md` |
 | **CKM 五参数第一性推导** | ✅ 已完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` |

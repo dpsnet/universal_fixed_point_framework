@@ -177,7 +177,7 @@ $$R_{\partial\mathbf{Rec}_D} \sim 10^{26} \mathrm{m} \sim H_0^{-1},$$
 ### 5.3 AdS/CFT 对应的谱翻译
 
 **命题 5.3**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
-$$\mathbf{Spec}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Spec}_{\text{CFT}},$$
+$$\mathbf{Sp}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Sp}_{\text{CFT}},$$
 
 即 AdS 时空的 $\partial\mathbf{Rec}_D$ 边界谱对象等价于 CFT 的谱对象。
 

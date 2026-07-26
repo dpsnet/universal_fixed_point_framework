@@ -14,7 +14,7 @@
 
 $$Z_{\text{spec}}[J] = \int \mathcal{D}_{\text{Spec}}\Phi \; \exp\left(i S_{\text{spec}}[\Phi] + i \int d\lambda \, J(\lambda) \Phi(\lambda)\right),$$
 
-其中谱测度 $\mathcal{D}_{\text{Spec}}\Phi$ 是 $\mathbf{Spec}$ 范畴中谱对象 $A_\phi$ 的所有态射变分的积：
+其中谱测度 $\mathcal{D}_{\text{Spec}}\Phi$ 是 $\mathbf{Sp}$ 范畴中谱对象 $A_\phi$ 的所有态射变分的积：
 
 $$\mathcal{D}_{\text{Spec}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda).$$
 

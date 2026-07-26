@@ -2,7 +2,7 @@
 
 **版本**：v0.5（2026-07-25）
 
-**摘要**：本笔记将黑洞铃荡（ringdown）阶段的准正常模（QNM）衰减翻译为谱语言，建立 QNM 谱数值框架。核心成果包括：(1) Leaver 连续分数法 QNM 频率精确求解，(2) 基于分形谱去递归理论的统一 Leaver 求解器（集成去递归谱分析、修正 Leaver 系数、LACI 物理根选择判据、双重 Homotopy Continuation），(3) **两弦法快速谱求解（TridiagonalSpectralSolver）**：将递推系数转化为三对角矩阵最小特征值问题，使用反幂迭代（O(N) Thomas 算法 + Rayleigh 商）实现 1.4x-9x 加速，(4) 多模叠加谱分析与谱间隙恢复机制，(5) 与 LIGO 观测数据的对比框架。
+**摘要**：本笔记将黑洞铃荡（ringdown）阶段的准正常模（QNM）衰减翻译为谱语言，建立 QNM 谱数值框架。核心成果包括：(1) Leaver 连续分数法 QNM 频率精确求解，(2) 基于分形谱化理论的统一 Leaver 求解器（集成谱化谱分析、修正 Leaver 系数、LACI 物理根选择判据、双重 Homotopy Continuation），(3) **双初始向量逆迭代法快速谱求解（TridiagonalSpectralSolver）**：将递推系数转化为三对角矩阵最小特征值问题，使用反幂迭代（O(N) Thomas 算法 + Rayleigh 商）实现 1.4x-9x 加速，(4) 多模叠加谱分析与谱间隙恢复机制，(5) 与 LIGO 观测数据的对比框架。
 
 ---
 
@@ -40,11 +40,11 @@ $$S_n = \frac{1}{R_n} = \frac{\beta_n - \alpha_n/S_{n-1}}{\gamma_n}$$
 - 有限差分梯度 $\partial R_0/\partial \omega$ 通过复扰动计算
 - 收敛判据 $|\Delta \omega| < \text{tol} \cdot |\omega|$
 
-### 1.3 基于去递归理论的统一 Leaver 求解器
+### 1.3 基于谱化理论的统一 Leaver 求解器
 
-在 `LeaverUnifiedSolver`（`src/dynamic_spectrum/leaver_unified_solver.py`）中实现了基于分形谱去递归理论的完整 Leaver QNM 求解器，包含四层集成：
+在 `LeaverUnifiedSolver`（`src/dynamic_spectrum/leaver_unified_solver.py`）中实现了基于分形谱化理论的完整 Leaver QNM 求解器，包含四层集成：
 
-1. **去递归理论核心（DerecursionAnalyzer）**：将三项递推系统 $R \in \text{Rec}$ 映射为 Koopman 算子 $K$，计算谱分布 $\sigma(K)$ 和谱间隙 $\gamma = 1 - \rho(K)$，验证谱对应 $\lambda = e^{-\mu}$。Koopman 算子的构造基于：
+1. **谱化理论核心（DerecursionAnalyzer）**：将三项递推系统 $R \in \text{Rec}$ 映射为 Koopman 算子 $K$，计算谱分布 $\sigma(K)$ 和谱间隙 $\gamma = 1 - \rho(K)$，验证谱对应 $\lambda = e^{-\mu}$。Koopman 算子的构造基于：
    $$K_n = \begin{bmatrix} -\beta_n/\alpha_n & -\gamma_n/\alpha_n \\ 1 & 0 \end{bmatrix}$$
    谱半径 $\rho(K)$ 决定收敛速度，谱间隙 $\gamma$ 越大收敛越快。
 
@@ -56,17 +56,17 @@ $$S_n = \frac{1}{R_n} = \frac{\beta_n - \alpha_n/S_{n-1}}{\gamma_n}$$
 
 4. **双重 Homotopy Continuation**：从 Schwarzschild 参考解出发，沿自旋 $a$ 和磁量子数 $m$ 双参数逐步推进到目标 Kerr 参数。
 
-5. **两弦法快速谱求解（TridiagonalSpectralSolver）**：将 Leaver 三项递推系数 $\{\alpha_n, \beta_n, \gamma_n\}$ 构造为 $N\times N$ 三对角矩阵 $M$，将 QNM 频率条件 $R_0(\omega)=0$ 转化为 $M$ 的最小模特征值问题。使用反幂迭代（shift=0）在 $O(N)$ 内收敛到最小特征值，替代全对角化 $O(N^3)$ 方案。
+5. **双初始向量逆迭代法快速谱求解（TridiagonalSpectralSolver）**：将 Leaver 三项递推系数 $\{\alpha_n, \beta_n, \gamma_n\}$ 构造为 $N\times N$ 三对角矩阵 $M$，将 QNM 频率条件 $R_0(\omega)=0$ 转化为 $M$ 的最小模特征值问题。使用反幂迭代（shift=0）在 $O(N)$ 内收敛到最小特征值，替代全对角化 $O(N^3)$ 方案。
 
-   **谱系说明**：全对角化 $O(N^3)$ 方案最早在 `src/_archive/leaver_deprecated/leaver_spectral_derecursion.py` 中作为去递归理论的**概念验证（proof-of-concept）**实现，直接验证了"连分数迭代→三对角矩阵特征值"的 D 函子对应关系。该文件同时实现了 $O(N^3)$ 全谱分解和 $O(N)$ 两弦法两种方案，并完成了三路径交叉验证（CF 迭代 vs 谱分解 vs qnm 包，差值 $\sim 10^{-12}$），证明了去递归理论在黑洞 QNM 计算中的物理可实现性。两弦法是该文件的 $O(N)$ 优化版本。
+   **谱系说明**：全对角化 $O(N^3)$ 方案最早在 `src/_archive/leaver_deprecated/leaver_spectral_derecursion.py` 中作为谱化理论的**概念验证（proof-of-concept）**实现，直接验证了"连分数迭代→三对角矩阵特征值"的 D 函子对应关系。该文件同时实现了 $O(N^3)$ 全谱分解和 $O(N)$ 双初始向量逆迭代法两种方案，并完成了三路径交叉验证（CF 迭代 vs 谱分解 vs qnm 包，差值 $\sim 10^{-12}$），证明了谱化理论在黑洞 QNM 计算中的物理可实现性。双初始向量逆迭代法是该文件的 $O(N)$ 优化版本。
 
    核心步骤：
    - 使用**多项式形式 Leaver 系数**（Cook & Zalutskiy 2014）构建 $M$，确保 $\det M = 0 \iff R_0(\omega) = 0$
    - 随机初始向量 $\rightarrow$ 求解 $Mw = v$（Thomas 算法，$O(N)$）$\rightarrow$ 归一化 $\rightarrow$ Rayleigh 商 $\mu = v^\dagger Mv$
    - 通常 **3-5 步**收敛到 $|\mu| \sim 10^{-12}$
 
-   **两弦法 vs 标准 Leaver 连分数**：
-   | 维度 | 标准 Leaver | 两弦法 |
+   **双初始向量逆迭代法 vs 标准 Leaver 连分数**：
+   | 维度 | 标准 Leaver | 双初始向量逆迭代法 |
    |:----:|:-----------:|:------:|
    | 收敛速度 | 二次 (Newton) | 三次 (Rayleigh 商) |
    | 每步复杂度 | $O(N)$ 连分数递推 | $O(N)$ Thomas 三对角求解 |
@@ -74,7 +74,7 @@ $$S_n = \frac{1}{R_n} = \frac{\beta_n - \alpha_n/S_{n-1}}{\gamma_n}$$
    | 附加产出 | 仅频率 | 特征向量（展开系数）+ 谱间隙 |
 
    **数值验证**（Schwarzschild $a=0$, $l=2,m=0$）：
-   - 两弦法：$\omega = 0.373672 - 0.088962i$（Berti 相符，$1.16\times10^{-6}$ 相对误差）
+   - 双初始向量逆迭代法：$\omega = 0.373672 - 0.088962i$（Berti 相符，$1.16\times10^{-6}$ 相对误差）
    - 残差 $9.54\times10^{-12}$，仅需 **2 次 Newton 迭代**
    - 耗时 960ms vs 标准 Newton 法 1380ms（加速比 **1.4x**）
    - Kerr 模式加速比达 **3-9x**
@@ -85,15 +85,15 @@ from dynamic_spectrum.leaver_unified_solver import LeaverUnifiedSolver
 solver = LeaverUnifiedSolver(M=1.0, a=0.0, s=-2)
 # 标准 Newton 法
 result = solver.solve(l=2, m=2, n=0)
-# 两弦法
+# 双初始向量逆迭代法
 result = solver.solve(l=2, m=2, n=0, method='spectral_fast')
 # 两法对比
 result = solver.solve(l=2, m=2, n=0, method='spectral_compare')
 ```
 
-**验证**：Schwarzschild 基模 $(l=2,m=0,n=0)$ 已通过两弦法精确验证——$\omega = 0.373672 - 0.088962i$，与 Berti (2006) 拟合表相对误差 $1.16\times10^{-6}$，残差 $9.54\times10^{-12}$。废弃的探索性 Leaver 实现已移至 `src/_archive/leaver_deprecated/`。
+**验证**：Schwarzschild 基模 $(l=2,m=0,n=0)$ 已通过双初始向量逆迭代法精确验证——$\omega = 0.373672 - 0.088962i$，与 Berti (2006) 拟合表相对误差 $1.16\times10^{-6}$，残差 $9.54\times10^{-12}$。废弃的探索性 Leaver 实现已移至 `src/_archive/leaver_deprecated/`。
 
-### 1.4 去递归理论定量验证
+### 1.4 谱化理论定量验证
 
 **谱对应定理验证**：对 Kerr QNM 频率构建角向 Koopman 算子 $K$，验证谱对应 $\lambda_i = e^{-\mu_i}$（误差 $\sim 10^{-14}$，机器精度级）：
 
@@ -103,7 +103,7 @@ result = solver.solve(l=2, m=2, n=0, method='spectral_compare')
 | $a=0.9, l=2, m=2$ | $0.604 - 0.058i$ | 45.5 | $1.59\times10^{-14}$ |
 | $a=0.5, l=2, m=1$ | $0.210 - 0.043i$ | 127.8 | $5.86\times10^{-14}$ |
 
-谱对应误差 $\sim 10^{-14}$ 在复数算术的机器精度范围内，**严格验证了去递归理论的核心谱对应定理**。
+谱对应误差 $\sim 10^{-14}$ 在复数算术的机器精度范围内，**严格验证了谱化理论的核心谱对应定理**。
 
 **LACI 自动选择**：LACI 指数在测试的 8 个模式中100% 正确识别物理根：
 
@@ -288,10 +288,10 @@ $$\frac{dE}{df} = \left| \mathcal{F}\left[ \frac{dE}{dt} \right] \right|^2$$
 
 ## 版本历史
 
-**v0.5（2026-07-25）**：新增 §1.4 去递归理论定量验证——谱对应定理验证（误差 $\sim 10^{-14}$）、LACI 100% 识别率、8 模式精度统计表（相对误差 $< 1.5\times10^{-6}$）
+**v0.5（2026-07-25）**：新增 §1.4 谱化理论定量验证——谱对应定理验证（误差 $\sim 10^{-14}$）、LACI 100% 识别率、8 模式精度统计表（相对误差 $< 1.5\times10^{-6}$）
 
 **v0.4（2026-07-25）**：角向 spin-weighted spheroidal 特征值求解方法升级：从 Leaver CF Newton-Raphson 迭代替换为矩阵谱方法（MatrixAngularSolver），确保高自旋 m≠0 模式下 λ 与 COOK_REF_TABLE 自洽；全模式验证通过（Schwarzschild + Kerr a∈[0,0.9] l=2 m=0,±1,±2，相对误差 1.16e-06）
 
-**v0.3（2026-07-25）**：新增两弦法快速谱求解描述（§1.3 第 5 项 + 对比表 + 数值验证数据）；更新验证状态（Schwarzschild 已通过 Berti 验证）；更新代码接口示例
+**v0.3（2026-07-25）**：新增双初始向量逆迭代法快速谱求解描述（§1.3 第 5 项 + 对比表 + 数值验证数据）；更新验证状态（Schwarzschild 已通过 Berti 验证）；更新代码接口示例
 
-**v0.2（2026-07-25）**：新增基于分形谱去递归理论的统一 Leaver 求解器描述；废弃 Leaver 实现移至 `_archive`
+**v0.2（2026-07-25）**：新增基于分形谱化理论的统一 Leaver 求解器描述；废弃 Leaver 实现移至 `_archive`

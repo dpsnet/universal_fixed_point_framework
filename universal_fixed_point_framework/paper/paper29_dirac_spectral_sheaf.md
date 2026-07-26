@@ -4,7 +4,7 @@
 
 **版本**：v0.1（草稿，2026-07-25）
 
-**摘要**：本文将 Leaver 谱丛理论推广至半整数自旋（Dirac 场，$s=\pm1/2$），建立 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心创新在于发现并证明 Dirac 谱丛具有非平凡的自旋结构（spin structure）——沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时存在 $\mathbb{Z}_2$ 阻碍 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，使 Dirac 谱丛成为引力谱丛的 $\mathbb{Z}_2$-覆盖。提出 $2\pi$ vs $4\pi$ 回路单值群比较的数值检测方法。进一步构造 Dirac-引力张量积谱丛 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，给出无耦合情形下谱的 Minkowski 和公式。计算 Dirac 谱丛的 LACI 参数并与引力/电磁进行跨自旋对比，验证谱丛理论的普适性。
+**摘要**：本文将 Leaver 谱丛理论推广至半整数自旋（Dirac 场，$s=\pm1/2$），建立 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心创新在于发现并证明 Dirac 谱丛具有非平凡的自旋结构（spin structure）——沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时存在 $\mathbb{Z}_2$ 阻碍 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，使 Dirac 谱丛成为引力谱丛的 $\mathbb{Z}_2$-覆盖。提出 $2\pi$ vs $4\pi$ 回路单值群比较的数值检测方法。进一步构造 Dirac-引力张量积谱丛 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，给出无耦合情形下谱的 Minkowski 和公式。计算 Dirac 谱丛的局部吸引子捕获指数（Local Attractor Capture Index, LACI）参数并与引力/电磁进行跨自旋对比，验证谱丛理论的普适性。
 
 ---
 
@@ -573,7 +573,7 @@ Paper XXVIII 已建立了引力-电磁双自旋耦合谱丛（$S=\{-2,-1\}$，�
 
 ### 8.1 动机与现有基础
 
-三参数谱丛 $\mathfrak{S}^{(s)}$ 的 $\infty$-范畴提升有三个核心动机：(i) 单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 在 $\infty$-范畴中自然成为高阶自同构群，可编码非平凡的同伦相干性；(ii) $\mathbb{Z}_2$-覆盖在 $\infty$-层中对应 Postnikov 塔的 $K(\mathbb{Z}_2,1)$-层，提供严格的范畴论实现；(iii) 与 Phase 31.1 已有的 $\mathbf{Rec}_\infty$ / $\mathbf{Spec}_\infty$ 形式化骨架对接。
+三参数谱丛 $\mathfrak{S}^{(s)}$ 的 $\infty$-范畴提升有三个核心动机：(i) 单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 在 $\infty$-范畴中自然成为高阶自同构群，可编码非平凡的同伦相干性；(ii) $\mathbb{Z}_2$-覆盖在 $\infty$-层中对应 Postnikov 塔的 $K(\mathbb{Z}_2,1)$-层，提供严格的范畴论实现；(iii) 与 Phase 31.1 已有的 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架对接。
 
 **已有形式化基础**（Phase 31.1）：已定义 `RecInfinity` 作为 $\infty$-范畴，对象为满足压缩条件的递归系统 $R = (V, U_R)$，1-态射为递归保持的线性映射 $f: R_1 \to R_2$（满足 $f \circ U_{R_1} = U_{R_2} \circ f$）。已完成六个核心模块的 Lean 4 编译（A∞-代数、Spec_∞ 切空间、Rec_∞、Spec_∞、D_∞ 函子、谱流同伦），核心定理以 `sorry` 占位等待填充。
 
@@ -670,7 +670,7 @@ $$k = \iota(\kappa_2) + k_0$$
 
 **证明**。$D_{\text{diss}}$ 的辫子交叉数 $k$ 定义为谱叶置换的最小对换分解长度。在 $\infty$-范畴中，$\mathfrak{S}^{(s)}_\infty$ 的 Postnikov 塔的 $n$-截断 $\tau_{\leq n} \mathfrak{S}^{(s)}_\infty$ 逐层编码了底空间 $\pi_0$、基本群 $\pi_1$、高阶同伦群 $\pi_n$ 以及连接它们的 $k$-不变量。$\pi_1$ 由单值群 $\mathcal{M}_\omega$ 给出。$k$-不变量 $\kappa_2 \in H^2(\pi_1, \pi_2)$ 的几何含义是：沿 $\pi_1$ 的每个回路 $\gamma$，$\pi_2$ 中元素的平行移动可能非平凡。在谱丛中，$\pi_2$ 由分支点的局部拓扑决定，其非平凡平行移动就是谱叶的非平凡置换。因此 $k$ 和 $\kappa_2$ 编码了相同的拓扑信息，存在映照 $\iota$ 在两者间转换。$\rho_s=0.9177$ 提供了数值证据支撑这一对应的存在性和谱叶置换作为 $k$-不变量离散骨架的解释。∎
 
-**推论 8.3**（$D_{\text{diss}}$ 的 $\infty$-函子性）。$D_{\text{diss}}$ 的函子性在 $\infty$-范畴中提升为 $\infty$-函子性：$\hat{D}_\infty: \mathbf{Rec}_\infty^{\mathrm{diss}} \to \mathbf{Spec}_\infty$ 不仅保持态射，还保持高阶同伦（即 2-态射、3-态射等）。这一提升使得谱丛单值群的高阶相干性（如 $\mathbb{Z}_2$-覆盖的 $k$-不变量）可以沿 $D_{\text{diss}}$ 传递到 $\mathbf{Spec}_\infty$ 中。
+**推论 8.3**（$D_{\text{diss}}$ 的 $\infty$-函子性）。$D_{\text{diss}}$ 的函子性在 $\infty$-范畴中提升为 $\infty$-函子性：$\hat{D}_\infty: \mathbf{Rec}_\infty^{\mathrm{diss}} \to \mathbf{Sp}_\infty$ 不仅保持态射，还保持高阶同伦（即 2-态射、3-态射等）。这一提升使得谱丛单值群的高阶相干性（如 $\mathbb{Z}_2$-覆盖的 $k$-不变量）可以沿 $D_{\text{diss}}$ 传递到 $\mathbf{Sp}_\infty$ 中。
 
 三条路径的对比总结：
 
@@ -692,7 +692,7 @@ $$k = \iota(\kappa_2) + k_0$$
 3. **Dirac-引力张量积谱丛**（§4）：构造了 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，证明了无耦合 Minkowski 和谱公式和耦合块三对角构造，给出了 $D_{\mathrm{diss}}$ 张量积扩展的压缩性和伪谱扰动界。
 4. **跨自旋 LACI 对比与 III 型奇异纤维标度指数**（§5）：定义了 Dirac LACI 参数和标度指数 $\beta_{\mathrm{D}}$，通过数值扫描确定了 $\beta_{\mathrm{D}} \approx 0.712$（$R^2=0.85$，详见 §6），验证了排序 $\beta_{\mathrm{G}} < \beta_{\mathrm{EM}} < \beta_{\mathrm{D}}$。
 5. **三自旋联合谱丛的纤维积构造**（§7）：建立了 $S=\{-2,-1,-1/2\}$ 联合谱丛的理论框架，包括无耦合纤维积定义、有耦合块三对角构造、弱/强耦合分类（$|Q|\ll M$ vs $|Q|\sim M$）以及耦合曲率 $R^{(s_i,s_j)}$ 作为 IV 型奇异纤维分类指标。
-6. **$\infty$-范畴谱丛的路径分析**（§8）：提出了三条将自旋结构提升至 $(\infty,1)$-范畴的路径，建立了与 Phase 31.1 $\mathbf{Rec}_\infty$ / $\mathbf{Spec}_\infty$ 形式化骨架及 Phase 59C $D_{\text{diss}}$ 辫子不变量的初步对应。
+6. **$\infty$-范畴谱丛的路径分析**（§8）：提出了三条将自旋结构提升至 $(\infty,1)$-范畴的路径，建立了与 Phase 31.1 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架及 Phase 59C $D_{\text{diss}}$ 辫子不变量的初步对应。
 
 以下开放问题留待后续研究：
 

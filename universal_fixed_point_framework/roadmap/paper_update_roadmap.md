@@ -32,7 +32,7 @@
 
 ## 二、各论文需写入的具体内容
 
-### P0 — Paper XIX（噪声丛 + 谱编织乘积基）
+### P0 — Paper XIX（噪声丛 + 谱粘合乘积基）
 
 **需自包含写入的内容**：
 
@@ -68,7 +68,7 @@
 | Paper XVI § | 需写入的数学内容 | 当前在笔记中的位置 |
 |:-----------|:---------------|:------------------|
 | §10.1 开集范畴 | $M$ 的 Lorentz 流形设定、$\mathrm{Open}(M)$ 范畴定义（对象为开集，态射为包含）、开覆盖 $\{U_i \to U\}$ 的 Grothendieck 拓扑 | `spectral_spacetime_stack.md` §1 |
-| §10.2 谱预层 | $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$、限制函子 $\mathcal{E}(V \subseteq U) = \iota_{V\subseteq U}^*$、函子性条件 | `spectral_spacetime_stack.md` §2 |
+| §10.2 谱预层 | $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Sp})$、限制函子 $\mathcal{E}(V \subseteq U) = \iota_{V\subseteq U}^*$、函子性条件 | `spectral_spacetime_stack.md` §2 |
 | §10.3 层公理 | 粘合存在性 + 唯一性的完整定义、常量预层 $\mathcal{E}_{\text{const}}$ 满足层公理的证明 | `spectral_spacetime_stack.md` §3.1 |
 | §10.4 广义协变 | 定理：广义协变原理 $\Leftrightarrow$ 层公理的双向证明 | `spectral_spacetime_stack.md` §3.2 |
 | **主定理 21** | Einstein 张量 $G_{\mathcal{E}}$ 的谱形式定义、应力-能量张量 $T_{\mathcal{E}}$ 的谱流生成元构造、Einstein 方程 $G_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}$ 的谱曲率约束证明 | `spectral_spacetime_stack.md` §4 |
@@ -102,7 +102,7 @@
 | §4.2 视界谱 | $r_\pm = M \pm \sqrt{M^2-a^2}$、$\lambda_{\text{horizon}}^{(\pm)} = M\pm\sqrt{M^2-a^2}$、Schwarzschild 和极端极限的退化为 $r_+=2M/r_-=0$ 和 $r_+=r_-=M$ | `spectral_kerr_fibration.md` §2.1 |
 | §7.1 Hawking 温度 | $T_H = \Delta\lambda_{\min}^{(\text{Kerr})}/(2\pi)$ 的谱框架关系、$T_H(a=0) = \Delta\lambda_{\min}^{(0)}/(2\pi)$、$T_H(a=M)=0$ | `spectral_kerr_fibration.md` §6 |
 | §7.2 BH 熵 | $S_{\text{BH}} = A/4G = 2\pi(M^2 + \sqrt{M^4 - J^2})$ 的谱求和形式 $S_{\text{spec}} = \sum_{\lambda<\lambda_h} \ln(1/\lambda)$；$a=0$ 时简化为 $4\pi M^2$ | `spectral_kerr_fibration.md` §7 |
-| §7.3 非乘积丛 | 纤维类型跳变 $\mathbf{Spec} \to \mathbf{Spec}_{\text{deg}}$ 的证据：极端极限下谱间隙闭合 + QNM 虚部消失 + 视界简并，使全局截面无法连续延拓 | `spectral_kerr_fibration.md` §7 |
+| §7.3 非乘积丛 | 纤维类型跳变 $\mathbf{Sp} \to \mathbf{Sp}_{\text{deg}}$ 的证据：极端极限下谱间隙闭合 + QNM 虚部消失 + 视界简并，使全局截面无法连续延拓 | `spectral_kerr_fibration.md` §7 |
 
 ---
 

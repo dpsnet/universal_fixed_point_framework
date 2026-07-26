@@ -22,7 +22,7 @@ $$\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle = \pr
 
 $$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{spec}} = \prod_{i=1}^n \frac{i}{\lambda_i - m^2 + i\varepsilon} \prod_{j=1}^m \frac{i}{\lambda_j - m^2 + i\varepsilon} \times G_{n+m}^{\text{spec}}(\lambda_1,\ldots,\lambda_{n+m})}.$$
 
-**定理 1**（谱 LSZ 等价性）。谱 LSZ 公式在谱去递归函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 下与标准 LSZ 公式等价：
+**定理 1**（谱 LSZ 等价性）。谱 LSZ 公式在谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 下与标准 LSZ 公式等价：
 
 $$D(\text{LSZ}_{\text{std}}) = \text{LSZ}_{\text{spec}}.$$
 

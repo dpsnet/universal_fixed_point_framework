@@ -84,7 +84,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 
 #### A2: K-S 语境性实验定量匹配
 - **目标**：将 Spec ≠ Spec_com 与 Yu-Oh 2012 / Kulikov 2020 实验定量对比
-- **做法**：在 Spec 中构建投影态射族，计算 M 个测量语境下的真值赋值一致性
+- **做法**：在 Sp 中构建投影态射族，计算 M 个测量语境下的真值赋值一致性
 - **产出**：`paperX_contextuality_match.py` + `notes/00_foundations/spectral_contextuality_experiment.md`
 - **独有性**：首次将语境性归因为范畴非对易结构
 - **依赖**：无（直接基于 spectral_quantum_extensions.md）
@@ -96,11 +96,11 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 - **覆盖范围**：
   - Klein-Gordon: 谱标量场 Φ(λ) + 谱质量项
   - Dirac: Clifford 值谱旋量 Ψ(λ)（已有 Cl(p,q) 结构）
-  - Yang-Mills: 谱规范连接 ∇_Spec（已有纤维丛结构）
+  - Yang-Mills: 谱规范连接 ∇_Sp（已有纤维丛结构）
   - Higgs: 谱自发对称破缺
 - **验证标准**：运动方程在谱语言中还原 KG/Dirac/YM
 - **产出**：`notes/00_foundations/spectral_lagrangian.md` + `paperX_spectral_lagrangian.py`
-- **依赖**：Paper I（Spec 范畴）、Paper V（谱流方程）、已有纤维丛代码
+- **依赖**：Paper I（Sp 范畴）、Paper V（谱流方程）、已有纤维丛代码
 
 ---
 
@@ -165,7 +165,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 ### Track A：标准模型参数推导
 
 #### C1: 精细结构常数 α 的谱推导
-- **目标**：从谱对应自然等价 M ≅ L 推导 α
+- **目标**：从谱对应自然同构 M ≅ L 推导 α
 - **做法**：M ≅ L 给出 λ_i = e^{-μ_i}；电磁耦合 α 与最低非平凡谱间隙 Δλ_min^(EM) 的关系
 - **产出**：`notes/10_gauge_RG/spectral_alpha_derivation.md`
 - **依赖**：Phase 2 构建的谱 QFT 框架

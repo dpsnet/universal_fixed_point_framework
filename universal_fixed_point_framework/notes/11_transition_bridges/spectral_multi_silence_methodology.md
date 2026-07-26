@@ -12,7 +12,7 @@
 
 | 层 | 静默类型 | 数值 | 范畴对应 | 物理角色 |
 |:-:|:--------|:---:|:--------|:---------|
-| $S_1$ | 谱静默 | $(\Delta\lambda_{\min}/M_{\text{Pl}})^2 \approx 0.015$ | 对象（$A_i \in \mathbf{Spec}$） | 谱间隙 → 裸量标度 |
+| $S_1$ | 谱静默 | $(\Delta\lambda_{\min}/M_{\text{Pl}})^2 \approx 0.015$ | 对象（$A_i \in \mathbf{Sp}$） | 谱间隙 → 裸量标度 |
 | $S_2$ | 态射静默 | $e^{-2\pi/\alpha} \ll 1$ | 1-态射（$f: A_i \to A_j$） | 相互作用强度、对易子、DS 减除 |
 | $S_3$ | 对象静默 | $e^{-3} \approx 0.05$ | 2-态射（$\alpha: f \Rightarrow g$） | 代结构、费米子代数 |
 | $S_4$ | 辫子静默 | $e^{-d_H} \approx 0.067$ | 3-态射（$\beta: \alpha \Rrightarrow \beta$） | 分形边界条件、IFS 维数 |

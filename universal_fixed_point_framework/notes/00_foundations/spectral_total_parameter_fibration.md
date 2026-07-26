@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-23）
 
-**摘要**：本笔记将 Phase 55A-55G 各自独立构造的 Grothendieck 纤维化统一为一个总参数丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Spec})$，其中 $\mathbf{Param}$ 是包含所有物理参数的公共基空间。核心结构包括：(1) 参数范畴 $\mathbf{Param}$——对象为 $(G, \eta, T, \mu, M, a, \Lambda, f, \ldots)$ 的元组，态射为逐分量膨胀；(2) 每个子纤维化作为总丛沿坐标嵌入的拉回出现；(3) 不同参数方向之间的丛态射（由物理对偶性诱导——如 $\mathcal{T}: T \leftrightarrow \mu$、$\mathcal{H}: (M,a) \to T$、$\Phi: \Lambda \to \mu$ 等）。本构造是 UFPF 五层架构的顶层收口。
+**摘要**：本笔记将 Phase 55A-55G 各自独立构造的 Grothendieck 纤维化统一为一个总参数丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$，其中 $\mathbf{Param}$ 是包含所有物理参数的公共基空间。核心结构包括：(1) 参数范畴 $\mathbf{Param}$——对象为 $(G, \eta, T, \mu, M, a, \Lambda, f, \ldots)$ 的元组，态射为逐分量膨胀；(2) 每个子纤维化作为总丛沿坐标嵌入的拉回出现；(3) 不同参数方向之间的丛态射（由物理对偶性诱导——如 $\mathcal{T}: T \leftrightarrow \mu$、$\mathcal{H}: (M,a) \to T$、$\Phi: \Lambda \to \mu$ 等）。本构造是 UFPF 五层架构的顶层收口。
 
 **前置依赖**：全部 Phase 55 输出——`TempRGFiber.lean`、`NoiseFiber.lean`、`SignatureFiber.lean`、`WeaveProductFiber.lean`、`WeaveBCS.lean`、`CuprateDistribution.lean`、`KerrFiber.lean`、`EFTCodomainFiber.lean`、`FlavorFiber.lean`、`ContextualitySheaf.lean`、`SpacetimeStack.lean`。
 
@@ -39,15 +39,15 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 
 ---
 
-## 2. 总谱丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Spec})$
+## 2. 总谱丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$
 
 ### 2.1 总范畴
 
-**定义 2.1**（总范畴）。$\mathbf{Bun}(\mathbf{Param}, \mathbf{Spec})$ 的对象为 $(\mathbf{p}, \{\lambda\})$，其中 $\mathbf{p} \in \mathbf{Param}$ 是全部参数，$\{\lambda\}$ 是谱数据。
+**定义 2.1**（总范畴）。$\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$ 的对象为 $(\mathbf{p}, \{\lambda\})$，其中 $\mathbf{p} \in \mathbf{Param}$ 是全部参数，$\{\lambda\}$ 是谱数据。
 
 ### 2.2 投影
 
-**定义 2.2**（投影 $\pi_{\mathbf{Param}}$）。$\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Spec}) \to \mathbf{Param}$ 是 Grothendieck 纤维化（由 $\mathbf{Param}$ 是乘积范畴且每个因子上的纤维化生成）。
+**定义 2.2**（投影 $\pi_{\mathbf{Param}}$）。$\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp}) \to \mathbf{Param}$ 是 Grothendieck 纤维化（由 $\mathbf{Param}$ 是乘积范畴且每个因子上的纤维化生成）。
 
 ### 2.3 拉回结构
 
@@ -55,11 +55,11 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 
 | 子纤维化 | 拉回沿 | 固定参数 |
 |:--------|:------|:--------|
-| $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ | $\iota_{\mathbf{Temp}}$ | $\eta=0, \mu=\mu_0, a=0, \ldots$ |
-| $\pi_\eta: \mathbf{Bun}(\mathbf{Noise}, \mathbf{Spec})$ | $\iota_{\mathbf{Noise}}$ | $T=0, \mu=\mu_0, \ldots$ |
-| $\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ | $\iota_{\mathbf{Kerr}}$ | $T=0, \ldots$ |
+| $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ | $\iota_{\mathbf{Temp}}$ | $\eta=0, \mu=\mu_0, a=0, \ldots$ |
+| $\pi_\eta: \mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ | $\iota_{\mathbf{Noise}}$ | $T=0, \mu=\mu_0, \ldots$ |
+| $\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ | $\iota_{\mathbf{Kerr}}$ | $T=0, \ldots$ |
 | $\pi_{\mathbf{Flt}}: \mathbf{Bun}(\mathbf{Flt}, \mathbb{C}^3)$ | $\iota_{\mathbf{Flt}}$ | 所有连续参数固定 |
-| $\mathcal{E}: \mathbf{Bun}(\mathrm{Open}(M), \mathbf{Spec})$ | $\iota_{\mathrm{Open}(M)}$ | 所有参数固定 |
+| $\mathcal{E}: \mathbf{Bun}(\mathrm{Open}(M), \mathbf{Sp})$ | $\iota_{\mathrm{Open}(M)}$ | 所有参数固定 |
 
 ---
 
@@ -73,9 +73,9 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 | $\hat{\mathcal{N}}$ | $\mathbf{Bun}(\mathbf{Temp}) \to \mathbf{Bun}(\mathbf{Noise})$ | 温度-噪声对偶 | Phase 55A |
 | $\hat{\mathcal{H}}$ | $\mathbf{Bun}(\mathbf{Kerr}) \to \mathbf{Bun}(\mathbf{Temp})$ | Hawking 温度 | Phase 55F-F1 |
 | $\hat{D}$ | $\mathbf{EFT}/\Lambda \to \mathbf{Bun}(\mathbf{RG})$ | 谱退归 | Phase 55F-F2 |
-| $\theta$ | $\mathbf{Bun}(\mathbf{Temp}\times\mathbf{RG}) \to$ ... | 谱编织 | Phase 55C |
+| $\theta$ | $\mathbf{Bun}(\mathbf{Temp}\times\mathbf{RG}) \to$ ... | 谱粘合 | Phase 55C |
 
-**定理 3.1**（丛态射交换性）。以上丛态射构成的图表在 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Spec})$ 中交换。
+**定理 3.1**（丛态射交换性）。以上丛态射构成的图表在 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$ 中交换。
 
 ---
 

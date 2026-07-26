@@ -1,16 +1,16 @@
-# Temp/RG 纤维范畴架构定位——与 $\mathbf{Rec}/\mathbf{Spec}$ 的关系分析
+# Temp/RG 纤维范畴架构定位——与 $\mathbf{Rec}/\mathbf{Sp}$ 的关系分析
 
 **版本**：v0.1（2026-07-22）
 
-**摘要**：本笔记系统分析 Temp/RG 纤维范畴体系在 UFPF 整体架构中的定位。核心结论：(1) Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Spec}$ 上的纤维范畴扩展——参数化递归系统如何接近 $\partial\mathbf{Rec}_D$ 边界；(2) Temp/RG 与 Paper I（$\mathbf{Rec}$ 底层）、Paper XIX（$\mathbf{Rec}_{\text{id}}$ + $\Sigma$-$\mathbf{Rec}$ 扩展层）共同构成五层 UFPF 架构：$\mathbf{Bun} \supset \mathbf{Spec} \supset \mathbf{Rec} \supset \mathbf{Rec}_{\text{id}} \supset \Sigma$-$\mathbf{Rec}$；(3) Temp/RG 为 $(G, \eta)$ 二维相图引入第三个独立维度（温度-标度对偶）；(4) 该框架可覆盖 QCD（完全验证）、BCS 超导（框架即用）、Hawking-Page 相变（有基础）、流变学（需扩展）等多类物理系统。
+**摘要**：本笔记系统分析 Temp/RG 纤维范畴体系在 UFPF 整体架构中的定位。核心结论：(1) Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Sp}$ 上的纤维范畴扩展——参数化递归系统如何接近 $\partial\mathbf{Rec}_D$ 边界；(2) Temp/RG 与 Paper I（$\mathbf{Rec}$ 底层）、Paper XIX（$\mathbf{Rec}_{\text{id}}$ + $\Sigma$-$\mathbf{Rec}$ 扩展层）共同构成五层 UFPF 架构：$\mathbf{Bun} \supset \mathbf{Sp} \supset \mathbf{Rec} \supset \mathbf{Rec}_{\text{id}} \supset \Sigma$-$\mathbf{Rec}$；(3) Temp/RG 为 $(G, \eta)$ 二维相图引入第三个独立维度（温度-标度对偶）；(4) 该框架可覆盖 QCD（完全验证）、BCS 超导（框架即用）、Hawking-Page 相变（有基础）、流变学（需扩展）等多类物理系统。
 
 ---
 
 ## 1. 问题起源
 
-在研究笔记 [spectral_T_category.md](spectral_T_category.md) 及后续系列笔记中，我们构造了温度参数范畴 $\mathbf{Temp}$、RG 标度参数范畴 $\mathbf{RG}$ 以及谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$。一个自然的架构问题随之产生：
+在研究笔记 [spectral_T_category.md](spectral_T_category.md) 及后续系列笔记中，我们构造了温度参数范畴 $\mathbf{Temp}$、RG 标度参数范畴 $\mathbf{RG}$ 以及谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$。一个自然的架构问题随之产生：
 
-> Temp/RG 体系与 Paper I 的 $\mathbf{Rec}/\mathbf{Spec}$ 框架、Paper XIX 的 $\mathbf{Rec}_{\text{id}}/\Sigma$-$\mathbf{Rec}$ 扩展是什么关系？是子范畴、扩展、还是独立框架？
+> Temp/RG 体系与 Paper I 的 $\mathbf{Rec}/\mathbf{Sp}$ 框架、Paper XIX 的 $\mathbf{Rec}_{\text{id}}/\Sigma$-$\mathbf{Rec}$ 扩展是什么关系？是子范畴、扩展、还是独立框架？
 
 本笔记旨在明确回答这一问题。
 
@@ -30,14 +30,14 @@
 
 **证明**。$\mathbf{Rec}$ 的对象是四元组 $R = (\mathcal{S}_R, \Phi_R, \mathcal{T}_R, \mathcal{M}_R)$，其中 $\mathcal{S}_R$ 是 Polish 空间，$\Phi_R$ 是自相似映射，$\mathcal{T}_R$ 是时间半群，$\mathcal{M}_R$ 是附加结构。而 $\mathbf{Temp}$ 的对象是实数 $T \in (0,\infty)$，$\mathbf{RG}$ 的对象是实数 $\mu \in (0,\infty)$。这两类对象在集合论上不交集——实数不是四元组。因此条件 1（对象包含）不满足，无需检查条件 2-3。$\square$
 
-**推论 2.1**（不是 $\mathbf{Spec}$ 的子范畴）。$\mathbf{Temp}$ 和 $\mathbf{RG}$ 也不是 $\mathbf{Spec}$ 的子范畴，因为 $\mathbf{Spec}$ 的对象是 $(\mathcal{H}, A, \sigma(A))$（Hilbert 空间 + 算子 + 谱），而温度 $T$ 不是这类三元组。
+**推论 2.1**（不是 $\mathbf{Sp}$ 的子范畴）。$\mathbf{Temp}$ 和 $\mathbf{RG}$ 也不是 $\mathbf{Sp}$ 的子范畴，因为 $\mathbf{Sp}$ 的对象是 $(\mathcal{H}, A, \sigma(A))$（Hilbert 空间 + 算子 + 谱），而温度 $T$ 不是这类三元组。
 
 ### 2.3 直观理解
 
 子范畴要求"是同一类东西的子集"。但：
 
 - $\mathbf{Rec}$ 的对象 = **系统**（有状态空间、有演化映射）
-- $\mathbf{Spec}$ 的对象 = **谱数据**（有 Hilbert 空间、有算子）
+- $\mathbf{Sp}$ 的对象 = **谱数据**（有 Hilbert 空间、有算子）
 - $\mathbf{Temp}$ 的对象 = **参数值**（实数温度）
 
 参数值既不是系统也不是谱数据，因此不可能成为任何一方的子范畴。
@@ -51,7 +51,7 @@
 对于 Temp/RG 体系：
 
 - **基范畴**：$\mathbf{Temp}$ 或 $\mathbf{RG}$（参数空间，对象为实数）
-- **纤维**：$\mathbf{Spec}$ 的谱数据（每个参数点对应一个谱生成元 $A(T)$ 或 $A(\mu)$）
+- **纤维**：$\mathbf{Sp}$ 的谱数据（每个参数点对应一个谱生成元 $A(T)$ 或 $A(\mu)$）
 - **总空间**：谱丛 $B_T = \{(T, \{\lambda_i\})\}$ 和 $B_\mu = \{(\mu, \{\lambda_i\})\}$
 - **投影**：$\pi_T(T, \{\lambda_i\}) = T$、$\pi_\mu(\mu, \{\lambda_i\}) = \mu$
 
@@ -65,7 +65,7 @@
 | 额外结构 | 无 | 纤维+截面+联络 |
 | Temp/RG 适用性 | ❌ | ✅ |
 
-**纤维范畴的自然类比**：向量丛 $E \to M$ 中，纤维 $E_x$ 是向量空间，基 $M$ 是流形。Temp/RG 中，纤维是 $\mathbf{Spec}$ 谱数据，基是参数空间 $\mathbf{Temp}$ 或 $\mathbf{RG}$。谱丛截面 $\sigma_\Delta$ 如同向量丛的截面——选择每个纤维中的一个特定元素。
+**纤维范畴的自然类比**：向量丛 $E \to M$ 中，纤维 $E_x$ 是向量空间，基 $M$ 是流形。Temp/RG 中，纤维是 $\mathbf{Sp}$ 谱数据，基是参数空间 $\mathbf{Temp}$ 或 $\mathbf{RG}$。谱丛截面 $\sigma_\Delta$ 如同向量丛的截面——选择每个纤维中的一个特定元素。
 
 ## 4. UFPF 完整五层架构
 
@@ -74,13 +74,13 @@
 ```
                     ┌─────────────────────────────────────┐
                     │        纤维范畴层（上层）              │
-                    │  $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$  ←$\hat{\mathcal{T}}_{\text{Riem}}$→  $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$  │
+                    │  $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$  ←$\hat{\mathcal{T}}_{\text{Riem}}$→  $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$  │
                     │    参数化系统族如何接近 $\partial\mathbf{Rec}_D$ 边界 │
                     └────────────────┬────────────────────┘
                                      │ $\pi_T$  $\pi_\mu$
                     ┌────────────────↓────────────────────┐
                     │        谱范畴层（中间层）              │
-                    │  $\mathbf{Spec}$：$(\mathcal{H}, A, \sigma(A))$           │
+                    │  $\mathbf{Sp}$：$(\mathcal{H}, A, \sigma(A))$           │
                     │    所有谱数据的统一载体               │
                     └────────────────┬────────────────────┘
                                      │ $D$  $R$
@@ -107,16 +107,16 @@
 
 | 层 | 名称 | 核心范畴/函子 | 物理意义 | 来源 |
 |:-:|:----|:------------|:--------|:----|
-| V | 纤维范畴 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$, $\hat{\mathcal{T}}_{\text{Riem}}$ | 参数化系统接近 $\partial\mathbf{Rec}_D$ 的方式 | 本笔记系列 |
-| IV | 谱范畴 | $\mathbf{Spec}$, $D$-$\mathbf{Rec}$ 伴随 | 谱数据，连接上下层的桥梁 | Paper I |
+| V | 纤维范畴 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$, $\hat{\mathcal{T}}_{\text{Riem}}$ | 参数化系统接近 $\partial\mathbf{Rec}_D$ 的方式 | 本笔记系列 |
+| IV | 谱范畴 | $\mathbf{Sp}$, $D$-$\mathbf{Rec}$ 伴随 | 谱数据，连接上下层的桥梁 | Paper I |
 | III | 递归系统 | $\mathbf{Rec}$, $D \dashv R$ | 有确定性演化的动力系统 | Paper I |
 | II | 静态嵌入 | $\mathbf{Rec}_{\text{id}}$, $\mathcal{L} \dashv \iota$ | 无演化的静态拓扑 | Paper XIX |
 | I | 随机嵌入 | $\Sigma$-$\mathbf{Rec}$, $\mathcal{S}el \dashv \mathcal{D}iss$ | 无确定性映射的纯随机系统 | Paper XIX |
 
 ### 4.3 为什么这样分层
 
-1. **V 在 IV 之上**：$\mathbf{Spec}$ 提供纤维数据，$\mathbf{Bun}$ 构造参数化族——自然的上层结构
-2. **IV 在 III 之上**：$\mathbf{Rec}$ 通过 $D$ 函子映射到 $\mathbf{Spec}$，$\mathbf{Spec}$ 是 $\mathbf{Rec}$ 的谱像
+1. **V 在 IV 之上**：$\mathbf{Sp}$ 提供纤维数据，$\mathbf{Bun}$ 构造参数化族——自然的上层结构
+2. **IV 在 III 之上**：$\mathbf{Rec}$ 通过 $D$ 函子映射到 $\mathbf{Sp}$，$\mathbf{Sp}$ 是 $\mathbf{Rec}$ 的谱像
 3. **III 在 II 之上**：$\mathbf{Rec}_{\text{id}} \hookrightarrow \mathbf{Rec}$ 是反射子范畴，$\mathcal{L}$ 遗忘动力学
 4. **II 在 I 之上**：$\Sigma$-$\mathbf{Rec}$ 通过 $\mathcal{S}el \dashv \mathcal{D}iss$ 与 $\mathbf{Rec}$ 连接，但与 $\mathbf{Rec}_{\text{id}}$ 正交
 
@@ -143,7 +143,7 @@ Temp/RG 引入第三个独立维度：
 |:----:|:----|:--------|:------|
 | $G$ | 谱流生成元范数 | $\mathbf{Rec}$ / $\mathbf{Rec}_{\text{id}}$ | 动力学强度 |
 | $\eta$ | 噪声强度 | $\mathbf{Rec}$ / $\Sigma$-$\mathbf{Rec}$ | 随机性程度 |
-| $(T, \mu)$ | 温度-标度对偶 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ | 距 $\partial\mathbf{Rec}_D$ 的距离 |
+| $(T, \mu)$ | 温度-标度对偶 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ | 距 $\partial\mathbf{Rec}_D$ 的距离 |
 
 三个维度的正交性：
 - **$G$ 与 $(T, \mu)$ 正交**：即使是纯静态系统（$G=0$），其参数谱丛 $B_T$ 仍存在（如热平衡态在不同温度下的谱族）
@@ -173,7 +173,7 @@ $\partial\mathbf{Rec}_D$ 边界在三个维度的解释：
 | **T2** | 存在可定义的谱间隙 $\Delta\lambda_{\min}$，且在某个参数值处消失（$\partial\mathbf{Rec}_D$） | 谱丛截面构造 |
 | **T3** | 谱流生成元 $G_{\text{th}}$、$G_{\text{RG}}$ 属于 $\mathfrak{so}(1,1)$ 或可嵌入 | Paper XVI §2.2 |
 | **T4** | $T$ 空间与 $\mu$ 空间的态射结构同构（均为 $\mathbb{R}^+$ 乘法群） | $\mathbf{Temp} \cong \mathbf{RG}$ |
-| **T5** | $\partial\mathbf{Rec}_D$ 在 $T$ 空间和 $\mu$ 空间均为单点集（或有限点集） | 谱编织临界嵌入 |
+| **T5** | $\partial\mathbf{Rec}_D$ 在 $T$ 空间和 $\mu$ 空间均为单点集（或有限点集） | 谱粘合临界嵌入 |
 
 ### 6.2 适用性矩阵
 
@@ -209,7 +209,7 @@ $\partial\mathbf{Rec}_D$ 边界在三个维度的解释：
 | 文件 | 定位 | 互引关系 |
 |:----|:----|:--------|
 | `spectral_T_category.md` | $\mathbf{Temp}$ 范畴 + 函子 $\mathcal{T}$ 的构建 | 本笔记的前置基础 |
-| `spectral_T_category_riemann.md` | 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ | 依赖 spectral_T_category.md |
+| `spectral_T_category_riemann.md` | 谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ | 依赖 spectral_T_category.md |
 | `spectral_Riem_functoriality.md` | 函子性证明 + 自然变换 + 2-函子 | 依赖 spectral_T_category_riemann.md |
 | `spectral_bundle_sections.md` | 谱丛截面 $\sigma_\Delta$ 显式构造 | 依赖 spectral_T_category_riemann.md |
 | **本笔记** | 架构定位 + 物理系统覆盖分析 | 汇总以上全部 |
@@ -224,8 +224,8 @@ Paper I §1.3 已新增跨论文定位段落（v2.45）。Paper XIX §17 已完�
 
 ## 8. 结论
 
-1. **架构定位**：Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Spec}$ 上的纤维范畴扩展
-2. **架构层次**：UFPF 框架分为五层——$\mathbf{Bun}$（纤维范畴）$\supset$ $\mathbf{Spec}$（谱）$\supset$ $\mathbf{Rec}$（递归）$\supset$ $\mathbf{Rec}_{\text{id}}$（静态）$\supset$ $\Sigma$-$\mathbf{Rec}$（随机）
+1. **架构定位**：Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Sp}$ 上的纤维范畴扩展
+2. **架构层次**：UFPF 框架分为五层——$\mathbf{Bun}$（纤维范畴）$\supset$ $\mathbf{Sp}$（谱）$\supset$ $\mathbf{Rec}$（递归）$\supset$ $\mathbf{Rec}_{\text{id}}$（静态）$\supset$ $\Sigma$-$\mathbf{Rec}$（随机）
 3. **维度扩展**：Temp/RG 为 $(G, \eta)$ 二维相图引入第三个维度——温度-标度对偶 $(T, \mu)$
 4. **覆盖范围**：QCD 已完全验证，BCS 超导和 Hawking-Page 相变是最高优先级的扩展目标
 5. **正交兼容**：Temp/RG 与 Paper I 底层 + Paper XIX 扩展层正交——Paper XIX 处理"横切"转化（动态↔静态↔随机），Temp/RG 处理"纵贯"参数化（连续温度族），两者结合构成 UFPF 的完整架构

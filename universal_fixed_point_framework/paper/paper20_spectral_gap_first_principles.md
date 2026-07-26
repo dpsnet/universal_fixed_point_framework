@@ -1,10 +1,10 @@
-# 通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Spec 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙
+# 通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.0（2026-07-23）
 
-**摘要**：本文建立从 Rec/Spec 范畴框架到引力谱间隙 Δλ_min 的完整第一性推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4）→（3）$\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套（Paper I §5.8.4）作用于 $(1,7)$ 维几何的自然代数涌现，Bott 周期分类导出截断 $k_{\max} = 8$（§5）→（4）谱间隙解析公式 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 第一性原理闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。全链已在 Lean 4 中形式化验证，零 `sorry`（§8）。本文定位为 Cl(1,7) 完整生成树的「引力扇区」专著，与规范扇区（Paper V/VIII/IX/50/51）和旋量扇区（Paper XXI/XXII）共同构成统一物理框架。
+**摘要**：本文建立从 Rec/Sp 范畴框架到引力谱间隙 Δλ_min 的完整第一性推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4）→（3）$\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套（Paper I §5.8.4）作用于 $(1,7)$ 维几何的自然代数涌现，Bott 周期分类导出截断 $k_{\max} = 8$（§5）→（4）谱间隙解析公式 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 第一性原理闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。全链已在 Lean 4 中形式化验证，零 `sorry`（§8）。本文定位为 Cl(1,7) 完整生成树的「引力扇区」专著，与规范扇区（Paper V/VIII/IX/50/51）和旋量扇区（Paper XXI/XXII）共同构成统一物理框架。
 
 ---
 
@@ -12,14 +12,14 @@
 
 ### 1.1 动机
 
-Paper I 建立的 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架通过 D 函子将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$（Step 1）。Paper V 进一步从 $\mathbf{Spec}_\infty$ 切空间 $T_A\mathbf{Spec}_\infty$ 导出谱流方程 $dA/dt = [G, A]$（Step 2）。$\mathbf{Rec}$ 范畴本身包含三层结构 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setminus\mathbf{Rec}_D$，对应四个基本力生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$（Step 3）。**五个范畴内部约束（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $A_{\text{GR}}$ 的 Lie 代数 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$**（Step 4，§3.5 新推导）。由 SU(2) Casimir 谱 $\lambda_k \propto \sqrt{k(k+1)}$ 导出三谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$，该比值与截断 $k_{\max}$ 无关（Step 5）。群论约束与数值验证共同确定 $k_{\max}=8$ 为唯一自洽解（Step 6）。$A_{\text{GR}}$ 的 $8\times8$ 矩阵表示 $M_8(\mathbb{R})$ 经 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 唯一同构于 $\mathrm{Cl}(1,7)$（Step 7）。
+Paper I 建立的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架通过 D 函子将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$（Step 1）。Paper V 进一步从 $\mathbf{Sp}_\infty$ 切空间 $T_A\mathbf{Sp}_\infty$ 导出谱流方程 $dA/dt = [G, A]$（Step 2）。$\mathbf{Rec}$ 范畴本身包含三层结构 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setminus\mathbf{Rec}_D$，对应四个基本力生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$（Step 3）。**五个范畴内部约束（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $A_{\text{GR}}$ 的 Lie 代数 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$**（Step 4，§3.5 新推导）。由 SU(2) Casimir 谱 $\lambda_k \propto \sqrt{k(k+1)}$ 导出三谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$，该比值与截断 $k_{\max}$ 无关（Step 5）。群论约束与数值验证共同确定 $k_{\max}=8$ 为唯一自洽解（Step 6）。$A_{\text{GR}}$ 的 $8\times8$ 矩阵表示 $M_8(\mathbb{R})$ 经 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 唯一同构于 $\mathrm{Cl}(1,7)$（Step 7）。
 
-本文的核心论点是：**上述六步推演体系已经足够闭合——从 Rec/Spec 范畴框架出发，经谱流方程、三层对称性破缺、Casimir 谱、群论约束到矩阵代数同构，可以第一性导出引力谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$，无需任何拟合参数**。整条链中不存在自由参数：$M_8(\mathbb{R})$ 的维数由 $A_{\text{GR}}$ 的 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 从 $M_8(\mathbb{R})$ 唯一确定，物理签名 $(1,7)$ 是该代数分类在 $p+q=8$ 约束下的自然实现。全链每一步均有 Lean 4 形式化证明支撑，零 `sorry`。
+本文的核心论点是：**上述六步推演体系已经足够闭合——从 Rec/Sp 范畴框架出发，经谱流方程、三层对称性破缺、Casimir 谱、群论约束到矩阵代数同构，可以第一性导出引力谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$，无需任何拟合参数**。整条链中不存在自由参数：$M_8(\mathbb{R})$ 的维数由 $A_{\text{GR}}$ 的 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 从 $M_8(\mathbb{R})$ 唯一确定，物理签名 $(1,7)$ 是该代数分类在 $p+q=8$ 约束下的自然实现。全链每一步均有 Lean 4 形式化证明支撑，零 `sorry`。
 
 ### 1.2 完整推导链
 
 ```
-Step 1: Rec/Spec → D 函子 → 谱对象 D(R) = (ℋ, A)
+Step 1: Rec/Sp → D 函子 → 谱对象 D(R) = (ℋ, A)
     ↓   Paper I 范畴框架
 Step 2: 谱流方程 dA/dt = [G, A]
     ↓   Paper V, Spec_∞ 切空间
@@ -46,7 +46,7 @@ Step 6: M₈(ℝ) → Bott (p-q)≡2 → Cl(1,7)
 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 作为 so(1,7) [28 生成元] 的代数实现，是**三扇区统一的交汇代数**。以此为枢纽，整个框架的推演可综合为以下生成树：
 
 ```
-Rec/Spec 范畴框架 (Paper I)
+Rec/Sp 范畴框架 (Paper I)
     │
     ├── D 函子 → 谱流方程 → 三层破缺 → 四力
     │       ↓
@@ -76,7 +76,7 @@ Rec/Spec 范畴框架 (Paper I)
 | 工作 | 关系 | 差异 |
 |:----|:-----|:-----|
 | 圈量子引力面积谱 $A_j \propto \sqrt{j(j+1)}$ | **数值一致**（R²=0.999984） | 本文从范畴论推导，非量子几何 |
-| Paper I Rec/Spec 框架 | **理论基础** | 本文应用 D 函子边界构造具体物理预言 |
+| Paper I Rec/Sp 框架 | **理论基础** | 本文应用 D 函子边界构造具体物理预言 |
 | Paper V 谱流方程 | $G_{\text{GR}} = \text{ad}(G)(A)$ 源于谱流展开 | 本文给出第一个完整数值输出 |
 | Paper XIX 范畴扩展 | $\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$ **提供 Cl(1,7) 的嵌入接口** | 本文使用该接口引入物理签名 |
 | Phase 36 数值验证 | Python 64-bit 验证 | 本文提供 Lean 4 形式化证明替代浮点计算 |
@@ -84,17 +84,17 @@ Rec/Spec 范畴框架 (Paper I)
 
 ### 1.5 论文结构
 
-§2 回顾 Rec/Spec 范畴框架的必要定义。§3 建立谱流生成元 $G_{\text{GR}}$ 的范畴来源（$\partial\mathbf{Rec}_D$ 边界处的伴随作用）。§4 从范畴层面的 Lie 代数结构构造 SU(2) 角动量对称群并推导 Casimir 谱 $\sqrt{k(k+1)}$。§5 揭示 $\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套的自然代数涌现，Bott 周期分类导出截断 $k_{\max}=8$；进一步构造签名范畴 $\mathbf{Sig}$（§5.5）、签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$（§5.6）、三重投影的基变更函子（§5.7）、Bott 塔无限层级（§5.8）、Level 4 静默的 $\iota\dashv\pi$ 精确定义（§5.9）以及 complete_chain 总成定理（§5.10）。§6 导出谱间隙公式并给出数值界限。§7 推导物理常数链。§8 概述 Lean 4 形式化。§9 展望统一生成树中的下一环节。
+§2 回顾 Rec/Sp 范畴框架的必要定义。§3 建立谱流生成元 $G_{\text{GR}}$ 的范畴来源（$\partial\mathbf{Rec}_D$ 边界处的伴随作用）。§4 从范畴层面的 Lie 代数结构构造 SU(2) 角动量对称群并推导 Casimir 谱 $\sqrt{k(k+1)}$。§5 揭示 $\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套的自然代数涌现，Bott 周期分类导出截断 $k_{\max}=8$；进一步构造签名范畴 $\mathbf{Sig}$（§5.5）、签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$（§5.6）、三重投影的基变更函子（§5.7）、Bott 塔无限层级（§5.8）、Level 4 静默的 $\iota\dashv\pi$ 精确定义（§5.9）以及 complete_chain 总成定理（§5.10）。§6 导出谱间隙公式并给出数值界限。§7 推导物理常数链。§8 概述 Lean 4 形式化。§9 展望统一生成树中的下一环节。
 
 ---
 
-## 2. Rec/Spec 范畴框架概要
+## 2. Rec/Sp 范畴框架概要
 
 *本文假设读者熟悉 Paper I 的基本框架。以下仅列出必要的定义。*
 
-**定义 2.1**（谱范畴 $\mathbf{Spec}$）。对象为三元组 $(\mathcal{H}, A, \sigma(A))$，其中 $\mathcal{H}$ 是有限维 Hilbert 空间，$A$ 是正自伴算子，$\sigma(A)$ 是谱。
+**定义 2.1**（谱范畴 $\mathbf{Sp}$）。对象为三元组 $(\mathcal{H}, A, \sigma(A))$，其中 $\mathcal{H}$ 是有限维 Hilbert 空间，$A$ 是正自伴算子，$\sigma(A)$ 是谱。
 
-**定义 2.2**（谱去递归函子 $D$）。$D: \mathbf{Rec}_D \to \mathbf{Spec}$ 将递归系统映射到其谱像。在有限维原型中，$D(R)$ 的矩阵由 $R$ 的步函数确定。
+**定义 2.2**（谱化函子 $D$）。$D: \mathbf{Rec}_D \to \mathbf{Sp}$ 将递归系统映射到其谱像。在有限维原型中，$D(R)$ 的矩阵由 $R$ 的步函数确定。
 
 **定义 2.3**（谱流方程 Paper V §2）。
 $$\frac{d}{dt}A_t = [G, A_t], \quad A_t = \exp(tG) A_0 \exp(-tG)$$
@@ -110,7 +110,7 @@ $$\text{ad}(G)(A) = [G, A] = G A - A G$$
 
 ### 3.1 边界方向导数
 
-在 Rec/Spec 框架中，$\mathbf{Rec}$ 范畴的对象携带自相似演化映射 $\Phi_R$。$\mathbf{Rec}_D$ 宽子范畴包含 $\Phi_R$ 为压缩映射的对象。$\partial\mathbf{Rec}_D$ 边界包含使谱条件边缘化的对象。
+在 Rec/Sp 框架中，$\mathbf{Rec}$ 范畴的对象携带自相似演化映射 $\Phi_R$。$\mathbf{Rec}_D$ 宽子范畴包含 $\Phi_R$ 为压缩映射的对象。$\partial\mathbf{Rec}_D$ 边界包含使谱条件边缘化的对象。
 
 在边界处，谱流生成元 $G_{\text{GR}}$ 由伴随作用给出：
 
@@ -172,13 +172,13 @@ $$G = G_N \cdot A_{\text{GR}} + q \cdot A_{\text{EM}} + g_3 \cdot A_{\text{stron
 
 ### 3.5 SU(2) 的范畴涌现——$A_{\text{GR}}$ Lie 代数的唯一锁定
 
-上述 $A_{\text{GR}}$ 被赋予 SU(2) Casimir 谱 $\sqrt{k(k+1)}$，但"为什么是 SU(2) 而不是其他 Lie 代数"的问题一直未正面回答。本节证明：**$\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$ 由 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架的五个内部约束唯一确定**。
+上述 $A_{\text{GR}}$ 被赋予 SU(2) Casimir 谱 $\sqrt{k(k+1)}$，但"为什么是 SU(2) 而不是其他 Lie 代数"的问题一直未正面回答。本节证明：**$\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$ 由 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架的五个内部约束唯一确定**。
 
 #### 3.5.1 五个范畴约束
 
 **约束 C1（非交换性）**。谱流方程 $dA_t/dt = [G, A_t]$ 是 $A_{\text{GR}}$ 的动力学生成方程。若 $\mathfrak{g}_{\text{GR}}$ 是交换的（如 $\mathfrak{u}(1)$），则 $[G, A_t] = 0$ 恒成立，谱流退化为平凡恒等映射。引力扇区的非平凡动力学要求 $[\mathfrak{g}_{\text{GR}}, \mathfrak{g}_{\text{GR}}] \neq 0$。
 
-**约束 C2（紧形式）**。$\mathbf{Spec}$ 范畴中的谱对象 $D(R)$ 具有有界谱——$D$ 函子保持 Rec 对象序结构的有界性（Paper I §2.7）。$A_{\text{GR}}$ 作为谱对象，其谱有界，对应 Lie 群必须是紧的。故 $\mathfrak{g}_{\text{GR}}$ 是紧实 Lie 代数。
+**约束 C2（紧形式）**。$\mathbf{Sp}$ 范畴中的谱对象 $D(R)$ 具有有界谱——$D$ 函子保持 Rec 对象序结构的有界性（Paper I §2.7）。$A_{\text{GR}}$ 作为谱对象，其谱有界，对应 Lie 群必须是紧的。故 $\mathfrak{g}_{\text{GR}}$ 是紧实 Lie 代数。
 
 **约束 C3（唯一谱间隙）**。$\Delta\lambda_{\min}$ 是 $A_{\text{GR}}$ 的谱间隙，在框架中具有唯一性：它导出裸耦合常数比 $\alpha_1^{(0)}:\alpha_2^{(0)}:\alpha_3^{(0)} = \sqrt{2/3}:1:\sqrt{2}$（§7.1）、R² 系数和临界能量密度（§7.2-7.3）。对紧半单 Lie 代数 $\mathfrak{g}$，独立 Casimir 不变量个数等于秩 $r = \dim \mathfrak{h}$（Cartan 子代数维数）。若 $r \geq 2$，则存在至少两个独立 Casimir 谱间距，与 $\Delta\lambda_{\min}$ 的唯一性矛盾。故 $\text{rank}(\mathfrak{g}_{\text{GR}}) = 1$。
 
@@ -303,11 +303,11 @@ $$\lambda_k(k, k_{\max}) = \frac{\sqrt{j(j+1)}}{\sqrt{j_{\max}(j_{\max}+1)}} = \
 
 ## 5. Cl(1,7) 的范畴涌现：三层伴随对的自然产物
 
-前两节从 Rec/Spec 范畴框架本身导出了谱流生成元 $G_{\text{GR}}$（§3）和 SU(2) Casimir 谱 $\sqrt{k(k+1)}$（§4）。这些结构在范畴层面是纯数学的——它们没有指定表示空间的维数，没有指定 $k_{\max}$ 的值。要获得具体的截断值，需要将范畴框架作用于具体的几何结构。
+前两节从 Rec/Sp 范畴框架本身导出了谱流生成元 $G_{\text{GR}}$（§3）和 SU(2) Casimir 谱 $\sqrt{k(k+1)}$（§4）。这些结构在范畴层面是纯数学的——它们没有指定表示空间的维数，没有指定 $k_{\max}$ 的值。要获得具体的截断值，需要将范畴框架作用于具体的几何结构。
 
 ### 5.1 三层伴随对作为代数根源
 
-Paper I §5.8.4 揭示了 Rec/Spec 框架的核心结构：**三层伴随对嵌套**提供了范畴层面的代数根源：
+Paper I §5.8.4 揭示了 Rec/Sp 框架的核心结构：**三层伴随对嵌套**提供了范畴层面的代数根源：
 
 ```
 外層:  Sel ⊣ Diss     (噪声-确定性转化，条件性)
@@ -324,9 +324,9 @@ Paper I §5.8.4 揭示了 Rec/Spec 框架的核心结构：**三层伴随对嵌�
 ```
 三层伴随对嵌套 (Paper I §5.8.4)
     │
-    ├── 内层 D ⊣ R: Rec 对象 → Spec 对象的矩阵表示
+    ├── 内层 D ⊣ R: Rec 对象 → Sp 对象的矩阵表示
     │       ↓
-    │   矩阵代数 Mₙ(ℂ) 作为 Spec 范畴的纤维代数
+    │   矩阵代数 Mₙ(ℂ) 作为 Sp 范畴的纤维代数
     │
     ├── 中层 ℒ ⊣ ι: 流形通过 Rec_id 嵌入范畴 (Paper XIX)
     │       ↓
@@ -342,13 +342,13 @@ Paper I §5.8.4 揭示了 Rec/Spec 框架的核心结构：**三层伴随对嵌�
 
 **三个关键环节**：
 
-1. **内层 $D \dashv R$ 的线性表示**。$D: \mathbf{Rec}_D \to \mathbf{Spec}$ 将递归系统映射为矩阵。Spec 范畴天然携带矩阵代数结构——Clifford 代数是此类结构的子代数。
+1. **内层 $D \dashv R$ 的线性表示**。$D: \mathbf{Rec}_D \to \mathbf{Sp}$ 将递归系统映射为矩阵。Sp 范畴天然携带矩阵代数结构——Clifford 代数是此类结构的子代数。
 
-2. **中层 $\mathcal{L} \dashv \iota$ 的流形嵌入**。Paper XIX §4 证明 $\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}$ 的全反射子范畴（$\mathcal{L} \dashv \iota$），且 $\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$（定理 3.3）。时空流形 $M^{1+7}$ 通过恒等延拓嵌入 $\mathbf{Rec}_{\text{id}}$，由其谱几何函子 $D^{\text{id}}$ 进入 $\mathbf{Spec}$。流形的 Clifford 丛结构随附到谱层面。
+2. **中层 $\mathcal{L} \dashv \iota$ 的流形嵌入**。Paper XIX §4 证明 $\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}$ 的全反射子范畴（$\mathcal{L} \dashv \iota$），且 $\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$（定理 3.3）。时空流形 $M^{1+7}$ 通过恒等延拓嵌入 $\mathbf{Rec}_{\text{id}}$，由其谱几何函子 $D^{\text{id}}$ 进入 $\mathbf{Sp}$。流形的 Clifford 丛结构随附到谱层面。
 
-3. **复合 $D^{\text{id}} \circ \iota$ 的谱实现**。流形的 Laplace 谱 $\sigma(\Delta_M)$ 在 $\mathbf{Spec}$ 中由 $A = \Delta_M$ 实现（Paper XIX 定义 3.3）。此时 $\mathrm{Cl}(1,7)$ 作为 $M^{1+7}$ 的 Clifford 丛纤维代数自然出现。
+3. **复合 $D^{\text{id}} \circ \iota$ 的谱实现**。流形的 Laplace 谱 $\sigma(\Delta_M)$ 在 $\mathbf{Sp}$ 中由 $A = \Delta_M$ 实现（Paper XIX 定义 3.3）。此时 $\mathrm{Cl}(1,7)$ 作为 $M^{1+7}$ 的 Clifford 丛纤维代数自然出现。
 
-**结论**：$\mathrm{Cl}(1,7)$ 不是从范畴公理推导的外部输入，而是 **三层伴随对结构作用于 $M^{1+7}$ 时的自然代数产物**。$M_8(\mathbb{R})$ 的唯一性来自 $A_{\text{GR}}$ 的 Casimir 谱确定的矩阵维数，$\mathrm{Cl}(1,7)$ 的唯一性来自 Bott 周期分类 $(p-q)\equiv2\pmod{8}$。更重要的是，物理签名 $(1,7)$ 本身也是范畴论内部唯一确定的——联立代数约束 $p+q=8$（矩阵维数）与 $p-q\equiv2\pmod{8}$（Bott 分类）给出 $(p,q)=(1,7)$ 或 $(5,3)$，而 $\mathbf{Spec}$ 范畴公理（定义 2.1）要求 $A$ 正自伴，排除了 $(5,3)$ 签名下 $\Delta_M$ 非椭圆的情形。**整条链中不存在任何自由参数或外部假设**。
+**结论**：$\mathrm{Cl}(1,7)$ 不是从范畴公理推导的外部输入，而是 **三层伴随对结构作用于 $M^{1+7}$ 时的自然代数产物**。$M_8(\mathbb{R})$ 的唯一性来自 $A_{\text{GR}}$ 的 Casimir 谱确定的矩阵维数，$\mathrm{Cl}(1,7)$ 的唯一性来自 Bott 周期分类 $(p-q)\equiv2\pmod{8}$。更重要的是，物理签名 $(1,7)$ 本身也是范畴论内部唯一确定的——联立代数约束 $p+q=8$（矩阵维数）与 $p-q\equiv2\pmod{8}$（Bott 分类）给出 $(p,q)=(1,7)$ 或 $(5,3)$，而 $\mathbf{Sp}$ 范畴公理（定义 2.1）要求 $A$ 正自伴，排除了 $(5,3)$ 签名下 $\Delta_M$ 非椭圆的情形。**整条链中不存在任何自由参数或外部假设**。
 
 作为对比，弦论的 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ 在代数和物理两个层面均包含 $\mathrm{Cl}(1,7)$：代数上 $\mathrm{M}_8(\mathbb{R}) \hookrightarrow \mathrm{M}_{16}(\mathbb{R})$ 作为左上角块嵌入（$\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$）；物理上这意味着本框架的所有预言——谱间隙 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$、三力耦合比 $\sqrt{2/3}:1:\sqrt{2}$、临界能量密度 $\rho_c \approx 0.332$——都应是弦论在特定子扇区（如 10D 到 8D 的退化或紧致化）中的特例。
 
@@ -727,7 +727,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ## 参考文献
 
-[1] Paper I: 通用不动点范畴框架 I：分形谱去递归理论 (v2.44).
+[1] Paper I: 通用不动点范畴框架 I：分形谱化理论 (v2.44).
 [2] Paper V: 通用不动点范畴框架 V：谱动力学 (Phase 21).
 [3] Paper XIX: 通用不动点范畴框架 XIX：范畴扩展 (v0.8).
 [4] `CategoryRepBridge.lean`: SU(2) 结构、Casimir、agEigenvalue 桥接.
@@ -745,7 +745,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Spec 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Spec}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
+《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
 - 谱流生成元 $G_{\text{GR}}$ 的范畴来源与三层对称性破缺（§3）
 - **SU(2) 范畴涌现：五个约束 C1-C5 唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$（§3.5，新增）**
 - SU(2) Casimir 谱 $\sqrt{k(k+1)}$ 与谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$（§4）
@@ -761,6 +761,6 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 |------|------|----------|
 | v0.5 | 2026-07-21 | 新增 §3.5 SU(2) 范畴涌现（五个约束 C1-C5 唯一锁定 g_GR ≅ su(2)，系统排除表，半整数 j 挑选 SU(2) 而非 SO(3)）；开放问题 #1 标记为已解决 |
 | v0.4 | 2026-07-21 | 新增 §6.4 谱交织精度 ε 的第一性原理推导（N(2₁)=4 分支规则、闭式 ε=N(2₁)×v_EW/M_Pl、数值验证 8.068×10⁻¹⁷，偏差 0.64%）；替换笔记引用为 Lean 文件引用 |
-| v0.3 | 2026-07-21 | 签名 $(1,7)$ 唯一性论证补全（添加 $\mathbf{Spec}$ 公理排除 $(5,3)$）；与弦论 Cl(9,1) 对比修正（代数包含、物理参数公用表、推导路径差异、IC 兼容共存、IC 投影机制）；修正 Cl(9,1) ≅ M₁₆(ℝ) 同构；删除错误的遗忘函子方向 |
+| v0.3 | 2026-07-21 | 签名 $(1,7)$ 唯一性论证补全（添加 $\mathbf{Sp}$ 公理排除 $(5,3)$）；与弦论 Cl(9,1) 对比修正（代数包含、物理参数公用表、推导路径差异、IC 兼容共存、IC 投影机制）；修正 Cl(9,1) ≅ M₁₆(ℝ) 同构；删除错误的遗忘函子方向 |
 | v0.2 | 2026-07-21 | 补完 §1.3 完整生成树（三扇区统一框架）、§1.4 与现有工作关系表、§3 三层破缺与力生成元、§5 Cl(1,7) 范畴涌现论证、§9 展望；修正 §3.2/3.3 关键概念混淆 |
 | v0.1 | 2026-07-21 | 初始版本，基于 Phase 53 分析笔记 A-E 与 SpectralGap.lean 形式化证明 |

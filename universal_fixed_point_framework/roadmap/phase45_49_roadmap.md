@@ -135,9 +135,9 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 
 **目标**：超导（BCS 能隙）、量子 Hall（陈数拓扑序）、超流（Gross-Pitaevskii → 谱流）
 
-**产出**：`notes/02_superconductivity/spectral_BCS_weave.md` v0.9（BCS 谱编织自由度 + Eliashberg $Z(\omega)$ 统一框架）+ `notes/02_superconductivity/spectral_cuprate_distribution.md` v0.1（赝能隙分布截面）+ `notes/02_superconductivity/spectral_quantum_Hall_topology.md` v0.1（IQHE/FQHE 陈数拓扑序谱翻译 + 任意子辫子统计）
+**产出**：`notes/02_superconductivity/spectral_BCS_weave.md` v0.9（BCS 谱粘合自由度 + Eliashberg $Z(\omega)$ 统一框架）+ `notes/02_superconductivity/spectral_cuprate_distribution.md` v0.1（赝能隙分布截面）+ `notes/02_superconductivity/spectral_quantum_Hall_topology.md` v0.1（IQHE/FQHE 陈数拓扑序谱翻译 + 任意子辫子统计）
 
-**核心结论**：凝聚态物理的三大支柱（超导、量子 Hall、超流）在 $\mathbf{Spec}$ 范畴中共享同一数学结构——BCS 能隙是谱间隙，Hall 电导是谱陈数，GP 方程是谱流方程。所有序参量 = 谱生成元的谱间隙或拓扑不变量。
+**核心结论**：凝聚态物理的三大支柱（超导、量子 Hall、超流）在 $\mathbf{Sp}$ 范畴中共享同一数学结构——BCS 能隙是谱间隙，Hall 电导是谱陈数，GP 方程是谱流方程。所有序参量 = 谱生成元的谱间隙或拓扑不变量。
 
 ### Q3: 量子化学谱翻译
 
@@ -188,7 +188,7 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 | 里程碑 | 时间 | 通过标准 |
 |:------|:----:|---------|
 | M5 Phase 45 完成 | ✅ 已完成 | ✅ E1 CP相位定量推导完成（CKM δ_CP 偏差 1.6%，PMNS δ_CP 偏差 0.39%）；✅ E2 ν绝对质量 + 0νββ 完成；✅ E3 α修正完成（Z_i 因子通过四层静默确定）；✅ E4 RGE链完成（完整跑动链建立） |
-| M6 Phase 46 完成 | 8 周 | ✅ Q1 低能 QCD 谱翻译核心已解决；✅ Q2a 电荷量子化 + Q2b 谱交织子构造完成（v0.5 Formula B + Formula B^β，三扇区全部完美拟合，η_RG 谱推导完成，U_Hf 解析角推导完成）；✅ Q2c 凝聚态物理谱翻译完成（BCS 谱编织+Eliashberg+Cuprate赝能隙+量子Hall拓扑序）；🟡 Q3 + Q4 待启动 |
+| M6 Phase 46 完成 | 8 周 | ✅ Q1 低能 QCD 谱翻译核心已解决；✅ Q2a 电荷量子化 + Q2b 谱交织子构造完成（v0.5 Formula B + Formula B^β，三扇区全部完美拟合，η_RG 谱推导完成，U_Hf 解析角推导完成）；✅ Q2c 凝聚态物理谱翻译完成（BCS 谱粘合+Eliashberg+Cuprate赝能隙+量子Hall拓扑序）；🟡 Q3 + Q4 待启动 |
 | M7 Phase 47 完成 | 12 周 | arXiv 预印本发布 |
 | M8 Phase 48-49 | 长期 | 实验提案/合作 |
 
@@ -206,4 +206,4 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 | 2026-07-23 | **η_RG 谱推导 + 夸克扇区扩展**：α_u 扫描发现 $\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}}) = 1.426\times10^{-17}$；$\alpha_u$ 从 1.945 修正为 1.983；下型夸克完美拟合，上型夸克识别结构性偏差（λ_H^(1)/λ_H^(3) 比 m_u/m_t 大 68%，需 Formula B^β 谱幂推广）。Q2b 剩余开放问题减至 2 个。 | spectral_Higgs_fermion_interweaver.md v0.4 + spectral_eta_RG_derivation.md v0.1 + spectral_yukawa_quark_extension.py v0.2 + up_quark_quick_scan.py（新增） |
 | 2026-07-23 | **Formula B$^\beta$ 谱幂推广完成**：上型夸克结构性偏差修复——$\beta_u = \alpha_u/\alpha_v \approx 1.053$ 从谱指数比精确推导；$\eta_{\text{RG}}^{(u)}$ 自动等于 $\eta_{\text{RG}}^{(0)} = v/(\sqrt{2}M_{\text{Pl}})$；三扇区全部完美拟合（偏差 <0.01%）。Q2b 全部子项完成。更新 Paper XVII v1.6。 | spectral_formula_Bbeta.md v0.2 + spectral_Higgs_fermion_interweaver.md v0.5 + spectral_yukawa_quark_extension.py v0.3 + formula_Bbeta_analysis.py v0.2 + paper17 v1.6 |
 | 2026-07-23 | **U_Hf 解析角推导完成**：建立定理 3.1-3.3 闭合公式 $\tan^2\theta_{ij} = (r_{ij} - r_\lambda^{(ij)})/(1 - r_{ij}r_\lambda^{(ij)})$ 从谱投影约束解析推导混合角。三步对角化框架（2-3→1-3→1-2）。$\theta_{23}$ 解析预测与数值优化偏差 <0.005 rad（轻子 0.2271 vs 0.2230，下型 0.1265 vs 0.1310）。上型夸克 $U \to I$ 极限确认识别。完整 3×3 数值求解确认一致性。Q2b 最后开放问题关闭，Phase 46 Q2 全部完成。 | spectral_UHf_angle_derivation.md v0.1 + analytical_UHf_angles.py v0.1 + spectral_charge_quantization.md (路线图更新) |
-| 2026-07-23 | **Q2c 凝聚态物理谱翻译完成**：BCS 谱编织自由度 + Eliashberg $Z(\omega)$ 统一框架（spectral_BCS_weave.md v0.9）→ $\Delta\lambda_{\text{BCS}}$ 谱流自洽封闭形式与 BCS $a=0.567$ 吻合 <0.1% 偏差；Cuprate 赝能隙分布截面（spectral_cuprate_distribution.md v0.1）→ 双组分高斯混合模型 + $\hat{\mathcal{T}}_{\text{Riem}}$ 推前兼容性；量子 Hall 拓扑序（spectral_quantum_Hall_topology.md v0.1）→ IQHE TKNN 谱公式、FQHE 复合费米子谱翻译、Laughlin 波函数谱分解、任意子辫子统计量子化保护、4 项可检验预言（纠缠熵振荡 $\ell_{\text{spec}}/\ell_B \approx 8.2$、临界指数 $\nu_{\text{spec}}=1$）。Q2 全部子项闭合。 | spectral_BCS_weave.md v0.9 + spectral_cuprate_distribution.md v0.1 + spectral_quantum_Hall_topology.md v0.1 + phase45_49_roadmap.md (Q2c 状态更新) + spectral_charge_quantization.md (路线图更新) |
+| 2026-07-23 | **Q2c 凝聚态物理谱翻译完成**：BCS 谱粘合自由度 + Eliashberg $Z(\omega)$ 统一框架（spectral_BCS_weave.md v0.9）→ $\Delta\lambda_{\text{BCS}}$ 谱流自洽封闭形式与 BCS $a=0.567$ 吻合 <0.1% 偏差；Cuprate 赝能隙分布截面（spectral_cuprate_distribution.md v0.1）→ 双组分高斯混合模型 + $\hat{\mathcal{T}}_{\text{Riem}}$ 推前兼容性；量子 Hall 拓扑序（spectral_quantum_Hall_topology.md v0.1）→ IQHE TKNN 谱公式、FQHE 复合费米子谱翻译、Laughlin 波函数谱分解、任意子辫子统计量子化保护、4 项可检验预言（纠缠熵振荡 $\ell_{\text{spec}}/\ell_B \approx 8.2$、临界指数 $\nu_{\text{spec}}=1$）。Q2 全部子项闭合。 | spectral_BCS_weave.md v0.9 + spectral_cuprate_distribution.md v0.1 + spectral_quantum_Hall_topology.md v0.1 + phase45_49_roadmap.md (Q2c 状态更新) + spectral_charge_quantization.md (路线图更新) |

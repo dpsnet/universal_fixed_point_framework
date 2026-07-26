@@ -16,7 +16,7 @@
 | `recInfVertComp` 结合律 | ✅ | 归结为 `Category.assoc` |
 | 左右单位律 | ✅ | 归结为 `Category.id_comp` / `comp_id` |
 
-**结构发现**：Rec_∞ 是平凡的严格 ∞-范畴——所有高于 1 的胞腔均为恒等态射。非平凡 ∞-结构出现在经过去递归函子 D_∞ : Rec_∞ → Spec_∞ 之后。
+**结构发现**：Rec_∞ 是平凡的严格 ∞-范畴——所有高于 1 的胞腔均为恒等态射。非平凡 ∞-结构出现在经过谱化函子 D_∞ : Rec_∞ → Spec_∞ 之后。
 
 ### 1.2 Spec_∞ 范畴结构（SpecInfinity.lean）
 
@@ -128,7 +128,7 @@ $$[A,G]=0 \quad \Longrightarrow \quad \text{S3(谱静默)} \;\wedge\; \text{id}_
 该定理表明：
 - 谱流静默是连接 S3（谱间隙消失）与 M-判据（态射静默）的**动力学桥梁**
 - 在 $\infty$-范畴层面，`h_silence` 是**唯一的静默边界形式化证明闭包条件**
-- 超出此边界（$[A,G]\neq0$），$F_t(A)$ 不再是 $\mathbf{Spec}_\infty$ 的态射，需完整的谱流演算
+- 超出此边界（$[A,G]\neq0$），$F_t(A)$ 不再是 $\mathbf{Sp}_\infty$ 的态射，需完整的谱流演算
 
 **谱流静默在四层体系中的精确层次**（推测）：
 
@@ -141,12 +141,12 @@ $$\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}
 **建议的深化方向**：
 
 1. **谱流静默的严格层次定位**：
-   - 证明 $[A,G]=0$ 与 S3 的等价/包含关系在 $\mathbf{Spec}_\infty$ 中的精确条件
+   - 证明 $[A,G]=0$ 与 S3 的等价/包含关系在 $\mathbf{Sp}_\infty$ 中的精确条件
    - 确定谱流静默在 $\subsetneq$ 层次中的确切位置
 
 2. **$[A,G]\neq0$ 的谱流演算发展**：
    - 当静默破缺时，谱流 $\infty$-端射需要什么额外结构才能闭合？
-   - 这对应 $\mathbf{Spec}_\infty$ 中哪些高阶 coherence 条件？
+   - 这对应 $\mathbf{Sp}_\infty$ 中哪些高阶 coherence 条件？
    - 是否可引入"静默度"的连续参数 $\delta_{\text{silence}} = \|[A,G]\|$ 来量化破缺程度？
 
 3. **形式化验证的完整性推进**：
@@ -171,13 +171,13 @@ $$\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}
 
 **形式化策略**：
 - 在 Lean 中构造 2×2 矩阵反例证明 $\subsetneq$ 的严格性
-- $[A,G]=0$ 与 S3 的等价关系依赖于 $\mathbf{Spec}_\infty$ 的切空间结构：$T_A\mathbf{Spec}_\infty = \{[G,A] : G\}$
+- $[A,G]=0$ 与 S3 的等价关系依赖于 $\mathbf{Sp}_\infty$ 的切空间结构：$T_A\mathbf{Sp}_\infty = \{[G,A] : G\}$
 
 ---
 
 ### 2.3c 深化方向二：$[A,G]\neq0$ 的谱流演算
 
-**核心问题**：当静默破缺时，谱流 $\infty$-端射 $F_t(A)$ 需要什么额外结构才能成为 $\mathbf{Spec}_\infty$ 的合法态射？
+**核心问题**：当静默破缺时，谱流 $\infty$-端射 $F_t(A)$ 需要什么额外结构才能成为 $\mathbf{Sp}_\infty$ 的合法态射？
 
 **问题的形式化表述**：
 $F_t(A)$ 是 $\text{SpecInfMorphism}$ 当且仅当 $F_t(A) \cdot A = A \cdot F_t(A)$（交换条件）。当 $[A,G]\neq0$ 时，该条件不成立。
@@ -189,10 +189,10 @@ $F_t(A) \cdot A = A \cdot F_t(A)$ 的偏差由 BCH 公式的高阶项描述：
 
 $$F_t(A) \cdot A - A \cdot F_t(A) = \sum_{n=1}^\infty \frac{t^n}{n!} \left( \text{ad}_G^n(A) \cdot A - A \cdot \text{ad}_G^n(A) \right)$$
 
-在 $\mathbf{Spec}_\infty$ 的 L∞ 代数结构中，$\text{ad}_G$ 是 $m_1$ 运算。$F_t(A)$ 与 $A$ 的不交换性反映了 $m_1$ 与 $m_0$（恒等运算）之间的 homotopy coherence 条件。完整的形式化需要建立 $\text{ad}_G^n(A) \cdot A = A \cdot \text{ad}_G^n(A)$ 的 **充分条件**——即 $[A, \text{ad}_G^n(A)] = 0$ 对所有 $n$ 成立。
+在 $\mathbf{Sp}_\infty$ 的 L∞ 代数结构中，$\text{ad}_G$ 是 $m_1$ 运算。$F_t(A)$ 与 $A$ 的不交换性反映了 $m_1$ 与 $m_0$（恒等运算）之间的 homotopy coherence 条件。完整的形式化需要建立 $\text{ad}_G^n(A) \cdot A = A \cdot \text{ad}_G^n(A)$ 的 **充分条件**——即 $[A, \text{ad}_G^n(A)] = 0$ 对所有 $n$ 成立。
 
 **路径 B：正则化方案（物理动机）**
-在物理应用中，$F_t(A)$ 定义为 $\exp(tG) \cdot A \cdot \exp(-tG)$（`SpectralDynamics.lean` 的 `spectralFlow`）。此表达式自动满足 $F_t(A) \cdot \exp(tG) = \exp(tG) \cdot A$，但不一定满足 $\mathbf{Spec}_\infty$ 所需的 $F_t(A) \cdot A = A \cdot F_t(A)$。物理上这一偏差通过静默破缺机制（§5.7.6）解释——零测自由度在量子层面恢复可见性。因此，谱流 $\infty$-端射的闭合条件应在量子修正层面恢复，而非经典 $\mathbf{Spec}_\infty$ 层面。
+在物理应用中，$F_t(A)$ 定义为 $\exp(tG) \cdot A \cdot \exp(-tG)$（`SpectralDynamics.lean` 的 `spectralFlow`）。此表达式自动满足 $F_t(A) \cdot \exp(tG) = \exp(tG) \cdot A$，但不一定满足 $\mathbf{Sp}_\infty$ 所需的 $F_t(A) \cdot A = A \cdot F_t(A)$。物理上这一偏差通过静默破缺机制（§5.7.6）解释——零测自由度在量子层面恢复可见性。因此，谱流 $\infty$-端射的闭合条件应在量子修正层面恢复，而非经典 $\mathbf{Sp}_\infty$ 层面。
 
 **路径 C：交换化投影**
 定义投影算子 $P_{\text{sym}}(X) = \frac{1}{2}(X + A^{-1}XA)$（假设 $A$ 可逆），使 $F_t(A)$ 交换化。但这要求 $A$ 可逆，在有限维情形下 $\det A \neq 0$。
@@ -229,7 +229,7 @@ $$F_t(A) \cdot A - A \cdot F_t(A) = \sum_{n=1}^\infty \frac{t^n}{n!} \left( \tex
 
 $$\delta_{\text{silence}} \leq \|A\| \cdot \|G\| + \|G\| \cdot \|A\| = 2\|A\|\cdot\|G\|$$
 
-当 $\|[A,G]\| \to 0$ 时，$F_t(A) \cdot A - A \cdot F_t(A) \to 0$。这为谱流 $\infty$-端射提供了**渐近闭合条件**——静默破缺足够小时，$\mathbf{Spec}_\infty$ 的态射结构在近似意义下闭合。
+当 $\|[A,G]\| \to 0$ 时，$F_t(A) \cdot A - A \cdot F_t(A) \to 0$。这为谱流 $\infty$-端射提供了**渐近闭合条件**——静默破缺足够小时，$\mathbf{Sp}_\infty$ 的态射结构在近似意义下闭合。
 
 **形式化策略**：
 - 在 Lean 中定义 $\delta_{\text{silence}}$ 作为矩阵范数
@@ -276,11 +276,11 @@ $$\delta_{\text{silence}} \leq \|A\| \cdot \|G\| + \|G\| \cdot \|A\| = 2\|A\|\cd
 
 以下6步链在研究中建立，但此前未记入笔记。它构成了"范畴论 → Cl(1,7)"的理论桥梁：
 
-**Step 1: Rec/Spec 范畴结构 → D 函子定义谱对象**
-Paper I 的 D 函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$，其中 $A_R$ 是正自伴矩阵。这是一切推导的起点。
+**Step 1: Rec/Sp 范畴结构 → D 函子定义谱对象**
+Paper I 的 D 函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$，其中 $A_R$ 是正自伴矩阵。这是一切推导的起点。
 
 **Step 2: 谱动力学方程 $dA/dt = [G, A]$**
-来自 $\mathbf{Spec}_\infty$ 切空间 $T_A\mathbf{Spec}_\infty$ 的自然结构。谱流方程（Paper V）是谱对象演化的基本动力学。
+来自 $\mathbf{Sp}_\infty$ 切空间 $T_A\mathbf{Sp}_\infty$ 的自然结构。谱流方程（Paper V）是谱对象演化的基本动力学。
 
 **Step 3: 对称性破缺三层级 → 四个力生成元**
 $\mathbf{Rec}$ 的 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setminus\mathbf{Rec}_D$ 三层结构（Paper I §2.1）对应四个基本力生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$。详见 `SpectralDynamics.lean`。
@@ -296,7 +296,7 @@ $M_8(\mathbb{R})$ 作为 $A_{\text{GR}}$ 的表示代数，其签名由谱的实
 
 **完整链**：
 ```
-Rec/Spec 范畴 (Paper I)
+Rec/Sp 范畴 (Paper I)
     ↓ D 函子
 谱对象 D(R) = (ℋ, A)
     ↓ 切空间
@@ -380,7 +380,7 @@ Cl(1,7) ≅ M₈(ℝ)
 
 ### 4.4a Phase 53 全链断裂点修复（2026-07-21）
 
-**背景**：从 Rec/Spec 范畴框架到谱间隙 Δλ_min 的推导链存在 9 处结构性断裂。Phase 53 路线图（`roadmap/phase53_category_rep_bridge.md`）系统填补了所有断裂。核心发现：原 `A_GR_fromBoundary` 被混淆为谱流生成元与谱算子两重身份，经澄清后分裂为 `G_GR_fromBoundary`（生成元）与 `A_GR`=Casimir（谱算子）。
+**背景**：从 Rec/Sp 范畴框架到谱间隙 Δλ_min 的推导链存在 9 处结构性断裂。Phase 53 路线图（`roadmap/phase53_category_rep_bridge.md`）系统填补了所有断裂。核心发现：原 `A_GR_fromBoundary` 被混淆为谱流生成元与谱算子两重身份，经澄清后分裂为 `G_GR_fromBoundary`（生成元）与 `A_GR`=Casimir（谱算子）。
 
 | 阶段 | 修复内容 | 涉及文件 | 状态 |
 |:----:|:---------|:---------|:----:|
@@ -390,7 +390,7 @@ Cl(1,7) ≅ M₈(ℝ)
 | **53D** | Cl(1,7) Bott 周期分类 → `cl17_rep_dim = 8`；`kmax_from_cl17` 从常量改为真正定理；`cl17_iso_M8` 从 `True` 占位符改为有意义定理 | `Clifford.lean`, `SpectralGap.lean` | ✅ |
 | **53E** | `spectralGap_numerical_approx` sorry 填充：区间不等式证明 `0.121 < Δλ_min < 0.123` | `SpectralGap.lean` | ✅ |
 
-**全链当前状态**：Rec/Spec → G_GR=ad(G)(A) → SU(2) 结构 → Casimir → agEigenvalue → Cl(1,7)→k_max=8 → Δλ_min=(√6-√2)/√72 ≈ 0.122 M_Pl。**所有环节均已形式化，零 sorry**。
+**全链当前状态**：Rec/Sp → G_GR=ad(G)(A) → SU(2) 结构 → Casimir → agEigenvalue → Cl(1,7)→k_max=8 → Δλ_min=(√6-√2)/√72 ≈ 0.122 M_Pl。**所有环节均已形式化，零 sorry**。
 
 ### 4.5 当前 sorry 分布（总 14 处，较此前减少 1 处）
 

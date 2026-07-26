@@ -4,11 +4,11 @@
 
 **摘要**：本笔记完成 Phase 54 的最后两个物理系统验证——Hawking-Page (HP) 相变和流变学 DST（剪切稠化）。HP 验证证明 Temp/RG 框架适用于引力系统（$\partial\mathbf{Rec}_D$ 在 AdS 温度-质量平面的投影），流变学 $\mathbf{Rate}$ 范畴证明应变率参数空间与 $\mathbf{Temp}$ 范畴同构。两者联合满足 Phase 54D 决策树中"物理系统 $\ge 3$"的条件，触发独立 Paper XXI 撰写。
 
-**前置依赖**：`spectral_T_category.md`（$\mathbf{Temp}$ 范畴定义）、`spectral_BCS_weave.md`（BCS 谱编织自由度）、`paper8_black_hole_spectral.md`（黑洞视界谱动力学）、`spectral_rheology_lorentz_isomorphism.md`（流变-Lorentz 同构）。
+**前置依赖**：`spectral_T_category.md`（$\mathbf{Temp}$ 范畴定义）、`spectral_BCS_weave.md`（BCS 谱粘合自由度）、`paper8_black_hole_spectral.md`（黑洞视界谱动力学）、`spectral_rheology_lorentz_isomorphism.md`（流变-Lorentz 同构）。
 
 ---
 
-## §1 Hawking-Page 相变——C1a：黑洞谱编织自由度 $d_{\text{HP}}$
+## §1 Hawking-Page 相变——C1a：黑洞谱粘合自由度 $d_{\text{HP}}$
 
 ### 1.1 Temp/RG 映射
 
@@ -22,15 +22,15 @@
 | 有效自由度 | $d_q = 14/3$ | $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$ | $d_{\text{HP}}$ |
 | 比例因子 | $a_{\text{QCD}} = 0.729$ | $a_{\text{BCS}} = 0.567$ | $a_{\text{HP}}$ |
 
-### 1.2 谱编织自由度推导
+### 1.2 谱粘合自由度推导
 
 HP 相变的物理本质是热 AdS 相与 Schwarzschild-AdS 黑洞相的自由能竞争。在 $\partial\mathbf{Rec}_D$ 边界处，自由能差 $\Delta F = F_{\text{BH}} - F_{\text{AdS}}$ 为零，即谱间隙消失。
 
-近视界对称代数 $\mathfrak{sl}(2,\mathbb{R})$ 控制黑洞的谱编织结构。对于 Schwarzschild 黑洞，近视界几何具有 $SL(2,\mathbb{R})$ 等距群，其生成元满足：
+近视界对称代数 $\mathfrak{sl}(2,\mathbb{R})$ 控制黑洞的谱粘合结构。对于 Schwarzschild 黑洞，近视界几何具有 $SL(2,\mathbb{R})$ 等距群，其生成元满足：
 
 $$[L_0, L_{\pm 1}] = \mp L_{\pm 1}, \quad [L_1, L_{-1}] = 2L_0$$
 
-**定义 1.1**（黑洞谱编织自由度）。HP 谱编织自由度 $d_{\text{HP}}$ 由近视界对称代数的 Casimir 结构和谱流生成元范数守恒决定：
+**定义 1.1**（黑洞谱粘合自由度）。HP 谱粘合自由度 $d_{\text{HP}}$ 由近视界对称代数的 Casimir 结构和谱流生成元范数守恒决定：
 
 $$d_{\text{HP}} = g_{\text{HP}} \cdot \sqrt{\frac{C_2(\mathfrak{sl}(2,\mathbb{R})_{\text{fund}})}{C_2(\mathfrak{so}(1,1))}} \cdot \sqrt{r_{\text{HP}}}$$
 
@@ -44,7 +44,7 @@ $$d_{\text{HP}} = g_{\text{HP}} \cdot \sqrt{\frac{C_2(\mathfrak{sl}(2,\mathbb{R}
 
 $$\omega_{\text{QNM}}^{(0)} = \frac{\ln 3}{2\pi} T_H + i\left(n+\frac12\right)T_H$$
 
-实部谱间距 $\Delta\omega_{\text{Re}} = (\ln 3)T_H/(2\pi)$。在谱框架的 $\mathbf{Spec}$ 表示中，此间距对应 $\Delta\lambda_{\text{HP}}$。与 $\Delta\lambda_3 = 0.1725$（来自 SU(3) 谱编织比例）对比可得 $r_{\text{HP}}$。
+实部谱间距 $\Delta\omega_{\text{Re}} = (\ln 3)T_H/(2\pi)$。在谱框架的 $\mathbf{Sp}$ 表示中，此间距对应 $\Delta\lambda_{\text{HP}}$。与 $\Delta\lambda_3 = 0.1725$（来自 SU(3) 谱粘合比例）对比可得 $r_{\text{HP}}$。
 
 **推论 1.1**（$d_{\text{HP}}$ 的数值）。代入上述参数：
 
@@ -96,7 +96,7 @@ $$a_{\text{HP}} = \left( \frac{1 \cdot 1 + d_{\text{HP}}}{4\pi \cdot 1} \cdot r_
 
 其中 $r_{\text{HP}} = \Delta\lambda_{\min}/\Delta\lambda_{\text{HP}}$。
 
-**定理 2.1**（HP 谱编织自洽解）。上述方程组的唯一解为：
+**定理 2.1**（HP 谱粘合自洽解）。上述方程组的唯一解为：
 
 $$r_{\text{HP}} = 0.0395, \quad d_{\text{HP}} = \sqrt{2}\sqrt{0.0395} \approx 0.281, \quad a_{\text{HP}} = 0.159$$
 
@@ -112,7 +112,7 @@ $\Rightarrow r_{\text{HP}} + \sqrt{2}r_{\text{HP}}^{3/2} = 0.0505$
 
 ### 2.4 物理诠释
 
-**$d_{\text{HP}} \approx 0.281$ 的意义**：黑洞视界的有效谱编织自由度约为 0.28，远小于 BCS 的 1.62 和 QCD 的 4.67。这是因为 HP 相变不是物质微观自由度的凝聚，而是时空几何的相变——唯一的自由度来自近视界 $SL(2,\mathbb{R})$ 对称性的一个生成元方向。$d_{\text{HP}} < 1$ 表明几何相变的谱编织是"亚自由度"的，即单个对称生成元的部分贡献。这一结果与引力系统的"自由度匮乏"（相比物质系统）的物理直觉一致。
+**$d_{\text{HP}} \approx 0.281$ 的意义**：黑洞视界的有效谱粘合自由度约为 0.28，远小于 BCS 的 1.62 和 QCD 的 4.67。这是因为 HP 相变不是物质微观自由度的凝聚，而是时空几何的相变——唯一的自由度来自近视界 $SL(2,\mathbb{R})$ 对称性的一个生成元方向。$d_{\text{HP}} < 1$ 表明几何相变的谱粘合是"亚自由度"的，即单个对称生成元的部分贡献。这一结果与引力系统的"自由度匮乏"（相比物质系统）的物理直觉一致。
 
 **$a_{\text{HP}} = 0.159$ 的验证**：在标准 HP 理论中，$T_{\text{HP}} = 1/(\pi R_{\text{AdS}})$ 的经典值直接给出 $a_{\text{HP}} = 1/(2\pi)$，无需任何自由参数。谱框架公式以 $<10^{-6}$ 的数值精度再现此值，证实了谱框架对引力相变系统的适用性。
 
@@ -124,7 +124,7 @@ $\Rightarrow r_{\text{HP}} + \sqrt{2}r_{\text{HP}}^{3/2} = 0.0505$
 | BCS | $\sqrt{3}\sqrt{0.8740} \approx 1.619$ | 0.8740 | 0.567 | Cooper 对自由度 |
 | **HP** | **$\sqrt{2}\sqrt{0.0395} \approx 0.281$** | **0.0395** | **0.159** | **近视界对称自由度** |
 
-**观察**：从 QCD ($d=4.67$) → BCS ($d=1.62$) → HP ($d=0.28$)，有效自由度递减，反映系统从多通道（QCD 有 3 色 × 2 味 × 自旋）到单通道（BCS 单 Cooper 对）再到纯几何相变（HP 几何自由度）的简化趋势。HP 的 $d<1$ 表明几何相变的谱编织是一种"亚自由度"贡献。
+**观察**：从 QCD ($d=4.67$) → BCS ($d=1.62$) → HP ($d=0.28$)，有效自由度递减，反映系统从多通道（QCD 有 3 色 × 2 味 × 自旋）到单通道（BCS 单 Cooper 对）再到纯几何相变（HP 几何自由度）的简化趋势。HP 的 $d<1$ 表明几何相变的谱粘合是一种"亚自由度"贡献。
 
 ---
 
@@ -176,7 +176,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 
 ---
 
-## §4 流变学 DST——C2c：谱编织自由度
+## §4 流变学 DST——C2c：谱粘合自由度
 
 ### 4.1 DST 参数映射
 
@@ -190,11 +190,11 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 | 有效自由度 | $d_q = 14/3$ | $d_{\text{DST}}$ |
 | 比例因子 | $a_{\text{QCD}} = 0.729$ | $a_{\text{DST}} = \dot\gamma_c \cdot \eta_c$ |
 
-### 4.2 DST 谱编织自由度
+### 4.2 DST 谱粘合自由度
 
 DST 的高剪切稠化由颗粒接触网络的渗透相变驱动。在谱框架中，此相变对应 $\partial\mathbf{Rec}_D$ 边界处的谱间隙压缩。
 
-**定义 4.1**（DST 谱编织自由度）。DST 谱编织自由度 $d_{\text{DST}}$ 由 Lorentz 同构（`spectral_rheology_lorentz_isomorphism.md`）和谱流生成元范数守恒决定：
+**定义 4.1**（DST 谱粘合自由度）。DST 谱粘合自由度 $d_{\text{DST}}$ 由 Lorentz 同构（`spectral_rheology_lorentz_isomorphism.md`）和谱流生成元范数守恒决定：
 
 $$d_{\text{DST}} = 2 \cdot \sqrt{\frac{C_2(\mathfrak{so}(1,1)_{\text{rheo}})}{C_2(\mathfrak{so}(1,1))}} \cdot \sqrt{r_{\text{DST}}}$$
 
@@ -246,7 +246,7 @@ $$a_{\text{DST}} = \left( \frac{1 + 2\sqrt{r_{\text{DST}}}}{4\pi} \cdot r_{\text
 | $a$ | 0.729 | 0.567 | 0.159 | **0.435** |
 | 验证状态 | ✅ 完全 | ✅ 完全 | ✅ 理论验证 | ✅ **第一性原理推导** |
 
-### 5.2 谱编织自由度递减规律
+### 5.2 谱粘合自由度递减规律
 
 从 QCD 到 HP，$d$ 值系统递减：
 
@@ -302,9 +302,9 @@ Phase 54C 结束时
 
 | 章 | 内容 | 来源 | 状态 |
 |:--:|:-----|:----|:----|
-| §1 | 引言：$\mathbf{Rec}/\mathbf{Spec}$ 的纤维范畴扩展 | Paper I §1.3 | 📝 |
+| §1 | 引言：$\mathbf{Rec}/\mathbf{Sp}$ 的纤维范畴扩展 | Paper I §1.3 | 📝 |
 | §2 | $\mathbf{Temp}$、$\mathbf{RG}$ 范畴与 $\mathcal{T}$ 函子 | `spectral_T_category.md` | ✅ |
-| §3 | 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ | `spectral_T_category_riemann.md` | ✅ |
+| §3 | 谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ | `spectral_T_category_riemann.md` | ✅ |
 | §4 | 函子性、自然变换与 2-函子 | `spectral_Riem_functoriality.md` | ✅ |
 | §5 | 物理实例 I：QCD 禁闭-退禁闭 | Paper VI/XVII | ✅ |
 | §6 | 物理实例 II：BCS 超导 | Phase 54A | ✅ |
@@ -320,7 +320,7 @@ Phase 54C 结束时
 
 1. **$r_{\text{DST}}$ 的第一性原理推导**：DST 的谱间隙 $\Delta\lambda_{\text{DST}}$ 不能单独由 Lie 代数 Casimir 确定，需要颗粒物质接触网络的谱分解分析。可能路径：使用渗透理论的谱维数。
 
-2. **$g_{\text{HP}}$ 的自旋依赖**：Kerr 黑洞的 $g_{\text{HP}}$ 可能为 2（内外视界），对应 $d_{\text{HP}}$ 增至 $0.281 \cdot 2 = 0.562$。此预言可用于区分 Schwarzschild vs Kerr 黑洞的谱编织结构。
+2. **$g_{\text{HP}}$ 的自旋依赖**：Kerr 黑洞的 $g_{\text{HP}}$ 可能为 2（内外视界），对应 $d_{\text{HP}}$ 增至 $0.281 \cdot 2 = 0.562$。此预言可用于区分 Schwarzschild vs Kerr 黑洞的谱粘合结构。
 
 3. **Cuprate 分布论的严格形式化**：Phase 54A Q4 的解析形式已建立，但严格范畴形式化待完成。若完成可使物理系统计数增至 5，显著增强 Paper XXI 的实证基础。
 
@@ -331,7 +331,7 @@ Phase 54C 结束时
 ## 参考文献
 
 1. `spectral_T_category.md` v0.1：$\mathbf{Temp}$ 范畴定义与 $\mathcal{T}$ 函子
-2. `spectral_BCS_weave.md` v0.9：BCS 谱编织自由度（Phase 54A）
+2. `spectral_BCS_weave.md` v0.9：BCS 谱粘合自由度（Phase 54A）
 3. `spectral_architecture_temp_rg.md` v0.1：Temp/RG 架构定位
 4. `spectral_rheology_lorentz_isomorphism.md` v0.1：流变-Lorentz 同构
 5. Paper VIII：黑洞视界谱动力学
@@ -345,4 +345,4 @@ Phase 54C 结束时
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
 | v0.2 | 2026-07-25 | **DST 第一性原理升级**：$r_{\text{DST}}$ 由 3D 渗透阈值谱维数 $d_s=4/3$ 封闭，状态从 ⚠️ 半经验 → ✅ 第一性原理推导 |
-| v0.1 | 2026-07-25 | 初版：HP 谱编织自由度推导、Rate 范畴定义、四系统统一对比、Paper XXI 触发条件确认 |
+| v0.1 | 2026-07-25 | 初版：HP 谱粘合自由度推导、Rate 范畴定义、四系统统一对比、Paper XXI 触发条件确认 |

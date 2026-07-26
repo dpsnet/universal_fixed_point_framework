@@ -158,7 +158,7 @@ Hg (Z=80, 常温常压 s-波超导) 的 11.7% a_spec 偏差需要仔细分析，
 
 ### 3.6 Nb d-轨道多带 μ*_spec 修正
 
-**定理 6（多带 μ*_spec）**：对含多个能带（s、d 等）穿过费米面的过渡金属，$\mu^*_{\text{spec}}$ 由各能带的谱间隙常数 $D_0^{(i)}$ 和费米能 $\varepsilon_F^{(i)}$ 经 DOS 权重加权平均确定：
+**定理 6（多带 μ*_Sp）**：对含多个能带（s、d 等）穿过费米面的过渡金属，$\mu^*_{\text{spec}}$ 由各能带的谱间隙常数 $D_0^{(i)}$ 和费米能 $\varepsilon_F^{(i)}$ 经 DOS 权重加权平均确定：
 
 $$\mu^*_{\text{eff}} = \sum_i w_i \cdot \frac{\alpha_i L_i}{1 + \alpha_i L_i}, \quad \alpha_i = \left(\frac{D_0^{(i)}}{r_w}\right)^2, \quad L_i = \ln\left(\frac{\varepsilon_F^{(i)}}{\omega_D}\right)$$
 

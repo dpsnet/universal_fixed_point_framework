@@ -1,6 +1,6 @@
 # Phase 11：纤维丛理论在范畴框架中的接入
 
-> 本阶段目标：分析当前 $\mathbf{Rec} \rightleftarrows \mathbf{Spec}$ 范畴框架与经典纤维丛理论的
+> 本阶段目标：分析当前 $\mathbf{Rec} \rightleftarrows \mathbf{Sp}$ 范畴框架与经典纤维丛理论的
 > 对应关系，给出纤维丛概念在框架中的范畴论实现，并验证 SM 规范群作为结构群的表示。
 
 ---
@@ -10,7 +10,7 @@
 | 纤维丛概念 | 范畴框架对应 | 解释 |
 |---|---|---|
 | **底空间 $M$** | Rec 对象 $R$（状态空间 $X_R$） | 时空/参数空间上的递归系统 |
-| **纤维 $F$** | Spec 对象 $E = D(R)$ | 每点上的谱数据（质量、频率） |
+| **纤维 $F$** | Sp 对象 $E = D(R)$ | 每点上的谱数据（质量、频率） |
 | **结构群 $G$** | 轨道函子 $O(R) \in \mathbf{Weight}$ | 轨道权重决定规范群表示维数 |
 | **主丛 $P \to M$** | ${\rm Orb}(R) \to R$（轨道范畴 forgetful） | 遗忘函子 $U: \mathbf{Orb} \to \mathbf{Rec}$ |
 | **联络 $\nabla$** | 自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}} \to R \circ D$ | 单位自然变换编码平行移动 |
@@ -27,9 +27,9 @@ $X_R$ 可视为纤维丛的**底空间**。递推演化 $\Phi_R: X_R \to X_R$ �
 
 **例**：SM 实例的底空间是费米子扇区标签集 $\{\text{up}, \text{down}, \text{lepton}, \text{neutrino}\}$。
 
-### 2.2 纤维作为 Spec 对象
+### 2.2 纤维作为 Sp 对象
 
-**定义 2.1**（纤维函子）。纤维函子 $\mathcal{F}: \mathbf{Rec} \to \mathbf{Spec}$ 定义为
+**定义 2.1**（纤维函子）。纤维函子 $\mathcal{F}: \mathbf{Rec} \to \mathbf{Sp}$ 定义为
 
 $$\mathcal{F}(R) = D(R) = (H_R, A_R, \sigma(A_R)).$$
 
@@ -103,7 +103,7 @@ structure_group = SU(3)  # w=3 对应色相互作用
 | 纤维丛概念 | 框架公理/结构 |
 |---|---|
 | 底空间 $M = X_R$ | $\mathbf{Rec}$ 的状态空间 |
-| 纤维 $F = D(R)$ | $\mathbf{Spec}$ 谱对象 |
+| 纤维 $F = D(R)$ | $\mathbf{Sp}$ 谱对象 |
 | 结构群 $G$ | 轨道函子 $O$ 的权重维数 |
 | 主丛 $P \to M$ | 遗忘函子 $U: \mathbf{Orb} \to \mathbf{Rec}$ |
 | 联络 $\nabla$ | 自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}} \to R \circ D$ |
@@ -121,7 +121,7 @@ structure_group = SU(3)  # w=3 对应色相互作用
 - **曲率**为零（$\eta$ 自然性偏差为 0），对应平坦联络
 - **SM 规范群**由轨道权重 $w$ 的维数决定
 
-> 框架可以不显式引入纤维丛语言，而是通过范畴论结构（自然变换、遗忘函子、伴随）**内蕴地**编码纤维丛信息。这意味着当前的 $\mathbf{Rec} \rightleftarrows \mathbf{Spec}$ 框架已经隐式包含纤维丛结构。
+> 框架可以不显式引入纤维丛语言，而是通过范畴论结构（自然变换、遗忘函子、伴随）**内蕴地**编码纤维丛信息。这意味着当前的 $\mathbf{Rec} \rightleftarrows \mathbf{Sp}$ 框架已经隐式包含纤维丛结构。
 
 ---
 
@@ -130,4 +130,4 @@ structure_group = SU(3)  # w=3 对应色相互作用
 - v0.1（2026-07-12）：初稿，建立纤维丛概念与范畴框架的完整对应关系。
 - v0.2（2026-07-12）：结论确认，所有对应关系均已严格证明，Phase 11 纤维丛接入正式完成。
 
-> **Phase 11 结语**：经完整分析确认，当前 $\mathbf{Rec} \rightleftarrows \mathbf{Spec}$ 范畴框架通过轨道函子、遗忘函子与 $\eta$ 自然变换隐式编码了纤维丛的全部核心结构（底空间、纤维、结构群、联络、曲率）。纤维丛理论不是框架的扩展，而是框架内在结构的揭示。SM SU(3) 规范群作为轨道权重 $w=3$ 的结构群表示，进一步验证了该对应关系的物理相关性。
+> **Phase 11 结语**：经完整分析确认，当前 $\mathbf{Rec} \rightleftarrows \mathbf{Sp}$ 范畴框架通过轨道函子、遗忘函子与 $\eta$ 自然变换隐式编码了纤维丛的全部核心结构（底空间、纤维、结构群、联络、曲率）。纤维丛理论不是框架的扩展，而是框架内在结构的揭示。SM SU(3) 规范群作为轨道权重 $w=3$ 的结构群表示，进一步验证了该对应关系的物理相关性。

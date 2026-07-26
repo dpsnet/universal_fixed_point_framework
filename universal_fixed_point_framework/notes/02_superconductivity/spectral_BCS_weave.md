@@ -1,8 +1,8 @@
-# BCS 超导的谱编织自由度与 Temp/RG 框架验证
+# BCS 超导的谱粘合自由度与 Temp/RG 框架验证
 
 **版本**：v0.9（2026-07-22）
 
-**摘要**：本笔记将 QCD 中已完全验证的 Temp/RG 纤维范畴框架扩展到 BCS 超导系统。核心步骤为：(1) 建立 BCS 参数到 $\mathbf{Temp}/\mathbf{RG}$ 范畴的映射——$T_c^{\text{BCS}}$（临界温度）对应 $\partial\mathbf{Rec}_D^{(\mathbf{Temp})}$，$\Delta_0$（超导能隙）对应 $\partial\mathbf{Rec}_D^{(\mathbf{RG})}$；(2) 推导 BCS 谱编织自由度 $d_{\text{BCS}} = N(0) \cdot V_{\text{BCS}}$（Cooper 对态密度 × 吸引相互作用强度），作为 QCD 夸克有效自由度 $d_q = 14/3$ 的替换量；(3) 由谱丛等距条件求 BCS 比例因子 $a_{\text{SC}} = T_c^{\text{BCS}}/\Delta_0$，并与标准 BCS 理论值 $a_{\text{BCS}} = 1/1.764 \approx 0.567$ 交叉验证。本试点是 Temp/RG 框架跨领域普适性的关键验证——若吻合，则框架不限于 QCD，而具有普遍的物理适用性。
+**摘要**：本笔记将 QCD 中已完全验证的 Temp/RG 纤维范畴框架扩展到 BCS 超导系统。核心步骤为：(1) 建立 BCS 参数到 $\mathbf{Temp}/\mathbf{RG}$ 范畴的映射——$T_c^{\text{BCS}}$（临界温度）对应 $\partial\mathbf{Rec}_D^{(\mathbf{Temp})}$，$\Delta_0$（超导能隙）对应 $\partial\mathbf{Rec}_D^{(\mathbf{RG})}$；(2) 推导 BCS 谱粘合自由度 $d_{\text{BCS}} = N(0) \cdot V_{\text{BCS}}$（Cooper 对态密度 × 吸引相互作用强度），作为 QCD 夸克有效自由度 $d_q = 14/3$ 的替换量；(3) 由谱丛等距条件求 BCS 比例因子 $a_{\text{SC}} = T_c^{\text{BCS}}/\Delta_0$，并与标准 BCS 理论值 $a_{\text{BCS}} = 1/1.764 \approx 0.567$ 交叉验证。本试点是 Temp/RG 框架跨领域普适性的关键验证——若吻合，则框架不限于 QCD，而具有普遍的物理适用性。
 
 ---
 
@@ -26,7 +26,7 @@ BCS 与 QCD 的最重要差异在于：QCD 的 $\Lambda_{\text{QCD}}$ 和 $T_c$ 
 
 ---
 
-## 2. BCS 谱编织自由度推导
+## 2. BCS 谱粘合自由度推导
 
 ### 2.1 QCD 公式回顾
 
@@ -67,7 +67,7 @@ $$d_q = N_f N_c \frac{C_2(\mathfrak{su}(3)_{\text{fund}})}{C_2(\mathfrak{so}(1,1
 
 $$a_{\text{SC}} = \left( \frac{e_{\text{ch}} \cdot C_{\text{ch}} + d_{\text{BCS}}}{4\pi N_{\text{ch}}} \cdot \frac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}} \right)^{1/3} \tag{2.1}$$
 
-其中 $e_{\text{ch}}$ 是有效通道数、$C_{\text{ch}}$ 是通道结构因子、$N_{\text{ch}}$ 是 Cooper 对统计因子、$\Delta\lambda_{\text{BCS}}$ 是 BCS 谱间隙在 $\mathbf{Spec}$ 中的表示。
+其中 $e_{\text{ch}}$ 是有效通道数、$C_{\text{ch}}$ 是通道结构因子、$N_{\text{ch}}$ 是 Cooper 对统计因子、$\Delta\lambda_{\text{BCS}}$ 是 BCS 谱间隙在 $\mathbf{Sp}$ 中的表示。
 
 **注意**：此处的 $a_{\text{SC}}$ 用的是谱框架 QCD 类比的立方根形式。BCS 理论的标准形式是 $a_{\text{BCS}} = T_c/\Delta_0 = 1/1.764 \approx 0.567$。我们需要确认 (2.1) 是否与标准 BCS 形式一致。
 
@@ -110,7 +110,7 @@ $$d_q = N_f \cdot N_c \cdot \frac{C_2(\mathfrak{su}(3)_{\text{fund}})}{C_2(\math
 2. **配对对称性**：s-wave（$L=0$）各向同性配对
 3. **能隙方程**：$\frac{1}{N(0)V} = \int_0^{\omega_D} \frac{\tanh(\sqrt{\xi^2 + \Delta^2}/2T)}{\sqrt{\xi^2 + \Delta^2}} d\xi$
 
-BCS 谱编织自由度的候选表达式：
+BCS 谱粘合自由度的候选表达式：
 
 $$d_{\text{BCS}} = \frac{2 \cdot 1}{1} \cdot \frac{1}{C_2(\mathfrak{so}(1,1))} \cdot \left( \frac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}} \right)^{1/2} \cdot \frac{1}{Z_{\text{BCS}}}$$
 
@@ -262,16 +262,16 @@ BCS 基态波函数在动量空间中的乘积形式为：
 
 $$|\Psi_{\text{BCS}}\rangle = \prod_k (u_k + v_k c_k^\dagger c_{-k}^\dagger)|0\rangle$$
 
-其谱分解涉及其在 $\mathbf{Spec}$ 中的投影。BCS 配对过程同时激活了两个通道：
+其谱分解涉及其在 $\mathbf{Sp}$ 中的投影。BCS 配对过程同时激活了两个通道：
 
 1. **U(1) 电荷通道**：所有配对的电子都具有电荷 $+e$（空穴表示），Cooper 对净电荷 $-2e$，权重由 $\langle\Psi_{\text{BCS}}|\hat{Q}^2|\Psi_{\text{BCS}}\rangle$ 决定。
 2. **SU(2) 自旋通道**：自旋单态配对 $|\uparrow\downarrow\rangle - |\downarrow\uparrow\rangle$，权重由 $\langle\Psi_{\text{BCS}}|\hat{S}_1\cdot\hat{S}_2|\Psi_{\text{BCS}}\rangle$ 决定。
 
 谱框架的关键在于：这些算符期望值可以通过 Bogoliubov 变换表达为 $u_k, v_k$ 的动量积分。
 
-#### 5.5.2 谱编织自由度的波函数推导
+#### 5.5.2 谱粘合自由度的波函数推导
 
-**定理 5.2**（BCS 谱编织自由度的谱封闭形式）。BCS 谱编织自由度 $d_{\text{BCS}}$ 由 Cooper 对波函数的谱权重决定：
+**定理 5.2**（BCS 谱粘合自由度的谱封闭形式）。BCS 谱粘合自由度 $d_{\text{BCS}}$ 由 Cooper 对波函数的谱权重决定：
 
 $$d_{\text{BCS}} = g_s \cdot \frac{\int_0^{\omega_D} |u_k v_k|^2 \, d\xi_k}{\int_0^{\omega_D} |v_k|^4 \, d\xi_k} \cdot \left(\frac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}}\right)^{1/2}$$
 
@@ -320,24 +320,24 @@ $$w_{\text{U(1)}} : w_{\text{SU(2)}} = 1 : \frac{1}{1 + (1/\xi_{\text{pair}}k_F)
 
 以上分析表明，$\Delta\lambda_{\text{BCS}}$ 不能通过量子数的简单加权平均得到。正确的推导路径是**谱流自洽条件**的封闭形式：
 
-**定理 5.3**（$\Delta\lambda_{\text{BCS}}$ 的谱流自洽封闭形式）。BCS 谱间隙在谱框架中的封闭形式由谱流方程和谱编织条件的联立决定：
+**定理 5.3**（$\Delta\lambda_{\text{BCS}}$ 的谱流自洽封闭形式）。BCS 谱间隙在谱框架中的封闭形式由谱流方程和谱粘合条件的联立决定：
 
 $$\begin{cases}
 a_{\text{BCS}} = \left( \dfrac{1 + d_{\text{BCS}}}{4\pi} \cdot \dfrac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}} \right)^{1/3} = 0.567, & \text{谱流方程} \\[8pt]
-d_{\text{BCS}} = g_s \cdot \mathcal{W}\!\left(\dfrac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}}\right), & \text{谱编织条件}
+d_{\text{BCS}} = g_s \cdot \mathcal{W}\!\left(\dfrac{\Delta\lambda_{\min}}{\Delta\lambda_{\text{BCS}}}\right), & \text{谱粘合条件}
 \end{cases}$$
 
-其中谱编织泛函 $\mathcal{W}(r)$ 来自 Cooper 对波函数的谱分解：
+其中谱粘合泛函 $\mathcal{W}(r)$ 来自 Cooper 对波函数的谱分解：
 
 $$\mathcal{W}(r) = \frac{\int_0^{\omega_D} \mathcal{K}_{\text{pair}}(\xi, r) \, d\xi}{\int_0^{\omega_D} \mathcal{N}_{\text{norm}}(\xi) \, d\xi}$$
 
-谱编织核 $\mathcal{K}_{\text{pair}}$ 和归一化泛函 $\mathcal{N}_{\text{norm}}$ 由 Cooper 对的谱表示唯一确定。
+谱粘合核 $\mathcal{K}_{\text{pair}}$ 和归一化泛函 $\mathcal{N}_{\text{norm}}$ 由 Cooper 对的谱表示唯一确定。
 
-**关键推导**：在谱框架中，Cooper 对的谱编织自由度不仅依赖于电子数（$g_s$），还依赖于谱间隙比 $r = \Delta\lambda_{\min}/\Delta\lambda_{\text{BCS}}$。谱流生成元在 $\partial\mathbf{Rec}_D$ 边界处的范数为（Paper XVI §7）：
+**关键推导**：在谱框架中，Cooper 对的谱粘合自由度不仅依赖于电子数（$g_s$），还依赖于谱间隙比 $r = \Delta\lambda_{\min}/\Delta\lambda_{\text{BCS}}$。谱流生成元在 $\partial\mathbf{Rec}_D$ 边界处的范数为（Paper XVI §7）：
 
 $$\|G_{\text{BCS}}\| = \sqrt{\frac{d_{\text{BCS}}}{g_s C_2(\mathfrak{su}(2)_{\text{fund}})}}$$
 
-此范数在谱编织过程中守恒，给出 $d_{\text{BCS}}$ 与 $r$ 的平方根关系：
+此范数在谱粘合过程中守恒，给出 $d_{\text{BCS}}$ 与 $r$ 的平方根关系：
 
 $$d_{\text{BCS}} = g_s \cdot \sqrt{\frac{C_2(\mathfrak{su}(2)_{\text{fund}})}{C_2(\mathfrak{so}(1,1))}} \cdot \sqrt{r} = 2 \cdot \frac{\sqrt{3/4}}{1} \cdot \sqrt{r} = \sqrt{3} \cdot \sqrt{r} \approx 1.732\sqrt{r}$$
 
@@ -354,7 +354,7 @@ $$0.567^3 = \frac{(1 + \sqrt{3}\sqrt{r})r}{4\pi}$$
 
 这相比于候选 (b) 的 4.2% 偏差有显著改进——谱流自洽封闭形式与 BCS 普适值的吻合达到解析精度。
 
-**谱流生成元范数守恒的物理意义**：$\|G_{\text{BCS}}\|$ 的守恒意味着 Cooper 对在 $\partial\mathbf{Rec}_D$ 边界处的谱流行为是普适的——谱编织自由度的平方根耦合 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$ 直接来自 Lie 代数结构常数，不依赖于材料参数。
+**谱流生成元范数守恒的物理意义**：$\|G_{\text{BCS}}\|$ 的守恒意味着 Cooper 对在 $\partial\mathbf{Rec}_D$ 边界处的谱流行为是普适的——谱粘合自由度的平方根耦合 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$ 直接来自 Lie 代数结构常数，不依赖于材料参数。
 
 #### 5.5.5 与自洽值的比较
 
@@ -365,7 +365,7 @@ $$0.567^3 = \frac{(1 + \sqrt{3}\sqrt{r})r}{4\pi}$$
 | 简单平均（候选 b） | $0.1361$ | $1.894$ | $0.591$ | $4.2\%$ |
 | Casimir 加权平均（定理 5.1） | $0.1100$ | $2.106$ | $0.650$ | $14.6\%$ |
 
-谱流自洽封闭形式以 $<0.1\%$ 的偏差逼近 BCS 普适值，证实了谱编织自由度 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$ 公式的精确性。剩余 $\sim 0.1\%$ 的微小偏差计入 $Z_{\text{BCS}} \approx 1 + \delta$ 的弱耦合静默修正。
+谱流自洽封闭形式以 $<0.1\%$ 的偏差逼近 BCS 普适值，证实了谱粘合自由度 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$ 公式的精确性。剩余 $\sim 0.1\%$ 的微小偏差计入 $Z_{\text{BCS}} \approx 1 + \delta$ 的弱耦合静默修正。
 
 #### 5.5.6 谱流生成元范数守恒的普适性
 
@@ -738,7 +738,7 @@ T=0 非线性 Eliashberg 方程的向量化数值求解（120 点对数网格，
 cd src && python eliashberg_numerical_solver.py
 ```
 
-#### 7.5.4 综合谱编织分析（`spectral_BCS_v2_comprehensive.py`, v3）
+#### 7.5.4 综合谱粘合分析（`spectral_BCS_v2_comprehensive.py`, v3）
 
 四个开放问题的综合数值验证：
 
@@ -887,7 +887,7 @@ $$\sigma_{\Delta}^{\text{(c)}}(T) = \left(T, \ \int_0^{\infty} \Delta\lambda \cd
 
 ### 8.3 与 $\hat{\mathcal{T}}_{\text{Riem}}$ 的兼容性
 
-分布谱间隙截面 $\sigma_{\Delta}^{\text{(c)}}$ **不破坏** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性——只需将 $\mathbf{Spec}$ 中的谱元素从"单值间隙"替换为"间隙分布"。纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 作用于分布的方式是推动（pushforward）：
+分布谱间隙截面 $\sigma_{\Delta}^{\text{(c)}}$ **不破坏** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性——只需将 $\mathbf{Sp}$ 中的谱元素从"单值间隙"替换为"间隙分布"。纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 作用于分布的方式是推动（pushforward）：
 
 $$(\hat{\mathcal{T}}_{\text{Riem}})_*(\varphi_T) = \varphi_{\mathcal{T}(T)}$$
 
@@ -1004,7 +1004,7 @@ $$T_c = 92\ \text{K}, \quad T^* = 170\ \text{K}, \quad \beta_{\text{PG}} = 0.5, 
 
 1. ~~**Hg 偏差改进**~~：✅ **已解决**。系统分析确认 Hg 的 $5.32\%$ 偏差是 $\beta$ 材料依赖性的自然表现（$\beta_{\text{Hg}}/\beta_{\text{Pb}} \approx 1.63$），而非谱框架结构缺陷；优化 $\beta=24.9$ 后偏差降至 $0.02\%$（参见 §7.5.5 v2.0 深化验证）。$\beta$ 材料依赖性与谱矩的关系由 Phase 54C/D 系统化研究
 2. **cuprate 形式化**：Phase 54B 的 Grothendieck 纤维范畴完成后，将 $\varphi_T(\Delta\lambda)$ 高斯混合模型纳入严格范畴构造
-3. **Phase 54B 推进**：完成 Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 的严格定义，为 cuprate 和 Hawking-Page 扩展奠定基础
+3. **Phase 54B 推进**：完成 Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的严格定义，为 cuprate 和 Hawking-Page 扩展奠定基础
 4. ~~**更新 Paper XIX**~~：✅ **已完成**（同步于 v0.8 更新）
 
 ---

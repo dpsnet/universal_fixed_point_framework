@@ -8,11 +8,11 @@ AdS/CFT 对应是全息原理最重要的具体实现。谱版本将 $A_{\text{G
 
 $$\partial(\text{AdS}_{\text{spec}}) = \left\{ \Lambda = \Lambda_{\max} \right\},$$
 
-其中 $\Lambda$ 是谱 RG 标度，$\Lambda_{\max} = M_{\text{Pl}}$ 是谱截断。该边界是 $\mathbf{Spec}$ 范畴中的谱边界，而非几何边界。
+其中 $\Lambda$ 是谱 RG 标度，$\Lambda_{\max} = M_{\text{Pl}}$ 是谱截断。该边界是 $\mathbf{Sp}$ 范畴中的谱边界，而非几何边界。
 
 谱 bulk 算符 $A_{\text{bulk}}$ 作用于谱 bulk Hilbert 空间 $\mathcal{H}_{\text{bulk}}$：
 
-$$A_{\text{bulk}} \in \mathbf{Spec}(\mathcal{H}_{\text{bulk}}), \quad A_{\text{bulk}} = \sum_i \lambda_i P_i^{\text{bulk}}.$$
+$$A_{\text{bulk}} \in \mathbf{Sp}(\mathcal{H}_{\text{bulk}}), \quad A_{\text{bulk}} = \sum_i \lambda_i P_i^{\text{bulk}}.$$
 
 ## 谱全息字典
 

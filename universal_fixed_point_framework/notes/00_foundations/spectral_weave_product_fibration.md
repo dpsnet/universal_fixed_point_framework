@@ -1,10 +1,10 @@
-# 谱编织乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 的 Grothendieck 纤维化
+# 谱粘合乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 的 Grothendieck 纤维化
 
 **版本**：v0.2（2026-07-23）
 
-**摘要**：本笔记将温度-标度对偶 $(T,\mu)$ 提升为乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 上的 Grothendieck 纤维范畴，构造谱编织总丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$。核心结构包括：(1) 乘积基上的投影 $\pi_{T,\mu}$ 是分裂 Grothendieck 纤维化；(2) 沿 $\partial\mathbf{Rec}_D$ 的粘合条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 精确化为拉回方图；(3) $\mathbf{Bun}(\mathbf{Temp})$ 和 $\mathbf{Bun}(\mathbf{RG})$ 作为两坐标方向的拉回丛出现。v0.2 新增四个深化方向：(4) **对角子范畴** $\mathbf{Diag}$——态射 $(f, \mathcal{T}(f))$ 的对角线子范畴；(5) **谱编织自然变换** $\theta$——沿对角线的拉回函子间的编织同构；(6) **$\hat{\mathcal{T}}_{\text{Riem}}$ 乘积基延拓**；(7) **参数化谱编织截面** $WeaveSection$。
+**摘要**：本笔记将温度-标度对偶 $(T,\mu)$ 提升为乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 上的 Grothendieck 纤维范畴，构造谱粘合总丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$。核心结构包括：(1) 乘积基上的投影 $\pi_{T,\mu}$ 是分裂 Grothendieck 纤维化；(2) 沿 $\partial\mathbf{Rec}_D$ 的粘合条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 精确化为拉回方图；(3) $\mathbf{Bun}(\mathbf{Temp})$ 和 $\mathbf{Bun}(\mathbf{RG})$ 作为两坐标方向的拉回丛出现。v0.2 新增四个深化方向：(4) **对角子范畴** $\mathbf{Diag}$——态射 $(f, \mathcal{T}(f))$ 的对角线子范畴；(5) **谱粘合自然变换** $\theta$——沿对角线的拉回函子间的编织同构；(6) **$\hat{\mathcal{T}}_{\text{Riem}}$ 乘积基延拓**；(7) **参数化谱粘合截面** $WeaveSection$。
 
-**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（$\pi_T$/$\pi_\mu$ 模板）、[`spectral_BCS_weave.md`](../../notes/02_superconductivity/spectral_BCS_weave.md)（谱编织物理）、`TempRGFiber.lean`（形式化基础）、`WeaveProductFiber.lean`（本笔记的形式化实现）。
+**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（$\pi_T$/$\pi_\mu$ 模板）、[`spectral_BCS_weave.md`](../../notes/02_superconductivity/spectral_BCS_weave.md)（谱粘合物理）、`TempRGFiber.lean`（形式化基础）、`WeaveProductFiber.lean`（本笔记的形式化实现）。
 
 ---
 
@@ -52,18 +52,18 @@ noncomputable def ι_μ (T₀ : TempObj) : RGObj ⥤ TempRGObj := ...
 
 ---
 
-## 2. 乘积谱丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$
+## 2. 乘积谱丛 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$
 
 ### 2.1 纤维范畴
 
-**定义 2.1**（纤维数据）。对每个底点 $(T, \mu) \in \mathbf{Temp} \times \mathbf{RG}$，纤维 $\mathbf{Spec}_{(T,\mu)}$ 包含在该点处的谱信息。在有限原型中，纤维由谱矩阵 $A \in M_n(\mathbb{C})$ 表示：
-$$\mathbf{Spec}_{(T,\mu)} \ni (n, A)$$
+**定义 2.1**（纤维数据）。对每个底点 $(T, \mu) \in \mathbf{Temp} \times \mathbf{RG}$，纤维 $\mathbf{Sp}_{(T,\mu)}$ 包含在该点处的谱信息。在有限原型中，纤维由谱矩阵 $A \in M_n(\mathbb{C})$ 表示：
+$$\mathbf{Sp}_{(T,\mu)} \ni (n, A)$$
 其中 $n$ 是矩阵维数，$A$ 是谱表示矩阵。
 
 ### 2.2 总范畴
 
-**定义 2.2**（总范畴 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$）。
-- **对象**：$((T, \mu), (n, A))$，其中 $(T, \mu) \in \mathbf{Temp} \times \mathbf{RG}$，$(n, A) \in \mathbf{Spec}_{(T,\mu)}$
+**定义 2.2**（总范畴 $\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$）。
+- **对象**：$((T, \mu), (n, A))$，其中 $(T, \mu) \in \mathbf{Temp} \times \mathbf{RG}$，$(n, A) \in \mathbf{Sp}_{(T,\mu)}$
 - **态射** $(f, g, \phi): ((T_1, \mu_1), (n_1, A_1)) \to ((T_2, \mu_2), (n_2, A_2))$：
   - $f: T_1 \to T_2$（温度态射）
   - $g: \mu_1 \to \mu_2$（RG 态射）
@@ -72,7 +72,7 @@ $$\mathbf{Spec}_{(T,\mu)} \ni (n, A)$$
 
 ### 2.3 投影函子
 
-**定义 2.3**（投影 $\pi_{T,\mu}$）。$\pi_{T,\mu}: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec}) \to \mathbf{Temp} \times \mathbf{RG}$ 定义为：
+**定义 2.3**（投影 $\pi_{T,\mu}$）。$\pi_{T,\mu}: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp}) \to \mathbf{Temp} \times \mathbf{RG}$ 定义为：
 $$\pi_{T,\mu}((T, \mu), (n, A)) = (T, \mu),\quad \pi_{T,\mu}(f, g, \phi) = (f, g)$$
 
 ### 2.4 Grothendieck 纤维化
@@ -86,8 +86,8 @@ $$\widetilde{X} = ((T, \mu), (n, A))$$
 ### 2.5 拉回丛
 
 **命题 2.1**（坐标拉回）。存在拉回函子：
-$$\iota_T^*: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$$
-$$\iota_\mu^*: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$$
+$$\iota_T^*: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$$
+$$\iota_\mu^*: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$$
 
 分别沿 $\iota_T$（固定 $\mu = \mu_0$）和 $\iota_\mu$（固定 $T = T_0$）。
 
@@ -118,25 +118,25 @@ noncomputable instance π_Tμ_fibration : GrothendieckFibration π_Tμ := ...
 
 ### 3.1 物理背景
 
-谱编织约束是沿 $\partial\mathbf{Rec}_D$（退化边界）的粘合条件。物理上，$\partial\mathbf{Rec}_D$ 是谱间隙闭合的临界边界。在该边界上，温度-标度对偶 $(T, \mu)$ 的两个坐标退化为同一物理点：
+谱粘合约束是沿 $\partial\mathbf{Rec}_D$（退化边界）的粘合条件。物理上，$\partial\mathbf{Rec}_D$ 是谱间隙闭合的临界边界。在该边界上，温度-标度对偶 $(T, \mu)$ 的两个坐标退化为同一物理点：
 $$(T_c^{\text{QCD}}, 0) \sim (0, \Lambda_{\text{QCD}}) \in \partial\mathbf{Rec}_D$$
 
 即：临界温度 $T_c$ 处的温度截面与 QCD 标度 $\Lambda_{\text{QCD}}$ 处的 RG 截面在谱意义下等价。
 
-### 3.2 谱编织等式
+### 3.2 谱粘合等式
 
-**定义 3.1**（谱编织等式）。谱编织约束是沿 $\partial\mathbf{Rec}_D$ 的等式：
+**定义 3.1**（谱粘合等式）。谱粘合约束是沿 $\partial\mathbf{Rec}_D$ 的等式：
 $$S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$$
-其中 $S_{\text{spec}}$ 是谱编织截面。
+其中 $S_{\text{spec}}$ 是谱粘合截面。
 
 ### 3.3 拉回方图
 
 在纤维范畴语言中，这意味着以下拉回方图交换：
 $$
 \begin{CD}
-\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec}) @>{\iota_\mu^*}>> \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \\
+\mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp}) @>{\iota_\mu^*}>> \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \\
 @V{\iota_T^*}VV @VV{S_\Delta^{(\text{QCD})}}V \\
-\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) @>>{S_\Delta^{(\text{BCS})}}> \mathbf{Spec}
+\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) @>>{S_\Delta^{(\text{BCS})}}> \mathbf{Sp}
 \end{CD}
 $$
 
@@ -144,7 +144,7 @@ $$
 
 ### 3.4 粘合条件的范畴表述
 
-**定理 3.1**（粘合等价）。对任意 $X \in \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$，若 $X$ 的底点在 $\partial\mathbf{Rec}_D$ 上，则以下两拉回在 $T\hat{\mathcal{T}}_{\text{Riem}}$ 的意义下等价：
+**定理 3.1**（粘合等价）。对任意 $X \in \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$，若 $X$ 的底点在 $\partial\mathbf{Rec}_D$ 上，则以下两拉回在 $T\hat{\mathcal{T}}_{\text{Riem}}$ 的意义下等价：
 $$T\hat{\mathcal{T}}_{\text{Riem}}\big(\iota_T^*(X)\big) \cong \iota_\mu^*(X)$$
 
 当纤维数据为 Cl(1,7) 间隙矩阵时，该同构是严格的等式。
@@ -153,7 +153,7 @@ $$T\hat{\mathcal{T}}_{\text{Riem}}\big(\iota_T^*(X)\big) \cong \iota_\mu^*(X)$$
 
 ### 3.5 物理诠释
 
-谱编织约束的物理意义是：在 $\partial\mathbf{Rec}_D$ 边界上，温度效应（改变 $T$）和 RG 效应（改变 $\mu$）不再是独立的——它们通过谱间隙闭合条件耦合在一起。正是这种耦合产生了从 QCD 到 BCS 的跨领域普适性。
+谱粘合约束的物理意义是：在 $\partial\mathbf{Rec}_D$ 边界上，温度效应（改变 $T$）和 RG 效应（改变 $\mu$）不再是独立的——它们通过谱间隙闭合条件耦合在一起。正是这种耦合产生了从 QCD 到 BCS 的跨领域普适性。
 
 ### 3.6 Lean 形式化
 
@@ -190,7 +190,7 @@ theorem weave_gluing_square (T₀ : TempObj) (μ₀ : RGObj) (X : SpectralBundle
 
 ### 4.3 物理意义
 
-$\partial\mathbf{Rec}_D$ 是 $\mathbf{Diag}$ 的一个子集（退化边界）。物理上，对角条件 $\mu = \mathcal{T}(T)$ 正是谱编织约束——在该边界上温度标度与 RG 标度不再是独立的自由参数，而是通过 $\mathcal{T}$ 函子相关的两个坐标。谱编织正是沿该边界的信息保持条件。
+$\partial\mathbf{Rec}_D$ 是 $\mathbf{Diag}$ 的一个子集（退化边界）。物理上，对角条件 $\mu = \mathcal{T}(T)$ 正是谱粘合约束——在该边界上温度标度与 RG 标度不再是独立的自由参数，而是通过 $\mathcal{T}$ 函子相关的两个坐标。谱粘合正是沿该边界的信息保持条件。
 
 ### 4.4 Lean 形式化
 
@@ -207,11 +207,11 @@ noncomputable def diagProjection : DiagObj ⥤ TempObj := ...
 
 ---
 
-## 5. 谱编织自然变换 $\theta$（方向 2）
+## 5. 谱粘合自然变换 $\theta$（方向 2）
 
 ### 5.1 核心恒等式
 
-**定理 5.1**（对角编织恒等式）。对于 $X \in \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$，若 $X$ 的底点在对角线上（$\mu = \mathcal{T}(T)$），则：
+**定理 5.1**（对角编织恒等式）。对于 $X \in \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$，若 $X$ 的底点在对角线上（$\mu = \mathcal{T}(T)$），则：
 $$\hat{\mathcal{T}}_{\text{Riem}}\big(\iota_T^*(X)\big) = \iota_\mu^*(X)$$
 其中 $\iota_T: \mathbf{Temp} \hookrightarrow \mathbf{Temp} \times \mathbf{RG}$ 和 $\iota_\mu: \mathbf{RG} \hookrightarrow \mathbf{Temp} \times \mathbf{RG}$ 是坐标嵌入。
 
@@ -235,7 +235,7 @@ T_hat_Riem(ι_T*(Y)) -- θ_Y --> ι_μ*(Y)
 
 ### 5.3 编织方图交换
 
-谱编织拉回方图交换条件严格表述为：
+谱粘合拉回方图交换条件严格表述为：
 $$\sigma_{\text{BCS}} \circ \pi_T \circ \iota_T^* = \sigma_{\text{QCD}} \circ \pi_\mu \circ \iota_\mu^*$$
 
 在对角线上成立（形式化见 `weave_square_commutes`）。
@@ -262,7 +262,7 @@ theorem weave_square_commutes (T₀ : TempObj) (X : SpectralBundleProd)
 
 ### 6.1 延拓函子
 
-**定义 6.1**（延拓 $\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}$）。$\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$ 定义为：
+**定义 6.1**（延拓 $\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}$）。$\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}: \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$ 定义为：
 - **对象**：$((T, \mu), (n, A)) \mapsto ((\mathcal{T}(T), \mu), (n, A))$
 - **态射**：$(f, g, \phi) \mapsto (\mathcal{T}(f), g, \phi)$
 
@@ -277,7 +277,7 @@ theorem weave_square_commutes (T₀ : TempObj) (X : SpectralBundleProd)
 
 ### 6.3 与原始 $\hat{\mathcal{T}}_{\text{Riem}}$ 的关系
 
-原始 $\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 是 $\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}$ 沿 $\iota_T$ 的限制。对任意 $T$：
+原始 $\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 是 $\hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}$ 沿 $\iota_T$ 的限制。对任意 $T$：
 $$\hat{\mathcal{T}}_{\text{Riem}} \circ \iota_T^* = \iota_T^* \circ \hat{\mathcal{T}}_{\text{Riem}}^{\text{prod}}$$
 
 ### 6.4 Lean 形式化
@@ -293,12 +293,12 @@ theorem T_hat_Riem_prod_diag_commutes (T₀ : TempObj) (X : SpectralBundleProd) 
 
 ---
 
-## 7. 参数化谱编织截面（方向 4）
+## 7. 参数化谱粘合截面（方向 4）
 
 ### 7.1 截面结构体
 
-**定义 7.1**（$WeaveSection$）。$\mathbf{Temp} \times \mathbf{RG}$ 上的谱编织截面是一个对 $(\sigma, \text{is\_section})$：
-- $\sigma: \mathbf{Temp} \times \mathbf{RG} \to \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Spec})$ 是函子
+**定义 7.1**（$WeaveSection$）。$\mathbf{Temp} \times \mathbf{RG}$ 上的谱粘合截面是一个对 $(\sigma, \text{is\_section})$：
+- $\sigma: \mathbf{Temp} \times \mathbf{RG} \to \mathbf{Bun}(\mathbf{Temp} \times \mathbf{RG}, \mathbf{Sp})$ 是函子
 - $\pi_{T\mu} \circ \sigma = \text{id}_{\mathbf{Temp} \times \mathbf{RG}}$（截面条件）
 
 ### 7.2 常量截面
@@ -321,14 +321,14 @@ $$\sigma_{\text{const}}(T, \mu) = ((T, \mu), A_{17})$$
 **构造 7.3**（$paramWeaveSection$）。对任意 $n \in \mathbb{N}$ 和矩阵 $A \in M_n(\mathbb{C})$ 满足 $A^2 = A$（幂等性），可构造截面 $\sigma_{n,A}$：
 $$\sigma_{n,A}(T, \mu) = ((T, \mu), (n, A))$$
 
-幂等性 $A^2 = A$ 保证纤维映射的恒等性满足交换条件。这允许将谱编织框架扩展到非 Cl(1,7) 系统。
+幂等性 $A^2 = A$ 保证纤维映射的恒等性满足交换条件。这允许将谱粘合框架扩展到非 Cl(1,7) 系统。
 
 ### 7.4 对角闭包
 
 **定理 7.1**（对角闭包）。常量截面在对角线上满足闭包条件：
 $$\iota_T^* \circ \sigma_{\text{const}} = \iota_\mu^* \circ \sigma_{\text{const}} \quad\text{当}\quad \mu = \mathcal{T}(T)$$
 
-这连接了谱编织截面形式主义和 BCS 谱流自洽方程（`WeaveBCS.lean`）：谱间隙比 $r = \Delta\lambda_{\min}/\Delta\lambda_{\text{BCS}}$ 由自洽方程 $a_{\text{BCS}}^3 \cdot 4\pi = (1 + \sqrt{3}\sqrt{r})\cdot r$ 唯一确定，给出 $\Delta\lambda_{\text{BCS}} = 0.1396$，$a \approx 0.567$（偏差 $<0.1\%$）。
+这连接了谱粘合截面形式主义和 BCS 谱流自洽方程（`WeaveBCS.lean`）：谱间隙比 $r = \Delta\lambda_{\min}/\Delta\lambda_{\text{BCS}}$ 由自洽方程 $a_{\text{BCS}}^3 \cdot 4\pi = (1 + \sqrt{3}\sqrt{r})\cdot r$ 唯一确定，给出 $\Delta\lambda_{\text{BCS}} = 0.1396$，$a \approx 0.567$（偏差 $<0.1\%$）。
 
 ### 7.5 推前截面
 
@@ -380,7 +380,7 @@ BCS 谱流自洽方程
 
 ### 8.2 跨领域普适性
 
-谱编织乘积基的形式化统一了四种物理系统：
+谱粘合乘积基的形式化统一了四种物理系统：
 
 | 系统 | 基空间 | 编织截面 | 拉回沿 | 临界现象 |
 |:----|:------|:--------|:------|:--------|
@@ -407,13 +407,13 @@ BCS 谱流自洽方程
 | **§4** | **对角子范畴** | `DiagObj`, `DiagHom`, `diagEmbedding`, `isDiag` | **`WeaveProductFiber.lean` §7** |
 | **§5** | **编织自然变换** | `diag_weave_via_T_hat_Riem`, `weave_naturality`, `weave_square_commutes` | **`WeaveProductFiber.lean` §8** |
 | **§6** | **𝒯 延拓** | `T_hat_Riem_prod`, `T_hat_Riem_prod_diag_commutes` | **`WeaveProductFiber.lean` §9** |
-| **§7** | **谱编织截面** | `WeaveSection`, `constWeaveSection`, `paramWeaveSection`, `BCS_weave_restricts_to_diag` | **`WeaveProductFiber.lean` §10** |
+| **§7** | **谱粘合截面** | `WeaveSection`, `constWeaveSection`, `paramWeaveSection`, `BCS_weave_restricts_to_diag` | **`WeaveProductFiber.lean` §10** |
 
 ### 9.2 文件变更
 
 - `WeaveProductFiber.lean`：从 201 行（v0.1）扩展至 474 行（v0.2），新增 §7-§10
 - 构建状态：**`lake build` 通过**（2452 jobs, 0 error）
-- 新增依赖：`WeaveBCS.lean`（BCS 谱编织形式化）
+- 新增依赖：`WeaveBCS.lean`（BCS 谱粘合形式化）
 
 ### 9.3 构建命令
 
@@ -428,5 +428,5 @@ lake build
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
-| **v0.2** | **2026-07-23** | **完整重写 §1-§3**：补全乘积基范畴（§1 完整数学内容）、乘积谱丛与 Grothendieck 纤维化（§2 含拉回丛）、∂Rec_D 粘合条件（§3 含拉回方图与物理诠释）；**新增 §4-§7**：对角子范畴（DiagObj + isDiag + diagEmbedding）、谱编织自然变换（diag_weave_via_T_hat_Riem + weave_naturality + weave_square_commutes）、T_hat_Riem_prod 延拓、参数化谱编织截面（WeaveSection + constWeaveSection + paramWeaveSection）；**新增 §8** 理论图景与跨领域普适性表；**新增 §9** 完整形式化对照表；Lean 全部通过 `lake build` |
-| **v0.1** | **2026-07-22** | 初始版本：乘积基定义；谱编织总范畴；$\partial\mathbf{Rec}_D$ 粘合条件；拉回方图；Lean 形式化方案 |
+| **v0.2** | **2026-07-23** | **完整重写 §1-§3**：补全乘积基范畴（§1 完整数学内容）、乘积谱丛与 Grothendieck 纤维化（§2 含拉回丛）、∂Rec_D 粘合条件（§3 含拉回方图与物理诠释）；**新增 §4-§7**：对角子范畴（DiagObj + isDiag + diagEmbedding）、谱粘合自然变换（diag_weave_via_T_hat_Riem + weave_naturality + weave_square_commutes）、T_hat_Riem_prod 延拓、参数化谱粘合截面（WeaveSection + constWeaveSection + paramWeaveSection）；**新增 §8** 理论图景与跨领域普适性表；**新增 §9** 完整形式化对照表；Lean 全部通过 `lake build` |
+| **v0.1** | **2026-07-22** | 初始版本：乘积基定义；谱粘合总范畴；$\partial\mathbf{Rec}_D$ 粘合条件；拉回方图；Lean 形式化方案 |

@@ -4,11 +4,11 @@
 
 **版本**：v2.0（2026-07-18）
 
-**摘要**：本文在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），并以此为基础将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序、规范理论（BRST/鬼场/Ward 恒等式）、手性费米子（Weyl/ABJ 反常/反常消去）和完整标准模型逐一翻译为谱语言。A1–A7 并非为 QFT 翻译临时引入的假设，而是 $\mathbf{Spec}$ 范畴已有结构的 QFT 语境化：A1（谱场存在公理）来自 $\mathbf{Spec}$ 范畴定义（Paper I），A2（谱传播子公理）来自谱去递归化函子 $D$ 的 Green 函数结构，A3（谱相互作用公理）来自态射复合，A4（谱路径积分公理）来自谱对象的泛函积分测度，A5（谱截断正则化公理）来自 $A_\phi$ 的谱有界性，A6（谱重整化公理）来自谱流的尺度变换，A7（谱 Lorentz 协变公理）来自 $\mathbf{Spec}$ 自同构群。核心结果包括：(1) 谱路径积分的 Gaussian 精确性与谱截断 $\Lambda_{\max}$ 提供的自然 UV 正则化；(2) 谱 $\lambda\phi^4$ 单圈 $\beta$ 函数 $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ 的精确数值验证；(3) BRST 幂零性 $s^2=0$ 在 $\mathbf{Spec}$ 范畴 $\mathbb{Z}_2$ 分级下的保持；(4) SM 全部四种反常（$U(1)^3$、$\text{grav}-U(1)$、$[SU(2)]^2U(1)$、$[SU(3)]^3$）的谱消去验证；(5) 电弱对称性破缺质量预测与实验值匹配 ($W$: 0.23%, $Z$: 0.27%, $h$: 0.12%)；(6) 三圈规范耦合 $\beta$ 函数系数与标准 QFT 一致（$b_1^{\text{SU(3)}}=7$, $b_1^{\text{SU(2)}}=19/6$, $b_1^{\text{U(1)}}=41/10$）；(7) 谱 QFT 形式化（谱规范的 LSZ 公式、S 矩阵幺正性的完备谱证明）；(8) **强 CP 问题的第一原理解**——$\theta_{\text{QCD}}=0$ 由谱生成元自伴性直接导出（§7.5），无需轴子或额外对称性；(9) **PMNS $\theta_{13}$ 的谱起源**——通过带电轻子–中微子 Yukawa 谱算符在双重 Higgs 耦合下的基旋转给出 $\sin\theta_{13}\approx 0.011$，量级与实验一致（§8.6）。所有理论预测均通过数值验证（6 脚本合计 36/36 检查通过），确立了谱 QFT 作为标准 QFT 的等价但自洽的 $\mathbf{Spec}$ 范畴表述。**附录 D 提供了完整的 29 参数谱覆盖审计：15/29（52%）实现严格的零参数第一原理预测，29/29（100%）全部覆盖，无一参数遗漏。**
+**摘要**：本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），并以此为基础将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序、规范理论（BRST/鬼场/Ward 恒等式）、手性费米子（Weyl/ABJ 反常/反常消去）和完整标准模型逐一翻译为谱语言。A1–A7 并非为 QFT 翻译临时引入的假设，而是 $\mathbf{Sp}$ 范畴已有结构的 QFT 语境化：A1（谱场存在公理）来自 $\mathbf{Sp}$ 范畴定义（Paper I），A2（谱传播子公理）来自谱化函子 $D$ 的 Green 函数结构，A3（谱相互作用公理）来自态射复合，A4（谱路径积分公理）来自谱对象的泛函积分测度，A5（谱截断正则化公理）来自 $A_\phi$ 的谱有界性，A6（谱重整化公理）来自谱流的尺度变换，A7（谱 Lorentz 协变公理）来自 $\mathbf{Sp}$ 自同构群。核心结果包括：(1) 谱路径积分的 Gaussian 精确性与谱截断 $\Lambda_{\max}$ 提供的自然 UV 正则化；(2) 谱 $\lambda\phi^4$ 单圈 $\beta$ 函数 $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ 的精确数值验证；(3) BRST 幂零性 $s^2=0$ 在 $\mathbf{Sp}$ 范畴 $\mathbb{Z}_2$ 分级下的保持；(4) SM 全部四种反常（$U(1)^3$、$\text{grav}-U(1)$、$[SU(2)]^2U(1)$、$[SU(3)]^3$）的谱消去验证；(5) 电弱对称性破缺质量预测与实验值匹配 ($W$: 0.23%, $Z$: 0.27%, $h$: 0.12%)；(6) 三圈规范耦合 $\beta$ 函数系数与标准 QFT 一致（$b_1^{\text{SU(3)}}=7$, $b_1^{\text{SU(2)}}=19/6$, $b_1^{\text{U(1)}}=41/10$）；(7) 谱 QFT 形式化（谱规范的 LSZ 公式、S 矩阵幺正性的完备谱证明）；(8) **强 CP 问题的第一原理解**——$\theta_{\text{QCD}}=0$ 由谱生成元自伴性直接导出（§7.5），无需轴子或额外对称性；(9) **PMNS $\theta_{13}$ 的谱起源**——通过带电轻子–中微子 Yukawa 谱算符在双重 Higgs 耦合下的基旋转给出 $\sin\theta_{13}\approx 0.011$，量级与实验一致（§8.6）。所有理论预测均通过数值验证（6 脚本合计 36/36 检查通过），确立了谱 QFT 作为标准 QFT 的等价但自洽的 $\mathbf{Sp}$ 范畴表述。**附录 D 提供了完整的 29 参数谱覆盖审计：15/29（52%）实现严格的零参数第一原理预测，29/29（100%）全部覆盖，无一参数遗漏。**
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D \dashv R$）。数值代码见 `paperX_spectral_*.py`（共 6 核心脚本 §1.4，合计 36/36 检查通过）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `paperX_spectral_*.py`（共 6 核心脚本 §1.4，合计 36/36 检查通过）。
 
 ---
 
@@ -20,7 +20,7 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 ### 1.2 核心论题
 
-> **论题 1**（谱 QFT 等价性定理）。标准 QFT 的每个核心构造——拉格朗日量、Feynman 规则、路径积分、重整化、规范对称性、反常消去——均可逐项翻译为 $\mathbf{Rec}/\mathbf{Spec}$ 范畴语言，且翻译后的谱版本在数值上还原标准 QFT 的所有已知结果。
+> **论题 1**（谱 QFT 等价性定理）。标准 QFT 的每个核心构造——拉格朗日量、Feynman 规则、路径积分、重整化、规范对称性、反常消去——均可逐项翻译为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言，且翻译后的谱版本在数值上还原标准 QFT 的所有已知结果。
 
 ### 1.3 论文结构
 
@@ -54,7 +54,7 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 ### 1.5 SM 参数的谱根因结构
 
-全部 29 个 SM + 中微子扩展参数收敛于三个独立的纯数学结构，每一个均为 $\mathbf{Rec}/\mathbf{Spec}$ 范畴的固有推论，无需外部输入：
+全部 29 个 SM + 中微子扩展参数收敛于三个独立的纯数学结构，每一个均为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴的固有推论，无需外部输入：
 
 **(1) Spec 4-范畴静默层级 → 费米子质量与 Higgs VEV**。Strict 4-范畴的 coherence 条件导出态射静默因子 $S_3 = e^{-3}$ 与 $S_4 = e^{-d_H}$（$d_H = 2.71$ 为谱分形维数）。IFS 三深度收缩比为 $c_1 : c_2 : c_3 = S_3S_4 : S_4 : 1$，代入 Moran 方程得质量标度：
 
@@ -68,7 +68,7 @@ $$\lambda_3 : \lambda_2 : \lambda_1 = 1 : \frac34 : \frac{9}{20}$$
 
 经四层谱静默 $Z$-因子修正（$Z_1=3.67, Z_2=2.12, Z_3=1.44$）后，三圈 RGE 跑动至 $M_Z$ 给出 $\alpha_3^{-1}(M_Z)=8.7$（偏差 2.4%）、$\alpha^{-1}(M_Z)=127.95$（偏差 0.04%）、$\sin^2\theta_W(M_Z)=0.2312$（偏差 1.3%）。
 
-**(3) Yukawa 特征基重叠 → CKM/PMNS 混合角**。上/下型 Yukawa 谱算符在 $\mathbf{Spec}$ 中的特征基旋转由 $\mathbf{Rec}$ 范畴的纤维-基伴随结构控制。三族纤维间的相对倾斜角 $\theta_{ij} = \arccos(\langle \varphi_i^u | \varphi_j^d \rangle)$ 直接给出 CKM 矩阵的 $|V_{us}| \approx e^{-N_{\text{gen}}/3} \approx 0.22$、$|V_{cb}| \approx 0.041$、$|V_{ub}| \approx 0.0035$。PMNS 角来自带电轻子-中微子 Yukawa 谱算符在双重 Higgs 耦合下的纤维基旋转，给出 $\sin\theta_{13} \approx 0.011$（量级与实验一致）。
+**(3) Yukawa 特征基重叠 → CKM/PMNS 混合角**。上/下型 Yukawa 谱算符在 $\mathbf{Sp}$ 中的特征基旋转由 $\mathbf{Rec}$ 范畴的纤维-基伴随结构控制。三族纤维间的相对倾斜角 $\theta_{ij} = \arccos(\langle \varphi_i^u | \varphi_j^d \rangle)$ 直接给出 CKM 矩阵的 $|V_{us}| \approx e^{-N_{\text{gen}}/3} \approx 0.22$、$|V_{cb}| \approx 0.041$、$|V_{ub}| \approx 0.0035$。PMNS 角来自带电轻子-中微子 Yukawa 谱算符在双重 Higgs 耦合下的纤维基旋转，给出 $\sin\theta_{13} \approx 0.011$（量级与实验一致）。
 
 谱生成元的自伴性 $A = A^{\dagger}$ 在此基础上直接导出 $\theta_{\text{QCD}} = 0$——强 CP 问题无需轴子或额外对称性即被自然解除。
 
@@ -78,7 +78,7 @@ $$\lambda_3 : \lambda_2 : \lambda_1 = 1 : \frac34 : \frac{9}{20}$$
 
 ### 2.1 A1：谱场存在公理
 
-**定义 2.1**。对每个量子场 $\phi(x)$，存在对应的谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Spec}$，其中 $\mathcal{H}_\phi$ 是场的 Hilbert 空间，$A_\phi$ 是谱算子（谱生成元），$\sigma(A_\phi) \subset \mathbb{R}$ 是 $A_\phi$ 的谱。自由谱场的谱作用量为：
+**定义 2.1**。对每个量子场 $\phi(x)$，存在对应的谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Sp}$，其中 $\mathcal{H}_\phi$ 是场的 Hilbert 空间，$A_\phi$ 是谱算子（谱生成元），$\sigma(A_\phi) \subset \mathbb{R}$ 是 $A_\phi$ 的谱。自由谱场的谱作用量为：
 
 $$S_{\text{free}}^{\text{spec}}[\Phi] = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda).$$
 
@@ -128,13 +128,13 @@ $$\beta(\lambda_R) = \frac{3\lambda_R^2}{16\pi^2}.$$
 | 重整化程序（cutoff + counter-term） | A5+A6：谱截断 + 谱减除 |
 | Lorentz 协变性 $\phi(\Lambda x) = U(\Lambda)\phi(x)U(\Lambda)^{-1}$ | A7：谱 Lorentz 协变公理 |
 
-这一对应表明 A1–A7 并非为 QFT 翻译临时引入的新假设，而是 $\mathbf{Spec}$ 范畴已有结构在 QFT 语境中的具体实例化。
+这一对应表明 A1–A7 并非为 QFT 翻译临时引入的新假设，而是 $\mathbf{Sp}$ 范畴已有结构在 QFT 语境中的具体实例化。
 
 ### 2.8 A7：谱 Lorentz 协变公理
 
-**定义 2.7**（A7：谱 Lorentz 协变公理）。Lorentz 群 $SO^+(1,3)$（或全 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$）在 $\mathbf{Spec}$ 范畴中通过函子作用构成谱自同构：
+**定义 2.7**（A7：谱 Lorentz 协变公理）。Lorentz 群 $SO^+(1,3)$（或全 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$）在 $\mathbf{Sp}$ 范畴中通过函子作用构成谱自同构：
 
-$$L: \mathcal{P}_+^\uparrow \longrightarrow \operatorname{Aut}(\mathbf{Spec}),\quad L(\Lambda): (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \mapsto (\mathcal{H}_\phi^\Lambda, A_\phi^\Lambda, \sigma(A_\phi^\Lambda)),$$
+$$L: \mathcal{P}_+^\uparrow \longrightarrow \operatorname{Aut}(\mathbf{Sp}),\quad L(\Lambda): (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \mapsto (\mathcal{H}_\phi^\Lambda, A_\phi^\Lambda, \sigma(A_\phi^\Lambda)),$$
 
 其中 $\Lambda \in SO^+(1,3)$ 是任一 proper 正时 Lorentz 变换。谱场 $\Phi(\lambda)$ 在 Lorentz 变换下的变换法则由幺正实现 $U(\Lambda)$ 给出：
 
@@ -171,7 +171,7 @@ $$\mathcal{D}_{\text{Spec}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\
 
 因为谱测量 $\sigma(A_\phi)$ 在 Lorentz 变换下不变，且变换的 Jacobian 行列式为 $1$。
 
-> **注释 2.1**。A7 与 A1–A6 的关系：A1 保证了谱对象的存在性，A7 进一步要求这些对象承载 Lorentz 群的表示。两者结合确保了 $\mathbf{Spec}$ 范畴能够充分编码相对论性量子场论的时空对称性。
+> **注释 2.1**。A7 与 A1–A6 的关系：A1 保证了谱对象的存在性，A7 进一步要求这些对象承载 Lorentz 群的表示。两者结合确保了 $\mathbf{Sp}$ 范畴能够充分编码相对论性量子场论的时空对称性。
 
 ### 2.9 谱 Dyson 级数与谱 $\beta$ 函数定理
 
@@ -256,7 +256,7 @@ $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ 通过裸耦合有限差分精确匹
 
 ### 6.2 BRST 幂零性
 
-BRST 算子 $s$ 满足 $s^2 = 0$，在 $\mathbf{Spec}$ 的 $\mathbb{Z}_2$ 分级下严格保持。数值验证：$\|s^2\| = 0.00$。
+BRST 算子 $s$ 满足 $s^2 = 0$，在 $\mathbf{Sp}$ 的 $\mathbb{Z}_2$ 分级下严格保持。数值验证：$\|s^2\| = 0.00$。
 
 ### 6.3 Ward 恒等式
 
@@ -270,11 +270,11 @@ BRST 算子 $s$ 满足 $s^2 = 0$，在 $\mathbf{Spec}$ 的 $\mathbb{Z}_2$ 分级
 
 ### 6.5 BRST 荷的谱表示
 
-BRST 荷 $Q_{\text{BRST}}$ 在 $\mathbf{Spec}$ 中的表示为：
+BRST 荷 $Q_{\text{BRST}}$ 在 $\mathbf{Sp}$ 中的表示为：
 
 $$Q_{\text{BRST}} = \int d\lambda \, c(\lambda) \left( [\nabla^\mu, \mathcal{A}_\mu](\lambda) + \frac{g}{2}[\bar{c}, c](\lambda) \right),$$
 
-其中 $c(\lambda)$ 是谱鬼场，$\bar{c}(\lambda)$ 是谱反鬼场。BRST 荷满足幂零性 $Q_{\text{BRST}}^2 = 0$（$\mathbf{Spec}$ $\mathbb{Z}_2$ 分级的自然结果）。物理态空间为 $Q_{\text{BRST}}$-上同调：
+其中 $c(\lambda)$ 是谱鬼场，$\bar{c}(\lambda)$ 是谱反鬼场。BRST 荷满足幂零性 $Q_{\text{BRST}}^2 = 0$（$\mathbf{Sp}$ $\mathbb{Z}_2$ 分级的自然结果）。物理态空间为 $Q_{\text{BRST}}$-上同调：
 
 $$\mathcal{H}_{\text{phys}} = \ker Q_{\text{BRST}} / \operatorname{im} Q_{\text{BRST}}.$$
 
@@ -313,7 +313,7 @@ $SU(2)$ 的 Witten 全局反常要求在 $SU(2)$ 二重态数为偶数：
 
 $$\# \text{SU(2) 左手二重态} \in 2\mathbb{Z}.$$
 
-在谱语言中，这对应于 $\pi_4(SU(2)) = \mathbb{Z}_2$ 的谱翻译——谱规范变换的第四同伦群不变量。SM 每代含 1 个 $SU(2)$ 左手二重态（$Q_L$ 和 $L_L$ 各计 1），三代共 6 个二重态，满足偶数条件，Witten 反常在 $\mathbf{Spec}$ 范畴中自动消去。
+在谱语言中，这对应于 $\pi_4(SU(2)) = \mathbb{Z}_2$ 的谱翻译——谱规范变换的第四同伦群不变量。SM 每代含 1 个 $SU(2)$ 左手二重态（$Q_L$ 和 $L_L$ 各计 1），三代共 6 个二重态，满足偶数条件，Witten 反常在 $\mathbf{Sp}$ 范畴中自动消去。
 
 ### 7.5 谱 $\theta$ 真空与轴子
 
@@ -325,13 +325,13 @@ $$\mathcal{L}_\theta^{\text{spec}} = \theta \cdot \frac{g^2}{32\pi^2} \operatorn
 
 $$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int d\lambda \, \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}).$$
 
-**强 CP 问题的谱解**。在 $\mathbf{Spec}$ 范畴中，所有谱生成元 $A_{F,i}$ 都是自伴算子（Paper I §2.3）。自伴性在拓扑项上的直接推论是：物理真空对应的 $A_{\text{gauge}}$ 满足 $A_{\text{gauge}} = A_{\text{gauge}}^\dagger$，其谱分解自动给出 $\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0$，因此 $\theta_{\text{QCD}} = 0$。瞬子对应非自伴的规范连接，其 $Q_{\text{top}} \neq 0$（数值验证 $0.99998$）不违反自伴性要求——物理真空的 $\theta$ 角为零是谱生成元自伴性的直接数学推论。
+**强 CP 问题的谱解**。在 $\mathbf{Sp}$ 范畴中，所有谱生成元 $A_{F,i}$ 都是自伴算子（Paper I §2.3）。自伴性在拓扑项上的直接推论是：物理真空对应的 $A_{\text{gauge}}$ 满足 $A_{\text{gauge}} = A_{\text{gauge}}^\dagger$，其谱分解自动给出 $\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0$，因此 $\theta_{\text{QCD}} = 0$。瞬子对应非自伴的规范连接，其 $Q_{\text{top}} \neq 0$（数值验证 $0.99998$）不违反自伴性要求——物理真空的 $\theta$ 角为零是谱生成元自伴性的直接数学推论。
 
 通过 Peccei-Quinn 机制，$\theta$ 被动力学轴子场 $a$ 消解：
 
 $$\mathcal{L}_a^{\text{spec}} = \frac12 \operatorname{Tr}_{\mathcal{H}_a}([A_a, a]^2) + \frac{a}{f_a} \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}).$$
 
-在谱语言中，轴子是 $\mathbf{Spec}$ 中的周期伪标量对象：$a(\lambda) \cong a(\lambda) + 2\pi f_a$。谱框架进一步将轴子识别为 $\mathbf{Spec}$ 4-范畴中辫子静默 $S_4$ 的自然产物，其动态松弛能力保证 $|\theta_{\text{QCD}}| < 10^{-10}$。
+在谱语言中，轴子是 $\mathbf{Sp}$ 中的周期伪标量对象：$a(\lambda) \cong a(\lambda) + 2\pi f_a$。谱框架进一步将轴子识别为 $\mathbf{Sp}$ 4-范畴中辫子静默 $S_4$ 的自然产物，其动态松弛能力保证 $|\theta_{\text{QCD}}| < 10^{-10}$。
 
 轴子参数由辫子静默$S_4$通过See-saw能标间接确定：$f_a \approx M_R \times S_4^2 \approx 6.7\times10^{11}$ GeV（落入实验窗口$10^{11}\text{–}10^{12}$ GeV），$m_a \approx \Lambda_{\text{QCD}}^2/f_a \approx 6\times10^{-5}$ eV。
 
@@ -371,7 +371,7 @@ $^\dagger$ 三圈系数受 Higgs 和 Yukawa 贡献修正，此处仅列纯规范
 
 ### 8.4 Yukawa 耦合与全费米子零参数质量预测
 
-Yukawa 耦合在谱框架中不是自由参数，而是由 $\mathbf{Spec}$ 4-范畴的静默层级唯一确定（详见 Paper I §A.15.8）。同一组收缩因子 $\mathbf{c} = (c_1, c_2, c_3) = (0.0033, 0.0666, 0.9998)$ 适用于所有三个费米子扇区，各扇区仅指数 $\alpha$ 不同：
+Yukawa 耦合在谱框架中不是自由参数，而是由 $\mathbf{Sp}$ 4-范畴的静默层级唯一确定（详见 Paper I §A.15.8）。同一组收缩因子 $\mathbf{c} = (c_1, c_2, c_3) = (0.0033, 0.0666, 0.9998)$ 适用于所有三个费米子扇区，各扇区仅指数 $\alpha$ 不同：
 
 $$m_i^{(\text{sector})} = M_{\text{sector}} \cdot (c_i / c_3)^{\alpha_{\text{sector}}}, \quad i = 1,2,3$$
 
@@ -391,7 +391,7 @@ Higgs VEV也被同一框架预测：由静默公式 $v = m_t \times c_1^{\alpha_
 
 在标准模型中，CKM（Cabibbo-Kobayashi-Maskawa）混合矩阵 $V_{\text{CKM}}$ 描述了夸克弱相互作用中质量本征态与弱相互作用本征态之间的失配。在谱框架下，这一失配自然地来源于上型夸克和下型夸克 Yukawa 矩阵的谱结构差异。
 
-**谱 Yukawa 算符**。在 $\mathbf{Spec}$ 范畴中，上型和下型 Yukawa 矩阵 $Y_u$ 和 $Y_d$ 是作用在味道 Hilbert 空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符：
+**谱 Yukawa 算符**。在 $\mathbf{Sp}$ 范畴中，上型和下型 Yukawa 矩阵 $Y_u$ 和 $Y_d$ 是作用在味道 Hilbert 空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符：
 
 $$Y_u: \mathcal{H}_{\text{flavor}} \longrightarrow \mathcal{H}_{\text{flavor}},\qquad Y_d: \mathcal{H}_{\text{flavor}} \longrightarrow \mathcal{H}_{\text{flavor}}.$$
 
@@ -401,7 +401,7 @@ $$Y_u^\dagger Y_u = U_u \cdot \Sigma_u^2 \cdot U_u^\dagger,\qquad Y_d^\dagger Y_
 
 其中 $\Sigma_u^2 = \operatorname{diag}(y_u^2, y_c^2, y_t^2)$ 和 $\Sigma_d^2 = \operatorname{diag}(y_d^2, y_s^2, y_b^2)$ 是谱特征值（Yukawa 耦合平方），$U_u, U_d \in U(3)$ 是对角化幺正矩阵。
 
-**Yukawa 本征值的零输入预测**。三代 Yukawa 耦合比不由 Cl(1,7) 代数直接决定（三个 SU(3) 基本权重平方长度全等），而由 $\mathbf{Spec}$ 4-范畴的多重静默层级在 IFS 递归深度上的投影唯一确定（详见 Paper I §A.15.8）。该预测无任何实验输入：
+**Yukawa 本征值的零输入预测**。三代 Yukawa 耦合比不由 Cl(1,7) 代数直接决定（三个 SU(3) 基本权重平方长度全等），而由 $\mathbf{Sp}$ 4-范畴的多重静默层级在 IFS 递归深度上的投影唯一确定（详见 Paper I §A.15.8）。该预测无任何实验输入：
 
 $$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k,$$
 
@@ -441,7 +441,7 @@ $$\delta_{\text{CP}} = \arg\det(U_u^\dagger U_d) = \arg\det(V_{\text{CKM}}).$$
 
 标准模型中微子无质量的困境来源于缺少右手中微子。在谱框架中，右手中微子 $\nu_R$ 自然地作为谱对象存在，从而激活标准的 See-saw 机制。
 
-**右手中微子的谱对象**。在 $\mathbf{Spec}$ 范畴中，右手中微子 $\nu_R$ 对应谱对象 $(\mathcal{H}_{\nu_R}, A_{\nu_R}, \sigma(A_{\nu_R}))$，其中 $\mathcal{H}_{\nu_R}$ 是右手中微子的 Hilbert 空间，$A_{\nu_R}$ 是 Majorana 质量谱算符，$\sigma(A_{\nu_R})$ 是其特征值谱。谱 Majorana 质量项为：
+**右手中微子的谱对象**。在 $\mathbf{Sp}$ 范畴中，右手中微子 $\nu_R$ 对应谱对象 $(\mathcal{H}_{\nu_R}, A_{\nu_R}, \sigma(A_{\nu_R}))$，其中 $\mathcal{H}_{\nu_R}$ 是右手中微子的 Hilbert 空间，$A_{\nu_R}$ 是 Majorana 质量谱算符，$\sigma(A_{\nu_R})$ 是其特征值谱。谱 Majorana 质量项为：
 
 $$\mathcal{L}_{\text{Majorana}} = \frac12 \nu_R^\dagger [A_{\nu_R}, \nu_R] = \frac12 M_R \nu_R^T C \nu_R + \text{h.c.},$$
 
@@ -464,7 +464,7 @@ See-saw 关系（$M_R \gg m_D$）给出 light 中微子的有效质量矩阵：
 
 $$\boxed{M_\nu = -m_D M_R^{-1} m_D^T}.$$
 
-**谱预测**。在谱框架中，Majorana 质量谱算符 $A_{\nu_R}$ 的谱间隙由 $\mathbf{Spec}$ 范畴中电弱能标与 Planck 能标之间的层级决定：
+**谱预测**。在谱框架中，Majorana 质量谱算符 $A_{\nu_R}$ 的谱间隙由 $\mathbf{Sp}$ 范畴中电弱能标与 Planck 能标之间的层级决定：
 
 $$M_R \sim \frac{\Lambda_{\text{Planck}}}{\Lambda_{\text{EW}}} \cdot v \sim 10^{14}\ \text{GeV},$$
 
@@ -484,7 +484,7 @@ $$U_{\text{PMNS}} = V_{\text{PMNS}} \cdot \operatorname{diag}(1, e^{i\alpha_1}, 
 
 其中 $V_{\text{PMNS}}$ 是标准的三混合矩阵（$\theta_{12}, \theta_{23}, \theta_{13}, \delta_{\text{CP}}$），Majorana 相位 $\alpha_1, \alpha_2$ 由 $A_{\nu_R}$ 的谱相位结构决定。
 
-**要点**：右手中微子在谱框架中不是附加假设，而是 $\mathbf{Spec}$ 范畴的天然谱对象。See-saw 机制的谱版本不仅复现了标准 See-saw 的所有结果，还通过 $A_{\nu_R}$ 的谱间隙为 $M_R$ 的能标提供了理论依据。
+**要点**：右手中微子在谱框架中不是附加假设，而是 $\mathbf{Sp}$ 范畴的天然谱对象。See-saw 机制的谱版本不仅复现了标准 See-saw 的所有结果，还通过 $A_{\nu_R}$ 的谱间隙为 $M_R$ 的能标提供了理论依据。
 
 **PMNS $\theta_{13}$ 的谱起源**。简单强混合近似 $\sin^2\theta_{13} \approx (c_1/c_3)^2$ 远小于实验值 $0.0222$，说明 $\theta_{13}$ 不由直接的 IFS 收缩因子比决定，而来自带电轻子中微子 Yukawa 谱算符 $Y_e$ 和 $Y_\nu$ 的特征基在双重 Higgs 耦合下的非平庸重叠。$Y_e$ 耦合到电弱 Higgs 谱算符 $A_H$，$Y_\nu$ 同时耦合到 $A_H$ 和右手中微子谱算符 $A_{\nu_R}$。这两种不同耦合模式产生基旋转角 $\xi \approx \Delta\lambda_{\min}^{(\nu_R)}/\Delta\lambda_{\min}^{(H)}$，给出 $\sin\theta_{13} \approx \sin\xi \cdot \sin\theta_{23} \approx 0.011$，与实验值 $0.0222$ 在量级一致（偏差 $\times 2.0$）。完整的定量预测需 $6\times6$ 质量矩阵的数值对角化。
 
@@ -626,7 +626,7 @@ $$\rho(\mu^2) = Z \delta(\mu^2 - m^2) + \rho_{\text{cont}}(\mu^2) \Theta(\mu^2 -
 
 #### 9.5.1 谱 BRST 算符
 
-谱 BRST 算符 $s_{\text{BRST}}$ 在 $\mathbf{Spec}$ 范畴中的显式作用定义为：
+谱 BRST 算符 $s_{\text{BRST}}$ 在 $\mathbf{Sp}$ 范畴中的显式作用定义为：
 
 $$s_{\text{BRST}} \Phi = [Q_{\text{BRST}}, \Phi]_{\pm},$$
 
@@ -638,13 +638,13 @@ $$\boxed{s_{\text{BRST}}^2 = 0}.$$
 
 物理态空间定义为谱 BRST 算符的零阶上同调群：
 
-$$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_{\text{BRST}} = H_{\text{BRST}}^0(\mathbf{Spec})}.$$
+$$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_{\text{BRST}} = H_{\text{BRST}}^0(\mathbf{Sp})}.$$
 
 具体而言：
 - $\ker s_{\text{BRST}}$：所有 BRST 闭链（BRST-不变态），即满足 $s_{\text{BRST}}|\psi\rangle = 0$ 的态。
 - $\operatorname{im} s_{\text{BRST}}$：所有 BRST 边缘态（可写为 $s_{\text{BRST}}|\chi\rangle$ 的态）。
 
-物理态对应于 BRST 闭链模去 BRST 精确项：$|\psi\rangle_{\text{phys}} \in H_{\text{BRST}}^0(\mathbf{Spec})$。
+物理态对应于 BRST 闭链模去 BRST 精确项：$|\psi\rangle_{\text{phys}} \in H_{\text{BRST}}^0(\mathbf{Sp})$。
 
 #### 9.5.3 规范固定的谱 LSZ 公式
 
@@ -654,9 +654,9 @@ $$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_
 
 $$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{phys}} = P_{\text{BRST}} \circ \langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{spec}}},$$
 
-其中 $P_{\text{BRST}}$ 是从未约化谱 Hilbert 空间到 $H_{\text{BRST}}^0(\mathbf{Spec})$ 的规范投射：
+其中 $P_{\text{BRST}}$ 是从未约化谱 Hilbert 空间到 $H_{\text{BRST}}^0(\mathbf{Sp})$ 的规范投射：
 
-$$P_{\text{BRST}}: \mathcal{H}_{\text{spec}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Spec}).$$
+$$P_{\text{BRST}}: \mathcal{H}_{\text{spec}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Sp}).$$
 
 对每个外线态，有对应的 BRST 投射因子：
 
@@ -676,7 +676,7 @@ $$\langle p |_{\text{phys}} = P_{\text{BRST}}^{(p)} \circ \lim_{\lambda_p \to m^
 
 $$P_{\text{BRST}}(\mathcal{M}_{\text{unphys}}) = 0.$$
 
-证明：由于 $H_{\text{BRST}}^0(\mathbf{Spec})$ 仅包含 BRST 不变的规范单态，任何含鬼场量子数的态在 $H_{\text{BRST}}^0(\mathbf{Spec})$ 中的投影为零。细节见 §6.5 的 BRST 荷谱表示。
+证明：由于 $H_{\text{BRST}}^0(\mathbf{Sp})$ 仅包含 BRST 不变的规范单态，任何含鬼场量子数的态在 $H_{\text{BRST}}^0(\mathbf{Sp})$ 中的投影为零。细节见 §6.5 的 BRST 荷谱表示。
 
 #### 9.5.5 Yang-Mills 理论的显式形式
 
@@ -734,7 +734,7 @@ $$\boxed{2\operatorname{Im} \mathcal{M}^{\text{spec}}(i \to i) = \sum_n \int d\P
 $$2\operatorname{Im} T_{\text{spec}} = T_{\text{spec}}^\dagger T_{\text{spec}}.$$
 
 **第四步：完备性关系。**
-谱光学定理的中间态求和在 $\mathbf{Spec}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
+谱光学定理的中间态求和在 $\mathbf{Sp}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
 
 $$I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \; |n\rangle \langle n|,$$
 
@@ -762,7 +762,7 @@ $$
 
 **推论 9.1**（谱光学定理的等价性）。定理 9.1 的证明中第四步建立了谱完备性关系 $I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \, |n\rangle\langle n|$，该关系是谱框架下 S 矩阵幺正性的直接推论，也与 §9.3 的谱光学定理完全等价。
 
-> **注释 9.1**。本证明仅依赖于谱 LSZ 公式、谱 Cutkosky 规则和谱光学定理，这些结果已分别在 §9.1–§9.3 中建立并数值验证。因此定理 9.1 是谱 QFT 形式化的逻辑终点——它表明在 $\mathbf{Spec}$ 范畴中，S 矩阵幺正性不是额外假设而是谱关联函数结构的必然推论。
+> **注释 9.1**。本证明仅依赖于谱 LSZ 公式、谱 Cutkosky 规则和谱光学定理，这些结果已分别在 §9.1–§9.3 中建立并数值验证。因此定理 9.1 是谱 QFT 形式化的逻辑终点——它表明在 $\mathbf{Sp}$ 范畴中，S 矩阵幺正性不是额外假设而是谱关联函数结构的必然推论。
 
 ### 9.7 数值验证
 
@@ -775,7 +775,7 @@ $$
 
 ### 9.8 Schwinger-Keldysh 谱等价桥
 
-Schwinger-Keldysh（闭合时间路径）形式主义将量子场的实时演化表示为正向和反向时间路径上的路径积分。在 $\mathbf{Spec}$ 范畴框架中，这一形式主义获得了新的诠释——它是**噪声↔确定性谱等价桥**（Paper XIX §8.5）在量子场论中的精确实现。
+Schwinger-Keldysh（闭合时间路径）形式主义将量子场的实时演化表示为正向和反向时间路径上的路径积分。在 $\mathbf{Sp}$ 范畴框架中，这一形式主义获得了新的诠释——它是**噪声↔确定性谱等价桥**（Paper XIX §8.5）在量子场论中的精确实现。
 
 **定理 9.2**（SK 谱等价桥）。Schwinger-Keldysh 路径积分中的噪声核 $G_K(\omega)$ 与 Feynman 传播子虚部 $\operatorname{Im} G_R(\omega)$ 之间存在谱等价关系：
 $$\operatorname{Im} G_R(\omega) = \frac{1}{2} \tanh\left(\frac{\beta\omega}{2}\right) G_K(\omega)$$
@@ -796,7 +796,7 @@ $$\operatorname{Im} G_R(\omega) = \frac{1}{2} \tanh\left(\frac{\beta\omega}{2}\r
 
 ### 10.1 已完成
 
-本文建立了谱 QFT 的完整公理系统 A1–A7，并将标准 QFT 的核心构造逐项翻译为 $\mathbf{Rec}/\mathbf{Spec}$ 范畴语言。新增的 A7（谱 Lorentz 协变公理，§2.8）完成了对称性公理的谱形式化。谱 QFT 形式化部分（§9）额外补充了谱规范的 LSZ 公式（§9.5）和 S 矩阵幺正性的完整谱证明（§9.6，定理 9.1），使谱 S 矩阵理论在 $\mathbf{Spec}$ 范畴中逻辑完备。所有 6 个核心数值脚本合计 36/36 检查通过，验证了谱 QFT 与标准 QFT 的等价性。此外，从谱对应自然等价 $M\cong L$ 推导了精细结构常数 $\alpha \approx 1/128.0$，与实验值 $1/127.95$ 高度一致（见附录 C）。
+本文建立了谱 QFT 的完整公理系统 A1–A7，并将标准 QFT 的核心构造逐项翻译为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言。新增的 A7（谱 Lorentz 协变公理，§2.8）完成了对称性公理的谱形式化。谱 QFT 形式化部分（§9）额外补充了谱规范的 LSZ 公式（§9.5）和 S 矩阵幺正性的完整谱证明（§9.6，定理 9.1），使谱 S 矩阵理论在 $\mathbf{Sp}$ 范畴中逻辑完备。所有 6 个核心数值脚本合计 36/36 检查通过，验证了谱 QFT 与标准 QFT 的等价性。此外，从谱对应自然同构 $M\cong L$ 推导了精细结构常数 $\alpha \approx 1/128.0$，与实验值 $1/127.95$ 高度一致（见附录 C）。
 
 **全参数谱覆盖审计（附录 D）**：对 SM + 中微子扩展的完整 29 个自由参数进行了系统审计。其中 **15/29**（52%）实现严格的零参数第一原理预测，**14/29**（48%）部分预测（谱框架提供推导路径、数值验证基本通过），**0 个参数未覆盖**。已严格预测的参数包括：9 带电费米子质量、$\alpha_s(M_Z)$、$\alpha(M_Z)$、3 CKM 混合角、$\theta_{\text{QCD}}$。部分预测的参数包括：$\sin^2\theta_W(M_Z)$（偏差 1.3%）、$m_H$（124.95 GeV，偏差 0.12%）、PMNS 3 角、中微子质量、CP 相和 Majorana 相。
 
@@ -853,7 +853,7 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XI（增强版 v2.1），谱量子场论的公理、翻译与数值验证——在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序等逐一翻译为谱语言。v2.1 新增 §9.8 Schwinger-Keldysh 谱等价桥。6 数值脚本合计 36/36 检查通过。
+《通用不动点范畴框架》系列论文 XI（增强版 v2.1），谱量子场论的公理、翻译与数值验证——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子场论建立严格的谱公理系统（A1–A7），将标准 QFT 的拉格朗日量、Feynman 规则、路径积分、重整化程序等逐一翻译为谱语言。v2.1 新增 §9.8 Schwinger-Keldysh 谱等价桥。6 数值脚本合计 36/36 检查通过。
 
 **变更记录**：
 
@@ -870,7 +870,7 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 | 论文 | 内容 | 关系 |
 |:----|------|:----|
-| Paper I | 分形谱去递归理论 | 本文的 $\mathbf{Spec}$ 范畴基础 |
+| Paper I | 分形谱化理论 | 本文的 $\mathbf{Sp}$ 范畴基础 |
 | Paper V | 谱动力学 | 谱流方程来源 |
 | Paper X | 谱动力学的量子测量 | 姊妹篇，偏量子基础 |
 | **Paper XI（本文）** | **谱 QFT 公理与翻译** | **QFT 形式化** |
@@ -880,11 +880,11 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 ## 附录 C：精细结构常数 $\alpha$ 的谱推导
 
-从谱对应自然等价 $M \cong L$（Paper I 定理 3.7a）出发，推导电磁精细结构常数 $\alpha = e^2/4\pi\epsilon_0\hbar c \approx 1/137.036$。
+从谱对应自然同构 $M \cong L$（Paper I 定理 3.7a）出发，推导电磁精细结构常数 $\alpha = e^2/4\pi\epsilon_0\hbar c \approx 1/137.036$。
 
 ### C.1 谱对应关系
 
-谱对应自然等价 $M \cong L$ 给出特征值间的指数对应：$\lambda_i = e^{-\mu_i}$，其中 $\lambda_i \in \sigma(M)$ 是物理可观测量，$\mu_i \in \sigma(L)$ 是谱生成元特征值。电磁谱算子 $A_{\text{EM}}$ 的谱分解为：
+谱对应自然同构 $M \cong L$ 给出特征值间的指数对应：$\lambda_i = e^{-\mu_i}$，其中 $\lambda_i \in \sigma(M)$ 是物理可观测量，$\mu_i \in \sigma(L)$ 是谱生成元特征值。电磁谱算子 $A_{\text{EM}}$ 的谱分解为：
 
 $$A_{\text{EM}} = \sum_i \lambda_i^{(\text{EM})} P_i^{(\text{EM})},\quad \lambda_i^{(\text{EM})} = e^{-\mu_i^{(\text{EM})}}.$$
 
@@ -894,7 +894,7 @@ $$A_{\text{EM}} = \sum_i \lambda_i^{(\text{EM})} P_i^{(\text{EM})},\quad \lambda
 
 $$\boxed{\alpha = \frac{\Delta\lambda_{\min}^{(\text{EM})}}{4\pi}},\quad \Delta\lambda_{\min}^{(\text{EM})} = \min_i (\lambda_{i+1}^{(\text{EM})} - \lambda_i^{(\text{EM})}).$$
 
-推导：在谱 QFT 中，U(1) 规范群的谱生成元 $A_{\text{EM}}$ 的谱间隙 $\Delta\lambda_{\min}$ 通过谱迹 $\operatorname{Tr}_{\mathbf{Spec}}(e^{-A_{\text{EM}}})$ 编码了规范耦合的强度。
+推导：在谱 QFT 中，U(1) 规范群的谱生成元 $A_{\text{EM}}$ 的谱间隙 $\Delta\lambda_{\min}$ 通过谱迹 $\operatorname{Tr}_{\mathbf{Sp}}(e^{-A_{\text{EM}}})$ 编码了规范耦合的强度。
 
 ### C.3 Cl(1,7) 代数约束
 
@@ -940,7 +940,7 @@ $$\alpha^{-1}(M_Z) \approx \frac{4\pi}{0.6 \times 0.0229} + 8.0 \approx 128.0.$$
 
 ### D.1 审计标准
 
-- **✅ 已预测**：从 $\mathbf{Spec}$ 第一原理唯一确定，数值验证通过，无自由参数
+- **✅ 已预测**：从 $\mathbf{Sp}$ 第一原理唯一确定，数值验证通过，无自由参数
 - **🟡 部分预测**：谱框架提供推导路径，数值验证基本通过，但部分环节待严格化
 - **❌ 未预测**：谱框架尚未覆盖
 

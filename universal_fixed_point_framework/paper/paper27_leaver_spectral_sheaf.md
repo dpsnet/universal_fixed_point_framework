@@ -4,7 +4,7 @@
 
 **版本**：v1.0（2026-07-25）
 
-**摘要**：本文在通用不动点范畴框架下系统建立 Leaver 谱丛理论。将 Kerr 黑洞准正态模的三参数空间 $(a,m,\omega)$ 上的三对角矩阵族构造为三参数谱丛 $\mathfrak{S}$，证明其纤维化为三重纤维积结构。建立三个方向单值群 $\mathcal{M}_a,\mathcal{M}_m,\mathcal{M}_\omega$ 的交换关系定理，揭示 $a$-$m$ 可交换而 $a$-$\omega$、$m$-$\omega$ 不可交换的根本原因，证明三重单值群具有非平凡群扩张结构并由 2-上循环分类。提出奇异纤维三分定理，将参数空间中的退化点严格分为分支交叉（I 型）、谱静默边界（II 型）和零谱间隙退化（III 型）三类，建立互斥全覆盖的完备分类体系，并建立每类与 QNM 物理现象的精确对应。进一步将理论扩展至电磁扰动（$s=\pm1$），建立电磁谱丛 $\mathfrak{S}^{(s=-1)}$ 的数学框架，证明 Teukolsky-Starobinsky 同谱性定理，给出跨自旋奇异纤维分类的推广和 LACI 对比框架（§12）。
+**摘要**：本文在通用不动点范畴框架下系统建立 Leaver 谱丛理论。将 Kerr 黑洞准正态模的三参数空间 $(a,m,\omega)$ 上的三对角矩阵族构造为三参数谱丛 $\mathfrak{S}$，证明其纤维化为三重纤维积结构。建立三个方向单值群 $\mathcal{M}_a,\mathcal{M}_m,\mathcal{M}_\omega$ 的交换关系定理，揭示 $a$-$m$ 可交换而 $a$-$\omega$、$m$-$\omega$ 不可交换的根本原因，证明三重单值群具有非平凡群扩张结构并由 2-上循环分类。提出奇异纤维三分定理，将参数空间中的退化点严格分为分支交叉（I 型）、谱静默边界（II 型）和零谱间隙退化（III 型）三类，建立互斥全覆盖的完备分类体系，并建立每类与 QNM 物理现象的精确对应。进一步将理论扩展至电磁扰动（$s=\pm1$），建立电磁谱丛 $\mathfrak{S}^{(s=-1)}$ 的数学框架，证明 Teukolsky-Starobinsky 同谱性定理，给出跨自旋奇异纤维分类的推广和局部吸引子捕获指数（Local Attractor Capture Index, LACI）对比框架（§12）。
 
 ---
 
@@ -407,7 +407,7 @@ $$\mathfrak{S} = \mathbf{Reg}(\mathfrak{S}) \sqcup \mathbf{Sing}_{\text{I}}(\mat
 | 几何 | 谱叶分支交叉 | 零点截面触碰谱叶 | 谱间隙坍缩 |
 | 物理 | 双重同伦根切换区 | 超辐射临界、阻尼消失 | 极值极限、高 $l$ 退化 |
 
-这一对应关系为 Leaver 求解器在 Kerr 参数空间中的稳健运行提供了理论指导：在正则区可直接应用标准 Newton 迭代和 Leaver 连分数求解；在 I 型密集区需减小同伦步长并结合 LACI 监控以避免叶间跳跃；在 II 型区应标记候选根为不可解并放弃；在 III 型区应切换为两弦法（逆迭代，不受 $\gamma$ 影响）以保证收敛。
+这一对应关系为 Leaver 求解器在 Kerr 参数空间中的稳健运行提供了理论指导：在正则区可直接应用标准 Newton 迭代和 Leaver 连分数求解；在 I 型密集区需减小同伦步长并结合 LACI 监控以避免叶间跳跃；在 II 型区应标记候选根为不可解并放弃；在 III 型区应切换为双初始向量逆迭代法（逆迭代，不受 $\gamma$ 影响）以保证收敛。
 
 ---
 
@@ -452,7 +452,7 @@ $$\gamma_n = \bigl(2iq\omega + 1 - \tau\bigr)\bigl(2iq\omega - \tau\bigr),$$
 **命题 5.1**（Koopman 算子的压缩性）。设 $U_{\text{Teuk}}$ 为 Kerr QNM 的 Koopman 算子，其谱对应 $\sigma(U_{\text{Teuk}}) = \{e^{-\mu_i}\}_{i=1}^{2N}$，其中 $\mu_i$ 为递推系统的 Lyapunov 指数。对阻尼 QNM（$\operatorname{Im}(\omega) < 0$），$U_{\text{Teuk}}$ 是压缩算子：
 $$\|U_{\text{Teuk}}\| \leq 1.$$
 
-*证明*。由去递归理论的核心对应（Paper I §3.5, Theorem 3.5），Koopman 算子的特征值与 QNM 频率满足 $\lambda = e^{-\mu}$，其中 $\mu = i\omega$ 的离散化。当 $\operatorname{Im}(\omega) < 0$ 时，
+*证明*。由谱化理论的核心对应（Paper I §3.5, Theorem 3.5），Koopman 算子的特征值与 QNM 频率满足 $\lambda = e^{-\mu}$，其中 $\mu = i\omega$ 的离散化。当 $\operatorname{Im}(\omega) < 0$ 时，
 $$|\lambda| = |e^{-\mu}| = |e^{-\operatorname{Re}(\mu)} \cdot e^{-i\operatorname{Im}(\mu)}| = e^{-\operatorname{Re}(\mu)} < 1.$$
 因此谱半径 $\rho(U_{\text{Teuk}}) < 1$。对任意矩阵 $\|U\| = \rho(U) + \delta$，其中 $\delta$ 为非正规性修正。§5.3 将验证 $\delta$ 有限且不改变压缩性。对 Schwarzschild 基模 $(l=2, m=0, n=0)$，$\operatorname{Im}(\omega) = -0.089$ 给出 $|\lambda| \approx e^{-0.089} = 0.915 < 1$；对 $a = 0.9$ 的基模，$|\lambda|$ 略有变化但仍严格小于 1。∎
 
@@ -574,7 +574,7 @@ return k
    $$\nu_1 = \frac{\|U^\dagger U - U U^\dagger\|_F}{\|U\|_F}, \quad \nu_2 = \kappa(U) = \|U\| \cdot \|U^{-1}\|,$$
    其中 $\nu_1$ 为 Frobenius 范数下的交换子度量，$\nu_2$ 为条件数。
 
-**注 6.1**。$D_{\text{diss}}$ 谱不变量集在 $\mathbf{Rec}_{\text{diss}}$ 的态射作用下保持：若 $f: R_1 \to R_2$ 为范畴中的态射，则 $D_{\text{diss}}(R_1) \cong D_{\text{diss}}(R_2)$ 在等价意义下成立。这是 $\mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}$ 函子性的直接推论。辫子交叉数 $k$ 是 $D_{\text{diss}}$ 谱不变量集中谱间隙 $\gamma$ 的拓扑表征。
+**注 6.1**。$D_{\text{diss}}$ 谱不变量集在 $\mathbf{Rec}_{\text{diss}}$ 的态射作用下保持：若 $f: R_1 \to R_2$ 为范畴中的态射，则 $D_{\text{diss}}(R_1) \cong D_{\text{diss}}(R_2)$ 在等价意义下成立。这是 $\mathbf{Rec}_{\text{diss}} \to \mathbf{Sp}$ 函子性的直接推论。辫子交叉数 $k$ 是 $D_{\text{diss}}$ 谱不变量集中谱间隙 $\gamma$ 的拓扑表征。
 
 ### 6.3 数值验证
 
@@ -620,13 +620,13 @@ return k
 
 ### 6.4 作为拓扑不变量的意义
 
-**定理 6.1**（辫子交叉数的函子不变性）。$D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}$ 是保持谱丛拓扑结构的函子。辫子交叉数 $k$ 在 $D_{\text{diss}}$ 作用下不变：对任意态射 $f: R_1 \to R_2$，
+**定理 6.1**（辫子交叉数的函子不变性）。$D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Sp}$ 是保持谱丛拓扑结构的函子。辫子交叉数 $k$ 在 $D_{\text{diss}}$ 作用下不变：对任意态射 $f: R_1 \to R_2$，
 $$k(D_{\text{diss}}(R_1)) = k(R_1),$$
 且沿闭回路的辫子交叉数 $k$ 是 $D_{\text{diss}}$ 映射下的拓扑不变量。
 
-*证明思路*。由定理 7.31（Paper I §7.9），$D_{\text{diss}}$ 是保持伪谱扰动界的函子，将 $\mathbf{Rec}_{\text{diss}}$ 中的递归对象映射为 $\mathbf{Spec}$ 中的谱丛。函子保持同伦类，即保持沿闭回路的谱叶置换群结构。辫子交叉数 $k$ 定义为单值群元素在相邻对换生成元下的最小分解长度，由置换群的群结构唯一决定。$D_{\text{diss}}$ 的保持性保证沿闭回路的单值群元素不变，因此 $k$ 不变。∎
+*证明思路*。由定理 7.31（Paper I §7.9），$D_{\text{diss}}$ 是保持伪谱扰动界的函子，将 $\mathbf{Rec}_{\text{diss}}$ 中的递归对象映射为 $\mathbf{Sp}$ 中的谱丛。函子保持同伦类，即保持沿闭回路的谱叶置换群结构。辫子交叉数 $k$ 定义为单值群元素在相邻对换生成元下的最小分解长度，由置换群的群结构唯一决定。$D_{\text{diss}}$ 的保持性保证沿闭回路的单值群元素不变，因此 $k$ 不变。∎
 
-**推论 6.1**（$k$ 作为 $D_{\text{diss}}$ 拓扑不变量）。定理 6.1 保证：不论通过直接计算递推系统（$\mathbf{Rec}_{\text{diss}}$ 层面）还是通过计算谱丛表现（$\mathbf{Spec}$ 层面），沿给定同伦路径的辫子交叉数 $k$ 一致。这解释了 §6.3 中 $k$ 与 $\gamma$ 的高相关性——两者是同一拓扑结构在不同范畴层面的表现。
+**推论 6.1**（$k$ 作为 $D_{\text{diss}}$ 拓扑不变量）。定理 6.1 保证：不论通过直接计算递推系统（$\mathbf{Rec}_{\text{diss}}$ 层面）还是通过计算谱丛表现（$\mathbf{Sp}$ 层面），沿给定同伦路径的辫子交叉数 $k$ 一致。这解释了 §6.3 中 $k$ 与 $\gamma$ 的高相关性——两者是同一拓扑结构在不同范畴层面的表现。
 
 **物理意义**：
 

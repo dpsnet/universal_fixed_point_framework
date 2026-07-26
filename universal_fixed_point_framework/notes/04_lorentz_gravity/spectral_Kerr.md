@@ -1,6 +1,6 @@
 # Kerr 度规的全谱分解
 
-Kerr 度规是旋转黑洞的精确解，其谱分解将 $A_{\text{GR}}$ 的构造从 Schwarzschild 推广到带角动量的情形。本节在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下建立 Kerr 度规的完整谱描述。
+Kerr 度规是旋转黑洞的精确解，其谱分解将 $A_{\text{GR}}$ 的构造从 Schwarzschild 推广到带角动量的情形。本节在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立 Kerr 度规的完整谱描述。
 
 ## Kerr 度规与 Boyer-Lindquist 坐标
 
@@ -12,7 +12,7 @@ $$ds^2 = -\left(1 - \frac{2Mr}{\Sigma}\right)dt^2 - \frac{4aMr\sin^2\theta}{\Sig
 
 ## 谱生成元
 
-谱生成元 $A_{\text{Kerr}}$ 在 $\mathbf{Spec}$ 范畴中扩展 $A_{\text{GR}}$：
+谱生成元 $A_{\text{Kerr}}$ 在 $\mathbf{Sp}$ 范畴中扩展 $A_{\text{GR}}$：
 
 $$A_{\text{Kerr}} = A_{\text{GR}} + \delta A_{\text{rot}}(a), \quad \delta A_{\text{rot}}(a) = \frac{a}{M} \cdot \mathcal{L}_\phi,$$
 
@@ -40,7 +40,7 @@ $A_{\text{Kerr}}$ 的谱分解由自旋权重椭球谐函数的特征值 ${}_{s}
 
 $$A_{\text{Kerr}} = \sum_{s,l,m} \lambda_{slm} P_{slm}, \quad \lambda_{slm} = {}_{s}E_{lm}(a\omega),$$
 
-其中 $P_{slm}$ 是 $\mathbf{Spec}$ 范畴中的谱投影。对于慢转情形 $a\omega \ll 1$，特征值展开为：
+其中 $P_{slm}$ 是 $\mathbf{Sp}$ 范畴中的谱投影。对于慢转情形 $a\omega \ll 1$，特征值展开为：
 
 $${}_{s}E_{lm} = l(l+1) - s^2 - a\omega\left(\frac{2s^2m}{l(l+1)}\right) + O(a^2\omega^2).$$
 

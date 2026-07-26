@@ -4,7 +4,7 @@
 
 **版本**：v0.1（2026-07-25）
 
-**摘要**：本文将 Paper XXII 的 7 层嵌套纤维化方法论系统推广至五大物理领域：(1) QCD/强相互作用、(2) 引力/黑洞、(3) 凝聚态/流体、(4) 味物理/标准模型、(5) 宇宙学。核心成果为：(a) 三个元方法论定理——谱交织条件缩放定理（定理 1）、$\ell_{\text{corr}}$ 替换存在性定理（定理 2）、纤维方向一致性定理（定理 3）；(b) 五大领域的精细纤维分解，每层给出谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 和 $\ell_{\text{corr}}$ 替换；(c) 领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 的严格构造，证明其满忠实性（定理 4）；(d) 截面粘贴定理（定理 5），在四个能标界面建立领域间粘贴。所有谱交织条件全部通过数值验证。
+**摘要**：本文将 Paper XXII 的 7 层嵌套纤维化方法论系统推广至五大物理领域：(1) QCD/强相互作用、(2) 引力/黑洞、(3) 凝聚态/流体、(4) 味物理/标准模型、(5) 宇宙学。核心成果为：(a) 三个元方法论定理——谱交织条件缩放定理（定理 1）、$\ell_{\text{corr}}$ 替换存在性定理（定理 2）、纤维方向一致性定理（定理 3）；(b) 五大领域的精细纤维分解，每层给出谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 和 $\ell_{\text{corr}}$ 替换；(c) 领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 的严格构造，证明其满忠实性（定理 4）；(d) 截面粘贴定理（定理 5），在四个能标界面建立领域间粘贴。所有谱交织条件全部通过数值验证。
 
 **前置依赖**：Paper XXII（量子化学精细纤维拆分）。
 
@@ -29,7 +29,7 @@ Paper XXII 的成功引发了一个自然的问题：7 层嵌套纤维化链是�
 1. 每个领域都存在自然的能标/尺度分层结构，可映射为嵌套纤维化链；
 2. 每层的谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 均可严格定义；
 3. 存在领域特异的相关长度替换 $\ell_{\text{corr}}$，将量子化学中 $\ell_{\text{corr}} = 0.5$ Å 的经验推广为普适机制；
-4. 所有领域的纤维结构可通过嵌入函子 $\Phi$ 统一到同一总范畴 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 中。
+4. 所有领域的纤维结构可通过嵌入函子 $\Phi$ 统一到同一总范畴 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 中。
 
 ### 1.3 本文贡献
 
@@ -522,8 +522,8 @@ $$\ell_{\text{Cosmo}} = H^{-1}(z)$$
   其中 QC（量子化学）作为参考基准领域（来自 Paper XXII）。
 - **态射**：领域 $\mathcal{D}_1$ 到 $\mathcal{D}_2$ 的态射 $f: \mathcal{D}_1 \to \mathcal{D}_2$ 是一个交换对 $(\phi_{\text{scale}}, \psi_{\text{spec}})$，其中：
   - $\phi_{\text{scale}}: \mathbb{R}_+(\mathcal{D}_1) \to \mathbb{R}_+(\mathcal{D}_2)$ 是能标映射（保序或反序）；
-  - $\psi_{\text{spec}}: \mathbf{Spec}(\mathcal{D}_1) \to \mathbf{Spec}(\mathcal{D}_2)$ 是谱映射（保持谱间隙和谱流方程形式）。
-- **恒等态射**：$\text{id}_{\mathcal{D}} = (\text{id}_{\mathbb{R}_+}, \text{id}_{\mathbf{Spec}})$。
+  - $\psi_{\text{spec}}: \mathbf{Sp}(\mathcal{D}_1) \to \mathbf{Sp}(\mathcal{D}_2)$ 是谱映射（保持谱间隙和谱流方程形式）。
+- **恒等态射**：$\text{id}_{\mathcal{D}} = (\text{id}_{\mathbb{R}_+}, \text{id}_{\mathbf{Sp}})$。
 - **复合**：$g \circ f = (\phi_{g} \circ \phi_{f}, \psi_{g} \circ \psi_{f})$。
 
 **态射存在性**：如果两个领域至少共享一个公共能标界面（可在不同符号下对应）且谱流方程的形式相同，则二者之间存在态射。
@@ -532,7 +532,7 @@ $$\ell_{\text{Cosmo}} = H^{-1}(z)$$
 
 **定理 4**（嵌入函子 $\Phi$）。存在满忠实嵌入函子：
 
-$$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$$
+$$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$$
 
 使得每个物理领域 $\mathcal{D}$ 被映射为 $\partial\mathbf{Rec}_D$ 上的一个总谱丛，且 $\Phi$ 满忠实。
 
@@ -543,7 +543,7 @@ $$\Phi(\mathcal{D}) = \left( \bigsqcup_{i=1}^{n_{\mathcal{D}}} \mathcal{E}_{i}^{
 其中：
 1. $\{ \mathcal{E}_{i}^{(\mathcal{D})} \}_{i=1}^{n_{\mathcal{D}}}$ 是该领域的嵌套纤维化链；
 2. $\sim_{\partial\mathbf{Rec}_D}$ 是在谱边界处的粘合等价关系——不同领域的纤维化链在 $\partial\mathbf{Rec}_D$ 处共享公共截面数据；
-3. $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 是 Paper XXI [2] 定义的总参数丛范畴，基为 $\partial\mathbf{Rec}_D$（谱边界）。
+3. $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 是 Paper XXI [2] 定义的总参数丛范畴，基为 $\partial\mathbf{Rec}_D$（谱边界）。
 
 对态射 $f = (\phi_{\text{scale}}, \psi_{\text{spec}}): \mathcal{D}_1 \to \mathcal{D}_2$，定义：
 
@@ -552,7 +552,7 @@ $$\Phi(f) = \left( \phi_{\text{scale}}^\#, \psi_{\text{spec}}^\# \right)$$
 其中 $\phi_{\text{scale}}^\#$ 诱导纤维化链基空间之间的拉回，$\psi_{\text{spec}}^\#$ 诱导纤维谱数据之间的自然变换。
 
 **满忠实性证明**。
-1. **满性**：对任意 $G \in \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$，若 $G$ 具有 $n$ 层嵌套结构且每层谱生成元可归入某一物理领域的 $A_i$ 形式，则存在 $\mathcal{D} \in \mathbf{Domains}$ 使得 $\Phi(\mathcal{D}) \cong G$。
+1. **满性**：对任意 $G \in \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$，若 $G$ 具有 $n$ 层嵌套结构且每层谱生成元可归入某一物理领域的 $A_i$ 形式，则存在 $\mathcal{D} \in \mathbf{Domains}$ 使得 $\Phi(\mathcal{D}) \cong G$。
 2. **忠实性**：若 $\Phi(f) = \Phi(g)$，则 $(f)$ 和 $(g)$ 在基空间和谱数据上的作用相同，故 $f = g$。
 
 ### 8.3 截面粘贴定理
@@ -621,7 +621,7 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
    - 味物理：5 层结构（Yukawa→Mixing→CP→Seesaw→Hierarchy），非单调能标排序及 $d=-1$ 局部修正，$\ell_{\text{Flv}} = \ln(c_i)$。
    - 宇宙学：6 层结构（Inflation→Reheat→BBN→LSS→DE→Quantum Cosmo），时间-纤维化对偶，$\ell_{\text{Cosmo}} = H^{-1}(z)$。
 
-3. **领域同一化嵌入函子 $\Phi$**（定理 4，§8）：将 6 个领域嵌入同一总范畴 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$，证明满忠实性。
+3. **领域同一化嵌入函子 $\Phi$**（定理 4，§8）：将 6 个领域嵌入同一总范畴 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$，证明满忠实性。
 
 4. **截面粘贴定理**（定理 5，§8）：在 4 对领域界面（QCD↔Flv、GR↔Cosmo、CM↔QCD、CM↔GR）建立截面数据粘贴，粘贴精度 < 7%。
 
@@ -640,7 +640,7 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 **Paper XXVI：RG 流纤维嵌入严格化**。将 §3.3 中提出的 RG 流纤维嵌入（能标跨度 $10^{19}$ 所需的层内亚纤维化）严格形式化，建立 $\mathcal{E}_i^{\text{(sub)}}$ 的严格范畴论构造。
 
-**Paper XXVII：时间-纤维化对偶的形式化证明**。将 §7.1 的时间-纤维化对偶提升为严格的范畴等价，证明红移参数化的谱流方程在 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Spec})$ 中与时间演化是等价的。
+**Paper XXVII：时间-纤维化对偶的形式化证明**。将 §7.1 的时间-纤维化对偶提升为严格的范畴等价，证明红移参数化的谱流方程在 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 中与时间演化是等价的。
 
 **Phase 57：数值实现与预测**。将本文的纤维分解方案实现为可执行数值协议，在五大领域中产生可检验的预测——特别是 QCD 禁闭-退禁闭谱交织条件的精确格点验证，以及味物理中 CP→Seesaw $d=-1$ 界面的中微子质量预测。
 
@@ -716,7 +716,7 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 ## 参考文献
 
-[1] 王斌. 通用不动点范畴框架 I：分形谱去递归理论. Paper I, v2.30, 2026.
+[1] 王斌. 通用不动点范畴框架 I：分形谱化理论. Paper I, v2.30, 2026.
 
 [2] 王斌. 通用不动点范畴框架 XXI：Grothendieck 纤维化综合——从谱族到总参数丛. Paper XXI, v0.1, 2026.
 

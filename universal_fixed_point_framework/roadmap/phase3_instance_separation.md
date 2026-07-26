@@ -8,7 +8,7 @@
 
 抽象框架（universal_fixed_point_framework）提供三层通用结构：
 
-1. **元公理层**：$\mathbf{Rec}$、$\mathbf{Spec}$、谱去递归化函子 $D$、忠实性、伴随函子等。
+1. **元公理层**：$\mathbf{Rec}$、$\mathbf{Sp}$、谱化函子 $D$、忠实性、伴随函子等。
 2. **结构定理层**：全域不动点方程 $\mathcal{F}[\mathcal{V}]=\mathcal{V}$、$\text{Cat}_H(\mathcal{Cl})$、轨道函子 $O$ 等。
 3. **实例假设层**：具体物理/数学系统的额外假设，仅通过标准接口与上层交互。
 
@@ -94,8 +94,8 @@
 
 **待验证预言**：
 
-- 去递归化算子 $A_R = -\log(I - \eta \Theta)$ 的特征值与 NTK 特征值一致。
-- 谱自然等价 $\lambda_k = e^{-\mu_k}$ 成立。
+- 谱化算子 $A_R = -\log(I - \eta \Theta)$ 的特征值与 NTK 特征值一致。
+- 谱自然同构 $\lambda_k = e^{-\mu_k}$ 成立。
 
 ### 3.3 弦论（String）
 
@@ -135,7 +135,7 @@
 **待验证预言**：
 
 - Lyapunov 指数按能量/角动量排序。
-- 谱自然等价成立。
+- 谱自然同构成立。
 
 ### 3.5 BSM 新费米子
 

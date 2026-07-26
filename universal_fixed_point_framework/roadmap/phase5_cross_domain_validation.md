@@ -6,7 +6,7 @@
 
 ## 1. 已完成基础回顾
 
-- **元公理层**（`phase1_meta_axioms.md`）：$\mathbf{Rec}$、$\mathbf{Spec}$、谱去递归化函子 $D$、忠实性、伴随函子存在条件。
+- **元公理层**（`phase1_meta_axioms.md`）：$\mathbf{Rec}$、$\mathbf{Sp}$、谱化函子 $D$、忠实性、伴随函子存在条件。
 - **结构定理层**（`phase2_structural_theorems.md`）：全域不动点方程、$\text{Cat}_H(\mathcal{Cl})$、轨道函子 $O$、谱对应。
 - **实例假设层剥离**（`phase3_instance_separation.md`）：SM、NTK、弦论、引力、BSM 作为下游插件。
 - **过拟合几何判据**（`phase4_semantics_over_fitting.md`）：LACI、局部吸引子 = 约束下全域不动点。
@@ -62,7 +62,7 @@ $$K_R(x,y) = \int_{\sigma(U_R)} \frac{1}{1 - |\lambda|^2/2} \, dP_{x,y}(\lambda)
 - `src/decursion_functor.py` 中已实现:
   - `right_adjoint_on_morphism()` — 将 `SpectralMorphism` 映射为 `RecMorphism`
   - `unit()` — 自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}} \to R \circ D$
-  - `counit()` — 自然变换 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Spec}}$
+  - `counit()` — 自然变换 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Sp}}$
   - `verify_triangle_identities()` — 验证两条三角恒等式
 - `src/test_decursion_functor.py` 中通过测试验证:
   - `test_adjunction_triangle_identities()` — 三角恒等式成立

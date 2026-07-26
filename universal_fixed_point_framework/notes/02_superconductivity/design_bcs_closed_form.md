@@ -96,7 +96,7 @@ $$\mu^*_{\text{spec}} = \frac{\alpha \cdot L}{1 + \alpha \cdot L}, \quad \alpha 
 
 **结论**：Al, Sn, Pb 的 a_spec 偏差均 < 5%，μ*_spec 成功消除经验参数。Nb 的偏差 (26.6%) 确认源于 d-轨道多带效应。
 
-Hg 的偏差需要特殊分析（见 §5.3）。McMillan T_c 预测的系统高估（所有材料的 T_c^spec >> T_c^exp）是 McMillan 公式自身的精度限制，非 μ*_spec 的问题。
+Hg 的偏差需要特殊分析（见 §5.3）。McMillan T_c 预测的系统高估（所有材料的 T_c^spec >> T_c^exp）是 McMillan 公式自身的精度限制，非 μ*_Sp 的问题。
 
 ### 5.2 核心优势
 
@@ -145,7 +145,7 @@ Hg 的 a_spec 偏差 (11.7%) 与 μ*_spec 偏差 (7.2%) 的关系并非直接因
 
 ### 6.1 Nb d-轨道多带 μ*_spec 修正
 
-**修正 P0-B（多带 μ*_spec）**：对于 d-轨道过渡金属，不同能带的谱间隙常数 $D_0^{(i)}$ 不同，多带 $\mu^*$ 由 DOS 权重加权平均：
+**修正 P0-B（多带 μ*_Sp）**：对于 d-轨道过渡金属，不同能带的谱间隙常数 $D_0^{(i)}$ 不同，多带 $\mu^*$ 由 DOS 权重加权平均：
 
 $$\mu^*_{\text{eff}} = \sum_i w_i \cdot \frac{\alpha_i L_i}{1 + \alpha_i L_i}, \quad \alpha_i = \left(\frac{D_0^{(i)}}{r_w}\right)^2, \quad L_i = \ln\left(\frac{\varepsilon_F^{(i)}}{\omega_D}\right)$$
 
@@ -204,7 +204,7 @@ $$Z_{\text{eff}} = 2.0 \times \left(1 + \frac{16.5}{2} \times \left(\frac{80}{13
 
 ### 6.4 MgB₂ 多带 μ*_spec 独立验证
 
-MgB₂（T_c = 39 K）是已知的双带超导体（σ 带 + π 带），用于独立验证多带 μ*_spec 的预测性。
+MgB₂（T_c = 39 K）是已知的双带超导体（σ 带 + π 带），用于独立验证多带 μ*_Sp 的预测性。
 
 **MgB₂ 能带结构**：
 

@@ -8,7 +8,7 @@
 
 
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VII（固定基谱熵 $S_{\mathcal{B}}(t)$）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VII（固定基谱熵 $S_{\mathcal{B}}(t)$）。
 
 ## 1. 引言
 
@@ -240,7 +240,7 @@ $$A_{\text{GR}}|\psi_n\rangle = E_n|\psi_n\rangle$$
 
 $$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{const}$$
 
-**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Spec}$ 分支。数值验证见 `paperX_bh_interior_spectral.py` 和 `paperX_bh_interior_deep.py`（6/6 ✅，含谱流匹配、信息守恒、Page 曲线、奇点反射）。
+**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Sp}$ 分支。数值验证见 `paperX_bh_interior_spectral.py` 和 `paperX_bh_interior_deep.py`（6/6 ✅，含谱流匹配、信息守恒、Page 曲线、奇点反射）。
 
 **推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `paperX_page_curve.py`。
 
@@ -280,17 +280,17 @@ $$\lim_{a \to 0} \frac{d}{dt} D(R_{\text{Kerr}}) = 0$$
 **定义 7.5**（极端边界）。$\partial\mathbf{Kerr}_{\text{ext}} = \{(M, a) \in \mathbf{Kerr} \mid a = M\}$。在极端边界上：
 - 内外视界重合：$r_+ = r_- = M$
 - 谱间隙闭合：$\Delta\lambda_{\min}^{(\text{Kerr})}(a = M) = 0$
-- 纤维类型从 $\mathbf{Spec}$（离散谱）跳变到 $\mathbf{Spec}_{\text{deg}}$（简并谱）
+- 纤维类型从 $\mathbf{Sp}$（离散谱）跳变到 $\mathbf{Sp}_{\text{deg}}$（简并谱）
 
 #### 7.4.2 Kerr 谱丛
 
-**定义 7.6**（总范畴 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$）。
+**定义 7.6**（总范畴 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$）。
 - **对象**：$((M, a), \{\omega_{lmn}\})$，其中 $(M, a) \in \mathbf{Kerr}$，$\{\omega_{lmn}\}$ 是 QNM 谱数据（$l$ 角量子数，$m$ 磁量子数，$n$ 径向量子数）
 - **态射** $(f, \phi): ((M_1, a_1), \{\omega^{(1)}\}) \to ((M_2, a_2), \{\omega^{(2)}\})$：
   - $f: (M_1, a_1) \to (M_2, a_2)$ 是参数膨胀
   - $\phi$ 是谱变换（模式映射），满足 $\phi \cdot \omega^{(2)} = \omega^{(1)} \cdot \phi$
 
-**定义 7.7**（投影 $\pi_{M,a}$）。$\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Kerr}$ 定义为：
+**定义 7.7**（投影 $\pi_{M,a}$）。$\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Kerr}$ 定义为：
 $$\pi_{M,a}((M, a), \{\omega\}) = (M, a), \quad \pi_{M,a}(f, \phi) = f$$
 
 **定理 7.4**（$\pi_{M,a}$ 是 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化：对任意 $((M_2, a_2), \{\omega^{(2)}\})$ 和 $f: (M_1, a_1) \to (M_2, a_2)$，Cartan 提升由 QNM 谱沿参数方向的连续性给出。
@@ -299,12 +299,12 @@ $$\pi_{M,a}((M, a), \{\omega\}) = (M, a), \quad \pi_{M,a}(f, \phi) = f$$
 
 #### 7.4.3 谱间隙截面与 Hawking 温度
 
-**定义 7.8**（谱间隙截面）。$\sigma_{\Delta}^{(\text{Kerr})}: \mathbf{Kerr} \to \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 定义为：
+**定义 7.8**（谱间隙截面）。$\sigma_{\Delta}^{(\text{Kerr})}: \mathbf{Kerr} \to \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 定义为：
 $$\sigma_{\Delta}^{(\text{Kerr})}(M, a) = ((M, a), \Delta\lambda_{\min}^{(\text{Kerr})}(M, a))$$
 
 该截面满足 $\pi_{M,a} \circ \sigma_{\Delta}^{(\text{Kerr})} = \text{id}_{\mathbf{Kerr}}$。
 
-**定理 7.5**（温度-谱间隙丛态射）。存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$，其基函子为 $\mathcal{H}(M, a) = T_H(M, a)$，使得：
+**定理 7.5**（温度-谱间隙丛态射）。存在纤维保持函子 $\hat{\mathcal{H}}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$，其基函子为 $\mathcal{H}(M, a) = T_H(M, a)$，使得：
 $$T_H(M, a) = \frac{\Delta\lambda_{\min}^{(\text{Kerr})}(M, a)}{2\pi}$$
 
 *证明*。Kerr 表面引力 $\kappa = \sqrt{M^2 - a^2} / (M^2 + \sqrt{M^2 - a^2})$，代入 Hawking 公式 $T_H = \kappa/(2\pi)$，对比谱间隙公式 $\Delta\lambda_{\min}^{(\text{Kerr})} = \Delta\lambda_{\min}^{(0)} \cdot \sqrt{1-a^2/M^2}$，得 $T_H = \kappa/(2\pi) = \Delta\lambda_{\min}^{(\text{Kerr})}/(2\pi)$。$\square$
@@ -321,13 +321,13 @@ $$S_{\text{BH}} = \frac{A}{4G} = 2\pi(M^2 + \sqrt{M^4 - J^2}) = S_{\text{spec}} 
 
 #### 7.4.5 非乘积丛结构
 
-**定理 7.7**（非乘积丛）。$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 是一个**非乘积丛**——当 $a \to M$ 时，纤维类型从 $\mathbf{Spec}$（离散 QNM 谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（退化视界谱）：
+**定理 7.7**（非乘积丛）。$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 是一个**非乘积丛**——当 $a \to M$ 时，纤维类型从 $\mathbf{Sp}$（离散 QNM 谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（退化视界谱）：
 $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M - a) \cdot \delta\omega_{lm}$$
 其中 $\delta\omega_{lm} > 0$ 使 QNM 虚部在极端极限下消失。
 
-*证据*。极端极限下谱间隙闭合（$\Delta\lambda_{\min} \to 0$）、QNM 虚部消失（$\text{Im}(\omega_{lmn}) \to 0$）、内外视界简并（$r_+ = r_- = M$），三者联合导致全局截面无法连续延拓到 $\partial\mathbf{Kerr}_{\text{ext}}$ 以外。这使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 成为普通向量丛无法表达的范畴对象。
+*证据*。极端极限下谱间隙闭合（$\Delta\lambda_{\min} \to 0$）、QNM 虚部消失（$\text{Im}(\omega_{lmn}) \to 0$）、内外视界简并（$r_+ = r_- = M$），三者联合导致全局截面无法连续延拓到 $\partial\mathbf{Kerr}_{\text{ext}}$ 以外。这使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为普通向量丛无法表达的范畴对象。
 
-**推论 7.5**（非乘积丛 vs 乘积丛的区分）。$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 是乘积丛（温度参数无边界，纤维类型恒定），而 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 是非乘积丛（极端边界 $a=M$ 处纤维跳变）。这一区分在范畴论层面解释了为何 Kerr 黑洞有极端极限而 Schwarzschild 黑洞没有。
+**推论 7.5**（非乘积丛 vs 乘积丛的区分）。$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 是乘积丛（温度参数无边界，纤维类型恒定），而 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 是非乘积丛（极端边界 $a=M$ 处纤维跳变）。这一区分在范畴论层面解释了为何 Kerr 黑洞有极端极限而 Schwarzschild 黑洞没有。
 
 ## 8. 结论
 
@@ -342,7 +342,7 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.34。无界算子与 Hille-Yosida 半群（§2.10）；**Phase 36：谱间隙 Δλ_min = 0.122 M_Pl 由 Cl(1,7) + SU(2) 第一性原理导出（§A.15.7）。**
+- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.34。无界算子与 Hille-Yosida 半群（§2.10）；**Phase 36：谱间隙 Δλ_min = 0.122 M_Pl 由 Cl(1,7) + SU(2) 第一性原理导出（§A.15.7）。**
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。
 - [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、信息持守。
@@ -360,7 +360,7 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。v1.4 新增 §7.4 Kerr 参数范畴的纤维化形式化（$\mathbf{Kerr}$ 基范畴、$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Spec})$ 总范畴、Grothendieck 纤维化、温度-谱间隙丛态射、BH 熵谱求和形式、非乘积丛结构）。主要内容：
+《通用不动点范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。v1.4 新增 §7.4 Kerr 参数范畴的纤维化形式化（$\mathbf{Kerr}$ 基范畴、$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 总范畴、Grothendieck 纤维化、温度-谱间隙丛态射、BH 熵谱求和形式、非乘积丛结构）。主要内容：
 - Hawking 温度谱公式（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
 - BH 熵谱公式（定理 3.1）：$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$，数值匹配 0.0000%
 - QNM 频谱（定理 4.1）：$\omega_n$ 由谱间隙决定
@@ -372,7 +372,7 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| **v1.4** | **2026-07-23** | **纤维化形式化**：新增 §7.4 Kerr 参数范畴的纤维化形式化（§7.4.1 $\mathbf{Kerr}$ 范畴定义与极端边界；§7.4.2 $\mathbf{Bun}(\mathbf{Kerr},\mathbf{Spec})$ 总范畴与 Grothendieck 纤维化；§7.4.3 谱间隙截面 $\sigma_{\Delta}^{(\text{Kerr})}$ 与 $\hat{\mathcal{H}}$ 温度-谱间隙丛态射；§7.4.4 BH 熵谱求和形式 $S_{\text{spec}} = \sum \ln(1/\lambda)$；§7.4.5 非乘积丛结构与极端极限纤维跳变）|
+| **v1.4** | **2026-07-23** | **纤维化形式化**：新增 §7.4 Kerr 参数范畴的纤维化形式化（§7.4.1 $\mathbf{Kerr}$ 范畴定义与极端边界；§7.4.2 $\mathbf{Bun}(\mathbf{Kerr},\mathbf{Sp})$ 总范畴与 Grothendieck 纤维化；§7.4.3 谱间隙截面 $\sigma_{\Delta}^{(\text{Kerr})}$ 与 $\hat{\mathcal{H}}$ 温度-谱间隙丛态射；§7.4.4 BH 熵谱求和形式 $S_{\text{spec}} = \sum \ln(1/\lambda)$；§7.4.5 非乘积丛结构与极端极限纤维跳变）|
 | v1.2 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
 | v1.1 | 2026-07-17 | 同步 Phase 36：谱间隙 Δλ_min 第一性原理导出 |
 | v1.0 | 2026-07-17 | 新增 §2.4 Hille-Yosida 蒸发半群、§7.1 极端极限连续谱 |

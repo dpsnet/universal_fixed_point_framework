@@ -72,7 +72,7 @@ $$Z_2 \approx 5.27,\quad Z_1 \approx 3.66$$
 
 ### 3.1 问题形式化
 
-设 $\mathcal{A} = \{A_1, A_2, A_3\}$ 为三个规范谱生成元。完整谱对象 $A \in \mathbf{Spec}$ 包含 $\mathcal{A}$ 和引力谱生成元 $A_{\text{GR}}$。
+设 $\mathcal{A} = \{A_1, A_2, A_3\}$ 为三个规范谱生成元。完整谱对象 $A \in \mathbf{Sp}$ 包含 $\mathcal{A}$ 和引力谱生成元 $A_{\text{GR}}$。
 
 谱对易子的 Jacobi 恒等式：
 
@@ -145,7 +145,7 @@ $4\pi$ 的来源：
 
 ### 5.1 $4\pi$ 的谱起源
 
-在 $\mathbf{Spec}$ 范畴中，谱生成元 $A_i$ 的 Hilbert-Schmidt 范数 $\|A_i\|_{\text{HS}}$ 与其谱间隙的关系为：
+在 $\mathbf{Sp}$ 范畴中，谱生成元 $A_i$ 的 Hilbert-Schmidt 范数 $\|A_i\|_{\text{HS}}$ 与其谱间隙的关系为：
 
 $$\|A_i\|_{\text{HS}}^2 = \sum_k \lambda_k^2 \propto \Delta\lambda_i^2 \cdot \dim\mathcal{H}_i$$
 
@@ -162,7 +162,7 @@ $$g_i \propto \|[A_i, \psi]\|_{\text{HS}}$$
 | 问题 | 状态 | 路径 |
 |:----|:----|:-----|
 | Z_i 的显式 DS 公式 | 🔴 未推导 | 需从 $[A_i, [A_j, A_k]]$ 的 HS 范数比计算 |
-| $4\pi$ 的范畴起源 | 🟡 半定量 | 涉及 $\mathbf{Spec}$ 的态射空间维数 |
+| $4\pi$ 的范畴起源 | 🟡 半定量 | 涉及 $\mathbf{Sp}$ 的态射空间维数 |
 | Z_i 的数值预测 | 🔴 未计算 | 需 $SU(3)$ 对易子空间的显式谱分解 |
 
 ---

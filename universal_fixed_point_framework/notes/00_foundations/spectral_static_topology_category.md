@@ -1,4 +1,4 @@
-# 纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位
+# 纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位
 
 **版本**：v1.0（2026-07-22）
 
@@ -6,7 +6,7 @@
 
 ## 1. 问题陈述
 
-纯静态拓扑结构（无时间/尺度演化的固定几何流形）能否被纳入 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架？如果可以，以何种方式纳入？
+纯静态拓扑结构（无时间/尺度演化的固定几何流形）能否被纳入 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架？如果可以，以何种方式纳入？
 
 核心矛盾：
 - $\mathbf{Rec}$ 范畴对象四元组 $(\mathcal{S}_R, \Phi_R, \mathcal{T}_R, \mathcal{M}_R)$ 强制要求**迭代半群 $\mathcal{T}_R$**——对应时间/尺度上的重复演化过程
@@ -79,7 +79,7 @@ $$R_{\text{static}}^{\text{ext}} = (M, \mathrm{id}_M, \mathbb{R}_{\ge 0}, \mu_M)
 
 ### 4.2 谱像
 
-**注**：此处 $D$ 记为 $D^{\text{id}}$，是与 Paper I §2.3 中标准谱去递归化函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$（$A_R = -\log U_R$）不同的函子。对恒等延拓 $R_{\text{static}}^{\text{ext}} = (M, \mathrm{id}_M, \mathbb{R}_{\ge 0}, \mu_M)$，Paper I 的标准 $D$ 会给出 $A_R = -\log \mathrm{id} = 0$，谱为 $\{0\}$——这不能反映静态流形的谱几何。$D^{\text{id}}$ 使用流形 $M$ 上自然的谱算子（如 Laplace-Beltrami 算子 $\Delta_M$），是独立于 $D$ 的谱几何函子。
+**注**：此处 $D$ 记为 $D^{\text{id}}$，是与 Paper I §2.3 中标准谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$（$A_R = -\log U_R$）不同的函子。对恒等延拓 $R_{\text{static}}^{\text{ext}} = (M, \mathrm{id}_M, \mathbb{R}_{\ge 0}, \mu_M)$，Paper I 的标准 $D$ 会给出 $A_R = -\log \mathrm{id} = 0$，谱为 $\{0\}$——这不能反映静态流形的谱几何。$D^{\text{id}}$ 使用流形 $M$ 上自然的谱算子（如 Laplace-Beltrami 算子 $\Delta_M$），是独立于 $D$ 的谱几何函子。
 
 延拓后的谱像为：
 
@@ -139,7 +139,7 @@ $$\frac{d}{dt}D(R) = 0$$
 | **原生 $\mathbf{Rec}$** | $\Phi(\theta) = \theta/2$（压缩） | $\mathbb{N}$ | 康托集类型谱 | 非 $S^1$ 原生拓扑 |
 | **临界广义自相似** | $\Phi_R(\theta) = \theta + \omega$（旋转）| $\mathbb{R}$ | 旋转谱 | 有演化但无压缩 |
 | **静态延拓（本文）** | $\mathrm{id}_{S^1}$ | $\mathbb{R}_{\ge 0}$ | $\sigma(\Delta_{S^1})$ | 任意旋转角下谱不变 |
-| **纯几何（无延拓）** | 无 | 无 | 无法进入 $\mathbf{Spec}$ | 范畴外 |
+| **纯几何（无延拓）** | 无 | 无 | 无法进入 $\mathbf{Sp}$ | 范畴外 |
 
 表中可见：$S^1$ 可被三种不同方式处理，结果差异巨大。
 
@@ -211,7 +211,7 @@ $$\frac{d}{dt}D(R_{\text{static}}^{\text{ext}}) = 0 \iff A_t = A_0, \quad \foral
 
 **延拓**：$(S^2, \mathrm{id}_{S^2}, \mathbb{R}_{\ge 0}, \sin\theta\,d\theta d\phi)$
 
-**意义**：球谐函数在谱动力学中对应 $\mathbf{Spec}$ 对象的本征态，恒等演化保持所有角动量模式不变
+**意义**：球谐函数在谱动力学中对应 $\mathbf{Sp}$ 对象的本征态，恒等演化保持所有角动量模式不变
 
 ### 9.3 环面 $T^2$
 
@@ -272,7 +272,7 @@ $$\frac{d}{dt}D(R_{\text{static}}^{\text{ext}}) = 0 \iff A_t = A_0, \quad \foral
 
 - 恒等延拓不产生任何新动力学预言。谱分析结果完全由原始流形的谱几何决定。
 - 延拓是一种**分析工具**，不是对静态系统内禀属性的断言。
-- 延拓无法将非度量拓扑信息编码进 $\mathbf{Spec}$ 范畴。
+- 延拓无法将非度量拓扑信息编码进 $\mathbf{Sp}$ 范畴。
 
 ---
 ## 12. 恒等延拓的谱静默条件分析
@@ -322,7 +322,7 @@ Paper I §5.2 定义了四个判断"谱静默"的充分必要条件。这些条�
 | 非紧致双曲（$\mathbb{H}^2/\Gamma$）| 🟡 混合 | ✅ | ✅ 无间隙 | ✅ | **部分静默**（3/4）|
 | Kerr BH 静态极限 $a\to 0$ | ❌ 离散 | ✅ | ❌ 有间隙 | ✅ | **弱静默**（2/4）|
 
-**关键发现**：恒等延拓下的静态流形是**弱静默对象**——满足 S2–S4 但不满足 S1（紧致情况）。这意味着静态度量在 $\mathbf{Spec}$ 范畴中处于"半静默"状态：其谱结构在局部上可分辨（离散特征），但在整体谱测度下权重为零。
+**关键发现**：恒等延拓下的静态流形是**弱静默对象**——满足 S2–S4 但不满足 S1（紧致情况）。这意味着静态度量在 $\mathbf{Sp}$ 范畴中处于"半静默"状态：其谱结构在局部上可分辨（离散特征），但在整体谱测度下权重为零。
 
 **推论 12.1**（静默程度与流形紧致性的关系）。流形的非紧致性越强，其恒等延拓的静默程度越高。在 $\mathbb{H}^2/\Gamma$ 的连续谱区域，恒等延拓达到完全静默（S1–S4 全部满足）。
 
@@ -364,12 +364,12 @@ AdS 时空在共形紧致化后，边界 $\partial(\text{AdS})$ 是可区分于�
 | 边界 CFT 视角 | **静态共形流形** | 恒等延拓 $(\partial\text{AdS}, \mathrm{id}, \mathbb{R}_{\ge 0}, \mu)$ |
 | AdS/CFT 对应 | 体 $\;\leftrightarrow\;$ 边对偶 | $D(R_{\text{bulk}}) \;\leftrightarrow\; D(R_{\text{boundary}}^{\text{ext}})$ |
 
-**重要观察**：AdS/CFT 中体时空与边界的对偶，在 $\mathbf{Rec}/\mathbf{Spec}$ 语言中转化为：
+**重要观察**：AdS/CFT 中体时空与边界的对偶，在 $\mathbf{Rec}/\mathbf{Sp}$ 语言中转化为：
 - 体：以 $R_{\text{AdS}} \in \mathbf{Rec}$（原生，具有非平凡演化生成元 $A_{\text{AdS}}$）
 - 边：以 $R_{\partial\text{AdS}}^{\text{ext}}$ 恒等延拓嵌入 $\mathbf{Rec}$
 - 对偶映射：$D(R_{\text{AdS}}) \simeq D(R_{\partial\text{AdS}}^{\text{ext}})$（谱像等价）
 
-这使得 AdS/CFT 对应获得了范畴论诠释——体-边对偶等价于原生 $\mathbf{Rec}$ 对象与恒等延拓对象在 $\mathbf{Spec}$ 中的谱等价。
+这使得 AdS/CFT 对应获得了范畴论诠释——体-边对偶等价于原生 $\mathbf{Rec}$ 对象与恒等延拓对象在 $\mathbf{Sp}$ 中的谱等价。
 
 ### 13.3 拓扑量子场论的静态背景
 
@@ -390,7 +390,7 @@ AdS 时空在共形紧致化后，边界 $\partial(\text{AdS})$ 是可区分于�
 
 以上三个物理应用统一于以下原则：
 
-> **谱静态原理**。当一个物理系统的演化自由度被完全冻结（$d/dt = 0$），其 $\mathbf{Rec}$ 范畴定位自动退化到恒等延拓。此时系统的所有可观测物理内容均编码在其拓扑和谱几何中，$\mathbf{Spec}$ 范畴中的时间演化完全退化。
+> **谱静态原理**。当一个物理系统的演化自由度被完全冻结（$d/dt = 0$），其 $\mathbf{Rec}$ 范畴定位自动退化到恒等延拓。此时系统的所有可观测物理内容均编码在其拓扑和谱几何中，$\mathbf{Sp}$ 范畴中的时间演化完全退化。
 
 ---
 
@@ -429,12 +429,12 @@ AdS 时空在共形紧致化后，边界 $\partial(\text{AdS})$ 是可区分于�
 
 **注**：$D^{\text{id}}$ 不是 Paper I 标准 $D$ 函子在 $\mathbf{Rec}_{\text{id}}$ 上的限制。对 $\Phi=\mathrm{id}$，标准 $D$ 给出平凡谱 $\{0\}$（$A=-\log U=0$），而 $D^{\text{id}}$ 使用流形的 Laplace-Beltrami 算子编码谱几何。$D^{\text{id}}$ 是 $\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$ 等价下的自然谱函子。
 
-**定理 14.4**（限制伴随对）。$D \dashv R$ 伴随对限制到 $\mathbf{Rec}_{\text{id}}$ 时，退化到 $\mathbf{Riemann} \to \mathbf{Spec}$ 的**平凡谱函子**：
+**定理 14.4**（限制伴随对）。$D \dashv R$ 伴随对限制到 $\mathbf{Rec}_{\text{id}}$ 时，退化到 $\mathbf{Riemann} \to \mathbf{Sp}$ 的**平凡谱函子**：
 $$D^{\text{id}}(M) = (\mathcal{H}_M, \Delta_M, \sigma(\Delta_M))$$
 
 其中谱流方程 $\frac{d}{dt}D(R) = 0$ 恒成立。
 
-*证明*：限制函子 $D^{\text{id}} = D \circ \iota$ 作用于 $R_M^{\text{ext}}$ 时，传播不产生态射生成元 $A_{F,i} = 0$，故谱流退化。伴随关系 $D \dashv R$ 在子范畴上保持，但伴随单位 $\eta: \mathrm{id}_{\mathbf{Riemann}} \to R \circ D^{\text{id}}$ 和余单位 $\varepsilon: D^{\text{id}} \circ R \to \mathrm{id}_{\mathbf{Spec}}$ 分别退化到恒等嵌入和谱投影。∎
+*证明*：限制函子 $D^{\text{id}} = D \circ \iota$ 作用于 $R_M^{\text{ext}}$ 时，传播不产生态射生成元 $A_{F,i} = 0$，故谱流退化。伴随关系 $D \dashv R$ 在子范畴上保持，但伴随单位 $\eta: \mathrm{id}_{\mathbf{Riemann}} \to R \circ D^{\text{id}}$ 和余单位 $\varepsilon: D^{\text{id}} \circ R \to \mathrm{id}_{\mathbf{Sp}}$ 分别退化到恒等嵌入和谱投影。∎
 
 **推论 14.1**。恒等延拓子范畴的引入不改变 $\mathbf{Rec}$ 范畴的伴随对结构——$D \dashv R$ 在 $\mathbf{Rec}_{\text{id}}$ 上的限制是良定义的，但丧失非平凡动力学内容。
 
@@ -514,12 +514,12 @@ $$D(\eta_R): D(R) \to D(\mathcal{L}(R)) \quad \text{满足} \quad \frac{d}{dt}D(
 
 ### 16.3 与 Gelfand 对偶的对应
 
-**定理 16.4**（谱函子限制下的 Gelfand 型对偶）。限制谱函子 $D^{\text{id}}: \mathbf{Rec}_{\text{id}} \to \mathbf{Spec}$ 与 Gelfand 对偶存在精确对应：
+**定理 16.4**（谱函子限制下的 Gelfand 型对偶）。限制谱函子 $D^{\text{id}}: \mathbf{Rec}_{\text{id}} \to \mathbf{Sp}$ 与 Gelfand 对偶存在精确对应：
 - 对紧致流形 $M$，$C^\infty(M)$ 是交换 $C^*$-代数
 - Gelfand 对偶给出 $\mathrm{Spec}(C^\infty(M)) \cong M$（作为拓扑空间）
 - 谱函子 $D^{\text{id}}(M) = (\mathcal{H}_M, \Delta_M, \sigma(\Delta_M))$ 是 Gelfand 变换的**谱版本**——不是恢复拓扑空间 $M$，而是恢复 $M$ 的谱几何
 
-因此，$D^{\text{id}}$ 可以视为 Gelfand 对偶在 $\mathbf{Rec}_{\text{id}}$ 中的"谱几何版本"，将交换 $C^*$-代数理论翻译为 $\mathbf{Spec}$ 范畴的语言。
+因此，$D^{\text{id}}$ 可以视为 Gelfand 对偶在 $\mathbf{Rec}_{\text{id}}$ 中的"谱几何版本"，将交换 $C^*$-代数理论翻译为 $\mathbf{Sp}$ 范畴的语言。
 
 **对应表**：
 
@@ -551,7 +551,7 @@ $$D(\eta_R): D(R) \to D(\mathcal{L}(R)) \quad \text{满足} \quad \frac{d}{dt}D(
 
 ### 17.1 与理想直线的类比
 
-纯静态拓扑在 $\mathbf{Rec}/\mathbf{Spec}$ 框架中的地位，与欧氏几何中**理想直线**的地位完全平行：
+纯静态拓扑在 $\mathbf{Rec}/\mathbf{Sp}$ 框架中的地位，与欧氏几何中**理想直线**的地位完全平行：
 
 | 维度 | 理想直线(Euclid) | 纯静态拓扑(本框架) |
 |:----|:---------------|:------------------|
@@ -627,11 +627,11 @@ $$\mathcal{D}yn(\mathcal{L}(R), (\Phi, \mathcal{T})) \cong R$$
 
 ### 18.3 谱等价桥
 
-当动态系统的谱满足静默条件时，其谱像与静态背景的谱像在 $\mathbf{Spec}$ 中不可区分——这是静态-动态转化的深层结构。
+当动态系统的谱满足静默条件时，其谱像与静态背景的谱像在 $\mathbf{Sp}$ 中不可区分——这是静态-动态转化的深层结构。
 
 **定理 18.2**（谱等价桥）。设 $R \in \mathbf{Rec}$ 是动态系统，$M$ 是其状态空间。若 $R$ 的谱像 $D(R)$ 满足条件 S1-S4（完全静默），则存在谱等价：
 
-$$D(R) \cong D^{\text{id}}(M) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
+$$D(R) \cong D^{\text{id}}(M) \quad \text{在 } \mathbf{Sp} \text{ 中}$$
 
 其中 $D^{\text{id}}$ 是 $\mathbf{Rec}_{\text{id}}$ 上的谱几何函子（§4.2）。
 
@@ -641,9 +641,9 @@ $$D(R) \cong D^{\text{id}}(M) \quad \text{在 } \mathbf{Spec} \text{ 中}$$
 - S3（LACI高 → 无间隙）：$D(R)$ 无谱间隙 $\implies \sigma(D(R)) = \overline{\sigma(D^{\text{id}}(M))}$
 - S4（零轨道权重）：两者在群表示下的不变权重均为零
 
-由 Paper I §5.2 的谱静默等价条件（S2 条件下严格成立），完全静默的动态系统在 $\mathbf{Spec}$ 中退化到其静态背景的谱。因此存在谱范畴中的同构。∎
+由 Paper I §5.2 的谱静默等价条件（S2 条件下严格成立），完全静默的动态系统在 $\mathbf{Sp}$ 中退化到其静态背景的谱。因此存在谱范畴中的同构。∎
 
-**推论 18.1**（静默动态系统与静态拓扑的谱对偶）。完全静默的动态系统在 $\mathbf{Spec}$ 层面等价于其状态空间的静态延拓谱。这意味着在这种极限下，"动力学是静态的一种表现形式"成立——不是动态"变成"了静态，而是它们在谱层面不可区分。
+**推论 18.1**（静默动态系统与静态拓扑的谱对偶）。完全静默的动态系统在 $\mathbf{Sp}$ 层面等价于其状态空间的静态延拓谱。这意味着在这种极限下，"动力学是静态的一种表现形式"成立——不是动态"变成"了静态，而是它们在谱层面不可区分。
 
 ### 18.4 冻结-解冻：静态↔动态的连续转化
 
@@ -729,7 +729,7 @@ $$A(1) = \mathrm{Ad}_{\exp(\int_0^1 G'(s) ds)} A(0) = A_R$$
 [2] Paper I: $\mathbf{Rec}$ 范畴四元组定义与 $D$ 函子构造.
 [3] Paper V: 谱流方程 $dA/dt = [G_F, A]$.
 [4] Paper VIII: 黑洞视界静默与静态度量极限.
-[5] `notes/00_foundations/spectral_noise_category.md` — 噪声在 $\mathbf{Rec}/\mathbf{Spec}$ 中的定位（姊妹篇）.
+[5] `notes/00_foundations/spectral_noise_category.md` — 噪声在 $\mathbf{Rec}/\mathbf{Sp}$ 中的定位（姊妹篇）.
 [6] `notes/11_transition_bridges/spectral_multi_silence_methodology.md` — 多层静默理论（用于 §12 静默条件分析）.
 [7] Weyl, H. (1911). Über die asymptotische Verteilung der Eigenwerte. *Nachrichten der Königlichen Gesellschaft der Wissenschaften zu Göttingen*, 110–117.
 
@@ -741,7 +741,7 @@ $$A(1) = \mathrm{Ad}_{\exp(\int_0^1 G'(s) ds)} A(0) = A_R$$
 
 **状态**：
 
-《通用不动点范畴框架》研究笔记——纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位。v1.0 新增 $\infty$-反射子范畴证明（$\mathcal{L}_\infty \dashv \iota_\infty$，`InfinityReflection.lean`）与 $D^{\text{id}}$–Gelfand 对偶对应（`GelfandDuality.lean`），封闭剩余理论开放问题。
+《通用不动点范畴框架》研究笔记——纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v1.0 新增 $\infty$-反射子范畴证明（$\mathcal{L}_\infty \dashv \iota_\infty$，`InfinityReflection.lean`）与 $D^{\text{id}}$–Gelfand 对偶对应（`GelfandDuality.lean`），封闭剩余理论开放问题。
 
 **变更记录**：
 

@@ -7,7 +7,7 @@
 
 ## 1. 理论背景：谱丛纤维化与普适关联长度
 
-在 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的范畴框架中，分子间电荷转移（CT）耦合强度 $J_{\text{CT}}(R_{AB})$ 是离子谱丛 $\pi_{\text{Ion}}$ 上的截面 $\sigma_{\text{CT}}$。沿分子间距离 $R_{AB}$，谱流方程（扩展 Cartan 提升）：
+在 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的范畴框架中，分子间电荷转移（CT）耦合强度 $J_{\text{CT}}(R_{AB})$ 是离子谱丛 $\pi_{\text{Ion}}$ 上的截面 $\sigma_{\text{CT}}$。沿分子间距离 $R_{AB}$，谱流方程（扩展 Cartan 提升）：
 
 $$\frac{d}{d\xi_{\text{tot}}} A_{\text{dim}} = [G_{\xi_A} + G_{\xi_B} + G_{\text{CT}}, A_{\text{dim}}] - \gamma_{\text{eff}} \cdot \Delta_{\text{spec}} A_{\text{dim}}$$
 
@@ -24,7 +24,7 @@ $$\frac{d^2}{dR_{AB}^2} J_{\text{CT}} = \ell_{\text{corr}}^{-2} J_{\text{CT}}$$
 | 碎片轨道解析模型 | $0.441 \pm 0.020$ | 11.8% |
 | STO-CI 第一性原理 | $0.776 \pm 0.039$ | 55.2%（上限有界）|
 
-**核心预言**：在 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Spec})$ 截面 $\sigma_{\text{CT}}$ 的物理可实现中，2D IR 交叉峰强度 $I_{\text{cross}}(R_{AB})$ 直接映射到 $|J_{\text{CT}}(R_{AB})|^2$，因此应满足：
+**核心预言**：在 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 截面 $\sigma_{\text{CT}}$ 的物理可实现中，2D IR 交叉峰强度 $I_{\text{cross}}(R_{AB})$ 直接映射到 $|J_{\text{CT}}(R_{AB})|^2$，因此应满足：
 
 $$I_{\text{cross}}(R_{AB}) \propto |J_{\text{CT}}(R_{AB})|^2 \propto \exp\left(-\frac{2R_{AB}}{\ell_{\text{corr}}}\right)$$
 
@@ -102,7 +102,7 @@ $$I_{\text{cross}}(R_{AB}) = I_0 \cdot \exp\left(-\frac{2(R_{AB} - R_{\text{eq}}
 
 ## 4. 与范畴框架的对齐
 
-本提案直接检验 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的**核心结构定理**：
+本提案直接检验 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的**核心结构定理**：
 
 | 范畴对象 | 可观测量 | 检验内容 |
 |:--------|:--------|:--------|

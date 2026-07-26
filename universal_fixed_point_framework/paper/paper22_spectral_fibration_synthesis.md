@@ -51,7 +51,7 @@
 |:----|:-----|:-----|
 | **S1** | 定义基范畴 $\mathcal{B}$ | 参数空间（分子构型/电子坐标/溶剂参量等） |
 | **S2** | 定义纤维范畴 $\mathcal{E}_b$ | 参数 $b$ 处的谱数据（$A_b$，$\sigma(A_b)$，$\delta_{\text{spec}}(b)$） |
-| **S3** | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Spec})$ | 对象 $= (b, A_b)$，态射 $= (f, \tilde{f})$ |
+| **S3** | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$ | 对象 $= (b, A_b)$，态射 $= (f, \tilde{f})$ |
 | **S4** | 定义投影 $\pi_\mathcal{B}$ | 遗忘谱数据，保留参数 |
 | **S5** | 构造 **Cartan 提升** | 基态射 $f: b_1 \to b_2$ 提升为 $\tilde{f}: (b_1, A_{b_1}) \to (b_2, A_{b_2})$ |
 | **S6** | 验证分裂性 | 提升保持恒等和复合 |
@@ -84,7 +84,7 @@ $$[A_{\text{layer }i}, \pi_{i \leftarrow i+1}]_{\text{HS}} < \varepsilon_i$$
 ### 3.1 层级一：电子态纤维
 
 $$
-\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})
 $$
 
 对应于分子内中性体系的电子态随核构型的变化。
@@ -106,7 +106,7 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 ### 3.2 层级二：电子关联纤维
 
 $$
-\mathbf{Bun}(\mathbf{Corr}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Corr}, \mathbf{Sp})
 $$
 
 当层级一的 $\delta_{\text{HOMO-LUMO}} \lesssim 0.01$ 或需要化学精度（$\sim 1$ kcal/mol）时，需提升到电子关联层级。
@@ -132,7 +132,7 @@ $$\Delta E_{\text{corr}}^{(n)} / \Delta E_{\text{corr}}^{(2)} \approx e^{-\beta(
 ### 3.3 层级三：振动纤维
 
 $$
-\mathbf{Bun}(\mathbf{Vib}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Vib}, \mathbf{Sp})
 $$
 
 电子-振动耦合（vibronic coupling）——电子谱对核位移的响应。
@@ -145,12 +145,12 @@ $$
 | **谱跃迁截面** | 谱 Franck-Condon 因子 $F_{if}^{\text{FC}} = |\langle \varphi_f^{\text{vib}} | \varphi_i^{\text{vib}} \rangle|^2$ |
 | **拉曼截面** | 谱拉曼张量 $\alpha_{ij}^{\text{spec}}(\omega)$（双态共振 |$\delta_{mn} - \delta_{\text{laser}}|^{-1}$） |
 
-**谱跃迁的纤维解释**：电子态间的振动跃迁对应 $\mathbf{Bun}(\mathbf{Vib}, \mathbf{Spec})$ 与 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 之间的**纤维保持自然变换**——电子态提供了基空间上的"参考帧"，振动跃迁是此参考帧上的截面。
+**谱跃迁的纤维解释**：电子态间的振动跃迁对应 $\mathbf{Bun}(\mathbf{Vib}, \mathbf{Sp})$ 与 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 之间的**纤维保持自然变换**——电子态提供了基空间上的"参考帧"，振动跃迁是此参考帧上的截面。
 
 ### 3.4 层级四：分子内 CT 纤维
 
 $$
-\mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Sp})
 $$
 
 分子内电荷分离体系的谱丛（如 D-π-A 推拉发色团）。
@@ -168,7 +168,7 @@ $$
 ### 3.5 层级五：分子间 CT 纤维
 
 $$
-\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})
 $$
 
 分子间 CT 耦合（二聚体、H 键、分子间电荷转移）。
@@ -188,7 +188,7 @@ $$\frac{d}{d\xi_{\text{tot}}} A_{\text{dim}} = [G_{\xi_A}+G_{\xi_B}+G_{\text{CT}
 ### 3.6 层级六：溶剂/介质纤维
 
 $$
-\mathbf{Bun}(\mathbf{Solv}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Solv}, \mathbf{Sp})
 $$
 
 溶剂对分子谱的影响（极化效应、氢键网络重整、介电摩擦）。
@@ -202,14 +202,14 @@ $$
 
 **嵌入态射**：
 
-$$\hat{\mathcal{S}}_*: \mathbf{Bun}(\mathbf{Solv}, \mathbf{Spec}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Reac}_S, \mathbf{Spec})$$
+$$\hat{\mathcal{S}}_*: \mathbf{Bun}(\mathbf{Solv}, \mathbf{Sp}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Reac}_S, \mathbf{Sp})$$
 
 其中 $\mathbf{Reac}_S$ 是溶剂修正后的分子构型范畴。
 
 ### 3.7 层级七：自旋纤维
 
 $$
-\mathbf{Bun}(\mathbf{Spin}, \mathbf{Spec})
+\mathbf{Bun}(\mathbf{Spin}, \mathbf{Sp})
 $$
 
 自旋轨道耦合（SOC）、磁耦合（双交换、超交换）等自旋相关效应。
@@ -219,7 +219,7 @@ $$
 | **基 $\mathcal{B}$** | $\mathbf{Spin}$：对象（总自旋 $S$，磁场 $\mathbf{B}$，SOC 强度 $\zeta$） |
 | **纤维 $\mathcal{E}_{\text{spin}}$** | $A_{\text{spin}} = e^{-\beta H_{\text{SO}}}$，其中 $H_{\text{SO}} \propto \sum_i \zeta_i \mathbf{l}_i \cdot \mathbf{s}_i$ |
 | **截面** | $\sigma_{\text{Zeeman}}(B) = \text{Zeeman 劈裂} \propto g\mu_B B$ |
-| **自然变换** | $\hat{\mathcal{Z}}: \mathbf{Bun}(\mathbf{Spin}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ |
+| **自然变换** | $\hat{\mathcal{Z}}: \mathbf{Bun}(\mathbf{Spin}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ |
 
 ---
 
@@ -253,7 +253,7 @@ $$\mathbf{Bun}(\mathbf{Reac}) \hookrightarrow \mathbf{Bun}(\mathbf{Corr}) \hookr
 
 ### 4.3 层间自然变换
 
-每一对相邻层级之间的**自然变换** $\hat{\mathcal{N}}_{i \to i-1}: \mathbf{Bun}(\mathcal{B}_i, \mathbf{Spec}) \to \mathbf{Bun}(\mathcal{B}_{i-1}, \mathbf{Spec})$ 满足：
+每一对相邻层级之间的**自然变换** $\hat{\mathcal{N}}_{i \to i-1}: \mathbf{Bun}(\mathcal{B}_i, \mathbf{Sp}) \to \mathbf{Bun}(\mathcal{B}_{i-1}, \mathbf{Sp})$ 满足：
 
 1. 服从遗忘函子结构（丢弃第 $i$ 层新增的自由度）
 2. 谱交织条件：$[A_i, \pi_{i \to i-1}]_{\text{HS}} < \varepsilon_i$
@@ -421,7 +421,7 @@ $$\kappa = \frac{\delta_{\text{spec}}}{\delta_{\text{spec}} + \delta_{\text{crit
 
 **设置**。给定量子化学系统 $\mathcal{S}$，其参数空间 $\mathcal{P}$ 可分解为 $m$ 个独立坐标子空间 $\mathcal{P} = \mathcal{P}_1 \times \cdots \times \mathcal{P}_m$。
 
-**定义**。$\mathcal{S}$ 的一个**纤维层次**是由 Grothendieck 纤维化 $\pi_i: \mathbf{Bun}(\mathcal{B}_i, \mathbf{Spec}) \to \mathcal{B}_i$ 定义的谱丛，其中 $\mathcal{B}_i$ 是 $\mathcal{P}_i$ 上的基范畴。
+**定义**。$\mathcal{S}$ 的一个**纤维层次**是由 Grothendieck 纤维化 $\pi_i: \mathbf{Bun}(\mathcal{B}_i, \mathbf{Sp}) \to \mathcal{B}_i$ 定义的谱丛，其中 $\mathcal{B}_i$ 是 $\mathcal{P}_i$ 上的基范畴。
 
 **定理 1（唯一性）**。在谱交织条件 $[A_i, \pi_{i \to i+1}]_{\text{HS}} < \varepsilon_i$ 下，$\mathcal{S}$ 的纤维层次分解是唯一的——即最大嵌套链
 
@@ -429,7 +429,7 @@ $$\mathbf{Bun}(\mathcal{B}_1) \hookrightarrow \mathbf{Bun}(\mathcal{B}_2) \hookr
 
 的构成是 $\mathcal{S}$ 的参数空间结构决定的，与分解顺序无关。
 
-**定理 1（存在性）**。对上述嵌套链的相邻层 $i$ 和 $i+1$，自然变换 $\hat{\mathcal{N}}_{i+1 \to i}: \mathbf{Bun}(\mathcal{B}_{i+1}, \mathbf{Spec}) \to \mathbf{Bun}(\mathcal{B}_i, \mathbf{Spec})$ 存在当且仅当谱交织条件 $[A_i, \pi_{i \to i+1}]_{\text{HS}} < \varepsilon_i$ 成立。
+**定理 1（存在性）**。对上述嵌套链的相邻层 $i$ 和 $i+1$，自然变换 $\hat{\mathcal{N}}_{i+1 \to i}: \mathbf{Bun}(\mathcal{B}_{i+1}, \mathbf{Sp}) \to \mathbf{Bun}(\mathcal{B}_i, \mathbf{Sp})$ 存在当且仅当谱交织条件 $[A_i, \pi_{i \to i+1}]_{\text{HS}} < \varepsilon_i$ 成立。
 
 *证明*。令 $\iota_{i}: \mathcal{B}_i \to \mathcal{B}_{i+1}$ 为基空间的遗忘函子（丢弃第 $i+1$ 层新增自由度）。由 Grothendieck 纤维化的分裂性质（Paper XXI 定义 2.3），每个基态射 $\iota_i(b) \to b'$ 的提升是唯一的。因此自然变换 $\hat{\mathcal{N}}_{i+1 \to i}$ 由 $\iota_i$ 的拉回决定。谱交织条件确保拉回后的谱数据 $A_i$ 在下层纤维 $\mathcal{E}_{b}$ 中保持精确至 $\varepsilon_i$。若该条件不满足，则拉回后的谱数据与下层纤维的谱流方程解之间的偏差超过允许阈值，自然变换失去函子性。$\square$
 
@@ -593,7 +593,7 @@ $$ \ell_{\text{corr}} = 0.5\ \text{Å} \quad \text{(Bun(Ionic) 谱丛不变量)}
 
 ## 9. 延伸：嵌入总参数丛
 
-根据 Paper XXI §7，上述 7 层纤维化最终嵌入**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Spec}) \to \mathbf{Param}$：
+根据 Paper XXI §7，上述 7 层纤维化最终嵌入**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp}) \to \mathbf{Param}$：
 
 $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \times \mathbf{RG} \times \mathbf{Kerr} \times \mathbf{Scale} \times \mathbf{Flt} \times \mathrm{Open}(M)$$
 
@@ -692,10 +692,10 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 ## 参考文献与关联文档
 
-- Paper XV：《谱量子化学》——量子化学在 $\mathbf{Spec}$ 范畴中的完整翻译，本方法论的电子态层级基础
+- Paper XV：《谱量子化学》——量子化学在 $\mathbf{Sp}$ 范畴中的完整翻译，本方法论的电子态层级基础
 - Paper XXI：《Grothendieck 纤维化综合》——总参数丛和纤维化模板，本方法论的范畴论基础
 - Paper V：《力的谱动力学》——谱流方程 $dA/dt = [G,A]$，所有 Cartan 提升的统一载体
-- Paper I：《分形谱去递归理论》——Rec、Spec 范畴、D 函子、静默层级，本方法论的原始起点
+- Paper I：《分形谱化理论》——Rec、Sp 范畴、D 函子、静默层级，本方法论的原始起点
 - Paper XXIII：《CH₃CHO n→π* 谱流第一性原理推导》——精细纤维拆分的 7 层全链应用实例
 - **Paper XXIV-A：《Bun(Corr) 闭式定理在连续谱中的推广——强耦合超导 μ* 的谱框架第一性原理推导》**——从离散谱到连续谱，消除经验 μ* 参数
 - **Paper XXIV-B：《H+H₂ 谱键刚性第一性原理推导——3-中心 Hückel 模型的经验参数消除》**——谱键刚性定理替代 Hückel 模型

@@ -42,9 +42,9 @@ $$\boxed{\beta_3(G_N) = \beta_1(G_N) + \beta_2(G_N) + \beta_3^{\text{(spec)}}}.$
 
 谱修正 $\beta_3^{\text{(spec)}}$ 来源于 $A_{\text{GR}}$ 谱生成元的对易子结构：
 
-$$\beta_3^{\text{(spec)}} = \frac{g_{\text{spec}}^2}{16\pi^2} \cdot \mathcal{C}, \quad \mathcal{C} = \operatorname{Tr}_{\mathbf{Spec}}[A_{\text{GR}}, [A_{\text{GR}}, \Pi_{\text{ghost}}]],$$
+$$\beta_3^{\text{(spec)}} = \frac{g_{\text{spec}}^2}{16\pi^2} \cdot \mathcal{C}, \quad \mathcal{C} = \operatorname{Tr}_{\mathbf{Sp}}[A_{\text{GR}}, [A_{\text{GR}}, \Pi_{\text{ghost}}]],$$
 
-其中 $g_{\text{spec}}$ 是谱耦合常数，$\Pi_{\text{ghost}}$ 是鬼场谱投影，$\operatorname{Tr}_{\mathbf{Spec}}$ 是 $\mathbf{Spec}$ 范畴中的谱迹。
+其中 $g_{\text{spec}}$ 是谱耦合常数，$\Pi_{\text{ghost}}$ 是鬼场谱投影，$\operatorname{Tr}_{\mathbf{Sp}}$ 是 $\mathbf{Sp}$ 范畴中的谱迹。
 
 具体展开形式：
 

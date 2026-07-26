@@ -290,7 +290,7 @@ $$\mathrm{Br}(\mathcal{L}_{\text{total}}) \geq \max\{\mathrm{Br}(\mathcal{L}^{(+
 **阶段三**（第 3-4 周，中等 $Q$ 耦合效应）。$Q = 0.1M, 0.2M, 0.3M$：
 - 引力/电磁 QNM 交叉现象
 - 跨自旋分支交叉（I' 型奇异纤维）检测
-- LACI 参数的耦合修正计算
+- 局部吸引子捕获指数（Local Attractor Capture Index, LACI）参数的耦合修正计算
 
 **阶段四**（第 5-8 周，大 $Q$ 接近极端）。$Q = 0.5M, 0.7M, 0.9M, 0.99M$：
 - 接近极端 $a \to 1$ 和 $Q \to M$ 的耦合退化

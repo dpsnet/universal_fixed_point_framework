@@ -5,7 +5,7 @@
 ## 定位
 
 - 将 4D 无质量外腿的旋量运动学 $p_{\alpha \dot \alpha} = \lambda_\alpha \tilde \lambda_{\dot \alpha}$ 视为递归系统 $R_{Twistor} \in \mathbf{Rec}$。
-- 其去递归化像 $D(R_{Twistor})$ 给出角度旋量括号 $|<ij>|$ 的谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
+- 其谱化像 $D(R_{Twistor})$ 给出角度旋量括号 $|<ij>|$ 的谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
 - 与弦论散射振幅模块联动：可直接调用 Veneziano / Virasoro-Shapiro 振幅。
 
 ## 文件
