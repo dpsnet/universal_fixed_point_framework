@@ -1,0 +1,30 @@
+[
+  {
+    "tag": "v2_N64_kf1.0_fa0.100_T20",
+    "elapsed": 5772.46702337265,
+    "final_energy": 0.00012162916450217167,
+    "energy_first_half": 0.00025012614434109375,
+    "energy_last_half": 0.00014954255420002798,
+    "energy_growth_rate": -0.40213145413500334,
+    "slope": -4.5253740448337645,
+    "slope_err": 1.2154083676011587,
+    "C_K": 2.07312209984607,
+    "S_spec": 0.06732552102578589,
+    "k_nu": 9.0,
+    "R2": 0.4643213083646779,
+    "cfg": {
+      "N": 64,
+      "Re_lambda": 200.0,
+      "nu": 0.005,
+      "dt": 0.004,
+      "T_total": 20.0,
+      "T_stats_start": 10.0,
+      "force_kf": 1.0,
+      "force_amp": 0.1,
+      "force_type": "stochastic",
+      "target_energy": 0.5,
+      "dealias_fraction": 0.6666666666666666,
+      "seed": 42
+    }
+  }
+]

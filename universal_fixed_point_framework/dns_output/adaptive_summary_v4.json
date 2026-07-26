@@ -1,0 +1,30 @@
+[
+  {
+    "tag": "v4_N64_kf1.0_fa0.030_T40",
+    "elapsed": 11729.367990016937,
+    "final_energy": 0.08106814869662063,
+    "energy_first_half": 0.11676874372367888,
+    "energy_last_half": 0.09091009373608036,
+    "energy_growth_rate": -0.2214518128994376,
+    "slope": NaN,
+    "slope_err": NaN,
+    "C_K": NaN,
+    "S_spec": 0.11873227398431034,
+    "k_nu": 1.0,
+    "R2": NaN,
+    "cfg": {
+      "N": 64,
+      "Re_lambda": 100.0,
+      "nu": 0.01,
+      "dt": 0.004,
+      "T_total": 40.0,
+      "T_stats_start": 20.0,
+      "force_kf": 1.0,
+      "force_amp": 0.03,
+      "force_type": "energy_injection",
+      "target_energy": 0.5,
+      "dealias_fraction": 0.6666666666666666,
+      "seed": 42
+    }
+  }
+]
