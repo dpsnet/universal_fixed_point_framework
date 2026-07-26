@@ -1,6 +1,6 @@
 import UFPFormalization.Silence
 import UFPFormalization.SilenceHierarchy
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
 
@@ -143,7 +143,7 @@ noncomputable def allSilenceLayers : List SilenceLayer :=
   [ { name := "S₁", value := S₁_factor, interpretation := "Spectral gap → bare scale",
       categoricalLevel := "object (Spec)" },
     { name := "S₂", value := S₂_factor, interpretation := "Interaction strength exponential",
-      categoricalLevel := "1-morphism (SpecHom)" },
+      categoricalLevel := "1-morphism (SpHom)" },
     { name := "S₃", value := S₃_factor, interpretation := "Fermion generation structure",
       categoricalLevel := "2-morphism (natural transformation)" },
     { name := "S₄", value := S₄_factor_default, interpretation := "Fractal boundary conditions",

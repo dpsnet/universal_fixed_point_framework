@@ -317,6 +317,8 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 
 ### 6.1 Temp×RG 乘积基与谱粘合
 
+谱粘合（即不同参数方向谱结构的编织统一）是指通过自然变换将不同参数维度上的谱数据编织为统一截面的机制。
+
 **定义 6.1**（乘积范畴 $\mathbf{Temp} \times \mathbf{RG}$）。
 - **对象**：$(T, \mu)$，温度和 RG 标度的有序对
 - **态射**：逐分量复合
@@ -324,7 +326,7 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 
 **定义 6.2**（对角子范畴 $\mathbf{Diag}$）。$\mathbf{Diag} \subset \mathbf{Temp} \times \mathbf{RG}$ 是满足谱粘合条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 的子范畴。其态射满足 $(f, \mathcal{T}(f))$，其中 $\mathcal{T}$ 是谱纤维丛上的 Riemann 函子的基函子。
 
-**定义 6.3**（编织自然变换）。$\theta_X: \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*(X)) \cong \iota_\mu^*(X)$ 是 $\mathbf{Diag}$ 上的自然同构，编织方图的交换性由谱粘合条件保证。
+**定义 6.3**（编织自然变换，即谱数据沿不同参数方向的交换自然同构）。$\theta_X: \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*(X)) \cong \iota_\mu^*(X)$ 是 $\mathbf{Diag}$ 上的自然同构，编织方图的交换性由谱粘合条件保证。
 
 **定理 6.1**（编织截面存在性）。$\mathbf{Temp} \times \mathbf{RG}$ 上的谱粘合截面 $\sigma_{\text{weave}}$ 满足：
 $$\pi_{T\mu} \circ \sigma_{\text{weave}} = \text{id}_{\mathbf{Temp} \times \mathbf{RG}}, \quad \theta \circ \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*\sigma) = \iota_\mu^*\sigma$$
@@ -350,7 +352,7 @@ $$\pi_{T\mu} \circ \sigma_{\text{weave}} = \text{id}_{\mathbf{Temp} \times \math
 
 ### 6.2 时空谱栈 $\mathcal{E} \to \mathrm{Open}(M)$
 
-将谱丛从全局参数空间推广到局域开集，得到 $\mathrm{Open}(M)$ 上的谱预层（stack）。
+谱栈（即谱丛在开集范畴上的层论推广）将谱丛从全局参数空间推广到局域开集，得到 $\mathrm{Open}(M)$ 上的谱预层（stack）。
 
 **定义 6.4**（开集范畴 $\mathrm{Open}(M)$）。对 Lorentz 流形 $(M, g)$：
 - **对象**：$M$ 的开集 $U \subseteq M$
@@ -623,6 +625,6 @@ UFPF 紧缩投影图景对多重宇宙的回答是：
 |:----|:----|:--------|
 | **v0.5** | **2026-07-25** | **DST 第一性原理计算完成**：$r_{\text{DST}}=0.443$（从 3D 渗透谱维数 $d_s=4/3$ 封闭），$a_{\text{DST}}=0.435$；DST 状态从 ⚠️ 半经验 → ✅ 第一性原理推导；四系统统一表 DST 行填入确定值 |
 | **v0.4** | **2026-07-25** | Phase 54C 集成：§5.3 新增 HP/DST 精确数值验证（$d_{\text{HP}}=0.281$，$a_{\text{HP}}=0.159$）及四系统统一对比表；§6.1 新增 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 三范畴同构扩展和完整编织参数表；§7.5 新增 DST 截面行及验证等级列；§8.3 扩展 HP 精确验证详情（$r_{\text{HP}}=0.0395$，$\Delta\lambda_{\text{HP}}=3.09$，经典值 $2.78\times10^{-17}$ 偏差）；新增 §8.4 流变学 $\mathbf{Rate}$ 范畴与 DST 截面 |
-| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，基于 Paper XV 量子化学谱翻译 |
+| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，基于 Paper XV 量子化学谱表述 |
 | **v0.2** | **2026-07-23** | 新增 §5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$，统合 Paper VI §9.2.2 F5 定理 |
 | **v0.1** | **2026-07-23** | 初始版本 |

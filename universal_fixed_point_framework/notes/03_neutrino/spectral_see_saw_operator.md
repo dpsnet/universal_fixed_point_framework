@@ -43,8 +43,8 @@ A_{LR} &= A_{LL} \cdot \text{(基混合)} \quad &&\text{（来自味谱生成元
 $$
 
 **证明**。
-- $A_{LL}$：电弱对称性破缺后，Dirac 质量项 $m_D$ 来自 Yukawa 耦合 $\mathcal{L}_{\text{Yuk}} = y_\nu \bar{L}_L \cdot H \cdot \nu_R$。谱翻译后，$m_D = y_\nu v/\sqrt{2}$ 作为 $A_{\text{Yuk}}$ 的最低本征值出现在 $A_{LL}$ 中。
-- $A_{RR}$：Majorana 项 $\frac12 M_R \nu_R^T C \nu_R$ 的谱翻译为 $A_{\nu_R}$ 的自伴谱。$M_R$ 是 $A_{\nu_R}$ 的最小非零谱间隙。
+- $A_{LL}$：电弱对称性破缺后，Dirac 质量项 $m_D$ 来自 Yukawa 耦合 $\mathcal{L}_{\text{Yuk}} = y_\nu \bar{L}_L \cdot H \cdot \nu_R$。谱表述后，$m_D = y_\nu v/\sqrt{2}$ 作为 $A_{\text{Yuk}}$ 的最低本征值出现在 $A_{LL}$ 中。
+- $A_{RR}$：Majorana 项 $\frac12 M_R \nu_R^T C \nu_R$ 的谱表述为 $A_{\nu_R}$ 的自伴谱。$M_R$ 是 $A_{\nu_R}$ 的最小非零谱间隙。
 - $A_{LR}$：基混合矩阵 $V_{\text{mix}}$ 来自 Yukawa 特征基与味特征基之间的重叠。□
 
 ---
@@ -109,7 +109,7 @@ $$A_\nu^{\text{eff}} = A_{LL} - A_{LR} A_{RR}^{-1} A_{LR}^\dagger$$
 
 $$M_\nu = -m_D M_R^{-1} m_D^T$$
 
-**证明**。将块算子的谱翻译映射为矩阵形式即得。□
+**证明**。将块算子的谱表述映射为矩阵形式即得。□
 
 **推论 2.1**（低能中微子质量）。$A_\nu^{\text{eff}}$ 的本征值 $\{\lambda_{\nu_1}, \lambda_{\nu_2}, \lambda_{\nu_3}\}$ 对应三代 light 中微子的质量：
 

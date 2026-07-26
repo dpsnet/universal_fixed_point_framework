@@ -8,7 +8,18 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（Rec、Spec、D 函子、谱丛）、Paper VI（谱截断与临界动力学）、Paper VIII（黑洞 QNM 记号）、Paper XXVI（Leaver 连续分数求解器数值方法）。
+**术语说明**：记号与定义沿用 Paper I（Rec、Sp、D 函子、谱丛）、Paper VI（谱截断与临界动力学）、Paper VIII（黑洞 QNM 记号）、Paper XXVI（Leaver 连续分数求解器数值方法）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **LACI**：局部吸引子捕获指数（Local Attractor Capture Index）
+- **TS**：Teukolsky-Starobinsky（托伊科尔斯基-斯塔罗宾斯基）
+- **Koopman**：Koopman 算子（Koopman Operator）
+- **LIGO**：激光干涉引力波天文台（Laser Interferometer Gravitational-Wave Observatory）
+- **LVK**：LIGO-Virgo-KAGRA 合作组（LIGO-Virgo-KAGRA Collaboration）
+- **EMRI**：极端质量比旋近（Extreme Mass Ratio Inspiral）
+- **CZ**：Cook-Zalutskiy（库克-扎卢茨基）
+- **L1/L2/L3**：第 1/2/3 层基准（Level 1/2/3 Benchmark）
 
 **前置依赖**：Paper I（基础范畴框架与 RKHS 收敛率）、Paper VIII（黑洞谱动力学）、Paper XXVI（动态过程谱数值方法）。
 
@@ -1050,7 +1061,7 @@ P1 ──(电磁递推系数)──→ P2 ──(块矩阵模板)──→ P3
 - **B（高优先级，根的无穷性证明）**。对所有 $a \in [0,1)$，Kerr QNM 根是否可数无穷？数值结果强烈暗示答案为是，但缺少严格泛函分析证明。与 Hod 猜想的关联：若根无穷多，渐近实部 $\omega_R \to \ln 3/(8\pi M)$（Schwarzschild）或 $m\Omega_H$（Kerr）是否严格成立？
 - **C（中优先级，高泛音 $n\to\infty$ 渐近公式的谱丛解释）**。渐近公式 $\omega_n \sim m\Omega_H - i(2n+1)\pi T_H$ 是否对应谱丛截面在 $\text{Im}\,\omega \to -\infty$ 处的渐近展开？泛音阶数 $n$ 是否对应谱丛纤维的拓扑不变量（如环绕数）？
 - **D（中优先级，分支割的代数曲线解释）**。发散面是否由 $\beta_n(\omega) = 0$ 的极限点集确定？对截断 $N$，分支点数 $\sim 4N$，Riemann 面亏格 $\sim 2N$，但物理叶亏格可能远小。
-- **E（中优先级，漏根问题）**。连分数法在某些参数区域是否存在无法找到的物理根？HeunC 方法是否完全解决了漏根问题？
+- **E（中优先级，漏根问题）**。连分数法在某些参数区域是否存在无法找到的物理根？HeunC 方法是否彻底解决了漏根问题？
 - **F（低优先级，物理/非物理根的拓扑分类）**。能否通过单值群表示或环绕数给出不需要边界条件的纯拓扑判据来区分两类根？
 
 ### 10.5 推进路径

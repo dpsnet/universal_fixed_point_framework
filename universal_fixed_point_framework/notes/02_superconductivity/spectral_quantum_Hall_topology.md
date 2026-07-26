@@ -2,9 +2,9 @@
 
 **版本**：v1.4（2026-07-23）
 
-**摘要**：本笔记将量子 Hall 效应——包括整数量子 Hall 效应（IQHE）和分数量子 Hall 效应（FQHE）——纳入谱框架 Grothendieck 纤维范畴构造。核心内容为：(1) 将 TKNN 公式翻译为谱流第一陈数 $\text{Ch}(A_{\text{Hall}})$，证明 Hall 电导的精确量子化是 $\mathbf{Sp}$ 中陈数整数拓扑不变性的凝聚态实现；(2) 建立陈数绝热不变性 $\frac{d}{dt}\text{Ch}(A_{\text{Hall}}(t)) = 0$ 与平台跃迁的谱流机制——平台宽度由谱测度中的连续谱区间（无序局域态）决定；(3) 将 FQHE 的复合费米子构造翻译为谱生成元的规范变换重排，证明 $\text{Ch}(A_{\text{Hall}}) = p/q$ 对应谱粘合自由度的分数化；(4) 建立 Laughlin 波函数的谱分解——$\Psi_{\text{Laughlin}}$ 是谱流方程在 $\partial\mathbf{Rec}_D$ 边界处的基态解；(5) 证明任意子辫子统计（以 Fibonacci 任意子为例）是 $\mathbf{Sp}$ 4-范畴中辫子 3-态射的投影表示，Wilson 线-辫子对应 $n_\gamma = k$ 由谱流静默条件 $C_{\text{crit}} = \pi/K_{\text{crit}}^{(f)}$ 保护；(6) 推导谱框架独有的可检验预言：量子 Hall 纠缠熵谱振荡 ($\ell_{\text{spec}}/\ell_B \approx 8.2$)、边缘态谱截止指纹 ($k_{\max}=8$) 和 Hall 平台临界指数的无序驱动 RGE 连续过渡 ($\nu_{\text{spec}}(\epsilon) = 1 \to 2.35$)，并基于 16 组开放渠道实验数据的系统对比验证谱框架预言——清洁极限 ($\nu\to 1$) 为当前测量空白，高无序极限 ($\nu\to 2.35$) 与数值模拟完美一致。本笔记与 `spectral_BCS_weave.md` 共同构成 Q2c 凝聚态物理谱翻译的完整图景。
+**摘要**：本笔记将量子 Hall 效应——包括整数量子 Hall 效应（IQHE）和分数量子 Hall 效应（FQHE）——纳入谱框架 Grothendieck 纤维范畴构造。核心内容为：(1) 将 TKNN 公式翻译为谱流第一陈数 $\text{Ch}(A_{\text{Hall}})$，证明 Hall 电导的精确量子化是 $\mathbf{Sp}$ 中陈数整数拓扑不变性的凝聚态实现；(2) 建立陈数绝热不变性 $\frac{d}{dt}\text{Ch}(A_{\text{Hall}}(t)) = 0$ 与平台跃迁的谱流机制——平台宽度由谱测度中的连续谱区间（无序局域态）决定；(3) 将 FQHE 的复合费米子构造翻译为谱生成元的规范变换重排，证明 $\text{Ch}(A_{\text{Hall}}) = p/q$ 对应谱粘合自由度的分数化；(4) 建立 Laughlin 波函数的谱分解——$\Psi_{\text{Laughlin}}$ 是谱流方程在 $\partial\mathbf{Rec}_D$ 边界处的基态解；(5) 证明任意子辫子统计（以 Fibonacci 任意子为例）是 $\mathbf{Sp}$ 4-范畴中辫子 3-态射的投影表示，Wilson 线-辫子对应 $n_\gamma = k$ 由谱流静默条件 $C_{\text{crit}} = \pi/K_{\text{crit}}^{(f)}$ 保护；(6) 推导谱框架独有的可检验预言：量子 Hall 纠缠熵谱振荡 ($\ell_{\text{spec}}/\ell_B \approx 8.2$)、边缘态谱截止指纹 ($k_{\max}=8$) 和 Hall 平台临界指数的无序驱动 RGE 连续过渡 ($\nu_{\text{spec}}(\epsilon) = 1 \to 2.35$)，并基于 16 组开放渠道实验数据的系统对比验证谱框架预言——清洁极限 ($\nu\to 1$) 为当前测量空白，高无序极限 ($\nu\to 2.35$) 与数值模拟完美一致。本笔记与 `spectral_BCS_weave.md` 共同构成 Q2c 凝聚态物理谱表述的完整图景。
 
-**前置依赖**：Paper XIV（凝聚态谱翻译）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理）、Paper XIX §15（辫子静默与拓扑物态）、`spectral_static_topology_category.md`（静态拓扑范畴）。
+**前置依赖**：Paper XIV（凝聚态谱表述）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理）、Paper XIX §15（辫子静默与拓扑物态）、`spectral_static_topology_category.md`（静态拓扑范畴）。
 
 ---
 
@@ -24,7 +24,7 @@
 
 **核心观察**：$\sigma_{xy}$ 不是"响应函数"，而是 $\mathbf{Sp}$ 范畴中谱生成元 $A_{\text{Hall}}$ 的拓扑不变量——其量子化由 $\partial\mathbf{Rec}_D$ 边界处的谱间隙结构保护。
 
-IQHE 和 FQHE 共享相同的谱翻译框架：
+IQHE 和 FQHE 共享相同的谱表述框架：
 
 $$\boxed{\sigma_{xy} = \frac{e^2}{h} \cdot \mathcal{I}_{\text{top}}(A_{\text{Hall}})}$$
 
@@ -36,7 +36,7 @@ $$\boxed{\sigma_{xy} = \frac{e^2}{h} \cdot \mathcal{I}_{\text{top}}(A_{\text{Hal
 
 ### 2.1 TKNN 公式的谱版本
 
-**定理 2.1**（TKNN 谱公式）。令 $A_{\text{Hall}}$ 为二维电子气在垂直磁场中的谱生成元，其谱像 $D(A_{\text{Hall}}) = (\mathcal{H}_{\text{Hall}}, A_{\text{Hall}}, \sigma(A_{\text{Hall}}))$。Hall 电导的谱翻译为：
+**定理 2.1**（TKNN 谱公式）。令 $A_{\text{Hall}}$ 为二维电子气在垂直磁场中的谱生成元，其谱像 $D(A_{\text{Hall}}) = (\mathcal{H}_{\text{Hall}}, A_{\text{Hall}}, \sigma(A_{\text{Hall}}))$。Hall 电导的谱表述为：
 
 $$\boxed{\sigma_{xy} = \frac{e^2}{h} \cdot \text{Ch}(A_{\text{Hall}})} \tag{2.1}$$
 
@@ -89,7 +89,7 @@ $$\sigma_{\text{Hall}}(B, \mu) = \left(B, \mu,\ \text{Ch}(\mathcal{P}_{\mu}(B))\
 
 ---
 
-## 3. 分数量子 Hall 效应：复合费米子谱翻译
+## 3. 分数量子 Hall 效应：复合费米子谱表述
 
 ### 3.1 谱粘合自由度的分数化
 
@@ -101,7 +101,7 @@ $$A_{\text{CF}} = A_{\text{Hall}} + 2p \cdot A_{\Phi} \tag{3.1}$$
 
 其中 $A_{\Phi}$ 是附着的 Chern-Simons 规范场谱生成元，$2p$ 个磁通量子 $(\hbar c/e)$ 附着于每个电子上。复合费米子的有效磁场为 $B_{\text{eff}} = B - 2p \cdot n\phi_0$（$\phi_0 = \hbar c/e$ 是磁通量子，$n$ 是电子数密度）。
 
-**定理 3.1**（复合费米子谱翻译等价性）。FQHE 填充因子 $\nu = p/(2mp \pm 1)$ 的谱翻译等价于 IQHE 的复合费米子版本：
+**定理 3.1**（复合费米子谱表述等价性）。FQHE 填充因子 $\nu = p/(2mp \pm 1)$ 的谱表述等价于 IQHE 的复合费米子版本：
 
 $$\text{Ch}(A_{\text{Hall}}) = \frac{p}{2mp \pm 1} \iff \text{Ch}(A_{\text{CF}}) = p \in \mathbb{Z} \tag{3.2}$$
 
@@ -109,7 +109,7 @@ $$\text{Ch}(A_{\text{Hall}}) = \frac{p}{2mp \pm 1} \iff \text{Ch}(A_{\text{CF}})
 
 ### 3.2 填充因子序列的谱框架预言
 
-| FQHE 态 | Jain 序列 | 谱翻译 $\text{Ch}(A_{\text{CF}}) = p$ | 实验观测 |
+| FQHE 态 | Jain 序列 | 谱表述 $\text{Ch}(A_{\text{CF}}) = p$ | 实验观测 |
 |:--------|:---------|:-----------------------------------:|:--------:|
 | $\nu = 1/3$ | $1/(2\cdot1+1)$ | 复合费米子填充 $p=1$ 的 IQHE | GaAs/AlGaAs |
 | $\nu = 2/5$ | $2/(2\cdot2+1)$ | 复合费米子填充 $p=2$ 的 IQHE | GaAs/AlGaAs |
@@ -161,11 +161,11 @@ $$d_{\text{CF}}^2 = d_e^2 + (2p \cdot \bar{d}_\Phi)^2 \tag{3.7}$$
 
 其中 $d_e = 2$ 是电子谱自由度（自旋），$\bar{d}_\Phi$ 是单磁通量子的归一化谱自由度，$2p$ 是每个 CF 携带的磁通量子数。平方和（Pythagorean 和）源于电子自由度和磁通自由度在 $\mathbf{Sp}$ 中相互正交——Chern-Simons 规范场 $A_\Phi$ 与电子场 $A_e$ 的谱对易子 $[A_e, A_\Phi] = 0$（LLL 投影下）。
 
-**引理 3.3**（$\bar{d}_\Phi$ 的 Chern-Simons 谱翻译）。单磁通量子的归一化谱自由度由 U(1)$_k$ Chern-Simons 作用量的谱翻译确定：
+**引理 3.3**（$\bar{d}_\Phi$ 的 Chern-Simons 谱表述）。单磁通量子的归一化谱自由度由 U(1)$_k$ Chern-Simons 作用量的谱表述确定：
 
 $$\bar{d}_\Phi = \frac{k}{2} \cdot \sqrt{\frac{C_2(\mathfrak{so}(1,1))}{C_2(\mathfrak{u}(1))}} = \frac{1}{2} \cdot 1 = \frac{1}{2} \tag{3.8}$$
 
-其中 $k = 1$ 是 Chern-Simons 级。推导：CS 作用量 $S_{\text{CS}} = \frac{k}{4\pi}\int A \wedge dA$ 的谱翻译给出 $\text{Tr}(A_\Phi^2) = k/2$，归一化后得 $\bar{d}_\Phi = k/2$。
+其中 $k = 1$ 是 Chern-Simons 级。推导：CS 作用量 $S_{\text{CS}} = \frac{k}{4\pi}\int A \wedge dA$ 的谱表述给出 $\text{Tr}(A_\Phi^2) = k/2$，归一化后得 $\bar{d}_\Phi = k/2$。
 
 #### 3.4.3 $\mathbf{Sp}$ 拓扑谱流方程
 
@@ -320,7 +320,7 @@ $$d_{\text{CF}}^2 = \text{Tr}(A_{\text{CF}}^2) = \text{Tr}(A_e^2) + 4p^2\,\text{
 
 $$\boxed{\eta(p) = \frac{d_{\text{CF}}^2 - d_e^2 - (2p)^2\bar{d}_\Phi^2}{4p} = \frac{(4\pi p)^{2/3} - 4 - p^2}{4p}} \tag{3.16}$$
 
-其中 $d_e = 2$（电子自旋谱自由度），$\bar{d}_\Phi = 1/2$（Chern-Simons 谱翻译 (3.8)）。$\eta(p)$ 是 $p$ 的单变量函数，无需外部输入——$p$ 是 CF 谱陈数（整数拓扑不变量），其与填充因子的关系由谱测度分区 $\nu = p/(1+2p^2)$（定理 3.3）确定。
+其中 $d_e = 2$（电子自旋谱自由度），$\bar{d}_\Phi = 1/2$（Chern-Simons 谱表述 (3.8)）。$\eta(p)$ 是 $p$ 的单变量函数，无需外部输入——$p$ 是 CF 谱陈数（整数拓扑不变量），其与填充因子的关系由谱测度分区 $\nu = p/(1+2p^2)$（定理 3.3）确定。
 
 **谱框架断言**：若谱流方程 (3.10) 成立且谱测度分区 (3.12) 自洽，则 $\eta$ 由 $p$ 唯一确定。$\eta$ 的符号在 $p_{\text{crit}} \approx 2.369$ 处发生转变——$p \leq 2$ 时 $\eta > 0$（协同增强），$p \geq 3$ 时 $\eta < 0$（相消压缩）。该符号转变是 $\mathbf{Sp}_{\text{LLL}}$ 非对称子范畴中由 $p$ 控制的编织相变。
 
@@ -676,7 +676,7 @@ $$\beta(A) \approx -\frac{1}{2\pi} A^3, \quad |A| \ll 1 \tag{Q3.5}$$
 
 *证明*。推导分为三步：
 
-1. **自能修正的谱翻译**。在 $\mathbf{Sp}$ 框架中，杂质平均等效于谱纤维 $\mathcal{H}_{\text{Hall}}$ 上的规范场修正。自能算符 $\Sigma(\epsilon)$ 的谱展开为：
+1. **自能修正的谱表述**。在 $\mathbf{Sp}$ 框架中，杂质平均等效于谱纤维 $\mathcal{H}_{\text{Hall}}$ 上的规范场修正。自能算符 $\Sigma(\epsilon)$ 的谱展开为：
    $$\Sigma(\epsilon) = \int \frac{d^2k}{(2\pi)^2} \frac{V_{\text{imp}}^2}{i\epsilon - A_0(k)}$$
    其中 $V_{\text{imp}}$ 是杂质散射势的谱表示。在无序图展开的一圈阶（单圈近似），自能修正给出 $\beta$ 函数的leading order。
 
@@ -1080,7 +1080,7 @@ $$\nu_{\text{spec}}(\epsilon) = \lim_{\zeta \to 0} \nu(\epsilon, \zeta) \quad \t
 
 ### Q4: 倾斜磁场下的谱框架预测
 
-**问题陈述**：现有 IQHE/FQHE 谱翻译假设垂直磁场 $B_{\perp}$。倾斜磁场 $B_{\text{total}}$ 以角度 $\theta$（$\tan\theta = B_{\parallel}/B_{\perp}$）偏离样品法线，引入面内分量 $B_{\parallel}$。在谱框架中，$B_{\parallel}$ 通过两个独立通道修改谱流方程：(1) **有限厚度轨道耦合**——$B_{\parallel}$ 与 2DEG 有限厚度 $d_{\text{eff}}$ 耦合，改变有效无序关联长度；(2) **Zeeman 能隙变窄**——$B_{\parallel}$ 增大总 Zeeman 劈裂，减小有效朗道能级谱间隙。两者共同导致 $A_{\text{Hall}}$ 谱的 Lifshitz 型转变和 $\nu(\theta)$ 的非平凡角度依赖。
+**问题陈述**：现有 IQHE/FQHE 谱表述假设垂直磁场 $B_{\perp}$。倾斜磁场 $B_{\text{total}}$ 以角度 $\theta$（$\tan\theta = B_{\parallel}/B_{\perp}$）偏离样品法线，引入面内分量 $B_{\parallel}$。在谱框架中，$B_{\parallel}$ 通过两个独立通道修改谱流方程：(1) **有限厚度轨道耦合**——$B_{\parallel}$ 与 2DEG 有限厚度 $d_{\text{eff}}$ 耦合，改变有效无序关联长度；(2) **Zeeman 能隙变窄**——$B_{\parallel}$ 增大总 Zeeman 劈裂，减小有效朗道能级谱间隙。两者共同导致 $A_{\text{Hall}}$ 谱的 Lifshitz 型转变和 $\nu(\theta)$ 的非平凡角度依赖。
 
 ---
 
@@ -1244,4 +1244,4 @@ $d_{\text{eff}}$ 越大，有限厚度轨道耦合越强，Lifshitz 转变越早
 | **v0.4** | **2026-07-23** | 第一性原理诚实化重写：§3.4.3 新增 $\mathbf{Sp}$ 拓扑谱流方程（Chen-Simons 谱作用量推导，独立于 Jain 序列）；§3.4.4 明确声明 Jain 序列为实验输入，区分谱框架"参数化"与"预言"；§3.5.1 非交换性根源从 LLL 几何升级为 $\mathbf{Sp}$ 辫子 3-态射；删除所有"定理 3.8"等空泛形式；删除"实验检验"中的冗余预言；新增压缩系数标度率的 $m$ 独立性作为关键检验 |
 | **v0.3** | **2026-07-23** | §3.5 新增：亚电子态非交换谱粘合理论——非交换分解 $d_{\text{CF}}^2 = d_e^2 + (2p)^2\bar{d}_\Phi^2 + 4p\cdot\eta$；$\eta$ 谱流封闭形式；$\kappa$ 压缩系数；与 BCS 的编织类型对比；3 项可检验预言；Q1 子问题标记为已解决 |
 | **v0.2** | **2026-07-23** | Q1 已解决（§3.4 新增）：谱流自洽封闭形式 $d_{\text{CF}} = (4\pi\nu)^{1/3}$；谱间隙比 $r_{\text{CF}}$ 数值预言；CF 亚电子态临界 $\nu_{\text{crit}} \approx 0.637$ 发现；Jain 序列的范畴论统一（定理 3.4） |
-| **v0.1** | **2026-07-23** | 初始版本：IQHE TKNN 谱公式与陈数绝热不变性；FQHE 复合费米子谱翻译与谱粘合自由度分数化；Laughlin 波函数的谱流基态分解；陈数拓扑序的谱分类（体-边界对应、$Z_2$ 分类、无序局域化）；任意子辫子统计的谱框架翻译（Fibonacci 示例）；四项谱框架独有可检验预言（纠缠熵振荡、FQHE 能隙标度、临界指数、边缘态谱截止）；数值验证方案；四项开放问题 |
+| **v0.1** | **2026-07-23** | 初始版本：IQHE TKNN 谱公式与陈数绝热不变性；FQHE 复合费米子谱表述与谱粘合自由度分数化；Laughlin 波函数的谱流基态分解；陈数拓扑序的谱分类（体-边界对应、$Z_2$ 分类、无序局域化）；任意子辫子统计的谱框架翻译（Fibonacci 示例）；四项谱框架独有可检验预言（纠缠熵振荡、FQHE 能隙标度、临界指数、边缘态谱截止）；数值验证方案；四项开放问题 |

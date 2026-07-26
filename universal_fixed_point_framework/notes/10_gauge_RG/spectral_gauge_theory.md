@@ -1,181 +1,181 @@
-# 谱规范理论：BRST、鬼场与 Ward 恒等式
+﻿# 璋辫鑼冪悊璁猴細BRST銆侀鍦轰笌 Ward 鎭掔瓑寮?
 
-## 核心目标
+## 鏍稿績鐩爣
 
-在 T1 的谱 YM 拉格朗日量基础上，建立谱版本的规范固定、FP 鬼场、BRST 对称性和 Ward 恒等式，完善谱非交换规范场论。
+鍦?T1 鐨勮氨 YM 鎷夋牸鏈楁棩閲忓熀纭€涓婏紝寤虹珛璋辩増鏈殑瑙勮寖鍥哄畾銆丗P 楝煎満銆丅RST 瀵圭О鎬у拰 Ward 鎭掔瓑寮忥紝瀹屽杽璋遍潪浜ゆ崲瑙勮寖鍦鸿銆?
 
 ---
 
-## 1. 谱规范固定
+## 1. 璋辫鑼冨浐瀹?
 
-### 1.1 规范冗余的谱表述
+### 1.1 瑙勮寖鍐椾綑鐨勮氨琛ㄨ堪
 
-在标准 YM 理论中，规范变换 $A_\mu \to g^{-1}A_\mu g + g^{-1}\partial_\mu g$ 导致路径积分发散。谱版本中规范变换对应于 $\mathbf{Sp}$ 范畴中的态射共轭：
+鍦ㄦ爣鍑?YM 鐞嗚涓紝瑙勮寖鍙樻崲 $A_\mu \to g^{-1}A_\mu g + g^{-1}\partial_\mu g$ 瀵艰嚧璺緞绉垎鍙戞暎銆傝氨鐗堟湰涓鑼冨彉鎹㈠搴斾簬 $\mathbf{Sp}$ 鑼冪暣涓殑鎬佸皠鍏辫江锛?
 
 $$\mathcal{A} \to g^{-1} \mathcal{A} g + g^{-1} [\nabla, g],$$
 
-其中 $\nabla$ 是谱联络，$g \in \mathcal{G}$ 是谱规范群对象。
+鍏朵腑 $\nabla$ 鏄氨鑱旂粶锛?g \in \mathcal{G}$ 鏄氨瑙勮寖缇ゅ璞°€?
 
-### 1.2 谱 $R_\xi$ 规范固定
+### 1.2 璋?$R_\xi$ 瑙勮寖鍥哄畾
 
-谱版本的规范固定项为（类比标准 $R_\xi$ 规范）：
+璋辩増鏈殑瑙勮寖鍥哄畾椤逛负锛堢被姣旀爣鍑?$R_\xi$ 瑙勮寖锛夛細
 
 $$\mathcal{L}_{\text{gf}}^{\text{spec}} = -\frac{1}{2\xi} \operatorname{Tr}_{\mathfrak{g}} \left( [\nabla^\mu, \mathcal{A}_\mu] \star [\nabla^\nu, \mathcal{A}_\nu] \right),$$
 
-其中 $[\nabla^\mu, \mathcal{A}_\mu]$ 是谱版本的规范条件（$\partial^\mu A_\mu = 0$ 的谱翻译），$\xi$ 是规范参数。
+鍏朵腑 $[\nabla^\mu, \mathcal{A}_\mu]$ 鏄氨鐗堟湰鐨勮鑼冩潯浠讹紙$\partial^\mu A_\mu = 0$ 鐨勮氨琛ㄨ堪锛夛紝$\xi$ 鏄鑼冨弬鏁般€?
 
-**谱 Feynman 规范** ($\xi = 1$) 下，谱规范传播子简化为：
+**璋?Feynman 瑙勮寖** ($\xi = 1$) 涓嬶紝璋辫鑼冧紶鎾瓙绠€鍖栦负锛?
 
 $$D_{\mu\nu}^{ab}(k) = -\frac{i\delta^{ab}}{k^2 + i\varepsilon} \left( g_{\mu\nu} - (1-\xi)\frac{k_\mu k_\nu}{k^2} \right).$$
 
-在谱表示下：
+鍦ㄨ氨琛ㄧず涓嬶細
 
 $$D_{\mu\nu}^{ab}(\lambda) = -\frac{i\delta^{ab}}{\lambda + i\varepsilon} \left( g_{\mu\nu} - (1-\xi)\frac{k_\mu k_\nu}{\lambda} \right).$$
 
-### 1.3 谱规范固定拉格朗日量
+### 1.3 璋辫鑼冨浐瀹氭媺鏍兼湕鏃ラ噺
 
-完整谱规范固定拉格朗日量为：
+瀹屾暣璋辫鑼冨浐瀹氭媺鏍兼湕鏃ラ噺涓猴細
 
 $$\mathcal{L}_{\text{YM+gf}}^{\text{spec}} = -\frac{1}{4} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F}_{\mu\nu}\mathcal{F}^{\mu\nu}) - \frac{1}{2\xi} \operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu,\mathcal{A}_\mu]^2).$$
 
 ---
 
-## 2. 谱 FP 鬼场
+## 2. 璋?FP 楝煎満
 
-### 2.1 鬼场的谱翻译
+### 2.1 楝煎満鐨勮氨琛ㄨ堪
 
-Faddeev-Popov 行列式 $\det(\delta G/\delta \alpha)$ 的谱版本通过 Grassmann 值谱鬼场引入：
+Faddeev-Popov 琛屽垪寮?$\det(\delta G/\delta \alpha)$ 鐨勮氨鐗堟湰閫氳繃 Grassmann 鍊艰氨楝煎満寮曞叆锛?
 
 $$\mathcal{L}_{\text{ghost}}^{\text{spec}} = \operatorname{Tr}_{\mathfrak{g}} \left( \bar{c}^a [\nabla^\mu, D_\mu c]^a \right),$$
 
-其中：
-- $c^a(\lambda)$: 谱鬼场（Grassmann 奇值的 $\mathbf{Sp}$ 对象）
-- $\bar{c}^a(\lambda)$: 谱反鬼场
-- $D_\mu c = \partial_\mu c + g[\mathcal{A}_\mu, c]$: 谱协变导数
+鍏朵腑锛?
+- $c^a(\lambda)$: 璋遍鍦猴紙Grassmann 濂囧€肩殑 $\mathbf{Sp}$ 瀵硅薄锛?
+- $\bar{c}^a(\lambda)$: 璋卞弽楝煎満
+- $D_\mu c = \partial_\mu c + g[\mathcal{A}_\mu, c]$: 璋卞崗鍙樺鏁?
 
-### 2.2 谱鬼场传播子
+### 2.2 璋遍鍦轰紶鎾瓙
 
-在 $\xi$ 规范下，谱鬼场传播子为：
+鍦?$\xi$ 瑙勮寖涓嬶紝璋遍鍦轰紶鎾瓙涓猴細
 
 $$G_{\text{ghost}}^{ab}(\lambda) = \frac{i\delta^{ab}}{\lambda + i\varepsilon}.$$
 
-与标量谱传播子形式一致，但具有 Grassmann 统计（奇 $\mathbb{Z}_2$ 分级）。
+涓庢爣閲忚氨浼犳挱瀛愬舰寮忎竴鑷达紝浣嗗叿鏈?Grassmann 缁熻锛堝 $\mathbb{Z}_2$ 鍒嗙骇锛夈€?
 
-### 2.3 谱鬼场顶点
+### 2.3 璋遍鍦洪《鐐?
 
-鬼-胶子相互作用顶点：
+楝?鑳跺瓙鐩镐簰浣滅敤椤剁偣锛?
 
 $$\Gamma_{\bar{c}Ac}^{abc}(\lambda_1, \lambda_2, \lambda_3) = -g f^{abc} \cdot \delta(\lambda_1 + \lambda_2 + \lambda_3),$$
 
-其中 $f^{abc}$ 是李代数结构常数。
+鍏朵腑 $f^{abc}$ 鏄潕浠ｆ暟缁撴瀯甯告暟銆?
 
 ---
 
-## 3. 谱 BRST 对称性
+## 3. 璋?BRST 瀵圭О鎬?
 
-### 3.1 BRST 变换的谱形式
+### 3.1 BRST 鍙樻崲鐨勮氨褰㈠紡
 
-标准 BRST 变换 $s$ 的谱版本为：
+鏍囧噯 BRST 鍙樻崲 $s$ 鐨勮氨鐗堟湰涓猴細
 
 $$s\mathcal{A}_\mu = [\nabla_\mu, c], \quad sc = \frac{g}{2}[c, c], \quad s\bar{c} = \frac{[\nabla^\mu, \mathcal{A}_\mu]}{\xi}, \quad s\Phi = -g c \Phi.$$
 
-其中 $s$ 是 Graded 导子（奇 $\mathbb{Z}_2$ 分级，与谱对象的分级结构一致）。
+鍏朵腑 $s$ 鏄?Graded 瀵煎瓙锛堝 $\mathbb{Z}_2$ 鍒嗙骇锛屼笌璋卞璞＄殑鍒嗙骇缁撴瀯涓€鑷达級銆?
 
-### 3.2 BRST 不变性
+### 3.2 BRST 涓嶅彉鎬?
 
-**定理 1**（谱 BRST 不变性）。完整规范固定拉格朗日量在 BRST 变换下不变：
+**瀹氱悊 1**锛堣氨 BRST 涓嶅彉鎬э級銆傚畬鏁磋鑼冨浐瀹氭媺鏍兼湕鏃ラ噺鍦?BRST 鍙樻崲涓嬩笉鍙橈細
 
 $$s\left( \mathcal{L}_{\text{YM+gf+ghost}}^{\text{spec}} \right) = 0.$$
 
-**证明**。分为三步：
-1. $s\mathcal{L}_{\text{YM}}^{\text{spec}} = 0$: YM 项在规范变换下不变，BRST 是规范变换的代数版本
-2. $s\mathcal{L}_{\text{gf}}^{\text{spec}} + s\mathcal{L}_{\text{ghost}}^{\text{spec}} = 0$: 规范固定项的 BRST 变化被鬼场项抵消
-3. $s^2 = 0$: BRST 算子幂零（谱 $\mathbb{Z}_2$ 分级的自然结果）
+**璇佹槑**銆傚垎涓轰笁姝ワ細
+1. $s\mathcal{L}_{\text{YM}}^{\text{spec}} = 0$: YM 椤瑰湪瑙勮寖鍙樻崲涓嬩笉鍙橈紝BRST 鏄鑼冨彉鎹㈢殑浠ｆ暟鐗堟湰
+2. $s\mathcal{L}_{\text{gf}}^{\text{spec}} + s\mathcal{L}_{\text{ghost}}^{\text{spec}} = 0$: 瑙勮寖鍥哄畾椤圭殑 BRST 鍙樺寲琚鍦洪」鎶垫秷
+3. $s^2 = 0$: BRST 绠楀瓙骞傞浂锛堣氨 $\mathbb{Z}_2$ 鍒嗙骇鐨勮嚜鐒剁粨鏋滐級
 
-### 3.3 BRST 荷的谱表示
+### 3.3 BRST 鑽风殑璋辫〃绀?
 
-BRST 荷 $Q_{\text{BRST}}$ 在 $\mathbf{Sp}$ 中的表示为：
+BRST 鑽?$Q_{\text{BRST}}$ 鍦?$\mathbf{Sp}$ 涓殑琛ㄧず涓猴細
 
 $$Q_{\text{BRST}} = \int d\lambda \, c(\lambda) \left( [\nabla^\mu, \mathcal{A}_\mu](\lambda) + \frac{g}{2}[\bar{c}, c](\lambda) \right),$$
 
-满足 $Q_{\text{BRST}}^2 = 0$。物理态空间为 $Q_{\text{BRST}}$-上同调：
+婊¤冻 $Q_{\text{BRST}}^2 = 0$銆傜墿鐞嗘€佺┖闂翠负 $Q_{\text{BRST}}$-涓婂悓璋冿細
 
 $$\mathcal{H}_{\text{phys}} = \ker Q_{\text{BRST}} / \operatorname{im} Q_{\text{BRST}}.$$
 
 ---
 
-## 4. 谱 Ward 恒等式（Slavnov-Taylor 恒等式）
+## 4. 璋?Ward 鎭掔瓑寮忥紙Slavnov-Taylor 鎭掔瓑寮忥級
 
-### 4.1 生成泛函的 BRST 变换
+### 4.1 鐢熸垚娉涘嚱鐨?BRST 鍙樻崲
 
-谱生成泛函的 BRST 变换给出：
+璋辩敓鎴愭硾鍑界殑 BRST 鍙樻崲缁欏嚭锛?
 
-$$\int \mathcal{D}_{\text{Spec}}[\mathcal{A}, c, \bar{c}] \; s(\cdots) e^{iS_{\text{eff}}} = 0,$$
+$$\int \mathcal{D}_{\text{Sp}}[\mathcal{A}, c, \bar{c}] \; s(\cdots) e^{iS_{\text{eff}}} = 0,$$
 
-其中 $S_{\text{eff}} = S_{\text{YM}} + S_{\text{gf}} + S_{\text{ghost}}$。
+鍏朵腑 $S_{\text{eff}} = S_{\text{YM}} + S_{\text{gf}} + S_{\text{ghost}}$銆?
 
-### 4.2 谱 Ward 恒等式
+### 4.2 璋?Ward 鎭掔瓑寮?
 
-对规范传播子的 Ward 恒等式：
+瀵硅鑼冧紶鎾瓙鐨?Ward 鎭掔瓑寮忥細
 
-$$k^\mu \tilde{D}_{\mu\nu}^{ab}(k) = \xi \cdot (\text{ghost 贡献}),$$
+$$k^\mu \tilde{D}_{\mu\nu}^{ab}(k) = \xi \cdot (\text{ghost 璐＄尞}),$$
 
-在谱语言中：
+鍦ㄨ氨璇█涓細
 
 $$\lambda \cdot \tilde{D}_{\mu\nu}^{ab}(\lambda) = \xi \cdot \delta^{ab} \frac{k_\mu k_\nu}{\lambda^2} + \mathcal{O}(g).$$
 
-**推论**（物理极化）。物理散射振幅仅依赖于横向极化模式，纵向/类时模式被鬼场抵消。
+**鎺ㄨ**锛堢墿鐞嗘瀬鍖栵級銆傜墿鐞嗘暎灏勬尟骞呬粎渚濊禆浜庢í鍚戞瀬鍖栨ā寮忥紝绾靛悜/绫绘椂妯″紡琚鍦烘姷娑堛€?
 
-### 4.3 谱耦合跑动与 Ward 恒等式
+### 4.3 璋辫€﹀悎璺戝姩涓?Ward 鎭掔瓑寮?
 
-Ward 恒等式保证了规范耦合的重整化与规范参数 $\xi$ 无关：
+Ward 鎭掔瓑寮忎繚璇佷簡瑙勮寖鑰﹀悎鐨勯噸鏁村寲涓庤鑼冨弬鏁?$\xi$ 鏃犲叧锛?
 
 $$\beta(g) = \frac{dg}{d\ln\mu} = -\frac{b_0}{16\pi^2} g^3,$$
 
-其中 $b_0 = \frac{11}{3}C_2(G) - \frac{4}{3}T(R)n_f$。
+鍏朵腑 $b_0 = \frac{11}{3}C_2(G) - \frac{4}{3}T(R)n_f$銆?
 
-**定理 2**（谱 Ward 恒等式的函子不变性）。Ward 恒等式在谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 下保持：
+**瀹氱悊 2**锛堣氨 Ward 鎭掔瓑寮忕殑鍑藉瓙涓嶅彉鎬э級銆俉ard 鎭掔瓑寮忓湪璋卞寲鍑藉瓙 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 涓嬩繚鎸侊細
 
 $$D(\text{Ward}_{\text{std}}) = \text{Ward}_{\text{spec}}.$$
 
 ---
 
-## 5. 与标准规范理论的对应
+## 5. 涓庢爣鍑嗚鑼冪悊璁虹殑瀵瑰簲
 
-| 概念 | 标准 QFT | 谱版本 |
+| 姒傚康 | 鏍囧噯 QFT | 璋辩増鏈?|
 |:----|:---------|:-------|
-| 规范固定 | $\mathcal{L}_{\text{gf}} = -\frac{1}{2\xi}(\partial^\mu A_\mu)^2$ | $\mathcal{L}_{\text{gf}}^{\text{spec}} = -\frac{1}{2\xi}\operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu,\mathcal{A}_\mu]^2)$ |
-| FP 鬼场 | $\bar{c}^a \partial^\mu D_\mu c^a$ | $\bar{c}^a [\nabla^\mu, D_\mu c]^a$ |
-| BRST 变换 | $sA_\mu = D_\mu c$ | $s\mathcal{A}_\mu = [\nabla_\mu, c]$ |
-| BRST 幂零性 | $s^2 = 0$ | $s^2 = 0$（$\mathbf{Sp}$ $\mathbb{Z}_2$ 分级） |
-| Ward 恒等式 | $k^\mu D_{\mu\nu} = \xi \cdot (\cdots)$ | $\lambda \tilde{D}_{\mu\nu}(\lambda) = \xi \cdot (\cdots)$ |
+| 瑙勮寖鍥哄畾 | $\mathcal{L}_{\text{gf}} = -\frac{1}{2\xi}(\partial^\mu A_\mu)^2$ | $\mathcal{L}_{\text{gf}}^{\text{spec}} = -\frac{1}{2\xi}\operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu,\mathcal{A}_\mu]^2)$ |
+| FP 楝煎満 | $\bar{c}^a \partial^\mu D_\mu c^a$ | $\bar{c}^a [\nabla^\mu, D_\mu c]^a$ |
+| BRST 鍙樻崲 | $sA_\mu = D_\mu c$ | $s\mathcal{A}_\mu = [\nabla_\mu, c]$ |
+| BRST 骞傞浂鎬?| $s^2 = 0$ | $s^2 = 0$锛?\mathbf{Sp}$ $\mathbb{Z}_2$ 鍒嗙骇锛?|
+| Ward 鎭掔瓑寮?| $k^\mu D_{\mu\nu} = \xi \cdot (\cdots)$ | $\lambda \tilde{D}_{\mu\nu}(\lambda) = \xi \cdot (\cdots)$ |
 
 ---
 
-## 6. 数值验证
+## 6. 鏁板€奸獙璇?
 
-### 6.1 谱规范传播子
+### 6.1 璋辫鑼冧紶鎾瓙
 
-验证谱规范传播子在不同规范参数 $\xi$ 下的行为：
-- $\xi = 0$ (Landau 规范): 横向量子数仅横向传播
-- $\xi = 1$ (Feynman 规范): 传播子 $D_{\mu\nu} = -ig_{\mu\nu}/k^2$
-- $\xi \to \infty$ (幺正规范): 非物理极化退耦
+楠岃瘉璋辫鑼冧紶鎾瓙鍦ㄤ笉鍚岃鑼冨弬鏁?$\xi$ 涓嬬殑琛屼负锛?
+- $\xi = 0$ (Landau 瑙勮寖): 妯悜閲忓瓙鏁颁粎妯悜浼犳挱
+- $\xi = 1$ (Feynman 瑙勮寖): 浼犳挱瀛?$D_{\mu\nu} = -ig_{\mu\nu}/k^2$
+- $\xi \to \infty$ (骞烘瑙勮寖): 闈炵墿鐞嗘瀬鍖栭€€鑰?
 
-### 6.2 谱鬼场传播子
+### 6.2 璋遍鍦轰紶鎾瓙
 
-验证谱鬼场传播子与标量谱传播子形式一致（$\delta^{ab}/(k^2 + i\varepsilon)$）。
+楠岃瘉璋遍鍦轰紶鎾瓙涓庢爣閲忚氨浼犳挱瀛愬舰寮忎竴鑷达紙$\delta^{ab}/(k^2 + i\varepsilon)$锛夈€?
 
-### 6.3 BRST 不变性
+### 6.3 BRST 涓嶅彉鎬?
 
-数值验证 BRST 变换下规范固定拉格朗日量的不变性（在离散谱截断下）。
+鏁板€奸獙璇?BRST 鍙樻崲涓嬭鑼冨浐瀹氭媺鏍兼湕鏃ラ噺鐨勪笉鍙樻€э紙鍦ㄧ鏁ｈ氨鎴柇涓嬶級銆?
 
 ---
 
-## 7. 开放问题
+## 7. 寮€鏀鹃棶棰?
 
-| 问题 | 难度 | 说明 |
+| 闂 | 闅惧害 | 璇存槑 |
 |:----|:----:|------|
-| 谱版本的 Gribov 复制问题 | 🔴 | 非微扰规范固定中的 Gribov 副本在 $\mathbf{Sp}$ 中的表现 |
-| 谱瞬子与 $\theta$ 真空 | 🔴 | 瞬子解的谱翻译与 $\theta$ 项的谱表示 |
-| 谱反常（Adler-Bell-Jackiw） | 🟡 | 三角图 anomalies 的谱版本与 $\mathbf{Sp}$ 上同调 |
-| 谱规范理论的严格 BRST 上同调 | 🟡 | $\mathbf{Sp}$ 范畴中的 BRST 上同调计算 |
+| 璋辩増鏈殑 Gribov 澶嶅埗闂 | 馃敶 | 闈炲井鎵拌鑼冨浐瀹氫腑鐨?Gribov 鍓湰鍦?$\mathbf{Sp}$ 涓殑琛ㄧ幇 |
+| 璋辩灛瀛愪笌 $\theta$ 鐪熺┖ | 馃敶 | 鐬瓙瑙ｇ殑璋辫〃杩颁笌 $\theta$ 椤圭殑璋辫〃绀?|
+| 璋卞弽甯革紙Adler-Bell-Jackiw锛?| 馃煛 | 涓夎鍥?anomalies 鐨勮氨鐗堟湰涓?$\mathbf{Sp}$ 涓婂悓璋?|
+| 璋辫鑼冪悊璁虹殑涓ユ牸 BRST 涓婂悓璋?| 馃煛 | $\mathbf{Sp}$ 鑼冪暣涓殑 BRST 涓婂悓璋冭绠?|

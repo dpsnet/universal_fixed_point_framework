@@ -1,4 +1,4 @@
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.AInfinityAlgebra
 import UFPFormalization.SpecInfinity
 import UFPFormalization.InfinityCategory
@@ -66,7 +66,7 @@ theorem spectral_flow_ode (n : ℕ) (G A : Matrix (Fin n) (Fin n) ℂ) (t : ℝ)
 
 At t = 0 it is the identity; the ∞-structure organizes the deformation into
 higher homotopies.  Full proof is deferred to the analytic limit N → ∞. -/
-theorem spectral_flow_homotopy_equivalence (X : SpecObj)
+theorem spectral_flow_homotopy_equivalence (X : SpObj)
     (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) :
     spectralFlowMap X.n G X.A 0 1 = X.A := by
   have h := spectral_flow_at_zero X.n G X.A 0
@@ -74,7 +74,7 @@ theorem spectral_flow_homotopy_equivalence (X : SpecObj)
   simpa [Nat.zero_add] using h
 
 /-- Lemma: At t = 0, the spectral flow map (for any N) commutes with X.A. -/
-lemma spectral_flow_zero_commutes (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) (N : ℕ) :
+lemma spectral_flow_zero_commutes (X : SpObj) (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ) (N : ℕ) :
     spectralFlowMap X.n G X.A 0 N * X.A = X.A * spectralFlowMap X.n G X.A 0 N := by
   by_cases hN : N = 0
   · subst hN; simp [spectralFlowMap]
@@ -95,7 +95,7 @@ lemma spectral_flow_zero_commutes (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin (X.
     
     When X.A and G commute, the spectral flow map reduces to X.A for all t,
     making the intertwine property trivially true. -/
-noncomputable def spectralFlowInfEndo (X : SpecObj) (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ)
+noncomputable def spectralFlowInfEndo (X : SpObj) (G : Matrix (Fin (X.n)) (Fin (X.n)) ℂ)
     (t : ℝ) (N : ℕ) (h_silence : X.A * G = G * X.A) : SpecInfMorphism X X :=
   { P := spectralFlowMap X.n G X.A t N
     generator := G

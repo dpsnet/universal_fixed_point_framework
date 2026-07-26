@@ -4,7 +4,7 @@
 
 **摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartan 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
 
-**前置依赖**：Paper XV（量子化学谱翻译）、Paper XXI（Grothendieck 纤维化综合）、`spectral_quantum_chemistry.md`（量子化学谱翻译笔记）。
+**前置依赖**：Paper XV（量子化学谱表述）、Paper XXI（Grothendieck 纤维化综合）、`spectral_quantum_chemistry.md`（量子化学谱表述笔记）。
 **延伸方法论**：`spectral_fibration_methodology.md` v1.0（量子化学多层次精细纤维拆分方法论）——基于 Paper XV 和 Paper XXI 建立的系统纤维化分解 8 步协议，将 Bun(Reac)/Bun(IntraIonic)/Bun(Ionic) 扩展为 7 层嵌套链（含 Bun(Corr)/Bun(Vib)/Bun(Solv)/Bun(Spin)），提供层次分类树、精度判据、自然变换检验和跨界粘合机制。
 
 ---
@@ -68,7 +68,7 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 
 该奇异性在物理上对应两类重要情形：
 
-1. **锥形交叉（Conical Intersection）**：两个电子态的能量面在构型空间中形成锥形简并点。谱框架中，$\lambda_i(R) = \lambda_j(R)$ 导致 $\delta_{\text{spec}}(R) = 0$。围绕锥形交叉的 Berry 相 $\gamma_{\text{Berry}} = \pi$ 对应纤维丛的拓扑非平凡性——这是非绝热动力学的谱翻译基础。
+1. **锥形交叉（Conical Intersection）**：两个电子态的能量面在构型空间中形成锥形简并点。谱框架中，$\lambda_i(R) = \lambda_j(R)$ 导致 $\delta_{\text{spec}}(R) = 0$。围绕锥形交叉的 Berry 相 $\gamma_{\text{Berry}} = \pi$ 对应纤维丛的拓扑非平凡性——这是非绝热动力学的谱表述基础。
 
 2. **键解离极限**：化学键断裂时 HOMO-LUMO 间隙闭合，单参考 Hartree-Fock 描述失效。在谱语言中，$\delta_{\text{spec}} \to 0$ 自动标记了需要多参考描述的区域（Paper XV §3.5.4）。
 
@@ -291,7 +291,7 @@ $J_{\text{intra}}$ 是分子内 CT 耦合强度——与 $R$ 的函数关系取�
 |:----|:-----|:--------|
 | $\sigma_{\text{zwitter}}$ | $(R, \xi_{\text{intra}}(R))$ | ${基态电荷分离度}$——沿构型坐标变化的两性离子特征 |
 | $\sigma_{\text{CT-exc}}$ | $(R, \omega_{\text{CT}} = E_{\text{ion}} - E_{\text{cov}})$ | 分子内 CT 激发能——实验对应 UV-Vis 电荷转移吸收带 |
-| $\sigma_{\text{dipole}}$ | $(R, \mu(R, \xi_{\text{intra}}) = \mu_0 \cdot (1 - \xi_{\text{intra}}))$ | 分子偶极矩的 CT 依赖——溶剂效应的谱翻译 |
+| $\sigma_{\text{dipole}}$ | $(R, \mu(R, \xi_{\text{intra}}) = \mu_0 \cdot (1 - \xi_{\text{intra}}))$ | 分子偶极矩的 CT 依赖——溶剂效应的谱表述 |
 
 ### 9.5 嵌套链
 

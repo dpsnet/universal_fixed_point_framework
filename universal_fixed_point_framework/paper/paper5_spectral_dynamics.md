@@ -14,6 +14,13 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 **术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。记号与定义沿用 Paper I，谱流方程引用 Paper V。Lean 4 形式化代码库 `SpectralDynamics.lean` 提供谱流方程、谱不变性、Nöther 守恒等定理的形式化框架。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **LQG**：圈量子引力（Loop Quantum Gravity）
+- **FLRW**：弗里德曼-勒梅特-罗伯逊-沃克（Friedmann-Lemaître-Robertson-Walker）度规
+- **SPT**：标准微扰论（Standard Perturbation Theory）
+- **GUT**：大统一理论（Grand Unified Theory）
+- **DS**：Dyson-Schwinger（戴森-施温格）方程
+
 ## 1. 引言：从谱分类到谱动力学
 
 ### 1.1 Paper I–IV 回顾
@@ -36,7 +43,7 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 > **论题 1**（力的谱解释）。力不是作用于粒子的外部实体，而是 $\mathbf{Sp}$ 中谱流的生成元。四种基本力对应四个谱生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$，通过谱流方程 $\frac{d}{dt}D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$ 统一描述。
 
-## 2. 谱流方程
+## 2. 谱流方程（类比 Heisenberg 绘景——谱流方程是算子代数中 Heisenberg 运动方程的范畴化推广，将对易子结构 $dA/dt = i[H, A]$ 推广至非自治、多生成元的谱动力学框架）
 
 ### 2.1 基本定义
 
@@ -44,7 +51,7 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 $$\boxed{\frac{d}{dt} A_t = \sum_{i=1}^4 g_i \cdot [A_{F,i}, A_t] + \mathcal{E}(t)}$$
 
-其中 $A_{F,i}$ 为第 $i$ 种力的谱生成元，$g_i$ 为耦合常数，$[A_{F,i}, A_t] = A_{F,i}A_t - A_tA_{F,i}$ 为谱对易子（Lie 导数），$\mathcal{E}(t)$ 为误差项。
+其中 $A_{F,i}$ 为第 $i$ 种力的**谱生成元**（谱生成元——驱动谱流的算子，对应经典力学中的 Hamiltonian 生成元或量子力学中的自伴算子，是框架对"生成元"概念的范畴化推广），$g_i$ 为耦合常数，$[A_{F,i}, A_t] = A_{F,i}A_t - A_tA_{F,i}$ 为谱对易子（Lie 导数），$\mathcal{E}(t)$ 为误差项。
 
 ### 2.2 Koopman 推导与几何意义
 
@@ -146,7 +153,7 @@ $$\|[q \tilde{F}, A_t]\|_{\text{HS}} = q \cdot |E + v \times B|$$
 4. **逆平方律的几何起源**：牛顿引力 $F \propto 1/r^2$ 和库仑力 $F \propto 1/r^2$ 是谱流在 3 维空间中几何传播的必然结果。谱通量守恒方程 $\partial_r(r^{d-1}\rho) = 0$ 的解 $\rho \propto 1/r^{d-1}$ 对于 $d=3$ 给出 $1/r^2$。数值验证（`paper5_inverse_square_law.py`）确认三维通量守恒偏差 $3.68 \times 10^{-17}$。
 5. **谱统一能标**：$\mu_U^{\text{spec}} = \mu_U^{\text{GUT}} \pm 10\% \sim 10^{15-16}$ GeV，预言质子寿命 $\tau_p \sim 10^{34-36}$ 年（Hyper-Kamiokande、DUNE 可检验）。
 
-**预言评估**：上述预言的意义并不等同。第 4 条（逆平方律的几何起源）是谱动力学**最核心的解释性贡献**——它第一次给出了 $1/r^2$ 律的几何必然性解释，而非将其作为经验事实接受。第 5 条（谱统一能标）是**可检验的物理预言**，但数值与现有 GUT 理论一致，不构成独立确证。第 3 条（引力-量子退相干）信号极弱，需下一代量子引力实验。第 1-2 条属于**框架性概念敞口**——它们展示框架的表达范围而非具体预言。
+**预言评估**：上述预言的意义并不等同。第 4 条（逆平方律的几何起源）是谱动力学**最核心的解释性贡献**——它第一次给出了 $1/r^2$ 律的几何必然性解释，而非将其作为经验事实接受。第 5 条（谱统一能标）是**可检验的物理预言**，但数值与现有 GUT 理论一致，不构成独立确证。第 3 条（引力-量子退相干）信号极弱，需下一代量子引力实验。第 1-2 条属于**理论框架的自然延伸**——它们展示框架的表达范围而非具体预言。
 
 ### 4.3 与弦论、LQG、渐近安全的关系
 
@@ -176,7 +183,7 @@ $A_{\text{GR}}$ 的离散特征值 $\lambda_k$（源自 $\mathbf{Rec}_D$ 边界�
 
 $$\lambda_k \propto \sqrt{k(k+1)}, \quad k = 1, 2, \ldots$$
 
-线性拟合 $\lambda_k = \alpha A_j + \beta$ 给出 **R² = 0.999952**，$A_{\text{GR}}$ 谱与 LQG 面积谱完美匹配。两种理论共享 $\sqrt{j(j+1)}$ 的 $SU(2)$ 自旋标记模式，且 $A_{\text{GR}}$ 的离散尺度由 Planck 质量 $M_{\text{Pl}} = 1.22 \times 10^{19}$ GeV 固定，LQG 的离散尺度由 Planck 面积 $l_P^2 = 2.61 \times 10^{-70}$ m² 固定。
+线性拟合 $\lambda_k = \alpha A_j + \beta$ 给出 **R² = 0.999952**，$A_{\text{GR}}$ 谱与 LQG 面积谱精确匹配。两种理论共享 $\sqrt{j(j+1)}$ 的 $SU(2)$ 自旋标记模式，且 $A_{\text{GR}}$ 的离散尺度由 Planck 质量 $M_{\text{Pl}} = 1.22 \times 10^{19}$ GeV 固定，LQG 的离散尺度由 Planck 面积 $l_P^2 = 2.61 \times 10^{-70}$ m² 固定。
 
 **结论**：$A_{\text{GR}}$ 的离散谱特征值等价于 LQG 面积谱量子——谱动力学框架中的"引力量子化"与 LQG 的自旋网络表示在谱层面完全一致。
 

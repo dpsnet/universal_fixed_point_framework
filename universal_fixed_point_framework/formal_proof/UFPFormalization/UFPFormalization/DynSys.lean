@@ -6,7 +6,7 @@ import Mathlib.Analysis.Normed.Group.Basic
 import Mathlib.Analysis.Complex.Norm
 import Mathlib.Analysis.Convex.Basic
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 
 open Set
 

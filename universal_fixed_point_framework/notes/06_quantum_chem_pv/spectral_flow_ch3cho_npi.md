@@ -518,7 +518,7 @@ $$\mu^*_{\text{spec}} = \frac{\alpha \cdot L}{1 + \alpha \cdot L}, \quad \alpha 
 
 [5] Paper VIII: Universal Fixed Point Framework VIII — 谱响应理论
 
-[6] Paper XV: Universal Fixed Point Framework XV — 量子化学的谱翻译
+[6] Paper XV: Universal Fixed Point Framework XV — 量子化学的谱表述
 
 [7] Paper XXI: Universal Fixed Point Framework XXI — Grothendieck 纤维化综合
 

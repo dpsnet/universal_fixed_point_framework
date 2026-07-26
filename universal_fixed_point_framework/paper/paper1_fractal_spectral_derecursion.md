@@ -150,7 +150,7 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 
 **命题 2.4.1**（$\mathbf{Rec}_D$ 是合法子范畴）。$\mathbf{Rec}_D$（定义 2.3.1）满足子范畴的三条充要条件：
 
-1. **对象子集封闭**：$\mathrm{Obj}(\mathbf{Rec}_D)\subseteq\mathrm{Obj}(\mathbf{Rec})$，由定义显然；
+1. **对象子集封闭**：$\mathrm{Obj}(\mathbf{Rec}_D)\subseteq\mathrm{Obj}(\mathbf{Rec})$，由定义直接可得；
 2. **恒等态射封闭**：对 $R\in\mathbf{Rec}_D$，恒等态射 $\mathrm{id}_R$ 满足谱保持条件（$D(\mathrm{id}_R)^\ast = \mathrm{id}_{\mathcal{H}_R}$ 是等距）；
 3. **态射复合封闭**：若 $f:R_1\to R_2$ 与 $g:R_2\to R_3$ 都是 $\mathbf{Rec}_D$ 态射（即 $D(f)^\ast, D(g)^\ast$ 等距），则 $g\circ f$ 也满足谱保持条件：
    $$D(g\circ f)^\ast = (D(g)\circ D(f))^\ast = D(f)^\ast\circ D(g)^\ast$$

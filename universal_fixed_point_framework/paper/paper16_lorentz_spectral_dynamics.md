@@ -8,7 +8,23 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper III（谱对应等价性）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）、Paper XI（A1-A7 谱 QFT 公理系统，特别是 A7 Lorentz 协变公理）、Paper XIII（多重静默理论）。度规符号约定 $\eta = \mathrm{diag}(+,-,-,-)$，光速 $c = 1$（自然单位）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper III（谱分类完备性定理）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）、Paper XI（A1-A7 谱 QFT 公理系统，特别是 A7 Lorentz 协变公理）、Paper XIII（多重静默理论）。度规符号约定 $\eta = \mathrm{diag}(+,-,-,-)$，光速 $c = 1$（自然单位）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **IFS**：迭代函数系统（Iterated Function System）
+- **QFT**：量子场论（Quantum Field Theory）
+- **SM**：标准模型（Standard Model）
+- **GR**：广义相对论（General Relativity）
+- **LIV**：Lorentz 不变性破坏（Lorentz Invariance Violation）
+- **CMB**：宇宙微波背景辐射（Cosmic Microwave Background）
+- **GZK**：Greisen-Zatsepin-Kuzmin（截断）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+- **RG**：重整化群（Renormalization Group）
+- **HS**：Hilbert-Schmidt（范数/内积）
+- **BH**：黑洞（Black Hole）
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **EW**：电弱（Electroweak）
 
 ---
 
@@ -284,7 +300,7 @@ $$S^2|s, m_s\rangle = -m^2 s(s+1)|s, m_s\rangle.$$
 
 > **观察**：零质量粒子位于 $\partial\mathbf{Rec}_D$，对应 Paper VIII Hawking 谱边界条件；有质量粒子位于 $\mathbf{Rec}_D$ 内部，对应非零谱间隙。
 
-### 6.5 Higgs 机制的谱翻译
+### 6.5 Higgs 机制的谱表述
 
 **命题 6.9**（Higgs 机制作为谱间隙生成）。对称性破缺前 $M^2 = 0$（Goldstone 模式，$\sigma(M^2) = \{0\}$）；破缺后 $M^2 = \lambda v^2$（$\sigma(M^2) = \{\lambda v^2\}$，非零谱间隙）。
 
@@ -581,7 +597,7 @@ $$\mathcal{E}(\{p\}) \cong \mathbf{Sp}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$
 
 ### 10.3 主定理 21（更新）：曲率-物质对应函子的层论形式
 
-本节利用 §10.1-§10.2 的层论语言，将 §10.6 中的谱翻译提升为严格的曲率-物质对应函子。
+本节利用 §10.1-§10.2 的层论语言，将 §10.6 中的谱表述提升为严格的曲率-物质对应函子。
 
 #### 10.3.1 谱曲率的层论定义
 
@@ -678,14 +694,14 @@ $$A_q = A_p + \nabla_\mu A_p \cdot \Delta x^\mu + \mathcal{O}(\Delta x^2),$$
 
 **命题 10.15**（谱丛的全局结构）。在切触条件下，谱对象丛 $\mathcal{E}$ 是 $M$ 上的向量丛，结构群为 $SO^+(1,3)$。广义协变原理对应将各点谱对象通过切触条件粘合为全局谱丛的自由度。在层论语言中，这等价于 $\mathcal{E}$ 作为 $\mathrm{Open}(M)$ 上的预层自动满足层公理（定理 10.2）。
 
-### 10.6 Einstein 方程的谱翻译
+### 10.6 Einstein 方程的谱表述
 
 **定义 10.16**（谱曲率）。谱对象丛 $\mathcal{E}$ 上的**谱曲率** $F_A$ 由协变导数的对易子定义：
 $$F_A(X, Y) = \nabla_X \nabla_Y - \nabla_Y \nabla_X - \nabla_{[X, Y]},$$
 其中 $X, Y$ 是 $M$ 上的向量场。在局部坐标下，
 $$F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu + [A_\mu, A_\nu].$$
 
-**主定理 21**（Einstein 方程的谱翻译）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 在谱动力学中翻译为谱曲率-物质谱流对偶关系。其严格形式由 §10.3 的层论版本给出（定理 10.3）：
+**主定理 21**（Einstein 方程的谱表述）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 在谱动力学中翻译为谱曲率-物质谱流对偶关系。其严格形式由 §10.3 的层论版本给出（定理 10.3）：
 $$\boxed{G_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}}$$
 其中 $G_{\mathcal{E}}$ 是谱 Einstein 张量（定义 10.8），$T_{\mathcal{E}}$ 是应力-能量谱张量（定义 10.9）。
 
@@ -762,7 +778,7 @@ $$\boxed{\Lambda \propto \frac{1}{R_{\partial\mathbf{Rec}_D}^2},}$$
 
 **暗能量问题的谱解答**：若 $\Lambda$ 是 $\partial\mathbf{Rec}_D$ 的曲率，则"暗能量"不是独立的物质成分，而是谱边界几何的体现——宇宙加速膨胀是 $\partial\mathbf{Rec}_D$ 正曲率的动力学结果。定量推导 $\Lambda$ 的具体值需要更深入的工作。$\square$
 
-**命题 10.22**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
+**命题 10.22**（AdS/CFT 的谱表述）。AdS/CFT 对应在谱动力学中翻译为：
 $$\mathbf{Sp}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Sp}_{\text{CFT}},$$
 即 AdS 时空的 $\partial\mathbf{Rec}_D$ 边界谱对象等价于 CFT 的谱对象。这为全息原理提供了谱动力学解释。
 
@@ -827,7 +843,7 @@ $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 | 18 | NTK 谱压缩-谱间隙坍缩同构 | 神经网络训练弛豫与谱间隙坍缩同构 | §11.5 |
 | 19 | 跨领域统一函子 | $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一七类临界现象 | §11.5 |
 | 20 | 局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构 | $SO^+(1,3)_p \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D}(T_pM)$ | §10.1 |
-| 21 | Einstein 方程的谱翻译 | $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$ | §10.2 |
+| 21 | Einstein 方程的谱表述 | $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$ | §10.2 |
 | 22 | Bianchi 恒等式的谱形式 | $\nabla_\mu \mathrm{Tr}(F^{\mu\nu} F_{\nu\rho}) = 0$ | §10.2 |
 | 23 | $\Lambda$ 的谱起源 | $\Lambda \propto 1/R_{\partial\mathbf{Rec}_D}^2$，暗能量 = 谱边界曲率 | §10.4 |
 
@@ -835,7 +851,7 @@ $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 
 | Paper | 关系 | 内容 |
 |:------|:----|:----|
-| Paper I | 基础 | Rec/Spec/D 函子定义 |
+| Paper I | 基础 | Rec/Sp/D 函子定义 |
 | Paper V | 衍生 | Lorentz 谱流是力谱流的特例（$G_{\text{Lor}}$ 替代 $A_{F,i}$） |
 | Paper VI | 衔接 | 流变谱流方程推广 B2 到非牛顿流体；非牛顿 K41 修正 |
 | Paper VII | 平行 | 熵增公理降级为谱流定理（与 A7 降级模式一致） |
@@ -1089,7 +1105,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 |:----|:----:|:-----|:----|
 | 流变硬化的 $\partial\mathbf{Rec}_D$ 机制 | ✅ | 从猜想升级为主定理（主定理 13-14） | §11.4 |
 | 跨领域统一图景 | ✅ | 从 3 类扩展到 7 类，建立统一函子（主定理 19） | §11.5 |
-| 弯曲时空扩展 | ✅ | 建立谱对象丛、Einstein 方程谱翻译、$\Lambda$ 谱起源（主定理 20-23） | §10 |
+| 弯曲时空扩展 | ✅ | 建立谱对象丛、Einstein 方程谱表述、$\Lambda$ 谱起源（主定理 20-23） | §10 |
 | LIV 系数定量推导 | ✅ | 建立 $\partial\mathbf{Rec}_D$ 扰动理论，数值验证 5 个实验约束一致 | §9.7 |
 | 中微子 LIV 与质量层级关联 | ✅ | 建立符号-层级对应（正常+ / 反转-） | §9.3, §9.7 |
 | $\zeta_3 \approx \xi_3$ 数值验证 | ✅ | 浮点层面精确相等，解析层面交织修正 $\sim 10^{-17}$ | §9.7.3 |
@@ -1154,7 +1170,7 @@ $$\boxed{\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D}$$
 18. **NTK 谱压缩-谱间隙坍缩同构**；
 19. **跨领域统一函子**（$\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类临界现象）；
 20. **局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构群**；
-21. **Einstein 方程的谱翻译**（谱曲率-物质谱流对偶）；
+21. **Einstein 方程的谱表述**（谱曲率-物质谱流对偶）；
 22. **Bianchi 恒等式的谱形式**（对应能量-动量守恒）；
 23. **$\Lambda$ 的谱起源**（暗能量 = 谱边界曲率效应）。
 
@@ -1268,7 +1284,7 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 - 流变谱流方程，推广 Paper VI B2 到非牛顿情形（主定理 12）
 - 钟慢-硬化谱间隙同构，三类硬化律对应三类 Lie 代数（主定理 13-14）
 - 八类临界现象的 $\partial\mathbf{Rec}_D$ 统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（主定理 19）
-- 弯曲时空扩展：开集范畴与谱预层、层公理与广义协变等价性、曲率-物质对应函子的层论形式（主定理 21 更新版）、奇点的层论探测、谱对象丛、Einstein 方程谱翻译、$\Lambda$ 谱起源（主定理 20-23）
+- 弯曲时空扩展：开集范畴与谱预层、层公理与广义协变等价性、曲率-物质对应函子的层论形式（主定理 21 更新版）、奇点的层论探测、谱对象丛、Einstein 方程谱表述、$\Lambda$ 谱起源（主定理 20-23）
 - LIV 数值验证：5 个实验约束全部一致，$\zeta_3 \approx \xi_3$ 验证通过（§9.7）
 - 主定理共 23 条
 
@@ -1277,7 +1293,7 @@ LIV 数值验证方面（§9.7），本文基于 $\partial\mathbf{Rec}_D$ 谱边
 |------|------|----------|
 | **v1.2** | **2026-07-23** | **§10 大重构**：新增 §10.1 开集范畴与谱预层（$\mathrm{Open}(M)$ 范畴、谱预层 $\mathcal{E}$、限制函子性）、§10.2 层公理与广义协变等价性（层条件、常量谱预层是层、广义协变 $\Leftrightarrow$ 层公理）、§10.3 主定理 21 更新版（谱曲率层、谱 Einstein 张量 $G_{\mathcal{E}}$、应力-能量谱张量 $T_{\mathcal{E}}$、完整四步骤证明、$\mathcal{F}: \mathbf{Curv} \to \mathbf{Matter}$ 显式构造）、§10.4 奇点的层论探测（谱间隙退化 = 层公理破坏、Kerr 反例证明、奇点的层论定义）；旧 §10.1-§10.5 重编号为 §10.5-§10.9 并更新交叉引用；§10.6 主定理 21 引用层论版本 |
 | v1.0 | 2026-07-19 | **正式版发布**。新增 §9.7 数值验证（五类 LIV 预言数值计算、实验约束对比、$\zeta_3 \approx \xi_3$ 关系验证、离散谱结构分析、可检验性排序）；修正 §11.4.4 中残留的"猜想"标记（已升级为主定理 13-14）；重构 §12 开放问题（新增 §12.1 已完成进展表、§12.2 严格化需求表含预期时间、扩展 §12.3 新增跨领域扩展、扩展 §12.5 新增临界现象普适类哲学）；结论补充 LIV 数值验证总结；主定理 23 个保持不变 |
-| v0.4 | 2026-07-19 | 深化 §10 弯曲时空扩展：从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱翻译、典型时空谱结构、$\Lambda$ 谱起源、量子引力视角）；新增主定理 20-23；主定理总数从 19 增至 23；更新摘要、结论、参考文献（新增量子引力与宇宙学分类） |
+| v0.4 | 2026-07-19 | 深化 §10 弯曲时空扩展：从 4 个简略小节扩展为 5 个完整小节（局部 Lorentz 群与谱对象丛、Einstein 方程谱表述、典型时空谱结构、$\Lambda$ 谱起源、量子引力视角）；新增主定理 20-23；主定理总数从 19 增至 23；更新摘要、结论、参考文献（新增量子引力与宇宙学分类） |
 | v0.3 | 2026-07-19 | 新增 §11.5 跨领域统一：七类临界现象的 $\partial\mathbf{Rec}_D$ 归一（主定理 15-19）；新增 Lie 代数-临界指数对应表、七类临界现象统一表；主定理总数从 14 增至 19；更新摘要、结论、参考文献（按主题分类） |
 | v0.2 | 2026-07-19 | 新增 §11.4 跨领域同构：流变硬化与 Lorentz 钟慢（主定理 11-14）；新增 Carreau-Lorentz 精确同构、流变谱流方程、钟慢-硬化谱间隙同构、流变 Lie 代数分类、三类临界现象统一；主定理总数从 10 增至 14；更新摘要、结论、参考文献；规范化参考文献（仅保留系列论文与公开文献） |
 | v0.1 | 2026-07-19 | 初稿。建立 Lorentz 谱动力学完整体系：10 个主定理、A7 公理降级、5 类可检验预言、弯曲时空扩展 |

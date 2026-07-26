@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.HigherRecCategory
 import UFPFormalization.HigherSpecCategory
@@ -16,7 +16,7 @@ namespace UFPFormalization
 The D-functor lifts to a 2-functor D₂ : Rec₂ → Spec₂ (deepening notes §A.2).
 
 Structure preservation:
-  1. Objects:  D(R) = SpecObj from DFunctor
+  1. Objects:  D(R) = SpObj from DFunctor
   2. 1-morphisms: D(f) = transfer matrix from DFunctor
   3. 2-morphisms: D₂(α)_t = D(α_t) via the homotopy matrix
   4. Vertical composition preservation: D₂(β∘_vα) = D₂(β)∘_vD₂(α)
@@ -31,9 +31,9 @@ universe u
 
 /--
 Action of D₂ on objects: same as DFunctor.
-D(R) : RecObj → SpecObj via the spectral decursion functor.
+D(R) : RecObj → SpObj via the spectral decursion functor.
 -/
-def D2_map_obj (R : RecObj) : SpecObj :=
+def D2_map_obj (R : RecObj) : SpObj :=
   DFunctor_obj R
 
 /--

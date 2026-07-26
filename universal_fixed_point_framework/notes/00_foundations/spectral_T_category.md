@@ -318,7 +318,7 @@ $$\|G_{\text{RG}}(\Lambda_{\text{QCD}})\| = \frac{1}{2} \cdot \frac{\Delta\lambd
 
 其中 $\Delta\lambda_3 = 0.1725$ 是 SU(3) 谱间隙，$\Delta\lambda_{\min}^{(0)} = 0.122$ 是谱框架基本谱间隙，均来自 Cl(1,7) 代数（Paper XX §4）。
 
-**证明要点**。$G_{\text{RG}}$ 在 $\mathbf{Sp}$ 中的范数由其在 $A(\mu)$ 上的作用决定。在 $\partial\mathbf{Rec}_D$ 处，谱间隙关闭，$G_{\text{RG}}$ 的范数与 $\beta$-函数的"谱翻译"成正比。SU(3) 规范群通过 $\Delta\lambda_3$ 进入，而基本谱单元 $\Delta\lambda_{\min}^{(0)}$ 提供了归一化。
+**证明要点**。$G_{\text{RG}}$ 在 $\mathbf{Sp}$ 中的范数由其在 $A(\mu)$ 上的作用决定。在 $\partial\mathbf{Rec}_D$ 处，谱间隙关闭，$G_{\text{RG}}$ 的范数与 $\beta$-函数的"谱表述"成正比。SU(3) 规范群通过 $\Delta\lambda_3$ 进入，而基本谱单元 $\Delta\lambda_{\min}^{(0)}$ 提供了归一化。
 
 **谱推导**。在 $\mu = \Lambda_{\text{QCD}}$ 附近，谱间隙的临界标度行为（Paper XVI §11.4.4）：
 

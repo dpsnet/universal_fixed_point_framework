@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.ICVerification
 import Mathlib.Analysis.Contraction

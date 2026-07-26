@@ -354,8 +354,8 @@ $$\alpha^{(\delta)}_{(T, \{\lambda_i\})}: (\mathcal{T}^{(d_q)}(T), \{\lambda_i(\
 | 层次 | 结构 | 物理对应 |
 |:----|:-----|:---------|
 | 0-细胞 | 谱丛 | 物理系统（QCD、GR 等） |
-| 1-细胞 | $\hat{\mathcal{T}}_{\text{Riem}}$ | 温度-能标谱翻译 |
-| 2-细胞 | 自然变换 $\alpha$ | 参数微调下的谱翻译变形 |
+| 1-细胞 | $\hat{\mathcal{T}}_{\text{Riem}}$ | 温度-能标谱表述 |
+| 2-细胞 | 自然变换 $\alpha$ | 参数微调下的谱表述变形 |
 
 **推论 9.1**（参数鲁棒性的范畴论表述）。若 $2\hat{\mathcal{T}}_{\text{Riem}}$ 存在，则 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱粘合等距嵌入在参数微调下"同伦不变"——不同 $d_q$ 值给出的等距嵌入在 2-同伦意义上等价。
 
@@ -423,7 +423,7 @@ $$\tilde{\sigma}(\mu) = (\mu, \Delta\lambda_{\min}(\mu) + \delta(\mu))$$
 
 **证明**。若 $\tilde{\sigma}(\mu) \in \text{Im}_{\text{ess}}$，则存在 $T$ 使得 $\mu = \mathcal{T}(T)$ 且 $\Delta\lambda_{\min}(\mu) + \delta(\mu) = \Delta\lambda_{\min}(T)$。但谱间隙匹配条件要求 $\Delta\lambda_{\min}(\mu) = \Delta\lambda_{\min}(T)$，因此 $\delta(\mu) = 0$。$\square$
 
-**物理意义**：$\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像精确地刻画出"物理上可实现"的 RG 谱截面——即那些可以通过温度-能标谱翻译从热谱截面获得的截面。这为"哪些 RG 截面是物理的"提供了一个严格的范畴论判据。
+**物理意义**：$\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像精确地刻画出"物理上可实现"的 RG 谱截面——即那些可以通过温度-能标谱表述从热谱截面获得的截面。这为"哪些 RG 截面是物理的"提供了一个严格的范畴论判据。
 
 ### 10.6 本质像的进一步问题
 

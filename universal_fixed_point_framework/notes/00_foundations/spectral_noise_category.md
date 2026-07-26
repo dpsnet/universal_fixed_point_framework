@@ -620,7 +620,7 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 [2] Paper I: $\mathbf{Rec}$ 范畴四元组定义与 $D$ 函子构造.
 [3] `notes/11_transition_bridges/spectral_multi_silence_methodology.md` — 多层静默理论.
 [4] `notes/05_condensed_matter/spectral_rheology_experiments.md` — 实验信号噪声处理（SNR 分析）.
-[5] Paper XIII: 复杂系统谱翻译（含噪声项 $dW_{\text{spec}}$）.
+[5] Paper XIII: 复杂系统谱表述（含噪声项 $dW_{\text{spec}}$）.
 [6] Mandelbrot, B. B. & Van Ness, J. W. (1968). Fractional Brownian motions, fractional noises and applications. *SIAM Review*, 10(4), 422–437.
 [7] Press, W. H. (1978). Flicker noises in astronomy and elsewhere. *Comments on Astrophysics*, 7(4), 103–119.
 

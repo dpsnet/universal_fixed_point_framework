@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.SpectralCorrespondence
 import Mathlib.CategoryTheory.Monoidal.Braided
@@ -83,10 +83,10 @@ noncomputable def monoidalPreservation (X Y : RecObj) :
   { hom := { P := 1, intertwine := by simp [DFunctor, recTensorProduct] }
     inv := { P := 1, intertwine := by simp [DFunctor, recTensorProduct] }
     hom_inv_id := by
-      apply SpecHom.ext
+      apply SpHom.ext
       simp
     inv_hom_id := by
-      apply SpecHom.ext
+      apply SpHom.ext
       simp }
 
 end UFPFormalization

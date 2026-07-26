@@ -10,6 +10,19 @@
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper III（谱分类完备性定理）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）、Paper XVII（静默因子、IFS 收缩比、$d_H = 2.7095$）。本文使用自然单位制 $\hbar = c = 1$，但保留 $\hbar$ 在关键公式中以显示量纲。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **IFS**：迭代函数系统（Iterated Function System）
+- **QFT**：量子场论（Quantum Field Theory）
+- **SM**：标准模型（Standard Model）
+- **GR**：广义相对论（General Relativity）
+- **HS**：Hilbert-Schmidt（范数/内积）
+- **ISCO**：最内稳定圆轨道（Innermost Stable Circular Orbit）
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **RG**：重整化群（Renormalization Group）
+- **EW**：电弱（Electroweak）
+- **Planck**：普朗克（尺度/质量/长度）
+
 ---
 
 ## 1. 引言

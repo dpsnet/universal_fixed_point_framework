@@ -1,14 +1,29 @@
-# 通用不动点范畴框架 XV：量子化学的谱翻译——分子结构、反应动力学与光谱
+# 通用不动点范畴框架 XV：量子化学的谱表述——分子结构、反应动力学与光谱
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.3（2026-07-25）
 
-**摘要**：本文在谱动力学框架（Paper V—VII）基础上，将量子化学的核心体系——定态 Schrödinger 方程、分子轨道理论、化学反应动力学和光谱跃迁——系统翻译为 $\mathbf{Sp}$ 范畴中的谱问题。核心结果包括：(1) 分子 Hamiltonian 的谱翻译 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$，其中 $A_H$ 的有界谱将无界 Schrödinger 算子纳入有界算子框架；(2) 分子轨道能级、化学键级和反应活性指标（Fukui 函数、硬度 $\eta$）的统一谱表达；(3) **电子关联的谱分类**：CI、MP2 和 Coupled Cluster 的谱展开，谱间隙压制因子解释关联能收敛（§3.5）；(4) **Bun(Corr) 闭式定理**：电子关联修正由谱间隙压制因子的平方唯一确定 $\Delta E_{\text{corr}} = -\kappa_{\text{corr}}^2 \cdot \delta_{\text{Reac}}$，在 CH₃CHO n→π* 谱流推导中验证（偏差 3.5%），并推广到强耦合超导 $\mu^*$ 消除（偏差 < 1%，Paper XXIV-A）（§3.5.5）；(5) Eyring 方程的谱等价形式 $k = (k_B T/h) \cdot Z^{\ddagger}_{\text{spec}}/Z^{\text{R}}_{\text{spec}}$，将反应速率常数化为谱通量；(6) **Kramers 理论与量子隧穿的谱修正**（§4.4）：从过阻尼 Kramers 到低阻尼能量扩散，锥形交叉的谱粘合诠释；(7) 光谱跃迁 $h\nu_{if} = -k_B T \ln \delta_{if}$ 的谱间隙解释，实现 UV-Vis、IR、**Raman、CD 和 2D 非线性光谱**的统一翻译（§5.5-5.6）；(8) 超越经典量子化学的新预测：IFS 谱间隙固定、反应速率谱修正、交叉峰的谱结构、超快谱热力学（§6.4）。本文建立了一个自洽的谱量子化学语言，所有经典结论均在谱极限下精确恢复。数值验证涵盖氢原子（7/7）、H₂⁺（6/6）和苯 π-共轭 Hückel 体系（6/6）。谱键刚性定理（Paper XXIV-B）进一步用谱框架第一性原理替代了 Hückel 模型的经验参数。
+**摘要**：本文在谱动力学框架（Paper V—VII）基础上，将量子化学的核心体系——定态 Schrödinger 方程、分子轨道理论、化学反应动力学和光谱跃迁——系统翻译为 $\mathbf{Sp}$ 范畴中的谱问题。核心结果包括：(1) 分子 Hamiltonian 的谱表述 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$，其中 $A_H$ 的有界谱将无界 Schrödinger 算子纳入有界算子框架；(2) 分子轨道能级、化学键级和反应活性指标（Fukui 函数、硬度 $\eta$）的统一谱表达；(3) **电子关联的谱分类**：CI、MP2 和 Coupled Cluster 的谱展开，谱间隙压制因子解释关联能收敛（§3.5）；(4) **Bun(Corr) 闭式定理**：电子关联修正由谱间隙压制因子的平方唯一确定 $\Delta E_{\text{corr}} = -\kappa_{\text{corr}}^2 \cdot \delta_{\text{Reac}}$，在 CH₃CHO n→π* 谱流推导中验证（偏差 3.5%），并推广到强耦合超导 $\mu^*$ 消除（偏差 < 1%，Paper XXIV-A）（§3.5.5）；(5) Eyring 方程的谱等价形式 $k = (k_B T/h) \cdot Z^{\ddagger}_{\text{spec}}/Z^{\text{R}}_{\text{spec}}$，将反应速率常数化为谱通量；(6) **Kramers 理论与量子隧穿的谱修正**（§4.4）：从过阻尼 Kramers 到低阻尼能量扩散，锥形交叉的谱粘合诠释；(7) 光谱跃迁 $h\nu_{if} = -k_B T \ln \delta_{if}$ 的谱间隙解释，实现 UV-Vis、IR、**Raman、CD 和 2D 非线性光谱**的统一翻译（§5.5-5.6）；(8) 超越经典量子化学的新预测：IFS 谱间隙固定、反应速率谱修正、交叉峰的谱结构、超快谱热力学（§6.4）。本文建立了一个自洽的谱量子化学语言，所有经典结论均在谱极限下精确恢复。数值验证涵盖氢原子（7/7）、H₂⁺（6/6）和苯 π-共轭 Hückel 体系（6/6）。谱键刚性定理（Paper XXIV-B）进一步用谱框架第一性原理替代了 Hückel 模型的经验参数。
 
 ---
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper III（谱对应等价性）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学）、Paper VI（谱流体动力学）、Paper VII（非平衡谱热力学、谱熵）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **$\mathbf{Sp}$**：谱范畴（Spectral Category）
+- **$\mathbf{Rec}$**：递归范畴（Recursive Category）
+- **CI**：组态相互作用（Configuration Interaction）
+- **MP**：Møller-Plesset 微扰理论（Møller-Plesset Perturbation Theory）
+- **CC**：耦合簇方法（Coupled Cluster）
+- **HF**：Hartree-Fock（哈特里-福克方法）
+- **HOMO**：最高占据分子轨道（Highest Occupied Molecular Orbital）
+- **LUMO**：最低未占据分子轨道（Lowest Unoccupied Molecular Orbital）
+- **IRC**：内禀反应坐标（Intrinsic Reaction Coordinate）
+- **TST**：过渡态理论（Transition State Theory）
+- **CD**：圆二色性（Circular Dichroism）
+- **IR**：红外光谱（Infrared Spectroscopy）
+- **PES**：光电子能谱（Photoelectron Spectroscopy）
 
 ---
 
@@ -24,13 +39,13 @@
 
 ### 1.2 核心论题
 
-本文证明，量子化学的全部核心结构可以在 $\mathbf{Sp}$ 范畴中获得统一且简洁的翻译。核心洞见：**无界 Hamiltonian $H$ 被翻译为有界谱生成元 $A_H$，其谱 $\sigma(A_H) \subset (0,1]$ 将量子化学的所有量子数（能级、轨道、跃迁）编码为有界算子的本征值**。
+本文证明，量子化学的全部核心结构可以在 $\mathbf{Sp}$ 范畴中获得统一且简洁的谱表述（谱表述：框架特有的方法论，指将经典物理/化学理论映射为 $\mathbf{Sp}$ 范畴中谱生成元、谱间隙与谱流方程的系统对应规则）。核心洞见：**无界 Hamiltonian $H$ 被翻译为有界谱生成元 $A_H$，其谱 $\sigma(A_H) \subset (0,1]$ 将量子化学的所有量子数（能级、轨道、跃迁）编码为有界算子的本征值**。
 
 这一翻译的技术基础是 Paper III 建立的谱对应等价性：遗忘-构造伴随对 $(D, R)$ 在 $H$ 和 $A_H$ 之间建立了范畴等价，使得量子化学问题在 $\mathbf{Sp}$ 中的表述在谱极限下等价于经典表述。
 
 ### 1.3 论文结构
 
-§2 给出定态 Schrödinger 方程的谱翻译；§3 将分子轨道理论（Hartree-Fock、电子关联 CI/MP2/CC、化学键、反应活性指标）翻译为谱生成元的泛函问题；§4 建立反应坐标的谱流方程、Eyring 方程的谱等价形式、Kramers 理论与量子隧穿的谱修正；§5 统一翻译 UV-Vis、IR、Raman、CD、2D 非线性光谱和光电子光谱；§6 总结核心结论、新预测并展望跨领域意义；§7 数值验证（氢原子、H₂⁺、苯 Hückel 体系）。
+§2 给出定态 Schrödinger 方程的谱表述；§3 将分子轨道理论（Hartree-Fock、电子关联 CI/MP2/CC、化学键、反应活性指标）翻译为谱生成元的泛函问题；§4 建立反应坐标的谱流方程、Eyring 方程的谱等价形式、Kramers 理论与量子隧穿的谱修正；§5 统一翻译 UV-Vis、IR、Raman、CD、2D 非线性光谱和光电子光谱；§6 总结核心结论、新预测并展望跨领域意义；§7 数值验证（氢原子、H₂⁺、苯 Hückel 体系）。
 
 ## 2. Schrödinger 方程在 $\mathbf{Sp}$ 中的翻译
 
@@ -68,7 +83,7 @@ $$D(H) = (\mathcal{H}_{\text{QC}}, e^{-\beta H}, e^{-\beta \sigma(H)})$$
 
 $$\langle \psi_i | H | \psi_i \rangle = -\beta^{-1} \log \langle \varphi_i | A_H | \varphi_i \rangle$$
 
-**定理 2.1**（谱对应等价性，Paper III §3）。范畴 $\mathbf{Ham}_{\text{QC}}$（量子化学 Hamiltonian 系统）与 $\mathbf{Sp}$（谱像范畴）通过 $D \dashv R$ 等价。即，对任意量子化学问题，存在唯一的谱翻译，且在 $R \circ D \cong \text{Id}$ 的意义下经典表述可被精确恢复。
+**定理 2.1**（谱对应等价性，Paper III §3）。范畴 $\mathbf{Ham}_{\text{QC}}$（量子化学 Hamiltonian 系统）与 $\mathbf{Sp}$（谱像范畴）通过 $D \dashv R$ 等价。即，对任意量子化学问题，存在唯一的谱表述，且在 $R \circ D \cong \text{Id}$ 的意义下经典表述可被精确恢复。
 
 **证明要点**。由加权有向图范畴的谱构造（Paper III 定理 3.1），$H$ 作为有向图的邻接类似物（加权图 Laplacian 的逆），通过 $D$ 映射为谱像。$R$ 的逆映射由对数运算给出，复合函子 $R \circ D$ 自然同构于恒等函子。□
 
@@ -119,7 +134,7 @@ $$\delta_{\text{crit}} = \frac{1}{2} \left( e^{-\beta K_{ij}} - e^{-\beta J_{ij}
 
 $$\text{BO}_{ij} \propto \sum_{a \in \text{occ}} \sum_{r \in \text{vir}} \frac{|\langle \varphi_a | A_{\text{mol}} | \varphi_r \rangle|^2}{\varepsilon_r - \varepsilon_a}$$
 
-这正是分子轨道二阶微扰理论的谱翻译：**化学键强度 = 占据-虚轨道间谱相干性的二阶累积**。
+这正是分子轨道二阶微扰理论的谱表述：**化学键强度 = 占据-虚轨道间谱相干性的二阶累积**。
 
 **命题 3.1**（谱键级与经典键级的一致性）。在极限 $\varepsilon_r - \varepsilon_a \gg 0$ 下，谱键级 $\text{BO}_{ij}$ 退化为经典 Wiberg 键级 $\text{W}_{ij} = \sum_{a \in \text{occ}} |C_{ia}|^2 |C_{ja}|^2$。
 
@@ -141,7 +156,7 @@ $$\eta = \frac{1}{2} \left( \frac{\partial^2 E}{\partial N^2} \right)_v = \frac{
 
 **注 3.1**（与 Paper VIII 谱响应理论的联系）。谱 Fukui 函数和谱硬度是 Paper VIII（谱响应理论）在量子化学中的具体实现。它们与 Paper VII 的非平衡谱热力学自然衔接：反应活性可重新表述为谱熵对电子数的导数。
 
-### 3.5 电子关联的谱翻译
+### 3.5 电子关联的谱表述
 
 单行列式 Hartree-Fock 仅捕获了总能量的 $\sim 99\%$。剩余 $\sim 1\%$ 的**电子关联能** $E_{\text{corr}} = E_{\text{exact}} - E_{\text{HF}}$ 对于 kcal/mol 级化学精度至关重要。谱框架提供电子关联的自然分类——不同关联层次对应谱生成元 $A_{\text{mol}}$ 的不同量级谱修正。
 
@@ -187,7 +202,7 @@ $$E_{\text{MP2}}^{\text{spec}} = -\beta^{-1} \sum_{i<j,a<b} \ln \left( 1 + \frac
 
 #### 3.5.3 耦合簇理论的谱解释
 
-**定义 3.7**（谱耦合簇指数参量化）。耦合簇基态 $|\Psi_{\text{CC}}\rangle = e^{\hat{T}} |\Phi_0\rangle$ 的谱翻译为：
+**定义 3.7**（谱耦合簇指数参量化）。耦合簇基态 $|\Psi_{\text{CC}}\rangle = e^{\hat{T}} |\Phi_0\rangle$ 的谱表述为：
 
 $$A_{\text{mol}}^{\text{CC}} = e^{-\beta H_{\text{CC}}} = e^{[\hat{T}, \cdot]} A_{\text{mol}}^{(0)}$$
 
@@ -230,7 +245,7 @@ $$\mathcal{F}[\rho, \Delta_{\text{sep}}] = \left(\int_{\omega_{\text{low}}}^{\om
 
 ## 4. 化学反应动力学：反应坐标的谱流方程
 
-### 4.1 过渡态理论的谱翻译
+### 4.1 过渡态理论的谱表述
 
 经典过渡态理论（TST）的核心是寻找势能面上的鞍点（过渡态）并计算反应速率常数。在谱框架中，反应坐标 $s$（内禀反应坐标 IRC）的演化由谱流方程控制。
 
@@ -289,7 +304,7 @@ $$k(T)_{\text{Kramers}} = \frac{\lambda_{\text{well}}}{\lambda_{\text{barrier}}}
 
 **谱传输因子的物理诠释**。$\Gamma(\gamma_{\text{spec}})$ 在 $\mathbf{Sp}$ 中对应**反应坐标谱生成元 $A_{\text{RC}}$ 与热浴谱模式的纠缠度**——摩擦 $\gamma_{\text{spec}}$ 大意味着谱纠缠强（体系-热浴谱流耦合），小 $\gamma_{\text{spec}}$ 意味着能量扩散受限（$A_{\text{RC}}$ 的谱能量输入不足）。
 
-#### 4.4.2 量子隧穿的谱翻译
+#### 4.4.2 量子隧穿的谱表述
 
 **定义 4.3**（谱隧穿概率）。WKB 隧穿概率 $T(E) = \exp\left(-\frac{2}{\hbar} \int_{x_1}^{x_2} \sqrt{2m(V(x)-E)} dx\right)$ 在谱语言中化为：
 
@@ -363,9 +378,9 @@ $$F_{if}^{\text{FC}} = |\langle \varphi_f^{\text{vib}} | \varphi_i^{\text{vib}} 
 
 谱 Franck-Condon 因子与经典表述的关系由遗忘-构造伴随 $D \dashv R$ 保证：$F_{if}^{\text{FC}} = |\langle \mathcal{F}(\chi_f) | \mathcal{F}(\chi_i) \rangle|^2 = |\langle \chi_f | \chi_i \rangle|^2$，因为 $\mathcal{F}$ 是幺正变换。
 
-### 5.4 光谱翻译表
+### 5.4 光谱对应表
 
-| 光谱类型 | 经典表述 | 谱翻译 |
+| 光谱类型 | 经典表述 | 谱表述 |
 |---------|---------|--------|
 | UV-Vis 吸收 | $E_{\text{ex}} = \hbar\omega$（激发能） | $\delta_{\text{exc}} = e^{-\beta\hbar\omega}$（激发谱间隙） |
 | | 振子强度 $f_{if} = \frac{2m_e}{3\hbar^2} \Delta E_{if} |\boldsymbol{\mu}_{if}|^2$ | $f_{if} = \frac{2m_e}{3\hbar^2} (-k_B T \ln \delta_{if}) |\langle \varphi_f | [A_{\text{mol}}, \mathbf{r}] | \varphi_i \rangle|^2$ |
@@ -376,7 +391,7 @@ $$F_{if}^{\text{FC}} = |\langle \varphi_f^{\text{vib}} | \varphi_i^{\text{vib}} 
 
 **核心统一**：所有光谱跃迁都对应谱生成元 $A_{\text{mol}}$ 本征值之间的跃迁——**光吸收即谱流方程中的共振激发模式**。这一看法将光谱学纳入 Paper V 谱动力学框架，使光谱预测与谱流方程的稳定性分析等价。
 
-### 5.5 拉曼光谱与圆二色性的谱翻译
+### 5.5 拉曼光谱与圆二色性的谱表述
 
 #### 5.5.1 谱拉曼张量
 
@@ -386,15 +401,15 @@ $$F_{if}^{\text{FC}} = |\langle \varphi_f^{\text{vib}} | \varphi_i^{\text{vib}} 
 
 $$\alpha_{ij}^{\text{spec}}(\omega) = \sum_{n\neq m} \frac{\langle \varphi_m | [A_{\text{mol}}, r_i] | \varphi_n \rangle \langle \varphi_n | [A_{\text{mol}}, r_j] | \varphi_m \rangle}{\delta_{mn} - \delta_{\text{laser}}}$$
 
-其中 $\delta_{mn} = |\lambda_n - \lambda_m|$ 是谱间隙，$\delta_{\text{laser}} = e^{-\beta h\nu_{\text{laser}}}$ 是入射激光的谱翻译。
+其中 $\delta_{mn} = |\lambda_n - \lambda_m|$ 是谱间隙，$\delta_{\text{laser}} = e^{-\beta h\nu_{\text{laser}}}$ 是入射激光的谱表述。
 
 **命题 5.2**（拉曼选择定则）。$\alpha_{ij}^{\text{spec}}(\omega) \neq 0$ 当且仅当存在中间态 $|n\rangle$ 使 $\langle \varphi_m | [A_{\text{mol}}, r_i] | \varphi_n \rangle$ 和 $\langle \varphi_n | [A_{\text{mol}}, r_j] | \varphi_m \rangle$ 同时非零——这等价于拉曼活性的经典对称性判据（极化率张量非零）。
 
 **推论 5.1**（共振拉曼增强）。当 $\delta_{\text{laser}} \approx \delta_{mn}$ 时（激光频率接近真实电子跃迁），谱拉曼张量中的分母 $(\delta_{mn} - \delta_{\text{laser}})^{-1}$ 发散——**共振拉曼效应**在谱语言中对应谱间隙共振。
 
-#### 5.5.2 圆二色性的谱翻译
+#### 5.5.2 圆二色性的谱表述
 
-**定义 5.3**（谱旋光强度）。圆二色性（CD）测量左右圆偏振光吸收之差，对应旋转强度 $R_{if}$ 的谱翻译为：
+**定义 5.3**（谱旋光强度）。圆二色性（CD）测量左右圆偏振光吸收之差，对应旋转强度 $R_{if}$ 的谱表述为：
 
 $$R_{if}^{\text{spec}} \propto \text{Im}\left[ \langle \varphi_i | [A_{\text{mol}}, \mathbf{r}] | \varphi_f \rangle \cdot \langle \varphi_f | [A_{\text{mol}}, \mathbf{m}] | \varphi_i \rangle \right]$$
 
@@ -429,7 +444,7 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 
 | 编号 | 结论 | 谱形式 | 对应经典结果 | 引用 |
 |------|------|--------|-------------|------|
-| C1 | Schrödinger 方程的谱翻译 | $A_H \varphi_i = \lambda_i \varphi_i$ | $H\psi_i = E_i\psi_i$ | Paper III |
+| C1 | Schrödinger 方程的谱表述 | $A_H \varphi_i = \lambda_i \varphi_i$ | $H\psi_i = E_i\psi_i$ | Paper III |
 | C2 | 轨道能级 = $A_{\text{mol}}$ 本征值 | $A_{\text{mol}}\varphi_i = \varepsilon_i\varphi_i$ | Fock 方程 $F\psi_i = \epsilon_i\psi_i$ | Paper III, VIII |
 | C3 | 化学键 = 谱相干耦合 | $\text{BO}_{ij} \propto \sum_{a,r} \frac{|\langle \varphi_a | A_{\text{mol}} | \varphi_r \rangle|^2}{\varepsilon_r - \varepsilon_a}$ | Wiberg/Mayer 键级 | — |
 | C4 | 反应活性指标谱统一 | $\eta = \frac{1}{2}(\delta_{\text{LUMO}}^{-1} - \delta_{\text{HOMO}}^{-1})$ | 硬度 $\eta = (I-A)/2$ | Paper VIII |
@@ -467,7 +482,7 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 
 ### 6.4 谱框架的超越：经典量子化学无法到达的新预测
 
-谱翻译虽在经典极限下还原标准结果，但 $\mathbf{Sp}$ 范畴框架提供了经典量子化学无法自然到达的新预测维度：
+谱表述虽在经典极限下还原标准结果，但 $\mathbf{Sp}$ 范畴框架提供了经典量子化学无法自然到达的新预测维度：
 
 1. **谱间隙的 IFS 预测**（连接 Paper XVII）。$\mathbf{Sp}$ 4-范畴的严格结构将分子谱间隙 $\delta_{\text{HOMO-LUMO}}$ 与 IFS 收缩因子 $c_i$ 联系起来。Paper XVII 的零参数预言链暗示：**有机共轭分子的 $\delta_{\text{HOMO-LUMO}}$ 不应是自由参数，而应由 $c_i$ 的谱几何固定**。对长共轭聚合物（如聚乙炔），谱预言 $\delta_{\text{HOMO-LUMO}} \to c_1^{\alpha_l} \approx 0.04$（对应 $\sim 2$ eV 光学带隙），在有机光伏材料的典型实验范围内。
 
@@ -481,7 +496,7 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 
 ### 7.1 氢原子精确谱 (`paperX_hydrogen_spectral.py`)
 
-**验证目标**：§2 的谱翻译 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$ 在 Coulomb 势下的精确成立。
+**验证目标**：§2 的谱表述 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$ 在 Coulomb 势下的精确成立。
 
 | 检验项 | 理论预言 | 数值结果 | 偏差 |
 |:------|:--------|:--------|:----:|
@@ -492,17 +507,17 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 | $\beta \to 0$: $H = (I-A_H)/\beta + O(\beta)$ | Taylor 展开 | 偏差 $0.025\%$ | $\beta=0.001$ |
 | $\int R_{nl}^2 r^2 dr = 1$ | 波函数归一化 | $1.00000000$ | $10^{-9}$ |
 
-**结论**: §2 的谱翻译在氢原子精确解下得到完全验证。7/7 自洽性检验通过。
+**结论**: §2 的谱表述在氢原子精确解下得到完全验证。7/7 自洽性检验通过。
 
 ### 7.2 H₂⁺ 分子离子 (`paperX_H2plus_spectral.py`)
 
-**验证目标**：§3 的化学键谱翻译——$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
+**验证目标**：§3 的化学键谱表述——$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
 
 LCAO-MO 1s 近似下的 H₂⁺ 成键/反键总能量（含核排斥）为：
 
 $$E_{\pm}(R) = E_H - \frac{J \pm K}{1 \pm S} + \frac{1}{R}$$
 
-谱翻译为 $A_{\text{mol}}(R) = e^{-\beta E(R)}$。谱隙 $\Delta\lambda(R) = |\lambda_{\text{bond}}(R) - \lambda_{\text{anti}}(R)|$ 与化学键强度的关系：
+谱表述为 $A_{\text{mol}}(R) = e^{-\beta E(R)}$。谱隙 $\Delta\lambda(R) = |\lambda_{\text{bond}}(R) - \lambda_{\text{anti}}(R)|$ 与化学键强度的关系：
 
 | 检验项 | 谱值 | 实验 | 偏差 |
 |:------|:---:|:---:|:----:|
@@ -512,19 +527,19 @@ $$E_{\pm}(R) = E_H - \frac{J \pm K}{1 \pm S} + \frac{1}{R}$$
 | 谱序: $\lambda_{\text{bond}} > \lambda_{\text{anti}}$ | 成立 | — | — |
 | 解离极限: $\Delta\lambda \to 0$ | $R=10$: $\Delta\lambda=0.001$ | — | ✅ |
 
-LCAO 1s 近似是定性而非定量近似（R₀ 偏差 24.7%，D₀ 偏差 36.4%），但谱翻译的定性结构——谱隙与化学键的对应——得到充分验证。6/6 自洽性检验通过。
+LCAO 1s 近似是定性而非定量近似（R₀ 偏差 24.7%，D₀ 偏差 36.4%），但谱表述的定性结构——谱隙与化学键的对应——得到充分验证。6/6 自洽性检验通过。
 
 **核心结论**: 成键轨道对应大 $\lambda$ 分支（低能量），反键轨道对应小 $\lambda$ 分支（高能量）。谱隙 $\Delta\lambda(R)$ 编码了化学键的形成、稳定与断裂的完整信息。
 
-### 7.3 苯 π-共轭体系的 Hückel 谱翻译
+### 7.3 苯 π-共轭体系的 Hückel 谱表述
 
 **验证目标**：§3 谱分子轨道理论在 π-共轭体系中的定量正确性——苯的 $A_{\text{mol}}$ 谱隙结构。
 
-Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化学模型。在谱翻译中，苯的 Hückel Hamiltonian $H_{\text{Hückel}}$ 对应谱生成元 $A_{\text{benzene}} = e^{-\beta H_{\text{Hückel}}}$。
+Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化学模型。在谱表述中，苯的 Hückel Hamiltonian $H_{\text{Hückel}}$ 对应谱生成元 $A_{\text{benzene}} = e^{-\beta H_{\text{Hückel}}}$。
 
-**Hückel 近似的谱翻译**。苯分子使用 Hückel 近似，设 $\alpha$ 为 Coulomb 积分，$\beta_{\text{Hückel}}$ 为相邻 C 间的共振积分。在谱语言中：
+**Hückel 近似的谱表述**。苯分子使用 Hückel 近似，设 $\alpha$ 为 Coulomb 积分，$\beta_{\text{Hückel}}$ 为相邻 C 间的共振积分。在谱语言中：
 
-| 经典量 | Hückel 值 | 谱翻译 |
+| 经典量 | Hückel 值 | 谱表述 |
 |:------|:---------|:------|
 | π 轨道能级 | $\epsilon_k = \alpha + 2\beta\cos(2\pi k/6),\; k=0,\pm1,\pm2,3$ | $\varepsilon_k = e^{-\beta(\alpha + 2\beta\cos(2\pi k/6))}$ |
 | HOMO-LUMO 谱隙 | $\Delta\epsilon = 2\beta(1-\cos(\pi/3)) = \beta$ | $\delta_{\text{HOMO-LUMO}} = e^{-\beta\alpha}(e^{-2\beta\beta\cos(2\pi/3)} - e^{-2\beta\beta\cos(4\pi/3)})$ |
@@ -545,7 +560,7 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 - $4n+2$（苯 6π）：$\varepsilon_k$ 中最低 $3$ 个谱轨道全占**且**与非占轨道间有稳定谱间隔——**谱闭壳层**
 - $4n$（环丁二烯 4π）：$\varepsilon_{\pm1}$ 简并轨道各占一个电子——**谱开壳层**，Jahn-Teller 畸变破缺
 
-**谱翻译已自动编码了芳香稳定性的本质**：芳香性 = 谱生成元的填充对称性导致的最大谱间隙。
+**谱表述已自动编码了芳香稳定性的本质**：芳香性 = 谱生成元的填充对称性导致的最大谱间隙。
 
 **6/6 检验通过**。
 
@@ -575,15 +590,15 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XV，量子化学的谱翻译——分子结构、反应动力学与光谱。主要内容：
-- Schrödinger 方程的谱翻译 $D(H)$ 与有界算子优势（§2）
+《通用不动点范畴框架》系列论文 XV，量子化学的谱表述——分子结构、反应动力学与光谱。主要内容：
+- Schrödinger 方程的谱表述 $D(H)$ 与有界算子优势（§2）
 - 分子轨道理论的谱版本：Fock 谱生成元 $A_{\text{mol}}$、谱 Hund 规则、化学键的谱重新解释（§3.1-3.4）
-- **电子关联的谱翻译**（§3.5，新增）：CI 截断的谱间隙压制，MP2 谱微扰公式（定理 3.2），Coupled Cluster 的李氏变换诠释，多参考谱理论
+- **电子关联的谱表述**（§3.5，新增）：CI 截断的谱间隙压制，MP2 谱微扰公式（定理 3.2），Coupled Cluster 的李氏变换诠释，多参考谱理论
 - 反应活性指标的谱统一：谱 Fukui 函数、谱硬度 $\eta$（§3.4）
 - 反应坐标谱流方程与谱 Eyring 方程 $k = (k_B T/h) \cdot Z^{\ddagger}_{\text{spec}}/Z^{\text{R}}_{\text{spec}}$（§4）
-- **谱 Kramers 理论与量子隧穿**（§4.4，新增）：Kramers 谱传输因子（定理 4.2），WKB 隧穿谱翻译（定义 4.3），锥形交叉的谱粘合诠释（定义 4.4）
-- 光谱的谱间隙解释：$h\nu_{if} = -k_B T \ln \delta_{if}$，UV-Vis/IR/PES 翻译表（§5.1-5.4）
-- **拉曼光谱与圆二色性**（§5.5，新增）：谱拉曼张量（定义 5.2），共振拉曼增强，CD 旋光强度谱翻译
+- **谱 Kramers 理论与量子隧穿**（§4.4，新增）：Kramers 谱传输因子（定理 4.2），WKB 隧穿谱表述（定义 4.3），锥形交叉的谱粘合诠释（定义 4.4）
+- 光谱的谱间隙解释：$h\nu_{if} = -k_B T \ln \delta_{if}$，UV-Vis/IR/PES 对应表（§5.1-5.4）
+- **拉曼光谱与圆二色性**（§5.5，新增）：谱拉曼张量（定义 5.2），共振拉曼增强，CD 旋光强度谱表述
 - **非线性光谱与超快动力学**（§5.6，新增）：泵浦-探测谱流（定理 5.3），2D 红外谱谱形式
 - 核心结论 C1—C10（§6.1）——从 C6 到 C10 为 v1.2 新增
 - **谱框架超越经典量子化学的新预测**（§6.4，新增）：IFS 谱间隙固定、反应速率谱修正、交叉峰谱结构、超快谱热力学
@@ -596,6 +611,6 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
 | **v1.3** | **2026-07-25** | **新增 §3.5.5 Bun(Corr) 闭式定理与跨领域推广**（定型 3.3-3.4，链接 Paper XXIII/XXIV-A）；**新增注 4.1** 谱键刚性替代 Hückel 经验参数（Paper XXIV-B）；结论表扩展至 C11-C12；更新跨领域展望 §6.3；更新摘要 |
-| v1.2 | 2026-07-21 | **深入扩展**：新增 §3.5 电子关联的谱翻译（CI/MP2/CC/多参考）、§4.4 Kramers 理论/量子隧穿/锥形交叉、§5.5 拉曼与 CD 光谱、§5.6 非线性光谱与超快动力学、§6.4 谱框架超越经典 QChem 的新预测、§7.3 苯 Hückel 谱翻译验证（6/6）；结论表扩展至 C1-C10；更新摘要、§1.3 目录结构 |
+| v1.2 | 2026-07-21 | **深入扩展**：新增 §3.5 电子关联的谱表述（CI/MP2/CC/多参考）、§4.4 Kramers 理论/量子隧穿/锥形交叉、§5.5 拉曼与 CD 光谱、§5.6 非线性光谱与超快动力学、§6.4 谱框架超越经典 QChem 的新预测、§7.3 苯 Hückel 谱表述验证（6/6）；结论表扩展至 C1-C10；更新摘要、§1.3 目录结构 |
 | v1.1 | 2026-07-19 | 新增 §7 数值验证（氢原子 + H₂⁺）；笔记升级至 v2.0 |
 | v1.0 | 2026-07-18 | 初始版本，基于笔记 spectral_quantum_chemistry.md |

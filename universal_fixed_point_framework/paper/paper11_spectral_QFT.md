@@ -10,6 +10,14 @@
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `paperX_spectral_*.py`（共 6 核心脚本 §1.4，合计 36/36 检查通过）。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **BRST**：Becchi-Rouet-Stora-Tyutin（贝基-罗埃-斯托拉-秋廷）规范固定形式
+- **LSZ**：Lehmann-Symanzik-Zimmermann（莱曼-西曼奇克-齐默曼）约化公式
+- **RGE**：重整化群方程（Renormalization Group Equation）
+- **PMNS**：Pontecorvo-Maki-Nakagawa-Sakata（庞特科沃-牧-中川-坂田）中微子混合矩阵
+- **YM**：Yang-Mills（杨-米尔斯）理论
+- **ABJ**：Adler-Bell-Jackiw（阿德勒-贝尔-杰基欧）反常
+
 ---
 
 ## 1. 引言
@@ -44,7 +52,7 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 | 脚本 | 验证内容 | 通过率 | 关键结果 |
 |:----|---------|:-----:|---------|
-| `paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{spec}} = i/(\lambda-m^2+i\varepsilon)$ |
+| `paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{Sp}} = i/(\lambda-m^2+i\varepsilon)$ |
 | `paperX_spectral_renormalization.py` | 路径积分 + $\beta$ 函数 | **4/4** | $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ |
 | `paperX_spectral_gauge.py` | BRST 幂零性 + Ward 恒等式 | **6/6** | $s^2=0$, Landau 纵向=0 |
 | `paperX_spectral_chiral.py` | 反常消去 + 瞬子拓扑荷 | **7/7** | SM 4 反常全消去, $Q_{\text{top}}=1$ |
@@ -56,11 +64,11 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 全部 29 个 SM + 中微子扩展参数收敛于三个独立的纯数学结构，每一个均为 $\mathbf{Rec}/\mathbf{Sp}$ 范畴的固有推论，无需外部输入：
 
-**(1) Spec 4-范畴静默层级 → 费米子质量与 Higgs VEV**。Strict 4-范畴的 coherence 条件导出态射静默因子 $S_3 = e^{-3}$ 与 $S_4 = e^{-d_H}$（$d_H = 2.71$ 为谱分形维数）。IFS 三深度收缩比为 $c_1 : c_2 : c_3 = S_3S_4 : S_4 : 1$，代入 Moran 方程得质量标度：
+**(1) $\mathbf{Sp}$ 4-范畴静默层级 → 费米子质量与 Higgs VEV**。Strict 4-范畴的 coherence 条件导出态射静默因子 $S_3 = e^{-3}$ 与 $S_4 = e^{-d_H}$（$d_H = 2.71$ 为谱分形维数）。IFS 三深度收缩比为 $c_1 : c_2 : c_3 = S_3S_4 : S_4 : 1$，代入 Moran 方程得质量标度：
 
 $$m_i \propto c_i^{\alpha}, \quad \alpha = d_H/2 = 1.355$$
 
-$\alpha$ 已从 IFS 有限谱三元组 + KO-维数修正第一性原理推导。该公式以零参数精度预言 9 个带电费米子质量比（偏差 < 3%），并确定 Higgs VEV 的谱标度 $v_{\text{spec}} \approx 246$ GeV。
+$\alpha$ 已从 IFS 有限谱三元组 + KO-维数修正第一性原理推导。该公式以零参数精度预言 9 个带电费米子质量比（偏差 < 3%），并确定 Higgs VEV 的谱标度 $v_{\text{Sp}} \approx 246$ GeV。
 
 **(2) Cl(1,7) 根系 → 规范耦合谱间隙比**。Cl(1,7) Clifford 代数在 $\mathbf{Rec}$ 范畴中编码标准模型规范群 $SU(3)_C \times SU(2)_L \times U(1)_Y$ 的根系结构。根系权重向量 $\{\alpha_i\}$ 的归一化直接确定 $M_{\text{Pl}}$ 处规范耦合谱间隙比：
 
@@ -80,13 +88,13 @@ $$\lambda_3 : \lambda_2 : \lambda_1 = 1 : \frac34 : \frac{9}{20}$$
 
 **定义 2.1**。对每个量子场 $\phi(x)$，存在对应的谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Sp}$，其中 $\mathcal{H}_\phi$ 是场的 Hilbert 空间，$A_\phi$ 是谱算子（谱生成元），$\sigma(A_\phi) \subset \mathbb{R}$ 是 $A_\phi$ 的谱。自由谱场的谱作用量为：
 
-$$S_{\text{free}}^{\text{spec}}[\Phi] = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda).$$
+$$S_{\text{free}}^{\text{Sp}}[\Phi] = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda).$$
 
 ### 2.2 A2：谱传播子公理
 
 **定义 2.2**。谱 Feynman 传播子由谱算子的 Green 函数给出：
 
-$$D_F^{\text{spec}}(\lambda, \lambda') = \langle 0 | T\Phi(\lambda)\Phi^\dagger(\lambda') | 0 \rangle = \delta(\lambda - \lambda') \cdot \frac{i}{\lambda - m^2 + i\varepsilon}.$$
+$$D_F^{\text{Sp}}(\lambda, \lambda') = \langle 0 | T\Phi(\lambda)\Phi^\dagger(\lambda') | 0 \rangle = \delta(\lambda - \lambda') \cdot \frac{i}{\lambda - m^2 + i\varepsilon}.$$
 
 ### 2.3 A3：谱相互作用公理
 
@@ -98,15 +106,15 @@ $$V_4(\lambda_1, \lambda_2, \lambda_3, \lambda_4) = -i\lambda \cdot \delta(\lamb
 
 **定义 2.4**。谱 QFT 的生成泛函为：
 
-$$Z_{\text{spec}}[J] = \int \mathcal{D}_{\text{Spec}}\Phi \; \exp\left(i S_{\text{spec}}[\Phi] + i \int d\lambda \, J(\lambda)\Phi(\lambda)\right),$$
+$$Z_{\text{Sp}}[J] = \int \mathcal{D}_{\text{Sp}}\Phi \; \exp\left(i S_{\text{Sp}}[\Phi] + i \int d\lambda \, J(\lambda)\Phi(\lambda)\right),$$
 
-其中谱测度 $\mathcal{D}_{\text{Spec}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda)$。
+其中谱测度 $\mathcal{D}_{\text{Sp}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda)$。
 
 ### 2.5 A5：谱截断正则化公理
 
 **定义 2.5**。谱 QFT 的自然紫外截断由谱算子 $A_\phi$ 的最大特征值 $\Lambda_{\max} = \max \sigma(A_\phi)$ 给出。谱截断版本为：
 
-$$Z_{\text{spec}}^{\Lambda}[J] = \int \prod_{\lambda_i < \Lambda} d\Phi_i \; \exp\left(i S_{\text{spec}}^{\Lambda}[\Phi] + i \sum_i J_i \Phi_i\right).$$
+$$Z_{\text{Sp}}^{\Lambda}[J] = \int \prod_{\lambda_i < \Lambda} d\Phi_i \; \exp\left(i S_{\text{Sp}}^{\Lambda}[\Phi] + i \sum_i J_i \Phi_i\right).$$
 
 ### 2.6 A6：谱重整化公理
 
@@ -124,7 +132,7 @@ $$\beta(\lambda_R) = \frac{3\lambda_R^2}{16\pi^2}.$$
 |:----------------------------------------|:-------|
 | 场算子 $\phi(x)$ 的存在性 | A1：谱对象 $(\mathcal{H}, A, \sigma(A))$ |
 | Wightman 函数 $W_n(x_1,\ldots,x_n)$ | A2+A3：谱关联函数 $G_n(\lambda_1,\ldots,\lambda_n)$ |
-| 路径积分测度 $\mathcal{D}\phi$ | A4：谱测度 $\mathcal{D}_{\text{Spec}}\Phi$ |
+| 路径积分测度 $\mathcal{D}\phi$ | A4：谱测度 $\mathcal{D}_{\text{Sp}}\Phi$ |
 | 重整化程序（cutoff + counter-term） | A5+A6：谱截断 + 谱减除 |
 | Lorentz 协变性 $\phi(\Lambda x) = U(\Lambda)\phi(x)U(\Lambda)^{-1}$ | A7：谱 Lorentz 协变公理 |
 
@@ -153,21 +161,21 @@ $$\boxed{\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}},$$
 
 - **谱测度** $d\lambda$ 在 Lorentz 变换下保持不变。由于谱参数 $\lambda$ 直接定义为 $p^2 + m^2$（对传播子）或通过对角化 $A_\phi$ 的特征值得到，Lorentz 变换保持谱的取值集合 $\sigma(A_\phi)$ 不变。
 - **谱自由作用量**：
-  $$S_{\text{free}}^{\text{spec}}[\Phi'] = \frac12 \int d\lambda \, \Phi'^\dagger(\lambda') (\lambda' - m^2) \Phi'(\lambda') = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda) = S_{\text{free}}^{\text{spec}}[\Phi],$$
+  $$S_{\text{free}}^{\text{Sp}}[\Phi'] = \frac12 \int d\lambda \, \Phi'^\dagger(\lambda') (\lambda' - m^2) \Phi'(\lambda') = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda) = S_{\text{free}}^{\text{Sp}}[\Phi],$$
   其中变换 Jacobian $|d\lambda'/d\lambda| = 1$。
 - **谱相互作用项**（以 $\phi^4$ 为例）：
-  $$V_4^{\text{spec}}[\Phi'] = -i\lambda \int d\lambda_1 d\lambda_2 d\lambda_3 d\lambda_4 \, \delta(\lambda_1 + \lambda_2 + \lambda_3 + \lambda_4) \prod_{i=1}^4 \Phi'(\lambda_i') = V_4^{\text{spec}}[\Phi],$$
+  $$V_4^{\text{Sp}}[\Phi'] = -i\lambda \int d\lambda_1 d\lambda_2 d\lambda_3 d\lambda_4 \, \delta(\lambda_1 + \lambda_2 + \lambda_3 + \lambda_4) \prod_{i=1}^4 \Phi'(\lambda_i') = V_4^{\text{Sp}}[\Phi],$$
   因为 $\delta$ 函数和测度均不变。
 
 谱 Feynman 传播子的协变性：
 
-$$D_F^{\text{spec}}(\lambda', \lambda'') = \langle 0 | T\Phi'(\lambda')\Phi'^\dagger(\lambda'') | 0 \rangle = \langle 0 | T U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}U(\Lambda)\Phi^\dagger(\lambda')U(\Lambda)^{-1} | 0 \rangle = D_F^{\text{spec}}(\lambda, \lambda'),$$
+$$D_F^{\text{Sp}}(\lambda', \lambda'') = \langle 0 | T\Phi'(\lambda')\Phi'^\dagger(\lambda'') | 0 \rangle = \langle 0 | T U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}U(\Lambda)\Phi^\dagger(\lambda')U(\Lambda)^{-1} | 0 \rangle = D_F^{\text{Sp}}(\lambda, \lambda'),$$
 
 其中 $|0\rangle$ 是 Lorentz 不变的真空态：$U(\Lambda)|0\rangle = |0\rangle$。
 
 谱路径积分测度的 Lorentz 不变性：
 
-$$\mathcal{D}_{\text{Spec}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\lambda') = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda) = \mathcal{D}_{\text{Spec}}\Phi,$$
+$$\mathcal{D}_{\text{Sp}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\lambda') = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda) = \mathcal{D}_{\text{Sp}}\Phi,$$
 
 因为谱测量 $\sigma(A_\phi)$ 在 Lorentz 变换下不变，且变换的 Jacobian 行列式为 $1$。
 
@@ -177,9 +185,9 @@ $$\mathcal{D}_{\text{Spec}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\
 
 **定理 2.2**（谱 Dyson 级数）。散射振幅的谱 Dyson 展开为：
 
-$$\mathcal{M}^{\text{spec}} = \sum_{n=0}^\infty \mathcal{M}_n^{\text{spec}},$$
+$$\mathcal{M}^{\text{Sp}} = \sum_{n=0}^\infty \mathcal{M}_n^{\text{Sp}},$$
 
-其中 $\mathcal{M}_n^{\text{spec}}$ 由 $n$ 个谱顶点和 $n$ 个内线谱传播子构成（A3 + A4 的微扰论展开）。
+其中 $\mathcal{M}_n^{\text{Sp}}$ 由 $n$ 个谱顶点和 $n$ 个内线谱传播子构成（A3 + A4 的微扰论展开）。
 
 **定理 2.3**（谱 $\beta$ 函数定理）。谱 $\beta$ 函数由谱截断 $\Lambda$ 的连续变化生成：
 
@@ -193,19 +201,19 @@ $$\beta(\lambda) = \left.\frac{d\lambda}{d\ln\Lambda}\right|_{\text{physical}}.$
 
 ### 3.1 谱标量场
 
-**定理 3.1**（谱 KG 还原性）。谱 KG 拉格朗日量 $\mathcal{L}_{\text{KG}}^{\text{spec}} = \frac12 \operatorname{Tr}_{\mathcal{H}_\phi}(\Phi^\dagger [A_\phi, \Phi]) - \frac{\lambda}{4!} \operatorname{Tr}_{\mathcal{H}_\phi}(\Phi^4)$ 在 $\Phi(\lambda) \to \phi(x)$ 对应下还原为标准 KG 拉格朗日量。
+**定理 3.1**（谱 KG 还原性）。谱 KG 拉格朗日量 $\mathcal{L}_{\text{KG}}^{\text{Sp}} = \frac12 \operatorname{Tr}_{\mathcal{H}_\phi}(\Phi^\dagger [A_\phi, \Phi]) - \frac{\lambda}{4!} \operatorname{Tr}_{\mathcal{H}_\phi}(\Phi^4)$ 在 $\Phi(\lambda) \to \phi(x)$ 对应下还原为标准 KG 拉格朗日量。
 
 ### 3.2 谱旋量场
 
-谱 Dirac 旋量 $\Psi$ 是 $\mathrm{Cl}(1,3)$ 值谱对象。谱 Dirac 拉格朗日量：$\mathcal{L}_{\text{Dirac}}^{\text{spec}} = \operatorname{Tr}_{\mathcal{H}_\psi}(\bar{\Psi} [A_\psi, \Psi])$。
+谱 Dirac 旋量 $\Psi$ 是 $\mathrm{Cl}(1,3)$ 值谱对象。谱 Dirac 拉格朗日量：$\mathcal{L}_{\text{Dirac}}^{\text{Sp}} = \operatorname{Tr}_{\mathcal{H}_\psi}(\bar{\Psi} [A_\psi, \Psi])$。
 
 ### 3.3 谱规范场
 
-谱 YM 拉格朗日量：$\mathcal{L}_{\text{YM}}^{\text{spec}} = -\frac14 \operatorname{Tr}_{\mathfrak{g}}\operatorname{Tr}_{\mathcal{H}_A}(\mathcal{F} \wedge \star \mathcal{F})$，其中谱规范曲率 $\mathcal{F} = [\nabla_A, \nabla_A]$。
+谱 YM 拉格朗日量：$\mathcal{L}_{\text{YM}}^{\text{Sp}} = -\frac14 \operatorname{Tr}_{\mathfrak{g}}\operatorname{Tr}_{\mathcal{H}_A}(\mathcal{F} \wedge \star \mathcal{F})$，其中谱规范曲率 $\mathcal{F} = [\nabla_A, \nabla_A]$。
 
 ### 3.4 谱 SM 拉格朗日量
 
-$$\mathcal{L}_{\text{SM}}^{\text{spec}} = \mathcal{L}_{\text{YM}}^{\text{spec}} + \mathcal{L}_{\text{fermion}}^{\text{spec}} + \mathcal{L}_{\text{Higgs}}^{\text{spec}} + \mathcal{L}_{\text{Yukawa}}^{\text{spec}} + \mathcal{L}_{\text{gf+ghost}}^{\text{spec}}.$$
+$$\mathcal{L}_{\text{SM}}^{\text{Sp}} = \mathcal{L}_{\text{YM}}^{\text{Sp}} + \mathcal{L}_{\text{fermion}}^{\text{Sp}} + \mathcal{L}_{\text{Higgs}}^{\text{Sp}} + \mathcal{L}_{\text{Yukawa}}^{\text{Sp}} + \mathcal{L}_{\text{gf+ghost}}^{\text{Sp}}.$$
 
 ---
 
@@ -213,22 +221,22 @@ $$\mathcal{L}_{\text{SM}}^{\text{spec}} = \mathcal{L}_{\text{YM}}^{\text{spec}} 
 
 ### 4.1 谱传播子
 
-谱传播子的严格对角形式 $D_F^{\text{spec}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`paperX_spectral_feynman.py`）：
+谱传播子的严格对角形式 $D_F^{\text{Sp}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`paperX_spectral_feynman.py`）：
 
 - 谱传播子还原无质量传播子：相对误差 $1.47 \times 10^{-16}$
 - 谱传播子为严格对角矩阵：非对角范数 $0.00$
 
 ### 4.2 谱顶点
 
-谱 $\phi^4$ 顶点 $V_4^{\text{spec}} = -i\lambda$ 与标准顶点完全一致（误差 $0.00$）。
+谱 $\phi^4$ 顶点 $V_4^{\text{Sp}} = -i\lambda$ 与标准顶点完全一致（误差 $0.00$）。
 
 ### 4.3 散射振幅
 
-$\phi^4$ $2\to2$ 散射振幅：$M_{\text{spec}} = -3i\lambda$（$s+t+u$ 三道求和，比值 $|M_{\text{spec}}/M_{\text{std}}| = 3.00$）。
+$\phi^4$ $2\to2$ 散射振幅：$M_{\text{Sp}} = -3i\lambda$（$s+t+u$ 三道求和，比值 $|M_{\text{Sp}}/M_{\text{std}}| = 3.00$）。
 
 ### 4.4 紫外有限性
 
-谱截断 $\Lambda$ 自动正则化单圈图：积分 $I_{\text{spec}} = \int d\lambda/(\lambda - m^2)^2$ 在 $\Lambda$ 下有限，收敛到解析值 $1/\Lambda^2$（相对误差 $11.7\%$，因离散网格分辨率；$\Lambda \to \infty$ 时趋于 $1/m^2$）。
+谱截断 $\Lambda$ 自动正则化单圈图：积分 $I_{\text{Sp}} = \int d\lambda/(\lambda - m^2)^2$ 在 $\Lambda$ 下有限，收敛到解析值 $1/\Lambda^2$（相对误差 $11.7\%$，因离散网格分辨率；$\Lambda \to \infty$ 时趋于 $1/m^2$）。
 
 ---
 
@@ -236,7 +244,7 @@ $\phi^4$ $2\to2$ 散射振幅：$M_{\text{spec}} = -3i\lambda$（$s+t+u$ 三道�
 
 ### 5.1 Gaussian 积分验证
 
-自由谱路径积分 $Z_{\text{free}}^{\text{spec}}[J]$ 在 $d=32$ 维离散截断下的关联函数 $\langle \Phi_i \Phi_j \rangle = \delta_{ij}/p_i^2$ 验证通过（对角元误差 $0.25$，非对角 $\max 0.21$，统计波动可接受）。
+自由谱路径积分 $Z_{\text{free}}^{\text{Sp}}[J]$ 在 $d=32$ 维离散截断下的关联函数 $\langle \Phi_i \Phi_j \rangle = \delta_{ij}/p_i^2$ 验证通过（对角元误差 $0.25$，非对角 $\max 0.21$，统计波动可接受）。
 
 ### 5.2 谱截断正则化
 
@@ -252,7 +260,7 @@ $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ 通过裸耦合有限差分精确匹
 
 ### 6.1 谱规范固定与 $R_\xi$ 规范
 
-谱规范固定项：$\mathcal{L}_{\text{gf}}^{\text{spec}} = -\frac{1}{2\xi} \operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu, \mathcal{A}_\mu]^2)$。
+谱规范固定项：$\mathcal{L}_{\text{gf}}^{\text{Sp}} = -\frac{1}{2\xi} \operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu, \mathcal{A}_\mu]^2)$。
 
 ### 6.2 BRST 幂零性
 
@@ -313,13 +321,13 @@ $SU(2)$ 的 Witten 全局反常要求在 $SU(2)$ 二重态数为偶数：
 
 $$\# \text{SU(2) 左手二重态} \in 2\mathbb{Z}.$$
 
-在谱语言中，这对应于 $\pi_4(SU(2)) = \mathbb{Z}_2$ 的谱翻译——谱规范变换的第四同伦群不变量。SM 每代含 1 个 $SU(2)$ 左手二重态（$Q_L$ 和 $L_L$ 各计 1），三代共 6 个二重态，满足偶数条件，Witten 反常在 $\mathbf{Sp}$ 范畴中自动消去。
+在谱语言中，这对应于 $\pi_4(SU(2)) = \mathbb{Z}_2$ 的谱表述——谱规范变换的第四同伦群不变量。SM 每代含 1 个 $SU(2)$ 左手二重态（$Q_L$ 和 $L_L$ 各计 1），三代共 6 个二重态，满足偶数条件，Witten 反常在 $\mathbf{Sp}$ 范畴中自动消去。
 
 ### 7.5 谱 $\theta$ 真空与轴子
 
 谱 $\theta$ 项为规范场的拓扑项在谱语言中的翻译：
 
-$$\mathcal{L}_\theta^{\text{spec}} = \theta \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}),$$
+$$\mathcal{L}_\theta^{\text{Sp}} = \theta \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}),$$
 
 其中 $\theta$ 是真空角参数，$\mathcal{F}$ 是谱规范曲率。谱拓扑荷（Pontryagin 指数）为：
 
@@ -329,7 +337,7 @@ $$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int d\lambda \, \operatorname{Tr}_{\math
 
 通过 Peccei-Quinn 机制，$\theta$ 被动力学轴子场 $a$ 消解：
 
-$$\mathcal{L}_a^{\text{spec}} = \frac12 \operatorname{Tr}_{\mathcal{H}_a}([A_a, a]^2) + \frac{a}{f_a} \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}).$$
+$$\mathcal{L}_a^{\text{Sp}} = \frac12 \operatorname{Tr}_{\mathcal{H}_a}([A_a, a]^2) + \frac{a}{f_a} \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}).$$
 
 在谱语言中，轴子是 $\mathbf{Sp}$ 中的周期伪标量对象：$a(\lambda) \cong a(\lambda) + 2\pi f_a$。谱框架进一步将轴子识别为 $\mathbf{Sp}$ 4-范畴中辫子静默 $S_4$ 的自然产物，其动态松弛能力保证 $|\theta_{\text{QCD}}| < 10^{-10}$。
 
@@ -449,7 +457,7 @@ $$\mathcal{L}_{\text{Majorana}} = \frac12 \nu_R^\dagger [A_{\nu_R}, \nu_R] = \fr
 
 **谱 See-saw 拉格朗日量**。完整的谱 See-saw 拉格朗日量为：
 
-$$\boxed{\mathcal{L}_\nu^{\text{spec}} = \frac12 \nu_R^\dagger [A_{\nu_R}, \nu_R] + y_\nu \bar{L}_L \cdot H \cdot \nu_R + \text{h.c.}},$$
+$$\boxed{\mathcal{L}_\nu^{\text{Sp}} = \frac12 \nu_R^\dagger [A_{\nu_R}, \nu_R] + y_\nu \bar{L}_L \cdot H \cdot \nu_R + \text{h.c.}},$$
 
 其中 $L_L = (\nu_L, e_L)^T$ 是左手轻子二重态，$H$ 是 Higgs 二重态，$y_\nu$ 是中微子 Yukawa 耦合。
 
@@ -496,11 +504,11 @@ PMNS扇区的开问题包括：(1) Dirac CP相位 $\delta_{\rm CP}$ 的精确谱
 
 **谱 Higgs 有效势**。在谱语言中，Higgs 有效势包含经典项和谱量子修正项：
 
-$$\boxed{V_{\text{eff}}(h) = -\mu^2 h^2 + \lambda_H h^4 + \delta V_{\text{spec}}(h)}.$$
+$$\boxed{V_{\text{eff}}(h) = -\mu^2 h^2 + \lambda_H h^4 + \delta V_{\text{Sp}}(h)}.$$
 
-前三项是标准 Higgs 势，第四项 $\delta V_{\text{spec}}(h)$ 是谱量子修正，来源于谱 QFT 中 Higgs 场的自相互作用和 Yukawa 耦合的谱圈图贡献。在谱截断 $\Lambda_{\max}$ 内的单圈近似下：
+前三项是标准 Higgs 势，第四项 $\delta V_{\text{Sp}}(h)$ 是谱量子修正，来源于谱 QFT 中 Higgs 场的自相互作用和 Yukawa 耦合的谱圈图贡献。在谱截断 $\Lambda_{\max}$ 内的单圈近似下：
 
-$$\delta V_{\text{spec}}(h) = \frac{1}{64\pi^2} \sum_i (-1)^{2s_i} (2s_i+1) \, M_i^4(h) \left( \ln\frac{M_i^2(h)}{\Lambda_{\max}^2} - \frac12 \right),$$
+$$\delta V_{\text{Sp}}(h) = \frac{1}{64\pi^2} \sum_i (-1)^{2s_i} (2s_i+1) \, M_i^4(h) \left( \ln\frac{M_i^2(h)}{\Lambda_{\max}^2} - \frac12 \right),$$
 
 其中 $M_i(h)$ 是场依赖的质量本征值，$s_i$ 是自旋，求和遍及 SM 全部粒子（$W, Z, t, h$ 等）。
 
@@ -570,13 +578,13 @@ $$\beta(\lambda_H) = \frac{1}{16\pi^2} \left( 24\lambda_H^2 - 6y_t^4 + \frac{9}{
 
 ### 9.1 谱 LSZ 约化公式
 
-从谱关联函数 $G_n^{\text{spec}}(\lambda_1,\ldots,\lambda_n)$ 提取 S 矩阵元的标准程序是谱 LSZ 约化公式。在谱语言中，动量壳条件 $p_i^2 = m^2$ 对应谱条件 $\lambda_i = m^2$：
+从谱关联函数 $G_n^{\text{Sp}}(\lambda_1,\ldots,\lambda_n)$ 提取 S 矩阵元的标准程序是谱 LSZ 约化公式。在谱语言中，动量壳条件 $p_i^2 = m^2$ 对应谱条件 $\lambda_i = m^2$：
 
-$$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{spec}} = \prod_{i=1}^n \frac{i}{\lambda_i - m^2 + i\varepsilon} \prod_{j=1}^m \frac{i}{\lambda_j - m^2 + i\varepsilon} \times G_{n+m}^{\text{spec}}(\lambda_1,\ldots,\lambda_{n+m})}.$$
+$$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{Sp}} = \prod_{i=1}^n \frac{i}{\lambda_i - m^2 + i\varepsilon} \prod_{j=1}^m \frac{i}{\lambda_j - m^2 + i\varepsilon} \times G_{n+m}^{\text{Sp}}(\lambda_1,\ldots,\lambda_{n+m})}.$$
 
 谱传播子的极点残差给出波函数重整化因子 $Z$：
 
-$$D_F^{\text{spec}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{连续谱},\quad Z = \lim_{\lambda \to m^2} (\lambda - m^2)(-i) D_F^{\text{spec}}(\lambda).$$
+$$D_F^{\text{Sp}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{连续谱},\quad Z = \lim_{\lambda \to m^2} (\lambda - m^2)(-i) D_F^{\text{Sp}}(\lambda).$$
 
 数值验证（`paperX_spectral_formalization.py`）：在 Lorentzian 峰近似下，$Z_{\text{extracted}} = 0.792$（真值 $0.8$），相对误差 $0.99\%$，验证了谱 LSZ 残差提取的可行性。
 
@@ -584,11 +592,11 @@ $$D_F^{\text{spec}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{�
 
 Cutkosky 规则将 Feynman 图的割不连续性与相空间积分关联。在谱语言中，切割传播子被替换为 on-shell delta 函数：
 
-$$D_F^{\text{spec}}(\lambda) = \frac{i}{\lambda - m^2 + i\varepsilon} \quad \Longrightarrow \quad \operatorname{Cut} D_F^{\text{spec}}(\lambda) = 2\pi \delta(\lambda - m^2).$$
+$$D_F^{\text{Sp}}(\lambda) = \frac{i}{\lambda - m^2 + i\varepsilon} \quad \Longrightarrow \quad \operatorname{Cut} D_F^{\text{Sp}}(\lambda) = 2\pi \delta(\lambda - m^2).$$
 
 对 $\phi^4$ 的 $s$-道单圈图，不连续性的谱形式为：
 
-$$\operatorname{Disc} \mathcal{M}_{\text{1-loop}}^{\text{spec}}(s) = \frac{\lambda^2}{2} \int \frac{d^4 k}{(2\pi)^4} 2\pi \delta_+(k^2 - m^2) 2\pi \delta_+((p-k)^2 - m^2).$$
+$$\operatorname{Disc} \mathcal{M}_{\text{1-loop}}^{\text{Sp}}(s) = \frac{\lambda^2}{2} \int \frac{d^4 k}{(2\pi)^4} 2\pi \delta_+(k^2 - m^2) 2\pi \delta_+((p-k)^2 - m^2).$$
 
 解析结果：$\operatorname{Im} \mathcal{M}_{\text{1-loop}}(s) = \frac{\lambda^2}{32\pi} \sqrt{1 - 4m^2/s} \cdot \Theta(s - 4m^2)$。
 
@@ -598,21 +606,21 @@ $$\operatorname{Disc} \mathcal{M}_{\text{1-loop}}^{\text{spec}}(s) = \frac{\lamb
 
 光学定理 $2\operatorname{Im} \mathcal{M}(s) = s \cdot \sigma_{\text{tot}}(s)$ 在谱语言中保持形式不变。对 $\phi^4$ 散射：
 
-$$2\operatorname{Im} \mathcal{M}^{\text{spec}}(s) = \int d\Pi_2^{\text{spec}} |\mathcal{M}^{\text{spec}}|^2,$$
+$$2\operatorname{Im} \mathcal{M}^{\text{Sp}}(s) = \int d\Pi_2^{\text{Sp}} |\mathcal{M}^{\text{Sp}}|^2,$$
 
-其中谱相空间 $d\Pi_2^{\text{spec}}$ 与标准相空间一致。光学定理是 S 矩阵幺正性的直接推论，作为结构恒等式在谱框架下严格成立。
+其中谱相空间 $d\Pi_2^{\text{Sp}}$ 与标准相空间一致。光学定理是 S 矩阵幺正性的直接推论，作为结构恒等式在谱框架下严格成立。
 
 谱 S 矩阵的幺正条件 $S^\dagger S = I$ 在谱语言中的显式形式为：
 
-$$\sum_n \int d\Pi_n^{\text{spec}} \; \langle f | n \rangle_{\text{spec}} \langle n | i \rangle_{\text{spec}}^* = \delta_{fi},$$
+$$\sum_n \int d\Pi_n^{\text{Sp}} \; \langle f | n \rangle_{\text{Sp}} \langle n | i \rangle_{\text{Sp}}^* = \delta_{fi},$$
 
-其中谱 $n$-粒子相空间为 $d\Pi_n^{\text{spec}} = \prod_{i=1}^n \frac{d^3 p_i}{(2\pi)^3 2E_i} \cdot \delta_{\text{spec}}(\Sigma \lambda_i)$，$\delta_{\text{spec}}$ 为谱能量-动量守恒。
+其中谱 $n$-粒子相空间为 $d\Pi_n^{\text{Sp}} = \prod_{i=1}^n \frac{d^3 p_i}{(2\pi)^3 2E_i} \cdot \delta_{\text{Sp}}(\Sigma \lambda_i)$，$\delta_{\text{Sp}}$ 为谱能量-动量守恒。
 
 ### 9.4 谱 Källén-Lehmann 表示
 
 全谱传播子的 Källén-Lehmann 谱表示为：
 
-$$D_F^{\text{spec}}(\lambda) = \int_0^\infty d\mu^2 \frac{\rho(\mu^2)}{\lambda - \mu^2 + i\varepsilon},$$
+$$D_F^{\text{Sp}}(\lambda) = \int_0^\infty d\mu^2 \frac{\rho(\mu^2)}{\lambda - \mu^2 + i\varepsilon},$$
 
 其中谱密度 $\rho(\mu^2)$ 满足求和规则 $\int_0^\infty d\mu^2 \rho(\mu^2) = 1$。谱密度分解为单粒子峰与连续谱：
 
@@ -652,15 +660,15 @@ $$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_
 
 规范固定的谱 LSZ 公式为：
 
-$$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{phys}} = P_{\text{BRST}} \circ \langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{spec}}},$$
+$$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{phys}} = P_{\text{BRST}} \circ \langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{Sp}}},$$
 
 其中 $P_{\text{BRST}}$ 是从未约化谱 Hilbert 空间到 $H_{\text{BRST}}^0(\mathbf{Sp})$ 的规范投射：
 
-$$P_{\text{BRST}}: \mathcal{H}_{\text{spec}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Sp}).$$
+$$P_{\text{BRST}}: \mathcal{H}_{\text{Sp}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Sp}).$$
 
 对每个外线态，有对应的 BRST 投射因子：
 
-$$\langle p |_{\text{phys}} = P_{\text{BRST}}^{(p)} \circ \lim_{\lambda_p \to m^2} \frac{i}{\lambda_p - m^2 + i\varepsilon} \int d\lambda \, e^{i\lambda x} G_n^{\text{spec}}(\lambda_1,\ldots,\lambda_n),$$
+$$\langle p |_{\text{phys}} = P_{\text{BRST}}^{(p)} \circ \lim_{\lambda_p \to m^2} \frac{i}{\lambda_p - m^2 + i\varepsilon} \int d\lambda \, e^{i\lambda x} G_n^{\text{Sp}}(\lambda_1,\ldots,\lambda_n),$$
 
 其中 $P_{\text{BRST}}^{(p)}$ 作用在第 $p$ 个外线上。
 
@@ -682,12 +690,12 @@ $$P_{\text{BRST}}(\mathcal{M}_{\text{unphys}}) = 0.$$
 
 对 $SU(N)$ Yang-Mills 理论，谱 BRST 协变的 LSZ 公式取以下显式形式。设规范场 $A_\mu^a(\lambda)$、鬼场 $c^a(\lambda)$、反鬼场 $\bar{c}^a(\lambda)$、物质场 $\psi_i(\lambda)$。谱关联函数为：
 
-$$G_{n_g,n_f,n_{\bar{c}},n_c}^{\text{spec}} = \langle 0 | T A_{\mu_1}^{a_1}(\lambda_1) \cdots \psi_{i_1}(\lambda_{i_1}) \cdots \bar{c}^{b_1}(\mu_1) \cdots c^{c_1}(\nu_1) \cdots | 0 \rangle.$$
+$$G_{n_g,n_f,n_{\bar{c}},n_c}^{\text{Sp}} = \langle 0 | T A_{\mu_1}^{a_1}(\lambda_1) \cdots \psi_{i_1}(\lambda_{i_1}) \cdots \bar{c}^{b_1}(\mu_1) \cdots c^{c_1}(\nu_1) \cdots | 0 \rangle.$$
 
-物理 S 矩阵元从 $G^{\text{spec}}$ 通过以下步骤提取：
+物理 S 矩阵元从 $G^{\text{Sp}}$ 通过以下步骤提取：
 
 1. 对每个外线施加谱 LSZ 约化（极点提取）：
-   $$\prod_{\text{外线}} \frac{i}{\lambda - m^2 + i\varepsilon} \; G^{\text{spec}} \;\Bigg|_{\lambda \to m^2}.$$
+   $$\prod_{\text{外线}} \frac{i}{\lambda - m^2 + i\varepsilon} \; G^{\text{Sp}} \;\Bigg|_{\lambda \to m^2}.$$
 
 2. 对每个规范玻色子外线，将极化矢量 $\varepsilon_\mu^{(r)}(p)$ 与 BRST 投射组合：
    $$\mathcal{M}_{\text{phys}} = P_{\text{BRST}} \circ \sum_{\{r\}} \prod_{\text{规范玻色子}} \varepsilon_{\mu_r}^{(r)}(p_r) \cdot \prod_{\text{旋量}} \bar{u}(p) / v(p) \cdot \text{谱 LSZ 余项}.$$
@@ -700,67 +708,67 @@ $$G_{n_g,n_f,n_{\bar{c}},n_c}^{\text{spec}} = \langle 0 | T A_{\mu_1}^{a_1}(\lam
 
 本节在谱框架下给出 S 矩阵幺正性的完备证明，将 §9.2–§9.5 的各条形式化结果统一为定理 9.1。
 
-**定理 9.1**（谱 S 矩阵幺正性）。谱 S 矩阵 $S_{\text{spec}}$ 满足幺正条件：
+**定理 9.1**（谱 S 矩阵幺正性）。谱 S 矩阵 $S_{\text{Sp}}$ 满足幺正条件：
 
-$$\boxed{S_{\text{spec}}^\dagger S_{\text{spec}} = I}.$$
+$$\boxed{S_{\text{Sp}}^\dagger S_{\text{Sp}} = I}.$$
 
 **证明**。证明分五步进行。
 
 **第一步：谱 LSZ 约化与 S 矩阵元的谱表示。**
 由 §9.1 的谱 LSZ 公式，S 矩阵元与谱关联函数的关系为：
 
-$$\langle f | S_{\text{spec}} | i \rangle = \prod_{j=1}^{n_f} \frac{i}{\lambda_j - m^2 + i\varepsilon} \prod_{k=1}^{n_i} \frac{i}{\lambda_k - m^2 + i\varepsilon} \times G_{n_f+n_i}^{\text{spec}}(\lambda_1,\ldots,\lambda_{n_f+n_i})\Bigg|_{\lambda \to m^2}.$$
+$$\langle f | S_{\text{Sp}} | i \rangle = \prod_{j=1}^{n_f} \frac{i}{\lambda_j - m^2 + i\varepsilon} \prod_{k=1}^{n_i} \frac{i}{\lambda_k - m^2 + i\varepsilon} \times G_{n_f+n_i}^{\text{Sp}}(\lambda_1,\ldots,\lambda_{n_f+n_i})\Bigg|_{\lambda \to m^2}.$$
 
-引入散射振幅 $M_{\text{spec}}$ 的标准分解 $S_{\text{spec}} = I + i T_{\text{spec}}$，其中 $T_{\text{spec}}$ 的矩阵元为：
+引入散射振幅 $M_{\text{Sp}}$ 的标准分解 $S_{\text{Sp}} = I + i T_{\text{Sp}}$，其中 $T_{\text{Sp}}$ 的矩阵元为：
 
-$$\langle f | T_{\text{spec}} | i \rangle = (2\pi)^4 \delta^{(4)}(P_f - P_i) \cdot \mathcal{M}^{\text{spec}}(i \to f).$$
+$$\langle f | T_{\text{Sp}} | i \rangle = (2\pi)^4 \delta^{(4)}(P_f - P_i) \cdot \mathcal{M}^{\text{Sp}}(i \to f).$$
 
 **第二步：谱 Cutkosky 规则与不连续性的态和表示。**
-对 $i \to f$ 前向散射振幅 $\mathcal{M}^{\text{spec}}(i \to i)$，谱 Cutkosky 规则（§9.2）给出其虚部与中间态求和的关系。考虑二到二散射过程 $p_1 p_2 \to p_3 p_4$ 的单圈修正。谱自能图 $\Sigma^{\text{spec}}(s)$ 的不连续性为：
+对 $i \to f$ 前向散射振幅 $\mathcal{M}^{\text{Sp}}(i \to i)$，谱 Cutkosky 规则（§9.2）给出其虚部与中间态求和的关系。考虑二到二散射过程 $p_1 p_2 \to p_3 p_4$ 的单圈修正。谱自能图 $\Sigma^{\text{Sp}}(s)$ 的不连续性为：
 
-$$\operatorname{Disc} \Sigma^{\text{spec}}(s) = 2i \operatorname{Im} \Sigma^{\text{spec}}(s) = \sum_n \int d\Pi_n^{\text{spec}} \; \langle p_1 p_2 | T_{\text{spec}}^\dagger | n \rangle \langle n | T_{\text{spec}} | p_1 p_2 \rangle,$$
+$$\operatorname{Disc} \Sigma^{\text{Sp}}(s) = 2i \operatorname{Im} \Sigma^{\text{Sp}}(s) = \sum_n \int d\Pi_n^{\text{Sp}} \; \langle p_1 p_2 | T_{\text{Sp}}^\dagger | n \rangle \langle n | T_{\text{Sp}} | p_1 p_2 \rangle,$$
 
-其中中间态求和 $n$ 遍历所有满足能动量守恒的 on-shell 多粒子态，谱相空间 $d\Pi_n^{\text{spec}}$ 为：
+其中中间态求和 $n$ 遍历所有满足能动量守恒的 on-shell 多粒子态，谱相空间 $d\Pi_n^{\text{Sp}}$ 为：
 
-$$d\Pi_n^{\text{spec}} = \prod_{i=1}^n \frac{d^3 k_i}{(2\pi)^3 2E_i} \cdot (2\pi)^4 \delta^{(4)}\Bigl(\sum k_i - \sum p\Bigr).$$
+$$d\Pi_n^{\text{Sp}} = \prod_{i=1}^n \frac{d^3 k_i}{(2\pi)^3 2E_i} \cdot (2\pi)^4 \delta^{(4)}\Bigl(\sum k_i - \sum p\Bigr).$$
 
 **第三步：谱光学定理。**
 从谱 Cutkosky 规则直接导出谱光学定理的精确形式（§9.3）。对前向散射 $i \to i$ 有：
 
-$$\boxed{2\operatorname{Im} \mathcal{M}^{\text{spec}}(i \to i) = \sum_n \int d\Pi_n^{\text{spec}} \; |\mathcal{M}^{\text{spec}}(i \to n)|^2}.$$
+$$\boxed{2\operatorname{Im} \mathcal{M}^{\text{Sp}}(i \to i) = \sum_n \int d\Pi_n^{\text{Sp}} \; |\mathcal{M}^{\text{Sp}}(i \to n)|^2}.$$
 
-这一关系等价于 $T_{\text{spec}}$ 的算符恒等式：
+这一关系等价于 $T_{\text{Sp}}$ 的算符恒等式：
 
-$$2\operatorname{Im} T_{\text{spec}} = T_{\text{spec}}^\dagger T_{\text{spec}}.$$
+$$2\operatorname{Im} T_{\text{Sp}} = T_{\text{Sp}}^\dagger T_{\text{Sp}}.$$
 
 **第四步：完备性关系。**
-谱光学定理的中间态求和在 $\mathbf{Sp}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
+谱光学定理的中间态求和在 $\mathbf{Sp}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{Sp}}$ 的一组广义正交基。定义谱单位算符的分解：
 
-$$I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \; |n\rangle \langle n|,$$
+$$I_{\text{Sp}} = \sum_n \int d\Pi_n^{\text{Sp}} \; |n\rangle \langle n|,$$
 
-其中求和对所有粒子数 $n$ 以及所有 on-shell 动量构型进行。插入 $I_{\text{spec}}$ 到前向散射振幅中给出：
+其中求和对所有粒子数 $n$ 以及所有 on-shell 动量构型进行。插入 $I_{\text{Sp}}$ 到前向散射振幅中给出：
 
-$$\sum_n \int d\Pi_n^{\text{spec}} \; \langle i | T_{\text{spec}}^\dagger | n \rangle \langle n | T_{\text{spec}} | i \rangle = \langle i | T_{\text{spec}}^\dagger T_{\text{spec}} | i \rangle.$$
+$$\sum_n \int d\Pi_n^{\text{Sp}} \; \langle i | T_{\text{Sp}}^\dagger | n \rangle \langle n | T_{\text{Sp}} | i \rangle = \langle i | T_{\text{Sp}}^\dagger T_{\text{Sp}} | i \rangle.$$
 
-结合谱光学定理 $2\operatorname{Im} \langle i | T_{\text{spec}} | i \rangle = \langle i | T_{\text{spec}}^\dagger T_{\text{spec}} | i \rangle$ 对所有 $|i\rangle$ 成立，可得算符恒等式：
+结合谱光学定理 $2\operatorname{Im} \langle i | T_{\text{Sp}} | i \rangle = \langle i | T_{\text{Sp}}^\dagger T_{\text{Sp}} | i \rangle$ 对所有 $|i\rangle$ 成立，可得算符恒等式：
 
-$$T_{\text{spec}} - T_{\text{spec}}^\dagger = i T_{\text{spec}}^\dagger T_{\text{spec}}.$$
+$$T_{\text{Sp}} - T_{\text{Sp}}^\dagger = i T_{\text{Sp}}^\dagger T_{\text{Sp}}.$$
 
 **第五步：幺正性的结论。**
-由 $S_{\text{spec}} = I + i T_{\text{spec}}$ 计算：
+由 $S_{\text{Sp}} = I + i T_{\text{Sp}}$ 计算：
 
 $$
 \begin{aligned}
-S_{\text{spec}}^\dagger S_{\text{spec}} &= (I - i T_{\text{spec}}^\dagger)(I + i T_{\text{spec}}) \\
-&= I + i(T_{\text{spec}} - T_{\text{spec}}^\dagger) + T_{\text{spec}}^\dagger T_{\text{spec}} \\
-&= I - (T_{\text{spec}} - T_{\text{spec}}^\dagger - i T_{\text{spec}}^\dagger T_{\text{spec}}) \\
+S_{\text{Sp}}^\dagger S_{\text{Sp}} &= (I - i T_{\text{Sp}}^\dagger)(I + i T_{\text{Sp}}) \\
+&= I + i(T_{\text{Sp}} - T_{\text{Sp}}^\dagger) + T_{\text{Sp}}^\dagger T_{\text{Sp}} \\
+&= I - (T_{\text{Sp}} - T_{\text{Sp}}^\dagger - i T_{\text{Sp}}^\dagger T_{\text{Sp}}) \\
 &= I \quad (\text{由第四步的恒等式}).
 \end{aligned}
 $$
 
-类似地可验证 $S_{\text{spec}} S_{\text{spec}}^\dagger = I$，从而 $S_{\text{spec}}$ 是幺正算符。$\blacksquare$
+类似地可验证 $S_{\text{Sp}} S_{\text{Sp}}^\dagger = I$，从而 $S_{\text{Sp}}$ 是幺正算符。$\blacksquare$
 
-**推论 9.1**（谱光学定理的等价性）。定理 9.1 的证明中第四步建立了谱完备性关系 $I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \, |n\rangle\langle n|$，该关系是谱框架下 S 矩阵幺正性的直接推论，也与 §9.3 的谱光学定理完全等价。
+**推论 9.1**（谱光学定理的等价性）。定理 9.1 的证明中第四步建立了谱完备性关系 $I_{\text{Sp}} = \sum_n \int d\Pi_n^{\text{Sp}} \, |n\rangle\langle n|$，该关系是谱框架下 S 矩阵幺正性的直接推论，也与 §9.3 的谱光学定理完全等价。
 
 > **注释 9.1**。本证明仅依赖于谱 LSZ 公式、谱 Cutkosky 规则和谱光学定理，这些结果已分别在 §9.1–§9.3 中建立并数值验证。因此定理 9.1 是谱 QFT 形式化的逻辑终点——它表明在 $\mathbf{Sp}$ 范畴中，S 矩阵幺正性不是额外假设而是谱关联函数结构的必然推论。
 
@@ -859,7 +867,7 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v1.0 | 2026-07-18 | 初稿完成：10 章 + 附录 C，~400 行。含 A1-A6 公理、标量/旋量/规范/Higgs 谱翻译、Feynman 规则（7/7）、路径积分/$\beta$ 函数（4/4）、BRST/鬼场/Ward（6/6）、手性/反常消去（7/7）、完整 SM（8/8）、**§9 谱 QFT 形式化**（LSZ/Cutkosky/光学定理/Källén-Lehmann, 4/4）。**附录 C**：$\alpha$ 谱推导完整内容（6 节）。6 数值脚本合计 36/36 检查通过。 |
+| v1.0 | 2026-07-18 | 初稿完成：10 章 + 附录 C，~400 行。含 A1-A6 公理、标量/旋量/规范/Higgs 谱表述、Feynman 规则（7/7）、路径积分/$\beta$ 函数（4/4）、BRST/鬼场/Ward（6/6）、手性/反常消去（7/7）、完整 SM（8/8）、**§9 谱 QFT 形式化**（LSZ/Cutkosky/光学定理/Källén-Lehmann, 4/4）。**附录 C**：$\alpha$ 谱推导完整内容（6 节）。6 数值脚本合计 36/36 检查通过。 |
 | v1.1 | 2026-07-18 | 补充三大理论节：**§2.8** A7 谱 Lorentz 协变公理（定义 2.7）；**§9.5** 谱规范的 LSZ 公式（BRST 上同调投射）；**§9.6** S 矩阵幺正性的完整谱证明（定理 9.1）。原 §2.8→§2.9，原 §9.5→§9.7。更新 §10.1 总结、§10.3 开放问题标记为 [已完成]。 |
 | v2.1 | 2026-07-19 | **噪声谱桥**：新增 §9.8 Schwinger-Keldysh 谱等价桥（SK = 噪声↔确定性谱等价桥在 QFT 中的实现，$\operatorname{Im}G_R = \frac12\tanh(\beta\omega/2)G_K$，连接 Paper XIX §8.5）|
 | v2.0 | 2026-07-18 | **全参数谱覆盖与论文全面升级**：**(a)** 新增附录 D（29 参数谱覆盖审计，15/29 严格零参数预测，29/29 全部覆盖）；**(b)** 摘要全面更新，增加强 CP 解（§7.5）和 PMNS θ₁₃ 谱起源（§8.6）的显式阐述；**(c)** §1.3 结构表更新为包含所有新章节（A7/强 CP/CKM/See-saw/真空稳定性/谱规范 LSZ/幺正性证明/附录 A-D）；**(d)** §1.1 动机段增加附录 D 交叉引用；**(e)** §10.3 开放问题表增加 3 个已解决项（强 CP、PMNS θ₁₃）和 1 个待完成项（PMNS CP 相），已解决项总数增至 6 个。 |

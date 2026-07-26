@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.IFSFractal
 import Mathlib.Analysis.Convex.Basic

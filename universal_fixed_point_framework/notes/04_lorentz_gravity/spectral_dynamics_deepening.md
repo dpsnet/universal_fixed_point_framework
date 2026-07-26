@@ -11,7 +11,7 @@
 > 
 > **Phase 37**（2026-07-17）：IFS 重叠因子 $\rho$ 第一性原理推导完成（`paper37_ifs_overlap_derivation.py` 7/7）。Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）$\Rightarrow$ Moran 方程 $\sum c_i^d = 1$ 确定收缩因子 $c_i$。三代质量谱从 Cl(1,7) 代数结构自然涌现，所有半涌现量（$\rho$, $\Delta\lambda_{\min}$, 耦合初值）全部去外部输入化。
 > 
-> **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱翻译 + 暴胀能标 V₀ 精确化（`paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
+> **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱表述 + 暴胀能标 V₀ 精确化（`paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
 > 
 > **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`paper39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
 > 
@@ -241,7 +241,7 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 
 ## F. 谱流体动力学
 
-### F.1 Navier-Stokes 方程的谱翻译
+### F.1 Navier-Stokes 方程的谱表述
 
 不可压 Navier-Stokes 方程：
 

@@ -21,7 +21,7 @@
 1. **局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$**：弯曲时空每点 $p$ 的切空间 $T_pM$ 上的局部 Lorentz 群 $SO^+(1,3)_p$ 对应该点切空间上 $\partial\mathbf{Rec}_D$ 的自同构。
 2. **广义协变 = 谱对象的全局粘合**：广义协变原理对应将各点谱对象通过切触条件粘合为全局谱丛。
 3. **Einstein 方程 = 谱流的曲率约束**：Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 翻译为谱对象 $A$ 的曲率 $F_A$ 与物质谱流的对偶关系。
-4. **Schwarzschild、Kerr、FLRW 度规的谱翻译**：三种典型时空对应不同的谱边界结构。
+4. **Schwarzschild、Kerr、FLRW 度规的谱表述**：三种典型时空对应不同的谱边界结构。
 5. **宇宙学常数 $\Lambda$ = 谱边界的全局曲率**：$\Lambda \neq 0$ 对应 $\partial\mathbf{Rec}_D$ 边界的全局曲率修正。
 
 本笔记是远期扩展，目标是为 Paper XVI 后续工作（可能 Paper XVII 弯曲时空谱动力学）奠基。
@@ -73,7 +73,7 @@ $$A_q = A_p + \nabla_\mu A_p \cdot \Delta x^\mu + \mathcal{O}(\Delta x^2),$$
 
 ---
 
-## 3. Einstein 方程的谱翻译
+## 3. Einstein 方程的谱表述
 
 ### 3.1 谱曲率
 
@@ -84,7 +84,7 @@ $$F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu + [A_\mu, A_\nu].$$
 
 ### 3.2 Einstein 方程的谱形式
 
-**命题 3.2**（Einstein 方程的谱翻译）。Einstein 方程
+**命题 3.2**（Einstein 方程的谱表述）。Einstein 方程
 $$G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$$
 
 在谱动力学中翻译为
@@ -106,7 +106,7 @@ $$\nabla_\mu \mathrm{Tr}(F^{\mu\nu} F_{\nu\rho}) = 0,$$
 
 ---
 
-## 4. 典型时空的谱翻译
+## 4. 典型时空的谱表述
 
 ### 4.1 Schwarzschild 时空
 
@@ -174,9 +174,9 @@ $$R_{\partial\mathbf{Rec}_D} \sim 10^{26} \mathrm{m} \sim H_0^{-1},$$
 
 **与暗能量问题的可能关系**：若 $\Lambda$ 是 $\partial\mathbf{Rec}_D$ 的曲率，则"暗能量"不是独立的物质成分，而是谱边界几何的体现。这给出暗能量问题的可能谱动力学解答——但需要更深入的工作来定量推导 $\Lambda$ 的具体值。
 
-### 5.3 AdS/CFT 对应的谱翻译
+### 5.3 AdS/CFT 对应的谱表述
 
-**命题 5.3**（AdS/CFT 的谱翻译）。AdS/CFT 对应在谱动力学中翻译为：
+**命题 5.3**（AdS/CFT 的谱表述）。AdS/CFT 对应在谱动力学中翻译为：
 $$\mathbf{Sp}_{\text{AdS}}|_{\partial\mathbf{Rec}_D} \cong \mathbf{Sp}_{\text{CFT}},$$
 
 即 AdS 时空的 $\partial\mathbf{Rec}_D$ 边界谱对象等价于 CFT 的谱对象。
@@ -226,7 +226,7 @@ $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 
 **定理 A**（局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构）。每点 $p \in M$ 上的局部 Lorentz 群 $SO^+(1,3)_p$ 是切空间 $T_pM$ 上 $\partial\mathbf{Rec}_D$ 的自同构群。
 
-**定理 B**（Einstein 方程的谱翻译）。Einstein 方程翻译为谱曲率-物质谱流对偶关系 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$。
+**定理 B**（Einstein 方程的谱表述）。Einstein 方程翻译为谱曲率-物质谱流对偶关系 $\mathrm{Tr}(F_{\mu\nu}F^{\mu\nu}) = 8\pi G \cdot \mathrm{Tr}(A_T A_{\text{GR}})$。
 
 **定理 C**（Bianchi 恒等式的谱形式）。$\nabla_\mu \mathrm{Tr}(F^{\mu\nu}F_{\nu\rho}) = 0$ 对应物质能量-动量守恒。
 
@@ -262,7 +262,7 @@ $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 
 | Paper II 内容 | 本笔记的扩展 |
 |:-------------|:------------|
-| $G_N$ 从谱交织导出 | Einstein 方程的谱翻译 |
+| $G_N$ 从谱交织导出 | Einstein 方程的谱表述 |
 | 谱交织条件 $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ | 弯曲时空中的纤维丛结构 |
 
 ### 8.3 与现有笔记的衔接
@@ -273,14 +273,14 @@ $$t_{\text{Page}} \sim S_{BH}/2 \sim \pi/(8\Delta\lambda_{\min}^2).$$
 | `spectral_lorentz_causality.md` | 光锥 = $\partial\mathbf{Rec}_D$ 的全局推广 |
 | `spectral_lorentz_symmetry_breaking.md` | Lorentz 群 = 谱边界自同构的局部化 |
 | `spectral_Kerr_silence_analysis.md` | Kerr 时空的多重静默结构 |
-| `spectral_AdS_CFT.md` | AdS/CFT 的谱翻译 |
+| `spectral_AdS_CFT.md` | AdS/CFT 的谱表述 |
 | `spectral_inflation_silence.md` | 暴胀的谱静默分析 |
 
 ---
 
 ## 9. 版本记录
 
-- v0.1（2026-07-19）：初稿。建立局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构；Einstein 方程的谱翻译；Schwarzschild/Kerr/FLRW 谱结构；$\Lambda$ 的谱起源猜想；Page 曲线的谱推导猜想。
+- v0.1（2026-07-19）：初稿。建立局部 Lorentz 群 = 切空间 $\partial\mathbf{Rec}_D$ 自同构；Einstein 方程的谱表述；Schwarzschild/Kerr/FLRW 谱结构；$\Lambda$ 的谱起源猜想；Page 曲线的谱推导猜想。
 
 ---
 

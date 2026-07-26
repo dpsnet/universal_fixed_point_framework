@@ -14,7 +14,7 @@ Wheeler 延迟选择实验中最反直觉的部分：
 
 ---
 
-## 1. 谱翻译：纠缠 = 不可分谱对象
+## 1. 谱表述：纠缠 = 不可分谱对象
 
 **定义 1**（谱纠缠）。双光子系统的总谱生成元 $A_{\text{total}} = A_{\text{sig}} \otimes I + I \otimes A_{\text{idler}} + A_{\text{ent}}$。当 $A_{\text{ent}} \neq 0$ 时，$A_{\text{total}}$ 不能因子化为 $A_1 \otimes A_2$。
 

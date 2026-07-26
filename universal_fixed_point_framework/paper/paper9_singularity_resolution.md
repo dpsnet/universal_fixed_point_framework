@@ -10,6 +10,11 @@
 
 **术语说明**：记号与定义沿用 Paper V（谱流方程、$A_{\text{GR}}$ 离散谱、$\mathbf{Rec}_D$ 边界）、Paper VIII（谱间隙 $\Delta\lambda_{\min}$）。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **BCH**：Baker-Campbell-Hausdorff（贝克-坎贝尔-豪斯多夫）公式
+- **CMB**：宇宙微波背景辐射（Cosmic Microwave Background）
+- **CKM**：Cabibbo-Kobayashi-Maskawa（卡比博-小林-益川）矩阵
+
 ## 1. 引言
 
 ### 1.1 奇点问题
@@ -392,7 +397,7 @@ $\Lambda$ 是**唯一的有量纲全扇区求和量**——因此呈现 16 层�
 6. **$R^2$ 修正**：BCH 展开自然产生 $R^2/M_{\text{Pl}}^2$ 项，有效 Friedmann 方程 $H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ 给出有限 $\rho_c$（数值验证 ✅）
 7. **黑洞-反弹连接**：蒸发在 $M_{\text{Pl}}$ 自然终止，残留黑洞成为反弹种子（Phase 27 整合 ✅）
 8. **谱指数**：$n_s = 0.9650$，与 Planck 2018 偏差 $0.0001$（数值验证 ✅）
-9. **$\Lambda$ 多重静默**（§6）：四力层叠静默压制 126 量级，覆盖观测所需 120 量级（安全余量 6），**宇宙学常数问题在谱动力学框架内完全解决**（`paper41_cosmological_constant.py` 6/6）
+9. **$\Lambda$ 多重静默**（§6）：四力层叠静默压制 126 量级，覆盖观测所需 120 量级（安全余量 6），**宇宙学常数问题在谱动力学框架内得到理论解答**（`paper41_cosmological_constant.py` 6/6）
 
 
 

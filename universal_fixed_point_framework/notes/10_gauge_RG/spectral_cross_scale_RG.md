@@ -118,6 +118,6 @@ $$\left.\frac{\partial \lambda(\Lambda)}{\partial \Lambda}\right|_{\Lambda = M_{
 
 | 问题 | 难度 | 说明 |
 |:----|:----:|------|
-| 两圈 β 函数的谱翻译 | 🟡 | 标准结果已知，翻译工作量 |
+| 两圈 β 函数的谱表述 | 🟡 | 标准结果已知，翻译工作量 |
 | $\Lambda_{\text{QCD}}$ 的谱推导 | 🔴 | 需 SU(3) 规范理论的非微扰谱分析 |
 | 谱截断函数的 Wilson-Fisher 不动点 | 🟡 | 谱版本的临界指数计算 |

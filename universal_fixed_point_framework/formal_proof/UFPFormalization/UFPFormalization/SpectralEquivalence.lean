@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.Braided
 import UFPFormalization.SpectralCorrespondence
@@ -106,8 +106,8 @@ theorem thm41_classification_finite (R₁ R₂ : RecObj)
     exact { P := 1, intertwine := by simp }
   · -- inv: identity matrix (placeholder)
     exact { P := 1, intertwine := by simp }
-  · apply SpecHom.ext; simp
-  · apply SpecHom.ext; simp
+  · apply SpHom.ext; simp
+  · apply SpHom.ext; simp
 
 /-! ### Layer 2: Braided dissipative classification (Theorem 4.2) -/
 
@@ -138,10 +138,10 @@ theorem thm42_braided_classification_finite (R₁ R₂ : RecObj)
   -- follows from the symmetry of the braiding on identical objects.
   refine ⟨recBraiding (DFunctor.obj R₁) (DFunctor.obj R₂), recBraiding (DFunctor.obj R₂) (DFunctor.obj R₁), ?_, ?_⟩
   · -- hom ≫ inv = id
-    apply SpecHom.ext
+    apply SpHom.ext
     simp [recBraiding]
   · -- inv ≫ hom = id
-    apply SpecHom.ext
+    apply SpHom.ext
     simp [recBraiding]
 
 /-! ### Layer 3: Cross-domain IC-covered classification (Theorem 4.3) -/
@@ -165,8 +165,8 @@ theorem thm43_IC_full_coverage_finite (R₁ R₂ : RecObj)
   refine ⟨?_, ?_, ?_, ?_⟩
   · exact { P := 1, intertwine := by simp }
   · exact { P := 1, intertwine := by simp }
-  · apply SpecHom.ext; simp
-  · apply SpecHom.ext; simp
+  · apply SpHom.ext; simp
+  · apply SpHom.ext; simp
 
 /-! ### Compatibility with the Braided Natural Equivalence (C1 solution) -/
 
@@ -197,7 +197,7 @@ theorem braided_natural_equivalence_bridge (R₁ R₂ : RecObj)
   -- eigenvalues of the factors.
   rcases hBraided with ⟨iso⟩
   -- The isomorphism iso: recTensorProduct (D(R₁)) (D(R₂)) ≅ recTensorProduct (D(R₂)) (D(R₁))
-  -- implies that the D-functor values are isomorphic as SpecObj.
+  -- implies that the D-functor values are isomorphic as SpObj.
   -- Using the monoidal preservation theorem, we have:
   -- D(recTensorProduct (D(R₁)) (D(R₂))) ≅ D(D(R₁)) ⊗ D(D(R₂))
   -- The unit/counit of the adjunction then gives D(R₁) ≅ D(R₂).

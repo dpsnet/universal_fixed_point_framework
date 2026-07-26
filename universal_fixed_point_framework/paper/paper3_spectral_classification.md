@@ -18,6 +18,15 @@
 
 **术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `UFPFormalization`。记号与定义沿用 Paper I。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **IFS**：迭代函数系统（Iterated Function System）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **IC**：隔离约束条件（Isolation Constraints）
+- **BPS**：Bogomol'nyi-Prasad-Sommerfield（BPS）黑洞
+- **RKHS**：再生核 Hilbert 空间（Reproducing Kernel Hilbert Space）
+- **BH**：黑洞（Black Hole）
+
 ## 1. 引言
 
 ### 1.1 物理系统的谱分类问题
@@ -36,9 +45,11 @@
 
 ## 2. 递归系统范畴的三层结构
 
-### 2.1 谱化函子 $D$
+### 2.1 谱化函子 $D$（将递归动力系统映射为谱算子的函子，是 Koopman 算子理论的范畴化推广）
 
 **定义 2.1**（$D$ 函子）。$D: \mathbf{Rec}_D \to \mathbf{Sp}$，$D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$，$A_R = -\log U_R$。
+
+> **注**：$D$ 函子可视为 Koopman 算子理论的范畴化推广——Koopman 算子将非线性动力系统线性化为无限维算子，$D$ 进一步将这一线性化过程提升为函子，保留递归系统的范畴结构。
 
 **定理 2.2**（$D$ 的忠实性）。$D(f) = D(g) \Rightarrow f = g$。
 
@@ -55,6 +66,8 @@ Paper I 识别了三种递归系统：
 ### 2.3 谱对应 $M \cong_{\text{br}} L$
 
 **定理 2.3**（辫子自然同构）。在 $\mathbf{Rec}_{\text{diss}}$ 上，$M(R) = \sigma(A_R)$ 与 $L(R) = \sigma(U_R)$ 通过 $\lambda = e^{-\mu}$ 建立辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$。
+
+> **注（与标准概念的关系）**："辫子自然同构"对应范畴论中的辫子幺半自然同构（braided monoidal natural isomorphism），编码非自伴算子谱分解的非交换结构。辫子交叉次数 $k$ 对应辫子群 $\mathcal{B}_n$ 中的交叉数（crossing number），是混沌系统拓扑复杂度的不变量。
 
 ### 2.4 隔离约束条件（IC）
 
@@ -104,6 +117,8 @@ $$R_1 \sim_{\text{spec}} R_2 \iff \text{存在辫子自然同构 } M_{R_1}^{\tex
 **证明**。($\Rightarrow$) 由 $D(R_1) \cong D(R_2)$ 和谱对应的辫子自然同构（定理 2.3）直接推出。
 
 ($\Leftarrow$) 若 $M_{R_1}^{\text{br}} \cong_{\text{br}} M_{R_2}^{\text{br}}$ 且 $k_1 = k_2$，则由辫子自然同构的函子性，$D(R_1) \cong D(R_2)$。□
+
+> **注（与标准概念的关系）**：辫子交叉次数 $k$ 对应辫子群 $\mathcal{B}_n$ 的标准交叉数（standard braid crossing number），是拓扑学中度量辫子复杂度的经典不变量。在本框架中，$k$ 编码耗散/混沌系统的"不可逆性程度"——$k=0$ 退化到自伴情形，$k>0$ 对应非平凡拓扑复杂度。
 
 **注**。$k \neq 0$ 的 $\mathbf{Rec}_{\text{diss}}$ 对象对应耗散/混沌系统——辫子交叉次数 $k$ 是比谱集更精细的不变量。因此 $\mathbf{Rec}_{\text{diss}}$ 中的谱等价类比 $\mathbf{Rec}_D$ 更"粗糙"（因为 $k$ 同伦类吸收了大量差异）。
 

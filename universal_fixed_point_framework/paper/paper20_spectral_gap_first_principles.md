@@ -22,7 +22,7 @@ Paper I 建立的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架通过 D 函子将递�
 Step 1: Rec/Sp → D 函子 → 谱对象 D(R) = (ℋ, A)
     ↓   Paper I 范畴框架
 Step 2: 谱流方程 dA/dt = [G, A]
-    ↓   Paper V, Spec_∞ 切空间
+    ↓   Paper V, Sp_∞ 切空间
 Step 3: 三层破缺 → 四力生成元
     ↓   Rec_D/Rec_diss/Rec\Rec_D → A_GR, A_EM, A_strong, A_weak
 Step 4: Casimir 谱 → 谱间隙比 √(2/3):1:√2
@@ -719,7 +719,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ### 9.3 开放问题
 
-~~1. **SU(2) 的范畴涌现**：$G_{\text{GR}} = \text{ad}(G)(A)$ 作为谱流生成元已在范畴框架内定义，但"为什么是 SU(2) 而不是其他 Lie 代数"的范畴来源尚未完全形式化（方向 B1：SpecObj 纤维丛结构约束待完成）。~~ **✅ 已解决（§3.5）。** 五个范畴约束 C1-C5（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$。秩-1 紧实非交换 Lie 代数连同 Casimir 谱的半整数 $j$ 条件排除所有其他 Lie 代数（包括 $\mathfrak{so}(3)$）。
+~~1. **SU(2) 的范畴涌现**：$G_{\text{GR}} = \text{ad}(G)(A)$ 作为谱流生成元已在范畴框架内定义，但"为什么是 SU(2) 而不是其他 Lie 代数"的范畴来源尚未完全形式化（方向 B1：SpObj 纤维丛结构约束待完成）。~~ **✅ 已解决（§3.5）。** 五个范畴约束 C1-C5（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$。秩-1 紧实非交换 Lie 代数连同 Casimir 谱的半整数 $j$ 条件排除所有其他 Lie 代数（包括 $\mathfrak{so}(3)$）。
 2. **Bott 周期分类的完全形式化**：Cl(1,7) ≅ M₈(ℝ) 当前引用已知代数分类定理。完整的形式化需在 Lean 中实现 Bott 周期性，超出当前 Mathlib 能力。
 ~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`paper41_cosmological_constant.py` 6/6 验证通过。
 

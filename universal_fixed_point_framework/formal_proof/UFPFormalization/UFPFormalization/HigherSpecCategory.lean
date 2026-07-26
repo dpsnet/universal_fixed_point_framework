@@ -1,4 +1,4 @@
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.Data.Matrix.Basic
 
@@ -8,14 +8,14 @@ namespace UFPFormalization
 
 universe u
 
-/-- A 2-morphism in Spec₂: β : P ⇒ Q where P,Q : X → Y are SpecHom. -/
+/-- A 2-morphism in Spec₂: β : P ⇒ Q where P,Q : X → Y are SpHom. -/
 @[ext]
-structure SpecTwoMorphism {X Y : SpecObj} (P Q : X ⟶ Y) where
+structure SpecTwoMorphism {X Y : SpObj} (P Q : X ⟶ Y) where
   homotopy : Matrix (Fin (X.n)) (Fin (Y.n)) ℂ
   condition : Q.P - P.P = X.A * homotopy - homotopy * Y.A
 
 /-- Vertical composition of Spec 2-morphisms. -/
-def specVertComp {X Y : SpecObj} {P Q R : X ⟶ Y}
+def specVertComp {X Y : SpObj} {P Q R : X ⟶ Y}
     (α : SpecTwoMorphism P Q) (β : SpecTwoMorphism Q R) : SpecTwoMorphism P R :=
   { homotopy := α.homotopy + β.homotopy
     condition := by
@@ -35,7 +35,7 @@ The homotopy matrix is H = α.hom * P'.P + Q.P * α'.hom.
 The condition (Q≫Q').P - (P≫P').P = X.A*H - H*Z.A follows from
 the 2-morphism conditions and intertwining, proved at entry level.
 -/
-def specHorizComp {X Y Z : SpecObj} {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z}
+def specHorizComp {X Y Z : SpObj} {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z}
     (α : SpecTwoMorphism P Q) (α' : SpecTwoMorphism P' Q') :
     SpecTwoMorphism (P ≫ P') (Q ≫ Q') :=
   { homotopy := α.homotopy * P'.P + Q.P * α'.homotopy
@@ -82,19 +82,19 @@ def specHorizComp {X Y Z : SpecObj} {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z}
       }
 
 /-- The identity 2-morphism id_P : P ⇒ P. -/
-def specIdTwoMorphism {X Y : SpecObj} (P : X ⟶ Y) : SpecTwoMorphism P P :=
+def specIdTwoMorphism {X Y : SpObj} (P : X ⟶ Y) : SpecTwoMorphism P P :=
   { homotopy := 0
     condition := by simp }
 
 /-- Vertical composition associativity. -/
-theorem specVertComp_assoc {X Y : SpecObj} {P Q R S : X ⟶ Y}
+theorem specVertComp_assoc {X Y : SpObj} {P Q R S : X ⟶ Y}
     (α : SpecTwoMorphism P Q) (β : SpecTwoMorphism Q R) (γ : SpecTwoMorphism R S) :
     specVertComp (specVertComp α β) γ = specVertComp α (specVertComp β γ) := by
   ext
   simp [specVertComp, add_assoc]
 
 /-- Exchange law for Spec₂ 2-morphisms. -/
-theorem specExchangeLaw {X Y Z : SpecObj}
+theorem specExchangeLaw {X Y Z : SpObj}
     {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
     (α : SpecTwoMorphism P Q) (β : SpecTwoMorphism Q R)
     (α' : SpecTwoMorphism P' Q') (β' : SpecTwoMorphism Q' R') :

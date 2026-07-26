@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Complex.Basic
@@ -56,7 +56,7 @@ theorem transferMatrix_comp {α β γ : Type} [Fintype α] [DecidableEq α]
     · simp [hk]
 
 /-- Object part of the spectral de-recursion functor. -/
-noncomputable abbrev DFunctor_obj (X : RecObj) : SpecObj :=
+noncomputable abbrev DFunctor_obj (X : RecObj) : SpObj :=
   ⟨Fintype.card X.T, stepMatrix (Fintype.equivFin X.T ∘ X.step ∘ (Fintype.equivFin X.T).symm)⟩
 
 /-- Morphism part of the spectral de-recursion functor. -/
@@ -75,7 +75,7 @@ noncomputable abbrev DFunctor_map {X Y : RecObj} (f : RecHom X Y) :
     encode a finite recursive system as a spectral operator.
 
     Maps a discrete dynamical system (RecObj: step function on finite set T)
-    to a linear operator (SpecObj: matrix) via its transfer matrix representation.
+    to a linear operator (SpObj: matrix) via its transfer matrix representation.
 
     Standard correspondence:
       - The functor D: Rec → Spec is a categorial generalization of the
@@ -89,17 +89,17 @@ noncomputable abbrev DFunctor_map {X Y : RecObj} (f : RecHom X Y) :
       - This is the "decursion" (去递归) operation, which eliminates
         explicit iteration by mapping the recursive dynamics directly
         to its spectral fixed point. -/
-noncomputable def DFunctor : RecObj ⥤ SpecObj where
+noncomputable def DFunctor : RecObj ⥤ SpObj where
   obj := DFunctor_obj
   map := DFunctor_map
   map_id X := by
-    apply SpecHom.ext
+    apply SpHom.ext
     funext i j
     dsimp [DFunctor_map, DFunctor_obj]
     simp [transferMatrix]
     rw [Matrix.one_apply]
   map_comp {X Y Z} f g := by
-    apply SpecHom.ext
+    apply SpHom.ext
     funext i j
     dsimp [DFunctor_map, DFunctor_obj]
     rw [← transferMatrix_comp]

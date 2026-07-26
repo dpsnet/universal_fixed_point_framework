@@ -24,7 +24,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.SpectralGap
 
 open CategoryTheory
@@ -172,8 +172,8 @@ noncomputable def TempIsoRG : TempObj ≌ RGObj :=
    ========================================================= -/
 
 /-- Fiber category: spectral data over a temperature base point.
-    The fiber is equivalent to SpecObj at that temperature.
-    In this finite prototype, the fiber data is a SpecObj (matrix A)
+    The fiber is equivalent to SpObj at that temperature.
+    In this finite prototype, the fiber data is a SpObj (matrix A)
     annotated with the base point for tracking. -/
 structure SpecFiberTemp (T : TempObj) where
   n : ℕ

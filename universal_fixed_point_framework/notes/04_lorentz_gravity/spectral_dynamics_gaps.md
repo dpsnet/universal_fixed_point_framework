@@ -33,7 +33,7 @@
 > - 与 Phase 37 ρ=0 共享同一 Cl(1,7) 代数结构
 > 
 > **Phase 38**（中微子质量层级 + 暴胀能标推进）：
-> - Seesaw→Rec_diss 谱翻译完成，正常层级从非 Hermite 谱自然涌现 ✅（`paper38_neutrino_inflation.py` 7/7）
+> - Seesaw→Rec_diss 谱表述完成，正常层级从非 Hermite 谱自然涌现 ✅（`paper38_neutrino_inflation.py` 7/7）
 > - 暴胀能标 V₀¹⁄⁴ = 8.1×10¹⁵ GeV 与 Planck 归一化自洽，R² 系数 c₁=25.19 框架内一致
 > - 剩余开放：V₀ 精确值需 A_GR 算符展开至 R⁴ 阶
 > 

@@ -14,6 +14,22 @@
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱静默条件 S1–S4）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文首次使用记号 $\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）、$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）、$\mathcal{L}$（静态化函子）、$\mathcal{D}yn$（动态化函子）、$\mathcal{S}el$（选择函子）、$\mathcal{D}iss$（溶解函子）。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **IFS**：迭代函数系统（Iterated Function System）
+- **QFT**：量子场论（Quantum Field Theory）
+- **SM**：标准模型（Standard Model）
+- **GR**：广义相对论（General Relativity）
+- **RG**：重整化群（Renormalization Group）
+- **HS**：Hilbert-Schmidt（范数/内积）
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **KK**：Kaluza-Klein（紧致化/模式）
+- **FDT**：涨落-耗散定理（Fluctuation-Dissipation Theorem）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+- **BH**：黑洞（Black Hole）
+- **LQG**：圈量子引力（Loop Quantum Gravity）
+- **AdS/CFT**：反 de Sitter/共形场论对偶
+
 ## 1. 引言
 
 ### 1.1 动机
@@ -461,7 +477,7 @@ $$\tau(\eta) \propto \frac{1}{\eta_c - \eta}, \quad \eta \to \eta_c^-$$
 ```
 静态化（典范，唯一）：
   Rec ──ℒ──→ Rec_id    (遗忘动力学)
-  Rec_id ─D^id─→ Spec  (谱几何)
+  Rec_id ─D^id─→ Sp  (谱几何)
 
 动态化（非典范，需选择数据）：
   Rec_id × DynData ─𝒟yn─→ Rec
@@ -1147,7 +1163,7 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 ### 17.8 架构定位
 
 ```
-总参数丛 Bun(Param, Spec)           ← 纤维范畴顶层
+总参数丛 Bun(Param, Sp)           ← 纤维范畴顶层
 ├── π_Param: → Param = G × Noise × Temp × RG × Kerr × Scale × Flt × Open(M)
 │
 ├── 拉回子纤维化

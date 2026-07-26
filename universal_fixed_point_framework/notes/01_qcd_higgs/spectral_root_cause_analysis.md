@@ -316,7 +316,7 @@ $$\boxed{\tau_p \sim 10^{52}\ \text{年}}$$
 
 ---
 
-### 第 6 层：低能 QCD 非微扰谱翻译
+### 第 6 层：低能 QCD 非微扰谱表述
 
 **"如何"**：QCD 的非微扰效应（禁闭、手征对称性破缺）在谱语言中对应 $\partial\mathbf{Rec}_D$ 边界穿越——当能标 $\mu \to \Lambda_{\text{QCD}}$，QCD 谱系统穿越 $\partial\mathbf{Rec}_D$，谱间隙 $\Delta\lambda_{\min} \to 0$。这与 Paper XVI 中 Lorentz 变换的 $\partial\mathbf{Rec}_D$ 边界机制完全平行。
 
@@ -420,7 +420,7 @@ $$\frac{d}{d\tau}A_\pi(\tau) = [G_{\text{chiral}}, A_\pi(\tau)] + \mathcal{D}_{\
 3. **$F_\pi$ 的完整谱推导** ✅ **已解决**：从 $\partial\mathbf{Rec}_D$ 谱密度出发，$F_\pi = \sqrt{N_c} \cdot \Lambda_{\text{QCD}} \cdot \Delta\lambda_3/(4\pi \Delta\lambda_{\min}) \cdot C_{\text{QCD}}$，其中 $C_{\text{QCD}} \approx 2.25$ 是 QCD 修正因子（来自 $S_2$ 层态射静默高阶修正）。预测值 92 MeV 与实验值 92.2 MeV 一致。
 4. **$Z_m$ 的第一性推导** ✅ **已解决**：$Z_m = m_{\text{bare}}/m_{\text{phys}} = y_q \cdot c_1^{\alpha_q} \cdot M_{\text{Pl}}/m_{\text{phys}} \approx 3.2 \times 10^{16}$（取 $m_{\text{phys}} = 4.0$ MeV，PDG 范围上限），平均质量反常维度 $\gamma_m^{\text{avg}} \approx 0.825$（来自 $S_2$ 层态射静默累积效应）。之前假设的 0.65 是错误的，正确值应为 ~0.83。$\gamma_m^{\text{avg}} \approx 0.825$ 在 QCD 质量反常维度的合理范围内（0.5-1.0）。
 5. **有限温度相变** ✅ **已解决**：温度作为第二谱流参数，$T_c$ 对应 $\partial\mathbf{Rec}_D$ 温度阈值；正确公式 $T_c = a \cdot \Lambda_{\text{QCD}}$（$a \approx 0.73$），预测值 153 MeV，与实验值 155 MeV 偏差仅 1.1%；低温相 $\rho \propto 1/\lambda$，高温相（QGP）$\rho \propto \lambda^2$；谱流方程推广为两参数形式。
-6. **χPT 高阶算符谱翻译** ✅ **已解决**：$p^4$ 算符、四夸克算符、电磁修正的完整谱翻译；谱流方程包含高阶力项。
+6. **χPT 高阶算符谱表述** ✅ **已解决**：$p^4$ 算符、四夸克算符、电磁修正的完整谱表述；谱流方程包含高阶力项。
 7. **QCD 相图谱推导** ✅ **已解决**：($T$, $\mu$) 平面上的四相区域（禁闭/QGP/手征恢复/色超导）；临界点预测 $T_{\text{CP}} \approx 150$ MeV，$\mu_{\text{CP}} \approx 450$ MeV。
 8. **Lattice QCD 对比** ✅ **已建立**：完整验证方案（特征值谱测量、临界行为分析、Banks-Casher 验证、谱间隙验证）和预期结果。
 

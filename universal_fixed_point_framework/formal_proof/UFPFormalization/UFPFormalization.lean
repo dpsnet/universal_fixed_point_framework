@@ -1,6 +1,6 @@
 import UFPFormalization.Basic
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.Adjunction
 import UFPFormalization.SpectralCorrespondence

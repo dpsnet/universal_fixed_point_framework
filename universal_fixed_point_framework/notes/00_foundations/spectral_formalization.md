@@ -157,5 +157,5 @@ $$G_2^{\text{spec}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{�
 |:----|:----:|------|
 | 谱规范的 LSZ 公式 | 🟡 | 需引入谱 BRST 上同调与物理态投射 |
 | 谱 Landau 方程 | 🔴 | 奇点结构与谱参数的 Landau 曲线 |
-| 谱色散关系与因果性 | 🟡 | $\operatorname{Re} M \sim \int \operatorname{Im} M/(s'-s)$ 的谱翻译 |
+| 谱色散关系与因果性 | 🟡 | $\operatorname{Re} M \sim \int \operatorname{Im} M/(s'-s)$ 的谱表述 |
 | 谱重整化与求和规则的一致性 | 🟡 | 谱求和规则在谱截断下的保持 |

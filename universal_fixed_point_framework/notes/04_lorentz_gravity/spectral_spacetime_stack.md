@@ -90,7 +90,7 @@ $$F_{\mathcal{E}}(U) = [\nabla_U, \nabla_U] - \nabla_{[U,U]}$$
 
 ### 4.2 Einstein 方程 = 谱曲率约束
 
-**定理 4.1**（Einstein 方程谱翻译）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 等价于 $\mathcal{E}$ 上谱曲率的约束：
+**定理 4.1**（Einstein 方程谱表述）。Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ 等价于 $\mathcal{E}$ 上谱曲率的约束：
 $$\text{Ric}_{\mathcal{E}} - \frac{1}{2}R_{\mathcal{E}} \cdot \text{id}_{\mathcal{E}} = 8\pi G \cdot T_{\mathcal{E}}$$
 其中 $\text{Ric}_{\mathcal{E}}$ 是 $\mathcal{E}$ 的 Ricci 曲率，$T_{\mathcal{E}}$ 是物质谱流生成元。
 
@@ -167,4 +167,4 @@ $$\mathcal{E}_{\text{Kerr}}(U) = \{s \mid \Delta\lambda_{\min}(s) = \Delta\lambd
 |:----|:----|:--------|
 | **v0.3** | **2026-07-23** | **Proof 修复**：§3.1 SheafCondition 签名更新（U.U.Nonempty 前提消除空集边缘情况）；constPresheaf_is_sheaf 证明简化至 0 sorry；§3.3 kerr_section_singularity 具体反例证明（两个不同矩阵破坏唯一性）而非占位符；§6.1 状态列更新为"0 sorry"；§6.2 三次深化迭代总结 |
 | **v0.2** | **2026-07-23** | **深化**：新增 §5 Minkowski 层与 Kerr 奇点截面构造 + 奇点的层论探测定理；§2.3 限制函子性条件；§3.1-3.3 定理编号与 Kerr 层破坏定理；§4.2 EinsteinTensor/StressEnergyTensor 具体结构；§6 完整形式化对照表（含状态列） |
-| **v0.1** | **2026-07-23** | 初始版本：开集范畴定义；谱预层构造；层/粘合公理与广义协变等价性；谱曲率与 Einstein 方程谱翻译；主定理 21 填补方案；Lean 形式化方案 |
+| **v0.1** | **2026-07-23** | 初始版本：开集范畴定义；谱预层构造；层/粘合公理与广义协变等价性；谱曲率与 Einstein 方程谱表述；主定理 21 填补方案；Lean 形式化方案 |

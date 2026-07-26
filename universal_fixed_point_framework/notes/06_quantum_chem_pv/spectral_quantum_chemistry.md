@@ -1,6 +1,6 @@
-# 量子化学谱翻译
+# 量子化学谱表述
 
-> **来源**: Paper XV — 通用不动点范畴框架 XV：量子化学的谱翻译
+> **来源**: Paper XV — 通用不动点范畴框架 XV：量子化学的谱表述
 > 
 > **作者**: 王斌 | **版本**: v2.0 (2026-07-19)
 > 
@@ -42,7 +42,7 @@ $$
 
 ## 3. 化学反应动力学：反应坐标的谱流方程
 
-过渡态理论的谱翻译由反应坐标的谱流方程给出。设 $s$ 为内禀反应坐标（IRC），定义沿反应路径的谱生成元 $A_s$，则反应动力学满足：
+过渡态理论的谱表述由反应坐标的谱流方程给出。设 $s$ 为内禀反应坐标（IRC），定义沿反应路径的谱生成元 $A_s$，则反应动力学满足：
 
 $$
 \frac{d}{dt} A_s = [A_{\text{RC}}, A_s] - \gamma \cdot \Delta_{\text{spec}} A_s
@@ -58,7 +58,7 @@ $$
 
 ## 4. 光谱预测：谱间隙 → 光子能量
 
-分子光谱的谱翻译是框架最直接的化学应用。谱间隙 $\delta_{if} = |\lambda_f - \lambda_i|$ 与光子能量的对应关系为：
+分子光谱的谱表述是框架最直接的化学应用。谱间隙 $\delta_{if} = |\lambda_f - \lambda_i|$ 与光子能量的对应关系为：
 
 $$
 h\nu_{if} = -k_B T \ln \delta_{if} \approx k_B T \cdot \frac{E_f - E_i}{k_B T} = E_f - E_i
@@ -70,9 +70,9 @@ $$
 \mu_{if} \propto \langle \varphi_f | [A_{\text{mol}}, \mathbf{r}] | \varphi_i \rangle
 $$
 
-由此可导出 Franck-Condon 因子的谱版本和振动选律的谱翻译。参见 Paper V（谱间隙动力学）和 Paper IX（谱响应与光谱）。
+由此可导出 Franck-Condon 因子的谱版本和振动选律的谱表述。参见 Paper V（谱间隙动力学）和 Paper IX（谱响应与光谱）。
 
-| 光谱类型 | 经典表述 | 谱翻译 |
+| 光谱类型 | 经典表述 | 谱表述 |
 |---------|---------|--------|
 | UV-Vis 吸收 | $E_{\text{ex}} = \hbar\omega$ | $\delta_{\text{exc}} = e^{-\beta\hbar\omega}$ |
 | 振动光谱 IR | $\nu_{\text{vib}} = \frac{1}{2\pi}\sqrt{k/\mu}$ | $\lambda_{\text{vib}} = e^{-\beta h\nu}$ |
@@ -97,7 +97,7 @@ $$
 
 ### A.1 氢原子精确谱 (`paperX_hydrogen_spectral.py`) — 7/7 ✅
 
-验证 Paper XV §2 的谱翻译：$A_H = e^{-\beta H}$ 将无界 Coulomb Hamiltonian 映射为有界谱生成元。
+验证 Paper XV §2 的谱表述：$A_H = e^{-\beta H}$ 将无界 Coulomb Hamiltonian 映射为有界谱生成元。
 
 | 检验项 | 结果 |
 |:------|:----:|
@@ -110,7 +110,7 @@ $$
 
 ### A.2 H₂⁺ 分子离子 (`paperX_H2plus_spectral.py`) — 6/6 ✅
 
-验证 Paper XV §3 的化学键谱翻译：$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
+验证 Paper XV §3 的化学键谱表述：$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
 
 | 检验项 | 谱值 | 实验 | 偏差 |
 |:------|:---:|:---:|:----:|

@@ -120,7 +120,7 @@ $$\ell_{\mathrm{corr}}^{(\mathrm{Infl})} = H_{\mathrm{inf}}^{-1}$$
 
 ### 3.2 粒子生成谱
 
-暴胀结束后，暴胀子 $\phi$ 振荡并衰变为 Standard Model 粒子。粒子生成过程的谱翻译：衰变宽度 $\Gamma_\phi$ 对应谱生成元的衰减项：
+暴胀结束后，暴胀子 $\phi$ 振荡并衰变为 Standard Model 粒子。粒子生成过程的谱表述：衰变宽度 $\Gamma_\phi$ 对应谱生成元的衰减项：
 
 $$\Gamma_{\phi \to \chi\chi} \sim \frac{y^2}{8\pi} m_\phi$$
 
@@ -198,7 +198,7 @@ $$\ell_n = n \cdot \frac{\pi}{\theta_s} = n \cdot \frac{\pi d_A(z_*)}{r_s(z_*)}$
 
 其中 $\theta_s$ 为声视界角直径，$d_A(z_*)$ 为角直径距离，$r_s(z_*)$ 为重组时的声视界半径。
 
-在谱纤维化框架中，CMB 功率谱的 TE 和 EE 极化谱同样具有谱翻译——TE 交叉谱对应不同谱生成元之间的干涉项，EE 极化谱对应纯张量模式的谱流。
+在谱纤维化框架中，CMB 功率谱的 TE 和 EE 极化谱同样具有谱表述——TE 交叉谱对应不同谱生成元之间的干涉项，EE 极化谱对应纯张量模式的谱流。
 
 ### 5.3 ℓ_corr 替换
 
@@ -229,11 +229,11 @@ $$F_2^{\mathrm{(spec)}}(k_1,k_2) = \frac{5}{7} + \frac{k_1\cdot k_2}{2k_1k_2}\le
 
 $F_2^{\mathrm{(spec)}} \equiv F_2^{(s)}$（SPT 标准对称化核），解析等价（1000 随机采样点最大偏差 0.00）。
 
-### 5.5 CMB 功率谱的谱翻译
+### 5.5 CMB 功率谱的谱表述
 
 CMB TT/TE/EE 功率谱在谱框架中的对应：
 
-| CMB 谱 | 谱翻译 | 物理对应 |
+| CMB 谱 | 谱表述 | 物理对应 |
 |:------|:------|:--------|
 | $C_\ell^{TT}$ | $\mathrm{Tr}[\hat{\Theta}(x_i)\hat{\Theta}(x_j)]_{\ell}$ | 温度各向异性的谱关联 |
 | $C_\ell^{TE}$ | $\langle \hat{\Theta} | \hat{E} \rangle_\ell$ | 温度-极化交叉谱（干涉项） |
@@ -303,7 +303,7 @@ $$d_H(z) = \frac{c}{H(z)} = \frac{c}{H_0\sqrt{\Omega_m(1+z)^3 + \Omega_\Lambda}}
 - **长度尺度**：Planck 长度 $l_{\mathrm{Pl}} \sim 1.616 \times 10^{-35}$ m
 - **谱流参数**：无经典谱流参数——该层位于经典时空描述的边界
 
-### 7.2 宇宙波函数的谱翻译
+### 7.2 宇宙波函数的谱表述
 
 量子宇宙学层的核心对象是宇宙波函数 $\Psi[h_{ij}, \phi]$，在谱框架中翻译为 $\mathbf{Bun}(\mathrm{Quantum\_Cosmo})$ 上的截面。
 
@@ -412,7 +412,7 @@ CMB 功率谱 $C_\ell$ 的多极矩结构在谱框架中的严格翻译：
 - 声峰间距 $\Delta\ell \approx 300$ 是否对应谱间隙 $\Delta\lambda$ 的倒数？
 - TE 交叉谱的符号交替是否来自不同谱生成元之间的干涉相消？
 
-需要在 $\ell \in [2, 2500]$ 范围内对 Planck 2018 数据进行谱翻译验证。
+需要在 $\ell \in [2, 2500]$ 范围内对 Planck 2018 数据进行谱表述验证。
 
 ### Q4：暗能量 w(z) 参数化的谱流方程数值解
 

@@ -21,8 +21,8 @@
 | **框架完整推导综述** | ✅ 已完成 | `notes/00_foundations/spectral_comprehensive_review.md` |
 | **独有实验预言汇总** | ✅ 已完成 | `notes/09_experimental/spectral_unique_predictions.md` |
 | **跨领域谱对应——复杂系统** | ✅ → **Paper XIII** | `paper/paper13_spectral_complex_systems.md` |
-| **凝聚态物理谱翻译** | ✅ → **Paper XIV** | `paper/paper14_spectral_condensed_matter.md` |
-| **量子化学谱翻译** | ✅ → **Paper XV** | `paper/paper15_spectral_quantum_chemistry.md` |
+| **凝聚态物理谱表述** | ✅ → **Paper XIV** | `paper/paper14_spectral_condensed_matter.md` |
+| **量子化学谱表述** | ✅ → **Paper XV** | `paper/paper15_spectral_quantum_chemistry.md` |
 | **光伏效率谱增强** | 🟢 研究笔记 v0.2 | `notes/06_quantum_chem_pv/spectral_photovoltaics.md` |
 | **开放数据验证报告** | ✅ 已完成 | `notes/07_validation/open_data_validation_report.md` |
 | **OPV2D 大规模验证** | ✅ 5/5 通过（38,849 D-A 对） | `src/opv_validation_extended.py` |

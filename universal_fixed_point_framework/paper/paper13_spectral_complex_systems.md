@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XIII：跨领域谱对应——复杂系统的谱翻译
+# 通用不动点范畴框架 XIII：跨领域谱对应——复杂系统的谱表述
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -9,6 +9,14 @@
 ---
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper III（谱分类）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VI（Koopman 算子 $U_t = e^{t\mathcal{K}}$）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **$\mathbf{Sp}$**：谱范畴（Spectral Category）
+- **$\mathbf{Rec}$**：递归范畴（Recursive Category）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+- **LV**：Lotka-Volterra（洛特卡-沃尔泰拉竞争模型）
+- **EMH**：有效市场假说（Efficient Market Hypothesis）
+- **BS**：Black-Scholes（布莱克-舒尔斯期权定价模型）
 
 ---
 
@@ -30,7 +38,7 @@
 2. **生态系统的 Lotka-Volterra 动力学**：种群丰度向量经对数变换后，竞争动力学化为非线性的谱流方程。生态稳定性与多样性的关系统一由竞争谱生成元的谱半径决定。
 3. **经济市场的供需动力学**：价格对数作为谱生成元，供需差驱动谱流。市场的有效性和周期性分别对应谱熵最大化和谱间隙动力学。
 
-这三个领域的谱翻译不仅提供了统一的分析工具，更揭示了跨领域的数学同构——例如，NTK 的谱衰减与生态竞争矩阵的谱压缩共享相同的 Lie 代数结构。
+这三个领域的谱表述（谱表述：框架特有的方法论，指将经典动力学方程映射为 $\mathbf{Sp}$ 范畴中谱流方程的对应规则）不仅提供了统一的分析工具，更揭示了跨领域的数学同构——例如，NTK 的谱衰减与生态竞争矩阵的谱压缩共享相同的 Lie 代数结构。
 
 ### 1.3 论文结构
 
@@ -45,7 +53,7 @@
 
 ## 2. 神经网络：NTK 的谱分解
 
-### 2.1 NTK 的谱翻译
+### 2.1 NTK 的谱表述
 
 深度神经网络的训练过程可以通过神经正切核（Neural Tangent Kernel, NTK）进行精确分析。设参数为 $\theta$ 的神经网络 $f_\theta(x): \mathbb{R}^{d_{\text{in}}} \to \mathbb{R}^{d_{\text{out}}}$ 在数据集 $\{x_i, y_i\}_{i=1}^n$ 上通过梯度下降最小化均方损失。NTK 定义为：
 
@@ -99,7 +107,7 @@ NTK 理论的最深刻洞察在于无限宽与有限宽之间的本质区别。
 
 ## 3. 生态网络：Lotka-Volterra 方程的谱流翻译
 
-### 3.1 竞争动力学的谱翻译
+### 3.1 竞争动力学的谱表述
 
 Lotka-Volterra（LV）竞争模型是生态网络动力学的核心方程。设 $n$ 个物种种群丰度为 $N_i(t)$（$i=1,\ldots,n$），其动力学由以下方程控制：
 
@@ -109,7 +117,7 @@ $$
 
 其中 $r_i > 0$ 为内在生长率，$\alpha_{ij} \ge 0$ 为种间竞争系数（$\alpha_{ii}$ 为种内竞争）。
 
-**定义 3.1**（生态谱翻译）。LV 系统的谱翻译由以下映射建立：
+**定义 3.1**（生态谱表述）。LV 系统的谱表述由以下映射建立：
 
 1. **种群谱生成元**：$A_{\text{eco}} = -\log N$，其中 $N = (N_1, \ldots, N_n)^\top$ 为丰度向量。$A_{\text{eco}}$ 的对角元 $-\log N_i$ 编码各物种的丰度信息。
 2. **生长谱生成元**：$A_{\text{growth}} = \text{diag}(r_1, \ldots, r_n)$，对角元为各物种的内在增长率。
@@ -133,11 +141,11 @@ $$
 
 即生成元 $A_{\text{growth}} - A_{\text{comp}} \circ e^{-A_{\text{eco}}}$ 与 $A_{\text{eco}}$ 对易。当 $A_{\text{eco}}$ 为非退化对角矩阵时，该条件简化为 $A_{\text{growth}} = A_{\text{comp}} \circ e^{-A_{\text{eco}}}$，即 $r_i = \sum_j \alpha_{ij} N_j^*$，与经典 LV 稳态一致。
 
-### 3.2 生态概念的谱翻译表
+### 3.2 生态概念的谱对应表
 
 生态网络的核心概念在 $\mathbf{Sp}$ 范畴中获得统一的谱解释：
 
-| 生态概念 | 经典定义 | 谱翻译 | 谱意义 |
+| 生态概念 | 经典定义 | 谱表述 | 谱意义 |
 |---------|---------|--------|--------|
 | 物种多样性 | Shannon 指数 $H' = -\sum_i p_i \log p_i$ | $S_{\text{eco}} = -\sum_k p_k(\lambda_k) \log p_k(\lambda_k)$ | $A_{\text{eco}}$ 的谱熵 |
 | 生态系统稳定性 | Jacobian 最大实部 $\max \text{Re}(\Lambda_J)$ | $\delta_{\text{eco}} = \lambda_{\max}(A_{\text{eco}})^{-1}$ | 谱间隙倒数 |
@@ -148,7 +156,7 @@ $$
 
 ### 3.3 May 稳定性-多样性悖论
 
-**定理 3.2**（May 悖论的谱翻译）。生态网络的稳定性条件在谱框架中等价于：
+**定理 3.2**（May 悖论的谱表述）。生态网络的稳定性条件在谱框架中等价于：
 
 $$
 \boxed{\rho(A_{\text{comp}}) < 1}
@@ -170,11 +178,11 @@ $$
 
 ## 4. 经济系统：市场动力学的谱流方程
 
-### 4.1 市场谱翻译
+### 4.1 市场谱表述
 
-经济系统的谱翻译将市场动力学视为谱流方程在经济学中的实例。基本映射如下：
+经济系统的谱表述将市场动力学视为谱流方程在经济学中的实例。基本映射如下：
 
-**定义 4.1**（市场谱翻译）。设市场价格向量为 $P = (P_1, \ldots, P_n)^\top$，定义：
+**定义 4.1**（市场谱表述）。设市场价格向量为 $P = (P_1, \ldots, P_n)^\top$，定义：
 
 1. **市场价格谱生成元**：$A_{\text{mkt}} = -\log P$，其中对数逐元素作用。$A_{\text{mkt}}$ 的谱编码了市场各资产的价格结构信息。
 2. **需求谱生成元**：$A_{\text{demand}} = D(d_i)$，其中 $d_i$ 为第 $i$ 种商品/资产的需求强度。$A_{\text{demand}}$ 的大特征值对应高需求资产。
@@ -232,7 +240,7 @@ $$
 
 ### 4.4 Black-Scholes 方程的谱版本
 
-**定理 4.4**（BS 谱流方程）。Black-Scholes 期权定价方程 $\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0$ 的谱翻译为：
+**定理 4.4**（BS 谱流方程）。Black-Scholes 期权定价方程 $\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0$ 的谱表述为：
 
 $$
 \frac{d}{dt} A_{\text{BS}} = \left[\frac{1}{2}\sigma^2 \Delta_{\text{spec}} + r \cdot \nabla_{\text{spec}} - rI, A_{\text{BS}}\right]
@@ -240,7 +248,7 @@ $$
 
 其中 $\Delta_{\text{spec}}$ 为谱拉普拉斯（对应 $\partial^2/\partial S^2$），$\nabla_{\text{spec}}$ 为谱梯度（对应 $\partial/\partial S$），$I$ 为单位谱算子。
 
-**注 4.3**。BS 谱流方程将金融衍生品定价纳入谱动力学框架。特别地，BS 方程的解算子 $e^{-r(T-t)}\mathbb{E}^\mathbb{Q}[\cdot]$ 在谱翻译中对应 $\mathbf{Sp}$ 中的谱传播子——与 Paper VI 中 N-S 谱流方程的 Koopman 算子表述形式一致。
+**注 4.3**。BS 谱流方程将金融衍生品定价纳入谱动力学框架。特别地，BS 方程的解算子 $e^{-r(T-t)}\mathbb{E}^\mathbb{Q}[\cdot]$ 在谱表述中对应 $\mathbf{Sp}$ 中的谱传播子——与 Paper VI 中 N-S 谱流方程的 Koopman 算子表述形式一致。
 
 ---
 
@@ -258,7 +266,7 @@ $$
 
 ### 5.2 跨领域统一性总结
 
-本文建立的三类复杂系统的谱翻译揭示了 $\mathbf{Sp}$ 范畴中的深层统一模式：
+本文建立的三类复杂系统的谱表述揭示了 $\mathbf{Sp}$ 范畴中的深层统一模式：
 
 1. **翻译法则的普适性**。每一类系统的动力学方程都可以通过一对一的翻译法则映射到 $\mathbf{Sp}$ 中的谱流方程。核心翻译模式为"对数变换 $A = -\log(\text{状态})$ + Lie 括号 $[G, A]$ + 系统特异的耗散/噪声项"。对数变换将乘法动力学（如 $N_i N_j$、$S \partial^2 V/\partial S^2$）转化为加性谱生成元，Lie 括号编码了动力学的几何本质。
 
@@ -306,9 +314,9 @@ $$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIII，跨领域谱对应——复杂系统的谱翻译。主要内容：
+《通用不动点范畴框架》系列论文 XIII，跨领域谱对应——复杂系统的谱表述。主要内容：
 - NTK 谱分解与训练动力学的谱流退化（§2）
-- Lotka-Volterra 生态谱流方程（定理 3.1）与 May 悖论的谱翻译（定理 3.2）
+- Lotka-Volterra 生态谱流方程（定理 3.1）与 May 悖论的谱表述（定理 3.2）
 - 市场谱流方程（定理 4.1）与有效市场假说的谱重述（定理 4.2）
 - 经济衰退 = 谱间隙坍塌（定理 4.3）
 - Black-Scholes 谱版本（定理 4.4）

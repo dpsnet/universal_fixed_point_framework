@@ -100,6 +100,8 @@ V & \epsilon_{\pi^*}
 
 ### 2.3 裸谱间隙的确定：谱键刚性定理
 
+谱键刚性（即化学键能级分裂幅度的谱框架量度）描述了化学键的 HOMO-LUMO 间隙与键序、键长的定量关系。
+
 **定理 2（C=O 谱键刚性）**：C=O 双键的谱键刚性 $R_{\text{bond}}$ 由键序 $b_{\text{CO}} = 2$、C=O 键长 $R_{\text{CO}} = 1.22$ Å 和 $\ell_{\text{corr}}$ 唯一确定。核心机制为：π 轨道重叠在 $\ell_{\text{corr}}$ 标度上指数衰减：
 
 $$R_{\text{bond}}(\text{C=O}) = b_{\text{CO}} \cdot \frac{\hbar^2}{m_e \cdot \ell_{\text{corr}}^2} \cdot \exp\left(-\frac{R_{\text{CO}}}{\ell_{\text{corr}}}\right)$$
@@ -119,7 +121,7 @@ $$\Delta E_{\pi \to \pi^*} = R_{\text{bond}}(\text{C=O}) = 5.31 \text{ eV}$$
 
 这与已知的 C=O 发色团 π→π* 跃迁的实验范围 5.0-6.0 eV [2] 一致。
 
-**定理 3（n-π 分离的谱化学势）**：氧孤对轨道相对于 π 轨道的能量由谱化学势梯度 $\partial \mu_{\text{spec}}/\partial Z$ 决定：
+**定理 3（n-π 分离的谱化学势）**：谱化学势梯度（即轨道能量随原子序数变化的谱框架标度律）决定氧孤对轨道相对于 π 轨道的能量由谱化学势梯度 $\partial \mu_{\text{spec}}/\partial Z$ 决定：
 
 $$\Delta E_{n - \pi} = \frac{\partial \mu_{\text{spec}}}{\partial Z} \times (Z_O - Z_C) \times \mathcal{F}_{\text{lone}}$$
 
@@ -520,7 +522,7 @@ $$\mu^*_{\text{spec}} = \frac{\alpha \cdot L}{1 + \alpha \cdot L}, \quad \alpha 
 
 [5] Paper VIII: Universal Fixed Point Framework VIII — 谱响应理论
 
-[6] Paper XV: Universal Fixed Point Framework XV — 量子化学的谱翻译
+[6] Paper XV: Universal Fixed Point Framework XV — 量子化学的谱表述
 
 [7] Paper XXI: Universal Fixed Point Framework XXI — Grothendieck 纤维化综合
 

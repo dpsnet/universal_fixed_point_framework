@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.Adjunction
 import UFPFormalization.Braided
@@ -14,7 +14,7 @@ namespace UFPFormalization.Test
 /-!
 # Tests for Category-Theoretic Foundations (Rec, Spec, D, Adjunction, Braided, IC)
 
-Covers: RecCategory, SpecCategory, DecursionFunctor, Adjunction, Braided, IsolationConstraints
+Covers: RecCategory, SpCategory, DecursionFunctor, Adjunction, Braided, IsolationConstraints
 -/
 
 -- ============================================================
@@ -45,27 +45,27 @@ theorem test_recCategory_comp_id (n : ℕ) (f : RecHom (testRecObj n) (testRecOb
   intro x; simp
 
 -- ============================================================
--- SpecCategory Tests
+-- SpCategory Tests
 -- ============================================================
 
-def testSpecObj (n : ℕ) : SpecObj :=
+def testSpObj (n : ℕ) : SpObj :=
   { n := n, A := 1 }
 
--- SpecHom identity
-example (n : ℕ) : ((𝟙 (testSpecObj n) : SpecHom (testSpecObj n) (testSpecObj n)).P = 1) := rfl
+-- SpHom identity
+example (n : ℕ) : ((𝟙 (testSpObj n) : SpHom (testSpObj n) (testSpObj n)).P = 1) := rfl
 
--- SpecHom intertwine property for identity
-theorem test_SpecHom_id_intertwine (n : ℕ) :
-    (𝟙 (testSpecObj n) : SpecHom (testSpecObj n) (testSpecObj n)).P * (testSpecObj n).A =
-    (testSpecObj n).A * (𝟙 (testSpecObj n) : SpecHom (testSpecObj n) (testSpecObj n)).P := by
+-- SpHom intertwine property for identity
+theorem test_SpHom_id_intertwine (n : ℕ) :
+    (𝟙 (testSpObj n) : SpHom (testSpObj n) (testSpObj n)).P * (testSpObj n).A =
+    (testSpObj n).A * (𝟙 (testSpObj n) : SpHom (testSpObj n) (testSpObj n)).P := by
   simp
 
 -- ============================================================
 -- DecursionFunctor Tests
 -- ============================================================
 
--- D functor object: DFunctor.obj returns a SpecObj
-theorem test_DFunctor_obj_type (n : ℕ) : (DFunctor.obj (testRecObj n) : SpecObj).n = n := by
+-- D functor object: DFunctor.obj returns a SpObj
+theorem test_DFunctor_obj_type (n : ℕ) : (DFunctor.obj (testRecObj n) : SpObj).n = n := by
   simp [DFunctor, testRecObj]
 
 -- D functor preserves identity
@@ -81,7 +81,7 @@ theorem test_adjUnit_exists (R : RecObj) : Nonempty (R ⟶ RFunctor.obj (DFuncto
   ⟨adjUnit R⟩
 
 -- D ⊣ R adjunction counit exists
-theorem test_adjCounit_exists (S : SpecObj) : Nonempty (DFunctor.obj (RFunctor.obj S) ⟶ S) :=
+theorem test_adjCounit_exists (S : SpObj) : Nonempty (DFunctor.obj (RFunctor.obj S) ⟶ S) :=
   ⟨adjCounit S⟩
 
 -- ============================================================

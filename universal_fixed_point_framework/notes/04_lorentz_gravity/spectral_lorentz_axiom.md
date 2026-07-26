@@ -1,73 +1,73 @@
-# 谱 Lorentz 协变公理 (A7)
+﻿# 璋?Lorentz 鍗忓彉鍏悊 (A7)
 
-谱 QFT 公理系统的第七公理 A7 规定了 Lorentz 群在 $\mathbf{Sp}$ 范畴中的作用方式，确保谱 QFT 承载相对论性量子场论的时空对称性。
+璋?QFT 鍏悊绯荤粺鐨勭涓冨叕鐞?A7 瑙勫畾浜?Lorentz 缇ゅ湪 $\mathbf{Sp}$ 鑼冪暣涓殑浣滅敤鏂瑰紡锛岀‘淇濊氨 QFT 鎵胯浇鐩稿璁烘€ч噺瀛愬満璁虹殑鏃剁┖瀵圭О鎬с€?
 
-## 定义 2.7 (A7：谱 Lorentz 协变公理)
+## 瀹氫箟 2.7 (A7锛氳氨 Lorentz 鍗忓彉鍏悊)
 
-Lorentz 群 $SO^+(1,3)$（或全 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$）在 $\mathbf{Sp}$ 范畴中通过函子作用构成谱自同构：
+Lorentz 缇?$SO^+(1,3)$锛堟垨鍏?Poincar茅 缇?$\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$锛夊湪 $\mathbf{Sp}$ 鑼冪暣涓€氳繃鍑藉瓙浣滅敤鏋勬垚璋辫嚜鍚屾瀯锛?
 
 $$L: \mathcal{P}_+^\uparrow \longrightarrow \operatorname{Aut}(\mathbf{Sp}),\quad L(\Lambda): (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \mapsto (\mathcal{H}_\phi^\Lambda, A_\phi^\Lambda, \sigma(A_\phi^\Lambda)),$$
 
-其中 $\Lambda \in SO^+(1,3)$ 是任一 proper 正时 Lorentz 变换。谱场 $\Phi(\lambda)$ 在 Lorentz 变换下的变换法则由幺正实现 $U(\Lambda)$ 给出：
+鍏朵腑 $\Lambda \in SO^+(1,3)$ 鏄换涓€ proper 姝ｆ椂 Lorentz 鍙樻崲銆傝氨鍦?$\Phi(\lambda)$ 鍦?Lorentz 鍙樻崲涓嬬殑鍙樻崲娉曞垯鐢卞购姝ｅ疄鐜?$U(\Lambda)$ 缁欏嚭锛?
 
 $$\boxed{\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}},$$
 
-其中 $\lambda'$ 是经 Lorentz 变换后的谱参数。
+鍏朵腑 $\lambda'$ 鏄粡 Lorentz 鍙樻崲鍚庣殑璋卞弬鏁般€?
 
-## 各类场的变换法则
+## 鍚勭被鍦虹殑鍙樻崲娉曞垯
 
-### 1. 标量场
+### 1. 鏍囬噺鍦?
 
-$\lambda' = \lambda$（$\lambda = p^2 + m^2$ 为 Lorentz 标量），变换为：
+$\lambda' = \lambda$锛?\lambda = p^2 + m^2$ 涓?Lorentz 鏍囬噺锛夛紝鍙樻崲涓猴細
 
 $$\Phi'(\lambda) = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1} = \Phi(\lambda).$$
 
-### 2. Dirac 旋量场
+### 2. Dirac 鏃嬮噺鍦?
 
 $$\Psi'(\lambda') = S(\Lambda)\Psi(\lambda),$$
 
-其中 $S(\Lambda) = \exp\left(-\frac{i}{4}\omega_{\mu\nu}\sigma^{\mu\nu}\right)$ 是旋量表示，$\sigma^{\mu\nu} = \frac{i}{2}[\gamma^\mu, \gamma^\nu]$。旋量谱参数变换为 $\lambda' = \lambda$（$\lambda = p^2 + m^2$ 仍为 Lorentz 标量）。
+鍏朵腑 $S(\Lambda) = \exp\left(-\frac{i}{4}\omega_{\mu\nu}\sigma^{\mu\nu}\right)$ 鏄棆閲忚〃绀猴紝$\sigma^{\mu\nu} = \frac{i}{2}[\gamma^\mu, \gamma^\nu]$銆傛棆閲忚氨鍙傛暟鍙樻崲涓?$\lambda' = \lambda$锛?\lambda = p^2 + m^2$ 浠嶄负 Lorentz 鏍囬噺锛夈€?
 
-### 3. 矢量场（规范场）
+### 3. 鐭㈤噺鍦猴紙瑙勮寖鍦猴級
 
 $$A'_\mu(\lambda') = \Lambda_\mu^{\;\nu} A_\nu(\lambda),$$
 
-谱参数 $\lambda' = \lambda$。
+璋卞弬鏁?$\lambda' = \lambda$銆?
 
-## Lorentz 不变性
+## Lorentz 涓嶅彉鎬?
 
-### 谱测度
+### 璋辨祴搴?
 
-谱测度 $d\lambda$ 在 Lorentz 变换下保持不变。由于谱参数 $\lambda$ 直接定义为 $p^2 + m^2$（对传播子）或通过对角化 $A_\phi$ 的特征值得到，Lorentz 变换保持谱的取值集合 $\sigma(A_\phi)$ 不变。
+璋辨祴搴?$d\lambda$ 鍦?Lorentz 鍙樻崲涓嬩繚鎸佷笉鍙樸€傜敱浜庤氨鍙傛暟 $\lambda$ 鐩存帴瀹氫箟涓?$p^2 + m^2$锛堝浼犳挱瀛愶級鎴栭€氳繃瀵硅鍖?$A_\phi$ 鐨勭壒寰佸€煎緱鍒帮紝Lorentz 鍙樻崲淇濇寔璋辩殑鍙栧€奸泦鍚?$\sigma(A_\phi)$ 涓嶅彉銆?
 
-### 谱自由作用量
+### 璋辫嚜鐢变綔鐢ㄩ噺
 
 $$S_{\text{free}}^{\text{spec}}[\Phi'] = \frac12 \int d\lambda \, \Phi'^\dagger(\lambda') (\lambda' - m^2) \Phi'(\lambda') = \frac12 \int d\lambda \, \Phi^\dagger(\lambda) (\lambda - m^2) \Phi(\lambda) = S_{\text{free}}^{\text{spec}}[\Phi],$$
 
-其中变换 Jacobian $|d\lambda'/d\lambda| = 1$。
+鍏朵腑鍙樻崲 Jacobian $|d\lambda'/d\lambda| = 1$銆?
 
-### 谱相互作用项（以 $\phi^4$ 为例）
+### 璋辩浉浜掍綔鐢ㄩ」锛堜互 $\phi^4$ 涓轰緥锛?
 
 $$V_4^{\text{spec}}[\Phi'] = -i\lambda \int d\lambda_1 d\lambda_2 d\lambda_3 d\lambda_4 \, \delta(\lambda_1 + \lambda_2 + \lambda_3 + \lambda_4) \prod_{i=1}^4 \Phi'(\lambda_i') = V_4^{\text{spec}}[\Phi],$$
 
-因为 $\delta$ 函数和测度均不变。
+鍥犱负 $\delta$ 鍑芥暟鍜屾祴搴﹀潎涓嶅彉銆?
 
-### 谱 Feynman 传播子
+### 璋?Feynman 浼犳挱瀛?
 
 $$D_F^{\text{spec}}(\lambda', \lambda'') = \langle 0 | T\Phi'(\lambda')\Phi'^\dagger(\lambda'') | 0 \rangle = \langle 0 | T U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}U(\Lambda)\Phi^\dagger(\lambda')U(\Lambda)^{-1} | 0 \rangle = D_F^{\text{spec}}(\lambda, \lambda'),$$
 
-其中 $|0\rangle$ 是 Lorentz 不变的真空态：$U(\Lambda)|0\rangle = |0\rangle$。
+鍏朵腑 $|0\rangle$ 鏄?Lorentz 涓嶅彉鐨勭湡绌烘€侊細$U(\Lambda)|0\rangle = |0\rangle$銆?
 
-### 谱路径积分测度
+### 璋辫矾寰勭Н鍒嗘祴搴?
 
-$$\mathcal{D}_{\text{Spec}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\lambda') = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda) = \mathcal{D}_{\text{Spec}}\Phi,$$
+$$\mathcal{D}_{\text{Sp}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\lambda') = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda) = \mathcal{D}_{\text{Sp}}\Phi,$$
 
-因为谱测量 $\sigma(A_\phi)$ 在 Lorentz 变换下不变，且变换的 Jacobian 行列式为 $1$。
+鍥犱负璋辨祴閲?$\sigma(A_\phi)$ 鍦?Lorentz 鍙樻崲涓嬩笉鍙橈紝涓斿彉鎹㈢殑 Jacobian 琛屽垪寮忎负 $1$銆?
 
-## 注释
+## 娉ㄩ噴
 
-A7 与 A1–A6 的关系：A1 保证了谱对象的存在性，A7 进一步要求这些对象承载 Lorentz 群的表示。两者结合确保了 $\mathbf{Sp}$ 范畴能够充分编码相对论性量子场论的时空对称性。
+A7 涓?A1鈥揂6 鐨勫叧绯伙細A1 淇濊瘉浜嗚氨瀵硅薄鐨勫瓨鍦ㄦ€э紝A7 杩涗竴姝ヨ姹傝繖浜涘璞℃壙杞?Lorentz 缇ょ殑琛ㄧず銆備袱鑰呯粨鍚堢‘淇濅簡 $\mathbf{Sp}$ 鑼冪暣鑳藉鍏呭垎缂栫爜鐩稿璁烘€ч噺瀛愬満璁虹殑鏃剁┖瀵圭О鎬с€?
 
 ---
 
-*摘自 Paper XI §2.8（定义 2.7）*
+*鎽樿嚜 Paper XI 搂2.8锛堝畾涔?2.7锛?

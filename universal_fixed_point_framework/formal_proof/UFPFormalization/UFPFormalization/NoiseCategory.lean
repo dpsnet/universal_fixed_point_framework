@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.Adjunction
 import UFPFormalization.Silence
@@ -121,13 +121,13 @@ theorem sigmaRecInclusion_full_faithful : Full sigmaRecInclusion ∧ Faithful si
 -/
 
 /-- Σ-Spec object: a countable coproduct of Spec objects. -/
-structure SigmaSpecObj where
+structure SigmaSpObj where
   /-- The Spec objects indexed by ℕ. -/
-  components : ℕ → Option SpecObj
+  components : ℕ → Option SpObj
 
 /-- Σ-D functor: extension of D : Rec → Spec to Σ-Rec → Σ-Spec.
     Σ-D(⨁_i R_i) = ⨁_i D(R_i). -/
-noncomputable def sigmaDFunctor : SigmaRecObj ⥤ SigmaSpecObj where
+noncomputable def sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj where
   obj X :=
     { components := λ i =>
         match X.components i with
