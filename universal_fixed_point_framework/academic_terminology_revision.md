@@ -22,6 +22,7 @@
 | 第四批 | 2026-07-26 | 工程口语化修正 | 1 个文件（paper1_rkhs） |
 | 第五批 | 2026-07-26 | 跨领域类比术语标注 | 2 个文件 |
 | 第六批 | 2026-07-26 | 哲学板块术语释义 | 1 个文件（paper1_philosophy） |
+| 第七批 | 2026-07-26 | 纵向剖面纤维术语 | 3 个文件（paper21, paper22, notes） |
 
 ---
 
@@ -249,6 +250,45 @@
 | 还原论 | Reductionism | paper1_philosophy §9.4.1 |
 | 涌现论 | Emergentism | paper1_philosophy §9.4.2 |
 | 结构双向性 | Structural Bidirectionality | paper1_philosophy §9.4.3 |
+
+---
+
+## 十一、第七批：纵向剖面纤维术语
+
+### 11.1 修订内容
+
+新增纵向剖面纤维相关术语，建立规范的术语体系。
+
+### 11.2 新增术语
+
+| 术语 | 英文名称 | 定义位置 |
+|------|----------|----------|
+| 纵向剖面纤维 | Longitudinal Section Fiber | notes/longitudinal_section_fiber.md §1.1 |
+| 纵向剖面纤维对象 | Longitudinal Section Fiber Object | paper21 §10.1 |
+| 纵向剖面纤维化 | Longitudinal Section Fibration | paper21 §10.2 |
+| 观察窗口 | Observation Window | notes/longitudinal_section_fiber.md §1.3 |
+| 有效域 | Effective Domain | paper21 §10.1 |
+| 域边界 | Domain Boundary | paper21 §10.1 |
+| 粘合条件 | Gluing Condition | paper21 §10.2 |
+| 域边界态射 | Domain Boundary Morphism | notes/longitudinal_section_fiber.md §1.5 |
+| 谱静默对应 | Spectral Silence Correspondence | paper21 §10.3 |
+| 双纤维化 | Double Fibration | paper21 §10.5 |
+| 三维纤维化 | Three-Dimensional Fibration | paper22 §10.3 |
+
+### 11.3 涉及文件
+
+| 文件 | 修订内容 |
+|------|----------|
+| `notes/longitudinal_section_fiber.md` | 新增完整的纵向剖面纤维笔记，包含定义、定理、实例 |
+| `paper21_grothendieck_fibration_synthesis.md` | 新增 §10 纵向剖面纤维章节，包含定义、定理、QCD 实例 |
+| `paper22_spectral_fibration_synthesis.md` | 新增 §10 纵向剖面纤维章节，包含量子化学应用、三维纤维化 |
+
+### 11.4 修订原因
+
+1. 将"同一物理系统的不同数学工具描述"这一核心概念形式化为严格的范畴论结构——纵向剖面纤维
+2. 每个数学工具对应一个"观察窗口"（有效域），窗口之间通过粘合条件连接，覆盖完整的参数空间
+3. 建立域边界与谱静默的对应关系，将谱静默理论从物理层面扩展到数学工具层面
+4. 将 Grothendieck 纤维化范式从"参数化谱族"扩展到"多数学工具谱族"，增强框架的表达能力
 
 ---
 
