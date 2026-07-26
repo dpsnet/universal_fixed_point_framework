@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXV：谱丛精细纤维拆分跨领域方法论
+# 通用不动点范畴框架 XXV：谱丛纤维精细分解跨领域方法论
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -6,7 +6,7 @@
 
 **摘要**：本文将 Paper XXII 的 7 层嵌套纤维化方法论系统推广至五大物理领域：(1) QCD/强相互作用、(2) 引力/黑洞、(3) 凝聚态/流体、(4) 味物理/标准模型、(5) 宇宙学。核心成果为：(a) 三个元方法论定理——谱交织条件缩放定理（定理 1）、$\ell_{\text{corr}}$ 替换存在性定理（定理 2）、纤维方向一致性定理（定理 3）；(b) 五大领域的精细纤维分解，每层给出谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 和 $\ell_{\text{corr}}$ 替换；(c) 领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 的严格构造，证明其满忠实性（定理 4）；(d) 截面粘贴定理（定理 5），在四个能标界面建立领域间粘贴。所有谱交织条件全部通过数值验证。
 
-**前置依赖**：Paper XXII（量子化学精细纤维拆分）。
+**前置依赖**：Paper XXII（量子化学纤维精细分解）。
 
 ---
 
@@ -631,7 +631,7 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 | 子阶段 | 内容 | 状态 |
 |:------|:-----|:----:|
-| Phase 56A | 量子化学精细纤维拆分（Paper XXII） | ✓ 完成 |
+| Phase 56A | 量子化学纤维精细分解（Paper XXII） | ✓ 完成 |
 | Phase 56B | Bun(Corr) 闭式定理的连续谱推广（Paper XXIV-A） | ✓ 完成 |
 | Phase 56C | H-H 谱键刚性定理（Paper XXIV-B） | ✓ 完成 |
 | Phase 56D | 跨领域推广（本文，Paper XXV） | ✓ 完成 |
@@ -720,7 +720,7 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 [2] 王斌. 通用不动点范畴框架 XXI：Grothendieck 纤维化综合——从谱族到总参数丛. Paper XXI, v0.1, 2026.
 
-[3] 王斌. 通用不动点范畴框架 XXII：量子化学精细纤维拆分与谱键刚性. Paper XXII, v1.0, 2026.
+[3] 王斌. 通用不动点范畴框架 XXII：量子化学纤维精细分解与谱键刚性. Paper XXII, v1.0, 2026.
 
 [4] 王斌. 通用不动点范畴框架 VI：谱流体动力学与 $\partial\mathbf{Rec}_D$ 统一. Paper VI, v2.4, 2026.
 

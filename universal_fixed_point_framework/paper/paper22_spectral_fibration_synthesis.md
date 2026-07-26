@@ -1,10 +1,10 @@
-# 通用不动点范畴框架 XXII：量子化学精细纤维拆分——从 Grothendieck 纤维化到可计算协议
+# 通用不动点范畴框架 XXII：量子化学纤维精细分解——从 Grothendieck 纤维化到可计算协议
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v0.6（2026-07-25）
 
-**摘要**：基于 Paper XV 的谱表述和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次精细纤维拆分方法论。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚性定理**（Paper XXIV-B）用谱键刚性替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
+**摘要**：基于 Paper XV 的谱表述和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次纤维精细分解方法论。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚度定理**（Paper XXIV-B）用谱键刚度替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
 
 **前置依赖**：Paper XV（谱量子化学）、Paper XXI（Grothendieck 纤维化综合）。
 
@@ -12,7 +12,7 @@
 
 ## 1. 引言
 
-### 1.1 为什么需要精细纤维拆分？
+### 1.1 为什么需要纤维精细分解？
 
 量子化学描述的核心困难在于**不同耦合层次的尺度分离**：
 
@@ -27,11 +27,11 @@
 
 **传统处理方式**：将所有层次装进同一个 Hamiltonian $H$ 中一起对角化——计算成本随电子数 $N$ 和层次数 $m$ 呈 $\mathcal{O}(N^m)$ 或更差增长。
 
-**精细纤维拆分**：将总 Hamiltonian 的求解**分解为**嵌套的、各含独立谱流方程的纤维化层，层间通过自然变换交换截面数据而非 $\mathcal{O}(N^3)$ 级别的矩阵对角化。结果是计算复杂度从 $\mathcal{O}(N^m)$ 降为 $\mathcal{O}(N) \cdot m$。
+**纤维精细分解**：将总 Hamiltonian 的求解**分解为**嵌套的、各含独立谱流方程的纤维化层，层间通过自然变换交换截面数据而非 $\mathcal{O}(N^3)$ 级别的矩阵对角化。结果是计算复杂度从 $\mathcal{O}(N^m)$ 降为 $\mathcal{O}(N) \cdot m$。
 
 ### 1.2 与量子化学多尺度方法的区别
 
-| 对比项 | QM/MM, ONIOM 等 | 精细纤维拆分 |
+| 对比项 | QM/MM, ONIOM 等 | 纤维精细分解 |
 |:------|:---------------|:------------|
 | 理论基础 | 能量加和/嵌入势 | **Grothendieck 纤维化 + 谱流方程** |
 | 层间耦合 | 静电嵌入经验参数 | **自然变换——精确** |
@@ -274,7 +274,7 @@ $$A_{\text{total}} = \frac{\kappa_H}{\kappa_H + \kappa_L} A_H + \frac{\kappa_L}{
 
 ### 5.1 步骤总览
 
-对任意分子体系，按以下 8 步执行精细纤维拆分：
+对任意分子体系，按以下 8 步执行纤维精细分解：
 
 ```
 Step 1: 分子系统分析 ──→ 确定存在的耦合层次清单
@@ -353,7 +353,7 @@ $$A_i^{\text{cross}} = \frac{\delta_{\text{spec}}}{\delta_{\text{spec}} + \kappa
 | Bun(Solv) | 可选 | 气相 → 液相介电修正 |
 | Bun(Spin) | ❌ | 闭壳层，可忽略 |
 
-**纤维拆分计算流程**：
+**纤维分解计算流程**：
 
 ```
 Step 1: 激活 Bun(Reac) + Bun(Vib) + Bun(Ionic)
@@ -443,7 +443,7 @@ $$\mathbf{Bun}(\mathcal{B}_1) \hookrightarrow \mathbf{Bun}(\mathcal{B}_2) \hookr
 
 **设置**。量子化学系统的总 Hilbert 空间维数为 $\mathcal{N} = N_{\text{orb}}$（参与计算的轨道数），$m$ 为激活的纤维层次数，$\{k_i\}_{i=1}^m$ 为各层的电子相关阶次（$k_i = 0$ 对应平均场，$k_i = 2$ 对应双激发），$\delta_{i}$ 为第 $i$ 层的谱间隙。
 
-**定理 2**。精细纤维拆分后的总计算复杂度为：
+**定理 2**。纤维精细分解后的总计算复杂度为：
 
 $$\mathcal{C}_{\text{fibration}} = \sum_{i=1}^m \mathcal{O}\left( \frac{N_{\text{orb}}^{2k_i+1}}{\delta_i^{d_i}} \right)$$
 
@@ -459,11 +459,11 @@ $$\frac{\mathcal{C}_{\text{fibration}}}{\mathcal{C}_{\text{total}}} \leq \frac{m
 
 *证明*。在传统计算中，所有层次的信息编码在单一 Hamiltonian 中，激发空间维数为 $\binom{N_{\text{orb}}}{k_{\max}}$，对角化复杂度为 $\mathcal{O}(\binom{N_{\text{orb}}}{k_{\max}}^2) \sim \mathcal{O}(N_{\text{orb}}^{2k_{\max}+1})$（忽略低阶项）。
 
-在纤维拆分中，第 $i$ 层的激发空间仅包含该层相关的轨道子集 $N_i$，且 $N_i \leq N_{\text{orb}}$。谱间隙 $\delta_i$ 提供了天然截断——超出 $\delta_i$ 阈值的激发自动被谱耗散项压制。第 $i$ 层的 $d_i$-维基空间扫描需要 $\delta_i^{-d_i}$ 个沿基坐标的积分步长。因此各层复杂度求和即得上述表达式。
+在纤维分解中，第 $i$ 层的激发空间仅包含该层相关的轨道子集 $N_i$，且 $N_i \leq N_{\text{orb}}$。谱间隙 $\delta_i$ 提供了天然截断——超出 $\delta_i$ 阈值的激发自动被谱耗散项压制。第 $i$ 层的 $d_i$-维基空间扫描需要 $\delta_i^{-d_i}$ 个沿基坐标的积分步长。因此各层复杂度求和即得上述表达式。
 
-全空间复杂度与纤维拆分复杂度的比值由 $k_{\max}$ 与 $k_i$ 的关系决定。当 $k_{\max} > \max_i k_i$ 时（这是常规情况，因为全空间需处理最坏情况的相关性，而纤维拆分在各层处理中等相关性），比值在 $N_{\text{orb}} \to \infty$ 时趋于零。$\square$
+全空间复杂度与纤维分解复杂度的比值由 $k_{\max}$ 与 $k_i$ 的关系决定。当 $k_{\max} > \max_i k_i$ 时（这是常规情况，因为全空间需处理最坏情况的相关性，而纤维分解在各层处理中等相关性），比值在 $N_{\text{orb}} \to \infty$ 时趋于零。$\square$
 
-**推论 2.1（并行性）**。$m$ 层的纤维拆分在最优实现中可实现 $m$ 倍并行加速。
+**推论 2.1（并行性）**。$m$ 层的纤维分解在最优实现中可实现 $m$ 倍并行加速。
 
 *证明*。各层谱流方程的解在截面交换之前是独立的，因此可以在独立处理器/核上并行计算。仅在 Step 7（自然变换检验）和 Step 8（跨界粘合）时需要进行层间通信。该通信仅涉及截面数据（标量或低维数组），其通信成本 $\mathcal{O}(1)$ 相对于计算成本 $\mathcal{O}(N_{\text{orb}}^{2k_i+1})$ 可忽略。$\square$
 
@@ -532,27 +532,27 @@ $$I_{\text{cross}}(R_{AB}) \propto |J_{\text{CT}}(R_{AB})|^2 \propto \exp\left(-
 
 ### 8.3 全栈数值交叉验证
 
-为检验精细纤维拆分方法论的定量可靠性，我们在 6 个独立数值实验上进行了**全栈交叉验证**。
+为检验纤维精细分解方法论的定量可靠性，我们在 6 个独立数值实验上进行了**全栈交叉验证**。
 
 #### 8.3.1 验证矩阵
 
 | 实验 | 系统 | 验证量 | 理论值 | 预测/计算结果 | 偏差 | 状态 |
 |:----|:----|:------|:-----:|:-----------:|:---:|:---:|
 | P1 (v2.0) | H + H$_2$ | 最佳 ℓ_corr | 0.5 Å | 0.5 Å（势垒 0.436 eV vs 0.425 eV） | 2.6% | ✅ |
-| **P1 (Paper XXIV-B)** | **H + H$_2$** | **谱键刚性 R_bond(H$_2$)** | **——** | **6.925 eV (谱键刚性)** | **— (新)** | **✅** |
+| **P1 (Paper XXIV-B)** | **H + H$_2$** | **谱键刚度 R_bond(H$_2$)** | **——** | **6.925 eV (谱键刚度)** | **— (新)** | **✅** |
 | P2 (v2.0) | Fulvene CI | Berry 相位/陈数 | $\pi$ / $C=1$ | $\pi$ / $C=1$ | 0.00% | ✅ |
-| P3 | CH$_3$CHO SGL | 隐式通道偏差 | > 5° | Δφ=-50.8°, Δθ=24.8° | 确认 | ✅ |
+| P3 | CH$_3$CHO SGL | 隐谱通道偏差 | > 5° | Δφ=-50.8°, Δθ=24.8° | 确认 | ✅ |
 | CH$_3$CHO 谱流推导 (Paper XXIII) | CH$_3$CHO n→π* | 谱流方程严格解 | 4.1 eV | **谱框架内部: 3.958 eV** | **3.5%** | **✅** |
 | **P0 (Paper XXIV-A)** | **BCS 超导** | **库仑赝势 μ*** | **经验 0.10–0.15** | **$\mu^*_{\text{spec}}$ 闭式公式** | **Al: 0.9%, Sn: 0.6%, Pb: 0.5%** | **✅** |
 | CH$_3$CHO ab initio (参考) | CH$_3$CHO n→π* | 外部 QC: TDHF/6-31G* | 4.1 eV | TDHF/6-31G*: 3.985 eV | 2.8% | — (外部) |
 | 水二聚体全链 | (H$_2$O)$_2$ | ℓ_corr | 0.5 Å | 0.514 Å（文献拟合） | 2.9% | ✅ |
 | 水二聚体 J_CT | J$_CT$(R) | ℓ_corr | 0.5 Å | 0.441 ± 0.020 Å / 0.514 Å | 11.8%/2.9% | ✅ |
 
-*CH$_3$CHO 的谱框架内部推导（Paper XXIII，从谱流方程 + $\ell_{\text{corr}}$ + 谱键刚性出发）给出 3.958 eV，偏差 3.5%，首次在纯框架内完成 n→π* 预言。核心改进为 Bun(Corr) 层的闭式关联修正定理 ΔE_corr = −κ_corr² · δ_Reac。作为外部参考，PySCF TDHF/6-31G* 给出 3.985 eV（2.8%），但此为 Schrödinger 方程的数值解，非谱框架推导。
+*CH$_3$CHO 的谱框架内部推导（Paper XXIII，从谱流方程 + $\ell_{\text{corr}}$ + 谱键刚度出发）给出 3.958 eV，偏差 3.5%，首次在纯框架内完成 n→π* 预言。核心改进为 Bun(Corr) 层的闭式关联修正定理 ΔE_corr = −κ_corr² · δ_Reac。作为外部参考，PySCF TDHF/6-31G* 给出 3.985 eV（2.8%），但此为 Schrödinger 方程的数值解，非谱框架推导。
 
 **P0 (Paper XXIV-A)**：Bun(Corr) 闭式定理的连续谱推广，在强耦合超导中导出 $\mu^*_{\text{spec}} = \alpha L/(1+\alpha L)$ 闭式公式（$\alpha = (D_0/r_w)^2$）。Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差均 < 1%，a_spec 偏差 < 5%。Nb 的 26.6% 偏差确认源于 d-轨道多带效应。这是 Bun(Corr) 闭式定理从分子体系到凝聚态超导的首次跨领域推广。
 
-**P1 (Paper XXIV-B)**：H-H 谱键刚性定理 $R_{\text{bond}}(\text{H}_2) = \hbar^2/(m_e \ell_{\text{corr}}^2) \cdot \exp(-R_{\text{HH}}/\ell_{\text{corr}})$ 给出 H₂ 谱间隙 6.925 eV（此前 Hückel 经验 $\beta_0$ 对应 $2|\beta_0| = 12.6$ eV），谱耦合 $V_{\text{eq}} = -3.462$ eV。沿 IRC 的 gap closure 18.2%（Hückel 为 7.9%），方向正确。完全消除了 Hückel 模型的三个经验参数（$\beta_0$、$\alpha_0$、次近邻因子 0.3）。
+**P1 (Paper XXIV-B)**：H-H 谱键刚度定理 $R_{\text{bond}}(\text{H}_2) = \hbar^2/(m_e \ell_{\text{corr}}^2) \cdot \exp(-R_{\text{HH}}/\ell_{\text{corr}})$ 给出 H₂ 谱间隙 6.925 eV（此前 Hückel 经验 $\beta_0$ 对应 $2|\beta_0| = 12.6$ eV），谱耦合 $V_{\text{eq}} = -3.462$ eV。沿 IRC 的 gap closure 18.2%（Hückel 为 7.9%），方向正确。完全消除了 Hückel 模型的三个经验参数（$\beta_0$、$\alpha_0$、次近邻因子 0.3）。
 
 #### 8.3.2 关键结论
 
@@ -563,7 +563,7 @@ $$I_{\text{cross}}(R_{AB}) \propto |J_{\text{CT}}(R_{AB})|^2 \propto \exp\left(-
 
 **拓扑不变量验证**：Fulvene 锥形交叉的 Berry 相位精确为 $\pi$，陈数 $C=1$，$\delta_{\text{spec}} \propto r^{1.0000}$ 的幂律偏差 0.00%。这是谱丛拓扑预言在量子化学体系中的直接验证。
 
-**隐式通道验证**：CH$_3$CHO 的 $\delta_{\text{spec}}$ 极小（φ=106.2°, θ=26.9°）与 PES 鞍点（φ=156.9°, θ=2.1°）存在 Δφ=-50.8° 的系统性偏差——支持谱框架预言的隐式反应通道，即谱间隙 Landscape 而非 PES 主导反应路径。
+**隐谱通道验证**：CH$_3$CHO 的 $\delta_{\text{spec}}$ 极小（φ=106.2°, θ=26.9°）与 PES 鞍点（φ=156.9°, θ=2.1°）存在 Δφ=-50.8° 的系统性偏差——支持谱框架预言的隐谱反应通道，即谱间隙 Landscape 而非 PES 主导反应路径。
 
 #### 8.3.3 跨系统 ℓ_corr 一致性
 
@@ -613,7 +613,7 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 
 $$\mathbf{Bun}(\mathcal{B}_{\text{QChem},i}) \cong \iota_i^*(\pi_{\mathbf{Param}})$$
 
-这证明了精细纤维拆分的**范畴论封闭性**——拆分不是临时技巧，而是总参数丛结构的内蕴属性。
+这证明了纤维精细分解的**范畴论封闭性**——拆分不是临时技巧，而是总参数丛结构的内蕴属性。
 
 ---
 
@@ -641,21 +641,21 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 ### 11.1 全栈交叉验证总结
 
-6 个独立数值实验完成了精细纤维拆分方法论的**全栈交叉验证**：
+6 个独立数值实验完成了纤维精细分解方法论的**全栈交叉验证**：
 
 | 验证维度 | 系统 | 核心结果 | 偏差 | 状态 |
 |:--------|:----|:--------|:---:|:---:|
 | ℓ_corr 不变量 | H + H₂ 势垒 | 最佳 ℓ_corr = 0.5 Å | 2.6% | ✅ |
-| 谱键刚性 (P1) | H₂ 键 | H-H 谱键刚性 R_bond = 6.925 eV | — (新定理) | ✅ |
-| π* 消除经验参数 | H + H₂ → H₂ + H | 谱键刚性替代 β₀, α₀ | 3 参数消除 | ✅ |
+| 谱键刚度 (P1) | H₂ 键 | H-H 谱键刚度 R_bond = 6.925 eV | — (新定理) | ✅ |
+| π* 消除经验参数 | H + H₂ → H₂ + H | 谱键刚度替代 β₀, α₀ | 3 参数消除 | ✅ |
 | μ* 闭式消除 (P0) | BCS 超导 (Al, Sn, Pb) | μ*_spec = αL/(1+αL) | Al 0.9%, Sn 0.6%, Pb 0.5% | ✅ |
 | ℓ_corr 不变量 | (H₂O)₂ 文献拟合 | ℓ_corr = 0.514 Å | 2.9% | ✅ |
 | ℓ_corr 不变量 | (H₂O)₂ 碎片轨道 | ℓ_corr = 0.441 ± 0.020 Å | 11.8% | ✅ |
 | 拓扑不变量 | Fulvene CI | Berry 相位 = π, C=1 | 0.00% | ✅ |
-| 隐式通道 | CH₃CHO SGL | Δφ = -50.8°, Δθ = 24.8° | 确认 | ✅ |
+| 隐谱通道 | CH₃CHO SGL | Δφ = -50.8°, Δθ = 24.8° | 确认 | ✅ |
 | 全链谱流推导 | CH₃CHO n→π* | 跃迁能 3.958 eV (谱框架内部) | 3.5% | ✅ |
 
-**核心结论**：谱框架的核心预言 $\ell_{\text{corr}} = 0.5$ Å 在跨系统、跨方法的独立验证中表现出高度一致性（2.6–11.8% 偏差）。拓扑不变量（Berry 相位、陈数）以数值精度精确复现。CH₃CHO 谱流推导（Paper XXIII）在谱框架内部完成 n→π* 跃迁能的纯第一性原理计算（3.958 eV，3.5%）。谱键刚性（Paper XXIV-B）成功消除 Hückel 经验参数，$\mu^*$ 闭式公式（Paper XXIV-A）将 Bun(Corr) 闭式定理首次推广到凝聚态超导。
+**核心结论**：谱框架的核心预言 $\ell_{\text{corr}} = 0.5$ Å 在跨系统、跨方法的独立验证中表现出高度一致性（2.6–11.8% 偏差）。拓扑不变量（Berry 相位、陈数）以数值精度精确复现。CH₃CHO 谱流推导（Paper XXIII）在谱框架内部完成 n→π* 跃迁能的纯第一性原理计算（3.958 eV，3.5%）。谱键刚度（Paper XXIV-B）成功消除 Hückel 经验参数，$\mu^*$ 闭式公式（Paper XXIV-A）将 Bun(Corr) 闭式定理首次推广到凝聚态超导。
 
 ### 11.2 核心矩阵
 
@@ -679,7 +679,7 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 ### 11.4 与常规计算方案的对比
 
-| 维度 | 常规 QChem | 精细纤维拆分 |
+| 维度 | 常规 QChem | 纤维精细分解 |
 |:----|:----------|:-----------|
 | 计算方法 | 单一 Hamiltonian 对角化 | **7 层独立谱流** |
 | 层间耦合 | 隐含在同一基底中 | **自然变换 + 谱交织条件** |
@@ -696,22 +696,22 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 - Paper XXI：《Grothendieck 纤维化综合》——总参数丛和纤维化模板，本方法论的范畴论基础
 - Paper V：《力的谱动力学》——谱流方程 $dA/dt = [G,A]$，所有 Cartan 提升的统一载体
 - Paper I：《分形谱化理论》——Rec、Sp 范畴、D 函子、静默层级，本方法论的原始起点
-- Paper XXIII：《CH₃CHO n→π* 谱流第一性原理推导》——精细纤维拆分的 7 层全链应用实例
+- Paper XXIII：《CH₃CHO n→π* 谱流第一性原理推导》——纤维精细分解的 7 层全链应用实例
 - **Paper XXIV-A：《Bun(Corr) 闭式定理在连续谱中的推广——强耦合超导 μ* 的谱框架第一性原理推导》**——从离散谱到连续谱，消除经验 μ* 参数
-- **Paper XXIV-B：《H+H₂ 谱键刚性第一性原理推导——3-中心 Hückel 模型的经验参数消除》**——谱键刚性定理替代 Hückel 模型
+- **Paper XXIV-B：《H+H₂ 谱键刚度第一性原理推导——3-中心 Hückel 模型的经验参数消除》**——谱键刚度定理替代 Hückel 模型
 
 ### 数值实验脚本
 
 | 脚本 | 功能 | 核心结果 |
 |:----|:----|:--------|
-| `src/spectral_hh2_first_principles.py` | **P1 (Paper XXIV-B): H+H₂ 谱键刚性** | **谱键刚性 6.925 eV, gap closure 18.2%** |
+| `src/spectral_hh2_first_principles.py` | **P1 (Paper XXIV-B): H+H₂ 谱键刚度** | **谱键刚度 6.925 eV, gap closure 18.2%** |
 | `src/spectral_bcs_strong_coupling_closed.py` | **P0 (Paper XXIV-A): 超导 μ* 闭式公式** | **μ*_spec: Al 0.9%, Sn 0.6%, Pb 0.5%** |
 | `src/spectral_hh2_reaction.py` | P1 (v2.0): H+H₂ IRC 谱分析 | ℓ_corr=0.5 Å, 势垒 0.436 eV (2.6%) |
 | `src/spectral_fulvene_ci.py` | P2: Fulvene CI 拓扑分析 | Berry π, C=1, 0.00% |
 | `src/spectral_ch3cho_sgl.py` | P3: CH₃CHO SGL 扫描 | Δφ=-50.8°, Δθ=24.8° |
-| `src/spectral_ch3cho_full_fibration.py` | CH₃CHO 全链纤维拆分 | 6.66 eV (3-轨道模型限制) |
+| `src/spectral_ch3cho_full_fibration.py` | CH₃CHO 全链纤维分解 | 6.66 eV (3-轨道模型限制) |
 | `src/spectral_ch3cho_pyscf.py` | CH₃CHO ab initio (PySCF，外部参考) | TDHF/6-31G\*: 3.985 eV (2.8%) |
-| `src/spectral_water_dimer_full_fibration.py` | 水二聚体全链纤维拆分 | ℓ_corr=0.514 Å (2.9%) |
+| `src/spectral_water_dimer_full_fibration.py` | 水二聚体全链纤维分解 | ℓ_corr=0.514 Å (2.9%) |
 | `src/spectral_water_dimer_jct.py` | 水二聚体 J_CT(R) 模型 | ℓ_corr=0.441±0.020 Å |
 
 ---
