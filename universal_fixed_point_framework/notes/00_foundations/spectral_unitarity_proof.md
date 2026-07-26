@@ -42,7 +42,7 @@ $$2\operatorname{Im} T_{\text{spec}} = T_{\text{spec}}^\dagger T_{\text{spec}}.$
 
 #### 第四步：谱完备性关系
 
-谱光学定理的中间态求和在 $\mathbf{Spec}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
+谱光学定理的中间态求和在 $\mathbf{Sp}$ 范畴中具有谱完备性解释。谱中间态集合 $\{|n\rangle\}$ 构成谱 Hilbert 空间 $\mathcal{H}_{\text{spec}}$ 的一组广义正交基。定义谱单位算符的分解：
 
 $$\boxed{I_{\text{spec}} = \sum_n \int d\Pi_n^{\text{spec}} \; |n\rangle \langle n|},$$
 
@@ -75,7 +75,7 @@ $$
 
 ## 注释
 
-本证明仅依赖于谱 LSZ 公式、谱 Cutkosky 规则和谱光学定理，这些结果已分别在 §9.1–§9.3 中建立并数值验证。因此定理 9.1 是谱 QFT 形式化的逻辑终点——它表明在 $\mathbf{Spec}$ 范畴中，S 矩阵幺正性不是额外假设而是谱关联函数结构的必然推论。
+本证明仅依赖于谱 LSZ 公式、谱 Cutkosky 规则和谱光学定理，这些结果已分别在 §9.1–§9.3 中建立并数值验证。因此定理 9.1 是谱 QFT 形式化的逻辑终点——它表明在 $\mathbf{Sp}$ 范畴中，S 矩阵幺正性不是额外假设而是谱关联函数结构的必然推论。
 
 ---
 

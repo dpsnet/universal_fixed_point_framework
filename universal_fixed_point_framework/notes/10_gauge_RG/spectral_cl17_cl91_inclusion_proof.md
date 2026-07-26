@@ -33,7 +33,7 @@
 **2.1.2 谱截断的维数压缩**
 
 - Riemann 流形 $M^{1+7}$ 的 Laplace 谱 $\sigma(\Delta_M)$ 是无限维的
-- 经 $D^{\text{id}} \circ \iota$ 进入 $\mathbf{Spec}$ 后截断为 $8\times8$ 矩阵代数（$k_{\max}=8$）
+- 经 $D^{\text{id}} \circ \iota$ 进入 $\mathbf{Sp}$ 后截断为 $8\times8$ 矩阵代数（$k_{\max}=8$）
 - 无限谱 $\to$ 有限截断必然丢失信息
 
 **形式化策略**：使用 Weyl 渐近式证明 $\sigma(\Delta_M)$ 无限，并与 $k_{\max}=8$ 的有限截断对比。需要 Lean 中 Weyl 渐近的形式化（依赖 Mathlib 的谱几何模块）。
@@ -78,7 +78,7 @@
 
 在 $\mathbf{Rec}_{\text{id}}$ 上构造一个保持更多几何信息的谱函子：
 
-$$D^{(10)}: \mathbf{Rec}_{\text{id}} \to \mathbf{Spec}_{16}$$
+$$D^{(10)}: \mathbf{Rec}_{\text{id}} \to \mathbf{Sp}_{16}$$
 
 使得：
 1. $D^{(10)}(M^{1+7})$ 的纤维代数是 $\mathrm{Cl}(9,1)$
@@ -87,7 +87,7 @@ $$D^{(10)}: \mathbf{Rec}_{\text{id}} \to \mathbf{Spec}_{16}$$
 
 ### 3.2 构造要素
 
-- $\mathbf{Spec}_{16}$：$\mathbf{Spec}$ 的推广，允许 $16\times16$ 矩阵代数
+- $\mathbf{Sp}_{16}$：$\mathbf{Sp}$ 的推广，允许 $16\times16$ 矩阵代数
 - $D^{(10)}$ 的谱算子 $A$ 包含 $\mathbf{Rec}_{\text{id}}$ 更多信息（如 Ricci 曲率 + Weyl 曲率）
 - 截断条件从 $k_{\max}=8$ 改为 $k_{\max}=16$，对应 $\mathrm{Cl}(9,1)$ 的表示维数
 
@@ -112,7 +112,7 @@ $$D^{(10)}: \mathbf{Rec}_{\text{id}} \to \mathbf{Spec}_{16}$$
 | Mathlib | Riemann 流形的 Laplace 谱 | ❌ 需扩展 |
 | Mathlib | Weyl 渐近式 | ❌ 需扩展 |
 | 新构造 | $D^{(10)}$ 函子定义 | ❌ 待建 |
-| 新构造 | $\mathbf{Spec}_{16}$ 范畴 | ❌ 待建 |
+| 新构造 | $\mathbf{Sp}_{16}$ 范畴 | ❌ 待建 |
 | Clifford.lean | $\mathrm{Cl}(9,1)$ 分类 | ⚠️ 部分（仅分类陈述，无表示构造）|
 
 ---

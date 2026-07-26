@@ -2,12 +2,12 @@
 
 ## 核心思想
 
-将标准 QFT 的拉格朗日量密度逐项翻译为 $\mathbf{Spec}$ 范畴中的谱算符表达式。翻译原则：
+将标准 QFT 的拉格朗日量密度逐项翻译为 $\mathbf{Sp}$ 范畴中的谱算符表达式。翻译原则：
 
-1. **场 → 谱对象**：每个量子场 $\phi(x)$ 映射为 $\mathbf{Spec}$ 对象 $\Phi(\lambda)$，其中 $\lambda \in \sigma(A)$ 是谱参数。
+1. **场 → 谱对象**：每个量子场 $\phi(x)$ 映射为 $\mathbf{Sp}$ 对象 $\Phi(\lambda)$，其中 $\lambda \in \sigma(A)$ 是谱参数。
 2. **导数 → 谱流生成元**：$\partial_\mu$ 映射为谱对易子 $[A_{F,\mu}, \cdot]$。
 3. **相互作用 → 态射复合**：顶点 $\phi^3, \phi^4$ 映射为谱对象的态射复合。
-4. **拉格朗日量 → 谱迹**：$\int d^4x$ 映射为 $\operatorname{Tr}_{\mathbf{Spec}}$。
+4. **拉格朗日量 → 谱迹**：$\int d^4x$ 映射为 $\operatorname{Tr}_{\mathbf{Sp}}$。
 
 ---
 
@@ -18,7 +18,7 @@ $$\mathcal{L}_{\text{KG}} = \frac{1}{2}(\partial_\mu \phi)(\partial^\mu \phi) - 
 
 ### 谱翻译
 
-**定义 1**（谱标量场）。设 $E_\phi = (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi))$ 为 $\mathbf{Spec}$ 对象，其中：
+**定义 1**（谱标量场）。设 $E_\phi = (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi))$ 为 $\mathbf{Sp}$ 对象，其中：
 - $\mathcal{H}_\phi = L^2(\mathbb{R}^{1,3})$（标准 QFT 的 Fock 空间）
 - $A_\phi = -\square + m^2$（Klein-Gordon 算子）
 - $\sigma(A_\phi) = \{p^2 + m^2 : p \in \mathbb{R}^{1,3}\}$
@@ -87,7 +87,7 @@ $$\mathcal{L}_{\text{Higgs}} = |D_\mu H|^2 - V(H), \quad V(H) = -\mu^2|H|^2 + \l
 
 ### 谱翻译
 
-**定义 7**（谱 Higgs 场）。设 $E_H = (\mathcal{H}_H, A_H, \sigma(A_H))$，$H$ 为 $\mathbf{Spec}$ 对象。
+**定义 7**（谱 Higgs 场）。设 $E_H = (\mathcal{H}_H, A_H, \sigma(A_H))$，$H$ 为 $\mathbf{Sp}$ 对象。
 谱协变导数：$\nabla_\mu H = [A_{A,\mu}, H] + igH$。
 
 $$\mathcal{L}_{\text{Higgs}}^{\text{spec}} = \operatorname{Tr}_{\mathcal{H}_H}\left( |[A_A, H]|^2 \right) + \mu^2 \operatorname{Tr}(H^\dagger H) - \lambda \operatorname{Tr}((H^\dagger H)^2).$$

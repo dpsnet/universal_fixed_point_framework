@@ -12,7 +12,7 @@
 
 ### 1.1 核心目标
 
-将 Lorentz 变换从独立时空几何公理**降级**为 $\mathbf{Spec}$ 范畴中的谱动力学定理，并整理为 **Paper XVI** 正式论文。
+将 Lorentz 变换从独立时空几何公理**降级**为 $\mathbf{Sp}$ 范畴中的谱动力学定理，并整理为 **Paper XVI** 正式论文。
 
 **降级路径**：
 ```
@@ -56,7 +56,7 @@ Track B（实证产出）：  从谱边界扰动 → LIV 系数推导 → 与 Fe
 |:--------|:----:|------|
 | Paper V 谱流方程 | ✅ Phase 21 | $\frac{d}{dt}A_t = \sum_i g_i [A_{F,i}, A_t]$ |
 | Paper VIII $\partial\mathbf{Rec}_D$ | ✅ Phase 26 | 黑洞视界谱边界、$T_H$、$S_{BH}$ |
-| Paper XI A7 公理 | ✅ Phase 44 | Lorentz 群在 $\mathbf{Spec}$ 上的作用 |
+| Paper XI A7 公理 | ✅ Phase 44 | Lorentz 群在 $\mathbf{Sp}$ 上的作用 |
 | 三层结构 $\mathbf{Rec}_D \subset \mathbf{Rec}_{\text{diss}} \subset \mathbf{Rec}$ | ✅ Phase 18 | 对称破缺链 |
 | 现有 Lorentz 公理笔记 | ✅ 已有 | `spectral_lorentz_axiom.md` |
 
@@ -88,7 +88,7 @@ Track B（实证产出）：  从谱边界扰动 → LIV 系数推导 → 与 Fe
 
 **主定理 6**（光锥 = $\partial\mathbf{Rec}_D$，`causality.md` 定理 4.2）。类光运动对应 $\Delta\lambda_{\min} = 0$。
 
-**主定理 7**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构，`symmetry_breaking.md` 定理 2.3）。$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$。
+**主定理 7**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构，`symmetry_breaking.md` 定理 2.3）。$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3)$。
 
 **主定理 8**（三层破缺生成三类对称，`symmetry_breaking.md` 命题 3.2）。$\mathbf{Rec} \to \mathbf{Rec}_{\text{diss}} \to \mathbf{Rec}_D$ 生成 Diff → 规范 → Lorentz。
 
@@ -108,7 +108,7 @@ Track B（实证产出）：  从谱边界扰动 → LIV 系数推导 → 与 Fe
 
 **原始 A7 公理**（Paper XI）：QFT 场 $\Phi(\lambda)$ 在 Lorentz 变换下协变 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$。
 
-**降级后 A7 定理**（`symmetry_breaking.md` 命题 6.3）：A7 由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
+**降级后 A7 定理**（`symmetry_breaking.md` 命题 6.3）：A7 由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
 
 降级模式与 Paper VII（熵增定理）、Paper VIII（Hawking 公式）一致：**公理 → 谱定理**。
 

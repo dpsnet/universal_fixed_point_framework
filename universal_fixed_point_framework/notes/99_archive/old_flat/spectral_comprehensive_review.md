@@ -48,7 +48,7 @@ Higgs VEV $v \approx 246$ GeV 由电弱对称性破缺的谱条件 $m_W = g_2 v/
 
 三个规范耦合 $g_1, g_2, g_3$ 不由实验输入，而是从 Cl(1,7) 代数约束的谱间隙推导（Paper XI 附录 C 及 `notes/spectral_alpha_derivation.md`）：
 
-- 谱对应自然等价 $M \cong L$ 给出 $\lambda_i = e^{-\mu_i}$
+- 谱对应自然同构 $M \cong L$ 给出 $\lambda_i = e^{-\mu_i}$
 - 电磁谱算子 $A_{\text{EM}}$ 的最低非平凡谱间隙 $\Delta\lambda_{\min}^{(\text{EM})} \approx 0.0229$（$\dim=32$ 截断）
 - GUT 归一化 $C_{\text{GUT}} = 3/5$ + 从 $M_{\text{GUT}}$ 到 $M_Z$ 的 RGE 跑动给出 $\alpha^{-1}(M_Z) \approx 128.0$（实验 127.95，偏差 < 0.1%）
 - 三个耦合的谱间隙比例由 Cl(1,7) 根系权重决定（Paper XI §C.5 表）

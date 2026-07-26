@@ -2,21 +2,21 @@
 
 ## 核心命题
 
-波函数坍缩不是物理过程，而是 $\mathbf{Rec} \to \mathbf{Spec}$ **谱去递归函子** $D$ 在测量构型下的**自然涌现**。Born 规则 $p_i = |\langle\lambda_i|\psi\rangle|^2$ 对应轨道函子 $O$ 的**谱权重**。
+波函数坍缩不是物理过程，而是 $\mathbf{Rec} \to \mathbf{Sp}$ **谱化函子** $D$ 在测量构型下的**自然涌现**。Born 规则 $p_i = |\langle\lambda_i|\psi\rangle|^2$ 对应轨道函子 $O$ 的**谱权重**。
 
 ---
 
 ## 0. 谱测量公理
 
-谱动力学在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架下为量子测量建立四条严格公理。
+谱动力学在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立四条严格公理。
 
 ---
 
-**公理 M1（谱投影公理）**。在 $\mathbf{Spec}$ 范畴中，每个测量过程对应一个投影态射族 $\{P_i: E \to E\}_{i \in I}$，满足：
+**公理 M1（谱投影公理）**。在 $\mathbf{Sp}$ 范畴中，每个测量过程对应一个投影态射族 $\{P_i: E \to E\}_{i \in I}$，满足：
 
 - (i) $P_i \circ P_i = P_i$（幂等性）
 - (ii) $P_i \circ P_j = 0$ 当 $i \neq j$（正交性）
-- (iii) $\bigcirc_{i \in I} P_i = \mathrm{id}_E$（完备性，$\bigcirc$ 为 $\mathbf{Spec}$ 中的余乘积）
+- (iii) $\bigcirc_{i \in I} P_i = \mathrm{id}_E$（完备性，$\bigcirc$ 为 $\mathbf{Sp}$ 中的余乘积）
 
 其中 $E = (\mathcal{H}, A_M, \sigma(A_M))$ 是测量构型谱对象。投影 $P_i$ 对应 $A_M$ 的谱分解：
 $$A_M = \sum_i \lambda_i P_i, \quad \lambda_i \in \sigma(A_M).$$
@@ -35,7 +35,7 @@ $$A_\infty = \lim_{t\to\infty} A_t = \sum_i p_i P_i, \quad p_i = \frac{\|P_i\psi
 
 **公理 M3（Born 规则公理）**。测量结果为本征值 $\lambda_i$ 的概率由轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$ 的谱权重给出：
 $$p_i = \frac{\omega_E(P_i)}{\sum_{j \in I} \omega_E(P_j)} = |\langle \lambda_i | \psi \rangle|^2,$$
-其中 $\omega_E(P_i) = \operatorname{Tr}(P_i \rho P_i)$ 是投影 $P_i$ 在轨道函子下的谱权重。Born 概率在谱去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 下保持：
+其中 $\omega_E(P_i) = \operatorname{Tr}(P_i \rho P_i)$ 是投影 $P_i$ 在轨道函子下的谱权重。Born 概率在谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 下保持：
 $$p_i(R_{\text{mes}}) = p_i(D(R_{\text{mes}})),$$
 即测量概率是函子不变量。
 
@@ -52,7 +52,7 @@ $$w(\lambda_i) = \frac{\operatorname{Tr}(P_i [A_{\text{int}}, \rho] P_i)}{\sum_j
 - **随机性** = M4 分支放大（初始涨落的谱放大，非概率公设）
 - **Born 规则** = M3 函子不变量（从轨道函子结构导出，非独立假设）
 
-三者统一于 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架，无需引入额外物理机制。
+三者统一于 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架，无需引入额外物理机制。
 
 ---
 
@@ -156,7 +156,7 @@ $$p_i = \frac{\omega(P_i)}{\sum_j \omega(P_j)} = \frac{\|P_i\psi\|^2}{\sum_j\|P_
 
 其中 $\omega(P_i) = \text{Tr}(P_i \rho P_i)$ 是轨道函子的谱权重。
 
-**证明**。轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$ 将递归系统 $R$ 映射到其轨道集 $\{A_t : t \in \mathbb{R}\}$。在测量递归系统 $R_{\text{mes}}$ 中，轨道的不变测度由 $\rho = |\psi\rangle\langle\psi|$ 的谱分解导出。$P_i$ 的测度权重正是 $\|P_i\psi\|^2$。由公理 M3，此权重在谱去递归函子 $D$ 下保持为函子不变量。□
+**证明**。轨道函子 $O: \mathbf{Rec} \to \mathbf{Set}$ 将递归系统 $R$ 映射到其轨道集 $\{A_t : t \in \mathbb{R}\}$。在测量递归系统 $R_{\text{mes}}$ 中，轨道的不变测度由 $\rho = |\psi\rangle\langle\psi|$ 的谱分解导出。$P_i$ 的测度权重正是 $\|P_i\psi\|^2$。由公理 M3，此权重在谱化函子 $D$ 下保持为函子不变量。□
 
 ---
 
@@ -164,7 +164,7 @@ $$p_i = \frac{\omega(P_i)}{\sum_j \omega(P_j)} = \frac{\|P_i\psi\|^2}{\sum_j\|P_
 
 | 标准量子力学 | 谱动力学对应 |
 |------------|------------|
-| 态矢量 $|\psi\rangle$ | Spec 对象 $A = |\psi\rangle\langle\psi|$ |
+| 态矢量 $|\psi\rangle$ | Sp 对象 $A = |\psi\rangle\langle\psi|$ |
 | 可观测量 $\hat{O}$ | 谱生成元 $A_{\text{obs}}$ |
 | 本征值 $\lambda_i$ | 谱 $\sigma(A_{\text{obs}})$ |
 | 投影 $P_i$ | 子对象 $P_i : A_{\text{obs}} \to A_{\text{obs}}$ |
@@ -204,7 +204,7 @@ $$\boxed{R_{\text{qc}} = \frac{\Delta\lambda_{\text{sys}}}{\kappa} \gtrsim 5 \;\
 
 ### 5.3 无测量佯谬
 
-Wigner 朋友类佯谬在谱框架中自然消解——两个观察者对应两个不同的递归系统 $R_1, R_2$，它们的谱流收敛到不同但相容的不动点。谱去递归函子 $D$ 确保两套描述在 $\mathbf{Spec}$ 中相容。
+Wigner 朋友类佯谬在谱框架中自然消解——两个观察者对应两个不同的递归系统 $R_1, R_2$，它们的谱流收敛到不同但相容的不动点。谱化函子 $D$ 确保两套描述在 $\mathbf{Sp}$ 中相容。
 
 ---
 

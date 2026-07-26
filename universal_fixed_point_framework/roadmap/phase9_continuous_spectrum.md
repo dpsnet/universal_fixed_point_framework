@@ -215,7 +215,7 @@ gamma = 1.0 - eigenvalues[1] / eigenvalues[0] if len(eigenvalues) > 1 else 1.0
   $$D_{\text{KY}} = \frac{-\sum_i p_i \log p_i}{-\sum_i p_i \log c_i};$$
 - 数值验证：OSC 情形下 $D_{\text{KY}}$ 与 Hausdorff 维数 $d_H$ 一致（相对差异 $<3\%$）。
 
-**结论**：奇异连续谱维数与 Lyapunov 指数可通过熵-李雅普诺夫比定量关联，为分形谱去递归框架提供了动力系统解释。
+**结论**：奇异连续谱维数与 Lyapunov 指数可通过熵-李雅普诺夫比定量关联，为分形谱化框架提供了动力系统解释。
 
 ---
 

@@ -16,8 +16,8 @@
 
 | 编号 | 原文档描述 | 当前状态 | 代码证据 |
 |---|---|---|---|
-| M1 | Rec/Spec 基础范畴构造、D 函子基础性质、伴随关系 D⊣R 在自伴子范畴内严格证明 | ✅ 已确认 | `decursion_functor.py`, `rec_category.py`, `spec_category.py` |
-| M2 | 谱对应 λ=e^{-μ} 升级为自然等价 M≅L，离散正规压缩算子下推导完整 | ✅ 已确认 | `decursion_functor.py`, `paper1 §3` |
+| M1 | Rec/Sp 基础范畴构造、D 函子基础性质、伴随关系 D⊣R 在自伴子范畴内严格证明 | ✅ 已确认 | `decursion_functor.py`, `rec_category.py`, `spec_category.py` |
+| M2 | 谱对应 λ=e^{-μ} 升级为自然同构 M≅L，离散正规压缩算子下推导完整 | ✅ 已确认 | `decursion_functor.py`, `paper1 §3` |
 | M3 | 分形 RKHS 三层收敛率（强/弱分离）证明完备，数值验证匹配 Cantor 集 | ✅ 已确认 | `math_open_problems_advanced.py`, 定理 NS-1~NS-3 |
 | M4 | Lebesgue 谱分解、η_R 测度同构、LACI 指数定义在自伴算子框架内无矛盾 | ✅ 已确认 | `lebesgue_spectrum_demo.py`, `attractor_distance.py` |
 | M5 | 轨道函子、Clifford 旋量模、弦图演算属于合规范畴论构造 | ✅ 已确认 | `orbit_functor.py`, `clifford_spectrum_demo.py` |
@@ -29,7 +29,7 @@
 | MD1 | **核心函子定义域天然残缺**：D 仅定义于 Rec_D，大量主流系统被排除 | ✅ **已解决** | 100% | `d_functor_extension.py` 扩展到 PVM 和连续谱对象；`d_functor_dissipative_extension.py` 扩展到耗散混沌系统、非正规算子、无界算子（含定义域管理、泛函演算）；`d_functor_expansion_if.py` 扩展到扩张 IFS；`decursion_functor.py` 支持 CurvedRecObject |
 | MD2a | SC-L/TE-G 仅 Markov IFS 严格，一般光滑动力系统无通用证明 | ✅ **已解决** | 100% | `sc_l_te_g_strict_proof.py` 完成严格证明框架，含 10 测试 |
 | MD2b | 非分离 IFS 收敛下界仅证阶匹配，无显式最优常数 | ✅ **已解决** | 100% | `ns_lb_constant_optimization.py` 变分优化；`ns_lb_strict_proof.py` 完成显式最优常数 c_opt(ρ) = -log(max_i c_i)·(1-ρ) 的严格证明框架，含 Frostman 引理证明、对偶问题求解、最优性证明 |
-| MD2c | Feng-Wang 热力学仅数值原型，未证明维数凹性、热力学极限 | ✅ **已解决** | 100% | `feng_wang_concavity.py` 完成热力学极限存在性严格证明（ThermodynamicLimit 类）；包含自由能凸性验证、次可加性验证、Fekete 引理应用、大偏差原理；数值验证：自由能密度收敛性通过 |
+| MD2c | IFS 热力学仅数值原型，未证明维数凹性、热力学极限 | ✅ **已解决** | 100% | `feng_wang_concavity.py` 完成热力学极限存在性严格证明（ThermodynamicLimit 类）；包含自由能凸性验证、次可加性验证、Fekete 引理应用、大偏差原理；数值验证：自由能密度收敛性通过 |
 | MD3 | 谱静默逻辑修正后仍存在定义缺陷 | ✅ **已解决** | 100% | `spectral_silence_axiomatization.py` 建立了 A1-A4 公理体系和 S1-S4 判据的独立性/完备性证明框架；S3 区分度通过增强版 LACI（综合最小间隙、间隙熵、间隙比值谱、密度变化率）提升到 3.93；自适应阈值策略根据点密度动态调整，正确分类不同谱类型 |
 | MD4 | 纤维丛简化过度：联络曲率强制设为0 | ✅ **已解决** | 100% | `nonzero_curvature_connection.py` 构造了非零曲率联络（Levi-Civita + 规范场）；`fiber_bundle_decursion.py` 实现了 CurvedRecObject 和 CurvedDecursionFunctor；`decursion_functor.py` 主框架已整合曲率信息；Kerr 纤维丛测试通过 |
 | MD5 | EFT 逆重构非唯一性 | ✅ **已解决** | 100% | `eft_equivalence_framework.py` 完备静默条件下唯一性定理 + 非唯一性边界分析 |
@@ -84,7 +84,7 @@
 1. **D 函子定义域扩展**（MD1）：`d_functor_dissipative_extension.py` 扩展到耗散混沌系统、非正规算子、无界算子（含定义域管理、泛函演算），15 测试全部通过
 2. **SC-L/TE-G 严格证明**（MD2a）：`sc_l_te_g_strict_proof.py` 完成严格证明框架，含 10 测试
 3. **NS-LB 显式最优常数**（MD2b）：`ns_lb_strict_proof.py` 完成显式最优常数 c_opt(ρ) = -log(max_i c_i)·(1-ρ) 的严格证明框架，含 Frostman 引理证明、对偶问题求解、最优性证明
-4. **Feng-Wang 热力学极限**（MD2c）：`feng_wang_concavity.py` 完成热力学极限存在性严格证明（ThermodynamicLimit 类），包含自由能凸性、次可加性、Fekete 引理、大偏差原理
+4. **IFS 热力学极限**（MD2c）：`feng_wang_concavity.py` 完成热力学极限存在性严格证明（ThermodynamicLimit 类），包含自由能凸性、次可加性、Fekete 引理、大偏差原理
 5. **谱静默公理化定义**（MD3）：`spectral_silence_axiomatization.py` 建立了 A1-A4 公理体系和 S1-S4 判据的独立性/完备性证明框架；S3 区分度提升到 3.93；自适应阈值策略正确分类不同谱类型
 6. **纤维丛非零曲率联络**（MD4）：`nonzero_curvature_connection.py` + `fiber_bundle_decursion.py` + `decursion_functor.py` 整合完成，Kerr 纤维丛测试通过
 7. **EFT 逆重构非唯一性**（MD5）：完备静默条件下唯一性定理 + 非唯一性边界分析
@@ -114,7 +114,7 @@
 |---|---|---|---|
 | D 函子定义域扩展到耗散混沌系统 | MD1 | 耗散系统 PVM 构造 + 测试 | 🔴 高 |
 | NS-LB 显式最优常数严格证明 | MD2b | 变分原理严格证明 + 论文 | 🔴 高 |
-| Feng-Wang 热力学极限存在性证明 | MD2c | 热力学极限证明框架 | 🟡 中 |
+| IFS 热力学极限存在性证明 | MD2c | 热力学极限证明框架 | 🟡 中 |
 | 纤维丛非零曲率联络 | MD4 | 非零曲率纤维丛构造 | 🟡 中 |
 | 谱静默测度论公理化定义 | MD3 | 公理化定义 + 验证 | 🟡 中 |
 

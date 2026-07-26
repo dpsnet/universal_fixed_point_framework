@@ -42,7 +42,7 @@ $$\mathcal{T}: \mathbf{Temp} \longrightarrow \mathbf{RG}$$
 
 ### 2.2 $\mathbf{RG}$ 上的谱结构
 
-在 $\mathbf{Spec}$ 范畴中，每个 $\mu \in \text{Ob}(\mathbf{RG})$ 对应一个谱生成元 $A(\mu) = e^{-\beta H(\mu)}$，其谱流方程为（Paper V §2，Paper VIII §3）：
+在 $\mathbf{Sp}$ 范畴中，每个 $\mu \in \text{Ob}(\mathbf{RG})$ 对应一个谱生成元 $A(\mu) = e^{-\beta H(\mu)}$，其谱流方程为（Paper V §2，Paper VIII §3）：
 
 $$\frac{d}{d\ln\mu} A(\mu) = [G_{\text{RG}}(\mu), A(\mu)]$$
 
@@ -85,7 +85,7 @@ $$\partial\mathbf{Rec}_D^{\mathbf{RG}} = \{\mu \in \text{Ob}(\mathbf{RG}) \mid \
 
 $$A(T) = e^{-H/T}$$
 
-其中 $H$ 是系统的 Hamiltonian（在 $\mathbf{Spec}$ 中提升为有界算子）。此处假设 $T$ 足够高使得 $e^{-H/T}$ 的迹收敛。
+其中 $H$ 是系统的 Hamiltonian（在 $\mathbf{Sp}$ 中提升为有界算子）。此处假设 $T$ 足够高使得 $e^{-H/T}$ 的迹收敛。
 
 **定理 3.1**（热谱流方程）。$A(T)$ 满足热谱流方程：
 
@@ -187,7 +187,7 @@ $$\partial\mathbf{Rec}_D^{(\mathbf{Temp})} = \{T \in \text{Ob}(\mathbf{Temp}) \m
 
 $$\Delta\lambda_{\min}(T) = \Delta\lambda_{\min}(\mathcal{T}(T))$$
 
-其中左边的 $\Delta\lambda_{\min}(T)$ 是对 $A(T)$ 在 $\mathbf{Spec}$ 中计算的谱间隙，右边的 $\Delta\lambda_{\min}(\mu)$ 是对 $A(\mu)$ 在 $\mathbf{Spec}$ 中计算的谱间隙。
+其中左边的 $\Delta\lambda_{\min}(T)$ 是对 $A(T)$ 在 $\mathbf{Sp}$ 中计算的谱间隙，右边的 $\Delta\lambda_{\min}(\mu)$ 是对 $A(\mu)$ 在 $\mathbf{Sp}$ 中计算的谱间隙。
 
 **物理含义**：温度 $T$ 和 RG 标度 $\mu = \mathcal{T}(T)$ 在谱空间中产生相同的"远离 $\partial\mathbf{Rec}_D$ 的距离"。温度降低到 $T_c$ 以下和标度升高到 $\Lambda_{\text{QCD}}$ 以上，在谱语言中描述了同样的现象——谱间隙打开。
 
@@ -246,7 +246,7 @@ $$\mathcal{T}_*(G_{\text{th}}(T)) = \frac{1}{\gamma} \cdot G_{\text{RG}}(\mathca
 
 其中 $\mathcal{T}_*$ 是 $\mathcal{T}$ 在谱流生成元上的推进（pushforward），$\gamma = -\alpha$。
 
-**证明**。由热谱流方程 $dA/d\ln T = [G_{\text{th}}, A] + \mathcal{D}_{\text{th}}$ 和 RG 谱流方程 $dA/d\ln\mu = [G_{\text{RG}}, A]$，在 $\mathcal{T}$ 下，$A$ 作为谱对象在 $\mathbf{Spec}$ 中必须满足：
+**证明**。由热谱流方程 $dA/d\ln T = [G_{\text{th}}, A] + \mathcal{D}_{\text{th}}$ 和 RG 谱流方程 $dA/d\ln\mu = [G_{\text{RG}}, A]$，在 $\mathcal{T}$ 下，$A$ 作为谱对象在 $\mathbf{Sp}$ 中必须满足：
 
 $$\frac{dA}{d\ln T} \Big|_{T\text{-space}} = \frac{d\ln\mu}{d\ln T} \cdot \frac{dA}{d\ln\mu} \Big|_{\mu = \mathcal{T}(T)}$$
 
@@ -318,7 +318,7 @@ $$\|G_{\text{RG}}(\Lambda_{\text{QCD}})\| = \frac{1}{2} \cdot \frac{\Delta\lambd
 
 其中 $\Delta\lambda_3 = 0.1725$ 是 SU(3) 谱间隙，$\Delta\lambda_{\min}^{(0)} = 0.122$ 是谱框架基本谱间隙，均来自 Cl(1,7) 代数（Paper XX §4）。
 
-**证明要点**。$G_{\text{RG}}$ 在 $\mathbf{Spec}$ 中的范数由其在 $A(\mu)$ 上的作用决定。在 $\partial\mathbf{Rec}_D$ 处，谱间隙关闭，$G_{\text{RG}}$ 的范数与 $\beta$-函数的"谱翻译"成正比。SU(3) 规范群通过 $\Delta\lambda_3$ 进入，而基本谱单元 $\Delta\lambda_{\min}^{(0)}$ 提供了归一化。
+**证明要点**。$G_{\text{RG}}$ 在 $\mathbf{Sp}$ 中的范数由其在 $A(\mu)$ 上的作用决定。在 $\partial\mathbf{Rec}_D$ 处，谱间隙关闭，$G_{\text{RG}}$ 的范数与 $\beta$-函数的"谱翻译"成正比。SU(3) 规范群通过 $\Delta\lambda_3$ 进入，而基本谱单元 $\Delta\lambda_{\min}^{(0)}$ 提供了归一化。
 
 **谱推导**。在 $\mu = \Lambda_{\text{QCD}}$ 附近，谱间隙的临界标度行为（Paper XVI §11.4.4）：
 
@@ -399,13 +399,13 @@ $$a_{\text{full}} = \sqrt{\frac{C_2}{N_c}} \cdot \frac{\Delta\lambda_{\min}^{(0)
 
 ### 5.4 校正：行列式条件的替代映射
 
-此处揭示：**定理 5.1 中的谱流生成元范数表达式假设了谱流生成元在 $\mathbf{Spec}$ 中的简单线性作用，但实际作用包含非线性修正**。$\mathcal{T}$ 的函子性本身不依赖于这些表达式的精度——它只要求一旦 $G_{\text{RG}}$ 和 $G_{\text{th}}$ 在谱框架中被正确计算，a 就唯一确定。
+此处揭示：**定理 5.1 中的谱流生成元范数表达式假设了谱流生成元在 $\mathbf{Sp}$ 中的简单线性作用，但实际作用包含非线性修正**。$\mathcal{T}$ 的函子性本身不依赖于这些表达式的精度——它只要求一旦 $G_{\text{RG}}$ 和 $G_{\text{th}}$ 在谱框架中被正确计算，a 就唯一确定。
 
 **正确的计算路径**：
 
 不再通过生成元范数间接计算 a，而是使用更基础的**谱行列式连续性条件**：
 
-在 $\mathbf{Spec}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界的定义等价于谱生成元行列式的零点：
+在 $\mathbf{Sp}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界的定义等价于谱生成元行列式的零点：
 
 $$\det(A(\mu)) = 0 \iff \mu \in \partial\mathbf{Rec}_D^{\mathbf{RG}}$$
 $$\det(A(T)) = 0 \iff T \in \partial\mathbf{Rec}_D^{(\mathbf{Temp})}$$
@@ -543,18 +543,18 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 
 1. **$a$ 不能来自范畴结构本身**。任何声称从范畴论公理单独导出 $a$ 的推导都一定引入了隐含的物理假设。
 
-2. **$a$ 的确定需要 $\mathbf{Spec}$ 中的度量结构**。$\mathbf{Temp}$ 和 $\mathbf{RG}$ 作为范畴是同构的，但它们在 $\mathbf{Spec}$ 中的"嵌入"不同——谱生成元 $A(T)$ 和 $A(\mu)$ 的具体算子形式不同。这个差异编码了 $a$ 的数值。
+2. **$a$ 的确定需要 $\mathbf{Sp}$ 中的度量结构**。$\mathbf{Temp}$ 和 $\mathbf{RG}$ 作为范畴是同构的，但它们在 $\mathbf{Sp}$ 中的"嵌入"不同——谱生成元 $A(T)$ 和 $A(\mu)$ 的具体算子形式不同。这个差异编码了 $a$ 的数值。
 
 3. **明确所需的额外结构**：
-   - $\mathbf{Spec}$ 中的迹度量：$\text{Tr}(A(T))$ 提供温度空间中的"体积"信息
-   - $\mathbf{Spec}$ 中的谱熵：$s_{\text{spec}}(T) = -\text{Tr}(A(T)\ln A(T))$ 提供可穿越自由度的计数
+   - $\mathbf{Sp}$ 中的迹度量：$\text{Tr}(A(T))$ 提供温度空间中的"体积"信息
+   - $\mathbf{Sp}$ 中的谱熵：$s_{\text{spec}}(T) = -\text{Tr}(A(T)\ln A(T))$ 提供可穿越自由度的计数
    - 两者都在 $\partial\mathbf{Rec}_D$ 边界处有临界行为
 
 4. **路径 D9（谱织约束）的重新评价**：
    - D9 使用 $d_A \cdot C_2/(4\pi N_c) \cdot \Delta\lambda_{\min}/\Delta\lambda_3$ 得到 $a_0 = 0.669$
-   - 这实际上是在计算 $\mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 处的"有效模式密度"
-   - 范畴形式化后看，D9 并非"选择了正确的外部输入"，而是**最直接地触及了 $\mathbf{Spec}$ 的度量结构**
-   - $m_s$ 修正 $+0.068$ 反映的是有限温度下部分激发自由度的计数——这正是 $\mathbf{Spec}$ 迹度量的温度修正
+   - 这实际上是在计算 $\mathbf{Sp}$ 在 $\partial\mathbf{Rec}_D$ 处的"有效模式密度"
+   - 范畴形式化后看，D9 并非"选择了正确的外部输入"，而是**最直接地触及了 $\mathbf{Sp}$ 的度量结构**
+   - $m_s$ 修正 $+0.068$ 反映的是有限温度下部分激发自由度的计数——这正是 $\mathbf{Sp}$ 迹度量的温度修正
 
 ---
 
@@ -571,7 +571,7 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 | $\partial\mathbf{Rec}_D^{(\mathbf{Temp})}$ | 临界温度 $T_c$ 的范畴定位 | ✅ 严格 |
 | $\mathcal{T}$ 构造 | $\mu \leftrightarrow T$ 的结构保持映射 | ✅ 严格 |
 | $\gamma = 2$ | 谱间隙的"二次标度"关系 | ✅ 谱框架内证明 |
-| $a$ 的确定 | 需要 $\mathbf{Spec}$ 度量结构 | **❌ 超出范畴论范围** |
+| $a$ 的确定 | 需要 $\mathbf{Sp}$ 度量结构 | **❌ 超出范畴论范围** |
 
 ### 7.2 $\mathcal{T}$ 的谱框架价值
 
@@ -600,9 +600,9 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 
 ### 7.3 $a$ 的下一步推导路径
 
-范畴形式化告诉我们：**$a$ 的正确推导必须且只能在 $\mathbf{Spec}$ 的度量结构层面完成**。具体而言：
+范畴形式化告诉我们：**$a$ 的正确推导必须且只能在 $\mathbf{Sp}$ 的度量结构层面完成**。具体而言：
 
-> **后续进展**：以下三条路径已在谱丛黎曼函子框架（[`spectral_T_category_riemann.md`](spectral_T_category_riemann.md)）中正式定义并全部完成：
+> **后续进展**：以下三条路径已在谱纤维丛上的 Riemann 函子框架（[`spectral_T_category_riemann.md`](spectral_T_category_riemann.md)）中正式定义并全部完成：
 >
 > - **路径 A** ✅：D9 谱织约束完备化——引入夸克有效自由度 $d_q = 14/3$，$a$ 从 0.669 闭合至 0.729（偏差 0.1%）。笔记：[`spectral_weave_quark_completion.md`](../01_qcd_higgs/spectral_weave_quark_completion.md)
 > - **路径 B** ✅ v0.2：谱丛截面显式构造——$\sigma_\Delta^{(T)}$、$\sigma_\Delta^{(\mu)}$ 显式形式、谱密度截面 $\sigma_\rho$ 扩展、分布论处理。笔记：[`spectral_bundle_sections.md`](spectral_bundle_sections.md)
@@ -623,7 +623,7 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 **推论 A.1**（筛选条件）。任何声称"从谱框架第一性原理导出 $a$"的推导必须满足以下可检验条件：
 1. 产生的函子 $\mathcal{T}$ 具有 $\gamma = 2$
 2. 产生的 $\mathcal{T}$ 保持谱流生成元结构（定理 4.2）
-3. $a$ 的数值来自 $\mathbf{Spec}$ 的度量结构而非范畴结构
+3. $a$ 的数值来自 $\mathbf{Sp}$ 的度量结构而非范畴结构
 
 不符合上述任意一条的推导都引入了外部输入。
 
@@ -648,13 +648,13 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 
 ## 附录 C：与 UFPF 整体架构的关系
 
-本笔记构建的 $\mathbf{Temp}$ 范畴和函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 隶属于 Temp/RG 纤维范畴体系——该体系是 $\mathbf{Rec}/\mathbf{Spec}$ 框架上方的纤维范畴扩展，**不是** $\mathbf{Rec}$ 的子范畴。
+本笔记构建的 $\mathbf{Temp}$ 范畴和函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 隶属于 Temp/RG 纤维范畴体系——该体系是 $\mathbf{Rec}/\mathbf{Sp}$ 框架上方的纤维范畴扩展，**不是** $\mathbf{Rec}$ 的子范畴。
 
 完整架构分析见：[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)
 
 关键定位：
-- **层 V**（纤维范畴层）：$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$（本笔记及系列笔记）
-- **层 IV**（谱范畴层）：$\mathbf{Spec}$（Paper I）
+- **层 V**（纤维范畴层）：$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$（本笔记及系列笔记）
+- **层 IV**（谱范畴层）：$\mathbf{Sp}$（Paper I）
 - **层 III**（递归系统层）：$\mathbf{Rec}$（Paper I）
 - **层 II**（静态嵌入层）：$\mathbf{Rec}_{\text{id}}$（Paper XIX）
 - **层 I**（随机嵌入层）：$\Sigma$-$\mathbf{Rec}$（Paper XIX）

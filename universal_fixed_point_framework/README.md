@@ -24,9 +24,9 @@
 
 ## ENGLISH / 英文概要
 
-**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics under a single strict 4-category $\mathbf{Spec}$. All Standard Model parameters are determined from first principles—**29 independent predictions + 30 zero-param validations, zero fitting parameters, Fisher combined $p \approx 0$**.
+**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics under a single strict 4-category $\mathbf{Sp}$. All Standard Model parameters are determined from first principles—**29 independent predictions + 30 zero-param validations, zero fitting parameters, Fisher combined $p \approx 0$**.
 
-**Core Mechanism**: The $\mathbf{Spec}$ 4-category silence hierarchy ($S_3 = e^{-3}$, $S_4 = e^{-d_H}$) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3 = S_3S_4:S_4:1$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
+**Core Mechanism**: The $\mathbf{Sp}$ 4-category silence hierarchy ($S_3 = e^{-3}$, $S_4 = e^{-d_H}$) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3 = S_3S_4:S_4:1$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
 
 **Key Results**:
 | Quantity | Prediction | Experiment | Deviation |
@@ -44,13 +44,13 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ---
 
-本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱去递归理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
+本目录是基于 [《Clifford值分形RKHS构造》讨论文档](../docs/关于《Clifford值分形RKHS构造》的讨论.md) 规划的新研究路线图。核心目标是从「标准模型质量拟合」回归「通用分形谱化理论」，并通过范畴论与不动点公理彻底剥离具象迭代构造。
 
 ## 一、核心定位
 
-- **理论本体**：分形谱去递归理论 = 不动点泛函方程 + $\text{Cat}_H(\mathcal{Cl})$ 范畴 + 三条不变内核
+- **理论本体**：分形谱化理论 = 不动点泛函方程 + $\text{Cat}_H(\mathcal{Cl})$ 范畴 + 三条不变内核
   1. 分形压缩 ↔ 算子谱指数对应：$\lambda_i = e^{-\mu_i}$
-  2. 所有递归系统可通过算子半群实现去递归
+  2. 所有递归系统可通过算子半群实现谱化
   3. 以 Clifford 值分形 RKHS 为泛函基底
 - **标准模型质量预测**：只是低能规范对称下的一个算例，不是理论核心。
 - **过拟合新解**：不是参数冗余，而是多层递归迭代被困在局部吸引子；根治方案是抽象到全域不动点。
@@ -63,7 +63,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 | 论文 | 版本 | 定位 | 状态 |
 |:-----|:----:|:-----|:----:|
-| **Paper I**：分形谱去递归理论 | **v2.35** | 纯数学理论 + Phase 41 Λ + Phase 42 R⁴ | ✅ |
+| **Paper I**：分形谱化理论 | **v2.35** | 纯数学理论 + Phase 41 Λ + Phase 42 R⁴ | ✅ |
 | **Paper II**：物理应用与实验验证 | **v2.22** | 物理应用（SM/BSM/暗物质）+ 零参数框架引用 | ✅ |
 | **Paper III**：谱分类完备性定理 | v1.1 | 三层谱分类 + Lean 形式化 | ✅ |
 | **Paper IV**：Stretched Horizon → D-brane | v1.1 | 弦论案例专论 | ✅ |
@@ -81,8 +81,8 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | **Paper XVI**：Lorentz 变换的谱动力学 | **v1.1** | 相对论谱动力学 + 八类临界现象统一函子 | ✅ |
 | **Paper XVII**：从严格 4-范畴零参数预测全部粒子物理可观测量 | **v1.8** | **29 项零参数预测，Fisher p≈0 + 电荷量子化谱定理** | ✅ |
 | **Paper XVIII**：从谱第一原理推导牛顿力学 | **v1.1** | 谱惯性质量、F=ma、逆平方律、弱等效原理的第一性推导 | ✅ |
-| **Paper XIX**：Rec/Spec 范畴扩展 | **v1.0** | 静态拓扑与随机系统的范畴论嵌入 + 四层静默深化 | ✅ |
-| **Paper XX**：谱间隙第一性推导 | **v1.0** | 从 Rec/Spec 经 SU(2) Casimir 与 Cl(1,7) 到引力谱间隙 Δλ_min | ✅ |
+| **Paper XIX**：Rec/Sp 范畴扩展 | **v1.0** | 静态拓扑与随机系统的范畴论嵌入 + 四层静默深化 | ✅ |
+| **Paper XX**：谱间隙第一性推导 | **v1.0** | 从 Rec/Sp 经 SU(2) Casimir 与 Cl(1,7) 到引力谱间隙 Δλ_min | ✅ |
 | **Paper XXI**：Grothendieck 纤维化综合 | **v0.1** | 总参数丛 + 6个纤维化实例 + 物理截面实例化 | ✅ |
 | **Paper XXII**：量子化学精细纤维拆分方法论 | **v0.6** | 7层纤维化 + 全栈交叉验证 + ℓ_corr不变量 | ✅ |
 | **Paper XXIII**：CH₃CHO n→π* 谱流第一性原理推导 | **v0.3** | 谱流方程 + 7层全链推导 (3.958 eV, 3.5%) | ✅ |
@@ -148,7 +148,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ### 零参数突破：核心数值
 
-从 $\mathbf{Spec}$ 4-范畴静默层级 $S_3 = e^{-3}$, $S_4 = e^{-d_H}$ 到 IFS 收缩因子 $\mathbf{c} = (0.0033, 0.0666, 0.9998)$，所有参数零输入预测：
+从 $\mathbf{Sp}$ 4-范畴静默层级 $S_3 = e^{-3}$, $S_4 = e^{-d_H}$ 到 IFS 收缩因子 $\mathbf{c} = (0.0033, 0.0666, 0.9998)$，所有参数零输入预测：
 
 | 类别 | 参数 | 谱预测 | 实验 | 偏差 |
 |:-----|:----|:------:|:----:|:----:|
@@ -208,10 +208,10 @@ universal_fixed_point_framework/
 │   └── three_layer_axiomatic_system.md  # 三层公理体系草案
 ├── src/                            # 核心框架代码（已填充）
 │   ├── rec_category.py             # Rec 范畴定义
-│   ├── spec_category.py            # Spec 范畴定义
-│   ├── decursion_functor.py        # 谱去递归化函子 D
+│   ├── spec_category.py            # Sp 范畴定义
+│   ├── decursion_functor.py        # 谱化函子 D
 │   ├── fixed_point_solver.py       # 不动点求解器
-│   ├── spectral_correspondence.py  # λ_i = e^{-μ_i} 自然等价
+│   ├── spectral_correspondence.py  # λ_i = e^{-μ_i} 自然同构
 │   ├── orbit_functor.py            # 规范群轨道函子 O
 │   ├── attractor_distance.py       # LACI 局部吸引子捕获指数
 │   ├── overfitting_diagnosis.py    # 过拟合诊断报告
@@ -298,8 +298,8 @@ universal_fixed_point_framework/
 ## 四、研究阶段（历史）
 
 ### Phase 1：元公理层形式化
-- 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$
-- 定义谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$
+- 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$
+- 定义谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$
 - 证明 $D$ 是忠实函子
 - 研究伴随函子 $D \dashv R$ 的存在性
 
@@ -331,13 +331,13 @@ universal_fixed_point_framework/
 ## 六、当前进度（历史）
 
 - **P0 理论严格化**：已完成。`phase1_meta_axioms.md`、`phase2_structural_theorems.md`、`phase4_semantics_over_fitting.md` 中的待解决问题已逐一严格化，给出定理与证明。
-- **P1 核心代码补全**：已完成。`src/` 中已实现 Rec/Spec 范畴、$D$ 函子、伴随函子 $D \dashv R$（含 `right_adjoint_on_morphism`、`unit`、`counit`、`verify_triangle_identities`，三角恒等式与自然性已验证）、不动点求解器、谱自然等价、轨道函子、LACI 诊断等核心模块，以及 RKHS 核收敛性数值演示与非正规 Koopman $A_R$ 正性验证。
+- **P1 核心代码补全**：已完成。`src/` 中已实现 Rec/Sp 范畴、$D$ 函子、伴随函子 $D \dashv R$（含 `right_adjoint_on_morphism`、`unit`、`counit`、`verify_triangle_identities`，三角恒等式与自然性已验证）、不动点求解器、谱自然同构、轨道函子、LACI 诊断等核心模块，以及 RKHS 核收敛性数值演示与非正规 Koopman $A_R$ 正性验证。
 - **P2 下游插件深化**：进行中。已完成 SM 物理完整性扩展、NTK 真实谱对接、弦论散射振幅对接、引力 Schwarzschild/Kerr 真实度规对接（Kerr 积分器扩展至逆行与偏心率 e=0.3）、BSM 实验约束接口对接（热遗迹密度冻结、LHC 对产生、直接探测 SI 截面等精确截面工具已加入），并新增 LQG、AdS/CFT、TQFT、NCG、因果集、渐近安全、扭量七个下游插件；后续可转入 P5 理论升级。
 - **P5 深层次问题清单与理论升级**：✅ **已完成**：伴随函子 $D \dashv R$ 离散原型、分形 RKHS 显式构造、$A_R$ 正性与闭性一般证明、轨道函子 $O$ 标准范畴实现（含三个开放问题分析）、连续谱与谱测度理论、RKHS 收敛率上界（强分离 IFS 类 $O(r^N)$、弱分离扰动论上界、完全非分离覆盖熵上界 $O(N^{-(1-d_{\text{frac}}/d_{\text{amb}})})$ + 严格证明框架定理 NS-1~NS-3 + 测度论深化版本 NS-1M~NS-3M + 高维推广）、RG 截断严格化（指数衰减权重与 zeta 函数正则化）、高阶 RG 效应量化（二阶修正 top~1.5%，轻费米子~0.4%）、BSM 热遗迹密度多通道校准（$\Omega h^2 = 0.1200$）、BSM 精确计算工具对接接口（SLHA-like 卡 + micrOMEGAs/MadGraph 接口 + 扫描管线）、全息纠缠熵严格化（RT 公式 + 分形修正 + 谱对应 + 定理 HE-1~HE-4 + bulk 重建）、BSM HL-LHC/FCC-hh 深度对接（Asimov 显著性 + 系统误差；HL-LHC $Z=2.13\sigma$，FCC-hh $Z=14.75\sigma$）、Kerr 非赤道面混沌与 NR 对比（定理 NE-1~NE-3，NR ringdown 误差 2.03%）、复杂 CFT 与全息相变（定理 CFT-1~CFT-3，6 种拓扑相全验证，Hawking-Page 谱间隙跳变 2.83x）、奇异连续谱系统刻画（谱维数谱系 + 谱型分类 + 物理意义 + 谱对应保持谱型）、高维 IFS 收敛率理论（维数相变图 + 高维切换点）
 - **Phase 11 纤维丛接入**：已完成。证明当前 Rec⇄Spec 框架通过轨道函子、遗忘函子、η 自然变换隐式编码完整纤维丛结构（底空间=Rec、纤维=Spec、结构群=轨道权重、联络=η）。SM SU(3) 规范群由轨道权重 w=3 直接决定。
 - **Phase 12 GR+SM 统一谱对应猜想**：✅ **已全部完成**。SM 扇区谱对应 ✅、引力扇区 σ(G)=8πG_Nσ(T) ✅、谱交织条件 [T_GR,A_SM]=0 ✅、Cl(1,7) 统一算子 13 维构造 ✅。全部三个开放问题均已解决：G_N 从谱对应自然导出（8π来自SO(3)对称性），Cl(1,7) C*代数严格构造通过，数值精度达机器极限。详见 phase12_unification_conjecture.md §7 与 gn_emergence_derivation.py。
 - **Phase 14 开放问题推进**：✅ **已全面推进**。详见 `roadmap/phase14_open_problems_advancement.md` 与 Paper I §8.2。
-- **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、Feng-Wang 热力学极限、纯数学三大定理（D-C/HD-D/TE-G-M）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
+- **Phase 15 理论短板推进**：✅ **已完成**。Phase 15A–D 全部完成：D 函子定义域扩展、NS-LB 显式最优常数、IFS 热力学极限、纯数学三大定理（Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）、物理理论短板（Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱）均解决。全仓库 336+ 测试通过，2 个 xfail。详见 `roadmap/phase15_shortboard_advancement.md`。
 - **Phase 16 机器证明形式化**：✅ **已完成**。基于 Lean 4 + mathlib4 的 `formal_proof/UFPFormalization/` 项目，19 个功能模块 + 1 个 DynSys 模块 + 4 个测试模块共 **24 个 Lean 模块，零诊断错误，52 个测试定理**。Phase 16A（范畴基础 9 模块）+ Phase 16B（泛函分析 4 模块）+ Phase 16C-I（遍历论 1 模块）+ Phase 16C-II（IFS 分形 1 模块）+ Phase 16C-III（热力学形式论 1 模块）全部完成，新增 `SpectralEquivalence.lean`、`ICVerification.lean`、`DynSys.lean` 等基础设施模块。14/19 功能模块完全证明（零 `sorry`）。详见 `roadmap/phase16_machine_proof.md`。
 
 ## 七、已完善的深层次问题（历史）
@@ -424,10 +424,10 @@ universal_fixed_point_framework/
 
 | 周次 | 任务 | 交付物 |
 |---|---|---|
-| 第 1 周 | 严格化 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 的定义 | `notes/rec_spec_definitions.md` |
-| 第 1–2 周 | 定义谱去递归化函子 $D$ 并证明其忠实性 | `roadmap/phase1_meta_axioms.md` |
+| 第 1 周 | 严格化 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的定义 | `notes/rec_spec_definitions.md` |
+| 第 1–2 周 | 定义谱化函子 $D$ 并证明其忠实性 | `roadmap/phase1_meta_axioms.md` |
 | 第 2–3 周 | 建立全域不动点方程与 $\text{Cat}_H(\mathcal{Cl})$ 范畴 | `roadmap/phase2_structural_theorems.md` |
-| 第 3–4 周 | 将 $ \lambda_i = e^{-\mu_i}$ 表述为范畴自然等价 | `notes/spectral_correspondence_equivalence.md` |
+| 第 3–4 周 | 将 $ \lambda_i = e^{-\mu_i}$ 表述为范畴自然同构 | `notes/spectral_correspondence_equivalence.md` |
 
 **里程碑 M1**：三层公理体系文档达到可投稿纯数学期刊预印本的水准。
 
@@ -439,7 +439,7 @@ universal_fixed_point_framework/
 
 | 周次 | 任务 | 交付物 |
 |---|---|---|
-| 第 4–5 周 | 实现 $\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 的 Python 原型 | `src/rec_category.py`、`src/spec_category.py`、`src/decursion_functor.py` |
+| 第 4–5 周 | 实现 $\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 的 Python 原型 | `src/rec_category.py`、`src/spec_category.py`、`src/decursion_functor.py` |
 | 第 5–6 周 | 实现全域不动点方程求解器（可插拔迭代算法） | `src/fixed_point_solver.py` |
 | 第 6–7 周 | 将 `sm_mass_complete_v5.py` 重构为标准模型下游插件 | `applications/standard_model/sm_instance.py` |
 | 第 7–8 周 | 将 NTK 实验结果重新包装为接口验证 | `applications/ntk/ntk_instance.py` |
@@ -469,9 +469,9 @@ universal_fixed_point_framework/
 
 | 论文 | 定位 | 文件 | 目标期刊 | 状态 |
 |---|---|---|---|---|
-| Paper I：通用不动点范畴框架 I——分形谱去递归理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.31，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 24 模块 + 52 测试定理 |
+| Paper I：通用不动点范畴框架 I——分形谱化理论 | 纯数学理论 | `paper/paper1_fractal_spectral_derecursion.md` + `paper/paper1_appendix.md` | J. Funct. Anal. / Adv. Math. | ✅ v2.31，含 18 篇参考文献 + 附录 A.1–A.14 + Lean 24 模块 + 52 测试定理 |
 | Paper II：通用不动点范畴框架 II——物理应用与实验验证 | 物理应用 | `paper/paper2_physics_applications.md` | JHEP / PRD | ✅ v2.18，含 34 篇参考文献 + 336+ 测试 |
-| Paper III：通用不动点范畴框架 III——谱去递归函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.1，三层谱分类（定理 4.1-4.3）+ BPS 黑洞数值验证（谱距离 0.00）+ Lean 形式化背书 |
+| Paper III：通用不动点范畴框架 III——谱化函子的谱分类完备性定理 | 谱分类完备性 | `paper/paper3_spectral_classification.md` | 待定 | ✅ v1.1，三层谱分类（定理 4.1-4.3）+ BPS 黑洞数值验证（谱距离 0.00）+ Lean 形式化背书 |
 | Paper IV：通用不动点范畴框架 IV——从 Stretched Horizon 到 D-brane | 弦论案例专论 | `paper/paper4_stretched_d_brane.md` | 待定 | ✅ v1.1，$D$ 函子统一黑洞熵 + AdS/CFT/镜像对称/朗兰兹对偶扩展 + 参数约束 $C(g_s)$ |
 | Paper V：力的谱动力学——从谱分类到力的统一描述 | 概念框架 | `paper/paper5_spectral_dynamics.md` | 待定 | 🔬 v0.3，谱流方程 + 逆平方律几何起源 + $A_{\text{GR}}/A_{\text{SM}}$ 构造 + 4 个数值脚本 |
 
@@ -509,10 +509,10 @@ universal_fixed_point_framework/
 
 | 任务 | 位置 | 状态 |
 |---|---|---|
-| 严格定义 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 的态射复合律 | `notes/rec_spec_definitions.md` | ✅ 已完成 |
-| 证明谱去递归化函子 $D$ 的忠实性 | `roadmap/phase1_meta_axioms.md` | ✅ 已完成（定理 3.4） |
+| 严格定义 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的态射复合律 | `notes/rec_spec_definitions.md` | ✅ 已完成 |
+| 证明谱化函子 $D$ 的忠实性 | `roadmap/phase1_meta_axioms.md` | ✅ 已完成（定理 3.4） |
 | 研究伴随函子 $D \dashv R$ 的存在条件 | `roadmap/phase1_meta_axioms.md` | ✅ 已完成（定理 4.1） |
-| 将 $ \lambda_i = e^{-\mu_i}$ 表述为严格范畴自然等价 | `notes/spectral_correspondence_equivalence.md` | ✅ 已完成 |
+| 将 $ \lambda_i = e^{-\mu_i}$ 表述为严格范畴自然同构 | `notes/spectral_correspondence_equivalence.md` | ✅ 已完成 |
 | 严格化局部吸引子距离度量 | `roadmap/phase4_semantics_over_fitting.md` | ✅ 已完成（定理 2.1、2.2） |
 
 ### P1：核心代码补全（框架可用性）— 已完成
@@ -566,7 +566,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
-| 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+去递归+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
+| 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+谱化+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，$m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$T_c$ 预测 153 MeV 偏差 1.1%，$F_\pi$ 偏差 0.1%） |
 | 2026-07-18 | **零参数突破**：29/29 SM参数全覆盖，15/29严格零参数预测。新增 Phase 44 D1-D6 全部完成。中英文双语首部。Papers X-XIII 全部完稿。 |
 | 2026-07-17 | Phase 36-42 全部完成；数值脚本 46+；Papers I-IX 全部完稿 |
@@ -577,23 +577,23 @@ universal_fixed_point_framework/
 | 2026-07-13 | 新增理论转化（五种转化模式，验证弦论/超弦/M理论/LQG 互相转化可行性） | Phase 13 任务1 |
 | 2026-07-13 | 新增谱静默理论（替代紧致化概念，四个静默判据，三物理实例验证） | Phase 12 |
 | 2026-07-13 | 新增高维 IFS 收敛率理论、奇异连续谱刻画、测度论收敛率证明（NS-1M~NS-3M） | Phase 12 |
-| 2026-07-13 | 论文拆分：Paper I（分形谱去递归理论）+ Paper II（物理应用与实验验证） | Phase 12 |
+| 2026-07-13 | 论文拆分：Paper I（分形谱化理论）+ Paper II（物理应用与实验验证） | Phase 12 |
 | 2026-07-13 | 推进开放问题：非分离 IFS 下界、Lyapunov-谱维数关联、MadGraph/micrOMEGAs、双星引力波、Kerr/N=4 SYM/暗物质分形谱 | Phase 14 |
 | 2026-07-13 | 更新 Paper I v2.5：将 `spectral_silence.py` 写入 §5.6，将 `theory_transformation.py`/`eft_equivalence_framework.py`/`string_diagram_calculus.py` 系统化为 §7.7 核心方法论 | Phase 14 |
-| 2026-07-13 | 数学严格化深化：新增 Feng-Wang 热力学形式、Leaver 连分数 Kerr QNM 原型、强耦合 N=4 SYM Bethe ansatz；测试数从 47 增至 52 | Phase 14 |
+| 2026-07-13 | 数学严格化深化：新增 IFS 热力学形式、Leaver 连分数 Kerr QNM 原型、强耦合 N=4 SYM Bethe ansatz；测试数从 47 增至 52 | Phase 14 |
 | 2026-07-13 | 数学严格化再深化：新增 Ruelle 精确转移算子、拓扑熵-谱间隙不等式、Leaver 精确系数、N=4 SYM 简化 BES/TBA；测试数从 52 增至 57 | Phase 14 |
-| 2026-07-13 | 数学严格化三阶段深化：新增 Feng-Wang 条件转移算子、Markov IFS 下 TE-G 严格框架、完整 Teukolsky-Leaver 求解器、N=4 SYM 完整 BES/TBA 升级；测试数从 57 增至 61 | Phase 14 |
-| 2026-07-13 | 数学严格化四阶段深化：Feng-Wang 加权条件测度、Koopman TE-G 推广、spheroidal λ 自洽迭代、O(g⁶) BES/TBA；测试数从 61 增至 64 | Phase 14 |
+| 2026-07-13 | 数学严格化三阶段深化：新增 IFS 条件转移算子、Markov IFS 下 TE-G 严格框架、完整 Teukolsky-Leaver 求解器、N=4 SYM 完整 BES/TBA 升级；测试数从 57 增至 61 | Phase 14 |
+| 2026-07-13 | 数学严格化四阶段深化：IFS 加权条件测度、Koopman TE-G 推广、spheroidal λ 自洽迭代、O(g⁶) BES/TBA；测试数从 61 增至 64 | Phase 14 |
 | 2026-07-13 | D 函子代码质量修复：移除 Koopman 强制对称化（Rec 范畴扩展为完整范畴），logm fallback，忠实性测试加强 | Code Quality |
 | 2026-07-13 | Phase 15A 短板推进完成（5/6 项）：高维 IFS 验证、Kerr 校准、FCC-hh 系统误差、谱静默等价链修正、BSM S/T 参数；测试数从 64 增至 100 | Phase 15A |
 | 2026-07-13 | Phase 15B-7 不变量充要性提升：动力学相容性检查 + 完备性缺口分析；测试数从 100 增至 105 | Phase 15B |
-| 2026-07-14 | Phase 15C-1 轨道函子群表示谱理论：等价类定义 3.10 + 同谱判定定理 3.10a + 谱荷定义 3.10b + 表示签名定义 3.10c；Paper I §3.5.1 新增；测试数从 105 增至 121 | Phase 15C |
+| 2026-07-14 | Phase 15C-1 轨道函子群表示谱理论：等价类定义 3.10 + 同谱判定定理 3.10a + 谱权范数定义 3.10b + 表示签名定义 3.10c；Paper I §3.5.1 新增；测试数从 105 增至 121 | Phase 15C |
 | 2026-07-14 | Phase 15C-4 误差预算体系：Rec→Spec→预言→实验 全链路误差传播；Paper II §7.5 新增；`error_budget.py` + `test_error_budget.py`（11 测试） | Phase 15C |
 | 2026-07-14 | Phase 15C-2 Clifford 旋量模结构：原始幂等元 + 左理想性质 + 旋量模谱定理；Paper I §6.4 新增；`clifford_spectrum_demo.py` 扩展 + `test_clifford_spinor_module.py`（9 测试）；测试数从 121 增至 130 | Phase 15C |
 | 2026-07-14 | Phase 15C-3 EFT 逆重构唯一性：完备静默信息定义 + 唯一性定理 + 非唯一性边界 + 双向一致性；Paper I §7.7.5 新增；`eft_equivalence_framework.py` 扩展 + `test_eft_inverse_reconstruction.py`（8 测试）；测试数从 130 增至 138 | Phase 15C |
-| 2026-07-15 | Phase 16 启动：机器证明形式化计划落地——创建 `formal_proof/UFPFormalization/` Lean 4 项目，完成 Rec/Spec 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford 矩阵表示七个等级 A 模块核心代码；配置本地 elan 环境与 ghproxy 代理 | Phase 16 |
+| 2026-07-15 | Phase 16 启动：机器证明形式化计划落地——创建 `formal_proof/UFPFormalization/` Lean 4 项目，完成 Rec/Sp 范畴、D 函子、D⊣R 伴随、谱对应 M≅L、轨道函子、Clifford 矩阵表示七个等级 A 模块核心代码；配置本地 elan 环境与 ghproxy 代理 | Phase 16 |
 | 2026-07-15 | Paper I 升级至 v2.28：附录新增 §A.13「机器证明形式化计划」，总结四等级可行性分级与三阶段实施路线 | Phase 16 |
 | 2026-07-15 | Paper II 升级至 v2.17：§8.4 谱静默与紧致化代数-几何对偶，§5.2 Leaver 复谱投影范畴诠释 | Phase 15D |
-| 2026-07-15 | Phase 15D-10 完成：纯数学三大定理 D-C（Hausdorff 维数凹性）、HD-D（Ledrappier-Young 维数分解）、TE-G-M（拓扑熵-谱间隙不等式）严格证明框架；Paper I §7.10 新增 | Phase 15D |
+| 2026-07-15 | Phase 15D-10 完成：纯数学三大Hausdorff 维数凹性定理（Hausdorff 维数凹性）、Ledrappier-Young 维数分解（Ledrappier-Young 维数分解）、拓扑熵–谱间隙不等式（拓扑熵-谱间隙不等式）严格证明框架；Paper I §7.10 新增 | Phase 15D |
 | 2026-07-15 | Phase 15D-11 完成：物理理论短板解决——Kerr 量子引力精确谱、N=4 SYM 完整 TBA、暗物质间接探测谱；Paper II §8.1/§8.2 更新 | Phase 15D |
 | 2026-07-16 | **Phase 16C 全部完成**（IFS 分形层 + 热力学形式论），新增 4 功能模块 + DynSys + 4 测试模块共 24 模块；Paper III v1.1（谱分类完备性 + 形式化背书 + BPS 数值验证）；Paper IV v1.1（Rec→Spec 三步构造 + 参数约束 + 对偶扩展）；四篇论文作者统一为独立研究人 + 邮箱；版本管理标准化；完整术语说明体系 | Phase 16C / Paper III / IV |

@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-23）
 
-**摘要**：本笔记将弯曲时空谱对象丛 $\mathcal{E} \to M$ 提升为 $\mathrm{Open}(M)$ 上的层（stack），建立广义协变原理与层粘合公理的等价性。核心结构包括：(1) 底空间——Lorentz 流形 $M$ 的开始集范畴 $\mathrm{Open}(M)$；(2) 谱预层 $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$——将每个开集 $U \subseteq M$ 映射为 $U$ 上的谱丛截面；(3) **粘合定理**——谱预层在谱间隙非退化时满足层公理（descent）；(4) **曲率-物质对应函子**——填补 Paper XVI 主定理 21 的缺口：Einstein 方程 $\Leftrightarrow$ 谱曲率约束。v0.2 新增：(5) 具体例子——Minkowski 常量层与 Kerr 奇点截面；(6) 奇点探测——层公理在谱间隙归零处的破坏。
+**摘要**：本笔记将弯曲时空谱对象丛 $\mathcal{E} \to M$ 提升为 $\mathrm{Open}(M)$ 上的层（stack），建立广义协变原理与层粘合公理的等价性。核心结构包括：(1) 底空间——Lorentz 流形 $M$ 的开始集范畴 $\mathrm{Open}(M)$；(2) 谱预层 $\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Sp})$——将每个开集 $U \subseteq M$ 映射为 $U$ 上的谱丛截面；(3) **粘合定理**——谱预层在谱间隙非退化时满足层公理（descent）；(4) **曲率-物质对应函子**——填补 Paper XVI 主定理 21 的缺口：Einstein 方程 $\Leftrightarrow$ 谱曲率约束。v0.2 新增：(5) 具体例子——Minkowski 常量层与 Kerr 奇点截面；(6) 奇点探测——层公理在谱间隙归零处的破坏。
 
 **前置依赖**：[`spectral_lorentz_curved_spacetime.md`](spectral_lorentz_curved_spacetime.md)（弯曲时空谱动力学）、`spectral_Grothendieck_fibration.md`（纤维范畴模板）、`WeaveProductFiber.lean`（乘积基粘合模式）、`KerrFiber.lean`（Kerr 谱间隙）。
 
@@ -29,14 +29,14 @@
 ### 2.1 定义
 
 **定义 2.1**（谱预层）。$\mathcal{E}: \mathrm{Open}(M)^{\mathrm{op}} \to \mathbf{Cat}$ 是 $\mathrm{Open}(M)$ 上的预层（2-函子），定义为：
-$$\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Spec})$$
+$$\mathcal{E}(U) = \mathbf{Bun}(U, \mathbf{Sp})$$
 即 $U$ 上的谱丛 Grothendieck 纤维化总范畴。对包含 $V \subseteq U$，限制函子为沿包含的拉回：
-$$\mathcal{E}(V \subseteq U) = \iota_{V \subseteq U}^*: \mathbf{Bun}(U, \mathbf{Spec}) \to \mathbf{Bun}(V, \mathbf{Spec})$$
+$$\mathcal{E}(V \subseteq U) = \iota_{V \subseteq U}^*: \mathbf{Bun}(U, \mathbf{Sp}) \to \mathbf{Bun}(V, \mathbf{Sp})$$
 
 ### 2.2 纤维
 
-对单点 $p \in M$，$\mathcal{E}(\{p\})$ 是 $p$ 处的谱纤维，等价于 $\mathbf{Spec}$ 在 $p$ 处的实例：
-$$\mathcal{E}(\{p\}) \cong \mathbf{Spec}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$$
+对单点 $p \in M$，$\mathcal{E}(\{p\})$ 是 $p$ 处的谱纤维，等价于 $\mathbf{Sp}$ 在 $p$ 处的实例：
+$$\mathcal{E}(\{p\}) \cong \mathbf{Sp}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$$
 即 $p$ 处切空间上的谱递归系统。
 
 ### 2.3 限制函子性

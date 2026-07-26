@@ -37,7 +37,7 @@ PMNS 矩阵 $U_{\text{PMNS}} = U_e^\dagger U_\nu$ 的非对角性来源于 $U_e$
 
 ### 4.1 谱非对角性机制
 
-在 $\mathbf{Spec}$ 范畴中，$Y_e$ 和 $Y_\nu$ 是同一味道空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符。它们的特征向量满足：
+在 $\mathbf{Sp}$ 范畴中，$Y_e$ 和 $Y_\nu$ 是同一味道空间 $\mathcal{H}_{\text{flavor}}$ 上的谱算符。它们的特征向量满足：
 
 $$U_e = U_\nu \cdot V_{\text{PMNS}}^\dagger$$
 

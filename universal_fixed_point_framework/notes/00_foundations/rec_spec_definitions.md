@@ -1,6 +1,6 @@
-# 递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Spec}$ 的严格定义
+# 递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 的严格定义
 
-> 本文档是「通用不动点范畴框架」奠基期的第一项交付物。目标是为三层公理体系中的元公理 1–2 提供严格、可操作的数学定义，并为后续函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 的建立奠定基础。
+> 本文档是「通用不动点范畴框架」奠基期的第一项交付物。目标是为三层公理体系中的元公理 1–2 提供严格、可操作的数学定义，并为后续函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 的建立奠定基础。
 
 ---
 
@@ -9,9 +9,9 @@
 我们希望构造两个范畴：
 
 1. **递归系统范畴 $\mathbf{Rec}$**：其对象是各种递归/自相似系统（IFS、神经网络训练、重整化群流、拓扑递归等），其态射是这些系统之间的结构保持映射。
-2. **谱范畴 $\mathbf{Spec}$**：其对象是 Hilbert/赋范空间上的线性算子及其谱，其态射是保持谱结构的线性映射。
+2. **谱范畴 $\mathbf{Sp}$**：其对象是 Hilbert/赋范空间上的线性算子及其谱，其态射是保持谱结构的线性映射。
 
-然后建立**谱去递归化函子** $D: \mathbf{Rec} \to \mathbf{Spec}$，将「递归迭代」映射为「算子半群指数演化」，从而实现理论的「去递归」核心范式。
+然后建立**谱化函子** $D: \mathbf{Rec} \to \mathbf{Sp}$，将「递归迭代」映射为「算子半群指数演化」，从而实现理论的「谱化」核心范式。
 
 ---
 
@@ -132,7 +132,7 @@ $$M_{g \circ f} = M_g \cdot M_f \in \mathbb{R}^{n_3 \times n_1}.$$
 
 ---
 
-## 3. 谱范畴 $\mathbf{Spec}$
+## 3. 谱范畴 $\mathbf{Sp}$
 
 ### 3.1 对象
 
@@ -146,11 +146,11 @@ $$E = (\mathcal{H}_E, A_E, \sigma_E),$$
 - $A_E: \mathcal{D}(A_E) \subseteq \mathcal{H}_E \to \mathcal{H}_E$：一个闭稠定正算子，称为谱算子。
 - $\sigma_E \subseteq \mathbb{C}$：$A_E$ 的谱。对正算子，$\sigma_E \subseteq \mathbb{R}_{\ge 0}$。
 
-> **与分形谱去递归理论的关联**：$A_E$ 是算子半群 $e^{-t A_E}$ 的生成元，其离散谱 $ \lambda_i = e^{-\mu_i}$ 对应递归系统的分形谱。
+> **与分形谱化理论的关联**：$A_E$ 是算子半群 $e^{-t A_E}$ 的生成元，其离散谱 $ \lambda_i = e^{-\mu_i}$ 对应递归系统的分形谱。
 
 ### 3.2 态射
 
-设 $E_1 = (\mathcal{H}_1, A_1, \sigma_1)$，$E_2 = (\mathcal{H}_2, A_2, \sigma_2) \in \mathrm{Obj}(\mathbf{Spec})$，一个**态射** $T: E_1 \to E_2$ 是一个有界线性算子
+设 $E_1 = (\mathcal{H}_1, A_1, \sigma_1)$，$E_2 = (\mathcal{H}_2, A_2, \sigma_2) \in \mathrm{Obj}(\mathbf{Sp})$，一个**态射** $T: E_1 \to E_2$ 是一个有界线性算子
 
 $$T: \mathcal{H}_1 \longrightarrow \mathcal{H}_2,$$
 
@@ -182,7 +182,7 @@ $$(U \circ T) A_1 u = U (T A_1 u) = U (A_2 T u) = A_3 U (T u) = A_3 (U \circ T) 
 
 ### 3.4 单位态射
 
-对每个 $E \in \mathrm{Obj}(\mathbf{Spec})$，单位态射
+对每个 $E \in \mathrm{Obj}(\mathbf{Sp})$，单位态射
 
 $$\mathrm{id}_E: E \to E$$
 
@@ -193,11 +193,11 @@ $$\mathrm{id}_E: E \to E$$
 - **结合律**：有界线性算子复合的结合律。
 - **单位律**：$T \circ I_{\mathcal{H}_1} = T = I_{\mathcal{H}_2} \circ T$。
 
-因此 $(\mathbf{Spec}, \circ, \mathrm{id})$ 构成一个范畴。
+因此 $(\mathbf{Sp}, \circ, \mathrm{id})$ 构成一个范畴。
 
 ### 3.6 谱映射的保持性
 
-若 $T: E_1 \to E_2$ 是 $\mathbf{Spec}$ 中的同构（即 $T$ 可逆且 $T^{-1}$ 也满足谱交织条件），则 $A_1$ 与 $A_2$ 是**相似算子**，从而
+若 $T: E_1 \to E_2$ 是 $\mathbf{Sp}$ 中的同构（即 $T$ 可逆且 $T^{-1}$ 也满足谱交织条件），则 $A_1$ 与 $A_2$ 是**相似算子**，从而
 
 $$\sigma_1 = \sigma_2.$$
 
@@ -241,7 +241,7 @@ $$(M_U M_T) A_1 = M_U (M_T A_1) = M_U (A_2 M_T) = (M_U A_2) M_T = (A_3 M_U) M_T 
 2. **单位律**：$M_T I_{n_1} = M_T = I_{n_2} M_T$。
 3. **复合的存在条件**：$U \circ T$ 有定义当且仅当 $T$ 的目标对象与 $U$ 的源对象相等。在离散实现中，对象相等要求两个实例的**Hilbert 空间维数**与**谱算子**均一致（在数值容差内）：
    $$n_2 = n_2', \quad A_{E_2} = A_{E_2'}.$$
-   仅维数相同不足以保证对象相等；不同的谱算子定义不同的 Spec 对象。
+   仅维数相同不足以保证对象相等；不同的谱算子定义不同的 Sp 对象。
 
 ---
 
@@ -249,9 +249,9 @@ $$(M_U M_T) A_1 = M_U (M_T A_1) = M_U (A_2 M_T) = (M_U A_2) M_T = (A_3 M_U) M_T 
 
 我们期望构造函子
 
-$$D: \mathbf{Rec} \longrightarrow \mathbf{Spec},$$
+$$D: \mathbf{Rec} \longrightarrow \mathbf{Sp},$$
 
-使得对任意递归系统 $R$，$D(R)$ 是其「去递归化」后的谱对象。具体地：
+使得对任意递归系统 $R$，$D(R)$ 是其「谱化」后的谱对象。具体地：
 
 - $D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$
 - 对态射 $f: R_1 \to R_2$，$D(f): D(R_1) \to D(R_2)$ 是满足谱交织条件的有界线性算子。
@@ -342,7 +342,7 @@ $$D: \mathbf{Rec} \longrightarrow \mathbf{Spec},$$
 
 **工作假设**：
 
-1. 原型阶段**强制使用强交织条件**：$\mathbf{Spec}$ 中的态射 $T: E_1 \to E_2$ 必须满足
+1. 原型阶段**强制使用强交织条件**：$\mathbf{Sp}$ 中的态射 $T: E_1 \to E_2$ 必须满足
    $$T A_1 = A_2 T$$
    作为矩阵等式（在有限维情形下）。
 
@@ -410,7 +410,7 @@ class SpectralMorphism:
 
 > 注：若 $\mathcal{S}_{R_1}, \mathcal{S}_{R_2}$ 仅为度量空间而非拓扑空间，可退化为双射且双向连续的映射；在离散原型中，同构对应状态空间点之间的一一对应（置换矩阵）。
 
-**$\mathbf{Spec}$ 中的同构**。设 $T: E_1 \to E_2$ 为 $\mathbf{Spec}$ 中的态射。称 $T$ 为**同构**，若 $T: \mathcal{H}_1 \to \mathcal{H}_2$ 是有界可逆线性算子，且其逆 $T^{-1}$ 也满足谱交织条件（即 $T^{-1} A_2 \subseteq A_1 T^{-1}$）。
+**$\mathbf{Sp}$ 中的同构**。设 $T: E_1 \to E_2$ 为 $\mathbf{Sp}$ 中的态射。称 $T$ 为**同构**，若 $T: \mathcal{H}_1 \to \mathcal{H}_2$ 是有界可逆线性算子，且其逆 $T^{-1}$ 也满足谱交织条件（即 $T^{-1} A_2 \subseteq A_1 T^{-1}$）。
 
 > 强标准：若进一步要求 $T$ 为**酉算子**（$T^\ast T = I_{\mathcal{H}_1}$，$T T^\ast = I_{\mathcal{H}_2}$），则 $A_1$ 与 $A_2$ 酉等价，谱完全相同（包括重数）。强标准适用于需要保持 Hilbert 空间几何的情形。
 > 
@@ -424,13 +424,13 @@ class SpectralMorphism:
 
 ## 6. 版本记录
 
-- v0.1（2026-07-12）：初稿，定义 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 的对象、态射、复合与单位，提出待澄清问题。
+- v0.1（2026-07-12）：初稿，定义 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的对象、态射、复合与单位，提出待澄清问题。
 - v0.2（2026-07-12）：严格化同构标准：Rec 同构要求同胚且逆为态射；Spec 同构要求有界可逆且逆满足谱交织，强标准下为酉算子。
 
 ---
 
 ## 7. 相关论文
 
-本文档定义的 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 范畴是以下论文的范畴论基础：
+本文档定义的 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 范畴是以下论文的范畴论基础：
 
-- **Paper X**：`paper/paper10_spectral_quantum.md` — 在 $\mathbf{Spec}$ 范畴中建立了量子测量的 M1-M4 公理系统。其中 M1（谱投影公理）直接使用本文 §3 中 $\mathbf{Spec}$ 对象的投影态射结构；M2（谱流动力学公理）使用本文 §3.2 中态射的谱交织条件。详见 Paper X §2。
+- **Paper X**：`paper/paper10_spectral_quantum.md` — 在 $\mathbf{Sp}$ 范畴中建立了量子测量的 M1-M4 公理系统。其中 M1（谱投影公理）直接使用本文 §3 中 $\mathbf{Sp}$ 对象的投影态射结构；M2（谱流动力学公理）使用本文 §3.2 中态射的谱交织条件。详见 Paper X §2。

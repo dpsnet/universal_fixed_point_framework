@@ -1,6 +1,6 @@
 # Higgs 参数的谱零输入预测
 
-**目标**：从 $\mathbf{Spec}$ 4-范畴的静默层级第一原理推导 $m_H$、$v$、$\lambda_H$。
+**目标**：从 $\mathbf{Sp}$ 4-范畴的静默层级第一原理推导 $m_H$、$v$、$\lambda_H$。
 
 ---
 
@@ -15,7 +15,7 @@
 
 ## 2. 谱框架中的 Higgs
 
-在 $\mathbf{Spec}$ 范畴中，Higgs 对应谱对象 $(\mathcal{H}_H, A_H, \sigma(A_H))$。
+在 $\mathbf{Sp}$ 范畴中，Higgs 对应谱对象 $(\mathcal{H}_H, A_H, \sigma(A_H))$。
 
 **Higgs 势**的谱版本：
 $$V_{\text{spec}}(H) = -\mu^2 \operatorname{Tr}_{\mathcal{H}_H}([A_H, H]^2) + \lambda_H \operatorname{Tr}_{\mathcal{H}_H}([A_H, H]^4)$$
@@ -40,7 +40,7 @@ $$v = M_{\text{Pl}} \cdot \Delta\lambda_{\min}^{(\text{GR})} \cdot \prod_{i=1}^4
 
 $$v = M_{\text{Pl}} \cdot \prod_{i=1}^4 S_i^{(w)}$$
 
-其中 $S_1^{(w)} = \Delta\lambda_{\min}^{(w)} = \Delta\lambda_{\min}^{(\text{GR})} = 0.122$（谱间隙在所有力中相同，来自 $\mathbf{Spec}$ 范畴结构）
+其中 $S_1^{(w)} = \Delta\lambda_{\min}^{(w)} = \Delta\lambda_{\min}^{(\text{GR})} = 0.122$（谱间隙在所有力中相同，来自 $\mathbf{Sp}$ 范畴结构）
 $S_2^{(w)} = e^{-2\pi/\alpha_W}$（态射静默，依赖弱耦合常数）
 $S_3^{(w)} = e^{-3}$（对象静默，与生成数无关）
 $S_4^{(w)} = e^{-d_H}$（辫子静默，分形拓扑）

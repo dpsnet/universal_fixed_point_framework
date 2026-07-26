@@ -58,7 +58,7 @@ $$\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa},$$
 
 ### 理论基础
 
-谱动力学中，Kochen-Specker 语境性等价于 $\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$（Paper X §8.1）。这一表述预言：
+谱动力学中，Kochen-Specker 语境性等价于 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$（Paper X §8.1）。这一表述预言：
 
 - 在特定测量配置下，真值赋值矛盾出现概率高于量子理论标准预测
 - 语境性的强度可由谱间隙 $\Delta\lambda_{\min}$ 定量控制
@@ -69,7 +69,7 @@ $$\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa},$$
 |:----|:---------|:---------|
 | 标准 QM | 存在（Kochen-Specker 定理） | 无特定数值偏离 |
 | 隐变量理论 | 不存在（非语境） | 所有投影可同时赋值 |
-| **谱动力学** | **$\mathbf{Spec} \neq \mathbf{Spec}_{\text{com}}$** | **矛盾概率与谱间隙相关** |
+| **谱动力学** | **$\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$** | **矛盾概率与谱间隙相关** |
 
 ### 实验设计
 

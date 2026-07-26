@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-22）
 
-**摘要**：本笔记将函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 提升为黎曼函子 $\mathcal{T}_{\text{Riem}}$，进而提升为谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$，要求其不仅保持范畴结构，还保持 $\mathbf{Spec}$ 谱丛上的全空间黎曼度量。§1-§9 全面探索三种单分量度量（谱间隙度量 R1、Casimir 度量 R2、对易子迹度量 R3），发现任何单分量度量均无法独立确定 $a$。§10 提出正确的"谱间隙度量"应定义在**谱丛**（spectral bundle）上——以 $\mathbf{Temp}$ 和 $\mathbf{RG}$ 为基、以谱数据为纤维的纤维丛。谱丛全空间度量由基度量、纤维发散部分和纤维有限部分三项构成。联合等距条件构成超定系统，解的存在性要求谱编织有效自由度满足谱织约束，从而唯一确定 $a = T_c/\Lambda_{\text{QCD}} = 0.737$（与格点 QCD 偏差 0.96%）。这修正了 §9 的初步结论，完成了 $\mathcal{T} \to \mathcal{T}_{\text{Riem}} \to \hat{\mathcal{T}}_{\text{Riem}}$ 的三层范畴形式化提升。
+**摘要**：本笔记将函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 提升为黎曼函子 $\mathcal{T}_{\text{Riem}}$，进而提升为谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$，要求其不仅保持范畴结构，还保持 $\mathbf{Sp}$ 谱丛上的全空间黎曼度量。§1-§9 全面探索三种单分量度量（谱间隙度量 R1、Casimir 度量 R2、对易子迹度量 R3），发现任何单分量度量均无法独立确定 $a$。§10 提出正确的"谱间隙度量"应定义在**谱丛**（spectral bundle）上——以 $\mathbf{Temp}$ 和 $\mathbf{RG}$ 为基、以谱数据为纤维的纤维丛。谱丛全空间度量由基度量、纤维发散部分和纤维有限部分三项构成。联合等距条件构成超定系统，解的存在性要求谱粘合有效自由度满足谱织约束，从而唯一确定 $a = T_c/\Lambda_{\text{QCD}} = 0.737$（与格点 QCD 偏差 0.96%）。这修正了 §9 的初步结论，完成了 $\mathcal{T} \to \mathcal{T}_{\text{Riem}} \to \hat{\mathcal{T}}_{\text{Riem}}$ 的三层范畴形式化提升。
 
 ---
 
@@ -10,23 +10,23 @@
 
 [`spectral_T_category.md`](spectral_T_category.md) 的 §7.3 提出了三条 $a$ 的下一步推导路径。路径 C（优先建议）要求将 $\mathcal{T}$ 扩展为黎曼函子 $\mathcal{T}_{\text{Riem}}$，通过谱间隙度量的保持条件唯一确定 $a$。
 
-**问题**：$\mathcal{T}$ 作为范畴函子保证了 $\mathbf{Temp}$ 与 $\mathbf{RG}$ 之间的结构等价（边界保持、谱流保持、$\gamma = 2$），但 $a = T_c/\Lambda_{\text{QCD}}$ 仍然是自由参数。需要额外的结构——$\mathbf{Spec}$ 的黎曼度量——来固定 $a$。
+**问题**：$\mathcal{T}$ 作为范畴函子保证了 $\mathbf{Temp}$ 与 $\mathbf{RG}$ 之间的结构等价（边界保持、谱流保持、$\gamma = 2$），但 $a = T_c/\Lambda_{\text{QCD}}$ 仍然是自由参数。需要额外的结构——$\mathbf{Sp}$ 的黎曼度量——来固定 $a$。
 
-**核心思想**：$\mathbf{Spec}$ 是一个度量范畴（metric-enriched category），其对象之间的"距离"由谱间隙之差定义。$\mathcal{T}$ 作为函子保持范畴结构但不一定保持度量结构。$\mathcal{T}_{\text{Riem}}$ 要求保持度量，从而唯一确定 $a$。
+**核心思想**：$\mathbf{Sp}$ 是一个度量范畴（metric-enriched category），其对象之间的"距离"由谱间隙之差定义。$\mathcal{T}$ 作为函子保持范畴结构但不一定保持度量结构。$\mathcal{T}_{\text{Riem}}$ 要求保持度量，从而唯一确定 $a$。
 
 ---
 
-## 2. $\mathbf{Spec}$ 的度量结构
+## 2. $\mathbf{Sp}$ 的度量结构
 
 ### 2.1 谱间隙度量
 
-**定义 2.1**（谱间隙度量）。在 $\mathbf{Spec}$ 范畴中，定义对象 $A_1, A_2$ 之间的伪度量为：
+**定义 2.1**（谱间隙度量）。在 $\mathbf{Sp}$ 范畴中，定义对象 $A_1, A_2$ 之间的伪度量为：
 
-$$d_{\mathbf{Spec}}(A_1, A_2) = |\Delta\lambda_{\min}(A_1) - \Delta\lambda_{\min}(A_2)|$$
+$$d_{\mathbf{Sp}}(A_1, A_2) = |\Delta\lambda_{\min}(A_1) - \Delta\lambda_{\min}(A_2)|$$
 
 其中 $\Delta\lambda_{\min}(A)$ 是谱生成元 $A$ 的谱间隙。这是一个伪度量（满足对称性和三角不等式，但不一定满足正定性——两个不同的 $A$ 可能有相同的谱间隙）。
 
-**命题 2.1**（伪度量的谱框架合理性）。在 $\mathbf{Spec}$ 中，$\Delta\lambda_{\min}$ 是谱生成元的最重要不变量（它控制 $\partial\mathbf{Rec}_D$ 边界穿越）。两个具有相同 $\Delta\lambda_{\min}$ 的对象在谱流意义下"等距"。$\square$
+**命题 2.1**（伪度量的谱框架合理性）。在 $\mathbf{Sp}$ 中，$\Delta\lambda_{\min}$ 是谱生成元的最重要不变量（它控制 $\partial\mathbf{Rec}_D$ 边界穿越）。两个具有相同 $\Delta\lambda_{\min}$ 的对象在谱流意义下"等距"。$\square$
 
 ### 2.2 参数空间的诱导度量
 
@@ -356,7 +356,7 @@ $\gamma = 2$（来自谱间隙相等）与 Casimir 度量保持（5.5）的冲�
 
 **谱流生成元范数的"裸"表达式（4.4）和（4.5）中的前因子 $C_2/N_c$ 和 $\Delta\lambda_3/\Delta\lambda_{\min}^{(0)}$ 的物理含义需要重新检视。**
 
-在 $\mathbf{Spec}$ 范畴中：
+在 $\mathbf{Sp}$ 范畴中：
 - $G_{\text{th}}$ 的范数来自热统计的 Lie 代数结构 $\mathfrak{so}(1,1)$，通过 $C_2$ 编码
 - $G_{\text{RG}}$ 的范数来自规范群的谱间隙结构，通过 $\Delta\lambda_3/\Delta\lambda_{\min}^{(0)}$ 编码
 
@@ -512,7 +512,7 @@ $$a = \left[ \frac{2}{3} \cdot \frac{0.122^2}{0.1725^2} \cdot \frac{3}{2} \cdot 
 
 此值 $a \approx 1.414 = \sqrt{2}$ 仍偏高。
 
-### 8.3 最终闭合：谱编织前因子
+### 8.3 最终闭合：谱粘合前因子
 
 对易子迹度量 R3 需要精确的谱函数前因子。完整的谱密度函数（包含 $S_2$ 层态射静默的完整 DS 顶点减除）给出对易子迹度量的精确形式为：
 
@@ -544,11 +544,11 @@ $$a^2 = \frac{T_c^2}{\Lambda_{\text{QCD}}^2} = \frac{N_c}{4d_A} = \frac{3}{4 \cd
 
 $$a = \sqrt{0.09375} \approx 0.306$$
 
-此值偏低。说明对易子迹度量边界条件的正确形式应使用**谱编织跃迁自由度**而非静态 $d_A$。
+此值偏低。说明对易子迹度量边界条件的正确形式应使用**谱粘合跃迁自由度**而非静态 $d_A$。
 
-### 8.4 谱编织自由度修正
+### 8.4 谱粘合自由度修正
 
-在 $\partial\mathbf{Rec}_D$ 边界处，只有参与谱编织的**有效跃迁自由度**而非全部静态自由度贡献于对易子迹度量。有效跃迁自由度由 spectral_Tc_derivation.md §6.1 的谱织约束给出：
+在 $\partial\mathbf{Rec}_D$ 边界处，只有参与谱粘合的**有效跃迁自由度**而非全部静态自由度贡献于对易子迹度量。有效跃迁自由度由 spectral_Tc_derivation.md §6.1 的谱织约束给出：
 
 $$d_{\text{eff}} = d_A \cdot C_2 = 8 \cdot 2 = 16$$
 
@@ -564,9 +564,9 @@ $$a^2 = \frac{T_c^2}{\Lambda_{\text{QCD}}^2} = \frac{3}{16 \cdot 4} = \frac{3}{6
 
 $$a = \sqrt{0.046875} \approx 0.216$$
 
-仍然偏低。但用谱编织约束的原始形式 $a_0 = (d_A C_2/(4\pi N_c))^{1/3}(\Delta\lambda_{\min}/\Delta\lambda_3)^{1/3} = 0.669$，则与三重度量相交自洽。
+仍然偏低。但用谱粘合约束的原始形式 $a_0 = (d_A C_2/(4\pi N_c))^{1/3}(\Delta\lambda_{\min}/\Delta\lambda_3)^{1/3} = 0.669$，则与三重度量相交自洽。
 
-**实际上，对易子迹度量 R3 应使用谱编织约束的 $a$ 值作为输入而非独立求解。** 三重相交给出的是自洽性检验而非独立确定。
+**实际上，对易子迹度量 R3 应使用谱粘合约束的 $a$ 值作为输入而非独立求解。** 三重相交给出的是自洽性检验而非独立确定。
 
 ### 8.5 三重自洽性验证
 
@@ -602,13 +602,13 @@ $$\frac{g_T}{g_\mu} = \frac{3}{16} \cdot \frac{2^{5/4}}{2^{13/4}} \cdot \frac{1}
 
 ### 10.2 谱丛的定义
 
-**定义 10.1**（热谱丛 $B_T$）。热谱丛 $B_T$ 是以 $\mathbf{Temp}$ 为基、以 $\mathbf{Spec}$ 的谱数据为纤维的纤维丛：
+**定义 10.1**（热谱丛 $B_T$）。热谱丛 $B_T$ 是以 $\mathbf{Temp}$ 为基、以 $\mathbf{Sp}$ 的谱数据为纤维的纤维丛：
 
 $$B_T = \{(T, \{\lambda_i\}) \mid T \in \text{Ob}(\mathbf{Temp}), \{\lambda_i\} \in \text{Spec}(A(T))\}$$
 
 其中 $\text{Spec}(A(T))$ 是谱生成元 $A(T) = e^{-H/T}$ 的本征值集合。
 
-**定义 10.2**（RG 谱丛 $B_\mu$）。RG 谱丛 $B_\mu$ 是以 $\mathbf{RG}$ 为基、以 $\mathbf{Spec}$ 的谱数据为纤维的纤维丛：
+**定义 10.2**（RG 谱丛 $B_\mu$）。RG 谱丛 $B_\mu$ 是以 $\mathbf{RG}$ 为基、以 $\mathbf{Sp}$ 的谱数据为纤维的纤维丛：
 
 $$B_\mu = \{(\mu, \{\lambda_i\}) \mid \mu \in \text{Ob}(\mathbf{RG}), \{\lambda_i\} \in \text{Spec}(A(\mu))\}$$
 
@@ -649,7 +649,7 @@ $$g_{\text{base}}^{(\mu)} = \|G_{\text{RG}}(\mu)\|^2 \cdot d\mu^2 \tag{10.2}$$
 $$g_{\text{fiber}}^{(T)} = \rho_T(\Delta\lambda_{\min}(T))^2 \cdot d(\Delta\lambda_{\min})^2 \tag{10.3}$$
 $$g_{\text{fiber}}^{(\mu)} = \rho_\mu(\Delta\lambda_{\min}(\mu))^2 \cdot d(\Delta\lambda_{\min})^2 \tag{10.4}$$
 
-其中 $\rho_T(\lambda)$ 是 $\mathbf{Spec}$ 在温度 $T$ 下的谱密度函数，$\rho_\mu(\lambda)$ 是 $\mathbf{Spec}$ 在 RG 标度 $\mu$ 下的谱密度函数。
+其中 $\rho_T(\lambda)$ 是 $\mathbf{Sp}$ 在温度 $T$ 下的谱密度函数，$\rho_\mu(\lambda)$ 是 $\mathbf{Sp}$ 在 RG 标度 $\mu$ 下的谱密度函数。
 
 **物理动机**：谱间隙处的谱密度 $\rho_T(\Delta\lambda_{\min})$ 度量了"有多少态分布在谱间隙附近"。两个谱生成元即使有相同的谱间隙值，如果间隙附近的态密度不同，它们的"谱几何"就不同。纤维度量编码了这一差异。
 
@@ -686,7 +686,7 @@ $$g_{\text{fiber}}^{(\mu)} \to \frac{d_A^2}{\pi^2 \Lambda_{\text{QCD}}^2} \cdot 
 
 ### 10.5 谱丛等距条件
 
-**定义 10.5**（谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$）。$\hat{\mathcal{T}}_{\text{Riem}}: B_T \to B_\mu$ 是满足谱丛等距条件的谱丛映射：
+**定义 10.5**（谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$）。$\hat{\mathcal{T}}_{\text{Riem}}: B_T \to B_\mu$ 是满足谱丛等距条件的谱丛映射：
 
 $$\hat{\mathcal{T}}_{\text{Riem}}^* (g_{\text{base}}^{(\mu)} + g_{\text{fiber}}^{(\mu)}) = g_{\text{base}}^{(T)} + g_{\text{fiber}}^{(T)} \tag{10.9}$$
 
@@ -749,7 +749,7 @@ $\square$
 
 ### 10.8 $F_{S_2}$ 修正因子的谱框架确定
 
-**定理 10.5**（$S_2$ 修正因子的谱表达式）。纤维等距条件中的 $S_2$ 层态射静默修正因子由谱编织约束决定：
+**定理 10.5**（$S_2$ 修正因子的谱表达式）。纤维等距条件中的 $S_2$ 层态射静默修正因子由谱粘合约束决定：
 
 $$F_{S_2} = \frac{4\pi N_c}{d_A C_2} \cdot \frac{\Delta\lambda_3}{\Delta\lambda_{\min}^{(0)}} \cdot a_{\text{D9}}^3 \tag{10.15}$$
 
@@ -811,7 +811,7 @@ $$a = \sqrt{\frac{N_c}{d_A}} \cdot \sqrt{\frac{d_A/(12\pi)}{N_c/(12\pi)}} = 1$$
 
 这给出了平凡解 $a = 1$——自由场极限下纤维等距条件不约束 $a$。
 
-**定理 10.7**（谱织修正下的纤维等距条件）。计入谱编织对有效自由度的修正（谱织约束 D9，spectral_Tc_derivation.md §6.1），参与边界处谱密度的有效自由度为：
+**定理 10.7**（谱织修正下的纤维等距条件）。计入谱粘合对有效自由度的修正（谱织约束 D9，spectral_Tc_derivation.md §6.1），参与边界处谱密度的有效自由度为：
 
 $$d_{\text{eff}} = d_A \cdot C_2 = 16, \quad N_{\text{eff}} = \sqrt{N_c \cdot C_2} = \sqrt{6} \approx 2.449$$
 
@@ -823,7 +823,7 @@ $$a = \frac{1}{4} = 0.25$$
 
 此值偏低——说明单纯有效自由度修正不足以确定 $a$。
 
-### 10.10 谱丛等距条件的完整形式：光谱编织
+### 10.10 谱丛等距条件的完整形式：光谱粘合
 
 **关键突破**：谱丛全空间等距条件（10.9）同时要求基度量和纤维度量在 $\partial\mathbf{Rec}_D$ 边界处保持。两个独立条件的联合构成了一个**超定系统**，其解的存在性要求 $F_{S_2}$ 具有特定数值。
 
@@ -857,7 +857,7 @@ B_T @>{\hat{\mathcal{T}}_{\text{Riem}}}>> B_\mu \\
 
 其中 $\pi_T$、$\pi_\mu$ 是纤维丛投影。$\hat{\mathcal{T}}_{\text{Riem}}$ 是等距嵌入当且仅当：
 1. $\mathcal{T}$ 保持谱间隙相等（$\gamma = 2$）
-2. 谱编织有效自由度 $d_{\text{eff}}$ 满足谱织约束公式
+2. 谱粘合有效自由度 $d_{\text{eff}}$ 满足谱织约束公式
 
 **条件 2 等价于** $a$ 由（10.20）给出。
 
@@ -930,7 +930,7 @@ $$a = \frac{N_c^{3/2} \cdot \Delta\lambda_3}{2 d_A \sqrt{C_2} \Delta\lambda_{\mi
 
 $$a = \frac{N_c^{3/2} \cdot \Delta\lambda_3}{2 d_A \sqrt{C_2} \Delta\lambda_{\min}^{(0)}} \cdot \left( \frac{C_{\text{QCD}}^{(1)}}{C_{\text{QCD}}^{(2)} \cdot C_{\text{QCD}}^{(3)}} \right)$$
 
-三重修正因子由谱织约束确定：$C_{\text{QCD}}^{(1)} = 2.25$（来自 $F_\pi$ 推导），$C_{\text{QCD}}^{(2)} = 1.44$（来自 $m_s$ 阈值），$C_{\text{QCD}}^{(3)} = 1.33$（来自谱编织有效自由度），联合修正：
+三重修正因子由谱织约束确定：$C_{\text{QCD}}^{(1)} = 2.25$（来自 $F_\pi$ 推导），$C_{\text{QCD}}^{(2)} = 1.44$（来自 $m_s$ 阈值），$C_{\text{QCD}}^{(3)} = 1.33$（来自谱粘合有效自由度），联合修正：
 
 $$\frac{C_{\text{QCD}}^{(1)}}{C_{\text{QCD}}^{(2)} \cdot C_{\text{QCD}}^{(3)}} = \frac{2.25}{1.44 \cdot 1.33} = \frac{2.25}{1.915} = 1.175$$
 
@@ -938,17 +938,17 @@ $$a_{\text{full}} = 0.325 \cdot 1.175 = 0.382$$
 
 仍然偏低。
 
-### 10.13 谱丛等距的最终解：谱编织临界嵌入
+### 10.13 谱丛等距的最终解：谱粘合临界嵌入
 
-**最终的解决路径** 不是通过条件联立的代数解，而是通过 **谱编织临界嵌入**——在 $\partial\mathbf{Rec}_D$ 边界处，谱丛自然地嵌入到由谱编织约束确定的临界几何中。
+**最终的解决路径** 不是通过条件联立的代数解，而是通过 **谱粘合临界嵌入**——在 $\partial\mathbf{Rec}_D$ 边界处，谱丛自然地嵌入到由谱粘合约束确定的临界几何中。
 
-**定义 10.6**（谱编织临界嵌入）。谱丛 $B_T$ 和 $B_\mu$ 在 $\partial\mathbf{Rec}_D$ 边界处的临界嵌入由谱编织约束确定：
+**定义 10.6**（谱粘合临界嵌入）。谱丛 $B_T$ 和 $B_\mu$ 在 $\partial\mathbf{Rec}_D$ 边界处的临界嵌入由谱粘合约束确定：
 
 $$B_T|_{\partial\mathbf{Rec}_D} \cong B_{\text{weave}} \cong B_\mu|_{\partial\mathbf{Rec}_D}$$
 
-其中 $B_{\text{weave}}$ 是谱编织（spectral weaving）在该边界处的临界截面。
+其中 $B_{\text{weave}}$ 是谱粘合（spectral weaving）在该边界处的临界截面。
 
-谱编织嵌入要求纤维丛的各向异性（基/纤维比率）在边界处由**总有效自由度** $d_{\text{eff}}^{\text{(total)}} = d_A C_2 + d_q$ 决定，其中 $d_A C_2 = 16$ 是胶子扇区的贡献（来自 SU(3) 伴随表示 × 谱流 Casimir），$d_q$ 是夸克扇区的有效跃迁自由度。
+谱粘合嵌入要求纤维丛的各向异性（基/纤维比率）在边界处由**总有效自由度** $d_{\text{eff}}^{\text{(total)}} = d_A C_2 + d_q$ 决定，其中 $d_A C_2 = 16$ 是胶子扇区的贡献（来自 SU(3) 伴随表示 × 谱流 Casimir），$d_q$ 是夸克扇区的有效跃迁自由度。
 
 **扩展的谱织约束公式**（完整谱丛等距条件）：
 
@@ -964,21 +964,21 @@ $$a = \left( \frac{8 \cdot 2 + 14/3}{4\pi \cdot 3} \cdot \frac{0.122}{0.1725} \r
 
 **与原公式的关系**：原公式 $a = 0.669 + 0.068 = 0.737$ 将 $m_s$ 作为独立的外部修正。扩展公式中，$m_s$ 效应通过谱流耦合压制因子 $e^{-m_s/T_c}$ 内化到 $d_q$ 中，$a = 0.729$ 在 $m_s$ 修正前即与格点 QCD（$0.73$）偏差仅 0.1%。
 
-**这是谱丛等距条件的直接结果**——谱编织自由度 $d_{\text{eff}}$ 与谱间隙比率 $\Delta\lambda_{\min}/\Delta\lambda_3$ 的幂律组合，自然导出谱织约束的 $a^3$ 形式。
+**这是谱丛等距条件的直接结果**——谱粘合自由度 $d_{\text{eff}}$ 与谱间隙比率 $\Delta\lambda_{\min}/\Delta\lambda_3$ 的幂律组合，自然导出谱织约束的 $a^3$ 形式。
 
 **证明要点**。在 $\partial\mathbf{Rec}_D$ 边界处，谱丛的截面 $\sigma_\Delta$ 满足临界嵌入条件：
 
 $$\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)}) \quad \text{（拉回截面相等）}$$
 
-在谱编织几何中，这等价于三个量的匹对：
+在谱粘合几何中，这等价于三个量的匹对：
 
 1. **谱间隙比率** $\Delta\lambda_{\min}/\Delta\lambda_3$（来自 Cl(1,7) 代数）
-2. **有效自由度稀疏性** $d_A C_2 / (4\pi N_c)$（来自谱编织）
+2. **有效自由度稀疏性** $d_A C_2 / (4\pi N_c)$（来自谱粘合）
 3. **临界维数比** $1/3$（来自 $\partial\mathbf{Rec}_D$ 的普适临界指数）
 
 三者的组合唯一地给出 $a^3$ 表达式。这正是谱织约束 D9 的推导实质。$\square$
 
-### 10.14 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的完成状态
+### 10.14 谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的完成状态
 
 | 度量分量 | 约束 | 对 $a$ 的确定力 |
 |:--------|:-----|:--------------|
@@ -1001,7 +1001,7 @@ $$\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)}) \quad \text{�
 
 > **定理 6.1**（范畴形式化的界限）。函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 的存在性和性质已严格建立，但它无法确定比例因子 $a$ 的数值。
 
-定理 6.1 的结论针对的是 $\mathcal{T}$ 作为**纯范畴函子**（对象 + 态射 + 函子性，不带度量结构）。$\hat{\mathcal{T}}_{\text{Riem}}$ 是 $\mathcal{T}$ 在谱丛上的**度量提升**——它包含了 $\mathcal{T}$ 的所有范畴结构，额外要求谱丛全空间度量的等距性。正是这个额外的度量结构（$S_2$ 层修正 + 谱编织自由度 + 临界嵌入 + 夸克有效自由度）提供了确定 $a$ 所需的约束。
+定理 6.1 的结论针对的是 $\mathcal{T}$ 作为**纯范畴函子**（对象 + 态射 + 函子性，不带度量结构）。$\hat{\mathcal{T}}_{\text{Riem}}$ 是 $\mathcal{T}$ 在谱丛上的**度量提升**——它包含了 $\mathcal{T}$ 的所有范畴结构，额外要求谱丛全空间度量的等距性。正是这个额外的度量结构（$S_2$ 层修正 + 谱粘合自由度 + 临界嵌入 + 夸克有效自由度）提供了确定 $a$ 所需的约束。
 
 **统一表述**：
 - **无度量**：$\mathcal{T}$ 的纯范畴结构能筛选 $a$ 的推导路径（§7.2），但不能确定其数值
@@ -1020,7 +1020,7 @@ $$\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)}) \quad \text{�
 |:----|:--------|:-------------|:-----|
 | **I. 纯范畴函子 $\mathcal{T}$** | $\mathbf{Temp} \to \mathbf{RG}$，保持 $\partial\mathbf{Rec}_D$、$\gamma=2$ | **筛选**：9 条路径 → 仅 D9 保留 | ✅ 已完成（spectral_T_category.md） |
 | **II. 黎曼函子 $\mathcal{T}_{\text{Riem}}$** | $\mathcal{T}$ + 单分量度量保持（R1/R2/R3） | **不足**：单分量度量无法独立确定 $a$ | ⚠️ 已探索（§1-§9） |
-| **III. 谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$** | $\mathcal{T}_{\text{Riem}}$ + 谱丛全空间度量（基+纤维联合） | **唯一确定**：$a = 0.729$（含夸克 $d_q$） | ✅ 本 §10 + 路径 A 完成 |
+| **III. 谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$** | $\mathcal{T}_{\text{Riem}}$ + 谱丛全空间度量（基+纤维联合） | **唯一确定**：$a = 0.729$（含夸克 $d_q$） | ✅ 本 §10 + 路径 A 完成 |
 
 ### 11.2 最终确定的 $a$ 值
 
@@ -1028,13 +1028,13 @@ $$\boxed{a = \frac{T_c}{\Lambda_{\text{QCD}}} = \left( \frac{d_A \cdot C_2 + d_q
 
 其中 $d_q = 14/3$ 是夸克在 $\partial\mathbf{Rec}_D$ 边界处的有效跃迁自由度。
 
-**理论地位**：从 $\mathcal{T}$ 的范畴筛选出发，经谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱丛全空间等距条件唯一确定，再经路径 A 的夸克有效自由度完备化。这是**经四层验证的谱框架第一性原理值**（范畴筛选 → 黎曼函子 → 谱丛等距 → 夸克自由度完备化）。
+**理论地位**：从 $\mathcal{T}$ 的范畴筛选出发，经谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱丛全空间等距条件唯一确定，再经路径 A 的夸克有效自由度完备化。这是**经四层验证的谱框架第一性原理值**（范畴筛选 → 黎曼函子 → 谱丛等距 → 夸克自由度完备化）。
 
 ### 11.3 更新后的推荐研究路径
 
 | 优先级 | 路径 | 描述 | 状态 |
 |:-----:|:----|:-----|:-----|
-| ✅ **已完成** | $\hat{\mathcal{T}}_{\text{Riem}}$ 谱丛黎曼函子 | $a$ 已通过谱丛等距唯一确定 | ✅ 本笔记 |
+| ✅ **已完成** | $\hat{\mathcal{T}}_{\text{Riem}}$ 谱纤维丛上的 Riemann 函子 | $a$ 已通过谱丛等距唯一确定 | ✅ 本笔记 |
 | ✅ **已完成** | **路径 A** | D9 谱织约束完备化——已通过夸克有效自由度 $d_q = 14/3$ 闭合 8.4% 偏差 | ✅ [`spectral_weave_quark_completion.md`](../01_qcd_higgs/spectral_weave_quark_completion.md) |
 | 🟢 路径 B | 谱丛截面显式构造 | 构造 $\sigma_\Delta^{(T)}$ 和 $\sigma_\Delta^{(\mu)}$ 的显式解析形式 | ✅ v0.2 已完成 — 含 $\sigma_\rho$ 谱密度截面扩展、分布论处理、数值验证 |
 | 🟡 路径 C | $\hat{\mathcal{T}}_{\text{Riem}}$ 的完整函子性证明 | 证明 $\hat{\mathcal{T}}_{\text{Riem}}$ 在谱丛上保持复合和恒等 | ✅ v0.2 已完成 — 含自然变换 $\eta$、2-函子框架、本质像分析 |
@@ -1047,7 +1047,7 @@ $$\boxed{a = \frac{T_c}{\Lambda_{\text{QCD}}} = \left( \frac{d_A \cdot C_2 + d_q
 """
 spectral_bundle_isometry.py — 谱丛等距条件的数值验证
 
-验证谱丛黎曼函子 hat{T}_Riem 的完整等距条件，
+验证谱纤维丛上的 Riemann 函子 hat{T}_Riem 的完整等距条件，
 确认 a = 0.737 为超定系统的唯一解。
 """
 
@@ -1144,18 +1144,18 @@ a        ratio        Δ%         等距?
 1.000    2.6745       167.45      ❌
 ```
 
-注意：上表中 $a=0.612$ 时纤维有限部分等距条件最优（偏差 1.23%），$a=0.669$ 时谱织约束最优。谱丛全空间度量的超定系统解应使用加权联合优化，而非单一分量的最优。完整的谱丛等距验证需要使用谱编织临界嵌入的精确表达式（§10.13）。
+注意：上表中 $a=0.612$ 时纤维有限部分等距条件最优（偏差 1.23%），$a=0.669$ 时谱织约束最优。谱丛全空间度量的超定系统解应使用加权联合优化，而非单一分量的最优。完整的谱丛等距验证需要使用谱粘合临界嵌入的精确表达式（§10.13）。
 
 ---
 
 ## 附录 D：与 UFPF 整体架构的关系
 
-本笔记构造的谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是 Temp/RG 纤维范畴体系的核心构件，位于 UFPF 五层架构的顶层（层 V——纤维范畴层）。
+本笔记构造的谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是 Temp/RG 纤维范畴体系的核心构件，位于 UFPF 五层架构的顶层（层 V——纤维范畴层）。
 
 完整架构分析见：[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)
 
 本笔记与各层的关系：
-- **层 V → 层 IV**：$\hat{\mathcal{T}}_{\text{Riem}}$ 以 $\mathbf{Spec}$ 为纤维，纤维中的数据直接继承自 Paper I 的谱范畴
+- **层 V → 层 IV**：$\hat{\mathcal{T}}_{\text{Riem}}$ 以 $\mathbf{Sp}$ 为纤维，纤维中的数据直接继承自 Paper I 的谱范畴
 - **层 V → 层 III**：温度参数 $T$ 通过 $\mathbf{Rec}$ 对象的谱生成元 $A(T) = e^{-H/T}$ 连接到递归系统
 - **层 V 与层 II/层 I**：正交——Paper XIX 的静态/随机扩展不改变 $\hat{\mathcal{T}}_{\text{Riem}}$ 的构造
 

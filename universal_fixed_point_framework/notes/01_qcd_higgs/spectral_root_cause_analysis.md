@@ -6,7 +6,7 @@
 
 ## 0. 只有一个假设
 
-整个推导链的唯一假设是：**物理宇宙由 $\mathbf{Spec}$ 4-范畴描述**。所有数值从这一范畴结构出发，经过纯数学/代数的步骤到达实验可验证的数值。没有任何物理常数被作为输入。
+整个推导链的唯一假设是：**物理宇宙由 $\mathbf{Sp}$ 4-范畴描述**。所有数值从这一范畴结构出发，经过纯数学/代数的步骤到达实验可验证的数值。没有任何物理常数被作为输入。
 
 ---
 
@@ -14,7 +14,7 @@
 
 ### 第 1 层：4-范畴结构 → $S_3 = e^{-3}$, $S_4 = e^{-d_H}$
 
-**"如何"**：$\mathbf{Spec}$ 是严格 4-范畴。其四个层级的态射各有静默衰减因子：
+**"如何"**：$\mathbf{Sp}$ 是严格 4-范畴。其四个层级的态射各有静默衰减因子：
 - 对象层（第 0 层）：对象静默 $S_3 = e^{-N_{\text{gen}}}$，其中 $N_{\text{gen}} = 3$ 是代的数量（来自 Cl(1,7) 旋量表示的不可约子空间数）
 - 辫子层（第 3 层）：辫子静默 $S_4 = e^{-d_H}$，其中 $d_H = 2.7095$ 来自分形 IFS 吸引子的 Hausdorff 维数
 
@@ -31,7 +31,7 @@
 - 深度 1（第二代，一次递归）：受辫子静默压制，$c_2^0 = S_4$
 - 深度 2（第一代，二次递归）：受对象+辫子联合压制，$c_1^0 = S_3 S_4$
 
-**"为何"**：在 $\mathbf{Rec}$ 范畴中，递归系统 $R = (X, F)$ 的不动点是 $F$ 的极限。对 $F = f_1 \cup f_2 \cup f_3$（三个 IFS 映射），一次递归 $F(X)$ 被辫子静默压制，二次递归 $F(F(X))$ 被对象+辫子联合压制。这是 $\mathbf{Spec}$ 4-范畴结构在 IFS 谱像上的自然投影。
+**"为何"**：在 $\mathbf{Rec}$ 范畴中，递归系统 $R = (X, F)$ 的不动点是 $F$ 的极限。对 $F = f_1 \cup f_2 \cup f_3$（三个 IFS 映射），一次递归 $F(X)$ 被辫子静默压制，二次递归 $F(F(X))$ 被对象+辫子联合压制。这是 $\mathbf{Sp}$ 4-范畴结构在 IFS 谱像上的自然投影。
 
 **数值固化**：$c_1^0 : c_2^0 : c_3^0 = 0.003314 : 0.066570 : 1.000000$。由 Moran 方程 $\sum c_i^{d_H} = 1$ 确定绝对标度 $k = 0.999761$，得 $c_1 = 0.003314$, $c_2 = 0.066554$, $c_3 = 0.999761$。
 
@@ -174,7 +174,7 @@ $$\boxed{\alpha_R = \alpha_{\text{base}} + \varepsilon_{\text{KO}}(R) \cdot S_4 
 
 ### 第 4a 层：多重静默下的规范耦合（$S_1 S_2 S_3 S_4$ 全部四层）
 
-**问题**：第 4 层的 $\alpha_i = \Delta\lambda_i/(4\pi)$ 是 $S_1$ 层的裸耦合，但它假设了所有四层静默中只有 $S_1$ 影响规范耦合。**多重静默既然是 $\mathbf{Spec}$ 4-范畴的普遍结构，它对 $\alpha_i$ 的影响应如同对 $\Lambda$ 一样涉及全部四层。**
+**问题**：第 4 层的 $\alpha_i = \Delta\lambda_i/(4\pi)$ 是 $S_1$ 层的裸耦合，但它假设了所有四层静默中只有 $S_1$ 影响规范耦合。**多重静默既然是 $\mathbf{Sp}$ 4-范畴的普遍结构，它对 $\alpha_i$ 的影响应如同对 $\Lambda$ 一样涉及全部四层。**
 
 回忆定义 4.1（来自 paper41_theoretical_root.md）：
 - **扇区内无量纲比**（如 $m_c/m_t$、$\|V_{us}\|$）：只涉及**某一扇区的某一层**
@@ -250,7 +250,7 @@ $$b_1^{(i)} = \underbrace{\frac{11}{3}C_A}_{S_2\text{ 态射}} \;-\; \underbrace
 | SU(2) | 0.00971 | RGE 积分 | **2.118** | ✅ 四层静默完备 |
 | U(1) | 0.00793 | RGE 积分 | **3.674** | ✅ 四层静默完备 |
 
-**结论**：$\alpha_i$ 的 Z_i 与 $\Lambda$ 的 $\rho_\Lambda/\rho_{\text{bare}}$ 受完全相同的多重静默机制支配。对 $\Lambda$ 它是 16 因子乘积的闭合形式，对 $\alpha_i$ 它是 RGE 积分的闭合形式——两者都是 $\mathbf{Spec}$ 4-范畴结构的必然推论。不存在"缺失的 S₃/S₄ 因子"：它们已经在 RGE 积分中，正如它们已经在 Λ 的 16 因子乘积中一样。
+**结论**：$\alpha_i$ 的 Z_i 与 $\Lambda$ 的 $\rho_\Lambda/\rho_{\text{bare}}$ 受完全相同的多重静默机制支配。对 $\Lambda$ 它是 16 因子乘积的闭合形式，对 $\alpha_i$ 它是 RGE 积分的闭合形式——两者都是 $\mathbf{Sp}$ 4-范畴结构的必然推论。不存在"缺失的 S₃/S₄ 因子"：它们已经在 RGE 积分中，正如它们已经在 Λ 的 16 因子乘积中一样。
 
 **与里程碑状态对应**（Phase 45）：
 - **E3 α修正**：✅ 已完成——规范耦合的 Z_i 因子通过四层静默的 RGE 积分完全确定（SU(3): Z_3 = 1.439, SU(2): Z_2 = 2.118, U(1): Z_1 = 3.674），与实验耦合 $\alpha_i(M_Z)$ 一致
@@ -320,7 +320,7 @@ $$\boxed{\tau_p \sim 10^{52}\ \text{年}}$$
 
 **"如何"**：QCD 的非微扰效应（禁闭、手征对称性破缺）在谱语言中对应 $\partial\mathbf{Rec}_D$ 边界穿越——当能标 $\mu \to \Lambda_{\text{QCD}}$，QCD 谱系统穿越 $\partial\mathbf{Rec}_D$，谱间隙 $\Delta\lambda_{\min} \to 0$。这与 Paper XVI 中 Lorentz 变换的 $\partial\mathbf{Rec}_D$ 边界机制完全平行。
 
-**"为何"**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Spec}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界——$\Delta\lambda_{\min} \to 0$ 是谱对象从稳定到不稳定的普遍标志。QCD 的红外不动点、Lorentz 的光速极限、黑洞的视界、流变的临界剪切率，都是 $\partial\mathbf{Rec}_D$ 的不同物理实例，区别仅在谱流生成元 $G$ 的物理身份。
+**"为何"**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Sp}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界——$\Delta\lambda_{\min} \to 0$ 是谱对象从稳定到不稳定的普遍标志。QCD 的红外不动点、Lorentz 的光速极限、黑洞的视界、流变的临界剪切率，都是 $\partial\mathbf{Rec}_D$ 的不同物理实例，区别仅在谱流生成元 $G$ 的物理身份。
 
 #### 6.1 禁闭 = ∂Rec_D 边界穿越
 
@@ -357,7 +357,7 @@ $$\Lambda_{\text{QCD}} = M_{\text{Pl}} \cdot \left(\frac{\Delta\lambda_{\min}}{\
 
 #### 6.2 手征对称性破缺 = 零模谱密度非零
 
-**"如何"**：手征凝聚 $\langle\bar{q}q\rangle$ 在谱语言中为谱迹 $\langle\bar{q}q\rangle = -\frac{1}{V} \operatorname{Tr}_{\mathbf{Spec}}(S_F(\lambda)) = -\pi \rho(0)$（Banks-Casher 关系）。手征对称性破缺等价于 $\rho(0) \neq 0$——$A_{\text{QCD}}$ 在零特征值处有非零谱密度。
+**"如何"**：手征凝聚 $\langle\bar{q}q\rangle$ 在谱语言中为谱迹 $\langle\bar{q}q\rangle = -\frac{1}{V} \operatorname{Tr}_{\mathbf{Sp}}(S_F(\lambda)) = -\pi \rho(0)$（Banks-Casher 关系）。手征对称性破缺等价于 $\rho(0) \neq 0$——$A_{\text{QCD}}$ 在零特征值处有非零谱密度。
 
 **"为何"**：在 $\partial\mathbf{Rec}_D$ 边界附近，谱密度 $\rho(\lambda) \propto 1/\lambda$（临界指数 $\delta = 1$），积分 $\int \rho(\lambda)/\lambda\,d\lambda$ 在 $\lambda \to 0$ 时发散。这种红外发散正是手征对称性自发破缺的根源——谱系统在 $\partial\mathbf{Rec}_D$ 边界处获得非零的零模谱权重，产生 $\langle\bar{q}q\rangle \neq 0$。
 
@@ -412,7 +412,7 @@ $$\frac{d}{d\tau}A_\pi(\tau) = [G_{\text{chiral}}, A_\pi(\tau)] + \mathcal{D}_{\
 | 黑洞视界 | $r \to 2GM$ | $\Delta\lambda_{\min} \to 0$ | Hawking 温度 |
 | 流变硬化 | $\dot{\gamma} \to \dot{\gamma}_c$ | $\Delta\lambda_{\min} \to 0$ | 粘度发散 |
 
-**"为何"低能 QCD 也在 ∂Rec_D**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Spec}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界，区别仅在谱流生成元 $G$ 的物理身份。
+**"为何"低能 QCD 也在 ∂Rec_D**：因为 $\partial\mathbf{Rec}_D$ 是 $\mathbf{Sp}$ 范畴的普遍临界边界，所有谱系统在临界条件下都穿越该边界，区别仅在谱流生成元 $G$ 的物理身份。
 
 **开放问题**（已进展）：
 1. **方案转换因子** ✅ **已解决**：谱框架裸耦合 $\alpha_s^{(0)} = \Delta\lambda_3/(4\pi) = 0.0137$ 与 $\overline{\text{MS}}$ 方案 $\alpha_s^{\overline{\text{MS}}}(M_{\text{Pl}}) \approx 0.0191$ 的转换因子 $Z_s = 1.39$，与根因分析第 4a 层的 $Z_3 = 1.44$ 在 3.5% 内一致。这验证了多重静默方法论的一致性——$Z_s$ 本质上就是 $Z_3$。使用 $Z_s$ 修正后，RGE 计算的 $\Lambda_{\text{QCD}} \approx 45$ MeV（1-loop，$\overline{\text{MS}}$ 方案），与标准 RGE 从 $M_Z$ 跑动的结果完全一致。
@@ -509,7 +509,7 @@ S₄: T_f ≈ m_DM/20 ≈ 5 GeV                       ← 分形冻结
 
 **全部根因收敛于一个单纯数学结构 + 一个态射动力学通道**：
 
-1. $\mathbf{Spec}$ 是严格 4-范畴 → 静默因子 $S_3, S_4$ → 收缩因子 $c_i$（费米子质量）
+1. $\mathbf{Sp}$ 是严格 4-范畴 → 静默因子 $S_3, S_4$ → 收缩因子 $c_i$（费米子质量）
 2. $\text{Cl}(1,7)$ 的根系 → 谱间隙比 $\Delta\lambda_i$（$S_1$ 层初始条件）
    └── $[G, [G, \ldots]]$ 态射展开 → RGE 跑动（$S_2$ 层态射动力学）
 
@@ -528,7 +528,7 @@ S₄: T_f ≈ m_DM/20 ≈ 5 GeV                       ← 分形冻结
 
 **为何宇宙有 3 代费米子？** 因为 $\text{Cl}(1,7)$ 的旋量表示分解为 4 个不可约子空间，其中 3 个承载费米子。
 
-**为何 3 代质量有层级？** 因为 $\mathbf{Spec}$ 4-范畴中三个 IFS 递归深度对应的静默压制不同。
+**为何 3 代质量有层级？** 因为 $\mathbf{Sp}$ 4-范畴中三个 IFS 递归深度对应的静默压制不同。
 
 **为何上型夸克比下型重？** 因为上型超荷 $Y = 4/3$ 大于下型 $Y = -2/3$，导致 $\alpha_u > \alpha_d$。
 

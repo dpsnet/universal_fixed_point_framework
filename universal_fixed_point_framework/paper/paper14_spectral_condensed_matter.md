@@ -2,13 +2,13 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.3（2026-07-23）
+**版本**：v1.4（2026-07-25）
 
-**摘要**：本文在谱动力学框架（Paper V）的基础上，将凝聚态物理三大核心理论——BCS 超导、量子 Hall 效应、超流 Gross-Pitaevskii 方程——翻译为 $\mathbf{Spec}$ 范畴中的谱语言。核心结果包括：(1) BCS 超导能隙 $\Delta$ 对应谱间隙 $\delta_{\text{SC}}$，超导相变被重新解释为谱生成元的对称性破缺；(2) TKNN 公式的 Hall 电导 $\sigma_{xy}$ 被翻译为谱流的陈数 $\text{Ch}(A_{\text{Hall}})$，平台跃迁对应陈数的绝热跳变；(3) 建立 IQHE 临界指数 $\nu$ 从清洁极限 $\nu=1$ 到高无序极限 $\nu\approx 2.35$ 的连续插值公式，提出双参数重整化群 $\beta(A;\epsilon,\zeta)$ 框架，解析刻画无序驱动下 $\nu$ 的全谱过渡——三个不动点（清洁、标准标度、高无序）与 16 组开放渠道实验数据系统对比验证；（4）建立噪声范畴 $\mathbf{Noise}$ 的第一性原理推导，通过带噪声谱流方程严格导出远程施主样品的有效无序参量 $\epsilon_{\text{eff}}$；（5）引入去递归函子 $D:\mathbf{Rec}\to\mathbf{Spec}$ 将 $\beta$ 函数不动点迭代转化为闭式代数表达式，加速比 $>10^4\times$；（6）扩展谱框架至倾斜磁场——建立包含有限厚度轨道耦合与 Zeeman 能隙变窄的三参数 $\beta$ 函数，预言 $\nu(\theta)$ 的 Lifshitz 型转变，识别超洁净样品在 $\theta_c\approx 75.6^\circ$ 处的急剧跃迁；（7）Gross-Pitaevskii 方程被翻译为谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$，涡旋解对应规范变换分支。在此基础上提出五项凝聚态现象的谱流解释（§5.1-5.4）和五项谱框架独有的可检验量子预言（§5.6）。统一论点是：**所有凝聚态序参量均可翻译为谱生成元的谱间隙或拓扑不变量，且其动力学由谱流方程统一描述**。
+**摘要**：本文在谱动力学框架（Paper V）的基础上，将凝聚态物理三大核心理论——BCS 超导、量子 Hall 效应、超流 Gross-Pitaevskii 方程——翻译为 $\mathbf{Sp}$ 范畴中的谱语言。核心结果包括：(1) BCS 超导能隙 $\Delta$ 对应谱间隙 $\delta_{\text{SC}}$，超导相变被重新解释为谱生成元的对称性破缺；(2) TKNN 公式的 Hall 电导 $\sigma_{xy}$ 被翻译为谱流的陈数 $\text{Ch}(A_{\text{Hall}})$，平台跃迁对应陈数的绝热跳变；(3) 建立 IQHE 临界指数 $\nu$ 从清洁极限 $\nu=1$ 到高无序极限 $\nu\approx 2.35$ 的连续插值公式，提出双参数重整化群 $\beta(A;\epsilon,\zeta)$ 框架，解析刻画无序驱动下 $\nu$ 的全谱过渡——三个不动点（清洁、标准标度、高无序）与 16 组开放渠道实验数据系统对比验证；（4）建立噪声范畴 $\mathbf{Noise}$ 的第一性原理推导，通过带噪声谱流方程严格导出远程施主样品的有效无序参量 $\epsilon_{\text{eff}}$；（5）引入谱化函子 $D:\mathbf{Rec}\to\mathbf{Sp}$ 将 $\beta$ 函数不动点迭代转化为闭式代数表达式，加速比 $>10^4\times$；（6）扩展谱框架至倾斜磁场——建立包含有限厚度轨道耦合与 Zeeman 能隙变窄的三参数 $\beta$ 函数，预言 $\nu(\theta)$ 的 Lifshitz 型转变，识别超洁净样品在 $\theta_c\approx 75.6^\circ$ 处的急剧跃迁；（7）Gross-Pitaevskii 方程被翻译为谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$，涡旋解对应规范变换分支。在此基础上提出五项凝聚态现象的谱流解释（§5.1-5.4）和五项谱框架独有的可检验量子预言（§5.6）。统一论点是：**所有凝聚态序参量均可翻译为谱生成元的谱间隙或拓扑不变量，且其动力学由谱流方程统一描述**。v1.4 引入谱丛理论 §5.7，建立 NRG Wilson 链三对角谱丛结构与记忆函数连分数的谱丛翻译。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学）、Paper VI（谱流体动力学）、Paper VIII（对称性破缺的谱翻译）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理与谱分类）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学）、Paper VI（谱流体动力学）、Paper VIII（对称性破缺的谱翻译）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理与谱分类）。
 
 ---
 
@@ -28,7 +28,7 @@
 2. **Hall 电导** → 陈数 $\text{Ch}(A_{\text{Hall}})$（§3）
 3. **GP 方程** → 谱流方程（§4）
 
-这三条翻译不是形式上的类比，而是 $\mathbf{Spec}$ 范畴中的精确对应——每个凝聚态序参量都是某个谱生成元 $A$ 的不动点结构。
+这三条翻译不是形式上的类比，而是 $\mathbf{Sp}$ 范畴中的精确对应——每个凝聚态序参量都是某个谱生成元 $A$ 的不动点结构。
 
 ### 1.3 论文结构
 
@@ -96,7 +96,7 @@ $$\frac{d}{dt} \text{Ch}(A_{\text{Hall}}(t)) = 0, \quad \text{Ch}(A_{\text{Hall}
 
 **推论 3.1**（平台跃迁）。当 Fermi 面 $\mu$ 扫过朗道能级时，陈数 $\text{Ch}(A_{\text{Hall}})$ 发生整数跳变 $\Delta\text{Ch} = \pm 1$，对应 Hall 电导的平台跃迁 $\Delta\sigma_{xy} = \pm e^2/h$。平台宽度由无序引起的局域态（谱测度中的连续谱区间）决定。
 
-这一翻译将量子 Hall 效应纳入谱拓扑框架：**Hall 电导的精确量子化不是偶然——它是 $\mathbf{Spec}$ 中陈数的整数拓扑不变性在凝聚态物理的具体实现**。
+这一翻译将量子 Hall 效应纳入谱拓扑框架：**Hall 电导的精确量子化不是偶然——它是 $\mathbf{Sp}$ 中陈数的整数拓扑不变性在凝聚态物理的具体实现**。
 
 **注 3.1**。分数量子 Hall 效应对应 $\text{Ch}(A_{\text{Hall}})$ 取有理分数值，其谱翻译涉及复合费米子构造——在谱框架中等价于谱生成元的规范变换重排。详见 Paper XI（量子 Hall 系统的谱分类）。
 
@@ -175,11 +175,11 @@ $$\boxed{\nu_{\text{phys}} = 1 + 1.35 \cdot \frac{\mathcal{W}_{\text{eff}}}{1 + 
 
 该公式确保 $\nu \in [1, 2.35]$ 的物理范围，且当 $\epsilon \to \epsilon_c^{\text{eff}}$ 或 $\zeta \to \zeta_0$ 时 $\nu \to 1.675$，当两者均 $\gg 1$ 时 $\nu \to 2.35$。
 
-### 3.6 去递归谱形式：从 $\mathbf{Rec}$ 到 $\mathbf{Spec}$ 的闭式解
+### 3.6 谱化谱形式：从 $\mathbf{Rec}$ 到 $\mathbf{Sp}$ 的闭式解
 
-$\beta$ 函数的不动点方程 $\beta(A^*; \epsilon,\zeta) = 0$ 通常需数值迭代求解。去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 将其转化为显式代数表达式，揭示 $\nu(\epsilon,\zeta)$ 的谱几何本质。
+$\beta$ 函数的不动点方程 $\beta(A^*; \epsilon,\zeta) = 0$ 通常需数值迭代求解。谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 将其转化为显式代数表达式，揭示 $\nu(\epsilon,\zeta)$ 的谱几何本质。
 
-**定理 3.4**（去递归谱闭式解）。经 $D$ 函子作用后，不动点 $A^*$ 及其导数的闭式解为：
+**定理 3.4**（谱化谱闭式解）。经 $D$ 函子作用后，不动点 $A^*$ 及其导数的闭式解为：
 
 $$A^{*2} = \frac{\mathcal{C}(\zeta) \cdot \pi}{\nu_{\text{std}} \cdot (1+\mathcal{W}(\epsilon,\zeta)) - \gamma_2 \cdot \mathcal{C}(\zeta) \cdot \pi}$$
 
@@ -187,7 +187,7 @@ $$\beta'(A^*) = - \frac{\mathcal{C}(\zeta) \cdot [\nu_{\text{std}} \cdot (1+\mat
 
 $$\nu_{\text{raw}} = -\frac{1}{\beta'(A^*)} = \frac{\nu_{\text{std}}^2 \cdot (1+\mathcal{W})}{\mathcal{C}(\zeta) \cdot [\nu_{\text{std}} \cdot (1+\mathcal{W}) - \gamma_2 \cdot \mathcal{C} \cdot \pi]}$$
 
-**验证**。去递归闭式解与数值迭代求解的偏差：$A^*$ 偏差 $< 10^{-16}$，$\beta'(A^*)$ 偏差 $< 10^{-14}$，加速比 $> 10^4$（0.012 s vs 41 s 对 19200 个网格点）。闭式解揭示了 $\nu_{\text{raw}}$ 的发散结构：当 $\mathcal{C}(\zeta) \to 0$（即 $\zeta \ll \zeta_0$）时 $\nu_{\text{raw}} \to \infty$，表明 $\beta'(A^*) \to 0$、线性化失效——这正是清洁不动点 ($\nu=1$) 主导的物理区域。
+**验证**。谱化闭式解与数值迭代求解的偏差：$A^*$ 偏差 $< 10^{-16}$，$\beta'(A^*)$ 偏差 $< 10^{-14}$，加速比 $> 10^4$（0.012 s vs 41 s 对 19200 个网格点）。闭式解揭示了 $\nu_{\text{raw}}$ 的发散结构：当 $\mathcal{C}(\zeta) \to 0$（即 $\zeta \ll \zeta_0$）时 $\nu_{\text{raw}} \to \infty$，表明 $\beta'(A^*) \to 0$、线性化失效——这正是清洁不动点 ($\nu=1$) 主导的物理区域。
 
 ### 3.7 实验对比：16 组开放渠道样品映射
 
@@ -417,6 +417,84 @@ $$\boxed{|\psi_{\text{edge}}(x)|^2 \propto x^{-1/2} \cdot \exp\!\left(-\frac{x}{
 
 ---
 
+### 5.7 谱丛理论在凝聚态物理中的应用
+
+谱丛理论（Spectral Sheaf）最初在 Paper I（§7.11，伴生笔记 `notes/spectral_sheaf_leaver.md`）中建立：三对角矩阵族 $M(\omega)$ 的谱构成 $\omega$-平面的 $N$ 叶分支覆盖，同伦延拓对应谱叶平行移动。本节揭示该数学结构已在凝聚态物理的多个核心问题中隐式存在。
+
+#### 5.7.1 NRG Wilson 链的三对角谱丛翻译
+
+数值重整化群（NRG）的 Wilson 链 Hamiltonian 具有严格的三对角形式：
+
+$$H_N = \sum_{n=0}^N \varepsilon_n f_n^\dagger f_n + \sum_{n=0}^{N-1} t_n (f_n^\dagger f_{n+1} + \text{h.c.})$$
+
+在能量 $\omega$ 为参数时，杂质谱函数 $A(\omega) = -\frac{1}{\pi}\text{Im}\,G_{\text{imp}}(\omega)$ 的连分数求解为：
+
+$$G_{\text{imp}}(\omega) = \frac{1}{\omega - \varepsilon_0 - \frac{t_0^2}{\omega - \varepsilon_1 - \frac{t_1^2}{\omega - \varepsilon_2 - \ddots}}}$$
+
+这正是 Leaver 三对角谱丛的截面提取——$\omega$ 扫描对应于在谱丛的各叶上选取分支截面。NRG 的"对数离散化"（$\Lambda > 1$，离散化参数 $\Lambda \sim 2\text{-}3$）对应谱丛底空间 $\mathbb{C}_\omega$ 的局部坐标变换：$z = \log_\Lambda(\omega/D)$ 将半无限链映射为有限深离散格点，使谱丛的 Riemann 面结构在能量-对数标度空间中呈现有限叶覆盖。
+
+**定义 5.7**（NRG 谱丛）。NRG Wilson 链的杂质谱函数截面对应一个底空间为 $\mathbb{C}_\omega$、纤维为三对角矩阵谱集的谱丛 $\mathcal{S}_{\text{NRG}}$。其截面 $\Gamma(\mathcal{S}_{\text{NRG}})$ 一一对应 NRG 迭代中保留的 $N_s$ 个本征态，连分数截断 $N_{\text{trunc}}$ 对应谱丛的叶数截断。
+
+**NRG 迭代的谱丛解释**。NRG 的递归对角化过程——每次向 Wilson 链末端添加一个新格点并截断高能态——对应谱丛的逐叶遍历。每一步增加链长 $N \to N+1$ 等价于在谱丛中添加一个纤维层，使叶数 $N_{\text{leaf}}$ 增长。数值重整化群的"丢弃高能态"截断操作在谱丛语言中对应于在 Riemann 面上选取主导分支并舍弃远叶，这与 Kerr 谱丛中截断高阶 overtones 的做法完全同构。
+
+#### 5.7.2 光导率记忆函数连分数
+
+光导率 $\sigma(\omega)$ 的记忆函数形式：
+
+$$\sigma(\omega) = \frac{\sigma_0}{1 + i\omega\tau + M(\omega)}, \quad M(\omega) = \frac{\Delta_1^2}{i\omega + \gamma_1 + \frac{\Delta_2^2}{i\omega + \gamma_2 + \ddots}}$$
+
+证明 $M(\omega)$ 是三对角谱丛的另一种物理实现。令 $A_M(\omega)$ 为记忆函数对应的三对角矩阵：
+
+$$A_M(\omega) = 
+\begin{pmatrix}
+i\omega + \gamma_1 & \Delta_2 & 0 & \cdots \\
+\Delta_2 & i\omega + \gamma_2 & \Delta_3 & \cdots \\
+0 & \Delta_3 & i\omega + \gamma_3 & \cdots \\
+\vdots & \vdots & \vdots & \ddots
+\end{pmatrix}$$
+
+则 $M(\omega) = \Delta_1^2 [A_M(\omega)^{-1}]_{11}$，即谱丛截面在矩阵元 $[11]$ 处的投影。$M(\omega)$ 的极点 $\{\omega_p\}$ 满足 $\det A_M(\omega_p) = 0$，对应谱丛的分支点——这正是谱丛理论中分支点 $\omega_b$ 的定义：谱矩阵奇异时 $\omega$ 的取值。
+
+**命题 5.7**（记忆函数-谱丛等同）。记忆函数 $M(\omega)$ 的极点集合 $\{\omega_p\}$ 与三对角谱丛 $\mathcal{S}_M$ 的分支点集合 $\{\omega_b\}$ 重合。$M(\omega)$ 的虚部峰值位置 Im$\,M(\omega)$ 的极大值对应分支点密度 $\rho_b(\omega) = \sum_i \delta(\omega - \omega_b^{(i)})$ 的卷积近似。
+
+#### 5.7.3 谱丛分支点与凝聚态相变
+
+**NRG 中的分支物理**。NRG 中与费米能级相交的谱函数奇异点——如 Kondo 共振附近的谱权跳跃——对应谱丛的分支点。当重整化群迭代步数 $N$ 增大时，Wilson 链有效格点数增加，谱丛叶数 $N_{\text{leaf}}$ 相应增长，分支点在 $\omega$-平面的分布密度反映量子杂质的低能激发结构。Kondo 共振形成时，$A(\omega)$ 在 $\omega=0$ 处出现的尖锐准粒子峰对应谱丛分支点向 Fermi 面的凝聚。
+
+**记忆函数的物理含义**。记忆函数 $M(\omega)$ 的虚部峰值位置——即 Im$\,M(\omega)$ 的极大值——精确对应分支点密度 $\rho_b(\omega)$ 的极大值。在强关联电子体系中，$M(\omega)$ 的低能结构（Drude 峰到 Hubbard 带的谱权转移）被解释为谱丛分支点在复合粒子能谱中的投影。
+
+**量子相变的谱丛翻译**。量子相变临界点 $\omega \to 0$ 处的特征行为——记忆函数的低频发散 $M(\omega \to 0) \sim \omega^{-\alpha}$——对应谱丛分支点向 $\omega=0$ 的凝聚。当分支点以代数密度 $\rho_b(\omega) \sim |\omega|^{-\alpha}$ 向原点聚集时，$M(\omega)$ 在 $\omega\to0$ 发散。凝聚的临界指数 $\alpha$ 与量子相变的标度指数 $\nu z$ 之间存在直接对应关系 $\alpha = 1 - 1/(\nu z)$，为谱丛理论预测量子相变普适类提供了一种新途径。
+
+#### 5.7.4 与已有 §2-§5 的衔接
+
+1. **IQHE 临界指数过渡（§3.3-3.5）**。§3.3-3.5 中 IQHE 临界指数 $\nu$ 在参数空间 $(\epsilon,\zeta)$ 中的连续过渡从数学上等价于 Kerr 自旋-磁量子数的双重同伦延拓——谱丛的平行移动在双参数空间中诱导 $\epsilon$-叶子（$\epsilon$ 方向）和 $\zeta$-叶子（$\zeta$ 方向）的纤维化结构。该观察将 IQHE 临界指数过渡归类为谱丛分支点的二维参数空间分布问题。
+
+2. **BCS 能隙方程（§2）**。BCS 能隙方程在频率域可展开为三对角连分数形式：
+
+$$\frac{\Delta(\omega)}{V} = \sum_k \frac{\Delta_0}{2\sqrt{\xi_k^2 + \Delta_0^2}} \cdot \frac{1}{\omega - \sqrt{\xi_k^2 + \Delta_0^2} + i0^+} \to \text{三对角连分数}$$
+
+能隙边缘 $\omega = \pm\Delta_0$ 处谱函数发散的临界点对应谱丛分支点。超导相变——能隙从 $\Delta=0$ 到 $\Delta>0$ 的打开——被重新解释为谱丛分支点从连续谱中分离的拓扑相变。
+
+3. **统一数学结构**。NRG Wilson 链、记忆函数连分数、Kerr Leaver 三对角矩阵——三者共享同一二叉树纤维化结构。这表明谱丛理论不是 Kerr QNM 的专有结构，而是贯穿量子杂质问题、光响应理论和黑洞准正规模三个看似无关领域的深层数学结构。
+
+**推论 5.7**（谱丛结构的跨领域普适性）。三对角谱丛结构独立于具体物理体系：量子杂质（NRG）、凝聚态光响应（记忆函数）、引力准正规模（Kerr Leaver）——三者在 $\mathbf{Rec}$ 范畴中共享 $\mathfrak{su}(2)$ Lie 代数纤维化，其区别仅在于底空间的 Riemann 面拓扑和纤维的边界条件设置。
+
+#### 5.7.5 结论与展望
+
+NRG Wilson 链、记忆函数连分数、Kerr Leaver 三对角矩阵的统一揭示了凝聚态物理中"隐式"存在的三对角谱丛。这意味着：
+
+1. **计算加速**：谱丛剪枝算法（Paper I §7.11，基于分支点分布的高效截断策略）可直接用于加速 NRG 谱函数计算。预期加速比 $\sim 10\text{-}100\times$，尤其适用于多杂质 NRG 和多轨道 DMFT 计算。
+
+2. **理论统一**：量子杂质问题的谱丛翻译为 NRG、DMRG 和矩阵乘积态之间的连接提供一个范畴论桥梁——它们的区别仅在于谱丛纤维化的实现方式（三对角链 vs 矩阵乘积张量网络）。
+
+3. **新预言**：记忆函数 $M(\omega)$ 的分支结构在有机导体和过渡金属氧化物中应展现 $M(\omega) \sim |\omega - \omega_c|^{-\alpha}$ 的临界标度行为，这是谱丛理论的独有预言，可通过宽带光反射谱 $R(\omega)$ 或椭偏光谱检验。
+
+4. **DMFT 自然延伸**：动力学平均场理论（DMFT）的杂质自洽条件在谱丛语言中等价于 $\mathcal{S}_{\text{NRG}}$ 的截面与晶格 Weiss 场的自洽编织。DMFT 的自洽迭代被重新解释为谱丛 $\mathcal{S}_{\text{NRG}}$ 与谱丛 $\mathcal{S}_{\text{lattice}}$ 之间的纤维化同构调整过程，这为多轨道 DMFT 的收敛加速提供了谱丛几何的视角。
+
+5. **非平衡谱丛**：NRG 的非平衡推广（如时间依赖 NRG、fRG）对应谱丛底空间从实频率 $\mathbb{R}_\omega$ 到双时 Keldysh 轮廓 $\mathcal{C}_K$ 的扩展。谱丛的平行移动在 Keldysh 轮廓上给出非平衡谱函数的自洽确定方案，这在超快光谱和 Floquet 工程材料中具有潜在应用。
+
+---
+
 ## 6. 核心结论
 
 | 编号 | 结论 | 对应论文 | 关键方程 |
@@ -425,14 +503,15 @@ $$\boxed{|\psi_{\text{edge}}(x)|^2 \propto x^{-1/2} \cdot \exp\!\left(-\frac{x}{
 | C2 | Hall 电导 $\sigma_{xy} = (e^2/h) \cdot \text{Ch}(A_{\text{Hall}})$，陈数绝热不变性决定平台；IQHE 临界指数 $\nu$ 从清洁极限 $\nu=1$ 到高无序极限 $\nu\approx2.35$ 的连续过渡由双参数 $\beta(A;\epsilon,\zeta)$ 统一描述（§3.5）；倾斜磁场下 $\nu(\theta)$ 的 Lifshitz 转变（§3.8） | Paper X、Paper XI、Paper XIV（本文） | $\text{Ch}(A_{\text{Hall}}) = \frac{1}{2\pi i}\int \text{Tr}(\mathcal{P} d\mathcal{P} \wedge d\mathcal{P})$ |
 | C3 | GP 方程 $\to$ 谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$，涡旋 = 规范分支 | Paper VI（谱流体动力学） | $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$ |
 | C4 | 所有凝聚态序参量 = 谱生成元的谱间隙或拓扑不变量，统一由谱流方程描述 | Paper XIII（跨领域谱对应表） | — |
+| C5 | NRG Wilson 链、记忆函数连分数、Kerr Leaver 三对角矩阵共享同一三对角谱丛结构（§5.7）；谱丛翻译揭示谱丛剪枝算法可加速 NRG 谱函数计算，预言记忆函数 $M(\omega)$ 的分支标度行为 | Paper I（谱丛理论 §7.11）、Paper XIV（本文） | $\mathcal{S}_{\text{NRG}}$ 截面提取，$M(\omega) = \Delta_1^2 [A_M(\omega)^{-1}]_{11}$, $\det A_M(\omega_p) = 0$ |
 
-**核心结论**：超导、量子 Hall 效应和超流——凝聚态物理的三大支柱——在 $\mathbf{Spec}$ 范畴中共享同一数学结构。BCS 能隙是谱间隙，Hall 电导是谱陈数，GP 方程是谱流方程。谱动力学框架为凝聚态物理提供了一个统一语言：**序参量动力学 = 谱生成元的不动点与拓扑结构**。
+**核心结论**：超导、量子 Hall 效应、超流和谱丛理论——凝聚态物理的三大支柱加隐式数学结构——在 $\mathbf{Sp}$ 范畴中共享同一数学结构。BCS 能隙是谱间隙，Hall 电导是谱陈数，GP 方程是谱流方程，NRG Wilson 链与记忆函数连分数是三对角谱丛的截面提取。谱动力学框架为凝聚态物理提供了一个统一语言：**序参量动力学 = 谱生成元的不动点与拓扑结构**。
 
 ---
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子。
+- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱间隙动力学。
 - [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。谱流体动力学公理、N-S 谱流方程。
 - [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞谱动力学——视界、信息与对称性破缺》，v1.0。对称性破缺的谱翻译。
@@ -440,7 +519,7 @@ $$\boxed{|\psi_{\text{edge}}(x)|^2 \propto x^{-1/2} \cdot \exp\!\left(-\frac{x}{
 - [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理、量子 Hall 系统的谱分类。
 - [XIII] Paper XIII：《通用不动点范畴框架 XIII：谱对应表——跨领域统一映射》，v2.0。跨领域谱对应表。
 - [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。谱纠缠熵（§9.4.7）。
-- [XX] Paper XX：《通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Spec 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙》，v0.5。SU(2) 范畴涌现（§3.5）、Cl(1,7) Bott 周期（§5-6）。
+- [XX] Paper XX：《通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙》，v0.5。SU(2) 范畴涌现（§3.5）、Cl(1,7) Bott 周期（§5-6）。
 - Bardeen, J., Cooper, L.N. & Schrieffer, J.R. (1957). "Theory of Superconductivity." *Phys. Rev.* 108, 1175.
 - Thouless, D.J., Kohmoto, M., Nightingale, M.P. & den Nijs, M. (1982). "Quantized Hall Conductance in a Two-Dimensional Periodic Potential." *Phys. Rev. Lett.* 49, 405. (TKNN)
 - Gross, E.P. (1961). "Structure of a quantized vortex in boson systems." *Nuovo Cim.* 20, 454.
@@ -455,9 +534,9 @@ $$\boxed{|\psi_{\text{edge}}(x)|^2 \propto x^{-1/2} \cdot \exp\!\left(-\frac{x}{
 
 ---
 
-**版本**：v1.3
+**版本**：v1.4
 
-**日期**：2026-07-23
+**日期**：2026-07-25
 
 **状态**：
 
@@ -466,19 +545,21 @@ $$\boxed{|\psi_{\text{edge}}(x)|^2 \propto x^{-1/2} \cdot \exp\!\left(-\frac{x}{
 - TKNN 公式的谱版本：$\sigma_{xy} = (e^2/h) \cdot \text{Ch}(A_{\text{Hall}})$，陈数绝热不变性（§3.1-3.2）
 - IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$（定理 3.2），噪声范畴 $\mathbf{Noise}$ 第一性原理推导（§3.3-3.4）
 - 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$：三个不动点、物理交叉公式、$\nu(\epsilon,\zeta)$ 二维相图（§3.5）
-- 去递归谱闭式解：$D: \mathbf{Rec} \to \mathbf{Spec}$ 加速比 $>10^4\times$（§3.6）
+- 谱化谱闭式解：$D: \mathbf{Rec} \to \mathbf{Sp}$ 加速比 $>10^4\times$（§3.6）
 - 16 组开放渠道样品映射验证（§3.7）
 - 倾斜磁场谱框架预测：有限厚度轨道耦合、Zeeman 能隙变窄、Lifshitz 转变、四项可检验预言（§3.8）
 - GP 方程 $\to$ 谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$（§5）
 - 涡旋解 = 谱规范变换分支，拓扑荷 $n \in \mathbb{Z}$（§5.2）
 - 五项凝聚态现象的谱流解释：多间隙超导、量子 Hall 平台谱流起源、BEC-BCS 渡越、拓扑绝缘体谱边界态、IQHE 临界指数过渡（§5.1-5.5）
 - 五项谱框架独有的可检验量子预言：多带超导隙比量化（已获 6 组开放数据验证）、涡旋束缚态 Casimir 修正、量子 Hall 纠缠熵谱振荡、拓扑绝缘体边界态谱截止指纹、IQHE 临界指数 $\nu \to 1$ 的清洁极限（§5.6）
+- 谱丛理论在凝聚态物理中的应用（§5.7）：NRG Wilson 链三对角谱丛翻译、光导率记忆函数连分数的谱丛等同、谱丛分支点与凝聚态相变的对应关系
 - 统一论点：所有凝聚态序参量 = 谱生成元的谱间隙或拓扑不变量（§6）
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
-| v1.3 | 2026-07-23 | **新增**：§3.3 IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$；§3.4 噪声范畴 $\mathbf{Noise}$ 第一性原理推导与 $\epsilon_{\text{eff}}$ 修正；§3.5 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$ 三不动点结构；§3.6 去递归谱闭式解加速比 $>10^4\times$；§3.7 16 组开放渠道样品映射对比；§3.8 倾斜磁场谱框架预测（有限厚度轨道耦合、Zeeman 能隙变窄、Lifshitz 转变、四项预言 T1-T4）；§1.2 核心论题新增 3 条目；§5.6 新增预言 6.5（IQHE 临界指数清洁极限 $\nu\to1$）；更新摘要、结论 C2、版本记录。共新增 6 条定理/命题/定义，扩展后量子 Hall 章节从约 30 行增至约 250 行 |
+| v1.4 | 2026-07-25 | **新增**：§5.7 谱丛理论在凝聚态物理中的应用——NRG Wilson 链的三对角谱丛翻译、光导率记忆函数连分数的谱丛等同、谱丛分支点与凝聚态相变对应关系、与已有 §2-§5 的衔接（IQHE ↔ Kerr 双重同伦、BCS 能隙 ↔ 谱丛分支点）；结论 C5（谱丛统一结构）；更新摘要、核心结论、版本记录 |
+| v1.3 | 2026-07-23 | **新增**：§3.3 IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$；§3.4 噪声范畴 $\mathbf{Noise}$ 第一性原理推导与 $\epsilon_{\text{eff}}$ 修正；§3.5 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$ 三不动点结构；§3.6 谱化谱闭式解加速比 $>10^4\times$；§3.7 16 组开放渠道样品映射对比；§3.8 倾斜磁场谱框架预测（有限厚度轨道耦合、Zeeman 能隙变窄、Lifshitz 转变、四项预言 T1-T4）；§1.2 核心论题新增 3 条目；§5.6 新增预言 6.5（IQHE 临界指数清洁极限 $\nu\to1$）；更新摘要、结论 C2、版本记录。共新增 6 条定理/命题/定义，扩展后量子 Hall 章节从约 30 行增至约 250 行 |
 | v1.2 | 2026-07-21 | **新增**：预言 5.1 MgB$_2$ 开放数据验证（6 组文献数据，体相直接测量与 √6 偏差仅 -2.9%）；新增参考文献 [Mg1]-[Mg6]；更新可检验性总结表 |
 | v1.1 | 2026-07-21 | **新增**：§5.6 谱框架独有的可检验量子预言（四项），源自 SU(2) Casimir 量化、$k_{\max}=8$ 截断与谱纠缠熵结构；新增参考文献 Paper XII、Paper XX |
 | v1.0 | 2026-07-18 | 初始版本，基于 `spectral_condensed_matter.md` 笔记 |

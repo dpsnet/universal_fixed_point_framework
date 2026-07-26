@@ -8,25 +8,25 @@
 
 1. **不可反馈原则**：实例假设层的任何拟合结果，不构成对元公理层与结构定理层的反驳。
 2. **范畴表述原则**：理论本体使用范畴论语言，不绑定特定维度、特定分形映射或特定规范群。
-3. **去递归原则**：递归迭代仅作为数值工具出现在实例假设层，不出现在理论公理本体。
+3. **谱化原则**：递归迭代仅作为数值工具出现在实例假设层，不出现在理论公理本体。
 4. **向下兼容原则**：抽象框架保留原有三条理论内核：
    - 分形压缩 ↔ 算子谱指数对应：$\lambda_i = e^{-\mu_i}$；
-   - 递归系统可通过算子半群实现去递归；
+   - 递归系统可通过算子半群实现谱化；
    - 以 Clifford 值分形 RKHS 为泛函基底。
 
 ---
 
 ## 第二层：结构定理层（Application—测量公理 M1–M4）
 
-在元公理 1–3 的基础上，[Paper X](../paper/paper10_spectral_quantum.md) 在 $\mathbf{Spec}$ 范畴中建立了量子测量的四条具体公理：
+在元公理 1–3 的基础上，[Paper X](../paper/paper10_spectral_quantum.md) 在 $\mathbf{Sp}$ 范畴中建立了量子测量的四条具体公理：
 
-- **M1（谱投影公理）**：测量对应 $\mathbf{Spec}$ 中的投影态射族 $\{P_i\}$，满足幂等性、正交性和完备性。
-- **M2（谱流动力学公理）**：测量过程中的谱流方程 $dA_t/dt = [A_{\text{int}}, A_t] + \kappa(\mathcal{D}(A_t)-A_t)$ 是元公理 3 谱去递归化函子的推广——添加了 $\kappa$ 对角化项。
-- **M3（Born 规则公理）**：测量概率由轨道函子的谱权重给出，是 $\mathbf{Spec}$ 上的函子不变量。
+- **M1（谱投影公理）**：测量对应 $\mathbf{Sp}$ 中的投影态射族 $\{P_i\}$，满足幂等性、正交性和完备性。
+- **M2（谱流动力学公理）**：测量过程中的谱流方程 $dA_t/dt = [A_{\text{int}}, A_t] + \kappa(\mathcal{D}(A_t)-A_t)$ 是元公理 3 谱化函子的推广——添加了 $\kappa$ 对角化项。
+- **M3（Born 规则公理）**：测量概率由轨道函子的谱权重给出，是 $\mathbf{Sp}$ 上的函子不变量。
 - **M4（谱分支公理）**：实际观察结果由分支拓扑权重选择，对应 $\mathbf{Rec}$ 中递归系统的分支结构。
 
 M1–M4 与三层公理体系的关系：
-- M1–M2 在**结构定理层**：由元公理 2（$\mathbf{Spec}$ 存在性）和元公理 3（$D$ 函子存在性）导出。
+- M1–M2 在**结构定理层**：由元公理 2（$\mathbf{Sp}$ 存在性）和元公理 3（$D$ 函子存在性）导出。
 - M3–M4 在**实例假设层**：Born 规则和分支选择可以通过替换为其他概率解释来修改。
 
 详细推导见 Paper X §2 和配套笔记 `notes/spectral_measurement.md`。
@@ -56,7 +56,7 @@ M1–M4 与三层公理体系的关系：
 
 ### 元公理 2（谱范畴存在性）
 
-存在一个范畴 $\mathbf{Spec}$，称为**谱范畴**，满足：
+存在一个范畴 $\mathbf{Sp}$，称为**谱范畴**，满足：
 
 - **对象**：三元组 $(\mathcal{H}, A, \sigma)$，其中 $\mathcal{H}$ 为复或 Clifford 值 Hilbert 空间，$A: \mathcal{D}(A) \subseteq \mathcal{H} \to \mathcal{H}$ 为闭稠定正算子，$\sigma = \sigma(A) \subseteq \mathbb{R}_{\ge 0}$。
 - **态射**：有界线性算子 $T: \mathcal{H}_1 \to \mathcal{H}_2$，满足谱交织条件
@@ -64,11 +64,11 @@ M1–M4 与三层公理体系的关系：
 
 **复合律与单位律的严格定义**：见 [notes/rec_spec_definitions.md](../notes/rec_spec_definitions.md)。复合由有界线性算子的通常复合给出，单位态射为恒等算子；交织条件的保持由算子复合的直接验证得到。
 
-### 元公理 3（谱去递归化函子存在性与自然性）
+### 元公理 3（谱化函子存在性与自然性）
 
 存在一个协变函子
-$$D: \mathbf{Rec} \longrightarrow \mathbf{Spec},$$
-称为**谱去递归化函子**，将递归系统的自相似演化映射为算子半群的指数演化：
+$$D: \mathbf{Rec} \longrightarrow \mathbf{Sp},$$
+称为**谱化函子**，将递归系统的自相似演化映射为算子半群的指数演化：
 
 $$D(\Phi_R) = e^{-t A_R}, \quad t \ge 0,$$
 
@@ -86,7 +86,7 @@ R_2 --D--> Spec(R_2)
 **忠实性与伴随函子的严格结果**：
 
 - **忠实性**：若 $\mathcal{H}_{R_2}$ 的再生核为 universal kernel（或至少能分离 $\mathcal{S}_{R_2}$ 的点），则 $D$ 在 $\mathrm{Hom}_{\mathbf{Rec}}(R_1, R_2)$ 上是单射。证明见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 3.4。
-- **右伴随 $R$**：在 $\mathbf{Rec}$ 完备且 $D$ 保持小极限并满足解集条件下，$D$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}$。充分必要条件见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 4.1。
+- **右伴随 $R$**：在 $\mathbf{Rec}$ 完备且 $D$ 保持小极限并满足解集条件下，$D$ 存在右伴随 $R: \mathbf{Sp} \to \mathbf{Rec}$。充分必要条件见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 4.1。
 
 ### 元公理 4（再生核 Hilbert 空间存在性）
 
@@ -116,7 +116,7 @@ $$\sigma(S) < 1,$$
 
 $$S(R_\ast) = R_\ast.$$
 
-该不动点对象在 $D$ 下的像 $D(R_\ast)$ 对应 $\mathbf{Spec}$ 中的不变测度/谱分布。
+该不动点对象在 $D$ 下的像 $D(R_\ast)$ 对应 $\mathbf{Sp}$ 中的不变测度/谱分布。
 
 > 注：此定理替代原有 IFS 迭代式 $x_{n+1} = \bigcup S_i(x_n)$；迭代仅作为数值逼近手段。
 
@@ -126,9 +126,9 @@ $$S(R_\ast) = R_\ast.$$
 
 $$\lambda_i = e^{-\mu_i}.$$
 
-> 注：此为核心等式 $ \lambda_i = e^{-\mu_i}$ 的升级形式，从数值等式提升为两个范畴对象谱之间的自然等价。
+> 注：此为核心等式 $ \lambda_i = e^{-\mu_i}$ 的升级形式，从数值等式提升为两个范畴对象谱之间的自然同构。
 
-**严格范畴自然等价**：定义两个从 $\mathbf{Rec}$ 到有限多重集合范畴的函子
+**严格范畴自然同构**：定义两个从 $\mathbf{Rec}$ 到有限多重集合范畴的函子
 
 - $M(R) := \sigma(-\log \Phi_R^\ast) = \{\mu_i\}$（压缩谱）；
 - $L(R) := \sigma(\Phi_R^\ast) = \{\lambda_i\}$（算子半群谱）。
@@ -169,19 +169,19 @@ $$\mathrm{LACI}(v_{num}) := \frac{\rho(v_{num})}{\rho_{ref}} + \frac{\Delta(v_{n
 
 > 注：局部吸引子可严格表述为约束子集 $\mathcal{C} \subseteq \mathcal{V}$ 上的不动点 $v_{loc} \in \mathrm{Fix}(\mathcal{F}, \mathcal{C})$，而全局不动点 $v_\ast$ 是消除所有约束后的唯一不动点。见 [roadmap/phase4_semantics_over_fitting.md](../roadmap/phase4_semantics_over_fitting.md) 定理 4.1、4.2。
 
-### 结构定理 4（算子半群去递归化）
+### 结构定理 4（算子半群谱化）
 
-任意递归系统 $R$ 的迭代演化 $\Phi_R^n$ 可由其去递归化像 $D(R) = e^{-t A_R}$ 的离散采样实现：
+任意递归系统 $R$ 的迭代演化 $\Phi_R^n$ 可由其谱化像 $D(R) = e^{-t A_R}$ 的离散采样实现：
 
 $$\Phi_R^n \cong e^{-n A_R}, \quad n \in \mathbb{N}.$$
 
-> 注：此定理为「去递归」核心范式的数学表述。
+> 注：此定理为「谱化」核心范式的数学表述。
 
 ### 结构定理 5（轨道函子与权重比例）
 
-在 $\mathbf{Spec}$ 上可定义规范群轨道函子
+在 $\mathbf{Sp}$ 上可定义规范群轨道函子
 
-$$O: \mathrm{Obj}(\mathbf{Spec}) \longrightarrow \mathbb{R}_+,$$
+$$O: \mathrm{Obj}(\mathbf{Sp}) \longrightarrow \mathbb{R}_+,$$
 
 将对象映射为其在规范群作用下的轨道权重。轨道权重比例作为范畴内固有态射性质，不绑定具体 Clifford 代数签名或旋量表示。
 
@@ -208,7 +208,7 @@ $$O: \mathrm{Obj}(\mathbf{Spec}) \longrightarrow \mathbb{R}_+,$$
 在无限宽度神经网络的惰性训练（lazy training）极限下，选取
 
 - 递归系统 $R_{NN}$ 为神经网络参数梯度下降动态；
-- 谱去递归化像 $D(R_{NN})$ 为神经正切核（NTK）的谱演化；
+- 谱化像 $D(R_{NN})$ 为神经正切核（NTK）的谱演化；
 - 轨道函子 $O$ 由网络架构与初始化分布决定。
 
 ### 实例假设 3（弦论 = Cl(9,1) 实例）
@@ -232,14 +232,14 @@ $$O: \mathrm{Obj}(\mathbf{Spec}) \longrightarrow \mathbb{R}_+,$$
 │  元公理层（Meta-axioms）：不可被实例修改      │
 │  MA1: Rec 存在性                         │
 │  MA2: Spec 存在性                        │
-│  MA3: 谱去递归化函子 D: Rec → Spec        │
+│  MA3: 谱化函子 D: Rec → Spec        │
 │  MA4: Clifford 值分形 RKHS 存在性          │
 ├─────────────────────────────────────────┤
 │  结构定理层（Structural Theorems）：由元公理导出│
 │  ST1: 压缩态射与 Hutchinson 不动点         │
 │  ST2: 谱对应 λ_i = e^{-μ_i}               │
 │  ST3: 全域不动点方程                       │
-│  ST4: 算子半群去递归化                     │
+│  ST4: 算子半群谱化                     │
 │  ST5: 轨道函子 O                           │
 ├─────────────────────────────────────────┤
 │  实例假设层（Model Hypotheses）：可替换、不反馈 │
@@ -259,10 +259,10 @@ $$O: \mathrm{Obj}(\mathbf{Spec}) \longrightarrow \mathbb{R}_+,$$
 
 ## 待解决问题（已严格化）
 
-1. ~~严格定义 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 的对象与态射（特别是态射的复合律与单位律）。~~  已完成：详见 [notes/rec_spec_definitions.md](../notes/rec_spec_definitions.md) 与本文元公理 1、2 的严格化补充。
-2. ~~证明谱去递归化函子 $D$ 的忠实性（faithfulness）。~~  已完成：见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 3.4；本文元公理 3 已引用。
-3. ~~研究伴随函子 $D \dashv R$ 的存在条件：$R: \mathbf{Spec} \to \mathbf{Rec}$ 将谱空间生成最小递归系统。~~  已完成：见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 4.1；本文元公理 3 已引用。
-4. ~~将结构定理 2 的 $ \lambda_i = e^{-\mu_i}$ 表述为严格的范畴自然等价，而非仅作为等式。~~  已完成：见 [notes/spectral_correspondence_equivalence.md](../notes/spectral_correspondence_equivalence.md) 与本文结构定理 2 的严格化补充。
+1. ~~严格定义 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的对象与态射（特别是态射的复合律与单位律）。~~  已完成：详见 [notes/rec_spec_definitions.md](../notes/rec_spec_definitions.md) 与本文元公理 1、2 的严格化补充。
+2. ~~证明谱化函子 $D$ 的忠实性（faithfulness）。~~  已完成：见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 3.4；本文元公理 3 已引用。
+3. ~~研究伴随函子 $D \dashv R$ 的存在条件：$R: \mathbf{Sp} \to \mathbf{Rec}$ 将谱空间生成最小递归系统。~~  已完成：见 [roadmap/phase1_meta_axioms.md](../roadmap/phase1_meta_axioms.md) 定理 4.1；本文元公理 3 已引用。
+4. ~~将结构定理 2 的 $ \lambda_i = e^{-\mu_i}$ 表述为严格的范畴自然同构，而非仅作为等式。~~  已完成：见 [notes/spectral_correspondence_equivalence.md](../notes/spectral_correspondence_equivalence.md) 与本文结构定理 2 的严格化补充。
 5. ~~定义局部 Hutchinson 吸引子与全域不动点之间的「距离」度量，给出过拟合的几何判据。~~  已完成：见 [roadmap/phase4_semantics_over_fitting.md](../roadmap/phase4_semantics_over_fitting.md) 定理 2.1、2.2、4.1、4.2；本文结构定理 3 已引用。
 
 ---
@@ -270,4 +270,4 @@ $$O: \mathrm{Obj}(\mathbf{Spec}) \longrightarrow \mathbb{R}_+,$$
 ## 版本记录
 
 - v0.1（2026-07-12）：初稿，提出三层公理体系与待解决问题。
-- v0.2（2026-07-12）：严格化 Rec/Spec 复合律与单位律，引用 D 忠实性、D⊣R、谱自然等价、LACI 等已完成定理，将待解决问题全部标记为已解决。
+- v0.2（2026-07-12）：严格化 Rec/Sp 复合律与单位律，引用 D 忠实性、D⊣R、谱自然同构、LACI 等已完成定理，将待解决问题全部标记为已解决。

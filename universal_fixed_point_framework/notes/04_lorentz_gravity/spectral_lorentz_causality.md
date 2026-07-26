@@ -16,14 +16,14 @@
 
 ## 0. 摘要
 
-本专题严格化四类 Lorentz 不变量——**因果符号、静质量、自旋、光锥结构**——在 $\mathbf{Spec}$ 范畴中的谱刻画。核心论题：
+本专题严格化四类 Lorentz 不变量——**因果符号、静质量、自旋、光锥结构**——在 $\mathbf{Sp}$ 范畴中的谱刻画。核心论题：
 
 1. **因果性是谱符号**：四速度 $v^\mu$ 的 Lorentz 符号 $\eta_{\mu\nu}v^\mu v^\nu \in \{+1, 0, -1\}$ 等同于谱算子的符号函数 $\mathrm{sgn}(\sigma(A_v))$。
 2. **静质量 = 动量算符的谱间隙**：$m^2 = P^\mu P_\mu = \Delta\lambda_P$（Casimir 算子的最小谱间隙）。
 3. **自旋 = Pauli-Lubanski 算子的谱间隙**：$s(s+1) = W^\mu W_\mu = \Delta\lambda_W$。
 4. **光锥 = $\partial\mathbf{Rec}_D$ 的谱边界**：类光轨道对应谱流刚好触及 $\partial\mathbf{Rec}_D$ 的临界态。
 
-由此把狭义相对论的核心 Lorentz 不变量还原为 $\mathbf{Spec}$ 范畴中谱算子的**代数不变量**，与 Paper VIII 的黑洞物理（$\partial\mathbf{Rec}_D$、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）共享同一谱边界结构。本专题进一步把 A7 公理从"LFT 协变变换规则"提升为"谱不变量的范畴刻画"。
+由此把狭义相对论的核心 Lorentz 不变量还原为 $\mathbf{Sp}$ 范畴中谱算子的**代数不变量**，与 Paper VIII 的黑洞物理（$\partial\mathbf{Rec}_D$、Hawking 温度 $T_H = \Delta\lambda_{\min}/(2\pi)$、Bekenstein-Hawking 熵 $S_{BH} = \pi/(4\Delta\lambda_{\min}^2)$）共享同一谱边界结构。本专题进一步把 A7 公理从"LFT 协变变换规则"提升为"谱不变量的范畴刻画"。
 
 ---
 
@@ -100,7 +100,7 @@ $$\sigma(M^2_\tau) = \sigma(M^2_0), \quad \forall \tau.$$
 $$m^2(\tau) = \min\sigma(M^2_\tau) = \min\sigma(M^2_0) = m^2(0).$$
 即静质量在 Lorentz 变换下不变。□
 
-**注 2.5**（质量的范畴论地位）。定理 2.4 在范畴论上意味着：$M^2$ 是 Lorentz 谱流的**不动点**，即 $M^2 \in \mathrm{Fix}(\mathbf{Spec}^{SO^+(1,3)})$。Lorentz 不变量 = Lorentz 谱流的不动点。这是 Wigner 分类的谱基础。
+**注 2.5**（质量的范畴论地位）。定理 2.4 在范畴论上意味着：$M^2$ 是 Lorentz 谱流的**不动点**，即 $M^2 \in \mathrm{Fix}(\mathbf{Sp}^{SO^+(1,3)})$。Lorentz 不变量 = Lorentz 谱流的不动点。这是 Wigner 分类的谱基础。
 
 ### 2.3 质量谱与质量层级的对应
 
@@ -120,7 +120,7 @@ $$m^2(\tau) = \min\sigma(M^2_\tau) = \min\sigma(M^2_0) = m^2(0).$$
 
 ### 2.4 质量生成机制：Higgs 机制的谱翻译
 
-**命题 2.7**（Higgs 机制作为谱间隙生成）。Higgs 机制在 $\mathbf{Spec}$ 中翻译为：对称性破缺前 $M^2 = 0$（Goldstone 模式，$\sigma(M^2) = \{0\}$），破缺后 $M^2 = \lambda v^2$（$\sigma(M^2) = \{\lambda v^2\}$，非零谱间隙）。
+**命题 2.7**（Higgs 机制作为谱间隙生成）。Higgs 机制在 $\mathbf{Sp}$ 中翻译为：对称性破缺前 $M^2 = 0$（Goldstone 模式，$\sigma(M^2) = \{0\}$），破缺后 $M^2 = \lambda v^2$（$\sigma(M^2) = \{\lambda v^2\}$，非零谱间隙）。
 
 **证明草图**。Higgs 场 $\phi$ 的势能 $V(\phi) = -\mu^2|\phi|^2 + \lambda|\phi|^4$ 在 $\phi = v = \mu/\sqrt{2\lambda}$ 处取极小。围绕真空的涨落 $\phi = v + h$ 给出 $h$ 的质量 $m_h^2 = 2\lambda v^2$。在谱框架中，对称破缺前 $A_v$ 的最小特征值为 0；破缺后 $A_v$ 的最小特征值跳变为 $2\lambda v^2$，即"打开谱间隙"。□
 
@@ -162,7 +162,7 @@ $$\sigma(S^2_\tau) = \sigma(S^2_0), \quad \forall \tau.$$
 
 ### 3.3 自旋-统计定理的谱刻画
 
-**命题 3.5**（自旋统计对应）。整数自旋（$s \in \mathbb{Z}$）的谱对象服从 Bose-Einstein 统计；半整数自旋（$s \in \mathbb{Z} + \tfrac12$）的谱对象服从 Fermi-Dirac 统计。在 $\mathbf{Spec}$ 范畴中，这一对应体现为：
+**命题 3.5**（自旋统计对应）。整数自旋（$s \in \mathbb{Z}$）的谱对象服从 Bose-Einstein 统计；半整数自旋（$s \in \mathbb{Z} + \tfrac12$）的谱对象服从 Fermi-Dirac 统计。在 $\mathbf{Sp}$ 范畴中，这一对应体现为：
 
 - 整数自旋：$S^2$ 的谱 $\{s(s+1) : s \in \mathbb{Z}\}$ 与对称张量积 $\mathrm{Sym}^n(\mathcal{H})$ 对应；
 - 半整数自旋：$S^2$ 的谱 $\{s(s+1) : s \in \mathbb{Z} + \tfrac12\}$ 与外代数 $\wedge^n(\mathcal{H})$ 对应。
@@ -208,7 +208,7 @@ $$v^\mu \text{ 类光} \Leftrightarrow R_v \in \partial\mathbf{Rec}_D.$$
 - 光子轨道（类光）：$\Delta\lambda_{\min} = 0$，位于 $\partial\mathbf{Rec}_D$ 上；
 - 黑洞视界：$\Delta\lambda_{\min} = 0$，位于 $\partial\mathbf{Rec}_D$ 上。
 
-> **物理意义**：光锥与黑洞视界在 $\mathbf{Spec}$ 范畴中是同一类谱边界——它们都是"信息流出"的临界点。光子刚好不能逃离类光轨道（其能量在远距离衰减为红移），物质刚好不能逃离黑洞视界。两者共享 $\partial\mathbf{Rec}_D$ 的谱边界条件。
+> **物理意义**：光锥与黑洞视界在 $\mathbf{Sp}$ 范畴中是同一类谱边界——它们都是"信息流出"的临界点。光子刚好不能逃离类光轨道（其能量在远距离衰减为红移），物质刚好不能逃离黑洞视界。两者共享 $\partial\mathbf{Rec}_D$ 的谱边界条件。
 
 ### 4.3 Hawking 温度与红移的统一
 
@@ -222,8 +222,8 @@ $$v^\mu \text{ 类光} \Leftrightarrow R_v \in \partial\mathbf{Rec}_D.$$
 
 ### 4.4 因果锥的谱定义
 
-**定义 4.5**（谱因果锥）。对谱对象 $E = (\mathcal{H}, A, \sigma(A)) \in \mathbf{Spec}$，定义其**因果锥**为
-$$\mathcal{C}(E) := \left\{E' \in \mathbf{Spec} : \exists \text{ 谱态射 } T: E \to E',\, \sigma(T) \subset \mathbb{R}_{\ge 0}\right\}.$$
+**定义 4.5**（谱因果锥）。对谱对象 $E = (\mathcal{H}, A, \sigma(A)) \in \mathbf{Sp}$，定义其**因果锥**为
+$$\mathcal{C}(E) := \left\{E' \in \mathbf{Sp} : \exists \text{ 谱态射 } T: E \to E',\, \sigma(T) \subset \mathbb{R}_{\ge 0}\right\}.$$
 
 即因果锥是 $E$ 通过"保因果符号的谱态射"可达的所有谱对象集合。
 
@@ -238,8 +238,8 @@ $$\mathcal{C}(E) = J^+(E).$$
 
 ### 5.1 质量壳的谱定义
 
-**定义 5.1**（质量壳谱条件）。粒子静质量为 $m$ 的质量壳定义为 $\mathbf{Spec}$ 中的子对象
-$$\mathcal{M}_m := \left\{E \in \mathbf{Spec} : \sigma(M^2) = \{m^2\}\right\}.$$
+**定义 5.1**（质量壳谱条件）。粒子静质量为 $m$ 的质量壳定义为 $\mathbf{Sp}$ 中的子对象
+$$\mathcal{M}_m := \left\{E \in \mathbf{Sp} : \sigma(M^2) = \{m^2\}\right\}.$$
 
 即质量壳是质量谱算子取固定值 $m^2$ 的所有谱对象构成的子范畴。
 
@@ -248,7 +248,7 @@ $$U_\tau \mathcal{M}_m U_\tau^{-1} = \mathcal{M}_m, \quad \forall \tau.$$
 
 **证明**。由定理 2.4，$\sigma(M^2_\tau) = \sigma(M^2_0)$。若 $M^2_0 = m^2$，则 $M^2_\tau = m^2$。故 Lorentz 谱流保持质量壳。□
 
-**推论 5.3**（Lorentz 轨道 = 质量壳）。Lorentz 群在 $\mathbf{Spec}$ 中的轨道恰好是质量壳：
+**推论 5.3**（Lorentz 轨道 = 质量壳）。Lorentz 群在 $\mathbf{Sp}$ 中的轨道恰好是质量壳：
 $$\mathcal{O}_{\text{Lor}}(E) := \{U_\tau E U_\tau^{-1} : \tau\} = \mathcal{M}_m, \quad \text{其中 } m^2 = \min\sigma(M^2_E).$$
 
 **证明**。Lorentz 群作用于 $\mathcal{M}_m$ 上传递（任意两个具有相同 $m$ 的四动量可通过 Lorentz 变换联系）。故轨道等于质量壳。□
@@ -256,11 +256,11 @@ $$\mathcal{O}_{\text{Lor}}(E) := \{U_\tau E U_\tau^{-1} : \tau\} = \mathcal{M}_m
 ### 5.2 质量壳作为不动点子范畴
 
 **命题 5.4**（质量壳是 Lorentz 不动点子范畴）。质量壳 $\mathcal{M}_m$ 是 Lorentz 谱流的不动点子范畴：
-$$\mathrm{Fix}_{\text{Lor}}(\mathbf{Spec}) = \bigsqcup_{m \ge 0} \mathcal{M}_m.$$
+$$\mathrm{Fix}_{\text{Lor}}(\mathbf{Sp}) = \bigsqcup_{m \ge 0} \mathcal{M}_m.$$
 
-**证明**。Lorentz 谱流在 $\mathcal{M}_m$ 上传递，但在不同 $\mathcal{M}_m$ 之间无变换。故整个 $\mathbf{Spec}$ 分解为 Lorentz 不变的质量壳不交并。□
+**证明**。Lorentz 谱流在 $\mathcal{M}_m$ 上传递，但在不同 $\mathcal{M}_m$ 之间无变换。故整个 $\mathbf{Sp}$ 分解为 Lorentz 不变的质量壳不交并。□
 
-> **范畴论意义**：Lorentz 群在 $\mathbf{Spec}$ 中的不动点分解为质量壳的不交并——这是 Wigner 分类"粒子 = Poincaré 不可约表示"的范畴论形式。
+> **范畴论意义**：Lorentz 群在 $\mathbf{Sp}$ 中的不动点分解为质量壳的不交并——这是 Wigner 分类"粒子 = Poincaré 不可约表示"的范畴论形式。
 
 ### 5.3 质量谱与速度谱的耦合
 
@@ -321,7 +321,7 @@ m=0 ↔ Δλ_min=0 ↔ ∂Rec_D (本笔记定理 4.2)
 
 ### 7.1 谱边界的双重身份
 
-**命题 7.1**（$\partial\mathbf{Rec}_D$ 的双重身份）。$\partial\mathbf{Rec}_D$ 在 $\mathbf{Spec}$ 中具有双重身份：
+**命题 7.1**（$\partial\mathbf{Rec}_D$ 的双重身份）。$\partial\mathbf{Rec}_D$ 在 $\mathbf{Sp}$ 中具有双重身份：
 - 作为**光锥边界**（本笔记定理 4.2）：$\Delta\lambda_{\min} = 0$ 对应类光运动；
 - 作为**黑洞视界**（Paper VIII 定理 3.2）：$\Delta\lambda_{\min} = 0$ 对应视界 Hawking 温度。
 
@@ -358,7 +358,7 @@ $$T = \frac{\Delta\lambda_{\min}}{2\pi}, \quad \omega_{\text{obs}} = \omega_{\te
 
 1. **弯曲时空中的因果结构**：从 Minkowski 推广到 Lorentz 流形（参见 `spectral_lorentz_curved_spacetime.md`，待创建）。
 2. **量子信息视角**：纠缠熵与 $\partial\mathbf{Rec}_D$ 的关系（Page 曲线的谱推导）。
-3. **因果集理论的谱翻译**：离散因果序与 $\mathbf{Spec}_{\text{dyn}}$ 态射时序的对应。
+3. **因果集理论的谱翻译**：离散因果序与 $\mathbf{Sp}_{\text{dyn}}$ 态射时序的对应。
 4. **超光速粒子的谱地位**：快子（$m^2 < 0$）在 $\mathbf{Rec} \setminus \mathbf{Rec}_D$ 中的位置。
 
 ### 8.3 与现有框架的衔接
@@ -367,7 +367,7 @@ $$T = \frac{\Delta\lambda_{\min}}{2\pi}, \quad \omega_{\text{obs}} = \omega_{\te
 |:-------|:---------|:------------|
 | Paper VIII $\partial\mathbf{Rec}_D$ | 黑洞视界谱边界 | 光锥、红移、Hawking 统一 |
 | Paper XI A7 公理 | QFT 场 Lorentz 变换规则 | 因果性、质量、自旋的谱刻画 |
-| `spectral_lorentz_axiom.md` | Lorentz 群在 Spec 上的作用 | Lorentz 流的不动点结构 |
+| `spectral_lorentz_axiom.md` | Lorentz 群在 Sp 上的作用 | Lorentz 流的不动点结构 |
 | `spectral_lorentz_dynamics.md` | Lorentz 谱流方程 | 不变量作为不动点 |
 | `spectral_lorentz_kinematics.md` | Rapidity、时间膨胀、长度收缩 | 质量壳、能量-动量耦合 |
 

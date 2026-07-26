@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-22）
 
-**摘要**：本笔记推进路径 B——谱丛截面的显式构造。在 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱编织临界嵌入条件 $\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)})$ 中，截面 $\sigma_\Delta$ 仅以符号形式出现。本笔记构造 $\sigma_\Delta^{(T)}: \mathbf{Temp} \to B_T$ 和 $\sigma_\Delta^{(\mu)}: \mathbf{RG} \to B_\mu$ 的显式解析形式，证明它们满足拉回相等条件，并验证与扩展 D9 公式（含 $d_q = 14/3$）的自洽性。
+**摘要**：本笔记推进路径 B——谱丛截面的显式构造。在 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱粘合临界嵌入条件 $\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)})$ 中，截面 $\sigma_\Delta$ 仅以符号形式出现。本笔记构造 $\sigma_\Delta^{(T)}: \mathbf{Temp} \to B_T$ 和 $\sigma_\Delta^{(\mu)}: \mathbf{RG} \to B_\mu$ 的显式解析形式，证明它们满足拉回相等条件，并验证与扩展 D9 公式（含 $d_q = 14/3$）的自洽性。
 
 ---
 
@@ -25,7 +25,7 @@ $$\pi_\mu: B_\mu \to \mathbf{RG}, \quad \pi_\mu(\mu, \{\lambda_i\}) = \mu$$
 
 ### 1.3 临界嵌入截面 $\sigma_\Delta$
 
-谱编织临界嵌入（§10.13）涉及的截面 $\sigma_\Delta$ 是**谱间隙选择的截面**——它选择每个参数点处的谱间隙值作为纤维中的特定元素：
+谱粘合临界嵌入（§10.13）涉及的截面 $\sigma_\Delta$ 是**谱间隙选择的截面**——它选择每个参数点处的谱间隙值作为纤维中的特定元素：
 
 $$\sigma_\Delta^{(T)}(T) = (T, \Delta\lambda_{\min}(T)) \in B_T$$
 $$\sigma_\Delta^{(\mu)}(\mu) = (\mu, \Delta\lambda_{\min}(\mu)) \in B_\mu$$
@@ -36,7 +36,7 @@ $$\sigma_\Delta^{(\mu)}(\mu) = (\mu, \Delta\lambda_{\min}(\mu)) \in B_\mu$$
 
 临界嵌入条件 $\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)})$ 中的拉回操作定义如下。
 
-谱编织 $B_{\text{weave}}$ 是 $\partial\mathbf{Rec}_D$ 边界处的公共截面。嵌入映射 $i_T: B_{\text{weave}} \hookrightarrow B_T$ 和 $i_\mu: B_{\text{weave}} \hookrightarrow B_\mu$ 将谱编织嵌入到各谱丛中。
+谱粘合 $B_{\text{weave}}$ 是 $\partial\mathbf{Rec}_D$ 边界处的公共截面。嵌入映射 $i_T: B_{\text{weave}} \hookrightarrow B_T$ 和 $i_\mu: B_{\text{weave}} \hookrightarrow B_\mu$ 将谱粘合嵌入到各谱丛中。
 
 **定义 1.2**（拉回截面）。$\sigma_\Delta^{(T)}$ 沿 $i_T$ 的拉回是 $B_{\text{weave}}$ 上的截面：
 
@@ -128,13 +128,13 @@ $$\sigma_\Delta^{(\mu)}(g_s(\mu)) = \sigma_\Delta^{(\mu)}(s\mu) = \left(s\mu, \ 
 
 ## 4. 拉回相等条件的验证
 
-### 4.1 谱编织 $B_{\text{weave}}$ 的截面结构
+### 4.1 谱粘合 $B_{\text{weave}}$ 的截面结构
 
-谱编织 $B_{\text{weave}}$ 是 $\partial\mathbf{Rec}_D$ 边界处的公共临界截面。$B_{\text{weave}}$ 上的点对应 $(T_c, 0)$ 或 $(\Lambda_{\text{QCD}}, 0)$，但谱编织将它们视为同一个对象——谱间隙为零的临界状态。
+谱粘合 $B_{\text{weave}}$ 是 $\partial\mathbf{Rec}_D$ 边界处的公共临界截面。$B_{\text{weave}}$ 上的点对应 $(T_c, 0)$ 或 $(\Lambda_{\text{QCD}}, 0)$，但谱粘合将它们视为同一个对象——谱间隙为零的临界状态。
 
 ### 4.2 拉回相等
 
-**定理 4.1**（拉回相等）。在谱编织临界嵌入下：
+**定理 4.1**（拉回相等）。在谱粘合临界嵌入下：
 
 $$\pi_T^*(\sigma_\Delta^{(T)}) = \pi_\mu^*(\sigma_\Delta^{(\mu)}) \tag{4.1}$$
 
@@ -146,7 +146,7 @@ $$\pi_T^*(\sigma_\Delta^{(T)})(w) = \sigma_\Delta^{(T)}(\pi_T(w)) = \sigma_\Delt
 右侧拉回：
 $$\pi_\mu^*(\sigma_\Delta^{(\mu)})(w) = \sigma_\Delta^{(\mu)}(\pi_\mu(w)) = \sigma_\Delta^{(\mu)}(\Lambda_{\text{QCD}}) = (\Lambda_{\text{QCD}}, 0)$$
 
-在谱编织 $B_{\text{weave}}$ 中，$(T_c, 0)$ 和 $(\Lambda_{\text{QCD}}, 0)$ 被视为同一对象——它们是 $\partial\mathbf{Rec}_D$ 边界在温标和能标两个参数化下的同像。因此两个拉回截面在 $B_{\text{weave}}$ 上恒等。$\square$
+在谱粘合 $B_{\text{weave}}$ 中，$(T_c, 0)$ 和 $(\Lambda_{\text{QCD}}, 0)$ 被视为同一对象——它们是 $\partial\mathbf{Rec}_D$ 边界在温标和能标两个参数化下的同像。因此两个拉回截面在 $B_{\text{weave}}$ 上恒等。$\square$
 
 ### 4.3 参数化依赖的消除
 
@@ -277,7 +277,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\rho^{(T)} = \sigma_\rho^{(\mu)} 
 
 右侧：$\sigma_\rho^{(\mu)}(\mathcal{T}(T)) = (\mathcal{T}(T), \rho_{\mathcal{T}(T)}(\lambda))$
 
-两者相等。关键在于谱密度函数在 $\hat{\mathcal{T}}_{\text{Riem}}$ 下的映射由谱流保持条件决定——$A(T)$ 和 $A(\mathcal{T}(T))$ 在 $\mathbf{Spec}$ 中等距，因此谱密度函数恒等映射。$\square$
+两者相等。关键在于谱密度函数在 $\hat{\mathcal{T}}_{\text{Riem}}$ 下的映射由谱流保持条件决定——$A(T)$ 和 $A(\mathcal{T}(T))$ 在 $\mathbf{Sp}$ 中等距，因此谱密度函数恒等映射。$\square$
 
 ### 7.6 谱密度截面的物理意义
 
@@ -314,7 +314,7 @@ $$\lim_{T \to T_c^-} \frac{d\sigma_\Delta^{(T)}}{dT} \neq \lim_{T \to T_c^+} \fr
 
 $$\langle \tilde{\sigma}_\Delta^{(T)}, \varphi \rangle = \int_0^\infty \sigma_\Delta^{(T)}(T) \cdot \varphi(T) \, dT, \quad \forall \varphi \in C_c^\infty(\mathbf{Temp}) \tag{8.3}$$
 
-其中积分在 $\mathbf{Spec}$ 值的 Bochner 意义下理解。
+其中积分在 $\mathbf{Sp}$ 值的 Bochner 意义下理解。
 
 **定理 8.1**（分布导数的有限性）。$\tilde{\sigma}_\Delta^{(T)}$ 的分布导数处处有限：
 

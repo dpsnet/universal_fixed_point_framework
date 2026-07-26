@@ -8,9 +8,9 @@
 
 ### 1.1 全域谱态空间 $\mathcal{V}$
 
-**定义 1.1**（全域谱态空间）。设 $\mathbf{Rec}$ 为小范畴（或至少 $D$ 的像构成小图表），$D: \mathbf{Rec} \to \mathbf{Spec}$ 为谱去递归化函子。定义**全域谱态空间** $\mathcal{V}$ 为 $D$ 的像图表在 $\mathbf{Spec}$ 中的余极限（colimit）：
+**定义 1.1**（全域谱态空间）。设 $\mathbf{Rec}$ 为小范畴（或至少 $D$ 的像构成小图表），$D: \mathbf{Rec} \to \mathbf{Sp}$ 为谱化函子。定义**全域谱态空间** $\mathcal{V}$ 为 $D$ 的像图表在 $\mathbf{Sp}$ 中的余极限（colimit）：
 
-$$\mathcal{V} := \varinjlim_{R \in \mathrm{Obj}(\mathbf{Rec})} D(R) \in \mathrm{Obj}(\mathbf{Spec}).$$
+$$\mathcal{V} := \varinjlim_{R \in \mathrm{Obj}(\mathbf{Rec})} D(R) \in \mathrm{Obj}(\mathbf{Sp}).$$
 
 具体构造如下。对每个 Rec 态射 $f: R_1 \to R_2$，$D(f): D(R_1) \to D(R_2)$ 是 Spec 态射。令
 
@@ -25,9 +25,9 @@ $$(h, D(R_2)) \sim (D(f)^\ast h, D(R_1)), \qquad \forall f: R_1 \to R_2, \; h \i
 **命题 1.2**（$\mathcal{V}$ 的存在条件）。若以下两个条件成立，则上述余极限存在：
 
 1. **图表由等距嵌入构成**：对所有 $f: R_1 \to R_2$，$D(f): D(R_1) \to D(R_2)$ 是等距嵌入（或至少在 Hilbert 空间范畴中是单射、保持内积的态射）。
-2. **$\mathbf{Spec}$ 对该图表封闭**：余极限 $\varinjlim D(R)$ 仍属于 $\mathbf{Spec}$，即诱导算子 $A_{\mathcal{V}}$ 为闭稠定正算子。
+2. **$\mathbf{Sp}$ 对该图表封闭**：余极限 $\varinjlim D(R)$ 仍属于 $\mathbf{Sp}$，即诱导算子 $A_{\mathcal{V}}$ 为闭稠定正算子。
 
-**证明概要**。在 Hilbert 空间范畴中，由等距嵌入构成的 filtered 图表的归纳极限是良定义的：取各 $\mathcal{H}_{D(R)}$ 的并集的闭包，内积由等距性一致诱导。条件 2 保证该极限对象的算子 $A_{\mathcal{V}}$ 满足 Spec 对象的公理。
+**证明概要**。在 Hilbert 空间范畴中，由等距嵌入构成的 filtered 图表的归纳极限是良定义的：取各 $\mathcal{H}_{D(R)}$ 的并集的闭包，内积由等距性一致诱导。条件 2 保证该极限对象的算子 $A_{\mathcal{V}}$ 满足 Sp 对象的公理。
 
 > 注：条件 1 在通常情形下成立。对 IFS，$D(f)$ 将低维吸引子的函数空间嵌入高维吸引子的函数空间；对 NTK，$D(f)$ 将少样本空间的函数嵌入多样本空间。若 $D(f)$ 不是等距嵌入，则需先取等距部分再构造余极限。
 
@@ -117,7 +117,7 @@ $$\Phi_R(S(x_\ast)) = x_\ast.$$
 
 ### 2.3 在 $D$ 下的像
 
-压缩态射 $S$ 的不动点对象 $R_\ast$ 在谱去递归化函子 $D$ 下的像 $D(R_\ast)$ 对应 $\mathbf{Spec}$ 中的不变测度或谱分布。具体地：
+压缩态射 $S$ 的不动点对象 $R_\ast$ 在谱化函子 $D$ 下的像 $D(R_\ast)$ 对应 $\mathbf{Sp}$ 中的不变测度或谱分布。具体地：
 
 - $D(R_\ast) = (\mathcal{H}_{R_\ast}, A_{R_\ast}, \sigma(A_{R_\ast}))$
 - $A_{R_\ast}$ 的谱由压缩率 $\{\mu_i\}$ 给出。
@@ -183,13 +183,13 @@ $$\|T v\|_{\mathcal{H}_2} \le C \|v\|_{\mathcal{H}_1}, \quad \forall v \in \math
 
 > **命题 3.1**：$\text{Cat}_H(\mathcal{Cl})$ 在上述对象与态射下构成一个范畴。单位态射为恒等算子；态射复合为算子复合，有界性由算子范数的次可乘性保证。
 
-### 3.4 与 $\mathbf{Spec}$ 的关系
+### 3.4 与 $\mathbf{Sp}$ 的关系
 
-$\mathbf{Spec}$ 可视为 $\text{Cat}_H(\mathcal{Cl})$ 的一个子范畴，其对象额外带有一个闭稠定正算子 $A_E$（谱算子），其态射额外满足谱交织条件。
+$\mathbf{Sp}$ 可视为 $\text{Cat}_H(\mathcal{Cl})$ 的一个子范畴，其对象额外带有一个闭稠定正算子 $A_E$（谱算子），其态射额外满足谱交织条件。
 
 形式化地，存在遗忘函子
 
-$$U: \mathbf{Spec} \longrightarrow \text{Cat}_H(\mathcal{Cl}),$$
+$$U: \mathbf{Sp} \longrightarrow \text{Cat}_H(\mathcal{Cl}),$$
 
 将 $(\mathcal{H}_E, A_E, \sigma_E)$ 映为底层 Clifford 值 Hilbert 空间 $(\mathcal{H}_E, \langle \cdot, \cdot \rangle)$。
 
@@ -266,7 +266,7 @@ $$O(\mathcal{H}_1) \le O(\mathcal{H}_2),$$
 元公理层
   ├── 递归系统范畴 Rec
   ├── 谱范畴 Spec
-  ├── 谱去递归化函子 D: Rec → Spec
+  ├── 谱化函子 D: Rec → Spec
   └── Clifford 值分形 RKHS 存在性
       ↓
 结构定理层
@@ -287,7 +287,7 @@ $$O(\mathcal{H}_1) \le O(\mathcal{H}_2),$$
 
 ## 6. 待解决问题（已严格化）
 
-1. ~~**$\mathcal{V}$ 的严格构造**：归纳极限或余极限的存在性条件；在 $\mathbf{Spec}$ 中是否总有余极限？~~  已在 §1.1 中给出余极限构造，并在命题 1.2 中给出存在条件（等距嵌入 + Spec 封闭性）。
+1. ~~**$\mathcal{V}$ 的严格构造**：归纳极限或余极限的存在性条件；在 $\mathbf{Sp}$ 中是否总有余极限？~~  已在 §1.1 中给出余极限构造，并在命题 1.2 中给出存在条件（等距嵌入 + Spec 封闭性）。
 2. ~~**$\mathcal{F}$ 的良定性**：如何保证 $\mathcal{F}$ 在不同子空间 $D(R)$ 上的限制相容？~~  已在 §1.2 中由 Koopman 提升的交换关系证明 $\mathcal{F}$ 良定义（命题 1.4）。
 3. ~~**$\text{Cat}_H(\mathcal{Cl})$ 的公理**：Clifford 值内积的公理系统（正定性、共轭对称性、线性性）需要显式列出。~~  已在 §3.2 中给出 (C1)–(C5) 五条公理，并在命题 3.1 中证明其构成范畴。
 4. ~~**轨道函子的函子性**：$O$ 是否真正构成函子？它需要如何作用于态射？~~  已在 §4.1–§4.3 中通过引入带测度 Hilbert 空间范畴与偏序范畴 $(\mathbb{R}_+, \le)$，给出 $O$ 的函子化定义与充要条件（命题 4.1）。

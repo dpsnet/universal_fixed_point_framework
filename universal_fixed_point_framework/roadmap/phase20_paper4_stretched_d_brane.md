@@ -10,7 +10,7 @@
 
 | 论文 | 内容 | Paper IV 的引用 |
 |------|------|----------------|
-| Paper I | $\mathbf{Rec}$、$\mathbf{Spec}$、$D$、IC | 提供范畴论基础与 IC 定理 |
+| Paper I | $\mathbf{Rec}$、$\mathbf{Sp}$、$D$、IC | 提供范畴论基础与 IC 定理 |
 | Paper II | Kerr、BSM、暗物质应用 | 提供数值验证参考 |
 | Paper III | 谱分类完备性定理（全域分类） | **Paper IV 是 Paper III 定理 4.3 的一个具体案例展开** |
 | **Paper IV** | **拉伸视界与 D-brane 的谱等价性 + 弦论对偶统一** | **案例专论** |

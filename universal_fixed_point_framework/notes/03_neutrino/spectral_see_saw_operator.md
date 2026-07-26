@@ -1,6 +1,6 @@
 # See-saw 公式的谱算子推导
 
-> **目标**：从 $\mathbf{Spec}$ 范畴中的谱算子结构推导 See-saw 公式 $M_\nu = -m_D M_R^{-1} m_D^T$，而非引用标准 QFT 的 Type-I See-saw 结果。
+> **目标**：从 $\mathbf{Sp}$ 范畴中的谱算子结构推导 See-saw 公式 $M_\nu = -m_D M_R^{-1} m_D^T$，而非引用标准 QFT 的 Type-I See-saw 结果。
 >
 > **承袭**：本笔记延续 `spectral_hypercharge_derivation.md` 的谱代数推导精神，将 See-saw 机制翻译为谱算子语言。
 
@@ -32,7 +32,7 @@ A_{LR}^\dagger & A_{RR}
 
 ### 1.3 各块算子的谱来源
 
-**定理 1.1**（块算子的谱来源）。三个块算子来自 $\mathbf{Spec}$ 范畴的不同谱生成元：
+**定理 1.1**（块算子的谱来源）。三个块算子来自 $\mathbf{Sp}$ 范畴的不同谱生成元：
 
 $$
 \begin{aligned}
@@ -58,7 +58,7 @@ See-saw 机制的物理本质是 $A_{RR}$ 的谱远大于 $A_{LL}$ 和 $A_{LR}$ 
 $$\|A_{RR}\| \gg \|A_{LL}\|, \|A_{LR}\|$$
 
 在谱框架中，这一层级来源于：
-- $A_{RR}$ 的谱间隙 $M_R \sim \Lambda_{\text{Planck}}/\Lambda_{\text{EW}} \cdot v \sim 10^{14}\text{ GeV}$（$\mathbf{Spec}$ 的范畴层级比）
+- $A_{RR}$ 的谱间隙 $M_R \sim \Lambda_{\text{Planck}}/\Lambda_{\text{EW}} \cdot v \sim 10^{14}\text{ GeV}$（$\mathbf{Sp}$ 的范畴层级比）
 - $A_{LL}$ 的标度 $\sim y_\nu v \sim 10^2\text{ GeV}$（电弱标度）
 
 ### 2.2 谱 Schur 补
@@ -121,7 +121,7 @@ $$m_{\nu_i} = -\log \lambda_{\nu_i} \quad (\text{谱对应 } \lambda = e^{-\beta
 
 ### 3.1 $M_R$ 的谱间隙起源
 
-在标准 See-saw 中，$M_R$ 是一个自由参数。在谱框架中，$M_R$ 是谱生成元 $A_{\nu_R}$ 的谱间隙，由 $\mathbf{Spec}$ 4-范畴的范畴层级比确定：
+在标准 See-saw 中，$M_R$ 是一个自由参数。在谱框架中，$M_R$ 是谱生成元 $A_{\nu_R}$ 的谱间隙，由 $\mathbf{Sp}$ 4-范畴的范畴层级比确定：
 
 $$\boxed{M_R = v \cdot \frac{\Lambda_{\text{Planck}}}{\Lambda_{\text{EW}}} \approx 10^{14}\text{ GeV}}$$
 
@@ -165,7 +165,7 @@ Spec 4-范畴
 A_ν = [ALL  ALR]   ← 谱算子块结构
       [ALR†  ARR]
      ↓
-谱层级分离: ‖ARR‖ ≫ ‖ALL‖, ‖ALR‖   ← Spec 范畴层级比
+谱层级分离: ‖ARR‖ ≫ ‖ALL‖, ‖ALR‖   ← Sp 范畴层级比
      ↓
 谱 Schur 补: A_ν^eff = ALL - ALR·ARR⁻¹·ALR†
      ↓
@@ -184,10 +184,10 @@ M_R = v · Λ_Planck/Λ_EW ≈ 10¹⁴ GeV   ← 唯一谱预测
 
 | 环节 | 谱框架来源 | 非标准 QFT 引用 |
 |:----|:---------|:-------------|
-| $\nu_R$ 的存在 | ✅ $\mathbf{Spec}$ 谱对象 | ❌ 无 |
+| $\nu_R$ 的存在 | ✅ $\mathbf{Sp}$ 谱对象 | ❌ 无 |
 | $A_\nu$ 的 $2\times2$ 块结构 | ✅ 谱算子直和分解 | ❌ 无 |
 | Schur 补公式 | ✅ 谱算子理论定理 | ❌ 无 |
-| $M_R \gg m_D$ 层级 | ✅ $\mathbf{Spec}$ 范畴层级比 | ❌ 无 |
+| $M_R \gg m_D$ 层级 | ✅ $\mathbf{Sp}$ 范畴层级比 | ❌ 无 |
 | $M_\nu = -m_D M_R^{-1} m_D^T$ | ✅ Schur 补的经典翻译 | ❌ 仅符号转换 |
 | $M_R \sim 10^{14}$ GeV | ✅ 谱间隙比预测 | ❌ 无 |
 | PMNS Majorana 相位 | ✅ $A_{RR}$ 自伴性 → 谱流指标 | ❌ 无 |

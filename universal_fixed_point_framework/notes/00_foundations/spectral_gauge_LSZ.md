@@ -4,7 +4,7 @@
 
 ## 谱 BRST 算符
 
-谱 BRST 算符 $s_{\text{BRST}}$ 在 $\mathbf{Spec}$ 范畴中的显式作用定义为：
+谱 BRST 算符 $s_{\text{BRST}}$ 在 $\mathbf{Sp}$ 范畴中的显式作用定义为：
 
 $$s_{\text{BRST}} \Phi = [Q_{\text{BRST}}, \Phi]_{\pm},$$
 
@@ -16,13 +16,13 @@ $$\boxed{s_{\text{BRST}}^2 = 0}.$$
 
 物理态空间定义为谱 BRST 算符的零阶上同调群：
 
-$$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_{\text{BRST}} = H_{\text{BRST}}^0(\mathbf{Spec})}.$$
+$$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_{\text{BRST}} = H_{\text{BRST}}^0(\mathbf{Sp})}.$$
 
 具体而言：
 - $\ker s_{\text{BRST}}$：所有 BRST 闭链（BRST-不变态），即满足 $s_{\text{BRST}}|\psi\rangle = 0$ 的态。
 - $\operatorname{im} s_{\text{BRST}}$：所有 BRST 边缘态（可写为 $s_{\text{BRST}}|\chi\rangle$ 的态）。
 
-物理态对应于 BRST 闭链模去 BRST 精确项：$|\psi\rangle_{\text{phys}} \in H_{\text{BRST}}^0(\mathbf{Spec})$。
+物理态对应于 BRST 闭链模去 BRST 精确项：$|\psi\rangle_{\text{phys}} \in H_{\text{BRST}}^0(\mathbf{Sp})$。
 
 ## 规范固定的谱 LSZ 公式
 
@@ -32,9 +32,9 @@ $$\boxed{\mathcal{H}_{\text{phys}} = \ker s_{\text{BRST}} / \operatorname{im} s_
 
 $$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{phys}} = P_{\text{BRST}} \circ \langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangle_{\text{spec}}},$$
 
-其中 $P_{\text{BRST}}$ 是从未约化谱 Hilbert 空间到 $H_{\text{BRST}}^0(\mathbf{Spec})$ 的规范投射：
+其中 $P_{\text{BRST}}$ 是从未约化谱 Hilbert 空间到 $H_{\text{BRST}}^0(\mathbf{Sp})$ 的规范投射：
 
-$$P_{\text{BRST}}: \mathcal{H}_{\text{spec}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Spec}).$$
+$$P_{\text{BRST}}: \mathcal{H}_{\text{spec}} \longrightarrow H_{\text{BRST}}^0(\mathbf{Sp}).$$
 
 对每个外线态，有对应的 BRST 投射因子：
 
@@ -56,7 +56,7 @@ $$\langle p |_{\text{phys}} = P_{\text{BRST}}^{(p)} \circ \lim_{\lambda_p \to m^
 
 $$P_{\text{BRST}}(\mathcal{M}_{\text{unphys}}) = 0.$$
 
-**证明**：由于 $H_{\text{BRST}}^0(\mathbf{Spec})$ 仅包含 BRST 不变的规范单态，任何含鬼场量子数的态在 $H_{\text{BRST}}^0(\mathbf{Spec})$ 中的投影为零。
+**证明**：由于 $H_{\text{BRST}}^0(\mathbf{Sp})$ 仅包含 BRST 不变的规范单态，任何含鬼场量子数的态在 $H_{\text{BRST}}^0(\mathbf{Sp})$ 中的投影为零。
 
 ## Yang-Mills 理论的显式形式
 

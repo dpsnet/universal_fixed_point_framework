@@ -328,7 +328,7 @@ $$\mathcal{K}_x|t\rangle \propto |x\rangle,\quad \mathcal{K}_x|x\rangle \propto 
 
 1. **加速运动的谱流处理**：本笔记限于惯性系（恒定 rapidity）的 Lorentz 谱流。加速运动对应 rapidity 时变 $\varphi(t)$，需要扩展到非惯性谱流方程。与 Unruh 效应的衔接？
 
-2. **多粒子系统的 Lorentz 谱流**：本笔记限于单粒子/单钟。多粒子系统的 Lorentz 变换涉及 Lorentz 群的张量积表示，需要扩展到 $\mathbf{Spec}$ 中的张量积结构。
+2. **多粒子系统的 Lorentz 谱流**：本笔记限于单粒子/单钟。多粒子系统的 Lorentz 变换涉及 Lorentz 群的张量积表示，需要扩展到 $\mathbf{Sp}$ 中的张量积结构。
 
 3. **自旋-统计定理的谱推导**：自旋-统计连接（整数自旋玻色子、半整数自旋费米子）在谱框架中的推导？与 Paper X 谱拓扑不变量的衔接？
 

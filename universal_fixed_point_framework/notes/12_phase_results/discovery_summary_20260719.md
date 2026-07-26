@@ -90,7 +90,7 @@
 - **发现**：Wick 转动 $t=i\tau$ 满足 Paper XIX 谱等价桥全部四个条件（S1–S4 ✅），是谱等价桥在 QG 中的核心实现
 - **定理 8.1**：Wick 转动建立 Lorentz 动态系统与 Euclidean 静态背景之间的谱等价
 - **推论 8.1a**：Euclidean 路径积分 $Z_E = \int\mathcal{D}\phi\,e^{-S_E[\phi]}$ 的谱版本为：
-  $$Z_{\text{spec}} = \operatorname{Tr}_{\mathbf{Spec}} e^{-\beta D^{\text{id}}(M_4)}$$
+  $$Z_{\text{spec}} = \operatorname{Tr}_{\mathbf{Sp}} e^{-\beta D^{\text{id}}(M_4)}$$
   其中 $D^{\text{id}}$ 是静态谱几何函子
 - **推论 8.1b**：黑洞热力学的静态极限通过 $\tau$ 周期性 $\beta=8\pi M$（Gibbons-Hawking）实现
 - **论文**：paper12 §8.7，v1.2
@@ -118,4 +118,4 @@
 - Paper X: 谱量子测量 v1.3
 - Paper XI: 谱 QFT v2.1
 - Paper XII: 谱量子引力 v1.2
-- Paper XIX: $\mathbf{Rec}/\mathbf{Spec}$ 范畴扩展 v0.2
+- Paper XIX: $\mathbf{Rec}/\mathbf{Sp}$ 范畴扩展 v0.2

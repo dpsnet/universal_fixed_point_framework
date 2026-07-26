@@ -52,12 +52,12 @@ $$\boxed{m_i^{(f)} = (y_i^{(f)})^{\beta_f} \cdot M_{\text{Pl}} \cdot \eta_{\text
 
 ### 3.1 严格 4-范畴的谱流合成律
 
-**设定**。在 $\mathbf{Spec}$ 严格 4-范畴中：
+**设定**。在 $\mathbf{Sp}$ 严格 4-范畴中：
 - $A_H$：Higgs 谱算子（0-态射，对象），IFS 标度指数 $\alpha_v$
 - $A_f$：费米子谱算子（0-态射，对象），IFS 标度指数 $\alpha_f$
 - $\mathcal{I}$：谱交织子（2-态射），连接 $A_H$ 与 $A_f$
 
-**定理 3.1**（谱流合成指数律）。在严格 $n$-范畴 $\mathbf{Spec}$ 中，沿 2-态射 $\mathcal{I}: A_H \to A_f$ 的谱流合成满足指数加法：
+**定理 3.1**（谱流合成指数律）。在严格 $n$-范畴 $\mathbf{Sp}$ 中，沿 2-态射 $\mathcal{I}: A_H \to A_f$ 的谱流合成满足指数加法：
 
 $$\boxed{\alpha_f = \alpha_v \cdot \beta_f}$$
 
@@ -67,7 +67,7 @@ $$\boxed{\alpha_f = \alpha_v \cdot \beta_f}$$
 
 严格 $n$-范畴的 Coherence 定理（[Paper XVI §2.1]）保证所有合成严格结合且单位严格。在此框架下：
 
-考虑谱流 $\Phi_H: [0,1] \to \mathbf{Spec}$ 沿 $A_H$ 的 IFS 基，其标度行为由 $\alpha_v$ 参数化：
+考虑谱流 $\Phi_H: [0,1] \to \mathbf{Sp}$ 沿 $A_H$ 的 IFS 基，其标度行为由 $\alpha_v$ 参数化：
 
 $$\Phi_H(t) \sim \Phi_H(0) \cdot e^{\alpha_v \lambda_H t}$$
 
@@ -247,7 +247,7 @@ $$m_i^{(f)} = (y_i^{(f)})^{\beta_f} \cdot M_{\text{Pl}} \cdot \eta_{\text{RG}}^{
 
 ### 5.2 物理意义
 
-- **范畴论根源**：$\beta_f$ 是严格 4-范畴 \(\mathbf{Spec}\) 中谱流沿谱交织子 $\mathcal{I}$ 的合成指数（定理 3.1），非数值拟合参数
+- **范畴论根源**：$\beta_f$ 是严格 4-范畴 \(\mathbf{Sp}\) 中谱流沿谱交织子 $\mathcal{I}$ 的合成指数（定理 3.1），非数值拟合参数
 - **IFS 基对齐阈值**：$\beta_f \neq 1$ 仅当 $|\alpha_f - \alpha_v|$ 足够小（阈值 $\sim 0.1$）时触发，此时 $U_{Hf} \to I$，谱投影失去展宽调节能力
 - **自洽性选择**：$\eta_{\text{RG}}$ 自洽性条件唯一确定 $\beta = \alpha_u^{\text{eff}}/\alpha_v$
 - **与 Paper XVII 一致**：全链从 $d_H = 2.7095$ 导出，零自由参数
@@ -256,7 +256,7 @@ $$m_i^{(f)} = (y_i^{(f)})^{\beta_f} \cdot M_{\text{Pl}} \cdot \eta_{\text{RG}}^{
 
 > **$\beta$ 不是拟合参数**。
 > 
-> 它是严格 4-范畴 $\mathbf{Spec}$ 中谱流合成律的必然结果：
+> 它是严格 4-范畴 $\mathbf{Sp}$ 中谱流合成律的必然结果：
 > 谱交织子 $\mathcal{I}: A_H \to A_f$ 的转移指数 $\beta_f = \alpha_f/\alpha_v$
 > 由范畴结构强制决定（定理 3.1），其数值全部来自 $d_H = 2.7095$。
 > 

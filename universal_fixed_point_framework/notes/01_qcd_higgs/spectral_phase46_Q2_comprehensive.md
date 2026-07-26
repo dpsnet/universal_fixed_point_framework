@@ -4,7 +4,7 @@
 
 **摘要**：本笔记整合 Phase 46 Q2 全部研究成果，建立从电荷量子化到费米子质量谱再到混合角解析推导的完整零参数链。核心路线：Cl(1,7) 代数 → 电荷量子化（$Q = T^3 + Y$） → Higgs 谱权重 $\lambda_H$ → 谱交织子 $[A_H, A_f]$ → 谱 Yukawa 投影 $y_i^{(f)} = \sum_k |U_{ki}|^2 \lambda_H^{(k)}$ → Formula B/B$^\beta$ 质量公式 → $\eta_{\text{RG}}$ 谱推导 → $U_{Hf}$ 解析混合角 $\theta_{ij}$。五篇独立笔记在此统一为单一逻辑流，三扇区（轻子、上型夸克、下型夸克）全部预测偏差 $<0.01\%$，混合角 $\theta_{23}$ 解析预测与数值优化偏差 $<0.005$ rad。
 
-**前置依赖**：Paper I（Rec/Spec 范畴）、Paper VI（谱流）、Paper XI（谱 QFT）、[`spectral_hypercharge_derivation.md`](../10_gauge_RG/spectral_hypercharge_derivation.md)、[`spectral_gap_first_principles.md`](../10_gauge_RG/spectral_gap_first_principles.md)。
+**前置依赖**：Paper I（Rec/Sp 范畴）、Paper VI（谱流）、Paper XI（谱 QFT）、[`spectral_hypercharge_derivation.md`](../10_gauge_RG/spectral_hypercharge_derivation.md)、[`spectral_gap_first_principles.md`](../10_gauge_RG/spectral_gap_first_principles.md)。
 
 ---
 
@@ -203,7 +203,7 @@ $$2.14 \times 10^{-5} > 1.27 \times 10^{-5} \quad \Rightarrow \quad \text{理论
 
 ### 5.2 $\beta$ 的范畴论必然性
 
-**定理 5.1**（谱流合成指数律）。在 $\mathbf{Spec}$ 严格 4-范畴中，设 $A_H$（Higgs，IFS 指数 $\alpha_v$）与 $A_f$（费米子，IFS 指数 $\alpha_f$）由谱交织子 $\mathcal{I}$ 连接。严格 $n$-范畴的 Coherence 定理保证态射合成严格结合，谱流沿 $\mathcal{I}$ 的合成满足指数律：
+**定理 5.1**（谱流合成指数律）。在 $\mathbf{Sp}$ 严格 4-范畴中，设 $A_H$（Higgs，IFS 指数 $\alpha_v$）与 $A_f$（费米子，IFS 指数 $\alpha_f$）由谱交织子 $\mathcal{I}$ 连接。严格 $n$-范畴的 Coherence 定理保证态射合成严格结合，谱流沿 $\mathcal{I}$ 的合成满足指数律：
 
 $$\Phi_f(t) = \mathcal{I} \circ \Phi_H(t) \equiv \Phi_H(t)^{\beta_f}$$
 
@@ -211,7 +211,7 @@ $$\Phi_f(t) = \mathcal{I} \circ \Phi_H(t) \equiv \Phi_H(t)^{\beta_f}$$
 
 $$\boxed{\alpha_f = \alpha_v \cdot \beta_f \quad \Longrightarrow \quad \beta_f = \frac{\alpha_f}{\alpha_v}}$$
 
-因此 $\beta$ 不是拟合参数，而是 $\mathbf{Spec}$ 范畴结构强制的谱转移指数。
+因此 $\beta$ 不是拟合参数，而是 $\mathbf{Sp}$ 范畴结构强制的谱转移指数。
 
 ### 5.3 零参数链
 
@@ -394,7 +394,7 @@ Phase 46 Q2 (全部完成 ✅)
 
 ## 参考文献
 
-- Paper I §3：Rec/Spec 范畴与谱对应
+- Paper I §3：Rec/Sp 范畴与谱对应
 - Paper VI §E3：[谱交织子定理](paper/paper6_spectral_flow.md)
 - Paper XI 附录 C：精细结构常数的谱推导
 - Paper XVII §4.3：[α 指数 KO 手征修正与零参数链](paper/paper17_zero_parameter_predictions.md)

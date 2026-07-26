@@ -10,9 +10,9 @@
 
 ## 0. 摘要
 
-本笔记建立 Lorentz 变换在 $\mathbf{Spec}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$ 在 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 时的实例化**。由此推出：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间；(3) 时间膨胀 = 谱间隙按 $\text{sech}\,\varphi$ 压缩；(4) 静质量 = 动量算符谱间隙；(5) 光锥结构 = $\partial\mathbf{Rec}_D$ 谱边界条件；(6) Lorentz 违规 = 谱静默条件破缺。
+本笔记建立 Lorentz 变换在 $\mathbf{Sp}$ 范畴中的谱动力学解读。核心论题：**Lorentz 变换不是独立给出的时空几何公理，而是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$ 在 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 时的实例化**。由此推出：(1) Lorentz 不变性 = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$；(2) Rapidity = 谱流内禀时间；(3) 时间膨胀 = 谱间隙按 $\text{sech}\,\varphi$ 压缩；(4) 静质量 = 动量算符谱间隙；(5) 光锥结构 = $\partial\mathbf{Rec}_D$ 谱边界条件；(6) Lorentz 违规 = 谱静默条件破缺。
 
-本文与已有 `spectral_lorentz_axiom.md`（Paper XI A7 公理）互补：A7 规定 Lorentz 群在 $\mathbf{Spec}$ 中的**作用方式**（QFT 场变换），本文建立 Lorentz 群作为谱流方程**生成元**的**动力学**，并把狭义相对论的诸多效应还原为谱定理的推论。
+本文与已有 `spectral_lorentz_axiom.md`（Paper XI A7 公理）互补：A7 规定 Lorentz 群在 $\mathbf{Sp}$ 中的**作用方式**（QFT 场变换），本文建立 Lorentz 群作为谱流方程**生成元**的**动力学**，并把狭义相对论的诸多效应还原为谱定理的推论。
 
 ---
 
@@ -32,7 +32,7 @@
 
 **Lorentz 变换是谱流方程在时空对称群上的限制**。具体地，对 Lorentz 群 $SO^+(1,3)$ 的 Lie 代数 $\mathfrak{so}(1,3)$，存在谱生成元嵌入
 
-$$\iota_{\text{Lor}}: \mathfrak{so}(1,3) \hookrightarrow \mathrm{Gen}(\mathbf{Spec}),$$
+$$\iota_{\text{Lor}}: \mathfrak{so}(1,3) \hookrightarrow \mathrm{Gen}(\mathbf{Sp}),$$
 
 使得任意 Lorentz 变换 $\Lambda = \exp(\omega_{\mu\nu}M^{\mu\nu}/2) \in SO^+(1,3)$ 对应谱流
 
@@ -50,7 +50,7 @@ Lorentz 群 $SO^+(1,3)$ 的 Lie 代数 $\mathfrak{so}(1,3)$ 由 6 个生成元�
 
 $$[J_i, J_j] = \varepsilon_{ijk} J_k,\quad [J_i, K_j] = \varepsilon_{ijk} K_k,\quad [K_i, K_j] = -\varepsilon_{ijk} J_k.$$
 
-**定义 2.1**（Lorentz 谱生成元嵌入）。Lorentz 谱生成元嵌入 $\iota_{\text{Lor}}: \mathfrak{so}(1,3) \to \mathrm{Gen}(\mathbf{Spec})$ 是 Lie 代数同态，把 $\mathfrak{so}(1,3)$ 的生成元 $J_i, K_i$ 映为 $\mathbf{Spec}$ 中的反 Hermite 谱生成元：
+**定义 2.1**（Lorentz 谱生成元嵌入）。Lorentz 谱生成元嵌入 $\iota_{\text{Lor}}: \mathfrak{so}(1,3) \to \mathrm{Gen}(\mathbf{Sp})$ 是 Lie 代数同态，把 $\mathfrak{so}(1,3)$ 的生成元 $J_i, K_i$ 映为 $\mathbf{Sp}$ 中的反 Hermite 谱生成元：
 
 $$\iota_{\text{Lor}}(J_i) =: \mathcal{J}_i,\quad \iota_{\text{Lor}}(K_i) =: \mathcal{K}_i,$$
 
@@ -58,11 +58,11 @@ $$\iota_{\text{Lor}}(J_i) =: \mathcal{J}_i,\quad \iota_{\text{Lor}}(K_i) =: \mat
 
 $$[\mathcal{J}_i, \mathcal{J}_j] = \varepsilon_{ijk}\mathcal{J}_k,\quad [\mathcal{J}_i, \mathcal{K}_j] = \varepsilon_{ijk}\mathcal{K}_k,\quad [\mathcal{K}_i, \mathcal{K}_j] = -\varepsilon_{ijk}\mathcal{J}_k.$$
 
-**注 2.1**（同态的非平凡性）。$\iota_{\text{Lor}}$ 不是恒等映射——它把抽象 Lie 代数元映为 $\mathbf{Spec}$ 中的具体算子。其存在性由 Wigner-Bargmann 表示定理保证：Lorentz 群在 Hilbert 空间上的么正表示存在，且其 Lie 代数表示满足上述对易关系。
+**注 2.1**（同态的非平凡性）。$\iota_{\text{Lor}}$ 不是恒等映射——它把抽象 Lie 代数元映为 $\mathbf{Sp}$ 中的具体算子。其存在性由 Wigner-Bargmann 表示定理保证：Lorentz 群在 Hilbert 空间上的么正表示存在，且其 Lie 代数表示满足上述对易关系。
 
 ### 2.2 Lorentz 谱流方程
 
-**定理 2.1**（Lorentz 谱流方程）。设物理可观测量 $A$ 在 $\mathbf{Spec}$ 中的谱像为 $D(A) = (\mathcal{H}, A, \sigma(A))$。Lorentz 变换 $\Lambda(\boldsymbol{\theta}, \boldsymbol{\varphi}) = \exp(\boldsymbol{\theta}\cdot\mathbf{J} + \boldsymbol{\varphi}\cdot\mathbf{K}) \in SO^+(1,3)$ 作用于 $A$ 上对应谱流：
+**定理 2.1**（Lorentz 谱流方程）。设物理可观测量 $A$ 在 $\mathbf{Sp}$ 中的谱像为 $D(A) = (\mathcal{H}, A, \sigma(A))$。Lorentz 变换 $\Lambda(\boldsymbol{\theta}, \boldsymbol{\varphi}) = \exp(\boldsymbol{\theta}\cdot\mathbf{J} + \boldsymbol{\varphi}\cdot\mathbf{K}) \in SO^+(1,3)$ 作用于 $A$ 上对应谱流：
 
 $$\boxed{\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau],\quad G_{\text{Lor}} = \boldsymbol{\theta}\cdot\boldsymbol{\mathcal{J}} + \boldsymbol{\varphi}\cdot\boldsymbol{\mathcal{K}}}$$
 
@@ -70,13 +70,13 @@ $$\boxed{\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau],\quad G_{\text{Lor}} =
 
 $$A_\tau = U_\tau A_0 U_\tau^{-1},\quad U_\tau = e^{\tau G_{\text{Lor}}}.$$
 
-**证明**。由 $\iota_{\text{Lor}}$ 是 Lie 代数同态，$\exp(\tau G_{\text{Lor}}) = \iota_{\text{Lor}}(\exp(\tau\omega_{\mu\nu}M^{\mu\nu}/2))$ 是 Lorentz 群在 $\mathbf{Spec}$ 中的实现。$G_{\text{Lor}}$ 反 Hermite $\Rightarrow$ $U_\tau$ 幺正 $\Rightarrow$ $A_\tau = U_\tau A_0 U_\tau^{-1}$ 是相似变换。谱流方程由直接对 $\tau$ 求导得到：$\frac{d}{d\tau}A_\tau = G_{\text{Lor}} A_\tau - A_\tau G_{\text{Lor}} = [G_{\text{Lor}}, A_\tau]$。□
+**证明**。由 $\iota_{\text{Lor}}$ 是 Lie 代数同态，$\exp(\tau G_{\text{Lor}}) = \iota_{\text{Lor}}(\exp(\tau\omega_{\mu\nu}M^{\mu\nu}/2))$ 是 Lorentz 群在 $\mathbf{Sp}$ 中的实现。$G_{\text{Lor}}$ 反 Hermite $\Rightarrow$ $U_\tau$ 幺正 $\Rightarrow$ $A_\tau = U_\tau A_0 U_\tau^{-1}$ 是相似变换。谱流方程由直接对 $\tau$ 求导得到：$\frac{d}{d\tau}A_\tau = G_{\text{Lor}} A_\tau - A_\tau G_{\text{Lor}} = [G_{\text{Lor}}, A_\tau]$。□
 
 **注 2.2**（与 Paper V 力谱流的同构）。Lorentz 谱流方程与 Paper V 的力谱流方程 $\frac{d}{dt}A_t = \sum_i g_i [A_{F,i}, A_t]$ 共享 Lie 导数结构 $[G, A_t]$。区别仅在生成元的物理身份：力谱流的 $A_{F,i}$ 是相互作用的谱生成元，Lorentz 谱流的 $\mathcal{J}_i, \mathcal{K}_i$ 是时空对称性的谱生成元。这一同构揭示：**时空对称性与基本力共享同一谱动力学根源**。
 
 ### 2.3 主定理：Lorentz 不变性 = 谱不变性
 
-**定理 2.2**（Lorentz 不变性的谱刻画）。对任意 Lorentz 变换 $\Lambda \in SO^+(1,3)$ 与任意可观测量 $A \in \mathrm{Obj}(\mathbf{Spec})$，
+**定理 2.2**（Lorentz 不变性的谱刻画）。对任意 Lorentz 变换 $\Lambda \in SO^+(1,3)$ 与任意可观测量 $A \in \mathrm{Obj}(\mathbf{Sp})$，
 
 $$\sigma(\Lambda\cdot A\cdot\Lambda^{-1}) = \sigma(A).$$
 
@@ -86,7 +86,7 @@ $$\sigma(\Lambda\cdot A\cdot\Lambda^{-1}) = \sigma(A).$$
 
 ### 2.4 与 A7 公理的关系
 
-`spectral_lorentz_axiom.md` 中的 A7 公理规定 Lorentz 群在 $\mathbf{Spec}$ 中的**作用函子** $L: \mathcal{P}_+^\uparrow \to \mathrm{Aut}(\mathbf{Spec})$，以及 QFT 场 $\Phi(\lambda)$ 的变换法则 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$。
+`spectral_lorentz_axiom.md` 中的 A7 公理规定 Lorentz 群在 $\mathbf{Sp}$ 中的**作用函子** $L: \mathcal{P}_+^\uparrow \to \mathrm{Aut}(\mathbf{Sp})$，以及 QFT 场 $\Phi(\lambda)$ 的变换法则 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$。
 
 **命题 2.3**（A7 是定理 2.1 的具体化）。A7 公理中的 $U(\Lambda)$ 与定理 2.1 中的 $U_\tau$ 通过 $\Lambda = \exp(\tau G_{\text{Lor}}^{\text{abstract}})$ 一一对应：
 
@@ -297,7 +297,7 @@ $$\tau = \int_\gamma \frac{ds}{c}\sqrt{-\eta_{\mu\nu}dx^\mu dx^\nu},$$
 
 ### 7.2 Poincaré 群的谱扩展
 
-**命题 7.2**（Poincaré 群 = Lorentz 谱流 + 平移谱流）。完整 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$ 在 $\mathbf{Spec}$ 中的实现为：
+**命题 7.2**（Poincaré 群 = Lorentz 谱流 + 平移谱流）。完整 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$ 在 $\mathbf{Sp}$ 中的实现为：
 
 $$G_{\text{Poincaré}} = \boldsymbol{\theta}\cdot\boldsymbol{\mathcal{J}} + \boldsymbol{\varphi}\cdot\boldsymbol{\mathcal{K}} + \mathbf{a}\cdot\mathcal{P},$$
 
@@ -305,11 +305,11 @@ $$G_{\text{Poincaré}} = \boldsymbol{\theta}\cdot\boldsymbol{\mathcal{J}} + \bol
 
 $$\frac{d}{d\tau}A_\tau = [G_{\text{Poincaré}}, A_\tau].$$
 
-**证明**。Poincaré Lie 代数 $\mathfrak{iso}(1,3) = \mathfrak{so}(1,3) \oplus \mathbb{R}^{1,3}$ 的生成元 $J_{\mu\nu}, P_\mu$ 满足标准对易关系。$\iota_{\text{Lor}}$ 扩展为 $\iota_{\text{Poinc}}: \mathfrak{iso}(1,3) \to \mathrm{Gen}(\mathbf{Spec})$ 直接给出 Poincaré 谱流。□
+**证明**。Poincaré Lie 代数 $\mathfrak{iso}(1,3) = \mathfrak{so}(1,3) \oplus \mathbb{R}^{1,3}$ 的生成元 $J_{\mu\nu}, P_\mu$ 满足标准对易关系。$\iota_{\text{Lor}}$ 扩展为 $\iota_{\text{Poinc}}: \mathfrak{iso}(1,3) \to \mathrm{Gen}(\mathbf{Sp})$ 直接给出 Poincaré 谱流。□
 
 ### 7.3 与 A7 公理的范畴论衔接
 
-A7 公理中 $L: \mathcal{P}_+^\uparrow \to \mathrm{Aut}(\mathbf{Spec})$ 是函子，本节的 $\iota_{\text{Poinc}}$ 是 Lie 代数同态。两者关系：
+A7 公理中 $L: \mathcal{P}_+^\uparrow \to \mathrm{Aut}(\mathbf{Sp})$ 是函子，本节的 $\iota_{\text{Poinc}}$ 是 Lie 代数同态。两者关系：
 
 **命题 7.3**（函子-同态对应）。$L$ 是 $\iota_{\text{Poinc}}$ 的 Lie 群-Lie 代数对应：
 
@@ -374,7 +374,7 @@ $$\xi(E) \sim \left(\frac{E}{M_{\text{Pl}}}\right)^n\cdot\frac{M_{\text{Pl}}}{\d
 
 ### 9.2 统一论点
 
-**Lorentz 变换在 $\mathbf{Spec}$ 中是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$ 在 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 时的实例化**。由此推出：
+**Lorentz 变换在 $\mathbf{Sp}$ 中是谱流方程 $\frac{d}{d\tau}A_\tau = [G_{\text{Lor}}, A_\tau]$ 在 $G_{\text{Lor}} \in \mathfrak{so}(1,3)$ 时的实例化**。由此推出：
 
 1. **Lorentz 不变性** = 谱不变性 $\sigma(A_\tau) = \sigma(A_0)$（定理 2.2）
 2. **Rapidity** = 谱流内禀时间（命题 3.1）
@@ -397,7 +397,7 @@ $$\xi(E) \sim \left(\frac{E}{M_{\text{Pl}}}\right)^n\cdot\frac{M_{\text{Pl}}}{\d
 
 1. **定理 4.1 时间膨胀的严格证明**：当前证明为启发式，需要严格推导 $\Delta\lambda_{\text{lab}} = \Delta\lambda_0\,\text{sech}\,\varphi$ 的算子论细节，特别是能量本征态在推进作用下的非对角混合。
 
-2. **定理 6.1 静质量-谱间隙对应的范畴论严格化**：需要在 $\mathbf{Spec}$ 中定义"Poincaré Casimir 算子"的范畴论版本，并证明其本征值与 Wigner 粒子分类一一对应。
+2. **定理 6.1 静质量-谱间隙对应的范畴论严格化**：需要在 $\mathbf{Sp}$ 中定义"Poincaré Casimir 算子"的范畴论版本，并证明其本征值与 Wigner 粒子分类一一对应。
 
 3. **猜想 7.1 Lorentz 群的范畴起源**：当前是猜想，需要从 $\partial\mathbf{Rec}_D$ 的微分结构严格推导 $SO^+(1,3)$ 的唯一性。可能需要用到 Lie-Cartan 定理与 Witt 扩展定理。
 
@@ -439,7 +439,7 @@ $$\xi(E) \sim \left(\frac{E}{M_{\text{Pl}}}\right)^n\cdot\frac{M_{\text{Pl}}}{\d
 
 ## 12. 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》。$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子。
+- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》。$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子。
 - [V] Paper V：《力的谱动力学》。谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、定理 2.2（谱流不变性）。
 - [VII] Paper VII：《非平衡谱热力学》。固定基谱熵 $S_\mathcal{B}(t)$。
 - [VIII] Paper VIII：《黑洞视界谱动力学》。$\partial\mathbf{Rec}_D$、$T_H = \Delta\lambda_{\min}/(2\pi)$、$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$。

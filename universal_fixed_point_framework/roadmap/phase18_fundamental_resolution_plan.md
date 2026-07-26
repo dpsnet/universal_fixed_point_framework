@@ -1,6 +1,6 @@
 # Phase 18：框架顶层设计根本矛盾解决计划
 
-针对 [关于范畴论使用的相关批评之二](../../docs/关于范畴论使用的相关批评之二.md) 指出的三类底层硬伤（复谱自然等价失效、跨领域函子无通用相容证明、Freyd 定理缺紧性构造）与学术规范问题，规划本框架的顶层设计修订路线。本文档为方案确认稿，不直接修改论文，待用户审阅后决定执行范围。
+针对 [关于范畴论使用的相关批评之二](../../docs/关于范畴论使用的相关批评之二.md) 指出的三类底层硬伤（复谱自然同构失效、跨领域函子无通用相容证明、Freyd 定理缺紧性构造）与学术规范问题，规划本框架的顶层设计修订路线。本文档为方案确认稿，不直接修改论文，待用户审阅后决定执行范围。
 
 ## 一、批评要点与诊断
 
@@ -17,10 +17,10 @@
 
 | 硬伤编号 | 描述 | 严重程度 |
 |----------|------|----------|
-| **C1** | $M\cong L$ 自然等价仅对实正自伴算子成立，复谱 $\lambda=e^{-\mu}$ 不可逆，Kerr QNM 复谱无范畴等价 | 致命 |
+| **C1** | $M\cong L$ 自然同构仅对实正自伴算子成立，复谱 $\lambda=e^{-\mu}$ 不可逆，Kerr QNM 复谱无范畴等价 | 致命 |
 | **C2** | Freyd 定理应用跳步：$\mathbf{Rec}_D$ 完备性无测度论紧性推导；解集条件无可表函子构造；IFS 无穷维空间无标准紧性引理 | 致命 |
 | **C3** | 跨领域函子无通用相容性证明：IFS/Kerr/NTK/Clifford 四类对象态射、内积、拓扑不同，无通用交换图证明 | 致命 |
-| **C4** | D-C/HD-D/TE-G-M 三定理为已有结论重包装，无原创数学突破 | 重大 |
+| **C4** | Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式 三定理为已有结论重包装，无原创数学突破 | 重大 |
 | **P1** | 谱静默与 QFT 真空冲突：零测自由度无量子涨落、无圈修正 | 致命 |
 | **P2** | GR 与 SM 强行 Cl(1,7) 统一无反常抵消机制 | 致命 |
 | **P3** | BSM 四代矢量轻子多重理论不自洽：质子寿命、重子生成、轻子味振荡多观测约束缺失 | 重大 |
@@ -38,7 +38,7 @@
 
 ---
 
-## 二、核心硬伤 C1 解决方案：复谱自然等价
+## 二、核心硬伤 C1 解决方案：复谱自然同构
 
 ### 2.1 硬伤本质
 
@@ -53,7 +53,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 在 1-范畴层面断裂于 $\exp$ 的非单射性，而在辫子范畴层面提升为**辫子正合序列**——$\exp$ 成为辫子函子，其"核"$2\pi i\mathbb{Z}$ 被辫子结构吸收为交叉计数。
 
-### 2.2 首选方案：辫子自然等价（braided natural equivalence）
+### 2.2 首选方案：辫子自然同构（braided natural equivalence）
 
 **核心思想**：将 $\mathbf{Rec}_{\text{diss}}$ 升级为辫子幺半范畴，$\eta_R: \mu \mapsto e^{-\mu}$ 升级为辫子自然变换——辫子交叉记录辐角缠绕，吸收 $\exp$ 的非单射性。
 
@@ -71,14 +71,14 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 **证明**。六边形公理由张量积的结合性与辫子态射的辫子关系（braid relation）直接验证。退化性：当 $\omega_I = 0$，$k = 0$，辫子退化为对称翻转 $\sigma^2 = \mathrm{id}$，与 $\mathbf{Rec}_D$ 的自伴子范畴一致。□
 
-#### 2.2.2 辫子自然等价
+#### 2.2.2 辫子自然同构
 
-**定理 C1.3**（辫子自然等价）。设 $M, L: \mathbf{Rec}_{\text{diss}} \to \mathbf{Vect}_{\mathbb{C}}$ 为辫子函子：
+**定理 C1.3**（辫子自然同构）。设 $M, L: \mathbf{Rec}_{\text{diss}} \to \mathbf{Vect}_{\mathbb{C}}$ 为辫子函子：
 
 - $M(R) = \sigma(-\log U_R)$（对数谱，带辫子作用）；
 - $L(R) = \sigma(U_R)$（指数谱，带辫子作用）。
 
-则映射 $\eta_R: \mu \mapsto e^{-\mu}$ 给出**辫子自然等价** $M \cong L$，即在辫子范畴层面严格成立自然同构。
+则映射 $\eta_R: \mu \mapsto e^{-\mu}$ 给出**辫子自然同构** $M \cong L$，即在辫子范畴层面严格成立自然同构。
 
 **证明**。
 
@@ -104,18 +104,18 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 辫子版本允许弦的交叉，交叉次数对应辐角缠绕，拉直后交叉归零——严格验证。这比文字证明更严格、更直观，且为 Phase 16 机器证明提供友好接口（Lean mathlib 的 `CategoryTheory.Monoidal.Braided`）。
 
-### 2.3 退路方案：分支自然等价（branched natural equivalence）
+### 2.3 退路方案：分支自然同构（branched natural equivalence）
 
 当 $\mathbf{Rec}_{\text{diss}}$ 的辫子结构退化（$U_R$ 严重非正规导致辫子相容性失效）时，退回 1-范畴层面的分支方案。
 
-**定义 C1.4**（复谱分支结构）。设 $\mathbf{Spec}_{\mathbb{C}}^{\text{br}}$ 为分支谱范畴，对象为 $(E, \mathcal{B})$，其中 $E \in \mathbf{Spec}_{\mathbb{C}}$，$\mathcal{B} = \{B_k\}_{k \in \mathbb{Z}}$ 为谱的分支族，$B_k = \{\mu + 2\pi i k \mid \mu \in \mathbb{R}\}$。
+**定义 C1.4**（复谱分支结构）。设 $\mathbf{Sp}_{\mathbb{C}}^{\text{br}}$ 为分支谱范畴，对象为 $(E, \mathcal{B})$，其中 $E \in \mathbf{Sp}_{\mathbb{C}}$，$\mathcal{B} = \{B_k\}_{k \in \mathbb{Z}}$ 为谱的分支族，$B_k = \{\mu + 2\pi i k \mid \mu \in \mathbb{R}\}$。
 
-**定理 C1.5**（分支自然等价）。定义函子 $M^{\text{br}}, L^{\text{br}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Set}$：
+**定理 C1.5**（分支自然同构）。定义函子 $M^{\text{br}}, L^{\text{br}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Set}$：
 
 - $M^{\text{br}}(R) = \{(\mu, k) \mid \mu \in \sigma(-\log U_R), k \in \mathbb{Z}\}$（分支对数谱）；
 - $L^{\text{br}}(R) = \{(\lambda, k) \mid \lambda \in \sigma(U_R), k \in \mathbb{Z}\}$（分支指数谱）。
 
-则映射 $\eta_R^{\text{br}}: (\mu, k) \mapsto (e^{-\mu - 2\pi i k}, k)$ 给出**分支自然等价** $M^{\text{br}} \cong L^{\text{br}}$，即在每个分支 $B_k$ 上严格为双射。
+则映射 $\eta_R^{\text{br}}: (\mu, k) \mapsto (e^{-\mu - 2\pi i k}, k)$ 给出**分支自然同构** $M^{\text{br}} \cong L^{\text{br}}$，即在每个分支 $B_k$ 上严格为双射。
 
 **证明**。
 
@@ -123,14 +123,14 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 2. **满射性**：对任意 $(\lambda, k) \in L^{\text{br}}(R)$，取 $\mu = -\log \lambda - 2\pi i k$（主值 $\log$ 加分支修正），则 $\eta_R^{\text{br}}(\mu, k) = (\lambda, k)$；
 3. **自然性**：对 $\mathbf{Rec}_{\text{diss}}$ 态射 $f:R_1 \to R_2$，由 $D_{\text{diss}}$ 的严格函子律，$D_{\text{diss}}(f)$ 保持伪谱扰动界，故分支结构在态射作用下保持。□
 
-**注 C1.6**。分支自然等价可视为辫子自然等价在辫子结构退化（交叉计数扁平化为分支指标 $k$）时的 1-范畴投影。对 Kerr QNM 复谱 $\omega = \omega_R + i\omega_I$，分支 $k$ 对应 $\omega_I / (2\pi)$ 的整数部分，主值分支 $k=0$ 对应 $\omega_I \in (-\pi, \pi]$。
+**注 C1.6**。分支自然同构可视为辫子自然同构在辫子结构退化（交叉计数扁平化为分支指标 $k$）时的 1-范畴投影。对 Kerr QNM 复谱 $\omega = \omega_R + i\omega_I$，分支 $k$ 对应 $\omega_I / (2\pi)$ 的整数部分，主值分支 $k=0$ 对应 $\omega_I \in (-\pi, \pi]$。
 
 ### 2.4 方案选择准则
 
 | 优先级 | 方案 | 适用情形 | 判据 |
 |--------|------|----------|------|
-| **首选** | 辫子自然等价（§2.2） | $\mathbf{Rec}_{\text{diss}}$ 满足辫子相容性（六边形公理） | $U_R$ 的伪谱扰动界常数 $C < C_{\text{crit}}$（辫子非退化） |
-| 退路 | 分支自然等价（§2.3） | 辫子结构退化（$U_R$ 严重非正规） | $C \geq C_{\text{crit}}$，辫子交叉计数失效 |
+| **首选** | 辫子自然同构（§2.2） | $\mathbf{Rec}_{\text{diss}}$ 满足辫子相容性（六边形公理） | $U_R$ 的伪谱扰动界常数 $C < C_{\text{crit}}$（辫子非退化） |
+| 退路 | 分支自然同构（§2.3） | 辫子结构退化（$U_R$ 严重非正规） | $C \geq C_{\text{crit}}$，辫子交叉计数失效 |
 
 ### 2.5 弦图方案的额外优势
 
@@ -143,14 +143,14 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 | 章节 | 修订 | 优先级 |
 |------|------|--------|
-| §3.4 定理 3.7 | 标题改为"辫子谱对应自然等价"（首选）/ "分支谱对应自然等价"（退路），证明升级为辫子版本 | 高 |
+| §3.4 定理 3.7 | 标题改为"辫子谱对应自然同构"（首选）/ "分支谱对应自然同构"（退路），证明升级为辫子版本 | 高 |
 | §2 新增 §2.x | $\mathbf{Rec}_{\text{diss}}$ 的辫子幺半结构与命题 C1.2（辫子相容性） | 高 |
 | §3 新增 §3.x | 弦图验证三角恒等式（yanking equation） | 高 |
-| §7.9.1 定理 7.31 | 引用辫子自然等价，证明 $\mathbf{Rec}_{\text{diss}}$ 上的复谱辫子范畴等价 | 高 |
+| §7.9.1 定理 7.31 | 引用辫子自然同构，证明 $\mathbf{Rec}_{\text{diss}}$ 上的复谱辫子范畴等价 | 高 |
 | §5.7 三层静默 | 补充"辫子静默"——不同辫子同伦类间不可见的第四层静默（替代"分支静默"） | 中 |
 | §9 物理诠释 | 补充辫子交叉次数 $k$ 的物理对应（QNM 阻尼量子数 / 弦绕数 / NTK 模式交叉） | 中 |
-| 摘要 | 修正"$M \cong L$"为"$M \cong_{\text{br}} L$（辫子自然等价）" | 中 |
-| Phase 16 优先级 | 辫子自然等价形式化作为 Phase 16B 首要任务，利用 `CategoryTheory.Monoidal.Braided` | 高 |
+| 摘要 | 修正"$M \cong L$"为"$M \cong_{\text{br}} L$（辫子自然同构）" | 中 |
+| Phase 16 优先级 | 辫子自然同构形式化作为 Phase 16B 首要任务，利用 `CategoryTheory.Monoidal.Braided` | 高 |
 
 ---
 
@@ -160,7 +160,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 命题 2.5d 当前证明：
 - 完备性仅文字断言"极限满足正半定谱"，无测度论紧性推导；
-- 解集条件仅定性描述"基数有界"，无 $\mathbf{Spec}$ 对象解集的标准构造；
+- 解集条件仅定性描述"基数有界"，无 $\mathbf{Sp}$ 对象解集的标准构造；
 - IFS 无穷维空间上递归系统图表极限无标准紧性引理。
 
 ### 3.2 数学解决方案：显式构造 + 紧性论证
@@ -180,9 +180,9 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 #### 3.2.2 解集条件的可表函子构造
 
-**命题 C2.2**（解集的可表构造）。对每个 $E \in \mathbf{Spec}$，存在可表函子 $G_E: \mathbf{Rec}_D \to \mathbf{Set}$，$G_E(R) = \mathrm{Hom}_{\mathbf{Spec}}(E, D(R))$，其代表对象为 $R_E = R(E)$（包含函子的像）。解集条件等价于 $G_E$ 的可表性。
+**命题 C2.2**（解集的可表构造）。对每个 $E \in \mathbf{Sp}$，存在可表函子 $G_E: \mathbf{Rec}_D \to \mathbf{Set}$，$G_E(R) = \mathrm{Hom}_{\mathbf{Sp}}(E, D(R))$，其代表对象为 $R_E = R(E)$（包含函子的像）。解集条件等价于 $G_E$ 的可表性。
 
-**证明**。由 $D \dashv R$（定理 2.10a），$\mathrm{Hom}_{\mathbf{Spec}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集条件由 $\mathbf{Spec}$ 的小性（谱对象集合为集合而非真类）保证。□
+**证明**。由 $D \dashv R$（定理 2.10a），$\mathrm{Hom}_{\mathbf{Sp}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集条件由 $\mathbf{Sp}$ 的小性（谱对象集合为集合而非真类）保证。□
 
 #### 3.2.3 Freyd 定理的完整应用
 
@@ -192,7 +192,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 2. **解集条件**：命题 C2.2 给出可表函子的标准构造；
 3. **小性**：$\mathbf{Rec}_D$ 的对象类为集合（由 Koopman 算子的集合性保证）。
 
-故 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 存在右伴随 $R: \mathbf{Spec} \to \mathbf{Rec}_D$。
+故 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 存在右伴随 $R: \mathbf{Sp} \to \mathbf{Rec}_D$。
 
 ### 3.3 论文修订操作
 
@@ -276,9 +276,9 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 ### 5.1 硬伤本质
 
 批评者指出：
-- D-C：Falconer 2014 已有压力函数凸→Hausdorff 维数凹的推导；
-- HD-D：Ledrappier-Young 80 年代经典定理；
-- TE-G-M：Ruelle 1978 谱间隙与拓扑熵不等式。
+- Hausdorff 维数凹性：Falconer 2014 已有压力函数凸→Hausdorff 维数凹的推导；
+- Ledrappier-Young 维数分解：Ledrappier-Young 80 年代经典定理；
+- 拓扑熵–谱间隙不等式：Ruelle 1978 谱间隙与拓扑熵不等式。
 
 ### 5.2 处理方案：诚实声明 + 真正创新点
 
@@ -286,7 +286,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 **真正创新点**（非定理本身，而是定理间的关联）：
 
-1. **三定理的统一框架**：D-C、HD-D、TE-G-M 在本框架内首次被组织为"分形 RKHS + 遍历理论 + 拓扑动力系统"的统一范畴结构，三定理间的范畴关联（通过 $D$ 函子的谱保持性传递）为本文创新；
+1. **三定理的统一框架**：Hausdorff 维数凹性、Ledrappier-Young 维数分解、拓扑熵–谱间隙不等式 在本框架内首次被组织为"分形 RKHS + 遍历理论 + 拓扑动力系统"的统一范畴结构，三定理间的范畴关联（通过 $D$ 函子的谱保持性传递）为本文创新；
 2. **物理应用的具体化**：将三定理应用于 Kerr QNM、暗物质质量谱、BSM 费米子质量谱的具体物理预测（含误差预算），为本文创新；
 3. **数学工具的范畴论化**：将遍历论工具重新表述为范畴论语言（如将转移算子表述为 $\mathbf{Rec}$ 对象），为本文方法创新。
 
@@ -357,7 +357,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 **解决方案**：新增 §1.x「与现有范畴动力系统文献的关系」，梳理：
 
 - **范畴动力系统**（Lawvere, 1963）：本框架的 $\mathbf{Rec}$ 范畴为 Lawvere 范畴的特化；
-- **遍历理论与算子代数**（Connes, 1994）：$\mathbf{Spec}$ 范畴与 Connes 的谱三元组的关系；
+- **遍历理论与算子代数**（Connes, 1994）：$\mathbf{Sp}$ 范畴与 Connes 的谱三元组的关系；
 - **分形几何与 IFS**（Falconer, 2014）：分形 RKHS 为 Falconer 理论的范畴论化；
 - **机器学习与 NTK**（Jacot, 2018）：NTK 在本框架中的位置。
 
@@ -377,9 +377,9 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 ### 7.4 A4：机器证明仅规划
 
-**解决方案**：Phase 16 Lean 形式化已推进至 6/7 完成（见 README.md 与 phase16_machine_proof.md）。对 C1-C3 硬伤，优先形式化**辫子自然等价**（首选）与隔离约束相容性定理。利用 Lean mathlib 现有的 `CategoryTheory.Monoidal.Braided` 与 `CategoryTheory.Monoidal.Braided.Basic`，辫子方案的形式化成本低于分支方案。
+**解决方案**：Phase 16 Lean 形式化已推进至 6/7 完成（见 README.md 与 phase16_machine_proof.md）。对 C1-C3 硬伤，优先形式化**辫子自然同构**（首选）与隔离约束相容性定理。利用 Lean mathlib 现有的 `CategoryTheory.Monoidal.Braided` 与 `CategoryTheory.Monoidal.Braided.Basic`，辫子方案的形式化成本低于分支方案。
 
-**修订操作**：Phase 16 优先级调整，将 C1 辫子自然等价（定义 C1.1 + 命题 C1.2 + 定理 C1.3）与 C3 隔离约束相容性作为 Phase 16B 的首要任务。
+**修订操作**：Phase 16 优先级调整，将 C1 辫子自然同构（定义 C1.1 + 命题 C1.2 + 定理 C1.3）与 C3 隔离约束相容性作为 Phase 16B 的首要任务。
 
 ---
 
@@ -400,7 +400,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 ### 8.3 核心立场
 
-本框架的跨领域统一是**有条件的统一**——在隔离约束 $\mathrm{IC}$ 满足时严格成立，不满足时退化为条件性统一或不相容。这一立场既尊重了批评者的合理观察（跨领域相容性不能无条件成立），又保留了框架的核心创新（通过 IC 严格化实现有条件统一）。复谱情形下的辫子自然等价是这一立场的典范——$\exp$ 的非单射性在 1-范畴层面是缺陷，在辫子范畴层面被辫子结构吸收为内蕴特征。
+本框架的跨领域统一是**有条件的统一**——在隔离约束 $\mathrm{IC}$ 满足时严格成立，不满足时退化为条件性统一或不相容。这一立场既尊重了批评者的合理观察（跨领域相容性不能无条件成立），又保留了框架的核心创新（通过 IC 严格化实现有条件统一）。复谱情形下的辫子自然同构是这一立场的典范——$\exp$ 的非单射性在 1-范畴层面是缺陷，在辫子范畴层面被辫子结构吸收为内蕴特征。
 
 ---
 
@@ -409,12 +409,12 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 | 序号 | 硬伤 | 章节 | 操作 | 优先级 | 状态 |
 |------|------|------|------|--------|------|
 | 1 | C1 | §2 新增 §2.4a | $\mathbf{Rec}_{\text{diss}}$ 辫子幺半结构（定义 2.11a + 命题 2.11b 辫子相容性） | 致命 | ✅ 完成 |
-| 2 | C1 | §3.4 定理 3.7 | 升级为辫子自然等价 $M \cong_{\text{br}} L$（首选）/ 分支自然等价 $M^{\text{br}} \cong L^{\text{br}}$（退路） | 致命 | ✅ 完成 |
+| 2 | C1 | §3.4 定理 3.7 | 升级为辫子自然同构 $M \cong_{\text{br}} L$（首选）/ 分支自然同构 $M^{\text{br}} \cong L^{\text{br}}$（退路） | 致命 | ✅ 完成 |
 | 3 | C1 | §3.4b 弦图 | 弦图验证三角恒等式（yanking equation, 定理 3.7f） | 高 | ✅ 完成 |
-| 4 | C1 | §7.9.1 定理 7.31 | 引用辫子自然等价（注 7.31a），证明 $\mathbf{Rec}_{\text{diss}}$ 上的复谱辫子范畴等价 | 高 | ✅ 完成 |
+| 4 | C1 | §7.9.1 定理 7.31 | 引用辫子自然同构（注 7.31a），证明 $\mathbf{Rec}_{\text{diss}}$ 上的复谱辫子范畴等价 | 高 | ✅ 完成 |
 | 5 | C1 | §5.7.5 | 补充"辫子静默"——第四层静默（定义 5.17 + 定理 5.18 + 注 5.19） | 中 | ✅ 完成 |
 | 6 | C1 | §9.5 物理诠释 | 补充辫子交叉次数 $k$ 的物理对应（QNM 阻尼量子数 / 弦绕数 / NTK 模式交叉） | 中 | ✅ 完成 |
-| 7 | C1 | 摘要/贡献 | 修正 $M \cong L$ 为 $M \cong_{\text{br}} L$（辫子自然等价） | 高 | ✅ 完成 |
+| 7 | C1 | 摘要/贡献 | 修正 $M \cong L$ 为 $M \cong_{\text{br}} L$（辫子自然同构） | 高 | ✅ 完成 |
 | 8 | C2 | §2.4 命题 2.5d | 扩充测度论紧性（命题 C2.1）与可表函子构造（命题 C2.2），Freyd 完整应用（定理 C2.3） | 致命 | ✅ 完成 |
 | 9 | C2 | 附录 A.14 | 新增紧性引理（引理 A.1 谱上半连续性）、Banach-Alaoglu 论证（注 A.2）、Yoneda 可表性（引理 A.3） | 高 | ✅ 完成 |
 | 10 | C3 | §3.7 | 跨领域函子相容性（定义 C3.1 IC + 定理 C3.2 + 命题 C3.3 + 注 C3.4/C3.5） | 致命 | ✅ 完成 |
@@ -429,17 +429,17 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 | 19 | A1 | §1.4 | 与现有范畴动力系统文献对话（Lawvere/Connes/Falconer/Jacot/Mezić） | 高 | ✅ 完成 |
 | 20 | A2 | §9.5 / 各处 | "统一"改为"形式类比" | 中 | ✅ 完成 |
 | 21 | A3 | paper2 §4.9/§5.6/§7.6 | 参数空间扫描（BSM/Kerr/暗物质各1节） | 中 | ✅ 完成 |
-| 22 | A4 | Phase 16B 优先级 | C1 辫子自然等价 + C3 IC 相容性优先形式化（利用 `CategoryTheory.Monoidal.Braided`） | 中 | ✅ 完成 |
+| 22 | A4 | Phase 16B 优先级 | C1 辫子自然同构 + C3 IC 相容性优先形式化（利用 `CategoryTheory.Monoidal.Braided`） | 中 | ✅ 完成 |
 
 ---
 
 ## 十、与现有工作的关系
 
-本阶段是 **Phase 17 范畴论写作规范修订** 的深化——Phase 17 解决了表层写作规范（时序、证明、配套修正），Phase 18 解决框架顶层设计的根本矛盾（复谱自然等价、跨领域相容性、Freyd 紧性、物理场论自洽性）。与 **Phase 16 机器证明形式化** 协同：C1 **辫子自然等价**（首选，利用 Lean mathlib `CategoryTheory.Monoidal.Braided`）与 C3 隔离约束相容性将作为 Phase 16B 的首要形式化目标。分支自然等价作为辫子结构退化时的退路方案保留。
+本阶段是 **Phase 17 范畴论写作规范修订** 的深化——Phase 17 解决了表层写作规范（时序、证明、配套修正），Phase 18 解决框架顶层设计的根本矛盾（复谱自然同构、跨领域相容性、Freyd 紧性、物理场论自洽性）。与 **Phase 16 机器证明形式化** 协同：C1 **辫子自然同构**（首选，利用 Lean mathlib `CategoryTheory.Monoidal.Braided`）与 C3 隔离约束相容性将作为 Phase 16B 的首要形式化目标。分支自然同构作为辫子结构退化时的退路方案保留。
 
 ## 十一、学术意义
 
-1. **将致命批评转化为理论深化契机**：C1 复谱自然等价失效催生**辫子自然等价**理论——$\exp$ 的非单射性在辫子范畴层面被吸收为辫子交叉的内蕴特征，比原分支方案更内蕴、更优雅；C3 跨领域相容性缺失催生隔离约束条件下的相容性定理；P1 量子真空冲突催生静默破缺机制；
+1. **将致命批评转化为理论深化契机**：C1 复谱自然同构失效催生**辫子自然同构**理论——$\exp$ 的非单射性在辫子范畴层面被吸收为辫子交叉的内蕴特征，比原分支方案更内蕴、更优雅；C3 跨领域相容性缺失催生隔离约束条件下的相容性定理；P1 量子真空冲突催生静默破缺机制；
 2. **诚实声明原创性边界**：C4 三定理为已有结论重新组织，真正创新点在统一框架与物理应用具体化；
 3. **符合标准学术规范**：A1 文献对话、A2 形式类比替代宏大统一、A3 全局参数扫描、A4 机器证明优先级调整（辫子方案形式化成本低于分支方案）。
 
@@ -447,7 +447,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 ### 12.1 数学选择确认
 
-1. **C1 复谱自然等价**：采用**辫子自然等价**（首选，将 $\mathbf{Rec}_{\text{diss}}$ 升级为辫子幺半范畴，$\exp$ 的核被辫子交叉吸收）？退路：分支自然等价（Riemann 面分支，1-范畴层面）。备选：放弃全域等价，仅限实正自伴情形。
+1. **C1 复谱自然同构**：采用**辫子自然同构**（首选，将 $\mathbf{Rec}_{\text{diss}}$ 升级为辫子幺半范畴，$\exp$ 的核被辫子交叉吸收）？退路：分支自然同构（Riemann 面分支，1-范畴层面）。备选：放弃全域等价，仅限实正自伴情形。
 2. **C3 隔离约束**：采用 IC 三条件方案（谱尺度/态射延伸/拓扑相容）？备选：放弃跨领域统一。
 3. **C4 三定理**：采纳诚实声明方案（已有结论 + 统一框架创新）？备选：尝试反驳原创性。
 
@@ -462,7 +462,7 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 ### 12.3 待澄清的深层问题
 
 1. **批评者根本路径建议**：是否完全采纳"拆分单一领域、放弃跨领域统一"？还是部分采纳（隔离约束下的有条件统一）？
-2. **辫子自然等价的物理诠释**：Kerr QNM 的辫子交叉次数 $k = \lfloor(\omega_{I,1} - \omega_{I,2})/(2\pi)\rfloor$ 是否对应物理可观测量（如阻尼周期的量子数 / Chern-Simons 拓扑荷 / 弦绕数）？
+2. **辫子自然同构的物理诠释**：Kerr QNM 的辫子交叉次数 $k = \lfloor(\omega_{I,1} - \omega_{I,2})/(2\pi)\rfloor$ 是否对应物理可观测量（如阻尼周期的量子数 / Chern-Simons 拓扑荷 / 弦绕数）？
 3. **辫子结构的退化判据**：伪谱扰动界常数 $C_{\text{crit}}$ 的具体值如何确定？当 $U_R$ 严重非正规导致辫子相容性失效时，如何检测并退回分支方案？
 4. **隔离约束的物理基础**：IC 条件的物理动机是否充分？（候选：能标分离、重整化群流、规范等价性）
 5. **机器证明路径**：是否优先形式化辫子方案（利用 Lean mathlib `CategoryTheory.Monoidal.Braided`），而非分支方案？
@@ -473,9 +473,9 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 | 日期 | 更新内容 |
 |------|---------|
-| 2026-07-16 | 创建 Phase 18 框架顶层设计根本矛盾解决计划，针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然等价失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与 P1-P4 物理硬伤，规划分支自然等价、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案 |
-| 2026-07-16 | **C1 解决方案升级**——将"分支自然等价"方案升级为以**辫子自然等价**为首选（将 $\mathbf{Rec}_{\text{diss}}$ 升级为辫子幺半范畴，$\exp$ 的核 $2\pi i\mathbb{Z}$ 被辫子交叉吸收为内蕴特征）、分支自然等价为退路的双层方案。新增定义 C1.1（辫子幺半结构）、命题 C1.2（辫子相容性六边形公理）、定理 C1.3（辫子自然等价）、弦图验证三角恒等式（yanking equation）。修订操作清单从 18 项扩展至 22 项；机器证明优先利用 Lean mathlib `CategoryTheory.Monoidal.Braided` |
-| 2026-07-16 | **Phase 18A 完成**——C1（辫子自然等价全套，1-7项）全部完成：§2.4a 辫子幺半结构、§5.7.5 辫子静默、§7.9.1 注 7.31a、§9.5 辫子交叉物理诠释；配套代码实现辫子弦图演算与自然等价验证 |
+| 2026-07-16 | 创建 Phase 18 框架顶层设计根本矛盾解决计划，针对 `docs/关于范畴论使用的相关批评之二.md` 的三类致命硬伤（C1 复谱自然同构失效、C2 Freyd 紧性缺失、C3 跨领域函子无通用相容证明）与 P1-P4 物理硬伤，规划分支自然同构、显式紧性构造、隔离约束下相容性定理、静默破缺机制等深化方案 |
+| 2026-07-16 | **C1 解决方案升级**——将"分支自然同构"方案升级为以**辫子自然同构**为首选（将 $\mathbf{Rec}_{\text{diss}}$ 升级为辫子幺半范畴，$\exp$ 的核 $2\pi i\mathbb{Z}$ 被辫子交叉吸收为内蕴特征）、分支自然同构为退路的双层方案。新增定义 C1.1（辫子幺半结构）、命题 C1.2（辫子相容性六边形公理）、定理 C1.3（辫子自然同构）、弦图验证三角恒等式（yanking equation）。修订操作清单从 18 项扩展至 22 项；机器证明优先利用 Lean mathlib `CategoryTheory.Monoidal.Braided` |
+| 2026-07-16 | **Phase 18A 完成**——C1（辫子自然同构全套，1-7项）全部完成：§2.4a 辫子幺半结构、§5.7.5 辫子静默、§7.9.1 注 7.31a、§9.5 辫子交叉物理诠释；配套代码实现辫子弦图演算与自然同构验证 |
 | 2026-07-16 | **Phase 18B 完成**——C2（Freyd 定理紧性与可表构造，8-9项）全部完成：命题 2.5d 拆分为 C2.1/C2.2/C2.3，附录 A.14 新增谱上半连续性引理与 Yoneda 可表性 |
 | 2026-07-16 | **Phase 18C 完成**——C3（跨领域函子相容性，10-12项）全部完成：§3.7 新增隔离约束 IC 条件与相容性定理；paper2 六大物理应用章节补充 IC 验证标注；配套代码实现 IC 验证 |
 | 2026-07-16 | **Phase 18A2 完成**——A2（学术规范，20项）完成：paper1/paper2/math_phys_unification.py 共 15 处"统一"→"形式类比"修改 |
@@ -485,4 +485,4 @@ $$0 \to 2\pi i \mathbb{Z} \to \mathbb{C} \xrightarrow{\exp} \mathbb{C}^\ast \to 
 
 ---
 
-**文档结束**。**全部 22 项已完成**——框架顶层设计的根本矛盾（C1-C3）已通过辫子自然等价、隔离约束与显式紧性构造解决；物理硬伤（P1-P4）已通过静默破缺、反常抵消与 RG 改进处理；学术规范问题（A1-A4）已全部采纳。论文与代码修订同步完成。
+**文档结束**。**全部 22 项已完成**——框架顶层设计的根本矛盾（C1-C3）已通过辫子自然同构、隔离约束与显式紧性构造解决；物理硬伤（P1-P4）已通过静默破缺、反常抵消与 RG 改进处理；学术规范问题（A1-A4）已全部采纳。论文与代码修订同步完成。

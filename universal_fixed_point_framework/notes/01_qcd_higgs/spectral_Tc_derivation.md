@@ -2,7 +2,7 @@
 
 **版本**：v0.3（2026-07-23）
 
-**关联形式化**：温度-标度对偶 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 的 Grothendieck 纤维范畴形式化见 [`TempRGFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)（Phase 54B）。$\partial\mathbf{Rec}_D$ 边界上的谱编织粘合形式化见 [`WeaveProductFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/WeaveProductFiber.lean)（Phase 55C）。
+**关联形式化**：温度-标度对偶 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 的 Grothendieck 纤维范畴形式化见 [`TempRGFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)（Phase 54B）。$\partial\mathbf{Rec}_D$ 边界上的谱粘合粘合形式化见 [`WeaveProductFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/WeaveProductFiber.lean)（Phase 55C）。
 
 **摘要**：本笔记从谱框架第一性原理出发，**独立于格点 QCD 数值拟合**，推导临界温度公式 $T_c = a \cdot \Lambda_{\text{QCD}}$ 中的比例因子 $a$。核心方法是将温度作为第二谱流参数纳入两参数谱流方程，结合 $\partial\mathbf{Rec}_D$ 边界穿越条件和 Banks-Casher 关系的有限温度推广，从谱生成元的 RG 跑动与热演化的竞争关系导出 $a$ 的解析形式。本笔记探索了 9 条推导路径（§4-§5），发现结果跨越 12 倍（0.247~3.03），无法唯一确定。元分析（§8）指出根因为有限温度谱流的范畴形式化缺失。该形式化已在 [`spectral_T_category.md`](../00_foundations/spectral_T_category.md) 中完成，构造了函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 并确定了 $\gamma = 2$，但发现函子本身不能确定 $a$。$\mathcal{T}$ 筛选后 9 条路径中仅谱织约束路径（D9）保留。推荐值 $a \approx 0.737$（谱织约束 + $m_s$ 修正），与格点 QCD 偏差 0.96%，标注为"经范畴形式化验证的校准值"。
 
@@ -16,7 +16,7 @@ $$T_c = a \cdot \Lambda_{\text{QCD}}, \quad a \approx 0.73$$
 
 数值预测 $T_c = 153$ MeV 与格点 QCD 实验值 155 MeV 偏差仅 1.1%。然而，现有处理中 $a \approx 0.73$ 引自"热 QCD 数值解和格点 QCD 标度关系"，**并非来自谱框架的第一性原理推导**。这构成了 Paper XVII §12.5 中一个待闭合的推导链。
 
-**本笔记的目标**：仅使用谱框架的公理（$\mathbf{Rec}/\mathbf{Spec}$ 范畴、$D$ 函子、$\partial\mathbf{Rec}_D$ 边界条件、谱流方程），独立导出 $a$ 的解析形式。
+**本笔记的目标**：仅使用谱框架的公理（$\mathbf{Rec}/\mathbf{Sp}$ 范畴、$D$ 函子、$\partial\mathbf{Rec}_D$ 边界条件、谱流方程），独立导出 $a$ 的解析形式。
 
 ---
 
@@ -66,7 +66,7 @@ $$\lim_{T \to T_c} \Delta\lambda_{\min}(0, T) = 0$$
 
 ### 3.1 零温 Banks-Casher
 
-在 $\mathbf{Spec}$ 范畴中，Banks-Casher 关系（Paper XVII §12.4）翻译为：
+在 $\mathbf{Sp}$ 范畴中，Banks-Casher 关系（Paper XVII §12.4）翻译为：
 
 $$\langle\bar{q}q\rangle(0) = -\pi \rho_0(0)$$
 
@@ -191,7 +191,7 @@ $$\frac{T_c}{\Lambda_{\text{QCD}}} = \left(\frac{\rho_0(0) \cdot 12\pi T_c^2}{N_
 
 $$a = \frac{T_c}{\Lambda_{\text{QCD}}} = \left( \frac{12\pi |\langle\bar{q}q\rangle(0)|}{N_c \Lambda_{\text{QCD}}^3} \right)^{1/2} \cdot \left( \frac{T_c^2}{\Lambda_{\text{QCD}}^2} \right)^{1/2} \cdots$$
 
-自指方程。实际收敛条件来自 $\mathbf{Spec}$ 范畴中谱生成元的迹归一化。
+自指方程。实际收敛条件来自 $\mathbf{Sp}$ 范畴中谱生成元的迹归一化。
 
 ### 4.5 解析解的谱生成元迹条件
 
@@ -243,7 +243,7 @@ $$a = (0.01482)^{1/3} \approx 0.247$$
 
 ### 4.7 谱间隙比约束
 
-更精确的推导路径：在 $\mathbf{Spec}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界由谱间隙 $\Delta\lambda_{\min} \to 0$ 定义。$T_c$ 处的热谱间隙与 $\Lambda_{\text{QCD}}$ 处的 RG 谱间隙共享同一谱生成元结构，两者的比值由谱间隙方程确定：
+更精确的推导路径：在 $\mathbf{Sp}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界由谱间隙 $\Delta\lambda_{\min} \to 0$ 定义。$T_c$ 处的热谱间隙与 $\Lambda_{\text{QCD}}$ 处的 RG 谱间隙共享同一谱生成元结构，两者的比值由谱间隙方程确定：
 
 $$\frac{\Delta\lambda_{\min}^{(T)}}{\Delta\lambda_{\min}^{(\mu)}} = \frac{T_c}{\Lambda_{\text{QCD}}} \cdot \frac{\Delta\lambda_3^{(T)}}{\Delta\lambda_3^{(\mu)}}$$
 
@@ -315,7 +315,7 @@ $$\rho_{T_c}(0) = \frac{N_c}{12\pi T_c^2} \cdot \frac{\Delta\lambda_3}{\Delta\la
 
 ### 4.9 最终推导
 
-**定理 4.1**（$a$ 的解析形式）。在谱框架 $\mathbf{Spec}$ 范畴中，QCD 临界温度 $T_c$ 与 QCD 标度 $\Lambda_{\text{QCD}}$ 的比例因子 $a = T_c/\Lambda_{\text{QCD}}$ 由谱间隙比和色自由度的不同组合确定：
+**定理 4.1**（$a$ 的解析形式）。在谱框架 $\mathbf{Sp}$ 范畴中，QCD 临界温度 $T_c$ 与 QCD 标度 $\Lambda_{\text{QCD}}$ 的比例因子 $a = T_c/\Lambda_{\text{QCD}}$ 由谱间隙比和色自由度的不同组合确定：
 
 $$a = \left( \frac{|\langle\bar{q}q\rangle(0)|}{\Lambda_{\text{QCD}}^3} \cdot \frac{12\pi}{N_c} \right)^{1/2} \cdot \left( \frac{\Delta\lambda_{\min}^{(0)}}{\Delta\lambda_3} \right)^{1/2} \cdot \left( \frac{1}{g_{\text{eff}}} \right)^{1/2}$$
 
@@ -371,7 +371,7 @@ $$a = \left[ 4\pi \left( \frac{|\langle\bar{q}q\rangle(0)|^{1/3}}{\Lambda_{\text
 
 ### 4.10 基于谱生成元本征值标度的简洁推导
 
-恢复谱框架的最简版本：在 $\mathbf{Spec}$ 范畴中，两个不同的谱流参数（$\mu$ 和 $T$）本质上是对同一 $\partial\mathbf{Rec}_D$ 边界的不同接近路径。**比例因子 a 完全由 Banks-Casher 谱密度在临界处与 QGP 自由场极限的匹配确定**。
+恢复谱框架的最简版本：在 $\mathbf{Sp}$ 范畴中，两个不同的谱流参数（$\mu$ 和 $T$）本质上是对同一 $\partial\mathbf{Rec}_D$ 边界的不同接近路径。**比例因子 a 完全由 Banks-Casher 谱密度在临界处与 QGP 自由场极限的匹配确定**。
 
 $$\rho_0(0) \cdot \left(1 - \frac{T^2}{T_c^2}\right) \xrightarrow{T \to T_c} \rho_0(0) \cdot \frac{2(T_c - T)}{T_c} \quad \text{(线性化)}$$
 
@@ -426,9 +426,9 @@ $$a = \left( \frac{3}{12} \cdot 0.450 \right)^{1/2} = (0.25 \cdot 0.450)^{1/2} =
 
 ### 5.1 从 Minkowski 谱空间度量
 
-谱框架的核心公理：谱间隙 $\Delta\lambda_{\min}$ 定义了 $\mathbf{Spec}$ 范畴中的基本度量（Paper III §4）。RG 标度和温度标度在谱空间中以不同的"方向"穿越同一边界。
+谱框架的核心公理：谱间隙 $\Delta\lambda_{\min}$ 定义了 $\mathbf{Sp}$ 范畴中的基本度量（Paper III §4）。RG 标度和温度标度在谱空间中以不同的"方向"穿越同一边界。
 
-在 $\mathbf{Spec}$ 的谱流形中，谱生成元 $A_{\text{QCD}}$ 的二阶变分给出谱间隙张量：
+在 $\mathbf{Sp}$ 的谱流形中，谱生成元 $A_{\text{QCD}}$ 的二阶变分给出谱间隙张量：
 
 $$g_{ab} = \frac{\partial^2 \ln \Delta\lambda_{\min}}{\partial x^a \partial x^b}$$
 
@@ -456,7 +456,7 @@ $$a = \sqrt{6.55} \approx 2.56$$
 
 仍然偏大。
 
-### 5.2 谱编织与可观测量的直接关系
+### 5.2 谱粘合与可观测量的直接关系
 
 回到最简洁的物理图像。谱框架中所有临界现象共享同一结构——谱间隙在 $\partial\mathbf{Rec}_D$ 处消失。**比例因子 a 仅由两个可观测量的谱预言值之比确定**：
 
@@ -466,7 +466,7 @@ $$a = \frac{T_c}{\Lambda_{\text{QCD}}} = \frac{153\ \text{MeV}}{210\ \text{MeV}}
 
 ### 5.3 谱生成元的特征值比率法
 
-关键简化：在 $\mathbf{Spec}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界穿越条件对任何谱流参数都是相同的——**边界本身是唯一的**，区别仅在于从哪个方向接近它。因此 $T_c$ 和 $\Lambda_{\text{QCD}}$ 对应同一谱根（spectral root）在不同参数空间的像。
+关键简化：在 $\mathbf{Sp}$ 范畴中，$\partial\mathbf{Rec}_D$ 边界穿越条件对任何谱流参数都是相同的——**边界本身是唯一的**，区别仅在于从哪个方向接近它。因此 $T_c$ 和 $\Lambda_{\text{QCD}}$ 对应同一谱根（spectral root）在不同参数空间的像。
 
 在谱框架中，谱生成元 $A_{\text{QCD}}$ 的本征值集合 $\{\lambda_i\}$ 编码了系统的全部物理信息。$\Lambda_{\text{QCD}}$ 和 $T_c$ 分别对应不同参数空间中的同一谱根 $\lambda_*$：
 
@@ -474,7 +474,7 @@ $$\lambda_* = e^{-\Lambda_{\text{QCD}}/T_0} = e^{-T_c/T_0} \cdot f(N_c, n_f)$$
 
 其中 $T_0$ 是谱-能量转换的基本标度（Paper III §2，$T_0 = 1$ 原子单位）。
 
-在谱框架中，$\Lambda_{\text{QCD}}$ 被定义为 $S_2$ 层静默修正后的 IR 标度。在谱空间 $\mathbf{Spec}$ 中，它对应的本征值为：
+在谱框架中，$\Lambda_{\text{QCD}}$ 被定义为 $S_2$ 层静默修正后的 IR 标度。在谱空间 $\mathbf{Sp}$ 中，它对应的本征值为：
 
 $$\lambda_{\text{QCD}} = \exp(-\Lambda_{\text{QCD}}/M_{\text{Pl}}) \approx 1 - 210/1.22\times 10^{19} \approx 1 - 1.72\times 10^{-17}$$
 
@@ -550,9 +550,9 @@ $$\frac{T_c^2}{\Lambda_{\text{QCD}}^2} = \frac{2}{\beta_0} \cdot \frac{\Delta\la
 
 其中 $\chi(0) = \langle Q_w^2 \rangle(0)/V$ 是零温拓扑磁化率。格点 QCD 测量值 $\chi(0)^{1/4} \approx 180$ MeV。但此路径引入了格点 QCD 输入，违反第一性原理要求。
 
-### 5.6 回路的闭合：谱编织约束
+### 5.6 回路的闭合：谱粘合约束
 
-**谱编织约束**（本文定理）：$\partial\mathbf{Rec}_D$ 谱边界的唯一性要求从 $\mu$ 方向和 $T$ 方向穿越边界时，**谱生成元的本征值分布熵密度相等**：
+**谱粘合约束**（本文定理）：$\partial\mathbf{Rec}_D$ 谱边界的唯一性要求从 $\mu$ 方向和 $T$ 方向穿越边界时，**谱生成元的本征值分布熵密度相等**：
 
 $$S_{\text{spec}}(\mu = \Lambda_{\text{QCD}}, T = 0) = S_{\text{spec}}(\mu = 0, T = T_c)$$
 
@@ -588,7 +588,7 @@ $$a = \sqrt[3]{0.06704} \approx 0.406$$
 
 ### 6.1 组合计算的谱公式
 
-综合以上推导的线索，比例因子 $a$ 的最简洁路径来自 **谱编织约束**（$\partial\mathbf{Rec}_D$ 边界穿越的谱生成元迹连续性）与 **Banks-Casher 热推广** 的组合。
+综合以上推导的线索，比例因子 $a$ 的最简洁路径来自 **谱粘合约束**（$\partial\mathbf{Rec}_D$ 边界穿越的谱生成元迹连续性）与 **Banks-Casher 热推广** 的组合。
 
 将推导 5.6 中的谱熵密度修正为**有效跃迁自由度**而非静态自由度。在 $\partial\mathbf{Rec}_D$ 边界穿越瞬间，胶子扇区的有效跃迁自由度为 $d_A C_2 = 16$，夸克扇区贡献额外的有效跃迁自由度 $d_q$（详见 [`spectral_weave_quark_completion.md`](spectral_weave_quark_completion.md)）。
 
@@ -596,7 +596,7 @@ $$a = \sqrt[3]{0.06704} \approx 0.406$$
 
 $$\frac{T_c}{\Lambda_{\text{QCD}}} = \left( \frac{d_A \cdot C_2 + d_q}{4\pi \cdot N_c} \cdot \frac{\Delta\lambda_{\min}}{\Delta\lambda_3} \right)^{1/3}$$
 
-其中 $d_q = 14/3$ 是夸克在 $\partial\mathbf{Rec}_D$ 边界处的有效跃迁自由度，由谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的等距条件确定。
+其中 $d_q = 14/3$ 是夸克在 $\partial\mathbf{Rec}_D$ 边界处的有效跃迁自由度，由谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的等距条件确定。
 
 代入 $d_A = 8$, $C_2 = 2$, $d_q = 14/3$, $N_c = 3$, $\Delta\lambda_{\min} = 0.122$, $\Delta\lambda_3 = 0.1725$：
 
@@ -637,7 +637,7 @@ $$a = \frac{T_c}{\Lambda_{\text{QCD}}} \approx 0.729$$
 **所有输入来自谱框架第一性原理**：
 - $\Delta\lambda_{\min}$, $\Delta\lambda_3$：Cl(1,7) 代数（Paper XX §4）
 - $d_A$, $C_2$, $N_c$：Lie 代数结构常数
-- $d_q$：谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 等距条件
+- $d_q$：谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 等距条件
 - $\Lambda_{\text{QCD}}$：$Z_s$ 修正后谱框架值
 
 ### 7.2 定量精度
@@ -665,7 +665,7 @@ $$a = \frac{T_c}{\Lambda_{\text{QCD}}} \approx 0.729$$
 
 ### 8.1 问题陈述
 
-本笔记 §4-§5 探索了 **9 条推导路径**，各自基于不同的额外假设，得到 $a = T_c/\Lambda_{\text{QCD}}$ 的结果跨越 12 倍（0.247~3.03）。仅靠谱框架公理（$\mathbf{Rec}/\mathbf{Spec}$ 范畴、$D$ 函子、$\partial\mathbf{Rec}_D$ 边界条件、谱流方程）**无法唯一确定 $a$**。
+本笔记 §4-§5 探索了 **9 条推导路径**，各自基于不同的额外假设，得到 $a = T_c/\Lambda_{\text{QCD}}$ 的结果跨越 12 倍（0.247~3.03）。仅靠谱框架公理（$\mathbf{Rec}/\mathbf{Sp}$ 范畴、$D$ 函子、$\partial\mathbf{Rec}_D$ 边界条件、谱流方程）**无法唯一确定 $a$**。
 
 ### 8.2 九条推导路径的假设审计
 
@@ -801,7 +801,7 @@ $$a_0 = \left( \frac{d_A \cdot C_2}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{
 
 **为何 D9 通过了范畴筛选**？因为谱织约束隐式地编码了谱流保持条件：$\partial\mathbf{Rec}_D$ 边界处有效的"跃迁自由度" $d_A \cdot C_2/(4\pi N_c)$ 正是使 $\gamma = 2$ 的谱流生成元结构。
 
-具体而言，D9 的 $(d_A \cdot C_2/(4\pi N_c))^{1/3}$ 等价于在 $\mathbf{Spec}$ 的谱流生成元范数计算中强制使用跃迁自由度而非静态自由度——这正是 $\mathcal{T}$ 的谱流保持条件所要求的。
+具体而言，D9 的 $(d_A \cdot C_2/(4\pi N_c))^{1/3}$ 等价于在 $\mathbf{Sp}$ 的谱流生成元范数计算中强制使用跃迁自由度而非静态自由度——这正是 $\mathcal{T}$ 的谱流保持条件所要求的。
 
 ### 9.4 $a$ 的现状与下一步
 
@@ -813,7 +813,7 @@ $$a_0 = \left( \frac{d_A \cdot C_2}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{
 
 **已完成路径**：
 
-1. **路径 C**（已完成）：$\mathcal{T}$ 提升为黎曼函子 $\mathcal{T}_{\text{Riem}}$，再提升为谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$，通过谱丛全空间等距条件唯一确定 $a$。详见 [`spectral_T_category_riemann.md`](../00_foundations/spectral_T_category_riemann.md)。
+1. **路径 C**（已完成）：$\mathcal{T}$ 提升为黎曼函子 $\mathcal{T}_{\text{Riem}}$，再提升为谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$，通过谱丛全空间等距条件唯一确定 $a$。详见 [`spectral_T_category_riemann.md`](../00_foundations/spectral_T_category_riemann.md)。
 
 2. **路径 A**（本笔记完成）：通过引入夸克有效跃迁自由度 $d_q = 14/3$，将 D9 公式扩展为 $a_0 = ((d_A C_2 + d_q)/(4\pi N_c) \cdot \Delta\lambda_{\min}/\Delta\lambda_3)^{1/3}$，使 $a_0 = 0.729$ 与格点参考值的偏差从 8.4% 闭合至 **0.1%**。详见 [`spectral_weave_quark_completion.md`](spectral_weave_quark_completion.md)。
 
@@ -825,7 +825,7 @@ $$a_0 = \left( \frac{d_A \cdot C_2}{4\pi N_c} \cdot \frac{\Delta\lambda_{\min}}{
 
 $$a = 0.729$$
 
-这来自扩展 D9 公式（含夸克有效自由度 $d_q = 14/3$），与格点 QCD 偏差 **0.1%**。理论地位已从"校准值"提升为**谱框架第一性原理预言**——输入仅来自 Cl(1,7) 代数（$\Delta\lambda_{\min}, \Delta\lambda_3$）、Lie 代数结构常数（$d_A, C_2, N_c$）和谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的等距条件（$d_q$）。
+这来自扩展 D9 公式（含夸克有效自由度 $d_q = 14/3$），与格点 QCD 偏差 **0.1%**。理论地位已从"校准值"提升为**谱框架第一性原理预言**——输入仅来自 Cl(1,7) 代数（$\Delta\lambda_{\min}, \Delta\lambda_3$）、Lie 代数结构常数（$d_A, C_2, N_c$）和谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的等距条件（$d_q$）。
 
 与原 §8.6 的区别：范畴形式化（路径 C）筛选出唯一有效路径 D9，路径 A 将 D9 的 $m_s$ 修正内化为 $d_q$ 的谱流耦合压制效应，使 $a$ 完全由谱框架第一性原理确定。
 

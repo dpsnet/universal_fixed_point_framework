@@ -44,7 +44,7 @@
 
 **核心论题**：Lorentz 群 $SO^+(1,3)$ 是 $\partial\mathbf{Rec}_D$ 谱边界的保结构自同构群。
 
-$$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}|_{\partial\mathbf{Rec}_D}).$$
+$$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}|_{\partial\mathbf{Rec}_D}).$$
 
 这一论题把 Lorentz 群从"独立公理"降级为"谱边界的自同构定理"，与 Paper VIII 已建立的 $\partial\mathbf{Rec}_D$ 黑洞视界刻画一致。
 
@@ -57,14 +57,14 @@ $$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}|_{\partial\mat
 **回顾 2.1**（$\partial\mathbf{Rec}_D$ 的结构）。由 Paper VIII，$\partial\mathbf{Rec}_D$ 由满足 $\Delta\lambda_{\min}(R) = 0$ 的递归系统 $R$ 构成。其谱对象 $D(R) = (\mathcal{H}, A, \sigma(A))$ 满足 $0 \in \sigma(A)$。
 
 **定义 2.2**（谱边界自同构）。$\partial\mathbf{Rec}_D$ 的保结构自同构群定义为
-$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) := \left\{F: \mathbf{Spec}|_{\partial\mathbf{Rec}_D} \to \mathbf{Spec}|_{\partial\mathbf{Rec}_D} \,:\, F \text{ 是范畴等价},\, \Delta\lambda_{\min}(F(E)) = \Delta\lambda_{\min}(E) = 0\right\}.$$
+$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) := \left\{F: \mathbf{Sp}|_{\partial\mathbf{Rec}_D} \to \mathbf{Sp}|_{\partial\mathbf{Rec}_D} \,:\, F \text{ 是范畴等价},\, \Delta\lambda_{\min}(F(E)) = \Delta\lambda_{\min}(E) = 0\right\}.$$
 
 即保持 $\Delta\lambda_{\min} = 0$ 谱边界条件的范畴自同构。
 
 ### 2.2 主定理
 
 **定理 2.3**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构群）。在 4 维时空中，
-$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3).$$
+$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3).$$
 
 **证明思路**（非严格）。$\partial\mathbf{Rec}_D$ 上的谱对象由"零模"刻划，即谱算子有零特征值。零模的几何结构在 4 维时空中由 Lorentz 度规 $\eta = \mathrm{diag}(+,-,-,-)$ 诱导——零向量 $v^\mu$ 满足 $\eta_{\mu\nu}v^\mu v^\nu = 0$。保持零模结构的线性变换恰好是 Lorentz 群 $O(1,3)$；要求 proper 与 orthochronous 限制到 $SO^+(1,3)$。□
 
@@ -176,7 +176,7 @@ $$\varepsilon_{\text{Lor}}(\mu \sim M_{\text{Pl}}) \sim \mathcal{O}(1).$$
 ### 5.2 维数与谱结构的耦合
 
 **命题 5.2**（维数-谱耦合）。若时空维数为 $d$，则 $\partial\mathbf{Rec}_D$ 的自同构群为 $SO^+(1, d-1)$：
-$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}_d) \cong SO^+(1, d-1).$$
+$$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}_d) \cong SO^+(1, d-1).$$
 
 **证明思路**。零模结构在 $d$ 维时空中由 $SO^+(1, d-1)$ 度规诱导，与定理 2.3 的论证类似。□
 
@@ -223,9 +223,9 @@ Rec_D (SO⁺(1,3), Lorentz 对称 - 时空运动学，无力)
 
 **命题 6.3**（A7 公理的降级）。Paper XI 的 A7 公理"Lorentz 协变"在 UFPF 框架内降级为定理：
 
-**A7 定理**（Lorentz 协变 = $\partial\mathbf{Rec}_D$ 自同构）。QFT 场 $\Phi(\lambda)$ 的 Lorentz 协变变换法则 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$ 由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
+**A7 定理**（Lorentz 协变 = $\partial\mathbf{Rec}_D$ 自同构）。QFT 场 $\Phi(\lambda)$ 的 Lorentz 协变变换法则 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$ 由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
 
-**证明思路**。由定理 2.3，$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec})$。范畴自同构作用在 $\mathbf{Spec}$ 对象上给出 $U(\Lambda)$，作用在场算子 $\Phi(\lambda)$ 上给出 Lorentz 协变变换。□
+**证明思路**。由定理 2.3，$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp})$。范畴自同构作用在 $\mathbf{Sp}$ 对象上给出 $U(\Lambda)$，作用在场算子 $\Phi(\lambda)$ 上给出 Lorentz 协变变换。□
 
 > **降级的意义**：A7 从"独立公理"降级为"谱边界自同构定理"，与 Paper VII 中"熵增公理"降级为"谱流定理"、Paper VIII 中"Hawking 公式"降级为"$\partial\mathbf{Rec}_D$ 边界定理"的处理方式一致。这是 UFPF 的统一方法：**公理 → 谱定理**。
 
@@ -235,7 +235,7 @@ Rec_D (SO⁺(1,3), Lorentz 对称 - 时空运动学，无力)
 
 ### 7.1 已证定理
 
-**定理 A**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构）。$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$（4 维时空）。证明思路见 §2.2，严格化待后续推进。
+**定理 A**（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构）。$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Sp}) \cong SO^+(1,3)$（4 维时空）。证明思路见 §2.2，严格化待后续推进。
 
 **定理 B**（三层破缺生成三类对称）。$\mathbf{Rec} \to \mathbf{Rec}_{\text{diss}} \to \mathbf{Rec}_D$ 的对称破缺生成 Diff$(M) \to U(1)\times SU(2)\times SU(3) \to SO^+(1,3)$。
 
@@ -273,7 +273,7 @@ Rec_D (SO⁺(1,3), Lorentz 对称 - 时空运动学，无力)
 
 1. **弯曲时空中的 Lorentz 群**：从 Minkowski 推广到 Lorentz 流形上的局部 Lorentz 群（参见 `spectral_lorentz_curved_spacetime.md`，待创建）。
 2. **de Sitter / Anti-de Sitter 时空**：宇宙学常数 $\Lambda \neq 0$ 时 $\partial\mathbf{Rec}_D$ 的修正。
-3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Spec}$ 中的谱提升。
+3. **量子 Lorentz 群**：量子群 $U_q(\mathfrak{so}(1,3))$ 在 $\mathbf{Sp}$ 中的谱提升。
 4. **超对称的谱起源**：超 Poincaré 群作为 $\partial\mathbf{Rec}_D$ 的超对称扩张。
 
 ### 8.3 与现有笔记的衔接

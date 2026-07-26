@@ -10,7 +10,7 @@
 
 ## 1. 核心问题
 
-谱丛理论预言分子间通过空间（through-space）CT 耦合的衰减长度 $\ell_{\text{corr}} \approx 0.5$ Å（$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的不变量）。能否利用可开放获取的实验数据来**独立验证**这个预言，并与传统量子化学理论进行区分？
+谱丛理论预言分子间通过空间（through-space）CT 耦合的衰减长度 $\ell_{\text{corr}} \approx 0.5$ Å（$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的不变量）。能否利用可开放获取的实验数据来**独立验证**这个预言，并与传统量子化学理论进行区分？
 
 ## 2. 数据源
 

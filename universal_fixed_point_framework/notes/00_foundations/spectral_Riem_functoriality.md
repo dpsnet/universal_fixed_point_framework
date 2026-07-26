@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-22）
 
-**摘要**：本笔记推进路径 C——证明谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 在谱丛水平上的完整函子性。$\hat{\mathcal{T}}_{\text{Riem}}$ 已在 [`spectral_T_category_riemann.md`](spectral_T_category_riemann.md) §10 中通过谱丛全空间等距条件构造为 $B_T \to B_\mu$ 的映射。本笔记从谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的定义出发，证明 $\hat{\mathcal{T}}_{\text{Riem}}$ 满足完整的函子性公理（保恒等、保复合、三层包含、与 $d_q$ 自洽）。进一步，本笔记将函子性证明提升到三个新层面：**§8** 构造了三层之间的自然变换 $\eta: \mathcal{T} \Rightarrow \mathcal{T}_{\text{Riem}} \Rightarrow \hat{\mathcal{T}}_{\text{Riem}}$ 并证明自然性；**§9** 建立了 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的初步框架（2-范畴 $\mathbf{2Bun}$、2-细胞、参数族 2-细胞）；**§10** 分析了 $\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像，给出谱间隙匹配条件作为刻画特征，证明谱间隙截面完全包含于本质像中。
+**摘要**：本笔记推进路径 C——证明谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 在谱丛水平上的完整函子性。$\hat{\mathcal{T}}_{\text{Riem}}$ 已在 [`spectral_T_category_riemann.md`](spectral_T_category_riemann.md) §10 中通过谱丛全空间等距条件构造为 $B_T \to B_\mu$ 的映射。本笔记从谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的定义出发，证明 $\hat{\mathcal{T}}_{\text{Riem}}$ 满足完整的函子性公理（保恒等、保复合、三层包含、与 $d_q$ 自洽）。进一步，本笔记将函子性证明提升到三个新层面：**§8** 构造了三层之间的自然变换 $\eta: \mathcal{T} \Rightarrow \mathcal{T}_{\text{Riem}} \Rightarrow \hat{\mathcal{T}}_{\text{Riem}}$ 并证明自然性；**§9** 建立了 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的初步框架（2-范畴 $\mathbf{2Bun}$、2-细胞、参数族 2-细胞）；**§10** 分析了 $\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像，给出谱间隙匹配条件作为刻画特征，证明谱间隙截面完全包含于本质像中。
 
 ---
 
@@ -10,13 +10,13 @@
 
 ### 1.1 纤维丛对象
 
-**定义 1.1**（谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$）。热谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 以热谱丛 $B_T$ 为总空间，以 $\mathbf{Temp}$ 为基，以 $\mathbf{Spec}$ 的谱数据为纤维，其对象和态射定义如下。
+**定义 1.1**（谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$）。热谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 以热谱丛 $B_T$ 为总空间，以 $\mathbf{Temp}$ 为基，以 $\mathbf{Sp}$ 的谱数据为纤维，其对象和态射定义如下。
 
 **对象**：谱丛 $B_T$ 中的点 $(T, \{\lambda_i\})$，其中 $T \in \text{Ob}(\mathbf{Temp})$，$\{\lambda_i\} \in \text{Spec}(A(T))$。
 
 **态射**：$\text{Hom}((T_1, \{\lambda_i^{(1)}\}), (T_2, \{\lambda_i^{(2)}\}))$ 由基空间的态射 $f: T_1 \to T_2$ 和纤维间的谱变换 $\phi: \text{Spec}(A(T_1)) \to \text{Spec}(A(T_2))$ 共同构成，满足投影兼容性。
 
-**定义 1.2**（谱丛范畴 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$）。类似地，RG 谱丛范畴 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 以 $B_\mu$ 为总空间，以 $\mathbf{RG}$ 为基。
+**定义 1.2**（谱丛范畴 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$）。类似地，RG 谱丛范畴 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 以 $B_\mu$ 为总空间，以 $\mathbf{RG}$ 为基。
 
 ### 1.2 态射的结构
 
@@ -24,7 +24,7 @@
 
 $$h = (\text{base}(h), \text{fiber}(h)) \tag{1.1}$$
 
-其中 $\text{base}(h): \mathbf{Temp} \to \mathbf{Temp}$（或 $\mathbf{RG} \to \mathbf{RG}$）是基空间上的态射，$\text{fiber}(h): \mathbf{Spec} \to \mathbf{Spec}$ 是纤维上的谱变换。
+其中 $\text{base}(h): \mathbf{Temp} \to \mathbf{Temp}$（或 $\mathbf{RG} \to \mathbf{RG}$）是基空间上的态射，$\text{fiber}(h): \mathbf{Sp} \to \mathbf{Sp}$ 是纤维上的谱变换。
 
 **恒等态射**：
 $$\text{id}_{(T, \{\lambda_i\})} = (\text{id}_T, \text{id}_{\text{Spec}}) \tag{1.2}$$
@@ -40,7 +40,7 @@ $$h_2 \circ h_1 = (\text{base}(h_2) \circ \text{base}(h_1), \ \text{fiber}(h_2) 
 
 $\hat{\mathcal{T}}_{\text{Riem}}$ 是从热谱丛范畴到 RG 谱丛范畴的函子：
 
-$$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \longrightarrow \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$$
+$$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \longrightarrow \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$$
 
 ### 2.2 对象映射
 
@@ -76,7 +76,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(h) = (\mathcal{T}(f), \phi_\mu) \tag{2.3}$$
 
 $$\hat{\mathcal{T}}_{\text{Riem}}(\text{id}_{(T, \{\lambda_i\})}) = \text{id}_{\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i\})} \tag{3.1}$$
 
-**证明**。设 $(T, \{\lambda_i\}) \in \text{Ob}(\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}))$。恒等态射为：
+**证明**。设 $(T, \{\lambda_i\}) \in \text{Ob}(\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}))$。恒等态射为：
 
 $$\text{id}_{(T, \{\lambda_i\})} = (\text{id}_T, \text{id}_{\text{Spec}})$$
 
@@ -125,7 +125,7 @@ $$\mathcal{T}(f_2 \circ f_1) = \mathcal{T}(f_2) \circ \mathcal{T}(f_1) \tag{4.3}
 
 $$(\phi_2 \circ \phi_1)_\mu = (\phi_2)_\mu \circ (\phi_1)_\mu \tag{4.4}$$
 
-这是因为谱变换在 $\mathbf{Spec}$ 范畴中构成函子——谱数据 $\{\lambda_i\}$ 的映射满足复合律。
+这是因为谱变换在 $\mathbf{Sp}$ 范畴中构成函子——谱数据 $\{\lambda_i\}$ 的映射满足复合律。
 
 **分别作用于各态射**：
 
@@ -176,9 +176,9 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(h_2) \circ \hat{\mathcal{T}}_{\text{Riem}}(h_1
 |:----|:----|:--------|:----------|
 | I | $\mathcal{T}$ | $\mathbf{Temp} \to \mathbf{RG}$（基空间） | spectral_T_category.md 定理 4.1 |
 | II | $\mathcal{T}_{\text{Riem}}$ | $\mathbf{Temp} \to \mathbf{RG}$（带度量） | 本笔记 §3-4（基部分继承自 $\mathcal{T}$） |
-| III | $\hat{\mathcal{T}}_{\text{Riem}}$ | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ | 本笔记 §3-4（基+纤维联合） |
+| III | $\hat{\mathcal{T}}_{\text{Riem}}$ | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ | 本笔记 §3-4（基+纤维联合） |
 
-**证明**。$\hat{\mathcal{T}}_{\text{Riem}}$ 的基部分态射映射 $\mathcal{T}(f)$ 继承自 $\mathcal{T}$，其保复合、保恒等已由 $\mathcal{T}$ 的函子性保证。$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维部分态射映射 $(\phi)_\mu$ 继承自 $\mathbf{Spec}$ 范畴的函子性结构。联合后两者独立保持各自律，因此 $\hat{\mathcal{T}}_{\text{Riem}}$ 的函子性自动包含 $\mathcal{T}$ 和 $\mathcal{T}_{\text{Riem}}$ 的函子性。$\square$
+**证明**。$\hat{\mathcal{T}}_{\text{Riem}}$ 的基部分态射映射 $\mathcal{T}(f)$ 继承自 $\mathcal{T}$，其保复合、保恒等已由 $\mathcal{T}$ 的函子性保证。$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维部分态射映射 $(\phi)_\mu$ 继承自 $\mathbf{Sp}$ 范畴的函子性结构。联合后两者独立保持各自律，因此 $\hat{\mathcal{T}}_{\text{Riem}}$ 的函子性自动包含 $\mathcal{T}$ 和 $\mathcal{T}_{\text{Riem}}$ 的函子性。$\square$
 
 ### 5.2 与交换图的兼容性
 
@@ -204,7 +204,7 @@ B_T @>{\hat{\mathcal{T}}_{\text{Riem}}}>> B_\mu \\
 
 **证明**。$d_q$ 扩展仅修改了 $a$ 的数值（$0.669 \to 0.729$），即 $T_c = a\Lambda_{\text{QCD}}$ 中的比例因子。$\hat{\mathcal{T}}_{\text{Riem}}$ 的函子性证明（§3-4）完全不依赖于 $a$ 的数值——它仅依赖于：
 1. $\mathcal{T}$ 作为基空间函子的函子性（不受 $a$ 影响）
-2. $\mathbf{Spec}$ 范畴的函子性结构（不受 $a$ 影响）
+2. $\mathbf{Sp}$ 范畴的函子性结构（不受 $a$ 影响）
 3. 态射映射的定义方式（不受 $a$ 影响）
 
 因此 $d_q$ 扩展不改变 $\hat{\mathcal{T}}_{\text{Riem}}$ 的函子性。$\square$
@@ -323,9 +323,9 @@ $$\text{id}_{\hat{\mathcal{T}}_{\text{Riem}}, (T, \{\lambda_i\})} = \text{id}_{\
 
 **证明**。由 $\mathbf{Bun}$ 中恒等态射的存在性直接得出。$\square$
 
-### 9.3 谱编织参数族的 2-细胞
+### 9.3 谱粘合参数族的 2-细胞
 
-**定理 9.2**（谱编织参数的 2-细胞）。设 $\hat{\mathcal{T}}_{\text{Riem}}^{(d_q)}$ 和 $\hat{\mathcal{T}}_{\text{Riem}}^{(d_q + \delta)}$ 对应不同 $d_q$ 参数的函子。则存在 2-细胞 $\alpha^{(\delta)}: \hat{\mathcal{T}}_{\text{Riem}}^{(d_q)} \Rightarrow \hat{\mathcal{T}}_{\text{Riem}}^{(d_q + \delta)}$，其分量由 $a$ 的连续变形给出。
+**定理 9.2**（谱粘合参数的 2-细胞）。设 $\hat{\mathcal{T}}_{\text{Riem}}^{(d_q)}$ 和 $\hat{\mathcal{T}}_{\text{Riem}}^{(d_q + \delta)}$ 对应不同 $d_q$ 参数的函子。则存在 2-细胞 $\alpha^{(\delta)}: \hat{\mathcal{T}}_{\text{Riem}}^{(d_q)} \Rightarrow \hat{\mathcal{T}}_{\text{Riem}}^{(d_q + \delta)}$，其分量由 $a$ 的连续变形给出。
 
 **证明**。$d_q$ 参数通过 $a = a(d_q)$ 影响 $\mathcal{T}$ 的标度因子。定义分量：
 
@@ -337,14 +337,14 @@ $$\alpha^{(\delta)}_{(T, \{\lambda_i\})}: (\mathcal{T}^{(d_q)}(T), \{\lambda_i(\
 
 ### 9.4 2-函子的候选定义
 
-**定义 9.3**（候选 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$）。$2\hat{\mathcal{T}}_{\text{Riem}}$ 是从 $\mathbf{2Bun}(\mathbf{Temp}, \mathbf{Spec})$ 到 $\mathbf{2Bun}(\mathbf{RG}, \mathbf{Spec})$ 的 2-函子，满足：
+**定义 9.3**（候选 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$）。$2\hat{\mathcal{T}}_{\text{Riem}}$ 是从 $\mathbf{2Bun}(\mathbf{Temp}, \mathbf{Sp})$ 到 $\mathbf{2Bun}(\mathbf{RG}, \mathbf{Sp})$ 的 2-函子，满足：
 
 - **0-细胞映射**：$2\hat{\mathcal{T}}_{\text{Riem}}(B_T) = B_\mu$（同 $\hat{\mathcal{T}}_{\text{Riem}}$ 的对象映射）
 - **1-细胞映射**：$2\hat{\mathcal{T}}_{\text{Riem}}(\hat{\mathcal{T}}_{\text{Riem}}) = \text{id}_{B_\mu}$（将 $\hat{\mathcal{T}}_{\text{Riem}}$ 映射为恒等函子——待确定更一般的定义）
 - **2-细胞映射**：$2\hat{\mathcal{T}}_{\text{Riem}}(\alpha) = \alpha_\mu$，其中 $\alpha_\mu$ 是 $B_\mu$ 上的自然变换
 
 **注 9.1**。定义 9.3 是一个初步框架。$2\hat{\mathcal{T}}_{\text{Riem}}$ 的严格定义需要：
-1. $\mathbf{2Bun}(\mathbf{Temp}, \mathbf{Spec})$ 的严格 2-范畴结构（2-细胞的垂直和水平复合）
+1. $\mathbf{2Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的严格 2-范畴结构（2-细胞的垂直和水平复合）
 2. 2-函子公理的验证（保 1-细胞复合、保 2-细胞复合、保恒等 2-细胞）
 
 ### 9.5 2-函子提升的意义
@@ -357,7 +357,7 @@ $$\alpha^{(\delta)}_{(T, \{\lambda_i\})}: (\mathcal{T}^{(d_q)}(T), \{\lambda_i(\
 | 1-细胞 | $\hat{\mathcal{T}}_{\text{Riem}}$ | 温度-能标谱翻译 |
 | 2-细胞 | 自然变换 $\alpha$ | 参数微调下的谱翻译变形 |
 
-**推论 9.1**（参数鲁棒性的范畴论表述）。若 $2\hat{\mathcal{T}}_{\text{Riem}}$ 存在，则 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱编织等距嵌入在参数微调下"同伦不变"——不同 $d_q$ 值给出的等距嵌入在 2-同伦意义上等价。
+**推论 9.1**（参数鲁棒性的范畴论表述）。若 $2\hat{\mathcal{T}}_{\text{Riem}}$ 存在，则 $\hat{\mathcal{T}}_{\text{Riem}}$ 的谱粘合等距嵌入在参数微调下"同伦不变"——不同 $d_q$ 值给出的等距嵌入在 2-同伦意义上等价。
 
 ---
 
@@ -367,11 +367,11 @@ $$\alpha^{(\delta)}_{(T, \{\lambda_i\})}: (\mathcal{T}^{(d_q)}(T), \{\lambda_i(\
 
 **开放问题 3**（见 §7.3）询问 $\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像（essential image）是否包含 RG 谱丛的所有截面。
 
-**定义 10.1**（本质像）。$\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像 $\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}}) \subset \text{Ob}(\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}))$ 是所有满足以下条件的对象 $(\mu, \{\lambda_i\})$ 的集合：
+**定义 10.1**（本质像）。$\hat{\mathcal{T}}_{\text{Riem}}$ 的本质像 $\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}}) \subset \text{Ob}(\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}))$ 是所有满足以下条件的对象 $(\mu, \{\lambda_i\})$ 的集合：
 
-存在 $(T, \{\lambda_i'\}) \in \text{Ob}(\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}))$ 使得 $\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i'\}) \cong (\mu, \{\lambda_i\})$。
+存在 $(T, \{\lambda_i'\}) \in \text{Ob}(\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}))$ 使得 $\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i'\}) \cong (\mu, \{\lambda_i\})$。
 
-此处 $\cong$ 是 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中的同构（基空间 $\mu$ 的恒等，纤维谱数据的等价）。
+此处 $\cong$ 是 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中的同构（基空间 $\mu$ 的恒等，纤维谱数据的等价）。
 
 ### 10.2 本质像的刻画
 
@@ -397,9 +397,9 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i(T)\}) = (\mathcal{T}(T), \{\lam
 
 ### 10.3 本质像的结构
 
-**推论 10.1**（本质像的稠密性）。$\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 是 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中满足谱间隙匹配条件的对象的全子范畴（full subcategory）。
+**推论 10.1**（本质像的稠密性）。$\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 是 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中满足谱间隙匹配条件的对象的全子范畴（full subcategory）。
 
-**定理 10.2**（本质像的闭包）。$\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 在 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中闭于谱间隙拓扑——即若 $(\mu_n, \{\lambda_i^{(n)}\}) \to (\mu, \{\lambda_i\})$ 且每个 $(\mu_n, \{\lambda_i^{(n)}\}) \in \text{Im}_{\text{ess}}$，则极限也在本质像中。
+**定理 10.2**（本质像的闭包）。$\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 在 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中闭于谱间隙拓扑——即若 $(\mu_n, \{\lambda_i^{(n)}\}) \to (\mu, \{\lambda_i\})$ 且每个 $(\mu_n, \{\lambda_i^{(n)}\}) \in \text{Im}_{\text{ess}}$，则极限也在本质像中。
 
 **证明**。谱间隙匹配条件 $\Delta\lambda_{\min}(\mu_n) = \Delta\lambda_{\min}(\mathcal{T}^{-1}(\mu_n))$ 在 $n \to \infty$ 时由 $\Delta\lambda_{\min}$ 的连续性保持。$\square$
 
@@ -428,7 +428,7 @@ $$\tilde{\sigma}(\mu) = (\mu, \Delta\lambda_{\min}(\mu) + \delta(\mu))$$
 ### 10.6 本质像的进一步问题
 
 **开放问题**：
-1. $\hat{\mathcal{T}}_{\text{Riem}}$ 是否稠密（essentially surjective）？即 $\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 是否等于 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中所有满足谱间隙匹配条件的对象的全子范畴？
+1. $\hat{\mathcal{T}}_{\text{Riem}}$ 是否稠密（essentially surjective）？即 $\text{Im}_{\text{ess}}(\hat{\mathcal{T}}_{\text{Riem}})$ 是否等于 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中所有满足谱间隙匹配条件的对象的全子范畴？
 2. $\hat{\mathcal{T}}_{\text{Riem}}$ 是否满（full）和忠实（faithful）？即谱丛态射映射是否为双射？
 3. 本质上，$\hat{\mathcal{T}}_{\text{Riem}}$ 是否是一个[[范畴等价]]（equivalence of categories）？
 
@@ -460,8 +460,8 @@ $$\tilde{\sigma}(\mu) = (\mu, \Delta\lambda_{\min}(\mu) + \delta(\mu))$$
 **更新后的开放问题**：
 
 1. **2-函子的严格化**：§9 的候选 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 需要验证完整的 2-函子公理（保 1-细胞复合、保 2-细胞复合及其交换律），并检查与谱丛等距条件的 2-相容性。
-2. **本质像的范畴等价性**：$\hat{\mathcal{T}}_{\text{Riem}}$ 是否满和忠实？若成立，则 $\hat{\mathcal{T}}_{\text{Riem}}$ 定义了一个**范畴等价** $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \simeq \text{Im}_{\text{ess}}$，这对谱框架的"翻译不变性"具有深远意义。
-3. **自然变换的 $\mathbf{Spec}$-丰富化**：$\eta$ 和 $\eta_{\text{Riem}}$ 能否提升为 $\mathbf{Spec}$-丰富范畴中的丰富自然变换（enriched natural transformation）？
+2. **本质像的范畴等价性**：$\hat{\mathcal{T}}_{\text{Riem}}$ 是否满和忠实？若成立，则 $\hat{\mathcal{T}}_{\text{Riem}}$ 定义了一个**范畴等价** $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \simeq \text{Im}_{\text{ess}}$，这对谱框架的"翻译不变性"具有深远意义。
+3. **自然变换的 $\mathbf{Sp}$-丰富化**：$\eta$ 和 $\eta_{\text{Riem}}$ 能否提升为 $\mathbf{Sp}$-丰富范畴中的丰富自然变换（enriched natural transformation）？
 4. **截面的截面**：考虑 $\mathbf{2Bun}$ 中的 2-截面——将每个谱丛映射到其截面范畴的 2-函子，探讨 $\hat{\mathcal{T}}_{\text{Riem}}$ 在该 2-截面下的行为。
 
 ---

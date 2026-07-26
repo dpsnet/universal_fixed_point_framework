@@ -13,7 +13,7 @@
 对 Dirac 代数 $\mathrm{Cl}(1,3)$，手性投影算子为：
 $$P_L = \frac{1 - \gamma^5}{2}, \quad P_R = \frac{1 + \gamma^5}{2}.$$
 
-在 $\mathbf{Spec}$ 范畴中，手性投影对应于谱旋量对象的 $\mathbb{Z}_2$ 分级：
+在 $\mathbf{Sp}$ 范畴中，手性投影对应于谱旋量对象的 $\mathbb{Z}_2$ 分级：
 
 **定义 1**（谱手性旋量）。谱 Dirac 算子 $A_\psi = i\gamma^\mu\partial_\mu$ 与 $\gamma^5$ 反对易：
 $$\{A_\psi, \gamma^5\} = 0.$$
@@ -59,7 +59,7 @@ $$\delta_\alpha \ln Z_{\text{spec}} = \frac{g^2}{16\pi^2} \int d\lambda \, \alph
 
 在谱截断 $\Lambda$ 下，反常来自谱 Dirac 算子的手征 Jacobian：
 
-$$\mathcal{J}[\alpha] = \exp\left(-2i \int_0^\infty dt \, \operatorname{Tr}_{\mathbf{Spec}}\left( \alpha \gamma^5 e^{-t A_\psi^2/\Lambda^2} \right)\right).$$
+$$\mathcal{J}[\alpha] = \exp\left(-2i \int_0^\infty dt \, \operatorname{Tr}_{\mathbf{Sp}}\left( \alpha \gamma^5 e^{-t A_\psi^2/\Lambda^2} \right)\right).$$
 
 在 $t \to 0$ 时的 Heawood 展开给出：
 $$\lim_{t\to 0} \operatorname{Tr}(\alpha \gamma^5 e^{-t A_\psi^2}) = \frac{1}{16\pi^2} \int d\lambda \, \alpha(\lambda) \cdot \operatorname{Tr}(\mathcal{F} \wedge \mathcal{F}) \cdot (1 + \mathcal{O}(t)).$$
@@ -68,7 +68,7 @@ $$\lim_{t\to 0} \operatorname{Tr}(\alpha \gamma^5 e^{-t A_\psi^2}) = \frac{1}{16
 
 ### 2.3 谱反常的函子不变性
 
-**定理 2**（反常的函子不变性）。ABJ 反常在谱去递归函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 下保持：
+**定理 2**（反常的函子不变性）。ABJ 反常在谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 下保持：
 $$D(\partial^\mu j_\mu^5) = \partial^\mu j_\mu^{5,\text{spec}}.$$
 
 ---
@@ -90,9 +90,9 @@ SM 中所有反常必须消去以保证理论自洽：
 
 ### 3.2 谱反常消去条件
 
-在 $\mathbf{Spec}$ 范畴中，反常消去条件表示为谱迹的消失：
+在 $\mathbf{Sp}$ 范畴中，反常消去条件表示为谱迹的消失：
 
-$$\boxed{\operatorname{Tr}_{\mathbf{Spec}}\left( \gamma^5 \{T^a, T^b\} \right)_{\text{全体费米子}} = 0},$$
+$$\boxed{\operatorname{Tr}_{\mathbf{Sp}}\left( \gamma^5 \{T^a, T^b\} \right)_{\text{全体费米子}} = 0},$$
 
 其中 $T^a$ 是规范生成元在费米子表示上的作用。
 
@@ -127,14 +127,14 @@ $$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int d\lambda \, \operatorname{Tr}_{\math
 谱 $\theta$ 项为：
 $$\mathcal{L}_\theta^{\text{spec}} = \theta \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}),$$
 
-其中 $\theta$ 是真空角参数。在 $\mathbf{Spec}$ 中，$\theta$ 是谱对象的拓扑不变量。
+其中 $\theta$ 是真空角参数。在 $\mathbf{Sp}$ 中，$\theta$ 是谱对象的拓扑不变量。
 
 ### 4.3 轴子与 $\theta$ 的动力学消解
 
 通过 Peccei-Quinn 机制，$\theta$ 被动力学轴子场 $a$ 消解：
 $$\mathcal{L}_{a}^{\text{spec}} = \frac12 \operatorname{Tr}_{\mathcal{H}_a}([A_a, a]^2) + \frac{a}{f_a} \cdot \frac{g^2}{32\pi^2} \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}).$$
 
-在谱语言中，轴子是 $\mathbf{Spec}$ 中的周期伪标量对象：
+在谱语言中，轴子是 $\mathbf{Sp}$ 中的周期伪标量对象：
 $$a(\lambda) \cong a(\lambda) + 2\pi f_a.$$
 
 ---
@@ -145,7 +145,7 @@ $$a(\lambda) \cong a(\lambda) + 2\pi f_a.$$
 |:----|:---------|:-------|
 | Weyl 费米子 | $\psi_L, \psi_R$ | $\Psi_L = P_L\Psi, \Psi_R = P_R\Psi$ |
 | 手征反常 | $\partial^\mu j_\mu^5 = \frac{g^2}{16\pi^2}F\tilde{F}$ | $\delta_\alpha \ln Z_{\text{spec}} \propto \operatorname{Tr}(\mathcal{F}\wedge\mathcal{F})$ |
-| 反常消去 | $\sum \operatorname{Tr}(T^a\{T^b,T^c\})_{L-R}=0$ | $\operatorname{Tr}_{\mathbf{Spec}}(\gamma^5\{T^a,T^b\})=0$ |
+| 反常消去 | $\sum \operatorname{Tr}(T^a\{T^b,T^c\})_{L-R}=0$ | $\operatorname{Tr}_{\mathbf{Sp}}(\gamma^5\{T^a,T^b\})=0$ |
 | $\theta$ 项 | $\theta \cdot F\tilde{F}$ | $\theta \cdot \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F}\wedge\mathcal{F})$ |
 | 轴子 | $a/f_a \cdot F\tilde{F}$ | $a(\lambda)/f_a \cdot \operatorname{Tr}_{\mathfrak{g}}(\mathcal{F}\wedge\mathcal{F})$ |
 
@@ -174,6 +174,6 @@ $$Q_{\text{top}} \in \mathbb{Z}.$$
 | 问题 | 难度 | 说明 |
 |:----|:----:|------|
 | 谱版本的 $SU(2)$ Witten 反常 | 🔴 | $\pi_4(SU(2))$ 的谱翻译与数值验证 |
-| 谱轴子势的严格推导 | 🟡 | 瞬子效应在 $\mathbf{Spec}$ 中生成的轴子势 $V(a)$ |
+| 谱轴子势的严格推导 | 🟡 | 瞬子效应在 $\mathbf{Sp}$ 中生成的轴子势 $V(a)$ |
 | 谱反常匹配条件（'t Hooft） | 🔴 | 低能有效理论与高能理论的谱反常一致性 |
 | 谱 $\theta$ 角的重整化 | 🟡 | $\theta$ 参数在谱截断下的跑动 |

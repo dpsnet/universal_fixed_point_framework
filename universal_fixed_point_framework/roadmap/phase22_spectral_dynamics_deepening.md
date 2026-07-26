@@ -9,7 +9,7 @@
 ## 概述
 
 Phase 22 在 Phase 21 的谱动力学基础框架之上，推进四个深层理论方向：
-A. $\mathbf{Rec}/\mathbf{Spec}$ 高阶范畴拓展
+A. $\mathbf{Rec}/\mathbf{Sp}$ 高阶范畴拓展
 B. 非平衡谱热力学
 C. 黑洞视界谱动力学
 D. 奇点谱消解

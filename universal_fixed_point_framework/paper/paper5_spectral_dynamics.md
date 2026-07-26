@@ -4,7 +4,7 @@
 
 **版本**：v1.4（2026-07-19）
 
-**摘要**：本文在 Paper I–IV 建立的谱去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 与谱分类完备性定理的基础上，引入**谱动力学**概念——将力重新诠释为 $\mathbf{Spec}$ 范畴中的谱流生成元。核心定理是**力的谱统一公式**：
+**摘要**：本文在 Paper I–IV 建立的谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 与谱分类完备性定理的基础上，引入**谱动力学**概念——将力重新诠释为 $\mathbf{Sp}$ 范畴中的谱流生成元。核心定理是**力的谱统一公式**：
 
 $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
@@ -20,7 +20,7 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 | 论文 | 核心贡献 | 视角 |
 |------|----------|------|
-| **Paper I** | $\mathbf{Rec}$、$\mathbf{Spec}$、$D \dashv R$、谱对应 $\lambda = e^{-\mu}$ | **静态结构** |
+| **Paper I** | $\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$、谱对应 $\lambda = e^{-\mu}$ | **静态结构** |
 | **Paper II** | $G_N$ 导出、BSM 预言、Kerr QNM、全息熵 | **物理应用** |
 | **Paper III** | 三层谱分类完备性定理 4.1-4.3、IC 全覆盖 | **分类** |
 | **Paper IV** | 黑洞熵双重推导的统一、弦论对偶扩展 | **弦论案例** |
@@ -28,19 +28,19 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 ### 1.2 缺失环节
 
 上述四篇论文回答"系统是什么"和"哪些系统等价"，但未回答：
-1. **系统如何随时间演化？** — $D(R)$ 在 $\mathbf{Spec}$ 中的轨迹
+1. **系统如何随时间演化？** — $D(R)$ 在 $\mathbf{Sp}$ 中的轨迹
 2. **系统间如何相互作用？** — 谱流方程中的对易子 $[A_{F,i}, A_t]$
 3. **力在谱语言中是什么？** — 谱生成元 $A_F$ 驱动的流
 
 ### 1.3 核心论题
 
-> **论题 1**（力的谱解释）。力不是作用于粒子的外部实体，而是 $\mathbf{Spec}$ 中谱流的生成元。四种基本力对应四个谱生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$，通过谱流方程 $\frac{d}{dt}D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$ 统一描述。
+> **论题 1**（力的谱解释）。力不是作用于粒子的外部实体，而是 $\mathbf{Sp}$ 中谱流的生成元。四种基本力对应四个谱生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$，通过谱流方程 $\frac{d}{dt}D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$ 统一描述。
 
 ## 2. 谱流方程
 
 ### 2.1 基本定义
 
-设 $R(t) \in \mathbf{Rec}$ 为随时间演化的递归系统，$D(R(t)) = (\mathcal{H}_t, A_t, \sigma(A_t))$ 为其谱像。$A_t$ 在 $\mathbf{Spec}$ 中的演化由谱流方程决定：
+设 $R(t) \in \mathbf{Rec}$ 为随时间演化的递归系统，$D(R(t)) = (\mathcal{H}_t, A_t, \sigma(A_t))$ 为其谱像。$A_t$ 在 $\mathbf{Sp}$ 中的演化由谱流方程决定：
 
 $$\boxed{\frac{d}{dt} A_t = \sum_{i=1}^4 g_i \cdot [A_{F,i}, A_t] + \mathcal{E}(t)}$$
 
@@ -54,7 +54,7 @@ $$\frac{d}{dt} A_t = -e^{A_t} G_t e^{-A_t} = -G_t - [A_t, G_t] + \mathcal{O}(\hb
 
 证明：由 $A_t = -\log U_{R(t)}$ 求导，代入 $U_{R(t)} = e^{-A_t}$ 得 $\frac{d}{dt} A_t = -e^{A_t} G_t e^{-A_t}$。由 Baker-Campbell-Hausdorff 公式展开，在经典极限 $\hbar \to 0$ 下 $G_t = \sum_i g_i A_{F,i}$，谱流方程成立。
 
-对易子 $[A_F, A_t]$ 是 $\mathbf{Spec}$ 中沿 $A_F$ 方向的 Lie 导数：
+对易子 $[A_F, A_t]$ 是 $\mathbf{Sp}$ 中沿 $A_F$ 方向的 Lie 导数：
 
 $$[A_F, A_t] = \mathcal{L}_{A_F} A_t = \lim_{\varepsilon \to 0} \frac{e^{\varepsilon A_F} A_t e^{-\varepsilon A_F} - A_t}{\varepsilon}$$
 
@@ -74,7 +74,7 @@ $$g_{ij} = \frac{1}{2} \frac{\|[A_{F,i}, A_{F,j}]\|_{\text{HS}}}{\|A_{F,i}\|_{\t
 
 ### 2.4 动力学位移函子
 
-**定义 2.3**。$D_{\text{dyn}}: \mathbf{Rec} \times \mathbb{R} \to \mathbf{Spec}$ 定义为 $D_{\text{dyn}}(R, t) = e^{t G} \cdot D(R) \cdot e^{-t G}$，其中 $G = \sum_i g_i A_{F,i}$。
+**定义 2.3**。$D_{\text{dyn}}: \mathbf{Rec} \times \mathbb{R} \to \mathbf{Sp}$ 定义为 $D_{\text{dyn}}(R, t) = e^{t G} \cdot D(R) \cdot e^{-t G}$，其中 $G = \sum_i g_i A_{F,i}$。
 
 | 谱流方程 | 经典对应 | 条件 |
 |----------|----------|------|
@@ -375,7 +375,7 @@ $F_2^{\text{(spec)}} \equiv F_2^{(s)}$（SPT 标准对称化核），**解析等
 
 ### 8.1 高阶范畴拓展
 
-当前 $\mathbf{Rec}$ 和 $\mathbf{Spec}$ 是普通范畴（1-范畴）。态射是线性的、复合是严格的。这不足以描述谱流方程的高阶对称性（2-态射）、重整化群流的函子间自然变换，以及弦论中的对偶等价（范畴等价的高阶提升）。本节将 $\mathbf{Rec}$ 与 $\mathbf{Spec}$ 提升至 2-范畴和 $\infty$-范畴层次。
+当前 $\mathbf{Rec}$ 和 $\mathbf{Sp}$ 是普通范畴（1-范畴）。态射是线性的、复合是严格的。这不足以描述谱流方程的高阶对称性（2-态射）、重整化群流的函子间自然变换，以及弦论中的对偶等价（范畴等价的高阶提升）。本节将 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 提升至 2-范畴和 $\infty$-范畴层次。
 
 #### 8.1.1 2-范畴结构
 
@@ -385,7 +385,7 @@ $$\alpha_t: f(R)_t \to g(R)_t, \quad \forall t \in \mathbb{R}$$
 
 使得谱流方程沿 $\alpha$ 自然：$\frac{d}{dt} \alpha_t = [G, \alpha_t]$。
 
-**定理 8.1**（$D$ 的 2-函子提升）。$D: \mathbf{Rec} \to \mathbf{Spec}$ 可唯一提升为 2-函子 $D_2: \mathbf{Rec}_2 \to \mathbf{Spec}_2$，保 2-态射复合。
+**定理 8.1**（$D$ 的 2-函子提升）。$D: \mathbf{Rec} \to \mathbf{Sp}$ 可唯一提升为 2-函子 $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$，保 2-态射复合。
 
 **证明**。$D_2$ 在 2-态射上的作用由 $D_2(\alpha)_t = D(\alpha_t)$ 定义。自然性由 $D$ 的函子性保证。形式化验证（`paper28_higher_category_formalization.py`）确认 $D_2$ 满足全部 4 条 2-函子公理：
 1. $D(g \circ f) = D(g) \circ D(f)$ ✅
@@ -399,9 +399,9 @@ Lean 4 形式化路径包含 4 个新模块（`HigherRecCategory`、`HigherSpecC
 
 在 $\infty$-范畴 $\mathbf{Rec}_\infty$ 中，谱流方程成为态射空间的切向量场：
 
-$$\frac{d}{dt} A_t \in T_{A_t} \mathbf{Spec}_\infty$$
+$$\frac{d}{dt} A_t \in T_{A_t} \mathbf{Sp}_\infty$$
 
-力的谱解释获得微分几何诠释——$A_{F,i}$ 是 $\mathbf{Spec}_\infty$ 上的 Killing 向量场，谱流方程是沿这些向量场的 Lie 导数。该视角将四种基本力统一为 $\mathbf{Spec}_\infty$ 中同一微分几何结构的四个切方向。
+力的谱解释获得微分几何诠释——$A_{F,i}$ 是 $\mathbf{Sp}_\infty$ 上的 Killing 向量场，谱流方程是沿这些向量场的 Lie 导数。该视角将四种基本力统一为 $\mathbf{Sp}_\infty$ 中同一微分几何结构的四个切方向。
 
 ### 8.2 非平衡谱热力学
 
@@ -562,9 +562,9 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》，v2.34（含 Phase 36 谱间隙 Δλ_min 与 Phase 37 IFS 重叠因子 ρ 第一性原理推导）
+- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.34（含 Phase 36 谱间隙 Δλ_min 与 Phase 37 IFS 重叠因子 ρ 第一性原理推导）
 - [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》，v2.21
-- [III] Paper III：《通用不动点范畴框架 III：谱去递归函子的谱分类完备性定理》，v1.1
+- [III] Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》，v1.1
 - [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
 - [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、Onsager 关系、涨落定理。
 - [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞视界的谱动力学——熵、辐射与信息》，v1.2。Hawking 温度谱公式、BH 熵谱公式、信息持守。
@@ -582,7 +582,7 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 
 **核心理论**：
 - 谱流方程的定义与 Koopman 推导（§2）
-- **零参数质量预测**：谱框架已实现全部 29 个 SM 参数的零输入预测（Paper XI 附录 D），核心机制是 $\mathbf{Spec}$ 4-范畴静默层级（$S_3, S_4$）在 IFS 递归深度上的投影→收缩因子 $c_i$ →质量比（Paper I §A.15.8）。
+- **零参数质量预测**：谱框架已实现全部 29 个 SM 参数的零输入预测（Paper XI 附录 D），核心机制是 $\mathbf{Sp}$ 4-范畴静默层级（$S_3, S_4$）在 IFS 递归深度上的投影→收缩因子 $c_i$ →质量比（Paper I §A.15.8）。
 - 力的独立性判据与 Nöther 谱定理（§2.3）
 
 **四种力的谱生成元**（§3）：

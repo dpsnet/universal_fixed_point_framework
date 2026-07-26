@@ -12,7 +12,7 @@
 ### 1.1 推导链
 
 ```
-Rec/Spec 范畴框架
+Rec/Sp 范畴框架
     ↓  A_GR = ad(G)(A) = [G, A]               [53A ✅]
     ↓  选定 G, A 为 SU(2) Lie 代数生成元
     ↓  Casimir 算子 C₂ = Σ L_i²

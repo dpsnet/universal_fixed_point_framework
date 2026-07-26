@@ -4,7 +4,7 @@
 
 ## 右手中微子的谱对象
 
-在 $\mathbf{Spec}$ 范畴中，右手中微子 $\nu_R$ 对应谱对象 $(\mathcal{H}_{\nu_R}, A_{\nu_R}, \sigma(A_{\nu_R}))$，其中 $\mathcal{H}_{\nu_R}$ 是右手中微子的 Hilbert 空间，$A_{\nu_R}$ 是 Majorana 质量谱算符，$\sigma(A_{\nu_R})$ 是其特征值谱。谱 Majorana 质量项为：
+在 $\mathbf{Sp}$ 范畴中，右手中微子 $\nu_R$ 对应谱对象 $(\mathcal{H}_{\nu_R}, A_{\nu_R}, \sigma(A_{\nu_R}))$，其中 $\mathcal{H}_{\nu_R}$ 是右手中微子的 Hilbert 空间，$A_{\nu_R}$ 是 Majorana 质量谱算符，$\sigma(A_{\nu_R})$ 是其特征值谱。谱 Majorana 质量项为：
 
 $$\mathcal{L}_{\text{Majorana}} = \frac12 \nu_R^\dagger [A_{\nu_R}, \nu_R] = \frac12 M_R \nu_R^T C \nu_R + \text{h.c.},$$
 
@@ -33,7 +33,7 @@ $$\boxed{M_\nu = -m_D M_R^{-1} m_D^T}.$$
 
 ## 谱预测
 
-在谱框架中，Majorana 质量谱算符 $A_{\nu_R}$ 的谱间隙由 $\mathbf{Spec}$ 范畴中电弱能标与 Planck 能标之间的层级决定：
+在谱框架中，Majorana 质量谱算符 $A_{\nu_R}$ 的谱间隙由 $\mathbf{Sp}$ 范畴中电弱能标与 Planck 能标之间的层级决定：
 
 $$M_R \sim \frac{\Lambda_{\text{Planck}}}{\Lambda_{\text{EW}}} \cdot v \sim 10^{14}\ \text{GeV},$$
 
@@ -57,7 +57,7 @@ $$U_{\text{PMNS}} = V_{\text{PMNS}} \cdot \operatorname{diag}(1, e^{i\alpha_1}, 
 
 ## 要点
 
-右手中微子在谱框架中不是附加假设，而是 $\mathbf{Spec}$ 范畴的天然谱对象。See-saw 机制的谱版本不仅复现了标准 See-saw 的所有结果，还通过 $A_{\nu_R}$ 的谱间隙为 $M_R$ 的能标提供了理论依据。
+右手中微子在谱框架中不是附加假设，而是 $\mathbf{Sp}$ 范畴的天然谱对象。See-saw 机制的谱版本不仅复现了标准 See-saw 的所有结果，还通过 $A_{\nu_R}$ 的谱间隙为 $M_R$ 的能标提供了理论依据。
 
 ---
 

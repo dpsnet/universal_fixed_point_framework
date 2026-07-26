@@ -5,7 +5,7 @@
 ## 定位
 
 - 将 UV 固定点处线性化稳定性矩阵的临界指数谱视为递归系统 $R_{AS} \in \mathbf{Rec}$。
-- 其去递归化像 $D(R_{AS})$ 给出 RG 不动点谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
+- 其谱化像 $D(R_{AS})$ 给出 RG 不动点谱结构，并验证 $\lambda_i = e^{-\mu_i}$。
 - 直接与全域不动点方程 $\mathcal{F}[\mathcal{V}] = \mathcal{V}$ 的框架核心相呼应。
 
 ## 文件

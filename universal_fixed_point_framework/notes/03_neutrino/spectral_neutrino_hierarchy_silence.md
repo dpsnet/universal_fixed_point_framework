@@ -42,7 +42,7 @@ $$m_\nu^{(i)} = \frac{(m_D^{(i)})^2}{M_R^{(i)}} \propto \frac{(c_i^{\alpha_D})^2
 - $\alpha_D$：Dirac mass IFS exponent (related to up-type quark exponent $\alpha_u = 1.945$)
 - $\alpha_R$：Right-handed Majorana mass IFS exponent
 
-**关键**：$m_D$ 和 $M_R$ 使用**相同的 IFS 收缩因子 $c_i$**（来自 $\mathbf{Spec}$ 4-范畴），但指数不同。这使得有效中微子 IFS 指数成为两者之差：
+**关键**：$m_D$ 和 $M_R$ 使用**相同的 IFS 收缩因子 $c_i$**（来自 $\mathbf{Sp}$ 4-范畴），但指数不同。这使得有效中微子 IFS 指数成为两者之差：
 
 $$\alpha_\nu = 2\alpha_D - \alpha_R$$
 

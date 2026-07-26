@@ -184,7 +184,7 @@ $Y$ 作为 $\mathfrak{so}(1,7)$ Cartan 子代数的线性组合，自动是自�
 
 ### 5.3 为何 $\nu_R^c$ 有 $Y = +1$？
 
-$\nu_R^c$（右手中微子共轭）有 $Y = +1$ 的预言值，对应于 $Q_{\text{EM}} = +1$。这不是标准 SM 中的场（右手中微子是 SM 单态），而是在谱框架中自然出现的 $\mathbf{Spec}$ 谱对象。该电荷赋值与 $e_R$ 的 $-1$ 对称，对应 $B-L$ 的镜像结构。
+$\nu_R^c$（右手中微子共轭）有 $Y = +1$ 的预言值，对应于 $Q_{\text{EM}} = +1$。这不是标准 SM 中的场（右手中微子是 SM 单态），而是在谱框架中自然出现的 $\mathbf{Sp}$ 谱对象。该电荷赋值与 $e_R$ 的 $-1$ 对称，对应 $B-L$ 的镜像结构。
 
 ---
 
@@ -229,4 +229,4 @@ Q_EM = T³ + Y ←── 五个 SM 超荷
 - `spectral_zero_parameter_derivation.md` §2（Cl(1,7) 分支规则）
 - `spectral_SM.md` §1（SM 场内容表）
 - `spectral_root_cause_analysis.md` §1 第 4 层（谱间隙 → 规范耦合）
-- `rec_spec_definitions.md`（Spec 范畴基础）
+- `rec_spec_definitions.md`（Sp 范畴基础）

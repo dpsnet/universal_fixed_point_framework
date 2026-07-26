@@ -285,7 +285,7 @@ PhysCrit 范畴                          ∂Rec_D 边界
 ### 8.1 层级定位
 
 本笔记的主定理 F1-F5 位于 **实例假设层**，使用：
-- 元公理 1-2（递归存在、谱去递归）
+- 元公理 1-2（递归存在、谱化）
 - 结构定理（Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$、Paper XVI 主定理 8-9）
 - Phase 51F-F2 主定理 E1-E3（流变谱边界）
 

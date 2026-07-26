@@ -1,4 +1,4 @@
-# 附录（通用不动点范畴框架 I：分形谱去递归理论）
+# 附录（通用不动点范畴框架 I：分形谱化理论）
 
 > 本附录为 `paper1_fractal_spectral_derecursion.md` 的独立附录文件，包含代码实现清单、机器证明形式化进展与技术引理。正文中的引用直接指向本文件对应章节。
 
@@ -8,24 +8,24 @@
 
 本文理论框架的完整代码实现位于 `universal_fixed_point_framework/src/`，与本文直接相关的核心模块如下：
 
-### A.1 范畴论与谱去递归化
+### A.1 范畴论与谱化
 
 - `rec_category.py`：递归系统范畴 $\mathbf{Rec}$ 的定义，包括对象（递归系统）与态射（仿真映射）；
-- `spec_category.py`：谱范畴 $\mathbf{Spec}$ 的定义，包括谱对象与谱态射；
-- `decursion_functor.py`：谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 的构造与伴随关系 $D \dashv R$ 的验证；
-- `spectral_correspondence.py`：谱对应自然等价 $M \cong L$ 的数值验证；
-- `orbit_functor.py`：轨道函子 $O$ 的构造与性质验证 + 群表示谱理论（等价类/同谱判定/谱荷/表示签名）；
+- `spec_category.py`：谱范畴 $\mathbf{Sp}$ 的定义，包括谱对象与谱态射；
+- `decursion_functor.py`：谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 的构造与伴随关系 $D \dashv R$ 的验证；
+- `spectral_correspondence.py`：谱对应自然同构 $M \cong L$ 的数值验证；
+- `orbit_functor.py`：轨道函子 $O$ 的构造与性质验证 + 群表示谱理论（等价类/同谱判定/谱权范数/表示签名）；
 - `fixed_point_solver.py`：全域不动点方程的数值求解器。
 
 ### A.2 连续谱测度理论
 
 - `continuous_spectrum_demo.py`：连续谱测度的数值演示，包括 Lebesgue 分解、$\eta_R$ 测度空间同构；
 - `singular_continuous_spectrum.py`：奇异连续谱的系统刻画，包括 Cantor/Sierpinski 分形谱构造、谱维数计算（$\dim_B, D_1, D_2$）、谱型三分类、谱对应保持谱型验证（对应本文 §4.4.1）；
-- `attractor_distance.py`：LACI 诊断与吸引子距离计算（对应本文 §3.6）。
+- `attractor_distance.py`：局部吸引子捕获指数（Local Attractor Capture Index, LACI）诊断与吸引子距离计算（对应本文 §3.6）。
 
 ### A.3 谱静默
 
-- `spectral_silence.py`：谱静默分析器，包括四个静默判据（连续谱/零测度/LACI 高/轨道权重）、高维→低维维度静默映射、紧致化对比、三个物理实例（弦论/全息/GR+SM）（对应本文 §5）。
+- `spectral_silence.py`：谱静默分析器，包括四个静默判据（连续谱/零测度/局部吸引子捕获指数 LACI 高/轨道权重）、高维→低维维度静默映射、紧致化对比、三个物理实例（弦论/全息/GR+SM）（对应本文 §5）。
 
 ### A.4 理论转化
 
@@ -58,6 +58,8 @@
 
 ### A.10 与朗兰兹纲领/镜像对称/全息对偶的形式类比
 
+> **术语边界说明**：本节所述"形式类比"指数学结构层面的相似性，**不等于严格范畴同构或函子等价**。形式类比的价值在于揭示不同领域间的共同数学语言，但严格的函子构造与范畴等价证明需要满足隔离约束（IC）条件（见配套论文 I §3.7 命题 C3.3），完整证明框架见未来 Paper III。
+
 - `math_phys_unification.py`：与朗兰兹纲领/镜像对称/全息对偶的形式类比框架，包括朗兰兹纲领的谱对应解释（数论↔几何范畴的形式类比）、镜像对称的谱对应解释（Calabi-Yau镜像对Hodge谱转置等价的形式类比）、全息对偶的谱对应解释（bulk↔boundary谱静默转化的形式类比）、三者形式类比于通用不动点框架共同结构的演示、分形谱量子引力独立研究分支基础框架（分形维数扫描、量子引力谱作用量、4个研究方向）。三者严格函子构造与范畴等价证明见未来 Paper III。
 
 ### A.11 哲学基础框架
@@ -68,22 +70,23 @@
 
 针对 §8.2 所列开放问题的最新推进实现：
 
-- `math_open_problems_advanced.py`：纯数学开放问题推进——非分离 IFS 收敛率下界（定理 NS-LB）、packing number / minimax 下界验证、奇异连续谱维数与 Lyapunov 指数的定量关系（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/Feng-Wang 精确转移算子、Feng-Wang 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
-- `math_open_problems_convexity.py`：纯数学理论短板解决——压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（定理 D-C）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（定理 HD-D）、拓扑熵-谱间隙普适不等式严格证明（定理 TE-G-M）；
+- `math_open_problems_advanced.py`：纯数学开放问题推进——非分离 IFS 收敛率下界（定理 NS-LB）、packing number / minimax 下界验证、奇异连续谱维数与 Lyapunov 指数的定量关系（定理 SC-L）、Kaplan-Yorke 维数与 Hausdorff 维数一致性验证、Ruelle/IFS 精确转移算子、IFS 热力学形式、拓扑熵-谱间隙普适不等式（猜想 TE-G）；
+- `math_open_problems_convexity.py`：纯数学理论短板解决——压力函数凸性验证（定理 P-C）、Hausdorff 维数凹性严格证明（Hausdorff 维数凹性定理）、热力学极限存在性证明框架（定理 T-L）、高维可逆系统 Ledrappier-Young 维数分解（Ledrappier-Young 维数分解定理）、拓扑熵-谱间隙普适不等式严格证明（拓扑熵–谱间隙不等式定理）；
 - `numerical_engineering_open_problems.py`：数值工程开放问题推进——MadGraph 调用接口（process/run card 自动生成、截面解析、解析回退）、micrOMEGAs 调用接口（relic density / SI / SD 解析、SLHA 自动生成、解析回退）、双星系统完整 inspiral-merger-ringdown 引力波仿真与简化 SNR 估计；
 - `physics_open_problems_advanced.py`：物理理论开放问题推进——Kerr 黑洞全局量子谱解析框架（QNM、Bohr-Sommerfeld 量子化、超辐射判据）、$N=4$ SYM 单迹/BMN/保护算子谱与框架谱对应匹配、暗物质质量分形谱推导与实验约束筛选；
-- `leaver_corrected_solver.py`：校正后的 Leaver QNM 求解器——采用正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向方程用谱方法（矩阵特征值），径向方程用连分数（n_inv 反转形式提高稳定性），同伦延拓 + Newton-Raphson 求根，与 qnm 包结果完全一致（差值 $\sim 10^{-11}$）；
-- `leaver_spectral_derecursion.py`：去递归谱计算求解器——将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$），CF 残差关系 $\beta_0 + \alpha_0 \cdot (a_1/a_0) = 0$ 通过谱方法验证（误差 $\sim 10^{-11}$），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$）；
-- `leaver_derecursion.py`：早期版本——使用乘积形式系数（已被 `leaver_corrected_solver.py` 修正），保留作为历史参考；
+- `src/dynamic_spectrum/leaver_unified_solver.py`：**最终版 Leaver QNM 统一求解器**——基于分形谱化理论，整合四层核心：(1) DerecursionAnalyzer（Koopman 算子谱分析 + 谱对应 $\lambda = e^{-\mu}$），(2) LeaverResidual（修正 Leaver 连分数系数，乘积形式 + 二次多项式双验证），(3) LACIEvaluator（不动点残差 + 分散度 + 谱间隙物理根选择），(4) LeaverUnifiedSolver（双重 Homotopy Continuation：自旋 $a$ + 磁量子数 $m$）。**替代了以下已归档的探索性实现**：
+  - `leaver_corrected_solver.py`（已归档至 `src/_archive/leaver_deprecated/`）：校正后的 Leaver QNM 求解器，采用 Cook-Zalutskiy 二次多项式系数，角向谱方法 + 径向连分数 + 同伦延拓 + Newton-Raphson，与 qnm 包结果一致（差值 $\sim 10^{-11}$）；
+  - `leaver_spectral_derecursion.py`（已归档）：谱化谱计算求解器——将连分数迭代转化为三对角矩阵特征值问题，实现 Koopman 算子谱分析，验证谱对应定理 $\lambda = e^{-\mu}$（误差 $\sim 10^{-15}$）；
+  - `leaver_derecursion.py`（已归档）：早期版本，使用乘积形式系数；
 - `nonzero_curvature_connection.py`：非零曲率纤维丛联络构造——Levi-Civita 联络与规范场联络的统一框架、曲率张量计算、Bianchi 恒等式验证、Clifford 规范场构造；
-- `fiber_bundle_decursion.py`：曲率感知的去递归函子——`CurvedRecObject`（含联络与曲率的递归对象）、`CurvedDecursionFunctor`（曲率修正的谱对象构造）、`KerrFiberBundle`（Kerr 时空纤维丛模型）；
-- `spectral_silence_axiomatization.py`：谱静默测度论公理化定义——A1-A4 公理体系（Borel 概率测度、静默度不变量、维度静默比、LACI 指数）、S1-S4 判据的独立性与完备性证明框架、增强版 LACI（综合最小间隙、间隙熵、间隙比值谱、密度变化率）、自适应阈值策略（根据点密度动态调整 S3 阈值）；
+- `fiber_bundle_decursion.py`：曲率感知的谱化函子——`CurvedRecObject`（含联络与曲率的递归对象）、`CurvedDecursionFunctor`（曲率修正的谱对象构造）、`KerrFiberBundle`（Kerr 时空纤维丛模型）；
+- `spectral_silence_axiomatization.py`：谱静默测度论公理化定义——A1-A4 公理体系（Borel 概率测度、静默度不变量、维度静默比、局部吸引子捕获指数 LACI）、S1-S4 判据的独立性与完备性证明框架、增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）（综合最小间隙、间隙熵、间隙比值谱、密度变化率）、自适应阈值策略（根据点密度动态调整 S3 阈值）；
 - `test_fiber_bundle_decursion.py`：纤维丛非零曲率与 D 函子兼容性测试——7 项测试覆盖 CurvedRecObject 构造、含联络的 Koopman 矩阵、含曲率的谱对象、CurvedDecursionFunctor 映射、Kerr 纤维丛结构、曲率非零验证、Kerr 谱对象；
-- `d_functor_dissipative_extension.py`：D 函子耗散扩展——`NonNormalOperatorTheory`（数值半径、非正规性指标、谱变分、伪谱分析）、`UnboundedOperatorDomain`（定义域管理、图范数、泛函演算）、`DissipativeDecursionFunctor`（$D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Spec}_{\mathbb{C}}$）、幂零算子谱变分修复（网格自适应）；
+- `d_functor_dissipative_extension.py`：D 函子耗散扩展——`NonNormalOperatorTheory`（数值半径、非正规性指标、谱变分、伪谱分析）、`UnboundedOperatorDomain`（定义域管理、图范数、泛函演算）、`DissipativeDecursionFunctor`（$D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Sp}_{\mathbb{C}}$）、幂零算子谱变分修复（网格自适应）；
 - `ns_lb_strict_proof.py`：NS-LB 显式最优常数严格证明框架——Frostman 引理严格证明（上界/下界、质量分布原理）、对偶问题求解（最优概率分布）、最优性证明（反证法）、数值验证（不同重叠因子 $\rho$ 下收敛率与理论一致）；
-- `feng_wang_concavity.py`：Feng-Wang 热力学极限严格证明——`ThermodynamicLimit` 类（自由能凸性验证、次可加性验证、Fekete 引理应用、大偏差原理）、数值验证（自由能密度收敛性）；
+- `feng_wang_concavity.py`：IFS 热力学极限严格证明——`ThermodynamicLimit` 类（自由能凸性验证、次可加性验证、Fekete 引理应用、大偏差原理）、数值验证（自由能密度收敛性）；
 - `decursion_functor.py`：主框架整合——支持 `non_normality_index` 和 `domain_mask` 属性的递归对象、`_numerical_radius()` 和 `_non_normality_index()` 辅助方法、曲率感知的谱对象构造；
-- `eft_slice_category.py`：$\mathbf{EFT}_\Lambda$ slice category 形式化构造——`EFTTheory`（EFT 理论对象）、`RGFlow`（RG 流态射）、`EFTSliceCategory`（slice category 定义与对象/态射管理）、`RGFlowFunctor`（Wilson 流函子 $W: \mathbf{EFT} \to \mathbf{EFT}_\Lambda$）、`SpectralSilenceFunctor`（谱静默函子 $S: \mathbf{EFT}_\Lambda \to \mathbf{Spec}$）、`AdjunctionRelation`（伴随关系 $W \dashv S$）；
+- `eft_slice_category.py`：$\mathbf{EFT}_\Lambda$ slice category 形式化构造——`EFTTheory`（EFT 理论对象）、`RGFlow`（RG 流态射）、`EFTSliceCategory`（slice category 定义与对象/态射管理）、`RGFlowFunctor`（Wilson 流函子 $W: \mathbf{EFT} \to \mathbf{EFT}_\Lambda$）、`SpectralSilenceFunctor`（谱静默函子 $S: \mathbf{EFT}_\Lambda \to \mathbf{Sp}$）、`AdjunctionRelation`（伴随关系 $W \dashv S$）；
 - `holographic_quantum_corrections.py`：全息量子修正——`HolographicEntanglementEntropy`（Ryu-Takayanagi 经典面积项 + 纤维丛曲率量子修正）、`BlackHoleEntropy`（Bekenstein-Hawking + 曲率修正 + 量子引力修正）、`HolographicSpectralSilence`（AdS/CFT 谱静默解释）、`BES_TBA_Curvature_Correction`（N=4 SYM BES/TBA 曲率修正）；
 - `cross_domain_predictions.py`：跨领域定量新预测——`BSMNewPhysicsPredictor`（第四代轻子、额外 Higgs、新规范玻色子、暗物质、Higgs 自耦合修正）、`KerrQNMCorrections`（Kerr QNM 曲率修正频率预测）、`HolographicNewPredictions`（算子维度修正、混沌边界、CFT 关联函数）；
 - `spectral_silence_compactification.py`：谱静默与紧致化等价性——`CompactificationParameters`（紧致化参数空间：半径、额外维度、拓扑、通量、翘曲因子）、`KKModeSpectrum`（KK 模式谱构造：环面/Calabi-Yau/一般紧致化）、`CompactificationSilenceChecker`（谱静默四判据验证）、`CompactificationSilenceEquivalence`（有限半径等价性定理、临界半径、定量误差估计）、`CompactificationNumericalVerification`（环面/Calabi-Yau 数值验证、相图）；解决 PD3 有限半径情形；
@@ -107,10 +110,10 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 
 #### A.15.2 C* 代数框架（Phase 30.2，`paper33_cstar_framework.py`）
 
-将 $\mathbf{Rec}/\mathbf{Spec}$ 范畴和 D 函子从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到 C* 代数：
+将 $\mathbf{Rec}/\mathbf{Sp}$ 范畴和 D 函子从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到 C* 代数：
 
 - **$\mathbf{Rec}_{C*}$ 对象**：C* 代数 A + 完全正映射 $\Phi: A \to A$
-- **$\mathbf{Spec}_{C*}$ 对象**：C* 代数 B + 谱空间（Gelfand 谱/Dixmier 原始理想谱）
+- **$\mathbf{Sp}_{C*}$ 对象**：C* 代数 B + 谱空间（Gelfand 谱/Dixmier 原始理想谱）
 - **$D_{C*}$ 函子**：Gelfand-Naimark 构造，$M_n(\mathbb{C})$ 特例退化到原始 D 函子（谱相关度 > 0.84）
 - **Gelfand 变换**：commutative C* 代数 $C(X)$ 的谱 $\cong$ 紧 Hausdorff 空间 $X$
 - **GNS 表示**：一般 C* 代数 → $B(H)$，谱对应 $\lambda = e^{-\mu}$ 在 C* 框架中保持（corr = 1.0000）
@@ -130,8 +133,8 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 将谱流方程诠释为 L∞ 代数/∞-范畴结构：
 
 - **$m_n = \text{ad}_G^n$**：谱流的同伦运算，满足 Jacobi 恒等式
-- **$\mathbf{Spec}_\infty$ Banach 流形**：$T_A\mathbf{Spec}_\infty = \{[G,A] : G \in \text{End}(H)\}$，指数映射 $\exp_A: T_A \to \mathbf{Spec}_\infty$ 由 $\exp(G)\cdot A\cdot\exp(-G)$ 给出
-- **Killing 向量场**：四力生成元 $\{A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}\}$ 是 $\mathbf{Spec}_\infty$ 上的 Killing 场
+- **$\mathbf{Sp}_\infty$ Banach 流形**：$T_A\mathbf{Sp}_\infty = \{[G,A] : G \in \text{End}(H)\}$，指数映射 $\exp_A: T_A \to \mathbf{Sp}_\infty$ 由 $\exp(G)\cdot A\cdot\exp(-G)$ 给出
+- **Killing 向量场**：四力生成元 $\{A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}\}$ 是 $\mathbf{Sp}_\infty$ 上的 Killing 场
 - **同伦截断收敛**：$n\to\infty$ 下 $m_1, m_2$ 收敛
 
 **Lean 4 形式化进展（Phase 31.1，2026-07-20）**：
@@ -212,9 +215,9 @@ $$
 
 #### A.15.8 IFS 收缩因子第一性原理推导（Phase 37，`paper37_ifs_overlap_derivation.py` 补充）
 
-半涌现量 $\rho$（IFS 重叠因子）去外部输入化，三代质量谱从 $\mathbf{Spec}$ 4-范畴的静默层级结构自然涌现（7/7 验证通过）。
+半涌现量 $\rho$（IFS 重叠因子）去外部输入化，三代质量谱从 $\mathbf{Sp}$ 4-范畴的静默层级结构自然涌现（7/7 验证通过）。
 
-**推导链**：Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）。三代收缩因子 $\{c_1, c_2, c_3\}$ 不由 Cl(1,7) 代数直接决定（三个 SU(3) 基本权重平方长度全等 $= 1/3$，D$_4$ triality 三个 8 维表示 Casimir 本征值全等 $= 7/2$），而由 $\mathbf{Spec}$ 4-范畴的多重静默层级在 IFS 递归深度上的投影唯一确定：
+**推导链**：Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）。三代收缩因子 $\{c_1, c_2, c_3\}$ 不由 Cl(1,7) 代数直接决定（三个 SU(3) 基本权重平方长度全等 $= 1/3$，D$_4$ triality 三个 8 维表示 Casimir 本征值全等 $= 7/2$），而由 $\mathbf{Sp}$ 4-范畴的多重静默层级在 IFS 递归深度上的投影唯一确定：
 
 $$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k,$$
 
@@ -223,9 +226,9 @@ $$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k,$$
 | 量 | 来源 | 值 | 状态 |
 |---|------|-----|------|
 | $\rho$（重叠因子） | Cl(1,7) 子空间正交性 | $0$（分离 IFS） | ✅ |
-| $d_H$（Hausdorff 维数） | D-C 定理 + $\rho=0$ | $2.7095$ | ✅ |
-| $S_3$（对象静默） | $\mathbf{Spec}$ 4-范畴对象层 | $e^{-3} = 0.049787$ | ✅ |
-| $S_4$（辫子静默） | $\mathbf{Spec}$ 4-范畴辫子层 | $e^{-d_H} = 0.066570$ | ✅ |
+| $d_H$（Hausdorff 维数） | Hausdorff 维数凹性定理 + $\rho=0$ | $2.7095$ | ✅ |
+| $S_3$（对象静默） | $\mathbf{Sp}$ 4-范畴对象层 | $e^{-3} = 0.049787$ | ✅ |
+| $S_4$（辫子静默） | $\mathbf{Sp}$ 4-范畴辫子层 | $e^{-d_H} = 0.066570$ | ✅ |
 | $k$（Moran 标度） | $\sum c_i^{d_H} = 1$ | $0.999761$ | ✅ |
 | $c_1$（一代收缩因子） | $k \cdot S_3 S_4$ | $0.003314$ | ✅ |
 | $c_2$（二代收缩因子） | $k \cdot S_4$ | $0.066554$ | ✅ |
@@ -241,9 +244,9 @@ $$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k,$$
 
 $$\frac{m_c}{m_t} \approx 0.0052,\quad \frac{m_u}{m_t} \approx 1.55 \times 10^{-5},$$
 
-与实验值 $0.0074$ 和 $1.27 \times 10^{-5}$ 偏差仅 $\times 1.4$ 和 $\times 1.2$——**无任何实验输入**，完全来自 $\mathbf{Spec}$ 4-范畴结构。
+与实验值 $0.0074$ 和 $1.27 \times 10^{-5}$ 偏差仅 $\times 1.4$ 和 $\times 1.2$——**无任何实验输入**，完全来自 $\mathbf{Sp}$ 4-范畴结构。
 
-**核心结论**：SM 三代费米子质量谱由 $\mathbf{Spec}$ 4-范畴的静默层级结构在 IFS 递归深度上的投影唯一确定。$\rho = 0$ 表明 IFS 自然为分离型，质量层级由三重静默压制编码。第四代轻子需不同 IFS 结构。
+**核心结论**：SM 三代费米子质量谱由 $\mathbf{Sp}$ 4-范畴的静默层级结构在 IFS 递归深度上的投影唯一确定。$\rho = 0$ 表明 IFS 自然为分离型，质量层级由三重静默压制编码。第四代轻子需不同 IFS 结构。
 
 #### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`paper41_cosmological_constant.py`）
 
@@ -254,7 +257,7 @@ $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整�
 | 必然性 | 根因 | 来源 |
 |--------|------|------|
 | 力数 $= 4$ | $\text{Cl}(1,7) \cong M_8(\mathbb{R})$ 旋量表示的 4 个不可约子空间 | Phase 36-37 |
-| 静默层数 $= 4$ | $\mathbf{Spec}$ 作为严格 4-范畴的层次饱和 | Paper I §5.7 |
+| 静默层数 $= 4$ | $\mathbf{Sp}$ 作为严格 4-范畴的层次饱和 | Paper I §5.7 |
 | 乘积形式 | 独立谱生成元 $\Rightarrow$ 谱测度正交 $\Rightarrow$ 联合测度乘积 | Paper V |
 
 **四力层叠**：每种力（GR/EM/强/弱）的谱生成元 $A_{F,i}$ 各经历完整 4 层静默，总压制 $S_{\text{total}} = (S_1 S_2 S_3 S_4)^4$。
@@ -297,9 +300,9 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 
 | 等级 | 模块范围 | 状态 |
 |------|----------|------|
-| A（极易） | $\mathbf{Rec}/\mathbf{Spec}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（24 个模块，零诊断错误，50 个测试定理） |
+| A（极易） | $\mathbf{Rec}/\mathbf{Sp}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（24 个模块，零诊断错误，50 个测试定理） |
 | B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、辫子幺半结构、IC 隔离约束 | ✅ 已完成 |
-| C（中等偏高） | IFS 分形吸引子、Hausdorff 维数、遍历论三项定理（D-C/HD-D/TE-G-M）、热力学形式论（压力函数/Legendre 变换/定理 D-C）——基于 mathlib `Dynamics.Ergodic`（完整内置）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），已全部自主实现 | ✅ **全部完成**（Phase 16C-I/II/III 三个子阶段，详见 `roadmap/phase16_machine_proof.md`） |
+| C（中等偏高） | IFS 分形吸引子、Hausdorff 维数、遍历论三项定理（Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）、热力学形式论（压力函数/Legendre 变换/Hausdorff 维数凹性定理）——基于 mathlib `Dynamics.Ergodic`（完整内置）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），已全部自主实现 | ✅ **全部完成**（Phase 16C-I/II/III 三个子阶段，详见 `roadmap/phase16_machine_proof.md`） |
 | D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ✅ **Phase 30.4 数值推进**（`paper35_infinity_category_infinite_dim.py` 6/6）；**Phase 31.1 Lean 4 骨架已实现并通过 `lake build`**（六个模块：`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`），核心定理证明以 `sorry` 占位 |
 
 #### A.16.2 当前进展（2026-07-16 更新）
@@ -311,7 +314,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | 序号 | 任务 | Lean 模块 | 状态 |
 |------|------|-----------|------|
 | 1 | $\mathbf{Rec}$ 范畴形式化 | `RecCategory.lean` | ✅ 对象、态射、复合、恒等态射已证 |
-| 2 | $\mathbf{Spec}$ 范畴形式化 | `SpecCategory.lean` | ✅ 谱对象、谱态射、谱复合已证 |
+| 2 | $\mathbf{Sp}$ 范畴形式化 | `SpecCategory.lean` | ✅ 谱对象、谱态射、谱复合已证 |
 | 3 | $D$ 函子良定义 | `DecursionFunctor.lean` | ✅ `map_id`/`map_comp` 完整 Functor 律与 `transferMatrix_comp` 反变合成、intertwine 性质均已证 |
 | 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `RFunctor` 使用 `Fin n` 非平凡状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，`DAdjR` 三角恒等式已证 |
 | 5 | 谱对应 $M \cong L$ | `SpectralCorrespondence.lean` | ✅ `spectralInv_leftInv`（基于 `Complex.log_exp` 的辐角范围处理）/ `spectralMap_rightInv`（基于 `Complex.exp_log`）双向逆已证 |
@@ -322,7 +325,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 
 | 序号 | 任务 | Lean 模块 | 状态 |
 |------|------|-----------|------|
-| 0a | C1 辫子自然等价 | `Braided.lean` | ✅ $\mathbf{Rec}_{\text{diss}}$ 辫子幺半范畴 + 六边形公理验证 + 对称退化定理 |
+| 0a | C1 辫子自然同构 | `Braided.lean` | ✅ $\mathbf{Rec}_{\text{diss}}$ 辫子幺半范畴 + 六边形公理验证 + 对称退化定理 |
 | 0b | C3 IC 隔离约束 | `IsolationConstraints.lean` | ✅ IC 三条件 Prop 定义 + 定理 C3.2 形式化陈述 |
 | 1 | Koopman 压缩半群 | `OperatorTheory.lean` | ✅ `koopmanOperator` + `koopmanSemigroup` 半群性质已证 |
 | 2 | m-增生生成元 $A_R$ | `OperatorTheory.lean` | ✅ `isMAccretive` 定义 + `selfAdjointNonneg_implies_mAccretive` 定理框架 |
@@ -395,10 +398,10 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 I（增强版 v2.41），分形谱去递归理论，含 18 篇参考文献。主要新增内容：
+《通用不动点范畴框架》系列论文 I（增强版 v2.41），分形谱化理论，含 18 篇参考文献。主要新增内容：
 
 - **Phase 36 谱间隙第一性原理推导**：$\Delta\lambda_{\min}$ 由 SU(2) + Cl(1,7) 唯一固定为 $0.122\,M_{\text{Pl}}$，半涌现量全部去外部输入化。
-- **v2.41 框架根本扩展规划**：新增 §8.3.3 开放问题 20–23（高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 TE-G-M 不等式严格推广）。
+- **v2.41 框架根本扩展规划**：新增 §8.3.3 开放问题 20–23（高阶 ∞-范畴完整形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 拓扑熵–谱间隙不等式严格推广）。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
@@ -410,7 +413,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | v2.34 | 2026-07-17 | 新增 §A.15.8 Phase 37 IFS 重叠因子推导；版本号同步；半涌现量全部去外部输入化 |
 | v2.33 | 2026-07-17 | 新增 §A.15.7 Phase 36 谱间隙第一性原理推导 |
 | v2.32 | 2026-07-17 | 新增 §A.15 Phase 30–35 全系模块附录 |
-| v2.31 | 2026-07-16 | Phase 16C 全部完成：16C-I 遍历论（HD-D/TE-G-M）+ 16C-II IFS 分形层 + 16C-III 热力学形式论；新增 SpectralEquivalence.lean、ICVerification.lean、IFSFractal.lean、ThermoFormalism.lean、DynSys.lean 共 5 个模块；Lean 总数从 12 → 24 模块；新增 4 个测试文件（52 测试定理）；15/19 功能模块零 `sorry`；Paper I 新增 §9.7 批评回应 + 注 2.2a 双轨 Koopman |
+| v2.31 | 2026-07-16 | Phase 16C 全部完成：16C-I 遍历论（Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）+ 16C-II IFS 分形层 + 16C-III 热力学形式论；新增 SpectralEquivalence.lean、ICVerification.lean、IFSFractal.lean、ThermoFormalism.lean、DynSys.lean 共 5 个模块；Lean 总数从 12 → 24 模块；新增 4 个测试文件（52 测试定理）；15/19 功能模块零 `sorry`；Paper I 新增 §9.7 批评回应 + 注 2.2a 双轨 Koopman |
 | v2.30 | 2026-07-16 | Phase 17 范畴论写作规范修订——针对 `docs/关于范畴论使用的相关批评.md` 三个缺陷的系统化解决：(1) **缺陷1（时序违规）** §2.3 新增定义 2.5a（$\mathbf{Rec}_D$ 宽子范畴）与注 2.5b（宽子范畴声明），将 $D$ 的定义域从全 $\mathbf{Rec}$ 前移到 $\mathbf{Rec}_D$；§2.4 删除与 §2.7 自相矛盾的注 2.11，命题 2.10 反射子范畴断言限定到 $\mathbf{Rec}_D$；§2.7 由"事后反思"改写为"定义域声明总结"。(2) **缺陷2（关键命题无证明）** §2.4 新增三条严格证明：命题 2.5c（$\mathbf{Rec}_D$ 子范畴合法性——对象/恒等/复合封闭）、命题 2.5d（Freyd 伴随定理前提继承——完备性与解集条件）、定理 2.10a（$D\dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立——三角恒等式验证）。(3) **缺陷3（无配套修正）** §7.9.1 定理 7.31 严格化为真正函子（消除 $O(\varepsilon)$ 误差），新增 $\mathbf{Rec}_{\text{diss}}$ 伪谱扰动界定义与 $\mathbf{Rec}_D\subset\mathbf{Rec}_{\text{diss}}\subset\mathbf{Rec}$ 包含关系；新增表 7.x 物理实例归类（黑洞耗散/非对称IFS/NTK→$\mathbf{Rec}_{\text{diss}}$）。(4) **理论创新** §5 新增 §5.7「三层静默体系」：定义 5.11（对象/态射/谱静默）、命题 5.13（态射静默比谱静默更彻底）、推论 5.14（谱静默的范畴论基础）、定理 5.15（三层静默严格层次 $\text{谱}\subsetneq\text{态射}\subsetneq\text{对象}$）。(5) §1.2 贡献 10 重写为"方法论与三层静默体系"；§8.2.5 新增问题 20（三层静默体系完整形式化待深化）；摘要补充三层静默与 $D_{\text{diss}}$ 严格化说明。 |
 | v2.29 | 2026-07-16 | 机器证明形式化章节实质落地 |
 | ... | ... | （完整变更记录见 paper1 正文末尾） |

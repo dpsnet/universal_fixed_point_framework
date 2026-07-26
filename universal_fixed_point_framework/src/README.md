@@ -4,7 +4,7 @@
 
 ## 设计目标
 
-- 用 Python 实现递归系统范畴 $\mathbf{Rec}$、谱范畴 $\mathbf{Spec}$、谱去递归化函子 $D$ 的完整原型。
+- 用 Python 实现递归系统范畴 $\mathbf{Rec}$、谱范畴 $\mathbf{Sp}$、谱化函子 $D$ 的完整原型。
 - 所有数值迭代仅作为求解不动点方程的工具方法，不侵入理论本体。
 
 ## 模块清单
@@ -14,11 +14,11 @@
 | 模块 | 功能 | 状态 |
 |---|---|---|
 | `rec_category.py` | 递归系统范畴 $\mathbf{Rec}$ 的对象、态射、复合律 | ✅ 已完成 |
-| `spec_category.py` | 谱范畴 $\mathbf{Spec}$ 的对象、态射、谱映射 | ✅ 已完成 |
-| `decursion_functor.py` | 谱去递归化函子 $D: \mathbf{Rec} \to \mathbf{Spec}$，含伴随函子 $D \dashv R$ | ✅ 已完成 |
+| `spec_category.py` | 谱范畴 $\mathbf{Sp}$ 的对象、态射、谱映射 | ✅ 已完成 |
+| `decursion_functor.py` | 谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$，含伴随函子 $D \dashv R$ | ✅ 已完成 |
 | `fixed_point_solver.py` | 全域不动点方程 $\mathcal{F}[\mathcal{V}] = \mathcal{V}$ 的数值求解器 | ✅ 已完成 |
-| `spectral_correspondence.py` | 谱对应自然等价 $M \cong L$ 的数值验证 | ✅ 已完成 |
-| `orbit_functor.py` | 规范群轨道函子 $O$ 的构造与性质验证 + 群表示谱理论（等价类/同谱判定/谱荷/表示签名） | ✅ 已完成 |
+| `spectral_correspondence.py` | 谱对应自然同构 $M \cong L$ 的数值验证 | ✅ 已完成 |
+| `orbit_functor.py` | 规范群轨道函子 $O$ 的构造与性质验证 + 群表示谱理论（等价类/同谱判定/谱权范数/表示签名） | ✅ 已完成 |
 
 ### 连续谱与谱测度
 
@@ -43,7 +43,7 @@
 | `spectral_silence_axiomatization.py` | 谱静默测度论公理化定义：A1-A4 公理体系、S1-S4 判据独立性与完备性证明、综合静默度计算 | ✅ 已完成 |
 | `d_functor_expansion_if.py` | D 函子扩张 IFS 扩展：扩张 IFS 逆系统构造、不稳定流形理论、双曲谱对象、D 函子映射 | ✅ 已完成 |
 | `ns_lb_constant_optimization.py` | NS-LB 常数变分优化：Frostman 常数变分原理、对偶问题求解、稳定性验证 | ✅ 已完成 |
-| `feng_wang_concavity.py` | Feng-Wang 凹性证明：理论证明框架（变分原理 + 熵凹性）、数值验证 | ✅ 已完成 |
+| `feng_wang_concavity.py` | IFS 凹性证明：理论证明框架（变分原理 + 熵凹性）、数值验证 | ✅ 已完成 |
 | `attractor_distance.py` | LACI 诊断与吸引子距离计算 | ✅ 已完成 |
 | `overfitting_diagnosis.py` | 过拟合诊断报告 | ✅ 已完成 |
 
@@ -99,11 +99,10 @@
 | `continuous_open_problems.py` | 连续谱开放问题数值分析 | ✅ 已完成 |
 | `orbit_open_problems.py` | 轨道函子开放问题分析 | ✅ 已完成 |
 | `unification_open_problems.py` | 统一猜想开放问题分析 | ✅ 已完成 |
-| `math_open_problems_advanced.py` | 非分离 IFS 收敛率下界 + 奇异连续谱-Lyapunov 关联 + Feng-Wang/Ruelle/最优条件转移算子 + 拓扑熵-谱间隙不等式 + Markov IFS 严格框架 + Koopman TE-G 推广 | ✅ 已完成 |
+| `math_open_problems_advanced.py` | 非分离 IFS 收敛率下界 + 奇异连续谱-Lyapunov 关联 + IFS/Ruelle/最优条件转移算子 + 拓扑熵-谱间隙不等式 + Markov IFS 严格框架 + Koopman TE-G 推广 | ✅ 已完成 |
 | `numerical_engineering_open_problems.py` | MadGraph/micrOMEGAs 调用接口 + 双星引力波仿真 | ✅ 已完成 |
 | `physics_open_problems_advanced.py` | Kerr 全局量子谱（含 Leaver 简化/精确/自洽 Teukolsky） + N=4 SYM（含强耦合/BES/O(g⁶) BES/TBA） + 暗物质分形谱 | ✅ 已完成 |
-| `leaver_corrected_solver.py` | 校正后的 Leaver QNM 求解器：正确的二次多项式系数（Cook-Zalutskiy D_coeffs），角向谱方法，径向连分数（n_inv 反转），同伦延拓 + Newton-Raphson，与 qnm 包一致 | ✅ 已完成 |
-| `leaver_spectral_derecursion.py` | 去递归谱计算求解器：连分数迭代→三对角矩阵特征值问题，Koopman 算子谱分析，三路径对照验证，谱对应定理验证；"两弦法"逆迭代优化（Thomas+Rayleigh），多吸引子谱优势定理 | ✅ 已完成 |
+| `dynamic_spectrum/leaver_unified_solver.py` | **最终版 Leaver QNM 统一求解器**：基于分形谱化理论，集成 DerecursionAnalyzer（Koopman 谱分析）+ LeaverResidual（修正系数）+ LACIEvaluator（物理根选择）+ LeaverUnifiedSolver（双重 Homotopy）。**替代已归档的早期实现**：`leaver_corrected_solver.py`（正确的二次多项式系数 + 角向谱方法 + 同伦延拓）、`leaver_spectral_derecursion.py`（连分数→三对角矩阵 + 双初始向量逆迭代法逆迭代）、`leaver_derecursion.py`（乘积形式系数早期版本）——以上已移入 `_archive/leaver_deprecated/` | ✅ 已完成 |
 | `error_budget.py` | 误差预算体系：Rec→Spec→预言→实验 全链路误差传播（ErrorSource/ErrorBudget + Rec/Spec/预言/RKHS/G_N 误差估计 + 误差链传播） | ✅ 已完成 |
 
 ## 测试
@@ -111,18 +110,18 @@
 | 测试文件 | 覆盖内容 | 状态 |
 |---|---|---|
 | `test_decursion_functor.py` | $D$ 函子、伴随函子、三角恒等式 | ✅ 通过 |
-| `test_orbit_functor.py` | 轨道函子 + 群表示谱理论（等价类/同谱判定/谱荷/表示签名） | ✅ 通过 |
-| `test_spectral_correspondence.py` | 谱对应自然等价 | ✅ 通过 |
+| `test_orbit_functor.py` | 轨道函子 + 群表示谱理论（等价类/同谱判定/谱权范数/表示签名） | ✅ 通过 |
+| `test_spectral_correspondence.py` | 谱对应自然同构 | ✅ 通过 |
 | `test_overfitting_diagnosis.py` | 过拟合诊断 / LACI | ✅ 通过 |
 | `test_weak_intertwining.py` | 弱交织模式 | ✅ 通过 |
-| `test_open_problems_advanced.py` | 开放问题推进模块（数学/数值/物理，含 Feng-Wang/Ruelle/最优条件、TE-G/Markov/Koopman、Leaver 简化/精确/自洽、N=4 强耦合/BES/O(g⁶) BES） | ✅ 通过 |
+| `test_open_problems_advanced.py` | 开放问题推进模块（数学/数值/物理，含 IFS/Ruelle/最优条件、TE-G/Markov/Koopman、Leaver 简化/精确/自洽、N=4 强耦合/BES/O(g⁶) BES） | ✅ 通过 |
 | `test_error_budget.py` | 误差预算体系（ErrorSource/ErrorBudget + Rec/Spec/预言/RKHS/G_N 误差估计 + 误差链传播） | ✅ 通过 |
 
 ## 与论文的对应关系
 
 | 论文章节 | 对应代码模块 |
 |---|---|
-| **Paper I §2-3**：范畴论基础、谱去递归化函子、全域不动点 | `rec_category.py`、`spec_category.py`、`decursion_functor.py`、`fixed_point_solver.py`、`spectral_correspondence.py` |
+| **Paper I §2-3**：范畴论基础、谱化函子、全域不动点 | `rec_category.py`、`spec_category.py`、`decursion_functor.py`、`fixed_point_solver.py`、`spectral_correspondence.py` |
 | **Paper I §4**：连续谱与谱测度 | `continuous_spectrum_demo.py`、`singular_continuous_spectrum.py` |
 | **Paper I §5**：Clifford 值谱与纤维丛 | `clifford_spectrum_demo.py`、`fiber_bundle_demo.py`、`test_clifford_spinor_module.py` |
 | **Paper I §6**：RKHS 收敛率 | `rkhs_convergence_rate.py`、`rkhs_weak_separation.py`、`rkhs_non_separated.py`、`rkhs_non_separated_measure_theoretic.py`、`high_dimensional_ifs.py` |
@@ -134,7 +133,7 @@
 | **Paper II §2-3**：标准模型、GR+SM 统一 | `sm_mass_2loop.py`、`unification_conjecture_demo.py`、`gn_emergence_derivation.py` |
 | **Paper II §4**：BSM 物理与实验 | `bsm_predictions.py`、`bsm_signatures.py`、`bsm_hllhc_fcc_study.py`、`bsm_relic_calibration.py`、`bsm_experiment_validation.py`、`bsm_precision_interface.py` |
 | **Paper II §5**：Kerr 黑洞与引力波 | `kerr_fractal_entropy.py`、`kerr_nonequatorial_chaos.py` |
-| **Paper I §7.8**：去递归理论在 Kerr Leaver 连分数中的应用 | `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py`、`leaver_derecursion.py` |
+| **Paper I §7.8**：谱化理论在 Kerr Leaver 连分数中的应用 | `dynamic_spectrum/leaver_unified_solver.py`（**最终版**；早期探索实现 `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py`、`leaver_derecursion.py` 已归档至 `_archive/leaver_deprecated/`） |
 | **Paper II §8.2/A.12**：开放问题推进（Kerr 量子谱、N=4 SYM、暗物质分形谱、MadGraph/micrOMEGAs、双星引力波） | `physics_open_problems_advanced.py`、`numerical_engineering_open_problems.py` |
 | **Paper II §6-7**：全息纠缠熵、CFT、理论转化应用 | `holographic_entropy.py`、`cft_entanglement_verification.py`、`complex_cft_phase_transition.py`、`transformation_simulation_interface.py`、`ntk_fractal_bidirectional.py`、`theory_taxonomy.py`、`eft_equivalence_framework.py`、`math_phys_unification.py`、`philosophical_foundations.py` |
 | **Paper II §7.5**：误差预算体系 | `error_budget.py` |
@@ -145,13 +144,13 @@
 
 | 日期 | 更新内容 | 新增模块 |
 |---|---|---|
-| 2026-07-15 | 去递归深化："两弦法"逆迭代优化（Thomas算法 + Rayleigh商，O(N³)→O(N)），多吸引子谱优势定理（平衡点K≈3） | `leaver_spectral_derecursion.py` 增强 |
-| 2026-07-15 | 去递归理论实质验证：新增 `leaver_corrected_solver.py`（正确二次多项式系数）和 `leaver_spectral_derecursion.py`（谱分解方法），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率 | `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py` |
+| 2026-07-15 | 谱化深化："双初始向量逆迭代法"逆迭代优化（Thomas算法 + Rayleigh商，O(N³)→O(N)），多吸引子谱优势定理（平衡点K≈3）（该模块现已归档至 `_archive/leaver_deprecated/`，最终版见 `dynamic_spectrum/leaver_unified_solver.py`） | `leaver_spectral_derecursion.py` 增强（已归档） |
+| 2026-07-15 | 谱化理论实质验证：新增 `leaver_corrected_solver.py`（正确二次多项式系数）和 `leaver_spectral_derecursion.py`（谱分解方法），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致 QNM 频率（均已归档至 `_archive/leaver_deprecated/`，最终版见 `dynamic_spectrum/leaver_unified_solver.py`） | `leaver_corrected_solver.py`、`leaver_spectral_derecursion.py`（均已归档） |
 | 2026-07-13 | 同步 Paper I v2.5：§5.6 谱静默定理深化、§7.7 理论转化/EFT/弦图演算方法论系统化 | 论文对应关系更新 |
-| 2026-07-13 | 数学严格化深化：`math_open_problems_advanced.py` 新增 Feng-Wang 热力学形式；`physics_open_problems_advanced.py` 新增 Leaver 连分数 Kerr QNM、强耦合 N=4 SYM；测试数从 47 增至 52 | 开放问题推进 |
+| 2026-07-13 | 数学严格化深化：`math_open_problems_advanced.py` 新增 IFS 热力学形式；`physics_open_problems_advanced.py` 新增 Leaver 连分数 Kerr QNM、强耦合 N=4 SYM；测试数从 47 增至 52 | 开放问题推进 |
 | 2026-07-13 | 数学严格化再深化：`math_open_problems_advanced.py` 新增 Ruelle 精确转移算子、拓扑熵-谱间隙不等式；`physics_open_problems_advanced.py` 新增 Leaver 精确系数、N=4 SYM 简化 BES/TBA；测试数从 52 增至 57 | 开放问题推进 |
-| 2026-07-13 | 数学严格化三阶段深化：`math_open_problems_advanced.py` 新增 Feng-Wang 条件转移算子、Markov IFS 下 TE-G 严格框架；`physics_open_problems_advanced.py` 新增完整 Teukolsky-Leaver 求解器、N=4 SYM 完整 BES/TBA 升级；测试数从 57 增至 61 | 开放问题推进 |
-| 2026-07-13 | 数学严格化四阶段深化：`math_open_problems_advanced.py` 新增 Feng-Wang 最优条件转移算子、Koopman TE-G 推广；`physics_open_problems_advanced.py` 新增 spheroidal λ 自洽迭代、O(g⁶) BES/TBA；测试数从 61 增至 64 | 开放问题推进 |
+| 2026-07-13 | 数学严格化三阶段深化：`math_open_problems_advanced.py` 新增 IFS 条件转移算子、Markov IFS 下 TE-G 严格框架；`physics_open_problems_advanced.py` 新增完整 Teukolsky-Leaver 求解器、N=4 SYM 完整 BES/TBA 升级；测试数从 57 增至 61 | 开放问题推进 |
+| 2026-07-13 | 数学严格化四阶段深化：`math_open_problems_advanced.py` 新增 IFS 最优条件转移算子、Koopman TE-G 推广；`physics_open_problems_advanced.py` 新增 spheroidal λ 自洽迭代、O(g⁶) BES/TBA；测试数从 61 增至 64 | 开放问题推进 |
 | 2026-07-13 | 代码质量修复：移除 D 函子 Koopman 矩阵强制对称化；`from_koopman` 增加 logm fallback 处理不可对角化矩阵；忠实性测试扩展为多组随机态射验证；`map_morphism` 增加交织验证选项；Callable 演化增加误差估计 | `decursion_functor.py` `spec_category.py` `rec_category.py` `test_decursion_functor.py` |
 | 2026-07-13 | Phase 15A-1 高维 IFS 数值验证：新增 `test_high_dimensional_ifs.py`（13 项：解析层 8 + 数值层 2 + 相变层 2 + 跨维数 1），覆盖合成核矩阵幂律衰减验证 | `test_high_dimensional_ifs.py` |
 | 2026-07-13 | Phase 15A-2 Kerr 校准：新增 `test_qnm_calibration.py`（4 项 + 1 xfail），homotopy continuation 修复 m=0；改进 `qnm_frequency_approximation` | `test_qnm_calibration.py` `physics_open_problems_advanced.py` |

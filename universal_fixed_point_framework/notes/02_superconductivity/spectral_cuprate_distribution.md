@@ -24,7 +24,7 @@
 
 ### 1.2 谱丛语言翻译
 
-在谱丛 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 中，BCS 截面 $\sigma_{\Delta}(T)$ 的纤维是单值谱间隙 $\Delta\lambda_{\min}(T)$：
+在谱丛 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 中，BCS 截面 $\sigma_{\Delta}(T)$ 的纤维是单值谱间隙 $\Delta\lambda_{\min}(T)$：
 $$\sigma_{\Delta}(T) = (T, \Delta\lambda_{\min}(T))$$
 
 cuprate 截面 $\sigma_{\Delta}^{\text{(c)}}(T)$ 的纤维是谱间隙的**分布** $\varphi_T(\Delta\lambda)$：
@@ -85,7 +85,7 @@ $$\sigma_{\Delta}^{\text{(c)}}(T) = \left(T, \ w_{\text{g}}(T) \cdot \mu_T\right
 
 ### 3.1 推前映射
 
-分布谱间隙截面 $\sigma_{\Delta}^{\text{(c)}}$ **不破坏** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性——只需将 $\mathbf{Spec}$ 中的谱元素从"单值间隙"替换为"间隙分布"。
+分布谱间隙截面 $\sigma_{\Delta}^{\text{(c)}}$ **不破坏** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性——只需将 $\mathbf{Sp}$ 中的谱元素从"单值间隙"替换为"间隙分布"。
 
 **定理 3.1**（推前兼容性）。纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 作用于分布的方式是推前（pushforward）：
 $$(\hat{\mathcal{T}}_{\text{Riem}})_*(\varphi_T) = \varphi_{\mathcal{T}(T)}$$
@@ -93,7 +93,7 @@ $$(\hat{\mathcal{T}}_{\text{Riem}})_*(\varphi_T) = \varphi_{\mathcal{T}(T)}$$
 
 ### 3.2 物理意义
 
-推前条件意味着：温度截面和 RG 截面通过 $\hat{\mathcal{T}}_{\text{Riem}}$ 保持分布的形状——温度 $T$ 处的谱间隙分布和 RG 标度 $\mathcal{T}(T)$ 处的谱间隙分布相同。这保证了谱编织条件在分布论框架下的自洽性。
+推前条件意味着：温度截面和 RG 截面通过 $\hat{\mathcal{T}}_{\text{Riem}}$ 保持分布的形状——温度 $T$ 处的谱间隙分布和 RG 标度 $\mathcal{T}(T)$ 处的谱间隙分布相同。这保证了谱粘合条件在分布论框架下的自洽性。
 
 ---
 
@@ -101,12 +101,12 @@ $$(\hat{\mathcal{T}}_{\text{Riem}})_*(\varphi_T) = \varphi_{\mathcal{T}(T)}$$
 
 ### 4.1 分布纤维
 
-**定义 4.1**（分布纤维 $\widehat{\mathbf{Spec}}$）。$\widehat{\mathbf{Spec}}$ 是 $\mathbf{Spec}$ 的推广，其元素为谱间隙上的概率分布 $\varphi$，而非单值谱间隙 $\Delta\lambda$。直观上：
-$$\widehat{\mathbf{Spec}}_{(T)} \ni \varphi_T(\Delta\lambda)$$
+**定义 4.1**（分布纤维 $\widehat{\mathbf{Sp}}$）。$\widehat{\mathbf{Sp}}$ 是 $\mathbf{Sp}$ 的推广，其元素为谱间隙上的概率分布 $\varphi$，而非单值谱间隙 $\Delta\lambda$。直观上：
+$$\widehat{\mathbf{Sp}}_{(T)} \ni \varphi_T(\Delta\lambda)$$
 
 ### 4.2 分布截面
 
-**定义 4.2**（分布谱丛截面）。一个 cuprate 谱丛截面 $\sigma_{\Delta}^{\text{(c)}}$ 是函子 $\sigma_{\Delta}^{\text{(c)}}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \widehat{\mathbf{Spec}})$，满足 $\pi_T \circ \sigma_{\Delta}^{\text{(c)}} = \text{id}_{\mathbf{Temp}}$。
+**定义 4.2**（分布谱丛截面）。一个 cuprate 谱丛截面 $\sigma_{\Delta}^{\text{(c)}}$ 是函子 $\sigma_{\Delta}^{\text{(c)}}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \widehat{\mathbf{Sp}})$，满足 $\pi_T \circ \sigma_{\Delta}^{\text{(c)}} = \text{id}_{\mathbf{Temp}}$。
 
 ### 4.3 $\hat{\mathcal{T}}_{\text{Riem}}$ 的推前延拓
 
@@ -117,7 +117,7 @@ $$(\hat{\mathcal{T}}_{\text{Riem}})_*(\sigma_{\Delta}^{\text{(c)}})(T) = \sigma_
 
 ### 4.4 与乘积基 Diag 的关系
 
-在谱编织乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 上，cuprate 分布截面沿对角嵌入 $T \mapsto (T, \mathcal{T}(T))$ 的限制给出：
+在谱粘合乘积基 $\mathbf{Temp} \times \mathbf{RG}$ 上，cuprate 分布截面沿对角嵌入 $T \mapsto (T, \mathcal{T}(T))$ 的限制给出：
 $$\iota_T^* \circ \sigma_{\Delta}^{\text{(c)}} = \iota_\mu^* \circ \sigma_{\Delta}^{\text{(c)}} \quad\text{在}\quad \mu = \mathcal{T}(T)$$
 
 即分布截面也满足对角闭包条件（类比 `weave_closure_on_diag`）。

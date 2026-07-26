@@ -20,10 +20,10 @@
 本笔记对流变-Lorentz 同构笔记中提出的猜想 E（流变 $\partial\mathbf{Rec}_D$）与猜想 F（流变 Lorentz 群）进行严格化。建立三个主定理：
 
 - **主定理 E1**（临界剪切率-谱间隙对应）：$\dot\gamma \to \dot\gamma_c^- \Leftrightarrow \Delta\lambda_{\min}(A_{\text{fl}}) \to 0^+$，证明路径为本构方程奇异性 → Maxwell 弛豫发散 → 谱间隙坍缩。
-- **主定理 E2**（流变 Lorentz 群同构）：$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}}) \cong SO^+(1,1)$，由 $\mathfrak{so}(1,1)$ Lie 代数同构 + 指数映射唯一性得到。
-- **主定理 E3**（三类临界现象的统一范畴论刻画）：Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散是同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的三种物理实现。
+- **主定理 E2**（流变 Lorentz 群同构）：$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}}) \cong SO^+(1,1)$，由 $\mathfrak{so}(1,1)$ Lie 代数同构 + 指数映射唯一性得到。
+- **主定理 E3**（三类临界现象的统一范畴论刻画）：Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散是同一函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的三种物理实现。
 
-严格化遵循 UFPF 公理层级非反馈原则：所有证明仅使用元公理 1-2（递归存在、谱去递归）与结构定理（Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$），流变层不反馈到上层。
+严格化遵循 UFPF 公理层级非反馈原则：所有证明仅使用元公理 1-2（递归存在、谱化）与结构定理（Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$），流变层不反馈到上层。
 
 ---
 
@@ -170,9 +170,9 @@ $$\tau_{\text{rheo}} = 1 / \Delta\lambda_{\min}(A_{\text{fl}}),$$
 ### 5.1 定理陈述
 
 **主定理 E2**（流变 Lorentz 群同构）。存在群同构
-$$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}}) \cong SO^+(1,1),$$
+$$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}}) \cong SO^+(1,1),$$
 
-其中 $SO^+_{\text{rheo}}(1,1)$ 是流变 Lorentz 群（由流变谱流生成元 $G_{\text{rheo}} \in \mathfrak{so}(1,1)$ 生成），$\mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}})$ 是流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的保结构自同构群。
+其中 $SO^+_{\text{rheo}}(1,1)$ 是流变 Lorentz 群（由流变谱流生成元 $G_{\text{rheo}} \in \mathfrak{so}(1,1)$ 生成），$\mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}})$ 是流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 的保结构自同构群。
 
 ### 5.2 证明
 
@@ -186,16 +186,16 @@ $$U_\phi: \begin{pmatrix} \sigma_{xy} \\ \sigma_{xx} \end{pmatrix} \mapsto \begi
 
 这正是一维 Lorentz 推进矩阵，故 $SO^+_{\text{rheo}}(1,1) := \{e^{\phi K} : \phi \in \mathbb{R}\} \cong SO^+(1,1)$。
 
-**步骤 2**（$\mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}$ 的刻画）。流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 上的保结构自同构是保持谱边界结构的 $\mathbf{Spec}_{\text{fl}}$ 自同构。由主定理 E1，$\partial\mathbf{Rec}_D^{\text{rheo}}$ 由 $\Delta\lambda_{\min} = 0$ 刻画，保结构自同构必须保持这一条件。
+**步骤 2**（$\mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}$ 的刻画）。流变谱边界 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 上的保结构自同构是保持谱边界结构的 $\mathbf{Sp}_{\text{fl}}$ 自同构。由主定理 E1，$\partial\mathbf{Rec}_D^{\text{rheo}}$ 由 $\Delta\lambda_{\min} = 0$ 刻画，保结构自同构必须保持这一条件。
 
 由 Paper XVI 主定理 9 的证明模式（Lorentz 群 = $\partial\mathbf{Rec}_D$ 自同构），$\partial\mathbf{Rec}_D^{\text{rheo}}$ 的保结构自同构群是保持二维流变子空间上 $\mathfrak{so}(1,1)$ 作用的群，即 $SO^+(1,1)$。
 
-**步骤 3**（同构的显式构造）。构造映射 $\Psi: SO^+_{\text{rheo}}(1,1) \to \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}})$：
+**步骤 3**（同构的显式构造）。构造映射 $\Psi: SO^+_{\text{rheo}}(1,1) \to \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}})$：
 $$\Psi(e^{\phi K})(A_{\text{fl}}) := e^{\phi K} A_{\text{fl}} e^{-\phi K}.$$
 
 由流变谱流方程（Paper XVI 主定理 12）$\frac{d}{d\phi}A_\phi = [G_{\text{rheo}}, A_\phi] + \ldots$，$\Psi$ 是群同态。$\Psi$ 的单射性来自 $K$ 的非零性，满射性来自 $\mathfrak{so}(1,1)$ 是 $\partial\mathbf{Rec}_D^{\text{rheo}}$ 上唯一的保结构 Lie 代数（由二维性 + 度规 signature (1,1) 唯一确定）。
 
-故 $\Psi$ 是群同构，$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}})$。结合步骤 1，$SO^+_{\text{rheo}}(1,1) \cong SO^+(1,1)$。$\square$
+故 $\Psi$ 是群同构，$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}})$。结合步骤 1，$SO^+_{\text{rheo}}(1,1) \cong SO^+(1,1)$。$\square$
 
 ### 5.3 推论：4 维 Lorentz 群与 2 维流变 Lorentz 群的关系
 
@@ -213,7 +213,7 @@ $$SO^+_{\text{rheo}}(1,1) \hookrightarrow SO^+(1,3),$$
 
 ### 6.1 定理陈述
 
-**主定理 E3**（三类临界现象的统一）。以下三类临界现象通过 $D: \mathbf{Rec} \to \mathbf{Spec}$ 函子在 $\partial\mathbf{Rec}_D$ 边界附近统一：
+**主定理 E3**（三类临界现象的统一）。以下三类临界现象通过 $D: \mathbf{Rec} \to \mathbf{Sp}$ 函子在 $\partial\mathbf{Rec}_D$ 边界附近统一：
 
 | 临界现象 | 物理参数 | 谱边界 | 边界条件 | 谱流生成元 | 出处 |
 |:--------|:--------|:------|:--------|:---------|:----|
@@ -227,7 +227,7 @@ $$SO^+_{\text{rheo}}(1,1) \hookrightarrow SO^+(1,3),$$
 
 **证明**。三类临界现象的统一性来自以下三个层次的范畴论结构：
 
-**层次 1**（对象的统一）。三类递归系统 $R_{\text{Lor}}, R_{\text{BH}}, R_{\text{fl}}$ 都是 $\mathbf{Rec}$ 中的对象，其谱像 $D(R_i) = (\mathcal{H}_i, A_i, \sigma(A_i))$ 由同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 给出。
+**层次 1**（对象的统一）。三类递归系统 $R_{\text{Lor}}, R_{\text{BH}}, R_{\text{fl}}$ 都是 $\mathbf{Rec}$ 中的对象，其谱像 $D(R_i) = (\mathcal{H}_i, A_i, \sigma(A_i))$ 由同一函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 给出。
 
 **层次 2**（边界的统一）。三类谱边界 $\partial\mathbf{Rec}_D^{\text{Lor}}, \partial\mathbf{Rec}_D^{\text{BH}}, \partial\mathbf{Rec}_D^{\text{rheo}}$ 都是 $\partial\mathbf{Rec}_D$ 的物理实例，由同一范畴论条件 $\Delta\lambda_{\min} = 0$ 刻画（命题 1.2 + 命题 3.4）。区别仅在递归对象 $R$ 的物理身份：
 - $R_{\text{Lor}}$：运动学递归（粒子轨道）；
@@ -265,7 +265,7 @@ $$SO^+_{\text{rheo}}(1,1) \hookrightarrow SO^+(1,3),$$
 
 UFPF 严格区分三层公理：
 
-1. **元公理**（不可修改）：元公理 1（递归存在）、元公理 2（谱去递归函子 $D$）；
+1. **元公理**（不可修改）：元公理 1（递归存在）、元公理 2（谱化函子 $D$）；
 2. **结构定理**（固定形式）：Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$、Paper XVI Lorentz 谱流；
 3. **实例假设**（可替换，不反馈上层）：流变本构方程、Carreau 参数、DST 模型。
 
@@ -276,7 +276,7 @@ UFPF 严格区分三层公理：
 **验证**：
 - 主定理 E1 的证明使用：(a) 相对论型硬化定律（实例假设）；(b) Maxwell 关系 $\tau = \eta/G$（经典流变学，实例假设）；(c) 谱间隙-弛豫时间对应 $\tau = 1/\Delta\lambda_{\min}$（Paper V 结构定理）。不修改上层。
 - 主定理 E2 的证明使用：(a) $\mathfrak{so}(1,1)$ Lie 代数（Paper XVI 结构定理）；(b) 指数映射唯一性（Lie 群理论）；(c) Paper XVI 主定理 9 的证明模式。不修改上层。
-- 主定理 E3 的证明使用：(a) 函子 $D: \mathbf{Rec} \to \mathbf{Spec}$（元公理 2）；(b) Paper VIII $\partial\mathbf{Rec}_D$（结构定理）；(c) Paper V 谱流方程（结构定理）。不修改上层。
+- 主定理 E3 的证明使用：(a) 函子 $D: \mathbf{Rec} \to \mathbf{Sp}$（元公理 2）；(b) Paper VIII $\partial\mathbf{Rec}_D$（结构定理）；(c) Paper V 谱流方程（结构定理）。不修改上层。
 
 **推论 7.2**。流变层的实验检验（F3）若给出与预测不符的结果，仅影响流变层的实例假设（如相对论型硬化定律的适用范围），不影响元公理或结构定理。这是 UFPF 层级结构的稳健性保证。
 
@@ -332,9 +332,9 @@ UFPF 严格区分三层公理：
 
 **主定理 E1**（临界剪切率-谱间隙对应，§4）。$\dot\gamma \to \dot\gamma_c^- \Leftrightarrow \Delta\lambda_{\min} \to 0^+$，证明路径为本构方程奇异性 → Maxwell 弛豫发散 → 谱间隙坍缩。
 
-**主定理 E2**（流变 Lorentz 群同构，§5）。$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}}) \cong SO^+(1,1)$。
+**主定理 E2**（流变 Lorentz 群同构，§5）。$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Sp}_{\text{fl}}) \cong SO^+(1,1)$。
 
-**主定理 E3**（三类临界现象的统一范畴论刻画，§6）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散通过 $D: \mathbf{Rec} \to \mathbf{Spec}$ 函子在 $\partial\mathbf{Rec}_D$ 边界统一。
+**主定理 E3**（三类临界现象的统一范畴论刻画，§6）。Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散通过 $D: \mathbf{Rec} \to \mathbf{Sp}$ 函子在 $\partial\mathbf{Rec}_D$ 边界统一。
 
 ### 9.2 推论
 

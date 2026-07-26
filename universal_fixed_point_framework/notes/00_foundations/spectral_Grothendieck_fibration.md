@@ -1,10 +1,10 @@
-# Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的严格形式化
+# Grothendieck 纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的严格形式化
 
 **版本**：v0.5（2026-07-22）
 
 **Lean 4 状态**：✅ 已完成全部形式化验证——`TempRGFiber.lean`（~970 行）通过 `lake build`（无 sorry），实现了本笔记 §1–§8 的全部核心定义与定理，以及 Grothendieck 构造（§5）、η̂ 提升（§6）、2-范畴定理（§7）、物理截面（§8）的 Lean 4 形式化。
 
-**摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
+**摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
 
 **前置依赖**：[`spectral_T_category.md`](spectral_T_category.md)（$\mathbf{Temp}$/$\mathbf{RG}$ 范畴定义）、[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md)（函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$）、[`spectral_bundle_sections.md`](spectral_bundle_sections.md)（谱丛截面 $\sigma_\Delta$）。
 
@@ -30,13 +30,13 @@ $$\mathbf{Fib}(\mathcal{B}) \simeq \text{PseudoFun}(\mathcal{B}^{\text{op}}, \ma
 
 ---
 
-## 2. 热谱丛纤维化 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$
+## 2. 热谱丛纤维化 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$
 
 ### 2.1 投影函子的定义
 
-**定义 2.1**（热谱丛投影函子）。设 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 是谱丛范畴（[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md) 定义 1.1），其对象为 $(T, \{\lambda_i\})$（$T \in \text{Ob}(\mathbf{Temp})$，$\{\lambda_i\} \in \text{Spec}(A(T))$），态射为 $(f, \phi)$（基态射与纤维谱变换对）。
+**定义 2.1**（热谱丛投影函子）。设 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 是谱丛范畴（[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md) 定义 1.1），其对象为 $(T, \{\lambda_i\})$（$T \in \text{Ob}(\mathbf{Temp})$，$\{\lambda_i\} \in \text{Spec}(A(T))$），态射为 $(f, \phi)$（基态射与纤维谱变换对）。
 
-投影函子 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 定义为：
+投影函子 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 定义为：
 - 对象映射：$\pi_T(T, \{\lambda_i\}) = T$
 - 态射映射：$\pi_T(f, \phi) = f$
 
@@ -46,7 +46,7 @@ $$\mathbf{Fib}(\mathcal{B}) \simeq \text{PseudoFun}(\mathcal{B}^{\text{op}}, \ma
 
 ### 2.2 Cartan 提升的构造
 
-**定理 2.1**（$\pi_T$ 是 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
+**定理 2.1**（$\pi_T$ 是 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
 
 **证明**。需证：对任意对象 $(T_2, \{\lambda_i^{(2)}\}) \in \text{Ob}(\mathbf{Bun})$ 和 $\mathbf{Temp}$ 中的任意态射 $f: T_1 \to T_2$，存在 $(T_2, \{\lambda_i^{(2)}\})$ 上的 Cartan 提升。
 
@@ -80,19 +80,19 @@ $\tilde{w}$ 的唯一性由谱流方程解的唯一性保证。$\square$
 
 ### 2.3 纤维范畴
 
-**定义 2.3**（纤维范畴）。对每个 $T \in \text{Ob}(\mathbf{Temp})$，**纤维范畴** $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})_T$ 定义为：
+**定义 2.3**（纤维范畴）。对每个 $T \in \text{Ob}(\mathbf{Temp})$，**纤维范畴** $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})_T$ 定义为：
 - 对象：$(T, \{\lambda_i\})$，即 $\pi_T^{-1}(T)$ 中的对象
-- 态射：$\text{Hom}_T((T, \{\lambda_i^{(1)}\}), (T, \{\lambda_i^{(2)}\})) = \{(\text{id}_T, \phi) \mid \phi \in \text{Hom}_{\mathbf{Spec}}(\{\lambda_i^{(1)}\}, \{\lambda_i^{(2)}\})\}$
+- 态射：$\text{Hom}_T((T, \{\lambda_i^{(1)}\}), (T, \{\lambda_i^{(2)}\})) = \{(\text{id}_T, \phi) \mid \phi \in \text{Hom}_{\mathbf{Sp}}(\{\lambda_i^{(1)}\}, \{\lambda_i^{(2)}\})\}$
 
-**命题 2.3**（纤维等价于谱范畴）。$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})_T \cong \mathbf{Spec}_T$，其中 $\mathbf{Spec}_T$ 是温度 $T$ 处的谱范畴（对象为 $\text{Spec}(A(T))$ 中的谱数据，态射为谱变换）。
+**命题 2.3**（纤维等价于谱范畴）。$\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})_T \cong \mathbf{Sp}_T$，其中 $\mathbf{Sp}_T$ 是温度 $T$ 处的谱范畴（对象为 $\text{Spec}(A(T))$ 中的谱数据，态射为谱变换）。
 
-**证明**。定义 $\iota_T: \mathbf{Spec}_T \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})_T$ 为 $\iota_T(\{\lambda_i\}) = (T, \{\lambda_i\})$，$\iota_T(\phi) = (\text{id}_T, \phi)$。这是满、忠实的（基部分 $\text{id}_T$ 唯一确定），且是本质满的（每个纤维对象形如 $(T, \{\lambda_i\})$）。$\square$
+**证明**。定义 $\iota_T: \mathbf{Sp}_T \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})_T$ 为 $\iota_T(\{\lambda_i\}) = (T, \{\lambda_i\})$，$\iota_T(\phi) = (\text{id}_T, \phi)$。这是满、忠实的（基部分 $\text{id}_T$ 唯一确定），且是本质满的（每个纤维对象形如 $(T, \{\lambda_i\})$）。$\square$
 
 ---
 
-## 3. RG 谱丛纤维化 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$
+## 3. RG 谱丛纤维化 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$
 
-**定义 3.1**（RG 谱丛投影函子）。投影 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$ 定义为：
+**定义 3.1**（RG 谱丛投影函子）。投影 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$ 定义为：
 - 对象映射：$\pi_\mu(\mu, \{\lambda_i\}) = \mu$
 - 态射映射：$\pi_\mu(g, \psi) = g$
 
@@ -100,7 +100,7 @@ $\tilde{w}$ 的唯一性由谱流方程解的唯一性保证。$\square$
 
 **证明**。与定理 2.1 类似。对任意 $(\mu_2, \{\lambda_i^{(2)}\})$ 和 $g: \mu_1 \to \mu_2$，构造 $\tilde{g}: (\mu_1, g^*\{\lambda_i^{(2)}\}) \to (\mu_2, \{\lambda_i^{(2)}\})$，其中 $g^*\{\lambda_i^{(2)}\}$ 是 RG 谱流的逆图像。分裂性证明与命题 2.2 相同。$\square$
 
-**命题 3.1**（RG 纤维等价于谱范畴）。$\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})_\mu \cong \mathbf{Spec}_\mu$。
+**命题 3.1**（RG 纤维等价于谱范畴）。$\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})_\mu \cong \mathbf{Sp}_\mu$。
 
 **证明**。与命题 2.3 对偶。$\square$
 
@@ -118,7 +118,7 @@ $\tilde{w}$ 的唯一性由谱流方程解的唯一性保证。$\square$
 
 ### 4.2 $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性
 
-**定理 4.1**（$\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子）。谱丛黎曼函子 $\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 是纤维保持函子，其基函子为 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$。
+**定理 4.1**（$\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子）。谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 是纤维保持函子，其基函子为 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$。
 
 **证明**。需验证两个条件。
 
@@ -143,7 +143,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f}) = (\mathcal{T}(f), \phi_{f,\mu})$$
 
 验证 $\tilde{w}' = (w', \phi_{w'})$ 满足所需性质——此过程与定理 2.1 中 Cartan 条件验证完全相同。$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f})$ 保持 Cartan 性。$\square$
 
-**推论 4.1**（纤维映射）。$\hat{\mathcal{T}}_{\text{Riem}}$ 在纤维间诱导一对一映射 $\hat{\mathcal{T}}_{\text{Riem}}|_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})_T \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})_{\mathcal{T}(T)}$。
+**推论 4.1**（纤维映射）。$\hat{\mathcal{T}}_{\text{Riem}}$ 在纤维间诱导一对一映射 $\hat{\mathcal{T}}_{\text{Riem}}|_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})_T \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})_{\mathcal{T}(T)}$。
 
 **证明**。由定理 4.1 的条件 1，$p' \circ F = F_0 \circ p$ 意味着 $F$ 将 $\pi_T^{-1}(T)$ 映射到 $\pi_\mu^{-1}(\mathcal{T}(T))$。$\square$
 
@@ -153,7 +153,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f}) = (\mathcal{T}(f), \phi_{f,\mu})$$
 
 $$
 \begin{CD}
-\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) @>{\hat{\mathcal{T}}_{\text{Riem}}}>> \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \\
+\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) @>{\hat{\mathcal{T}}_{\text{Riem}}}>> \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \\
 @V{\pi_T}VV @VV{\pi_\mu}V \\
 \mathbf{Temp} @>>{\mathcal{T}}> \mathbf{RG}
 \end{CD}
@@ -170,28 +170,28 @@ $$
 ### 5.1 温度伪函子 $F_T$
 
 **定义 5.1**（温度伪函子）。定义伪函子 $F_T: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$：
-- 对象映射：$F_T(T) = \mathbf{Spec}_T$（温度 $T$ 处的谱范畴）
-- 态射映射：对 $f: T_1 \to T_2$（温度膨胀 $r: T_1 \to rT_1 = T_2$），$F_T(f): \mathbf{Spec}_{T_2} \to \mathbf{Spec}_{T_1}$ 是谱流逆映射——将标度 $T_2$ 处的谱数据拉回到标度 $T_1$ 处
+- 对象映射：$F_T(T) = \mathbf{Sp}_T$（温度 $T$ 处的谱范畴）
+- 态射映射：对 $f: T_1 \to T_2$（温度膨胀 $r: T_1 \to rT_1 = T_2$），$F_T(f): \mathbf{Sp}_{T_2} \to \mathbf{Sp}_{T_1}$ 是谱流逆映射——将标度 $T_2$ 处的谱数据拉回到标度 $T_1$ 处
 
-**命题 5.1**（等价性）。Grothendieck 构造 $\int F_T$ 与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 同构：
+**命题 5.1**（等价性）。Grothendieck 构造 $\int F_T$ 与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 同构：
 
-$$\int F_T \cong \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$$
+$$\int F_T \cong \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$$
 
 **证明**。Grothendieck 构造 $\int F_T$ 的定义：
-- 对象：$(T, s)$，其中 $T \in \text{Ob}(\mathbf{Temp})$，$s \in \text{Ob}(F_T(T)) = \text{Ob}(\mathbf{Spec}_T)$
+- 对象：$(T, s)$，其中 $T \in \text{Ob}(\mathbf{Temp})$，$s \in \text{Ob}(F_T(T)) = \text{Ob}(\mathbf{Sp}_T)$
 - 态射 $(T_1, s_1) \to (T_2, s_2)$：对 $(f: T_1 \to T_2, \phi: s_1 \to F_T(f)(s_2))$
 
-这与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 的对象 $(T, \{\lambda_i\})$ 和态射 $(f, \phi)$ 完全对应——其中 $\phi: \{\lambda_i^{(1)}\} \to f^*\{\lambda_i^{(2)}\}$ 正是 $F_T(f)$ 的应用导致的谱变换。此对应显然是一一对应且兼容范畴结构。$\square$
+这与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的对象 $(T, \{\lambda_i\})$ 和态射 $(f, \phi)$ 完全对应——其中 $\phi: \{\lambda_i^{(1)}\} \to f^*\{\lambda_i^{(2)}\}$ 正是 $F_T(f)$ 的应用导致的谱变换。此对应显然是一一对应且兼容范畴结构。$\square$
 
 **注 5.1**。此同构使 $\pi_T$ 自动成为 Grothendieck 纤维化——Grothendieck 构造 $\int F_T$ 的标准投影 $\int F_T \to \mathbf{Temp}$ 正是 $\pi_T$。
 
 ### 5.2 RG 伪函子 $F_\mu$
 
 **定义 5.2**（RG 伪函子）。伪函子 $F_\mu: \mathbf{RG}^{\text{op}} \to \mathbf{Cat}$：
-- $F_\mu(\mu) = \mathbf{Spec}_\mu$
-- 对 $g: \mu_1 \to \mu_2$，$F_\mu(g): \mathbf{Spec}_{\mu_2} \to \mathbf{Spec}_{\mu_1}$ 是 RG 谱流逆映射
+- $F_\mu(\mu) = \mathbf{Sp}_\mu$
+- 对 $g: \mu_1 \to \mu_2$，$F_\mu(g): \mathbf{Sp}_{\mu_2} \to \mathbf{Sp}_{\mu_1}$ 是 RG 谱流逆映射
 
-**命题 5.2**。$\int F_\mu \cong \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$。
+**命题 5.2**。$\int F_\mu \cong \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$。
 
 **证明**。与命题 5.1 对偶。$\square$
 
@@ -213,9 +213,9 @@ $$\hat{\eta}: \hat{\mathcal{T}}_{\text{Riem}} \Rightarrow \mathcal{T} \circ \pi_
 
 其中 $\hat{\eta}$ 的每个分量限制在纤维内：$\pi_\mu(\hat{\eta}_{(T,\{\lambda_i\})}) = \text{id}_{\mathcal{T}(T)}$。
 
-**证明**。对 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 中的每个对象 $(T, \{\lambda_i\})$，定义：
+**证明**。对 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 中的每个对象 $(T, \{\lambda_i\})$，定义：
 $$\hat{\eta}_{(T,\{\lambda_i\})}: \hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i\}) \longrightarrow \mathcal{T}(\pi_T(T, \{\lambda_i\}))$$
-其中 $\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i\}) = (\mathcal{T}(T), \{\lambda_i(\mathcal{T}(T))\}) \in \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$，$\mathcal{T}(\pi_T(T, \{\lambda_i\})) = \mathcal{T}(T)$（视为 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 中的对象——该对象是 $(\mathcal{T}(T), \{\lambda_i(\mathcal{T}(T))\})$ 的基空间投影）。
+其中 $\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i\}) = (\mathcal{T}(T), \{\lambda_i(\mathcal{T}(T))\}) \in \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$，$\mathcal{T}(\pi_T(T, \{\lambda_i\})) = \mathcal{T}(T)$（视为 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 中的对象——该对象是 $(\mathcal{T}(T), \{\lambda_i(\mathcal{T}(T))\})$ 的基空间投影）。
 
 由命题 2.3 的纤维等价，限制在纤维内时 $\hat{\eta}_{(T,\{\lambda_i\})} = (\text{id}_{\mathcal{T}(T)}, \text{id}_{\text{Spec}})$，满足 $\pi_\mu(\hat{\eta}_{(T,\{\lambda_i\})}) = \text{id}_{\mathcal{T}(T)}$。自然性条件：对任意态射 $(f, \phi): (T_1, \{\lambda_i^{(1)}\}) \to (T_2, \{\lambda_i^{(2)}\})$，交换图：
 $$
@@ -234,7 +234,7 @@ $$
 ### 7.1 2-范畴 $\mathbf{2Bun}$ 的严格化
 
 [`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md) §9 定义了 2-范畴 $\mathbf{2Bun}$，其：
-- 0-细胞：Grothendieck 纤维化 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec}) \to \mathbf{Temp}$ 和 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec}) \to \mathbf{RG}$
+- 0-细胞：Grothendieck 纤维化 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 和 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$
 - 1-细胞：纤维保持函子（如 $\hat{\mathcal{T}}_{\text{Riem}}$）
 - 2-细胞：纤维化间自然变换（如 $\hat{\eta}$）
 
@@ -280,16 +280,16 @@ $$2\hat{\mathcal{T}}_{\text{Riem}}(\pi_T) = \pi_\mu, \quad 2\hat{\mathcal{T}}_{\
 > **论文出处**：Paper VI §9.1.5（QCD 禁闭发散作为 $\partial\mathbf{Rec}_D$ 边界）；Paper I §5
 > **对应笔记**：[`../01_qcd_higgs/spectral_Tc_derivation.md`](../01_qcd_higgs/spectral_Tc_derivation.md)（$T_c = a \cdot F_\pi \approx 153$ MeV 的谱第一性推导）；[`spectral_bundle_sections.md`](spectral_bundle_sections.md) §2（$\sigma_\Delta^{(T)}$ 显式构造）
 
-**定理 8.1**（QCD 纤维截面提升）。QCD 的谱间隙截面 $\sigma_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$（[`spectral_bundle_sections.md`](spectral_bundle_sections.md) 定理 2.1）是 $\pi_T$ 的截面——即满足 $\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$。其 Grothendieck 纤维提升 $\tilde{\sigma}_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})^{[1]}$ 将每个温度 $T$ 处的谱间隙值 $\Delta\lambda_{\min}(T)$ 作为纤维中的终端对象（terminal object）。
+**定理 8.1**（QCD 纤维截面提升）。QCD 的谱间隙截面 $\sigma_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$（[`spectral_bundle_sections.md`](spectral_bundle_sections.md) 定理 2.1）是 $\pi_T$ 的截面——即满足 $\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$。其 Grothendieck 纤维提升 $\tilde{\sigma}_\Delta^{(T)}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})^{[1]}$ 将每个温度 $T$ 处的谱间隙值 $\Delta\lambda_{\min}(T)$ 作为纤维中的终端对象（terminal object）。
 
-**证明**。$\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$ 由截面公理直接满足。在 Grothendieck 纤维化中，一个截面等价于伪函子 $F_T$ 的一个伪截面（pseudo-section）。对每个 $T$，$\Delta\lambda_{\min}(T)$ 是 $\mathbf{Spec}_T$ 中的一个特定对象，且由温度膨胀 $f: T_1 \to T_2$ 诱导的拉回 $F_T(f)(\Delta\lambda_{\min}(T_2)) = \Delta\lambda_{\min}(T_1)$ 与谱间隙函数的连续性一致。$\square$
+**证明**。$\pi_T \circ \sigma_\Delta^{(T)} = \text{id}_{\mathbf{Temp}}$ 由截面公理直接满足。在 Grothendieck 纤维化中，一个截面等价于伪函子 $F_T$ 的一个伪截面（pseudo-section）。对每个 $T$，$\Delta\lambda_{\min}(T)$ 是 $\mathbf{Sp}_T$ 中的一个特定对象，且由温度膨胀 $f: T_1 \to T_2$ 诱导的拉回 $F_T(f)(\Delta\lambda_{\min}(T_2)) = \Delta\lambda_{\min}(T_1)$ 与谱间隙函数的连续性一致。$\square$
 
-### 8.2 BCS 谱编织
+### 8.2 BCS 谱粘合
 
-> **论文出处**：QCD → BCS 参数映射（谱编织模板移植）
-> **对应笔记**：[`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md)（BCS 谱编织自由度、$T_c$ 比例公式、Al/Sn/Nb/Pb/Hg 强耦合数值验证）
+> **论文出处**：QCD → BCS 参数映射（谱粘合模板移植）
+> **对应笔记**：[`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md)（BCS 谱粘合自由度、$T_c$ 比例公式、Al/Sn/Nb/Pb/Hg 强耦合数值验证）
 
-**定理 8.2**（BCS 纤维截面）。BCS 谱编织的纤维截面 $\sigma_\Delta^{(\text{BCS})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 定义在 $T_c^{\text{BCS}}$ 处：
+**定理 8.2**（BCS 纤维截面）。BCS 谱粘合的纤维截面 $\sigma_\Delta^{(\text{BCS})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 定义在 $T_c^{\text{BCS}}$ 处：
 $$\sigma_\Delta^{(\text{BCS})}(T) = \begin{cases}
 (T, \Delta\lambda_{\text{BCS}}(T)), & T < T_c^{\text{BCS}} \\
 (T, 0), & T \geq T_c^{\text{BCS}}
@@ -304,7 +304,7 @@ $$\sigma_\Delta^{(\text{BCS})}(T) = \begin{cases}
 > **论文出处**：Paper VIII（黑洞视界 = $\partial\mathbf{Rec}_D$）；Paper XII（Hawking-Page 相变）
 > **对应笔记**：[`../04_lorentz_gravity/spectral_Kerr.md`](../04_lorentz_gravity/spectral_Kerr.md)（黑洞谱分解、谱间隙闭合、BH 熵谱形式）
 
-**定理 8.3**（Hawking-Page 纤维截面）。Hawking-Page 相变的谱间隙截面 $\sigma_\Delta^{(\text{HP})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 通过 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 $\sigma_\Delta^{(T)}$ 关联：
+**定理 8.3**（Hawking-Page 纤维截面）。Hawking-Page 相变的谱间隙截面 $\sigma_\Delta^{(\text{HP})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 通过 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 $\sigma_\Delta^{(T)}$ 关联：
 $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\Delta^{(T)}$$
 即，HP 截面是 QCD 截面沿纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 的推移。
 
@@ -315,7 +315,7 @@ $$\sigma_\Delta^{(\text{HP})} = \hat{\mathcal{T}}_{\text{Riem}} \circ \sigma_\De
 > **论文出处**：Paper VI §9.1（主定理 E1-E3，定义 9.3 为 Paper VI 内部编号）、§9.2.2（主定理 F5）、§9.2.3（命题 9.8）
 > **对应笔记**：[`../05_condensed_matter/spectral_rheo_boundary.md`](../05_condensed_matter/spectral_rheo_boundary.md)（E1-E3 严格化证明）；[`../05_condensed_matter/spectral_critical_unification.md`](../05_condensed_matter/spectral_critical_unification.md) §6（主定理 F5）、§7（Lie 代数-临界指数分类）；[`../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md`](../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md)（流变-Lorentz 同构、Wick 对偶）
 
-**定理 8.4**（流变谱边界纤维截面——Paper VI 主定理 E1-E3 的 Grothendieck 嵌入）。流变硬化发散的谱间隙截面 $\sigma_\Delta^{(\text{rheo})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 定义为：
+**定理 8.4**（流变谱边界纤维截面——Paper VI 主定理 E1-E3 的 Grothendieck 嵌入）。流变硬化发散的谱间隙截面 $\sigma_\Delta^{(\text{rheo})}: \mathbf{Temp} \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 定义为：
 
 $$\sigma_\Delta^{(\text{rheo})}(T) = \big(T, \Delta\lambda_{\min}(A_{\text{fl}}(T))\big)$$
 
@@ -351,7 +351,7 @@ $$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\te
 | 本节定理 | 论文出处 | 对应笔记 |
 |:--------|:--------|:--------|
 | 定理 8.1（QCD 纤维截面） | Paper VI §9.1.5（QCD 禁闭发散）；Paper I §5 | [`../01_qcd_higgs/spectral_Tc_derivation.md`](../01_qcd_higgs/spectral_Tc_derivation.md)；[`spectral_bundle_sections.md`](spectral_bundle_sections.md) §2、§8 |
-| 定理 8.2（BCS 纤维截面） | QCD → BCS 谱编织模板 | [`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md) §1-§3 |
+| 定理 8.2（BCS 纤维截面） | QCD → BCS 谱粘合模板 | [`../02_superconductivity/spectral_BCS_weave.md`](../02_superconductivity/spectral_BCS_weave.md) §1-§3 |
 | 定理 8.3（HP 纤维截面） | Paper VIII（视界 = $\partial\mathbf{Rec}_D$）；Paper XII | [`../04_lorentz_gravity/spectral_Kerr.md`](../04_lorentz_gravity/spectral_Kerr.md) |
 | 定理 8.4（流变纤维截面） | Paper VI §9.1（E1-E3，定义 9.3*） | [`../05_condensed_matter/spectral_rheo_boundary.md`](../05_condensed_matter/spectral_rheo_boundary.md) §3-§6 |
 | 推论 8.4a（流变-HP Wick 对偶） | Paper VI §9.2.3（命题 9.8*）；Paper XVI 主定理 8 | [`../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md`](../05_condensed_matter/spectral_rheology_lorentz_isomorphism.md)；[`../04_lorentz_gravity/spectral_lorentz_axiom.md`](../04_lorentz_gravity/spectral_lorentz_axiom.md) |
@@ -368,8 +368,8 @@ $$\sigma_\Delta^{(\text{Lor})}, \sigma_\Delta^{(\text{BH})}, \sigma_\Delta^{(\te
 | 层级 | 热系 | RG 系 | 噪声系 | 连接 |
 |:----|:-----|:------|:------|:-----|
 | **基范畴** | $\mathbf{Temp}$ | $\mathbf{RG}$ | $\mathbf{Noise}$ | $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$；$\mathcal{N}: \mathbf{Temp} \to \mathbf{Noise}$（同构） |
-| **纤维范畴** | $\mathbf{Spec}_T$ | $\mathbf{Spec}_\mu$ | $\mathbf{Spec}_\eta$ | $\hat{\mathcal{T}}_{\text{Riem}}\|_T: \mathbf{Spec}_T \to \mathbf{Spec}_{\mathcal{T}(T)}$；$\hat{\mathcal{N}}\|_T: \mathbf{Spec}_T \to \mathbf{Spec}_{\mathcal{N}(T)}$ |
-| **总范畴** | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Spec})$ | $\hat{\mathcal{T}}_{\text{Riem}}$（纤维保持）；$\hat{\mathcal{N}}$（纤维保持） |
+| **纤维范畴** | $\mathbf{Sp}_T$ | $\mathbf{Sp}_\mu$ | $\mathbf{Sp}_\eta$ | $\hat{\mathcal{T}}_{\text{Riem}}\|_T: \mathbf{Sp}_T \to \mathbf{Sp}_{\mathcal{T}(T)}$；$\hat{\mathcal{N}}\|_T: \mathbf{Sp}_T \to \mathbf{Sp}_{\mathcal{N}(T)}$ |
+| **总范畴** | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ | $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ | $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ | $\hat{\mathcal{T}}_{\text{Riem}}$（纤维保持）；$\hat{\mathcal{N}}$（纤维保持） |
 | **投影** | $\pi_T$（Grothendieck 纤维化） | $\pi_\mu$（Grothendieck 纤维化） | $\pi_\eta$（Grothendieck 纤维化） | 定理 4.2 交换图 + 定理 5.1（噪声-温度交换图） |
 | **伪函子** | $F_T: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ | $F_\mu: \mathbf{RG}^{\text{op}} \to \mathbf{Cat}$ | $F_\eta: \mathbf{Noise}^{\text{op}} \to \mathbf{Cat}$ | $\int F_T \cong \mathbf{Bun}$（三类） |
 | **自然变换** | $\hat{\eta}$ | $\hat{\eta}$ | $\hat{\eta}_\eta$ | 定理 6.1（$\hat{\eta}$ 纤维限制） |

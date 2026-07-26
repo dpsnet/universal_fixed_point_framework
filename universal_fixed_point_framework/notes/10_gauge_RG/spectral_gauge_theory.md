@@ -10,7 +10,7 @@
 
 ### 1.1 规范冗余的谱表述
 
-在标准 YM 理论中，规范变换 $A_\mu \to g^{-1}A_\mu g + g^{-1}\partial_\mu g$ 导致路径积分发散。谱版本中规范变换对应于 $\mathbf{Spec}$ 范畴中的态射共轭：
+在标准 YM 理论中，规范变换 $A_\mu \to g^{-1}A_\mu g + g^{-1}\partial_\mu g$ 导致路径积分发散。谱版本中规范变换对应于 $\mathbf{Sp}$ 范畴中的态射共轭：
 
 $$\mathcal{A} \to g^{-1} \mathcal{A} g + g^{-1} [\nabla, g],$$
 
@@ -49,7 +49,7 @@ Faddeev-Popov 行列式 $\det(\delta G/\delta \alpha)$ 的谱版本通过 Grassm
 $$\mathcal{L}_{\text{ghost}}^{\text{spec}} = \operatorname{Tr}_{\mathfrak{g}} \left( \bar{c}^a [\nabla^\mu, D_\mu c]^a \right),$$
 
 其中：
-- $c^a(\lambda)$: 谱鬼场（Grassmann 奇值的 $\mathbf{Spec}$ 对象）
+- $c^a(\lambda)$: 谱鬼场（Grassmann 奇值的 $\mathbf{Sp}$ 对象）
 - $\bar{c}^a(\lambda)$: 谱反鬼场
 - $D_\mu c = \partial_\mu c + g[\mathcal{A}_\mu, c]$: 谱协变导数
 
@@ -94,7 +94,7 @@ $$s\left( \mathcal{L}_{\text{YM+gf+ghost}}^{\text{spec}} \right) = 0.$$
 
 ### 3.3 BRST 荷的谱表示
 
-BRST 荷 $Q_{\text{BRST}}$ 在 $\mathbf{Spec}$ 中的表示为：
+BRST 荷 $Q_{\text{BRST}}$ 在 $\mathbf{Sp}$ 中的表示为：
 
 $$Q_{\text{BRST}} = \int d\lambda \, c(\lambda) \left( [\nabla^\mu, \mathcal{A}_\mu](\lambda) + \frac{g}{2}[\bar{c}, c](\lambda) \right),$$
 
@@ -134,7 +134,7 @@ $$\beta(g) = \frac{dg}{d\ln\mu} = -\frac{b_0}{16\pi^2} g^3,$$
 
 其中 $b_0 = \frac{11}{3}C_2(G) - \frac{4}{3}T(R)n_f$。
 
-**定理 2**（谱 Ward 恒等式的函子不变性）。Ward 恒等式在谱去递归函子 $D: \mathbf{Rec}_D \to \mathbf{Spec}$ 下保持：
+**定理 2**（谱 Ward 恒等式的函子不变性）。Ward 恒等式在谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 下保持：
 
 $$D(\text{Ward}_{\text{std}}) = \text{Ward}_{\text{spec}}.$$
 
@@ -147,7 +147,7 @@ $$D(\text{Ward}_{\text{std}}) = \text{Ward}_{\text{spec}}.$$
 | 规范固定 | $\mathcal{L}_{\text{gf}} = -\frac{1}{2\xi}(\partial^\mu A_\mu)^2$ | $\mathcal{L}_{\text{gf}}^{\text{spec}} = -\frac{1}{2\xi}\operatorname{Tr}_{\mathfrak{g}}([\nabla^\mu,\mathcal{A}_\mu]^2)$ |
 | FP 鬼场 | $\bar{c}^a \partial^\mu D_\mu c^a$ | $\bar{c}^a [\nabla^\mu, D_\mu c]^a$ |
 | BRST 变换 | $sA_\mu = D_\mu c$ | $s\mathcal{A}_\mu = [\nabla_\mu, c]$ |
-| BRST 幂零性 | $s^2 = 0$ | $s^2 = 0$（$\mathbf{Spec}$ $\mathbb{Z}_2$ 分级） |
+| BRST 幂零性 | $s^2 = 0$ | $s^2 = 0$（$\mathbf{Sp}$ $\mathbb{Z}_2$ 分级） |
 | Ward 恒等式 | $k^\mu D_{\mu\nu} = \xi \cdot (\cdots)$ | $\lambda \tilde{D}_{\mu\nu}(\lambda) = \xi \cdot (\cdots)$ |
 
 ---
@@ -175,7 +175,7 @@ $$D(\text{Ward}_{\text{std}}) = \text{Ward}_{\text{spec}}.$$
 
 | 问题 | 难度 | 说明 |
 |:----|:----:|------|
-| 谱版本的 Gribov 复制问题 | 🔴 | 非微扰规范固定中的 Gribov 副本在 $\mathbf{Spec}$ 中的表现 |
+| 谱版本的 Gribov 复制问题 | 🔴 | 非微扰规范固定中的 Gribov 副本在 $\mathbf{Sp}$ 中的表现 |
 | 谱瞬子与 $\theta$ 真空 | 🔴 | 瞬子解的谱翻译与 $\theta$ 项的谱表示 |
-| 谱反常（Adler-Bell-Jackiw） | 🟡 | 三角图 anomalies 的谱版本与 $\mathbf{Spec}$ 上同调 |
-| 谱规范理论的严格 BRST 上同调 | 🟡 | $\mathbf{Spec}$ 范畴中的 BRST 上同调计算 |
+| 谱反常（Adler-Bell-Jackiw） | 🟡 | 三角图 anomalies 的谱版本与 $\mathbf{Sp}$ 上同调 |
+| 谱规范理论的严格 BRST 上同调 | 🟡 | $\mathbf{Sp}$ 范畴中的 BRST 上同调计算 |

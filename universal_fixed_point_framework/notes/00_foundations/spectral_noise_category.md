@@ -1,4 +1,4 @@
-# 噪声/随机系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位
+# 噪声/随机系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位
 
 **版本**：v0.8（2026-07-22）
 
@@ -6,7 +6,7 @@
 
 ## 1. 问题陈述
 
-均匀无标度白噪声（平坦功率谱 $P(f) \propto f^0$）能否被纳入 $\mathbf{Rec}/\mathbf{Spec}$ 范畴框架？如果可以，以何种方式纳入？
+均匀无标度白噪声（平坦功率谱 $P(f) \propto f^0$）能否被纳入 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架？如果可以，以何种方式纳入？
 
 核心矛盾：
 - $\mathbf{Rec}$ 范畴要求对象携带**全局统一确定性自相似演化映射** $\Phi_R$（$\mathbf{Rec}$ 四元组核心构件）
@@ -133,7 +133,7 @@ $$A_{\text{total}} = A_{\text{signal}} + \delta A_{\text{noise}}, \quad \delta A
 
 | 层面 | 内容 | 关联文件 |
 |-----|------|---------|
-| **范畴论层面**（本文） | 白噪声在 $\mathbf{Rec}/\mathbf{Spec}$ 中的数学定位：无穷直和 | 本文 |
+| **范畴论层面**（本文） | 白噪声在 $\mathbf{Rec}/\mathbf{Sp}$ 中的数学定位：无穷直和 | 本文 |
 | **物理信号层面** | 实验测量中的 SNR 估计、噪声背景扣除 | paper10, paper13 |
 | **数值处理层面** | 数据中的随机涨落项、Monte Carlo 采样 | `paperX_*.py` |
 
@@ -288,7 +288,7 @@ $$S_{\text{noise}} = \lim_{N\to\infty} \bigotimes_{i=1}^N \bigotimes_{k=1}^4 S_k
 - 若所有 $S_k^{(i)} < 1$（严格衰减），则无穷乘积趋于零
 - $S_{\text{noise}} = 0$ 的物理含义为：**噪声在谱框架中是完全"透明"的背景**——其个体结构不可分辨，仅以连续谱密度的形式贡献于有效理论
 
-**推论 12.1**（噪声的谱透明性）。在 $\mathbf{Spec}$ 范畴中，噪声直和的谱像 $D(\bigoplus_i R_{\text{local}, i})$ 的谱测度绝对连续于 Lebesgue 测度，其 Radon-Nikodým 导数 $\rho(\lambda) = d\mu_{\text{noise}}/d\lambda$ 为常数当且仅当所有四层静默均达到饱和。
+**推论 12.1**（噪声的谱透明性）。在 $\mathbf{Sp}$ 范畴中，噪声直和的谱像 $D(\bigoplus_i R_{\text{local}, i})$ 的谱测度绝对连续于 Lebesgue 测度，其 Radon-Nikodým 导数 $\rho(\lambda) = d\mu_{\text{noise}}/d\lambda$ 为常数当且仅当所有四层静默均达到饱和。
 
 ### 12.3 Paper I §5.2 谱静默条件
 
@@ -502,19 +502,19 @@ $$\sigma(\Sigma\text{-}D(\mathcal{D}iss(R))) \to [\lambda_{\min}, \lambda_{\max}
 
 ### 17.4 谱等价桥（噪声-确定性）
 
-当噪声直和的谱在统计意义上收敛到某一确定性系统的谱时，两者在 $\mathbf{Spec}$ 中不可区分。
+当噪声直和的谱在统计意义上收敛到某一确定性系统的谱时，两者在 $\mathbf{Sp}$ 中不可区分。
 
 **定理 17.6**（噪声-确定性谱等价桥）。设 $R \in \mathbf{Rec}$ 为确定性系统，$N = \bigoplus_i R_{\text{local}, i} \in \Sigma$-$\mathbf{Rec}$ 为噪声直和。若以下两个条件同时成立：
 
 1. **谱均值收敛**：$\lim_{N\to\infty} \frac{1}{N}\sum_{i=1}^N \sigma(A_i) = \sigma(A_R)$（特征值谱收敛）
 2. **谱密度匹配**：$\rho_N(\lambda) \to \rho_R(\lambda)$ 在 $L^1$ 范数下（谱密度函数逐点匹配）
 
-则在 $\Sigma$-$\mathbf{Spec}$ 中存在谱等价关系：
-$$\Sigma\text{-}D(N) \cong D(R) \quad \text{在 } \Sigma\text{-}\mathbf{Spec} \text{ 中}$$
+则在 $\Sigma$-$\mathbf{Sp}$ 中存在谱等价关系：
+$$\Sigma\text{-}D(N) \cong D(R) \quad \text{在 } \Sigma\text{-}\mathbf{Sp} \text{ 中}$$
 
-*证明*：由定理 15.3（$\Sigma$-$D$ 保持直和）将 $\Sigma\text{-}D(N)$ 展开为 $\bigoplus_i D(R_{\text{local}, i})$。谱均值收敛保证直和的谱闭包等于 $\sigma(A_R)$。谱密度匹配保证测度等价——即存在 $\Sigma$-$\mathbf{Spec}$ 中的同构映射，将 $\bigoplus_i D(R_{\text{local}, i})$ 映射到 $D(R)$（逐特征值匹配）。∎
+*证明*：由定理 15.3（$\Sigma$-$D$ 保持直和）将 $\Sigma\text{-}D(N)$ 展开为 $\bigoplus_i D(R_{\text{local}, i})$。谱均值收敛保证直和的谱闭包等于 $\sigma(A_R)$。谱密度匹配保证测度等价——即存在 $\Sigma$-$\mathbf{Sp}$ 中的同构映射，将 $\bigoplus_i D(R_{\text{local}, i})$ 映射到 $D(R)$（逐特征值匹配）。∎
 
-**推论 17.1**（统计显著性与谱等价阈值）。当 $\|\rho_N - \rho_R\|_{L^1} < \varepsilon_{\text{spec}}$ 时，噪声与确定性系统在 $\mathbf{Spec}$ 层面不可区分。$\varepsilon_{\text{spec}}$ 是谱感知阈值，对每个具体应用定标。
+**推论 17.1**（统计显著性与谱等价阈值）。当 $\|\rho_N - \rho_R\|_{L^1} < \varepsilon_{\text{spec}}$ 时，噪声与确定性系统在 $\mathbf{Sp}$ 层面不可区分。$\varepsilon_{\text{spec}}$ 是谱感知阈值，对每个具体应用定标。
 
 **推论 17.2**（噪声→确定性→噪声的谱循环）。$R \cong \mathcal{E}xt(\mathcal{D}iss(R))$ 在谱层面等价当且仅当 $\mathcal{D}iss$ 的分割足够精细使得谱信息不被丢失。如果分割中丢弃了信息（例如粗粒化平均），则 $\mathcal{E}xt \circ \mathcal{D}iss \neq \mathrm{id}_{\mathbf{Rec}}$。
 
@@ -632,7 +632,7 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 **状态**：
 
-《通用不动点范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Spec}$ 范畴中的定位。v0.9 新增不可数直和推广分析、$\eta$ 谱流实验预言（谱间隙闭合奇异性）与色噪声 $\alpha \leftrightarrow \gamma$ 实验验证方案。
+《通用不动点范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v0.9 新增不可数直和推广分析、$\eta$ 谱流实验预言（谱间隙闭合奇异性）与色噪声 $\alpha \leftrightarrow \gamma$ 实验验证方案。
 
 **变更记录**：
 
@@ -658,7 +658,7 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 ### 15.2 定义与构造
 
-**注**：本文 $\Sigma$‑$\mathbf{Rec}$ 中的 $\Sigma$ 表示可数直和（coproduct）的范畴论余完备化，与 Paper I §2.11 中 $\mathbf{Spec}_\infty$ 的 $\infty$-范畴结构（L$\infty$ 代数 + Banach 流形）是不同概念。$\Sigma$‑$\mathbf{Rec}$ 是 $\mathbf{Rec}$ 在可数直和下的自由余完备化，而 $\mathbf{Spec}_\infty$ 是 $\mathbf{Spec}$ 的 $\infty$-范畴提升。
+**注**：本文 $\Sigma$‑$\mathbf{Rec}$ 中的 $\Sigma$ 表示可数直和（coproduct）的范畴论余完备化，与 Paper I §2.11 中 $\mathbf{Sp}_\infty$ 的 $\infty$-范畴结构（L$\infty$ 代数 + Banach 流形）是不同概念。$\Sigma$‑$\mathbf{Rec}$ 是 $\mathbf{Rec}$ 在可数直和下的自由余完备化，而 $\mathbf{Sp}_\infty$ 是 $\mathbf{Sp}$ 的 $\infty$-范畴提升。
 
 **定义 15.1**（$\Sigma$‑$\mathbf{Rec}$ 范畴（可数直和余完备化））。$\Sigma$‑$\mathbf{Rec}$ 是 $\mathbf{Rec}$ 通过在可数直和下的**自由余完备化**（free cocompletion）得到的范畴。具体地：
 
@@ -679,13 +679,13 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 *证明*：由定义 15.1，局部 $\mathbf{Rec}$ 对象序列 $\{R_{\text{local}, i}\}_{i=1}^\infty$ 的可数直和是 $\Sigma$‑$\mathbf{Rec}$ 的合法对象。∎
 
-### 15.3 $\Sigma$‑$\mathbf{Spec}$ 与谱函子的扩展
+### 15.3 $\Sigma$‑$\mathbf{Sp}$ 与谱函子的扩展
 
-**定义 15.2**（$\Sigma$‑$\mathbf{Spec}$ 范畴）。$\Sigma$‑$\mathbf{Spec}$ 是 $\mathbf{Spec}$ 在 Hilbert 空间可数直和下的自由余完备化：
-- 对象：$\bigoplus_i (\mathcal{H}_i, A_i, \sigma(A_i))$，$(\mathcal{H}_i, A_i, \sigma(A_i)) \in \mathbf{Spec}$
+**定义 15.2**（$\Sigma$‑$\mathbf{Sp}$ 范畴）。$\Sigma$‑$\mathbf{Sp}$ 是 $\mathbf{Sp}$ 在 Hilbert 空间可数直和下的自由余完备化：
+- 对象：$\bigoplus_i (\mathcal{H}_i, A_i, \sigma(A_i))$，$(\mathcal{H}_i, A_i, \sigma(A_i)) \in \mathbf{Sp}$
 - 态射：同 $\Sigma$‑$\mathbf{Rec}$ 的态射定义（逐分量）
 
-**定理 15.3**（$D$ 函子的扩展）。谱去递归函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 可唯一扩展为 $\Sigma$‑$D: \Sigma$‑$\mathbf{Rec} \to \Sigma$‑$\mathbf{Spec}$，满足：
+**定理 15.3**（$D$ 函子的扩展）。谱化函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 可唯一扩展为 $\Sigma$‑$D: \Sigma$‑$\mathbf{Rec} \to \Sigma$‑$\mathbf{Sp}$，满足：
 $$\Sigma\text{-}D\left(\bigoplus_i R_i\right) = \bigoplus_i D(R_i)$$
 且 $\Sigma$‑$D$ 保持可数直和（即可数直和与谱像交换）。
 
@@ -695,11 +695,11 @@ $$\Sigma\text{-}D\left(\bigoplus_i R_i\right) = \bigoplus_i D(R_i)$$
 
 白噪声 $\bigoplus_i R_{\text{local}, i}$ 在 $\Sigma$‑$\mathbf{Rec}$ 中具有以下特殊性质：
 
-**命题 15.1**（噪声的泛逼近性）。任意 $\mathbf{Spec}$ 对象 $(\mathcal{H}, A, \sigma(A))$ 的谱可在 $\Sigma$‑$\mathbf{Spec}$ 中被白噪声的 $\Sigma$‑$D$ 像任意精度逼近，当且仅当 $\sigma(A)$ 是紧集。
+**命题 15.1**（噪声的泛逼近性）。任意 $\mathbf{Sp}$ 对象 $(\mathcal{H}, A, \sigma(A))$ 的谱可在 $\Sigma$‑$\mathbf{Sp}$ 中被白噪声的 $\Sigma$‑$D$ 像任意精度逼近，当且仅当 $\sigma(A)$ 是紧集。
 
 *证明概要*：对任意紧谱集 $\sigma(A)$，存在稠密序列 $\{\lambda_n\}_{n=1}^\infty$ 在 $\sigma(A)$ 中。取 $\sigma(A_i) = \{\lambda_i\}$（单点谱），则 $\bigoplus_i \sigma(A_i)$ 的闭包为 $\sigma(A)$。因此白噪声的 $\Sigma$‑$D$ 像的谱可以逼近任意紧谱集。∎
 
-**推论 15.1**（噪声作为 $\Sigma$‑$\mathbf{Spec}$ 的"通用背景"）。在 $\Sigma$‑$\mathbf{Spec}$ 中，白噪声的谱像构成一个"泛逼近基"——任何紧谱集都可被白噪声直和逼近。这为噪声在物理框架中的普遍存在提供了范畴论解释：噪声不是异常，而是 $\Sigma$‑$\mathbf{Rec}$ 中"自由度最丰富"的对象。
+**推论 15.1**（噪声作为 $\Sigma$‑$\mathbf{Sp}$ 的"通用背景"）。在 $\Sigma$‑$\mathbf{Sp}$ 中，白噪声的谱像构成一个"泛逼近基"——任何紧谱集都可被白噪声直和逼近。这为噪声在物理框架中的普遍存在提供了范畴论解释：噪声不是异常，而是 $\Sigma$‑$\mathbf{Rec}$ 中"自由度最丰富"的对象。
 
 ---
 
@@ -715,7 +715,7 @@ $$\Sigma\text{-}D\left(\bigoplus_i R_i\right) = \bigoplus_i D(R_i)$$
 
 ### 16.2 谱序列结构
 
-**定理 16.2**（谱序列收敛性）。设 $\{R^{(n)}\}_{n=1}^\infty$ 是 $\Sigma$‑$\mathbf{Rec}$ 中一列对象，满足 $R^{(n)} = \bigoplus_{i=1}^n R_i$（前 $n$ 个局部对象的直和）。则谱序列 $D(R^{(n)})$ 在 $\Sigma$‑$\mathbf{Spec}$ 中收敛到 $D(R^{(\infty)})$，收敛速度为：
+**定理 16.2**（谱序列收敛性）。设 $\{R^{(n)}\}_{n=1}^\infty$ 是 $\Sigma$‑$\mathbf{Rec}$ 中一列对象，满足 $R^{(n)} = \bigoplus_{i=1}^n R_i$（前 $n$ 个局部对象的直和）。则谱序列 $D(R^{(n)})$ 在 $\Sigma$‑$\mathbf{Sp}$ 中收敛到 $D(R^{(\infty)})$，收敛速度为：
 $$\|\mu_{\text{macro}} - \mu_n\|_{\text{TV}} \leq \frac{C}{n}$$
 其中 $C = (\lambda_{\max} - \lambda_{\min}) \cdot \sup_i \rho_i$。
 
@@ -727,7 +727,7 @@ $$\|\mu_{\text{macro}} - \mu_n\|_{\text{TV}} \leq \frac{C}{n}$$
 $$\bigoplus_{i=1}^\infty R_i \cong \varinjlim_{n \to \infty} \bigoplus_{i=1}^n R_i$$
 其中归纳系统由包含态射 $\bigoplus_{i=1}^n R_i \hookrightarrow \bigoplus_{i=1}^{n+1} R_i$ 定义。
 
-**定理 16.3**（$\Sigma$‑$D$ 保持归纳极限）。$\Sigma$‑$D: \Sigma$‑$\mathbf{Rec} \to \Sigma$‑$\mathbf{Spec}$ 保持可数归纳极限：
+**定理 16.3**（$\Sigma$‑$D$ 保持归纳极限）。$\Sigma$‑$D: \Sigma$‑$\mathbf{Rec} \to \Sigma$‑$\mathbf{Sp}$ 保持可数归纳极限：
 $$\Sigma\text{-}D\left(\varinjlim_n R^{(n)}\right) \cong \varinjlim_n \Sigma\text{-}D(R^{(n)})$$
 
 *证明*：由定理 15.3（$D$ 保持可数直和）与直和/归纳极限的等价性，归纳极限与直和交换。$\Sigma$‑$D$ 在直和上的作用逐分量定义，因此保持归纳系统的余锥结构。∎

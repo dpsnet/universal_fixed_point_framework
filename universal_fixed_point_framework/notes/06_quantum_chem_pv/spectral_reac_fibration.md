@@ -1,8 +1,8 @@
-# 分子构型 Grothendieck 纤维化：$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$
+# 分子构型 Grothendieck 纤维化：$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$
 
 **版本**：v1.5（2026-07-24）
 
-**摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartan 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Spec})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
+**摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartan 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
 
 **前置依赖**：Paper XV（量子化学谱翻译）、Paper XXI（Grothendieck 纤维化综合）、`spectral_quantum_chemistry.md`（量子化学谱翻译笔记）。
 **延伸方法论**：`spectral_fibration_methodology.md` v1.0（量子化学多层次精细纤维拆分方法论）——基于 Paper XV 和 Paper XXI 建立的系统纤维化分解 8 步协议，将 Bun(Reac)/Bun(IntraIonic)/Bun(Ionic) 扩展为 7 层嵌套链（含 Bun(Corr)/Bun(Vib)/Bun(Solv)/Bun(Spin)），提供层次分类树、精度判据、自然变换检验和跨界粘合机制。
@@ -16,7 +16,7 @@
 | 方面 | 标准 PES | 谱丛方法 |
 |:----|:--------|:---------|
 | 信息量 | 仅基态能量 | 全电子谱 $\sigma(A_{\text{mol}}(R))$ |
-| 简并点 | 锥形交叉为奇点 | 纤维类型跃变（$\mathbf{Spec} \to \mathbf{Spec}_{\text{deg}}$）|
+| 简并点 | 锥形交叉为奇点 | 纤维类型跃变（$\mathbf{Sp} \to \mathbf{Sp}_{\text{deg}}$）|
 | 反应速率 | Eyring 外部输入 | 截面 $\sigma_k(T)$ 的内禀计算 |
 | 活性指标 | 经验定义 | Fukui 截面 $\sigma_f(R)$ 的谱推导 |
 
@@ -43,7 +43,7 @@
 - $\sigma(A_{\text{mol}}(R)) = \{\lambda_i(R) = e^{-\beta E_i(R)}\} \subset (0,1]$
 - $\delta_{\text{spec}}(R) = \lambda_{\text{LUMO}}(R) - \lambda_{\text{HOMO}}(R)$ 为 HOMO-LUMO 谱间隙
 
-**定义 3.2**（总范畴与投影）。总范畴 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的对象为 $(R, A_{\text{mol}}(R))$，投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Reac}$ 遗忘谱数据，保留核构型参数。
+**定义 3.2**（总范畴与投影）。总范畴 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的对象为 $(R, A_{\text{mol}}(R))$，投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Reac}$ 遗忘谱数据，保留核构型参数。
 
 ## 4. Cartan 提升与谱流
 
@@ -60,11 +60,11 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 
 该方程的解 $A_{\text{mol}}(\xi)$（对应提升态射 $\widetilde{\phi_\xi}$）在给定初值 $A_{\text{mol}}(R_1)$ 下唯一。分裂性来自谱流方程解对初值的连续依赖性和参数可加性。$\square$
 
-**注 4.1**（结构同构）。方程 (4.1) 与 Paper VI 的 N-S 谱流方程 $\frac{d}{dt}A_t = [A_{\text{adv}}, A_t] - \nu\Delta_{\text{spec}}A_t$ 在形式上完全同构——化学反应动力学是谱流体动力学在 $d=1$（一维反应坐标）的投影。两个丛之间自然存在丛态射 $\hat{\mathcal{T}}_{\text{react}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Fluid}, \mathbf{Spec})$。
+**注 4.1**（结构同构）。方程 (4.1) 与 Paper VI 的 N-S 谱流方程 $\frac{d}{dt}A_t = [A_{\text{adv}}, A_t] - \nu\Delta_{\text{spec}}A_t$ 在形式上完全同构——化学反应动力学是谱流体动力学在 $d=1$（一维反应坐标）的投影。两个丛之间自然存在丛态射 $\hat{\mathcal{T}}_{\text{react}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Fluid}, \mathbf{Sp})$。
 
 ## 5. 非乘积丛结构
 
-**定理 5.1**（锥形交叉奇异性）。在 $\partial\mathbf{Reac}$ 处（$\delta_{\text{spec}}(R) = 0$），纤维类型从 $\mathbf{Spec}$（非简并有隙谱）跳变为 $\mathbf{Spec}_{\text{deg}}$（简并/退化谱），使 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 成为非乘积丛。
+**定理 5.1**（锥形交叉奇异性）。在 $\partial\mathbf{Reac}$ 处（$\delta_{\text{spec}}(R) = 0$），纤维类型从 $\mathbf{Sp}$（非简并有隙谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（简并/退化谱），使 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 成为非乘积丛。
 
 该奇异性在物理上对应两类重要情形：
 
@@ -74,7 +74,7 @@ $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_
 
 ## 6. 物理截面
 
-**定义 6.1**（分子谱丛截面）。截面 $\sigma: \mathbf{Reac} \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 是满足 $\pi_{\text{Reac}} \circ \sigma = \text{id}_{\mathbf{Reac}}$ 的函子。
+**定义 6.1**（分子谱丛截面）。截面 $\sigma: \mathbf{Reac} \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 是满足 $\pi_{\text{Reac}} \circ \sigma = \text{id}_{\mathbf{Reac}}$ 的函子。
 
 已识别的物理截面：
 
@@ -102,18 +102,18 @@ graph LR
     D --> E
 ```
 
-**态射 7.1**（Arrhenius 态射）。$\hat{\mathcal{T}}_{\text{mol}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ 是纤维保持函子，其基函子 $\mathcal{T}: \mathbf{Reac} \to \mathbf{Temp}$ 由 Eyring 方程的 Arrhenius 行为诱导：$k(T) \propto e^{-E_a/RT} \Leftrightarrow \ln k \propto -1/T$。
+**态射 7.1**（Arrhenius 态射）。$\hat{\mathcal{T}}_{\text{mol}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 是纤维保持函子，其基函子 $\mathcal{T}: \mathbf{Reac} \to \mathbf{Temp}$ 由 Eyring 方程的 Arrhenius 行为诱导：$k(T) \propto e^{-E_a/RT} \Leftrightarrow \ln k \propto -1/T$。
 
-**态射 7.2**（流体同构态射）。$\hat{\mathcal{F}}_{\text{react}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Fluid}, \mathbf{Spec})$ 由谱流方程 (4.1) 与 N-S 谱流方程之间的结构同构给出（Paper XV §4.3）。
+**态射 7.2**（流体同构态射）。$\hat{\mathcal{F}}_{\text{react}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Fluid}, \mathbf{Sp})$ 由谱流方程 (4.1) 与 N-S 谱流方程之间的结构同构给出（Paper XV §4.3）。
 
-## 8. 离子构型纤维化 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$
+## 8. 离子构型纤维化 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$
 
 ### 8.1 动机：P6 检验暴露的基空间不足
 
-预言的实验检验经验表明，$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的 $k=2$ 截面 $\sigma^{(2)}(R_1, R_2)$ 虽然**数学上**被定义（定义 11.6），但**物理上**无法通过单个分子的谱数据实例化。原因：
+预言的实验检验经验表明，$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的 $k=2$ 截面 $\sigma^{(2)}(R_1, R_2)$ 虽然**数学上**被定义（定义 11.6），但**物理上**无法通过单个分子的谱数据实例化。原因：
 
 1. **$\mathbf{Reac}$ 的对象是单分子核构型**——其纤维 $\mathcal{E}_{\text{mol},R}$ 只包含该分子的电子谱信息，不包含分子间耦合
-2. **$k=2$ 截面 $\sigma^{(2)}(R_1,R_2)$ 需要知道两个构型间的谱关联**，但 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的两个纤维之间没有自然的"耦合算子"——纤维是独立计算的
+2. **$k=2$ 截面 $\sigma^{(2)}(R_1,R_2)$ 需要知道两个构型间的谱关联**，但 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的两个纤维之间没有自然的"耦合算子"——纤维是独立计算的
 3. **H-bond 的物理本质是电荷转移（CT）**——水的 O-H 拉伸频率对 H-bond 距离的敏感性（$d\nu/dd \approx -200$ cm$^{-1}$/Å）来源于 H 原子的部分离子性（O$^{-\delta}$—H$^{+\delta}$ $\cdots$ O），这需要纤维中包含**电荷转移激发态**，而非中性分子的电子谱
 
 这些问题的根源是：**基空间不够大**。P6 的 $\ell_{\text{corr}}$ 预言需要将**纤维化的基从孤立分子构型升级为包含分子间 CT 自由度的离子构型**。
@@ -147,7 +147,7 @@ $$\mathcal{E}_{\text{ion},\mathcal{I}} = D(H_{\text{dim}}(R_A, R_B, \xi_{\text{C
 - $J_{\text{CT}}(R_{AB})$ 是分子间 CT 耦合强度，$R_{AB} = \|R_A - R_B\|$ 是分子间距离
 - **关键：** $J_{\text{CT}}(R_{AB})$ 的 $R_{AB}$ 依赖性正是 P6 的 $\ell_{\text{corr}}$ 预言的物理载体
 
-**定义 8.3**（总范畴与投影）。总范畴 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的对象为 $(\mathcal{I}, A_{\text{dim}}(\mathcal{I}))$，投影 $\pi_{\text{Ion}}: \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec}) \to \mathbf{Ionic}$ 遗忘谱数据。
+**定义 8.3**（总范畴与投影）。总范畴 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的对象为 $(\mathcal{I}, A_{\text{dim}}(\mathcal{I}))$，投影 $\pi_{\text{Ion}}: \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp}) \to \mathbf{Ionic}$ 遗忘谱数据。
 
 **定理 8.1**（$\pi_{\text{Ion}}$ 是分裂 Grothendieck 纤维化）。$\pi_{\text{Ion}}$ 是分裂 Grothendieck 纤维化。
 
@@ -157,19 +157,19 @@ $$\frac{d}{d\xi_{\text{tot}}} A_{\text{dim}} = [G_{\xi_A} + G_{\xi_B} + G_{\text
 
 其中 $\xi_{\text{tot}} = (\xi_A, \xi_B, \xi_{\text{CT}})$ 是多参数演化，$G_{\text{CT}}$ 是 CT 耦合生成元。扩展方程 (8.1) 对初值的连续依赖性和多参数可加性保证了分裂 Grothendieck 纤维化的条件。$\square$
 
-**推论 8.1**（$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 到 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的嵌套）。遗忘函子 $\mathcal{U}$ 自然地诱导纤维保持态射：
+**推论 8.1**（$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 到 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的嵌套）。遗忘函子 $\mathcal{U}$ 自然地诱导纤维保持态射：
 
-$$\hat{\mathcal{U}}_*: \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec}) \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$$
+$$\hat{\mathcal{U}}_*: \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$$
 
 其中：
 - 基函子为 $\mathcal{U}: \mathbf{Ionic} \to \mathbf{Reac} \times \mathbf{Reac}$
 - 纤维映射 $\mathcal{E}_{\text{ion},\mathcal{I}} \to (\mathcal{E}_{\text{mol},R_A}, \mathcal{E}_{\text{mol},R_B})$ 是对角化 $H_{\text{dim}}$ 并投影到各单分子子空间
 
-**物理含义**：单分子谱丛的乘积嵌入在离子谱丛中，但反向不成立——$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的纤维包含单分子谱丛乘积无法捕获的 CT 耦合信息（即 $J_{\text{CT}}$）。
+**物理含义**：单分子谱丛的乘积嵌入在离子谱丛中，但反向不成立——$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的纤维包含单分子谱丛乘积无法捕获的 CT 耦合信息（即 $J_{\text{CT}}$）。
 
 ### 8.4 CT 耦合截面与 $\ell_{\text{corr}}$
 
-**定义 8.4**（CT 耦合截面）。截面 $\sigma_{\text{CT}}: \mathbf{Ionic} \to \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 由 CT 耦合强度给出：
+**定义 8.4**（CT 耦合截面）。截面 $\sigma_{\text{CT}}: \mathbf{Ionic} \to \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 由 CT 耦合强度给出：
 
 $$\sigma_{\text{CT}}(\mathcal{I}) = (\mathcal{I}, J_{\text{CT}}(R_{AB}) \cdot \tau_{12})$$
 
@@ -181,7 +181,7 @@ $$J_{\text{CT}}(R_{AB}) \sim J_0 \cdot \exp\left(-\frac{R_{AB}}{\ell_{\text{corr
 
 其中 $\ell_{\text{corr}}$ 是谱丛非局域关联长度，$\ell_{\text{corr}} \sim 0.5$ Å 由谱框架的普适标度确定。
 
-**注 8.2**（$\ell_{\text{corr}}$ 的普适性）。$\ell_{\text{corr}}$ 的值源自谱流方程中 Cartan 生成元与谱耗散在普适 RG 不动点处的平衡，与具体纤维化结构无关。因此 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的 $k=2$ 截面和 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的 $\sigma_{\text{CT}}$ 截面预言了同一 $\ell_{\text{corr}} \sim 0.5$ Å。两种纤维化的区别**不在于 $\ell_{\text{corr}}$ 的数值，而在于其控制的物理量**：$k=2$ 截面缺乏直接实例化路径，而 $\sigma_{\text{CT}}$ 截面对应可直接量子化学计算（$J_{\text{CT}}$ CASSCF 计算）或实验测量（分子间 2D IR 交叉峰）的具体可观测量。分子内数据（Gunkel $J_{\text{intra}}$）估算的 $\ell_{\text{corr}} \in [2.50,5.31]$ Å 是结构关联长度，与 $\sigma_{\text{CT}}$ 截面的谱关联长度（~0.5 Å）是不同范畴的量，不可直接比较。
+**注 8.2**（$\ell_{\text{corr}}$ 的普适性）。$\ell_{\text{corr}}$ 的值源自谱流方程中 Cartan 生成元与谱耗散在普适 RG 不动点处的平衡，与具体纤维化结构无关。因此 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的 $k=2$ 截面和 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的 $\sigma_{\text{CT}}$ 截面预言了同一 $\ell_{\text{corr}} \sim 0.5$ Å。两种纤维化的区别**不在于 $\ell_{\text{corr}}$ 的数值，而在于其控制的物理量**：$k=2$ 截面缺乏直接实例化路径，而 $\sigma_{\text{CT}}$ 截面对应可直接量子化学计算（$J_{\text{CT}}$ CASSCF 计算）或实验测量（分子间 2D IR 交叉峰）的具体可观测量。分子内数据（Gunkel $J_{\text{intra}}$）估算的 $\ell_{\text{corr}} \in [2.50,5.31]$ Å 是结构关联长度，与 $\sigma_{\text{CT}}$ 截面的谱关联长度（~0.5 Å）是不同范畴的量，不可直接比较。
 
 *证明概要*。在 $R_{AB} \gg \ell_{\text{corr}}$ 的渐进区域，谱流方程 (8.1) 中的 CT 生成元 $G_{\text{CT}}$ 与耗散项 $-\gamma_{\text{eff}}\Delta_{\text{spec}}$ 之间达到平衡。扩展方程的解 $A_{\text{dim}}$ 的非对角元 $J_{\text{CT}}$ 满足二阶微分方程 $d^2J_{\text{CT}}/dR_{AB}^2 = \ell_{\text{corr}}^{-2}J_{\text{CT}}$，其指数解恰好为 (8.2)。（完整推导见 Paper XVI 附录 C。）$\square$
 
@@ -212,11 +212,11 @@ $$J_{\text{CT}}(R_{AB}) \sim J_0 \cdot \exp\left(-\frac{R_{AB}}{\ell_{\text{corr
 
 STO-CI 值偏高是预期的：纯 STO 重叠积分的多项式因子 $[1 + \rho + (2/5)\rho^2 + (1/15)\rho^3]$ 使有效衰减慢于纯指数。实际 CT 耦合还受超交换（through-bond）和能隙变化等机制的加速，使经验拟合值更接近 SF 预言。三种方法从不同方向**共同确认了 $\ell_{\text{corr}}$ 在 0.4-0.8 Å 量级**，与谱框架预言高度一致。
 
-**结论**：$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的 CT 耦合截面 $\sigma_{\text{CT}}$ 的数值实例化（含第一性原理 STO-CI 验证）全面支持谱框架预言 $\ell_{\text{corr}} \sim 0.5$ Å。
+**结论**：$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的 CT 耦合截面 $\sigma_{\text{CT}}$ 的数值实例化（含第一性原理 STO-CI 验证）全面支持谱框架预言 $\ell_{\text{corr}} \sim 0.5$ Å。
 
 *(v0.7 续, 2026-07-24)*
 
-### 8.5 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的物理截面
+### 8.5 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的物理截面
 
 | 截面 | 定义 | 物理意义 |
 |:----|:-----|:--------|
@@ -227,7 +227,7 @@ STO-CI 值偏高是预期的：纯 STO 重叠积分的多项式因子 $[1 + \rho
 
 ### 8.6 非乘积丛结构
 
-**定理 8.3**（CT 间隙闭合奇异性）。在 $\partial\mathbf{Ionic}$ 处（$\delta_{\text{CT}}(\mathcal{I}) = 0$），纤维类型从 $\mathbf{Spec}$ 跳变为 $\mathbf{Spec}_{\text{deg}}$（CT 态与基态简并），使 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 成为非乘积丛。
+**定理 8.3**（CT 间隙闭合奇异性）。在 $\partial\mathbf{Ionic}$ 处（$\delta_{\text{CT}}(\mathcal{I}) = 0$），纤维类型从 $\mathbf{Sp}$ 跳变为 $\mathbf{Sp}_{\text{deg}}$（CT 态与基态简并），使 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 成为非乘积丛。
 
 CT 间隙闭合对应两类物理情形：
 
@@ -235,11 +235,11 @@ CT 间隙闭合对应两类物理情形：
 
 2. **质子耦合电子转移（PCET）**：氢原子转移伴随电子转移的反应步骤中，$\xi_{\text{CT}}$ 和核构型 $R$ 同时演化。$\delta_{\text{CT}} = 0$ 的流形构成 PCET 反应的"过渡态"，与 §5 的锥形交叉具有相同的拓扑结构和陈数分类。
 
-### 8.7 与 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的关系总结
+### 8.7 与 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的关系总结
 
-$$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec}) \xrightarrow{\hat{\mathcal{U}}_*} \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$$
+$$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp}) \xrightarrow{\hat{\mathcal{U}}_*} \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \times \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$$
 
-| 方面 | $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ | $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ |
+| 方面 | $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ | $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ |
 |:----|:------------------------------------------:|:------------------------------------------:|
 | 基对象 | 单分子核构型 $R$ | 离子对构型 $(R_A, R_B, \xi_{\text{CT}})$ |
 | 纤维内容 | 中性分子电子谱 | 二聚体谱（含 CT 激发） |
@@ -247,7 +247,7 @@ $$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec}) \xrightarrow{\hat{\mathcal{U}}_*} 
 | P6 的 $\ell_{\text{corr}}$ | $k=2$ 截面（数学定义但物理上间接） | $\sigma_{\text{CT}}$ 截面（直接可观测） |
 | 实验检验 | 需要分子内振动谱（已耗尽）| 需要分子间 2D IR 交叉峰（待检验） |
 
-## 9. 分子内离子构型纤维化 $\mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Spec})$
+## 9. 分子内离子构型纤维化 $\mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Sp})$
 
 ### 9.1 动机：电荷分离分子需要独立的纤维化
 
@@ -306,7 +306,7 @@ $$\mathbf{Reac} \subsetneq \mathbf{IntraIonic} \subsetneq \mathbf{Ionic}$$
 
 **推论 9.1**（纤维化之间的纤维保持态射）。嵌套链诱导纤维保持态射：
 
-$$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \xleftarrow{\hat{\mathcal{U}}_{\text{intra}}^*} \mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Spec}) \xrightarrow{\hat{\mathcal{I}}_*} \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$$
+$$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \xleftarrow{\hat{\mathcal{U}}_{\text{intra}}^*} \mathbf{Bun}(\mathbf{IntraIonic}, \mathbf{Sp}) \xrightarrow{\hat{\mathcal{I}}_*} \mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$$
 
 ### 9.6 三种纤维化的统一对比
 
@@ -345,7 +345,7 @@ $$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec}) \xleftarrow{\hat{\mathcal{U}}_{\tex
 
 ## 11. 谱框架可检验新预言
 
-分子构型纤维化 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 提供了标准量子化学无法触及的六类新预言，按可检验性排序：
+分子构型纤维化 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 提供了标准量子化学无法触及的六类新预言，按可检验性排序：
 
 ### 11.1 预言 P1：反应速率超出 Eyring 的谱流耗散修正
 
@@ -383,7 +383,7 @@ $$\text{SGL}(R) = \delta_{\text{spec}}(R) = \lambda_{\text{LUMO}}(R) - \lambda_{
 
 标准量子化学：锥形交叉是偶然简并，由 Jahn-Teller 定理描述。
 
-纤维化视角：锥形交叉是 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的拓扑缺陷——非乘积丛结构 $\mathbf{Spec} \to \mathbf{Spec}_{\text{deg}}$ 携带拓扑不变量。
+纤维化视角：锥形交叉是 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的拓扑缺陷——非乘积丛结构 $\mathbf{Sp} \to \mathbf{Sp}_{\text{deg}}$ 携带拓扑不变量。
 
 **定义 11.2**（锥形交叉陈数）。对 $\partial\mathbf{Reac}$ 中的孤立锥形交叉 $R_0$，其陈数为：
 
@@ -409,7 +409,7 @@ $$w(\gamma_R) \cdot \text{Ch}(R_0) \equiv 1 \pmod{2}$$
 
 ### 11.4 预言 P4：谱反应雷诺数与"反应湍流"
 
-由丛态射 $\hat{\mathcal{F}}_{\text{react}}$ 将 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 映射到 $\mathbf{Bun}(\mathbf{Fluid}, \mathbf{Spec})$，谱流方程 (4.1) 与 N-S 谱流方程完全同构（Paper XV §4.3）。
+由丛态射 $\hat{\mathcal{F}}_{\text{react}}$ 将 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 映射到 $\mathbf{Bun}(\mathbf{Fluid}, \mathbf{Sp})$，谱流方程 (4.1) 与 N-S 谱流方程完全同构（Paper XV §4.3）。
 
 **定义 11.3**（谱反应雷诺数）。
 
@@ -445,7 +445,7 @@ $$k_{\text{ET}}^{\text{(spec)}} = \frac{2\pi}{\hbar} \frac{|V_{ab}|^2}{\sqrt{4\p
 
 ### 11.6 预言 P6：光谱超分辨（丛结构的高阶效应）
 
-**定义 11.6**（谱丛高阶截面）。$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的 $k$-阶截面是 $\sigma^{(k)}: \mathbf{Reac}^k \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$，编码 $k$ 个核构型间的非局域谱关联。
+**定义 11.6**（谱丛高阶截面）。$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的 $k$-阶截面是 $\sigma^{(k)}: \mathbf{Reac}^k \to \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，编码 $k$ 个核构型间的非局域谱关联。
 
 **预言 P6a**（二维光谱的丛关联峰）。$k=2$ 截面 $\sigma^{(2)}(R_1, R_2)$ 在标准 2D 光谱（如 2D IR、2D 电子光谱）中产生额外的交叉峰。交叉峰位置由谱平行输运条件决定：
 
@@ -453,14 +453,14 @@ $$\omega_{\text{cross}} = -\beta^{-1} \ln\left(\frac{\lambda_i(R_1)}{\lambda_j(R
 
 **关键修正**（v0.7, 2026-07-24）。实验检验揭示，P6 的物理实现需要区分两个层面：
 
-1. **$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的 $k=2$ 截面** 是数学上严格定义的，但缺乏物理实例化路径——两个独立分子纤维之间没有自然的耦合算子。
-2. **$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的 $\sigma_{\text{CT}}$ 截面**（定义 8.4）提供了 $\ell_{\text{corr}}$ 的物理载体——CT 耦合 $J_{\text{CT}}(R_{AB}) \sim J_0 \exp(-R_{AB}/\ell_{\text{corr}})$ 在分子间二聚体谱中直接产生交叉峰。
+1. **$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的 $k=2$ 截面** 是数学上严格定义的，但缺乏物理实例化路径——两个独立分子纤维之间没有自然的耦合算子。
+2. **$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的 $\sigma_{\text{CT}}$ 截面**（定义 8.4）提供了 $\ell_{\text{corr}}$ 的物理载体——CT 耦合 $J_{\text{CT}}(R_{AB}) \sim J_0 \exp(-R_{AB}/\ell_{\text{corr}})$ 在分子间二聚体谱中直接产生交叉峰。
 
 因此，P6 的预测应重新表述为：
 
 $$\boxed{J_{\text{CT}}(R_{AB}) \sim J_0 \cdot \exp\left(-\frac{R_{AB}}{\ell_{\text{corr}}}\right), \quad \ell_{\text{corr}} \sim 0.5\ \text{Å}} \tag{11.9}$$
 
-即 **$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 纤维中分子间 CT 耦合 $J_{\text{CT}}$ 随距离指数衰减，衰减长度 $\ell_{\text{corr}}$ 由谱框架的普适标度确定**。这解释了为何 Gunkel 2024（分子内）和 Begušić 2023（IIR）数据无法直接检验 P6——两者涉及的耦合都是分子内的（$J_{\text{intra}} \sim 60$ cm$^{-1}$），而非分子间的 CT 耦合 $J_{\text{CT}}$。
+即 **$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 纤维中分子间 CT 耦合 $J_{\text{CT}}$ 随距离指数衰减，衰减长度 $\ell_{\text{corr}}$ 由谱框架的普适标度确定**。这解释了为何 Gunkel 2024（分子内）和 Begušić 2023（IIR）数据无法直接检验 P6——两者涉及的耦合都是分子内的（$J_{\text{intra}} \sim 60$ cm$^{-1}$），而非分子间的 CT 耦合 $J_{\text{CT}}$。
 
 **可检验体系**：
 - 水二聚体 (H$_2$O)$_2$ 的 2D IR 光谱——直接测量分子间交叉峰强度 vs O-O 距离
@@ -547,9 +547,9 @@ $$\rho = \frac{w_{\text{corr}}^2 - w_{\text{anti}}^2}{w_{\text{corr}}^2 + w_{\te
 
 **(c) 与谱框架预言 P6 的对比（v0.7 更新：离子纤维化重构）**。谱框架预言 $\ell_{\text{corr}} \sim 0.5$ Å（注 8.2：该值在 $\mathbf{Bun}(\mathbf{Reac})$ 和 $\mathbf{Bun}(\mathbf{Ionic})$ 中普适），而数据驱动估算的综合范围为 $[2.50, 5.31]$ Å。**当前数据并非对预言值的"偏离"——两者是不同范畴的量**：预言值 $\ell_{\text{corr}} \sim 0.5$ Å 是 CT 耦合 $J_{\text{CT}}$ 的谱关联衰减长度（§8.4），数据估算值是 H-bond 结构的统计关联长度。不应直接比较，而需注意以下区分：
 
-1. **谱丛关联 vs. 结构关联**：谱框架预言 P6 的 $\ell_{\text{corr}} \sim 0.5$ Å 是 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 中 CT 耦合截面 $\sigma_{\text{CT}}$ 的指数衰减长度（§8.4 定理 8.2），而非分子构型空间的统计关联长度。Gunkel 2024 的 2D IR 耦合峰主要反映**分子内 H-bond 结构反关联**，其关联长度（$2.5-5.3$ Å）对应于水的典型分子间关联尺度，与 XRD/中子散射测得的 H-bond 网络关联长度一致。
+1. **谱丛关联 vs. 结构关联**：谱框架预言 P6 的 $\ell_{\text{corr}} \sim 0.5$ Å 是 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 中 CT 耦合截面 $\sigma_{\text{CT}}$ 的指数衰减长度（§8.4 定理 8.2），而非分子构型空间的统计关联长度。Gunkel 2024 的 2D IR 耦合峰主要反映**分子内 H-bond 结构反关联**，其关联长度（$2.5-5.3$ Å）对应于水的典型分子间关联尺度，与 XRD/中子散射测得的 H-bond 网络关联长度一致。
 
-2. **$J_{\text{intra}}$ vs $J_{\text{CT}}$**：P6 的 $\ell_{\text{corr}}$ 描述的是 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 纤维中分子间 CT 耦合 $J_{\text{CT}}(R_{AB})$ 随距离的指数衰减（方程 10.9）。Gunkel 2024 的耦合峰来自**同一水分子**的两个 OD 键——这是分子内振动耦合 $J_{\text{intra}} \sim 60$ cm$^{-1}$，属于 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的纤维内结构（$k=1$ 截面），而非 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的 $\sigma_{\text{CT}}$ 截面。因此，该数据虽为谱框架提供间接支持（反关联的谱起源），但不能作为 P6 的直接检验。
+2. **$J_{\text{intra}}$ vs $J_{\text{CT}}$**：P6 的 $\ell_{\text{corr}}$ 描述的是 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 纤维中分子间 CT 耦合 $J_{\text{CT}}(R_{AB})$ 随距离的指数衰减（方程 10.9）。Gunkel 2024 的耦合峰来自**同一水分子**的两个 OD 键——这是分子内振动耦合 $J_{\text{intra}} \sim 60$ cm$^{-1}$，属于 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的纤维内结构（$k=1$ 截面），而非 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的 $\sigma_{\text{CT}}$ 截面。因此，该数据虽为谱框架提供间接支持（反关联的谱起源），但不能作为 P6 的直接检验。
 
 3. **衰减时间的一致性**：CLS 动力学给出的反关联衰减时间 $\tau_{\text{corr}} = 91$ fs 与水的 H-bond 涨落时间尺度（50-200 fs）一致。谱框架的热涨落模型 $\tau = \ell_{\text{corr}} / v_{\text{th}}$ 在 $\ell_{\text{corr}} \sim 4.5-5.3$ Å 时给出 $\tau \sim 90-106$ fs，与实验观测吻合。
 
@@ -603,7 +603,7 @@ $$I_{\text{cross}}(q) \propto \int P(R|q) \cdot M(R, q) \cdot e^{-R/\ell_{\text{
 
 3. **谱线形状变化 vs. 总强度变化**：论文的分析表明，$Q$ 对 IIR 谱的影响集中在特定谱特征的形态变化（如机械非谐性 lobe 的强度分布、零背景穿越点偏移），而非总强度的再分配。这意味着预言 P6 的指数衰减模型 $I_{\text{cross}} \propto e^{-R/\ell_{\text{corr}}}$ 需要更精细的**特征分解**（separate mechanical/electrical contributions）才能测试，而非直接在 TIRV 区域求和。
 
-4. **分子内 vs. 分子间耦合**：IIR 谱的交叉峰主要来源于同一水分子的两个 O-H 键间耦合（通过分子内和非谐性骨架），属于 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Spec})$ 的纤维内结构（$k=1$ 截面），而非 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的 $\sigma_{\text{CT}}$ 截面所描述的分子间 CT 耦合。因此，**IIR 数据从根本上不适合直接检验预言 P6 的谱丛非局域关联长度**。预言 P6 的 $\ell_{\text{corr}}$ 是 CT 耦合 $J_{\text{CT}}(R_{AB})$ 的指数衰减长度（§8.4 定理 8.2），需要不同分子间的二维光谱（如 2D IR 的分子间 cross-peak 或 TIRV 的 intermolecular coupling pathway）或直接量子化学计算验证。
+4. **分子内 vs. 分子间耦合**：IIR 谱的交叉峰主要来源于同一水分子的两个 O-H 键间耦合（通过分子内和非谐性骨架），属于 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的纤维内结构（$k=1$ 截面），而非 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的 $\sigma_{\text{CT}}$ 截面所描述的分子间 CT 耦合。因此，**IIR 数据从根本上不适合直接检验预言 P6 的谱丛非局域关联长度**。预言 P6 的 $\ell_{\text{corr}}$ 是 CT 耦合 $J_{\text{CT}}(R_{AB})$ 的指数衰减长度（§8.4 定理 8.2），需要不同分子间的二维光谱（如 2D IR 的分子间 cross-peak 或 TIRV 的 intermolecular coupling pathway）或直接量子化学计算验证。
 
 **结论与建议（v1.2 更新：引入 $\mathbf{Bun}(\mathbf{IntraIonic})$ 嵌套链后重新定位）**。
 
@@ -615,7 +615,7 @@ $$I_{\text{cross}}(q) \propto \int P(R|q) \cdot M(R, q) \cdot e^{-R/\ell_{\text{
 | 需**不同水分子的间耦合数据**（而非同一分子的两个 O-H）检验 P6 | **高** |
 | 电气非谐性的 $Q$ 依赖性是 $\mathbf{Bun}(\mathbf{Ionic})$ 的未关闭通道，但需超越现有分析的谱分解 | **中** |
 | Gunkel 的 $J_{\text{intra}} \sim 60$ cm$^{-1}$ 属于 $\mathbf{Bun}(\mathbf{Reac})$ $k=1$ 截面，与 $\mathbf{Bun}(\mathbf{Ionic})$ 的 $\sigma_{\text{CT}}$ 截面（§8）是不同范畴对象 | **高** |
-| 若需继续推进，应关注：$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的数值实例化（水二聚体 CASSCF 计算 $J_{\text{CT}}(R_{AB})$ 验证指数衰减，§13.1 开放问题 4），而非分子内光谱的进一步分解 | **中** |
+| 若需继续推进，应关注：$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的数值实例化（水二聚体 CASSCF 计算 $J_{\text{CT}}(R_{AB})$ 验证指数衰减，§13.1 开放问题 4），而非分子内光谱的进一步分解 | **中** |
 
 **(e)(续) 现有数据对谱框架的理论支撑**。
 
@@ -652,7 +652,7 @@ $$I_{\text{cross}}(q) \propto \int P(R|q) \cdot M(R, q) \cdot e^{-R/\ell_{\text{
 1. **谱反应雷诺数的定量标度**：$\text{Re}_{\text{reac}}$ 的临界阈值 $\text{Re}_c$ 是否普适（类似 Navier-Stokes 中的 $\text{Re}_c \sim 2000$）？如果存在普适阈值，则反应湍流在所有分子体系中具有相同的触发条件。
 2. **$n$-阶截面的谱特征**：预言 P6 中 $k \ge 3$ 的截面在非线性光谱中的可观测性——是否与多维光谱（3D IR、2D VE）的特定实验设置对应？
 3. **与精确因子的衔接**：预言 P1 的 $\mathcal{F}_{\text{spec}}$ 与变分过渡态理论（CVT）的通用性关系——$\mathcal{F}_{\text{spec}}$ 是 CVT 的补充还是覆盖？
-4. **【已解决】$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 的数值实例化和第一性原理验证**：已完成水二聚体 CT 耦合的三层分析：(i) 文献数据拟合 $\ell_{\text{corr}} = 0.514$ Å（2.9% 偏差）；(ii) 碎片轨道解析模型 $\ell_{\text{corr}} = 0.441 \pm 0.020$ Å（11.8% 偏差）；(iii) **STO-CI 第一性原理验证**（解析 Roothaan 重叠积分 + Mulliken 近似）$\ell_{\text{corr}} = 0.776 \pm 0.039$ Å（55.2% 偏差，STO 多项式因子减缓了指数衰减，上限有界）。三层分析共同确认 $\ell_{\text{corr}} \in [0.4, 0.8]$ Å，支持 SF 预言 $\ell_{\text{corr}} \sim 0.5$ Å。
+4. **【已解决】$\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的数值实例化和第一性原理验证**：已完成水二聚体 CT 耦合的三层分析：(i) 文献数据拟合 $\ell_{\text{corr}} = 0.514$ Å（2.9% 偏差）；(ii) 碎片轨道解析模型 $\ell_{\text{corr}} = 0.441 \pm 0.020$ Å（11.8% 偏差）；(iii) **STO-CI 第一性原理验证**（解析 Roothaan 重叠积分 + Mulliken 近似）$\ell_{\text{corr}} = 0.776 \pm 0.039$ Å（55.2% 偏差，STO 多项式因子减缓了指数衰减，上限有界）。三层分析共同确认 $\ell_{\text{corr}} \in [0.4, 0.8]$ Å，支持 SF 预言 $\ell_{\text{corr}} \sim 0.5$ Å。
 5. **【已解决】CT 耦合的坐标依赖性**：STO-CI 角度扫描（$\theta_a \in [0^\circ, 90^\circ]$，脚本 `src/spectral_water_dimer_angle_dep.py`）证明 $\ell_{\text{corr}}$ 完全各向同性——所有 H-bond 角度下 $\ell_{\text{corr}}$ 值一致（0.660 Å）。原因：供体 O-H 沿 O-O 轴时（$\theta_d=0$），$\pi$ 分量贡献为零，有效重叠为 $S_{\text{eff}} = \cos\theta_a \cdot S_\sigma(R)$，角度因子在 $J(R)/J(R_{\text{eq}})$ 比率中相消。**结论**：$\ell_{\text{corr}}$ 不依赖于 H-bond 角度，是普适的各向同性标度
 
 ### 13.2 近期推进方向（按紧迫性）
@@ -661,7 +661,7 @@ $$I_{\text{cross}}(q) \propto \int P(R|q) \cdot M(R, q) \cdot e^{-R/\ell_{\text{
 |:-----:|:----|:----|:--------|
 | **✅ 已完成** | **P6 实验验证提案** | 撰写两个版本提案（纤维化版+传统版），调研国内合作者。下载分析 Cambridge CB5-8 CC BY 4.0 数据，提取 ZnPc (JACS 2025) ET 数据，完成独立验证报告。详见 `independent_validation_report.md` | **提案草案** ✅ (`proposal_p6_fibration.md`, `proposal_p6_conventional.md`); **独立验证报告** ✅ (`independent_validation_report.md`); **脚本** ✅ (`src/spectral_open_data_validation.py`) |
 | **✅ 已完成** | P1–P4 全面推进 | P1–P4 四个方向全部完成 v2.0 升级，见下文详细说明 | 全部完成 ✅ |
-| **✅ 已完成** | P6 完整验证闭环 | Gunkel 2024, Begušić 2023 → 排除错误路径。离子纤维化 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Spec})$ 形式化（§8）。$\ell_{\text{corr}}$ 三层验证（经验 0.514/碎片 0.441/STO-CI 0.776 Å）。**角依赖性**：完全各向同性，$\ell_{\text{corr}}$ 对所有 H-bond 角度一致。SF 预言全面支持 | 全部完成 ✅ |
+| **✅ 已完成** | P6 完整验证闭环 | Gunkel 2024, Begušić 2023 → 排除错误路径。离子纤维化 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 形式化（§8）。$\ell_{\text{corr}}$ 三层验证（经验 0.514/碎片 0.441/STO-CI 0.776 Å）。**角依赖性**：完全各向同性，$\ell_{\text{corr}}$ 对所有 H-bond 角度一致。SF 预言全面支持 | 全部完成 ✅ |
 | **✅ 已完成** | IntraIonic 数值实例化 | D-π-A 推拉发色团紧束缚模型（NH$_2$-(CH=CH)$_n$-NO$_2$），McConnell 超交换机制。$\beta=0.1966$ per site，$\ell_{\text{corr}}^{\text{(intra)}} = 12.2 \pm 0.8$ Å（24x Bun(Ionic)）| 实例 9.2 + 脚本 `spectral_intraionic_dpa_model.py` ✅ |
 
 ---
@@ -700,7 +700,7 @@ $$I_{\text{cross}}(q) \propto \int P(R|q) \cdot M(R, q) \cdot e^{-R/\ell_{\text{
 | **v1.1** | **2026-07-24** | 角度依赖性验证完成。§13.1 问题 5 标记已解决。§13.2 P0 更新为 P6 实验验证提案，已完成行扩展含角依赖性结论 |
 | **v1.0** | **2026-07-24** | **里程碑：P6 + Bun(Ionic,Spec) 验证闭环完成**。STO-CI 第一性原理验证新增 $\ell_{\text{corr}}=0.776\pm0.039$ Å。$\ell_{\text{corr}}$ 三层分析（经验 0.514/碎片 0.441/STO-CI 0.776）共同确认 0.4-0.8 Å。§13.2 P0 更新为 CT 耦合角度依赖性研究。§8.4 结果表扩展三层方法。§13.1 问题 4 更新为完全解决 |
 | **v0.8** | **2026-07-24** | §8.4 新增实例 8.1（水二聚体 CT 耦合数值实例化）：文献拟合 $\ell_{\text{corr}}=0.514$ Å（2.9% 偏差），解析模型 $0.441\pm0.020$ Å（11.8% 偏差）。修正早期 $\alpha_{\text{ov}}=2\zeta$ 错误（双中心重叠衰减 $\sim e^{-\zeta R}$ 非 $e^{-2\zeta R}$）。§13.1 问题 4 标记已解决。§13.2 P2 更新为数值实例化完成 |
-| **v0.7** | **2026-07-24** | 新增 §8 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Spec})$ 离子构型纤维化：基范畴定义（8.2）、离子谱纤维（8.3）、CT 耦合截面与 $\ell_{\text{corr}}$ 定理（8.4）、CT 间隙闭合奇异性（8.6）；更新 §11.6 P6 预言为 $\sigma_{\text{CT}}$ 截面表述；§12.4(e) 结论对齐；§13 开放问题新增离子纤维化数值验证需求 |
+| **v0.7** | **2026-07-24** | 新增 §8 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 离子构型纤维化：基范畴定义（8.2）、离子谱纤维（8.3）、CT 耦合截面与 $\ell_{\text{corr}}$ 定理（8.4）、CT 间隙闭合奇异性（8.6）；更新 §11.6 P6 预言为 $\sigma_{\text{CT}}$ 截面表述；§12.4(e) 结论对齐；§13 开放问题新增离子纤维化数值验证需求 |
 | **v0.6** | **2026-07-24** | §12.4(e) 全面升级为 v3.0 直接 MD 分析：否决 v2.0 $\ell_{\text{corr}}\approx 0.200$ Å（假阳性）；确认 TIRV 总强度对 $Q$ 不敏感（$I_{\text{high}}/I_{\text{low}}=1.022$）；澄清 IIR 数据不适合直接检验 P6；更新 §13.2 P2 状态 |
 | **v0.5** | **2026-07-24** | §12.4(e) 从"后续方向"升级为"实际分析结果"：补充 Begušić & Blake 2023 数据分子间检验的完整结果（$\ell_{\text{corr}} \approx 0.200$ Å，强度比偏差 0.28）及局限性讨论 |
 | **v0.4** | **2026-07-24** | §12.4 从"方案"更新为"实际分析结果"：确认 $\rho=-0.54$ 反关联，$\ell_{\text{corr}} \in [2.50,5.31]$ Å；新增 §12.4(e) 后续方向讨论（分子间耦合数据需求）；更新 §13.2 P2 状态为已完成 |

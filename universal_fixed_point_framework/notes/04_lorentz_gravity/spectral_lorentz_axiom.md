@@ -1,12 +1,12 @@
 # 谱 Lorentz 协变公理 (A7)
 
-谱 QFT 公理系统的第七公理 A7 规定了 Lorentz 群在 $\mathbf{Spec}$ 范畴中的作用方式，确保谱 QFT 承载相对论性量子场论的时空对称性。
+谱 QFT 公理系统的第七公理 A7 规定了 Lorentz 群在 $\mathbf{Sp}$ 范畴中的作用方式，确保谱 QFT 承载相对论性量子场论的时空对称性。
 
 ## 定义 2.7 (A7：谱 Lorentz 协变公理)
 
-Lorentz 群 $SO^+(1,3)$（或全 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$）在 $\mathbf{Spec}$ 范畴中通过函子作用构成谱自同构：
+Lorentz 群 $SO^+(1,3)$（或全 Poincaré 群 $\mathcal{P}_+^\uparrow = \mathbb{R}^{1,3} \rtimes SO^+(1,3)$）在 $\mathbf{Sp}$ 范畴中通过函子作用构成谱自同构：
 
-$$L: \mathcal{P}_+^\uparrow \longrightarrow \operatorname{Aut}(\mathbf{Spec}),\quad L(\Lambda): (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \mapsto (\mathcal{H}_\phi^\Lambda, A_\phi^\Lambda, \sigma(A_\phi^\Lambda)),$$
+$$L: \mathcal{P}_+^\uparrow \longrightarrow \operatorname{Aut}(\mathbf{Sp}),\quad L(\Lambda): (\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \mapsto (\mathcal{H}_\phi^\Lambda, A_\phi^\Lambda, \sigma(A_\phi^\Lambda)),$$
 
 其中 $\Lambda \in SO^+(1,3)$ 是任一 proper 正时 Lorentz 变换。谱场 $\Phi(\lambda)$ 在 Lorentz 变换下的变换法则由幺正实现 $U(\Lambda)$ 给出：
 
@@ -66,7 +66,7 @@ $$\mathcal{D}_{\text{Spec}}\Phi' = \prod_{\lambda' \in \sigma(A_\phi')} d\Phi'(\
 
 ## 注释
 
-A7 与 A1–A6 的关系：A1 保证了谱对象的存在性，A7 进一步要求这些对象承载 Lorentz 群的表示。两者结合确保了 $\mathbf{Spec}$ 范畴能够充分编码相对论性量子场论的时空对称性。
+A7 与 A1–A6 的关系：A1 保证了谱对象的存在性，A7 进一步要求这些对象承载 Lorentz 群的表示。两者结合确保了 $\mathbf{Sp}$ 范畴能够充分编码相对论性量子场论的时空对称性。
 
 ---
 

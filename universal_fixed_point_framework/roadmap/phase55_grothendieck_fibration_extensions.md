@@ -2,13 +2,13 @@
 
 ## 战略定位
 
-在 Phase 54B 完成 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Spec})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Spec})$ 的 Grothendieck 纤维化与 Lean 4 验证（[`TempRGFiber.lean`](../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)，无 sorry）之后，将"基空间上的谱族 = Grothendieck 纤维化，物理可观测量 = 纤维截面"范式推广到框架内其余谱族结构。
+在 Phase 54B 完成 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的 Grothendieck 纤维化与 Lean 4 验证（[`TempRGFiber.lean`](../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)，无 sorry）之后，将"基空间上的谱族 = Grothendieck 纤维化，物理可观测量 = 纤维截面"范式推广到框架内其余谱族结构。
 
 候选分析详见笔记 [`notes/00_foundations/spectral_grothendieck_extension_candidates.md`](../notes/00_foundations/spectral_grothendieck_extension_candidates.md)（paper/ 23 篇 + notes/ 90 篇全扫描，12 个候选，五类模板关系）。
 
 **核心目标**：按 P0→P1→P2 顺序完成 8 个候选的纤维化提升，最终汇总为 $(G, \eta, T, \mu, \ldots)$ 总参数丛（UFPF 上层架构的统一收口）。
 
-**最高优先级（2026-07-23 更新）**：**Phase 55C（谱编织乘积基）** 和 **Phase 55B（Clifford 签名丛）** 已全部完成。新增 Phase 55D（BCS 谱编织）和 Phase 55E（Cuprate 分布论）。详见各阶段状态更新。
+**最高优先级（2026-07-23 更新）**：**Phase 55C（谱粘合乘积基）** 和 **Phase 55B（Clifford 签名丛）** 已全部完成。新增 Phase 55D（BCS 谱粘合）和 Phase 55E（Cuprate 分布论）。详见各阶段状态更新。
 
 ---
 
@@ -23,8 +23,8 @@
 | Lean 4 补全（Grothendieck 构造、η̂、2-范畴、物理截面） | ✅ **完成** | **Phase 55F**，`TempRGFiber.lean` ~970 行 |
 | 扩展候选扫描与分类 | ✅ 完成 | `spectral_grothendieck_extension_candidates.md` v0.1 |
 | **Phase 55B：Clifford 签名丛 + IC 投影** | ✅ **完成** | `SignatureFiber.lean`（§1-§11：Sig 范畴、Bott 商、Grothendieck 纤维化、Level4Extension、Bott 塔、RG 流对应、complete_chain 定理）|
-| **Phase 55C：谱编织 Temp×RG 乘积基** | ✅ **完成** | `WeaveProductFiber.lean` 474 行（§1-§10：乘积基、拉回函子、对角子范畴 Diag、编织自然变换 θ、T_hat_Riem_prod、参数化截面 WeaveSection）|
-| **Phase 55D：BCS 谱编织** | ✅ **完成** | `WeaveBCS.lean`（BCS 参数、d_BCS=√3·√r、谱流自洽封闭形式、强耦合两步方案、5 材料参数结构、η_c 一致性）|
+| **Phase 55C：谱粘合 Temp×RG 乘积基** | ✅ **完成** | `WeaveProductFiber.lean` 474 行（§1-§10：乘积基、拉回函子、对角子范畴 Diag、编织自然变换 θ、T_hat_Riem_prod、参数化截面 WeaveSection）|
+| **Phase 55D：BCS 谱粘合** | ✅ **完成** | `WeaveBCS.lean`（BCS 参数、d_BCS=√3·√r、谱流自洽封闭形式、强耦合两步方案、5 材料参数结构、η_c 一致性）|
 | **Phase 55E：Cuprate 分布论** | ✅ **完成** | `CuprateDistribution.lean`（cuprate 参数、双组分高斯混合模型、推前兼容性、对角闭包）|
 | **Phase 55A：噪声丛 Bun(Noise, Spec)** | ✅ **完成** | `NoiseFiber.lean`（Grothendieck 纤维化 + FH 定理 + η_c 奇异性 + N_hat 丛态射）；`NoiseCategory.lean`（Σ-Rec/Σ-Spec + Sel/Ext/Diss）；`spectral_noise_fibration.md` v0.1 |
 | **Phase 55G：时空谱对象丛（stack 化）** | ✅ **完成** | `SpacetimeStack.lean`（Open(M) 开集范畴 + SpectralPresheaf + sheaf_condition 层公理 + general_covariance_iff_sheaf 等价性 + CurvatureMatterFunctor 主定理 21 填补）`spectral_spacetime_stack.md` v0.1 |
@@ -40,12 +40,12 @@
 ┌────────────────────────────────────────┐  ┌─────────────────────────────┐
 │ Phase 54B  Temp/RG 纤维化        ✅    │  │ Phase 55A  噪声丛 Bun(Noise)│
 │ Phase 55B  Clifford 签名丛       ✅    │  │   (A1-A4)                   │
-│ Phase 55C  谱编织乘积基          ✅    │  ├─────────────────────────────┤
+│ Phase 55C  谱粘合乘积基          ✅    │  ├─────────────────────────────┤
 │   · 对角子范畴 Diag                    │  │ Phase 55F+  Kerr/EFT/味丛   │
 │   · 编织自然变换 θ                     │  │   语境性层 (D1-D4)          │
 │   · T_hat_Riem_prod 延拓              │  ├─────────────────────────────┤
 │   · WeaveSection 参数化截面            │  │ Phase 55G  时空谱丛 stack   │
-│ Phase 55D  BCS 谱编织形式化      ✅    │  │   总参数丛汇总              │
+│ Phase 55D  BCS 谱粘合形式化      ✅    │  │   总参数丛汇总              │
 │   · d_BCS = √3·√r                     │  └─────────────────────────────┘
 │   · 谱流自洽封闭形式                   │
 │   · 强耦合两步方案 (5材料)             │
@@ -103,7 +103,7 @@ Paper XX §5.1 三重投影表（代数 Cl(9,1)→Cl(1,7)、范畴 Rec_id→Rec�
 
 ---
 
-## 五、Phase 55C：谱编织 Temp×RG 乘积基【已完成】
+## 五、Phase 55C：谱粘合 Temp×RG 乘积基【已完成】
 
 **完成时间**：2026-07-23
 
@@ -111,14 +111,14 @@ Paper XX §5.1 三重投影表（代数 Cl(9,1)→Cl(1,7)、范畴 Rec_id→Rec�
 
 ### 5.1 动机
 
-BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱编织约束 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 是两个已完成纤维化的粘合条件。
+BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱粘合约束 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 是两个已完成纤维化的粘合条件。
 
 ### 5.2 完成内容
 
 | 子任务 | 描述 | 状态 | 交付物 |
 |:------|:-----|:----:|:------|
 | **C1** Temp×RG 乘积基 | 二维参数丛；Bun(Temp)、Bun(RG) 作为两坐标方向拉回 | ✅ | `WeaveProductFiber.lean` §1-2 |
-| **C2** ∂Rec_D 粘合 | 谱编织约束 = 拉回方图中的粘合条件 | ✅ | `WeaveProductFiber.lean` §6 |
+| **C2** ∂Rec_D 粘合 | 谱粘合约束 = 拉回方图中的粘合条件 | ✅ | `WeaveProductFiber.lean` §6 |
 | **C3** 对角子范畴 Diag | $\mathbf{Diag} \hookrightarrow \mathbf{Temp} \times \mathbf{RG}$，态射 $(f, \mathcal{T}(f))$ | ✅ | `WeaveProductFiber.lean` §7 |
 | **C4** 编织自然变换 θ | $\hat{\mathcal{T}}_{\text{Riem}} \circ \iota_T^* \cong \iota_\mu^*$ 在对角线上 | ✅ | `WeaveProductFiber.lean` §8 |
 | **C5** T_hat_Riem_prod | $\hat{\mathcal{T}}_{\text{Riem}}$ 的乘积基延拓 | ✅ | `WeaveProductFiber.lean` §9 |
@@ -126,13 +126,13 @@ BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱编织约束 $S
 
 ### 5.3 验收标准
 
-- ✅ 谱编织乘积基笔记 `spectral_weave_product_fibration.md` v0.2
+- ✅ 谱粘合乘积基笔记 `spectral_weave_product_fibration.md` v0.2
 - ✅ BCS/HP 截面沿对角线的限制闭包定理
 - ✅ `lake build` 通过
 
 ---
 
-## 六、Phase 55D：BCS 谱编织形式化【已完成】
+## 六、Phase 55D：BCS 谱粘合形式化【已完成】
 
 **完成时间**：2026-07-23
 
@@ -140,14 +140,14 @@ BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱编织约束 $S
 
 ### 6.1 动机
 
-将 BCS 超导的谱编织自由度分析纳入谱框架 Grothendieck 纤维范畴。核心是谱流生成元范数守恒推导 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$，以及谱流自洽封闭形式。
+将 BCS 超导的谱粘合自由度分析纳入谱框架 Grothendieck 纤维范畴。核心是谱流生成元范数守恒推导 $d_{\text{BCS}} = \sqrt{3}\sqrt{r}$，以及谱流自洽封闭形式。
 
 ### 6.2 完成内容
 
 | 子任务 | 描述 | 状态 | 交付物 |
 |:------|:-----|:----:|:------|
 | **D1** BCS 参数常量 | a_BCS, Δλ_min, Δλ_3, Δλ_1, C2_su2_fund | ✅ | `WeaveBCS.lean` §1 |
-| **D2** 谱编织自由度 | d_BCS(Δλ_BCS) = √3·√r, a_SC formula | ✅ | `WeaveBCS.lean` §2 |
+| **D2** 谱粘合自由度 | d_BCS(Δλ_BCS) = √3·√r, a_SC formula | ✅ | `WeaveBCS.lean` §2 |
 | **D3** 谱流自洽封闭形式 | r=0.8740, Δλ_BCS=0.1396, a≈0.567 (<0.1%) | ✅ | `WeaveBCS.lean` §3 |
 | **D4** 强耦合两步方案 | Z=1+λ, GK r strong, 5 材料参数结构 | ✅ | `WeaveBCS.lean` §4 |
 | **D5** BCS 乘积基连接 | BCSWeaveSection, 拉回定理, 对角闭包 | ✅ | `WeaveBCS.lean` §5 |
@@ -224,8 +224,8 @@ BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱编织约束 $S
 | **55F** | P1 批量（Kerr/EFT/味丛/语境性） | `KerrFiber.lean` + `EFTCodomainFiber.lean` + `FlavorFiber.lean` + `ContextualitySheaf.lean` | ~600 | 2026-07-23 |
 | **55G** | 时空谱对象丛 stack（Open(M) 层 + 主定理 21） | `SpacetimeStack.lean` | ~230 | 2026-07-23 |
 | **55B** | Clifford 签名丛 + IC 投影 | `SignatureFiber.lean` | 452 | 2026-07-22 |
-| **55C** | 谱编织乘积基（Diag + θ + T_hat_Riem_prod + WeaveSection） | `WeaveProductFiber.lean` | 474 | 2026-07-23 |
-| **55D** | BCS 谱编织形式化 | `WeaveBCS.lean` | 328 | 2026-07-23 |
+| **55C** | 谱粘合乘积基（Diag + θ + T_hat_Riem_prod + WeaveSection） | `WeaveProductFiber.lean` | 474 | 2026-07-23 |
+| **55D** | BCS 谱粘合形式化 | `WeaveBCS.lean` | 328 | 2026-07-23 |
 | **55E** | Cuprate 分布论形式化 | `CuprateDistribution.lean` | 300 | 2026-07-23 |
 | **55∞** | 总参数丛汇总（$(G,\eta,T,\mu,\ldots)$ 统一收口） | `TotalParameterFiber.lean` | ~200 | 2026-07-23 |
 
