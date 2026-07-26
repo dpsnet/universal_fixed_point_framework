@@ -12,7 +12,7 @@
 
 
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱静默条件 S1–S4）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文首次使用记号 $\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）、$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）、$\mathcal{L}$（静态化函子）、$\mathcal{D}yn$（动态化函子）、$\mathcal{S}el$（选择函子）、$\mathcal{D}iss$（溶解函子）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱静默条件 S1–S4）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。本文首次使用记号 $\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）、$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）、$\mathcal{L}$（静态化函子）、$\mathcal{D}yn$（动态化函子）、$\mathcal{S}el$（选择函子）、$\mathcal{D}iss$（溶解函子）。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
@@ -29,6 +29,18 @@
 - **BH**：黑洞（Black Hole）
 - **LQG**：圈量子引力（Loop Quantum Gravity）
 - **AdS/CFT**：反 de Sitter/共形场论对偶
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **BTZ**：巴尼阿多斯-特菲尔博-扎尼奥利黑洞（Bañados-Teitelboim-Zanelli black hole）
+- **Kerr**：克尔黑洞（Kerr black hole）
+- **Temp**：温度参数空间
+
+本文涉及的自创术语与标准概念对照如下：
+- **$\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）**：标准范畴论中反射子范畴的实例（见定理 4.2 $\mathcal{L} \dashv \iota$ 伴随对）
+- **$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）**：标准范畴论中自由余完备化的实例
+- **$\mathcal{L}$（静态化函子）**：标准范畴论中遗忘函子的特例（遗忘动力学结构）
+- **$\mathcal{D}yn$（动态化函子）**：标准范畴论中自由函子的变体
+- **$\mathcal{S}el$（选择函子）**：标准概率论中选择映射的范畴化
+- **$\mathcal{D}iss$（溶解函子）**：标准范畴论中遗忘函子的变体
 
 ## 1. 引言
 

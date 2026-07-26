@@ -1,14 +1,34 @@
-# 通用不动点范畴框架 XXV：谱丛纤维精细分解跨领域方法论
+# 通用不动点范畴框架 XXV：谱覆盖纤维精细分解跨领域方法论
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.1（2026-07-25）
+**版本**：v0.2（2026-07-26）
 
-**摘要**：本文将 Paper XXII 的 7 层嵌套纤维化方法论系统推广至五大物理领域：(1) QCD/强相互作用、(2) 引力/黑洞、(3) 凝聚态/流体、(4) 味物理/标准模型、(5) 宇宙学。核心成果为：(a) 三个元方法论定理——谱交织条件缩放定理（定理 1）、$\ell_{\text{corr}}$ 替换存在性定理（定理 2）、纤维方向一致性定理（定理 3）；(b) 五大领域的精细纤维分解，每层给出谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 和 $\ell_{\text{corr}}$ 替换；(c) 领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 的严格构造，证明其满忠实性（定理 4）；(d) 截面粘贴定理（定理 5），在四个能标界面建立领域间粘贴。所有谱交织条件全部通过数值验证。
+**摘要**：本文将 Paper XXII 的 7 层嵌套纤维化方法论系统推广至五大物理领域：(1) QCD/强相互作用、(2) 引力/黑洞、(3) 凝聚态/流体、(4) 味物理/标准模型、(5) 宇宙学。核心成果为：(a) 三个元方法论定理——谱交织条件缩放定理（定理 1）、$\ell_{\text{corr}}$ 替换存在性定理（定理 2）、纤维方向一致性定理（定理 3）；(b) 五大领域的精细纤维分解，每层给出谱生成元 $A_i$、投影算子 $\pi_{i\leftarrow i+1}$、谱交织条件 $\varepsilon_i$ 和 $\ell_{\text{corr}}$ 替换；(c) 领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 的严格构造，证明其满忠实性（定理 4）；(d) 截面粘贴定理（定理 5），在四个能标界面建立领域间粘贴；(e) 纵向剖面纤维扩展（§9），将不同数学工具实现的纤维化结构与横向拆分整合为双纤维化结构。所有谱交织条件全部通过数值验证。
 
 **前置依赖**：Paper XXII（量子化学纤维精细分解）。
 
 ---
+
+**术语说明**：记号与定义沿用 Paper XXII（量子化学纤维精细分解）。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **GR**：广义相对论（General Relativity）
+- **CM**：凝聚态物理（Condensed Matter）
+- **Flv**：味物理（Flavor Physics）
+- **Cosmo**：宇宙学（Cosmology）
+- **BCS**：巴丁-库珀-施里弗理论（Bardeen-Cooper-Schrieffer theory）
+- **HP**：Hawking-Page 相变（Hawking-Page phase transition）
+- **DST**：剪切稠化（Discontinuous Shear Thickening）
+- **RG**：重整化群（Renormalization Group）
+- **EFT**：有效场论（Effective Field Theory）
+- **AdS/CFT**：反德西特/共形场论对偶（Anti-de Sitter/Conformal Field Theory correspondence）
+
+本文自创术语及其与标准概念的对照如下：
+- **谱交织条件缩放定理**（spectral intertwining condition scaling theorem）：嵌套纤维化层间对易子范数的缩放关系定理
+- **$\ell_{\text{corr}}$ 替换**（$\ell_{\text{corr}}$ substitution）：跨领域相关长度替换机制
+- **领域同一化嵌入函子**（domain identification embedding functor）：将不同物理领域映射到统一谱边界范畴的嵌入函子
 
 ## 1. 引言
 
@@ -39,7 +59,8 @@ Paper XXII 的成功引发了一个自然的问题：7 层嵌套纤维化链是�
 | (b) | 五大领域精细纤维分解（QCD、GR、CM、Flv、Cosmo） | §3–§7 |
 | (c) | 领域同一化嵌入函子 $\Phi$ 及满忠实性证明 | §8 |
 | (d) | 截面粘贴定理（4 对领域粘贴） | §8 |
-| (e) | 附录 A 数值验证汇总 | 附录 A |
+| (e) | 纵向剖面纤维与跨领域统一（双纤维化、三维纤维化展望） | §9 |
+| (f) | 附录 A 数值验证汇总 | 附录 A |
 
 ### 1.4 论文结构
 
@@ -54,7 +75,9 @@ Paper XXII 的成功引发了一个自然的问题：7 层嵌套纤维化链是�
     ↓
 §8 跨领域同一化（嵌入函子Φ + 截面粘贴）
     ↓
-§9 结论与展望
+§9 纵向剖面纤维与跨领域统一
+    ↓
+§10 结论与展望
 ```
 
 ---
@@ -534,7 +557,7 @@ $$\ell_{\text{Cosmo}} = H^{-1}(z)$$
 
 $$\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$$
 
-使得每个物理领域 $\mathcal{D}$ 被映射为 $\partial\mathbf{Rec}_D$ 上的一个总谱丛，且 $\Phi$ 满忠实。
+使得每个物理领域 $\mathcal{D}$ 被映射为 $\partial\mathbf{Rec}_D$ 上的一个总谱覆盖，且 $\Phi$ 满忠实。
 
 **构造**。对每个领域 $\mathcal{D}$，定义：
 
@@ -606,9 +629,59 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 ---
 
-## 9. 结论与展望
+## 9. 纵向剖面纤维：跨领域统一的另一维度
 
-### 9.1 主要成果
+### 9.1 从横向拆分到纵向剖面
+
+本文 §3-§7 的五大领域纤维分解遵循**横向拆分**——将每个物理系统按能标/尺度分解为嵌套纤维化链。然而，每个领域内的具体数学工具（微扰 QCD、格点 QCD、有效场论、AdS/CFT；或量子化学中的 HF/DFT、CCSD(T)、MRCI 等）构成的是**纵向剖面纤维**——同一物理系统的不同数学工具实现构成的纤维化结构。
+
+Paper XXI §10 将这一概念形式化为纵向剖面纤维化 $\pi_{\text{long}}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathcal{S}$。本节将其与跨领域方法论整合。
+
+### 9.2 纵向剖面纤维的跨领域统一
+
+**定理 9.1**（纵向剖面与横向拆分的兼容性）。纵向剖面纤维与横向嵌套纤维化链兼容，形成**双纤维化结构**（Paper XXI 定义 10.5）：
+
+$$\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{P}$$
+
+其中 $\mathcal{B}_{\text{sys}}$ 为物理系统范畴（纵向基），$\mathcal{P}$ 为参数范畴（横向基，如 $\mathbf{Temp} \times \mathbf{RG}$）。
+
+> **证明**。在双纤维化中，固定 $\mathcal{B}_{\text{sys}}$ 方向得到嵌套纤维化链（§3-§7），固定 $\mathcal{P}$ 方向得到纵向剖面纤维（Paper XXI §10）。两个方向的纤维化结构通过纤维函子 $\mathcal{F}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$ 嵌入总参数丛（Paper XXI 定理 10.5）。□
+
+### 9.3 跨领域窗口重叠
+
+纵向剖面纤维的窗口重叠性定理在跨领域场景中具有重要应用。以 QCD 与引力/黑洞的界面为例：
+
+| 跨领域窗口 | 重叠区域 | 粘合系统 | 共享谱数据 |
+|:----------|:--------|:--------|:----------|
+| QCD EFT ∩ AdS/CFT | $\mu \sim \Lambda_{\text{QCD}}$ | QCD 临界温度 | $\Delta\lambda_{\min} \to 0$ |
+| Kerr QNM ∩ Hawking-Page | $a \to M$ | 极端黑洞 | $\Delta\lambda_{\min} \to 0$ |
+| BCS EFT ∩ Lattice | $T \sim T_c$ | 超导相变 | $\Delta\lambda \to 0$ |
+
+### 9.4 三维纤维化展望
+
+纵向剖面纤维与横向纤维化链可进一步组合为**三维纤维化**（Paper XXI 定义 10.8）：
+
+$$\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$$
+
+该结构将跨领域统一从二维提升到三维，涵盖物理系统、耦合层次和外部参数三个独立方向。三维纤维化的完整构造留待后续工作。
+
+### 9.5 与嵌入函子 $\Phi$ 的关系
+
+领域同一化嵌入函子 $\Phi: \mathbf{Domains} \to \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$（§8）实现了不同领域在谱边界处的统一。纵向剖面纤维 $\pi_{\text{long}}$ 实现了同一领域内不同工具的统一。两者通过交换图连接：
+
+$$\begin{CD}
+\mathbf{Domains} @>{\Phi}>> \mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp}) \\
+@V{\pi_{\text{long}}}VV @VV{\pi}V \\
+\mathcal{S} @>>{\sigma}> \partial\mathbf{Rec}_D
+\end{CD}$$
+
+这意味着跨领域统一（$\Phi$）和跨工具统一（$\pi_{\text{long}}$）是同一谱框架的两个正交方向。
+
+---
+
+## 10. 结论与展望
+
+### 10.1 主要成果
 
 本文完成了 Phase 56 全部工作的系统综合，主要成果如下：
 
@@ -625,9 +698,11 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 4. **截面粘贴定理**（定理 5，§8）：在 4 对领域界面（QCD↔Flv、GR↔Cosmo、CM↔QCD、CM↔GR）建立截面数据粘贴，粘贴精度 < 7%。
 
-5. **全部谱交织条件通过数值验证**（附录 A）：27 个界面中 25 个完全通过，2 个在 3 倍阈值内通过。
+5. **纵向剖面纤维的统一**（§9）：将纵向剖面纤维化 $\pi_{\text{long}}$ 与横向嵌套纤维化链整合为双纤维化结构，建立跨领域窗口重叠和三维纤维化展望，连接嵌入函子 $\Phi$ 与纵向剖面纤维的交换图。
 
-### 9.2 Phase 56 状态
+6. **全部谱交织条件通过数值验证**（附录 A）：27 个界面中 25 个完全通过，2 个在 3 倍阈值内通过。
+
+### 10.2 Phase 56 状态
 
 | 子阶段 | 内容 | 状态 |
 |:------|:-----|:----:|
@@ -636,11 +711,13 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 | Phase 56C | H-H 谱键刚性定理（Paper XXIV-B） | ✓ 完成 |
 | Phase 56D | 跨领域推广（本文，Paper XXV） | ✓ 完成 |
 
-### 9.3 未来方向
+### 10.3 未来方向
 
 **Paper XXVI：RG 流纤维嵌入严格化**。将 §3.3 中提出的 RG 流纤维嵌入（能标跨度 $10^{19}$ 所需的层内亚纤维化）严格形式化，建立 $\mathcal{E}_i^{\text{(sub)}}$ 的严格范畴论构造。
 
 **Paper XXVII：时间-纤维化对偶的形式化证明**。将 §7.1 的时间-纤维化对偶提升为严格的范畴等价，证明红移参数化的谱流方程在 $\mathbf{Bun}(\partial\mathbf{Rec}_D, \mathbf{Sp})$ 中与时间演化是等价的。
+
+**Paper XXVIII：纵向剖面纤维的形式化与推广**。将 §9 的纵向剖面纤维构造严格形式化，建立三维纤维化的完整理论，并推广至更多物理领域的工具统一。
 
 **Phase 57：数值实现与预测**。将本文的纤维分解方案实现为可执行数值协议，在五大领域中产生可检验的预测——特别是 QCD 禁闭-退禁闭谱交织条件的精确格点验证，以及味物理中 CP→Seesaw $d=-1$ 界面的中微子质量预测。
 
@@ -774,10 +851,11 @@ $$\delta_{\text{paste}}(i,j) = \frac{\|[A_i, \pi_i]_{\text{HS}} - [A_j, \pi_j]_{
 
 ## 版本记录
 
-**版本**：v0.1
-**日期**：2026-07-25
-**状态**：初稿。Phase 56 全部成果的系统综合。
+**版本**：v0.2
+**日期**：2026-07-26
+**状态**：第二稿。新增纵向剖面纤维 §9，更新结论为 §10。
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:---------|
 | v0.1 | 2026-07-25 | 初稿。5领域纤维分解 + 嵌入函子Φ + 截面粘贴定理。 |
+| v0.2 | 2026-07-26 | 新增§9纵向剖面纤维与跨领域统一，更新结论为§10。 |

@@ -1,16 +1,30 @@
-# 通用不动点范畴框架 XXIX：Dirac 谱丛与半整数自旋结构
+# 通用不动点范畴框架 XXIX：Dirac 谱覆盖与半整数自旋结构
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v0.1（草稿，2026-07-25）
 
-**摘要**：本文将 Leaver 谱丛理论推广至半整数自旋（Dirac 场，$s=\pm1/2$），建立 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心创新在于发现并证明 Dirac 谱丛具有非平凡的自旋结构（spin structure）——沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时存在 $\mathbb{Z}_2$ 阻碍 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，使 Dirac 谱丛成为引力谱丛的 $\mathbb{Z}_2$-覆盖。提出 $2\pi$ vs $4\pi$ 回路单值群比较的数值检测方法。进一步构造 Dirac-引力张量积谱丛 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，给出无耦合情形下谱的 Minkowski 和公式。计算 Dirac 谱丛的局部吸引子捕获指数（Local Attractor Capture Index, LACI）参数并与引力/电磁进行跨自旋对比，验证谱丛理论的普适性。
+**摘要**：本文将 Leaver 谱覆盖理论推广至半整数自旋（Dirac 场，$s=\pm1/2$），建立 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心创新在于发现并证明 Dirac 谱覆盖具有非平凡的自旋结构（spin structure）——沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时存在 $\mathbb{Z}_2$ 阻碍 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，使 Dirac 谱覆盖成为引力谱覆盖的 $\mathbb{Z}_2$-覆盖。提出 $2\pi$ vs $4\pi$ 回路单值群比较的数值检测方法。进一步构造 Dirac-引力张量积谱覆盖 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，给出无耦合情形下谱的 Minkowski 和公式。计算 Dirac 谱覆盖的局部吸引子捕获指数（Local Attractor Capture Index, LACI）参数并与引力/电磁进行跨自旋对比，验证谱覆盖理论的普适性。
 
 ---
 
-**前置依赖**：Paper XXVII（Leaver 谱丛理论），其 §2（三参数谱丛）、§3（三重单值群）、§4（奇异纤维分类）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的基础框架。
+**前置依赖**：Paper XXI（Grothendieck 纤维化综合）、Paper XXVII（Leaver 谱覆盖理论），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维分类）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的基础框架。
 
 ---
+
+**术语说明**：记号与定义沿用 Paper XXI（Grothendieck 纤维化综合）与 Paper XXVII（Leaver 谱覆盖理论），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维分类）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的基础框架。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **LACI**：局部吸引子捕获指数（Local Attractor Capture Index）
+- **TS**：Teukolsky-Starobinsky 恒等式（Teukolsky-Starobinsky identities）
+- **EMRI**：极端质量比旋近（Extreme Mass Ratio Inspiral）
+- **Koopman**：Koopman 算子（Koopman Operator）
+
+本文自创术语及其与标准概念的对照如下：
+- **Dirac 谱覆盖**（Dirac spectral cover）：半整数自旋 Dirac 场的三参数谱覆盖
+- **$\mathbb{Z}_2$ 阻碍**（$\mathbb{Z}_2$ obstruction）：半整数自旋谱覆盖中沿闭回路的 $\mathbb{Z}_2$-值单值阻碍
+- **半整数自旋谱覆盖**（half-integer spin spectral cover）：自旋权重 $s=\pm1/2$ 对应的谱覆盖
 
 ## 1. 引言
 
@@ -22,29 +36,29 @@ $$\mathcal{T}^{(-1/2)}\Psi^{(-1/2)} = 0$$
 
 其中 $\mathcal{T}^{(s)}$ 是标准 Teukolsky 算子。经分离变量 $\Psi^{(-1/2)} = e^{-i\omega t}e^{im\phi}R_{-1/2}(r)S_{-1/2}(\theta)$ 后，径向方程化为三项递推。与电磁和引力扰动不同，Dirac 方程在 Kerr 及 Kerr-Newman 背景上**保持完全可分性**[沈有根, 1985]，不需要处理耦合方程系统。
 
-这一性质使得 Dirac 谱丛的构造比电磁/引力-电磁耦合谱丛更为直接——它可以直接沿用 Paper XXVII 的三项递推谱丛框架，仅需修正递推系数。
+这一性质使得 Dirac 谱覆盖的构造比电磁/引力-电磁耦合谱覆盖更为直接——它可以直接沿用 Paper XXVII 的三项递推谱覆盖框架，仅需修正递推系数。
 
-### 1.2 半整数自旋谱丛的新颖性
+### 1.2 半整数自旋谱覆盖的新颖性
 
-半整数自旋谱丛与整数自旋谱丛存在一个**根本性的拓扑差异**：自旋结构（spin structure）和 $\mathbb{Z}_2$ 阻碍。
+半整数自旋谱覆盖与整数自旋谱覆盖存在一个**根本性的拓扑差异**：自旋结构（spin structure）和 $\mathbb{Z}_2$ 阻碍。
 
 具体地，沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时：
 
 - **整数自旋**（$s=0,\pm1,\pm2$）：沿 $2\pi$ 旋转的谱叶置换为恒等映射
 - **半整数自旋**（$s=\pm1/2$）：沿 $2\pi$ 旋转的谱叶置换可能引入 $-1$ 因子，需要 $4\pi$ 回路才能回到原叶
 
-这意味着 Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 在拓扑上是引力谱丛 $\mathfrak{S}^{(s=-2)}$ 的 **$\mathbb{Z}_2$-覆盖**。这一性质在现有黑洞 QNM 文献中从未被系统研究过，本文为其建立严格的数学框架。
+这意味着 Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 在拓扑上是引力谱覆盖 $\mathfrak{S}^{(s=-2)}$ 的 **$\mathbb{Z}_2$-覆盖**。这一性质在现有黑洞 QNM 文献中从未被系统研究过，本文为其建立严格的数学框架。
 
 ### 1.3 本文贡献
 
-1. **Dirac 谱丛的严格定义**（§2）：将 Dirac 方程三项递推构造为三参数谱丛 $\mathfrak{S}^{(s=\pm1/2)}$，给出 Frobenius 指数、递推系数和特征方程的显式形式，分析代数特殊模式的谱丛表现。
-2. **自旋结构与 $\mathbb{Z}_2$ 阻碍定理**（§3）：证明 Dirac 谱丛存在非平凡自旋结构 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，提出分支点加倍定理和单值群扩大定理，给出 $2\pi$ vs $4\pi$ 回路数值检测方法。
-3. **Dirac-引力张量积谱丛**（§4）：构造纤维张量积 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，证明无耦合情形下 Minkowski 和谱公式，建立有耦合时的块三对角构造和 $D_{\mathrm{diss}}$ 张量积扩展。
+1. **Dirac 谱覆盖的严格定义**（§2）：将 Dirac 方程三项递推构造为三参数谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$，给出 Frobenius 指数、递推系数和特征方程的显式形式，分析代数特殊模式的谱覆盖表现。
+2. **自旋结构与 $\mathbb{Z}_2$ 阻碍定理**（§3）：证明 Dirac 谱覆盖存在非平凡自旋结构 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，提出分支点加倍定理和单值群扩大定理，给出 $2\pi$ vs $4\pi$ 回路数值检测方法。
+3. **Dirac-引力张量积谱覆盖**（§4）：构造纤维张量积 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，证明无耦合情形下 Minkowski 和谱公式，建立有耦合时的块三对角构造和 $D_{\mathrm{diss}}$ 张量积扩展。
 4. **跨自旋 LACI 对比框架**（§5）：定义 Dirac LACI 参数 $\gamma_{\mathrm{D}}$、$\Delta\lambda_{\mathrm{D}}$、$\mathrm{disp}_{\mathrm{D}}$，提出 $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$ 的排序预期和理论依据，分析 III 型奇异纤维标度指数 $\beta_{\mathrm{D}}$。
 
 ---
 
-## 2. Dirac 谱丛
+## 2. Dirac 谱覆盖
 
 ### 2.1 Dirac Teukolsky 方程与三项递推
 
@@ -81,7 +95,7 @@ $$\lambda_{\pm1/2,lm} = \left(l+\frac12\right)^2 - \frac12 + O(a\omega) = l(l+1)
 
 ### 2.2 $\mathfrak{S}^{(s=\pm1/2)}$ 的定义与纤维化
 
-**定义 2.1**（Dirac 谱丛）。对自旋权重 $s = \pm\frac12$，定义三参数谱丛：
+**定义 2.1**（Dirac 谱覆盖）。对自旋权重 $s = \pm\frac12$，定义三参数谱覆盖：
 
 $$\mathfrak{S}^{(s)} = \{(a,m,\omega,\lambda) \in \mathbb{C}^4 : \det(M^{(s)}_{a,m}(\omega) - \lambda I) = 0\}$$
 
@@ -91,11 +105,11 @@ Dirac QNM 频率 $\omega$ 满足特征方程：
 
 $$\det M^{(s)}_{a,m}(\omega) = 0$$
 
-谱丛的纤维化结构与 Paper XXVII 定义 2.1 完全相同——三重纤维积 $\mathfrak{S}^{(s)} = \mathop{\times}\limits_{\pi} \mathfrak{S}^{(s)}_a \times_{\pi} \mathfrak{S}^{(s)}_m \times_{\pi} \mathfrak{S}^{(s)}_\omega$，底空间为 $\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$。
+谱覆盖的纤维化结构与 Paper XXVII 定义 2.1 完全相同——三重纤维积 $\mathfrak{S}^{(s)} = \mathop{\times}\limits_{\pi} \mathfrak{S}^{(s)}_a \times_{\pi} \mathfrak{S}^{(s)}_m \times_{\pi} \mathfrak{S}^{(s)}_\omega$，底空间为 $\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$。
 
 ### 2.3 代数特殊模式
 
-Dirac 谱丛的一个独特特征是**代数特殊模式**（algebraically special modes）的存在。Chandrasekhar (1983) 证明：对 $s = -\frac12$，当 $\omega = \pm m/2M$（对 $a=0$）时，Teukolsky 方程可以精确求解。
+Dirac 谱覆盖的一个独特特征是**代数特殊模式**（algebraically special modes）的存在。Chandrasekhar (1983) 证明：对 $s = -\frac12$，当 $\omega = \pm m/2M$（对 $a=0$）时，Teukolsky 方程可以精确求解。
 
 **定义 2.2**（Dirac 代数特殊模式）。满足如下条件的 QNM 频率称为 Dirac 代数特殊模式：
 
@@ -106,11 +120,11 @@ $$\omega_{\text{AS}} = \begin{cases}
 
 其中 $\mathcal{D}_{\text{AS}}$ 是 Chandrasekhar 代数特殊条件的离散化。
 
-**命题 2.1**（代数特殊模式的谱丛表现）。Dirac 代数特殊模式在谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 中表现为 **III 型奇异纤维**的退化点：在这些参数点处，谱间隙 $\gamma^{(s)} \to 0$，导致连分数收敛速度急剧减慢。
+**命题 2.1**（代数特殊模式的谱覆盖表现）。Dirac 代数特殊模式在谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 中表现为 **III 型奇异纤维**的退化点：在这些参数点处，谱间隙 $\gamma^{(s)} \to 0$，导致连分数收敛速度急剧减慢。
 
 **证明概要**。代数特殊模式对应 Teukolsky 方程存在精确多项式解，此时无穷连分数截断为有限递推。有限截断意味着 $M^{(s)}_{a,m}(\omega)$ 在某个 $n_0$ 处的三对角结构退化（$\gamma_{n_0} \to 0$），即 Paper XXVII 定义 4.4 的 III 型奇异纤维条件。$\square$
 
-### 2.4 与引力/电磁谱丛的参数对比
+### 2.4 与引力/电磁谱覆盖的参数对比
 
 | 属性 | 引力 $s=-2$ | 电磁 $s=-1$ | Dirac $s=-1/2$ |
 |:----|:-----------|:-----------|:--------------|
@@ -120,7 +134,7 @@ $$\omega_{\text{AS}} = \begin{cases}
 | 收敛阶 $c$ | $c_{\mathrm{G}}$ | $c_{\mathrm{EM}}$ | $c_{\mathrm{D}} > c_{\mathrm{G}}$ |
 | 谱间隙 $\gamma$ | $\gamma_{\mathrm{G}}$ | $\gamma_{\mathrm{EM}}$ | $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}}$ |
 
-预期 $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$，即 Dirac 谱丛的数值收敛性最好。这一排序的物理依据：半整数自旋的 Frobenius 指数 $\nu_0$ 绝对值最小，递推系数的增长最慢，对应的 Koopman 算子谱半径最小，故谱间隙最大。
+预期 $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$，即 Dirac 谱覆盖的数值收敛性最好。这一排序的物理依据：半整数自旋的 Frobenius 指数 $\nu_0$ 绝对值最小，递推系数的增长最慢，对应的 Koopman 算子谱半径最小，故谱间隙最大。
 
 ---
 
@@ -128,57 +142,57 @@ $$\omega_{\text{AS}} = \begin{cases}
 
 ### 3.1 整数 vs 半整数自旋的单值群
 
-半整数自旋谱丛与整数自旋谱丛的根本差异在于沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时的行为：
+半整数自旋谱覆盖与整数自旋谱覆盖的根本差异在于沿 $\mathbb{C}_\omega$ 中闭回路平行移动谱叶时的行为：
 
 - **整数自旋**（$s=0,\pm1,\pm2$）：沿 $2\pi$ 回路的谱叶置换为恒等映射 $\mathrm{id}$
 - **半整数自旋**（$s=\pm1/2$）：沿 $2\pi$ 回路的谱叶置换可能引入 $-1$ 因子
 
 这一差异的物理起源：自旋 $s$ 的场量在 $2\pi$ 旋转下乘以 $e^{2\pi i s}$——对整数自旋为 $+1$，对半整数自旋为 $-1$。
 
-**定义 3.1**（自旋阻碍）。对 $s = \pm\frac12$ 谱丛 $\mathfrak{S}^{(s)}$，存在 2-覆盖 $\tilde{\mathfrak{S}}^{(s)} \to \mathfrak{S}^{(s)}$，使得沿 $\mathbb{C}_\omega$ 中闭回路的单值群 $\mathcal{M}_\omega^{(s)}$ 嵌入置换群 $S_N$ 时，存在 $\mathbb{Z}_2$ 阻碍：
+**定义 3.1**（自旋阻碍）。对 $s = \pm\frac12$ 谱覆盖 $\mathfrak{S}^{(s)}$，存在 2-覆盖 $\tilde{\mathfrak{S}}^{(s)} \to \mathfrak{S}^{(s)}$，使得沿 $\mathbb{C}_\omega$ 中闭回路的单值群 $\mathcal{M}_\omega^{(s)}$ 嵌入置换群 $S_N$ 时，存在 $\mathbb{Z}_2$ 阻碍：
 
 $$H^2(\mathcal{M}_\omega^{(s)}, \mathbb{Z}_2) \neq 0$$
 
 ### 3.2 $\mathbb{Z}_2$ 阻碍的形式化
 
-**定理 3.1**（$\mathbb{Z}_2$ 阻碍存在性）。Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 的自旋结构等价于以下条件之一成立：
+**定理 3.1**（$\mathbb{Z}_2$ 阻碍存在性）。Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 的自旋结构等价于以下条件之一成立：
 
 1. **上同调条件**：$H^2(\mathcal{M}_\omega^{(s)}, \mathbb{Z}_2) \neq 0$
 2. **覆盖条件**：存在非平凡 $\mathbb{Z}_2$-覆盖 $\tilde{\mathfrak{S}}^{(s)} \to \mathfrak{S}^{(s)}$，使得 $\tilde{\mathfrak{S}}^{(s)}$ 的单值群 $\tilde{\mathcal{M}}_\omega^{(s)}$ 是 $\mathcal{M}_\omega^{(s)}$ 的中心扩张：
    $$1 \to \mathbb{Z}_2 \to \tilde{\mathcal{M}}_\omega^{(s)} \to \mathcal{M}_\omega^{(s)} \to 1$$
 3. **置换条件**：存在谱叶对 $(i,j)$，使得沿某闭回路 $\ell \subset \mathbb{C}_\omega$ 的平行移动置换为对换 $(ij)$，而沿 $2\ell$（两倍回路）的置换回到恒等。
 
-**证明**。三个条件的等价性通过标准代数拓扑结果建立：自旋结构的存在性 $\iff$ 第二 Stiefel-Whitney 类 $w_2 = 0$。对谱丛 $\mathfrak{S}^{(s)}$，其二阶上同调群 $H^2(\mathcal{M}_\omega^{(s)}, \mathbb{Z}_2)$ 的非平凡性正是 $w_2 \neq 0$ 的离散化表示。覆盖条件由 $\mathbb{Z}_2$ 阻碍的群扩张解释给出。置换条件来自 $\mathcal{M}_\omega^{(s)} \subset S_N$ 的嵌入：若 $w_2 \neq 0$，则存在奇置换（对换）沿 $\ell$ 出现，其平方为偶置换（恒等）。$\square$
+**证明**。三个条件的等价性通过标准代数拓扑结果建立：自旋结构的存在性 $\iff$ 第二 Stiefel-Whitney 类 $w_2 = 0$。对谱覆盖 $\mathfrak{S}^{(s)}$，其二阶上同调群 $H^2(\mathcal{M}_\omega^{(s)}, \mathbb{Z}_2)$ 的非平凡性正是 $w_2 \neq 0$ 的离散化表示。覆盖条件由 $\mathbb{Z}_2$ 阻碍的群扩张解释给出。置换条件来自 $\mathcal{M}_\omega^{(s)} \subset S_N$ 的嵌入：若 $w_2 \neq 0$，则存在奇置换（对换）沿 $\ell$ 出现，其平方为偶置换（恒等）。$\square$
 
-**推论 3.1**。Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 是引力谱丛 $\mathfrak{S}^{(s=-2)}$ 的 $\mathbb{Z}_2$-覆盖。
+**推论 3.1**。Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 是引力谱覆盖 $\mathfrak{S}^{(s=-2)}$ 的 $\mathbb{Z}_2$-覆盖。
 
-**证明**。由定理 3.1 的条件 2，覆盖映射 $\pi: \tilde{\mathfrak{S}}^{(s)} \to \mathfrak{S}^{(s)}$ 是二对一的。引力谱丛 $\mathfrak{S}^{(s=-2)}$ 作为整数自旋谱丛不满足 $H^2 \neq 0$，可取为 $\mathfrak{S}^{(s)}$ 的商空间 $\mathfrak{S}^{(s)}/\mathbb{Z}_2$。$\square$
+**证明**。由定理 3.1 的条件 2，覆盖映射 $\pi: \tilde{\mathfrak{S}}^{(s)} \to \mathfrak{S}^{(s)}$ 是二对一的。引力谱覆盖 $\mathfrak{S}^{(s=-2)}$ 作为整数自旋谱覆盖不满足 $H^2 \neq 0$，可取为 $\mathfrak{S}^{(s)}$ 的商空间 $\mathfrak{S}^{(s)}/\mathbb{Z}_2$。$\square$
 
 ### 3.3 分支点加倍定理
 
-自旋结构的直接后果是 Dirac 谱丛中分支点密度的加倍。
+自旋结构的直接后果是 Dirac 谱覆盖中分支点密度的加倍。
 
-**定理 3.2**（分支点加倍）。在相同截断 $N$ 下，Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 的分支点数目至少为引力谱丛 $\mathfrak{S}^{(s=-2)}$ 的两倍：
+**定理 3.2**（分支点加倍）。在相同截断 $N$ 下，Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 的分支点数目至少为引力谱覆盖 $\mathfrak{S}^{(s=-2)}$ 的两倍：
 
 $$|\mathcal{B}_{\mathrm{D}}| \geq 2|\mathcal{B}_{\mathrm{G}}|$$
 
 其中 $\mathcal{B}$ 表示分支点集合（满足 $\partial\det M/\partial\omega = 0$ 的参数点）。
 
-**证明概要**。由推论 3.1，$\mathfrak{S}^{(s=\pm1/2)}$ 是 $\mathfrak{S}^{(s=-2)}$ 的二叶覆盖。覆盖映射 $\pi$ 将 Dirac 谱丛的每个分支点映至引力谱丛的分支点，但引力谱丛的一个分支点可能对应两个 Dirac 分支点（自旋向上/向下分裂）。反方向，$\mathfrak{S}^{(s=-2)}$ 的每个分支点 $\omega_0$ 在覆盖下的原像 $\pi^{-1}(\omega_0)$ 包含至少两个 Dirac 谱叶，这些叶在 $\omega_0$ 处可能交叉，产生额外的分支点。$\square$
+**证明概要**。由推论 3.1，$\mathfrak{S}^{(s=\pm1/2)}$ 是 $\mathfrak{S}^{(s=-2)}$ 的二叶覆盖。覆盖映射 $\pi$ 将 Dirac 谱覆盖的每个分支点映至引力谱覆盖的分支点，但引力谱覆盖的一个分支点可能对应两个 Dirac 分支点（自旋向上/向下分裂）。反方向，$\mathfrak{S}^{(s=-2)}$ 的每个分支点 $\omega_0$ 在覆盖下的原像 $\pi^{-1}(\omega_0)$ 包含至少两个 Dirac 谱叶，这些叶在 $\omega_0$ 处可能交叉，产生额外的分支点。$\square$
 
 ### 3.4 单值群扩大
 
-**定理 3.3**（单值群扩大）。在相同截断 $N$ 下，Dirac 谱丛的单值群 $\mathcal{M}_\omega^{(s=\pm1/2)}$ 的阶数至少为引力谱丛 $\mathcal{M}_\omega^{(s=-2)}$ 的两倍：
+**定理 3.3**（单值群扩大）。在相同截断 $N$ 下，Dirac 谱覆盖的单值群 $\mathcal{M}_\omega^{(s=\pm1/2)}$ 的阶数至少为引力谱覆盖 $\mathcal{M}_\omega^{(s=-2)}$ 的两倍：
 
 $$|\mathcal{M}_\omega^{(s=\pm1/2)}| \geq 2|\mathcal{M}_\omega^{(s=-2)}|$$
 
 **证明**。由定理 3.1 的覆盖条件，存在群扩张 $1 \to \mathbb{Z}_2 \to \tilde{\mathcal{M}}_\omega \to \mathcal{M}_\omega^{(-2)} \to 1$，故 $|\tilde{\mathcal{M}}_\omega| = 2|\mathcal{M}_\omega^{(-2)}|$。而 $\mathcal{M}_\omega^{(s=\pm1/2)}$ 作为 $\tilde{\mathcal{M}}_\omega$ 在 $S_N$ 中的像，其阶数不小于 $\tilde{\mathcal{M}}_\omega$ 的阶数。$\square$
 
-**推论 3.2**（交换关系修正）。Dirac 谱丛中 $a$-$\omega$ 和 $m$-$\omega$ 的换位子可能包含 $\mathbb{Z}_2$ 因子：
+**推论 3.2**（交换关系修正）。Dirac 谱覆盖中 $a$-$\omega$ 和 $m$-$\omega$ 的换位子可能包含 $\mathbb{Z}_2$ 因子：
 
 $$[\mathcal{M}_a, \mathcal{M}_\omega]_{\mathrm{D}} = (-1)^{\sigma} [\mathcal{M}_a, \mathcal{M}_\omega]_{\mathrm{G}}$$
 
-其中 $\sigma \in \{0,1\}$ 由自旋结构决定。这意味 Paper XXVII 定理 3.1 的交换关系在 Dirac 谱丛中可能获得 $\mathbb{Z}_2$ 修正。
+其中 $\sigma \in \{0,1\}$ 由自旋结构决定。这意味 Paper XXVII 定理 3.1 的交换关系在 Dirac 谱覆盖中可能获得 $\mathbb{Z}_2$ 修正。
 
 ### 3.5 $2\pi$ vs $4\pi$ 回路的数值检测
 
@@ -198,35 +212,35 @@ $$[\mathcal{M}_a, \mathcal{M}_\omega]_{\mathrm{D}} = (-1)^{\sigma} [\mathcal{M}_
 
 ---
 
-## 4. Dirac-引力张量积谱丛
+## 4. Dirac-引力张量积谱覆盖
 
 ### 4.1 纤维张量积的定义
 
-在单自旋谱丛的基础上，可以构造 Dirac 场与引力场的联合谱丛。关键思想是纤维张量积——在公共参数空间上将两个独立谱丛的纤维"乘"在一起。
+在单自旋谱覆盖的基础上，可以构造 Dirac 场与引力场的联合谱覆盖。关键思想是纤维张量积——在公共参数空间上将两个独立谱覆盖的纤维"乘"在一起。
 
-**定义 4.1**（Dirac-引力张量积谱丛）。对自旋集合 $S = \{-2, -\frac12\}$，定义张量积谱丛为：
+**定义 4.1**（Dirac-引力张量积谱覆盖）。对自旋集合 $S = \{-2, -\frac12\}$，定义张量积谱覆盖为：
 
 $$\mathfrak{S}^{(-2) \otimes (-1/2)} = \mathfrak{S}^{(-2)} \otimes \mathfrak{S}^{(-1/2)}$$
 
 其中 $\otimes$ 是**纤维张量积**：在公共参数空间 $(a,m,\omega)$ 上，纤维为 $F^{(-2)} \otimes F^{(-1/2)}$，即引力特征值与 Dirac 特征值的张量积空间。
 
-张量积谱丛的底空间为三参数流形 $\mathcal{P} = \mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$，纤维 $F^{(-2) \otimes (-1/2)}$ 的维数为 $N^2$（假设两个子谱丛的截断均为 $N$）。
+张量积谱覆盖的底空间为三参数流形 $\mathcal{P} = \mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$，纤维 $F^{(-2) \otimes (-1/2)}$ 的维数为 $N^2$（假设两个子谱覆盖的截断均为 $N$）。
 
 ### 4.2 Minkowski 和谱公式
 
-**定理 4.1**（无耦合 Minkowski 和）。在无耦合（仅直积）情形下，张量积谱丛的谱（即联合特征值集）满足：
+**定理 4.1**（无耦合 Minkowski 和）。在无耦合（仅直积）情形下，张量积谱覆盖的谱（即联合特征值集）满足：
 
 $$\sigma(\mathfrak{S}^{(-2) \otimes (-1/2)}) = \{\lambda_i + \mu_j : \lambda_i \in \sigma^{(-2)},\ \mu_j \in \sigma^{(-1/2)}\}$$
 
 其中 $\sigma^{(-2)} = \{\lambda_1,\dots,\lambda_N\}$ 为引力对角矩阵的特征值，$\sigma^{(-1/2)} = \{\mu_1,\dots,\mu_N\}$ 为 Dirac 矩阵的特征值。
 
-**证明**。无耦合时，联合矩阵为 $M_{\text{total}} = M^{(-2)} \oplus M^{(-1/2)}$（直和），其谱为两个子矩阵谱的并集。但张量积谱丛的纤维定义为特征值的张量积空间，其生成元为 $\lambda_i \otimes \mathrm{id} + \mathrm{id} \otimes \mu_j$，在 Abel 化后对应标量和 $\lambda_i + \mu_j$。$\square$
+**证明**。无耦合时，联合矩阵为 $M_{\text{total}} = M^{(-2)} \oplus M^{(-1/2)}$（直和），其谱为两个子矩阵谱的并集。但张量积谱覆盖的纤维定义为特征值的张量积空间，其生成元为 $\lambda_i \otimes \mathrm{id} + \mathrm{id} \otimes \mu_j$，在 Abel 化后对应标量和 $\lambda_i + \mu_j$。$\square$
 
 **物理意义**：无耦合 Dirac-引力联合系统的 QNM 频率由引力 QNM 和 Dirac QNM 的复频率和给出，这对应极端质量比旋近（EMRI）中物质场在引力背景上的线性能量叠加。
 
 ### 4.3 有耦合时的块三对角构造
 
-当 Dirac 场与引力场存在耦合时（如 Kerr-Newman 背景中物质-引力耦合，或通过背景曲率的间接耦合），联合谱丛需由块三对角矩阵描述。
+当 Dirac 场与引力场存在耦合时（如 Kerr-Newman 背景中物质-引力耦合，或通过背景曲率的间接耦合），联合谱覆盖需由块三对角矩阵描述。
 
 耦合递推系统为：
 
@@ -259,11 +273,11 @@ $$\|U^{(-2)} \otimes U^{(-1/2)}\| \leq \|U^{(-2)}\| \cdot \|U^{(-1/2)}\| \leq 1$
 
 **证明**。算子张量积的范数满足 $\|A \otimes B\| = \|A\| \cdot \|B\|$。代入 $\|U^{(-2)}\| \leq 1$ 和 $\|U^{(-1/2)}\| \leq 1$ 即得。$\square$
 
-**命题 4.2**（伪谱扰动界的张量积扩展）。张量积谱丛的伪谱扰动界 $\varepsilon_{\otimes}$ 满足：
+**命题 4.2**（伪谱扰动界的张量积扩展）。张量积谱覆盖的伪谱扰动界 $\varepsilon_{\otimes}$ 满足：
 
 $$\varepsilon_{\otimes} \geq \min\{\varepsilon_1, \varepsilon_2\}$$
 
-其中 $\varepsilon_1$、$\varepsilon_2$ 为引力、Dirac 子谱丛的伪谱扰动界。
+其中 $\varepsilon_1$、$\varepsilon_2$ 为引力、Dirac 子谱覆盖的伪谱扰动界。
 
 **证明概要**。耦合系统的伪谱由 $U_{\text{total}} = \mathrm{diag}(U^{(-2)}, U^{(-1/2)})$ 的最小奇异值决定。分块对角结构使 $\varepsilon_{\text{total}} = \min\{\varepsilon_1, \varepsilon_2\}$。在有耦合时，耦合项使 $\varepsilon_{\text{total}}$ 进一步减小（至多），故下界为无耦合最小值。$\square$
 
@@ -273,9 +287,9 @@ $$\varepsilon_{\otimes} \geq \min\{\varepsilon_1, \varepsilon_2\}$$
 
 ### 5.1 Dirac LACI 参数定义
 
-在 Paper XXVII §5.3 的 LACI 框架基础上，定义 Dirac 谱丛的 LACI 参数：
+在 Paper XXVII §5.3 的 LACI 框架基础上，定义 Dirac 谱覆盖的 LACI 参数：
 
-**定义 5.1**（Dirac LACI 参数）。对 Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}$，LACI 三分量为：
+**定义 5.1**（Dirac LACI 参数）。对 Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$，LACI 三分量为：
 
 1. **不动点残差**：$\gamma_{\mathrm{D}} = 1 - \rho(K_{\mathrm{D}})$，其中 $\rho(K_{\mathrm{D}})$ 为 Dirac Koopman 算子的谱半径
 2. **谱分散度**：$\Delta\lambda_{\mathrm{D}} = \max_i |\lambda_i| - \min_i |\lambda_i|$，$\lambda_i$ 为 $M^{(s)}_{a,m}(\omega)$ 的特征值
@@ -287,11 +301,11 @@ $$\varepsilon_{\otimes} \geq \min\{\varepsilon_1, \varepsilon_2\}$$
 
 ### 5.2 $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$ 的预期排序与理论依据
 
-**猜想 5.1**（跨自旋谱间隙排序）。不同自旋谱丛的 LACI 谱间隙参数满足严格序关系：
+**猜想 5.1**（跨自旋谱间隙排序）。不同自旋谱覆盖的 LACI 谱间隙参数满足严格序关系：
 
 $$\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$$
 
-即 Dirac 谱丛的数值收敛性最好，引力谱丛最差，电磁谱丛居中。
+即 Dirac 谱覆盖的数值收敛性最好，引力谱覆盖最差，电磁谱覆盖居中。
 
 **理论依据**：
 
@@ -302,15 +316,15 @@ $$\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$$
 
 ### 5.3 III 型奇异纤维标度指数 $\beta_{\mathrm{D}}$
 
-Paper XXVII 定义 4.6 建立了 III 型奇异纤维的标度律 $\gamma_{\mathrm{G}}(a) \propto (1-a)^{\beta_{\mathrm{G}}}$。对 Dirac 谱丛，类似标度律存在。
+Paper XXVII 定义 4.6 建立了 III 型奇异纤维的标度律 $\gamma_{\mathrm{G}}(a) \propto (1-a)^{\beta_{\mathrm{G}}}$。对 Dirac 谱覆盖，类似标度律存在。
 
-**定义 5.2**（III 型奇异纤维标度指数）。Dirac 谱丛中 III 型奇异纤维在 $a \to 1$ 极限下的标度指数 $\beta_{\mathrm{D}}$ 定义为：
+**定义 5.2**（III 型奇异纤维标度指数）。Dirac 谱覆盖中 III 型奇异纤维在 $a \to 1$ 极限下的标度指数 $\beta_{\mathrm{D}}$ 定义为：
 
 $$\gamma_{\mathrm{D}}(a) \propto (1-a)^{\beta_{\mathrm{D}}},\quad a \to 1$$
 
-**命题 5.2**（标度指数排序）。预期标度指数满足 $\beta_{\mathrm{D}} > \beta_{\mathrm{EM}} > \beta_{\mathrm{G}}$，即 Dirac 谱丛的 III 型奇异纤维的退化（谱间隙归零）比电磁和引力谱丛更"陡峭"。
+**命题 5.2**（标度指数排序）。预期标度指数满足 $\beta_{\mathrm{D}} > \beta_{\mathrm{EM}} > \beta_{\mathrm{G}}$，即 Dirac 谱覆盖的 III 型奇异纤维的退化（谱间隙归零）比电磁和引力谱覆盖更"陡峭"。
 
-**物理解释**：标度指数 $\beta$ 越大，谱间隙在 $a \to 1$ 极限下归零的速度越快。$\beta_{\mathrm{D}} > \beta_{\mathrm{EM}} > \beta_{\mathrm{G}}$ 意味着 Dirac 谱丛在极值 Kerr 极限附近的数值收敛性退化最为剧烈——这与半整数自旋在极端旋转下具有更强的超辐射不稳定性的物理图像一致。数值验证见 §6。
+**物理解释**：标度指数 $\beta$ 越大，谱间隙在 $a \to 1$ 极限下归零的速度越快。$\beta_{\mathrm{D}} > \beta_{\mathrm{EM}} > \beta_{\mathrm{G}}$ 意味着 Dirac 谱覆盖在极值 Kerr 极限附近的数值收敛性退化最为剧烈——这与半整数自旋在极端旋转下具有更强的超辐射不稳定性的物理图像一致。数值验证见 §6。
 
 ---
 
@@ -345,8 +359,8 @@ $$\gamma_{\mathrm{D}}(a) \propto (1-a)^{\beta_{\mathrm{D}}},\quad a \to 1$$
 
 1. **排序验证 $\beta_{\mathrm{G}} < \beta_{\mathrm{EM}} < \beta_{\mathrm{D}}$**：三种拟合方法（OLS、加权 OLS、截断高 $a$ 区域 OLS）均一致通过。这直接验证了命题 5.2 的跨自旋标度排序猜想。
 2. **Dirac 标度远大于引力和电磁**：$\beta_{\mathrm{D}}$ 比 $\beta_{\mathrm{G}}$ 大 19 倍、比 $\beta_{\mathrm{EM}}$ 大 9.5 倍。半整数自旋的波函数在极端旋转 $a \to 1$ 时受自旋-轨道耦合影响最弱，谱间隙退化最剧烈。
-3. **引力-电磁接近性**：$\beta_{\mathrm{EM}}/\beta_{\mathrm{G}} \approx 2$，反映整数自旋谱丛的退化机制更为相似。$n_{\text{start}}$ 参数本身编码了 Frobenius 结构差异：$|\nu_0^{(\mathrm{G})}| = 2 \to n_{\text{start}} = 4$，$|\nu_0^{(\mathrm{EM})}| = 1 \to n_{\text{start}} = 2$，$|\nu_0^{(\mathrm{D})}| = 1/2 \to n_{\text{start}} = 0$。
-4. **跨自旋普适性**：所有三个自旋均满足幂律标度且 $R^2 > 0.85$，直接支持了谱丛理论的跨自旋普适性——奇异纤维分类不依赖于具体场方程的自旋权重，仅定量参数因 $s$ 而异。
+3. **引力-电磁接近性**：$\beta_{\mathrm{EM}}/\beta_{\mathrm{G}} \approx 2$，反映整数自旋谱覆盖的退化机制更为相似。$n_{\text{start}}$ 参数本身编码了 Frobenius 结构差异：$|\nu_0^{(\mathrm{G})}| = 2 \to n_{\text{start}} = 4$，$|\nu_0^{(\mathrm{EM})}| = 1 \to n_{\text{start}} = 2$，$|\nu_0^{(\mathrm{D})}| = 1/2 \to n_{\text{start}} = 0$。
+4. **跨自旋普适性**：所有三个自旋均满足幂律标度且 $R^2 > 0.85$，直接支持了谱覆盖理论的跨自旋普适性——奇异纤维分类不依赖于具体场方程的自旋权重，仅定量参数因 $s$ 而异。
 
 ### 6.5 数值局限
 
@@ -354,13 +368,13 @@ $$\gamma_{\mathrm{D}}(a) \propto (1-a)^{\beta_{\mathrm{D}}},\quad a \to 1$$
 
 ---
 
-## 7. 三自旋联合谱丛的纤维积构造
+## 7. 三自旋联合谱覆盖的纤维积构造
 
-将 Paper XXVIII 的引力-电磁耦合谱丛与本文的 Dirac 谱丛结合，构造 $S=\{-2,-1,-1/2\}$ 的三自旋联合谱丛。
+将 Paper XXVIII 的引力-电磁耦合谱覆盖与本文的 Dirac 谱覆盖结合，构造 $S=\{-2,-1,-1/2\}$ 的三自旋联合谱覆盖。
 
 ### 7.1 无耦合情形的纤维积与 Grothendieck 构造
 
-**定义 7.1**（多自旋联合谱丛）。对自旋指标集合 $S = \{s_1, s_2, \dots, s_k\}$，无耦合情形下，联合谱丛定义为各单自旋谱丛的**纤维积**（fibered product）：
+**定义 7.1**（多自旋联合谱覆盖）。对自旋指标集合 $S = \{s_1, s_2, \dots, s_k\}$，无耦合情形下，联合谱覆盖定义为各单自旋谱覆盖的**纤维积**（fibered product）：
 
 $$\mathfrak{S}^{(S)} = \prod_{\pi} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)}, \dots, \lambda^{(s_k)}) : \det(M^{(s_i)}_{a,m,\omega} - \lambda^{(s_i)}I) = 0, \forall s_i \in S\}$$
 
@@ -368,7 +382,7 @@ $$\mathfrak{S}^{(S)} = \prod_{\pi} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)},
 
 纤维积结构的严格范畴论基础由以下定理保证：
 
-**定理 7.1**（Grothendieck 纤维化结构）。联合谱丛 $\mathfrak{S}^{(S)}$ 到参数空间 $\mathcal{P}$ 的投影 $\pi: \mathfrak{S}^{(S)} \to \mathcal{P}$ 构成 Grothendieck 纤维化，当且仅当每个单自旋谱丛 $\mathfrak{S}^{(s_i)} \to \mathcal{P}$ 是 Grothendieck 纤维化。
+**定理 7.1**（Grothendieck 纤维化结构）。联合谱覆盖 $\mathfrak{S}^{(S)}$ 到参数空间 $\mathcal{P}$ 的投影 $\pi: \mathfrak{S}^{(S)} \to \mathcal{P}$ 构成 Grothendieck 纤维化，当且仅当每个单自旋谱覆盖 $\mathfrak{S}^{(s_i)} \to \mathcal{P}$ 是 Grothendieck 纤维化。
 
 **证明**。设 $\mathfrak{S}^{(s_i)} \to \mathcal{P}$ 已满足 Grothendieck 纤维化公理（Paper XXVII 定理 3.1 已对单自旋情形证明）。对任意态射 $f: p \to q$ 在 $\mathcal{P}$ 中，以及任意 $y \in \mathfrak{S}^{(S)}_q$（即 $y = (y_1, \dots, y_k)$ 满足 $\pi(y_i) = q$），需要构造 Cartesian 提升 $\tilde{f}: x \to y$ 使得 $\pi(\tilde{f}) = f$。
 
@@ -381,7 +395,7 @@ $$\mathfrak{S}^{(S)} = \prod_{\pi} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)},
 
 ### 7.2 有耦合情形的块三对角构造与显式矩阵元
 
-当存在场间耦合时，联合谱丛由耦合参数族 $\{M_{\text{total}}(p)\}$ 的块三对角矩阵谱定义。本节从 Kerr-Newman 耦合 Teukolsky 方程的离散化出发，推导完整的块三对角矩阵元。
+当存在场间耦合时，联合谱覆盖由耦合参数族 $\{M_{\text{total}}(p)\}$ 的块三对角矩阵谱定义。本节从 Kerr-Newman 耦合 Teukolsky 方程的离散化出发，推导完整的块三对角矩阵元。
 
 #### 7.2.1 离散化：从耦合 PDE 到块三对角系统
 
@@ -468,35 +482,35 @@ $$C_n = \begin{pmatrix}
 
 其中 $\gamma_n^{(s)}$ 为各通道的次对角系数，$\zeta_n^{(s_i,s_j)}$ 来自耦合函数在 $r \to r_+$ 展开中与 $(r-r_+)^{n+\nu_0-1}$ 项相乘的部分。
 
-**命题 7.1**（平凡化准则）。多自旋联合谱丛可完全分离（退化为各单自旋谱丛的直积）当且仅当存在规范变换 $U$ 使得：
+**命题 7.1**（平凡化准则）。多自旋联合谱覆盖可完全分离（退化为各单自旋谱覆盖的直积）当且仅当存在规范变换 $U$ 使得：
 
 $$U^{-1} M_{\text{total}} U = \bigoplus_{i} M^{(s_i)}$$
 
-**证明**。充分性：若存在 $U$ 块对角化 $M_{\text{total}}$，则 $\det(M_{\text{total}} - \lambda I) = \prod_i \det(M^{(s_i)} - \lambda_i I)$，联合特征值集退化为各子块特征值集的笛卡尔积，谱丛退化为直积。
+**证明**。充分性：若存在 $U$ 块对角化 $M_{\text{total}}$，则 $\det(M_{\text{total}} - \lambda I) = \prod_i \det(M^{(s_i)} - \lambda_i I)$，联合特征值集退化为各子块特征值集的笛卡尔积，谱覆盖退化为直积。
 
-必要性：若联合谱丛为直积，则对每个参数 $p$，特征值集为直积 $\prod_i \sigma(M^{(s_i)}_p)$，且存在整体同胚 $\mathfrak{S}^{(S)} \cong \prod_i \mathfrak{S}^{(s_i)}$ 与投影 $\pi$ 相容。在该同胚下，$M_{\text{total}}(p)$ 的谱分解自动给出由 $p$ 连续依赖的特征空间族的直积分解。对每个 $p$ 选取基使 $M_{\text{total}}(p)$ 呈块对角，基的光滑性由谱丛的 Hermitian 结构和 Kato-Rellich 定理（在分支点外）保证。∎
+必要性：若联合谱覆盖为直积，则对每个参数 $p$，特征值集为直积 $\prod_i \sigma(M^{(s_i)}_p)$，且存在整体同胚 $\mathfrak{S}^{(S)} \cong \prod_i \mathfrak{S}^{(s_i)}$ 与投影 $\pi$ 相容。在该同胚下，$M_{\text{total}}(p)$ 的谱分解自动给出由 $p$ 连续依赖的特征空间族的直积分解。对每个 $p$ 选取基使 $M_{\text{total}}(p)$ 呈块对角，基的光滑性由谱覆盖的 Hermitian 结构和 Kato-Rellich 定理（在分支点外）保证。∎
 
 ### 7.3 耦合强度分类与曲率形式推导
 
-按电荷 $Q$ 与质量 $M$ 的比值，联合谱丛呈现三种不同几何形态：
+按电荷 $Q$ 与质量 $M$ 的比值，联合谱覆盖呈现三种不同几何形态：
 
 | 耦合类型 | $Q/M$ 条件 | 几何形态 | 截面构造 |
 |:--------|:----------|:--------|:--------|
 | 无耦合 | $Q = 0$ | 直积 $\prod_i F_{s_i}$ | 全局截面存在 |
 | 弱耦合 | $0 < |Q| \ll M$ | 直积的形变 | 联络形式 $\omega^{(s_i,s_j)}$ 定义纤维间平行移动 |
-| 强耦合 | $|Q| \sim M$ | 编织谱丛 | 联络不可忽略，纤维"缠绕" |
+| 强耦合 | $|Q| \sim M$ | 编织谱覆盖 | 联络不可忽略，纤维"缠绕" |
 
 #### 7.3.1 联络形式 $\omega^{(s_i,s_j)}$ 的推导
 
-弱耦合情形下，联合谱丛的纤维是直积的形变。形变由耦合项 $\epsilon_n^{(s_i,s_j)}$ 驱动，在谱丛几何中对应联络 1-形式 $\omega^{(s_i,s_j)}$。
+弱耦合情形下，联合谱覆盖的纤维是直积的形变。形变由耦合项 $\epsilon_n^{(s_i,s_j)}$ 驱动，在谱覆盖几何中对应联络 1-形式 $\omega^{(s_i,s_j)}$。
 
 **定理 7.2**（联络形式的显式表达式）。对耦合对 $(s_i,s_j)$，联络 1-形式在参数空间 $\mathcal{P} = (a,m,\omega,Q)$ 上的表达式为：
 
 $$\omega^{(s_i,s_j)} = \sum_{n=0}^\infty \frac{\epsilon_n^{(s_i,s_j)}(a,m,\omega,Q)}{(\lambda^{(s_i)}(p) - \lambda^{(s_j)}(p))} \cdot \langle \phi_n^{(s_i)} | d\phi_n^{(s_j)} \rangle$$
 
-其中 $\lambda^{(s_i)}(p)$ 是单自旋谱丛 $\mathfrak{S}^{(s_i)}$ 的纤维元素，$\phi_n^{(s_i)}$ 是 $M^{(s_i)}(p)$ 的归一化特征向量，$\langle \cdot | \cdot \rangle$ 为 $\mathbb{C}^N$ 上的标准内积，$d$ 是 $\mathcal{P}$ 上的 de Rham 外微分。
+其中 $\lambda^{(s_i)}(p)$ 是单自旋谱覆盖 $\mathfrak{S}^{(s_i)}$ 的纤维元素，$\phi_n^{(s_i)}$ 是 $M^{(s_i)}(p)$ 的归一化特征向量，$\langle \cdot | \cdot \rangle$ 为 $\mathbb{C}^N$ 上的标准内积，$d$ 是 $\mathcal{P}$ 上的 de Rham 外微分。
 
-**证明概要**。联合谱丛的纤维丛结构由投影 $\pi: \mathfrak{S}^{(S)}_{\text{coupled}} \to \mathcal{P}$ 定义。弱耦合下，$\mathfrak{S}^{(S)}_{\text{coupled}}$ 是直积 $\prod_i \mathfrak{S}^{(s_i)}$ 的形变，形变由 $M_{\text{total}}$ 的非对角块驱动。将 $M_{\text{total}}$ 写为：
+**证明概要**。联合谱覆盖的纤维丛结构由投影 $\pi: \mathfrak{S}^{(S)}_{\text{coupled}} \to \mathcal{P}$ 定义。弱耦合下，$\mathfrak{S}^{(S)}_{\text{coupled}}$ 是直积 $\prod_i \mathfrak{S}^{(s_i)}$ 的形变，形变由 $M_{\text{total}}$ 的非对角块驱动。将 $M_{\text{total}}$ 写为：
 
 $$M_{\text{total}}(p) = M_0(p) + \epsilon \cdot V(p)$$
 
@@ -520,11 +534,11 @@ $$R^{(s_i,s_j)} = d\omega^{(s_i,s_j)} + \sum_k \omega^{(s_i,k)} \wedge \omega^{(
 
 $$|R^{(-2,-1)}| \approx \frac{|\epsilon_n^{(-2,-1)}|}{|\lambda^{(-2)} - \lambda^{(-1)}|} \cdot \left|\frac{d}{dQ}\left(\frac{\epsilon_n^{(-2,-1)}}{\lambda^{(-2)} - \lambda^{(-1)}}\right)\right| + \mathcal{O}(|\epsilon|^2)$$
 
-当 $|\lambda^{(-2)} - \lambda^{(-1)}| \to 0$ 时（即引力谱丛与电磁谱丛的纤维趋于简并），$|R|$ 发散——这正是 IV 型奇异纤维出现的信号。
+当 $|\lambda^{(-2)} - \lambda^{(-1)}| \to 0$ 时（即引力谱覆盖与电磁谱覆盖的纤维趋于简并），$|R|$ 发散——这正是 IV 型奇异纤维出现的信号。
 
 **证明**。将 $\omega^{(-2,-1)} = f(Q) \cdot \xi$（其中 $f(Q) = \epsilon_n/(-2,-1)/(\lambda^{(-2)}-\lambda^{(-1)})$，$\xi = \langle \phi_n^{(-2)}|d\phi_n^{(-1)}\rangle$）代入曲率定义。$d\omega = f'(Q) dQ \wedge \xi + f(Q) d\xi$。主导项 $|f \cdot f'|$ 给出命题中的估计。当 $\lambda^{(-2)} \to \lambda^{(-1)}$ 时 $|f| \to \infty$，曲率发散。∎
 
-**猜想 7.1**（曲率分类指标）。耦合曲率 $R^{(s_i,s_j)}$ 的非零区域对应 IV 型奇异纤维出现的位置——即耦合系统特有的、与单自旋谱丛无关的奇异纤维类型。对 Kerr-Newman 背景，IV 型奇异纤维出现在引力-电磁特征值简并区域。$|Q|$ 从零增大时，$|R|$ 单调增大，当 $|R|$ 超过临界阈值 $R_c \sim 1$（即联络的规范不变梯度的 Frobenius 范数超过 1）时，IV 型奇异纤维从背景噪声中"涌现"为可识别的分支点结构。
+**猜想 7.1**（曲率分类指标）。耦合曲率 $R^{(s_i,s_j)}$ 的非零区域对应 IV 型奇异纤维出现的位置——即耦合系统特有的、与单自旋谱覆盖无关的奇异纤维类型。对 Kerr-Newman 背景，IV 型奇异纤维出现在引力-电磁特征值简并区域。$|Q|$ 从零增大时，$|R|$ 单调增大，当 $|R|$ 超过临界阈值 $R_c \sim 1$（即联络的规范不变梯度的 Frobenius 范数超过 1）时，IV 型奇异纤维从背景噪声中"涌现"为可识别的分支点结构。
 
 #### 7.3.3 弱耦合临界值的定量估计
 
@@ -538,14 +552,14 @@ $$\max_{n,i\neq j} \frac{|\epsilon_n^{(s_i,s_j)}|}{|\alpha_n^{(s_i)}| + |\beta_n
 
 ### 7.4 IV 型奇异纤维：三自旋简并与分类定理
 
-**定义 7.3**（三自旋 IV 型奇异纤维）。对三自旋联合谱丛 $\mathfrak{S}^{(S)}_{\text{coupled}}$（$S=\{-2,-1,-1/2\}$），IV 型奇异纤维出现在参数 $p \in \mathcal{P}$ 满足以下四个条件：
+**定义 7.3**（三自旋 IV 型奇异纤维）。对三自旋联合谱覆盖 $\mathfrak{S}^{(S)}_{\text{coupled}}$（$S=\{-2,-1,-1/2\}$），IV 型奇异纤维出现在参数 $p \in \mathcal{P}$ 满足以下四个条件：
 
 1. **全局特征方程退化**：$\det(M_{\text{total}}(p) - \lambda_0 I) = 0$ 有多重根 $\lambda_0$。
 2. **子块简并**：至少两个自旋通道的特征值在 $\lambda_0$ 处简并，即 $\lambda^{(s_i)}(p) = \lambda^{(s_j)}(p) = \lambda_0$ 对某些 $i \neq j$。
 3. **耦合非零**：$\epsilon_n^{(s_i,s_j)}(p) \neq 0$（简并的通道间有非零耦合）。
 4. **第三通道同步性**：第三个通道的特征值 $\lambda^{(s_k)}(p)$ 与 $\lambda_0$ 的差在 $p$ 处达到局部极小。
 
-**定理 7.4**（三自旋 IV 型的退化阶数）。在三自旋联合谱丛中，IV 型奇异纤维的代数退化度至少为 2，至多为 3。达到退化度 3 的充要条件是三个自旋的特征值同时简并：$\lambda^{(-2)} = \lambda^{(-1)} = \lambda^{(-1/2)}$。
+**定理 7.4**（三自旋 IV 型的退化阶数）。在三自旋联合谱覆盖中，IV 型奇异纤维的代数退化度至少为 2，至多为 3。达到退化度 3 的充要条件是三个自旋的特征值同时简并：$\lambda^{(-2)} = \lambda^{(-1)} = \lambda^{(-1/2)}$。
 
 **证明**。$M_{\text{total}}$ 的块三对角结构将特征多项式 $\det(M_{\text{total}} - \lambda I)$ 分解为各子块特征多项式的组合加上耦合修正。对 $3 \times 3$ 块结构，$M_{\text{total}}$ 可写为 $3N \times 3N$ 矩阵。多重根 $\lambda_0$ 要求 $\det(M_{\text{total}} - \lambda I)$ 及其一阶导数在 $\lambda_0$ 处为零。无耦合时，退化度恰好等于简并子块的数量。有耦合时，耦合项打破"额外"简并，故退化度 ≤ 简并通道数。三个通道全简并时退化度可达 3。∎
 
@@ -559,21 +573,52 @@ $$\Delta\lambda_{\min}(t) \propto t^{\nu_{IV}}$$
 
 ### 7.5 与 Paper XXVIII 的衔接
 
-Paper XXVIII 已建立了引力-电磁双自旋耦合谱丛（$S=\{-2,-1\}$，块 $2\times2$ 构造，IV 型奇异纤维分类，$Q$ 参数纤维延拓）。本节将其扩展至三自旋联合谱丛 $S=\{-2,-1,-1/2\}$，扩展要点包括：
+Paper XXVIII 已建立了引力-电磁双自旋耦合谱覆盖（$S=\{-2,-1\}$，块 $2\times2$ 构造，IV 型奇异纤维分类，$Q$ 参数纤维延拓）。本节将其扩展至三自旋联合谱覆盖 $S=\{-2,-1,-1/2\}$，扩展要点包括：
 
 1. **块维数扩展**：从 $2\times2$ 到 $3\times3$，$A_n/B_n/C_n$ 各块增加了 Dirac 通道的行和列。Dirac 场在 $a=0$ 时的解耦性意味着 $\epsilon_n^{(\pm2,\mp1/2)} = 0$（$a=0$），但 Kerr 背景中存在间接耦合——旋转度规通过 frame-dragging 效应将 Dirac 自旋流与 Weyl 曲率耦合，耦合强度正比于 $a\omega$。
 2. **物质-引力混合耦合**：Dirac 场 $s=-1/2$ 为物质场，其与引力扰动的耦合通过 Einstein 方程 $G_{\mu\nu} = 8\pi G T_{\mu\nu}^{\text{(Dirac)}}$ 的线性化实现。在 Teukolsky 形式体系中，这对应描述引力扰动的 Weyl 标量 $\psi_4$（$s=-2$）的源项中包含 Dirac 应力-能量张量的投影。因此 $\epsilon_n^{(-2,-1/2)}$ 正比于 $G$，在 Planck 单位制中 $G = 1/M_{\text{Pl}}^2 \approx 2 \times 10^{-38} \, \text{GeV}^{-2}$，故对 $M \sim M_\odot$ 的黑洞，引力扰动对 Dirac 场的"反作用"在数值上可忽略，但概念上不可忽略——它保证了 $\mathfrak{S}^{(S)}_{\text{coupled}}$ 的纤维不是严格直积。
 3. **IV 型奇异纤维的扩展**：定理 7.4-7.5 将 Paper XXVIII 的双通道 IV 型分类推广至三通道。新退化机制涉及 $s=-2$、$s=-1$ 和 $s=-1/2$ 三者的特征值同时简并，标度指数从 $\nu_{IV}=2$ 增至 $\nu_{IV}=3$。然而，三通道同时简并的实际发生需要精细调参——$a$、$m$、$\omega$ 和 $Q$ 的同时对齐，在物理参数空间中可能是测度零的事件。
 
+### 7.6 纵向剖面纤维嵌入与纤维等价性
+
+三自旋联合谱覆盖在 Paper XXI（Grothendieck 纤维化综合）的框架中具有两层嵌入结构。
+
+**定理 7.8（纵向剖面纤维嵌入）**。三自旋联合谱覆盖 $\mathfrak{S}^{(S)}$（$S = \{-2,-1,-1/2\}$）可规范地嵌入纵向剖面纤维范畴 $\mathcal{F}_{\text{QNM}}$（Paper XXI 定义 10.1），其中：
+- 基对象为物理系统 $s =$"黑洞 QNM 扰动理论"
+- 三个数学工具 $F_i =$ Teukolsky 方程（$s=-2,-1,-1/2$）
+- 有效域 $\mathcal{D}_{F_i} \subseteq \mathcal{P}$：各自旋在不同参数区域（自旋 $a$、多极 $l$、泛音 $n$）具有不同的计算可靠性。例如，引力扰动在 $a \in [0,0.99]$ 已验证，Dirac 扰动在中等自旋 $a \in [0,0.7]$ 表现良好，高自旋 $a > 0.9$ 时谱间隙退化严重
+- 域边界 $\partial\mathcal{D}_{F_i}$：对应各自旋的 III 型奇异纤维退化点（$a \to 1$ 时谱间隙归零）
+- 谱截面 $\sigma_{F_i}(p)$：即各自旋谱覆盖在参数点 $p$ 处的特征值集
+
+**定理 7.9（纤维等价性）**。对同一黑洞系统 $s$，所有三种自旋的谱覆盖对象通过谱对应自然同构 $M \cong L$ 相互等价（Paper XXI 定理 10.4）。不同自旋的 Teukolsky 方程只是同一递归结构在不同自旋权重下的形式化，它们的谱像通过 $M \cong L$ 相互等价。
+
+**定理 7.10（三维纤维化嵌入）**。完整的三自旋系统嵌入 Paper XXI 定义 10.8 的三维纤维化结构：
+
+$$\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$$
+
+其中：
+- $\mathcal{B}_{\text{sys}}$：黑洞系统范畴（Schwarzschild、Kerr、Kerr-Newman）
+- $\mathcal{B}_{\text{level}}$：耦合层次范畴（$s=-2$（引力底层）、$s=-1$（电磁中层）、$s=-1/2$（物质顶层的能标排序））
+- $\mathcal{P}$：参数范畴（$\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega \times \mathbb{C}_Q$）
+- 纤维 $\mathcal{E}_{(\text{sys}, s, p)}$：黑洞系统在自旋 $s$ 参数 $p$ 处的谱数据
+
+纤维等价性（定理 7.9）保证三维纤维化中不同 $\mathcal{B}_{\text{level}}$ 层之间的截面数据在窗口重叠区域一致，无需额外的粘合条件。
+
+**定理 7.11（窗口覆盖性与粘合条件）**。三种自旋的有效域之并覆盖完整参数空间。在窗口重叠区域 $\mathcal{D}_{F_i} \cap \mathcal{D}_{F_j}$，谱数据满足粘合条件：
+
+$$\sigma_{F_i}(p) = \sigma_{F_j}(p) \quad \forall p \in \mathcal{D}_{F_i} \cap \mathcal{D}_{F_j}$$
+
+跨自旋 LACI 排序 $\gamma_{\mathrm{D}} > \gamma_{\mathrm{EM}} > \gamma_{\mathrm{G}}$（§5.2）正是不同工具谱间隙差异的体现。在数值收敛的重叠区域（如中等自旋 $a \sim 0.5$，低多极 $l=2$），三者应给出一致的 QNM 频率，这为纵向剖面纤维的粘合条件提供了直接可检验的数值预言。
+
 ---
 
-## 8. $\infty$-范畴谱丛与 $\mathbb{Z}_2$-覆盖的提升
+## 8. $\infty$-范畴谱覆盖与 $\mathbb{Z}_2$-覆盖的提升
 
-将 Dirac 谱丛的自旋结构提升至 $\infty$-范畴框架，建立 $(\infty,1)$-谱丛的 $\mathbb{Z}_2$-覆盖理论。
+将 Dirac 谱覆盖的自旋结构提升至 $\infty$-范畴框架，建立 $(\infty,1)$-谱覆盖的 $\mathbb{Z}_2$-覆盖理论。
 
 ### 8.1 动机与现有基础
 
-三参数谱丛 $\mathfrak{S}^{(s)}$ 的 $\infty$-范畴提升有三个核心动机：(i) 单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 在 $\infty$-范畴中自然成为高阶自同构群，可编码非平凡的同伦相干性；(ii) $\mathbb{Z}_2$-覆盖在 $\infty$-层中对应 Postnikov 塔的 $K(\mathbb{Z}_2,1)$-层，提供严格的范畴论实现；(iii) 与 Phase 31.1 已有的 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架对接。
+三参数谱覆盖 $\mathfrak{S}^{(s)}$ 的 $\infty$-范畴提升有三个核心动机：(i) 单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 在 $\infty$-范畴中自然成为高阶自同构群，可编码非平凡的同伦相干性；(ii) $\mathbb{Z}_2$-覆盖在 $\infty$-层中对应 Postnikov 塔的 $K(\mathbb{Z}_2,1)$-层，提供严格的范畴论实现；(iii) 与 Phase 31.1 已有的 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架对接。
 
 **已有形式化基础**（Phase 31.1）：已定义 `RecInfinity` 作为 $\infty$-范畴，对象为满足压缩条件的递归系统 $R = (V, U_R)$，1-态射为递归保持的线性映射 $f: R_1 \to R_2$（满足 $f \circ U_{R_1} = U_{R_2} \circ f$）。已完成六个核心模块的 Lean 4 编译（A∞-代数、Sp_∞ 切空间、Rec_∞、Sp_∞、D_∞ 函子、谱流同伦），核心定理以 `sorry` 占位等待填充。
 
@@ -581,7 +626,7 @@ Paper XXVIII 已建立了引力-电磁双自旋耦合谱丛（$S=\{-2,-1\}$，�
 
 将 $\mathfrak{S}^{(s)}$ 视为 $\mathbb{C}^3$（参数空间 $\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$）上的 $\infty$-层。
 
-**定义 8.1**（$\infty$-谱丛）。$\infty$-谱丛 $\mathfrak{S}^{(s)}_\infty$ 是一个 $\infty$-层：
+**定义 8.1**（$\infty$-谱覆盖）。$\infty$-谱覆盖 $\mathfrak{S}^{(s)}_\infty$ 是一个 $\infty$-层：
 
 $$\mathfrak{S}^{(s)}_\infty: \mathrm{Open}(\mathbb{C}^3)^{\mathrm{op}} \to \infty\text{-}\mathbf{Grpd}$$
 
@@ -595,18 +640,18 @@ $$\mathfrak{S}^{(s)}_\infty(U) \xrightarrow{\sim} \lim_{\leftarrow} \left( \prod
 
 **证明概要**。将 $\mathfrak{S}^{(s)}_\infty$ 视为 $\mathrm{Open}(\mathbb{C}^3)$ 上的 $\infty$-预层。$\infty$-层公理要求 $\mathfrak{S}^{(s)}_\infty$ 将 Čech 神经的余极限（在 $\mathrm{Open}(\mathbb{C}^3)$ 中）映射为 $\infty$-$\mathbf{Grpd}$ 中的极限。对任意开覆盖 $\{U_\alpha\}$，Čech 神经是一个单纯对象 $N(\{U_\alpha\})_\bullet: \Delta^{\mathrm{op}} \to \mathrm{Open}(\mathbb{C}^3)$，其在 $\infty$-意象 $\mathbf{Sh}(\mathbb{C}^3)$ 中的余极限等于 $U$。$\infty$-层条件等价于 $\mathfrak{S}^{(s)}_\infty$ 将这一余极限映射为 $\infty$-$\mathbf{Grpd}$ 中的极限。将单纯对象逐层展开即得定理中的 Čech 极限条件。∎
 
-**定理 8.2**（$\mathbb{Z}_2$-覆盖的 Postnikov 塔实现）。Dirac 谱丛 $\mathfrak{S}^{(s=\pm1/2)}_\infty$ 的 $\mathbb{Z}_2$-覆盖由 Postnikov 塔的 $K(\mathbb{Z}_2, 1)$-层实现：存在 $\infty$-层态射 $f: \mathfrak{S}^{(s)}_\infty \to K(\mathbb{Z}_2, 1)$，使得 $\mathbb{Z}_2$-覆盖 $\tilde{\mathfrak{S}}^{(s)}_\infty$ 是 $f$ 的同伦纤维：
+**定理 8.2**（$\mathbb{Z}_2$-覆盖的 Postnikov 塔实现）。Dirac 谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}_\infty$ 的 $\mathbb{Z}_2$-覆盖由 Postnikov 塔的 $K(\mathbb{Z}_2, 1)$-层实现：存在 $\infty$-层态射 $f: \mathfrak{S}^{(s)}_\infty \to K(\mathbb{Z}_2, 1)$，使得 $\mathbb{Z}_2$-覆盖 $\tilde{\mathfrak{S}}^{(s)}_\infty$ 是 $f$ 的同伦纤维：
 
 $$\tilde{\mathfrak{S}}^{(s)}_\infty \longrightarrow * \downarrow \quad\quad \downarrow$$
 $$\mathfrak{S}^{(s)}_\infty \xrightarrow{f} K(\mathbb{Z}_2, 1)$$
 
 其中 $K(\mathbb{Z}_2, 1)$ 是 Eilenberg-MacLane $\infty$-层，其截面 $\pi_0(K(\mathbb{Z}_2, 1)(U)) = H^1(U, \mathbb{Z}_2)$。
 
-**证明**。由定理 3.1，非平凡自旋结构等价于 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$。在 $\infty$-层框架中，这个上同调类对应于 $H^1(\mathbb{C}^3\setminus\mathcal{B}^{(s)}, \mathbb{Z}_2)$ 的非零元（通过谱丛的纤维化结构从 $\mathcal{M}_\omega$ 拉回）。由 Eilenberg-MacLane 空间 $K(\mathbb{Z}_2, 1)$ 的分类性质，$H^1(X, \mathbb{Z}_2) \cong [X, K(\mathbb{Z}_2, 1)]$，其中 $[-,-]$ 是同伦类的集合。因此非零上同调类对应一个非平凡的同伦类 $[f] \in [\mathfrak{S}^{(s)}_\infty, K(\mathbb{Z}_2, 1)]$。该同伦类对应的同伦纤维正是所需的 $\mathbb{Z}_2$-覆盖。∎
+**证明**。由定理 3.1，非平凡自旋结构等价于 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$。在 $\infty$-层框架中，这个上同调类对应于 $H^1(\mathbb{C}^3\setminus\mathcal{B}^{(s)}, \mathbb{Z}_2)$ 的非零元（通过谱覆盖的纤维化结构从 $\mathcal{M}_\omega$ 拉回）。由 Eilenberg-MacLane 空间 $K(\mathbb{Z}_2, 1)$ 的分类性质，$H^1(X, \mathbb{Z}_2) \cong [X, K(\mathbb{Z}_2, 1)]$，其中 $[-,-]$ 是同伦类的集合。因此非零上同调类对应一个非平凡的同伦类 $[f] \in [\mathfrak{S}^{(s)}_\infty, K(\mathbb{Z}_2, 1)]$。该同伦类对应的同伦纤维正是所需的 $\mathbb{Z}_2$-覆盖。∎
 
 **定理 8.3**（分支点处 $\infty$-层公理失效的充分条件）。对分支点 $p \in \mathcal{B}^{(s)}$，$\mathfrak{S}^{(s)}_\infty$ 在 $p$ 处不满足 $\infty$-层公理。具体而言，令 $U$ 为 $p$ 的任意开邻域，$U^\times = U \setminus \{p\}$，则 $\mathfrak{S}^{(s)}_\infty(U) \not\cong \lim \mathfrak{S}^{(s)}_\infty(U^\times)$。
 
-**证明**。由谱丛几何，在 $p$ 的足够小邻域 $U$ 内，谱叶 $\mathcal{L}_k(p)$ 满足 $\lim_{z\to p} \mathcal{L}_k(z)$ 的极限发散——不同方向逼近 $p$ 给出不同的极限叶。在 $U^\times$（$p$ 的穿孔邻域）上，谱叶截面 $\{s_k(z)\}_{k=1}^N$ 形成 $N$ 叶覆盖。由于 $p$ 是分支点，沿环绕 $p$ 的闭回路的平行移动诱导非平凡置换 $\sigma \in S_N$。沿 $U^\times$ 上的 Čech 神经取极限时，该置换产生非平凡同伦相干数据，导致 $\mathfrak{S}^{(s)}_\infty(U^\times)$ 的 Čech 极限比 $\mathfrak{S}^{(s)}_\infty(U)$ 大——多出了由置换产生的自同构群。因此极限不等价，$\infty$-层公理失效。∎
+**证明**。由谱覆盖几何，在 $p$ 的足够小邻域 $U$ 内，谱叶 $\mathcal{L}_k(p)$ 满足 $\lim_{z\to p} \mathcal{L}_k(z)$ 的极限发散——不同方向逼近 $p$ 给出不同的极限叶。在 $U^\times$（$p$ 的穿孔邻域）上，谱叶截面 $\{s_k(z)\}_{k=1}^N$ 形成 $N$ 叶覆盖。由于 $p$ 是分支点，沿环绕 $p$ 的闭回路的平行移动诱导非平凡置换 $\sigma \in S_N$。沿 $U^\times$ 上的 Čech 神经取极限时，该置换产生非平凡同伦相干数据，导致 $\mathfrak{S}^{(s)}_\infty(U^\times)$ 的 Čech 极限比 $\mathfrak{S}^{(s)}_\infty(U)$ 大——多出了由置换产生的自同构群。因此极限不等价，$\infty$-层公理失效。∎
 
 **推论 8.1**。半整数自旋比整数自旋有更多的 $\infty$-层公理失效点，因为分支点加倍（定理 3.2）使 $\mathcal{B}^{(s=1/2)}$ 的势加倍。
 
@@ -618,7 +663,7 @@ $$F_p^{\mathbb{L}} = \mathfrak{S}^{(s)} \times^{\mathbb{L}}_{\mathbb{C}^3} \{p\}
 
 其中 $\kappa(p)$ 是 $p$ 点的剩余域，$\otimes^{\mathbb{L}}$ 是导出张量积。
 
-**定理 8.4**（导出纤维与奇异纤维的对应）。$p \in \mathbb{C}^3$ 是谱丛 $\mathfrak{S}^{(s)}$ 的分支点当且仅当导出纤维 $F_p^{\mathbb{L}}$ 的切复形 $\mathbb{T}_{F_p^{\mathbb{L}}}$ 的非零上同调群满足：
+**定理 8.4**（导出纤维与奇异纤维的对应）。$p \in \mathbb{C}^3$ 是谱覆盖 $\mathfrak{S}^{(s)}$ 的分支点当且仅当导出纤维 $F_p^{\mathbb{L}}$ 的切复形 $\mathbb{T}_{F_p^{\mathbb{L}}}$ 的非零上同调群满足：
 
 $$H^i(\mathbb{T}_{F_p^{\mathbb{L}}}) \neq 0 \quad \text{对某些} \quad i \in \{-1, 0\}$$
 
@@ -634,9 +679,9 @@ $$H^i(\mathbb{T}_{F_p^{\mathbb{L}}}) \neq 0 \quad \text{对某些} \quad i \in \
 
 ### 8.4 路径 3（远期）：Banach 流形谱理论极限
 
-通过 $N \to \infty$ 的 Toeplitz 符号建立无穷维谱丛。
+通过 $N \to \infty$ 的 Toeplitz 符号建立无穷维谱覆盖。
 
-**猜想 8.1**（Toeplitz 符号闭式）。$N \times N$ 三对角矩阵 $M_{a,m,\omega}^{(s)}$ 在 $N \to \infty$ 极限下的 Toeplitz 算符存在符号函数 $\sigma(\theta; a,m,\omega,s)$，且 $\sigma$ 的谱等于无穷维谱丛 $\mathfrak{S}^{(s)}_\infty$ 的纤维。
+**猜想 8.1**（Toeplitz 符号闭式）。$N \times N$ 三对角矩阵 $M_{a,m,\omega}^{(s)}$ 在 $N \to \infty$ 极限下的 Toeplitz 算符存在符号函数 $\sigma(\theta; a,m,\omega,s)$，且 $\sigma$ 的谱等于无穷维谱覆盖 $\mathfrak{S}^{(s)}_\infty$ 的纤维。
 
 **定理 8.5**（符号函数的渐近存在性）。对固定 $(a,m,\omega,s)$，当 $n \to \infty$ 时，三项递推系数 $\alpha_n, \beta_n, \gamma_n$ 满足 $\alpha_n \to n^2$，$\beta_n \to -2n^2$，$\gamma_n \to n^2$，即三对角矩阵趋于纯 Toeplitz 结构 $\mathrm{Toep}_N(T)$，其符号为：
 
@@ -646,7 +691,7 @@ $$\sigma(\theta) = e^{i\theta} - 2 + e^{-i\theta} = 2\cos\theta - 2 = -4\sin^2(\
 
 **证明**。由 Cook-Zalutskiy 系数形式，$\alpha_n = n^2 + (2s+2)n + (2s+1)$，$\beta_n = -2n^2 + \mathcal{O}(n)$，$\gamma_n = n^2 + (-2s-3)n + \mathcal{O}(1)$。当 $n \to \infty$ 时，$\mathcal{O}(n)$ 和下阶项可忽略，三对角矩阵趋于 $\mathrm{Toep}_N(e^{i\theta} - 2 + e^{-i\theta})$。对固定 Toeplitz 符号 $\sigma$，Widom 定理保证 $\lim_{N\to\infty} \sigma(\mathrm{Toep}_N) = \sigma(S^1)$（即符号在单位圆上的像）。由于 $\sigma(\theta) = -4\sin^2(\theta/2) \in [-4,0]$，谱趋于 $[-4,0]$。∎
 
-**命题 8.1**（分支点的符号判据）。在 $N\to\infty$ 极限下，点 $p \in \mathbb{C}^3$ 是谱丛 $\mathfrak{S}^{(s)}$ 的分支点，当且仅当符号函数 $\sigma(\theta; a,m,\omega,s)$ 在 $\theta$ 的某点处退化（$\partial\sigma/\partial\theta = 0$）且 $\sigma$ 的值属于多重谱区域。
+**命题 8.1**（分支点的符号判据）。在 $N\to\infty$ 极限下，点 $p \in \mathbb{C}^3$ 是谱覆盖 $\mathfrak{S}^{(s)}$ 的分支点，当且仅当符号函数 $\sigma(\theta; a,m,\omega,s)$ 在 $\theta$ 的某点处退化（$\partial\sigma/\partial\theta = 0$）且 $\sigma$ 的值属于多重谱区域。
 
 **物理解释**。符号函数的 $\theta$-退化对应三对角矩阵的块分离机制：当 $\sigma$ 在某个 $\theta_0$ 处达到极值 $e_0$ 且 $\sigma'(\theta_0)=0$，则围绕 $e_0$ 的区域中谱曲率趋于零，谱叶趋向于"扁平"，这正是 III 型奇异纤维在 $N\to\infty$ 极限下的表现。
 
@@ -654,23 +699,23 @@ $$\sigma(\theta) = e^{i\theta} - 2 + e^{-i\theta} = 2\cos\theta - 2 = -4\sin^2(\
 
 Phase 59C 的 $D_{\text{diss}}$ 辫子不变量与 $\infty$-范畴提升存在深层联系，以下定理建立严格的对应关系。
 
-**定理 8.6**（$\mathbb{Z}_2$-覆盖与谱叶置换的 Parity 定理）。对 Dirac 半整数自旋谱丛 $\mathfrak{S}^{(s=\pm1/2)}$，谱叶置换 $\sigma \in S_N$ 沿 $\mathbb{C}_\omega$ 中 $2\pi$ 回路的置换的 parity（$\mathrm{sgn}(\sigma) \in \{\pm 1\}$）构成 $\mathbb{Z}_2$-覆盖的分类映射。具体地，映射：
+**定理 8.6**（$\mathbb{Z}_2$-覆盖与谱叶置换的 Parity 定理）。对 Dirac 半整数自旋谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$，谱叶置换 $\sigma \in S_N$ 沿 $\mathbb{C}_\omega$ 中 $2\pi$ 回路的置换的 parity（$\mathrm{sgn}(\sigma) \in \{\pm 1\}$）构成 $\mathbb{Z}_2$-覆盖的分类映射。具体地，映射：
 
 $$f_{\mathrm{parity}}: \pi_1(\mathbb{C}_\omega \setminus \mathcal{B}_\omega) \to \{\pm 1\}, \quad [\gamma] \mapsto \mathrm{sgn}(\sigma_\gamma)$$
 
 是群同态，其核对应 $\mathbb{Z}_2$-覆盖的平凡部分。对整数自旋 $s \in \mathbb{Z}$，$f_{\mathrm{parity}}$ 恒为零映射；对半整数自旋 $s \in \mathbb{Z}+1/2$，$f_{\mathrm{parity}}$ 可能非零。
 
-**证明概要**。由 $2\pi$ 旋转下场的变换性质：$\psi^{(s)}(e^{2\pi i} z) = e^{2\pi i s} \psi^{(s)}(z)$。对整数自旋 $s = k$，$e^{2\pi i s} = 1$，谱叶在 $2\pi$ 回路下回到自身。对半整数自旋 $s = k+1/2$，$e^{2\pi i s} = -1$，谱叶可能变换到不同的叶。在谱丛语言中，这对应沿 $\mathbb{C}_\omega$ 中环绕分支点的回路 $\gamma$ 的谱叶置换 $\sigma_\gamma$ 的 parity。由于 $\sigma_\gamma$ 是置换群 $S_N$ 的元素，$\mathrm{sgn}(\sigma_\gamma)$ 是良定义的同态。每个生成元的 parity 决定了 $H^1(\mathbb{C}_\omega\setminus\mathcal{B}_\omega, \mathbb{Z}_2)$ 的相应上同调类，这正是定理 3.1 的 $\mathbb{Z}_2$-阻碍的上同调条件。∎
+**证明概要**。由 $2\pi$ 旋转下场的变换性质：$\psi^{(s)}(e^{2\pi i} z) = e^{2\pi i s} \psi^{(s)}(z)$。对整数自旋 $s = k$，$e^{2\pi i s} = 1$，谱叶在 $2\pi$ 回路下回到自身。对半整数自旋 $s = k+1/2$，$e^{2\pi i s} = -1$，谱叶可能变换到不同的叶。在谱覆盖语言中，这对应沿 $\mathbb{C}_\omega$ 中环绕分支点的回路 $\gamma$ 的谱叶置换 $\sigma_\gamma$ 的 parity。由于 $\sigma_\gamma$ 是置换群 $S_N$ 的元素，$\mathrm{sgn}(\sigma_\gamma)$ 是良定义的同态。每个生成元的 parity 决定了 $H^1(\mathbb{C}_\omega\setminus\mathcal{B}_\omega, \mathbb{Z}_2)$ 的相应上同调类，这正是定理 3.1 的 $\mathbb{Z}_2$-阻碍的上同调条件。∎
 
 **定理 8.7**（辫子交叉数与 Postnikov $k$-不变量的对应）。$D_{\text{diss}}$ 辫子交叉数 $k$ 与 $\infty$-层 $\mathfrak{S}^{(s)}_\infty$ 的 Postnikov 塔中 $k$-不变量 $\kappa_2 \in H^2(\pi_1, \pi_2)$ 满足对应关系：
 
 $$k = \iota(\kappa_2) + k_0$$
 
-其中 $\iota: H^2(\pi_1, \pi_2) \to \mathbb{Z}$ 是 $k$-不变量到整数交叉数的映照，$k_0$ 是整数自旋谱丛的"背景"辫子交叉数（对 $s=-2$ 的 Teukolsky 谱丛，$k_0 = 3$）。$\rho_s = 0.9177$（Phase 59C 的实验结果）即为 $\iota$ 的 Spearman 相关系数估计。
+其中 $\iota: H^2(\pi_1, \pi_2) \to \mathbb{Z}$ 是 $k$-不变量到整数交叉数的映照，$k_0$ 是整数自旋谱覆盖的"背景"辫子交叉数（对 $s=-2$ 的 Teukolsky 谱覆盖，$k_0 = 3$）。$\rho_s = 0.9177$（Phase 59C 的实验结果）即为 $\iota$ 的 Spearman 相关系数估计。
 
-**证明**。$D_{\text{diss}}$ 的辫子交叉数 $k$ 定义为谱叶置换的最小对换分解长度。在 $\infty$-范畴中，$\mathfrak{S}^{(s)}_\infty$ 的 Postnikov 塔的 $n$-截断 $\tau_{\leq n} \mathfrak{S}^{(s)}_\infty$ 逐层编码了底空间 $\pi_0$、基本群 $\pi_1$、高阶同伦群 $\pi_n$ 以及连接它们的 $k$-不变量。$\pi_1$ 由单值群 $\mathcal{M}_\omega$ 给出。$k$-不变量 $\kappa_2 \in H^2(\pi_1, \pi_2)$ 的几何含义是：沿 $\pi_1$ 的每个回路 $\gamma$，$\pi_2$ 中元素的平行移动可能非平凡。在谱丛中，$\pi_2$ 由分支点的局部拓扑决定，其非平凡平行移动就是谱叶的非平凡置换。因此 $k$ 和 $\kappa_2$ 编码了相同的拓扑信息，存在映照 $\iota$ 在两者间转换。$\rho_s=0.9177$ 提供了数值证据支撑这一对应的存在性和谱叶置换作为 $k$-不变量离散骨架的解释。∎
+**证明**。$D_{\text{diss}}$ 的辫子交叉数 $k$ 定义为谱叶置换的最小对换分解长度。在 $\infty$-范畴中，$\mathfrak{S}^{(s)}_\infty$ 的 Postnikov 塔的 $n$-截断 $\tau_{\leq n} \mathfrak{S}^{(s)}_\infty$ 逐层编码了底空间 $\pi_0$、基本群 $\pi_1$、高阶同伦群 $\pi_n$ 以及连接它们的 $k$-不变量。$\pi_1$ 由单值群 $\mathcal{M}_\omega$ 给出。$k$-不变量 $\kappa_2 \in H^2(\pi_1, \pi_2)$ 的几何含义是：沿 $\pi_1$ 的每个回路 $\gamma$，$\pi_2$ 中元素的平行移动可能非平凡。在谱覆盖中，$\pi_2$ 由分支点的局部拓扑决定，其非平凡平行移动就是谱叶的非平凡置换。因此 $k$ 和 $\kappa_2$ 编码了相同的拓扑信息，存在映照 $\iota$ 在两者间转换。$\rho_s=0.9177$ 提供了数值证据支撑这一对应的存在性和谱叶置换作为 $k$-不变量离散骨架的解释。∎
 
-**推论 8.3**（$D_{\text{diss}}$ 的 $\infty$-函子性）。$D_{\text{diss}}$ 的函子性在 $\infty$-范畴中提升为 $\infty$-函子性：$\hat{D}_\infty: \mathbf{Rec}_\infty^{\mathrm{diss}} \to \mathbf{Sp}_\infty$ 不仅保持态射，还保持高阶同伦（即 2-态射、3-态射等）。这一提升使得谱丛单值群的高阶相干性（如 $\mathbb{Z}_2$-覆盖的 $k$-不变量）可以沿 $D_{\text{diss}}$ 传递到 $\mathbf{Sp}_\infty$ 中。
+**推论 8.3**（$D_{\text{diss}}$ 的 $\infty$-函子性）。$D_{\text{diss}}$ 的函子性在 $\infty$-范畴中提升为 $\infty$-函子性：$\hat{D}_\infty: \mathbf{Rec}_\infty^{\mathrm{diss}} \to \mathbf{Sp}_\infty$ 不仅保持态射，还保持高阶同伦（即 2-态射、3-态射等）。这一提升使得谱覆盖单值群的高阶相干性（如 $\mathbb{Z}_2$-覆盖的 $k$-不变量）可以沿 $D_{\text{diss}}$ 传递到 $\mathbf{Sp}_\infty$ 中。
 
 三条路径的对比总结：
 
@@ -685,21 +730,24 @@ $$k = \iota(\kappa_2) + k_0$$
 
 ## 9. 结论与展望
 
-本文建立了 Dirac 半整数自旋谱丛 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心成果包括：
+本文建立了 Dirac 半整数自旋谱覆盖 $\mathfrak{S}^{(s=\pm1/2)}$ 的严格数学框架。核心成果包括：
 
-1. **Dirac 谱丛的构造**（§2）：给出了 $s=\pm1/2$ 三项递推系数的显式形式和 Frobenius 指数 $\nu_0 = \pm 1/2$，定义了 Dirac 谱丛的纤维化结构，分析了代数特殊模式作为 III 型奇异纤维退化点，建立了跨自旋参数对比表。
-2. **自旋结构与 $\mathbb{Z}_2$ 阻碍定理**（§3）：证明了 Dirac 谱丛存在非平凡自旋结构 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，建立了三个等价条件（上同调、覆盖、置换），证明了分支点加倍定理和单值群扩大定理，提出了 $2\pi$ vs $4\pi$ 回路数值检测协议。
-3. **Dirac-引力张量积谱丛**（§4）：构造了 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，证明了无耦合 Minkowski 和谱公式和耦合块三对角构造，给出了 $D_{\mathrm{diss}}$ 张量积扩展的压缩性和伪谱扰动界。
+1. **Dirac 谱覆盖的构造**（§2）：给出了 $s=\pm1/2$ 三项递推系数的显式形式和 Frobenius 指数 $\nu_0 = \pm 1/2$，定义了 Dirac 谱覆盖的纤维化结构，分析了代数特殊模式作为 III 型奇异纤维退化点，建立了跨自旋参数对比表。
+2. **自旋结构与 $\mathbb{Z}_2$ 阻碍定理**（§3）：证明了 Dirac 谱覆盖存在非平凡自旋结构 $H^2(\mathcal{M}_\omega^{(s)},\mathbb{Z}_2) \neq 0$，建立了三个等价条件（上同调、覆盖、置换），证明了分支点加倍定理和单值群扩大定理，提出了 $2\pi$ vs $4\pi$ 回路数值检测协议。
+3. **Dirac-引力张量积谱覆盖**（§4）：构造了 $\mathfrak{S}^{(-2)\otimes(-1/2)}$，证明了无耦合 Minkowski 和谱公式和耦合块三对角构造，给出了 $D_{\mathrm{diss}}$ 张量积扩展的压缩性和伪谱扰动界。
 4. **跨自旋 LACI 对比与 III 型奇异纤维标度指数**（§5）：定义了 Dirac LACI 参数和标度指数 $\beta_{\mathrm{D}}$，通过数值扫描确定了 $\beta_{\mathrm{D}} \approx 0.712$（$R^2=0.85$，详见 §6），验证了排序 $\beta_{\mathrm{G}} < \beta_{\mathrm{EM}} < \beta_{\mathrm{D}}$。
-5. **三自旋联合谱丛的纤维积构造**（§7）：建立了 $S=\{-2,-1,-1/2\}$ 联合谱丛的理论框架，包括无耦合纤维积定义、有耦合块三对角构造、弱/强耦合分类（$|Q|\ll M$ vs $|Q|\sim M$）以及耦合曲率 $R^{(s_i,s_j)}$ 作为 IV 型奇异纤维分类指标。
-6. **$\infty$-范畴谱丛的路径分析**（§8）：提出了三条将自旋结构提升至 $(\infty,1)$-范畴的路径，建立了与 Phase 31.1 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架及 Phase 59C $D_{\text{diss}}$ 辫子不变量的初步对应。
+5. **三自旋联合谱覆盖的纤维积构造**（§7）：建立了 $S=\{-2,-1,-1/2\}$ 联合谱覆盖的理论框架，包括无耦合纤维积定义、有耦合块三对角构造、弱/强耦合分类（$|Q|\ll M$ vs $|Q|\sim M$）以及耦合曲率 $R^{(s_i,s_j)}$ 作为 IV 型奇异纤维分类指标。
+6. **$\infty$-范畴谱覆盖的路径分析**（§8）：提出了三条将自旋结构提升至 $(\infty,1)$-范畴的路径，建立了与 Phase 31.1 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架及 Phase 59C $D_{\text{diss}}$ 辫子不变量的初步对应。
+7. **纵向剖面纤维嵌入与纤维等价性**（§7.6）：将三自旋联合谱覆盖嵌入 Paper XXI 的纵向剖面纤维范畴（定理 7.8），证明纤维等价性定理（定理 7.9），建立三维纤维化嵌入（定理 7.10），提出窗口覆盖性与粘合条件的可检验数值预言（定理 7.11）。
 
 以下开放问题留待后续研究：
 
 1. **$\mathbb{Z}_2$ 阻碍的严格数值验证**：§3.5 的数值检测协议需要高精度谱叶追踪实现，数值验证后可将 $\mathbb{Z}_2$ 阻碍从猜想提升为定理。
 2. **Dirac QNM 基准表**：目前缺乏系统的 Dirac QNM 基准表（对标 Berti 表的引力/电磁 QNM），建立后可以验证截断误差指数衰减率 $c_{\mathrm{D}}$。
-3. **三自旋联合谱丛的数值验证**：联合谱丛的理论框架（§7）已建立，但需数值验证——包括无耦合极限的退化连续性、小 $Q$ 下的纤维形变、以及耦合曲率作为 IV 型奇异纤维阈值的定量检测。
-4. **$\infty$-范畴谱丛的形式化实现**：三条提升路径已确定（§8），与 Phase 31.1 形式化骨架的对接方案已建立，但 $(\infty,1)$-谱丛的完整 Lean 4 实现（路径 1 的 $\infty$-层粘合条件、路径 2 的导出交义构造）仍需完成。
+3. **三自旋联合谱覆盖的数值验证**：联合谱覆盖的理论框架（§7）已建立，但需数值验证——包括无耦合极限的退化连续性、小 $Q$ 下的纤维形变、以及耦合曲率作为 IV 型奇异纤维阈值的定量检测。
+4. **$\infty$-范畴谱覆盖的形式化实现**：三条提升路径已确定（§8），与 Phase 31.1 形式化骨架的对接方案已建立，但 $(\infty,1)$-谱覆盖的完整 Lean 4 实现（路径 1 的 $\infty$-层粘合条件、路径 2 的导出交义构造）仍需完成。
+5. **纵向剖面纤维的跨自旋粘合验证**：定理 7.11 提出三种自旋在窗口重叠区域应给出一致 QNM 频率的数值预言。需在中等自旋 $a \sim 0.5$、低多极 $l=2$ 等收敛区域进行系统交叉验证，确认 $\sigma_{F_{-2}}(p) = \sigma_{F_{-1}}(p) = \sigma_{F_{-1/2}}(p)$ 在数值精度范围内成立。定理 7.9 的纤维等价性为跨自旋粘合提供了范畴论保证，但实际数值验证仍需完成。
+6. **三维纤维化的数值构造**：定理 7.10 的三维纤维化 $\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$ 目前为理论构造，其纤维 $\mathcal{E}_{(\text{sys}, s, p)}$ 的显式数值表示和 Cartan 提升的数值实现方案尚未建立。
 
 ---
 
@@ -721,8 +769,27 @@ $$k = \iota(\kappa_2) + k_0$$
 
 [8] L. Stein, "qnm: A Python package for calculating Kerr quasinormal modes," *J. Open Source Softw.* **4**(42), 1623 (2019).
 
-[9] Paper XXVII (UFPF XXVII, Leaver 谱丛理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入).
+[9] Paper XXVII (UFPF XXVII, Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入).
 
-[10] Paper XXVIII (UFPF XXVIII, Kerr-Newman 耦合谱丛与 IV 型奇异纤维).
+[10] Paper XXVIII (UFPF XXVIII, Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维).
 
 [11] Paper XXVI (UFPF XXVI, 动态过程谱数值方法).
+
+[12] Paper XXI (UFPF XXI, Grothendieck 纤维化综合——从谱族到总参数丛).
+
+---
+
+## 版本记录
+
+**版本**：v0.2
+
+**日期**：2026-07-26
+
+**状态**：草稿。理论框架已建立，纵向剖面纤维嵌入完成。
+
+**变更记录**：
+
+| 版本 | 日期 | 更新内容 |
+|:----|:----|:--------|
+| v0.2 | 2026-07-26 | 新增 §7.6 纵向剖面纤维嵌入与纤维等价性（定理 7.8-7.11），连接 Paper XXI Grothendieck 纤维化综合框架；更新 §9 结论与开放问题 |
+| v0.1 | 2026-07-25 | 初始版本：Dirac 谱覆盖定义、$\mathbb{Z}_2$ 阻碍定理、Dirac-引力张量积谱覆盖、跨自旋 LACI 对比、三自旋联合谱覆盖 |

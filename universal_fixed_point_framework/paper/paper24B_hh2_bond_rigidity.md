@@ -10,6 +10,25 @@
 
 ---
 
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV 及 Paper XXII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **Hückel**：休克尔分子轨道法（Hückel molecular orbital method）
+- **LSTH**：Liu-Siegbahn-Truhlar-Horowitz势能面（Liu-Siegbahn-Truhlar-Horowitz potential energy surface）
+- **CVT**：正则变分理论（Canonical Variational Theory）
+- **SCT**：小曲率隧道效应（Small Curvature Tunneling）
+- **IRC**：内禀反应坐标（Intrinsic Reaction Coordinate）
+- **VSIE**：价态电离能（Valence State Ionization Energy）
+- **TS**：过渡态（Transition State）
+- **HOMO**：最高占据分子轨道（Highest Occupied Molecular Orbital）
+- **LUMO**：最低未占分子轨道（Lowest Unoccupied Molecular Orbital）
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+
+自创术语与标准概念对照如下：
+- **谱键刚性**（spectral bond rigidity）：谱框架中化学键HOMO-LUMO谱间隙的定量量度
+- **谱键刚度**（spectral bond stiffness）：谱键刚性的同义术语，强调stiffness的物理含义
+- **gap closure**（谱间隙闭合）：过渡态处HOMO-LUMO间隙的减小量
+
 ## 1. 引言
 
 ### 1.1 背景与问题
@@ -314,6 +333,7 @@ Paper XXII §8.3 中报告的"势垒 0.436 eV vs LSTH 0.425 eV（偏差 2.6%）"
 | Q2 | 大基组下谱键刚性 vs 第一性原理 HF/DFT 的定量对比 | 中 |
 | Q3 | 谱键刚性中的电子关联修正（Bun(Corr) 层） | 高 |
 | Q4 | 与 $F_{\text{spec}}$ 修正的 CVT/SCT 直接对比 | 中 |
+| Q5 | 纵向剖面纤维视角：Hückel vs 谱键刚性作为同一反应体系的"多工具纤维"（Paper XXI §10） | 中 |
 
 ---
 
@@ -321,10 +341,10 @@ Paper XXII §8.3 中报告的"势垒 0.436 eV vs LSTH 0.425 eV（偏差 2.6%）"
 
 | 常数 | 符号 | 值 | 来源 |
 |:----|:----|:--|:-----|
-| Planck 常数 | $\hbar$ | $1.0546 \times 10^{-34}\ \text{J·s}$ | 物理常数 |
-| 电子质量 | $m_e$ | $9.109 \times 10^{-31}\ \text{kg}$ | 物理常数 |
-| 谱丛不变量 | $\ell_{\text{corr}}$ | $0.5\ \text{Å}$ | Paper VI §4 |
-| 基本能标 | $\hbar^2/(m_e \ell_{\text{corr}}^2)$ | $30.48\ \text{eV}$ | 本工作 |
+| Planck 常数 | $\hbar$ | $1.0546 \times 10^{-34}\ \mathrm{J{\cdot}s}$ | 物理常数 |
+| 电子质量 | $m_e$ | $9.109 \times 10^{-31}\ \mathrm{kg}$ | 物理常数 |
+| 谱丛不变量 | $\ell_{\text{corr}}$ | $0.5\ \mathrm{Å}$ | Paper VI §4 |
+| 基本能标 | $\hbar^2/(m_e \ell_{\text{corr}}^2)$ | $30.48\ \mathrm{eV}$ | 本工作 |
 
 ## 附录 B：完整数值结果
 

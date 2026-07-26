@@ -1,22 +1,36 @@
-# 通用不动点范畴框架 XXVIII：Kerr-Newman 耦合谱丛与 IV 型奇异纤维
+# 通用不动点范畴框架 XXVIII：Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v0.1（草稿，2026-07-25）
 
-**摘要**：本文将 Leaver 谱丛理论从 Kerr 单自旋谱丛推广至 Kerr-Newman 背景下的引力-电磁耦合系统。将 Chandrasekhar 耦合方程离散化为 $2\times2$ 块三对角矩阵族 $\{M_{\text{total}}(\omega;a,m,Q)\}$，建立四重参数 $(a,m,\omega,Q)$ 上的耦合谱丛 $\mathfrak{S}_{\text{coupled}}$。证明 $Q=0$ 时严格退化为直积结构 $\det M_{\text{total}} = \det M^{(+2)}\det M^{(+1)}$。建立 $Q$ 参数的纤维延拓理论，将奇异纤维分类从三分法扩展为四分法——新增 IV 型（耦合融合型）奇异纤维，给出四种互斥全覆盖的分类体系和数值检测算法。提出 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 函子的扩展猜想，给出耦合 Koopman 算子的压缩性条件和伪谱扰动界的耦合扩展框架。
+**摘要**：本文将 Leaver 谱覆盖理论从 Kerr 单自旋谱覆盖推广至 Kerr-Newman 背景下的引力-电磁耦合系统。将 Chandrasekhar 耦合方程离散化为 $2\times2$ 块三对角矩阵族 $\{M_{\text{total}}(\omega;a,m,Q)\}$，建立四重参数 $(a,m,\omega,Q)$ 上的耦合谱覆盖 $\mathfrak{S}_{\text{coupled}}$。证明 $Q=0$ 时严格退化为直积结构 $\det M_{\text{total}} = \det M^{(+2)}\det M^{(+1)}$。建立 $Q$ 参数的纤维延拓理论，将奇异纤维分类从三分法扩展为四分法——新增 IV 型（耦合融合型）奇异纤维，给出四种互斥全覆盖的分类体系和数值检测算法。提出 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 函子的扩展猜想，给出耦合 Koopman 算子的压缩性条件和伪谱扰动界的耦合扩展框架。
 
 ---
 
-**前置依赖**：Paper XXVII（Leaver 谱丛理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入），其 §2（三参数谱丛）、§3（三重单值群）、§4（奇异纤维三分法）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）、§9（多耦合谱丛推广）为本论文的理论基础。
+**前置依赖**：Paper XXVII（Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维三分法）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）、§9（多耦合谱覆盖推广）为本论文的理论基础。
 
 ---
+
+**术语说明**：记号与定义沿用 Paper XXVII（Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维三分法）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的理论基础。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **LACI**：局部吸引子捕获指数（Local Attractor Capture Index）
+- **TS**：Teukolsky-Starobinsky 恒等式（Teukolsky-Starobinsky identities）
+- **EMRI**：极端质量比旋近（Extreme Mass Ratio Inspiral）
+- **CZ**：Cook-Zalutskiy 多项式系数（Cook-Zalutskiy polynomial coefficients）
+
+本文自创术语及其与标准概念的对照如下：
+- **耦合谱覆盖**（coupled spectral cover）：多自旋耦合系统的块三对角矩阵族分支覆盖结构
+- **IV 型奇异纤维**（Type IV singular fiber）：耦合系统特有的耦合融合型退化纤维
+- **$Q$-纤维延拓**（$Q$-fiber continuation）：沿电荷参数的纤维连续形变理论
 
 ## 1. 引言
 
 ### 1.1 背景与动机
 
-Leaver 谱丛理论（Paper XXVII）将 Kerr 黑洞 QNM 的三参数 $(a,m,\omega)$ 三对角矩阵族构造为三参数谱丛 $\mathfrak{S}$，建立了三重单值群交换关系、奇异纤维三分法和 $D_{\mathrm{diss}}$ 范畴嵌入的完整数学体系。然而，该理论目前局限于单自旋（$s=-2$，引力扰动）系统。
+Leaver 谱覆盖理论（Paper XXVII）将 Kerr 黑洞 QNM 的三参数 $(a,m,\omega)$ 三对角矩阵族构造为三参数谱覆盖 $\mathfrak{S}$，建立了三重单值群交换关系、奇异纤维三分法和 $D_{\mathrm{diss}}$ 范畴嵌入的完整数学体系。然而，该理论目前局限于单自旋（$s=-2$，引力扰动）系统。
 
 真实物理场景涉及多自旋场的耦合：
 
@@ -24,14 +38,14 @@ Leaver 谱丛理论（Paper XXVII）将 Kerr 黑洞 QNM 的三参数 $(a,m,\omeg
 2. **多信使天文学**：同时观测引力波和电磁对应体需要耦合扰动的严格理论
 3. **极端质量比旋近（EMRI）**：辐射反作用问题需要多极多自旋的扰动模式系统
 
-因此，将谱丛理论从单自旋推广到多自旋耦合系统是 Leaver 谱丛框架从"单通道"走向"多通道"的关键步骤。
+因此，将谱覆盖理论从单自旋推广到多自旋耦合系统是 Leaver 谱覆盖框架从"单通道"走向"多通道"的关键步骤。
 
 ### 1.2 核心挑战
 
-耦合谱丛面临三个根本挑战：
+耦合谱覆盖面临三个根本挑战：
 
 1. **可分性失效**：在 Kerr-Newman 背景（$Q \neq 0$）上，只有标量场（$s=0$）和 Dirac 场（$s=\pm1/2$）的波动方程保持径向-角向完全可分性。电磁（$s=\pm1$）和引力（$s=\pm2$）扰动不可分离（Khanal 1983; Chandrasekhar 1983）。
-2. **谱丛纤维结构复杂化**：耦合场特征值系统不再是独立的谱丛，而是通过耦合参数 $Q$ 连结成联合谱丛。
+2. **谱覆盖纤维结构复杂化**：耦合场特征值系统不再是独立的谱覆盖，而是通过耦合参数 $Q$ 连结成联合谱覆盖。
 3. **奇异纤维分类需要推广**：耦合参数引入新的退化机制，需要将 Paper XXVII 的奇异纤维三分法扩展为四分法。
 
 ### 1.3 已有理论基础
@@ -46,15 +60,15 @@ Leaver 谱丛理论（Paper XXVII）将 Kerr 黑洞 QNM 的三参数 $(a,m,\omeg
 
 ### 1.4 本文贡献
 
-1. **耦合谱丛的严格定义**（§2）：将 Chandrasekhar 耦合方程离散化为 $2\times2$ 块三对角矩阵族，建立耦合谱丛 $\mathfrak{S}_{\mathrm{coupled}}$ 的严格数学框架，证明 $Q=0$ 退化性定理。
-2. **$Q$ 参数纤维延拓理论**（§3）：将 $Q$ 视为谱丛第四参数，建立 $Q$-纤维定义和连续形变理论，提出双扫描策略。
+1. **耦合谱覆盖的严格定义**（§2）：将 Chandrasekhar 耦合方程离散化为 $2\times2$ 块三对角矩阵族，建立耦合谱覆盖 $\mathfrak{S}_{\mathrm{coupled}}$ 的严格数学框架，证明 $Q=0$ 退化性定理。
+2. **$Q$ 参数纤维延拓理论**（§3）：将 $Q$ 视为谱覆盖第四参数，建立 $Q$-纤维定义和连续形变理论，提出双扫描策略。
 3. **IV 型奇异纤维分类**（§4）：在 Paper XXVII 的三分法基础上新增 IV 型（耦合融合型），建立四种互斥全覆盖的分类体系，给出数值检测算法和物理对应。
 4. **$D_{\mathrm{diss}}^{\text{(coupled)}}$ 扩展猜想**（§5）：提出耦合系统上 $D_{\mathrm{diss}}$ 函子的扩展方案，给出耦合 Koopman 算子的压缩性条件和伪谱扰动界的扩展框架。
 5. **数值验证方案**（§6）：五阶段数值验证计划，覆盖从 $Q=0$ 退化验证到 $Q \to M$ 极值极限的完整参数空间。
 
 ---
 
-## 2. 块三对角耦合谱丛
+## 2. 块三对角耦合谱覆盖
 
 ### 2.1 Chandrasekhar 耦合方程的离散化
 
@@ -125,7 +139,7 @@ $M_{\text{total}}$ 是块三对角矩阵，每个块为 $2\times2$ 矩阵。截�
 
 $$\det M_{\text{total}}^{(N)}(\omega; a, m, Q) = 0$$
 
-**定义 2.1**（耦合谱丛）。Kerr-Newman 耦合谱丛定义为：
+**定义 2.1**（耦合谱覆盖）。Kerr-Newman 耦合谱覆盖定义为：
 
 $$\mathfrak{S}_{\text{coupled}} = \{(a,m,\omega,Q,\lambda) \in \mathbb{C}^5 : \det(M_{\text{total}}(\omega; a, m, Q) - \lambda I) = 0\}$$
 
@@ -133,7 +147,7 @@ $$\mathfrak{S}_{\text{coupled}} = \{(a,m,\omega,Q,\lambda) \in \mathbb{C}^5 : \d
 
 ### 2.4 $Q=0$ 退化性定理
 
-**定理 2.1**（$Q=0$ 退化性）。当 $Q = 0$ 时，耦合谱丛严格退化为引力谱丛与电磁谱丛的直积：
+**定理 2.1**（$Q=0$ 退化性）。当 $Q = 0$ 时，耦合谱覆盖严格退化为引力谱覆盖与电磁谱覆盖的直积：
 
 $$\det M_{\text{total}}^{(N)}(\omega; a, m, 0) = \det M^{(+2)}(\omega; a, m) \cdot \det M^{(+1)}(\omega; a, m)$$
 
@@ -141,7 +155,7 @@ $$\det M_{\text{total}}^{(N)}(\omega; a, m, 0) = \det M^{(+2)}(\omega; a, m) \cd
 
 **证明**。$Q=0$ 时耦合项 $\delta_n = \delta_n' = 0$，块矩阵 $\mathbf{B}_n$ 的对角化为 $\mathrm{diag}(\beta_n^{(+2)}, \beta_n^{(+1)})$，非对角块 $\mathbf{A}_n$、$\mathbf{C}_n$ 已为对角矩阵。因此 $M_{\text{total}}$ 通过行重排可化为块对角矩阵 $\mathrm{blockdiag}(M^{(+2)}, M^{(+1)})$。分块矩阵的行列式性质给出 $\det(\mathrm{blockdiag}(A,B)) = \det(A)\det(B)$。$\square$
 
-**推论 2.1**。$Q=0$ 时，耦合谱丛的零纤维（即 QNM 频率集）为引力 QNM 集与电磁 QNM 集的并集：
+**推论 2.1**。$Q=0$ 时，耦合谱覆盖的零纤维（即 QNM 频率集）为引力 QNM 集与电磁 QNM 集的并集：
 
 $$\{\omega : 0 \in \mathfrak{S}_{\text{coupled}}|_{Q=0}\} = \{\omega : \det M^{(+2)} = 0\} \cup \{\omega : \det M^{(+1)} = 0\}$$
 
@@ -153,13 +167,13 @@ $$\{\omega : 0 \in \mathfrak{S}_{\text{coupled}}|_{Q=0}\} = \{\omega : \det M^{(
 
 ### 3.1 $Q$-纤维
 
-耦合系统的参数空间从三参数扩展为四重 $(a,m,\omega,Q)$。谱丛结构随 $Q$ 的演化由纤维延拓描述。
+耦合系统的参数空间从三参数扩展为四重 $(a,m,\omega,Q)$。谱覆盖结构随 $Q$ 的演化由纤维延拓描述。
 
 **定义 3.1**（$Q$-纤维）。对固定参数点 $(a,m,\omega)$，$Q$-纤维定义为：
 
 $$\mathcal{F}_Q(a,m,\omega) = \{\lambda \in \mathbb{C} : \det(M_{\text{total}}(\omega; a, m, Q) - \lambda I) = 0\}$$
 
-**命题 3.1**（$Q$-纤维的连续形变）。当 $Q$ 从 $0$ 连续增加到 $Q_{\max}$ 时，$Q$-纤维 $\mathcal{F}_Q$ 从直积结构 $\sigma^{(+2)} \times \sigma^{(+1)}$ 连续形变为耦合结构。形变保持谱丛的紧性（特征值有界），且形变速率由耦合项范数 $\|\delta_n\|$ 控制：
+**命题 3.1**（$Q$-纤维的连续形变）。当 $Q$ 从 $0$ 连续增加到 $Q_{\max}$ 时，$Q$-纤维 $\mathcal{F}_Q$ 从直积结构 $\sigma^{(+2)} \times \sigma^{(+1)}$ 连续形变为耦合结构。形变保持谱覆盖的紧性（特征值有界），且形变速率由耦合项范数 $\|\delta_n\|$ 控制：
 
 $$\frac{d}{dQ} \mathcal{F}_Q \propto \|\delta_n\| = |Q| \cdot \|d_n\|$$
 
@@ -175,7 +189,7 @@ $$\frac{d}{dQ} \mathcal{F}_Q \propto \|\delta_n\| = |Q| \cdot \|d_n\|$$
 
 ### 3.3 四重参数群扩张
 
-四重参数谱丛的群扩张结构将 Paper XXVII 定理 3.2 从三重推广为四重：
+四重参数谱覆盖的群扩张结构将 Paper XXVII 定理 3.2 从三重推广为四重：
 
 $$1 \to \mathcal{M}_\omega \to \mathfrak{M} \to \mathcal{M}_a \times \mathcal{M}_m \times \mathcal{M}_Q \to 1$$
 
@@ -189,9 +203,9 @@ $$\lim_{Q\to 0} \mathcal{M}_Q = \{\mathrm{id}\}, \quad \lim_{Q\to 0} \mathfrak{M
 
 ### 4.1 奇异纤维的四分法
 
-Paper XXVII 定理 4.5 将单自旋谱丛的奇异纤维严格分为三类。耦合系统引入第四类奇异纤维。
+Paper XXVII 定理 4.5 将单自旋谱覆盖的奇异纤维严格分为三类。耦合系统引入第四类奇异纤维。
 
-**定义 4.1**（耦合谱丛奇异纤维分类）。耦合谱丛 $\mathfrak{S}_{\text{coupled}}$ 的奇异纤维严格分为四类：
+**定义 4.1**（耦合谱覆盖奇异纤维分类）。耦合谱覆盖 $\mathfrak{S}_{\text{coupled}}$ 的奇异纤维严格分为四类：
 
 $$\begin{aligned}
 \text{I 型（分支交叉）}&: \partial\det M_{\text{total}}/\partial\omega = 0 \\
@@ -256,7 +270,7 @@ $$\varepsilon_{\text{total}} \geq \min\{\varepsilon^{(+2)}, \varepsilon^{(+1)}\}
 
 ### 5.3 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 猜想
 
-**猜想 5.1**（耦合耗散函子的存在性）。对 Kerr-Newman 背景（$|Q| < M$），存在耦合系统上的 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 函子，使得谱丛的耗散结构（伪谱扰动界、非正规性度量）在 $Q$ 的连续形变下保持稳定，退化仅发生在 IV 型奇异纤维对应的临界 $Q_c$ 处。
+**猜想 5.1**（耦合耗散函子的存在性）。对 Kerr-Newman 背景（$|Q| < M$），存在耦合系统上的 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 函子，使得谱覆盖的耗散结构（伪谱扰动界、非正规性度量）在 $Q$ 的连续形变下保持稳定，退化仅发生在 IV 型奇异纤维对应的临界 $Q_c$ 处。
 
 该猜想的验证需要：
 1. 沿 $Q$ 参数计算 $\varepsilon_{\text{total}}$ 的数值演化
@@ -265,7 +279,7 @@ $$\varepsilon_{\text{total}} \geq \min\{\varepsilon^{(+2)}, \varepsilon^{(+1)}\}
 
 ### 5.4 耦合层析定理
 
-**定理 5.1**（耦合层析）。若 $U^{(+2)}$ 和 $U^{(+1)}$ 均满足 $\mathbf{Rec}_{\mathrm{diss}}$ 的对象条件，则 $U_{\text{total}}$ 是 $\mathbf{Rec}_{\mathrm{diss}}$ 的对象。进一步，$D_{\mathrm{diss}}^{\text{(coupled)}}$ 谱丛的拓扑不变量 $\mathrm{Br}(\mathcal{L}_{\text{total}})$ 满足：
+**定理 5.1**（耦合层析）。若 $U^{(+2)}$ 和 $U^{(+1)}$ 均满足 $\mathbf{Rec}_{\mathrm{diss}}$ 的对象条件，则 $U_{\text{total}}$ 是 $\mathbf{Rec}_{\mathrm{diss}}$ 的对象。进一步，$D_{\mathrm{diss}}^{\text{(coupled)}}$ 谱覆盖的拓扑不变量 $\mathrm{Br}(\mathcal{L}_{\text{total}})$ 满足：
 
 $$\mathrm{Br}(\mathcal{L}_{\text{total}}) \geq \max\{\mathrm{Br}(\mathcal{L}^{(+2)}), \mathrm{Br}(\mathcal{L}^{(+1)})\}$$
 
@@ -318,14 +332,15 @@ $$\mathrm{Br}(\mathcal{L}_{\text{total}}) \geq \max\{\mathrm{Br}(\mathcal{L}^{(+
 
 ## 7. 结论与展望
 
-本文建立了 Kerr-Newman 耦合谱丛 $\mathfrak{S}_{\text{coupled}}$ 的完整数学框架。核心成果包括：块三对角耦合矩阵构造（§2.3）、$Q=0$ 退化性定理（定理 2.1）、$Q$-纤维连续形变理论（§3.1）、奇异纤维四分法（定理 4.1）、IV 型检测准则（定义 4.2）、以及 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 扩展猜想（猜想 5.1）。
+本文建立了 Kerr-Newman 耦合谱覆盖 $\mathfrak{S}_{\text{coupled}}$ 的完整数学框架。核心成果包括：块三对角耦合矩阵构造（§2.3）、$Q=0$ 退化性定理（定理 2.1）、$Q$-纤维连续形变理论（§3.1）、奇异纤维四分法（定理 4.1）、IV 型检测准则（定义 4.2）、以及 $D_{\mathrm{diss}}^{\text{(coupled)}}$ 扩展猜想（猜想 5.1）。
 
 以下开放问题留待后续研究：
 
 1. **$\mathcal{M}_Q$ 单值群的结构**——$\mathcal{M}_Q$ 与 $\mathcal{M}_a,\mathcal{M}_m,\mathcal{M}_\omega$ 的完整换位关系尚需数值确定后理论化
-2. **耦合谱丛的交叉同谱性**——Chandrasekhar 变换在 $Q \neq 0$ 时是否保持同谱性？$s=+2$ 与 $s=-2$ 的 TS 恒等式是否受耦合影响？
+2. **耦合谱覆盖的交叉同谱性**——Chandrasekhar 变换在 $Q \neq 0$ 时是否保持同谱性？$s=+2$ 与 $s=-2$ 的 TS 恒等式是否受耦合影响？
 3. **$D_{\mathrm{diss}}^{\text{(coupled)}}$ 猜想的严格证明**——目前为数值验证的实验猜想，严格泛函分析证明需进一步工作
-4. **四重参数谱丛的 $\infty$-范畴提升**——将 Paper XXVII §11.2 的 $\infty$-范畴化推广到耦合情形，需要更复杂的层化结构
+4. **四重参数谱覆盖的 $\infty$-范畴提升**——将 Paper XXVII §11.2 的 $\infty$-范畴化推广到耦合情形，需要更复杂的层化结构
+5. **纵向剖面纤维嵌入**——Kerr-Newman 耦合谱覆盖可视为"黑洞扰动理论"这一物理系统的纵向剖面纤维实例。不同的扰动方法（Chandrasekhar 耦合方程、Khanal 分离变量法、Giorgi-Wan 有界性分析、Berens-Gravely-Lupsasca 度规重构）构成不同的数学工具纤维，各自在电荷 $Q$ 参数空间的不同区域具有有效域 $\mathcal{D}_F$。纵向剖面纤维的窗口重叠性和粘合条件（Paper XXI §10）为这些方法的交叉验证提供了统一框架。
 
 ---
 
@@ -349,7 +364,7 @@ $$\mathrm{Br}(\mathcal{L}_{\text{total}}) \geq \max\{\mathrm{Br}(\mathcal{L}^{(+
 
 [9] S. A. Teukolsky, "Perturbations of a rotating black hole. I. Fundamental equations," *Astrophys. J.* **185**, 635 (1973).
 
-[10] Paper XXVII (UFPF XXVII, Leaver 谱丛理论).
+[10] Paper XXVII (UFPF XXVII, Leaver 谱覆盖理论).
 
 [11] F. Finster and J. Smoller, "Decay of solutions of the Teukolsky equation for higher spin in the Schwarzschild geometry," arXiv:gr-qc/0607046 (2007).
 

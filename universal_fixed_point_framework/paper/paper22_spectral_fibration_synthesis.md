@@ -2,13 +2,34 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.6（2026-07-25）
+**版本**：v0.7（2026-07-26）
 
-**摘要**：基于 Paper XV 的谱表述和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次纤维精细分解方法论。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚度定理**（Paper XXIV-B）用谱键刚度替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
+**摘要**：基于 Paper XV 的谱表述和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次纤维精细分解方法论，引入**纵向剖面纤维**（Longitudinal Section Fiber）概念，将 Grothendieck 纤维化范式从参数化谱族扩展到多量子化学方法谱族。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚度定理**（Paper XXIV-B）用谱键刚度替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
 
 **前置依赖**：Paper XV（谱量子化学）、Paper XXI（Grothendieck 纤维化综合）。
 
 ---
+
+**术语说明**：记号与定义沿用 Paper XV 和 Paper XXI。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **HF**：哈特里-福克方法（Hartree-Fock）
+- **DFT**：密度泛函理论（Density Functional Theory）
+- **CI**：组态相互作用（Configuration Interaction）
+- **MP2**：二阶Møller-Plesset微扰论（Second-order Møller-Plesset perturbation theory）
+- **CCSD(T)**：耦合簇单双迭代三重激发（Coupled Cluster Singles Doubles with Perturbative Triples）
+- **MRCI**：多参考组态相互作用（Multi-Reference Configuration Interaction）
+- **CASSCF**：完全活性空间自洽场（Complete Active Space Self-Consistent Field）
+- **DFTB**：密度泛函紧束缚（Density Functional Tight Binding）
+- **ML-QM**：机器学习量子化学（Machine Learning Quantum Mechanics）
+- **SOC**：自旋-轨道耦合（Spin-Orbit Coupling）
+- **FC**：弗兰克-康登因子（Franck-Condon Factor）
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+
+自创术语与标准概念对照如下：
+- **纵向剖面纤维**（Longitudinal Section Fiber）：将Grothendieck纤维化从参数化谱族扩展到多方法谱族的新概念
+- **谱交织条件**（spectral intertwining condition）：算子代数中交织子对易子范数的量化判据
+- **纤维精细分解**（fine fiber decomposition）：嵌套Grothendieck纤维化链的分解方法
 
 ## 1. 引言
 
@@ -627,9 +648,9 @@ $$(F, \mathcal{D}_F, \partial\mathcal{D}_F, \sigma_F)$$
 
 其中：
 - $F$：量子化学方法（如 HF/DFT、CI/MP2、CCSD(T)、MRCI/CASSCF、DFTB、ML-QM）
-- $\mathcal{D}_F \subseteq \mathcal{M}$：$F$ 的**有效域**（effective domain），即分子构型空间 $\mathcal{M}$ 的子集，$F$ 在此区域内能有效描述系统
+- $\mathcal{D}_F \subseteq \mathcal{M}$：$F$ 的**有效域**（effective domain），即分子构型空间 $\mathcal{M}$ 的子集，$F$ 在此区域内能有效描述系统，又称**观察窗口**（observation window）
 - $\partial\mathcal{D}_F$：$\mathcal{D}_F$ 的**域边界**（domain boundary），即 $F$ 失效的构型点集合
-- $\sigma_F: \mathcal{D}_F \to \mathbf{Sp}$：$F$ 在有效域内的谱截面
+- $\sigma_F: \mathcal{D}_F \to \mathbf{Sp}$：$F$ 在有效域内的谱截面（spectral section）
 
 **量子化学纵向剖面纤维范畴 $\mathcal{F}_{\text{QChem},s}$**：
 
@@ -658,22 +679,7 @@ $$\sigma_{F_1}(R) = \sigma_{F_2}(R) \quad \forall R \in \mathcal{D}_{F_1} \cap \
 
 $$\bigcup_{F \in \mathcal{F}_{\text{QChem},s}} \mathcal{D}_F = \mathcal{M}$$
 
-### 10.3 与精细纤维拆分的兼容性
-
-**定理 10.2**（纵向剖面与横向拆分的兼容性）。纵向剖面纤维与精细纤维拆分（横向层次拆分）兼容，形成三维纤维化结构：
-
-- **纵向**：同一分子体系的不同量子化学方法（HF/DFT、CI/MP2、CCSD(T)、MRCI/CASSCF、DFTB、ML-QM）
-- **横向**：不同耦合层次的尺度分离（Reac→Corr→Vib→IntraIonic→Ionic→Solv→Spin）
-- **参数**：温度、溶剂、外场等外部参数
-
-**定义 10.4**（三维纤维化，Three-Dimensional Fibration）。函子 $\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$ 是三维纤维化，其中：
-
-- $\mathcal{B}_{\text{sys}}$：分子体系范畴（纵向基）
-- $\mathcal{B}_{\text{level}}$：耦合层次范畴（横向基）
-- $\mathcal{P}$：参数范畴（外部参数）
-- 纤维 $\mathcal{E}_{(sys, level, p)}$：分子体系 $sys$ 在耦合层次 $level$、参数 $p$ 处的纵向剖面纤维
-
-### 10.4 应用实例：水二聚体的纵向剖面纤维
+#### 10.2.1 水二聚体实例
 
 **水二聚体纵向剖面纤维范畴 $\mathcal{F}_{\text{(H₂O)₂}}$**：
 
@@ -692,9 +698,51 @@ $$\bigcup_{F \in \mathcal{F}_{\text{QChem},s}} \mathcal{D}_F = \mathcal{M}$$
 | MP2 ∩ CCSD(T) | 2.3–4.0 Å | $E_{\text{bind}}^{\text{MP2}} \approx E_{\text{bind}}^{\text{CCSD(T)}}$（偏差 < 3%） | ✅ |
 | DFTB ∩ HF/DFT | 2.5–3.5 Å | $E_{\text{bind}}^{\text{DFTB}} \approx E_{\text{bind}}^{\text{DFT}}$（偏差 < 10%） | ✅ |
 
-### 10.5 域边界与谱静默对应
+### 10.3 纤维等价性与三维纤维化扩展
 
-**定理 10.3**（量子化学域边界与谱静默对应）。每个量子化学方法的域边界 $\partial\mathcal{D}_F$ 对应谱静默的一个判据：
+**定理 10.2**（纤维等价性，Fiber Equivalence）。对同一分子体系 $s$，所有量子化学纵向剖面纤维对象通过谱对应自然同构 $M \cong L$ 相互等价——不同量子化学方法只是同一谱结构的不同表象。该定理的形式化证明见 Paper XXI 定理 10.4。
+
+**定义 10.4**（三维纤维化，Three-Dimensional Fibration）。函子 $\pi: \mathcal{E} \to \mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$ 是三维纤维化，其中：
+
+- $\mathcal{B}_{\text{sys}}$：分子体系范畴（纵向基）
+- $\mathcal{B}_{\text{level}}$：耦合层次范畴（横向基）
+- $\mathcal{P}$：参数范畴（外部参数）
+- 纤维 $\mathcal{E}_{(sys, level, p)}$：分子体系 $sys$ 在耦合层次 $level$、参数 $p$ 处的纵向剖面纤维
+
+三维纤维化将纵向剖面纤维（多方法多窗口）与横向纤维拆分（多耦合层次）统一在同一总丛 $\mathcal{E}$ 中，实现量子化学描述的完全范畴化。
+
+### 10.4 与精细纤维拆分的兼容性
+
+**定理 10.3**（纵向剖面与横向拆分的兼容性）。纵向剖面纤维与精细纤维拆分（横向层次拆分）兼容，形成三维纤维化结构：
+
+- **纵向**：同一分子体系的不同量子化学方法（HF/DFT、CI/MP2、CCSD(T)、MRCI/CASSCF、DFTB、ML-QM）
+- **横向**：不同耦合层次的尺度分离（Reac→Corr→Vib→IntraIonic→Ionic→Solv→Spin）
+- **参数**：温度、溶剂、外场等外部参数
+
+该兼容性由定义 10.4 的三维纤维化结构保证——纵向剖面纤维范畴 $\mathcal{F}_{\text{QChem},s}$ 作为 $\mathcal{B}_{\text{sys}}$ 上的纤维，与精细纤维拆分在 $\mathcal{B}_{\text{level}}$ 上的纤维通过总参数丛 $\pi_{\mathbf{Param}}$ 自然结合。
+
+### 10.5 应用实例：水二聚体的纵向剖面纤维（详见 10.2.1）
+
+**水二聚体纵向剖面纤维范畴 $\mathcal{F}_{\text{(H₂O)₂}}$**：
+
+| 对象 $F$ | 有效域 $\mathcal{D}_F$ | 域边界 $\partial\mathcal{D}_F$ | 谱截面 $\sigma_F$ |
+|:---------|:---------------------|:-----------------------------|:-----------------|
+| HF/DFT | O-O 距离 2.5–3.5 Å | O-O 距离 < 2.5 Å（强耦合） | $E_{\text{bind}}^{\text{DFT}}(R)$ |
+| MP2 | O-O 距离 2.3–4.0 Å | O-O 距离 < 2.3 Å（多参考必要） | $E_{\text{bind}}^{\text{MP2}}(R)$ |
+| CCSD(T) | O-O 距离 2.2–4.5 Å | O-O 距离 < 2.2 Å（强关联） | $E_{\text{bind}}^{\text{CCSD(T)}}(R)$ |
+| DFTB | O-O 距离 > 2.5 Å | O-O 距离 < 2.5 Å（精度不足） | $E_{\text{bind}}^{\text{DFTB}}(R)$ |
+
+**窗口重叠区域的粘合验证**：
+
+| 重叠区域 | O-O 距离范围 | 谱数据一致性 | 验证状态 |
+|:--------|:------------|:------------|:--------|
+| HF/DFT ∩ MP2 | 2.5–3.5 Å | $E_{\text{bind}}^{\text{DFT}} \approx E_{\text{bind}}^{\text{MP2}}$（偏差 < 5%） | ✅ |
+| MP2 ∩ CCSD(T) | 2.3–4.0 Å | $E_{\text{bind}}^{\text{MP2}} \approx E_{\text{bind}}^{\text{CCSD(T)}}$（偏差 < 3%） | ✅ |
+| DFTB ∩ HF/DFT | 2.5–3.5 Å | $E_{\text{bind}}^{\text{DFTB}} \approx E_{\text{bind}}^{\text{DFT}}$（偏差 < 10%） | ✅ |
+
+### 10.6 域边界与谱静默对应
+
+**定理 10.4**（量子化学域边界与谱静默对应）。每个量子化学方法的域边界 $\partial\mathcal{D}_F$ 对应谱静默的一个判据：
 
 | 量子化学方法 $F$ | 域边界 $\partial\mathcal{D}_F$ | 对应的谱静默判据 |
 |:----------------|:-----------------------------|:----------------|
@@ -703,12 +751,12 @@ $$\bigcup_{F \in \mathcal{F}_{\text{QChem},s}} \mathcal{D}_F = \mathcal{M}$$
 | CCSD(T) | 强关联区 | S3（局部吸引子捕获指数 LACI 高）：动态相关失效 |
 | DFTB | 高精度要求区 | S2（零测度）：半经验参数无法描述精细结构 |
 
-### 10.6 开放问题
+### 10.7 开放问题
 
 1. 将量子化学纵向剖面纤维形式化为 Lean 4 模块（`QChemLongitudinalSection.lean`）
 2. 创建专门的数值验证脚本，验证不同量子化学方法在窗口重叠区域的谱数据一致性
-3. 研究纵向剖面纤维的拓扑性质（如 Berry 相位、Chern 类）
-4. 将纵向剖面纤维应用于机器学习量子化学（ML-QM）的数据集覆盖分析
+3. 研究纵向剖面纤维的拓扑性质（如 Berry 相位、Chern 类）对量子化学方法选择的影响
+4. 将纵向剖面纤维的窗口覆盖分析应用于 ML-QM 数据集的覆盖完备性验证
 
 ---
 
@@ -813,14 +861,15 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 ## 版本记录
 
-**版本**：v0.6
+**版本**：v0.7
 
-**日期**：2026-07-25
+**日期**：2026-07-26
 
-**状态**：成熟。7层纤维化链构建完成，3个核心定理形式化，7个独立数值实验验证通过，ℓ_corr不变量跨体系交叉验证完成。
+**状态**：成熟。7层纤维化链构建完成，3个核心定理形式化，7个独立数值实验验证通过，ℓ_corr不变量跨体系交叉验证完成。§10纵向剖面纤维框架完整构建。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v0.7 | 2026-07-26 | 纵向剖面纤维扩展。细化§10.1定义10.1（加入观察窗口、谱截面），新增§10.2.1水二聚体实例，新增§10.3纤维等价性与三维纤维化扩展定理，重编号§10.4–§10.7，更新开放问题与摘要。 |
 | v0.6 | 2026-07-25 | 成熟版。全栈交叉验证（7/7）完成，ℓ_corr跨体系验证（H+H₂ 2.6%，水二聚体 2.9%）完成。 |

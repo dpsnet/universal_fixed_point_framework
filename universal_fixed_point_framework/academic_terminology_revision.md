@@ -39,6 +39,7 @@
 | 第二十一批 | 2026-07-26 | notes 目录术语规范化（Sync #15） | ~46 个文件 |
 | 第二十二批 | 2026-07-26 | 口语化/非标准术语清理（Sync #16） | 7 个文件 |
 | 第二十三批 | 2026-07-26 | 纵向剖面纤维术语 | 3 个文件（paper21, paper22, notes） |
+| 第二十四批 | 2026-07-26 | "谱丛"→"谱覆盖"术语修正 | 4 个文件（paper25, paper27, paper28, paper29） |
 
 ---
 
@@ -449,6 +450,42 @@
 - "纤维拆分"→"纤维分解"："拆分"口语化，"分解"是标准数学用语（decomposition）
 - "谱键刚性"→"谱键刚度"："刚度"（stiffness/strength）在物理中标准化用法
 - "隐式通道"→"隐谱通道"：明确该通道由谱间隙景观（spectral gap landscape）定义，区别于一般"隐式"概念
+
+### 9.18 Sync #18 明细（2026-07-26）— "谱丛"→"谱覆盖"术语修正
+
+**修订原因**：UFPF 中"谱丛"指代数结构 $\mathfrak{S} = \{(p,\lambda): \det(M(p)-\lambda I)=0\}$，其投影 $\pi: \mathfrak{S} \to \mathcal{B}$ 是**分支覆盖（branched covering）**，在分支点处不满足局部平凡性。标准术语应使用 **谱覆盖（spectral cover）** 或 **谱簇（spectral variety）**。
+
+与标准术语的对照：
+
+| UFPF 原术语 | 标准术语 | 数学结构 | 区别 |
+|:-----------|:---------|:--------|:-----|
+| 谱丛 $\mathfrak{S}$ | **谱覆盖**（spectral cover） | 分支覆盖 $\pi: \mathfrak{S} \to \mathcal{B}$ | "丛"（bundle）要求局部平凡，但 $\mathfrak{S}$ 在分支点处退化 |
+| — | **谱簇**（spectral variety） | 特征多项式 $\det(M(p)-\lambda I)=0$ 定义的代数簇 | 侧重代数簇而非覆盖结构 |
+| — | **谱纤维化**（spectral fibration） | Grothendieck 纤维化 $\pi: \mathbf{Bun}(\mathcal{B}, \mathbf{Sp}) \to \mathcal{B}$ | 范畴论层面的抽象结构，非几何分支覆盖 |
+
+**修订策略**（根据语境分类处理）：
+
+| 语境 | 原术语 | 修订后 | 说明 |
+|:----|:------|:------|:-----|
+| **具体代数结构**：由 $\det(M(p)-\lambda I)=0$ 定义的参数化特征值集（如 Paper XXVII 定义 2.1） | 谱丛 | **谱覆盖** | 精确描述分支覆盖结构 |
+| **抽象纤维化**：Grothendieck 纤维化 $\pi: \mathbf{Bun}(\mathcal{B}, \mathbf{Sp}) \to \mathcal{B}$（如 Paper XXI-XXII） | 谱丛 | **谱纤维化** | 范畴论层面，非几何分支覆盖 |
+| **混合/过渡**：跨领域上下文（如 Paper XXV "总谱丛"） | 谱丛 | **总谱覆盖** | 按具体语境判断 |
+
+**受影响文件与修改**：
+
+| 文件 | 位置 | 原术语 | 修订后 | 修改次数 |
+|:----|:-----|:------|:------|:-------:|
+| `paper25_fibration_cross_domain_methodology.md` | 标题（第1行） | 谱丛纤维精细分解 | 谱覆盖纤维精细分解 | 1 |
+| `paper25_fibration_cross_domain_methodology.md` | §8 定理（第540行附近） | 总谱丛 | 总谱覆盖 | 1 |
+| `paper27_leaver_spectral_sheaf.md` | §2.1 定义2.1（第79-81行） | 三参数谱丛 | 三参数谱覆盖（three-parameter spectral cover） | 1 |
+| `paper27_leaver_spectral_sheaf.md` | 定义2.1 后 | （无对照说明） | 添加**注 2.1a（与标准概念的关系）** | 1 |
+| `paper28_kerr_newman_coupled_sheaf.md` | §2.3 定义2.1（第129-133行） | 耦合谱丛 | 耦合谱覆盖 | 1 |
+| `paper29_dirac_spectral_sheaf.md` | §2（第55-58行） | Dirac 谱丛 | Dirac 谱覆盖 | 1 |
+| `notes/spec_infinity_prelim.md` | 全文（第1-598行） | 谱丛（43处） | 谱覆盖（43处） | 43 |
+
+**注**：笔记文件（`notes/`）和附录文件的术语修正留待后续同步处理。本笔记中的"三参数谱丛""∞-范畴谱丛"均指由 $\det(M(p)-\lambda I)=0$ 定义的具体代数结构，属于"谱覆盖"语境。
+
+---
 
 ## 十、附录：核心术语定义总览
 

@@ -8,6 +8,25 @@
 
 ---
 
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **IFS**：迭代函数系统（Iterated Function System）
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **CKM**：卡比博-小林-益川矩阵（Cabibbo-Kobayashi-Maskawa matrix）
+- **PMNS**：庞特科沃-牧-中川-坂田矩阵（Pontecorvo-Maki-Nakagawa-Sakata matrix）
+- **CP**：电荷共轭-宇称（Charge Conjugation-Parity）
+- **GUT**：大统一理论（Grand Unified Theory）
+- **SUSY**：超对称（Supersymmetry）
+- **QED**：量子电动力学（Quantum Electrodynamics）
+- **SM**：标准模型（Standard Model）
+
+本文涉及的自创术语与标准概念对照如下：
+- **严格 4-范畴**（strict 4-category）：标准高阶范畴论中的严格 n-范畴
+- **谱交织子**（spectral intertwiner）：标准算子代数中的交织子概念
+- **谱投影**（spectral projection）：标准泛函分析中的谱投影
+
 ## 1. 引言
 
 标准模型是史上最成功的科学理论之一，实验验证跨越多个数量级。然而它包含约 20 个自由参数——费米子质量、混合角、CP 相位、规范耦合——其数值由实验测定但理论未提供解释。这一参数任意性长期被视为基础物理最深层的开放问题之一。
@@ -246,7 +265,7 @@ $$\boxed{\tan^2\theta_{ij}^{(f)} = \frac{r_{ij}^{(f)} - r_\lambda^{(ij)}}{1 - r_
 | 下型 $d$ | $\theta_{12}$ | $-0.214$ rad* | $-0.191$ rad | $0.023$ |
 | 下型 $d$ | $\theta_{13}$ | $+0.033$ rad* | $+0.019$ rad | $0.014$ |
 
-*完整 3×3 数值求解的符号翻转后取值（物理约定：$\theta_{23}>0$、$\theta_{12}<0$、$\theta_{13}$ 符号与 $\theta_{23}$ 关联）。  
+*完整 3×3 数值求解的符号翻转后取值（物理约定：$\theta_{23}>0$、$\theta_{12}<0$、$\theta_{13}$ 符号与 $\theta_{23}$ 关联）。
 †轻子 $\theta_{13}$ 的解析三步对角化与完整 3×3 求解之间存在 $O(\theta_{13}\theta_{23})$ 耦合修正，见 §5.5 定理 5.6。
 
 **核心结果**：$\theta_{23}$ 的解析预测与完整 3×3 数值求解在 $\sim 0.005$ rad 精度内一致，确认混合角已从"数值优化"降格为"解析预测"。
