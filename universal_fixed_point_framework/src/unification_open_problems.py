@@ -101,7 +101,7 @@ def problem2_cl17_strict_construction() -> dict:
     print("问题 2：Cl(1,7) C* 代数表示论严格构造")
     print("=" * 60)
 
-    # Cl(1,7) ≅ M_8(R) 的 13 维子表示
+    # Cl(1,7) ≅ M_{16}(R) 的 13 维子表示
     # 构造方案：用 Cl(1,7) 的 spinor 表示 (8维) + 扩充 5 维
 
     # 引力扇区：4 个 epicyclic 频率
@@ -136,7 +136,7 @@ def problem2_cl17_strict_construction() -> dict:
     nonzero_mask = np.abs(diag_vals) > 1e-30
     positive_semi = np.all(diag_vals[nonzero_mask] >= 0)
 
-    print(f"  Cl(1,7) ≅ M_8(R) 的 13 维子表示")
+    print(f"  Cl(1,7) ≅ M_{16}(R) 的 13 维子表示")
     print(f"    向量部分 (引力, 4 维): diag({np.round(T_GR, 4)})")
     print(f"    旋量部分 (SM, 9 维): diag({np.round(T_SM, 6)})")
     print(f"  Hermitian: {is_hermitian}")

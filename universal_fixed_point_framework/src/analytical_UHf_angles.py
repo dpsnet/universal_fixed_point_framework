@@ -385,9 +385,9 @@ def main():
         
         print_angle_comparison(label, ts, f3, num_angles, masses)
     
-    # ---- 零参数链总结 ----
+    # ---- 参数链总结（登记参数基线）----
     print(f"\n\n{'='*72}")
-    print(f"  零参数链总结")
+    print(f"  参数链总结（登记参数基线）")
     print(f"{'='*72}")
     av_str = f"{alpha_v}"
     print(f"""

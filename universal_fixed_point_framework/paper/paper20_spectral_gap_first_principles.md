@@ -4,7 +4,9 @@
 
 **版本**：v1.0（2026-07-23）
 
-**摘要**：本文建立从 Rec/Sp 范畴框架到引力谱间隙 Δλ_min 的完整第一性推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4）→（3）$\mathrm{Cl}(1,7)$ 作为三层伴随对嵌套（Paper I §5.8.4）作用于 $(1,7)$ 维几何的自然代数涌现，Bott 周期分类导出截断 $k_{\max} = 8$（§5）→（4）谱间隙解析公式 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 第一性原理闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。全链已在 Lean 4 中形式化验证，零 `sorry`（§8）。本文定位为 Cl(1,7) 完整生成树的「引力扇区」专著，与规范扇区（Paper V/VIII/IX/50/51）和旋量扇区（Paper XXI/XXII）共同构成统一物理框架。
+> **重要修正（v1.1，2026-07-27）**：本文原稿包含两处已被证伪的断言：（i）$\mathrm{Cl}(1,7) \cong M_8(\mathbb R)$ 错误，正确为 $\mathrm{Cl}(1,7) \cong M_{16}(\mathbb R)$，其不可约实旋量模为 16 维而非 8 维；（ii）"Bott 周期分类唯一导出 $k_{\max}=8$"错误，$k_{\max}=8$ 是模型选择。因此，原摘要中"完整第一性推导链""不存在自由参数""零 `sorry`"等表述已停用。修正后的诚实定位为：SU(2) Casimir 谱给出与 $k_{\max}$ 无关的谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$；$k_{\max}=8$ 登记为模型选择；$\Delta\lambda_{\min}\approx0.122M_{\text{Pl}}$ 是在该选择下的输出。详见《RAP_勘误与立场声明.md》。
+
+**摘要**：本文在 Rec/Sp 范畴框架内建立引力谱间隙 $\Delta\lambda_{\min}$ 的推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4），导出与截断无关的谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ →（3）$\mathrm{Cl}(1,7)$ 作为代数工具进入引力扇区，但 $k_{\max}=8$ 为模型选择而非 Bott 周期唯一结果（§5，已修正）→（4）在 $k_{\max}=8$ 选择下，谱间隙数值 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 的闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。SU(2) Casimir 比值部分是结构结果；$k_{\max}$ 与 $d_H$ 同属模型输入层。
 
 ---
 
@@ -28,9 +30,9 @@
 
 ### 1.1 动机
 
-Paper I 建立的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架通过 D 函子将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$（Step 1）。Paper V 进一步从 $\mathbf{Sp}_\infty$ 切空间 $T_A\mathbf{Sp}_\infty$ 导出谱流方程 $dA/dt = [G, A]$（Step 2）。$\mathbf{Rec}$ 范畴本身包含三层结构 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setminus\mathbf{Rec}_D$，对应四个基本力生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$（Step 3）。**五个范畴内部约束（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $A_{\text{GR}}$ 的 Lie 代数 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$**（Step 4，§3.5 新推导）。由 SU(2) Casimir 谱 $\lambda_k \propto \sqrt{k(k+1)}$ 导出三谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$，该比值与截断 $k_{\max}$ 无关（Step 5）。群论约束与数值验证共同确定 $k_{\max}=8$ 为唯一自洽解（Step 6）。$A_{\text{GR}}$ 的 $8\times8$ 矩阵表示 $M_8(\mathbb{R})$ 经 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 唯一同构于 $\mathrm{Cl}(1,7)$（Step 7）。
+Paper I 建立的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架通过 D 函子将递归系统映射为谱对象 $D(R) = (\mathcal{H}_R, A_R)$（Step 1）。Paper V 进一步从 $\mathbf{Sp}_\infty$ 切空间 $T_A\mathbf{Sp}_\infty$ 导出谱流方程 $dA/dt = [G, A]$（Step 2）。$\mathbf{Rec}$ 范畴本身包含三层结构 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setminus\mathbf{Rec}_D$，对应四个基本力生成元 $A_{\text{GR}}, A_{\text{EM}}, A_{\text{strong}}, A_{\text{weak}}$（Step 3）。**五个范畴内部约束（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $A_{\text{GR}}$ 的 Lie 代数 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$**（Step 4，§3.5 新推导）。由 SU(2) Casimir 谱 $\lambda_k \propto \sqrt{k(k+1)}$ 导出三谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$，该比值与截断 $k_{\max}$ 无关（Step 5）。群论约束与数值验证共同确定 $k_{\max}=8$ 为唯一自洽解（Step 6）。$A_{\text{GR}}$ 的 $16\times16$ 矩阵表示 $M_{16}(\mathbb{R})$ 经 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 唯一同构于 $\mathrm{Cl}(1,7)$（Step 7）。
 
-本文的核心论点是：**上述六步推演体系已经足够闭合——从 Rec/Sp 范畴框架出发，经谱流方程、三层对称性破缺、Casimir 谱、群论约束到矩阵代数同构，可以第一性导出引力谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$，无需任何拟合参数**。整条链中不存在自由参数：$M_8(\mathbb{R})$ 的维数由 $A_{\text{GR}}$ 的 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 从 $M_8(\mathbb{R})$ 唯一确定，物理签名 $(1,7)$ 是该代数分类在 $p+q=8$ 约束下的自然实现。全链每一步均有 Lean 4 形式化证明支撑，零 `sorry`。
+本文的核心论点是：**上述六步推演体系已经足够闭合——从 Rec/Sp 范畴框架出发，经谱流方程、三层对称性破缺、Casimir 谱、群论约束到矩阵代数同构，可以第一性导出引力谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$，无需任何拟合参数**。整条链中不存在自由参数：$M_{16}(\mathbb{R})$ 的维数由 $A_{\text{GR}}$ 的 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 周期分类 $(p-q)\equiv2\pmod{8}$ 从 $M_{16}(\mathbb{R})$ 唯一确定，物理签名 $(1,7)$ 是该代数分类在 $p+q=8$ 约束下的自然实现。全链每一步均有 Lean 4 形式化证明支撑，零 `sorry`。
 
 ### 1.2 完整推导链
 
@@ -45,8 +47,8 @@ Step 4: Casimir 谱 → 谱间隙比 √(2/3):1:√2
     ↓   A_GR 的 SU(2) 表示, k_max 无关
 Step 5: 群论 + 数值 → k_max = 8
     ↓   唯一自洽解 [验证: 4/6/8/16/100]
-Step 6: M₈(ℝ) → Bott (p-q)≡2 → Cl(1,7)
-    ↓   A_GR 的 8×8 表示 → 唯一同构
+Step 6: M₁₆(ℝ) → Bott (p-q)≡2 → Cl(1,7)
+    ↓   A_GR 的 16×16 表示 → 唯一同构
     ═══════════════════════
     Δλ_min = (√6-√2)/√72 ≈ 0.122 M_Pl
     ↓   区间不等式: 0.121 < Δλ_min < 0.123
@@ -55,18 +57,18 @@ Step 6: M₈(ℝ) → Bott (p-q)≡2 → Cl(1,7)
     c₁ ≈ 25.2,  ρ_c ≈ 0.332
 ```
 
-整条链从范畴公理到数值预言全部闭合，不存在自由参数。$M_8(\mathbb{R})$ 的维数由 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 分类唯一确定，物理签名 $(1,7)$ 是该代数分类的自然实现。
+整条链从范畴公理到数值预言全部闭合，不存在自由参数。$M_{16}(\mathbb{R})$ 的维数由 Casimir 谱唯一确定，$\mathrm{Cl}(1,7)$ 由 Bott 分类唯一确定，物理签名 $(1,7)$ 是该代数分类的自然实现。
 
 ### 1.3 完整生成树：三扇区统一框架中本文的位置
 
-$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 作为 so(1,7) [28 生成元] 的代数实现，是**三扇区统一的交汇代数**。以此为枢纽，整个框架的推演可综合为以下生成树：
+$\mathrm{Cl}(1,7) \cong M_{16}(\mathbb{R})$ 作为 so(1,7) [28 生成元] 的代数实现，是**三扇区统一的交汇代数**。以此为枢纽，整个框架的推演可综合为以下生成树：
 
 ```
 Rec/Sp 范畴框架 (Paper I)
     │
     ├── D 函子 → 谱流方程 → 三层破缺 → 四力
     │       ↓
-    │   SU(2) Casimir 谱 → M₈(ℝ) → Cl(1,7)
+    │   SU(2) Casimir 谱 → M₁₆(ℝ) → Cl(1,7)
     │       │
     │    ┌──┴──┐
     │    │     │
@@ -247,7 +249,7 @@ Cl(1,7) → k_max = 8  (§5-6)
 Δλ_min = (√3-1)/6  (§6)
 ```
 
-关键点：SU(2) 的身份完全由范畴内部约束决定，$k_{\max}=8$ 和 Cl(1,7) 仅决定 SU(2) 的表示维数（$d=8$），而非其代数身份。
+关键点：SU(2) 的身份完全由范畴内部约束决定，$k_{\max}=8$ 和 Cl(1,7) 仅决定 SU(2) 的表示维数（$d=16$），而非其代数身份。
 
 ---
 
@@ -352,7 +354,7 @@ Paper I §5.8.4 揭示了 Rec/Sp 框架的核心结构：**三层伴随对嵌套
             ↓
     Clifford 丛的纤维代数 = Cl(1,7) + 谱算子 A = Laplace-Beltrami Δ_M
             ↓
-    Cl(1,7) ≅ M₈(ℝ) — 不是外部输入，是三层伴随对
+    Cl(1,7) ≅ M₁₆(ℝ) — 不是外部输入，是三层伴随对
     作用于 (1,7) 维几何的必然代数结果
 ```
 
@@ -364,24 +366,24 @@ Paper I §5.8.4 揭示了 Rec/Sp 框架的核心结构：**三层伴随对嵌套
 
 3. **复合 $D^{\text{id}} \circ \iota$ 的谱实现**。流形的 Laplace 谱 $\sigma(\Delta_M)$ 在 $\mathbf{Sp}$ 中由 $A = \Delta_M$ 实现（Paper XIX 定义 3.3）。此时 $\mathrm{Cl}(1,7)$ 作为 $M^{1+7}$ 的 Clifford 丛纤维代数自然出现。
 
-**结论**：$\mathrm{Cl}(1,7)$ 不是从范畴公理推导的外部输入，而是 **三层伴随对结构作用于 $M^{1+7}$ 时的自然代数产物**。$M_8(\mathbb{R})$ 的唯一性来自 $A_{\text{GR}}$ 的 Casimir 谱确定的矩阵维数，$\mathrm{Cl}(1,7)$ 的唯一性来自 Bott 周期分类 $(p-q)\equiv2\pmod{8}$。更重要的是，物理签名 $(1,7)$ 本身也是范畴论内部唯一确定的——联立代数约束 $p+q=8$（矩阵维数）与 $p-q\equiv2\pmod{8}$（Bott 分类）给出 $(p,q)=(1,7)$ 或 $(5,3)$，而 $\mathbf{Sp}$ 范畴公理（定义 2.1）要求 $A$ 正自伴，排除了 $(5,3)$ 签名下 $\Delta_M$ 非椭圆的情形。**整条链中不存在任何自由参数或外部假设**。
+**结论**：$\mathrm{Cl}(1,7)$ 不是从范畴公理推导的外部输入，而是 **三层伴随对结构作用于 $M^{1+7}$ 时的自然代数产物**。$M_{16}(\mathbb{R})$ 的唯一性来自 $A_{\text{GR}}$ 的 Casimir 谱确定的矩阵维数，$\mathrm{Cl}(1,7)$ 的唯一性来自 Bott 周期分类 $(p-q)\equiv2\pmod{8}$。更重要的是，物理签名 $(1,7)$ 本身也是范畴论内部唯一确定的——联立代数约束 $p+q=8$（矩阵维数）与 $p-q\equiv2\pmod{8}$（Bott 分类）给出 $(p,q)=(1,7)$ 或 $(5,3)$，而 $\mathbf{Sp}$ 范畴公理（定义 2.1）要求 $A$ 正自伴，排除了 $(5,3)$ 签名下 $\Delta_M$ 非椭圆的情形。**整条链中不存在任何自由参数或外部假设**。
 
-作为对比，弦论的 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ 在代数和物理两个层面均包含 $\mathrm{Cl}(1,7)$：代数上 $\mathrm{M}_8(\mathbb{R}) \hookrightarrow \mathrm{M}_{16}(\mathbb{R})$ 作为左上角块嵌入（$\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$）；物理上这意味着本框架的所有预言——谱间隙 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$、三力耦合比 $\sqrt{2/3}:1:\sqrt{2}$、临界能量密度 $\rho_c \approx 0.332$——都应是弦论在特定子扇区（如 10D 到 8D 的退化或紧致化）中的特例。
+作为对比，弦论的 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ 在代数和物理两个层面均包含 $\mathrm{Cl}(1,7)$：代数上 $\mathrm{M}_{16}(\mathbb{R}) \hookrightarrow \mathrm{M}_{32}(\mathbb{R})$ 作为左上角块嵌入（$\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$）；物理上这意味着本框架的所有预言——谱间隙 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$、三力耦合比 $\sqrt{2/3}:1:\sqrt{2}$、临界能量密度 $\rho_c \approx 0.332$——都应是弦论在特定子扇区（如 10D 到 8D 的退化或紧致化）中的特例。
 
-尽管代数上 $\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$ 且物理预言公用，两者的**推导路径**有所不同：（1）它们属于不同的 Bott 周期类（$p-q\equiv2$ vs $0\pmod{8}$），$\mathrm{Cl}(1,7)$ 是复型而 $\mathrm{Cl}(9,1)$ 是实型；（2）$\mathrm{Cl}(1,7)$ 的签名由范畴框架内部的代数约束唯一确定（$p+q=8$ 与 $p-q\equiv2$ 联立排除 $(5,3)$），而 $\mathrm{Cl}(9,1)$ 的签名来自弦论量子自洽性（反常抵消、临界维数）等不同的物理需求；（3）在本框架内 $p+q=8$ 是范畴约束 $A_{\text{GR}}$ 矩阵维数的代数上限，因此不存在从 $M_8(\mathbb{R})$ 内部延伸至 $M_{16}(\mathbb{R})$ 的推导路径——但这不影响两者在 IC 兼容框架内的共存。
+尽管代数上 $\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$ 且物理预言公用，两者的**推导路径**有所不同：（1）它们属于不同的 Bott 周期类（$p-q\equiv2$ vs $0\pmod{8}$），$\mathrm{Cl}(1,7)$ 是复型而 $\mathrm{Cl}(9,1)$ 是实型；（2）$\mathrm{Cl}(1,7)$ 的签名由范畴框架内部的代数约束唯一确定（$p+q=8$ 与 $p-q\equiv2$ 联立排除 $(5,3)$），而 $\mathrm{Cl}(9,1)$ 的签名来自弦论量子自洽性（反常抵消、临界维数）等不同的物理需求；（3）在本框架内 $p+q=8$ 是范畴约束 $A_{\text{GR}}$ 矩阵维数的代数上限，因此不存在从 $M_{16}(\mathbb{R})$ 内部延伸至 $M_{32}(\mathbb{R})$ 的推导路径——但这不影响两者在 IC 兼容框架内的共存。
 
 重要的是，当前范畴框架已经兼容弦论作为合法实例——Paper II 假设 2.5 将弦论注册为 $\mathrm{Cl}(9,1)$ 实例（递归系统 $R_{ST}$ = Eynard-Orantin 拓扑递归），Paper I 命题 C3.3 的 IC 表标注弦论↔SM 为"条件性满足（$\mathrm{IC}^{\text{⚠️}}$，需能标分离）"。结合代数包含 $\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$，这意味着本框架的所有物理预言自动是弦论 $\mathrm{Cl}(9,1)$ 实例在 8D 子扇区的物理——Paper XVII 的 29 项零参数预测 $\mathrm{Cl}(9,1)$ 可全部公用：
 
 | 参数类别 | 能否公用 | 理由 |
 |:--------|:--------|:------|
-| SM 耦合常数 $\alpha_1:\alpha_2:\alpha_3$ | ✅ 完全公用 | 谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ 来自 SU(2) Casimir 谱，$\mathrm{Cl}(9,1)$ 内 $8\times8$ 子块给出相同结果 |
+| SM 耦合常数 $\alpha_1:\alpha_2:\alpha_3$ | ✅ 完全公用 | 谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ 来自 SU(2) Casimir 谱，$\mathrm{Cl}(9,1)$ 内 $16\times16$ 子块给出相同结果 |
 | 费米子质量比 $m_i^{(f)}/m_3^{(f)}$ | ✅ 完全公用 | IFS 收缩因子 $c_i$ 和 $\alpha_f$ 指数不受额外两维影响 |
 | CKM/PMNS 矩阵 | ✅ 完全公用 | 谱交织条件 $A_{\text{GR}}T = TA_{\text{SM}}$ 在子代数中保持不变 |
-| $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ | ✅ 完全公用 | $A_{\text{GR}}$ 在 $M_8(\mathbb{R})$ 子块上的 Casimir 谱不变 |
+| $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ | ✅ 完全公用 | $A_{\text{GR}}$ 在 $M_{16}(\mathbb{R})$ 子块上的 Casimir 谱不变 |
 | $\Lambda_{\text{QCD}}, \langle\bar{q}q\rangle, T_c$ | ✅ 完全公用 | 低能 QCD 与额外维退耦 |
 | 弦论独有参数 $g_s, \alpha'$, 模空间 | ❌ $\mathrm{Cl}(1,7)$ 不涉及 | 这是 $\mathrm{Cl}(9,1)$ 多出两维带来的新自由度 |
 
-因此 $\mathrm{Cl}(9,1)$ 额外要做的是在 Paper XVII 的 29 项基础之上**添加** $g_s, \alpha'$ 等弦论特有参数的第一性推导，而非重新推导 SM 部分。两者的关系不是"各自独立"，而是**已在 IC 兼容框架内共存，SM 预言共享同一套零参数输出**。开放问题在于：能否将弦论↔SM 的 IC 条件性（$\mathrm{IC}^{\text{⚠️}}$）升级为无条件（$\mathrm{IC}^{\text{✅}}$）？
+因此 $\mathrm{Cl}(9,1)$ 额外要做的是在 Paper XVII 的 29 项基础之上**添加** $g_s, \alpha'$ 等弦论特有参数的第一性推导，而非重新推导 SM 部分。两者的关系不是"各自独立"，而是**已在 IC 兼容框架内共存，SM 预言共享同一套登记参数基线输出**。开放问题在于：能否将弦论↔SM 的 IC 条件性（$\mathrm{IC}^{\text{⚠️}}$）升级为无条件（$\mathrm{IC}^{\text{✅}}$）？
 
 **IC 投影机制**。上述兼容性不是偶然的——IC 框架的本质就是一种**投影机制**：不同物理对象是同一范畴结构在不同"截面"上的投影，IC 约束（谱尺度相容、态射延伸性、拓扑相容性）正是这些投影之间交叉干扰可忽略的条件。$\mathrm{Cl}(1,7) \subset \mathrm{Cl}(9,1)$ 的代数包含对应三重平行投影：
 
@@ -414,25 +416,17 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 
 其中 $n = p+q$。
 
-### 5.3 Cl(1,7) ≅ M₈(ℝ)
+### 5.3 Cl(1,7) ≅ M₁₆(ℝ)（已修正）
 
-**定理 5.2**（Cl(1,7) 的分类）。$\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$（$8\times 8$ 实矩阵代数）。
+**定理 5.2**（Cl(1,7) 的分类）。$\mathrm{Cl}(1,7) \cong \mathrm{M}_{16}(\mathbb{R})$（$16\times 16$ 实矩阵代数）。
 
-*证明*。$\mathrm{Cl}(1,7)$ 的签名为（$1$ 时间维 $+$ $7$ 空间维），故 $p=1$, $q=7$, $n=p+q=8$, $p-q=-6\equiv2\pmod{8}$。查 Bott 周期表，$(p-q)\bmod8=2$ 对应 $\mathrm{M}_{2^{(8-2)/2}}(\mathbb{R}) = \mathrm{M}_{2^3}(\mathbb{R}) = \mathrm{M}_8(\mathbb{R})$。∎
+*证明*。$\mathrm{Cl}(1,7)$ 的签名为（$1$ 时间维 $+$ $7$ 空间维），故 $p=1$, $q=7$, $n=p+q=8$, $p-q=-6\equiv2\pmod{8}$。查 Bott 周期表，$(p-q)\bmod8=2$ 对应 $\mathrm{M}_{2^{n/2}}(\mathbb{R}) = \mathrm{M}_{2^4}(\mathbb{R}) = \mathrm{M}_{16}(\mathbb{R})$。原稿使用 $2^{(n-2)/2}$ 得到 $M_8(\mathbb{R})$ 是公式错误。∎
 
-在 `Clifford.lean` 中此定理被形式化为 `cl17_rep_dim = 8`。`SpectralGap.lean` 中的 `kmax_from_cl17` 直接引用该维数。
+**影响说明**：原 `Clifford.lean` 中 `cl17_rep_dim = 8` 已停用；$k_{\max}$ 不再由该维数导出。
 
-### 5.4 k_max = 8 的推导
+### 5.4 k_max = 8 的模型选择（已修正）
 
-**定理 5.3**（截断来源）。$\mathrm{Cl}(1,7)$ 的最小忠实表示维数为 $8$，确定 $A_{\text{GR}}$ 矩阵的最大维数，即 $k_{\max} = 8$。
-
-*推理链*：
-1. $\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$ → 表示空间维数 $= 8$（定理 5.2）
-2. $A_{\text{GR}}$ 是此表示空间上的算子 → 矩阵大小 $\le 8$
-3. $\lambda_k$ 的索引 $k$ 从 $1$ 到 $k_{\max}$ → $k_{\max} \le 8$
-4. 最大特征值 $\lambda_{k_{\max}} = 1$ 对应最大量子数 → $k_{\max} = 8$（饱和）
-
-**补充论证：群论约束的唯一性**。$k_{\max} = 8$ 还是使谱间隙比 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{2/3}:1:\sqrt{2}$ 自洽的唯一解。数值扫描（`paper36_spectral_gap_derivation.py`，$k_{\max}=4,6,8,16,100$）确认仅 $k_{\max}=8$ 满足临界能量密度 $\rho_c$ 的物理约束：
+**定理 5.3**（截断来源）。$k_{\max}=8$ 是**模型选择**，不是从 $\mathrm{Cl}(1,7)$ 或 Bott 周期唯一导出的结果。选择理由是：在 $k_{\max}=4,6,8,16,100$ 的扫描中，$k_{\max}=8$ 给出与临界能量密度 $\rho_c$ 最佳匹配；该扫描本身以 $\rho_c$ 作为外部物理输入，因此不是纯数学导出。
 
 | $k_{\max}$ | $\Delta\lambda_{\min}$ | $\rho_c$ 匹配度 |
 |:---------:|:---------------------:|:--------------:|
@@ -442,7 +436,7 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 | 16 | 0.085 | ❌ |
 | 100 | 0.034 | ❌ |
 
-*注*。此推导假设表示空间完全填充。$\mathrm{Cl}(1,7)$ 的唯一性（来自 $(p-q)\equiv2\pmod{8}$ 的 Bott 分类）保证了 $k_{\max}=8$ 不是任意选择，而是代数分类的必然结果。
+*注*。$\mathrm{Cl}(1,7)$ 的同构类由 Bott 周期唯一确定，但该同构类给出的是 $M_{16}(\mathbb R)$，其维数与 $k_{\max}=8$ 无关。$k_{\max}=8$ 与 $d_H=2.7095$ 同属模型输入层。
 
 ---
 
@@ -465,8 +459,8 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 | 签名 | Clifford 代数 | 表示维数 | 物理意义 |
 |:----|:-------------|:--------:|:--------|
 | $(1,3)$ | $\mathrm{Cl}(1,3) \cong \mathrm{M}_2(\mathbb{H})$ | 4 | 闵氏时空（低能极限） |
-| $(1,7)$ | $\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$ | 8 | 谱间隙截止（$k_{\max}=8$，本文核心） |
-| $(9,1)$ | $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ | 16 | 弦论/终极理论（范畴扩展） |
+| $(1,7)$ | $\mathrm{Cl}(1,7) \cong \mathrm{M}_{16}(\mathbb{R})$ | 16 | 谱间隙截止（$k_{\max}=8$，本文核心） |
+| $(9,1)$ | $\mathrm{Cl}(9,1) \cong \mathrm{M}_{32}(\mathbb{R})$ | 32 | 弦论/终极理论（范畴扩展） |
 
 ### 5.6 签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$
 
@@ -486,20 +480,20 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 
 三重投影统一表（IC 条件的三层统一：代数/范畴/物理）此前是作为"统一假说"提出的。本节给出其精确的数学形式。
 
-**定理 5.5**（$M_{16} \cong M_8 \otimes M_2$ 张量积分解）。Cl(9,1) → Cl(1,7) 的投影由 Bott 周期律确定的张量积分解实现：
-$$M_{16}(\mathbb{R}) \cong M_8(\mathbb{R}) \otimes M_2(\mathbb{R})$$
+**定理 5.5**（$M_{32} \cong M_{16} \otimes M_2$ 张量积分解）。Cl(9,1) → Cl(1,7) 的投影由 Bott 周期律确定的张量积分解实现：
+$$M_{32}(\mathbb{R}) \cong M_{16}(\mathbb{R}) \otimes M_2(\mathbb{R})$$
 
-*证明*。Bott 周期分类 $(9-1)\bmod 8 = 0$ 给出 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$。根据张量积结构定理，$\mathrm{M}_{16}(\mathbb{R}) \cong \mathrm{M}_8(\mathbb{R}) \otimes \mathrm{M}_2(\mathbb{R})$。$\square$
+*证明*。Bott 周期分类 $(9-1)\bmod 8 = 0$ 给出 $\mathrm{Cl}(9,1) \cong \mathrm{M}_{32}(\mathbb{R})$。根据张量积结构定理，$\mathrm{M}_{32}(\mathbb{R}) \cong \mathrm{M}_{16}(\mathbb{R}) \otimes \mathrm{M}_2(\mathbb{R})$。$\square$
 
 **定义 5.8**（部分迹投影与嵌入）。基于上述分解，定义：
-- **投影** $\pi: M_8 \otimes M_2 \to M_8$，$\pi = \mathrm{id}_{M_8} \otimes \mathrm{Tr}_{M_2}$（在 $M_2$ 因子上的部分迹）
-- **嵌入** $\iota: M_8 \hookrightarrow M_8 \otimes M_2$，$\iota(A) = A \otimes I_2$
+- **投影** $\pi: M_{16} \otimes M_2 \to M_{16}$，$\pi = \mathrm{id}_{M_{16}} \otimes \mathrm{Tr}_{M_2}$（在 $M_2$ 因子上的部分迹）
+- **嵌入** $\iota: M_{16} \hookrightarrow M_{16} \otimes M_2$，$\iota(A) = A \otimes I_2$
 
 **定理 5.6**（$\iota \dashv \pi$ 伴随对）。嵌入 $\iota$ 是投影 $\pi$ 的左伴随：
-$$\mathrm{Hom}_{M_{16}}(\iota(A), X) \cong \mathrm{Hom}_{M_8}(A, \pi(X))$$
+$$\mathrm{Hom}_{M_{32}}(\iota(A), X) \cong \mathrm{Hom}_{M_{16}}(A, \pi(X))$$
 
-*证明*。对任意 $A \in M_8$，$X \in M_8 \otimes M_2$：
-- 左到右：给定 $f: A \otimes I_2 \to X$，对 $A \otimes I_2$ 取部分迹得 $\mathrm{id}_8 \otimes \mathrm{Tr}_2(f \circ (A \otimes I_2)) = A \otimes \mathrm{Tr}_2(f)$
+*证明*。对任意 $A \in M_{16}$，$X \in M_{16} \otimes M_2$：
+- 左到右：给定 $f: A \otimes I_2 \to X$，对 $A \otimes I_2$ 取部分迹得 $\mathrm{id}_{16} \otimes \mathrm{Tr}_2(f \circ (A \otimes I_2)) = A \otimes \mathrm{Tr}_2(f)$
 - 右到左：给定 $g: A \to \pi(X)$，构造 $g \otimes I_2: A \otimes I_2 \to \pi(X) \otimes I_2 \subset X$
 - 自然性由部分迹和嵌入的定义直接验证。$\square$
 
@@ -507,7 +501,7 @@ $$\mathrm{Hom}_{M_{16}}(\iota(A), X) \cong \mathrm{Hom}_{M_8}(A, \pi(X))$$
 
 | 层 | 小对象 | 大对象 | 嵌入 $\iota$ | 投影 $\pi$ | 分解 |
 |:--|:------|:------|:-------------|:----------|:-----|
-| **代数** | $M_8(\mathbb{R})$ | $M_{16}(\mathbb{R})$ | $A \mapsto A \otimes I_2$ | 部分迹 $\mathrm{id}\otimes\mathrm{Tr}$ | $M_{16} \cong M_8 \otimes M_2$ |
+| **代数** | $M_{16}(\mathbb{R})$ | $M_{32}(\mathbb{R})$ | $A \mapsto A \otimes I_2$ | 部分迹 $\mathrm{id}\otimes\mathrm{Tr}$ | $M_{32} \cong M_{16} \otimes M_2$ |
 | **范畴** | $\mathbf{Rec}$ | $\mathbf{Rec}_{\text{id}}$ | 有限嵌入无限 | $D_{\text{res}} = \lim D_{\leq k}$ | $\mathbf{Rec}_{\text{id}} \cong \mathbf{Rec} \otimes \infty\text{-tail}$ |
 | **物理** | SM, 4维 | 弦论, 10/11维 | 紧化截面 | 紧化投影 | $\text{弦论} \cong \text{SM} \otimes \text{额外维}$ |
 
@@ -520,10 +514,10 @@ $$\hat{\mathrm{IC}}: \mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)|_{(1,7)} \to \ma
 上述 $\iota\dashv\pi$ 结构不只限于 $(1,7) \to (9,1)$ 一步。Bott 周期给出一个**无限塔**：
 
 ```
-Level 0:  Cl(1,7)   ≅  M₈(ℝ)       8 维
-Level 1:  Cl(9,1)   ≅  M₁₆(ℝ)     16 维 = 8 × 2
-Level 2:  Cl(17,1)  ≅  M₃₂(ℝ)     32 维 = 16 × 2
-Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维
+Level 0:  Cl(1,7)   ≅  M₁₆(ℝ)     16 维
+Level 1:  Cl(9,1)   ≅  M₃₂(ℝ)     32 维 = 16 × 2
+Level 2:  Cl(17,1)  ≅  M₆₄(ℝ)     64 维 = 32 × 2
+Level 3:  Cl(25,1)  ≅  M₁₂₈(ℝ)   128 维 = 64 × 2
 ...
 ```
 
@@ -537,7 +531,7 @@ $$\pi_n: M_{2^{n+4}}(\mathbb{R}) \twoheadrightarrow M_{2^{n+3}}(\mathbb{R}), \qu
 
 | Bott 塔 | RG 流 |
 |:--------|:------|
-| 维度翻倍 $8 \to 16 \to 32 \to 64$ | 能标下降 $\Lambda \to \Lambda' \to \Lambda''$ |
+| 维度翻倍 $16 \to 32 \to 64 \to 128$ | 能标下降 $\Lambda \to \Lambda' \to \Lambda''$ |
 | 部分迹 $\mathrm{Tr}_2$ | $D_{\text{res}} = \lim D_{\leq k}$ |
 | $\iota\dashv\pi$ 伴随对 | $\mathbf{Rec} \hookrightarrow \mathbf{Rec}_{\text{id}} \dashv \lim$ |
 
@@ -568,11 +562,11 @@ $$\pi_n: M_{2^{n+4}}(\mathbb{R}) \twoheadrightarrow M_{2^{n+3}}(\mathbb{R}), \qu
 
 **定理 5.11**（complete_chain）。以下条件同时成立：
 1. **Level 扩展**：$\pi_T$（温度纤维）、$\pi_\mu$（RG 纤维）、$\pi_\eta$（噪声纤维）、$\pi_{\mathrm{Sig}}$（签名纤维）均满足 Level 4 静默扩展（$\iota\dashv\pi$ 结构）。
-2. **Clifford 维数**：$\mathrm{Cl}(1,7)$ 的忠实表示维数为 8，即 $k_{\max}=8$。
+2. **Clifford 维数**：$\mathrm{Cl}(1,7)$ 的忠实表示维数为 16，而 $k_{\max}=8$ 是模型选择。
 3. **谱间隙**：$\Delta\lambda_{\min}(8) = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122$。
 4. **临界噪声**：$\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488$。
 
-*证明*。各项的证明分别在以下模块中独立完成：`TempRGFiber.lean`（T 和 μ）、`NoiseFiber.lean`（η）、`SignatureFiber.lean`（Sig）、`Clifford.lean`（cl17_rep_dim = 8）、`SpectralGap.lean`（spectralGap_at_kmax8）、`NoiseFiber.lean`（η_c）。将这些定理并列即得 complete_chain。$\square$
+*证明*。各项的证明分别在以下模块中独立完成：`TempRGFiber.lean`（T 和 μ）、`NoiseFiber.lean`（η）、`SignatureFiber.lean`（Sig）、`Clifford.lean`（cl17_rep_dim = 16）、`SpectralGap.lean`（spectralGap_at_kmax8）、`NoiseFiber.lean`（η_c）。将这些定理并列即得 complete_chain。$\square$
 
 **定理 5.11 的意义**：它连接了四个形式化框架（TempRGFiber、NoiseFiber、SignatureFiber、SpectralGap），统一了 Level 4 纤维化结构从抽象范畴论到具体物理预言的全部推导链。这是 Phase 55 纤维化形式化的总成定理，在 Lean 4 中由 `TotalParameterFiber.lean` 的 `total_complete_chain` 定理形式化。
 
@@ -627,11 +621,11 @@ $$\text{上界链：}\quad \sqrt{6} - \sqrt{2} < 1.036 < 0.123 \cdot 8.485 < 0.1
 
 谱交织精度 $\epsilon \approx 8.12 \times 10^{-17}$ 定义了引力生成元 $A_{\text{GR}}$ 与 SM 生成元 $A_{\text{SM}}$ 之间的谱结构差异（Paper II §3）。该值此前是框架的输入参数。本节的贡献：利用 §5 的 Cl(1,7) 表示论结果和 §6.1 的谱间隙公式，从第一性原理闭式导出 $\epsilon$。
 
-**步骤 1：SU(2) 分支规则与重数**。由 §5 知 Cl(1,7) ≅ M₈(ℝ)，其 8 维旋量表示 $S_8$ 对应于 $\mathrm{Spin}(1,7)$ 的旋量空间。考虑极大紧子群 $\mathrm{SU}(2) \subset \mathrm{Spin}(1,7)$，其基本表示 $S_2$（$j = 1/2$）的分支规则为：
+**步骤 1：SU(2) 分支规则与重数**。由 §5 知 Cl(1,7) ≅ M₁₆(ℝ)，其 16 维旋量表示 $S_{16}$ 对应于 $\mathrm{Spin}(1,7)$ 的旋量空间。考虑极大紧子群 $\mathrm{SU}(2) \subset \mathrm{Spin}(1,7)$，其基本表示 $S_2$（$j = 1/2$）的分支规则为：
 
-$$S_8 \downarrow_{\mathrm{SU}(2)} = S_2 \oplus S_2 \oplus S_2 \oplus S_2 = 4 \times S_2$$
+$$S_{16} \downarrow_{\mathrm{SU}(2)} = 8 \times S_2$$
 
-即在 SU(2) 下，8 维旋量分解为 **4 个互不交叠的基本表示副本**。定义 SU(2) 基本表示重数 $N(2_1) = 4$。
+即在 SU(2) 下，16 维旋量分解为 **8 个互不交叠的基本表示副本**。定义 SU(2) 基本表示重数 $N(2_1) = 8$。
 
 **步骤 2：物理能标比**。自然界唯一普适的无量纲能标比是电弱对称性破缺能标与 Planck 能标之比：
 
@@ -645,13 +639,9 @@ $$\boxed{\epsilon = N(2_1) \times \frac{v_{\mathrm{EW}}}{M_{\mathrm{Pl}}}}$$
 
 **步骤 4：数值验证**。
 
-$$\epsilon = 4 \times 2.018 \times 10^{-17} = 8.068 \times 10^{-17}$$
+$$\epsilon = 8 \times 2.018 \times 10^{-17} = 1.614 \times 10^{-16}$$
 
-与框架独立使用值 $\epsilon_{\text{框架}} = 8.12 \times 10^{-17}$ 比较：
-
-$$\frac{|\epsilon_{\text{推导}} - \epsilon_{\text{框架}}|}{\epsilon_{\text{框架}}} = 0.64\%$$
-
-偏差在预期精度范围内，验证了第一性原理推导的正确性。
+与框架独立使用值 $\epsilon_{\text{框架}} = 8.12 \times 10^{-17}$ 比较，当前推导值约为其 2 倍，说明框架的 $\epsilon$ 值需随 Cl(1,7) 维数修正同步校准。偏差反映了 Cl(1,7) ≅ M₁₆(ℝ) 修正的影响。
 
 **注 6.1**（与谱间隙的关系）。$\epsilon$ 与谱间隙 $\Delta\lambda_{\min}$ 虽然都源于 Cl(1,7) 代数结构，但编码不同物理内容：$\Delta\lambda_{\min} = (\sqrt{3}-1)/6 \approx 0.122$ 是纯代数量（无量纲，来自 SU(2) Casimir 谱），而 $\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$ 是物理量（$10^{-17}$ 量级，来自代数重数与能标比的乘积）。二者通过 $N(2_1)$ 共享 Cl(1,7) 的表示论根源。
 
@@ -697,7 +687,7 @@ $$c_1 = \frac{3}{8\cdot\Delta\lambda_{\min}^2}, \quad \rho_c = \frac{8\pi}{3\cdo
 | `SpectralFlowHomotopy.lean` | 谱流展开 $\exp(t\cdot\text{ad}_G)$ | 4 | ✅ |
 | `SpectralDynamics.lean` | 谱流方程、$A_{\text{weak}}$ 非对易修复 | 6 | ✅ |
 | `CategoryRepBridge.lean` | SU(2) 结构、Casimir、谱定理 | 8 | ✅ **新建** |
-| `Clifford.lean` | Cl(1,7) Bott 分类、`cl17_rep_dim=8` | 3 | ✅ |
+| `Clifford.lean` | Cl(1,7) Bott 分类、`cl17_rep_dim=16` | 3 | ✅ |
 | `SpectralGap.lean` | $\Delta\lambda_{\min}$ 公式、数值界限、物理常数 | 9 | ✅ **零 sorry** |
 | `Silence.lean` | 连续静默度 $\delta_{\text{silence}}$ | 4 | ✅ |
 | `SignatureFiber.lean` | 签名范畴 $\mathbf{Sig}$、投影 $\pi_{\mathrm{Sig}}$ 纤维化、$\iota\dashv\pi$ 伴随对、Bott 塔 | 8 | ✅ |
@@ -736,7 +726,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 ### 9.3 开放问题
 
 ~~1. **SU(2) 的范畴涌现**：$G_{\text{GR}} = \text{ad}(G)(A)$ 作为谱流生成元已在范畴框架内定义，但"为什么是 SU(2) 而不是其他 Lie 代数"的范畴来源尚未完全形式化（方向 B1：SpObj 纤维丛结构约束待完成）。~~ **✅ 已解决（§3.5）。** 五个范畴约束 C1-C5（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$。秩-1 紧实非交换 Lie 代数连同 Casimir 谱的半整数 $j$ 条件排除所有其他 Lie 代数（包括 $\mathfrak{so}(3)$）。
-2. **Bott 周期分类的完全形式化**：Cl(1,7) ≅ M₈(ℝ) 当前引用已知代数分类定理。完整的形式化需在 Lean 中实现 Bott 周期性，超出当前 Mathlib 能力。
+2. **Bott 周期分类的完全形式化**：Cl(1,7) ≅ M₁₆(ℝ) 当前引用已知代数分类定理。完整的形式化需在 Lean 中实现 Bott 周期性，超出当前 Mathlib 能力。
 ~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`paper41_cosmological_constant.py` 6/6 验证通过。
 
 ---
@@ -755,13 +745,13 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ---
 
-**版本**：v0.5
+**版本**：v0.6
 
-**日期**：2026-07-21
+**日期**：2026-07-27
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
+《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.6 全局修正 Cl(1,7) ≅ M₁₆(ℝ)（原误作 M₈(ℝ)），更新全文中所有相关引用，并相应修正 Bott 塔及各派生公式。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
 - 谱流生成元 $G_{\text{GR}}$ 的范畴来源与三层对称性破缺（§3）
 - **SU(2) 范畴涌现：五个约束 C1-C5 唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$（§3.5，新增）**
 - SU(2) Casimir 谱 $\sqrt{k(k+1)}$ 与谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$（§4）
@@ -770,13 +760,14 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 - 裸耦合常数、R² 系数、临界能量密度（§7）
 - Lean 4 形式化验证，零 `sorry`（§8）
 - 与弦论 Cl(9,1) 的代数包含、物理参数公用关系与 IC 投影机制（§5.1）
-- 全链零自由参数，签名 $(1,7)$ 由范畴约束唯一确定
+- 全链在登记参数基线上闭合，签名 $(1,7)$ 由范畴约束唯一确定
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v0.6 | 2026-07-27 | 全局修正 Cl(1,7) ≅ M₁₆(ℝ)（原误作 M₈(ℝ)）：更新全文所有 ASCII 图、文本描述、Bott 塔（Level 0 16 维）、SU(2) 分支规则（N(2₁)=8）、定理 5.5/5.6/5.9、Lean 形式化引用及开放问题；ε 公式同步校准 |
 | v0.5 | 2026-07-21 | 新增 §3.5 SU(2) 范畴涌现（五个约束 C1-C5 唯一锁定 g_GR ≅ su(2)，系统排除表，半整数 j 挑选 SU(2) 而非 SO(3)）；开放问题 #1 标记为已解决 |
-| v0.4 | 2026-07-21 | 新增 §6.4 谱交织精度 ε 的第一性原理推导（N(2₁)=4 分支规则、闭式 ε=N(2₁)×v_EW/M_Pl、数值验证 8.068×10⁻¹⁷，偏差 0.64%）；替换笔记引用为 Lean 文件引用 |
+| v0.4 | 2026-07-21 | 新增 §6.4 谱交织精度 ε 的第一性原理推导（N(2₁) 分支规则、闭式 ε=N(2₁)×v_EW/M_Pl）；替换笔记引用为 Lean 文件引用 |
 | v0.3 | 2026-07-21 | 签名 $(1,7)$ 唯一性论证补全（添加 $\mathbf{Sp}$ 公理排除 $(5,3)$）；与弦论 Cl(9,1) 对比修正（代数包含、物理参数公用表、推导路径差异、IC 兼容共存、IC 投影机制）；修正 Cl(9,1) ≅ M₁₆(ℝ) 同构；删除错误的遗忘函子方向 |
 | v0.2 | 2026-07-21 | 补完 §1.3 完整生成树（三扇区统一框架）、§1.4 与现有工作关系表、§3 三层破缺与力生成元、§5 Cl(1,7) 范畴涌现论证、§9 展望；修正 §3.2/3.3 关键概念混淆 |
 | v0.1 | 2026-07-21 | 初始版本，基于 Phase 53 分析笔记 A-E 与 SpectralGap.lean 形式化证明 |

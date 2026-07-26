@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.1（2026-07-19）
+**版本**：v1.2（2026-07-27）
 
-**摘要**：本文在 UFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Sp}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Sp}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Sp}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Sp}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，无自由参数。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、零参数预测（Paper XVII）形成完整的跨领域统一框架。
+**摘要**：本文在 UFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Sp}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Sp}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Sp}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Sp}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，基于登记参数基线。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、登记参数基线（Paper XVII 勘误）形成完整的跨领域统一框架。
 
 ---
 
@@ -255,7 +255,7 @@ $$N_{\text{IFS}} = n - 1 = 3$$
 
 $$\boxed{d = N_{\text{IFS}} = 3}$$
 
-**证明**。由引理 4.1，IFS 有 3 个生成映射 $f_1, f_2, f_3$。每个映射 $f_i$ 生成一个独立的收缩方向，对应一个空间自由度。IFS 吸引子的支撑集在这些方向上的投影张成一个 $d$ 维空间。由 Moran 方程 $\sum_{i=1}^3 c_i^{d_H} = 1$ 的自洽性，IFS 映射数 $N_{\text{IFS}} = 3$ 直接决定了谱流在 3 个方向上的通量守恒方程形式。□
+**证明**。由引理 4.1，IFS 有 3 个生成映射 $f_1, f_2, f_3$。每个映射 $f_i$ 生成一个独立的收缩方向，对应一个空间自由度。IFS 吸引子的支撑集在这些方向上的投影张成一个 $d$ 维空间。由 Moran 方程 $\sum_{i=1}^3 c_i^{d_H} = 1$，IFS 映射数 $N_{\text{IFS}} = 3$ 直接决定了谱流在 3 个方向上的通量守恒方程形式。□
 
 **推论 4.1a**（IFS 映射数与引力定律的维度依赖）。$1/r^2$ 规律来自谱强度在 $d = 3$ 维空间中的通量守恒，如果 $d \neq 3$，引力定律将为 $1/r^{d-1}$。
 
@@ -625,7 +625,7 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 - **Paper VIII**（黑洞谱）：$\partial\mathbf{Rec}_D$ 视界 → 本文 §4：谱边界几何
 - **Paper XI**（QFT 公理）：A1-A7 → 本文：Newtonian 基础
 - **Paper XVI**（Lorentz 谱动力学）：Lorentz 谱流 → 本文：经典极限
-- **Paper XVII**（零参数预测）：SM 参数 → 本文 §5：$G_N$ 和引力标度
+- **Paper XVII**（登记参数基线）：SM 参数 → 本文 §5：$G_N$ 和引力标度（见 RAP_勘误与立场声明.md）
 
 ### 12.3 可检验预言汇总
 
@@ -663,7 +663,7 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 [5] UFPF Paper VIII: 黑洞熵的谱动力学推导.
 [6] UFPF Paper XI: 谱量子场论公理系统.
 [7] UFPF Paper XVI: Lorentz 变换的谱动力学解读.
-[8] UFPF Paper XVII: 从严格 4-范畴零参数预测全部粒子物理可观测量.
+[8] UFPF Paper XVII: 从严格 4-范畴登记参数基线（见 RAP_勘误与立场声明.md）. 原称"零参数预测"已修正.
 [9] Magnus, W. (1954). On the exponential solution of differential equations for a linear operator. *Comm. Pure Appl. Math.*, 7:649–673.
 [10] Eöt-Wash Collaboration (2020). Constraints on Yukawa-type deviations from Newtonian gravity. *Phys. Rev. D*, 101:042001.
 [11] MICROSCOPE Collaboration (2022). MICROSCOPE mission: final results of the test of the equivalence principle. *Phys. Rev. Lett.*, 129:121102.
@@ -694,5 +694,6 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.2 | 2026-07-27 | RAP v0.1 修正：替换"零参数预测"为"登记参数基线"并标注 Paper XVII 勘误；删除 Moran 方程"自洽性"表述 |
 | v1.1 | 2026-07-19 | 开放问题 4（ε 更深层起源）标记为已解决，补充 Cl(1,7) 第一性原理推导；移除研究笔记引用，替换为自包含推导内容 |
 | v1.0 | 2026-07-19 | 初始版本：从谱动力学第一原理推导牛顿力学 |

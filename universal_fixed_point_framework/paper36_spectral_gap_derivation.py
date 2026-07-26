@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 """
-Paper 36: 谱间隙 Δλ_min 的第一性原理推导
-=========================================
+Paper 36: 谱间隙 Δλ_min 的推导
+=================================
 
 核心问题：
   谱间隙 Δλ_min 出现在 Hawking 温度、BH 熵、反弹尺度、R² 系数等多个物理量中。
-  能否从 A_GR 的 SU(2) 表示结构 + Cl(1,7) 代数唯一确定？
+  能否从 A_GR 的 SU(2) 表示结构确定谱间隙比值？
 
 推导策略：
   1. A_GR 谱：λ_k ∝ √{k(k+1)}（来自 SU(2) 表示，与 LQG 面积谱一致）
-  2. 最大模数 k_max：由 Cl(1,7) ≅ M_8(R) 的表示维数固定
+  2. 最大模数 k_max：模型选择（参见 paper/RAP_勘误与立场声明.md），非 Cl(1,7) 维数唯一导出
   3. 归一化：λ_max ∼ M_Pl（Planck 截断）
   4. 自洽求解 Δλ_min = λ_2 - λ_1
+  5. 谱间隙比值 √(2/3):1:√2 与 k_max 无关，属 SU(2) 结构结果；Δλ_min 数值依赖 k_max 选择
 
 验证：
   计算 Δλ_min 后，推导 ρ_c、c_1、T_H 等并与已知物理比较。
@@ -47,14 +48,13 @@ def spectral_gap(k_max):
 
 def derive_kmax_candidates():
     """
-    k_max 的候选值来源：
+    k_max 的候选值来源（模型选择）：
     
-    候选 A（基础）：Cl(1,7) ≅ M_8(R)，实 8×8 矩阵 → 维数 8
-      几何：A_GR 谱对应 8 个"几何颜色"（与 SM 的 SU(3)×SU(2)×U(1) 匹配）
-      k_max = 8
+    候选 A（选择值）：k_max = 8
+      数值扫描 {4,6,8,16,100} 中 k_max=8 与 ρ_c 最佳匹配（见 paper/RAP_勘误与立场声明.md）
       Δλ_min = λ_2 - λ_1 ≈ 0.122 M_Pl
     
-    候选 B（扩展）：Cl(1,7) 旋量表示维数 = 2^{floor(8/2)} = 16
+    候选 B（升维）：k_max = 16
       k_max = 16
       Δλ_min = λ_2 - λ_1 ≈ 0.086 M_Pl
     
@@ -210,7 +210,7 @@ def main():
     print("\n    解析公式：")
     print("      Delta_lambda_min = (sqrt(6) - sqrt(2)) / sqrt(k_max(k_max+1))  [M_Pl]")
     print("      ")
-    print("    当 k_max = 8 (Cl(1,7) 代数维数)：")
+    print("    当 k_max = 8（模型选择）：")
     print("      Delta_lambda_min = (sqrt(6) - sqrt(2)) / sqrt(72) ≈ 0.122 M_Pl")
     print("")
     
@@ -250,15 +250,14 @@ def main():
     
     # (1) Δλ_min → A_GR 总模数
     k_max_derived = int(1 / gap_8**2)  # ~67 for gap=0.122
-    kmax_from_cl = 8
+    kmax_model = 8  # 模型选择值（见 paper/RAP_勘误与立场声明.md）
     
     # (2) 谱截断：总能量
     k_vals, spec = ag_spectrum(100)
     total_energy = np.sum(spec)
     
-    print(f"\n    自洽性链：")
-    print(f"      Cl(1,7) -> k_max = 8")
-    print(f"      -> Delta_lambda_min = {gap_8:.4f} M_Pl")
+    print(f"\n    自洽性链（k_max = 8 模型选择下）：")
+    print(f"      k_max = 8 -> Δλ_min = {gap_8:.4f} M_Pl")
     print(f"      -> c_1 = {q['c1']:.2f}")
     print(f"      -> rho_c = {q['rho_c']:.4f} M_Pl^4  (期望 ~0.335)")
     print(f"      -> r = {q['r']:.4f}  (期望 0.0042)")
@@ -266,7 +265,7 @@ def main():
     print(f"      ")
     print(f"    LQG 面积谱 R^2 一致性：0.999984 ✅")
     print(f"    SU(2) 表示 -> sqrt(k(k+1)) 谱：严格推导 ✅")
-    print(f"    Cl(1,7) -> k_max = 8：群论直接确定 ✅")
+    print(f"    k_max = 8：模型选择（数值扫描 {4,6,8,16,100} 中与 ρ_c 最佳匹配）✅")
     print("")
     
     # -------------------------------------------------------
@@ -278,7 +277,7 @@ def main():
     
     checks = [
         ("SU(2) -> sqrt(k(k+1)) 谱", True),
-        ("Cl(1,7) → k_max = 8", True),
+        ("k_max = 8（模型选择）", True),
         ("Δλ_min = 0.122 M_Pl", abs(gap_8 - 0.122) < 0.01),
         (f"ρ_c = {q['rho_c']:.3f} M_Pl⁴ (期望 0.335, 偏差 {(q['rho_c']/0.335-1)*100:.0f}%)", True),
         (f"r = {q['r']:.4f} (期望 0.0042)", abs(q['r']/0.0042-1) < 0.5),

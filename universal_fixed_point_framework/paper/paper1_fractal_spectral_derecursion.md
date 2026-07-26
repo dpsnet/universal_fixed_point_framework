@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.43（2026-07-20）
+**版本**：v2.46（2026-07-27）
 
-**摘要**：本文提出分形谱化理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$，构造谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.3.1），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.4.5）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然同构 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将谱化理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"双初始向量逆迭代法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 IFS 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：Hausdorff 维数凹性定理（Hausdorff 维数 $d_H(\rho)$ 凹性）、Ledrappier-Young 维数分解定理（高维可逆系统 Ledrappier-Young 维数分解）、拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，所有核心理论开放问题已全部解决（7/7），物理应用见配套论文 II——三项纯数学定理（Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）已用于修正暗物质质量谱、BSM 新费米子质量谱、Kerr 分形维数与 LIGO/Virgo SNR 等物理预测。此外，本文识别出**四层静默体系**（对象静默 / 态射静默 / 谱静默 / 辫子静默，§5.7），将范畴论定义域限制转化为不可见性理论的统一框架——态射静默是比谱静默更彻底的不可见性机制，辫子静默是复耗散系统中谱静默的拓扑缠绕推广；并将耗散拓展函子 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除原 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统。层次包含关系已在 Lean 4 中形式化验证（`SilenceHierarchy.lean`）。**借助 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入，该框架可覆盖所有以集合为底层对象的数学系统，构成 $\mathbf{Rec}/\mathbf{Sp}$ 通用范畴论基础（推论 5.32, §5.8.5）。**
+**摘要**：本文提出分形谱化理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$，构造谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.3.1），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.4.5）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然同构 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将谱化理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"双初始向量逆迭代法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 IFS 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：Hausdorff 维数凹性定理（Hausdorff 维数 $d_H(\rho)$ 凹性）、Ledrappier-Young 维数分解定理（高维可逆系统 Ledrappier-Young 维数分解）、拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，四层静默体系（§5.7）的定义与层次包含关系已在 Lean 4 中形式化验证（`SilenceHierarchy.lean`）；自伴骨架的循环论证已通过显式余伴随构造（RAP-5a/定理 R11）清除。范畴层完备化的其余开放问题（耗散半边统一、连续谱 Lean 形式化）已登记为 RAP-5d–5f。**借助 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入，该框架可嵌入所有以集合为底层对象的数学系统；其作为物理预言理论的适用范围由桥梁假设与实验检验决定，不构成“覆盖所有数学系统”的元数学宣称（参见《RAP_勘误与立场声明.md》）。**
 
 ---
 
@@ -35,11 +35,11 @@
 7. **谱静默理论**：四个静默判据与等价性定理，增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）（区分度达 3.93），自适应阈值策略；
 8. **热力学极限**：IFS 热力学极限存在性严格证明（自由能凸性、次可加性、Fekete 引理）；
 9. **物理应用验证**：将谱化理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题（定理 7.27），三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$），实现双重 homotopy continuation（a-homotopy + m-homotopy）；提出"双初始向量逆迭代法"逆迭代优化（定理 7.27b）将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（定理 7.27c，平衡点 $K \approx 3$）。
-10. **方法论与四层静默体系**：(a) 重构 $D$ 函子的定义时序，明确 $\mathbf{Rec}_D$ 宽子范畴（§2.3 定义 2.3.1）；(b) 严格证明 $\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）与 $D\dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性（定理 2.4.5）；(c) 识别**四层静默体系**——对象静默、态射静默（新发现，比谱静默更彻底）、谱静默、辫子静默（新发现，复耗散系统中谱静默的拓扑缠绕推广，§5.7）——统一"对象/关系/属性/辫子同伦"四个层级的不可见性，层次包含关系已形式化（`SilenceHierarchy.lean`）；(d) 将 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统；所有核心理论开放问题已全部解决（7/7）。
+10. **方法论与四层静默体系**：(a) 重构 $D$ 函子的定义时序，明确 $\mathbf{Rec}_D$ 宽子范畴（§2.3 定义 2.3.1）；(b) 严格证明 $\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）与 $D\dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性（定理 2.4.5）；(c) 识别**四层静默体系**——对象静默、态射静默（新发现，比谱静默更彻底）、谱静默、辫子静默（新发现，复耗散系统中谱静默的拓扑缠绕推广，§5.7）——统一"对象/关系/属性/辫子同伦"四个层级的不可见性，层次包含关系已形式化（`SilenceHierarchy.lean`）；(d) 将 $D_{\text{diss}}$ 严格化为真正函子（定理 7.31 严格化版本），消除 $O(\varepsilon)$ 误差，覆盖黑洞耗散混沌、非对称 IFS、非正规 NTK 核等耗散系统；自伴骨架的循环论证已清除（构造 C2.2 / 定理 C2.3），范畴层完备化的其余问题已登记为 RAP-5d–5f。
 11. **纯数学理论短板解决**：基于 Falconer (2014)、Ledrappier & Young (1985)、Ruelle (1978) 的经典工作，在本框架的统一范畴论体系内严格化三项核心数学定理——Hausdorff 维数凹性定理（Hausdorff 维数 $d_H(\rho)$ 凹性，基于压力函数凸性 + Legendre 变换 + 隐函数定理 + IFS 模型验证）、Ledrappier-Young 维数分解定理（高维可逆系统 Ledrappier-Young 维数分解，Oseledets 分解 + 稳定/不稳定流形定理 + 条件熵分解 + 乘积结构）、拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙普适不等式，Markov IFS 严格框架 + Perron-Frobenius 特征值分析 + IFS 框架验证）。三定理本身的数学内容为已有结论的严格化重组，框架的**真正创新点**在于：(a) 三定理在分形 RKHS + 遍历理论 + 拓扑动力系统的统一范畴框架内首次被系统组织为关联体系；(b) 将三定理应用于 Kerr QNM、暗物质质量谱、BSM 费米子质量谱等物理预测的具体化。综合验证全部通过（`math_open_problems_convexity.py`）。
 12. **跨领域函子相容性与隔离约束**：针对 IFS/Kerr/NTK/Clifford 四类对象的态射、内积、拓扑不同问题，引入隔离约束条件 IC（谱尺度相容、态射延伸性、拓扑相容性，定义 C3.1），证明 IC 满足时 $D$ 函子严格保持跨领域态射与结构不变量（定理 C3.2），诚实标注条件性满足的实例对（命题 C3.3）。
 
-**框架普适性**：在与 Paper XIX 的联合框架下——静态拓扑嵌入 $\mathbf{Rec}_{\text{id}}$、随机系统嵌入 $\Sigma$-$\mathbf{Rec}$、三层伴随对嵌套 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$——$\mathbf{Rec}/\mathbf{Sp}$ 范畴可覆盖所有以集合为底层对象的数学系统：包括但不限于代数结构（群、环、模）、几何结构（拓扑空间、流形）、组合结构（图、偏序集）、逻辑结构（形式语言、计算模型）等。这是 $\mathbf{Rec}/\mathbf{Sp}$ 框架的根本定位：**任一可被集合承载的数学对象均可嵌入该框架**（推论 5.32, §5.8.5），静默体系自动刻画其结构不可见性。
+**框架嵌入范围**：在与 Paper XIX 的联合框架下——静态拓扑嵌入 $\mathbf{Rec}_{\text{id}}$、随机系统嵌入 $\Sigma$-$\mathbf{Rec}$、三层伴随对嵌套 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$——$\mathbf{Rec}/\mathbf{Sp}$ 范畴可嵌入所有以集合为底层对象的数学系统：包括但不限于代数结构（群、环、模）、几何结构（拓扑空间、流形）、组合结构（图、偏序集）、逻辑结构（形式语言、计算模型）等。但“可嵌入”是形式化能力，不等于框架自然导出这些系统的全部结构；作为物理预言理论的适用范围仍由桥梁假设与实验检验决定（参见《RAP_勘误与立场声明.md》）。
 
 ### 1.3 论文结构
 
@@ -73,7 +73,7 @@
 
 **从谱理论到物理**。当 $D$ 函子的谱像 $\mathbf{Sp}$ 被赋予物理诠释（$A_R = -\log U_R$ 对应谱算子，$\sigma(A_R)$ 对应物理可观测量的谱），一个意外的统一开始浮现：Kerr 黑洞的 QNM 谱、标准模型的费米子质量谱、NTK 的收敛谱——这些表面上无关的谱结构，在 $\mathbf{Sp}$ 范畴中共享同一数学形式。这一发现将框架从机器学习工具推向了物理基础理论。
 
-**从 $\mathrm{Cl}(1,7)$ 到零参数预测**。框架与 Clifford 代数 $\mathrm{Cl}(1,7)$ 的结合标志着从"分类工具"到"预言理论"的跃迁。Bott 周期分类唯一锁定 $k_{\max}=8$，SU(2) Casimir 谱唯一锁定 $\Delta\lambda_{\min}$——这一切都不是拟合，而是代数和范畴公理的必然结果。29 项零参数物理预测是这一推导链的最终输出。
+**从 $\mathrm{Cl}(1,7)$ 到谱唯象体系**。框架与 Clifford 代数 $\mathrm{Cl}(1,7)$ 的结合提供了一条从代数结构到低能谱的翻译通道。修正后的诚实定位为：以 $(d_H, \lambda_{\text{静默}})$ 两个登记参数为核心、覆盖 15 项严格结果与 14 项唯象关系的跨领域谱唯象体系。其中 $k_{\max}=8$ 是模型选择而非 Bott 周期唯一锁定；$\mathrm{Cl}(1,7)$ 提供单代旋量载体，三代结构 $N_{\text{gen}}=3$ 作为独立输入加入；$d_H=2.7095$ 目前登记为味数术关系联合最优值，Moran 方程本身不对 $d_H$ 构成约束。详见《RAP_勘误与立场声明.md》。
 
 **方法论特点**。与弦论从几何美学出发、圈量子引力从广义相对论量子化出发不同，本框架从**工程痛点**出发——谱化最初是一个计算问题，而非物理问题。这一起源使框架具有独特的实用主义特征：所有公理都有明确的工程动机，所有定理都有可检验的数值后果。
 
@@ -171,17 +171,25 @@ $$(D(f)^\ast h)(x) = h(f(x)), \quad (D(g)^\ast h)(x) = h(g(x)).$$
 1. **紧性论证**：由 $\sigma(-\log U_{R_i}) \subset \mathbb{R}_{\ge 0}$（闭集），并集闭包 $\overline{\bigcup_i \sigma(-\log U_{R_i})} \subset \mathbb{R}_{\ge 0}$（闭集之并在 $\mathbb{R}_{\ge 0}$ 内仍闭）。由 $\mathbb{R}_{\ge 0}$ 的闭性，$\sigma(-\log U_{R_\infty}) \subset \mathbb{R}_{\ge 0}$，故 $R_\infty \in \mathbf{Rec}_D$。
 2. **测度论紧性（IFS 无穷维空间情形）**：若涉及 IFS 无穷维空间，需补充弱紧性论证——Koopman 算子在 $L^2$ 上的作用为压缩算子，单位球弱紧（Banach-Alaoglu），极限在弱拓扑下存在，弱极限保持正半定谱（由谱的上半连续性，附录 A.5 引理 A.1）。□
 
-**命题 C2.2**（解集的可表构造）。对每个 $E \in \mathbf{Sp}$，存在可表函子 $G_E: \mathbf{Rec}_D \to \mathbf{Set}$，$G_E(R) = \mathrm{Hom}_{\mathbf{Sp}}(E, D(R))$，其代表对象为 $R_E = R(E)$（包含函子的像）。解集条件等价于 $G_E$ 的可表性。
+**构造 C2.2**（余伴随 $R(E)$ 的显式定义）。对每个谱对象 $E = (\mathcal H_E, A_E, \sigma_E) \in \mathbf{Sp}$，定义递归系统 $R(E) \in \mathbf{Rec}_D$ 如下：
 
-**证明**。由 $D \dashv R$（定理 2.4.5 在 $\mathbf{Rec}_D$ 上严格成立），$\mathrm{Hom}_{\mathbf{Sp}}(E, D(R)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), R)$，故 $G_E \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), -)$，由 Yoneda 引理可表，代表对象为 $R(E)$。解集 $\{(R(E), \eta_{R(E)})\}$ 的基数由 $\mathbf{Sp}$ 的小性保证（谱对象集合为集合而非真类）。□
+- **状态空间**：$\mathcal S_{R(E)} = \mathcal D(A_E)$（$A_E$ 的稠定定义域，赋予图范数拓扑）；
+- **演化映射**：$\Phi_{R(E)} = e^{-A_E}|_{\mathcal D(A_E)}$（Hille–Yosida 压缩半群在 $t=1$ 的值）；
+- **时间半群**：$\mathbb R_{\ge 0}$；
+- **附加结构**：$A_E$ 的谱测度 $E_{A_E}$。
 
-**定理 C2.3**（Freyd 伴随定理完整应用）。$\mathbf{Rec}_D$ 满足 Freyd 伴随定理的全部前提：
+**定理 C2.3**（$D \dashv R$ 的无循环证明）。在 $D$ 的像（谱对象可对角化的全子范畴）上，上述 $R$ 是 $D$ 的右伴随，即存在自然同构：
+$$\mathrm{Hom}_{\mathbf{Sp}}(E, D(S)) \;\cong\; \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), S).$$
 
-1. **完备性**：命题 C2.1 给出小极限的显式构造与测度论紧性推导；
-2. **解集条件**：命题 C2.2 给出可表函子的标准构造；
-3. **小性**：$\mathbf{Rec}_D$ 的对象类为集合（由 Koopman 算子的集合性保证）。
+**证明**。
 
-故 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 存在右伴随 $R: \mathbf{Sp} \to \mathbf{Rec}_D$。□
+1. **对象重建**：$D(R(E)) \cong E$。因为 $A_{R(E)} = -\log U_{R(E)} = -\log e^{-A_E} = A_E$（$A_E$ 正自伴，$-\log$ 与 $\exp$ 在 $(0,1]$ 上互逆）。
+
+2. **态射对应**：$\mathbf{Sp}$ 中的谱交织条件 $T A_E \subseteq A_{D(S)} T$ 与 $\mathbf{Rec}_D$ 中的交换条件 $\Phi_S \circ f = f \circ \Phi_{R(E)}$ 在谱坐标下等价。事实上，后者即 $f$ 与 $e^{-A_E}$ 和 $\Phi_S$ 同时交换，前者即 $T$ 把 $A_E$ 的本征数据匹配到 $A_{D(S)}$ 的本征数据；两者都以“谱匹配”为枢纽建立双射。
+
+3. **单位与余单位**：单位 $\eta_E = \mathrm{id}_E$（由 $D(R(E)) \cong E$）；余单位 $\varepsilon_S: R(D(S)) \to S$ 取“忘却谱坐标”映射。三角恒等式由 $R \circ D$ 的幂等性（$D(R(D(S))) = D(S)$，构造保持谱不变）成立。□
+
+**注 C2.3a**（Freyd 定理的角色）。命题 C2.2 与定理 C2.3 的早期版本曾试图用 Freyd 伴随函子定理证明 $D \dashv R$ 的存在性，但该证明以 $D \dashv R$ 本身为前提导出解集条件，构成循环。本版改用上述显式构造，绕开 Freyd 定理；Freyd 定理可作为存在性的另一种视角，但不再是本证明链的必要环节。
 
 **推论 2.4.3**。存在自然变换 $\eta: \mathrm{id}_{\mathbf{Rec}_D} \to R \circ D$（单位）与 $\varepsilon: D \circ R \to \mathrm{id}_{\mathbf{Sp}}$（余单位），满足三角恒等式：
 
@@ -195,19 +203,9 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
 
 **证明**。(1) 由 $R$ 的定义，$\mathbf{Sp}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Sp}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
 
-**定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为包含函子（将谱对象 $E$ 映射为以 $U_E = e^{-A_E}$ 为 Koopman 算子的递归系统）。则 $D\dashv R$ 严格成立。
+**定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为构造 C2.2 给出的显式余伴随。则 $D\dashv R$ 严格成立。
 
-**证明**。构造单位 $\eta$ 与余单位 $\varepsilon$：
-
-- **单位** $\eta_R: R \to R(D(R))$，对 $R\in\mathbf{Rec}_D$，将 $U_R$ 投影到其自伴谱内容 $e^{-A_R}$（$A_R$ 已正定）；
-- **余单位** $\varepsilon_E: D(R(E)) \to E$，对 $E\in\mathbf{Sp}$，由 $A_{D(R(E))} = A_E$（$A_E$ 自伴）得 $\varepsilon_E = \mathrm{id}_E$。
-
-**三角恒等式验证**：
-
-1. $(\varepsilon D)\circ(D\eta) = \mathrm{id}_D$：对 $R\in\mathbf{Rec}_D$，$D(\eta_R): D(R)\to D(R(D(R)))$ 与 $\varepsilon_{D(R)}: D(R(D(R)))\to D(R)$，由 $\varepsilon_{D(R)} = \mathrm{id}_{D(R)}$（因 $A_{D(R(D(R)))} = A_{D(R)}$），恒等式成立；
-2. $(R\varepsilon)\circ(\eta R) = \mathrm{id}_R$：对 $E\in\mathbf{Sp}$，$\eta_{R(E)}: R(E)\to R(D(R(E)))$ 与 $R(\varepsilon_E): R(D(R(E)))\to R(E)$，由 $D(R(E)) = E$（$R$ 为包含函子），$\eta_{R(E)} = \mathrm{id}_{R(E)}$，恒等式成立。
-
-故 $D\dashv R$ 严格成立。□
+**证明**。由构造 C2.2 与定理 C2.3，$R(E)$ 的显式定义直接给出自然同构 $\mathrm{Hom}_{\mathbf{Sp}}(E, D(S)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), S)$；单位 $\eta_E = \mathrm{id}_E$ 与余单位 $\varepsilon_S: R(D(S)) \to S$（忘却谱坐标）满足三角恒等式，详见定理 C2.3 的证明。□
 
 **注 2.4.6**。命题 2.4.4 表明 $D$ 函子的实质像是 $\mathbf{Sp}$ 在 $\mathbf{Rec}_D$ 中的反射子范畴。$D$ 仅定义在 $\mathbf{Rec}_D$ 上，而 $\eta_R$ 编码从一般动力学到其谱内容的规范投影——对于 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象，需通过 §7.9.1 的耗散拓展 $D_{\text{diss}}$ 处理。
 
@@ -1075,23 +1073,23 @@ $$A_\eta = A_R + \eta \cdot \delta A_N$$
 中層:   ℒ ⊣ ι          (静态-动态转化，无条件)
         ↑                  ↑
 內層:   D ⊣ R           (谱-递归转化，Paper I)
-        (本文定理 2.4.5，在 Rec_D 上严格)
+        (本文定理 2.4.5 / 构造 C2.2，显式构造，非 Freyd 循环)
 ```
 
 #### 5.8.5 框架完备性
 
-**定理 5.32**（框架完备性）。本文的 $\mathbf{Rec}$ 与 Paper XIX 的 $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 通过三层伴随对构成一个封闭的范畴网络：
+**定理 5.32**（自伴骨架的范畴网络）。本文的 $\mathbf{Rec}$ 与 Paper XIX 的 $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 通过三层伴随对构成一个**部分闭合**的范畴网络：
 
-1. 任意 $\mathbf{Rec}$ 对象可静态化为 $\mathbf{Rec}_{\text{id}}$ 对象（$\mathcal{L}$）
-2. 任意 $\mathbf{Rec}_{\text{id}}$ 对象可在附加动力学数据后动态化为 $\mathbf{Rec}$ 对象（$\mathcal{D}yn$）
-3. 任意 $\mathbf{Rec}$ 对象可在超过噪声阈值后溶解为 $\Sigma$-$\mathbf{Rec}$ 对象（$\mathcal{D}iss$）
-4. 任意 $\Sigma$-$\mathbf{Rec}$ 对象可在主导分量条件下选择为 $\mathbf{Rec}$ 对象（$\mathcal{S}el$）
-5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Sp}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）
-6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma\text{-}D(N) \cong D(R)$）
+1. 任意 $\mathbf{Rec}$ 对象可静态化为 $\mathbf{Rec}_{\text{id}}$ 对象（$\mathcal{L}$）；
+2. 任意 $\mathbf{Rec}_{\text{id}}$ 对象可在附加动力学数据后动态化为 $\mathbf{Rec}$ 对象（$\mathcal{D}yn$）；
+3. 任意 $\mathbf{Rec}$ 对象可在超过噪声阈值后溶解为 $\Sigma$-$\mathbf{Rec}$ 对象（$\mathcal{D}iss$）；
+4. 任意 $\Sigma$-$\mathbf{Rec}$ 对象可在主导分量条件下选择为 $\mathbf{Rec}$ 对象（$\mathcal{S}el$）；
+5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Sp}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）；
+6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma\text{-}D(N) \cong D(R)$）。
 
-*证明*：由本文定理 2.4.5（$D \dashv R$）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥）、定理 8.5（谱等价桥）组合。∎
+*证明*：由本文定理 2.4.5 / 构造 C2.2（$D \dashv R$ 显式构造）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥）、定理 8.5（谱等价桥）组合。∎
 
-**推论 5.32**（框架覆盖范围）。$\mathbf{Rec}/\mathbf{Sp}$ 框架统一覆盖了从纯确定性动力学（本文）到纯静态拓扑（Paper XIX）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的全部连续谱。更进一步，在 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入的支撑下，该框架可覆盖所有以集合为底层对象的数学系统——包括但不限于代数结构（群、环、模）、几何结构（拓扑空间、流形）、组合结构（图、偏序集）、逻辑结构（形式语言、计算模型）等。**任一可被集合承载的数学对象均可嵌入 $\mathbf{Rec}/\mathbf{Sp}$ 框架。**
+**推论 5.32**（框架嵌入范围）。$\mathbf{Rec}/\mathbf{Sp}$ 框架可嵌入从纯确定性动力学（本文）到纯静态拓扑（Paper XIX）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的连续谱。在 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入的支撑下，任一以集合为底层对象的数学系统均可形式化地**嵌入**该框架。但“可嵌入”不等于“框架自然导出该系统的物理/数学结构”；作为物理预言理论的适用范围仍由桥梁假设与实验检验决定。
 
 ---
 
@@ -1113,7 +1111,7 @@ $$A_\eta = A_R + \eta \cdot \delta A_N$$
 
 ### 6.2 Clifford 值谱理论
 
-**定理 5.3**（Clifford 值谱等价）。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 和 $\mathrm{Cl}(9,1) \cong M_{16}(\mathbb{R})$ 均为实矩阵代数，左谱 = 右谱 = 双向谱 = 标量谱。
+**定理 5.3**（Clifford 值谱等价）。$\mathrm{Cl}(1,7) \cong M_{16}(\mathbb{R})$ 和 $\mathrm{Cl}(9,1) \cong M_{32}(\mathbb{R})$ 均为实矩阵代数，左谱 = 右谱 = 双向谱 = 标量谱。
 
 **证明**。实矩阵代数的谱理论与标量谱一致。□
 
@@ -1182,7 +1180,7 @@ $$\sigma_S(A|_S) = \sigma_\mathrm{Cl}(A).$$
 | Clifford 代数 | 矩阵表示 | 旋量模维度 | 物理对应 |
 |---|---|---|---|
 | $\mathrm{Cl}(1,3)$ | $M_4(\mathbb{R})$ | 4 | Dirac 旋量（标准模型） |
-| $\mathrm{Cl}(1,7)$ | $M_8(\mathbb{R})$ | 8 | Majorana 旋量（超对称 SM） |
+| $\mathrm{Cl}(1,7)$ | $M_{16}(\mathbb{R})$ | 16 | Majorana 旋量（单代 SM 载体） |
 | $\mathrm{Cl}(9,1)$ | $M_{32}(\mathbb{R})$ | 32 | 弦论超旋量 |
 
 **数值验证**（`clifford_spectrum_demo.py` + `test_clifford_spinor_module.py`，9 项测试）：
@@ -1191,13 +1189,13 @@ $$\sigma_S(A|_S) = \sigma_\mathrm{Cl}(A).$$
 2. **左理想吸收性**：对 $\gamma_i$ 和 $\gamma_0\gamma_1$，验证 $(a \cdot \mathfrak{p}) \cdot \mathfrak{p} = a \cdot \mathfrak{p}$（误差 $< 10^{-10}$）；
 3. **Clifford 乘法封闭性**：取 $\psi = \gamma_3 \cdot \mathfrak{p} \in S$，验证 $\gamma_i \cdot \psi \in S$（即 $(\gamma_i \cdot \psi) \cdot \mathfrak{p} = \gamma_i \cdot \psi$，误差 $< 10^{-10}$）；
 4. **旋量谱 = 全谱**：随机自伴 $A = \sum c_i \gamma_i$ 的旋量谱与全 Clifford 谱完全一致；
-5. **$\mathrm{Cl}(1,7)$ 旋量模**：8 维 Majorana 旋量，幂等性验证通过。
+5. **$\mathrm{Cl}(1,7)$ 旋量模**：16 维实 Majorana 旋量，幂等性验证通过。
 
 ### 6.5 $\mathrm{Cl}(1,7)$ 统一框架下的反常抵消
 
 本节补充 $\mathrm{Cl}(1,7)$ 统一框架中引力-规范混合反常的显式推导——这是框架声明"GR 与 SM 通过 $\mathrm{Cl}(1,7)$ 统一"时必须验证的自洽性条件。
 
-**定义 6.7**（反常抵消条件）。在 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 统一框架下，设 $F$ 为 $\mathrm{Cl}(1,7)$ 值规范场曲率，$R$ 为 Riemann 曲率，引力-规范混合反常由下列三项之和给出：
+**定义 6.7**（反常抵消条件）。在 $\mathrm{Cl}(1,7) \cong M_{16}(\mathbb{R})$ 统一框架下，设 $F$ 为 $\mathrm{Cl}(1,7)$ 值规范场曲率，$R$ 为 Riemann 曲率，引力-规范混合反常由下列三项之和给出：
 
 $$A = A_{\text{gauge}} + A_{\text{grav}} + A_{\text{mixed}}.$$
 
@@ -1205,9 +1203,9 @@ $$A = A_{\text{gauge}} + A_{\text{grav}} + A_{\text{mixed}}.$$
 
 1. **规范反常**：$\mathrm{Tr}(F \wedge F \wedge F) = 0$——标准模型规范群 $SU(3)_C \times SU(2)_L \times U(1)_Y$ 满足 $\pi_3(G) = 0$，故 $\int \mathrm{Tr}(F^3) = 0$，无规范反常；
 2. **引力反常**：$\mathrm{Tr}(R \wedge R) = 0$——在 $\dim M = 4$ 时，4-形式 $\mathrm{Tr}(R \wedge R)$ 的积分恒为零（Gauss-Bonnet 项在 4 维为拓扑不变量，不贡献反常）；
-3. **混合反常**：$\mathrm{Tr}(F \wedge R) = 0$——需 $\mathrm{Cl}(1,7)$ 表示的显式验证。在 $M_8(\mathbb{R})$ 表示中，$\mathrm{Tr}(F) = 0$（$F$ 为无迹 $\mathfrak{so}(1,7)$ 生成元），故 $\mathrm{Tr}(F \wedge R) = \mathrm{Tr}(F) \cdot \mathrm{Tr}(R) = 0$。
+3. **混合反常**：$\mathrm{Tr}(F \wedge R) = 0$——需 $\mathrm{Cl}(1,7)$ 表示的显式验证。在 $M_{16}(\mathbb{R})$ 表示中，$\mathrm{Tr}(F) = 0$（$F$ 为无迹 $\mathfrak{so}(1,7)$ 生成元），故 $\mathrm{Tr}(F \wedge R) = \mathrm{Tr}(F) \cdot \mathrm{Tr}(R) = 0$。
 
-**证明**。(1) 由规范群无反常条件直接得出：$SU(3)$ 与 $SU(2)$ 的 $\pi_3 = 0$，$U(1)$ 的三角反常可通过电荷赋值消除。(2) $\dim M = 4$ 时 $\mathrm{Tr}(R \wedge R)$ 的积分为 Euler 示性数的 $32\pi^2$ 倍，不产生混合反常。(3) $\mathrm{Cl}(1,7)$ 的矩阵表示 $M_8(\mathbb{R})$ 中所有生成元均为无迹矩阵，故 $\mathrm{Tr}(F) = 0$，$\mathrm{Tr}(F \wedge R) = 0$ 自动满足。□
+**证明**。(1) 由规范群无反常条件直接得出：$SU(3)$ 与 $SU(2)$ 的 $\pi_3 = 0$，$U(1)$ 的三角反常可通过电荷赋值消除。(2) $\dim M = 4$ 时 $\mathrm{Tr}(R \wedge R)$ 的积分为 Euler 示性数的 $32\pi^2$ 倍，不产生混合反常。(3) $\mathrm{Cl}(1,7)$ 的矩阵表示 $M_{16}(\mathbb{R})$ 中所有 $\mathfrak{so}(1,7)$ 生成元均为无迹矩阵，故 $\mathrm{Tr}(F) = 0$，$\mathrm{Tr}(F \wedge R) = 0$ 自动满足。□
 
 **注 6.9**（意义与局限）。上述抵消条件是 $\mathrm{Cl}(1,7)$ 统一框架自洽性的最低要求。完整的反常分析需考虑 (a) $\mathrm{Cl}(1,7)$ 值的 Wess-Zumino 项；(b) 规范反常的高阶圈图修正；(c) 与 BSM 第四代轻子相关的混合反常，（a）-（c）留待未来 Paper III 严格处理。
 
@@ -1253,7 +1251,7 @@ $$A = A_{\text{gauge}} + A_{\text{grav}} + A_{\text{mixed}}.$$
 
 ### 8.2 已解决的核心问题
 
-本节汇总本文已严格证明或已通过数值验证的核心问题，按主题分类。所有核心理论开放问题已全部解决（7/7）。
+本节汇总本文已严格证明或已通过数值验证的核心问题，按主题分类。四层静默体系已闭合；自伴骨架的循环论证已通过显式余伴随构造（构造 C2.2 / 定理 C2.3）清除。范畴层完备化的其余问题（耗散半边统一、连续谱 Lean 形式化）已登记为 RAP-5d–5f 开放项。
 
 #### 8.2.1 框架全景：$\mathbf{Rec}/\mathbf{Sp}$ 的统一相图
 
@@ -1272,9 +1270,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 | 静态拓扑 | $=0$ | $=0$ | $\mathbf{Rec}_{\text{id}}$（Paper XIX）| 紧致流形、稳态时空 |
 | 纯噪声 | $=0$ | $>\eta_c$ | $\Sigma$-$\mathbf{Rec}$（Paper XIX）| 白噪声、$1/f$ 噪声 |
 
-框架的完备性由定理 13.1（Paper XIX）保证：本文的 $\mathbf{Rec}/\mathbf{Sp}$ 框架是有界的（仅覆盖动力学系统），Paper XIX 通过范畴构造突破了这一边界（嵌入静态拓扑与随机系统），二者共同形成完整的范畴转化闭环。三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 与范畴转化机制的详细描述见 §5.8。完整相图与证明见 Paper XIX §13。**不存在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴之外的物理系统。**
-
-**已解决状态**：框架全景的严格化与扩展已在 Paper XIX（`paper19_category_extension.md`）中完成——三层伴随对结构已形式化验证（`StaticTopologyFormalization.lean`、`NoiseCategory.lean`）。
+自伴骨架 $D \dashv R$ 的循环论证已通过构造 C2.2 / 定理 C2.3 的显式余伴随构造清除；$\mathcal{L} \dashv \iota$ 与静默层次包含关系已在 Lean 4 中形式化验证（`StaticTopologyFormalization.lean`、`SilenceHierarchy.lean`）。$\mathcal{S}el \dashv \mathcal{D}iss$ 仍为条件性伴随（Paper XIX 命题 8.3），耗散半边统一与连续谱形式化属于 RAP-5d–5f 开放项。三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 与范畴转化机制的详细描述见 §5.8。完整相图见 Paper XIX §13。**框架可嵌入广泛物理系统，但“可嵌入”不等于“已穷尽所有物理系统”；该穷尽性命题不属于当前可证明范围。**
 
 #### 8.2.2 范畴论与算子理论扩展
 
@@ -1470,6 +1466,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.46 | 2026-07-27 | **修复工程（RAP v0.1）**：（a）摘要、§1.2、§8.2 停用"所有核心理论开放问题已全部解决（7/7）"与"覆盖所有数学系统"表述，改为"自伴骨架循环论证已清除，范畴层完备化仍有 RAP-5d–5f 开放项"及"可嵌入但不等于穷尽"；（b）§1.5 停用"从 Cl(1,7) 到零参数预测"，改为"从 Cl(1,7) 到谱唯象体系"，明确 $d_H$、$\lambda_{\text{静默}}$、$N_{\text{gen}}=3$ 为登记参数；（c）§2.4 用显式余伴随构造（构造 C2.2 / 定理 C2.3）替代原 Freyd 循环证明，定理 2.4.5 证明更新为引用显式构造；（d）§5.8.5 定理 5.32 从"框架完备性"降级为"自伴骨架的范畴网络"，推论 5.32 从"覆盖范围"改为"嵌入范围"；（e）§6 修正 $\mathrm{Cl}(1,7) \cong M_8(\mathbb R)$ 为 $\mathrm{Cl}(1,7) \cong M_{16}(\mathbb R)$，旋量模维度从 8 改为 16，物理对应改为"单代 SM 载体"；（f）§8.2.1 更新三层伴随对形式化状态，标注 $\mathcal{S}el \dashv \mathcal{D}iss$ 仍为条件性伴随。 |
 | v2.45 | 2026-07-22 | **(a) 架构定位更新**：§1.3 新增跨论文定位段落，阐明 Temp/RG 纤维范畴体系与 $\mathbf{Rec}/\mathbf{Sp}$ 的架构关系——Temp/RG 不是 $\mathbf{Rec}$ 的子范畴，而是上方的纤维范畴扩展，参数化 $\mathbf{Rec}$ 对象如何接近 $\partial\mathbf{Rec}_D$ 边界；同时引用 Paper XIX 的范畴扩展，定位三者共同构成 UFPF 完整上层架构；**(b)** 版本号 v2.44 → v2.45。 |
 | v2.44 | 2026-07-21 | **(a) 修复 `SpectralFlowHomotopy.lean` 归纳法证明**：`h_iter_ge_one` 类型错误——`Function.iterate_succ_apply` 在 Mathlib 4.31 中为 `f^[n+1] x = f^[n] (f x)`，原证明以反向方向构建，重写为 `h_iterate_zero` 辅助引理 + `rw [h_ad_zero]` 方式完成，谱流静默模块全量通过编译；**(b) 连续静默度 $\delta_{\text{silence}}$**：`Silence.lean` 新增 `frobeniusNorm`、`deltaSilence` 定义，`frobeniusNorm_eq_zero_iff` 与 `deltaSilence_eq_zero_iff` 已证明，`deltaSilence_bound` 待证；**(c) 跨论文引用更新**：§5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用；版本号 v2.43 → v2.44。 |
 | v2.43 | 2026-07-20 | **Phase 31.1 高阶 ∞-范畴 Lean 4 形式化骨架完成并通过编译**：修复六个模块（`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`）的类型一致性、命名空间冲突、矩阵乘法解析与 `noncomputable` 标记问题；修复 `HigherSpecCategory.lean` 中 `.matrix` → `.P` 的字段名不一致及 `specExchangeLaw` 参数错误；给 `SpecTwoMorphism` 与 `SpecInfMorphism` 添加 `@[ext]`；**全部模块通过 `lake build`**；开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"；同步更新版本号至 v2.43 及状态描述。 |
