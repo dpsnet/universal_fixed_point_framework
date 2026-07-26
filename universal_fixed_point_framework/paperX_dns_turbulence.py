@@ -116,23 +116,34 @@ class PseudoSpectralDNS3D:
         self._init_velocity()
 
     def _init_velocity(self):
-        """初始化满足不可压条件的随机速度场"""
-        # 在 Fourier 空间中生成随机场
+        """初始化满足不可压条件的随机速度场
+        
+        初始能量选取优先级：
+          1. energy_controlled 模式 → 直接用 target_energy
+          2. 其他模式 → K41 估计 E = (ε·L_f/C_K)^(2/3)
+        """
+        if self.cfg.force_type in ("energy_controlled", "deterministic_controlled"):
+            E_target = self.cfg.target_energy
+        else:
+            L_f = 2 * np.pi / max(self.cfg.force_kf, 0.5)
+            E_target = (self.cfg.force_amp * L_f / 1.5)**(2/3)
+        E_target = max(E_target, 0.001)  # 保底下限
+        
         u_hat = np.zeros((3,) + (self.N, self.N, self.N), dtype=complex)
-
         for i in range(3):
-            # 随机振幅
             u_hat[i] = (
                 np.random.randn(self.N, self.N, self.N) +
                 1j * np.random.randn(self.N, self.N, self.N)
             )
 
-        # 投影到无散空间
+        # 投影、标度
         u_hat = self._apply_projection(u_hat)
-
-        # 标度到给定总能量
+        # 仅保留 k < kf*1.5 的大尺度模
+        kf_mask = (self.k < self.cfg.force_kf * 1.5 + 0.5).astype(float)
+        for i in range(3):
+            u_hat[i] *= kf_mask
         E0 = self._compute_energy(u_hat)
-        scale = np.sqrt(0.5 / E0) if E0 > 0 else 1.0
+        scale = np.sqrt(E_target / E0) if E0 > 0 else 1.0
         self.u_hat = u_hat * scale
         self._compute_real_velocity()
 
@@ -267,15 +278,24 @@ class PseudoSpectralDNS3D:
         return rhs
 
     def step(self):
-        """RK4 时间步进"""
+        """RK4 时间步进
+        
+        所有中间步使用 dealias 后的速度场，防止混叠污染。
+        """
         u = self.u_hat
         dt = self.dt
 
+        # 对中间步的速度场做 dealias
+        def dealias(v):
+            for i in range(3):
+                v[i] *= self.dealias_mask
+            return v
+
         # RK4 中间步
         k1 = self._rhs(u)
-        k2 = self._rhs(u + 0.5 * dt * k1)
-        k3 = self._rhs(u + 0.5 * dt * k2)
-        k4 = self._rhs(u + dt * k3)
+        k2 = self._rhs(dealias(u + 0.5 * dt * k1))
+        k3 = self._rhs(dealias(u + 0.5 * dt * k2))
+        k4 = self._rhs(dealias(u + dt * k3))
 
         # 更新
         self.u_hat = u + (dt / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
@@ -360,9 +380,9 @@ class PseudoSpectralDNS3D:
             self.step()
             E = self._compute_energy()
 
-            # 能量耗散率 ε = 2ν * ∫ k² E(k) dk
+            # 能量耗散率 ε = 2ν * ∫ k² E(k) dk ≈ Σ 2ν·k²·E(k)
             _, Ek = self.compute_energy_spectrum()
-            epsilon = 2 * self.cfg.nu * np.sum(self.k_spectrum(Ek, np.arange(len(Ek))))
+            epsilon = 2 * self.cfg.nu * np.sum(np.arange(len(Ek))**2 * Ek)
 
             self.energy_history.append((self.t, E))
             self.dissipation_history.append((self.t, epsilon))
@@ -398,11 +418,15 @@ class PseudoSpectralDNS3D:
         if len(self.spectra_history) < 2:
             return None, None
 
-        # 仅取稳定后的谱
         k, _ = self.compute_energy_spectrum()
 
-        # 对时间平均
-        Ek_avg = np.mean(self.spectra_history, axis=0)
+        # 仅取 T_stats_start 之后的谱
+        valid_spectra = [Ek for t, Ek in zip(self.spectra_times, self.spectra_history)
+                         if t >= self.cfg.T_stats_start]
+        if len(valid_spectra) < 1:
+            return None, None
+
+        Ek_avg = np.mean(valid_spectra, axis=0)
 
         return k, Ek_avg
 
@@ -435,9 +459,12 @@ class EnergySpectrumAnalyzer:
         self.nu = nu
         self._valid_mask = (self.k > 0) & (np.isfinite(self.Ek)) & (self.Ek > 0)
 
-    def fit_inertial_range(self, k_min=None, k_max=None):
+    def fit_inertial_range(self, k_min=None, k_max=None, force_kf=None):
         """
         在惯性区拟合 E(k) ∝ k^n。
+
+        默认范围：k_min = 2*kf (避开强迫区), k_max = k_nu/2 (避开耗散区)
+        若无法获取 k_nu，后备 k_max = N/6
 
         返回:
             slope: 谱斜率 n
@@ -445,6 +472,22 @@ class EnergySpectrumAnalyzer:
             C_K: Kolmogorov 常数 (若 epsilon 已知)
             k_min, k_max: 拟合范围
         """
+        # 默认惯性区范围
+        if k_min is None and force_kf is not None:
+            k_min = 2.0 * force_kf
+        if k_max is None:
+            # 用理论 k_η 估计（优先于 knee 检测，因 knee 可能在强迫尺度）
+            if self.nu is not None and self.epsilon is not None and self.epsilon > 0:
+                k_eta = (self.epsilon / self.nu**3)**0.25
+                k_max = k_eta / 3.0
+            else:
+                k_max = np.max(self.k[self._valid_mask]) / 3.0
+            # knee 检测作为后备，但需验证不在强迫区
+            knee = self.find_dissipation_knee()
+            if knee is not None and force_kf is not None:
+                if knee["k_nu"] > 2.0 * force_kf:
+                    k_max = min(k_max, knee["k_nu"] / 2.0)
+
         mask = self._valid_mask.copy()
 
         if k_min is not None:
@@ -576,9 +619,9 @@ class EnergySpectrumAnalyzer:
                               "中等静默" if S_spec < 0.05 else "弱静默"
         }
 
-    def to_dict(self):
+    def to_dict(self, force_kf=None):
         """导出分析结果"""
-        fit = self.fit_inertial_range()
+        fit = self.fit_inertial_range(force_kf=force_kf)
         knee = self.find_dissipation_knee()
         silence = self.spectral_silence()
 
@@ -621,10 +664,9 @@ def main():
     k, Ek_avg = dns.get_time_averaged_spectrum()
 
     if Ek_avg is not None:
-        # 平均耗散率
-        epsilon_avg = np.mean([e for _, e in dns.dissipation_history
-                               if dns.spectra_times and
-                               dns.t >= cfg.T_stats_start])
+        # 平均耗散率（仅 T_stats_start 之后）
+        epsilon_avg = np.mean([e for t_e, e in dns.dissipation_history
+                               if t_e >= cfg.T_stats_start])
 
         analyzer = EnergySpectrumAnalyzer(k, Ek_avg, epsilon=epsilon_avg, nu=cfg.nu)
         analysis = analyzer.to_dict()
@@ -698,19 +740,20 @@ def main():
 
     print(f"\n  完成。")
 
-    # 输出标准检查格式 (用于 run_all_tests.py 汇总)
+    # 输出标准检查格式
     n_checks = 3
     n_pass = 0
     if Ek_avg is not None and fit and "slope" in fit:
         if abs(fit["slope"] + 5/3) < 0.10:
-            n_pass += 1  # -5/3 斜率检查
+            n_pass += 1
         if fit.get("C_K") is not None and abs(fit["C_K"] - 1.5) / 1.5 * 100 < 20:
-            n_pass += 1  # C_K 常数检查
-        if silence and silence["S_spec"] < 0.05:
-            n_pass += 1  # 谱静默度检查
+            n_pass += 1
+        if silence and silence.get("S_spec", 1.0) < 0.05:
+            n_pass += 1
     print(f"\n验证: {n_pass}/{n_checks}")
 
-    return result, analysis if 'analysis' in dir() else None
+    analysis_dict = analysis if 'analysis' in dir() and 'silence' in dir() else None
+    return result, analysis_dict
 
 
 if __name__ == "__main__":
