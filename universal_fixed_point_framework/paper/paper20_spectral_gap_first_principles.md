@@ -8,6 +8,22 @@
 
 ---
 
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **SU(2)**：特殊酉群（Special Unitary Group of degree 2）
+- **GR**：广义相对论（General Relativity）
+- **EM**：电磁相互作用（Electromagnetic Interaction）
+- **EW**：弱相互作用（Electroweak Interaction）
+- **Bott**：Bott 周期（Bott Periodicity）
+- **Lean**：Lean 4 定理证明器
+
+本文涉及的自创术语与标准概念对照如下：
+- **谱间隙**（spectral gap）：标准算子理论中算子谱集的最大间距
+- **谱交织精度**（spectral intertwining precision）：标准算子代数中交织子对易子范数的量化
+- **三层伴随对嵌套**（three-layer adjoint pair nesting）：标准范畴论中伴随函子的多层嵌套结构
+
 ## 1. 引言
 
 ### 1.1 动机

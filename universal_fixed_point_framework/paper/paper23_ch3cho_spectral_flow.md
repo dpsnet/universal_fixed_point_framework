@@ -10,6 +10,23 @@
 
 **前置依赖**：Paper V（谱流方程）、Paper VI（谱间隙动力学）、Paper XV（谱量子化学）、Paper XXI（Grothendieck 纤维化）、Paper XXII（精细纤维拆分方法论）。
 
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **EHT**：扩展休克尔理论（Extended Hückel Theory）
+- **TDHF**：含时哈特里-福克（Time-Dependent Hartree-Fock）
+- **CIS**：单激发组态相互作用（Configuration Interaction Singles）
+- **DFT**：密度泛函理论（Density Functional Theory）
+- **CASSCF**：完全活性空间自洽场（Complete Active Space Self-Consistent Field）
+- **FC**：弗兰克-康登因子（Franck-Condon Factor）
+- **SOC**：自旋-轨道耦合（Spin-Orbit Coupling）
+- **VSIE**：价态电离能（Valence State Ionization Energy）
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+
+自创术语与标准概念对照如下：
+- **谱流严格解**（exact spectral flow solution）：谱流方程在两能级系统中的闭式解析解
+- **闭式关联修正定理**（closed-form correlation correction theorem）：谱间隙压制因子的闭式表达定理
+
 ---
 
 ## 1. 引言
@@ -465,6 +482,8 @@ $$[A_i, \pi_{i \leftarrow i+1}]_{\text{HS}} < \varepsilon_i$$
 3. **推广到其他发色团**：该方法论应可推广到任意含有羰基发色团的分子（甲醛、丙酮、酰胺等），验证谱键刚性的普适性。
 
 4. **3 层谱流的可扩展性**：见附录 A 的分析——CH₃CHO 中 π 轨道为对称性禁阻的旁观态，3 层谱流退回 2 层。在对称性允许的体系（如非平面发色团）中，3 层谱流可能提供额外精度提升。
+
+5. **纵向剖面纤维视角**：当前推导仅使用了单一的数学工具（谱流方程 + 7 层纤维化链）。纵向剖面纤维（Paper XXI §10）提供了"同一物理系统的不同数学工具实现"的纤维化结构——如将本推导与 EHT 或 TDDFT 结果的谱数据在 $\mathcal{D}_F$ 重叠区域进行粘合验证。这一视角可为 CH₃CHO 的理论预测提供跨工具一致性检验。
 
 ### 10.3 Bun(Corr) 闭式定理的连续谱推广（Paper XXIV-A）
 

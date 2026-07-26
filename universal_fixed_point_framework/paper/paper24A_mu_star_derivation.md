@@ -12,6 +12,30 @@
 
 ---
 
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXIII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **BCS**：巴丁-库珀-施里弗理论（Bardeen-Cooper-Schrieffer theory）
+- **McMillan**：麦克米兰公式（McMillan formula）
+- **GK**：Geilikman-Kresin修正（Geilikman-Kresin correction）
+- **Eliashberg**：埃利亚什贝格理论（Eliashberg theory）
+- **DOS**：态密度（Density of States）
+- **RG**：重整化群（Renormalization Group）
+- **s-p**：s-p轨道杂化金属
+- **d-轨道**：d-轨道过渡金属
+- **Al**：铝（Aluminium）
+- **Sn**：锡（Tin）
+- **Pb**：铅（Lead）
+- **Hg**：汞（Mercury）
+- **Nb**：铌（Niobium）
+- **MgB₂**：二硼化镁（Magnesium Diboride）
+- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+
+自创术语与标准概念对照如下：
+- **Bun(Corr)闭式定理**（Bun(Corr) closed-form theorem）：谱框架中关联修正层的闭式关联定理
+- **μ*_spec**（spectral framework Coulomb pseudopotential）：谱框架库仑赝势
+- **谱映射**（spectral mapping）：从物理可观测量到谱框架参数的函数映射
+
 ## 1. 引言
 
 ### 1.1 背景与问题
@@ -361,6 +385,8 @@ $$\mathcal{F}[\rho, \Delta_{\text{sep}}] = \left(\int_{\omega_{\text{low}}}^{\om
 3. **重元素谱映射的 $f_s$ 参数化**：标定 $\gamma_{\text{rel}}(Z_{\text{atom}}, f_s)$ 的 $f_s$ 依赖关系
 4. **非常规超导的谱密度框架验证**：在铜氧化物和铁基超导上检验 d-波/p-波 μ* 公式
 5. **2D 谱密度修正**：推导 $\rho(E) \propto E^{-1/2}$ 的压制泛函，用于准 2D 体系
+
+6. **纵向剖面纤维的超导应用**：将 §3 QCD 纵向剖面纤维方法论（Paper XXI §10.4）类比推广到超导体系——BCS 微扰论、Eliashberg 理论、格点 Monte Carlo 等构成超导领域的纵向剖面纤维。$\mu^*_{\text{spec}}$ 公式在这些工具的重叠区域提供粘合验证的谱数据。
 
 ---
 
