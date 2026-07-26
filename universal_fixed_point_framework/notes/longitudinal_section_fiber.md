@@ -6,7 +6,7 @@
 
 **前置依赖**：Paper XXI（Grothendieck 纤维化综合）、Paper XXII（量子化学精细纤维拆分）。
 
----
+--- 
 
 ## 1. 核心概念
 
