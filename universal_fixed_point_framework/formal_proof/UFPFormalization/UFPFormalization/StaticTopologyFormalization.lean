@@ -157,7 +157,7 @@ def silenceS1 (X : IdExtObj) : Prop := False
     Holds because any countable (discrete) spectrum has zero Lebesgue measure. -/
 def silenceS2 (X : IdExtObj) : Prop := True
 
-/-- S3: Spectral gap vanishing (LACI high → no gap).
+/-- S3: Spectral gap vanishing (局部吸引子捕获指数 Local Attractor Capture Index LACI high → no gap).
     Fails for compact manifolds (discrete spectrum has finite gaps, e.g. S¹: λ_{n+1} - λ_n = (2n+1)/R²).
     Holds for non-compact hyperbolic manifolds (continuous spectrum [¼,∞) has no gap). -/
 def silenceS3 (X : IdExtObj) : Prop := True

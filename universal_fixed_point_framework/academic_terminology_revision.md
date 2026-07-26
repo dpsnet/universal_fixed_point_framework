@@ -217,6 +217,23 @@
 | 4 | 2026-07-26 | 工程口语化修正 | paper1_rkhs | 自动修订 |
 | 5 | 2026-07-26 | 跨领域类比术语标注 | paper1_appendix, paper1_philosophy | 自动修订 |
 | 6 | 2026-07-26 | 哲学板块术语释义 | paper1_philosophy | 自动修订 |
+| 7 | 2026-07-23 | **Sync #1**: Lean 形式化术语统一 | 见 9.1 节 | 交互修订 |
+
+### 9.1 Sync #1 明细（2026-07-23）
+
+| 优先级 | 术语 | 修改内容 | 涉及 Lean 文件 |
+|--------|------|---------|---------------|
+| P0 | LACI | `LACI` → `局部吸引子捕获指数（Local Attractor Capture Index, LACI）` | Silence.lean (3处), SilenceHierarchy.lean (2处), StaticTopologyFormalization.lean (1处), TestOperatorTheory.lean (1处) |
+| P1 | Decursion | 添加 docstring 标准对应说明（Koopman 算子范畴化版本） | DecursionFunctor.lean |
+| P1 | Silence | 模块 docstring 添加 S1-S4 标准概念映射 + 文献引用 | Silence.lean |
+| P1 | Weave | 模块 docstring 添加标准对应说明（谱丛截面/下降数据） | WeaveProductFiber.lean |
+| P1 | Level4 | 类 docstring 添加标准对应说明（纤维化 + 分裂 + 纤维终对象） | SignatureFiber.lean |
+| P3 | EFT | `EFT` → `有效场论（Effective Field Theory, EFT）` | EFTCodomainFiber.lean (2处) |
+| P3 | NTK | `NTK` → `神经正切核（Neural Tangent Kernel, NTK）` | ICVerification.lean (2处) |
+| P3 | QCD/BCS | `QCD` → `量子色动力学（Quantum Chromodynamics, QCD）`; `BCS` → `巴丁-库珀-施里弗（Bardeen-Cooper-Schrieffer, BCS）`; 添加 BCSSection≡QCDSection 说明 | TempRGFiber.lean (3处) |
+| P4 | 口语化 | δ_silence docstring 替换为量化表述 | Silence.lean (1处) |
+
+**受影响文件统计**: 10 个 .lean 文件，约 18 处修改。不影响 Lean 编译和定理证明。
 
 ---
 

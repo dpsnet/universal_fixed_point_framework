@@ -281,7 +281,10 @@ noncomputable def bottTower_partial_trace (X : SignatureBundle) (n : ℕ)
     1. p is a Grothendieck fibration (Cartesian lifts exist)
     2. There exists a section ι: B → E (the "embedding"/"lift" functor)
     3. The unit id_B → p ∘ ι and counit ι ∘ p → id_E are isomorphisms
-       (making ι a right adjoint to p) -/
+       (making ι a right adjoint to p)
+    
+    Standard correspondence: this is equivalent to a fibration with a chosen
+    cleavage and a fibered terminal object, cf. Jacobs (1999) §1.10. -/
 class Level4Extension {E B : Type u} [Category E] [Category B] (p : E ⥤ B) 
     extends GrothendieckFibration p where
   /-- The inclusion functor ι: B → E (section of p). -/

@@ -11,18 +11,28 @@ import Mathlib.Data.Fintype.Basic
 namespace UFPFormalization
 
 /-!
-# Spectral Silence Criteria (Phase 16B)
+# Spectral Silence Criteria (谱静默判据) — Phase 16B
 
-Finite-dimensional prototype of the four spectral silence criteria (§5.2, Definition 5.1):
+Finite-dimensional prototype of the four spectral silence criteria (§5.2, Definition 5.1:
 
   S1. Fractal support: dim_H(μ_σ) < dim_amb
+      → 标准对应: 分形谱理论中谱测度的 Hausdorff 维数条件 (Fractal Spectral Theory)
   S2. No continuous component: μ_σ has zero measure on the continuous spectrum
-  S3. Spectral gap vanishing: LACI(μ_σ) ≥ τ
+      → 标准对应: 谱测度论中纯点谱条件 (Pure Point Spectrum)
+  S3. Spectral gap vanishing: 局部吸引子捕获指数（Local Attractor Capture Index, LACI）(μ_σ) ≥ τ
+      → 标准对应: 算子谱论中的谱隙条件 (Spectral Gap Condition), LACI = 1 - |λ₂|/|λ₁|
   S4. Gauge group constraint: max probability weight ≤ w
+      → 标准对应: 规范群作用下轨道权重的上界 (Orbit Weight Bound)
 
 In the finite-dimensional prototype, all spectra are discrete point spectra,
 so S1 and S2 are vacuously satisfied, S3 reduces to eigenvalue spacing conditions,
 and S4 reduces to orbit weight bounds.
+
+References:
+  - S1: Falconer, *Fractal Geometry* (2003), Ch. 2-3
+  - S2: Reed & Simon, *Methods of Modern Mathematical Physics I* (1980), Ch. VII
+  - S3/LACI: Paper I §3.6, Definition 3.11; spectrale gap in Bär & Strobl (2023)
+  - S4: Paper I §5.2, Definition 5.1; orbit weight via gauge group action
 -/
 
 /-- S1: Fractal support condition.
@@ -38,16 +48,18 @@ def silenceS1 {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
 def silenceS2 {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   True
 
-/-- LACI index: a simplified measure of spectral gap.
-    In the finite-dimensional prototype, LACI = 1 - |λ₂|/|λ₁|
+/-- 局部吸引子捕获指数（Local Attractor Capture Index, LACI）: a simplified measure
+    of spectral gap. In the finite-dimensional prototype, LACI = 1 - |λ₂|/|λ₁|
     where λ₁ is the largest eigenvalue and λ₂ is the second largest.
-    A value of LACI ≥ τ indicates spectral gap vanishing. -/
+    A value of LACI ≥ τ indicates spectral gap vanishing.
+    Standard correspondence: spectral gap in operator theory. -/
 noncomputable def laciIndex {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   if h : n = 0 then 0 else
     -- Placeholder: requires eigenvalue computation
     0
 
-/-- S3: Spectral gap vanishing condition: LACI ≥ τ. -/
+/-- S3: Spectral gap vanishing condition: 局部吸引子捕获指数（Local Attractor Capture Index, LACI）≥ τ.
+    Standard correspondence: spectral gap threshold for operator A. -/
 def silenceS3 {n : ℕ} (τ : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   laciIndex A ≥ τ
 
@@ -78,12 +90,14 @@ theorem silenceEquivalence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) �
 noncomputable def frobeniusNorm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq (A i j))
 
-/-- Continuous silence degree: δ_silence(A, G) = ‖[A, G]‖_F.
-    Measures the commutativity defect between A and G.
+/-- Continuous silence degree (连续静默度): δ_silence(A, G) = ‖[A, G]‖_F.
+    Measures the commutativity defect between A and G via Frobenius norm.
 
-    δ_silence = 0  ⇔  [A, G] = 0  (complete silence, spectral flow reduces to identity)
-    δ_silence > 0  ⇒  silence partially broken, spectral flow calculus needed
-    δ_silence → ∞  ⇒  complete commutativity breakdown. -/
+    δ_silence = 0  ⇔  [A, G] = 0  (zero commutator → identity spectral flow)
+    δ_silence > 0  ⇒  non-zero commutator, indicating spectral flow deviation
+    δ_silence → ∞  ⇒  unbounded commutator growth, spectral flow inapplicable
+
+    Standard correspondence: Frobenius norm of Lie bracket, cf. ad(A)(G) in operator theory. -/
 noncomputable def deltaSilence {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   frobeniusNorm (ad G A)
 

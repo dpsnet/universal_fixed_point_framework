@@ -15,7 +15,11 @@ namespace UFPFormalization
 Formalizes the four-layer silence hierarchy:
   1. Object silence (对象静默): R ∉ Obj(𝐑𝐞𝐜_D)
   2. Morphism silence (态射静默): f fails the spectral preservation condition
-  3. Spectral silence (谱静默): S1–S4 criteria satisfied
+  3. Spectral silence (谱静默): S1–S4 criteria satisfied (defined in Silence.lean):
+     - S1: fractal support (分形支撑, cf. Falconer, *Fractal Geometry*)
+     - S2: no continuous component (纯点谱, cf. Reed & Simon I, Ch. VII)
+     - S3: spectral gap via 局部吸引子捕获指数（Local Attractor Capture Index, LACI）(对应标准谱隙条件)
+     - S4: gauge group constraint (规范群轨道权重上界)
   4. Braided silence (辫子静默): braided crossing invisible under D_diss
 
 Hierarchy theorem (定理 5.18):
@@ -57,7 +61,7 @@ def morphismSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂) : Prop :=
 Spectral silence: a spectral subset Σ ⊆ σ_E satisfies one of S1–S4.
 In the finite-dimensional prototype, all spectra are pure point and discrete,
 so S1 (fractal support) and S2 (no continuous component) are vacuously true,
-S3 (LACI threshold) is defined in Silence.lean, S4 (gauge group constraint)
+S3 (局部吸引子捕获指数 Local Attractor Capture Index LACI threshold) is defined in Silence.lean, S4 (gauge group constraint)
 depends on orbit weights.
 -/
 def spectralSilence {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=

@@ -71,7 +71,24 @@ noncomputable abbrev DFunctor_map {X Y : RecObj} (f : RecHom X Y) :
     rw [Equiv.symm_apply_apply (Fintype.equivFin Y.T), Equiv.symm_apply_apply (Fintype.equivFin X.T)]
     rw [← RecHom.comm f ((Fintype.equivFin X.T).symm x)]⟩
 
-/-- Spectral de-recursion functor: encode a finite recursive system as a spectral operator. -/
+/-- Spectral de-recursion functor (谱去递归函子):
+    encode a finite recursive system as a spectral operator.
+
+    Maps a discrete dynamical system (RecObj: step function on finite set T)
+    to a linear operator (SpecObj: matrix) via its transfer matrix representation.
+
+    Standard correspondence:
+      - The functor D: Rec → Spec is a categorial generalization of the
+        Koopman operator in dynamical systems theory (Mezić, 2013).
+        For a step function step: T → T, the transfer matrix encodes the
+        pushforward of functions under the dynamics, analogous to the
+        Koopman operator acting on observable functions.
+      - The spectral information (eigenvalues, spectral gap) of D(R)
+        corresponds to the dynamical properties (mixing rates, attractor
+        structure) of the original recursive system R.
+      - This is the "decursion" (去递归) operation, which eliminates
+        explicit iteration by mapping the recursive dynamics directly
+        to its spectral fixed point. -/
 noncomputable def DFunctor : RecObj ⥤ SpecObj where
   obj := DFunctor_obj
   map := DFunctor_map

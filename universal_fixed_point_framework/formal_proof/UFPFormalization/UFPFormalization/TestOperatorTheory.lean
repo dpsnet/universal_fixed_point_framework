@@ -43,7 +43,7 @@ theorem test_silence_definitions_exist (R : RecObj) : Nonempty (silenceS1 R) := 
   dsimp [silenceS1]
   trivial
 
--- LACI index is non-negative
+-- 局部吸引子捕获指数（Local Attractor Capture Index, LACI）index is non-negative
 theorem test_laci_nonneg {X Y : SpecObj} (f : X ⟶ Y) : 0 ≤ laciIndex f := by
   dsimp [laciIndex]
   -- LACI is a non-negative real (ratio of singular values)

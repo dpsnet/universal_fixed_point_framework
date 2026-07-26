@@ -1,5 +1,18 @@
 /-
-# WeaveProductFiber.lean — Phase 55C Spectral Weave Product Base
+# WeaveProductFiber.lean — Phase 55C Spectral Weave Product Base (谱编织积底范畴)
+
+"Spectral weave" (谱编织) corresponds to the standard mathematical concept of
+a spectral bundle section / spectral gluing condition: given two spectral bundles
+over a product base Temp × RG, the weave condition ensures that the spectral data
+is compatible along the diagonal (∂Rec_D gluing).
+
+Standard correspondence:
+  - Spectral weave = spectral section of a fibred product, analogous to a
+    descent datum in Grothendieck's fibred category theory.
+  - The gluing condition is a spectral-type cocycle condition ensuring
+    consistency under base change Temp → RG and RG → Temp.
+  - See: Vistoli, "Grothendieck Topologies, Fibered Categories and Descent Theory"
+    (2004), §3.1 for the standard descent formalism.
 
 Three components:
   1. Product base category Temp × RG
