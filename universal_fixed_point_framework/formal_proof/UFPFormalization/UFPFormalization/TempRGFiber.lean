@@ -24,7 +24,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.SpectralGap
 
 open CategoryTheory
@@ -172,8 +172,8 @@ noncomputable def TempIsoRG : TempObj ≌ RGObj :=
    ========================================================= -/
 
 /-- Fiber category: spectral data over a temperature base point.
-    The fiber is equivalent to SpecObj at that temperature.
-    In this finite prototype, the fiber data is a SpecObj (matrix A)
+    The fiber is equivalent to SpObj at that temperature.
+    In this finite prototype, the fiber data is a SpObj (matrix A)
     annotated with the base point for tracking. -/
 structure SpecFiberTemp (T : TempObj) where
   n : ℕ
@@ -1105,7 +1105,7 @@ theorem cl17GapMatrix_gap_eq : (cl17GapMatrix 1 1 - cl17GapMatrix 0 0 : ℂ) = (
 theorem cl17GapMatrix_gap_real : spectralGap 8 = (Real.sqrt 6 - Real.sqrt 2) / Real.sqrt (72 : ℝ) :=
   spectralGap_at_kmax8
 
-/-- QCD confinement section σ_Δ^(T) : Temp → Bun(Temp, Spec), with Cl(1,7) spectral gap.
+/-- 量子色动力学（Quantum Chromodynamics, QCD）confinement section σ_Δ^(T) : Temp → Bun(Temp, Spec), with Cl(1,7) spectral gap.
     Each temperature T maps to the spectral bundle with Cl(1,7) gap data.
     The pullback is identity (spectral flow preserves A under temperature dilation). -/
 noncomputable def QCDSection_cl17 : TempObj ⥤ SpectralBundleTemp where
@@ -1123,8 +1123,13 @@ theorem QCDSection_cl17_gap :
     spectralGap 8 = (Real.sqrt 6 - Real.sqrt 2) / Real.sqrt (72 : ℝ) :=
   cl17GapMatrix_gap_real
 
-/-- BCS superconductivity section σ_Δ^(BCS) : Temp → Bun(Temp, Spec).
-    Uses the same Cl(1,7) gap structure; the gap closes at T_c^(BCS). -/
+/-- 巴丁-库珀-施里弗（Bardeen-Cooper-Schrieffer, BCS）superconductivity section σ_Δ^(BCS) : Temp → Bun(Temp, Spec).
+    Uses the same Cl(1,7) gap structure; the gap closes at T_c^(BCS).
+  
+    NOTE: BCSSection_cl17 is defined as identical to QCDSection_cl17 in the
+    finite-dimensional prototype. This is a placeholder: physically, QCD and BCS
+    have distinct spectral gaps and critical exponents. The unified Cl(1,7)
+    spectral gap is a framework postulate requiring full verification (Phase 55F). -/
 noncomputable def BCSSection_cl17 : TempObj ⥤ SpectralBundleTemp :=
   QCDSection_cl17
 

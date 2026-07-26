@@ -237,9 +237,9 @@ Phase 46 Q2 (已完成)
   │     ├── η_RG 谱推导: η_RG^(0)=v/(√2·M_Pl)
   │     └── m_e = 0.511 MeV 零参数预测 ✅
   │
-  ├── Q2c: 凝聚态物理谱翻译 → 待启动
-  │     ├── 超导 BCS 能隙的谱翻译
-  │     └── 量子 Hall 陈数拓扑序的谱翻译
+  ├── Q2c: 凝聚态物理谱表述 → 待启动
+  │     ├── 超导 BCS 能隙的谱表述
+  │     └── 量子 Hall 陈数拓扑序的谱表述
   │
   └── U_Hf 解析角推导 → ✅ v0.1 完成
         ├── 定理 3.1-3.3：θ_ij 的闭合解析公式
@@ -250,10 +250,10 @@ Phase 46 Q2 (已完成)
 
 **下一步可选方向**：
 - **A**: **✅ 已完成**——$U_{Hf}$ 解析角推导
-- **B**: **已完成**——Q2c 凝聚态物理谱翻译
+- **B**: **已完成**——Q2c 凝聚态物理谱表述
   - BCS 超导谱粘合自由度 ✅ `spectral_BCS_weave.md` v0.9
   - Cuprate 赝能隙分布截面 ✅ `spectral_cuprate_distribution.md` v0.1
-  - 量子 Hall 陈数拓扑序谱翻译 ✅ `spectral_quantum_Hall_topology.md` v0.1
+  - 量子 Hall 陈数拓扑序谱表述 ✅ `spectral_quantum_Hall_topology.md` v0.1
 - **C**: 静默因子严格化——$\eta_{\text{RG}}^{(f)}$ 的 $\prod_i F_{S_i}^{(f)}$ 的严格谱框架推导
 
 ---

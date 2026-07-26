@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.Adjunction
 import UFPFormalization.Silence
@@ -128,7 +128,7 @@ flow equation d/dt D(R) = 0 holds identically.
 
 /-- Degenerate spectral image: D^id(M) = (ℂ, 0, {0}).
     The zero operator has spectrum {0} and generates trivial dynamics. -/
-noncomputable def D_id (X : IdExtObj) : SpecObj :=
+noncomputable def D_id (X : IdExtObj) : SpObj :=
   { n := 1, A := 0 }
 
 /-- Theorem 14.4: D_id produces zero spectral flow. -/
@@ -157,7 +157,7 @@ def silenceS1 (X : IdExtObj) : Prop := False
     Holds because any countable (discrete) spectrum has zero Lebesgue measure. -/
 def silenceS2 (X : IdExtObj) : Prop := True
 
-/-- S3: Spectral gap vanishing (LACI high → no gap).
+/-- S3: Spectral gap vanishing (局部吸引子捕获指数 Local Attractor Capture Index LACI high → no gap).
     Fails for compact manifolds (discrete spectrum has finite gaps, e.g. S¹: λ_{n+1} - λ_n = (2n+1)/R²).
     Holds for non-compact hyperbolic manifolds (continuous spectrum [¼,∞) has no gap). -/
 def silenceS3 (X : IdExtObj) : Prop := True
@@ -405,13 +405,13 @@ theorem ℒιMonad_EM_iso : ℒιMonad = 𝟭 IdExtObj := ℒιMonad_eq_id
       Gelfand: C(M) ←→ M
       D_id:    (ℋ_M, Δ_M, σ(Δ_M)) ←→ M
 -/
-noncomputable def D_id_spec (X : IdExtObj) : SpecObj :=
+noncomputable def D_id_spec (X : IdExtObj) : SpObj :=
   { n := 1, A := 0 }
 
 /-- Corollary 16.2: D_id is surjective in the sense that each compact manifold
     maps to a unique spectral object (up to spectral equivalence).
     This connects to Mark Kac's "Can you hear the shape of a drum?" problem. -/
-theorem D_id_surjectivity (M : CompHaus) : ∃ (X : IdExtObj) (S : SpecObj), D_id_spec ⟨M⟩ = S :=
+theorem D_id_surjectivity (M : CompHaus) : ∃ (X : IdExtObj) (S : SpObj), D_id_spec ⟨M⟩ = S :=
   ⟨⟨M⟩, D_id_spec ⟨M⟩, rfl⟩
 
 /-- Theorem 16.5 (Morphism Classification): Morphisms in IdExtObj are classified by

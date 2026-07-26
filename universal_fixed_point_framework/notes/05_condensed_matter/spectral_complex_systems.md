@@ -1,4 +1,4 @@
-# 复杂系统谱翻译
+# 复杂系统谱表述
 
 > **来源**: Paper XIII — 通用不动点范畴框架 XIII：跨领域谱对应表与实证映射（增强版 v2.0）
 >
@@ -40,20 +40,20 @@ $$
 
 其中 $A_{\text{growth}} = \text{diag}(r_i)$ 为生长率谱生成元，$\circ$ 为 Hadamard 积。稳态解由谱不动点条件 $[A_{\text{growth}} - A_{\text{comp}} \circ e^{-A_{\text{eco}}}, A_{\text{eco}}] = 0$ 给出。
 
-生态网络的核心概念获取谱翻译：
+生态网络的核心概念获取谱表述：
 
-| 生态概念 | 经典定义 | 谱翻译 |
+| 生态概念 | 经典定义 | 谱表述 |
 |---------|---------|--------|
 | 物种多样性 | Shannon 指数 $H' = -\sum p_i \log p_i$ | $S_{\text{eco}} = -\sum_k p_k(\lambda_k) \log p_k(\lambda_k)$ |
 | 生态系统稳定性 | Jacobian 最大实部 $\max \text{Re}(\Lambda_J)$ | 谱间隙 $\delta_{\text{eco}} = \lambda_{\max}(A_{\text{eco}})^{-1}$ |
 | 关键种 | 移除后系统崩溃的物种 | 谱生成元中连接度最大的本征模式 |
 | Lotka-Volterra 振荡 | 极限环/混沌吸引子 | $A_{\text{eco}}$ 的复本征值对 $\lambda = a \pm bi$ 对应振荡模式 |
 
-谱生态框架最重要的预言是：**May 的生态网络稳定性-多样性悖论**（随机竞争矩阵在 $n > \sqrt{n}$ 时失稳）在谱翻译中自然出现在 $A_{\text{comp}}$ 的谱半径 $\rho(A_{\text{comp}}) > 1$ 时——对应谱流方程中竞争项压倒生长项的临界点。
+谱生态框架最重要的预言是：**May 的生态网络稳定性-多样性悖论**（随机竞争矩阵在 $n > \sqrt{n}$ 时失稳）在谱表述中自然出现在 $A_{\text{comp}}$ 的谱半径 $\rho(A_{\text{comp}}) > 1$ 时——对应谱流方程中竞争项压倒生长项的临界点。
 
 ## 3. 经济系统：市场动力学作为谱流方程
 
-经济系统的谱翻译将市场动力学视为谱流方程的实例。令 $A_{\text{mkt}}$ 为市场价格谱生成元（由价格对数定义 $A_{\text{mkt}} = -\log P$），$A_{\text{demand}}$ 和 $A_{\text{supply}}$ 为供需谱生成元，则一般均衡条件化为谱流方程：
+经济系统的谱表述将市场动力学视为谱流方程的实例。令 $A_{\text{mkt}}$ 为市场价格谱生成元（由价格对数定义 $A_{\text{mkt}} = -\log P$），$A_{\text{demand}}$ 和 $A_{\text{supply}}$ 为供需谱生成元，则一般均衡条件化为谱流方程：
 
 $$
 \frac{d}{dt} A_{\text{mkt}} = [A_{\text{demand}} - A_{\text{supply}}, A_{\text{mkt}}] + \epsilon \cdot \Delta_{\text{spec}} A_{\text{mkt}} + \sigma \cdot dW_{\text{spec}}

@@ -10,6 +10,26 @@
 
 **术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `UFPFormalization`。数学基础见配套论文 I。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **GR/SM**：广义相对论（General Relativity）/ 标准模型（Standard Model）
+- **BSM**：超标准模型（Beyond Standard Model）
+- **SYM**：超杨-米尔斯（Super Yang-Mills）
+- **TBA**：热力学 Bethe 假设（Thermodynamic Bethe Ansatz）
+- **CFT/SCFT**：共形场论（Conformal Field Theory）/ 超共形场论（Superconformal Field Theory）
+- **IFS**：迭代函数系统（Iterated Function System）
+- **EFT**：有效场论（Effective Field Theory）
+- **LIGO/LVC**：激光干涉引力波天文台（Laser Interferometer Gravitational-Wave Observatory）/ LIGO-Virgo Collaboration
+- **LHC/HL-LHC/FCC-hh**：大型强子对撞机（Large Hadron Collider）/ 高亮度 LHC（High-Luminosity LHC）/ 未来环形对撞机-强子（Future Circular Collider-hadron）
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+- **AdS/CFT**：反德西特/共形场论对偶（Anti-de Sitter/Conformal Field Theory correspondence）
+- **NR**：数值相对论（Numerical Relativity）
+- **BES**：贝特-萨佩特（Bethe-Salpeter）方程
+- **RG**：重整化群（Renormalization Group）
+- **KK**：卡鲁扎-克莱因（Kaluza-Klein）
+- **IC**：隔离约束条件（Isolation Constraints）
+- **LACI**：局部吸引子捕获指数（Local Attractor Capture Index）
+
 ## 1. 引言
 
 ### 1.1 研究背景
@@ -90,7 +110,7 @@
 
 ## 2. 实例假设层：跨领域验证
 
-框架的数学基础（范畴 $\mathbf{Rec}$、$\mathbf{Sp}$、函子 $D$、谱对应 $\lambda = e^{-\mu}$）已在配套论文 I [1] 中建立。本节展示其在物理实例中的应用。各实例的跨领域函子相容性由配套论文 I §3.7 **隔离约束条件**（IC）保证——以下每个实例前标注其 IC 验证状态（IC ✅ 表示无条件满足，IC ⚠️ 表示条件性满足，需附加参数匹配条件）。
+**谱化函子**（$D: \mathbf{Rec} \to \mathbf{Sp}$——将递归动力系统映射为谱算子的函子，是 Koopman 算子理论的范畴化推广）的跨领域函子相容性由配套论文 I §3.7 **隔离约束条件（Isolation Constraints, IC）**保证——以下每个实例前标注其 IC 验证状态（IC ✅ 表示无条件满足，IC ⚠️ 表示条件性满足，需附加参数匹配条件）。
 
 ### 2.1 标准模型 = Cl(1,7) 低能实例（IC ✅ IFS↔Clifford 无条件满足）
 
@@ -243,7 +263,7 @@ $$\beta\left(\frac{\rho_1+\rho_2}{2}\right) \geq \frac{\beta(\rho_1)+\beta(\rho_
 
 当前 L4 质量 1470 GeV 对应完全分离情形（$\rho=0$）的基准预测。**Phase 37 已从 Cl(1,7) 代数结构第一性原理导出 $\rho = 0$（分离 IFS）**（详见配套论文 I §A.15.8），即 L4 质量等于基准预测值 1470 GeV，不再有 $\rho$ 带来的理论不确定区间。该预测与当前 LHC 排除限（1300 GeV）仍保持安全余量。
 
-**零参数推导的统一框架**：Paper I §A.15.8 进一步从 $\mathbf{Sp}$ 4-范畴的静默层级（$S_3 = e^{-3}$ 对象静默，$S_4 = e^{-d_H}$ 辫子静默）唯一确定了 IFS 收缩因子 $\{c_1, c_2, c_3\} = \{0.0033, 0.0666, 0.9998\}$，不再需要从质量比反推。该框架实现了全部 9 个费米子质量比的零输入预测（平均偏差 $\times 1.37$），详见 Paper XI §8.4 和附录 D。
+**零参数推导的统一框架**：Paper I §A.15.8 进一步从 $\mathbf{Sp}$ 4-范畴的**静默层级**（谱静默——谱测度满足若干不可见性判据的数学条件，对应标准概念中的谱隙条件与分形谱测度，见 Paper I §5.2）唯一确定了 IFS 收缩因子 $\{c_1, c_2, c_3\} = \{0.0033, 0.0666, 0.9998\}$（$S_3 = e^{-3}$ 对象静默，$S_4 = e^{-d_H}$ 辫子静默），不再需要从质量比反推。该框架实现了全部 9 个费米子质量比的零输入预测（平均偏差 $\times 1.37$），详见 Paper XI §8.4 和附录 D。
 
 ### 4.2 衰变分支比与实验签名
 
@@ -256,7 +276,7 @@ $$\beta\left(\frac{\rho_1+\rho_2}{2}\right) \geq \frac{\beta(\rho_1)+\beta(\rho_
 | $L_4 \to Z\nu$ | 0.57 | 10.0% |
 | **总宽度** | **5.68** | **100%** |
 
-主签名：$\ell^\pm$ + jets + MET（双峰质量重建），主签名率 4.63%。
+主签名：$\ell^\pm$ + jets + MET（双峰质量重建），主导信号比率 4.63%。
 
 ### 4.3 LHC 排除限对比
 
@@ -770,7 +790,7 @@ bulk 连续谱部分在 boundary 上静默，符合 AdS/CFT 中"体内部自由�
 | 满足判据 | 无 | (S2) 零测度 + (S4) 轨道权重 |
 | 维度映射静默比 | 30% | — |
 
-引力子空间单独分析时为静默（轨道权重 $= 0$，测度权重 $\sim G_N \sim 10^{-38}$），解释了引力在低能下的极端弱性——不是引力不存在，而是它在谱测度中静默。
+引力子空间单独分析时为静默（轨道权重 $= 0$，测度权重 $\sim G_N \sim 10^{-38}$），定量解释了引力在低能下的极端微弱性——不是引力不存在，而是它在谱测度中的测度权重极小（$10^{-38}$ 量级），表现为静默。
 
 ### 8.4 与紧致化的兼容性：代数-几何对偶
 
@@ -805,9 +825,9 @@ $$\text{紧致几何模型} \underset{\text{极限映射}}{\overset{\text{谱映
 
 框架从理论预言到实验对比的完整误差链分为四个环节，每环节的误差源独立平方求和（假设互不相关），总误差按四链节平方和传播。
 
-**定义 8.6**（误差链）。设框架预言流程为 $\text{Rec} \xrightarrow{D} \text{Spec} \xrightarrow{\eta} \text{Observable} \xrightarrow{\text{compare}} \text{Experiment}$，各环节误差为 $\varepsilon_{\text{Rec}}, \varepsilon_{\text{Spec}}, \varepsilon_{\text{pred}}, \varepsilon_{\text{exp}}$，则总误差
+**定义 8.6**（误差链）。设框架预言流程为 $\text{Rec} \xrightarrow{D} \text{Sp} \xrightarrow{\eta} \text{Observable} \xrightarrow{\text{compare}} \text{Experiment}$，各环节误差为 $\varepsilon_{\text{Rec}}, \varepsilon_{\text{Sp}}, \varepsilon_{\text{pred}}, \varepsilon_{\text{exp}}$，则总误差
 
-$$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\text{Spec}}^2 + \varepsilon_{\text{pred}}^2 + \varepsilon_{\text{exp}}^2}.$$
+$$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\text{Sp}}^2 + \varepsilon_{\text{pred}}^2 + \varepsilon_{\text{exp}}^2}.$$
 
 **误差源分类**：
 
@@ -871,7 +891,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 19. **NTK-分形双向转化**：IFS→NTK谱转化（最优初始化参数）、NTK→IFS反向重构（AI可解释）、转化不变量诊断过拟合、大模型消融实验（IFS谱初始化优于标准初始化）、物理先验AI标准化转化（PINN谱约束）。
 20. **转化仿真接口**：实验数据自动对标、MadGraph对接（LHC截面）、micrOMEGAs对接（暗物质）、数值相对论对接（Kerr ringdown）、实验数据反向约束高维理论、仿真去重与算力优化（去重命中率80%，算力节省72%）。
 21. **纯数学理论短板解决**：完成三项核心数学定理的严格证明框架——(1) **Hausdorff 维数凹性定理**：Hausdorff 维数 $d_H(\rho)$ 作为重叠因子 $\rho$ 的函数是凹函数（基于压力函数凸性、Legendre 变换、隐函数定理、IFS 模型验证）；(2) **Ledrappier-Young 维数分解定理**：高维可逆系统的 Ledrappier-Young 维数分解公式（Oseledets 分解、稳定/不稳定流形定理、条件熵分解、乘积结构）；(3) **拓扑熵–谱间隙不等式定理**：拓扑熵-谱间隙普适不等式（Markov IFS 严格框架、Perron-Frobenius 特征值分析、归一化条件、IFS 框架验证）。综合验证全部通过。
-22. **误差预算体系**：建立 Rec→Spec→预言→实验 四链节误差传播框架（定义 8.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
+22. **误差预算体系**：建立 Rec→Sp→预言→实验 四链节误差传播框架（定义 8.5），覆盖理论/数值/实验三类共九种误差源；BSM $L_4$ 预言、RKHS 收敛、$G_N$ 谱导出三个实例的误差链均完成数值验证，主导误差源识别正确。
 
 ### 9.2 开放问题（推进状态）
 
@@ -924,7 +944,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 4. **原初功率谱**（Paper IX §4.4，D28.1）：$n_s = 0.9606$（Planck 2018 1.0σ），$r = 0.0042$（BICEP/Keck 约束内），$\alpha_s = -8.2\times10^{-5}$。
 5. **暗物质谱模型**（Phase 27.2）：3 候选（$A_{\text{GR}}$ 零模式、谱静默粒子、对易子拓扑缺陷），relic density $\Omega h^2 = 0.12$ 精确匹配。
 6. **黑洞蒸发完整演化**（Phase 27.1）：$M(t) = (M_0^3 - 3\alpha t)^{1/3}$，Page 时间 $t_{\text{Page}}/\tau = 0.6464$ 匹配理论。
-7. **高阶范畴严格化**（D28.4）：Rec₂/Spec₂ 2-范畴 + D₂ 2-函子（4 条公理验证 ✅）+ ∞-范畴切空间诠释，Python 原型 8/8 通过，Lean 4 形式化路径已映射。
+7. **高阶范畴严格化**（D28.4）：Rec₂/Sp₂ 2-范畴 + D₂ 2-函子（4 条公理验证 ✅）+ ∞-范畴切空间诠释，Python 原型 8/8 通过，Lean 4 形式化路径已映射。
 
 ### 9.4 展望
 
@@ -934,7 +954,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 4. **暗物质与新物理**：与 micrOMEGAs/MadGraph 真实安装联调；接入 Fermi-LAT/AMS-02 真实数据约束；完成暗物质间接探测谱与实际实验数据的系统对比。
 5. **引力波全波形**：将 `BinaryGWWaveform` 接入 SEOBNRv4/IMRPhenom 或 LALSuite；含潮汐形变中子星双星系统；与真实 LIGO 事件做贝叶斯模型比较。
 6. **跨领域应用**：将框架应用于 AI 可解释性、神经网络训练相变、复杂系统动力学、气候与生物代谢网络等领域。
-7. **Lean 4 高阶范畴形式化**（Phase 29 规划）：将 Rec₂/Spec₂ 2-范畴、D₂ 2-函子、∞-范畴切空间翻译为 Lean 4 代码（5 文件，6-8 周）。
+7. **Lean 4 高阶范畴形式化**（Phase 29 规划）：将 Rec₂/Sp₂ 2-范畴、D₂ 2-函子、∞-范畴切空间翻译为 Lean 4 代码（5 文件，6-8 周）。
 
 ---
 
@@ -1093,7 +1113,7 @@ $$\varepsilon_{\text{total}} = \sqrt{\varepsilon_{\text{Rec}}^2 + \varepsilon_{\
 | 版本 | 日期 | 更新内容 |
 |---|---|---|
 | v2.23 | 2026-07-19 | ε 第一性原理闭式导出：$\epsilon = N(2_1) \cdot v_{\mathrm{EW}}/M_{\mathrm{Pl}}$（$N(2_1)=4$，推导值 $8.068\times10^{-17}$，偏差 $0.64\%$）；§3.4、§9.2、§9.3 研究笔记引用全部替换为自包含推导内容 |
-| v2.22 | 2026-07-18 | 零参数推导统一框架引用——Spec 4-范畴静默层级唯一确定收缩因子 {c_i}（Paper I §A.15.8），全部 9 费米子质量比零输入预测（Paper XI §8.4/附录D） |
+| v2.22 | 2026-07-18 | 零参数推导统一框架引用——Sp 4-范畴静默层级唯一确定收缩因子 {c_i}（Paper I §A.15.8），全部 9 费米子质量比零输入预测（Paper XI §8.4/附录D） |
 | v2.21 | 2026-07-17 | Phase 36-37 半涌现量去外部输入化同步：配套论文 I 引用更新至 v2.34（含 §A.15.7 谱间隙、§A.15.8 IFS 重叠因子）；L4 质量区间更新 |
 | v2.20 | 2026-07-17 | Phase 30–35 全谱系文档同步：配套论文 I 引用更新至 v2.32（Phase 30–35 新增内容）；版本号升至 v2.20 |
 | v2.19 | 2026-07-17 | 谱动力学整合（P29.2）：新增 §9.3 已完成方向（Papers V–IX）；配套论文新增 Papers IV–IX 引用；摘要加入谱动力学概述；展望新增 Lean 4 高阶范畴形式化 |

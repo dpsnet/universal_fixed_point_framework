@@ -8,7 +8,20 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（Rec、Spec、D 函子）、Paper V（谱流方程 $\partial_t\lambda = F(\lambda,t)$）、Paper VI（谱截断 $\lambda_{\max}$ 与谱间隙 $\Delta\lambda_{\min}$）、Paper VIII（黑洞 QNM 记号）、Paper XI（Feynman 规则与传播子谱表示）、Paper XII（谱路径积分与重整化程序）。
+**术语说明**：记号与定义沿用 Paper I（Rec、Sp、D 函子）、Paper V（谱流方程 $\partial_t\lambda = F(\lambda,t)$）、Paper VI（谱截断 $\lambda_{\max}$ 与谱间隙 $\Delta\lambda_{\min}$）、Paper VIII（黑洞 QNM 记号）、Paper XI（Feynman 规则与传播子谱表示）、Paper XII（谱路径积分与重整化程序）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **PN**：后牛顿（Post-Newtonian）
+- **QNM**：准正态模（Quasi-Normal Mode）
+- **IMR**：激发-合并-铃荡（Inspiral-Merger-Ringdown）
+- **NR**：数值相对论（Numerical Relativity）
+- **QED**：量子电动力学（Quantum Electrodynamics）
+- **RG**：重整化群（Renormalization Group）
+- **UV/IR**：紫外/红外正则化（Ultraviolet/Infrared）
+- **LACI**：局部吸引子捕获指数（Local Attractor Capture Index）
+- **MLP**：多层感知机（Multi-Layer Perceptron）
+- **PCA**：主成分分析（Principal Component Analysis）
+- **MCMC**：马尔可夫链蒙特卡洛（Markov Chain Monte Carlo）
 
 **前置依赖**：Paper I（基础范畴框架）、Paper V（谱流方程）、Paper VI（谱截断与临界动力学）、Paper VIII（黑洞谱）、Paper XI（QFT 谱表示）、Paper XII（量子引力谱）。
 

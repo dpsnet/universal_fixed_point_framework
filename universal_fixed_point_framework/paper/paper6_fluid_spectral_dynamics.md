@@ -12,6 +12,14 @@ v2.8 完成流变学谱丛工程化的数值验证：三对角矩阵结构正确
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper XI（谱 QFT 公理 A4 路径积分）与 Paper XII（谱截断 $\Lambda_{\max}$ 的跨尺度同构）。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **N-S**：Navier-Stokes（纳维-斯托克斯）方程
+- **K41**：Kolmogorov 1941（湍流能谱理论）
+- **RG**：重整化群（Renormalization Group）
+- **IQHE**：整数量子 Hall 效应（Integer Quantum Hall Effect）
+- **QCD**：量子色动力学（Quantum Chromodynamics）
+- **NTK**：神经正切核（Neural Tangent Kernel）
+
 ## 1. 引言
 
 ### 1.1 湍流的核心难题
@@ -32,7 +40,7 @@ $$\partial_t \mathbf{v} + (\mathbf{v}\cdot\nabla)\mathbf{v} = -\nabla p + \nu\na
 
 核心洞见：**$k^{-5/3}$ 与 $1/r^2$ 不是两个独立经验定律——它们是同一谱流几何在 $d=3$ 不同边界条件下的投影**。
 
-## 2. N-S 方程的谱翻译
+## 2. N-S 方程的谱翻译（谱流体动力学——将经典流体动力学方程翻译到 $\mathbf{Sp}$ 范畴的谱流框架，是 Koopman 算子理论与谱动力学在流体力学中的交汇）
 
 ### 2.1 递归系统表示
 
@@ -629,7 +637,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 
 1. **三对角矩阵结构验证**（T2）：$M_{\text{rheo}}(\omega)$ 的对称性、带宽严格满足三对角定义。在弛豫极点 $\omega = i/\tau_k$ 处，对角元 $\beta_k = 1 + i\omega\tau_k$ 精确为零，验证了 $\det(M_{\text{rheo}}(\omega)) = 0$ 与弛豫模态的对应关系。
 
-2. **无噪声精确重建**（T3）：当测试频率 $\omega \in [0.01, 100]$ rad/s、弛豫时间 $\tau \in [0.001, 1000]$ s 时，谱丛反演实现 $G^*(\omega)$ 的几乎完美重建（相对误差 $10^{-32}$ 级）。$\tau$ 恢复偏差为零，证明优化器在合适的初值（NNLS 密集网格选择）下能找到全局最优。
+2. **无噪声精确重建**（T3）：当测试频率 $\omega \in [0.01, 100]$ rad/s、弛豫时间 $\tau \in [0.001, 1000]$ s 时，谱丛反演实现 $G^*(\omega)$ 的高精度重建（相对误差 $10^{-32}$ 级）（相对误差 $10^{-32}$ 级）。$\tau$ 恢复偏差为零，证明优化器在合适的初值（NNLS 密集网格选择）下能找到全局最优。
 
 3. **噪声稳定性**（T4）：5% Gaussian 噪声（约 SNR=10）下，$G^*$ 预测相对误差仅 0.06%。LACI 指数从无噪声的 0.55 降至 0.26，反映噪声导致的谱叶分散度上升，但仍保持在物理可接受阈值内。
 

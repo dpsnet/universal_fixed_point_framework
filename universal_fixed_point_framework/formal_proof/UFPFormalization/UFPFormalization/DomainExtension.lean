@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.SpectralCorrespondence
 import UFPFormalization.OperatorTheory
@@ -40,7 +40,7 @@ def contractiveDual {n : ℕ} (eifs : ExpansiveIFS n) : RecObj :=
 
 /-- Extend D to expansive IFS via the contractive dual.
     D_ext(R_expansive) := D(R_contractive_dual) -/
-noncomputable def D_ext_expansive {n : ℕ} (eifs : ExpansiveIFS n) : SpecObj :=
+noncomputable def D_ext_expansive {n : ℕ} (eifs : ExpansiveIFS n) : SpObj :=
   DFunctor.obj (contractiveDual eifs)
 
 /-- The extended D functor satisfies the same spectral correspondence:
@@ -71,7 +71,7 @@ structure NonCompressiveRGFlow where
 
 /-- Extended D for non-compressive RG flows.
     Uses the adjoint (backward) RG flow as the contractive dual. -/
-noncomputable def D_ext_rg (rg : NonCompressiveRGFlow) : SpecObj :=
+noncomputable def D_ext_rg (rg : NonCompressiveRGFlow) : SpObj :=
   -- Placeholder: detailed construction requires RG-specific analysis
   ⟨1, fun _ _ => 0, inferInstance⟩
 

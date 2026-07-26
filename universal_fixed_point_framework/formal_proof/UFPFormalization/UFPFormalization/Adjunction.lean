@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.SpectralCorrespondence
 import Mathlib.CategoryTheory.Adjunction.Basic
@@ -20,7 +20,7 @@ open CategoryTheory
     
     The full analytic construction (infinite-dimensional, m-增生生成元) is
     deferred to Phase 16B functional analysis formalization. -/
-noncomputable def RFunctor : SpecObj ⥤ RecObj where
+noncomputable def RFunctor : SpObj ⥤ RecObj where
   obj S :=
     { T := Fin S.n
       fin := inferInstance
@@ -54,7 +54,7 @@ noncomputable def adjUnit (X : RecObj) : X ⟶ (RFunctor.obj (DFunctor.obj X)) :
     Maps a spectral object's de-recursion back to itself.
     Uses the spectral correspondence: the step matrix of R(S) equals identity,
     and the spectral map bridges between identity and S.A. -/
-noncomputable def adjCounit (S : SpecObj) : (DFunctor.obj (RFunctor.obj S)) ⟶ S :=
+noncomputable def adjCounit (S : SpObj) : (DFunctor.obj (RFunctor.obj S)) ⟶ S :=
   { P := 1
     intertwine := by
       dsimp [DFunctor, RFunctor]
@@ -74,7 +74,7 @@ noncomputable def DAdjR : DFunctor ⊣ RFunctor :=
       counit := { app := adjCounit }
       left_triangle := by
         ext X
-        apply SpecHom.ext
+        apply SpHom.ext
         funext i j
         dsimp [adjUnit, adjCounit, DFunctor, RFunctor]
         simp

@@ -1,17 +1,17 @@
-# 低能 QCD 的谱翻译
+# 低能 QCD 的谱表述
 
 **目标**：将 QCD 禁闭、手征对称性破缺、$\chi$PT 翻译为 $\mathbf{Sp}$ 范畴语言，并与 $\partial\mathbf{Rec}_D$ 谱边界机制建立联系。
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 **日期**：2026-07-19
 **状态**：v0.2（深化版）
-**关联**：Paper XI §3.3（QCD 拉格朗日量谱翻译）、Paper VI（流体谱动力学）、Paper XVI（∂Rec_D 谱边界机制）、`spectral_root_cause_analysis.md` 第 6 层
+**关联**：Paper XI §3.3（QCD 拉格朗日量谱表述）、Paper VI（流体谱动力学）、Paper XVI（∂Rec_D 谱边界机制）、`spectral_root_cause_analysis.md` 第 6 层
 
 ---
 
 ## 1. 谱框架中的 QCD 拉格朗日量
 
-QCD 拉格朗日量的谱翻译已在 Paper XI §3.3 中建立。低能 QCD 的关键新元素是**非微扰效应**——禁闭和手征对称性破缺——这些在谱语言中对应谱测度的拓扑相变。
+QCD 拉格朗日量的谱表述已在 Paper XI §3.3 中建立。低能 QCD 的关键新元素是**非微扰效应**——禁闭和手征对称性破缺——这些在谱语言中对应谱测度的拓扑相变。
 
 ### 1.1 QCD 谱生成元
 
@@ -193,7 +193,7 @@ $$\Lambda_{\text{QCD}} \approx 76\ \text{MeV}.$$
 
 在手征极限 $m_q \to 0$，QCD 拉格朗日量具有 $SU(N_f)_L \times SU(N_f)_R$ 手征对称性。实验观测到该对称性自发破缺为 $SU(N_f)_V$，产生 $N_f^2 - 1$ 个 Goldstone 玻色子（$\pi, K, \eta$）。
 
-**谱翻译**：手征对称性破缺对应谱生成元 $A_{\text{QCD}}$ 在红外获得非零谱间隙：
+**谱表述**：手征对称性破缺对应谱生成元 $A_{\text{QCD}}$ 在红外获得非零谱间隙：
 
 $$\Delta\lambda_{\chi\text{SB}} \equiv \min \sigma(A_{\text{QCD}}) = \Lambda_{\text{QCD}}.$$
 
@@ -357,7 +357,7 @@ $$m_\pi^2 = 2B_0 m_q,$$
 
 其中 $B_0 = -\frac{\langle\bar{q}q\rangle}{F_\pi^2}$。
 
-**谱翻译**：
+**谱表述**：
 
 $$m_\pi^2 = -\frac{2m_q \langle\bar{q}q\rangle}{F_\pi^2} = \frac{2\pi m_q \rho(0)}{F_\pi^2}.$$
 
@@ -375,11 +375,11 @@ $$m_\pi \approx 140\ \text{MeV},$$
 
 **"为何"**：因为 $\partial\mathbf{Rec}_D$ 边界上的谱对象具有普适的动力学结构——谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau] + \mathcal{D} + \mathcal{F}$ 是 $\partial\mathbf{Rec}_D$ 上的普遍动力学方程，Goldstone 玻色子（χPT）和流体元（Navier-Stokes）都是该方程的不同实例化。
 
-### 4.1 手征微扰论的谱翻译
+### 4.1 手征微扰论的谱表述
 
 手征微扰论（$\chi$PT）是 QCD 在低能区的有效场论，以 Goldstone 玻色子为自由度。
 
-**谱翻译**：Goldstone 玻色子 $\pi^a$ 是 $\mathbf{Sp}$ 中的周期谱对象，其谱作用量为：
+**谱表述**：Goldstone 玻色子 $\pi^a$ 是 $\mathbf{Sp}$ 中的周期谱对象，其谱作用量为：
 
 $$\mathcal{L}_{\chi\text{PT}}^{\text{spec}} = \frac{F_\pi^2}{4} \operatorname{Tr}_{\mathcal{H}_\pi}([A_\pi, U]^\dagger [A_\pi, U]) + \frac{F_\pi^2}{4} \operatorname{Tr}_{\mathcal{H}_\pi}(\chi^\dagger U + U^\dagger \chi),$$
 
@@ -593,13 +593,13 @@ $$\rho_T(\lambda) = \frac{N_c}{\pi T} \sum_{n=-\infty}^{\infty} \frac{1}{\lambda
 
    其中 $\mathcal{D}_{\text{thermal}}(T)$ 是热耗散项，$\mathcal{F}_{\text{QGP}}$ 是 QGP 的微观力项。
 
-6. **$\chi$PT 高阶算符的谱翻译** ✅ **已解决**：
+6. **$\chi$PT 高阶算符的谱表述** ✅ **已解决**：
 
    **$p^4$ 阶 χPT 算符**：标准 χPT 的 $p^4$ 拉格朗日量包含以下算符：
 
    $$\mathcal{L}_{\chi\text{PT}}^{(4)} = L_1 (\text{Tr}\,U^\dagger \chi + \text{Tr}\,\chi^\dagger U)^2 + L_2 \text{Tr}\,(U^\dagger \chi)(\chi^\dagger U) + \cdots$$
 
-   **谱翻译**：在谱语言中，这些算符对应更高阶的谱密度修正：
+   **谱表述**：在谱语言中，这些算符对应更高阶的谱密度修正：
 
    - $L_1$ 算符：$\rho(\lambda) \propto \rho_0(\lambda) \cdot (1 + L_1 \lambda^2)$
    - $L_2$ 算符：$\rho(\lambda) \propto \rho_0(\lambda) \cdot (1 + L_2 \lambda^2)$
@@ -688,4 +688,4 @@ $$\rho_T(\lambda) = \frac{N_c}{\pi T} \sum_{n=-\infty}^{\infty} \frac{1}{\lambda
 - v0.4（2026-07-19）：开放问题解决版。问题 3（$F_\pi$ 完整谱推导）已解决——从 $\partial\mathbf{Rec}_D$ 谱密度出发，包含 QCD 修正因子 $C_{\text{QCD}} \approx 2.25$，预测值 92 MeV 与实验一致；问题 4（$Z_m$ 第一性推导）已解决——从 RG 跑动出发，$Z_m = (M_{\text{Pl}}/\Lambda_{\text{QCD}})^{\gamma_m^{\text{avg}}}$，预测值 3300 与实验一致；问题 1 修正 $\overline{\text{MS}}$ 方案标注。
 - v0.3（2026-07-19）：核心问题解决版。新增 §2.4 方案转换因子 $Z_s = Z_3 = 1.39$（验证多重静默一致性）；新增 §3.4 ⟨ψ̄ψ⟩ 与 IFS 收缩因子 $c_i$ 的直接联系（完整推导链，$Z_m \approx 3300$）；修正 §2.3 和 §3.3 的数值计算错误；更新开放问题列表（问题 1-2 标记为已解决/已建立，新增问题 3-4）；与 Paper VI v2.3、Paper XVII v1.1 同步。
 - v0.2（2026-07-19）：深化版。新增 §2 禁闭作为 ∂Rec_D 边界穿越（与 Paper XVI 统一机制类比）；新增 §2.3 $\Lambda_{\text{QCD}}$ 的谱推导（从 $M_{\text{Pl}}$ 到红外的 RGE 链）；新增 §3.3 手征凝聚的定量估算；新增 §4.3 χPT 谱流方程（与 Paper VI 流体谱流类比）；新增 §6 低能 QCD 与谱框架的统一；更新预测表格，新增 $m_K$ 预测；完善参考文献关联。
-- v0.1（初始版本）：基础版。包含 QCD 拉格朗日量谱翻译、禁闭谱判据、手征对称性破缺谱翻译、谱 χPT 基础、初步预测表格。
+- v0.1（初始版本）：基础版。包含 QCD 拉格朗日量谱表述、禁闭谱判据、手征对称性破缺谱表述、谱 χPT 基础、初步预测表格。

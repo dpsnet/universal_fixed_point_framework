@@ -142,13 +142,13 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 | 模块 | 内容 | 状态 |
 |:----|:----|:----:|
 | `AInfinityAlgebra.lean` | A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式 | ✅ 已实现并通过 `lake build` |
-| `InfinityCategory.lean` | Spec_∞ 切空间、Killing 向量场、统一谱流方程、切向量 = m_1 定理 | ✅ 已实现并通过 `lake build` |
-| `RecInfinity.lean` | Rec_∞ 对象与 ∞-态射 | ✅ 已实现并通过 `lake build` |
-| `SpecInfinity.lean` | Spec_∞ 对象与 ∞-态射 | ✅ 已实现并通过 `lake build` |
-| `DInfinityFunctor.lean` | D_∞ : Rec_∞ → Spec_∞ 的 ∞-函子性框架 | ✅ 已实现并通过 `lake build` |
+| `InfinityCategory.lean` | $\mathbf{Sp}_\infty$ 切空间、Killing 向量场、统一谱流方程、切向量 = m_1 定理 | ✅ 已实现并通过 `lake build` |
+| `RecInfinity.lean` | $\mathbf{Rec}_\infty$ 对象与 $\infty$-态射 | ✅ 已实现并通过 `lake build` |
+| `SpecInfinity.lean` | $\mathbf{Sp}_\infty$ 对象与 $\infty$-态射 | ✅ 已实现并通过 `lake build` |
+| `DInfinityFunctor.lean` | $D_\infty : \mathbf{Rec}_\infty \to \mathbf{Sp}_\infty$ 的 $\infty$-函子性框架 | ✅ 已实现并通过 `lake build` |
 | `SpectralFlowHomotopy.lean` | 谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释 | ✅ 已实现并通过 `lake build` |
 
-Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过。核心定理（D_∞ 函子性、谱流 ODE、同伦等价、切向量 = m_1、Killing 条件、Spec₂ 交换律）以 `sorry` 占位，待后续严格证明。
+Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过。核心定理（D_∞ 函子性、谱流 ODE、同伦等价、切向量 = m_1、Killing 条件、Sp₂ 交换律）以 `sorry` 占位，待后续严格证明。
 
 #### A.15.5 三圈 β 函数匹配（Phase 31，`paper31_threeloop_beta.py`）
 

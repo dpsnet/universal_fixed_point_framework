@@ -374,7 +374,7 @@ $$\mathfrak{S}^{(S)} = \prod_{\pi} \mathfrak{S}^{(s_i)} = \{(p, \lambda^{(s_1)},
 
 由于每个 $\mathfrak{S}^{(s_i)}$ 是纤维化，对每个 $i$，$f$ 在 $\mathfrak{S}^{(s_i)}$ 中有 Cartesian 提升 $\tilde{f}_i: x_i \to y_i$，满足 $\pi(\tilde{f}_i) = f$ 并且对任意交换图存在唯一提升。定义 $\tilde{f} = (\tilde{f}_1, \dots, \tilde{f}_k): (x_1,\dots,x_k) \to (y_1,\dots,y_k)$。则：
 
-1. $\pi(\tilde{f}) = f$ 显然，因为每个分量 $\pi(\tilde{f}_i) = f$。
+1. $\pi(\tilde{f}) = f$ 由分量投影直接可得，因为每个分量 $\pi(\tilde{f}_i) = f$。
 2. **Cartesian 性**：任给 $g: z \to y$ 和 $h: \pi(z) \to \pi(x)$ 使得 $\pi(g) = f \circ h$，需存在唯一 $\tilde{h}: z \to x$ 使得 $g = \tilde{f} \circ \tilde{h}$ 且 $\pi(\tilde{h}) = h$。对每个分量 $i$，由 $\mathfrak{S}^{(s_i)}$ 的 Cartesian 性，存在唯一的 $\tilde{h}_i: z_i \to x_i$ 使得 $g_i = \tilde{f}_i \circ \tilde{h}_i$ 且 $\pi(\tilde{h}_i) = h$。则 $\tilde{h} = (\tilde{h}_1,\dots,\tilde{h}_k)$ 唯一满足要求。
 
 因此 $\pi$ 是 Grothendieck 纤维化。反之，若 $\pi$ 不是纤维化，则至少一个 $\mathfrak{S}^{(s_i)}$ 不满足 Cartesian 提升存在性。∎
@@ -575,7 +575,7 @@ Paper XXVIII 已建立了引力-电磁双自旋耦合谱丛（$S=\{-2,-1\}$，�
 
 三参数谱丛 $\mathfrak{S}^{(s)}$ 的 $\infty$-范畴提升有三个核心动机：(i) 单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 在 $\infty$-范畴中自然成为高阶自同构群，可编码非平凡的同伦相干性；(ii) $\mathbb{Z}_2$-覆盖在 $\infty$-层中对应 Postnikov 塔的 $K(\mathbb{Z}_2,1)$-层，提供严格的范畴论实现；(iii) 与 Phase 31.1 已有的 $\mathbf{Rec}_\infty$ / $\mathbf{Sp}_\infty$ 形式化骨架对接。
 
-**已有形式化基础**（Phase 31.1）：已定义 `RecInfinity` 作为 $\infty$-范畴，对象为满足压缩条件的递归系统 $R = (V, U_R)$，1-态射为递归保持的线性映射 $f: R_1 \to R_2$（满足 $f \circ U_{R_1} = U_{R_2} \circ f$）。已完成六个核心模块的 Lean 4 编译（A∞-代数、Spec_∞ 切空间、Rec_∞、Spec_∞、D_∞ 函子、谱流同伦），核心定理以 `sorry` 占位等待填充。
+**已有形式化基础**（Phase 31.1）：已定义 `RecInfinity` 作为 $\infty$-范畴，对象为满足压缩条件的递归系统 $R = (V, U_R)$，1-态射为递归保持的线性映射 $f: R_1 \to R_2$（满足 $f \circ U_{R_1} = U_{R_2} \circ f$）。已完成六个核心模块的 Lean 4 编译（A∞-代数、Sp_∞ 切空间、Rec_∞、Sp_∞、D_∞ 函子、谱流同伦），核心定理以 `sorry` 占位等待填充。
 
 ### 8.2 路径 1（推荐）：$\infty$-层方法
 

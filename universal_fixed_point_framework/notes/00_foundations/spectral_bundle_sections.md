@@ -241,12 +241,12 @@ $$\Delta\lambda_{\min}^{(0)} = \frac{N_c}{\pi^2 |\langle\bar{q}q\rangle|} \cdot 
 
 ### 7.3 RG 谱密度的解析形式
 
-**定理 7.2**（$\rho_\mu(\lambda)$ 的谱框架形式）。RG 谱密度在 $\mu > \Lambda_{\text{QCD}}$ 时由跑动耦合的谱翻译给出：
+**定理 7.2**（$\rho_\mu(\lambda)$ 的谱框架形式）。RG 谱密度在 $\mu > \Lambda_{\text{QCD}}$ 时由跑动耦合的谱表述给出：
 
 $$\rho_\mu(\lambda) = \rho_0(\lambda) \cdot Z_\alpha(\mu) + \rho_{\text{pert}}(\mu, \lambda) \tag{7.5}$$
 
 其中：
-- $Z_\alpha(\mu) = \alpha_s(\mu)/\alpha_s(M_{\text{Pl}})$ 是跑动耦合的归一化谱翻译因子
+- $Z_\alpha(\mu) = \alpha_s(\mu)/\alpha_s(M_{\text{Pl}})$ 是跑动耦合的归一化谱表述因子
 - $\rho_{\text{pert}}$ 是微扰 QCD 贡献的谱密度
 
 **证明要点**。$\rho_\mu(\lambda)$ 的 $\mu$ 依赖完全由 RG 谱流方程 $dA(\mu)/d\ln\mu = [G_{\text{RG}}, A(\mu)]$ 确定。谱密度作为 $A(\mu)$ 的迹泛函，满足相应的 RG 方程。$\square$

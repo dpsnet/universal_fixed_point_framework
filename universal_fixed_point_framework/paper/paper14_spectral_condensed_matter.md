@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XIV：凝聚态物理的谱翻译——超导、量子 Hall 与超流
+# 通用不动点范畴框架 XIV：凝聚态物理的谱表述——超导、量子 Hall 与超流
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -8,7 +8,17 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学）、Paper VI（谱流体动力学）、Paper VIII（对称性破缺的谱翻译）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理与谱分类）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学）、Paper VI（谱流体动力学）、Paper VIII（对称性破缺的谱表述）、Paper X（谱拓扑不变量）、Paper XI（谱 QFT 公理与谱分类）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **$\mathbf{Sp}$**：谱范畴（Spectral Category）
+- **$\mathbf{Rec}$**：递归范畴（Recursive Category）
+- **BCS**：巴丁-库珀-施里弗超导理论（Bardeen-Cooper-Schrieffer）
+- **IQHE**：整数量子霍尔效应（Integer Quantum Hall Effect）
+- **GP**：Gross-Pitaevskii（格罗斯-皮塔耶夫斯基方程）
+- **NRG**：数值重整化群（Numerical Renormalization Group）
+- **RGE**：重整化群方程（Renormalization Group Equation）
+- **CDGM**：Caroli-de Gennes-Matricon（卡洛利-德热纳-马特里孔涡旋束缚态）
 
 ---
 
@@ -36,7 +46,9 @@
 
 ---
 
-## 2. BCS 超导能隙的谱翻译
+## 2. BCS 超导能隙的谱表述
+
+（谱表述：框架特有的方法论，指从经典物理理论到 $\mathbf{Sp}$ 范畴中谱生成元、谱间隙与谱流方程的系统对应规则）
 
 ### 2.1 BCS Hamiltonian 的谱像
 
@@ -52,7 +64,7 @@ $$\delta_{\text{SC}} = \min \sigma_+(A_{\text{SC}}) = \Delta$$
 
 $$\frac{\Delta}{V} = \sum_k \frac{\Delta}{2\sqrt{\xi_k^2 + \Delta^2}}$$
 
-在谱翻译中等价于谱流不动点条件：
+在谱表述中等价于谱流不动点条件：
 
 $$\frac{d}{dt} A_{\text{SC}} = [A_{\text{pair}}, A_{\text{SC}}] = 0$$
 
@@ -64,7 +76,7 @@ $$\frac{d}{dt} A_{\text{SC}} = [A_{\text{pair}}, A_{\text{SC}}] = 0$$
 
 **命题 2.2**（超导相变的谱诠释）。正常态谱生成元 $A_{\text{normal}}$ 在 Fermi 面处谱隙为零——$\delta_{\text{normal}} = 0$——对应 $U(1)$ 规范对称性未破缺。超导态 $A_{\text{SC}}$ 打开有限间隙 $\delta_{\text{SC}} = \Delta > 0$，对应 $U(1)$ 规范对称性的谱破缺。超导相变温度 $T_c$ 由谱间隙消失条件 $\delta_{\text{SC}}(T_c) = 0$ 定义。
 
-该翻译将超导相变重新解释为**谱生成元的对称性破缺**——与 Paper VIII 中对称性破缺的谱翻译一致，且与 Paper V（谱间隙动力学）的间隙打开机制同构。
+该表述将超导相变重新解释为**谱生成元的对称性破缺**——与 Paper VIII 中对称性破缺的谱表述一致，且与 Paper V（谱间隙动力学）的间隙打开机制同构。
 
 **注 2.1**。有限温度下，谱间隙 $\delta_{\text{SC}}(T)$ 随温度升高而减小，在 $T_c$ 处连续消失（二级相变）。该行为由谱流方程耦合温度参数 $T$ 控制——温度作为热浴谱生成元的耦合强度进入 $[A_{\text{SC}}, A_{\text{thermal}}]$ 项，其谱间隙温度依赖性由不动点方程 $\frac{d}{dt}A_{\text{SC}}(T) = 0$ 确定。
 
@@ -76,7 +88,7 @@ $$\frac{d}{dt} A_{\text{SC}} = [A_{\text{pair}}, A_{\text{SC}}] = 0$$
 
 整数量子 Hall 效应的核心——Hall 电导 $\sigma_{xy} = \nu e^2/h$——在谱框架中被翻译为谱流的拓扑不变量。令 $A_{\text{Hall}}$ 为二维电子气（2DEG）在垂直磁场中的谱生成元，其谱像为 $D(A_{\text{Hall}}) = (\mathcal{H}_{\text{Hall}}, A_{\text{Hall}}, \sigma(A_{\text{Hall}}))$。
 
-**定理 3.1**（TKNN 谱公式）。Hall 电导 $\sigma_{xy}$ 的谱翻译为：
+**定理 3.1**（TKNN 谱公式）。Hall 电导 $\sigma_{xy}$ 的谱表述为：
 
 $$\sigma_{xy} = \frac{e^2}{h} \cdot \text{Ch}(A_{\text{Hall}})$$
 
@@ -98,7 +110,7 @@ $$\frac{d}{dt} \text{Ch}(A_{\text{Hall}}(t)) = 0, \quad \text{Ch}(A_{\text{Hall}
 
 这一翻译将量子 Hall 效应纳入谱拓扑框架：**Hall 电导的精确量子化不是偶然——它是 $\mathbf{Sp}$ 中陈数的整数拓扑不变性在凝聚态物理的具体实现**。
 
-**注 3.1**。分数量子 Hall 效应对应 $\text{Ch}(A_{\text{Hall}})$ 取有理分数值，其谱翻译涉及复合费米子构造——在谱框架中等价于谱生成元的规范变换重排。详见 Paper XI（量子 Hall 系统的谱分类）。
+**注 3.1**。分数量子 Hall 效应对应 $\text{Ch}(A_{\text{Hall}})$ 取有理分数值，其谱表述涉及复合费米子构造——在谱框架中等价于谱生成元的规范变换重排。详见 Paper XI（量子 Hall 系统的谱分类）。
 
 ### 3.3 IQHE 临界指数的连续插值
 
@@ -203,7 +215,7 @@ $$\nu_{\text{raw}} = -\frac{1}{\beta'(A^*)} = \frac{\nu_{\text{std}}^2 \cdot (1+
 | | #5-#7 中迁移率/Cu 屏蔽 | $1\text{-}3\times10^6$ | 0.4-7.2 | $1\text{-}3\times10^{-7}$ | 1.86-1.96 | 2.17-2.63 | ⚠偏 0.31-0.42 |
 | | #8-#9 标准/低迁移率 | $0.1\text{-}1\times10^6$ | 0.4-0.5 | $1.5\text{-}5\times10^{-7}$ | 2.06-2.23 | 2.13-2.70 | ⚠偏 ~0.07 |
 | **短程势** | #10 InGaAs/InP | $1.2\times10^5$ | 0.42 | $1.2\times10^{-6}$ | 1.57 | 2.27-2.50 | ⚠偏 0.70 |
-| **高无序** | #14 数值模拟 | — | $\gg\epsilon_c$ | — | 2.35 | $2.35\pm0.03$ | ✅完美一致 |
+| **高无序** | #14 数值模拟 | — | $\gg\epsilon_c$ | — | 2.35 | $2.35\pm0.03$ | ✅精确一致 |
 
 **核心发现**。远程施主样品（#3-#9）通过 $\epsilon_{\text{eff}}$ 修正后，谱框架预测与实验值的系统偏差在可接受范围内（LIV 实验精度典型偏差 $\sim 30\%$，此处最大偏差 $\sim 0.42$）。短程势样品 #10 的偏差较大（$\sim 0.70$），表明 $\mathfrak{so}(2,1)$ 谱流生成元在该材料体系中的 Lie 代数结构可能存在修正。超洁净样品 #1-#2 的 $\nu \to 1$ 预言是谱框架独有的可检验差异——该极限在标准 Pruisken 标度理论中不存在。
 
@@ -243,7 +255,7 @@ $$\mathcal{W}_{\text{tilt}}(\theta) = \mathcal{F}_Z(\theta) \cdot \left[\frac{\e
 
 ## 4. 超流 Gross-Pitaevskii 方程 → 谱流方程
 
-### 4.1 GP 方程的谱翻译
+### 4.1 GP 方程的谱表述
 
 Bose-Einstein 凝聚体的 Gross-Pitaevskii（GP）方程：
 
@@ -263,7 +275,7 @@ $$\frac{d}{dt} A_{\text{GP}} = [A_{\text{kin}} + A_{\text{ext}} + A_{\text{int}}
 | 外势 | $A_{\text{ext}} = D(V_{\text{ext}})$ | 外势约束谱 |
 | 相互作用 | $A_{\text{int}} = g\,\text{Tr}(\rho \cdot)$ | 相互作用谱（平均场近似） |
 
-**证明**。$A_{\text{GP}} = -\log \rho$ 满足 $\frac{d}{dt}A_{\text{GP}} = -\rho^{-1} \frac{d\rho}{dt}$。将 GP 方程的连续性方程 $\partial_t \rho + \nabla\cdot(\rho \mathbf{v}) = 0$（其中 $\mathbf{v} = (\hbar/m)\nabla\theta$）代入，经谱翻译后得谱流方程形式。对易子 $[A_{\text{kin}} + A_{\text{ext}} + A_{\text{int}}, A_{\text{GP}}]$ 编码了 GP 方程的非线性动力学。□
+**证明**。$A_{\text{GP}} = -\log \rho$ 满足 $\frac{d}{dt}A_{\text{GP}} = -\rho^{-1} \frac{d\rho}{dt}$。将 GP 方程的连续性方程 $\partial_t \rho + \nabla\cdot(\rho \mathbf{v}) = 0$（其中 $\mathbf{v} = (\hbar/m)\nabla\theta$）代入，经谱表述后得谱流方程形式。对易子 $[A_{\text{kin}} + A_{\text{ext}} + A_{\text{int}}, A_{\text{GP}}]$ 编码了 GP 方程的非线性动力学。□
 
 ### 4.2 涡旋解的谱拓扑
 
@@ -273,7 +285,7 @@ $$\frac{d}{dt} A_{\text{GP}} = [A_{\text{kin}} + A_{\text{ext}} + A_{\text{int}}
 
 **推论 4.2**（涡旋稳定性）。涡旋拓扑荷 $n$ 在谱流方程演化下不变——$dn/dt = 0$——这从谱拓扑角度解释了超流涡旋的拓扑稳定性。涡旋-反涡旋对的湮灭对应 $n_+ + n_- = 0$ 的拓扑荷相消。
 
-该翻译将 GP 方程统一到谱流体动力学框架中，与 Paper VI（谱流体动力学）的精神一致——流体和超流的谱描述共享相同的数学结构，区别仅在于谱生成元的具体形式和量子统计。
+该表述将 GP 方程统一到谱流体动力学框架中，与 Paper VI（谱流体动力学）的精神一致——流体和超流的谱描述共享相同的数学结构，区别仅在于谱生成元的具体形式和量子统计。
 
 ---
 
@@ -309,7 +321,7 @@ $$\text{Ind}_{\partial}(\mathcal{P}) = \text{Ch}_{\text{bulk}}(A_{\text{TI}}) \m
 
 ### 6.5 谱动力学统一性
 
-下表总结了凝聚态谱翻译的统一结构：
+下表总结了凝聚态谱表述的统一结构：
 
 | 物理系统 | 谱生成元 $A$ | 序参量 | 谱不变量 | 动力学 |
 |---------|-------------|--------|---------|--------|
@@ -318,7 +330,7 @@ $$\text{Ind}_{\partial}(\mathcal{P}) = \text{Ch}_{\text{bulk}}(A_{\text{TI}}) \m
 | 超流 | $A_{\text{GP}}$ | $\rho = e^{-A_{\text{GP}}}$ | 涡旋荷 $n$ | $[A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$ |
 | 拓扑绝缘体 | $A_{\text{TI}}$ | 边界态存在性 | $Z_2$ 指标 | 体-边界谱对偶 |
 
-所有四类系统的共同数学结构——**谱生成元 + 谱不变量 + 谱流方程**——验证了谱动力学作为凝聚态物理统一语言的潜力。与 Paper VI（流体动力学谱统一）和 Paper XIII（跨领域谱对应表）一致，凝聚态谱翻译进一步确认了谱框架的跨尺度普适性。
+所有四类系统的共同数学结构——**谱生成元 + 谱不变量 + 谱流方程**——验证了谱动力学作为凝聚态物理统一语言的潜力。与 Paper VI（流体动力学谱统一）和 Paper XIII（跨领域谱对应表）一致，凝聚态谱表述进一步确认了谱框架的跨尺度普适性。
 
 ### 5.6 谱框架独有的可检验量子预言
 
@@ -514,7 +526,7 @@ NRG Wilson 链、记忆函数连分数、Kerr Leaver 三对角矩阵的统一揭
 - [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子。
 - [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱间隙动力学。
 - [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。谱流体动力学公理、N-S 谱流方程。
-- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞谱动力学——视界、信息与对称性破缺》，v1.0。对称性破缺的谱翻译。
+- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞谱动力学——视界、信息与对称性破缺》，v1.0。对称性破缺的谱表述。
 - [X ] Paper X：《通用不动点范畴框架 X：谱拓扑不变量——从陈数到谱 Callias 指标定理》，v1.0。谱拓扑不变量的一般理论。
 - [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理、量子 Hall 系统的谱分类。
 - [XIII] Paper XIII：《通用不动点范畴框架 XIII：谱对应表——跨领域统一映射》，v2.0。跨领域谱对应表。
@@ -540,8 +552,8 @@ NRG Wilson 链、记忆函数连分数、Kerr Leaver 三对角矩阵的统一揭
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIV，凝聚态物理的谱翻译——超导、量子 Hall 与超流。主要内容：
-- BCS 超导能隙 $\Delta$ 的谱翻译：$\delta_{\text{SC}} = \Delta$，谱对称性破缺（§2）
+《通用不动点范畴框架》系列论文 XIV，凝聚态物理的谱表述——超导、量子 Hall 与超流。主要内容：
+- BCS 超导能隙 $\Delta$ 的谱表述：$\delta_{\text{SC}} = \Delta$，谱对称性破缺（§2）
 - TKNN 公式的谱版本：$\sigma_{xy} = (e^2/h) \cdot \text{Ch}(A_{\text{Hall}})$，陈数绝热不变性（§3.1-3.2）
 - IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$（定理 3.2），噪声范畴 $\mathbf{Noise}$ 第一性原理推导（§3.3-3.4）
 - 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$：三个不动点、物理交叉公式、$\nu(\epsilon,\zeta)$ 二维相图（§3.5）

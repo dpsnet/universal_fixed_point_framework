@@ -1,4 +1,4 @@
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.HigherSpecCategory
 import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic

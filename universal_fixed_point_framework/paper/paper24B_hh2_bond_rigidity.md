@@ -22,7 +22,7 @@ H + H₂ → H₂ + H 是最简单的双分子反应，长期以来是反应动�
 
 ### 1.2 核心思想
 
-谱键刚性定理（Paper V §5）指出：化学键的谱间隙（HOMO-LUMO gap）由以下公式唯一确定：
+谱键刚性定理（Paper V §5）指出：化学键的谱间隙（HOMO-LUMO gap）——即谱键刚性（化学键能级分裂幅度的谱框架量度）——由以下公式唯一确定：
 
 $$R_{\text{bond}}(A-B) = b_{AB} \cdot \frac{\hbar^2}{m_e \cdot \ell_{\text{corr}}^2} \cdot \exp\left(-\frac{R_{AB}}{\ell_{\text{corr}}}\right)$$
 

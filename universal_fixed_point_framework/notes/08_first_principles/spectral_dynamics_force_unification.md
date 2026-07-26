@@ -121,7 +121,7 @@ $$\frac{d}{dt} \mathrm{Tr}(A_S A_t) = 0$$
 
 > **与 Paper V 的关系**：本文档 §2-§4 对应 Paper V §2.2-§2.4、§3-§4；附录 A 对应 Paper V §5 开放问题的详细研究方案。
 
-## 2. 已知力定律的谱翻译
+## 2. 已知力定律的谱表述
 ### 2.1 牛顿第二定律 $F = ma$
 
 力学系统：$R_{\text{mech}} = (X, \Phi_t)$，其中 $X$ 是相空间，$\Phi_t$ 是 Hamilton 流。
@@ -510,7 +510,7 @@ $$[A_{\text{GR}}, \pi] \cdot T = T \cdot \text{flow}(A_{\text{SM}})$$
 
 ## 10. 宇宙学谱动力学：FLRW 谱方程与原初扰动
 
-### 10.1 FLRW 度规的谱翻译
+### 10.1 FLRW 度规的谱表述
 
 FLRW 度规 $ds^2 = -dt^2 + a(t)^2 d\mathbf{x}^2$ 对应的递归系统 $R_{\text{FLRW}}$ 由尺度因子 $a(t)$ 的演化方程定义。其谱像 $D(R_{\text{FLRW}}) = (\mathcal{H}_t, A_t, \sigma(A_t))$ 中，$A_t$ 的谱结构编码宇宙膨胀动力学。
 

@@ -4,7 +4,7 @@
 
 **版本**：v0.6（2026-07-25）
 
-**摘要**：基于 Paper XV 的谱翻译和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次精细纤维拆分方法论。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚性定理**（Paper XXIV-B）用谱键刚性替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
+**摘要**：基于 Paper XV 的谱表述和 Paper XXI 的 Grothendieck 纤维化模板，建立量子化学多层次精细纤维拆分方法论。提出 7 层嵌套纤维化链（Bun(Reac)→Corr→Vib→IntraIonic→Ionic→Solv→Spin），形式化 3 个关键定理（嵌套唯一性、复杂度降低 $\mathcal{O}(N^7)\to\mathcal{O}(N^3)\times m$、精度传播链式上界），并在 7 个独立数值实验上完成全栈交叉验证。核心预言 $\ell_{\text{corr}} = 0.5$ Å 在 H+H$_2$ 势垒拟合（2.6% 偏差）和水二聚体文献拟合（2.9% 偏差）中获独立验证。Fulvene 锥形交叉的拓扑不变量（Berry 相位 = $\pi$, 陈数 $C=1$）以 0.00% 偏差精确复现。CH$_3$CHO $n\to\pi^*$ 跃迁完成**谱流第一性原理推导**（3.958 eV，3.5% 偏差，见 Paper XXIII）。**Bun(Corr) 闭式定理的连续谱推广**（Paper XXIV-A）成功消除强耦合超导 McMillan 公式中的经验 $\mu^*$ 参数——Al、Sn、Pb 三种 s-p 金属的 $\mu^*$ 偏差 < 1%，Hg (Z=80) 的 11.7% a_spec 偏差经定量分解确认 92% 源于重元素谱映射链失效、仅 8% 来自 $\mu^*_{\text{spec}}$ 公式。**H-H 谱键刚性定理**（Paper XXIV-B）用谱键刚性替代了 3-中心 Hückel 模型的经验参数 $\beta_0$ 和 $\alpha_0$，实现 H+H$_2$ 反应 3-中心谱 Hamiltonian 的完全第一性原理构造。
 
 **前置依赖**：Paper XV（谱量子化学）、Paper XXI（Grothendieck 纤维化综合）。
 
@@ -69,7 +69,7 @@ $$\frac{d}{d\xi} A = [G_\xi, A] - \gamma_\xi \cdot \Delta_{\text{spec}} A$$
 
 ### 2.3 通用验证条件（谱交织条件）
 
-两个纤维化层级之间的相容性由**谱交织条件**验证：
+谱交织条件（即不同纤维化层级间相容性的对易子判据）是验证两个纤维化层级之间相容性的基本工具：
 
 $$[A_{\text{layer }i}, \pi_{i \leftarrow i+1}]_{\text{HS}} < \varepsilon_i$$
 
@@ -262,7 +262,7 @@ $$\mathbf{Bun}(\mathbf{Reac}) \hookrightarrow \mathbf{Bun}(\mathbf{Corr}) \hookr
 
 ### 4.4 跨界处理
 
-当自然变换的谱交织条件不满足时（例如锥形交叉处 $\delta_{\text{spec}} \to 0$），谱框架提供 **跨界粘合** 机制：
+当自然变换的谱交织条件不满足时（例如锥形交叉处 $\delta_{\text{spec}} \to 0$），谱框架提供 **跨界粘合** 机制（即谱间隙闭合时采用加权平均的双层耦合方案）：
 
 $$A_{\text{total}} = \frac{\kappa_H}{\kappa_H + \kappa_L} A_H + \frac{\kappa_L}{\kappa_H + \kappa_L} A_L$$
 

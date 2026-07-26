@@ -101,7 +101,7 @@ noncomputable def NoiseIsoTemp : NoiseObj ≌ TempObj :=
    ========================================================= -/
 
 /-- Fiber category: spectral data over a noise base point.
-    In this finite prototype, fiber data is a SpecObj (matrix A)
+    In this finite prototype, fiber data is a SpObj (matrix A)
     annotated with the base point for tracking (same pattern as SpecFiberTemp). -/
 structure SpecFiberNoise (η : NoiseObj) where
   n : ℕ

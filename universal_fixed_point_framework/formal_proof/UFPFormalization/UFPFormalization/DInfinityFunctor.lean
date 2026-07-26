@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.RecInfinity
 import UFPFormalization.SpecInfinity
@@ -14,7 +14,7 @@ namespace UFPFormalization
 universe u
 
 /-- D_∞ on objects: same as DFunctor. -/
-noncomputable def DInfinity_obj (R : RecObj) : SpecObj :=
+noncomputable def DInfinity_obj (R : RecObj) : SpObj :=
   DFunctor_obj R
 
 /-- D_∞ on 1-morphisms: same as DFunctor_map. -/
@@ -38,7 +38,7 @@ theorem DInfinity_preserves_vertComp {X Y Z : RecObj}
     ext i j
     unfold DInfinity_inf DInfinity_one DInfinity_obj recInfVertComp specInfVertComp
     have hP : (DFunctor_map (α ≫ β)).P = (DFunctor_map α).P * (DFunctor_map β).P := by
-      have h := congrArg SpecHom.P (DFunctor.map_comp α β)
+      have h := congrArg SpHom.P (DFunctor.map_comp α β)
       calc
         (DFunctor_map (α ≫ β)).P = ((DFunctor_map α) ≫ (DFunctor_map β)).P := h
         _ = (DFunctor_map α).P * (DFunctor_map β).P := rfl
@@ -52,12 +52,12 @@ theorem DInfinity_preserves_id (X : RecObj) :
   · -- P equality
     unfold DInfinity_inf DInfinity_one DInfinity_obj recInfId specInfId
     ext i j
-    have hP_mat : SpecHom.P (DFunctor_map (𝟙 X)) = 1 := by
+    have hP_mat : SpHom.P (DFunctor_map (𝟙 X)) = 1 := by
       calc
-        SpecHom.P (DFunctor_map (𝟙 X)) = SpecHom.P (𝟙 (DFunctor_obj X)) :=
-          congrArg SpecHom.P (DFunctor.map_id X)
+        SpHom.P (DFunctor_map (𝟙 X)) = SpHom.P (𝟙 (DFunctor_obj X)) :=
+          congrArg SpHom.P (DFunctor.map_id X)
         _ = 1 := by
-          simpa using (SpecHom.id_P (DFunctor_obj X))
+          simpa using (SpHom.id_P (DFunctor_obj X))
     simpa using congrArg (fun M : Matrix (Fin (DFunctor_obj X).n) (Fin (DFunctor_obj X).n) ℂ => M i j) hP_mat
   · simp [DInfinity_inf, DInfinity_one, recInfId, specInfId]
 

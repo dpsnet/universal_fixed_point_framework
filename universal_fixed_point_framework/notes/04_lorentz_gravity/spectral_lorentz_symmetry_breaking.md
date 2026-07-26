@@ -158,7 +158,7 @@ $$\Delta\theta \sim \varepsilon_{\text{Lor}} \cdot D / \lambda_{\text{Pl}}.$$
 **命题 4.7**（Planck 尺度的 Lorentz 违规）。在 Planck 尺度 $\mu \sim M_{\text{Pl}}$，谱边界 $\partial\mathbf{Rec}_D$ 自身可能涨落，导致 Lorentz 群局部破缺：
 $$\varepsilon_{\text{Lor}}(\mu \sim M_{\text{Pl}}) \sim \mathcal{O}(1).$$
 
-**论证**。Planck 尺度下量子引力效应使时空度规涨落，对应 $\partial\mathbf{Rec}_D$ 边界本身的涨落。由定理 2.3，边界涨落导致自同构群偏离 $SO^+(1,3)$。具体机制涉及圈量子引力、因果集、弦论等量子引力方案的谱翻译（参见 `spectral_dynamics_force_unification.md` §7.4）。
+**论证**。Planck 尺度下量子引力效应使时空度规涨落，对应 $\partial\mathbf{Rec}_D$ 边界本身的涨落。由定理 2.3，边界涨落导致自同构群偏离 $SO^+(1,3)$。具体机制涉及圈量子引力、因果集、弦论等量子引力方案的谱表述（参见 `spectral_dynamics_force_unification.md` §7.4）。
 
 ---
 

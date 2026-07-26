@@ -150,7 +150,7 @@ $$\|G_{\text{th}}(T)\| = \frac{1}{2T} \cdot \frac{\sqrt{C_2(\mathfrak{so}(1,1))}
 
 ### 4.3 $G_{\text{RG}}$ 的 Casimir 范数
 
-RG 谱流生成元 $G_{\text{RG}}(\mu)$ 的范数来自 $\beta$-函数的谱翻译。
+RG 谱流生成元 $G_{\text{RG}}(\mu)$ 的范数来自 $\beta$-函数的谱表述。
 
 **定理 4.2**（$\|G_{\text{RG}}(\mu)\|$ 的显式形式）。在谱框架中，RG 谱流生成元 $G_{\text{RG}}(\mu)$ 的算子范数为：
 

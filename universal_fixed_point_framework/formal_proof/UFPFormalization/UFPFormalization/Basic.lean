@@ -5,7 +5,7 @@
 -/
 
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.AInfinityAlgebra
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.HigherSpecCategory

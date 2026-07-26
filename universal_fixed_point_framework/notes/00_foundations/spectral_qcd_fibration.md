@@ -114,7 +114,7 @@ $$\ell_{\mathrm{GUT}} = M_{\mathrm{GUT}}^{-1} \sim 10^{-16} \, \mathrm{fm}$$
 
 ### 4.1 谱生成元
 
-Bun(EW) 层的谱生成元来自 Higgs 势和对称性破缺的谱翻译（Paper XI §7）：
+Bun(EW) 层的谱生成元来自 Higgs 势和对称性破缺的谱表述（Paper XI §7）：
 
 $$A_{\mathrm{EW}} = \exp\left(-\beta_{\mathrm{EW}} \cdot \left( \frac{H^{\dagger}H}{v^2} + \frac{\lambda}{\hbar} \phi^4 \right)\right)$$
 

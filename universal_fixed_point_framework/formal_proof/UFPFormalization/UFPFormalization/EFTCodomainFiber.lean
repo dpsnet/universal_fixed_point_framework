@@ -1,8 +1,13 @@
 /-
-# EFTCodomainFiber.lean — Phase 55F-F2 EFT Codomain Fibration
+# EFTCodomainFiber.lean — Phase 55F-F2 有效场论（Effective Field Theory, EFT）Codomain Fibration
 
-Formalizes the EFT energy scale slice category as a codomain fibration,
+Formalizes the 有效场论（Effective Field Theory, EFT）energy scale slice category as a codomain fibration,
 a textbook Grothendieck fibration structure.
+
+Standard correspondence:
+  - EFT energy scale = base category (ordered by UV → IR)
+  - Codomain fibration = fibre category of EFT actions at fixed energy scale
+  - Cartesian lift = Wilsonian RG transformation integrating out high-energy modes
 
 Based on:
   spectral_eft_codomain_fibration.md v0.1

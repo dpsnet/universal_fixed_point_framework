@@ -1,5 +1,5 @@
 import UFPFormalization.RecCategory
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.IsolationConstraints
 import UFPFormalization.Braided
@@ -115,10 +115,10 @@ theorem Kerr_IFS_IC (kcfg : KerrConfig) (icfg : IFSConfig) :
   simp [isolationConstraint, spectralScaleCompatible, morphismExtendable,
     topologicallyCompatible]
 
-/-! ### NTK (Neural Tangent Kernel) Domain -/
+/-! ### 神经正切核（Neural Tangent Kernel, NTK）Domain -/
 
 /--
-NTK recursive system parameters.
+神经正切核（Neural Tangent Kernel, NTK）recursive system parameters.
 The NTK matrix K(X,X) defines the spectral structure of neural network training.
 In the finite-dimensional prototype, the NTK is a finite symmetric positive
 semidefinite matrix.

@@ -1,6 +1,6 @@
 import UFPFormalization.Silence
 import UFPFormalization.MultiSilenceMethodology
-import UFPFormalization.SpecCategory
+import UFPFormalization.SpCategory
 import Mathlib.Data.Real.Basic
 
 open Real

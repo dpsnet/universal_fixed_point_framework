@@ -195,7 +195,7 @@ $$\epsilon_{\text{framework}} = 8.12 \times 10^{-17}$$
 ## 参考文献
 
 [1] Paper II §3: 谱交织精度 $\epsilon$ 的原始定义.
-[2] Paper V §3.1-4.1: 谱交织条件与爱因斯坦方程的谱翻译.
+[2] Paper V §3.1-4.1: 谱交织条件与爱因斯坦方程的谱表述.
 [3] Paper XVIII §12.4(4): $\epsilon$ 开放问题.
 [4] `notes/11_transition_bridges/category_to_rep_bridge_53D.md`: Cl(1,7) 表示论与 $k_{\max}=8$ 的详细论证.
 [5] `notes/08_first_principles/spectral_dynamics_first_principles_derivation.md` §4.3: $\epsilon$ 的谱间隙比值定义.

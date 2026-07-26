@@ -4,11 +4,26 @@
 
 **版本**：v1.7（2026-07-21）
 
-**摘要**：本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（Spectral Quantum Gravity, SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。核心贡献包括：(1) 基于 Cl(1,7) 代数构造 $A_{\text{GR}}$ 离散谱（$\lambda_k \propto \sqrt{k(k+1)}$），谱间隙 $\Delta\lambda_{\min} = 0.122\,M_{\text{Pl}}$（Paper XX 第一性原理推导）；(2) 构建谱引力子传播子 $G_{\text{spec}}(k) = \sum_i w_i(k)/(k_i^2 - m^2)$，验证红外极限还原 $1/k^2$（GR），紫外极限被 $\lambda_{\max}$ 指数压制（UV 有限）；(3) 计算 Planck 尺度 $2\to2$ 散射振幅，推广至 **N 体散射的统一解析闭式** $M_{\text{spec}}^{(N)}(E) = \kappa^{N-2} N!\,[G_{\text{spec}}(E^2/N)]^{N(N-1)/2} e^{-(NE/\lambda_{\max})^2}$，证明对所有 $N$ 和 $E$ 的 UV 有限性；(4) 导出 **谱 Cutkosky 规则** $\text{Disc}[M^{(N)}] = i\sum_k \int M^{(k)}M^{(N-k)\dagger}$，证明谱 S-矩阵满足完整幺正性 $SS^\dagger = I$；(5) 通过 RAMBO 算法实现 Lorentz 不变相空间蒙特卡洛积分，给出从 LHC ($\sim 10^{-15}M_{\text{Pl}}$) 到 Planck 标度的完整截面能标依赖；(6) 将谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 从人工正则化器升级为物理边界——谱截断即是量子引力本身的结构特征；(7) 整合黑洞视界谱动力学（Paper VIII）与奇点谱消解（Paper IX），建立完整的黑洞演化谱描述；(8) 给出黑洞蒸发 Page 曲线的谱动力学推导（$\tau_{\text{Page}} \approx 0.5\tau_{\text{evap}}$）；(9) 构建从 Planck 到 QCD 的跨尺度单链 RG 流；(10) 推广至 Kerr 度规的全谱分解，覆盖旋转黑洞的视界谱动力学与极端极限；(11) 推导谱引力子自相互作用至三圈 $\beta$ 函数，证明谱截断 $\Lambda_{\max}$ 保证 UV 有限性；(12) 建立谱 AdS/CFT 对应，揭示谱截断的全息诠释作为边界 CFT 的天然 UV 正则化器；(13) 导出谱原初引力波修正（§12），证明 SQG 在 CMB 以下能标以 $<10^{-100}$ 精度还原标准暴涨，在 Planck 能标附近预言无参数谱截断结构。所有理论预测均通过数值验证（6 核心脚本合计 44/44 检查通过），确立了谱量子引力作为 $\mathbf{Sp}$ 范畴中广义相对论的自然量子扩展。
+**摘要**：本文在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（Spectral Quantum Gravity, SQG），将广义相对论与量子场论的谱表述统一为单一的谱引力理论。核心贡献包括：(1) 基于 Cl(1,7) 代数构造 $A_{\text{GR}}$ 离散谱（$\lambda_k \propto \sqrt{k(k+1)}$），谱间隙 $\Delta\lambda_{\min} = 0.122\,M_{\text{Pl}}$（Paper XX 第一性原理推导）；(2) 构建谱引力子传播子 $G_{\text{spec}}(k) = \sum_i w_i(k)/(k_i^2 - m^2)$，验证红外极限还原 $1/k^2$（GR），紫外极限被 $\lambda_{\max}$ 指数压制（UV 有限）；(3) 计算 Planck 尺度 $2\to2$ 散射振幅，推广至 **N 体散射的统一解析闭式** $M_{\text{spec}}^{(N)}(E) = \kappa^{N-2} N!\,[G_{\text{spec}}(E^2/N)]^{N(N-1)/2} e^{-(NE/\lambda_{\max})^2}$，证明对所有 $N$ 和 $E$ 的 UV 有限性；(4) 导出 **谱 Cutkosky 规则** $\text{Disc}[M^{(N)}] = i\sum_k \int M^{(k)}M^{(N-k)\dagger}$，证明谱 S-矩阵满足完整幺正性 $SS^\dagger = I$；(5) 通过 RAMBO 算法实现 Lorentz 不变相空间蒙特卡洛积分，给出从 LHC ($\sim 10^{-15}M_{\text{Pl}}$) 到 Planck 标度的完整截面能标依赖；(6) 将谱截断 $\lambda_{\max} \sim M_{\text{Pl}}$ 从人工正则化器升级为物理边界——谱截断即是量子引力本身的结构特征；(7) 整合黑洞视界谱动力学（Paper VIII）与奇点谱消解（Paper IX），建立完整的黑洞演化谱描述；(8) 给出黑洞蒸发 Page 曲线的谱动力学推导（$\tau_{\text{Page}} \approx 0.5\tau_{\text{evap}}$）；(9) 构建从 Planck 到 QCD 的跨尺度单链 RG 流；(10) 推广至 Kerr 度规的全谱分解，覆盖旋转黑洞的视界谱动力学与极端极限；(11) 推导谱引力子自相互作用至三圈 $\beta$ 函数，证明谱截断 $\Lambda_{\max}$ 保证 UV 有限性；(12) 建立谱 AdS/CFT 对应，揭示谱截断的全息诠释作为边界 CFT 的天然 UV 正则化器；(13) 导出谱原初引力波修正（§12），证明 SQG 在 CMB 以下能标以 $<10^{-100}$ 精度还原标准暴涨，在 Planck 能标附近预言无参数谱截断结构。所有理论预测均通过数值验证（6 核心脚本合计 44/44 检查通过），确立了谱量子引力作为 $\mathbf{Sp}$ 范畴中广义相对论的自然量子扩展。
 
 ---
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）与 Paper XI（谱 QFT 公理 A1–A6）。配套数值代码见 `paperX_graviton_propagator.py`、`paperX_planck_scattering.py`。本文为 Paper VIII（黑洞视界谱动力学）与 Paper IX（奇点谱消解）的上层整合，后者为本文 §5–6 提供细化的黑洞与奇点描述。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **$\mathbf{Sp}$**：谱范畴（Spectral Category）
+- **$\mathbf{Rec}$**：递归范畴（Recursive Category）
+- **SQG**：谱量子引力（Spectral Quantum Gravity）
+- **GR**：广义相对论（General Relativity）
+- **QG**：量子引力（Quantum Gravity）
+- **BH**：黑洞（Black Hole）
+- **LQG**：圈量子引力（Loop Quantum Gravity）
+- **PGW**：原初引力波（Primordial Gravitational Wave）
+- **CMB**：宇宙微波背景（Cosmic Microwave Background）
+- **IR**：红外（Infrared）
+- **UV**：紫外（Ultraviolet）
+- **RG**：重整化群（Renormalization Group）
+- **AdS/CFT**：反 de Sitter/共形场论对偶
 
 ---
 
@@ -16,7 +31,7 @@
 
 ### 1.1 量子引力的谱路径
 
-标准量子引力面临的核心困境：GR 作为经典理论在 $E \sim M_{\text{Pl}}$ 处发散，而所有候选 QG 理论（弦论、LQG、渐近安全）均引入超出 GR 的新结构。谱量子引力采取不同路径——**谱截断即是量子引力本身**。
+标准量子引力面临的核心困境：GR 作为经典理论在 $E \sim M_{\text{Pl}}$ 处发散，而所有候选 QG 理论（弦论、LQG、渐近安全）均引入超出 GR 的新结构。谱量子引力采取不同路径——**谱截断即是量子引力本身**（谱截断：谱生成元 $A_{\text{GR}}$ 有界性导致的高能自然边界，对应标准理论中的正则化截断，但此处由离散谱结构第一性原理导出，非人工插入）。
 
 ### 1.2 核心论题
 
@@ -488,7 +503,7 @@ $$\boxed{\lambda_{\text{horizon}}^{(\pm)} = M \pm \sqrt{M^2 - a^2}}.$$
 
 当 $a = 0$ 时恢复 Schwarzschild 情形 $\lambda_{\text{horizon}} = 2M$（等价于 §5.1 的 $1/(4M^2)$ 标度）。
 
-### 9.3 自旋权重球谐函数的谱翻译
+### 9.3 自旋权重球谐函数的谱表述
 
 Kerr 度规的角方程分离为自旋权重椭球谐函数（spin-weighted spheroidal harmonics）${}_sS_{lm}(\theta, a\omega)$：
 
@@ -883,7 +898,7 @@ SQG 的可检验预言横跨粒子物理、量子引力、黑洞物理和宇宙�
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XII（增强版 v1.7），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱翻译统一为单一的谱引力理论。v1.7 将 §12.6 可检验预言从仅 PGW 扩展为 SQG 全体可检验预言表，新增 A1-A8 共 8 项已利用现有开放数据验证的预言（规范耦合、QCD 参数、PGW 红外还原、BH 熵、Page 曲线、弱等效原理、暗物质、CKM/PMNS），以及 B1-B6 共 6 项需未来实验预言，并添加"现有开放数据约束"和"理论区分力"列。v1.6 重构 §9-13 章节结构。v1.5 全面修订 §8 跨尺度 RG 流。6 核心脚本 44/44 检查通过。
+《通用不动点范畴框架》系列论文 XII（增强版 v1.7），谱量子引力——传播子、散射与黑洞——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下建立谱量子引力（SQG），将广义相对论与量子场论的谱表述统一为单一的谱引力理论。v1.7 将 §12.6 可检验预言从仅 PGW 扩展为 SQG 全体可检验预言表，新增 A1-A8 共 8 项已利用现有开放数据验证的预言（规范耦合、QCD 参数、PGW 红外还原、BH 熵、Page 曲线、弱等效原理、暗物质、CKM/PMNS），以及 B1-B6 共 6 项需未来实验预言，并添加"现有开放数据约束"和"理论区分力"列。v1.6 重构 §9-13 章节结构。v1.5 全面修订 §8 跨尺度 RG 流。6 核心脚本 44/44 检查通过。
 
 **变更记录**：
 | 版本 | 日期 | 更新内容 |

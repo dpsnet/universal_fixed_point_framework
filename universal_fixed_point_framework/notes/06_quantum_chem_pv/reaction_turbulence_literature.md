@@ -4,7 +4,7 @@
 
 **摘要**：本文档系统整理支持谱框架 P4 预言"反应湍流标度律"的已有文献证据。核心论点——化学反应体系在远离平衡态条件下表现出类似湍流的能谱标度行为，且该行为可用普适标度律描述——在燃烧物理、湍流理论和非平衡统计力学中均有独立依据。以下各节分别综述直接模拟证据、理论框架、动态标度分类学、超快实验观测及等离子体湍流实验，最后综合讨论对谱框架 P4 预言的支撑强度并提出实验验证方案。
 
-**关联笔记**：`spectral_reac_fibration.md`（分子构型 Grothendieck 纤维化）、`spectral_quantum_chemistry.md`（量子化学谱翻译）。
+**关联笔记**：`spectral_reac_fibration.md`（分子构型 Grothendieck 纤维化）、`spectral_quantum_chemistry.md`（量子化学谱表述）。
 
 ---
 

@@ -83,7 +83,7 @@ $$\Delta E_{\text{corr}} = -\kappa_{\text{corr}}^2 \cdot \delta_{\text{Reac}}$$
 
 $$\Delta E_{\text{corr}} = -\mathcal{F}[\rho, \Delta_{\text{sep}}] \cdot \delta_{\text{ref}}$$
 
-其中 $\mathcal{F}$ 为由谱密度 $\rho$ 和能标分离 $\Delta_{\text{sep}}$ 决定的压制泛函，$\delta_{\text{ref}}$ 为参考能标。
+其中 $\mathcal{F}$ 为由谱密度 $\rho$ 和能标分离 $\Delta_{\text{sep}}$ 决定的压制泛函（即高阶耦合通道被能标分离压制的积分核泛函），$\delta_{\text{ref}}$ 为参考能标。
 
 > **证明**：在 Bun(Corr) 层，从 Bun(Reac) 层传入的谱数据定义了参考能标 $\delta_{\text{ref}}$。高阶耦合通道在能量区间 $[\omega_{\text{low}}, \omega_{\text{high}}]$ 上积分，积分的核由谱密度 $\rho(E)$ 加权。谱间隙压制等价于在能量区间上对耦合核的积分，其幅值由 $\Delta_{\text{sep}}$ 控制。对于不同的 $\rho(E)$，压制泛函 $\mathcal{F}$ 取不同形式，但数学结构一致。□
 

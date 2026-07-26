@@ -10,6 +10,15 @@
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `paperX_*.py`（共 7 脚本，合计 40/40 检查通过）。
 
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **CHSH**：Clauser-Horne-Shimony-Holt（克劳泽-霍恩-希莫尼-霍尔特）不等式
+- **K-S**：Kochen-Specker（科亨-斯佩克）定理
+- **PBR**：Pusey-Barrett-Rudolph（普西-巴雷特-鲁道夫）定理
+- **GRW**：Ghirardi-Rimini-Weber（吉拉迪-里米尼-韦伯）自发坍缩模型
+- **RQM**：关系性量子力学（Relational Quantum Mechanics）
+- **MWI**：多世界诠释（Many-Worlds Interpretation）
+- **QC**：量子-经典（Quantum-Classical）边界
+
 ---
 
 ## 1. 引言
@@ -42,7 +51,7 @@
 | §7 | 与六大诠释的范畴论对比 | G5 |
 | §8 | 结论 + 四个拓展方向（K-S/PBR/达尔文/速度极限） | G6 |
 | §9 | 十维诠释全景对比 | — |
-| §10 | 量子资源理论的谱翻译 | G7 |
+| §10 | 量子资源理论的谱表述 | G7 |
 | §11 | 开放问题（9 个方向） | — |
 | §12 | 实验提案与可检验预言 | — |
 
@@ -266,7 +275,7 @@ $$\text{测干涉}\; P_{\text{int}} : A_t \to P_{\text{int}} A_t P_{\text{int}}$
 |------|------------|
 | 事后选择 → 回溯决定 | 非回溯。选择是态射选择，非因果事件 |
 | 光子"知道"将被测什么？ | 不知道。$A_t$ 的谱同时包含两种信息——谱对应 $M \cong L$ 保证 |
-| 擦除似乎是魔术 | 擦除是 $U_{\text{erase}}$ 的幺正操作，由谱流 $[A_{\text{eraser}}, A_t]$ 生成 |
+| 擦除似乎是逆向因果 | 擦除是 $U_{\text{erase}}$ 的幺正操作，由谱流 $[A_{\text{eraser}}, A_t]$ 生成 |
 | 因果关系如何保持？ | 态射 $P_{\text{which}}$ 和 $P_{\text{int}}$ 同时存在，这是态射选择的自由 |
 
 ### 5.3 与 Kim 1999 实验的定量匹配
@@ -579,7 +588,7 @@ $$\tau \ge \frac{\pi}{2\kappa \|\mathcal{D}\|} \cdot \frac{\|A_0 - \mathcal{D}(A
 
 ---
 
-## 10. 量子资源理论的谱翻译
+## 10. 量子资源理论的谱表述
 
 量子资源理论在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架中获得统一表述。
 
@@ -728,7 +737,7 @@ $$\sigma(A_t) = \sigma(A_0), \quad \forall t \ge 0.$$
 |------|------|---------|
 | Wigner 朋友的函子模型 | 范畴形式化 | 利用 $D \dashv R$ 伴随函子构造双观察者交换 |
 | 谱坍缩时间的直接实验测量 | 实验设计 | 超导量子比特平台，$\tau \sim \mu$s 量级 |
-| 量子引力的谱翻译 | 理论扩展 | Paper V 谱流与 Paper VIII 黑洞熵的结合 |
+| 量子引力的谱表述 | 理论扩展 | Paper V 谱流与 Paper VIII 黑洞熵的结合 |
 | 无限维谱测量的严格化 | 数学基础 | 无界算子的 Hille-Yosida 半群理论 |
 | 语境性的多体推广 | 范畴形式化 | K-S 定理在 $\mathbf{Sp}$ 中的严格范畴论证明 |
 | 谱冗余的数值扫描 | 数值实验 | 环境碎片数与 $R_{\text{qc}}$ 阈值的定量关系 |

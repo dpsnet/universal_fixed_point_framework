@@ -118,7 +118,7 @@ $$m^2(\tau) = \min\sigma(M^2_\tau) = \min\sigma(M^2_0) = m^2(0).$$
 
 > **观察**：质量为零的粒子（光子、胶子）位于 $\partial\mathbf{Rec}_D$，对应 Paper VIII 的 Hawking 谱边界条件；有质量粒子位于 $\mathbf{Rec}_D$ 内部，对应非零谱间隙。这给出"质量 = 谱间隙"的几何化诠释。
 
-### 2.4 质量生成机制：Higgs 机制的谱翻译
+### 2.4 质量生成机制：Higgs 机制的谱表述
 
 **命题 2.7**（Higgs 机制作为谱间隙生成）。Higgs 机制在 $\mathbf{Sp}$ 中翻译为：对称性破缺前 $M^2 = 0$（Goldstone 模式，$\sigma(M^2) = \{0\}$），破缺后 $M^2 = \lambda v^2$（$\sigma(M^2) = \{\lambda v^2\}$，非零谱间隙）。
 
@@ -358,7 +358,7 @@ $$T = \frac{\Delta\lambda_{\min}}{2\pi}, \quad \omega_{\text{obs}} = \omega_{\te
 
 1. **弯曲时空中的因果结构**：从 Minkowski 推广到 Lorentz 流形（参见 `spectral_lorentz_curved_spacetime.md`，待创建）。
 2. **量子信息视角**：纠缠熵与 $\partial\mathbf{Rec}_D$ 的关系（Page 曲线的谱推导）。
-3. **因果集理论的谱翻译**：离散因果序与 $\mathbf{Sp}_{\text{dyn}}$ 态射时序的对应。
+3. **因果集理论的谱表述**：离散因果序与 $\mathbf{Sp}_{\text{dyn}}$ 态射时序的对应。
 4. **超光速粒子的谱地位**：快子（$m^2 < 0$）在 $\mathbf{Rec} \setminus \mathbf{Rec}_D$ 中的位置。
 
 ### 8.3 与现有框架的衔接

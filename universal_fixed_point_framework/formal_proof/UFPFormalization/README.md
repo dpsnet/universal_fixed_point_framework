@@ -16,7 +16,7 @@ UFPFormalization/
 └── UFPFormalization/
     ├── Basic.lean                # 最小可构建原型
     ├── RecCategory.lean          # Rec 范畴（mathlib 版本）
-    ├── SpecCategory.lean         # Sp 范畴（mathlib 版本）
+    ├── SpCategory.lean           # Sp 范畴（mathlib 版本）
     ├── DecursionFunctor.lean     # D : Rec → Spec 函子（完整 Functor 律证明）
     ├── Adjunction.lean           # D ⊣ R 伴随关系（R 为原型，DAdjR 仍 sorry）
     ├── SpectralCorrespondence.lean # 谱对应 η(μ)=e^{-μ} 双向逆证明
@@ -32,7 +32,7 @@ UFPFormalization/
 |------|------|------|
 | 最小可构建原型 | `Basic.lean` | ✅ 完成 |
 | Rec 范畴 | `RecCategory.lean` | ✅ 完成 |
-| Sp 范畴 | `SpecCategory.lean` | ✅ 完成 |
+| Sp 范畴 | `SpCategory.lean` | ✅ 完成 |
 | D 函子 | `DecursionFunctor.lean` | ✅ Functor 律 + intertwine 已证 |
 | D ⊣ R 伴随 | `Adjunction.lean` | 🔄 RFunctor 原型；DAdjR 三角恒等式 sorry |
 | 谱对应 M ≅ L | `SpectralCorrespondence.lean` | ✅ 双向逆已证 |

@@ -1,150 +1,150 @@
-# 谱路径积分与谱重整化
+﻿# 璋辫矾寰勭Н鍒嗕笌璋遍噸鏁村寲
 
-## 核心目标
+## 鏍稿績鐩爣
 
-将标准 QFT 的路径积分和重整化程序翻译为谱语言，建立从谱拉格朗日量到散射振幅计算的完整体系。
+灏嗘爣鍑?QFT 鐨勮矾寰勭Н鍒嗗拰閲嶆暣鍖栫▼搴忕炕璇戜负璋辫瑷€锛屽缓绔嬩粠璋辨媺鏍兼湕鏃ラ噺鍒版暎灏勬尟骞呰绠楃殑瀹屾暣浣撶郴銆?
 
 ---
 
-## 1. 谱路径积分
+## 1. 璋辫矾寰勭Н鍒?
 
-### 1.1 定义
+### 1.1 瀹氫箟
 
-**定义 1**（谱路径积分）。对于谱标量场 $\Phi(\lambda)$，谱路径积分为对谱算子 $A_\phi$ 的谱分解模式的泛函积分：
+**瀹氫箟 1**锛堣氨璺緞绉垎锛夈€傚浜庤氨鏍囬噺鍦?$\Phi(\lambda)$锛岃氨璺緞绉垎涓哄璋辩畻瀛?$A_\phi$ 鐨勮氨鍒嗚В妯″紡鐨勬硾鍑界Н鍒嗭細
 
-$$Z_{\text{spec}}[J] = \int \mathcal{D}_{\text{Spec}}\Phi \; \exp\left(i S_{\text{spec}}[\Phi] + i \int d\lambda \, J(\lambda) \Phi(\lambda)\right),$$
+$$Z_{\text{spec}}[J] = \int \mathcal{D}_{\text{Sp}}\Phi \; \exp\left(i S_{\text{spec}}[\Phi] + i \int d\lambda \, J(\lambda) \Phi(\lambda)\right),$$
 
-其中谱测度 $\mathcal{D}_{\text{Spec}}\Phi$ 是 $\mathbf{Sp}$ 范畴中谱对象 $A_\phi$ 的所有态射变分的积：
+鍏朵腑璋辨祴搴?$\mathcal{D}_{\text{Sp}}\Phi$ 鏄?$\mathbf{Sp}$ 鑼冪暣涓氨瀵硅薄 $A_\phi$ 鐨勬墍鏈夋€佸皠鍙樺垎鐨勭Н锛?
 
-$$\mathcal{D}_{\text{Spec}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda).$$
+$$\mathcal{D}_{\text{Sp}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda).$$
 
-在有限维截断下（$d$ 个离散谱模式），谱路径积分退化为 $d$ 维 Gaussian 积分：
+鍦ㄦ湁闄愮淮鎴柇涓嬶紙$d$ 涓鏁ｈ氨妯″紡锛夛紝璋辫矾寰勭Н鍒嗛€€鍖栦负 $d$ 缁?Gaussian 绉垎锛?
 
 $$Z_{\text{spec}}[J] = \int \prod_{i=1}^d d\Phi_i \; \exp\left(i S_{\text{spec}}[\{\Phi_i\}] + i \sum_i J_i \Phi_i\right).$$
 
-### 1.2 自由谱生成泛函
+### 1.2 鑷敱璋辩敓鎴愭硾鍑?
 
-对自由谱标量场，谱作用量为：
+瀵硅嚜鐢辫氨鏍囬噺鍦猴紝璋变綔鐢ㄩ噺涓猴細
 
 $$S_{\text{free}}^{\text{spec}}[\Phi] = \frac12 \int d\lambda \, \Phi(\lambda) (\lambda - m^2) \Phi(\lambda).$$
 
-谱路径积分可直接计算：
+璋辫矾寰勭Н鍒嗗彲鐩存帴璁＄畻锛?
 
 $$Z_{\text{free}}^{\text{spec}}[J] = \exp\left(-\frac12 \iint d\lambda d\lambda' \, J(\lambda) D_F^{\text{spec}}(\lambda, \lambda') J(\lambda')\right),$$
 
-其中 $D_F^{\text{spec}}(\lambda, \lambda') = \delta(\lambda - \lambda') \cdot \frac{i}{\lambda - m^2 + i\varepsilon}$ 是谱 Feynman 传播子（T2）。
+鍏朵腑 $D_F^{\text{spec}}(\lambda, \lambda') = \delta(\lambda - \lambda') \cdot \frac{i}{\lambda - m^2 + i\varepsilon}$ 鏄氨 Feynman 浼犳挱瀛愶紙T2锛夈€?
 
-### 1.3 关联函数的谱表示
+### 1.3 鍏宠仈鍑芥暟鐨勮氨琛ㄧず
 
-谱关联函数由对 $J$ 的泛函导数得到：
+璋卞叧鑱斿嚱鏁扮敱瀵?$J$ 鐨勬硾鍑藉鏁板緱鍒帮細
 
 $$G_n^{\text{spec}}(\lambda_1, \ldots, \lambda_n) = \frac{1}{i^n} \frac{\delta^n Z_{\text{spec}}[J]}{\delta J(\lambda_1) \cdots \delta J(\lambda_n)} \bigg|_{J=0}.$$
 
-两点关联函数为：
+涓ょ偣鍏宠仈鍑芥暟涓猴細
 
 $$G_2^{\text{spec}}(\lambda, \lambda') = i D_F^{\text{spec}}(\lambda, \lambda').$$
 
-### 1.4 谱路径积分的微扰展开
+### 1.4 璋辫矾寰勭Н鍒嗙殑寰壈灞曞紑
 
-当相互作用项 $S_{\text{int}}^{\text{spec}}[\Phi] = -\frac{\lambda}{4!} \int d\lambda \, \Phi^4(\lambda)$ 存在时：
+褰撶浉浜掍綔鐢ㄩ」 $S_{\text{int}}^{\text{spec}}[\Phi] = -\frac{\lambda}{4!} \int d\lambda \, \Phi^4(\lambda)$ 瀛樺湪鏃讹細
 
 $$Z_{\text{spec}}[J] = \exp\left(i S_{\text{int}}^{\text{spec}}\left[\frac{1}{i} \frac{\delta}{\delta J}\right]\right) Z_{\text{free}}^{\text{spec}}[J].$$
 
-谱 Wick 定理：谱场的时序乘积等于所有配对缩并的和，每个缩并贡献一个谱传播子：
+璋?Wick 瀹氱悊锛氳氨鍦虹殑鏃跺簭涔樼Н绛変簬鎵€鏈夐厤瀵圭缉骞剁殑鍜岋紝姣忎釜缂╁苟璐＄尞涓€涓氨浼犳挱瀛愶細
 
 $$\langle 0 | T \Phi(\lambda_1) \cdots \Phi(\lambda_{2n}) | 0 \rangle = \sum_{\text{pairings}} \prod_{\text{pairs }(a,b)} i D_F^{\text{spec}}(\lambda_a, \lambda_b).$$
 
 ---
 
-## 2. 谱重整化
+## 2. 璋遍噸鏁村寲
 
-### 2.1 谱截断正则化
+### 2.1 璋辨埅鏂鍒欏寲
 
-谱路径积分天然提供 UV 正则化机制：谱算子 $A_\phi$ 的谱 $\sigma(A_\phi)$ 有最大特征值 $\lambda_{\max} \sim M_{\text{Pl}}^2$。谱路径积分的截断版本为：
+璋辫矾寰勭Н鍒嗗ぉ鐒舵彁渚?UV 姝ｅ垯鍖栨満鍒讹細璋辩畻瀛?$A_\phi$ 鐨勮氨 $\sigma(A_\phi)$ 鏈夋渶澶х壒寰佸€?$\lambda_{\max} \sim M_{\text{Pl}}^2$銆傝氨璺緞绉垎鐨勬埅鏂増鏈负锛?
 
 $$Z_{\text{spec}}^{\Lambda}[J] = \int \prod_{\lambda_i < \Lambda} d\Phi_i \; \exp\left(i S_{\text{spec}}^{\Lambda}[\Phi] + i \sum_i J_i \Phi_i\right),$$
 
-其中谱截断 $\Lambda$ 自动切断高能模式——无需手动引入 cutoff 或 dimensional regularization。
+鍏朵腑璋辨埅鏂?$\Lambda$ 鑷姩鍒囨柇楂樿兘妯″紡鈥斺€旀棤闇€鎵嬪姩寮曞叆 cutoff 鎴?dimensional regularization銆?
 
-### 2.2 谱二点函数的单圈修正
+### 2.2 璋变簩鐐瑰嚱鏁扮殑鍗曞湀淇
 
-谱二点函数的单圈修正为：
+璋变簩鐐瑰嚱鏁扮殑鍗曞湀淇涓猴細
 
 $$\Pi^{\text{spec}}(p^2) = \frac{\lambda}{2} \int_0^{\Lambda^2} d\lambda' \frac{1}{\lambda' - m^2 + i\varepsilon}.$$
 
-在谱截断 $\Lambda$ 下：
+鍦ㄨ氨鎴柇 $\Lambda$ 涓嬶細
 
 $$\Pi^{\text{spec}}(p^2) = \frac{\lambda}{2} \ln\left(\frac{\Lambda^2 - m^2}{-m^2}\right) \approx \frac{\lambda}{2} \ln\left(\frac{\Lambda^2}{m^2}\right).$$
 
-谱重整化条件：在 $p^2 = \mu^2$ 处减除：
+璋遍噸鏁村寲鏉′欢锛氬湪 $p^2 = \mu^2$ 澶勫噺闄わ細
 
 $$\Pi_R^{\text{spec}}(p^2) = \Pi^{\text{spec}}(p^2) - \Pi^{\text{spec}}(\mu^2) = \frac{\lambda}{2} \ln\left(\frac{p^2}{\mu^2}\right).$$
 
-### 2.3 谱四点函数与单圈 β 函数
+### 2.3 璋卞洓鐐瑰嚱鏁颁笌鍗曞湀 尾 鍑芥暟
 
-谱四点函数（$\phi^4$ 耦合）的单圈修正来自 $s$、$t$、$u$ 三道：
+璋卞洓鐐瑰嚱鏁帮紙$\phi^4$ 鑰﹀悎锛夌殑鍗曞湀淇鏉ヨ嚜 $s$銆?t$銆?u$ 涓夐亾锛?
 
-$$\Gamma_4^{\text{spec}}(s, t, u) = -i\lambda + \frac{3\lambda^2}{32\pi^2} \ln\left(\frac{\Lambda^2}{s}\right) + \text{交叉项} + \mathcal{O}(\lambda^3).$$
+$$\Gamma_4^{\text{spec}}(s, t, u) = -i\lambda + \frac{3\lambda^2}{32\pi^2} \ln\left(\frac{\Lambda^2}{s}\right) + \text{浜ゅ弶椤箎 + \mathcal{O}(\lambda^3).$$
 
-谱重整化后在 $s = \mu^2$ 处减除，定义重整化耦合 $\lambda_R(\mu)$：
+璋遍噸鏁村寲鍚庡湪 $s = \mu^2$ 澶勫噺闄わ紝瀹氫箟閲嶆暣鍖栬€﹀悎 $\lambda_R(\mu)$锛?
 
 $$\lambda_R(\mu) = \lambda + \frac{3\lambda^2}{32\pi^2} \ln\left(\frac{\Lambda^2}{\mu^2}\right).$$
 
-由此得到 **单圈 β 函数**：
+鐢辨寰楀埌 **鍗曞湀 尾 鍑芥暟**锛?
 
 $$\boxed{\beta(\lambda_R) = \frac{d\lambda_R}{d\ln\mu} = \frac{3\lambda_R^2}{16\pi^2}}.$$
 
-这与标准 QFT 的 $\lambda\phi^4$ 单圈 β 函数完全一致。
+杩欎笌鏍囧噯 QFT 鐨?$\lambda\phi^4$ 鍗曞湀 尾 鍑芥暟瀹屽叏涓€鑷淬€?
 
-### 2.4 谱重整化方案
+### 2.4 璋遍噸鏁村寲鏂规
 
-| 标准 QFT | 谱版本 |
+| 鏍囧噯 QFT | 璋辩増鏈?|
 |---------|-------|
-| Dimensional Regularization $d = 4 - \varepsilon$ | 谱截断 $\lambda_{\max} \sim M_{\text{Pl}}^2$ |
-| $\overline{\text{MS}}$ 减除方案 | 谱减除点 $\mu^2$ |
-| Counter-term $\delta\mathcal{L} = \delta_Z \partial_\mu\phi\partial^\mu\phi + \delta_m m^2\phi^2 + \delta_\lambda \phi^4$ | 谱 Counter-term $\delta\mathcal{L}^{\text{spec}} = \delta_Z \Phi(\lambda - m^2)\Phi + \delta_\lambda \Phi^4$ |
-| β 函数 $\beta = 3\lambda^2/16\pi^2$ | 谱 β 函数 $\beta^{\text{spec}} = 3\lambda_R^2/16\pi^2$ |
+| Dimensional Regularization $d = 4 - \varepsilon$ | 璋辨埅鏂?$\lambda_{\max} \sim M_{\text{Pl}}^2$ |
+| $\overline{\text{MS}}$ 鍑忛櫎鏂规 | 璋卞噺闄ょ偣 $\mu^2$ |
+| Counter-term $\delta\mathcal{L} = \delta_Z \partial_\mu\phi\partial^\mu\phi + \delta_m m^2\phi^2 + \delta_\lambda \phi^4$ | 璋?Counter-term $\delta\mathcal{L}^{\text{spec}} = \delta_Z \Phi(\lambda - m^2)\Phi + \delta_\lambda \Phi^4$ |
+| 尾 鍑芥暟 $\beta = 3\lambda^2/16\pi^2$ | 璋?尾 鍑芥暟 $\beta^{\text{spec}} = 3\lambda_R^2/16\pi^2$ |
 
-### 2.5 谱传播子的单圈修正
+### 2.5 璋变紶鎾瓙鐨勫崟鍦堜慨姝?
 
-质量壳重整化后的谱传播子为：
+璐ㄩ噺澹抽噸鏁村寲鍚庣殑璋变紶鎾瓙涓猴細
 
 $$D_F^{(R)}(p^2) \approx \frac{i}{p^2 - m_R^2 + \Sigma_R(p^2) + i\varepsilon},$$
 
-其中 $\Sigma_R(p^2) \propto \ln(p^2/\mu^2)$ 来自单圈自能图。
+鍏朵腑 $\Sigma_R(p^2) \propto \ln(p^2/\mu^2)$ 鏉ヨ嚜鍗曞湀鑷兘鍥俱€?
 
 ---
 
-## 3. 与标准 QFT 的对应
+## 3. 涓庢爣鍑?QFT 鐨勫搴?
 
-| 标准 QFT | 谱版本 |
+| 鏍囧噯 QFT | 璋辩増鏈?|
 |---------|-------|
-| 路径积分 $\int \mathcal{D}\phi \, e^{iS[\phi]}$ | 谱路径积分 $\int \mathcal{D}_{\text{Spec}}\Phi \, e^{iS_{\text{spec}}[\Phi]}$ |
-| 生成泛函 $Z[J]$ | $Z_{\text{spec}}[J]$ |
-| 两点函数 $\langle 0|T\phi(x)\phi(y)|0\rangle$ | $G_2^{\text{spec}}(\lambda, \lambda') = i D_F^{\text{spec}}(\lambda, \lambda')$ |
-| UV 截断 $\Lambda_{\text{UV}}$ | 谱截断 $\lambda_{\max}$ |
-| Counter-term 减除 | 谱减除条件 $\Gamma^{(R)}(p^2 = \mu^2) = \Gamma_{\text{tree}}$ |
-| β 函数 $\beta = 3\lambda^2/16\pi^2$ | 谱 β 函数 $\beta^{\text{spec}} = 3\lambda_R^2/16\pi^2$ |
+| 璺緞绉垎 $\int \mathcal{D}\phi \, e^{iS[\phi]}$ | 璋辫矾寰勭Н鍒?$\int \mathcal{D}_{\text{Sp}}\Phi \, e^{iS_{\text{spec}}[\Phi]}$ |
+| 鐢熸垚娉涘嚱 $Z[J]$ | $Z_{\text{spec}}[J]$ |
+| 涓ょ偣鍑芥暟 $\langle 0|T\phi(x)\phi(y)|0\rangle$ | $G_2^{\text{spec}}(\lambda, \lambda') = i D_F^{\text{spec}}(\lambda, \lambda')$ |
+| UV 鎴柇 $\Lambda_{\text{UV}}$ | 璋辨埅鏂?$\lambda_{\max}$ |
+| Counter-term 鍑忛櫎 | 璋卞噺闄ゆ潯浠?$\Gamma^{(R)}(p^2 = \mu^2) = \Gamma_{\text{tree}}$ |
+| 尾 鍑芥暟 $\beta = 3\lambda^2/16\pi^2$ | 璋?尾 鍑芥暟 $\beta^{\text{spec}} = 3\lambda_R^2/16\pi^2$ |
 
 ---
 
-## 4. 数值验证
+## 4. 鏁板€奸獙璇?
 
-配套脚本 `paperX_spectral_renormalization.py` 验证以下内容：
+閰嶅鑴氭湰 `paperX_spectral_renormalization.py` 楠岃瘉浠ヤ笅鍐呭锛?
 
-1. **自由谱路径积分**：Gaussian 积分在离散谱下的精确性
-2. **谱截断正则化**：$\int_0^{\Lambda^2} d\lambda/(\lambda - m^2)$ 有限性
-3. **单圈二点函数**：$\Pi(p^2) \propto \ln(\Lambda^2/m^2)$ 标度
-4. **单圈四点函数**：$\Gamma_4(s) \propto \ln(s/\mu^2)$ 标度
-5. **β 函数还原**：$\beta(\lambda_R) \approx 3\lambda_R^2/16\pi^2$（相对误差 < 5%）
+1. **鑷敱璋辫矾寰勭Н鍒?*锛欸aussian 绉垎鍦ㄧ鏁ｈ氨涓嬬殑绮剧‘鎬?
+2. **璋辨埅鏂鍒欏寲**锛?\int_0^{\Lambda^2} d\lambda/(\lambda - m^2)$ 鏈夐檺鎬?
+3. **鍗曞湀浜岀偣鍑芥暟**锛?\Pi(p^2) \propto \ln(\Lambda^2/m^2)$ 鏍囧害
+4. **鍗曞湀鍥涚偣鍑芥暟**锛?\Gamma_4(s) \propto \ln(s/\mu^2)$ 鏍囧害
+5. **尾 鍑芥暟杩樺師**锛?\beta(\lambda_R) \approx 3\lambda_R^2/16\pi^2$锛堢浉瀵硅宸?< 5%锛?
 
 ---
 
-## 5. 开放问题
+## 5. 寮€鏀鹃棶棰?
 
-| 问题 | 说明 |
+| 闂 | 璇存槑 |
 |------|------|
-| 谱路径积分的测度定义 | 无限维极限下的泛函测度严格化 |
-| 谱重整化群流方程 | 谱截断 $\Lambda$ 连续变化的 RG 方程 |
-| 多圈重整化 | 两圈及以上的谱 Feynman 图翻译 |
-| 规范场重整化 | 谱版本的 FP 鬼场和 Ward 恒等式 |
+| 璋辫矾寰勭Н鍒嗙殑娴嬪害瀹氫箟 | 鏃犻檺缁存瀬闄愪笅鐨勬硾鍑芥祴搴︿弗鏍煎寲 |
+| 璋遍噸鏁村寲缇ゆ祦鏂圭▼ | 璋辨埅鏂?$\Lambda$ 杩炵画鍙樺寲鐨?RG 鏂圭▼ |
+| 澶氬湀閲嶆暣鍖?| 涓ゅ湀鍙婁互涓婄殑璋?Feynman 鍥剧炕璇?|
+| 瑙勮寖鍦洪噸鏁村寲 | 璋辩増鏈殑 FP 楝煎満鍜?Ward 鎭掔瓑寮?|
