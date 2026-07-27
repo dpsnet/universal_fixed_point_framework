@@ -61,3 +61,4 @@ import UFPFormalization.TestApplications
 import UFPFormalization.RAP1_weight_uniqueness
 import UFPFormalization.RAP2_moran_nonrigidity
 import UFPFormalization.RAP3_generation_obstruction
+import UFPFormalization.RAP4_silence_strictification
