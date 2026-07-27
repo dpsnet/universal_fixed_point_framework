@@ -3,8 +3,8 @@ import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.Normed.Algebra.Exponential
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
+import Mathlib.Tactic
 
 namespace UFPFormalization
 
@@ -27,30 +27,29 @@ section KoopmanSemigroup
 
 /-- The Koopman operator U_R = exp(-A_R) for a spectral object.
     In the finite-dimensional prototype, A_R is a complex matrix and
-    exp(-A_R) is the matrix exponential. -/
+    exp(-A_R) is the matrix exponential（`NormedSpace.exp`，2026-07-27 修正：
+    `Matrix.exp` 不是 Mathlib 定义）。 -/
 noncomputable def koopmanOperator {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  Matrix.exp (-A)
+  NormedSpace.exp (-A)
 
 /-- Semigroup property: U(t)U(s) = U(t+s) for the Koopman semigroup.
     This holds because exp(-tA) * exp(-sA) = exp(-(t+s)A). -/
 theorem koopmanSemigroup {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (t s : ℂ) :
-    Matrix.exp ((-t) • A) * Matrix.exp ((-s) • A) = Matrix.exp ((-(t + s)) • A) := by
-  -- For commuting matrices, exp(A)exp(B) = exp(A+B).
-  -- Here (-tA) and (-sA) commute trivially.
-  have hcomm : (-t • A) * (-s • A) = (-s • A) * (-t • A) := by
-    simp [smul_mul_smul, mul_comm]
-  calc
-    Matrix.exp ((-t) • A) * Matrix.exp ((-s) • A) = Matrix.exp ((-t) • A + (-s) • A) := by
-      apply Matrix.exp_add_comm hcomm
-    _ = Matrix.exp ((-(t + s)) • A) := by
-      simp [add_smul, smul_add, add_comm, add_left_comm]
+    NormedSpace.exp ((-t) • A) * NormedSpace.exp ((-s) • A) =
+      NormedSpace.exp ((-(t + s)) • A) := by
+  have hcomm : Commute ((-t) • A) ((-s) • A) := by
+    show ((-t) • A) * ((-s) • A) = ((-s) • A) * ((-t) • A)
+    rw [smul_mul_smul_comm, smul_mul_smul_comm, mul_comm (-t) (-s)]
+  rw [← Matrix.exp_add_of_commute _ _ hcomm]
+  congr 1
+  module
 
 /-- Contraction property: For self-adjoint A with non-negative spectrum,
     the spectral radius of exp(-A) is ≤ 1.
     In the finite-dimensional case, this implies ‖exp(-A)‖ ≤ 1 for the spectral norm. -/
 theorem koopmanContraction {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (hPos : ∀ (v : Fin n → ℂ), v ≠ 0 → 0 ≤ (star v ⬝ (A ⬝ v)).re) : True :=
+    (hPos : ∀ (v : Fin n → ℂ), v ≠ 0 → 0 ≤ (dotProduct (star v) (A *ᵥ v)).re) : True :=
   -- Placeholder: The full contraction proof requires the spectral theorem
   -- and is deferred to Phase 16B functional analysis.
   trivial
@@ -63,17 +62,17 @@ section AccretiveGenerator
     For all vectors v, Re(⟨v, Av⟩) ≥ 0.
     In the finite-dimensional case, this is equivalent to A + A* being PSD. -/
 def isMAccretive {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
-  ∀ (v : Fin n → ℂ), 0 ≤ (star v ⬝ (A ⬝ v)).re
+  ∀ (v : Fin n → ℂ), 0 ≤ (dotProduct (star v) (A *ᵥ v)).re
 
-/-- Self-adjoint matrices with non-negative eigenvalues are m-accretive. -/
+/-- Self-adjoint matrices with non-negative Rayleigh quotient are m-accretive.
+    （2026-07-27 诚实修正：原假设 hNonnegEigs : True 是空假设，
+    原命题无法证明；现改为显式 Rayleigh 非负假设——结论即定义展开。
+    从"特征值非负"到 Rayleigh 非负的谱定理推导仍属 16B 开放工作。） -/
 theorem selfAdjointNonneg_implies_mAccretive {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (hSelfAdjoint : Aᴴ = A) (hNonnegEigs : True) : isMAccretive A := by
-  intro v
-  -- For self-adjoint A, ⟨v, Av⟩ = ⟨Av, v⟩ is real.
-  -- Non-negative eigenvalues imply non-negativity.
-  -- Full proof requires spectral decomposition, deferred to 16B.
-  simp [isMAccretive]
-  trivial
+    (_hSelfAdjoint : Aᴴ = A)
+    (hNonneg : ∀ (v : Fin n → ℂ), 0 ≤ (dotProduct (star v) (A *ᵥ v)).re) :
+    isMAccretive A :=
+  hNonneg
 
 /-- Spectral mapping theorem for normal matrices:
     σ(exp(-A)) = exp(-σ(A)).

@@ -65,8 +65,8 @@ theorem koopmanLinfty_norm_le_one {X : Type u} [Nonempty X] (sys : DynSys X) (f 
       norm (f (sys.Φ x)) ≤ sSup (Set.range (fun (y : X) => norm (f y))) :=
         le_csSup h_bdd mem
       _ = iSup (fun (y : X) => norm (f y)) := rfl
-  -- Apply ciSup_le': if ∀ x, f_koop(x) ≤ S, then iSup f_koop ≤ S
-  exact ciSup_le' h_bound
+  -- Apply ciSup_le: if ∀ x, f_koop(x) ≤ S, then iSup f_koop ≤ S
+  exact ciSup_le h_bound
 
 /--
 The Koopman operator is always a contraction: ‖U_R‖ ≤ 1.

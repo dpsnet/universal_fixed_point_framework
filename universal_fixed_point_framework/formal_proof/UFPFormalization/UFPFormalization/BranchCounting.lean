@@ -16,9 +16,11 @@ import Mathlib.Data.Nat.Basic
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
+import Mathlib.Tactic.DeriveFintype
 import UFPFormalization.Unified3Theorem
 import UFPFormalization.HigherSpecCategory
 import UFPFormalization.SpCategory
+import UFPFormalization.DHStructuralAnalysis
 
 open CategoryTheory
 open UFPFormalization.Unified3
@@ -55,7 +57,7 @@ def N_total : ℕ := 5
 
 /-- 总层数等于 5 的验证。 -/
 theorem total_layers_count : Fintype.card LayerIndex = 5 := by
-  simp [LayerIndex]
+  native_decide
 
 /-- 层是否为主动生成层（即非平凡的态射层）。 -/
 def isActive (l : LayerIndex) : Bool :=
@@ -76,7 +78,8 @@ theorem active_layers_count : (ActiveLayers : Finset LayerIndex).card = 3 := by
 
 /-- 主动生成层数等于统一 3 定理中的主动生成层数。 -/
 theorem active_layers_eq_unified3 : Fintype.card ActiveMorphismLayer = (ActiveLayers : Finset LayerIndex).card := by
-  simp [ActiveLayers]
+  rw [card_active_layers]
+  native_decide
 
 /-! =========================================================
    第二章 有效分支数 B
@@ -101,7 +104,6 @@ theorem B_eq_15 : B = 15 := by
   unfold B N_total
   have h_active : (ActiveLayers : Finset LayerIndex).card = 3 := active_layers_count
   rw [h_active]
-  norm_num
 
 /-! =========================================================
    第三章 Moran 方程与 d_H = ln 15
@@ -126,7 +128,9 @@ noncomputable def e : ℝ := Real.exp 1
 noncomputable def ln15 : ℝ := Real.log 15
 
 /-- 条件定理：若有效分支数为 B = 15 且均匀收缩率为 r = e⁻¹，
-    则 Moran 方程 B · r^{d_H} = 1 的解为 d_H = ln 15。 -/
+    则 Moran 方程 B · r^{d_H} = 1 的解为 d_H = ln 15。
+    （2026-07-27：改写为调用 `DHStructural.dH_moran_solution_unique`
+    的唯一性定理，消除对不存在引理 `Real.exp_mul` 的依赖。） -/
 theorem dH_from_branching :
     let B' : ℝ := (B : ℝ)
     let d_H : ℝ := ln15
@@ -135,18 +139,8 @@ theorem dH_from_branching :
   have hB : B' = (15 : ℝ) := by
     have hB_nat : B = 15 := B_eq_15
     simpa using congrArg (fun n : ℕ => (n : ℝ)) hB_nat
-  calc
-    B' * (r ^ d_H) = (15 : ℝ) * ((Real.exp (-1 : ℝ)) ^ Real.log 15) := by
-      simp [hB, r, d_H, ln15]
-    _ = (15 : ℝ) * (Real.exp ((-1 : ℝ) * Real.log 15)) := by rw [Real.exp_mul]
-    _ = (15 : ℝ) * (Real.exp (Real.log ((15 : ℝ)⁻¹))) := by
-      rw [Real.log_inv (by norm_num : (15 : ℝ) ≠ 0)]
-      ring
-    _ = (15 : ℝ) * ((15 : ℝ)⁻¹) := by
-      rw [Real.exp_log (by norm_num : (0 : ℝ) < (1/15 : ℝ))]
-    _ = 1 := by
-      field_simp
-      norm_num
+  rw [hB]
+  exact DHStructural.dH_moran_solution_unique.mpr rfl
 
 /-- 条件定理的等价形式：e^{d_H} = 15。 -/
 theorem exp_dH_eq_15 : Real.exp (ln15 : ℝ) = (15 : ℝ) :=
@@ -173,12 +167,13 @@ noncomputable def d_H_fit : ℝ := 2.7095
 /-- 偏差 δ = d_H_fit - ln15。 -/
 noncomputable def delta_fit : ℝ := d_H_fit - ln15
 
-/-- δ < 0.01（范畴底线偏差不超过 1%）。 -/
+/-- δ < 0.01（范畴底线偏差不超过 1%）。
+    （2026-07-27：由 `DHStructural.ln15_gt_2708`（ln 15 > 2.708）闭合，
+    消除 sorry。） -/
 theorem delta_bound : delta_fit < (1 : ℝ) / 100 := by
+  have h1 : (2.708 : ℝ) < Real.log 15 := DHStructural.ln15_gt_2708
   unfold delta_fit d_H_fit ln15
-  -- 数值验证：2.7095 - ln15 ≈ 0.00145 < 0.01
-  -- 需要 Real.log 15 的带余估计，此处标记为暂缺
-  sorry
+  linarith
 
 /-! =========================================================
    第五章 与统一 3 定理的桥梁
@@ -198,6 +193,6 @@ theorem delta_bound : delta_fit < (1 : ℝ) / 100 := by
 
 /-- 统一 3 定理与分支计数的桥梁。 -/
 theorem bridge_to_unified3 : Fintype.card ActiveMorphismLayer = 3 ∧ B = 15 :=
-  ⟨by simp, B_eq_15⟩
+  ⟨card_active_layers, B_eq_15⟩
 
 end UFPFormalization.BranchCounting

@@ -27,12 +27,9 @@ Phase 16B functional analysis formalization.
 
 /-- Spectral radius of a finite complex matrix (max |eigenvalue|).
     In the finite-dimensional prototype, we compute this via the spectral norm. -/
-noncomputable def spectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  -- Simplified: max absolute value of eigenvalues (finite case is decidable)
-  if h : n = 0 then 0 else
-    (Finset.sup' (Finset.univ : Finset (Fin n))
-      (by simpa [h] using Finset.univ_nonempty))
-    (fun i => 0)  -- Placeholder: actual spectral radius requires spectral theorem
+noncomputable def spectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ := 0
+  -- Placeholder: actual spectral radius requires spectral theorem (eigenvalue
+  -- analysis), deferred to Phase 16B. Returns 0 as a stand-in.
 
 /-- IC Condition 1: Spectral scale compatibility.
     The ratio of spectral radii ρ(σ(-log U_{R1})) / ρ(σ(-log U_{R2})) is bounded. -/

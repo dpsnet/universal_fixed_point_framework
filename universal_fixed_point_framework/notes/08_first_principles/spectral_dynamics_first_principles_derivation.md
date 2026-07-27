@@ -543,6 +543,45 @@ $$d_H = \ln\left(N_{\text{IFS}} \cdot (n+1)\right) + \mathcal{O}(\epsilon)$$
 
 **开放问题**：$d_H = \ln(N_{\text{IFS}} \cdot (n+1))$ 是精确的数学关系还是一个意外精确的近似？能否从 $\mathbf{Sp}$ 4-范畴的 coherence 定理直接导出此式？
 
+### 3.9 Lean 4 形式化验证（2026-07-27，DHStructuralAnalysis.lean）
+
+$d_H$ 的不等式链与 Moran 条件定理已在 Lean 4 + Mathlib 中完成形式化，文件 `formal_proof/UFPFormalization/UFPFormalization/DHStructuralAnalysis.lean`，**全部证明通过 `lake build` 编译验证（零错误零警告，无 `sorry`）**。
+
+**已机器验证的定理**（严格区分纯数学结果与唯象代入）：
+
+| 定理 | 内容 | 性质 |
+|:----|:----|:----|
+| `dH_from_branching` | $B = 15 \land r = e^{-1} \Rightarrow B \cdot r^{\ln 15} = 1$ | 条件定理（纯代数，经 `rpow_def_of_pos`） |
+| `exp_dH_eq_15_from_branching` | $e^{\ln 15} = 15$ | 纯数学 |
+| `moran_solution_iff` | $B > 1 \land 0 < r < 1 \Rightarrow (B\cdot r^x = 1 \Leftrightarrow x = \log B/\log(1/r))$ | 纯数学（Moran 解存在唯一性，一般形式） |
+| `dH_moran_solution_unique` | $15\cdot(e^{-1})^x = 1 \Leftrightarrow x = \ln 15$ | 纯数学（d_H 唯一解刻画） |
+| `ln15_lt_65_24` | $\ln 15 < 65/24$ | 纯数学（幂技巧：$15^{24} < 2.7182818283^{65} \le e^{65}$） |
+| `ln15_gt_2708` | $\ln 15 > 2.708 = 677/250$ | 纯数学（$15^{250} > 2.7182818286^{677} \ge e^{677}$） |
+| `sixtyfive_over_24_lt_e` | $65/24 < e$ | 纯数学（`Real.exp_one_gt_d9`） |
+| `e_lt_3` | $e < 3$ | 纯数学（`Real.exp_one_lt_d9`） |
+| `sixtyfive_over_24_lt_d_H` / `d_H_lt_e` | $65/24 < d_H^{\text{fit}} < e$ | ⚠️ 唯象代入（拟合值 $d_H^{\text{fit}} = 2.7095$） |
+| `dH_categorical_floor_bound` | $\lvert d_H^{\text{fit}} - \ln 15\rvert < 0.01$ | ⚠️ 唯象代入 |
+| `delta_1_magnitude` | $\lvert \delta_1 - \delta_{\text{fit}}\rvert < 0.01$（$\delta_1 = \sqrt{2}\times 10^{-3}$） | ⚠️ 唯象代入（量级验证） |
+
+完整不等式链（`inequality_chain_full`）：$\ln 15 < \frac{65}{24} < d_H^{\text{fit}} < e < 3$。
+
+**Moran 解唯一性（新推导，2026-07-27）**：`moran_solution_iff` 把步骤 3 从"$\ln 15$ 是一个解"升级为"唯一解"——对任意 $B > 1$、$0 < r < 1$，$x \mapsto B\cdot r^x = B\cdot e^{x\ln r}$ 严格单调（$\ln r < 0$），故 $B\cdot r^x = 1 \Leftrightarrow x = \log B/\log(1/r)$。
+
+**δ 的一阶结构推导（新推导，2026-07-27）**：对扰动权重 $c_i = r(1+\varepsilon_i)$ 的 Moran 方程隐函数求导，得
+
+$$\delta = \frac{d_0}{\ln(1/r)}\cdot\bar{\varepsilon} = \ln(15)\cdot\bar{\varepsilon}$$
+
+数值验证（`paperX_dH_moran_perturbation.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+- 一阶公式 vs 精确解（$\varepsilon \le 10^{-3}$）：相对误差 ≤ 5×10⁻⁴
+- 反演：$\delta_{\text{obs}} = 0.00145 \Leftrightarrow \bar{\varepsilon} \approx 5.35\times 10^{-4}$（0.054% 平均权重上调）
+- 实际 3-映射 IFS 灵敏度 $\partial d/\partial\ln c_3 \approx 721$（解析与差分一致）——定量证实命题 R2：$c_3$ 的 $10^{-6}$ 相对扰动即可移动 $d$ 约 $7\times 10^{-4}$（与 δ 同量级）
+
+**技术要点**：$\ln 15$ 的界通过幂比较实现——$\ln 15 < 65/24 \Leftrightarrow 15^{24} < e^{65}$，配合 Mathlib 的 $e$ 的 9 位小数界（`exp_one_gt_d9` / `exp_one_lt_d9`）归结为 `norm_num` 可判定的大整数有理数比较（$15^{250}$ 约 294 位，需 `exponentiation.threshold 1024`）。该路线避免了脆弱的级数余项估计。
+
+**仍为核心理论开放问题**（未被形式化覆盖）：
+1. $B = N_{\text{active}} \times N_{\text{total}}$ 的 coherence 定理推导（`dH_from_branching` 的前提 $B = 15$ 目前作为假设引入；`CoherenceToBranching.lean` 已覆盖层对计数，IFS 吸引子对应关系仍缺）
+2. 权重扰动 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 本身的物理推导（δ 的一阶响应公式 $\delta = \ln(15)\cdot\bar{\varepsilon}$ 已建立，见上文；问题转化为从规范耦合/质量层级解释该扰动量级）
+
 ---
 
 ## 4. 引力常数 $G_N$ 的谱推导（成熟度：严谨）

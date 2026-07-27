@@ -46,6 +46,10 @@ SCRIPTS = [
 
     # === Phase 55A: 噪声谱流数值交叉验证 ===
     ("noise_spectral_flow_numerical.py",       "噪声谱流 η_c 奇异性数值验证"),
+
+    # === 2026-07-27: d_H 偏差 δ 的一阶响应推导 ===
+    ("paperX_dH_moran_perturbation.py",        "d_H 偏差 δ 一阶响应推导 (Moran 微扰)"),
+    ("paperX_dH_recursion_test.py",            "δ 两级粘合递归 IFS 检验 (递归不变性)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

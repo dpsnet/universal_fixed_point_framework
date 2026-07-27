@@ -9,24 +9,29 @@
   3. d_H 的数值分解：d_H = ln 15 + δ（δ ≈ 0.00145）
   4. 开放问题的形式化路线图
 
-  状态：(2026-07-27 v2)
-    - ln 15 < 65/24              ✅ 可证明（纯数学）
-    - 65/24 < e < 3              ✅ 可证明（纯数学）
+  状态：(2026-07-27 v4，全部证明通过 lake build 编译验证)
+    - ln 15 < 65/24              ✅ 已证明（纯数学，经 exp_one_gt_d9 + log_pow）
+    - 65/24 < e < 3              ✅ 已证明（纯数学，经 exp_one_gt_d9 / exp_one_lt_d9）
     - 65/24 < d_H < e            ⚠️ 唯象验证（拟合值代入）
     - d_H = ln 15 的结构推导      🔶 条件定理（假设 B=15, r=e⁻¹ ⇒ d_H=ln 15）
-    - d_H = ln 15 + δ 分解        ❓ δ 的结构待推导
+    - Moran 解唯一性              ✅ 已证明（moran_solution_iff，一般 B, r）
+    - 递归不动点定理              ✅ 已证明（glued_recursion_fixed_point：
+                                     两级粘合递归对任意 ρ∈[0,1] 锁定 d = log B/log(1/r)）
+    - 扰动响应解析核心            ✅ 已证明（§2.5：∂F/∂d、∂F/∂ε₁、∂F/∂ε₂
+                                     在解点的导数 + 响应系数恒等式 response_ratio）
+    - d_H = ln 15 + δ 分解        ❓ δ 的结构待推导（递归不产生 δ，
+                                     只能来自收缩率非均匀性）
 -/
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Tactic
-import Mathlib.Data.Rat.Basic
-import UFPFormalization.FlavorFiber
 
 open Real
-open BigOperators
 
 namespace UFPFormalization.DHStructural
 
@@ -86,122 +91,274 @@ noncomputable def r : ℝ := Real.exp (-1)
 
 /-- 条件定理：若有效分支数为 B = 15 且均匀收缩率为 r = e⁻¹，
     则 Moran 方程 B · r^{d_H} = 1 的解为 d_H = ln 15。 -/
-theorem dH_from_branching (h_B : B = 15) (h_r : r = Real.exp (-1)):
-    let B' : ℝ := (B : ℝ) in
-    let d_H_solution : ℝ := ln15 in
-    B' * (r ^ d_H_solution) = 1 := by
-  intro B' d_H_solution
-  have hB : B' = (15 : ℝ) := by
-    simpa [B, N_active, N_total] using congrArg (fun n : ℕ => (n : ℝ)) h_B
-  have hr : r = Real.exp (-1 : ℝ) := h_r
-  calc
-    B' * (r ^ d_H_solution) = (15 : ℝ) * ((Real.exp (-1 : ℝ)) ^ Real.log 15) := by
-      simp [hB, hr, d_H_solution, ln15]
-    _ = (15 : ℝ) * (Real.exp ((-1 : ℝ) * Real.log 15)) := by rw [Real.exp_mul]
-    _ = (15 : ℝ) * (Real.exp (Real.log (15 : ℝ)⁻¹)) := by
-      ring_nf
-      rw [Real.log_inv (by norm_num : (15 : ℝ) ≠ 0)]
-    _ = (15 : ℝ) * ((15 : ℝ)⁻¹) := by rw [Real.exp_log (by norm_num : (0 : ℝ) < (1/15 : ℝ))]
-    _ = 1 := by
-      field_simp
-      norm_num
+theorem dH_from_branching (h_B : B = 15) (h_r : r = Real.exp (-1)) :
+    (B : ℝ) * r ^ ln15 = 1 := by
+  have hB : (B : ℝ) = 15 := by
+    have := congrArg (fun n : ℕ => (n : ℝ)) h_B
+    push_cast at this
+    exact this
+  rw [hB, h_r]
+  unfold ln15
+  rw [Real.rpow_def_of_pos (Real.exp_pos _), Real.log_exp, neg_mul, one_mul,
+    Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 15)]
+  exact mul_inv_cancel₀ (by norm_num : (15 : ℝ) ≠ 0)
 
 /-- 条件定理的等价形式：若前提成立，则 e^{d_H} = 15。 -/
-theorem exp_dH_eq_15_from_branching (h_B : B = 15) (h_r : r = Real.exp (-1)):
-    Real.exp (ln15 : ℝ) = (15 : ℝ) := by
+theorem exp_dH_eq_15_from_branching (_h_B : B = 15) (_h_r : r = Real.exp (-1)) :
+    Real.exp ln15 = (15 : ℝ) := by
   calc
-    Real.exp (ln15 : ℝ) = Real.exp (Real.log (15 : ℝ)) := rfl
+    Real.exp ln15 = Real.exp (Real.log (15 : ℝ)) := rfl
     _ = (15 : ℝ) := Real.exp_log (by norm_num : (0 : ℝ) < (15 : ℝ))
 
-/-- d_H 的范畴底线：ln 15 是理想极限，唯象值 d_H_fit 在此附近。 -/
-theorem dH_categorical_floor_bound :
-    |d_H_fit - ln15| < (1 : ℝ) / 100 := by
-  unfold d_H_fit ln15
-  have h_diff_pos : 2.7095 - Real.log (15 : ℝ) > 0 := by
-    have h_lt : Real.log (15 : ℝ) < (65 : ℝ) / 24 := ln15_lt_65_24
-    have h_65_24_lt_dH : (65 : ℝ) / 24 < 2.7095 := by norm_num
-    nlinarith
-  have h_upper : 2.7095 - Real.log (15 : ℝ) < 0.01 := by
-    have h_lower_bound : Real.log (15 : ℝ) > 2.708 := by
-      have h_log_lt : Real.log (15 : ℝ) > 2.708 ↔ Real.exp (2.708 : ℝ) < 15 :=
-        Real.log_gt_iff_exp_lt (by norm_num : (0 : ℝ) < 15)
-      apply h_log_lt.mpr
-      have h_exp_eq_tsum : Real.exp (2.708 : ℝ) = ∑' (n : ℕ), (2.708 : ℝ) ^ n / (n.factorial : ℝ) :=
-        Real.exp_eq_tsum (2.708 : ℝ)
-      have h_partial_sum_lt_15 : ∑ (n : ℕ) in Finset.range 11, (2.708 : ℝ) ^ n / (n.factorial : ℝ) < 15 := by
-        norm_num
-      have h_tsum_le_partial : ∑' (n : ℕ), (2.708 : ℝ) ^ n / (n.factorial : ℝ) ≤ ∑ (n : ℕ) in Finset.range 11, (2.708 : ℝ) ^ n / (n.factorial : ℝ) + (1 : ℝ) / 1000 := by
-        have h_fact_ge : ∀ n : ℕ, n ≥ 11 → (n.factorial : ℝ) ≥ 39916800 * (2 : ℝ) ^ (n - 11) := by
-          intro n hn
-          induction hn with
-          | base => norm_num
-          | step k hk =>
-            have hk_val : k.factorial ≥ 39916800 * 2 ^ (k - 11) := hk
-            calc
-              (k + 1).factorial = (k + 1) * k.factorial := rfl
-              _ ≥ (k + 1) * 39916800 * 2 ^ (k - 11) := by gcongr; linarith
-              _ ≥ 12 * 39916800 * 2 ^ (k - 11) := by gcongr; linarith
-              _ = 39916800 * 2 ^ (k - 10) := by ring
-        have h_series_bound : ∀ n : ℕ, n ≥ 11 → (2.708 : ℝ) ^ n / (n.factorial : ℝ) ≤ 2.708 ^ 11 / (39916800 * 2 ^ (n - 11)) := by
-          intro n hn
-          have h_fact : (n.factorial : ℝ) ≥ 39916800 * 2 ^ (n - 11) := h_fact_ge n hn
-          have h_pow : (2.708 : ℝ) ^ n = 2.708 ^ 11 * 2.708 ^ (n - 11) := by ring
-          calc
-            (2.708 : ℝ) ^ n / (n.factorial : ℝ) = (2.708 ^ 11 * 2.708 ^ (n - 11)) / (n.factorial : ℝ) := by rw [h_pow]
-            _ ≤ (2.708 ^ 11 * 2.708 ^ (n - 11)) / (39916800 * 2 ^ (n - 11)) := by gcongr; exact h_fact
-            _ ≤ 2.708 ^ 11 / (39916800 * 2 ^ (n - 11)) := by
-              apply mul_le_of_le_one_right
-              · positivity
-              · apply pow_le_one_iff_of_le_one
-                · norm_num
-                · norm_num
-        have h_sum_geometric : ∑' (n : ℕ) in (Finset.range 11)ᶜ, 2.708 ^ 11 / (39916800 * 2 ^ (n - 11)) = 2.708 ^ 11 / 19958400 := by
-          let S := ∑' (k : ℕ), 2.708 ^ 11 / (39916800 * 2 ^ k)
-          have h_S : S = 2.708 ^ 11 / 19958400 := by
-            calc
-              S = (2.708 ^ 11 / 39916800) * ∑' (k : ℕ), (1 / 2) ^ k := by
-                apply tsum_mul_left
-                positivity
-              _ = (2.708 ^ 11 / 39916800) * 2 := by
-                rw [tsum_geometric_two]
-                norm_num
-              _ = 2.708 ^ 11 / 19958400 := by norm_num
-          rw [h_S]
-          apply tsum_congr
-          intro n
-          by_cases hn : n ∈ (Finset.range 11)ᶜ
-          · simp [hn]
-          · simp [hn]
-        have h_remainder_lt_0001 : 2.708 ^ 11 / 19958400 < (1 : ℝ) / 1000 := by
-          norm_num
-        apply tsum_le_of_le_nat
-        · intro n; positivity
-        · exact h_series_bound
-        · exact h_sum_geometric
-        · exact h_remainder_lt_0001
-      nlinarith
-    have h_diff : 2.7095 - 2.708 < 0.01 := by norm_num
-    nlinarith
-  have h_lower : -(2.7095 - Real.log (15 : ℝ)) < 0.01 := by
-    have h_upper_bound : Real.log (15 : ℝ) < 2.7195 := by
-      have h_log_lt : Real.log (15 : ℝ) < 2.7195 ↔ 15 < Real.exp (2.7195 : ℝ) :=
-        Real.log_lt_iff_exp_lt (by norm_num : (0 : ℝ) < 15)
-      apply h_log_lt.mpr
-      have h_exp_eq_tsum : Real.exp (2.7195 : ℝ) = ∑' (n : ℕ), (2.7195 : ℝ) ^ n / (n.factorial : ℝ) :=
-        Real.exp_eq_tsum (2.7195 : ℝ)
-      have h_partial_sum_gt_15 : ∑ (n : ℕ) in Finset.range 10, (2.7195 : ℝ) ^ n / (n.factorial : ℝ) > 15 := by
-        norm_num
-      have h_partial_lt_tsum : ∑ (n : ℕ) in Finset.range 10, (2.7195 : ℝ) ^ n / (n.factorial : ℝ) < ∑' (n : ℕ), (2.7195 : ℝ) ^ n / (n.factorial : ℝ) := by
-        apply tsum_lt_tsum_of_nonneg_of_lt
-        · intro n; positivity
-        · use 10
-          positivity
-        · intro n; positivity
-      nlinarith
-    have h_diff : -(2.7095 - 2.7195) < 0.01 := by norm_num
-    nlinarith
-  rw [abs_of_pos h_diff_pos]
-  nlinarith
+/-- Moran 方程解的存在唯一性（一般形式）。
+    对分支数 B > 1、均匀收缩率 0 < r < 1，方程 B · r^x = 1 有且仅有唯一解
+    x = log B / log(1/r)。
+    证明要点：x ↦ B · r^x = B · exp(x·log r) 在 log r < 0 时严格单调，
+    故解若存在则唯一；直接代入验证 x = log B / log(1/r) 满足方程。
+    这把此前的条件定理从"ln 15 是一个解"升级为"唯一解"的充要刻画。 -/
+theorem moran_solution_iff {B r x : ℝ} (hB : (1 : ℝ) < B) (hr0 : (0 : ℝ) < r)
+    (hr1 : r < 1) :
+    B * r ^ x = 1 ↔ x = Real.log B / Real.log (1 / r) := by
+  have hB0 : (0 : ℝ) < B := by linarith
+  have hlogr : Real.log r < 0 := Real.log_neg hr0 hr1
+  have hnlr : Real.log r ≠ 0 := ne_of_lt hlogr
+  have hlog1r : Real.log (1 / r) = -Real.log r := by
+    rw [Real.log_div one_ne_zero (ne_of_gt hr0), Real.log_one, zero_sub]
+  constructor
+  · intro h
+    have h1 : r ^ x = B⁻¹ := eq_inv_of_mul_eq_one_right h
+    have h2 : x * Real.log r = -Real.log B := by
+      have h2' := congrArg Real.log h1
+      rw [Real.log_rpow hr0, Real.log_inv] at h2'
+      exact h2'
+    rw [hlog1r]
+    field_simp
+    linarith
+  · intro h
+    rw [h]
+    have h5 : Real.log r * (Real.log B / Real.log (1 / r)) = -Real.log B := by
+      rw [hlog1r]
+      field_simp
+    have h4 : r ^ (Real.log B / Real.log (1 / r)) = B⁻¹ := by
+      rw [Real.rpow_def_of_pos hr0, h5, Real.exp_neg, Real.exp_log hB0]
+    rw [h4]
+    exact mul_inv_cancel₀ (ne_of_gt hB0)
+
+/-- d_H 的唯一解刻画：当 B = 15、r = e⁻¹ 时，Moran 方程 15 · (e⁻¹)^x = 1
+    的解存在且唯一：x = ln 15。
+    结合 BranchCounting 的 B = 15（计数）与 CoherenceToBranching 的层对论证，
+    推导链中"Moran 方程 ⇒ d_H = ln 15"这一步至此完全严格化（存在性 + 唯一性）。 -/
+theorem dH_moran_solution_unique {x : ℝ} :
+    (15 : ℝ) * (Real.exp (-1)) ^ x = 1 ↔ x = ln15 := by
+  have hr1 : Real.exp (-1) < 1 := by
+    have h := Real.exp_lt_exp.mpr (by norm_num : (-1 : ℝ) < 0)
+    rwa [Real.exp_zero] at h
+  have hl : Real.log (1 / Real.exp (-1)) = 1 := by
+    rw [Real.log_div one_ne_zero (ne_of_gt (Real.exp_pos _)), Real.log_one,
+      Real.log_exp, zero_sub, neg_neg]
+  have h := moran_solution_iff (B := (15 : ℝ)) (r := Real.exp (-1)) (x := x)
+    (by norm_num) (Real.exp_pos _) hr1
+  rw [hl, div_one] at h
+  exact h
+
+/-- 辅助引理：Moran 解点处的收缩率幂等于分支数倒数。 -/
+theorem rpow_at_moran_solution {B r : ℝ} (hB : (0 : ℝ) < B) (hr0 : (0 : ℝ) < r)
+    (hr1 : r < 1) :
+    r ^ (Real.log B / Real.log (1 / r)) = B⁻¹ := by
+  have hlogr : Real.log r < 0 := Real.log_neg hr0 hr1
+  have hlog1r : Real.log (1 / r) = -Real.log r := by
+    rw [Real.log_div one_ne_zero (ne_of_gt hr0), Real.log_one, zero_sub]
+  have hnlr : Real.log r ≠ 0 := ne_of_lt hlogr
+  have h5 : Real.log r * (Real.log B / Real.log (1 / r)) = -Real.log B := by
+    rw [hlog1r]
+    field_simp
+  rw [Real.rpow_def_of_pos hr0, h5, Real.exp_neg, Real.exp_log hB]
+
+/-- 递归不动点定理（两级粘合递归 Moran 方程解的存在唯一性）。
+
+    模型：B 个一级分支中，B−1 个各细分出 B 个二级分支（收缩率 r²），
+    1 个（对象层/粘合分支）以比例 1−ρ 保持不细分（收缩率 r）：
+
+        (1−ρ)·r^d + (B(B−1) + ρB)·r^{2d} = 1
+
+    结论：对任意粘合比例 ρ ∈ [0,1]，解存在且唯一：d = log B / log(1/r)。
+    即两级递归把维数精确锁定在单层值上——递归修正 δ = 0 对所有 ρ 精确成立。
+
+    存在性：代入 r^{d₀} = 1/B，两项权重之和 (1−ρ)/B + (B−1+ρ)/B = 1（自相似守恒）。
+    唯一性：被映射 d ↦ 两项正系数指数衰减之和，关于 d 严格递减，故为单射。 -/
+theorem glued_recursion_fixed_point {B r d ρ : ℝ} (hB : (1 : ℝ) < B)
+    (hr0 : (0 : ℝ) < r) (hr1 : r < 1) (hρ0 : (0 : ℝ) ≤ ρ) (hρ1 : ρ ≤ 1) :
+    (1 - ρ) * r ^ d + (B * (B - 1) + ρ * B) * r ^ (2 * d) = 1 ↔
+    d = Real.log B / Real.log (1 / r) := by
+  have hB0 : (0 : ℝ) < B := by linarith
+  have hB0' : B ≠ 0 := ne_of_gt hB0
+  set d₀ := Real.log B / Real.log (1 / r) with hd₀
+  have hsol : r ^ d₀ = B⁻¹ := rpow_at_moran_solution hB0 hr0 hr1
+  have hsq : r ^ (2 * d₀) = B⁻¹ * B⁻¹ := by
+    rw [show (2 : ℝ) * d₀ = d₀ + d₀ from by ring, Real.rpow_add hr0, hsol]
+  have hexists : (1 - ρ) * r ^ d₀ + (B * (B - 1) + ρ * B) * r ^ (2 * d₀) = 1 := by
+    rw [hsol, hsq]
+    field_simp
+    ring
+  have hanti : StrictAnti
+      (fun x : ℝ => (1 - ρ) * r ^ x + (B * (B - 1) + ρ * B) * r ^ (2 * x)) := by
+    intro x y hxy
+    have h1 : r ^ y < r ^ x := Real.rpow_lt_rpow_of_exponent_gt hr0 hr1 hxy
+    have h2 : r ^ (2 * y) < r ^ (2 * x) :=
+      Real.rpow_lt_rpow_of_exponent_gt hr0 hr1 (by linarith)
+    have hm : (0 : ℝ) < B * (B - 1) + ρ * B := by nlinarith [hB, hρ0]
+    have ha : (0 : ℝ) ≤ 1 - ρ := by linarith
+    have hlt := mul_lt_mul_of_pos_left h2 hm
+    have hle := mul_le_mul_of_nonneg_left h1.le ha
+    linarith
+  constructor
+  · intro h
+    exact hanti.injective (h.trans hexists.symm)
+  · intro h
+    rw [h]
+    exact hexists
+
+/-- 推论：B = 15、r = e⁻¹ 时，两级粘合递归把维数锁定在 ln 15
+    （δ = 0 对所有粘合比例 ρ 精确成立——ln 15 是递归不动点）。 -/
+theorem glued_recursion_dH_eq_ln15 {d ρ : ℝ} (hρ0 : (0 : ℝ) ≤ ρ) (hρ1 : ρ ≤ 1) :
+    (1 - ρ) * (Real.exp (-1)) ^ d + ((15 : ℝ) * (15 - 1) + ρ * 15) *
+      (Real.exp (-1)) ^ (2 * d) = 1 ↔ d = ln15 := by
+  have hr1 : Real.exp (-1) < 1 := by
+    have h := Real.exp_lt_exp.mpr (by norm_num : (-1 : ℝ) < 0)
+    rwa [Real.exp_zero] at h
+  have hl : Real.log (1 / Real.exp (-1)) = 1 := by
+    rw [Real.log_div one_ne_zero (ne_of_gt (Real.exp_pos _)), Real.log_one,
+      Real.log_exp, zero_sub, neg_neg]
+  have h := glued_recursion_fixed_point (B := (15 : ℝ)) (r := Real.exp (-1)) (d := d)
+    (by norm_num) (Real.exp_pos _) hr1 hρ0 hρ1
+  rw [hl, div_one] at h
+  exact h
+
+/-! ---------------------------------------------------------
+   §2.5 扰动响应的解析核心（响应公式的导数成分）
+   ---------------------------------------------------------
+
+   对扰动的两级粘合 Moran 函数
+       F(d, ε₁, ε₂) = (r(1+ε₁))^d + B(B−1)(r²(1+ε₂))^d − 1
+   在解点 (d₀, 0, 0) 处的三个偏导数：
+       ∂F/∂d  = ((2B−1)/B)·ln r
+       ∂F/∂ε₁ = d₀/B
+       ∂F/∂ε₂ = (B−1)d₀/B
+   以及响应系数恒等式 ∂d/∂εᵢ = −(∂F/∂εᵢ)/(∂F/∂d)。
+   一阶响应公式 δ = d₀(ε₁+(B−1)ε₂)/((2B−1)ln(1/r)) 是这些导数经
+   隐函数定理的直接推论；本节形式化其导数成分与代数恒等式。
+   （B = 15、r = e⁻¹ 时即 δ = ln 15·(ε₁ + 14ε₂)/29。）
+-/
+
+/-- r^x 对指数 x 的导数（底数 0 < r）：deriv = r^y · log r。 -/
+theorem hasDerivAt_rpow_base {r : ℝ} (hr : (0 : ℝ) < r) (y : ℝ) :
+    HasDerivAt (fun x : ℝ => r ^ x) (r ^ y * Real.log r) y := by
+  have h1 : HasDerivAt (fun x : ℝ => Real.exp (Real.log r * x))
+      (Real.exp (Real.log r * y) * Real.log r) y :=
+    (hasDerivAt_const_mul (Real.log r)).exp
+  convert h1 using 1
+  · funext x
+    exact Real.rpow_def_of_pos hr x
+  · rw [Real.rpow_def_of_pos hr y]
+
+/-- 响应解析核心 1（∂F/∂d）：Moran 函数在解点处对 d 的导数
+    = ((2B−1)/B)·ln r（注意 ln r < 0，故 ∂F/∂d ≠ 0）。 -/
+theorem deriv_moran_d_at_solution {B r : ℝ} (hB : (1 : ℝ) < B) (hr0 : (0 : ℝ) < r)
+    (hr1 : r < 1) :
+    deriv (fun d : ℝ => r ^ d + (B * (B - 1)) * (r ^ 2) ^ d)
+        (Real.log B / Real.log (1 / r)) =
+      Real.log r * ((2 * B - 1) / B) := by
+  have hB0 : (0 : ℝ) < B := by linarith
+  have hB0' : B ≠ 0 := ne_of_gt hB0
+  set d₀ := Real.log B / Real.log (1 / r) with hd₀
+  have hsol : r ^ d₀ = B⁻¹ := rpow_at_moran_solution hB0 hr0 hr1
+  have hsq2 : (r ^ 2 : ℝ) ^ d₀ = B⁻¹ * B⁻¹ := by
+    rw [← Real.rpow_two, ← Real.rpow_mul hr0.le,
+      show (2 : ℝ) * d₀ = d₀ + d₀ from by ring, Real.rpow_add hr0, hsol]
+  have h1 : HasDerivAt (fun d : ℝ => r ^ d) (r ^ d₀ * Real.log r) d₀ :=
+    hasDerivAt_rpow_base hr0 d₀
+  have h2 : HasDerivAt (fun d : ℝ => (r ^ 2 : ℝ) ^ d)
+      ((r ^ 2 : ℝ) ^ d₀ * Real.log (r ^ 2)) d₀ :=
+    hasDerivAt_rpow_base (pow_pos hr0 2) d₀
+  have h3 : HasDerivAt (fun d : ℝ => (B * (B - 1)) * (r ^ 2 : ℝ) ^ d)
+      ((B * (B - 1)) * ((r ^ 2 : ℝ) ^ d₀ * Real.log (r ^ 2))) d₀ :=
+    h2.const_mul (B * (B - 1))
+  have h4 : HasDerivAt (fun d : ℝ => r ^ d + (B * (B - 1)) * (r ^ 2 : ℝ) ^ d)
+      (r ^ d₀ * Real.log r + (B * (B - 1)) * ((r ^ 2 : ℝ) ^ d₀ * Real.log (r ^ 2))) d₀ :=
+    h1.add h3
+  rw [h4.deriv, hsol, hsq2, Real.log_pow]
+  field_simp
+  ring
+
+/-- 响应解析核心 2（∂F/∂ε₁）：一级扰动通道在零点的导数 = d₀/B。 -/
+theorem deriv_moran_eps1_at_zero {B r : ℝ} (hB : (1 : ℝ) < B) (hr0 : (0 : ℝ) < r)
+    (hr1 : r < 1) :
+    deriv (fun t : ℝ => (r * (1 + t)) ^ (Real.log B / Real.log (1 / r))) 0 =
+      (Real.log B / Real.log (1 / r)) / B := by
+  have hB0 : (0 : ℝ) < B := by linarith
+  have hB0' : B ≠ 0 := ne_of_gt hB0
+  have hr' : r ≠ 0 := ne_of_gt hr0
+  set d₀ := Real.log B / Real.log (1 / r) with hd₀
+  have hsol : r ^ d₀ = B⁻¹ := rpow_at_moran_solution hB0 hr0 hr1
+  have hf : HasDerivAt (fun t : ℝ => r * (1 + t)) r 0 := by
+    have h := ((hasDerivAt_id (0 : ℝ)).const_add (1 : ℝ)).const_mul r
+    simpa using h
+  have h0 : (fun t : ℝ => r * (1 + t)) 0 ≠ 0 := by simpa using hr'
+  have hd := HasDerivAt.rpow_const hf (Or.inl h0) (p := d₀)
+  rw [hd.deriv]
+  show r * d₀ * (r * (1 + (0 : ℝ))) ^ (d₀ - 1) = d₀ / B
+  have hf0 : r * (1 + (0 : ℝ)) = r := by ring
+  rw [hf0, Real.rpow_sub_one hr', hsol]
+  field_simp
+
+/-- 响应解析核心 3（∂F/∂ε₂）：二级扰动通道（含分支数权重 B(B−1)）
+    在零点的导数 = (B−1)·d₀/B。 -/
+theorem deriv_moran_eps2_at_zero {B r : ℝ} (hB : (1 : ℝ) < B) (hr0 : (0 : ℝ) < r)
+    (hr1 : r < 1) :
+    deriv (fun t : ℝ => (B * (B - 1)) * ((r ^ 2 : ℝ) * (1 + t)) ^
+        (Real.log B / Real.log (1 / r))) 0 =
+      (B - 1) * (Real.log B / Real.log (1 / r)) / B := by
+  have hB0 : (0 : ℝ) < B := by linarith
+  have hB0' : B ≠ 0 := ne_of_gt hB0
+  have hr2' : (r ^ 2 : ℝ) ≠ 0 := pow_pos hr0 2 |>.ne'
+  set d₀ := Real.log B / Real.log (1 / r) with hd₀
+  have hsol : r ^ d₀ = B⁻¹ := rpow_at_moran_solution hB0 hr0 hr1
+  have hsq2 : (r ^ 2 : ℝ) ^ d₀ = B⁻¹ * B⁻¹ := by
+    rw [← Real.rpow_two, ← Real.rpow_mul hr0.le,
+      show (2 : ℝ) * d₀ = d₀ + d₀ from by ring, Real.rpow_add hr0, hsol]
+  have hf : HasDerivAt (fun t : ℝ => (r ^ 2 : ℝ) * (1 + t)) (r ^ 2) 0 := by
+    have h := ((hasDerivAt_id (0 : ℝ)).const_add (1 : ℝ)).const_mul (r ^ 2)
+    simpa using h
+  have h0 : (fun t : ℝ => (r ^ 2 : ℝ) * (1 + t)) 0 ≠ 0 := by simpa using hr2'
+  have hd := (HasDerivAt.rpow_const hf (Or.inl h0) (p := d₀)).const_mul (B * (B - 1))
+  rw [hd.deriv]
+  show (B * (B - 1)) * (r ^ 2 * d₀ * ((r ^ 2 : ℝ) * (1 + (0 : ℝ))) ^ (d₀ - 1)) =
+    (B - 1) * d₀ / B
+  have hf0 : (r ^ 2 : ℝ) * (1 + (0 : ℝ)) = r ^ 2 := by ring
+  rw [hf0, Real.rpow_sub_one hr2', hsq2]
+  field_simp
+
+/-- 响应系数恒等式（∂d/∂εᵢ = −(∂F/∂εᵢ)/(∂F/∂d) 的代数形式）。
+    第一个系数对应一级通道，第二个对应二级通道（含 (B−1) 权重）。
+    B = 15、r = e⁻¹（ln(1/r) = 1）时：∂d/∂ε₁ = ln15/29，∂d/∂ε₂ = 14·ln15/29。 -/
+theorem response_ratio {B r : ℝ} (hB : (1 : ℝ) < B) (hr0 : (0 : ℝ) < r) (hr1 : r < 1) :
+    (-(Real.log B / Real.log (1 / r) / B)) / (Real.log r * ((2 * B - 1) / B)) =
+      (Real.log B / Real.log (1 / r)) / ((2 * B - 1) * Real.log (1 / r)) ∧
+    (-((B - 1) * (Real.log B / Real.log (1 / r)) / B)) / (Real.log r * ((2 * B - 1) / B)) =
+      (B - 1) * (Real.log B / Real.log (1 / r)) / ((2 * B - 1) * Real.log (1 / r)) := by
+  have hlogr : Real.log r ≠ 0 := ne_of_lt (Real.log_neg hr0 hr1)
+  have hlog1r : Real.log (1 / r) = -Real.log r := by
+    rw [Real.log_div one_ne_zero (ne_of_gt hr0), Real.log_one, zero_sub]
+  have hl1r' : Real.log (1 / r) ≠ 0 := by
+    rw [hlog1r]
+    exact neg_ne_zero.mpr hlogr
+  have hB0' : B ≠ 0 := ne_of_gt (by linarith : (0 : ℝ) < B)
+  have h2B : (2 * B - 1) ≠ 0 := by nlinarith [hB]
+  constructor
+  · rw [hlog1r]
+    field_simp
+  · rw [hlog1r]
+    field_simp
 
 /-! =========================================================
    第三章 纯数学不等式
@@ -209,118 +366,80 @@ theorem dH_categorical_floor_bound :
 
    证明链：ln 15 < 65/24 < e < 3
    这些是完全可证明的纯数学不等式，不依赖任何唯象输入。
+
+   技术手段：
+   - e 的界：Mathlib 的 `Real.exp_one_gt_d9`（e > 2.7182818283）
+     与 `Real.exp_one_lt_d9`（e < 2.7182818286）。
+   - ln 15 的界：转化为幂的比较。例如 ln 15 < 65/24
+     ⟺ 24·ln 15 < 65 ⟺ ln(15²⁴) < 65 ⟺ 15²⁴ < e⁶⁵，
+     而 e⁶⁵ > 2.7182818283⁶⁵ > 15²⁴ 是有限精度有理数比较（norm_num）。
 -/
 
-/-- ln 15 < 65/24 的证明。
-
-    等价于 15 < exp(65/24)。使用级数展开 exp(x) = Σ x^n / n!。
-    展开到足够多项后，部分和 > 15。
-
-    计算验证：65/24 ≈ 2.708333，
-              exp(65/24) ≈ 15.000...（刚好超过 15）
-              需要展开到约 10 项才能严格证明部分和 > 15。
--/
-theorem ln15_lt_65_24 : ln15 < sixtyfive_over_24 := by
-  unfold ln15 sixtyfive_over_24
-  have h_log_lt : Real.log (15 : ℝ) < (65 : ℝ) / 24 ↔ (15 : ℝ) < Real.exp ((65 : ℝ) / 24) :=
-    Real.log_lt_iff_exp_lt (by norm_num : (0 : ℝ) < 15)
-  apply h_log_lt.mpr
-  have h_exp_eq_tsum : Real.exp ((65 : ℝ) / 24) = ∑' (n : ℕ), ((65 : ℝ) / 24) ^ n / (n.factorial : ℝ) :=
-    Real.exp_eq_tsum ((65 : ℝ) / 24)
-  have h_partial_sum_gt_15 : ∑ (n : ℕ) in Finset.range 11, ((65 : ℝ) / 24) ^ n / (n.factorial : ℝ) > 15 := by
-    norm_num
-  have h_partial_lt_tsum : ∑ (n : ℕ) in Finset.range 11, ((65 : ℝ) / 24) ^ n / (n.factorial : ℝ) < ∑' (n : ℕ), ((65 : ℝ) / 24) ^ n / (n.factorial : ℝ) := by
-    apply tsum_lt_tsum_of_nonneg_of_lt
-    · intro n; positivity
-    · use 11
-      positivity
-    · intro n; positivity
-  rw [h_exp_eq_tsum]
-  nlinarith
-
-/-- e < 3 的经典证明：利用级数展开 e = Σ_{n=0}^{∞} 1/n! < Σ_{n=0}^{5} 1/n! + 剩余项。
-    使用标准估计：n! ≥ 5! · 2^{n-5} 对于 n ≥ 5，
-    因此 Σ_{n=5}^{∞} 1/n! ≤ Σ_{n=5}^{∞} 1/(120·2^{n-5}) = 1/60。
-    前 6 项和 = 163/60，加上剩余项 < 163/60 + 1/60 = 164/60 < 3。 -/
+/-- e < 3：由 e < 2.7182818286 < 3 直接得到。 -/
 theorem e_lt_3 : e < (3 : ℝ) := by
-  have h_exp_eq_tsum : Real.exp (1 : ℝ) = ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) :=
-    Real.exp_eq_tsum (1 : ℝ)
-  have h_partial_sum : ∑ (n : ℕ) in Finset.range 6, (1 : ℝ) / (n.factorial : ℝ) = (163 : ℝ) / 60 := by
-    norm_num
-  have h_remainder_bound : ∑' (n : ℕ) in (Finset.range 6)ᶜ, (1 : ℝ) / (n.factorial : ℝ) < (1 : ℝ) / 60 := by
-    have h_fact_ge : ∀ n : ℕ, n ≥ 5 → (n.factorial : ℝ) ≥ 120 * (2 : ℝ) ^ (n - 5) := by
-      intro n hn
-      induction hn with
-      | base => norm_num
-      | step k hk =>
-        have hk_val : k.factorial ≥ 120 * 2 ^ (k - 5) := hk
-        calc
-          (k + 1).factorial = (k + 1) * k.factorial := rfl
-          _ ≥ (k + 1) * 120 * 2 ^ (k - 5) := by gcongr; linarith
-          _ ≥ 6 * 120 * 2 ^ (k - 5) := by gcongr; linarith
-          _ = 120 * 2 ^ (k - 4) := by ring
-    have h_series_bound : ∀ n : ℕ, n ≥ 5 → (1 : ℝ) / (n.factorial : ℝ) ≤ 1 / (120 * 2 ^ (n - 5)) := by
-      intro n hn
-      apply div_le_div_of_le_of_pos
-      · norm_num
-      · exact h_fact_ge n hn
-      · positivity
-      · positivity
-    have h_sum_geometric : ∑' (n : ℕ) in (Finset.range 5)ᶜ, (1 : ℝ) / (120 * 2 ^ (n - 5)) = (1 : ℝ) / 60 := by
-      let S := ∑' (k : ℕ), (1 : ℝ) / (120 * 2 ^ k)
-      have h_S : S = 1 / 60 := by
-        calc
-          S = (1 / 120) * ∑' (k : ℕ), (1 / 2) ^ k := by
-            apply tsum_mul_left
-            positivity
-          _ = (1 / 120) * 2 := by
-            rw [tsum_geometric_two]
-            norm_num
-          _ = 1 / 60 := by norm_num
-      rw [h_S]
-      apply tsum_congr
-      intro n
-      by_cases hn : n ∈ (Finset.range 5)ᶜ
-      · simp [hn]
-      · simp [hn]
-    apply tsum_lt_tsum_of_nonneg_of_le
-    · intro n; positivity
-    · use 5
-      rw [h_series_bound]
-      nlinarith
-    · intro n; positivity
-  have h_total_bound : ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) < (163 : ℝ) / 60 + (1 : ℝ) / 60 := by
-    apply tsum_lt_add_of_partial_sum_lt
-    · exact h_partial_sum
-    · exact h_remainder_bound
-    · intro n; positivity
-  have h_final : (163 : ℝ) / 60 + (1 : ℝ) / 60 < (3 : ℝ) := by
-    norm_num
-  rw [h_exp_eq_tsum]
-  nlinarith
+  have h := Real.exp_one_lt_d9
+  unfold e
+  linarith
 
-/-- 65/24 < e：因为 e = Σ_{n=0}^{∞} 1/n! > Σ_{n=0}^{4} 1/n! = 65/24。 -/
+/-- 65/24 < e：由 65/24 ≈ 2.70833 < 2.7182818283 < e 直接得到。 -/
 theorem sixtyfive_over_24_lt_e : sixtyfive_over_24 < e := by
+  have h := Real.exp_one_gt_d9
   unfold sixtyfive_over_24 e
-  have h_fourth_partial : ∑ (n : ℕ) in Finset.range 5, (1 : ℝ) / (n.factorial : ℝ) = (65 : ℝ) / 24 := by
-    norm_num
-  have h_exp_eq_tsum : Real.exp (1 : ℝ) = ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) :=
-    Real.exp_eq_tsum (1 : ℝ)
-  have h_lt : ∑ (n : ℕ) in Finset.range 5, (1 : ℝ) / (n.factorial : ℝ) < ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) := by
-    apply tsum_lt_tsum_of_nonneg_of_lt
-    · intro n; positivity
-    · use 5
+  linarith
+
+/-- ln 15 < 65/24。
+    等价于 ln(15²⁴) < 65，即 15²⁴ < e⁶⁵。
+    而 e⁶⁵ = (e¹)⁶⁵ ≥ 2.7182818283⁶⁵ > 15²⁴（norm_num 验证的有理数比较）。 -/
+theorem ln15_lt_65_24 : ln15 < sixtyfive_over_24 := by
+  have h1 : (15 : ℝ) ^ 24 < Real.exp (65 : ℝ) := by
+    have hbase : (2.7182818283 : ℝ) ≤ Real.exp 1 := le_of_lt Real.exp_one_gt_d9
+    have h2 : (15 : ℝ) ^ 24 < (2.7182818283 : ℝ) ^ 65 := by norm_num
+    have h3 : (2.7182818283 : ℝ) ^ 65 ≤ (Real.exp 1) ^ 65 :=
+      pow_le_pow_left₀ (by norm_num) hbase 65
+    have h4 : (Real.exp 1) ^ 65 = Real.exp (65 : ℝ) := by
+      rw [← Real.exp_nat_mul]
       norm_num
-    · intro n; positivity
-  rw [h_exp_eq_tsum, h_fourth_partial] at h_lt
-  exact h_lt
+    rw [h4] at h3
+    linarith
+  have h5 : Real.log ((15 : ℝ) ^ 24) < (65 : ℝ) := by
+    rw [Real.log_lt_iff_lt_exp (by positivity)]
+    exact h1
+  rw [Real.log_pow] at h5
+  push_cast at h5
+  unfold ln15 sixtyfive_over_24
+  linarith
+
+-- 指数 677 超出 norm_num 默认阈值 256，故提升 exponentiation.threshold。
+set_option exponentiation.threshold 1024
+
+/-- ln 15 > 2.708 = 677/250。
+    等价于 ln(15²⁵⁰) > 677，即 15²⁵⁰ > e⁶⁷⁷。
+    而 e⁶⁷⁷ = (e¹)⁶⁷⁷ ≤ 2.7182818286⁶⁷⁷ < 15²⁵⁰（norm_num 验证）。 -/
+theorem ln15_gt_2708 : (2.708 : ℝ) < ln15 := by
+  have h1 : Real.exp (677 : ℝ) < (15 : ℝ) ^ 250 := by
+    have hbase : Real.exp 1 ≤ (2.7182818286 : ℝ) := le_of_lt Real.exp_one_lt_d9
+    have h2 : (Real.exp 1) ^ 677 ≤ (2.7182818286 : ℝ) ^ 677 :=
+      pow_le_pow_left₀ (Real.exp_nonneg _) hbase 677
+    have h3 : (2.7182818286 : ℝ) ^ 677 < (15 : ℝ) ^ 250 := by norm_num
+    have h4 : (Real.exp 1) ^ 677 = Real.exp (677 : ℝ) := by
+      rw [← Real.exp_nat_mul]
+      norm_num
+    rw [h4] at h2
+    linarith
+  have h5 : (677 : ℝ) < Real.log ((15 : ℝ) ^ 250) := by
+    rw [Real.lt_log_iff_exp_lt (by positivity)]
+    exact h1
+  rw [Real.log_pow] at h5
+  push_cast at h5
+  unfold ln15
+  linarith
 
 /-- 纯数学不等式链 ln 15 < 65/24 < e < 3。 -/
 theorem inequality_chain_pure_math :
     ln15 < sixtyfive_over_24 ∧
     sixtyfive_over_24 < e ∧
-    e < (3 : ℝ) := by
-  exact ⟨ln15_lt_65_24, sixtyfive_over_24_lt_e, e_lt_3⟩
+    e < (3 : ℝ) :=
+  ⟨ln15_lt_65_24, sixtyfive_over_24_lt_e, e_lt_3⟩
 
 /-! =========================================================
    第四章 唯象不等式链（d_H 拟合值代入验证）
@@ -329,38 +448,33 @@ theorem inequality_chain_pure_math :
    以下不等式涉及 d_H 的拟合值，非纯数学定理。
 -/
 
+/-- d_H 的范畴底线：ln 15 是理想极限，唯象值 d_H_fit 在此附近（偏差 < 1%）。 -/
+theorem dH_categorical_floor_bound :
+    |d_H_fit - ln15| < (1 : ℝ) / 100 := by
+  have h1 := ln15_gt_2708
+  have h2 := ln15_lt_65_24
+  unfold d_H_fit ln15 sixtyfive_over_24 at *
+  rw [abs_of_pos (by linarith : (0 : ℝ) < 2.7095 - Real.log 15)]
+  linarith
+
 /-- 65/24 < d_H 的数值验证。 -/
 theorem sixtyfive_over_24_lt_d_H : sixtyfive_over_24 < d_H_fit := by
   unfold sixtyfive_over_24 d_H_fit
   norm_num
 
-/-- d_H < e 的数值验证。 -/
+/-- d_H < e 的数值验证：2.7095 < 2.7182818283 < e。 -/
 theorem d_H_lt_e : d_H_fit < e := by
+  have h := Real.exp_one_gt_d9
   unfold d_H_fit e
-  have h_e_gt_163_60 : (163 : ℝ) / 60 < Real.exp (1 : ℝ) := by
-    have h_exp_eq_tsum : Real.exp (1 : ℝ) = ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) :=
-      Real.exp_eq_tsum (1 : ℝ)
-    have h_partial_sum : ∑ (n : ℕ) in Finset.range 6, (1 : ℝ) / (n.factorial : ℝ) = (163 : ℝ) / 60 := by
-      norm_num
-    have h_partial_lt_tsum : ∑ (n : ℕ) in Finset.range 6, (1 : ℝ) / (n.factorial : ℝ) < ∑' (n : ℕ), (1 : ℝ) / (n.factorial : ℝ) := by
-      apply tsum_lt_tsum_of_nonneg_of_lt
-      · intro n; positivity
-      · use 6
-        positivity
-      · intro n; positivity
-    rw [h_exp_eq_tsum, h_partial_sum] at h_partial_lt_tsum
-    exact h_partial_lt_tsum
-  have h_dH_bound : 2.7095 < (163 : ℝ) / 60 := by norm_num
-  nlinarith
+  linarith
 
 /-- 完整不等式链：ln 15 < 65/24 < d_H < e < 3。 -/
 theorem inequality_chain_full :
     ln15 < sixtyfive_over_24 ∧
     sixtyfive_over_24 < d_H_fit ∧
     d_H_fit < e ∧
-    e < (3 : ℝ) := by
-  have h_pure := inequality_chain_pure_math
-  exact ⟨h_pure.1, sixtyfive_over_24_lt_d_H, d_H_lt_e, h_pure.2.2⟩
+    e < (3 : ℝ) :=
+  ⟨inequality_chain_pure_math.1, sixtyfive_over_24_lt_d_H, d_H_lt_e, e_lt_3⟩
 
 /-! =========================================================
    第五章 d_H 数值结构分解
@@ -389,77 +503,18 @@ noncomputable def delta_2_raw : ℝ := ((1 : ℝ) / 4) * (1 / 10)
 /-- 观测到的总修正 δ = d_H_fit - ln15。 -/
 theorem delta_observed : delta_fit = d_H_fit - ln15 := rfl
 
-/-- δ₁ 的量级验证：√2 × 10⁻³ ≈ 0.001414，与 δ_obs ≈ 0.00145 同一量级。 -/
+/-- δ₁ 的量级验证：√2 × 10⁻³ ≈ 0.001414，与 δ_obs ≈ 0.00145 同一量级
+    （|δ₁ − δ_fit| < 0.01，实际偏差约 3.6×10⁻⁵）。 -/
 theorem delta_1_magnitude : |delta_1 - delta_fit| < (1 : ℝ) / 100 := by
-  unfold delta_1 delta_fit d_H_fit ln15
-  have h_delta_pos : 2.7095 - Real.log (15 : ℝ) > 0 := by
-    have h_lt : Real.log (15 : ℝ) < (65 : ℝ) / 24 := ln15_lt_65_24
-    have h_65_24_lt_dH : (65 : ℝ) / 24 < 2.7095 := by norm_num
-    nlinarith
-  have h_diff_pos : Real.sqrt 2 * (1 / 1000) - (2.7095 - Real.log (15 : ℝ)) > 0 := by
-    have h_sqrt2 : Real.sqrt 2 > 1.414 := by
-      have h_sq : (1.414 : ℝ) ^ 2 < 2 := by norm_num
-      rw [Real.sqrt_lt] at h_sq
-      · exact h_sq
-      · norm_num
-    have h_delta_fit_lt_00145 : 2.7095 - Real.log (15 : ℝ) < 0.00145 := by
-      have h_lower_bound : Real.log (15 : ℝ) > 2.70805 := by
-        have h_log_gt : Real.log (15 : ℝ) > 2.70805 ↔ Real.exp (2.70805 : ℝ) < 15 :=
-          Real.log_gt_iff_exp_lt (by norm_num : (0 : ℝ) < 15)
-        apply h_log_gt.mpr
-        have h_exp_eq_tsum : Real.exp (2.70805 : ℝ) = ∑' (n : ℕ), (2.70805 : ℝ) ^ n / (n.factorial : ℝ) :=
-          Real.exp_eq_tsum (2.70805 : ℝ)
-        have h_partial_sum_lt_15 : ∑ (n : ℕ) in Finset.range 12, (2.70805 : ℝ) ^ n / (n.factorial : ℝ) < 15 := by
-          norm_num
-        have h_partial_lt_tsum : ∑ (n : ℕ) in Finset.range 12, (2.70805 : ℝ) ^ n / (n.factorial : ℝ) < ∑' (n : ℕ), (2.70805 : ℝ) ^ n / (n.factorial : ℝ) := by
-          apply tsum_lt_tsum_of_nonneg_of_lt
-          · intro n; positivity
-          · use 12
-            positivity
-          · intro n; positivity
-        nlinarith
-      have h_diff : 2.7095 - 2.70805 < 0.00145 := by norm_num
-      nlinarith
-    have h_delta1_gt_001414 : Real.sqrt 2 * (1 / 1000) > 0.001414 := by
-      have h_sqrt2_gt : Real.sqrt 2 > 1.414 := by
-        have h_sq : (1.414 : ℝ) ^ 2 < 2 := by norm_num
-        rw [Real.sqrt_lt] at h_sq
-        · exact h_sq
-        · norm_num
-      nlinarith
-    nlinarith
-  have h_upper : Real.sqrt 2 * (1 / 1000) - (2.7095 - Real.log (15 : ℝ)) < 0.01 := by
-    have h_delta1_lt_002 : Real.sqrt 2 * (1 / 1000) < 0.002 := by
-      have h_sqrt2_lt : Real.sqrt 2 < 2 := by
-        rw [Real.lt_sqrt]
-        · norm_num
-        · norm_num
-      nlinarith
-    have h_delta_fit_gt_0 : 2.7095 - Real.log (15 : ℝ) > 0 := h_delta_pos
-    nlinarith
-  have h_lower : -(Real.sqrt 2 * (1 / 1000) - (2.7095 - Real.log (15 : ℝ))) < 0.01 := by
-    have h_delta_fit_lt_0015 : 2.7095 - Real.log (15 : ℝ) < 0.0015 := by
-      have h_upper_bound : Real.log (15 : ℝ) > 2.708 := by
-        have h_log_gt : Real.log (15 : ℝ) > 2.708 ↔ Real.exp (2.708 : ℝ) < 15 :=
-          Real.log_gt_iff_exp_lt (by norm_num : (0 : ℝ) < 15)
-        apply h_log_gt.mpr
-        have h_exp_eq_tsum : Real.exp (2.708 : ℝ) = ∑' (n : ℕ), (2.708 : ℝ) ^ n / (n.factorial : ℝ) :=
-          Real.exp_eq_tsum (2.708 : ℝ)
-        have h_partial_sum_lt_15 : ∑ (n : ℕ) in Finset.range 11, (2.708 : ℝ) ^ n / (n.factorial : ℝ) < 15 := by
-          norm_num
-        have h_partial_lt_tsum : ∑ (n : ℕ) in Finset.range 11, (2.708 : ℝ) ^ n / (n.factorial : ℝ) < ∑' (n : ℕ), (2.708 : ℝ) ^ n / (n.factorial : ℝ) := by
-          apply tsum_lt_tsum_of_nonneg_of_lt
-          · intro n; positivity
-          · use 11
-            positivity
-          · intro n; positivity
-        nlinarith
-      have h_diff : 2.7095 - 2.708 < 0.0015 := by norm_num
-      nlinarith
-    have h_delta1_gt_0 : Real.sqrt 2 * (1 / 1000) > 0 := by positivity
-    nlinarith
-  rw [abs_of_pos h_diff_pos]
-  nlinarith
+  have h1 := ln15_gt_2708
+  have h2 := ln15_lt_65_24
+  have h3 : (1.41421 : ℝ) < Real.sqrt 2 :=
+    (Real.lt_sqrt (by norm_num)).mpr (by norm_num)
+  have h4 : Real.sqrt 2 < (1.41422 : ℝ) :=
+    (Real.sqrt_lt (by norm_num) (by norm_num)).mpr (by norm_num)
+  unfold delta_1 delta_fit d_H_fit ln15 sixtyfive_over_24 at *
+  rw [abs_lt]
+  constructor <;> linarith
 
 /-! =========================================================
    第六章 开放问题路线图

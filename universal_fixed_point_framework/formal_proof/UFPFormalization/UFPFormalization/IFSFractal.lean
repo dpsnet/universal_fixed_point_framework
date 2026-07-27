@@ -1,8 +1,7 @@
 import UFPFormalization.RecCategory
 import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
-import UFPFormalization.ICVerification
-import Mathlib.Analysis.Contraction
+import UFPFormalization.DHStructuralAnalysis
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Finset.Basic
 import Mathlib.Data.Fintype.Basic
@@ -14,6 +13,7 @@ namespace UFPFormalization
 
 open Set
 open Real
+open scoped NNReal
 
 /-!
 # IFS Fractal Layer Formalization (Phase 16C-II)
@@ -45,13 +45,13 @@ The attractor A is the unique non-empty compact set satisfying
   A = ⋃_{i=1}^n f_i(A)
 (Hutchinson's theorem).
 -/
-structure IFS (X : Type) [MetricSpace X] [CompleteMetricSpace X] where
+structure IFS (X : Type) [MetricSpace X] [CompleteSpace X] where
   /-- Number of contraction maps -/
   n : ℕ
   /-- The contraction maps f_i: X → X -/
   maps : Fin n → X → X
   /-- Contraction ratios c_i ∈ (0,1) -/
-  ratios : Fin n → ℝ
+  ratios : Fin n → ℝ≥0
   /-- Each f_i is a contraction with ratio c_i -/
   hContracting : ∀ i : Fin n, ContractingWith (ratios i) (maps i)
   /-- Ratios are positive -/
@@ -63,7 +63,7 @@ structure IFS (X : Type) [MetricSpace X] [CompleteMetricSpace X] where
 The Hutchinson operator F(K) = ⋃_{i=1}^n f_i(K)
 maps compact sets to compact sets.
 -/
-def hutchinsonOperator {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+def hutchinsonOperator {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (K : Set X) : Set X :=
   ⋃ i : Fin ifs.n, ifs.maps i '' K
 
@@ -77,7 +77,7 @@ In this finite-dimensional prototype, we axiomatize the existence.
 The full proof requires the Hausdorff metric on compact subsets,
 which is available in mathlib as `HausdorffDist`.
 -/
-structure Attractor {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+structure Attractor {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) where
   /-- The attractor set A -/
   A : Set X
@@ -96,7 +96,7 @@ to the spectral de-recursion framework.
 The state space is a finite sample of points on the attractor,
 and the step function simulates the IFS dynamics.
 -/
-noncomputable def IFSToRecObj' {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+noncomputable def IFSToRecObj' {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (attractor : Attractor ifs) (nSamples : ℕ) (hSamples : nSamples ≥ 1) : RecObj :=
   { T := Fin nSamples
     fin := inferInstance
@@ -115,7 +115,7 @@ In the finite-dimensional prototype, we define the measure.
 The full construction (Hutchinson's measure existence theorem) requires
 the complete metric space of probability measures with the Wasserstein metric.
 -/
-structure SelfSimilarMeasure {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+structure SelfSimilarMeasure {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (attractor : Attractor ifs) where
   /-- The probability weights p_i > 0 -/
   weights : Fin ifs.n → ℝ
@@ -154,13 +154,13 @@ In the finite prototype, the placeholder returns q as a stand-in.
 The full root-finding is deferred to the numerical Python prototype
 and the implicit function theorem.
 -/
-noncomputable def multifractalSpectrum {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+noncomputable def multifractalSpectrum {X : Type} [MetricSpace X] [CompleteSpace X]
     {ifs : IFS X} {attractor : Attractor ifs} (measure : SelfSimilarMeasure ifs attractor)
     (q : ℝ) : ℝ :=
   -- τ(q) is defined implicitly by Σ p_i^q · c_i^{τ(q)} = 1
   -- Placeholder: returns q (satisfies the equation only when q=1 with c_i^0=1)
   if h : (Finset.sum (Finset.univ : Finset (Fin ifs.n))
-    (fun i : Fin ifs.n => (measure.weights i) ^ q * (ifs.ratios i) ^ 0)) > 0 then
+    (fun i : Fin ifs.n => (measure.weights i) ^ q * ((ifs.ratios i : ℝ)) ^ 0)) > 0 then
     q
   else
     0
@@ -175,12 +175,12 @@ where c_i are the contraction ratios and d_H is the Hausdorff dimension.
 For an IFS satisfying the Open Set Condition (OSC), the unique solution
 d_H ∈ (0, dim(X)) gives the Hausdorff dimension of the attractor.
 -/
-noncomputable def hausdorffDimensionEq {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+noncomputable def hausdorffDimensionEq {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) : ℝ → ℝ :=
   fun d => (Finset.sum (Finset.univ : Finset (Fin ifs.n))
-    (fun i : Fin ifs.n => (ifs.ratios i) ^ d)) - 1
+    (fun i : Fin ifs.n => (ifs.ratios i : ℝ) ^ d)) - 1
 
-/--
+/-
 The Hausdorff dimension d_H of the IFS attractor is the unique positive
 solution to the Moran equation Σ c_i^{d_H} = 1.
 
@@ -205,7 +205,7 @@ from the shift space Σ_n), and the contraction ratios c_i < 1 give
 dim_H(A) ≤ n. The full proof requires the Hausdorff dimension of the
 shift space and Hölder continuity of the coding map.
 -/
-structure HausdorffDimensionSolution {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+structure HausdorffDimensionSolution {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) where
   /-- The Hausdorff dimension d_H -/
   dH : ℝ
@@ -227,29 +227,46 @@ The upper bound (d_H ≤ n) is given by `HausdorffDimensionSolution.hBound`,
 which is a standard IFS theorem (attractor embedding argument) deferred
 to Phase 16B for the full analytic proof.
 -/
-theorem hausdorffDimension_bounds {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+theorem hausdorffDimension_bounds {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (sol : HausdorffDimensionSolution ifs) : sol.dH ≤ (ifs.n : ℝ) :=
   sol.hBound
 
-/--
-Link between the IFS fractal layer and the IC verification framework:
-Any IFS recursive system satisfies the Isolation Constraints with
-any other IFS system, via the bound on spectral radii provided by
-the Hausdorff dimension.
+/-! ### 4. 均匀 IFS 与 Moran 唯一解定理的桥梁（2026-07-27 新增）
 
-The key fact: the spectral radius of the IFS transfer operator
-(which is the D-functor image of the IFS) equals 1 for any IFS
-whose attractor has Hausdorff dimension d_H, because the transfer
-operator's spectrum is bounded by Σ c_i^{d_H} = 1.
+   对均匀 IFS（B 个映射、相同收缩率 r），Moran 方程退化为
+   B · r^d = 1，其唯一解已由 `DHStructural.moran_solution_iff`
+   机器证明：d = log B / log(1/r)。
+
+   以下定理把 IFSFractal 的 `hausdorffDimensionEq`（有限和形式）
+   与该唯一性定理连接：均匀 IFS 的 HausdorffDimensionSolution
+   的 dH 必然等于 log B / log(1/r)。
 -/
-theorem IFS_IC_via_hausdorff (cfg₁ cfg₂ : IFSConfig)
-    (sol₁ : HausdorffDimensionSolution (IFS.mk _ _ _ _ _ _)) :  -- Placeholder: needs proper IFS construction
-    isolationConstraint (IFSToRecObj cfg₁) (IFSToRecObj cfg₂) := by
-  apply IFS_IC_self cfg₁ cfg₂
-  refine ⟨1, ?_⟩
-  -- The spectral radius of D(IFS) is bounded by 1 for any contractive IFS,
-  -- so the ratio ρ₁/ρ₂ ≤ 1.
-  -- Full proof requires the transfer operator spectral radius theorem.
-  sorry
+
+/-- 均匀 IFS 的 Moran 函数恒等于 B · r^d − 1。 -/
+theorem hausdorffDimensionEq_uniform {X : Type} [MetricSpace X] [CompleteSpace X]
+    (ifs : IFS X) {B : ℕ} {r : ℝ≥0} (hn : ifs.n = B)
+    (huniform : ∀ i : Fin ifs.n, ifs.ratios i = r) (d : ℝ) :
+    hausdorffDimensionEq ifs d = (B : ℝ) * (r : ℝ) ^ d - 1 := by
+  unfold hausdorffDimensionEq
+  have hconst : ∀ i : Fin ifs.n, ((ifs.ratios i : ℝ)) ^ d = (r : ℝ) ^ d := fun i => by
+    rw [huniform i]
+  rw [Finset.sum_congr rfl (fun i _ => hconst i), Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, hn]
+
+/-- 桥梁定理：均匀 IFS（B 个映射、收缩率 0 < r < 1）的 Hausdorff 维数
+    唯一解为 log B / log(1/r)。
+    这是 `DHStructural.moran_solution_iff` 在 IFS 结构上的直接推论。 -/
+theorem uniform_ifs_dH_unique {X : Type} [MetricSpace X] [CompleteSpace X]
+    (ifs : IFS X) {B : ℕ} (hB : (1 : ℝ) < B) {r : ℝ≥0} (hr0 : (0 : ℝ≥0) < r)
+    (hr1 : r < 1) (hn : ifs.n = B) (huniform : ∀ i : Fin ifs.n, ifs.ratios i = r)
+    (sol : HausdorffDimensionSolution ifs) :
+    sol.dH = Real.log B / Real.log (1 / (r : ℝ)) := by
+  have hr0' : (0 : ℝ) < r := NNReal.coe_pos.mpr hr0
+  have hr1' : (r : ℝ) < 1 := by exact_mod_cast hr1
+  have hmoran : (B : ℝ) * (r : ℝ) ^ sol.dH = 1 := by
+    have h := sol.hMoran
+    rw [hausdorffDimensionEq_uniform ifs hn huniform sol.dH] at h
+    linarith
+  exact (DHStructural.moran_solution_iff hB hr0' hr1').mp hmoran
 
 end UFPFormalization

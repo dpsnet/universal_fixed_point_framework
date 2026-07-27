@@ -35,7 +35,7 @@
 
 import UFPFormalization.BranchCounting
 import UFPFormalization.Unified3Theorem
-import Mathlib.Data.Fintype.Product
+import Mathlib.Data.Fintype.Prod
 import Mathlib.Data.Fintype.Card
 import Mathlib.Tactic
 
@@ -97,8 +97,7 @@ instance : Fintype LayerPair :=
 
 /-- 层对的卡片数 = N_active × N_total = 3 × 5 = 15。 -/
 theorem layerPair_card : Fintype.card LayerPair = 15 := by
-  unfold LayerPair
-  simp [card_active_layers, total_layers_count, Fintype.card_prod]
+  native_decide
 
 /-- 层对计数与 BranchCounting.B 一致。
     此定理确认 B 的定义与严格 4-范畴的层计数相容。 -/
@@ -191,7 +190,6 @@ theorem branch_combination_principle :
   have h_total : N_total = 5 := total_layers_count
   have h_B : B_coherence = 15 := layerPair_card
   rw [h_active, h_total, h_B]
-  norm_num
 
 /-! =========================================================
    第五章 d_H 推论

@@ -1,6 +1,7 @@
 import UFPFormalization.SpCategory
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Tactic.Abel
 
 open CategoryTheory Matrix
 
@@ -145,27 +146,15 @@ structure SpecThreeMorphism {X Y : SpObj} {P Q : X ⟶ Y}
   /-- Condition that the second homotopy matrix interpolates between α and β. -/
   condition : β.homotopy - α.homotopy = X.A * secondHomotopy - secondHomotopy * Y.A
 
-/-- Vertical composition of Spec 3-morphisms (Σ then Τ: α ⇛ β ⇛ γ). -/
+/-- Vertical composition of Spec 3-morphisms (Ξ then Τ: α ⇛ β ⇛ γ). -/
 def specThreeVertComp {X Y : SpObj} {P Q : X ⟶ Y} {α β γ : SpecTwoMorphism P Q}
-    (Σ : SpecThreeMorphism α β) (Τ : SpecThreeMorphism β γ) : SpecThreeMorphism α γ :=
-  { secondHomotopy := Σ.secondHomotopy + Τ.secondHomotopy
+    (Ξ : SpecThreeMorphism α β) (Τ : SpecThreeMorphism β γ) : SpecThreeMorphism α γ :=
+  { secondHomotopy := Ξ.secondHomotopy + Τ.secondHomotopy
     condition := by
-      -- γ.homotopy - α.homotopy = (γ.homotopy - β.homotopy) + (β.homotopy - α.homotopy)
-      -- = (X.A*Τ.K - Τ.K*Y.A) + (X.A*Σ.K - Σ.K*Y.A)
-      -- = X.A*(Σ.K + Τ.K) - (Σ.K + Τ.K)*Y.A
-      calc
-        γ.homotopy - α.homotopy = (γ.homotopy - β.homotopy) + (β.homotopy - α.homotopy) := by
-          ext i j
-          simp [Matrix.sub_apply, Matrix.add_apply, sub_eq_add_neg, add_comm, add_assoc, add_left_comm]
-        _ = (X.A * Τ.secondHomotopy - Τ.secondHomotopy * Y.A) + (X.A * Σ.secondHomotopy - Σ.secondHomotopy * Y.A) := by
-          rw [Τ.condition, Σ.condition]
-        _ = X.A * (Σ.secondHomotopy + Τ.secondHomotopy) - (Σ.secondHomotopy + Τ.secondHomotopy) * Y.A := by
-          calc
-            (X.A * Τ.secondHomotopy - Τ.secondHomotopy * Y.A) + (X.A * Σ.secondHomotopy - Σ.secondHomotopy * Y.A)
-                = (X.A * Σ.secondHomotopy + X.A * Τ.secondHomotopy) - (Σ.secondHomotopy * Y.A + Τ.secondHomotopy * Y.A) := by
-              rw [← add_sub_add_comm]
-            _ = X.A * (Σ.secondHomotopy + Τ.secondHomotopy) - (Σ.secondHomotopy + Τ.secondHomotopy) * Y.A := by
-              rw [Matrix.mul_add, add_mul]
+      have h1 : γ.homotopy - α.homotopy =
+          (γ.homotopy - β.homotopy) + (β.homotopy - α.homotopy) := by abel
+      rw [h1, Τ.condition, Ξ.condition, Matrix.mul_add, Matrix.add_mul]
+      abel
       }
 
 /-- The identity 3-morphism id_α : α ⇛ α. -/
@@ -177,8 +166,8 @@ def specIdThreeMorphism {X Y : SpObj} {P Q : X ⟶ Y} (α : SpecTwoMorphism P Q)
 /-- Vertical composition associativity for Spec 3-morphisms. -/
 theorem specThreeVertComp_assoc {X Y : SpObj} {P Q : X ⟶ Y}
     {α β γ δ : SpecTwoMorphism P Q}
-    (Σ : SpecThreeMorphism α β) (Τ : SpecThreeMorphism β γ) (Υ : SpecThreeMorphism γ δ) :
-    specThreeVertComp (specThreeVertComp Σ Τ) Υ = specThreeVertComp Σ (specThreeVertComp Τ Υ) := by
+    (Ξ : SpecThreeMorphism α β) (Τ : SpecThreeMorphism β γ) (Υ : SpecThreeMorphism γ δ) :
+    specThreeVertComp (specThreeVertComp Ξ Τ) Υ = specThreeVertComp Ξ (specThreeVertComp Τ Υ) := by
   ext
   simp [specThreeVertComp, add_assoc]
 

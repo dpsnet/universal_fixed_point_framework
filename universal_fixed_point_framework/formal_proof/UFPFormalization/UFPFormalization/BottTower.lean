@@ -36,7 +36,6 @@ Unified3Theorem.lean 定义了 ActiveMorphismLayer 和 GenSpace。
 
 import UFPFormalization.Unified3Theorem
 import Mathlib.Data.Nat.Log
-import Mathlib.Data.Nat.Pow
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Tactic
 
@@ -96,10 +95,10 @@ def layerToDoublingIndex (l : ActiveMorphismLayer) : ℕ :=
     每个翻倍序号（0, 1, 2）至少有一个主动生成层对应。 -/
 theorem doublingIndex_surjective (i : ℕ) (hi : i < 3) :
     ∃ (l : ActiveMorphismLayer), layerToDoublingIndex l = i := by
-  fin_cases i <;> refine ⟨?_, rfl⟩
-  · exact ActiveMorphismLayer.first
-  · exact ActiveMorphismLayer.second
-  · exact ActiveMorphismLayer.third
+  interval_cases i
+  · exact ⟨ActiveMorphismLayer.first, rfl⟩
+  · exact ⟨ActiveMorphismLayer.second, rfl⟩
+  · exact ⟨ActiveMorphismLayer.third, rfl⟩
 
 /-- 翻倍索引的基数：Fintype.card ActiveMorphismLayer = 3 意味着
     翻倍步数 = 主动生成层数。 -/
@@ -173,7 +172,7 @@ theorem truncation_index_is_three : Nat.log 2 k_max = 3 := by
     3. log₂(k_max) = N_active = 3（truncation_by_active_layers） -/
 theorem unified_3_theorem_fully_closed :
     Fintype.card ActiveMorphismLayer = 3 ∧
-    Fintype.card (GenSpace → ℂ) = 3 ∧
+    Module.finrank ℂ GenSpace = 3 ∧
     Nat.log 2 k_max = 3 := by
   refine ⟨card_active_layers, genSpace_dim_is_three, truncation_index_is_three⟩
 

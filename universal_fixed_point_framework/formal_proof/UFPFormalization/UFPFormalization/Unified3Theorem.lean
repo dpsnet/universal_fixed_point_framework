@@ -19,10 +19,14 @@
 
 import UFPFormalization.SpCategory
 import UFPFormalization.HigherSpecCategory
-import UFPFormalization.FlavorFiber
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Nat.Basic
+import Mathlib.Data.Complex.Basic
+import Mathlib.Tactic.DeriveFintype
+import Mathlib.Tactic
+import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 
 open CategoryTheory Matrix
 
@@ -55,15 +59,9 @@ inductive ActiveMorphismLayer : Type
 /-- 主动生成层的基数。 -/
 def numActiveLayers : ℕ := 3
 
-/-- 主动生成层集合的 Fintype 实例。 -/
-instance : Fintype ActiveMorphismLayer :=
-  ⟨[ActiveMorphismLayer.first, ActiveMorphismLayer.second,
-    ActiveMorphismLayer.third],
-   by intro x; cases x <;> simp⟩
-
 /-- 主动生成层基数等于 3。 -/
 theorem card_active_layers : Fintype.card ActiveMorphismLayer = 3 := by
-  simp
+  native_decide
 
 /-! =========================================================
     §2 主动生成层与 𝐒𝐩 高阶范畴结构的对应
@@ -95,6 +93,10 @@ theorem each_layer_nonempty (l : ActiveMorphismLayer) : Nonempty (layerToSpType 
     §3 主动生成层 → GenSpace 的表示等价
    ========================================================= -/
 
+/-- GenSpace = ℂ³（代空间）。原定义在 FlavorFiber.lean；
+    为解除对损坏依赖链的耦合，此处本地定义（同一类型）。 -/
+abbrev GenSpace : Type := ℂ × ℂ × ℂ
+
 /-- GenSpace (ℂ³) 是主动生成层的表示空间。
     每个主动生成层对应 ℂ³ 中的一个独立方向。 -/
 def layerToGenSpaceBasis : ActiveMorphismLayer → GenSpace := λ
@@ -114,11 +116,13 @@ theorem layerRep_on_basis (l : ActiveMorphismLayer) :
     layerRepFunctor l (layerToGenSpaceBasis l) = layerToGenSpaceBasis l := by
   cases l <;> simp [layerRepFunctor, layerToGenSpaceBasis]
 
-/-- 不同主动生成层的像正交。 -/
-theorem layer_orthogonality (l₁ l₂ : ActiveMorphismLayer) (hne : l₁ ≠ l₂)
-    (v w : GenSpace) :
-    layerRepFunctor l₁ v ≠ layerRepFunctor l₂ w := by
-  cases l₁ <;> cases l₂ <;> simp [layerRepFunctor, Prod.mk.inj_iff]
+/-- 不同主动生成层对应的基向量像正交（互不相同）。
+    （2026-07-27 修正：原陈述对任意 v, w 不成立——v = w = 0 时像相等；
+    正确的陈述限定在基向量上。） -/
+theorem layer_orthogonality (l₁ l₂ : ActiveMorphismLayer) (hne : l₁ ≠ l₂) :
+    layerRepFunctor l₁ (layerToGenSpaceBasis l₁) ≠
+      layerRepFunctor l₂ (layerToGenSpaceBasis l₂) := by
+  cases l₁ <;> cases l₂ <;> simp_all [layerRepFunctor, layerToGenSpaceBasis, Prod.ext_iff]
 
 /-! =========================================================
     §4 核心定理：GenSpace 的维数 = 主动生成层数 = 3
@@ -139,14 +143,16 @@ noncomputable def genSpaceEquiv : GenSpace ≃ (ActiveMorphismLayer → ℂ) :=
     right_inv := by
       intro f; ext l; fin_cases l <;> rfl }
 
+/-- GenSpace 的复维数等于 3。
+    （2026-07-27 修正：原陈述用 Fintype.card (GenSpace → ℂ)，
+    但 ℂ 不是有限类型，该命题在数学上无意义；改用 Module.finrank。） -/
+theorem genSpace_dim_is_three : Module.finrank ℂ GenSpace = 3 := by
+  simp [GenSpace, Module.finrank_prod, Module.finrank_self]
+
 /-- 核心等式：dim(GenSpace) = #ActiveMorphismLayer = 3。 -/
 theorem genSpace_dim_equals_active_layers_count :
-    Fintype.card (ActiveMorphismLayer → ℂ) = Fintype.card ActiveMorphismLayer := by
-  simp
-
-/-- GenSpace 的维数等于 3（计算验证）。 -/
-theorem genSpace_dim_is_three : Fintype.card (GenSpace → ℂ) = 3 := by
-  simp
+    Module.finrank ℂ GenSpace = Fintype.card ActiveMorphismLayer := by
+  rw [genSpace_dim_is_three, card_active_layers]
 
 /-! =========================================================
     §5 𝐒𝐩 态射层链复形结构（统一 3 定理的核心论据）
@@ -173,11 +179,11 @@ theorem layer2_condition {X Y : SpObj} {P Q : X ⟶ Y} (α : SpecTwoMorphism P Q
     commutator X Y α.homotopy = Q.P - P.P := by
   rw [commutator, α.condition]
 
-/-- 层 3（3-态射）的 condition = 交换子给出二阶缺陷：commutator X Y Σ.secondHomotopy = β.homotopy - α.homotopy。 -/
+/-- 层 3（3-态射）的 condition = 交换子给出二阶缺陷：commutator X Y Ξ.secondHomotopy = β.homotopy - α.homotopy。 -/
 theorem layer3_condition {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpecTwoMorphism P Q}
-    (Σ : SpecThreeMorphism α β) :
-    commutator X Y Σ.secondHomotopy = β.homotopy - α.homotopy := by
-  rw [commutator, Σ.condition]
+    (Ξ : SpecThreeMorphism α β) :
+    commutator X Y Ξ.secondHomotopy = β.homotopy - α.homotopy := by
+  rw [commutator, Ξ.condition]
 
 /-! =========================================================
     §6 与修复方案 §4 的桥梁：N_gen = 3 的范畴论理由
@@ -185,8 +191,8 @@ theorem layer3_condition {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpecTwoMorphism 
 
 /-- 定理 R3 的补充：Cl(1,7) 不能提供三代，但 3 来自 𝐒𝐩 4-范畴的主动生成层数。 -/
 theorem unified_3_theorem :
-    Fintype.card ActiveMorphismLayer = 3 := by
-  simp
+    Fintype.card ActiveMorphismLayer = 3 :=
+  card_active_layers
 
 /-- 三代费米子的"3"的来源：𝐒𝐩 4-范畴的主动生成层数。
     此定理将外加代空间 ℂ³_fam 的维数 3 从"实验输入"升级为"范畴结构推论"。 -/
@@ -226,7 +232,7 @@ theorem bott_truncation_index :
     结构性证明见 BottTower.unified_3_theorem_fully_closed。 -/
 theorem unified_3_theorem_full_conjecture :
     Fintype.card ActiveMorphismLayer = 3 ∧
-    Fintype.card (GenSpace → ℂ) = 3 ∧
+    Module.finrank ℂ GenSpace = 3 ∧
     Nat.log 2 k_max = 3 := by
   refine ⟨card_active_layers, genSpace_dim_is_three, bott_truncation_index⟩
 

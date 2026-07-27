@@ -3,6 +3,9 @@
 > **基于 2026-07-27 讨论整理**
 >
 > 围绕 UFPF 框架的核心问题——"3"的来源、d_H 的结构分解、绝对质量标度的量纲分析、以及层次结构自洽性——进行了系统性的深入分析。
+>
+> **位置**：`notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`
+> （2026-07-27 自 `docs/UFPF修复与推进方案/层次演化的结构分析.md` 迁入，按"笔记先行"规范归档为第一手研究资料）
 
 ---
 
@@ -199,14 +202,129 @@ $$d_H = \underbrace{\ln 15}_{\text{范畴期望值}} + \underbrace{\delta}_{\tex
 
 其中 $\delta \approx 0.00145$ 的量级与三代质量层级（$10^{-3}$）一致，支持其源于物理修正的解读。
 
+#### 3.5.4a δ 的一阶结构推导（2026-07-27 新增）
+
+δ 不再是纯粹的数值模式识别——它是 Moran 方程解对**分支权重非均匀性**的一阶响应，可由隐函数定理严格导出。
+
+**推导**：等权参考系 $B$ 个分支、均匀收缩率 $r$ 的解为 $d_0 = \ln B/\ln(1/r)$（唯一性已由 Lean 定理 `moran_solution_iff` 证明）。扰动权重 $c_i = r(1+\varepsilon_i)$，对 $F(d,\varepsilon) = \sum_i [r(1+\varepsilon_i)]^d - 1$ 隐函数求导：
+
+$$\frac{\partial F}{\partial d}\bigg|_0 = \ln r, \qquad \frac{\partial F}{\partial \varepsilon_i}\bigg|_0 = \frac{d_0}{B}$$
+
+$$\Longrightarrow \quad \frac{\partial d}{\partial \varepsilon_i} = \frac{d_0}{B\ln(1/r)} \quad\Longrightarrow\quad \boxed{\delta = \frac{d_0}{\ln(1/r)}\cdot\bar{\varepsilon} = \ln(15)\cdot\bar{\varepsilon}}$$
+
+其中 $\bar{\varepsilon} = \frac{1}{B}\sum_i \varepsilon_i$ 是 15 个等效分支权重的平均相对扰动。
+
+**数值验证**（`paperX_dH_moran_perturbation.py`，6/6 检查通过）：
+
+| 检验 | 结果 |
+|:---|:---|
+| 一阶公式 vs 精确解（$\varepsilon \le 10^{-3}$） | 相对误差 ≤ 5×10⁻⁴ |
+| 反演 $\delta_{\text{obs}} \Rightarrow \bar{\varepsilon}$ | $\bar{\varepsilon} = 5.35\times 10^{-4}$（线性 vs 精确偏差 2.7×10⁻⁴） |
+| 非均匀随机扰动 | 一阶公式仍成立（误差 < 1%） |
+| 实际 3-映射 IFS 灵敏度 $\partial d/\partial\ln c_3$ | ≈ 721（解析与差分一致） |
+
+**结论升级**：
+
+1. $\delta_{\text{obs}} = 0.00145 \Longleftrightarrow \bar{\varepsilon} \approx 5.35\times 10^{-4}$（0.054% 平均权重上调）——δ 从"数值巧合"变为**可检验的单参数定量关系**
+2. 新的推导目标：从规范耦合/质量层级推导 $\bar{\varepsilon} \approx 5.4\times 10^{-4}$ 本身（替代 $\delta_1 = \sqrt{2}\times 10^{-3}$ 的猜测，后者隐含 $\bar{\varepsilon}_1 = \delta_1/\ln 15 \approx 5.22\times 10^{-4}$，偏差 2.5%）
+3. 实际 3-映射 IFS 中 $d$ 对 $c_3$（近 1 收缩率，自由参数）的灵敏度 ≈ 721，即 $c_3$ 的 $10^{-6}$ 相对扰动可移动 $d$ 约 $7\times 10^{-4}$（与 δ 同量级）——**定量证实了命题 R2**（Moran 非刚性）：$d_H$ 不能由 Moran 方程锁定，$\ln 15$ 的地位来自结构推导而非拟合
+
+#### 3.5.4b 候选结构假说：δ 的两项分解（2026-07-27 新增，⚠️ 假说层级）
+
+**候选式**（数值拟合）：
+
+$$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right)\times 10^{-3} = \frac{29}{2}\times 10^{-4} = 0.00145$$
+
+**拟合质量**：对舍入值 δ = 0.00145 精确；对未舍入 $\delta_{\text{obs}} = 0.00144980$ 相对偏差 **0.014%**——远优于原 $\delta_1 = \sqrt{2}\times 10^{-3}$ 猜测（2.5%），是目前最佳候选式。但注意：$d_H^{\text{fit}}$ 仅 4-5 位有效数字，**0.014% 的吻合度已超出输入精度，当前数据既不能证实也不能否定该式**。
+
+**候选结构解读**：分解形式提示两项各有范畴来源——
+
+$$\delta = \underbrace{\frac{N_{\text{active}}}{2}\times 10^{-3}}_{\text{主动层正贡献}} - \underbrace{\frac{1}{4\,N_{\text{total}}}\times 10^{-3}}_{\text{coherence 层负修正}}$$
+
+对应到一阶响应语言（$\delta = \ln 15\cdot\bar{\varepsilon}$）的**分解靶值**：
+
+| 成分 | δ 系数 | ε̄ 靶值 | 候选机制 |
+|:---|:---:|:---:|:---|
+| 主动层贡献 $\bar{\varepsilon}_{\text{active}}$ | $3/2\times 10^{-3}$ | $5.54\times 10^{-4}$ | 3 个主动生成层的权重上调 |
+| coherence 负修正 $-\bar{\varepsilon}_{\text{coh}}$ | $-1/20\times 10^{-3}$ | $-1.85\times 10^{-5}$ | 非主动层对有效权重的负反馈 |
+
+负号与"coherence 层不主动生成自由度"的图像自洽——但此为**后验解读，非推导**。
+
+**已知问题**：
+
+1. **分母欠定**：20 既可读作 $4\times 5$（态射层数×总层数）也可读作 $15+5$（$B + N_{\text{total}}$）——多解读性是数值巧合的典型特征，表明该形式被数据欠约束
+2. **单点拟合**：一个数据点拟合两个参数，预测力为零
+
+**升级为结构逻辑的三条判据**（满足任一即有结构意义）：
+
+| 判据 | 内容 | 状态 |
+|:---|:---|:---:|
+| ① 机制 | 从范畴结构强制导出 $\bar{\varepsilon}_{\text{active}} / \bar{\varepsilon}_{\text{coh}}$ 两个系数（为何主动层为正、coherence 为负） | ❌ 开放 |
+| ② 交叉验证 | 整数 (3, 20) 以相同组合角色出现在另一独立可观测量（混合角、$S_4$ 修正、质量比） | ❌ 未检验 |
+| ③ 精度预算 | $d_H$ 的高精度独立确定（非舍入的 2.7095），使 0.014% 偏差可判别 | ❌ 拟合精度不足 |
+
+**更深入口**：灵敏度分析（§3.5.4a 结论 3）表明 $d$ 被自由参数 $c_3$ 主导。若能从谱结构推导 $c_3$（如 $c_3 = e^{-\eta}$，$\eta$ 为某谱间隙），则 $\delta$、$\bar{\varepsilon}$ 及本假说的系数全部一次性可检验——优先于逐项拟合系数。
+
+#### 3.5.4c 两级粘合递归 IFS 检验（2026-07-27 新增，数值验证 6/6 通过）
+
+针对"$\delta$ 是否来自 15 的递归结构"的问题，构造两级粘合递归 IFS 并求解其 Moran 方程（`paperX_dH_recursion_test.py`，已注册 `run_all_tests.py`）。
+
+**模型**：15 个一级分支中，14 个（对应主动层）各细分出 15 个二级分支（收缩率 $r^2$），1 个（对象层，非主动）作为粘合/共享分支不细分（收缩率 $r$）；对象层可部分细分，比例 $\rho$。
+
+**结果一：递归不变性（✅ 已机器证明）**。均匀收缩率下，$x = r^d$ 满足
+
+$$B(B-1)x^2 + x - 1 = 0, \qquad \text{判别式} \; 1 + 4B(B-1) = (2B-1)^2$$
+
+对**任意** $B$ 为完全平方（$B = 15$：$841 = 29^2$），精确根 $x = 1/B$，故
+
+$$d = \ln 15 \quad \text{精确成立，且与粘合比例 } \rho \text{ 无关（自相似守恒）}$$
+
+**形式化状态**：已升级为 Lean 机器证明（2026-07-27，`DHStructuralAnalysis.lean` v4，`lake build` 通过）——
+
+| 定理 | 内容 |
+|:---|:---|
+| `rpow_at_moran_solution` | 解点处 $r^{d_0} = B^{-1}$（辅助引理） |
+| `glued_recursion_fixed_point` | **递归不动点定理**（一般形式）：$B > 1$、$0 < r < 1$、$\rho \in [0,1]$ 时，$(1-\rho)r^d + (B(B-1)+\rho B)r^{2d} = 1 \iff d = \log B/\log(1/r)$（存在性 + 唯一性） |
+| `glued_recursion_dH_eq_ln15` | 推论：$B = 15$、$r = e^{-1}$ 时 $d = \ln 15$（对所有 $\rho$） |
+
+**这从递归角度加强了 $d_H = \ln 15$ 的地位：$\ln 15$ 是两级递归的不动点，而非单层近似下的巧合。** 反过来说，递归本身不产生 $\delta$（$\delta = 0$ 精确），$\delta$ 只能来自收缩率的层级非均匀性。
+
+**结果二：29 的真实结构角色（✅ 导数成分已机器证明）**。对扰动（一级 $r(1+\varepsilon_1)$、二级复合 $r^2(1+\varepsilon_2)$）隐函数求导：
+
+$$\delta = \ln(15)\cdot\frac{\varepsilon_1 + 14\,\varepsilon_2}{29}$$
+
+**形式化状态**：响应公式的解析核心已升级为 Lean 机器证明（2026-07-27，`DHStructuralAnalysis.lean` v5 §2.5，`lake build` 零错误零警告）——
+
+| 定理 | 内容 |
+|:---|:---|
+| `hasDerivAt_rpow_base` | $r^x$ 对指数的导数 $= r^y \ln r$（辅助引理） |
+| `deriv_moran_d_at_solution` | $\partial F/\partial d = \frac{2B-1}{B}\ln r \neq 0$（在解点 $d_0$） |
+| `deriv_moran_eps1_at_zero` | $\partial F/\partial \varepsilon_1 = d_0/B$（一级通道） |
+| `deriv_moran_eps2_at_zero` | $\partial F/\partial \varepsilon_2 = (B-1)d_0/B$（二级通道，含分支数权重） |
+| `response_ratio` | 响应系数恒等式：$\partial d/\partial \varepsilon_1 = \frac{d_0}{(2B-1)\ln(1/r)}$，$\partial d/\partial \varepsilon_2 = \frac{(B-1)d_0}{(2B-1)\ln(1/r)}$ |
+
+注：一阶公式 $\delta = \ldots$ 本身是这些导数经隐函数定理的线性化推论（导数成分已证明）；$\delta$ 与有限扰动的误差界为数值验证（§3.5.4c 脚本检查 4-5）。
+
+$29 = 2B - 1$ 出现在**响应系数的分母**（扰动通道按分支计数 $(1, 14, 29)$ 加权：对象层分支 1 票、14 个主动细分分支各 1 票），而非 $\delta$ 的分子。**§3.5.4b 的 $\delta = (29/2)\times 10^{-4}$ 读法可能是对响应结构的误读**——29 的自然位置在响应函数中。
+
+**结果三：扰动反演**。$\delta_{\text{obs}}$ 要求（互斥的三种极端情形）：
+
+| 扰动模式 | 所需幅度 | 与已知量级的关系 |
+|:---|:---:|:---|
+| 纯二级 $\varepsilon_2$ | $1.11\times 10^{-3}$ | 接近质量层级 $10^{-3}$（偏差 ~11%） |
+| 纯一级 $\varepsilon_1$ | $1.55\times 10^{-2}$ | 无对应量级 |
+| 每级均匀 $\varepsilon$ | $5.35\times 10^{-4}$ | 同 §3.5.4a（交叉验证一致 ✓） |
+
+**结论**：递归结构解释了 $\ln 15$ 的稳健性和 29 的来源，但 $\delta$ 的具体值仍需要收缩率扰动的物理输入（规范耦合/质量层级）。这与 §3.5.4a 的命题 R2 定量证实一致：维数对分支*计数*稳健，对收缩*率*敏感。
+
 #### 3.5.5 推导现状总结
 
 | 步骤 | 内容 | 数学严格性 | 形式化状态 |
 |:---|:---|---:|:---:|
-| 1 | $B = N_{\text{active}} \times N_{\text{total}}$ | 需 coherence 定理 | 🔶 **部分形式化** —— `CoherenceToBranching.lean` 已建立层互异性论证 + 层对基数计算（LayerPair: Fintype.card = 15）+ 分支组合原理定理（branch_combination_principle）；剩余缺口：IFS 吸引子与层对的严格对应关系需 IFS 形式化 |
+| 1 | $B = N_{\text{active}} \times N_{\text{total}}$ | 需 coherence 定理 | 🔶 **部分形式化** —— `CoherenceToBranching.lean` 已建立层互异性论证 + 层对基数计算（LayerPair: Fintype.card = 15）+ 分支组合原理定理（branch_combination_principle）；`IFSFractal.lean` 已修复并新增**桥梁定理** `uniform_ifs_dH_unique`（均匀 IFS 的 HausdorffDimensionSolution.dH = log B/log(1/r)，连接 `moran_solution_iff`）；**全链编译验证通过**；剩余缺口：每个 LayerPair 产生独立 IFS 分支是结构假设（建模断言，非定理），且 Attractor/HausdorffDimensionSolution 的存在性字段仍为公理化结构 |
 | 2 | $r = e^{-1}$（均匀收缩） | 定理 R1 + 零阶近似 | ✅ 定理 R1 已知 |
-| 3 | $B \cdot r^{d_H} = 1 \Rightarrow d_H = \ln 15$ | 初等代数 | ✅ **已验证** —— `BranchCounting.dH_from_branching` + `CoherenceToBranching.dH_from_coherence_and_contraction` |
-| 4 | $\delta$ 的组成分析 | 数值模式识别 | ❌ 猜想状态 |
+| 3 | $B \cdot r^{d_H} = 1 \Rightarrow d_H = \ln 15$ | 初等代数 | ✅ **完全严格化**（存在性 + 唯一性）—— `DHStructuralAnalysis.moran_solution_iff`：对任意 $B > 1$、$0 < r < 1$，$B \cdot r^x = 1 \Leftrightarrow x = \log B / \log(1/r)$；推论 `dH_moran_solution_unique`：$15 \cdot (e^{-1})^x = 1 \Leftrightarrow x = \ln 15$（`lake build` 验证通过） |
+| 4 | $\delta$ 的组成分析 | 一阶结构公式已建立 | 🔶 **推进** —— δ 是分支权重非均匀性的一阶响应：$\delta = \ln(15)\cdot\bar{\varepsilon}$（$\bar{\varepsilon}$ 为权重平均相对扰动），数值验证 6/6 通过（`paperX_dH_moran_perturbation.py`）；剩余缺口：从规范耦合/质量层级推导 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 本身 |
 
 ---
 
@@ -358,7 +476,34 @@ $$\text{Distance}(i, j) = |i - j| \times d_H$$
 | 层次0→3 | $3 \times d_H$ | 8.1285 |
 | 层次0→4 | $4 \times d_H$ | 10.838 |
 
-**开放问题**：谱交织精度 $\epsilon \approx 8.12 \times 10^{-17}$ 与层次距离的关系——$-\ln(\epsilon) \approx 37.1$ 与 $3 \times d_H \approx 8.13$ 的比值 ≈ 4.56，接近 $\sqrt{2} \times \pi \approx 4.44$，可能不是巧合。
+**开放问题**：谱交织精度 $\epsilon \approx 8.12 \times 10^{-17}$ 与层次距离的关系——$-\ln(\epsilon) \approx 37.1$ 与 $3 \times d_H \approx 8.13$ 的比值 ≈ 4.56，接近 $\sqrt{2} \times \pi \approx 4.44$，可能不是巧合。（用 $d_H^{(0)} = \ln 15$ 代替拟合值重检：$37.1/(3\times 2.70805) = 4.567$，与 $\sqrt{2}\pi$ 偏差 2.8%——该比值与 δ 扰动无关，见 §3.5.4a。）
+
+### 6.4 Bott–Moran 距离桥（2026-07-27 新增，⚠️ 方向性假说）
+
+§6.2 的 $\ln 2$ 型距离（0.693、1.386）与 $d_H$ 型距离（2.7095）看似两个体系，但 §3.5.4c 的递归分析揭示它们通过 $B = 2^4 - 1$（Mersenne 形式）衔接：
+
+**精确恒等式**（纯算术，非拟合）：
+
+$$\ln(B+1) = \ln 16 = 4\ln 2, \qquad \ln 15 = 4\ln 2 - \ln\frac{16}{15} = 2.772589 - 0.064539$$
+
+即 **Moran 距离（层次0→1）= 4 级 Bott 翻倍距离 − 粘合修正 $\ln(16/15)$**。修正项 $\ln(16/15) \approx 0.0645$ 恰好是"$2^4$ 与 $B$ 之差"的对数——Bott 第 4 级旋量维数 16 与分支数 15 相差的"1"（对象层/粘合分支，见 §3.5.4c）。
+
+**桥的假说**：各层次过渡的距离以 $\ln 2$（Bott 单级翻倍）为量子化单位：
+
+| 层次对 | §6.2 距离 | Bott 读法 | 累计 |
+|:---|:---:|:---|:---:|
+| 层次0→1 | $d_H \approx 2.7095$ | $4\ln 2 - \ln(16/15) + \delta$ | ≈ 4 级 |
+| 层次1→2 | $0.693$ | $1\ln 2$ | 1 级 |
+| 层次2→3 | $1.386$ | $2\ln 2$ | 2 级 |
+| 层次3→4 | $\approx 10$ | 非 Bott（唯象代价） | — |
+
+**诚实标注**：
+
+1. §6.2 的 0.693/1.386 原为量级估计而非推导——本假说赋予它们 Bott 解释后，仍需独立论证"对称破缺 = 1 级翻倍、静默 4/8 维 = 2 级翻倍"的对应机制
+2. 恒等式 $\ln 15 = 4\ln 2 - \ln(16/15)$ 是精确的，但"4 级"与"4 个态射层"的对应是**读法**，机制未明
+3. 累计距离检验：$d_H + \ln 2 + 2\ln 2 = 4.7885$ vs $7\ln 2 = 4.8520$（偏差 1.3%）——若桥严格成立，累计距离应落在 $\ln 2$ 整数倍（经粘合修正）上
+
+**可证伪判据**：若未来从机制上导出某一过渡的 Bott 级数，其距离必须精确等于（级数）$\times\ln 2$ 减去相应的粘合修正——不允许连续调节。
 
 ---
 
@@ -530,6 +675,19 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 
 **关键识别**：d_H **略小于 e**，而非介于 e 与 3 之间。修正了此前表述的误差。
 
+**形式化状态（2026-07-27，DHStructuralAnalysis.lean v3）**：✅ **全链已通过 `lake build` 编译验证**（零错误零警告，无 `sorry`）。其中：
+
+| 环节 | Lean 定理 | 性质 |
+|:---|:---|:---:|
+| $\ln 15 < \frac{65}{24}$ | `ln15_lt_65_24` | 纯数学 |
+| $\frac{65}{24} < e$ | `sixtyfive_over_24_lt_e` | 纯数学 |
+| $e < 3$ | `e_lt_3` | 纯数学 |
+| $\frac{65}{24} < d_H$ | `sixtyfive_over_24_lt_d_H` | ⚠️ 唯象代入（$d_H^{\text{fit}} = 2.7095$） |
+| $d_H < e$ | `d_H_lt_e` | ⚠️ 唯象代入 |
+| $\lvert d_H^{\text{fit}} - \ln 15\rvert < 0.01$ | `dH_categorical_floor_bound` | ⚠️ 唯象代入 |
+
+证明技术：$\ln 15$ 的界通过幂比较实现——$\ln 15 < \frac{65}{24} \Leftrightarrow 15^{24} < e^{65}$，配合 Mathlib 的 $e$ 的 9 位小数界（`Real.exp_one_gt_d9` / `exp_one_lt_d9`）归结为 `norm_num` 可判定的有理数比较（下界 $\ln 15 > 2.708$ 经 $15^{250} > 2.7182818286^{677}$ 验证，需 `exponentiation.threshold 1024`）。该路线避免了早期版本的级数余项估计（不可编译）。
+
 ### 8.4 连续-离散对偶性
 
 | 参数类型 | 示例 | 行为 | 为什么 |
@@ -604,11 +762,13 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 | 从 $\mathbf{Sp}$ 4-范畴的 coherence 定理严格证明 $d_H = \ln(15)$ | **高** | 🔶 **推进中** —— 结构推导已建立（§3.5）：$B = N_{\text{active}} \times N_{\text{total}} = 15$ 的分支组合原理 + $r = e^{-1}$ 的均匀收缩假设 ⇒ Moran 方程 ⇒ $d_H = \ln 15$。**新进展**（2026-07-27）：`CoherenceToBranching.lean` 已创建，形式化了从严格 4-范畴结构到分支计数的桥梁论证，包含层互异性定理（§1）、`LayerPair` 基数计算 `Fintype.card LayerPair = 15`（§2）、分支组合原理定理 `coherence_implies_B_15`（§4）以及主定理 `dH_from_coherence_and_contraction`（§5）。当前障碍：IFS 吸引子与层对的严格对应关系需 `IFSFractal.lean` 的进一步形式化 |
 | **统一 3 定理：证明 $N_{\text{gen}} = 3$ 从范畴结构** | **高** | ✅ **已闭合** —— `SpecThreeMorphism` 在 `HigherSpecCategory.lean` 中完成定义；`Unified3Theorem.lean` 建立主动生成层→ℂ³显式同构 + 链复形结构与修复方案桥梁 |
 | **统一 3 定理：证明 $\log_2 k_{\max} = 3$ 从范畴结构** | **高** | ✅ **已闭合** —— `BottTower.lean` 建立旋量维数翻倍结构 spinorDim(k) = 8×2^k，通过 layerToDoublingIndex 满射证明翻倍步数 = 主动生成层数，即 k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3 |
-| 修正项 $\delta$ 的结构推导 | **中** | 数值模式识别，无结构必然性 |
+| 修正项 $\delta$ 的结构推导 | **中** | 🔶 **一阶结构公式已建立**（§3.5.4a）：$\delta = \ln(15)\cdot\bar{\varepsilon}$，数值验证 6/6 通过；候选假说 $\delta = (3/2 - 1/20)\times 10^{-3}$（§3.5.4b，拟合 0.014%，⚠️ 假说层级，三条判据全开放）；剩余缺口：从规范耦合/质量层级推导 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 本身，或推导 $c_3$ |
 | 谱交织精度 $\epsilon$ 与层次距离的关系 | **低** | 推测性 |
 | 绝对质量标度的非循环推导 | **高** | 当前不可能——G_N 是单位制约定 |
 | 四维时空涌现的严格谱静默证明 | **中** | 数学严格性待提升 |
 | $s = e^{-1}$ 的范畴论理由 | **低** | 只有信息论动机，无范畴论定理 |
+
+
 
 ---
 
@@ -656,3 +816,14 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 > - **v0.6（2026-07-27）**：创建 `BottTower.lean` 形式化 Bott 塔旋量维数翻倍结构 spinorDim(k) = 8×2^k；建立 `layerToDoublingIndex` 满射连接主动生成层与翻倍步数；证明 k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3；**缺口 2 标记为 ✅ 已闭合**；更新 `Unified3Theorem.lean` §7 注释链指向结构证明
 > - **v0.7（2026-07-27）**：修正不等式链 $\frac{65}{24} < \ln 15$ 为 $\ln 15 < \frac{65}{24}$（$\frac{65}{24}$ 介于 $\ln 15$ 和 $d_H$ 之间，非 $\ln 15$ 之下）；创建 `DHStructuralAnalysis.lean` v1 形式化 d_H 的结构分析（6 章结构）；**新增 §3.5 结构推导**：从 $B = N_{\text{active}} \times N_{\text{total}} = 15$ 的分支组合原理 + 均匀收缩 $r = e^{-1}$ ⇒ Moran 方程 ⇒ $d_H = \ln 15$，将数值巧合升级为有结构依据的理论期望值；更新 `DHStructuralAnalysis.lean` v2 添加 `dH_from_branching` 条件定理 + `B`/`N_active`/`N_total` 常数定义；更新开放问题清单中 d_H = ln(15) 状态为 🔶 推进中（附结构推导参考）
 > - **v0.8（2026-07-27）**：创建 `CoherenceToBranching.lean`，形式化从 $\mathbf{Sp}$ 严格4-范畴结构到分支计数 $B=15$ 的桥梁论证，包含层互异性（§1）、LayerPair 基数计算 `Fintype.card LayerPair = 15`（§2）、分支组合原理定理 `coherence_implies_B_15`（§4）、主定理 `dH_from_coherence_and_contraction`（§5）；更新 §3.5.5 推导现状总结步骤1状态为 🔶 部分形式化；更新 §9.4 开放问题清单反映 CoherenceToBranching.lean 进展
+> - **v0.9（2026-07-27）**：`DHStructuralAnalysis.lean` v3 修复并通过编译验证——移除坏导入（`Mathlib.Data.Rat.Basic` 已不存在、`UFPFormalization.FlavorFiber` 依赖链损坏且未使用）；发现此前"已填补"的证明使用了多个不存在的引理（`Real.exp_eq_tsum`、`tsum_lt_tsum_of_nonneg_of_lt` 等）且从未编译；全部证明改写为基于 Mathlib 的 $e$ 小数界（`exp_one_gt_d9`/`exp_one_lt_d9`）+ 幂比较技巧（$\ln 15 < \frac{65}{24} \Leftrightarrow 15^{24} < e^{65}$；$\ln 15 > 2.708 \Leftrightarrow 15^{250} > 2.7182818286^{677}$，需 `exponentiation.threshold 1024`）；`lake build` 零错误零警告、无 `sorry`；§8.3 补充形式化状态表；笔记同步记录于 `notes/08_first_principles/spectral_dynamics_first_principles_derivation.md` §3.9
+> - **v1.0（2026-07-27）**：推导链两处实质推进——**① Moran 解唯一性机器证明**：`DHStructuralAnalysis.moran_solution_iff`（一般形式：$B > 1$、$0 < r < 1$ 时 $B\cdot r^x = 1 \Leftrightarrow x = \log B/\log(1/r)$）+ 推论 `dH_moran_solution_unique`（$15\cdot(e^{-1})^x = 1 \Leftrightarrow x = \ln 15$），步骤 3 从"ln 15 是一个解"升级为"唯一解"，`lake build` 验证通过；**② δ 的一阶结构推导**（新增 §3.5.4a）：隐函数定理导出 $\delta = \ln(15)\cdot\bar{\varepsilon}$，$\delta_{\text{obs}} \Leftrightarrow \bar{\varepsilon} \approx 5.35\times 10^{-4}$，数值验证 6/6 通过（新建 `paperX_dH_moran_perturbation.py`，已注册 `run_all_tests.py`）；定量证实命题 R2（3-映射 IFS 中 $\partial d/\partial\ln c_3 \approx 721$）；§3.5.5 步骤 3 升级为 ✅ 完全严格化、步骤 4 升级为 🔶 一阶公式已建立；§9.4 δ 行同步更新
+> - **v1.1（2026-07-27）**：新增 §3.5.4b——记录 δ 的候选结构假说 $\delta = (3/2 - 1/20)\times 10^{-3} = (29/2)\times 10^{-4}$（拟合精度 0.014%，为目前最佳候选式；标注为 ⚠️ 假说层级：单点拟合、分母 20 欠定、吻合度超出 $d_H^{\text{fit}}$ 输入精度）；给出一阶响应语言下的分解靶值（$\bar{\varepsilon}_{\text{active}} \approx 5.54\times 10^{-4}$，$\bar{\varepsilon}_{\text{coh}} \approx 1.85\times 10^{-5}$）与升级为结构逻辑的三条判据（机制/交叉验证/精度预算）；指出更深入口为推导 $c_3$；§9.4 δ 行同步更新
+> - **v1.2（2026-07-27）**：按"笔记先行"研究操作规范，本文档自 `docs/UFPF修复与推进方案/层次演化的结构分析.md` 迁移至 `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`；更新 `paperX_dH_moran_perturbation.py` 中的文档引用
+> - **v1.3（2026-07-27）**：新增 §3.5.4c 两级粘合递归 IFS 检验（新建 `paperX_dH_recursion_test.py`，6/6 通过，已注册）——**递归不变性**：均匀收缩率下粘合递归 Moran 方程判别式 $1+4B(B-1) = (2B-1)^2$ 为完全平方恒等式（$B=15$：$841 = 29^2$），精确根 $x = 1/B$，维数锁定 $d = \ln 15$ 且与粘合比例 $\rho$ 无关（$\ln 15$ 是递归不动点，地位加强）；**29 的真实角色**：出现在扰动响应系数分母（$\delta = \ln(15)(\varepsilon_1 + 14\varepsilon_2)/29$，通道按 $(1, 14, 29)$ 分支计数加权），§3.5.4b 的分子读法可能是误读；**递归不产生 δ**（$\delta = 0$ 精确），δ 只能来自收缩率层级非均匀性（纯二级 $\varepsilon_2 \approx 1.11\times 10^{-3}$ / 纯一级 $\varepsilon_1 \approx 1.55\times 10^{-2}$ / 每级均匀 $\varepsilon \approx 5.35\times 10^{-4}$，与 §3.5.4a 交叉验证一致）
+> - **v1.4（2026-07-27）**：新增 §6.4 Bott–Moran 距离桥（⚠️ 方向性假说）——精确恒等式 $\ln 15 = 4\ln 2 - \ln(16/15)$（Moran 距离 = 4 级 Bott 翻倍 − 粘合修正），将 §6.2 的 $\ln 2$ 型距离与 $d_H$ 型距离通过 $B = 2^4 - 1$ 衔接；附诚实标注（§6.2 距离原为量级估计、"4 级"对应为读法、累计距离偏差 1.3%）与可证伪判据；§6.3 开放问题补充用 $\ln 15$ 重检 $-\ln\epsilon/(3d_H)$ 比值（4.567 vs $\sqrt{2}\pi$，与 δ 扰动无关）
+> - **v1.5（2026-07-27）**：递归不动点定理机器证明完成（`DHStructuralAnalysis.lean` v4，`lake build` 零错误零警告）——新增 `rpow_at_moran_solution`（辅助引理）、`glued_recursion_fixed_point`（一般形式：$B>1$、$0<r<1$、$\rho\in[0,1]$ 时 $(1-\rho)r^d + (B(B-1)+\rho B)r^{2d} = 1 \iff d = \log B/\log(1/r)$，存在性经自相似守恒、唯一性经严格递减单射）、`glued_recursion_dH_eq_ln15`（推论 $d = \ln 15$）；§3.5.4c 结果一升级为 ✅ 已机器证明
+> - **v1.6（2026-07-27）**：响应公式解析核心机器证明完成（`DHStructuralAnalysis.lean` v5 §2.5，`lake build` 零错误零警告）——新增 `hasDerivAt_rpow_base`（$r^x$ 指数求导）、`deriv_moran_d_at_solution`（$\partial F/\partial d = (2B-1)\ln r/B$）、`deriv_moran_eps1_at_zero`（$\partial F/\partial\varepsilon_1 = d_0/B$）、`deriv_moran_eps2_at_zero`（$\partial F/\partial\varepsilon_2 = (B-1)d_0/B$）、`response_ratio`（响应系数恒等式）；§3.5.4c 结果二升级为 ✅ 导数成分已机器证明（一阶公式的有限扰动误差界仍为数值验证）；新增依赖 `Mathlib.Analysis.SpecialFunctions.Pow.Deriv`
+> - **v1.7（2026-07-27）**：形式化项目大面积修复并通过编译——① `BranchCounting.lean` 的 `delta_bound` **sorry 已消除**（由 `DHStructural.ln15_gt_2708` 闭合），其 `dH_from_branching` 改写为调用 `dH_moran_solution_unique`（消除对不存在引理 `Real.exp_mul` 的依赖）；② `Unified3Theorem.lean` 与损坏的 `FlavorFiber` 链解耦（本地定义 `GenSpace`），修复 Fintype deriving（`Mathlib.Tactic.DeriveFintype`）；③ **诚实修正两处数学错误陈述**：`layer_orthogonality` 原陈述对任意 v, w 不成立（v = w = 0 时像相等），已限定为基向量版本；`genSpace_dim_is_three` 等原用 `Fintype.card (GenSpace → ℂ)`（ℂ 非有限类型，命题无意义），已改为 `Module.finrank ℂ GenSpace = 3`（BottTower 同步修正）；④ `HigherSpecCategory.lean` 修复保留字 `Σ` 作绑定名（→ `Ξ`）及矩阵代数证明（`abel` + `Matrix.add_mul`）；⑤ `BottTower.lean` 修复坏导入（`Mathlib.Data.Nat.Pow` 不存在）、`fin_cases`→`interval_cases` 及 rfl 证人顺序；⑥ `CoherenceToBranching.lean` 修复 `Mathlib.Data.Fintype.Product`→`Prod` 重命名。**当前状态**：d_H 相关全链（SpCategory/HigherSpecCategory/Unified3Theorem/BranchCounting/CoherenceToBranching/BottTower/DHStructuralAnalysis）`lake build` 全部通过；唯一保留的 sorry 是 `specExchangeLaw`（文档声明的核心理论开放问题：交换律在谱框架中不严格成立）；其余损坏文件（Braided、IFSFractal、OperatorTheory、DynSys、IsolationConstraints、FlavorFiber 等）与 d_H 链无依赖关系，尚未修复
+> - **v1.8（2026-07-27）**：`IFSFractal.lean` 修复并通过编译——移除坏导入（`Mathlib.Analysis.Contraction` 已并入 `Mathlib.Topology.MetricSpace.Contracting`；`UFPFormalization.ICVerification` 依赖损坏的 Braided 链且仅被末尾占位定理使用），删除依赖 IC 链的 sorry 占位定理 `IFS_IC_via_hausdorff`；`CompleteMetricSpace`→`CompleteSpace`（类重构，11 处）；`ratios` 类型 ℝ→ℝ≥0（`ContractingWith` 现要求 NNReal，`open scoped NNReal`）；修复连续 doc comment 语法错误与 ℝ/ℝ≥0 混合乘积。**新增 IFS 侧桥梁定理**（§4）：`hausdorffDimensionEq_uniform`（均匀 IFS 的 Moran 函数 = B·r^d − 1）与 `uniform_ifs_dH_unique`（均匀 IFS 的 HausdorffDimensionSolution.dH = log B/log(1/r)，直接调用 `moran_solution_iff`）——步骤 1 的"IFS 吸引子与层对对应"缺口在均匀 IFS 层面获得形式化连接；诚实标注：LayerPair→分支的映射仍是结构假设，Attractor 等存在性字段仍为公理化
+> - **v1.9（2026-07-27）**：三个独立文件修复并通过编译——① `OperatorTheory.lean`：`Matrix.exp`→`NormedSpace.exp`（附 `Mathlib.Analysis.Normed.Algebra.MatrixExponential`），半群性质改用 `Matrix.exp_add_of_commute` 严格证明；**诚实修正**：`selfAdjointNonneg_implies_mAccretive` 原假设 `hNonnegEigs : True` 为空假设（原命题不可证），改为显式 Rayleigh 非负假设并注明谱定理推导仍属开放工作；过时记号 `⬝`→`dotProduct (star v) (A *ᵥ v)`。② `DynSys.lean`：`ciSup_le'`→`ciSup_le`（API 更名）。③ `IsolationConstraints.lean`：删除有缺陷的 `Finset.sup'` 占位构造（ℝ 无 `OrderBot`），`spectralRadius` 简化为显式占位 0 并注明。**Braided 链评估**：`MonoidalCategory.ofChosenFiniteProducts` 等旧 API 已在 CartesianMonoidalCategory 重构中移除，且文件含虚构构造（`funex` 伪 tactic、`BraidedCategory.ofBraiding`、`monoidalTensor`）——修复需要对 RecObj 手工构造 chosen finite products（limit cones），工作量远超局部修补，且与 d_H 链无关；是否投入由研究优先级决定。**当前编译状态汇总**：通过 = DHStructuralAnalysis / SpCategory / HigherSpecCategory（仅 specExchangeLaw 声明性 sorry）/ Unified3Theorem / BranchCounting / CoherenceToBranching / BottTower / IFSFractal / OperatorTheory / DynSys / IsolationConstraints；未修复 = Braided 链（SilenceHierarchy、MultiSilenceMethodology、ForceUnification、SpectralGap、TempRGFiber、ICVerification、YukawaIFSWeights、FlavorFiber）
