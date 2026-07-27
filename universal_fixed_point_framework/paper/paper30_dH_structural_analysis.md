@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.0（2026-07-28）
+**版本**：v1.1（2026-07-28）
 
 **摘要**：本文在 UFPF 框架内，对 **Hausdorff 维数** $d_H \approx 2.7095$ 的结构成分进行严格的机器验证与数值分析。核心贡献包括：(1) **Moran 方程解唯一性定理**的机器证明：对任意分支数 $B > 1$ 和收缩率 $0 < r < 1$，方程 $B \cdot r^x = 1$ 有且仅有唯一解 $x = \log B / \log(1/r)$（定理 1，`moran_solution_iff`）；(2) **递归不动点定理**的机器证明：两级粘合递归 Moran 方程 $(1-\rho)r^d + (B(B-1)+\rho B)r^{2d} = 1$ 的解对任意粘合比例 $\rho \in [0,1]$ 精确锁定 $d = \log B / \log(1/r)$，即 $\ln 15$ 是递归不动点，递归不产生 $\delta$（定理 2，`glued_recursion_fixed_point`）；(3) **扰动响应解析核心**的机器证明：$\delta = \ln(15)\cdot(\varepsilon_1 + 14\varepsilon_2)/29$ 的导数成分已在 Lean 中严格证明（定理 3a–3e，`deriv_moran_d_at_solution`、`deriv_moran_eps1_at_zero`、`deriv_moran_eps2_at_zero`、`response_ratio`）；(4) **核心不等式链**的机器证明：$\ln 15 < \frac{65}{24} < d_H < e < 3$ 全链已通过编译（定理 4，`inequality_chain_full`），其中 $\ln 15 < \frac{65}{24}$ 与 $e < 3$ 为纯数学证明，$\frac{65}{24} < d_H < e$ 为唯象代入验证；(5) **一阶响应公式的数值验证**：$\delta = \ln(15)\cdot\bar{\varepsilon}$ 在多种扰动模式下的 6/6 检查通过，$\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 反演自洽；(6) **两级粘合递归 IFS 的数值验证**：递归不变性（$\delta = 0$）与 29 的分母角色获得 6/6 检查通过。本文明确标注 $\varepsilon$ 假说（$\S 6$）为假说层级，诚实分级以区别于已验证定理。
 
@@ -72,6 +72,26 @@ $$B \cdot r^x = 1 \quad \iff \quad x = \frac{\log B}{\log(1/r)}$$
 ### 2.3 意义
 
 定理 1 将 $d_H = \ln 15$ 从"一个解"升级为**唯一解**的充要刻画。此前 $d_H \approx \ln 15$ 仅有 0.05% 的数值精度支持；现在无论从哪个方向求解 Moran 方程，只要 $B = 15$、$r = e^{-1}$，$d_H = \ln 15$ 就是唯一可能的解。
+
+### 2.4 但 $B = 15$ 来自哪里？
+
+定理 1 解决了"给定 $B = 15$，解唯一"的问题，但未解决"为什么 $B = 15$"。这一问题由 $\mathbf{Sp}$ 严格 4-范畴的结构回答（Paper I §7，统一 3 定理）：
+
+$$B = N_{\text{active}} \times N_{\text{total}} = 3 \times 5 = 15$$
+
+其中 $N_{\text{active}} = 3$（三个主动生成层：1-态射、2-态射、3-态射）和 $N_{\text{total}} = 5$（对象层 + 4 个态射层）由 $\mathbf{Sp}$ 严格 4-范畴的层结构直接决定。
+
+### 2.5 BranchIndex：类型级的分支计数绑定
+
+此前，$B = 15$ 与 $d_H = \ln 15$ 之间的连接是"概念性"的——我们知道算术上二者吻合，但没有在类型系统中显式绑定。`CoherenceToBranching.lean` 新增 `BranchIndex` 类型（`LayerPair = ActiveMorphismLayer × LayerIndex` 的别名）作为 IFS 分支的显式索引类型，将这一绑定提升到类型层：
+
+| 定理 | 内容 | 证明 |
+|:---|---:|:---:|
+| `branchIndex_card_eq_15` | $\text{Fintype.card BranchIndex} = 15$ | `native_decide` |
+| `branchIndex_moran_eq_1` | $(\text{Fintype.card BranchIndex}:\mathbb{R})\cdot(e^{-1})^{\ln 15} = 1$ | `mod_cast` + `dH_moran_solution_unique` |
+| **`branchIndex_dH_unique`** | $(\text{Fintype.card BranchIndex}:\mathbb{R})\cdot(e^{-1})^d = 1 \iff d = \ln 15$ | 充要刻画 |
+
+关键意义：**类型系统保证了代数计数与解析解之间的直接链路。** `BranchIndex` 的基数 = 15 是可机器验证的代数事实（`native_decide`），而 `branchIndex_dH_unique` 将该基数对应的 Moran 方程的唯一解绑定到 $d = \ln 15$。从"范畴结构计数 $\Rightarrow$ 15 个分支 $\Rightarrow$ Moran 方程 $\Rightarrow$ $d_H = \ln 15$"的整个推导链中，**唯一剩余的建模假设**是"每个 `BranchIndex` 元素产生一个 IFS 收缩映射"——这一构造尚未在 Lean 中实现，但已被显式归因而非隐含缺口。有条件的 IFS 连接已由 `IFSFractal.uniform_ifs_dH_unique` 覆盖（若有这样的 IFS 则 $d_H = \ln 15$）。
 
 ---
 
@@ -281,6 +301,9 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 |:---|:---|---:|
 | Moran 解唯一性（定理 1） | Lean 机器证明 | 严格数学定理 |
 | $d_H = \ln 15$ 是唯一解（推论 1.1） | Lean 机器证明 | 严格数学定理 |
+| $B = N_{\text{active}} \times N_{\text{total}}$（定理 5a） | Lean 机器证明 | 代数计数定理 |
+| `branchIndex_card_eq_15`（定理 5b） | Lean 机器证明（`native_decide`） | 类型级基数绑定 |
+| **`branchIndex_dH_unique`（定理 5c）** | Lean 机器证明 | **类型-解析充要刻画** |
 | 递归不动点定理（定理 2） | Lean 机器证明 | 严格数学定理 |
 | $\ln 15$ 对任意 $\rho$ 是递归不动点（推论 2.1） | Lean 机器证明 | 严格数学定理 |
 | 响应导数成分（定理 3a–3d） | Lean 机器证明 | 严格数学定理 |
@@ -292,10 +315,10 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 
 ### 7.2 框架定位
 
-这里的 8 项机器证明（定理 1–4）和 2 项数值验证（§5.2–§5.3）共同构成对 $d_H$ 结构的**第一次完全严格化尝试**——此前 $d_H \approx 2.7095$ 登记为一个唯象拟合参数；现在它的范畴来源（$\ln 15$）、递归不动点地位、响应公式均获得机器验证。
+这里的 11 项机器证明（定理 1–5）和 2 项数值验证（§5.2–§5.3）共同构成对 $d_H$ 结构的**第一次完全严格化尝试**——此前 $d_H \approx 2.7095$ 登记为一个唯象拟合参数；现在它的范畴来源（$\ln 15$）、递归不动点地位、响应公式均获得机器验证。
 
 仍有两个根本性开放问题：
-1. **coherence → 分支计数的桥梁**（步骤 1b in `DHStructuralAnalysis.lean` 路线图）：从 $\mathbf{Sp}$ 4-范畴 coherence 定理严格证明 $B = N_{\text{active}} \times N_{\text{total}} = 15$
+1. **BranchIndex → IFS 映射的显式构造**：`BranchIndex` 类型提供了分支索引（15 个），但实际 IFS 收缩映射的构造（从每个 (主动层, 总层) 对到具体收缩映射）仍是建模假设，未在 Lean 中实现。有条件的连接已由 `IFSFractal.uniform_ifs_dH_unique` 覆盖
 2. **$\bar{\varepsilon}$ 的物理来源**：从规范耦合/质量层级推导 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 本身
 
 ### 7.3 与既有论文的关系
@@ -313,7 +336,7 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 | 文件 | 路径 | 内容 |
 |:---|:---|---:|
 | `DHStructuralAnalysis.lean` | `UFPFormalization/DHStructuralAnalysis.lean` | 定理 1–4，§2–5 |
-| `CoherenceToBranching.lean` | `UFPFormalization/CoherenceToBranching.lean` | 层互异性与分支计数的桥梁论证 |
+| `CoherenceToBranching.lean` | `UFPFormalization/CoherenceToBranching.lean` | 层互异性与分支计数桥梁论证；`BranchIndex` 类型级绑定（定理 5a–5c） |
 | `BranchCounting.lean` | `UFPFormalization/BranchCounting.lean` | 分支计数与 d_H 关系 |
 | `BottTower.lean` | `UFPFormalization/BottTower.lean` | 统一 3 定理的 Bott 塔形式 |
 | `IFSFractal.lean` | `UFPFormalization/IFSFractal.lean` | 均匀 IFS 桥梁定理 |
@@ -336,3 +359,6 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 > **版本记录**
 > - v1.0（2026-07-28）：初版创建。基于 2026-07-27 的全部形式化与数值验证成果提炼。
 >   核心结果引用：`spectral_hierarchy_evolution_analysis.md` v1.9、`DHStructuralAnalysis.lean` v5。
+> - **v1.1（2026-07-28）**：新增 §2.4–§2.5（BranchIndex 类型级封闭），新增定理 5a–5c（`branchIndex_card_eq_15`、
+>   `branchIndex_moran_eq_1`、`branchIndex_dH_unique`）。更新 §7 已验证结果表与开放问题。
+>   核心变更：`CoherenceToBranching.lean` 新增 `BranchIndex` 类型级绑定，`lake build` 零错误通过。

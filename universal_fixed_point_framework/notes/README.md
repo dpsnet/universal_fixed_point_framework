@@ -16,6 +16,7 @@
 | **PMNS 四参数第一性推导（含 δ_CP）** | ✅ 已完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` |
 | **强 CP 谱解** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_strong_CP.md` |
 | **全 29 参数验证 + ε_K 交叉检验** | ✅ **29/29 已验证** | `paperX_all_predictions.py` |
+| **d_H 结构分析与机器验证** | ✅ **Paper 30 v1.1** （11 项 Lean 证明 + 2 项数值验证） | `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper30_dH_structural_analysis.md` |
 | **p-value 统计分析** | ✅ **Fisher p≈0** | `paperX_pvalue_analysis.py` |
 | **根因分析** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/00_foundations/spectral_comprehensive_review.md` |
