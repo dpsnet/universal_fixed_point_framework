@@ -58,3 +58,6 @@ import UFPFormalization.ContextualitySheaf
 import UFPFormalization.SpacetimeStack
 import UFPFormalization.TotalParameterFiber
 import UFPFormalization.TestApplications
+import UFPFormalization.RAP1_weight_uniqueness
+import UFPFormalization.RAP2_moran_nonrigidity
+import UFPFormalization.RAP3_generation_obstruction

@@ -69,12 +69,16 @@ theorem e2_20_sq : e2_20 * e2_20 = 1 := by
 ### Cl(1,7) Classification
 
 Cl(1,7) is the Clifford algebra with signature (1,7) = 1 time-like + 7 space-like
-dimensions. By the Bott periodicity classification:
+dimensions.
 
-    Cl(1,7) ≅ M₈(ℝ)    (8×8 real matrices)
+**Structure theorem:** Cl(1,7) ≅ M₁₆(ℝ) (16×16 real matrices), by Bott periodicity:
+p+q = 8, p-q = -6 ≡ 2 (mod 8) → entry in periodicity table:
+(p-q) mod 8 = 2 → M_{2^{n/2}}(ℝ) = M_{2^4}(ℝ) = M₁₆(ℝ).
+(Note: earlier versions incorrectly used M₈(ℝ); corrected by RAP v0.1.)
 
-The minimum faithful representation dimension of Cl(1,7) is 8, which determines
-the spectral cutoff k_max = 8 in the spectral gap derivation.
+**Irreducible spinor (8_s):** The Majorana spinor of Spin(1,7) is 8-dimensional
+over ℝ. In the spectral gap derivation, k_max = 8 is a model choice
+(see RAP 修复方案 §5.3).
 -/
 
 /--
@@ -83,30 +87,26 @@ Number of generators of Cl(1,7).
 def cl17_dim : ℕ := 8
 
 /--
-Structure theorem: Cl(1,7) ≅ M₈(ℝ) by Bott periodicity classification.
-p+q = 8, p-q = -6 ≡ 2 (mod 8) → entry in periodicity table:
-(p-q) mod 8 = 2 → M_{2^{(n-2)/2}}(ℝ) = M_{2^3}(ℝ) = M₈(ℝ).
-
+Structure theorem: Cl(1,7) ≅ M₁₆(ℝ) by Bott periodicity classification.
 This theorem is accepted as a known algebraic fact; the full formal proof
 requires the complete classification of Clifford algebras (Bott periodicity).
 -/
-noncomputable def cl17_to_M8 : Type :=
-  Matrix (Fin 8) (Fin 8) ℝ
+noncomputable def cl17_to_M16 : Type :=
+  Matrix (Fin 16) (Fin 16) ℝ
 
 /--
-The 8-dimensional real representation of Cl(1,7).
+The irreducible Majorana spinor of Cl(1,7) (8_s) is 8-dimensional over ℝ.
+Under Spin(1,3)×Spin(4) ⊂ Spin(1,7), 8_s → (2_L,2) ⊕ (2_R,2'),
+giving 4 Weyl fermions in 4-dimensional spacetime.
+
 In the spectral framework, this representation space carries the A_GR operator
 whose eigenvalues follow the SU(2) Casimir spectrum √{k(k+1)}.
+Cl(1,7) provides a single-generation spinor carrier; the family space ℂ³_fam
+is an independent input (see RAP_勘误与立场声明.md).
+
+The spectral cutoff k_max = 8 is a model choice (RAP 修复方案 §1), not
+uniquely derived from the representation dimension.
 -/
 noncomputable def cl17_rep_dim : ℕ := 8
-
-/--
-The representation dimension of Cl(1,7) determines the angular momentum cutoff:
-rep_dim = 8 → k_max = 8.
-
-Theorem: The maximum SU(2) quantum number k_max equals the minimal faithful
-representation dimension of Cl(1,7).
--/
-theorem kmax_from_cl17_rep : cl17_rep_dim = 8 := rfl
 
 end UFPFormalization
