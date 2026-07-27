@@ -256,24 +256,13 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 
 ## 6. 候选假说与开放问题
 
-### 6.1 ε̄ 候选结构假说（⚠️ 假说层级）
+### 6.1 ε̄ 候选结构假说 I：数值拟合（⚠️ 假说层级）
 
-以下是当前最佳数值拟合假说：
+以下为数值拟合假说：
 
 $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} = \frac{29}{2} \times 10^{-4} = 0.00145$$
 
-该式对舍入值 $\delta = 0.00145$ 精确成立；对未舍入 $\delta_{\text{obs}} = 0.00144980$ 偏差仅 0.014%。
-
-**假说解读**。分解形式提示两项可能存在范畴来源：
-- $\frac{3}{2} \times 10^{-3}$：3 个主动生成层的正贡献（系数 1/2）
-- $-\frac{1}{20} \times 10^{-3}$：coherence 4-态射层的负修正（分母 $20 = 4 \times 5$）
-
-对应到一阶响应语言（$\delta = \ln 15\cdot\bar{\varepsilon}$）：
-
-| 成分 | δ 系数 | ε̄ 靶值 | 候选机制 |
-|:---|:---:|:---:|:---|
-| 主动层贡献 | $3/2 \times 10^{-3}$ | $5.54\times 10^{-4}$ | 3 个主动生成层的权重上调 |
-| coherence 负修正 | $-1/20 \times 10^{-3}$ | $-1.85\times 10^{-5}$ | 非主动层对有效权重的负反馈 |
+该式对舍入值 $\delta = 0.00145$ 精确成立；对未舍入 $\delta_{\text{obs}} = 0.00144980$ 偏差仅 0.014%。已知问题：分母 20 欠定、单点拟合无预测力。
 
 ### 6.2 诚实分级
 
@@ -290,6 +279,28 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 因此，替代逐项拟合系数的最有希望路径是：
 1. 从谱结构推导 $c_3$（如 $c_3 = e^{-\eta}$，$\eta$ 为某谱间隙）
 2. $c_3$ 完全确定时，$\delta$、$\bar{\varepsilon}$ 及本假说的系数全部一次性可检验
+
+### 6.4 ε̄ 候选结构假说 II：ε̄ = √N_total · ε₃ 选择原理（2026-07-28 新增，⚠️ 假说层级）
+
+**核心问题**：$\delta = \ln 15 \cdot \bar{\varepsilon}$ 中 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 从何而来？
+
+**新发现**（`paperX_dH_epsbar_3map.py`）：3-map IFS（$c_1 = e^{-(3+d_H)}$, $c_2 = e^{-d_H}$, $c_3$ 自由）的自洽性分析揭示 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{N_{\text{total}}} = \sqrt{5}$ 在 $d_H = 2.7095$ 处以浮点精度成立，其中 $\varepsilon_3 = 1 - c_3$ 是 $c_3$ 偏离 1 的量。
+
+**结构诠释**：$\sqrt{N_{\text{total}}} = \sqrt{5}$ 是 $N_{\text{total}} = 5$ 个范畴层的"标准差传播"因子——$c_3$ 的偏离 $\varepsilon_3$ 通过 5 个范畴层传播到有效平均扰动 $\bar{\varepsilon}$：
+
+$$\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$$
+
+**自洽方程**：将 $\bar{\varepsilon} = \sqrt{5} \cdot \varepsilon_3$ 代入 $\delta = \ln 15 \cdot \bar{\varepsilon}$ 并与 3-map IFS 的 Moran 方程 $c_1^d + c_2^d + c_3^d = 1$ 联立，消去 $\bar{\varepsilon}, \varepsilon_3$ 得 $d$ 的闭式方程：
+
+$$d(d - \ln 15) = \sqrt{5} \cdot \ln 15 \cdot (e^{-d^2} + e^{-d(3+d)})$$
+
+该方程的数值解 $d \approx 2.709499$ 与拟合值 $d_H = 2.7095$ 偏差仅 $8\times 10^{-7}$。
+
+**与假说 I 的关系**：本项目仅涉及 $N_{\text{total}}$ 一个结构常数（优于假说 I 的 $3, 20$ 两个参数），将 $\delta$ 的"预测"从数值拟合升级为单参数自洽条件。
+
+**诚实标注**：
+- $\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$ 是数值发现，非数学推导——解析尝试（`paperX_dH_analytic_ratio.py`）显示 $\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（$\partial(\bar{\varepsilon}/\varepsilon_3)/\partial d \approx 1556$），从 $d = \ln 15$（零穿越）到 $d_H$ 快速穿过 $\sqrt{5}$，而非函数的渐近极限
+- 残差 $8\times 10^{-7}$ 与 $2^3 \times 10^{-7}$（$N_{\text{active}} = 3$ 的 Bott 翻倍因子）吻合在 4.2%，需更高精度 $d_H$ 确认（`paperX_dH_residual_check.py`）
 
 ---
 
@@ -319,7 +330,7 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 
 仍有两个根本性开放问题：
 1. **BranchIndex → IFS 映射的显式构造**：`BranchIndex` 类型提供了分支索引（15 个），但实际 IFS 收缩映射的构造（从每个 (主动层, 总层) 对到具体收缩映射）仍是建模假设，未在 Lean 中实现。有条件的连接已由 `IFSFractal.uniform_ifs_dH_unique` 覆盖
-2. **$\bar{\varepsilon}$ 的物理来源**：从规范耦合/质量层级推导 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 本身
+2. **$\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$ 的数学证明**：该关系是目前最简洁的候选假说（仅涉及 $N_{\text{total}}=5$ 单个结构常数），但仅有数值支持无解析证明。$\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（导数 $\approx 1556$），穿过 $\sqrt{5}$ 而非渐近趋近。需更高精度 $d_H$ 确认残差 $8\times 10^{-7}$ 是否为系统性结构
 
 ### 7.3 与既有论文的关系
 
@@ -345,14 +356,17 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 
 ---
 
-## 附录 B：数值验证脚本
+## 附录 B：数值验证与分析脚本
 
-| 脚本 | 路径 | 检查项 |
+| 脚本 | 路径 | 状态 |
 |:---|:---|---:|
-| `paperX_dH_moran_perturbation.py` | `universal_fixed_point_framework/` | 6/6 |
-| `paperX_dH_recursion_test.py` | `universal_fixed_point_framework/` | 6/6 |
+| `paperX_dH_moran_perturbation.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
+| `paperX_dH_recursion_test.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
+| `paperX_dH_epsbar_3map.py` | `universal_fixed_point_framework/` | 📊 ε̄/ε₃ = √5 数值发现 |
+| `paperX_dH_analytic_ratio.py` | `universal_fixed_point_framework/` | 📊 解析推导尝试（无闭式解） |
+| `paperX_dH_residual_check.py` | `universal_fixed_point_framework/` | 📊 残差 8×10⁻⁷ 分析 |
 
-均已注册 `run_all_tests.py`，全量回归通过。
+前 2 个已注册 `run_all_tests.py`，全量回归通过。后 3 个为分析性脚本，不纳入回归套件。
 
 ---
 
@@ -362,3 +376,6 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 > - **v1.1（2026-07-28）**：新增 §2.4–§2.5（BranchIndex 类型级封闭），新增定理 5a–5c（`branchIndex_card_eq_15`、
 >   `branchIndex_moran_eq_1`、`branchIndex_dH_unique`）。更新 §7 已验证结果表与开放问题。
 >   核心变更：`CoherenceToBranching.lean` 新增 `BranchIndex` 类型级绑定，`lake build` 零错误通过。
+> - **v1.2（2026-07-28）**：新增 §6.4（ε̄ = √N_total · ε₃ 选择原理），更新 §7.2 开放问题与附录 B。
+>   核心发现：3-map IFS 自洽性揭示 ε̄/ε₃ = √5 在 d_H 处以浮点精度成立，自洽方程 d(d-ln15) = √5·ln15·(e^{-d²}+e^{-d(3+d)})
+>   的解与拟合值偏差仅 8×10⁻⁷（与 2³×10⁻⁷ 吻合 4.2%，待高精度确认）。
