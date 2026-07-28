@@ -63,6 +63,9 @@ SCRIPTS = [
     ("paperX_dH_IFS_optimality.py",           "3-map IFS 信息论最优性：n=2/3/4 对比（O2 路径 C）"),
     ("paperX_dH_spectral_flow_3fixed.py",    "谱流 RG 3-不动点结构（O2 路径 A）"),
 
+    # === 2026-07-29: δ 残差深入分析 (高精度, 无严格检查项) ===
+    ("paperX_dH_residual_deep.py",           "残差 Δ 高精度分解：线性化误差闭式 + 2³×10⁻⁷ 假说证伪 (分析性)"),
+
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),
     ("paperX_gravity_gEH_analysis.py",       "g_EH 转换因子的解析确定"),
