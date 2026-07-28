@@ -62,6 +62,17 @@ SCRIPTS = [
     ("paperX_dH_3cluster_attractor.py",       "3-map IFS 吸引子 3-簇结构验证（O2 动力路径 B）"),
     ("paperX_dH_IFS_optimality.py",           "3-map IFS 信息论最优性：n=2/3/4 对比（O2 路径 C）"),
     ("paperX_dH_spectral_flow_3fixed.py",    "谱流 RG 3-不动点结构（O2 路径 A）"),
+
+    # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
+    ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),
+    ("paperX_gravity_gEH_analysis.py",       "g_EH 转换因子的解析确定"),
+    ("paperX_gravity_coherence.py",          "引力作为范畴 coherence 条件"),
+    ("paperX_exchange_law_deviation.py",     "spExchangeLaw 偏差范数量级估计"),
+    ("paperX_deviation_to_GN.py",            "偏差 Δ → G_N 的定量路径"),
+    ("paperX_gravity_exact_quantification.py", "★ 引力强度彻底量化：偏差路径 ⇔ Phase C 双路径交叉验证"),
+    ("paperX_falsifiable_predictions.py",     "★ 框架的三个可证伪无量纲比率预测"),
+    ("paperX_gw_polarization.py",             "引力波极化：3 层各向异性的结构稳定性约束"),
+    ("paperX_lambda_analysis.py",             "Λ 的谱结构推导 — 诚实评估 (负结果)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

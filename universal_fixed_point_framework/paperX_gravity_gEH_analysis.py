@@ -229,7 +229,7 @@ print(f"  Σλᵢ² (精确) = {sum_lam_sq_exact}")
 # = (√2+√6+√12+√20+√30+√42+√56+√72)/√72
 
 sum_sqrt_kk1 = np.sum(np.sqrt(k*(k+1)))
-print(f"  Σ√{k(k+1)} = {sum_sqrt_kk1:.10f}")
+print(f"  Sum sqrt(k(k+1)) for k=1..8 = {sum_sqrt_kk1:.10f}")
 
 # E_comm_sq_theory 的解析形式
 # E[‖[A_GR, δ]‖_F²] = 2 × 10/3 - (2/8) × (Σλᵢ)²
