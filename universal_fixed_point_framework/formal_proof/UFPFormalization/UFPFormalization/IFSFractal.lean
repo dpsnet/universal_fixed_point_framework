@@ -403,3 +403,104 @@ noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
       · exact c1_physical_lt_one d hd
       · exact c2_physical_lt_one d hd
       · exact c3_physical_lt_one d hd)
+
+/-! ### 6. O2 统一性定理：三相异收缩率（2026-07-29 新增）
+
+   O2 动力层面（三个"3"的动力学统一）的三条路径——
+   路径 A（谱流 3 不动点）、路径 B（IFS 3 簇）、路径 C（信息论最小化）——
+   共享同一个结构核心：物理 3-map IFS 的收缩率**严格相异且有序**
+   c₁ < c₂ < c₃ < 1。本节机器证明该排序（d ≥ 1）。
+
+   关键定量步骤是 c₂ < c₃，等价于 2·e^{-d²} + e^{-d(3+d)} < 1，
+   由 e⁻¹ < 37/100（e > 100/37，经 `Real.exp_one_gt_d9`）控制。 -/
+
+/-- e⁻¹ 的改进上界：e⁻¹ < 37/100（由 e > 100/37 = 2.7027…，
+    经 `Real.exp_one_gt_d9`：e > 2.7182818283）。 -/
+theorem exp_neg_one_lt_37_100 : Real.exp (-1) < 37 / 100 := by
+  have he : (100 / 37 : ℝ) < Real.exp 1 :=
+    lt_trans (by norm_num) Real.exp_one_gt_d9
+  rw [Real.exp_neg, inv_eq_one_div]
+  have h := one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 100 / 37) he
+  rwa [show (1 : ℝ) / (100 / 37) = 37 / 100 by norm_num] at h
+
+/-- 关键定量引理（d ≥ 1）：2·e^{-d²} + e^{-d(3+d)} < 1。
+    e^{-d²} ≤ e⁻¹ < 37/100，e^{-d(3+d)} ≤ e⁻⁴ = (e⁻¹)⁴ < (37/100)⁴ < 2/100，
+    故和 < 2·37/100 + 2/100 = 76/100 < 1。 -/
+theorem two_exp_add_exp_lt_one (d : ℝ) (hd : 1 ≤ d) :
+    2 * Real.exp (-(d * d)) + Real.exp (-(d * (3 + d))) < 1 := by
+  have h1 : Real.exp (-(d * d)) ≤ Real.exp (-1) := by
+    apply Real.exp_le_exp.mpr
+    nlinarith [hd]
+  have h2 : Real.exp (-(d * (3 + d))) ≤ Real.exp (-4) := by
+    apply Real.exp_le_exp.mpr
+    nlinarith [hd]
+  have h4 : Real.exp (-4) = Real.exp (-1) ^ 4 := by
+    rw [show (-4 : ℝ) = (4 : ℕ) * (-1) by norm_num, Real.exp_nat_mul]
+  have h37 := exp_neg_one_lt_37_100
+  have h37pos : (0 : ℝ) ≤ Real.exp (-1) := le_of_lt (Real.exp_pos _)
+  have h4b : Real.exp (-1) ^ 4 < (37 / 100) ^ 4 :=
+    pow_lt_pow_left₀ h37 h37pos (by norm_num)
+  have hnum : (37 / 100 : ℝ) ^ 4 < 2 / 100 := by norm_num
+  have e1nn : (0 : ℝ) ≤ Real.exp (-(d * d)) := le_of_lt (Real.exp_pos _)
+  nlinarith [h1, h2, h4, h4b, h37, hnum, e1nn]
+
+/-- O2 统一性定理（核心）：物理 3-map IFS 的三个收缩率严格相异且有序，
+    c₁ < c₂ < c₃（d ≥ 1）。
+    这是三条动力学路径（谱流 3 不动点 / IFS 3 簇 / 信息论最小化）
+    共享的同一结构核心——三个"3"是同一个 3。 -/
+theorem c_physical_strictly_ordered (d : ℝ) (hd : 1 ≤ d) :
+    c1_physical d < c2_physical d ∧ c2_physical d < c3_physical d := by
+  have hdpos : (0 : ℝ) < d := by linarith
+  have hc1c2 : c1_physical d < c2_physical d := by
+    dsimp [c1_physical, c2_physical]
+    apply Real.exp_lt_exp.mpr
+    linarith
+  have hc2c3 : c2_physical d < c3_physical d := by
+    have hbase := one_sub_c1d_c2d_pos d hd
+    have hc3d : (c3_physical d) ^ d =
+        1 - (c1_physical d) ^ d - (c2_physical d) ^ d := by
+      dsimp [c3_physical]
+      rw [← Real.rpow_mul (le_of_lt hbase), one_div_mul_cancel (ne_of_gt hdpos),
+        Real.rpow_one]
+    have hc2d : (c2_physical d) ^ d = Real.exp (-(d * d)) := by
+      have hpos : (0 : ℝ) < c2_physical d := c2_physical_pos d
+      rw [Real.rpow_def_of_pos hpos]
+      have hlog : Real.log (c2_physical d) = -d := Real.log_exp _
+      rw [hlog]
+      ring_nf
+    have hc1d : (c1_physical d) ^ d = Real.exp (-(d * (3 + d))) := by
+      have hpos : (0 : ℝ) < c1_physical d := c1_physical_pos d
+      rw [Real.rpow_def_of_pos hpos]
+      have hlog : Real.log (c1_physical d) = -(3 + d) := Real.log_exp _
+      rw [hlog]
+      ring_nf
+    have hkey : 2 * (c2_physical d) ^ d + (c1_physical d) ^ d < 1 := by
+      rw [hc2d, hc1d]
+      exact two_exp_add_exp_lt_one d hd
+    have hc3nn : (0 : ℝ) ≤ c3_physical d := le_of_lt (c3_physical_pos d hd)
+    by_contra hnot
+    push Not at hnot
+    have hle := Real.rpow_le_rpow hc3nn hnot (le_of_lt hdpos)
+    rw [hc3d] at hle
+    have p1 : (0 : ℝ) < (c1_physical d) ^ d :=
+      Real.rpow_pos_of_pos (c1_physical_pos d) d
+    have p2 : (0 : ℝ) < (c2_physical d) ^ d :=
+      Real.rpow_pos_of_pos (c2_physical_pos d) d
+    linarith
+  exact ⟨hc1c2, hc2c3⟩
+
+/-- physicalIFS 的映射数 = 3。 -/
+theorem physicalIFS_n (d : ℝ) (hd : 1 ≤ d) : (physicalIFS d hd).n = 3 := rfl
+
+/-- O2 路径 B 的形式化核心：physicalIFS 的三个收缩率严格递增
+    （作为 ℝ 值），即三个 IFS 分支处于三个相异的标度。 -/
+theorem physicalIFS_ratios_ordered (d : ℝ) (hd : 1 ≤ d) :
+    ((physicalIFS d hd).ratios (0 : Fin 3) : ℝ) <
+      ((physicalIFS d hd).ratios (1 : Fin 3) : ℝ) ∧
+    ((physicalIFS d hd).ratios (1 : Fin 3) : ℝ) <
+      ((physicalIFS d hd).ratios (2 : Fin 3) : ℝ) := by
+  have h1 : ((physicalIFS d hd).ratios (0 : Fin 3) : ℝ) = c1_physical d := rfl
+  have h2 : ((physicalIFS d hd).ratios (1 : Fin 3) : ℝ) = c2_physical d := rfl
+  have h3 : ((physicalIFS d hd).ratios (2 : Fin 3) : ℝ) = c3_physical d := rfl
+  rw [h1, h2, h3]
+  exact c_physical_strictly_ordered d hd
