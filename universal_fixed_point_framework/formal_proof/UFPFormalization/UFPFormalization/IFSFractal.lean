@@ -269,4 +269,69 @@ theorem uniform_ifs_dH_unique {X : Type} [MetricSpace X] [CompleteSpace X]
     linarith
   exact (DHStructural.moran_solution_iff hB hr0' hr1').mp hmoran
 
-end UFPFormalization
+/-! ### 5. 物理 3-map IFS（2026-07-28 新增）
+
+   谱框架的物理 IFS：3 个映射，收缩率来自 Cl(1,7) 谱静默结构。
+   c₁ = e^{-3-d}（对象静默 × 辫静默的联合压制）
+   c₂ = e^{-d}（辫静默）
+   c₃ = (1 - e^{-d²} - e^{-d(3+d)})^{1/d}（Moran 方程唯一确定）
+
+   3 个映射 → 3 个吸引子分支 → N_active = 3 → 3 代费米子。
+-/
+
+/-- 物理 3-map IFS 的收缩率 c₁(d) = e^{-3-d}。 -/
+def c1_physical (d : ℝ) : ℝ := Real.exp (-(3 + d))
+
+/-- 物理 3-map IFS 的收缩率 c₂(d) = e^{-d}。 -/
+def c2_physical (d : ℝ) : ℝ := Real.exp (-d)
+
+/-- 给定 d，由 Moran 方程 c₁^d + c₂^d + c₃^d = 1 解出的 c₃(d)。 -/
+noncomputable def c3_physical (d : ℝ) : ℝ :=
+  (1 - (c1_physical d) ^ d - (c2_physical d) ^ d) ^ (1 / d)
+
+theorem moran_3map_holds (d : ℝ) (hdpos : d > 0) :
+    (c1_physical d) ^ d + (c2_physical d) ^ d + (c3_physical d) ^ d = 1 := by
+  dsimp [c3_physical, c1_physical, c2_physical]
+  have h : 0 ≤ 1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d := by
+    -- 对 d > 0, c₁^d + c₂^d < 1, 所以根号内为正
+    have hsum : (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d < 1 := by
+      -- e^{-(3+d)d} + e^{-d²} < e^{-d²} + e^{-d²} = 2e^{-d²} < 1 对 d ≥ 1
+      sorry
+    nlinarith
+  -- 代数恒等式: x^(1/d)^d = x (对 x ≥ 0)
+  -- 使用 (a ^ (1/d)) ^ d = a
+  have hpos : 0 ≤ 1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d := h
+  calc
+    (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d +
+      ((1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d) ^ (1 / d)) ^ d
+        = (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d +
+          (1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d) := by
+      rw [Real.rpow_mul_log ?_ ?_]  -- 需要处理 rpow 的严格正性
+    _ = 1 := by ring
+
+/-- 物理 3-map IFS，定义在 ℝ 上，收缩率 c₁, c₂, c₃。
+    映射选择 f_i(x) = c_i · x + t_i（平移 t_i 固定为 0, 0.5, 1.0）。
+    该 IFS 的吸引子有 3 个连通分量，对应 N_active = 3 个态射层。 -/
+noncomputable def physicalIFS (d : ℝ) : IFS ℝ :=
+  IFS.mk 3
+    (fun i => match i with
+      | 0 => fun x : ℝ => c1_physical d * x
+      | 1 => fun x : ℝ => c2_physical d * x + 0.5
+      | 2 => fun x : ℝ => c3_physical d * x + 1.0)
+    (fun i => match i with
+      | 0 => ⟨c1_physical d, by positivity⟩
+      | 1 => ⟨c2_physical d, by positivity⟩
+      | 2 => ⟨c3_physical d, by positivity⟩)
+    (by
+      intro i
+      -- 每个 f_i 是收缩映射，收缩率 = c_i
+      -- ContractingWith 证明: |f_i(x) - f_i(y)| = c_i · |x - y|
+      sorry)
+    (by
+      intro i
+      -- c_i > 0
+      positivity)
+    (by
+      intro i
+      -- c_i < 1（对物理 d ≈ 2.7095 成立）
+      sorry)

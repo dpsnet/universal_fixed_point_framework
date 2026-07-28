@@ -59,6 +59,9 @@ SCRIPTS = [
     ("paperX_dH_eta_origin.py",               "η 谱间隙来源扫描 (分析性)"),
     ("paperX_dH_selection_principle.py",      "ε̄/ε₃ = √5 选择原理形式化：固定点+单调性+等价性"),
     ("paperX_dH_RMS_propagation.py",         "RMS 传播定理数值验证：蒙特卡洛 + 关联分析"),
+    ("paperX_dH_3cluster_attractor.py",       "3-map IFS 吸引子 3-簇结构验证（O2 动力路径 B）"),
+    ("paperX_dH_IFS_optimality.py",           "3-map IFS 信息论最优性：n=2/3/4 对比（O2 路径 C）"),
+    ("paperX_dH_spectral_flow_3fixed.py",    "谱流 RG 3-不动点结构（O2 路径 A）"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
