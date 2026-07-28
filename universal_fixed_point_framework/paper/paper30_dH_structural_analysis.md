@@ -302,6 +302,22 @@ $$d(d - \ln 15) = \sqrt{5} \cdot \ln 15 \cdot (e^{-d^2} + e^{-d(3+d)})$$
 - $\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$ 是数值发现，非数学推导——解析尝试（`paperX_dH_analytic_ratio.py`）显示 $\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（$\partial(\bar{\varepsilon}/\varepsilon_3)/\partial d \approx 1556$），从 $d = \ln 15$（零穿越）到 $d_H$ 快速穿过 $\sqrt{5}$，而非函数的渐近极限
 - 残差 $8\times 10^{-7}$ 与 $2^3 \times 10^{-7}$（$N_{\text{active}} = 3$ 的 Bott 翻倍因子）吻合在 4.2%，需更高精度 $d_H$ 确认（`paperX_dH_residual_check.py`）
 
+**一阶闭式解析表达式**（`paperX_dH_closed_form.py`。从自洽方程 $d(d-\ln 15) = \sqrt{5}\ln 15\cdot A(d)$ 在 $d_0 = \ln 15$ 处做一阶展开，其中 $A(d) = e^{-d^2} + e^{-d(3+d)}$，可得：
+
+$$d_H \approx \ln 15 + \frac{\sqrt{5}\cdot\ln 15\cdot A_0}{\ln 15 - \sqrt{5}\cdot\ln 15\cdot A'_0} + \Delta_1$$
+
+其中 $A_0 = A(\ln 15)$，$A'_0 = A'(\ln 15)$。数值：`一阶项` ≈ 2.70949989，与拟合值 $2.7095$ 偏差 $1.1\times 10^{-7}$。$\Delta_1$ 为高阶残差。
+
+| 表达式 | 数值 | 与拟合偏差 |
+|:-------|:----:|:-----------:|
+| $\ln 15$ | 2.70805020 | $1.4\times10^{-3}$ |
+| $+ \sqrt{5}\cdot e^{-(\ln 15)^2}$ | 2.70951093 | $1.1\times10^{-5}$ |
+| $+$ 一阶自洽展开 | 2.70949989 | $1.1\times10^{-7}$ |
+| $+ 2^3\times10^{-7}$（候选残差） | 2.70949996 | $3.5\times10^{-8}$ |
+| 自洽方程精确解 | 2.70949916 | $8.4\times10^{-7}$ |
+
+所有闭式均依赖 $\bar{\varepsilon} = \sqrt{5}\cdot\varepsilon_3$，完整的解析证明仍有待未来的概念突破。
+
 ---
 
 ## 7. 结论
@@ -379,3 +395,4 @@ $$d(d - \ln 15) = \sqrt{5} \cdot \ln 15 \cdot (e^{-d^2} + e^{-d(3+d)})$$
 > - **v1.2（2026-07-28）**：新增 §6.4（ε̄ = √N_total · ε₃ 选择原理），更新 §7.2 开放问题与附录 B。
 >   核心发现：3-map IFS 自洽性揭示 ε̄/ε₃ = √5 在 d_H 处以浮点精度成立，自洽方程 d(d-ln15) = √5·ln15·(e^{-d²}+e^{-d(3+d)})
 >   的解与拟合值偏差仅 8×10⁻⁷（与 2³×10⁻⁷ 吻合 4.2%，待高精度确认）。
+> - **v1.3（2026-07-28）**：补充 §6.4 一阶闭式解析表达式（d ≈ ln15 + √5·ln15·A₀/(ln15 − √5·ln15·A'₀)，精度 1.1×10⁻⁷）。
