@@ -58,6 +58,7 @@ SCRIPTS = [
     ("paperX_dH_closed_form.py",              "d_H 一阶闭式表达式验证 (分析性)"),
     ("paperX_dH_eta_origin.py",               "η 谱间隙来源扫描 (分析性)"),
     ("paperX_dH_selection_principle.py",      "ε̄/ε₃ = √5 选择原理形式化：固定点+单调性+等价性"),
+    ("paperX_dH_RMS_propagation.py",         "RMS 传播定理数值验证：蒙特卡洛 + 关联分析"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
