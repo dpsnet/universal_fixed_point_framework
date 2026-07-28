@@ -40,6 +40,7 @@
 | 第二十二批 | 2026-07-26 | 口语化/非标准术语清理（Sync #16） | 7 个文件 |
 | 第二十三批 | 2026-07-26 | 纵向剖面纤维术语 | 3 个文件（paper21, paper22, notes） |
 | 第二十四批 | 2026-07-26 | "谱丛"→"谱覆盖"术语修正 | 4 个文件（paper25, paper27, paper28, paper29） |
+| **第二十五批** | **2026-07-28** | **Lean 形式化 Spec→Sp 术语统一（Sync #19）** | **8 个 Lean 文件** |
 
 ---
 
@@ -484,6 +485,29 @@
 | `notes/spec_infinity_prelim.md` | 全文（第1-598行） | 谱丛（43处） | 谱覆盖（43处） | 43 |
 
 **注**：笔记文件（`notes/`）和附录文件的术语修正留待后续同步处理。本笔记中的"三参数谱丛""∞-范畴谱丛"均指由 $\det(M(p)-\lambda I)=0$ 定义的具体代数结构，属于"谱覆盖"语境。
+
+### 9.19 Sync #19 明细（2026-07-28）— Lean 形式化 Spec→Sp 术语统一
+
+**修订原因**：`HigherSpecCategory.lean` 中的 2-态射和 3-态射类型及所有操作函数仍沿用 `Spec`/`spec` 前缀，与 Sync #2（SpCategory/SpecObj→SpObj）不一致。本次完成遗留术语修订。
+
+| 改动 | 旧名 | 新名 | 涉及文件 |
+|------|------|------|---------|
+| 文件重命名 | `HigherSpecCategory.lean` | `HigherSpCategory.lean` | 1 文件（自身） |
+| 2-态射类型 | `SpecTwoMorphism` | `SpTwoMorphism` | 7 个 .lean 文件 |
+| 2-态射垂直复合 | `specVertComp` | `spVertComp` | 3 个 .lean 文件 |
+| 2-态射水平复合 | `specHorizComp` | `spHorizComp` | 3 个 .lean 文件 |
+| 恒等 2-态射 | `specIdTwoMorphism` | `spIdTwoMorphism` | 2 个 .lean 文件 |
+| 交换律 | `specExchangeLaw` | `spExchangeLaw` | 3 个 .lean 文件 |
+| 偏差引理 | `specExchangeLaw_homotopy_deviation` | `spExchangeLaw_homotopy_deviation` | 1 个 .lean 文件 |
+| 3-态射类型 | `SpecThreeMorphism` | `SpThreeMorphism` | 3 个 .lean 文件 |
+| 3-态射垂直复合 | `specThreeVertComp` | `spThreeVertComp` | 2 个 .lean 文件 |
+| 3-态射水平复合 | `specThreeHorizComp` | `spThreeHorizComp` | 1 个 .lean 文件 |
+| 垂直复合结合律 | `specThreeVertComp_assoc` | `spThreeVertComp_assoc` | 1 个 .lean 文件 |
+| 顶层 import | `UFPFormalization.HigherSpecCategory` | `UFPFormalization.HigherSpCategory` | 6 个文件 |
+
+**受影响文件统计**: 8 个 .lean 文件（含自身），约 90+ 处替换。`lake build` 零错误通过。
+
+**附加数学修正**：在此轮形式化中发现 `spExchangeLaw_deviation_commutator_form`（偏差 = $X.A·H - H·Z.A$）存在代数错误——中间项 $-2·\beta.h·Y.A·\alpha'.h$ 在完整偏差中不抵消。已替换为正确的 `spExchangeLaw_deviation_partial_commutator` 和 `spExchangeLaw_deviation_strict_limit`。`spThreeHorizComp` 的第二同伦公式也经纠正（使用 $P'.P$ 和 $Q.P$ 而非 $\beta'.homotopy$ 和 $\alpha.homotopy$）。<span id="page-break-at-end"/>
 
 ---
 

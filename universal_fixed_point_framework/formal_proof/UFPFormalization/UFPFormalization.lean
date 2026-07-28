@@ -25,7 +25,7 @@ import UFPFormalization.Quantization
 import UFPFormalization.NormalOrdering
 import UFPFormalization.CategoryGeometry
 import UFPFormalization.HigherRecCategory
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import UFPFormalization.HigherDecursionFunctor
 import UFPFormalization.AInfinityAlgebra
 import UFPFormalization.InfinityCategory
@@ -63,3 +63,4 @@ import UFPFormalization.RAP2_moran_nonrigidity
 import UFPFormalization.RAP3_generation_obstruction
 import UFPFormalization.RAP4_silence_strictification
 import UFPFormalization.RAP5a_explicit_adjunction
+import UFPFormalization.DeviationBound

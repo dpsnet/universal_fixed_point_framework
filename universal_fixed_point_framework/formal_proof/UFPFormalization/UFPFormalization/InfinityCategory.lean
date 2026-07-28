@@ -1,5 +1,5 @@
 import UFPFormalization.SpCategory
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace

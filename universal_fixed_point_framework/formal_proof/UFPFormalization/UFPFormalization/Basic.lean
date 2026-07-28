@@ -8,7 +8,7 @@ import UFPFormalization.RecCategory
 import UFPFormalization.SpCategory
 import UFPFormalization.AInfinityAlgebra
 import UFPFormalization.DecursionFunctor
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import UFPFormalization.RecInfinity
 import UFPFormalization.SpecInfinity
 import UFPFormalization.InfinityCategory

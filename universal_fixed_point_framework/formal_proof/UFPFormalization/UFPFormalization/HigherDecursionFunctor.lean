@@ -2,7 +2,7 @@ import UFPFormalization.RecCategory
 import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.HigherRecCategory
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Data.Matrix.Basic
 
@@ -23,7 +23,7 @@ Structure preservation:
   5. Horizontal composition preservation: D₂(α∘_hα') = D₂(α)∘_hD₂(α')
   6. Identity preservation: D₂(id_f) = id_{D(f)}
 
-In the finite prototype, D₂ maps a RecTwoMorphism to a SpecTwoMorphism
+In the finite prototype, D₂ maps a RecTwoMorphism to a SpTwoMorphism
 by taking the difference of the transferred matrices.
 -/
 
@@ -51,7 +51,7 @@ whose homotopy matrix is the difference of the transfer matrices
 of g and f, projected through D.
 -/
 def D2_map_two {X Y : RecObj} {f g : X ⟶ Y}
-    (α : RecTwoMorphism f g) : SpecTwoMorphism (D2_map_one f) (D2_map_one g) :=
+    (α : RecTwoMorphism f g) : SpTwoMorphism (D2_map_one f) (D2_map_one g) :=
   { homotopy := (DFunctor_map g).matrix - (DFunctor_map f).matrix
     condition := by
       calc
@@ -83,9 +83,9 @@ D₂(β ∘_v α) = D₂(β) ∘_v D₂(α)
 -/
 theorem D2_preserves_vertical_comp {X Y : RecObj} {f g h : X ⟶ Y}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h) :
-    D2_map_two (vertComp α β) = specVertComp (D2_map_two α) (D2_map_two β) := by
+    D2_map_two (vertComp α β) = spVertComp (D2_map_two α) (D2_map_two β) := by
   ext
-  simp [D2_map_two, vertComp, specVertComp]
+  simp [D2_map_two, vertComp, spVertComp]
 
 /--
 Theorem: D₂ preserves horizontal composition.
@@ -94,18 +94,18 @@ D₂(α ∘_h α') = D₂(α) ∘_h D₂(α')
 theorem D2_preserves_horizontal_comp {X Y Z : RecObj}
     {f g : X ⟶ Y} {f' g' : Y ⟶ Z}
     (α : RecTwoMorphism f g) (α' : RecTwoMorphism f' g') :
-    D2_map_two (horizComp α α') = specHorizComp (D2_map_two α) (D2_map_two α') := by
+    D2_map_two (horizComp α α') = spHorizComp (D2_map_two α) (D2_map_two α') := by
   ext
-  simp [D2_map_two, horizComp, specHorizComp]
+  simp [D2_map_two, horizComp, spHorizComp]
 
 /--
 Theorem: D₂ preserves identity 2-morphisms.
 D₂(id_f) = id_{D(f)}
 -/
 theorem D2_preserves_identity {X Y : RecObj} (f : X ⟶ Y) :
-    D2_map_two (idTwoMorphism f) = specIdTwoMorphism (D2_map_one f) := by
+    D2_map_two (idTwoMorphism f) = spIdTwoMorphism (D2_map_one f) := by
   ext
-  simp [D2_map_two, idTwoMorphism, specIdTwoMorphism]
+  simp [D2_map_two, idTwoMorphism, spIdTwoMorphism]
 
 /--
 Corollary: D₂ is a 2-functor (all four axioms verified).

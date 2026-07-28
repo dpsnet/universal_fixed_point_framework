@@ -18,7 +18,7 @@ import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Tactic.DeriveFintype
 import UFPFormalization.Unified3Theorem
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import UFPFormalization.SpCategory
 import UFPFormalization.DHStructuralAnalysis
 
@@ -35,8 +35,8 @@ namespace UFPFormalization.BranchCounting
 
     层 0: SpObj（对象）           ❌ 非主动（不生成态射自由度）
     层 1: SpHom（1-态射）         ✅ 主动（谱流映射）
-    层 2: SpecTwoMorphism（2-态射） ✅ 主动（同伦变换）
-    层 3: SpecThreeMorphism（3-态射） ✅ 主动（高阶变换）
+    层 2: SpTwoMorphism（2-态射） ✅ 主动（同伦变换）
+    层 3: SpThreeMorphism（3-态射） ✅ 主动（高阶变换）
     层 4: 4-态射（coherence）     ❌ 非主动（仅 coherence 条件）
 
    总层数 N_total = 5

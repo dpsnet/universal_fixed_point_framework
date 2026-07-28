@@ -10,7 +10,7 @@
   2. 主动生成层与 GenSpace (ℂ³) 的表示等价
   3. N_gen = 3 的推导（非额外输入）
 
-状态：缺口 1 已闭合 —— 3-态射 (SpecThreeMorphism) 已在 HigherSpecCategory.lean
+状态：缺口 1 已闭合 —— 3-态射 (SpThreeMorphism) 已在 HigherSpCategory.lean
       中定义，本文件建立从主动生成层到 GenSpace 的显式同构。
       缺口 2 已闭合 —— BottTower.lean 建立 spinorDim(k) = 8×2^k 的翻倍结构，
       证明 k_max = 2^{N_active}，因此 log₂(k_max) = N_active = 3。
@@ -18,7 +18,7 @@
 -/
 
 import UFPFormalization.SpCategory
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Nat.Basic
@@ -42,8 +42,8 @@ universe u
    ┌────────────────────────────────────────────────────┐
    │ 层 0：SpObj（对象）—— 不生成动力学自由度           │
    │ 层 1：SpHom（1-态射）—— 谱流，生成第一代           │
-   │ 层 2：SpecTwoMorphism（2-态射）—— 同伦，生成第二代 │
-   │ 层 3：SpecThreeMorphism（3-态射）—— 高阶变换，生成第三代 │
+   │ 层 2：SpTwoMorphism（2-态射）—— 同伦，生成第二代 │
+   │ 层 3：SpThreeMorphism（3-态射）—— 高阶变换，生成第三代 │
    │ 层 4：4-态射（coherence）—— 不生成物理自由度       │
    └────────────────────────────────────────────────────┘
    主动生成层 = 层 1, 2, 3（排除对象层和 coherence 层）。
@@ -52,8 +52,8 @@ universe u
 /-- 主动生成层类型，对应 𝐒𝐩 4-范畴中三个非平凡的态射层。 -/
 inductive ActiveMorphismLayer : Type
   | first    : ActiveMorphismLayer   -- 层 1：SpHom（1-态射）
-  | second   : ActiveMorphismLayer   -- 层 2：SpecTwoMorphism（2-态射）
-  | third    : ActiveMorphismLayer   -- 层 3：SpecThreeMorphism（3-态射）
+  | second   : ActiveMorphismLayer   -- 层 2：SpTwoMorphism（2-态射）
+  | third    : ActiveMorphismLayer   -- 层 3：SpThreeMorphism（3-态射）
   deriving DecidableEq, Fintype
 
 /-- 主动生成层的基数。 -/
@@ -72,9 +72,9 @@ def layerToSpType (l : ActiveMorphismLayer) : Type :=
   match l with
   | ActiveMorphismLayer.first  => Σ (X Y : SpObj), X ⟶ Y
   | ActiveMorphismLayer.second => Σ (X Y : SpObj) (P Q : X ⟶ Y),
-      SpecTwoMorphism P Q
-  | ActiveMorphismLayer.third  => Σ (X Y : SpObj) (P Q : X ⟶ Y) (α β : SpecTwoMorphism P Q),
-      SpecThreeMorphism α β
+      SpTwoMorphism P Q
+  | ActiveMorphismLayer.third  => Σ (X Y : SpObj) (P Q : X ⟶ Y) (α β : SpTwoMorphism P Q),
+      SpThreeMorphism α β
 
 /-- 所有三个主动生成层对应的 𝐒𝐩 高阶结构均非空（至少包含恒等态射）。
     这是 𝐒𝐩 作为严格 4-范畴的基本性质。 -/
@@ -83,11 +83,11 @@ theorem each_layer_nonempty (l : ActiveMorphismLayer) : Nonempty (layerToSpType 
   · -- 层 1：取恒等对象
     refine ⟨SpObj.mk 1 1, SpObj.mk 1 1, 𝟙 (SpObj.mk 1 1)⟩
   · -- 层 2：取恒等 2-态射
-    refine ⟨SpObj.mk 1 1, SpObj.mk 1 1, 𝟙 _, 𝟙 _, specIdTwoMorphism (𝟙 _)⟩
+    refine ⟨SpObj.mk 1 1, SpObj.mk 1 1, 𝟙 _, 𝟙 _, spIdTwoMorphism (𝟙 _)⟩
   · -- 层 3：取恒等 3-态射
     refine ⟨SpObj.mk 1 1, SpObj.mk 1 1, 𝟙 _, 𝟙 _,
-      specIdTwoMorphism (𝟙 _), specIdTwoMorphism (𝟙 _),
-      specIdThreeMorphism (specIdTwoMorphism (𝟙 _))⟩
+      spIdTwoMorphism (𝟙 _), spIdTwoMorphism (𝟙 _),
+      spIdThreeMorphism (spIdTwoMorphism (𝟙 _))⟩
 
 /-! =========================================================
     §3 主动生成层 → GenSpace 的表示等价
@@ -175,13 +175,13 @@ theorem layer1_condition (X Y : SpObj) (P : X ⟶ Y) :
   rw [commutator, P.intertwine, sub_self]
 
 /-- 层 2（2-态射）的 condition = 交换子给出缺陷：commutator X Y α.homotopy = Q.P - P.P。 -/
-theorem layer2_condition {X Y : SpObj} {P Q : X ⟶ Y} (α : SpecTwoMorphism P Q) :
+theorem layer2_condition {X Y : SpObj} {P Q : X ⟶ Y} (α : SpTwoMorphism P Q) :
     commutator X Y α.homotopy = Q.P - P.P := by
   rw [commutator, α.condition]
 
 /-- 层 3（3-态射）的 condition = 交换子给出二阶缺陷：commutator X Y Ξ.secondHomotopy = β.homotopy - α.homotopy。 -/
-theorem layer3_condition {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpecTwoMorphism P Q}
-    (Ξ : SpecThreeMorphism α β) :
+theorem layer3_condition {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpTwoMorphism P Q}
+    (Ξ : SpThreeMorphism α β) :
     commutator X Y Ξ.secondHomotopy = β.homotopy - α.homotopy := by
   rw [commutator, Ξ.condition]
 

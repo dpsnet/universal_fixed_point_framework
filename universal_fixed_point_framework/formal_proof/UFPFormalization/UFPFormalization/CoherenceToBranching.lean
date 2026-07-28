@@ -200,12 +200,12 @@ theorem branchIndex_moran_solution :
 
     在 𝐒𝐩 严格 4-范畴中，每一层的态射类型不同：
     - 层 1：SpHom（矩阵 + 交织条件）
-    - 层 2：SpecTwoMorphism（同伦矩阵 + 交换子条件）
-    - 层 3：SpecThreeMorphism（二阶同伦矩阵 + 高阶交换子条件）
+    - 层 2：SpTwoMorphism（同伦矩阵 + 交换子条件）
+    - 层 3：SpThreeMorphism（二阶同伦矩阵 + 高阶交换子条件）
 
     由于这些是 Lean 中不同的归纳类型，类型系统本身保证了
-    不存在跨层重用：一个 SpecTwoMorphism 不能当做 SpHom 使用，
-    一个 SpecThreeMorphism 不能当做 SpecTwoMorphism 使用。
+    不存在跨层重用：一个 SpTwoMorphism 不能当做 SpHom 使用，
+    一个 SpThreeMorphism 不能当做 SpTwoMorphism 使用。
     
     此定理的"证明"由类型系统自动完成。 -/
 theorem commutator_levels_disjoint : True := by

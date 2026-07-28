@@ -1,5 +1,5 @@
 import UFPFormalization.HigherRecCategory
-import UFPFormalization.HigherSpecCategory
+import UFPFormalization.HigherSpCategory
 import UFPFormalization.InfinityCategory
 import UFPFormalization.StaticTopologyFormalization
 import Mathlib.CategoryTheory.Adjunction.Basic
