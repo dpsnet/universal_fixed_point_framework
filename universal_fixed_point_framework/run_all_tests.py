@@ -65,6 +65,7 @@ SCRIPTS = [
 
     # === 2026-07-29: δ 残差深入分析 (高精度, 无严格检查项) ===
     ("paperX_dH_residual_deep.py",           "残差 Δ 高精度分解：线性化误差闭式 + 2³×10⁻⁷ 假说证伪 (分析性)"),
+    ("paperX_dH_maxent_RMS.py",              "k = √N_total 最大熵推导：独立性+均匀性作为变分原理推论 (分析性)"),
 
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),
