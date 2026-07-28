@@ -50,6 +50,13 @@ SCRIPTS = [
     # === 2026-07-27: d_H 偏差 δ 的一阶响应推导 ===
     ("paperX_dH_moran_perturbation.py",        "d_H 偏差 δ 一阶响应推导 (Moran 微扰)"),
     ("paperX_dH_recursion_test.py",            "δ 两级粘合递归 IFS 检验 (递归不变性)"),
+
+    # === 2026-07-28: d_H 结构分析深入 (分析性, 无严格检查项) ===
+    ("paperX_dH_epsbar_3map.py",              "ε̄/ε₃ = √5 数值发现 (分析性)"),
+    ("paperX_dH_analytic_ratio.py",           "ε̄/ε₃ 解析推导尝试 (分析性)"),
+    ("paperX_dH_residual_check.py",           "残差 Δ 与 2³×10⁻⁷ 吻合检查 (分析性)"),
+    ("paperX_dH_closed_form.py",              "d_H 一阶闭式表达式验证 (分析性)"),
+    ("paperX_dH_eta_origin.py",               "η 谱间隙来源扫描 (分析性)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
