@@ -280,58 +280,126 @@ theorem uniform_ifs_dH_unique {X : Type} [MetricSpace X] [CompleteSpace X]
 -/
 
 /-- 物理 3-map IFS 的收缩率 c₁(d) = e^{-3-d}。 -/
-def c1_physical (d : ℝ) : ℝ := Real.exp (-(3 + d))
+noncomputable def c1_physical (d : ℝ) : ℝ := Real.exp (-(3 + d))
 
 /-- 物理 3-map IFS 的收缩率 c₂(d) = e^{-d}。 -/
-def c2_physical (d : ℝ) : ℝ := Real.exp (-d)
+noncomputable def c2_physical (d : ℝ) : ℝ := Real.exp (-d)
 
-/-- 给定 d，由 Moran 方程 c₁^d + c₂^d + c₃^d = 1 解出的 c₃(d)。 -/
+/-- 给定 d，由 Moran 方程 c₁^d + c₂^d + c₃^d = 1 解出的 c₃(d)。
+    注意：底数 1 − c₁^d − c₂^d 为正需要 d ≥ 1（`one_sub_c1d_c2d_pos`）；
+    物理取值 d ≈ 2.7095 远在此范围内。 -/
 noncomputable def c3_physical (d : ℝ) : ℝ :=
   (1 - (c1_physical d) ^ d - (c2_physical d) ^ d) ^ (1 / d)
 
-theorem moran_3map_holds (d : ℝ) (hdpos : d > 0) :
-    (c1_physical d) ^ d + (c2_physical d) ^ d + (c3_physical d) ^ d = 1 := by
-  dsimp [c3_physical, c1_physical, c2_physical]
-  have h : 0 ≤ 1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d := by
-    -- 对 d > 0, c₁^d + c₂^d < 1, 所以根号内为正
-    have hsum : (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d < 1 := by
-      -- e^{-(3+d)d} + e^{-d²} < e^{-d²} + e^{-d²} = 2e^{-d²} < 1 对 d ≥ 1
-      sorry
-    nlinarith
-  -- 代数恒等式: x^(1/d)^d = x (对 x ≥ 0)
-  -- 使用 (a ^ (1/d)) ^ d = a
-  have hpos : 0 ≤ 1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d := h
-  calc
-    (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d +
-      ((1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d) ^ (1 / d)) ^ d
-        = (Real.exp (-(3 + d))) ^ d + (Real.exp (-d)) ^ d +
-          (1 - (Real.exp (-(3 + d))) ^ d - (Real.exp (-d)) ^ d) := by
-      rw [Real.rpow_mul_log ?_ ?_]  -- 需要处理 rpow 的严格正性
-    _ = 1 := by ring
+theorem c1_physical_pos (d : ℝ) : 0 < c1_physical d := Real.exp_pos _
 
-/-- 物理 3-map IFS，定义在 ℝ 上，收缩率 c₁, c₂, c₃。
+theorem c2_physical_pos (d : ℝ) : 0 < c2_physical d := Real.exp_pos _
+
+/-- c₃ 的底数严格为正（对 d ≥ 1）：
+    c₁^d = e^{-(3+d)d} ≤ e⁻¹ 且 c₂^d = e^{-d²} ≤ e⁻¹（d ≥ 1 时指数均 ≤ −1），
+    故 c₁^d + c₂^d ≤ 2/e < 1（用 e > 2，经 `Real.exp_one_gt_d9`）。 -/
+theorem one_sub_c1d_c2d_pos (d : ℝ) (hd : 1 ≤ d) :
+    0 < 1 - (c1_physical d) ^ d - (c2_physical d) ^ d := by
+  have h1 : (c1_physical d) ^ d ≤ Real.exp (-1) := by
+    have hpos : (0 : ℝ) < c1_physical d := c1_physical_pos d
+    rw [Real.rpow_def_of_pos hpos]
+    apply Real.exp_le_exp.mpr
+    have hlog : Real.log (c1_physical d) = -(3 + d) := Real.log_exp _
+    rw [hlog]
+    nlinarith [hd]
+  have h2 : (c2_physical d) ^ d ≤ Real.exp (-1) := by
+    have hpos : (0 : ℝ) < c2_physical d := c2_physical_pos d
+    rw [Real.rpow_def_of_pos hpos]
+    apply Real.exp_le_exp.mpr
+    have hlog : Real.log (c2_physical d) = -d := Real.log_exp _
+    rw [hlog]
+    nlinarith [hd]
+  have he : (2 : ℝ) < Real.exp 1 := lt_trans (by norm_num) Real.exp_one_gt_d9
+  have h9 : Real.exp (-1) < 1 / 2 := by
+    rw [Real.exp_neg, inv_eq_one_div]
+    exact one_div_lt_one_div_of_lt (by norm_num) he
+  have p1 : 0 ≤ (c1_physical d) ^ d :=
+    Real.rpow_nonneg (le_of_lt (c1_physical_pos d)) d
+  have p2 : 0 ≤ (c2_physical d) ^ d :=
+    Real.rpow_nonneg (le_of_lt (c2_physical_pos d)) d
+  linarith
+
+theorem c3_physical_pos (d : ℝ) (hd : 1 ≤ d) : 0 < c3_physical d := by
+  dsimp [c3_physical]
+  exact Real.rpow_pos_of_pos (one_sub_c1d_c2d_pos d hd) _
+
+theorem c1_physical_lt_one (d : ℝ) (hd : 1 ≤ d) : c1_physical d < 1 := by
+  dsimp [c1_physical]
+  rw [Real.exp_lt_one_iff]
+  linarith
+
+theorem c2_physical_lt_one (d : ℝ) (hd : 1 ≤ d) : c2_physical d < 1 := by
+  dsimp [c2_physical]
+  rw [Real.exp_lt_one_iff]
+  linarith
+
+theorem c3_physical_lt_one (d : ℝ) (hd : 1 ≤ d) : c3_physical d < 1 := by
+  dsimp [c3_physical]
+  have hbase := one_sub_c1d_c2d_pos d hd
+  have p1 : 0 < (c1_physical d) ^ d := Real.rpow_pos_of_pos (c1_physical_pos d) d
+  have p2 : 0 < (c2_physical d) ^ d := Real.rpow_pos_of_pos (c2_physical_pos d) d
+  have hlt1 : 1 - (c1_physical d) ^ d - (c2_physical d) ^ d < 1 := by linarith
+  have hdpos : (0 : ℝ) < d := by linarith
+  exact Real.rpow_lt_one (le_of_lt hbase) hlt1 (one_div_pos.mpr hdpos)
+
+/-- Moran 方程对物理 3-map IFS 成立（d ≥ 1）。
+    （2026-07-29 修正：原陈述对任意 d > 0 为假——d 小时底数 1 − c₁^d − c₂^d
+    为负，c₃ 无定义；且原证明依赖不存在的 `Real.rpow_mul_log` 并含 `sorry`。） -/
+theorem moran_3map_holds (d : ℝ) (hd : 1 ≤ d) :
+    (c1_physical d) ^ d + (c2_physical d) ^ d + (c3_physical d) ^ d = 1 := by
+  have hbase := one_sub_c1d_c2d_pos d hd
+  have hnn := le_of_lt hbase
+  have hdne : d ≠ 0 := ne_of_gt (by linarith : (0 : ℝ) < d)
+  dsimp [c3_physical]
+  rw [← Real.rpow_mul hnn, one_div_mul_cancel hdne, Real.rpow_one]
+  ring
+
+/-- 仿射映射 f(x) = c·x + t 以 c 为收缩率（距离等式成立）。
+    `ContractingWith K f` 是 `K < 1 ∧ LipschitzWith K f` 的合取。 -/
+theorem contracting_affine (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (t : ℝ) :
+    ContractingWith (NNReal.mk c hc0) (fun x : ℝ => c * x + t) := by
+  refine ⟨hc1, LipschitzWith.of_dist_le_mul (fun x y => ?_)⟩
+  simp only [Real.dist_eq]
+  rw [show c * x + t - (c * y + t) = c * (x - y) by ring, abs_mul, abs_of_nonneg hc0,
+    NNReal.coe_mk]
+
+/-- 物理 3-map IFS（d ≥ 1），定义在 ℝ 上，收缩率 c₁, c₂, c₃。
     映射选择 f_i(x) = c_i · x + t_i（平移 t_i 固定为 0, 0.5, 1.0）。
-    该 IFS 的吸引子有 3 个连通分量，对应 N_active = 3 个态射层。 -/
-noncomputable def physicalIFS (d : ℝ) : IFS ℝ :=
+    该 IFS 的吸引子有 3 个连通分量，对应 N_active = 3 个态射层。
+    （2026-07-29：全部 sorry 已消除，所有引理机器证明。） -/
+noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
   IFS.mk 3
     (fun i => match i with
-      | 0 => fun x : ℝ => c1_physical d * x
+      | 0 => fun x : ℝ => c1_physical d * x + 0
       | 1 => fun x : ℝ => c2_physical d * x + 0.5
       | 2 => fun x : ℝ => c3_physical d * x + 1.0)
     (fun i => match i with
-      | 0 => ⟨c1_physical d, by positivity⟩
-      | 1 => ⟨c2_physical d, by positivity⟩
-      | 2 => ⟨c3_physical d, by positivity⟩)
+      | 0 => NNReal.mk (c1_physical d) (le_of_lt (c1_physical_pos d))
+      | 1 => NNReal.mk (c2_physical d) (le_of_lt (c2_physical_pos d))
+      | 2 => NNReal.mk (c3_physical d) (le_of_lt (c3_physical_pos d hd)))
     (by
       intro i
-      -- 每个 f_i 是收缩映射，收缩率 = c_i
-      -- ContractingWith 证明: |f_i(x) - f_i(y)| = c_i · |x - y|
-      sorry)
+      fin_cases i
+      · exact contracting_affine (c1_physical d) (le_of_lt (c1_physical_pos d))
+          (c1_physical_lt_one d hd) 0
+      · exact contracting_affine (c2_physical d) (le_of_lt (c2_physical_pos d))
+          (c2_physical_lt_one d hd) 0.5
+      · exact contracting_affine (c3_physical d) (le_of_lt (c3_physical_pos d hd))
+          (c3_physical_lt_one d hd) 1.0)
     (by
       intro i
-      -- c_i > 0
-      positivity)
+      fin_cases i
+      · exact c1_physical_pos d
+      · exact c2_physical_pos d
+      · exact c3_physical_pos d hd)
     (by
       intro i
-      -- c_i < 1（对物理 d ≈ 2.7095 成立）
-      sorry)
+      fin_cases i
+      · exact c1_physical_lt_one d hd
+      · exact c2_physical_lt_one d hd
+      · exact c3_physical_lt_one d hd)
