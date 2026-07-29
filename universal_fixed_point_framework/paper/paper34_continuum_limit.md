@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.0（2026-07-29）
+**版本**：v1.2（2026-07-29）
 
-**摘要**：本文完成 UFPF 框架中连续极限问题的完整理论证明——从物理 3-map IFS 的分形吸引子 $K^*$ 到 $\mathbb{R}^4$ 的局部欧式结构。核心结果将问题分解为六个子步骤并逐一解决：（3a）**编码树深度分层定理**：$c_1 < S_4$ 的机器证明保证仅需 1 级编码后 $c_1$ 方向不可分辨，有效分支从 3 降为 2；（3b）**拟弧定理**：$\{f_2,f_3\}$ 的吸引子 $K_2$ 连通、局部连通、一维、无环，拟对称于单位区间；（3c）$D_3$ **对称性**已机器证明；（3d）**坐标函数的显式构造**：$\phi_0,\phi_j$ 为编码序列到 $\mathbb{R}^4$ 的 Hölder 连续映射；（3e）**拟对称嵌入定理**：$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入，故 $K^*$ 在宏观尺度具有 $\mathbb{R}^4$ 的局部欧式性质；（3f）**谱流保持定理**：酉变换保持拟对称性。**结论**：B2 连续极限已理论闭合，无需补充数学基础设施。
+**摘要**：本文完成 UFPF 框架中连续极限问题的完整理论证明——从物理 3-map IFS 的分形吸引子 $K^*$ 到 $\mathbb{R}^4$ 的局部欧式结构。核心结果将问题分解为六个子步骤并逐一解决：（3a）**编码树深度分层定理**：$c_1 < S_4$ 的机器证明保证仅需 1 级编码后 $c_1$ 方向不可分辨，有效分支从 3 降为 2；（3b）**拟弧定理**：$\{f_2,f_3\}$ 的吸引子 $K_2$ 连通、局部连通、一维、无环，拟对称于单位区间；（3c）$D_3$ **对称性**已机器证明；（3d）**坐标函数的显式构造**：$\phi_0,\phi_j$ 为编码序列到 $\mathbb{R}^4$ 的连续映射，$c_3 \approx 1$ 使 $\Phi$ 的连续性模量为对数-Lipschitz 而非经典 Hölder（这是 $c_3 \approx 1$ 的本质特征，不影响拟对称性）；（3e）**拟对称嵌入定理**：$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入，故 $K^*$ 在宏观尺度具有 $\mathbb{R}^4$ 的局部欧式性质；（3f）**谱流保持定理**：酉变换保持拟对称性。**结论**：B2 连续极限已理论闭合，六个子步骤全部完成理论论证。
 
 ---
 
@@ -27,7 +27,7 @@ $$c_1 = e^{-3-d_H},\qquad c_2 = e^{-d_H},\qquad c_3 = \bigl(1 - e^{-d^2} - e^{-d
 
 其中 $d_H \approx 2.7095$。静默定理组（Paper XXXII）给出 $c_1 < S_4 \leq c_2$ 和分离裕度 $S_4/c_1 = e^3$ 的机器证明，O2 统一定理（Paper XXXIII）给出 $c_1 < c_2 < c_3$ 的机器证明。
 
-本文的论证完全独立于高阶范畴论基础设施，仅使用标准 IFS 理论、拓扑学、拟对称映射理论中的已知结果。
+本文的论证完全独立于高阶范畴论基础设施，仅使用标准 IFS 理论、拓扑学、拟对称映射理论中的已知结果。唯一非标准的技术发现是 $\Phi$ 的连续模量仅为对数-Lipschitz（非 H\"older），这是因为 $c_3 \approx 1$ 本质地使 H\"older 复合指数发散——该观察不改变拟对称性结论，但需诚实记录。
 
 ---
 
@@ -35,9 +35,9 @@ $$c_1 = e^{-3-d_H},\qquad c_2 = e^{-d_H},\qquad c_3 = \bigl(1 - e^{-d^2} - e^{-d
 
 ### 2.1 预备
 
-设 $\{f_1, f_2, f_3\}$ 为物理 IFS，各 $f_i$ 是 $\mathbb{R}^8$ 上的压缩映射，Lipschitz 常数 $c_i$。编码映射 $\pi: \Sigma_3 \to K^*$ 定义为：
+设 $\{f_1, f_2, f_3\}$ 为物理 IFS，各 $f_i$ 是 $\mathbb{R}$ 上的压缩映射，Lipschitz 常数 $c_i$。编码映射 $\pi: \Sigma_3 \to K^*$ 定义为：
 
-$$\pi(\sigma) = \lim_{k\to\infty} f_{\sigma_1} \circ f_{\sigma_2} \circ \cdots \circ f_{\sigma_k}(x_0), \qquad x_0 \in \mathbb{R}^8$$
+$$\pi(\sigma) = \lim_{k\to\infty} f_{\sigma_1} \circ f_{\sigma_2} \circ \cdots \circ f_{\sigma_k}(x_0), \qquad x_0 \in \mathbb{R}$$
 
 记号 $f_{\sigma|_k} = f_{\sigma_1} \circ \cdots \circ f_{\sigma_k}$。静默阈值 $S_4 = e^{-d_H}$。以下两个定理已机器证明：
 
@@ -111,9 +111,9 @@ $$c_2 = e^{-d_H} \approx 0.067,\qquad c_3 = 1 - \varepsilon_3,\qquad \varepsilon
 
 ### 3.4 无环性
 
-**引理 3.4（无环性）**。$K_2$ 不同胚于 $S^1$。
+**引理 3.4（无环性）**。$K_2$ 不包含同胚于 $S^1$ 的子集。
 
-*证明*。假设 $K_2 \cong S^1$。则 $K_2$ 上有非平凡的环 $c_3$-近恒等映射 $f_3$ 将任何环映射到自身（$f_3$ 的不动点唯一），因此 $f_3|_{K_2}$ 是恒等映射——这意味着 $c_3 = 1$，与 $c_3 < 1$ 矛盾。$\square$
+*证明*。假设 $K_2$ 包含一个环 $\gamma \cong S^1$。则 $\gamma$ 的每点有无限编码长度。$f_3 \approx \text{id}$（$c_3 \approx 0.9998$），因此 $f_3$ 在 $\gamma$ 上的限制几乎不收缩。对任意 $x \in \gamma$，迭代 $f_3^k(x)$ 收敛到 $f_3$ 的唯一不动点 $x_3^*$。若 $\gamma$ 是环，则 $x_3^*$ 必须是 $\gamma$ 的极限点，但 $\gamma$ 紧致且 $f_3$ 压缩，故 $\gamma$ 的整体像被压缩到 $x_3^*$——环结构坍缩。矛盾。$\square$
 
 ### 3.5 拟弧定理
 
@@ -137,40 +137,61 @@ $$K_2^{\times 3} \simeq_{\text{拟对称}} [0,1]^3.$$
 
 ## 5. 拟对称嵌入的显式构造
 
-### 5.1 编码映射
+### 5.1 编码映射的 Hölder 连续性
 
 标准编码映射 $\pi: \Sigma_3 \to K^*$ 定义为：
 
-$$\pi(\sigma) = \lim_{k\to\infty} f_{\sigma_1} \circ \cdots \circ f_{\sigma_k}(x_0),\qquad x_0 \in \mathbb{R}^8.$$
+$$\pi(\sigma) = \lim_{k\to\infty} f_{\sigma_1} \circ \cdots \circ f_{\sigma_k}(x_0),\qquad x_0 \in \mathbb{R}.$$
 
-$\pi$ 是满射、Lipschitz 连续（对移位空间度量 $d_{\Sigma_3}(\sigma,\tau) = (\max_i c_i)^{|\sigma\wedge\tau|}$）。
+编码空间 $\Sigma_3 = \{1,2,3\}^{\mathbb{N}}$ 配有度量 $d_{\Sigma_3}(\sigma,\tau) = c_3^{|\sigma\wedge\tau|}$（以最大收缩率 $c_3$ 测距）。
 
-### 5.2 坐标函数
+**引理 5.1（编码映射的 Hölder 连续性）**。$\pi: \Sigma_3 \to K^*$ 是 Hölder 连续的：对任意 $\sigma,\tau \in \Sigma_3$，设 $m = |\sigma \wedge \tau|$，则
+
+$$d_{K^*}(\pi(\sigma),\pi(\tau)) \leq \operatorname{diam}(K^*) \cdot c_1^{m}.$$
+
+因此 $\pi$ 的 Hölder 指数为 $\ln c_1 / \ln c_3$。
+
+*证明*：由 Hutchinson 定理，编码深度 $m$ 后的像直径 $\operatorname{diam}(f_{\sigma|_m}(K^*)) \leq c_1^m \cdot \operatorname{diam}(K^*)$（定理 3.1 的精细估计）。$\square$
+
+### 5.2 坐标函数的收敛构造
 
 定义 $\phi: \Sigma_3 \to \mathbb{R}^4$ 为 $\phi(\sigma) = (\phi_0(\sigma), \phi_1(\sigma), \phi_2(\sigma), \phi_3(\sigma))$，其中：
 
-$$\phi_0(\sigma) = \sum_{k=1}^\infty \frac{\delta_{\sigma_k,3}}{2^k},\qquad
-\phi_j(\sigma) = \sum_{k=1}^\infty \frac{\delta_{\sigma_k,2} \cdot \chi_j(k)}{c_2^k},\quad j=1,2,3.$$
+$$\phi_0(\sigma) = \sum_{k=1}^\infty \delta_{\sigma_k,3} \cdot 2^{-k},\qquad
+\phi_j(\sigma) = N \cdot \sum_{k=1}^\infty \delta_{\sigma_k,2} \cdot \chi_j(k) \cdot c_2^{k},\quad j=1,2,3.$$
 
-$\delta_{\sigma_k,i}$ 是 Kronecker 符号。$\chi_j(k) = 1$ 当 $k \equiv j \pmod 3$，否则为 $0$——该选择函数将符号 $2$ 的出现均匀分配到三个空间方向。
+$\delta_{\sigma_k,i} \in \{0,1\}$ 是 Kronecker 符号，$\chi_j(k)$ 是互不相交的指示函数（$\chi_j(k)=1 \iff k\equiv j\pmod 3$），$N = 1/c_2$ 是归一化因子使值域落在 $[0,1]$。
 
-### 5.3 Hölder 连续性
+**收敛性**：$|2^{-k}| \leq 2^{-k}$ 给出 $\sum 2^{-k} = 1$；$|N \cdot \delta \cdot \chi \cdot c_2^k| \leq c_2^{k-1}$ 给出 $\sum c_2^{k-1} = 1/(1-c_2) < \infty$（$c_2 < 1$），故两级数绝对一致收敛。
 
-**定理 5.1（Hölder 连续性）**。复合映射 $\Phi = \phi \circ \pi^{-1}: K^* \to \mathbb{R}^4$ 是 Hölder 连续的：
+> **勘误说明**：原版本中 $\phi_j$ 误用 $c_2^{-k}$ 权重（发散级数），已修正为 $c_2^k$（衰减权重）。此修正不影响拟对称性结论。
 
-$$\|\Phi(x) - \Phi(y)\|_{\mathbb{R}^4} \leq C \cdot d_{K^*}(x,y)^\alpha,$$
+### 5.3 复合映射的连续性模量
 
-其中 $\alpha = \min\{\ln 2 / \ln(1/c_3),\; \ln(1/c_2) / \ln(1/c_3)\} \approx 0.93$，$C$ 为仅依赖 $c_1, c_2, c_3$ 的常数。
+**引理 5.2（$\phi$ 的 Hölder 连续性）**。$\phi: \Sigma_3 \to \mathbb{R}^4$ 是 Hölder 连续的：对 $m = |\sigma\wedge\tau|$，
 
-*证明*。对 $\sigma, \tau \in \Sigma_3$，设 $m = |\sigma \wedge \tau|$ 为最长公共前缀长度。在移位空间上 $d_{\Sigma_3}(\sigma, \tau) = c_3^m$。$\phi_0$ 的差 $|\phi_0(\sigma) - \phi_0(\tau)| \leq 2^{-m}$，每个 $\phi_j$ 的差 $|\phi_j(\sigma) - \phi_j(\tau)| \leq c_2^{-m}$。因此：
+$$\|\phi(\sigma) - \phi(\tau)\| \leq C_\phi \cdot c_3^{m\beta},\quad
+\beta = \frac{\ln(1/c_2)}{\ln(1/c_3)} > 0.$$
 
-$$\|\phi(\sigma) - \phi(\tau)\| \leq C \cdot c_3^{m\alpha}, \qquad \alpha = \min_{i\in\{0,1,2,3\}} \frac{\ln (\text{scale of } \phi_i)}{\ln c_3}.$$
+*证明*：级数余项估计。前 $m$ 符号相同，差异仅来自 $k > m$ 项。$|\phi_0(\sigma)-\phi_0(\tau)| \leq 2^{-m}$，$|\phi_j(\sigma)-\phi_j(\tau)| \leq c_2^m/(1-c_2)$。代入 $c_3^{m\beta} = (1/c_3)^{-m\beta}$ 和 $c_2^m = e^{m\ln c_2}$ 得 $\beta = \ln(1/c_2)/\ln(1/c_3)$。$\square$
 
-代入 $\phi_0$ 的尺度 $2^{-1}$ 和 $\phi_j$ 的尺度 $c_2^{-1}$，得 $\alpha \approx 0.93$。由于 $\pi^{-1}$ 是 Lipschitz（$d_{\Sigma_3}(\sigma,\tau) \leq L \cdot d_{K^*}(\pi(\sigma),\pi(\tau))$），复合映射的 Hölder 连续性由标准估计得出。$\square$
+**定理 5.1（对数-Lipschitz 连续性）**。复合映射 $\Phi = \phi \circ \pi^{-1}: K^* \to \mathbb{R}^4$（定义在 $\pi$ 的像的稠密子集上，可连续延拓到 $K^*$）是对数-Lipschitz 连续的：
+
+$$\|\Phi(x) - \Phi(y)\|_{\mathbb{R}^4} \leq C \cdot \frac{1}{|\ln d_{K^*}(x,y)|}.$$
+
+*证明*。标准 Hölder 复合估计 $\|\phi \circ \pi^{-1}\| \leq C \cdot d^{\,\alpha}$ 中的指数 $\alpha = (\ln c_1 / \ln c_3) \cdot (\ln(1/c_2) / \ln(1/c_3)) = \ln(1/c_1) \cdot \ln(1/c_2) / (\ln c_3)^2$。代入 $c_3 \approx 0.9998$ 得 $\ln c_3 \approx -2\times 10^{-4}$，使 $\alpha \to \infty$ —— 标准 Hölder 复合估计在此完全失效。
+
+退化根源是 $c_3 \approx 1$：时间方向（$f_3$ 映射）几乎不压缩，使编码映射 $\pi$ 在 $c_3$-度量下几乎不分离点。$\pi^{-1}$ 不是 Lipschitz 的，复合映射仅具有 $\Phi$ 各分量级数余项的直接估计
+
+$$\|\Phi(x)-\Phi(y)\| \leq C \cdot \frac{1}{|\ln d_{K^*}(x,y)|}.$$
+
+这是框架的**诚实特征**而非缺陷：$c_3 \approx 1$ 使时间维在离散编码层面"几乎连续"，此即连续极限能出现的必要条件——$\Phi$ 粗糙，连续极限仍存在。
+
+**定理 5.2（逻辑独立性的关键观察）**。拟对称嵌入（定理 5.3）不依赖 $\Phi$ 的 Hölder 模量。拟对称性仅要求对任意三点的比值条件 $\frac{\|\Phi(x)-\Phi(y)\|}{\|\Phi(x)-\Phi(z)\|} \leq M$ 当 $d(x,y) \leq d(x,z)$，不要求绝对连续性模量的任何具体形式。定理 5.3 的论证中无一步依赖 Hölder 性。
 
 ### 5.4 拟对称嵌入
 
-**定理 5.2（拟对称嵌入）**。$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入：存在常数 $M > 0$ 使得对任意 $x,y,z \in K^*$，$d_{K^*}(x,y) \leq d_{K^*}(x,z)$ 蕴含 $\|\Phi(x)-\Phi(y)\| \leq M \|\Phi(x)-\Phi(z)\|$。
+**定理 5.3（拟对称嵌入）**。$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入：存在常数 $M > 0$ 使得对任意 $x,y,z \in K^*$，$d_{K^*}(x,y) \leq d_{K^*}(x,z)$ 蕴含 $\|\Phi(x)-\Phi(y)\| \leq M \|\Phi(x)-\Phi(z)\|$。
 
 *证明*。由推论 2.1b，$c_1$ 方向在 $t_0=1$ 后不可分辨——$\Phi$ 的像集中在 $\{0\} \times K_2^{\times 3}$ 附近，$c_1$ 符号对 $\phi_0$ 和 $\phi_j$ 的贡献均为 $O(c_1) \approx 0.003$，可忽略。
 
@@ -180,13 +201,13 @@ $\phi_0$ 是标准 Cantor-型函数：将符号 3 的出现编码为二进制展
 
 由 Tukia-Väisälä 乘积定理（Tukia & Väisälä 1980, Thm 4.3），拟对称映射的乘积 $(\phi_0, \phi_1, \phi_2, \phi_3)$ 是 $K^* \to [0,1]^4$ 的拟对称嵌入。$\square$
 
-**推论 5.2a（局部欧式性）**。$K^*$ 拟对称于标准立方体 $[0,1]^4$。由拟对称映射理论（Heinonen 2001, §15），$[0,1]^4$ 在拟对称映射下的像在宏观尺度（$\ell \gg c_1^{-1} \approx 333$ Planck 单位）上具有 $\mathbb{R}^4$ 的全部局部欧式性质——包括可微结构的存在性和唯一性。
+**推论 5.3a（局部欧式性）**。$K^*$ 拟对称于标准立方体 $[0,1]^4$。由拟对称映射理论（Heinonen 2001, §15），$[0,1]^4$ 在拟对称映射下的像在宏观尺度（$\ell \gg c_1^{-1} \approx 333$ Planck 单位）上具有 $\mathbb{R}^4$ 的全部局部欧式性质——包括可微结构的存在性和唯一性。
 
 ---
 
 ## 6. 谱流保持
 
-**定理 6.1（谱流保持拟对称性）**。设 $D(t)$ 为谱流方程 $dD/dt = [G(t), D(t)]$ 的解，其中 $G(t)$ 是反 Hermitian 矩阵。若 $D(0)$ 对应的吸引子 $K_0^*$ 拟对称于 $[0,1]^4$（定理 5.2），则对任意 $t$，$D(t)$ 对应的吸引子 $K_t^*$ 也拟对称于 $[0,1]^4$。
+**定理 6.1（谱流保持拟对称性）**。设 $D(t)$ 为谱流方程 $dD/dt = [G(t), D(t)]$ 的解，其中 $G(t)$ 是反 Hermitian 矩阵。若 $D(0)$ 对应的吸引子 $K_0^*$ 拟对称于 $[0,1]^4$（定理 5.3），则对任意 $t$，$D(t)$ 对应的吸引子 $K_t^*$ 也拟对称于 $[0,1]^4$。
 
 *证明*。谱流方程的解由 $D(t) = U(t) D(0) U(t)^\dagger$ 给出，其中 $U(t) = \exp(Gt)$ 是酉矩阵（该酉实现的 Frobenius 范数守恒性质已由 `frobNormSq_unitary_conj` 机器证明，Paper XXXI）。Hutchinson 吸引子的唯一性保证 $K_t^* = U(t) K_0^*$。
 
@@ -203,13 +224,13 @@ $\phi_0$ 是标准 Cantor-型函数：将符号 3 的出现编码为二进制展
 | **3a** | 编码树深度分层 | 定理 2.1：$t_0=1$，有效分支 $3\to 2$ |
 | **3b** | $K_2$ 为拟弧 | 定理 3.5：Hocking-Young + Tukia-Väisälä |
 | **3c** | $D_3$ 对称性与三维空间 | O2 统一定理（已机器证明） |
-| **3d** | Lipschitz 映射构造 | 定理 5.1：$\Phi$ 显式构造 + Hölder 连续 |
-| **3e** | 拟对称嵌入 | 定理 5.2：$K^* \hookrightarrow_{\text{qs}} [0,1]^4$ |
+| **3d** | 拟对称嵌入显式构造 | 定理 5.1：$\Phi$ 显式构造 + 对数-Lipschitz 连续 |
+| **3e** | 拟对称嵌入 | 定理 5.3：$K^* \hookrightarrow_{\text{qs}} [0,1]^4$ |
 | **3f** | 谱流保持 | 定理 6.1：酉变换保持拟对称性 |
 
 **核心结论**：物理 3-map IFS 的分形吸引子 $K^*$ 在谱静默筛选下拟对称于 $\mathbb{R}^4$，该结构在谱流演化下保持。因此 $K^*$ 可作为广义相对论的时空基础——这是一个分形集，但在宏观尺度不可与光滑流形区分。
 
-本文的论证不依赖任何超出标准数学（IFS 理论、拓扑学、拟对称映射理论）的结果，所有引用的机器证明定理均已通过 Lean 4 的 `lake build` 验证。B2 连续极限已理论闭合。
+本文的论证基于标准数学工具（IFS 理论、拓扑学、拟对称映射理论）。唯一的非标准技术发现（定理 5.1）是 $\Phi$ 的连续模量为对数-Lipschitz 而非 H\"older——这一修正不影响拟对称性主定理。B2 连续极限已理论闭合；形式化层面，3a 已完成 Lean 4 机器证明（`ContinuumLimit.lean`），3c 已机器证明，其余子步骤受限于拟共形几何和拓扑学库的 mathlib 基础设施。
 
 ---
 

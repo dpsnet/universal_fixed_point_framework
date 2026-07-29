@@ -152,17 +152,31 @@ $$K^*_{\text{有效}} \approx [0,1] \quad (\text{时间}, f_3) \times [0,1]^3 \q
 
 其中 $f_2^{\times 3}$ 是通过 Bott 塔的 $D_3$ 对称性将 $f_2$ 的吸引子提升到三个正交方向得到的。三个空间方向的等价性由 O2 统一定理（`c_physical_strictly_ordered`）保证——三收缩率 $c_1 < c_2 < c_3$ 中 $c_2$ 唯一地定义空间标度。
 
-## 5. Lipschitz 映射的显式构造
+## 5. Lipschitz 映射的显式构造（修正版 v1.49）
 
-### 5.1 编码映射
+### 5.1 编码映射的 Hölder 连续性
 
-IFS 吸引子 $K^*$ 的标准编码映射 $\pi: \Sigma_3 \to K^*$：
+IFS 吸引子 $K^*$ 的标准编码映射 $\pi: \Sigma_3 \to K^*$ 定义为：
 
 $$\pi(\sigma) = \lim_{k\to\infty} f_{\sigma_1} \circ f_{\sigma_2} \circ \cdots \circ f_{\sigma_k}(x_0)$$
 
-对任意 $x_0 \in \mathbb{R}^n$。$\pi$ 是满射、Lipschitz 连续（对移位空间的度量 $d(\sigma, \tau) = (\max_i c_i)^{|\sigma\wedge\tau|}$）。
+对任意 $x_0 \in \mathbb{R}$，极限存在且与 $x_0$ 无关。编码空间 $\Sigma_3 = \{1,2,3\}^{\mathbb{N}}$ 配有度量：
 
-### 5.2 四维坐标函数
+$$d_{\Sigma_3}(\sigma, \tau) = (\max c_i)^{|\sigma \wedge \tau|} = c_3^{|\sigma \wedge \tau|}$$
+
+其中 $|\sigma \wedge \tau|$ 是最长公共前缀长度，$c_3$ 是最大收缩率。
+
+**引理 5.1（编码映射的 Hölder 连续性）**。$\pi: \Sigma_3 \to K^*$ 是 Hölder 连续的：对任意 $\sigma, \tau \in \Sigma_3$，设 $m = |\sigma \wedge \tau|$，则
+
+$$d_{K^*}(\pi(\sigma), \pi(\tau)) \leq \operatorname{diam}(K^*) \cdot c_1^{m}$$
+
+因此，以 $\Sigma_3$ 度量 $d_{\Sigma_3}(\sigma,\tau) = c_3^m$ 衡量，$\pi$ 是 Hölder 指数为 $\ln c_1 / \ln c_3$ 的 Hölder 映射。
+
+*证明*：由 Hutchinson 定理，编码到深度 $m$ 后的像直径 $\operatorname{diam}(f_{\sigma|_m}(K^*)) \leq c_1^m \cdot \operatorname{diam}(K^*)$，因为 $c_1 = \min_i c_i$ 是最强压缩且 $f_{\sigma|_m}$ 中至少包含一次 $c_1$（若 $\sigma_1 = 1$）或至多 $m$ 次 $c_3$ 压缩。最紧的上界由 $c_1$ 决定（见定理 3.1）。$\square$
+
+### 5.2 四维坐标函数的收敛构造
+
+**关键修正**：原笔记中 $\phi_j$ 使用 $c_2^{-k}$ 权重导致发散。修正为 $c_2^k$（衰减权重），保证级数绝对收敛。
 
 定义 $\phi: \Sigma_3 \to \mathbb{R}^4$ 为：
 
@@ -170,38 +184,82 @@ $$\phi(\sigma) = \bigl(\phi_0(\sigma),\; \phi_1(\sigma),\; \phi_2(\sigma),\; \ph
 
 其中：
 
-$$\phi_0(\sigma) = \sum_{k=1}^{\infty} \frac{\delta_{\sigma_k,3}}{2^k}, \qquad
-\phi_j(\sigma) = \sum_{k=1}^{\infty} \frac{\delta_{\sigma_k,2} \cdot \chi_j(k)}{c_2^k}, \quad j=1,2,3$$
+$$\phi_0(\sigma) = \sum_{k=1}^{\infty} \delta_{\sigma_k,3} \cdot 2^{-k}, \qquad
+\phi_j(\sigma) = N \cdot \sum_{k=1}^{\infty} \delta_{\sigma_k,2} \cdot \chi_j(k) \cdot c_2^{k}, \quad j=1,2,3$$
 
-这里 $\delta_{\sigma_k,i}$ 是 Kronecker 符号（$\sigma_k = i$ 时为 1，否则 0），$\chi_j(k)$ 是 $\{1,2,3\}$ 值的选择函数，将编码序列中符号 $2$ 的出现均匀分配到三个空间方向（例如 $\chi_j(k) = 1$ 当 $k \equiv j \pmod 3$）。
+这里 $\delta_{\sigma_k,i} \in \{0,1\}$ 是 Kronecker 符号，$\chi_j: \mathbb{N} \to \{0,1\}$ 是互不相交的指示函数（$\sum_{j=1}^3 \chi_j(k) = 1$ 对任意 $k$，且各 $\chi_j$ 在 $\mathbb{N}$ 上无限支撑，例如 $\chi_j(k) = 1 \iff k \equiv j \pmod 3$），$N = 1/c_2$ 是归一化因子使得 $\phi_j$ 的值域落在 $[0,1]$。
 
-**定理 5.1（Lipschitz 连续）**。$\Phi = \phi \circ \pi^{-1}: K^* \to \mathbb{R}^4$ 是 Hölder 连续的，满足：
+**收敛性**：
+- $\phi_0$：$|2^{-k}| \leq 2^{-k}$，$\sum 2^{-k} = 1$，绝对收敛。
+- $\phi_j$：$|N \cdot \delta_{\sigma_k,2} \cdot \chi_j(k) \cdot c_2^{k}| \leq N \cdot c_2^k = c_2^{k-1}$，$\sum c_2^{k-1} = 1/(1-c_2) < \infty$（因为 $c_2 < 1$），绝对一致收敛。
+
+### 5.3 四维坐标函数的 Hölder 连续性
+
+**引理 5.2（$\phi$ 的 Hölder 连续性）**。$\phi: \Sigma_3 \to \mathbb{R}^4$ 是 Hölder 连续的。对任意 $\sigma, \tau \in \Sigma_3$，设 $m = |\sigma \wedge \tau|$，则存在常数 $C_\phi$ 和 $\beta > 0$ 使得：
+
+$$\|\phi(\sigma) - \phi(\tau)\|_{\mathbb{R}^4} \leq C_\phi \cdot c_3^{m\beta}$$
+
+*证明*：分分量估计。前 $m$ 个编码符号 $\sigma_1,\dots,\sigma_m = \tau_1,\dots,\tau_m$ 相同，因此 $\phi_0(\sigma) - \phi_0(\tau)$ 仅由第 $m+1$ 位后的差异贡献：
+
+$$|\phi_0(\sigma) - \phi_0(\tau)| \leq \sum_{k=m+1}^{\infty} 2^{-k} = 2^{-m}$$
+
+对 $\phi_j$ 分量：
+
+$$|\phi_j(\sigma) - \phi_j(\tau)| \leq N \cdot \sum_{k=m+1}^{\infty} c_2^k = N \cdot \frac{c_2^{m+1}}{1-c_2} = \frac{c_2^m}{1-c_2}$$
+
+因此：
+
+$$\|\phi(\sigma) - \phi(\tau)\| \leq \sqrt{ (2^{-m})^2 + 3 \cdot \left(\frac{c_2^m}{1-c_2}\right)^2 } \leq C \cdot c_3^{m\beta}$$
+
+其中 $\beta = \min\{\ln 2 / \ln(1/c_3),\; \ln(1/c_2) / \ln(1/c_3)\} = \ln(1/c_2)/\ln(1/c_3) > 0$（因为 $c_2 < c_3$），$C$ 为仅依赖 $c_2, c_3$ 的常数。$\square$
+
+**定理 5.3（复合映射的 Hölder 连续性）**。令 $\Phi = \phi \circ \pi^{-1}: K^* \to \mathbb{R}^4$（定义在 $\pi$ 的像上，即 $K^*$ 的稠密子集），则 $\Phi$ 可连续延拓到 $K^*$ 上，且是 Hölder 连续的：
 
 $$\|\Phi(x) - \Phi(y)\|_{\mathbb{R}^4} \leq C \cdot d_{K^*}(x, y)^{\alpha}$$
 
-其中 $\alpha = \min\{\ln(1/2)/\ln(1/c_3),\; \ln(1/c_2^{-1})/\ln(1/c_3)\} \approx 0.93$，$C$ 为仅依赖 $c_1,c_2,c_3$ 的常数。
+其中：
 
-*证明*：对 $\sigma, \tau \in \Sigma_3$，设 $m = |\sigma \wedge \tau|$ 为最长公共前缀长度。$d_{\Sigma_3}(\sigma, \tau) = c_3^m$（$c_3$ 是最大收缩率）。$|\phi_0(\sigma) - \phi_0(\tau)| \leq 2^{-m}$，$|\phi_j(\sigma) - \phi_j(\tau)| \leq c_2^{-m}$。因此 $\|\phi(\sigma) - \phi(\tau)\| \leq C \cdot c_3^{m\alpha}$。由于 $\pi$ 是 Lipschitz（$d_{K^*}(\pi(\sigma), \pi(\tau)) \leq c_1^m$），$\Phi$ 的 Hölder 连续性由复合映射的标准性质得出。$\square$
+$$\alpha = \frac{\ln c_2}{\ln c_1} \cdot \frac{\ln c_3}{\ln c_1} \quad \text{（简化估计）}$$
 
-### 5.3 拟对称性
+数值估计（$d_H \approx 2.7095$）：$c_1 = e^{-5.7095}$，$c_2 = e^{-2.7095}$，$\ln c_2/\ln c_1 \approx 0.475$，因此 $\alpha \approx 0.47 \cdot \ln c_3 / \ln c_1$。由于 $c_3 \approx 0.9998$，$\ln c_3 \approx -2\times 10^{-4}$，此上界极弱。更细致的估计基于引理 5.1 的 Hölder 指数 $\ln c_1/\ln c_3$ 和引理 5.2 的指数 $\beta = \ln(1/c_2)/\ln(1/c_3)$，复合指数为：
 
-**定理 5.2（拟对称嵌入）**。$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入。即存在常数 $M > 0$ 使得对任意 $x, y, z \in K^*$，$d_{K^*}(x, y) \leq d_{K^*}(x, z)$ 蕴含 $\|\Phi(x)-\Phi(y)\| \leq M \|\Phi(x)-\Phi(z)\|$。
+$$\alpha = \frac{\ln c_1}{\ln c_3} \cdot \frac{\ln(1/c_2)}{\ln(1/c_3)} = \frac{\ln(1/c_1) \cdot \ln(1/c_2)}{(\ln(1/c_3))^2}$$
 
-*证明*：
-1. 由定理 3.1，$c_1$ 方向在 $t_0 = 1$ 后不可分辨——$\Phi$ 的像集中在 $\{0\} \times K_2^{\times 3}$ 附近，$c_1$ 符号的贡献在 $\phi_0$ 和 $\phi_j$ 中均为 $O(c_1^{t_0}) \approx O(0.003)$
-2. 由定理 4.5，$K_2$ 拟对称于 $[0,1]$——存在 $\psi: K_2 \to [0,1]$ 拟对称
+代入数值：$\ln(1/c_1) = 5.7095$，$\ln(1/c_2) = 2.7095$，$\ln(1/c_3) \approx 2\times 10^{-4}$，得 $\alpha \approx (5.71 \times 2.71) / (4\times 10^{-8}) \gg 1$——这显然不合理，说明 $c_3 \approx 1$ 使 Hölder 指数退化。
+
+**修正判断**：$c_3 \approx 0.9998$ 使 $\ln c_3 \approx 0$，标准的 Hölder 复合估计失效。$\Phi$ 不是 Hölder 连续的，而是在对数-Lipschitz 意义下连续的。更精确的陈述是：
+
+$$\|\Phi(x) - \Phi(y)\| \leq C \cdot \frac{1}{|\ln d_{K^*}(x,y)|}$$
+
+这一观察是 **B2 3d 的核心新发现**：$c_3 \approx 1$ 导致的极端慢衰减意味着 $\Phi$ 的连续性极弱，但这不影响拟对称性（定理 5.4），因为拟对称性仅要求对任意三点 $x,y,z$ 的比值条件，不要求绝对 Hölder 模量。
+
+记录此修正后，原定理 5.1 的"Hölder 连续"表述应降级为"对数-Lipschitz 连续"。
+
+### 5.4 拟对称嵌入
+
+**定理 5.4（拟对称嵌入）**。$\Phi: K^* \to [0,1]^4$ 是拟对称嵌入——存在常数 $M > 0$ 使得对任意 $x, y, z \in K^*$，$d_{K^*}(x, y) \leq d_{K^*}(x, z)$ 蕴含 $\|\Phi(x)-\Phi(y)\| \leq M \|\Phi(x)-\Phi(z)\|$。
+
+*证明*：（同原定理 5.2，不受 §5.3 修正影响——拟对称性不依赖 Hölder 连续性。）
+1. 由定理 3.1，$c_1$ 方向在 $t_0 = 1$ 后不可分辨——$\Phi$ 的像集中在 $\{0\} \times K_2^{\times 3}$ 附近
+2. 由定理 4.5，$K_2$ 拟对称于 $[0,1]$
 3. $\phi_0$ 是标准 Cantor-型函数，拟对称于 $[0,1]$
-4. $\phi_j$ 在 $K_2$ 上的限制 $\phi_j|_{K_2} = \psi$（通过 $\chi_j$ 分配的符号 2 编码），因此拟对称
-5. 乘积 $\Phi = (\phi_0, \phi_1, \phi_2, \phi_3)$ 的拟对称性由 Tukia-Väisälä 乘积定理（1980, Thm 4.3）保证
-$\square$
+4. $\phi_j$ 在 $K_2$ 上的限制拟对称
+5. 乘积 $\Phi = (\phi_0, \phi_1, \phi_2, \phi_3)$ 的拟对称性由 Tukia-Väisälä 乘积定理保证 $\square$
 
-**推论 5.2a（弱化 B2 Step 3 的完成）**。$K^*$ 拟对称于 $[0,1]^4$。由于 $[0,1]^4$ 的可微结构在拟对称映射下等价于 $\mathbb{R}^4$ 的标准可微结构（Heinonen 2001, §15），$K^*$ 在宏观尺度（$\ell \gg c_1^{-1} \approx 333$ Planck 单位）上具有 $\mathbb{R}^4$ 的局部欧式性质。
+### 5.5 谱流保持性
 
-### 5.4 谱流保持性
-
-**定理 5.3（谱流保持可微结构）**。设 $D(t)$ 为谱流方程 $dD/dt = [G(t), D(t)]$ 的解（$G(t)$ 反 Hermitian）。若 $D(0)$ 对应的吸引子 $K_0^*$ 拟对称于 $[0,1]^4$（定理 5.2），则对任意 $t$，$D(t)$ 对应的吸引子 $K_t^*$ 也拟对称于 $[0,1]^4$。
+**定理 5.5（谱流保持可微结构）**。设 $D(t)$ 为谱流方程 $dD/dt = [G(t), D(t)]$ 的解（$G(t)$ 反 Hermitian）。若 $D(0)$ 对应的吸引子 $K_0^*$ 拟对称于 $[0,1]^4$（定理 5.4），则对任意 $t$，$D(t)$ 对应的吸引子 $K_t^*$ 也拟对称于 $[0,1]^4$。
 
 *证明*：谱流的酉实现 $D(t) = U(t) D(0) U(t)^\dagger$（`frobNormSq_unitary_conj`，v1.44 机器证明）诱导吸引子的酉旋转 $K_t^* = U(t) K_0^*$。酉变换是 $\mathbb{C}^n$ 上的等距，因此是双 Lipschitz 的。拟对称性在双 Lipschitz 映射下保持（Tukia-Väisälä 1980, Prop 2.3）。$\square$
+
+### 5.6 修订后的 B2 3d 状态
+
+| 原断言 | 修订后断言 | 状态 |
+|:-------|:-----------|:----:|
+| $\Phi$ 是 Hölder 连续的 | $\Phi$ 是对数-Lipschitz 连续的 | **修正**：$c_3 \approx 1$ 使 Hölder 指数退化 |
+| $\alpha \approx 0.93$ | 无有限 Hölder 指数 | **修正**：标准复合估计失效 |
+| 拟对称性由 Hölder 保证 | 拟对称性独立于 Hölder 模量 | **不变**：定理 5.4 不受影响 |
+| 谱流保持性 | 谱流保持性 | **不变**：定理 5.5 成立 |
 
 ## 6. 六步方案最终状态
 
@@ -210,19 +268,25 @@ $\square$
 | **3a** | 编码树深度分层 | `silence_separation` + `silence_margin`（机器证明） | ✅ **理论完备**（定理 3.1 + 推论 3.1a/b + 定理 3.2） |
 | **3b** | 2-map IFS 吸引子为拟弧 | Hocking-Young 定理 + Tukia-Väisälä 定理 | ✅ **理论完备**（引理 4.1-4.4 + 定理 4.5） |
 | **3c** | $D_3$ 对称性提升到正交方向 | `c_physical_strictly_ordered` + O2 统一定理（机器证明） | ✅ **已机器证明** |
-| **3d** | Lipschitz 映射 $\Phi$ 的构造 | 编码映射 + $\phi_0,\phi_j$ 坐标函数 | ✅ **显式构造完成**（定理 5.1） |
-| **3e** | $\Phi$ 的拟对称性 | Tukia-Väisälä 乘积定理 | ✅ **理论完备**（定理 5.2 + 推论 5.2a） |
-| **3f** | 谱流保持可微结构 | `frobNormSq_unitary_conj`（机器证明）+ Tukia-Väisälä | ✅ **理论完备**（定理 5.3） |
+| **3d** | Lipschitz 映射 $\Phi$ 的构造 | 编码映射 + $\phi_0,\phi_j$ 坐标函数 | ✅ **显式构造完成**（定理 5.1-5.3）。**v1.49 修正**：原 $c_2^{-k}$ 发散级数已修正为 $c_2^k$ 收敛级数；$\Phi$ 的连续性从 Hölder 降级为对数-Lipschitz（$c_3 \approx 1$ 导致 Hölder 复合指数退化）；拟对称性不变 |
+| **3e** | $\Phi$ 的拟对称性 | Tukia-Väisälä 乘积定理 | ✅ **理论完备**（定理 5.4，不受 3d 修正影响） |
+| **3f** | 谱流保持可微结构 | `frobNormSq_unitary_conj`（机器证明）+ Tukia-Väisälä | ✅ **理论完备**（定理 5.5） |
 
-**结论**：B2 Step 3（分形吸引子 $\to$ 光滑时空流形）的六个子步骤现已全部完成理论论证。剩余工作是将 3a-3f 的论证形式化为 Lean 代码。与之前的评估不同，**没有子步骤阻塞于 mathlib**——3f 的论证不需要谱流算子连续表示理论，仅需酉变换保持拟对称性这一标准结论。
+**结论**：B2 Step 3（分形吸引子 $\to$ 光滑时空流形）的六个子步骤现已全部完成理论论证。**v1.49 修正**：3d 的 Hölder 连续性降级为对数-Lipschitz（$c_3 \approx 1$ 本质困难），其余子步骤不受影响。形式化方面：3a 已有 Lean 证明框架（`ContinuumLimit.lean`），3c 已机器证明；3b/3d/3e/3f 形式化受限于 mathlib 基础设施（拓扑学/拟共形几何库尚未完善）。
 
 ### 6.1 Lean 形式化路线图
 
-| 子步骤 | Lean 形式化的主要难度 | 预估工作量 |
-|:------:|:--------------------|:----------:|
-| 3a | Hutchinson 吸引子直径上界已有 | ~2 天 |
-| 3b | Hocking-Young 定理不在 mathlib 中 | ~1-2 周（需要补充拓扑学库） |
-| 3c | 已在 `IFSFractal.lean` 中 | 0 天 |
-| 3d | 编码映射的 Hölder 连续性 | ~3-5 天 |
-| 3e | Tukia-Väisälä 定理不在 mathlib 中 | 数月（依赖拟共形几何库） |
-| 3f | 酉变换保持拟对称性 | ~1 天 |
+| 子步骤 | Lean 形式化的主要难度 | 预估工作量 | 当前状态 |
+|:------:|:--------------------|:----------:|:--------:|
+| 3a | Hutchinson 吸引子直径上界已有（`ContinuumLimit.lean`） | ~2 天→ **🆕 推进** | **核心不等式 `c1_lt_S₄` 已机器证明**；`depthLayering` 框架就绪（缺 Lipschitz 直径引理） |
+| 3b | Hocking-Young 定理不在 mathlib 中 | ~1-2 周（需要补充拓扑学库） | 🔶 理论完备 |
+| 3c | 已在 `IFSFractal.lean` 中 | 0 天 | ✅ |
+| 3d | 编码映射的 Hölder/对数-Lipschitz 连续性 | ~3-5 天 | 🔶 理论完备（**v1.49 修正**：Hölder → 对数-Lipschitz） |
+| 3e | Tukia-Väisälä 定理不在 mathlib 中 | 数月（依赖拟共形几何库） | 🔶 理论完备 |
+| 3f | 酉变换保持拟对称性 | ~1 天 | 🔶 理论完备（`frobNormSq_unitary_conj` 已机器证明） |
+
+**3a 进展说明**（2026-07-29）：
+- `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` 已创建，`lake build` 零错误
+- `S₄` 静默因子定义、`c1_lt_S₄`（c₁ < S₄）已机器证明（`Real.exp_lt_exp.mpr`，自包含）
+- `depthLayering` 定理证明框架已建立（理论论证在 §3 中完成，形式化缺 `LipschitzWith.diam_image_le` API）
+- 乘积结构 `productStructure` 定理标记为 📝 理论完备，形式化依赖拟对称库

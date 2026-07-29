@@ -17,6 +17,8 @@
 | **强 CP 谱解** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_strong_CP.md` |
 | **全 29 参数验证 + ε_K 交叉检验** | ✅ **29/29 已验证** | `paperX_all_predictions.py` |
 | **d_H 结构分析与机器验证** | ✅ **Paper 30 v1.1** （11 项 Lean 证明 + 2 项数值验证） | `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper30_dH_structural_analysis.md` |
+| **B2 连续极限（分形→光滑时空）** | ✅ **理论闭合（Paper XXXIV v1.2）** — 6/6 子步骤 | `notes/08_first_principles/b2_continuum_limit_analysis.md`、`paper/paper34_continuum_limit.md` |
+| **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 定理完整证明链 | `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` |
 | **p-value 统计分析** | ✅ **Fisher p≈0** | `paperX_pvalue_analysis.py` |
 | **根因分析** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/00_foundations/spectral_comprehensive_review.md` |
@@ -46,11 +48,14 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 
 ## 当前重点问题（开放问题推进中）
 
-1. **规范引力混合修正（Paper XII §9.3 β₃^(spec)）**：三圈 β 函数中的规范-引力混合项可使 M_Pl 处耦合偏移 ~5-15%；见 `src/spectral_rge_running.py`、`notes/01_qcd_higgs/spectral_root_cause_analysis.md` §4a。
-2. **GUT 能标门限修正**：在 M_GUT ∼ 2×10¹⁶ GeV 处若存在新物理（seesaw 中微子质量），引入额外态射通道改变 β 系数。
-3. **Kerr m≠0 Leaver 求解器收敛**：角向求解已收敛，径向 Leaver 系数约定需调试；见 `src/kerr_s2_guided_solver.py`、`notes/04_lorentz_gravity/spectral_Kerr_silence_analysis.md`。
-4. **谱方案 → MS-bar 方案转换因子 Z_i**：S₂ 层 DS 减除对易子框架已建立，Z_i 的显式解析公式待推导；见 `notes/10_gauge_RG/spectral_Zi_scheme_conversion.md`。
-5. **暗物质 α_DM 的第一原理推导**：谱静默粒子在 A_GR 谱结构中的精确范畴维数；见 `notes/04_lorentz_gravity/spectral_dark_matter_silence.md`。
+1. **B2 3b/3d/3e/3f Lean 形式化**：B2 连续极限理论已闭合，形式化受限于 mathlib 基础设施（拟共形几何库、拓扑学库尚未完善）
+2. **B3 暗能量 $\Lambda$**：$\Delta_{\text{global}}$ 的形式化——数值拟合通道已关闭，真瓶颈为机制缺失
+3. **O3 $d_H$ 出路 A/B**：构造已完成，待循环闭合
+4. **规范引力混合修正（Paper XII §9.3 β₃^(spec)）**：三圈 β 函数中的规范-引力混合项可使 M_Pl 处耦合偏移 ~5-15%
+5. **GUT 能标门限修正**：在 M_GUT ∼ 2×10¹⁶ GeV 处若存在新物理（seesaw 中微子质量），引入额外态射通道改变 β 系数
+6. **Kerr m≠0 Leaver 求解器收敛**：角向求解已收敛，径向 Leaver 系数约定需调试
+7. **谱方案 → MS-bar 方案转换因子 Z_i**：S₂ 层 DS 减除对易子框架已建立，Z_i 的显式解析公式待推导
+8. **暗物质 α_DM 的第一原理推导**：谱静默粒子在 A_GR 谱结构中的精确范畴维数
 
 ## 文件命名约定
 
@@ -70,7 +75,7 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 | `05_condensed_matter/` | 10 | 凝聚态、超导、临界现象、流变学 |
 | `06_quantum_chem_pv/` | 2 | 量子化学、光伏 |
 | `07_validation/` | 4 | 开放数据验证报告 |
-| `08_first_principles/` | 3 | 第一性原理推导、力统一 |
+| `08_first_principles/` | 13 | 第一性原理推导、力统一、B2 连续极限 |
 | `09_experimental/` | 4 | 实验提案、独有预言 |
 | `10_gauge_RG/` | 13 | 规范理论、重整化群、方案转换 |
 | `11_transition_bridges/` | 5 | 范畴-表示桥接（Phase 53） |

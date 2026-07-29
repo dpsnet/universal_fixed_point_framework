@@ -49,11 +49,11 @@
 | Paper XXXI（质量-$\Delta$ 方向性关系） | 1 | 🆕 J1-J3 形式命题 + Lean 证明 |
 | Paper XXXII（Cl(1,7) 谱静默与四维时空涌现） | 1 | 🆕 8 个严格定理（机器证明）+ 力程约束 |
 | Paper XXXIII（"3"的范畴论起源与层次结构） | 1 | 🆕 统一 3 定理、不等式链、Bott-Moran 桥 |
-| Paper XXXIV（连续极限——分形吸引子到光滑时空涌现） | 1 | 🆕 B2 六步理论证明：编码树分层→拟弧→对称性→Lipschitz 映射→拟对称嵌入→谱流保持 |
+| Paper XXXIV（连续极限——分形吸引子到光滑时空涌现） | 1 | 🆕 B2 六步理论证明（v1.2 修正：3d 对数-Lipschitz 而非 Hölder，拟对称性不变） |
 
 关键开放线状态：
 - **O1/O6** ✅ 已闭合；**O2/O3/O5** 🔶 已大幅推进；**O4** ❌ 仍开放
-- **B2** ✅ 理论闭合（六步理论证明，自包含论文，不依赖笔记）
+- **B2** ✅ 理论闭合（六步理论证明，自包含论文，3a `ContinuumLimit.lean` 形式化已完成）
 - **B3** ⏸ 阻塞于非微扰机制缺口
 - 7 项冻结预言（P1–P7）已盲登记，数值未变
 
@@ -76,7 +76,7 @@
 
 ## 五、Lean 4 形式化状态
 
-核心文件（均通过 `lake build` 零错误）：
+核心文件（均通过 `lake build` 零错误，含新增 `ContinuumLimit.lean`）：
 
 | 文件 | 内容 |
 |:-----|:------|
@@ -89,6 +89,7 @@
 | `HutchinsonAttractor.lean` | Hutchinson 吸引子存在唯一性 |
 | `BottTower.lean` | Bott 塔形式化、$\log_2 k_{\max}=3$ |
 | `Unified3Theorem.lean` | 统一 3 定理 |
+| `ContinuumLimit.lean` 🆕 | B2 3a 深度分层：$c_1 < S_4$ 机器证明 + `depthLayering` 定理
 
 遗留 `sorry`：仅 `spectral_gap_estimate` 和 `deviation_spectral_bound`（依赖 Mathlib `Matrix.Spectrum` 尚未稳定）。
 

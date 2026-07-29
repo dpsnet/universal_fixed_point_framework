@@ -65,3 +65,4 @@ import UFPFormalization.RAP4_silence_strictification
 import UFPFormalization.RAP5a_explicit_adjunction
 import UFPFormalization.DeviationBound
 import UFPFormalization.HutchinsonAttractor
+import UFPFormalization.ContinuumLimit

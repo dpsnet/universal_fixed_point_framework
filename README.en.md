@@ -139,8 +139,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] **Paper XXXIV 🆕**: Continuum limit — fractal attractor → smooth spacetime (B2 theoretical closure)
 
 **Lean 4 formalization**
-- [x] 9 core functional modules: $\mathbf{Sp}$ category, higher morphisms, deviation bound, $d_H$ structural analysis, silence theorem (8 thms), IFS fractal, Hutchinson attractor, Bott tower, unified 3 theorem
-- [x] Zero diagnostics, `lake build` clean
+- [x] 10 core functional modules zero diagnostics: $\mathbf{Sp}$ category, higher morphisms, deviation bound, $d_H$ structural analysis, silence theorem (8 thms), IFS fractal, Hutchinson attractor, Bott tower, unified 3 theorem, **ContinuumLimit** 🆕 (B2 3a depth layering: $c_1 < S_4$ machine-proven)
+- [x] `lake build` clean
 - [x] Remaining `sorry`: only `spectral_gap_estimate` and `deviation_spectral_bound` (pending Mathlib `Matrix.Spectrum` stability)
 
 **Author and versioning**
@@ -220,9 +220,10 @@ Core papers (I–IV) target journals; papers V–XXXIV are companion papers:
 
 ## 9. Disclaimer
 
-This project is a **highly interdisciplinary theoretical framework**. Core categorical constructions and spectral classification theorems have been formalized in Lean 4 (9 core modules zero diagnostics), providing machine-verified mathematical rigor. However, the following remain under development:
+This project is a **highly interdisciplinary theoretical framework**. Core categorical constructions and spectral classification theorems have been formalized in Lean 4 (10 core modules zero diagnostics, including the new `ContinuumLimit.lean` for the B2 continuum limit), providing machine-verified mathematical rigor. However, the following remain under development:
 
 - 2 remaining `sorry`s (`spectral_gap_estimate` and `deviation_spectral_bound`) await Mathlib `Matrix.Spectrum` infrastructure
+- B2 3b/3d/3e/3f formalization awaits mathlib topology/quasiconformal geometry libraries
 - Physical predictions (e.g., $L_4 \approx 1470$ GeV) depend on FCC-hh experimental verification
 - Instance hypotheses (Cl(1,7) choice, etc.) are replaceable and do not constrain the meta-axiom layer
 - All claim boundaries are documented in the **RAP-Errata v0.3** baseline (`paper/RAP_勘误与立场声明.md`)
