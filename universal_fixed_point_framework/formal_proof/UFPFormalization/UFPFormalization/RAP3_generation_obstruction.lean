@@ -40,7 +40,7 @@ def real_components_per_generation : ℕ := 32
 /-- Cl(1,7) 的 8_s 旋量模不足以容纳标准模型一代：8 < 32。 -/
 theorem dimension_obstruction : irreducible_real_spinor_dim < real_components_per_generation := by
   unfold irreducible_real_spinor_dim real_components_per_generation
-  norm_num
+  native_decide
 
 /-!
 ### 扩展：任何直和分解也无法容纳 3 代 + 1 反代
@@ -59,6 +59,6 @@ def four_copies_dim : ℕ := 4 * irreducible_real_spinor_dim
 /-- 4 个 8_s 拷贝仍不足以容纳 3 代 SM 费米子：32 < 96。 -/
 theorem four_copies_obstruction : four_copies_dim < claimed_generations_real_components := by
   unfold four_copies_dim irreducible_real_spinor_dim claimed_generations_real_components
-  norm_num
+  native_decide
 
 end UFPFormalization.RAP3

@@ -411,4 +411,53 @@ theorem deviation_spectral_bound (S : SpObj)
   -- 谱定理实现后，将 `spectral_gap_estimate` 的证明补全即可自动完成本定理
   sorry
 
+/-! ### §1.6 源缺陷线性（B1 ① 环，2026-07-29 新增）
+
+    source_defect_linearity：向谱算子 A 添加局域缺陷 δλ·P₀ 后，
+    交换律偏差 Δ 严格线性变化——无高阶项、无近似。
+    这是 paper18 §4.4 最为缺失的"质量在力中如何出现"的代数答案。 -/
+
+/-- 偏差谱算子的代数形式（无范畴结构，纯矩阵代数）：
+    Δ(A, H, β, α') := A·H - 2·β·A·α' + H·A
+    其中 H = β.homotopy · α'.homotopy。
+    该形式直接来自 spExchangeLaw_deviation_partial_commutator。 -/
+noncomputable def deltaOp {n : ℕ}
+    (A β_h α'_h : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
+  A * (β_h * α'_h) - 2 • (β_h * (A * α'_h)) + (β_h * α'_h) * A
+
+/-- **源缺陷线性定理**（B1 ① 环，严格代数）。
+
+    设 A 为谱算子，P₀ 为局域投影（缺陷支撑），δλ ∈ ℂ 为缺陷幅度。
+    定义 H = β_h · α'_h。则偏差 Δ 在 A → A + δλ·P₀ 下严格线性变化：
+
+    Δ(A + δλ·P₀, H, β, α') - Δ(A, H, β, α') = δλ·(P₀·H - 2·β·P₀·α' + H·P₀)
+
+    无高阶项、无需微扰展开、无近似——纯分配律的代数推论。 -/
+theorem source_defect_linearity {n : ℕ}
+    (A P₀ beta_h alpha'_h : Matrix (Fin n) (Fin n) ℂ) (dlambda : ℂ) :
+    deltaOp (A + dlambda • P₀) beta_h alpha'_h - deltaOp A beta_h alpha'_h =
+    dlambda • (P₀ * (beta_h * alpha'_h) - 2 • (beta_h * P₀ * alpha'_h) + (beta_h * alpha'_h) * P₀) := by
+  unfold deltaOp
+  set H := beta_h * alpha'_h
+  calc
+    ((A + dlambda • P₀) * H - 2 • (beta_h * ((A + dlambda • P₀) * alpha'_h)) + H * (A + dlambda • P₀)) -
+    (A * H - 2 • (beta_h * (A * alpha'_h)) + H * A)
+        = ((A + dlambda • P₀) * H - 2 • (beta_h * ((A + dlambda • P₀) * alpha'_h)) + H * (A + dlambda • P₀)) -
+          (A * H - 2 • (beta_h * (A * alpha'_h)) + H * A) := rfl
+    _ = dlambda • (P₀ * H - 2 • (beta_h * P₀ * alpha'_h) + H * P₀) := by
+      -- 展开 (A + dλ·P₀)·H − A·H = dλ·P₀·H，β·(A+dλ·P₀)·α' − β·A·α' = dλ·β·P₀·α'，依此类推
+      -- 所有交叉项抵消，仅剩 dλ 线性项。纯代数恒等式，无矩阵对易性假设。
+      calc
+        ((A + dlambda • P₀) * H - 2 • (beta_h * ((A + dlambda • P₀) * alpha'_h)) + H * (A + dlambda • P₀)) -
+        (A * H - 2 • (beta_h * (A * alpha'_h)) + H * A)
+            = (dlambda • (P₀ * H) - 2 • (dlambda • (beta_h * (P₀ * alpha'_h))) + dlambda • (H * P₀)) := by
+          simp [Matrix.add_mul, Matrix.mul_add, add_comm, add_left_comm, add_assoc, sub_eq_add_neg]
+          abel
+        _ = dlambda • (P₀ * H - 2 • (beta_h * (P₀ * alpha'_h)) + H * P₀) := by
+          simp [smul_add, smul_sub]
+        _ = dlambda • (P₀ * H - 2 • (beta_h * P₀ * alpha'_h) + H * P₀) := by
+          simp [Matrix.mul_assoc]
+    _ = dlambda • (P₀ * (beta_h * alpha'_h) - 2 • (beta_h * P₀ * alpha'_h) + (beta_h * alpha'_h) * P₀) := by
+      simp [H, Matrix.mul_assoc]
+
 end UFPFormalization
