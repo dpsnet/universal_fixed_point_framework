@@ -69,6 +69,13 @@ SCRIPTS = [
     ("paperX_spacetime_emergence.py",        "四维时空涌现：m=2n 计数唯一性 + 阈值分离裕度 e³ + 扰动鲁棒性 (分析性)"),
     ("paperX_O2_unification.py",             "O2 动力统一：c₁<c₂<c₃ 全域验证 + 三路径一致性 (分析性)"),
     ("paperX_epsilon_hierarchy.py",          "ε-层次距离 √2π 猜想判别分析：四判据排除 (分析性)"),
+    ("paperX_s_exp_reason.py",               "s=e⁻¹ 三层论证：复合⇒几何级数 + 生成元匹配 + 双重最优性 (分析性)"),
+    ("paperX_gravity_NLO_sign.py",           "A1 高阶修正符号：LO/NLO 严格分解 + 途径 B 排除 + ~8% 偏差归因修正 (分析性)"),
+    ("paperX_gravity_rcat_scale.py",         "A2 r_cat 标度不变性检验：c² 律 + k_max/窗口依赖 + 直觉 1 修订 (分析性)"),
+    ("paperX_gw_mode_counting.py",           "A3 引力波极化计数：Moran 冻结呼吸模式 + 通量守恒横向性 = 2 模式 (分析性)"),
+    ("paperX_propagator_spectral.py",        "A4 等效传播子修正：谱矩闭式 64 + 偏离有界饱和 0.48% + 截断 0.025 M_Pl (分析性)"),
+    ("paperX_gw_observables.py",             "C1 GW 观测信号字典：六通道定量化 → 负结果闭合 (分析性)"),
+    ("paperX_flux_conservation.py",          "B1② 通量守恒谱推导：等谱性（Lean 酉不变定理）+ 球面稀释 (分析性)"),
 
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),

@@ -354,8 +354,12 @@ theorem branchIndex_dH_unique (d : ℝ) :
         这需要接入 mathlib 的高阶范畴论基础设施。
 
      2. 均匀收缩率 r = e⁻¹ 的范畴论理由
-        目前只有信息论动机（定理 R1），
-        无严格的范畴论推导。
+        ~~目前只有信息论动机（定理 R1），
+        无严格的范畴论推导。~~
+        → **v1.37 部分回答（§10）**：代数层已机器证明
+        （`suppression_geometric`：范畴复合强制几何级数 S_k = s^k）；
+        归一化层（底数 = e ⟺ 生成元匹配）为分析性论证，
+        见笔记 §3.5.2a。规范不变量 d_H·ln(1/s) = ln 15。
 
    尽管如此，本文件已建立了从 𝐒𝐩 严格 4-范畴结构到
    分支计数 B = 15 的**类型级形式化链条**：
@@ -629,5 +633,43 @@ theorem spacetime_emergence_4d (d : ℝ) (hd : 0 < d) :
     rw [Real.exp_lt_one_iff]; linarith
   have h2 := silence_separation d
   simp [le_of_lt h1, h2]
+
+/-! =========================================================
+   §10 s = e⁻¹ 的函子性理由（2026-07-29 新增）
+   =========================================================
+
+   回答第六章开放问题 2（均匀收缩率 r = e⁻¹ 的范畴论理由）。
+
+   论证分两层：
+   (1) 代数层（本节机器证明）：递归压制是半群同态
+       (ℕ, +) → (ℝ, ×)——范畴复合 k+l 步 = k 步 ⊗ l 步
+       强制 S(k+l) = S(k)·S(l)，因此几何级数 S_k = s^k
+       不是假设而是复合结构的必然形式。
+   (2) 归一化层（分析性，见笔记 §3.5.2a）：底数 s = e⁻¹
+       由生成元匹配固定——Rec 的单位递归步是半群生成元，
+       D 函子保持生成元（单位步 ↦ 单位谱流步）等价于
+       指数映射 λ = e^{κμ} 中 κ = 1，即底数 e。
+       规范不变量：d_H·ln(1/s) = ln 15。
+-/
+
+/-- (1a) 递归压制的半群同态必然是几何级数：若 S : ℕ → ℝ 满足
+    S(0) = 1 且 S(k + l) = S(k)·S(l)，则 S(k) = S(1)^k。
+    这是范畴复合（k+l 步 = k 步 ⊗ l 步）的代数推论——
+    几何级数不是假设，是复合结构的必然形式。 -/
+theorem suppression_geometric (S : ℕ → ℝ) (h0 : S 0 = 1)
+    (hadd : ∀ k l, S (k + l) = S k * S l) (k : ℕ) :
+    S k = S 1 ^ k := by
+  induction k with
+  | zero => rw [h0, pow_zero]
+  | succ n ih => rw [hadd n 1, ih, pow_succ]
+
+/-- (1b) 推论：单位生成元规范下（S(1) = e⁻¹），S(k) = e⁻ᵏ。
+    谱静默因子 S₃ = e⁻³、S₄ = e^{−d_H} 的指数形式由此确定。 -/
+theorem suppression_exp_neg (S : ℕ → ℝ) (h0 : S 0 = 1)
+    (hadd : ∀ k l, S (k + l) = S k * S l) (h1 : S 1 = Real.exp (-1)) (k : ℕ) :
+    S k = Real.exp (-(k : ℝ)) := by
+  rw [suppression_geometric S h0 hadd k, h1, ← Real.exp_nat_mul]
+  congr 1
+  ring
 
 end UFPFormalization.CoherenceToBranching

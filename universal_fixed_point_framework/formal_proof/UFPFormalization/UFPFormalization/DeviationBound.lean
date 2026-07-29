@@ -31,6 +31,54 @@ lemma frobNormSq_nonneg {m n : ℕ} (M : Matrix (Fin m) (Fin n) ℂ) : 0 ≤ fro
 lemma frobNormSq_neg {m n : ℕ} (M : Matrix (Fin m) (Fin n) ℂ) : frobNormSq (-M) = frobNormSq M := by
   simp [frobNormSq, normSq_neg]
 
+/-! ### §1.5 Frobenius 范数的酉不变性（等谱守恒，2026-07-29 新增）
+
+   谱流方程 dD/dt = [G, D]（G 反 Hermitian）的解 D(t) = U·D₀·U†
+   （U = exp(Gt) 酉）。Frobenius 范数的酉不变性是"通量守恒"的
+   代数内核：谱强度在谱流演化下守恒，球面几何稀释 r^{d-1}
+   给出 1/r^{d-1} 衰减（B1 第 ②③ 环）。 -/
+
+/-- Frobenius 范数与迹的关系：‖M‖_F² = Re Tr(M·Mᴴ)。 -/
+lemma frobNormSq_eq_trace_re {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
+    ((M * M.conjTranspose).trace).re = frobNormSq M := by
+  have entry : ∀ i : Fin n,
+      ((M * M.conjTranspose) i i).re = ∑ j : Fin n, normSq (M i j) := by
+    intro i
+    rw [Matrix.mul_apply, Complex.re_sum]
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [Matrix.conjTranspose_apply, Complex.star_def, Complex.mul_conj, Complex.ofReal_re]
+  rw [Matrix.trace, Complex.re_sum, frobNormSq]
+  exact Finset.sum_congr rfl (fun i _ => entry i)
+
+/-- Frobenius 范数的酉不变性（左乘）：UᴴU = 1 时 ‖U·X‖_F² = ‖X‖_F²。 -/
+theorem frobNormSq_unitary_left {n : ℕ} (U X : Matrix (Fin n) (Fin n) ℂ)
+    (hU : U.conjTranspose * U = 1) :
+    frobNormSq (U * X) = frobNormSq X := by
+  rw [← frobNormSq_eq_trace_re (U * X), ← frobNormSq_eq_trace_re X]
+  rw [Matrix.conjTranspose_mul, ← Matrix.mul_assoc]
+  rw [Matrix.trace_mul_comm]
+  rw [← Matrix.mul_assoc, ← Matrix.mul_assoc, hU, Matrix.one_mul]
+
+/-- Frobenius 范数的酉不变性（右乘）：UUᴴ = 1 时 ‖X·U‖_F² = ‖X‖_F²。 -/
+theorem frobNormSq_unitary_right {n : ℕ} (U X : Matrix (Fin n) (Fin n) ℂ)
+    (hU : U * U.conjTranspose = 1) :
+    frobNormSq (X * U) = frobNormSq X := by
+  rw [← frobNormSq_eq_trace_re (X * U), ← frobNormSq_eq_trace_re X]
+  rw [Matrix.conjTranspose_mul, ← Matrix.mul_assoc, Matrix.mul_assoc X U U.conjTranspose,
+    hU, Matrix.mul_one]
+
+/-- **等谱守恒定理**：U 酉（UᴴU = 1）时 ‖U·X·Uᴴ‖_F² = ‖X‖_F²。
+    谱流 D(t) = U·D₀·U† 的 Hilbert-Schmidt 范数守恒——
+    谱通量守恒 ∂_r(r^{d-1}ρ) = 0 的谱结构内核（B1 第 ② 环）。 -/
+theorem frobNormSq_unitary_conj {n : ℕ} (U X : Matrix (Fin n) (Fin n) ℂ)
+    (hU : U.conjTranspose * U = 1) :
+    frobNormSq (U * X * U.conjTranspose) = frobNormSq X := by
+  rw [Matrix.mul_assoc, frobNormSq_unitary_left U (X * U.conjTranspose) hU]
+  have hU2 : U.conjTranspose * (U.conjTranspose).conjTranspose = 1 := by
+    rw [Matrix.conjTranspose_conjTranspose]; exact hU
+  exact frobNormSq_unitary_right U.conjTranspose X hU2
+
 /-- 三角不等式：|a+b|² ≤ 2(|a|²+|b|²)。证明使用平行四边形律。 -/
 lemma normSq_add_le_two_normSq (a b : ℂ) : normSq (a + b) ≤ 2 * (normSq a + normSq b) := by
   have h_para : normSq (a + b) + normSq (a - b) = 2 * (normSq a + normSq b) := by
