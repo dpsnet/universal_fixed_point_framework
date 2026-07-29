@@ -79,6 +79,7 @@ SCRIPTS = [
     ("paperX_source_defect.py",              "B1①④ 源定义与泊松方程：谱缺陷精确线性 + 五环模型化闭合 (分析性)"),
     ("paperX_dark_energy_scan.py",           "B3 暗能量压制候选因子判别扫描：数值拟合通道关闭 (分析性)"),
     ("paperX_delta_block_decomp.py",         "B4 Δ 分块支撑分布：对易子零对角 + 87% 混合块主导 (分析性)"),
+    ("paperX_hutchinson_iteration.py",       "B2 Hutchinson 迭代收敛演示：c₃ 几何级数 + 三尺度簇 (分析性)"),
 
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),
