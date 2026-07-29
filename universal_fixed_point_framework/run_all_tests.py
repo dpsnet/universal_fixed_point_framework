@@ -76,6 +76,9 @@ SCRIPTS = [
     ("paperX_propagator_spectral.py",        "A4 等效传播子修正：谱矩闭式 64 + 偏离有界饱和 0.48% + 截断 0.025 M_Pl (分析性)"),
     ("paperX_gw_observables.py",             "C1 GW 观测信号字典：六通道定量化 → 负结果闭合 (分析性)"),
     ("paperX_flux_conservation.py",          "B1② 通量守恒谱推导：等谱性（Lean 酉不变定理）+ 球面稀释 (分析性)"),
+    ("paperX_source_defect.py",              "B1①④ 源定义与泊松方程：谱缺陷精确线性 + 五环模型化闭合 (分析性)"),
+    ("paperX_dark_energy_scan.py",           "B3 暗能量压制候选因子判别扫描：数值拟合通道关闭 (分析性)"),
+    ("paperX_delta_block_decomp.py",         "B4 Δ 分块支撑分布：对易子零对角 + 87% 混合块主导 (分析性)"),
 
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),
