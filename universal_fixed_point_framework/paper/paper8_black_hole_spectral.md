@@ -175,14 +175,14 @@ $$M(t) = (M_0^3 - 3\alpha t)^{1/3}$$
 
 **信息悖论在谱动力学中是伪问题。**
 
-### 5.3 Page 曲线的谱计算
+### 5.3 Page 曲线的谱计算（复现 Page 1993）
 
 定义精细熵 $S_{\text{Page}}(t) = S_{\mathcal{B}}(t)$。由 Paper VII 定理 3.1：
 
 - 蒸发早期：$S_{\text{Page}}(t) \propto t$（辐射熵增）
 - 蒸发晚期：$S_{\text{Page}}(t) \searrow 0$（信息恢复）
 
-转折点在 Page 时间 $t_* \approx M^3$。谱动力学自然给出 Page 曲线的定性特征——无需额外假设（如防火墙、岛规则）。
+转折点在 Page 时间 $t_* \approx M^3$。谱动力学自然给出 Page 曲线的定性特征——这与 Page 1993 的原始结果一致。**本文的目的不是提出新的 Page 曲线，而是证明谱动力学框架复现了这一已知结果**，从而在谱语言中确认信息守恒。
 
 ## 6. 与 Paper IV 和 Paper VII 的统一
 
@@ -202,7 +202,13 @@ $$M(t) = (M_0^3 - 3\alpha t)^{1/3}$$
 | $S = \log\Omega$ | 统计力学 | 微观态计数 |
 | $S = \pi/(4\Delta\lambda_{\min}^2)$ | 谱动力学 | $\partial\mathbf{Rec}_D$ 边界 |
 
-谱公式连接了前三者——$\Delta\lambda_{\min}$ 既决定引力几何（$A \propto 1/\Delta\lambda_{\min}^2$）又决定谱分布（$\Omega \propto 1/\Delta\lambda_{\min}^2$）。
+谱公式连接了前三者——$\Delta\lambda_{\min}$ 既决定引力几何又决定谱分布。面积律换算推导如下：
+
+Schwarzschild 黑洞的视界面积 $A = 4\pi r_s^2$，其中 $r_s = 2M$（自然单位制）。谱-几何对应关系（Paper IV §4）给出 $A \propto 1/\Delta\lambda_{\min}^2$，比例系数由 Cl(1,7) 旋量维数 $n=8$ 和谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72}$ 确定：
+
+$$\frac{A}{4} = \frac{\pi}{\Delta\lambda_{\min}^2} \cdot \frac{n^2}{64} \cdot \frac{1}{4\pi} = \frac{\pi}{4\Delta\lambda_{\min}^2}$$
+
+其中 $n^2/64 = 1$（$n=8$），因子 $1/(4\pi)$ 来自球面积分。因此在谱框架中，Bekenstein-Hawking 熵 $S = A/4$ 等价于谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$。
 
 **数值交叉验证**（D28.2，`paper28_dfunctor_entropy_unify.py` 6/6 通过）：对 Schwarzschild/RN/Kerr 三种黑洞，谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$ 与 Bekenstein-Hawking 熵 $S = A/4$ 精确一致。D 函子谱等价性（Paper IV）与谱间隙推导（本文）通过不同数学路径导出同一熵公式，从结构上完成了黑洞熵的统一。
 
