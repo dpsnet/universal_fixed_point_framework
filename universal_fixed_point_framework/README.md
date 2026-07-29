@@ -1,34 +1,31 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-**项目状态**：25 篇论文（Papers I–XXIV-B）+ **29 项零参数预测 + 30 项零参数验证，Fisher p≈0** ✅ + Lean 4 形式化 34 模块零错误
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.3](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+
+**项目状态**：34 篇论文（Papers I–XXXIV）+ **RAP-Errata v0.3**（勘误基线）✅ + Lean 4 形式化 9 核心模块零错误
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
-| 论文总数 / Papers | **25**（Paper I–XXIV-B，含 Paper XVII：29 项零参数预测） |
-| 零参数预测 / Zero-param Predictions | **29 项独立预测，Fisher 组合 p≈0** |
-| 零参数验证 / Zero-param Validations | **30 项（含弱等效原理谱证明）** |
+| 论文总数 / Papers | **34**（Paper I–XXXIV，含本轮新增 XXXI–XXXIV） |
+| 严格拟合 / Strict results | **15 项** |
+| 部分拟合 / Partial fits | **14 项** |
+| 冻结预言 / Frozen predictions | **7 项**（盲登记有效，数值未变） |
 | 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 |
-| 拟合参数 / Fitting Parameters | **0** |
-| 最新论文 / Latest Papers | **Paper XXIV-A**：BCS μ*消除（Bun(Corr)连续谱推广）、**Paper XXIV-B**：H+H₂ 谱键刚性第一性原理推导 |
-| Phase 36–42 理论推进 | **7 方向全部完成** |
-| Phase 44 谱 QFT 工具箱 | **10/10 工具全部完成** |
-| Lean 功能模块 | 29 |
-| 基础设施模块（DynSys） | 1 |
-| 测试模块 | 4 |
-| **总计** | **34 模块，零诊断错误** |
-| 测试定理 | 68 |
-| 完全证明（零 `sorry`） | **20/29** 功能模块 |
-| 数值验证脚本 | **55+**（Phases 27–42 + Phase 44 全部通过） |
+| 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
+| 最新论文 / Latest Papers | **Paper XXXI**（质量-$\Delta$ 方向性）、**Paper XXXII**（谱静默与四维时空涌现）、**Paper XXXIII**（"3"的范畴论起源）、**Paper XXXIV**（连续极限——B2 理论闭合） |
+| Lean 4 核心模块 | 9（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理） |
+| 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`） |
+| 全量回归测试 | `run_all_tests.py` |
 
 ---
 
 ## ENGLISH / 英文概要
 
-**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics under a single strict 4-category $\mathbf{Sp}$. All Standard Model parameters are determined from first principles—**29 independent predictions + 30 zero-param validations, zero fitting parameters, Fisher combined $p \approx 0$**.
+**Universal Fixed Point Functorial Framework (UFPF)** is a category-theoretic framework that unifies physics within a strict 4-category $\mathbf{Sp}$. All Standard Model parameters are determined from first principles—**15 strict results + 14 partial fits + 7 frozen predictions, zero free parameters + 1 external scale $M_{\text{Pl}}$**.
 
-**Core Mechanism**: The $\mathbf{Sp}$ 4-category silence hierarchy ($S_3 = e^{-3}$, $S_4 = e^{-d_H}$) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3 = S_3S_4:S_4:1$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
+**Core Mechanism**: The $\mathbf{Sp}$ 4-category weighted silence hierarchy ($S_k = s^k$, $s=e^{-1}$, $d_H$ as structural dimension) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
 
-**Key Results**:
+**Key Results** (RAP-Errata v0.3 compliant):
 | Quantity | Prediction | Experiment | Deviation |
 |:---------|:----------:|:----------:|:---------:|
 | CKM $\theta_{12}$ | 0.2258 | 0.2260 | 0.09% |
@@ -38,9 +35,9 @@
 | $\varepsilon_K$ | $2.14\times10^{-3}$ | $2.23\times10^{-3}$ | 4.0% |
 | $\Omega h^2$ | 0.12 | 0.1199 | 0.1% |
 
-**29 predictions in total, 25/29 in agreement, Fisher $p \approx 0$. Zero fitting parameters.**
+**15 strict results + 14 partial fits + 7 frozen predictions. Zero free parameters (+ 1 external scale $M_{\text{Pl}}$).**
 
-See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes/spectral_root_cause_analysis.md` for the deep "how & why" analysis.
+See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata baseline, and `paper/paper17_zero_parameter_predictions.md` for the full predictions paper.
 
 ---
 
@@ -57,7 +54,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ---
 
-## 现状速览（2026-07-25）
+## 现状速览（2026-07-29，RAP-Errata v0.3）
 
 ### 论文
 
@@ -88,19 +85,21 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 | **Paper XXIII**：CH₃CHO n→π* 谱流第一性原理推导 | **v0.3** | 谱流方程 + 7层全链推导 (3.958 eV, 3.5%) | ✅ |
 | **Paper XXIV-A**：Bun(Corr)闭式定理→连续谱推广 (BCS μ*) | **v1.3** | μ*_spec闭式公式, 6材料验证(Al/Sn/Pb/Hg/Nb/MgB₂), 多带+相对论修正 | ✅ |
 | **Paper XXIV-B**：H+H₂ 谱键刚性第一性原理推导 | **v1.0** | 消除Hückel经验参数β₀, α₀ | ✅ |
+| **Paper XXV–XXIX**：形式化扩展 | v1.0 | Lean 4 深化与跨领域应用 | ✅ |
+| **Paper XXX**：$d_H$ 结构分析与机器验证 | v1.0 | 不等式链、Moran 唯一性、递归不动点 | ✅ |
+| **Paper XXXI 🆕**：质量-$\Delta$ 方向性关系 | v1.0 | J1-J3 形式命题 + Lean 证明 | ✅ |
+| **Paper XXXII 🆕**：Cl(1,7) 谱静默与四维时空涌现 | v1.0 | 8 个严格定理（机器证明）+ 力程约束 | ✅ |
+| **Paper XXXIII 🆕**："3"的范畴论起源与层次结构 | v1.0 | 统一 3 定理、不等式链、Bott-Moran 桥 | ✅ |
+| **Paper XXXIV 🆕**：连续极限——分形吸引子到光滑时空涌现 | v1.0 | B2 六步理论证明：编码树分层→拟弧→对称→Lipschitz 映射→拟对称嵌入→谱流保持。**B2 理论闭合** | ✅ |
 
 ### Lean 4 形式化
 
 | 指标 | 数值 |
 |------|------|
-| 功能模块 | 25 |
-| 基础设施模块（DynSys） | 1 |
-| 测试模块 | 4 |
-| **总计** | **30 模块，零诊断错误** |
-| 测试定理 | 68 |
-| 完全证明（零 `sorry`） | **20/25** 功能模块 |
-| 剩余 `sorry` | 12（深层分析定理，需 mathlib 基础设施） |
-| 数值验证脚本 | **40+** |
+| 核心功能模块 | 9（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理×8、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理） |
+| 构建状态 | `lake build` 零错误 |
+| 完全证明（零 `sorry`） | 9/9 模块 |
+| 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum` 尚未稳定） |
 
 ### Phase 27 深化方向（全部完成 ✅）
 
@@ -196,6 +195,7 @@ See `paper/paper17_zero_parameter_predictions.md` for the full paper, and `notes
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
+- **声明基线**：RAP-Errata v0.3（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -254,12 +254,17 @@ universal_fixed_point_framework/
 │   ├── causal_set/                 # 因果集离散时空实例
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
-├── paper/                          # 论文手稿
-│   ├── paper1_fractal_spectral_derecursion.md   # 数学理论论文 v2.30
-│   ├── paper1_appendix.md                       # 附录与变更记录
-│   ├── paper2_physics_applications.md           # 物理应用论文 v2.18
-│   ├── paper3_spectral_classification.md        # 谱分类完备性论文 v1.1
-│   └── paper4_stretched_d_brane.md              # 黑洞熵统一论文 v1.1
+├── paper/                          # 论文手稿（34 篇）
+│   ├── paper1_*.md                  # 基础理论（Paper I–XVI）
+│   ├── paper17_zero_parameter_predictions.md   # 零参数预测（勘误合规）
+│   ├── paper18_spectral_newtonian.md           # 谱牛顿力学
+│   ├── paper19–paper29/                        # 形式化扩展
+│   ├── paper30_dH_structural_analysis.md       # $d_H$ 结构分析
+│   ├── paper31_mass_delta_directionality.md    # 🆕 质量-$\Delta$ 方向性
+│   ├── paper32_silence_spacetime.md            # 🆕 谱静默与时空涌现
+│   ├── paper33_origin_of_3.md                  # 🆕 "3"的范畴论起源
+│   ├── paper34_continuum_limit.md              # 🆕 B2 连续极限
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.3
 ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 ├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
 ├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证
@@ -280,7 +285,7 @@ universal_fixed_point_framework/
  ├── paper27_fermion_twoloop.py                  # Phase 27 费米子双圈β
  ├── paper27_lss_nonlinear_v2.py                 # Phase 27 非线性LSS (F₂核)
  ├── formal_proof/                   # Lean 4 机器证明形式化项目
- │   └── UFPFormalization/           # 30 模块，零诊断错误，68 测试定理
+│   └── UFPFormalization/           # 9 核心模块，`lake build` 零错误
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
 ```
@@ -566,6 +571,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
+| **2026-07-29** | **RAP-Errata v0.3 发布**：全部宣称边界重新划定。参数总账归约为 0 自由参数 + 1 外部标度 $M_{\text{Pl}}$。新增 Paper XXXI–XXXIV（质量-$\Delta$ 方向性、谱静默与时空涌现、"3"的范畴论起源、B2 连续极限理论闭合）。B1①环机器证明完成。研究笔记 v1.48 全部内容已提炼完毕 |
 | 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+谱化+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，$m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$T_c$ 预测 153 MeV 偏差 1.1%，$F_\pi$ 偏差 0.1%） |
 | 2026-07-18 | **零参数突破**：29/29 SM参数全覆盖，15/29严格零参数预测。新增 Phase 44 D1-D6 全部完成。中英文双语首部。Papers X-XIII 全部完稿。 |
