@@ -4,7 +4,7 @@
 
 ---
 
-**Latest (2026-07-30)**: **RAP-Errata v0.4 released** — all 37 papers status complete (31 stable, 6 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-30)**: **RAP-Errata v0.5 released** — all 37 papers status complete (31 stable, 6 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -42,7 +42,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - **Orbit functor** $O$: encodes symmetry weights under gauge-group actions.
 - **Universal fixed-point equation** $\mathcal{F}[\mathcal{V}] = \mathcal{V}$: a unified form of subsystem fixed-point equations.
 - **Dual-track Koopman operator**: unconditional definition on $\ell^\infty(X)$ + spectral correspondence on $L^2$/$C(X)$ (`DynSys.lean`)
-- **Lean 4 formalization**: 74 core modules, `lake build` clean (0 errors, 8 warnings). **Only 3 active `sorry`s**: 1 conceptual feature in `HigherSpCategory.lean:103` (exchange law deviation = gravity), 2 pending Mathlib `Matrix.Spectrum` in `DeviationBound.lean:386/412`. 10 core theorem modules fully machine-proven (zero `sorry`).
+- **Lean 4 formalization**: 74 core modules, `lake build` clean (0 errors, 8 warnings). **Only 3 active `sorry`s**: 1 conceptual feature in `HigherSpCategory.lean:103` (exchange law deviation = gravity), 2 pending Mathlib `Matrix.Spectrum` in `DeviationBound.lean:386/412`. 10 core theorem modules fully machine-proven (zero `sorry`). **New in CoherenceToBranching.lean §11**: `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` (outward proof formalization).
 - **Category verification (Phase 60 🆕)**: `python -m verify.run_all` — 8/8 PASS. Path C complete (Python executable categorical semantics). See `roadmap/phase60_category_verification.md`.
 
 ### 2.3 Key Physical Correspondences

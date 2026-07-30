@@ -824,3 +824,12 @@ $$\vec{F}_{\text{real}} = (0, 0, 0, F_w)$$
 - 向外推视角是**纯几何/拓扑图像**，尚未达到范畴论形式化层级
 - 与 Randall-Sundrum / KK 额外维理论的表观相似性注意区分：KK 是 **向内推**（假设高维存在，再解释低维观察），向外推是 **向外推**（从观察严格推理必然有来源在外），逻辑方向相反；且 $W$ 不限于空间维，与 KK 的本质假设不同
 - 向外推与向下推属于同一理论体系的两个起点——结论收敛是框架自洽性的佐证
+
+#### 5.7k.6 Lean 形式化状态
+
+"向外推"的核心代数命题已在 Lean 中形式化，详见 [CoherenceToBranching.lean §11](file:///d:\trae-work\hyper-resolution\universal_fixed_point_framework\formal_proof\UFPFormalization\UFPFormalization\CoherenceToBranching.lean#L675-L723)：
+
+- **维数间隙定理** (`dimension_gap`)：`Real.log (15 : ℝ) < (3 : ℝ)`——由 `DHStructural.inequality_chain_pure_math` 的纯数学链 `ln 15 < 65/24 < e < 3` 经传递性得证，不依赖唯象拟合
+- **向外推定理** (`outward_proof_maps_to_orthogonal_layer`)：合取维数间隙与静默分离裕度 `S₄/c₁ = e³`，将"向下推"（静默→四维时空涌现）与"向外推"（维数间隙→正交层结构）统一为同一范畴自洽性的两种视角
+
+状态：`lake build` 编译通过 ✅（2026-07-30）

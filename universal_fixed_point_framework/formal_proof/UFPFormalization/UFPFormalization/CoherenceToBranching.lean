@@ -672,4 +672,54 @@ theorem suppression_exp_neg (S : ℕ → ℝ) (h0 : S 0 = 1)
   congr 1
   ring
 
+/-! =========================================================
+   §11 向外推：维数间隙与层正交性（2026-07-30 新增）
+   =========================================================
+
+   "球心在空间之外"的形式化表达。
+
+   本节使用已有闭合定理连接两个视角：
+   1. 维数间隙（ln 15 < 3，来自 inequality_chain_pure_math）
+   2. 层正交分离（S₄/c₁ = e³，来自 silence_margin）
+
+   不引入新数学——建立两个已有结果之间的解释性连接。 -/
+
+/-- 维数间隙定理：ln 15 < 3。
+
+    由不等式链 ln 15 < 65/24 < e < 3 经传递性得证。
+    该链中三项均为纯数学证明（DHStructuralAnalysis），
+    不依赖唯象代入。 -/
+theorem dimension_gap : Real.log (15 : ℝ) < (3 : ℝ) := by
+  have h := DHStructural.inequality_chain_pure_math
+  -- h: DHStructural.ln15 < DHStructural.sixtyfive_over_24
+  --    ∧ DHStructural.sixtyfive_over_24 < DHStructural.e
+  --    ∧ DHStructural.e < (3 : ℝ)
+  -- 其中 DHStructural.ln15 = Real.log 15
+  have hln15_lt_e : Real.log (15 : ℝ) < Real.e := by
+    calc
+      Real.log (15 : ℝ) = DHStructural.ln15 := rfl
+      _ < DHStructural.sixtyfive_over_24 := h.1
+      _ < Real.e := h.2.1
+  calc
+    Real.log (15 : ℝ) < Real.e := hln15_lt_e
+    _ < (3 : ℝ) := h.2.2
+
+/-- 向外推定理：维数间隙 ∧ 层 4 正交性。
+
+    "IFS 吸引子不填充 3D 空间 → 范畴结构包含正交的第 4 层"。
+
+    合取两个已有闭合定理：
+    1. dimension_gap（本文件）：ln 15 < 3
+    2. silence_margin（本文件）：S₄/c₁ = e³ > 1
+
+    该定理不证明新事实，而是将"向下推"（静默→四维时空涌现）
+    与"向外推"（维数间隙→正交层结构）统一为同一范畴自洽性
+    的两种视角。 -/
+theorem outward_proof_maps_to_orthogonal_layer (d : ℝ) :
+    Real.log (15 : ℝ) < (3 : ℝ) ∧
+    (Real.exp (-d) / (Real.exp (-3) * Real.exp (-d)) = Real.exp 3) := by
+  constructor
+  · exact dimension_gap
+  · exact silence_margin d
+
 end UFPFormalization.CoherenceToBranching

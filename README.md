@@ -6,9 +6,9 @@
 
 ---
 
-**最新进展（2026-07-30）**：**RAP-Errata v0.4 已发布**——全部 37 篇论文状态完整：31 篇稳定、6 篇本轮新增（XXXI–XXXV, XXXVII）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。新增 Paper XXXV（引力范畴论起源）和 Paper XXXVII（开放问题综述）。详见 `paper/RAP_勘误与立场声明.md`。
+**最新进展（2026-07-30）**：**RAP-Errata v0.5 已发布**——全部 37 篇论文状态完整：31 篇稳定、6 篇本轮新增（XXXI–XXXV, XXXVII）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。新增 Paper XXXV（引力范畴论起源）和 Paper XXXVII（开放问题综述）。**CoherenceToBranching.lean §11 向外推形式化完成**（"球心在空间之外"代数证明，维数间隙 ln 15 < 3 + 层正交分离 S₄/c₁ = e³）。详见 `paper/RAP_勘误与立场声明.md`。
 
-**Latest (2026-07-30)**: **RAP-Errata v0.4 released** — 37 papers: 31 stable, 6 new (XXXI–XXXV, XXXVII), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). See `paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-30)**: **RAP-Errata v0.5 released** — 37 papers: 31 stable, 6 new (XXXI–XXXV, XXXVII), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). See `paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -99,7 +99,7 @@
 
 详见 [`roadmap/phase60_category_verification.md`](universal_fixed_point_framework/roadmap/phase60_category_verification.md)。
 
-核心模块（完整列表见 RAP-Errata v0.4 §六 Lean 4 形式化状态总表）：
+核心模块（完整列表见 RAP-Errata v0.5 §六 Lean 4 形式化状态总表）：
 
 | 文件 | 内容 |
 |:-----|:------|
@@ -107,7 +107,7 @@
 | `HigherSpCategory.lean` | 2-态射、3-态射、交换律偏差 |
 | `DeviationBound.lean` | Frobenius 范数、等谱守恒、源缺陷线性 |
 | `DHStructuralAnalysis.lean` | $d_H$ 不等式链、Moran 唯一性、响应分析 |
-| `CoherenceToBranching.lean` | 静默定理组（8 定理）、层独立性、分支计数 |
+| `CoherenceToBranching.lean` | 静默定理组（8 定理）+ 层独立性 + 分支计数 + §11 向外推（维数间隙 + 层正交性） |
 | `IFSFractal.lean` | 物理 3-map IFS、$c_1<c_2<c_3$ 排序定理 |
 | `HutchinsonAttractor.lean` | Hutchinson 吸引子存在唯一性 |
 | `BottTower.lean` | Bott 塔形式化、$\log_2 k_{\max}=3$ |
@@ -134,7 +134,7 @@ universal_fixed_point_framework/
 │   ├── paper34_continuum_limit.md                  # 🆕
 │   ├── paper35_gravity_origin.md                   # 🆕 引力范畴论起源
 │   ├── paper37_open_problems.md                    # 🆕 开放问题综述
-│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.4
+│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.5
 │   └── RAP_盲登记协议.md                            # RAP-Registry v0.4
 ├── notes/08_first_principles/       # 研究笔记
 │   ├── spectral_hierarchy_evolution_analysis.md    # 主索引

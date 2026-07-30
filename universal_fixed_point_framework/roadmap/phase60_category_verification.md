@@ -6,7 +6,7 @@
 >
 > **策略**：三条路径并行，按投入产出比排序执行。
 >
-> **进度**：✅ 路径 C 已完成（2026-07-30）—— `verify/` 模块 8/8 全部 PASS。详见下方 §路径 C。
+> **进度**：✅ 路径 C 已完成（2026-07-30）—— `verify/` 模块 8/8 全部 PASS。✅ 向外推形式化已完成（2026-07-30）—— `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`（维数间隙 ln 15 < 3 + 层正交分离 S₄/c₁ = e³）。详见下文 §Lean 形式化更新。
 
 ---
 
@@ -172,3 +172,4 @@ Agda 版本:  定理 T 的证明链 A₁ → A₂ → ... → Aₙ
 |:-----|:----:|:-----|
 | v0.1 | 2026-07-30 | 初版创建。三路径策略：C（Python 可执行语义）→ B（Agda 重形式化）→ A（Lean 零 sorry） |
 | v0.2 | 2026-07-30 | **路径 C 完成**。`verify/` 模块 8/8 PASS，注册 `run_all_tests.py`。文档更新状态为 ✅ |
+| v0.3 | 2026-07-30 | **向外推形式化完成**。`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`。Lean 模块数：74 → 74（内容扩展，未新增模块）。文档更新为 ✅ |

@@ -1,8 +1,8 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.4](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.5](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 
-**项目状态**：37 篇论文（Papers I–XXXVII）+ **RAP-Errata v0.4**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误
+**项目状态**：37 篇论文（Papers I–XXXVII）+ **RAP-Errata v0.5**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
@@ -13,7 +13,7 @@
 | 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 |
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
 | 最新论文 / Latest Papers | **Paper XXXV**（引力范畴论起源）+ **Paper XXXVII**（开放问题综述） |
-| Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit** 🆕） |
+| Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推 🆕、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**） |
 | 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
 
@@ -54,7 +54,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ---
 
-## 现状速览（2026-07-30，RAP-Errata v0.4）
+## 现状速览（2026-07-30，RAP-Errata v0.5）
 
 ### 论文
 
@@ -100,12 +100,14 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 |------|------|
 | 总 Lean 模块数 | 74 |
 | 构建状态 | `lake build` 零错误（仅 8 条编译器警告） |
-| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.4 §六） |
+| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.5 §六） |
 | 活动 `sorry` | 3 处：`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新 |
 
 ### 范畴理论绝对性验证（Phase 60 🆕）
 
 **路径 C ✅ 已完成** — `python -m verify.run_all` 一键验证 8 项范畴理论自洽性检查（V1–V8），**8/8 全部 PASS**。详见 [`roadmap/phase60_category_verification.md`](roadmap/phase60_category_verification.md)。
+
+**向外推形式化 ✅** — `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`，维数间隙 $\ln 15 < 3$ 与层正交分离 $S_4/c_1 = e^3$ 已形式化绑定（`lake build` 编译通过）。
 
 ### Phase 27 深化方向（全部完成 ✅）
 
@@ -201,7 +203,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
-- **声明基线**：RAP-Errata v0.4（详见 `paper/RAP_勘误与立场声明.md`）
+- **声明基线**：RAP-Errata v0.5（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -270,7 +272,7 @@ universal_fixed_point_framework/
 │   ├── paper32_silence_spacetime.md            # 🆕 谱静默与时空涌现
 │   ├── paper33_origin_of_3.md                  # 🆕 "3"的范畴论起源
 │   ├── paper34_continuum_limit.md              # 🆕 B2 连续极限
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.4
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.5
 ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 ├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
 ├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证
