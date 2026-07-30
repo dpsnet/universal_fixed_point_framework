@@ -22,6 +22,7 @@
 - `phase51_ckm_unification.md`：**Phase 51：CKM/PMNS 统一路线图**——J 生成元旋转 → CKM 五参数 → PMNS 四参数 → ε_K → GUT/质子衰变。**✅ 全部完成**。
 - `phase31_fundamental_extensions.md`：**Phase 31：框架根本扩展**——高阶 ∞-范畴完整 Lean 4 形式化、完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正、DNS 湍流高精度数值验证谱流体 $k^{-5/3}$ 预言、非 Markov 系统 拓扑熵–谱间隙不等式严格推广。**🆕 新建（2026-07-20）**。
 - `phase52_dynamic_spectrum_library.md`：**Phase 52：动态过程谱数值库开发**——超高能双星并合（inspiral-merger-ringdown 全阶段谱计算）、普朗克能标多体散射（量子引力尺度散射振幅谱）、实验对接（LIGO/Virgo/KAGRA）。**&#9203; 路线图已制定，待启动开发**。
+- **`phase60_category_verification.md` 🆕**：**Phase 60：范畴理论绝对性验证路线图**——三路径策略：C（Python 可执行范畴语义，数天）→ B（Agda 独立重形式化，数周）→ A（Lean 零 sorry 持续闭合，长期）。**当前最高优先级**。
 - `phase55_grothendieck_fibration_extensions.md`：**Phase 55：Grothendieck 纤维范畴扩展（Phase 55A-G）**——将"基空间上的谱族 = Grothendieck 纤维化"范式推广至噪声、Kerr、EFT、味丛、语境性层等 8 个候选，已完成 Lean 4 形式化与总参数丛汇总。**&#9989; 全部完成**。
 - `phase56_fibration_domain_generalization.md`：**Phase 56：谱丛精细纤维拆分跨领域推广（56A-D）**——将 Paper XXII 的 7 层嵌套纤维化方法论推广至 QCD、引力/黑洞、凝聚态/流体、味物理、宇宙学五大领域，统一为 Paper XXV。**&#128679; 路线图已制定**。
 - `phase22_spectral_dynamics_deepening.md`：**Phase 22：谱动力学深化**——$\mathbf{Rec}/\mathbf{Sp}$ 高阶范畴拓展、非平衡谱热力学、黑洞视界谱动力学、奇点谱消解、谱流体动力学。**✅ 概念框架全部完成**。
@@ -39,8 +40,13 @@
 > - **Phase 42**：暴胀 R⁴ 修正 ✅（BCH 至 R⁴，c₂=8.92, c₃=4.72）
 > - **所有半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**
 
-## 当前优先级
+## 当前优先级（2026-07-30 更新）
 
+- **P0 范畴理论绝对性验证**：**🆕 最高优先级**。不依赖物理实验的纯数学验证。三路径策略：
+  - **路径 C 🔜（数天）**：Python 可执行范畴语义 → `pip install ufpf && verify_all()` 一键验证 8 项核心公理自洽性
+  - **路径 B 🔜（数周）**：Agda 独立重形式化 8 个核心 Lean 模块 → 证明助理交叉验证
+  - **路径 A 🔄（长期）**：Lean 零 `sorry` 持续闭合 → 全库完全机器证明
+  - 详见 [`phase60_category_verification.md`](phase60_category_verification.md)
 - **P0 理论严格化**：已完成（`phase1_meta_axioms.md`、`phase2_structural_theorems.md`、`phase4_semantics_over_fitting.md` 已严格化）。
 - **P1 核心代码补全**：已完成（`src/` 核心模块与测试全部就绪）。
 - **P2 下游插件深化**：已完成一轮完整覆盖。弦论散射振幅、LQG 面积谱、AdS/CFT 算子谱、TQFT 任意子量子维度、NCG Dirac 谱、因果集将来基数谱、渐近安全临界指数谱、扭量旋量运动学谱、引力 Schwarzschild/Kerr 真实度规（Kerr 积分器扩展至逆行与偏心率 e=0.3）、BSM 实验约束接口（热遗迹密度冻结、LHC 对产生、直接探测 SI 截面等精确截面工具已加入）均已完成；当前下一步可转入 P5 深层次理论严格化。SM 物理完整性与 NTK 真实谱对接已完成。
