@@ -81,6 +81,16 @@ UFPF 框架经过 34 篇论文的系统建设，以下核心问题已闭合：
 | C3 | 质子寿命 $\tau_p \sim 10^{34-36}$ 年 | Paper II | **中** | ⏳ 依赖下一代质子衰变实验（Hyper-K、DUNE） |
 | C4 | Kerr QNM 2.03% 偏差检验 | Paper II | **中** | 🟡 需更高精度 LIGO/Virgo/KAGRA ringdown 数据 |
 
+### 3.4 已排除的推导方向（❌ 负结果闭合）
+
+以下方向曾被视为有希望的推导路径，经系统分析后被确认不可行。记录于此以避免重复探索。
+
+| # | 方向 | 出处 | 排除原因 |
+|:-:|:-----|:-----|:---------|
+| **X1** | **ε̄/ε₃ = √5 的闭式解析证明** | Paper XXX §6.4 | ❌ **穿越点而非极限**：$\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（$\partial(\bar{\varepsilon}/\varepsilon_3)/\partial d \approx 1556$），从 $d = \ln 15$（零穿越）到 $d_H$ 快速穿过 $\sqrt{5}$，而非函数的渐近极限。解析闭式证明不可行。δ 因此保留为 RMS 定理约束的唯象残差。参见 Paper XXX §6.4 诚实标注 |
+
+> **说明**：X1 的排除不否定 $\bar{\varepsilon} = \sqrt{N_{\text{total}}}\cdot\varepsilon_3$ 的 RMS 传播假说本身（该假说已升级为认识论层面的最大熵原理，见 Paper XXXI），而是否定了"从解析推导中获得 ε̄/ε₃ = √5"的路径。
+
 ---
 
 ## 4. 层次距离度量空间
