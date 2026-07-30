@@ -8,7 +8,7 @@
 
 ---
 
-**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.3（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。
+**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.4（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。
 
 ---
 
@@ -438,7 +438,7 @@ $$\text{LO} = [A,\delta\beta]\cdot g + f\cdot[\delta\alpha,A], \quad \text{NLO} 
 2. Paper XXXI：质量-$\Delta$ 方向性关系（偏差代数、源线性、Phase C 闭式）
 3. Paper XXXIV：连续极限（B2 理论闭合、拟对称嵌入）
 4. Paper V：力的谱动力学（谱流方程）
-5. RAP-Errata v0.3：勘误与宣称基线
+5. RAP-Errata v0.4：勘误与宣称基线
 6. Donoghue, J.F. (1994). "General relativity as an effective field theory." *Phys. Rev. D* 50, 3874.
 7. Tukia & Väisälä (1980): "Quasisymmetric embeddings of metric spaces", *Ann. Acad. Sci. Fenn. Ser. A I Math.* 5, 97–114.
 8. Heinonen (2001): *Lectures on Analysis on Metric Spaces*, Springer.

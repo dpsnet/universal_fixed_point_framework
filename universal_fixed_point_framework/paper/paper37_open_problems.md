@@ -8,7 +8,7 @@
 
 ---
 
-**记号与引用**：所有引用定理均通过 Lean 4 `lake build` 零错误验证。零参数宣称边界以 RAP-Errata v0.3 为准。
+**记号与引用**：所有引用定理均通过 Lean 4 `lake build` 零错误验证。零参数宣称边界以 RAP-Errata v0.4 为准。
 
 ---
 
@@ -146,7 +146,7 @@ $$\ln(B+1) = \ln 16 = 4\ln 2, \qquad \ln 15 = 4\ln 2 - \ln\frac{16}{15}$$
 
 ## 参考文献
 
-1. RAP-Errata v0.3：《UFPF 勘误与立场声明》
+1. RAP-Errata v0.4：《UFPF 勘误与立场声明》
 2. Paper XXXIV：连续极限——B2 理论闭合
 3. Paper XXXV：引力的范畴论起源
 4. Paper XXXI：质量-$\Delta$ 方向性关系

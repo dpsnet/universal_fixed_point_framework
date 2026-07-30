@@ -25,7 +25,7 @@
 
 **Core Mechanism**: The $\mathbf{Sp}$ 4-category weighted silence hierarchy ($S_k = s^k$, $s=e^{-1}$, $d_H$ as structural dimension) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
 
-**Key Results** (RAP-Errata v0.3 compliant):
+**Key Results** (RAP-Errata v0.4 compliant):
 | Quantity | Prediction | Experiment | Deviation |
 |:---------|:----------:|:----------:|:---------:|
 | CKM $\theta_{12}$ | 0.2258 | 0.2260 | 0.09% |
@@ -266,7 +266,7 @@ universal_fixed_point_framework/
 │   ├── paper32_silence_spacetime.md            # 🆕 谱静默与时空涌现
 │   ├── paper33_origin_of_3.md                  # 🆕 "3"的范畴论起源
 │   ├── paper34_continuum_limit.md              # 🆕 B2 连续极限
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.3
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.4
 ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 ├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
 ├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证
