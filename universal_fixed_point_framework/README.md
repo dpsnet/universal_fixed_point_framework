@@ -103,6 +103,10 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.4 §六） |
 | 活动 `sorry` | 3 处：`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新 |
 
+### 范畴理论绝对性验证（Phase 60 🆕）
+
+**路径 C ✅ 已完成** — `python -m verify.run_all` 一键验证 8 项范畴理论自洽性检查（V1–V8），**8/8 全部 PASS**。详见 [`roadmap/phase60_category_verification.md`](roadmap/phase60_category_verification.md)。
+
 ### Phase 27 深化方向（全部完成 ✅）
 
 | 方向 | 交付物 | 状态 |

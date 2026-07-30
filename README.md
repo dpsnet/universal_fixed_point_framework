@@ -76,9 +76,28 @@
 
 ---
 
-## 五、Lean 4 形式化状态
+## 五、Lean 4 形式化与范畴验证
+
+### Lean 4 形式化状态
 
 74 个核心模块，`lake build` 零错误通过。**活动 `sorry`仅 3 处**（`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新）。10 个核心定理模块已完全机器证明（零 `sorry`）。
+
+### 范畴理论绝对性验证（Phase 60 🆕）
+
+**路径 C ✅ 已完成** — `python -m verify.run_all` 一键运行 8 项范畴理论自洽性检查，8/8 全部 PASS：
+
+| 验证项 | 对应 Lean 模块 | 状态 |
+|:-------|:---------------|:----:|
+| V1 Sp 严格 4-范畴 | `SpCategory.lean` | ✅ |
+| V2 D 函子忠实性 | `DecursionFunctor.lean` | ✅ |
+| V3 D ⊣ R 三角恒等式 | `DecursionFunctor.lean` | ✅ |
+| V4 谱对应自然性 | `SpectralCorrespondence.lean` | ✅ |
+| V5 统一 3 定理 | `Unified3Theorem.lean` | ✅ |
+| V6 不等式链 | `DHStructuralAnalysis.lean` | ✅ |
+| V7 c₁<c₂<c₃ | `IFSFractal.lean §6` | ✅ |
+| V8 偏差代数形式 | `DeviationBound.lean` | ✅ |
+
+详见 [`roadmap/phase60_category_verification.md`](universal_fixed_point_framework/roadmap/phase60_category_verification.md)。
 
 核心模块（完整列表见 RAP-Errata v0.4 §六 Lean 4 形式化状态总表）：
 

@@ -43,6 +43,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - **Universal fixed-point equation** $\mathcal{F}[\mathcal{V}] = \mathcal{V}$: a unified form of subsystem fixed-point equations.
 - **Dual-track Koopman operator**: unconditional definition on $\ell^\infty(X)$ + spectral correspondence on $L^2$/$C(X)$ (`DynSys.lean`)
 - **Lean 4 formalization**: 74 core modules, `lake build` clean (0 errors, 8 warnings). **Only 3 active `sorry`s**: 1 conceptual feature in `HigherSpCategory.lean:103` (exchange law deviation = gravity), 2 pending Mathlib `Matrix.Spectrum` in `DeviationBound.lean:386/412`. 10 core theorem modules fully machine-proven (zero `sorry`).
+- **Category verification (Phase 60 🆕)**: `python -m verify.run_all` — 8/8 PASS. Path C complete (Python executable categorical semantics). See `roadmap/phase60_category_verification.md`.
 
 ### 2.3 Key Physical Correspondences
 
@@ -146,6 +147,14 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] 74 core modules, `lake build` clean (0 errors, 8 warnings)
 - [x] 10 core theorem modules fully machine-proven (zero `sorry`)
 - [x] Active `sorry`: only `spExchangeLaw` (conceptual feature) + 2 pending Mathlib `Matrix.Spectrum`
+
+**Category-theoretic verification (Phase 60 🆕)**
+- [x] **Path C complete**: `python -m verify.run_all` — 8/8 PASS
+- [x] V1 Sp strict 4-category | V2 D functor faithful | V3 D ⊣ R triangles
+- [x] V4 Spectral correspondence natural | V5 Unified 3 theorem
+- [x] V6 Inequality chain | V7 c₁<c₂<c₃ | V8 Delta algebraic form
+- [ ] Path B (Agda re-formalization) — next
+- [ ] Path A (Lean zero `sorry` closure) — ongoing
 
 **Author and versioning**
 - [x] Author: Wang Bin (Independent Researcher), wang.bin@foxmail.com

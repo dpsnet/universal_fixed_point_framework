@@ -148,6 +148,10 @@
 
 **与 Paper XXXVII（开放问题）的关系**：Paper XXXVII 为综述论文，不引入新 `sorry`。其引用的所有 Lean 定理均已通过 `lake build`。
 
+### Phase 60 范畴理论绝对性验证（🆕 路径 C ✅）
+
+**路径 C 已完成**（2026-07-30）：Python 可执行范畴语义验证套件 `verify/` 模块，8 项核心范畴公理自洽性检查 8/8 全部 PASS。验证范围涵盖：$\mathbf{Sp}$ 4-范畴态射复合、D 函子忠实性、伴随三角恒等式、谱对应自然性、统一 3 定理、不等式链、$c_1<c_2<c_3$ 排序、偏差代数形式。详见 [`roadmap/phase60_category_verification.md`](../roadmap/phase60_category_verification.md)。
+
 ## 七、系列论文状态
 
 1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。

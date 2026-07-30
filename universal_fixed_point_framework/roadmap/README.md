@@ -43,7 +43,7 @@
 ## 当前优先级（2026-07-30 更新）
 
 - **P0 范畴理论绝对性验证**：**🆕 最高优先级**。不依赖物理实验的纯数学验证。三路径策略：
-  - **路径 C 🔜（数天）**：Python 可执行范畴语义 → `pip install ufpf && verify_all()` 一键验证 8 项核心公理自洽性
+  - **路径 C ✅（已完成）**：Python 可执行范畴语义 → `python -m verify.run_all` 8/8 PASS
   - **路径 B 🔜（数周）**：Agda 独立重形式化 8 个核心 Lean 模块 → 证明助理交叉验证
   - **路径 A 🔄（长期）**：Lean 零 `sorry` 持续闭合 → 全库完全机器证明
   - 详见 [`phase60_category_verification.md`](phase60_category_verification.md)

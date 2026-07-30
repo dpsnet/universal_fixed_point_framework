@@ -5,28 +5,44 @@
 > **原则**：验证对象是元公理层和结构定理层本身，而非其物理应用。实例层的"正确性"不构成对上层公理的验证。
 >
 > **策略**：三条路径并行，按投入产出比排序执行。
+>
+> **进度**：✅ 路径 C 已完成（2026-07-30）—— `verify/` 模块 8/8 全部 PASS。详见下方 §路径 C。
 
 ---
 
 ## 三路径总览
 
-| 路径 | 方法 | 时间 | 验证类型 | 产出 |
-|:-----|:------|:----:|:---------|:-----|
-| **C** | Python 可执行范畴语义 | 数天 | 运行时自洽性 | `pip install ufpf && verify_all()` |
-| **B** | Agda/Coq 独立重形式化 | 数周 | 证明助理交叉验证 | 核心 8 模块双实现一致 |
-| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 全库零 `sorry` |
+| 路径 | 方法 | 时间 | 验证类型 | 状态 | 产出 |
+|:-----|:------|:----:|:---------|:---:|:-----|
+| **C** | Python 可执行范畴语义 | 数天 | 运行时自洽性 | ✅ **已完成** | `python -m verify.run_all` → 8/8 PASS |
+| **B** | Agda/Coq 独立重形式化 | 数周 | 证明助理交叉验证 | 🔜 待启动 | 核心 8 模块双实现一致 |
+| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 🔄 持续 | 全库零 `sorry` |
 
 ---
 
-## 路径 C：可执行范畴语义（数天，先做）
+## 路径 C：可执行范畴语义（已 ✅ 完成）
 
-### 动机
+### 状态
 
-Lean 证明虽然可靠，但门槛高（需安装 Lean + mathlib，需懂依赖类型语法）。**可执行 Python 语义**让任何人能在 10 秒内验证核心范畴公理的自洽性。
+**2026-07-30 完成**。`verify/` 模块 8/8 全部 PASS，注册于 `run_all_tests.py`（Phase 60）。
 
-### 实现方案
+```bash
+$ cd universal_fixed_point_framework
+$ python -m verify.run_all
+✓ PASS  V1   Sp is strict 4-category
+✓ PASS  V2   D functor is faithful
+✓ PASS  V3   D ⊣ R triangle identities
+✓ PASS  V4   Spectral correspondence natural
+✓ PASS  V5   Unified 3 theorem
+✓ PASS  V6   Inequality chain
+✓ PASS  V7   c₁ < c₂ < c₃
+✓ PASS  V8   Delta algebraic form
+结果: 8/8 通过 — 范畴理论自洽性验证完成
+```
 
-在 `ufpf/` 包中新增 `ufpf/verify/` 子模块：
+### 实现方案（参考）
+
+在 `ufpf/` 包中新增 `verify/` 子模块：
 
 ```
 ufpf/
@@ -155,3 +171,4 @@ Agda 版本:  定理 T 的证明链 A₁ → A₂ → ... → Aₙ
 | 版本 | 日期 | 变更 |
 |:-----|:----:|:-----|
 | v0.1 | 2026-07-30 | 初版创建。三路径策略：C（Python 可执行语义）→ B（Agda 重形式化）→ A（Lean 零 sorry） |
+| v0.2 | 2026-07-30 | **路径 C 完成**。`verify/` 模块 8/8 PASS，注册 `run_all_tests.py`。文档更新状态为 ✅ |
