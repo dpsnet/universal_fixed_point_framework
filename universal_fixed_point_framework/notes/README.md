@@ -19,6 +19,8 @@
 | **d_H 结构分析与机器验证** | ✅ **Paper 30 v1.1** （11 项 Lean 证明 + 2 项数值验证） | `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper30_dH_structural_analysis.md` |
 | **B2 连续极限（分形→光滑时空）** | ✅ **理论闭合（Paper XXXIV v1.2）** — 6/6 子步骤 | `notes/08_first_principles/b2_continuum_limit_analysis.md`、`paper/paper34_continuum_limit.md` |
 | **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 定理完整证明链 | `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` |
+| **引力范畴论起源** | ✅ **Paper XXXV v0.2** — 交换律偏差 = 引力 | `notes/08_first_principles/04_gravity_analysis.md`、`paper/paper35_gravity_origin.md` |
+| **开放问题系统综述** | ✅ **Paper XXXVII v0.1** — A/B/C 三组分类 + 层次距离 + Bott-Moran 桥 | `notes/08_first_principles/05_hierarchy_distance.md`、`notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper37_open_problems.md` |
 | **p-value 统计分析** | ✅ **Fisher p≈0** | `paperX_pvalue_analysis.py` |
 | **根因分析** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/00_foundations/spectral_comprehensive_review.md` |

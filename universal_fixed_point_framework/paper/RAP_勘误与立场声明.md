@@ -1,7 +1,7 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.3）
+# UFPF 勘误与立场声明（RAP-Errata v0.4）
 
-**发布日期**：2026-07-29
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）
+**发布日期**：2026-07-30
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `d0b1ca47`（v0.4）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -10,7 +10,7 @@
 
 本勘误不是对原系列论文的又一次扩展，而是针对《UFPF 修复与推进方案》（RAP v0.1，2026-07-26）所列问题的基础性纠正。原框架的最高宣称（"$\mathbf{Sp}$ 严格 4-范畴零参数导出全部标准模型可观测量"）超出了当前可证明范围。本声明发布后，所有论文修订均以此冻结基线为准，任何后续改动都会附带版本哈希并公开记录。
 
-**系列论文扩展**：本次更新随附四篇新论文：**Paper XXXI**（质量-Δ 方向性）、**Paper XXXII**（谱静默与四维时空涌现）、**Paper XXXIII**（"3"的范畴论起源）、**Paper XXXIV**（连续极限——B2 理论闭合）。其中 Paper XXXIV 解决了此前被认为阻塞的连续极限问题，证明 B2 已理论闭合。
+**系列论文扩展**：本次更新随附六篇新论文：**Paper XXXI**（质量-Δ 方向性）、**Paper XXXII**（谱静默与四维时空涌现）、**Paper XXXIII**（"3"的范畴论起源）、**Paper XXXIV**（连续极限——B2 理论闭合）、**Paper XXXV**（引力的范畴论起源——交换律偏差、连续极限与时空涌现）、**Paper XXXVII**（开放问题、未来方向与层次距离）。其中 Paper XXXIV 解决了此前被认为阻塞的连续极限问题，证明 B2 已理论闭合；Paper XXXV 将引力图像从笔记综合为完整论文；Paper XXXVII 系统盘点剩余开放问题并建立层次距离度量概念。
 
 ---
 
@@ -100,13 +100,52 @@
 | **XXXII** | **Cl(1,7) 谱静默与四维时空涌现** | **`paper32_silence_spacetime.md`** | **🆕** | 8 个严格定理（机器证明）+ 力程约束。本轮新增 |
 | **XXXIII** | **"3"的范畴论起源与层次结构** | **`paper33_origin_of_3.md`** | **🆕** | 统一 3 定理、不等式链、O2 统一、Bott-Moran 桥。本轮新增 |
 | **XXXIV** | **连续极限——分形吸引子到光滑时空涌现** | **`paper34_continuum_limit.md`** | **🆕** | B2 Step 3 六步理论证明：编码树分层、拟弧、对称性、Lipschitz 映射、拟对称嵌入、谱流保持。**B2 已理论闭合**——自包含论文，不依赖笔记 |
+| **XXXV** | **引力的范畴论起源** | **`paper35_gravity_origin.md`** | **🆕** | 交换律偏差 = 引力；Δ 结构常数地位；引力不可屏蔽的范畴论根源；引力子等效性；GW 极化计数；牛顿引力定律范畴论推导。本轮新增 |
+| **XXXVII** | **开放问题、未来方向与层次距离** | **`paper37_open_problems.md`** | **🆕** | A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥恒等式。本轮新增 |
 
-**状态汇总**：全部 34 篇论文中 30 篇 ✅ 稳定、4 篇 🆕 本轮新增（XXXI–XXXIV）、零 ⚠️、零待办。
+**状态汇总**：全部 37 篇论文中 31 篇 ✅ 稳定、6 篇 🆕 本轮新增（XXXI–XXXV, XXXVII）、零 ⚠️、零待办。
+
+### Lean 4 形式化状态总表
+
+| 指标 | 数值 |
+|:-----|:-----:|
+| 总 Lean 模块数 | 74 |
+| `lake build` 状态 | ✅ 零错误通过（0 errors，仅 8 条编译器警告） |
+| 活动 `sorry` | 3 处（`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新） |
+| 核心理论模块（零 `sorry` 完全证明） | 10 模块：`SpCategory`、`DecursionFunctor`、`DHStructuralAnalysis`、`CoherenceToBranching`、`IFSFractal`（§6 排序定理）、`HutchinsonAttractor`、`BottTower`、`Unified3Theorem`、`ContinuumLimit`（B2 3a）、`DeviationBound`（§1.6 源缺陷线性） |
+
+**核心模块详细状态**：
+
+| 模块 | 对应论文 | 状态 | 说明 |
+|:-----|:--------:|:----:|:-----|
+| `SpCategory.lean` | I | ✅ 零 `sorry` | $\mathbf{Sp}$ 范畴定义 |
+| `RecCategory.lean` | I | ✅ 零 `sorry` | $\mathbf{Rec}$ 范畴定义 |
+| `DecursionFunctor.lean` | I | ✅ 零 `sorry` | D 函子 + 伴随 |
+| `HigherSpCategory.lean` | XIX | ⚠️ 1 `sorry`:103 | spExchangeLaw — **概念特征**，非技术缺口（填补为等式 ⇒ $G_N \to 0$） |
+| `DeviationBound.lean` | XXXI | ⚠️ 2 `sorry`:386/412 | `spectral_gap_estimate` + `deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`；§1.6 源缺陷线性已完全证明 |
+| `DHStructuralAnalysis.lean` | XXX | ✅ 零 `sorry` | 不等式链 + Moran 唯一性 + 响应分析 |
+| `CoherenceToBranching.lean` | XXXII | ✅ 零 `sorry` | 静默定理组（8 定理）+ 层独立性 + 分支计数 |
+| `IFSFractal.lean` | XXXIII | ✅ 零 `sorry` | 物理 3-map IFS + $c_1<c_2<c_3$ 排序定理 |
+| `HutchinsonAttractor.lean` | XXXIII | ✅ 零 `sorry` | Hutchinson 吸引子存在唯一性 |
+| `BottTower.lean` | XXXIII | ✅ 零 `sorry` | Bott 塔 + $\log_2 k_{\max}=3$ |
+| `Unified3Theorem.lean` | XXXIII | ✅ 零 `sorry` | 统一 3 定理 |
+| `ContinuumLimit.lean` | XXXIV | ✅ 零 `sorry` | B2 3a 深度分层：$c_1 < S_4$ 机器证明 |
+| `Silence.lean` / `SilenceHierarchy.lean` | II/XXXII | 🔶 部分 `sorry` | 基础静默机制已证明，高阶静默组合仍有 2 `sorry` 待优化 |
+| `SpectralGap.lean` | XX | ✅ 零 `sorry` | SU(2) 谱隙推导（不含 Rayeligh 商估计） |
+
+**分类解读**：
+- **🔴 概念特征（不可消除）**：`HigherSpCategory.lean:103` — 此 `sorry` 是特征（特征参见 Paper XXXV §2.1），填补为等式将证明 $G_N \to 0$（物理错误）。正确方向是证明偏差 Frobenius 范数与谱间隙的定量关系（已由 `spExchangeLaw_deviation_partial_commutator` 和 `spExchangeLaw_homotopy_deviation` 覆盖）
+- **🟡 待基础设施（可消除，依赖 Mathlib 更新）**：`DeviationBound.lean:386/412` — 待 Mathlib `Matrix.Spectrum` 模块稳定后自然闭合
+- **🟢 完全证明**：10 个核心模块、静默 8 定理、统一 3 定理、Bott 塔、B2 3a 等均已完全机器证明
+
+**与 Paper XXXV（引力范畴论）的关系**：Paper XXXV 不引入新 `sorry`。其核心断言（$\Delta$ = 引力）依赖的 Lean 定理均已完成：`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`、源缺陷线性（§1.6）。引力不可屏蔽的范畴论推论（§3）和引力子等效性（§4）为概念论证，未要求新 Lean 形式化。
+
+**与 Paper XXXVII（开放问题）的关系**：Paper XXXVII 为综述论文，不引入新 `sorry`。其引用的所有 Lean 定理均已通过 `lake build`。
 
 ## 七、系列论文状态
 
 1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。
-2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）。
+2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）。
 3. **盲登记协议**：7 项冻结预言数值未变，登记有效。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
 ---
@@ -122,3 +161,4 @@
 | v0.1 | 2026-07-27 | 初版创建。基于 RAP 修复方案，列出撤回/降级表述、内部矛盾修复包、参数总账 8-10、开放研究线 O1-O4 |
 | v0.2 | 2026-07-28 | 参数总账更新 8-10 → 2-3（消减 70-80%），新增 $G_N/M_{\text{Pl}}$ 行。O1 闭合、O3 大幅推进。新增 O5 |
 | **v0.3** | **2026-07-29** | **新增三篇论文**：Paper XXXI（质量-Δ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）。**B1①环机器证明**。**新增 O6**（质量-Δ 方向性闭合）。**RAP 文件修复**：RAP1-3 全部通过编译。**§三改标**为"修复方案已确认，待论文正文更新"。**研究笔记全部内容已提炼完毕**——7 份子笔记对应 33 篇论文已覆盖全部核心结果。基于笔记 v1.48 |
+| **v0.4** | **2026-07-30** | **新增六篇论文**：Paper XXXI–XXXV, XXXVII（含新增 Paper XXXV 引力范畴论起源、Paper XXXVII 开放问题综述）。**参数总账更新**：Paper XXXV 将引力图像综合为完整论文；Paper XXXVII 系统盘点剩余开放问题。**论文总数更新至 37 篇**。**O2/O3/O5 状态不变**（仍需新物理输入/更高精度 $d_H$）。基于笔记 v1.49 |

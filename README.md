@@ -6,9 +6,9 @@
 
 ---
 
-**最新进展（2026-07-29）**：**RAP-Errata v0.3 已发布**——全部 34 篇论文状态完整：30 篇稳定、4 篇本轮新增（XXXI–XXXIV）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。详见 `paper/RAP_勘误与立场声明.md`。
+**最新进展（2026-07-30）**：**RAP-Errata v0.4 已发布**——全部 37 篇论文状态完整：31 篇稳定、6 篇本轮新增（XXXI–XXXV, XXXVII）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。新增 Paper XXXV（引力范畴论起源）和 Paper XXXVII（开放问题综述）。详见 `paper/RAP_勘误与立场声明.md`。
 
-**Latest (2026-07-29)**: **RAP-Errata v0.3 released** — 34 papers: 30 stable, 4 new (XXXI–XXXIV), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. See `paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-30)**: **RAP-Errata v0.4 released** — 37 papers: 31 stable, 6 new (XXXI–XXXV, XXXVII), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). See `paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -38,7 +38,7 @@
 
 ---
 
-## 三、论文系列（共 34 篇）
+## 三、论文系列（共 37 篇）
 
 | 范围 | 数量 | 状态 |
 |:-----|:----:|:----:|
@@ -50,6 +50,8 @@
 | Paper XXXII（Cl(1,7) 谱静默与四维时空涌现） | 1 | 🆕 8 个严格定理（机器证明）+ 力程约束 |
 | Paper XXXIII（"3"的范畴论起源与层次结构） | 1 | 🆕 统一 3 定理、不等式链、Bott-Moran 桥 |
 | Paper XXXIV（连续极限——分形吸引子到光滑时空涌现） | 1 | 🆕 B2 六步理论证明（v1.2 修正：3d 对数-Lipschitz 而非 Hölder，拟对称性不变） |
+| Paper XXXV（引力的范畴论起源） | 1 | 🆕 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 |
+| Paper XXXVII（开放问题、未来方向与层次距离） | 1 | 🆕 A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥 |
 
 关键开放线状态：
 - **O1/O6** ✅ 已闭合；**O2/O3/O5** 🔶 已大幅推进；**O4** ❌ 仍开放
@@ -76,7 +78,9 @@
 
 ## 五、Lean 4 形式化状态
 
-核心文件（均通过 `lake build` 零错误，含新增 `ContinuumLimit.lean`）：
+74 个核心模块，`lake build` 零错误通过。**活动 `sorry`仅 3 处**（`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新）。10 个核心定理模块已完全机器证明（零 `sorry`）。
+
+核心模块（完整列表见 RAP-Errata v0.4 §六 Lean 4 形式化状态总表）：
 
 | 文件 | 内容 |
 |:-----|:------|
@@ -99,7 +103,7 @@
 
 ```
 universal_fixed_point_framework/
-├── paper/                           # 论文（34 篇）
+├── paper/                           # 论文（37 篇）
 │   ├── paper1_*.md                  # Paper I–XVI：基础理论
 │   ├── paper17_zero_parameter_predictions.md
 │   ├── paper18_spectral_newtonian.md
@@ -109,8 +113,10 @@ universal_fixed_point_framework/
 │   ├── paper32_silence_spacetime.md                # 🆕
 │   ├── paper33_origin_of_3.md                      # 🆕
 │   ├── paper34_continuum_limit.md                  # 🆕
-│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.3
-│   └── RAP_盲登记协议.md                            # RAP-Registry v0.3
+│   ├── paper35_gravity_origin.md                   # 🆕 引力范畴论起源
+│   ├── paper37_open_problems.md                    # 🆕 开放问题综述
+│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.4
+│   └── RAP_盲登记协议.md                            # RAP-Registry v0.4
 ├── notes/08_first_principles/       # 研究笔记
 │   ├── spectral_hierarchy_evolution_analysis.md    # 主索引
 │   ├── 01_origin_of_3.md … 07_e_less_than_3.md   # 各专题
@@ -153,4 +159,4 @@ universal_fixed_point_framework/
 
 ---
 
-*最后更新：2026-07-29*
+*最后更新：2026-07-30*

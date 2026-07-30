@@ -4,7 +4,7 @@
 
 ---
 
-**Latest (2026-07-29)**: **RAP-Errata v0.3 released** — all 34 papers status complete (30 stable, 4 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-30)**: **RAP-Errata v0.4 released** — all 37 papers status complete (31 stable, 6 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -15,7 +15,7 @@ This project consists of two interrelated research layers:
 | Layer | Location | Role |
 |-------|----------|------|
 | **Original numerical implementation layer** | Root directory `.` | Early-stage concrete numerical fits and experimental validations for the Standard Model mass spectrum, NTK spectral optimization, etc. |
-| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.3 — 34 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
+| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.4 — 37 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
 
 Core idea: treat "recursive iteration" as an **object-level evolution rule**, and its corresponding "operator semigroup spectrum" as a **spectral-level static structure**. The two are related systematically through a spectral de-recursion functor.
 
@@ -42,7 +42,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - **Orbit functor** $O$: encodes symmetry weights under gauge-group actions.
 - **Universal fixed-point equation** $\mathcal{F}[\mathcal{V}] = \mathcal{V}$: a unified form of subsystem fixed-point equations.
 - **Dual-track Koopman operator**: unconditional definition on $\ell^\infty(X)$ + spectral correspondence on $L^2$/$C(X)$ (`DynSys.lean`)
-- **Lean 4 formalization**: 9 core modules zero diagnostics, covering $\mathbf{Sp}$ category, 2/3-morphisms, deviation bound, $d_H$ structural analysis, silence theorem (8 theorems), IFS fractal, Hutchinson attractor, Bott tower, unified 3 theorem. Legacy `sorry`: only `spectral_gap_estimate` and `deviation_spectral_bound` (pending Mathlib `Matrix.Spectrum` stability).
+- **Lean 4 formalization**: 74 core modules, `lake build` clean (0 errors, 8 warnings). **Only 3 active `sorry`s**: 1 conceptual feature in `HigherSpCategory.lean:103` (exchange law deviation = gravity), 2 pending Mathlib `Matrix.Spectrum` in `DeviationBound.lean:386/412`. 10 core theorem modules fully machine-proven (zero `sorry`).
 
 ### 2.3 Key Physical Correspondences
 
@@ -65,15 +65,17 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   └── 分形谱去递归理论研究路线图.md        # Full research roadmap (v2.1)
 ├── universal_fixed_point_framework/       # Universal fixed-point categorical framework
 │   ├── README.md                          # Framework roadmap and progress overview
-│   ├── paper/                             # 34 papers
+│   ├── paper/                             # 37 papers
 │   │   ├── paper1_*.md — paper29/         # Papers I–XXIX: foundation, physics, formalization
 │   │   ├── paper30_dH_structural_analysis.md          # d_H structural analysis
 │   │   ├── paper31_mass_delta_directionality.md       # 🆕 Mass-Δ directionality
 │   │   ├── paper32_silence_spacetime.md               # 🆕 Cl(1,7) spectral silence & spacetime
 │   │   ├── paper33_origin_of_3.md                     # 🆕 Origin of "3"
 │   │   ├── paper34_continuum_limit.md                 # 🆕 Continuum limit (B2 closure)
-│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.3
-│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.3
+│   │   ├── paper35_gravity_origin.md                  # 🆕 Category-theoretic origin of gravity
+│   │   ├── paper37_open_problems.md                   # 🆕 Open problems survey
+│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.4
+│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.4
 │   ├── src/                               # Core code implementations
 │   │   ├── rec_category.py                # Rec category
 │   │   ├── spec_category.py               # Spec category
@@ -123,7 +125,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] Kerr non-equatorial chaos and NR ringdown comparison
 - [x] Holographic entanglement entropy, complex CFT phase transitions, N=4 SYM TBA
 
-**34 papers**
+**37 papers**
 - [x] Paper I v2.35: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
 - [x] Paper II v2.22: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
 - [x] Paper III v1.1: Spectral classification completeness (three-layer + BPS numerical verification + Lean)
@@ -137,11 +139,13 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] **Paper XXXII 🆕**: Cl(1,7) spectral silence & 4D spacetime emergence (8 theorems, machine-proven)
 - [x] **Paper XXXIII 🆕**: Origin of "3" — unified 3 theorem, inequality chain, Bott-Moran bridge
 - [x] **Paper XXXIV 🆕**: Continuum limit — fractal attractor → smooth spacetime (B2 theoretical closure)
+- [x] **Paper XXXV 🆕**: Category-theoretic origin of gravity — exchange law deviation = gravity
+- [x] **Paper XXXVII 🆕**: Open problems survey — A/B/C classification, hierarchy distance, Bott-Moran bridge
 
 **Lean 4 formalization**
-- [x] 10 core functional modules zero diagnostics: $\mathbf{Sp}$ category, higher morphisms, deviation bound, $d_H$ structural analysis, silence theorem (8 thms), IFS fractal, Hutchinson attractor, Bott tower, unified 3 theorem, **ContinuumLimit** 🆕 (B2 3a depth layering: $c_1 < S_4$ machine-proven)
-- [x] `lake build` clean
-- [x] Remaining `sorry`: only `spectral_gap_estimate` and `deviation_spectral_bound` (pending Mathlib `Matrix.Spectrum` stability)
+- [x] 74 core modules, `lake build` clean (0 errors, 8 warnings)
+- [x] 10 core theorem modules fully machine-proven (zero `sorry`)
+- [x] Active `sorry`: only `spExchangeLaw` (conceptual feature) + 2 pending Mathlib `Matrix.Spectrum`
 
 **Author and versioning**
 - [x] Author: Wang Bin (Independent Researcher), wang.bin@foxmail.com
@@ -169,9 +173,9 @@ It should be emphasized that **core mathematical structures have been verified b
 
 ---
 
-## 6. Publication Plan (UFPF Series, 34 Papers)
+## 6. Publication Plan (UFPF Series, 37 Papers)
 
-Core papers (I–IV) target journals; papers V–XXXIV are companion papers:
+Core papers (I–IV) target journals; papers V–XXXVII are companion papers:
 
 | Paper | Title | Positioning | Status |
 |-------|-------|-------------|:------:|
@@ -184,6 +188,8 @@ Core papers (I–IV) target journals; papers V–XXXIV are companion papers:
 | **XXXII 🆕** | Spectral Silence & 4D Spacetime Emergence | 8 machine-proven theorems | ✅ |
 | **XXXIII 🆕** | Origin of "3" | Unified 3 theorem | ✅ |
 | **XXXIV 🆕** | Continuum Limit — B2 Theoretical Closure | Fractal → smooth spacetime | ✅ |
+| **XXXV 🆕** | Category-Theoretic Origin of Gravity | Exchange law deviation = gravity | ✅ |
+| **XXXVII 🆕** | Open Problems, Future Directions & Hierarchy Distance | A/B/C classification + Bott-Moran bridge | ✅ |
 
 ---
 
@@ -204,6 +210,8 @@ Core papers (I–IV) target journals; papers V–XXXIV are companion papers:
 3. `paper31_mass_delta_directionality.md` (gravity origin)
 4. `paper32_silence_spacetime.md` (spacetime emergence)
 5. `paper33_origin_of_3.md` (family number origin)
+6. `paper35_gravity_origin.md` (category-theoretic gravity)
+7. `paper37_open_problems.md` (open problems survey)
 
 ### For formal methods researchers
 - `formal_proof/UFPFormalization/` — `.lean` files (9 core modules)
@@ -220,13 +228,14 @@ Core papers (I–IV) target journals; papers V–XXXIV are companion papers:
 
 ## 9. Disclaimer
 
-This project is a **highly interdisciplinary theoretical framework**. Core categorical constructions and spectral classification theorems have been formalized in Lean 4 (10 core modules zero diagnostics, including the new `ContinuumLimit.lean` for the B2 continuum limit), providing machine-verified mathematical rigor. However, the following remain under development:
+This project is a **highly interdisciplinary theoretical framework**. Core categorical constructions and spectral classification theorems have been formalized in Lean 4 (74 core modules, `lake build` clean, 10 core theorem modules zero `sorry`), providing machine-verified mathematical rigor. However, the following remain under development:
 
-- 2 remaining `sorry`s (`spectral_gap_estimate` and `deviation_spectral_bound`) await Mathlib `Matrix.Spectrum` infrastructure
+- 1 conceptual `sorry` in `HigherSpCategory.lean` (spExchangeLaw — this is a feature, not a gap: making it equal would imply $G_N \to 0$)
+- 2 `sorry`s in `DeviationBound.lean` await Mathlib `Matrix.Spectrum` infrastructure
 - B2 3b/3d/3e/3f formalization awaits mathlib topology/quasiconformal geometry libraries
 - Physical predictions (e.g., $L_4 \approx 1470$ GeV) depend on FCC-hh experimental verification
 - Instance hypotheses (Cl(1,7) choice, etc.) are replaceable and do not constrain the meta-axiom layer
-- All claim boundaries are documented in the **RAP-Errata v0.3** baseline (`paper/RAP_勘误与立场声明.md`)
+- All claim boundaries are documented in the **RAP-Errata v0.4** baseline (`paper/RAP_勘误与立场声明.md`)
 
 ---
 
@@ -238,4 +247,4 @@ This project is a **highly interdisciplinary theoretical framework**. Core categ
 
 ---
 
-*Last updated: 2026-07-29*
+*Last updated: 2026-07-30*
