@@ -181,6 +181,8 @@ $c_2 < c_3$ 的证明非平凡（$c_3\approx 0.9998$ 与 $c_2\approx 0.0666$ 隔
 
 **剩余缺口（诚实标注）**：各路径的**物理映射**（标度区 $\leftrightarrow$ 代的对应规则、簇 $\leftrightarrow$ 空间方向的对应规则）仍是建模指派；路径 A 的 RG 方程 $\beta_i(\lambda) = \lambda(1-c_i^2)$ 本身是模型化的流方程，非从谱流算子推导。
 
+> **数值验证详情**：高精度数值验证（mpmath 50 位、901 点扫描、三路径排序一致性）见独立补充材料 [`paper33_O2_supplement.md`](paper33_O2_supplement.md)。
+
 ---
 
 ## 7. Bott–Moran 距离桥
@@ -235,6 +237,7 @@ $$\ln 15 = 4\ln 2 - \ln\frac{16}{15} = 2.772589 - 0.064539$$
 | 脚本 | 内容 | 状态 |
 |:-----|:------|:----:|
 | `paperX_O2_unification.py` | mpmath 50 位验证 $c_1<c_2<c_3$ 全域成立 | ✅ 已注册 |
+| `paper33_O2_supplement.md` | 补充材料：全域扫描参数、三路径数值一致性、可证伪陈述 | ✅ 已发布 |
 
 ---
 
