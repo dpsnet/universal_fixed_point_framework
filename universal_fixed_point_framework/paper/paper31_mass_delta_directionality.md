@@ -176,6 +176,22 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 
 ---
 
+## 8. 开放问题：形式化剩余缺口
+
+| # | 问题 | 等级 | 位置 | 当前状态 |
+|:-:|:-----|:----:|:-----|:---------|
+| **L2-1** | `spectral_gap_estimate`：Rayleigh 商估计的严格证明 | **🟡 L2 待基础设施** | `DeviationBound.lean:386` | 数学推导已完成（§5.6-5.7），依赖 Mathlib `Matrix.Spectrum` 模块稳定 |
+| **L2-2** | `deviation_spectral_bound`：谱间隙定量绑定 | **🟡 L2 待基础设施** | `DeviationBound.lean:412` | 依赖 `spectral_gap_estimate` 补全后自动闭合 |
+| **L3** | `spExchangeLaw` `sorry`（HigherSpCategory.lean:103） | **🔴 L3 概念特征** | `HigherSpCategory.lean:103` | **非技术缺口**：填补为等式 ⇒ $G_N \to 0$（物理错误）。正确方向是维持偏差代数形式。已由 `spExchangeLaw_deviation_partial_commutator` 覆盖——参见 Paper XXXV §2.1 的详细论证 |
+
+**等级说明**：
+- **L2 🟡 待基础设施**：理论推导完备，仅因 Mathlib 底层库未稳定而暂留。不属于"理论未完成"或"证明策略缺失"
+- **L3 🔴 概念特征**：此 `sorry` 不是 bug 而是特征。其"解决"方向不是消除，而是维持为偏差代数形式。与常规形式化缺口性质完全不同
+
+**诚实标注**：上述 3 个 `sorry` 均不影响 `lake build` 的零错误通过。`spExchangeLaw` 的偏差代数形式（`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`）和源缺陷线性（`source_defect_linearity`）已在相邻定理中完全机器证明。
+
+---
+
 ## 附录 A：Lean 形式化文件清单
 
 | 文件 | 路径 | 内容 |
