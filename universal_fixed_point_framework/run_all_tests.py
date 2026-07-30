@@ -9,6 +9,9 @@ import re
 import time
 
 SCRIPTS = [
+    # === Phase 60: 范畴理论绝对性验证 ===
+    ("verify.run_all",                     "V1-V8 范畴理论验证 (8/8)"),
+
     # === Phase 44: 谱 QFT 工具箱 (Paper XI) ===
     ("paperX_spectral_feynman.py",         "T2 谱 Feynman 规则"),
     ("paperX_spectral_renormalization.py", "T3 谱路径积分+重整化"),
