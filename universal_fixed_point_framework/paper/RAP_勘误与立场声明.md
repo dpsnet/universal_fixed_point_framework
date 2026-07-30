@@ -1,7 +1,7 @@
 # UFPF 勘误与立场声明（RAP-Errata v0.5）
 
 **发布日期**：2026-07-30
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `e0793c6c`（v0.5）
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `cbe788dd`（v0.5）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -55,7 +55,7 @@
 | 扇区参数 | 拟合参数（6–8） | **Cl(1,7) 推导**：超荷赋值直接导出；α = Δλ_min/4π | **推导值**，提炼为 Paper XXXII（8 定理机器证明） | **不变** |
 | $G_N$ | — | **Phase C 闭式**：$G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$ | **推导值**（仅含 $M_{\text{Pl}}$ 外部标度） | **不变** |
 | B2 连续极限 | — | — | **✅ 理论闭合**（Paper XXXIV）：分形→$\mathbb{R}^4$ 拟对称嵌入 | **不变** |
-| Paper XXXV 引力范畴论 | — | — | — | **🆕 新增**：交换律偏差 = 引力、Δ 结构常数、GW 极化计数 |
+| Paper XXXV 引力范畴论 | — | — | **🆕 新增**：交换律偏差 = 引力、Δ 结构常数、GW 极化计数 | **v0.3**：新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` 引用 |
 | Paper XXXVII 开放问题 | — | — | — | **🆕 新增**：A/B/C 三组分类、层次距离、Bott-Moran 桥 |
 | **合计** | **8–10 个自由度** | **2–3 个**（$M_{\text{Pl}}$ + δ 约束） | **0 个自由参数 + 1 个外部标度 $M_{\text{Pl}}$**（$c=1$ 单位制）。δ 为 RMS 受约束的唯象残差，非可调参数 | **0 个自由参数 + 1 个外部标度 $M_{\text{Pl}}$**。δ 闭式推导方向已排除（ε̄/ε₃ = √5 穿越点，无法闭式证明） |
 
@@ -144,7 +144,7 @@
 - **🟡 待基础设施（可消除，依赖 Mathlib 更新）**：`DeviationBound.lean:386/412` — 待 Mathlib `Matrix.Spectrum` 模块稳定后自然闭合
 - **🟢 完全证明**：10 个核心模块、静默 8 定理、统一 3 定理、Bott 塔、B2 3a 等均已完全机器证明
 
-**与 Paper XXXV（引力范畴论）的关系**：Paper XXXV 不引入新 `sorry`。其核心断言（$\Delta$ = 引力）依赖的 Lean 定理均已完成：`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`、源缺陷线性（§1.6）。引力不可屏蔽的范畴论推论（§3）和引力子等效性（§4）为概念论证，未要求新 Lean 形式化。
+**与 Paper XXXV（引力范畴论）的关系**：Paper XXXV 不引入新 `sorry`。其核心断言（$\Delta$ = 引力）依赖的 Lean 定理均已完成：`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`、源缺陷线性（§1.6）。**v0.3 新增**：`dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 为层正交性提供形式化支撑（依赖 §3.2）。引力不可屏蔽的范畴论推论（§3）和引力子等效性（§4）为概念论证，未要求新 Lean 形式化。
 
 **与 Paper XXXVII（开放问题）的关系**：Paper XXXVII 为综述论文，不引入新 `sorry`。其引用的所有 Lean 定理均已通过 `lake build`。
 

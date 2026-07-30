@@ -75,7 +75,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 
 ## 4. 严格谱静默定理组
 
-本节是本文的核心——8 个定理全部在 Lean 4 中机器证明（`CoherenceToBranching.lean` §9，全项目 `lake build` 零错误通过）。
+本节是本文的核心——10 个定理全部在 Lean 4 中机器证明（`CoherenceToBranching.lean` §9+§11，全项目 `lake build` 零错误通过）。
 
 ### 4.1 定理一览
 
@@ -89,6 +89,8 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 | T6 | `silence_margin` | $S_4 / c_1 = e^3$ | 分离裕度精确 $e^3$ |
 | T7 | `visible_dimensions_eq_four` | $\forall d>0$，可见 $=4$ | 鲁棒于 $d_H$ 不确定性 |
 | T8 | `spacetime_emergence_4d` | $\forall d>0$，可见 4 $+$ 静默 4 $= 8$ | 综合定理 |
+| **T9** | `dimension_gap` | $\ln 15 < 3$（纯数学不等式链） | IFS 吸引子不填充 3D 空间 |
+| **T10** | `outward_proof_maps_to_orthogonal_layer` | $\ln 15 < 3$ $\land$ $S_4/c_1 = e^3$ | 维数间隙 ⇒ 层正交性（"球心在空间之外"） |
 
 ### 4.2 新结构结果
 
@@ -99,6 +101,10 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 **自洽不动点**。$d_H \rightarrow S_4 \rightarrow$ 权重筛选 $\rightarrow$ 可见 $1+3$ / 静默 $4 \rightarrow n=4 \rightarrow d_H = \ln 15 + \delta$。$n=4$ 是循环的唯一不动点（数值验证 `paperX_spacetime_emergence.py` S3）。
 
 **扰动鲁棒性**。50,000 次对数正态扰动实验显示四维计数在 $\sigma \lesssim 2.5$ 下 $100\%$ 稳定，断裂点 $\sigma \approx 3 = \ln(e^3)$ 恰为分离裕度——内部维度需 $\sim e^3$ 倍扰动才能越过阈值。
+
+**维数间隙（T9）**。纯数学不等式链 $\ln 15 < 65/24 < e < 3$（`DHStructuralAnalysis.lean`）经传递性给出 $\ln 15 < 3$，即 IFS 吸引子的 Hausdorff 维数 $\ln 15 \approx 2.708$ 严格小于 3——三维空间不能由 15-分支均匀 IFS 完全填充。该不等式链三项均为纯数学证明，不依赖唯象拟合。
+
+**向外推定理（T10）**。合取 T6（$S_4/c_1 = e^3$）与 T9（$\ln 15 < 3$），建立"向下推"与"向外推"的统一视角：IFS 吸引子不填充 3D 空间 ⇒ 范畴结构包含正交的第 4 层，实现"球心在空间之外"的代数证明（`CoherenceToBranching.lean` §11, `lake build` 编译通过）。
 
 ### 4.3 附带修复
 

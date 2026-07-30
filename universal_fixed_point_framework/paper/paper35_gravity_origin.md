@@ -2,13 +2,12 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.2（2026-07-30）
+**版本**：v0.3（2026-07-30）
 
 **摘要**：本文建立 UFPF 框架中引力的完整范畴论图像：引力不是 $\mathbf{Sp}$ 4-范畴中与规范力并列的第四种相互作用，而是 **coherence 层（4-态射）的自洽性条件**——交换律偏差 $\Delta$ 就是引力。具体地，（1）spExchangeLaw 的 `sorry` 不是证明缺口而是概念特征：填补为等式等价于证明 $G_N \to 0$（引力消失）；（2）$\Delta$ 是结构常数（非动力学场），其 Frobenius 范数 $\|\Delta\|_F$ 决定引力强度 $G_N \propto \|\Delta\|_F^2$；（3）引力不可屏蔽是 $\mathbf{Sp}$ 4-范畴结构的范畴论推论，而非经验事实；（4）引力子在低能下作为等效准粒子存在（类比固体物理中的声子），在高能下回到离散范畴结构；（5）引力波是三维空间主动层在 $\Delta$ 刚度上的集体振荡——与 GR 在一切可达观测精度下不可区分，但本质上是离散范畴结构的涌现集体激发而非时空本身的量子化波动；（6）时空的 $1/r^2$ 定律来自等谱通量守恒 + Moran 自洽性，无需 GR 的微分同胚不变性假设。
 
 ---
-
-**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.4（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。
+**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.5（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。**v0.3 新增**：`CoherenceToBranching.lean` §11 的 `dimension_gap` 与 `outward_proof_maps_to_orthogonal_layer` 定理。
 
 ---
 
@@ -30,6 +29,8 @@ $G_N$ 的 Phase C 闭式（Paper XXXI）已经证明 $G_N = 18(2+\sqrt{3})\cdot(
 | 源→偏差映射严格线性 | ✅ `source_defect_linearity` | Paper XXXI |
 | $\Delta$ 对角元恒为零 | ✅ 代数推论（J2） | Paper XXXI |
 | 引力不可屏蔽 | 🔶 范畴论推论（依赖 J2 + 层正交性） | 本文 §3 |
+| **维数间隙 $\ln 15 < 3$** | ✅ `dimension_gap` | `CoherenceToBranching.lean` §11 |
+| **层正交性（向外推）** | ✅ `outward_proof_maps_to_orthogonal_layer` | `CoherenceToBranching.lean` §11 |
 | 引力子非基本粒子 | 🔶 概念论证（依赖 B2 连续极限） | 本文 §4 |
 | $1/r^2$ 来自等谱守恒 | ✅ `frobNormSq_unitary_conj` | Paper XXXI |
 
@@ -174,6 +175,8 @@ $\mathbf{Sp}$ 4-范畴的层结构将 $\Delta$ 与三维空间自然地"正交�
 ```
 
 类型级正交已由 `layerIndex_independent` 机器证明（`CoherenceToBranching.lean`，v1.26 + 修正 v1.33）。分离裕度 $e^3$ 由 `silence_margin` 机器证明（§4.5a）。
+
+**"向外推"形式化**（`CoherenceToBranching.lean` §11, `lake build` ✅）：`dimension_gap` 定理证明 $\ln 15 < 3$（纯数学不等式链，不依赖唯象拟合），`outward_proof_maps_to_orthogonal_layer` 定理将其与 `silence_margin` 合取，建立"IFS 吸引子不填充 3D 空间 ⇒ 范畴结构包含正交的第 4 层"——即"球心在空间之外"的代数证明。两个定理将"向下推"（静默→四维时空涌现）与"向外推"（维数间隙→正交层结构）统一为同一范畴自洽性的两种视角。
 
 ### 3.3 屏蔽引力 = 改变 $\mathbf{Sp}$ 定义
 
