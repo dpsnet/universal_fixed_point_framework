@@ -148,19 +148,4 @@ layerIndex-injective _ _ refl = refl
 activeLayer-injective : (l₁ l₂ : ActiveMorphismLayer) → l₁ ≡ l₂ → l₁ ≡ l₂
 activeLayer-injective _ _ refl = refl
 
--- ==================================================================
--- §5 高阶态射框架（2-态射、3-态射）
--- ==================================================================
-
--- 2-态射：SpHom 之间的同伦（简化版本，待细化）
-record SpTwoMorphism {X Y : SpObj} (f g : SpHom X Y) : Set₁ where
-  field
-    H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
-    homotopy-condition : (Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ) ≡ (Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
-
--- 3-态射：SpTwoMorphism 之间的同伦（简化版本，待细化）
-record SpThreeMorphism {X Y : SpObj} {f g : SpHom X Y}
-                       (α β : SpTwoMorphism f g) : Set₁ where
-  field
-    K : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
-    two-homotopy-condition : (Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ) ≡ (Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
+-- 高阶态射的定义移至 HigherSpCategory.agda
