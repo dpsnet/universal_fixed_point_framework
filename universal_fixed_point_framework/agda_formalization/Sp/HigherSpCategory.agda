@@ -19,7 +19,6 @@ module Sp.HigherSpCategory where
 open import Agda.Primitive using (Level)
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory
-open import Rec.RecCategory using (cong)
 
 open SpObj
 open SpHom

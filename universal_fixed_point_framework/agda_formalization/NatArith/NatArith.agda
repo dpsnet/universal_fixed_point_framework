@@ -19,8 +19,7 @@ module NatArith.NatArith where
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
-open import Sp.SpCategory using (ℕ; zero; suc)
-open import Rec.RecCategory using (cong; trans)
+open import Sp.SpCategory using (ℕ; zero; suc; cong; trans)
 
 -- ==================================================================
 -- §0 基础运算（从 Unified3 迁入，作为算术基础库）

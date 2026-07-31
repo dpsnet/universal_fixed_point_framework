@@ -30,11 +30,8 @@ open import NatArith.NatArith
 open import Unified3.Unified3Theorem
 open import DHStructural.DHStructuralAnalysis
 
--- 局部辅助：对称性 + 双向蕴含 + 顶类型 + 自然数序
--- （+ℕ-suc/∸-zero/∸-1/2*ℕ/half 系列与 _∸_ 已在 NatArith 中定义）
-sym : {A : Set} {x y : A} → x ≡ y → y ≡ x
-sym refl = refl
-
+-- 局部辅助：双向蕴含 + 顶类型 + 自然数序
+-- （sym/trans/cong 与 +ℕ-suc/∸-zero/∸-1/2*ℕ/half 系列、_∸_ 已在基础层定义）
 record _↔_ (A B : Set) : Set where
   constructor mkIff
   field

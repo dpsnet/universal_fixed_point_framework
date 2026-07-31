@@ -11,14 +11,9 @@ module Rec.RecCategory where
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
-open import Sp.SpCategory using (ℕ; Fin)
+open import Sp.SpCategory using (ℕ; Fin; cong; trans)
 
--- trans 和 cong 的内联定义
-trans : {A : Set} {x y z : A} → x ≡ y → y ≡ z → x ≡ z
-trans refl refl = refl
-
-cong : {A B : Set} {x y : A} (f : A → B) → x ≡ y → f x ≡ f y
-cong f refl = refl
+-- （trans/cong 统一定义于 SpCategory 基础层，此处引用）
 
 -- Rec 对象：有限状态 Fin n + 演化规则 step
 record RecObj : Set where
