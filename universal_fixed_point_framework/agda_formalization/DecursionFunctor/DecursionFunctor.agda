@@ -146,3 +146,86 @@ left-triangle = refl
 -- 非论文构造的忠实实现；Agda 有限载体（ℤ/3）无法承载 e^{-A}，有限维化需 exp（T3）。
 postulate
   right-triangle : {S : SpObj} → compRec (R-map (adjCounit S)) (adjUnit (R-obj S)) ≡ idRec (R-obj S)
+
+-- ==================================================================
+-- §5 R11 有限维化：SpImD 子范畴（对应 RAP5a_explicit_adjunction.lean）
+-- ==================================================================
+-- 论文正确构造（定理 2.4.5 / 定理 R11）的有限维对应：
+-- 伴随限制在 D 的像子范畴 SpImD = Σ(src, tgt, Iso(D(src), tgt)) 上，
+-- R_im = 第一投影。本节省去泛化 R-map（不可构造），对象层闭合。
+
+-- 本地 UIP / 层级提升 cong（Set₁ 版，避免耦合 HigherSpCategory）
+uip₁ : {A : Set} {x y : A} (p q : x ≡ y) → p ≡ q
+uip₁ refl refl = refl
+
+cong₁ : {A : Set} {B : Set₁} {x y : A} (f : A → B) → x ≡ y → f x ≡ f y
+cong₁ f refl = refl
+
+-- Sp 范畴中的矩阵同构：P·Q = Q·P = 𝟙（方形 ⇒ nS = nT，规避泛化维度问题）
+record SpIso (S T : SpObj) : Set where
+  field
+    P : Fin (SpObj.n S) → Fin (SpObj.n T) → ℂ
+    Q : Fin (SpObj.n T) → Fin (SpObj.n S) → ℂ
+    isP-intertwine : P *mat SpObj.A T ≡ SpObj.A S *mat P
+    isQ-intertwine : Q *mat SpObj.A S ≡ SpObj.A T *mat Q
+    P-Q : P *mat Q ≡ 𝟙-matrix
+    Q-P : Q *mat P ≡ 𝟙-matrix
+
+-- 恒等同构（单位矩阵）
+SpIso-refl : (S : SpObj) → SpIso S S
+SpIso-refl S = record
+  { P = 𝟙-matrix
+  ; Q = 𝟙-matrix
+  ; isP-intertwine = unit-intertwine
+  ; isQ-intertwine = unit-intertwine
+  ; P-Q = *mat-id-l (𝟙-matrix {SpObj.n S})
+  ; Q-P = *mat-id-l (𝟙-matrix {SpObj.n S})
+  }
+
+-- Sp 真实恒等态射（单位矩阵；区别于 §辅助的 zeroMat 占位版本）
+idSp-real : (S : SpObj) → SpHom S S
+idSp-real S = record { P = 𝟙-matrix ; intertwine = unit-intertwine }
+
+-- SpHom 记录相等：P 相等 + 交织证明相等（uip）
+SpHom-≡ : {X Y : SpObj} {f g : SpHom X Y} → SpHom.P f ≡ SpHom.P g → f ≡ g
+SpHom-≡ {f = f} {g = g} refl =
+  cong₁ (λ p → record { P = SpHom.P f ; intertwine = p })
+        (uip₁ (SpHom.intertwine f) (SpHom.intertwine g))
+
+-- D 的像子范畴：源递归系统 + 目标谱对象 + 同构见证（对应 Lean SpImD）
+record SpImD : Set where
+  field
+    src : RecObj
+    tgt : SpObj
+    conn : SpIso (D-obj src) tgt
+
+-- R_im 对象映射：第一投影（对应 Lean RIm_obj）
+R-obj-img : SpImD → RecObj
+R-obj-img E = SpImD.src E
+
+-- 编码函子 D_im：Rec → SpImD（对应 Lean DIm_obj）
+DIm-obj : RecObj → SpImD
+DIm-obj X = record { src = X ; tgt = D-obj X ; conn = SpIso-refl (D-obj X) }
+
+-- DR 同构：D(R_im(E)) ≅ E.tgt（由 conn 给出，对应 Lean DR_iso）
+DR-iso : (E : SpImD) → SpIso (D-obj (R-obj-img E)) (SpImD.tgt E)
+DR-iso E = SpImD.conn E
+
+-- 单位 η_E = conn 的逆（Q 矩阵，对应 Lean adjUnit）
+adjUnit-img : (E : SpImD) → SpHom (SpImD.tgt E) (D-obj (R-obj-img E))
+adjUnit-img E = record
+  { P = SpIso.Q (SpImD.conn E)
+  ; intertwine = SpIso.isQ-intertwine (SpImD.conn E)
+  }
+
+-- 余单位 ε_X = 恒等递归同态（对应 Lean adjCounit）
+adjCounit-img : (X : RecObj) → RecHom (R-obj-img (DIm-obj X)) X
+adjCounit-img X = idRec X
+
+-- 左三角恒等式（对象层闭合）：(Dε)∘η = id，P 部分 𝟙·𝟙 = 𝟙（*mat-id-l）
+left-triangle-img : {X : RecObj} →
+  compose (D-map (adjCounit-img X)) (adjUnit-img (DIm-obj X)) ≡ idSp-real (D-obj X)
+left-triangle-img {X} = SpHom-≡ (*mat-id-l (𝟙-matrix {SpObj.n (D-obj X)}))
+
+-- 右三角恒等式（登记开放：依赖 R_im 的态射映射，即 D 的 full 性——
+-- 从 0-1 转移矩阵 + 谱交织条件恢复函数，对应 RAP5a RIm_map 的 sorry）

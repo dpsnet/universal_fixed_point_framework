@@ -6,6 +6,21 @@ import Mathlib.CategoryTheory.Adjunction.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
 import Mathlib.Analysis.Matrix.Spectrum
 
+/-
+※ 审计记录（2026-07-31，与 Agda 侧交叉校验一致）：
+本文件 DAdjR（DFunctor ⊣ RFunctor）为"简化原型"声明，当前编译失败
+（`lake env lean UFPFormalization/Adjunction.lean` 验证）。失败原因：
+  1. RFunctor.map 恒等 toFun（L29-33）要求 nS = nT（Fin S.n → Fin T.n 类型不匹配）；
+  2. adjUnit 的 comm 需要 X.step = id（不成立）；
+  3. adjCounit 的 P = 1 在维度不同时无 OfNat 实例，交织化简要求 S.A = 单位矩阵。
+论文正确构造（paper I 定理 2.4.5 / 构造 C2.2；UFPF修复与推进方案 §13.1 定理 R11）：
+  R(E) 状态空间 = D(A_E)，演化映射 = e^{-A_E}（保留谱信息），仅在 D 的像子范畴上严格成立。
+正确 Lean 路径：RAP5a_explicit_adjunction.lean（SpImD 子范畴方案：R_im 为第一投影），
+其 RIm_map（D 的 full 性，从 0-1 转移矩阵恢复函数）为开放项（sorry）。
+本文件简化原型保留仅作结构占位，与 Agda 侧（agda_formalization/DecursionFunctor.agda）
+统一标注范围限制。
+-/
+
 namespace UFPFormalization
 
 open CategoryTheory

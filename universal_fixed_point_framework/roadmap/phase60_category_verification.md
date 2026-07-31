@@ -195,6 +195,8 @@ agda_formalization/
 | | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（交换子代数引理链：`neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross`，对应 Lean 侧 70 行证明链） | ✅ 已闭合（2026-07-31） |
 | | B3 左三角恒等式（adjUnit/left-triangle） | adjUnit 构造为常函数同态（R-obj step 为恒等）；left-triangle 两边均为零矩阵态射，refl | ✅ 已闭合（2026-07-31） |
 | | B3 右三角恒等式（right-triangle） | 论文正确构造 C2.2/R11（R(E) 演化映射 = e^{-A_E}，仅 D 的像子范畴上严格，定理 2.4.5）；Lean 恒等原型（step=id, P=1）隐含 nS=nT + S.A=单位矩阵两个未声明条件，非论文构造的忠实实现；有限维化依赖 exp | ⏳ 登记待闭合（T3 依赖） |
+| | B3 R11 有限维化（SpImD 子范畴） | 对应 RAP5a：SpIso/SpImD/DIm-obj/R-obj-img/DR-iso/adjUnit-img/adjCounit-img 对象层闭合；`left-triangle-img` 闭合（𝟙·𝟙=𝟙）；右三角依赖 D 的 full 性（0-1 转移矩阵恢复函数） | ✅ 对象层闭合（右三角登记） |
+| | Lean 侧 DAdjR 编译失败（交叉校验） | `lake env lean` 验证失败：RFunctor.map 恒等需 nS=nT（L30）、adjUnit 需 step=id（L48）、adjCounit P=1 无 OfNat 实例/交织需 S.A=单位阵（L58-59）；正确路径为 RAP5a SpImD 方案 | ✅ 已核实并标注（Adjunction.lean 审计注释） |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
 | | B5 `layer1-condition` | 真实交织 `P·A_Y = A_X·P` + `-mat-elim`（`cong-app` + `+-inv`） | ✅ 已闭合（2026-07-31） |
 | | B5 `layer2/3-condition` | 经 `SpTwoMorphism.condition`/`SpThreeMorphism.condition`（真实化后直接引用） | ✅ 已闭合（2026-07-31） |
@@ -264,3 +266,4 @@ agda_formalization/
 | v0.10 | 2026-07-31 | **T2 收官（结构代数部分）**：B2 水平复合 condition 闭合（`spHorizComp-condition`/`spThreeHorizComp-condition`，交换子代数引理链含 `neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross` + 单侧同余引理）；T2 仅剩 `right-triangle`（依赖 R-map）与 `D-map-intertwine`（依赖 transferMatrix 语义）两项语义构造 |
 | v0.11 | 2026-07-31 | **T2 语义构造闭合**：`transferMatrix` 具体化（对应 Lean `fun i j => if f i = j then 1 else 0`）+ `transferMatrix-comp` 闭合；`D-map-intertwine` 经 `transferMatrix-comp` + `RecHom.comm` 闭合（对应 Lean `DFunctor_map`）；`right-triangle` 保持登记（Lean 侧 R-map 恒等隐式要求 nS = nT，Agda 泛化下不可构造，维度约束差异） |
 | v0.12 | 2026-07-31 | **论文推导审计**：校验显示 Lean 侧 `DAdjR` 恒等/单位矩阵构造隐含 nS=nT + S.A=单位矩阵两个未声明条件，非论文构造的忠实实现；论文层已用显式构造修复原文 Freyd 循环（构造 C2.2/R11，演化映射 e^{-A_E}，仅 D 的像子范畴上严格，定理 2.4.5）；`right-triangle` 对齐论文 R11 登记为 T3 依赖项（有限维化需 exp）；两侧统一标注原型限制 |
+| v0.13 | 2026-07-31 | **双路线推进**：(1) Lean 侧 `lake env lean` 验证 DAdjR 编译失败（nS=nT/step=id/S.A=单位阵三处），Adjunction.lean 加审计注释，正确路径指向 RAP5a；(2) Agda 侧 R11 有限维化：SpImD 子范畴（SpIso/DR-iso/adjUnit-img/adjCounit-img），`left-triangle-img` 闭合，右三角登记（依赖 D 的 full 性，对应 RAP5a RIm_map 开放项） |
