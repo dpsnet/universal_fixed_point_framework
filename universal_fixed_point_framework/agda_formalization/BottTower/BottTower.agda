@@ -71,12 +71,7 @@ layerToDoublingIndex third  = 2
 -- 翻倍索引在 ActiveMorphismLayer 上是满射：
 -- 每个翻倍序号（0, 1, 2）至少有一个主动生成层对应
 -- （对应 Lean: doublingIndex_surjective；Agda 用显式前像函数）
-
--- 严格小于（局部定义）
-infix 4 _<ℕ_
-data _<ℕ_ : ℕ → ℕ → Set where
-  z<s : {n : ℕ} → zero <ℕ suc n
-  s<s : {m n : ℕ} → m <ℕ n → suc m <ℕ suc n
+-- （_<ℕ_ 定义于 NatArith §3，含 z<s/s<s 构造子）
 
 -- 前像函数：对任意 i < 3 给出对应的层
 doublingIndex-preimage : (i : ℕ) → i <ℕ 3 → ActiveMorphismLayer
@@ -116,8 +111,7 @@ k-max-eq-two-pow-active = refl
 -- k_max 的 2-对数的范畴结构表达式：log₂(k_max) = N_active
 -- （对应 Lean: log2_k_max_eq_active_layers）
 log2-k-max-eq-active-layers : log2 k-max ≡ 3
-log2-k-max-eq-active-layers =
-  trans (cong log2 k-max-eq-two-pow-active) (log2-pow2 numActiveLayers)
+log2-k-max-eq-active-layers = refl
 
 -- ==================================================================
 -- §4 核心定理：Bott 截断指数由主动生成层决定

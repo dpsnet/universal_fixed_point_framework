@@ -227,16 +227,13 @@ k-max-value = refl
 k-max-eq-pow2 : k-max ≡ 2^ numActiveLayers
 k-max-eq-pow2 = refl
 
--- log₂（T1 开放项：折半递归被终止检查器拒绝——`half (suc n)` 非结构递减；
---   需良基递归（WfRec）或引入 stdlib 的 Data.Nat.Logarithm 才能闭合。
---   当前保持 postulate 并在路线图闭合账目中登记）
-postulate
-  log2 : ℕ → ℕ
-  log2-pow2 : (n : ℕ) → log2 (2^ n) ≡ n
+-- log₂ 定义于 NatArith（T1 闭合：良基递归），具体值完全规范化
+-- （对应 Lean: Nat.log；Lean 的 bott_truncation_index 为具体数值定理
+--   Nat.log 2 k_max = 3，Agda 侧由具体计算 refl 匹配）
 
--- Bott 截断指数：log₂(k_max) = 3（对应 Lean: bott_truncation_index）
+-- Bott 截断指数：log₂(k_max) = 3（对应 Lean: bott_truncation_index；**T1 闭合**）
 bott-truncation-index : log2 k-max ≡ 3
-bott-truncation-index = log2-pow2 numActiveLayers
+bott-truncation-index = refl
 
 -- ==================================================================
 -- §7 统一 3 定理完整陈述

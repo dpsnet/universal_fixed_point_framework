@@ -97,3 +97,72 @@ half-double (suc m) =
 -- half (2n) = n
 half-2*ℕ : (n : ℕ) → half (2 *ℕ n) ≡ n
 half-2*ℕ n = trans (cong half (2*ℕ n)) (half-double n)
+
+-- ==================================================================
+-- §3 严格小于与良基递归（T1 闭合 log2 所需）
+-- ==================================================================
+
+infix 4 _<ℕ_
+data _<ℕ_ : ℕ → ℕ → Set where
+  z<s : {n : ℕ} → zero <ℕ suc n
+  s<s : {m n : ℕ} → m <ℕ n → suc m <ℕ suc n
+
+-- 传递性
+<-trans : {a b c : ℕ} → a <ℕ b → b <ℕ c → a <ℕ c
+<-trans z<s (s<s h) = z<s
+<-trans (s<s h₁) (s<s h₂) = s<s (<-trans h₁ h₂)
+
+-- 自反后继：n < 1+n
+<-suc : (n : ℕ) → n <ℕ suc n
+<-suc zero    = z<s
+<-suc (suc n) = s<s (<-suc n)
+
+-- 折半严格递减：half n < 1+n
+half-lt : (n : ℕ) → half n <ℕ suc n
+half-lt zero          = z<s
+half-lt (suc zero)    = z<s
+half-lt (suc (suc m)) = s<s (<-trans (half-lt m) (<-suc (suc m)))
+
+-- 可达性（Acc）
+data Acc (x : ℕ) : Set where
+  acc : (∀ y → y <ℕ x → Acc y) → Acc x
+
+s<s-inv : {m n : ℕ} → suc m <ℕ suc n → m <ℕ n
+s<s-inv (s<s h) = h
+
+acc-suc : (n : ℕ) → Acc n → Acc (suc n)
+acc-suc n (acc h) = acc λ
+  { zero    _        → acc (λ _ ())
+  ; (suc m) sm<sn    → acc-suc m (h m (s<s-inv sm<sn))
+  }
+
+-- <ℕ 良基：每个数可达
+wf-acc : (n : ℕ) → Acc n
+wf-acc zero    = acc (λ y ())
+wf-acc (suc n) = acc-suc n (wf-acc n)
+
+-- 良基递归算子
+wfRec : (P : ℕ → Set) → (∀ n → (∀ m → m <ℕ n → P m) → P n) → (n : ℕ) → Acc n → P n
+wfRec P step n (acc h) = step n (λ m m<n → wfRec P step m (h m m<n))
+
+-- 免 Acc 的递归入口
+rec : (P : ℕ → Set) → (∀ n → (∀ m → m <ℕ n → P m) → P n) → (n : ℕ) → P n
+rec P step n = wfRec P step n (wf-acc n)
+
+-- ==================================================================
+-- §4 log₂（T1 闭合：良基递归定义，具体值完全规范化）
+-- ==================================================================
+
+-- 递归步：log2 n = 1 + log2 ⌊n/2⌋（对 n ≥ 2）
+log2-step : (n : ℕ) → (∀ m → m <ℕ n → ℕ) → ℕ
+log2-step zero        f = zero
+log2-step (suc zero)  f = zero
+log2-step (suc (suc n)) f = suc (f (half (suc (suc n))) (s<s (half-lt n)))
+
+-- log₂（总函数；具体值如 log2 8 可完全规范化）
+log2 : ℕ → ℕ
+log2 = rec (λ _ → ℕ) log2-step
+
+-- log₂ 8 = 3（具体计算，refl）
+log2-8 : log2 8 ≡ 3
+log2-8 = refl

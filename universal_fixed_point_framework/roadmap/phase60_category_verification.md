@@ -184,7 +184,7 @@ agda_formalization/
 | | `spacetime-dim-eq-category-order`（B7） | ℕ 归纳（∸-zero/∸-1） | ✅ 已闭合（2026-07-31） |
 | | `dimension-counting-eq-two-mul`（B7） | ℕ 归纳（+ℕ-suc/∸-1） | ✅ 已闭合（2026-07-31） |
 | | `category-order-unique`（B7） | ℕ 算术（half-2*ℕ/half-8 链） | ✅ 已闭合（2026-07-31） |
-| | `log2`/`log2-pow2`（B5/B6） | 良基递归 WfRec（已确认：折半递归被终止检查器拒绝，`--termination-depth` 无效）或 stdlib `Data.Nat.Logarithm` | ⏳ 待闭合 |
+| | `log2`（B5/B6） | 良基递归 WfRec（NatArith §3：`<`/`Acc`/`wfRec` + `half-lt` 递减引理） | ✅ 已闭合（2026-07-31） |
 | **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | 具体矩阵构造 + 真实交织条件 | ⏳ 待闭合 |
 | | B2 `spHorizComp`/`spThreeHorizComp` | 矩阵复合构造 | ⏳ 待闭合 |
 | | B3 三角恒等式（adjUnit/adjCounit） | 具体 D/R 函子 + 自然变换构造 | ⏳ 待闭合 |
@@ -195,7 +195,7 @@ agda_formalization/
 | | B8 收缩率排序（9 条） | rpow 分析 | ⏳ 待闭合 |
 
 **推进策略**：
-1. **T1**：`NatArith/NatArith.agda` 算术引理库已建立（`+ℕ-suc`/`+ℕ-zero`/`2*ℕ`/`∸`/`half` 系列，全归纳证明），5 项中 4 项已闭合；`log2` 需良基递归（WfRec）或 stdlib。
+1. **T1 ✅ 已全部闭合**（2026-07-31）：`NatArith/NatArith.agda` 算术引理库（含良基递归 §3）建成，5 项全部闭合。注：Lean 的 `bott_truncation_index` 为具体数值定理（`Nat.log 2 k_max = 3`），Agda 侧由良基递归定义 + 具体计算 refl 匹配；一般形式的 `log2-pow2` 不再需要（原为自加泛化，已移除）。
 2. **T2**：重构 B1-B3 占位为具体构造；ℂ 载体扩充为至少 3 个互异元素。
 3. **T3**：需实数/分析基础。Agda stdlib 无 exp/log/rpow——需自建（或引入 cubical 实数库），工程量级等同 Lean 侧 Mathlib 分析库，为持续主线。
 4. 每条闭合项完成后在 `Everything.agda` 整体编译验证并更新本账目。
