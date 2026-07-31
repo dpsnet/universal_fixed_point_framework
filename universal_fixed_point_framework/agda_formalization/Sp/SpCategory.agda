@@ -32,8 +32,11 @@ data ℕ : Set where
 -- ==================================================================
 
 -- 乘积类型（代替标准库的 _×_）
+infixr 20 _×_
 data _×_ (A B : Set) : Set where
   _,_ : A → B → A × B
+
+infixr 20 _,_
 
 -- Fin n：小于 n 的自然数
 data Fin : ℕ → Set where
