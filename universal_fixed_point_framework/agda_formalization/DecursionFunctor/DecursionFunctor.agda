@@ -88,9 +88,22 @@ postulate
 -- §4 伴随对 D ⊣ R
 -- ==================================================================
 
--- 单位 η : id_Rec → R ∘ D（简化占位）
-postulate
-  adjUnit : (X : RecObj) → RecHom X (R-obj (D-obj X))
+-- 单位 η : id_Rec → R ∘ D
+-- （T2 闭合：常函数同态；R-obj 的 step 为恒等，故常函数满足交换条件）
+const-adjUnit : {n : ℕ} → Fin n → Fin n
+const-adjUnit {zero}   ()
+const-adjUnit {suc m}  x = zero
+
+adjUnit : (X : RecObj) → RecHom X (R-obj (D-obj X))
+adjUnit (record { n = n ; step = stepX }) = record
+  { toFun = const-adjUnit {n}
+  ; comm  = comm-const n stepX
+  }
+  where
+  comm-const : (n : ℕ) (stepX : Fin n → Fin n) → (x : Fin n)
+    → const-adjUnit {n} (stepX x) ≡ const-adjUnit {n} x
+  comm-const zero    stepX ()
+  comm-const (suc m) stepX x = refl
 
 -- 余单位 ε : D ∘ R → id_Sp（零矩阵态射，交织经吸收引理闭合）
 adjCounit : (S : SpObj) → SpHom (D-obj (R-obj S)) S
@@ -100,7 +113,11 @@ adjCounit S = record
                        (sym (zeroMat-absorb-r (transferMatrix (RecObj.step (R-obj S)))))
   }
 
--- 三角恒等式（占位）
+-- 左三角恒等式（**T2 闭合**：compSp 与 idSp 均为零矩阵态射，
+-- 交织证明结构相同，两边定义上相等）
+left-triangle : {X : RecObj} → compSp (adjCounit (D-obj X)) (D-map (adjUnit X)) ≡ idSp (D-obj X)
+left-triangle = refl
+
+-- 右三角恒等式（登记待闭合：依赖 R-map 的具体构造）
 postulate
-  left-triangle : {X : RecObj} → compSp (adjCounit (D-obj X)) (D-map (adjUnit X)) ≡ idSp (D-obj X)
   right-triangle : {S : SpObj} → compRec (R-map (adjCounit S)) (adjUnit (R-obj S)) ≡ idRec (R-obj S)
