@@ -195,7 +195,8 @@ agda_formalization/
 | | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（交换子代数引理链：`neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross`，对应 Lean 侧 70 行证明链） | ✅ 已闭合（2026-07-31） |
 | | B3 左三角恒等式（adjUnit/left-triangle） | adjUnit 构造为常函数同态（R-obj step 为恒等）；left-triangle 两边均为零矩阵态射，refl | ✅ 已闭合（2026-07-31） |
 | | B3 右三角恒等式（right-triangle） | 论文正确构造 C2.2/R11（R(E) 演化映射 = e^{-A_E}，仅 D 的像子范畴上严格，定理 2.4.5）；Lean 恒等原型（step=id, P=1）隐含 nS=nT + S.A=单位矩阵两个未声明条件，非论文构造的忠实实现；有限维化依赖 exp | ⏳ 登记待闭合（T3 依赖） |
-| | B3 R11 有限维化（SpImD 子范畴） | 对应 RAP5a：SpIso/SpImD/DIm-obj/R-obj-img/DR-iso/adjUnit-img/adjCounit-img 对象层闭合；`left-triangle-img` 闭合（𝟙·𝟙=𝟙）；右三角依赖 D 的 full 性（0-1 转移矩阵恢复函数） | ✅ 对象层闭合（右三角登记） |
+| | B3 R11 有限维化（SpImD 子范畴） | 对应 RAP5a：SpIso/SpImD/DIm-obj/R-obj-img/DR-iso/adjUnit-img/adjCounit-img 对象层闭合；`left-triangle-img` 闭合（𝟙·𝟙=𝟙） | ✅ 对象层闭合 |
+| | B3 SpImD 态射层（RIm_map/右三角） | **结构性不可闭合（基数反例）**：2 状态平凡系统下 Hom_Sp(D(X),D(Y)) = ℂ⁴（不可数）vs Hom_Rec(X,Y) = 4（有限），无双射；P=[[1,0],[1,1]] 是合法谱态射但非转移矩阵（D 的 full 性为假）。闭合仅当态射限制为转移矩阵（平庸化）或转无限维（论文 R11 断言，需 T3 谱定理验证） | ⏳ 登记（结构性障碍） |
 | | Lean 侧 DAdjR 编译失败（交叉校验） | `lake env lean` 验证失败：RFunctor.map 恒等需 nS=nT（L30）、adjUnit 需 step=id（L48）、adjCounit P=1 无 OfNat 实例/交织需 S.A=单位阵（L58-59）；正确路径为 RAP5a SpImD 方案 | ✅ 已核实并标注（Adjunction.lean 审计注释） |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
 | | B5 `layer1-condition` | 真实交织 `P·A_Y = A_X·P` + `-mat-elim`（`cong-app` + `+-inv`） | ✅ 已闭合（2026-07-31） |

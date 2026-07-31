@@ -138,8 +138,12 @@ def adjCounit (S : RecObj) : RecHom (RIm_obj (DIm_obj S)) S :=
 /-! 6. 开放项 -/
 
 /-- D 的 full 性：对任意 ψ: D(E) → D(F)，存在 RecHom f 使得 D(f) = ψ。
-    在有限维原型中成立（transferMatrix 的像恰好是所有行恰有一个 1 的矩阵）。
-    需补充证明：从矩阵的 0-1 结构和谱交织条件恢复出函数。 -/
+    ⚠ 审计修正（2026-07-31）：该性质在有限维原型中**不成立**。
+    反例：2 状态平凡系统（step = id）下 A_X = A_Y = I₂，交织条件恒成立，
+    P = [[1,0],[1,1]] 是合法谱态射但每行非恰一个 1，不是任何 transferMatrix f。
+    更根本地，Hom_Sp(D(X),D(Y)) = ℂ⁴（不可数）与 Hom_Rec(X,Y) = 4（有限）
+    基数不匹配，伴随自然同构不存在。full 性仅在态射被限制为转移矩阵时成立（平庸化）。
+    （与 Agda 侧交叉校验一致。） -/
 theorem DFunctor_full_open : True := trivial
 
 /-- 完全构造 D_im ⊣ R_im 伴随需 D 的 full 性闭合后完成。
