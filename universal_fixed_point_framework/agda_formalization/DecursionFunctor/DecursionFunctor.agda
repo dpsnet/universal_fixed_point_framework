@@ -18,10 +18,10 @@ open import Rec.RecCategory
 
 -- 辅助定义
 idSp : (S : SpObj) → SpHom S S
-idSp S = record { P = λ i j → mkℂ ; intertwine = refl }
+idSp S = record { P = λ i j → c0 ; intertwine = refl }
 
 compSp : {S T U : SpObj} → SpHom T U → SpHom S T → SpHom S U
-compSp g f = record { P = λ i j → mkℂ ; intertwine = refl }
+compSp g f = record { P = λ i j → c0 ; intertwine = refl }
 
 -- ==================================================================
 -- §1 转移矩阵（transfer matrix）
@@ -82,7 +82,7 @@ postulate
 -- 余单位 ε : D ∘ R → id_Sp
 adjCounit : (S : SpObj) → SpHom (D-obj (R-obj S)) S
 adjCounit S = record
-  { P = λ i j → mkℂ
+  { P = λ i j → c0
   ; intertwine = refl
   }
 

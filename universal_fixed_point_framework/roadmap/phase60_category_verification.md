@@ -185,10 +185,12 @@ agda_formalization/
 | | `dimension-counting-eq-two-mul`（B7） | ℕ 归纳（+ℕ-suc/∸-1） | ✅ 已闭合（2026-07-31） |
 | | `category-order-unique`（B7） | ℕ 算术（half-2*ℕ/half-8 链） | ✅ 已闭合（2026-07-31） |
 | | `log2`（B5/B6） | 良基递归 WfRec（NatArith §3：`<`/`Acc`/`wfRec` + `half-lt` 递减引理） | ✅ 已闭合（2026-07-31） |
-| **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | 具体矩阵构造 + 真实交织条件 | ⏳ 待闭合 |
-| | B2 `spHorizComp`/`spThreeHorizComp` | 矩阵复合构造 | ⏳ 待闭合 |
+| **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | ℤ/3 载体 + 矩阵乘/单位矩阵具体构造（✅ 构造完成）；真实交织条件需矩阵环律 | 🔄 部分闭合 |
+| | B2 `spVertComp-assoc`/`spThreeVertComp-assoc` | ℤ/3 加法结合律 + funext | ✅ 已闭合（2026-07-31） |
+| | B2 `spHorizComp`/`spThreeHorizComp` | 矩阵水平复合构造 | ⏳ 待闭合 |
 | | B3 三角恒等式（adjUnit/adjCounit） | 具体 D/R 函子 + 自然变换构造 | ⏳ 待闭合 |
-| | B5 `layer-orthogonality`/层条件 | ℂ 载体扩充（≥3 互异元素）+ 真实代数条件 | ⏳ 待闭合 |
+| | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
+| | B5 `layer1/2/3-condition` | 交换子律（需矩阵环律） | ⏳ 待闭合 |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
 | | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
 | | B7 静默分离（`silence-separation/margin`） | exp 不等式 | ⏳ 待闭合 |

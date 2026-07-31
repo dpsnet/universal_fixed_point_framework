@@ -19,9 +19,14 @@ module Sp.HigherSpCategory where
 open import Agda.Primitive using (Level)
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory
+open import Rec.RecCategory using (cong)
 
 open SpObj
 open SpHom
+
+-- 层级提升的 cong（SpTwoMorphism 为 Set₁）
+cong₁ : {A : Set} {B : Set₁} {x y : A} (f : A → B) → x ≡ y → f x ≡ f y
+cong₁ f refl = refl
 
 -- ==================================================================
 -- §1 2-态射：SpHom 之间的同伦
@@ -37,7 +42,7 @@ record SpTwoMorphism {X Y : SpObj} (P Q : SpHom X Y) : Set₁ where
 -- 恒等 2-态射：homotopy = 0
 id-two-morphism : {X Y : SpObj} (P : SpHom X Y) → SpTwoMorphism P P
 id-two-morphism P = record
-  { homotopy = λ _ _ → mkℂ
+  { homotopy = λ _ _ → c0
   ; condition = refl
   }
 
@@ -55,11 +60,16 @@ spVertComp α β = record
 postulate
   spHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} → SpTwoMorphism P Q → SpTwoMorphism P' Q' → SpTwoMorphism (compose P' P) (compose Q' Q)
 
--- 垂直复合结合律
+-- 垂直复合结合律（T2 闭合：同伦逐点 +-assoc + funext）
 spVertComp-assoc : {X Y : SpObj} {P Q R S : SpHom X Y}
   (α : SpTwoMorphism P Q)(β : SpTwoMorphism Q R)(γ : SpTwoMorphism R S)
   → spVertComp (spVertComp α β) γ ≡ spVertComp α (spVertComp β γ)
-spVertComp-assoc α β γ = refl
+spVertComp-assoc {X} {Y} {P} {Q} {R} {S} α β γ =
+  cong₁ (λ h → record { homotopy = h ; condition = refl })
+        (funext (λ i → funext (λ j →
+          +-assoc (SpTwoMorphism.homotopy α i j)
+                  (SpTwoMorphism.homotopy β i j)
+                  (SpTwoMorphism.homotopy γ i j))))
 
 -- ==================================================================
 -- §2 交换律偏差结构
@@ -99,7 +109,7 @@ record SpThreeMorphism {X Y : SpObj} {P Q : SpHom X Y}
 id-three-morphism : {X Y : SpObj} {P Q : SpHom X Y}
   (α : SpTwoMorphism P Q) → SpThreeMorphism α α
 id-three-morphism α = record
-  { secondHomotopy = λ _ _ → mkℂ
+  { secondHomotopy = λ _ _ → c0
   ; condition = refl
   }
 
@@ -119,12 +129,17 @@ postulate
   spThreeHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
     → SpThreeMorphism α β → SpThreeMorphism α' β' → SpThreeMorphism (spHorizComp α α') (spHorizComp β β')
 
--- 垂直复合结合律
+-- 垂直复合结合律（T2 闭合：二阶同伦逐点 +-assoc + funext）
 spThreeVertComp-assoc : {X Y : SpObj} {P Q : SpHom X Y}
   {α β γ δ : SpTwoMorphism P Q}
   (Ξ : SpThreeMorphism α β)(Τ : SpThreeMorphism β γ)(Υ : SpThreeMorphism γ δ)
   → spThreeVertComp (spThreeVertComp Ξ Τ) Υ ≡ spThreeVertComp Ξ (spThreeVertComp Τ Υ)
-spThreeVertComp-assoc Ξ Τ Υ = refl
+spThreeVertComp-assoc {X} {Y} {P} {Q} {α} {β} {γ} {δ} Ξ Τ Υ =
+  cong₁ (λ h → record { secondHomotopy = h ; condition = refl })
+        (funext (λ i → funext (λ j →
+          +-assoc (SpThreeMorphism.secondHomotopy Ξ i j)
+                  (SpThreeMorphism.secondHomotopy Τ i j)
+                  (SpThreeMorphism.secondHomotopy Υ i j))))
 
 -- ==================================================================
 -- §4 层结构总结

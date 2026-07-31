@@ -40,10 +40,7 @@ record _≃_ (A B : Set) : Set where
     from    : B → A
     to-from : (b : B) → to (from b) ≡ b
     from-to : (a : A) → from (to a) ≡ a
-
--- 函数外延性（占位公理）
-postulate
-  funext : {A B : Set} {f g : A → B} → ((x : A) → f x ≡ g x) → f ≡ g
+-- （函数外延性 funext 为基础公理，定义于 SpCategory §1）
 
 -- ==================================================================
 -- §1 主动生成层基数 = 3
@@ -90,12 +87,7 @@ card-active-layers = mkEquiv toFin3 fromFin3 toFin3-from fromFin3-to
 -- §2 GenSpace = ℂ³ 表示
 -- ==================================================================
 
--- ℂ 的占位零元与单位元（ℂ 为单构造子占位类型，结构上重合）
-c0 : ℂ
-c0 = mkℂ
-
-c1 : ℂ
-c1 = mkℂ
+-- ℂ 载体（ℤ/3 环，定义于 SpCategory §1）：c0=0, c1=1, c2=2，互异
 
 -- GenSpace = ℂ³（对应 Lean: abbrev GenSpace := ℂ × ℂ × ℂ）
 record GenSpace : Set where
@@ -127,10 +119,19 @@ layerRep-on-basis second = refl
 layerRep-on-basis third  = refl
 
 -- 定理：不同主动生成层对应的基向量像正交（互不相同）
--- （对应 Lean: layer_orthogonality；ℂ 占位，需数值区分 → postulate）
-postulate
-  layer-orthogonality : (l₁ l₂ : ActiveMorphismLayer) → l₁ ≢ l₂
-    → layerRepFunctor l₁ (layerToGenSpaceBasis l₁) ≢ layerRepFunctor l₂ (layerToGenSpaceBasis l₂)
+-- （对应 Lean: layer_orthogonality；**T2 闭合**：ℂ 三元素载体使基向量互异，
+--   9 情形枚举直接证明）
+layer-orthogonality : (l₁ l₂ : ActiveMorphismLayer) → l₁ ≢ l₂
+  → layerRepFunctor l₁ (layerToGenSpaceBasis l₁) ≢ layerRepFunctor l₂ (layerToGenSpaceBasis l₂)
+layer-orthogonality first  first  hne h = hne refl
+layer-orthogonality first  second hne ()
+layer-orthogonality first  third  hne ()
+layer-orthogonality second first  hne ()
+layer-orthogonality second second hne h = hne refl
+layer-orthogonality second third  hne ()
+layer-orthogonality third  first  hne ()
+layer-orthogonality third  second hne ()
+layer-orthogonality third  third  hne h = hne refl
 
 -- ==================================================================
 -- §3 GenSpace ≃ (ActiveMorphismLayer → ℂ)
@@ -165,20 +166,13 @@ genSpace-dim-equals-active-layers-count = genSpaceEquiv , card-active-layers
 -- §4 链复形：统一交换子
 -- ==================================================================
 
--- 矩阵减与乘（占位，ℂ 运算未实现）
-postulate
-  _-mat_ : {nX nY : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ)
-  _*mat_ : {nX nY nZ : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nY → Fin nZ → ℂ) → (Fin nX → Fin nZ → ℂ)
+-- 矩阵运算已具体化于 SpCategory §1.5（_+mat_/_*mat_/_ -mat_/zeroMat/𝟙-matrix，ℤ/3 载体）
 
 -- 统一"微分" d_A(H) = A·H - H·A，所有三个主动层共享此结构
--- （对应 Lean: commutator）
+-- （对应 Lean: commutator；**T2 闭合**：矩阵乘/减为具体构造）
 commutator : {X Y : SpObj} (H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
   → Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
 commutator {X} {Y} H = (SpObj.A X *mat H) -mat (H *mat SpObj.A Y)
-
--- 零矩阵
-zeroMat : {nX nY : ℕ} → Fin nX → Fin nY → ℂ
-zeroMat _ _ = mkℂ
 
 -- 层 1（1-态射）条件：交换子为零（对应 Lean: layer1_condition）
 postulate
