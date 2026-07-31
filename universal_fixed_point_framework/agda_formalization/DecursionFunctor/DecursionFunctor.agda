@@ -34,8 +34,22 @@ compSp {S} {T} {U} g f = record
 -- ==================================================================
 
 -- 转移矩阵：函数 f : Fin n → Fin m → 矩阵 Fin n → Fin m → ℂ
-postulate
-  transferMatrix : {n m : ℕ} (f : Fin n → Fin m) → Fin n → Fin m → ℂ
+-- （**T2 闭合**：具体定义，对应 Lean transferMatrix = fun i j => if f i = j then 1 else 0）
+transferMatrix : {n m : ℕ} (f : Fin n → Fin m) → Fin n → Fin m → ℂ
+transferMatrix f i j = if Fin-eq? (f i) j then c1 else c0
+
+-- 转移矩阵反变复合：(g∘f) 的转移矩阵 = f 的转移矩阵 · g 的转移矩阵
+-- （对应 Lean: transferMatrix_comp）
+transferMatrix-comp : {n m p : ℕ} (f : Fin n → Fin m) (g : Fin m → Fin p)
+  → transferMatrix (λ x → g (f x)) ≡ transferMatrix f *mat transferMatrix g
+transferMatrix-comp {n} {m} {p} f g = funext (λ i → funext (λ j → pt i j))
+  where
+  pt : (i : Fin n) (j : Fin p)
+    → transferMatrix (λ x → g (f x)) i j ≡ (transferMatrix f *mat transferMatrix g) i j
+  pt i j =
+    trans (sym (sumFin-pick-dep-l {m} (f i) (λ k → if Fin-eq? (g k) j then c1 else c0)))
+          (sym (sumFin-cong {m} (λ k → if-mul-lemma (Fin-eq? (f i) k)
+                                        (if Fin-eq? (g k) j then c1 else c0))))
 
 -- ==================================================================
 -- §2 D 函子
@@ -49,11 +63,14 @@ D-obj X = record
   }
 
 -- D-map 的交织条件：转移矩阵对递归同态的交换性
--- （T2 待闭合：依赖 transferMatrix 的语义构造，登记在案）
-postulate
-  D-map-intertwine : {X Y : RecObj} (f : RecHom X Y)
-    → transferMatrix (RecHom.toFun f) *mat transferMatrix (RecObj.step Y)
-        ≡ transferMatrix (RecObj.step X) *mat transferMatrix (RecHom.toFun f)
+-- （**T2 闭合**：transferMatrix-comp + RecHom.comm，对应 Lean DFunctor_map）
+D-map-intertwine : {X Y : RecObj} (f : RecHom X Y)
+  → transferMatrix (RecHom.toFun f) *mat transferMatrix (RecObj.step Y)
+      ≡ transferMatrix (RecObj.step X) *mat transferMatrix (RecHom.toFun f)
+D-map-intertwine {X} {Y} f =
+  trans (sym (transferMatrix-comp (RecHom.toFun f) (RecObj.step Y)))
+  (trans (cong transferMatrix (sym (funext (λ x → RecHom.comm f x))))
+         (transferMatrix-comp (RecObj.step X) (RecHom.toFun f)))
 
 -- D-map: RecHom X Y → SpHom (D-obj X) (D-obj Y)
 D-map : {X Y : RecObj} → RecHom X Y → SpHom (D-obj X) (D-obj Y)
@@ -80,7 +97,10 @@ R-obj S = record
   ; step = λ x → x
   }
 
--- R-map: SpHom S T → RecHom (R-obj S) (R-obj T)（简化占位）
+-- R-map: SpHom S T → RecHom (R-obj S) (R-obj T)
+-- （登记待闭合：Lean 侧 RFunctor.map 用恒等 toFun，隐式要求 nS = nT
+--   （Adjunction.lean L29-33）；Agda 侧无此维度假设，泛化恒等不可构造。
+--   伴随三角恒等式所用实例维度均相同，可考虑按实例构造。）
 postulate
   R-map : {S T : SpObj} → SpHom S T → RecHom (R-obj S) (R-obj T)
 

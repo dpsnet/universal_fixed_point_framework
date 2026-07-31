@@ -194,11 +194,13 @@ agda_formalization/
 | | B2 `spHorizComp`/`spThreeHorizComp` 同伦构造 | 具体同伦构造（`α·P' + Q·α'`，与 Lean 公式一致） | ✅ 已闭合（2026-07-31） |
 | | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（交换子代数引理链：`neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross`，对应 Lean 侧 70 行证明链） | ✅ 已闭合（2026-07-31） |
 | | B3 左三角恒等式（adjUnit/left-triangle） | adjUnit 构造为常函数同态（R-obj step 为恒等）；left-triangle 两边均为零矩阵态射，refl | ✅ 已闭合（2026-07-31） |
-| | B3 右三角恒等式（right-triangle） | 依赖 R-map 的具体构造 | ⏳ 登记待闭合 |
+| | B3 右三角恒等式（right-triangle） | 依赖 R-map：Lean 侧 `RFunctor.map` 用恒等 toFun（隐式要求 nS = nT）；Agda 侧无此维度假设，泛化恒等不可构造 | ⏳ 登记待闭合（维度约束差异） |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
 | | B5 `layer1-condition` | 真实交织 `P·A_Y = A_X·P` + `-mat-elim`（`cong-app` + `+-inv`） | ✅ 已闭合（2026-07-31） |
 | | B5 `layer2/3-condition` | 经 `SpTwoMorphism.condition`/`SpThreeMorphism.condition`（真实化后直接引用） | ✅ 已闭合（2026-07-31） |
-| | SpHom 真实交织条件 | `SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`；`compose-intertwine`（`*mat-assoc` 链）与 `unit-intertwine` 真实闭合；DecursionFunctor 零矩阵态射（idSp/compSp/adjCounit）经 `zeroMat-absorb` 闭合；`D-map-intertwine` 登记为 postulate（依赖 transferMatrix 语义） | ✅ 已闭合（2026-07-31） |
+| | SpHom 真实交织条件 | `SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`；`compose-intertwine`（`*mat-assoc` 链）与 `unit-intertwine` 真实闭合；DecursionFunctor 零矩阵态射（idSp/compSp/adjCounit）经 `zeroMat-absorb` 闭合 | ✅ 已闭合（2026-07-31） |
+| | B3 `transferMatrix` 具体化 | 对应 Lean `fun i j => if f i = j then 1 else 0`；`transferMatrix-comp`（反变复合，`sumFin-pick-dep-l` + `if-mul-lemma`）闭合 | ✅ 已闭合（2026-07-31） |
+| | B3 `D-map-intertwine` | `transferMatrix-comp` + `RecHom.comm`（对应 Lean `DFunctor_map`） | ✅ 已闭合（2026-07-31） |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
 | | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
 | | B7 静默分离（`silence-separation/margin`） | exp 不等式 | ⏳ 待闭合 |
@@ -260,3 +262,4 @@ agda_formalization/
 | v0.8 | 2026-07-31 | **T2 condition 真实化**：交换子代数引理库（`commutator`/`neg-add`/`cancel-mid`/`*mat-distrib`/`commutator-add` 等）；`SpTwoMorphism`/`SpThreeMorphism` condition 升级为真实交换子等式，`id/spVertComp/id3/spThreeVertComp` 条件闭合；`layer2/3-condition` 闭合；结合律经 UIP 保持；水平复合 condition 登记 postulate |
 | v0.9 | 2026-07-31 | **T2 继续闭合**：B3 `adjUnit` 构造为常函数同态、`left-triangle` refl 闭合；`right-triangle` 登记待闭合（依赖 R-map） |
 | v0.10 | 2026-07-31 | **T2 收官（结构代数部分）**：B2 水平复合 condition 闭合（`spHorizComp-condition`/`spThreeHorizComp-condition`，交换子代数引理链含 `neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross` + 单侧同余引理）；T2 仅剩 `right-triangle`（依赖 R-map）与 `D-map-intertwine`（依赖 transferMatrix 语义）两项语义构造 |
+| v0.11 | 2026-07-31 | **T2 语义构造闭合**：`transferMatrix` 具体化（对应 Lean `fun i j => if f i = j then 1 else 0`）+ `transferMatrix-comp` 闭合；`D-map-intertwine` 经 `transferMatrix-comp` + `RecHom.comm` 闭合（对应 Lean `DFunctor_map`）；`right-triangle` 保持登记（Lean 侧 R-map 恒等隐式要求 nS = nT，Agda 泛化下不可构造，维度约束差异） |
