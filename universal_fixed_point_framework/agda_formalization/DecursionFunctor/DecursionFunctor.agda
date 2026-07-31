@@ -98,9 +98,10 @@ R-obj S = record
   }
 
 -- R-map: SpHom S T → RecHom (R-obj S) (R-obj T)
--- （登记待闭合：Lean 侧 RFunctor.map 用恒等 toFun，隐式要求 nS = nT
---   （Adjunction.lean L29-33）；Agda 侧无此维度假设，泛化恒等不可构造。
---   伴随三角恒等式所用实例维度均相同，可考虑按实例构造。）
+-- （登记待闭合：论文正确构造 R11/C2.2 用演化映射 e^{-A_E}（保留谱信息），
+--   Lean 侧恒等 toFun（Adjunction.lean L29-33）隐含 nS=nT 且 S.A=单位矩阵两个
+--   未声明条件，非论文构造的忠实实现；Agda 泛化下恒等不可构造，
+--   有限维化依赖 exp（T3）。）
 postulate
   R-map : {S T : SpObj} → SpHom S T → RecHom (R-obj S) (R-obj T)
 
@@ -138,6 +139,10 @@ adjCounit S = record
 left-triangle : {X : RecObj} → compSp (adjCounit (D-obj X)) (D-map (adjUnit X)) ≡ idSp (D-obj X)
 left-triangle = refl
 
--- 右三角恒等式（登记待闭合：依赖 R-map 的具体构造）
+-- 右三角恒等式（登记待闭合：对应论文构造 C2.2/R11 的有限维化，依赖 T3 分析层）
+-- 论文正确构造（定理 2.4.5 / 定理 R11）：R(E) 状态空间 = D(A_E)，演化映射 = e^{-A_E}
+-- （保留谱信息），仅在 D 的像（可对角化谱对象的全子范畴）上严格成立。
+-- Lean 侧恒等原型（step=id, P=1）丢失谱信息且隐含 nS=nT 与 S.A=单位矩阵两个未声明条件，
+-- 非论文构造的忠实实现；Agda 有限载体（ℤ/3）无法承载 e^{-A}，有限维化需 exp（T3）。
 postulate
   right-triangle : {S : SpObj} → compRec (R-map (adjCounit S)) (adjUnit (R-obj S)) ≡ idRec (R-obj S)
