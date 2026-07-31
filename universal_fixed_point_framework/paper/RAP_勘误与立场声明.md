@@ -1,7 +1,7 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.5）
+# UFPF 勘误与立场声明（RAP-Errata v0.6）
 
-**发布日期**：2026-07-30
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）
+**发布日期**：2026-07-31
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `f96a1d9a`（v0.6）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -148,11 +148,13 @@
 
 **与 Paper XXXVII（开放问题）的关系**：Paper XXXVII 为综述论文，不引入新 `sorry`。其引用的所有 Lean 定理均已通过 `lake build`。
 
-### Phase 60 范畴理论绝对性验证（🆕 路径 C ✅ + 向外推形式化 ✅）
+### Phase 60 范畴理论绝对性验证（🆕 路径 C ✅ + 路径 B ✅ + 向外推形式化 ✅）
 
 **路径 C 已完成**（2026-07-30）：Python 可执行范畴语义验证套件 `verify/` 模块，8 项核心范畴公理自洽性检查 8/8 全部 PASS。验证范围涵盖：$\mathbf{Sp}$ 4-范畴态射复合、D 函子忠实性、伴随三角恒等式、谱对应自然性、统一 3 定理、不等式链、$c_1<c_2<c_3$ 排序、偏差代数形式。详见 [`roadmap/phase60_category_verification.md`](../roadmap/phase60_category_verification.md)。
 
-**"向外推"形式化已完成**（2026-07-30）：`CoherenceToBranching.lean §11` 新增 `dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 两个定理，将维数间隙（$\ln 15 < 3$）与层正交分离（$S_4/c_1 = e^3$）形式化绑定，实现"球心在空间之外"的代数证明。`lake build` 编译通过 ✅。
+**路径 B 已完成**（2026-07-31）：Agda 2.8.0 独立重形式化核心 8 模块（B1–B8，`agda_formalization/`），`Everything.agda` 整体类型检查通过，定理签名与 Lean 一一对应，实现证明助理交叉验证（消除单一实现偏差）。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解）直接证明；ℝ 实数公理及解析定理以 `postulate` 声明（与 Lean 的 `Mathlib` 分析库对应）。与 Lean 的双实现一致性要点见 [`roadmap/phase60_category_verification.md`](../roadmap/phase60_category_verification.md) §路径 B 状态。
+
+**"向外推"形式化已完成**（2026-07-30）：`CoherenceToBranching.lean §11` 新增 `dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 两个定理，将维数间隙（$\ln 15 < 3$）与层正交分离（$S_4/c_1 = e^3$）形式化绑定，实现"球心在空间之外"的代数证明。`lake build` 编译通过 ✅。Agda 侧由 B7（`CoherenceToBranching.agda §11`）镜像。
 
 ## 七、系列论文状态
 
@@ -175,3 +177,4 @@
 | **v0.3** | **2026-07-29** | **新增三篇论文**：Paper XXXI（质量-Δ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）。**B1①环机器证明**。**新增 O6**（质量-Δ 方向性闭合）。**RAP 文件修复**：RAP1-3 全部通过编译。**§三改标**为"修复方案已确认，待论文正文更新"。**研究笔记全部内容已提炼完毕**——7 份子笔记对应 33 篇论文已覆盖全部核心结果。基于笔记 v1.48 |
 | **v0.4** | **2026-07-30** | **合并更新**：新增六篇论文（Paper XXXI–XXXV, XXXVII）；论文总数 34 → 37；Lean 4 形式化状态总表；开放研究线扩展（O7/O8 + L2/L3 等级体系）；参数总账四列完整追溯 + δ 排除注记（ε̄/ε₃ = √5 穿越点）；已排除方向 X1 登记；各级 README / 盲登记协议同步更新 |
 | **v0.5** | **2026-07-30** | **向外推形式化完成**：`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` 两个定理。维数间隙（ln 15 < 3）与层正交分离（S₄/c₁ = e³）形式化绑定。笔记 04_gravity_analysis.md §5.7k.6 新增 Lean 形式化状态。**Paper XXXV v0.3**：§3.2 扩展为三小节（几何阐述 + 形式证明 + 视角对比）。各级 README 同步更新至 v0.5。`lake build` 编译通过 |
+| **v0.6** | **2026-07-31** | **路径 B 完成（Agda 交叉验证）**：`agda_formalization/` 核心 8 模块（B1–B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过，定理签名与 Lean 一一对应。路线图 phase60 更新至 v0.4。Paper XXXV §3.2.2 补充 Agda 镜像说明。各级 README / 盲登记协议同步更新 |

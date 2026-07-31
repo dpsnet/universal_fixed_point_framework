@@ -4,7 +4,7 @@
 
 ---
 
-**Latest (2026-07-30)**: **RAP-Errata v0.5 released** — all 37 papers status complete (31 stable, 6 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-31)**: **RAP-Errata v0.6 released** — all 37 papers status complete (31 stable, 6 new), **zero warnings, zero pending**. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). **Path B complete**: 8 core modules re-formalized in Agda 2.8.0, all type-checked (proof-assistant cross-validation). See `universal_fixed_point_framework/paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -15,7 +15,7 @@ This project consists of two interrelated research layers:
 | Layer | Location | Role |
 |-------|----------|------|
 | **Original numerical implementation layer** | Root directory `.` | Early-stage concrete numerical fits and experimental validations for the Standard Model mass spectrum, NTK spectral optimization, etc. |
-| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.4 — 37 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
+| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.6 — 37 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
 
 Core idea: treat "recursive iteration" as an **object-level evolution rule**, and its corresponding "operator semigroup spectrum" as a **spectral-level static structure**. The two are related systematically through a spectral de-recursion functor.
 
@@ -43,7 +43,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - **Universal fixed-point equation** $\mathcal{F}[\mathcal{V}] = \mathcal{V}$: a unified form of subsystem fixed-point equations.
 - **Dual-track Koopman operator**: unconditional definition on $\ell^\infty(X)$ + spectral correspondence on $L^2$/$C(X)$ (`DynSys.lean`)
 - **Lean 4 formalization**: 74 core modules, `lake build` clean (0 errors, 8 warnings). **Only 3 active `sorry`s**: 1 conceptual feature in `HigherSpCategory.lean:103` (exchange law deviation = gravity), 2 pending Mathlib `Matrix.Spectrum` in `DeviationBound.lean:386/412`. 10 core theorem modules fully machine-proven (zero `sorry`). **New in CoherenceToBranching.lean §11**: `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` (outward proof formalization).
-- **Category verification (Phase 60 🆕)**: `python -m verify.run_all` — 8/8 PASS. Path C complete (Python executable categorical semantics). See `roadmap/phase60_category_verification.md`.
+- **Category verification (Phase 60 🆕)**: `python -m verify.run_all` — 8/8 PASS. Path C complete (Python executable categorical semantics). **Path B complete (2026-07-31)**: 8 core modules re-formalized in Agda 2.8.0 (`agda_formalization/`), `Everything.agda` type-checks, theorem signatures match Lean one-to-one (proof-assistant cross-validation). See `roadmap/phase60_category_verification.md`.
 
 ### 2.3 Key Physical Correspondences
 
@@ -75,8 +75,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── paper34_continuum_limit.md                 # 🆕 Continuum limit (B2 closure)
 │   │   ├── paper35_gravity_origin.md                  # 🆕 Category-theoretic origin of gravity
 │   │   ├── paper37_open_problems.md                   # 🆕 Open problems survey
-│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.4
-│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.4
+│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.6
+│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.5
 │   ├── src/                               # Core code implementations
 │   │   ├── rec_category.py                # Rec category
 │   │   ├── spec_category.py               # Spec category
@@ -153,7 +153,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] V1 Sp strict 4-category | V2 D functor faithful | V3 D ⊣ R triangles
 - [x] V4 Spectral correspondence natural | V5 Unified 3 theorem
 - [x] V6 Inequality chain | V7 c₁<c₂<c₃ | V8 Delta algebraic form
-- [ ] Path B (Agda re-formalization) — next
+- [x] **Path B complete (2026-07-31)**: Agda 2.8.0 re-formalization of 8 core modules (B1–B8), `Everything.agda` type-checks, signatures match Lean one-to-one
 - [ ] Path A (Lean zero `sorry` closure) — ongoing
 
 **Author and versioning**
@@ -244,7 +244,7 @@ This project is a **highly interdisciplinary theoretical framework**. Core categ
 - B2 3b/3d/3e/3f formalization awaits mathlib topology/quasiconformal geometry libraries
 - Physical predictions (e.g., $L_4 \approx 1470$ GeV) depend on FCC-hh experimental verification
 - Instance hypotheses (Cl(1,7) choice, etc.) are replaceable and do not constrain the meta-axiom layer
-- All claim boundaries are documented in the **RAP-Errata v0.4** baseline (`paper/RAP_勘误与立场声明.md`)
+- All claim boundaries are documented in the **RAP-Errata v0.6** baseline (`paper/RAP_勘误与立场声明.md`)
 
 ---
 

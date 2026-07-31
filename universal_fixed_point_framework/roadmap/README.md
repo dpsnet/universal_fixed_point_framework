@@ -40,11 +40,11 @@
 > - **Phase 42**：暴胀 R⁴ 修正 ✅（BCH 至 R⁴，c₂=8.92, c₃=4.72）
 > - **所有半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**
 
-## 当前优先级（2026-07-30 更新）
+## 当前优先级（2026-07-31 更新）
 
 - **P0 范畴理论绝对性验证**：**🆕 最高优先级**。不依赖物理实验的纯数学验证。三路径策略：
   - **路径 C ✅（已完成）**：Python 可执行范畴语义 → `python -m verify.run_all` 8/8 PASS
-  - **路径 B 🔜（数周）**：Agda 独立重形式化 8 个核心 Lean 模块 → 证明助理交叉验证
+  - **路径 B ✅（已完成，2026-07-31）**：Agda 2.8.0 独立重形式化 8 个核心 Lean 模块 → `agda_formalization/` 全部编译通过，证明助理交叉验证完成
   - **路径 A 🔄（长期）**：Lean 零 `sorry` 持续闭合 → 全库完全机器证明
   - 详见 [`phase60_category_verification.md`](phase60_category_verification.md)
 - **P0 理论严格化**：已完成（`phase1_meta_axioms.md`、`phase2_structural_theorems.md`、`phase4_semantics_over_fitting.md` 已严格化）。

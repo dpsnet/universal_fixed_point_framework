@@ -6,9 +6,9 @@
 
 ---
 
-**最新进展（2026-07-30）**：**RAP-Errata v0.5 已发布**——全部 37 篇论文状态完整：31 篇稳定、6 篇本轮新增（XXXI–XXXV, XXXVII）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。新增 Paper XXXV（引力范畴论起源）和 Paper XXXVII（开放问题综述）。**CoherenceToBranching.lean §11 向外推形式化完成**（"球心在空间之外"代数证明，维数间隙 ln 15 < 3 + 层正交分离 S₄/c₁ = e³）。详见 `paper/RAP_勘误与立场声明.md`。
+**最新进展（2026-07-31）**：**RAP-Errata v0.6 已发布**——全部 37 篇论文状态完整：31 篇稳定、6 篇本轮新增（XXXI–XXXV, XXXVII）、**零 ⚠️、零待办**。参数总账归约为 **0 自由参数 + 1 外部标度 $M_{\text{Pl}}$**。B2 连续极限（分形吸引子→光滑 $\mathbb{R}^4$ 拟对称嵌入）理论闭合。新增 Paper XXXV（引力范畴论起源）和 Paper XXXVII（开放问题综述）。**CoherenceToBranching.lean §11 向外推形式化完成**（"球心在空间之外"代数证明，维数间隙 ln 15 < 3 + 层正交分离 S₄/c₁ = e³）。**路径 B 完成（Agda 交叉验证）**：核心 8 模块 Agda 2.8.0 独立重形式化全部编译通过。详见 `paper/RAP_勘误与立场声明.md`。
 
-**Latest (2026-07-30)**: **RAP-Errata v0.5 released** — 37 papers: 31 stable, 6 new (XXXI–XXXV, XXXVII), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). See `paper/RAP_勘误与立场声明.md`.
+**Latest (2026-07-31)**: **RAP-Errata v0.6 released** — 37 papers: 31 stable, 6 new (XXXI–XXXV, XXXVII), zero pending. Parameter count reduced to **0 free parameters + 1 external scale $M_{\text{Pl}}$**. B2 continuum limit (fractal attractor → smooth $\mathbb{R}^4$ quasi-symmetric embedding) theoretically closed. New papers: Paper XXXV (category-theoretic origin of gravity) and Paper XXXVII (open problems survey). **CoherenceToBranching.lean §11 outward proof formalized** (dimension gap ln 15 < 3 + layer orthogonality S₄/c₁ = e³). **Path B complete (Agda cross-validation)**: 8 core modules re-formalized in Agda 2.8.0, all type-checked. See `paper/RAP_勘误与立场声明.md`.
 
 ---
 
@@ -99,7 +99,9 @@
 
 详见 [`roadmap/phase60_category_verification.md`](universal_fixed_point_framework/roadmap/phase60_category_verification.md)。
 
-核心模块（完整列表见 RAP-Errata v0.5 §六 Lean 4 形式化状态总表）：
+**路径 B ✅ 已完成** — Agda 2.8.0 独立重形式化核心 8 个 Lean 模块（`agda_formalization/`，B1–B8），`Everything.agda` 整体类型检查通过，定理签名与 Lean 一一对应，实现证明助理交叉验证。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解）直接证明；ℝ 实数公理及解析定理以 `postulate` 声明。双实现一致性要点见路线图 §路径 B 状态。
+
+核心模块（完整列表见 RAP-Errata v0.6 §六 Lean 4 形式化状态总表）：
 
 | 文件 | 内容 |
 |:-----|:------|
@@ -134,8 +136,8 @@ universal_fixed_point_framework/
 │   ├── paper34_continuum_limit.md                  # 🆕
 │   ├── paper35_gravity_origin.md                   # 🆕 引力范畴论起源
 │   ├── paper37_open_problems.md                    # 🆕 开放问题综述
-│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.5
-│   └── RAP_盲登记协议.md                            # RAP-Registry v0.4
+│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.6
+│   └── RAP_盲登记协议.md                            # RAP-Registry v0.5
 ├── notes/08_first_principles/       # 研究笔记
 │   ├── spectral_hierarchy_evolution_analysis.md    # 主索引
 │   ├── 01_origin_of_3.md … 07_e_less_than_3.md   # 各专题
