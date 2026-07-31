@@ -186,13 +186,15 @@ agda_formalization/
 | | `category-order-unique`（B7） | ℕ 算术（half-2*ℕ/half-8 链） | ✅ 已闭合（2026-07-31） |
 | | `log2`（B5/B6） | 良基递归 WfRec（NatArith §3：`<`/`Acc`/`wfRec` + `half-lt` 递减引理） | ✅ 已闭合（2026-07-31） |
 | **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | ℤ/3 载体 + 矩阵乘/单位矩阵具体构造；`*mat-id-l/r`（矩阵单位律）+ 真实 `unit-intertwine`（𝟙·A=A·𝟙）均闭合 | ✅ 构造与单位律闭合 |
+| | B1 `*mat-assoc`（矩阵乘法结合律） | `sumFin` 代数引理链（`+-rearrange`/`sumFin-+`/`sumFin-distrib-r/l`/`sumFin-swap`）+ ℤ/3 环律 | ✅ 已闭合（2026-07-31） |
+| | B1 `zeroMat-absorb-l/r`（零矩阵吸收） | `sumFin-cong` + `*-zero-l/r` + `sumFin-zero` | ✅ 已闭合（2026-07-31） |
 | | B2 `spVertComp-assoc`/`spThreeVertComp-assoc` | ℤ/3 加法结合律 + funext | ✅ 已闭合（2026-07-31） |
 | | ℤ/3 环律全套 | `+-assoc/comm/id/inv`、`*-assoc/comm/id/zero/distrib`（有限情形枚举） | ✅ 已闭合（2026-07-31） |
 | | B2 `spHorizComp`/`spThreeHorizComp` | 矩阵水平复合构造 | ⏳ 待闭合 |
 | | B3 三角恒等式（adjUnit/adjCounit） | 具体 D/R 函子 + 自然变换构造 | ⏳ 待闭合 |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
-| | B5 `layer1/2/3-condition` | 交换子律（需 `*mat-assoc`） | ⏳ 待闭合 |
-| | SpHom 真实交织条件 | 需 `*mat-assoc` + 单位律（已备） | ⏳ 待闭合 |
+| | B5 `layer1/2/3-condition` | 交换子律（`*mat-assoc` 已闭合，前置就绪） | ⏳ 待闭合 |
+| | SpHom 真实交织条件 | `SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`；`compose-intertwine`（`*mat-assoc` 链）与 `unit-intertwine` 真实闭合；DecursionFunctor 零矩阵态射（idSp/compSp/adjCounit）经 `zeroMat-absorb` 闭合；`D-map-intertwine` 登记为 postulate（依赖 transferMatrix 语义） | ✅ 已闭合（2026-07-31） |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
 | | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
 | | B7 静默分离（`silence-separation/margin`） | exp 不等式 | ⏳ 待闭合 |
@@ -249,3 +251,4 @@ agda_formalization/
 | v0.3 | 2026-07-30 | **向外推形式化完成**。`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`。Lean 模块数：74 → 74（内容扩展，未新增模块）。文档更新为 ✅ |
 | v0.4 | 2026-07-31 | **路径 B 完成**。`agda_formalization/` 核心 8 模块（B1-B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过。双实现一致性要点记录于 §路径 B 状态 |
 | v0.5 | 2026-07-31 | **路径 B 闭合路线图立项**（用户决议：签名镜像不构成第二条验证路径，必须完整闭合）。登记 T1/T2/T3 闭合账目（47 个 postulate 块的可闭合项）。T1 首批 3 项闭合中 |
+| v0.6 | 2026-07-31 | **T2 关键基石闭合**：`*mat-assoc`（矩阵乘法结合律，`sumFin` 代数引理链）、`zeroMat-absorb-l/r`；`SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`，`compose-intertwine`/`unit-intertwine` 真实闭合，DecursionFunctor 零矩阵态射交织闭合（`D-map-intertwine` 登记 postulate） |

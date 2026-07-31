@@ -323,21 +323,105 @@ if-mul-lemma false x = *-zero-l x
   trans (sumFin-cong (λ k → if-mul-lemma (Fin-eq? i k) (M k j)))
         (sumFin-pick-dep-l i (λ k → M k j))))
 
+-- ==================================================================
+-- §1.7 sumFin 代数引理（*mat-assoc 所需）
+-- ==================================================================
+
+-- 加法的四元重排：(a+b)+(c+d) = (a+c)+(b+d)
++-rearrange : (a b c d : ℂ) → (a + b) + (c + d) ≡ (a + c) + (b + d)
++-rearrange a b c d =
+  trans (+-assoc a b (c + d))
+  (trans (cong (λ x → a + x) (sym (+-assoc b c d)))
+  (trans (cong (λ x → a + (x + d)) (+-comm b c))
+  (trans (cong (λ x → a + x) (+-assoc c b d))
+         (sym (+-assoc a c (b + d))))))
+
+-- 求和可拆分：Σ(f+g) = Σf + Σg
+sumFin-+ : {n : ℕ} (f g : Fin n → ℂ) → sumFin {n} (λ k → f k + g k) ≡ sumFin {n} f + sumFin {n} g
+sumFin-+ {zero}   f g = refl
+sumFin-+ {suc m}  f g =
+  trans (cong₂ _+_ refl (sumFin-+ {m} (λ k → f (suc k)) (λ k → g (suc k))))
+        (+-rearrange (f zero) (g zero)
+              (sumFin {m} (λ k → f (suc k))) (sumFin {m} (λ k → g (suc k))))
+
+-- 乘法右分发到求和：Σf · y = Σ(f·y)
+sumFin-distrib-r : {n : ℕ} (f : Fin n → ℂ) (y : ℂ) → sumFin {n} f * y ≡ sumFin {n} (λ k → f k * y)
+sumFin-distrib-r {zero}   f y = refl
+sumFin-distrib-r {suc m}  f y =
+  trans (*-distrib-r (f zero) (sumFin {m} (λ k → f (suc k))) y)
+        (cong₂ _+_ refl (sumFin-distrib-r {m} (λ k → f (suc k)) y))
+
+-- 乘法左分发到求和：x · Σf = Σ(x·f)
+sumFin-distrib-l : {n : ℕ} (x : ℂ) (f : Fin n → ℂ) → x * sumFin {n} f ≡ sumFin {n} (λ k → x * f k)
+sumFin-distrib-l {zero}   x f = *-zero-r x
+sumFin-distrib-l {suc m}  x f =
+  trans (*-distrib-l x (f zero) (sumFin {m} (λ k → f (suc k))))
+        (cong₂ _+_ refl (sumFin-distrib-l {m} x (λ k → f (suc k))))
+
+-- 双重求和交换：Σᵢ Σⱼ f i j = Σⱼ Σᵢ f i j
+sumFin-swap : {n m : ℕ} (f : Fin n → Fin m → ℂ)
+  → sumFin {n} (λ i → sumFin {m} (λ j → f i j)) ≡ sumFin {m} (λ j → sumFin {n} (λ i → f i j))
+sumFin-swap {zero}   {m} f = sym (sumFin-zero {m})
+sumFin-swap {suc n}  {m} f =
+  trans (cong₂ _+_ refl (sumFin-swap {n} {m} (λ i j → f (suc i) j)))
+        (sym (sumFin-+ {m} (λ j → f zero j) (λ j → sumFin {n} (λ i → f (suc i) j))))
+
+-- **矩阵乘法结合律**：(M·N)·P = M·(N·P)
+*mat-assoc : {nX nY nZ nW : ℕ}
+  (M : Fin nX → Fin nY → ℂ) (N : Fin nY → Fin nZ → ℂ) (P : Fin nZ → Fin nW → ℂ)
+  → (M *mat N) *mat P ≡ M *mat (N *mat P)
+*mat-assoc {nX} {nY} {nZ} {nW} M N P = funext (λ i → funext (λ l → assoc-pt i l))
+  where
+  -- 逐点结合律，分四步
+  assoc-pt : (i : Fin nX) (l : Fin nW)
+    → ((M *mat N) *mat P) i l ≡ (M *mat (N *mat P)) i l
+  assoc-pt i l = trans s1 (trans s2 (trans s3 s4))
+    where
+    -- 步骤 1：Σk (Σj M·N)·P = Σk Σj (M·N)·P（右分发）
+    s1 : sumFin {nZ} (λ k → sumFin {nY} (λ j → M i j * N j k) * P k l)
+       ≡ sumFin {nZ} (λ k → sumFin {nY} (λ j → (M i j * N j k) * P k l))
+    s1 = sumFin-cong {nZ} (λ k → sumFin-distrib-r {nY} (λ j → M i j * N j k) (P k l))
+
+    -- 步骤 2：Σk Σj (M·N)·P = Σk Σj M·(N·P)（乘法结合）
+    s2 : sumFin {nZ} (λ k → sumFin {nY} (λ j → (M i j * N j k) * P k l))
+       ≡ sumFin {nZ} (λ k → sumFin {nY} (λ j → M i j * (N j k * P k l)))
+    s2 = sumFin-cong {nZ} (λ k → sumFin-cong {nY} (λ j → *-assoc (M i j) (N j k) (P k l)))
+
+    -- 步骤 3：双重求和交换
+    s3 : sumFin {nZ} (λ k → sumFin {nY} (λ j → M i j * (N j k * P k l)))
+       ≡ sumFin {nY} (λ j → sumFin {nZ} (λ k → M i j * (N j k * P k l)))
+    s3 = sumFin-swap {nZ} {nY} (λ k j → M i j * (N j k * P k l))
+
+    -- 步骤 4：Σj M·(Σk N·P) = Σj Σk M·(N·P)（左分发，取逆）
+    s4 : sumFin {nY} (λ j → sumFin {nZ} (λ k → M i j * (N j k * P k l)))
+       ≡ sumFin {nY} (λ j → M i j * sumFin {nZ} (λ k → N j k * P k l))
+    s4 = sumFin-cong {nY} (λ j → sym (sumFin-distrib-l {nZ} (M i j) (λ k → N j k * P k l)))
+
+-- 零矩阵吸收（左）：zeroMat · M = zeroMat
+zeroMat-absorb-l : {nX nY nZ : ℕ} (M : Fin nY → Fin nZ → ℂ) → zeroMat {nX} {nY} *mat M ≡ zeroMat {nX} {nZ}
+zeroMat-absorb-l {nX} {nY} {nZ} M = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-zero-l (M j k))) (sumFin-zero {nY})))
+
+-- 零矩阵吸收（右）：M · zeroMat = zeroMat
+zeroMat-absorb-r : {nX nY nZ : ℕ} (M : Fin nX → Fin nY → ℂ) → M *mat zeroMat {nY} {nZ} ≡ zeroMat {nX} {nZ}
+zeroMat-absorb-r {nX} {nY} {nZ} M = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-zero-r (M i j))) (sumFin-zero {nY})))
+
 -- 𝐒𝐩 对象：维数 n + 算子 A
 record SpObj : Set where
   field
     n : ℕ
     A : (Fin n → Fin n → ℂ)
 
--- 𝐒𝐩 1-态射：矩阵 P + 交织条件 P * A_Y = A_X * P
+-- 𝐒𝐩 1-态射：矩阵 P + 交织条件 P * A_Y = A_X * P（**T2 闭合**：真实等式，非占位）
 record SpHom (X Y : SpObj) : Set₁ where
   open SpObj X renaming (n to nX; A to AX)
   open SpObj Y renaming (n to nY; A to AY)
 
   field
     P : Fin nX → Fin nY → ℂ
-    -- 交织条件 P * AY = AX * P（占位为类型等式，随环律开发真实化）
-    intertwine : (Fin nX → Fin nY → ℂ) ≡ (Fin nX → Fin nY → ℂ)
+    -- 交织条件 P * AY = AX * P（真实等式）
+    intertwine : P *mat AY ≡ AX *mat P
 
 -- ==================================================================
 -- §2 𝐒𝐩 范畴实例 — 单位态射与复合
@@ -347,11 +431,23 @@ record SpHom (X Y : SpObj) : Set₁ where
 unit-intertwine : {X : SpObj} → 𝟙-matrix *mat SpObj.A X ≡ SpObj.A X *mat 𝟙-matrix
 unit-intertwine {X} = trans (*mat-id-l (SpObj.A X)) (sym (*mat-id-r (SpObj.A X)))
 
--- 复合运算：矩阵乘法（具体构造；真实交织条件随环律开发闭合）
+-- 复合运算的交织条件：P_f·P_g 满足 P·A_Z = A_X·P
+-- （**T2 闭合**：*mat-assoc + f、g 各自的交织条件）
+compose-intertwine : {X Y Z : SpObj} (f : SpHom X Y) (g : SpHom Y Z)
+  → (SpHom.P f *mat SpHom.P g) *mat SpObj.A Z
+      ≡ SpObj.A X *mat (SpHom.P f *mat SpHom.P g)
+compose-intertwine {X} {Y} {Z} f g =
+  trans (*mat-assoc (SpHom.P f) (SpHom.P g) (SpObj.A Z))
+  (trans (cong (λ m → SpHom.P f *mat m) (SpHom.intertwine g))
+  (trans (sym (*mat-assoc (SpHom.P f) (SpObj.A Y) (SpHom.P g)))
+  (trans (cong (λ m → m *mat SpHom.P g) (SpHom.intertwine f))
+         (*mat-assoc (SpObj.A X) (SpHom.P f) (SpHom.P g)))))
+
+-- 复合运算：矩阵乘法（交织条件经 *mat-assoc 真实闭合）
 compose : {X Y Z : SpObj} → SpHom Y Z → SpHom X Y → SpHom X Z
 compose {X} {Y} {Z} g f = record
   { P = (SpHom.P f) *mat (SpHom.P g)
-  ; intertwine = refl
+  ; intertwine = compose-intertwine f g
   }
 
 -- ==================================================================

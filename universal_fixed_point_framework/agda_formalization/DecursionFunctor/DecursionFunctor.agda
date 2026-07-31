@@ -16,12 +16,18 @@ open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory
 open import Rec.RecCategory
 
--- 辅助定义
+-- 辅助定义（零矩阵态射：交织条件经零矩阵吸收引理闭合）
 idSp : (S : SpObj) → SpHom S S
-idSp S = record { P = λ i j → c0 ; intertwine = refl }
+idSp S = record
+  { P = zeroMat
+  ; intertwine = trans (zeroMat-absorb-l (SpObj.A S)) (sym (zeroMat-absorb-r (SpObj.A S)))
+  }
 
 compSp : {S T U : SpObj} → SpHom T U → SpHom S T → SpHom S U
-compSp g f = record { P = λ i j → c0 ; intertwine = refl }
+compSp {S} {T} {U} g f = record
+  { P = zeroMat
+  ; intertwine = trans (zeroMat-absorb-l (SpObj.A U)) (sym (zeroMat-absorb-r (SpObj.A S)))
+  }
 
 -- ==================================================================
 -- §1 转移矩阵（transfer matrix）
@@ -42,11 +48,18 @@ D-obj X = record
   ; A = transferMatrix (RecObj.step X)
   }
 
+-- D-map 的交织条件：转移矩阵对递归同态的交换性
+-- （T2 待闭合：依赖 transferMatrix 的语义构造，登记在案）
+postulate
+  D-map-intertwine : {X Y : RecObj} (f : RecHom X Y)
+    → transferMatrix (RecHom.toFun f) *mat transferMatrix (RecObj.step Y)
+        ≡ transferMatrix (RecObj.step X) *mat transferMatrix (RecHom.toFun f)
+
 -- D-map: RecHom X Y → SpHom (D-obj X) (D-obj Y)
 D-map : {X Y : RecObj} → RecHom X Y → SpHom (D-obj X) (D-obj Y)
-D-map f = record
+D-map {X} {Y} f = record
   { P = transferMatrix (RecHom.toFun f)
-  ; intertwine = refl
+  ; intertwine = D-map-intertwine f
   }
 
 -- D 函子：D: Rec → Sp（对象映射 × 态射映射）
@@ -79,11 +92,12 @@ postulate
 postulate
   adjUnit : (X : RecObj) → RecHom X (R-obj (D-obj X))
 
--- 余单位 ε : D ∘ R → id_Sp
+-- 余单位 ε : D ∘ R → id_Sp（零矩阵态射，交织经吸收引理闭合）
 adjCounit : (S : SpObj) → SpHom (D-obj (R-obj S)) S
 adjCounit S = record
-  { P = λ i j → c0
-  ; intertwine = refl
+  { P = zeroMat
+  ; intertwine = trans (zeroMat-absorb-l (SpObj.A S))
+                       (sym (zeroMat-absorb-r (transferMatrix (RecObj.step (R-obj S)))))
   }
 
 -- 三角恒等式（占位）
