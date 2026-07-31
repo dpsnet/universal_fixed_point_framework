@@ -434,6 +434,100 @@ record SpHom (X Y : SpObj) : Set₁ where
     intertwine : P *mat AY ≡ AX *mat P
 
 -- ==================================================================
+-- §1.8 交换子代数（T2 闭合：统一"微分" d_A(H) = A·H - H·A）
+-- ==================================================================
+
+-- 统一"微分"：所有主动层的层条件共享此结构
+-- （对应 Lean: commutator）
+commutator : {X Y : SpObj} (H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
+  → Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
+commutator {X} {Y} H = (SpObj.A X *mat H) -mat (H *mat SpObj.A Y)
+
+-- 取负对加法的分配（9 情形）
+neg-add : (x y : ℂ) → negℂ (x + y) ≡ negℂ x + negℂ y
+neg-add c0 c0 = refl
+neg-add c0 c1 = refl
+neg-add c0 c2 = refl
+neg-add c1 c0 = refl
+neg-add c1 c1 = refl
+neg-add c1 c2 = refl
+neg-add c2 c0 = refl
+neg-add c2 c1 = refl
+neg-add c2 c2 = refl
+
+-- 减法项重排：(a - b) + (c - d) = (a + c) - (b + d)
++neg-rearrange : (a b c d : ℂ) → (a + negℂ b) + (c + negℂ d) ≡ (a + c) + negℂ (b + d)
++neg-rearrange a b c d =
+  trans (+-rearrange a (negℂ b) c (negℂ d))
+        (cong (λ x → (a + c) + x) (sym (neg-add b d)))
+
+-- 中间项消去：(q - p) + (r - q) = r - p
+cancel-mid : (p q r : ℂ) → (q + negℂ p) + (r + negℂ q) ≡ r + negℂ p
+cancel-mid p q r =
+  trans (+-rearrange q (negℂ p) r (negℂ q))
+  (trans (cong (λ x → x + (negℂ p + negℂ q)) (+-comm q r))
+  (trans (+-assoc r q (negℂ p + negℂ q))
+  (trans (cong (λ x → r + (q + x)) (+-comm (negℂ p) (negℂ q)))
+  (trans (cong (λ x → r + x) (sym (+-assoc q (negℂ q) (negℂ p))))
+  (trans (cong (λ x → r + (x + negℂ p)) (+-inv q))
+         (cong (λ x → r + x) (+-id-l (negℂ p))))))))
+
+-- 矩阵加法结合律
++mat-assoc : {nX nY : ℕ} (M N O : Fin nX → Fin nY → ℂ) → (M +mat N) +mat O ≡ M +mat (N +mat O)
++mat-assoc M N O = funext (λ i → funext (λ j → +-assoc (M i j) (N i j) (O i j)))
+
+-- 矩阵加法同余（双参数）
++mat-cong₂ : {nX nY : ℕ} {A B C D : Fin nX → Fin nY → ℂ} → A ≡ B → C ≡ D → A +mat C ≡ B +mat D
++mat-cong₂ {nX} {nY} e1 e2 = funext (λ i → funext (λ j →
+  cong₂ _+_ (cong-app (cong-app e1 i) j) (cong-app (cong-app e2 i) j)))
+
+-- 矩阵减法同余（双参数）
+-mat-cong₂ : {nX nY : ℕ} {A B C D : Fin nX → Fin nY → ℂ} → A ≡ B → C ≡ D → A -mat C ≡ B -mat D
+-mat-cong₂ {nX} {nY} e1 e2 = funext (λ i → funext (λ j →
+  cong₂ _+_ (cong-app (cong-app e1 i) j) (cong negℂ (cong-app (cong-app e2 i) j))))
+
+-- 矩阵自身相减为零
+-mat-self : {nX nY : ℕ} (M : Fin nX → Fin nY → ℂ) → M -mat M ≡ zeroMat
+-mat-self {nX} {nY} M = funext (λ i → funext (λ j → +-inv (M i j)))
+
+-- 矩阵级中间项消去：(Q-P) + (R-Q) = R-P
+-mat-cancel-mid : {nX nY : ℕ} (P Q R : Fin nX → Fin nY → ℂ) → (Q -mat P) +mat (R -mat Q) ≡ R -mat P
+-mat-cancel-mid P Q R = funext (λ i → funext (λ j → cancel-mid (P i j) (Q i j) (R i j)))
+
+-- 矩阵乘法对加法左分发：M·(N₁+N₂) = M·N₁ + M·N₂
+*mat-distrib-l : {nX nY nZ : ℕ} (M : Fin nX → Fin nY → ℂ) (N1 N2 : Fin nY → Fin nZ → ℂ)
+  → M *mat (N1 +mat N2) ≡ (M *mat N1) +mat (M *mat N2)
+*mat-distrib-l {nX} {nY} {nZ} M N1 N2 = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-distrib-l (M i j) (N1 j k) (N2 j k)))
+        (sumFin-+ {nY} (λ j → M i j * N1 j k) (λ j → M i j * N2 j k))))
+
+-- 矩阵乘法对加法右分发：(N₁+N₂)·M = N₁·M + N₂·M
+*mat-distrib-r : {nX nY nZ : ℕ} (N1 N2 : Fin nX → Fin nY → ℂ) (M : Fin nY → Fin nZ → ℂ)
+  → (N1 +mat N2) *mat M ≡ (N1 *mat M) +mat (N2 *mat M)
+*mat-distrib-r {nX} {nY} {nZ} N1 N2 M = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-distrib-r (N1 i j) (N2 i j) (M j k)))
+        (sumFin-+ {nY} (λ j → N1 i j * M j k) (λ j → N2 i j * M j k))))
+
+-- 矩阵级减法重排：(A-B) + (C-D) = (A+C) - (B+D)
+mat-rearrange : {nX nY : ℕ} (A B C D : Fin nX → Fin nY → ℂ) → (A -mat B) +mat (C -mat D) ≡ (A +mat C) -mat (B +mat D)
+mat-rearrange A B C D = funext (λ i → funext (λ j →
+  +neg-rearrange (A i j) (B i j) (C i j) (D i j)))
+
+-- 交换子对零矩阵为零
+commutator-zero : {X Y : SpObj} → commutator {X} {Y} zeroMat ≡ zeroMat
+commutator-zero {X} {Y} =
+  trans (-mat-cong₂ (zeroMat-absorb-r (SpObj.A X)) (zeroMat-absorb-l (SpObj.A Y)))
+        (-mat-self zeroMat)
+
+-- 交换子加性：d_A(H₁+H₂) = d_A(H₁) + d_A(H₂)
+commutator-add : {X Y : SpObj} (H1 H2 : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
+  → commutator {X} {Y} (H1 +mat H2) ≡ commutator {X} {Y} H1 +mat commutator {X} {Y} H2
+commutator-add {X} {Y} H1 H2 =
+  trans (-mat-cong₂ (*mat-distrib-l (SpObj.A X) H1 H2) (*mat-distrib-r H1 H2 (SpObj.A Y)))
+        (sym (mat-rearrange (SpObj.A X *mat H1) (H1 *mat SpObj.A Y)
+                            (SpObj.A X *mat H2) (H2 *mat SpObj.A Y)))
+
+-- ==================================================================
 -- §2 𝐒𝐩 范畴实例 — 单位态射与复合
 -- ==================================================================
 

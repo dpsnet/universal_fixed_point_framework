@@ -188,13 +188,15 @@ agda_formalization/
 | **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | ℤ/3 载体 + 矩阵乘/单位矩阵具体构造；`*mat-id-l/r`（矩阵单位律）+ 真实 `unit-intertwine`（𝟙·A=A·𝟙）均闭合 | ✅ 构造与单位律闭合 |
 | | B1 `*mat-assoc`（矩阵乘法结合律） | `sumFin` 代数引理链（`+-rearrange`/`sumFin-+`/`sumFin-distrib-r/l`/`sumFin-swap`）+ ℤ/3 环律 | ✅ 已闭合（2026-07-31） |
 | | B1 `zeroMat-absorb-l/r`（零矩阵吸收） | `sumFin-cong` + `*-zero-l/r` + `sumFin-zero` | ✅ 已闭合（2026-07-31） |
-| | B2 `spVertComp-assoc`/`spThreeVertComp-assoc` | ℤ/3 加法结合律 + funext | ✅ 已闭合（2026-07-31） |
+| | B2 `spVertComp-assoc`/`spThreeVertComp-assoc` | ℤ/3 加法结合律 + `SpTwoMorphism-≡`/`SpThreeMorphism-≡`（UIP） | ✅ 已闭合（2026-07-31） |
 | | ℤ/3 环律全套 | `+-assoc/comm/id/inv`、`*-assoc/comm/id/zero/distrib`（有限情形枚举） | ✅ 已闭合（2026-07-31） |
-| | B2 `spHorizComp`/`spThreeHorizComp` | 具体同伦构造（`α·P' + Q·α'`，与 Lean 公式一致） | ✅ 已闭合（2026-07-31） |
+| | B2 condition 字段真实化 | `SpTwoMorphism.condition`/`SpThreeMorphism.condition` 升级为真实交换子等式；`id-two-morphism`/`spVertComp`/`id-three-morphism`/`spThreeVertComp` 条件经 `commutator-add`/`-mat-cancel-mid` 闭合；`layer2/3-condition` 直接引用 | ✅ 已闭合（2026-07-31） |
+| | B2 `spHorizComp`/`spThreeHorizComp` 同伦构造 | 具体同伦构造（`α·P' + Q·α'`，与 Lean 公式一致） | ✅ 已闭合（2026-07-31） |
+| | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（需大规模矩阵代数，同 Lean 侧 70 行证明链） | ⏳ 登记待闭合 |
 | | B3 三角恒等式（adjUnit/adjCounit） | 具体 D/R 函子 + 自然变换构造 | ⏳ 待闭合 |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
 | | B5 `layer1-condition` | 真实交织 `P·A_Y = A_X·P` + `-mat-elim`（`cong-app` + `+-inv`） | ✅ 已闭合（2026-07-31） |
-| | B5 `layer2/3-condition` | 需 `SpTwoMorphism`/`SpThreeMorphism` 的 condition 字段真实化（交换子加性引理链） | ⏳ 待闭合 |
+| | B5 `layer2/3-condition` | 经 `SpTwoMorphism.condition`/`SpThreeMorphism.condition`（真实化后直接引用） | ✅ 已闭合（2026-07-31） |
 | | SpHom 真实交织条件 | `SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`；`compose-intertwine`（`*mat-assoc` 链）与 `unit-intertwine` 真实闭合；DecursionFunctor 零矩阵态射（idSp/compSp/adjCounit）经 `zeroMat-absorb` 闭合；`D-map-intertwine` 登记为 postulate（依赖 transferMatrix 语义） | ✅ 已闭合（2026-07-31） |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
 | | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
@@ -254,3 +256,4 @@ agda_formalization/
 | v0.5 | 2026-07-31 | **路径 B 闭合路线图立项**（用户决议：签名镜像不构成第二条验证路径，必须完整闭合）。登记 T1/T2/T3 闭合账目（47 个 postulate 块的可闭合项）。T1 首批 3 项闭合中 |
 | v0.6 | 2026-07-31 | **T2 关键基石闭合**：`*mat-assoc`（矩阵乘法结合律，`sumFin` 代数引理链）、`zeroMat-absorb-l/r`；`SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`，`compose-intertwine`/`unit-intertwine` 真实闭合，DecursionFunctor 零矩阵态射交织闭合（`D-map-intertwine` 登记 postulate） |
 | v0.7 | 2026-07-31 | **T2 继续闭合**：B2 `spHorizComp`/`spThreeHorizComp` 具体同伦构造；B5 `layer1-condition` 经 `-mat-elim`（新增 `cong-app`）闭合；`layer2/3-condition` 待 condition 字段真实化 |
+| v0.8 | 2026-07-31 | **T2 condition 真实化**：交换子代数引理库（`commutator`/`neg-add`/`cancel-mid`/`*mat-distrib`/`commutator-add` 等）；`SpTwoMorphism`/`SpThreeMorphism` condition 升级为真实交换子等式，`id/spVertComp/id3/spThreeVertComp` 条件闭合；`layer2/3-condition` 闭合；结合律经 UIP 保持；水平复合 condition 登记 postulate |

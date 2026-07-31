@@ -167,12 +167,7 @@ genSpace-dim-equals-active-layers-count = genSpaceEquiv , card-active-layers
 -- ==================================================================
 
 -- 矩阵运算已具体化于 SpCategory §1.5（_+mat_/_*mat_/_ -mat_/zeroMat/𝟙-matrix，ℤ/3 载体）
-
--- 统一"微分" d_A(H) = A·H - H·A，所有三个主动层共享此结构
--- （对应 Lean: commutator；**T2 闭合**：矩阵乘/减为具体构造）
-commutator : {X Y : SpObj} (H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
-  → Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
-commutator {X} {Y} H = (SpObj.A X *mat H) -mat (H *mat SpObj.A Y)
+-- 统一"微分" commutator 定义于 SpCategory §1.8（此处引用）
 
 -- 层 1（1-态射）条件：交换子为零（对应 Lean: layer1_condition；**T2 闭合**：
 --   由 SpHom 真实交织条件 P·A_Y = A_X·P 经 -mat-elim 直接推导）
@@ -181,18 +176,18 @@ layer1-condition : {X Y : SpObj} (P : SpHom X Y)
 layer1-condition {X} {Y} P = -mat-elim (sym (SpHom.intertwine P))
 
 -- 层 2（2-态射）条件：交换子给出缺陷 Q.P - P.P
--- （对应 Lean: layer2_condition）
-postulate
-  layer2-condition : {X Y : SpObj} {P Q : SpHom X Y} (α : SpTwoMorphism P Q)
-    → commutator {X} {Y} (SpTwoMorphism.homotopy α) ≡ (SpHom.P Q -mat SpHom.P P)
+-- （对应 Lean: layer2_condition；**T2 闭合**：SpTwoMorphism.condition 已是真实等式）
+layer2-condition : {X Y : SpObj} {P Q : SpHom X Y} (α : SpTwoMorphism P Q)
+  → commutator {X} {Y} (SpTwoMorphism.homotopy α) ≡ (SpHom.P Q -mat SpHom.P P)
+layer2-condition α = SpTwoMorphism.condition α
 
 -- 层 3（3-态射）条件：交换子给出二阶缺陷 β.H - α.H
--- （对应 Lean: layer3_condition）
-postulate
-  layer3-condition : {X Y : SpObj} {P Q : SpHom X Y} {α β : SpTwoMorphism P Q}
-    (Ξ : SpThreeMorphism α β)
-    → commutator {X} {Y} (SpThreeMorphism.secondHomotopy Ξ)
-        ≡ (SpTwoMorphism.homotopy β -mat SpTwoMorphism.homotopy α)
+-- （对应 Lean: layer3_condition；**T2 闭合**：SpThreeMorphism.condition 已是真实等式）
+layer3-condition : {X Y : SpObj} {P Q : SpHom X Y} {α β : SpTwoMorphism P Q}
+  (Ξ : SpThreeMorphism α β)
+  → commutator {X} {Y} (SpThreeMorphism.secondHomotopy Ξ)
+      ≡ (SpTwoMorphism.homotopy β -mat SpTwoMorphism.homotopy α)
+layer3-condition Ξ = SpThreeMorphism.condition Ξ
 
 -- ==================================================================
 -- §5 统一 3 定理
