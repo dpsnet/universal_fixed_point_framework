@@ -192,7 +192,7 @@ agda_formalization/
 | | ℤ/3 环律全套 | `+-assoc/comm/id/inv`、`*-assoc/comm/id/zero/distrib`（有限情形枚举） | ✅ 已闭合（2026-07-31） |
 | | B2 condition 字段真实化 | `SpTwoMorphism.condition`/`SpThreeMorphism.condition` 升级为真实交换子等式；`id-two-morphism`/`spVertComp`/`id-three-morphism`/`spThreeVertComp` 条件经 `commutator-add`/`-mat-cancel-mid` 闭合；`layer2/3-condition` 直接引用 | ✅ 已闭合（2026-07-31） |
 | | B2 `spHorizComp`/`spThreeHorizComp` 同伦构造 | 具体同伦构造（`α·P' + Q·α'`，与 Lean 公式一致） | ✅ 已闭合（2026-07-31） |
-| | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（需大规模矩阵代数，同 Lean 侧 70 行证明链） | ⏳ 登记待闭合 |
+| | B2 水平复合 condition | `spHorizComp-condition`/`spThreeHorizComp-condition`（交换子代数引理链：`neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross`，对应 Lean 侧 70 行证明链） | ✅ 已闭合（2026-07-31） |
 | | B3 左三角恒等式（adjUnit/left-triangle） | adjUnit 构造为常函数同态（R-obj step 为恒等）；left-triangle 两边均为零矩阵态射，refl | ✅ 已闭合（2026-07-31） |
 | | B3 右三角恒等式（right-triangle） | 依赖 R-map 的具体构造 | ⏳ 登记待闭合 |
 | | B5 `layer-orthogonality` | ℂ 三元素载体 + 9 情形枚举 | ✅ 已闭合（2026-07-31） |
@@ -259,3 +259,4 @@ agda_formalization/
 | v0.7 | 2026-07-31 | **T2 继续闭合**：B2 `spHorizComp`/`spThreeHorizComp` 具体同伦构造；B5 `layer1-condition` 经 `-mat-elim`（新增 `cong-app`）闭合；`layer2/3-condition` 待 condition 字段真实化 |
 | v0.8 | 2026-07-31 | **T2 condition 真实化**：交换子代数引理库（`commutator`/`neg-add`/`cancel-mid`/`*mat-distrib`/`commutator-add` 等）；`SpTwoMorphism`/`SpThreeMorphism` condition 升级为真实交换子等式，`id/spVertComp/id3/spThreeVertComp` 条件闭合；`layer2/3-condition` 闭合；结合律经 UIP 保持；水平复合 condition 登记 postulate |
 | v0.9 | 2026-07-31 | **T2 继续闭合**：B3 `adjUnit` 构造为常函数同态、`left-triangle` refl 闭合；`right-triangle` 登记待闭合（依赖 R-map） |
+| v0.10 | 2026-07-31 | **T2 收官（结构代数部分）**：B2 水平复合 condition 闭合（`spHorizComp-condition`/`spThreeHorizComp-condition`，交换子代数引理链含 `neg-mul-l/r`/`horiz-cross-scalar`/`*mat-distrib-l/r-minus`/`horiz-cross` + 单侧同余引理）；T2 仅剩 `right-triangle`（依赖 R-map）与 `D-map-intertwine`（依赖 transferMatrix 语义）两项语义构造 |

@@ -67,13 +67,132 @@ spVertComp {X} {Y} {P} {Q} {R} α β = record
   }
 
 -- 水平复合的同伦构造（T2 闭合：与 Lean 公式一致 homotopy = α·P' + Q·α'）
--- 水平复合的 condition（T2 登记待闭合：需大规模矩阵代数，同 Lean 侧 70 行证明链）
-postulate
-  spHorizComp-condition : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
-    (α : SpTwoMorphism P Q) (α' : SpTwoMorphism P' Q')
-    → commutator {X} {Z} ((SpTwoMorphism.homotopy α *mat SpHom.P P')
-                          +mat (SpHom.P Q *mat SpTwoMorphism.homotopy α'))
-        ≡ (SpHom.P (compose Q' Q) -mat SpHom.P (compose P' P))
+-- 水平复合的 condition（T2 闭合：交换子代数引理链，对应 Lean 侧 70 行证明）
+spHorizComp-condition : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
+  (α : SpTwoMorphism P Q) (α' : SpTwoMorphism P' Q')
+  → commutator {X} {Z} ((SpTwoMorphism.homotopy α *mat SpHom.P P')
+                        +mat (SpHom.P Q *mat SpTwoMorphism.homotopy α'))
+      ≡ (SpHom.P (compose Q' Q) -mat SpHom.P (compose P' P))
+spHorizComp-condition {X} {Y} {Z} {P} {Q} {P'} {Q'} α α' = main
+  where
+  hα  = SpTwoMorphism.homotopy α
+  hα' = SpTwoMorphism.homotopy α'
+  PP  = SpHom.P P
+  QP  = SpHom.P Q
+  P'P = SpHom.P P'
+  Q'P = SpHom.P Q'
+  AX  = SpObj.A X
+  AY  = SpObj.A Y
+  AZ  = SpObj.A Z
+
+  -- s1：分配 AX·(H₁+H₂) 与 (H₁+H₂)·AZ
+  s1 : AX *mat (hα *mat P'P +mat QP *mat hα') -mat (hα *mat P'P +mat QP *mat hα') *mat AZ
+     ≡ (AX *mat (hα *mat P'P) +mat AX *mat (QP *mat hα'))
+       -mat ((hα *mat P'P) *mat AZ +mat (QP *mat hα') *mat AZ)
+  s1 = -mat-cong₂ (*mat-distrib-l AX (hα *mat P'P) (QP *mat hα'))
+                  (*mat-distrib-r (hα *mat P'P) (QP *mat hα') AZ)
+
+  -- s2：括号重排（*mat-assoc）
+  s2 : (AX *mat (hα *mat P'P) +mat AX *mat (QP *mat hα'))
+       -mat ((hα *mat P'P) *mat AZ +mat (QP *mat hα') *mat AZ)
+     ≡ ((AX *mat hα) *mat P'P +mat AX *mat (QP *mat hα'))
+       -mat (hα *mat (P'P *mat AZ) +mat (QP *mat hα') *mat AZ)
+  s2 = -mat-cong₂ (cong (λ m → m +mat AX *mat (QP *mat hα')) (sym (*mat-assoc AX hα P'P)))
+                  (cong (λ m → m +mat (QP *mat hα') *mat AZ) (*mat-assoc hα P'P AZ))
+
+  -- s3：差值拆分 (A+C)-(B+D) → (A-B)+(C-D)
+  s3 : ((AX *mat hα) *mat P'P +mat AX *mat (QP *mat hα'))
+       -mat (hα *mat (P'P *mat AZ) +mat (QP *mat hα') *mat AZ)
+     ≡ ((AX *mat hα) *mat P'P -mat hα *mat (P'P *mat AZ))
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+  s3 = sym (mat-rearrange ((AX *mat hα) *mat P'P) (hα *mat (P'P *mat AZ))
+                          (AX *mat (QP *mat hα')) ((QP *mat hα') *mat AZ))
+
+  -- s4a：hα·(P'·AZ) = (hα·AY)·P'（P'.intertwine + assoc）
+  s4a : hα *mat (P'P *mat AZ) ≡ (hα *mat AY) *mat P'P
+  s4a = trans (cong (λ m → hα *mat m) (SpHom.intertwine P'))
+              (sym (*mat-assoc hα AY P'P))
+
+  -- 不动块缩写
+  CB = AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ
+  FB = QP *mat P'P -mat PP *mat P'P
+
+  -- s4：第一块第二项替换
+  s4 : ((AX *mat hα) *mat P'P -mat hα *mat (P'P *mat AZ))
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+     ≡ ((AX *mat hα) *mat P'P -mat (hα *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+  s4 = +mat-cong₁l {C = CB} (-mat-cong₁r {A = (AX *mat hα) *mat P'P} s4a)
+
+  -- s5：合并 (AX·hα)·P' - (hα·AY)·P' = (AX·hα - hα·AY)·P'
+  s5 : ((AX *mat hα) *mat P'P -mat (hα *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+     ≡ ((AX *mat hα -mat hα *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+  s5 = +mat-cong₁l {C = CB} (sym (*mat-distrib-r-minus (AX *mat hα) (hα *mat AY) P'P))
+
+  -- s6：用 α.condition 替换交换子
+  s6 : ((AX *mat hα -mat hα *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+     ≡ ((QP -mat PP) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+  s6 = +mat-cong₁l {C = CB} (cong (λ m → m *mat P'P) (SpTwoMorphism.condition α))
+
+  -- s7：分发 (QP-PP)·P' = QP·P' - PP·P'
+  s7 : ((QP -mat PP) *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+     ≡ (QP *mat P'P -mat PP *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+  s7 = +mat-cong₁l {C = CB} (*mat-distrib-r-minus QP PP P'P)
+
+  -- s8a：AX·(Q·hα') = Q·(AY·hα')（Q.intertwine + assoc）
+  s8a : AX *mat (QP *mat hα') ≡ QP *mat (AY *mat hα')
+  s8a = trans (sym (*mat-assoc AX QP hα'))
+         (trans (cong (λ m → m *mat hα') (sym (SpHom.intertwine Q)))
+                (*mat-assoc QP AY hα'))
+
+  -- s8b：(Q·hα')·AZ = Q·(hα'·AZ)
+  s8b : (QP *mat hα') *mat AZ ≡ QP *mat (hα' *mat AZ)
+  s8b = *mat-assoc QP hα' AZ
+
+  -- s8：第二块替换
+  s8 : (QP *mat P'P -mat PP *mat P'P)
+       +mat (AX *mat (QP *mat hα') -mat (QP *mat hα') *mat AZ)
+     ≡ (QP *mat P'P -mat PP *mat P'P)
+       +mat (QP *mat (AY *mat hα') -mat QP *mat (hα' *mat AZ))
+  s8 = +mat-cong₁r {A = FB} (-mat-cong₂ s8a s8b)
+
+  -- s9：合并 Q·(AY·hα') - Q·(hα'·AZ) = Q·((AY·hα') - (hα'·AZ))
+  s9 : (QP *mat P'P -mat PP *mat P'P)
+       +mat (QP *mat (AY *mat hα') -mat QP *mat (hα' *mat AZ))
+     ≡ (QP *mat P'P -mat PP *mat P'P)
+       +mat QP *mat (AY *mat hα' -mat hα' *mat AZ)
+  s9 = +mat-cong₁r {A = FB} (sym (*mat-distrib-l-minus QP (AY *mat hα') (hα' *mat AZ)))
+
+  -- s10：用 α'.condition 替换交换子
+  s10 : (QP *mat P'P -mat PP *mat P'P)
+        +mat QP *mat (AY *mat hα' -mat hα' *mat AZ)
+      ≡ (QP *mat P'P -mat PP *mat P'P)
+        +mat QP *mat (Q'P -mat P'P)
+  s10 = +mat-cong₁r {A = FB} (cong (λ m → QP *mat m) (SpTwoMorphism.condition α'))
+
+  -- s11：分发 Q·(Q'-P') = Q·Q' - Q·P'
+  s11 : (QP *mat P'P -mat PP *mat P'P)
+        +mat QP *mat (Q'P -mat P'P)
+      ≡ (QP *mat P'P -mat PP *mat P'P)
+        +mat (QP *mat Q'P -mat QP *mat P'P)
+  s11 = +mat-cong₁r {A = FB} (*mat-distrib-l-minus QP Q'P P'P)
+
+  -- s12：中间项消去 → RHS
+  s12 : (QP *mat P'P -mat PP *mat P'P)
+        +mat (QP *mat Q'P -mat QP *mat P'P)
+      ≡ QP *mat Q'P -mat PP *mat P'P
+  s12 = -mat-cancel-mid (PP *mat P'P) (QP *mat P'P) (QP *mat Q'P)
+
+  -- 组装
+  main : commutator {X} {Z} (hα *mat P'P +mat QP *mat hα')
+       ≡ (QP *mat Q'P -mat PP *mat P'P)
+  main = trans s1 (trans s2 (trans s3 (trans s4 (trans s5 (trans s6 (trans s7 (trans s8 (trans s9 (trans s10 (trans s11 s12))))))))))
 
 spHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
   → SpTwoMorphism P Q → SpTwoMorphism P' Q' → SpTwoMorphism (compose P' P) (compose Q' Q)
@@ -158,14 +277,142 @@ spThreeVertComp {X} {Y} {P} {Q} {α} {β} {γ} Ξ Τ = record
   }
 
 -- 水平复合（3-态射）：第二同伦构造（T2 闭合，与 Lean 公式一致
---   secondHomotopy = Ξ·P' + Q·Ξ'）；condition 登记待闭合
-postulate
-  spThreeHorizComp-condition : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
-    {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
-    (Ξ : SpThreeMorphism α β) (Ξ' : SpThreeMorphism α' β')
-    → commutator {X} {Z} ((SpThreeMorphism.secondHomotopy Ξ *mat SpHom.P P')
-                          +mat (SpHom.P Q *mat SpThreeMorphism.secondHomotopy Ξ'))
-        ≡ (SpTwoMorphism.homotopy (spHorizComp β β') -mat SpTwoMorphism.homotopy (spHorizComp α α'))
+--   secondHomotopy = Ξ·P' + Q·Ξ'）；condition（T2 闭合：平行于 spHorizComp-condition 的链）
+spThreeHorizComp-condition : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
+  {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
+  (Ξ : SpThreeMorphism α β) (Ξ' : SpThreeMorphism α' β')
+  → commutator {X} {Z} ((SpThreeMorphism.secondHomotopy Ξ *mat SpHom.P P')
+                        +mat (SpHom.P Q *mat SpThreeMorphism.secondHomotopy Ξ'))
+      ≡ (SpTwoMorphism.homotopy (spHorizComp β β') -mat SpTwoMorphism.homotopy (spHorizComp α α'))
+spThreeHorizComp-condition {X} {Y} {Z} {P} {Q} {P'} {Q'} {α} {β} {α'} {β'} Ξ Ξ' = main
+  where
+  KΞ  = SpThreeMorphism.secondHomotopy Ξ
+  KΞ' = SpThreeMorphism.secondHomotopy Ξ'
+  αh  = SpTwoMorphism.homotopy α
+  βh  = SpTwoMorphism.homotopy β
+  α'h = SpTwoMorphism.homotopy α'
+  β'h = SpTwoMorphism.homotopy β'
+  PP  = SpHom.P P
+  QP  = SpHom.P Q
+  P'P = SpHom.P P'
+  Q'P = SpHom.P Q'
+  AX  = SpObj.A X
+  AY  = SpObj.A Y
+  AZ  = SpObj.A Z
+
+  -- t1：分配
+  t1 : AX *mat (KΞ *mat P'P +mat QP *mat KΞ') -mat (KΞ *mat P'P +mat QP *mat KΞ') *mat AZ
+     ≡ (AX *mat (KΞ *mat P'P) +mat AX *mat (QP *mat KΞ'))
+       -mat ((KΞ *mat P'P) *mat AZ +mat (QP *mat KΞ') *mat AZ)
+  t1 = -mat-cong₂ (*mat-distrib-l AX (KΞ *mat P'P) (QP *mat KΞ'))
+                  (*mat-distrib-r (KΞ *mat P'P) (QP *mat KΞ') AZ)
+
+  -- t2：括号重排
+  t2 : (AX *mat (KΞ *mat P'P) +mat AX *mat (QP *mat KΞ'))
+       -mat ((KΞ *mat P'P) *mat AZ +mat (QP *mat KΞ') *mat AZ)
+     ≡ ((AX *mat KΞ) *mat P'P +mat AX *mat (QP *mat KΞ'))
+       -mat (KΞ *mat (P'P *mat AZ) +mat (QP *mat KΞ') *mat AZ)
+  t2 = -mat-cong₂ (cong (λ m → m +mat AX *mat (QP *mat KΞ')) (sym (*mat-assoc AX KΞ P'P)))
+                  (cong (λ m → m +mat (QP *mat KΞ') *mat AZ) (*mat-assoc KΞ P'P AZ))
+
+  -- t3：差值拆分
+  t3 : ((AX *mat KΞ) *mat P'P +mat AX *mat (QP *mat KΞ'))
+       -mat (KΞ *mat (P'P *mat AZ) +mat (QP *mat KΞ') *mat AZ)
+     ≡ ((AX *mat KΞ) *mat P'P -mat KΞ *mat (P'P *mat AZ))
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+  t3 = sym (mat-rearrange ((AX *mat KΞ) *mat P'P) (KΞ *mat (P'P *mat AZ))
+                          (AX *mat (QP *mat KΞ')) ((QP *mat KΞ') *mat AZ))
+
+  -- t4a：KΞ·(P'·AZ) = (KΞ·AY)·P'
+  t4a : KΞ *mat (P'P *mat AZ) ≡ (KΞ *mat AY) *mat P'P
+  t4a = trans (cong (λ m → KΞ *mat m) (SpHom.intertwine P'))
+              (sym (*mat-assoc KΞ AY P'P))
+
+  -- 不动块缩写
+  TCB = AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ
+  TFB = βh *mat P'P -mat αh *mat P'P
+
+  -- t4：第一块第二项替换
+  t4 : ((AX *mat KΞ) *mat P'P -mat KΞ *mat (P'P *mat AZ))
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+     ≡ ((AX *mat KΞ) *mat P'P -mat (KΞ *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+  t4 = +mat-cong₁l {C = TCB} (-mat-cong₁r {A = (AX *mat KΞ) *mat P'P} t4a)
+
+  -- t5：合并第一块交换子
+  t5 : ((AX *mat KΞ) *mat P'P -mat (KΞ *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+     ≡ ((AX *mat KΞ -mat KΞ *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+  t5 = +mat-cong₁l {C = TCB} (sym (*mat-distrib-r-minus (AX *mat KΞ) (KΞ *mat AY) P'P))
+
+  -- t6：用 Ξ.condition 替换交换子
+  t6 : ((AX *mat KΞ -mat KΞ *mat AY) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+     ≡ ((βh -mat αh) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+  t6 = +mat-cong₁l {C = TCB} (cong (λ m → m *mat P'P) (SpThreeMorphism.condition Ξ))
+
+  -- t7：分发 (βh-αh)·P' = βh·P' - αh·P'
+  t7 : ((βh -mat αh) *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+     ≡ (βh *mat P'P -mat αh *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+  t7 = +mat-cong₁l {C = TCB} (*mat-distrib-r-minus βh αh P'P)
+
+  -- t8a：AX·(Q·KΞ') = Q·(AY·KΞ')
+  t8a : AX *mat (QP *mat KΞ') ≡ QP *mat (AY *mat KΞ')
+  t8a = trans (sym (*mat-assoc AX QP KΞ'))
+         (trans (cong (λ m → m *mat KΞ') (sym (SpHom.intertwine Q)))
+                (*mat-assoc QP AY KΞ'))
+
+  -- t8b：(Q·KΞ')·AZ = Q·(KΞ'·AZ)
+  t8b : (QP *mat KΞ') *mat AZ ≡ QP *mat (KΞ' *mat AZ)
+  t8b = *mat-assoc QP KΞ' AZ
+
+  -- t8：第二块替换
+  t8 : (βh *mat P'P -mat αh *mat P'P)
+       +mat (AX *mat (QP *mat KΞ') -mat (QP *mat KΞ') *mat AZ)
+     ≡ (βh *mat P'P -mat αh *mat P'P)
+       +mat (QP *mat (AY *mat KΞ') -mat QP *mat (KΞ' *mat AZ))
+  t8 = +mat-cong₁r {A = TFB} (-mat-cong₂ t8a t8b)
+
+  -- t9：合并第二块交换子
+  t9 : (βh *mat P'P -mat αh *mat P'P)
+       +mat (QP *mat (AY *mat KΞ') -mat QP *mat (KΞ' *mat AZ))
+     ≡ (βh *mat P'P -mat αh *mat P'P)
+       +mat QP *mat (AY *mat KΞ' -mat KΞ' *mat AZ)
+  t9 = +mat-cong₁r {A = TFB} (sym (*mat-distrib-l-minus QP (AY *mat KΞ') (KΞ' *mat AZ)))
+
+  -- t10：用 Ξ'.condition 替换交换子
+  t10 : (βh *mat P'P -mat αh *mat P'P)
+        +mat QP *mat (AY *mat KΞ' -mat KΞ' *mat AZ)
+      ≡ (βh *mat P'P -mat αh *mat P'P)
+        +mat QP *mat (β'h -mat α'h)
+  t10 = +mat-cong₁r {A = TFB} (cong (λ m → QP *mat m) (SpThreeMorphism.condition Ξ'))
+
+  -- t11：分发 Q·(β'-α') = Q·β' - Q·α'
+  t11 : (βh *mat P'P -mat αh *mat P'P)
+        +mat QP *mat (β'h -mat α'h)
+      ≡ (βh *mat P'P -mat αh *mat P'P)
+        +mat (QP *mat β'h -mat QP *mat α'h)
+  t11 = +mat-cong₁r {A = TFB} (*mat-distrib-l-minus QP β'h α'h)
+
+  -- t12：重排为 (β·P' + Q·β') - (α·P' + Q·α')
+  t12 : (βh *mat P'P -mat αh *mat P'P)
+        +mat (QP *mat β'h -mat QP *mat α'h)
+      ≡ (βh *mat P'P +mat QP *mat β'h) -mat (αh *mat P'P +mat QP *mat α'h)
+  t12 = mat-rearrange (βh *mat P'P) (αh *mat P'P) (QP *mat β'h) (QP *mat α'h)
+
+  -- t13：展开 spHorizComp 同伦（定义上相等）
+  t13 : (βh *mat P'P +mat QP *mat β'h) -mat (αh *mat P'P +mat QP *mat α'h)
+      ≡ (SpTwoMorphism.homotopy (spHorizComp β β') -mat SpTwoMorphism.homotopy (spHorizComp α α'))
+  t13 = refl
+
+  -- 组装
+  main : commutator {X} {Z} (KΞ *mat P'P +mat QP *mat KΞ')
+       ≡ (SpTwoMorphism.homotopy (spHorizComp β β') -mat SpTwoMorphism.homotopy (spHorizComp α α'))
+  main = trans t1 (trans t2 (trans t3 (trans t4 (trans t5 (trans t6 (trans t7 (trans t8 (trans t9 (trans t10 (trans t11 (trans t12 t13)))))))))))
 
 spThreeHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
   → SpThreeMorphism α β → SpThreeMorphism α' β' → SpThreeMorphism (spHorizComp α α') (spHorizComp β β')

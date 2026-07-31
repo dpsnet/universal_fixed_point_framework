@@ -81,6 +81,7 @@ data ℂ : Set where
   c2 : ℂ  -- 2
 
 -- ℤ/3 加法（全部 9 种情形）
+infixl 30 _+_
 _+_ : ℂ → ℂ → ℂ
 c0 + x   = x
 c1 + c0  = c1
@@ -91,6 +92,7 @@ c2 + c1  = c0
 c2 + c2  = c1
 
 -- ℤ/3 乘法（全部 9 种情形）
+infixl 40 _*_
 _*_ : ℂ → ℂ → ℂ
 c0 * _   = c0
 c1 * x   = x
@@ -254,10 +256,12 @@ zeroMat : {nX nY : ℕ} → Fin nX → Fin nY → ℂ
 zeroMat _ _ = c0
 
 -- 矩阵加法（逐点）
+infixl 30 _+mat_
 _+mat_ : {nX nY : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ)
 (M +mat N) i j = M i j + N i j
 
 -- 矩阵减法（逐点，经取负）
+infixl 30 _-mat_
 _-mat_ : {nX nY : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ)
 (M -mat N) i j = M i j + negℂ (N i j)
 
@@ -267,6 +271,7 @@ sumFin {zero}   f = c0
 sumFin {suc n}  f = f zero + sumFin {n} (λ i → f (suc i))
 
 -- 矩阵乘法
+infixl 40 _*mat_
 _*mat_ : {nX nY nZ : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nY → Fin nZ → ℂ) → (Fin nX → Fin nZ → ℂ)
 (M *mat N) i k = sumFin (λ j → M i j * N j k)
 
@@ -455,6 +460,45 @@ neg-add c2 c0 = refl
 neg-add c2 c1 = refl
 neg-add c2 c2 = refl
 
+-- 取负对乘法的分配（左）：neg(x·y) = neg(x)·y（9 情形）
+neg-mul-l : (x y : ℂ) → negℂ (x * y) ≡ negℂ x * y
+neg-mul-l c0 c0 = refl
+neg-mul-l c0 c1 = refl
+neg-mul-l c0 c2 = refl
+neg-mul-l c1 c0 = refl
+neg-mul-l c1 c1 = refl
+neg-mul-l c1 c2 = refl
+neg-mul-l c2 c0 = refl
+neg-mul-l c2 c1 = refl
+neg-mul-l c2 c2 = refl
+
+-- 取负对乘法的分配（右）：neg(x·y) = x·neg(y)（9 情形）
+neg-mul-r : (x y : ℂ) → negℂ (x * y) ≡ x * negℂ y
+neg-mul-r c0 c0 = refl
+neg-mul-r c0 c1 = refl
+neg-mul-r c0 c2 = refl
+neg-mul-r c1 c0 = refl
+neg-mul-r c1 c1 = refl
+neg-mul-r c1 c2 = refl
+neg-mul-r c2 c0 = refl
+neg-mul-r c2 c1 = refl
+neg-mul-r c2 c2 = refl
+
+-- 逆元的交换版本：neg(x) + x = 0
+neg-inv : (x : ℂ) → negℂ x + x ≡ c0
+neg-inv x = trans (+-comm (negℂ x) x) (+-inv x)
+
+-- 标量水平交叉恒等式：q·(q'-p') + (q-p)·p' = q·q' - p·p'
+horiz-cross-scalar : (p q p' q' : ℂ) → q * (q' + negℂ p') + (q + negℂ p) * p' ≡ q * q' + negℂ (p * p')
+horiz-cross-scalar p q p' q' =
+  trans (cong₂ _+_ (*-distrib-l q q' (negℂ p')) (*-distrib-r q (negℂ p) p'))
+  (trans (+-assoc (q * q') (q * negℂ p') (q * p' + negℂ p * p'))
+  (trans (cong (λ x → (q * q') + x) (sym (+-assoc (q * negℂ p') (q * p') (negℂ p * p'))))
+  (trans (cong (λ x → (q * q') + ((x + (q * p')) + (negℂ p * p'))) (sym (neg-mul-r q p')))
+  (trans (cong (λ x → (q * q') + (x + (negℂ p * p'))) (neg-inv (q * p')))
+  (trans (cong (λ x → (q * q') + x) (+-id-l (negℂ p * p')))
+         (cong (λ x → (q * q') + x) (sym (neg-mul-l p p'))))))))
+
 -- 减法项重排：(a - b) + (c - d) = (a + c) - (b + d)
 +neg-rearrange : (a b c d : ℂ) → (a + negℂ b) + (c + negℂ d) ≡ (a + c) + negℂ (b + d)
 +neg-rearrange a b c d =
@@ -481,10 +525,30 @@ cancel-mid p q r =
 +mat-cong₂ {nX} {nY} e1 e2 = funext (λ i → funext (λ j →
   cong₂ _+_ (cong-app (cong-app e1 i) j) (cong-app (cong-app e2 i) j)))
 
+-- 矩阵加法同余（第一参数）
++mat-cong₁l : {nX nY : ℕ} {A B C : Fin nX → Fin nY → ℂ} → A ≡ B → A +mat C ≡ B +mat C
++mat-cong₁l {nX} {nY} {A} {B} {C} e = funext (λ i → funext (λ j →
+  cong (λ x → x + C i j) (cong-app (cong-app e i) j)))
+
+-- 矩阵加法同余（第二参数）
++mat-cong₁r : {nX nY : ℕ} {A C D : Fin nX → Fin nY → ℂ} → C ≡ D → A +mat C ≡ A +mat D
++mat-cong₁r {nX} {nY} {A} {C} {D} e = funext (λ i → funext (λ j →
+  cong (λ x → A i j + x) (cong-app (cong-app e i) j)))
+
 -- 矩阵减法同余（双参数）
 -mat-cong₂ : {nX nY : ℕ} {A B C D : Fin nX → Fin nY → ℂ} → A ≡ B → C ≡ D → A -mat C ≡ B -mat D
 -mat-cong₂ {nX} {nY} e1 e2 = funext (λ i → funext (λ j →
   cong₂ _+_ (cong-app (cong-app e1 i) j) (cong negℂ (cong-app (cong-app e2 i) j))))
+
+-- 矩阵减法同余（第一参数）
+-mat-cong₁l : {nX nY : ℕ} {A B C : Fin nX → Fin nY → ℂ} → A ≡ B → A -mat C ≡ B -mat C
+-mat-cong₁l {nX} {nY} {A} {B} {C} e = funext (λ i → funext (λ j →
+  cong (λ x → x + negℂ (C i j)) (cong-app (cong-app e i) j)))
+
+-- 矩阵减法同余（第二参数）
+-mat-cong₁r : {nX nY : ℕ} {A C D : Fin nX → Fin nY → ℂ} → C ≡ D → A -mat C ≡ A -mat D
+-mat-cong₁r {nX} {nY} {A} {C} {D} e = funext (λ i → funext (λ j →
+  cong (λ x → A i j + negℂ x) (cong-app (cong-app e i) j)))
 
 -- 矩阵自身相减为零
 -mat-self : {nX nY : ℕ} (M : Fin nX → Fin nY → ℂ) → M -mat M ≡ zeroMat
@@ -526,6 +590,43 @@ commutator-add {X} {Y} H1 H2 =
   trans (-mat-cong₂ (*mat-distrib-l (SpObj.A X) H1 H2) (*mat-distrib-r H1 H2 (SpObj.A Y)))
         (sym (mat-rearrange (SpObj.A X *mat H1) (H1 *mat SpObj.A Y)
                             (SpObj.A X *mat H2) (H2 *mat SpObj.A Y)))
+
+-- 矩阵加法交换律
++mat-comm : {nX nY : ℕ} (M N : Fin nX → Fin nY → ℂ) → M +mat N ≡ N +mat M
++mat-comm M N = funext (λ i → funext (λ j → +-comm (M i j) (N i j)))
+
+-- 求和的取负可提出：Σ neg(f) = neg(Σf)
+neg-sumFin : {n : ℕ} (f : Fin n → ℂ) → sumFin {n} (λ k → negℂ (f k)) ≡ negℂ (sumFin {n} f)
+neg-sumFin {zero}   f = refl
+neg-sumFin {suc m}  f =
+  trans (cong₂ _+_ refl (neg-sumFin {m} (λ k → f (suc k))))
+        (sym (neg-add (f zero) (sumFin {m} (λ k → f (suc k)))))
+
+-- 矩阵乘法对减法左分发：M·(N₁-N₂) = M·N₁ - M·N₂
+*mat-distrib-l-minus : {nX nY nZ : ℕ} (M : Fin nX → Fin nY → ℂ) (N1 N2 : Fin nY → Fin nZ → ℂ)
+  → M *mat (N1 -mat N2) ≡ (M *mat N1) -mat (M *mat N2)
+*mat-distrib-l-minus {nX} {nY} {nZ} M N1 N2 = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-distrib-l (M i j) (N1 j k) (negℂ (N2 j k))))
+        (trans (sumFin-+ {nY} (λ j → M i j * N1 j k) (λ j → M i j * negℂ (N2 j k)))
+               (cong₂ _+_ refl (trans (sumFin-cong {nY} (λ j → sym (neg-mul-r (M i j) (N2 j k))))
+                                      (neg-sumFin {nY} (λ j → M i j * N2 j k)))))))
+
+-- 矩阵乘法对减法右分发：(N₁-N₂)·M = N₁·M - N₂·M
+*mat-distrib-r-minus : {nX nY nZ : ℕ} (N1 N2 : Fin nX → Fin nY → ℂ) (M : Fin nY → Fin nZ → ℂ)
+  → (N1 -mat N2) *mat M ≡ (N1 *mat M) -mat (N2 *mat M)
+*mat-distrib-r-minus {nX} {nY} {nZ} N1 N2 M = funext (λ i → funext (λ k →
+  trans (sumFin-cong {nY} (λ j → *-distrib-r (N1 i j) (negℂ (N2 i j)) (M j k)))
+        (trans (sumFin-+ {nY} (λ j → N1 i j * M j k) (λ j → negℂ (N2 i j) * M j k))
+               (cong₂ _+_ refl (trans (sumFin-cong {nY} (λ j → sym (neg-mul-l (N2 i j) (M j k))))
+                                      (neg-sumFin {nY} (λ j → N2 i j * M j k)))))))
+
+-- 矩阵水平交叉恒等式：Q·(Q'-P') + (Q-P)·P' = Q·Q' - P·P'
+horiz-cross : {nX nY nZ : ℕ} (P Q : Fin nX → Fin nY → ℂ) (P' Q' : Fin nY → Fin nZ → ℂ)
+  → Q *mat (Q' -mat P') +mat (Q -mat P) *mat P' ≡ (Q *mat Q') -mat (P *mat P')
+horiz-cross P Q P' Q' =
+  trans (+mat-cong₂ (*mat-distrib-l-minus Q Q' P') (*mat-distrib-r-minus Q P P'))
+        (trans (+mat-comm ((Q *mat Q') -mat (Q *mat P')) ((Q *mat P') -mat (P *mat P')))
+               (-mat-cancel-mid (P *mat P') (Q *mat P') (Q *mat Q')))
 
 -- ==================================================================
 -- §2 𝐒𝐩 范畴实例 — 单位态射与复合
