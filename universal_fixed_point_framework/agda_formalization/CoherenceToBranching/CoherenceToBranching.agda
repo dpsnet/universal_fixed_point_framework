@@ -33,6 +33,11 @@ open import DHStructural.DHStructuralAnalysis
 sym : {A : Set} {x y : A} → x ≡ y → y ≡ x
 sym refl = refl
 
+-- 加法右端换 suc（T1 闭合引理）
++ℕ-suc : (n m : ℕ) → n +ℕ (suc m) ≡ suc (n +ℕ m)
++ℕ-suc zero    m = refl
++ℕ-suc (suc n) m = cong suc (+ℕ-suc n m)
+
 record _↔_ (A B : Set) : Set where
   constructor mkIff
   field
@@ -46,6 +51,15 @@ _∸_ : ℕ → ℕ → ℕ
 zero  ∸ m     = zero
 suc n ∸ zero  = suc n
 suc n ∸ suc m = n ∸ m
+
+-- 减零恒等（T1 闭合引理）
+∸-zero : (n : ℕ) → n ∸ zero ≡ n
+∸-zero zero    = refl
+∸-zero (suc n) = refl
+
+-- 减一：suc n ∸ 1 = n（T1 闭合引理）
+∸-1 : (n : ℕ) → suc n ∸ 1 ≡ n
+∸-1 n = ∸-zero n
 
 infix 4 _≤ℕ_
 data _≤ℕ_ : ℕ → ℕ → Set where
@@ -107,9 +121,85 @@ active-layers-pairwise-distinct = (λ ()) , (λ ()) , (λ ())
 -- ==================================================================
 
 -- 层对类型：主动生成层 × 总层（定义于 SpCategory，对应 Lean: def LayerPair）
--- 层对基数 = 15（Lean 以 native_decide 证明；Agda 以等价声明）
-postulate
-  layerPair-card-15 : LayerPair ≃ Fin 15
+-- 层对基数 = 15（T1 闭合：显式双射 LayerPair ↔ Fin 15，15 项枚举）
+
+-- 层对 → Fin 15（按 (主动层, 总层) 顺序编码：先 first 5 项，再 second，再 third）
+toFin15 : LayerPair → Fin 15
+toFin15 (first  , obj)   = zero
+toFin15 (first  , one)   = suc zero
+toFin15 (first  , two)   = suc (suc zero)
+toFin15 (first  , three) = suc (suc (suc zero))
+toFin15 (first  , four)  = suc (suc (suc (suc zero)))
+toFin15 (second , obj)   = suc (suc (suc (suc (suc zero))))
+toFin15 (second , one)   = suc (suc (suc (suc (suc (suc zero)))))
+toFin15 (second , two)   = suc (suc (suc (suc (suc (suc (suc zero))))))
+toFin15 (second , three) = suc (suc (suc (suc (suc (suc (suc (suc zero)))))))
+toFin15 (second , four)  = suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))
+toFin15 (third  , obj)   = suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))
+toFin15 (third  , one)   = suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))
+toFin15 (third  , two)   = suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))
+toFin15 (third  , three) = suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))))
+toFin15 (third  , four)  = suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))))
+
+-- Fin 15 → 层对（逆映射，15 项枚举）
+fromFin15 : Fin 15 → LayerPair
+fromFin15 zero                                          = first  , obj
+fromFin15 (suc zero)                                    = first  , one
+fromFin15 (suc (suc zero))                              = first  , two
+fromFin15 (suc (suc (suc zero)))                        = first  , three
+fromFin15 (suc (suc (suc (suc zero))))                  = first  , four
+fromFin15 (suc (suc (suc (suc (suc zero)))))            = second , obj
+fromFin15 (suc (suc (suc (suc (suc (suc zero))))))      = second , one
+fromFin15 (suc (suc (suc (suc (suc (suc (suc zero))))))) = second , two
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))) = second , three
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))) = second , four
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))) = third , obj
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))) = third , one
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))) = third , two
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))))) = third , three
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))))) = third , four
+fromFin15 (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc ())))))))))))))))
+
+-- 往返恒等：toFin15 ∘ fromFin15 = id（15 项 + 1 项不可能情形）
+toFin15-from : (f : Fin 15) → toFin15 (fromFin15 f) ≡ f
+toFin15-from zero                                    = refl
+toFin15-from (suc zero)                              = refl
+toFin15-from (suc (suc zero))                        = refl
+toFin15-from (suc (suc (suc zero)))                  = refl
+toFin15-from (suc (suc (suc (suc zero))))            = refl
+toFin15-from (suc (suc (suc (suc (suc zero)))))      = refl
+toFin15-from (suc (suc (suc (suc (suc (suc zero)))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc zero))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero))))))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc zero)))))))))))))) = refl
+toFin15-from (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc (suc ())))))))))))))))
+
+-- 往返恒等：fromFin15 ∘ toFin15 = id（15 项）
+fromFin15-to : (p : LayerPair) → fromFin15 (toFin15 p) ≡ p
+fromFin15-to (first  , obj)   = refl
+fromFin15-to (first  , one)   = refl
+fromFin15-to (first  , two)   = refl
+fromFin15-to (first  , three) = refl
+fromFin15-to (first  , four)  = refl
+fromFin15-to (second , obj)   = refl
+fromFin15-to (second , one)   = refl
+fromFin15-to (second , two)   = refl
+fromFin15-to (second , three) = refl
+fromFin15-to (second , four)  = refl
+fromFin15-to (third  , obj)   = refl
+fromFin15-to (third  , one)   = refl
+fromFin15-to (third  , two)   = refl
+fromFin15-to (third  , three) = refl
+fromFin15-to (third  , four)  = refl
+
+-- **T1 闭合**：层对基数 = 15（对应 Lean: layerPair_card，native_decide）
+layerPair-card-15 : LayerPair ≃ Fin 15
+layerPair-card-15 = mkEquiv toFin15 fromFin15 toFin15-from fromFin15-to
 
 -- 层对计数与 BranchCounting.B 一致（对应 Lean: layerPair_card_eq_B）
 layerPair-card-eq-B : LayerPair ≃ Fin B
@@ -262,10 +352,21 @@ spacetime-dimension-split = refl
 
 -- (2) 一般计数恒等式与时空维数 = 范畴阶数
 -- （对应 Lean: dimension_counting_eq_two_mul / spacetime_dim_eq_category_order；
---   Lean 以 omega 证明，Agda 声明为公理）
-postulate
-  dimension-counting-eq-two-mul : (n : ℕ) → 1 ≤ℕ n → (1 +ℕ (n ∸ 1)) +ℕ ((n +ℕ 1) ∸ 1) ≡ 2 *ℕ n
-  spacetime-dim-eq-category-order : (n : ℕ) → 1 ≤ℕ n → 1 +ℕ (n ∸ 1) ≡ n
+--   **T1 闭合**：ℕ 归纳直接证明，替代 Lean 的 omega 自动化）
+
+-- 1 + (n-1) + ((n+1)-1) = 2n（n ≥ 1）
+dimension-counting-eq-two-mul : (n : ℕ) → 1 ≤ℕ n → (1 +ℕ (n ∸ 1)) +ℕ ((n +ℕ 1) ∸ 1) ≡ 2 *ℕ n
+dimension-counting-eq-two-mul zero    ()
+dimension-counting-eq-two-mul (suc m) hn =
+  trans
+    (trans (cong (λ x → x +ℕ ((suc m +ℕ 1) ∸ 1)) (cong suc (∸-1 m)))
+           (cong (λ x → suc m +ℕ x) (∸-1 (m +ℕ 1))))
+    (trans (cong (λ x → suc m +ℕ x) (+ℕ-suc m zero)) refl)
+
+-- 1 + (n-1) = n（n ≥ 1）
+spacetime-dim-eq-category-order : (n : ℕ) → 1 ≤ℕ n → 1 +ℕ (n ∸ 1) ≡ n
+spacetime-dim-eq-category-order zero    ()
+spacetime-dim-eq-category-order (suc m) hn = cong suc (∸-1 m)
 
 -- (3) 唯一性：2n = 8 ⇒ n = 4（对应 Lean: category_order_unique；omega）
 postulate

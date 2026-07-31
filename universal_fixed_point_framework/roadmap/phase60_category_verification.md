@@ -172,6 +172,36 @@ agda_formalization/
 | B7 | `layers-distinct`（≃ Fin 5）、`branchIndex-dH-unique`（双向）、层独立性、维数分解 | ℝ 分析、`layerPair-card-15` |
 | B8 | `physicalIFS-n ≡ 3`（refl） | 收缩率正性/排序/Moran 方程 |
 
+### 路径 B 闭合路线图（2026-07-31 立项）
+
+**立场**（2026-07-31 用户决议）：签名镜像不构成第二条验证路径。路径 B 必须**完整闭合**——Agda 侧以独立证明覆盖全部定理，含实分析层（T3）。未闭合前，每条 postulate 均为登记在案的开放项。
+
+**闭合账目**（47 个 postulate 块中，定理形状的可闭合项）：
+
+| 层级 | 待闭合项 | 所需机制 | 状态 |
+|:-:|:---------|:---------|:----:|
+| **T1 纯 ℕ/组合** | `layerPair-card-15`（B7） | 显式双射枚举（15 项） | ✅ 已闭合（2026-07-31） |
+| | `spacetime-dim-eq-category-order`（B7） | ℕ 归纳（∸-zero/∸-1） | ✅ 已闭合（2026-07-31） |
+| | `dimension-counting-eq-two-mul`（B7） | ℕ 归纳（+ℕ-suc/∸-1） | ✅ 已闭合（2026-07-31） |
+| | `category-order-unique`（B7） | ℕ 算术（2*ℕ-suc 剥层链） | ⏳ 待闭合 |
+| | `log2`/`log2-pow2`（B5/B6） | 具体定义 + 终止机制（需 well-founded 或 stdlib） | ⏳ 待闭合 |
+| **T2 结构增强** | B1 `compose`/`𝟙-matrix`/`unit-intertwine` | 具体矩阵构造 + 真实交织条件 | ⏳ 待闭合 |
+| | B2 `spHorizComp`/`spThreeHorizComp` | 矩阵复合构造 | ⏳ 待闭合 |
+| | B3 三角恒等式（adjUnit/adjCounit） | 具体 D/R 函子 + 自然变换构造 | ⏳ 待闭合 |
+| | B5 `layer-orthogonality`/层条件 | ℂ 载体扩充（≥3 互异元素）+ 真实代数条件 | ⏳ 待闭合 |
+| **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
+| | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
+| | B7 静默分离（`silence-separation/margin`） | exp 不等式 | ⏳ 待闭合 |
+| | B8 收缩率排序（9 条） | rpow 分析 | ⏳ 待闭合 |
+
+**推进策略**：
+1. **T1**：当前最小基础设施内闭合（ℕ/Fin/归纳），需自建小型算术引理库（`+ℕ-suc`、suc 剥层等）。
+2. **T2**：重构 B1-B3 占位为具体构造；ℂ 载体扩充为至少 3 个互异元素。
+3. **T3**：需实数/分析基础。Agda stdlib 无 exp/log/rpow——需自建（或引入 cubical 实数库），工程量级等同 Lean 侧 Mathlib 分析库，为持续主线。
+4. 每条闭合项完成后在 `Everything.agda` 整体编译验证并更新本账目。
+
+**已排除/不需闭合**：ℝ 公理体系本身（B4 §0）是基础假设（对应 Lean/Mathlib 的 ℝ 公理），非"未证明"，不计入闭合账目；B1/B2 记录条件占位（refl 型等式）随 T2 一并真实化。
+
 ---
 
 ## 路径 A：Lean 零 `sorry` 持续闭合（长期）
@@ -214,3 +244,4 @@ agda_formalization/
 | v0.2 | 2026-07-30 | **路径 C 完成**。`verify/` 模块 8/8 PASS，注册 `run_all_tests.py`。文档更新状态为 ✅ |
 | v0.3 | 2026-07-30 | **向外推形式化完成**。`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`。Lean 模块数：74 → 74（内容扩展，未新增模块）。文档更新为 ✅ |
 | v0.4 | 2026-07-31 | **路径 B 完成**。`agda_formalization/` 核心 8 模块（B1-B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过。双实现一致性要点记录于 §路径 B 状态 |
+| v0.5 | 2026-07-31 | **路径 B 闭合路线图立项**（用户决议：签名镜像不构成第二条验证路径，必须完整闭合）。登记 T1/T2/T3 闭合账目（47 个 postulate 块的可闭合项）。T1 首批 3 项闭合中 |
