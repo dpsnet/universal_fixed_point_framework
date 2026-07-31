@@ -203,6 +203,7 @@ agda_formalization/
 | | SpHom 真实交织条件 | `SpHom.intertwine` 升级为真实等式 `P·A_Y = A_X·P`；`compose-intertwine`（`*mat-assoc` 链）与 `unit-intertwine` 真实闭合；DecursionFunctor 零矩阵态射（idSp/compSp/adjCounit）经 `zeroMat-absorb` 闭合 | ✅ 已闭合（2026-07-31） |
 | | B3 `transferMatrix` 具体化 | 对应 Lean `fun i j => if f i = j then 1 else 0`；`transferMatrix-comp`（反变复合，`sumFin-pick-dep-l` + `if-mul-lemma`）闭合 | ✅ 已闭合（2026-07-31） |
 | | B3 `D-map-intertwine` | `transferMatrix-comp` + `RecHom.comm`（对应 Lean `DFunctor_map`） | ✅ 已闭合（2026-07-31） |
+| | B3 `transferMatrix-inj`（D 忠实性） | `Fin-eq?-refl/true` + `if-c1` + 逐点单射（对应 Lean `transferMatrix_injective`） | ✅ 已闭合（2026-07-31） |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ⏳ 待闭合 |
 | | B4 Moran 方程族（`moran-solution-iff` 等） | exp/log 场论 | ⏳ 待闭合 |
 | | B7 静默分离（`silence-separation/margin`） | exp 不等式 | ⏳ 待闭合 |
@@ -267,3 +268,4 @@ agda_formalization/
 | v0.11 | 2026-07-31 | **T2 语义构造闭合**：`transferMatrix` 具体化（对应 Lean `fun i j => if f i = j then 1 else 0`）+ `transferMatrix-comp` 闭合；`D-map-intertwine` 经 `transferMatrix-comp` + `RecHom.comm` 闭合（对应 Lean `DFunctor_map`）；`right-triangle` 保持登记（Lean 侧 R-map 恒等隐式要求 nS = nT，Agda 泛化下不可构造，维度约束差异） |
 | v0.12 | 2026-07-31 | **论文推导审计**：校验显示 Lean 侧 `DAdjR` 恒等/单位矩阵构造隐含 nS=nT + S.A=单位矩阵两个未声明条件，非论文构造的忠实实现；论文层已用显式构造修复原文 Freyd 循环（构造 C2.2/R11，演化映射 e^{-A_E}，仅 D 的像子范畴上严格，定理 2.4.5）；`right-triangle` 对齐论文 R11 登记为 T3 依赖项（有限维化需 exp）；两侧统一标注原型限制 |
 | v0.13 | 2026-07-31 | **双路线推进**：(1) Lean 侧 `lake env lean` 验证 DAdjR 编译失败（nS=nT/step=id/S.A=单位阵三处），Adjunction.lean 加审计注释，正确路径指向 RAP5a；(2) Agda 侧 R11 有限维化：SpImD 子范畴（SpIso/DR-iso/adjUnit-img/adjCounit-img），`left-triangle-img` 闭合，右三角登记（依赖 D 的 full 性，对应 RAP5a RIm_map 开放项） |
+| v0.14 | 2026-07-31 | **Lean 编译修复 + Agda D 忠实性实现**：Adjunction.lean 恢复编译（RFunctor.map/adjUnit/adjCounit/DAdjR 以 sorry 占位登记——泛化不可构造为结构性数学障碍（Fin m → Fin n 在 m>0=n 时为空类型），非可修复错误）；Agda 新增 `transferMatrix-inj`（`Fin-eq?-refl/true` + `if-c1` 引理链，对应 Lean `transferMatrix_injective`，D 忠实性基础） |

@@ -247,6 +247,28 @@ Fin-eq? {suc n}  zero     (suc j)  = false
 Fin-eq? {suc n}  (suc i)  zero     = false
 Fin-eq? {suc n}  (suc i)  (suc j)  = Fin-eq? i j
 
+-- Fin-eq? 自反：Fin-eq? i i = true
+Fin-eq?-refl : {n : ℕ} (i : Fin n) → Fin-eq? i i ≡ true
+Fin-eq?-refl {zero}   ()
+Fin-eq?-refl {suc n}  zero     = refl
+Fin-eq?-refl {suc n}  (suc i)  = Fin-eq?-refl i
+
+-- Fin-eq? 为 true 蕴含相等
+Fin-eq?-true : {n : ℕ} (i j : Fin n) → Fin-eq? i j ≡ true → i ≡ j
+Fin-eq?-true {zero}   ()       _        _
+Fin-eq?-true {suc n}  zero     zero     h = refl
+Fin-eq?-true {suc n}  zero     (suc j)  h with h
+... | ()
+Fin-eq?-true {suc n}  (suc i)  zero     h with h
+... | ()
+Fin-eq?-true {suc n}  (suc i)  (suc j)  h = cong suc (Fin-eq?-true i j h)
+
+-- if b then 1 else 0 ≡ 1 蕴含 b = true
+if-c1 : (b : Bool) → (if b then c1 else c0) ≡ c1 → b ≡ true
+if-c1 true  h = refl
+if-c1 false h with h
+... | ()
+
 -- 单位矩阵：对角线为 1，其余为 0
 𝟙-matrix : {n : ℕ} → Fin n → Fin n → ℂ
 𝟙-matrix {n} i j = if Fin-eq? i j then c1 else c0

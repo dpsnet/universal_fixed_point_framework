@@ -8,11 +8,12 @@ import Mathlib.Analysis.Matrix.Spectrum
 
 /-
 ※ 审计记录（2026-07-31，与 Agda 侧交叉校验一致）：
-本文件 DAdjR（DFunctor ⊣ RFunctor）为"简化原型"声明，当前编译失败
-（`lake env lean UFPFormalization/Adjunction.lean` 验证）。失败原因：
-  1. RFunctor.map 恒等 toFun（L29-33）要求 nS = nT（Fin S.n → Fin T.n 类型不匹配）；
+本文件 DAdjR（DFunctor ⊣ RFunctor）为"简化原型"声明。原恒等构造编译失败
+（`lake env lean UFPFormalization/Adjunction.lean` 验证），失败原因：
+  1. RFunctor.map 恒等 toFun 要求 nS = nT（Fin S.n → Fin T.n 类型不匹配）；
   2. adjUnit 的 comm 需要 X.step = id（不成立）；
   3. adjCounit 的 P = 1 在维度不同时无 OfNat 实例，交织化简要求 S.A = 单位矩阵。
+已以 sorry 占位恢复可编译（对应 Agda 侧 postulate 登记）。
 论文正确构造（paper I 定理 2.4.5 / 构造 C2.2；UFPF修复与推进方案 §13.1 定理 R11）：
   R(E) 状态空间 = D(A_E)，演化映射 = e^{-A_E}（保留谱信息），仅在 D 的像子范畴上严格成立。
 正确 Lean 路径：RAP5a_explicit_adjunction.lean（SpImD 子范畴方案：R_im 为第一投影），
@@ -42,62 +43,34 @@ noncomputable def RFunctor : SpObj ⥤ RecObj where
       dec := inferInstance
       step := id }
   map {S T} f :=
-    { toFun := fun i => i
+    { toFun := fun _ => sorry  -- 泛化不可构造（nS ≠ nT 时 Fin S.n → Fin T.n 不存在，占位登记）
       comm := by
         intro x
-        simp }
+        rfl }
   map_id S := by
-    apply RecHom.ext
-    funext x
-    simp
+    sorry
   map_comp f g := by
-    apply RecHom.ext
-    funext x
-    simp
+    sorry
 
 /-- Unit of the adjunction η : id_Rec → R ∘ D.
-    Maps a recursive system R to the spectral object D(R) and back via R.
     In the finite-dimensional prototype, this is the identity map on state spaces. -/
 noncomputable def adjUnit (X : RecObj) : X ⟶ (RFunctor.obj (DFunctor.obj X)) :=
-  { toFun := Fintype.equivFin X.T
+  { toFun := fun _ => sorry  -- 常函数占位（正确构造见论文 R11 / Agda 侧 adjUnit）
     comm := by
       intro x
-      dsimp [RFunctor, DFunctor]
-      simp }
+      rfl }
 
 /-- Counit of the adjunction ε : D ∘ R → id_Spec.
-    Maps a spectral object's de-recursion back to itself.
-    Uses the spectral correspondence: the step matrix of R(S) equals identity,
-    and the spectral map bridges between identity and S.A. -/
+    In the finite-dimensional prototype this is a placeholder; the correct
+    construction (paper R11) preserves spectral information via e^{-A}. -/
 noncomputable def adjCounit (S : SpObj) : (DFunctor.obj (RFunctor.obj S)) ⟶ S :=
-  { P := 1
-    intertwine := by
-      dsimp [DFunctor, RFunctor]
-      simp }
+  { P := sorry  -- 占位登记（Agda 侧对应 adjCounit 用零矩阵，交织闭合）
+    intertwine := by sorry }
 
 /-- Adjunction D ⊣ R in the finite-dimensional prototype.
-    The unit and counit are defined via the spectral correspondence.
-    Triangle identities hold because in the finite-dimensional prototype:
-      (εD) ∘ (Dη) = id_D  and  (Rε) ∘ (ηR) = id_R
-    are verified by the spectral map properties exp(-log λ) = λ and -log(e^{-μ}) = μ.
-    
-    The full analytic generalization (infinite-dimensional case) requires
-    spectral functional calculus and is deferred to Phase 16B. -/
-noncomputable def DAdjR : DFunctor ⊣ RFunctor :=
-  Adjunction.mkOfUnitCounit
-    { unit := { app := adjUnit }
-      counit := { app := adjCounit }
-      left_triangle := by
-        ext X
-        apply SpHom.ext
-        funext i j
-        dsimp [adjUnit, adjCounit, DFunctor, RFunctor]
-        simp
-      right_triangle := by
-        ext S
-        apply RecHom.ext
-        funext x
-        dsimp [adjUnit, adjCounit, DFunctor, RFunctor]
-        simp }
+    ※ 占位登记：泛化伴随在简化原型下不可构造（与 Agda 侧 right-triangle/R-map
+    的 postulate 对应）。正确构造见 RAP5a_explicit_adjunction.lean 的 SpImD 子范畴方案。 -/
+noncomputable def DAdjR : DFunctor ⊣ RFunctor := by
+  sorry
 
 end UFPFormalization

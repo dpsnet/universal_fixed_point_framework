@@ -51,6 +51,18 @@ transferMatrix-comp {n} {m} {p} f g = funext (λ i → funext (λ j → pt i j))
           (sym (sumFin-cong {m} (λ k → if-mul-lemma (Fin-eq? (f i) k)
                                         (if Fin-eq? (g k) j then c1 else c0))))
 
+-- 转移矩阵单射：transferMatrix f ≡ transferMatrix g → f ≡ g
+-- （对应 Lean: transferMatrix_injective；**T2 闭合**：D 忠实性的基础）
+transferMatrix-inj : {n m : ℕ} {f g : Fin n → Fin m} → transferMatrix f ≡ transferMatrix g → f ≡ g
+transferMatrix-inj {n} {m} {f} {g} h = funext (λ x → step x)
+  where
+  step : (x : Fin n) → f x ≡ g x
+  step x = sym (Fin-eq?-true (g x) (f x) (if-c1 (Fin-eq? (g x) (f x)) (lemma x)))
+    where
+    lemma : (x : Fin n) → (if Fin-eq? (g x) (f x) then c1 else c0) ≡ c1
+    lemma x = trans (sym (cong-app (cong-app h x) (f x)))
+                    (cong (λ b → if b then c1 else c0) (Fin-eq?-refl (f x)))
+
 -- ==================================================================
 -- §2 D 函子
 -- ==================================================================
