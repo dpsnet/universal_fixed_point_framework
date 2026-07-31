@@ -34,6 +34,7 @@ postulate
   zeroℝ : ℝ
   oneℝ  : ℝ
   neg-oneℝ : ℝ  -- -1
+  negℝ : ℝ → ℝ  -- 一般取负：negℝ x = -x
   natℝ  : ℕ → ℝ  -- 自然数嵌入
 
 -- 实数的合理公理（简化声明）

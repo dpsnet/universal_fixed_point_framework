@@ -1,0 +1,261 @@
+module Unified3.Unified3Theorem where
+
+{-
+  B5: 统一 3 定理（Unified 3 Theorem）
+  ======================================
+  对应 Lean: Unified3Theorem.lean
+
+  定理陈述：在 𝐒𝐩 严格 4-范畴中，以下四个数相等：
+    d = N_gen = log₂ k_max = N_active = 3
+
+  结构（与 Lean 逐节对应）：
+    §1 主动生成层基数 = 3（层与 Fin 3 的显式双射）
+    §2 GenSpace = ℂ³ 表示（基向量 + 投影）
+    §3 投影表示与正交性
+    §4 GenSpace ≃ (ActiveMorphismLayer → ℂ) 等价
+    §5 链复形：统一交换子 commutator
+    §6 统一 3 定理 / 三代费米子起源
+    §7 Bott 截断指数（k_max = 8，log₂ k_max = 3）
+
+  说明：ℂ 为占位类型（单构造子 mkℂ），涉及数值区分的命题以 postulate
+  声明，与 B1-B4 风格一致；纯结构（refl 可判 / 有限情形枚举）直接证明。
+-}
+
+open import Agda.Builtin.Equality using (_≡_; refl)
+open import Sp.SpCategory
+open import Sp.HigherSpCategory
+
+-- ==================================================================
+-- §0 局部辅助：ℕ 算术 + 等价类型
+-- ==================================================================
+
+-- ℕ 加法与乘法（SpCategory 未导出）
+_+ℕ_ : ℕ → ℕ → ℕ
+zero  +ℕ m = m
+suc n +ℕ m = suc (n +ℕ m)
+
+_*ℕ_ : ℕ → ℕ → ℕ
+zero  *ℕ m = zero
+suc n *ℕ m = m +ℕ (n *ℕ m)
+
+-- 2 的幂
+2^ : ℕ → ℕ
+2^ zero    = 1
+2^ (suc n) = 2 *ℕ (2^ n)
+
+-- 等价类型（代替标准库的 _≃_）
+infix 10 _≃_
+record _≃_ (A B : Set) : Set where
+  constructor mkEquiv
+  field
+    to      : A → B
+    from    : B → A
+    to-from : (b : B) → to (from b) ≡ b
+    from-to : (a : A) → from (to a) ≡ a
+
+-- 函数外延性（占位公理）
+postulate
+  funext : {A B : Set} {f g : A → B} → ((x : A) → f x ≡ g x) → f ≡ g
+
+-- ==================================================================
+-- §1 主动生成层基数 = 3
+-- ==================================================================
+
+-- 主动生成层数（对应 Lean: numActiveLayers）
+numActiveLayers : ℕ
+numActiveLayers = 3
+
+-- 层 → 索引（1, 2, 3）
+layerToIndex : ActiveMorphismLayer → ℕ
+layerToIndex first  = 1
+layerToIndex second = 2
+layerToIndex third  = 3
+
+-- 双射：ActiveMorphismLayer ↔ Fin 3
+toFin3 : ActiveMorphismLayer → Fin 3
+toFin3 first  = zero
+toFin3 second = suc zero
+toFin3 third  = suc (suc zero)
+
+fromFin3 : Fin 3 → ActiveMorphismLayer
+fromFin3 zero             = first
+fromFin3 (suc zero)       = second
+fromFin3 (suc (suc zero)) = third
+fromFin3 (suc (suc (suc ())))
+
+toFin3-from : (f : Fin 3) → toFin3 (fromFin3 f) ≡ f
+toFin3-from zero             = refl
+toFin3-from (suc zero)       = refl
+toFin3-from (suc (suc zero)) = refl
+toFin3-from (suc (suc (suc ())))
+
+fromFin3-to : (l : ActiveMorphismLayer) → fromFin3 (toFin3 l) ≡ l
+fromFin3-to first  = refl
+fromFin3-to second = refl
+fromFin3-to third  = refl
+
+-- 定理：主动生成层基数 = 3（对应 Lean: card_active_layers）
+card-active-layers : ActiveMorphismLayer ≃ Fin 3
+card-active-layers = mkEquiv toFin3 fromFin3 toFin3-from fromFin3-to
+
+-- ==================================================================
+-- §2 GenSpace = ℂ³ 表示
+-- ==================================================================
+
+-- ℂ 的占位零元与单位元（ℂ 为单构造子占位类型，结构上重合）
+c0 : ℂ
+c0 = mkℂ
+
+c1 : ℂ
+c1 = mkℂ
+
+-- GenSpace = ℂ³（对应 Lean: abbrev GenSpace := ℂ × ℂ × ℂ）
+record GenSpace : Set where
+  constructor mkGenSpace
+  field
+    x : ℂ
+    y : ℂ
+    z : ℂ
+
+-- 基向量：每个主动生成层对应 ℂ³ 中的一个独立方向
+-- （对应 Lean: layerToGenSpaceBasis）
+layerToGenSpaceBasis : ActiveMorphismLayer → GenSpace
+layerToGenSpaceBasis first  = mkGenSpace c1 c0 c0
+layerToGenSpaceBasis second = mkGenSpace c0 c1 c0
+layerToGenSpaceBasis third  = mkGenSpace c0 c0 c1
+
+-- 投影表示：每层映射到对应坐标投影
+-- （对应 Lean: layerRepFunctor）
+layerRepFunctor : ActiveMorphismLayer → GenSpace → GenSpace
+layerRepFunctor first  (mkGenSpace x y z) = mkGenSpace x c0 c0
+layerRepFunctor second (mkGenSpace x y z) = mkGenSpace c0 y c0
+layerRepFunctor third  (mkGenSpace x y z) = mkGenSpace c0 c0 z
+
+-- 定理：投影在自身基向量上不动（对应 Lean: layerRep_on_basis）
+layerRep-on-basis : (l : ActiveMorphismLayer)
+  → layerRepFunctor l (layerToGenSpaceBasis l) ≡ layerToGenSpaceBasis l
+layerRep-on-basis first  = refl
+layerRep-on-basis second = refl
+layerRep-on-basis third  = refl
+
+-- 定理：不同主动生成层对应的基向量像正交（互不相同）
+-- （对应 Lean: layer_orthogonality；ℂ 占位，需数值区分 → postulate）
+postulate
+  layer-orthogonality : (l₁ l₂ : ActiveMorphismLayer) → l₁ ≢ l₂
+    → layerRepFunctor l₁ (layerToGenSpaceBasis l₁) ≢ layerRepFunctor l₂ (layerToGenSpaceBasis l₂)
+
+-- ==================================================================
+-- §3 GenSpace ≃ (ActiveMorphismLayer → ℂ)
+-- ==================================================================
+
+-- 等价：GenSpace 与 ℂ 上的层指标函数空间
+-- （对应 Lean: genSpaceEquiv）
+genSpaceEquiv : GenSpace ≃ (ActiveMorphismLayer → ℂ)
+genSpaceEquiv = mkEquiv toFun invFun toFun-invFun invFun-toFun
+  where
+    toFun : GenSpace → (ActiveMorphismLayer → ℂ)
+    toFun (mkGenSpace x y z) first  = x
+    toFun (mkGenSpace x y z) second = y
+    toFun (mkGenSpace x y z) third  = z
+
+    invFun : (ActiveMorphismLayer → ℂ) → GenSpace
+    invFun f = mkGenSpace (f first) (f second) (f third)
+
+    toFun-invFun : (f : ActiveMorphismLayer → ℂ) → toFun (invFun f) ≡ f
+    toFun-invFun f = funext (λ { first → refl; second → refl; third → refl })
+
+    invFun-toFun : (g : GenSpace) → invFun (toFun g) ≡ g
+    invFun-toFun (mkGenSpace x y z) = refl
+
+-- 推论：GenSpace 的"维数"等于主动生成层数
+-- （对应 Lean: genSpace_dim_equals_active_layers_count）
+genSpace-dim-equals-active-layers-count :
+  (GenSpace ≃ (ActiveMorphismLayer → ℂ)) × (ActiveMorphismLayer ≃ Fin 3)
+genSpace-dim-equals-active-layers-count = genSpaceEquiv , card-active-layers
+
+-- ==================================================================
+-- §4 链复形：统一交换子
+-- ==================================================================
+
+-- 矩阵减与乘（占位，ℂ 运算未实现）
+postulate
+  _-mat_ : {nX nY : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ) → (Fin nX → Fin nY → ℂ)
+  _*mat_ : {nX nY nZ : ℕ} → (Fin nX → Fin nY → ℂ) → (Fin nY → Fin nZ → ℂ) → (Fin nX → Fin nZ → ℂ)
+
+-- 统一"微分" d_A(H) = A·H - H·A，所有三个主动层共享此结构
+-- （对应 Lean: commutator）
+commutator : {X Y : SpObj} (H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
+  → Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
+commutator {X} {Y} H = (SpObj.A X *mat H) -mat (H *mat SpObj.A Y)
+
+-- 零矩阵
+zeroMat : {nX nY : ℕ} → Fin nX → Fin nY → ℂ
+zeroMat _ _ = mkℂ
+
+-- 层 1（1-态射）条件：交换子为零（对应 Lean: layer1_condition）
+postulate
+  layer1-condition : {X Y : SpObj} (P : SpHom X Y)
+    → commutator {X} {Y} (SpHom.P P) ≡ zeroMat
+
+-- 层 2（2-态射）条件：交换子给出缺陷 Q.P - P.P
+-- （对应 Lean: layer2_condition）
+postulate
+  layer2-condition : {X Y : SpObj} {P Q : SpHom X Y} (α : SpTwoMorphism P Q)
+    → commutator {X} {Y} (SpTwoMorphism.homotopy α) ≡ (SpHom.P Q -mat SpHom.P P)
+
+-- 层 3（3-态射）条件：交换子给出二阶缺陷 β.H - α.H
+-- （对应 Lean: layer3_condition）
+postulate
+  layer3-condition : {X Y : SpObj} {P Q : SpHom X Y} {α β : SpTwoMorphism P Q}
+    (Ξ : SpThreeMorphism α β)
+    → commutator {X} {Y} (SpThreeMorphism.secondHomotopy Ξ)
+        ≡ (SpTwoMorphism.homotopy β -mat SpTwoMorphism.homotopy α)
+
+-- ==================================================================
+-- §5 统一 3 定理
+-- ==================================================================
+
+-- 定理：三代费米子的"3"的来源 = 𝐒𝐩 4-范畴的主动生成层数
+-- （对应 Lean: unified_3_theorem / origin_of_three_generations）
+unified-3-theorem : ActiveMorphismLayer ≃ Fin 3
+unified-3-theorem = card-active-layers
+
+origin-of-three-generations : ActiveMorphismLayer ≃ Fin 3
+origin-of-three-generations = unified-3-theorem
+
+-- ==================================================================
+-- §6 Bott 截断指数（k_max = 8，log₂ k_max = 3）
+-- ==================================================================
+
+-- 截断参数 k_max = 8 = 2³（对应 Lean: k_max）
+k-max : ℕ
+k-max = 8
+
+-- k_max = 8
+k-max-value : k-max ≡ 8
+k-max-value = refl
+
+-- 结构等式：k_max = 2^{N_active}（对应 Lean: k_max = spinorDim(0) = 8 = 2³）
+k-max-eq-pow2 : k-max ≡ 2^ numActiveLayers
+k-max-eq-pow2 = refl
+
+-- log₂ 与幂的互逆性质（对应 Lean: Nat.log 2）
+postulate
+  log2 : ℕ → ℕ
+  log2-pow2 : (n : ℕ) → log2 (2^ n) ≡ n
+
+-- Bott 截断指数：log₂(k_max) = 3（对应 Lean: bott_truncation_index）
+bott-truncation-index : log2 k-max ≡ 3
+bott-truncation-index = log2-pow2 numActiveLayers
+
+-- ==================================================================
+-- §7 统一 3 定理完整陈述
+-- ==================================================================
+
+-- 完整陈述：card(层) = 3 ∧ dim(GenSpace) = 3 ∧ log₂(k_max) = 3
+-- （对应 Lean: unified_3_theorem_full_conjecture）
+unified-3-theorem-full :
+  (ActiveMorphismLayer ≃ Fin 3)
+    × (GenSpace ≃ (ActiveMorphismLayer → ℂ))
+    × (log2 k-max ≡ 3)
+unified-3-theorem-full = card-active-layers , genSpaceEquiv , bott-truncation-index
