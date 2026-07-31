@@ -42,6 +42,7 @@
 | **Higgs VEV 多重静默分析** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_Higgs_silence_analysis.md` |
 | **中微子质量层级多重静默分析** | ✅ 已完成 | `notes/03_neutrino/spectral_neutrino_hierarchy_silence.md` |
 | **暗物质遗迹密度多重静默分析** | ✅ 已完成 | `notes/04_lorentz_gravity/spectral_dark_matter_silence.md` |
+| **表示静默（D-静默）S0 层** | ✅ 研究笔记 v0.1（交叉校验发现：SpImD 态射层基数反例 → 静默度同构推广） | `notes/00_foundations/spectral_representation_silence.md` |
 
 See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained derivation chain from first principles to all 29 SM parameters.
 
