@@ -66,6 +66,10 @@ sym refl = refl
 cong₂ : {A B C : Set} {x y : A} {u v : B} (f : A → B → C) → x ≡ y → u ≡ v → f x u ≡ f y v
 cong₂ f refl refl = refl
 
+-- 函数等式逐点应用（funext 之逆，可对 refl 模式匹配）
+cong-app : {A B : Set} {f g : A → B} → f ≡ g → (x : A) → f x ≡ g x
+cong-app refl x = refl
+
 -- ==================================================================
 -- §1 𝐒𝐩 对象与 1-态射
 -- ==================================================================
@@ -406,6 +410,12 @@ zeroMat-absorb-l {nX} {nY} {nZ} M = funext (λ i → funext (λ k →
 zeroMat-absorb-r : {nX nY nZ : ℕ} (M : Fin nX → Fin nY → ℂ) → M *mat zeroMat {nY} {nZ} ≡ zeroMat {nX} {nZ}
 zeroMat-absorb-r {nX} {nY} {nZ} M = funext (λ i → funext (λ k →
   trans (sumFin-cong {nY} (λ j → *-zero-r (M i j))) (sumFin-zero {nY})))
+
+-- 减法消去：M ≡ N ⇒ M -mat N = zeroMat（逐点 +-inv）
+-mat-elim : {nX nY : ℕ} {M N : Fin nX → Fin nY → ℂ} → M ≡ N → M -mat N ≡ zeroMat
+-mat-elim {nX} {nY} {M} {N} e = funext (λ i → funext (λ j →
+  trans (cong (λ x → x + negℂ (N i j)) (cong-app (cong-app e i) j))
+        (+-inv (N i j))))
 
 -- 𝐒𝐩 对象：维数 n + 算子 A
 record SpObj : Set where

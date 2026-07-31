@@ -55,9 +55,15 @@ spVertComp α β = record
   where
     open SpTwoMorphism
 
--- 水平复合（简化版本：使用占位，完整矩阵乘法版本需追加）
-postulate
-  spHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} → SpTwoMorphism P Q → SpTwoMorphism P' Q' → SpTwoMorphism (compose P' P) (compose Q' Q)
+-- 水平复合（T2 闭合：具体同伦构造，与 Lean 公式一致
+--   homotopy = α.homotopy · P'.P + Q.P · α'.homotopy；condition 为占位类型等式）
+spHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z}
+  → SpTwoMorphism P Q → SpTwoMorphism P' Q' → SpTwoMorphism (compose P' P) (compose Q' Q)
+spHorizComp {X} {Y} {Z} {P} {Q} {P'} {Q'} α α' = record
+  { homotopy = (SpTwoMorphism.homotopy α *mat SpHom.P P')
+               +mat (SpHom.P Q *mat SpTwoMorphism.homotopy α')
+  ; condition = refl
+  }
 
 -- 垂直复合结合律（T2 闭合：同伦逐点 +-assoc + funext）
 spVertComp-assoc : {X Y : SpObj} {P Q R S : SpHom X Y}
@@ -123,10 +129,16 @@ spThreeVertComp Ξ Τ = record
   where
     open SpThreeMorphism
 
--- 水平复合（简化版本：使用占位）
-postulate
-  spThreeHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
-    → SpThreeMorphism α β → SpThreeMorphism α' β' → SpThreeMorphism (spHorizComp α α') (spHorizComp β β')
+-- 水平复合（T2 闭合：具体第二同伦构造，与 Lean 公式一致
+--   secondHomotopy = Ξ.secondHomotopy · P'.P + Q.P · Ξ'.secondHomotopy；
+--   condition 为占位类型等式）
+spThreeHorizComp : {X Y Z : SpObj} {P Q : SpHom X Y} {P' Q' : SpHom Y Z} {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
+  → SpThreeMorphism α β → SpThreeMorphism α' β' → SpThreeMorphism (spHorizComp α α') (spHorizComp β β')
+spThreeHorizComp {X} {Y} {Z} {P} {Q} {P'} {Q'} {α} {β} {α'} {β'} Ξ Ξ' = record
+  { secondHomotopy = (SpThreeMorphism.secondHomotopy Ξ *mat SpHom.P P')
+                     +mat (SpHom.P Q *mat SpThreeMorphism.secondHomotopy Ξ')
+  ; condition = refl
+  }
 
 -- 垂直复合结合律（T2 闭合：二阶同伦逐点 +-assoc + funext）
 spThreeVertComp-assoc : {X Y : SpObj} {P Q : SpHom X Y}

@@ -174,10 +174,11 @@ commutator : {X Y : SpObj} (H : Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ)
   → Fin (SpObj.n X) → Fin (SpObj.n Y) → ℂ
 commutator {X} {Y} H = (SpObj.A X *mat H) -mat (H *mat SpObj.A Y)
 
--- 层 1（1-态射）条件：交换子为零（对应 Lean: layer1_condition）
-postulate
-  layer1-condition : {X Y : SpObj} (P : SpHom X Y)
-    → commutator {X} {Y} (SpHom.P P) ≡ zeroMat
+-- 层 1（1-态射）条件：交换子为零（对应 Lean: layer1_condition；**T2 闭合**：
+--   由 SpHom 真实交织条件 P·A_Y = A_X·P 经 -mat-elim 直接推导）
+layer1-condition : {X Y : SpObj} (P : SpHom X Y)
+  → commutator {X} {Y} (SpHom.P P) ≡ zeroMat
+layer1-condition {X} {Y} P = -mat-elim (sym (SpHom.intertwine P))
 
 -- 层 2（2-态射）条件：交换子给出缺陷 Q.P - P.P
 -- （对应 Lean: layer2_condition）
