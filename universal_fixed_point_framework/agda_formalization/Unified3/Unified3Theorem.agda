@@ -24,24 +24,12 @@ module Unified3.Unified3Theorem where
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory
 open import Sp.HigherSpCategory
+open import NatArith.NatArith
 
 -- ==================================================================
--- §0 局部辅助：ℕ 算术 + 等价类型
+-- §0 局部辅助：等价类型
 -- ==================================================================
-
--- ℕ 加法与乘法（SpCategory 未导出）
-_+ℕ_ : ℕ → ℕ → ℕ
-zero  +ℕ m = m
-suc n +ℕ m = suc (n +ℕ m)
-
-_*ℕ_ : ℕ → ℕ → ℕ
-zero  *ℕ m = zero
-suc n *ℕ m = m +ℕ (n *ℕ m)
-
--- 2 的幂
-2^ : ℕ → ℕ
-2^ zero    = 1
-2^ (suc n) = 2 *ℕ (2^ n)
+-- （ℕ 算术 _+ℕ_/_*ℕ_/2^ 已迁入 NatArith，从上游导入）
 
 -- 等价类型（代替标准库的 _≃_）
 infix 10 _≃_
@@ -239,7 +227,9 @@ k-max-value = refl
 k-max-eq-pow2 : k-max ≡ 2^ numActiveLayers
 k-max-eq-pow2 = refl
 
--- log₂ 与幂的互逆性质（对应 Lean: Nat.log 2）
+-- log₂（T1 开放项：折半递归被终止检查器拒绝——`half (suc n)` 非结构递减；
+--   需良基递归（WfRec）或引入 stdlib 的 Data.Nat.Logarithm 才能闭合。
+--   当前保持 postulate 并在路线图闭合账目中登记）
 postulate
   log2 : ℕ → ℕ
   log2-pow2 : (n : ℕ) → log2 (2^ n) ≡ n

@@ -9,10 +9,12 @@ module Everything where
 -- B6 ✅  Bott 塔（BottTower）
 -- B7 ✅  静默定理组（CoherenceToBranching）
 -- B8 ✅  IFS 排序定理（IFSFractal）
+-- NatArith ✅  ℕ 算术引理库（闭合基础）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory
 open import Rec.RecCategory
+open import NatArith.NatArith
 open import DecursionFunctor.DecursionFunctor
 open import DHStructural.DHStructuralAnalysis
 open import Unified3.Unified3Theorem

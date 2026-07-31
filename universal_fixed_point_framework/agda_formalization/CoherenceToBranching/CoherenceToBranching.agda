@@ -26,17 +26,14 @@ open import Agda.Builtin.Equality using (_≡_; refl)
 open import Agda.Builtin.Bool using (Bool; true; false)
 open import Sp.SpCategory
 open import Rec.RecCategory
+open import NatArith.NatArith
 open import Unified3.Unified3Theorem
 open import DHStructural.DHStructuralAnalysis
 
--- 局部辅助：对称性 + 双向蕴含 + 顶类型 + 自然数减法/序
+-- 局部辅助：对称性 + 双向蕴含 + 顶类型 + 自然数序
+-- （+ℕ-suc/∸-zero/∸-1/2*ℕ/half 系列与 _∸_ 已在 NatArith 中定义）
 sym : {A : Set} {x y : A} → x ≡ y → y ≡ x
 sym refl = refl
-
--- 加法右端换 suc（T1 闭合引理）
-+ℕ-suc : (n m : ℕ) → n +ℕ (suc m) ≡ suc (n +ℕ m)
-+ℕ-suc zero    m = refl
-+ℕ-suc (suc n) m = cong suc (+ℕ-suc n m)
 
 record _↔_ (A B : Set) : Set where
   constructor mkIff
@@ -46,20 +43,6 @@ record _↔_ (A B : Set) : Set where
 
 data ⊤ : Set where
   tt : ⊤
-
-_∸_ : ℕ → ℕ → ℕ
-zero  ∸ m     = zero
-suc n ∸ zero  = suc n
-suc n ∸ suc m = n ∸ m
-
--- 减零恒等（T1 闭合引理）
-∸-zero : (n : ℕ) → n ∸ zero ≡ n
-∸-zero zero    = refl
-∸-zero (suc n) = refl
-
--- 减一：suc n ∸ 1 = n（T1 闭合引理）
-∸-1 : (n : ℕ) → suc n ∸ 1 ≡ n
-∸-1 n = ∸-zero n
 
 infix 4 _≤ℕ_
 data _≤ℕ_ : ℕ → ℕ → Set where
@@ -368,9 +351,11 @@ spacetime-dim-eq-category-order : (n : ℕ) → 1 ≤ℕ n → 1 +ℕ (n ∸ 1) 
 spacetime-dim-eq-category-order zero    ()
 spacetime-dim-eq-category-order (suc m) hn = cong suc (∸-1 m)
 
--- (3) 唯一性：2n = 8 ⇒ n = 4（对应 Lean: category_order_unique；omega）
-postulate
-  category-order-unique : (n : ℕ) → 2 *ℕ n ≡ 8 → n ≡ 4
+-- (3) 唯一性：2n = 8 ⇒ n = 4（对应 Lean: category_order_unique；**T1 闭合**）
+-- 由 half (2n) = n（NatArith.half-2*ℕ）与 half 8 = 4（NatArith.half-8）得
+category-order-unique : (n : ℕ) → 2 *ℕ n ≡ 8 → n ≡ 4
+category-order-unique n h =
+  trans (sym (half-2*ℕ n)) (trans (cong half h) half-8)
 
 -- 可见/静默维度计数（对应 Lean: visible_dimensions_eq_four 等；
 --   Lean 的 if-then-else 语义：e⁻ᵈ < 1 ⇒ 时间项 = 1；

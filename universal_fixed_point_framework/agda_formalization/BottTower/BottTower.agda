@@ -19,6 +19,7 @@ module BottTower.BottTower where
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory
 open import Rec.RecCategory
+open import NatArith.NatArith
 open import Unified3.Unified3Theorem
 
 -- ==================================================================
