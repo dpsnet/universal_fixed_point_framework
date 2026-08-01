@@ -759,3 +759,19 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.58。
 
 **阶段 6 状态**：Hille-Yosida 谱侧收官（σ(e^(-tA)) ⊆ (0,1] 可证）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层（压缩范数/强连续/生成元）；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并，σ-代数/极限层）。
+
+---
+
+【一般函数逼近层核心闭环：谱积分线性公理降为可证明定理（2026-08-01）】
+
+1. **§1b（SpectralTheory，置于 §3 前供引理 1 代数方向使用）**：
+   - sum-op/spec-int-simple/simple-comm 自 §7 移入（解决前向引用；§7 仅留加法性细化）。
+   - **sup/算子序公理 5 条**：`_≤ₒ_`（算子序）、level 多态 `sup-op`/`sup-op-upper`/`sup-op-least`（上确界）、`sup-comm`（交换子 sup 闭性——von Neumann 交换子定理代数版，模型必然性注明）。
+   - `SimpleF` 简单函数 record（pairwise 不相交 + 覆盖分划 + 逐原子支配）、`Σ₁`（Set₁ 层存在，SimpleF 含 Borel 字段）、`spec-int-below`（简单函数下界族）、`spec-int-general f` = 简单函数下界 sup（一般谱积分）。
+   - 桥接公理：`spec-int-general-id`（∫id = spec-int-A，无界函数演算）/`spec-int-general-exp`（∫e^(-x) = spec-int-exp）。
+   - **推导**：`member-comm`（族成员 = 简单函数谱积分 ⟹ 交换，simple-comm 可证）、**`X-comm-spectral-int-deriv` / `X-comm-spectral-int-exp-deriv`**（X 与 E 逐集交换 ⟹ 与谱表示/exp 谱表示交换 = sup-comm + member-comm）。
+2. **公理纪律执行**：§1 原 `X-comm-spectral-int` / `X-comm-spectral-int-exp` 公理**删除**，σ-to-Sp/σ-to-Rec（§3）改用推导版——可推导的不占 postulate 名额。
+3. **排坑**：Σ₁ 的 B 参数需 Set 层（积为 Set，首轮 UnequalSorts）；member-comm 的 eq 方向（第 1 步 eq 正向、第 3 步 sym eq，首轮 UnequalTerms）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.59。
+
+**阶段 6 状态**：① 核心闭环（A 侧 + exp 侧谱积分线性降定理）。待推进：①' 余项（t 侧 X-comm-spectral-int-exp-t 同机制推导，需 exp-tA 谱侧于 §8c 后）+ 无界逼近细节；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并）。

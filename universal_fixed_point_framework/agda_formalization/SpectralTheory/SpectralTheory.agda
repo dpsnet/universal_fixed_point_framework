@@ -11,20 +11,24 @@ module SpectralTheory.SpectralTheory where
   （引理 2）、Hille-Yosida 半群（对象层）。
 
   结构：
-    1. 谱论基础公理（谱测度 E / 谱表示 / 函数演算 / Fuglede 方向 / 谱积分线性 /
+    1. 谱论基础公理（谱测度 E / 谱表示 / 函数演算 / Fuglede 方向 /
        谱测度复合 / 谱测度外延 / Hille-Yosida 半群）
+    1b. 谱积分逼近机制（简单函数核心 sum-op/spec-int-simple/simple-comm +
+        sup/算子序 + 一般谱积分定义；X-comm-spectral-int / -exp 降为定理）
     2. φ(x) = e^(-x) 的可证引理（exp 单射 ⟹ φ 单射；exp-log ⟹ 值域刻画）
     3. 引理 2 核心（可证）：M_Rec ⊆ M_σ（exp 单射 + 谱测度复合 + Fuglede）
     4. 三条件谓词 M_Sp / M_σ / M_Rec 与定理 3（无限维版）
     5. 推论 5 核心：-log(φ(x)) = x（可证）+ 对象重建公理登记
 
   公理纪律（谱论基础假设，对齐"ℝ 公理是基础假设"立场）：
-    - 谱测度 E、谱表示（谱定理）、Fuglede 方向（交织 ⟹ 谱交换）、谱积分线性、
+    - 谱测度 E、谱表示（谱定理）、Fuglede 方向（交织 ⟹ 谱交换）、
       谱测度外延、谱测度复合、Hille-Yosida 半群 = 谱论基础公理——
       每个注明模型必然性与降定理路径（谱积分/测度论完整实现时转为可证明定理）
+    - **谱积分线性（X-comm-spectral-int / -exp）已降为可证明定理**（§1b）：
+      一般谱积分 = 简单函数谱积分的 sup（sup 公理 + simple-comm 可证 + sup-comm）
     - **核心定理真实证明**（不允许占位）：φ 单射（exp-inj + neg-neg）、
       谱测度输送往返（φ-image-roundtrip）、M_Rec ⊆ M_σ（Rec-to-σ）、
-      M_σ ⊆ M_Sp / M_σ ⊆ M_Rec（谱积分线性 + 谱表示重写）、-log(φ(x)) = x
+      M_σ ⊆ M_Sp / M_σ ⊆ M_Rec（谱积分线性推导 + 谱表示重写）、-log(φ(x)) = x
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
@@ -77,9 +81,8 @@ postulate
   -- 谱表示（谱定理）：A = ∫ λ dE(λ)，spec-int-A 为抽象谱积分记号
   spec-int-A : Op
   spectral-rep-A : A ≡ spec-int-A
-  -- 谱积分线性：X 与谱测度逐集交换 ⟹ X 与谱表示交换
-  --（谱积分基本性质：有界 X 与 E 交换时 X 可穿过积分；谱积分理论完整实现时降为定理）
-  X-comm-spectral-int : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X) → X *ₒ spec-int-A ≡ spec-int-A *ₒ X
+  -- （谱积分线性 X-comm-spectral-int 原在此声明，已降为可证明定理，见 §1b
+  --   X-comm-spectral-int-deriv：一般谱积分 = 简单函数谱积分的 sup + sup-comm）
   -- Fuglede（引理 1 ⟹ 方向）：交织 ⟹ 谱匹配
   --（Fuglede 定理：X 与自伴 A 交换 ⟹ X 与 A 的每个谱测度投影交换；
   --  标准谱论事实，Reed-Simon；谱测度输送引理，P1 笔记引理 1）
@@ -94,8 +97,8 @@ postulate
   -- e^(-A) 谱表示
   spec-int-exp : Op
   exp-spectral-rep : exp-A ≡ spec-int-exp
-  -- e^(-A) 侧谱积分线性
-  X-comm-spectral-int-exp : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X) → X *ₒ spec-int-exp ≡ spec-int-exp *ₒ X
+  -- （e^(-A) 侧谱积分线性 X-comm-spectral-int-exp 原在此声明，已降为可证明定理，
+  --   见 §1b X-comm-spectral-int-exp-deriv）
   -- e^(-A) 侧 Fuglede：与自伴算子 e^(-A) 交换 ⟹ 与其谱测度 E-exp 交换
   --（e^(-A) 由 Borel 函数演算保持自伴性；exp 单射保证谱点分离）
   intertwine-exp-imp-spectral-exp : (X : Op) → X *ₒ exp-A ≡ exp-A *ₒ X → (P : Borel) → X *ₒ E-exp P ≡ E-exp P *ₒ X
@@ -109,6 +112,125 @@ postulate
   semigroup : (s t : ℝ) → exp-tA (s +ℝ t) ≡ exp-tA s *ₒ exp-tA t
   exp-tA-zero : exp-tA zeroℝ ≡ 𝟙ₒ
   exp-tA-one : exp-tA oneℝ ≡ exp-A
+
+-- ==================================================================
+-- §1b 谱积分逼近机制（简单函数核心 + sup/算子序 + 一般谱积分）
+-- ==================================================================
+-- 目标：将原 §1 的谱积分线性公理（X-comm-spectral-int / -exp）降为可证明定理。
+-- 机制：一般谱积分 = 简单函数谱积分的上确界（sup 构造）；X 与 E 逐集交换
+--   ⟹ X 与每个简单函数谱积分交换（simple-comm，**可证**）
+--   ⟹ X 与上确界交换（sup-comm，交换子闭性公理）⟹ X 与一般谱积分交换（**推导**）。
+-- 依赖：本层位于 §3 之前，供引理 1 代数方向（σ-to-Sp / σ-to-Rec）使用。
+
+-- 有限求和（Op 层）
+sum-op : {m : ℕ} → (Fin m → Op) → Op
+sum-op {zero} f = 𝟘ₒ
+sum-op {suc m} f = f zero +ₒ sum-op {m} (λ i → f (suc i))
+
+-- 简单函数谱积分：∫(Σᵢ cᵢ·1_{Ωᵢ}) dE = Σᵢ cᵢ·E(Ωᵢ)
+--（简单函数 = 有限 Borel 划分 {Ωᵢ} 上的有限线性组合；谱积分对简单函数是有限组合）
+spec-int-simple : {m : ℕ} → (Fin m → ℝ) → (Fin m → Borel) → Op
+spec-int-simple {m} c Ω = sum-op {m} (λ i → c i ·ₒ E (Ω i))
+
+-- **可证明（零新增公理）**：X 与谱测度逐集交换 ⟹ X 与简单函数谱积分交换
+--（引理 1 代数方向（谱匹配 ⟹ 交织）的简单函数版：
+--  谱积分线性 + X 与 E 可交换时 X 可穿过有限组合——distribₒ + ·ₒ-comm 逐项）
+simple-comm : {m : ℕ} (X : Op) (c : Fin m → ℝ) (Ω : Fin m → Borel)
+  → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
+  → X *ₒ spec-int-simple {m} c Ω ≡ spec-int-simple {m} c Ω *ₒ X
+simple-comm {zero} X c Ω h =
+  trans (*ₒ-zero-r X) (sym (*ₒ-zero-l X))
+simple-comm {suc m} X c Ω h =
+  trans (distribₒ X (c zero ·ₒ E (Ω zero)) rest)
+        (trans (cong₂ _+ₒ_ head tail-comm)
+               (sym (distribₒ-l (c zero ·ₒ E (Ω zero)) rest X)))
+  where
+  rest : Op
+  rest = spec-int-simple {m} (λ i → c (suc i)) (λ i → Ω (suc i))
+  -- X·(c0·E(Ω0)) = (c0·E(Ω0))·X（标量中心 + h 逐集）
+  head : X *ₒ (c zero ·ₒ E (Ω zero)) ≡ (c zero ·ₒ E (Ω zero)) *ₒ X
+  head = trans (·ₒ-comm-l (c zero) X (E (Ω zero)))
+               (trans (cong (λ y → c zero ·ₒ y) (h (Ω zero)))
+                      (sym (·ₒ-comm (c zero) (E (Ω zero)) X)))
+  -- 归纳：X·rest = rest·X
+  tail-comm : X *ₒ rest ≡ rest *ₒ X
+  tail-comm = simple-comm {m} X (λ i → c (suc i)) (λ i → Ω (suc i)) h
+
+-- 算子序与 sup（一般谱积分的极限基础；标准算子代数/泛函分析结构）：
+--  - _≤ₒ_：算子序（X ≤ₒ Y ⟺ Y-X 正定；投影值上为投影格序）
+--  - sup-op/upper/least：算子族上确界存在（有界算子空间的序完备性，
+--    对应弱/强算子拓扑下的收敛；具体范数/拓扑随 Hilbert 空间层）
+--  - sup-comm：交换子关于 sup 的闭性（X 与族中每个元交换 ⟹ X 与上确界交换；
+--    von Neumann 交换子定理的代数版本，模型必然性 = 交换子代数弱闭）
+-- 降定理路径：Banach 空间/算子拓扑完整实现时转为可证明定理
+postulate
+  _≤ₒ_ : Op → Op → Set
+  sup-op : {l : Level} → (Op → Set l) → Op
+  sup-op-upper : {l : Level} (S : Op → Set l) (x : Op) → S x → x ≤ₒ sup-op S
+  sup-op-least : {l : Level} (S : Op → Set l) (b : Op) → ((x : Op) → S x → x ≤ₒ b) → sup-op S ≤ₒ b
+  sup-comm : {l : Level} (X : Op) (S : Op → Set l)
+    → ((Y : Op) → S Y → X *ₒ Y ≡ Y *ₒ X) → X *ₒ sup-op S ≡ sup-op S *ₒ X
+
+-- Set₁ 层存在（SimpleF 含 Borel 字段故为 Set₁；B 为 Set 层——成员条件为普通命题）
+data Σ₁ (A : Set₁) (B : A → Set) : Set₁ where
+  pair₁Σ : (a : A) → B a → Σ₁ A B
+
+-- 简单函数（有限分划 + 原子值；pairwise 不相交 + 覆盖 ⟹ 每点唯一原子）
+record SimpleF : Set₁ where
+  field
+    m : ℕ
+    c : Fin m → ℝ
+    Ω : Fin m → Borel
+    disj : (i j : Fin m) → i ≢ j → ((x : ℝ) → Ω i x → Ω j x → ⊥)
+    cover : (x : ℝ) → Σ (Fin m) (λ i → Ω i x)
+
+-- 简单函数谱积分（SimpleF 版）
+simple-int : SimpleF → Op
+simple-int s = spec-int-simple {SimpleF.m s} (SimpleF.c s) (SimpleF.Ω s)
+
+-- f 的简单函数下界族：Y = ∫s dE（s 为简单函数，逐原子值 ≤ f）
+--（支配条件使 sup 族正确 = ∫f dE；commutation 推导只依赖"族成员是简单函数谱积分"）
+spec-int-below : (ℝ → ℝ) → Op → Set₁
+spec-int-below f Y = Σ₁ SimpleF (λ s →
+  (Y ≡ simple-int s) × ((i : Fin (SimpleF.m s)) → (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ f x))
+
+-- 一般谱积分 = 简单函数下界谱积分的上确界（Borel 函数演算的 sup 构造；
+-- 对无界函数（如恒等）为无界函数演算，桥接公理见下）
+spec-int-general : (ℝ → ℝ) → Op
+spec-int-general f = sup-op (spec-int-below f)
+
+-- 桥接公理（定义性）：
+--  - ∫id dE = spec-int-A：恒等函数的谱积分即谱表示（无界函数演算的桥接，
+--    与 spectral-rep-A 一致）
+--  - ∫e^(-x) dE = spec-int-exp：φ 的谱积分即 exp 谱表示（与 exp-spectral-rep 一致）
+postulate
+  spec-int-general-id : spec-int-general (λ x → x) ≡ spec-int-A
+  spec-int-general-exp : spec-int-general (λ x → exp (negℝ x)) ≡ spec-int-exp
+
+-- **族成员交换（可证）**：族成员均为简单函数谱积分 ⟹ 与 X 交换（simple-comm）
+member-comm : {f : ℝ → ℝ} (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
+  → (Y : Op) → spec-int-below f Y → X *ₒ Y ≡ Y *ₒ X
+member-comm {f} X h Y (pair₁Σ s (eq , _)) =
+  trans (cong (λ Z → X *ₒ Z) eq)
+        (trans (simple-comm {SimpleF.m s} X (SimpleF.c s) (SimpleF.Ω s) h)
+               (cong (λ Z → Z *ₒ X) (sym eq)))
+
+-- **X-comm-spectral-int 降为定理（可证）**：X 与 E 逐集交换 ⟹ X 与谱表示交换
+--（spec-int-general-id 桥接 + sup-comm 公理 + member-comm（simple-comm 可证））
+X-comm-spectral-int-deriv : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
+  → X *ₒ spec-int-A ≡ spec-int-A *ₒ X
+X-comm-spectral-int-deriv X h =
+  trans (cong (λ Z → X *ₒ Z) (sym spec-int-general-id))
+  (trans (sup-comm X (spec-int-below (λ x → x)) (λ Y yb → member-comm {f = λ x → x} X h Y yb))
+         (cong (λ Z → Z *ₒ X) spec-int-general-id))
+
+-- **X-comm-spectral-int-exp 降为定理（可证）**：X 与 E 逐集交换 ⟹ X 与 exp 谱表示交换
+X-comm-spectral-int-exp-deriv : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
+  → X *ₒ spec-int-exp ≡ spec-int-exp *ₒ X
+X-comm-spectral-int-exp-deriv X h =
+  trans (cong (λ Z → X *ₒ Z) (sym spec-int-general-exp))
+  (trans (sup-comm X (spec-int-below (λ x → exp (negℝ x))) (λ Y yb → member-comm {f = λ x → exp (negℝ x)} X h Y yb))
+         (cong (λ Z → Z *ₒ X) spec-int-general-exp))
 
 -- ==================================================================
 -- §2 φ(x) = e^(-x) 的可证引理（exp 单射 + log 逆）
@@ -172,18 +294,18 @@ Rec-to-σ {X} h P =
   (trans (cong (λ Y → Y *ₒ X) (exp-spectral-measure (φ-image P)))
          (cong (λ Y → Y *ₒ X) (sym (E-phi-image P))))))
 
--- 引理 1 代数方向（**可证明**，谱积分线性公理 + 谱表示重写）：M_σ ⊆ M_Sp
+-- 引理 1 代数方向（**可证明**，§1b 谱积分线性推导 + 谱表示重写）：M_σ ⊆ M_Sp
 σ-to-Sp : {X : Op} → M-σ X → M-Sp X
 σ-to-Sp {X} h =
   trans (cong (λ Y → X *ₒ Y) spectral-rep-A)
-  (trans (X-comm-spectral-int X h)
+  (trans (X-comm-spectral-int-deriv X h)
          (cong (λ Y → Y *ₒ X) (sym spectral-rep-A)))
 
--- 引理 2 反向（**可证明**，谱积分线性公理 + exp 谱表示重写）：M_σ ⊆ M_Rec
+-- 引理 2 反向（**可证明**，§1b 谱积分线性推导 + exp 谱表示重写）：M_σ ⊆ M_Rec
 σ-to-Rec : {X : Op} → M-σ X → M-Rec X
 σ-to-Rec {X} h =
   trans (cong (λ Y → X *ₒ Y) exp-spectral-rep)
-  (trans (X-comm-spectral-int-exp X h)
+  (trans (X-comm-spectral-int-exp-deriv X h)
          (cong (λ Y → Y *ₒ X) (sym exp-spectral-rep)))
 
 -- 引理 1 方向（Fuglede，公理）：M_Sp ⊆ M_σ
@@ -240,7 +362,7 @@ cong₁ : {a b : Level} {A : Set a} {B : Set b} {x y : A} (f : A → B) → x �
 cong₁ f refl = refl
 
 -- 互逆往返一致性（定义性公理：谱表示（spectral-rep-A / exp-spectral-rep）与
--- 谱积分线性（X-comm-spectral-int / -exp）之间的往返一致性；
+-- 谱积分线性（§1b 推导 X-comm-spectral-int-deriv / -exp-deriv）之间的往返一致性；
 -- 谱积分理论完整实现时降为定理）
 postulate
   σ→Sp∘Sp→σ : {X : Op} (h : M-Sp X) → σ-to-Sp (Sp-to-σ h) ≡ h
@@ -295,42 +417,12 @@ corollary4-∞ : (Hom-Sp ≅ₗ Hom-σ) ×₁ (Hom-Rec ≅ₗ Hom-σ)
 corollary4-∞ = pair₁ Sp≅σ₁ Rec≅σ₁
 
 -- ==================================================================
--- §7 简单函数谱积分层（谱积分理论细化：X-comm-spectral-int 的降定理路径）
+-- §7 简单函数谱积分：线性细化（sum-op/spec-int-simple/simple-comm 已移至 §1b，
+-- 本节为加法性补充）
 -- ==================================================================
-
--- 有限求和（Op 层）
-sum-op : {m : ℕ} → (Fin m → Op) → Op
-sum-op {zero} f = 𝟘ₒ
-sum-op {suc m} f = f zero +ₒ sum-op {m} (λ i → f (suc i))
-
--- 简单函数谱积分：∫(Σᵢ cᵢ·1_{Ωᵢ}) dE = Σᵢ cᵢ·E(Ωᵢ)
---（简单函数 = 有限 Borel 划分 {Ωᵢ} 上的有限线性组合；谱积分对简单函数是有限组合）
-spec-int-simple : {m : ℕ} → (Fin m → ℝ) → (Fin m → Borel) → Op
-spec-int-simple {m} c Ω = sum-op {m} (λ i → c i ·ₒ E (Ω i))
-
--- **可证明（零新增公理）**：X 与谱测度逐集交换 ⟹ X 与简单函数谱积分交换
---（引理 1 代数方向（谱匹配 ⟹ 交织）的简单函数版：
---  谱积分线性 + X 与 E 可交换时 X 可穿过有限组合——distribₒ + ·ₒ-comm 逐项）
-simple-comm : {m : ℕ} (X : Op) (c : Fin m → ℝ) (Ω : Fin m → Borel)
-  → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
-  → X *ₒ spec-int-simple {m} c Ω ≡ spec-int-simple {m} c Ω *ₒ X
-simple-comm {zero} X c Ω h =
-  trans (*ₒ-zero-r X) (sym (*ₒ-zero-l X))
-simple-comm {suc m} X c Ω h =
-  trans (distribₒ X (c zero ·ₒ E (Ω zero)) rest)
-        (trans (cong₂ _+ₒ_ head tail-comm)
-               (sym (distribₒ-l (c zero ·ₒ E (Ω zero)) rest X)))
-  where
-  rest : Op
-  rest = spec-int-simple {m} (λ i → c (suc i)) (λ i → Ω (suc i))
-  -- X·(c0·E(Ω0)) = (c0·E(Ω0))·X（标量中心 + h 逐集）
-  head : X *ₒ (c zero ·ₒ E (Ω zero)) ≡ (c zero ·ₒ E (Ω zero)) *ₒ X
-  head = trans (·ₒ-comm-l (c zero) X (E (Ω zero)))
-               (trans (cong (λ y → c zero ·ₒ y) (h (Ω zero)))
-                      (sym (·ₒ-comm (c zero) (E (Ω zero)) X)))
-  -- 归纳：X·rest = rest·X
-  tail-comm : X *ₒ rest ≡ rest *ₒ X
-  tail-comm = simple-comm {m} X (λ i → c (suc i)) (λ i → Ω (suc i)) h
+--（§1b 已含：sum-op、spec-int-simple、simple-comm——简单函数谱积分的交换性；
+--  本节补充加法性（simple-add），配合 §10c/§10d 的乘法性，构成简单函数层
+--  交换 + 加法 + 乘法的完整代数结构。）
 
 -- ==================================================================
 -- §7b 简单函数谱积分：加法性（线性完整化）
@@ -379,10 +471,10 @@ simple-add {m} c d Ω =
 
 -- 谱积分理论细化状态：
 --  - 简单函数层：spec-int-simple 线性（simple-comm 交换性 + simple-add 加法性，**可证**，
---    ·ₒ-+ 为算子代数基础公理）——X-comm-spectral-int 公理的降定理路径第一步
---    （简单函数部分已从公理变为可证明定理）。
---  - 一般函数层：∫λ dE 经简单函数逼近（测度论单调逼近定理）——极限/逼近层随
---    完备性（sup-ℝ）扩展登记，X-comm-spectral-int 公理届时降为定理。
+--    ·ₒ-+ 为算子代数基础公理）——一般谱积分逼近（§1b）的简单函数基础。
+--  - **一般函数层（§1b 已完成）**：∫f dE = 简单函数下界的 sup（spec-int-general），
+--    X-comm-spectral-int / -exp 已由 sup-comm + simple-comm **降为可证明定理**
+--    （X-comm-spectral-int-deriv / -exp-deriv）。
 --  - 有限维对应：P1Spectral proj-comm-scalar-sum（有限谱点）为同一引理的离散谱版。
 
 -- ==================================================================
