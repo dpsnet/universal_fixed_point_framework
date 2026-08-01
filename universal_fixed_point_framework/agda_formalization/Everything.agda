@@ -10,6 +10,9 @@ module Everything where
 -- B7 ✅  静默定理组（CoherenceToBranching）
 -- B8 ✅  IFS 排序定理（IFSFractal）
 -- NatArith ✅  ℕ 算术引理库（闭合基础）
+-- P4 ✅  基数反例形式化（Cardinality：D 不 full + 4 态射枚举 + 鸽笼无双射 §5/§6）
+-- P1 🔄  谱匹配有限维特例（P1Spectral：定理 3 退化版 M_Sp = M_σ = M_Rec，代数方向可证）
+-- T3 🔄  谱定理层（SpectralTheory：谱测度/Fuglede/Hille-Yosida，引理 2 核心 M_Rec ⊆ M_σ 可证）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory
@@ -21,3 +24,6 @@ open import Unified3.Unified3Theorem
 open import BottTower.BottTower
 open import CoherenceToBranching.CoherenceToBranching
 open import IFSFractal.IFSFractal
+open import Cardinality.Cardinality
+open import P1Spectral.P1Spectral
+open import SpectralTheory.SpectralTheory

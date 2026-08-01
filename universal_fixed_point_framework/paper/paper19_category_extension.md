@@ -594,7 +594,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 中層:   ℒ ⊣ ι          (静态-动态转化，无条件)
         ↑                  ↑
 內層:   D ⊣ R           (谱-递归转化，Paper I)
-        (Paper I 定理 2.4.5，在 Rec_D 上严格)
+        (Paper I 定理 2.4.5，对象层与受限态射层严格，见 Paper I 注 2.4.5a)
 ```
 
 ### 13.5 与物理系统的对应
@@ -618,7 +618,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 
 ### 13.6 关键结论
 
-**定理 13.1**（框架完备性）。Paper I 的 $\mathbf{Rec}$ 与 Paper XIX 的 $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 通过三层伴随对构成一个封闭的范畴网络：
+**定理 13.1**（框架完备性）。Paper I 的 $\mathbf{Rec}$ 与 Paper XIX 的 $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 通过三层伴随对构成一个**部分闭合**的范畴网络：
 1. 任意 $\mathbf{Rec}$ 对象可静态化为 $\mathbf{Rec}_{\text{id}}$ 对象（$\mathcal{L}$）
 2. 任意 $\mathbf{Rec}_{\text{id}}$ 对象可在附加动力学数据后动态化为 $\mathbf{Rec}$ 对象（$\mathcal{D}yn$）
 3. 任意 $\mathbf{Rec}$ 对象可在超过噪声阈值后溶解为 $\Sigma$-$\mathbf{Rec}$ 对象（$\mathcal{D}iss$）
@@ -626,7 +626,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Sp}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）
 6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma$-$D(N) \cong D(R)$）
 
-*证明*：由 Paper I 定理 2.4.5（$D \dashv R$）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）、定理 8.5（谱等价桥 $\Sigma$-$D(N) \cong D(R)$）组合。∎
+*证明*：由 Paper I 定理 2.4.5（$D \dashv R$，对象层与受限态射层严格，见 Paper I 注 2.4.5a：有限维态射层结构性不可闭合，基数反例，定性为 S0 表示静默；无限维态射层依赖 T3 谱定理验证）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）、定理 8.5（谱等价桥 $\Sigma$-$D(N) \cong D(R)$）组合。∎
 
 **推论 13.1**（框架覆盖范围）。$\mathbf{Rec}/\mathbf{Sp}$ 框架统一覆盖了从纯确定性动力学（Paper I）到纯静态拓扑（Paper XIX §3）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的全部连续谱。框架可嵌入广泛物理系统；该穷尽性命题不属于当前可证明范围。
 

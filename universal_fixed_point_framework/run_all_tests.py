@@ -11,6 +11,9 @@ import time
 SCRIPTS = [
     # === Phase 60: 范畴理论绝对性验证 ===
     ("verify.run_all",                     "V1-V8 范畴理论验证 (8/8)"),
+    ("paperX_s0_sieve.py",                 "S0 表示静默筛结构验证 (7/7)：静默类不构成 sieve"),
+    ("paperX_s0_analytic.py",              "S0 静默遗留项解析 (6/6)：dim=n-1 闭式、S_D=1-√U 分布、非平凡演化"),
+    ("paperX_spectral_matching.py",        "P1 谱匹配三条件等价验证 (7/7)：交织/谱匹配/exp 交换解空间一致"),
 
     # === Phase 44: 谱 QFT 工具箱 (Paper XI) ===
     ("paperX_spectral_feynman.py",         "T2 谱 Feynman 规则"),

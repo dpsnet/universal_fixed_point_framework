@@ -209,8 +209,20 @@ branchIndex-moran-eq-1 = dH-from-branching
 -- 解的标准形式：ln 15 = log 15 / log(1/(e⁻¹))
 -- （对应 Lean: branchIndex_moran_solution 第二分量；
 --   由 moran_solution_iff + 1<15、0<e⁻¹、e⁻¹<1 得）
-postulate
-  ln15-solution-form : ln15 ≡ (log (natℝ 15) /ℝ log (natℝ 1 /ℝ (exp neg-oneℝ)))
+-- （**T3 阶段 4 闭合 2026-07-31**：log(1/(e⁻¹)) = -log(e⁻¹) = -(-1) = 1 [log-recip + log-exp + neg-neg]，
+--   故 log 15 / 1 = log 15 [div-one-ℝ]；不再是 postulate）
+ln15-solution-form : ln15 ≡ (log (natℝ 15) /ℝ log (natℝ 1 /ℝ (exp neg-oneℝ)))
+ln15-solution-form =
+  trans (sym (div-one-ℝ (log (natℝ 15))))
+        (cong₂ _/ℝ_ refl (sym lnlog-1))
+  where
+  lnlog-1 : log (natℝ 1 /ℝ (exp neg-oneℝ)) ≡ oneℝ
+  lnlog-1 =
+    trans (cong (λ x → log (x /ℝ (exp neg-oneℝ))) (natℝ-one))
+          (trans (cong (λ x → log (oneℝ /ℝ x)) (cong exp (neg-one-ℝ-def)))
+                 (trans (log-recip (exp (negℝ oneℝ)))
+                        (trans (cong negℝ (log-exp (negℝ oneℝ)))
+                               (neg-neg oneℝ))))
 
 -- BranchIndex Moran 方程的两个等价形式（对应 Lean: branchIndex_moran_solution）
 branchIndex-moran-solution :
@@ -292,9 +304,15 @@ activeLayer-independent l₁ l₂ hne ho = hne (toFin3-injective {l₁} {l₂} h
 -- ==================================================================
 
 -- 收缩率 r = e⁻¹ 的正性与小于 1（对应 Lean: r_uniform_pos / r_uniform_lt_one）
-postulate
-  r-uniform-pos : zeroℝ <ℝ exp neg-oneℝ
-  r-uniform-lt-one : exp neg-oneℝ <ℝ natℝ 1
+-- （**T3 阶段 4 闭合 2026-07-31**：正性 = exp-pos；< 1 经 exp-mono + -1<0 + exp 0 = 1）
+r-uniform-pos : zeroℝ <ℝ exp neg-oneℝ
+r-uniform-pos = exp-pos neg-oneℝ
+
+r-uniform-lt-one : exp neg-oneℝ <ℝ natℝ 1
+r-uniform-lt-one =
+  subst (λ y → exp neg-oneℝ <ℝ y) (sym natℝ-one)
+    (subst (λ y → exp neg-oneℝ <ℝ y) (exp-zero)
+           (exp-mono neg-one-lt-zero))
 
 -- 均匀 IFS（简化记录：映射数 + 均匀收缩率）
 record IFS : Set where
@@ -380,13 +398,64 @@ spacetime-emergence-4d = refl
 -- 静默维度权重 c₁ = e⁻³·e⁻ᵈ 严格低于静默阈值 S₄ = e⁻ᵈ
 -- （对应 Lean: silence_separation；nlinarith）
 -- （negℝ 定义于 DHStructural §0）
-postulate
-  silence-separation : {d : ℝ} → ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d))) <ℝ (exp (negℝ d))
+-- （**T3 阶段 4 闭合 2026-07-31**：e⁻³ < 1 [exp-mono + -3<0，-3 经 *-pos-mono + *-zero]，
+--   × e⁻ᵈ > 0 [exp-pos] 保序 [*-pos-mono]，1·e⁻ᵈ = e⁻ᵈ [*-ident]）
+silence-separation : {d : ℝ} → ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d))) <ℝ (exp (negℝ d))
+silence-separation {d} =
+  subst (λ x → x <ℝ exp (negℝ d))
+        (*-comm-ℝ (exp (negℝ d)) (exp (neg-oneℝ *ℝ natℝ 3)))
+    (subst (λ y → (exp (negℝ d) *ℝ exp (neg-oneℝ *ℝ natℝ 3)) <ℝ y)
+           (*-ident-ℝ (exp (negℝ d)))
+           (*-pos-mono-ℝ {a = exp (neg-oneℝ *ℝ natℝ 3)} {b = oneℝ} {c = exp (negℝ d)}
+                         (exp-pos (negℝ d)) exp-3-lt-1))
+  where
+  neg-3-lt-zero : (neg-oneℝ *ℝ natℝ 3) <ℝ zeroℝ
+  neg-3-lt-zero =
+    subst (λ x → x <ℝ zeroℝ) (sym (*-comm-ℝ neg-oneℝ (natℝ 3)))
+      (subst (λ y → (natℝ 3 *ℝ neg-oneℝ) <ℝ y) (*-zero-ℝ (natℝ 3))
+             (*-pos-mono-ℝ {a = neg-oneℝ} {b = zeroℝ} {c = natℝ 3}
+                           (natℝ-pos-embed z<s) neg-one-lt-zero))
+  exp-3-lt-1 : exp (neg-oneℝ *ℝ natℝ 3) <ℝ oneℝ
+  exp-3-lt-1 =
+    subst (λ y → exp (neg-oneℝ *ℝ natℝ 3) <ℝ y) (exp-zero)
+          (exp-mono neg-3-lt-zero)
 
 -- 分离裕度：S₄/c₁ = e³ > 1（对应 Lean: silence_margin；field_simp）
 -- （S₄ = e⁻ᵈ，c₁ = e⁻³·e⁻ᵈ，故 S₄/c₁ = e³，与 d 无关）
-postulate
-  silence-margin : {d : ℝ} → (exp (negℝ d) /ℝ ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d)))) ≡ exp (natℝ 3)
+-- （**T3 阶段 4 闭合 2026-07-31**：a/(b·a) = 1/b [/-cross + comm + one-mul]；
+--   1/e⁻³ = e³ [exp-add：e⁻³·e³ = e⁰ = 1，经 neg-one-mul + +-inv + exp-zero]；
+--   不再是 postulate）
+silence-margin : {d : ℝ} → (exp (negℝ d) /ℝ ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d)))) ≡ exp (natℝ 3)
+silence-margin {d} = trans qlem one-over-e-3
+  where
+  -- a/(b·a) = 1/b
+  qlem : (exp (negℝ d) /ℝ ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d))))
+       ≡ (oneℝ /ℝ (exp (neg-oneℝ *ℝ natℝ 3)))
+  qlem =
+    /-cross-ℝ
+      (trans (*-comm-ℝ (exp (negℝ d)) (exp (neg-oneℝ *ℝ natℝ 3)))
+             (sym (one-mul-ℝ ((exp (neg-oneℝ *ℝ natℝ 3)) *ℝ (exp (negℝ d))))))
+  -- e⁻³ = e^(-3)（neg-oneℝ·3 经 neg-one-ℝ-def + (-1)·x = -x）
+  e-3 : exp (neg-oneℝ *ℝ natℝ 3) ≡ exp (negℝ (natℝ 3))
+  e-3 =
+    trans (cong (λ y → exp (y *ℝ natℝ 3)) neg-one-ℝ-def)
+          (cong exp (neg-one-mul (natℝ 3)))
+  -- e⁻³·e³ = e⁰ = 1
+  exp-neg3-exp3 : (exp (negℝ (natℝ 3)) *ℝ exp (natℝ 3)) ≡ oneℝ
+  exp-neg3-exp3 =
+    trans (sym (exp-add (negℝ (natℝ 3)) (natℝ 3)))
+          (trans (cong exp (trans (+-comm-ℝ (negℝ (natℝ 3)) (natℝ 3)) (+-inv-ℝ (natℝ 3))))
+                 (exp-zero))
+  -- 1/e⁻³ = e³
+  one-over-e-3 : (oneℝ /ℝ (exp (neg-oneℝ *ℝ natℝ 3))) ≡ exp (natℝ 3)
+  one-over-e-3 =
+    trans (cong (λ y → oneℝ /ℝ y) e-3)
+          (trans (/-cross-ℝ cross) (div-one-ℝ (exp (natℝ 3))))
+    where
+    cross : (oneℝ *ℝ oneℝ) ≡ (exp (natℝ 3) *ℝ exp (negℝ (natℝ 3)))
+    cross =
+      trans (*-ident-ℝ oneℝ)
+            (sym (trans (*-comm-ℝ (exp (natℝ 3)) (exp (negℝ (natℝ 3)))) exp-neg3-exp3))
 
 -- ==================================================================
 -- §11 向外推：维数间隙与层正交性

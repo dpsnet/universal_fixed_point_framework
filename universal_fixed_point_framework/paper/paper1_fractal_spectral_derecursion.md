@@ -187,6 +187,13 @@ $$\mathrm{Hom}_{\mathbf{Sp}}(E, D(S)) \;\cong\; \mathrm{Hom}_{\mathbf{Rec}_D}(R(
 
 2. **态射对应**：$\mathbf{Sp}$ 中的谱交织条件 $T A_E \subseteq A_{D(S)} T$ 与 $\mathbf{Rec}_D$ 中的交换条件 $\Phi_S \circ f = f \circ \Phi_{R(E)}$ 在谱坐标下等价。事实上，后者即 $f$ 与 $e^{-A_E}$ 和 $\Phi_S$ 同时交换，前者即 $T$ 把 $A_E$ 的本征数据匹配到 $A_{D(S)}$ 的本征数据；两者都以“谱匹配”为枢纽建立双射。
 
+**注 C2.3b**（态射对应的语义限定——P1 分析，2026-07-31）。步骤 2 的"谱匹配双射"论证隐含假设态射 $f$ 为**有界线性算子**。该假设在框架 $\mathbf{Rec}$ 范畴中并非自动成立：$\mathbf{Rec}$ 的态射是状态空间之间的**集合映射**（`toFun : Fin n → Fin m`），仅在线性语义下才与谱交织条件的线性解空间对应。P1 分析（`notes/00_foundations/spectral_R11_morphism_layer.md`）表明：
+
+- **线性语义**（态射限制为有界线性谱匹配算子）：双射成立且为**恒等**——$\mathrm{Hom}_{\mathbf{Sp}}(E,D(S)) = M_\sigma = \mathrm{Hom}_{\mathbf{Rec}_D}(R(E),S)$ 是同一谱匹配方程的解集（经谱测度输送引理 + exp 单射引理；依赖 Fuglede 定理与 Hille–Yosida 前提）；
+- **集合语义**（态射为连续集合映射）：双射**不成立**（存在非线性谱匹配映射，如 $f(x)=\psi(\langle x,v\rangle)v$）。
+
+故定理 C2.3 的"态射层"须理解为**受限态射层（线性连续谱匹配映射）**；此无限维限定与有限维定理 2.4.5 的"受限态射层（转移矩阵）"语义连续。
+
 3. **单位与余单位**：单位 $\eta_E = \mathrm{id}_E$（由 $D(R(E)) \cong E$）；余单位 $\varepsilon_S: R(D(S)) \to S$ 取“忘却谱坐标”映射。三角恒等式由 $R \circ D$ 的幂等性（$D(R(D(S))) = D(S)$，构造保持谱不变）成立。□
 
 **注 C2.3a**（Freyd 定理的角色）。命题 C2.2 与定理 C2.3 的早期版本曾试图用 Freyd 伴随函子定理证明 $D \dashv R$ 的存在性，但该证明以 $D \dashv R$ 本身为前提导出解集条件，构成循环。本版改用上述显式构造，绕开 Freyd 定理；Freyd 定理可作为存在性的另一种视角，但不再是本证明链的必要环节。
@@ -203,9 +210,11 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
 
 **证明**。(1) 由 $R$ 的定义，$\mathbf{Sp}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Sp}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
 
-**定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立）。设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为构造 C2.2 给出的显式余伴随。则 $D\dashv R$ 严格成立。
+**定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立，有限维限定）。设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为构造 C2.2 给出的显式余伴随。则 $D\dashv R$ 在**对象层与受限态射层**（态射限制为转移矩阵 $D(f)$）上严格成立。
 
-**证明**。由构造 C2.2 与定理 C2.3，$R(E)$ 的显式定义直接给出自然同构 $\mathrm{Hom}_{\mathbf{Sp}}(E, D(S)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), S)$；单位 $\eta_E = \mathrm{id}_E$ 与余单位 $\varepsilon_S: R(D(S)) \to S$（忘却谱坐标）满足三角恒等式，详见定理 C2.3 的证明。□
+**证明**。由构造 C2.2 与定理 C2.3，$R(E)$ 的显式定义在 $D$ 的像子范畴上给出自然同构 $\mathrm{Hom}_{\mathbf{Sp}}(E, D(S)) \cong \mathrm{Hom}_{\mathbf{Rec}_D}(R(E), S)$；单位 $\eta_E = \mathrm{id}_E$ 与余单位 $\varepsilon_S: R(D(S)) \to S$（忘却谱坐标）满足三角恒等式，详见定理 C2.3 的证明。□
+
+**注 2.4.5a（态射层限定与基数反例）**。态射层限定是必要的：有限维原型中 $D$ 不 full。以 2 状态平凡系统（$\mathrm{step}=\mathrm{id}$）为例，$A_X=A_Y=I_2$，交织条件恒成立，故 $\mathrm{Hom}_{\mathbf{Sp}}(D(X),D(Y))=\mathbb{C}^4$（不可数），而 $\mathrm{Hom}_{\mathbf{Rec}}(X,Y)$ 仅有 4 个函数（有限）——不可数集与有限集间无双射，伴随自然同构在泛化态射层上不成立（$P=\begin{pmatrix}1&0\\1&1\end{pmatrix}$ 是合法谱态射但非任何转移矩阵）。因此"严格成立"仅指：**对象层 + 受限态射层（转移矩阵）在有限维严格**；无限维态射层的闭合路径是构造 C2.2/R11 断言——P1 分析（2026-07-31，`notes/00_foundations/spectral_R11_morphism_layer.md`）表明该断言在**线性语义**（受限态射层 = 有界线性谱匹配算子）下成立（恒等双射，见注 C2.3b），在**集合语义**（Rec 态射为连续集合映射）下不成立；无限维闭合声明须注明此限定，形式化依赖 T3 实分析层（Fuglede 定理/exp-log 函数演算/Hille–Yosida）。该不可表示性被定性为 **S0 表示静默**，完整分析见 `notes/00_foundations/spectral_representation_silence.md`。
 
 **注 2.4.6**。命题 2.4.4 表明 $D$ 函子的实质像是 $\mathbf{Sp}$ 在 $\mathbf{Rec}_D$ 中的反射子范畴。$D$ 仅定义在 $\mathbf{Rec}_D$ 上，而 $\eta_R$ 编码从一般动力学到其谱内容的规范投影——对于 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的对象，需通过 §7.9.1 的耗散拓展 $D_{\text{diss}}$ 处理。
 
@@ -258,7 +267,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 本节总结前述定义的适用范围，并讨论 $\mathbf{Rec}\setminus\mathbf{Rec}_D$ 的拓展处理。
 
-**定义域声明**。函子 $D$ 的定义域为 $\mathbf{Rec}_D$（定义 2.3.1），即 Koopman 算子谱在 $\log$ 映射下不产生负值的子范畴。前文定理 2.3.4–2.7.2 均在 $\mathbf{Rec}_D$ 内成立。$\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）、$D\dashv R$ 严格成立（定理 2.4.5）均已严格证明。
+**定义域声明**。函子 $D$ 的定义域为 $\mathbf{Rec}_D$（定义 2.3.1），即 Koopman 算子谱在 $\log$ 映射下不产生负值的子范畴。前文定理 2.3.4–2.7.2 均在 $\mathbf{Rec}_D$ 内成立。$\mathbf{Rec}_D$ 的子范畴合法性（命题 2.4.1）、Freyd 伴随定理前提继承（命题 2.4.2）、$D\dashv R$ 在对象层与受限态射层上严格成立（定理 2.4.5，态射层限定见注 2.4.5a）均已严格证明。
 
 **方法论区分**。框架内两类构造方式的对比：
 
@@ -435,7 +444,7 @@ $$d_{\mathcal{S}_R}(\Phi_R(S(x)), \Phi_R(S(y))) \le c \, d_{\mathcal{S}_R}(x,y),
 
 **证明**。弦图拉直方程由伴随的单位-余单位定义直接给出：单位 $\eta$ 的"杯"与余单位 $\varepsilon$ 的"帽"相互抵消，中间的线段拉直为恒等。在辫子范畴中，允许交叉存在；拉直过程中交叉次数 $k$ 被辫子关系保持（辫子同伦不改变总交叉数），故恒等式在辫子范畴层面严格成立。$\square$
 
-**推论 3.7g**（辫子三角恒等式与定理 2.4.5 的等价性）。定理 2.4.5 中 $D \dashv R$ 在 $\mathbf{Rec}_D$ 上的严格伴随性，是定理 3.7f 在辫子退化为对称（$k=0$）时的特例。
+**推论 3.7g**（辫子三角恒等式与定理 2.4.5 的等价性）。定理 2.4.5 中 $D \dashv R$ 在对象层与受限态射层上的严格伴随性，是定理 3.7f 在辫子退化为对称（$k=0$）时的特例。
 
 ### 3.5 轨道函子 $O$
 
@@ -1073,7 +1082,8 @@ $$A_\eta = A_R + \eta \cdot \delta A_N$$
 中層:   ℒ ⊣ ι          (静态-动态转化，无条件)
         ↑                  ↑
 內層:   D ⊣ R           (谱-递归转化，Paper I)
-        (本文定理 2.4.5 / 构造 C2.2，显式构造，非 Freyd 循环)
+        (本文定理 2.4.5 / 构造 C2.2，显式构造，非 Freyd 循环；
+         对象层与受限态射层严格，无限维态射层见注 2.4.5a)
 ```
 
 #### 5.8.5 框架完备性
@@ -1087,7 +1097,7 @@ $$A_\eta = A_R + \eta \cdot \delta A_N$$
 5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Sp}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）；
 6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma\text{-}D(N) \cong D(R)$）。
 
-*证明*：由本文定理 2.4.5 / 构造 C2.2（$D \dashv R$ 显式构造）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥）、定理 8.5（谱等价桥）组合。∎
+*证明*：由本文定理 2.4.5 / 构造 C2.2（$D \dashv R$ 显式构造，对象层与受限态射层严格，见注 2.4.5a）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥）、定理 8.5（谱等价桥）组合。∎
 
 **推论 5.32**（框架嵌入范围）。$\mathbf{Rec}/\mathbf{Sp}$ 框架可嵌入从纯确定性动力学（本文）到纯静态拓扑（Paper XIX）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的连续谱。在 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入的支撑下，任一以集合为底层对象的数学系统均可形式化地**嵌入**该框架。但“可嵌入”不等于“框架自然导出该系统的物理/数学结构”；作为物理预言理论的适用范围仍由桥梁假设与实验检验决定。
 

@@ -275,7 +275,7 @@ $$v(f_t)\le C\,e^{-\gamma t},\qquad \gamma=\min|\mathrm{Im}\,\omega|_{\text{通�
 | RAP-5e | 机制Ⅰ加权移位推广 + 机制Ⅱ散射理论接入 | 12.2.6 | 1–2 月 |
 | RAP-5f | 连续谱 Lean 基础设施（mathlib 对接） | 12.2.5 | 数月，工程 |
 
-完成 RAP-5a–5c 后，可诚实宣称"Rec/Sp 自伴骨架完备"；RAP-5d–5f 完成后才可宣称"Rec/Sp 范畴层完备"。在此之前，"所有核心理论开放问题已全部解决（7/7）"的原文表述应修正为"静默体系已闭合；范畴层完备化进行中，已知六项开放问题（RAP-5）"。
+完成 RAP-5a–5c 后，可诚实宣称"Rec/Sp 自伴骨架完备"——其中 RAP-5a 的完备性限于**对象层 + 受限态射层（转移矩阵）**，泛化态射层在有限维原型结构性不可闭合（S0 表示静默，见 §13.1 注 R11b），无限维态射层依赖 T3 谱定理验证；RAP-5d–5f 完成后才可宣称"Rec/Sp 范畴层完备"。在此之前，"所有核心理论开放问题已全部解决（7/7）"的原文表述应修正为"静默体系已闭合；范畴层完备化进行中，已知六项开放问题（RAP-5）"。
 
 ### 12.5 附：Paper XIX 在修复工程中的定位评估
 
@@ -293,16 +293,18 @@ $$v(f_t)\le C\,e^{-\gamma t},\qquad \gamma=\min|\mathrm{Im}\,\omega|_{\text{通�
 
 本节将 RAP-5a/5b/5c 从清单变为完成的修复（含数值验证），5d 给出部分结果并标注剩余缺口。RAP-5e/5f 如实保留为开放项。
 
-### 13.1 RAP-5a：余伴随的显式构造（绕开 Freyd 循环）✅ 已闭合
+### 13.1 RAP-5a：余伴随的显式构造（绕开 Freyd 循环）✅ 对象层与受限态射层闭合
 
 **构造 R11（余伴随 $R(E)$）**。对谱对象 $E=(\mathcal H_E,A_E,\sigma_E)$，定义递归系统 $R(E)$：状态空间 $\mathcal S_{R(E)}=\mathcal D(A_E)$（$A_E$ 的定义域，赋予图范数拓扑），演化映射 $\Phi_{R(E)}=e^{-A_E}|_{\mathcal D(A_E)}$（Hille–Yosida 保证的压缩半群在 $t=1$ 的值），时间半群 $\mathbb R_{\ge0}$，附加结构为谱测度 $E_{A_E}$。
 
 **定理 R11（$D\dashv R$ 的无循环证明）**。在 $D$ 的像（可对角化谱对象的全子范畴）上，$R$ 是 $D$ 的右伴随：存在自然同构
 $$\mathrm{Hom}_{\mathbf{Sp}}(E,\,D(S))\;\cong\;\mathrm{Hom}_{\mathbf{Rec}_D}(R(E),\,S).$$
 
-*证明*（直接验证，不引用 Freyd 定理）。**(i) 对象层**：$D(R(E))\cong E$，因 $A_{R(E)}=-\log U_{R(E)}=-\log e^{-A_E}=A_E$（$A_E$ 正自伴，$-\log$ 与 $\exp$ 在 $(0,1]$ 上互逆）——谱对象被精确重建（数值验证：$\sigma(A_E)=\{0.1,0.4,0.9\}$ 时 $A_{R(E)}$ 逐元复现）。**(ii) 态射层**：$\mathbf{Sp}$ 的谱交织条件 $TA_E\subseteq A_{D(S)}T$ 将对角谱对象间的 $T$ 压缩为谱匹配数据（数值验证：谱无交集时 $\mathrm{Hom}_{\mathbf{Sp}}$ 维数为 0，非匹配元强制为零）；右側 $\mathrm{Hom}_{\mathbf{Rec}_D}(R(E),S)$ 的态射由定义满足 $\Phi_S\circ f=f\circ\Phi_{R(E)}$，即 $f$ 与 $e^{-A_E}$、$\Phi_S$ 同时交换，同样压缩为谱匹配数据；两边以谱匹配为枢纽建立双射。**(iii) 单元/余单元与三角恒等式**：单元 $\eta_E=\mathrm{id}_E$（由 $D(R(E))\cong E$），余单元 $\varepsilon_S:R(D(S))\to S$ 取"忘却谱坐标"映射；三角恒等式由 $R\circ D$ 的幂等性（$D(R(D(S)))=D(S)$，构造保持谱不变）成立。$\square$
+*证明*（直接验证，不引用 Freyd 定理）。**(i) 对象层**：$D(R(E))\cong E$，因 $A_{R(E)}=-\log U_{R(E)}=-\log e^{-A_E}=A_E$（$A_E$ 正自伴，$-\log$ 与 $\exp$ 在 $(0,1]$ 上互逆）——谱对象被精确重建（数值验证：$\sigma(A_E)=\{0.1,0.4,0.9\}$ 时 $A_{R(E)}$ 逐元复现）。**(ii) 态射层（对非简并谱对象）**：$\mathbf{Sp}$ 的谱交织条件 $TA_E\subseteq A_{D(S)}T$ 将对角谱对象间的 $T$ 压缩为谱匹配数据（数值验证：谱无交集时 $\mathrm{Hom}_{\mathbf{Sp}}$ 维数为 0，非匹配元强制为零）；右側 $\mathrm{Hom}_{\mathbf{Rec}_D}(R(E),S)$ 的态射由定义满足 $\Phi_S\circ f=f\circ\Phi_{R(E)}$，即 $f$ 与 $e^{-A_E}$、$\Phi_S$ 同时交换，同样压缩为谱匹配数据；两边以谱匹配为枢纽在**受限态射层**（转移矩阵）上建立双射。**(iii) 单元/余单元与三角恒等式**：单元 $\eta_E=\mathrm{id}_E$（由 $D(R(E))\cong E$），余单元 $\varepsilon_S:R(D(S))\to S$ 取"忘却谱坐标"映射；三角恒等式由 $R\circ D$ 的幂等性（$D(R(D(S)))=D(S)$，构造保持谱不变）成立。$\square$
 
 **注 R11a（修复的意义与边界）**。定理 R11 用显式构造替代了命题 C2.2 的循环论证（原证明以 $D\dashv R$ 为前提论证解集条件）。边界：(i) 证明在 $D$ 的像的子范畴上严格，$\mathbf{Sp}$ 全域上需要谱对象可对角化（自伴情形由谱定理保证，无条件）；(ii) 连续谱情形 $\mathcal D(A_E)$ 的 RKHS 结构需要 13.3 的零模处理配合。**与 Paper XIX 的关系**：三层伴随对嵌套 $D\dashv R\subset\mathcal{L}\dashv\iota\subset\mathcal{S}el\dashv\mathcal{D}iss$ 的内层由此获得独立证明，Paper XIX 的完备性定理 5.32 不再依赖循环前提（§12.5 的结构性局限 (a) 解除）。
+
+**注 R11b（态射层结构性边界：S0 表示静默）**。定理 R11 的态射层同构在**有限维原型中不普遍成立**：以 2 状态平凡系统（$\mathrm{step}=\mathrm{id}$）为例，$A_X=A_Y=I_2$，谱交织条件恒成立，故 $\mathrm{Hom}_{\mathbf{Sp}}(D(X),D(Y))=\mathbb{C}^4$（不可数），而 $\mathrm{Hom}_{\mathbf{Rec}}(X,Y)$ 仅有 4 个函数（有限）——不可数集与有限集间无双射，D 的 full 性为假（$P=\begin{pmatrix}1&0\\1&1\end{pmatrix}$ 是合法谱态射但非任何转移矩阵）。因此 R11 的闭合范围须限定为**对象层 + 受限态射层（转移矩阵）**；简并/平凡谱对象上的泛化态射层结构性不可闭合。该不可表示性被定性为 **S0 表示静默**（四层静默体系扩为五层），完整推导见 `notes/00_foundations/spectral_representation_silence.md`；无限维态射层的谱匹配断言依赖 T3 谱定理验证（论文 R11 主张，未形式化）。本方案 §13.1 标题标注已相应修正。
 
 ### 13.2 RAP-5b：$\mathbf{Rec}_D$ 的内在刻画（无 $D$ 引用）✅ 已闭合
 
