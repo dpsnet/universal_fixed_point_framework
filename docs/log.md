@@ -775,3 +775,41 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.59。
 
 **阶段 6 状态**：① 核心闭环（A 侧 + exp 侧谱积分线性降定理）。待推进：①' 余项（t 侧 X-comm-spectral-int-exp-t 同机制推导，需 exp-tA 谱侧于 §8c 后）+ 无界逼近细节；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并）。
+
+---
+
+【t 侧谱积分线性降定理：三个谱积分线性公理全部降为可证明定理（2026-08-01）】
+
+1. **§1b 泛化**：新增 **`X-comm-spec-int-general`**（X 与 E 逐集交换 ⟹ 与任意一般谱积分 ∫f dE 交换——sup-comm + member-comm）；`X-comm-spectral-int-deriv` / `-exp-deriv` 重构为其特化（消除重复 sup-comm 内联）。
+2. **§8c 降定理**：桥接公理 `spec-int-general-phi-t`（∫φ_t dE = e^(-tA)，φ_t 以显式 λ 避免对 §8 的前向引用）+ **`σ-to-Rec-t` 改用推导版**（M_σ ⟹ X·e^(-tA) = e^(-tA)·X：X-comm-spec-int-general (f=φ_t) + 桥接；无需 0<t、无需 E-exp-tA 中间步）——**原 `X-comm-spectral-int-exp-t` 公理删除**。
+3. **意义**：A 侧 / exp 侧 / t 侧三个谱积分线性公理全部为可证明定理——谱积分线性（∫ 与交换子代数）不再占 postulate 名额；t 侧推导统一到 §1b 的 sup 逼近机制。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.60。
+
+**阶段 6 状态**：三个谱积分线性公理全部降定理（① 核心完成）。待推进：①' 无界逼近细节（spec-int-general 对无界 f 的 sup 收敛细节）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并）。
+
+---
+
+【Fuglede 引理 1 代数部分：交织 ⟹ A 的多项式交换（2026-08-01）】
+
+1. **§3b（SpectralTheory，零新增公理）**：
+   - **`scalar-sum-comm`（可证）**：X 与族元逐点交换 ⟹ X 与标量加权和交换——一般版（simple-comm 的泛化：Y = E∘Ω 即 simple-comm；P1Spectral proj-comm-scalar-sum 的同构）。
+   - `A-power`（Aⁿ 定义）+ **`A-power-comm`（可证）**：X·A = A·X ⟹ X·Aⁿ = Aⁿ·X——归纳（*ₒ-assoc + h 传递 + 单位律）。
+   - `poly-A`（p(A) = Σᵢ aᵢ·A^{nᵢ}）+ **`poly-A-comm`（可证）**：X·A = A·X ⟹ X 与 A 的多项式交换——scalar-sum-comm + A-power-comm 逐幂。
+2. **意义**：Fuglede 引理 1（交织 ⟹ 谱匹配，intertwine-imp-spectral 公理）的谱积分证明的**代数核心**——X 与 A 交换 ⟹ 与 A 的多项式交换。待：连续函数逼近（多项式稠密）⟹ X 与 fc(f) 交换 + 指示桥接（E(P) = 1_P(A)）⟹ 公理降为定理。
+3. **排坑**：隐参数 `{X}` 需在子句模式中显式绑定（`A-power-comm {X} h zero` / `poly-A-comm {X} h {m} a n`），否则 NotInScope。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.61。
+
+**阶段 6 状态**：Fuglede 引理 1 代数核心完成（poly-A-comm 可证）。待推进：③' 余项（连续函数逼近 + 指示桥接 ⟹ intertwine-imp-spectral 降定理）；①' 无界逼近细节；②' Hille-Yosida 范数/拓扑层；σ-可加性（可数并）。
+
+---
+
+【Fuglede fc 连接步：多项式函数的函数演算交换（2026-08-01）】
+
+1. **§5b（SpectralTheory）**：
+   - `sum-ℝ`（ℝ 值有限求和）+ `ℝ-power`（xⁿ）+ `poly-fn`（多项式函数 p(x) = Σᵢ aᵢ·x^{nᵢ}）——零新增公理。
+   - 桥接公理 `fc-poly`：多项式函数的函数演算 = A 的多项式（p(A) = Σᵢ aᵢ·A^{nᵢ}，定义性——标准 Borel fc 性质，注明降定理路径）。
+   - **`X-comm-fc-poly`（可证）**：X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）——fc-poly + poly-A-comm 组合。
+2. **意义**：§3b 的代数核心（poly-A-comm）连接到抽象函数演算 fc——Fuglede 引理 1（交织 ⟹ 谱匹配）证明链：交织 ⟹ 多项式交换（§3b）⟹ fc 多项式交换（§5b）⟹ [待] 连续逼近（Weierstrass 多项式稠密）⟹ 指示桥接（E(P) = 1_P(A)）⟹ intertwine-imp-spectral 降为定理。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.62。
+
+**阶段 6 状态**：Fuglede 证明链完成代数核心 + fc 连接步。待推进：③' 余项（连续函数逼近 + 指示桥接 ⟹ intertwine-imp-spectral 降定理）；①' 无界逼近细节；②' Hille-Yosida 范数/拓扑层；σ-可加性（可数并）。

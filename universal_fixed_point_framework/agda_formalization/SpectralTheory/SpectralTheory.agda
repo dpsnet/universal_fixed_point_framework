@@ -215,21 +215,30 @@ member-comm {f} X h Y (pair₁Σ s (eq , _)) =
         (trans (simple-comm {SimpleF.m s} X (SimpleF.c s) (SimpleF.Ω s) h)
                (cong (λ Z → Z *ₒ X) (sym eq)))
 
+-- **泛化谱积分交换（可证）**：X 与 E 逐集交换 ⟹ X 与任意一般谱积分 ∫f dE 交换
+--（sup-comm + member-comm（simple-comm 可证）；X-comm-spectral-int / -exp / -exp-t
+--  均为其特化）
+X-comm-spec-int-general : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X) → (f : ℝ → ℝ)
+  → X *ₒ spec-int-general f ≡ spec-int-general f *ₒ X
+X-comm-spec-int-general X h f =
+  sup-comm X (spec-int-below f) (λ Y yb → member-comm {f = f} X h Y yb)
+
 -- **X-comm-spectral-int 降为定理（可证）**：X 与 E 逐集交换 ⟹ X 与谱表示交换
---（spec-int-general-id 桥接 + sup-comm 公理 + member-comm（simple-comm 可证））
+--（spec-int-general-id 桥接 + X-comm-spec-int-general（f = id））
 X-comm-spectral-int-deriv : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
   → X *ₒ spec-int-A ≡ spec-int-A *ₒ X
 X-comm-spectral-int-deriv X h =
   trans (cong (λ Z → X *ₒ Z) (sym spec-int-general-id))
-  (trans (sup-comm X (spec-int-below (λ x → x)) (λ Y yb → member-comm {f = λ x → x} X h Y yb))
+  (trans (X-comm-spec-int-general X h (λ x → x))
          (cong (λ Z → Z *ₒ X) spec-int-general-id))
 
 -- **X-comm-spectral-int-exp 降为定理（可证）**：X 与 E 逐集交换 ⟹ X 与 exp 谱表示交换
+--（spec-int-general-exp 桥接 + X-comm-spec-int-general（f = e^(-x)））
 X-comm-spectral-int-exp-deriv : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
   → X *ₒ spec-int-exp ≡ spec-int-exp *ₒ X
 X-comm-spectral-int-exp-deriv X h =
   trans (cong (λ Z → X *ₒ Z) (sym spec-int-general-exp))
-  (trans (sup-comm X (spec-int-below (λ x → exp (negℝ x))) (λ Y yb → member-comm {f = λ x → exp (negℝ x)} X h Y yb))
+  (trans (X-comm-spec-int-general X h (λ x → exp (negℝ x)))
          (cong (λ Z → Z *ₒ X) spec-int-general-exp))
 
 -- ==================================================================
@@ -313,6 +322,70 @@ Sp-to-σ : {X : Op} → M-Sp X → M-σ X
 Sp-to-σ {X} h P = intertwine-imp-spectral X h P
 
 -- ==================================================================
+-- §3b Fuglede 引理 1 的代数部分（交织 ⟹ A 的多项式交换）
+-- ==================================================================
+-- 目标：引理 1 的谱积分证明（Sp-to-σ 方向降定理）的第一步——
+-- X·A = A·X ⟹ X 与 A 的每个幂、每个多项式交换。
+-- 后续步骤（连续函数逼近：多项式稠密；指示桥接：E(P) = 1_P(A)）随逼近层扩展登记，
+-- 届时 intertwine-imp-spectral（Fuglede 方向公理）降为定理。
+-- 本层零新增公理（纯算子代数：*ₒ-assoc / ·ₒ-comm / distribₒ）。
+
+-- **可证明**：X 与一族元逐点交换 ⟹ X 与它们的标量加权和交换（一般版）
+--（simple-comm 的泛化（Y = E∘Ω 即 simple-comm）；P1Spectral proj-comm-scalar-sum 的同构）
+scalar-sum-comm : (X : Op) {m : ℕ} (a : Fin m → ℝ) (Y : Fin m → Op)
+  → ((i : Fin m) → X *ₒ Y i ≡ Y i *ₒ X)
+  → X *ₒ sum-op {m} (λ i → a i ·ₒ Y i) ≡ sum-op {m} (λ i → a i ·ₒ Y i) *ₒ X
+scalar-sum-comm X {zero} a Y h =
+  trans (*ₒ-zero-r X) (sym (*ₒ-zero-l X))
+scalar-sum-comm X {suc m} a Y h =
+  trans (distribₒ X (a zero ·ₒ Y zero) rest)
+        (trans (cong₂ _+ₒ_ head tail)
+               (sym (distribₒ-l (a zero ·ₒ Y zero) rest X)))
+  where
+  rest : Op
+  rest = sum-op {m} (λ i → a (suc i) ·ₒ Y (suc i))
+  -- X·(a0·Y0) = (a0·Y0)·X（标量中心 + h zero）
+  head : X *ₒ (a zero ·ₒ Y zero) ≡ (a zero ·ₒ Y zero) *ₒ X
+  head = trans (·ₒ-comm-l (a zero) X (Y zero))
+               (trans (cong (λ y → a zero ·ₒ y) (h zero))
+                      (sym (·ₒ-comm (a zero) (Y zero) X)))
+  -- 归纳：X·rest = rest·X
+  tail : X *ₒ rest ≡ rest *ₒ X
+  tail = scalar-sum-comm X {m} (λ i → a (suc i)) (λ i → Y (suc i)) (λ i → h (suc i))
+
+-- A 的幂（算子代数中 Aⁿ）
+A-power : ℕ → Op
+A-power zero = 𝟙ₒ
+A-power (suc n) = A *ₒ A-power n
+
+-- **可证明**：X·A = A·X ⟹ X·Aⁿ = Aⁿ·X（归纳；*ₒ-assoc + h 传递）
+A-power-comm : {X : Op} → X *ₒ A ≡ A *ₒ X → (n : ℕ) → X *ₒ A-power n ≡ A-power n *ₒ X
+A-power-comm {X} h zero =
+  trans (*ₒ-ident X) (sym (*ₒ-ident-l X))
+A-power-comm {X} h (suc n) =
+  trans (sym (*ₒ-assoc X A (A-power n)))
+  (trans (cong (λ Y → Y *ₒ A-power n) h)
+  (trans (*ₒ-assoc A X (A-power n))
+  (trans (cong (λ Y → A *ₒ Y) (A-power-comm {X} h n))
+         (sym (*ₒ-assoc A (A-power n) X)))))
+
+-- A 的多项式（算子代数版）：p(A) = Σᵢ aᵢ·A^{nᵢ}
+poly-A : {m : ℕ} → (Fin m → ℝ) → (Fin m → ℕ) → Op
+poly-A {m} a n = sum-op {m} (λ i → a i ·ₒ A-power (n i))
+
+-- **可证明**：X·A = A·X ⟹ X 与 A 的多项式交换
+--（scalar-sum-comm + A-power-comm 逐幂；Fuglede 引理 1 的谱积分证明的代数核心）
+poly-A-comm : {X : Op} → X *ₒ A ≡ A *ₒ X → {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ)
+  → X *ₒ poly-A {m} a n ≡ poly-A {m} a n *ₒ X
+poly-A-comm {X} h {m} a n = scalar-sum-comm X {m} a (λ i → A-power (n i)) (λ i → A-power-comm {X} h (n i))
+
+-- Fuglede 引理 1 的谱积分证明状态：
+--  - 代数核心完成（poly-A-comm **可证**，零新增公理）。
+--  - 待：连续函数逼近（多项式稠密）⟹ X 与连续函数演算 fc(f) 交换；
+--    指示桥接（E(P) = 1_P(A)）⟹ X·E(P) = E(P)·X——届时
+--    intertwine-imp-spectral（Fuglede 方向公理）降为定理。
+
+-- ==================================================================
 -- §4 定理 3（无限维版）：M_Sp = M_σ = M_Rec（线性语义下谱匹配双射）
 -- ==================================================================
 
@@ -352,6 +425,49 @@ corollary5 : recon-op ≡ A
 corollary5 =
   trans recon-op-fc
         (trans (fc-ext (λ x → neg-log-phi-id x)) fc-id)
+
+-- ==================================================================
+-- §5b 函数演算的多项式交换（Fuglede 证明的 fc 连接步）
+-- ==================================================================
+-- 目标：将 §3b 的代数核心（poly-A-comm：X 与 A 的多项式交换）连接到
+-- 抽象函数演算 fc——X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）。
+-- 后续步骤（连续函数逼近：fc(f) = sup{fc(p) : p 多项式 ≤ f} + 指示桥接
+-- E(P) = 1_P(A)）随逼近层扩展登记，届时 intertwine-imp-spectral 降为定理。
+-- 本层仅新增桥接公理 fc-poly（函数演算保持多项式，标准 Borel fc 性质）。
+
+-- ℝ 值有限求和（多项式函数值的载体）
+sum-ℝ : {m : ℕ} → (Fin m → ℝ) → ℝ
+sum-ℝ {zero} f = zeroℝ
+sum-ℝ {suc m} f = f zero +ℝ sum-ℝ {m} (λ i → f (suc i))
+
+-- ℝ 幂（xⁿ）
+ℝ-power : ℕ → ℝ → ℝ
+ℝ-power zero x = oneℝ
+ℝ-power (suc n) x = x *ℝ ℝ-power n x
+
+-- 多项式函数：p(x) = Σᵢ aᵢ·x^{nᵢ}
+poly-fn : {m : ℕ} → (Fin m → ℝ) → (Fin m → ℕ) → (ℝ → ℝ)
+poly-fn {m} a n x = sum-ℝ {m} (λ i → a i *ℝ ℝ-power (n i) x)
+
+-- 桥接公理（定义性）：多项式函数的函数演算 = A 的多项式
+--（函数演算保持多项式：p(A) = Σᵢ aᵢ·A^{nᵢ}；标准 Borel 函数演算性质，
+--  函数演算经谱积分完整实现时降为定理）
+postulate
+  fc-poly : {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ) → fc (poly-fn {m} a n) ≡ poly-A {m} a n
+
+-- **可证明**：X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）
+--（fc-poly 桥接 + poly-A-comm；Fuglede 引理 1 证明的 fc 连接步）
+X-comm-fc-poly : {X : Op} → X *ₒ A ≡ A *ₒ X → {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ)
+  → X *ₒ fc (poly-fn {m} a n) ≡ fc (poly-fn {m} a n) *ₒ X
+X-comm-fc-poly {X} h {m} a n =
+  trans (cong (λ Z → X *ₒ Z) (fc-poly {m} a n))
+  (trans (poly-A-comm {X} h {m} a n)
+         (cong (λ Z → Z *ₒ X) (sym (fc-poly {m} a n))))
+
+-- Fuglede 证明的 fc 连接状态：
+--  - 多项式 fc 交换完成（X-comm-fc-poly **可证**，fc-poly 桥接公理）。
+--  - 待：连续函数逼近（Weierstrass：多项式稠密 ⟹ fc(f) = sup{fc(p)}）
+--    ⟹ X 与连续 fc(f) 交换；指示桥接（E(P) = 1_P(A)）⟹ X·E(P) = E(P)·X。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
@@ -589,21 +705,20 @@ Rec-t-to-σ {X} t ht h P =
 M-Rec-t : ℝ → Op → Set
 M-Rec-t t X = X *ₒ exp-tA t ≡ exp-tA t *ₒ X
 
--- 谱积分线性对 e^(-tA)（谱论基础公理；降定理路径同 X-comm-spectral-int：简单函数层
--- simple-comm 已证，一般函数经逼近待完备性扩展）
+-- 桥接公理（定义性）：∫φ_t dE = e^(-tA)——φ_t(x) = e^(-tx) 的谱积分即 exp-tA t
+--（与 exp-spectral-rep（t=1）一致；§1b 的 spec-int-general 对 φ_t 的谱表示）
 postulate
-  X-comm-spectral-int-exp-t : (t : ℝ) (X : Op)
-    → ((P : Borel) → X *ₒ E-exp-tA t P ≡ E-exp-tA t P *ₒ X)
-    → X *ₒ exp-tA t ≡ exp-tA t *ₒ X
+  spec-int-general-phi-t : (t : ℝ) → spec-int-general (λ x → exp (negℝ (t *ℝ x))) ≡ exp-tA t
 
--- **可证明**：M_σ ⊆ M-Rec-t（谱匹配 ⟹ X 与 e^(-tA) 交换）
--- 链：X·E-exp-tA t P = E-exp-tA t P·X [M_σ + 谱测度复合 exp-tA-spectral-measure]
---   ⟹ X·e^(-tA) = e^(-tA)·X [X-comm-spectral-int-exp-t]
+-- **可证明（§1b 机制推导）**：M_σ ⊆ M-Rec-t（谱匹配 ⟹ X 与 e^(-tA) 交换）
+-- 链：X-comm-spec-int-general（E 逐集交换 ⟹ 与一般谱积分 ∫φ_t dE 交换）
+--   + spec-int-general-phi-t（桥接 ∫φ_t dE = e^(-tA)）
+--（原 X-comm-spectral-int-exp-t 公理已删除——本推导为其降定理版）
 σ-to-Rec-t : {X : Op} (t : ℝ) → M-σ X → M-Rec-t t X
-σ-to-Rec-t {X} t h = X-comm-spectral-int-exp-t t X (λ P →
-  trans (cong (λ Y → X *ₒ Y) (exp-tA-spectral-measure t P))
-  (trans (h (λ x → P (φ-t t x)))
-         (cong (λ Y → Y *ₒ X) (sym (exp-tA-spectral-measure t P)))))
+σ-to-Rec-t {X} t h =
+  trans (cong (λ Z → X *ₒ Z) (sym (spec-int-general-phi-t t)))
+  (trans (X-comm-spec-int-general X h (λ x → exp (negℝ (t *ℝ x))))
+         (cong (λ Z → Z *ₒ X) (spec-int-general-phi-t t)))
 
 -- **定理 3 的半群参数化（0 < t）**：M-Rec-t ⟺ M_σ（e^(-tA) 谱匹配双射）
 theorem3-t : {X : Op} (t : ℝ) → zeroℝ <ℝ t → (M-Rec-t t X → M-σ X) ×₁ (M-σ X → M-Rec-t t X)
