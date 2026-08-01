@@ -619,3 +619,143 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.47。
 
 **阶段 6 状态**：① 谱积分细化第一步完成（简单函数层可证）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；② Hille-Yosida 完整层（强连续/压缩）；③ Fuglede 引理 1 的谱积分证明。
+
+---
+
+【Hille-Yosida 谱侧基础（2026-08-01）】
+
+1. **`semigroup-comm` 可证明（零新增公理）**：e^(-sA)·e^(-tA) = e^(-tA)·e^(-sA)——semigroup 方程（s t 与 t s）+ +-comm-ℝ。
+2. **φ_t 值域可证**：`φ-t t x = exp (negℝ (t *ℝ x))`；`phi-t-pos`（0 < e^(-tx)，exp-pos）、`phi-t-lt-one`（t、x ≥ 0 ⟹ e^(-tx) ≤ 1：*-≤-mono-ℝ 证 t·x ≥ 0 [0·x = 0 经 zero-mul] → neg-≤-ℝ 证 -tx ≤ 0 → exp-mono-≤ + exp-zero ⟹ ≤ 1）——⟹ e^(-tA) 谱支集 ⊆ (0,1]（压缩性谱侧）。**subst 方向修正 2 处**：neg-zero/exp-zero 均需正向（非 sym）。
+3. **`exp-tA-spectral-measure` 公理**：E_{e^(-tA)}(P) = E(φ_t⁻¹P)（谱映射定理谱测度形式，同 exp-spectral-measure 的 t 参数化）+ `intertwine-exp-tA-imp-spectral`（e^(-tA) 侧 Fuglede）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.48。
+
+**阶段 6 状态**：Hille-Yosida 谱侧基础完成。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层（压缩范数、强连续、生成元，需 Hilbert 空间层）；③ Fuglede 引理 1 谱积分证明。
+
+---
+
+【简单函数谱积分加法性（2026-08-01）】
+
+1. **`·ₒ-+` 算子代数补充公理**（P1Spectral §1 最小算子代数未含标量分配）：(a+ℝb)·ₒ x ≡ a·ₒ x +ₒ b·ₒ x（标准算子代数内容）。
+2. **可证明引理链**：`swap-pairₒ`（(a+b)+(c+d) = (a+c)+(b+d)，assoc/comm 链）、`sum-op-congₒ`（求和逐点同余）、`sum-op-+`（Σ(f+g) = Σf + Σg）、**`simple-add`**（∫(f+g) dE = ∫f dE + ∫g dE，零新增公理）——简单函数谱积分**线性完整化**（simple-comm 交换 + simple-add 加法），X-comm-spectral-int 公理降定理路径第二步。
+3. **排坑**：`+ₒ-comm` 为**三参数**（x y z，z 未用）；`swap-pairₒ` 末步需 `+ₒ-assoc (a+ₒc) b d` **正向**（非 sym）——链中 RHS 衔接要求 `((a+c)+b)+d ≡ (a+c)+(b+d)` 方向。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.49。
+
+**阶段 6 状态**：简单函数谱积分线性完整化完成（交换 + 加法可证）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明。
+
+---
+
+【引理 2 的 t 参数化：谱映射谱测度族等价（2026-08-01）】
+
+1. **可证引理链（§8b）**：`neg-inj`（-a≡-b ⟹ a≡b，neg-neg）+ `t-mul-inj`（0<t ⟹ t·x=t·y ⟹ x=y：trichotomy-ℝ 三分 + *-pos-mono-ℝ 严格单调 + irreflexive-ℝ 排除两严格分支）+ `phi-t-inj`（φ_t 单射：exp-inj + neg-inj + t-mul-inj）+ `φ-t-image`/`φ-t-image-roundtrip`（谱测度输送往返，φ_t 版）/`E-phi-t-image`。
+2. **`Rec-t-to-σ`（可证明）**：X·e^(-tA)=e^(-tA)·X ⟹ 与 A 谱测度交换（0<t）——Fuglede 对 e^(-tA) → exp-tA-spectral-measure → E-phi-t-image 回 P。谱映射定理 + exp 单射 ⟹ 谱测度族等价的**完整形式**（§3 Rec-to-σ 的 t 泛化，连接 Hille-Yosida 谱侧）。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.50。
+
+**阶段 6 状态**：谱映射谱测度族等价（Rec-t-to-σ）完成。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明。
+
+---
+
+【定理 3 的半群参数化：e^(-tA) 谱匹配双射（2026-08-01）】
+
+1. **§8c**：`M-Rec-t`（e^(-tA) 交换条件，t 参数化）+ `X-comm-spectral-int-exp-t`（谱积分线性对 e^(-tA)，谱论基础公理，降定理路径同 X-comm-spectral-int）。
+2. **`σ-to-Rec-t`（可证明）**：M_σ ⊆ M-Rec-t——X·E-exp-tA t P = E-exp-tA t P·X（M_σ + 谱测度复合 exp-tA-spectral-measure）⟹ X·e^(-tA) = e^(-tA)·X（谱积分线性）。
+3. **`theorem3-t`**：M-Rec-t ⟺ M_σ（0<t，组合 Rec-t-to-σ + σ-to-Rec-t）——**谱映射的 M 条件对任意 e^(-tA) 完整**。定理 3 家族：A 版（§4）+ e^(-A) 版（§3）+ e^(-tA) 版（§8c）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.51。
+
+**阶段 6 状态**：定理 3 半群参数化完成（e^(-tA) 谱匹配双射）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明。
+
+---
+
+【P1 无限维闭合结论 + 公理纪律审计（2026-08-01）】
+
+1. **§9 `P1-linear-closure`**：P1 线性语义闭合 = 对象重建 × Hom 双射——record（obj-recon : recon-op ≡ A + hom-bij : (Hom-Sp ≅ₗ Hom-σ) ×₁ (Hom-Rec ≅ₗ Hom-σ)）；`p1-linear-closure` 组装（corollary5 + corollary4-∞，全部组件可证）。对应 P1 笔记 §8 推荐裁决：**线性语义下伴随无限维闭合**（对象可重建 + 态射层谱匹配双射 = 恒等）；集合语义反例（命题 6）由 P1 笔记 §5 分析，不在本线性算子代数层。
+2. **公理纪律审计**：SpectralTheory 全部 postulate（谱论基础 §1：A/E/E-support-pos/spec-int-A/spectral-rep-A/X-comm-spectral-int/intertwine-imp-spectral + 函数演算 exp-A/exp-spectral-measure/spec-int-exp/X-comm-spectral-int-exp/intertwine-exp-imp-spectral-exp/spectral-ext + Hille-Yosida exp-tA/semigroup/exp-tA-zero/exp-tA-one + fc/fc-id/fc-ext/recon-op-fc + 往返一致性 4 条 + ·ₒ-+ + exp-tA 谱测度族 + X-comm-spectral-int-exp-t）**均有模型必然性/用途/降定理路径注释，无占位**；核心定理（phi-inj/t-mul-inj/phi-t-inj/Rec-to-σ/Rec-t-to-σ/σ-to-Rec-t/simple-comm/simple-add/corollary5/corollary4-∞/theorem3 家族）全部可证。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.52。
+
+**阶段 6 状态**：P1 无限维闭合结论完成（p1-linear-closure）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明。
+
+---
+
+【谱测度代数性质：投影值测度的投影性（2026-08-01）】
+
+1. **§10**：`E-mul`（E(P)·E(Q) = E(P∩Q)，投影值测度定义公理）+ `E-empty`（E(∅) = 0，定义公理）。
+2. **`E-idempotent`（可证明）**：E(P)² = E(P)——E-mul P P + spectral-ext（P∩P 点态等价 P）。
+3. **`E-orthogonal`（可证明）**：P∩Q = ∅ ⟹ E(P)·E(Q) = 0——E-mul + spectral-ext（P×Q 点态等价 ⊥）+ E-empty。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.53。
+
+**阶段 6 状态**：投影值测度代数核心完成（投影性 + 正交性可证）。待推进：①' 一般函数逼近层；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性/单调性/simple-mul（E-mul + 分划细化）。
+
+---
+
+【谱测度交互性质：交换/包含分解/切片（2026-08-01）】
+
+1. **§10b 谱测度交互层**（SpectralTheory，**全部可证、零新增公理**）：
+   - `E-comm`：E(P)·E(Q) = E(Q)·E(P)——E-mul 双向 + spectral-ext（交集点态交换）。
+   - `E-sub`：P ⊆ Q ⟹ E(P) = E(P)·E(Q)——P = P∩Q 点态 + E-mul（单调性 E(P) ≤ E(Q) 的算子序无版本：谱测度在包含下保"因子分解"，算子序完整层时给 ≤）。
+   - `E-sub-r`：P ⊆ Q ⟹ E(P) = E(Q)·E(P)——E-sub + E-comm。
+   - `E-slice`（左切片）：E(P)·∫(Σdⱼ·1_{Ωⱼ}) dE = ∫(Σdⱼ·1_{P∩Ωⱼ}) dE——distribₒ 展开 + ·ₒ-comm-l 标量提取 + E-mul 逐项 + 归纳。
+   - `slice-spec-int`（右切片）：∫(Σdⱼ·1_{Ωⱼ}) dE · E(P) = ∫(Σdⱼ·1_{Ωⱼ∩P}) dE——对称（distribₒ-l + ·ₒ-comm）。
+2. **意义**：切片 = 用谱测度值"切"简单函数谱积分——simple-mul（∫f dE · ∫g dE = ∫fg dE，分划细化）的机制前置就位；也是一般函数逼近层的切片组件。simple-mul 本体需双和/标量结合（a·(b·X) = (a·b)·X 算子代数律），留待下一步。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.54。
+
+**阶段 6 状态**：谱测度交互层完成（E-comm/E-sub/E-slice 全部可证）。待推进：①' 一般函数逼近层；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性/单调性/simple-mul（切片机制已就位，需双和/标量结合）。
+
+---
+
+【简单函数谱积分乘法：simple-mul 双和乘积公式（2026-08-01）】
+
+1. **§10c（SpectralTheory）**：
+   - `·ₒ-assoc`（算子代数补充公理）：标量乘结合律 a·(b·X) = (a·b)·X——标准赋范向量空间标量律，模型必然性 = Op 是 ℝ-向量空间（与 ·ₒ-+ 同类）。
+   - **`atom-atom`（可证）**：单原子乘积 (a·E(P))·(b·E(Q)) = (a·b)·E(P∩Q)——·ₒ-comm 标量左提 + ·ₒ-comm-l 标量右提 + ·ₒ-assoc 结合 + E-mul。
+   - `spec-int-simple2`：双和谱积分 ΣᵢΣⱼ (cᵢ·dⱼ)·E(Ωᵢ∩Ψⱼ)（乘积函数在公共细化分划上的谱积分）。
+   - **`atom-right`（可证）**：左原子×右和 (a·E(P))·∫d = Σⱼ(a·dⱼ)·E(P∩Ψⱼ)——distribₒ + atom-atom 逐项 + 归纳。
+   - **`simple-mul`（可证）**：∫f dE · ∫g dE = ∫(f·g) dE 双和乘积公式——distribₒ-l + atom-right 逐项 + 归纳。
+2. **意义**：简单函数谱积分乘法规则完成——谱积分对简单函数的代数结构（线性 + 交换 + 加法 + 乘法）齐备，X-comm-spectral-int 公理的降定理路径持续推进；simple-mul 也是谱积分完整乘法（Borel 函数演算的乘积结构）的简单函数基础。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.55。
+
+**阶段 6 状态**：简单函数谱积分乘法完成（simple-mul 可证）。待推进：①' 一般函数逼近层；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性/单调性/simple-mul 对角坍缩（公共分划不相交 ⟹ 双和坍缩到 Σᵢ(cᵢ·dᵢ)·E(Ωᵢ)，需 Fin 可判定相等/零吸收/和坍缩）。
+
+---
+
+【simple-mul 对角坍缩：∫f·∫g = ∫fg 标准形式（2026-08-01）】
+
+1. **§10d（SpectralTheory，零新增公理）**：
+   - Fin 构造子互异/单射：`zero≢suc`/`suc≢zero`（空模式）、`suc-inj`（refl 模式）、`suc≢suc`（suc-inj 组合）；`_≢_` 自 SpCategory 导入。
+   - **`·ₒ-zero`（可证）**：标量零吸收 a·0 = 0——·ₒ-comm a 𝟙ₒ 𝟘ₒ + *ₒ-zero-r 双向（零新增公理）。
+   - **`sum-zero`/`sum-keep-zero`/`zero-plus`（可证）**：全零求和/零尾部并入/左零消去。
+   - **`E-disjoint`（可证）**：不相交交集谱测度为零 E(P∩Q) = 0——sym E-mul + E-orthogonal。
+   - **`inner-sum-collapse`（可证）**：内部和坍缩 Σⱼ(cᵢ·dⱼ)·E(Ωᵢ∩Ωⱼ) = (cᵢ·dᵢ)·E(Ωᵢ)——对角项 E(Ωᵢ∩Ωᵢ)=E(Ωᵢ) 经 spectral-ext 保留，非对角项 E=0 经 ·ₒ-zero 吸收；i=zero（尾部全零）与 i=suc i'（zero 项为零 + 归纳，Ω 移位）两情形。
+   - **`simple-mul-diag`（可证）**：公共分划 pairwise 不相交 ⟹ ∫(Σcᵢ·1_{Ωᵢ})·∫(Σdᵢ·1_{Ωᵢ}) = ∫(Σ(cᵢ·dᵢ)·1_{Ωᵢ})——simple-mul 双和 + sum-op-congₒ 逐项坍缩。
+2. **意义**：∫f·∫g = ∫fg 完整（双和乘积公式 + 对角坍缩标准形式），简单函数谱积分代数结构全部闭合；为一般函数逼近层（① 待办）的乘积结构提供简单函数基础。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.56。
+
+**阶段 6 状态**：∫f·∫g = ∫fg 完整（simple-mul + 对角坍缩可证）。待推进：①' 一般函数逼近层；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性/单调性（E(ℝ)=I、P⊆Q ⟹ E(P)≤E(Q) 算子序版本）。
+
+---
+
+【谱测度完备性：E(ℝ)=𝟙ₒ + 有限可加性 + 分划可加性（2026-08-01）】
+
+1. **§10e（SpectralTheory）**：
+   - 本地 `⊤` 定义（全空间谓词载体：λ _ → ⊤ = 恒真 = 整个实轴）。
+   - **谱测度完备性公理 2 条**（投影值测度定义性质，注明降定理路径）：
+     - `E-total`：E(ℝ) = 𝟙ₒ（归一化/分辨率恒等式）。
+     - `E-union`：P∩Q = ∅ ⟹ E(P∪Q) = E(P)+E(Q)（不相交集加法性——σ-可加性的有限版，σ-代数层时给可数版）。
+   - **可证**：
+     - `E-spectrum-total`：E([0,∞)) = 𝟙ₒ——E-support-pos P=ℝ + spectral-ext 消 ⊤ + E-total。**排坑**：⊤×P 与 P 非定义性相等，需 spectral-ext 点态等价连接（首次编译 UnequalTerms 错误）。
+     - `fin0-empty`（Fin zero 空消去）、`split-union`/`join-union`（并集谓词拆分 Ω₀∪(∪ᵢΩ_{suc i}) ↔ ∪ᵢΩᵢ）。
+     - **`E-partition-add`**：分划可加性 E(∪ᵢΩᵢ) = ΣᵢE(Ωᵢ)——pairwise 不相交分划，spectral-ext 拆分 + E-union 逐项 + 归纳（复用 zero≢suc/suc≢suc）。
+2. **构造性限制（诚实登记）**：E(P)+E(Pᶜ) = 𝟙ₒ（分辨率恒等式的补形式）构造性上需排中律（P 可判定时成立），留待经典扩展层。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，排坑后）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.57。
+
+**阶段 6 状态**：谱测度完备性完成（E(ℝ)=𝟙ₒ + 分划可加性）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并，σ-代数/极限层）。
+
+---
+
+【Hille-Yosida 谱侧收官：σ(e^(-tA)) ⊆ (0,1] 压缩性谱测度形式（2026-08-01）】
+
+1. **§11（SpectralTheory，零新增公理）**：
+   - **`E-exp-tA-contractive`（可证）**：E_{e^(-tA)}((0,1]) = 𝟙ₒ（t ≥ 0）——压缩性的谱测度形式。
+   - 链：`exp-tA-spectral-measure`（谱映射 E_{e^(-tA)}(P) = E(φ_t⁻¹P)）→ `E-support-pos`（A 谱支集 ⊆ [0,∞)）→ `spectral-ext`（x ≥ 0 时 φ_t 值域 (0,1]：phi-t-pos + phi-t-lt-one，点态等价 (P0×[0≤x]) ⟷ [0≤x]）→ `E-spectrum-total`（E([0,∞)) = 𝟙ₒ）。
+2. **意义**：§8 状态注释承诺的"φ_t 值域 (0,1] ⟹ 谱支集 ⊆ (0,1]（压缩性谱侧）"落地为谱测度形式——Hille-Yosida 谱侧完整（半群交换 + 值域 + 谱支集）。压缩范数/强连续/生成元仍待范数/拓扑/导数层。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.58。
+
+**阶段 6 状态**：Hille-Yosida 谱侧收官（σ(e^(-tA)) ⊆ (0,1] 可证）。待推进：①' 一般函数逼近层（降 X-comm-spectral-int 为定理）；②' Hille-Yosida 范数/拓扑层（压缩范数/强连续/生成元）；③ Fuglede 引理 1 谱积分证明；σ-可加性（可数并，σ-代数/极限层）。
