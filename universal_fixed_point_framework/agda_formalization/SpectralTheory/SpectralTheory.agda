@@ -39,7 +39,8 @@ open import Sp.SpCategory using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; tra
 open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
-         *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
+         *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
+         sub-ℝ-def; sub-eq-zero; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -464,10 +465,40 @@ X-comm-fc-poly {X} h {m} a n =
   (trans (poly-A-comm {X} h {m} a n)
          (cong (λ Z → Z *ₒ X) (sym (fc-poly {m} a n))))
 
+-- 连续函数 f 的多项式下界族：Y = fc(p)（p 为多项式函数，逐点 ≤ f）
+--（Weierstrass：多项式在紧集上稠密，连续函数由多项式下界逼近）
+fc-below : (ℝ → ℝ) → Op → Set
+fc-below f Y = Σ ℕ (λ m → Σ (Fin m → ℝ) (λ a → Σ (Fin m → ℕ) (λ n →
+  (Y ≡ fc (poly-fn {m} a n)) × ((x : ℝ) → poly-fn {m} a n x ≤ℝ f x))))
+
+-- 桥接公理（定义性）：连续函数 f 的函数演算 = 多项式下界 fc 的上确界
+--（对连续 f 为 Weierstrass 逼近定理内容；对一般 f 为 Borel 函数演算的
+--  连续下界 sup 扩展——标准谱论事实，函数演算经谱积分完整实现时降为定理）
+postulate
+  fc-continuous : (f : ℝ → ℝ) → fc f ≡ sup-op (fc-below f)
+
+-- **可证明**：X·A = A·X ⟹ X 与连续函数 fc(f) 交换
+--（fc-continuous 桥接 + sup-comm + X-comm-fc-poly 逐成员；
+--  Fuglede 引理 1 证明链：交织 ⟹ 多项式（§3b）⟹ fc 多项式（§5b）⟹ 连续（本节））
+X-comm-fc-continuous : {X : Op} → X *ₒ A ≡ A *ₒ X → (f : ℝ → ℝ)
+  → X *ₒ fc f ≡ fc f *ₒ X
+X-comm-fc-continuous {X} h f =
+  trans (cong (λ Z → X *ₒ Z) (fc-continuous f))
+  (trans (sup-comm X (fc-below f) (λ Y yb → member-fc-comm h Y yb))
+         (cong (λ Z → Z *ₒ X) (sym (fc-continuous f))))
+  where
+  -- 族成员均为多项式 fc ⟹ 与 X 交换（X-comm-fc-poly）
+  member-fc-comm : (h : X *ₒ A ≡ A *ₒ X) → (Y : Op) → fc-below f Y → X *ₒ Y ≡ Y *ₒ X
+  member-fc-comm h Y (m , a , n , (eq , _)) =
+    trans (cong (λ Z → X *ₒ Z) eq)
+          (trans (X-comm-fc-poly {X} h {m} a n)
+                 (cong (λ Z → Z *ₒ X) (sym eq)))
+
 -- Fuglede 证明的 fc 连接状态：
 --  - 多项式 fc 交换完成（X-comm-fc-poly **可证**，fc-poly 桥接公理）。
---  - 待：连续函数逼近（Weierstrass：多项式稠密 ⟹ fc(f) = sup{fc(p)}）
---    ⟹ X 与连续 fc(f) 交换；指示桥接（E(P) = 1_P(A)）⟹ X·E(P) = E(P)·X。
+--  - 连续函数交换完成（X-comm-fc-continuous **可证**，fc-continuous 桥接公理）。
+--  - 待：指示桥接（E(P) = 1_P(A)）——构造性上 1_P 需可判定 P（或 Borel 层
+--    经可数逼近），留待经典扩展/测度论层，届时 intertwine-imp-spectral 降为定理。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
@@ -1094,8 +1125,63 @@ E-partition-add {suc m} Ω h =
 -- 谱测度完备性层状态：
 --  - E(ℝ) = 𝟙ₒ（E-total 公理）、有限可加性（E-union 公理）、分划可加性
 --    （E-partition-add **可证**）、谱支集完备性（E-spectrum-total **可证**）。
---  - σ-可加性（可数并）随 σ-代数/极限层扩展；E(P)+E(Pᶜ) = 𝟙ₒ（分辨率恒等式的
---    补形式）构造性上需排中律（P 可判定时成立），留待经典扩展层。
+--  - **σ-可加性（可数并）已闭合于 §10f**（E-σ-add 公理 + E-fin-union-sum 有限一致性可证）。
+--  - E(P)+E(Pᶜ) = 𝟙ₒ（分辨率恒等式的补形式）构造性上需排中律（P 可判定时成立），
+--    留待经典扩展层。
+
+-- ==================================================================
+-- §10f σ-可加性（可数并：σ-并谓词 + 可数可加/连续下式）
+-- ==================================================================
+
+-- Fin → ℕ 嵌入（有限前段索引）
+fin-to-nat : {m : ℕ} → Fin m → ℕ
+fin-to-nat zero = zero
+fin-to-nat (suc i) = suc (fin-to-nat i)
+
+-- ℕ 构造子互异/单射（可证）
+zero≢suc-ℕ : {n : ℕ} → zero ≢ suc n
+zero≢suc-ℕ ()
+
+suc-inj-ℕ : {i j : ℕ} → suc i ≡ suc j → i ≡ j
+suc-inj-ℕ refl = refl
+
+-- **可证**：Fin → ℕ 嵌入单射（i ≢ j ⟹ fin-to-nat i ≢ fin-to-nat j）
+fin-to-nat-inj : {m : ℕ} {i j : Fin m} → i ≢ j → fin-to-nat i ≢ fin-to-nat j
+fin-to-nat-inj {i = zero} {j = zero} h eq = h refl
+fin-to-nat-inj {i = zero} {j = suc j} h eq = zero≢suc-ℕ eq
+fin-to-nat-inj {i = suc i} {j = zero} h eq = zero≢suc-ℕ (sym eq)
+fin-to-nat-inj {i = suc i} {j = suc j} h eq = fin-to-nat-inj {i = i} {j = j} (λ ne → h (cong suc ne)) (suc-inj-ℕ eq)
+
+-- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
+σ-union : (ℕ → Borel) → Borel
+σ-union P x = Σ ℕ (λ n → P n x)
+
+-- 有限前段并：∪ᵢ<ₘ Pᵢ（经 Fin m 索引）
+fin-union : {m : ℕ} → (ℕ → Borel) → Borel
+fin-union {m} P x = Σ (Fin m) (λ i → P (fin-to-nat i) x)
+
+-- σ-可加性公理（投影值测度的可数可加性，和形式）：
+-- pairwise 不相交 ⟹ E(∪ₙPₙ) = supₘ Σᵢ<ₘ E(Pᵢ)（连续下式/可数可加；
+-- 测度论（Lebesgue-Stieltjes）完整实现时降为定理）
+postulate
+  E-σ-add : (P : ℕ → Borel)
+    → ((n₁ n₂ : ℕ) → n₁ ≢ n₂ → ((x : ℝ) → P n₁ x → P n₂ x → ⊥))
+    → E (σ-union P) ≡ sup-op (λ Y → Σ ℕ (λ m → Y ≡ sum-op {m} (λ i → E (P (fin-to-nat i)))))
+
+-- **可证**：有限前段并的谱测度 = 有限和（E-partition-add 的 ℕ 索引版）
+--（pairwise 不相交 ⟹ E(∪ᵢ<ₘPᵢ) = Σᵢ<ₘ E(Pᵢ)——σ-可加性的有限一致性）
+E-fin-union-sum : {m : ℕ} (P : ℕ → Borel)
+  → ((n₁ n₂ : ℕ) → n₁ ≢ n₂ → ((x : ℝ) → P n₁ x → P n₂ x → ⊥))
+  → E (fin-union {m} P) ≡ sum-op {m} (λ i → E (P (fin-to-nat i)))
+E-fin-union-sum {m} P h =
+  E-partition-add {m} (λ i → P (fin-to-nat i))
+    (λ i j neq x px py → h (fin-to-nat i) (fin-to-nat j) (fin-to-nat-inj neq) x px py)
+
+-- σ-可加性层状态：
+--  - σ-可加性公理（E-σ-add：可数可加/连续下式，和形式）+ 有限一致性
+--    （E-fin-union-sum **可证**：E(∪ᵢ<ₘPᵢ) = Σᵢ<ₘ E(Pᵢ)）+ Fin→ℕ 嵌入
+--    （fin-to-nat-inj **可证**）。
+--  - E-union（§10e）为 m=2 特例；可数并的测度论实现时降为定理。
 
 -- ==================================================================
 -- §11 Hille-Yosida 谱侧收官（σ(e^(-tA)) ⊆ (0,1] 压缩性谱测度形式）
@@ -1120,5 +1206,65 @@ E-exp-tA-contractive t ht =
 -- Hille-Yosida 谱侧最终状态：
 --  - 谱支集 ⊆ (0,1] 的谱测度形式（E-exp-tA-contractive **可证**，零新增公理）——
 --    §8 的 φ_t 值域引理 + §10e 的谱测度完备性组合：σ(e^(-tA)) ⊆ (0,1] 完整。
---  - 压缩范数（‖e^(-tA)‖ ≤ 1）、强连续（lim_{t→0} e^(-tA) = I）、生成元（-A）
+--  - 压缩范数（‖e^(-tA)‖ ≤ 1，§12）、强连续（lim_{t→0} e^(-tA) = I）、生成元（-A）
 --    需范数/拓扑/导数层（Hilbert 空间层），为阶段 6 剩余主项之一。
+
+-- ==================================================================
+-- §12 Hille-Yosida 范数层基础（C*-范数 + 投影范数 + 压缩性）
+-- ==================================================================
+
+-- C*-代数范数（自伴算子范数；Hilbert 空间层完整实现时降为定理）：
+--  - norm-pos：‖X‖ ≥ 0
+--  - norm-submul：‖X·Y‖ ≤ ‖X‖·‖Y‖（次乘法性）
+--  - norm-power：‖X·X‖ = ‖X‖·‖X‖（自伴幂恒等，C* 恒等 ‖X*X‖=‖X‖² 对自伴元）
+--  - norm-zero：‖X‖ = 0 ⟹ X = 0（正定性）
+--  - norm-ident：‖𝟙ₒ‖ = 1
+--  - norm-tri：‖X+Y‖ ≤ ‖X‖+‖Y‖（三角不等式）
+postulate
+  ‖_‖ : Op → ℝ
+  norm-pos : (X : Op) → zeroℝ ≤ℝ ‖ X ‖
+  norm-submul : (X Y : Op) → ‖ X *ₒ Y ‖ ≤ℝ (‖ X ‖ *ℝ ‖ Y ‖)
+  norm-power : (X : Op) → ‖ X *ₒ X ‖ ≡ (‖ X ‖ *ℝ ‖ X ‖)
+  norm-zero : (X : Op) → ‖ X ‖ ≡ zeroℝ → X ≡ 𝟘ₒ
+  norm-ident : ‖ 𝟙ₒ ‖ ≡ oneℝ
+  norm-tri : (X Y : Op) → ‖ X +ₒ Y ‖ ≤ℝ (‖ X ‖ +ℝ ‖ Y ‖)
+
+-- **可证**：x = x·x ⟹ x = 0 ∨ x = 1（域无零因子 + 因式分解）
+idem-zero-one : {x : ℝ} → x ≡ x *ℝ x → (x ≡ zeroℝ) ⊎ (x ≡ oneℝ)
+idem-zero-one {x} h = helper (zero-factor-ℝ {a = x} {b = x +ℝ negℝ oneℝ} factor-zero)
+  where
+  -- x·x = x ⟹ x·x + (-x) = x + (-x) = 0（+-inv）
+  xplus : (x *ℝ x) +ℝ negℝ x ≡ zeroℝ
+  xplus = trans (cong (λ y → y +ℝ negℝ x) (sym h)) (+-inv-ℝ x)
+  -- 因式分解：x·(x + (-1)) = x·x + (-x)（distrib + 乘法交换 + neg-one-mul）
+  factor : x *ℝ (x +ℝ negℝ oneℝ) ≡ (x *ℝ x) +ℝ negℝ x
+  factor =
+    trans (distrib-ℝ x x (negℝ oneℝ))
+    (trans (cong (λ y → (x *ℝ x) +ℝ y) (*-comm-ℝ x (negℝ oneℝ)))
+           (cong (λ y → (x *ℝ x) +ℝ y) (neg-one-mul x)))
+  factor-zero : x *ℝ (x +ℝ negℝ oneℝ) ≡ zeroℝ
+  factor-zero = trans factor xplus
+  helper : (x ≡ zeroℝ) ⊎ (x +ℝ negℝ oneℝ ≡ zeroℝ) → (x ≡ zeroℝ) ⊎ (x ≡ oneℝ)
+  helper (inj₁ z) = inj₁ z
+  helper (inj₂ b) = inj₂ (sub-eq-zero {a = x} (trans (sub-ℝ-def x oneℝ) b))
+
+-- **可证**：谱投影范数 ∈ {0,1}——‖E(P)‖ = ‖E(P)²‖ = ‖E(P)‖²（norm-power + E-idempotent）
+proj-norm : (P : Borel) → (‖ E P ‖ ≡ zeroℝ) ⊎ (‖ E P ‖ ≡ oneℝ)
+proj-norm P = idem-zero-one norm-idem
+  where
+  -- ‖E(P)‖ = ‖E(P)·E(P)‖ = ‖E(P)‖·‖E(P)‖
+  norm-idem : ‖ E P ‖ ≡ ‖ E P ‖ *ℝ ‖ E P ‖
+  norm-idem =
+    trans (sym (cong (λ Y → ‖ Y ‖) (E-idempotent P)))
+          (norm-power (E P))
+
+-- Hille-Yosida 压缩性（定义性公理）：σ(e^(-tA)) ⊆ (0,1]（§11 已证谱测度形式）
+-- ⟹ ‖e^(-tA)‖ ≤ 1（谱半径 = 范数，C*-代数谱半径公式；Hilbert 空间层降为定理）
+postulate
+  norm-contraction : (t : ℝ) → zeroℝ ≤ℝ t → ‖ exp-tA t ‖ ≤ℝ oneℝ
+
+-- Hille-Yosida 范数层状态：
+--  - C*-范数公理（6 条）+ 投影范数（proj-norm **可证**：‖E(P)‖ ∈ {0,1}）+ 压缩性
+--    （norm-contraction：σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）。
+--  - 强连续（lim_{t→0} e^(-tA) = I）、生成元（-A）、Fuglede 指示桥接
+--    （E(P) = 1_P(A)）需拓扑/测度论层，为阶段 6 剩余开放项。

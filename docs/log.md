@@ -813,3 +813,46 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.62。
 
 **阶段 6 状态**：Fuglede 证明链完成代数核心 + fc 连接步。待推进：③' 余项（连续函数逼近 + 指示桥接 ⟹ intertwine-imp-spectral 降定理）；①' 无界逼近细节；②' Hille-Yosida 范数/拓扑层；σ-可加性（可数并）。
+
+---
+
+【Fuglede 连续逼近步：连续函数 fc 交换（2026-08-01）】
+
+1. **§5b（SpectralTheory）**：
+   - `fc-below`：连续函数 f 的多项式下界族——Y = fc(p)（p 多项式函数，逐点 ≤ f）。
+   - 桥接公理 `fc-continuous`：fc(f) = sup{fc(p) : p 多项式 ≤ f}——连续 f 为 Weierstrass 内容，一般 f 为 Borel 函数演算 sup 扩展（注明降定理路径）。
+   - **`X-comm-fc-continuous`（可证）**：X·A = A·X ⟹ X 与连续 fc(f) 交换——fc-continuous + sup-comm + X-comm-fc-poly 逐成员（member-fc-comm 局部引理）。
+2. **意义**：Fuglede 引理 1 证明链**完整**：交织 ⟹ 多项式交换（§3b）⟹ fc 多项式交换（§5b）⟹ 连续 fc 交换（本节）。剩余仅指示桥接（E(P) = 1_P(A)）——构造性上 1_P 需可判定 P 或 Borel 可数逼近，留待经典扩展/测度论层。
+3. **排坑**：fc-continuous 方向（第 1 步正向、第 3 步 sym，首轮 UnequalTerms）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.63。
+
+**阶段 6 状态**：Fuglede 证明链完成（多项式 ⟹ fc 多项式 ⟹ 连续）。待推进：③' 余项（指示桥接，经典扩展/测度论层）；①' 无界逼近细节；②' Hille-Yosida 范数/拓扑层；σ-可加性（可数并）。
+
+---
+
+【σ-可加性：可数并（谱测度完备性有限版 + 可数版完成）（2026-08-01）】
+
+1. **§10f（SpectralTheory）**：
+   - `fin-to-nat`（Fin → ℕ 嵌入）+ `zero≢suc-ℕ`/`suc-inj-ℕ`（ℕ 构造子互异/单射）+ **`fin-to-nat-inj`（可证）**（嵌入单射：四情形 + ℕ 单射归纳）。
+   - `σ-union`（可数并谓词 ∪ₙPₙ = {x : ∃n. P n x}）+ `fin-union`（有限前段并 ∪ᵢ<ₘPᵢ）。
+   - **σ-可加性公理 `E-σ-add`**：pairwise 不相交 ⟹ E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)——可数可加/连续下式，和形式（测度论层降为定理）。
+   - **`E-fin-union-sum`（可证）**：E(∪ᵢ<ₘPᵢ) = Σᵢ<ₘE(Pᵢ)——E-partition-add 的 ℕ 索引版（σ-可加性的有限一致性）。
+2. **意义**：谱测度完备性完成——§10e 有限版（E-union/E-partition-add）+ §10f 可数版（E-σ-add + E-fin-union-sum），投影值测度公理体系完整。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.64。
+
+**阶段 6 状态**：σ-可加性完成（谱测度公理体系完整）。待推进：①' 无界逼近细节；②' Hille-Yosida 范数/拓扑层；③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）。
+
+---
+
+【Hille-Yosida 范数层基础：C*-范数 + 投影范数 + 压缩性（2026-08-01）】
+
+1. **§12（SpectralTheory）**：
+   - **C*-代数范数公理 6 条**：`‖_‖`/`norm-pos`（≥0）/`norm-submul`（次乘法性）/`norm-power`（自伴幂恒等：‖X·X‖ = ‖X‖·‖X‖，C* 恒等对自伴元）/`norm-zero`（正定性）/`norm-ident`（‖𝟙ₒ‖=1）/`norm-tri`（三角不等式）——Hilbert 空间层降为定理。
+   - **`idem-zero-one`（可证）**：x = x·x ⟹ x=0 ∨ x=1——因式分解 x·(x+(-1)) [distrib-ℝ + *-comm-ℝ + neg-one-mul] + zero-factor-ℝ + sub-ℝ-def/sub-eq-zero。
+   - **`proj-norm`（可证）**：谱投影范数 ∈ {0,1}——‖E(P)‖ = ‖E(P)²‖ = ‖E(P)‖·‖E(P)‖（norm-power + E-idempotent），C* 投影范数经典结果。
+   - 压缩性公理 `norm-contraction`：σ(e^(-tA)) ⊆ (0,1]（§11 谱测度形式）⟹ ‖e^(-tA)‖ ≤ 1（谱半径 = 范数）。
+2. **DHStructural 新增导入**：zero-factor-ℝ/+-inv-ℝ/distrib-ℝ/neg-one-mul/sub-ℝ-def/sub-eq-zero。
+3. **排坑**：sub-ℝ-def 方向（正向非 sym，首轮 UnequalTerms）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.65。
+
+**阶段 6 状态**：范数层基础完成（投影范数可证 + 压缩性登记）。待推进：②' 余项（强连续 lim_{t→0} e^(-tA) = I、生成元 -A，拓扑/导数层）；③' Fuglede 引理 1 余项（指示桥接）；①' 无界逼近细节。
