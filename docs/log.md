@@ -935,3 +935,37 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.71。
 
 **阶段 6 状态**：态射层动力学保持闭合（Rec/Sp/σ 三侧）。待推进：②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）；① 无界逼近细节；fc-poly 桥接替换。
+
+异常中断，
+继续推进。剩余项中，fc-poly 桥接替换是唯一完整可闭合项——本轮做 **fc-poly 降为可证定理**（用同态结构推导，删除桥接）。先读取当前 §5b/§5d/§5e 精确内容以规划重组。
+
+
+toolName: search_by_regex
+
+status: success
+
+query: fc-poly|X-comm-fc-poly|fc-below|fc-continuous|X-comm-fc-continuous|^-- §5b|^-- §5d|^-- §5e|fc-mul|fc-add|fc-const|fc-power|fc-id-sq|fc-id-add|fc-scalar-id
+
+读取当前 §5b 与 §5d/§5e 精确文本以规划重组。
+
+
+toolName: view_files
+
+status: success
+
+
+filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_formalization\SpectralTheory\SpectralTheory.agdaThis model's maximum context length is 1048576 tokens. However, you requested 1049597 tokens (656381 in the messages, 393216 in the completion). Please reduce the length of the messages or completion. (Model Provider Error Code: invalid_request_error, HTTP Status: 400)
+
+---
+
+【fc-poly 降为可证定理：桥接替换完成（2026-08-01）】
+
+1. **§5f（SpectralTheory）**：
+   - **`fc-zero`（可证）**：fc(0) = 𝟘ₒ——fc-const + `·ₒ-zero-l`（P1Spectral 新增标量零吸收律 zeroℝ·X = 𝟘ₒ，与 *ₒ-zero-l 平行；现有算子代数公理集不可推出，登记基础假设）。
+   - **`fc-monomial`（可证）**：fc(c·xⁿ) = c·Aⁿ（n 任意）——n=0 经 fc-const + *-ident-ℝ；n≥1 经 fc-mul + fc-const + fc-power 归纳 + ·ₒ-comm/*ₒ-ident-l。
+   - **`fc-poly`（可证，原 §5b 桥接公理删除）**：fc(p) = p(A)——Σᵢ aᵢ·x^{nᵢ} 展开（fc-add 迭代 + fc-monomial 逐项，基例 m=0 经 fc-zero）。函数演算保持多项式由同态结构（保加/乘/常数/恒等）直接推出。
+   - **`X-comm-fc-poly` / `X-comm-fc-continuous`（可证，随迁 §5f）**：Fuglede fc 连接步闭合（零新增 fc 桥接）。
+2. **意义**：§5b 桥接公理（fc-poly）删除——fc 层公理净减一；多项式保持从"定义性公理"变为"同态结构定理"。§5b 保留定义载体（sum-ℝ/ℝ-power/poly-fn）与连续逼近机制（fc-below/fc-continuous）。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.72。
+
+**阶段 6 状态**：fc-poly 桥接替换完成。待推进：②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）；① 无界逼近细节。

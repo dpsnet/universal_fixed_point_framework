@@ -47,7 +47,7 @@ open import P1Spectral.P1Spectral
   using (Op; _+ₒ_; _*ₒ_; _·ₒ_; 𝟘ₒ; 𝟙ₒ;
          +ₒ-assoc; +ₒ-comm; +ₒ-ident;
          *ₒ-assoc; *ₒ-ident; *ₒ-ident-l; *ₒ-zero-r; *ₒ-zero-l;
-         distribₒ; distribₒ-l; ·ₒ-comm; ·ₒ-comm-l)
+         distribₒ; distribₒ-l; ·ₒ-comm; ·ₒ-comm-l; ·ₒ-zero-l)
 
 -- 本地依赖对（库未提供 Agda.Builtin.Sigma）
 data Σ (A : Set) (B : A → Set) : Set where
@@ -432,9 +432,13 @@ corollary5 =
 -- ==================================================================
 -- 目标：将 §3b 的代数核心（poly-A-comm：X 与 A 的多项式交换）连接到
 -- 抽象函数演算 fc——X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）。
--- 后续步骤（连续函数逼近：fc(f) = sup{fc(p) : p 多项式 ≤ f} + 指示桥接
--- E(P) = 1_P(A)）随逼近层扩展登记，届时 intertwine-imp-spectral 降为定理。
--- 本层仅新增桥接公理 fc-poly（函数演算保持多项式，标准 Borel fc 性质）。
+-- 桥接替换（2026-08-01）：原 fc-poly 桥接公理已删除，改由 §5f 的 fc 同态结构
+-- （fc-mul/fc-add/fc-const/fc-power）推导为**可证定理**（fc-poly，§5f）；
+-- X-comm-fc-poly / X-comm-fc-continuous 随迁 §5f 闭合。
+-- 本节保留：多项式函数定义载体（sum-ℝ/ℝ-power/poly-fn）+ 连续逼近机制
+-- （fc-below/fc-continuous）。
+-- 后续步骤（指示桥接 E(P) = 1_P(A)）随逼近层扩展登记，届时
+-- intertwine-imp-spectral 降为定理。
 
 -- ℝ 值有限求和（多项式函数值的载体）
 sum-ℝ : {m : ℕ} → (Fin m → ℝ) → ℝ
@@ -450,21 +454,6 @@ sum-ℝ {suc m} f = f zero +ℝ sum-ℝ {m} (λ i → f (suc i))
 poly-fn : {m : ℕ} → (Fin m → ℝ) → (Fin m → ℕ) → (ℝ → ℝ)
 poly-fn {m} a n x = sum-ℝ {m} (λ i → a i *ℝ ℝ-power (n i) x)
 
--- 桥接公理（定义性）：多项式函数的函数演算 = A 的多项式
---（函数演算保持多项式：p(A) = Σᵢ aᵢ·A^{nᵢ}；标准 Borel 函数演算性质，
---  函数演算经谱积分完整实现时降为定理）
-postulate
-  fc-poly : {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ) → fc (poly-fn {m} a n) ≡ poly-A {m} a n
-
--- **可证明**：X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）
---（fc-poly 桥接 + poly-A-comm；Fuglede 引理 1 证明的 fc 连接步）
-X-comm-fc-poly : {X : Op} → X *ₒ A ≡ A *ₒ X → {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ)
-  → X *ₒ fc (poly-fn {m} a n) ≡ fc (poly-fn {m} a n) *ₒ X
-X-comm-fc-poly {X} h {m} a n =
-  trans (cong (λ Z → X *ₒ Z) (fc-poly {m} a n))
-  (trans (poly-A-comm {X} h {m} a n)
-         (cong (λ Z → Z *ₒ X) (sym (fc-poly {m} a n))))
-
 -- 连续函数 f 的多项式下界族：Y = fc(p)（p 为多项式函数，逐点 ≤ f）
 --（Weierstrass：多项式在紧集上稠密，连续函数由多项式下界逼近）
 fc-below : (ℝ → ℝ) → Op → Set
@@ -477,26 +466,9 @@ fc-below f Y = Σ ℕ (λ m → Σ (Fin m → ℝ) (λ a → Σ (Fin m → ℕ) 
 postulate
   fc-continuous : (f : ℝ → ℝ) → fc f ≡ sup-op (fc-below f)
 
--- **可证明**：X·A = A·X ⟹ X 与连续函数 fc(f) 交换
---（fc-continuous 桥接 + sup-comm + X-comm-fc-poly 逐成员；
---  Fuglede 引理 1 证明链：交织 ⟹ 多项式（§3b）⟹ fc 多项式（§5b）⟹ 连续（本节））
-X-comm-fc-continuous : {X : Op} → X *ₒ A ≡ A *ₒ X → (f : ℝ → ℝ)
-  → X *ₒ fc f ≡ fc f *ₒ X
-X-comm-fc-continuous {X} h f =
-  trans (cong (λ Z → X *ₒ Z) (fc-continuous f))
-  (trans (sup-comm X (fc-below f) (λ Y yb → member-fc-comm h Y yb))
-         (cong (λ Z → Z *ₒ X) (sym (fc-continuous f))))
-  where
-  -- 族成员均为多项式 fc ⟹ 与 X 交换（X-comm-fc-poly）
-  member-fc-comm : (h : X *ₒ A ≡ A *ₒ X) → (Y : Op) → fc-below f Y → X *ₒ Y ≡ Y *ₒ X
-  member-fc-comm h Y (m , a , n , (eq , _)) =
-    trans (cong (λ Z → X *ₒ Z) eq)
-          (trans (X-comm-fc-poly {X} h {m} a n)
-                 (cong (λ Z → Z *ₒ X) (sym eq)))
-
 -- Fuglede 证明的 fc 连接状态：
---  - 多项式 fc 交换完成（X-comm-fc-poly **可证**，fc-poly 桥接公理）。
---  - 连续函数交换完成（X-comm-fc-continuous **可证**，fc-continuous 桥接公理）。
+--  - 多项式 fc 交换（X-comm-fc-poly）**可证**，fc-poly 已降为可证定理（§5f）。
+--  - 连续函数交换（X-comm-fc-continuous）**可证**，fc-continuous 桥接公理（§5f 闭合）。
 --  - 全函数演算交换（X-comm-fc，§5c：M_σ ⟹ 与任意 fc(f) 交换）。
 --  - 待：指示桥接（E(P) = 1_P(A)）——构造性上 1_P 需可判定 P（或 Borel 层
 --    经可数逼近），留待经典扩展/测度论层，届时 intertwine-imp-spectral 降为定理。
@@ -585,8 +557,88 @@ fc-scalar-id c =
 -- 函数演算同态完整状态：
 --  - 加/乘/常数保持（fc-add / fc-mul / fc-const）+ 恒等（fc-id）——f ↦ f(A) 是
 --    代数同态的完整刻画；推导 fc-id-add（fc(x+x) = A+A）、fc-scalar-id（fc(c·x) = c·A）。
---  - fc-poly（§5b 桥接）可由同态结构 + fc-power 推导（Σᵢ aᵢ·x^{nᵢ} 展开：
---    fc-add 迭代 + fc-mul 逐项 + fc-const），留待桥接替换（需 sum-op-congₒ + fc-add 迭代）。
+--  - fc-poly（原 §5b 桥接）已由同态结构推导为可证定理（§5f：fc-add 迭代 +
+--    fc-monomial 逐项），桥接公理删除。
+
+-- ==================================================================
+-- §5f fc-poly 降为可证定理（桥接替换：fc 同态结构推导）
+-- ==================================================================
+-- 目标：将 §5b 原 fc-poly 桥接公理删除，改用 §5d/§5e 的 fc 同态结构
+-- （fc-mul + fc-add + fc-const + fc-power）推导——函数演算保持多项式是
+-- 代数同态（f ↦ f(A) 保加/乘/常数/恒等）的直接推论。随后闭合 §5b 的
+-- 多项式/连续函数交换（X-comm-fc-poly / X-comm-fc-continuous）。
+-- 依赖补充：`·ₒ-zero-l`（P1Spectral：zeroℝ ·ₒ X ≡ 𝟘ₒ，标量零吸收律，
+-- 与 *ₒ-zero-l 平行——fc-poly 基例 m=0 需 fc(0) = 𝟘ₒ，现有算子代数公理
+-- 集不可推出该零律，登记为基础假设）。
+-- 推导链：fc-monomial（单项式 c·xⁿ = c·Aⁿ，n 任意：n=0 经 fc-const，
+-- n≥1 经 fc-mul + fc-power 归纳）→ fc-poly（Σᵢ aᵢ·x^{nᵢ} 展开：
+-- fc-add 迭代 + fc-monomial 逐项）。
+
+-- **可证**：零常函数的函数演算 = 零算子（fc-const + 标量零律）
+fc-zero : fc (λ x → zeroℝ) ≡ 𝟘ₒ
+fc-zero = trans (fc-const zeroℝ) (·ₒ-zero-l 𝟙ₒ)
+
+-- **可证**：fc(c·xⁿ) = c·Aⁿ（n 任意；n=0 经 fc-const + *-ident-ℝ，
+-- n≥1 经 fc-mul + fc-const + fc-power 归纳 + ·ₒ 结合）
+fc-monomial : (c : ℝ) (n : ℕ) → fc (λ x → c *ℝ ℝ-power n x) ≡ c ·ₒ A-power n
+fc-monomial c zero =
+  trans (fc-ext (λ x → *-ident-ℝ c))
+        (fc-const c)
+fc-monomial c (suc n) with n
+... | zero =
+  trans (fc-ext (λ x → cong (λ y → c *ℝ y) (*-ident-ℝ x)))
+        (trans (fc-scalar-id c)
+               (cong (λ Y → c ·ₒ Y) (sym (*ₒ-ident A))))
+... | suc m =
+  trans (fc-mul (λ _ → c) (λ x → x *ℝ ℝ-power (suc m) x))
+        (trans (cong₂ _*ₒ_ (fc-const c)
+                          (trans (fc-mul (λ x → x) (λ x → ℝ-power (suc m) x))
+                                 (cong₂ _*ₒ_ fc-id (fc-power m))))
+               (trans (·ₒ-comm c 𝟙ₒ (A *ₒ A-power (suc m)))
+                      (cong (λ Y → c ·ₒ Y) (*ₒ-ident-l (A *ₒ A-power (suc m))))))
+
+-- **可证**：函数演算保持多项式——fc-poly 定理（原 §5b 桥接公理，现为可证定理）
+--（同态结构推导：Σᵢ aᵢ·x^{nᵢ} 展开——fc-add 迭代 + fc-monomial 逐项；
+--  基例 m=0：fc(0) = 𝟘ₒ）
+fc-poly : {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ) → fc (poly-fn {m} a n) ≡ poly-A {m} a n
+fc-poly {zero} a n = fc-zero
+fc-poly {suc m} a n =
+  trans (fc-add (λ x → a zero *ℝ ℝ-power (n zero) x)
+                (λ x → sum-ℝ {m} (λ i → a (suc i) *ℝ ℝ-power (n (suc i)) x)))
+        (cong₂ _+ₒ_ (fc-monomial (a zero) (n zero))
+                    (fc-poly {m} (λ i → a (suc i)) (λ i → n (suc i))))
+
+-- **可证**：X·A = A·X ⟹ X 与 fc(p) 交换（p 为多项式函数）
+--（fc-poly 定理 + poly-A-comm；Fuglede 引理 1 证明的 fc 连接步）
+X-comm-fc-poly : {X : Op} → X *ₒ A ≡ A *ₒ X → {m : ℕ} (a : Fin m → ℝ) (n : Fin m → ℕ)
+  → X *ₒ fc (poly-fn {m} a n) ≡ fc (poly-fn {m} a n) *ₒ X
+X-comm-fc-poly {X} h {m} a n =
+  trans (cong (λ Z → X *ₒ Z) (fc-poly {m} a n))
+  (trans (poly-A-comm {X} h {m} a n)
+         (cong (λ Z → Z *ₒ X) (sym (fc-poly {m} a n))))
+
+-- **可证**：X·A = A·X ⟹ X 与连续函数 fc(f) 交换
+--（fc-continuous 桥接 + sup-comm + X-comm-fc-poly 逐成员；
+--  Fuglede 引理 1 证明链：交织 ⟹ 多项式（§3b）⟹ fc 多项式（§5f）⟹ 连续（本节））
+X-comm-fc-continuous : {X : Op} → X *ₒ A ≡ A *ₒ X → (f : ℝ → ℝ)
+  → X *ₒ fc f ≡ fc f *ₒ X
+X-comm-fc-continuous {X} h f =
+  trans (cong (λ Z → X *ₒ Z) (fc-continuous f))
+  (trans (sup-comm X (fc-below f) (λ Y yb → member-fc-comm h Y yb))
+         (cong (λ Z → Z *ₒ X) (sym (fc-continuous f))))
+  where
+  -- 族成员均为多项式 fc ⟹ 与 X 交换（X-comm-fc-poly）
+  member-fc-comm : (h : X *ₒ A ≡ A *ₒ X) → (Y : Op) → fc-below f Y → X *ₒ Y ≡ Y *ₒ X
+  member-fc-comm h Y (m , a , n , (eq , _)) =
+    trans (cong (λ Z → X *ₒ Z) eq)
+          (trans (X-comm-fc-poly {X} h {m} a n)
+                 (cong (λ Z → Z *ₒ X) (sym eq)))
+
+-- §5f 状态：
+--  - fc-poly 降为可证定理（原 §5b 桥接公理删除）：同态结构推导完成。
+--  - X-comm-fc-poly / X-comm-fc-continuous 闭合（零新增 fc 桥接）。
+--  - 剩余 fc 桥接公理：fc-continuous（§5b）/ fc-integral（§5c）/
+--    fc-mul（§5d）/ fc-add、fc-const（§5e）——均注明降定理路径（测度论层）。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
