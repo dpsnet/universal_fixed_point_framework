@@ -680,8 +680,8 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 - **Paper XI**：`paper/paper11_spectral_QFT.md` — 谱 QFT 公理系统
 - **Paper XII**：`paper/paper12_spectral_quantum_gravity.md` — 谱量子引力
 - **Paper XVI**：`paper/paper16_lorentz_spectral_dynamics.md` — Lorentz 谱动力学（v0.3）
-- **Paper XXIV-A**：`notes/02_superconductivity/spectral_mu_star_derivation.md` — Bun(Corr) 闭式定理在连续谱中的推广（强耦合超导 μ* 消除）
-- **Paper XXIV-B**：`notes/06_quantum_chem_pv/spectral_hh2_bond_rigidity_paper.md` — H+H₂ 谱键刚性第一性原理推导（Hückel 参数消除）
+- **Paper XXIV-A**（规划中）：Bun(Corr) 闭式定理在连续谱中的推广（强耦合超导 μ* 消除）
+- **Paper XXIV-B**（规划中）：H+H₂ 谱键刚性第一性原理推导（Hückel 参数消除）
 
 ### 标准文献
 

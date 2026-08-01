@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.1（2026-07-27）
+**版本**：v1.3（2026-08-01）
 
-**摘要**：Paper I 建立了递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 的基础框架，其核心对象要求携带全局统一确定性自相似演化映射 $\Phi_R$ 与迭代半群 $\mathcal{T}_R$。本文处理两类被 Paper I 明确排除在原生覆盖范围之外的系统——**纯静态拓扑结构**（无内禀演化）与**随机噪声系统**（无全局确定性映射）——通过范畴构造将其嵌入 $\mathbf{Rec}/\mathbf{Sp}$ 框架。主要贡献包括：(1) 定义恒等延拓子范畴 $\mathbf{Rec}_{\text{id}}$（对象为静态拓扑流形附以平凡恒等演化），证明其与紧致 Riemann 流形范畴的等价性（定理 3.3）并给出谱静默条件 S1–S4 的完整分类分析；(2) 构造静态化函子 $\mathcal{L}: \mathbf{Rec} \to \mathbf{Rec}_{\text{id}}$（遗忘动力学）并证明 $\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}$ 的全反射子范畴（$\mathcal{L} \dashv \iota$，定理 4.2）；(3) 建立静态↔动态双向转化理论：动态化函子 $\mathcal{D}yn$、谱等价桥（定理 6.2）、冻结-解冻连续过程（定理 6.3–6.4），并与 Wick 转动、Matsubara 形式、黑洞热力学等六个物理样本建立精确对应；(4) 构造 $\Sigma$-$\mathbf{Rec}$ 范畴（$\mathbf{Rec}$ 在可数直和下的自由余完备化），证明白噪声作为 $\Sigma$-$\mathbf{Rec}$ 对象的合法性（命题 7.2），扩展谱化函子为 $\Sigma$-$D: \Sigma$-$\mathbf{Rec} \to \Sigma$-$\mathbf{Sp}$（定理 7.3）；(5) 建立噪声↔确定性双向转化理论：选择函子 $\mathcal{S}el$、统计提取函子 $\mathcal{E}xt$、溶解函子 $\mathcal{D}iss$，证明 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对的存在性（命题 8.3），推导 $\alpha \leftrightarrow \gamma$ 色噪声压缩常数分布解析关系（定理 9.2）与最优微观尺度变分原理（定理 10.1）；(6) 建立噪声谱流方程（定理 11.1）与涨落-耗散谱等价桥，给出八个经典物理样本的统一范畴论诠释。(7) 完成 Paper I §5.7 四层静默体系深化形式化的 5 个子项——M1–M4 态射静默判据、四层统一静默度、紧致化对比拓展、伪谱扰动界 $C$ 与辫子退化判据 $C_{\text{crit}}$、B1–B3 数值验证与 $K_{\text{crit}} \approx 7$ 的 Kerr QNM 标定（定理 15.1–15.6，§15）；并在 v0.4 中扩展至 Kerr QNM / BTZ QNM / Schwarzschild-Tangherlini 高维黑洞 / Fibonacci 任意子四类独立物理系统的 5/5 数值验证全覆盖（定理 15.7–15.9，§15.4.1/§15.5.1/§15.6.1），验证 $K_{\text{crit}}$ 系统相关性（Kerr $\approx 7$ / BTZ $= 1$ / Tangherlini $= 1$ / Fibonacci $= 3$）与 $C_{\text{crit}} = \pi/K_{\text{crit}}$ 普适退化判据；所有核心定理已在 Lean 4 中形式化验证（`StaticTopologyFormalization.lean`、`NoiseCategory.lean`、`SilenceHierarchyDeepened.lean`，覆盖 11 项核心结果）。
+**摘要**：Paper I 建立了递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 的基础框架，其核心对象要求携带全局统一确定性自相似演化映射 $\Phi_R$ 与迭代半群 $\mathcal{T}_R$。本文处理两类被 Paper I 明确排除在原生覆盖范围之外的系统——**纯静态拓扑结构**（无内禀演化）与**随机噪声系统**（无全局确定性映射）——通过范畴构造将其嵌入 $\mathbf{Rec}/\mathbf{Sp}$ 框架。主要贡献包括：(1) 定义恒等延拓子范畴 $\mathbf{Rec}_{\text{id}}$（对象为静态拓扑流形附以平凡恒等演化），证明其与紧致 Riemann 流形范畴的等价性（定理 3.3）并给出谱静默条件 S1–S4 的完整分类分析；(2) 构造静态化函子 $\mathcal{L}: \mathbf{Rec} \to \mathbf{Rec}_{\text{id}}$（遗忘动力学）并证明 $\mathbf{Rec}_{\text{id}}$ 是 $\mathbf{Rec}$ 的全反射子范畴（$\mathcal{L} \dashv \iota$，定理 4.2）；(3) 建立静态↔动态双向转化理论：动态化函子 $\mathcal{D}yn$、谱等价桥（定理 6.2）、冻结-解冻连续过程（定理 6.3–6.4），并与 Wick 转动、Matsubara 形式、黑洞热力学等六个物理样本建立精确对应；(4) 构造 $\Sigma$-$\mathbf{Rec}$ 范畴（$\mathbf{Rec}$ 在可数直和下的自由余完备化），证明白噪声作为 $\Sigma$-$\mathbf{Rec}$ 对象的合法性（命题 7.2），扩展谱化函子为 $\Sigma$-$D: \Sigma$-$\mathbf{Rec} \to \Sigma$-$\mathbf{Sp}$（定理 7.3）；(5) 建立噪声↔确定性双向转化理论：选择函子 $\mathcal{S}el$、统计提取函子 $\mathcal{E}xt$、溶解函子 $\mathcal{D}iss$，证明 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对的存在性（命题 8.3），推导 $\alpha \leftrightarrow \gamma$ 色噪声压缩常数分布解析关系（定理 9.2）与最优微观尺度变分原理（定理 10.1）；(6) 建立噪声谱流方程（定理 11.1）与涨落-耗散谱等价桥，给出八个经典物理样本的统一范畴论诠释。(7) 完成 Paper I §5.7 静默体系（S1–S4 层）深化形式化的 5 个子项——M1–M4 态射静默判据、统一静默度（S1–S4 层）、紧致化对比拓展、伪谱扰动界 $C$ 与辫子退化判据 $C_{\text{crit}}$、B1–B3 数值验证与 $K_{\text{crit}} \approx 7$ 的 Kerr QNM 标定（定理 15.1–15.6，§15）；并在 v0.4 中扩展至 Kerr QNM / BTZ QNM / Schwarzschild-Tangherlini 高维黑洞 / Fibonacci 任意子四类独立物理系统的 5/5 数值验证全覆盖（定理 15.7–15.9，§15.4.1/§15.5.1/§15.6.1），验证 $K_{\text{crit}}$ 系统相关性（Kerr $\approx 7$ / BTZ $= 1$ / Tangherlini $= 1$ / Fibonacci $= 3$）与 $C_{\text{crit}} = \pi/K_{\text{crit}}$ 普适退化判据；所有核心定理已在 Lean 4 中形式化验证（`StaticTopologyFormalization.lean`、`NoiseCategory.lean`、`SilenceHierarchyDeepened.lean`，覆盖 11 项核心结果）。
 
 **本文与 Paper I 的关系**：Paper I 的 $\mathbf{Rec}/\mathbf{Sp}$ 框架是有界的（仅覆盖确定性动力学系统），本文通过范畴构造突破了这一边界（嵌入静态拓扑 $\mathbf{Rec}_{\text{id}}$ 与随机系统 $\Sigma$-$\mathbf{Rec}$），并与 Paper I 共同形成完整的**范畴转化闭环**——三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 实现了动力学系统、静态拓扑、随机噪声之间的双向转化。
 
@@ -197,9 +197,9 @@ Paper I §5.2 的四个谱静默条件应用于恒等延拓时，判定结果取
 
 **推论 5.1**（静默程度与紧致性关系）。流形的非紧致性越强，其恒等延拓的静默程度越高。在 $\mathbb{H}^2/\Gamma$ 的连续谱区域，恒等延拓达到完全静默（S1–S4 全部满足）。
 
-### 5.2 与 Paper I 四层静默体系的关系
+### 5.2 与 Paper I 静默体系的关系（S0 + S1–S4）
 
-Paper I §5.7 的四层静默体系（对象/态射/谱/辫子）在 $\mathbf{Rec}_{\text{id}}$ 中退化：
+Paper I §5.7 的静默体系（五层：S0 表示层 + S1–S4 动力学/观测层；本节分析 S1–S4 部分）在 $\mathbf{Rec}_{\text{id}}$ 中退化：
 - **对象静默**：恒等延拓是 $\mathbf{Rec}$ 的合法对象（通过额外延拓），非原生 $\mathbf{Rec}$ 对象
 - **态射静默**：态射条件自动满足（因 $\Phi = \mathrm{id}$），所有光滑映射都是合法态射——态射静默在 $\mathbf{Rec}_{\text{id}}$ 中**饱和**
 - **谱静默**：由 S1–S4 判定（§5.1），紧致→弱静默，非紧致→部分静默
@@ -299,7 +299,7 @@ $$\|\mu_{\text{macro}} - \mu_n\|_{\text{TV}} \leq \frac{C}{n}$$
 
 ### 7.5 噪声的谱静默对应
 
-**定理 7.4**（噪声的静默层分解）。设 $\{R_{\text{local}, i}\}_{i=1}^\infty$ 为白噪声的微观 IFS 分解。Paper I §5.7 的四层静默在噪声直和中有精确对应：
+**定理 7.4**（噪声的静默层分解）。设 $\{R_{\text{local}, i}\}_{i=1}^\infty$ 为白噪声的微观 IFS 分解。Paper I §5.7 的静默体系（S1–S4 层）在噪声直和中有精确对应：
 
 | 静默层 | 范畴层次 | 噪声直和中的对应 |
 |:------:|:-------:|:--------------:|
@@ -649,20 +649,32 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 ---
 
 
-## 15. 四层静默体系深化（对应 Paper I §5.7）
+## 15. 静默体系深化（S1–S4 层，对应 Paper I §5.7）
 
-### 15.1 引言：四层静默体系的深化方向与推进策略
+### 15.1 引言：静默体系（S1–S4 层）的深化方向与推进策略
 
-Paper I §5.7 建立了四层静默体系框架——对象静默、态射静默、谱静默、辫子静默——将范畴论定义域限制转化为不可见性理论的统一层次结构。 在上述框架基础上，从五个方向展开严格化与数值验证，并新增第六个方向：
+Paper I §5.7 建立了静默体系框架——五层：S0 表示层（编码前不可表示，§5.7.9）+ S1–S4 动力学/观测层（对象静默、态射静默、谱静默、辫子静默）——将范畴论定义域限制转化为不可见性理论的统一层次结构。
+
+**双重结构分析（深化前置）**。深化 S1–S4 之前，先明确静默体系的"平行分层 + 内部层次"双重结构及其成因——**为何** S0 与 S1–S4 必须分开处理、**如何**体现在体系架构中：
+
+- **范畴方向相反（根本成因）**：S1–S4 描述 $\mathbf{Rec}$ 侧在 $D$ 作用下（编码后）的信息损失——对象不可定义、态射非等距、谱子集不可见、辫子差异不可分辨；S0 描述 $\mathrm{Hom}_{\mathbf{Sp}}$ 侧（编码前）的谱态射 $\varphi$ 与转移矩阵像 $\mathrm{Im}(D)$ 的关系（$P_{\mathrm{Im}(D)}(\varphi)=0$，无 Rec 原像）。二者构成 $D$ 的**两侧对偶**：态射静默是 Rec 态射经 $D$ 编码后退化，S0 是 Sp 态射无法被 $D$ 解码。
+- **sieve 结构（分类学证据）**：S1–S4 构成 sieve（Paper I 定理 R6 严格静默筛）；S0 **不构成**（左右复合均破坏静默，数值验证 7/7）。若将 S0 并入 S1–S4 层次，层次定理 5.15 的筛性立即失效——分离**保住了 S1–S4 作为干净定理**。
+- **判定机制不同**：S0 用正交投影 $P_{\mathrm{Im}(D)}$（静态结构判据）；S1–S4 用测度条件 S1–S4 / 等距判据 M1–M4 / 辫子判据 B1–B3。
+- **语义依赖不同**：S0 的真值随 P1 语义分岔改变（线性语义下伴随无限维闭合 ⟹ S0 仅有限维伪影；集合语义下 S0 结构性普遍）；S1–S4 与 Rec 态射语义选择无关。
+- **物理读法不同**：S0 是表示论基本约束（有限码本，"能表示的态射太少"）；S1–S4 是观测不可见性（紧致化/规范冗余/谱间隙）。
+
+**结论**：S0 与 S1–S4 的分离是结构使然而非编号习惯——体系呈现"**S0 平行于 S1–S4**（表示/编码层 vs 动力学/观测层）+ **S1–S4 内部严格包含层次**（定理 5.15）"的双重结构。因此本节深化 S1–S4 五个方向不涉及 S0；S0 的深化方向（sieve 结构、$S_D$ 动力学刻画、经典扩展层点态性质）与 §15 正交，独立处理（Paper I §5.7.9）。
+
+本节深化 S1–S4（动力学/观测）层，从五个方向展开严格化与数值验证，并新增第六个方向：
 
 - **态射静默的判据系统化**（与 S1–S4 类比，建立 M1–M4 判据）；
 - **四层静默的统一度量**（对象静默度 / 态射静默度 / 谱静默度 / 辫子静默度的统一定量描述）；
 - **四层静默与紧致化对比的拓展**（是否完全替代"是否完全替代"规范冗余的消除"，辫子静默的拓扑缠绕是否对应紧致化中的绕数守恒）；
 - **$\mathbf{Rec}_{\text{diss}}$ 严格化后的伪谱扰动界常数 $C$ 与辫子退化判据 $C_{\text{crit}}$ 的确定**（Paper I §2.5 命题 2.5.2 退化条件）；
 - **辫子静默判据 B1–B3 的数值验证与临界交叉数 $K_{\text{crit}}$ 的确定**。
-- **谱流静默：动态谱静默的跨层桥接**——Lean 4 形式化（`SpectralFlowHomotopy.lean`）揭示谱流 $\infty$-端射 $F_t(A)$ 在 $[A,G]=0$（静默边界）下闭合。谱流静默贯穿四层而非成为第五层，其层次定位 $\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}$ 为开放问题。
+- **谱流静默：动态谱静默的跨层桥接**——Lean 4 形式化（`SpectralFlowHomotopy.lean`）揭示谱流 $\infty$-端射 $F_t(A)$ 在 $[A,G]=0$（静默边界）下闭合。谱流静默贯穿 S1–S4 而非成为独立的静默层（静默体系现为五层：S0 表示层 + S1–S4），其层次定位 $\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}$ 为开放问题。
 
-Paper XIX 是推进的最自然位置，理由有三：(1) §5.2 已建立与 Paper I 四层静默体系的对应分析；(2) §7.5 定理 7.4 已为噪声直和给出四层静默的噪声侧对应；(3) §13 已建立 Paper I ⊕ Paper XIX 统一相图与三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$。本文在此基础上将五个方向严格化为定义+定理+数值验证+形式化。
+Paper XIX 是推进的最自然位置，理由有三：(1) §5.2 已建立与 Paper I 静默体系的对应分析；(2) §7.5 定理 7.4 已为噪声直和给出 S1–S4 静默的噪声侧对应；(3) §13 已建立 Paper I ⊕ Paper XIX 统一相图与三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$。本文在此基础上将五个方向严格化为定义+定理+数值验证+形式化。
 
 **推进策略**：每方向以"定义—定理—命题—数值/形式化验证"的四段式展开，最终在 §15.8 给出对应总结表。所有定理编号延续 Paper XIX 序列（15.1–15.6）。
 
@@ -970,7 +982,7 @@ $$K_{\text{crit}}^{(D)} = \left\lfloor \frac{\Delta\omega_I^{(D)}}{2\pi} \right\
 | `BTZ_Ccrit_stability` | 定理 15.8 | BTZ $K_{\text{crit}}^{\text{BTZ}} = 1$、$C_{\text{crit}}^{\text{BTZ}} = \pi$ 稳定性 |
 | `K_crit_tangherlini_dimension` | 定理 15.9 | Tangherlini $K_{\text{crit}}^{(D)} = 1$ 维度稳定性 |
 
-**与 Paper I `SilenceHierarchy.lean` 的关系**：Paper I 的形式化仅覆盖层次包含定理（定理 5.18），本文深化版本增加判据（M1–M4）、度量（$\mathcal{S}$）、退化阈值（$C_{\text{crit}}$）与数值算法（B1–B3），并扩展至 Fibonacci 任意子、BTZ 黑洞、Tangherlini 高维黑洞三类独立系统的数值验证。两个模块共同构成四层静默体系的完整形式化基础设施。
+**与 Paper I `SilenceHierarchy.lean` 的关系**：Paper I 的形式化仅覆盖层次包含定理（定理 5.18），本文深化版本增加判据（M1–M4）、度量（$\mathcal{S}$）、退化阈值（$C_{\text{crit}}$）与数值算法（B1–B3），并扩展至 Fibonacci 任意子、BTZ 黑洞、Tangherlini 高维黑洞三类独立系统的数值验证。两个模块共同构成 S1–S4 静默体系的完整形式化基础设施。
 
 #### 15.7.1 谱流静默的形式化验证
 
@@ -1051,7 +1063,7 @@ $$\delta_{\text{silence}}(A,G) = \|[A,G]\|, \qquad \delta_{\text{silence}}\leq 2
 
 **推进状态**：六个方向中前五个已在理论层面严格化（定义+定理+证明），且全部通过数值验证，覆盖 Kerr QNM / BTZ QNM / Schwarzschild-Tangherlini 高维黑洞 / Fibonacci 任意子四类独立物理系统。$K_{\text{crit}}$ 是**系统相关量**（Kerr $\approx 7$ / BTZ $= 1$ / Tangherlini $= 1$ / Fibonacci $= 3$），但所有系统均满足统一退化判据 $C_{\text{crit}} = \pi/K_{\text{crit}}$，验证了理论的普适性。第六方向（连续静默度 $\delta_{\text{silence}}$）已在 Lean 中完成定义与核心等价的证明，边界不等式待后续完成。所有核心定理已声明 Lean 形式化（`SilenceHierarchyDeepened.lean`，覆盖 11 项核心结果；`Silence.lean` 覆盖 $\delta_{\text{silence}}$ 相关结果），实际 `.lean` 代码实现留作后续工程任务。
 
-**与 Paper I §5.7 的关系**：Paper I §5.7 建立了四层静默体系框架并形式化层次包含关系，本文 §15 在此基础上完成五个方向的严格化与四类物理系统的数值验证，使 Paper I §5.7 四层静默体系深化形式化标记为"完全解决"。
+**与 Paper I §5.7 的关系**：Paper I §5.7 建立了静默体系框架（S1–S4 层）并形式化层次包含关系，本文 §15 在此基础上完成五个方向的严格化与四类物理系统的数值验证，使 Paper I §5.7 静默体系（S1–S4 层）深化形式化标记为"完全解决"。
 
 ---
 
@@ -1069,9 +1081,9 @@ $$\delta_{\text{silence}}(A,G) = \|[A,G]\|, \qquad \delta_{\text{silence}}\leq 2
 
 5. **色噪声的 IFS 构造实验验证**：$\alpha \leftrightarrow \gamma$ 关系预言了不同噪声类型的压缩常数分布。**预言**：白噪声频谱在 $\Delta\omega/\omega < 10^{-5}$ 分辨率下应出现 $\delta$ 尺度振荡，振幅 $A_{\text{osc}} \sim 10^{-3}$，在现有测量精度范围内。
 
-6. **四层静默体系深化（Paper I §5.7 深化形式化）**：5 个子项（M1–M4 判据、统一静默度、紧致化对比、$C_{\text{crit}}$、B1–B3 与 $K_{\text{crit}}$）已在 §15 全部严格化（定义 15.1–15.3、定理 15.1–15.6）。Kerr QNM 数值验证给出 $K_{\text{crit}} \approx 7$、$C_{\text{crit}} = \pi/7 \approx 0.449$。Paper I §5.7 四层静默体系深化形式化从开放问题升级为已解决（5/5 理论严格化，3/5 数值验证）。详见 §15.8。
+6. **静默体系深化（Paper I §5.7，S1–S4 层）**：5 个子项（M1–M4 判据、统一静默度、紧致化对比、$C_{\text{crit}}$、B1–B3 与 $K_{\text{crit}}$）已在 §15 全部严格化（定义 15.1–15.3、定理 15.1–15.6）。Kerr QNM 数值验证给出 $K_{\text{crit}} \approx 7$、$C_{\text{crit}} = \pi/7 \approx 0.449$。Paper I §5.7 静默体系（S1–S4 层）深化形式化从开放问题升级为已解决（5/5 理论严格化，3/5 数值验证）。详见 §15.8。
 
-7. **谱流静默的 $\infty$-范畴闭合**：`SpectralFlowHomotopy.lean` 形式化验证谱流 $\infty$-端射在静默边界 $[A,G]=0$ 下闭合；`SpectralGap.lean` 建立 $\mathrm{Cl}(1,7) \to \Delta\lambda_{\min}$ 的完整推导链。谱流静默是贯穿四层静默体系的桥接原理，其严格层次定位 $\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}$ 列为开放问题。详见 §15.7.1。
+7. **谱流静默的 $\infty$-范畴闭合**：`SpectralFlowHomotopy.lean` 形式化验证谱流 $\infty$-端射在静默边界 $[A,G]=0$ 下闭合；`SpectralGap.lean` 建立 $\mathrm{Cl}(1,7) \to \Delta\lambda_{\min}$ 的完整推导链。谱流静默是贯穿静默体系的桥接原理，其严格层次定位 $\text{谱静默} \subsetneq \text{谱流静默} \subsetneq \text{态射静默}$ 列为开放问题。详见 §15.7.1。
 
 ---
 
@@ -1288,7 +1300,7 @@ Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 
 
 ---
 
-**版本**：v1.1（2026-07-27）
+**版本**：v1.3（2026-08-01）
 
 **状态**：
 
@@ -1298,6 +1310,8 @@ Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.3 | 2026-08-01 | **深化前置：双重结构分析**——§15.1 新增"双重结构分析"块，在深化 S1–S4 之前明确交代静默体系"平行分层 + 内部层次"双重结构的成因（**为何** S0 与 S1–S4 分开处理：范畴方向相反/两侧对偶、sieve 结构（S0 不构成 sieve）、判定机制、语义依赖（P1 语义分岔）、物理读法五维论证；**如何**体现：S0 平行于 S1–S4 + S1–S4 内部严格包含层次）；据此说明 §15 深化 S1–S4 与 S0 正交、独立处理（Paper I §5.7.9）。版本号 v1.2 → v1.3 |
+| v1.2 | 2026-08-01 | **五层静默体系交叉引用对齐**（对应 Paper I v2.48）：§5.2 标题"与 Paper I 静默体系的关系（S0 + S1–S4）"；§15 标题"静默体系深化（S1–S4 层）"；定理 7.4 / §15.8 推进状态 / 开放问题项 6 / 摘要第 (7) 项中"Paper I 体系 = 四层"引用更新为"静默体系（S1–S4 层）"；谱流静默"贯穿四层"→"贯穿静默体系"。保留 §15 内部"四层静默深化"描述（S1–S4 内容自洽）。版本号 v1.1 → v1.2 |
 | v1.1 | 2026-07-27 | RAP v0.1 修正：推论 13.1 删除"不存在动力学谱范畴之外的物理系统"，替换为"框架可嵌入广泛物理系统；该穷尽性命题不属于当前可证明范围" |
 | v0.9 | 2026-07-22 | **§17.6 BCS 试点状态更新**：Q2 从旧唯象三项叠加公式 ($\delta Z_{\text{ret}}+\delta Z_{\mu^*}+\delta Z_{\text{fluc}}$) 替换为 Eliashberg $Z(\omega) = 1 + \lambda \cdot \omega_E^2/(\omega_E^2+\omega^2)$ 统一框架，`Z_peak_unified.py` 实际运行验证五种材料全部通过自洽性检验；Q4 从"开放中"更新为"解析形式已建立，待严格范畴形式化"；BCS 试点整体状态从"Q1-Q3 闭合，Q4 开放中"升级为"Q1-Q4 全部闭合"。 |
 | v0.8 | 2026-07-21 | **(a) 修复 `SpectralFlowHomotopy.lean` 归纳法证明**：`h_iter_ge_one` 类型错误——`Function.iterate_succ_apply` 方向修复，谱流静默模块全量通过编译；**(b) 连续静默度 $\delta_{\text{silence}}$**：`Silence.lean` 完成 `frobeniusNorm`、`deltaSilence` 定义，`frobeniusNorm_eq_zero_iff`（$\|A\|_F=0\iff A=0$）与 `deltaSilence_eq_zero_iff$（$\delta_{\text{silence}}=0\iff[A,G]=0$）已证明，`deltaSilence_bound$ 待证（需 Frobenius 范数次乘性，推迟至 Phase 36）；§15.8 表格新增第 7 行"连续静默度 $\delta_{\text{silence}}$"，§16 方向三补充 Lean 形式化状态；版本号 v0.7 → v0.8。 |

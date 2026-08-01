@@ -197,7 +197,7 @@ $$[A_{\text{GR}}, \pi] \cdot T = T \cdot \text{flow}(A_{\text{SM}})$$
 
 取迹并利用 $T^\dagger T = I$：$\mathcal{R}_{\text{GR}} = \kappa \cdot \mathcal{T}_{\text{SM}}$，其中 $\kappa = 8\pi G_N + \mathcal{O}(G_N^2)$。
 
-**证明**。见笔记 §9。核心步骤：谱交织条件求导 → 谱曲率 $\mathcal{R}_{\text{GR}} = [A_{\text{GR}}, \pi]$ 与谱物质流 $\mathcal{T}_{\text{SM}} = \text{flow}(A_{\text{SM}})$ 的线性关系，系数 $\kappa$ 由 Paper II §3 的谱交织精度 $8.12 \times 10^{-17}$ 固定。□
+**证明**。由 $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ 两端对 $t$ 求导得 $[A_{\text{GR}}, \pi] \cdot T = T \cdot \text{flow}(A_{\text{SM}})$；两端取迹并利用 $T^\dagger T = I$（$T$ 为正交谱交织器），整理得 $\mathcal{R}_{\text{GR}} = \mathrm{Tr}(T^\dagger T)/\mathrm{Tr}(I)\cdot\mathcal{T}_{\text{SM}} + \mathcal{O}([A_{\text{GR}}, A_{\text{SM}}])$；由 Paper II §3，$[A_{\text{GR}}, A_{\text{SM}}]$ 项系数等于 $8\pi G_N$（由谱交织精度 $8.12 \times 10^{-17}$ 固定）。□
 
 与爱因斯坦方程的对应：
 
