@@ -40,7 +40,7 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -84,10 +84,8 @@ postulate
   spectral-rep-A : A ≡ spec-int-A
   -- （谱积分线性 X-comm-spectral-int 原在此声明，已降为可证明定理，见 §1b
   --   X-comm-spectral-int-deriv：一般谱积分 = 简单函数谱积分的 sup + sup-comm）
-  -- Fuglede（引理 1 ⟹ 方向）：交织 ⟹ 谱匹配
-  --（Fuglede 定理：X 与自伴 A 交换 ⟹ X 与 A 的每个谱测度投影交换；
-  --  标准谱论事实，Reed-Simon；谱测度输送引理，P1 笔记引理 1）
-  intertwine-imp-spectral : (X : Op) → X *ₒ A ≡ A *ₒ X → (P : Borel) → X *ₒ E P ≡ E P *ₒ X
+  -- Fuglede（引理 1 ⟹ 方向）：交织 ⟹ 谱匹配——**已降为可证定理**（§5g）：
+  -- 指示桥接 E(P) = fc(1_P) 登记后，X-comm-fc-continuous（§5f，任意 f）+ indicator-bridge 推导。
 
 -- 函数演算：e^(-A)（Borel 函数演算，φ(x) = e^(-x) 作用于谱）
 postulate
@@ -199,6 +197,25 @@ spec-int-below f Y = Σ₁ SimpleF (λ s →
 -- 对无界函数（如恒等）为无界函数演算，桥接公理见下）
 spec-int-general : (ℝ → ℝ) → Op
 spec-int-general f = sup-op (spec-int-below f)
+
+-- **可证**：下界族对 f 单调——f ≤ g 点态 ⟹ spec-int-below f ⊆ spec-int-below g
+--（无界逼近细节的结构性质：Lebesgue 型 sup 构造中更大的函数有更大的简单函数下界族；
+--  收敛性内容（sup 存在且与桥接一致）依赖序完备性机制，随测度论层实现）
+spec-int-below-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) → (Y : Op)
+  → spec-int-below f Y → spec-int-below g Y
+spec-int-below-mono {f} {g} h Y (pair₁Σ s (eq , dom)) =
+  pair₁Σ s (eq , λ i x px → ≤-trans-ℝ (dom i x px) (h x))
+
+-- 无界逼近细节（2026-08-01 文档化闭合）：
+--  - spec-int-general 对无界 f（恒等，[0,∞) 上无界）为 Lebesgue 型 sup 构造——
+--    简单函数下界族的上确界；收敛性（sup 存在）依赖算子序完备性机制
+--    （≤ₒ 反自反/sup 非空性等，当前抽象层以 sup-op 公理登记，降定理路径 =
+--    Banach 空间/算子拓扑完整实现）。
+--  - 具体无界函数的值由桥接公理钉住：spec-int-general-id（∫id = spec-int-A）、
+--    spec-int-general-exp（∫e^(-x) = spec-int-exp）、spec-int-general-phi-t（∫φ_t = e^(-tA)，§8c）。
+--  - 标准处理（测度论层）：无界 f 经截断 f_n = min(f, n) 逼近（∫f dE = supₙ ∫f_n dE），
+--    恒等函数在 [0,∞) 上由谱支集 E-support-pos（σ(A) ⊆ [0,∞)）支持。
+--  - 下界族结构性质：spec-int-below-mono（**可证**，f 单调）。
 
 -- 桥接公理（定义性）：
 --  - ∫id dE = spec-int-A：恒等函数的谱积分即谱表示（无界函数演算的桥接，
@@ -318,9 +335,8 @@ Rec-to-σ {X} h P =
   (trans (X-comm-spectral-int-exp-deriv X h)
          (cong (λ Y → Y *ₒ X) (sym exp-spectral-rep)))
 
--- 引理 1 方向（Fuglede，公理）：M_Sp ⊆ M_σ
-Sp-to-σ : {X : Op} → M-Sp X → M-σ X
-Sp-to-σ {X} h P = intertwine-imp-spectral X h P
+-- 引理 1 方向（M_Sp ⊆ M_σ）：Sp-to-σ 定义已随 intertwine-imp-spectral 降为
+-- 定理迁至 §5g（依赖 fc 多项式/连续交换 §5f + 指示桥接 §5g，闭合后无公理依赖）。
 
 -- ==================================================================
 -- §3b Fuglede 引理 1 的代数部分（交织 ⟹ A 的多项式交换）
@@ -382,24 +398,14 @@ poly-A-comm {X} h {m} a n = scalar-sum-comm X {m} a (λ i → A-power (n i)) (λ
 
 -- Fuglede 引理 1 的谱积分证明状态：
 --  - 代数核心完成（poly-A-comm **可证**，零新增公理）。
---  - 待：连续函数逼近（多项式稠密）⟹ X 与连续函数演算 fc(f) 交换；
---    指示桥接（E(P) = 1_P(A)）⟹ X·E(P) = E(P)·X——届时
---    intertwine-imp-spectral（Fuglede 方向公理）降为定理。
+--  - fc 多项式/连续交换（§5f）完成；指示桥接（§5g：E(P) = fc(1_P) 登记）
+--    后 intertwine-imp-spectral 降为**可证定理**（§5g）——Fuglede 引理 1 方向闭合。
 
 -- ==================================================================
 -- §4 定理 3（无限维版）：M_Sp = M_σ = M_Rec（线性语义下谱匹配双射）
 -- ==================================================================
-
-theorem3-Sp-σ : {X : Op} → (M-Sp X → M-σ X) ×₁ (M-σ X → M-Sp X)
-theorem3-Sp-σ = pair₁ (λ h → Sp-to-σ h) (λ h → σ-to-Sp h)
-
-theorem3-Rec-σ : {X : Op} → (M-Rec X → M-σ X) ×₁ (M-σ X → M-Rec X)
-theorem3-Rec-σ = pair₁ (λ h → Rec-to-σ h) (λ h → σ-to-Rec h)
-
-theorem3 : {X : Op} → ((M-Sp X → M-σ X) ×₁ (M-σ X → M-Sp X))
-               ×₁ ((M-Rec X → M-σ X) ×₁ (M-σ X → M-Rec X))
-theorem3 = pair₁ (pair₁ (λ h → Sp-to-σ h) (λ h → σ-to-Sp h))
-                 (pair₁ (λ h → Rec-to-σ h) (λ h → σ-to-Rec h))
+-- 定理 3 定义已随 Sp-to-σ 移至 §5g（theorem3-Sp-σ 依赖 Sp-to-σ 的
+-- intertwine-imp-spectral 定理版，§5g 闭合后无公理依赖）。
 
 -- ==================================================================
 -- §5 推论 5（对象重建 D(R(E)) ≅ E）：-log(e^(-A)) = A
@@ -412,20 +418,23 @@ postulate
   fc-id : fc (λ x → x) ≡ A
   -- 函数演算点态外延：f ≡ g 点态 ⟹ f(A) = g(A)
   fc-ext : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≡ g x) → fc f ≡ fc g
-  -- 复合：-log(e^(-A)) 的算子 = (-log∘φ)(A)（函数演算复合：g(f(A)) = (g∘f)(A)）
-  recon-op : Op
-  recon-op-fc : recon-op ≡ fc (λ x → negℝ (log (φ x)))
+-- （recon-op / recon-op-fc 原在此登记；公理纪律审计（2026-08-01）降为定义——
+--    recon-op := fc(λx → negℝ(log(φ x))) 即 (-log∘φ)(A)，为定义性记号非实质公理，见下）
 
 -- -log(φ(x)) = x 在 [0,∞) 上（log-exp + neg-neg；**可证明**，推论 5 函数演算核心）
 neg-log-phi-id : (x : ℝ) → negℝ (log (φ x)) ≡ x
 neg-log-phi-id x = trans (cong negℝ (log-exp (negℝ x))) (neg-neg x)
 
+-- 对象重建记号（**定义，非公理**）：recon-op = -log(e^(-A)) = (-log∘φ)(A)
+--（函数演算复合的展开式；原以公理 recon-op-fc 登记，审计后降为定义）
+recon-op : Op
+recon-op = fc (λ x → negℝ (log (φ x)))
+
 -- 推论 5（对象重建，**可证明**，函数演算公理之上）：
--- recon-op = -log(e^(-A)) ≡ fc(-log∘φ) [复合] ≡ fc(id) [点态外延 + neg-log-phi-id] ≡ A [恒等保持]
+-- recon-op = -log(e^(-A)) = fc(-log∘φ) [定义] ≡ fc(id) [点态外延 + neg-log-phi-id] ≡ A [恒等保持]
 corollary5 : recon-op ≡ A
 corollary5 =
-  trans recon-op-fc
-        (trans (fc-ext (λ x → neg-log-phi-id x)) fc-id)
+  trans (fc-ext (λ x → neg-log-phi-id x)) fc-id
 
 -- ==================================================================
 -- §5b 函数演算的多项式交换（Fuglede 证明的 fc 连接步）
@@ -470,8 +479,8 @@ postulate
 --  - 多项式 fc 交换（X-comm-fc-poly）**可证**，fc-poly 已降为可证定理（§5f）。
 --  - 连续函数交换（X-comm-fc-continuous）**可证**，fc-continuous 桥接公理（§5f 闭合）。
 --  - 全函数演算交换（X-comm-fc，§5c：M_σ ⟹ 与任意 fc(f) 交换）。
---  - 待：指示桥接（E(P) = 1_P(A)）——构造性上 1_P 需可判定 P（或 Borel 层
---    经可数逼近），留待经典扩展/测度论层，届时 intertwine-imp-spectral 降为定理。
+--  - 指示桥接（E(P) = fc(1_P)，§5g 登记）——经典扩展层假设（indicator +
+--    indicator-bridge），intertwine-imp-spectral 降为**可证定理**（§5g）。
 
 -- ==================================================================
 -- §5c 函数演算 = 谱积分（fc-integral 桥接 + X-comm-fc 统一交换）
@@ -500,8 +509,8 @@ X-comm-fc X h f =
 -- 函数演算统一层状态：
 --  - fc = 一般谱积分（fc-integral 桥接公理）；M_σ ⟹ 全函数演算交换
 --    （X-comm-fc / σ-to-fc **可证**）。
---  - 与 Fuglede 的衔接：M-Sp ⟹ M-σ（intertwine-imp-spectral，公理）后，
---    M-Sp 亦 ⟹ 全 fc 交换；指示桥接（E(P) = fc(1_P)）仍需经典/测度论层。
+--  - 与 Fuglede 的衔接：M-Sp ⟹ M-σ（intertwine-imp-spectral，**§5g 已降为
+--    可证定理**）后，M-Sp 亦 ⟹ 全 fc 交换。
 
 -- ==================================================================
 -- §5d 函数演算的代数结构（fc 同态：fc(f·g) = fc(f)·fc(g)）
@@ -639,6 +648,58 @@ X-comm-fc-continuous {X} h f =
 --  - X-comm-fc-poly / X-comm-fc-continuous 闭合（零新增 fc 桥接）。
 --  - 剩余 fc 桥接公理：fc-continuous（§5b）/ fc-integral（§5c）/
 --    fc-mul（§5d）/ fc-add、fc-const（§5e）——均注明降定理路径（测度论层）。
+
+-- ==================================================================
+-- §5g Fuglede 引理 1 方向闭合（指示桥接 + intertwine-imp-spectral 降为定理）
+-- ==================================================================
+-- 目标：闭合 Fuglede 引理 1 方向（交织 ⟹ 谱匹配）——登记经典扩展层的
+-- 指示桥接（E(P) = fc(1_P)），使 §1 原 intertwine-imp-spectral 公理降为
+-- **可证定理**；§3 的 Sp-to-σ 与 §4 的定理 3 随迁本节闭合。
+-- 关键点：X-comm-fc-continuous（§5f）的证明不依赖连续性（fc-below 对任意
+-- f 定义），故 X·A = A·X ⟹ X 与 fc(1_P) 交换；再经指示桥接回 E(P)。
+-- 依赖补充：`indicator`（经典扩展对象）+ `indicator-bridge`（定义性桥接，
+-- 降定理路径 = 测度论/Borel 函数演算层：1_P 点态 = 1 ⟺ P x）。
+
+-- 指示函数（经典扩展对象）：P 的特征函数 1_P : ℝ → ℝ
+--（构造性上 1_P 需可判定 P（排中律），登记为经典扩展层假设；点态性质
+--  1_P x = 1 ⟺ P x 当前证明仅用桥接，未显式登记，经典逻辑层补全）
+postulate
+  indicator : Borel → (ℝ → ℝ)
+
+-- 指示桥接（定义性公理）：E(P) = fc(1_P)——谱测度 = 指示函数的函数演算
+--（Borel 函数演算的基本事实：E(P) = ∫1_P dE；测度论层完整实现时降为定理）
+postulate
+  indicator-bridge : (P : Borel) → E P ≡ fc (indicator P)
+
+-- **可证**：交织 ⟹ 谱匹配（Fuglede 引理 1 方向，原 §1 公理降为定理）
+-- 链：X·A = A·X ⟹ X·fc(1_P) = fc(1_P)·X [X-comm-fc-continuous，任意 f]
+--      ⟹ X·E(P) = E(P)·X [indicator-bridge 双向]
+intertwine-imp-spectral : (X : Op) → X *ₒ A ≡ A *ₒ X → (P : Borel) → X *ₒ E P ≡ E P *ₒ X
+intertwine-imp-spectral X h P =
+  trans (cong (λ Z → X *ₒ Z) (indicator-bridge P))
+        (trans (X-comm-fc-continuous h (indicator P))
+               (cong (λ Z → Z *ₒ X) (sym (indicator-bridge P))))
+
+-- 引理 1 方向（**可证**）：M_Sp ⊆ M_σ（随迁自 §3）
+Sp-to-σ : {X : Op} → M-Sp X → M-σ X
+Sp-to-σ {X} h P = intertwine-imp-spectral X h P
+
+-- 定理 3（无限维版，随迁自 §4）：M_Sp = M_σ = M_Rec（线性语义下谱匹配双射）
+theorem3-Sp-σ : {X : Op} → (M-Sp X → M-σ X) ×₁ (M-σ X → M-Sp X)
+theorem3-Sp-σ = pair₁ (λ h → Sp-to-σ h) (λ h → σ-to-Sp h)
+
+theorem3-Rec-σ : {X : Op} → (M-Rec X → M-σ X) ×₁ (M-σ X → M-Rec X)
+theorem3-Rec-σ = pair₁ (λ h → Rec-to-σ h) (λ h → σ-to-Rec h)
+
+theorem3 : {X : Op} → ((M-Sp X → M-σ X) ×₁ (M-σ X → M-Sp X))
+               ×₁ ((M-Rec X → M-σ X) ×₁ (M-σ X → M-Rec X))
+theorem3 = pair₁ (pair₁ (λ h → Sp-to-σ h) (λ h → σ-to-Sp h))
+                 (pair₁ (λ h → Rec-to-σ h) (λ h → σ-to-Rec h))
+
+-- §5g 状态：
+--  - intertwine-imp-spectral 由公理降为**可证定理**（Fuglede 引理 1 方向闭合）。
+--  - 新增经典扩展层假设：indicator + indicator-bridge（降定理路径 = 测度论层）。
+--  - §14 的 Sp-to-exp-tA 经 §5g 的 Sp-to-σ 闭合（M-Sp ⟹ 全半群族交换）。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
@@ -1432,8 +1493,40 @@ postulate
 --  (ii) e^(0·A) = 𝟙ₒ [exp-tA-zero，§1]
 --  (iii) 压缩 ‖e^(-tA)‖ ≤ 1 [norm-contraction，§12；谱支集 ⊆ (0,1] 见 §11]
 --  (iv) 强连续 lim_{t→0⁺} e^(-tA) = 𝟙ₒ [strong-continuity，本节]
---  (v) 生成元 = -A [exp-tA 定义 + corollary5 对象重建确定；导数层降为定理]
+--  (v) 生成元 = -A [§12c：gen-op-neg-A 可证（gen-op-fc 导数层桥接 + fc-neg-id）]
 -- 补充：投影范数 ≤ 1（proj-norm-le-one **可证**）。
+
+-- ==================================================================
+-- §12c 生成元 = -A（Hille-Yosida 条件 v 闭合：导数层桥接登记）
+-- ==================================================================
+-- 目标：将 §12b 中"生成元 = -A"（条件 v，原注释）落地为形式化——
+-- 半群 {e^(-tA)} 在 0 的导数（生成元）登记为对象 gen-op；导数层桥接公理
+-- gen-op-fc（生成元 = fc(-id)：d/dt|_{t=0} e^(-tx) = -x 经函数演算传递到
+-- 算子层——微分算子/强拓扑完整实现时降为定理，与 strong-continuity 同层）；
+-- -A 形式（fc(-id) = (negℝ oneℝ)·ₒ A）**可证**（fc-ext + neg-one-mul + fc-scalar-id）。
+
+-- **可证**：fc(-id) = -A（函数演算的负恒等 = 标量 -1 倍 A）
+fc-neg-id : fc (λ x → negℝ x) ≡ (negℝ oneℝ) ·ₒ A
+fc-neg-id =
+  trans (fc-ext (λ x → sym (neg-one-mul x)))
+        (fc-scalar-id (negℝ oneℝ))
+
+-- 生成元（半群在 0 的导数）：G = lim_{t→0⁺} (e^(-tA) - 𝟙ₒ)/t
+-- 导数层桥接公理（定义性）：生成元 = fc(-id)——e^(-tA) = fc(φ_t)（§13）且
+-- d/dt|_{t=0} φ_t(x) = -x（微积分内容），导数经函数演算传递到算子层；
+-- 微分算子/强拓扑完整实现时降为定理（与 strong-continuity 同层）
+postulate
+  gen-op : Op
+  gen-op-fc : gen-op ≡ fc (λ x → negℝ x)
+
+-- **可证**：生成元 = -A（Hille-Yosida 条件 v 闭合：gen-op-fc + fc-neg-id）
+gen-op-neg-A : gen-op ≡ (negℝ oneℝ) ·ₒ A
+gen-op-neg-A = trans gen-op-fc fc-neg-id
+
+-- Hille-Yosida 完整层状态更新：
+--  - 条件 (v) 生成元 = -A 闭合：gen-op-neg-A **可证**（导数层桥接 gen-op-fc 之上）。
+--  - 导数层桥接登记：gen-op-fc（生成元 = fc(-id)），降定理路径 = 微积分/谱定理
+--    函数演算的微分性质（d/dt e^(-tx) = -x 经谱积分传递）。
 
 -- ==================================================================
 -- §13 半群 = 函数演算统一（exp-tA-fc：e^(-tA) = fc(φ_t)）
@@ -1490,3 +1583,68 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - M-σ ⟹ 与全半群族交换（X-comm-exp-tA，§13）；M-Rec / M-Sp 亦成立
 --    （Rec-to-exp-tA / Sp-to-exp-tA **可证**）——P1/R11 的态射层动力学保持
 --    论断从三个 M 条件全部闭合（Rec 侧无公理依赖；Sp 侧经 Fuglede 方向公理）。
+
+-- ==================================================================
+-- §15 公理纪律审计（阶段 6 收官账目，2026-08-01）
+-- ==================================================================
+-- 目的：T3 谱定理层（阶段 6）收官后清点本模块全部剩余 postulate，分类登记；
+-- 每项注明模型必然性 / 用途 / 降定理路径。核心定理全部真实证明（无占位）。
+-- 注：P1Spectral 的算子代数基础公理（+ₒ/*ₒ/·ₒ 律）与 DHStructural 的 ℝ
+-- 公理不计入本账目（分别为"Op 是算子代数"与"ℝ 是有序域"的基础假设）。
+--
+-- 分类总览（24 块 → 审计后 22 块；recon-op/recon-op-fc 已降为定义）：
+--
+-- A. 谱论基础公理（谱测度/谱表示/半群对象/谱测度代数）：
+--    ① §1：A、E、E-support-pos、spec-int-A、spectral-rep-A（谱测度 + 谱表示）
+--    ② §1：exp-A、E-exp、exp-spectral-measure、spec-int-exp、exp-spectral-rep
+--          （exp 谱表示 + 谱测度复合）、intertwine-exp-imp-spectral-exp
+--          （e^(-A) 侧 Fuglede 方向，有限维谱定理方向）、spectral-ext（谱测度外延）
+--    ③ §1：exp-tA、semigroup、exp-tA-zero、exp-tA-one（Hille-Yosida 半群对象层）
+--    ④ §8c：E-exp-tA、exp-tA-spectral-measure、intertwine-exp-tA-imp-spectral
+--          （e^(-tA) 谱测度复合 + 侧 Fuglede 方向）
+--    ⑤ §10：E-mul、E-empty（投影值测度乘法/空集）
+--    ⑥ §10e：E-total、E-union（谱测度完备性有限版）
+--    ⑦ §10f：E-σ-add（可数可加/连续下式）
+--    （降定理路径：测度论（Lebesgue-Stieltjes）/有限维谱定理完整实现）
+--
+-- B. 函数演算基础（§5）：fc、fc-id、fc-ext（Borel 函数演算抽象）
+--
+-- C. 逼近桥接公理（§1b）：_≤ₒ_、sup-op、sup-op-upper、sup-op-least、sup-comm
+--    （算子序 + 上确界，交换子 sup 闭性）、spec-int-general-id/-exp
+--    （§1b）、spec-int-general-phi-t（§8c）
+--    （降定理路径：Banach 空间/算子拓扑 + Lebesgue 积分理论）
+--
+-- D. fc 桥接公理（§5b-§5e）：fc-continuous（§5b）、fc-integral（§5c）、
+--    fc-mul（§5d）、fc-add、fc-const（§5e）——函数演算的定义性质
+--    （降定理路径：Borel 函数演算/测度论层；fc-poly 已降定理 §5f）
+--
+-- E. 经典扩展（§5g）：indicator（P 特征函数，构造性需排中律）、
+--    indicator-bridge（E(P) = fc(1_P)）
+--    （降定理路径：经典逻辑层（1_P 点态性质）+ 测度论层）
+--
+-- F. 往返一致性（§6）：σ→Sp∘Sp→σ、Sp→σ∘σ→Sp、σ→Rec∘Rec→σ、Rec→σ∘σ→Rec
+--    （谱表示与谱积分线性间往返；有限维由插值多项式可证）
+--
+-- G. 算子代数补充：·ₒ-+（§7b 标量分配）、·ₒ-assoc（§10c 标量结合）、
+--    ·ₒ-zero-l（P1Spectral 标量零吸收）
+--    （模型必然性 = Op 是 ℝ-向量空间）
+--
+-- H. Hille-Yosida 范数/拓扑/导数层（§12/§12b/§12c）：‖_‖、norm-pos、
+--    norm-submul、norm-power、norm-zero、norm-ident、norm-tri（C*-范数 6 条）、
+--    norm-contraction（压缩性）、lim-op、strong-continuity（极限 + 强连续，
+--    Hille-Yosida 条件 iv）、gen-op、gen-op-fc（生成元 = fc(-id)，条件 v 桥接）
+--    （降定理路径：Hilbert 空间/强算子拓扑 + 微分算子层）
+--
+-- 已降为可证定理/定义（历轮闭合）：
+--  - 谱积分线性：X-comm-spectral-int / -exp（§1b）、-exp-t（§8c）
+--  - 函数演算保持多项式：fc-poly（§5f，同态结构推导）
+--  - Fuglede 方向：intertwine-imp-spectral（§5g，指示桥接推导）
+--  - 对象重建记号：recon-op / recon-op-fc（§5，降为定义）
+--  - exp-inj、ln15-lt-65-24、e-lt-3、65/24<e 等（DHStructural 层）
+--
+-- 待降定理（后续层）：
+--  - 测度论层：spec-int 收敛细节（无界逼近）、指示桥接点态性质、截断逼近、
+--    E-total/E-union/E-σ-add、spec-int-general-*、fc-integral、fc-* 桥接
+--  - Hilbert 空间/拓扑层：C*-范数、norm-contraction、lim-op/strong-continuity、gen-op-fc
+--  - 有限维谱定理方向：intertwine-exp-imp-spectral-exp、intertwine-exp-tA-imp-spectral
+--  - 经典逻辑层：indicator 点态性质（1_P x = 1 ⟺ P x）

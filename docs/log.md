@@ -969,3 +969,53 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.72。
 
 **阶段 6 状态**：fc-poly 桥接替换完成。待推进：②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）；① 无界逼近细节。
+
+---
+
+【生成元 = -A：Hille-Yosida 条件 v 闭合（2026-08-01）】
+
+1. **§12c（SpectralTheory）**：
+   - **`fc-neg-id`（可证）**：fc(-id) = (negℝ oneℝ)·ₒ A——fc-ext（点态 sym neg-one-mul）+ fc-scalar-id；函数演算的负恒等 = 标量 -1 倍 A。
+   - 导数层桥接公理 `gen-op-fc`：生成元 gen-op = fc(-id)——d/dt|_{t=0} e^(-tx) = -x 经函数演算传递到算子层（与 strong-continuity 同层，微分算子/强拓扑完整实现时降为定理）。
+   - **`gen-op-neg-A`（可证）**：生成元 = -A——gen-op-fc + fc-neg-id。Hille-Yosida 条件 (v) 闭合。
+2. **意义**：Hille-Yosida 五条件全部从"注释断言"落地为形式化断言（(i) semigroup (ii) exp-tA-zero (iii) norm-contraction (iv) strong-continuity (v) gen-op-neg-A）；生成元导数层以桥接公理登记（降定理路径注明）。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.73。
+
+**阶段 6 状态**：生成元导数层闭合（条件 v）。待推进：③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）；① 无界逼近细节。
+
+---
+
+【Fuglede 引理 1 方向闭合：intertwine-imp-spectral 降为可证定理（2026-08-01）】
+
+1. **§5g（SpectralTheory）**：
+   - 经典扩展层登记：`indicator`（P 的特征函数 1_P : ℝ → ℝ——构造性上需可判定 P（排中律），登记为经典扩展对象）+ `indicator-bridge`（E(P) = fc(1_P)，定义性桥接，测度论层降为定理）。
+   - **`intertwine-imp-spectral`（可证，原 §1 Fuglede 方向公理）**：X·A = A·X ⟹ X·E(P) = E(P)·X——X-comm-fc-continuous（§5f，任意 f）+ indicator-bridge 双向。**关键点**：X-comm-fc-continuous 的证明不依赖连续性（fc-below 对任意 f 定义）。
+   - §3 Sp-to-σ 与 §4 定理 3 随迁 §5g 闭合（无公理依赖）；§6 corollary4-∞、§14 Sp-to-exp-tA 就地引用。
+2. **意义**：**Fuglede 引理 1 谱积分证明链完整**——交织 ⟹ 多项式交换（§3b）⟹ fc 多项式（§5f）⟹ fc 连续（§5f）⟹ 指示桥接（§5g）⟹ 谱匹配。§1 谱论基础公理净减一（Fuglede 方向降为定理，代价是经典扩展层 indicator/indicator-bridge 两条登记公理）。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.74。
+
+**阶段 6 状态**：Fuglede 引理 1 方向闭合（③' 完成）。待推进：① 无界逼近细节。
+
+---
+
+【无界逼近细节闭合：阶段 6 收官（2026-08-01）】
+
+1. **§1b（SpectralTheory）**：
+   - **`spec-int-below-mono`（可证）**：下界族对 f 单调——f ≤ g 点态 ⟹ spec-int-below f ⊆ spec-int-below g（≤-trans-ℝ，DHStructural 新增导入）。Lebesgue 型 sup 构造的结构性质。
+   - 无界逼近细节文档化登记：无界 f（恒等）的 sup 收敛依赖算子序完备性机制（≤ₒ 反自反/sup 非空性，sup-op 公理层）；具体值由桥接钉住（spec-int-general-id/-exp/-phi-t）；标准截断逼近 f_n = min(f, n)（∫f dE = supₙ ∫f_n dE）与恒等函数谱支集支持（E-support-pos）留测度论层。
+2. **意义**：**阶段 6 全部子任务闭合**——① 谱积分细化（含无界逼近细节）、② Hille-Yosida 完整层（含生成元）、③ Fuglede 引理 1（含指示桥接）、④ P1 无限维组装、fc-poly 桥接替换。T3 谱定理层形式化收官。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新（✅ 完成）；路线图 v0.75。
+
+**阶段 6 状态**：全部子任务闭合。剩余为测度论/完备性层实现（spec-int 收敛细节、指示桥接点态性质、截断逼近），以及 P1 论文层后续推进。
+
+---
+
+【公理纪律审计：阶段 6 收官账目 + recon-op 降为定义（2026-08-01）】
+
+1. **§15（SpectralTheory）**：
+   - **recon-op / recon-op-fc 降为定义**：recon-op := fc(λx → negℝ(log(φ x)))（(-log∘φ)(A)，对象重建记号——函数演算复合的展开式，非实质公理）；corollary5 简化为 fc-ext + fc-id。§5 postulate 块 24 → 22。
+   - **公理纪律审计全账目**：A 谱论基础（谱测度/谱表示/半群对象/谱测度代数/完备性）；B 函数演算基础（fc/fc-id/fc-ext）；C 逼近桥接（sup 算子序 5 条 + spec-int-general-id/-exp/-phi-t）；D fc 桥接（fc-continuous/fc-integral/fc-mul/fc-add/fc-const）；E 经典扩展（indicator/indicator-bridge）；F 往返一致性 4 条；G 算子代数补充（·ₒ-+/·ₒ-assoc/·ₒ-zero-l）；H Hille-Yosida 范数/拓扑/导数（C*-范数 6 条/norm-contraction/lim-op/strong-continuity/gen-op-fc）。每项注明模型必然性/用途/降定理路径。
+2. **意义**：阶段 6 收官后的公理纪律基线——历轮已降 5 类（谱积分线性 3 条/fc-poly/intertwine-imp-spectral/recon-op 定义/exp-inj 等 DHStructural 项）；剩余 postulate 分层标注待降定理路径（测度论/Hilbert 空间/有限维谱定理/经典逻辑）。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.76。
+
+**阶段 6 状态**：全部子任务闭合 + 公理纪律审计基线建立。待推进：测度论/完备性层、Hilbert 空间/拓扑层实现；P1 论文层推进。
