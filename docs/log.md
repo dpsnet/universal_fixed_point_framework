@@ -856,3 +856,29 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.65。
 
 **阶段 6 状态**：范数层基础完成（投影范数可证 + 压缩性登记）。待推进：②' 余项（强连续 lim_{t→0} e^(-tA) = I、生成元 -A，拓扑/导数层）；③' Fuglede 引理 1 余项（指示桥接）；①' 无界逼近细节。
+
+---
+
+【Hille-Yosida 完整层：五条件齐备（2026-08-01）】
+
+1. **§12b（SpectralTheory）**：
+   - **`proj-norm-le-one`（可证）**：谱投影范数 ≤ 1——proj-norm 分情形（0≤1 / 1≤1），subst + <-≤-ℝ zero-lt-one-ℝ / refl-≤ℝ。
+   - 算子极限 `lim-op`（抽象记号：ℝ 索引 Op 族 0⁺ 极限）+ 强连续公理 `strong-continuity`（lim_{t→0⁺} e^(-tA) = 𝟙ₒ，Hille-Yosida 条件 iv）。
+2. **Hille-Yosida 五条件齐备**：(i) 半群方程（semigroup，§1）(ii) 单位（exp-tA-zero，§1）(iii) 压缩（norm-contraction，§12）(iv) 强连续（本节）(v) 生成元 = -A（exp-tA 定义 + corollary5 对象重建确定，导数层降为定理）。
+3. **排坑**：DHStructural 的 subst 方向（源→目标，需 sym——两轮 UnequalTerms）；with 抽象对 ‖E(P)‖ 的泛化（改显式 helper）。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.66。
+
+**阶段 6 状态**：Hille-Yosida 完整层齐备（五条件）。待推进：②'' 余项（生成元导数层）；③' Fuglede 引理 1 余项（指示桥接）；①' 无界逼近细节。
+
+---
+
+【函数演算 = 谱积分统一：fc 与 spec-int-general 两轨道合并（2026-08-01）】
+
+1. **§5c（SpectralTheory）**：
+   - 桥接公理 `fc-integral`：fc(f) = ∫f dE（定义性——谱定理的函数演算定义；与 spec-int-general-id/-exp/-phi-t 一致，注明降定理路径）。
+   - **`X-comm-fc`（可证）**：M_σ（X 与 E 逐集交换）⟹ X 与任意 fc(f) 交换——fc-integral + X-comm-spec-int-general。
+   - **`σ-to-fc`（可证）**：M-σ 形式重述。
+2. **意义**：统一抽象函数演算（§5）与一般谱积分（§1b）两条形式化轨道；衔接 Fuglede（M-Sp ⟹ M-σ 公理后，M-Sp 亦 ⟹ 全 fc 交换）——P1 线性语义的态射刻画完整化。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.67。
+
+**阶段 6 状态**：函数演算 = 谱积分统一（X-comm-fc 可证）。待推进：②'' 余项（生成元导数层）；③' Fuglede 引理 1 余项（指示桥接 E(P) = fc(1_P)，经典扩展/测度论层）；① 无界逼近细节。

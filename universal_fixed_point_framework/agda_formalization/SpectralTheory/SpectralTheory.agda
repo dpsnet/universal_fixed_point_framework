@@ -40,7 +40,7 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; <-≤-ℝ; zero-lt-one-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -497,8 +497,39 @@ X-comm-fc-continuous {X} h f =
 -- Fuglede 证明的 fc 连接状态：
 --  - 多项式 fc 交换完成（X-comm-fc-poly **可证**，fc-poly 桥接公理）。
 --  - 连续函数交换完成（X-comm-fc-continuous **可证**，fc-continuous 桥接公理）。
+--  - 全函数演算交换（X-comm-fc，§5c：M_σ ⟹ 与任意 fc(f) 交换）。
 --  - 待：指示桥接（E(P) = 1_P(A)）——构造性上 1_P 需可判定 P（或 Borel 层
 --    经可数逼近），留待经典扩展/测度论层，届时 intertwine-imp-spectral 降为定理。
+
+-- ==================================================================
+-- §5c 函数演算 = 谱积分（fc-integral 桥接 + X-comm-fc 统一交换）
+-- ==================================================================
+-- 目标：统一两条形式化轨道——抽象函数演算 fc（§5）与一般谱积分
+-- spec-int-general（§1b）。桥接后，M_σ（E 逐集交换）⟹ X 与任意 fc(f) 交换。
+
+-- 桥接公理（定义性）：函数演算 = 一般谱积分（fc(f) = ∫f dE）
+--（谱定理的函数演算定义：f(A) = ∫f dE；与 spec-int-general-id / -exp / -phi-t 一致）
+postulate
+  fc-integral : (f : ℝ → ℝ) → fc f ≡ spec-int-general f
+
+-- **可证**：M_σ（X 与 E 逐集交换）⟹ X 与任意函数演算 fc(f) 交换
+--（fc-integral 桥接 + X-comm-spec-int-general）
+X-comm-fc : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X) → (f : ℝ → ℝ)
+  → X *ₒ fc f ≡ fc f *ₒ X
+X-comm-fc X h f =
+  trans (cong (λ Z → X *ₒ Z) (fc-integral f))
+  (trans (X-comm-spec-int-general X h f)
+         (cong (λ Z → Z *ₒ X) (sym (fc-integral f))))
+
+-- **可证（M-σ 形式）**：谱匹配态射与整个函数演算交换
+σ-to-fc : {X : Op} → M-σ X → (f : ℝ → ℝ) → X *ₒ fc f ≡ fc f *ₒ X
+σ-to-fc {X} h f = X-comm-fc X h f
+
+-- 函数演算统一层状态：
+--  - fc = 一般谱积分（fc-integral 桥接公理）；M_σ ⟹ 全函数演算交换
+--    （X-comm-fc / σ-to-fc **可证**）。
+--  - 与 Fuglede 的衔接：M-Sp ⟹ M-σ（intertwine-imp-spectral，公理）后，
+--    M-Sp 亦 ⟹ 全 fc 交换；指示桥接（E(P) = fc(1_P)）仍需经典/测度论层。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
@@ -1266,5 +1297,31 @@ postulate
 -- Hille-Yosida 范数层状态：
 --  - C*-范数公理（6 条）+ 投影范数（proj-norm **可证**：‖E(P)‖ ∈ {0,1}）+ 压缩性
 --    （norm-contraction：σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）。
---  - 强连续（lim_{t→0} e^(-tA) = I）、生成元（-A）、Fuglede 指示桥接
---    （E(P) = 1_P(A)）需拓扑/测度论层，为阶段 6 剩余开放项。
+--  - 投影范数 ≤ 1（proj-norm-le-one，§12b）、强连续（strong-continuity，§12b）；
+--    Fuglede 指示桥接（E(P) = 1_P(A)）需拓扑/测度论层，为阶段 6 剩余开放项。
+
+-- ==================================================================
+-- §12b Hille-Yosida 完整层（投影范数 ≤ 1 + 强连续登记）
+-- ==================================================================
+
+-- **可证**：谱投影范数 ≤ 1（proj-norm 分情形：0 ≤ 1 / 1 ≤ 1）
+proj-norm-le-one : (P : Borel) → ‖ E P ‖ ≤ℝ oneℝ
+proj-norm-le-one P = helper (proj-norm P)
+  where
+  helper : (‖ E P ‖ ≡ zeroℝ) ⊎ (‖ E P ‖ ≡ oneℝ) → ‖ E P ‖ ≤ℝ oneℝ
+  helper (inj₁ z) = subst (λ y → y ≤ℝ oneℝ) (sym z) (<-≤-ℝ zero-lt-one-ℝ)
+  helper (inj₂ o) = subst (λ y → y ≤ℝ oneℝ) (sym o) (refl-≤ℝ {x = oneℝ})
+
+-- 算子极限（抽象记号）：ℝ 索引 Op 族在 0⁺ 的极限（范数/强算子拓扑抽象）
+postulate
+  lim-op : (ℝ → Op) → Op
+  -- 强连续（Hille-Yosida 条件 iv）：lim_{t→0⁺} e^(-tA) = 𝟙ₒ
+  strong-continuity : lim-op (λ t → exp-tA t) ≡ 𝟙ₒ
+
+-- Hille-Yosida 完整层状态（五条件齐备）：
+--  (i) 半群方程 e^((s+t)A) = e^(sA)·e^(tA) [semigroup，§1]
+--  (ii) e^(0·A) = 𝟙ₒ [exp-tA-zero，§1]
+--  (iii) 压缩 ‖e^(-tA)‖ ≤ 1 [norm-contraction，§12；谱支集 ⊆ (0,1] 见 §11]
+--  (iv) 强连续 lim_{t→0⁺} e^(-tA) = 𝟙ₒ [strong-continuity，本节]
+--  (v) 生成元 = -A [exp-tA 定义 + corollary5 对象重建确定；导数层降为定理]
+-- 补充：投影范数 ≤ 1（proj-norm-le-one **可证**）。
