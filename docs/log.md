@@ -1019,3 +1019,17 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.76。
 
 **阶段 6 状态**：全部子任务闭合 + 公理纪律审计基线建立。待推进：测度论/完备性层、Hilbert 空间/拓扑层实现；P1 论文层推进。
+
+---
+
+【P1 形式化闭环：研究笔记 §9 更新 + 模块状态同步（2026-08-01）】
+
+1. **P1 笔记（`spectral_R11_morphism_layer.md`）v0.3**：
+   - §9 形式化落点更新：原"形式化依赖 T3 实分析层（未形式化）"→"✅ 已完成（Agda T3 谱定理层阶段 6 收官）"。
+   - 断言↔形式化对应表：断言 A（定理 3 恒等双射）→ `theorem3` + `corollary4-∞`；引理 1 → `intertwine-imp-spectral`（§5g）+ `σ-to-Sp`；引理 2 → `Rec-to-σ`；对象重建 → `corollary5`；线性语义伴随闭合 → `P1-linear-closure`。
+   - 公理纪律：引用 SpectralTheory §15 审计（22 块 postulate 分类）；剩余非阻塞项分层（经典扩展 indicator 点态性质、测度论层 spec-int 收敛、Lean 路径）。
+2. **Everything.agda**：P1/T3 状态标记 🔄 → ✅（完整收官）。
+3. **意义**：P1（R11 无限维态射层严格验证，最高优先方向）的形式化闭环——理论分析 + 数值验证（7/7）+ Agda 形式化三方对齐；研究操作规范"笔记先行"落实（研究笔记优先于论文提炼）。
+4. **无代码改动**（纯文档/状态同步），无需重编译。
+
+**阶段 6 状态**：P1 形式化闭环。待推进：测度论/完备性层、Hilbert 空间/拓扑层实现；P1 论文层提炼（paper I 注 C2.3b/2.4.5a 引用正式化）。

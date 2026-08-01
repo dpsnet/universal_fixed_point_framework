@@ -2,7 +2,7 @@
 
 > **来源**：P4（基数反例）收官后的决定性推进方向 P1。对应 paper I 定理 C2.3 第 2 步"态射对应"断言（`paper1_fractal_spectral_derecursion.md`）与 RAP5a `RIm_map` 开放项。
 >
-> **状态**：研究笔记 v0.2（2026-07-31）。理论分析 + 有限维数值验证（7/7 PASS），未形式化（形式化依赖 T3 实分析层）。v0.1→v0.2：命题 6 反例修正（ψ=|z|z → ψ=|z|，正齐次性）、引理 1 $(\Rightarrow)$ 完整论证（Cayley 变换 + Fuglede）、§10 数值验证。
+> **状态**：研究笔记 v0.3（2026-08-01）。理论分析 + 有限维数值验证（7/7 PASS）+ **Agda 形式化完整落地**（T3 谱定理层阶段 6 收官）。v0.2→v0.3：形式化闭环（P1Spectral 有限维特例 + SpectralTheory 无限维：定理 3 / corollary4-∞ / corollary5 / P1-linear-closure 全部可证；Fuglede 方向 intertwine-imp-spectral 降为可证定理；§9 更新）。v0.1→v0.2：命题 6 反例修正（ψ=|z|z → ψ=|z|，正齐次性）、引理 1 $(\Rightarrow)$ 完整论证（Cayley 变换 + Fuglede）、§10 数值验证。
 
 ---
 
@@ -132,12 +132,28 @@ $$M_{\mathrm{Rec}}^{\mathrm{set}} = \{f\in C(\mathcal D(A_E),\mathcal H_S) : f\c
 
 ---
 
-## 9. 形式化落点（T3 依赖）
+## 9. 形式化落点（✅ 已完成：Agda T3 谱定理层，2026-08-01）
 
-- **T3 所需引理**：谱测度输送（Fuglede 定理，引理 1）、exp/log 函数演算单射性（引理 2）、Hille–Yosida 半群（对象层）。
-- **Agda**：无 stdlib 实分析——自建 exp/log 或引入实数库（路线图 T3 账目，持续主线）。
-- **Lean**：Mathlib 谱论（`Spectrum`/`ContinuousFunctionalCalculus`）成熟后可直接形式化定理 3 的有限维/离散谱特例。
-- **有限维特例（当前可形式化）**：若 $\sigma(A_E),\sigma(A_S)$ 为有限点谱，引理 1/2 退化为有限维矩阵方程，可先行在 Agda 中形式化（无 T3 依赖）。
+**状态更新**：P1 的 Agda 形式化已随 T3 阶段 6 收官**完整落地**（原"形式化依赖 T3 实分析层"已解除）。对应关系：
+
+- **有限维特例（`P1Spectral/P1Spectral.agda`，v0.42-v0.44）**：定理 3 退化版 M_Sp = M_σ = M_Rec（谱匹配⟹交织/exp 交换**可证**，谱定理方向登记公理）+ 推论 4 恒等双射（Hom-Sp ≅ Hom-σ ≅ Hom-Rec，`corollary4`）。
+- **无限维（`SpectralTheory/SpectralTheory.agda`，T3 阶段 6，v0.45-v0.76）**：
+  - **引理 1 谱测度输送（交织 ⟺ 谱匹配）**：Fuglede 方向（交织⟹谱匹配）**降为可证定理**（`intertwine-imp-spectral`，§5g——证明链：多项式交换 §3b ⟹ fc 多项式/连续交换 §5f ⟹ 指示桥接 E(P) = fc(1_P) §5g 全链闭合）；反向（谱匹配⟹交织，σ-to-Sp）由谱积分线性推导（§1b/§3，可证）。
+  - **引理 2 exp 单射**：M_Rec ⊆ M_σ（`Rec-to-σ` **可证**，§3）+ t 参数化（`Rec-t-to-σ`，§8b）。
+  - **定理 3**：`theorem3`（M_Sp = M_σ = M_Rec 四方向，§5g）+ t 版（`theorem3-t`，§8c）。
+  - **推论 4**：`corollary4-∞`（Hom_Sp ≅ₗ Hom_σ ×₁ Hom_Rec ≅ₗ Hom_σ，恒等双射，§6）。
+  - **推论 5（对象重建）**：`corollary5`（recon-op = -log(e^(-A)) ≡ A，§5；recon-op 已降为定义）。
+  - **Hille-Yosida 五条件齐备**（§1/§8/§12/§12b/§12c，含生成元 = -A 条件 v）。
+  - **`P1-linear-closure`**（§9）：obj-recon（corollary5）× hom-bij（corollary4-∞）——**线性语义下伴随无限维闭合**的组装结论。
+
+**对应本笔记断言**：断言 A（线性语义双射 = 恒等，定理 3）→ `theorem3` + `corollary4-∞`（已形式化）；引理 1 → `intertwine-imp-spectral`（§5g）+ `σ-to-Sp`（§3）（已形式化）；引理 2 → `Rec-to-σ`（§3）（已形式化）；对象重建 → `corollary5`（已形式化）。
+
+**公理纪律**：谱论基础登记公理（谱测度/谱表示/半群对象/谱测度代数/完备性）+ 桥接公理（fc 定义性质/sup 算子序/经典扩展 indicator），每项注明模型必然性/用途/降定理路径，见 SpectralTheory §15 公理纪律审计（24 → 22 块 postulate）。
+
+**剩余（非阻塞，后续层）**：
+- **经典扩展层**：indicator 点态性质（1_P x = 1 ⟺ P x，需排中律）未显式登记——当前证明仅用桥接 E(P) = fc(1_P)。
+- **测度论层**：spec-int 对无界 f 的 sup 收敛细节（截断逼近 f_n = min(f, n)）。
+- **Lean**：Mathlib 谱论（`Spectrum`/`ContinuousFunctionalCalculus`）成熟后可直接形式化定理 3 的有限维/离散谱特例（路线图路径 A 持续主线）。
 
 ---
 
@@ -159,4 +175,4 @@ $$M_{\mathrm{Rec}}^{\mathrm{set}} = \{f\in C(\mathcal D(A_E),\mathcal H_S) : f\c
 
 ---
 
-*关联*：paper I 定理 C2.3/2.4.5（限定修正）；`notes/00_foundations/spectral_representation_silence.md` §9（P1 判定）；RAP5a `RIm_map`；路线图 `phase60_category_verification.md`（T3 账目 + P1 状态）；数值脚本 `paperX_spectral_matching.py`（注册 `run_all_tests.py`）。
+*关联*：paper I 定理 C2.3/2.4.5（限定修正）；`notes/00_foundations/spectral_representation_silence.md` §9（P1 判定）；RAP5a `RIm_map`；路线图 `phase60_category_verification.md`（T3 账目 + P1 状态）；数值脚本 `paperX_spectral_matching.py`（注册 `run_all_tests.py`）；Agda 形式化：`P1Spectral/P1Spectral.agda`（有限维特例）+ `SpectralTheory/SpectralTheory.agda`（无限维，§9 形式化落点）。

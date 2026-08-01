@@ -11,8 +11,10 @@ module Everything where
 -- B8 ✅  IFS 排序定理（IFSFractal）
 -- NatArith ✅  ℕ 算术引理库（闭合基础）
 -- P4 ✅  基数反例形式化（Cardinality：D 不 full + 4 态射枚举 + 鸽笼无双射 §5/§6）
--- P1 🔄  谱匹配有限维特例（P1Spectral：定理 3 退化版 M_Sp = M_σ = M_Rec，代数方向可证）
--- T3 🔄  谱定理层（SpectralTheory：谱测度/Fuglede/Hille-Yosida，引理 2 核心 M_Rec ⊆ M_σ 可证）
+-- P1 ✅  谱匹配有限维特例（P1Spectral：定理 3 退化版 + 推论 4 恒等双射，完整收官 v0.44）
+-- T3 ✅  谱定理层（SpectralTheory：谱测度/Fuglede/Hille-Yosida/函数演算，阶段 6 收官 v0.76——
+--        引理 1/2 核心、定理 3、corollary4-∞、corollary5、P1-linear-closure 全可证；
+--        公理纪律审计 §15：22 块 postulate 分类登记）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory
