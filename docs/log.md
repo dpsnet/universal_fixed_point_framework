@@ -882,3 +882,56 @@ B4 完成。T3 剩余：B7/B8（rpow 单调 + Moran，阶段 4）、P1 形式化
 3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.67。
 
 **阶段 6 状态**：函数演算 = 谱积分统一（X-comm-fc 可证）。待推进：②'' 余项（生成元导数层）；③' Fuglede 引理 1 余项（指示桥接 E(P) = fc(1_P)，经典扩展/测度论层）；① 无界逼近细节。
+
+---
+
+【fc 代数结构：函数演算同态（2026-08-01）】
+
+1. **§5d（SpectralTheory）**：
+   - 桥接公理 `fc-mul`：fc(f·g) = fc(f)·fc(g)（f ↦ f(A) 是代数同态——与 fc-integral + 谱积分乘法 simple-mul 一致，测度论层降为定理）。
+   - **`fc-id-sq`（可证）**：fc(x²) = A·A——fc-mul + fc-id + cong₂。
+   - **`fc-power`（可证）**：fc(xⁿ) = Aⁿ（n ≥ 1）——fc-mul 归纳 + fc-id；基例经 fc-ext + *-ident-ℝ + *ₒ-ident（A-power (suc zero) = A·𝟙ₒ ≡ A）。
+2. **意义**：函数演算同态结构核心——连接 fc 代数与 A-power/poly-A；为完整函数演算（含常函数/加性）奠定结构基础。
+3. **DHStructural 新增导入**：*-ident-ℝ。
+4. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.68。
+
+**阶段 6 状态**：fc 同态结构完成（fc-mul + fc-power）。待推进：fc-const/fc 加性（函数演算完整层）；②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接）；① 无界逼近细节。
+
+---
+
+【fc 同态完整：加/乘/常数/恒等全保持（2026-08-01）】
+
+1. **§5e（SpectralTheory）**：
+   - 桥接公理 `fc-add`：fc(f+g) = fc(f)+fc(g)（与 fc-integral + simple-add 一致）。
+   - 桥接公理 `fc-const`：fc(λ _ → c) = c·𝟙ₒ（与 ∫c dE = c·E(ℝ) 一致）。
+   - **`fc-id-add`（可证）**：fc(x+x) = A+A——fc-add + fc-id + cong₂。
+   - **`fc-scalar-id`（可证）**：fc(c·x) = c·A——fc-mul 常数×恒等 + fc-const + ·ₒ-comm + *ₒ-ident-l。
+2. **意义**：f ↦ f(A) 代数同态完整刻画（加/乘/常数/恒等全保持）；fc-poly（§5b 桥接）可由同态结构 + fc-power 推导（Σᵢ aᵢ·x^{nᵢ} 展开），留待桥接替换。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.69。
+
+**阶段 6 状态**：fc 同态完整（加/乘/常数/恒等）。待推进：fc-poly 桥接替换（同态推导版）；②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接）；① 无界逼近细节。
+
+---
+
+【半群 = 函数演算统一：Hille-Yosida ↔ fc 连接（2026-08-01）】
+
+1. **§13（SpectralTheory）**：
+   - **`exp-A-fc`（可证）**：e^(-A) = fc(φ)——exp-spectral-rep + spec-int-general-exp + fc-integral。
+   - **`exp-tA-fc`（可证）**：e^(-tA) = fc(φ_t)——spec-int-general-phi-t + fc-integral。
+   - **`X-comm-exp-tA`（可证）**：M_σ ⟹ X 与全半群族 {e^(-tA)} 交换——X-comm-fc + exp-tA-fc。
+2. **意义**：Hille-Yosida 半群恰为 e^(-tx) 的函数演算（§8 谱侧与 §5 fc 侧统一）；谱匹配态射自动与动力学演化交换——**P1/R11 的"Rec_D 态射保动力学"论断直接成立**；衔接 M-Sp ⟹ M-σ（Fuglede 公理）⟹ M-Sp 亦与全半群族交换。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.70。
+
+**阶段 6 状态**：半群 = 函数演算统一（X-comm-exp-tA 可证）。待推进：②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接）；① 无界逼近细节；fc-poly 桥接替换。
+
+---
+
+【谱匹配态射保动力学：P1/R11 态射层动力学保持（2026-08-01）】
+
+1. **§14（SpectralTheory）**：
+   - **`Rec-to-exp-tA`（可证）**：M-Rec ⟹ X 与全半群族 {e^(-tA)} 交换——Rec-to-σ（theorem3-Rec-σ 方向）+ X-comm-exp-tA。
+   - **`Sp-to-exp-tA`（可证）**：M-Sp ⟹ X 与全半群族交换——Sp-to-σ（Fuglede 方向）+ X-comm-exp-tA。
+2. **意义**：P1/R11 态射层动力学保持论断从三个 M 条件（M-σ / M-Rec / M-Sp）全部闭合——Rec 侧零公理依赖（Rec-to-σ 可证）；Sp 侧经 intertwine-imp-spectral（Fuglede 方向公理）。结合 §13 的 X-comm-exp-tA，谱匹配态射自动与动力学演化交换的完整链建立。
+3. **Everything.agda 全量编译通过**（14 模块，退出码 0，一次通过）。蓝图 §5.14 阶段 6 状态更新；路线图 v0.71。
+
+**阶段 6 状态**：态射层动力学保持闭合（Rec/Sp/σ 三侧）。待推进：②'' 生成元导数层；③' Fuglede 引理 1 余项（指示桥接，经典扩展/测度论层）；① 无界逼近细节；fc-poly 桥接替换。

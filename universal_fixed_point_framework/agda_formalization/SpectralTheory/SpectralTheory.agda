@@ -40,7 +40,7 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; <-≤-ℝ; zero-lt-one-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -530,6 +530,63 @@ X-comm-fc X h f =
 --    （X-comm-fc / σ-to-fc **可证**）。
 --  - 与 Fuglede 的衔接：M-Sp ⟹ M-σ（intertwine-imp-spectral，公理）后，
 --    M-Sp 亦 ⟹ 全 fc 交换；指示桥接（E(P) = fc(1_P)）仍需经典/测度论层。
+
+-- ==================================================================
+-- §5d 函数演算的代数结构（fc 同态：fc(f·g) = fc(f)·fc(g)）
+-- ==================================================================
+-- 目标：登记函数演算的同态结构（f ↦ f(A) 是代数同态）——
+-- fc-mul（乘法保持）为桥接公理；推导 fc 与 A-power 的联系。
+
+-- 函数演算乘法性（定义性公理）：fc(f·g) = fc(f)·fc(g)（f ↦ f(A) 是代数同态；
+-- 与 fc-integral + 谱积分乘法（simple-mul 简单函数版）一致，测度论层降为定理）
+postulate
+  fc-mul : (f g : ℝ → ℝ) → fc (λ x → f x *ℝ g x) ≡ fc f *ₒ fc g
+
+-- **可证**：fc(x·x) = A·A（fc-mul + fc-id）
+fc-id-sq : fc (λ x → x *ℝ x) ≡ A *ₒ A
+fc-id-sq = trans (fc-mul (λ x → x) (λ x → x)) (cong₂ _*ₒ_ fc-id fc-id)
+
+-- **可证**：fc(xⁿ) = Aⁿ（n ≥ 1；fc-mul 归纳 + fc-id）
+fc-power : (n : ℕ) → fc (λ x → ℝ-power (suc n) x) ≡ A-power (suc n)
+fc-power zero =
+  trans (fc-ext (λ x → *-ident-ℝ x))
+        (trans fc-id (sym (*ₒ-ident A)))
+fc-power (suc n) =
+  trans (fc-mul (λ x → x) (λ x → ℝ-power (suc n) x))
+        (cong₂ _*ₒ_ fc-id (fc-power n))
+
+-- 函数演算代数结构状态：
+--  - fc 同态核心（fc-mul 桥接公理）+ 推导 fc-id-sq（fc(x²) = A²）、
+--    fc-power（fc(xⁿ) = Aⁿ，n ≥ 1）。
+--  - fc-const（常函数 ⟹ 标量算子，需标量单位律）与 fc 加性随函数演算完整层登记。
+
+-- ==================================================================
+-- §5e 函数演算的加性与常数（fc 同态完整：加/乘/常数保持）
+-- ==================================================================
+-- 目标：补全 f ↦ f(A) 的代数同态结构——fc-mul（§5d）+ fc-add + fc-const。
+
+-- 函数演算加法/常数保持（定义性公理；同态结构，与 fc-integral + simple-add /
+-- ∫c dE = c·E(ℝ) 一致，测度论层降为定理）
+postulate
+  fc-add : (f g : ℝ → ℝ) → fc (λ x → f x +ℝ g x) ≡ fc f +ₒ fc g
+  fc-const : (c : ℝ) → fc (λ _ → c) ≡ c ·ₒ 𝟙ₒ
+
+-- **可证**：fc(x+x) = A +ₒ A（fc-add + fc-id）
+fc-id-add : fc (λ x → x +ℝ x) ≡ A +ₒ A
+fc-id-add = trans (fc-add (λ x → x) (λ x → x)) (cong₂ _+ₒ_ fc-id fc-id)
+
+-- **可证**：fc(c·x) = c·A（fc-mul 常数×恒等 + fc-const + ·ₒ-comm + *ₒ-ident-l）
+fc-scalar-id : (c : ℝ) → fc (λ x → c *ℝ x) ≡ c ·ₒ A
+fc-scalar-id c =
+  trans (fc-mul (λ _ → c) (λ x → x))
+  (trans (cong₂ _*ₒ_ (fc-const c) fc-id)
+         (trans (·ₒ-comm c 𝟙ₒ A) (cong (λ Y → c ·ₒ Y) (*ₒ-ident-l A))))
+
+-- 函数演算同态完整状态：
+--  - 加/乘/常数保持（fc-add / fc-mul / fc-const）+ 恒等（fc-id）——f ↦ f(A) 是
+--    代数同态的完整刻画；推导 fc-id-add（fc(x+x) = A+A）、fc-scalar-id（fc(c·x) = c·A）。
+--  - fc-poly（§5b 桥接）可由同态结构 + fc-power 推导（Σᵢ aᵢ·x^{nᵢ} 展开：
+--    fc-add 迭代 + fc-mul 逐项 + fc-const），留待桥接替换（需 sum-op-congₒ + fc-add 迭代）。
 
 -- ==================================================================
 -- §6 P1 无限维组装（推论 4 无限维版：Hom_Sp ≅ Hom_σ ≅ Hom_Rec）
@@ -1325,3 +1382,59 @@ postulate
 --  (iv) 强连续 lim_{t→0⁺} e^(-tA) = 𝟙ₒ [strong-continuity，本节]
 --  (v) 生成元 = -A [exp-tA 定义 + corollary5 对象重建确定；导数层降为定理]
 -- 补充：投影范数 ≤ 1（proj-norm-le-one **可证**）。
+
+-- ==================================================================
+-- §13 半群 = 函数演算统一（exp-tA-fc：e^(-tA) = fc(φ_t)）
+-- ==================================================================
+-- 目标：将 Hille-Yosida 半群（§8）与函数演算（§5）连接——
+-- e^(-tA) 恰为 φ_t(x) = e^(-tx) 的函数演算。衔接 M_σ ⟹ 与全半群族交换
+-- （谱匹配态射自动与动力学演化交换——P1/R11 的动力学保持论断）。
+
+-- **可证**：e^(-A) = fc(φ)（exp-spectral-rep + spec-int-general-exp + fc-integral）
+exp-A-fc : exp-A ≡ fc (λ x → exp (negℝ x))
+exp-A-fc =
+  trans exp-spectral-rep
+  (trans (sym spec-int-general-exp)
+         (sym (fc-integral (λ x → exp (negℝ x)))))
+
+-- **可证**：e^(-tA) = fc(φ_t)（spec-int-general-phi-t + fc-integral）
+exp-tA-fc : (t : ℝ) → exp-tA t ≡ fc (λ x → exp (negℝ (t *ℝ x)))
+exp-tA-fc t =
+  trans (sym (spec-int-general-phi-t t))
+        (sym (fc-integral (λ x → exp (negℝ (t *ℝ x)))))
+
+-- **可证**：M_σ ⟹ X 与全半群族 {e^(-tA)} 交换
+--（X-comm-fc（fc(φ_t) 交换）+ exp-tA-fc 桥接）
+X-comm-exp-tA : (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X) → (t : ℝ)
+  → X *ₒ exp-tA t ≡ exp-tA t *ₒ X
+X-comm-exp-tA X h t =
+  trans (cong (λ Z → X *ₒ Z) (exp-tA-fc t))
+  (trans (X-comm-fc X h (λ x → exp (negℝ (t *ℝ x))))
+         (cong (λ Z → Z *ₒ X) (sym (exp-tA-fc t))))
+
+-- 半群-函数演算统一层状态：
+--  - e^(-A) = fc(φ)、e^(-tA) = fc(φ_t)（**可证**）；M_σ ⟹ 与全半群族交换
+--    （X-comm-exp-tA **可证**）——谱匹配态射自动与动力学演化交换。
+--  - 衔接：M-Sp ⟹ M-σ（Fuglede 公理）⟹ M-Sp 亦与全半群族交换；
+--    P1/R11 的"Rec_D 态射保动力学"论断由此直接成立。
+
+-- ==================================================================
+-- §14 谱匹配态射保动力学（Rec/Sp 态射 ⟹ 与全半群族交换）
+-- ==================================================================
+-- 目标：P1/R11 的态射层动力学保持论断——谱匹配态射（M_σ）与全半群族交换
+-- （X-comm-exp-tA，§13）⟹ 各 M 条件（M-Rec / M-Sp）亦保动力学。
+
+-- **可证**：Rec 态射（M-Rec）⟹ 与全半群族 {e^(-tA)} 交换
+--（theorem3-Rec-σ 方向：M-Rec ⟹ M-σ（Rec-to-σ）+ X-comm-exp-tA）
+Rec-to-exp-tA : {X : Op} → M-Rec X → (t : ℝ) → X *ₒ exp-tA t ≡ exp-tA t *ₒ X
+Rec-to-exp-tA {X} h t = X-comm-exp-tA X (Rec-to-σ h) t
+
+-- **可证**：谱态射（M-Sp）⟹ 与全半群族 {e^(-tA)} 交换
+--（Fuglede 方向 Sp-to-σ + X-comm-exp-tA）
+Sp-to-exp-tA : {X : Op} → M-Sp X → (t : ℝ) → X *ₒ exp-tA t ≡ exp-tA t *ₒ X
+Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
+
+-- 态射保动力学状态：
+--  - M-σ ⟹ 与全半群族交换（X-comm-exp-tA，§13）；M-Rec / M-Sp 亦成立
+--    （Rec-to-exp-tA / Sp-to-exp-tA **可证**）——P1/R11 的态射层动力学保持
+--    论断从三个 M 条件全部闭合（Rec 侧无公理依赖；Sp 侧经 Fuglede 方向公理）。
