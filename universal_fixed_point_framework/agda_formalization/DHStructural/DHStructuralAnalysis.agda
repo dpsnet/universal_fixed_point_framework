@@ -1120,6 +1120,13 @@ abs-pos-ident a ha = sqrt-sq a ha
 ≤-antisym {a} {b} hab hba | inj₂ (inj₁ a=b) = a=b
 ≤-antisym {a} {b} hab hba | inj₂ (inj₂ b<a) = ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ b<a hab))
 
+-- 右侧严格乘保序：0 < c ⟹ a < b ⟹ a·c < b·c（*-pos-mono-ℝ + 交换律）
+*-pos-mono-r-ℝ : {a b c : ℝ} → zeroℝ <ℝ c → a <ℝ b → (a *ℝ c) <ℝ (b *ℝ c)
+*-pos-mono-r-ℝ {a} {b} {c} hc hab =
+  subst (λ z → z <ℝ (b *ℝ c)) (sym (*-comm-ℝ a c))
+        (subst (λ z → (c *ℝ a) <ℝ z) (sym (*-comm-ℝ b c))
+               (*-pos-mono-ℝ {a = a} {b = b} {c = c} hc hab))
+
 -- (a+b)² = a² + 2ab + b²（分配律 + 重排）
 sum-sq-ℝ : (a b : ℝ) → (a +ℝ b) *ℝ (a +ℝ b) ≡ ((a *ℝ a) +ℝ (natℝ 2 *ℝ (a *ℝ b))) +ℝ (b *ℝ b)
 sum-sq-ℝ a b = trans expand regroup

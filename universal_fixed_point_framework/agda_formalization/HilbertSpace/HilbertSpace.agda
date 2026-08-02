@@ -44,20 +44,30 @@ module HilbertSpace.HilbertSpace where
     - **可证** norm-power（自伴幂恒等 ‖X²‖ = ‖X‖²）：‖Xv‖² = ⟨v,X²v⟩（自伴）
       ≤ ‖v‖‖X²v‖（C-S）≤ ‖X²‖（缩放 + 单位球）⟹ ‖Xv‖ ≤ √‖X²‖ ⟹ sup-least
       ‖X‖ ≤ √‖X²‖ ⟹ 平方两侧 + sq-sqrt + submul + ≤-antisym——C* 恒等落地。
-  阶段 5+（待）：算子拓扑（strong-continuity）、谱半径公式（norm-contraction）。
+  阶段 5（2026-08-02）：算子拓扑层（SOT/范数收敛）。
+    - V 减法 _−ᵥ_（定义）+ op-neg/op-sub（算子减法，线性性可证）；
+    - ε-δ 收敛定义：SOT-conv（∀v. ‖Tt v − T0 v‖ → 0）/ op-norm-conv（‖Tt − T0‖ → 0）；
+    - **可证** sot-from-norm（范数收敛 ⟹ 强收敛：缩放引理 + η = ε/(1+‖v‖) 除法技巧）——
+      范数拓扑细于强拓扑；SpectralTheory lim-op/strong-continuity 降定理的拓扑地基。
+  阶段 8（2026-08-02）：完备性层（Hilbert 空间公理补全——pre-Hilbert ⟹ Hilbert）。
+    - Seq/≤ℕ（局部）/Cauchy-seq/Converges（ε-δ 定义）+ 完备性基础假设 complete；
+    - **可证** ≤ℕ-refl/trans/suc、sub-ᵥ-self（x−x=0）、conv-const/cauchy-const——
+      Riesz 表示/投影定理/谱定理的共同地基。
+  阶段 6（待）：谱半径公式（norm-contraction，需谱论 + 完备性层）。
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
-open import Sp.SpCategory using (sym; trans; cong; cong₂; _×_; _,_)
+open import Sp.SpCategory using (ℕ; zero; suc; sym; trans; cong; cong₂; _×_; _,_)
 
 -- ℝ 层（复用 DHStructural：T3 已建的有序域 + 完备性机制）
 open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; _+ℝ_; _*ℝ_; _≤ℝ_; _<ℝ_; _/ℝ_; negℝ; subst;
          +-assoc-ℝ; +-comm-ℝ; +-ident-ℝ; +-inv-ℝ; *-assoc-ℝ; *-comm-ℝ; *-ident-ℝ; *-zero-ℝ;
-         refl-≤ℝ; ≤-trans-ℝ; ≤-antisym; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; trichotomy-ℝ; irreflexive-ℝ;
+         refl-≤ℝ; ≤-trans-ℝ; ≤-antisym; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ;
+         trichotomy-ℝ; irreflexive-ℝ; add-pos-ℝ;
          zero-add-ℝ; natℝ; sqrt; sqrt-nonneg; sq-sqrt; sqrt-sq; sqrt-mono; sqrt-zero; sqrt-mul;
          abs; abs-pos-ident; sq-nonneg-ℝ; le-sqrt-sq; sum-sq-ℝ; two-add-eq; sum-add-≤;
-         *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-/cancel-ℝ; /-pos-ℝ;
+         *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-pos-mono-ℝ; *-pos-mono-r-ℝ; *-/cancel-ℝ; /-pos-ℝ;
          sup-ℝ; sup-upper; sup-least; zero-lt-one-ℝ;
          tp-ident; ttq-ident; ≤-from-nonneg; div-≤-mul;
          ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
@@ -643,6 +653,185 @@ norm-power X h = ≤-antisym (op-norm-submul X X) lower
                                    (sqrt-nonneg M (op-norm-nonneg (op-comp X X)))
                                    (op-norm-le-sqrt X h)))
 
+-- ==================================================================
+-- §7 算子拓扑层（阶段 8-5，2026-08-02）
+-- ==================================================================
+
+-- 向量减法（定义）：x − y := x + (-1)·y（V 减法层）
+_-ᵥ_ : V → V → V
+x -ᵥ y = x +ᵥ ((negℝ oneℝ) ·ᵥ y)
+
+-- 算子取负（线性性：·ᵥ-distrib + 标量结合 + 交换）
+op-neg : LinOp → LinOp
+op-neg X = record
+  { f = λ x → (negℝ oneℝ) ·ᵥ LinOp.f X x
+  ; lin-add = λ x y →
+      trans (cong (λ w → (negℝ oneℝ) ·ᵥ w) (LinOp.lin-add X x y))
+            (·ᵥ-distrib-l (negℝ oneℝ) (LinOp.f X x) (LinOp.f X y))
+  ; lin-scalar = λ a x →
+      trans (cong (λ w → (negℝ oneℝ) ·ᵥ w) (LinOp.lin-scalar X a x))
+            (trans (·ᵥ-assoc (negℝ oneℝ) a (LinOp.f X x))
+                   (trans (cong (λ s → s ·ᵥ LinOp.f X x) (*-comm-ℝ (negℝ oneℝ) a))
+                          (sym (·ᵥ-assoc a (negℝ oneℝ) (LinOp.f X x)))))
+  }
+
+-- 算子减法：S − T := S + (−T)
+op-sub : LinOp → LinOp → LinOp
+op-sub S T = op-add S (op-neg T)
+
+-- 强收敛（SOT，0⁺）：∀v. ‖T t v − T0 v‖ → 0（ε-δ，t ∈ (0,δ)）
+SOT-conv : (ℝ → LinOp) → LinOp → Set
+SOT-conv T T0 = (v : V) → (ε : ℝ) → zeroℝ <ℝ ε
+  → Σ ℝ (λ δ → (zeroℝ <ℝ δ) × ((t : ℝ) → zeroℝ <ℝ t → t <ℝ δ
+    → norm (LinOp.f (T t) v -ᵥ LinOp.f T0 v) <ℝ ε))
+
+-- 范数收敛（算子范数拓扑，0⁺）：‖T t − T0‖ → 0（ε-δ）
+op-norm-conv : (ℝ → LinOp) → LinOp → Set
+op-norm-conv T T0 = (ε : ℝ) → zeroℝ <ℝ ε
+  → Σ ℝ (λ δ → (zeroℝ <ℝ δ) × ((t : ℝ) → zeroℝ <ℝ t → t <ℝ δ
+    → op-norm (op-sub (T t) T0) <ℝ ε))
+
+-- **可证**：1+‖v‖ > 0（1 > 0 + 1 ≤ 1+‖v‖）
+one-plus-norm-pos : (v : V) → zeroℝ <ℝ (oneℝ +ℝ norm v)
+one-plus-norm-pos v = lt-≤-trans-ℝ zero-lt-one-ℝ one-le-one-plus
+  where
+  one-le-one-plus : oneℝ ≤ℝ (oneℝ +ℝ norm v)
+  one-le-one-plus =
+    subst (λ z → z ≤ℝ (oneℝ +ℝ norm v)) (+-ident-ℝ oneℝ)
+          (≤-+-mono-ℝ (refl-≤ℝ {oneℝ}) (norm-nonneg v))
+
+-- **可证**：‖v‖ ≤ 1+‖v‖（add-pos-ℝ）
+norm-le-one-plus : (v : V) → norm v ≤ℝ (oneℝ +ℝ norm v)
+norm-le-one-plus v =
+  subst (λ z → norm v ≤ℝ z) (+-comm-ℝ (norm v) oneℝ)
+        (<-≤-ℝ (add-pos-ℝ {x = norm v} {y = oneℝ} zero-lt-one-ℝ))
+
+-- **可证**：η := ε/(1+‖v‖) > 0
+div-η-pos : (v : V) (ε : ℝ) → zeroℝ <ℝ ε → zeroℝ <ℝ (ε /ℝ (oneℝ +ℝ norm v))
+div-η-pos v ε 0<ε = /-pos-ℝ 0<ε (one-plus-norm-pos v)
+
+-- **可证**：η·(1+‖v‖) = ε（乘除消去）
+η-1pv-eq : (v : V) (ε : ℝ) → ((ε /ℝ (oneℝ +ℝ norm v)) *ℝ (oneℝ +ℝ norm v)) ≡ ε
+η-1pv-eq v ε =
+  trans (*-comm-ℝ (ε /ℝ (oneℝ +ℝ norm v)) (oneℝ +ℝ norm v))
+        (*-/cancel-ℝ (oneℝ +ℝ norm v) ε)
+
+-- **可证**：η·‖v‖ ≤ ε（η ≥ 0 + ‖v‖ ≤ 1+‖v‖ + 乘除消去）
+ηv-le-ε : (v : V) (ε : ℝ) → zeroℝ <ℝ ε → ((ε /ℝ (oneℝ +ℝ norm v)) *ℝ norm v) ≤ℝ ε
+ηv-le-ε v ε 0<ε =
+  subst (λ z → ((ε /ℝ (oneℝ +ℝ norm v)) *ℝ norm v) ≤ℝ z)
+        (η-1pv-eq v ε)
+        (*-≤-mono-l-ℝ (ε /ℝ (oneℝ +ℝ norm v)) (norm v) (oneℝ +ℝ norm v)
+                      (<-≤-ℝ (div-η-pos v ε 0<ε))
+                      (norm-le-one-plus v))
+
+-- **可证**（‖v‖ = 0 分支）：‖Tt v − T0 v‖ = 0 < ε
+sot-v-zero : (T : ℝ → LinOp) (T0 : LinOp) (t : ℝ) (v : V) (ε : ℝ)
+  → norm v ≡ zeroℝ → zeroℝ <ℝ ε → norm (LinOp.f (T t) v -ᵥ LinOp.f T0 v) <ℝ ε
+sot-v-zero T T0 t v ε 0=nv 0<ε =
+  subst (λ z → z <ℝ ε) (sym e) 0<ε
+  where
+  v-zero : v ≡ zeroᵥ
+  v-zero = norm-def v 0=nv
+  l1 : LinOp.f (T t) v ≡ zeroᵥ
+  l1 = trans (cong (LinOp.f (T t)) v-zero) (lin-zero (T t))
+  l2 : LinOp.f T0 v ≡ zeroᵥ
+  l2 = trans (cong (LinOp.f T0) v-zero) (lin-zero T0)
+  -- 0 − 0 = 0（(-1)·0 = 0 + 0+0 = 0）
+  sub00 : zeroᵥ -ᵥ zeroᵥ ≡ zeroᵥ
+  sub00 = trans (cong (λ w → zeroᵥ +ᵥ w) (scalar-zero (negℝ oneℝ)))
+                (+ᵥ-ident zeroᵥ)
+  -- ‖Tt v − T0 v‖ = ‖0 − 0‖ = 0
+  e : norm (LinOp.f (T t) v -ᵥ LinOp.f T0 v) ≡ zeroℝ
+  e = trans (cong norm (trans (cong₂ _-ᵥ_ l1 l2) sub00)) norm-zero
+
+-- **可证**：范数收敛 ⟹ 强收敛（范数拓扑细于强拓扑）
+--（‖(Tt−T0)v‖ ≤ ‖Tt−T0‖·‖v‖（缩放）< η·‖v‖（η = ε/(1+‖v‖)，严格乘保序）≤ ε）
+sot-from-norm : (T : ℝ → LinOp) (T0 : LinOp) → op-norm-conv T T0 → SOT-conv T T0
+sot-from-norm T T0 hnorm v ε 0<ε with hnorm (ε /ℝ (oneℝ +ℝ norm v)) (div-η-pos v ε 0<ε)
+... | ex δ (0<δ , bound) = ex δ (0<δ , λ t 0<t t<δ → est v ε 0<ε t (bound t 0<t t<δ))
+  where
+  est : (v : V) (ε : ℝ) → zeroℝ <ℝ ε → (t : ℝ)
+    → op-norm (op-sub (T t) T0) <ℝ (ε /ℝ (oneℝ +ℝ norm v))
+    → norm (LinOp.f (T t) v -ᵥ LinOp.f T0 v) <ℝ ε
+  est v ε 0<ε t hb with trichotomy-ℝ zeroℝ (norm v)
+  est v ε 0<ε t hb | inj₁ 0<nv =
+    lt-≤-trans-ℝ (≤-lt-trans-ℝ (op-norm-scalar (op-sub (T t) T0) v)
+                               (*-pos-mono-r-ℝ 0<nv hb))
+                 (ηv-le-ε v ε 0<ε)
+  est v ε 0<ε t hb | inj₂ (inj₁ 0=nv) = sot-v-zero T T0 t v ε (sym 0=nv) 0<ε
+  est v ε 0<ε t hb | inj₂ (inj₂ nv<0) = ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ nv<0 (norm-nonneg v)))
+
+-- ==================================================================
+-- §8 完备性层（2026-08-02：Hilbert 空间公理补全）
+-- ==================================================================
+
+-- 序列：ℕ 索引 V 值
+Seq : Set
+Seq = ℕ → V
+
+-- 局部 ≤ℕ（避免跨模块依赖）
+data _≤ℕ_ : ℕ → ℕ → Set where
+  z≤n : {n : ℕ} → zero ≤ℕ n
+  s≤s : {m n : ℕ} → m ≤ℕ n → suc m ≤ℕ suc n
+
+-- **可证**：≤ℕ 自反
+≤ℕ-refl : (n : ℕ) → n ≤ℕ n
+≤ℕ-refl zero = z≤n
+≤ℕ-refl (suc n) = s≤s (≤ℕ-refl n)
+
+-- **可证**：≤ℕ 传递
+≤ℕ-trans : {m n p : ℕ} → m ≤ℕ n → n ≤ℕ p → m ≤ℕ p
+≤ℕ-trans z≤n h = z≤n
+≤ℕ-trans (s≤s h) (s≤s g) = s≤s (≤ℕ-trans h g)
+
+-- **可证**：≤ℕ 到后继
+≤ℕ-suc : {m n : ℕ} → m ≤ℕ n → m ≤ℕ suc n
+≤ℕ-suc z≤n = z≤n
+≤ℕ-suc (s≤s h) = s≤s (≤ℕ-suc h)
+
+-- **可证**：0·x = 0（0·x = (0+0)·x = 0·x + 0·x ⟹ 双自零）
+scalar-zero-any : (x : V) → zeroℝ ·ᵥ x ≡ zeroᵥ
+scalar-zero-any x = v-double-zero double
+  where
+  double : zeroℝ ·ᵥ x ≡ (zeroℝ ·ᵥ x) +ᵥ (zeroℝ ·ᵥ x)
+  double =
+    trans (cong (λ a → a ·ᵥ x) (sym (+-ident-ℝ zeroℝ)))
+          (·ᵥ-distrib-r zeroℝ zeroℝ x)
+
+-- **可证**：x − x = 0（x = 1·x + (-1)·x = (1+(-1))·x = 0·x = 0）
+sub-ᵥ-self : (x : V) → x -ᵥ x ≡ zeroᵥ
+sub-ᵥ-self x =
+  trans (cong (λ w → w +ᵥ ((negℝ oneℝ) ·ᵥ x)) (sym (·ᵥ-ident x)))
+        (trans (sym (·ᵥ-distrib-r oneℝ (negℝ oneℝ) x))
+               (trans (cong (λ a → a ·ᵥ x) (+-inv-ℝ oneℝ))
+                      (scalar-zero-any x)))
+
+-- Cauchy 序列：∀ε>0. ∃N. ∀m n ≥ N. ‖xₘ − xₙ‖ < ε
+Cauchy-seq : Seq → Set
+Cauchy-seq s = (ε : ℝ) → zeroℝ <ℝ ε
+  → Σ ℕ (λ N → (m n : ℕ) → N ≤ℕ m → N ≤ℕ n → norm (s m -ᵥ s n) <ℝ ε)
+
+-- 收敛：xₙ → x（∀ε>0. ∃N. ∀n ≥ N. ‖xₙ − x‖ < ε）
+Converges : Seq → V → Set
+Converges s x = (ε : ℝ) → zeroℝ <ℝ ε
+  → Σ ℕ (λ N → (n : ℕ) → N ≤ℕ n → norm (s n -ᵥ x) <ℝ ε)
+
+-- 完备性（基础假设：Hilbert 空间公理——Cauchy 序列收敛，补全 pre-Hilbert 缺失项；
+-- 降定理路径 = 完备化构造（Riesz 表示/投影定理/谱定理的共同地基））
+postulate
+  complete : (s : Seq) → Cauchy-seq s → Σ V (λ x → Converges s x)
+
+-- **可证**：常值序列收敛（xₙ = x ⟹ xₙ → x）
+conv-const : (x : V) → Converges (λ _ → x) x
+conv-const x ε 0<ε = ex zero (λ n h →
+  subst (λ z → z <ℝ ε) (sym (trans (cong norm (sub-ᵥ-self x)) norm-zero)) 0<ε)
+
+-- **可证**：常值序列是 Cauchy 序列
+cauchy-const : (x : V) → Cauchy-seq (λ _ → x)
+cauchy-const x ε 0<ε = ex zero (λ m n h1 h2 →
+  subst (λ z → z <ℝ ε) (sym (trans (cong norm (sub-ᵥ-self x)) norm-zero)) 0<ε)
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -661,5 +850,12 @@ norm-power X h = ≤-antisym (op-norm-submul X X) lower
 --    SelfAdjoint（⟨Xx,y⟩=⟨x,Xy⟩）+ 可证 adj-move/v-mul-le-one/norm-sq-adj-est/
 --    op-norm-adj-est/op-norm-le-sqrt/**norm-power**（自伴幂恒等 ‖X²‖=‖X‖²，
 --    submul + √ 估计 + ≤-antisym）——SpectralTheory §12 C*-范数公理降定理路径核心闭环。
---  - 阶段 5+（待）：算子拓扑 + 强连续（SOT/lim-op/strong-continuity）；
---    谱半径公式（norm-contraction）。
+--  - 阶段 5（✅ 2026-08-02）：算子拓扑层——V 减法 _−ᵥ_ + op-neg/op-sub（算子减法）；
+--    ε-δ 强收敛 SOT-conv / 范数收敛 op-norm-conv（0⁺ 右极限）定义 +
+--    **可证** sot-from-norm（范数收敛 ⟹ 强收敛：缩放 + η=ε/(1+‖v‖) 除法技巧）——
+--    范数拓扑细于强拓扑；SpectralTheory lim-op/strong-continuity 降定理路径的拓扑地基。
+--  - 阶段 8（✅ 2026-08-02）：完备性层——Hilbert 空间公理补全：Seq/≤ℕ（局部）/
+--    Cauchy-seq/Converges（ε-δ 定义）+ 完备性基础假设 complete + 可证 ≤ℕ-refl/trans/suc、
+--    sub-ᵥ-self（x−x=0）、conv-const/cauchy-const（常值序列收敛/Cauchy）——
+--    Riesz 表示/投影定理/谱定理的共同地基（pre-Hilbert ⟹ Hilbert 空间）。
+--  - 阶段 6（待）：谱半径公式（norm-contraction，需谱论）；阶段 7-3（E 的测度构造）。

@@ -19,7 +19,8 @@ module Everything where
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
---        （norm-pos/tri/submul 从 sup 证明）v0.89/90；自伴 + C* 恒等 v0.91）
+--        （norm-pos/tri/submul 从 sup 证明）v0.89/90；自伴 + C* 恒等 v0.91；
+--        算子拓扑层（ε-δ SOT/范数收敛 + 范数⟹强收敛）v0.92；完备性层 v0.93）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory

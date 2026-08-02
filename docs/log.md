@@ -1235,3 +1235,34 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 5. **意义**：SpectralTheory §12 C*-范数公理（norm-pos/norm-tri/norm-submul/norm-power）的 Hilbert 侧降定理路径全部有 sup 定义证明背书（§15 审计 H 类）；伴随（Riesz 桥接）与自伴结构就位，为阶段 8-5（算子拓扑 + 强连续）与 8-6（谱半径公式 norm-contraction）铺路。
 
 **阶段 8 状态**：阶段 4 完成（自伴 + C* 恒等 norm-power，adj 一条 Riesz 桥接 + 可证链）。待推进：阶段 8-5（算子拓扑 + 强连续）、8-6（谱半径公式）；阶段 7-3（E 的测度构造）。
+
+---
+
+【阶段 8-5：算子拓扑层（HilbertSpace §7，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-5 启动**：SOT 收敛 + 范数收敛（算子拓扑的 ε-δ 地基）——SpectralTheory lim-op/strong-continuity 降定理路径的 Hilbert 侧拓扑基础。
+2. **DHStructural 新增可证** `*-pos-mono-r-ℝ`（右侧严格乘保序：0<c ⟹ a<b ⟹ a·c<b·c）。
+3. **HilbertSpace 新增 §7**：
+   - **V 减法层** `_-ᵥ_`（x − y := x + (-1)·y）+ 算子取负 `op-neg`（线性性：·ᵥ-distrib + 标量结合）+ 算子减法 `op-sub`（S − T := S + (−T)）；
+   - **ε-δ 收敛定义**（0⁺ 右极限）：`SOT-conv`（∀v. ‖T t v − T0 v‖ → 0）、`op-norm-conv`（‖T t − T0‖ → 0）；
+   - **可证**辅助引理：`one-plus-norm-pos`（1+‖v‖>0）、`norm-le-one-plus`（‖v‖≤1+‖v‖）、`div-η-pos`（η=ε/(1+‖v‖)>0）、`η-1pv-eq`（η·(1+‖v‖)=ε）、`ηv-le-ε`（η·‖v‖≤ε）、`sot-v-zero`（‖v‖=0 分支）；
+   - **`sot-from-norm`**（**范数收敛 ⟹ 强收敛**——范数拓扑细于强拓扑）：‖(Tt−T0)v‖ ≤ ‖Tt−T0‖·‖v‖（缩放）< η·‖v‖（η=ε/(1+‖v‖)，* -pos-mono-r-ℝ）≤ ε（ηv-le-ε）；三分律分 ‖v‖（=0 分支 sot-v-zero，<0 分支矛盾）。
+4. **排坑**：`×`/`<ℝ` 同级需括号（SOT-conv/op-norm-conv）；op-neg lin-scalar 的 ·ᵥ-assoc 方向（a·(b·x)=(a·b)·x 正向）；one-le-one-plus/+-ident subst 方向（direct）；sot-v-zero 的 +ᵥ-ident（direct 非 sym）；est =0 分支需 sym 0=nv；where 块参数。
+5. **意义**：算子拓扑层的 ε-δ 分析地基落地——强收敛/范数收敛定义 + 范数拓扑细于强拓扑的可证蕴含；V 减法层与算子减法为后续（正交分解、强连续半群、SpectralTheory lim-op/strong-continuity 降定理）铺路。
+
+**阶段 8 状态**：阶段 5（8-5a）完成（V 减法 + ε-δ SOT/范数收敛 + 范数⟹强收敛可证）。待推进：8-5b（强连续半群/lim-op 实例化）、阶段 8-6（谱半径公式）；阶段 7-3（E 的测度构造）。
+
+---
+
+【阶段 8-7：完备性层（HilbertSpace §8，2026-08-02）】
+
+1. **Hilbert 空间公理补全**：本模块此前仅有向量空间 + 内积公理（严格为 pre-Hilbert 空间）——补完备性基础假设，成为真正 Hilbert 空间；Riesz 表示/投影定理/谱定理（后续阶段 7-3/8-6 前置）的共同地基。
+2. **HilbertSpace 新增 §8**：
+   - `Seq`（ℕ 索引序列）+ 局部 `_≤ℕ_`（避免跨模块依赖）+ **可证** `≤ℕ-refl`/`≤ℕ-trans`/`≤ℕ-suc`；
+   - `Cauchy-seq`（∀ε>0. ∃N. ∀m n ≥ N. ‖xₘ − xₙ‖ < ε）/ `Converges`（xₙ → x）——ε-δ 序列收敛定义（复用 8-5 的 _−ᵥ_ 与 <ℝ 机制）；
+   - **完备性基础假设** `complete`（Cauchy 序列收敛，降定理路径 = 完备化构造）；
+   - **可证** `scalar-zero-any`（0·x = 0，双自零）、`sub-ᵥ-self`（x−x=0）、`conv-const`/`cauchy-const`（常值序列收敛/Cauchy）。
+3. **排坑**：scalar-zero 参数是 ℝ 标量（需新证 scalar-zero-any）；scalar-zero-any 的 double 方向（·ᵥ-distrib-r 与 +-ident 交换）；深层嵌套函数类型检查耗时（Cauchy/Converges 定义）。
+4. **意义**：pre-Hilbert ⟹ Hilbert 空间（公理补全里程碑）；完备性层是 Riesz 表示（adj 降定理路径）、投影定理、谱定理（E 构造/谱半径公式）的共同地基，后续阶段由此展开。
+
+**阶段 8 状态**：完备性层完成（Hilbert 空间公理补全）。待推进：8-5b（强连续半群，需谱论）、阶段 8-6（谱半径公式，需谱论）；阶段 7-3（E 的测度构造，需谱定理）。
