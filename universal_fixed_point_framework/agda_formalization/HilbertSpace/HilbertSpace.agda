@@ -81,6 +81,13 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-union（P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}
       （incl+add）+ x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 + 逐项正交：proj-orth + W_P⊥W_Q）+
       proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
+  阶段 8-6b 第一步（2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）。
+    - 谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，
+      避免 n 次根——iter-sq + op-norm-power-2^k 直接闭合）；
+    - **可证** sr-le-norm（r(X) ≤ ‖X‖：成员 k=0 特化 + sup-least）/ sr-norm-le
+      （自伴 ⟹ ‖X‖ ≤ r(X)：r=‖X‖ 是族成员经 op-norm-power-2^k 精确等式 + sup-upper）/
+      **spectral-radius-norm**（自伴 C* 元 r(X) = ‖X‖，≤-antisym）——
+      norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的 Hilbert 侧核心。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1310,6 +1317,37 @@ E-hilb-union P Q disjoint x = sym (proj-unique W-pq x b b-in-W orth-b)
                  (trans (cong₂ _+ℝ_ (orth-A u hu) (orth-B v hv))
                         (zero-add-ℝ zeroℝ)))
 
+-- ==================================================================
+-- §11 谱半径公式极限层（阶段 8-6b 第一步，2026-08-02）
+-- ==================================================================
+
+-- 谱半径（Gelfand 公式沿 2^k 子列的幂形式刻画）：
+-- r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（自伴元 ⟹ r(X) = ‖X‖；
+-- 避免 n 次根——iter-sq 迭代平方 + op-norm-power-2^k 直接闭合）
+spectral-radius : LinOp → ℝ
+spectral-radius X = sup-ℝ (λ r → (k : ℕ) → iter-sq r k ≤ℝ op-norm (op-power-2^k X k))
+
+-- **可证**：r(X) ≤ ‖X‖（族成员 r ≤ ‖X‖ 经 k=0 特化 + sup-least）
+sr-le-norm : (X : LinOp) → spectral-radius X ≤ℝ op-norm X
+sr-le-norm X = sup-least (λ r → (k : ℕ) → iter-sq r k ≤ℝ op-norm (op-power-2^k X k))
+                         (op-norm X)
+                         (λ r h → h zero)
+
+-- **可证**：自伴 ⟹ ‖X‖ ≤ r(X)（r = ‖X‖ 是族成员：op-norm-power-2^k 精确等式 + sup-upper）
+sr-norm-le : (X : LinOp) → SelfAdjoint X → op-norm X ≤ℝ spectral-radius X
+sr-norm-le X h = sup-upper (λ r → (k : ℕ) → iter-sq r k ≤ℝ op-norm (op-power-2^k X k))
+                           (op-norm X)
+                           (λ k → subst (λ z → iter-sq (op-norm X) k ≤ℝ z)
+                                         (sym (op-norm-power-2^k X h k))
+                                         (refl-≤ℝ {iter-sq (op-norm X) k}))
+
+-- **可证**：谱半径 = 范数（自伴 C* 元，Gelfand 公式）——r(X) = ‖X‖
+--（SpectralTheory §12 norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）
+--  的 Hilbert 侧核心：自伴元谱半径 = 范数；norm-contraction 完整降定理 =
+--  本定理 + e^(-tA) 自伴 + 谱支集 ⊆ (0,1] ⟹ r(e^(-tA)) ≤ 1，留 8-5b/整合层）
+spectral-radius-norm : (X : LinOp) → SelfAdjoint X → spectral-radius X ≡ op-norm X
+spectral-radius-norm X h = ≤-antisym (sr-le-norm X) (sr-norm-le X h)
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1365,5 +1403,12 @@ E-hilb-union P Q disjoint x = sym (proj-unique W-pq x b b-in-W orth-b)
 --    （P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}（incl 单调 + add 闭包）+
 --    x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 u+v + 逐项正交：proj-orth + W_P⊥W_Q）+
 --    proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
+--  - 阶段 8-6b 第一步（✅ 2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）——
+--    谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，避免
+--    n 次根——iter-sq + op-norm-power-2^k 直接闭合）；**可证** sr-le-norm（r(X) ≤ ‖X‖，
+--    k=0 特化 + sup-least）/ sr-norm-le（自伴 ⟹ ‖X‖ ≤ r(X)，r=‖X‖ 族成员 + sup-upper）/
+--    **spectral-radius-norm**（自伴 C* 元 r(X) = ‖X‖，≤-antisym）——norm-contraction
+--    （σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的 Hilbert 侧核心；完整降定理（e^(-tA)
+--    自伴 + 谱支集 ⟹ r(e^(-tA)) ≤ 1）留 8-5b/整合层。
 --  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项 E-σ-add（可数可加，需
 --    σ-代数/极限层）；8-5b（强连续半群）。

@@ -1339,3 +1339,16 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：谱测度加法性（SpectralTheory §10e E-union 的 Hilbert 侧构造版）落地——E(P∪Q)=E(P)+E(Q) 对不相交集成立，E 的有限可加性构造侧闭合；E-σ-add（可数可加）留 σ-代数/极限层。
 
 **阶段 7 状态**：7-3a/7-3b 完成 + 7-3 第一步 + E-union 完成。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。
+
+---
+
+【阶段 8-6b 第一步：谱半径公式极限层（HilbertSpace §11，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-6 前置**：8-6a 代数核心（op-norm-pow-le 的 r≤‖X‖ 侧 + op-norm-power-2^k 的 r≥‖X‖ 侧）的极限层闭合——自伴 C* 元谱半径 = 范数（Gelfand 公式），norm-contraction 降定理的 Hilbert 侧核心。
+2. **HilbertSpace 新增 §11**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - 谱半径 **`spectral-radius X := sup-ℝ {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}`**——沿 2^k 子列的幂形式刻画，避免 n 次根（iter-sq 迭代平方 + op-norm-power-2^k 精确等式直接闭合）；
+   - **可证** `sr-le-norm`（r(X) ≤ ‖X‖：族成员 r 经 k=0 特化 r ≤ ‖X‖ + sup-least）、`sr-norm-le`（自伴 ⟹ ‖X‖ ≤ r(X)：r=‖X‖ 是族成员——op-norm-power-2^k 精确等式 ‖X^{2^k}‖=‖X‖^{2^k} + sup-upper）、**`spectral-radius-norm`**（自伴 C* 元 r(X) = ‖X‖，≤-antisym）。
+3. **排坑**：subst 方向需 sym（op-norm-power-2^k 给 op-norm ≡ iter-sq，subst 需 iter-sq ≡ op-norm）。
+4. **意义**：谱半径公式（Gelfand）在 Hilbert 侧完整闭合——8-6a 的代数核心 + 本极限层 = r(X) = ‖X‖（自伴）；SpectralTheory §12 norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的降定理路径核心就位（完整实例化需 e^(-tA) 自伴 + 谱支集连接，留 8-5b/整合层）。
+
+**阶段 8 状态**：8-6b 第一步完成（谱半径公式极限层：自伴 r(X) = ‖X‖ 可证）。待推进：8-6b 完整降定理（e^(-tA) 实例化，需 8-5b/整合层）；8-5b（强连续半群）；阶段 7-3 余项 E-σ-add。
