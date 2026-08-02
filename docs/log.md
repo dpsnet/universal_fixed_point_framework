@@ -1412,3 +1412,17 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：fc-integral 降定理的"≤"方向闭合——任意 f 的简单函数下界谱积分 sup ≤ fc(f)；完整降定理的"≥"方向（fc f ≤ₒ spec-int-general f）需多项式下界→简单函数逼近的兼容性，留逼近兼容性/测度论层。
 
 **阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：7-4 余项（"≥"方向 fc f ≤ₒ spec-int-general f，需逼近兼容性）；7-3 余项 E-σ-add（σ-代数/极限层）；8-6b 完整降定理；8-5b（强连续半群，跨层实例化）。
+
+---
+
+【阶段 8-5b 第一步：强连续半群实例化框架（HilbertSpace §12，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8 拆分第 5 项**：8-5b（强连续半群实例化）+ 8-6b 完整降定理连接——e^(-tA) 的 Hilbert 层表示。
+2. **HilbertSpace 新增 §12**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - e^(-tA) 的 Hilbert 层表示桥接 `exp-hilb-tA`：半群方程 `exp-hilb-semigroup`（e^(-(s+t)A)x = e^(-sA)(e^(-tA)x)）、单位 `exp-hilb-zero`、自伴 `exp-hilb-self-adjoint`、压缩 `exp-hilb-contractive`（‖e^(-tA)‖ ≤ 1）、范数连续 `exp-hilb-norm-cont`（‖e^(-tA)−id‖ → 0）——降定理路径 = 跨层模型（Op → LinOp）+ fc 函数演算（§5d-f）+ 谱积分（§1b）+ φ_t ε-δ 连续性（测度论/极限层）；
+   - **可证** `exp-hilb-strong-cont`（强连续 SOT：sot-from-norm 特化——范数连续 ⟹ 强连续，SpectralTheory strong-continuity（Hille-Yosida 条件 iv）的 Hilbert 侧对应）；
+   - **可证** `exp-hilb-radius-le-one`（自伴 + 压缩 ⟹ r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1：spectral-radius-norm（§11）+ exp-hilb-contractive——**norm-contraction 的 Hilbert 侧完整降定理核心**，8-6b 连接）。
+3. **意义**：Hille-Yosida 五条件的 Hilbert 侧实例化框架落地——半群方程/单位/压缩/强连续（(i)-(iv)）+ 生成元 = -A（§12c 已登记）连接；norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）经"谱支集 ⊆ (0,1]（E-exp-tA-contractive）⟹ 压缩 ⟹ r ≤ 1（spectral-radius-norm）"在 Hilbert 侧闭合。
+4. **余项**：8-5b 完整实例化需跨层模型（Op → LinOp 的具体构造），留整合层。
+
+**阶段 8 状态**：8-5b 第一步完成（强连续半群实例化框架 + 谱半径-压缩连接）。待推进：8-5b 余项（跨层模型 Op → LinOp）；8-6b 完整降定理（经 exp-hilb-radius-le-one 连接）；7-4 "≥"方向；E-σ-add。

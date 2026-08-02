@@ -96,6 +96,13 @@ module HilbertSpace.HilbertSpace where
       （自伴 ⟹ ‖X‖ ≤ r(X)：r=‖X‖ 是族成员经 op-norm-power-2^k 精确等式 + sup-upper）/
       **spectral-radius-norm**（自伴 C* 元 r(X) = ‖X‖，≤-antisym）——
       norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的 Hilbert 侧核心。
+  阶段 8-5b 第一步（2026-08-02）：强连续半群实例化框架（§12）。
+    - e^(-tA) 的 Hilbert 层表示桥接 exp-hilb-tA（半群方程/单位/自伴/压缩/范数连续，
+      降定理路径 = 跨层模型 + fc 函数演算 + 谱积分 + φ_t 连续性）；
+    - **可证** exp-hilb-strong-cont（强连续 SOT：sot-from-norm 特化，范数连续 ⟹ 强连续——
+      strong-continuity（Hille-Yosida 条件 iv）的 Hilbert 侧对应）；
+    - **可证** exp-hilb-radius-le-one（r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1：spectral-radius-norm +
+      压缩——norm-contraction 的 Hilbert 侧完整降定理核心，8-6b 连接）。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1412,6 +1419,47 @@ sr-norm-le X h = sup-upper (λ r → (k : ℕ) → iter-sq r k ≤ℝ op-norm (o
 spectral-radius-norm : (X : LinOp) → SelfAdjoint X → spectral-radius X ≡ op-norm X
 spectral-radius-norm X h = ≤-antisym (sr-le-norm X) (sr-norm-le X h)
 
+-- ==================================================================
+-- §12 强连续半群实例化框架（阶段 8-5b 第一步 + 8-6b 完整降定理连接，2026-08-02）
+-- ==================================================================
+-- 目标：e^(-tA) 的 Hilbert 层表示——SpectralTheory exp-tA（半群对象）+ exp-tA-fc
+-- （e^(-tA) = fc(φ_t)）降定理的实例化侧：登记桥接 + 强连续拓扑性质可证 +
+-- 自伴 ⟹ 谱半径 = 范数连接压缩（8-6b 完整降定理核心）。
+-- 降定理路径（统一）：跨层模型（Op → LinOp）+ fc 函数演算（§5d-f）+
+-- 谱积分（§1b）+ φ_t 的 ε-δ 连续性（测度论/极限层）。
+
+-- e^(-tA) 的 Hilbert 层表示（桥接登记：SpectralTheory exp-tA 的 LinOp 实例，
+-- 半群方程/单位/自伴/压缩/范数连续——降定理路径见上）
+postulate
+  exp-hilb-tA : ℝ → LinOp
+  -- 半群方程（点态）：e^(-(s+t)A) x = e^(-sA)(e^(-tA) x)（semigroup 的 LinOp 侧）
+  exp-hilb-semigroup : (s t : ℝ) (x : V) → LinOp.f (exp-hilb-tA (s +ℝ t)) x
+    ≡ LinOp.f (op-comp (exp-hilb-tA s) (exp-hilb-tA t)) x
+  -- 单位：e^(-0·A) x = x（exp-tA-zero 的 LinOp 侧）
+  exp-hilb-zero : (x : V) → LinOp.f (exp-hilb-tA zeroℝ) x ≡ x
+  -- 自伴：e^(-tA) 自伴（φ_t 值域 ⊆ (0,1] 实值 + fc 保自伴）
+  exp-hilb-self-adjoint : (t : ℝ) → SelfAdjoint (exp-hilb-tA t)
+  -- 压缩：‖e^(-tA)‖ ≤ 1（σ(e^(-tA)) ⊆ (0,1]（E-exp-tA-contractive 谱测度形式）⟹
+  -- 谱半径 ≤ 1 ⟹ 范数 ≤ 1，经 spectral-radius-norm）
+  exp-hilb-contractive : (t : ℝ) → op-norm (exp-hilb-tA t) ≤ℝ oneℝ
+  -- 范数连续（0⁺ 极限）：‖e^(-tA) − id‖ → 0（φ_t 的 ε-δ 连续性 + 谱积分）
+  exp-hilb-norm-cont : op-norm-conv exp-hilb-tA id-op
+
+-- **可证**：e^(-tA) 强连续（SOT）——范数连续 ⟹ 强连续（sot-from-norm 特化；
+--   SpectralTheory strong-continuity（lim_{t→0⁺} e^(-tA) = 𝟙ₒ，Hille-Yosida 条件 iv）
+--   的 Hilbert 侧对应——范数拓扑细于强拓扑）
+exp-hilb-strong-cont : SOT-conv exp-hilb-tA id-op
+exp-hilb-strong-cont = sot-from-norm exp-hilb-tA id-op exp-hilb-norm-cont
+
+-- **可证**：自伴 + 压缩 ⟹ 谱半径 ≤ 1——r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1
+--（spectral-radius-norm（自伴 ⟹ r(X) = ‖X‖，§11）+ exp-hilb-contractive；
+--  SpectralTheory §12 norm-contraction 的 Hilbert 侧完整降定理核心：
+--  谱支集 ⊆ (0,1]（E-exp-tA-contractive）⟹ 压缩 ⟹ r ≤ 1）
+exp-hilb-radius-le-one : (t : ℝ) → spectral-radius (exp-hilb-tA t) ≤ℝ oneℝ
+exp-hilb-radius-le-one t =
+  subst (λ z → z ≤ℝ oneℝ) (sym (spectral-radius-norm (exp-hilb-tA t) (exp-hilb-self-adjoint t)))
+        (exp-hilb-contractive t)
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1481,5 +1529,11 @@ spectral-radius-norm X h = ≤-antisym (sr-le-norm X) (sr-norm-le X h)
 --    **spectral-radius-norm**（自伴 C* 元 r(X) = ‖X‖，≤-antisym）——norm-contraction
 --    （σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的 Hilbert 侧核心；完整降定理（e^(-tA)
 --    自伴 + 谱支集 ⟹ r(e^(-tA)) ≤ 1）留 8-5b/整合层。
+--  - 阶段 8-5b 第一步（✅ 2026-08-02）：强连续半群实例化框架（§12）——e^(-tA) 的
+--    Hilbert 层表示桥接 exp-hilb-tA（半群方程/单位/自伴/压缩/范数连续，降定理路径 =
+--    跨层模型 + fc 函数演算 + 谱积分 + φ_t 连续性）；**可证** exp-hilb-strong-cont
+--    （强连续 SOT，sot-from-norm 特化——strong-continuity 的 Hilbert 侧对应）/
+--    **exp-hilb-radius-le-one**（自伴 ⟹ r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1，spectral-radius-norm
+--    + 压缩——norm-contraction 的 Hilbert 侧完整降定理核心，8-6b 连接）。
 --  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项 E-σ-add（可数可加，需
---    σ-代数/极限层）；8-5b（强连续半群）。
+--    σ-代数/极限层）；8-5b 余项（跨层模型 Op → LinOp 完整实例化）。
