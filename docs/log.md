@@ -1205,3 +1205,33 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：SpectralTheory §12 C*-范数公理降定理路径的 Hilbert 侧核心就位——norm-pos（op-norm-nonneg）/norm-tri（op-norm-tri）已按蓝图从 sup 定义证明；norm-submul（‖ST‖≤‖S‖‖T‖）需缩放引理（‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖），留 8-3b；为阶段 8-4（自伴 + C* 恒等 norm-power）铺路。
 
 **阶段 8 状态**：阶段 3（8-3a）完成（LinOp + 算子范数 + nonneg/upper/tri 可证）。待推进：8-3b（缩放引理 ⟹ op-norm-submul）；阶段 8-4（自伴 + C* 恒等）；阶段 7-3（E 的测度构造）。
+
+---
+
+【阶段 8-3b：缩放引理 + op-norm-submul（HilbertSpace §5b，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-3 收官**：norm-submul（‖ST‖ ≤ ‖S‖‖T‖）从 sup 定义证明——阶段 8-3 蓝图三项（norm-pos/norm-tri/norm-submul）全部落地。
+2. **DHStructural 新增可证 ℝ 引理**（零新增公理）：`abs-pos-ident`（0≤a ⟹ |a|=a，sqrt-sq）、`*-≤-mono-l-ℝ`（左侧乘保序：0≤a ⟹ b≤c ⟹ a·b≤a·c，*-≤-mono-ℝ + 交换律）。
+3. **HilbertSpace 新增 §5b**：
+   - **缩放引理** `op-norm-scalar`（‖Sw‖ ≤ ‖S‖·‖w‖，三分律分 ‖w‖）：‖w‖>0 分支取 u = (1/‖w‖)·w 单位化——‖u‖=1（齐次 + |1/‖w‖|=1/‖w‖ + 乘除消去）⟹ ‖Su‖≤‖S‖（sup-upper）；w = ‖w‖·u（·ᵥ 结合 + 乘除消去 + 单位）⟹ ‖Sw‖=‖w‖·‖Su‖（线性 + 齐次 + |‖w‖|=‖w‖）⟹ ≤ ‖w‖·‖S‖（左侧乘保序）；‖w‖=0 分支 w=0 ⟹ 两边皆 0；‖w‖<0 分支与正性矛盾；
+   - **`op-norm-submul`**（‖ST‖ ≤ ‖S‖·‖T‖）：缩放引理逐点（v 单位球内 ‖S(Tv)‖ ≤ ‖S‖·‖Tv‖ ≤ ‖S‖·‖T‖，左侧乘保序）+ sup-least——**submultiplicativity 从 sup 定义证明完成**。
+4. **排坑**：·ᵥ-assoc 方向（a·(b·x) ≡ (a·b)·x，非反向）；*-comm 的 subst 方向（direct 非 sym）；同级算子括号 ×2。
+5. **意义**：SpectralTheory §12 C*-范数公理降定理路径的 norm-pos/norm-tri/norm-submul 三项全部有 Hilbert 侧 sup 定义证明背书（§15 审计 H 类）；阶段 8-3 完整闭合，为阶段 8-4（自伴算子 + C* 恒等 norm-power，需 Riesz 表示）铺路。
+
+**阶段 8 状态**：阶段 3 完整闭合（8-3a + 8-3b，norm-pos/norm-tri/norm-submul 从 sup 定义证明）。待推进：阶段 8-4（自伴 + C* 恒等 norm-power）；阶段 7-3（E 的测度构造）。
+
+---
+
+【阶段 8-4：自伴算子 + C* 恒等（HilbertSpace §6，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-4 落地**：X* 存在性（Riesz 表示桥接）+ 自伴元 ⟹ norm-power（‖X²‖=‖X‖²）——SpectralTheory §12 C*-范数公理的 norm-power 降定理路径核心闭环。
+2. **DHStructural 新增可证** `≤-antisym`（反对称：三分律排除两严格分支）。
+3. **HilbertSpace 新增 §6**：
+   - 桥接基础假设：`adj`（伴随算子，Riesz 表示定理——对每个 y，x ↦ ⟨Xx,y⟩ 是连续线性泛函，Riesz ⟹ ∃! z；降定理路径 = 完备性层 + 投影定理完整证明）+ `adj-ip`（⟨Xx,y⟩ = ⟨x,adj X y⟩）；
+   - `SelfAdjoint`（⟨Xx,y⟩ = ⟨x,Xy⟩，C* 恒等的自伴前提；与 adj X ≡ X 等价需 V 减法层，注明）；
+   - **可证** `adj-move`（⟨adj X x, y⟩ = ⟨x, X y⟩，伴随跨槽交换）、`v-mul-le-one`（‖v‖≤1 ⟹ ‖v‖²≤1）；
+   - **C* 恒等证明链**：`norm-sq-adj-est`（‖Xv‖² = ⟨v,X²v⟩（自伴）≤ ‖v‖‖X²v‖（C-S）≤ ‖X²‖·‖v‖²（缩放））⟹ `op-norm-adj-est`（‖v‖≤1 ⟹ ‖Xv‖≤√‖X²‖，√ 单调）⟹ `op-norm-le-sqrt`（‖X‖≤√‖X²‖，sup-least）⟹ **`norm-power`**（SelfAdjoint X ⟹ ‖X²‖=‖X‖²：submul 上界 + 平方两侧 + sq-sqrt 下界 + ≤-antisym）。
+4. **排坑**：*-≤-mono-l-ℝ 第三参数需 M·A（与 rearrange 匹配，非 M）；rearrange 末步 *-assoc direct（非 sym）；*-ident subst 方向 ×2（v-mul-le-one direct、op-norm-adj-est sym）；同级算子括号。
+5. **意义**：SpectralTheory §12 C*-范数公理（norm-pos/norm-tri/norm-submul/norm-power）的 Hilbert 侧降定理路径全部有 sup 定义证明背书（§15 审计 H 类）；伴随（Riesz 桥接）与自伴结构就位，为阶段 8-5（算子拓扑 + 强连续）与 8-6（谱半径公式 norm-contraction）铺路。
+
+**阶段 8 状态**：阶段 4 完成（自伴 + C* 恒等 norm-power，adj 一条 Riesz 桥接 + 可证链）。待推进：阶段 8-5（算子拓扑 + 强连续）、8-6（谱半径公式）；阶段 7-3（E 的测度构造）。

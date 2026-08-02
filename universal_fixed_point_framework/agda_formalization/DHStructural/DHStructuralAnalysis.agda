@@ -1102,6 +1102,24 @@ le-sqrt-sq a | inj₂ (inj₂ a<0) =
 abs : ℝ → ℝ
 abs a = sqrt (a *ℝ a)
 
+-- 0 ≤ a ⟹ |a| = a（abs = √(a²) + sqrt-sq）
+abs-pos-ident : (a : ℝ) → zeroℝ ≤ℝ a → abs a ≡ a
+abs-pos-ident a ha = sqrt-sq a ha
+
+-- 左侧乘保序：0 ≤ a ⟹ b ≤ c ⟹ a·b ≤ a·c（*-≤-mono-ℝ + 交换律）
+*-≤-mono-l-ℝ : (a b c : ℝ) → zeroℝ ≤ℝ a → b ≤ℝ c → (a *ℝ b) ≤ℝ (a *ℝ c)
+*-≤-mono-l-ℝ a b c ha hbc =
+  subst (λ z → z ≤ℝ (a *ℝ c)) (sym (*-comm-ℝ a b))
+        (subst (λ z → (b *ℝ a) ≤ℝ z) (sym (*-comm-ℝ a c))
+               (*-≤-mono-ℝ {a = b} {b = c} {c = a} ha hbc))
+
+-- 反对称：a ≤ b 且 b ≤ a ⟹ a = b（三分律排除两严格分支）
+≤-antisym : {a b : ℝ} → a ≤ℝ b → b ≤ℝ a → a ≡ b
+≤-antisym {a} {b} hab hba with trichotomy-ℝ a b
+≤-antisym {a} {b} hab hba | inj₁ a<b = ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ a<b hba))
+≤-antisym {a} {b} hab hba | inj₂ (inj₁ a=b) = a=b
+≤-antisym {a} {b} hab hba | inj₂ (inj₂ b<a) = ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ b<a hab))
+
 -- (a+b)² = a² + 2ab + b²（分配律 + 重排）
 sum-sq-ℝ : (a b : ℝ) → (a +ℝ b) *ℝ (a +ℝ b) ≡ ((a *ℝ a) +ℝ (natℝ 2 *ℝ (a *ℝ b))) +ℝ (b *ℝ b)
 sum-sq-ℝ a b = trans expand regroup

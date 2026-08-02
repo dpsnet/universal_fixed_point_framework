@@ -350,8 +350,8 @@ postulate
 **阶段 8（Hilbert 空间/拓扑层）拆分**：
 1. **向量空间 + 内积基础**（`HilbertSpace/HilbertSpace.agda`，2026-08-01 启动）：V（载体）+ 向量空间公理 + 内积公理（登记基础假设——Hilbert 空间公理是标准分析结构，对齐"ℝ 公理是基础假设"立场）；从内积推导范数平方 ‖v‖² := ⟨v,v⟩ 与首批性质（右加性/右标量经对称性、‖a·v‖² = a²‖v‖²、‖0‖² = 0）。
 2. **Cauchy-Schwarz + 范数性质**：⟨x,y⟩² ≤ ⟨x,x⟩⟨y,y⟩（二次型判别式，ℝ 代数链）——✅ **Cauchy-Schwarz 已闭合（2026-08-02，HilbertSpace §3）**：三分律分 ‖y‖²（=0 分支正定性⟹y=0、<0 分支正性矛盾排除）+ t = -⟨x,y⟩/‖y‖² 判别式；前置 DHStructural 可证 ℝ 引理（取负×乘/乘除结合/分数乘除消去/≤ 移项/非负侧乘保序，零新增公理）。——✅ **范数公理落地（2026-08-02，HilbertSpace §4）**：√ 分析层扩展（DHStructural 基础假设，与 exp/log 同层）+ 可证 sq-nonneg-ℝ/le-sqrt-sq/abs/sum-sq-ℝ/two-add-eq/sum-add-≤；norm := √(‖·‖²)，norm-nonneg（正性）/norm-scalar（齐次）/norm-tri（三角不等式，cs-norm = C-S 范数形式枢纽）/norm-zero/norm-def（正定性）全部可证。
-3. **有界线性算子 + 算子范数**：B(H)（有界线性映射）+ ‖X‖ = sup_{‖v‖≤1} ‖Xv‖（需 √ + sup-ℝ）；norm-pos/norm-tri/norm-submul 从 sup 定义证明。——🔄 **8-3a 已闭合（2026-08-02，HilbertSpace §5）**：LinOp record + 算子代数（zero-op/op-add/op-comp）+ 线性⟹T0=0；op-norm := sup_{‖v‖≤1}‖Tv‖（sup-ℝ 完备性假设）；op-norm-nonneg（norm-pos）/op-norm-upper/op-norm-tri（norm-tri）可证。**待 8-3b**：缩放引理（‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖）⟹ op-norm-submul。
-4. **自伴算子 + C* 恒等**：X* 存在性（Riesz 表示）+ ‖X*X‖ = ‖X‖²（自伴元 ⟹ norm-power 降定理）。
+3. **有界线性算子 + 算子范数**：B(H)（有界线性映射）+ ‖X‖ = sup_{‖v‖≤1} ‖Xv‖（需 √ + sup-ℝ）；norm-pos/norm-tri/norm-submul 从 sup 定义证明。——✅ **已闭合（2026-08-02，HilbertSpace §5/§5b）**：LinOp record + 算子代数（zero-op/op-add/op-comp）+ 线性⟹T0=0；op-norm := sup_{‖v‖≤1}‖Tv‖（sup-ℝ 完备性假设）；op-norm-nonneg（norm-pos）/op-norm-upper/op-norm-tri（norm-tri）可证；8-3b 缩放引理 op-norm-scalar（‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖）⟹ op-norm-submul（norm-submul）——norm-pos/norm-tri/norm-submul 全从 sup 定义证明。
+4. **自伴算子 + C* 恒等**：X* 存在性（Riesz 表示）+ ‖X*X‖ = ‖X‖²（自伴元 ⟹ norm-power 降定理）。——✅ **已闭合（2026-08-02，HilbertSpace §6）**：adj（Riesz 表示桥接，降定理路径 = 完备性层 + 投影定理）+ adj-ip + SelfAdjoint（⟨Xx,y⟩=⟨x,Xy⟩）+ 可证 adj-move/v-mul-le-one/norm-sq-adj-est/op-norm-adj-est/op-norm-le-sqrt/**norm-power**（自伴幂恒等 ‖X²‖=‖X‖²，submul + √ 估计 + ≤-antisym）。
 5. **算子拓扑 + 强连续**：SOT 收敛 + 半群强连续（lim-op/strong-continuity 降定理）。
 6. **谱半径公式**：r(X) = ‖X‖（自伴 C* 元 ⟹ norm-contraction 降定理）。
 

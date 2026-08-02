@@ -35,10 +35,16 @@ module HilbertSpace.HilbertSpace where
     - LinOp（线性算子 record）+ 算子代数（zero/add/comp）+ 线性 ⟹ T0=0；
     - 算子范数 ‖T‖ := sup_{‖v‖≤1} ‖Tv‖（sup-ℝ 完备性假设）；
     - **可证**：op-norm-nonneg（‖T‖ ≥ 0，T0=0 是单位球成员）、op-norm-upper
-      （‖v‖≤1 ⟹ ‖Tv‖≤‖T‖）、op-norm-tri（‖S+T‖ ≤ ‖S‖+‖T‖，norm-tri + sup-least）。
-    - 待（8-3b）：缩放引理 ⟹ op-norm-submul（‖ST‖ ≤ ‖S‖‖T‖）。
-  阶段 4+（待）：自伴 C* 恒等（norm-power）、算子拓扑（strong-continuity）、
-    谱半径公式（norm-contraction）。
+      （‖v‖≤1 ⟹ ‖Tv‖≤‖T‖）、op-norm-tri（‖S+T‖ ≤ ‖S‖+‖T‖，norm-tri + sup-least）；
+    - **8-3b（✅）**：缩放引理 op-norm-scalar（‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖）⟹
+      op-norm-submul（‖ST‖ ≤ ‖S‖‖T‖）——norm-pos/norm-tri/norm-submul 全从 sup 定义证明。
+  阶段 4（2026-08-02）：自伴算子 + C* 恒等（norm-power）。
+    - adj（伴随，Riesz 表示桥接，降定理路径 = 完备性层 + 投影定理）+ adj-ip；
+    - SelfAdjoint（⟨Xx,y⟩ = ⟨x,Xy⟩）+ **可证** adj-move（伴随跨槽交换）；
+    - **可证** norm-power（自伴幂恒等 ‖X²‖ = ‖X‖²）：‖Xv‖² = ⟨v,X²v⟩（自伴）
+      ≤ ‖v‖‖X²v‖（C-S）≤ ‖X²‖（缩放 + 单位球）⟹ ‖Xv‖ ≤ √‖X²‖ ⟹ sup-least
+      ‖X‖ ≤ √‖X²‖ ⟹ 平方两侧 + sq-sqrt + submul + ≤-antisym——C* 恒等落地。
+  阶段 5+（待）：算子拓扑（strong-continuity）、谱半径公式（norm-contraction）。
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
@@ -47,10 +53,11 @@ open import Sp.SpCategory using (sym; trans; cong; cong₂; _×_; _,_)
 -- ℝ 层（复用 DHStructural：T3 已建的有序域 + 完备性机制）
 open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; _+ℝ_; _*ℝ_; _≤ℝ_; _<ℝ_; _/ℝ_; negℝ; subst;
-         +-assoc-ℝ; +-comm-ℝ; +-ident-ℝ; +-inv-ℝ; *-assoc-ℝ; *-zero-ℝ;
-         refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; trichotomy-ℝ; irreflexive-ℝ;
+         +-assoc-ℝ; +-comm-ℝ; +-ident-ℝ; +-inv-ℝ; *-assoc-ℝ; *-comm-ℝ; *-ident-ℝ; *-zero-ℝ;
+         refl-≤ℝ; ≤-trans-ℝ; ≤-antisym; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; trichotomy-ℝ; irreflexive-ℝ;
          zero-add-ℝ; natℝ; sqrt; sqrt-nonneg; sq-sqrt; sqrt-sq; sqrt-mono; sqrt-zero; sqrt-mul;
-         abs; sq-nonneg-ℝ; le-sqrt-sq; sum-sq-ℝ; two-add-eq; sum-add-≤;
+         abs; abs-pos-ident; sq-nonneg-ℝ; le-sqrt-sq; sum-sq-ℝ; two-add-eq; sum-add-≤;
+         *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-/cancel-ℝ; /-pos-ℝ;
          sup-ℝ; sup-upper; sup-least; zero-lt-one-ℝ;
          tp-ident; ttq-ident; ≤-from-nonneg; div-≤-mul;
          ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
@@ -475,6 +482,167 @@ op-norm-tri S T = sup-least (op-fam (op-add S T)) (op-norm S +ℝ op-norm T) bou
     ≤-trans-ℝ (norm-tri (LinOp.f S v) (LinOp.f T v))
               (≤-+-mono-ℝ (op-norm-upper S v hv) (op-norm-upper T v hv))
 
+-- **可证**：缩放引理——‖Sw‖ ≤ ‖S‖·‖w‖（阶段 8-3b）
+--（w = 0 平凡；w ≠ 0 经 u = (1/‖w‖)·w 单位化：‖u‖ = 1 ⟹ ‖Su‖ ≤ ‖S‖（sup-upper）
+--  + ‖Sw‖ = ‖w‖·‖Su‖（线性 + 齐次 + |·| 正吸收）+ 左侧乘保序）
+op-norm-scalar : (S : LinOp) (w : V) → norm (LinOp.f S w) ≤ℝ (op-norm S *ℝ norm w)
+op-norm-scalar S w with trichotomy-ℝ zeroℝ (norm w)
+op-norm-scalar S w | inj₁ 0<nw = main
+  where
+  u : V
+  u = (oneℝ /ℝ norm w) ·ᵥ w
+  -- 0 ≤ 1/‖w‖（0 < 1/‖w‖ 经 /-pos-ℝ）
+  recip-nonneg : zeroℝ ≤ℝ (oneℝ /ℝ norm w)
+  recip-nonneg = <-≤-ℝ (/-pos-ℝ zero-lt-one-ℝ 0<nw)
+  -- ‖u‖ = 1（齐次 + |1/‖w‖| = 1/‖w‖ + 乘除消去）
+  u-norm-one : norm u ≡ oneℝ
+  u-norm-one =
+    trans (norm-scalar (oneℝ /ℝ norm w) w)
+          (trans (cong₂ _*ℝ_ (abs-pos-ident (oneℝ /ℝ norm w) recip-nonneg) refl)
+                 (trans (*-comm-ℝ (oneℝ /ℝ norm w) (norm w))
+                        (*-/cancel-ℝ (norm w) oneℝ)))
+  -- ‖u‖ ≤ 1
+  u≤1 : norm u ≤ℝ oneℝ
+  u≤1 = subst (λ z → z ≤ℝ oneℝ) (sym u-norm-one) (refl-≤ℝ {oneℝ})
+  -- w = ‖w‖·u（·ᵥ 结合 + 乘除消去 + 单位）
+  w-eq : w ≡ (norm w) ·ᵥ u
+  w-eq = sym (trans (·ᵥ-assoc (norm w) (oneℝ /ℝ norm w) w)
+                    (trans (cong (λ a → a ·ᵥ w) (*-/cancel-ℝ (norm w) oneℝ))
+                           (·ᵥ-ident w)))
+  -- S w = ‖w‖·S u（线性）
+  Sw-eq : LinOp.f S w ≡ (norm w) ·ᵥ (LinOp.f S u)
+  Sw-eq = trans (cong (LinOp.f S) w-eq) (LinOp.lin-scalar S (norm w) u)
+  -- ‖Sw‖ = ‖w‖·‖Su‖（cong norm + 齐次 + |‖w‖| = ‖w‖）
+  e : norm (LinOp.f S w) ≡ (norm w) *ℝ norm (LinOp.f S u)
+  e = trans (cong norm Sw-eq)
+            (trans (norm-scalar (norm w) (LinOp.f S u))
+                   (cong₂ _*ℝ_ (abs-pos-ident (norm w) (norm-nonneg w)) refl))
+  -- ‖w‖·‖Su‖ ≤ ‖w‖·‖S‖ = ‖S‖·‖w‖（左侧乘保序 + 交换律）
+  h : ((norm w) *ℝ norm (LinOp.f S u)) ≤ℝ (op-norm S *ℝ norm w)
+  h = subst (λ z → ((norm w) *ℝ norm (LinOp.f S u)) ≤ℝ z)
+            (*-comm-ℝ (norm w) (op-norm S))
+            (*-≤-mono-l-ℝ (norm w) (norm (LinOp.f S u)) (op-norm S)
+                          (norm-nonneg w) (op-norm-upper S u u≤1))
+  main : norm (LinOp.f S w) ≤ℝ (op-norm S *ℝ norm w)
+  main = subst (λ z → z ≤ℝ (op-norm S *ℝ norm w)) (sym e) h
+
+-- ‖w‖ = 0 分支：w = 0 ⟹ ‖Sw‖ = 0 = ‖S‖·0
+op-norm-scalar S w | inj₂ (inj₁ 0=nw) =
+  subst (λ z → z ≤ℝ (op-norm S *ℝ norm w)) (sym e1)
+        (subst (λ z → zeroℝ ≤ℝ z) (sym e2) (refl-≤ℝ {zeroℝ}))
+  where
+  w-zero : w ≡ zeroᵥ
+  w-zero = norm-def w (sym 0=nw)
+  -- ‖Sw‖ = 0（T0 = 0 + ‖0‖ = 0）
+  e1 : norm (LinOp.f S w) ≡ zeroℝ
+  e1 = trans (cong norm (trans (cong (LinOp.f S) w-zero) (lin-zero S))) norm-zero
+  -- ‖S‖·‖w‖ = 0（‖w‖ = 0 + 零吸收）
+  e2 : op-norm S *ℝ norm w ≡ zeroℝ
+  e2 = trans (cong (λ u → op-norm S *ℝ u) (sym 0=nw)) (*-zero-ℝ (op-norm S))
+
+-- ‖w‖ < 0 分支：与正性 0 ≤ ‖w‖ 矛盾
+op-norm-scalar S w | inj₂ (inj₂ nw<0) =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ nw<0 (norm-nonneg w)))
+
+-- **可证**：‖ST‖ ≤ ‖S‖·‖T‖（submultiplicativity，阶段 8-3b）
+--（缩放引理逐点 + sup-least + 左侧乘保序）
+op-norm-submul : (S T : LinOp) → op-norm (op-comp S T) ≤ℝ (op-norm S *ℝ op-norm T)
+op-norm-submul S T = sup-least (op-fam (op-comp S T)) (op-norm S *ℝ op-norm T) bound
+  where
+  bound : (r : ℝ) → op-fam (op-comp S T) r → r ≤ℝ (op-norm S *ℝ op-norm T)
+  bound r (ex v (hv , refl)) =
+    ≤-trans-ℝ (op-norm-scalar S (LinOp.f T v))
+              (*-≤-mono-l-ℝ (op-norm S) (norm (LinOp.f T v)) (op-norm T)
+                            (op-norm-nonneg S) (op-norm-upper T v hv))
+
+-- ==================================================================
+-- §6 自伴算子 + C* 恒等（阶段 8-4，2026-08-02）
+-- ==================================================================
+
+-- 伴随算子（Riesz 表示定理桥接：对每个 y，x ↦ ⟨Xx,y⟩ 是连续线性泛函，
+-- Riesz 表示 ⟹ ∃! z. ⟨Xx,y⟩ = ⟨x,z⟩；降定理路径 = 完备性层 + 投影定理完整证明）
+postulate
+  adj : LinOp → LinOp
+  adj-ip : (X : LinOp) (x y : V) → LinOp.f X x ⟨⟩ y ≡ x ⟨⟩ LinOp.f (adj X) y
+
+-- 自伴：⟨Xx,y⟩ = ⟨x,Xy⟩（C* 恒等的自伴前提；与 adj X ≡ X 等价需 V 减法层）
+SelfAdjoint : LinOp → Set
+SelfAdjoint X = (x y : V) → LinOp.f X x ⟨⟩ y ≡ x ⟨⟩ LinOp.f X y
+
+-- **可证**：伴随跨槽交换——⟨adj X x, y⟩ = ⟨x, X y⟩（adj-ip + ip-sym 链）
+adj-move : (X : LinOp) (x y : V) → LinOp.f (adj X) x ⟨⟩ y ≡ x ⟨⟩ LinOp.f X y
+adj-move X x y =
+  trans (ip-sym (LinOp.f (adj X) x) y)
+        (trans (sym (adj-ip X y x))
+               (ip-sym (LinOp.f X y) x))
+
+-- **可证**：‖v‖ ≤ 1 ⟹ ‖v‖·‖v‖ ≤ 1（乘保序 ×2）
+v-mul-le-one : (v : V) → norm v ≤ℝ oneℝ → (norm v *ℝ norm v) ≤ℝ oneℝ
+v-mul-le-one v hv =
+  subst (λ z → (norm v *ℝ norm v) ≤ℝ z) (*-ident-ℝ oneℝ)
+        (≤-trans-ℝ (*-≤-mono-ℝ (norm-nonneg v) hv)
+                   (*-≤-mono-l-ℝ oneℝ (norm v) oneℝ (<-≤-ℝ zero-lt-one-ℝ) hv))
+
+-- **可证**：‖Xv‖² ≤ ‖X²‖·‖v‖²（自伴 ⟹ ⟨Xv,Xv⟩ = ⟨v,X²v⟩（自伴）≤ ‖v‖·‖X²v‖（C-S）≤ ‖X²‖·‖v‖²（缩放））
+norm-sq-adj-est : (X : LinOp) → SelfAdjoint X → (v : V)
+  → norm-sq (LinOp.f X v) ≤ℝ (op-norm (op-comp X X) *ℝ (norm v *ℝ norm v))
+norm-sq-adj-est X h v =
+  subst (λ z → z ≤ℝ (op-norm (op-comp X X) *ℝ (norm v *ℝ norm v)))
+        (sym (h v (LinOp.f X v)))
+        (≤-trans-ℝ (cs-norm v (LinOp.f X (LinOp.f X v)))
+                   (subst (λ z → ((norm v) *ℝ norm (LinOp.f X (LinOp.f X v))) ≤ℝ z)
+                          (rearrange)
+                          (*-≤-mono-l-ℝ (norm v) (norm (LinOp.f X (LinOp.f X v)))
+                                        (op-norm (op-comp X X) *ℝ norm v)
+                                        (norm-nonneg v)
+                                        (op-norm-scalar (op-comp X X) v))))
+  where
+  -- ‖v‖·(‖X²‖·‖v‖) = ‖X²‖·(‖v‖·‖v‖)（结合 + 交换）
+  rearrange : (norm v) *ℝ (op-norm (op-comp X X) *ℝ (norm v)) ≡ (op-norm (op-comp X X)) *ℝ (norm v *ℝ norm v)
+  rearrange =
+    trans (sym (*-assoc-ℝ (norm v) (op-norm (op-comp X X)) (norm v)))
+          (trans (cong (λ z → z *ℝ (norm v)) (*-comm-ℝ (norm v) (op-norm (op-comp X X))))
+                 (*-assoc-ℝ (op-norm (op-comp X X)) (norm v) (norm v)))
+
+-- **可证**：‖v‖ ≤ 1 ⟹ ‖Xv‖ ≤ √‖X²‖（√ 单调于 ‖Xv‖² ≤ ‖X²‖）
+op-norm-adj-est : (X : LinOp) → SelfAdjoint X → (v : V) → norm v ≤ℝ oneℝ
+  → norm (LinOp.f X v) ≤ℝ sqrt (op-norm (op-comp X X))
+op-norm-adj-est X h v hv =
+  sqrt-mono (ip-pos (LinOp.f X v))
+            (≤-trans-ℝ (norm-sq-adj-est X h v)
+                       (≤-trans-ℝ (*-≤-mono-l-ℝ (op-norm (op-comp X X))
+                                                (norm v *ℝ norm v) oneℝ
+                                                (op-norm-nonneg (op-comp X X))
+                                                (v-mul-le-one v hv))
+                                  (subst (λ z → z ≤ℝ op-norm (op-comp X X))
+                                         (sym (*-ident-ℝ (op-norm (op-comp X X))))
+                                         (refl-≤ℝ {op-norm (op-comp X X)}))))
+
+-- **可证**：‖X‖ ≤ √‖X²‖（单位球上逐点界 + sup-least）
+op-norm-le-sqrt : (X : LinOp) → SelfAdjoint X
+  → op-norm X ≤ℝ sqrt (op-norm (op-comp X X))
+op-norm-le-sqrt X h = sup-least (op-fam X) (sqrt (op-norm (op-comp X X))) bound
+  where
+  bound : (r : ℝ) → op-fam X r → r ≤ℝ sqrt (op-norm (op-comp X X))
+  bound r (ex v (hv , refl)) = op-norm-adj-est X h v hv
+
+-- **可证**：C* 恒等（自伴幂恒等）——SelfAdjoint X ⟹ ‖X²‖ = ‖X‖²
+--（≤：op-norm-submul；≥：‖X‖ ≤ √‖X²‖ 平方两侧 + sq-sqrt；反对称闭合）
+norm-power : (X : LinOp) → SelfAdjoint X → op-norm (op-comp X X) ≡ (op-norm X *ℝ op-norm X)
+norm-power X h = ≤-antisym (op-norm-submul X X) lower
+  where
+  M : ℝ
+  M = op-norm (op-comp X X)
+  -- ‖X‖·‖X‖ ≤ ‖X‖·√M ≤ √M·√M = M
+  lower : (op-norm X *ℝ op-norm X) ≤ℝ M
+  lower =
+    subst (λ z → (op-norm X *ℝ op-norm X) ≤ℝ z)
+          (sq-sqrt M (op-norm-nonneg (op-comp X X)))
+          (≤-trans-ℝ (*-≤-mono-ℝ (op-norm-nonneg X) (op-norm-le-sqrt X h))
+                     (*-≤-mono-l-ℝ (sqrt M) (op-norm X) (sqrt M)
+                                   (sqrt-nonneg M (op-norm-nonneg (op-comp X X)))
+                                   (op-norm-le-sqrt X h)))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -486,7 +654,12 @@ op-norm-tri S T = sup-least (op-fam (op-add S T)) (op-norm S +ℝ op-norm T) bou
 --    正定性 norm-zero/norm-def 全部可证（依赖 C-S 的 cs-norm 形式）。
 --  - 阶段 3（✅ 2026-08-02）：有界线性算子 + 算子范数——LinOp record +
 --    算子代数（zero-op/op-add/op-comp）+ 线性⟹T0=0；op-norm := sup_{‖v‖≤1}‖Tv‖
---    （sup-ℝ 完备性假设）；op-norm-nonneg/op-norm-upper/op-norm-tri 可证。
---    待（8-3b）：缩放引理 ⟹ op-norm-submul（‖ST‖ ≤ ‖S‖‖T‖）。
---  - 阶段 4+（待）：自伴算子 + C* 恒等（norm-power）⟹
---    SpectralTheory §12 C*-范数公理降定理路径。
+--    （sup-ℝ 完备性假设）；op-norm-nonneg/op-norm-upper/op-norm-tri 可证；
+--    **8-3b 缩放引理**（op-norm-scalar：‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖）⟹
+--    **op-norm-submul**（‖ST‖≤‖S‖‖T‖）——norm-pos/norm-tri/norm-submul 全从 sup 定义证明。
+--  - 阶段 4（✅ 2026-08-02）：自伴算子 + C* 恒等——adj（Riesz 表示桥接）+ adj-ip +
+--    SelfAdjoint（⟨Xx,y⟩=⟨x,Xy⟩）+ 可证 adj-move/v-mul-le-one/norm-sq-adj-est/
+--    op-norm-adj-est/op-norm-le-sqrt/**norm-power**（自伴幂恒等 ‖X²‖=‖X‖²，
+--    submul + √ 估计 + ≤-antisym）——SpectralTheory §12 C*-范数公理降定理路径核心闭环。
+--  - 阶段 5+（待）：算子拓扑 + 强连续（SOT/lim-op/strong-continuity）；
+--    谱半径公式（norm-contraction）。
