@@ -124,6 +124,12 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-norm-idempotent（‖E(P)‖² = ‖E(P)‖：norm-power（自伴）+
       点态幂等 E-hilb-idemp + sup 外延——SpectralTheory §12 idem-zero-one/proj-norm
       （幂等元范数 ∈{0,1}）的 Hilbert 侧对应）。
+  阶段 16（2026-08-02）：算子代数完整化（跨层模型代数基础，§16）。
+    - 标量乘 _·ₗ_（(c·ₗX)v = c·(Xv)，线性性可证）+ **可证** ·ₗ-ident-pt
+      （1·ₗX 逐点 = X）/op-comp-assoc-pt/op-comp-id-pt/op-comp-id-r-pt
+      （结合/单位律点态版，定义性）/·ₗ-distrib-add-pt（标量对加法分配点态）/
+      ·ₗ-comp-pt（标量与复合点态）——为 8-5b 余项（跨层模型 Op → LinOp）铺路，
+      点态版避开 funext（LinOp record 依赖字段需依赖 funext）。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1635,6 +1641,51 @@ E-hilb-norm-idempotent P =
   fam-p→pp : (P : ℝ → Set) (r : ℝ) → op-fam (E-hilb P) r → op-fam (op-comp (E-hilb P) (E-hilb P)) r
   fam-p→pp P r (ex v (hv , refl)) = ex v (hv , trans refl (sym (cong norm (E-hilb-idemp P v))))
 
+-- ==================================================================
+-- §16 算子代数完整化（跨层模型代数基础，2026-08-02）
+-- ==================================================================
+-- 目标：LinOp 层算子代数结构完整化——标量乘 + 结合/单位律（点态版）——
+-- 为 8-5b 余项（跨层模型 Op → LinOp：SpectralTheory 算子代数公理在
+-- LinOp 层的点态对应）铺路。点态版避免 funext（LinOp record 依赖字段
+-- lin-add/lin-scalar 的相等需依赖 funext，超出库公理范围）。
+
+-- 标量乘（LinOp 层）：(c·ₗ X)v = c·(Xv)（线性性：·ᵥ-distrib + ·ᵥ-assoc + *-comm）
+_·ₗ_ : ℝ → LinOp → LinOp
+c ·ₗ X = record
+  { f = λ x → c ·ᵥ LinOp.f X x
+  ; lin-add = λ x y → trans (cong (λ w → c ·ᵥ w) (LinOp.lin-add X x y))
+                            (·ᵥ-distrib-l c (LinOp.f X x) (LinOp.f X y))
+  ; lin-scalar = λ a x → trans (cong (λ w → c ·ᵥ w) (LinOp.lin-scalar X a x))
+                               (trans (·ᵥ-assoc c a (LinOp.f X x))
+                                      (trans (cong (λ s → s ·ᵥ LinOp.f X x) (*-comm-ℝ c a))
+                                             (sym (·ᵥ-assoc a c (LinOp.f X x)))))
+  }
+
+-- **可证**：标量单位（点态）——1·ₗ X 逐点 = X
+·ₗ-ident-pt : (X : LinOp) (v : V) → LinOp.f (oneℝ ·ₗ X) v ≡ LinOp.f X v
+·ₗ-ident-pt X v = ·ᵥ-ident (LinOp.f X v)
+
+-- **可证**：op-comp 结合律（点态）——(X∘Y)∘Z 与 X∘(Y∘Z) 逐点相等（定义性）
+op-comp-assoc-pt : (X Y Z : LinOp) (v : V)
+  → LinOp.f (op-comp (op-comp X Y) Z) v ≡ LinOp.f (op-comp X (op-comp Y Z)) v
+op-comp-assoc-pt X Y Z v = refl
+
+-- **可证**：op-comp 单位律（点态）——id∘X 与 X∘id 逐点等于 X
+op-comp-id-pt : (X : LinOp) (v : V) → LinOp.f (op-comp id-op X) v ≡ LinOp.f X v
+op-comp-id-pt X v = refl
+op-comp-id-r-pt : (X : LinOp) (v : V) → LinOp.f (op-comp X id-op) v ≡ LinOp.f X v
+op-comp-id-r-pt X v = refl
+
+-- **可证**：标量对加法分配（点态）——c·ₗ(X+Y) 与 c·ₗX + c·ₗY 逐点相等
+·ₗ-distrib-add-pt : (c : ℝ) (X Y : LinOp) (v : V)
+  → LinOp.f (c ·ₗ (op-add X Y)) v ≡ LinOp.f (op-add (c ·ₗ X) (c ·ₗ Y)) v
+·ₗ-distrib-add-pt c X Y v = ·ᵥ-distrib-l c (LinOp.f X v) (LinOp.f Y v)
+
+-- **可证**：标量与复合（点态）——c·ₗ(X∘Y) 与 (c·ₗX)∘Y 逐点相等（定义性）
+·ₗ-comp-pt : (c : ℝ) (X Y : LinOp) (v : V)
+  → LinOp.f (c ·ₗ (op-comp X Y)) v ≡ LinOp.f (op-comp (c ·ₗ X) Y) v
+·ₗ-comp-pt c X Y v = refl
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1731,5 +1782,12 @@ E-hilb-norm-idempotent P =
 --    sup-least/upper 双向）+ E-hilb-norm-idempotent（‖E(P)‖²=‖E(P)‖：norm-power（自伴）
 --    + 点态幂等 E-hilb-idemp + sup 外延——SpectralTheory §12 idem-zero-one/proj-norm
 --    （幂等元范数 ∈{0,1}）的 Hilbert 侧对应）。
---  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；8-5b 余项（跨层模型
---    Op → LinOp 完整实例化）；7-4 "≥"方向。
+--  - 阶段 16（✅ 2026-08-02）：算子代数完整化（跨层模型代数基础，§16）——标量乘
+--    _·ₗ_（(c·ₗX)v=c·(Xv)，线性性经 ·ᵥ-distrib/·ᵥ-assoc/*-comm）+ **可证**
+--    ·ₗ-ident-pt（1·ₗX 逐点=X）/op-comp-assoc-pt/op-comp-id-pt/op-comp-id-r-pt
+--    （结合/单位律点态版，定义性 refl）/·ₗ-distrib-add-pt（标量对加法分配点态，
+--    ·ᵥ-distrib-l）/·ₗ-comp-pt（标量与复合点态，refl）——为 8-5b 余项（跨层模型
+--    Op → LinOp：SpectralTheory 算子代数公理在 LinOp 层的点态对应）铺路；点态版
+--    避开 funext（LinOp record 依赖字段 lin-add/lin-scalar 的相等需依赖 funext）。
+--  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-4 "≥"方向完整（测度论核心）；
+--    8-5b 余项（跨层模型 Op → LinOp 完整实例化，代数基础已就位）。

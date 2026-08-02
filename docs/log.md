@@ -1516,3 +1516,29 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：公理纪律审计与实现全同步——每个 postulate 的降定理路径在阶段 7/8 后的实际状态明确登记，为后续测度论核心层/跨层模型推进提供账目。
 
 **阶段 7/8 状态**：阶段 7 全部闭合；阶段 8 主要子项闭合（8-1 到 8-6b 均有落地，norm-contraction 降定理核心连接）。剩余开放项：7-4 "≥"方向完整（测度论核心逼近）、8-5b 余项（跨层模型 Op → LinOp 完整实例化）。
+
+---
+
+【阶段 16：算子代数完整化（HilbertSpace §16，2026-08-02）】
+
+1. **前置**：8-5b 余项（跨层模型 Op → LinOp）的代数基础——LinOp 层算子代数结构完整化（标量乘 + 结合/单位律点态版）。
+2. **HilbertSpace 新增 §16**（Everything.agda 全量编译通过，15 模块，退出码 0）：
+   - 标量乘 **`_·ₗ_`**（(c·ₗX)v = c·(Xv)，线性性经 ·ᵥ-distrib/·ᵥ-assoc/*-comm）；
+   - **可证** `·ₗ-ident-pt`（1·ₗX 逐点 = X）、`op-comp-assoc-pt`/`op-comp-id-pt`/`op-comp-id-r-pt`（结合/单位律点态版，定义性 refl）、`·ₗ-distrib-add-pt`（标量对加法分配点态，·ᵥ-distrib-l）、`·ₗ-comp-pt`（标量与复合点态，定义性）。
+3. **排坑**：lin-scalar 末步需 `sym (·ᵥ-assoc a c)`（a·(c·Xx) = (a·c)·Xx 反向）。
+4. **意义**：LinOp 层算子代数结构齐备（加/复合/标量乘 + 结合/单位/分配律点态版）——为 8-5b 余项（跨层模型：SpectralTheory 算子代数公理在 LinOp 层的点态对应）铺路；点态版刻意避开 funext（LinOp record 依赖字段 lin-add/lin-scalar 的相等需依赖 funext，超出库公理范围，P4 先例）。
+
+**阶段 7/8 状态**：阶段 7 全部闭合；阶段 8 主要子项闭合 + 算子代数完整化（跨层模型代数基础就位）。剩余开放项：7-4 "≥"方向完整（测度论核心逼近）、8-5b 余项（跨层模型 Op → LinOp 完整实例化，代数基础已就位）。
+
+---
+
+【研究笔记更新：阶段 7/8 实现研究记录（notes/00_foundations/spectral_T3_analysis_foundation.md §5.16，2026-08-02）】
+
+1. **依据研究操作规范 ①（笔记先行）**：阶段 7/8 的完整实现成果补录为研究笔记——`spectral_T3_analysis_foundation.md` 新增 §5.16"阶段 7/8 实现研究记录"。
+2. **内容**：
+   - **§5.16.1 Hilbert 空间层（阶段 8）**：8-1 到 8-6b 全链研究记录（内积→范数→算子→谱半径），含 cauchy-schwarz/norm-tri/op-norm-submul/norm-power/sot-from-norm/spectral-radius-norm/exp-hilb 族的推导链 + Gelfand 公式构造化表述关键讨论；
+   - **§5.16.2 投影理论与谱测度 E 构造（阶段 7-3 全链）**：proj-unique ⟹ 线性性 ⟹ 自伴性 + E-hilb 族测度性质（幂等/正交/完备性/加法性/有限可加/σ-可加）推导链 + 关键讨论；
+   - **§5.16.3 fc = ∫ 积分实现（阶段 7-4）**：fc-simple-integral ⟹ fc-integral-le ⟹ fc-simple-le ⟹ fc-simple-integral-full 推导链；
+   - **§5.16.4 算子代数完整化与跨层模型（§16 + 8-5b 余项）**；
+   - **§5.16.5 开放项**：7-4 "≥"方向完整、8-5b 跨层模型、spec-int 收敛细节、E-σ-add 收敛。
+3. **意义**：阶段 7/8 研究成果作为第一手研究资料完整落笔记（笔记先行 → 论文提炼的规范闭环），推导链与开放项明确登记。

@@ -369,6 +369,70 @@ postulate
 
 **纪律**：基础假设（Hilbert 空间/内积公理）注明模型必然性；核心定理真实证明；降定理路径与 SpectralTheory §15 审计对应。
 
+### 5.16 阶段 7/8 实现研究记录（2026-08-02，`HilbertSpace.agda` + `SpectralTheory.agda`）
+
+> 本节约束：**笔记先行**（研究操作规范 ①）——阶段 7（测度论/完备性层）与阶段 8（Hilbert 空间/拓扑层）的完整实现记录，含推导链、关键定理、开放项。实现落点：`agda_formalization/HilbertSpace/HilbertSpace.agda`（§1-§16）、`SpectralTheory/SpectralTheory.agda`（§5h/§10d 等）；Everything.agda 15 模块编译通过（退出码 0）。
+
+#### 5.16.1 Hilbert 空间层（阶段 8）：从内积到谱半径的完整链条
+
+**核心思路**：Hilbert 空间公理（V + 实向量空间 + 实内积）登记为基础假设（模型必然性 = 希尔伯特空间理论），其余全部从内积推导——范数 ‖v‖ := √⟨v,v⟩、算子范数 ‖T‖ := sup_{‖v‖≤1}‖Tv‖、谱半径 r(X)。这是 SpectralTheory §12 C*-范数公理与 norm-contraction 降定理路径的实质起点（§15 审计 H 类）。
+
+| 子项 | 关键定理（全部可证） | 推导链 |
+|:-:|:--|:--|
+| 8-1 内积基础（§2） | ip-add-r/ip-scalar-r（双线性经对称性）、norm-sq-scalar、norm-sq-nonneg、norm-sq-zero | 对称性 + 左线性对偶；⟨0,0⟩ 双自零 |
+| 8-2 Cauchy-Schwarz（§3） | **cauchy-schwarz**（⟨x,y⟩²≤‖x‖²‖y‖²） | 三分律分 ‖y‖²；t=-⟨x,y⟩/‖y‖² 判别式 + 内积正性 |
+| 8-2b 范数公理（§4） | norm-nonneg/norm-scalar/**norm-tri**/norm-zero/norm-def | √ 分析层扩展；cs-norm（C-S 范数形式）枢纽 |
+| 8-3 有界算子（§5） | op-norm-nonneg/upper/tri/**submul** | op-norm := sup_{‖v‖≤1}‖Tv‖；缩放引理 op-norm-scalar（单位化 w/‖w‖） |
+| 8-4 自伴 + C* 恒等（§6） | adj-move/**norm-power**（‖X²‖=‖X‖²） | adj 桥接（Riesz 表示）+ ‖Xv‖≤√‖X²‖ + sq-sqrt + ≤-antisym |
+| 8-5a 算子拓扑（§7） | **sot-from-norm**（范数⟹强收敛） | η=ε/(1+‖v‖) 除法技巧 |
+| 8-7 完备性（§8） | complete 基础假设 + conv-const/cauchy-const | pre-Hilbert ⟹ Hilbert 空间公理补全 |
+| 8-6a 谱半径代数核心（§9） | op-norm-pow-le（r≤‖X‖）、**op-norm-power-2^k**（自伴 ‖X^{2^k}‖=‖X‖^{2^k}） | submul 归纳；iter-sq 迭代平方规避 ℕ 2^k 算术 |
+| 8-6b 谱半径极限层（§11） | **spectral-radius-norm**（自伴 r(X)=‖X‖） | r(X) := sup{r : r^{2^k}≤‖X^{2^k}‖∀k}（幂形式刻画，避免 n 次根）+ ≤-antisym |
+| 8-5b 强连续半群框架（§12） | **exp-hilb-strong-cont**（SOT 强连续）、**exp-hilb-radius-le-one**（r(e^(-tA))≤1） | e^(-tA) LinOp 桥接登记 + sot-from-norm 特化 + spectral-radius-norm + 压缩 |
+
+**关键讨论**：谱半径公式（Gelfand）的构造化表述——r(X) := sup{r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式），避免构造框架中缺失的 n 次根；自伴元 r(X)=‖X‖ 的"≤"方向（成员 k=0 特化 + sup-least）与"≥"方向（r=‖X‖ 是族成员经 op-norm-power-2^k + sup-upper）闭合，norm-contraction 降定理的 Hilbert 侧核心就位。
+
+#### 5.16.2 投影理论与谱测度 E 的构造（阶段 7-3 全链）
+
+**核心思路**：谱定理 E = 谱投影族 E(P) = proj-op(spectral-subspace P) 的构造侧——投影定理（proj 桥接）+ 投影算子理论（唯一性 ⟹ 线性性 ⟹ 自伴性）+ 谱子空间（spectral-subspace 桥接）。E 的测度性质（幂等/正交/完备性/加法性/σ-可加性）全部从投影性质推导。
+
+| 子项 | 关键定理（全部可证） | 推导链 |
+|:-:|:--|:--|
+| 7-3a 正交分解（§10） | pythagorean、proj-decomp、proj-idemp、proj-norm-le | Pythagorean + Subspace（闭子空间）+ 投影定理桥接 |
+| 7-3b 投影算子（§10b） | **proj-unique**（w∈W 且 x−w⊥W ⟹ w=Px）、proj-lin-add/proj-lin-scalar、**proj-self-adjoint**（⟨Px,y⟩=⟨x,Py⟩）、proj-op-norm-le-one | a=w−Px 的 ⟨a,a⟩=0 论证；proj-ip-left/right 双分解 |
+| 7-3 第一步 E 构造（§10c） | E-hilb-idemp/orth/total/self-adjoint/norm-le-one | E-hilb P := proj-op(spectral-subspace P) 直接特化 |
+| 7-3 余项 E-union（§10d） | **E-hilb-union**（P∩Q=∅ ⟹ E(P∪Q)=E(P)+E(Q)） | ip-sub-l/r（减法双线性）+ 谱子空间直和桥接（incl/split）+ proj-unique |
+| 7-3 余项 E-fin-union（§10e） | **E-hilb-fin-union**（pairwise ⟹ E(∪ᵢ<ₘPᵢ)=Σᵢ<ₘE(Pᵢ)） | E-hilb-union 归纳 + FinUnion 递归谓词 + fin-union-in/disjoint |
+| E-σ-add 完整形式（§14） | **E-hilb-fin-le-σ**（有限前段 ≤ₗ 可数并）+ E-hilb-σ-add 桥接 | LinOp 层算子序 _≤ₗ_ + supₗ（§13 机制）+ σUnion |
+| 算子序机制（§13） | **E-hilb-mono**（P⊆Q ⟹ E(P)≤ₗ E(Q)） | ⟨(E(Q)−E(P))v,v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0（proj-decomp + 自伴/幂等） |
+| 谱投影范数（§15） | **E-hilb-norm-idempotent**（‖E(P)‖²=‖E(P)‖） | norm-power + 点态幂等 + sup 外延（sup-ext-ℝ） |
+
+**关键讨论**：投影算子理论的核心是 **proj-unique**（投影唯一性）——"w∈W 且 x−w⊥W ⟹ w=Px"经 a=w−Px 的 ⟨a,a⟩=0 论证闭合（x−Px=(x−w)+a + 左加性 + 两正交 + 正定性）。由此推导出投影的线性性（P(x+y)=Px+Py、P(ax)=aPx）与自伴性（⟨Px,y⟩=⟨x,Py⟩）——谱投影 E(P) 成为自伴、幂等、有界（范数≤1）的投影算子族。E 的测度性质全链闭合（幂等/正交/完备性/加法性/有限可加/σ-可加），SpectralTheory E-idempotent/E-orthogonal/E-total/E-union/E-partition-add/E-σ-add 的 Hilbert 侧对应全部落地。
+
+#### 5.16.3 fc = ∫ 积分实现（阶段 7-4）
+
+**核心思路**：fc-integral 公理（fc(f) = ∫f dE，§5c）降定理——先证明简单函数谱积分 = 其函数演算（∫s dE = fc(s)），再证"≤"/"≥"两方向。
+
+| 子项 | 关键定理（全部可证） | 推导链 |
+|:-:|:--|:--|
+| 7-4 第一步（§5h） | **fc-simple-integral**（∫s dE = fc(s)） | fc-sum（fc 保有限和）+ fc-atom（fc(c·1_Ω)=c·E(Ω)，indicator-bridge）+ spec-int-simple |
+| "≤"方向（§10d） | **fc-integral-le**（spec-int-general f ≤ₒ fc f） | fc-mono（fc 单调）+ simple-fn-below（dom ⟹ 简单函数逐点 ≤ f）+ sup-op-least |
+| "≥"第一步（§10d） | **fc-simple-le**（fc s ≤ₒ spec-int-general s） | sum-c-ind-eq（有限线性组合定位）+ simple-fn-eq-atom + s 自身下界 + sup-op-upper |
+| 组合收尾（§1b/§10d） | **fc-simple-integral-full**（fc s ≡ spec-int-general s） | ≤ₒ-antisym 登记（Hilbert 层算子序语义）+ fc-simple-le + fc-integral-le |
+
+**关键讨论**：fc-integral 对简单函数的完整降定理（等式版）闭合——简单函数的函数演算与 Lebesgue 谱积分完全一致。完整"≥"方向（一般 f）需要多项式→简单函数逼近兼容性（测度论核心逼近定理，构造化 Lebesgue 积分），登记为开放项。
+
+#### 5.16.4 算子代数完整化与跨层模型（阶段 16 + 8-5b 余项）
+
+**LinOp 层算子代数结构**（§16）：标量乘 _·ₗ_ + 结合/单位律点态版（op-comp-assoc-pt/op-comp-id-pt/op-comp-id-r-pt）+ 标量对加法分配（·ₗ-distrib-add-pt）+ 标量与复合（·ₗ-comp-pt）——为跨层模型（Op → LinOp）铺路。**点态版刻意避开 funext**（LinOp record 依赖字段 lin-add/lin-scalar 的相等需依赖 funext，超出库公理范围，P4 先例）。
+
+#### 5.16.5 开放项（测度论核心 + 跨层模型）
+
+1. **7-4 "≥"方向完整**：fc f ≤ₒ spec-int-general f（一般 f）——多项式→简单函数逼近兼容性，需构造化 Lebesgue 积分理论（ℝ 分划 + 连续函数简单逼近）。
+2. **8-5b 余项**：跨层模型 Op → LinOp 完整实例化——SpectralTheory 算子代数公理在 LinOp 层的验证（代数基础 §16 已就位）。
+3. **spec-int 收敛细节**：无界逼近的 Lebesgue 单调收敛构造化（trunc 截断族）。
+4. **E-σ-add 收敛**：LinOp 层算子序 sup 的存在性（强/弱算子拓扑单调有界收敛）。
+
 ## 6. 各闭合项证明策略
 
 - **65/24 < e**：✅ **已闭合（2026-07-31，见 §5.3）**——走级数路径（`partial-e-4-value` 通分计算 + `exp-partial-< 4` 级数截断公理），未采用直接定义性公理 `exp-one-gt-65-24`。
