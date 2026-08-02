@@ -1381,3 +1381,34 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：蓝图阶段 7 第 5 项（经典扩展）兑现——indicator 从"登记对象"变为"可判定定义 + 点态引理可证"，为 indicator-bridge 点态化（测度论层）铺路；Fuglede 引理 1 的经典扩展依赖完整落地。
 
 **阶段 7 状态**：7-1/7-2（截断 + 可测函数积分）✅、7-3（E 构造：7-3a/b + 第一步 + E-union + E-fin-union）✅、7-5（经典扩展）✅。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；7-4（fc = ∫ 积分实现）；8-6b 完整降定理；8-5b（强连续半群，跨层实例化）。
+
+---
+
+【阶段 7-4 第一步：简单函数 = 函数演算（SpectralTheory §5h，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7 拆分第 4 项**：fc = ∫ 积分实现——fc-integral（fc(f) = ∫f dE，§5c 桥接公理）降定理的第一步：简单函数谱积分 = 其函数演算。
+2. **SpectralTheory 新增 §5h**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过；零新增公理）：
+   - **可证** `fc-sum`（fc 保持有限和 fc(Σᵢgᵢ) = Σᵢfc(gᵢ)，fc-add 归纳，基例 fc-ext+fc-zero）、`fc-scalar-mul`（fc(c·g) = c·fc(g)，fc-mul + fc-const + ·ₒ-comm + 单位律）、`fc-atom`（fc(c·1_Ω) = c·E(Ω)，fc-scalar-mul + indicator-bridge）；
+   - `simple-fn`（SimpleF → ℝ → ℝ：s(x) = Σᵢcᵢ·1_{Ωᵢ}(x)，sum-ℝ + indicator）；
+   - **`fc-simple-integral`**（∫s dE = fc(s)）：fc(s) = fc(Σᵢcᵢ·1_{Ωᵢ}) = Σᵢfc(cᵢ·1_{Ωᵢ})（fc-sum）= Σᵢcᵢ·fc(1_{Ωᵢ})（fc-atom）= Σᵢcᵢ·E(Ωᵢ)（indicator-bridge）= ∫s dE（spec-int-simple）。
+3. **排坑**：sum-op-congₒ 前向引用（定义于 §7b，§5h 块整体移至其定义之后）。
+4. **意义**：fc-integral 降定理的简单函数层闭合——∫s dE = fc(s) 对任意简单函数成立；完整降定理（fc(f) = ∫f dE 对一般 f）需 sup 族连接（简单函数下界 sup vs fc 多项式下界 sup 的兼容性），留逼近兼容性/测度论层。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项）✅、7-4 第一步（fc-simple-integral）✅、7-5（经典扩展）✅。待推进：7-4 余项（fc-integral 完整降定理）；7-3 余项 E-σ-add（σ-代数/极限层）；8-6b 完整降定理；8-5b（强连续半群，跨层实例化）。
+
+---
+
+【阶段 7-4 余项：fc-integral 降定理的"≤"方向（SpectralTheory §5h/§10d，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7 拆分第 4 项**：fc-integral（fc(f) = ∫f dE）完整降定理的"≤"方向——spec-int-general f ≤ₒ fc f（简单函数下界 sup ≤ 函数演算）。
+2. **SpectralTheory §5h + §10d 扩展**（Everything.agda 全量编译通过，15 模块，退出码 0；零新增公理）：
+   - fc 单调性：`fc-below-mono`（fc-below 族对 f 单调）+ `fc-mono`（f ≤ g 点态 ⟹ fc f ≤ₒ fc g，fc-continuous + fc-below-mono + sup-op-least/upper）；
+   - ℝ 求和结构：`sum-mono-ℝ`（逐项 ≤ ⟹ 和 ≤）、`sum-distrib-ℝ`（Σᵢ(c·aᵢ) = c·Σᵢaᵢ）、`sum-zero-ℝ`（全零和 = 0）、`sum-ℝ-zero`（逐项零 ⟹ 和零）；
+   - 原子点态比较：`atom-ip-le`（x ∈ Ω ⟹ c·1_Ω(x) ≤ fx·1_Ω(x)）、`atom-ip-lec`（x ∉ Ω 情形）；
+   - 覆盖坍缩 **`sum-indicator-cover`**（覆盖 + 不相交 ⟹ Σᵢ1_{Ωᵢ}(x) = 1：i₀ 定位归纳，i₀ 项 = 1 + 其余项 = 0 + 和坍缩）；
+   - **`simple-fn-below`**（dom（逐原子 cᵢ ≤ f）⟹ simple-fn s x ≤ f x：逐项 atom-ip-le/lec（排中律分情形）+ sum-mono-ℝ + Σᵢ(fx·1_{Ωᵢ}(x)) = fx·Σ1 = fx·1 = fx）；
+   - **`fc-integral-le`**（spec-int-general f ≤ₒ fc f：Y = ∫s dE = fc(s)（fc-simple-integral）≤ fc f（simple-fn-below + fc-mono）+ sup-op-least）。
+3. **排坑**：本地 Σ 构造子 `_,_` 右结合模式（非 ex）；fc-continuous 双向 subst（fc f ≡ sup 两侧各一次）；with 抽象下 indicator 定义性约简（atom-le-i 分支直接构造，不调用 indicator-pos 独立函数——其返回类型带抽象标记致 UnequalTerms）。
+4. **意义**：fc-integral 降定理的"≤"方向闭合——任意 f 的简单函数下界谱积分 sup ≤ fc(f)；完整降定理的"≥"方向（fc f ≤ₒ spec-int-general f）需多项式下界→简单函数逼近的兼容性，留逼近兼容性/测度论层。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：7-4 余项（"≥"方向 fc f ≤ₒ spec-int-general f，需逼近兼容性）；7-3 余项 E-σ-add（σ-代数/极限层）；8-6b 完整降定理；8-5b（强连续半群，跨层实例化）。

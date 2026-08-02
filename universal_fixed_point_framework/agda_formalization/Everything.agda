@@ -17,7 +17,11 @@ module Everything where
 --        公理纪律审计 §15：22 块 postulate 分类登记；
 --        阶段 7-1/7-2 测度论层（ℝ 截断/min + 可测函数层 + Lebesgue 积分，2026-08-02 v0.86/87）；
 --        阶段 7-5 经典扩展（§5g：排中律 classical 基础假设 + indicator 由 postulate 降为定义 +
---        点态性质 1_P x = 1 ⟺ P x 可证，2026-08-02 v1.01））
+--        点态性质 1_P x = 1 ⟺ P x 可证，2026-08-02 v1.01）；
+--        阶段 7-4 第一步（§5h：简单函数 = 函数演算 fc-simple-integral——∫s dE = fc(s)，
+--        fc-sum/fc-scalar-mul/fc-atom 可证，零新增公理，2026-08-02 v1.02）；
+--        阶段 7-4 余项"≤"方向（§5h/§10d：fc-integral-le——spec-int-general f ≤ₒ fc f，
+--        fc-mono/sum-indicator-cover/simple-fn-below 可证，2026-08-02 v1.03））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

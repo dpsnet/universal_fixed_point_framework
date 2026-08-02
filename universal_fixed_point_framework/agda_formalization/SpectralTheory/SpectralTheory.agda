@@ -40,7 +40,7 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
@@ -920,6 +920,98 @@ sum-op-congₒ {zero} h = refl
 sum-op-congₒ {suc m} {f} {g} h =
   cong₂ _+ₒ_ (h zero) (sum-op-congₒ {m} {λ i → f (suc i)} {λ i → g (suc i)} (λ i → h (suc i)))
 
+-- ==================================================================
+-- §5h 简单函数 = 函数演算（阶段 7-4 第一步：fc-simple-integral，2026-08-02）
+-- ==================================================================
+-- 目标：fc-integral（fc(f) = ∫f dE，§5c 桥接公理）降定理的第一步——
+-- 简单函数谱积分 = 其函数演算（∫(Σcᵢ·1_{Ωᵢ}) dE = fc(Σcᵢ·1_{Ωᵢ})）。
+-- 链：fc(s) = fc(Σᵢcᵢ·1_{Ωᵢ}) = Σᵢfc(cᵢ·1_{Ωᵢ})（fc-sum）= Σᵢcᵢ·fc(1_{Ωᵢ})（fc-atom）
+--      = Σᵢcᵢ·E(Ωᵢ)（indicator-bridge）= ∫s dE（spec-int-simple 定义）。
+-- 零新增公理：全部由 fc 同态（fc-add/fc-mul/fc-const/fc-zero）与
+-- indicator-bridge/indicator（经典扩展，§5g）推导。
+
+-- **可证**：fc 保持有限和——fc(Σᵢ gᵢ) = Σᵢ fc(gᵢ)（fc-add 归纳）
+fc-sum : {m : ℕ} (g : Fin m → (ℝ → ℝ))
+  → fc (λ x → sum-ℝ {m} (λ i → g i x)) ≡ sum-op {m} (λ i → fc (g i))
+fc-sum {zero} g = trans (fc-ext (λ x → refl)) fc-zero
+fc-sum {suc m} g =
+  trans (fc-add (g zero) (λ x → sum-ℝ {m} (λ i → g (suc i) x)))
+        (cong₂ _+ₒ_ refl (fc-sum {m} (λ i → g (suc i))))
+
+-- **可证**：fc 保持标量乘——fc(c·g) = c·fc(g)（fc-mul + fc-const + ·ₒ-comm + 单位律）
+fc-scalar-mul : (c : ℝ) (g : ℝ → ℝ) → fc (λ x → c *ℝ g x) ≡ c ·ₒ fc g
+fc-scalar-mul c g =
+  trans (fc-mul (λ _ → c) g)
+        (trans (cong₂ _*ₒ_ (fc-const c) refl)
+               (trans (·ₒ-comm c 𝟙ₒ (fc g))
+                      (cong (λ Y → c ·ₒ Y) (*ₒ-ident-l (fc g)))))
+
+-- 简单函数的点态函数（SimpleF → ℝ → ℝ）：s(x) = Σᵢ cᵢ·1_{Ωᵢ}(x)
+simple-fn : SimpleF → (ℝ → ℝ)
+simple-fn s x = sum-ℝ {SimpleF.m s} (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)
+
+-- **可证**：fc(c·1_Ω) = c·E(Ω)（fc-scalar-mul + indicator-bridge）
+fc-atom : (c : ℝ) (Ω : Borel) → fc (λ x → c *ℝ indicator Ω x) ≡ c ·ₒ E Ω
+fc-atom c Ω = trans (fc-scalar-mul c (indicator Ω))
+                    (cong (λ Y → c ·ₒ Y) (sym (indicator-bridge Ω)))
+
+-- **可证**：简单函数谱积分 = 其函数演算——∫s dE = fc(s)（阶段 7-4 关键引理）
+fc-simple-integral : (s : SimpleF) → simple-int s ≡ fc (simple-fn s)
+fc-simple-integral s =
+  sym (trans (fc-sum (λ i → λ x → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x))
+             (sum-op-congₒ (λ i → fc-atom (SimpleF.c s i) (SimpleF.Ω s i))))
+
+-- ------------------------------------------------------------------
+-- 7-4 余项（fc-integral 降定理的单侧方向）：fc 单调性组件，2026-08-02
+-- ------------------------------------------------------------------
+-- 目标：spec-int-general f ≤ₒ fc f（简单函数下界 sup ≤ 函数演算）——
+-- fc-integral（fc(f) = ∫f dE，§5c 桥接公理）降定理的"≤"方向。
+-- 依赖：fc 单调性（本批）+ 覆盖坍缩（simple-fn ≤ f 点态，下一批）。
+
+-- **可证**：fc-below 族对 f 单调——f ≤ g 点态 ⟹ fc-below f ⊆ fc-below g
+fc-below-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) → (Y : Op) → fc-below f Y → fc-below g Y
+fc-below-mono h Y (m , a , n , eq , dom) =
+  m , a , n , eq , λ x → ≤-trans-ℝ (dom x) (h x)
+
+-- **可证**：fc 单调——f ≤ g 点态 ⟹ fc f ≤ₒ fc g
+--（fc-continuous + fc-below-mono + sup-op-least/upper）
+fc-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) → fc f ≤ₒ fc g
+fc-mono {f} {g} h = subst (λ Z → Z ≤ₒ fc g) (sym (fc-continuous f))
+                           (sup-op-least (fc-below f) (fc g) bound)
+  where
+  bound : (Y : Op) → fc-below f Y → Y ≤ₒ fc g
+  bound Y yb = subst (λ Z → Y ≤ₒ Z) (sym (fc-continuous g))
+                     (sup-op-upper (fc-below g) Y (fc-below-mono h Y yb))
+
+-- **可证**：ℝ 有限和保序——逐项 ≤ ⟹ 和 ≤（归纳 + ≤-+-mono-ℝ）
+sum-mono-ℝ : {m : ℕ} {a b : Fin m → ℝ} → ((i : Fin m) → a i ≤ℝ b i) → sum-ℝ a ≤ℝ sum-ℝ b
+sum-mono-ℝ {zero} h = refl-≤ℝ
+sum-mono-ℝ {suc m} {a} {b} h =
+  ≤-+-mono-ℝ (h zero) (sum-mono-ℝ {m} {λ i → a (suc i)} {λ i → b (suc i)} (λ i → h (suc i)))
+
+-- **可证**：ℝ 有限和分配——Σᵢ(c·aᵢ) = c·Σᵢ aᵢ（归纳 + distrib-ℝ + *-zero-ℝ）
+sum-distrib-ℝ : {m : ℕ} (c : ℝ) (a : Fin m → ℝ) → sum-ℝ (λ i → c *ℝ a i) ≡ c *ℝ sum-ℝ a
+sum-distrib-ℝ {zero} c a = sym (*-zero-ℝ c)
+sum-distrib-ℝ {suc m} c a =
+  trans (cong₂ _+ℝ_ refl (sum-distrib-ℝ {m} c (λ i → a (suc i))))
+        (sym (distrib-ℝ c (a zero) (sum-ℝ {m} (λ i → a (suc i)))))
+
+-- **可证**：原子点态比较——x ∈ Ω ⟹ c·1_Ω(x) ≤ f x·1_Ω(x)（c ≤ f x + indicator-pos）
+atom-ip-le : (c fx : ℝ) (Ω : Borel) (x : ℝ) → c ≤ℝ fx → Ω x
+  → (c *ℝ indicator Ω x) ≤ℝ (fx *ℝ indicator Ω x)
+atom-ip-le c fx Ω x hc hx =
+  subst (λ z → (c *ℝ z) ≤ℝ (fx *ℝ z)) (sym (indicator-pos Ω x hx))
+        (subst (λ z → z ≤ℝ (fx *ℝ oneℝ)) (sym (*-ident-ℝ c))
+               (subst (λ z → c ≤ℝ z) (sym (*-ident-ℝ fx)) hc))
+
+-- **可证**：原子点态比较（补集）——x ∉ Ω ⟹ c·1_Ω(x) ≤ f x·1_Ω(x)（indicator-zero）
+atom-ip-lec : (c fx : ℝ) (Ω : Borel) (x : ℝ) → (Ω x → ⊥)
+  → (c *ℝ indicator Ω x) ≤ℝ (fx *ℝ indicator Ω x)
+atom-ip-lec c fx Ω x hx =
+  subst (λ z → (c *ℝ z) ≤ℝ (fx *ℝ z)) (sym (indicator-zero Ω x hx))
+        (subst (λ z → z ≤ℝ (fx *ℝ zeroℝ)) (sym (*-zero-ℝ c))
+               (subst (λ z → zeroℝ ≤ℝ z) (sym (*-zero-ℝ fx)) (refl-≤ℝ {zeroℝ})))
+
 -- 加法重组（可证）：(a+b)+(c+d) = (a+c)+(b+d)
 swap-pairₒ : (a b c d : Op) → (a +ₒ b) +ₒ (c +ₒ d) ≡ (a +ₒ c) +ₒ (b +ₒ d)
 swap-pairₒ a b c d =
@@ -1302,6 +1394,87 @@ suc-inj refl = refl
 
 suc≢suc : {m : ℕ} {i j : Fin m} → i ≢ j → suc i ≢ suc j
 suc≢suc h eq = h (suc-inj eq)
+
+-- ------------------------------------------------------------------
+-- 7-4 余项（fc-integral 降定理的"≤"方向）：覆盖坍缩 + simple-fn-below +
+-- fc-integral-le，2026-08-02（依赖 Fin 构造子互异，置于 §10d）
+-- ------------------------------------------------------------------
+
+-- **可证**：ℝ 全零和 = 0
+sum-zero-ℝ : {m : ℕ} → sum-ℝ {m} (λ _ → zeroℝ) ≡ zeroℝ
+sum-zero-ℝ {zero} = refl
+sum-zero-ℝ {suc m} = trans (cong₂ _+ℝ_ refl sum-zero-ℝ) (+-ident-ℝ zeroℝ)
+
+-- **可证**：逐项为零 ⟹ 和为零（sum-ℝ 坍缩）
+sum-ℝ-zero : {m : ℕ} (a : Fin m → ℝ) → ((i : Fin m) → a i ≡ zeroℝ) → sum-ℝ a ≡ zeroℝ
+sum-ℝ-zero {zero} a h = refl
+sum-ℝ-zero {suc m} a h =
+  trans (cong₂ _+ℝ_ (h zero) (sum-ℝ-zero {m} (λ i → a (suc i)) (λ i → h (suc i))))
+        (+-ident-ℝ zeroℝ)
+
+-- **可证**：覆盖 + 不相交 ⟹ Σᵢ 1_{Ωᵢ}(x) = 1（恰一个指标；i₀ 定位归纳：
+--  i₀ 项 = 1（indicator-pos）+ 其余项 = 0（disj 不相交 + indicator-zero）+ 和坍缩）
+sum-indicator-cover : {m : ℕ} → (Ω : Fin m → Borel) → ((i j : Fin m) → i ≢ j → ((x : ℝ) → Ω i x → Ω j x → ⊥))
+  → (x : ℝ) → (i₀ : Fin m) → Ω i₀ x → sum-ℝ (λ i → indicator (Ω i) x) ≡ oneℝ
+sum-indicator-cover {suc m} Ω disj x zero hx₀ =
+  trans (cong₂ _+ℝ_ (indicator-pos (Ω zero) x hx₀)
+                    (sum-ℝ-zero {m} (λ i → indicator (Ω (suc i)) x) tail-zero))
+        (+-ident-ℝ oneℝ)
+  where
+  -- x ∈ Ω zero 且 disj zero (suc i) ⟹ x ∉ Ω (suc i) ⟹ 尾部逐项 = 0
+  tail-zero : (i : Fin m) → indicator (Ω (suc i)) x ≡ zeroℝ
+  tail-zero i = indicator-zero (Ω (suc i)) x
+                 (λ hx → disj zero (suc i) (zero≢suc {m = m} {k = i}) x hx₀ hx)
+sum-indicator-cover {suc m} Ω disj x (suc i₀') hx₀ =
+  trans (cong₂ _+ℝ_ (indicator-zero (Ω zero) x
+                       (λ hx → disj (suc i₀') zero (suc≢zero {m = m} {k = i₀'}) x hx₀ hx))
+                    (sum-indicator-cover {m} (λ i → Ω (suc i))
+                                         (λ i j hij → disj (suc i) (suc j) (suc≢suc hij))
+                                         x i₀' hx₀))
+        (zero-add-ℝ oneℝ)
+
+-- **可证**：简单函数逐点 ≤ f——dom（逐原子 cᵢ ≤ f）⟹ simple-fn s x ≤ f x
+--（逐项 cᵢ·1_{Ωᵢ}(x) ≤ f x·1_{Ωᵢ}(x)（atom-ip-le/lec，排中律分情形）+ 和保序 +
+--  Σᵢ(fx·1_{Ωᵢ}(x)) = fx·Σᵢ1 = fx·1 = fx（分配 + 覆盖坍缩））
+simple-fn-below : (s : SimpleF) (f : ℝ → ℝ)
+  → ((i : Fin (SimpleF.m s)) → (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ f x)
+  → (x : ℝ) → simple-fn s x ≤ℝ f x
+simple-fn-below s f dom x =
+  subst (λ z → (sum-ℝ (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)) ≤ℝ z)
+        (*-ident-ℝ (f x))
+        (subst (λ z → (sum-ℝ (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)) ≤ℝ z)
+               (cong (λ t → f x *ℝ t)
+                     (sum-indicator-cover {SimpleF.m s} (SimpleF.Ω s) (SimpleF.disj s) x i₀ hx₀))
+               (subst (λ z → (sum-ℝ (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)) ≤ℝ z)
+                      (sum-distrib-ℝ (f x) (λ i → indicator (SimpleF.Ω s i) x))
+                      (sum-mono-ℝ {SimpleF.m s} atom-le-i)))
+  where
+  i₀ : Fin (SimpleF.m s)
+  i₀ = proj₁ (SimpleF.cover s x)
+  hx₀ : SimpleF.Ω s i₀ x
+  hx₀ = proj₂ (SimpleF.cover s x)
+  -- 逐项比较（排中律分情形：x ∈ Ωᵢ / x ∉ Ωᵢ；分支中 indicator 定义性约简为 1/0）
+  atom-le-i : (i : Fin (SimpleF.m s))
+    → (SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x) ≤ℝ (f x *ℝ indicator (SimpleF.Ω s i) x)
+  atom-le-i i with classical {SimpleF.Ω s i x}
+  atom-le-i i | inj₁ hxi =
+    subst (λ z → z ≤ℝ (f x *ℝ oneℝ)) (sym (*-ident-ℝ (SimpleF.c s i)))
+          (subst (λ z → SimpleF.c s i ≤ℝ z) (sym (*-ident-ℝ (f x))) (dom i x hxi))
+  atom-le-i i | inj₂ hnxi =
+    subst (λ z → z ≤ℝ (f x *ℝ zeroℝ)) (sym (*-zero-ℝ (SimpleF.c s i)))
+          (subst (λ z → zeroℝ ≤ℝ z) (sym (*-zero-ℝ (f x))) (refl-≤ℝ {zeroℝ}))
+
+-- **可证**：fc-integral 降定理的"≤"方向——spec-int-general f ≤ₒ fc f
+--（简单函数下界 sup ≤ 函数演算：Y = ∫s dE = fc(s)（fc-simple-integral）
+--  ≤ fc f（simple-fn-below + fc-mono）+ sup-op-least）
+fc-integral-le : (f : ℝ → ℝ) → spec-int-general f ≤ₒ fc f
+fc-integral-le f = sup-op-least (spec-int-below f) (fc f) bound
+  where
+  bound : (Y : Op) → spec-int-below f Y → Y ≤ₒ fc f
+  bound Y (pair₁Σ s (eq , dom)) =
+    subst (λ Z → Z ≤ₒ fc f) (sym eq)
+          (subst (λ Z → Z ≤ₒ fc f) (sym (fc-simple-integral s))
+                 (fc-mono (simple-fn-below s f dom)))
 
 -- **可证明（零新增公理）**：标量乘零吸收 a·0 = 0
 --（·ₒ-comm a 𝟙ₒ 𝟘ₒ + *ₒ-zero-r 双向）
