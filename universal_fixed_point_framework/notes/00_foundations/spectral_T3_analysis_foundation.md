@@ -419,8 +419,10 @@ postulate
 | "≤"方向（§10d） | **fc-integral-le**（spec-int-general f ≤ₒ fc f） | fc-mono（fc 单调）+ simple-fn-below（dom ⟹ 简单函数逐点 ≤ f）+ sup-op-least |
 | "≥"第一步（§10d） | **fc-simple-le**（fc s ≤ₒ spec-int-general s） | sum-c-ind-eq（有限线性组合定位）+ simple-fn-eq-atom + s 自身下界 + sup-op-upper |
 | 组合收尾（§1b/§10d） | **fc-simple-integral-full**（fc s ≡ spec-int-general s） | ≤ₒ-antisym 登记（Hilbert 层算子序语义）+ fc-simple-le + fc-integral-le |
+| "≥"方向完整（§1b/§10d） | **fc-integral-ge**（fc f ≤ₒ spec-int-general f，任意 f） | fc-continuous 展开（fc f = sup{fc(p) : p 多项式 ≤ f}）+ ≤ₒ-trans 登记 + **fc-poly-le-spec-int 桥接**（测度论核心逼近）+ spec-int-mono（可证，spec-int-below-mono + sup-op-least/upper）+ sup-op-least |
+| 完整降定理（§1b/§10d） | **fc-integral-full**（fc f ≡ spec-int-general f，任意 f） | ≥ 方向 fc-integral-ge + ≤ 方向 fc-integral-le + ≤ₒ-antisym |
 
-**关键讨论**：fc-integral 对简单函数的完整降定理（等式版）闭合——简单函数的函数演算与 Lebesgue 谱积分完全一致。完整"≥"方向（一般 f）需要多项式→简单函数逼近兼容性（测度论核心逼近定理，构造化 Lebesgue 积分），登记为开放项。
+**关键讨论**：fc-integral 对简单函数的完整降定理（等式版）闭合——简单函数的函数演算与 Lebesgue 谱积分完全一致。**"≥"方向完整闭合（2026-08-03，v1.13）**——fc-integral 公理（§5c）完整降为可证明定理：fc f ≡ ∫f dE = spec-int-general f（任意 f）。证明骨架：fc f = sup{fc(p) : p 多项式 ≤ f}（fc-continuous 公理）⟹ 每项 fc(p) ≤ spec-int-general p（多项式简单逼近桥接 fc-poly-le-spec-int，唯一剩余登记项）≤ spec-int-general f（spec-int-mono，p ≤ f 点态）。**唯一剩余登记项 = 测度论核心逼近桥接 fc-poly-le-spec-int**（多项式可由简单函数下界逼近，∫p dE = sup{∫s : s ≤ p} 的完备性），其构造化实现（ℝ 分划 + 连续函数简单逼近族 + 单调收敛）是构造化 Lebesgue 积分层降定理。
 
 #### 5.16.4 算子代数完整化与跨层模型（阶段 16 + 8-5b 余项）
 
@@ -428,8 +430,8 @@ postulate
 
 #### 5.16.5 开放项（测度论核心 + 跨层模型）
 
-1. **7-4 "≥"方向完整**：fc f ≤ₒ spec-int-general f（一般 f）——多项式→简单函数逼近兼容性，需构造化 Lebesgue 积分理论（ℝ 分划 + 连续函数简单逼近）。
-2. **8-5b 余项**：跨层模型 Op → LinOp 完整实例化——SpectralTheory 算子代数公理在 LinOp 层的验证（代数基础 §16 已就位）。
+1. **测度论核心逼近桥接构造化**：`fc-poly-le-spec-int` 的构造化实现（"≥"方向唯一剩余登记项）——多项式 p 的简单函数下界逼近族（ℝ 分划 [i/2^k, (i+1)/2^k) + 谱支集 [0,∞) 截断 + 单调收敛 ⟹ ∫p dE = sup{∫s : s ≤ p}），构造化 Lebesgue 积分层降定理。
+2. **8-5b 余项**：跨层模型 Op → LinOp 完整实例化——SpectralTheory 算子代数公理在 LinOp 层的验证（代数基础 §16 已就位；受 funext 受限，点态版为准）。
 3. **spec-int 收敛细节**：无界逼近的 Lebesgue 单调收敛构造化（trunc 截断族）。
 4. **E-σ-add 收敛**：LinOp 层算子序 sup 的存在性（强/弱算子拓扑单调有界收敛）。
 

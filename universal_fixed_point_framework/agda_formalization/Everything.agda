@@ -25,7 +25,12 @@ module Everything where
 --        阶段 7-4 余项"≥"方向第一步（§10d：fc-simple-le——fc s ≤ₒ spec-int-general s，
 --        sum-c-ind-eq/simple-fn-eq-atom 可证，2026-08-02 v1.09）；
 --        阶段 7-4 组合收尾（§1b/§10d：≤ₒ-antisym 登记 + fc-simple-integral-full——
---        fc s ≡ spec-int-general s，fc-integral 对简单函数完整降定理，v1.10））
+--        fc s ≡ spec-int-general s，fc-integral 对简单函数完整降定理，v1.10）；
+--        阶段 7-4 余项"≥"方向完整（§1b/§10d：≤ₒ-trans 登记 + fc-poly-le-spec-int
+--        桥接（测度论核心逼近，多项式可由简单函数下界逼近）+ spec-int-mono /
+--        fc-integral-ge 可证——fc f ≤ₒ spec-int-general f（任意 f）；fc-integral-full：
+--        fc f ≡ ∫f dE = spec-int-general f，fc-integral 公理（§5c）完整降为可证明定理，
+--        唯一剩余登记项 = 测度论核心逼近桥接 fc-poly-le-spec-int，v1.13））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

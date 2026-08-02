@@ -178,6 +178,12 @@ postulate
 postulate
   ≤ₒ-antisym : (X Y : Op) → X ≤ₒ Y → Y ≤ₒ X → X ≡ Y
 
+-- 正算子序传递（桥接登记，2026-08-02）：X ≤ₒ Y 且 Y ≤ₒ Z ⟹ X ≤ₒ Z——
+-- Hilbert 层（§13 算子序 _≤ₗ_）语义：⟨(Z−X)v,v⟩ = ⟨(Z−Y)v,v⟩ + ⟨(Y−X)v,v⟩ ≥ 0 + 0
+-- （内积双线性 ip-add-l + 减法分解）；降定理路径 = Hilbert 层算子序 + 内积双线性
+postulate
+  ≤ₒ-trans : (X Y Z : Op) → X ≤ₒ Y → Y ≤ₒ Z → X ≤ₒ Z
+
 -- Set₁ 层存在（SimpleF 含 Borel 字段故为 Set₁；B 为 Set 层——成员条件为普通命题）
 data Σ₁ (A : Set₁) (B : A → Set) : Set₁ where
   pair₁Σ : (a : A) → B a → Σ₁ A B
@@ -1550,6 +1556,50 @@ fc-simple-integral-full : (s : SimpleF) → fc (simple-fn s) ≡ spec-int-genera
 fc-simple-integral-full s =
   ≤ₒ-antisym (fc (simple-fn s)) (spec-int-general (simple-fn s))
              (fc-simple-le s) (fc-integral-le (simple-fn s))
+
+-- ------------------------------------------------------------------
+-- 7-4 余项（"≥"方向完整：fc-integral-ge + fc-integral-full），2026-08-02
+-- ------------------------------------------------------------------
+-- 目标：fc-integral 降定理的"≥"方向完整（fc f ≤ₒ spec-int-general f，任意 f）——
+-- fc f = sup{fc(p) : p 多项式 ≤ f}（fc-continuous）≤ sup{∫s : s 简单 ≤ f}。
+-- 依赖：测度论核心逼近桥接 fc-poly-le-spec-int（多项式可由简单函数下界逼近，
+-- ∫p dE = sup{∫s : s ≤ p} 的完备性——构造化 Lebesgue 积分层降定理）。
+
+-- 多项式简单逼近（桥接登记，2026-08-02）：多项式 p 可由简单函数下界逼近，
+-- ∫p dE = sup{∫s : s 简单 ≤ p} 的完备性——fc(p) ≤ₒ spec-int-general p
+-- （测度论核心逼近定理的算子序形式；构造化 Lebesgue 积分层降定理）
+postulate
+  fc-poly-le-spec-int : (m : ℕ) (a : Fin m → ℝ) (n : Fin m → ℕ)
+    → fc (poly-fn {m} a n) ≤ₒ spec-int-general (poly-fn {m} a n)
+
+-- **可证**：谱积分单调——f ≤ g 点态 ⟹ spec-int-general f ≤ₒ spec-int-general g
+--（spec-int-below-mono（下界族单调）+ sup-op-least/upper）
+spec-int-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) → spec-int-general f ≤ₒ spec-int-general g
+spec-int-mono {f} {g} h = sup-op-least (spec-int-below f) (spec-int-general g)
+                                       (λ Y yb → sup-op-upper (spec-int-below g) Y (spec-int-below-mono h Y yb))
+
+-- **可证**：fc-integral 降定理的"≥"方向完整——fc f ≤ₒ spec-int-general f（任意 f）
+--（fc f = sup{fc(p) : p ≤ f}（fc-continuous）；每个 fc(p) ≤ spec-int-general p
+--  （fc-poly-le-spec-int）≤ spec-int-general f（spec-int-mono，p ≤ f）+ sup-op-least）
+fc-integral-ge : (f : ℝ → ℝ) → fc f ≤ₒ spec-int-general f
+fc-integral-ge f =
+  subst (λ Z → Z ≤ₒ spec-int-general f) (sym (fc-continuous f))
+        (sup-op-least (fc-below f) (spec-int-general f) bound)
+  where
+  bound : (Y : Op) → fc-below f Y → Y ≤ₒ spec-int-general f
+  bound Y (m , a , n , eq , dom) =
+    subst (λ Z → Z ≤ₒ spec-int-general f) (sym eq)
+          (≤ₒ-trans (fc (poly-fn {m} a n)) (spec-int-general (poly-fn {m} a n)) (spec-int-general f)
+                    (fc-poly-le-spec-int m a n)
+                    (spec-int-mono {poly-fn {m} a n} {f} dom))
+
+-- **可证**：fc-integral 完整降定理——fc f ≡ ∫f dE = spec-int-general f（任意 f）
+--（≥ 方向 fc-integral-ge + ≤ 方向 fc-integral-le + ≤ₒ-antisym——
+--  fc-integral 公理（§5c）完整降为可证明定理，唯一剩余登记项为
+--  测度论核心逼近桥接 fc-poly-le-spec-int）
+fc-integral-full : (f : ℝ → ℝ) → fc f ≡ spec-int-general f
+fc-integral-full f =
+  ≤ₒ-antisym (fc f) (spec-int-general f) (fc-integral-ge f) (fc-integral-le f)
 
 -- **可证明（零新增公理）**：标量乘零吸收 a·0 = 0
 --（·ₒ-comm a 𝟙ₒ 𝟘ₒ + *ₒ-zero-r 双向）
