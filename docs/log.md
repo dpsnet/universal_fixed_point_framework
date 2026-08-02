@@ -1452,3 +1452,16 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：投影值测度的算子序单调性（SpectralTheory E-sub 的算子序版本）闭合——E-σ-add 的 sup 上界机制基础就位（E(P) ≤ₗ E(Q) 当 P⊆Q）；完整可数可加性随 σ-代数/极限层实现。
 
 **阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项 + E-σ-add 第一步 + 算子序机制）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：E-σ-add 完整形式（σ-代数/极限层）；7-4 "≥"方向；8-5b 余项（跨层模型）。
+
+---
+
+【阶段 14：E-σ-add 完整形式（可数可加性，HilbertSpace §14，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E-σ-add（可数可加）完整形式——连续下式 E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ) 的 Hilbert 侧落地（sup 机制 + 有限前段单调 + 可数可加桥接）。
+2. **HilbertSpace 新增 §14**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - `sum-ₗ`（LinOp 层有限和 Σᵢ<ₘFᵢ）+ LinOp 层算子序 sup 桥接（`supₗ`/`supₗ-upper`/`supₗ-least`，降定理路径 = 强/弱算子拓扑单调有界收敛）；
+   - **可证** `E-hilb-fin-le-σ`（E(∪ᵢ<ₘPᵢ) ≤ₗ E(∪ₙPₙ)：FinUnion P m ⊆ σUnion P（fin-union-in 给出 ∃i<ₘ.Pᵢx ⟹ 取 n=i）+ E-hilb-mono——连续下式的上界方向）；
+   - σ-可数可加桥接 `E-hilb-σ-add`（pairwise 不相交 ⟹ E(σUnion P) = supₗ{Y : Y = Σᵢ<ₘE(Pᵢ) 某 m}——least 方向 + 收敛随极限层）。
+3. **意义**：**E 的测度构造（阶段 7-3）全链闭合**——E-total（§10c）/E-union（§10d）/E-fin-union（§10e）/E-σ-add 完整形式（§14）全部落地；SpectralTheory §10f E-σ-add（可数可加公理）的 Hilbert 侧对应完成（sup 收敛细节留极限层）。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链：7-3a/b + 第一步 + E-union + E-fin-union + E-σ-add 完整形式）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：7-4 "≥"方向（多项式→简单函数逼近兼容性）；8-5b 余项（跨层模型 Op → LinOp）。

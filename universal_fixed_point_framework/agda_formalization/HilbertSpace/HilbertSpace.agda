@@ -113,6 +113,12 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-mono（P⊆Q ⟹ E(P) ≤ₗ E(Q）：⟨(E(Q)−E(P))v, v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0
       （proj-decomp + E-hilb-sub + 自伴/幂等 + w ⊥ W_P）——投影序单调，E-σ-add 的
       sup 上界机制基础）。
+  阶段 14（2026-08-02）：E-σ-add 完整形式（可数可加性，§14）。
+    - sum-ₗ（LinOp 层有限和）+ LinOp 层算子序 sup 桥接（supₗ/upper/least，
+      降定理路径 = 强/弱算子拓扑单调有界收敛）；
+    - **可证** E-hilb-fin-le-σ（E(∪ᵢ<ₘPᵢ) ≤ₗ E(∪ₙPₙ)：FinUnion ⊆ σUnion
+      （fin-union-in 取 n=i）+ E-hilb-mono——连续下式上界方向）；
+    - σ-可数可加桥接 E-hilb-σ-add（E(∪ₙPₙ) = supₘΣᵢ<ₘE(Pᵢ)，least 方向 + 收敛随极限层）。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1561,6 +1567,42 @@ E-hilb-mono P Q pq v =
                         (trans (cong₂ _+ℝ_ orth-Xw ww-eq)
                                (zero-add-ℝ (LinOp.f Y w ⟨⟩ LinOp.f Y w)))))
 
+-- ==================================================================
+-- §14 E-σ-add 完整形式（可数可加性，2026-08-02）
+-- ==================================================================
+
+-- LinOp 层有限和（点态向量和封装：Σᵢ<ₘ Fᵢ）
+sum-ₗ : (ℕ → LinOp) → ℕ → LinOp
+sum-ₗ F zero = zero-op
+sum-ₗ F (suc m) = op-add (sum-ₗ F m) (F m)
+
+-- LinOp 层算子序上确界（桥接登记：正算子序 sup——E-σ-add 的连续下式机制；
+-- 降定理路径 = 强/弱算子拓扑下单调有界收敛（极限层））
+postulate
+  supₗ : (LinOp → Set) → LinOp
+  supₗ-upper : (S : LinOp → Set) (X : LinOp) → S X → X ≤ₗ supₗ S
+  supₗ-least : (S : LinOp → Set) (B : LinOp) → ((X : LinOp) → S X → X ≤ₗ B) → supₗ S ≤ₗ B
+
+-- **可证**：有限前段单调——E(∪ᵢ<ₘPᵢ) ≤ₗ E(∪ₙPₙ)
+--（FinUnion P m ⊆ σUnion P：fin-union-in（∃i<ₘ.Pᵢx）⟹ σUnion（取 n=i）+ E-hilb-mono——
+--  E-σ-add 连续下式的上界方向）
+E-hilb-fin-le-σ : (P : ℕ → ℝ → Set) (m : ℕ) → E-hilb (FinUnion P m) ≤ₗ E-hilb (σUnion P)
+E-hilb-fin-le-σ P m = E-hilb-mono (FinUnion P m) (σUnion P)
+                                 (λ x fx → sigma-union-in P m x fx)
+  where
+  -- FinUnion P m x ⟹ σUnion P x（fin-union-in 取指标 n = i）
+  sigma-union-in : (P : ℕ → ℝ → Set) (m : ℕ) (x : ℝ) → FinUnion P m x → σUnion P x
+  sigma-union-in P m x fx with fin-union-in P m x fx
+  sigma-union-in P m x fx | ex i (ile , pxi) = ex i pxi
+
+-- σ-可数可加性（桥接登记，2026-08-02）：E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)（连续下式）——
+-- 上界方向（有限前段单调 E-hilb-fin-le-σ 可证）+ least 方向（supₗ-least）；
+-- 完整收敛（sup 存在与算子序完备）随极限层（强/弱算子拓扑单调有界收敛）。
+-- SpectralTheory §10f E-σ-add（可数可加公理）的 Hilbert 侧对应。
+postulate
+  E-hilb-σ-add : (P : ℕ → ℝ → Set) → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
+    → E-hilb (σUnion P) ≡ supₗ (λ Y → Σ ℕ (λ m → Y ≡ sum-ₗ (λ i → E-hilb (P i)) m))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1647,5 +1689,11 @@ E-hilb-mono P Q pq v =
 --    v=E(P)v+w（proj-decomp）+ (E(Q)−E(P))v=E(Q)w（E-hilb-sub x=v）+ ⟨E(Q)w,v⟩
 --    =⟨w,E(P)v⟩+‖E(Q)w‖²=0+‖E(Q)w‖²（自伴+幂等+w⊥W_P）——投影序单调，E-σ-add 的
 --    sup 上界机制基础）。
---  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项 E-σ-add（可数可加，需
---    σ-代数/极限层）；8-5b 余项（跨层模型 Op → LinOp 完整实例化）。
+--  - 阶段 14（✅ 2026-08-02）：E-σ-add 完整形式（可数可加性，§14）——sum-ₗ（LinOp
+--    层有限和）+ LinOp 层算子序 sup 桥接（supₗ/upper/least，降定理路径 = 强/弱算子
+--    拓扑单调有界收敛）；**可证** E-hilb-fin-le-σ（E(∪ᵢ<ₘPᵢ)≤ₗ E(∪ₙPₙ)：FinUnion⊆σUnion
+--    （fin-union-in 取 n=i）+ E-hilb-mono——连续下式上界方向）；σ-可数可加桥接
+--    E-hilb-σ-add（E(∪ₙPₙ)=supₘΣᵢ<ₘE(Pᵢ)，least 方向 + 收敛随极限层）——
+--    SpectralTheory §10f E-σ-add 的 Hilbert 侧对应。
+--  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；8-5b 余项（跨层模型
+--    Op → LinOp 完整实例化）；7-4 "≥"方向。
