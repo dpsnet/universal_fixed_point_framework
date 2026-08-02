@@ -1178,3 +1178,15 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：无界非负可测函数的积分结构完整成型——积分单调性/下界性/截断封闭性全部可证（零新增公理），Lebesgue 单调收敛以阶段 7-1 桥接特化文档化；阶段 7-2 闭合，为阶段 7-3（E 的测度构造，需 Hilbert 空间层）与函数演算 fc-integral 降定理铺路。
 
 **阶段 7 状态**：阶段 2 完成（可测函数层 + Lebesgue 积分，零新增公理）。待推进：阶段 7-3（E 的测度构造，需 Hilbert 空间层完备性）；阶段 8 三角不等式（需 √）。
+
+---
+
+【阶段 8-2b：分析层 √ 扩展 + 范数公理落地（2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-2 收官**：三角不等式（C-S 推论）+ 范数公理（正性/齐次/三角/正定性）落地——兑现"范数公理依赖 Cauchy-Schwarz"的承诺（C-S 的 norm 形式 cs-norm 是三角不等式的枢纽）。
+2. **DHStructural 分析层扩展 √**（与 exp/log 同层登记基础假设，降定理路径 = Dedekind 完备性层）：`sqrt`/`sqrt-nonneg`/`sq-sqrt`（(√x)²=x）/`sqrt-sq`（√(x²)=x，x≥0）/`sqrt-mono`/`sqrt-zero`/`sqrt-mul`；**可证** `sq-nonneg-ℝ`（a²≥0，三分律 + (-a)²=a²）、`le-sqrt-sq`（a≤√(a²)）、`abs`（|a|:=√(a²)，可证定义）、`sum-sq-ℝ`（(a+b)²=a²+2ab+b²）、`two-add-eq`/`sum-add-≤`（三角不等式重排）。
+3. **HilbertSpace 新增 §4 范数公理**（全部可证，√ 侧一条基础假设）：`norm`（‖v‖:=√⟨v,v⟩）+ `norm-nonneg`（正性）、`cs-norm`（⟨x,y⟩≤‖x‖‖y‖，C-S 范数形式：le-sqrt-sq + sqrt-mono + sqrt-mul）、`norm-sq-add`（‖x+y‖² 展开）、`norm-sq-norm`（‖v‖²=‖v‖·‖v‖）、`norm-sum-sq`（(‖x‖+‖y‖)² 展开）、`norm-sq-tri`（‖x+y‖²≤(‖x‖+‖y‖)²：sum-add-≤ + cs-norm + two-add-eq + norm-sum-sq）、`sum-nonneg`、`norm-tri`（三角不等式：sqrt-mono + sqrt-sq）、`norm-zero`/`norm-def`（正定性）、`norm-scalar`（齐次 ‖a·v‖=|a|·‖v‖，sqrt-mul + ‖a·v‖²=a²‖v‖²）。
+4. **排坑**：同级算子括号 ×4（cs-norm/sum-nonneg/norm-tri/norm-sq-tri RHS 整体再括）；subst 方向 ×4（pos-sq/sq-nonneg 分支 3/le-sqrt-sq 分支 2 需 direct，norm-sq-tri 中间 subst 谓词侧 RHS 传递）；sum-sq-ℝ 与 two-add-eq 的 +-assoc 需 sym（重排方向）。
+5. **意义**：Hilbert 空间层的范数结构完整落地——C-S ⟹ cs-norm ⟹ 三角不等式的降定理链闭合；阶段 8-3（有界线性算子 + 算子范数 sup + √）的 √ 前置就位；SpectralTheory §12 C*-范数公理（‖_‖/norm-pos/norm-tri/norm-submul 等）降定理路径的 Hilbert 侧地基完成（§15 审计 H 类）。
+
+**阶段 8 状态**：阶段 2/2b 完成（Cauchy-Schwarz + 范数公理落地，零新增公理 + √ 一条基础假设）。待推进：阶段 8-3（有界线性算子 + 算子范数 sup + √）；阶段 7-3（E 的测度构造，需 Hilbert 空间层完备性）。

@@ -1043,6 +1043,104 @@ min-mono-r a b c hbc =
   min-glb (min-ℝ a b) a c (min-≤-l a b) (≤-trans-ℝ (min-≤-r a b) hbc)
 
 -- ==================================================================
+-- 平方根（分析层扩展，2026-08-02）
+-- 用途：Hilbert 空间层阶段 8-2b 收官——norm := √(‖·‖²)（范数公理落地）、
+--   三角不等式（C-S 推论）与阶段 8-3 有界算子范数（sup + √）的前提。
+-- 平方根为标准分析结构，与 exp/log 同层登记基础假设；
+-- 降定理路径：Dedekind 完备性层（√x = sup{y : y² ≤ x} 构造）。
+-- ==================================================================
+postulate
+  sqrt : ℝ → ℝ
+  -- 非负性：0 ≤ x ⟹ 0 ≤ √x
+  sqrt-nonneg : (x : ℝ) → zeroℝ ≤ℝ x → zeroℝ ≤ℝ sqrt x
+  -- (√x)² = x（定义性：x ≥ 0）
+  sq-sqrt : (x : ℝ) → zeroℝ ≤ℝ x → (sqrt x) *ℝ (sqrt x) ≡ x
+  -- √(x²) = x（x ≥ 0）
+  sqrt-sq : (x : ℝ) → zeroℝ ≤ℝ x → sqrt (x *ℝ x) ≡ x
+  -- 单调：0 ≤ x ≤ y ⟹ √x ≤ √y
+  sqrt-mono : {x y : ℝ} → zeroℝ ≤ℝ x → x ≤ℝ y → sqrt x ≤ℝ sqrt y
+  -- √0 = 0
+  sqrt-zero : sqrt zeroℝ ≡ zeroℝ
+  -- 乘法性：0 ≤ x、0 ≤ y ⟹ √(xy) = √x·√y
+  sqrt-mul : (x y : ℝ) → zeroℝ ≤ℝ x → zeroℝ ≤ℝ y → sqrt (x *ℝ y) ≡ (sqrt x) *ℝ (sqrt y)
+
+-- 0 < a ⟹ 0 ≤ a²（乘保序）
+pos-sq : (a : ℝ) → zeroℝ <ℝ a → zeroℝ ≤ℝ (a *ℝ a)
+pos-sq a ha =
+  subst (λ z → z ≤ℝ (a *ℝ a)) (*-zero-l-ℝ a)
+        (*-≤-mono-ℝ {a = zeroℝ} {b = a} {c = a} (<-≤-ℝ ha) (<-≤-ℝ ha))
+
+-- a² ≥ 0（三分律：0<a 直接；a=0 平凡；a<0 经 (-a)² = a²）
+sq-nonneg-ℝ : (a : ℝ) → zeroℝ ≤ℝ (a *ℝ a)
+sq-nonneg-ℝ a with trichotomy-ℝ zeroℝ a
+sq-nonneg-ℝ a | inj₁ 0<a = pos-sq a 0<a
+sq-nonneg-ℝ a | inj₂ (inj₁ 0=a) =
+  subst (λ z → zeroℝ ≤ℝ z)
+        (sym (trans (sym (cong₂ _*ℝ_ 0=a 0=a)) (*-zero-ℝ zeroℝ)))
+        (refl-≤ℝ {zeroℝ})
+sq-nonneg-ℝ a | inj₂ (inj₂ a<0) =
+  subst (λ z → zeroℝ ≤ℝ z) (neg-neg-mul-ℝ a a)
+        (pos-sq (negℝ a) 0<neg-a)
+  where
+  -- a < 0 ⟹ 0 < -a（取负保序反转）
+  0<neg-a : zeroℝ <ℝ negℝ a
+  0<neg-a = subst (λ z → z <ℝ negℝ a) neg-zero (neg-<-ℝ a<0)
+
+-- a ≤ √(a²)（三分律：a<0 经 √(a²) ≥ 0；a≥0 经 sqrt-sq）
+le-sqrt-sq : (a : ℝ) → a ≤ℝ sqrt (a *ℝ a)
+le-sqrt-sq a with trichotomy-ℝ zeroℝ a
+le-sqrt-sq a | inj₁ 0<a =
+  subst (λ z → a ≤ℝ z) (sym (sqrt-sq a (<-≤-ℝ 0<a))) (refl-≤ℝ {a})
+le-sqrt-sq a | inj₂ (inj₁ 0=a) =
+  subst (λ z → a ≤ℝ z) (sym (trans (cong sqrt (trans (sym (cong₂ _*ℝ_ 0=a 0=a)) (*-zero-ℝ zeroℝ)))
+                                    sqrt-zero))
+        (subst (λ z → z ≤ℝ zeroℝ) 0=a (refl-≤ℝ {zeroℝ}))
+le-sqrt-sq a | inj₂ (inj₂ a<0) =
+  <-≤-ℝ (lt-≤-trans-ℝ a<0 (sqrt-nonneg (a *ℝ a) (sq-nonneg-ℝ a)))
+
+-- 绝对值（可证定义）：|a| := √(a²)
+abs : ℝ → ℝ
+abs a = sqrt (a *ℝ a)
+
+-- (a+b)² = a² + 2ab + b²（分配律 + 重排）
+sum-sq-ℝ : (a b : ℝ) → (a +ℝ b) *ℝ (a +ℝ b) ≡ ((a *ℝ a) +ℝ (natℝ 2 *ℝ (a *ℝ b))) +ℝ (b *ℝ b)
+sum-sq-ℝ a b = trans expand regroup
+  where
+  -- (a+b)(a+b) = (a·a + a·b) + (a·b + b·b)
+  expand : (a +ℝ b) *ℝ (a +ℝ b) ≡ ((a *ℝ a) +ℝ (a *ℝ b)) +ℝ ((a *ℝ b) +ℝ (b *ℝ b))
+  expand =
+    trans (distrib-ℝ (a +ℝ b) a b)
+          (cong₂ _+ℝ_
+                 (trans (*-comm-ℝ (a +ℝ b) a) (distrib-ℝ a a b))
+                 (trans (*-comm-ℝ (a +ℝ b) b)
+                        (trans (distrib-ℝ b a b)
+                               (cong₂ _+ℝ_ (*-comm-ℝ b a) refl))))
+  -- 重排：a·b + a·b = 2ab（two-mul-add 反向 + 结合）
+  regroup : ((a *ℝ a) +ℝ (a *ℝ b)) +ℝ ((a *ℝ b) +ℝ (b *ℝ b))
+    ≡ ((a *ℝ a) +ℝ (natℝ 2 *ℝ (a *ℝ b))) +ℝ (b *ℝ b)
+  regroup =
+    trans (+-assoc-ℝ (a *ℝ a) (a *ℝ b) ((a *ℝ b) +ℝ (b *ℝ b)))
+          (trans (cong (λ u → (a *ℝ a) +ℝ u)
+                       (sym (+-assoc-ℝ (a *ℝ b) (a *ℝ b) (b *ℝ b))))
+                 (trans (cong (λ u → (a *ℝ a) +ℝ u)
+                              (cong₂ _+ℝ_ (sym (two-mul-add (a *ℝ b))) refl))
+                        (sym (+-assoc-ℝ (a *ℝ a) (natℝ 2 *ℝ (a *ℝ b)) (b *ℝ b)))))
+
+-- (A+M) + (M+B) = A + 2M + B（三角不等式重排）
+two-add-eq : (A M B : ℝ) → (A +ℝ M) +ℝ (M +ℝ B) ≡ (A +ℝ (natℝ 2 *ℝ M)) +ℝ B
+two-add-eq A M B =
+  trans (+-assoc-ℝ A M (M +ℝ B))
+        (trans (cong (λ u → A +ℝ u) (sym (+-assoc-ℝ M M B)))
+               (trans (cong (λ u → A +ℝ u) (cong₂ _+ℝ_ (sym (two-mul-add M)) refl))
+                      (sym (+-assoc-ℝ A (natℝ 2 *ℝ M) B))))
+
+-- p ≤ M ⟹ (A+p)+(p+B) ≤ (A+M)+(M+B)（≤-+-mono 逐项）
+sum-add-≤ : (A p B M : ℝ) → p ≤ℝ M → ((A +ℝ p) +ℝ (p +ℝ B)) ≤ℝ ((A +ℝ M) +ℝ (M +ℝ B))
+sum-add-≤ A p B M hpm =
+  ≤-+-mono-ℝ (≤-+-mono-ℝ (refl-≤ℝ {A}) hpm)
+             (≤-+-mono-ℝ hpm (refl-≤ℝ {B}))
+
+-- ==================================================================
 -- B8 two-exp-add-exp-lt-one 辅助（T3 阶段 4，2026-07-31）
 -- 目标：d ≥ 1 ⟹ 2e^{-d²} + e^{-d(3+d)} < 1
 -- 策略：d² ≥ 1 ⟹ e^{-d²} ≤ e^{-1} < 37/100；d(3+d) ≥ 4 ⟹ e^{-d(3+d)} ≤ e^{-4} < 1/16
