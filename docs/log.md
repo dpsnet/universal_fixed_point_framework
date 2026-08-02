@@ -1366,3 +1366,18 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：E 的有限可加性构造侧闭合——E-σ-add（可数可加）的有限版基础（SpectralTheory E-partition-add 对应）；可数版需 σ-代数/极限层（可数并 + 算子 sup 收敛），留待测度论完整层。
 
 **阶段 7 状态**：7-3a/7-3b + 7-3 第一步 + E-union + E-fin-union 全部完成。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；8-6b 完整降定理；8-5b（强连续半群）。
+
+---
+
+【阶段 7-5：经典扩展——indicator 点态性质（SpectralTheory §5g，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7 拆分第 5 项**：经典扩展——indicator 点态性质（1_P x = 1 ⟺ P x，排中律），indicator-bridge（E(P) = fc(1_P)）点态化的决策基础。
+2. **SpectralTheory §5g 扩展**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - 经典扩展基础假设 `classical`（排中律 {A : Set} → A ⊎ (A→⊥)，降定理路径 = 经典逻辑层）；
+   - **`indicator` 由 postulate 降为定义**（1_P x = if P x then 1 else 0，classical 决策）——原 postulate 块删除；
+   - **可证** `one≢zero-ℝ`/`zero≢one-ℝ`（0<1 经等式 subst 的严格序矛盾，irreflexive-ℝ）、`indicator-pos`（P x ⟹ 1_P x=1）、`indicator-zero`（¬P x ⟹ 1_P x=0）、`indicator-eq-one-iff`（1_P x=1 ⟺ P x）——**点态性质完整闭合**；
+   - indicator-bridge（E(P) = fc(1_P)）保持（测度论层降定理），intertwine-imp-spectral 等下游不受影响。
+3. **排坑**：`_≢_`（Sp ⊥）与 `⊥`（DHStructural）类型分叉（one≢zero-ℝ 显式返回 DHStructural ⊥）；with 抽象下 indicator 已约简（indicator-eq-one-iff 的 inj₂ 分支改用 `zero≢one-ℝ h` 直接矛盾，而非转 indicator-zero）。
+4. **意义**：蓝图阶段 7 第 5 项（经典扩展）兑现——indicator 从"登记对象"变为"可判定定义 + 点态引理可证"，为 indicator-bridge 点态化（测度论层）铺路；Fuglede 引理 1 的经典扩展依赖完整落地。
+
+**阶段 7 状态**：7-1/7-2（截断 + 可测函数积分）✅、7-3（E 构造：7-3a/b + 第一步 + E-union + E-fin-union）✅、7-5（经典扩展）✅。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；7-4（fc = ∫ 积分实现）；8-6b 完整降定理；8-5b（强连续半群，跨层实例化）。

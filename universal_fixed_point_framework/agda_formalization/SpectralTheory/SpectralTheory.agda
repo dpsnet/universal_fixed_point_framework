@@ -760,12 +760,44 @@ X-comm-fc-continuous {X} h f =
 -- f 定义），故 X·A = A·X ⟹ X 与 fc(1_P) 交换；再经指示桥接回 E(P)。
 -- 依赖补充：`indicator`（经典扩展对象）+ `indicator-bridge`（定义性桥接，
 -- 降定理路径 = 测度论/Borel 函数演算层：1_P 点态 = 1 ⟺ P x）。
+-- 经典扩展（阶段 7-5，2026-08-02）：排中律为基础假设，indicator 由 postulate 降为
+-- **定义**，点态性质（1_P x = 1 ⟺ P x）**可证**——indicator-bridge 点态化的决策基础。
+
+-- 经典扩展（基础假设：排中律——构造性框架外扩，indicator 点态性质的决策基础；
+-- 降定理路径 = 经典逻辑层）
+postulate
+  classical : {A : Set} → A ⊎ (A → ⊥)
 
 -- 指示函数（经典扩展对象）：P 的特征函数 1_P : ℝ → ℝ
---（构造性上 1_P 需可判定 P（排中律），登记为经典扩展层假设；点态性质
---  1_P x = 1 ⟺ P x 当前证明仅用桥接，未显式登记，经典逻辑层补全）
-postulate
-  indicator : Borel → (ℝ → ℝ)
+--（1_P x = if P x then 1 else 0——排中律 classical 提供决策；原 postulate 降为定义）
+indicator : Borel → (ℝ → ℝ)
+indicator P x with classical {P x}
+indicator P x | inj₁ p = oneℝ
+indicator P x | inj₂ np = zeroℝ
+
+-- **可证**：oneℝ ≢ zeroℝ（0 < 1 经等式 subst 的严格序矛盾；用 DHStructural ⊥ 避免 _≢_ 的类型分叉）
+one≢zero-ℝ : (oneℝ ≡ zeroℝ) → ⊥
+one≢zero-ℝ eq = irreflexive-ℝ (subst (λ z → zeroℝ <ℝ z) eq zero-lt-one-ℝ)
+
+-- **可证**：zeroℝ ≢ oneℝ（对称方向：1 经等式 subst 的严格序矛盾）
+zero≢one-ℝ : (zeroℝ ≡ oneℝ) → ⊥
+zero≢one-ℝ eq = irreflexive-ℝ (subst (λ z → z <ℝ oneℝ) eq zero-lt-one-ℝ)
+
+-- **可证**：指示函数点态性质——1_P x = 1 ⟺ P x（排中律分情形，阶段 7-5 核心）
+indicator-pos : (P : Borel) (x : ℝ) → P x → indicator P x ≡ oneℝ
+indicator-pos P x p with classical {P x}
+indicator-pos P x p | inj₁ p' = refl
+indicator-pos P x p | inj₂ np' = ⊥-elim (np' p)
+
+indicator-zero : (P : Borel) (x : ℝ) → (P x → ⊥) → indicator P x ≡ zeroℝ
+indicator-zero P x np with classical {P x}
+indicator-zero P x np | inj₁ p = ⊥-elim (np p)
+indicator-zero P x np | inj₂ np' = refl
+
+indicator-eq-one-iff : (P : Borel) (x : ℝ) → indicator P x ≡ oneℝ → P x
+indicator-eq-one-iff P x h with classical {P x}
+indicator-eq-one-iff P x h | inj₁ p = p
+indicator-eq-one-iff P x h | inj₂ np' = ⊥-elim (zero≢one-ℝ h)
 
 -- 指示桥接（定义性公理）：E(P) = fc(1_P)——谱测度 = 指示函数的函数演算
 --（Borel 函数演算的基本事实：E(P) = ∫1_P dE；测度论层完整实现时降为定理）
