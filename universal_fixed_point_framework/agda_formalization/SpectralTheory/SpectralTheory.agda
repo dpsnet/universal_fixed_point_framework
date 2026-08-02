@@ -269,6 +269,55 @@ postulate
   spec-int-trunc-conv : (f : ℝ → ℝ)
     → spec-int-general f ≡ sup-op (λ Y → Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
 
+-- ==================================================================
+-- §1d 可测函数层与 Lebesgue 积分（测度论层阶段 2，2026-08-02）
+-- ==================================================================
+
+-- 可测函数（Borel = ℝ → Set 下可测性真空——吸收进 Borel 抽象；
+-- 非负性为非负可测函数 Lebesgue 积分 sup 构造所需）
+record MeasurableF : Set₁ where
+  field
+    f : ℝ → ℝ
+    nonneg : (x : ℝ) → zeroℝ ≤ℝ f x
+
+-- Lebesgue 积分：∫f dE = 简单函数下界的 sup（§1b 机制）
+lebesgue-int : MeasurableF → Op
+lebesgue-int m = spec-int-general (MeasurableF.f m)
+
+-- **可证**：积分单调——f ≤ g 逐点 ⟹ ∫f ≤ₒ ∫g（spec-int-below-mono + sup-op-least/upper）
+lebesgue-mono : {m m' : MeasurableF} → ((x : ℝ) → MeasurableF.f m x ≤ℝ MeasurableF.f m' x)
+  → lebesgue-int m ≤ₒ lebesgue-int m'
+lebesgue-mono {m} {m'} h =
+  sup-op-least (spec-int-below (MeasurableF.f m)) (lebesgue-int m')
+    (λ Y yb → sup-op-upper (spec-int-below (MeasurableF.f m')) Y
+                (spec-int-below-mono {f = MeasurableF.f m} {g = MeasurableF.f m'} h Y yb))
+
+-- **可证**：下界族成员 ≤ₒ 积分——简单函数下界（Y = ∫s，s ≤ m 逐点）⟹ ∫s ≤ₒ ∫m
+lebesgue-lower : (m : MeasurableF) (Y : Op) → spec-int-below (MeasurableF.f m) Y → Y ≤ₒ lebesgue-int m
+lebesgue-lower m Y yb = sup-op-upper (spec-int-below (MeasurableF.f m)) Y yb
+
+-- **可证**：截断保持非负性——0 ≤ f x 且 0 ≤ c ⟹ 0 ≤ min(f x, c)（min-glb）
+trunc-nonneg : (m : MeasurableF) {c : ℝ} → zeroℝ ≤ℝ c → (x : ℝ) → zeroℝ ≤ℝ trunc (MeasurableF.f m) c x
+trunc-nonneg m {c} hc x = min-glb zeroℝ (MeasurableF.f m x) c (MeasurableF.nonneg m x) hc
+
+-- **可证**：可测函数的截断仍为可测函数（非负性保持）
+trunc-m : (m : MeasurableF) (c : ℝ) → zeroℝ ≤ℝ c → MeasurableF
+trunc-m m c hc = record { f = trunc (MeasurableF.f m) c; nonneg = trunc-nonneg m {c = c} hc }
+
+-- **可证**：∫trunc(m,c) ≤ₒ ∫m（截断是下界：trunc-below-general 对 MeasurableF 的特化）
+trunc-lebesgue-below : (m : MeasurableF) (c : ℝ) (hc : zeroℝ ≤ℝ c) → lebesgue-int (trunc-m m c hc) ≤ₒ lebesgue-int m
+trunc-lebesgue-below m c hc = trunc-below-general (MeasurableF.f m) c
+
+-- **可证**：截断族单调（≤ₒ）：c ≤ d ⟹ ∫trunc(m,c) ≤ₒ ∫trunc(m,d)（trunc-mono-general 特化）
+trunc-lebesgue-mono : (m : MeasurableF) {c d : ℝ} (hc : zeroℝ ≤ℝ c) (hd : zeroℝ ≤ℝ d) → c ≤ℝ d
+  → lebesgue-int (trunc-m m c hc) ≤ₒ lebesgue-int (trunc-m m d hd)
+trunc-lebesgue-mono m {c} {d} hc hd hcd = trunc-mono-general (MeasurableF.f m) hcd
+
+-- Lebesgue 单调收敛（文档化）：对非负可测 m，上升截断族 ∫min(m,n) 单调（trunc-lebesgue-mono）
+-- 且收敛到 ∫m——supₙ ∫min(m,n) = ∫m 即 spec-int-trunc-conv 对 MeasurableF 的特化
+-- （截断族指数取 natℝ (suc n)：0 ≤ natℝ (suc n) 经 natℝ-pos-embed z<s + <-≤-ℝ；
+--  完整单调收敛 = 测度论完整层降定理路径）。
+
 -- 桥接公理（定义性）：
 --  - ∫id dE = spec-int-A：恒等函数的谱积分即谱表示（无界函数演算的桥接，
 --    与 spectral-rep-A 一致）

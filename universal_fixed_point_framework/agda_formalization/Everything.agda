@@ -15,7 +15,7 @@ module Everything where
 -- T3 ✅  谱定理层（SpectralTheory：谱测度/Fuglede/Hille-Yosida/函数演算，阶段 6 收官 v0.76——
 --        引理 1/2 核心、定理 3、corollary4-∞、corollary5、P1-linear-closure 全可证；
 --        公理纪律审计 §15：22 块 postulate 分类登记；
---        阶段 7-1 测度论层（ℝ 截断/min + 截断逼近，2026-08-02 v0.86））
+--        阶段 7-1/7-2 测度论层（ℝ 截断/min + 可测函数层 + Lebesgue 积分，2026-08-02 v0.86/87））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85）
 

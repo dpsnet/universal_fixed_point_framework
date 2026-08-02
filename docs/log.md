@@ -1163,3 +1163,18 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 5. **意义**：无界函数（恒等/exp/φ_t）的谱积分由"文档化承诺"转为可运行结构——截断族的逐点/算子序单调性全部可证，∫f = supₙ∫min(f,n) 收敛以明确桥接登记（Lebesgue 单调收敛，测度论完整层降定理路径）；阶段 7-1 闭合，为阶段 7-2（简单函数 → 可测函数积分）铺路。
 
 **阶段 7 状态**：阶段 1 完成（ℝ 截断/min + 截断逼近结构，零新增公理 + 一条收敛桥接）。待推进：阶段 7-2（简单函数 → 可测函数积分）、7-3（E 的测度构造）；阶段 8 三角不等式（需 √）。
+
+---
+
+【测度论层阶段 2：可测函数层 + Lebesgue 积分（2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-2 落地**：SimpleF（§1b 已有）→ 可测函数层 + Lebesgue 积分（sup 下界族，§1b 机制）。
+2. **SpectralTheory 新增 §1d 可测函数层**（零新增公理，一次编译通过）：
+   - `MeasurableF` record（f : ℝ → ℝ + 非负性 nonneg——Borel = ℝ → Set 下可测性真空，吸收进 Borel 抽象；非负性为非负可测函数 Lebesgue 积分 sup 构造所需）；
+   - `lebesgue-int`（∫f dE = 简单函数下界的 sup——即 §1b spec-int-general 机制）；
+   - **可证**：`lebesgue-mono`（f ≤ g 逐点 ⟹ ∫f ≤ₒ ∫g，spec-int-below-mono + sup-op-least/upper）、`lebesgue-lower`（下界族成员 ≤ₒ 积分——简单函数下界 Y = ∫s ⟹ ∫s ≤ₒ ∫m，sup-op-upper 特化）；
+   - **可证**：截断与可测层衔接——`trunc-nonneg`（0 ≤ f x 且 0 ≤ c ⟹ 0 ≤ min(f x, c)，min-glb）、`trunc-m`（可测函数的截断仍可测，非负保持）、`trunc-lebesgue-below`（∫trunc(m,c) ≤ₒ ∫m，trunc-below-general 特化）、`trunc-lebesgue-mono`（截断族 ≤ₒ 单调，trunc-mono-general 特化）；
+   - Lebesgue 单调收敛文档化：supₙ ∫min(m,n) = ∫m 即 spec-int-trunc-conv 对 MeasurableF 的特化（截断族指数取 natℝ (suc n)，0 ≤ natℝ (suc n) 经 natℝ-pos-embed z<s + <-≤-ℝ；完整单调收敛 = 测度论完整层降定理路径）。
+3. **意义**：无界非负可测函数的积分结构完整成型——积分单调性/下界性/截断封闭性全部可证（零新增公理），Lebesgue 单调收敛以阶段 7-1 桥接特化文档化；阶段 7-2 闭合，为阶段 7-3（E 的测度构造，需 Hilbert 空间层）与函数演算 fc-integral 降定理铺路。
+
+**阶段 7 状态**：阶段 2 完成（可测函数层 + Lebesgue 积分，零新增公理）。待推进：阶段 7-3（E 的测度构造，需 Hilbert 空间层完备性）；阶段 8 三角不等式（需 √）。

@@ -357,7 +357,7 @@ postulate
 
 **阶段 7（测度论/完备性层）拆分**：
 1. **ℝ 截断 + 无界函数逼近**：min-ℝ（DHStructural 扩展）+ 截断 f_n = min(f,n)；spec-int 对无界 f 的 sup 收敛细节落地。——✅ **已闭合（2026-08-02，SpectralTheory §1c）**：DHStructural min-ℝ（三分律定义，min-≤-l/r、min-glb、min-absorp-l、min-mono-r 全可证）+ trunc f c x := min(f x, c)（截断逐点性质 trunc-below-f/bounded/mono/absorp 可证）+ 算子序单调结构 trunc-below-general/trunc-mono-general 可证 + 收敛桥接 spec-int-trunc-conv（∫f = supₙ∫min(f,n)，Lebesgue 单调收敛，测度论完整层降定理，§15 审计 C 类登记）。
-2. **简单函数 → 可测函数积分**：SimpleF（§1b 已有）→ 可测函数层 + Lebesgue 积分（sup 下界族，§1b 机制）。
+2. **简单函数 → 可测函数积分**：SimpleF（§1b 已有）→ 可测函数层 + Lebesgue 积分（sup 下界族，§1b 机制）。——✅ **已闭合（2026-08-02，SpectralTheory §1d）**：MeasurableF record（f + 非负性，Borel = ℝ → Set 下可测性真空吸收进 Borel 抽象）+ lebesgue-int（∫f = 简单函数下界 sup）+ 可证 lebesgue-mono（逐点 ≤ ⟹ ≤ₒ 单调）/lebesgue-lower（下界族成员 ≤ₒ 积分）/trunc-nonneg/trunc-m（可测截断封闭）/trunc-lebesgue-below/trunc-lebesgue-mono；Lebesgue 单调收敛 = spec-int-trunc-conv 对 MeasurableF 特化（文档化）。
 3. **E 的测度构造**：投影值测度 E 从谱定理构造（Hilbert 空间层之上）——E-total/E-union/E-σ-add 降定理。
 4. **fc = ∫ 积分实现**：函数演算 f(A) = ∫f dE（Lebesgue 积分）——fc-integral/fc-* 桥接降定理。
 5. **经典扩展**：indicator 点态性质（1_P x = 1 ⟺ P x，排中律）——indicator-bridge 点态化。
