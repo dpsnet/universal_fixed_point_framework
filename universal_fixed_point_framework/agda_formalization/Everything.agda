@@ -21,7 +21,9 @@ module Everything where
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
 --        （norm-pos/tri/submul 从 sup 证明）v0.89/90；自伴 + C* 恒等 v0.91；
 --        算子拓扑层（ε-δ SOT/范数收敛 + 范数⟹强收敛）v0.92；完备性层 v0.93；
---        谱半径公式代数核心（幂范数上界 + 自伴 2^k 精确范数）v0.94）
+--        谱半径公式代数核心（幂范数上界 + 自伴 2^k 精确范数）v0.94；
+--        正交分解与投影算子（阶段 7-3a：Pythagorean + Subspace + 投影定理桥接 +
+--        proj-decomp/proj-idemp/proj-norm-le 可证）v0.95）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory

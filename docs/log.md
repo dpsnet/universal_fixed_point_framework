@@ -1280,3 +1280,48 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：谱半径公式两侧的代数核心全部落地（避开 ℕ 2^k 算术——iter-sq 迭代平方定义使归纳定义性闭合）；完整 Gelfand 公式（极限层）与 norm-contraction 实例化（谱论）留 8-6b + 阶段 7-3。
 
 **阶段 8 状态**：6a 完成（谱半径公式代数核心：r≤‖X‖ 与自伴 ‖X^{2^k}‖=‖X‖^{2^k} 可证）。待推进：8-6b（Gelfand 极限层 + 谱论）；8-5b（强连续半群）；阶段 7-3（E 的测度构造）。
+
+---
+
+【阶段 7-3a：正交分解与投影算子（HilbertSpace §10，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：谱定理 E 构造的投影组件——投影定理（完备性层之上的核心 Hilbert 空间定理）。
+2. **HilbertSpace 新增 §10**：
+   - **可证** `pythagorean`（⟨a,b⟩=0 ⟹ ‖a+b‖²=‖a‖²+‖b‖²，norm-sq-add + 正交归零）；
+   - `Subspace` record（闭子空间：mem + 代数闭包 add/scalar/zero-mem + 拓扑闭包 closed（Converges））；
+   - 投影桥接基础假设：`proj`/`proj-in`（Px∈W）/`proj-orth`（x−Px ⊥ W）/`proj-fixed`（x∈W ⟹ Px=x）——投影定理，降定理路径 = 极小化序列 + 完备性论证；
+   - **可证** `proj-decomp`（正交分解 x = Px + (x−Px)，向量代数链）、`proj-idemp`（幂等 P(Px)=Px，proj-fixed + proj-in）、**`proj-norm-le`**（非扩张 ‖Px‖≤‖x‖：‖Px‖² ≤ ‖Px‖²+‖x−Px‖² = ‖x‖²（Pythagorean 正交 + 分解）+ √）。
+3. **排坑**：Subspace 字段 zero 与 ℕ 构造子冲突（改名 zero-mem）；pythagorean 与 proj-norm-le 的 subst 方向 ×3（sym/direct）；hab 的 ip-sym 方向（需 sym）；≤-+-mono LHS 需 +0 归一。
+4. **意义**：投影算子层落地——谱定理（E = 谱投影族）与 Riesz 表示（adj 降定理路径）的核心组件；Pythagorean 定理与投影非扩张/幂等为后续谱测度构造铺路。
+
+**阶段 7 状态**：7-3a 完成（正交分解与投影算子）。待推进：7-3b（投影自伴 ⟨Px,y⟩=⟨x,Py⟩）、7-3（E 的测度构造，需谱定理）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。
+
+---
+
+【阶段 7-3b：投影算子与自伴性（HilbertSpace §10b，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：投影算子层收尾——投影唯一性 ⟹ 线性性 ⟹ 自伴性，谱定理 E = 谱投影族的组件齐备。
+2. **HilbertSpace 新增 §10b**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过；零新增公理）：
+   - 可证向量引理：`+-inv-ᵥ`（z + (-1)·z = 0，px-neg-px 泛化）、`zero-l-ᵥ`（0+u=u）、**`sub-ᵥ-impl`**（w−z=0 ⟹ w=z，减法消去）；
+   - **`proj-unique`**（投影唯一性：w∈W 且 x−w⊥W ⟹ w=Px——a = w−Px ∈ W，x−Px = (x−w)+a，⟨x−Px,a⟩ = 0+⟨a,a⟩ = 0 ⟹ ⟨a,a⟩=0 ⟹ a=0 ⟹ 减法消去）；
+   - **`proj-lin-add`**（P(x+y)=Px+Py：Px+Py∈W + (x−Px)+(y−Py)⊥W 逐项 + 唯一性）与 **`proj-lin-scalar`**（P(a·x)=a·Px：a·Px∈W + a·(x−Px)⊥W（⟨a·(x−Px),u⟩=a·0）+ 唯一性）——投影线性性闭合，构造 **`proj-op : Subspace → LinOp`**（投影定理的算子封装）；
+   - **`proj-self-adjoint`**（⟨Px,y⟩=⟨x,Py⟩——阶段 7-3b 核心：proj-ip-left ⟨Px,y⟩=⟨Px,Py⟩（y=Py+(y−Py)，y−Py⊥W）+ proj-ip-right ⟨x,Py⟩=⟨Px,Py⟩（x=Px+(x−Px)，x−Px⊥W）组合）；
+   - **`proj-op-norm-le-one`**（‖P‖≤1：‖Pv‖≤‖v‖≤1 逐点 + sup-least——SpectralTheory §12b proj-norm-le-one 的 Hilbert 侧版本）。
+3. **排坑**：链式结合/交换重排（trans 方向 6 处）；ip-add-l 的 sym 方向（正交分解展开）；cong (λ v → v ⟨⟩ a) 需 sym（xw-a 方向）。
+4. **意义**：投影算子成为自伴有界算子（‖P‖≤1）——谱定理（E = 谱投影族）与 Riesz 表示（adj 降定理路径）的核心组件全部就位；阶段 7-3（E 的测度构造）与 8-6b（Gelfand 极限层）的投影基础闭合。
+
+**阶段 7 状态**：7-3a/7-3b 完成（正交分解 + 投影算子 + 投影自伴）。待推进：7-3（E 的测度构造，需谱定理）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。
+
+---
+
+【阶段 7-3 第一步：谱投影构造框架（HilbertSpace §10c，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E 的测度构造起点——谱定理桥接 + 谱投影（E := proj-op ∘ spectral-subspace）构造侧。
+2. **HilbertSpace 新增 §10c**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - 谱定理桥接 3 条（登记，注明降定理路径 = 自伴算子谱定理/Borel 函数演算/乘法算子模型）：`spectral-subspace`（谱集 P ↦ 闭子空间 W_P = E(P)V）、`spectral-subspace-orth`（P∩Q=∅ ⟹ W_P ⊥ W_Q）、`spectral-subspace-total`（W_ℝ = 全空间）；
+   - 谱投影 **`E-hilb P := proj-op (spectral-subspace P)`**——谱测度 E 的 Hilbert 层构造（SpectralTheory E 的构造侧）；
+   - **可证**（全部投影层性质直接特化，零新增可证引理）：`E-hilb-idemp`（E(P)(E(P)x)=E(P)x，proj-idemp）、`E-hilb-orth`（P∩Q=∅ ⟹ E(P)u⊥E(Q)v，spectral-subspace-orth + proj-in）、`E-hilb-total`（E(ℝ)x=x，proj-fixed + 谱支集=全空间）、`E-hilb-self-adjoint`（⟨E(P)x,y⟩=⟨x,E(P)y⟩，proj-self-adjoint）、`E-hilb-norm-le-one`（‖E(P)‖≤1，proj-op-norm-le-one）。
+3. **意义**：SpectralTheory §10 E-idempotent/E-orthogonal、§10e E-total、§12b proj-norm-le-one 的构造侧对应落地——谱投影族 E(P) 是自伴、幂等、正交、有界（范数 ≤1）的投影算子族，E 的测度性质（E-union/E-σ-add）的构造基础齐备。
+4. **余项（7-3 后续）**：E-union（P∩Q=∅ ⟹ E(P∪Q)=E(P)+E(Q)）需内积减法双线性（ip-sub-l/ip-sub-r）+ 谱子空间直和桥接；E-σ-add（可数可加）需 σ-代数/极限层——留待阶段 7-3 后续 + 测度论层。
+
+**阶段 7 状态**：7-3a/7-3b 完成 + 7-3 第一步（谱投影构造框架）。待推进：7-3 余项（E-union/E-σ-add）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。

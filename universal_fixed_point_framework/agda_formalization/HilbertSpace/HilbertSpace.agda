@@ -58,6 +58,22 @@ module HilbertSpace.HilbertSpace where
     - **可证** op-norm-id-le（‖id‖≤1）/op-norm-pow-le（‖Xⁿ‖≤‖X‖ⁿ，r≤‖X‖）/
       SelfAdjoint-op-sq/SelfAdjoint-op-power-2^k/op-norm-power-2^k
       （‖X^{2^k}‖=‖X‖^{2^k}，Gelfand 子列核心）。
+  阶段 7-3a（2026-08-02）：正交分解与投影算子（谱定理 E 构造的投影组件）。
+    - **可证** pythagorean（⟨a,b⟩=0 ⟹ ‖a+b‖²=‖a‖²+‖b‖²）；
+    - Subspace（闭子空间）+ 投影桥接（proj/proj-in/proj-orth/proj-fixed，投影定理）；
+    - **可证** proj-decomp（正交分解）/proj-idemp（幂等）/proj-norm-le（非扩张 ‖Px‖≤‖x‖）。
+  阶段 7-3b（2026-08-02）：投影算子与自伴性（阶段 7-3a 的算子层收尾）。
+    - 投影唯一性（w∈W 且 x−w⊥W ⟹ w=Px，⟨a,a⟩=0 ⟹ a=0）⟹ P(x+y)=Px+Py、
+      P(a·x)=a·Px（线性性，proj-op : Subspace → LinOp 构造）；
+    - **可证** proj-self-adjoint（⟨Px,y⟩=⟨x,Py⟩——SelfAdjoint (proj-op W)，阶段 7-3b 核心）；
+    - **可证** proj-op-norm-le-one（‖P‖≤1，SpectralTheory §12b proj-norm-le-one 的 Hilbert 侧）。
+  阶段 7-3 第一步（2026-08-02）：谱投影构造框架（E 的测度构造起点，§10c）。
+    - 谱定理桥接：spectral-subspace（谱集 P ↦ 闭子空间 W_P）+ spectral-subspace-orth
+      （P∩Q=∅ ⟹ W_P⊥W_Q）+ spectral-subspace-total（W_ℝ=全空间）；
+    - 谱投影 E-hilb P := proj-op (spectral-subspace P)（谱测度 E 的 Hilbert 层构造）；
+    - **可证** E-hilb-idemp（幂等）/E-hilb-orth（正交）/E-hilb-total（E(ℝ)=𝟙）/
+      E-hilb-self-adjoint（自伴）/E-hilb-norm-le-one（‖E(P)‖≤1）——全部投影性质直接特化，
+      SpectralTheory E-idempotent/E-orthogonal/E-total/proj-norm-le-one 的构造侧对应。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -911,6 +927,283 @@ op-norm-power-2^k X h (suc k) =
 --   SpectralTheory norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）降定理的代数核心齐备，
 --   完整公式需极限/谱论层（8-6b + 阶段 7-3 E 构造后）。
 
+-- ==================================================================
+-- §10 正交分解与投影算子（阶段 7-3a，2026-08-02）
+-- ==================================================================
+
+-- **可证**：Pythagorean——⟨a,b⟩ = 0 ⟹ ‖a+b‖² = ‖a‖² + ‖b‖²（norm-sq-add + 正交归零）
+pythagorean : (a b : V) → a ⟨⟩ b ≡ zeroℝ → norm-sq (a +ᵥ b) ≡ norm-sq a +ℝ norm-sq b
+pythagorean a b hab =
+  trans (norm-sq-add a b)
+        (subst (λ z → (norm-sq a +ℝ z) +ℝ (z +ℝ norm-sq b) ≡ norm-sq a +ℝ norm-sq b) (sym hab)
+               (cong₂ _+ℝ_ (+-ident-ℝ (norm-sq a)) (zero-add-ℝ (norm-sq b))))
+
+-- 闭子空间（代数闭包 + 拓扑闭包——投影定理需完备性/闭性；closed 用 Converges）
+record Subspace : Set₁ where
+  field
+    mem : V → Set
+    add : {x y : V} → mem x → mem y → mem (x +ᵥ y)
+    scalar : (a : ℝ) {x : V} → mem x → mem (a ·ᵥ x)
+    zero-mem : mem zeroᵥ
+    closed : (s : Seq) → ((n : ℕ) → mem (s n)) → (x : V) → Converges s x → mem x
+
+-- 正交投影（投影定理桥接：完备性层之上，每个 x 唯一分解为 W 分量 Px 与正交分量 x−Px；
+-- 降定理路径 = 极小化序列 + 完备性论证）
+postulate
+  proj : Subspace → V → V
+  proj-in : (W : Subspace) (x : V) → Subspace.mem W (proj W x)
+  proj-orth : (W : Subspace) (x : V) → (w : V) → Subspace.mem W w → ((x -ᵥ proj W x) ⟨⟩ w) ≡ zeroℝ
+  proj-fixed : (W : Subspace) (x : V) → Subspace.mem W x → proj W x ≡ x
+
+-- **可证**：正交分解 x = Px + (x−Px)（向量代数恒真；内容在 proj-in/proj-orth）
+proj-decomp : (W : Subspace) (x : V) → x ≡ proj W x +ᵥ (x -ᵥ proj W x)
+proj-decomp W x = sym chain
+  where
+  -- Px + (-1)·Px = 0（1·Px + (-1)·Px = (1+(-1))·Px = 0·Px = 0）
+  px-neg-px : proj W x +ᵥ ((negℝ oneℝ) ·ᵥ proj W x) ≡ zeroᵥ
+  px-neg-px =
+    trans (cong (λ w → w +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)) (sym (·ᵥ-ident (proj W x))))
+          (trans (sym (·ᵥ-distrib-r oneℝ (negℝ oneℝ) (proj W x)))
+                 (trans (cong (λ a → a ·ᵥ proj W x) (+-inv-ℝ oneℝ))
+                        (scalar-zero-any (proj W x))))
+  -- Px + (x + (-1)·Px) = ... = x（结合/交换/逆/零）
+  chain : proj W x +ᵥ (x -ᵥ proj W x) ≡ x
+  chain =
+    trans (sym (+ᵥ-assoc (proj W x) x ((negℝ oneℝ) ·ᵥ proj W x)))
+          (trans (cong (λ w → w +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)) (+ᵥ-comm (proj W x) x))
+                 (trans (+ᵥ-assoc x (proj W x) ((negℝ oneℝ) ·ᵥ proj W x))
+                        (trans (cong (λ w → x +ᵥ w) px-neg-px)
+                               (+ᵥ-ident x))))
+
+-- **可证**：投影幂等——P(Px) = Px（Px ∈ W + proj-fixed）
+proj-idemp : (W : Subspace) (x : V) → proj W (proj W x) ≡ proj W x
+proj-idemp W x = proj-fixed W (proj W x) (proj-in W x)
+
+-- **可证**：投影非扩张——‖Px‖ ≤ ‖x‖
+--（‖Px‖² ≤ ‖Px‖² + ‖x−Px‖² = ‖Px+(x−Px)‖²（Pythagorean，正交） = ‖x‖²（分解）+ √）
+proj-norm-le : (W : Subspace) (x : V) → norm (proj W x) ≤ℝ norm x
+proj-norm-le W x =
+  sqrt-mono (ip-pos (proj W x))
+            (subst (λ z → norm-sq (proj W x) ≤ℝ z)
+                   (sym (cong norm-sq (proj-decomp W x)))
+                   (subst (λ z → norm-sq (proj W x) ≤ℝ z)
+                          (sym (pythagorean (proj W x) (x -ᵥ proj W x) hab))
+                          (subst (λ w → w ≤ℝ (norm-sq (proj W x) +ℝ norm-sq (x -ᵥ proj W x)))
+                                 (+-ident-ℝ (norm-sq (proj W x)))
+                                 (≤-+-mono-ℝ (refl-≤ℝ {norm-sq (proj W x)})
+                                             (norm-sq-nonneg (x -ᵥ proj W x))))))
+  where
+  -- ⟨Px, x−Px⟩ = 0（proj-orth 的 w = Px 特化 + 对称性）
+  hab : (proj W x) ⟨⟩ (x -ᵥ proj W x) ≡ zeroℝ
+  hab = trans (sym (ip-sym (x -ᵥ proj W x) (proj W x)))
+              (proj-orth W x (proj W x) (proj-in W x))
+
+-- ==================================================================
+-- §10b 投影算子与自伴性（阶段 7-3b，2026-08-02）
+-- ==================================================================
+
+-- **可证**：z + (-1)·z = 0（1·z + (-1)·z = (1+(-1))·z = 0·z = 0；
+--   proj-decomp 内部 px-neg-px 的泛化）
++-inv-ᵥ : (z : V) → z +ᵥ ((negℝ oneℝ) ·ᵥ z) ≡ zeroᵥ
++-inv-ᵥ z =
+  trans (cong (λ w → w +ᵥ ((negℝ oneℝ) ·ᵥ z)) (sym (·ᵥ-ident z)))
+        (trans (sym (·ᵥ-distrib-r oneℝ (negℝ oneℝ) z))
+               (trans (cong (λ a → a ·ᵥ z) (+-inv-ℝ oneℝ))
+                      (scalar-zero-any z)))
+
+-- **可证**：0 + u = u（左单位，经交换律 + 右单位）
+zero-l-ᵥ : (u : V) → zeroᵥ +ᵥ u ≡ u
+zero-l-ᵥ u = trans (+ᵥ-comm zeroᵥ u) (+ᵥ-ident u)
+
+-- **可证**：减法消去——w − z = 0 ⟹ w = z
+--（z = z+0 = z+(w−z) = (z+w)+(-1)·z = (w+z)+(-1)·z = w+(z+(-1)·z) = w+0 = w）
+sub-ᵥ-impl : {w z : V} → w -ᵥ z ≡ zeroᵥ → w ≡ z
+sub-ᵥ-impl {w} {z} h = sym chain
+  where
+  chain : z ≡ w
+  chain =
+    trans (sym (+ᵥ-ident z))
+          (trans (cong (λ u → z +ᵥ u) (sym h))
+                 (trans (sym (+ᵥ-assoc z w ((negℝ oneℝ) ·ᵥ z)))
+                        (trans (cong (λ u → u +ᵥ ((negℝ oneℝ) ·ᵥ z)) (+ᵥ-comm z w))
+                               (trans (+ᵥ-assoc w z ((negℝ oneℝ) ·ᵥ z))
+                                      (trans (cong (λ u → w +ᵥ u) (+-inv-ᵥ z))
+                                             (+ᵥ-ident w))))))
+
+-- 投影唯一性：w ∈ W 且 x−w ⊥ W ⟹ w = Px
+--（a = w−Px ∈ W；x−Px = (x−w)+a ⟹ ⟨x−Px, a⟩ = ⟨x−w, a⟩ + ⟨a, a⟩（左加性）
+--  = 0 + ⟨a, a⟩（两正交）⟹ proj-orth 给 ⟨x−Px, a⟩ = 0 ⟹ ⟨a, a⟩ = 0 ⟹ a = 0 ⟹ w = Px）
+proj-unique : (W : Subspace) (x : V) (w : V) → Subspace.mem W w
+  → ((u : V) → Subspace.mem W u → ((x -ᵥ w) ⟨⟩ u) ≡ zeroℝ)
+  → w ≡ proj W x
+proj-unique W x w w-in orth = sub-ᵥ-impl (ip-def a a-zero)
+  where
+  a : V
+  a = w -ᵥ proj W x
+  a-in-W : Subspace.mem W a
+  a-in-W = Subspace.add W w-in (Subspace.scalar W (negℝ oneℝ) (proj-in W x))
+  -- x−Px = (x−w) + (w−Px)（结合/交换/逆/零）
+  xw-a : (x -ᵥ proj W x) ≡ (x -ᵥ w) +ᵥ a
+  xw-a = sym chain
+    where
+    chain : (x -ᵥ w) +ᵥ (w -ᵥ proj W x) ≡ x -ᵥ proj W x
+    chain =
+      trans (+ᵥ-assoc x ((negℝ oneℝ) ·ᵥ w) (w +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)))
+            (trans (cong (λ u → x +ᵥ u) inner)
+                   (cong (λ u → x +ᵥ u) (zero-l-ᵥ ((negℝ oneℝ) ·ᵥ proj W x))))
+      where
+      inner : ((negℝ oneℝ) ·ᵥ w) +ᵥ (w +ᵥ ((negℝ oneℝ) ·ᵥ proj W x))
+        ≡ zeroᵥ +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)
+      inner =
+        trans (sym (+ᵥ-assoc ((negℝ oneℝ) ·ᵥ w) w ((negℝ oneℝ) ·ᵥ proj W x)))
+              (trans (cong (λ u → u +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)) (+ᵥ-comm ((negℝ oneℝ) ·ᵥ w) w))
+                     (cong (λ u → u +ᵥ ((negℝ oneℝ) ·ᵥ proj W x)) (+-inv-ᵥ w)))
+  -- ⟨a, a⟩ = 0
+  a-zero : a ⟨⟩ a ≡ zeroℝ
+  a-zero =
+    trans (sym (zero-add-ℝ (a ⟨⟩ a)))
+          (trans (cong₂ _+ℝ_ (sym (orth a a-in-W)) refl)
+                 (trans (sym (ip-add-l (x -ᵥ w) a a))
+                        (trans (sym (cong (λ v → v ⟨⟩ a) xw-a))
+                               (proj-orth W x a a-in-W))))
+
+-- **可证**：投影加法性——P(x+y) = Px + Py
+--（Px+Py ∈ W；x+y−(Px+Py) = (x−Px)+(y−Py) ⊥ W（逐项正交）；唯一性）
+proj-lin-add : (W : Subspace) (x y : V) → proj W (x +ᵥ y) ≡ proj W x +ᵥ proj W y
+proj-lin-add W x y = sym (proj-unique W (x +ᵥ y) (proj W x +ᵥ proj W y) b-in-W orth-b)
+  where
+  b-in-W : Subspace.mem W (proj W x +ᵥ proj W y)
+  b-in-W = Subspace.add W (proj-in W x) (proj-in W y)
+  -- x+y−(Px+Py) = (x−Px) + (y−Py)（·ᵥ-distrib-l + swap-pair-ᵥ）
+  sub-decomp : (x +ᵥ y) -ᵥ (proj W x +ᵥ proj W y) ≡ (x -ᵥ proj W x) +ᵥ (y -ᵥ proj W y)
+  sub-decomp =
+    trans (cong (λ u → (x +ᵥ y) +ᵥ u) (·ᵥ-distrib-l (negℝ oneℝ) (proj W x) (proj W y)))
+          (swap-pair-ᵥ x y ((negℝ oneℝ) ·ᵥ proj W x) ((negℝ oneℝ) ·ᵥ proj W y))
+  -- x+y−b ⊥ W：⟨(x−Px)+(y−Py), u⟩ = 0 + 0（逐项 proj-orth）
+  orth-b : (u : V) → Subspace.mem W u → ((x +ᵥ y) -ᵥ (proj W x +ᵥ proj W y)) ⟨⟩ u ≡ zeroℝ
+  orth-b u hu =
+    trans (cong (λ w → w ⟨⟩ u) sub-decomp)
+          (trans (ip-add-l (x -ᵥ proj W x) (y -ᵥ proj W y) u)
+                 (trans (cong₂ _+ℝ_ (proj-orth W x u hu) (proj-orth W y u hu))
+                        (zero-add-ℝ zeroℝ)))
+
+-- **可证**：投影标量齐次——P(a·x) = a·Px
+--（a·Px ∈ W；a·x−a·Px = a·(x−Px) ⊥ W（⟨a·(x−Px), u⟩ = a·⟨x−Px, u⟩ = a·0）；唯一性）
+proj-lin-scalar : (W : Subspace) (a : ℝ) (x : V) → proj W (a ·ᵥ x) ≡ a ·ᵥ proj W x
+proj-lin-scalar W a x = sym (proj-unique W (a ·ᵥ x) (a ·ᵥ proj W x) b-in-W orth-b)
+  where
+  b-in-W : Subspace.mem W (a ·ᵥ proj W x)
+  b-in-W = Subspace.scalar W a (proj-in W x)
+  -- a·x−a·Px = a·(x−Px)（·ᵥ-assoc ×2 + *-comm + ·ᵥ-distrib-l 反向）
+  sub-scalar-decomp : (a ·ᵥ x) -ᵥ (a ·ᵥ proj W x) ≡ a ·ᵥ (x -ᵥ proj W x)
+  sub-scalar-decomp =
+    trans (cong (λ u → (a ·ᵥ x) +ᵥ u) (·ᵥ-assoc (negℝ oneℝ) a (proj W x)))
+          (trans (cong (λ s → (a ·ᵥ x) +ᵥ (s ·ᵥ proj W x)) (*-comm-ℝ (negℝ oneℝ) a))
+                 (trans (cong (λ u → (a ·ᵥ x) +ᵥ u) (sym (·ᵥ-assoc a (negℝ oneℝ) (proj W x))))
+                        (sym (·ᵥ-distrib-l a x ((negℝ oneℝ) ·ᵥ proj W x)))))
+  -- a·x−a·Px ⊥ W：⟨a·(x−Px), u⟩ = a·⟨x−Px, u⟩ = a·0 = 0
+  orth-b : (u : V) → Subspace.mem W u → ((a ·ᵥ x) -ᵥ (a ·ᵥ proj W x)) ⟨⟩ u ≡ zeroℝ
+  orth-b u hu =
+    trans (cong (λ w → w ⟨⟩ u) sub-scalar-decomp)
+          (trans (ip-scalar-l a (x -ᵥ proj W x) u)
+                 (trans (cong (λ t → a *ℝ t) (proj-orth W x u hu))
+                        (*-zero-ℝ a)))
+
+-- 投影算子（线性性经唯一性论证——投影定理的算子封装）
+proj-op : Subspace → LinOp
+proj-op W = record
+  { f = λ x → proj W x
+  ; lin-add = λ x y → proj-lin-add W x y
+  ; lin-scalar = λ a x → proj-lin-scalar W a x
+  }
+
+-- **可证**：⟨Px, y⟩ = ⟨Px, Py⟩（y = Py + (y−Py)，y−Py ⊥ W 且 Px ∈ W）
+proj-ip-left : (W : Subspace) (x y : V) → (proj W x) ⟨⟩ y ≡ (proj W x) ⟨⟩ (proj W y)
+proj-ip-left W x y =
+  trans (cong (λ w → (proj W x) ⟨⟩ w) (proj-decomp W y))
+        (trans (ip-add-r (proj W x) (proj W y) (y -ᵥ proj W y))
+               (trans (cong₂ _+ℝ_ refl (proj-orth-px))
+                      (+-ident-ℝ (proj W x ⟨⟩ proj W y))))
+  where
+  -- ⟨Px, y−Py⟩ = 0（proj-orth 对 w = Px ∈ W + 对称性）
+  proj-orth-px : (proj W x) ⟨⟩ (y -ᵥ proj W y) ≡ zeroℝ
+  proj-orth-px = trans (sym (ip-sym (y -ᵥ proj W y) (proj W x)))
+                       (proj-orth W y (proj W x) (proj-in W x))
+
+-- **可证**：⟨x, Py⟩ = ⟨Px, Py⟩（x = Px + (x−Px)，x−Px ⊥ W 且 Py ∈ W）
+proj-ip-right : (W : Subspace) (x y : V) → x ⟨⟩ (proj W y) ≡ (proj W x) ⟨⟩ (proj W y)
+proj-ip-right W x y =
+  trans (cong (λ w → w ⟨⟩ (proj W y)) (proj-decomp W x))
+        (trans (ip-add-l (proj W x) (x -ᵥ proj W x) (proj W y))
+               (trans (cong₂ _+ℝ_ refl (proj-orth W x (proj W y) (proj-in W y)))
+                      (+-ident-ℝ (proj W x ⟨⟩ proj W y))))
+
+-- **可证**：投影自伴——⟨Px, y⟩ = ⟨x, Py⟩（阶段 7-3b 核心结论）
+proj-self-adjoint : (W : Subspace) → SelfAdjoint (proj-op W)
+proj-self-adjoint W x y = trans (proj-ip-left W x y) (sym (proj-ip-right W x y))
+
+-- **可证**：投影算子范数 ≤ 1（‖Pv‖ ≤ ‖v‖ ≤ 1 逐点 + sup-least；
+--   呼应 SpectralTheory §12b proj-norm-le-one 的 Hilbert 侧版本）
+proj-op-norm-le-one : (W : Subspace) → op-norm (proj-op W) ≤ℝ oneℝ
+proj-op-norm-le-one W = sup-least (op-fam (proj-op W)) oneℝ bound
+  where
+  bound : (r : ℝ) → op-fam (proj-op W) r → r ≤ℝ oneℝ
+  bound r (ex v (hv , refl)) = ≤-trans-ℝ (proj-norm-le W v) hv
+
+-- ==================================================================
+-- §10c 谱投影构造框架（阶段 7-3：E 的测度构造第一步，2026-08-02）
+-- ==================================================================
+
+-- 全空间谱集 TopP：ℝ 上处处为真的谓词（E(ℝ) = 分辨恒等的载体，E-total 的 Hilbert 侧）
+data TopP : ℝ → Set where
+  top-p : (x : ℝ) → TopP x
+
+-- 谱子空间（谱定理桥接：自伴算子 A 的谱分解给出谱集 P 对应的闭子空间 W_P = E(P)V——
+-- Borel 函数演算 / 乘法算子模型内容；降定理路径 = 自伴算子谱定理）
+postulate
+  spectral-subspace : (P : ℝ → Set) → Subspace
+  -- 谱子空间正交性：P ∩ Q = ∅ ⟹ W_P ⊥ W_Q（谱投影正交性，SpectralTheory E-orthogonal 的 Hilbert 侧）
+  spectral-subspace-orth : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥)
+    → (u v : V) → Subspace.mem (spectral-subspace P) u → Subspace.mem (spectral-subspace Q) v
+    → u ⟨⟩ v ≡ zeroℝ
+  -- 谱支集完备性：W_ℝ = 全空间（E(ℝ) = 𝟙，SpectralTheory E-total 的 Hilbert 侧）
+  spectral-subspace-total : (x : V) → Subspace.mem (spectral-subspace TopP) x
+
+-- 谱投影（谱测度 E 的 Hilbert 层构造：E(P) := proj-op (spectral-subspace P)——
+-- SpectralTheory 谱测度 E 的构造侧；E-idempotent/E-orthogonal/E-total/E-union/E-σ-add
+-- 降定理的投影基础）
+E-hilb : (P : ℝ → Set) → LinOp
+E-hilb P = proj-op (spectral-subspace P)
+
+-- **可证**：谱投影幂等（点态）——E(P)(E(P)x) = E(P)x（proj-idemp 特化；
+--   SpectralTheory §10 E-idempotent 的 Hilbert 侧对应）
+E-hilb-idemp : (P : ℝ → Set) (x : V)
+  → LinOp.f (op-comp (E-hilb P) (E-hilb P)) x ≡ LinOp.f (E-hilb P) x
+E-hilb-idemp P x = proj-idemp (spectral-subspace P) x
+
+-- **可证**：谱投影正交——P ∩ Q = ∅ ⟹ E(P)u ⊥ E(Q)v（spectral-subspace-orth + proj-in；
+--   SpectralTheory §10 E-orthogonal 的 Hilbert 侧对应）
+E-hilb-orth : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥) → (u v : V)
+  → LinOp.f (E-hilb P) u ⟨⟩ LinOp.f (E-hilb Q) v ≡ zeroℝ
+E-hilb-orth P Q disjoint u v = spectral-subspace-orth P Q disjoint
+  (LinOp.f (E-hilb P) u) (LinOp.f (E-hilb Q) v)
+  (proj-in (spectral-subspace P) u) (proj-in (spectral-subspace Q) v)
+
+-- **可证**：谱支集完备性——E(ℝ)x = x（proj-fixed + 谱支集 = 全空间；
+--   SpectralTheory §10e E-total/E-spectrum-total 的 Hilbert 侧对应）
+E-hilb-total : (x : V) → LinOp.f (E-hilb TopP) x ≡ x
+E-hilb-total x = proj-fixed (spectral-subspace TopP) x (spectral-subspace-total x)
+
+-- **可证**：谱投影自伴——⟨E(P)x, y⟩ = ⟨x, E(P)y⟩（proj-self-adjoint 特化；
+--   谱投影 = 正交投影的自伴性）
+E-hilb-self-adjoint : (P : ℝ → Set) → SelfAdjoint (E-hilb P)
+E-hilb-self-adjoint P = proj-self-adjoint (spectral-subspace P)
+
+-- **可证**：谱投影范数 ≤ 1（proj-op-norm-le-one 特化；
+--   SpectralTheory §12b proj-norm-le-one 的谱投影实例）
+E-hilb-norm-le-one : (P : ℝ → Set) → op-norm (E-hilb P) ≤ℝ oneℝ
+E-hilb-norm-le-one P = proj-op-norm-le-one (spectral-subspace P)
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -941,4 +1234,23 @@ op-norm-power-2^k X h (suc k) =
 --    iter-mul/iter-sq + **可证** op-norm-id-le（‖id‖≤1）/op-norm-pow-le（‖Xⁿ‖≤‖X‖ⁿ，
 --    r≤‖X‖）/SelfAdjoint-op-sq/SelfAdjoint-op-power-2^k/op-norm-power-2^k
 --    （‖X^{2^k}‖=‖X‖^{2^k}，r≥‖X‖ 的 Gelfand 子列核心）——norm-contraction 降定理代数核心齐备。
---  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；阶段 7-3（E 的测度构造）。
+--  - 阶段 7-3a（✅ 2026-08-02）：正交分解与投影算子——pythagorean（正交⟹范数平方可加，
+--    可证）+ Subspace（闭子空间 record）+ 投影桥接（proj/proj-in/proj-orth/proj-fixed，
+--    投影定理，降定理路径 = 极小化序列 + 完备性）+ **可证** proj-decomp（正交分解）/
+--    proj-idemp（幂等）/proj-norm-le（非扩张 ‖Px‖≤‖x‖，Pythagorean 推论）——
+--    谱定理 E 构造的投影组件。
+--  - 阶段 7-3b（✅ 2026-08-02）：投影算子与自伴性——投影唯一性（proj-unique：
+--    w∈W 且 x−w⊥W ⟹ w=Px，经 a=w−Px 的 ⟨a,a⟩=0）⟹ P(x+y)=Px+Py（proj-lin-add）/
+--    P(a·x)=a·Px（proj-lin-scalar）——投影算子 proj-op : Subspace → LinOp 线性性闭合；
+--    **可证** proj-self-adjoint（⟨Px,y⟩=⟨x,Py⟩：⟨Px,y⟩=⟨Px,Py⟩=⟨x,Py⟩，y−Py/x−Px
+--    分别 ⊥ W）+ proj-op-norm-le-one（‖P‖≤1，SpectralTheory §12b proj-norm-le-one
+--    的 Hilbert 侧版本）——投影算子是自伴有界算子，谱定理 E = 谱投影族的组件齐备。
+--  - 阶段 7-3 第一步（✅ 2026-08-02）：谱投影构造框架（E 的测度构造起点，§10c）——
+--    谱定理桥接 spectral-subspace（谱集 ↦ 闭子空间 W_P，降定理路径 = 自伴算子谱定理）+
+--    spectral-subspace-orth（P∩Q=∅ ⟹ W_P⊥W_Q）+ spectral-subspace-total（W_ℝ=全空间）；
+--    谱投影 E-hilb P := proj-op (spectral-subspace P)（谱测度 E 的 Hilbert 层构造）；
+--    **可证** E-hilb-idemp（幂等）/E-hilb-orth（正交）/E-hilb-total（E(ℝ)=𝟙）/
+--    E-hilb-self-adjoint（自伴）/E-hilb-norm-le-one（‖E(P)‖≤1）——全部投影性质直接
+--    特化，SpectralTheory E-idempotent/E-orthogonal/E-total/proj-norm-le-one 构造侧对应。
+--  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项（E-union/E-σ-add，需
+--    ip-sub 减法双线性 + 谱子空间直和）；8-5b（强连续半群）。
