@@ -81,6 +81,14 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-union（P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}
       （incl+add）+ x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 + 逐项正交：proj-orth + W_P⊥W_Q）+
       proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
+  阶段 7-3 余项 E-fin-union（2026-08-02）：E 的有限可加性（§10e）。
+    - sum-ᵥ（点态向量有限和）+ EmptyP（空谱集）+ spectral-subspace-empty 桥接（W_∅={0}）
+      ⟹ **可证** E-hilb-empty（E(∅)x=0）；
+    - FinUnion（递归有限并谓词）+ **可证** fin-union-in（∪ᵢ<ₘPᵢ ⟹ ∃i<ₘ.Pᵢ）/
+      FinUnion-disjoint（pairwise ⟹ (∪ᵢ<ₘPᵢ)∩Pₘ=∅）；
+    - **可证** E-hilb-fin-union（pairwise 不相交 ⟹ E(∪ᵢ<ₘPᵢ)x = Σᵢ<ₘE(Pᵢ)x，归纳：
+      E-hilb-union 拆分 + FinUnion-disjoint + 归纳假设）——E-σ-add 的有限版，
+      SpectralTheory §10e E-partition-add 的 Hilbert 侧对应。
   阶段 8-6b 第一步（2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）。
     - 谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，
       避免 n 次根——iter-sq + op-norm-power-2^k 直接闭合）；
@@ -1318,6 +1326,62 @@ E-hilb-union P Q disjoint x = sym (proj-unique W-pq x b b-in-W orth-b)
                         (zero-add-ℝ zeroℝ)))
 
 -- ==================================================================
+-- §10e E 的有限可加性（阶段 7-3 余项：E-fin-union，2026-08-02）
+-- ==================================================================
+
+-- 点态向量有限和：Σᵢ<ₘ f i（前 m 项，i = 0..m-1）
+sum-ᵥ : (ℕ → V) → ℕ → V
+sum-ᵥ f zero = zeroᵥ
+sum-ᵥ f (suc m) = sum-ᵥ f m +ᵥ f m
+
+-- 空谱集（处处假谓词）
+EmptyP : ℝ → Set
+EmptyP = λ _ → ⊥
+
+-- 空谱子空间平凡性（谱定理内容：W_∅ = {0}——E(∅) = 0 的 Hilbert 侧桥接；
+-- 降定理路径 = 自伴算子谱定理/Borel 函数演算）
+postulate
+  spectral-subspace-empty : (x : V) → Subspace.mem (spectral-subspace EmptyP) x → x ≡ zeroᵥ
+
+-- **可证**：空谱投影为零——E(∅)x = 0（spectral-subspace-empty + proj-in）
+E-hilb-empty : (x : V) → LinOp.f (E-hilb EmptyP) x ≡ zeroᵥ
+E-hilb-empty x = spectral-subspace-empty (LinOp.f (E-hilb EmptyP) x) (proj-in (spectral-subspace EmptyP) x)
+
+-- 有限并谓词（递归）：∪ᵢ<ₘ Pᵢ
+FinUnion : (ℕ → ℝ → Set) → ℕ → ℝ → Set
+FinUnion P zero x = ⊥
+FinUnion P (suc m) x = FinUnion P m x ⊎ P m x
+
+-- **可证**：FinUnion 展开——∪ᵢ<ₘ Pᵢ x ⟹ ∃ i. suc i ≤ℕ m ∧ Pᵢ x（递归）
+fin-union-in : (P : ℕ → ℝ → Set) (m : ℕ) (x : ℝ) → FinUnion P m x
+  → Σ ℕ (λ i → (suc i ≤ℕ m) × (P i x))
+fin-union-in P zero x ()
+fin-union-in P (suc m) x (inj₁ fx) with fin-union-in P m x fx
+fin-union-in P (suc m) x (inj₁ fx) | ex i (ile , pxi) = ex i (≤ℕ-suc ile , pxi)
+fin-union-in P (suc m) x (inj₂ pmx) = ex m (≤ℕ-refl (suc m) , pmx)
+
+-- **可证**：pairwise 不相交 ⟹ (∪ᵢ<ₘPᵢ) ∩ Pₘ = ∅（FinUnion-disjoint）
+FinUnion-disjoint : (P : ℕ → ℝ → Set) (m : ℕ)
+  → ((i : ℕ) → suc i ≤ℕ m → (x : ℝ) → P i x → P m x → ⊥)
+  → (x : ℝ) → FinUnion P m x → P m x → ⊥
+FinUnion-disjoint P m h x fx pmx with fin-union-in P m x fx
+FinUnion-disjoint P m h x fx pmx | ex i (ile , pxi) = h i ile x pxi pmx
+
+-- **可证**：E 的有限可加性——pairwise 不相交 ⟹ E(∪ᵢ<ₘ Pᵢ)x = Σᵢ<ₘ E(Pᵢ)x
+--（归纳：m+1 步经 E-hilb-union 拆分（FinUnion-disjoint + h i m 特化）+ 归纳假设；
+--  E-σ-add 的有限版，SpectralTheory §10e E-partition-add 的 Hilbert 侧对应）
+E-hilb-fin-union : (P : ℕ → ℝ → Set) → (m : ℕ)
+  → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
+  → (x : V) → LinOp.f (E-hilb (FinUnion P m)) x ≡ sum-ᵥ (λ i → LinOp.f (E-hilb (P i)) x) m
+E-hilb-fin-union P zero h x = E-hilb-empty x
+E-hilb-fin-union P (suc m) h x =
+  trans (E-hilb-union (FinUnion P m) (P m) (FinUnion-disjoint P m hₘ) x)
+        (trans (cong₂ _+ᵥ_ (E-hilb-fin-union P m h x) refl) refl)
+  where
+  hₘ : (i : ℕ) → suc i ≤ℕ m → (x' : ℝ) → P i x' → P m x' → ⊥
+  hₘ i ile x' pxi pmx = h i m ile x' pxi pmx
+
+-- ==================================================================
 -- §11 谱半径公式极限层（阶段 8-6b 第一步，2026-08-02）
 -- ==================================================================
 
@@ -1403,6 +1467,13 @@ spectral-radius-norm X h = ≤-antisym (sr-le-norm X) (sr-norm-le X h)
 --    （P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}（incl 单调 + add 闭包）+
 --    x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 u+v + 逐项正交：proj-orth + W_P⊥W_Q）+
 --    proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
+--  - 阶段 7-3 余项 E-fin-union（✅ 2026-08-02）：E 的有限可加性（§10e）——sum-ᵥ（点态
+--    向量有限和）+ EmptyP（空谱集）+ spectral-subspace-empty 桥接（W_∅={0}，降定理路径
+--    = 自伴算子谱定理）⟹ **可证** E-hilb-empty（E(∅)x=0）；FinUnion（递归有限并谓词）+
+--    **可证** fin-union-in（∪ᵢ<ₘPᵢ ⟹ ∃i<ₘ.Pᵢ）/FinUnion-disjoint（pairwise ⟹
+--    (∪ᵢ<ₘPᵢ)∩Pₘ=∅）；**可证** E-hilb-fin-union（pairwise 不相交 ⟹
+--    E(∪ᵢ<ₘPᵢ)x = Σᵢ<ₘE(Pᵢ)x，归纳：E-hilb-union 拆分 + FinUnion-disjoint + 归纳假设）——
+--    E-σ-add 的有限版，SpectralTheory §10e E-partition-add 的 Hilbert 侧对应。
 --  - 阶段 8-6b 第一步（✅ 2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）——
 --    谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，避免
 --    n 次根——iter-sq + op-norm-power-2^k 直接闭合）；**可证** sr-le-norm（r(X) ≤ ‖X‖，

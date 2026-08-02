@@ -1352,3 +1352,17 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：谱半径公式（Gelfand）在 Hilbert 侧完整闭合——8-6a 的代数核心 + 本极限层 = r(X) = ‖X‖（自伴）；SpectralTheory §12 norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）的降定理路径核心就位（完整实例化需 e^(-tA) 自伴 + 谱支集连接，留 8-5b/整合层）。
 
 **阶段 8 状态**：8-6b 第一步完成（谱半径公式极限层：自伴 r(X) = ‖X‖ 可证）。待推进：8-6b 完整降定理（e^(-tA) 实例化，需 8-5b/整合层）；8-5b（强连续半群）；阶段 7-3 余项 E-σ-add。
+
+---
+
+【阶段 7-3 余项 E-fin-union：E 的有限可加性（HilbertSpace §10e，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E-union 的归纳推广——E 的有限可加性（E-σ-add 的有限版，SpectralTheory §10e E-partition-add 的 Hilbert 侧对应）。
+2. **HilbertSpace 新增 §10e**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - `sum-ᵥ`（点态向量有限和 Σᵢ<ₘ f i）+ `EmptyP`（空谱集 λ_→⊥）+ 桥接 `spectral-subspace-empty`（W_∅={0}，降定理路径 = 自伴算子谱定理）⟹ **可证** `E-hilb-empty`（E(∅)x=0）；
+   - `FinUnion`（递归有限并谓词 ∪ᵢ<ₘPᵢ）+ **可证** `fin-union-in`（∪ᵢ<ₘPᵢx ⟹ ∃i<ₘ.Pᵢx，递归展开）、`FinUnion-disjoint`（pairwise 不相交 ⟹ (∪ᵢ<ₘPᵢ)∩Pₘ=∅）；
+   - **`E-hilb-fin-union`**（pairwise 不相交 ⟹ E(∪ᵢ<ₘPᵢ)x = Σᵢ<ₘE(Pᵢ)x）：归纳——m+1 步经 E-hilb-union 拆分（FinUnion-disjoint + h i m 特化）+ 归纳假设。
+3. **排坑**：归纳索引——pairwise 条件需全局（i<j ⟹ Pᵢ∩Pⱼ=∅，suc i ≤ℕ j），归纳步用 `h i m` 特化（初版误用 P(suc m) 索引致 UnequalTerms）。
+4. **意义**：E 的有限可加性构造侧闭合——E-σ-add（可数可加）的有限版基础（SpectralTheory E-partition-add 对应）；可数版需 σ-代数/极限层（可数并 + 算子 sup 收敛），留待测度论完整层。
+
+**阶段 7 状态**：7-3a/7-3b + 7-3 第一步 + E-union + E-fin-union 全部完成。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；8-6b 完整降定理；8-5b（强连续半群）。
