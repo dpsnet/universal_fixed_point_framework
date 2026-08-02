@@ -53,7 +53,12 @@ module HilbertSpace.HilbertSpace where
     - Seq/≤ℕ（局部）/Cauchy-seq/Converges（ε-δ 定义）+ 完备性基础假设 complete；
     - **可证** ≤ℕ-refl/trans/suc、sub-ᵥ-self（x−x=0）、conv-const/cauchy-const——
       Riesz 表示/投影定理/谱定理的共同地基。
-  阶段 6（待）：谱半径公式（norm-contraction，需谱论 + 完备性层）。
+  阶段 6a（2026-08-02）：谱半径公式的代数核心（norm-contraction 降定理前置）。
+    - id-op/op-sq/op-power/op-power-2^k/iter-mul/iter-sq；
+    - **可证** op-norm-id-le（‖id‖≤1）/op-norm-pow-le（‖Xⁿ‖≤‖X‖ⁿ，r≤‖X‖）/
+      SelfAdjoint-op-sq/SelfAdjoint-op-power-2^k/op-norm-power-2^k
+      （‖X^{2^k}‖=‖X‖^{2^k}，Gelfand 子列核心）。
+  阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
@@ -832,6 +837,80 @@ cauchy-const : (x : V) → Cauchy-seq (λ _ → x)
 cauchy-const x ε 0<ε = ex zero (λ m n h1 h2 →
   subst (λ z → z <ℝ ε) (sym (trans (cong norm (sub-ᵥ-self x)) norm-zero)) 0<ε)
 
+-- ==================================================================
+-- §9 谱半径公式的代数核心（阶段 8-6a，2026-08-02）
+-- ==================================================================
+
+-- 恒等算子
+id-op : LinOp
+id-op = record { f = λ x → x; lin-add = λ x y → refl; lin-scalar = λ a x → refl }
+
+-- 平方算子（S∘S）
+op-sq : LinOp → LinOp
+op-sq X = op-comp X X
+
+-- 幂算子：X⁰ = id、X^{n+1} = Xⁿ∘X
+op-power : LinOp → ℕ → LinOp
+op-power X zero = id-op
+op-power X (suc n) = op-comp (op-power X n) X
+
+-- 幂算子（2 幂次）：X, X², X⁴, ...（2^k 次平方迭代）
+op-power-2^k : LinOp → ℕ → LinOp
+op-power-2^k X zero = X
+op-power-2^k X (suc k) = op-sq (op-power-2^k X k)
+
+-- 迭代积：aⁿ（n 次乘）
+iter-mul : ℝ → ℕ → ℝ
+iter-mul a zero = oneℝ
+iter-mul a (suc n) = iter-mul a n *ℝ a
+
+-- 迭代平方：a, a², a⁴, ...（2^k 次幂）
+iter-sq : ℝ → ℕ → ℝ
+iter-sq a zero = a
+iter-sq a (suc k) = iter-sq a k *ℝ iter-sq a k
+
+-- **可证**：‖id‖ ≤ 1（单位球上 ‖v‖ ≤ 1 逐点 + sup-least）
+op-norm-id-le : op-norm id-op ≤ℝ oneℝ
+op-norm-id-le = sup-least (op-fam id-op) oneℝ bound
+  where
+  bound : (r : ℝ) → op-fam id-op r → r ≤ℝ oneℝ
+  bound r (ex v (hv , refl)) = hv
+
+-- **可证**：幂范数上界——‖Xⁿ‖ ≤ ‖X‖ⁿ（submul 归纳；r(X) ≤ ‖X‖ 的代数核心）
+op-norm-pow-le : (X : LinOp) (n : ℕ) → op-norm (op-power X n) ≤ℝ iter-mul (op-norm X) n
+op-norm-pow-le X zero = op-norm-id-le
+op-norm-pow-le X (suc n) =
+  ≤-trans-ℝ (op-norm-submul (op-power X n) X)
+            (*-≤-mono-ℝ (op-norm-nonneg X) (op-norm-pow-le X n))
+
+-- **可证**：自伴 ⟹ 平方自伴（⟨X(Xx),y⟩ = ⟨Xx,Xy⟩ = ⟨x,X(Xy)⟩）
+SelfAdjoint-op-sq : (X : LinOp) → SelfAdjoint X → SelfAdjoint (op-sq X)
+SelfAdjoint-op-sq X h x y = trans (h (LinOp.f X x) y) (h x (LinOp.f X y))
+
+-- **可证**：自伴 ⟹ 2^k 幂自伴（归纳）
+SelfAdjoint-op-power-2^k : (X : LinOp) → SelfAdjoint X → (k : ℕ) → SelfAdjoint (op-power-2^k X k)
+SelfAdjoint-op-power-2^k X h zero = h
+SelfAdjoint-op-power-2^k X h (suc k) =
+  SelfAdjoint-op-sq (op-power-2^k X k) (SelfAdjoint-op-power-2^k X h k)
+
+-- **可证**：自伴幂范数精确——‖X^{2^k}‖ = ‖X‖^{2^k}（norm-power 归纳；
+--   Gelfand 公式 r(X) = lim ‖Xⁿ‖^{1/n} 沿 2^k 子列 ⟹ r(X) ≥ ‖X‖ 的代数核心）
+op-norm-power-2^k : (X : LinOp) → SelfAdjoint X → (k : ℕ)
+  → op-norm (op-power-2^k X k) ≡ iter-sq (op-norm X) k
+op-norm-power-2^k X h zero = refl
+op-norm-power-2^k X h (suc k) =
+  trans (norm-power P (SelfAdjoint-op-power-2^k X h k))
+        (cong₂ _*ℝ_ (op-norm-power-2^k X h k) (op-norm-power-2^k X h k))
+  where
+  P : LinOp
+  P = op-power-2^k X k
+
+-- 谱半径公式组合路径（文档化，8-6b）：
+--   r(X) ≤ ‖X‖：op-norm-pow-le（‖Xⁿ‖ ≤ ‖X‖ⁿ）+ Gelfand 公式（极限层）；
+--   r(X) ≥ ‖X‖（自伴）：op-norm-power-2^k（‖X^{2^k}‖ = ‖X‖^{2^k}）沿 2^k 子列；
+--   SpectralTheory norm-contraction（σ(e^(-tA)) ⊆ (0,1] ⟹ ‖e^(-tA)‖ ≤ 1）降定理的代数核心齐备，
+--   完整公式需极限/谱论层（8-6b + 阶段 7-3 E 构造后）。
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -858,4 +937,8 @@ cauchy-const x ε 0<ε = ex zero (λ m n h1 h2 →
 --    Cauchy-seq/Converges（ε-δ 定义）+ 完备性基础假设 complete + 可证 ≤ℕ-refl/trans/suc、
 --    sub-ᵥ-self（x−x=0）、conv-const/cauchy-const（常值序列收敛/Cauchy）——
 --    Riesz 表示/投影定理/谱定理的共同地基（pre-Hilbert ⟹ Hilbert 空间）。
---  - 阶段 6（待）：谱半径公式（norm-contraction，需谱论）；阶段 7-3（E 的测度构造）。
+--  - 阶段 6a（✅ 2026-08-02）：谱半径公式的代数核心——id-op/op-sq/op-power/op-power-2^k/
+--    iter-mul/iter-sq + **可证** op-norm-id-le（‖id‖≤1）/op-norm-pow-le（‖Xⁿ‖≤‖X‖ⁿ，
+--    r≤‖X‖）/SelfAdjoint-op-sq/SelfAdjoint-op-power-2^k/op-norm-power-2^k
+--    （‖X^{2^k}‖=‖X‖^{2^k}，r≥‖X‖ 的 Gelfand 子列核心）——norm-contraction 降定理代数核心齐备。
+--  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；阶段 7-3（E 的测度构造）。

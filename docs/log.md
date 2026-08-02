@@ -1266,3 +1266,17 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **意义**：pre-Hilbert ⟹ Hilbert 空间（公理补全里程碑）；完备性层是 Riesz 表示（adj 降定理路径）、投影定理、谱定理（E 构造/谱半径公式）的共同地基，后续阶段由此展开。
 
 **阶段 8 状态**：完备性层完成（Hilbert 空间公理补全）。待推进：8-5b（强连续半群，需谱论）、阶段 8-6（谱半径公式，需谱论）；阶段 7-3（E 的测度构造，需谱定理）。
+
+---
+
+【阶段 8-6a：谱半径公式的代数核心（HilbertSpace §9，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-6 前置**：norm-contraction（谱半径 = 范数）降定理的代数核心——Gelfand 公式 r(X) = lim ‖Xⁿ‖^{1/n} 的上下界两侧。
+2. **HilbertSpace 新增 §9**（一次编译通过，零新增公理）：
+   - 结构：`id-op`（恒等算子）、`op-sq`（平方）、`op-power`（Xⁿ，X⁰=id、X^{n+1}=Xⁿ∘X）、`op-power-2^k`（X, X², X⁴, ...，k 次平方迭代）、`iter-mul`（aⁿ 迭代积）、`iter-sq`（a, a², a⁴, ... 迭代平方）；
+   - **可证** `op-norm-id-le`（‖id‖≤1，单位球 + sup-least）、**`op-norm-pow-le`**（‖Xⁿ‖≤‖X‖ⁿ，submul 归纳——r(X)≤‖X‖ 的代数核心）；
+   - **可证** `SelfAdjoint-op-sq`（自伴⟹平方自伴）、`SelfAdjoint-op-power-2^k`（自伴⟹2^k 幂自伴，归纳）；
+   - **`op-norm-power-2^k`**（SelfAdjoint X ⟹ ‖X^{2^k}‖=‖X‖^{2^k}，norm-power 归纳——Gelfand 公式沿 2^k 子列 ⟹ r(X)≥‖X‖ 的代数核心）。
+3. **意义**：谱半径公式两侧的代数核心全部落地（避开 ℕ 2^k 算术——iter-sq 迭代平方定义使归纳定义性闭合）；完整 Gelfand 公式（极限层）与 norm-contraction 实例化（谱论）留 8-6b + 阶段 7-3。
+
+**阶段 8 状态**：6a 完成（谱半径公式代数核心：r≤‖X‖ 与自伴 ‖X^{2^k}‖=‖X‖^{2^k} 可证）。待推进：8-6b（Gelfand 极限层 + 谱论）；8-5b（强连续半群）；阶段 7-3（E 的测度构造）。
