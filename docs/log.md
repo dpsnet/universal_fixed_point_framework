@@ -1439,3 +1439,16 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：E-σ-add 的单调性与可数并基础落地——谱投影的单调吸收（E-sub 对应）闭合；完整可数可加性（sup 收敛）留 σ-代数/极限层（LinOp 层算子序 sup 机制）。
 
 **阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项 + E-σ-add 第一步）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：E-σ-add 完整形式（σ-代数/极限层 + 算子序 sup）；7-4 "≥"方向；8-5b 余项（跨层模型）；8-6b 完整降定理（已连接）。
+
+---
+
+【阶段 13：算子序与投影单调性（HilbertSpace §13，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E-σ-add 完整形式的机制——Hilbert 层算子序（正算子序）+ 谱投影单调性（sup 上界机制基础）。
+2. **HilbertSpace 新增 §13**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - Hilbert 层算子序 **`_≤ₗ_`**（X ≤ₗ Y ⟺ ∀v. ⟨(Y−X)v, v⟩ ≥ 0，正算子序——投影值测度序结构的基础）；
+   - **可证** **`E-hilb-mono`**（P⊆Q ⟹ E(P) ≤ₗ E(Q）：⟨(E(Q)−E(P))v, v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0——v = E(P)v + w（proj-decomp）⟹ (E(Q)−E(P))v = E(Q)w（E-hilb-sub x=v + 线性性 + 减法消去 add-sub-cancel）⟹ ⟨E(Q)w, v⟩ = ⟨w, E(P)v⟩ + ‖E(Q)w‖² = 0 + ‖E(Q)w‖²（E(Q) 自伴 + 幂等 + w ⊥ W_P（proj-orth）））。
+3. **排坑**：E-hilb-sub 需 x = v 特化（直接给 Y(Xv) = Xv，无需 proj-idemp 组合）。
+4. **意义**：投影值测度的算子序单调性（SpectralTheory E-sub 的算子序版本）闭合——E-σ-add 的 sup 上界机制基础就位（E(P) ≤ₗ E(Q) 当 P⊆Q）；完整可数可加性随 σ-代数/极限层实现。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项 + E-σ-add 第一步 + 算子序机制）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：E-σ-add 完整形式（σ-代数/极限层）；7-4 "≥"方向；8-5b 余项（跨层模型）。

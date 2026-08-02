@@ -108,6 +108,11 @@ module HilbertSpace.HilbertSpace where
       strong-continuity（Hille-Yosida 条件 iv）的 Hilbert 侧对应）；
     - **可证** exp-hilb-radius-le-one（r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1：spectral-radius-norm +
       压缩——norm-contraction 的 Hilbert 侧完整降定理核心，8-6b 连接）。
+  阶段 13（2026-08-02）：算子序与投影单调性（E-σ-add 完整形式的机制前置，§13）。
+    - Hilbert 层算子序 _≤ₗ_（X ≤ₗ Y ⟺ ∀v. ⟨(Y−X)v, v⟩ ≥ 0，正算子序）；
+    - **可证** E-hilb-mono（P⊆Q ⟹ E(P) ≤ₗ E(Q）：⟨(E(Q)−E(P))v, v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0
+      （proj-decomp + E-hilb-sub + 自伴/幂等 + w ⊥ W_P）——投影序单调，E-σ-add 的
+      sup 上界机制基础）。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1488,6 +1493,74 @@ exp-hilb-radius-le-one t =
   subst (λ z → z ≤ℝ oneℝ) (sym (spectral-radius-norm (exp-hilb-tA t) (exp-hilb-self-adjoint t)))
         (exp-hilb-contractive t)
 
+-- ==================================================================
+-- §13 算子序与投影单调性（E-σ-add 完整形式的机制前置，2026-08-02）
+-- ==================================================================
+
+-- Hilbert 层算子序（正算子序）：X ≤ₗ Y ⟺ ∀v. ⟨(Y−X)v, v⟩ ≥ 0
+--（投影值测度的算子序基础——E-σ-add（E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)）的上确界机制）
+_≤ₗ_ : LinOp → LinOp → Set
+X ≤ₗ Y = (v : V) → zeroℝ ≤ℝ (LinOp.f (op-sub Y X) v ⟨⟩ v)
+
+-- **可证**：谱投影算子序单调——P ⊆ Q ⟹ E(P) ≤ₗ E(Q)
+--（⟨(E(Q)−E(P))v, v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0：
+--  v = E(P)v + w（proj-decomp），E(Q)(E(P)v) = E(P)v（E-hilb-sub）⟹
+--  (E(Q)−E(P))v = E(Q)w；⟨E(Q)w, v⟩ = ⟨E(Q)w, E(P)v⟩ + ⟨E(Q)w, w⟩
+--  = ⟨w, E(P)v⟩（E(Q) 自伴 + E-hilb-sub）+ ‖E(Q)w‖²（E(Q) 自伴 + 幂等）
+--  = 0 + ‖E(Q)w‖²（w ⊥ W_P）——投影序单调的 Hilbert 侧，E-σ-add 的单调性基础）
+E-hilb-mono : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x) → E-hilb P ≤ₗ E-hilb Q
+E-hilb-mono P Q pq v =
+  subst (λ z → zeroℝ ≤ℝ z) (sym ip-eq) (norm-sq-nonneg (LinOp.f (E-hilb Q) w))
+  where
+  X : LinOp
+  X = E-hilb P
+  Y : LinOp
+  Y = E-hilb Q
+  w : V
+  w = v -ᵥ LinOp.f X v
+  -- v = Xv + w（正交分解）
+  v-decomp : v ≡ LinOp.f X v +ᵥ w
+  v-decomp = proj-decomp (spectral-subspace P) v
+  -- Yv = Xv + Yw（线性性 + E-hilb-sub：Y(Xv) = Xv，x = v 特化）
+  Yv-eq : LinOp.f Y v ≡ LinOp.f X v +ᵥ LinOp.f Y w
+  Yv-eq =
+    trans (cong (LinOp.f Y) v-decomp)
+          (trans (LinOp.lin-add Y (LinOp.f X v) w)
+                 (cong₂ _+ᵥ_ (E-hilb-sub P Q pq v) refl))
+  -- (Xv+Yw) − Xv = Yw（向量代数：结合/交换/逆/零）
+  add-sub-cancel : (LinOp.f X v +ᵥ LinOp.f Y w) -ᵥ LinOp.f X v ≡ LinOp.f Y w
+  add-sub-cancel =
+    trans (+ᵥ-assoc (LinOp.f X v) (LinOp.f Y w) ((negℝ oneℝ) ·ᵥ LinOp.f X v))
+          (trans (cong (λ u → LinOp.f X v +ᵥ u)
+                       (+ᵥ-comm (LinOp.f Y w) ((negℝ oneℝ) ·ᵥ LinOp.f X v)))
+                 (trans (sym (+ᵥ-assoc (LinOp.f X v) ((negℝ oneℝ) ·ᵥ LinOp.f X v) (LinOp.f Y w)))
+                        (trans (cong (λ u → u +ᵥ LinOp.f Y w) (+-inv-ᵥ (LinOp.f X v)))
+                               (zero-l-ᵥ (LinOp.f Y w)))))
+  -- (Y−X)v = Yv − Xv = Yw
+  diff-eq : LinOp.f (op-sub Y X) v ≡ LinOp.f Y w
+  diff-eq = trans (cong (λ t → t -ᵥ LinOp.f X v) Yv-eq) add-sub-cancel
+  -- ⟨Yw, Xv⟩ = 0（E(Q) 自伴 + E-hilb-sub（x = v）+ w ⊥ W_P）
+  orth-Xw : (LinOp.f Y w) ⟨⟩ (LinOp.f X v) ≡ zeroℝ
+  orth-Xw =
+    trans (proj-self-adjoint (spectral-subspace Q) w (LinOp.f X v))
+          (trans (cong (λ t → w ⟨⟩ t) (E-hilb-sub P Q pq v))
+                 (proj-orth (spectral-subspace P) v (LinOp.f X v)
+                            (proj-in (spectral-subspace P) v)))
+  -- ⟨Yw, w⟩ = ‖Yw‖²（E(Q) 自伴 + 幂等）
+  ww-eq : (LinOp.f Y w) ⟨⟩ w ≡ (LinOp.f Y w ⟨⟩ LinOp.f Y w)
+  ww-eq =
+    trans (proj-self-adjoint (spectral-subspace Q) w w)
+          (trans (cong (λ t → w ⟨⟩ t) (sym (proj-idemp (spectral-subspace Q) w)))
+                 (sym (proj-self-adjoint (spectral-subspace Q) w (LinOp.f Y w))))
+  -- ⟨(Y−X)v, v⟩ = ⟨Yw, v⟩ = ⟨Yw, Xv+w⟩ = ⟨Yw,Xv⟩ + ⟨Yw,w⟩ = 0 + ‖Yw‖² = ‖Yw‖²
+  ip-eq : (LinOp.f (op-sub Y X) v ⟨⟩ v) ≡ (LinOp.f Y w ⟨⟩ LinOp.f Y w)
+  ip-eq =
+    trans (cong (λ t → t ⟨⟩ v) diff-eq)
+          (trans (cong (λ u → (LinOp.f Y w) ⟨⟩ u) (v-decomp))
+                 (trans (ip-add-r (LinOp.f Y w) (LinOp.f X v) w)
+                        (trans (cong₂ _+ℝ_ orth-Xw ww-eq)
+                               (zero-add-ℝ (LinOp.f Y w ⟨⟩ LinOp.f Y w)))))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1568,5 +1641,11 @@ exp-hilb-radius-le-one t =
 --    （强连续 SOT，sot-from-norm 特化——strong-continuity 的 Hilbert 侧对应）/
 --    **exp-hilb-radius-le-one**（自伴 ⟹ r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1，spectral-radius-norm
 --    + 压缩——norm-contraction 的 Hilbert 侧完整降定理核心，8-6b 连接）。
+--  - 阶段 13（✅ 2026-08-02）：算子序与投影单调性（E-σ-add 完整形式的机制前置）——
+--    Hilbert 层算子序 _≤ₗ_（X≤ₗY ⟺ ∀v.⟨(Y−X)v,v⟩≥0，正算子序）+ **可证**
+--    E-hilb-mono（P⊆Q ⟹ E(P)≤ₗ E(Q)：⟨(E(Q)−E(P))v,v⟩ = ‖E(Q)(v−E(P)v)‖² ≥ 0——
+--    v=E(P)v+w（proj-decomp）+ (E(Q)−E(P))v=E(Q)w（E-hilb-sub x=v）+ ⟨E(Q)w,v⟩
+--    =⟨w,E(P)v⟩+‖E(Q)w‖²=0+‖E(Q)w‖²（自伴+幂等+w⊥W_P）——投影序单调，E-σ-add 的
+--    sup 上界机制基础）。
 --  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项 E-σ-add（可数可加，需
 --    σ-代数/极限层）；8-5b 余项（跨层模型 Op → LinOp 完整实例化）。
