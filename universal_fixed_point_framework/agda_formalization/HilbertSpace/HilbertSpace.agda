@@ -119,6 +119,11 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-fin-le-σ（E(∪ᵢ<ₘPᵢ) ≤ₗ E(∪ₙPₙ)：FinUnion ⊆ σUnion
       （fin-union-in 取 n=i）+ E-hilb-mono——连续下式上界方向）；
     - σ-可数可加桥接 E-hilb-σ-add（E(∪ₙPₙ) = supₘΣᵢ<ₘE(Pᵢ)，least 方向 + 收敛随极限层）。
+  阶段 15（2026-08-02）：谱投影范数幂等（‖E(P)‖² = ‖E(P)‖，§15）。
+    - **可证** sup-ext-ℝ（sup 外延：谓词外延相同 ⟹ sup 相等，sup-least/upper 双向）；
+    - **可证** E-hilb-norm-idempotent（‖E(P)‖² = ‖E(P)‖：norm-power（自伴）+
+      点态幂等 E-hilb-idemp + sup 外延——SpectralTheory §12 idem-zero-one/proj-norm
+      （幂等元范数 ∈{0,1}）的 Hilbert 侧对应）。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1603,6 +1608,33 @@ postulate
   E-hilb-σ-add : (P : ℕ → ℝ → Set) → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
     → E-hilb (σUnion P) ≡ supₗ (λ Y → Σ ℕ (λ m → Y ≡ sum-ₗ (λ i → E-hilb (P i)) m))
 
+-- ==================================================================
+-- §15 谱投影范数幂等（‖E(P)‖² = ‖E(P)‖，2026-08-02）
+-- ==================================================================
+
+-- **可证**：sup 外延——谓词外延相同 ⟹ sup 相等（sup-least/upper 双向 + ≤-antisym）
+sup-ext-ℝ : (S T : ℝ → Set) → ((r : ℝ) → S r → T r) → ((r : ℝ) → T r → S r) → sup-ℝ S ≡ sup-ℝ T
+sup-ext-ℝ S T s→t t→s =
+  ≤-antisym (sup-least S (sup-ℝ T) (λ r sr → sup-upper T r (s→t r sr)))
+            (sup-least T (sup-ℝ S) (λ r tr → sup-upper S r (t→s r tr)))
+
+-- **可证**：谱投影范数幂等——‖E(P)‖² = ‖E(P)‖
+--（norm-power（E(P) 自伴）：‖E(P)²‖ = ‖E(P)‖²；点态幂等 E-hilb-idemp +
+--  sup 外延（op-fam 谓词外延相同）⟹ ‖E(P)²‖ = ‖E(P)‖——
+--  SpectralTheory §12 idem-zero-one/proj-norm（幂等元范数 ∈{0,1}）的 Hilbert 侧对应）
+E-hilb-norm-idempotent : (P : ℝ → Set) → (op-norm (E-hilb P) *ℝ op-norm (E-hilb P)) ≡ op-norm (E-hilb P)
+E-hilb-norm-idempotent P =
+  trans (sym (norm-power (E-hilb P) (E-hilb-self-adjoint P)))
+        (sup-ext-ℝ (op-fam (op-comp (E-hilb P) (E-hilb P))) (op-fam (E-hilb P))
+                   (fam-pp→p P) (fam-p→pp P))
+  where
+  -- op-fam (E(P)²) ⊆ op-fam E(P)：E(P)(E(P)v) = E(P)v（幂等）
+  fam-pp→p : (P : ℝ → Set) (r : ℝ) → op-fam (op-comp (E-hilb P) (E-hilb P)) r → op-fam (E-hilb P) r
+  fam-pp→p P r (ex v (hv , refl)) = ex v (hv , trans refl (cong norm (E-hilb-idemp P v)))
+  -- op-fam E(P) ⊆ op-fam (E(P)²)：反向
+  fam-p→pp : (P : ℝ → Set) (r : ℝ) → op-fam (E-hilb P) r → op-fam (op-comp (E-hilb P) (E-hilb P)) r
+  fam-p→pp P r (ex v (hv , refl)) = ex v (hv , trans refl (sym (cong norm (E-hilb-idemp P v))))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1695,5 +1727,9 @@ postulate
 --    （fin-union-in 取 n=i）+ E-hilb-mono——连续下式上界方向）；σ-可数可加桥接
 --    E-hilb-σ-add（E(∪ₙPₙ)=supₘΣᵢ<ₘE(Pᵢ)，least 方向 + 收敛随极限层）——
 --    SpectralTheory §10f E-σ-add 的 Hilbert 侧对应。
+--  - 阶段 15（✅ 2026-08-02）：谱投影范数幂等（§15）——**可证** sup-ext-ℝ（sup 外延，
+--    sup-least/upper 双向）+ E-hilb-norm-idempotent（‖E(P)‖²=‖E(P)‖：norm-power（自伴）
+--    + 点态幂等 E-hilb-idemp + sup 外延——SpectralTheory §12 idem-zero-one/proj-norm
+--    （幂等元范数 ∈{0,1}）的 Hilbert 侧对应）。
 --  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；8-5b 余项（跨层模型
 --    Op → LinOp 完整实例化）；7-4 "≥"方向。

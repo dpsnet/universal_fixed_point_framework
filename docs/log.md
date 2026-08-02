@@ -1465,3 +1465,15 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：**E 的测度构造（阶段 7-3）全链闭合**——E-total（§10c）/E-union（§10d）/E-fin-union（§10e）/E-σ-add 完整形式（§14）全部落地；SpectralTheory §10f E-σ-add（可数可加公理）的 Hilbert 侧对应完成（sup 收敛细节留极限层）。
 
 **阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链：7-3a/b + 第一步 + E-union + E-fin-union + E-σ-add 完整形式）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：7-4 "≥"方向（多项式→简单函数逼近兼容性）；8-5b 余项（跨层模型 Op → LinOp）。
+
+---
+
+【阶段 15：谱投影范数幂等（HilbertSpace §15，2026-08-02）】
+
+1. **前置**：SpectralTheory §12 idem-zero-one/proj-norm（幂等元范数 ∈{0,1}）的 Hilbert 侧对应——谱投影 ‖E(P)‖² = ‖E(P)‖。
+2. **HilbertSpace 新增 §15**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - **可证** `sup-ext-ℝ`（sup 外延：谓词外延相同 ⟹ sup 相等，sup-least/upper 双向 + ≤-antisym）；
+   - **可证** **`E-hilb-norm-idempotent`**（‖E(P)‖² = ‖E(P)‖：norm-power（E(P) 自伴，E-hilb-self-adjoint）给 ‖E(P)²‖ = ‖E(P)‖² + 点态幂等 E-hilb-idemp + sup 外延（op-fam (E(P)²) 与 op-fam E(P) 谓词外延相同））。
+3. **意义**：谱投影范数幂等（‖E(P)‖ ∈ {0,1} 的代数核心）闭合——SpectralTheory §12 idem-zero-one/proj-norm 的 Hilbert 侧对应；E-hilb 的范数结构完整（‖E(P)‖ ≤ 1 + 幂等）。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅ + Hilbert 层范数/序结构完整。待推进：7-4 "≥"方向；8-5b 余项（跨层模型 Op → LinOp）。

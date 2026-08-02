@@ -29,7 +29,14 @@ module Everything where
 --        算子拓扑层（ε-δ SOT/范数收敛 + 范数⟹强收敛）v0.92；完备性层 v0.93；
 --        谱半径公式代数核心（幂范数上界 + 自伴 2^k 精确范数）v0.94；
 --        正交分解与投影算子（阶段 7-3a：Pythagorean + Subspace + 投影定理桥接 +
---        proj-decomp/proj-idemp/proj-norm-le 可证）v0.95）
+--        proj-decomp/proj-idemp/proj-norm-le 可证）v0.95；
+--        投影算子与自伴（阶段 7-3b：proj-unique ⟹ 线性性 + proj-self-adjoint +
+--        proj-op-norm-le-one）v0.96；谱投影构造框架（阶段 7-3 第一步：E-hilb）v0.97；
+--        谱投影加法性（E-union）v0.98；谱半径公式极限层（Gelfand 闭合 r(X)=‖X‖）v0.99；
+--        E 有限可加性（E-fin-union）v1.00；E-σ-add 单调吸收 + 可数并 v1.05；
+--        强连续半群实例化框架（§12：exp-hilb + strong-cont + radius-le-one）v1.04；
+--        算子序与投影单调（§13：≤ₗ + E-hilb-mono）v1.06；E-σ-add 完整形式（§14）v1.07；
+--        谱投影范数幂等（§15：sup-ext + ‖E(P)‖²=‖E(P)‖）v1.08——阶段 7-3 全链闭合）
 
 open import Sp.SpCategory
 open import Sp.HigherSpCategory
