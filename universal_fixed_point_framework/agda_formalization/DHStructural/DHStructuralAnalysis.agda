@@ -913,6 +913,136 @@ sub-elim {a} {b} {c} h =
                (lt-+-mono-l-ℝ (subst (λ u → u <ℝ c) (+-comm-ℝ a b) h)))
 
 -- ==================================================================
+-- 除法/取负代数与 ≤ 移项（T3 阶段 4 补充，2026-08-02）
+-- 用途：Hilbert 空间层 Cauchy-Schwarz 不等式（阶段 8-2）——
+--   t = -⟨x,y⟩/‖y‖² 的展开需 取负×乘 / 乘除结合 / 分数乘除消去；
+--   终步 P/q ≤ A 且 0 < q ⟹ P ≤ A·q 需非负侧乘保序。
+-- 全部为可证引理（零新增公理）。
+-- ==================================================================
+
+-- x·(-y) = -(x·y)（neg-mul-ℝ + 交换律）
+neg-mul-r-ℝ : (x y : ℝ) → x *ℝ negℝ y ≡ negℝ (x *ℝ y)
+neg-mul-r-ℝ x y = trans (*-comm-ℝ x (negℝ y))
+                        (trans (neg-mul-ℝ y x) (cong negℝ (*-comm-ℝ y x)))
+
+-- (-x)·(-y) = x·y（neg-mul-ℝ + neg-mul-r-ℝ + neg-neg）
+neg-neg-mul-ℝ : (x y : ℝ) → (negℝ x) *ℝ (negℝ y) ≡ x *ℝ y
+neg-neg-mul-ℝ x y =
+  trans (neg-mul-ℝ x (negℝ y))
+        (trans (cong negℝ (neg-mul-r-ℝ x y))
+               (neg-neg (x *ℝ y)))
+
+-- (x/a)/b = x/(a·b)（交叉相乘消去）
+div-div-ℝ : (x a b : ℝ) → (x /ℝ a) /ℝ b ≡ x /ℝ (a *ℝ b)
+div-div-ℝ x a b =
+  /-cross-ℝ (trans (sym (*-assoc-ℝ (x /ℝ a) a b))
+                   (cong (λ u → u *ℝ b)
+                         (trans (*-comm-ℝ (x /ℝ a) a) (*-/cancel-ℝ a x))))
+
+-- (a/c)·(b/d) = (a·b)/(c·d)（*-/ℝ 两次 + div-div-ℝ）
+frac-mul-ℝ : (a b c d : ℝ) → (a /ℝ c) *ℝ (b /ℝ d) ≡ (a *ℝ b) /ℝ (c *ℝ d)
+frac-mul-ℝ a b c d =
+  trans (*-/ℝ (a /ℝ c) b d)
+        (trans (cong (λ u → u /ℝ d)
+                     (trans (*-comm-ℝ (a /ℝ c) b)
+                            (trans (*-/ℝ b a c)
+                                   (cong (λ u → u /ℝ c) (*-comm-ℝ b a)))))
+               (div-div-ℝ (a *ℝ b) c d))
+
+-- (a·b)/(c·b) = a/c（交叉相乘消去）
+frac-cancel-ℝ : (a c b : ℝ) → (a *ℝ b) /ℝ (c *ℝ b) ≡ a /ℝ c
+frac-cancel-ℝ a c b =
+  /-cross-ℝ (trans (*-assoc-ℝ a b c)
+                   (cong (λ u → a *ℝ u) (*-comm-ℝ b c)))
+
+-- 0 ≤ a + (-b) ⟹ b ≤ a（移项：两边加 b）
+≤-from-nonneg : {a b : ℝ} → zeroℝ ≤ℝ (a +ℝ negℝ b) → b ≤ℝ a
+≤-from-nonneg {a} {b} h =
+  subst (λ v → b ≤ℝ v) (add-neg-ident a b)
+        (subst (λ u → u ≤ℝ ((a +ℝ negℝ b) +ℝ b)) (zero-add-ℝ b)
+               (≤-+-mono-ℝ h (refl-≤ℝ {x = b})))
+  where
+  -- (a + (-b)) + b = a（结合 + 交换 + 逆 + 单位）
+  add-neg-ident : (a b : ℝ) → (a +ℝ negℝ b) +ℝ b ≡ a
+  add-neg-ident a b =
+    trans (+-assoc-ℝ a (negℝ b) b)
+          (trans (cong (λ u → a +ℝ u) (+-comm-ℝ (negℝ b) b))
+                 (trans (cong (λ u → a +ℝ u) (+-inv-ℝ b))
+                        (+-ident-ℝ a)))
+
+-- p/q ≤ a 且 0 ≤ q ⟹ p ≤ a·q（非负侧乘保序 + 乘除消去）
+div-≤-mul : {p a q : ℝ} → zeroℝ ≤ℝ q → (p /ℝ q) ≤ℝ a → p ≤ℝ (a *ℝ q)
+div-≤-mul {p} {a} {q} hq h =
+  subst (λ u → u ≤ℝ (a *ℝ q))
+        (trans (*-comm-ℝ (p /ℝ q) q) (*-/cancel-ℝ q p))
+        (*-≤-mono-ℝ {a = p /ℝ q} {b = a} {c = q} hq h)
+
+-- t·p 约简：(-(p/q))·p = -(p²/q)（Cauchy-Schwarz 展开的 t 侧）
+tp-ident : (p q : ℝ) → (negℝ (p /ℝ q)) *ℝ p ≡ negℝ ((p *ℝ p) /ℝ q)
+tp-ident p q =
+  trans (neg-mul-ℝ (p /ℝ q) p)
+        (cong negℝ (trans (*-comm-ℝ (p /ℝ q) p) (*-/ℝ p p q)))
+
+-- t²·q 约简：(-(p/q))²·q = p²/q（Cauchy-Schwarz 展开的 t² 侧）
+ttq-ident : (p q : ℝ) → ((negℝ (p /ℝ q)) *ℝ (negℝ (p /ℝ q))) *ℝ q ≡ ((p *ℝ p) /ℝ q)
+ttq-ident p q =
+  trans (cong (λ u → u *ℝ q)
+              (trans (neg-neg-mul-ℝ (p /ℝ q) (p /ℝ q))
+                     (frac-mul-ℝ p p q q)))
+        (trans (*-comm-ℝ ((p *ℝ p) /ℝ (q *ℝ q)) q)
+               (trans (*-/ℝ q (p *ℝ p) (q *ℝ q))
+                      (trans (cong (λ u → u /ℝ (q *ℝ q)) (*-comm-ℝ q (p *ℝ p)))
+                             (frac-cancel-ℝ (p *ℝ p) q q))))
+
+-- ==================================================================
+-- min-ℝ（测度论层阶段 1 前置，2026-08-02）
+-- 用途：无界函数的截断逼近 f_c = min(f, c)（蓝图 §5.15 阶段 7-1）——
+--   恒等/exp/φ_t 等无界函数经截断族逼近 ∫f dE = supₙ ∫min(f,n) dE。
+-- min-ℝ 经三分律定义（标准有序域事实，可证性质、零新增公理）。
+-- ==================================================================
+
+-- min(a,b)：三分律取较小者
+min-ℝ : ℝ → ℝ → ℝ
+min-ℝ a b with trichotomy-ℝ a b
+min-ℝ a b | inj₁ _ = a
+min-ℝ a b | inj₂ (inj₁ _) = a
+min-ℝ a b | inj₂ (inj₂ _) = b
+
+-- min(a,b) ≤ a
+min-≤-l : (a b : ℝ) → min-ℝ a b ≤ℝ a
+min-≤-l a b with trichotomy-ℝ a b
+min-≤-l a b | inj₁ _ = refl-≤ℝ {x = a}
+min-≤-l a b | inj₂ (inj₁ _) = refl-≤ℝ {x = a}
+min-≤-l a b | inj₂ (inj₂ b<a) = <-≤-ℝ b<a
+
+-- min(a,b) ≤ b
+min-≤-r : (a b : ℝ) → min-ℝ a b ≤ℝ b
+min-≤-r a b with trichotomy-ℝ a b
+min-≤-r a b | inj₁ a<b = <-≤-ℝ a<b
+min-≤-r a b | inj₂ (inj₁ a=b) = subst (λ z → z ≤ℝ b) (sym a=b) (refl-≤ℝ {x = b})
+min-≤-r a b | inj₂ (inj₂ _) = refl-≤ℝ {x = b}
+
+-- min 是最小下界：z ≤ a 且 z ≤ b ⟹ z ≤ min(a,b)
+min-glb : (z a b : ℝ) → z ≤ℝ a → z ≤ℝ b → z ≤ℝ min-ℝ a b
+min-glb z a b hza hzb with trichotomy-ℝ a b
+min-glb z a b hza hzb | inj₁ _ = hza
+min-glb z a b hza hzb | inj₂ (inj₁ _) = hza
+min-glb z a b hza hzb | inj₂ (inj₂ _) = hzb
+
+-- 吸收（左）：a ≤ b ⟹ min(a,b) = a
+min-absorp-l : (a b : ℝ) → a ≤ℝ b → min-ℝ a b ≡ a
+min-absorp-l a b hab with trichotomy-ℝ a b
+min-absorp-l a b hab | inj₁ _ = refl
+min-absorp-l a b hab | inj₂ (inj₁ _) = refl
+min-absorp-l a b hab | inj₂ (inj₂ b<a) =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ b<a hab))
+
+-- 右单调：b ≤ c ⟹ min(a,b) ≤ min(a,c)（min-glb + min-≤-l/r）
+min-mono-r : (a b c : ℝ) → b ≤ℝ c → min-ℝ a b ≤ℝ min-ℝ a c
+min-mono-r a b c hbc =
+  min-glb (min-ℝ a b) a c (min-≤-l a b) (≤-trans-ℝ (min-≤-r a b) hbc)
+
+-- ==================================================================
 -- B8 two-exp-add-exp-lt-one 辅助（T3 阶段 4，2026-07-31）
 -- 目标：d ≥ 1 ⟹ 2e^{-d²} + e^{-d(3+d)} < 1
 -- 策略：d² ≥ 1 ⟹ e^{-d²} ≤ e^{-1} < 37/100；d(3+d) ≥ 4 ⟹ e^{-d(3+d)} ≤ e^{-4} < 1/16

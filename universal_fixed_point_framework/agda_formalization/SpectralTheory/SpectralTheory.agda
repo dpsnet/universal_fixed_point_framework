@@ -40,7 +40,8 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
+         natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -206,16 +207,66 @@ spec-int-below-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) →
 spec-int-below-mono {f} {g} h Y (pair₁Σ s (eq , dom)) =
   pair₁Σ s (eq , λ i x px → ≤-trans-ℝ (dom i x px) (h x))
 
--- 无界逼近细节（2026-08-01 文档化闭合）：
+-- 无界逼近细节（2026-08-01 文档化闭合；2026-08-02 阶段 7-1 落地 min-ℝ + 截断）：
 --  - spec-int-general 对无界 f（恒等，[0,∞) 上无界）为 Lebesgue 型 sup 构造——
 --    简单函数下界族的上确界；收敛性（sup 存在）依赖算子序完备性机制
 --    （≤ₒ 反自反/sup 非空性等，当前抽象层以 sup-op 公理登记，降定理路径 =
 --    Banach 空间/算子拓扑完整实现）。
 --  - 具体无界函数的值由桥接公理钉住：spec-int-general-id（∫id = spec-int-A）、
 --    spec-int-general-exp（∫e^(-x) = spec-int-exp）、spec-int-general-phi-t（∫φ_t = e^(-tA)，§8c）。
---  - 标准处理（测度论层）：无界 f 经截断 f_n = min(f, n) 逼近（∫f dE = supₙ ∫f_n dE），
---    恒等函数在 [0,∞) 上由谱支集 E-support-pos（σ(A) ⊆ [0,∞)）支持。
+--  - **阶段 7-1（2026-08-02）**：无界 f 经截断 f_c = min(f, c) 逼近——
+--    DHStructural 新增 min-ℝ（三分律定义，可证性质）；
+--    截断逐点性质（≤ f / ≤ c / 族单调 / 吸收）与 spec-int 侧单调结构
+--    （spec-int-general (trunc f c) ≤ₒ spec-int-general f，族单调）全部**可证**；
+--    ∫f dE = supₙ ∫min(f,n) dE 为 Lebesgue 单调收敛（桥接公理 spec-int-trunc-conv，
+--    测度论完整层降为定理）；恒等函数在 x ≤ c 时截断精确（trunc-absorp），
+--    谱支集 [0,∞) 支持（E-support-pos）覆盖其余部分。
 --  - 下界族结构性质：spec-int-below-mono（**可证**，f 单调）。
+
+-- ==================================================================
+-- §1c 截断逼近（测度论层阶段 1，2026-08-02）
+-- ==================================================================
+
+-- 截断 f_c(x) := min(f x, c)（c 为 ℝ 截断水平；上升族取 c = natℝ n）
+trunc : (ℝ → ℝ) → ℝ → ℝ → ℝ
+trunc f c x = min-ℝ (f x) c
+
+-- **可证**：截断 ≤ f（逐点）：min(f x, c) ≤ f x
+trunc-below-f : (f : ℝ → ℝ) (c x : ℝ) → trunc f c x ≤ℝ f x
+trunc-below-f f c x = min-≤-l (f x) c
+
+-- **可证**：截断有界：min(f x, c) ≤ c
+trunc-bounded : (f : ℝ → ℝ) (c x : ℝ) → trunc f c x ≤ℝ c
+trunc-bounded f c x = min-≤-r (f x) c
+
+-- **可证**：截断族单调（截断水平）：c ≤ d ⟹ min(f x, c) ≤ min(f x, d)
+trunc-mono : (f : ℝ → ℝ) {c d x : ℝ} → c ≤ℝ d → trunc f c x ≤ℝ trunc f d x
+trunc-mono f {c} {d} {x} hcd = min-mono-r (f x) c d hcd
+
+-- **可证**：截断精确：f x ≤ c ⟹ min(f x, c) = f x（恒等函数在 x ≤ c 时）
+trunc-absorp : (f : ℝ → ℝ) (c x : ℝ) → f x ≤ℝ c → trunc f c x ≡ f x
+trunc-absorp f c x hxc = min-absorp-l (f x) c hxc
+
+-- **可证**：截断族是下界族子族 ⟹ spec-int-general (trunc f c) ≤ₒ spec-int-general f
+--（trunc-below-f 逐点 + spec-int-below-mono + sup-op-least/upper）
+trunc-below-general : (f : ℝ → ℝ) (c : ℝ) → spec-int-general (trunc f c) ≤ₒ spec-int-general f
+trunc-below-general f c =
+  sup-op-least (spec-int-below (trunc f c)) (spec-int-general f)
+    (λ Y yb → sup-op-upper (spec-int-below f) Y (spec-int-below-mono (trunc-below-f f c) Y yb))
+
+-- **可证**：截断族单调（算子序）：c ≤ d ⟹ spec-int-general (trunc f c) ≤ₒ spec-int-general (trunc f d)
+trunc-mono-general : (f : ℝ → ℝ) {c d : ℝ} → c ≤ℝ d → spec-int-general (trunc f c) ≤ₒ spec-int-general (trunc f d)
+trunc-mono-general f {c} {d} hcd =
+  sup-op-least (spec-int-below (trunc f c)) (spec-int-general (trunc f d))
+    (λ Y yb → sup-op-upper (spec-int-below (trunc f d)) Y
+                (spec-int-below-mono (trunc-mono f hcd) Y yb))
+
+-- 截断收敛（Lebesgue 单调收敛定理的代数形式，登记测度论层桥接公理）：
+-- 无界 f（支持在 [0,∞) 的恒等/exp/φ_t）经上升截断族逼近 ∫f dE = supₙ ∫min(f, n) dE
+-- 降定理路径：测度论完整层（单调收敛 + 简单函数逼近机制）时转为可证明定理
+postulate
+  spec-int-trunc-conv : (f : ℝ → ℝ)
+    → spec-int-general f ≡ sup-op (λ Y → Σ₁ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
 
 -- 桥接公理（定义性）：
 --  - ∫id dE = spec-int-A：恒等函数的谱积分即谱表示（无界函数演算的桥接，

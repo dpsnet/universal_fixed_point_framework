@@ -1114,3 +1114,36 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **无代码改动**（纯论文提炼），无需重编译。
 
 **阶段 6 状态**：双重结构分析前置（paper19 v1.3）。待推进：测度论/完备性层、Hilbert 空间/拓扑层实现。
+
+---
+
+【Hilbert 空间/拓扑层立项启动：阶段 8 第一阶段（2026-08-01）】
+
+1. **蓝图 §5.15 立项**（spectral_T3_analysis_foundation.md）：
+   - 阶段 7（测度论/完备性层）🔄 立项：5 阶段拆分（ℝ 截断/min → 简单函数→可测函数积分 → E 的测度构造 → fc=∫ 积分实现 → 经典扩展）。
+   - 阶段 8（Hilbert 空间/拓扑层）🔄 立项：6 阶段拆分（向量空间+内积基础 → Cauchy-Schwarz+范数 → 有界算子+算子范数 → 自伴 C* 恒等 → 算子拓扑+强连续 → 谱半径公式）。
+   - 依赖：两层共用 DHStructural ℝ 完备性机制；谱测度构造需 Hilbert 空间 + 测度论。
+2. **新模块 `HilbertSpace/HilbertSpace.agda`**（阶段 8 第一阶段；Everything.agda 注册，**15 模块编译通过**，退出码 0）：
+   - 基础假设：实向量空间 V（8 条公理）+ 实内积（对称/左加性/左标量/正性/正定性）——注明模型必然性（希尔伯特空间理论）。
+   - 范数平方 ‖v‖² := ⟨v,v⟩（√ 待分析层扩展）。
+   - **可证引理**：`ip-add-r`（右加性）、`ip-scalar-r`（右标量）——内积双线性经对称性；`norm-sq-scalar`（‖a·v‖² = a²‖v‖²）、`norm-sq-nonneg`（‖v‖² ≥ 0）、`norm-sq-zero`（‖0‖² = 0，ℝ 层 `double-self-zero` 引理）。
+3. **排坑**：+ᵥ/·ᵥ/≤ℝ/⟨⟩ 同级（fixity 20）需括号（两处 NoParseForApplication）；double-self-zero 的 step1 方向（sym 多余，正向正确）。
+4. **意义**：谱论层"降定理路径"的实质起点——SpectralTheory §12 C*-范数公理（‖_‖/norm-pos 等）将随 Hilbert 空间层推进降为可证明定理（§15 审计 H 类）。
+
+**阶段 8 状态**：第一阶段完成（向量空间 + 内积基础 + 范数平方首批引理）。待推进：Cauchy-Schwarz、三角不等式（阶段 2）；测度论层阶段 1（ℝ 截断/min）。
+
+---
+
+【阶段 8-2：Cauchy-Schwarz 不等式闭合（2026-08-02）】
+
+1. **前置确认**：DHStructural 除法与不等式引理可用性核实——`_/ℝ_`/`*-/cancel-ℝ`（a·(b/a)=b）/`*-/ℝ`（a·(b/c)=(a·b)/c）/`div-one-ℝ`/`/-cross-ℝ`/`/-pos-ℝ`；不等式侧 `≤-trans-ℝ`/`*-≤-mono-ℝ`/`neg-≤-ℝ`/`≤-+-mono-ℝ`/`neg-<-ℝ`/`lt-≤-trans-ℝ`/`<-≤-ℝ`/`trichotomy-ℝ`/`irreflexive-ℝ` 均齐备；取负×乘已有 `neg-mul-ℝ`/`neg-neg`。
+2. **DHStructural 新增可证 ℝ 引理**（零新增公理）：`neg-mul-r-ℝ`（x·(-y)=-(x·y)）、`neg-neg-mul-ℝ`（(-x)·(-y)=x·y）、`div-div-ℝ`（(x/a)/b=x/(a·b)）、`frac-mul-ℝ`（(a/c)·(b/d)=(a·b)/(c·d)）、`frac-cancel-ℝ`（(a·b)/(c·b)=a/c）、`≤-from-nonneg`（0≤a+(-b) ⟹ b≤a，移项）、`div-≤-mul`（p/q≤a 且 0≤q ⟹ p≤a·q）、`tp-ident`/`ttq-ident`（t=-p/q 时 t·p=-p²/q、t²·q=p²/q——C-S 展开的 t 侧/t² 侧约简）。
+3. **HilbertSpace 新增**（阶段 8-2，全部可证、零新增公理）：
+   - `ip-zero-r`/`ip-zero-l`（⟨x,0⟩=0/⟨0,x⟩=0，0 的自加性 + ℝ 双自零）；
+   - `ip-expand`（⟨x+ay, x+ay⟩ 展开 = (‖x‖²+a⟨x,y⟩)+(a⟨x,y⟩+a²‖y‖²)，左/右加性 + 左/右标量 + 对称性）；
+   - `cs-core`（纯 ℝ 代数核心约简：t=-p/q 时 (A+t·p)+(t·p+t²·q) = A-p²/q）；
+   - **`cauchy-schwarz`**（⟨x,y⟩² ≤ ‖x‖²·‖y‖²）：三分律分 ‖y‖²=0/>0/<0（<0 分支与正性矛盾经 lt-≤-trans + irreflexive 排除；=0 分支正定性 ⟹ y=0 ⟹ 两边皆 0）；>0 分支取 t=-⟨x,y⟩/‖y‖²，⟨x+ty,x+ty⟩≥0 展开约简为 ‖x‖²-⟨x,y⟩²/‖y‖²≥0，移项得 ⟨x,y⟩²/‖y‖²≤‖x‖²，乘正 ‖y‖² 得 ⟨x,y⟩²≤‖x‖²·‖y‖²。
+4. **排坑**：≤ℝ 与 +ℝ/*ℝ/⟨⟩ 同级（fixity 20）需括号（NoParseForApplication 三处）；subst 方向（≤-from-nonneg 两处 direct 非 sym；div-≤-mul direct 非 sym）；frac-mul-ℝ 需 *-comm 交换到 b 侧再 *-/ℝ；cs-core 的 -p²/q+p²/q 抵消需 +-comm + +-inv（非直接 +-inv）。
+5. **意义**：范数公理依赖的核心不等式落地——SpectralTheory §12 C*-范数公理降定理路径的第二个实质组件（norm-pos 之外）就位；‖x+y‖² ≤ (‖x‖+‖y‖)² 的三角不等式依赖 √（‖x‖=√‖x‖²），待分析层扩展。
+
+**阶段 8 状态**：第二阶段完成（Cauchy-Schwarz 闭合，零新增公理）。待推进：三角不等式（需 √）；测度论层阶段 1（ℝ 截断/min）。
