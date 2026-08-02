@@ -31,12 +31,18 @@ module HilbertSpace.HilbertSpace where
       norm-sq-add（‖x+y‖² 展开）、norm-sq-tri（‖x+y‖²≤(‖x‖+‖y‖)²）、
       norm-tri（三角不等式）、norm-zero/norm-def（正定性）、
       norm-scalar（齐次 ‖a·v‖=|a|‖v‖）——范数公理（正性/齐次/三角/正定性）落地。
-  阶段 3+（待）：有界线性算子 + 算子范数（sup + √）、自伴 C* 恒等（norm-power）、
-    算子拓扑（strong-continuity）、谱半径公式（norm-contraction）。
+  阶段 3（2026-08-02）：有界线性算子 + 算子范数（sup + √）。
+    - LinOp（线性算子 record）+ 算子代数（zero/add/comp）+ 线性 ⟹ T0=0；
+    - 算子范数 ‖T‖ := sup_{‖v‖≤1} ‖Tv‖（sup-ℝ 完备性假设）；
+    - **可证**：op-norm-nonneg（‖T‖ ≥ 0，T0=0 是单位球成员）、op-norm-upper
+      （‖v‖≤1 ⟹ ‖Tv‖≤‖T‖）、op-norm-tri（‖S+T‖ ≤ ‖S‖+‖T‖，norm-tri + sup-least）。
+    - 待（8-3b）：缩放引理 ⟹ op-norm-submul（‖ST‖ ≤ ‖S‖‖T‖）。
+  阶段 4+（待）：自伴 C* 恒等（norm-power）、算子拓扑（strong-continuity）、
+    谱半径公式（norm-contraction）。
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
-open import Sp.SpCategory using (sym; trans; cong; cong₂)
+open import Sp.SpCategory using (sym; trans; cong; cong₂; _×_; _,_)
 
 -- ℝ 层（复用 DHStructural：T3 已建的有序域 + 完备性机制）
 open import DHStructural.DHStructuralAnalysis
@@ -45,6 +51,7 @@ open import DHStructural.DHStructuralAnalysis
          refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; trichotomy-ℝ; irreflexive-ℝ;
          zero-add-ℝ; natℝ; sqrt; sqrt-nonneg; sq-sqrt; sqrt-sq; sqrt-mono; sqrt-zero; sqrt-mul;
          abs; sq-nonneg-ℝ; le-sqrt-sq; sum-sq-ℝ; two-add-eq; sum-add-≤;
+         sup-ℝ; sup-upper; sup-least; zero-lt-one-ℝ;
          tp-ident; ttq-ident; ≤-from-nonneg; div-≤-mul;
          ⊥; ⊥-elim; _⊎_; inj₁; inj₂)
 
@@ -344,6 +351,130 @@ norm-scalar a v =
   trans (cong sqrt (norm-sq-scalar a v))
         (sqrt-mul (a *ℝ a) (norm-sq v) (sq-nonneg-ℝ a) (ip-pos v))
 
+-- ==================================================================
+-- §5 有界线性算子 + 算子范数（阶段 8-3，2026-08-02）
+-- ==================================================================
+
+-- 本地 Σ（Set 层依赖对，库未提供；构造子 ex 避免与 _×_ 的 _,_ 冲突）
+data Σ (A : Set) (B : A → Set) : Set where
+  ex : (a : A) → B a → Σ A B
+
+-- 线性算子 B(H)：f : V → V 保持加性与标量乘
+record LinOp : Set where
+  field
+    f : V → V
+    lin-add : (x y : V) → f (x +ᵥ y) ≡ f x +ᵥ f y
+    lin-scalar : (a : ℝ) (x : V) → f (a ·ᵥ x) ≡ a ·ᵥ f x
+
+-- **可证**（V 层双自零）：w = w + w ⟹ w = 0（⟨w,w⟩ = ⟨w,w⟩+⟨w,w⟩ + 正定性）
+v-double-zero : {w : V} → w ≡ w +ᵥ w → w ≡ zeroᵥ
+v-double-zero {w} h = ip-def w (double-self-zero step1)
+  where
+  -- ⟨w,w⟩ = ⟨w+w,w⟩ = ⟨w,w⟩+⟨w,w⟩
+  step1 : w ⟨⟩ w ≡ (w ⟨⟩ w) +ℝ (w ⟨⟩ w)
+  step1 = trans (cong (λ u → u ⟨⟩ w) h) (ip-add-l w w w)
+  -- ℝ 双自零：t = t+t ⟹ t = 0
+  double-self-zero : {t : ℝ} → t ≡ t +ℝ t → t ≡ zeroℝ
+  double-self-zero {t} h' = trans (sym s1) s2
+    where
+    s1 : (t +ℝ t) +ℝ negℝ t ≡ t
+    s1 = trans (+-assoc-ℝ t t (negℝ t))
+               (trans (cong (λ s → t +ℝ s) (+-inv-ℝ t)) (+-ident-ℝ t))
+    s2 : (t +ℝ t) +ℝ negℝ t ≡ zeroℝ
+    s2 = trans (cong (λ s → s +ℝ negℝ t) (sym h')) (+-inv-ℝ t)
+
+-- **可证**：线性 ⟹ T(0) = 0（T(0) = T(0+0) = T0 + T0 ⟹ 双自零）
+lin-zero : (T : LinOp) → LinOp.f T zeroᵥ ≡ zeroᵥ
+lin-zero T = v-double-zero double
+  where
+  double : LinOp.f T zeroᵥ ≡ LinOp.f T zeroᵥ +ᵥ LinOp.f T zeroᵥ
+  double =
+    trans (cong (λ w → LinOp.f T w) (sym (+ᵥ-ident zeroᵥ)))
+          (LinOp.lin-add T zeroᵥ zeroᵥ)
+
+-- **可证**：标量零吸收 a·0 = 0（a·0 = a·(0+0) = a·0 + a·0 ⟹ 双自零）
+scalar-zero : (a : ℝ) → a ·ᵥ zeroᵥ ≡ zeroᵥ
+scalar-zero a = v-double-zero double
+  where
+  double : a ·ᵥ zeroᵥ ≡ (a ·ᵥ zeroᵥ) +ᵥ (a ·ᵥ zeroᵥ)
+  double =
+    trans (cong (λ w → a ·ᵥ w) (sym (+ᵥ-ident zeroᵥ)))
+          (·ᵥ-distrib-l a zeroᵥ zeroᵥ)
+
+-- **可证**（V 层交换重排）：(a+b)+(c+d) = (a+c)+(b+d)
+swap-pair-ᵥ : (a b c d : V) → (a +ᵥ b) +ᵥ (c +ᵥ d) ≡ (a +ᵥ c) +ᵥ (b +ᵥ d)
+swap-pair-ᵥ a b c d =
+  trans (+ᵥ-assoc a b (c +ᵥ d))
+        (trans (cong (λ u → a +ᵥ u) (+ᵥ-comm b (c +ᵥ d)))
+               (trans (sym (+ᵥ-assoc a (c +ᵥ d) b))
+                      (trans (cong (λ u → u +ᵥ b) (sym (+ᵥ-assoc a c d)))
+                             (trans (+ᵥ-assoc (a +ᵥ c) d b)
+                                    (cong (λ u → (a +ᵥ c) +ᵥ u) (+ᵥ-comm d b))))))
+
+-- 零算子（点态零，线性性经 +ᵥ-ident/scalar-zero）
+zero-op : LinOp
+zero-op = record
+  { f = λ _ → zeroᵥ
+  ; lin-add = λ x y → sym (+ᵥ-ident zeroᵥ)
+  ; lin-scalar = λ a x → sym (scalar-zero a)
+  }
+
+-- 逐点加法（线性性经 swap-pair-ᵥ / ·ᵥ-distrib-l 反向）
+op-add : LinOp → LinOp → LinOp
+op-add S T = record
+  { f = λ x → LinOp.f S x +ᵥ LinOp.f T x
+  ; lin-add = λ x y →
+      trans (cong₂ _+ᵥ_ (LinOp.lin-add S x y) (LinOp.lin-add T x y))
+            (swap-pair-ᵥ (LinOp.f S x) (LinOp.f S y) (LinOp.f T x) (LinOp.f T y))
+  ; lin-scalar = λ a x →
+      trans (cong₂ _+ᵥ_ (LinOp.lin-scalar S a x) (LinOp.lin-scalar T a x))
+            (sym (·ᵥ-distrib-l a (LinOp.f S x) (LinOp.f T x)))
+  }
+
+-- 复合（线性性经逐层传递）
+op-comp : LinOp → LinOp → LinOp
+op-comp S T = record
+  { f = λ x → LinOp.f S (LinOp.f T x)
+  ; lin-add = λ x y →
+      trans (cong (LinOp.f S) (LinOp.lin-add T x y))
+            (LinOp.lin-add S (LinOp.f T x) (LinOp.f T y))
+  ; lin-scalar = λ a x →
+      trans (cong (LinOp.f S) (LinOp.lin-scalar T a x))
+            (LinOp.lin-scalar S a (LinOp.f T x))
+  }
+
+-- 算子范数族（共享谓词：‖v‖ ≤ 1 且 r = ‖Tv‖）
+op-fam : LinOp → ℝ → Set
+op-fam T = λ r → Σ V (λ v → (norm v ≤ℝ oneℝ) × (r ≡ norm (LinOp.f T v)))
+
+-- 算子范数：‖T‖ := sup_{‖v‖≤1} ‖Tv‖（sup-ℝ 完备性基础假设）
+op-norm : LinOp → ℝ
+op-norm T = sup-ℝ (op-fam T)
+
+-- **可证**：‖T‖ ≥ 0（T(0) = 0 是单位球内成员，sup-upper）
+op-norm-nonneg : (T : LinOp) → zeroℝ ≤ℝ op-norm T
+op-norm-nonneg T = sup-upper (op-fam T) zeroℝ (ex zeroᵥ (norm-zero-≤-one , norm-T-zero))
+  where
+  -- ‖0‖ ≤ 1（‖0‖ = 0 ≤ 1）
+  norm-zero-≤-one : norm zeroᵥ ≤ℝ oneℝ
+  norm-zero-≤-one = subst (λ z → z ≤ℝ oneℝ) (sym norm-zero) (<-≤-ℝ zero-lt-one-ℝ)
+  -- 0 = ‖T0‖（T0 = 0 + ‖0‖ = 0）
+  norm-T-zero : zeroℝ ≡ norm (LinOp.f T zeroᵥ)
+  norm-T-zero = sym (trans (cong norm (lin-zero T)) norm-zero)
+
+-- **可证**：上界性——‖v‖ ≤ 1 ⟹ ‖Tv‖ ≤ ‖T‖（sup-upper 直接）
+op-norm-upper : (T : LinOp) (v : V) → norm v ≤ℝ oneℝ → norm (LinOp.f T v) ≤ℝ op-norm T
+op-norm-upper T v hv = sup-upper (op-fam T) (norm (LinOp.f T v)) (ex v (hv , refl))
+
+-- **可证**：‖S+T‖ ≤ ‖S‖+‖T‖（norm-tri 逐点 + sup-least）
+op-norm-tri : (S T : LinOp) → op-norm (op-add S T) ≤ℝ (op-norm S +ℝ op-norm T)
+op-norm-tri S T = sup-least (op-fam (op-add S T)) (op-norm S +ℝ op-norm T) bound
+  where
+  bound : (r : ℝ) → op-fam (op-add S T) r → r ≤ℝ (op-norm S +ℝ op-norm T)
+  bound r (ex v (hv , refl)) =
+    ≤-trans-ℝ (norm-tri (LinOp.f S v) (LinOp.f T v))
+              (≤-+-mono-ℝ (op-norm-upper S v hv) (op-norm-upper T v hv))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -353,5 +484,9 @@ norm-scalar a v =
 --  - 阶段 2b（✅ 2026-08-02）：范数公理落地——norm := √(‖·‖²)（√ 分析层扩展），
 --    正性 norm-nonneg / 齐次 norm-scalar（|a|·‖v‖）/ 三角 norm-tri /
 --    正定性 norm-zero/norm-def 全部可证（依赖 C-S 的 cs-norm 形式）。
---  - 阶段 3+（待）：有界线性算子 + 算子范数（sup + √）⟹
+--  - 阶段 3（✅ 2026-08-02）：有界线性算子 + 算子范数——LinOp record +
+--    算子代数（zero-op/op-add/op-comp）+ 线性⟹T0=0；op-norm := sup_{‖v‖≤1}‖Tv‖
+--    （sup-ℝ 完备性假设）；op-norm-nonneg/op-norm-upper/op-norm-tri 可证。
+--    待（8-3b）：缩放引理 ⟹ op-norm-submul（‖ST‖ ≤ ‖S‖‖T‖）。
+--  - 阶段 4+（待）：自伴算子 + C* 恒等（norm-power）⟹
 --    SpectralTheory §12 C*-范数公理降定理路径。

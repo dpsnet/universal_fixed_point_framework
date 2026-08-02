@@ -1190,3 +1190,18 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 5. **意义**：Hilbert 空间层的范数结构完整落地——C-S ⟹ cs-norm ⟹ 三角不等式的降定理链闭合；阶段 8-3（有界线性算子 + 算子范数 sup + √）的 √ 前置就位；SpectralTheory §12 C*-范数公理（‖_‖/norm-pos/norm-tri/norm-submul 等）降定理路径的 Hilbert 侧地基完成（§15 审计 H 类）。
 
 **阶段 8 状态**：阶段 2/2b 完成（Cauchy-Schwarz + 范数公理落地，零新增公理 + √ 一条基础假设）。待推进：阶段 8-3（有界线性算子 + 算子范数 sup + √）；阶段 7-3（E 的测度构造，需 Hilbert 空间层完备性）。
+
+---
+
+【阶段 8-3：有界线性算子 + 算子范数（HilbertSpace §5，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 8-3 启动**：B(H)（有界线性映射）+ ‖X‖ = sup_{‖v‖≤1} ‖Xv‖（√ + sup-ℝ 前置已就位）；norm-pos/norm-tri 从 sup 定义证明落地，norm-submul 留 8-3b。
+2. **HilbertSpace 新增 §5 有界线性算子层**：
+   - `LinOp` record（f : V → V + 线性性 lin-add/lin-scalar）+ **可证** `v-double-zero`（w = w+w ⟹ w=0，⟨w,w⟩ 双自零 + 正定性）、`lin-zero`（线性 ⟹ T0=0）、`scalar-zero`（a·0=0）、`swap-pair-ᵥ`（V 层交换重排）；
+   - 算子代数：`zero-op`（点态零）、`op-add`（逐点加，线性性经 swap-pair-ᵥ/·ᵥ-distrib-l）、`op-comp`（复合）；
+   - **算子范数** `op-norm T := sup-ℝ (op-fam T)`（op-fam：‖v‖≤1 且 r=‖Tv‖，sup-ℝ 完备性基础假设）；
+   - **可证** `op-norm-nonneg`（‖T‖≥0：T0=0 是单位球内成员，sup-upper）、`op-norm-upper`（‖v‖≤1 ⟹ ‖Tv‖≤‖T‖）、`op-norm-tri`（‖S+T‖≤‖S‖+‖T‖：norm-tri 逐点 + sup-least）。
+3. **排坑**：本地 Σ 构造子命名（与 SpCategory `_,_` 冲突 ⟹ 命名 `ex`）；op-fam 前向引用（顶层无前向引用 ⟹ 调换定义顺序）。
+4. **意义**：SpectralTheory §12 C*-范数公理降定理路径的 Hilbert 侧核心就位——norm-pos（op-norm-nonneg）/norm-tri（op-norm-tri）已按蓝图从 sup 定义证明；norm-submul（‖ST‖≤‖S‖‖T‖）需缩放引理（‖Sw‖≤‖S‖·‖w‖，单位化 w/‖w‖），留 8-3b；为阶段 8-4（自伴 + C* 恒等 norm-power）铺路。
+
+**阶段 8 状态**：阶段 3（8-3a）完成（LinOp + 算子范数 + nonneg/upper/tri 可证）。待推进：8-3b（缩放引理 ⟹ op-norm-submul）；阶段 8-4（自伴 + C* 恒等）；阶段 7-3（E 的测度构造）。
