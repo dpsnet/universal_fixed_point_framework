@@ -171,6 +171,13 @@ postulate
   sup-comm : {l : Level} (X : Op) (S : Op → Set l)
     → ((Y : Op) → S Y → X *ₒ Y ≡ Y *ₒ X) → X *ₒ sup-op S ≡ sup-op S *ₒ X
 
+-- 正算子序反对称（桥接登记，2026-08-02）：X ≤ₒ Y 且 Y ≤ₒ X ⟹ X ≡ Y——
+-- Hilbert 层（§13 算子序 _≤ₗ_）语义：两向非负 ⟹ ∀v.⟨(Y−X)v,v⟩ = 0（≥0 且 ≤0）
+-- ⟹ 正定性 ⟹ (Y−X)v = 0 逐 v ⟹ X = Y（funext）；
+-- 降定理路径 = Hilbert 层算子序 + 内积正定性 + 函数外延性
+postulate
+  ≤ₒ-antisym : (X Y : Op) → X ≤ₒ Y → Y ≤ₒ X → X ≡ Y
+
 -- Set₁ 层存在（SimpleF 含 Borel 字段故为 Set₁；B 为 Set 层——成员条件为普通命题）
 data Σ₁ (A : Set₁) (B : A → Set) : Set₁ where
   pair₁Σ : (a : A) → B a → Σ₁ A B
@@ -1476,6 +1483,74 @@ fc-integral-le f = sup-op-least (spec-int-below f) (fc f) bound
           (subst (λ Z → Z ≤ₒ fc f) (sym (fc-simple-integral s))
                  (fc-mono (simple-fn-below s f dom)))
 
+-- ------------------------------------------------------------------
+-- 7-4 余项（"≥"方向第一步：简单函数版 fc-simple-le），2026-08-02
+-- ------------------------------------------------------------------
+-- 目标：fc-integral 降定理的"≥"方向（fc f ≤ₒ spec-int-general f）的简单函数层——
+-- fc s ≤ₒ spec-int-general s（fc s = ∫s dE ≤ sup{∫t : t ≤ s}，s 自身是下界）。
+-- 依赖：有限线性组合定位引理（sum-c-ind-eq：覆盖+不相交 ⟹ Σⱼcⱼ·1_{Ωⱼ}(x) = cᵢ）。
+
+-- **可证**：有限线性组合在定位原子上的值——Σⱼ cⱼ·1_{Ωⱼ}(x) = cᵢ（x ∈ Ωᵢ，覆盖+不相交；
+--   Fin 定位归纳：i 项 = cᵢ（indicator-pos + *-ident-ℝ）+ 其余项 = 0（disj + *-zero-ℝ）+ 和坍缩）
+sum-c-ind-eq : {m : ℕ} (c : Fin m → ℝ) (Ω : Fin m → Borel)
+  → ((i j : Fin m) → i ≢ j → ((x : ℝ) → Ω i x → Ω j x → ⊥))
+  → (i : Fin m) (x : ℝ) → Ω i x
+  → sum-ℝ (λ j → c j *ℝ indicator (Ω j) x) ≡ c i
+sum-c-ind-eq {suc m} c Ω disj zero x hx₀ =
+  trans (cong₂ _+ℝ_ head-eq tail-zero)
+        (+-ident-ℝ (c zero))
+  where
+  -- c₀·1 = c₀（x ∈ Ω₀）
+  head-eq : (c zero *ℝ indicator (Ω zero) x) ≡ c zero
+  head-eq = trans (cong (λ t → c zero *ℝ t) (indicator-pos (Ω zero) x hx₀))
+                  (*-ident-ℝ (c zero))
+  -- 其余项 cⱼ·0 = 0（x ∈ Ω₀ 且 disj 0 (suc j)）
+  tail-zero : sum-ℝ {m} (λ j → c (suc j) *ℝ indicator (Ω (suc j)) x) ≡ zeroℝ
+  tail-zero = sum-ℝ-zero {m} (λ j → c (suc j) *ℝ indicator (Ω (suc j)) x)
+                          (λ j → trans (cong (λ t → c (suc j) *ℝ t)
+                                             (indicator-zero (Ω (suc j)) x
+                                               (λ hx → disj zero (suc j) (zero≢suc {m = m} {k = j}) x hx₀ hx)))
+                                       (*-zero-ℝ (c (suc j))))
+sum-c-ind-eq {suc m} c Ω disj (suc i₀') x hx₀ =
+  trans (cong₂ _+ℝ_ head-zero (sum-c-ind-eq {m} (λ j → c (suc j)) (λ j → Ω (suc j))
+                                            (λ j k hjk → disj (suc j) (suc k) (suc≢suc hjk))
+                                            i₀' x hx₀))
+        (zero-add-ℝ (c (suc i₀')))
+  where
+  -- c₀·0 = 0（x ∈ Ω(suc i₀') 且 disj (suc i₀') zero）
+  head-zero : (c zero *ℝ indicator (Ω zero) x) ≡ zeroℝ
+  head-zero = trans (cong (λ t → c zero *ℝ t)
+                          (indicator-zero (Ω zero) x
+                            (λ hx → disj (suc i₀') zero (suc≢zero {m = m} {k = i₀'}) x hx₀ hx)))
+                    (*-zero-ℝ (c zero))
+
+-- **可证**：简单函数在原子上的值——x ∈ Ωᵢ ⟹ simple-fn s x = cᵢ（sum-c-ind-eq 特化）
+simple-fn-eq-atom : (s : SimpleF) (i : Fin (SimpleF.m s)) (x : ℝ) → SimpleF.Ω s i x
+  → simple-fn s x ≡ SimpleF.c s i
+simple-fn-eq-atom s i x px = sum-c-ind-eq (SimpleF.c s) (SimpleF.Ω s) (SimpleF.disj s) i x px
+
+-- **可证**：fc-integral 降定理的"≥"方向（简单函数版）——fc s ≤ₒ spec-int-general s
+--（fc s = ∫s dE（fc-simple-integral）≤ sup{∫t : t ≤ s}（s 自身是下界：
+--  cᵢ ≤ simple-fn s x 点态经 simple-fn-eq-atom）+ sup-op-upper）
+fc-simple-le : (s : SimpleF) → fc (simple-fn s) ≤ₒ spec-int-general (simple-fn s)
+fc-simple-le s =
+  subst (λ Z → Z ≤ₒ spec-int-general (simple-fn s)) (fc-simple-integral s)
+        (sup-op-upper (spec-int-below (simple-fn s)) (simple-int s)
+                      (pair₁Σ s (refl , λ i x px → dom-eq i x px)))
+  where
+  -- cᵢ ≤ simple-fn s x（x ∈ Ωᵢ 时 simple-fn s x = cᵢ）
+  dom-eq : (i : Fin (SimpleF.m s)) (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ simple-fn s x
+  dom-eq i x px = subst (λ z → SimpleF.c s i ≤ℝ z) (sym (simple-fn-eq-atom s i x px))
+                        (refl-≤ℝ {SimpleF.c s i})
+
+-- **可证**：fc-integral 对简单函数完整成立——fc s = ∫s dE = spec-int-general s
+--（≥ 方向 fc-simple-le + ≤ 方向 fc-integral-le（s 特化）+ ≤ₒ-antisym——
+--  fc-integral 公理（§5c）对简单函数的完整降定理，等式版）
+fc-simple-integral-full : (s : SimpleF) → fc (simple-fn s) ≡ spec-int-general (simple-fn s)
+fc-simple-integral-full s =
+  ≤ₒ-antisym (fc (simple-fn s)) (spec-int-general (simple-fn s))
+             (fc-simple-le s) (fc-integral-le (simple-fn s))
+
 -- **可证明（零新增公理）**：标量乘零吸收 a·0 = 0
 --（·ₒ-comm a 𝟙ₒ 𝟘ₒ + *ₒ-zero-r 双向）
 ·ₒ-zero : (a : ℝ) → a ·ₒ 𝟘ₒ ≡ 𝟘ₒ
@@ -1956,3 +2031,36 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - Hilbert 空间/拓扑层：C*-范数、norm-contraction、lim-op/strong-continuity、gen-op-fc
 --  - 有限维谱定理方向：intertwine-exp-imp-spectral-exp、intertwine-exp-tA-imp-spectral
 --  - 经典逻辑层：indicator 点态性质（1_P x = 1 ⟺ P x）
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新（2026-08-02）：Hilbert 空间/拓扑层 + 测度论层推进后的降定理状态
+-- ------------------------------------------------------------------
+-- 已降为可证定理/定义（阶段 7/8 追加）：
+--  - fc-integral 对简单函数：fc-simple-integral（∫s dE = fc(s)，§5h）、
+--    fc-simple-le（fc s ≤ₒ spec-int-general s，§10d）、
+--    fc-simple-integral-full（fc s ≡ spec-int-general s，§10d + ≤ₒ-antisym）
+--  - fc-integral "≤"方向：fc-integral-le（spec-int-general f ≤ₒ fc f，§10d）
+--  - fc 同态组件：fc-sum / fc-scalar-mul / fc-atom（§5h）
+--  - 简单函数定位：sum-c-ind-eq / simple-fn-eq-atom（§10d）
+--  - indicator 点态性质：indicator-pos / indicator-zero / indicator-eq-one-iff
+--    （§5g，经典扩展，indicator 由 postulate 降为定义）
+--  - E 的测度构造（Hilbert 层对应）：E-hilb-idemp / E-hilb-orth / E-hilb-total（§10c）、
+--    E-hilb-union（§10d）、E-hilb-fin-union（§10e）、E-σ-add（§14）
+--
+-- 跨层降定理映射（SpectralTheory 公理 ↔ Hilbert 层可证定理，2026-08-02）：
+--  - C*-范数（H 类）↔ HilbertSpace §5/§6/§11：norm-pos/norm-tri/norm-submul 从 sup 证、
+--    norm-power（自伴幂恒等 ‖X²‖=‖X‖²）、spectral-radius-norm（r(X) = ‖X‖）
+--  - norm-contraction（H 类）↔ HilbertSpace §12：exp-hilb-radius-le-one
+--    （自伴 ⟹ r(e^(-tA)) = ‖e^(-tA)‖ ≤ 1，谱半径-压缩连接）
+--  - strong-continuity（H 类，条件 iv）↔ HilbertSpace §12：exp-hilb-strong-cont
+--    （范数连续 ⟹ 强连续，sot-from-norm 特化）
+--  - E-total / E-union / E-σ-add（A 类）↔ HilbertSpace §10c/§10d/§10e/§14（E-hilb 族全链）
+--  - indicator-bridge 点态化（E 类）↔ SpectralTheory §5g 经典扩展
+--    （indicator 降为定义 + 1_P x = 1 ⟺ P x 可证）
+--  - ≤ₒ-antisym（C 类补充，2026-08-02 登记）↔ HilbertSpace §13 算子序 _≤ₗ_ + 正定性 + funext
+--
+-- 待降定理（测度论核心，阶段 7/8 之后）：
+--  - fc-integral "≥"方向完整（fc f ≤ₒ spec-int-general f）：多项式→简单函数逼近兼容性
+--  - spec-int 收敛细节（无界逼近）：Lebesgue 单调收敛的构造化
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+--  - 跨层模型（8-5b 余项）：Op → LinOp 完整实例化

@@ -1477,3 +1477,42 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 3. **意义**：谱投影范数幂等（‖E(P)‖ ∈ {0,1} 的代数核心）闭合——SpectralTheory §12 idem-zero-one/proj-norm 的 Hilbert 侧对应；E-hilb 的范数结构完整（‖E(P)‖ ≤ 1 + 幂等）。
 
 **阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅ + Hilbert 层范数/序结构完整。待推进：7-4 "≥"方向；8-5b 余项（跨层模型 Op → LinOp）。
+
+---
+
+【阶段 7-4 余项"≥"方向第一步：简单函数版 fc-simple-le（SpectralTheory §10d，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7 拆分第 4 项**：fc-integral（fc(f) = ∫f dE）完整降定理的"≥"方向（fc f ≤ₒ spec-int-general f）第一步——简单函数层。
+2. **SpectralTheory §10d 扩展**（Everything.agda 全量编译通过，15 模块，退出码 0；零新增公理）：
+   - **可证** `sum-c-ind-eq`（有限线性组合定位：覆盖+不相交 ⟹ Σⱼcⱼ·1_{Ωⱼ}(x) = cᵢ（x ∈ Ωᵢ），Fin 定位归纳——i 项 = cᵢ（indicator-pos + *-ident-ℝ）+ 其余项 = 0（disj + *-zero-ℝ）+ sum-ℝ-zero 坍缩）；
+   - `simple-fn-eq-atom`（simple-fn s x = cᵢ on Ωᵢ，sum-c-ind-eq 特化）；
+   - **`fc-simple-le`**（fc s ≤ₒ spec-int-general s：fc s = ∫s dE（fc-simple-integral）≤ sup{∫t : t ≤ s}（s 自身是下界：cᵢ ≤ simple-fn s x 点态经 simple-fn-eq-atom）+ sup-op-upper）。
+3. **排坑**：subst 方向——正向 fc-simple-integral（simple-int ≡ fc ⟹ P(simple-int) → P(fc)），无需 sym。
+4. **意义**：fc-integral 降定理"≥"方向的简单函数层闭合——简单函数的 fc ≤ 其 Lebesgue 积分 sup；完整"≥"方向（多项式 ⟹ 简单函数逼近）需测度论核心逼近定理，留测度论层。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链）✅、7-4 第一步 + "≤"方向 + "≥"第一步 ✅、7-5（经典扩展）✅。待推进：7-4 "≥"方向完整（多项式→简单函数逼近兼容性）；8-5b 余项（跨层模型 Op → LinOp）。
+
+---
+
+【阶段 7-4 组合收尾：fc-integral 对简单函数完整降定理（SpectralTheory §1b/§10d，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7 拆分第 4 项**：fc-integral（fc(f) = ∫f dE）对简单函数的完整降定理——等式版 fc s ≡ ∫s dE。
+2. **SpectralTheory §1b + §10d 扩展**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - 登记 `≤ₒ-antisym`（正算子序反对称：X ≤ₒ Y 且 Y ≤ₒ X ⟹ X ≡ Y——降定理路径 = Hilbert 层算子序（§13）+ 内积正定性 + funext）；
+   - **可证** **`fc-simple-integral-full`**（fc s ≡ spec-int-general s：fc-simple-le（≥ 方向）+ fc-integral-le（≤ 方向特化）+ ≤ₒ-antisym）。
+3. **意义**：**fc-integral 公理（§5c）对简单函数的完整降定理**——简单函数的函数演算与 Lebesgue 谱积分完全一致（等式版）；一般函数（多项式 ⟹ 简单函数逼近）留测度论层。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（E 构造全链）✅、7-4 第一步 + "≤"方向 + "≥"第一步 + 组合收尾 ✅、7-5（经典扩展）✅。待推进：7-4 "≥"方向完整（多项式→简单函数逼近兼容性）；8-5b 余项（跨层模型 Op → LinOp）。
+
+---
+
+【公理纪律审计更新：阶段 7/8 降定理状态同步（SpectralTheory §15，2026-08-02）】
+
+1. **目的**：§15 公理纪律审计（阶段 6 收官账目）与阶段 7/8 实现同步——已降定理的项、跨层降定理映射、待降定理更新。
+2. **审计追加"阶段 7/8 审计更新"**（纯注释，Everything.agda 全量编译通过，15 模块，退出码 0）：
+   - **已降为可证定理/定义**：fc-simple-integral / fc-simple-le / fc-simple-integral-full / fc-integral-le / fc-sum / fc-scalar-mul / fc-atom / sum-c-ind-eq / simple-fn-eq-atom / indicator 点态性质（indicator 降为定义）/ E-hilb 族（idemp/orth/total/union/fin-union/σ-add）；
+   - **跨层降定理映射**（SpectralTheory 公理 ↔ Hilbert 层可证）：C*-范数（H）↔ §5/§6/§11、norm-contraction（H）↔ §12 exp-hilb-radius-le-one、strong-continuity（H）↔ §12 exp-hilb-strong-cont、E-total/E-union/E-σ-add（A）↔ §10c-e/§14、indicator-bridge（E）↔ §5g 经典扩展、≤ₒ-antisym（C 补充）↔ §13 算子序；
+   - **待降定理**（测度论核心）：fc-integral "≥"方向完整（多项式→简单函数逼近）、spec-int 收敛细节、E-σ-add 收敛（算子序 sup）、跨层模型（8-5b 余项）。
+3. **意义**：公理纪律审计与实现全同步——每个 postulate 的降定理路径在阶段 7/8 后的实际状态明确登记，为后续测度论核心层/跨层模型推进提供账目。
+
+**阶段 7/8 状态**：阶段 7 全部闭合；阶段 8 主要子项闭合（8-1 到 8-6b 均有落地，norm-contraction 降定理核心连接）。剩余开放项：7-4 "≥"方向完整（测度论核心逼近）、8-5b 余项（跨层模型 Op → LinOp 完整实例化）。

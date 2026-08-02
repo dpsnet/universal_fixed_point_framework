@@ -21,7 +21,11 @@ module Everything where
 --        阶段 7-4 第一步（§5h：简单函数 = 函数演算 fc-simple-integral——∫s dE = fc(s)，
 --        fc-sum/fc-scalar-mul/fc-atom 可证，零新增公理，2026-08-02 v1.02）；
 --        阶段 7-4 余项"≤"方向（§5h/§10d：fc-integral-le——spec-int-general f ≤ₒ fc f，
---        fc-mono/sum-indicator-cover/simple-fn-below 可证，2026-08-02 v1.03））
+--        fc-mono/sum-indicator-cover/simple-fn-below 可证，2026-08-02 v1.03）；
+--        阶段 7-4 余项"≥"方向第一步（§10d：fc-simple-le——fc s ≤ₒ spec-int-general s，
+--        sum-c-ind-eq/simple-fn-eq-atom 可证，2026-08-02 v1.09）；
+--        阶段 7-4 组合收尾（§1b/§10d：≤ₒ-antisym 登记 + fc-simple-integral-full——
+--        fc s ≡ spec-int-general s，fc-integral 对简单函数完整降定理，v1.10））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
