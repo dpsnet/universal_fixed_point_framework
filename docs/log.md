@@ -1325,3 +1325,17 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **余项（7-3 后续）**：E-union（P∩Q=∅ ⟹ E(P∪Q)=E(P)+E(Q)）需内积减法双线性（ip-sub-l/ip-sub-r）+ 谱子空间直和桥接；E-σ-add（可数可加）需 σ-代数/极限层——留待阶段 7-3 后续 + 测度论层。
 
 **阶段 7 状态**：7-3a/7-3b 完成 + 7-3 第一步（谱投影构造框架）。待推进：7-3 余项（E-union/E-σ-add）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。
+
+---
+
+【阶段 7-3 余项 E-union：谱投影加法性（HilbertSpace §10d，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E-union 的 Hilbert 侧构造——谱测度加法性从谱子空间直和 + 投影唯一性证明。
+2. **HilbertSpace 新增 §10d**（Everything.agda 全量编译通过，15 模块，退出码 0）：
+   - 可证内积减法双线性：`ip-sub-l`（⟨x−y,z⟩ = ⟨x,z⟩+(-1)·⟨y,z⟩）、`ip-sub-r`（⟨x,y−z⟩ = ⟨x,y⟩+(-1)·⟨x,z⟩）+ 减法分解 `sub-add-decomp`（x−(a+b) = (x−a)+(-1)·b）；
+   - 谱子空间直和桥接 2 条（登记，降定理路径 = 自伴算子谱定理）：`spectral-subspace-incl`（P⊆Q ⟹ W_P⊆W_Q）、`spectral-subspace-split`（P∩Q=∅ ⟹ W_{P∪Q} 中每元分解为 W_P+W_Q 分量）；
+   - **`E-hilb-union`**（P∩Q=∅ ⟹ E(P∪Q)x = E(P)x + E(Q)x）：E(P)x+E(Q)x ∈ W_{P∪Q}（incl 单调 + add 闭包）+ x−(E(P)x+E(Q)x) ⊥ W_{P∪Q}（split 分解 u+v + 逐项正交：proj-orth（x−Px⊥W_P、x−Qx⊥W_Q）+ W_P⊥W_Q（spectral-subspace-orth + ip-sym））+ proj-unique。
+3. **排坑**：`×` 嵌套需括号（V !=< Set，乘积两侧均为 Set）；spectral-subspace-orth 参数顺序（Qx∈W_Q、u∈W_P ⟹ 先传 W_P 成员 + ip-sym 交换）；`,` 右结合需显式括号 `((hu , hv) , w-eq)`；subst 方向需 sym（w-eq : w ≡ u+v ⟹ P(u+v) → P w）。
+4. **意义**：谱测度加法性（SpectralTheory §10e E-union 的 Hilbert 侧构造版）落地——E(P∪Q)=E(P)+E(Q) 对不相交集成立，E 的有限可加性构造侧闭合；E-σ-add（可数可加）留 σ-代数/极限层。
+
+**阶段 7 状态**：7-3a/7-3b 完成 + 7-3 第一步 + E-union 完成。待推进：7-3 余项 E-σ-add（可数可加，σ-代数/极限层）；8-6b（Gelfand 极限层）；8-5b（强连续半群）。

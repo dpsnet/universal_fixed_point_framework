@@ -74,6 +74,13 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-idemp（幂等）/E-hilb-orth（正交）/E-hilb-total（E(ℝ)=𝟙）/
       E-hilb-self-adjoint（自伴）/E-hilb-norm-le-one（‖E(P)‖≤1）——全部投影性质直接特化，
       SpectralTheory E-idempotent/E-orthogonal/E-total/proj-norm-le-one 的构造侧对应。
+  阶段 7-3 余项 E-union（2026-08-02）：谱投影加法性（§10d）。
+    - 内积减法双线性 **可证** ip-sub-l/ip-sub-r + 减法分解 sub-add-decomp；
+    - 谱子空间直和桥接：spectral-subspace-incl（P⊆Q ⟹ W_P⊆W_Q）+ spectral-subspace-split
+      （P∩Q=∅ ⟹ W_{P∪Q} 分解为 W_P+W_Q）；
+    - **可证** E-hilb-union（P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}
+      （incl+add）+ x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 + 逐项正交：proj-orth + W_P⊥W_Q）+
+      proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
   阶段 6b（待）：Gelfand 公式极限层 + 谱论（需阶段 7-3 E 构造）。
 -}
 
@@ -1204,6 +1211,105 @@ E-hilb-self-adjoint P = proj-self-adjoint (spectral-subspace P)
 E-hilb-norm-le-one : (P : ℝ → Set) → op-norm (E-hilb P) ≤ℝ oneℝ
 E-hilb-norm-le-one P = proj-op-norm-le-one (spectral-subspace P)
 
+-- ==================================================================
+-- §10d 谱投影加法性（阶段 7-3 余项：E-union，2026-08-02）
+-- ==================================================================
+
+-- **可证**：内积左减法——⟨x−y, z⟩ = ⟨x,z⟩ + (-1)·⟨y,z⟩（ip-add-l + ip-scalar-l）
+ip-sub-l : (x y z : V) → (x -ᵥ y) ⟨⟩ z ≡ (x ⟨⟩ z) +ℝ ((negℝ oneℝ) *ℝ (y ⟨⟩ z))
+ip-sub-l x y z =
+  trans (ip-add-l x ((negℝ oneℝ) ·ᵥ y) z)
+        (cong₂ _+ℝ_ refl (ip-scalar-l (negℝ oneℝ) y z))
+
+-- **可证**：内积右减法——⟨x, y−z⟩ = ⟨x,y⟩ + (-1)·⟨x,z⟩（ip-add-r + ip-scalar-r）
+ip-sub-r : (x y z : V) → x ⟨⟩ (y -ᵥ z) ≡ (x ⟨⟩ y) +ℝ ((negℝ oneℝ) *ℝ (x ⟨⟩ z))
+ip-sub-r x y z =
+  trans (ip-add-r x y ((negℝ oneℝ) ·ᵥ z))
+        (cong₂ _+ℝ_ refl (ip-scalar-r (negℝ oneℝ) x z))
+
+-- **可证**：减法分解——x − (a+b) = (x−a) + (-1)·b（·ᵥ-distrib-l + assoc 反向）
+sub-add-decomp : (x a b : V) → x -ᵥ (a +ᵥ b) ≡ (x -ᵥ a) +ᵥ ((negℝ oneℝ) ·ᵥ b)
+sub-add-decomp x a b =
+  trans (cong (λ u → x +ᵥ u) (·ᵥ-distrib-l (negℝ oneℝ) a b))
+        (sym (+ᵥ-assoc x ((negℝ oneℝ) ·ᵥ a) ((negℝ oneℝ) ·ᵥ b)))
+
+-- 谱子空间直和（谱定理内容：E(P∪Q) = E(P)+E(Q) 对不相交集的分解侧——
+-- W_{P∪Q} ⊆ W_P + W_Q（spectral-subspace-split）+ 谱子空间单调性
+-- （spectral-subspace-incl）；E-union 降定理的桥接，降定理路径 = 自伴算子谱定理）
+postulate
+  spectral-subspace-incl : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x) → (w : V)
+    → Subspace.mem (spectral-subspace P) w → Subspace.mem (spectral-subspace Q) w
+  spectral-subspace-split : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥) → (w : V)
+    → Subspace.mem (spectral-subspace (λ x → P x ⊎ Q x)) w
+    → Σ V (λ u → Σ V (λ v → ((Subspace.mem (spectral-subspace P) u × Subspace.mem (spectral-subspace Q) v)
+      × (w ≡ u +ᵥ v))))
+
+-- **可证**：谱投影加法性（E-union）——P∩Q=∅ ⟹ E(P∪Q)x = E(P)x + E(Q)x
+--（E(P)x+E(Q)x ∈ W_{P∪Q}（incl 单调 + add 闭包）；x−(E(P)x+E(Q)x) ⊥ W_{P∪Q}
+--（split 分解 u+v + 逐项：⟨x−(Px+Qx),u⟩=0 经 proj-orth + W_P⊥W_Q、⟨x−(Px+Qx),v⟩=0 对称）+
+-- proj-unique——SpectralTheory §10e E-union 的 Hilbert 侧构造版）
+E-hilb-union : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥) → (x : V)
+  → LinOp.f (E-hilb (λ z → P z ⊎ Q z)) x ≡ LinOp.f (E-hilb P) x +ᵥ LinOp.f (E-hilb Q) x
+E-hilb-union P Q disjoint x = sym (proj-unique W-pq x b b-in-W orth-b)
+  where
+  W-pq : Subspace
+  W-pq = spectral-subspace (λ z → P z ⊎ Q z)
+  Px : V
+  Px = LinOp.f (E-hilb P) x
+  Qx : V
+  Qx = LinOp.f (E-hilb Q) x
+  b : V
+  b = Px +ᵥ Qx
+  -- E(P)x + E(Q)x ∈ W_{P∪Q}（P ⊆ P∪Q、Q ⊆ P∪Q 单调 + add 闭包）
+  b-in-W : Subspace.mem W-pq b
+  b-in-W = Subspace.add W-pq px-in-pq qx-in-pq
+    where
+    px-in-pq : Subspace.mem W-pq Px
+    px-in-pq = spectral-subspace-incl P (λ z → P z ⊎ Q z) (λ x' px → inj₁ px) Px
+               (proj-in (spectral-subspace P) x)
+    qx-in-pq : Subspace.mem W-pq Qx
+    qx-in-pq = spectral-subspace-incl Q (λ z → P z ⊎ Q z) (λ x' qx → inj₂ qx) Qx
+               (proj-in (spectral-subspace Q) x)
+  -- x−(E(P)x+E(Q)x) ⊥ W_P（x−Px ⊥ W_P + Qx ⊥ W_P）
+  orth-A : (u : V) → Subspace.mem (spectral-subspace P) u
+    → (x -ᵥ b) ⟨⟩ u ≡ zeroℝ
+  orth-A u hu =
+    trans (cong (λ w → w ⟨⟩ u) (sub-add-decomp x Px Qx))
+          (trans (ip-add-l (x -ᵥ Px) ((negℝ oneℝ) ·ᵥ Qx) u)
+                 (trans (cong₂ _+ℝ_ (proj-orth (spectral-subspace P) x u hu)
+                                  (ip-scalar-l (negℝ oneℝ) Qx u))
+                        (trans (cong₂ _+ℝ_ refl
+                                       (cong (λ t → (negℝ oneℝ) *ℝ t)
+                                             (trans (ip-sym Qx u)
+                                                    (spectral-subspace-orth P Q disjoint u Qx hu
+                                                                            (proj-in (spectral-subspace Q) x)))))
+                               (trans (cong₂ _+ℝ_ refl (*-zero-ℝ (negℝ oneℝ)))
+                                      (zero-add-ℝ zeroℝ)))))
+  -- x−(E(P)x+E(Q)x) ⊥ W_Q（x−Qx ⊥ W_Q + Px ⊥ W_Q）
+  orth-B : (v : V) → Subspace.mem (spectral-subspace Q) v
+    → (x -ᵥ b) ⟨⟩ v ≡ zeroℝ
+  orth-B v hv =
+    trans (cong (λ w → w ⟨⟩ v) (trans (cong (λ t → x -ᵥ t) (+ᵥ-comm Px Qx))
+                                      (sub-add-decomp x Qx Px)))
+          (trans (ip-add-l (x -ᵥ Qx) ((negℝ oneℝ) ·ᵥ Px) v)
+                 (trans (cong₂ _+ℝ_ (proj-orth (spectral-subspace Q) x v hv)
+                                  (ip-scalar-l (negℝ oneℝ) Px v))
+                        (trans (cong₂ _+ℝ_ refl
+                                       (cong (λ t → (negℝ oneℝ) *ℝ t)
+                                             (trans (ip-sym Px v)
+                                                    (spectral-subspace-orth Q P (λ x' qx px → disjoint x' px qx) v Px hv
+                                                                            (proj-in (spectral-subspace P) x)))))
+                               (trans (cong₂ _+ℝ_ refl (*-zero-ℝ (negℝ oneℝ)))
+                                      (zero-add-ℝ zeroℝ)))))
+  -- x−(E(P)x+E(Q)x) ⊥ W_{P∪Q}（split 分解 u+v + 逐项正交）
+  orth-b : (w : V) → Subspace.mem W-pq w → (x -ᵥ b) ⟨⟩ w ≡ zeroℝ
+  orth-b w hw with spectral-subspace-split P Q disjoint w hw
+  orth-b w hw | ex u (ex v ((hu , hv) , w-eq)) =
+    subst (λ t → ((x -ᵥ b) ⟨⟩ t) ≡ zeroℝ) (sym w-eq)
+          (trans (ip-add-r (x -ᵥ b) u v)
+                 (trans (cong₂ _+ℝ_ (orth-A u hu) (orth-B v hv))
+                        (zero-add-ℝ zeroℝ)))
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
@@ -1252,5 +1358,12 @@ E-hilb-norm-le-one P = proj-op-norm-le-one (spectral-subspace P)
 --    **可证** E-hilb-idemp（幂等）/E-hilb-orth（正交）/E-hilb-total（E(ℝ)=𝟙）/
 --    E-hilb-self-adjoint（自伴）/E-hilb-norm-le-one（‖E(P)‖≤1）——全部投影性质直接
 --    特化，SpectralTheory E-idempotent/E-orthogonal/E-total/proj-norm-le-one 构造侧对应。
---  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项（E-union/E-σ-add，需
---    ip-sub 减法双线性 + 谱子空间直和）；8-5b（强连续半群）。
+--  - 阶段 7-3 余项 E-union（✅ 2026-08-02）：谱投影加法性（§10d）——内积减法双线性
+--    **可证** ip-sub-l/ip-sub-r（⟨x−y,z⟩/⟨x,y−z⟩ 展开）+ 减法分解 sub-add-decomp
+--    （x−(a+b)=(x−a)+(-1)b）；谱子空间直和桥接 spectral-subspace-incl（P⊆Q ⟹ W_P⊆W_Q）+
+--    spectral-subspace-split（P∩Q=∅ ⟹ W_{P∪Q} ⊆ W_P+W_Q 分解）；**可证** E-hilb-union
+--    （P∩Q=∅ ⟹ E(P∪Q)x = E(P)x+E(Q)x：E(P)x+E(Q)x∈W_{P∪Q}（incl 单调 + add 闭包）+
+--    x−(E(P)x+E(Q)x)⊥W_{P∪Q}（split 分解 u+v + 逐项正交：proj-orth + W_P⊥W_Q）+
+--    proj-unique）——SpectralTheory §10e E-union 的 Hilbert 侧构造版。
+--  - 阶段 6b（待）：Gelfand 公式极限层 + 谱论（8-6b）；7-3 余项 E-σ-add（可数可加，需
+--    σ-代数/极限层）；8-5b（强连续半群）。
