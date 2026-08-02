@@ -259,14 +259,15 @@ trunc-mono-general : (f : ℝ → ℝ) {c d : ℝ} → c ≤ℝ d → spec-int-g
 trunc-mono-general f {c} {d} hcd =
   sup-op-least (spec-int-below (trunc f c)) (spec-int-general (trunc f d))
     (λ Y yb → sup-op-upper (spec-int-below (trunc f d)) Y
-                (spec-int-below-mono (trunc-mono f hcd) Y yb))
+                (spec-int-below-mono {f = trunc f c} {g = trunc f d}
+                                     (λ x → trunc-mono f {c = c} {d = d} {x = x} hcd) Y yb))
 
 -- 截断收敛（Lebesgue 单调收敛定理的代数形式，登记测度论层桥接公理）：
 -- 无界 f（支持在 [0,∞) 的恒等/exp/φ_t）经上升截断族逼近 ∫f dE = supₙ ∫min(f, n) dE
 -- 降定理路径：测度论完整层（单调收敛 + 简单函数逼近机制）时转为可证明定理
 postulate
   spec-int-trunc-conv : (f : ℝ → ℝ)
-    → spec-int-general f ≡ sup-op (λ Y → Σ₁ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
+    → spec-int-general f ≡ sup-op (λ Y → Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
 
 -- 桥接公理（定义性）：
 --  - ∫id dE = spec-int-A：恒等函数的谱积分即谱表示（无界函数演算的桥接，
@@ -1662,7 +1663,9 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --
 -- C. 逼近桥接公理（§1b）：_≤ₒ_、sup-op、sup-op-upper、sup-op-least、sup-comm
 --    （算子序 + 上确界，交换子 sup 闭性）、spec-int-general-id/-exp
---    （§1b）、spec-int-general-phi-t（§8c）
+--    （§1b）、spec-int-general-phi-t（§8c）、spec-int-trunc-conv
+--    （§1c 截断收敛：∫f = supₙ ∫min(f,n)，Lebesgue 单调收敛定理的代数形式，
+--    阶段 7-1 登记，2026-08-02）
 --    （降定理路径：Banach 空间/算子拓扑 + Lebesgue 积分理论）
 --
 -- D. fc 桥接公理（§5b-§5e）：fc-continuous（§5b）、fc-integral（§5c）、

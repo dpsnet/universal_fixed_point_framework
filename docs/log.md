@@ -1147,3 +1147,19 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 5. **意义**：范数公理依赖的核心不等式落地——SpectralTheory §12 C*-范数公理降定理路径的第二个实质组件（norm-pos 之外）就位；‖x+y‖² ≤ (‖x‖+‖y‖)² 的三角不等式依赖 √（‖x‖=√‖x‖²），待分析层扩展。
 
 **阶段 8 状态**：第二阶段完成（Cauchy-Schwarz 闭合，零新增公理）。待推进：三角不等式（需 √）；测度论层阶段 1（ℝ 截断/min）。
+
+---
+
+【测度论层阶段 1：ℝ 截断/min + 无界函数逼近（2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-1 落地**：兑现 v0.75 文档化闭合中"截断 f_n = min(f, n) 留测度论层"的承诺。
+2. **DHStructural 新增 min-ℝ**（零新增公理）：`min-ℝ` 经三分律定义（`trichotomy-ℝ` 取较小者）+ **可证**性质 `min-≤-l`/`min-≤-r`（min ≤ 两侧）、`min-glb`（min 是最小下界）、`min-absorp-l`（a≤b ⟹ min(a,b)=a）、`min-mono-r`（b≤c ⟹ min(a,b)≤min(a,c)，min-glb + ≤-trans 组合）——无界函数截断逼近的 ℝ 侧地基。
+3. **SpectralTheory 新增 §1c 截断逼近**：
+   - `trunc f c x := min(f x, c)`（ℝ 截断水平，上升族取 c = natℝ n——避开 ℕ 序依赖）；
+   - **可证**逐点性质：`trunc-below-f`（截断 ≤ f）、`trunc-bounded`（截断 ≤ c，有界）、`trunc-mono`（族单调）、`trunc-absorp`（f x ≤ c ⟹ 截断精确——恒等函数在 x ≤ c 时）；
+   - **可证** spec-int 侧单调结构：`trunc-below-general`（spec-int-general (trunc f c) ≤ₒ spec-int-general f，trunc-below-f + spec-int-below-mono + sup-op-least/upper）、`trunc-mono-general`（族单调 ≤ₒ）——无界 f 的 Lebesgue 型 sup 构造的截断子族单调性落地；
+   - 桥接公理 `spec-int-trunc-conv`（∫f = supₙ ∫min(f,n)——Lebesgue 单调收敛定理的代数形式，登记 §15 审计 C 类，测度论完整层降为定理）。
+4. **排坑**：Σ₁ 需 Set₁ 层（ℕ 为 Set ⟹ 改本地 `Σ`）；spec-int-below-mono 需显式逐点函数（trunc-mono 的隐 x 需 `{x = x}` 包裹，两处）。
+5. **意义**：无界函数（恒等/exp/φ_t）的谱积分由"文档化承诺"转为可运行结构——截断族的逐点/算子序单调性全部可证，∫f = supₙ∫min(f,n) 收敛以明确桥接登记（Lebesgue 单调收敛，测度论完整层降定理路径）；阶段 7-1 闭合，为阶段 7-2（简单函数 → 可测函数积分）铺路。
+
+**阶段 7 状态**：阶段 1 完成（ℝ 截断/min + 截断逼近结构，零新增公理 + 一条收敛桥接）。待推进：阶段 7-2（简单函数 → 可测函数积分）、7-3（E 的测度构造）；阶段 8 三角不等式（需 √）。
