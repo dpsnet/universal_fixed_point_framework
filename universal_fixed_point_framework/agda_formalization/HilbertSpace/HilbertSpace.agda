@@ -89,6 +89,11 @@ module HilbertSpace.HilbertSpace where
     - **可证** E-hilb-fin-union（pairwise 不相交 ⟹ E(∪ᵢ<ₘPᵢ)x = Σᵢ<ₘE(Pᵢ)x，归纳：
       E-hilb-union 拆分 + FinUnion-disjoint + 归纳假设）——E-σ-add 的有限版，
       SpectralTheory §10e E-partition-add 的 Hilbert 侧对应。
+  阶段 7-3 余项 E-σ-add 第一步（2026-08-02）：单调吸收 + 可数并（§10f）。
+    - **可证** E-hilb-sub（P⊆Q ⟹ E(Q)(E(P)x)=E(P)x：E(P)x∈W_P⊆W_Q + proj-fixed——
+      SpectralTheory §10b E-sub 的 Hilbert 侧对应，E-σ-add 单调性前置）；
+    - σUnion（可数并谓词 ∪ₙPₙ = ∃n.Pₙ）+ E-σ-add 降定理路径登记（连续下式
+      E(∪ₙPₙ)=supₘΣᵢ<ₘE(Pᵢ)，需算子序 sup 随极限层 + 有限一致性已闭合）。
   阶段 8-6b 第一步（2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）。
     - 谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，
       避免 n 次根——iter-sq + op-norm-power-2^k 直接闭合）；
@@ -1389,6 +1394,29 @@ E-hilb-fin-union P (suc m) h x =
   hₘ i ile x' pxi pmx = h i m ile x' pxi pmx
 
 -- ==================================================================
+-- §10f E-σ-add 第一步：单调吸收 + 可数并（阶段 7-3 余项，2026-08-02）
+-- ==================================================================
+
+-- **可证**：谱投影复合吸收——P ⊆ Q ⟹ E(Q)(E(P)x) = E(P)x
+--（E(P)x ∈ W_P ⊆ W_Q（spectral-subspace-incl）+ proj-fixed；
+--  SpectralTheory §10b E-sub（P⊆Q ⟹ E(P) = E(P)·E(Q)）的 Hilbert 侧对应——
+--  E-σ-add 的单调性前置）
+E-hilb-sub : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x) → (x : V)
+  → LinOp.f (E-hilb Q) (LinOp.f (E-hilb P) x) ≡ LinOp.f (E-hilb P) x
+E-hilb-sub P Q pq x = proj-fixed (spectral-subspace Q) (LinOp.f (E-hilb P) x)
+                                 (spectral-subspace-incl P Q pq (LinOp.f (E-hilb P) x)
+                                                          (proj-in (spectral-subspace P) x))
+
+-- 可数并谓词（σ-union）：∪ₙ Pₙ x = ∃ n. Pₙ x
+σUnion : (ℕ → ℝ → Set) → ℝ → Set
+σUnion P x = Σ ℕ (λ n → P n x)
+
+-- σ-可数可加性（降定理路径登记，2026-08-02）：E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)（连续下式）——
+-- 需 LinOp 层算子序 sup 机制（随极限层）+ E-hilb-fin-union 有限一致性（已闭合）+
+-- E-hilb-sub 单调性（已闭合）；完整形式（E(∪ₙPₙ)x = supₘ Σᵢ<ₘE(Pᵢ)x 点态 sup）
+-- 随 σ-代数/极限层实现。SpectralTheory §10f E-σ-add（可数可加公理）的 Hilbert 侧路径。
+
+-- ==================================================================
 -- §11 谱半径公式极限层（阶段 8-6b 第一步，2026-08-02）
 -- ==================================================================
 
@@ -1522,6 +1550,11 @@ exp-hilb-radius-le-one t =
 --    (∪ᵢ<ₘPᵢ)∩Pₘ=∅）；**可证** E-hilb-fin-union（pairwise 不相交 ⟹
 --    E(∪ᵢ<ₘPᵢ)x = Σᵢ<ₘE(Pᵢ)x，归纳：E-hilb-union 拆分 + FinUnion-disjoint + 归纳假设）——
 --    E-σ-add 的有限版，SpectralTheory §10e E-partition-add 的 Hilbert 侧对应。
+--  - 阶段 7-3 余项 E-σ-add 第一步（✅ 2026-08-02）：单调吸收 + 可数并（§10f）——
+--    **可证** E-hilb-sub（P⊆Q ⟹ E(Q)(E(P)x)=E(P)x：E(P)x∈W_P⊆W_Q（spectral-subspace-incl）+
+--    proj-fixed——SpectralTheory §10b E-sub 的 Hilbert 侧对应，E-σ-add 单调性前置）+
+--    σUnion（可数并谓词 ∪ₙPₙ = ∃n.Pₙ）+ E-σ-add 降定理路径登记（E(∪ₙPₙ)=supₘΣᵢ<ₘE(Pᵢ)
+--    连续下式，需 LinOp 层算子序 sup 随极限层 + 有限一致性 E-hilb-fin-union 已闭合）。
 --  - 阶段 8-6b 第一步（✅ 2026-08-02）：谱半径公式极限层（§11，Gelfand 公式闭合）——
 --    谱半径 r(X) := sup {r : r^{2^k} ≤ ‖X^{2^k}‖ ∀k}（沿 2^k 子列的幂形式刻画，避免
 --    n 次根——iter-sq + op-norm-power-2^k 直接闭合）；**可证** sr-le-norm（r(X) ≤ ‖X‖，

@@ -1426,3 +1426,16 @@ filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\agda_for
 4. **余项**：8-5b 完整实例化需跨层模型（Op → LinOp 的具体构造），留整合层。
 
 **阶段 8 状态**：8-5b 第一步完成（强连续半群实例化框架 + 谱半径-压缩连接）。待推进：8-5b 余项（跨层模型 Op → LinOp）；8-6b 完整降定理（经 exp-hilb-radius-le-one 连接）；7-4 "≥"方向；E-σ-add。
+
+---
+
+【阶段 7-3 余项 E-σ-add 第一步：单调吸收 + 可数并（HilbertSpace §10f，2026-08-02）】
+
+1. **蓝图 §5.15 阶段 7-3 前置**：E-σ-add（可数可加）的 Hilbert 侧组件——单调性 + 可数并谓词 + 降定理路径。
+2. **HilbertSpace 新增 §10f**（Everything.agda 全量编译通过，15 模块，退出码 0，一次通过）：
+   - **可证** `E-hilb-sub`（P⊆Q ⟹ E(Q)(E(P)x) = E(P)x：E(P)x ∈ W_P ⊆ W_Q（spectral-subspace-incl）+ proj-fixed——SpectralTheory §10b E-sub（P⊆Q ⟹ E(P) = E(P)·E(Q)）的 Hilbert 侧对应，E-σ-add 的单调性前置）；
+   - `σUnion`（可数并谓词 ∪ₙPₙ x = ∃n.Pₙ x）；
+   - E-σ-add 降定理路径登记：E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)（连续下式）——需 LinOp 层算子序 sup 机制（随 σ-代数/极限层）+ E-hilb-fin-union 有限一致性（已闭合）+ E-hilb-sub 单调性（已闭合）。
+3. **意义**：E-σ-add 的单调性与可数并基础落地——谱投影的单调吸收（E-sub 对应）闭合；完整可数可加性（sup 收敛）留 σ-代数/极限层（LinOp 层算子序 sup 机制）。
+
+**阶段 7 状态**：7-1/7-2 ✅、7-3（全部子项 + E-σ-add 第一步）✅、7-4 第一步 + "≤"方向 ✅、7-5（经典扩展）✅。待推进：E-σ-add 完整形式（σ-代数/极限层 + 算子序 sup）；7-4 "≥"方向；8-5b 余项（跨层模型）；8-6b 完整降定理（已连接）。
