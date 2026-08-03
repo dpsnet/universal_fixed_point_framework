@@ -7,7 +7,7 @@
 **摘要**：本文建立 UFPF 框架中引力的完整范畴论图像：引力不是 $\mathbf{Sp}$ 4-范畴中与规范力并列的第四种相互作用，而是 **coherence 层（4-态射）的自洽性条件**——交换律偏差 $\Delta$ 就是引力。具体地，（1）spExchangeLaw 的 `sorry` 不是证明缺口而是概念特征：填补为等式等价于证明 $G_N \to 0$（引力消失）；（2）$\Delta$ 是结构常数（非动力学场），其 Frobenius 范数 $\|\Delta\|_F$ 决定引力强度 $G_N \propto \|\Delta\|_F^2$；（3）引力不可屏蔽是 $\mathbf{Sp}$ 4-范畴结构的范畴论推论，而非经验事实；（4）引力子在低能下作为等效准粒子存在（类比固体物理中的声子），在高能下回到离散范畴结构；（5）引力波是三维空间主动层在 $\Delta$ 刚度上的集体振荡——与 GR 在一切可达观测精度下不可区分，但本质上是离散范畴结构的涌现集体激发而非时空本身的量子化波动；（6）时空的 $1/r^2$ 定律来自等谱通量守恒 + Moran 自洽性，无需 GR 的微分同胚不变性假设。
 
 ---
-**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.6（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。**v0.3 新增**：`CoherenceToBranching.lean` §11 的 `dimension_gap` 与 `outward_proof_maps_to_orthogonal_layer` 定理。**v0.4 新增**：Agda 交叉验证（路径 B 完成）——§3.2.2 补充 Agda 镜像说明（`CoherenceToBranching.agda §11`）。
+**记号与引用**：本文引用 Paper XXXI（`DeviationBound.lean`，偏差代数与源线性）、Paper XVIII（谱牛顿力学）、Paper XXXIV（连续极限——B2 理论闭合）、RAP-Errata v0.7（宣称边界）。所有引用 Lean 定理均通过 `lake build` 零错误。**v0.3 新增**：`CoherenceToBranching.lean` §11 的 `dimension_gap` 与 `outward_proof_maps_to_orthogonal_layer` 定理。**v0.4 新增**：Agda 交叉验证（路径 B 完成）——§3.2.2 补充 Agda 镜像说明（`CoherenceToBranching.agda §11`）。
 
 ---
 

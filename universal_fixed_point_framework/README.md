@@ -1,8 +1,8 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.6](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.7](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 >
-> **项目状态**：37 篇论文（Papers I–XXXVII）+ **RAP-Errata v0.6**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误 + **Agda 交叉验证 8 模块完成**
+> **项目状态**：37 篇论文（Papers I–XXXVII）+ **RAP-Errata v0.7**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误 + **Agda 交叉验证 16 模块推进**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
@@ -25,7 +25,7 @@
 
 **Core Mechanism**: The $\mathbf{Sp}$ 4-category weighted silence hierarchy ($S_k = s^k$, $s=e^{-1}$, $d_H$ as structural dimension) projects onto three IFS recursive depths, producing contraction factors $c_1:c_2:c_3$. These yield fermion mass ratios via $\alpha$ exponents, CKM/PMNS mixing via $J$-generator rotation, gauge couplings via spectral gap ratios, and dark matter via the WIMP miracle.
 
-**Key Results** (RAP-Errata v0.6 compliant):
+**Key Results** (RAP-Errata v0.7 compliant):
 | Quantity | Prediction | Experiment | Deviation |
 |:---------|:----------:|:----------:|:---------:|
 | CKM $\theta_{12}$ | 0.2258 | 0.2260 | 0.09% |
@@ -54,7 +54,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ---
 
-## 现状速览（2026-07-31，RAP-Errata v0.6）
+## 现状速览（2026-08-03，RAP-Errata v0.7）
 
 ### 论文
 
@@ -100,7 +100,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 |------|------|
 | 总 Lean 模块数 | 74 |
 | 构建状态 | `lake build` 零错误（仅 8 条编译器警告） |
-| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.6 §六） |
+| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.7 §六） |
 | 活动 `sorry` | 3 处：`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新 |
 
 ### 范畴理论绝对性验证（Phase 60 🆕）
@@ -108,6 +108,8 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 **路径 C ✅ 已完成** — `python -m verify.run_all` 一键验证 8 项范畴理论自洽性检查（V1–V8），**8/8 全部 PASS**。详见 [`roadmap/phase60_category_verification.md`](roadmap/phase60_category_verification.md)。
 
 **路径 B ✅ 已完成**（2026-07-31）— Agda 2.8.0 独立重形式化核心 8 模块（`agda_formalization/`，B1–B8），`Everything.agda` 整体类型检查通过，定理签名与 Lean 一一对应，实现证明助理交叉验证。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解）直接证明；ℝ 实数公理及解析定理以 `postulate` 声明。
+
+**路径 B 推进 ✅（2026-08-03，v1.13–v1.16）** — Agda 侧扩至 **16 模块**，T3 谱定理层进一步闭合：fc-integral 公理完整降为可证明定理（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步。
 
 **向外推形式化 ✅** — `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`，维数间隙 $\ln 15 < 3$ 与层正交分离 $S_4/c_1 = e^3$ 已形式化绑定（`lake build` 编译通过）；Agda 侧由 B7 镜像。
 
@@ -205,7 +207,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
-- **声明基线**：RAP-Errata v0.6（详见 `paper/RAP_勘误与立场声明.md`）
+- **声明基线**：RAP-Errata v0.7（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -274,7 +276,7 @@ universal_fixed_point_framework/
 │   ├── paper32_silence_spacetime.md            # 🆕 谱静默与时空涌现
 │   ├── paper33_origin_of_3.md                  # 🆕 "3"的范畴论起源
 │   ├── paper34_continuum_limit.md              # 🆕 B2 连续极限
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.6
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.7
 ├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
 ├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
 ├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证

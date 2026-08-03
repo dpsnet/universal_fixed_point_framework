@@ -1,7 +1,7 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.6）
+# UFPF 勘误与立场声明（RAP-Errata v0.7）
 
-**发布日期**：2026-07-31
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）
+**发布日期**：2026-08-03
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `9c41d7a3`（v0.7）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -154,13 +154,15 @@
 
 **路径 B 已完成**（2026-07-31）：Agda 2.8.0 独立重形式化核心 8 模块（B1–B8，`agda_formalization/`），`Everything.agda` 整体类型检查通过，定理签名与 Lean 一一对应，实现证明助理交叉验证（消除单一实现偏差）。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解）直接证明；ℝ 实数公理及解析定理以 `postulate` 声明（与 Lean 的 `Mathlib` 分析库对应）。与 Lean 的双实现一致性要点见 [`roadmap/phase60_category_verification.md`](../roadmap/phase60_category_verification.md) §路径 B 状态。
 
+**路径 B 推进（2026-08-03，v1.13–v1.16）**：Agda 侧扩至 **16 模块**，T3 谱定理层（`SpectralTheory.agda`）进一步闭合——① **fc-integral 公理（fc(f) = ∫f dE）完整降为可证明定理**（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`，语义由目标模型谱定理保证）；② **理论闭合审计**：谱匹配核心（theorem3 / corollary4-∞ / corollary5 / P1-linear-closure）**独立于** fc-integral 桥接、完全可证（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；钉住 sup 语义显式文档化（§1b）；③ **跨层模型 Op → LinOp 点态对应闭合**（新模块 `CrossLayer`，OpAlgPt 见证 record，13 组算子代数公理逐点验证）；④ **测度论逼近引理库阶段 1**（ℝ 幂单调性 power-nonneg/mono/pos + *-nonneg-ℝ）。paper I 已同步至 v2.49（注 C2.3b/2.4.5a 追加理论闭合审计补充）。
+
 **"向外推"形式化已完成**（2026-07-30）：`CoherenceToBranching.lean §11` 新增 `dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 两个定理，将维数间隙（$\ln 15 < 3$）与层正交分离（$S_4/c_1 = e^3$）形式化绑定，实现"球心在空间之外"的代数证明。`lake build` 编译通过 ✅。Agda 侧由 B7（`CoherenceToBranching.agda §11`）镜像。
 
 ## 七、系列论文状态
 
-1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。
+1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。
 2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）。
-3. **盲登记协议**：7 项冻结预言数值未变，登记有效。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
+3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.6，2026-08-03）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
 ---
 
@@ -178,3 +180,4 @@
 | **v0.4** | **2026-07-30** | **合并更新**：新增六篇论文（Paper XXXI–XXXV, XXXVII）；论文总数 34 → 37；Lean 4 形式化状态总表；开放研究线扩展（O7/O8 + L2/L3 等级体系）；参数总账四列完整追溯 + δ 排除注记（ε̄/ε₃ = √5 穿越点）；已排除方向 X1 登记；各级 README / 盲登记协议同步更新 |
 | **v0.5** | **2026-07-30** | **向外推形式化完成**：`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` 两个定理。维数间隙（ln 15 < 3）与层正交分离（S₄/c₁ = e³）形式化绑定。笔记 04_gravity_analysis.md §5.7k.6 新增 Lean 形式化状态。**Paper XXXV v0.3**：§3.2 扩展为三小节（几何阐述 + 形式证明 + 视角对比）。各级 README 同步更新至 v0.5。`lake build` 编译通过 |
 | **v0.6** | **2026-07-31** | **路径 B 完成（Agda 交叉验证）**：`agda_formalization/` 核心 8 模块（B1–B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过，定理签名与 Lean 一一对应。路线图 phase60 更新至 v0.4。Paper XXXV §3.2.2 补充 Agda 镜像说明。各级 README / 盲登记协议同步更新 |
+| **v0.7** | **2026-08-03** | **路径 B 推进 + 理论闭合**：Agda 侧扩至 16 模块——T3 谱定理层进一步闭合（fc-integral 公理完整降为可证明定理 `fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步（注 C2.3b/2.4.5a 理论闭合审计补充）。各级 README / 盲登记协议同步更新 |
