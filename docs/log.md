@@ -2291,3 +2291,24 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 余项第一步 ✅）、技术债清单项 1（阶段 4 余项第一步 ✅）、路线图 v1.29 条目、Everything.agda 头注释 v1.29。
 
 **当前开放项**：SimpleF 阶梯构造（Fin 2^k 分划 + disj/cover）→ 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 余项第二步第一部分——SimpleF 阶梯 disj 基础（v1.30）
+
+**新增（SpectralTheory）**：
+- `grid-pt-suc`（**可证**：网格严格递增——0 < c ⟹ xⱼ < xⱼ₊₁：/-lt-same-den-ℝ（同分母除保序）+ *-pos-mono-ℝ（乘正保序）+ natℝ-<-embed（j < suc j））
+- `dyadic-Ω`（dyadic 区间：Ωⱼ = [xⱼ, xⱼ₊₁)，2^k 等分子区间谓词）
+- ℕ 严格序工具（**可证**，零新增公理）：`<-ℕ-trich`（三分律）、`<-ℕ-split`（m < suc n ⟹ m ≡ n ⊎ m < n）、`<-ℕ-suc-split`（m < n ⟹ suc m < n ⊎ suc m ≡ n）
+- `fin-to-nat-trich`（**可证**：Fin 三分律——任意两个下标可比，fin-to-nat 落回 ℕ 层）
+- `grid-pt-lt`（**可证**：网格严格单调——i <ℕ j ⟹ xᵢ < xⱼ，grid-pt-suc 迭代 + 传递）
+- `dyadic-disj-lt`（**可证**：dyadic 区间不相交（ℕ 序版）——i < j ⟹ Ωᵢ ∩ Ωⱼ = ∅：i < j ⟹ xᵢ₊₁ ≤ xⱼ（<-ℕ-suc-split + grid-pt-lt）⟹ x < xᵢ₊₁ ≤ xⱼ ≤ x ⟹ x < x 矛盾（irreflexive-ℝ））
+- `dyadic-disj`（**可证**：dyadic 区间不相交（Fin 版，SimpleF.disj 核心）——i ≢ j ⟹ Ωᵢ ∩ Ωⱼ = ∅：fin-to-nat-trich 三分律三分，i≡j 情形经 fin-to-nat-inj 矛盾）+ `⊥-Sp-elim`（Sp 层 ⊥ → 本层 ⊥，空类型桥接）
+
+**里程碑**：**SimpleF 阶梯构造的 disj 侧闭合**（阶段 4 余项第二步第一部分）——Fin 2^k 分划 + pairwise 不相交证明全可证，零新增公理。剩余：cover（实数划分定理，依赖 Archimedean）→ SimpleF dyadic 实例组装 → 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：import 补 `/-lt-same-den-ℝ`/`natℝ-<-embed`/`trans-<ℝ`/`_<ℕ_`（z<s/s<s 构造子需显式）——NotInScope；grid-pt-suc 内层 subst 方向（*-pos-mono-ℝ 给 (c·x)<(c·y)，p 应为 *-comm-ℝ 非 sym）；grid-pt-lt 的 subst 方向（需 P j → P i，sym p）；`⊎` 无结合性声明（默认非结合）链式需嵌套括号；toℕ 与后部 fin-to-nat 重复——删 toℕ 改用 fin-to-nat，三分律 fin-to-nat-trich 置于 §10f；`⊥` 双定义（Sp/DH 层）——renaming ⊥ → ⊥-Sp + ⊥-Sp-elim。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 余项第二步第一部分 ✅）、技术债清单项 1（阶段 4 余项第二步第一部分 ✅）、路线图 v1.30 条目、Everything.agda 头注释 v1.30。
+
+**当前开放项**：SimpleF 阶梯构造的 cover 侧（实数划分定理：∀x∈[0,c).∃j<2^k. xⱼ≤x<xⱼ₊₁，依赖 archimedean-ub）+ SimpleF dyadic 实例组装（三段式 Ω：负部/dyadic/正部）→ 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。

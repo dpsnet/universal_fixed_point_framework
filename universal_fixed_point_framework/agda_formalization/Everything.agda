@@ -97,7 +97,15 @@ module Everything where
 --        方案 A 阶段 4 余项第一步（dyadic 网格 ℝ 基础：DHStructural natℝ-zero/
 --        natℝ-nonneg（可证）+ div-zero-l/div-nonneg + SpectralTheory grid-pt
 --        （xⱼ=(j·c)/2^k）/grid-pt-nonneg（可证）——dyadic 阶梯逼近网格基础；
---        技术债 A1 阶段 4 余项第一步，v1.29））
+--        技术债 A1 阶段 4 余项第一步，v1.29）；
+--        方案 A 阶段 4 余项第二步第一部分（SimpleF 阶梯 disj 基础：SpectralTheory
+--        grid-pt-suc（网格严格递增，可证：/-lt-same-den-ℝ + *-pos-mono-ℝ +
+--        natℝ-<-embed））+ dyadic-Ω（dyadic 区间 [xⱼ,xⱼ₊₁)）+ ℕ 严格序工具
+--        （<-ℕ-trich/<-ℕ-split/<-ℕ-suc-split，可证）+ fin-to-nat-trich（Fin 三分律）+
+--        grid-pt-lt（网格严格单调 i<j ⟹ xᵢ<xⱼ，可证）+ dyadic-disj-lt/dyadic-disj
+--        （dyadic 区间不相交 Ωᵢ∩Ωⱼ=∅，SimpleF.disj 核心，可证，零新增公理；
+--        ⊥-Sp-elim 桥接 Sp/DH 层空类型）——阶段 4 余项第二步 disj 侧闭合；
+--        技术债 A1 阶段 4 余项第二步第一部分，v1.30））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

@@ -33,19 +33,21 @@ module SpectralTheory.SpectralTheory where
 
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Agda.Primitive using (Level; _⊔_)
-open import Sp.SpCategory using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; trans; cong; cong₂)
-open import NatArith.NatArith using (2^)
+open import Sp.SpCategory
+  renaming (⊥ to ⊥-Sp)
+  using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; trans; cong; cong₂)
+open import NatArith.NatArith using (2^; <-suc; _<ℕ_; z<s; s<s; <-trans; s<s-inv)
 
 -- ℝ 层（T3 已建：序代数 + exp/log/rpow + exp-inj 可证）
 open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; _/ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ; trans-<ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
          max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          max-pos-value; max-neg-value; max-zero-zero;
-         natℝ-nonneg; div-nonneg; 2^-pos; natℝ-pos-embed;
+         natℝ-nonneg; div-nonneg; 2^-pos; natℝ-pos-embed; natℝ-<-embed; /-lt-same-den-ℝ;
          sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
@@ -1342,6 +1344,87 @@ grid-pt-nonneg k c hc j =
              (*-nonneg-ℝ (natℝ j) c (natℝ-nonneg j) hc)
              (natℝ-pos-embed (2^-pos k))
 
+-- **可证**：网格严格递增——0 < c ⟹ xⱼ < xⱼ₊₁（natℝ-<-embed（j < suc j）+ 乘正保序
+--  （*-pos-mono-ℝ，c > 0）+ 同分母除保序（/-lt-same-den-ℝ，分母 2^k > 0））
+grid-pt-suc : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (j : ℕ) → grid-pt k c j <ℝ grid-pt k c (suc j)
+grid-pt-suc k c hc j =
+  /-lt-same-den-ℝ {natℝ j *ℝ c} {natℝ (suc j) *ℝ c} {natℝ (2^ k)}
+                  (subst (λ w → (natℝ j *ℝ c) <ℝ w)
+                         (*-comm-ℝ c (natℝ (suc j)))
+                         (subst (λ z → z <ℝ (c *ℝ natℝ (suc j)))
+                         (*-comm-ℝ c (natℝ j))
+                         (*-pos-mono-ℝ {a = natℝ j} {b = natℝ (suc j)} {c = c} hc
+                                       (natℝ-<-embed (<-suc j)))))
+
+-- dyadic 区间：Ωⱼ = [xⱼ, xⱼ₊₁)（第 j 个 2^k 等分子区间；disj/cover 证明见 SimpleF
+--  阶梯构造阶段——disj 依赖 grid-pt-suc（严格递增），cover 依赖实数划分定理）
+dyadic-Ω : (k : ℕ) (c : ℝ) (j : ℕ) → ℝ → Set
+dyadic-Ω k c j x = (grid-pt k c j ≤ℝ x) × (x <ℝ grid-pt k c (suc j))
+
+-- ==================================================================
+-- ℕ 严格序工具（SimpleF 阶梯 disj 基础；2026-08-03，零新增公理）
+-- ==================================================================
+-- 目标：dyadic-Ω 的 pairwise 不相交证明（disj）——i ≠ j ⟹ Ωᵢ ∩ Ωⱼ = ∅。
+-- 需要 Fin 下标可比（三分律，fin-to-nat-trich 见 §10e 后 fin-to-nat 处）
+-- + 网格单调性（i <ℕ j ⟹ xᵢ < xⱼ）。
+
+-- ℕ 严格序三分律（归纳可证）
+<-ℕ-trich : (m n : ℕ) → (m <ℕ n) ⊎ ((n <ℕ m) ⊎ (m ≡ n))
+<-ℕ-trich zero    zero    = inj₂ (inj₂ refl)
+<-ℕ-trich zero    (suc n) = inj₁ z<s
+<-ℕ-trich (suc m) zero    = inj₂ (inj₁ z<s)
+<-ℕ-trich (suc m) (suc n) with <-ℕ-trich m n
+<-ℕ-trich (suc m) (suc n) | inj₁ h          = inj₁ (s<s h)
+<-ℕ-trich (suc m) (suc n) | inj₂ (inj₁ h)   = inj₂ (inj₁ (s<s h))
+<-ℕ-trich (suc m) (suc n) | inj₂ (inj₂ p)   = inj₂ (inj₂ (cong suc p))
+
+-- m < suc n ⟹ m ≡ n ⊎ m < n（ℕ 层分裂）
+<-ℕ-split : {m n : ℕ} → m <ℕ suc n → (m ≡ n) ⊎ (m <ℕ n)
+<-ℕ-split {zero}    {zero}    z<s           = inj₁ refl
+<-ℕ-split {zero}    {suc n}   z<s           = inj₂ z<s
+<-ℕ-split {suc m}   {zero}    (s<s ())
+<-ℕ-split {suc m}   {suc n}   (s<s h) with <-ℕ-split {m} {n} h
+<-ℕ-split {suc m}   {suc n}   (s<s h) | inj₁ p = inj₁ (cong suc p)
+<-ℕ-split {suc m}   {suc n}   (s<s h) | inj₂ q = inj₂ (s<s q)
+
+-- m < n ⟹ suc m < n ⊎ suc m ≡ n（disj 核心：i < j ⟹ xᵢ₊₁ ≤ xⱼ）
+<-ℕ-suc-split : {m n : ℕ} → m <ℕ n → (suc m <ℕ n) ⊎ (suc m ≡ n)
+<-ℕ-suc-split {m} {zero}    ()
+<-ℕ-suc-split {m} {suc n}   h with <-ℕ-split {m} {n} h
+<-ℕ-suc-split {m} {suc n}   h | inj₁ p = inj₂ (cong suc p)
+<-ℕ-suc-split {m} {suc n}   h | inj₂ q = inj₁ (s<s q)
+
+-- **可证**：网格严格单调——i <ℕ j ⟹ xᵢ < xⱼ
+--（归纳于 j：j = suc j' 时 i <ℕ suc j' 分裂为 i ≡ j'（grid-pt-suc 直接）
+--  或 i <ℕ j'（归纳 + grid-pt-suc 传递））
+grid-pt-lt : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → {i j : ℕ} → i <ℕ j → grid-pt k c i <ℝ grid-pt k c j
+grid-pt-lt k c hc {i} {zero}    ()
+grid-pt-lt k c hc {i} {suc j}   ij with <-ℕ-split {i} {j} ij
+grid-pt-lt k c hc {i} {suc j}   ij | inj₁ p =
+  subst (λ w → grid-pt k c w <ℝ grid-pt k c (suc j)) (sym p) (grid-pt-suc k c hc j)
+grid-pt-lt k c hc {i} {suc j}   ij | inj₂ q =
+  trans-<ℝ (grid-pt-lt k c hc {i} {j} q) (grid-pt-suc k c hc j)
+
+-- **可证**：dyadic 区间不相交（严格序版）——i <ℕ j ⟹ Ωᵢ ∩ Ωⱼ = ∅
+--（i < j ⟹ xᵢ₊₁ ≤ xⱼ（<-ℕ-suc-split + grid-pt-lt/≡ 特化）⟹
+--  x < xᵢ₊₁（Ωᵢ 上界）≤ xⱼ ≤ x（Ωⱼ 下界）⟹ x < x 矛盾（irreflexive-ℝ））
+dyadic-disj-lt : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → {i j : ℕ} → i <ℕ j
+  → (x : ℝ) → dyadic-Ω k c i x → dyadic-Ω k c j x → ⊥
+dyadic-disj-lt k c hc {i} {j} ij x (xi≤x , x<xi+1) (xj≤x , x<xj+1) =
+  irreflexive-ℝ (lt-≤-trans-ℝ (lt-≤-trans-ℝ x<xi+1 xi+1≤xj) xj≤x)
+  where
+  -- xᵢ₊₁ ≤ xⱼ：suc i < j 经网格单调（<-≤-ℝ），suc i ≡ j 经 refl
+  xi+1≤xj : grid-pt k c (suc i) ≤ℝ grid-pt k c j
+  xi+1≤xj with <-ℕ-suc-split {i} {j} ij
+  xi+1≤xj | inj₁ h = <-≤-ℝ (grid-pt-lt k c hc {suc i} {j} h)
+  xi+1≤xj | inj₂ p = subst (λ w → grid-pt k c (suc i) ≤ℝ grid-pt k c w) p
+                          (refl-≤ℝ {grid-pt k c (suc i)})
+
+-- **可证**：dyadic 区间不相交（Fin 版，SimpleF.disj 核心）——i ≢ j ⟹ Ωᵢ ∩ Ωⱼ = ∅
+--（fin-to-nat-trich 三分律：i<j 经 dyadic-disj-lt、j<i 经其对称、i≡j 与 neq 矛盾
+--  （fin-to-nat-inj）；依赖 fin-to-nat-trich/-inj，定义见 §10f fin-to-nat 之后）
+-- dyadic-disj 定义见下（§10f，fin-to-nat-trich 后）
+
 -- 简单函数的点态函数（SimpleF → ℝ → ℝ）：s(x) = Σᵢ cᵢ·1_{Ωᵢ}(x)
 simple-fn : SimpleF → (ℝ → ℝ)
 simple-fn s x = sum-ℝ {SimpleF.m s} (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)
@@ -2162,6 +2245,10 @@ fin-to-nat : {m : ℕ} → Fin m → ℕ
 fin-to-nat zero = zero
 fin-to-nat (suc i) = suc (fin-to-nat i)
 
+-- Fin 三分律（2026-08-03，SimpleF 阶梯 disj 基础）：任意两个下标可比
+fin-to-nat-trich : {n : ℕ} (i j : Fin n) → (fin-to-nat i <ℕ fin-to-nat j) ⊎ ((fin-to-nat j <ℕ fin-to-nat i) ⊎ (fin-to-nat i ≡ fin-to-nat j))
+fin-to-nat-trich i j = <-ℕ-trich (fin-to-nat i) (fin-to-nat j)
+
 -- ℕ 构造子互异/单射（可证）
 zero≢suc-ℕ : {n : ℕ} → zero ≢ suc n
 zero≢suc-ℕ ()
@@ -2175,6 +2262,23 @@ fin-to-nat-inj {i = zero} {j = zero} h eq = h refl
 fin-to-nat-inj {i = zero} {j = suc j} h eq = zero≢suc-ℕ eq
 fin-to-nat-inj {i = suc i} {j = zero} h eq = zero≢suc-ℕ (sym eq)
 fin-to-nat-inj {i = suc i} {j = suc j} h eq = fin-to-nat-inj {i = i} {j = j} (λ ne → h (cong suc ne)) (suc-inj-ℕ eq)
+
+-- Sp 层 ⊥ → 本层 ⊥（两者均为无构造子空类型，模式匹配 ())
+⊥-Sp-elim : ⊥-Sp → ⊥
+⊥-Sp-elim ()
+
+-- **可证**：dyadic 区间不相交（Fin 版，SimpleF.disj 核心，2026-08-03）——
+-- i ≢ j ⟹ Ωᵢ ∩ Ωⱼ = ∅（fin-to-nat-trich 三分律：i<j 经 dyadic-disj-lt、j<i 经其
+-- 对称、i≡j 与 neq 矛盾（fin-to-nat-inj）；依赖 fin-to-nat-trich/-inj，故置于此处）
+dyadic-disj : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (i j : Fin (2^ k)) → i ≢ j
+  → (x : ℝ) → dyadic-Ω k c (fin-to-nat i) x → dyadic-Ω k c (fin-to-nat j) x → ⊥
+dyadic-disj k c hc i j neq x pix pjx with fin-to-nat-trich i j
+dyadic-disj k c hc i j neq x pix pjx | inj₁ iltj =
+  dyadic-disj-lt k c hc {fin-to-nat i} {fin-to-nat j} iltj x pix pjx
+dyadic-disj k c hc i j neq x pix pjx | inj₂ (inj₁ jlti) =
+  dyadic-disj-lt k c hc {fin-to-nat j} {fin-to-nat i} jlti x pjx pix
+dyadic-disj k c hc i j neq x pix pjx | inj₂ (inj₂ eq) =
+  ⊥-Sp-elim (fin-to-nat-inj neq eq)
 
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel
