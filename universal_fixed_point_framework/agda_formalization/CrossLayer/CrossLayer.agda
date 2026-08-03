@@ -31,6 +31,7 @@ module CrossLayer.CrossLayer where
     ·ₒ-comm   ↦ ·ₗ-comp-pt      （**可证**，定义性）
     ·ₒ-comm-l ↦ ·ₗ-comm-l-pt    （**可证**，线性性 lin-scalar）
     ·ₒ-zero-l ↦ ·ₗ-zero-l-pt    （**可证**，scalar-zero-any）
+    ·ₒ-zero-r ↦ ·ₗ-zero-r-pt    （**可证**，scalar-zero；v1.24 补充公理对应）
 
   funext 限制：LinOp 是 record（f/lin-add/lin-scalar 三字段），算子层等式
   （op-add (op-add X Y) Z ≡ op-add X (op-add Y Z) 等）需 f 字段函数相等
@@ -67,7 +68,7 @@ open import HilbertSpace.HilbertSpace
          +ₗ-assoc-pt; +ₗ-comm-pt; +ₗ-ident-pt;
          op-comp-assoc-pt; op-comp-id-pt; op-comp-id-r-pt;
          *ₗ-zero-r-pt; *ₗ-zero-l-pt; distribₗ-pt; distribₗ-l-pt;
-         ·ₗ-comp-pt; ·ₗ-comm-l-pt; ·ₗ-zero-l-pt)
+         ·ₗ-comp-pt; ·ₗ-comm-l-pt; ·ₗ-zero-l-pt; ·ₗ-zero-r-pt)
 
 -- 打开 LinOp 记录模块：投影 f（与 lin-add/lin-scalar）进入作用域
 --（Agda 的 using 子句不支持 `LinOp.f` 限定投影名解析，用 open 记录方式引入）
@@ -75,8 +76,8 @@ open LinOp
 
 -- 点态算子代数见证（跨层模型证书）：LinOp 层逐点满足 Op 层全部算子代数公理
 --（+ₒ-assoc / +ₒ-comm / +ₒ-ident / *ₒ-assoc / *ₒ-ident / *ₒ-ident-l /
---  *ₒ-zero-r / *ₒ-zero-l / distribₒ / distribₒ-l / ·ₒ-comm / ·ₒ-comm-l / ·ₒ-zero-l——
---  13 组公理，逐点形式 = ∀v. LinOp.f 值相等）
+--  *ₒ-zero-r / *ₒ-zero-l / distribₒ / distribₒ-l / ·ₒ-comm / ·ₒ-comm-l /
+--  ·ₒ-zero-l / ·ₒ-zero-r——14 组公理，逐点形式 = ∀v. LinOp.f 值相等）
 record OpAlgPt : Set where
   field
     -- +ₒ-assoc 点态
@@ -111,6 +112,8 @@ record OpAlgPt : Set where
       → f (op-comp X (c ·ₗ Y)) v ≡ f (c ·ₗ (op-comp X Y)) v
     -- ·ₒ-zero-l 点态
     ·ₗ-zero-l : (X : LinOp) (v : V) → f (zeroℝ ·ₗ X) v ≡ f zero-op v
+    -- ·ₒ-zero-r 点态（标量乘零算子：(c·ₗ𝟘ₗ)v = 𝟘ₗ v，v1.24 补充）
+    ·ₗ-zero-r : (c : ℝ) (v : V) → f (c ·ₗ zero-op) v ≡ f zero-op v
 
 -- **可证（零新增公理）**：LinOp 层逐点满足 Op 层算子代数公理——
 -- 跨层模型验证证书实例化（字段全部来自 HilbertSpace §16 点态律）
@@ -129,6 +132,7 @@ op-alg-pt = record
   ; ·ₗ-comm = λ c X Y v → sym (·ₗ-comp-pt c X Y v)
   ; ·ₗ-comm-l = ·ₗ-comm-l-pt
   ; ·ₗ-zero-l = ·ₗ-zero-l-pt
+  ; ·ₗ-zero-r = ·ₗ-zero-r-pt
   }
 
 -- ==================================================================

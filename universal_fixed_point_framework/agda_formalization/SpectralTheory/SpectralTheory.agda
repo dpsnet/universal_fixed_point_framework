@@ -50,7 +50,7 @@ open import P1Spectral.P1Spectral
   using (Op; _+ₒ_; _*ₒ_; _·ₒ_; 𝟘ₒ; 𝟙ₒ;
          +ₒ-assoc; +ₒ-comm; +ₒ-ident;
          *ₒ-assoc; *ₒ-ident; *ₒ-ident-l; *ₒ-zero-r; *ₒ-zero-l;
-         distribₒ; distribₒ-l; ·ₒ-comm; ·ₒ-comm-l; ·ₒ-zero-l)
+         distribₒ; distribₒ-l; ·ₒ-comm; ·ₒ-comm-l; ·ₒ-zero-l; ·ₒ-zero-r)
 
 -- 本地依赖对（库未提供 Agda.Builtin.Sigma）
 data Σ (A : Set) (B : A → Set) : Set where
@@ -319,6 +319,25 @@ op-sub-comm X Y Z hY hZ =
 postulate
   spec-int-general-decomp : (f : ℝ → ℝ)
     → spec-int-general f ≡ spec-int-general (pos-part f) -ₒ spec-int-general (neg-part f)
+
+-- **可证**：X −ₒ 𝟘ₒ = X（·ₒ-zero-r（标量×零算子）+ +ₒ-ident；
+--  重构后非负一致性（f⁻ = 0 ⟹ ∫f = ∫f⁺ − 0）的左消）
+op-sub-zero-r : (X : Op) → X -ₒ 𝟘ₒ ≡ X
+op-sub-zero-r X = trans (cong (λ Y → X +ₒ Y) (·ₒ-zero-r (negℝ oneℝ))) (+ₒ-ident X)
+
+-- 非负函数积分（重构定义的前置别名）：spec-int-nonneg g = sup{∫s : s ≤ g 逐点}
+--（对非负 g 即 Lebesgue 积分；方案 A 重构 spec-int-general f := spec-int-nonneg f⁺
+--  −ₒ spec-int-nonneg f⁻ 时避免定义递归）
+spec-int-nonneg : (ℝ → ℝ) → Op
+spec-int-nonneg g = sup-op (spec-int-below g)
+
+-- 零函数积分（**桥接登记**，D 类）：∫0 dE = 𝟘ₒ
+--（模型必然性 = 测度论 ∫0 = 0（Lebesgue 积分零函数性）；钉住 sup 语义下真
+--  （下界族 {∫s : s ≤ 0} 的 sup = 0，0 是成员（零简单函数）+ 上界（负标量×正算子
+--  ≤ 0 需谱投影非负，Hilbert 层 E-hilb-nonneg 可证））；降定理路径 = Hilbert 层
+--  谱投影非负 + 标量保序 + sup-least）
+postulate
+  spec-int-general-zero : spec-int-general (λ _ → zeroℝ) ≡ 𝟘ₒ
 
 -- ==================================================================
 -- §1c 截断逼近（测度论层阶段 1，2026-08-02）
@@ -2439,8 +2458,35 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 -- 待降定理（2026-08-03 再再再更新）：
 --  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 4 阶段
 --    （阶段 1 ✅ v1.22 max-ℝ 族 + f⁺/f⁻；阶段 2 第一部分 ✅ v1.23 Op 减法 +
---    decomp 桥接；阶段 2 第二部分 spec-int-general 定义重构 + 下游适配；
---    阶段 3 钉住桥接转定理；阶段 4 组合替换）
+--    decomp 桥接；阶段 2 第二部分第一步 ✅ v1.24 一致性组件（·ₒ-zero-r、
+--    op-sub-zero-r、spec-int-nonneg、spec-int-general-zero）；阶段 2 第二部分
+--    第二步 spec-int-general 定义重构 + 下游适配；阶段 3 钉住桥接转定理；
+--    阶段 4 组合替换）
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 6（2026-08-03）：方案 A 一致性组件（v1.24）
+-- ------------------------------------------------------------------
+-- 新增桥接（v1.24，D 类补充）：
+--  - spec-int-general-zero：∫0 dE = 𝟘ₒ（零函数积分）——模型必然性 = 测度论
+--    零函数性（Lebesgue 积分 ∫0 = 0）；钉住 sup 语义下真（下界族 {∫s : s ≤ 0}
+--    sup = 0）；降定理路径 = Hilbert 层谱投影非负（E-hilb-nonneg）+ 标量保序 +
+--    sup-least。
+-- 新增补充公理（v1.24，P1Spectral §1，G 类算子代数补充）：
+--  - ·ₒ-zero-r：a·ₒ𝟘ₒ = 𝟘ₒ（标量乘零算子 = 零算子，与 ·ₒ-zero-l 平行；
+--    模型必然性 = Op 是 ℝ-向量空间）——支撑 op-sub-zero-r（X−ₒ𝟘ₒ = X，可证）。
+-- 同轮可证组件：op-sub-zero-r（·ₒ-zero-r + +ₒ-ident）、spec-int-nonneg（非负
+--  积分别名 = sup-op (spec-int-below)，重构定义避免递归）、HilbertSpace
+--  ·ₗ-zero-r-pt（(c·ₗ𝟘ₗ)v = 𝟘ₗ v，scalar-zero；CrossLayer OpAlgPt 补第 14 组点态
+--  字段——算子代数公理 13 → 14 组证书完整）。
+--
+-- 待降定理（2026-08-03 再再再再更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 阶段 2 第二部分
+--    第二步（spec-int-general 定义重构 ∫f := spec-int-nonneg f⁺ −ₒ spec-int-nonneg f⁻
+--    + 下游全适配（X-comm-spec-int-general 用 op-sub-comm 重写、spec-int-R-trunc-conv/
+--    -ℕ-conv 陈述调整、fc-integral 重验））→ 阶段 3（钉住桥接转定理）→ 阶段 4
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛

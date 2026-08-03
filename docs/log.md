@@ -2181,3 +2181,21 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 2 第一部分 ✅）、技术债清单项 1（阶段 2 第一部分 ✅）、路线图 v1.23 条目、Everything.agda 头注释 v1.23、SpectralTheory §15 审计更新 5（D 类桥接登记）。
 
 **当前开放项**：阶段 2 第二部分（spec-int-general **定义重构**（需 spec-int-nonneg 别名避免递归）+ 下游全适配（X-comm-spec-int-general 用 op-sub-comm 重写、spec-int-R-trunc-conv/-ℕ-conv 陈述调整、fc-integral 重验））；一致性（spec-int-general-zero：∫0=0 需"负标量×正算子 ≤ 0"序论证或桥接）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 2 第二部分第一步——一致性组件（v1.24）
+
+**新增（P1Spectral + HilbertSpace + SpectralTheory + CrossLayer）**：
+- **P1Spectral 补充公理** `·ₒ-zero-r`：a·ₒ𝟘ₒ = 𝟘ₒ（标量乘零算子 = 零算子，G 类算子代数补充，模型必然性 = Op 是 ℝ-向量空间）
+- **HilbertSpace 可证** `·ₗ-zero-r-pt`：(c·ₗ𝟘ₗ)v = 𝟘ₗ v（scalar-zero）⟹ **CrossLayer OpAlgPt 补第 14 组点态字段**（算子代数公理 13 → 14 组证书完整）
+- **SpectralTheory 可证** `op-sub-zero-r`：X −ₒ 𝟘ₒ = X（·ₒ-zero-r + +ₒ-ident）/ `spec-int-nonneg`：非负积分别名 = sup-op (spec-int-below)（重构定义避免递归）
+- **桥接登记** `spec-int-general-zero`：∫0 dE = 𝟘ₒ（D 类，模型必然性 = 测度论零函数性，降定理路径 = Hilbert 层谱投影非负 + 标量保序 + sup-least）
+
+**里程碑**：**阶段 2 第二部分第一步闭合**——重构前置的一致性组件齐备（·ₒ-zero-r/op-sub-zero-r/spec-int-nonneg/spec-int-general-zero），为 spec-int-general 定义重构（∫f := spec-int-nonneg f⁺ −ₒ spec-int-nonneg f⁻）与下游适配铺路。
+
+**验证**：`agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 2 第二部分第一步 ✅）、技术债清单项 1（阶段 2 第二部分第一步 ✅）、路线图 v1.24 条目、Everything.agda 头注释 v1.24、SpectralTheory §15 审计更新 6。
+
+**当前开放项**：阶段 2 第二部分第二步（spec-int-general **定义重构** + 下游全适配 + 非负一致性组装）；阶段 3（钉住桥接转定理）。改动尚未提交 git。

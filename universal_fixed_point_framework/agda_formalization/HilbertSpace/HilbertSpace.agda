@@ -1850,6 +1850,11 @@ distribₗ-l-pt X Y Z v = refl
 ·ₗ-zero-l-pt : (X : LinOp) (v : V) → LinOp.f (zeroℝ ·ₗ X) v ≡ LinOp.f zero-op v
 ·ₗ-zero-l-pt X v = scalar-zero-any (LinOp.f X v)
 
+-- **可证**：标量乘零算子（点态）——(c·ₗ𝟘ₗ)v = 𝟘ₗ v（scalar-zero；
+--  P1Spectral ·ₒ-zero-r（a·ₒ𝟘ₒ = 𝟘ₒ，2026-08-03 补充公理）的点态对应）
+·ₗ-zero-r-pt : (c : ℝ) (v : V) → LinOp.f (c ·ₗ zero-op) v ≡ LinOp.f zero-op v
+·ₗ-zero-r-pt c v = scalar-zero c
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。
