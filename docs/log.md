@@ -2239,3 +2239,20 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 3 第一步 ✅）、技术债清单项 1（阶段 3 第一步 ✅）、路线图 v1.26 条目、Everything.agda 头注释 v1.26。
 
 **当前开放项**：阶段 3 余项（id 分解一致性：∫id = ∫id⁺ −ₒ ∫id⁻ 且 ∫id⁻ = 0——需谱支集外零贡献论证 E-support-pos + 谱投影非负，较深）；阶段 4（fc-poly-le-spec-int 组合替换）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 3 收官——id 钉住完全解析（v1.27）
+
+**新增（SpectralTheory）**：
+- **桥接登记** `spec-int-nonneg-zero-off-support`：非负 g 在 [0,∞) 上 = 0 ⟹ ∫g dE = 0（谱支集外零贡献，D 类；模型必然性 = E-support-pos + 测度论零函数性，降定理路径 = Hilbert 层谱投影非负 + E-support-pos + sup-least）
+- **可证** `spec-int-A-decomp`：spec-int-A ≡ ∫id⁺ −ₒ ∫id⁻（sym spec-int-general-id + decomp id——id 钉住桥接改写为分解形式）
+- **可证** `spec-int-general-id-pos`：**∫id⁺ = spec-int-A**（spec-int-A-decomp + 零贡献桥接（∫id⁻ = 0：id⁻ 非负 + 在 [0,∞) = 0）+ op-sub-zero-r）
+
+**里程碑**：**阶段 3 收官**——三个钉住桥接（spec-int-general-id/-exp/-phi-t）全部解析：exp/φ_t 到非负 sup（v1.26）、id 到 id⁺ 非负积分（v1.27）；钉住残留 = 谱表示 postulate 值（spec-int-A/-exp/e^(-tA)，真正的基础假设），健全。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 3 收官 ✅）、技术债清单项 1（阶段 3 ✅）、路线图 v1.27 条目、Everything.agda 头注释 v1.27、SpectralTheory §15 审计更新 7。
+
+**当前开放项**：阶段 4（fc-poly-le-spec-int 组合替换：∫p = ∫p⁺ −ₒ ∫p⁻ 各自由非负 sup 构造化 + v1.15 幂单调性引理库 + dyadic 阶梯逼近）。改动尚未提交 git。

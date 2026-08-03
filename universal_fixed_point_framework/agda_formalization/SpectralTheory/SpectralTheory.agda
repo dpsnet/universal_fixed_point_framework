@@ -378,6 +378,16 @@ spec-int-nonneg g = sup-op (spec-int-below g)
 postulate
   spec-int-general-zero : spec-int-general (λ _ → zeroℝ) ≡ 𝟘ₒ
 
+-- 谱支集外零贡献（**桥接登记**，D 类）：非负 g 在 [0,∞) 上 = 0 ⟹ ∫g dE = 0
+--（模型必然性 = E-support-pos（E(P) = E(P∩[0,∞))，谱支集 [0,∞)）+ 测度论零函数性；
+--  下界族 {∫s : s ≤ g} 成员在谱支集上 ≤ 0（g 在 [0,∞) = 0 ⟹ s ≤ 0 于 [0,∞)）⟹
+--  谱投影非负 + 标量保序 ⟹ ∫s ≤ 0，且 0 是成员（s = 0 ≤ g）⟹ sup = 0；
+--  降定理路径 = Hilbert 层谱投影非负（E-hilb-nonneg）+ E-support-pos + sup-least）
+-- 用途：id⁻（支持 ⊆ (-∞,0]，[0,∞) 上 = 0）的积分为 0（阶段 3 余项，id 钉住解析）
+postulate
+  spec-int-nonneg-zero-off-support : (g : ℝ → ℝ) → ((x : ℝ) → zeroℝ ≤ℝ g x)
+    → ((x : ℝ) → zeroℝ ≤ℝ x → g x ≡ zeroℝ) → spec-int-general g ≡ 𝟘ₒ
+
 -- **可证**：非负一致性——f ≥ 0 逐点 ⟹ ∫f = 非负 sup（spec-int-general f ≡ spec-int-nonneg f）
 --（spec-int-general-decomp（∫f = ∫f⁺ −ₒ ∫f⁻）+ pos-part-absorp/neg-part-zero-point
 --  （逐点外延 spec-int-general-ext-pt）+ spec-int-general-zero（∫0 = 0）+ op-sub-zero-r
@@ -614,6 +624,31 @@ spec-int-nonneg-exp =
   trans (sym (spec-int-nonneg-consistent (λ x → exp (negℝ x))
                                          (λ x → <-≤-ℝ (exp-pos (negℝ x)))))
         spec-int-general-exp
+
+-- **可证**：id 分解重述——spec-int-A ≡ ∫id⁺ −ₒ ∫id⁻（阶段 3 余项，id 钉住解析第一步）
+--（sym spec-int-general-id（∫id = spec-int-A）+ spec-int-general-decomp id（∫id = ∫id⁺ −ₒ ∫id⁻）
+--  ——把 id 钉住桥接改写为分解形式）
+spec-int-A-decomp : spec-int-A ≡ spec-int-general (pos-part (λ x → x))
+                                  -ₒ spec-int-general (neg-part (λ x → x))
+spec-int-A-decomp =
+  trans (sym spec-int-general-id)
+        (spec-int-general-decomp (λ x → x))
+
+-- **可证**：id 钉住完全解析——∫id⁺ = spec-int-A
+--（spec-int-A-decomp（spec-int-A = ∫id⁺ −ₒ ∫id⁻）+ spec-int-nonneg-zero-off-support
+--  （∫id⁻ = 0：id⁻ 非负 + 在 [0,∞) 上 = 0（neg-part-zero-point），谱支集外零贡献）
+--  + op-sub-zero-r（X −ₒ 0 = X）——spec-int-general-id 桥接的钉住解析为 id⁺ 的
+--  非负积分值（id⁺ 与 id 在 [0,∞) 相等 ⟹ ∫id⁺ = ∫id = spec-int-A））
+spec-int-general-id-pos : spec-int-general (pos-part (λ x → x)) ≡ spec-int-A
+spec-int-general-id-pos =
+  sym (trans (trans spec-int-A-decomp
+                   (cong₂ _-ₒ_ refl id-neg-zero))
+             (op-sub-zero-r (spec-int-general (pos-part (λ x → x)))))
+  where
+  id-neg-zero : spec-int-general (neg-part (λ x → x)) ≡ 𝟘ₒ
+  id-neg-zero = spec-int-nonneg-zero-off-support (neg-part (λ x → x))
+                  (λ x → neg-part-nonneg (λ y → y) x)
+                  (λ x hx → neg-part-zero-point (λ y → y) x hx)
 
 -- **族成员交换（可证）**：族成员均为简单函数谱积分 ⟹ 与 X 交换（simple-comm）
 member-comm : {f : ℝ → ℝ} (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
@@ -2562,6 +2597,32 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --    过大（MCT/fc-integral 系列依赖定义性）⟹ 改走 decomp 显式化，阶段 2 收官）
 --    → 阶段 3（钉住桥接转定理：spec-int-general-id/-exp/-phi-t 经 decomp +
 --    非负一致性转可证）→ 阶段 4（fc-poly-le-spec-int 组合替换）
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 7（2026-08-03）：方案 A 阶段 3 收官（钉住解析）
+-- ------------------------------------------------------------------
+-- 新增桥接（v1.27，D 类补充）：
+--  - spec-int-nonneg-zero-off-support：非负 g 在 [0,∞) 上 = 0 ⟹ ∫g dE = 0
+--    （谱支集外零贡献）——模型必然性 = E-support-pos（E(P) = E(P∩[0,∞))）+
+--    测度论零函数性；降定理路径 = Hilbert 层谱投影非负（E-hilb-nonneg）+
+--    E-support-pos + sup-least。
+-- 同轮可证组件（v1.27，阶段 3 收官）：
+--  - spec-int-A-decomp：spec-int-A ≡ ∫id⁺ −ₒ ∫id⁻（sym spec-int-general-id +
+--    spec-int-general-decomp id——id 钉住桥接改写为分解形式）
+--  - spec-int-general-id-pos：∫id⁺ = spec-int-A（spec-int-A-decomp +
+--    spec-int-nonneg-zero-off-support（∫id⁻ = 0：id⁻ 非负 + 在 [0,∞) = 0）+
+--    op-sub-zero-r）——spec-int-general-id 钉住完全解析为 id⁺ 非负积分值。
+-- 阶段 3 状态：三个钉住桥接（spec-int-general-id/-exp/-phi-t）全部解析——
+--  exp/φ_t 到非负 sup（spec-int-nonneg-exp/-phi-t，v1.26）、id 到 id⁺ 非负积分
+--  （v1.27）；钉住残留 = 谱表示 postulate 值（spec-int-A/-exp/e^(-tA），健全）。
+--
+-- 待降定理（2026-08-03 再再再再再更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 阶段 4
+--    （∫p = ∫p⁺ −ₒ ∫p⁻ 各自由非负 sup 构造化 + v1.15 幂单调性引理库 +
+--    dyadic 阶梯逼近 → fc-integral 零登记项）
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
