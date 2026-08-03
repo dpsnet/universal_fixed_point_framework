@@ -38,7 +38,7 @@ open import Sp.SpCategory using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; tra
 -- ℝ 层（T3 已建：序代数 + exp/log/rpow + exp-inj 可证）
 open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
-         exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
+         exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r)
@@ -572,6 +572,36 @@ sum-ℝ {suc m} f = f zero +ℝ sum-ℝ {m} (λ i → f (suc i))
 ℝ-power : ℕ → ℝ → ℝ
 ℝ-power zero x = oneℝ
 ℝ-power (suc n) x = x *ℝ ℝ-power n x
+
+-- ==================================================================
+-- 测度论逼近引理库 阶段 1：ℝ 幂单调性/正性（2026-08-03）
+-- ==================================================================
+-- 目标：单项式 xⁿ 的 dyadic 阶梯逼近（(j·c/2^k)ⁿ ≤ xⁿ，x ∈ 原子区间）的
+-- ℝ 层地基——构造化 fc-poly-le-spec-int（测度论核心逼近桥接）的多阶段路线阶段 1。
+-- 零新增公理：全部从 ℝ 序代数推导。
+
+-- **可证**：幂非负——0 ≤ x ⟹ 0 ≤ xⁿ（归纳：基例 0 ≤ 1；步进 乘积非负 *-nonneg-ℝ）
+power-nonneg : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ x → zeroℝ ≤ℝ ℝ-power n x
+power-nonneg zero x hx = <-≤-ℝ zero-lt-one-ℝ
+power-nonneg (suc n) x hx = *-nonneg-ℝ x (ℝ-power n x) hx (power-nonneg n x hx)
+
+-- **可证**：幂单调——0 ≤ x 且 x ≤ y ⟹ xⁿ ≤ yⁿ（归纳：步进经
+-- 右侧乘保序 *-≤-mono-ℝ（x·xⁿ ≤ y·xⁿ）+ 左侧乘保序 *-≤-mono-l-ℝ（y·xⁿ ≤ y·yⁿ））
+power-mono : (n : ℕ) (x y : ℝ) → zeroℝ ≤ℝ x → x ≤ℝ y → ℝ-power n x ≤ℝ ℝ-power n y
+power-mono zero x y hx hxy = refl-≤ℝ {oneℝ}
+power-mono (suc n) x y hx hxy = ≤-trans-ℝ step1 step2
+  where
+  -- x·xⁿ ≤ y·xⁿ（0 ≤ xⁿ + x ≤ y，右侧乘保序）
+  step1 : (x *ℝ ℝ-power n x) ≤ℝ (y *ℝ ℝ-power n x)
+  step1 = *-≤-mono-ℝ {a = x} {b = y} {c = ℝ-power n x} (power-nonneg n x hx) hxy
+  -- y·xⁿ ≤ y·yⁿ（0 ≤ y + xⁿ ≤ yⁿ，左侧乘保序）
+  step2 : (y *ℝ ℝ-power n x) ≤ℝ (y *ℝ ℝ-power n y)
+  step2 = *-≤-mono-l-ℝ y (ℝ-power n x) (ℝ-power n y) (≤-trans-ℝ hx hxy) (power-mono n x y hx hxy)
+
+-- **可证**：幂正性——0 < x ⟹ 0 < xⁿ（归纳：基例 0 < 1；步进 乘积正性 lt-*-pos-ℝ）
+power-pos : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → zeroℝ <ℝ ℝ-power n x
+power-pos zero x hx = zero-lt-one-ℝ
+power-pos (suc n) x hx = lt-*-pos-ℝ hx (power-pos n x hx)
 
 -- 多项式函数：p(x) = Σᵢ aᵢ·x^{nᵢ}
 poly-fn : {m : ℕ} → (Fin m → ℝ) → (Fin m → ℕ) → (ℝ → ℝ)

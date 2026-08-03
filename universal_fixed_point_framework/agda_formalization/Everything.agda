@@ -36,7 +36,11 @@ module Everything where
 --        distribₗ/distribₗ-l-pt、·ₗ-comm-l/·ₗ-zero-l-pt，零新增公理）；新模块
 --        CrossLayer：OpAlgPt 见证 record（13 组算子代数公理的点态对应）+ op-alg-pt
 --        实例化——SpectralTheory 算子代数公理在 LinOp 层的逐点验证证书；算子层
---        等式版（funext 受限）登记为开放项，v1.14））
+--        等式版（funext 受限）登记为开放项，v1.14）；
+--        测度论核心逼近构造化阶段 1（§5f：ℝ 幂单调性引理库——DHStructural
+--        *-nonneg-ℝ（0≤ab）+ power-nonneg/power-mono/power-pos（0≤x≤y ⟹ xⁿ≤yⁿ、
+--        0<x ⟹ 0<xⁿ），零新增公理；构造化 fc-poly-le-spec-int 多阶段路线地基，
+--        v1.15））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

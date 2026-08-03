@@ -432,8 +432,8 @@ postulate
 
 #### 5.16.5 开放项（测度论核心 + 跨层模型）
 
-1. **测度论核心逼近桥接构造化**：`fc-poly-le-spec-int` 的构造化实现（"≥"方向唯一剩余登记项）——多项式 p 的简单函数下界逼近族（ℝ 分划 [i/2^k, (i+1)/2^k) + 谱支集 [0,∞) 截断 + 单调收敛 ⟹ ∫p dE = sup{∫s : s ≤ p}），构造化 Lebesgue 积分层降定理。
-2. **8-5b 余项（算子层等式版 + 对象映射）**：跨层模型 Op → LinOp 完整实例化——点态对应已闭合（v1.14，OpAlgPt 证书），剩余为 funext 受限部分：算子层等式版公理（+ₒ-assoc 等 15 条在 LinOp 层的算子级版本）、对象映射 op-lin 及其保结构（降定理路径 = Op := LinOp 时 op-lin = id）、谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造，随各降定理链闭合）。
+1. **测度论核心逼近桥接构造化**：`fc-poly-le-spec-int` 的构造化实现（"≥"方向唯一剩余登记项）——多项式 p 的简单函数下界逼近族（ℝ 分划 [i/2^k, (i+1)/2^k) + 谱支集 [0,∞) 截断 + 单调收敛 ⟹ ∫p dE = sup{∫s : s ≤ p}），构造化 Lebesgue 积分层降定理。**多阶段路线（2026-08-03，log）**：阶段 1（✅ v1.15）ℝ 幂单调性引理库——`*-nonneg-ℝ`（DHStructural，0≤a 且 0≤b ⟹ 0≤ab）+ `power-nonneg`/`power-mono`/`power-pos`（SpectralTheory，0≤x≤y ⟹ xⁿ≤yⁿ、0<x ⟹ 0<xⁿ，归纳零新增公理）——dyadic 阶梯逼近的 ℝ 层地基；阶段 2 dyadic 分划与阶梯函数（SimpleF 构造 + 点态 sₖ ≤ xⁿ）；阶段 3 上界 ∫sₖ ≤ Aⁿ + 单调收敛（MCT）；阶段 4 组合替换桥接（fc-integral 零登记项化）。
+2. **8-5b 余项（算子层等式版 + 对象映射）**：跨层模型 Op → LinOp 完整实例化——点态对应已闭合（v1.14，OpAlgPt 证书），剩余为 funext 受限部分：算子层等式版公理（+ₒ-assoc 等 13 组在 LinOp 层的算子级版本）、对象映射 op-lin 及其保结构（降定理路径 = Op := LinOp 时 op-lin = id）、谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造，随各降定理链闭合）。
 3. **spec-int 收敛细节**：无界逼近的 Lebesgue 单调收敛构造化（trunc 截断族）。
 4. **E-σ-add 收敛**：LinOp 层算子序 sup 的存在性（强/弱算子拓扑单调有界收敛）。
 

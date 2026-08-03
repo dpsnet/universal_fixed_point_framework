@@ -1859,3 +1859,54 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 
 - 测度论核心逼近桥接 `fc-poly-le-spec-int` 的构造化实现（构造化 Lebesgue 积分层）。
 - 8-5b 算子层等式版 + 对象映射（funext 受限）；spec-int 收敛细节；E-σ-add 收敛。
+
+---
+
+## 推进计划（2026-08-03）：测度论核心逼近构造化——多阶段路线 + 阶段 1（ℝ 幂单调性引理库）
+
+**目标**：将 v1.13 登记的测度论核心逼近桥接 `fc-poly-le-spec-int` 构造化为可证定理（替换桥接）。
+
+**核心困难（log 早前分析确认）**：构造化 Lebesgue 积分——单项式 xⁿ 的简单函数下界逼近族（dyadic 分划）+ 单调收敛（sup 收敛到 ∫xⁿ = Aⁿ）——工程量数百行且依赖深。桥接替换链：fc-poly-le-spec-int（桥接）⟹ fc-integral-ge ⟹ fc-integral-full（v1.13 已闭合）；构造化后桥接删除，`fc-integral` 公理（§5c）变为**零剩余登记项**的纯可证定理。
+
+**多阶段路线**：
+
+1. **阶段 1（本轮）**：ℝ 幂单调性引理库——`*-nonneg-ℝ`（DHStructural，0≤a 且 0≤b ⟹ 0≤ab）+ `power-nonneg`/`power-mono`/`power-pos`（SpectralTheory，ℝ-power 的单调性/正性：0≤x≤y ⟹ xⁿ≤yⁿ）——dyadic 阶梯逼近（(j·c/2^k)ⁿ ≤ xⁿ）的 ℝ 层地基。
+2. **阶段 2**：dyadic 分划与阶梯函数——网格点 j·c/2^k（_/ℝ_）、原子区间 Ωⱼ = {j·c/2^k ≤ x < (j+1)·c/2^k}、SimpleF 构造 sₖ（有限 2^k 原子 + 谱支集 [0,∞) 截断）、点态 sₖ ≤ xⁿ（power-mono + 三分律分情形）。
+3. **阶段 3**：上界 ∫sₖ ≤ Aⁿ（fc-integral-le 机制：sₖ ≤ xⁿ 点态 ⟹ ∫sₖ ≤ spec-int-general(xⁿ) ≤ fc(xⁿ) = Aⁿ）+ 单调收敛（MCT 桥接登记或替换，sup 收敛到 Aⁿ）。
+4. **阶段 4**：组合——fc-poly-le-spec-int 由 MCT + dyadic 逼近可证，删除 v1.13 桥接；fc-integral-full 变零桥接依赖。
+
+**本轮实施（阶段 1）**：
+
+1. DHStructural 新增 `*-nonneg-ℝ`（零新增公理）。
+2. SpectralTheory 扩展 import（`*-≤-mono-ℝ`/`*-≤-mono-l-ℝ`/`lt-*-pos-ℝ`）+ ℝ-power 后新增 `power-nonneg`/`power-mono`/`power-pos`（归纳，零新增公理）。
+3. 类型检查 + 记录。
+
+---
+
+## 实现完成（2026-08-03）：测度论核心逼近构造化——阶段 1（ℝ 幂单调性引理库，v1.15）
+
+按上述计划实现并**通过 Agda 全量类型检查**（`agda Everything.agda` exit=0，16 模块，v1.15）。
+
+### 新增内容（零新增公理）
+
+**DHStructural**：`*-nonneg-ℝ`——0≤a 且 0≤b ⟹ 0≤a·b（*-≤-mono-ℝ 以 0 为左端 + 左零吸收 *-zero-l-ℝ）。
+
+**SpectralTheory**（ℝ-power 后，"测度论逼近引理库 阶段 1"节）：
+- `power-nonneg`：0≤x ⟹ 0≤xⁿ（归纳，*-nonneg-ℝ）
+- `power-mono`：0≤x 且 x≤y ⟹ xⁿ≤yⁿ（归纳：*-≤-mono-ℝ（x·xⁿ≤y·xⁿ）+ *-≤-mono-l-ℝ（y·xⁿ≤y·yⁿ））
+- `power-pos`：0<x ⟹ 0<xⁿ（lt-*-pos-ℝ）
+
+### 意义
+
+构造化 `fc-poly-le-spec-int`（测度论核心逼近桥接）多阶段路线的**阶段 1**——dyadic 阶梯逼近（(j·c/2^k)ⁿ ≤ xⁿ）的 ℝ 层地基。
+
+### 修错记录（类型检查驱动）
+
+1. `*-nonneg-ℝ`：`*-≤-mono-ℝ` 产出 `zeroℝ·b ≤ a·b`，需**左零吸收** `*-zero-l-ℝ b`（0·b ≡ 0），初版误用右零 `*-zero-ℝ b`（b·0 ≡ 0）报 UnequalTerms。
+2. `power-mono` step2：`*-≤-mono-l-ℝ` 第三参数需 0≤y，初版误传 hx（0≤x），需 `≤-trans-ℝ hx hxy`。
+
+### 剩余（后续阶段）
+
+- 阶段 2：dyadic 分划与阶梯函数（SimpleF 构造 + 点态 sₖ ≤ xⁿ）。
+- 阶段 3：上界 ∫sₖ ≤ Aⁿ + 单调收敛（MCT）。
+- 阶段 4：组合替换桥接（fc-integral 零登记项化）。

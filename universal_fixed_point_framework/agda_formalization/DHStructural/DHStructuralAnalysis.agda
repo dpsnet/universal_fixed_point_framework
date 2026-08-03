@@ -1113,6 +1113,13 @@ abs-pos-ident a ha = sqrt-sq a ha
         (subst (λ z → (b *ℝ a) ≤ℝ z) (sym (*-comm-ℝ a c))
                (*-≤-mono-ℝ {a = b} {b = c} {c = a} ha hbc))
 
+-- 乘积非负：0 ≤ a 且 0 ≤ b ⟹ 0 ≤ a·b（*-≤-mono-ℝ 以 0 为左端 + 零吸收）
+--（测度论逼近引理库阶段 1 前置，2026-08-03：幂单调性 power-mono 的基础组件）
+*-nonneg-ℝ : (a b : ℝ) → zeroℝ ≤ℝ a → zeroℝ ≤ℝ b → zeroℝ ≤ℝ (a *ℝ b)
+*-nonneg-ℝ a b ha hb =
+  subst (λ z → z ≤ℝ (a *ℝ b)) (*-zero-l-ℝ b)
+        (*-≤-mono-ℝ {a = zeroℝ} {b = a} {c = b} hb ha)
+
 -- 反对称：a ≤ b 且 b ≤ a ⟹ a = b（三分律排除两严格分支）
 ≤-antisym : {a b : ℝ} → a ≤ℝ b → b ≤ℝ a → a ≡ b
 ≤-antisym {a} {b} hab hba with trichotomy-ℝ a b
