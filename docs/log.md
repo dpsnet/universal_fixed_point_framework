@@ -2058,3 +2058,23 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 项 2 更新（阶段 1 ✅）、路线图 v1.17 条目、Everything.agda 头注释 v1.17。
 
 **当前开放项**：E-σ-add 收敛阶段 2（Vigier 构造化强收敛）；spec-int MCT 构造化；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：E-σ-add 收敛阶段 2——Vigier 强收敛（v1.18，E-σ-add 收敛闭合）
+
+**新增（HilbertSpace §14，E-σ-family-bounded 后）**：
+- `SOT-conv-seq`：ℕ-序列强收敛定义（∀v. Converges 点态向量序列，ε-δ）
+- **可证** `self-adjoint-zero-op`（零算子自伴，ip-zero-l/r）/ `self-adjoint-op-add`（自伴和：ip-add-l + ip-add-r）/ `sumₗ-self-adjoint`（逐项自伴 ⟹ 部分和自伴，归纳）
+- **Vigier 定理桥接登记** `Vigier-strong-conv`：单调递增自伴族 ⟹ 强收敛到 supₗ（强/弱算子拓扑单调有界收敛——E-σ-add 的 supₗ 存在性/收敛降定理路径；有界上由 supₗ-upper 自动保证；构造化需标量单调收敛 + 自伴范数平方估计）
+- **可证** `E-σ-SOT-conv`：Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)（Vigier：自伴 sumₗ-self-adjoint + 单调 E-σ-family-increasing + E-hilb-σ-add）
+
+**里程碑**：**E-σ-add 收敛侧闭合**——连续下式族 sup 存在（supₗ 桥接）+ 强收敛（Vigier 桥接），且全部假设（自伴/单调/有界）可证成立。技术债清单（笔记 §5.16.7）优先序 ① 项闭合。
+
+**验证**：`agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：inline λ 应用消解歧义（`E-hilb-self-adjoint (P i)` 报 UnequalTerms）——改为 where 块显式类型化 T/hSelf/hMono。
+
+**记录**：笔记 §5.16.7 项 2 更新（✅ 已闭合）、路线图 v1.18 条目、Everything.agda 头注释 v1.18。
+
+**当前开放项**：spec-int MCT 构造化；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。

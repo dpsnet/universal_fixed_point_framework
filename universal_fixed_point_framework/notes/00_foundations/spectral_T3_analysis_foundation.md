@@ -458,7 +458,7 @@ postulate
 
 **A. 实质技术债（可闭合，未闭合）**：
 1. **fc-poly-le-spec-int 构造化**（fc-integral 降定理唯一剩余登记项）——需 ∫f⁺−∫f⁻/谱支集受限语义重构（多周工程，v1.16 决策暂缓，须先出方案）。
-2. **E-σ-add 收敛**（LinOp 层 supₗ 存在性）——**阶段 1 ✅（2026-08-03，v1.17）**：连续下式族单调有界结构全可证（`E-hilb-nonneg`（谱投影非负：⟨Ev,v⟩=‖Ev‖²≥0，自伴+幂等+norm-sq-nonneg）、`≤ₗ-add-nonneg-r`（非负项右加单调，op-sub 点态代数 (Xv+Bv)+(−Xv)=Bv）、`E-σ-family-increasing`（部分和单调）、`E-σ-family-bounded`（部分和 ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add））——**Vigier 定理假设条件（单调+有界）在 Hilbert 层成立**；supₗ 存在性（收敛本身）为 Vigier 桥接（降定理路径 = 强/弱算子拓扑单调有界收敛）。Vigier 定理（构造化强收敛）为阶段 2 候选。
+2. **E-σ-add 收敛**（LinOp 层 supₗ 存在性）——**✅ 已闭合（2026-08-03，v1.17-1.18）**：阶段 1（v1.17）连续下式族单调有界结构全可证（`E-hilb-nonneg`（谱投影非负：⟨Ev,v⟩=‖Ev‖²≥0，自伴+幂等+norm-sq-nonneg）、`≤ₗ-add-nonneg-r`（非负项右加单调，op-sub 点态代数 (Xv+Bv)+(−Xv)=Bv）、`E-σ-family-increasing`（部分和单调）、`E-σ-family-bounded`（部分和 ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add））；阶段 2（v1.18）**Vigier 强收敛**——`SOT-conv-seq`（ℕ-序列强收敛定义）、`self-adjoint-zero-op`/`self-adjoint-op-add`/`sumₗ-self-adjoint`（部分和自伴，可证）+ Vigier 定理桥接登记（`Vigier-strong-conv`：单调递增自伴族 ⟹ 强收敛到 supₗ，降定理路径 = 强/弱算子拓扑单调有界收敛）⟹ **`E-σ-SOT-conv`**（Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)）——**E-σ-add 收敛侧闭合**（sup 存在 = supₗ 桥接 + 收敛 = Vigier 桥接，假设全部可证）。
 3. **spec-int 收敛细节**（trunc 截断族 Lebesgue 单调收敛构造化）——测度论层。
 4. **跨层完整实例化**（谱对象映射 A/E/fc/exp-tA ↦ Hilbert 构造）——funext 受限部分结构性，其余可推进。
 

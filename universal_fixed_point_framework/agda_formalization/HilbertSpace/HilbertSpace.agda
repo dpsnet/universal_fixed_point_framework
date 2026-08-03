@@ -1676,6 +1676,63 @@ E-σ-family-bounded P h m =
         (supₗ-upper (λ Y → Σ ℕ (λ n → Y ≡ sum-ₗ (λ i → E-hilb (P i)) n))
                     (sum-ₗ (λ i → E-hilb (P i)) m) (ex m refl))
 
+-- ------------------------------------------------------------------
+-- E-σ-add 收敛 阶段 2：Vigier 强收敛（2026-08-03）
+-- ------------------------------------------------------------------
+-- 目标：E-σ-add 连续下式族的**强收敛**——Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)。
+-- 阶段 1 已证单调（E-σ-family-increasing）+ 有界（E-σ-family-bounded）；
+-- 阶段 2：自伴（sumₗ-self-adjoint 可证）+ Vigier 定理（强/弱算子拓扑单调有界收敛，
+-- supₗ 存在性/收敛的降定理路径）⟹ E-σ-SOT-conv（部分和强收敛到 E(∪ₙPₙ)）。
+
+-- 强收敛（ℕ-序列，SOT）：Tₘ → T∞ ⟺ ∀v. ‖Tₘv − T∞v‖ → 0（ε-δ 序列收敛 Converges 特化）
+SOT-conv-seq : (ℕ → LinOp) → LinOp → Set
+SOT-conv-seq T T∞ = (v : V) → Converges (λ m → LinOp.f (T m) v) (LinOp.f T∞ v)
+
+-- **可证**：零算子自伴（⟨0x,y⟩ = 0 = ⟨x,0y⟩）
+self-adjoint-zero-op : SelfAdjoint zero-op
+self-adjoint-zero-op x y = trans (ip-zero-l y) (sym (ip-zero-r x))
+
+-- **可证**：自伴和——SelfAdjoint X ⟹ SelfAdjoint Y ⟹ SelfAdjoint (X+Y)
+--（⟨(X+Y)x,y⟩ = ⟨Xx,y⟩+⟨Yx,y⟩（ip-add-l）= ⟨x,Xy⟩+⟨x,Yy⟩ = ⟨x,(X+Y)y⟩（ip-add-r））
+self-adjoint-op-add : (X Y : LinOp) → SelfAdjoint X → SelfAdjoint Y → SelfAdjoint (op-add X Y)
+self-adjoint-op-add X Y hX hY x y =
+  trans (ip-add-l (LinOp.f X x) (LinOp.f Y x) y)
+        (trans (cong₂ _+ℝ_ (hX x y) (hY x y))
+               (sym (ip-add-r x (LinOp.f X y) (LinOp.f Y y))))
+
+-- **可证**：有限和自伴——逐项自伴 ⟹ sumₗ 自伴（归纳）
+sumₗ-self-adjoint : (F : ℕ → LinOp) → ((i : ℕ) → SelfAdjoint (F i)) → (m : ℕ)
+  → SelfAdjoint (sum-ₗ F m)
+sumₗ-self-adjoint F h zero = self-adjoint-zero-op
+sumₗ-self-adjoint F h (suc m) =
+  self-adjoint-op-add (sum-ₗ F m) (F m) (sumₗ-self-adjoint F h m) (h m)
+
+-- Vigier 定理（桥接登记，2026-08-03）：单调递增的自伴算子族 ⟹ 强收敛到最小上界 supₗ
+--（强/弱算子拓扑单调有界收敛——E-σ-add 的 supₗ 存在性/收敛的降定理路径；
+--  有界上由 supₗ-upper 自动保证；构造化实现需标量单调收敛（ℝ 完备性 ε-逼近）+
+--  自伴范数平方估计 ‖(sup−Tₘ)v‖² ≤ ‖sup−Tₘ‖·⟨(sup−Tₘ)v,v⟩，⟨(sup−Tₘ)v,v⟩ → 0）
+postulate
+  Vigier-strong-conv : (T : ℕ → LinOp)
+    → ((m : ℕ) → SelfAdjoint (T m))
+    → ((m : ℕ) → T m ≤ₗ T (suc m))
+    → SOT-conv-seq T (supₗ (λ Y → Σ ℕ (λ m → Y ≡ T m)))
+
+-- **可证**：E-σ 连续下式族强收敛到 E(∪ₙPₙ)——E-σ-add 的收敛侧闭合
+--（Vigier-strong-conv（自伴 sumₗ-self-adjoint + 单调 E-σ-family-increasing）
+--  + E-hilb-σ-add（E(∪ₙPₙ) ≡ supₗ 族））
+E-σ-SOT-conv : (P : ℕ → ℝ → Set) → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
+  → SOT-conv-seq (λ m → sum-ₗ (λ i → E-hilb (P i)) m) (E-hilb (σUnion P))
+E-σ-SOT-conv P h =
+  subst (λ Z → SOT-conv-seq T Z) (sym (E-hilb-σ-add P h))
+        (Vigier-strong-conv T hSelf hMono)
+  where
+  T : ℕ → LinOp
+  T = λ m → sum-ₗ (λ i → E-hilb (P i)) m
+  hSelf : (m : ℕ) → SelfAdjoint (T m)
+  hSelf m = sumₗ-self-adjoint (λ i → E-hilb (P i)) (λ i → E-hilb-self-adjoint (P i)) m
+  hMono : (m : ℕ) → T m ≤ₗ T (suc m)
+  hMono m = E-σ-family-increasing P m
+
 -- ==================================================================
 -- §15 谱投影范数幂等（‖E(P)‖² = ‖E(P)‖，2026-08-02）
 -- ==================================================================

@@ -48,7 +48,11 @@ module Everything where
 --        E-σ-add 收敛阶段 1（§14：连续下式族单调有界结构——E-hilb-nonneg（谱投影
 --        非负 ⟨Ev,v⟩=‖Ev‖²≥0）+ ≤ₗ-add-nonneg-r + E-σ-family-increasing/monotone +
 --        E-σ-family-bounded（部分和 ≤ₗ E(∪ₙPₙ)）——Vigier 定理假设条件全可证；
---        supₗ 存在性 = Vigier 桥接，v1.17））
+--        supₗ 存在性 = Vigier 桥接，v1.17）；
+--        E-σ-add 收敛阶段 2（§14：Vigier 强收敛——SOT-conv-seq 定义 + 自伴
+--        self-adjoint-zero-op/op-add/sumₗ-self-adjoint 可证 + Vigier-strong-conv
+--        桥接登记（单调递增自伴族 ⟹ 强收敛到 supₗ）⟹ E-σ-SOT-conv
+--        （Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)）——E-σ-add 收敛侧闭合，v1.18））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
