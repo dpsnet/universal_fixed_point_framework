@@ -118,7 +118,13 @@ module Everything where
 --        在 Ωᵢ，power-mono 可证）+ dyadic-stair-below（s≤p⁺ 逐点：负部/正部经
 --        pos-part-nonneg、dyadic 经 max-≤-l，可证）+ dyadic-below-member（spec-int-below
 --        p⁺ 成员）+ dyadic-int-below（∫sₖ≤ₒ∫p⁺，sup-op-upper，可证）——fc-poly-le-spec-int
---        构造化阶梯逼近侧基础；技术债 A1 阶段 4 余项第三步第一部分，v1.32））
+--        构造化阶梯逼近侧基础；技术债 A1 阶段 4 余项第三步第一部分，v1.32））；
+--        方案 A 阶段 4 余项第三步第二部分（MCT：SpectralTheory stair-seq（dyadic 阶梯
+--        序列族 sₖ = stair k (k+1)，Σ₀₁ Set₁ 层积）+ stair-seq-le（supₖ∫sₖ≤ₒ∫p⁺，可证：
+--        sup-op-least + dyadic-int-below）+ stair-MCT 桥接登记（∫p⁺≤ₒsupₖ∫sₖ，Lebesgue
+--        单调收敛算子序形式，archimedean-ub/Vigier 同层分析学完备性族标准推论）+
+--        stair-int-full（∫p⁺=supₖ∫sₖ，≤ₒ-antisym）——fc-poly-le-spec-int 构造化的
+--        收敛机制闭合；技术债 A1 阶段 4 余项第三步第二部分，v1.33））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

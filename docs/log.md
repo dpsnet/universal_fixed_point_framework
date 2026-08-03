@@ -2353,3 +2353,22 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 余项第三步第一部分 ✅）、技术债清单项 1（阶段 4 余项第三步第一部分 ✅）、路线图 v1.32 条目、Everything.agda 头注释 v1.32。
 
 **当前开放项**：MCT（supₖ∫sₖ = ∫p⁺：dyadic 阶梯序列单调收敛）→ 组合替换 fc-poly-le-spec-int 零登记项。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 余项第三步第二部分——MCT（dyadic 阶梯序列单调收敛，v1.33）
+
+**新增（SpectralTheory，fc-poly-le-spec-int 构造化的收敛机制）**：
+- `Σ₀₁`/`pair₀₁`（Set₁ 层积：本地 Σ 为 Set 层，序列族含 Op 等式需 Set₁）
+- `stair-seq`（**dyadic 阶梯序列族**：sₖ = dyadic-stair k (natℝ (suc k))——网格精度 k 与上界 c = k+1 同步增长，覆盖全 ℝ（∀x ≥ 0 最终落入 [0, k+1)））
+- `stair-seq-le`（**可证**：supₖ∫sₖ ≤ₒ ∫p⁺——每个 ∫sₖ ≤ₒ ∫p⁺（dyadic-int-below，sₖ ≤ p⁺）+ sup-op-least）
+- **桥接登记** `stair-MCT`（∫p⁺ ≤ₒ supₖ∫sₖ——Lebesgue 单调收敛定理的算子序形式（阶梯序列 sₖ ↑ p⁺ 逐点 ⟹ supₖ∫sₖ = ∫p⁺，谱积分序完备性）；降定理路径 = 测度论完整层 sup 交换（supₖ∫sₖ = ∫supₖsₖ）经单调收敛论证；与 archimedean-ub（v1.20）/Vigier-strong-conv（v1.18）同层分析学完备性族标准推论）
+- `stair-int-full`（**可证**：∫p⁺ = supₖ∫sₖ——≤ₒ-antisym（stair-MCT + stair-seq-le））
+
+**里程碑**：**fc-poly-le-spec-int 构造化的收敛机制（MCT）闭合**——"≤"方向全可证（零新增公理），"≥"方向为 Lebesgue 单调收敛桥接登记（测度论完备性族标准推论）。剩余：组合替换 fc-poly-le-spec-int 零登记项。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：natℝ-pos-embed 的 0 <ℕ (suc k) 用 z<s（s<s z<s 是 1<2）；stair-seq 需 Set₁ 层积（本地 Σ 为 Set 层）——新增 Σ₀₁/pair₀₁（mixfix _,_₀₁ 解析失败改前缀）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 余项第三步第二部分 ✅）、技术债清单项 1（阶段 4 余项第三步第二部分 ✅）、路线图 v1.33 条目、Everything.agda 头注释 v1.33。
+
+**当前开放项**：组合替换 fc-poly-le-spec-int 零登记项（∫p = ∫p⁺ −ₒ ∫p⁻ 组装——需评估 fc(p⁺) ≤ₒ ∫p⁺ 经 fc-continuous 的依赖循环（fc(q) ≤ₒ ∫q 自引用），可能需替代路径）。改动尚未提交 git。

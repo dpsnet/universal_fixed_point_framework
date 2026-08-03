@@ -2484,6 +2484,46 @@ dyadic-int-below k c hc n =
                (simple-int (dyadic-stair k c hc (dyadic-vc k c n)))
                (dyadic-below-member k c hc n)
 
+-- ==================================================================
+-- 阶段 4 余项第三步第二部分：MCT（dyadic 阶梯序列单调收敛，2026-08-03）
+-- ==================================================================
+-- 目标：∫p⁺ = supₖ∫sₖ（Lebesgue 单调收敛的算子序形式）——fc-poly-le-spec-int
+--   构造化的收敛机制。sₖ = dyadic-stair k (k+1)（网格精度 k 与上界 c = k+1 同步增长，
+--   覆盖全 ℝ：∀x ≥ 0 最终落入 [0, k+1)）。
+--   "≤"方向可证（sup-op-least + dyadic-int-below）；"≥"方向（MCT 反向）为
+--   Lebesgue 单调收敛核心机制，登记桥接（与 archimedean-ub/Vigier-strong-conv 同层）。
+
+-- dyadic 阶梯序列族（k 索引）：sₖ = dyadic-stair k (natℝ (suc k))，c = k+1 > 0 自动
+--（Set₁ 层积：本地 Σ 为 Set 层，序列族含 Op 等式需 Set₁）
+data Σ₀₁ (A : Set) (B : A → Set) : Set₁ where
+  pair₀₁ : (a : A) → B a → Σ₀₁ A B
+
+stair-seq : (n : ℕ) → Op → Set₁
+stair-seq n Y = Σ₀₁ ℕ (λ k → Y ≡ simple-int (dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) n)))
+
+-- **可证**：supₖ∫sₖ ≤ₒ ∫p⁺（每个 ∫sₖ ≤ₒ ∫p⁺（dyadic-int-below，sₖ ≤ p⁺）+ sup-op-least）
+stair-seq-le : (n : ℕ) → sup-op (stair-seq n) ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))
+stair-seq-le n = sup-op-least (stair-seq n) (spec-int-general (pos-part (λ y → ℝ-power n y))) bound
+  where
+  bound : (Y : Op) → stair-seq n Y → Y ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))
+  bound Y (pair₀₁ k eq) =
+    subst (λ Z → Z ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))) (sym eq)
+          (dyadic-int-below k (natℝ (suc k)) (natℝ-pos-embed z<s) n)
+
+-- 桥接登记：Lebesgue 单调收敛（dyadic 阶梯序列）——∫p⁺ ≤ₒ supₖ∫sₖ（MCT 反向）
+--（模型必然性 = Lebesgue 单调收敛定理（阶梯序列 sₖ ↑ p⁺ 逐点 ⟹ supₖ∫sₖ = ∫p⁺，
+--  谱积分的序完备性）；降定理路径 = 测度论完整层 sup 交换（supₖ∫sₖ = ∫supₖsₖ）
+--  经单调收敛论证实现；与 archimedean-ub（v1.20）/Vigier-strong-conv（v1.18）
+--  同层的分析学完备性族标准推论）
+postulate
+  stair-MCT : (n : ℕ) → spec-int-general (pos-part (λ y → ℝ-power n y)) ≤ₒ sup-op (stair-seq n)
+
+-- **可证**：∫p⁺ = supₖ∫sₖ（≤ₒ-antisym：stair-seq-le + stair-MCT）
+stair-int-full : (n : ℕ) → spec-int-general (pos-part (λ y → ℝ-power n y)) ≡ sup-op (stair-seq n)
+stair-int-full n =
+  ≤ₒ-antisym (spec-int-general (pos-part (λ y → ℝ-power n y))) (sup-op (stair-seq n))
+             (stair-MCT n) (stair-seq-le n)
+
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel
 σ-union P x = Σ ℕ (λ n → P n x)
