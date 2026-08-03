@@ -52,7 +52,12 @@ module Everything where
 --        E-σ-add 收敛阶段 2（§14：Vigier 强收敛——SOT-conv-seq 定义 + 自伴
 --        self-adjoint-zero-op/op-add/sumₗ-self-adjoint 可证 + Vigier-strong-conv
 --        桥接登记（单调递增自伴族 ⟹ 强收敛到 supₗ）⟹ E-σ-SOT-conv
---        （Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)）——E-σ-add 收敛侧闭合，v1.18））
+--        （Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)）——E-σ-add 收敛侧闭合，v1.18）；
+--        spec-int MCT 构造化阶段 1（§1c：ℝ-截断版单调收敛可证——s-bound（简单
+--        函数值 ℝ 上界 = sup-ℝ 有限值集）+ simple-below-trunc（s ≤ f ⟹ s ≤
+--        trunc f (s-bound s)，min-glb）+ sup-op-ext（Op 层 sup 外延）⟹
+--        spec-int-R-trunc-conv（∫f = sup{∫s : s ≤ 某截断}）零新增公理；
+--        ℕ-版本构造化需 Archimedean，v1.19））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

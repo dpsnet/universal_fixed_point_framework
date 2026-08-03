@@ -2078,3 +2078,24 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 项 2 更新（✅ 已闭合）、路线图 v1.18 条目、Everything.agda 头注释 v1.18。
 
 **当前开放项**：spec-int MCT 构造化；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：spec-int MCT 构造化——ℝ-截断版（v1.19，技术债清单优先序②）
+
+**新增（SpectralTheory §1c，spec-int-trunc-conv 后，零新增公理）**：
+- `s-bound`：简单函数值的 ℝ 上界（sup-ℝ 对有限值集）——**关键观察**：有限值域 ⟹ 存在 ℝ 上界，无需 max 构造
+- **可证** `s-bound-upper`（每原子值 ≤ s-bound，sup-upper）/ `simple-below-trunc`（s ≤ f 逐点 ⟹ s ≤ trunc f (s-bound s) 逐点：cᵢ ≤ f x 且 cᵢ ≤ s-bound s ⟹ min-glb = trunc 定义性）
+- **可证** `spec-int-below-into-trunc` / `trunc-below-into-spec-int`（spec-int-below f 与 TruncBelow f（截断下界族）逐成员等价）
+- **可证** `sup-op-ext`（Op 层 sup 外延：≤ₒ-antisym + sup-op-least/upper 双向）
+- **可证** `spec-int-R-trunc-conv`：∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}
+
+**里程碑**：**Lebesgue 单调收敛的 ℝ-截断版构造化闭合**——截断逼近机制（∫f = sup over 有界下界简单函数）由桥接降为可证定理。技术债清单（笔记 §5.16.7）优先序 ② 项阶段 1 完成。
+
+**剩余**：ℕ-版本（spec-int-trunc-conv 桥接，∫f = supₙ∫min(f,n)）构造化需 **Archimedean**（有界实值存在自然数上界）——ℝ 层公理决策项，登记为待基础设施/后续。
+
+**验证**：`agda Everything.agda` 全量编译通过（exit=0，16 模块）。**修错**：sup-ℝ/sup-upper/sup-least 需加入 SpectralTheory import。
+
+**记录**：笔记 §5.16.7 项 3 更新（阶段 1 ✅）、路线图 v1.19 条目、Everything.agda 头注释 v1.19。
+
+**当前开放项**：fc-poly-le-spec-int（须先出语义重构方案）；ℕ-MCT Archimedean 决策；跨层完整实例化。改动尚未提交 git。

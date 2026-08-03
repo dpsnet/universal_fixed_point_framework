@@ -41,7 +41,8 @@ open import DHStructural.DHStructuralAnalysis
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
-         natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r)
+         natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
+         sup-ℝ; sup-upper; sup-least)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -295,6 +296,65 @@ trunc-mono-general f {c} {d} hcd =
 postulate
   spec-int-trunc-conv : (f : ℝ → ℝ)
     → spec-int-general f ≡ sup-op (λ Y → Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
+
+-- ------------------------------------------------------------------
+-- spec-int MCT 构造化（ℝ-截断版，2026-08-03）
+-- ------------------------------------------------------------------
+-- 目标：Lebesgue 单调收敛的**可证部分**——∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}。
+-- 关键观察：每个简单函数 s 有有限值域 ⟹ 存在 ℝ 上界 s-bound s（sup-ℝ 对有限值集）⟹
+-- s ≤ f 逐点 ⟹ s ≤ trunc f (s-bound s) 逐点（min-glb）。故下界族 spec-int-below f
+-- 与截断下界族 TruncBelow f **逐成员等价**，sup-op 外延（sup-op-ext 可证）⟹ ℝ-MCT 可证
+-- （零新增公理）。注：ℕ-版本（spec-int-trunc-conv 桥接，∫f = supₙ∫min(f,n)）的构造化
+-- 需 Archimedean（有界实值存在自然数上界）——ℝ 层公理决策项，登记为待基础设施/后续。
+
+-- 简单函数值的 ℝ 上界：s-bound s := sup{cᵢ : i < m}（sup-ℝ 完备性，有限值集 sup）
+s-bound : SimpleF → ℝ
+s-bound s = sup-ℝ (λ r → Σ (Fin (SimpleF.m s)) (λ i → r ≡ SimpleF.c s i))
+
+-- **可证**：每个原子值 ≤ s-bound（sup-upper 特化）
+s-bound-upper : (s : SimpleF) (i : Fin (SimpleF.m s)) → SimpleF.c s i ≤ℝ s-bound s
+s-bound-upper s i = sup-upper (λ r → Σ (Fin (SimpleF.m s)) (λ j → r ≡ SimpleF.c s j))
+                              (SimpleF.c s i) (i , refl)
+
+-- **可证**：dom（cᵢ ≤ f）⟹ cᵢ ≤ trunc f (s-bound s)（逐原子）
+--（cᵢ ≤ f x（dom）且 cᵢ ≤ s-bound s（s-bound-upper）⟹ cᵢ ≤ min(f x, s-bound s)（min-glb）
+--  = trunc f (s-bound s) x（定义性））
+simple-below-trunc : (s : SimpleF) (f : ℝ → ℝ)
+  → ((i : Fin (SimpleF.m s)) → (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ f x)
+  → (i : Fin (SimpleF.m s)) (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ trunc f (s-bound s) x
+simple-below-trunc s f dom i x px =
+  min-glb (SimpleF.c s i) (f x) (s-bound s) (dom i x px) (s-bound-upper s i)
+
+-- 截断下界族：Y = ∫s（s ≤ trunc f (s-bound s) 逐点）——ℝ-MCT 的 sup 族
+TruncBelow : (ℝ → ℝ) → Op → Set₁
+TruncBelow f Y = Σ₁ SimpleF (λ s →
+  (Y ≡ simple-int s) × ((i : Fin (SimpleF.m s)) → (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ trunc f (s-bound s) x))
+
+-- **可证**：spec-int-below f ⊆ TruncBelow f（s ≤ f ⟹ s ≤ trunc f (s-bound s)，simple-below-trunc）
+spec-int-below-into-trunc : {f : ℝ → ℝ} {Y : Op} → spec-int-below f Y → TruncBelow f Y
+spec-int-below-into-trunc {f} {Y} (pair₁Σ s (eq , dom)) =
+  pair₁Σ s (eq , λ i x px → simple-below-trunc s f dom i x px)
+
+-- **可证**：TruncBelow f ⊆ spec-int-below f（s ≤ trunc f (s-bound s) ≤ f，trunc-below-f）
+trunc-below-into-spec-int : {f : ℝ → ℝ} {Y : Op} → TruncBelow f Y → spec-int-below f Y
+trunc-below-into-spec-int {f} {Y} (pair₁Σ s (eq , dom)) =
+  pair₁Σ s (eq , λ i x px → ≤-trans-ℝ (dom i x px) (trunc-below-f f (s-bound s) x))
+
+-- **可证**：sup 外延（Op 层）——谓词逐成员等价 ⟹ sup 相等（sup-op-least/upper + ≤ₒ-antisym）
+sup-op-ext : {l : Level} {S T : Op → Set l} → ((Y : Op) → S Y → T Y) → ((Y : Op) → T Y → S Y)
+  → sup-op S ≡ sup-op T
+sup-op-ext {l} {S} {T} s→t t→s =
+  ≤ₒ-antisym (sup-op S) (sup-op T)
+             (sup-op-least S (sup-op T) (λ Y sy → sup-op-upper T Y (s→t Y sy)))
+             (sup-op-least T (sup-op S) (λ Y ty → sup-op-upper S Y (t→s Y ty)))
+
+-- **可证**：ℝ-MCT——∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}（零新增公理）
+--（spec-int-below f 与 TruncBelow f 逐成员等价 + sup-op-ext；
+--  ℕ-版本 spec-int-trunc-conv 的构造化需 Archimedean，登记为后续）
+spec-int-R-trunc-conv : (f : ℝ → ℝ) → spec-int-general f ≡ sup-op (TruncBelow f)
+spec-int-R-trunc-conv f =
+  sup-op-ext (λ Y yb → spec-int-below-into-trunc {f = f} {Y = Y} yb)
+             (λ Y yb → trunc-below-into-spec-int {f = f} {Y = Y} yb)
 
 -- ==================================================================
 -- §1d 可测函数层与 Lebesgue 积分（测度论层阶段 2，2026-08-02）
