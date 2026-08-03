@@ -1795,3 +1795,67 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 
 - 测度论核心逼近桥接 `fc-poly-le-spec-int` 的构造化实现：ℝ 分划 + 连续函数简单逼近族（x ≥ 0 谱支集 [0,∞) 分划 [i/2^k, (i+1)/2^k)）+ 单调收敛——构造化 Lebesgue 积分层。
 - 跨层模型（Op → LinOp 完整实例化）仍受 funext 受限（算子层等式 +ₒ-assoc 等不可行）。
+
+---
+
+## 推进计划（2026-08-03）：8-5b 余项——跨层模型 Op → LinOp（点态对应版）
+
+**目标**：SpectralTheory 算子代数公理在 LinOp 层的**验证（点态对应）**——"完整实例化"受 funext 限制，但全部 13 组算子代数公理的**逐点形式**（∀v. LinOp.f 值相等）在 LinOp 层全部可证（零新增公理）。
+
+**跨层对应表**（抽象 Op 层 ↦ 具体 LinOp 层）：
+
+| Op 公理（P1Spectral §2） | LinOp 点态对应 | 可证性 |
+|:--|:--|:--|
+| +ₒ-assoc / +ₒ-comm / +ₒ-ident | +ₗ-assoc-pt / +ₗ-comm-pt / +ₗ-ident-pt | +ᵥ-assoc / +ᵥ-comm / +ᵥ-ident（**新**，HilbertSpace §16） |
+| *ₒ-assoc / *ₒ-ident / *ₒ-ident-l | op-comp-assoc-pt / op-comp-id-r-pt / op-comp-id-pt | 已有（§16，refl） |
+| *ₒ-zero-r / *ₒ-zero-l | *ₗ-zero-r-pt / *ₗ-zero-l-pt | lin-zero（T0=0）/ refl（**新**） |
+| distribₒ / distribₒ-l | distribₗ-pt / distribₗ-l-pt | lin-add / refl（**新**） |
+| ·ₒ-comm / ·ₒ-comm-l / ·ₒ-zero-l | ·ₗ-comp-pt（sym 适配）/ ·ₗ-comm-l-pt / ·ₗ-zero-l-pt | lin-scalar / scalar-zero-any（·ₗ-comm-l、·ₗ-zero-l **新**） |
+
+**实施步骤**：
+
+1. **HilbertSpace §16 补全**（9 条新点态律，零新增公理）：
+   `+ₗ-assoc-pt` / `+ₗ-comm-pt` / `+ₗ-ident-pt`（+ᵥ 结合/交换/单位）、
+   `*ₗ-zero-r-pt`（lin-zero：X∘0 = 0）、`*ₗ-zero-l-pt`（refl）、
+   `distribₗ-pt`（lin-add：X∘(Y+Z) = X∘Y+X∘Z）、`distribₗ-l-pt`（refl）、
+   `·ₗ-comm-l-pt`（lin-scalar：X∘(c·ₗY) = c·ₗ(X∘Y)）、`·ₗ-zero-l-pt`（scalar-zero-any）。
+2. **新模块 `CrossLayer/CrossLayer.agda`**：跨层模型层（导入 P1Spectral Op 层 + HilbertSpace LinOp 层）——
+   对应表文档 + **见证 record `OpAlgPt`**（13 字段 = 13 组公理的点态对应）+ 实例化
+   `op-alg-pt`（字段全部来自 HilbertSpace §16 点态律）——**跨层验证的正式证书**。
+   不登记新 postulate（点态版零新增公理）；对象映射 op-lin 与算子层等式（funext）登记为开放项。
+3. **Everything.agda 注册** CrossLayer 模块。
+4. **类型检查**（agda Everything.agda，exit=0）。
+5. **记录**：笔记 §5.16.4/5.16.5 + 路线图 v1.14 + log 完成段。
+
+---
+
+## 实现完成（2026-08-03）：8-5b 余项——跨层模型 Op → LinOp 点态对应（v1.14）
+
+按上述设计实现并**通过 Agda 全量类型检查**（`agda Everything.agda` exit=0，**16 模块**，v1.14）。
+
+### 新增内容
+
+**HilbertSpace §16 补全**（9 条点态律，零新增公理）：
+- `+ₗ-assoc-pt` / `+ₗ-comm-pt` / `+ₗ-ident-pt`（+ᵥ-assoc / +ᵥ-comm / +ᵥ-ident）
+- `*ₗ-zero-r-pt`（lin-zero：X∘0 = 0）/ `*ₗ-zero-l-pt`（refl）
+- `distribₗ-pt`（lin-add：X∘(Y+Z) = X∘Y+X∘Z）/ `distribₗ-l-pt`（refl）
+- `·ₗ-comm-l-pt`（lin-scalar：X∘(c·ₗY) = c·ₗ(X∘Y)）/ `·ₗ-zero-l-pt`（scalar-zero-any）
+
+**新模块 `CrossLayer/CrossLayer.agda`**（导入 P1Spectral Op 层 + HilbertSpace LinOp 层）：
+- **见证 record `OpAlgPt`**（13 字段 = P1Spectral §2 全部 13 组算子代数公理的点态对应）
+- **实例化 `op-alg-pt`**（字段全部来自 §16 点态律；·ₗ-comp-pt 经 sym 适配 ·ₒ-comm 方向）
+- **跨层验证证书**：SpectralTheory 算子代数公理在 LinOp 层的逐点验证（13 组逐点形式全部闭合）
+
+### 里程碑
+
+**跨层模型 Op → LinOp 的点态对应层闭合**——完整实例化的 funext 受限部分（算子层等式、对象映射 op-lin、谱对象映射）登记为开放项（不新增 postulate，保持零新增公理）。
+
+### 修错记录（类型检查驱动）
+
+1. `LinOp.f` 在 `using` 子句中解析失败（ParseError，Agda 不支持限定投影名于 using）——改用 `open LinOp` 打开记录模块引入投影 `f`。
+2. 计数修正：Op 算子代数公理为 **13 组**（+ₒ 3 + *ₒ 5 + 分配 2 + ·ₒ 3），非 15。
+
+### 剩余项（后续方向）
+
+- 测度论核心逼近桥接 `fc-poly-le-spec-int` 的构造化实现（构造化 Lebesgue 积分层）。
+- 8-5b 算子层等式版 + 对象映射（funext 受限）；spec-int 收敛细节；E-σ-add 收敛。

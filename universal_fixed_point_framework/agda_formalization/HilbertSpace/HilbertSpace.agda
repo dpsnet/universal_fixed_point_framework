@@ -1686,6 +1686,51 @@ op-comp-id-r-pt X v = refl
   → LinOp.f (c ·ₗ (op-comp X Y)) v ≡ LinOp.f (op-comp (c ·ₗ X) Y) v
 ·ₗ-comp-pt c X Y v = refl
 
+-- 跨层点态律补全（2026-08-03，8-5b 余项：Op 层算子代数公理在 LinOp 层的点态对应）：
+-- 加法结合/交换/单位（+ᵥ 向量空间律）、复合零吸收（lin-zero）、
+-- 分配（lin-add）、标量跨复合（lin-scalar）、标量零吸收（scalar-zero-any）——
+-- 全部逐点（∀v. LinOp.f 值相等），零新增公理（funext 仅算子层等式需要）。
+
+-- **可证**：加法结合律（点态）——(X+Y)+Z 与 X+(Y+Z) 逐点相等（+ᵥ-assoc）
++ₗ-assoc-pt : (X Y Z : LinOp) (v : V)
+  → LinOp.f (op-add (op-add X Y) Z) v ≡ LinOp.f (op-add X (op-add Y Z)) v
++ₗ-assoc-pt X Y Z v = +ᵥ-assoc (LinOp.f X v) (LinOp.f Y v) (LinOp.f Z v)
+
+-- **可证**：加法交换律（点态）——X+Y 与 Y+X 逐点相等（+ᵥ-comm）
++ₗ-comm-pt : (X Y : LinOp) (v : V) → LinOp.f (op-add X Y) v ≡ LinOp.f (op-add Y X) v
++ₗ-comm-pt X Y v = +ᵥ-comm (LinOp.f X v) (LinOp.f Y v)
+
+-- **可证**：加法单位律（点态）——X+0 逐点等于 X（+ᵥ-ident）
++ₗ-ident-pt : (X : LinOp) (v : V) → LinOp.f (op-add X zero-op) v ≡ LinOp.f X v
++ₗ-ident-pt X v = +ᵥ-ident (LinOp.f X v)
+
+-- **可证**：右零吸收（点态）——X∘0 逐点等于 0（线性 ⟹ X(0) = 0）
+*ₗ-zero-r-pt : (X : LinOp) (v : V) → LinOp.f (op-comp X zero-op) v ≡ LinOp.f zero-op v
+*ₗ-zero-r-pt X v = lin-zero X
+
+-- **可证**：左零吸收（点态）——0∘X 逐点等于 0（定义性）
+*ₗ-zero-l-pt : (X : LinOp) (v : V) → LinOp.f (op-comp zero-op X) v ≡ LinOp.f zero-op v
+*ₗ-zero-l-pt X v = refl
+
+-- **可证**：右分配（点态）——X∘(Y+Z) 与 X∘Y + X∘Z 逐点相等（线性性 lin-add）
+distribₗ-pt : (X Y Z : LinOp) (v : V)
+  → LinOp.f (op-comp X (op-add Y Z)) v ≡ LinOp.f (op-add (op-comp X Y) (op-comp X Z)) v
+distribₗ-pt X Y Z v = LinOp.lin-add X (LinOp.f Y v) (LinOp.f Z v)
+
+-- **可证**：左分配（点态）——(X+Y)∘Z 与 X∘Z + Y∘Z 逐点相等（定义性）
+distribₗ-l-pt : (X Y Z : LinOp) (v : V)
+  → LinOp.f (op-comp (op-add X Y) Z) v ≡ LinOp.f (op-add (op-comp X Z) (op-comp Y Z)) v
+distribₗ-l-pt X Y Z v = refl
+
+-- **可证**：标量跨复合（点态）——X∘(c·ₗY) 与 c·ₗ(X∘Y) 逐点相等（线性性 lin-scalar）
+·ₗ-comm-l-pt : (c : ℝ) (X Y : LinOp) (v : V)
+  → LinOp.f (op-comp X (c ·ₗ Y)) v ≡ LinOp.f (c ·ₗ (op-comp X Y)) v
+·ₗ-comm-l-pt c X Y v = LinOp.lin-scalar X c (LinOp.f Y v)
+
+-- **可证**：标量零吸收（点态）——0·ₗX 逐点等于 0（scalar-zero-any）
+·ₗ-zero-l-pt : (X : LinOp) (v : V) → LinOp.f (zeroℝ ·ₗ X) v ≡ LinOp.f zero-op v
+·ₗ-zero-l-pt X v = scalar-zero-any (LinOp.f X v)
+
 -- 本层状态：
 --  - 向量空间 + 内积基础登记（基础假设，注明模型必然性 = 希尔伯特空间理论）。
 --  - 内积双线性（右加性/右标量经对称性可证）；范数平方的齐次/正性/零性可证。

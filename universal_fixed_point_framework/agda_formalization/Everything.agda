@@ -30,7 +30,13 @@ module Everything where
 --        桥接（测度论核心逼近，多项式可由简单函数下界逼近）+ spec-int-mono /
 --        fc-integral-ge 可证——fc f ≤ₒ spec-int-general f（任意 f）；fc-integral-full：
 --        fc f ≡ ∫f dE = spec-int-general f，fc-integral 公理（§5c）完整降为可证明定理，
---        唯一剩余登记项 = 测度论核心逼近桥接 fc-poly-le-spec-int，v1.13））
+--        唯一剩余登记项 = 测度论核心逼近桥接 fc-poly-le-spec-int，v1.13）；
+--        阶段 8-5b 余项：跨层模型 Op → LinOp 点态对应（§16 补全 + CrossLayer——
+--        HilbertSpace §16 补 9 条点态律（+ₗ-assoc/comm/ident-pt、*ₗ-zero-r/l-pt、
+--        distribₗ/distribₗ-l-pt、·ₗ-comm-l/·ₗ-zero-l-pt，零新增公理）；新模块
+--        CrossLayer：OpAlgPt 见证 record（13 组算子代数公理的点态对应）+ op-alg-pt
+--        实例化——SpectralTheory 算子代数公理在 LinOp 层的逐点验证证书；算子层
+--        等式版（funext 受限）登记为开放项，v1.14））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
@@ -61,3 +67,4 @@ open import IFSFractal.IFSFractal
 open import Cardinality.Cardinality
 open import P1Spectral.P1Spectral
 open import SpectralTheory.SpectralTheory
+open import CrossLayer.CrossLayer

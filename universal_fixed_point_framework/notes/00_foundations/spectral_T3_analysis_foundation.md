@@ -428,10 +428,12 @@ postulate
 
 **LinOp 层算子代数结构**（§16）：标量乘 _·ₗ_ + 结合/单位律点态版（op-comp-assoc-pt/op-comp-id-pt/op-comp-id-r-pt）+ 标量对加法分配（·ₗ-distrib-add-pt）+ 标量与复合（·ₗ-comp-pt）——为跨层模型（Op → LinOp）铺路。**点态版刻意避开 funext**（LinOp record 依赖字段 lin-add/lin-scalar 的相等需依赖 funext，超出库公理范围，P4 先例）。
 
+**8-5b 余项点态对应（✅ 2026-08-03，v1.14，`CrossLayer/CrossLayer.agda`）**：SpectralTheory/P1Spectral 的 Op 层算子代数公理（P1Spectral §2，13 组）在 LinOp 层的**逐点验证**（∀v. LinOp.f 值相等，零新增公理）——HilbertSpace §16 补全 9 条点态律（`+ₗ-assoc-pt`/`+ₗ-comm-pt`/`+ₗ-ident-pt`（+ᵥ 结合/交换/单位）、`*ₗ-zero-r-pt`（lin-zero：X∘0=0）、`*ₗ-zero-l-pt`（refl）、`distribₗ-pt`（lin-add：X∘(Y+Z)=X∘Y+X∘Z）、`distribₗ-l-pt`（refl）、`·ₗ-comm-l-pt`（lin-scalar：X∘(c·ₗY)=c·ₗ(X∘Y)）、`·ₗ-zero-l-pt`（scalar-zero-any））；新模块 CrossLayer 交付**见证 record `OpAlgPt`**（13 字段 = 13 组公理的点态对应）+ 实例化 `op-alg-pt`（字段全部来自 §16 点态律）——跨层验证的正式证书。对应表：+ₒ↦op-add、*ₒ↦op-comp、·ₒ↦·ₗ、𝟘ₒ↦zero-op、𝟙ₒ↦id-op；13 组公理（+ₒ-assoc/comm/ident、*ₒ-assoc/ident/ident-l/zero-r/zero-l、distribₒ/distribₒ-l、·ₒ-comm/comm-l/zero-l）逐点形式全部闭合。**开放项**（funext 受限，不登记 postulate）：算子层等式版公理、对象映射 op-lin 及其保结构（降定理路径 = Op := LinOp 时 op-lin = id）、谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）。
+
 #### 5.16.5 开放项（测度论核心 + 跨层模型）
 
 1. **测度论核心逼近桥接构造化**：`fc-poly-le-spec-int` 的构造化实现（"≥"方向唯一剩余登记项）——多项式 p 的简单函数下界逼近族（ℝ 分划 [i/2^k, (i+1)/2^k) + 谱支集 [0,∞) 截断 + 单调收敛 ⟹ ∫p dE = sup{∫s : s ≤ p}），构造化 Lebesgue 积分层降定理。
-2. **8-5b 余项**：跨层模型 Op → LinOp 完整实例化——SpectralTheory 算子代数公理在 LinOp 层的验证（代数基础 §16 已就位；受 funext 受限，点态版为准）。
+2. **8-5b 余项（算子层等式版 + 对象映射）**：跨层模型 Op → LinOp 完整实例化——点态对应已闭合（v1.14，OpAlgPt 证书），剩余为 funext 受限部分：算子层等式版公理（+ₒ-assoc 等 15 条在 LinOp 层的算子级版本）、对象映射 op-lin 及其保结构（降定理路径 = Op := LinOp 时 op-lin = id）、谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造，随各降定理链闭合）。
 3. **spec-int 收敛细节**：无界逼近的 Lebesgue 单调收敛构造化（trunc 截断族）。
 4. **E-σ-add 收敛**：LinOp 层算子序 sup 的存在性（强/弱算子拓扑单调有界收敛）。
 
