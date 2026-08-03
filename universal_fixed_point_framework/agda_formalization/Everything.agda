@@ -131,7 +131,13 @@ module Everything where
 --        依赖循环分析：fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 引用 fc-poly-le-spec-int 自循环
 --        （结构性，p⁺ 非多项式侧唯一工具是 fc-continuous/fc-integral），改用更基础
 --        fc-integral 直接降；桥接减一，fc 侧唯一剩余 D 类 = fc-integral（谱定理函数
---        演算 = 谱积分，与 spec-int-A 同层）；方案 A 收官，技术债 A1 闭合，v1.34））
+--        演算 = 谱积分，与 spec-int-A 同层）；方案 A 收官，技术债 A1 闭合，v1.34））；
+--        方案② 谱对象映射完整闭合（HilbertSpace §12'：A-hilb/fc-hilb 桥接登记（A 自伴
+--        A-hilb-self-adjoint + A 与谱投影交换 A-hilb-comm-E + fc-hilb-id（恒等函数演算 = A）
+--        + fc-hilb-exponential（指数函数演算 = 半群）——谱定理降定理链端点桥接，与
+--        spectral-subspace/exp-hilb-tA 同层）+ CrossLayer SpectralObjPt 扩展 A/fc 字段
+--        （A-self-adjoint-hilb/A-comm-E-hilb-pt/fc-hilb-id-A-pt/fc-hilb-exp-tA-pt）——
+--        技术债项 4 谱对象映射（A/E/fc/exp-tA）完整闭合，v1.36））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

@@ -2414,3 +2414,25 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 C 类项（ln15-arith-ax 资源静默确认）。
 
 **当前开放项**：ln2-lt/ln1615-lb/ln15-arith-ax（scoped 数值公理，资源静默，降定理路径 = 大整数算术/级数机制）；fc-integral 完整降定理（测度论层）。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案② 谱对象映射完整闭合——A/fc Hilbert 层模型桥接（v1.36）
+
+**背景**：技术债项 4（跨层实例化）的谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）此前闭合 E/exp-tA（v1.21 SpectralObjPt），剩余 A/fc 依赖"谱定理降定理链"。完整降定理链（证明自伴算子谱定理）超出框架（泛函分析顶点），经用户决策采用**方案②**：登记谱定理降定理链的**端点桥接**（A-hilb/fc-hilb 模型），链体（谱定理证明）文档化为降定理路径。
+
+**新增（HilbertSpace §12'）**：
+- `A-hilb`（自伴算子 A 的 Hilbert 层模型）+ `A-hilb-self-adjoint`（A 自伴）+ `A-hilb-comm-E`（A 与谱投影交换：A E(P) = E(P) A——M-Sp/M-σ 的 Hilbert 侧，降定理路径 = 自伴算子谱定理）
+- `fc-hilb`（Borel 函数演算模型：fc f ↦ fc-hilb f）+ `fc-hilb-id`（恒等函数演算 = A：fc-hilb(id) = A-hilb）+ `fc-hilb-exponential`（指数函数演算 = 半群：fc-hilb(e^(-t·)) = exp-hilb-tA t，§8c exp-tA = fc(φ_t) 的 Hilbert 侧）
+- 全部与 spectral-subspace（§10c）/exp-hilb-tA（§12）同层桥接登记
+
+**新增（CrossLayer SpectralObjPt 扩展 4 字段）**：
+- `A-self-adjoint-hilb`（A ↦ 自伴算子）、`A-comm-E-hilb-pt`（A 与谱投影交换点态）、`fc-hilb-id-A-pt`（恒等函数演算 = A 点态）、`fc-hilb-exp-tA-pt`（指数函数演算 = 半群点态）——`spectral-obj-pt` 实例化
+
+**里程碑**：**技术债项 4 谱对象映射（A/E/fc/exp-tA）完整闭合**——抽象层谱对象全部有 Hilbert 侧映射证书；降定理链以端点桥接登记（诚实保留链体为文档化降定理路径）。剩余项 4 部分：算子层等式版公理 + 对象映射 op-lin 等式保结构（funext 受限，结构性，P4 先例）。
+
+**验证**：`agda HilbertSpace\HilbertSpace.agda` + `agda CrossLayer\CrossLayer.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：HilbertSpace import 补 exp（using 列表）；CrossLayer import 补 exp/negℝ/_*ℝ_。
+
+**记录**：笔记 §5.16.7 项 4（谱对象映射完整 ✅）、技术债清单项 4（谱对象映射部分完整）、路线图 v1.36 条目、Everything.agda 头注释 v1.36。
+
+**当前开放项**：项 4 剩余（算子层等式版，funext 结构性）；ln2-lt/ln1615-lb/ln15-arith-ax（资源静默）；fc-integral 完整降定理（测度论层）。改动尚未提交 git。

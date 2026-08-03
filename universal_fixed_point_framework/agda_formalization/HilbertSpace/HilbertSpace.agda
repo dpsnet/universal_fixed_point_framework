@@ -138,7 +138,7 @@ open import Sp.SpCategory using (ℕ; zero; suc; sym; trans; cong; cong₂; _×_
 
 -- ℝ 层（复用 DHStructural：T3 已建的有序域 + 完备性机制）
 open import DHStructural.DHStructuralAnalysis
-  using (ℝ; zeroℝ; oneℝ; _+ℝ_; _*ℝ_; _≤ℝ_; _<ℝ_; _/ℝ_; negℝ; subst;
+  using (ℝ; zeroℝ; oneℝ; _+ℝ_; _*ℝ_; _≤ℝ_; _<ℝ_; _/ℝ_; negℝ; subst; exp;
          +-assoc-ℝ; +-comm-ℝ; +-ident-ℝ; +-inv-ℝ; *-assoc-ℝ; *-comm-ℝ; *-ident-ℝ; *-zero-ℝ;
          refl-≤ℝ; ≤-trans-ℝ; ≤-antisym; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ;
          trichotomy-ℝ; irreflexive-ℝ; add-pos-ℝ;
@@ -1509,6 +1509,39 @@ exp-hilb-radius-le-one : (t : ℝ) → spectral-radius (exp-hilb-tA t) ≤ℝ on
 exp-hilb-radius-le-one t =
   subst (λ z → z ≤ℝ oneℝ) (sym (spectral-radius-norm (exp-hilb-tA t) (exp-hilb-self-adjoint t)))
         (exp-hilb-contractive t)
+
+-- ==================================================================
+-- §12' 自伴算子 A 与 Borel 函数演算的 Hilbert 层模型（2026-08-03，方案②）
+-- ==================================================================
+-- 谱定理降定理链的**端点桥接**：自伴算子谱定理给出 A 的谱分解（A = ∫λ dE(λ)）与
+-- Borel 函数演算（f(A) = ∫f dE(λ)）。本层登记端点模型（A-hilb/fc-hilb），与
+-- spectral-subspace（§10c 谱子空间）/exp-hilb-tA（§12 半群）同层；链体（谱定理
+-- 证明）为降定理路径（完整形式化 = 泛函分析谱定理，超出框架，文档化）。
+-- 用途：CrossLayer §2 谱对象映射证书扩展 A/fc 字段（技术债项 4 谱对象映射完整闭合）。
+
+-- 自伴算子 A 的 Hilbert 层模型（SpectralTheory A ↦ 自伴算子）
+postulate
+  A-hilb : LinOp
+  -- A 自伴（SpectralTheory A 自伴正定的 Hilbert 侧；正定 = 谱支集 [0,∞)
+  -- 经 spectral-subspace）
+  A-hilb-self-adjoint : SelfAdjoint A-hilb
+  -- A 与谱投影交换：A E(P) = E(P) A（谱定理交换子性质——A = ∫λ dE(λ) 与每个
+  -- E(P) 交换；SpectralTheory M-Sp/M-σ（Fuglede 方向）的 Hilbert 侧；
+  -- 降定理路径 = 自伴算子谱定理）
+  A-hilb-comm-E : (P : ℝ → Set) (x : V)
+    → LinOp.f (op-comp A-hilb (E-hilb P)) x ≡ LinOp.f (op-comp (E-hilb P) A-hilb) x
+
+-- Borel 函数演算的 Hilbert 层模型（SpectralTheory fc f ↦ fc-hilb f）
+postulate
+  fc-hilb : (ℝ → ℝ) → LinOp
+  -- 恒等函数演算 = A：fc-hilb(id) = A-hilb（f ↦ f(A) 同态 + 谱定理 ∫id dE = A；
+  --   降定理路径 = Borel 函数演算/谱定理）
+  fc-hilb-id : (x : V) → LinOp.f (fc-hilb (λ y → y)) x ≡ LinOp.f A-hilb x
+  -- 指数函数演算 = 半群：fc-hilb(e^(-t·)) = exp-hilb-tA t（φ_t 的 Borel 函数演算；
+  --   SpectralTheory §8c exp-tA = fc(φ_t)（exp-tA-fc）的 Hilbert 侧；
+  --   降定理路径 = Borel 函数演算/谱积分）
+  fc-hilb-exponential : (t : ℝ) (x : V)
+    → LinOp.f (fc-hilb (λ y → exp (negℝ (t *ℝ y)))) x ≡ LinOp.f (exp-hilb-tA t) x
 
 -- ==================================================================
 -- §13 算子序与投影单调性（E-σ-add 完整形式的机制前置，2026-08-02）

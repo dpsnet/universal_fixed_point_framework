@@ -51,7 +51,7 @@ open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory using (sym)
 
 -- ℝ 层
-open import DHStructural.DHStructuralAnalysis using (ℝ; zeroℝ; oneℝ; _+ℝ_; _≤ℝ_; _⊎_; ⊥)
+open import DHStructural.DHStructuralAnalysis using (ℝ; zeroℝ; oneℝ; _+ℝ_; _*ℝ_; _≤ℝ_; _⊎_; ⊥; exp; negℝ)
 
 -- Op 层（P1Spectral：抽象算子代数公理，跨层验证的源；SpectralTheory 复用同一 Op）
 open import P1Spectral.P1Spectral
@@ -65,6 +65,8 @@ open import HilbertSpace.HilbertSpace
          E-hilb-self-adjoint; E-hilb-norm-le-one; E-hilb-union;
          exp-hilb-tA; exp-hilb-semigroup; exp-hilb-zero;
          exp-hilb-self-adjoint; exp-hilb-contractive;
+         A-hilb; A-hilb-self-adjoint; A-hilb-comm-E;
+         fc-hilb; fc-hilb-id; fc-hilb-exponential;
          +ₗ-assoc-pt; +ₗ-comm-pt; +ₗ-ident-pt;
          op-comp-assoc-pt; op-comp-id-pt; op-comp-id-r-pt;
          *ₗ-zero-r-pt; *ₗ-zero-l-pt; distribₗ-pt; distribₗ-l-pt;
@@ -172,10 +174,23 @@ record SpectralObjPt : Set₁ where
         ≡ LinOp.f (op-comp (exp-hilb-tA s) (exp-hilb-tA t)) x
     -- exp-tA-zero（exp-tA 0 ≡ 𝟙ₒ）点态对应：e^(0A)x = x
     exp-tA-zero-pt : (x : V) → LinOp.f (exp-hilb-tA zeroℝ) x ≡ x
-    -- e^(-tA) 自伴
+    -- exp-tA-self-adjoint（e^(-tA) 自伴）
     exp-tA-self-adjoint : (t : ℝ) → SelfAdjoint (exp-hilb-tA t)
     -- 压缩（‖e^(-tA)‖ ≤ 1）
     exp-tA-contractive : (t : ℝ) → op-norm (exp-hilb-tA t) ≤ℝ oneℝ
+    -- §12' A/fc 对象映射（2026-08-03，方案②）：谱定理降定理链端点桥接——
+    -- A ↦ A-hilb（自伴算子）、fc f ↦ fc-hilb f（Borel 函数演算）；链体（谱定理
+    -- 证明）为降定理路径，与 spectral-subspace/exp-hilb-tA 同层桥接
+    -- A 自伴（SpectralTheory A 自伴正定的 Hilbert 侧）
+    A-self-adjoint-hilb : SelfAdjoint A-hilb
+    -- A 与谱投影交换（A E(P) = E(P) A，M-Sp/M-σ 的 Hilbert 侧）
+    A-comm-E-hilb-pt : (P : ℝ → Set) (x : V)
+      → LinOp.f (op-comp A-hilb (E-hilb P)) x ≡ LinOp.f (op-comp (E-hilb P) A-hilb) x
+    -- 恒等函数演算 = A（fc-hilb(id) = A-hilb，∫id dE = A 的 Hilbert 侧）
+    fc-hilb-id-A-pt : (x : V) → LinOp.f (fc-hilb (λ y → y)) x ≡ LinOp.f A-hilb x
+    -- 指数函数演算 = 半群（fc-hilb(e^(-t·)) = exp-hilb-tA t，§8c exp-tA = fc(φ_t)）
+    fc-hilb-exp-tA-pt : (t : ℝ) (x : V)
+      → LinOp.f (fc-hilb (λ y → exp (negℝ (t *ℝ y)))) x ≡ LinOp.f (exp-hilb-tA t) x
 
 -- **可证（E 族零新增公理；exp-tA 族字段为 §12 桥接）**：谱对象映射证书实例化——
 -- E 族字段全部来自 HilbertSpace §10c-§10e 可证定理（E-hilb-idemp/orth/total/
@@ -193,4 +208,8 @@ spectral-obj-pt = record
   ; exp-tA-zero-pt = exp-hilb-zero
   ; exp-tA-self-adjoint = exp-hilb-self-adjoint
   ; exp-tA-contractive = exp-hilb-contractive
+  ; A-self-adjoint-hilb = A-hilb-self-adjoint
+  ; A-comm-E-hilb-pt = A-hilb-comm-E
+  ; fc-hilb-id-A-pt = fc-hilb-id
+  ; fc-hilb-exp-tA-pt = fc-hilb-exponential
   }
