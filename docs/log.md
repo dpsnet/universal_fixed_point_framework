@@ -2140,3 +2140,27 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 项 4 更新（谱对象映射部分 ✅）、路线图 v1.21 条目、Everything.agda 头注释 v1.21、SpectralTheory §15 审计更新 4。
 
 **当前开放项**：A/fc 对象 Hilbert 侧构造（谱定理降定理链）；算子层等式版 + op-lin 保结构（funext 受限，结构性）；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：fc-poly-le-spec-int 语义重构方案 A 阶段 1——max-ℝ 族 + 正负分解（v1.22，技术债清单 A1 启动）
+
+**决策背景**：用户批准"启动方案 A"（正负分解重构，笔记 §5.16.8）——∫f dE = ∫f⁺ dE − ∫f⁻ dE（f⁺ = max(f,0)、f⁻ = max(−f,0)），消除钉住 sup 语义（§5.16.6），4 阶段路线（ℝ 层 max → Op 减法 + 一致性 → 钉住桥接转定理 → fc-poly-le-spec-int 构造化）。
+
+**新增（DHStructural，max-ℝ 族，零新增公理）**：
+- `max-ℝ`（三分律定义，与 min-ℝ 平行）+ **可证** `max-≤-l`/`max-≤-r`（上界）、`max-lub`（最小上界）、`max-pos-value`（0<a ⟹ max(a,0)=a）、`max-neg-value`（a<0 ⟹ max(a,0)=0）、`lt-neg-ℝ`/`neg-lt-ℝ`（取负反转）、`max-zero-zero`（max(0,0)=0）、`sub-zero-r`（a−0=a）、`zero-sub`（0−c=−c）
+- **核心** `max-sub-decomp`：max(a,0) − max(−a,0) = a（三分律三分：a<0 ⟹ 0−(−a)；a=0 ⟹ 0−0；a>0 ⟹ a−0）——f = f⁺ − f⁻ 的 ℝ 值版
+- `max-pos-mul-neg-zero`：max(a,0)·max(−a,0) = 0（f⁺·f⁻ = 0）
+
+**新增（SpectralTheory §1b'，正负分解）**：
+- `pos-part`/`neg-part`（f⁺/f⁻ = max(±f,0) 逐点）+ **可证** `pos-part-nonneg`/`neg-part-nonneg`（非负）、`decomp-pos-neg`（f x = f⁺ x − f⁻ x 逐点）、`pos-mul-neg-zero`（f⁺ x·f⁻ x = 0 逐点）
+
+**里程碑**：**方案 A 阶段 1 闭合**——正负分解的 ℝ 层地基 + f⁺/f⁻ 定义与逐点性质全部可证（零新增公理），为阶段 2（Op 减法 `_−ₒ_` + spec-int-general 重构 ∫f := ∫f⁺−ₒ∫f⁻ + 一致性 spec-int-general-zero）铺路。
+
+**验证**：`agda DHStructural\DHStructuralAnalysis.agda` + `agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：① max-≤-l 的 inj₂ (inj₁) 分支报 UnequalTerms——with 已把 max-ℝ a b 约简为分支值 a，目标即 a ≤ a，**直接 refl 无需 subst**（原 subst 方向反了：sym a=b : b≡a ⟹ subst 期望 b ≤ a）；② max-≤-r 的 inj₂ (inj₁) 需 `sym a=b`（P 从 b 传到 a：subst P (sym a=b) : P b → P a）；③ max-neg-value 的 inj₂ (inj₁ a=0) 直接 `a=0`（目标 a ≡ 0）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 1 ✅）、技术债清单项 1（阶段 1 ✅）、路线图 v1.22 条目。
+
+**当前开放项**：阶段 2（Op 减法 + spec-int-general 重构 + spec-int-general-zero 一致性）；A/fc 对象 Hilbert 侧构造。改动尚未提交 git。

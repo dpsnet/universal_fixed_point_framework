@@ -37,11 +37,12 @@ open import Sp.SpCategory using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; tra
 
 -- ℝ 层（T3 已建：序代数 + exp/log/rpow + exp-inj 可证）
 open import DHStructural.DHStructuralAnalysis
-  using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
+  using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
+         max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
@@ -250,6 +251,38 @@ spec-int-below-mono {f} {g} h Y (pair₁Σ s (eq , dom)) =
 --    测度论完整层降为定理）；恒等函数在 x ≤ c 时截断精确（trunc-absorp），
 --    谱支集 [0,∞) 支持（E-support-pos）覆盖其余部分。
 --  - 下界族结构性质：spec-int-below-mono（**可证**，f 单调）。
+
+-- ==================================================================
+-- §1b' 正负分解（方案 A 阶段 1，2026-08-03）
+-- ==================================================================
+-- 用途：spec-int-general 正负分解重构（笔记 §5.16.8 方案 A）——∫f dE =
+--   ∫f⁺ dE − ∫f⁻ dE（f⁺ = max(f,0)、f⁻ = max(−f,0)），消除钉住 sup 语义的
+--   构造地基。本阶段交付 f⁺/f⁻ 定义 + 逐点性质（全部**可证**，零新增公理）；
+--   重构本身（spec-int-general 定义改造）留待阶段 2。
+
+-- f⁺ = max(f,0)（正部）
+pos-part : (ℝ → ℝ) → ℝ → ℝ
+pos-part f x = max-ℝ (f x) zeroℝ
+
+-- f⁻ = max(−f,0)（负部）
+neg-part : (ℝ → ℝ) → ℝ → ℝ
+neg-part f x = max-ℝ (negℝ (f x)) zeroℝ
+
+-- **可证**：f⁺ 非负（0 ≤ max(f x, 0)，max-≤-r 特化）
+pos-part-nonneg : (f : ℝ → ℝ) (x : ℝ) → zeroℝ ≤ℝ pos-part f x
+pos-part-nonneg f x = max-≤-r (f x) zeroℝ
+
+-- **可证**：f⁻ 非负
+neg-part-nonneg : (f : ℝ → ℝ) (x : ℝ) → zeroℝ ≤ℝ neg-part f x
+neg-part-nonneg f x = max-≤-r (negℝ (f x)) zeroℝ
+
+-- **可证**：分解 f x = f⁺ x − f⁻ x（max-sub-decomp 特化，逐点）
+decomp-pos-neg : (f : ℝ → ℝ) (x : ℝ) → (pos-part f x) -ℝ (neg-part f x) ≡ f x
+decomp-pos-neg f x = max-sub-decomp (f x)
+
+-- **可证**：正交 f⁺ x · f⁻ x = 0（max-pos-mul-neg-zero 特化，逐点）
+pos-mul-neg-zero : (f : ℝ → ℝ) (x : ℝ) → (pos-part f x) *ℝ (neg-part f x) ≡ zeroℝ
+pos-mul-neg-zero f x = max-pos-mul-neg-zero (f x)
 
 -- ==================================================================
 -- §1c 截断逼近（测度论层阶段 1，2026-08-02）

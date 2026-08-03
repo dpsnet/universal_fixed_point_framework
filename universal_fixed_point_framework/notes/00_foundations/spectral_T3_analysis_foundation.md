@@ -457,7 +457,7 @@ postulate
 **结论**：**不可声称"数学层技术债基本扫除"**——存在多个实质可闭合未闭合项。分类如下（技术债 = 可闭合而未闭合；结构性限制 = 不可也不应闭合；待基础设施 = 依赖外部条件可自然闭合）。
 
 **A. 实质技术债（可闭合，未闭合）**：
-1. **fc-poly-le-spec-int 构造化**（fc-integral 降定理唯一剩余登记项）——需 ∫f⁺−∫f⁻/谱支集受限语义重构（多周工程，v1.16 决策暂缓，须先出方案）。
+1. **fc-poly-le-spec-int 构造化**（fc-integral 降定理唯一剩余登记项）——需 ∫f⁺−∫f⁻ 语义重构（**方案 A 已批准启动（2026-08-03，§5.16.8）**：正负分解重构 4 阶段路线；**阶段 1 ✅ v1.22**（max-ℝ 族 + f⁺/f⁻ 定义与逐点性质，零新增公理）；待阶段 2（Op 减法 + spec-int-general 重构 + 一致性））。
 2. **E-σ-add 收敛**（LinOp 层 supₗ 存在性）——**✅ 已闭合（2026-08-03，v1.17-1.18）**：阶段 1（v1.17）连续下式族单调有界结构全可证（`E-hilb-nonneg`（谱投影非负：⟨Ev,v⟩=‖Ev‖²≥0，自伴+幂等+norm-sq-nonneg）、`≤ₗ-add-nonneg-r`（非负项右加单调，op-sub 点态代数 (Xv+Bv)+(−Xv)=Bv）、`E-σ-family-increasing`（部分和单调）、`E-σ-family-bounded`（部分和 ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add））；阶段 2（v1.18）**Vigier 强收敛**——`SOT-conv-seq`（ℕ-序列强收敛定义）、`self-adjoint-zero-op`/`self-adjoint-op-add`/`sumₗ-self-adjoint`（部分和自伴，可证）+ Vigier 定理桥接登记（`Vigier-strong-conv`：单调递增自伴族 ⟹ 强收敛到 supₗ，降定理路径 = 强/弱算子拓扑单调有界收敛）⟹ **`E-σ-SOT-conv`**（Σᵢ<ₘE(Pᵢ) SOT → E(∪ₙPₙ)）——**E-σ-add 收敛侧闭合**（sup 存在 = supₗ 桥接 + 收敛 = Vigier 桥接，假设全部可证）。
 3. **spec-int 收敛细节**（trunc 截断族 Lebesgue 单调收敛构造化）——**✅ 已闭合（2026-08-03，v1.19-1.20）**：阶段 1（v1.19，ℝ-截断版）`s-bound`（简单函数值的 ℝ 上界 = sup-ℝ 有限值集）+ `s-bound-upper`（每原子值 ≤ s-bound，sup-upper）+ `simple-below-trunc`（s ≤ f 逐点 ⟹ s ≤ trunc f (s-bound s) 逐点，min-glb）+ `spec-int-below-into-trunc`/`trunc-below-into-spec-int`（spec-int-below f 与 TruncBelow f 逐成员等价）+ `sup-op-ext`（Op 层 sup 外延，≤ₒ-antisym + sup-op-least/upper）⟹ **`spec-int-R-trunc-conv`**（∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}，**可证，零新增公理**）；阶段 2（v1.20，ℕ-截断版）——**Archimedean 登记**（DHStructural：`archimedean-ub`/`archimedean-ub-bound`，∀a.∃n. a ≤ natℝ n，与 sup-ℝ 同级 ℝ 完备性族标准公理；经典可由 sup-ℝ 推出但构造框架缺排中律式步骤，故显式登记，降定理路径 = 标准实数构造）+ `simple-below-ℕ-trunc`（s ≤ f ⟹ s ≤ trunc f (natℝ N)，N = archimedean-ub (s-bound s)，s-bound-upper + archimedean-ub-bound + min-glb）+ `spec-int-below-member-≤-ℕ-sup`（成员 ≤ₒ ℕ-截断 sup，≤ₒ-trans + sup-op-upper）⟹ **`spec-int-trunc-ℕ-conv`**（∫f dE = supₙ∫min(f,n) dE，**原 spec-int-trunc-conv 桥接删除，降为可证定理**）——Lebesgue 单调收敛的 ℕ-截断版构造化闭合，桥接减一。
 4. **跨层完整实例化**（谱对象映射 A/E/fc/exp-tA ↦ Hilbert 构造）——**谱对象映射部分 ✅（2026-08-03，v1.21）**：CrossLayer §2 谱对象映射证书 `SpectralObjPt`（E P ↦ E-hilb P、exp-tA t ↦ exp-hilb-tA t 的性质保持——10 字段：E-idem-pt（E(P)²x=E(P)x，E-hilb-idemp）/E-orth-ip（P∩Q=∅ ⟹ ⟨E(P)u,E(Q)v⟩=0，E-hilb-orth）/E-total-pt（E(ℝ)x=x，E-hilb-total）/E-self-adjoint/E-norm-le-one/E-union-pt（E(P∪Q)x=E(P)x+E(Q)x，E-hilb-union）+ exp-tA-semigroup-pt/zero-pt/self-adjoint/contractive（exp-hilb 族）——**E 族零新增公理、exp-tA 族为 §12 桥接字段**，§15 审计跨层降定理映射从"注释断言"形式化为可证证书）。**剩余（funext 受限部分结构性）**：算子层等式版公理 + 对象映射 op-lin 等式保结构（需 funext，P4 先例）+ A/fc 对象的 Hilbert 侧构造（依赖谱定理降定理链）。
@@ -468,7 +468,39 @@ postulate
 
 **D. 范畴层完备化**：RAP-5d–5f（耗散半边统一、连续谱 Lean 形式化）。
 
-**可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（modulo 一个文档化桥接）；spec-int MCT（ℝ-截断 + ℕ-截断）已构造化闭合（Archimedean 登记，v1.20）；Agda 16 模块全量通过；Lean 核心 10 模块零错误。**推进优先序**：① E-σ-add 收敛（✅ v1.17-1.18）→ ② spec-int MCT 构造化（✅ v1.19-1.20）→ ③ fc-poly-le-spec-int（须先出语义重构方案）→ ④ 跨层完整实例化 / 待基础设施随 Mathlib 更新。
+**可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（modulo 一个文档化桥接）；spec-int MCT（ℝ-截断 + ℕ-截断）已构造化闭合（Archimedean 登记，v1.20）；Agda 16 模块全量通过；Lean 核心 10 模块零错误。**推进优先序**：① E-σ-add 收敛（✅ v1.17-1.18）→ ② spec-int MCT 构造化（✅ v1.19-1.20）→ ③ fc-poly-le-spec-int（须先出语义重构方案，方案已出 §5.16.8）→ ④ 跨层完整实例化 / 待基础设施随 Mathlib 更新。
+
+#### 5.16.8 fc-poly-le-spec-int 语义重构方案（A1 前置，2026-08-03）
+
+**目标**：构造化 `fc-poly-le-spec-int`（v1.13 桥接：∫p dE = sup{∫s : s 简单 ≤ p}，fc-integral 降定理最后登记项）⟹ fc-integral 零登记项、A1 闭合、钉住 sup 语义（§5.16.6）可移除。
+
+**障碍回顾**：`spec-int-general` 是"钉住 sup"——朴素下界族（spec-int-below f = 全 ℝ 上 cᵢ ≤ f x）对变号 f（如奇次 xⁿ，(-∞,0) 无下界）为空，其值由钉住桥接（spec-int-general-id/-exp/-phi-t）确定；构造化 fc-poly-le-spec-int 的中间步 fc(p) ≤ₒ spec-int-general(p) 对任意含变号多项式成立才可绕过。
+
+**方案 A：正负分解重构（推荐，唯一彻底路径）**——∫f dE = ∫f⁺ dE − ∫f⁻ dE（f⁺ = max(f,0)，f⁻ = max(−f,0)）：
+1. **ℝ 层（阶段 1）**：`max-ℝ`（三分律定义，与 min-ℝ 平行，零新增公理）+ 可证性质：f⁺/f⁻ 非负、f = f⁺ − f⁻ 逐点、f⁺·f⁻ = 0、max-≥-l/r、max-glb。
+2. **Op 层减法（阶段 2）**：`_−ₒ_`（X −ₒ Y := X +ₒ ((negℝ oneℝ) ·ₒ Y)，定义性，P1Spectral ·ₒ-comm/assoc 可证减法性质）。
+3. **spec-int-general 重构**：`spec-int-general f := spec-int-general f⁺ −ₒ spec-int-general f⁻`——**关键优势：f⁺、f⁻ 分开做朴素 sup（各自动作非负），减法定义性 ⟹ 完全避开 sup 的加法/线性公理**（sup-add 无需登记）。
+4. **一致性（阶段 2 核心，必须可证）**：
+   - `spec-int-general-zero`：∫0 dE = 𝟘ₒ（零函数下界族 = {s=0}，sup = 0 算子）——sup-op-least/upper + 零简单函数成员；
+   - 非负 f（f ≥ 0 逐点）⟹ f⁻ = 0 ⟹ 新定义 = 旧 sup 定义（spec-int-general f = spec-int-general f⁺）——**新旧定义对非负 f 一致**（MCT v1.19-20 的 sup 机制直接复用）。
+5. **钉住桥接重验（阶段 3）**：
+   - spec-int-general-id：id⁻ 支持 ⊆ (-∞,0) ⊆ 谱支集外（E-support-pos：E(P) = E(P∩[0,∞)) ⟹ 支集外谱测度为 0）⟹ ∫id⁻ dE = 0；id⁺ 与 id 在 [0,∞) 相等 + 谱支集 ⟹ ∫id⁺ dE = spec-int-A（spectral-ext + 下界族外延）——**桥接可转为可证**；
+   - spec-int-general-exp/-phi-t：exp/φ_t 全 ℝ 非负 ⟹ f⁻ = 0 ⟹ 新定义 = 朴素 sup（原本就有效）——**桥接可转为可证**（非负函数 Lebesgue sup 就是积分）。
+6. **fc-integral 侧（阶段 4）**：fc(p) ≤ₒ spec-int-general p 的正负分解形式——∫p = ∫p⁺ − ∫p⁻ 各自由简单函数下界 sup 逼近（p⁺、p⁻ 非负 ⟹ 下界族非空，v1.15 幂单调性引理库 + v1.19-20 MCT 机制可用）⟹ fc-poly-le-spec-int 构造化 ⟹ fc-integral 零登记项。
+7. **下游重验**：X-comm-spec-int-general（X 与 ∫f⁺、∫f⁻ 交换（sup-comm + member-comm）+ 减法保交换）、fc-integral 系列、spec-int-general-id/-exp/-phi-t 使用处（X-comm-spec-int-general-deriv 等）——结构重验，逻辑不变。
+8. **工作量**：4 阶段 ≈ v1.22-v1.26 量级（与"多周工程"标注一致）；每阶段可独立验证提交。
+
+**方案 B：谱支集受限下界族（部分缓解，不彻底）**——spec-int-below 的 Ω 限制在 [0,∞)（E-support-pos 自动截断）；非负 f 下界族非空（MCT 已闭合），但变号多项式在 [0,∞) 上仍可变号（如 p(x) = x − 1）⟹ 不消除钉住，仅扩展可构造部分；与 §5.16.6"不因非负 f 而简化"一致。
+
+**方案 C：保留桥接（现状）**——v1.16 决策，健全；论文表述"modulo 文档化测度论核心逼近桥接"；A1 保持暂缓。
+
+**风险评估**：方案 A 阶段 2 的一致性（spec-int-general-zero + 非负等价）是技术关键点，若不可证则退化为方案 B/C；其余步骤均为标准构造（max/min 三分律、定义性减法、sup 机制复用），风险可控。
+
+**决策点（待用户）**：是否启动方案 A 分期执行（阶段 1 = ℝ 层 max/f⁺ f⁻，v1.22 起）；或维持方案 C（A1 暂缓）。
+
+**执行状态（2026-08-03，用户批准"启动方案 A"）**：
+- **阶段 1 ✅（v1.22）**：DHStructural `max-ℝ` 族（三分律定义 + 可证：max-≤-l/r、max-lub、max-pos-value、max-neg-value、lt-neg-ℝ、neg-lt-ℝ、max-zero-zero、sub-zero-r、zero-sub、**max-sub-decomp**（max(a,0) − max(−a,0) = a）、**max-pos-mul-neg-zero**（max(a,0)·max(−a,0) = 0）——零新增公理）+ SpectralTheory §1b' 正负分解（`pos-part`/`neg-part`（f⁺/f⁻ = max(±f,0)）+ **可证** pos-part-nonneg/neg-part-nonneg（非负）、decomp-pos-neg（f = f⁺ − f⁻ 逐点）、pos-mul-neg-zero（f⁺·f⁻ = 0 逐点））。
+- **待（阶段 2）**：Op 层减法 `_−ₒ_` + spec-int-general 重构（∫f := ∫f⁺ −ₒ ∫f⁻）+ 一致性（spec-int-general-zero、非负等价）。
 
 ## 6. 各闭合项证明策略
 

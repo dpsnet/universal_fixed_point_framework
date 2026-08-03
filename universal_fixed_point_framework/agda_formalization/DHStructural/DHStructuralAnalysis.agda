@@ -1053,6 +1053,109 @@ min-mono-r a b c hbc =
   min-glb (min-ℝ a b) a c (min-≤-l a b) (≤-trans-ℝ (min-≤-r a b) hbc)
 
 -- ==================================================================
+-- max-ℝ 与正负分解（方案 A 阶段 1，2026-08-03）
+-- 用途：fc-poly-le-spec-int 语义重构（笔记 §5.16.8 方案 A）——
+--   f⁺ = max(f,0)、f⁻ = max(−f,0)，∫f dE = ∫f⁺ dE − ∫f⁻ dE 的 ℝ 层地基。
+-- max 与 min-ℝ 平行（三分律定义），全部可证（零新增公理）。
+-- ==================================================================
+
+-- max(a,b)：a < b ⟹ b；a = b ⟹ a；b < a ⟹ a
+max-ℝ : ℝ → ℝ → ℝ
+max-ℝ a b with trichotomy-ℝ a b
+max-ℝ a b | inj₁ _ = b
+max-ℝ a b | inj₂ (inj₁ _) = a
+max-ℝ a b | inj₂ (inj₂ _) = a
+
+-- a ≤ max(a,b)
+max-≤-l : (a b : ℝ) → a ≤ℝ max-ℝ a b
+max-≤-l a b with trichotomy-ℝ a b
+max-≤-l a b | inj₁ a<b = <-≤-ℝ a<b
+max-≤-l a b | inj₂ (inj₁ _) = refl-≤ℝ {x = a}
+max-≤-l a b | inj₂ (inj₂ _) = refl-≤ℝ {x = a}
+
+-- b ≤ max(a,b)
+max-≤-r : (a b : ℝ) → b ≤ℝ max-ℝ a b
+max-≤-r a b with trichotomy-ℝ a b
+max-≤-r a b | inj₁ _ = refl-≤ℝ {x = b}
+max-≤-r a b | inj₂ (inj₁ a=b) = subst (λ z → b ≤ℝ z) (sym a=b) (refl-≤ℝ {x = b})
+max-≤-r a b | inj₂ (inj₂ b<a) = <-≤-ℝ b<a
+
+-- max 是最小上界：a ≤ z 且 b ≤ z ⟹ max(a,b) ≤ z
+max-lub : (z a b : ℝ) → a ≤ℝ z → b ≤ℝ z → max-ℝ a b ≤ℝ z
+max-lub z a b hza hzb with trichotomy-ℝ a b
+max-lub z a b hza hzb | inj₁ _ = hzb
+max-lub z a b hza hzb | inj₂ (inj₁ _) = hza
+max-lub z a b hza hzb | inj₂ (inj₂ _) = hza
+
+-- 正部特化：0 < a ⟹ max(a,0) = a
+max-pos-value : (a : ℝ) → zeroℝ <ℝ a → max-ℝ a zeroℝ ≡ a
+max-pos-value a 0<a with trichotomy-ℝ a zeroℝ
+max-pos-value a 0<a | inj₁ a<0 =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ a<0 (<-≤-ℝ 0<a)))
+max-pos-value a 0<a | inj₂ (inj₁ _) = refl
+max-pos-value a 0<a | inj₂ (inj₂ _) = refl
+
+-- 负部特化：a < 0 ⟹ max(a,0) = 0
+max-neg-value : (a : ℝ) → a <ℝ zeroℝ → max-ℝ a zeroℝ ≡ zeroℝ
+max-neg-value a a<0 with trichotomy-ℝ a zeroℝ
+max-neg-value a a<0 | inj₁ _ = refl
+max-neg-value a a<0 | inj₂ (inj₁ a=0) = a=0
+max-neg-value a a<0 | inj₂ (inj₂ 0<a) =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ 0<a (<-≤-ℝ a<0)))
+
+-- a < 0 ⟹ 0 < −a（取负反转，neg-<-ℝ + neg-zero）
+lt-neg-ℝ : {a : ℝ} → a <ℝ zeroℝ → zeroℝ <ℝ negℝ a
+lt-neg-ℝ {a} a<0 = subst (λ z → z <ℝ negℝ a) neg-zero (neg-<-ℝ a<0)
+
+-- 0 < a ⟹ −a < 0（取负反转）
+neg-lt-ℝ : {a : ℝ} → zeroℝ <ℝ a → negℝ a <ℝ zeroℝ
+neg-lt-ℝ {a} 0<a = subst (λ z → negℝ a <ℝ z) neg-zero (neg-<-ℝ 0<a)
+
+-- max(0,0) = 0（三分支排除：0 < 0 矛盾）
+max-zero-zero : max-ℝ zeroℝ zeroℝ ≡ zeroℝ
+max-zero-zero with trichotomy-ℝ zeroℝ zeroℝ
+max-zero-zero | inj₁ 0<0 = ⊥-elim (irreflexive-ℝ 0<0)
+max-zero-zero | inj₂ (inj₁ _) = refl
+max-zero-zero | inj₂ (inj₂ 0<0) = ⊥-elim (irreflexive-ℝ 0<0)
+
+-- a − 0 = a（sub-ℝ-def + neg-zero + 加单位）
+sub-zero-r : (a : ℝ) → (a -ℝ zeroℝ) ≡ a
+sub-zero-r a = trans (sub-ℝ-def a zeroℝ)
+                     (trans (cong (λ w → a +ℝ w) neg-zero) (+-ident-ℝ a))
+
+-- 0 − c = −c（sub-ℝ-def + 交换 + 加单位）
+zero-sub : (c : ℝ) → (zeroℝ -ℝ c) ≡ negℝ c
+zero-sub c = trans (sub-ℝ-def zeroℝ c)
+                   (trans (+-comm-ℝ zeroℝ (negℝ c)) (+-ident-ℝ (negℝ c)))
+
+-- 分解：max(a,0) − max(−a,0) = a（f = f⁺ − f⁻ 的 ℝ 值版）
+-- 三分律三分 a：a<0 ⟹ 0 − (−a) = a；a=0 ⟹ 0 − 0 = 0；a>0 ⟹ a − 0 = a
+max-sub-decomp : (a : ℝ) → (max-ℝ a zeroℝ) -ℝ (max-ℝ (negℝ a) zeroℝ) ≡ a
+max-sub-decomp a with trichotomy-ℝ a zeroℝ
+max-sub-decomp a | inj₁ a<0 =
+  trans (cong (λ v → zeroℝ -ℝ v) (max-pos-value (negℝ a) (lt-neg-ℝ a<0)))
+        (trans (zero-sub (negℝ a)) (neg-neg a))
+max-sub-decomp a | inj₂ (inj₁ a=0) =
+  trans (cong (λ v → a -ℝ v)
+              (trans (cong₂ max-ℝ (trans (cong negℝ a=0) neg-zero) refl) max-zero-zero))
+        (sub-zero-r a)
+max-sub-decomp a | inj₂ (inj₂ 0<a) =
+  trans (cong (λ v → a -ℝ v) (max-neg-value (negℝ a) (neg-lt-ℝ 0<a)))
+        (sub-zero-r a)
+
+-- 正交性：max(a,0)·max(−a,0) = 0（f⁺·f⁻ = 0，三分律三分 + 零吸收）
+max-pos-mul-neg-zero : (a : ℝ) → (max-ℝ a zeroℝ) *ℝ (max-ℝ (negℝ a) zeroℝ) ≡ zeroℝ
+max-pos-mul-neg-zero a with trichotomy-ℝ a zeroℝ
+max-pos-mul-neg-zero a | inj₁ a<0 = *-zero-l-ℝ (max-ℝ (negℝ a) zeroℝ)
+max-pos-mul-neg-zero a | inj₂ (inj₁ a=0) =
+  trans (cong (λ v → a *ℝ v)
+              (trans (cong₂ max-ℝ (trans (cong negℝ a=0) neg-zero) refl) max-zero-zero))
+        (*-zero-ℝ a)
+max-pos-mul-neg-zero a | inj₂ (inj₂ 0<a) =
+  trans (cong (λ v → a *ℝ v) (max-neg-value (negℝ a) (neg-lt-ℝ 0<a)))
+        (*-zero-ℝ a)
+
+-- ==================================================================
 -- 平方根（分析层扩展，2026-08-02）
 -- 用途：Hilbert 空间层阶段 8-2b 收官——norm := √(‖·‖²)（范数公理落地）、
 --   三角不等式（C-S 推论）与阶段 8-3 有界算子范数（sup + √）的前提。

@@ -66,7 +66,12 @@ module Everything where
 --        （E-idem-pt/orth-ip/total-pt/self-adjoint/norm-le-one/union-pt，可证零新增
 --        公理）+ exp-tA t ↦ exp-hilb-tA t（semigroup-pt/zero-pt/self-adjoint/
 --        contractive，§12 桥接字段）；§15 审计跨层映射从注释断言形式化为可证证书，
---        A4 谱对象映射部分闭合，v1.21））
+--        A4 谱对象映射部分闭合，v1.21）；
+--        fc-poly-le-spec-int 语义重构方案 A 阶段 1（§1b'：正负分解——DHStructural
+--        max-ℝ 族（三分律定义 + max-sub-decomp：max(a,0)−max(−a,0)=a、max-pos-mul-neg-zero：
+--        max(a,0)·max(−a,0)=0，零新增公理）+ pos-part/neg-part（f⁺/f⁻ = max(±f,0)）+
+--        decomp-pos-neg（f = f⁺−f⁻ 逐点）/pos-mul-neg-zero（f⁺·f⁻=0 逐点）可证；
+--        方案 A（∫f := ∫f⁺−ₒ∫f⁻）启动，技术债 A1 阶段 1，v1.22））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
