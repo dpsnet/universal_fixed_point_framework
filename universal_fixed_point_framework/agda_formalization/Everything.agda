@@ -44,7 +44,11 @@ module Everything where
 --        理论闭合决策（§1b/§15 + 笔记 §5.16.6：钉住 sup 语义显式文档化——spec-int-general
 --        是"钉住 sup"（语义值 = 谱支集 [0,∞) 上 ∫f dE），变号 f 朴素下界族为空、值由钉住
 --        桥接确定；构造化 fc-poly-le-spec-int 需语义重构；保持健全桥接层不冒险重构；
---        影响分析：谱匹配核心（theorem3/P1）零 fc-integral 依赖完全可证，v1.16））
+--        影响分析：谱匹配核心（theorem3/P1）零 fc-integral 依赖完全可证，v1.16）；
+--        E-σ-add 收敛阶段 1（§14：连续下式族单调有界结构——E-hilb-nonneg（谱投影
+--        非负 ⟨Ev,v⟩=‖Ev‖²≥0）+ ≤ₗ-add-nonneg-r + E-σ-family-increasing/monotone +
+--        E-σ-family-bounded（部分和 ≤ₗ E(∪ₙPₙ)）——Vigier 定理假设条件全可证；
+--        supₗ 存在性 = Vigier 桥接，v1.17））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

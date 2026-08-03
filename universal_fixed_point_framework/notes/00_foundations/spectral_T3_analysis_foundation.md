@@ -452,6 +452,24 @@ postulate
 
 **执行落点**：SpectralTheory §1b 钉住 sup 语义文档块（纯注释，2026-08-03）；log 决策记录；本文档分析。**论文层审计项**（工作流②，paper I/相关论文）：确认"fc-integral 降定理"表述为"modulo 桥接"，避免零公理化过度声称。
 
+#### 5.16.7 数学层技术债清单（2026-08-03，范畴到物理层之前）
+
+**结论**：**不可声称"数学层技术债基本扫除"**——存在多个实质可闭合未闭合项。分类如下（技术债 = 可闭合而未闭合；结构性限制 = 不可也不应闭合；待基础设施 = 依赖外部条件可自然闭合）。
+
+**A. 实质技术债（可闭合，未闭合）**：
+1. **fc-poly-le-spec-int 构造化**（fc-integral 降定理唯一剩余登记项）——需 ∫f⁺−∫f⁻/谱支集受限语义重构（多周工程，v1.16 决策暂缓，须先出方案）。
+2. **E-σ-add 收敛**（LinOp 层 supₗ 存在性）——**阶段 1 ✅（2026-08-03，v1.17）**：连续下式族单调有界结构全可证（`E-hilb-nonneg`（谱投影非负：⟨Ev,v⟩=‖Ev‖²≥0，自伴+幂等+norm-sq-nonneg）、`≤ₗ-add-nonneg-r`（非负项右加单调，op-sub 点态代数 (Xv+Bv)+(−Xv)=Bv）、`E-σ-family-increasing`（部分和单调）、`E-σ-family-bounded`（部分和 ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add））——**Vigier 定理假设条件（单调+有界）在 Hilbert 层成立**；supₗ 存在性（收敛本身）为 Vigier 桥接（降定理路径 = 强/弱算子拓扑单调有界收敛）。Vigier 定理（构造化强收敛）为阶段 2 候选。
+3. **spec-int 收敛细节**（trunc 截断族 Lebesgue 单调收敛构造化）——测度论层。
+4. **跨层完整实例化**（谱对象映射 A/E/fc/exp-tA ↦ Hilbert 构造）——funext 受限部分结构性，其余可推进。
+
+**B. 结构性限制（不可/不应"扫除"）**：funext 受限（8-5b 算子层等式版，库公理范围外）；`HigherSpCategory.lean` spExchangeLaw sorry（概念特征，填补为等式 ⇒ G_N→0 物理错误）；钉住 sup 语义（框架设计决策，已文档化 §1b）。
+
+**C. 待基础设施（可自然闭合）**：`DeviationBound.lean` 2 sorry（Mathlib `Matrix.Spectrum` 未稳定）；T3 阶段 3 scoped 数值公理（`ln2-lt`/`ln1615-lb`/`ln15-arith-ax` 类，数值比较超可手算 ℕ 链，资源/实践静默）。
+
+**D. 范畴层完备化**：RAP-5d–5f（耗散半边统一、连续谱 Lean 形式化）。
+
+**可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（modulo 一个文档化桥接）；Agda 16 模块全量通过；Lean 核心 10 模块零错误。**推进优先序**：① E-σ-add 收敛 → ② spec-int MCT 构造化 → ③ fc-poly-le-spec-int（须先出语义重构方案）→ ④ 待基础设施随 Mathlib 更新。
+
 ## 6. 各闭合项证明策略
 
 - **65/24 < e**：✅ **已闭合（2026-07-31，见 §5.3）**——走级数路径（`partial-e-4-value` 通分计算 + `exp-partial-< 4` 级数截断公理），未采用直接定义性公理 `exp-one-gt-65-24`。

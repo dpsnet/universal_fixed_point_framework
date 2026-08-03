@@ -1614,6 +1614,68 @@ postulate
   E-hilb-σ-add : (P : ℕ → ℝ → Set) → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
     → E-hilb (σUnion P) ≡ supₗ (λ Y → Σ ℕ (λ m → Y ≡ sum-ₗ (λ i → E-hilb (P i)) m))
 
+-- ------------------------------------------------------------------
+-- E-σ-add 收敛 阶段 1：连续下式族的单调有界结构（2026-08-03）
+-- ------------------------------------------------------------------
+-- 目标：E-σ-add（E(∪ₙPₙ) = supₘ Σᵢ<ₘE(Pᵢ)）连续下式族的**单调有界结构**全部可证——
+-- 即 Vigier 定理（强/弱算子拓扑单调有界收敛）的假设条件在 Hilbert 层成立：
+--   - 单调：E-σ-family-increasing（谱投影非负 E-hilb-nonneg ⟹ 部分和递增）
+--   - 有界：E-σ-family-bounded（部分和 ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add）
+-- supₗ 存在性（收敛本身）为 Vigier 桥接（降定理路径 = 强算子拓扑单调有界收敛）。
+
+-- **可证**：谱投影非负——0 ≤ ⟨E(P)v, v⟩ = ‖E(P)v‖² ≥ 0
+--（E(P) 自伴 + 幂等：⟨Ev,v⟩ = ⟨v,Ev⟩ = ⟨v,E(Ev)⟩ = ⟨E(Ev),v⟩ = ⟨Ev,Ev⟩ = ‖Ev‖²）
+E-hilb-nonneg : (P : ℝ → Set) (v : V) → zeroℝ ≤ℝ (LinOp.f (E-hilb P) v ⟨⟩ v)
+E-hilb-nonneg P v =
+  subst (λ z → zeroℝ ≤ℝ z) (sym E-hilb-nonneg-eq) (norm-sq-nonneg (LinOp.f (E-hilb P) v))
+  where
+  E : LinOp
+  E = E-hilb P
+  -- ⟨Ev,v⟩ = ⟨v,Ev⟩ = ⟨v,E(Ev)⟩ = ⟨E(Ev),v⟩ = ⟨Ev,Ev⟩
+  E-hilb-nonneg-eq : (LinOp.f E v ⟨⟩ v) ≡ (LinOp.f E v ⟨⟩ LinOp.f E v)
+  E-hilb-nonneg-eq =
+    trans (E-hilb-self-adjoint P v v)
+          (trans (cong (λ t → v ⟨⟩ t) (sym (E-hilb-idemp P v)))
+                 (trans (ip-sym v (LinOp.f E (LinOp.f E v)))
+                        (E-hilb-self-adjoint P (LinOp.f E v) v)))
+
+-- **可证**：非负项右加单调（点态）——∀v. 0 ≤ ⟨Bv,v⟩ ⟹ (X+B) − X 逐点 = B
+--（op-sub 点态代数：(Xv+Bv)+(−Xv) = Bv（结合/交换/逆/零）；(X+B−X)v = Bv 收缩）
+≤ₗ-add-nonneg-r : (X B : LinOp) → ((v : V) → zeroℝ ≤ℝ (LinOp.f B v ⟨⟩ v)) → (v : V)
+  → zeroℝ ≤ℝ (LinOp.f (op-sub (op-add X B) X) v ⟨⟩ v)
+≤ₗ-add-nonneg-r X B hB v =
+  subst (λ z → zeroℝ ≤ℝ z) (sym (add-sub-diff v)) (hB v)
+  where
+  -- (Xv+Bv)+(−Xv) = Bv（向量代数：结合 + 交换 + 逆 + 零元）
+  pointwise-sub : (v : V) → LinOp.f (op-sub (op-add X B) X) v ≡ LinOp.f B v
+  pointwise-sub v =
+    trans (+ᵥ-assoc (LinOp.f X v) (LinOp.f B v) ((negℝ oneℝ) ·ᵥ LinOp.f X v))
+          (trans (cong (λ u → LinOp.f X v +ᵥ u)
+                       (+ᵥ-comm (LinOp.f B v) ((negℝ oneℝ) ·ᵥ LinOp.f X v)))
+                 (trans (sym (+ᵥ-assoc (LinOp.f X v) ((negℝ oneℝ) ·ᵥ LinOp.f X v) (LinOp.f B v)))
+                        (trans (cong (λ u → u +ᵥ LinOp.f B v) (+-inv-ᵥ (LinOp.f X v)))
+                               (zero-l-ᵥ (LinOp.f B v)))))
+  -- ⟨(X+B−X)v, v⟩ = ⟨Bv, v⟩（op-sub 定义性展开后逐点收缩）
+  add-sub-diff : (v : V) → (LinOp.f (op-sub (op-add X B) X) v ⟨⟩ v) ≡ (LinOp.f B v ⟨⟩ v)
+  add-sub-diff v = cong (λ t → t ⟨⟩ v) (pointwise-sub v)
+
+-- **可证**：连续下式族单调——Σᵢ<ₘE(Pᵢ) ≤ₗ Σᵢ<ₘ₊₁E(Pᵢ)
+--（sum-ₗ (suc m) = op-add (sum-ₗ m) (E(P m)) + 每个 E(Pᵢ) 非负（E-hilb-nonneg））
+E-σ-family-increasing : (P : ℕ → ℝ → Set) (m : ℕ) (v : V)
+  → zeroℝ ≤ℝ (LinOp.f (op-sub (sum-ₗ (λ i → E-hilb (P i)) (suc m))
+                              (sum-ₗ (λ i → E-hilb (P i)) m)) v ⟨⟩ v)
+E-σ-family-increasing P m =
+  ≤ₗ-add-nonneg-r (sum-ₗ (λ i → E-hilb (P i)) m) (E-hilb (P m)) (E-hilb-nonneg (P m))
+
+-- **可证**：连续下式族有界——Σᵢ<ₘE(Pᵢ) ≤ₗ E(∪ₙPₙ)
+--（supₗ-upper（族成员：ex m refl）+ E-hilb-σ-add（E(∪ₙPₙ) ≡ supₗ 族））
+E-σ-family-bounded : (P : ℕ → ℝ → Set) → ((i j : ℕ) → suc i ≤ℕ j → (x : ℝ) → P i x → P j x → ⊥)
+  → (m : ℕ) → sum-ₗ (λ i → E-hilb (P i)) m ≤ₗ E-hilb (σUnion P)
+E-σ-family-bounded P h m =
+  subst (λ Z → sum-ₗ (λ i → E-hilb (P i)) m ≤ₗ Z) (sym (E-hilb-σ-add P h))
+        (supₗ-upper (λ Y → Σ ℕ (λ n → Y ≡ sum-ₗ (λ i → E-hilb (P i)) n))
+                    (sum-ₗ (λ i → E-hilb (P i)) m) (ex m refl))
+
 -- ==================================================================
 -- §15 谱投影范数幂等（‖E(P)‖² = ‖E(P)‖，2026-08-02）
 -- ==================================================================

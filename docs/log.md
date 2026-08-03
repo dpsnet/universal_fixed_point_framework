@@ -2019,3 +2019,42 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 3. **README 同步**：根 README（最新进展中/英盲登记版本 v0.6→v0.7 + 文件树）、README.en.md（文件树 RAP-Errata v0.6→v0.7、RAP-Registry v0.5→v0.7）。
 
 **验证**：grep 无残留过期盲登记版本引用（README L9 与 log 中"v0.6"为历史勘误引用/史实记录，正确保留）。
+
+---
+
+## 推进计划（2026-08-03）：E-σ-add 收敛——阶段 1（Hilbert 层单调有界族结构，可证）
+
+**目标**：E-σ-add（E(∪ₙPₙ) = supₘΣᵢ<ₘE(Pᵢ)，§14 桥接）连续下式族的**单调有界结构**全部可证——即 Vigier 定理（强/弱算子拓扑单调有界收敛）的假设条件在 Hilbert 层成立；supₗ 存在性（收敛本身）文档化为 Vigier 桥接（降定理路径 = 强算子拓扑单调有界收敛）。这是技术债清单（笔记 §5.16.7）优先序 ① 项，Hilbert 层可独立推进（无需测度论语义重构）。
+
+**新增（HilbertSpace §14，零新增公理）**：
+1. `E-hilb-nonneg`：E(P) ≥ₗ 0（⟨E(P)v,v⟩ = ‖E(P)v‖² ≥ 0，自伴 + 幂等 + norm-sq-nonneg）
+2. `≤ₗ-trans`：正算子序传递（⟨(Z−X)v,v⟩ = ⟨(Z−Y)v,v⟩ + ⟨(Y−X)v,v⟩，op-sub 点态代数 + ip-add-l + ≤-+-mono-ℝ）
+3. `≤ₗ-add-nonneg-r`：B ≥ₗ 0 ⟹ X ≤ₗ X+B（点态 ⟨Bv,v⟩ ≥ 0）
+4. `sumₗ-f-eq`：LinOp.f (sumₗ F m) v ≡ sum-ᵥ (λi→F i v) m（归纳）
+5. `E-σ-family-increasing`：E(Pᵢ) ≥ₗ 0 ⟹ 部分和单调（sumₗ m ≤ₗ sumₗ (suc m)）
+6. `E-σ-family-bounded`：sumₗ (λi→E(Pᵢ)) m ≤ₗ E(σUnion P)（supₗ-upper + E-hilb-σ-add）
+7. 文档化：单调（5）+ 有界（6）全可证 ⟹ Vigier 假设成立；supₗ 存在 = Vigier 桥接。
+
+**实施**：HilbertSpace §14（E-hilb-σ-add 后）；类型检查；记录（笔记 §5.16.7 项 2 更新 + 路线图 v1.17 + log 完成段）。
+
+---
+
+## 实现完成（2026-08-03）：E-σ-add 收敛——阶段 1（单调有界族结构，v1.17）
+
+**① 技术债清单入笔记**：`notes/00_foundations/spectral_T3_analysis_foundation.md` 新增 **§5.16.7**"数学层技术债清单（2026-08-03，范畴到物理层之前）"——结论：**不可声称基本扫除**；分类（实质技术债 A1-A4 / 结构性限制 B / 待基础设施 C / 范畴层 D）；可诚实声称边界 + 推进优先序（① E-σ-add 收敛 → ② spec-int MCT → ③ fc-poly-le-spec-int 语义重构 → ④ 待基础设施）。
+
+**② E-σ-add 收敛阶段 1（HilbertSpace §14，零新增公理）**——连续下式族单调有界结构全可证：
+- `E-hilb-nonneg`：谱投影非负（⟨Ev,v⟩ = ‖Ev‖² ≥ 0，自伴 + 幂等 + norm-sq-nonneg）
+- `≤ₗ-add-nonneg-r`：非负项右加单调（op-sub 点态向量代数 (Xv+Bv)+(−Xv) = Bv）
+- `E-σ-family-increasing`：部分和单调（Σᵢ<ₘE(Pᵢ) ≤ₗ Σᵢ<ₘ₊₁E(Pᵢ)）
+- `E-σ-family-bounded`：部分和有界（Σᵢ<ₘE(Pᵢ) ≤ₗ E(∪ₙPₙ)，supₗ-upper + E-hilb-σ-add）
+
+**里程碑**：**Vigier 定理（强/弱算子拓扑单调有界收敛）的假设条件（单调 + 有界）在 Hilbert 层全部可证成立**；supₗ 存在性（收敛本身）文档化为 Vigier 桥接（降定理路径 = 强算子拓扑单调有界收敛）。
+
+**验证**：`agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：① where 子句顺序性（`pointwise-sub` 须置于 `add-sub-diff` 前，不可后向引用）；② where 内引理已特化外层参数（`E-hilb-nonneg-eq` 调用不再传 P v）。
+
+**记录**：笔记 §5.16.7 项 2 更新（阶段 1 ✅）、路线图 v1.17 条目、Everything.agda 头注释 v1.17。
+
+**当前开放项**：E-σ-add 收敛阶段 2（Vigier 构造化强收敛）；spec-int MCT 构造化；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。
