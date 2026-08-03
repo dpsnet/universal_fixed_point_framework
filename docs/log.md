@@ -2273,3 +2273,21 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 第一/二步 ✅）、技术债清单项 1（阶段 4 第一/二步 ✅）、路线图 v1.28 条目、Everything.agda 头注释 v1.28。
 
 **当前开放项**：阶段 4 余项（∫p⁺/∫p⁻ 的非负 sup 逼近：dyadic 阶梯——v1.15 幂单调性引理库 + SimpleF 阶梯构造 + 上界 ∫sₖ ≤ Aⁿ + MCT → fc-poly-le-spec-int 零登记项）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 余项第一步——dyadic 网格 ℝ 基础（v1.29）
+
+**新增（DHStructural + SpectralTheory）**：
+- **DHStructural**：`natℝ-zero`（**可证**：natℝ 0 = 0——natℝ-suc zero + natℝ-one + 加消去（add-neg-cancel + 交换））/ `natℝ-nonneg`（**可证**：0 ≤ natℝ j）+ `div-zero-l`（基础假设登记：0/d = 0，与 /-pos-ℝ 同层）+ `div-nonneg`（**可证**：0 ≤ a 且 0 < d ⟹ 0 ≤ a/d，三分律三分）
+- **SpectralTheory**：`grid-pt`（**dyadic 网格点** xⱼ = (j·c)/2^k）+ `grid-pt-nonneg`（**可证**：0 ≤ c ⟹ 0 ≤ xⱼ，natℝ-nonneg + *-nonneg-ℝ + div-nonneg）
+
+**里程碑**：**dyadic 阶梯逼近的网格基础**就位（阶段 4 余项路线：网格 → SimpleF 阶梯构造 → 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项）。
+
+**验证**：`agda DHStructural\DHStructuralAnalysis.agda` + `agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：div-nonneg 的 subst 方向（0=a 而非 sym——P 从 zeroℝ 传到 a）；`_/ℝ_`/`2^` 需加入 import。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 余项第一步 ✅）、技术债清单项 1（阶段 4 余项第一步 ✅）、路线图 v1.29 条目、Everything.agda 头注释 v1.29。
+
+**当前开放项**：SimpleF 阶梯构造（Fin 2^k 分划 + disj/cover）→ 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。

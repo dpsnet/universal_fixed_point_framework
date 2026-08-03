@@ -34,16 +34,18 @@ module SpectralTheory.SpectralTheory where
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Agda.Primitive using (Level; _⊔_)
 open import Sp.SpCategory using (ℕ; zero; suc; Fin; _×_; _,_; _≢_; sym; trans; cong; cong₂)
+open import NatArith.NatArith using (2^)
 
 -- ℝ 层（T3 已建：序代数 + exp/log/rpow + exp-inj 可证）
 open import DHStructural.DHStructuralAnalysis
-  using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
+  using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; _/ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
          max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          max-pos-value; max-neg-value; max-zero-zero;
+         natℝ-nonneg; div-nonneg; 2^-pos; natℝ-pos-embed;
          sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
@@ -1326,6 +1328,19 @@ fc-decomp-pos-neg : (p : ℝ → ℝ) → fc p ≡ fc (pos-part p) -ₒ fc (neg-
 fc-decomp-pos-neg p =
   trans (sym (fc-ext (λ x → decomp-pos-neg p x)))
         (fc-sub (pos-part p) (neg-part p))
+
+-- dyadic 网格点：xⱼ = (j·c)/2^k（[0,c] 的 2^k 等分点；j ≤ 2^k 时 xⱼ ≤ c；
+--  阶段 4 余项：fc-poly-le-spec-int 构造化的 dyadic 阶梯逼近的网格基础）
+grid-pt : ℕ → ℝ → ℕ → ℝ
+grid-pt k c j = (natℝ j *ℝ c) /ℝ natℝ (2^ k)
+
+-- **可证**：网格点非负——0 ≤ c ⟹ 0 ≤ xⱼ（natℝ-nonneg + *-nonneg-ℝ + div-nonneg，
+--  分母 2^k > 0 经 2^-pos + natℝ-pos-embed）
+grid-pt-nonneg : (k : ℕ) (c : ℝ) → zeroℝ ≤ℝ c → (j : ℕ) → zeroℝ ≤ℝ grid-pt k c j
+grid-pt-nonneg k c hc j =
+  div-nonneg {natℝ j *ℝ c} {natℝ (2^ k)}
+             (*-nonneg-ℝ (natℝ j) c (natℝ-nonneg j) hc)
+             (natℝ-pos-embed (2^-pos k))
 
 -- 简单函数的点态函数（SimpleF → ℝ → ℝ）：s(x) = Σᵢ cᵢ·1_{Ωᵢ}(x)
 simple-fn : SimpleF → (ℝ → ℝ)

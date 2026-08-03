@@ -1156,6 +1156,44 @@ max-pos-mul-neg-zero a | inj₂ (inj₂ 0<a) =
         (*-zero-ℝ a)
 
 -- ==================================================================
+-- dyadic 网格 ℝ 基础（方案 A 阶段 4 余项，2026-08-03）
+-- 用途：fc-poly-le-spec-int 构造化的 dyadic 阶梯逼近——[0,c] 的 2^k 等分
+--   网格点 xⱼ = (j·c)/2^k（natℝ 嵌入 + 除法的非负/保序基础）。
+-- ==================================================================
+
+-- **可证**：natℝ 嵌入零——natℝ 0 = 0（可证：natℝ-suc zero + natℝ-one ⟹ 1 = natℝ 0 + 1
+--  ⟹ 加消去（add-neg-cancel + 交换）⟹ natℝ 0 = 0）
+natℝ-zero : natℝ zero ≡ zeroℝ
+natℝ-zero =
+  sym (trans (sym (+-inv-ℝ oneℝ))
+             (trans (cong (λ x → x +ℝ negℝ oneℝ) h-one)
+                    (trans (cong (λ x → x +ℝ negℝ oneℝ) (+-comm-ℝ (natℝ zero) oneℝ))
+                           (add-neg-cancel oneℝ (natℝ zero)))))
+  where
+  h-one : oneℝ ≡ natℝ zero +ℝ oneℝ
+  h-one = trans (sym natℝ-one) (natℝ-suc zero)
+
+-- **可证**：natℝ 嵌入非负——0 ≤ natℝ j（j=0 经 natℝ-zero；j>0 经 natℝ-pos-embed + <-≤-ℝ）
+natℝ-nonneg : (j : ℕ) → zeroℝ ≤ℝ natℝ j
+natℝ-nonneg zero = subst (λ z → zeroℝ ≤ℝ z) (sym natℝ-zero) (refl-≤ℝ {x = zeroℝ})
+natℝ-nonneg (suc j) = <-≤-ℝ (natℝ-pos-embed (z<s {j}))
+
+-- 零除以正数 = 0（基础假设，标准有序域事实，与 /-pos-ℝ 同层）
+postulate
+  div-zero-l : (d : ℝ) → zeroℝ /ℝ d ≡ zeroℝ
+
+-- **可证**：非负除以正 = 非负——0 ≤ a 且 0 < d ⟹ 0 ≤ a/d
+--（三分律：0<a ⟹ /-pos-ℝ（严格保序）；a=0 ⟹ div-zero-l；a<0 矛盾排除）
+div-nonneg : {a d : ℝ} → zeroℝ ≤ℝ a → zeroℝ <ℝ d → zeroℝ ≤ℝ (a /ℝ d)
+div-nonneg {a} {d} ha hd with trichotomy-ℝ zeroℝ a
+div-nonneg {a} {d} ha hd | inj₁ 0<a = <-≤-ℝ (/-pos-ℝ 0<a hd)
+div-nonneg {a} {d} ha hd | inj₂ (inj₁ 0=a) =
+  subst (λ z → zeroℝ ≤ℝ (z /ℝ d)) 0=a
+        (subst (λ w → zeroℝ ≤ℝ w) (sym (div-zero-l d)) (refl-≤ℝ {x = zeroℝ}))
+div-nonneg {a} {d} ha hd | inj₂ (inj₂ a<0) =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ a<0 ha))
+
+-- ==================================================================
 -- 平方根（分析层扩展，2026-08-02）
 -- 用途：Hilbert 空间层阶段 8-2b 收官——norm := √(‖·‖²)（范数公理落地）、
 --   三角不等式（C-S 推论）与阶段 8-3 有界算子范数（sup + √）的前提。
