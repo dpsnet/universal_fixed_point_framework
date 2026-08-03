@@ -45,7 +45,7 @@ open import DHStructural.DHStructuralAnalysis
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ; trans-<ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂; div-one-ℝ; /-cross-ℝ;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
-         max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
+         max-ℝ; max-≤-l; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          max-pos-value; max-neg-value; max-zero-zero;
          natℝ-nonneg; div-nonneg; 2^-pos; natℝ-pos-embed; natℝ-<-embed; /-lt-same-den-ℝ;
          sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
@@ -2431,6 +2431,58 @@ dyadic-stair k c hc vc = record
   ; disj = λ i j neq x → dyadic-disj3 k c hc i j neq x
   ; cover = dyadic-cover3 k c hc
   }
+
+-- ==================================================================
+-- 阶段 4 余项第三步：上界 ∫sₖ ≤ Aⁿ（dyadic 阶梯逐点下界，2026-08-03）
+-- ==================================================================
+-- 目标：fc-poly-le-spec-int 构造化的阶梯逼近侧——dyadic 阶梯 sₖ ≤ p⁺ 逐点
+--   （值 = 网格点幂，power-mono）+ 谱积分上界 ∫sₖ ≤ₒ ∫p⁺（sup-op-upper）。
+-- 值函数：负部/正部取 0（p⁺ 非负，0 ≤ p⁺ 逐点），dyadic 原子取 xᵢⁿ。
+-- 注意：逼近的是 p⁺ = max(idⁿ,0)（方案 A 正负分解），负部/正部 0 值经 pos-part-nonneg
+--   自动成立（p⁺ 非负）；x<0 时 idⁿ 可能为负，p⁺ = 0，0 ≤ 0 ✓（这正是 p⁺ 分解的意义）。
+
+-- 单项式 dyadic 阶梯值：vc₀/vc₁ = 0，vc_{2+i} = xᵢⁿ
+dyadic-vc : (k : ℕ) (c : ℝ) (n : ℕ) → Fin (suc (suc (2^ k))) → ℝ
+dyadic-vc k c n zero          = zeroℝ
+dyadic-vc k c n (suc zero)    = zeroℝ
+dyadic-vc k c n (suc (suc i)) = ℝ-power n (grid-pt k c (fin-to-nat i))
+
+-- **可证**：dyadic 值 ≤ xⁿ 在 Ωᵢ——xᵢ ≤ x（Ωᵢ 下界）且 0 ≤ xᵢ（grid-pt-nonneg）
+--   ⟹ xᵢⁿ ≤ xⁿ（power-mono，v1.15）
+dyadic-vc-le : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (n : ℕ) (i : Fin (2^ k))
+  → (x : ℝ) → dyadic-Ω k c (fin-to-nat i) x
+  → ℝ-power n (grid-pt k c (fin-to-nat i)) ≤ℝ ℝ-power n x
+dyadic-vc-le k c hc n i x (xi≤x , x<xi1) =
+  power-mono n (grid-pt k c (fin-to-nat i)) x
+             (grid-pt-nonneg k c (<-≤-ℝ hc) (fin-to-nat i)) xi≤x
+
+-- **可证**：dyadic 阶梯逐点 ≤ p⁺——∀i. ∀x ∈ Ωᵢ. vc i ≤ p⁺ x
+--（负部/正部：0 ≤ p⁺（pos-part-nonneg）；dyadic：xᵢⁿ ≤ xⁿ ≤ max(xⁿ,0)
+--  （dyadic-vc-le + max-≤-l））
+dyadic-stair-below : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (n : ℕ)
+  → (i : Fin (suc (suc (2^ k)))) → (x : ℝ) → dyadic-Ω3 k c i x
+  → dyadic-vc k c n i ≤ℝ pos-part (λ y → ℝ-power n y) x
+dyadic-stair-below k c hc n zero          x px = pos-part-nonneg (λ y → ℝ-power n y) x
+dyadic-stair-below k c hc n (suc zero)    x px = pos-part-nonneg (λ y → ℝ-power n y) x
+dyadic-stair-below k c hc n (suc (suc i')) x (xi≤x , x<xi1) =
+  ≤-trans-ℝ (dyadic-vc-le k c hc n i' x (xi≤x , x<xi1))
+            (max-≤-l (ℝ-power n x) zeroℝ)
+
+-- **可证**：dyadic 阶梯是 spec-int-below p⁺ 的成员（eq + dom）
+dyadic-below-member : (k : ℕ) (c : ℝ) → (hc : zeroℝ <ℝ c) → (n : ℕ)
+  → spec-int-below (pos-part (λ y → ℝ-power n y))
+                   (simple-int (dyadic-stair k c hc (dyadic-vc k c n)))
+dyadic-below-member k c hc n =
+  pair₁Σ (dyadic-stair k c hc (dyadic-vc k c n)) (refl , dyadic-stair-below k c hc n)
+
+-- **可证**：上界 ∫sₖ ≤ₒ ∫p⁺——dyadic 阶梯谱积分 ≤ p⁺ 谱积分
+--（simple-int s 是 spec-int-below p⁺ 成员（dyadic-below-member）+ sup-op-upper）
+dyadic-int-below : (k : ℕ) (c : ℝ) → (hc : zeroℝ <ℝ c) → (n : ℕ)
+  → simple-int (dyadic-stair k c hc (dyadic-vc k c n)) ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))
+dyadic-int-below k c hc n =
+  sup-op-upper (spec-int-below (pos-part (λ y → ℝ-power n y)))
+               (simple-int (dyadic-stair k c hc (dyadic-vc k c n)))
+               (dyadic-below-member k c hc n)
 
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel

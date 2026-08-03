@@ -2334,3 +2334,22 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 余项第二步第二部分 ✅）、技术债清单项 1（阶段 4 余项第二步 ✅）、路线图 v1.31 条目、Everything.agda 头注释 v1.31。
 
 **当前开放项**：上界 ∫sₖ ≤ Aⁿ（dyadic 阶梯值 ≤ 多项式，power-mono + simple-int 上界）→ MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 余项第三步第一部分——上界 ∫sₖ ≤ₒ ∫p⁺（dyadic 阶梯逐点下界，v1.32）
+
+**新增（SpectralTheory，fc-poly-le-spec-int 构造化的阶梯逼近侧基础）**：
+- `dyadic-vc`（**单项式 dyadic 阶梯值函数**：负部/正部取 0、dyadic 原子取 xᵢⁿ——逼近 p⁺ = max(idⁿ,0)，负部/正部 0 值经 pos-part-nonneg 自动成立（p⁺ 非负），x<0 时 idⁿ 为负而 p⁺ = 0 的差异由方案 A 正负分解吸收）
+- `dyadic-vc-le`（**可证**：xᵢⁿ ≤ xⁿ 在 Ωᵢ——xᵢ ≤ x（Ωᵢ 下界）+ 0 ≤ xᵢ（grid-pt-nonneg）⟹ power-mono）
+- `dyadic-stair-below`（**可证**：dyadic 阶梯逐点 ≤ p⁺——负部/正部：0 ≤ p⁺（pos-part-nonneg）；dyadic：xᵢⁿ ≤ xⁿ ≤ max(xⁿ,0)（dyadic-vc-le + max-≤-l））
+- `dyadic-below-member`（**可证**：dyadic 阶梯是 spec-int-below p⁺ 的成员——eq refl + dom dyadic-stair-below）
+- `dyadic-int-below`（**可证**：上界 ∫sₖ ≤ₒ ∫p⁺——simple-int s 是 spec-int-below p⁺ 成员 + sup-op-upper）
+
+**里程碑**：**fc-poly-le-spec-int 构造化的阶梯逼近侧基础闭合**——dyadic 阶梯 sₖ ≤ p⁺ 逐点（值 = 网格点幂）+ 谱积分上界 ∫sₖ ≤ₒ ∫p⁺ 全部可证（零新增公理）。剩余：MCT（supₖ∫sₖ = ∫p⁺）→ 组合替换 fc-poly-le-spec-int 零登记项。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：dyadic-below-member/-int-below 的 hc 参数需显式命名（`(hc : zeroℝ <ℝ c)`）；import 补 max-≤-l。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 余项第三步第一部分 ✅）、技术债清单项 1（阶段 4 余项第三步第一部分 ✅）、路线图 v1.32 条目、Everything.agda 头注释 v1.32。
+
+**当前开放项**：MCT（supₖ∫sₖ = ∫p⁺：dyadic 阶梯序列单调收敛）→ 组合替换 fc-poly-le-spec-int 零登记项。改动尚未提交 git。
