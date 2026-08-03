@@ -71,7 +71,10 @@ module Everything where
 --        max-ℝ 族（三分律定义 + max-sub-decomp：max(a,0)−max(−a,0)=a、max-pos-mul-neg-zero：
 --        max(a,0)·max(−a,0)=0，零新增公理）+ pos-part/neg-part（f⁺/f⁻ = max(±f,0)）+
 --        decomp-pos-neg（f = f⁺−f⁻ 逐点）/pos-mul-neg-zero（f⁺·f⁻=0 逐点）可证；
---        方案 A（∫f := ∫f⁺−ₒ∫f⁻）启动，技术债 A1 阶段 1，v1.22））
+--        方案 A（∫f := ∫f⁺−ₒ∫f⁻）启动，技术债 A1 阶段 1，v1.22）；
+--        方案 A 阶段 2 第一部分（§1b''：Op 层减法 _−ₒ_（定义性）+ op-sub-comm
+--        （减法保交换，可证）+ spec-int-general-decomp 桥接（∫f ≡ ∫f⁺−ₒ∫f⁻，
+--        测度论线性，降定理路径 = 定义重构后）；技术债 A1 阶段 2 第一部分，v1.23））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

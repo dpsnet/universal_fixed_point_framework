@@ -2164,3 +2164,20 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 1 ✅）、技术债清单项 1（阶段 1 ✅）、路线图 v1.22 条目。
 
 **当前开放项**：阶段 2（Op 减法 + spec-int-general 重构 + spec-int-general-zero 一致性）；A/fc 对象 Hilbert 侧构造。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 2 第一部分——Op 层减法 + 正负分解定理（v1.23）
+
+**新增（SpectralTheory §1b''）**：
+- **`_−ₒ_`**：Op 层减法（定义性：X −ₒ Y := X +ₒ ((−1)·ₒ Y)，P1Spectral 算子代数）
+- **可证** `op-sub-comm`：减法保交换——X 与 Y、Z 交换 ⟹ X 与 Y−ₒZ 交换（distribₒ + ·ₒ-comm-l（标量右提）+ ·ₒ-comm（标量左提）+ distribₒ-l 逐项）——**X-comm-spec-int-general 重构后重验的核心组件**
+- **桥接登记** `spec-int-general-decomp`：∫f dE ≡ ∫f⁺ dE −ₒ ∫f⁻ dE（方案 A 核心等式显式化；模型必然性 = 测度论线性（Lebesgue 积分可加性）；钉住 sup 语义下真；降定理路径 = spec-int-general 定义重构（∫f := ∫f⁺−ₒ∫f⁻）后可证）
+
+**里程碑**：**方案 A 阶段 2 第一部分闭合**——Op 减法基础设施 + 正负分解定理显式化，为阶段 2 第二部分（spec-int-general 定义重构 + 下游全适配）铺路。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 2 第一部分 ✅）、技术债清单项 1（阶段 2 第一部分 ✅）、路线图 v1.23 条目、Everything.agda 头注释 v1.23、SpectralTheory §15 审计更新 5（D 类桥接登记）。
+
+**当前开放项**：阶段 2 第二部分（spec-int-general **定义重构**（需 spec-int-nonneg 别名避免递归）+ 下游全适配（X-comm-spec-int-general 用 op-sub-comm 重写、spec-int-R-trunc-conv/-ℕ-conv 陈述调整、fc-integral 重验））；一致性（spec-int-general-zero：∫0=0 需"负标量×正算子 ≤ 0"序论证或桥接）。改动尚未提交 git。

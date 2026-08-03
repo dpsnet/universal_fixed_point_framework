@@ -285,6 +285,42 @@ pos-mul-neg-zero : (f : ℝ → ℝ) (x : ℝ) → (pos-part f x) *ℝ (neg-part
 pos-mul-neg-zero f x = max-pos-mul-neg-zero (f x)
 
 -- ==================================================================
+-- §1b'' Op 层减法与正负分解定理（方案 A 阶段 2 第一部分，2026-08-03）
+-- ==================================================================
+-- 目标：spec-int-general 正负分解重构（∫f := ∫f⁺ −ₒ ∫f⁻）的前置基础设施——
+--   Op 层减法（定义性）+ 减法保交换（可证，X-comm-spec-int-general 重构后重验
+--   的核心组件）+ 正负分解定理（桥接登记，方案 A 核心等式显式化）。
+-- 注：spec-int-general **定义重构**本身（下游全适配）为阶段 2 第二部分。
+
+-- Op 层减法：X −ₒ Y := X +ₒ ((−1)·ₒ Y)（定义性，P1Spectral 算子代数）
+_-ₒ_ : Op → Op → Op
+X -ₒ Y = X +ₒ ((negℝ oneℝ) ·ₒ Y)
+
+-- **可证**：减法保交换——X 与 Y、Z 交换 ⟹ X 与 Y−ₒZ 交换
+--（X-comm-spec-int-general 重构后重验：distribₒ（左分配）+ ·ₒ-comm-l（标量右提）
+--  + ·ₒ-comm（标量左提）+ distribₒ-l（右分配）逐项）
+op-sub-comm : (X Y Z : Op) → X *ₒ Y ≡ Y *ₒ X → X *ₒ Z ≡ Z *ₒ X
+  → X *ₒ (Y -ₒ Z) ≡ (Y -ₒ Z) *ₒ X
+op-sub-comm X Y Z hY hZ =
+  trans (distribₒ X Y (c ·ₒ Z))
+        (trans (cong₂ _+ₒ_ hY (·ₒ-comm-l c X Z))
+               (trans (cong₂ _+ₒ_ refl (cong (λ w → c ·ₒ w) hZ))
+                      (trans (cong₂ _+ₒ_ refl (sym (·ₒ-comm c Z X)))
+                             (sym (distribₒ-l Y (c ·ₒ Z) X)))))
+  where
+  c : ℝ
+  c = negℝ oneℝ
+
+-- 正负分解（**桥接登记**，方案 A 核心等式）：∫f dE = ∫f⁺ dE −ₒ ∫f⁻ dE
+--（模型必然性 = 测度论线性 ∫f = ∫f⁺ − ∫f⁻（Lebesgue 积分可加性，标准事实）；
+--  钉住 sup 语义（§1b 文档块）下真（目标模型谱定理 ∫f dE = ∫f⁺ dE − ∫f⁻ dE）；
+--  降定理路径 = 方案 A 阶段 3/4：spec-int-general 定义重构（∫f := ∫f⁺ −ₒ ∫f⁻）
+--  后转为可证明定理（重构即定义性，本桥接退化为 refl 推导））
+postulate
+  spec-int-general-decomp : (f : ℝ → ℝ)
+    → spec-int-general f ≡ spec-int-general (pos-part f) -ₒ spec-int-general (neg-part f)
+
+-- ==================================================================
 -- §1c 截断逼近（测度论层阶段 1，2026-08-02）
 -- ==================================================================
 
@@ -2385,6 +2421,26 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：多阶段路线
 --    （阶段 1 ✅ 幂单调性引理库；阶段 2 dyadic 分划与阶梯函数；阶段 3 上界 + MCT；
 --    阶段 4 组合替换桥接）——需语义重构方案先行
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 5（2026-08-03）：方案 A 桥接登记（正负分解）
+-- ------------------------------------------------------------------
+-- 新增桥接（v1.23，§1b''，D 类补充）：
+--  - spec-int-general-decomp：∫f dE ≡ ∫f⁺ dE −ₒ ∫f⁻ dE（f⁺ = max(f,0)、
+--    f⁻ = max(−f,0)）——模型必然性 = 测度论线性（Lebesgue 积分可加性）；
+--    钉住 sup 语义（§1b 文档块）下真；降定理路径 = 方案 A（笔记 §5.16.8）
+--    spec-int-general 定义重构（∫f := ∫f⁺ −ₒ ∫f⁻）后转为可证（重构即定义性）。
+-- 同轮可证组件（v1.23）：Op 层减法 _−ₒ_（定义性）+ op-sub-comm（减法保交换，
+--   X-comm-spec-int-general 重构后重验核心）。
+--
+-- 待降定理（2026-08-03 再再再更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 4 阶段
+--    （阶段 1 ✅ v1.22 max-ℝ 族 + f⁺/f⁻；阶段 2 第一部分 ✅ v1.23 Op 减法 +
+--    decomp 桥接；阶段 2 第二部分 spec-int-general 定义重构 + 下游适配；
+--    阶段 3 钉住桥接转定理；阶段 4 组合替换）
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
