@@ -2391,3 +2391,26 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 收官 ✅）、技术债清单项 1（✅ 闭合）、路线图 v1.34 条目、Everything.agda 头注释 v1.34、SpectralTheory §15 审计更新 8。
 
 **当前开放项**：fc-integral（§5c，fc = ∫）完整降为定理需测度论完整层（sup 交换/函数演算实现），方案 A 阶段 4 余项基础设施（dyadic 阶梯 + MCT，v1.29-1.33）为其备用。改动尚未提交 git。
+
+## 探索记录（2026-08-03）：ln15-arith-ax 闭合尝试——资源静默确认（v1.35）
+
+**尝试**：闭合 DHStructural scoped 数值公理 `ln15-arith-ax`（4·(69317/100000) − 29/450 < 65/24，纯有理比较）——原注释判"分母交叉乘积 ~1e9-1e11 超出可手写 ℕ 链，属资源/实践静默"。
+
+**闭合方案设计（逻辑完备）**：
+- `lt-neg-add`（移项引理：x + negℝ y < z ⟹ x < z + y，加 y 两边 + y+(x+neg y)=x）
+- `mul-div-ℝ`（c·(a/b) = (c·a)/b，*-div-impl + *-assoc + *-/cancel）
+- `/-lt-cross-ℝ`（异分母分数比较：a·d < b·c ⟹ a/c < b/d，frac-cancel-ℝ + /-lt-same-den-ℝ）
+- `<-ℕ-lt-plus`（ℕ 大数比较：n < n + suc k）
+- 数值：4·69317=277268、65·450+29·24=29946、24·450=10800、277268·10800=2994494400、29946·100000=2994600000（差 105600）
+
+**结果**：逻辑链全部类型检查通过（逐段验证），但最终组装触发 **Agda 内存不足**（`osCommitMemory: VirtualAlloc MEM_COMMIT failed`，页面文件太小）——2994494400 级大数乘法 refl 归一化 + 105600 层 <-ℕ 链超出框架归一化能力。**确认原"资源/实践静默"判断**。
+
+**保留成果**：`*-div-impl`/`frac-cancel-ℝ` 前移至 postulate 块后（674 行区域，可证引理，供未来闭合与既有使用处引用）；ln15-arith-ax postulate 注释更新（记录尝试与降定理路径 = 大整数算术实现/ℕ 高效比较）。**ln15-arith-ax/ln2-lt/ln1615-lb 保留 scoped 公理**。
+
+**验证**：`agda DHStructural\DHStructuralAnalysis.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：lt-neg-add subst 链（方向乱，重写为两层）；/-lt-cross-ℝ 的 frac-cancel-ℝ 参数（b/d 的等价分数需 *-comm 分母）；cross 的 subst 方向（用 natℝ-* 而非 sym）；<-ℕ-lt-plus 基例（suc n 需 cong suc 处理 +ℕ-zero）。
+
+**记录**：笔记 §5.16.7 C 类项（ln15-arith-ax 资源静默确认）。
+
+**当前开放项**：ln2-lt/ln1615-lb/ln15-arith-ax（scoped 数值公理，资源静默，降定理路径 = 大整数算术/级数机制）；fc-integral 完整降定理（测度论层）。改动尚未提交 git。

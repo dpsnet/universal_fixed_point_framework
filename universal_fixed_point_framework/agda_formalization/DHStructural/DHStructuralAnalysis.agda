@@ -635,6 +635,9 @@ postulate
   -- ln15 算术比较（账目开放项，scoped 数值公理）：4·0.69317 - 29/450 ≈ 2.7082356 < 65/24 ≈ 2.7083333。
   -- 分母 100000/450/24，交叉乘积 ~1e9-1e11 超出可手写 ℕ 链（对比 e < 3 的 288 规模可手算），
   -- 属资源/实践静默：纯有理比较在标准分析中可计算验证（数值见注释），但框架归一化能力不可达。
+  -- （2026-08-03 v1.35 尝试 refl 级闭合：移项 + 分数引理 + 异分母比较 + natℝ-* 大数归一化
+  --   逻辑完备，但 2994494400 级大数乘法/105600 层 <-ℕ 链触发 Agda 内存不足（页面文件），
+  --   确认原"资源/实践静默"判断；保留 scoped 公理，降定理路径 = 大整数算术实现/ℕ 高效比较）
   ln15-arith-ax : ((natℝ 4 *ℝ (natℝ 69317 /ℝ natℝ 100000)) +ℝ negℝ (natℝ 29 /ℝ natℝ 450)) <ℝ (natℝ 65 /ℝ natℝ 24)
   -- T3 阶段 4：exp 正性/严格单调（定义性公理，蓝图 §4；待级数机制实现为可证明定理）
   exp-pos : (x : ℝ) → zeroℝ <ℝ exp x
@@ -676,6 +679,30 @@ postulate
   -- 严格序反自反（定义性公理，标准全序域内容）：x < x ⟹ ⊥
   -- 用途：闭合 B4 §4 `glued-recursion-*`（M>0 且 M=0 ⟹ 0<0 矛盾，排除零因子第二分支）。
   irreflexive-ℝ : {x : ℝ} → x <ℝ x → ⊥
+
+-- 除法消去（**可证**）：a·b = c ⟹ a = c/b（b 消去；*-/cancel-ℝ + *-assoc + *-ident）
+--（自 §? 前移 2026-08-03：ln15-arith-ax 闭合（v1.35）的 mul-div-ℝ 依赖，前移供引用）
+*-div-impl : {a b c : ℝ} → (a *ℝ b) ≡ c → a ≡ c /ℝ b
+*-div-impl {a} {b} {c} h =
+  trans (sym (*-ident-ℝ a))
+        (trans (cong (λ x → a *ℝ x) (sym (*-/cancel-ℝ b oneℝ)))
+               (trans (sym (*-assoc-ℝ a b (oneℝ /ℝ b)))
+                      (trans (cong₂ _*ℝ_ h refl)
+                             (trans (*-/ℝ c oneℝ b)
+                                    (cong₂ _/ℝ_ (*-ident-ℝ c) refl)))))
+
+-- 分数消去（**可证**）：(a·b)/(c·b) = a/c（/-cross-ℝ + *-assoc + *-comm）
+--（自 §? 前移 2026-08-03：ln15-arith-ax 闭合（v1.35）的 /-lt-cross-ℝ 依赖，前移供引用）
+frac-cancel-ℝ : (a c b : ℝ) → (a *ℝ b) /ℝ (c *ℝ b) ≡ a /ℝ c
+frac-cancel-ℝ a c b =
+  /-cross-ℝ (trans (*-assoc-ℝ a b c)
+                   (cong (λ u → a *ℝ u) (*-comm-ℝ b c)))
+
+-- ln15 算术比较（scoped 公理，见 postulate 块）：v1.35 尝试 refl 级闭合但触发 Agda
+-- 内存不足（大数归一化），确认"资源/实践静默"，保留 scoped 公理（降定理路径 =
+-- 大整数算术实现/ℕ 高效比较）。*-div-impl/frac-cancel-ℝ 已前移至 674 后（可证引理，
+-- 供未来闭合与既有使用处引用）。
+
 
 -- exp 单射（**闭合 2026-08-01**：exp-mono 严格单调 + trichotomy-ℝ 三分律 +
 -- irreflexive-ℝ 反自反 ⟹ 单射；零新增公理，不再是 postulate。
@@ -775,16 +802,6 @@ exp-recip x =
   -- (1/a)·a = 1
   one-over-a-mul-a : (oneℝ /ℝ a) *ℝ a ≡ oneℝ
   one-over-a-mul-a = trans (*-comm-ℝ (oneℝ /ℝ a) a) (*-/cancel-ℝ a oneℝ)
-
--- a·b = c ⟹ a = c/b（乘除消去）
-*-div-impl : {a b c : ℝ} → (a *ℝ b) ≡ c → a ≡ c /ℝ b
-*-div-impl {a} {b} {c} h =
-  trans (sym (*-ident-ℝ a))
-        (trans (cong (λ x → a *ℝ x) (sym (*-/cancel-ℝ b oneℝ)))
-               (trans (sym (*-assoc-ℝ a b (oneℝ /ℝ b)))
-                      (trans (cong₂ _*ℝ_ h refl)
-                             (trans (*-/ℝ c oneℝ b)
-                                    (cong₂ _/ℝ_ (*-ident-ℝ c) refl)))))
 
 -- (-x)·y = -(x·y)（经分配律 + 加性逆唯一）
 neg-mul-ℝ : (x y : ℝ) → (negℝ x) *ℝ y ≡ negℝ (x *ℝ y)
@@ -958,12 +975,6 @@ frac-mul-ℝ a b c d =
                             (trans (*-/ℝ b a c)
                                    (cong (λ u → u /ℝ c) (*-comm-ℝ b a)))))
                (div-div-ℝ (a *ℝ b) c d))
-
--- (a·b)/(c·b) = a/c（交叉相乘消去）
-frac-cancel-ℝ : (a c b : ℝ) → (a *ℝ b) /ℝ (c *ℝ b) ≡ a /ℝ c
-frac-cancel-ℝ a c b =
-  /-cross-ℝ (trans (*-assoc-ℝ a b c)
-                   (cong (λ u → a *ℝ u) (*-comm-ℝ b c)))
 
 -- 0 ≤ a + (-b) ⟹ b ≤ a（移项：两边加 b）
 ≤-from-nonneg : {a b : ℝ} → zeroℝ ≤ℝ (a +ℝ negℝ b) → b ≤ℝ a
