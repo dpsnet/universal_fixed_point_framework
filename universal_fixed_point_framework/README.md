@@ -1,18 +1,18 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.8](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.9](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 >
-> **项目状态**：37 篇论文（Papers I–XXXVII）+ **RAP-Errata v0.8**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误 + **Agda 交叉验证 16 模块推进（技术债清单 A 类全闭合）**
+> **项目状态**：38 篇论文（Papers I–XXXVIII）+ **RAP-Errata v0.9**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误 + **Agda 交叉验证 16 模块推进（技术债清单 A 类全闭合，Paper XXXVIII 专论）**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
-| 论文总数 / Papers | **37**（Paper I–XXXVII，含本轮新增 XXXI–XXXV, XXXVII） |
+| 论文总数 / Papers | **38**（Paper I–XXXVIII，含本轮新增 XXXI–XXXV, XXXVII, XXXVIII） |
 | 严格拟合 / Strict results | **15 项** |
 | 部分拟合 / Partial fits | **14 项** |
 | 冻结预言 / Frozen predictions | **7 项**（盲登记有效，数值未变） |
 | 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 |
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
-| 最新论文 / Latest Papers | **Paper XXXV**（引力范畴论起源）+ **Paper XXXVII**（开放问题综述） |
+| 最新论文 / Latest Papers | **Paper XXXV**（引力范畴论起源）+ **Paper XXXVII**（开放问题综述）+ **Paper XXXVIII**（Agda 独立交叉验证） |
 | Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推 🆕、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**） |
 | 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
@@ -93,6 +93,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XXXIV 🆕**：连续极限——分形吸引子到光滑时空涌现 | v1.0 | B2 六步理论证明：编码树分层→拟弧→对称→Lipschitz 映射→拟对称嵌入→谱流保持。**B2 理论闭合** | ✅ |
 | **Paper XXXV 🆕**：引力的范畴论起源 | v0.3 | 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 + **§3.2 向外推几何阐述** | ✅ |
 | **Paper XXXVII 🆕**：开放问题、未来方向与层次距离 | v0.1 | A/B/C 三组开放问题 + 层次距离度量 + Bott-Moran 桥 | ✅ |
+| **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.1 | 双实现证明协议：16 模块清单、B1-B8 直接证明、技术债 A 类全闭合、S0 静默/待基础设施边界 | ✅ |
 
 ### Lean 4 形式化
 

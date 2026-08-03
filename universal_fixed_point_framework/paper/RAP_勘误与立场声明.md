@@ -1,7 +1,7 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.8）
+# UFPF 勘误与立场声明（RAP-Errata v0.9）
 
 **发布日期**：2026-08-03
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `8587511c`（v0.8）
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `8587511c`（v0.8）→ `00000000`（v0.9）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -108,8 +108,9 @@
 | **XXXIV** | **连续极限——分形吸引子到光滑时空涌现** | **`paper34_continuum_limit.md`** | **🆕** | B2 Step 3 六步理论证明：编码树分层、拟弧、对称性、Lipschitz 映射、拟对称嵌入、谱流保持。**B2 已理论闭合**——自包含论文，不依赖笔记 |
 | **XXXV** | **引力的范畴论起源** | **`paper35_gravity_origin.md`** | **🆕** | 交换律偏差 = 引力；Δ 结构常数地位；引力不可屏蔽的范畴论根源；引力子等效性；GW 极化计数；牛顿引力定律范畴论推导。本轮新增 |
 | **XXXVII** | **开放问题、未来方向与层次距离** | **`paper37_open_problems.md`** | **🆕** | A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥恒等式。本轮新增 |
+| **XXXVIII** | **Agda 独立交叉验证——双实现证明** | **`paper38_agda_cross_validation.md`** | **🆕** | 系统说明 Agda 重形式化目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程（v1.17–v1.36）、S0 静默/待基础设施边界与声明纪律。基于笔记 `agda_cross_validation_notes.md`。本轮新增 |
 
-**状态汇总**：全部 37 篇论文中 31 篇 ✅ 稳定、6 篇 🆕 本轮新增（XXXI–XXXV, XXXVII）、零 ⚠️、零待办。
+**状态汇总**：全部 38 篇论文中 31 篇 ✅ 稳定、7 篇 🆕 本轮新增（XXXI–XXXV, XXXVII, XXXVIII）、零 ⚠️、零待办。
 
 ### Lean 4 形式化状态总表
 
@@ -162,9 +163,9 @@
 
 ## 七、系列论文状态
 
-1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。
-2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）。
-3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.7，2026-08-03，与勘误 1:1 同步）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
+1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。**v0.9 追加（2026-08-03）**：新增 Paper XXXVIII（Agda 独立交叉验证专论——双实现证明协议、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程、S0 静默/待基础设施边界，内容自包含）。
+2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。
+3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.9，2026-08-03，与勘误 1:1 同步）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
 ---
 
@@ -184,3 +185,4 @@
 | **v0.6** | **2026-07-31** | **路径 B 完成（Agda 交叉验证）**：`agda_formalization/` 核心 8 模块（B1–B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过，定理签名与 Lean 一一对应。路线图 phase60 更新至 v0.4。Paper XXXV §3.2.2 补充 Agda 镜像说明。各级 README / 盲登记协议同步更新 |
 | **v0.7** | **2026-08-03** | **路径 B 推进 + 理论闭合**：Agda 侧扩至 16 模块——T3 谱定理层进一步闭合（fc-integral 公理完整降为可证明定理 `fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步（注 C2.3b/2.4.5a 理论闭合审计补充）。各级 README / 盲登记协议同步更新 |
 | **v0.8** | **2026-08-03** | **技术债清单 A 类全闭合 + 谱对象映射完整**：路径 B 推进 v1.17–v1.36——① E-σ-add 收敛闭合（v1.17-1.18，Vigier 桥接）；② spec-int MCT 构造化闭合（v1.19-1.20，Archimedean 登记）；③ fc-poly-le-spec-int 构造化（方案 A）收官（v1.22-1.34，正负分解 4 阶段 + SimpleF 阶梯/MCT + 依赖循环解决——`fc-poly-le-spec-int` 降为可证定理，桥接减一，fc 侧唯一剩余 D 类 = `fc-integral`）；④ 跨层谱对象映射完整闭合（v1.21 E/exp-tA + v1.36 A/fc：A-hilb/fc-hilb 谱定理降定理链端点桥接）；⑤ 术语更新（scoped 数值公理标注"工程计算资源不足"，v1.35 实测确认）。各级 README / 盲登记协议同步更新至 v0.8 |
+| **v0.9** | **2026-08-03** | **新增 Paper XXXVIII（Agda 独立交叉验证专论）**：系统说明路径 B 全貌——目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、闭合历程（T1/T2/T3 + 技术债 A 类全闭合 v1.17–v1.36）、剩余开放项（funext/spExchangeLaw 概念特征/S0 静默/待基础设施）与声明纪律。论文总数 37 → 38；勘误 §六 论文状态总表更新；盲登记同步更新至 v0.9（1:1，预言数值不变）。各级 README 同步 |
