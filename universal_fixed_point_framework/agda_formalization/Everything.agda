@@ -83,7 +83,10 @@ module Everything where
 --        （逐点外延，sup-op-ext 移 §1b，避开 funext）+ pos-part-absorp/neg-part-zero-point
 --        + spec-int-nonneg-consistent（f ≥ 0 ⟹ ∫f ≡ 非负 sup）——定义重构改走
 --        decomp 显式化（破坏面评估：MCT/fc-integral 系列依赖定义性）；
---        技术债 A1 阶段 2 收官，v1.25））
+--        技术债 A1 阶段 2 收官，v1.25）；
+--        方案 A 阶段 3 第一步（钉住解析到值级：spec-int-nonneg-exp/-phi-t——
+--        exp/φ_t 全 ℝ 非负 ⟹ ∫f = 非负 sup = 谱表示值，可证；
+--        钉住残留 = 谱表示 postulate 值，健全；技术债 A1 阶段 3 第一步，v1.26））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

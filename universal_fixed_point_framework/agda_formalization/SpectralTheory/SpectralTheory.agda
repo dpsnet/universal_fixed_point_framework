@@ -605,6 +605,16 @@ postulate
   spec-int-general-id : spec-int-general (λ x → x) ≡ spec-int-A
   spec-int-general-exp : spec-int-general (λ x → exp (negℝ x)) ≡ spec-int-exp
 
+-- **可证**：exp 的非负积分明确值——∫e^(-x) = 非负 sup = spec-int-exp（阶段 3 第一步）
+--（exp 全 ℝ 非负（exp-pos：0 < exp x）⟹ spec-int-nonneg-consistent（钉住与非负 sup
+--  无分歧）+ spec-int-general-exp 桥接组合——**钉住解析为"非负 sup 明确值 + 谱表示值"**
+--  （spec-int-exp 本身为谱表示 postulate，钉住从 spec-int-general 定义级降至值级））
+spec-int-nonneg-exp : spec-int-nonneg (λ x → exp (negℝ x)) ≡ spec-int-exp
+spec-int-nonneg-exp =
+  trans (sym (spec-int-nonneg-consistent (λ x → exp (negℝ x))
+                                         (λ x → <-≤-ℝ (exp-pos (negℝ x)))))
+        spec-int-general-exp
+
 -- **族成员交换（可证）**：族成员均为简单函数谱积分 ⟹ 与 X 交换（simple-comm）
 member-comm : {f : ℝ → ℝ} (X : Op) → ((P : Borel) → X *ₒ E P ≡ E P *ₒ X)
   → (Y : Op) → spec-int-below f Y → X *ₒ Y ≡ Y *ₒ X
@@ -1475,6 +1485,15 @@ M-Rec-t t X = X *ₒ exp-tA t ≡ exp-tA t *ₒ X
 --（与 exp-spectral-rep（t=1）一致；§1b 的 spec-int-general 对 φ_t 的谱表示）
 postulate
   spec-int-general-phi-t : (t : ℝ) → spec-int-general (λ x → exp (negℝ (t *ℝ x))) ≡ exp-tA t
+
+-- **可证**：φ_t 的非负积分明确值——∫φ_t = 非负 sup = e^(-tA)（阶段 3 第一步）
+--（φ_t 全 ℝ 非负（phi-t-pos）⟹ spec-int-nonneg-consistent（钉住与非负 sup 无分歧）
+--  + spec-int-general-phi-t 桥接组合——钉住解析为"非负 sup 明确值 + 谱表示值"）
+spec-int-nonneg-phi-t : (t : ℝ) → spec-int-nonneg (λ x → exp (negℝ (t *ℝ x))) ≡ exp-tA t
+spec-int-nonneg-phi-t t =
+  trans (sym (spec-int-nonneg-consistent (λ x → exp (negℝ (t *ℝ x)))
+                                         (λ x → <-≤-ℝ (phi-t-pos t x))))
+        (spec-int-general-phi-t t)
 
 -- **可证明（§1b 机制推导）**：M_σ ⊆ M-Rec-t（谱匹配 ⟹ X 与 e^(-tA) 交换）
 -- 链：X-comm-spec-int-general（E 逐集交换 ⟹ 与一般谱积分 ∫φ_t dE 交换）

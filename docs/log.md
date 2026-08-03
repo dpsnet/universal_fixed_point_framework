@@ -2221,3 +2221,21 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 2 第二部分第二步 ✅ + 定义重构评估）、技术债清单项 1（阶段 2 全部 ✅）、路线图 v1.25 条目、Everything.agda 头注释 v1.25、SpectralTheory §15 审计待降定理更新。
 
 **当前开放项**：阶段 3（钉住桥接转定理：spec-int-general-id/-exp/-phi-t）；阶段 4（fc-poly-le-spec-int 组合替换）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 3 第一步——钉住解析到值级（v1.26）
+
+**新增（SpectralTheory，全部可证）**：
+- **`spec-int-nonneg-exp`**：∫e^(-x) = 非负 sup = spec-int-exp（exp 全 ℝ 非负（exp-pos）⟹ spec-int-nonneg-consistent + spec-int-general-exp 桥接组合）
+- **`spec-int-nonneg-phi-t`**：∫φ_t = 非负 sup = e^(-tA)（φ_t 全 ℝ 非负（phi-t-pos）+ spec-int-general-phi-t 桥接组合）
+
+**里程碑**：**阶段 3 第一步闭合**——**钉住从 spec-int-general 定义级解析为"非负 sup 明确值 + 谱表示值"**。非负函数（exp、φ_t）的 ∫f 即朴素下界族 sup（构造上有效），与谱表示桥接值一致；钉住残留即 spec-int-A/-exp/e^(-tA)（谱表示 postulate，真正的基础假设），健全。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：spec-int-nonneg-exp/-phi-t 前向引用钉住桥接（spec-int-general-exp/-phi-t 定义在 §1b 桥接块/§8c 末尾）——移至桥接定义之后。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 3 第一步 ✅）、技术债清单项 1（阶段 3 第一步 ✅）、路线图 v1.26 条目、Everything.agda 头注释 v1.26。
+
+**当前开放项**：阶段 3 余项（id 分解一致性：∫id = ∫id⁺ −ₒ ∫id⁻ 且 ∫id⁻ = 0——需谱支集外零贡献论证 E-support-pos + 谱投影非负，较深）；阶段 4（fc-poly-le-spec-int 组合替换）。改动尚未提交 git。
