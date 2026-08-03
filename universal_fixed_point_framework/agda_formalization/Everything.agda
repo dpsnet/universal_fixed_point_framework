@@ -40,7 +40,11 @@ module Everything where
 --        测度论核心逼近构造化阶段 1（§5f：ℝ 幂单调性引理库——DHStructural
 --        *-nonneg-ℝ（0≤ab）+ power-nonneg/power-mono/power-pos（0≤x≤y ⟹ xⁿ≤yⁿ、
 --        0<x ⟹ 0<xⁿ），零新增公理；构造化 fc-poly-le-spec-int 多阶段路线地基，
---        v1.15））
+--        v1.15）；
+--        理论闭合决策（§1b/§15 + 笔记 §5.16.6：钉住 sup 语义显式文档化——spec-int-general
+--        是"钉住 sup"（语义值 = 谱支集 [0,∞) 上 ∫f dE），变号 f 朴素下界族为空、值由钉住
+--        桥接确定；构造化 fc-poly-le-spec-int 需语义重构；保持健全桥接层不冒险重构；
+--        影响分析：谱匹配核心（theorem3/P1）零 fc-integral 依赖完全可证，v1.16））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

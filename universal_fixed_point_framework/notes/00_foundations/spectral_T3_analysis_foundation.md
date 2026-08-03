@@ -437,6 +437,21 @@ postulate
 3. **spec-int 收敛细节**：无界逼近的 Lebesgue 单调收敛构造化（trunc 截断族）。
 4. **E-σ-add 收敛**：LinOp 层算子序 sup 的存在性（强/弱算子拓扑单调有界收敛）。
 
+#### 5.16.6 钉住 sup 语义与 fc-integral 降定理缺口（层次位置与影响分析，2026-08-03）
+
+**问题核心**：`spec-int-general`（SpectralTheory §1b）是"钉住 sup"——语义值 = 谱支集 [0,∞) 上的 ∫f dE（目标模型谱定理），朴素 sup 只是部分计算机制；变号 f（奇次单项式 xⁿ，n 奇）在 (-∞,0) 无下界 ⟹ 朴素下界族为空，其积分值由钉住桥接（spec-int-general-id/-exp/-phi-t）确定。构造化 `fc-poly-le-spec-int`（v1.13 桥接，fc-integral 降定理最后登记项）实质需 ∫f⁺−∫f⁻/谱支集受限语义重构，且**不因非负 f 而简化**（fc-integral-ge 的多项式中间步 fc(p) ≤ spec-int-general(p) 对任意含变号多项式成立才可绕过）。决策（用户授权，log 2026-08-03）：**保持健全桥接层 + 钉住 sup 语义显式文档化**（SpectralTheory §1b 文档块），不冒险重构；SpectralTheory §15 公理纪律审计相应保持 fc-integral/fc-poly-le-spec-int 为 D 类桥接（降定理路径文档化）。
+
+**层次位置**：T3 谱定理层内部——§1b（spec-int-general 定义语义）与 §5c（fc-integral 降定理）的衔接处。上游谱论基础公理（E/A/fc 抽象）不受影响；下游经 §5c X-comm-fc / §13 exp-A-fc / exp-tA-fc / §14 态射保动力学；旁侧 Hilbert 层（T4）提供语义模型（∫f dE 即谱定理），跨层模型（v1.14）为语义侧进展。
+
+**影响（关键：谱匹配核心不依赖此问题）**：
+- **不受影响（完全可证，零 fc-integral 依赖）**：`X-comm-spec-int-general` 直接由 sup-comm + member-comm（simple-comm 可证）建立（SpectralTheory §1b L364-370）⟹ `σ-to-Sp`（引理 1 代数方向）/`σ-to-Rec`（引理 2）/`theorem3`（M_Sp=M_σ=M_Rec）/`corollary4-∞`/`corollary5`/`P1-linear-closure`（P1 谱匹配双射）全部可证；`M_Sp ⊆ M_σ`（Fuglede 方向）走 indicator-bridge（§5g），亦不依赖 fc-integral。
+- **受影响（健全，但降定理不完备）**：仅"fc 侧 = spec-int-general 侧"等式及其下游——`X-comm-fc`（M_σ ⟹ 与任意 fc(f) 交换）、`exp-A-fc`/`exp-tA-fc`（半群 = 函数演算）、`Rec-to-exp-tA`/`Sp-to-exp-tA`（态射保动力学）——依赖 fc-integral（现为定理 modulo fc-poly-le-spec-int 桥接 + 钉住桥接如 spec-int-general-phi-t）。
+- **健全性零影响**：fc-integral 与 fc-poly-le-spec-int 均在目标模型为真；钉住 sup 只是构造机制，值由桥接确定，理论无洞。
+
+**结论**：P1 与论文核心定理（定理 2.4.5、谱匹配）成立不依赖此问题；问题实质是 fc-integral 降定理的**最后一个登记项**（形式化完备性缺口，已文档化），唯一真实影响 = 论文若声称"fc-integral 已零公理化"需表述为"modulo 文档化测度论核心逼近桥接"。物理关键函数（exp、φ_t）非负+单调且另有钉住桥接，半群-动力学应用健全无虞。
+
+**执行落点**：SpectralTheory §1b 钉住 sup 语义文档块（纯注释，2026-08-03）；log 决策记录；本文档分析。**论文层审计项**（工作流②，paper I/相关论文）：确认"fc-integral 降定理"表述为"modulo 桥接"，避免零公理化过度声称。
+
 ## 6. 各闭合项证明策略
 
 - **65/24 < e**：✅ **已闭合（2026-07-31，见 §5.3）**——走级数路径（`partial-e-4-value` 通分计算 + `exp-partial-< 4` 级数截断公理），未采用直接定义性公理 `exp-one-gt-65-24`。

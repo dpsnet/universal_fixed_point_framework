@@ -212,6 +212,20 @@ spec-int-below f Y = Σ₁ SimpleF (λ s →
 spec-int-general : (ℝ → ℝ) → Op
 spec-int-general f = sup-op (spec-int-below f)
 
+-- **钉住 sup 语义（2026-08-03 显式文档化，理论闭合基础）**：
+-- spec-int-general 是"钉住 sup"——其语义值 = 谱支集 [0,∞)（E-support-pos）上的
+-- Lebesgue 谱积分 ∫f dE，由目标模型（Hilbert 层谱定理）确定；朴素 sup 构造只是
+-- 部分计算机制，对变号/无界函数其值由桥接公理钉住（spec-int-general-id/-exp/
+-- -phi-t 等），**不可**从朴素 sup 定义独立推出。
+--   - 非负 f（f ≥ 0 逐点）下，族 {s : s ≤ f 逐点} 非空（s = 0 为成员），
+--     朴素 sup = 经典 Lebesgue 积分（与钉住值一致，MCT 可证化见测度论层）；
+--   - 变号 f（如奇次单项式 xⁿ，n 奇）：xⁿ 在 (-∞,0) 无下界 ⟹ 朴素下界族为空
+--     （sup(∅) 无语义意义），其积分值由钉住桥接确定——fc-integral-full（v1.13）
+--     对此类 f 的相容性依赖钉住桥接，构造化需谱支集受限/∫f⁺−∫f⁻ 语义重构
+--     （2026-08-03 分析，log；桥接 fc-poly-le-spec-int 语义 = 目标模型 ∫p dE = p(A)，
+--     与 spec-int-general-id 同地位，健全）；
+--   - 物理关键函数（exp、φ_t）均非负+单调，朴素 sup 即其积分，见测度论层。
+
 -- **可证**：下界族对 f 单调——f ≤ g 点态 ⟹ spec-int-below f ⊆ spec-int-below g
 --（无界逼近细节的结构性质：Lebesgue 型 sup 构造中更大的函数有更大的简单函数下界族；
 --  收敛性内容（sup 存在且与桥接一致）依赖序完备性机制，随测度论层实现）
@@ -2144,3 +2158,38 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - spec-int 收敛细节（无界逼近）：Lebesgue 单调收敛的构造化
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
 --  - 跨层模型（8-5b 余项）：Op → LinOp 完整实例化
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 2（2026-08-03）：v1.13-v1.15 + 钉住 sup 语义文档化
+-- ------------------------------------------------------------------
+-- 已降为可证定理/登记（2026-08-03 追加）：
+--  - fc-integral "≥"方向完整：fc-integral-ge（fc f ≤ₒ spec-int-general f，任意 f，§10d）+
+--    fc-integral-full（fc f ≡ spec-int-general f，任意 f；≥ 方向 + ≤ 方向 + ≤ₒ-antisym）
+--    ——fc-integral 公理（§5c，D 类）完整降为可证明定理，**唯一剩余登记项 =
+--    测度论核心逼近桥接 fc-poly-le-spec-int**（§10d 登记，多项式可由简单函数下界
+--    逼近，∫p dE = sup{∫s : s 简单 ≤ p} 的完备性）；支撑登记 ≤ₒ-trans（C 类补充）
+--  - 跨层模型点态对应（8-5b 第一步）：CrossLayer/CrossLayer.agda——OpAlgPt 见证
+--    record（13 组算子代数公理的点态对应）+ op-alg-pt 实例化（HilbertSpace §16
+--    点态律，含 9 条 2026-08-03 补全：+ₗ-assoc/comm/ident-pt、*ₗ-zero-r/l-pt、
+--    distribₗ/distribₗ-l-pt、·ₗ-comm-l/·ₗ-zero-l-pt）——算子代数公理在 LinOp 层的
+--    逐点验证证书（funext 受限部分登记为开放项，不登记新 postulate）
+--  - 测度论逼近引理库阶段 1（fc-poly-le-spec-int 构造化路线）：DHStructural
+--    *-nonneg-ℝ（0≤ab）+ SpectralTheory power-nonneg/power-mono/power-pos
+--    （0≤x≤y ⟹ xⁿ≤yⁿ、0<x ⟹ 0<xⁿ，归纳）——dyadic 阶梯逼近的 ℝ 层地基
+--
+-- 钉住 sup 语义文档化（§1b，2026-08-03）：spec-int-general 是"钉住 sup"——语义值 =
+-- 谱支集 [0,∞) 上的 ∫f dE（目标模型谱定理），朴素 sup 只是部分计算机制；变号 f
+-- （奇次单项式）朴素下界族为空，其积分值由钉住桥接（spec-int-general-id/-exp/-phi-t）
+-- 确定。fc-integral-full（v1.13）对此类 f 的相容性依赖钉住桥接；构造化
+-- fc-poly-le-spec-int 需 ∫f⁺−∫f⁻/谱支集受限语义重构（多阶段路线，阶段 1 ✅；
+-- 阶段 2-4 待），且不因非负 f 而简化（fc-integral-ge 的多项式中间步不可绕过）。
+-- 决策（2026-08-03，log）：保持健全桥接层 + 文档化，不冒险重构。
+--
+-- 待降定理（2026-08-03 更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：多阶段路线
+--    （阶段 1 ✅ 幂单调性引理库；阶段 2 dyadic 分划与阶梯函数；阶段 3 上界 + MCT；
+--    阶段 4 组合替换桥接）——需语义重构方案先行
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）
+--  - spec-int 收敛细节（无界逼近）：Lebesgue 单调收敛的构造化
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
