@@ -1,7 +1,7 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.7）
+# UFPF 勘误与立场声明（RAP-Errata v0.8）
 
 **发布日期**：2026-08-03
-**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）
+**版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `9d3a51c8`（v0.8）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
 ---
@@ -156,6 +156,8 @@
 
 **路径 B 推进（2026-08-03，v1.13–v1.16）**：Agda 侧扩至 **16 模块**，T3 谱定理层（`SpectralTheory.agda`）进一步闭合——① **fc-integral 公理（fc(f) = ∫f dE）完整降为可证明定理**（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`，语义由目标模型谱定理保证）；② **理论闭合审计**：谱匹配核心（theorem3 / corollary4-∞ / corollary5 / P1-linear-closure）**独立于** fc-integral 桥接、完全可证（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；钉住 sup 语义显式文档化（§1b）；③ **跨层模型 Op → LinOp 点态对应闭合**（新模块 `CrossLayer`，OpAlgPt 见证 record，13 组算子代数公理逐点验证）；④ **测度论逼近引理库阶段 1**（ℝ 幂单调性 power-nonneg/mono/pos + *-nonneg-ℝ）。paper I 已同步至 v2.49（注 C2.3b/2.4.5a 追加理论闭合审计补充）。
 
+**路径 B 推进（2026-08-03，v1.17–v1.36，技术债清单 A 类全闭合）**：对应技术债清单（笔记 §5.16.7）的实质可闭合项全部收官——① **E-σ-add 收敛闭合**（v1.17-1.18）：连续下式族单调有界结构全可证 + Vigier 强收敛桥接（`E-σ-SOT-conv`）；② **spec-int MCT 构造化闭合**（v1.19-1.20）：ℝ-截断（`spec-int-R-trunc-conv`，零新增公理）+ ℕ-截断（`spec-int-trunc-ℕ-conv`，Archimedean 登记，原桥接删除）；③ **fc-poly-le-spec-int 构造化（方案 A）收官**（v1.22-1.34）：正负分解重构 4 阶段（max-ℝ 族/f⁺f⁻ → Op 减法 → 非负一致性 → 钉住解析 → fc 侧分解）→ 阶段 4 余项（dyadic 网格 → SimpleF 阶梯构造（disj/cover）→ 上界 ∫sₖ≤ₒ∫p⁺ → MCT）→ **依赖循环解决**（fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 自循环为结构性，改用更基础 `fc-integral` 直接降 `fc-poly-le-spec-int` 为可证定理——**桥接减一**，fc 侧唯一剩余 D 类 = `fc-integral`，健全）；④ **跨层谱对象映射完整闭合**（v1.21 E/exp-tA + **v1.36 A/fc**）：HilbertSpace §12' 登记 `A-hilb`/`fc-hilb`（谱定理降定理链端点桥接，与 spectral-subspace/exp-hilb-tA 同层）+ CrossLayer SpectralObjPt 扩展 A/fc 字段——**谱对象映射（A/E/fc/exp-tA）完整闭合**；⑤ **术语更新**：scoped 数值公理（`ln15-arith-ax` 等）归类标注由"资源/实践静默"改为 **"工程计算资源不足"**（v1.35 实测确认：refl 级闭合逻辑完备但 2994494400 级大数归一化触发 Agda 内存不足）。剩余开放项均为结构性限制（funext 受限、`spExchangeLaw` 概念特征）或待基础设施（Mathlib 稳定、大整数算术/级数机制）。
+
 **"向外推"形式化已完成**（2026-07-30）：`CoherenceToBranching.lean §11` 新增 `dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 两个定理，将维数间隙（$\ln 15 < 3$）与层正交分离（$S_4/c_1 = e^3$）形式化绑定，实现"球心在空间之外"的代数证明。`lake build` 编译通过 ✅。Agda 侧由 B7（`CoherenceToBranching.agda §11`）镜像。
 
 ## 七、系列论文状态
@@ -181,3 +183,4 @@
 | **v0.5** | **2026-07-30** | **向外推形式化完成**：`CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer` 两个定理。维数间隙（ln 15 < 3）与层正交分离（S₄/c₁ = e³）形式化绑定。笔记 04_gravity_analysis.md §5.7k.6 新增 Lean 形式化状态。**Paper XXXV v0.3**：§3.2 扩展为三小节（几何阐述 + 形式证明 + 视角对比）。各级 README 同步更新至 v0.5。`lake build` 编译通过 |
 | **v0.6** | **2026-07-31** | **路径 B 完成（Agda 交叉验证）**：`agda_formalization/` 核心 8 模块（B1–B8）全部通过 Agda 2.8.0 类型检查，`Everything.agda` 整体编译通过，定理签名与 Lean 一一对应。路线图 phase60 更新至 v0.4。Paper XXXV §3.2.2 补充 Agda 镜像说明。各级 README / 盲登记协议同步更新 |
 | **v0.7** | **2026-08-03** | **路径 B 推进 + 理论闭合**：Agda 侧扩至 16 模块——T3 谱定理层进一步闭合（fc-integral 公理完整降为可证明定理 `fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步（注 C2.3b/2.4.5a 理论闭合审计补充）。各级 README / 盲登记协议同步更新 |
+| **v0.8** | **2026-08-03** | **技术债清单 A 类全闭合 + 谱对象映射完整**：路径 B 推进 v1.17–v1.36——① E-σ-add 收敛闭合（v1.17-1.18，Vigier 桥接）；② spec-int MCT 构造化闭合（v1.19-1.20，Archimedean 登记）；③ fc-poly-le-spec-int 构造化（方案 A）收官（v1.22-1.34，正负分解 4 阶段 + SimpleF 阶梯/MCT + 依赖循环解决——`fc-poly-le-spec-int` 降为可证定理，桥接减一，fc 侧唯一剩余 D 类 = `fc-integral`）；④ 跨层谱对象映射完整闭合（v1.21 E/exp-tA + v1.36 A/fc：A-hilb/fc-hilb 谱定理降定理链端点桥接）；⑤ 术语更新（scoped 数值公理标注"工程计算资源不足"，v1.35 实测确认）。各级 README / 盲登记协议同步更新至 v0.8 |
