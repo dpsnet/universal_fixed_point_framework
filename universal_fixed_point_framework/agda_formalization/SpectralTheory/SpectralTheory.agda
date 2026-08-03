@@ -40,9 +40,10 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
          max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
+         max-pos-value; max-neg-value; max-zero-zero;
          sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
@@ -236,6 +237,26 @@ spec-int-below-mono : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≤ℝ g x) →
 spec-int-below-mono {f} {g} h Y (pair₁Σ s (eq , dom)) =
   pair₁Σ s (eq , λ i x px → ≤-trans-ℝ (dom i x px) (h x))
 
+-- **可证**：sup 外延（Op 层）——谓词逐成员等价 ⟹ sup 相等（sup-op-least/upper + ≤ₒ-antisym；
+--   v1.19 起在 §1c 定义，v1.25 移至 §1b——spec-int-general-ext-pt 依赖，前向引用消解）
+sup-op-ext : {l : Level} {S T : Op → Set l} → ((Y : Op) → S Y → T Y) → ((Y : Op) → T Y → S Y)
+  → sup-op S ≡ sup-op T
+sup-op-ext {l} {S} {T} s→t t→s =
+  ≤ₒ-antisym (sup-op S) (sup-op T)
+             (sup-op-least S (sup-op T) (λ Y sy → sup-op-upper T Y (s→t Y sy)))
+             (sup-op-least T (sup-op S) (λ Y ty → sup-op-upper S Y (t→s Y ty)))
+
+-- **可证**：spec-int-general 逐点外延——f ≡ g 逐点 ⟹ ∫f = ∫g
+--（spec-int-below 族逐成员等价（≤ 双向）+ sup-op-ext；**避开 funext**——
+--  函数参数用逐点相等而非函数相等，方案 A 非负一致性（f⁻ = 0）的基础）
+spec-int-general-ext-pt : {f g : ℝ → ℝ} → ((x : ℝ) → f x ≡ g x)
+  → spec-int-general f ≡ spec-int-general g
+spec-int-general-ext-pt {f} {g} h =
+  sup-op-ext (λ Y yb → spec-int-below-mono {f = f} {g = g}
+                          (λ x → subst (λ z → f x ≤ℝ z) (h x) (refl-≤ℝ {x = f x})) Y yb)
+             (λ Y yb → spec-int-below-mono {f = g} {g = f}
+                          (λ x → subst (λ z → z ≤ℝ f x) (h x) (refl-≤ℝ {x = f x})) Y yb)
+
 -- 无界逼近细节（2026-08-01 文档化闭合；2026-08-02 阶段 7-1 落地 min-ℝ + 截断）：
 --  - spec-int-general 对无界 f（恒等，[0,∞) 上无界）为 Lebesgue 型 sup 构造——
 --    简单函数下界族的上确界；收敛性（sup 存在）依赖算子序完备性机制
@@ -283,6 +304,24 @@ decomp-pos-neg f x = max-sub-decomp (f x)
 -- **可证**：正交 f⁺ x · f⁻ x = 0（max-pos-mul-neg-zero 特化，逐点）
 pos-mul-neg-zero : (f : ℝ → ℝ) (x : ℝ) → (pos-part f x) *ℝ (neg-part f x) ≡ zeroℝ
 pos-mul-neg-zero f x = max-pos-mul-neg-zero (f x)
+
+-- **可证**：正部吸收——f x ≥ 0 ⟹ f⁺ x = f x（三分律：fx<0 矛盾排除，其余分支 max = fx）
+pos-part-absorp : (f : ℝ → ℝ) (x : ℝ) → zeroℝ ≤ℝ f x → pos-part f x ≡ f x
+pos-part-absorp f x hfx with trichotomy-ℝ (f x) zeroℝ
+pos-part-absorp f x hfx | inj₁ fx<0 =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ fx<0 hfx))
+pos-part-absorp f x hfx | inj₂ (inj₁ _) = refl
+pos-part-absorp f x hfx | inj₂ (inj₂ _) = refl
+
+-- **可证**：负部归零——f x ≥ 0 ⟹ f⁻ x = 0（三分律：0<−fx 与 −fx≤0 矛盾，
+--   neg-≤-ℝ 取负保序反转 + neg-zero）
+neg-part-zero-point : (f : ℝ → ℝ) (x : ℝ) → zeroℝ ≤ℝ f x → neg-part f x ≡ zeroℝ
+neg-part-zero-point f x hfx with trichotomy-ℝ (negℝ (f x)) zeroℝ
+neg-part-zero-point f x hfx | inj₁ _ = refl
+neg-part-zero-point f x hfx | inj₂ (inj₁ nfx=0) = nfx=0
+neg-part-zero-point f x hfx | inj₂ (inj₂ 0<nfx) =
+  ⊥-elim (irreflexive-ℝ (lt-≤-trans-ℝ 0<nfx
+          (subst (λ z → negℝ (f x) ≤ℝ z) neg-zero (neg-≤-ℝ hfx))))
 
 -- ==================================================================
 -- §1b'' Op 层减法与正负分解定理（方案 A 阶段 2 第一部分，2026-08-03）
@@ -338,6 +377,26 @@ spec-int-nonneg g = sup-op (spec-int-below g)
 --  谱投影非负 + 标量保序 + sup-least）
 postulate
   spec-int-general-zero : spec-int-general (λ _ → zeroℝ) ≡ 𝟘ₒ
+
+-- **可证**：非负一致性——f ≥ 0 逐点 ⟹ ∫f = 非负 sup（spec-int-general f ≡ spec-int-nonneg f）
+--（spec-int-general-decomp（∫f = ∫f⁺ −ₒ ∫f⁻）+ pos-part-absorp/neg-part-zero-point
+--  （逐点外延 spec-int-general-ext-pt）+ spec-int-general-zero（∫0 = 0）+ op-sub-zero-r
+--  （X −ₒ 0 = X）；**验证方案 A 分解等式与 sup 定义对非负 f 一致**——非负 f 的
+--  ∫f 即朴素下界族 sup，钉住语义与非负 sup 无分歧）
+spec-int-nonneg-consistent : (f : ℝ → ℝ) → ((x : ℝ) → zeroℝ ≤ℝ f x)
+  → spec-int-general f ≡ spec-int-nonneg f
+spec-int-nonneg-consistent f hf =
+  trans (trans (spec-int-general-decomp f)
+               (cong₂ _-ₒ_ pos-eq neg-eq))
+        (op-sub-zero-r (spec-int-general f))
+  where
+  pos-eq : spec-int-general (pos-part f) ≡ spec-int-general f
+  pos-eq = spec-int-general-ext-pt {f = pos-part f} {g = f}
+           (λ x → pos-part-absorp f x (hf x))
+  neg-eq : spec-int-general (neg-part f) ≡ 𝟘ₒ
+  neg-eq = trans (spec-int-general-ext-pt {f = neg-part f} {g = λ _ → zeroℝ}
+                  (λ x → neg-part-zero-point f x (hf x)))
+                 spec-int-general-zero
 
 -- ==================================================================
 -- §1c 截断逼近（测度论层阶段 1，2026-08-02）
@@ -425,13 +484,7 @@ trunc-below-into-spec-int : {f : ℝ → ℝ} {Y : Op} → TruncBelow f Y → sp
 trunc-below-into-spec-int {f} {Y} (pair₁Σ s (eq , dom)) =
   pair₁Σ s (eq , λ i x px → ≤-trans-ℝ (dom i x px) (trunc-below-f f (s-bound s) x))
 
--- **可证**：sup 外延（Op 层）——谓词逐成员等价 ⟹ sup 相等（sup-op-least/upper + ≤ₒ-antisym）
-sup-op-ext : {l : Level} {S T : Op → Set l} → ((Y : Op) → S Y → T Y) → ((Y : Op) → T Y → S Y)
-  → sup-op S ≡ sup-op T
-sup-op-ext {l} {S} {T} s→t t→s =
-  ≤ₒ-antisym (sup-op S) (sup-op T)
-             (sup-op-least S (sup-op T) (λ Y sy → sup-op-upper T Y (s→t Y sy)))
-             (sup-op-least T (sup-op S) (λ Y ty → sup-op-upper S Y (t→s Y ty)))
+-- **sup-op-ext 已移至 §1b（v1.25：spec-int-general-ext-pt 依赖，前向引用消解）**
 
 -- **可证**：ℝ-MCT——∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}（零新增公理）
 --（spec-int-below f 与 TruncBelow f 逐成员等价 + sup-op-ext；
@@ -2483,10 +2536,13 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  字段——算子代数公理 13 → 14 组证书完整）。
 --
 -- 待降定理（2026-08-03 再再再再更新）：
---  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 阶段 2 第二部分
---    第二步（spec-int-general 定义重构 ∫f := spec-int-nonneg f⁺ −ₒ spec-int-nonneg f⁻
---    + 下游全适配（X-comm-spec-int-general 用 op-sub-comm 重写、spec-int-R-trunc-conv/
---    -ℕ-conv 陈述调整、fc-integral 重验））→ 阶段 3（钉住桥接转定理）→ 阶段 4
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：方案 A 阶段 2 完成
+--    （阶段 2 第二部分第二步 ✅ v1.25：非负一致性——spec-int-general-ext-pt
+--    （逐点外延，sup-op-ext 移 §1b）+ pos-part-absorp/neg-part-zero-point +
+--    spec-int-nonneg-consistent（f ≥ 0 ⟹ ∫f ≡ 非负 sup）；定义重构评估：破坏面
+--    过大（MCT/fc-integral 系列依赖定义性）⟹ 改走 decomp 显式化，阶段 2 收官）
+--    → 阶段 3（钉住桥接转定理：spec-int-general-id/-exp/-phi-t 经 decomp +
+--    非负一致性转可证）→ 阶段 4（fc-poly-le-spec-int 组合替换）
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛

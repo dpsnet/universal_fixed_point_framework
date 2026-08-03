@@ -2199,3 +2199,25 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 2 第二部分第一步 ✅）、技术债清单项 1（阶段 2 第二部分第一步 ✅）、路线图 v1.24 条目、Everything.agda 头注释 v1.24、SpectralTheory §15 审计更新 6。
 
 **当前开放项**：阶段 2 第二部分第二步（spec-int-general **定义重构** + 下游全适配 + 非负一致性组装）；阶段 3（钉住桥接转定理）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 2 第二部分第二步——非负一致性闭合（v1.25）
+
+**决策（定义重构评估）**：spec-int-general **定义重构破坏面过大**——MCT 定理（spec-int-R-trunc-conv/-ℕ-conv、trunc-below-general）与 fc-integral 系列（-le/-ge/-full）全部依赖 `spec-int-general f = sup-op (spec-int-below f)` 定义性，重构需连带 ≤ₒ 减法单调性桥接 + 多个定理陈述改写。**改走"decomp 显式化"路线**（保留定义，用 spec-int-general-decomp 桥接 + 非负一致性归约，破坏面为零）——"消除钉住"通过阶段 3（钉住桥接转定理）实现。
+
+**新增（SpectralTheory §1b/§1b'/§1b''，全部可证）**：
+- **`spec-int-general-ext-pt`**：spec-int-general 逐点外延——f ≡ g 逐点 ⟹ ∫f = ∫g（spec-int-below-mono 双向 + sup-op-ext，**避开 funext**；sup-op-ext 自 §1c 移至 §1b 消解前向引用）
+- **`pos-part-absorp`**：f x ≥ 0 ⟹ f⁺ x = f x（三分律 + 矛盾排除）
+- **`neg-part-zero-point`**：f x ≥ 0 ⟹ f⁻ x = 0（neg-≤-ℝ 取负保序反转 + neg-zero）
+- **`spec-int-nonneg-consistent`**：**f ≥ 0 ⟹ ∫f ≡ 非负 sup**（decomp + 吸收引理（逐点外延）+ spec-int-general-zero + op-sub-zero-r）——**非负函数的 ∫f 即朴素下界族 sup，钉住语义与非负 sup 无分歧**
+
+**里程碑**：**阶段 2 收官**——非负一致性闭合，为阶段 3（钉住桥接转定理：spec-int-general-id/-exp/-phi-t 经 decomp + 非负一致性转可证）铺路。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：① sup-op-ext 前向引用（§1b 引用 §1c 定义）——移至 §1b；② sup-op-ext 调用报 Set₁ 不匹配——S/T 为隐式参数，勿显式传（改为成员映射推断）；③ subst 方向报 UnequalTerms——反向映射用 `h x` 而非 `sym (h x)`（Q z = z ≤ℝ f x，subst Q (h x) : Q(f x) → Q(g x)）；④ `lt-≤-trans-ℝ` 需加入 import。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 2 第二部分第二步 ✅ + 定义重构评估）、技术债清单项 1（阶段 2 全部 ✅）、路线图 v1.25 条目、Everything.agda 头注释 v1.25、SpectralTheory §15 审计待降定理更新。
+
+**当前开放项**：阶段 3（钉住桥接转定理：spec-int-general-id/-exp/-phi-t）；阶段 4（fc-poly-le-spec-int 组合替换）。改动尚未提交 git。
