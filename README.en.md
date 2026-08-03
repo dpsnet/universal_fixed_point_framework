@@ -75,8 +75,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── paper34_continuum_limit.md                 # 🆕 Continuum limit (B2 closure)
 │   │   ├── paper35_gravity_origin.md                  # 🆕 Category-theoretic origin of gravity
 │   │   ├── paper37_open_problems.md                   # 🆕 Open problems survey
-│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.6
-│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.5
+│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.7
+│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.7（与勘误 1:1 同步）
 │   ├── src/                               # Core code implementations
 │   │   ├── rec_category.py                # Rec category
 │   │   ├── spec_category.py               # Spec category
