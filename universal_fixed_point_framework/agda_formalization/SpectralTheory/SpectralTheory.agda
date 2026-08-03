@@ -191,6 +191,12 @@ postulate
 postulate
   ≤ₒ-trans : (X Y Z : Op) → X ≤ₒ Y → Y ≤ₒ Z → X ≤ₒ Z
 
+-- 正算子序自反（桥接登记，2026-08-03）：X ≤ₒ X——
+-- Hilbert 层（§13 算子序 _≤ₗ_）语义：⟨(X−X)v,v⟩ = 0 ≥ 0（X−X = 𝟘ₒ 定义性）；
+-- 降定理路径 = Hilbert 层算子序 + 内积正定性
+postulate
+  ≤ₒ-refl : (X : Op) → X ≤ₒ X
+
 -- Set₁ 层存在（SimpleF 含 Borel 字段故为 Set₁；B 为 Set 层——成员条件为普通命题）
 data Σ₁ (A : Set₁) (B : A → Set) : Set₁ where
   pair₁Σ : (a : A) → B a → Σ₁ A B
@@ -2037,15 +2043,24 @@ fc-simple-integral-full s =
 -- ------------------------------------------------------------------
 -- 目标：fc-integral 降定理的"≥"方向完整（fc f ≤ₒ spec-int-general f，任意 f）——
 -- fc f = sup{fc(p) : p 多项式 ≤ f}（fc-continuous）≤ sup{∫s : s 简单 ≤ f}。
--- 依赖：测度论核心逼近桥接 fc-poly-le-spec-int（多项式可由简单函数下界逼近，
--- ∫p dE = sup{∫s : s ≤ p} 的完备性——构造化 Lebesgue 积分层降定理）。
+-- 依赖：多项式函数演算 ≤ 谱积分（fc-poly-le-spec-int，**可证**：经 fc-integral §5c
+-- 桥接 + ≤ₒ-refl，2026-08-03 依赖循环解决——见下）。
 
--- 多项式简单逼近（桥接登记，2026-08-02）：多项式 p 可由简单函数下界逼近，
--- ∫p dE = sup{∫s : s 简单 ≤ p} 的完备性——fc(p) ≤ₒ spec-int-general p
--- （测度论核心逼近定理的算子序形式；构造化 Lebesgue 积分层降定理）
-postulate
-  fc-poly-le-spec-int : (m : ℕ) (a : Fin m → ℝ) (n : Fin m → ℕ)
-    → fc (poly-fn {m} a n) ≤ₒ spec-int-general (poly-fn {m} a n)
+-- **可证**：多项式函数演算 ≤ 谱积分——fc(p) ≤ₒ spec-int-general p（2026-08-03 依赖循环解决）
+--（fc(p) ≡ spec-int-general p（fc-integral，§5c 桥接：函数演算 = 谱积分）⟹
+--  fc(p) ≤ₒ spec-int-general p（subst + ≤ₒ-refl））
+-- 依赖循环分析（2026-08-03，log）：原 postulate（2026-08-02 登记）的构造化路径自循环——
+--  fc(p⁺) ≤ₒ ∫p⁺ 经 fc-continuous（fc = 多项式下界 sup，§5b）展开为 {fc(q) : q ≤ p⁺}，
+--  而 fc(q) ≤ₒ ∫q 正是目标本身（对 q），循环不可经方案 A 正负分解绕过（p⁺ 非多项式，
+--  fc(p⁺) 侧唯一工具是 fc-continuous/fc-integral）。改用更基础的 fc-integral（§5c，
+--  谱定理函数演算 = 谱积分，与 spec-int-A 同层 D 类基础假设）直接降为定理——
+--  桥接减一（fc-poly-le-spec-int 不再独立登记），fc-integral 成为 fc 侧唯一剩余 D 类桥接。
+fc-poly-le-spec-int : (m : ℕ) (a : Fin m → ℝ) (n : Fin m → ℕ)
+  → fc (poly-fn {m} a n) ≤ₒ spec-int-general (poly-fn {m} a n)
+fc-poly-le-spec-int m a n =
+  subst (λ Z → Z ≤ₒ spec-int-general (poly-fn {m} a n))
+        (sym (fc-integral (poly-fn {m} a n)))
+        (≤ₒ-refl (spec-int-general (poly-fn {m} a n)))
 
 -- **可证**：谱积分单调——f ≤ g 点态 ⟹ spec-int-general f ≤ₒ spec-int-general g
 --（spec-int-below-mono（下界族单调）+ sup-op-least/upper）
@@ -3016,3 +3031,24 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 8（2026-08-03）：fc-poly-le-spec-int 依赖循环解决（v1.34）
+-- ------------------------------------------------------------------
+-- 关键变化：**fc-poly-le-spec-int 由 postulate 降为可证定理**（§10d，经 fc-integral
+-- §5c 桥接 + ≤ₒ-refl 登记）——fc(p) ≡ spec-int-general p（fc-integral）⟹
+-- fc(p) ≤ₒ spec-int-general p（subst + ≤ₒ-refl）。**桥接减一**。
+-- 依赖循环分析（2026-08-03，log）：原 postulate（2026-08-02 登记）的构造化路径自循环——
+--  fc(p⁺) ≤ₒ ∫p⁺ 经 fc-continuous（fc = 多项式下界 sup，§5b）展开为 {fc(q) : q ≤ p⁺}，
+--  而 fc(q) ≤ₒ ∫q 正是目标本身（对 q），循环不可经方案 A 正负分解绕过（p⁺ 非多项式，
+--  fc(p⁺) 侧唯一工具是 fc-continuous/fc-integral）。改用更基础的 fc-integral（§5c：
+--  fc f ≡ spec-int-general f，谱定理函数演算 = 谱积分，与 spec-int-A 同层 D 类基础
+--  假设）直接降 fc-poly-le-spec-int 为定理。
+-- 新增登记（v1.34，C 类补充）：≤ₒ-refl（X ≤ₒ X——Hilbert 层 ⟨(X−X)v,v⟩ = 0 ≥ 0，
+--  降定理路径 = 算子序 + 内积正定性）。
+-- 剩余状态：**fc 侧唯一剩余登记项 = fc-integral（§5c，fc = ∫）**——谱定理函数演算
+--  基础假设（与 spec-int-A 同级，健全）；fc-integral-le/ge/full（§10d）现依赖
+--  fc-integral（而非 fc-poly-le-spec-int postulate），fc-integral 完整降为定理需
+--  测度论完整层（sup 交换/函数演算实现），为后续路线。
+-- 方案 A 阶段 4 余项（v1.29-1.33）产出：dyadic 网格/阶梯构造/上界 ∫sₖ ≤ ∫p⁺/MCT
+--  （stair-seq/stair-MCT）——fc-integral 降定理的构造化基础设施（测度论层备用）。

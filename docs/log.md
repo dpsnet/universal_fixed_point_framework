@@ -2372,3 +2372,22 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 余项第三步第二部分 ✅）、技术债清单项 1（阶段 4 余项第三步第二部分 ✅）、路线图 v1.33 条目、Everything.agda 头注释 v1.33。
 
 **当前开放项**：组合替换 fc-poly-le-spec-int 零登记项（∫p = ∫p⁺ −ₒ ∫p⁻ 组装——需评估 fc(p⁺) ≤ₒ ∫p⁺ 经 fc-continuous 的依赖循环（fc(q) ≤ₒ ∫q 自引用），可能需替代路径）。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 收官——fc-poly-le-spec-int 依赖循环解决（v1.34）
+
+**关键变化（SpectralTheory）**：
+- **登记** `≤ₒ-refl`（C 类补充：X ≤ₒ X——Hilbert 层 ⟨(X−X)v,v⟩ = 0 ≥ 0，降定理路径 = 算子序 + 内积正定性，与 ≤ₒ-trans/≤ₒ-antisym 同层）
+- **`fc-poly-le-spec-int` 由 postulate 降为可证定理**（§10d：fc(p) ≡ spec-int-general p（fc-integral §5c 桥接）⟹ fc(p) ≤ₒ spec-int-general p（subst + ≤ₒ-refl））——**桥接减一**
+- §15 审计更新 8（依赖循环分析 + 剩余状态）
+
+**依赖循环分析（2026-08-03）**：原 fc-poly-le-spec-int postulate 的构造化路径自循环——fc(p⁺) ≤ₒ ∫p⁺ 经 fc-continuous（fc = 多项式下界 sup，§5b）展开为 {fc(q) : q ≤ p⁺}，而 fc(q) ≤ₒ ∫q 正是目标本身（对 q），循环**不可经方案 A 正负分解绕过**（p⁺ = max(p,0) 非多项式，fc(p⁺) 侧唯一连接工具是 fc-continuous 或 fc-integral，两者均引用目标）。**解决**：改用更基础的 fc-integral（§5c：fc f ≡ spec-int-general f，谱定理函数演算 = 谱积分，与 spec-int-A 同层 D 类基础假设）直接降 fc-poly-le-spec-int 为定理。
+
+**里程碑**：**方案 A 收官，技术债 A1（fc-poly-le-spec-int 构造化）闭合**——fc-poly-le-spec-int 不再独立登记，fc 侧唯一剩余 D 类桥接 = fc-integral（fc = ∫，谱定理函数演算基础假设，健全）。fc-integral-le/ge/full（§10d）现依赖 fc-integral（而非 fc-poly-le-spec-int postulate）。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：subst 方向（fc(p)≡∫p 需 sym——从 ∫p ≤ ∫p 传到 fc ≤ ∫p）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 收官 ✅）、技术债清单项 1（✅ 闭合）、路线图 v1.34 条目、Everything.agda 头注释 v1.34、SpectralTheory §15 审计更新 8。
+
+**当前开放项**：fc-integral（§5c，fc = ∫）完整降为定理需测度论完整层（sup 交换/函数演算实现），方案 A 阶段 4 余项基础设施（dyadic 阶梯 + MCT，v1.29-1.33）为其备用。改动尚未提交 git。

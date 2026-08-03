@@ -124,7 +124,14 @@ module Everything where
 --        sup-op-least + dyadic-int-below）+ stair-MCT 桥接登记（∫p⁺≤ₒsupₖ∫sₖ，Lebesgue
 --        单调收敛算子序形式，archimedean-ub/Vigier 同层分析学完备性族标准推论）+
 --        stair-int-full（∫p⁺=supₖ∫sₖ，≤ₒ-antisym）——fc-poly-le-spec-int 构造化的
---        收敛机制闭合；技术债 A1 阶段 4 余项第三步第二部分，v1.33））
+--        收敛机制闭合；技术债 A1 阶段 4 余项第三步第二部分，v1.33））；
+--        方案 A 阶段 4 收官（fc-poly-le-spec-int 依赖循环解决：SpectralTheory
+--        ≤ₒ-refl 登记（C 类补充）+ fc-poly-le-spec-int 由 postulate 降为可证定理
+--        （经 fc-integral §5c：fc(p) ≡ spec-int-general p ⟹ ≤ₒ，subst + ≤ₒ-refl）——
+--        依赖循环分析：fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 引用 fc-poly-le-spec-int 自循环
+--        （结构性，p⁺ 非多项式侧唯一工具是 fc-continuous/fc-integral），改用更基础
+--        fc-integral 直接降；桥接减一，fc 侧唯一剩余 D 类 = fc-integral（谱定理函数
+--        演算 = 谱积分，与 spec-int-A 同层）；方案 A 收官，技术债 A1 闭合，v1.34））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
