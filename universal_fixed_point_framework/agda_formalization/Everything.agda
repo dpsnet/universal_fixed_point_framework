@@ -90,7 +90,10 @@ module Everything where
 --        方案 A 阶段 3 收官（id 钉住完全解析：spec-int-nonneg-zero-off-support
 --        桥接（谱支集外零贡献）+ spec-int-A-decomp（spec-int-A ≡ ∫id⁺−ₒ∫id⁻）+
 --        spec-int-general-id-pos（∫id⁺ = spec-int-A）——三个钉住桥接全部解析，
---        技术债 A1 阶段 3 收官，v1.27））
+--        技术债 A1 阶段 3 收官，v1.27）；
+--        方案 A 阶段 4 第一/二步（fc 侧分解：fn-sub + fc-sub（fc 保减法）+
+--        fc-decomp-pos-neg（fc(p) = fc(p⁺)−ₒfc(p⁻)）——fc-poly-le-spec-int 构造化
+--        的 fc 侧前置，零新增公理；技术债 A1 阶段 4 第一/二步，v1.28））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数

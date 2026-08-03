@@ -1300,6 +1300,33 @@ fc-scalar-mul c g =
                (trans (·ₒ-comm c 𝟙ₒ (fc g))
                       (cong (λ Y → c ·ₒ Y) (*ₒ-ident-l (fc g)))))
 
+-- 函数减法（点态）：(f − g)(x) = f x −ℝ g x（阶段 4：fc 保减法的基础）
+fn-sub : (ℝ → ℝ) → (ℝ → ℝ) → ℝ → ℝ
+fn-sub f g x = f x -ℝ g x
+
+-- **可证**：fc 保减法——fc(f − g) = fc f −ₒ fc g（阶段 4 第一步）
+--（fn-sub 点态展开（sub-ℝ-def + fc-ext）→ fc-add（加性）→ fc-scalar-mul（−1 标量）
+--  → _−ₒ_ 定义；fc(p) = fc(p⁺) − fc(p⁻) 分解路径的核心组件——fc-poly-le-spec-int
+--  构造化（∫p = ∫p⁺ −ₒ ∫p⁻，p⁺/p⁻ 非负 ⟹ 非负 sup 逼近）的前置）
+fc-sub : (f g : ℝ → ℝ) → fc (fn-sub f g) ≡ fc f -ₒ fc g
+fc-sub f g =
+  trans (fc-ext (λ x → sub-ℝ-def (f x) (g x)))
+        (trans (fc-add f (λ x → negℝ (g x)))
+               (cong₂ _+ₒ_ refl neg-scalar))
+  where
+  neg-scalar : fc (λ x → negℝ (g x)) ≡ (negℝ oneℝ) ·ₒ fc g
+  neg-scalar = trans (fc-ext (λ x → sym (neg-one-mul (g x))))
+                     (fc-scalar-mul (negℝ oneℝ) g)
+
+-- **可证**：fc 正负分解——fc(p) = fc(p⁺) −ₒ fc(p⁻)（阶段 4 第二步）
+--（fc-ext（p = p⁺ − p⁻ 逐点，decomp-pos-neg）+ fc-sub——把 fc(p) 分解为两个
+--  非负函数 p⁺/p⁻ 的 fc；fc-poly-le-spec-int 构造化的关键组件：fc(p) ≤ₒ
+--  ∫p⁺ −ₒ ∫p⁻（p⁺/p⁻ 非负 ⟹ 各自由非负 sup 逼近，v1.15 幂单调性 + dyadic 阶梯））
+fc-decomp-pos-neg : (p : ℝ → ℝ) → fc p ≡ fc (pos-part p) -ₒ fc (neg-part p)
+fc-decomp-pos-neg p =
+  trans (sym (fc-ext (λ x → decomp-pos-neg p x)))
+        (fc-sub (pos-part p) (neg-part p))
+
 -- 简单函数的点态函数（SimpleF → ℝ → ℝ）：s(x) = Σᵢ cᵢ·1_{Ωᵢ}(x)
 simple-fn : SimpleF → (ℝ → ℝ)
 simple-fn s x = sum-ℝ {SimpleF.m s} (λ i → SimpleF.c s i *ℝ indicator (SimpleF.Ω s i) x)

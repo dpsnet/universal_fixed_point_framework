@@ -2256,3 +2256,20 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 3 收官 ✅）、技术债清单项 1（阶段 3 ✅）、路线图 v1.27 条目、Everything.agda 头注释 v1.27、SpectralTheory §15 审计更新 7。
 
 **当前开放项**：阶段 4（fc-poly-le-spec-int 组合替换：∫p = ∫p⁺ −ₒ ∫p⁻ 各自由非负 sup 构造化 + v1.15 幂单调性引理库 + dyadic 阶梯逼近）。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 第一/二步——fc 侧分解组件（v1.28）
+
+**新增（SpectralTheory §5f，零新增公理）**：
+- `fn-sub`：函数减法定义（(f−g)(x) = f x −ℝ g x）
+- **可证** `fc-sub`：**fc 保减法**——fc(f−g) ≡ fc f −ₒ fc g（fn-sub 点态展开（sub-ℝ-def + fc-ext）→ fc-add（加性）→ fc-scalar-mul（−1 标量）→ _−ₒ_ 定义）
+- **可证** `fc-decomp-pos-neg`：**fc 正负分解**——fc(p) ≡ fc(p⁺) −ₒ fc(p⁻)（fc-ext（p = p⁺ − p⁻ 逐点，decomp-pos-neg）+ fc-sub）
+
+**里程碑**：**fc(p) 分解为两个非负函数 p⁺/p⁻ 的 fc**——fc-poly-le-spec-int 构造化（fc(p) ≤ₒ ∫p⁺ −ₒ ∫p⁻，p⁺/p⁻ 非负 ⟹ 各自由非负 sup 逼近）的 fc 侧前置。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 第一/二步 ✅）、技术债清单项 1（阶段 4 第一/二步 ✅）、路线图 v1.28 条目、Everything.agda 头注释 v1.28。
+
+**当前开放项**：阶段 4 余项（∫p⁺/∫p⁻ 的非负 sup 逼近：dyadic 阶梯——v1.15 幂单调性引理库 + SimpleF 阶梯构造 + 上界 ∫sₖ ≤ Aⁿ + MCT → fc-poly-le-spec-int 零登记项）。改动尚未提交 git。
