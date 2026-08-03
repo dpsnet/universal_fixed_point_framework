@@ -2330,3 +2330,28 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 4（2026-08-03）：跨层降定理映射形式化为可证证书
+-- ------------------------------------------------------------------
+-- 已形式化（v1.21，CrossLayer §2 SpectralObjPt + spectral-obj-pt）：
+--  - E-total / E-union / E-idempotent / E-orthogonal（A 类，可证定理侧）
+--    ↔ HilbertSpace E-hilb-total / E-hilb-union / E-hilb-idemp / E-hilb-orth
+--    （§10c/§10d）——点态/内积版对应（E-idem-pt/E-orth-ip/E-total-pt/E-union-pt），
+--    零新增公理；
+--  - 谱投影自伴/范数（E-self-adjoint/E-norm-le-one ↔ §10c E-hilb-self-adjoint/
+--    E-hilb-norm-le-one）；
+--  - 半群对象（semigroup/exp-tA-zero，A 类）↔ HilbertSpace §12 exp-hilb-tA
+--    （exp-tA-semigroup-pt/exp-tA-zero-pt/exp-tA-self-adjoint/exp-tA-contractive，
+--    桥接字段）。
+-- 注：本层跨层映射（v1.14 OpAlgPt 算子代数 + v1.21 SpectralObjPt 谱对象）现均
+-- 为可证证书（点态/性质版）；算子级等式版（E-idempotent 的 E P *ₒ E P ≡ E P
+-- 等）需 funext 提升，结构性限制（P4 先例），不登记新 postulate。
+--
+-- 待降定理（2026-08-03 再再更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：多阶段路线
+--    （阶段 1 ✅ 幂单调性引理库；阶段 2 dyadic 分划与阶梯函数；阶段 3 上界 + MCT；
+--    阶段 4 组合替换桥接）——需语义重构方案先行
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    A/fc 对象 Hilbert 侧构造（依赖谱定理降定理链）
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛

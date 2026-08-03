@@ -2120,3 +2120,23 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 项 3 更新（✅ 已闭合，v1.19-1.20）、路线图 v1.20 条目、Everything.agda 头注释 v1.20、SpectralTheory §15 公理纪律审计更新 3。
 
 **当前开放项**：fc-poly-le-spec-int（须先出语义重构方案）；跨层完整实例化。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：跨层模型谱对象映射证书（v1.21，技术债清单 A4 谱对象映射部分）
+
+**新增（CrossLayer §2，SpectralTheory 谱论公理 → Hilbert 构造的跨层证书）**：
+- **`SpectralObjPt` record**（Set₁，10 字段 = SpectralTheory 谱论公理模式在 LinOp 层的对应签名）：
+  - **E 族**（E P ↦ E-hilb P）：`E-idem-pt`（E-idempotent 点态：E(P)²x = E(P)x）、`E-orth-ip`（E-orthogonal 内积版：P∩Q=∅ ⟹ ⟨E(P)u,E(Q)v⟩ = 0）、`E-total-pt`（E(ℝ)x = x）、`E-self-adjoint`、`E-norm-le-one`、`E-union-pt`（E(P∪Q)x = E(P)x + E(Q)x）
+  - **exp-tA 族**（exp-tA t ↦ exp-hilb-tA t）：`exp-tA-semigroup-pt`（半群方程点态）、`exp-tA-zero-pt`（e^(0A)x = x）、`exp-tA-self-adjoint`、`exp-tA-contractive`（‖e^(-tA)‖ ≤ 1）
+- **可证** `spectral-obj-pt` 实例化——**E 族字段全部来自 HilbertSpace §10c-§10e 可证定理（E-hilb-idemp/orth/total/self-adjoint/norm-le-one/union），零新增公理**；exp-tA 族字段为 §12 半群桥接（exp-hilb-semigroup/zero/self-adjoint/contractive）
+
+**里程碑**：**§15 审计跨层降定理映射（E-total/E-union/E-σ-add ↔ HilbertSpace §10c-e/§14、半群 ↔ §12）从"注释断言"形式化为可证证书**——技术债清单（笔记 §5.16.7）A4 跨层完整实例化的谱对象映射部分闭合。形式 = 点态/性质断言（∀v. 值级等式/内积正交/范数 ≤ 1/自伴谓词），避开 funext（算子级等式提升需函数外延性，P4 先例）。
+
+**验证**：`agda CrossLayer\CrossLayer.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：`⊥`/`≤ℝ` 需加入 DHStructural import（证书字段签名用到 disjoint 与范数比较）。
+
+**记录**：笔记 §5.16.7 项 4 更新（谱对象映射部分 ✅）、路线图 v1.21 条目、Everything.agda 头注释 v1.21、SpectralTheory §15 审计更新 4。
+
+**当前开放项**：A/fc 对象 Hilbert 侧构造（谱定理降定理链）；算子层等式版 + op-lin 保结构（funext 受限，结构性）；fc-poly-le-spec-int（须先出语义重构方案）。改动尚未提交 git。

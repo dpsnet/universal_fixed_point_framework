@@ -50,7 +50,7 @@ open import Agda.Builtin.Equality using (_≡_; refl)
 open import Sp.SpCategory using (sym)
 
 -- ℝ 层
-open import DHStructural.DHStructuralAnalysis using (ℝ; zeroℝ; oneℝ)
+open import DHStructural.DHStructuralAnalysis using (ℝ; zeroℝ; oneℝ; _+ℝ_; _≤ℝ_; _⊎_; ⊥)
 
 -- Op 层（P1Spectral：抽象算子代数公理，跨层验证的源；SpectralTheory 复用同一 Op）
 open import P1Spectral.P1Spectral
@@ -58,7 +58,12 @@ open import P1Spectral.P1Spectral
 
 -- LinOp 层（HilbertSpace：具体线性算子，跨层验证的目标；§16 点态律全齐）
 open import HilbertSpace.HilbertSpace
-  using (V; LinOp; zero-op; op-add; op-comp; id-op; _·ₗ_;
+  using (V; LinOp; zero-op; op-add; op-comp; id-op; _·ₗ_; _+ᵥ_; _⟨⟩_; op-norm;
+         TopP; SelfAdjoint;
+         E-hilb; E-hilb-idemp; E-hilb-orth; E-hilb-total;
+         E-hilb-self-adjoint; E-hilb-norm-le-one; E-hilb-union;
+         exp-hilb-tA; exp-hilb-semigroup; exp-hilb-zero;
+         exp-hilb-self-adjoint; exp-hilb-contractive;
          +ₗ-assoc-pt; +ₗ-comm-pt; +ₗ-ident-pt;
          op-comp-assoc-pt; op-comp-id-pt; op-comp-id-r-pt;
          *ₗ-zero-r-pt; *ₗ-zero-l-pt; distribₗ-pt; distribₗ-l-pt;
@@ -124,4 +129,64 @@ op-alg-pt = record
   ; ·ₗ-comm = λ c X Y v → sym (·ₗ-comp-pt c X Y v)
   ; ·ₗ-comm-l = ·ₗ-comm-l-pt
   ; ·ₗ-zero-l = ·ₗ-zero-l-pt
+  }
+
+-- ==================================================================
+-- §2 谱对象映射证书（跨层模型第二步：谱论公理 → Hilbert 构造，2026-08-03）
+-- ==================================================================
+-- 目标：把 SpectralTheory 谱论公理族（§1 E / exp-tA）在 Hilbert 层的构造对应
+-- （E P ↦ E-hilb P、exp-tA t ↦ exp-hilb-tA t）组织为可证证书——§15 审计
+-- 跨层降定理映射（E-total/E-union/E-σ-add ↔ HilbertSpace §10c-e/§14、
+-- 半群 ↔ §12）的形式化版本（A4 跨层完整实例化的谱对象映射部分）。
+-- 形式：点态/性质断言（∀v. 值级等式 / 内积正交 / 范数 ≤ 1 / 自伴谓词），
+-- 避开 funext（算子级等式（如 E-idempotent 的 E P *ₒ E P ≡ E P）在 LinOp 层
+-- 需函数外延性提升，P4 先例；对象映射 op-lin 的等式保结构同理，留降定理链）。
+-- 字段类型即 SpectralTheory 公理模式（E-idempotent/E-orthogonal/E-total/
+-- E-union/semigroup/exp-tA-zero）在 LinOp 层的对应签名。
+
+record SpectralObjPt : Set₁ where
+  field
+    -- E-idempotent（E P *ₒ E P ≡ E P）点态对应：E(P)(E(P)x) = E(P)x
+    E-idem-pt : (P : ℝ → Set) (x : V)
+      → LinOp.f (op-comp (E-hilb P) (E-hilb P)) x ≡ LinOp.f (E-hilb P) x
+    -- E-orthogonal（P∩Q=∅ ⟹ E P *ₒ E Q ≡ 𝟘ₒ）对应（内积正交版）：
+    -- P∩Q=∅ ⟹ ⟨E(P)u, E(Q)v⟩ = 0（E(P)u ⊥ E(Q)v）
+    E-orth-ip : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥) → (u v : V)
+      → LinOp.f (E-hilb P) u ⟨⟩ LinOp.f (E-hilb Q) v ≡ zeroℝ
+    -- E-total（E(ℝ) = 𝟙ₒ）点态对应：E(ℝ)x = x
+    E-total-pt : (x : V) → LinOp.f (E-hilb TopP) x ≡ x
+    -- 谱投影自伴（⟨E(P)x, y⟩ = ⟨x, E(P)y⟩）
+    E-self-adjoint : (P : ℝ → Set) → SelfAdjoint (E-hilb P)
+    -- 谱投影范数 ≤ 1（proj-norm-le-one 的谱投影实例）
+    E-norm-le-one : (P : ℝ → Set) → op-norm (E-hilb P) ≤ℝ oneℝ
+    -- E-union（P∩Q=∅ ⟹ E(P∪Q) ≡ E(P) + E(Q)）点态对应：E(P∪Q)x = E(P)x + E(Q)x
+    E-union-pt : (P Q : ℝ → Set) → ((x : ℝ) → P x → Q x → ⊥) → (x : V)
+      → LinOp.f (E-hilb (λ z → P z ⊎ Q z)) x ≡ LinOp.f (E-hilb P) x +ᵥ LinOp.f (E-hilb Q) x
+    -- semigroup（exp-tA(s+t) ≡ exp-tA s *ₒ exp-tA t）点态对应
+    exp-tA-semigroup-pt : (s t : ℝ) (x : V)
+      → LinOp.f (exp-hilb-tA (s +ℝ t)) x
+        ≡ LinOp.f (op-comp (exp-hilb-tA s) (exp-hilb-tA t)) x
+    -- exp-tA-zero（exp-tA 0 ≡ 𝟙ₒ）点态对应：e^(0A)x = x
+    exp-tA-zero-pt : (x : V) → LinOp.f (exp-hilb-tA zeroℝ) x ≡ x
+    -- e^(-tA) 自伴
+    exp-tA-self-adjoint : (t : ℝ) → SelfAdjoint (exp-hilb-tA t)
+    -- 压缩（‖e^(-tA)‖ ≤ 1）
+    exp-tA-contractive : (t : ℝ) → op-norm (exp-hilb-tA t) ≤ℝ oneℝ
+
+-- **可证（E 族零新增公理；exp-tA 族字段为 §12 桥接）**：谱对象映射证书实例化——
+-- E 族字段全部来自 HilbertSpace §10c-§10e 可证定理（E-hilb-idemp/orth/total/
+-- self-adjoint/norm-le-one/union），exp-tA 族字段来自 §12 半群桥接
+-- （exp-hilb-semigroup/zero/self-adjoint/contractive）
+spectral-obj-pt : SpectralObjPt
+spectral-obj-pt = record
+  { E-idem-pt = E-hilb-idemp
+  ; E-orth-ip = E-hilb-orth
+  ; E-total-pt = E-hilb-total
+  ; E-self-adjoint = E-hilb-self-adjoint
+  ; E-norm-le-one = E-hilb-norm-le-one
+  ; E-union-pt = E-hilb-union
+  ; exp-tA-semigroup-pt = exp-hilb-semigroup
+  ; exp-tA-zero-pt = exp-hilb-zero
+  ; exp-tA-self-adjoint = exp-hilb-self-adjoint
+  ; exp-tA-contractive = exp-hilb-contractive
   }

@@ -61,7 +61,12 @@ module Everything where
 --        （DHStructural archimedean-ub/archimedean-ub-bound，ℝ 完备性族标准公理，
 --        降定理路径 = 标准实数构造）+ simple-below-ℕ-trunc + spec-int-below-member-≤-ℕ-sup
 --        ⟹ spec-int-trunc-ℕ-conv（∫f = supₙ∫min(f,n)，原 spec-int-trunc-conv 桥接
---        删除降为可证定理；技术债清单 A3 全闭合，桥接减一，v1.20））
+--        删除降为可证定理；技术债清单 A3 全闭合，桥接减一，v1.20）；
+--        跨层模型谱对象映射证书（CrossLayer §2：SpectralObjPt——E P ↦ E-hilb P
+--        （E-idem-pt/orth-ip/total-pt/self-adjoint/norm-le-one/union-pt，可证零新增
+--        公理）+ exp-tA t ↦ exp-hilb-tA t（semigroup-pt/zero-pt/self-adjoint/
+--        contractive，§12 桥接字段）；§15 审计跨层映射从注释断言形式化为可证证书，
+--        A4 谱对象映射部分闭合，v1.21））
 -- T4 🔄  Hilbert 空间/拓扑层（HilbertSpace：内积 → 范数 → 有界算子，阶段 8 立项 v0.84——
 --        向量空间 + 内积基础 + 范数平方首批引理；Cauchy-Schwarz 闭合 v0.85；
 --        范数公理落地（√ 扩展 + 三角不等式）v0.88；有界线性算子 + 算子范数
