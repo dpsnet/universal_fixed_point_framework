@@ -43,7 +43,7 @@ open import DHStructural.DHStructuralAnalysis
   using (ℝ; zeroℝ; oneℝ; negℝ; exp; log; _≤ℝ_; _<ℝ_; _+ℝ_; _*ℝ_; _-ℝ_; _/ℝ_; subst; neg-neg; exp-inj; log-exp; exp-log;
          exp-pos; exp-mono-≤; exp-zero; neg-≤-ℝ; *-≤-mono-ℝ; *-≤-mono-l-ℝ; *-nonneg-ℝ; lt-*-pos-ℝ; *-comm-ℝ; *-zero-ℝ; neg-zero; +-comm-ℝ;
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
-         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ; trans-<ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
+         sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; lt-≤-trans-ℝ; ≤-lt-trans-ℝ; trans-<ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂; div-one-ℝ; /-cross-ℝ;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
          max-ℝ; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          max-pos-value; max-neg-value; max-zero-zero;
@@ -2279,6 +2279,158 @@ dyadic-disj k c hc i j neq x pix pjx | inj₂ (inj₁ jlti) =
   dyadic-disj-lt k c hc {fin-to-nat j} {fin-to-nat i} jlti x pjx pix
 dyadic-disj k c hc i j neq x pix pjx | inj₂ (inj₂ eq) =
   ⊥-Sp-elim (fin-to-nat-inj neq eq)
+
+-- ==================================================================
+-- SimpleF dyadic 阶梯构造（阶段 4 余项第二步第二部分：cover 侧，2026-08-03）
+-- ==================================================================
+-- 目标：组装 SimpleF dyadic 实例（disj v1.30 已闭合，本部分闭合 cover + 实例）。
+-- 设计（覆盖全空间的三段式 Ω，m = suc (suc (2^k))）：
+--   Ω zero        = (-∞,0)          （负部）
+--   Ω (suc zero)  = [c,∞)            （正部）
+--   Ω (suc (suc i)) = [xᵢ, xᵢ₊₁)    （dyadic 区间，i : Fin (2^k)）
+-- 覆盖：x<0 → 负部；c≤x → 正部；0≤x<c → 划分定理（dyadic-cover 桥接）给 dyadic。
+-- 注意：dyadic-Ω 末区间 Ω_{2^k-1} = [x_{2^k-1}, c) 左闭右开，x=c 落在正部，无缝隙。
+
+-- ℕ 层 ≤（划分定理/上界论证）
+_≤ℕ_ : ℕ → ℕ → Set
+m ≤ℕ n = (m <ℕ n) ⊎ (m ≡ n)
+
+-- m < n ⟹ suc m ≤ℕ n（<-ℕ-suc-split 转 ≤ℕ）
+≤-ℕ-suc-le : {m n : ℕ} → m <ℕ n → suc m ≤ℕ n
+≤-ℕ-suc-le h with <-ℕ-suc-split h
+≤-ℕ-suc-le h | inj₁ p = inj₁ p
+≤-ℕ-suc-le h | inj₂ q = inj₂ q
+
+-- **可证**：Fin 下标恒小于类型大小
+Fin-<ℕ : {n : ℕ} (i : Fin n) → fin-to-nat i <ℕ n
+Fin-<ℕ {zero}   ()
+Fin-<ℕ {suc n}  zero    = z<s
+Fin-<ℕ {suc n}  (suc i) = s<s (Fin-<ℕ i)
+
+-- **可证**：网格末点 = c——x_{2^k} ≡ c（/-cross-ℝ：((2^k·c)/2^k = c/1) +
+--  *-ident-ℝ + *-comm-ℝ + div-one-ℝ）
+grid-pt-last : (k : ℕ) (c : ℝ) → grid-pt k c (2^ k) ≡ c
+grid-pt-last k c =
+  trans (/-cross-ℝ {a = natℝ (2^ k) *ℝ c} {b = c} {c = natℝ (2^ k)} {d = oneℝ}
+                   (trans (*-ident-ℝ (natℝ (2^ k) *ℝ c)) (*-comm-ℝ (natℝ (2^ k)) c)))
+        (div-one-ℝ c)
+
+-- **可证**：网格点不超过 c——j ≤ℕ 2^k ⟹ xⱼ ≤ℝ c
+--（j < 2^k：xⱼ < x_{2^k} = c（grid-pt-lt + grid-pt-last）；j = 2^k：xⱼ = c）
+grid-pt-upper : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → {j : ℕ} → j ≤ℕ 2^ k → grid-pt k c j ≤ℝ c
+grid-pt-upper k c hc {j} (inj₁ jlt) =
+  <-≤-ℝ (subst (λ w → grid-pt k c j <ℝ w) (grid-pt-last k c)
+              (grid-pt-lt k c hc {j} {2^ k} jlt))
+grid-pt-upper k c hc {j} (inj₂ jeq) =
+  subst (λ w → w ≤ℝ c) (sym p) (refl-≤ℝ {c})
+  where
+  p : grid-pt k c j ≡ c
+  p = subst (λ w → grid-pt k c w ≡ c) (sym jeq) (grid-pt-last k c)
+
+-- 桥接登记：实数划分定理（dyadic 网格覆盖 [0,c)）——∀x. 0 ≤ x < c ⟹
+--   ∃j < 2^k. xⱼ ≤ x < xⱼ₊₁（SimpleF dyadic 实例的 cover 核心）
+--（模型必然性 = ℝ 的 Archimedean 性质（标准有序域划分定理：floor 存在）；
+--  降定理路径 = WellOrdering（ℕ 良序，NatArith wf-acc）+ floor 论证完整实现；
+--  与 archimedean-ub（v1.20 登记）同层的 ℝ 完备性族标准推论，构造框架中显式登记）
+postulate
+  dyadic-cover : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (x : ℝ) → zeroℝ ≤ℝ x → x <ℝ c
+    → Σ (Fin (2^ k)) (λ j → dyadic-Ω k c (fin-to-nat j) x)
+
+-- 三段式 dyadic 区间族（覆盖全空间）：Ω₀ = 负部 (-∞,0)、Ω₁ = 正部 [c,∞)、
+--   Ω_{2+i} = dyadic-Ω i（i : Fin (2^k)）——m = suc (suc (2^k)) 共 2^k+2 个原子
+dyadic-Ω3 : (k : ℕ) (c : ℝ) → Fin (suc (suc (2^ k))) → Borel
+dyadic-Ω3 k c zero          x = x <ℝ zeroℝ
+dyadic-Ω3 k c (suc zero)    x = c ≤ℝ x
+dyadic-Ω3 k c (suc (suc i)) x = dyadic-Ω k c (fin-to-nat i) x
+
+-- **可证**：三段式区间不相交（严格序版）——i <ℕ j ⟹ Ωᵢ ∩ Ωⱼ = ∅
+--（情形：负部 vs 正部（x<0<c ⟹ x<c 且 c≤x ⟹ c<c）、负部 vs dyadic（xᵢ≤x<0 与 xᵢ≥0 矛盾）、
+--  正部 vs dyadic（x<xᵢ₊₁≤c（grid-pt-upper）与 c≤x ⟹ c<c）、dyadic vs dyadic（dyadic-disj-lt））
+dyadic-disj3-lt : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → {i j : Fin (suc (suc (2^ k)))}
+  → fin-to-nat i <ℕ fin-to-nat j → (x : ℝ) → dyadic-Ω3 k c i x → dyadic-Ω3 k c j x → ⊥
+-- 负部 vs 正部：x < 0 ≤ c ⟹ x < c 且 c ≤ x ⟹ c < c（≤-lt-trans-ℝ + irreflexive-ℝ）
+dyadic-disj3-lt k c hc {zero} {suc zero} ij x px py =
+  irreflexive-ℝ (≤-lt-trans-ℝ py (lt-≤-trans-ℝ px (<-≤-ℝ hc)))
+-- 负部 vs dyadic：xᵢ ≤ x < 0 与 0 ≤ xᵢ（grid-pt-nonneg）矛盾
+dyadic-disj3-lt k c hc {zero} {suc (suc j')} ij x px (xj≤x , x<xj1) =
+  irreflexive-ℝ (≤-lt-trans-ℝ (grid-pt-nonneg k c (<-≤-ℝ hc) (fin-to-nat j')) xj'<0)
+  where
+  xj' : ℝ
+  xj' = grid-pt k c (fin-to-nat j')
+  -- xᵢ ≤ x 且 x < 0 ⟹ xᵢ < 0
+  xj'<0 : xj' <ℝ zeroℝ
+  xj'<0 = ≤-lt-trans-ℝ xj≤x px
+-- 正部 vs dyadic：x < xᵢ₊₁ ≤ c 且 c ≤ x ⟹ c < c
+dyadic-disj3-lt k c hc {suc zero} {suc (suc j')} ij x py (xj≤x , x<xj1) =
+  irreflexive-ℝ (≤-lt-trans-ℝ py (lt-≤-trans-ℝ x<xj1 xj1≤c))
+  where
+  -- xᵢ₊₁ ≤ c：suc(fin-to-nat j') ≤ℕ 2^k（Fin-<ℕ + <-ℕ-suc-split）+ grid-pt-upper
+  xj1≤c : grid-pt k c (suc (fin-to-nat j')) ≤ℝ c
+  xj1≤c = grid-pt-upper k c hc (≤-ℕ-suc-le (Fin-<ℕ j'))
+-- dyadic vs dyadic：s<s-inv 反解 fin-to-nat 次序 + dyadic-disj-lt
+dyadic-disj3-lt k c hc {suc (suc i')} {suc (suc j')} ij x (xi≤x , x<xi1) (xj≤x , x<xj1) =
+  dyadic-disj-lt k c hc {fin-to-nat i'} {fin-to-nat j'} (s<s-inv (s<s-inv ij)) x (xi≤x , x<xi1) (xj≤x , x<xj1)
+-- i < j 且 j 的构造使 i ≥ 2（不可能）
+dyadic-disj3-lt k c hc {suc (suc i')} {suc zero} (s<s ()) x px py
+dyadic-disj3-lt k c hc {suc (suc i')} {zero} () x px py
+dyadic-disj3-lt k c hc {suc zero} {zero} () x px py
+dyadic-disj3-lt k c hc {suc zero} {suc zero} (s<s ()) x px py
+
+-- **可证**：三段式区间不相交（Fin 版，SimpleF.disj）——i ≢ j ⟹ Ωᵢ ∩ Ωⱼ = ∅
+dyadic-disj3 : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (i j : Fin (suc (suc (2^ k)))) → i ≢ j
+  → (x : ℝ) → dyadic-Ω3 k c i x → dyadic-Ω3 k c j x → ⊥
+dyadic-disj3 k c hc i j neq x pix pjx with fin-to-nat-trich i j
+dyadic-disj3 k c hc i j neq x pix pjx | inj₁ iltj =
+  dyadic-disj3-lt k c hc {i} {j} iltj x pix pjx
+dyadic-disj3 k c hc i j neq x pix pjx | inj₂ (inj₁ jlti) =
+  dyadic-disj3-lt k c hc {j} {i} jlti x pjx pix
+dyadic-disj3 k c hc i j neq x pix pjx | inj₂ (inj₂ eq) =
+  ⊥-Sp-elim (fin-to-nat-inj neq eq)
+
+-- **可证**：三段式全空间覆盖——∀x. ∃i. Ωᵢ x
+--（三分律三分：x<0 → 负部；c≤x → 正部；0≤x<c → dyadic-cover 划分定理）
+dyadic-cover3 : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (x : ℝ)
+  → Σ (Fin (suc (suc (2^ k)))) (λ i → dyadic-Ω3 k c i x)
+dyadic-cover3 k c hc x with trichotomy-ℝ x zeroℝ | trichotomy-ℝ x c
+-- 负部：x < 0
+dyadic-cover3 k c hc x | inj₁ x<0 | _ = zero , x<0
+-- x = 0 且 x < c：划分定理（0 ≤ x 经 x=0）
+dyadic-cover3 k c hc x | inj₂ (inj₁ x0) | inj₁ x<c =
+  suc (suc (proj₁ dc)) , proj₂ dc
+  where
+  0≤x : zeroℝ ≤ℝ x
+  0≤x = subst (λ w → zeroℝ ≤ℝ w) (sym x0) (refl-≤ℝ {zeroℝ})
+  dc : Σ (Fin (2^ k)) (λ j → dyadic-Ω k c (fin-to-nat j) x)
+  dc = dyadic-cover k c hc x 0≤x x<c
+-- x = 0 且 x = c：0 < c 与 0 ≡ c 矛盾
+dyadic-cover3 k c hc x | inj₂ (inj₁ x0) | inj₂ (inj₁ xc) =
+  ⊥-elim (irreflexive-ℝ (subst (λ w → zeroℝ <ℝ w) (sym (trans (sym x0) xc)) hc))
+-- x = 0 且 c < x：0 < c 且 c < 0 矛盾
+dyadic-cover3 k c hc x | inj₂ (inj₁ x0) | inj₂ (inj₂ c<x) =
+  ⊥-elim (irreflexive-ℝ (trans-<ℝ hc (subst (λ w → c <ℝ w) x0 c<x)))
+-- 0 < x 且 x < c：划分定理（0 ≤ x 经 0 < x）
+dyadic-cover3 k c hc x | inj₂ (inj₂ 0<x) | inj₁ x<c =
+  suc (suc (proj₁ dc)) , proj₂ dc
+  where
+  dc : Σ (Fin (2^ k)) (λ j → dyadic-Ω k c (fin-to-nat j) x)
+  dc = dyadic-cover k c hc x (<-≤-ℝ 0<x) x<c
+-- 0 < x 且 x = c / c < x：正部 [c,∞)
+dyadic-cover3 k c hc x | inj₂ (inj₂ 0<x) | inj₂ (inj₁ xc) =
+  suc zero , subst (λ w → c ≤ℝ w) (sym xc) (refl-≤ℝ {c})
+dyadic-cover3 k c hc x | inj₂ (inj₂ 0<x) | inj₂ (inj₂ c<x) =
+  suc zero , <-≤-ℝ c<x
+
+-- **SimpleF dyadic 阶梯实例**（值函数 vc 参数化）：m = suc (suc (2^k))、
+--   Ω = 三段式 dyadic-Ω3、disj/cover 全部可证（disj3/cover3）
+--（s ≤ f 逐点（dom 字段）由调用处按具体 f 提供）
+dyadic-stair : (k : ℕ) (c : ℝ) → zeroℝ <ℝ c → (vc : Fin (suc (suc (2^ k))) → ℝ) → SimpleF
+dyadic-stair k c hc vc = record
+  { m = suc (suc (2^ k))
+  ; c = vc
+  ; Ω = dyadic-Ω3 k c
+  ; disj = λ i j neq x → dyadic-disj3 k c hc i j neq x
+  ; cover = dyadic-cover3 k c hc
+  }
 
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel

@@ -2312,3 +2312,25 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.8 执行状态（阶段 4 余项第二步第一部分 ✅）、技术债清单项 1（阶段 4 余项第二步第一部分 ✅）、路线图 v1.30 条目、Everything.agda 头注释 v1.30。
 
 **当前开放项**：SimpleF 阶梯构造的 cover 侧（实数划分定理：∀x∈[0,c).∃j<2^k. xⱼ≤x<xⱼ₊₁，依赖 archimedean-ub）+ SimpleF dyadic 实例组装（三段式 Ω：负部/dyadic/正部）→ 上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。
+
+## 实现完成（2026-08-03）：方案 A 阶段 4 余项第二步第二部分——SimpleF dyadic 阶梯实例组装（v1.31）
+
+**新增（SpectralTheory，SimpleF 阶梯构造 cover 侧 + 实例）**：
+- `_≤ℕ_`/`≤-ℕ-suc-le`（**可证**：ℕ 层 ≤；m < n ⟹ suc m ≤ℕ n）+ `Fin-<ℕ`（**可证**：Fin 下标恒小于类型大小，归纳）
+- `grid-pt-last`（**可证**：网格末点 = c——x_{2^k} ≡ c：/-cross-ℝ（(2^k·c)/2^k = c/1）+ *-ident-ℝ + *-comm-ℝ + div-one-ℝ）
+- `grid-pt-upper`（**可证**：网格点不超过 c——j ≤ℕ 2^k ⟹ xⱼ ≤ℝ c：j<2^k 经 grid-pt-lt + grid-pt-last，j=2^k 经 ≡）
+- **桥接登记** `dyadic-cover`（实数划分定理：∀x. 0 ≤ x < c ⟹ ∃j < 2^k. xⱼ ≤ x < xⱼ₊₁——模型必然性 = ℝ Archimedean 性质（标准有序域划分定理：floor 存在），降定理路径 = WellOrdering（ℕ 良序）+ floor 论证完整实现，与 archimedean-ub（v1.20）同层 ℝ 完备性族标准推论）
+- `dyadic-Ω3`（三段式 Ω 覆盖全空间：Ω₀ = 负部 (-∞,0)、Ω₁ = 正部 [c,∞)、Ω_{2+i} = dyadic-Ω i，m = suc (suc (2^k)) 共 2^k+2 原子）
+- `dyadic-disj3-lt`/`dyadic-disj3`（**可证**：三段式不相交——负部 vs 正部（x<0<c ⟹ x<c 且 c≤x ⟹ c<c）、负部 vs dyadic（xᵢ≤x<0 与 xᵢ≥0 矛盾）、正部 vs dyadic（x<xᵢ₊₁≤c（grid-pt-upper）与 c≤x ⟹ c<c）、dyadic vs dyadic（dyadic-disj-lt）；fin-to-nat-trich 组装）
+- `dyadic-cover3`（**可证**：三段式全空间覆盖——三分律三分：x<0 → 负部、c≤x → 正部、0≤x<c → dyadic-cover）
+- `dyadic-stair`（**SimpleF dyadic 阶梯实例**：m/Ω/disj/cover 全部就位，值函数 vc 参数化——s ≤ f 逐点（dom）由调用处按具体 f 提供）
+
+**里程碑**：**阶段 4 余项第二步（SimpleF 阶梯构造）闭合**——Fin 2^k 分划 + disj（v1.30）+ cover（v1.31）+ SimpleF 实例组装全部完成。剩余路线：上界 ∫sₖ ≤ Aⁿ → MCT → fc-poly-le-spec-int 零登记项。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：grid-pt-last 的 *-comm-ℝ 参数顺序（需 natℝ(2^k)*c ≡ c*natℝ(2^k)）；grid-pt-upper 两处 subst 方向（inj₂ 分支需 sym jeq + 外层 sym p）；≤-lt-trans-ℝ 的 x/y/z 为隐式参数（勿显式传实数）；suc(suc i')<ℕ suc zero 需 s<s 展开一层才空；dyadic-cover3 情形 4/6 subst 方向（x0 直接、xc 需 sym）。
+
+**记录**：笔记 §5.16.8 执行状态（阶段 4 余项第二步第二部分 ✅）、技术债清单项 1（阶段 4 余项第二步 ✅）、路线图 v1.31 条目、Everything.agda 头注释 v1.31。
+
+**当前开放项**：上界 ∫sₖ ≤ Aⁿ（dyadic 阶梯值 ≤ 多项式，power-mono + simple-int 上界）→ MCT → fc-poly-le-spec-int 零登记项。改动尚未提交 git。
