@@ -2099,3 +2099,24 @@ spec-int-mono 放哪？§1b 或 §10d。它依赖 spec-int-below-mono（§1b）�
 **记录**：笔记 §5.16.7 项 3 更新（阶段 1 ✅）、路线图 v1.19 条目、Everything.agda 头注释 v1.19。
 
 **当前开放项**：fc-poly-le-spec-int（须先出语义重构方案）；ℕ-MCT Archimedean 决策；跨层完整实例化。改动尚未提交 git。
+
+---
+
+## 实现完成（2026-08-03）：spec-int MCT 构造化——ℕ-截断版（v1.20，技术债清单优先序②收官，Archimedean 决策执行）
+
+**决策背景**：用户问"公理化意味着什么？"——解释：桥接登记 = 对标准数学已知事实的显式声明（内容固定/模型必然性/降定理路径），非自由参数；Archimedean（∀a.∃n. a ≤ natℝ n）与 sup-ℝ 同为 ℝ 完备性族标准公理，经典数学中可由 sup-ℝ（Dedekind 完备性）推出，但本构造框架缺排中律式步骤（¬∀n. a≤natℝ n ⟹ ∃n. natℝ n > a−1），故显式登记。用户批准"登记 Archimedean（推荐）"。
+
+**新增（DHStructural + SpectralTheory）**：
+- **Archimedean 登记**（DHStructural，sup-ℝ 模式：函数 + 正确性证明）：`archimedean-ub`（任意实数存在自然数上界）/ `archimedean-ub-bound`（a ≤ natℝ (archimedean-ub a)）——带完整注释块（ℝ 完备性族标准公理、降定理路径 = 标准实数构造 Dedekind/Cauchy 完备化）
+- **可证**（SpectralTheory §1c，ℕ-截断版）：`simple-below-ℕ-trunc`（s ≤ f ⟹ s ≤ trunc f (natℝ N)，N = archimedean-ub (s-bound s)：s-bound-upper + archimedean-ub-bound + min-glb）/ `spec-int-below-member-≤-ℕ-sup`（下界族成员 Y=∫s ≤ₒ supₙ∫min(f,n)：Y ∈ spec-int-below (trunc f (natℝ N)) + sup-op-upper + ≤ₒ-trans）
+- **可证** `spec-int-trunc-ℕ-conv`：∫f dE = supₙ∫min(f,n) dE——**原 spec-int-trunc-conv 桥接删除（C 类），降为可证明定理**（≥ 方向：spec-int-below-member-≤-ℕ-sup；≤ 方向：trunc-below-general；≤ₒ-antisym）
+
+**里程碑**：**Lebesgue 单调收敛的 ℕ-截断版构造化闭合**——技术债清单（笔记 §5.16.7）优先序 ② 项全闭合（阶段 1 ℝ-截断 v1.19 + 阶段 2 ℕ-截断 v1.20），桥接减一。
+
+**验证**：`agda SpectralTheory\SpectralTheory.agda` + `agda Everything.agda` 全量编译通过（exit=0，16 模块）。
+
+**修错**：① `spec-int-below-into-ℕ-trunc` 报 UnequalSorts（spec-int-below 为 Set₁，本地 Σ 需 Set 层）——内联消除 Σ 打包（该引理仅被 member-≤-ℕ-sup 使用）；② `λ Y (n , eq)` 报 ShouldBeRecordPattern（本地 Σ 是 data 非 record）——改匹配 lambda 花括号 `λ Y → λ { (n , eq) → ... }`；③ subst 报 UnequalTerms（eq 方向：`Y ≡ spec-int-general (trunc f (natℝ n))` 需 `sym eq`，从右侧成员传回 Y）。
+
+**记录**：笔记 §5.16.7 项 3 更新（✅ 已闭合，v1.19-1.20）、路线图 v1.20 条目、Everything.agda 头注释 v1.20、SpectralTheory §15 公理纪律审计更新 3。
+
+**当前开放项**：fc-poly-le-spec-int（须先出语义重构方案）；跨层完整实例化。改动尚未提交 git。

@@ -583,6 +583,16 @@ postulate
   exp-partial-≤-ub : (n : ℕ) → partial-e n ≤ℝ exp oneℝ  -- exp 1 是部分和上界
   exp-least-ub : (b : ℝ) → ((n : ℕ) → partial-e n ≤ℝ b) → exp oneℝ ≤ℝ b  -- exp 1 是最小上界
 
+-- Archimedean 性质（桥接登记，2026-08-03）：任意实数存在自然数上界
+--（∀a:ℝ. ∃n:ℕ. a ≤ natℝ n；与 sup-ℝ 同级的 ℝ 完备性族标准公理——标准实数模型真。
+--  经典数学中可由 sup-ℝ（Dedekind 完备性）推出，但本构造框架缺排中律式步骤
+--  （¬∀n. a≤natℝ n ⟹ ∃n. natℝ n > a−1），故显式登记（函数 + 正确性证明，sup-ℝ 模式）。
+--  降定理路径 = 标准实数构造（Dedekind 分割/Cauchy 序列完备化中可证）。
+--  用途：spec-int-trunc-conv（ℕ-MCT，∫f = supₙ∫min(f,n)）由桥接降为可证明定理，v1.20）
+postulate
+  archimedean-ub : (a : ℝ) → ℕ
+  archimedean-ub-bound : (a : ℝ) → a ≤ℝ natℝ (archimedean-ub a)
+
 -- ln 15
 ln15 : ℝ
 ln15 = log (natℝ 15)

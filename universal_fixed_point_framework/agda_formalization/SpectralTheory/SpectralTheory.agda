@@ -42,7 +42,7 @@ open import DHStructural.DHStructuralAnalysis
          *-pos-mono-ℝ; trichotomy-ℝ; irreflexive-ℝ; zero-factor-ℝ; +-inv-ℝ; distrib-ℝ; neg-one-mul;
          sub-ℝ-def; sub-eq-zero; refl-≤ℝ; ≤-trans-ℝ; ≤-+-mono-ℝ; <-≤-ℝ; zero-lt-one-ℝ; *-ident-ℝ; +-ident-ℝ; zero-add-ℝ; ⊥; ⊥-elim; _⊎_; inj₁; inj₂;
          natℝ; min-ℝ; min-≤-l; min-≤-r; min-glb; min-absorp-l; min-mono-r;
-         sup-ℝ; sup-upper; sup-least)
+         sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -290,12 +290,9 @@ trunc-mono-general f {c} {d} hcd =
                 (spec-int-below-mono {f = trunc f c} {g = trunc f d}
                                      (λ x → trunc-mono f {c = c} {d = d} {x = x} hcd) Y yb))
 
--- 截断收敛（Lebesgue 单调收敛定理的代数形式，登记测度论层桥接公理）：
--- 无界 f（支持在 [0,∞) 的恒等/exp/φ_t）经上升截断族逼近 ∫f dE = supₙ ∫min(f, n) dE
--- 降定理路径：测度论完整层（单调收敛 + 简单函数逼近机制）时转为可证明定理
-postulate
-  spec-int-trunc-conv : (f : ℝ → ℝ)
-    → spec-int-general f ≡ sup-op (λ Y → Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
+-- 截断收敛（Lebesgue 单调收敛定理的代数形式）：无界 f（支持在 [0,∞) 的恒等/exp/φ_t）
+-- 经上升截断族逼近 ∫f dE = supₙ ∫min(f, n) dE——**可证定理**（v1.20：Archimedean 登记后
+-- 由桥接降为定理，见下方 spec-int-trunc-ℕ-conv；Archimedean 降定理路径 = 标准实数构造）
 
 -- ------------------------------------------------------------------
 -- spec-int MCT 构造化（ℝ-截断版，2026-08-03）
@@ -304,8 +301,8 @@ postulate
 -- 关键观察：每个简单函数 s 有有限值域 ⟹ 存在 ℝ 上界 s-bound s（sup-ℝ 对有限值集）⟹
 -- s ≤ f 逐点 ⟹ s ≤ trunc f (s-bound s) 逐点（min-glb）。故下界族 spec-int-below f
 -- 与截断下界族 TruncBelow f **逐成员等价**，sup-op 外延（sup-op-ext 可证）⟹ ℝ-MCT 可证
--- （零新增公理）。注：ℕ-版本（spec-int-trunc-conv 桥接，∫f = supₙ∫min(f,n)）的构造化
--- 需 Archimedean（有界实值存在自然数上界）——ℝ 层公理决策项，登记为待基础设施/后续。
+-- （零新增公理）。注：ℕ-版本（spec-int-trunc-conv 桥接，∫f = supₙ∫min(f,n)）已由
+-- Archimedean（DHStructural 登记，v1.20）降为可证定理——见下方"ℕ-截断版"段。
 
 -- 简单函数值的 ℝ 上界：s-bound s := sup{cᵢ : i < m}（sup-ℝ 完备性，有限值集 sup）
 s-bound : SimpleF → ℝ
@@ -350,11 +347,65 @@ sup-op-ext {l} {S} {T} s→t t→s =
 
 -- **可证**：ℝ-MCT——∫f dE = sup{∫s : s ≤ 某截断 trunc f (s-bound s)}（零新增公理）
 --（spec-int-below f 与 TruncBelow f 逐成员等价 + sup-op-ext；
---  ℕ-版本 spec-int-trunc-conv 的构造化需 Archimedean，登记为后续）
+--  ℕ-版本见下方 spec-int-trunc-ℕ-conv（Archimedean，v1.20））
 spec-int-R-trunc-conv : (f : ℝ → ℝ) → spec-int-general f ≡ sup-op (TruncBelow f)
 spec-int-R-trunc-conv f =
   sup-op-ext (λ Y yb → spec-int-below-into-trunc {f = f} {Y = Y} yb)
              (λ Y yb → trunc-below-into-spec-int {f = f} {Y = Y} yb)
+
+-- ------------------------------------------------------------------
+-- spec-int MCT 构造化（ℕ-截断版，Archimedean，2026-08-03）
+-- ------------------------------------------------------------------
+-- 目标：ℕ-MCT——∫f dE = supₙ ∫min(f,n) dE 由桥接（spec-int-trunc-conv）降为可证定理。
+-- Archimedean（DHStructural 登记，v1.20）：∀a. ∃n. a ≤ natℝ n ⟹ 每个简单函数 s ≤ f
+-- 也 ≤ trunc f (natℝ N)（N = archimedean-ub (s-bound s)，s-bound-upper + archimedean-ub-bound
+--  + min-glb）⟹ 每成员 Y = ∫s（s ≤ f）落入 spec-int-below (trunc f (natℝ N))（simple-below-ℕ-trunc）；
+-- 反向经 trunc-below-f。故 ℕ-MCT 定理闭合（spec-int-trunc-ℕ-conv），桥接减一。
+
+-- **可证**：dom（cᵢ ≤ f）⟹ cᵢ ≤ trunc f (natℝ (archimedean-ub (s-bound s)))（逐原子）
+--（cᵢ ≤ f x（dom）且 cᵢ ≤ s-bound s ≤ natℝ N（s-bound-upper + archimedean-ub-bound）
+--  ⟹ cᵢ ≤ min(f x, natℝ N)（min-glb）= trunc f (natℝ N) x（定义性））
+simple-below-ℕ-trunc : (s : SimpleF) (f : ℝ → ℝ)
+  → ((i : Fin (SimpleF.m s)) → (x : ℝ) → SimpleF.Ω s i x → SimpleF.c s i ≤ℝ f x)
+  → (i : Fin (SimpleF.m s)) (x : ℝ) → SimpleF.Ω s i x
+  → SimpleF.c s i ≤ℝ trunc f (natℝ (archimedean-ub (s-bound s))) x
+simple-below-ℕ-trunc s f dom i x px =
+  min-glb (SimpleF.c s i) (f x) (natℝ (archimedean-ub (s-bound s)))
+          (dom i x px)
+          (≤-trans-ℝ (s-bound-upper s i) (archimedean-ub-bound (s-bound s)))
+
+-- **可证**：下界族成员 ≤ₒ ℕ-截断 sup
+--（Y = ∫s（s ≤ f）⟹ s ≤ trunc f (natℝ N)（N = archimedean-ub (s-bound s)，simple-below-ℕ-trunc）
+--  ⟹ Y ∈ spec-int-below (trunc f (natℝ N)) ⟹ Y ≤ₒ ∫min(f,N)（sup-op-upper）≤ₒ supₙ（sup-op-upper））
+spec-int-below-member-≤-ℕ-sup : {f : ℝ → ℝ} {Y : Op} → spec-int-below f Y
+  → Y ≤ₒ sup-op (λ Z → Σ ℕ (λ n → Z ≡ spec-int-general (trunc f (natℝ n))))
+spec-int-below-member-≤-ℕ-sup {f} {Y} (pair₁Σ s (eq , dom)) =
+  ≤ₒ-trans Y (spec-int-general (trunc f (natℝ N))) (sup-op S)
+           (sup-op-upper (spec-int-below (trunc f (natℝ N))) Y member-N)
+           (sup-op-upper S (spec-int-general (trunc f (natℝ N))) (N , refl))
+  where
+  N : ℕ
+  N = archimedean-ub (s-bound s)
+  member-N : spec-int-below (trunc f (natℝ N)) Y
+  member-N = pair₁Σ s (eq , λ i x px → simple-below-ℕ-trunc s f dom i x px)
+  S : Op → Set
+  S Z = Σ ℕ (λ n → Z ≡ spec-int-general (trunc f (natℝ n)))
+
+-- **可证**：ℕ-MCT——∫f dE = supₙ ∫min(f,n) dE（原 spec-int-trunc-conv 桥接，现为定理，v1.20）
+--（≥ 方向：每成员 Y=∫s（s≤f）≤ₒ ∫min(f,N)（simple-below-ℕ-trunc）≤ₒ supₙ
+--  （spec-int-below-member-≤-ℕ-sup）；≤ 方向：每项 ∫min(f,n) ≤ₒ ∫f（trunc-below-general））
+spec-int-trunc-ℕ-conv : (f : ℝ → ℝ)
+  → spec-int-general f ≡ sup-op (λ Y → Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n))))
+spec-int-trunc-ℕ-conv f =
+  ≤ₒ-antisym (spec-int-general f) (sup-op S)
+             (sup-op-least (spec-int-below f) (sup-op S)
+                           (λ Y yb → spec-int-below-member-≤-ℕ-sup {f = f} {Y = Y} yb))
+             (sup-op-least S (spec-int-general f)
+                           (λ Y → λ { (n , eq) → subst (λ Z → Z ≤ₒ spec-int-general f) (sym eq)
+                                                              (trunc-below-general f (natℝ n)) }))
+  where
+  S : Op → Set
+  S Y = Σ ℕ (λ n → Y ≡ spec-int-general (trunc f (natℝ n)))
 
 -- ==================================================================
 -- §1d 可测函数层与 Lebesgue 积分（测度论层阶段 2，2026-08-02）
@@ -2251,5 +2302,31 @@ Sp-to-exp-tA {X} h t = X-comm-exp-tA X (Sp-to-σ h) t
 --    阶段 4 组合替换桥接）——需语义重构方案先行
 --  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
 --    谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）
---  - spec-int 收敛细节（无界逼近）：Lebesgue 单调收敛的构造化
+--  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
+
+-- ------------------------------------------------------------------
+-- 阶段 7/8 审计更新 3（2026-08-03）：v1.19-v1.20 spec-int 收敛构造化闭合
+-- ------------------------------------------------------------------
+-- 已降为可证定理/登记（2026-08-03 追加）：
+--  - spec-int 收敛细节（无界逼近）**构造化闭合**：
+--    （1）ℝ-截断版（v1.19，§1c）：spec-int-R-trunc-conv（∫f dE =
+--      sup{∫s : s ≤ 某截断 trunc f (s-bound s)}，**可证，零新增公理**——
+--      s-bound/s-bound-upper + simple-below-trunc + 截断下界族逐成员等价
+--      （spec-int-below-into-trunc/trunc-below-into-spec-int）+ sup-op-ext）
+--    （2）ℕ-截断版（v1.20，§1c）：spec-int-trunc-ℕ-conv（∫f dE = supₙ∫min(f,n) dE，
+--      **由桥接降为可证定理**）——支撑登记 **Archimedean**（DHStructural：
+--      archimedean-ub/archimedean-ub-bound，∀a.∃n. a ≤ natℝ n——ℝ 完备性族标准
+--      公理（与 sup-ℝ 同级，sup 层模型真；经典可由 sup-ℝ 推出，构造框架缺排中律式
+--      步骤故显式登记；降定理路径 = 标准实数构造 Dedekind/Cauchy 完备化）；
+--      **原 §1c 桥接 spec-int-trunc-conv（C 类）删除**，simple-below-ℕ-trunc +
+--      spec-int-below-member-≤-ℕ-sup（≤ₒ-trans + sup-op-upper）推导）
+-- 注：Archimedean 属 ℝ 公理层（DHStructural），对齐"ℝ 公理是基础假设，不计入
+-- 本账目"立场（与 sup-ℝ 同级登记），此处仅记录其在本层降定理中的使用。
+--
+-- 待降定理（2026-08-03 再更新）：
+--  - fc-poly-le-spec-int 构造化（fc-integral 最后登记项）：多阶段路线
+--    （阶段 1 ✅ 幂单调性引理库；阶段 2 dyadic 分划与阶梯函数；阶段 3 上界 + MCT；
+--    阶段 4 组合替换桥接）——需语义重构方案先行
+--  - 8-5b 算子层等式版 + 对象映射（funext 受限）：算子层等式版公理、op-lin 保结构、
+--    谱对象映射（A/E/fc/exp-tA ↦ Hilbert 构造）
 --  - E-σ-add 收敛（算子序 sup 存在）：强/弱算子拓扑单调有界收敛
