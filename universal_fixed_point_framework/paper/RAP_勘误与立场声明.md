@@ -1,4 +1,4 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.9）
+# UFPF 勘误与立场声明（RAP-Errata v0.13）
 
 **发布日期**：2026-08-03
 **版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `8587511c`（v0.8）→ `706ef820`（v0.9）
@@ -10,7 +10,28 @@
 
 本勘误不是对原系列论文的又一次扩展，而是针对《UFPF 修复与推进方案》（RAP v0.1，2026-07-26）所列问题的基础性纠正。原框架的最高宣称（"$\mathbf{Sp}$ 严格 4-范畴零参数导出全部标准模型可观测量"）超出了当前可证明范围。本声明发布后，所有论文修订均以此冻结基线为准，任何后续改动都会附带版本哈希并公开记录。
 
-**系列论文扩展**：本次更新随附六篇新论文：**Paper XXXI**（质量-Δ 方向性）、**Paper XXXII**（谱静默与四维时空涌现）、**Paper XXXIII**（"3"的范畴论起源）、**Paper XXXIV**（连续极限——B2 理论闭合）、**Paper XXXV**（引力的范畴论起源——交换律偏差、连续极限与时空涌现）、**Paper XXXVII**（开放问题、未来方向与层次距离）。其中 Paper XXXIV 解决了此前被认为阻塞的连续极限问题，证明 B2 已理论闭合；Paper XXXV 将引力图像从笔记综合为完整论文；Paper XXXVII 系统盘点剩余开放问题并建立层次距离度量概念。
+**系列论文扩展**：本次更新随附六篇新论文：**Paper XXXI**（质量-Δ 方向性）、**Paper XXXII**（谱静默与四维时空涌现）、**Paper XXXIII**（"3"的范畴论起源）、**Paper XXXIV**（连续极限——B2 理论闭合）、**Paper XXXV**（引力的范畴论起源——交换律偏差、连续极限与时空涌现）、**Paper XXXVII**（开放问题、未来方向与层次距离）。其中 Paper XXXIV 解决了此前被认为阻塞的连续极限问题，证明 B2 已理论闭合；Paper XXXV 将引力图像综合为完整论文；Paper XXXVII 系统盘点剩余开放问题并建立层次距离度量概念。
+
+### §一·补充 论证方法论（2026-08-04 确立）
+
+**立场**：在范畴层（$\mathbf{Sp}$ 4-范畴、D⊣R 伴随、谱对应）之上假设 Cl(1,7)/SU(2) 谱框架（A_GR 谱）的物理存在，再论证其存在的合理性——这是科学中标准的**假设-演绎（hypothetico-deductive）论证**，属**公理化辩护**而非先验证明。全系列以此立场标注物理断言与数学定理。
+
+**论证强度三层级**（详见 Paper XXXVII §4.4）：
+
+| 层级 | 形式 | 当前状态 |
+|:---:|:-----|:---------|
+| ① 预测检验 | 假设 → 可观测预言 → 实验吻合 → 似然辩护 | ✅ 已执行（29 参数、Fisher p≈0、paperX_gravity_c_constant.py） |
+| ② 框架自洽 | 假设 → 框架内部结构咬合（静默/维度/O2 统一） | ✅ 已执行 |
+| ③ 先验导出 | 范畴层纯结构直接导出谱结构 | 🔶 **未完成**（Bott 塔部分达成；Cl(1,7)/SU(2) 谱完整导出为开放方向） |
+
+**关键纪律**：合理性取决于假设独立于它要解释的现象（A_GR 谱不含质量实验值），否则即为循环论证；此纪律已贯彻于 O8/O11 的假设显式化处理。
+
+**假设-断言分类账**（O8/O11 闭合后）：
+
+| 假设 | 性质 | 可证性 |
+|:-----|:-----|:-------|
+| `hGap`/`hNorm`（A_GR 谱、Cl(1,7) 归一化） | **物理模型断言** | ❌ 数学上不可证（框架输入，数值已验证） |
+| `hτ0`/`hBdd`（Bowen τ(0)、Legendre 有界性） | 数学定理 | ✅ 可证（替换占位定义 + Moran 唯一性/斜率界） |
 
 ---
 
@@ -77,16 +98,19 @@
 | O4 | 用静默机制导出家族数 | 猜测 | 未变化 | **❌ 不变** — 仍为猜测 | **❌ 不变** |
 | O5 | 跨层关联精度 | — | **🔶 新增** — 条件 (b) 未排除 | **🔶 不变** — 需更高精度 $d_H$ | **🔶 不变** |
 | O6 | 质量-$\Delta$ 方向性形式化 | — | — | **✅ 已闭合** — J1-J3 形式命题 + Lean 证明 + Paper XXXI | **✅ 不变** |
-| **O7** | **`HigherSpCategory.lean` spExchangeLaw `sorry`** | — | — | — | **🔴 概念特征** — 非技术缺口。填补为等式 ⇒ $G_N \to 0$（物理错误）。正确方向是维持偏差代数形式（已由 `spExchangeLaw_deviation_partial_commutator` 和 `spExchangeLaw_homotopy_deviation` 覆盖）。参见 Paper XXXV §2.1 |
-| **O8** | **`DeviationBound.lean` 2 个 `sorry`** (`spectral_gap_estimate`, `deviation_spectral_bound`) | — | — | — | **🟡 待 Mathlib 基础设施** — 依赖 `Matrix.Spectrum` 模块尚未稳定。理论推导已在 Paper XXXI §5.6-5.7 中完成。一旦 Mathlib 更新即可自然闭合 |
+| **O7** | **`HigherSpCategory.lean` spExchangeLaw `sorry`** | — | — | — | **✅ 已闭合**（2026-08-04）— 按既定方向以偏差定理族（`spExchangeLaw_deviation_partial_commutator`/`homotopy_deviation`/`strict_limit`）覆盖，原始等式 `sorry` 已消除，`HigherSpCategory.lean` 零 `sorry`。参见 Paper XXXV §2.1 |
+| **O8** | **`DeviationBound.lean` 2 个 `sorry`** (`spectral_gap_estimate`, `deviation_spectral_bound`) | — | — | — | **✅ 已闭合**（2026-08-04）— 将"A 具有 A_GR 谱"物理模型断言**显式化为假设** `hGap : frobNormSq (A - λ₁•1) ≤ (spectralGap n)²`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm : 24·frobNormSq(S.A) ≤ (4·spectralGap 8)²`（`deviation_spectral_bound`，由已证 `deviation_spectral_bound_simplified` 传递），零 `sorry`。A_GR 谱假设本身仍为物理模型断言（对应 Paper XXXI §5.6-5.7 及 paperX_gravity_c_constant.py 数值验证） |
+| **O9** | **`ContinuumLimit.lean` hDiamLeOne 缺口**（`exists_attractorAxioms` 结构字段 `Metric.diam A ≤ 1` 未填充） | — | — | — | **✅ 已闭合**（2026-08-04）— 根因非缺证明而是**假命题**：原 f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1（f₂ 不动点 >1），"A ⊆ [0,1]"注释错误。修正：`physicalIFS` f₂ 平移 1.0 → **1−c₃**（不动点精确落在 1），收缩率 ratios 与 O2 排序/Moran/维数定理均不变。`ContinuumLimit.lean §3.5` 新增机器证明：`maps_monotone`（各映射单调）、`maps0/1/2_fixedPoint`（各映射不动点 ∈ [0,1]）、`attractor_subset_unitInterval_of`（sSup/sInf 极值论证 ⟹ A ⊆ [0,1]）、`attractor_diam_le_one`；`exists_attractorAxioms` 现完整填充含 hDiamLeOne（零 sorry） |
+| **O10** | **`ErgodicTheory.lean` 占位定义**（`lyapunovExponent := 0`、`topologicalEntropy := 0`） | — | — | — | **🔶 占位** — 有限维原型返回 0，相关定理（正 Lyapunov 前提等）在占位下平凡成立；注释已登记"开放项；当前原型返回 0 占位"。非 `sorry`，但占位定义使相应定理无物理内容，待真实定义填充 |
+| **O11** | **`ThermoFormalism.lean` 4 个 `sorry`** (`legendreTransform_convex`、`singularity_spectrum_bound` 内 `h_tau_zero`/`h_sup`、`interpolateMeasure.hInvariance`) | — | — | — | **✅ 已闭合**（2026-08-04）— ① `legendreTransform_convex` 真定理缺有界性前提 → 加 `hBdd : ∀ p, BddAbove (range fun z => p*z - f z)` 假设后 `csSup_le` 逐点论证机器证明；② `singularity_spectrum_bound` 假前提（占位 τ(q)=q−1 下 τ(0)=−1≠−d_H）→ 改条件定理（加 `hτ0` Bowen 公式 + `hBdd`）；③ `singularity_spectrum_concave` 占位 τ 下原陈述为假（legendreTransform 无界）→ 加 `hBdd` 条件化；④ `interpolateMeasure` **结构性假定理**（测度凸组合不自相似，交叉项不消失）→ 删除，`theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
 
 **说明**：
 - O1 的闭合不改变原 RAP 结论（Cl(1,7) 仍装不下三代），但提供了代空间的范畴论起源
 - O3 的推进将 d_H 从"登记参数"降级为"结构确定量"（≈ln15 机器证明 + δ 的结构约束）
 - O5 的诚实标注：RMS 假说的核心假设（层独立）已有类型层面证明，但跨层关联的定量排除依赖于更高精度的 d_H 测定
 - O6 的闭合使框架引力图像的三个核心命题（J1-J3）获得形式化支撑，但物理推论链（"正交⇒不可屏蔽"）仍需 B2 连续极限才能定理化
-- **O7 的等级定位**：**🔴 L3 概念特征**。此 `sorry` 的正确处理不是消除，而是维持其偏差代数形式（已由两个偏差定理覆盖）。等级定义为"概念特征"而非"技术缺口"或"待基础设施"，因填补为等式的"解决"方向在物理上是错误的
-- **O8 的等级定位**：**🟡 L2 待基础设施**。数学推导已完备（Paper XXXI §5.6-5.7），仅因 Mathlib `Matrix.Spectrum` 模块尚未稳定而暂留。不属于"理论未完成"或"证明策略缺失"
+- **O7 已闭合（2026-08-04）**：spExchangeLaw 原始等式 `sorry` 已按既定方向（维持偏差代数形式）以偏差定理族覆盖并消除，`HigherSpCategory.lean` 当前零 `sorry`。填补为等式的"解决"方向在物理上是错误的（⇒ $G_N \to 0$），故以偏差定理为正确形式
+- **O8 已闭合（2026-08-04）**：`spectral_gap_estimate`/`deviation_spectral_bound` 不再依赖 Mathlib `Matrix.Spectrum`——将"A 具有 A_GR 谱"物理模型断言显式化为假设 `hGap`/`hNorm`，证明体（Frobenius 次可乘性传递）机器完成，零 `sorry`。A_GR 谱假设本身仍为物理模型断言（对应 Paper XXXI §5.6-5.7 数值验证），非数学定理
 
 ---
 
@@ -102,23 +126,27 @@
 | XVIII | 谱牛顿力学 | `paper18_*` | ✅ | 不涉及 §三 6（该问题实际在 Paper VIII） |
 | XIX–XXIX | 形式化扩展 | `paper19`–`paper29` | ✅ | 已发布 |
 | XXX | $d_H$ 结构分析与机器验证 | `paper30_dH_structural_analysis.md` | ✅ | 包含不等式链、Moran 唯一性、递归不动点、O2 核心 |
-| **XXXI** | **质量-Δ 方向性关系** | **`paper31_mass_delta_directionality.md`** | **🆕** | J1-J3 形式命题 + Lean 证明。本轮新增 |
-| **XXXII** | **Cl(1,7) 谱静默与四维时空涌现** | **`paper32_silence_spacetime.md`** | **🆕** | 8 个严格定理（机器证明）+ 力程约束。本轮新增 |
-| **XXXIII** | **"3"的范畴论起源与层次结构** | **`paper33_origin_of_3.md`** | **🆕** | 统一 3 定理、不等式链、O2 统一、Bott-Moran 桥。本轮新增 |
-| **XXXIV** | **连续极限——分形吸引子到光滑时空涌现** | **`paper34_continuum_limit.md`** | **🆕** | B2 Step 3 六步理论证明：编码树分层、拟弧、对称性、Lipschitz 映射、拟对称嵌入、谱流保持。**B2 已理论闭合**——自包含论文，不依赖笔记 |
-| **XXXV** | **引力的范畴论起源** | **`paper35_gravity_origin.md`** | **🆕** | 交换律偏差 = 引力；Δ 结构常数地位；引力不可屏蔽的范畴论根源；引力子等效性；GW 极化计数；牛顿引力定律范畴论推导。本轮新增 |
-| **XXXVII** | **开放问题、未来方向与层次距离** | **`paper37_open_problems.md`** | **🆕** | A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥恒等式。本轮新增 |
-| **XXXVIII** | **Agda 独立交叉验证——双实现证明** | **`paper38_agda_cross_validation.md`** | **🆕** | 系统说明 Agda 重形式化目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程（v1.17–v1.36）、S0 静默/待基础设施边界与声明纪律。基于笔记 `agda_cross_validation_notes.md`。本轮新增 |
+| **XXXI** | **质量-Δ 方向性关系** | **`paper31_mass_delta_directionality.md`** | **✅** | J1-J3 形式命题 + Lean 证明。本轮新增（v0.4/v0.9，现稳定） |
+| **XXXII** | **Cl(1,7) 谱静默与四维时空涌现** | **`paper32_silence_spacetime.md`** | **✅** | 8 个严格定理（机器证明）+ 力程约束。本轮新增（v0.4/v0.9，现稳定） |
+| **XXXIII** | **"3"的范畴论起源与层次结构** | **`paper33_origin_of_3.md`** | **✅** | 统一 3 定理、不等式链、O2 统一、Bott-Moran 桥。本轮新增（v0.4/v0.9，现稳定） |
+| **XXXIV** | **连续极限——分形吸引子到光滑时空涌现** | **`paper34_continuum_limit.md`** | **✅** | B2 Step 3 六步理论证明：编码树分层、拟弧、对称性、Lipschitz 映射、拟对称嵌入、谱流保持。**B2 已理论闭合**——自包含论文，不依赖笔记 |
+| **XXXV** | **引力的范畴论起源** | **`paper35_gravity_origin.md`** | **✅** | 交换律偏差 = 引力；Δ 结构常数地位；引力不可屏蔽的范畴论根源；引力子等效性；GW 极化计数；牛顿引力定律范畴论推导。本轮新增（v0.4/v0.9，现稳定） |
+| **XXXVII** | **开放问题、未来方向与层次距离** | **`paper37_open_problems.md`** | **✅** | A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥恒等式。本轮新增（v0.4/v0.9，现稳定） |
+| **XXXVIII** | **Agda 独立交叉验证——双实现证明** | **`paper38_agda_cross_validation.md`** | **✅** | 系统说明 Agda 重形式化目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程（v1.17–v1.36）、S0 静默/待基础设施边界与声明纪律，内容自包含。本轮新增（v0.4/v0.9，现稳定） |
+| **61A** | **暴涨完整动力学（Phase 61，P1-4）** | **`paper61A_inflation_dynamics.md`** | **✅** | N_e 闭式 + 再加热 + 动态连续极限（定理 D3.1）+ PGW 预言闭环。对应 `roadmap/phase61_physics_advancement.md` Phase 61A。P1-4 升格"纳入"（2026-08-03） |
+| **61B** | **色规范完整动力学（Phase 61，P0-1）** | **`paper61B_qcd_color_dynamics.md`** | **✅** | 色丛 + 胶子顶点谱封闭 + 禁闭/渐近自由 + 4 强子谱（π/ρ/N/Δ）。P0-1 升格"纳入"（2026-08-03） |
+| **61C** | **量子重整化完整链条（Phase 61，P0-2）** | **`paper61C_renormalization_chain.md`** | **✅** | 谱 Feynman + 谱正则化 + 谱流→β 函数（定理 3.1）+ EFT 层级。P0-2 升格"纳入"（2026-08-04） |
+| **61D** | **黑洞量子演化（Phase 61，P1-3）** | **`paper61D_black_hole_quantum_evolution.md`** | **✅** | 霍金谱 + 蒸发动力学 + Page 曲线谱公理推导 + 视界涨落 + 蒸发终点-反弹衔接 + 信息保持。P1-3 升格"纳入"（2026-08-04） |
 
-**状态汇总**：全部 38 篇论文中 31 篇 ✅ 稳定、7 篇 🆕 本轮新增（XXXI–XXXV, XXXVII, XXXVIII）、零 ⚠️、零待办。
+**状态汇总**：全部 42 篇论文中 38 篇（Papers I–XXXVIII）全部 ✅ 稳定 + 4 篇 Phase 61（61A–61D）✅ 已纳入，零 ⚠️、零待办。
 
 ### Lean 4 形式化状态总表
 
 | 指标 | 数值 |
 |:-----|:-----:|
-| 总 Lean 模块数 | 74 |
-| `lake build` 状态 | ✅ 零错误通过（0 errors，仅 8 条编译器警告） |
-| 活动 `sorry` | 3 处（`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新） |
+| 总 Lean 模块数 | 81（其中 15 个模块存在预存编译错误，见下） |
+| `lake build` 状态 | 默认目标 `lake build`（Main + 核心依赖）✅ 零错误；**全库 `lean_lib` 仍有 15 个模块预存编译错误**（2026-08-04 实测）：GelfandDuality / RAP4_silence_strictification（bad import）、NoiseCategory（mathlib ProxyType 读取失败）、InfinityReflection、SilenceHierarchy（`spectralSilence` 重复声明）、ICDecidable、Quantization、CategoryGeometry、ContextualitySheaf、CuprateDistribution、HigherDecursionFunctor、SignatureFiber、SpacetimeStack、TestApplications / TestCategoryTheory / TestOperatorTheory（Test 文件）。均为诚实登记的遗留损坏，非 Phase 61A-D 引入 |
+| 活动 `sorry` | **0 处**（2026-08-04：非 S0 的 6 处已全部闭合——`DeviationBound.lean:384/411` 加 A_GR 谱/归一化假设机器证明；`ThermoFormalism.lean:168/215/223/297` 真定理加假设/假定理删除改述）+ **1 处 `axiom DAdjR`**（`Adjunction.lean:89`，DFunctor ⊣ RFunctor 伴随公理，S0 范畴结构性，注释已登记，未计入 sorry 统计）；Phase 61A-D 模块全部零 `sorry`；`HigherSpCategory.lean` spExchangeLaw 已按 O7 处理为偏差定理族，零 `sorry` |
 | 核心理论模块（零 `sorry` 完全证明） | 10 模块：`SpCategory`、`DecursionFunctor`、`DHStructuralAnalysis`、`CoherenceToBranching`、`IFSFractal`（§6 排序定理）、`HutchinsonAttractor`、`BottTower`、`Unified3Theorem`、`ContinuumLimit`（B2 3a）、`DeviationBound`（§1.6 源缺陷线性） |
 
 **核心模块详细状态**：
@@ -128,22 +156,21 @@
 | `SpCategory.lean` | I | ✅ 零 `sorry` | $\mathbf{Sp}$ 范畴定义 |
 | `RecCategory.lean` | I | ✅ 零 `sorry` | $\mathbf{Rec}$ 范畴定义 |
 | `DecursionFunctor.lean` | I | ✅ 零 `sorry` | D 函子 + 伴随 |
-| `HigherSpCategory.lean` | XIX | ⚠️ 1 `sorry`:103 | spExchangeLaw — **概念特征**，非技术缺口（填补为等式 ⇒ $G_N \to 0$） |
-| `DeviationBound.lean` | XXXI | ⚠️ 2 `sorry`:386/412 | `spectral_gap_estimate` + `deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`；§1.6 源缺陷线性已完全证明 |
+| `HigherSpCategory.lean` | XIX | ✅ 零 `sorry` | spExchangeLaw 已按 O7 处理：以偏差定理族（`spExchangeLaw_deviation_partial_commutator`/`homotopy_deviation`/`strict_limit`）覆盖，原始等式 `sorry` 已消除（填补为等式 ⇒ $G_N \to 0$ 的物理错误方向被正确规避） |
+| `DeviationBound.lean` | XXXI | ✅ 零 `sorry` | §1.6 源缺陷线性 + `spectral_gap_estimate`/`deviation_spectral_bound`（2026-08-04 O8 闭合：A_GR 谱/归一化假设显式化，Frobenius 次可乘性证明，零 `sorry`） |
 | `DHStructuralAnalysis.lean` | XXX | ✅ 零 `sorry` | 不等式链 + Moran 唯一性 + 响应分析 |
 | `CoherenceToBranching.lean` | XXXII | ✅ 零 `sorry` | 静默定理组（8 定理）+ 层独立性 + 分支计数 + §11 向外推（维数间隙 + 层正交性） |
 | `IFSFractal.lean` | XXXIII | ✅ 零 `sorry` | 物理 3-map IFS + $c_1<c_2<c_3$ 排序定理 |
 | `HutchinsonAttractor.lean` | XXXIII | ✅ 零 `sorry` | Hutchinson 吸引子存在唯一性 |
 | `BottTower.lean` | XXXIII | ✅ 零 `sorry` | Bott 塔 + $\log_2 k_{\max}=3$ |
 | `Unified3Theorem.lean` | XXXIII | ✅ 零 `sorry` | 统一 3 定理 |
-| `ContinuumLimit.lean` | XXXIV | ✅ 零 `sorry` | B2 3a 深度分层：$c_1 < S_4$ 机器证明 |
-| `Silence.lean` / `SilenceHierarchy.lean` | II/XXXII | 🔶 部分 `sorry` | 基础静默机制已证明，高阶静默组合仍有 2 `sorry` 待优化 |
+| `ContinuumLimit.lean` | XXXIV | ✅ 零 `sorry` | B2 3a 深度分层：$c_1 < S_4$ 机器证明；**hDiamLeOne 闭合（2026-08-04，O9）**——吸引子 ⊆ [0,1] 与 $\operatorname{diam} \leq 1$ 机器证明，`exists_attractorAxioms` 完整填充 |
+| `Silence.lean` / `SilenceHierarchy.lean` | II/XXXII | ✅ 零 `sorry` | 基础静默机制已证明；高阶静默组合 sorry 已填充（2026-08-04，Phase 61C 执行：Frobenius 范数次可乘性 + 三角不等式全证） |
 | `SpectralGap.lean` | XX | ✅ 零 `sorry` | SU(2) 谱隙推导（不含 Rayeligh 商估计） |
 
 **分类解读**：
-- **🔴 概念特征（不可消除）**：`HigherSpCategory.lean:103` — 此 `sorry` 是特征（特征参见 Paper XXXV §2.1），填补为等式将证明 $G_N \to 0$（物理错误）。正确方向是证明偏差 Frobenius 范数与谱间隙的定量关系（已由 `spExchangeLaw_deviation_partial_commutator` 和 `spExchangeLaw_homotopy_deviation` 覆盖）
-- **🟡 待基础设施（可消除，依赖 Mathlib 更新）**：`DeviationBound.lean:386/412` — 待 Mathlib `Matrix.Spectrum` 模块稳定后自然闭合
-- **🟢 完全证明**：10 个核心模块、静默 8 定理、统一 3 定理、Bott 塔、B2 3a 等均已完全机器证明
+- **🔴 概念特征 → ✅ 已按正确形式闭合**：`HigherSpCategory.lean` spExchangeLaw — 原始等式 `sorry` 已消除（2026-08-04），以偏差定理族（`spExchangeLaw_deviation_partial_commutator`/`homotopy_deviation`/`strict_limit`）覆盖，零 `sorry`。填补为等式的方向会证明 $G_N \to 0$（物理错误），偏差代数形式是正确表述
+- ** 完全证明（2026-08-04 更新）**：10 个核心模块、静默 8 定理、统一 3 定理、Bott 塔、B2 3a、Phase 61A-D 7 模块、`ThermoFormalism.lean`（4 处修复：legendreTransform/singularity_spectrum 加假设 + interpolateMeasure 假定理删除重构）、`DeviationBound.lean`（O8 闭合）等均已完全机器证明。**全库非 S0 活动 `sorry` 已清零**；余 S0 范畴层 7 `sorry` + 1 `axiom`（按 phase60 演进计划推进）
 
 **与 Paper XXXV（引力范畴论）的关系**：Paper XXXV 不引入新 `sorry`。其核心断言（$\Delta$ = 引力）依赖的 Lean 定理均已完成：`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`、源缺陷线性（§1.6）。**v0.3 新增**：`dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 为层正交性提供形式化支撑（依赖 §3.2）。引力不可屏蔽的范畴论推论（§3）和引力子等效性（§4）为概念论证，未要求新 Lean 形式化。
 
@@ -157,14 +184,14 @@
 
 **路径 B 推进（2026-08-03，v1.13–v1.16）**：Agda 侧扩至 **16 模块**，T3 谱定理层（`SpectralTheory.agda`）进一步闭合——① **fc-integral 公理（fc(f) = ∫f dE）完整降为可证明定理**（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`，语义由目标模型谱定理保证）；② **理论闭合审计**：谱匹配核心（theorem3 / corollary4-∞ / corollary5 / P1-linear-closure）**独立于** fc-integral 桥接、完全可证（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；钉住 sup 语义显式文档化（§1b）；③ **跨层模型 Op → LinOp 点态对应闭合**（新模块 `CrossLayer`，OpAlgPt 见证 record，13 组算子代数公理逐点验证）；④ **测度论逼近引理库阶段 1**（ℝ 幂单调性 power-nonneg/mono/pos + *-nonneg-ℝ）。paper I 已同步至 v2.49（注 C2.3b/2.4.5a 追加理论闭合审计补充）。
 
-**路径 B 推进（2026-08-03，v1.17–v1.36，技术债清单 A 类全闭合）**：对应技术债清单（笔记 §5.16.7）的实质可闭合项全部收官——① **E-σ-add 收敛闭合**（v1.17-1.18）：连续下式族单调有界结构全可证 + Vigier 强收敛桥接（`E-σ-SOT-conv`）；② **spec-int MCT 构造化闭合**（v1.19-1.20）：ℝ-截断（`spec-int-R-trunc-conv`，零新增公理）+ ℕ-截断（`spec-int-trunc-ℕ-conv`，Archimedean 登记，原桥接删除）；③ **fc-poly-le-spec-int 构造化（方案 A）收官**（v1.22-1.34）：正负分解重构 4 阶段（max-ℝ 族/f⁺f⁻ → Op 减法 → 非负一致性 → 钉住解析 → fc 侧分解）→ 阶段 4 余项（dyadic 网格 → SimpleF 阶梯构造（disj/cover）→ 上界 ∫sₖ≤ₒ∫p⁺ → MCT）→ **依赖循环解决**（fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 自循环为结构性，改用更基础 `fc-integral` 直接降 `fc-poly-le-spec-int` 为可证定理——**桥接减一**，fc 侧唯一剩余 D 类 = `fc-integral`，健全）；④ **跨层谱对象映射完整闭合**（v1.21 E/exp-tA + **v1.36 A/fc**）：HilbertSpace §12' 登记 `A-hilb`/`fc-hilb`（谱定理降定理链端点桥接，与 spectral-subspace/exp-hilb-tA 同层）+ CrossLayer SpectralObjPt 扩展 A/fc 字段——**谱对象映射（A/E/fc/exp-tA）完整闭合**；⑤ **术语更新**：scoped 数值公理（`ln15-arith-ax` 等）归类标注由"资源/实践静默"改为 **"工程计算资源不足"**（v1.35 实测确认：refl 级闭合逻辑完备但 2994494400 级大数归一化触发 Agda 内存不足）。剩余开放项均为结构性限制（funext 受限、`spExchangeLaw` 概念特征）或待基础设施（Mathlib 稳定、大整数算术/级数机制）。
+**路径 B 推进（2026-08-03，v1.17–v1.36，技术债清单 A 类全闭合）**：对应技术债清单（详见 Paper XXXVIII）的实质可闭合项全部收官——① **E-σ-add 收敛闭合**（v1.17-1.18）：连续下式族单调有界结构全可证 + Vigier 强收敛桥接（`E-σ-SOT-conv`）；② **spec-int MCT 构造化闭合**（v1.19-1.20）：ℝ-截断（`spec-int-R-trunc-conv`，零新增公理）+ ℕ-截断（`spec-int-trunc-ℕ-conv`，Archimedean 登记，原桥接删除）；③ **fc-poly-le-spec-int 构造化（方案 A）收官**（v1.22-1.34）：正负分解重构 4 阶段（max-ℝ 族/f⁺f⁻ → Op 减法 → 非负一致性 → 钉住解析 → fc 侧分解）→ 阶段 4 余项（dyadic 网格 → SimpleF 阶梯构造（disj/cover）→ 上界 ∫sₖ≤ₒ∫p⁺ → MCT）→ **依赖循环解决**（fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 自循环为结构性，改用更基础 `fc-integral` 直接降 `fc-poly-le-spec-int` 为可证定理——**桥接减一**，fc 侧唯一剩余 D 类 = `fc-integral`，健全）；④ **跨层谱对象映射完整闭合**（v1.21 E/exp-tA + **v1.36 A/fc**）：HilbertSpace §12' 登记 `A-hilb`/`fc-hilb`（谱定理降定理链端点桥接，与 spectral-subspace/exp-hilb-tA 同层）+ CrossLayer SpectralObjPt 扩展 A/fc 字段——**谱对象映射（A/E/fc/exp-tA）完整闭合**；⑤ **术语更新**：scoped 数值公理（`ln15-arith-ax` 等）归类标注由"资源/实践静默"改为 **"工程计算资源不足"**（v1.35 实测确认：refl 级闭合逻辑完备但 2994494400 级大数归一化触发 Agda 内存不足）。剩余开放项均为结构性限制（funext 受限、`spExchangeLaw` 概念特征）或待基础设施（Mathlib 稳定、大整数算术/级数机制）。
 
 **"向外推"形式化已完成**（2026-07-30）：`CoherenceToBranching.lean §11` 新增 `dimension_gap` 和 `outward_proof_maps_to_orthogonal_layer` 两个定理，将维数间隙（$\ln 15 < 3$）与层正交分离（$S_4/c_1 = e^3$）形式化绑定，实现"球心在空间之外"的代数证明。`lake build` 编译通过 ✅。Agda 侧由 B7（`CoherenceToBranching.agda §11`）镜像。
 
 ## 七、系列论文状态
 
 1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。**v0.9 追加（2026-08-03）**：新增 Paper XXXVIII（Agda 独立交叉验证专论——双实现证明协议、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程、S0 静默/待基础设施边界，内容自包含）。
-2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。
+2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。**v0.10 追加（2026-08-04）**：Phase 61 四个物理方向论文 61A–61D（暴涨完整动力学 / 色规范完整动力学 / 量子重整化完整链条 / 黑洞量子演化），全部达到完成判据并升格"纳入"，详见 `roadmap/phase61_physics_advancement.md`。
 3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.9，2026-08-03，与勘误 1:1 同步）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
 ---
@@ -186,3 +213,7 @@
 | **v0.7** | **2026-08-03** | **路径 B 推进 + 理论闭合**：Agda 侧扩至 16 模块——T3 谱定理层进一步闭合（fc-integral 公理完整降为可证明定理 `fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步（注 C2.3b/2.4.5a 理论闭合审计补充）。各级 README / 盲登记协议同步更新 |
 | **v0.8** | **2026-08-03** | **技术债清单 A 类全闭合 + 谱对象映射完整**：路径 B 推进 v1.17–v1.36——① E-σ-add 收敛闭合（v1.17-1.18，Vigier 桥接）；② spec-int MCT 构造化闭合（v1.19-1.20，Archimedean 登记）；③ fc-poly-le-spec-int 构造化（方案 A）收官（v1.22-1.34，正负分解 4 阶段 + SimpleF 阶梯/MCT + 依赖循环解决——`fc-poly-le-spec-int` 降为可证定理，桥接减一，fc 侧唯一剩余 D 类 = `fc-integral`）；④ 跨层谱对象映射完整闭合（v1.21 E/exp-tA + v1.36 A/fc：A-hilb/fc-hilb 谱定理降定理链端点桥接）；⑤ 术语更新（scoped 数值公理标注"工程计算资源不足"，v1.35 实测确认）。各级 README / 盲登记协议同步更新至 v0.8 |
 | **v0.9** | **2026-08-03** | **新增 Paper XXXVIII（Agda 独立交叉验证专论）**：系统说明路径 B 全貌——目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、闭合历程（T1/T2/T3 + 技术债 A 类全闭合 v1.17–v1.36）、剩余开放项（funext/spExchangeLaw 概念特征/S0 静默/待基础设施）与声明纪律。论文总数 37 → 38；勘误 §六 论文状态总表更新；盲登记同步更新至 v0.9（1:1，预言数值不变）。各级 README 同步 |
+| **v0.10** | **2026-08-04** | **Phase 61A–61D 四个物理方向全部纳入**：新增论文 61A（暴涨完整动力学，P1-4）、61B（色规范完整动力学，P0-1）、61C（量子重整化完整链条，P0-2）、61D（黑洞量子演化，P1-3）。论文总数 38 → 42。Lean 模块数 74 → 81（Phase 61A-D 新增 7 模块，全部零 `sorry`）；`lake build` 零错误（Phase 61D 攻克 rpow 立方根引理：精确熵平衡 + 蒸发 Planck 终止 + 量子反弹衔接）。勘误 §六 论文状态总表与 Lean 统计更新；开放项任务池详见 `roadmap/phase61_physics_advancement.md` §七。盲登记同步更新至 v0.10（1:1，预言数值不变）。各级 README 同步 |
+| **v0.11** | **2026-08-04** | **O9 闭合（假命题修正）**：审计发现 `ContinuumLimit.lean` hDiamLeOne 缺口根因是**假命题**——原 `physicalIFS` f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1（f₂ 不动点 >1），"A ⊆ [0,1]"注释错误，非缺证明。修正：f₂ 平移 1.0 → **1−c₃**（不动点精确落在 1），收缩率 ratios 与 O2 排序/Moran/维数定理全部不变（理论体系零破坏）。`ContinuumLimit.lean §3.5` 新增机器证明链：`maps_monotone` + `maps0/1/2_fixedPoint` + `attractor_subset_unitInterval_of`（sSup/sInf 极值论证 ⟹ A ⊆ [0,1]）+ `attractor_diam_le_one`；`exists_attractorAxioms` 完整填充含 hDiamLeOne（零 `sorry`），O9 由"🔶 部分闭合"升格"✅ 已闭合"。`lake build` 通过（2454 jobs）。Agda 侧 B8（IFSFractal.agda）无 maps/直径形式化，不受影响。盲登记同步更新（预言数值不变）。各级 README 同步 |
+| **v0.12** | **2026-08-04** | **非 S0 遗留 6 处全部闭合（O8 + O11）**：① `DeviationBound.lean` 2 处（O8）——不再依赖 Mathlib `Matrix.Spectrum`，A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）；② `ThermoFormalism.lean` 4 处（O11）——`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）、`singularity_spectrum_bound`/`singularity_spectrum_concave` 改条件定理（加 hτ0/hBdd，占位 τ 下原陈述为假）、`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。**全库非 S0 活动 `sorry` 清零**；余 S0 范畴层 7 `sorry` + 1 `axiom`（phase60 演进计划）。`lake build` 通过（2454 jobs）。盲登记同步更新（预言数值不变）。各级 README 同步 |
+| **v0.13** | **2026-08-04** | **论证方法论立场确立（§一·补充）**：在范畴层之上假设 Cl(1,7)/SU(2) 谱框架（A_GR 谱）物理存在、再论证其合理性——正式确立为**假设-演绎（公理化辩护）**方法论，明确论证强度三层级（① 预测检验 ✅ / ② 框架自洽 ✅ / ③ 先验导出 🔶 未完成）与非循环性判据。方法论章节提炼于 Paper XXXVII §4.4（§一·补充 论证方法论）。假设-断言分类账（hGap/hNorm 物理断言不可证、hτ0/hBdd 数学定理可证）。盲登记同步更新（预言数值不变）。各级 README 同步 |

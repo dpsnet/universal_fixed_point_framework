@@ -16,7 +16,7 @@
 |:-----|:------|:----:|:---------|:---:|:-----|
 | **C** | Python 可执行范畴语义 | 数天 | 运行时自洽性 | ✅ **已完成** | `python -m verify.run_all` → 8/8 PASS |
 | **B** | Agda/Coq 独立重形式化 | 数周 | 证明助理交叉验证 | ✅ **已完成** | `agda_formalization/` 8 模块编译通过（Agda 2.8.0） |
-| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 🔄 持续 | 全库 4 处 `sorry` + 1 处 `axiom`（阶段 1 圈定后从 8 处降至 4+1） |
+| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 🔄 持续 | 范畴层 9 处 `sorry` + 1 处 `axiom`（Adjunction 3 + HigherRecCategory 3 + RAP5a 1 + DeviationBound 2；`spExchangeLaw` 已消除 2026-08-04）；另有物理模块 ThermoFormalism 4 处（勘误 O 系列登记）。总计全库 13 `sorry` + 1 `axiom`（2026-08-04 实测）→ **非 S0 的 6 处已闭合（2026-08-04）**：DeviationBound 2（O8 加 A_GR 谱/归一化假设）+ ThermoFormalism 4（加 BddAbove/Bowen 假设、interpolateMeasure 假定理删除、theorem_DC_concavity 权重层面重构），余 S0 范畴层 7 `sorry` + 1 `axiom` |
 
 ---
 
@@ -266,7 +266,7 @@ agda_formalization/
 
 **P4 完成（Agda + Lean 双侧，2026-07-31）**：
 - **Agda**：`Cardinality/Cardinality.agda`——`P-spectral`（P=[[1,0],[1,1]] 合法谱态射，交织条件闭合）、`transferMatrix-not-P`/`D-not-full`（D 不 full）、`fun2-card`/`rec-hom-card`（Hom_Rec 恰 4 函数）、`transfers-distinct`/`P-distinct-transfers`（Hom_Sp ≥ 5 互异元素）；**§5 鸽笼补全**：`分类` + `fun2-excl-all` + `fun2-no-5`（5 个互异 F2→F2 函数不可能）；**§6 无双射**：`no-bijection`（Equiv (SpHom DX DX) (F2 → F2) → ⊥，4 转移矩阵态射 + P-spectral 五个互异 SpHom + 双射单射 + 鸽笼）。设计说明：Agda 侧计数落在**函数层**（Hom_Sp ≥ 5 vs |F2→F2| = 4）——RecHom-≡ 记录外延性需依赖版 funext，超出库公理范围（仅非依赖 funext），RecHom 经 rec-hom-card 落入同 4 类关联。注册 `Everything.agda` 整体编译通过，无新增 postulate。
-- **Lean**：`RAP5a_explicit_adjunction.lean §7-§8`——`P_counter_morph`（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`、`complex_emb`（ℂ↪Hom_Sp 单射）+ `homSp_infinite`（**Hom_Sp 不可数**）、`recHomTrivialEquiv`/`homRec_finite`（**Hom_Rec 有限**）、`no_bijection_homSp_homRec`（**无双射**——完全形式化的基数论证）。单独编译通过，无新增 sorry（L97 RIm_map 为既有登记项）。
+- **Lean**：`RAP5a_explicit_adjunction.lean §7-§8`——`P_counter_morph`（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`、`complex_emb`（ℂ↪Hom_Sp 单射）+ `homSp_infinite`（**Hom_Sp 不可数**）、`recHomTrivialEquiv`/`homRec_finite`（**Hom_Rec 有限**）、`no_bijection_homSp_homRec`（**无双射**——完全形式化的基数论证）。单独编译通过，无新增 sorry（L103 RIm_map 为既有登记项，2026-08-04 行号更正 L97→L103）。
 
 **P1 分析完成（2026-07-31，理论层；形式化待 T3）**：落点 `notes/00_foundations/spectral_R11_morphism_layer.md`。结论——**谱匹配双射的真值取决于 Rec 态射语义**：
 - **线性语义**（Rec_D 态射 = 有界线性谱匹配算子，论文 C2.3 隐含）：双射**成立且为恒等**（Hom_Sp = M_σ = Hom_Rec 同一方程解集；谱测度输送引理 + exp 单射引理）。伴随无限维闭合，S0 仅有限维原型。
@@ -282,10 +282,11 @@ agda_formalization/
 | `sorry` | 位置 | 性质 | 闭合路径 |
 |:--------|:-----|:-----|:---------|
 | ~~`spExchangeLaw`~~ | ~~`HigherSpCategory.lean:103`~~ | ~~🔴 L3 概念特征~~ | ✅ **已消除**（2026-08-04，改为偏差定理引用） |
-| `RFunctor.map`/`map_id`/`map_comp` | `Adjunction.lean:46,51,53` | 🔴 L3 全范畴不可构造 | 对齐 Agda `postulate R-map`；阶段 2 SpImDMor 限制后闭合 |
-| `RIm_map` | `RAP5a_explicit_adjunction.lean:102` | 🔴 L3 D 不 full（基数反例） | 阶段 2 SpImDMor 限制为线性态射后闭合 |
-| `spectral_gap_estimate` | `DeviationBound.lean:386` | 🟡 L2 待 Mathlib | 监视 `Matrix.Spectrum` 进展 |
-| `deviation_spectral_bound` | `DeviationBound.lean:412` | 🟡 L2 依赖上者 | 自动闭合 |
+| `RFunctor.map`/`map_id`/`map_comp` | `Adjunction.lean:53,58,60` | 🔴 L3 全范畴不可构造 | 对齐 Agda `postulate R-map`；阶段 2 SpImDMor 限制后闭合 |
+| `RIm_map` | `RAP5a_explicit_adjunction.lean:103` | 🔴 L3 D 不 full（基数反例） | 阶段 2 SpImDMor 限制为线性态射后闭合 |
+| `vertComp`/`horizComp`/`exchange_law` | `HigherRecCategory.lean:58,77,123` | 🔴 L3 自然性定义性缺口（逐点加法/矩阵乘法不满足） | 需重新定义竖/横复合（2026-08-04 补录，此前遗漏于本表） |
+| `spectral_gap_estimate` | `DeviationBound.lean:384` | 🟡 L2 待 Mathlib + 缺 A_GR 谱假设 | 监视 `Matrix.Spectrum` 进展 + 补假设 |
+| `deviation_spectral_bound` | `DeviationBound.lean:411` | 🟡 L2 依赖上者 | 自动闭合 |
 | `DAdjR` (axiom) | `Adjunction.lean:89` | 🔴 L3 右三角恒等式 | `noncomputable axiom`（对齐 Agda `postulate right-triangle`） |
 
 ### 时间线

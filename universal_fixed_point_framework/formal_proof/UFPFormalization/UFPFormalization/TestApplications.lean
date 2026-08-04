@@ -89,34 +89,20 @@ theorem test_topologicalPressure_at_zero (n : ℕ) (c : Fin n → ℝ) (hpos : �
       hpos hlt) 0 = Real.log (n : ℝ) := by
   simp [topologicalPressure]
 
--- Legendre transform convexity
-theorem test_legendreTransform_convex_trivial (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f) :
+-- Legendre transform convexity (conditional: ℝ 条件完备格需 BddAbove)
+theorem test_legendreTransform_convex_trivial (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f)
+    (hBdd : ∀ p : ℝ, BddAbove (Set.range fun z : ℝ => p * z - f z)) :
     ConvexOn ℝ Set.univ (legendreTransform f) :=
-  legendreTransform_convex hf
+  legendreTransform_convex hf hBdd
 
--- Theorem D-C: d_H(ρ) concavity for self-similar measures
-theorem test_theorem_DC_concavity (measure₁ measure₂ : SelfSimilarMeasure (IFS.mk 1 (fun _ => fun x : ℝ => 0.5 * x) (fun _ => 0.5)
-      (by
-        intro i
-        apply ContractingWith.of_dist_le_mul
-        intro x y; dsimp; nlinarith)
-      (by intro i; norm_num) (by intro i; norm_num)) (by
-        -- trivial attractor for unit interval
-        exact {
-          attractorSet := Set.Icc (0 : ℝ) 1
-          hNonempty := by
-            refine ⟨0.5, ?_⟩
-            simp
-          hInvariant := by
-            intro i
-            simp
-          hAttraction := by
-            intro K hK
-            simp })
-    (λ : ℝ) (hλ : 0 ≤ λ ∧ λ ≤ 1) :
-    hausdorffDimensionOfMeasure (interpolateMeasure measure₁ measure₂ λ) ≥
-    λ * hausdorffDimensionOfMeasure measure₁ + (1 - λ) * hausdorffDimensionOfMeasure measure₂ :=
-  theorem_DC_concavity measure₁ measure₂ λ hλ
+-- Theorem D-C: d_H(ρ) concavity (权重层面，2026-08-04 重构——原 interpolateMeasure 为假定理已删除)
+theorem test_theorem_DC_concavity (w₁ w₂ : Fin 1 → ℝ) (c : Fin 1 → ℝ)
+    (hpos₁ : ∀ i, 0 < w₁ i) (hpos₂ : ∀ i, 0 < w₂ i)
+    (hlog_neg : ∀ i, Real.log (c i) < 0)
+    (lam : ℝ) (hlam : 0 ≤ lam ∧ lam ≤ 1) :
+    hausdorffDimensionOfWeights (interpolateWeights w₁ w₂ lam) c ≥
+    lam * hausdorffDimensionOfWeights w₁ c + (1 - lam) * hausdorffDimensionOfWeights w₂ c :=
+  theorem_DC_concavity w₁ w₂ c hpos₁ hpos₂ hlog_neg lam hlam
 
 -- pressure_spectral_link forward direction (P(t) = 0 → t = d_H)
 theorem test_pressure_spectral_link_forward (ifs : IFS ℝ) (t : ℝ) (hP : topologicalPressure ifs t = 0) :

@@ -365,15 +365,20 @@ theorem contracting_affine (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (t : ℝ) :
     NNReal.coe_mk]
 
 /-- 物理 3-map IFS（d ≥ 1），定义在 ℝ 上，收缩率 c₁, c₂, c₃。
-    映射选择 f_i(x) = c_i · x + t_i（平移 t_i 固定为 0, 0.5, 1.0）。
+    映射选择 f_i(x) = c_i · x + t_i，平移 t_i = (0, 0.5, 1−c₃)。
+    归一化：三个映射均把 [0,1] 映到 [0,1]（f₂ 的不动点精确落在 1），
+    故吸引子 A ⊆ [0,1]，diam(A) ≤ 1（`ContinuumLimit.lean §3.5` 机器证明）。
     该 IFS 的吸引子有 3 个连通分量，对应 N_active = 3 个态射层。
+    （2026-08-04 修正：f₂ 平移由 1.0 改为 1−c₃——原固定平移 1.0 使
+    吸引子直径 = 1/(1−c₃) > 1，与 hDiamLeOne 归一化矛盾，见勘误 O9。
+    收缩率（ratios）不变，O2 排序/Moran 方程/维数定理不受影响。）
     （2026-07-29：全部 sorry 已消除，所有引理机器证明。） -/
 noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
   IFS.mk 3
     (fun i => match i with
       | 0 => fun x : ℝ => c1_physical d * x + 0
       | 1 => fun x : ℝ => c2_physical d * x + 0.5
-      | 2 => fun x : ℝ => c3_physical d * x + 1.0)
+      | 2 => fun x : ℝ => c3_physical d * x + (1 - c3_physical d))
     (fun i => match i with
       | 0 => NNReal.mk (c1_physical d) (le_of_lt (c1_physical_pos d))
       | 1 => NNReal.mk (c2_physical d) (le_of_lt (c2_physical_pos d))
@@ -386,7 +391,7 @@ noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
       · exact contracting_affine (c2_physical d) (le_of_lt (c2_physical_pos d))
           (c2_physical_lt_one d hd) 0.5
       · exact contracting_affine (c3_physical d) (le_of_lt (c3_physical_pos d hd))
-          (c3_physical_lt_one d hd) 1.0)
+          (c3_physical_lt_one d hd) (1 - c3_physical d))
     (by
       intro i
       fin_cases i

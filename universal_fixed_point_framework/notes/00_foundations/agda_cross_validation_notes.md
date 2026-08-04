@@ -79,6 +79,8 @@ agda_formalization/
 | B7 | 静默定理组 | `CoherenceToBranching.lean` | `layers-distinct`（≃ Fin 5）、`branchIndex-dH-unique` 双向、层独立性、维数分解、§11 向外推 | ℝ 分析（已闭合） |
 | B8 | IFS 排序 | `IFSFractal.lean §6` | `physicalIFS-n ≡ 3`（refl） | 收缩率正性/排序/Moran（已闭合） |
 
+> **B8 范围边界注记（2026-08-04）**：Agda 侧 `PhysicalIFS` 记录仅含 `n` + 三个收缩率（`ratio0/1/2`），**无 maps 字段，无吸引子/直径形式化**（无 ContinuumLimit 对应模块）。Lean 侧 `ContinuumLimit.lean` 的 hDiamLeOne 缺口（勘误 O9）因此**不可参照 Agda 侧闭合**——它属 Lean 特有几何层。2026-08-04 O9 闭合的 Lean 修正发生在 maps 层（`physicalIFS` f₂ 平移 1.0 → 1−c₃），**收缩率 ratios 未变**，故 B8 全部定理（`physicalIFS-n`/`physicalIFS-ratios-ordered` 及 c₁<c₂<c₃ 排序链）不受影响，双实现交叉验证一致性保持。
+
 ---
 
 ## 3. 闭合历程

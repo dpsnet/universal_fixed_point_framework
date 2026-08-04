@@ -127,9 +127,10 @@ theorem test_hutchinsonOperator_nonempty {X : Type} [MetricSpace X] [CompleteSpa
 -- ============================================================
 
 -- 4.1. Legendre transform of a linear function is convex
-theorem test_legendreTransform_convex (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f) :
+theorem test_legendreTransform_convex (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f)
+    (hBdd : ∀ p : ℝ, BddAbove (Set.range fun z : ℝ => p * z - f z)) :
     ConvexOn ℝ Set.univ (legendreTransform f) :=
-  legendreTransform_convex hf
+  legendreTransform_convex hf hBdd
 
 -- 4.2. topologicalPressure at zero equals log(n)
 theorem test_pressure_at_zero_simple : topologicalPressure

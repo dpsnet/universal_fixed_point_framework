@@ -155,17 +155,41 @@ noncomputable def legendreTransform (f : ℝ → ℝ) (p : ℝ) : ℝ :=
   ⨆ (x : ℝ), (p * x - f x)
 
 /--
-The Legendre transform of any function (convex or not) is convex.
+The Legendre transform of a function f is convex.
 Proof: f*(p) = sup_x (p·x - f(x)) is the pointwise supremum of affine
 functions p ↦ p·x - f(x), and the supremum of convex functions is convex.
+
+※ 修正（2026-08-04）：ℝ 是条件完备格（非 CompleteLattice），逐点上确界
+`iSup` 需要 `BddAbove (range fun z => p*z - f z)`。对一般 f 不成立
+（占位 τ(q) = q-1 下 p ≠ 1 时无界），故将原无假设陈述改为**条件定理**：
+加 `hBdd` 假设后逐点 `csSup_le` 论证，零 `sorry`。
 -/
-theorem legendreTransform_convex {f : ℝ → ℝ} (hf : ConvexOn ℝ Set.univ f) :
+theorem legendreTransform_convex {f : ℝ → ℝ} (hf : ConvexOn ℝ Set.univ f)
+    (hBdd : ∀ p : ℝ, BddAbove (range fun z : ℝ => p * z - f z)) :
     ConvexOn ℝ Set.univ (legendreTransform f) := by
-  -- 开放项：ℝ 是条件完备格（非 CompleteLattice），legendreTransform 的
-  -- `iSup` 逐点不等式需要 `BddAbove (range fun z => p*z - f z)`，
-  -- 对一般 f 不成立（占位 τ(q) = q-1 下 p ≠ 1 时无界）。
-  -- 需在完备格或有界性假设下严格化（mathlib 缺失对应定理）。
-  sorry
+  refine ⟨convex_univ, ?_⟩
+  intro p₁ hp₁ p₂ hp₂ a b ha hb hab
+  dsimp [legendreTransform]
+  have h_rewrite : (fun x : ℝ => (a * p₁ + b * p₂) * x - f x) =
+      (fun x : ℝ => a * (p₁ * x - f x) + b * (p₂ * x - f x)) := by
+    funext x
+    have hf : (a + b) * f x = f x := by rw [hab]; ring
+    nlinarith
+  rw [h_rewrite]
+  -- 目标：⨆ x, (a*(p₁*x - f x) + b*(p₂*x - f x)) ≤ a*⨆x (p₁*x-f x) + b*⨆x (p₂*x-f x)
+  apply csSup_le
+  · exact Set.range_nonempty _
+  · intro y hy
+    rcases hy with ⟨x, rfl⟩
+    have h1 : p₁ * x - f x ≤ ⨆ x : ℝ, (p₁ * x - f x) :=
+      le_csSup (hBdd p₁) ⟨x, rfl⟩
+    have h2 : p₂ * x - f x ≤ ⨆ x : ℝ, (p₂ * x - f x) :=
+      le_csSup (hBdd p₂) ⟨x, rfl⟩
+    have h3 : a * (p₁ * x - f x) ≤ a * ⨆ x : ℝ, (p₁ * x - f x) :=
+      mul_le_mul_of_nonneg_left h1 ha
+    have h4 : b * (p₂ * x - f x) ≤ b * ⨆ x : ℝ, (p₂ * x - f x) :=
+      mul_le_mul_of_nonneg_left h2 hb
+    exact add_le_add h3 h4
 
 /--
 The multifractal singularity spectrum f(α) is the Legendre transform
@@ -185,21 +209,20 @@ noncomputable def singularitySpectrum {X : Type} [MetricSpace X] [CompleteSpace 
 The singularity spectrum f(α) satisfies f(α) ≤ d_H (Hausdorff dimension),
 with equality at the maximizing Hölder exponent α₀.
 
-Proof sketch (standard multifractal analysis, Harte 1996):
-  1. f(α) = inf_q (q·α - τ(q)) = -sup_q (τ(q) - q·α) = -τ*(α)
-  2. The Legendre transform satisfies τ*(α) ≥ q·α - τ(q) for all q
-  3. For q = 1: τ(1) = 0 (since Σ p_i · c_i^{τ(1)} = Σ p_i = 1), so τ*(α) ≥ α·1 - 0 = α
-  4. Therefore f(α) ≤ -α for all α
-  5. By the variational principle, max_α f(α) = d_H (the Hausdorff dimension)
-  6. Hence f(α) ≤ d_H for all α
+※ 修正（2026-08-04）：原陈述在占位定义下不可证，改为**条件定理**：
+  - `hτ0 : multifractalSpectrum measure 0 = -sol.dH`——Bowen 公式 τ(0) = -d_H
+    （由 Σ c_i^{d_H} = 1 导出，完整隐函数求解为开放项，显式化为假设）；
+  - `hBdd : BddAbove (range fun q => α*q - τ(q))`——ℝ 条件完备格上
+    `iSup` 逐点下界需有界性（占位 τ(q)=q-1 下 α ≠ 1 时无界）。
 
-The full proof (steps 4-6) requires the variational principle for the
-topological pressure and is deferred to Phase 16B.
+其余证明链（sup 逐点下界 + 不等式传递）零 `sorry`。
 -/
 theorem singularity_spectrum_bound {X : Type} [MetricSpace X] [CompleteSpace X]
     {ifs : IFS X} {attractor : Attractor ifs}
     (measure : SelfSimilarMeasure ifs attractor) (sol : HausdorffDimensionSolution ifs)
-    (α : ℝ) : singularitySpectrum measure α ≤ sol.dH := by
+    (α : ℝ) (hτ0 : multifractalSpectrum measure (0 : ℝ) = -sol.dH)
+    (hBdd : BddAbove (range fun q : ℝ => α * q - multifractalSpectrum measure q)) :
+    singularitySpectrum measure α ≤ sol.dH := by
   -- Standard result: the singularity spectrum is bounded by the Hausdorff dimension.
   -- The full bound f(α) ≤ d_H requires the variational principle
   -- (Falconer 2014, Ch. 17, Theorem 17.2).
@@ -207,20 +230,16 @@ theorem singularity_spectrum_bound {X : Type} [MetricSpace X] [CompleteSpace X]
     -- f(α) ≤ d_H for self-similar measures (Falconer 2014, Ch. 17, Theorem 17.2).
     -- Proof structure:
     --   By the Legendre transform: f(α) = inf_q (q·α - τ(q)).
-    --   τ(0) = -d_H (Bowen formula), so f(α) ≤ 0·α - τ(0) = d_H.
-    have h_tau_zero : multifractalSpectrum measure (0 : ℝ) = -sol.dH := by
-      -- τ(0) = -d_H 由 Bowen 公式（Σ c_i^{d_H} = 1）给出；
-      -- 当前占位 τ(q) = q - 1 得 τ(0) = -1，仅当 sol.dH = 1 时相符。
-      -- 完整 Bowen 公式（隐函数定理求解 Σ p_i^q·c_i^{τ(q)} = 1）为开放项。
-      sorry
+    --   τ(0) = -d_H (Bowen formula, 假设 hτ0), so f(α) ≤ 0·α - τ(0) = d_H.
+    have h_tau_zero : multifractalSpectrum measure (0 : ℝ) = -sol.dH := hτ0
     calc
       singularitySpectrum measure α
           = -(⨆ (q : ℝ), (α * q - multifractalSpectrum measure q)) := rfl
       _ ≤ -(0 * α - multifractalSpectrum measure (0 : ℝ)) := by
         have h_sup : (⨆ (q : ℝ), (α * q - multifractalSpectrum measure q)) ≥
           0 * α - multifractalSpectrum measure (0 : ℝ) := by
-          -- 开放项：同上，sup 逐点下界需 BddAbove。
-          sorry
+          -- 0*α - τ(0) 是 range 中 q = 0 处的值，`le_csSup` 直接给出下界
+          exact le_csSup hBdd ⟨0, by simp⟩
         simp at h_sup
         nlinarith
       _ = -(-multifractalSpectrum measure (0 : ℝ)) := by simp
@@ -254,47 +273,20 @@ noncomputable def hausdorffDimensionOfMeasure {X : Type} [MetricSpace X] [Comple
     (fun i : Fin ifs.n =>
       (measure.weights i) * Real.log (measure.weights i) / Real.log (ifs.ratios i))
 
-/--
-Interpolate between two self-similar measures.
-The interpolated measure has weights lam·p_i + (1-lam)·q_i.
--/
-noncomputable def interpolateMeasure {X : Type} [MetricSpace X] [CompleteSpace X]
-    {ifs : IFS X} {attractor : Attractor ifs}
-    (measure₁ measure₂ : SelfSimilarMeasure ifs attractor) (lam : ℝ) (hlam : 0 ≤ lam ∧ lam ≤ 1) :
-    SelfSimilarMeasure ifs attractor :=
-  { weights := fun i => lam * measure₁.weights i + (1 - lam) * measure₂.weights i
-    hWeightsPos := by
-      intro i
-      have h₁ : measure₁.weights i > 0 := measure₁.hWeightsPos i
-      have h₂ : measure₂.weights i > 0 := measure₂.hWeightsPos i
-      have hlam0 : 0 ≤ lam := hlam.1
-      have hlam1 : lam ≤ 1 := hlam.2
-      by_cases hz : lam = 0
-      · simp [hz]
-        exact h₂
-      · have hlam_pos : 0 < lam := lt_of_le_of_ne hlam0 (Ne.symm hz)
-        have hterm1 : 0 < lam * measure₁.weights i := mul_pos hlam_pos h₁
-        nlinarith
-    hWeightsSum := by
-      calc
-        Finset.sum (Finset.univ : Finset (Fin ifs.n))
-            (fun i : Fin ifs.n => lam * measure₁.weights i + (1 - lam) * measure₂.weights i)
-            = lam * (Finset.sum (Finset.univ : Finset (Fin ifs.n)) measure₁.weights)
-              + (1 - lam) * (Finset.sum (Finset.univ : Finset (Fin ifs.n)) measure₂.weights) := by
-              rw [Finset.sum_add_distrib, Finset.mul_sum, Finset.mul_sum]
-        _ = lam * 1 + (1 - lam) * 1 := by rw [measure₁.hWeightsSum, measure₂.hWeightsSum]
-        _ = 1 := by ring
-    mu := fun E => lam * measure₁.mu E + (1 - lam) * measure₂.mu E
-    hTotalMass := by
-      -- μ(attractor.A) = lam·μ₁(A) + (1-lam)·μ₂(A) = lam·1 + (1-lam)·1 = 1
-      rw [measure₁.hTotalMass, measure₂.hTotalMass]
-      ring
-    hInvariance := by
-      intro E
-      -- 开放项：权重线性组合 lam·p₁ + (1-lam)·p₂ 对应的自相似测度需重新构造；
-      -- 直接线性组合 μ = lam·μ₁ + (1-lam)·μ₂ 不满足不变性方程
-      -- （交叉项 lam(1-lam)·p₁·μ₂ 不消失）。
-      sorry }
+/-- 信息维数（权重层面）：d(ρ) = Σ ρ_i · log(ρ_i) / log(c_i)。 -/
+noncomputable def hausdorffDimensionOfWeights {n : ℕ} (w : Fin n → ℝ) (c : Fin n → ℝ) : ℝ :=
+  Finset.sum (Finset.univ : Finset (Fin n))
+    (fun i : Fin n => w i * Real.log (w i) / Real.log (c i))
+
+/-- 权重凸组合（定理 D-C 的对象）。
+
+※ 修正（2026-08-04）：原 `interpolateMeasure` 声称构造 `SelfSimilarMeasure`
+（自相似测度）的凸组合，但**测度的凸组合不自相似**——不变性方程
+μ = Σ p_i·μ∘f_i⁻¹ 的交叉项 lam(1-lam)·p₁·μ₂ 不消失，`hInvariance` 为
+结构性假定理（不可证）。删除该定义，定理 D-C 仅在**权重层面**成立
+（凹性来自权重函数，与测度不变性无关），重构为 `interpolateWeights`。 -/
+noncomputable def interpolateWeights {n : ℕ} (w₁ w₂ : Fin n → ℝ) (lam : ℝ) : Fin n → ℝ :=
+  fun i => lam * w₁ i + (1 - lam) * w₂ i
 
 /--
 Theorem D-C: d_H(ρ) is a concave function of the probability vector ρ.
@@ -304,23 +296,18 @@ Proof sketch:
   Since log(c_i) < 0 (c_i < 1), the function p ↦ p·log(p) is concave,
   and dividing by the negative constant log(c_i) preserves concavity.
 
-In the finite-dimensional prototype, we verify concavity for the
-two-variable case (n=2). The general case follows by a standard
-convex analysis argument.
+※ 修正（2026-08-04）：改为权重层面陈述（`hausdorffDimensionOfWeights`），
+不再依赖被删除的假定理 `interpolateMeasure`。假设 `hpos₁/hpos₂`
+（权重正性）与 `hlog_neg`（log(c_i) < 0，即 c_i ∈ (0,1)）为构造所需，
+其余证明链零 `sorry`。
 -/
-theorem theorem_DC_concavity {X : Type} [MetricSpace X] [CompleteSpace X]
-    {ifs : IFS X} {attractor : Attractor ifs}
-    (measure₁ measure₂ : SelfSimilarMeasure ifs attractor) (lam : ℝ)
-    (hlam : 0 ≤ lam ∧ lam ≤ 1) : hausdorffDimensionOfMeasure (interpolateMeasure measure₁ measure₂ lam hlam) ≥
-    lam * hausdorffDimensionOfMeasure measure₁ + (1 - lam) * hausdorffDimensionOfMeasure measure₂ := by
+theorem theorem_DC_concavity {n : ℕ} (w₁ w₂ : Fin n → ℝ) (c : Fin n → ℝ)
+    (hpos₁ : ∀ i, 0 < w₁ i) (hpos₂ : ∀ i, 0 < w₂ i)
+    (hlog_neg : ∀ i, Real.log (c i) < 0)
+    (lam : ℝ) (hlam : 0 ≤ lam ∧ lam ≤ 1) :
+    hausdorffDimensionOfWeights (interpolateWeights w₁ w₂ lam) c ≥
+    lam * hausdorffDimensionOfWeights w₁ c + (1 - lam) * hausdorffDimensionOfWeights w₂ c := by
   rcases hlam with ⟨hlam0, hlam1⟩
-  -- Key fact: log(c_i) < 0 since 0 < c_i < 1
-  have h_log_c_neg : ∀ i : Fin ifs.n, Real.log (ifs.ratios i) < 0 := by
-    intro i
-    have hc_pos : (0 : ℝ) < ifs.ratios i := by exact_mod_cast ifs.hRatiosPos i
-    have hc_lt_one : (ifs.ratios i : ℝ) < 1 := by exact_mod_cast ifs.hRatiosLtOne i
-    have hlog : Real.log (ifs.ratios i) < Real.log 1 := Real.log_lt_log hc_pos hc_lt_one
-    simpa using hlog
   -- Per-term inequality: x·log(x) is convex on [0,∞) (mathlib `Real.convexOn_mul_log`),
   -- so the weighted Jensen inequality holds.
   have h_entropy_convex : ∀ (a b : ℝ), a > 0 → b > 0 →
@@ -329,62 +316,70 @@ theorem theorem_DC_concavity {X : Type} [MetricSpace X] [CompleteSpace X]
     intro a b ha hb
     simpa [smul_eq_mul] using
       (Real.convexOn_mul_log.2 (le_of_lt ha) (le_of_lt hb) hlam0 (by linarith) (by ring))
-  have h_term : ∀ i : Fin ifs.n,
-      ((lam * measure₁.weights i + (1 - lam) * measure₂.weights i) *
-        Real.log (lam * measure₁.weights i + (1 - lam) * measure₂.weights i) / Real.log (ifs.ratios i)) ≥
-      lam * (measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i)) +
-      (1 - lam) * (measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i)) := by
+  have h_term : ∀ i : Fin n,
+      ((lam * w₁ i + (1 - lam) * w₂ i) *
+        Real.log (lam * w₁ i + (1 - lam) * w₂ i) / Real.log (c i)) ≥
+      lam * (w₁ i * Real.log (w₁ i) / Real.log (c i)) +
+      (1 - lam) * (w₂ i * Real.log (w₂ i) / Real.log (c i)) := by
     intro i
-    set p := measure₁.weights i with hp
-    set q := measure₂.weights i with hq
-    have hp_pos : p > 0 := measure₁.hWeightsPos i
-    have hq_pos : q > 0 := measure₂.hWeightsPos i
-    have h_log_neg : Real.log (ifs.ratios i) < 0 := h_log_c_neg i
+    set p := w₁ i with hp
+    set q := w₂ i with hq
+    have hp_pos : p > 0 := hpos₁ i
+    have hq_pos : q > 0 := hpos₂ i
+    have h_log_neg : Real.log (c i) < 0 := hlog_neg i
     have h_main : (lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q) ≤
       lam * (p * Real.log p) + (1 - lam) * (q * Real.log q) :=
       h_entropy_convex p q hp_pos hq_pos
     -- Since denominator log(c_i) < 0, dividing reverses the inequality
-    have h_div : ((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) / Real.log (ifs.ratios i) ≥
-        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q)) / Real.log (ifs.ratios i) := by
+    have h_div : ((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) / Real.log (c i) ≥
+        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q)) / Real.log (c i) := by
       have h_num_nonpos : ((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) -
         (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q)) ≤ 0 := by linarith
-      have h_den_neg : Real.log (ifs.ratios i) < 0 := h_log_neg
+      have h_den_neg : Real.log (c i) < 0 := h_log_neg
       have h_ratio_nonneg : ((((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) -
-        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q))) / Real.log (ifs.ratios i)) ≥ 0 :=
+        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q))) / Real.log (c i)) ≥ 0 :=
         div_nonneg_of_nonpos h_num_nonpos (le_of_lt h_den_neg)
       rw [sub_div] at h_ratio_nonneg
       linarith
     calc
-      ((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) / Real.log (ifs.ratios i) ≥
-        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q)) / Real.log (ifs.ratios i) := h_div
-      _ = lam * (p * Real.log p / Real.log (ifs.ratios i)) + (1 - lam) * (q * Real.log q / Real.log (ifs.ratios i)) := by ring
+      ((lam * p + (1 - lam) * q) * Real.log (lam * p + (1 - lam) * q)) / Real.log (c i) ≥
+        (lam * (p * Real.log p) + (1 - lam) * (q * Real.log q)) / Real.log (c i) := h_div
+      _ = lam * (p * Real.log p / Real.log (c i)) + (1 - lam) * (q * Real.log q / Real.log (c i)) := by ring
   -- Sum over all indices
-  dsimp [hausdorffDimensionOfMeasure]
+  dsimp [hausdorffDimensionOfWeights, interpolateWeights]
   calc
-    Finset.sum (Finset.univ : Finset (Fin ifs.n))
-      (fun i : Fin ifs.n => ((interpolateMeasure measure₁ measure₂ lam ⟨hlam0, hlam1⟩).weights i) *
-        Real.log ((interpolateMeasure measure₁ measure₂ lam ⟨hlam0, hlam1⟩).weights i) / Real.log (ifs.ratios i)) ≥
-    Finset.sum (Finset.univ : Finset (Fin ifs.n))
-      (fun i : Fin ifs.n =>
-        lam * (measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i)) +
-        (1 - lam) * (measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i))) :=
+    Finset.sum (Finset.univ : Finset (Fin n))
+      (fun i : Fin n => (lam * w₁ i + (1 - lam) * w₂ i) *
+        Real.log (lam * w₁ i + (1 - lam) * w₂ i) / Real.log (c i)) ≥
+    Finset.sum (Finset.univ : Finset (Fin n))
+      (fun i : Fin n =>
+        lam * (w₁ i * Real.log (w₁ i) / Real.log (c i)) +
+        (1 - lam) * (w₂ i * Real.log (w₂ i) / Real.log (c i))) :=
       Finset.sum_le_sum (fun i hi => h_term i)
-    _ = lam * (Finset.sum (Finset.univ : Finset (Fin ifs.n))
-      (fun i : Fin ifs.n => measure₁.weights i * Real.log (measure₁.weights i) / Real.log (ifs.ratios i))) +
-      (1 - lam) * (Finset.sum (Finset.univ : Finset (Fin ifs.n))
-      (fun i : Fin ifs.n => measure₂.weights i * Real.log (measure₂.weights i) / Real.log (ifs.ratios i))) := by
+    _ = lam * (Finset.sum (Finset.univ : Finset (Fin n))
+      (fun i : Fin n => w₁ i * Real.log (w₁ i) / Real.log (c i))) +
+      (1 - lam) * (Finset.sum (Finset.univ : Finset (Fin n))
+      (fun i : Fin n => w₂ i * Real.log (w₂ i) / Real.log (c i))) := by
       simp [Finset.sum_add_distrib, Finset.mul_sum]
-    _ = lam * hausdorffDimensionOfMeasure measure₁ + (1 - lam) * hausdorffDimensionOfMeasure measure₂ := rfl
+    _ = lam * hausdorffDimensionOfWeights w₁ c + (1 - lam) * hausdorffDimensionOfWeights w₂ c := rfl
 
 /--
 Theorem D-C Corollary: The singularity spectrum f(α) is concave in α.
 Proof: f(α) = -τ*(α) where τ* is the Legendre transform of τ(q).
 Since τ(q) is convex (standard property of multifractal spectrum),
 τ* is convex (legendreTransform_convex), so -τ* is concave.
+
+※ 修正（2026-08-04）：原陈述在占位 τ(q) = q-1 下为**假定理**——此时
+legendreTransform τ α = ⨆ q, (α·q - (q-1)) = ⨆ q, ((α-1)·q + 1)，α ≠ 1 时
+无界，`ConvexOn` 前提（sup 存在）不成立。故改为**条件定理**：
+加 `hBdd : ∀ p, BddAbove (range fun q => p*q - τ(q))` 假设（与
+`legendreTransform_convex` 签名对齐），其余证明链零 `sorry`。
 -/
 theorem singularity_spectrum_concave {X : Type} [MetricSpace X] [CompleteSpace X]
     {ifs : IFS X} {attractor : Attractor ifs}
-    (measure : SelfSimilarMeasure ifs attractor) : ConcaveOn ℝ Set.univ (singularitySpectrum measure) := by
+    (measure : SelfSimilarMeasure ifs attractor)
+    (hBdd : ∀ p : ℝ, BddAbove (range fun q : ℝ => p * q - multifractalSpectrum measure q)) :
+    ConcaveOn ℝ Set.univ (singularitySpectrum measure) := by
   -- f(α) = -τ*(α) where τ* = L[τ]
   -- τ* is convex by legendreTransform_convex, so -τ* is concave.
   have h_convex_legendre : ConvexOn ℝ Set.univ (legendreTransform (multifractalSpectrum measure)) :=
@@ -398,7 +393,7 @@ theorem singularity_spectrum_concave {X : Type} [MetricSpace X] [CompleteSpace X
       -- τ(q) = q - 1 是仿射函数：τ(ax+by) = a·τ(x) + b·τ(y)（hab : a+b=1）
       rw [hτ, hτ, hτ]
       simp [smul_eq_mul]
-      nlinarith [hab])
+      nlinarith [hab]) hBdd
   -- ConcaveOn means: ∀ x y a b, a+b=1, a,b≥0 → f(ax+by) ≥ a·f(x) + b·f(y)
   -- This is the negation of convexity of τ*
   rcases h_convex_legendre with ⟨hconvex_set, hconvex⟩

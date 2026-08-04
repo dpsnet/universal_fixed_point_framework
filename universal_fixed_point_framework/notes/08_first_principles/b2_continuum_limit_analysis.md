@@ -278,15 +278,16 @@ $$\|\Phi(x) - \Phi(y)\| \leq C \cdot \frac{1}{|\ln d_{K^*}(x,y)|}$$
 
 | 子步骤 | Lean 形式化的主要难度 | 预估工作量 | 当前状态 |
 |:------:|:--------------------|:----------:|:--------:|
-| 3a | Hutchinson 吸引子直径上界已有（`ContinuumLimit.lean`） | ~2 天→ **🆕 推进** | **核心不等式 `c1_lt_S₄` 已机器证明**；`depthLayering` 框架就绪（缺 Lipschitz 直径引理） |
+| 3a | Hutchinson 吸引子直径上界已有（`ContinuumLimit.lean`） | ✅ 已完成 | **核心不等式 `c1_lt_S₄` 已机器证明**；**`depthLayering` 完整证明 + `attractor_diam_le_one`（hDiamLeOne）闭合（2026-08-04）**——吸引子 ⊆ [0,1]（f₂ 平移 1−c₃ 归一化）机器证明，`exists_attractorAxioms` 完整填充，零 `sorry` |
 | 3b | Hocking-Young 定理不在 mathlib 中 | ~1-2 周（需要补充拓扑学库） | 🔶 理论完备 |
 | 3c | 已在 `IFSFractal.lean` 中 | 0 天 | ✅ |
 | 3d | 编码映射的 Hölder/对数-Lipschitz 连续性 | ~3-5 天 | 🔶 理论完备（**v1.49 修正**：Hölder → 对数-Lipschitz） |
 | 3e | Tukia-Väisälä 定理不在 mathlib 中 | 数月（依赖拟共形几何库） | 🔶 理论完备 |
 | 3f | 酉变换保持拟对称性 | ~1 天 | 🔶 理论完备（`frobNormSq_unitary_conj` 已机器证明） |
 
-**3a 进展说明**（2026-07-29）：
+**3a 进展说明**（2026-07-29；2026-08-04 更新）：
 - `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` 已创建，`lake build` 零错误
 - `S₄` 静默因子定义、`c1_lt_S₄`（c₁ < S₄）已机器证明（`Real.exp_lt_exp.mpr`，自包含）
-- `depthLayering` 定理证明框架已建立（理论论证在 §3 中完成，形式化缺 `LipschitzWith.diam_image_le` API）
+- `depthLayering` 定理证明框架已建立（理论论证在 §3 中完成，`LipschitzWith.diam_image_le` 已用）
+- **O9 闭合（2026-08-04）**：审计发现 hDiamLeOne 缺口根因是假命题——原 f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1。修正 `physicalIFS` f₂ 平移为 1−c₃（ratios 不变），`ContinuumLimit.lean §3.5` 机器证明吸引子 ⊆ [0,1] 与 `attractor_diam_le_one`，`exists_attractorAxioms` 完整填充（零 `sorry`）
 - 乘积结构 `productStructure` 定理标记为 📝 理论完备，形式化依赖拟对称库

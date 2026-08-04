@@ -107,6 +107,9 @@ SCRIPTS = [
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
+
+    # === Phase 61D (P1-3): 黑洞量子演化 ===
+    ("paperX_hawking_spectrum.py",            "黑洞量子演化：霍金谱 + 蒸发动力学 + Page 曲线 + 视界涨落 + 信息保持 + 量子反弹 (35/35)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

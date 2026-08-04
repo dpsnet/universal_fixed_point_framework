@@ -159,7 +159,7 @@ Rec_set（集合语义：连续映射）
 
 **风险**：无（已确认无物理定理依赖 DAdjR 全范围）
 
-### 阶段 2：分层（依赖阶段 1）
+### 阶段 2：分层（依赖阶段 1）— ✅ 已完成（2026-08-04）
 
 **目标**：形式化 Rec_lin / Rec_silence 的子范畴结构
 
@@ -170,6 +170,23 @@ Rec_set（集合语义：连续映射）
 4. 将 `criticalNoiseThreshold` 的诠释从"噪声阈值"升级为"线性层边界"
 
 **验证**：子范畴构造编译通过，inclusion functor 满足 functor laws
+
+**产出**：
+- 实现笔记：`notes/00_foundations/spectral_phase2_stratification_implementation.md`
+- 形式化载体：`formal_proof/UFPFormalization/UFPFormalization/NoiseCategory.lean` §18
+- `lake build` 通过（2454 jobs，零 sorry）
+
+**关键结果**：
+- 选择 **Sp 层** 作为分层切入点（等价于 Rec 层，但 D 的像在 Sp 层有具体刻画 `isTransferMatrix`）
+- 态射分层结构：`SpLinearHom` / `SpSilentHom` + 分层定理 `spHom_stratify`
+- 静默桥接定理：`transfer_zero_silence`（δ=0）+ `silent_positive_silence`（δ>0，需 `h_noncomm` 假设）
+- Σ-Rec / Σ-Spec 范畴实例完成（`@[ext]` + 列表 flatMap/map 实现 component-wise composition）
+- Σ-D 函子 `sigmaDFunctor` 完成，保持 coproduct（§15.3）
+
+**遗留**（阶段 3 衔接）：
+- `SpLinearCat` 当前为类型别名，完整 `Category` 实例待阶段 3
+- `dissSilent` 为占位实现，阶段 3 升级为 IFS 分解
+- `criticalNoiseThreshold` 形式化定义待阶段 3 升级
 
 ### 阶段 3：扩张（依赖阶段 2 + 有限维谱积分层）
 

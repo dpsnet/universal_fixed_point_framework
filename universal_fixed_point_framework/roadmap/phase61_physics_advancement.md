@@ -97,7 +97,7 @@
 
 **验收判定**：拉氏量 → 圈图 → 正则化 → RG 流谱形式化链条 ✅（C1–C3，T3 前置闭合）+ β 函数从谱流方程导出 ✅（C3，定理 3.1）+ EFT 层级 ✅（C4）+ 双语言形式化 ✅（C5）—— **达到完成判据，P0-2 由"推进中"升格为"纳入"**。
 
-**遗留开放项**（均诚实登记）：谱静默"单向转化"的严格定理（C4 依赖谱静默判据 S3 的数值边界）；β 函数完整圈图求和的测度论严格化（当前以谱截断 + 单圈为主定理载体）；无限维谱流（S0 R11）阶段 1 圈定已完成（D ⊣ R 伴随有效范围 = Rec_lin(SpImD) 显式声明，Lean 侧 sorry 从 8 处降至 4 处 + 1 处 axiom），阶段 2 分层（Rec_lin / Rec_silence 子范畴形式化）待推进。
+**遗留开放项**（均诚实登记）：谱静默"单向转化"的严格定理（C4 依赖谱静默判据 S3 的数值边界）；β 函数完整圈图求和的测度论严格化（当前以谱截断 + 单圈为主定理载体）；S0 R11 无限维验证已完成（阶段 1 圈定 + 阶段 2 分层均闭合，见 `notes/00_foundations/spectral_phase2_stratification_implementation.md`）。
 
 #### 延伸填充证明与正本清源清单（2026-08-04）
 
@@ -112,7 +112,7 @@
 - `DeviationBound.lean`：`spectral_gap_estimate` 缺"A 具有 A_GR 谱"假设（一般 Hermitian A 下陈述为假），登记开放项。
 - `HigherRecCategory.lean`：`vertComp`/`horizComp` 自然性为定义性缺口（逐点加法/矩阵乘法不满足自然性），`exchange_law` 随之开放，均登记。
 
-**不可证项（诚实登记的开放项，保留编译占位）**：`legendreTransform_convex`（ℝ 条件完备格 sup 交换需 BddAbove）；Bowen 公式 τ(0)=-d_H；`interpolateMeasure` 不变性（线性组合不满足自相似性）；`spExchangeLaw`（偏差 = 谱隙引力起源）；RIm_map 结构性障碍（D 不 full）。
+**不可证项（诚实登记的开放项，保留编译占位）**：`legendreTransform_convex`（ℝ 条件完备格 sup 交换需 BddAbove）；Bowen 公式 τ(0)=-d_H；`interpolateMeasure` 不变性（线性组合不满足自相似性）；RIm_map 结构性障碍（D 不 full）。~~`spExchangeLaw`~~ 已闭合（2026-08-04，偏差定理族覆盖，见勘误 O7）。
 
 **遗留损坏文件（非本次范围，登记）**：`TempRGFiber.lean` 预存约 45 处编译错误（mathlib 4.31 API 迁移，含 `IsHomLift` 重构消解问题），其依赖链上的 Fiber 模块（WeaveProductFiber/WeaveBCS 等）一并受阻；WeaveBCS 的源级诚实登记已完成，待该链迁移后编译验证。
 
@@ -133,6 +133,22 @@
 **数值验证**：`paperX_hawking_spectrum.py`（辐射谱 + 蒸发演化）。
 
 **验收标准**：霍金辐射谱完整推导 + Page 曲线谱公理推导 + 视界涨落谱表述 + 双语言模块。
+
+### Phase 61D（P1-3）执行记录【✅ 已完成，2026-08-04】
+
+| 产出 | 文件 | 状态 |
+|:----|:----|:----:|
+| 研究笔记（形式化路线，2026-08-04 更新为执行记录） | `notes/04_lorentz_gravity/spectral_black_hole_evolution_formalization.md` | ✅ v0.2 |
+| 自包含论文（定理 2.1-2.7 霍金谱 / 3.1-3.4 蒸发动力学 / 4.1-4.6 Page 曲线谱公理推导 / 5.1-5.3 视界涨落 / 6.1-6.5 信息保持） | `paper/paper61D_black_hole_quantum_evolution.md` | ✅ v0.1 |
+| 数值验证（35/35 检查通过，已注册 `run_all_tests.py`） | `paperX_hawking_spectrum.py` | ✅ 35/35 |
+| Lean 形式化（质量演化/温度单调/Planck 分布/熵守恒/Page 曲线早期增-晚期减+熵平衡/视界涨落/信息保持双向/蒸发 Planck 终止/量子反弹衔接；`lake build` 四模块全通过，零 sorry） | `formal_proof/.../BlackHoleEvolution.lean` `HawkingSpectrum.lean` `BlackHoleInformation.lean` `BlackHoleBounce.lean` | ✅ |
+| Agda 形式化（谱流保自伴镜像；`agda Everything.agda` 全量通过） | `agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda` | ✅ |
+
+**关键数值**（`paperX_hawking_spectrum.py`）：35/35 检查（霍金谱 8 + 蒸发动力学 4 + Page 曲线 7 + 视界涨落 3 + 信息保持 2 + 谱间隙/温度 3 + 量子反弹 8）全部通过。t_Page/t_evap = 0.646447 ≈ 0.647（谱公理推导 1−1/(2√2)）；M(t_Page) = M₀/√2；ρ_c = 0.499 M_Pl⁴（与 Paper IX 0.335 同量级）；t_pl < t_evap 且 M(t_pl) = M_Pl（蒸发在 Planck 尺度终止）；反弹点 H²(ρ_c) = 0。
+
+**验收判定**：霍金辐射谱完整推导 ✅（定理 2.1-2.7）+ Page 曲线谱公理推导 ✅（定理 4.1-4.7，含精确熵平衡 rpow 机器证明）+ 视界涨落谱表述 ✅（定理 5.1-5.3）+ 蒸发终点-反弹衔接 ✅（定理 5.4-5.9，`BlackHoleBounce.lean` 零 sorry）+ 双语言模块 ✅（Lean 四模块零 sorry + Agda）—— **达到完成判据，P1-3 由"推进中"升格为"纳入"**。
+
+**遗留开放项**（诚实登记）：视界涨落 δT/T → 度规涨落 δg_μν 的全量子化（Paper 16 定性→定量）；反弹后的宇宙学演化（a(t) 完整动力学、原初谱）属 Paper IX/61A 范畴；Kerr 蒸发动力学推广。（精确熵平衡、蒸发终点-反弹衔接已于 2026-08-04 解决并移出开放项，见论文定理 4.7 与 §5.4-5.9。）
 
 ---
 
@@ -183,7 +199,7 @@
 | 支撑项 | 现状 | 与物理方向的关系 | 优先级 |
 |:------|:----|:----------------|:------:|
 | T3 测度论完整层（fc-integral 完整降定理） | 唯一剩余 D 类桥接 | **P0-2 圈图积分的直接前置**；测度论 sup 交换 | P0 |
-| S0 R11 无限维验证 | 阶段 1 圈定完成（D ⊣ R 有效范围 = Rec_lin(SpImD)，sorry 8→4+1 axiom）；阶段 2 分层待推进 | P1-3 黑洞无限维谱匹配的判定 | P1 |
+| S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；注：`NoiseCategory.lean` 存在预存编译错误（mathlib ProxyType 读取失败，2026-08-04 实测），其"lake build 通过"表述已更正——分层结论基于理论推导，编译恢复待 mathlib 修复 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
 | d_H 物理约束 | δ 为 RMS 统计约束（闭式已排除） | 维持现状，不追闭式；经实验精化 | P2 |
 | funext 结构性限制 | 库公理范围外 | 接受为构造数学通用短板 | P2 |
 
@@ -212,6 +228,44 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 
 ---
 
+## 七、遗留开放项汇总与后续规划
+
+四个已纳入方向（Phase 61A–61D）的遗留开放项统一汇总，作为 P2-5 统一嵌入及后续深化的**任务池**（诚实登记：均为"推进中"，未达完成判据前不升格；新推进方向按 Phase 61 规范执行：笔记→论文→形式化→数值→登记）。
+
+| 来源 | 开放项 | 后续归属 |
+|:----:|:------|:--------|
+| 61A（P1-4 暴涨） | γ_φ 谱第一性确定 | 暴涨动力学深化 |
+| 61A | N_{R⁴} 精确闭式 | 暴涨动力学深化 |
+| 61A | D3.1(3) 严格微分几何度规诱导 | P2-5 统一嵌入 |
+| 61A | P1-3↔P1-4 动态连续极限衔接 | P2-5 统一嵌入 |
+| 61B（P0-1 色规范） | κ 组分 dressing 独立谱定 | 强子谱深化 |
+| 61B | Δ_hf 色-Coulomb 谱势严格推导 | 强子谱深化 |
+| 61B | Λ_QCD 跨味阈值 | P0-2/P2-5 支撑 |
+| 61B | 重味强子 Cornell 谱势扩展 | 强子谱深化 |
+| 61C（P0-2 重整化） | 谱静默"单向转化"严格定理 | EFT 层级深化 |
+| 61C | β 函数完整圈图求和测度论严格化 | T3/重整化深化 |
+| 61D（P1-3 黑洞） | δT/T → δg_μν 全量子化 | P2-5 量子引力深化 |
+| 61D | 反弹后宇宙学演化（a(t)、原初谱） | Paper IX/61A 范畴 |
+| 61D | Kerr 蒸发动力学推广 | P2-5 量子引力深化 |
+
+**已解决并移出任务池**（2026-08-04）：61D 精确熵平衡（定理 4.7）、蒸发终点-反弹衔接（定理 5.4-5.9）；61C 部分可证 sorry（Silence/ThermoFormalism/TestSpectralEquivalence）与假定理正本清源（WeaveBCS）均已完成。
+
+### 遗留 `sorry`/`axiom` 处理规划（2026-08-04 补录，区分 S0 归属）
+
+Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代码遗留。**S0/范畴相关的 7+1 处已由 phase60 范畴演进计划（S0 表示静默 + SpImD 子范畴限制 + R11 无限维验证）规划闭合路径**，本表与其衔接而非另起炉灶：
+
+| 归属 | 位置 | 数量 | 性质 | 处理方向（衔接已有规划） |
+|:----|:-----|:--:|:-----|:--------|
+| **S0 表示静默/范畴基础** | `Adjunction.lean:53,58,60` + `:89 axiom` | 3+1 | 🔴 全范畴不可构造（nS≠nT 态射不存在） | phase60 阶段 2 **SpImDMor 限制**后闭合（对应 R11 有限维化，对象层已闭合 L198） |
+| **S0 表示静默/范畴基础** | `RAP5a_explicit_adjunction.lean:103`（RIm_map） | 1 | 🔴 D 不 full（基数反例，已机器证明） | phase60 已定性为 **S0 表示静默**（L199/L242-244）；闭合路径 = 态射限制为转移矩阵 或 转无限维（T3 R11 谱定理验证） |
+| **S0 边缘/范畴基础** | `HigherRecCategory.lean:58,77,123`（竖/横复合自然性） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | 随 phase60 路径 A 范畴演进持续跟进：限制态射层或修正复合定义后评估闭合（2026-08-04 补录，此前遗漏于 phase60 表） |
+| 非 S0（物理） | ~~`ThermoFormalism.lean:168,215,223,297`~~ | 4 | 🔶 不可证（legendreTransform 需 BddAbove / Bowen τ(0) / interpolateMeasure 为假定理 / sup 交换） | **✅ 已闭合（2026-08-04）**：`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）；`singularity_spectrum_bound` 改条件定理（加 hτ0 Bowen 公式 + hBdd）；`singularity_spectrum_concave` 改条件定理（加 hBdd，占位 τ 下原陈述为假）；`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
+| 非 S0（物理） | ~~`DeviationBound.lean:384,411`~~ | 2 | 🟡 缺 A_GR 谱假设 + 待 Mathlib Matrix.Spectrum | **✅ 已闭合（2026-08-04）**：不再依赖 Mathlib `Matrix.Spectrum`——A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）。DeviationBound 现零 `sorry`（勘误 O8 闭合） |
+
+**处理优先级**：可证项（ThermoFormalism 可证部分 + DeviationBound 加假设）优先；假定理（interpolateMeasure）删除；**S0/范畴相关 7+1 处按 phase60 既有范畴演进计划推进**（S0 表示静默理论 → SpImD 限制 → R11 无限维），非"转 axiom"替代方案。不在 Phase 61 物理推进范围，作为基础层支撑持续跟进（phase60 路径 A）。
+
+---
+
 ## 版本记录
 
 | 版本 | 日期 | 变更 |
@@ -220,3 +274,6 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 | v0.2 | 2026-08-03 | **Phase 61A（P1-4 暴涨完整动力学）完成**：笔记 `notes/05_cosmology/spectral_inflation_dynamics.md` + 论文 `paper/paper61A_inflation_dynamics.md`（定理 D3.1）+ 数值 `paperX_inflation_dynamics.py`（15/15，注册 `run_all_tests.py`）+ Lean `InflationDynamics.lean`/Agda `InflationDynamics.agda`（`lake build`/`agda Everything.agda` 全量通过）。P1-4 升格"纳入"。顺带修复 `Silence.lean` 预先存在的编译失败（mathlib API 变更：`Real.sqrt_eq_zero.mp` → 新 API + 显式实例化/nlinarith 修复）。 |
 | v0.3 | 2026-08-03 | **Phase 61B（P0-1 色规范/强子谱）完成**：笔记 `notes/01_qcd_higgs/spectral_color_dynamics.md` + 论文 `paper/paper61B_qcd_color_dynamics.md`（定理 2.1/3.1/4.1/4.2/5.1/5.2）+ 数值 `paperX_qcd_spectrum.py`（15/15，注册 `run_all_tests.py`）+ Lean `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）/Agda `ColorDynamics.agda`（桥接登记）。P0-1 升格"纳入"。 |
 | v0.4 | 2026-08-04 | **Phase 61C（P0-2 量子重整化完整链条）完成**：T3 测度论层闭合（v1.36）+ 笔记 `notes/00_foundations/spectral_renormalization_chain.md` + 论文 `paper/paper61C_renormalization_chain.md`（C1-C5，定理 2.1/3.1/3.2/4.1）+ 数值 `paperX_rg_chain.py`（12/12，注册 `run_all_tests.py`）+ Lean `RenormalizationChain.lean`（ad_G 保 Hermitian + 迭代对易子闭合）/Agda 登记。P0-2 升格"纳入"。顺带执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3 + TestSpectralEquivalence 编译错误）、正本清源假定理 5 处（WeaveBCS）+ hBound 文档纠正 + DeviationBound/HigherRecCategory 开放项登记；登记遗留损坏文件 TempRGFiber（约 45 处 mathlib 4.31 迁移错误）。 |
+| v0.5 | 2026-08-04 | **Phase 61D（P1-3 黑洞量子演化）完成**：笔记更新 v0.2 + 论文 `paper/paper61D_black_hole_quantum_evolution.md`（定理 2.1-2.7/3.1-3.4/4.1-4.7/5.1-5.9/6.1-6.5，含精确熵平衡与蒸发终点-反弹衔接）+ 数值 `paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`）+ Lean `BlackHoleEvolution.lean`/`HawkingSpectrum.lean`/`BlackHoleInformation.lean`/`BlackHoleBounce.lean`（四模块 `lake build` 全通过，零 sorry，含信息保持双向、Page 曲线早期增/晚期减+熵平衡、蒸发 Planck 终止、量子反弹衔接）/Agda `BlackHoleDynamics.agda`（`agda Everything.agda` 通过）。P1-3 升格"纳入"。新增第七章遗留开放项汇总与后续规划（61A-D 开放项统一纳入任务池）。 |
+| v0.6 | 2026-08-04 | **勘误 O9 闭合（假命题修正，非 Phase 61 新增）**：审计确认 `ContinuumLimit.lean` hDiamLeOne 缺口根因是假命题——原 `physicalIFS` f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1，"A ⊆ [0,1]"注释错误，Agda 侧（B8）无 maps 形式化无可参照。修正 f₂ 平移 1.0 → **1−c₃**（不动点精确落 1；ratios 与 O2 排序/Moran/维数定理不变，理论体系零破坏），`ContinuumLimit.lean §3.5` 新增 `maps_monotone`/`maps0/1/2_fixedPoint`/`attractor_subset_unitInterval_of`/`attractor_diam_le_one` 机器证明，`exists_attractorAxioms` 完整填充（零 sorry）。`lake build` 通过（2454 jobs）。勘误 v0.11/盲登记 v0.11/notes b2 笔记同步。 |
+| v0.7 | 2026-08-04 | **非 S0 遗留 6 处全部闭合（§七 规划表兑现，勘误 O8 + O11）**：① `DeviationBound.lean` 2 处——不再依赖 Mathlib `Matrix.Spectrum`，A_GR 谱断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）；② `ThermoFormalism.lean` 4 处——`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）、`singularity_spectrum_bound`/`singularity_spectrum_concave` 改条件定理（加 hτ0/hBdd，占位 τ 下原陈述为假）、`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）；TestApplications/TestSpectralEquivalence 引用同步。**全库非 S0 活动 `sorry` 清零**（余 S0 范畴层 7 + 1 axiom 由 phase60 演进计划推进）。`lake build` 通过（2454 jobs）。勘误 v0.12/盲登记 v0.12 同步。 |

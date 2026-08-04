@@ -16,6 +16,7 @@ import UFPFormalization.IFSFractal
 import Mathlib.Topology.MetricSpace.Lipschitz
 import Mathlib.Topology.MetricSpace.Bounded
 import Mathlib.Topology.Sets.Compacts
+import Mathlib.Topology.Order.Compact
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 open Set
@@ -63,7 +64,7 @@ structure AttractorAxioms (d : ℝ) (hd : 1 ≤ d) where
   hCompact : IsCompact A
   /-- 吸引子方程：A = ⋃_{i=1}^3 f_i(A) -/
   hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A
-  /-- 归一化：吸引子直径 ≤ 1（因平移参数 0, 0.5, 1.0 保证 A ⊆ [0,1]） -/
+  /-- 归一化：吸引子直径 ≤ 1（f₂ 平移 1−c₃ 使 A ⊆ [0,1]，§3.5 机器证明） -/
   hDiamLeOne : Metric.diam A ≤ 1
 
 /-! =========================================================
@@ -109,6 +110,186 @@ theorem depthLayering (d : ℝ) (hd : 1 ≤ d) (ax : AttractorAxioms d hd) :
   exact le_of_lt hChain
 
 /-! =========================================================
+   §3.5 吸引子 ⊆ [0,1] 与 hDiamLeOne（O9 闭合，2026-08-04）
+   =========================================================
+
+   f₂ 平移归一化（1.0 → 1−c₃）后，三个映射均把 [0,1] 映到 [0,1]，
+   且各映射的不动点 ∈ [0,1]。利用吸引子方程 A = ⋃ f_i(A)：
+   sSup A 必为某个 f_i 的不动点（单调性 + 极值论证），故 sSup A ≤ 1；
+   对称地 sInf A ≥ 0。因此 A ⊆ [0,1]，diam A ≤ 1。
+   （收缩率/排序/Moran 定理不受影响——它们只依赖 ratios。）
+-/
+
+/-- physicalIFS 的每个映射单调递增（c_i > 0 的仿射映射）。 -/
+lemma maps_monotone (d : ℝ) (hd : 1 ≤ d) (i : Fin 3) :
+    Monotone ((physicalIFS d hd).maps i) := by
+  fin_cases i
+  · intro x y hxy
+    simpa [physicalIFS] using mul_le_mul_of_nonneg_left hxy (le_of_lt (c1_physical_pos d))
+  · intro x y hxy
+    have h := mul_le_mul_of_nonneg_left hxy (le_of_lt (c2_physical_pos d))
+    dsimp [physicalIFS]
+    linarith
+  · intro x y hxy
+    have h := mul_le_mul_of_nonneg_left hxy (le_of_lt (c3_physical_pos d hd))
+    dsimp [physicalIFS]
+    linarith
+
+/-- c₂ = e^{-d} ≤ 1/2（d ≥ 1，因 e^{-d} ≤ e^{-1} < 37/100 < 1/2）。 -/
+lemma c2_le_half (d : ℝ) (hd : 1 ≤ d) : c2_physical d ≤ 1 / 2 := by
+  dsimp [c2_physical]
+  have hde : -d ≤ -1 := by linarith
+  have hle : Real.exp (-d) ≤ Real.exp (-1) := Real.exp_le_exp.mpr hde
+  have h1 : Real.exp (-1) < 37 / 100 := exp_neg_one_lt_37_100
+  have h2 : (37 : ℝ) / 100 < 1 / 2 := by norm_num
+  exact le_trans hle (le_of_lt (lt_trans h1 h2))
+
+/-- f₀ 的唯一不动点是 0（c₁ < 1）。 -/
+lemma maps0_fixedPoint (d : ℝ) (hd : 1 ≤ d) {x : ℝ}
+    (h : (physicalIFS d hd).maps (0 : Fin 3) x = x) : x = 0 := by
+  dsimp [physicalIFS] at h
+  have hc_ne : c1_physical d ≠ 1 := ne_of_lt (c1_physical_lt_one d hd)
+  have hmul : (c1_physical d - 1) * x = 0 := by nlinarith
+  rcases mul_eq_zero.mp hmul with hc | hx
+  · exfalso
+    exact hc_ne (by linarith)
+  · exact hx
+
+/-- f₂ 的唯一不动点是 1（c₃ < 1，平移 1−c₃ 使不动点精确落在 1）。 -/
+lemma maps2_fixedPoint (d : ℝ) (hd : 1 ≤ d) {x : ℝ}
+    (h : (physicalIFS d hd).maps (2 : Fin 3) x = x) : x = 1 := by
+  dsimp [physicalIFS] at h
+  have hc_ne : c3_physical d ≠ 1 := ne_of_lt (c3_physical_lt_one d hd)
+  have hmul : (1 - c3_physical d) * (x - 1) = 0 := by nlinarith
+  rcases mul_eq_zero.mp hmul with hc | hx
+  · exfalso
+    exact hc_ne (by linarith)
+  · linarith
+
+/-- f₁ 的任意不动点 ≥ 0（x = 0.5/(1−c₂) > 0）。 -/
+lemma maps1_fixedPoint_nonneg (d : ℝ) (hd : 1 ≤ d) {x : ℝ}
+    (h : (physicalIFS d hd).maps (1 : Fin 3) x = x) : 0 ≤ x := by
+  dsimp [physicalIFS] at h
+  have hden_pos : 0 < 1 - c2_physical d := by linarith [c2_physical_lt_one d hd]
+  have hmul : (1 - c2_physical d) * x = 1 / 2 := by nlinarith
+  have hx : x = (1 / 2) / (1 - c2_physical d) := by
+    rw [eq_div_iff (by linarith : 1 - c2_physical d ≠ 0)]
+    nlinarith
+  rw [hx]
+  exact div_nonneg (by norm_num) (le_of_lt hden_pos)
+
+/-- f₁ 的任意不动点 ≤ 1（d ≥ 1 ⟹ c₂ ≤ 1/2）。 -/
+lemma maps1_fixedPoint_le_one (d : ℝ) (hd : 1 ≤ d) {x : ℝ}
+    (h : (physicalIFS d hd).maps (1 : Fin 3) x = x) : x ≤ 1 := by
+  have hc2 : c2_physical d ≤ 1 / 2 := c2_le_half d hd
+  dsimp [physicalIFS] at h
+  have hden_pos : 0 < 1 - c2_physical d := by linarith [c2_physical_lt_one d hd]
+  have hmul : (1 - c2_physical d) * x = 1 / 2 := by nlinarith
+  have hx : x = (1 / 2) / (1 - c2_physical d) := by
+    rw [eq_div_iff (by linarith : 1 - c2_physical d ≠ 0)]
+    nlinarith
+  rw [hx]
+  rw [div_le_one hden_pos]
+  linarith
+
+/-- 吸引子 ⊆ [0,1]（以分量形式陈述，供 hDiamLeOne 构造时避免结构循环）。
+    论证：sSup A 是某映射的不动点（A = ⋃ f_i(A) + 各映射单调），
+    而各映射不动点 ≤ 1；sInf A 同理 ≥ 0。 -/
+theorem attractor_subset_unitInterval_of (d : ℝ) (hd : 1 ≤ d)
+    (A : Set ℝ) (hNonempty : A.Nonempty) (hCompact : IsCompact A)
+    (hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A) :
+    A ⊆ Set.Icc (0 : ℝ) 1 := by
+  -- ---- sSup A ≤ 1 ----
+  have hM_mem : sSup A ∈ A := hCompact.sSup_mem hNonempty
+  have hM_union : sSup A ∈ (⋃ i : Fin 3, (physicalIFS d hd).maps i '' A) := by
+    rw [← hFixedPoint]
+    exact hM_mem
+  rcases Set.mem_iUnion.mp hM_union with ⟨i, hi⟩
+  rcases hi with ⟨y, hyA, hyM⟩
+  have hy_le : y ≤ sSup A := le_csSup hCompact.bddAbove hyA
+  have hmono : (physicalIFS d hd).maps i y ≤ (physicalIFS d hd).maps i (sSup A) :=
+    (maps_monotone d hd i) hy_le
+  have hM_le : sSup A ≤ (physicalIFS d hd).maps i (sSup A) := by
+    calc
+      sSup A = (physicalIFS d hd).maps i y := hyM.symm
+      _ ≤ (physicalIFS d hd).maps i (sSup A) := hmono
+  have himg_sub : (physicalIFS d hd).maps i '' A ⊆ A := by
+    calc
+      (physicalIFS d hd).maps i '' A ⊆
+          ⋃ k : Fin 3, (physicalIFS d hd).maps k '' A :=
+        Set.subset_iUnion (fun k : Fin 3 => (physicalIFS d hd).maps k '' A) i
+      _ = A := hFixedPoint.symm
+  have hMs_mem : (physicalIFS d hd).maps i (sSup A) ∈ A :=
+    himg_sub (Set.mem_image_of_mem _ hM_mem)
+  have hMs_le : (physicalIFS d hd).maps i (sSup A) ≤ sSup A :=
+    le_csSup hCompact.bddAbove hMs_mem
+  have hfix : (physicalIFS d hd).maps i (sSup A) = sSup A :=
+    le_antisymm hMs_le hM_le
+  have hM_le_one : sSup A ≤ 1 := by
+    fin_cases i
+    · have hz : sSup A = 0 := maps0_fixedPoint d hd hfix
+      linarith
+    · exact maps1_fixedPoint_le_one d hd hfix
+    · have hz : sSup A = 1 := maps2_fixedPoint d hd hfix
+      linarith
+  -- ---- 0 ≤ sInf A ----
+  have hm_mem : sInf A ∈ A := hCompact.sInf_mem hNonempty
+  have hm_union : sInf A ∈ (⋃ i : Fin 3, (physicalIFS d hd).maps i '' A) := by
+    rw [← hFixedPoint]
+    exact hm_mem
+  rcases Set.mem_iUnion.mp hm_union with ⟨j, hj⟩
+  rcases hj with ⟨y, hyA, hym⟩
+  have hy_ge : sInf A ≤ y := csInf_le hCompact.bddBelow hyA
+  have hmono : (physicalIFS d hd).maps j (sInf A) ≤ (physicalIFS d hd).maps j y :=
+    (maps_monotone d hd j) hy_ge
+  have hm_le : (physicalIFS d hd).maps j (sInf A) ≤ sInf A := by
+    calc
+      (physicalIFS d hd).maps j (sInf A) ≤ (physicalIFS d hd).maps j y := hmono
+      _ = sInf A := hym
+  have himg_sub : (physicalIFS d hd).maps j '' A ⊆ A := by
+    calc
+      (physicalIFS d hd).maps j '' A ⊆
+          ⋃ k : Fin 3, (physicalIFS d hd).maps k '' A :=
+        Set.subset_iUnion (fun k : Fin 3 => (physicalIFS d hd).maps k '' A) j
+      _ = A := hFixedPoint.symm
+  have hms_mem : (physicalIFS d hd).maps j (sInf A) ∈ A :=
+    himg_sub (Set.mem_image_of_mem _ hm_mem)
+  have hms_ge : sInf A ≤ (physicalIFS d hd).maps j (sInf A) :=
+    csInf_le hCompact.bddBelow hms_mem
+  have hfix : (physicalIFS d hd).maps j (sInf A) = sInf A :=
+    le_antisymm hm_le hms_ge
+  have hzero_le_m : 0 ≤ sInf A := by
+    fin_cases j
+    · have hz : sInf A = 0 := maps0_fixedPoint d hd hfix
+      linarith
+    · exact maps1_fixedPoint_nonneg d hd hfix
+    · have hz : sInf A = 1 := maps2_fixedPoint d hd hfix
+      linarith
+  -- ---- 组装：0 ≤ sInf A ≤ x ≤ sSup A ≤ 1 ----
+  intro x hx
+  constructor
+  · exact le_trans hzero_le_m (csInf_le hCompact.bddBelow hx)
+  · exact le_trans (le_csSup hCompact.bddAbove hx) hM_le_one
+
+/-- AttractorAxioms 封装：吸引子 ⊆ [0,1]。 -/
+theorem attractor_subset_unitInterval (d : ℝ) (hd : 1 ≤ d) (ax : AttractorAxioms d hd) :
+    ax.A ⊆ Set.Icc (0 : ℝ) 1 :=
+  attractor_subset_unitInterval_of d hd ax.A ax.hNonempty ax.hCompact ax.hFixedPoint
+
+/-- 吸引子直径 ≤ 1（A ⊆ [0,1] ⟹ 任意两点距离 ≤ 1）。 -/
+theorem attractor_diam_le_one (d : ℝ) (hd : 1 ≤ d) (ax : AttractorAxioms d hd) :
+    Metric.diam ax.A ≤ 1 := by
+  refine Metric.diam_le_of_forall_dist_le (by norm_num) ?_
+  intro x hx y hy
+  have hx01 := attractor_subset_unitInterval d hd ax hx
+  have hy01 := attractor_subset_unitInterval d hd ax hy
+  rw [Real.dist_eq]
+  rw [abs_le]
+  constructor
+  · nlinarith [hx01.1, hx01.2, hy01.1, hy01.2]
+  · nlinarith [hx01.1, hx01.2, hy01.1, hy01.2]
+
+/-! =========================================================
    §4 从 HutchinsonAttractor 构造 AttractorAxioms
    =========================================================
 
@@ -116,11 +297,13 @@ theorem depthLayering (d : ℝ) (hd : 1 ≤ d) (ax : AttractorAxioms d hd) :
    构造满足 `AttractorAxioms` 的具体吸引子。
 -/
 
-/-- 从 `hutchinson_attractor_exists_unique` 构造 `AttractorAxioms` 的存在性。
-    除 `hDiamLeOne` 外全部填充。该缺口需要证明吸引子 ⊆ [0,1] 或缩放论证。 -/
+/-- 从 `hutchinson_attractor_exists_unique` 构造完整 `AttractorAxioms`（含 hDiamLeOne）。
+    O9 闭合（2026-08-04）：f₂ 平移归一化后吸引子 ⊆ [0,1]（§3.5），
+    `Metric.diam A ≤ 1` 获机器证明（零 sorry）。 -/
 lemma exists_attractorAxioms (d : ℝ) (hd : 1 ≤ d) [Nonempty ℝ] :
     ∃ (A : Set ℝ) (hNonempty : A.Nonempty) (hCompact : IsCompact A)
-      (hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A), True := by
+      (hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A)
+      (hDiamLeOne : Metric.diam A ≤ 1), True := by
   set ifs := physicalIFS d hd
   have hn : 0 < ifs.n := by
     have h : ifs.n = 3 := rfl; rw [h]; norm_num
@@ -143,14 +326,26 @@ lemma exists_attractorAxioms (d : ℝ) (hd : 1 ≤ d) [Nonempty ℝ] :
         symm; exact hK_fixed_set
       _ = ⋃ i : Fin (ifs.n), (ifs.maps i) '' (K : Set ℝ) := rfl
       _ = ⋃ i : Fin 3, (ifs.maps i) '' (K : Set ℝ) := rfl
-  exact ⟨(K : Set ℝ), K.nonempty', K.isCompact', hFixedPoint, trivial⟩
+  refine ⟨(K : Set ℝ), K.nonempty', K.isCompact', hFixedPoint, ?_, trivial⟩
+  · -- hDiamLeOne：由 §3.5 的 A ⊆ [0,1] 论证
+    refine Metric.diam_le_of_forall_dist_le (by norm_num) ?_
+    intro x hx y hy
+    have hsub := attractor_subset_unitInterval_of d hd (K : Set ℝ)
+      K.nonempty' K.isCompact' hFixedPoint
+    have hx01 := hsub hx
+    have hy01 := hsub hy
+    rw [Real.dist_eq]
+    rw [abs_le]
+    constructor
+    · nlinarith [hx01.1, hx01.2, hy01.1, hy01.2]
+    · nlinarith [hx01.1, hx01.2, hy01.1, hy01.2]
 
 /-! =========================================================
   §5 形式化状态总结
    ========================================================= -/
 
 /-
-  §1-§4 当前状态
+  §1-§5 当前状态（2026-08-04 更新：O9 闭合）
 
   | 组件 | 内容 | 状态 |
   |:-----|:-----|:----:|
@@ -159,9 +354,10 @@ lemma exists_attractorAxioms (d : ℝ) (hd : 1 ≤ d) [Nonempty ℝ] :
   | AttractorAxioms | 吸引子公理化定义 | ✅ |
   | depthLayering  | 深度分层定理完整证明 | ✅ `lake build` 通过 |
   | attractorAxioms_from_hutchinson | 连接真实吸引子 | ✅ 使用 `hutchinson_attractor_exists_unique` |
+  | attractor_subset_unitInterval | 吸引子 ⊆ [0,1]（§3.5） | ✅ `lake build` 通过 |
+  | attractor_diam_le_one / hDiamLeOne | diam(A) ≤ 1（§3.5） | ✅ 零 sorry，O9 闭合 |
 
   剩余工作
-    - 证明吸引子直径 bound（需显式 bound A ⊆ [0,1] 或使用缩放论证）
     - 连接 B2 3a 与 3b（2-map IFS 吸引子为拟弧）
 -/
 
