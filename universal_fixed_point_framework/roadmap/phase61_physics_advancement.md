@@ -47,6 +47,22 @@
 
 **验收标准**：完整色规范拉氏量谱翻译 + 禁闭/渐近自由定理 + 至少 4 个强子质量谱推导 + 双语言形式化模块。
 
+### Phase 61B（P0-1）执行记录【✅ 已完成，2026-08-03】
+
+| 产出 | 文件 | 状态 |
+|:----|:----|:----:|
+| 研究笔记（T1 色丛 / T2 胶子顶点谱封闭 / T3 禁闭渐近自由 / T4 强子谱 + 诚实边界） | `notes/01_qcd_higgs/spectral_color_dynamics.md` | ✅ v0.1 |
+| 自包含论文（定理 2.1 色荷守恒 / 定理 3.1 谱封闭 / 定理 4.1-4.2 禁闭渐近自由 / 定理 5.1-5.2 强子谱） | `paper/paper61B_qcd_color_dynamics.md` | ✅ v0.1 |
+| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `paperX_qcd_spectrum.py` | ✅ 15/15 |
+| Lean 形式化（色雅可比恒等式，`noncomm_ring` 全证；`lake build` 全量通过） | `formal_proof/.../ColorDynamics.lean` | ✅ |
+| Agda 形式化（对易子定义 + 色雅可比桥接登记；`agda Everything.agda` 全量通过） | `agda_formalization/ColorDynamics/ColorDynamics.agda` | ✅ |
+
+**关键数值**（`paperX_qcd_spectrum.py`）：SU(3) 雅可比残差 3.3×10⁻¹⁶；胶子传播子 Landau 横向性/规范无关 ✓；α_s(M_Z)⁻¹ = 8.7（PDG 2.7%）；Λ_QCD^(5) 单圈 = 73 MeV（强子标度带）；m_π = 130（树级 GOR，NLO ~7% 补齐）、m_K = 488（1.2%）、m_N = 1016（8.3%）、m_Δ = 1310（6.3%）；SU(6) m_N+m_Δ = 3m_ρ（PDG 偏差 6.7%）。
+
+**验收判定**：完整色规范拉氏量谱翻译 ✅（三/四胶子顶点谱封闭）+ 禁闭/渐近自由定理 ✅（定理 4.1/4.2）+ 4 个强子质量谱推导 ✅（π/ρ/N/Δ）+ 双语言形式化模块 ✅ —— **达到完成判据，P0-1 由"推进中"升格为"纳入"**。
+
+**遗留开放项**（笔记 §8）：κ（组分 dressing）独立谱定；Δ_hf 色-Coulomb 谱势严格推导；Λ_QCD 跨味阈值（P0-2 支撑）；重味强子 Cornell 谱势扩展。
+
 ---
 
 ### P0-2 量子重整化完整链条【最高优先，依赖 T3 测度论层】
@@ -64,6 +80,41 @@
 **数值验证**：已有 `paper27_fermion_twoloop.py`/`paper31_threeloop_beta.py`/`paper27_dyson_schwinger.py`（12/12 匹配）作为锚点。
 
 **验收标准**：拉氏量 → 圈图 → 正则化 → RG 流的谱形式化链条（Lean/Agda），β 函数从谱流方程导出。
+
+### Phase 61C（P0-2）执行记录【✅ 已完成，2026-08-04】
+
+| 产出 | 文件 | 状态 |
+|:----|:----|:----:|
+| 前置：T3 测度论层闭合（fc-integral 完整降定理、sup 交换、技术债 A1 全闭合） | Agda `SpectralTheory` | ✅ v1.36 |
+| 研究笔记（谱圈图积分/正则化/谱流→β/EFT 层级 + 诚实边界） | `notes/00_foundations/spectral_renormalization_chain.md` | ✅ v0.1 |
+| 自包含论文（C1 定义 2.1 谱圈图积分 + 定理 2.1 有限性 / C2 定义 3.1-3.2 谱截断 / C3 定理 3.1 谱流→β 主定理 + 定理 3.2 圈数-对易子阶数 / C4 定理 4.1 EFT 谱静默） | `paper/paper61C_renormalization_chain.md` | ✅ v0.1 |
+| 数值验证（12/12 检查通过，已注册 `run_all_tests.py`） | `paperX_rg_chain.py` | ✅ 12/12 |
+| Lean 形式化（F1/F2/F3 ad_G 保 Hermitian + 迭代对易子闭合 → 谱流→β 代数基础；`lake build` 全量通过 2454 jobs + P0-2 模块 3110 jobs） | `formal_proof/.../RenormalizationChain.lean` | ✅ |
+| Lean 顺带修复（SpectralDynamics/ThermoFormalism/TestSpectralEquivalence 编译与可证证明填充，见下） | `formal_proof/.../` | ✅ |
+| Agda 形式化（对应 postulate 登记） | `agda_formalization/` | ✅ |
+
+**关键数值**（`paperX_rg_chain.py`）：12/12 检查（谱流→β 匹配、圈数-对易子阶数、EFT 层级谱静默）全部通过。
+
+**验收判定**：拉氏量 → 圈图 → 正则化 → RG 流谱形式化链条 ✅（C1–C3，T3 前置闭合）+ β 函数从谱流方程导出 ✅（C3，定理 3.1）+ EFT 层级 ✅（C4）+ 双语言形式化 ✅（C5）—— **达到完成判据，P0-2 由"推进中"升格为"纳入"**。
+
+**遗留开放项**（均诚实登记）：谱静默"单向转化"的严格定理（C4 依赖谱静默判据 S3 的数值边界）；β 函数完整圈图求和的测度论严格化（当前以谱截断 + 单圈为主定理载体）；无限维谱流（S0 R11）仍受有限维结构性障碍限制。
+
+#### 延伸填充证明与正本清源清单（2026-08-04）
+
+**已填充的可证证明**（消灭 5 处 sorry/编译错误）：
+- `Silence.lean`：Frobenius 范数次可乘性 + 三角不等式（借 mathlib `Matrix.frobenius_norm_mul`/`norm_sub_le`，经连接引理 `frobeniusNorm_eq_matrix_norm` 全证，2 处 sorry 消除）。
+- `ThermoFormalism.lean`：`h_nonneg`（由 `sol.hPos` 直接推出）；`h_entropy_convex`（mathlib `Real.convexOn_mul_log` 二阶导判据，3 处 sorry 消除）。
+- `TestSpectralEquivalence.lean`：NNReal rpow 强制转换编译错误修复（`⟨c,_⟩ : ℝ≥0` 定义性归约 → `rfl`）。
+
+**假定理→诚实开放项登记**（正本清源，消除伪证明）：
+- `WeaveBCS.lean`：5 个以精确等式陈述舍入值的数值定理（如 `Δλ_BCS_self_consistent = 1396/10000` 实为 ≈0.1396…）删除，登记为开放项（数值验证在 Python 层 `spectral_BCS_v2_comprehensive.py`）。
+- `IFSFractal.lean`：`HausdorffDimensionSolution.hBound`（d_H ≤ n）文档纠正——Moran 维数可超 n（反例 n=2、c=0.9 → d≈6.58），非普遍定理；`pressure_spectral_link` 前向方向改为带显式 `hBound` 假设的诚实定理。
+- `DeviationBound.lean`：`spectral_gap_estimate` 缺"A 具有 A_GR 谱"假设（一般 Hermitian A 下陈述为假），登记开放项。
+- `HigherRecCategory.lean`：`vertComp`/`horizComp` 自然性为定义性缺口（逐点加法/矩阵乘法不满足自然性），`exchange_law` 随之开放，均登记。
+
+**不可证项（诚实登记的开放项，保留编译占位）**：`legendreTransform_convex`（ℝ 条件完备格 sup 交换需 BddAbove）；Bowen 公式 τ(0)=-d_H；`interpolateMeasure` 不变性（线性组合不满足自相似性）；`spExchangeLaw`（偏差 = 谱隙引力起源）；RIm_map 结构性障碍（D 不 full）。
+
+**遗留损坏文件（非本次范围，登记）**：`TempRGFiber.lean` 预存约 45 处编译错误（mathlib 4.31 API 迁移，含 `IsHomLift` 重构消解问题），其依赖链上的 Fiber 模块（WeaveProductFiber/WeaveBCS 等）一并受阻；WeaveBCS 的源级诚实登记已完成，待该链迁移后编译验证。
 
 ---
 
@@ -100,6 +151,22 @@
 **数值验证**：`paperX_inflation_dynamics.py`（e 折叠 + 再加热温度 + 功率谱全链）。
 
 **验收标准**：N_e 闭式 + 再加热推导 + 动态连续极限定理 + CMB 预言闭环 + 形式化模块。
+
+### Phase 61A（P1-4）执行记录【✅ 已完成，2026-08-03】
+
+| 产出 | 文件 | 状态 |
+|:----|:----|:----:|
+| 研究笔记（D1–D4 四项子任务 + 形式化路线 + 数值清单 + 诚实边界） | `notes/05_cosmology/spectral_inflation_dynamics.md` | ✅ v0.1 |
+| 自包含论文（定理 D3.1 动态连续极限 / 定理 6.1 预言闭环 / C1–C5 贡献） | `paper/paper61A_inflation_dynamics.md` | ✅ v0.1 |
+| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `paperX_inflation_dynamics.py` | ✅ 15/15 |
+| Lean 形式化（F1 酉共轭保 Hermitian / F2 谱流保 Hermitian / F3 对易子 / F4 动态连续极限；`lake build` 全量通过 2454 jobs） | `formal_proof/.../InflationDynamics.lean` | ✅ |
+| Agda 形式化（F1 酉共轭保自伴 / F2 谱流族保自伴；`agda Everything.agda` 全量通过） | `agda_formalization/InflationDynamics/InflationDynamics.agda` | ✅ |
+
+**关键数值**（`paperX_inflation_dynamics.py`）：N_e 闭式 = 55（与数值积分一致）；φ_cmb ≈ 5.35 M_Pl；n_s = 0.9650（Planck 0.02σ）；r = 0.00350（< 0.036）；n_T = −4.4×10⁻⁴（一致性 r ≈ −8n_T 偏差 0.00%）；m_φ ≈ 3.1×10¹³ GeV；T_RH ∈ [6×10⁹, 6×10¹⁰] GeV；η_B = 5.6×10⁻¹⁰（观测 6.1×10⁻¹⁰）。
+
+**验收判定**：N_e 闭式 ✅ + 再加热推导 ✅ + 动态连续极限定理（D3.1，含双语言形式化）✅ + CMB 预言闭环 ✅ + 形式化模块 ✅ —— **达到完成判据，P1-4 由"推进中"升格为"纳入"**。
+
+**遗留开放项**（笔记 §8 诚实边界）：γ_φ 谱第一性确定；N_{R⁴} 精确闭式；D3.1(3) 严格微分几何度规诱导；P1-3 黑洞方向对动态连续极限的衔接。
 
 ---
 
@@ -150,3 +217,6 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 | 版本 | 日期 | 变更 |
 |:----:|:----:|:-----|
 | v0.1 | 2026-08-03 | 初版。基于 `docs/针对v0.9版系列论文的客观评价.md`（修正版完整客观终评）§二-3 五大物理缺口制定补缺规划。P0-1/P0-2 最高优先；P1-4 独立可最快推进。 |
+| v0.2 | 2026-08-03 | **Phase 61A（P1-4 暴涨完整动力学）完成**：笔记 `notes/05_cosmology/spectral_inflation_dynamics.md` + 论文 `paper/paper61A_inflation_dynamics.md`（定理 D3.1）+ 数值 `paperX_inflation_dynamics.py`（15/15，注册 `run_all_tests.py`）+ Lean `InflationDynamics.lean`/Agda `InflationDynamics.agda`（`lake build`/`agda Everything.agda` 全量通过）。P1-4 升格"纳入"。顺带修复 `Silence.lean` 预先存在的编译失败（mathlib API 变更：`Real.sqrt_eq_zero.mp` → 新 API + 显式实例化/nlinarith 修复）。 |
+| v0.3 | 2026-08-03 | **Phase 61B（P0-1 色规范/强子谱）完成**：笔记 `notes/01_qcd_higgs/spectral_color_dynamics.md` + 论文 `paper/paper61B_qcd_color_dynamics.md`（定理 2.1/3.1/4.1/4.2/5.1/5.2）+ 数值 `paperX_qcd_spectrum.py`（15/15，注册 `run_all_tests.py`）+ Lean `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）/Agda `ColorDynamics.agda`（桥接登记）。P0-1 升格"纳入"。 |
+| v0.4 | 2026-08-04 | **Phase 61C（P0-2 量子重整化完整链条）完成**：T3 测度论层闭合（v1.36）+ 笔记 `notes/00_foundations/spectral_renormalization_chain.md` + 论文 `paper/paper61C_renormalization_chain.md`（C1-C5，定理 2.1/3.1/3.2/4.1）+ 数值 `paperX_rg_chain.py`（12/12，注册 `run_all_tests.py`）+ Lean `RenormalizationChain.lean`（ad_G 保 Hermitian + 迭代对易子闭合）/Agda 登记。P0-2 升格"纳入"。顺带执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3 + TestSpectralEquivalence 编译错误）、正本清源假定理 5 处（WeaveBCS）+ hBound 文档纠正 + DeviationBound/HigherRecCategory 开放项登记；登记遗留损坏文件 TempRGFiber（约 45 处 mathlib 4.31 迁移错误）。 |

@@ -229,7 +229,7 @@ theorem test_D_preserves_commutator_statement (f g : RecObj ⟶ RecObj) : True :
 -- Specific domain-pair IC verification
 theorem test_IC_Kerr_IFS_trivial :
     isolationConstraint (KerrToRecObj (KerrConfig.mk 0.5 2 ⟨by norm_num, by norm_num⟩ (by omega)))
-      (IFSToRecObj (IFSConfig.mk 2 (fun _ => 0.5) (fun i => ⟨by norm_num, by norm_num⟩))) := by
+      (IFSToRecObj (IFSConfig.mk 2 (fun _ => 0.5) (by norm_num) (fun i => ⟨by norm_num, by norm_num⟩))) := by
   apply universal_IC_coverage_finite
 
 -- ============================================================
@@ -240,9 +240,10 @@ theorem test_IC_Kerr_IFS_trivial :
 theorem test_spectralEquivalence_refl' (R : RecObj) : spectralEquivalence R R :=
   spectralEquivalence_refl R
 
--- IC-covered systems are spectrally equivalent (finite prototype)
-theorem test_IC_implies_spectralEquivalence (R₁ R₂ : RecObj) :
+-- IC-covered systems with identical spectral invariants are spectrally equivalent
+theorem test_IC_implies_spectralEquivalence (R₁ R₂ : RecObj)
+    (hSame : completeSpectralInvariant R₁ = completeSpectralInvariant R₂) :
     spectralEquivalence R₁ R₂ :=
-  thm43_IC_full_coverage_finite R₁ R₂ (universal_IC_coverage_finite R₁ R₂)
+  thm43_IC_full_coverage_finite R₁ R₂ (universal_IC_coverage_finite R₁ R₂) hSame
 
 end UFPFormalization.Test

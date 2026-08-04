@@ -98,6 +98,15 @@ SCRIPTS = [
     ("paperX_falsifiable_predictions.py",     "★ 框架的三个可证伪无量纲比率预测"),
     ("paperX_gw_polarization.py",             "引力波极化：3 层各向异性的结构稳定性约束"),
     ("paperX_lambda_analysis.py",             "Λ 的谱结构推导 — 诚实评估 (负结果)"),
+
+    # === Phase 61A (P1-4): 暴涨完整动力学 ===
+    ("paperX_inflation_dynamics.py",          "暴涨完整动力学：N_e 闭式 + 再加热 + 动态连续极限 + PGW 闭环 (15/15)"),
+
+    # === Phase 61B (P0-1): SU(3) 色规范完整动力学 ===
+    ("paperX_qcd_spectrum.py",                "色规范完整动力学：色丛 + 胶子顶点 + 禁闭渐近自由 + 强子谱 (15/15)"),
+
+    # === Phase 61C (P0-2): 量子重整化完整链条 ===
+    ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

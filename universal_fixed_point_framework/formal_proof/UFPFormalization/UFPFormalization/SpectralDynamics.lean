@@ -7,6 +7,7 @@ import UFPFormalization.Silence
 import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 
 open UFPFormalization
 open Matrix
@@ -17,7 +18,7 @@ namespace UFPFormalization
 The set of eigenvalues of a finite complex matrix: λ ∈ eigenvalues(A) ⇔ det(A - λ·I) = 0.
 -/
 def Matrix.eigenvalues {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Set ℂ :=
-  {λ | (A - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det = 0}
+  {a | (A - a • (1 : Matrix (Fin n) (Fin n) ℂ)).det = 0}
 
 /-!
 # Spectral Dynamics (Phase 16C Extension)
@@ -47,8 +48,8 @@ the solution at time t is A_t = exp(t·A_F)·A₀·exp(-t·A_F).
 -/
 noncomputable def spectralFlow {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  (Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ)) * A₀ *
-  (Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ))
+  (NormedSpace.exp (t • A_F)) * A₀ *
+  (NormedSpace.exp (-t • A_F))
 
 /--
 The generator G = Σ g_i·A_{F,i} of the unified force.
@@ -66,7 +67,7 @@ Proof: d/dt exp(tG)·A·exp(-tG) = G·exp(tG)·A·exp(-tG) + exp(tG)·A·(-G)·e
 theorem spectralFlow_satisfies_equation {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
     -- The derivative of spectralFlow w.r.t. t equals [A_F, spectralFlow ...]
     -- In the finite prototype, we verify that the solution form is correct.
-    spectralFlow A₀ A_F t = (Real.exp (t • A_F)) * A₀ * (Real.exp (-t • A_F)) := rfl
+    spectralFlow A₀ A_F t = (NormedSpace.exp (t • A_F)) * A₀ * (NormedSpace.exp (-t • A_F)) := rfl
 
 /--
 Spectral invariance: eigenvalues are preserved under spectral flow.
@@ -74,41 +75,47 @@ Spectral invariance: eigenvalues are preserved under spectral flow.
 Proof: A_t = U·A₀·U⁻¹ where U = exp(t·A_F) is unitary,
 so A_t and A₀ are similar, hence σ(A_t) = σ(A₀).
 -/
-theorem spectral_invariance {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) (λ : ℂ)
-    (h : λ ∈ Matrix.eigenvalues (A₀ : Matrix (Fin n) (Fin n) ℂ)) :
-    λ ∈ Matrix.eigenvalues (spectralFlow A₀ A_F t) := by
+theorem spectral_invariance {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) (a : ℂ)
+    (h : a ∈ Matrix.eigenvalues (A₀ : Matrix (Fin n) (Fin n) ℂ)) :
+    a ∈ Matrix.eigenvalues (spectralFlow A₀ A_F t) := by
   -- A_t = U·A₀·U⁻¹ where U = exp(t·A_F), U⁻¹ = exp(-t·A_F)
-  set U := Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
-  set Uinv := Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
+  set U := NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
+  set Uinv := NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
   have h_inv : U * Uinv = (1 : Matrix (Fin n) (Fin n) ℂ) := by
     calc
-      U * Uinv = Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) * Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
-      _ = Real.exp ((t • A_F) + (-t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
-        rw [Matrix.exp_add_of_commute (t • A_F : Matrix (Fin n) (Fin n) ℂ)
-          (-t • A_F : Matrix (Fin n) (Fin n) ℂ) ?_]
-        exact ((Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right).symm
-      _ = Real.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by ring
+      U * Uinv = NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) * NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
+      _ = NormedSpace.exp ((t • A_F) + (-t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
+        have hc : Commute (t • A_F : Matrix (Fin n) (Fin n) ℂ) ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) := by
+          simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right
+        rw [Matrix.exp_add_of_commute (t • A_F : Matrix (Fin n) (Fin n) ℂ) ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) hc]
+      _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by
+        simp [smul_neg]
       _ = 1 := by simp
   have h_similar : spectralFlow A₀ A_F t = U * A₀ * Uinv := rfl
-  have h_ident : U * (A₀ - λ • (1 : Matrix (Fin n) (Fin n) ℂ)) * Uinv =
-      spectralFlow A₀ A_F t - λ • (1 : Matrix (Fin n) (Fin n) ℂ) := by
+  have h_ident : U * (A₀ - a • (1 : Matrix (Fin n) (Fin n) ℂ)) * Uinv =
+      spectralFlow A₀ A_F t - a • (1 : Matrix (Fin n) (Fin n) ℂ) := by
     calc
-      U * (A₀ - λ • 1) * Uinv = (U * A₀ - λ • U) * Uinv := by
-        simp [Matrix.mul_sub, Matrix.mul_smul_comm]
-      _ = U * A₀ * Uinv - λ • (U * Uinv) := by
-        simp [Matrix.sub_mul, Matrix.smul_mul_assoc, Matrix.mul_assoc]
-      _ = spectralFlow A₀ A_F t - λ • 1 := by simp [h_similar, h_inv]
-  have h_det_eq : (spectralFlow A₀ A_F t - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det =
-      (A₀ - λ • (1 : Matrix (Fin n) (Fin n) ℂ)).det := by
+      U * (A₀ - a • 1) * Uinv = (U * A₀ - a • U) * Uinv := by
+        congr 1
+        calc
+          U * (A₀ - a • 1) = U * A₀ - U * (a • 1) := by rw [Matrix.mul_sub]
+          _ = U * A₀ - a • (U * 1) := by rw [mul_smul_comm]
+          _ = U * A₀ - a • U := by simp
+      _ = U * A₀ * Uinv - a • (U * Uinv) := by
+        rw [Matrix.sub_mul, smul_mul_assoc]
+      _ = spectralFlow A₀ A_F t - a • 1 := by rw [h_similar, h_inv]
+  have h_det_eq : (spectralFlow A₀ A_F t - a • (1 : Matrix (Fin n) (Fin n) ℂ)).det =
+      (A₀ - a • (1 : Matrix (Fin n) (Fin n) ℂ)).det := by
     calc
-      (spectralFlow A₀ A_F t - λ • 1).det = (U * (A₀ - λ • 1) * Uinv).det := by rw [h_ident]
-      _ = det U * (A₀ - λ • 1).det * det Uinv := by
-        simp [Matrix.det_mul, Matrix.mul_assoc]
-      _ = (det U * det Uinv) * (A₀ - λ • 1).det := by ring
-      _ = (U * Uinv).det * (A₀ - λ • 1).det := by rw [← Matrix.det_mul, Matrix.mul_assoc]
-      _ = (1 : Matrix (Fin n) (Fin n) ℂ).det * (A₀ - λ • 1).det := by rw [h_inv]
-      _ = (A₀ - λ • 1).det := by simp
-  -- λ ∈ eigenvalues(A_t) ⇔ det(A_t - λI) = 0 ⇔ det(A₀ - λI) = 0 ⇔ λ ∈ eigenvalues(A₀)
+      (spectralFlow A₀ A_F t - a • 1).det = (U * (A₀ - a • 1) * Uinv).det := by rw [h_ident]
+      _ = det U * (A₀ - a • 1).det * det Uinv := by
+        rw [Matrix.det_mul, Matrix.det_mul]
+      _ = (det U * det Uinv) * (A₀ - a • 1).det := by ring
+      _ = (U * Uinv).det * (A₀ - a • 1).det := by
+        rw [Matrix.det_mul]
+      _ = (1 : Matrix (Fin n) (Fin n) ℂ).det * (A₀ - a • 1).det := by rw [h_inv]
+      _ = (A₀ - a • 1).det := by simp
+  -- a ∈ eigenvalues(A_t) ⇔ det(A_t - aI) = 0 ⇔ det(A₀ - aI) = 0 ⇔ a ∈ eigenvalues(A₀)
   rw [Matrix.eigenvalues, Set.mem_setOf_eq, h_det_eq]
   exact h
 
@@ -121,8 +128,8 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
     (h_commutes : A_S * A_F = A_F * A_S) : 
     Matrix.trace (A_S * spectralFlow A₀ A_F t) = Matrix.trace (A_S * A₀) := by
   -- U = exp(t·A_F), Uinv = exp(-t·A_F)
-  set U := Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
-  set Uinv := Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
+  set U := NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) with hU
+  set Uinv := NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) with hUinv
   -- A_S commutes with U (and Uinv) because it commutes with A_F
   have h_comm_U : A_S * U = U * A_S := by
     have h_comm_tA : A_S * (t • A_F) = (t • A_F) * A_S := by
@@ -130,7 +137,8 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
         A_S * (t • A_F) = t • (A_S * A_F) := by simp [mul_smul_comm]
         _ = t • (A_F * A_S) := by rw [h_commutes]
         _ = (t • A_F) * A_S := by simp [smul_mul_assoc]
-    have h_comm_tA' : Commute A_S (t • A_F : Matrix (Fin n) (Fin n) ℂ) := ⟨h_comm_tA⟩
+    have h_comm_tA' : Commute A_S (t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
+      simpa [Commute, SemiconjBy] using h_comm_tA
     exact h_comm_tA'.exp_right
   have h_comm_Uinv : A_S * Uinv = Uinv * A_S := by
     have h_comm_neg_tA : A_S * (-t • A_F) = (-t • A_F) * A_S := by
@@ -138,16 +146,19 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
         A_S * (-t • A_F) = -(t • (A_S * A_F)) := by simp [mul_smul_comm]
         _ = -(t • (A_F * A_S)) := by rw [h_commutes]
         _ = (-t • A_F) * A_S := by simp [smul_mul_assoc]
-    have h_comm_neg_tA' : Commute A_S (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := ⟨h_comm_neg_tA⟩
+    have h_comm_neg_tA' : Commute A_S (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
+      simpa [Commute, SemiconjBy] using h_comm_neg_tA
     exact h_comm_neg_tA'.exp_right
   -- Uinv * U = 1 by exp(-X) * exp(X) = exp(0) = 1
   have h_Uinv_U : Uinv * U = (1 : Matrix (Fin n) (Fin n) ℂ) := by
     calc
-      Uinv * U = Real.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) * Real.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
-      _ = Real.exp ((-t • A_F) + (t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
-        rw [Matrix.exp_add_of_commute (-t • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) ?_]
-        exact ((Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right).symm
-      _ = Real.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by ring
+      Uinv * U = NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) * NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
+      _ = NormedSpace.exp ((-t • A_F) + (t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
+        have hc : Commute ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
+          simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_left
+        rw [Matrix.exp_add_of_commute ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) hc]
+      _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by
+        simp [smul_neg]
       _ = 1 := by simp
   calc
     Matrix.trace (A_S * spectralFlow A₀ A_F t)
@@ -155,7 +166,7 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
     _ = Matrix.trace (A_S * U * A₀ * Uinv) := by simp [Matrix.mul_assoc]
     _ = Matrix.trace (Uinv * (A_S * U * A₀)) := by rw [Matrix.trace_mul_comm]
     _ = Matrix.trace (Uinv * A_S * U * A₀) := by simp [Matrix.mul_assoc]
-    _ = Matrix.trace (A_S * Uinv * U * A₀) := by rw [h_comm_Uinv, h_comm_U]
+    _ = Matrix.trace (A_S * Uinv * U * A₀) := by rw [← h_comm_Uinv]
     _ = Matrix.trace (A_S * (Uinv * U) * A₀) := by simp [Matrix.mul_assoc]
     _ = Matrix.trace (A_S * (1 : Matrix (Fin n) (Fin n) ℂ) * A₀) := by rw [h_Uinv_U]
     _ = Matrix.trace (A_S * A₀) := by simp
@@ -169,9 +180,12 @@ def forcesIndependent {n : ℕ} (A_F₁ A_F₂ : Matrix (Fin n) (Fin n) ℂ) : P
 
 /--
 Force interaction strength proportional to commutator norm.
+（局部 Frobenius 范数定义，规避矩阵范数实例歧义。）
 -/
 noncomputable def forceInteractionStrength {n : ℕ} (A_F₁ A_F₂ : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  ‖A_F₁ * A_F₂ - A_F₂ * A_F₁‖ / (‖A_F₁‖ * ‖A_F₂‖)
+  Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq ((A_F₁ * A_F₂ - A_F₂ * A_F₁) i j)) /
+    (Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq (A_F₁ i j)) *
+     Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq (A_F₂ i j)))
 
 /--
 The unified force generator (Paper V §3.4): G = Σ g_i·A_{F,i}.
@@ -204,7 +218,7 @@ noncomputable def pauliX : Matrix (Fin 2) (Fin 2) ℂ :=
 
 /-- Pauli matrix σ_y = [[0,-i],[i,0]] (SU(2) generator). -/
 noncomputable def pauliY : Matrix (Fin 2) (Fin 2) ℂ :=
-  !![0, -I; I, 0]
+  !![0, -Complex.I; Complex.I, 0]
 
 /-- Pauli matrix σ_z = [[1,0],[0,-1]] (SU(2) generator). -/
 noncomputable def pauliZ : Matrix (Fin 2) (Fin 2) ℂ :=
@@ -250,13 +264,13 @@ Default strong force generator in 3×3 SU(3) representation using Gell-Mann matr
 noncomputable def A_strong_default (g₁ g₂ g₃ g₄ g₅ g₆ g₇ g₈ : ℂ) : Matrix (Fin 3) (Fin 3) ℂ :=
   A_strong (fun i => match i with
     | 0 => !![0, 1, 0; 1, 0, 0; 0, 0, 0]
-    | 1 => !![0, -I, 0; I, 0, 0; 0, 0, 0]
+    | 1 => !![0, -Complex.I, 0; Complex.I, 0, 0; 0, 0, 0]
     | 2 => !![1, 0, 0; 0, -1, 0; 0, 0, 0]
     | 3 => !![0, 0, 1; 0, 0, 0; 1, 0, 0]
-    | 4 => !![0, 0, -I; 0, 0, 0; I, 0, 0]
+    | 4 => !![0, 0, -Complex.I; 0, 0, 0; Complex.I, 0, 0]
     | 5 => !![0, 0, 0; 0, 0, 1; 0, 1, 0]
-    | 6 => !![0, 0, 0; 0, 0, -I; 0, I, 0]
-    | 7 => !![1, 0, 0; 0, 1, 0; 0, 0, -2] / Real.sqrt 3)
+    | 6 => !![0, 0, 0; 0, 0, -Complex.I; 0, Complex.I, 0]
+    | 7 => !![1 / (Real.sqrt 3 : ℂ), 0, 0; 0, 1 / (Real.sqrt 3 : ℂ), 0; 0, 0, -2 / (Real.sqrt 3 : ℂ)])
     (fun i => match i with
       | 0 => g₁ | 1 => g₂ | 2 => g₃ | 3 => g₄
       | 4 => g₅ | 5 => g₆ | 6 => g₇ | 7 => g₈)
@@ -297,8 +311,8 @@ theorem unified_force_formula {n : ℕ} (A₀ A_GR A_EM A_strong A_weak : Matrix
     (G_N q g₃ g₂ : ℂ) (t : ℝ) : 
     -- The spectral flow with the unified generator G satisfies the spectral flow equation
     spectralFlow A₀ (G_N • A_GR + q • A_EM + g₃ • A_strong + g₂ • A_weak) t =
-    (Real.exp (t • (G_N • A_GR + q • A_EM + g₃ • A_strong + g₂ • A_weak))) * A₀ *
-    (Real.exp (-t • (G_N • A_GR + q • A_EM + g₃ • A_strong + g₂ • A_weak))) := by
+    (NormedSpace.exp (t • (G_N • A_GR + q • A_EM + g₃ • A_strong + g₂ • A_weak))) * A₀ *
+    (NormedSpace.exp (-t • (G_N • A_GR + q • A_EM + g₃ • A_strong + g₂ • A_weak))) := by
   rfl
 
 /--
@@ -306,10 +320,12 @@ Corollary: The unified generator G commutes with the spectral intertwining
 operator T when [A_GR, T·A_SM·T⁻¹] = 0 (classical limit).
 -/
 theorem unified_generator_intertwining {n : ℕ} (T A_SM : Matrix (Fin n) (Fin n) ℂ)
-    (hT : T * A_SM = A_SM * T) : A_GR T A_SM = A_SM := by
+    (hT : T * A_SM = A_SM * T) (hTinv : T * T⁻¹ = (1 : Matrix (Fin n) (Fin n) ℂ)) :
+    A_GR T A_SM = A_SM := by
   calc
     A_GR T A_SM = T * A_SM * T⁻¹ := rfl
     _ = A_SM * T * T⁻¹ := by rw [hT]
-    _ = A_SM := by simp
+    _ = A_SM * (T * T⁻¹) := by rw [Matrix.mul_assoc]
+    _ = A_SM := by simp [hTinv]
 
 end UFPFormalization

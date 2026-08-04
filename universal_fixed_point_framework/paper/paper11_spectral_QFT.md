@@ -545,8 +545,8 @@ $$\beta(\lambda_H) = \frac{1}{16\pi^2} \left( 24\lambda_H^2 - 6y_t^4 + \frac{9}{
 | 胶子 $g$ | $D_{\mu\nu}^{ab}(\lambda) = -\frac{i\delta^{ab}}{\lambda}\left(g_{\mu\nu} - (1-\xi_3)\frac{k_\mu k_\nu}{\lambda}\right)$ |
 | 弱玻色子 $W^\pm, Z$ | $D_{\mu\nu}(\lambda) = -\frac{i}{\lambda - M_V^2}\left(g_{\mu\nu} - (1-\xi_2)\frac{k_\mu k_\nu}{\lambda - \xi_2 M_V^2}\right)$ |
 | 光子 $\gamma$ | $D_{\mu\nu}(\lambda) = -\frac{i}{\lambda}\left(g_{\mu\nu} - (1-\xi_1)\frac{k_\mu k_\nu}{\lambda}\right)$ |
-| 夸克 $q$ | $S_F(\lambda) = \frac{i(\slashed{k} + m_q)}{\lambda - m_q^2}$ |
-| 轻子 $\ell$ | $S_F(\lambda) = \frac{i(\slashed{k} + m_\ell)}{\lambda - m_\ell^2}$ |
+| 夸克 $q$ | $S_F(\lambda) = \frac{i(\not{k} + m_q)}{\lambda - m_q^2}$ |
+| 轻子 $\ell$ | $S_F(\lambda) = \frac{i(\not{k} + m_\ell)}{\lambda - m_\ell^2}$ |
 | Higgs $h$ | $\Delta_F(\lambda) = \frac{i}{\lambda - m_h^2}$ |
 
 **谱顶点**：

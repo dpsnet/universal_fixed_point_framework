@@ -1,8 +1,6 @@
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Nat.Basic
-import Mathlib.LinearAlgebra.Matrix.Tridiagonal
-import Mathlib.Analysis.NormedSpace.Exponential
 
 namespace UFPFormalization
 
@@ -34,8 +32,8 @@ structure TridiagonalData (n : ℕ) where
 def tridiagonalMatrix {n : ℕ} (d : TridiagonalData n) : Matrix (Fin n) (Fin n) ℂ :=
   fun i j =>
     if i = j then d.β i
-    else if i = j + 1 then d.γ i
-    else if j = i + 1 then d.α i
+    else if i.val = j.val + 1 then d.γ i
+    else if j.val = i.val + 1 then d.α i
     else 0
 
 /-- A tridiagonal matrix has at most 3 non-zero entries per row.
@@ -43,33 +41,64 @@ def tridiagonalMatrix {n : ℕ} (d : TridiagonalData n) : Matrix (Fin n) (Fin n)
 theorem tridiagonal_row_nonzero_count {n : ℕ} (d : TridiagonalData n) (i : Fin n) :
     (Finset.filter (fun (j : Fin n) => tridiagonalMatrix d i j ≠ 0) Finset.univ).card ≤ 3 := by
   -- Tridiagonal structure: only i-1, i, i+1 can be non-zero
-  have h : ∀ j, tridiagonalMatrix d i j ≠ 0 → j = i ∨ j = i - 1 ∨ j = i + 1 := by
+  have h : ∀ j, tridiagonalMatrix d i j ≠ 0 →
+      j.val = i.val ∨ j.val = i.val - 1 ∨ j.val = i.val + 1 := by
     intro j h
     dsimp [tridiagonalMatrix] at h
     split_ifs at h with h1 h2 h3
-    · left; exact h1
-    · right; left; exact h2
+    · left; exact (congrArg Fin.val h1).symm
+    · right; left; omega
     · right; right; exact h3
     · exfalso; exact h rfl
   -- At most 3 distinct positions can be non-zero
-  have card_bound : (Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ).card ≤ 3 := by
-    -- The filter is a subset of {i, i-1, i+1}, a set of at most 3 distinct elements
-    have h_subset : Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ ⊆
-      ({i, i-1, i+1} : Finset (Fin n)) := by
-      intro j hj
-      simpa [Finset.mem_filter] using hj
-    have card_subset : (Finset.filter (fun j : Fin n => j = i ∨ j = i - 1 ∨ j = i + 1) Finset.univ).card ≤
-      ({i, i-1, i+1} : Finset (Fin n)).card :=
-      Finset.card_le_card h_subset
-    have h_target : ({i, i-1, i+1} : Finset (Fin n)).card ≤ 3 := by
-      calc
-        ({i, i-1, i+1} : Finset (Fin n)).card ≤ (({i, i-1} : Finset (Fin n)).card + 1) :=
-          Finset.card_insert_le (i+1) {i, i-1}
-        _ ≤ (({i} : Finset (Fin n)).card + 1 + 1) := by
-          have h := Finset.card_insert_le (i-1) ({i} : Finset (Fin n))
-          omega
-        _ = 3 := by simp
-    exact le_trans card_subset h_target
+  have card_bound : (Finset.filter (fun j : Fin n =>
+      j.val = i.val ∨ j.val = i.val - 1 ∨ j.val = i.val + 1) Finset.univ).card ≤ 3 := by
+    let S : Finset ℕ := {i.val, i.val - 1, i.val + 1}
+    have hfilter : Finset.filter (fun j : Fin n =>
+        j.val = i.val ∨ j.val = i.val - 1 ∨ j.val = i.val + 1) Finset.univ
+        = Finset.univ.filter (fun j : Fin n => j.val ∈ S) := by
+      ext j
+      simp [S, Finset.mem_insert, Finset.mem_singleton]
+    calc
+      (Finset.filter (fun j : Fin n =>
+          j.val = i.val ∨ j.val = i.val - 1 ∨ j.val = i.val + 1) Finset.univ).card
+          = (Finset.univ.filter (fun j : Fin n => j.val ∈ S)).card := by rw [hfilter]
+      _ ≤ S.card := by
+          have hinj : Set.InjOn (fun j : Fin n => j.val)
+              (↑(Finset.univ.filter (fun j : Fin n => j.val ∈ S))) := by
+            intro a ha b hb hab
+            exact Fin.ext hab
+          have himage : (Finset.univ.filter (fun j : Fin n => j.val ∈ S)).image (fun j : Fin n => j.val) ⊆ S := by
+            intro x hx
+            rcases Finset.mem_image.mp hx with ⟨j, hj, rfl⟩
+            simpa [Finset.mem_filter] using hj
+          calc
+            (Finset.univ.filter (fun j : Fin n => j.val ∈ S)).card
+                = ((Finset.univ.filter (fun j : Fin n => j.val ∈ S)).image (fun j : Fin n => j.val)).card := by
+                  exact (Finset.card_image_of_injOn hinj).symm
+            _ ≤ S.card := Finset.card_le_card himage
+      _ ≤ 3 := by
+          have hs : S = insert (i.val + 1) ({i.val, i.val - 1} : Finset ℕ) := by
+            ext x
+            simp [S, Finset.mem_insert, Finset.mem_singleton]
+            tauto
+          calc
+            S.card = (insert (i.val + 1) ({i.val, i.val - 1} : Finset ℕ)).card := by rw [hs]
+            _ ≤ ({i.val, i.val - 1} : Finset ℕ).card + 1 := Finset.card_insert_le _ _
+            _ ≤ 2 + 1 := by
+              have hc : ({i.val, i.val - 1} : Finset ℕ).card ≤ 2 := by
+                calc
+                  ({i.val, i.val - 1} : Finset ℕ).card
+                      = (insert (i.val - 1) ({i.val} : Finset ℕ)).card := by
+                        simpa using congrArg Finset.card (Finset.insert_comm i.val (i.val - 1) ∅)
+                  _ ≤ ({i.val} : Finset ℕ).card + 1 := Finset.card_insert_le (i.val - 1) ({i.val} : Finset ℕ)
+                  _ = 2 := by simp
+              omega
+            _ = 3 := by norm_num
+  exact le_trans (Finset.card_le_card (by
+    intro j hj
+    simp [Finset.mem_filter] at hj ⊢
+    exact h j hj)) card_bound
 
 /-- Thomas algorithm for solving tridiagonal systems M·x = b in O(N).
     Forward sweep: modifies sub-diagonal and main diagonal.
@@ -118,7 +147,8 @@ noncomputable def thomasBackwardSweep {n : ℕ} (d : TridiagonalData n) (b : Fin
           omega
         exact hk⟩
       (b k - d.α k * x_next) / d.β k
-  termination_by n - k.val
+  termination_by k => n - k.val
+  decreasing_by omega
 
 /-- Thomas algorithm total complexity: O(N) operations.
     Forward: n-1 operations, Backward: n operations,
@@ -128,17 +158,17 @@ theorem thomasComplexity {n : ℕ} (d : TridiagonalData n) (b : Fin n → ℂ) :
   intro h
   trivial
 
-/-- The full tridiagonal eigenvalue problem M·v = λ·v.
-    The Leaver QNM problem corresponds to finding λ = 0 (det(M) = 0). -/
-def tridiagonalEigenvalueProblem {n : ℕ} (d : TridiagonalData n) (λ : ℂ) (v : Fin n → ℂ) : Prop :=
+/-- The full tridiagonal eigenvalue problem M·v = ev·v.
+    The Leaver QNM problem corresponds to finding ev = 0 (det(M) = 0). -/
+def tridiagonalEigenvalueProblem {n : ℕ} (d : TridiagonalData n) (ev : ℂ) (v : Fin n → ℂ) : Prop :=
   ∀ (i : Fin n),
     (d.γ i * v ⟨(i.val - 1) % n, by
-      have hi : (i.val - 1) % n < n := Nat.mod_lt _ (by omega)
-      exact hi⟩) +
+      have hn : 0 < n := Nat.lt_of_le_of_lt (Nat.zero_le i.val) i.isLt
+      exact Nat.mod_lt (i.val - 1) hn⟩) +
     d.β i * v i +
     (d.α i * v ⟨(i.val + 1) % n, by
-      have hi : (i.val + 1) % n < n := Nat.mod_lt _ (by omega)
-      exact hi⟩) = λ * v i
+      have hn : 0 < n := Nat.lt_of_le_of_lt (Nat.zero_le i.val) i.isLt
+      exact Nat.mod_lt (i.val + 1) hn⟩) = ev * v i
 
 /-- Theorem 7.27b: The two-string (inverse iteration) method
     for finding the eigenvalue closest to σ of tridiagonal matrix M_N

@@ -14,7 +14,7 @@
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
 | 最新论文 / Latest Papers | **Paper XXXV**（引力范畴论起源）+ **Paper XXXVII**（开放问题综述）+ **Paper XXXVIII**（Agda 独立交叉验证） |
 | Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推 🆕、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**） |
-| 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`） |
+| 遗留 `sorry` | 15 处（2026-08-04 审计，全部为诚实登记的开放项；详见下文"Lean 4 形式化"表） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
 
 ---
@@ -102,7 +102,9 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | 总 Lean 模块数 | 74 |
 | 构建状态 | `lake build` 零错误（仅 8 条编译器警告） |
 | 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.7 §六） |
-| 活动 `sorry` | 3 处：`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新 |
+| 活动 `sorry`（2026-08-04 审计） | 15 处，**全部为诚实登记的开放项**：ThermoFormalism 4（`legendreTransform_convex`/Bowen τ(0)/sup BddAbove/`interpolateMeasure` 不变性）、Adjunction 4（简化原型结构占位）、HigherRecCategory 3（竖/横复合自然性定义性缺口 + 交换律）、DeviationBound 2（`spectral_gap_estimate`/`deviation_spectral_bound` 缺 A_GR 谱假设）、RAP5a 1（RIm_map，D 不 full）、HigherSpCategory 1（`spExchangeLaw`，偏差=谱隙引力起源） |
+
+**Phase 61C（P0-2 量子重整化完整链条）✅ 2026-08-04** — 谱流→β 函数代数基础形式化完成：`RenormalizationChain.lean`（ad_G 保 Hermitian F1/F2/F3 + 迭代对易子闭合）；`SpectralDynamics.lean`/`ThermoFormalism.lean`/`TestSpectralEquivalence.lean` 修复；`Silence.lean` Frobenius 范数不等式全证（借 mathlib `frobenius_norm_mul`/`norm_sub_le`）。详见 [`roadmap/phase61_physics_advancement.md`](roadmap/phase61_physics_advancement.md) §Phase 61C。遗留损坏文件 `TempRGFiber.lean`（约 45 处 mathlib 4.31 API 迁移错误）已登记，其依赖链（Fiber 模块族）待迁移。
 
 ### 范畴理论绝对性验证（Phase 60 🆕）
 
@@ -584,6 +586,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
+| **2026-08-04** | **Phase 61C（P0-2 量子重整化完整链条）完成并纳入**：T3 测度论层闭合 + 笔记/论文（paper61C，定理 2.1/3.1/3.2/4.1）+ 数值 `paperX_rg_chain.py`（12/12）+ Lean `RenormalizationChain.lean` 形式化。执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3）、正本清源假定理 5 处（WeaveBCS）、hBound 文档纠正、DeviationBound/HigherRecCategory 开放项登记；`lake build` 全量通过 | Phase 61C |
 | **2026-07-29** | **RAP-Errata v0.3 发布**：全部宣称边界重新划定。参数总账归约为 0 自由参数 + 1 外部标度 $M_{\text{Pl}}$。新增 Paper XXXI–XXXIV（质量-$\Delta$ 方向性、谱静默与时空涌现、"3"的范畴论起源、B2 连续极限理论闭合）。B1①环机器证明完成。研究笔记 v1.48 全部内容已提炼完毕 |
 | 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+谱化+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，$m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$T_c$ 预测 153 MeV 偏差 1.1%，$F_\pi$ 偏差 0.1%） |

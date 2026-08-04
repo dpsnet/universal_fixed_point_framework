@@ -5,7 +5,8 @@ import UFPFormalization.Adjunction
 import UFPFormalization.Silence
 import UFPFormalization.StaticTopologyFormalization
 import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
-import Mathlib.CategoryTheory.Limits.Shapes.Coproducts
+-- mathlib 4.31 中 `Shapes.Coproducts` 模块已不存在（coproduct 定义并入
+-- `Shapes.Products`/`Colimits` 体系），且本文件未使用任何 Limits API，删除该 import。
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
 
@@ -13,6 +14,11 @@ open CategoryTheory
 open CategoryTheory.Limits
 
 namespace UFPFormalization
+
+-- mathlib 4.31：`.iget` 需显式 isSome 证明（原无证明版本已移除），
+-- 此处使用经典选择版本 `iget`（需 Inhabited RecObj）。
+instance recObjInhabited : Inhabited RecObj where
+  default := { T := Fin 1, fin := inferInstance, dec := inferInstance, step := id }
 
 /-!
 # Noise/Random Systems in the Rec/Spec Category Framework
@@ -52,10 +58,11 @@ structure SigmaRecObj where
     In the finite prototype, a morphism from ⨁_i R_i to ⨁_j S_j is
     a matrix (f_{ij}) where f_{ij} : R_i → S_j, with only finitely many
     non-zero entries per column. -/
+@[ext]
 structure SigmaRecHom (X Y : SigmaRecObj) where
   /-- Component maps indexed by source and target indices.
       For each source i, a list of (target j, map) pairs. -/
-  components : ∀ (i : ℕ), List (Σ (j : ℕ), RecHom (Option.get (X.components i)) (Option.get (Y.components j)))
+  components : ∀ (i : ℕ), List (Σ (j : ℕ), RecHom ((X.components i).getD default) ((Y.components j).getD default))
 
 instance : Category SigmaRecObj where
   Hom := SigmaRecHom
@@ -66,10 +73,10 @@ instance : Category SigmaRecObj where
         | none => [] }
   comp f g :=
     { components := λ i =>
-        (f.components i).bind λ pair_j =>
+        List.flatMap (f.components i) (λ pair_j =>
           let j := pair_j.1
           (g.components j).map λ pair_k =>
-            (⟨pair_k.1, pair_j.2 ≫ pair_k.2⟩ : Σ (k : ℕ), RecHom _ _) }
+            (⟨pair_k.1, pair_j.2 ≫ pair_k.2⟩ : Σ (k : ℕ), RecHom _ _)) }
   id_comp f := by
     ext i
     simp
@@ -205,7 +212,7 @@ structure NoiseData where
     
     Sel : Σ-Rec → Rec (partially defined). -/
 noncomputable def selFunctor (X : SigmaRecObj) (h : ∃ i, X.components i ≠ none) : RecObj :=
-  Option.get (X.components (Nat.find h))
+  (X.components (Nat.find h)).getD default
 
 /-- Theorem 17.1: Sel is a covariant functor on its domain of definition.
     Sel(id_{⨁R_i}) = id_{Sel(⨁R_i)}. -/
@@ -219,7 +226,7 @@ noncomputable def extFunctor (X : SigmaRecObj) : RecObj :=
   -- In the finite prototype, average over non-empty components
   let nonemptyComps := (Finset.range 10).filter (λ i => X.components i ≠ none)
   if h : nonemptyComps.Nonempty then
-    Option.get (X.components (nonemptyComps.min' h))
+    (X.components (nonemptyComps.min' h)).getD default
   else
     -- Return a default Rec object if no components exist
     { T := Fin 1

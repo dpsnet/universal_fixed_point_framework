@@ -5,7 +5,11 @@ import UFPFormalization.OperatorTheory
 import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.Real.Sqrt
+import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Data.Fintype.Basic
+
+open scoped Matrix.Norms.Frobenius
 
 
 namespace UFPFormalization
@@ -123,7 +127,7 @@ theorem frobeniusNorm_eq_zero_iff {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
     have hsq_sum : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') = 0 := by
       have hsqrt : Real.sqrt (∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j')) = 0 := h
       have h_nonpos : ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') ≤ 0 :=
-        (Real.sqrt_eq_zero.mp hsqrt)
+        le_of_eq ((Real.sqrt_eq_zero h_nonneg_total).mp hsqrt)
       nlinarith
     have h_ij_bound : Complex.normSq (A i j) ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') := by
       calc
@@ -131,7 +135,8 @@ theorem frobeniusNorm_eq_zero_iff {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
           Finset.single_le_sum (fun j' _ => h_nonneg_sq (A i j')) (Finset.mem_univ j)
         _ ≤ ∑ i' : Fin n, ∑ j' : Fin n, Complex.normSq (A i' j') :=
           Finset.single_le_sum (fun i' _ => h_nonneg_inner i') (Finset.mem_univ i)
-    have h_ij_sq_zero : Complex.normSq (A i j) = 0 := by nlinarith
+    have h_ij_sq_zero : Complex.normSq (A i j) = 0 := by
+      exact le_antisymm (le_trans h_ij_bound (le_of_eq hsq_sum)) (h_nonneg_sq (A i j))
     exact Complex.normSq_eq_zero.mp h_ij_sq_zero
   · intro h
     simp [frobeniusNorm, h]
@@ -142,15 +147,26 @@ theorem deltaSilence_eq_zero_iff {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
   dsimp [deltaSilence]
   rw [frobeniusNorm_eq_zero_iff]
 
+/-- 自定义 frobeniusNorm 与 mathlib Frobenius 范数 ‖·‖ 一致
+    （‖A‖ = (Σ_{i,j} ‖A_ij‖²)^{1/2}，且 ℂ 上 ‖z‖² = normSq z）。 -/
+private lemma frobeniusNorm_eq_matrix_norm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+    frobeniusNorm A = ‖A‖ := by
+  dsimp [frobeniusNorm]
+  rw [Matrix.frobenius_norm_def]
+  rw [Real.sqrt_eq_rpow]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro i _
+  apply Finset.sum_congr rfl
+  intro j _
+  rw [Complex.normSq_eq_norm_sq]
+  exact (Real.rpow_natCast ‖A i j‖ 2).symm
+
 /-- Inequality: δ_silence ≤ 2‖A‖_F · ‖G‖_F (triangle inequality bound).
     Proof: ‖[A,G]‖_F = ‖AG - GA‖_F ≤ ‖AG‖_F + ‖GA‖_F ≤ 2‖A‖_F · ‖G‖_F,
-    where the last inequality uses submultiplicativity of Frobenius norm.
-    The submultiplicativity proof ‖XY‖_F ≤ ‖X‖_F · ‖Y‖_F for complex matrices
-    requires the Cauchy-Schwarz inequality; deferred to full matrix analysis.
-
-    Reference: Mathlib lemma `frobenius_norm_mul` (Analysis/Matrix/Normed.lean) gives
-    the general proof. Our custom `frobeniusNorm` matches the Mathlib definition,
-    so the same result applies. -/
+    where the last inequality uses submultiplicativity of Frobenius norm
+    (mathlib `Matrix.frobenius_norm_mul`) and the triangle inequality
+    (`norm_sub_le`). -/
 theorem deltaSilence_bound {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
     deltaSilence A G ≤ 2 * frobeniusNorm A * frobeniusNorm G := by
   -- Goal: frobeniusNorm(ad(G)(A)) ≤ 2·frobeniusNorm(A)·frobeniusNorm(G)
@@ -160,21 +176,19 @@ theorem deltaSilence_bound {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) :
   -- frobeniusNorm(G*A) ≤ frobeniusNorm(G)·frobeniusNorm(A) (submultiplicativity)
   -- frobeniusNorm(A*G) ≤ frobeniusNorm(A)·frobeniusNorm(G)
   -- Combined: ≤ 2·frobeniusNorm(A)·frobeniusNorm(G)
-  -- Full proof requires Frobenius norm submultiplicativity (Cauchy-Schwarz for double sums).
   have h_submul : ∀ (X Y : Matrix (Fin n) (Fin n) ℂ), frobeniusNorm (X * Y) ≤ frobeniusNorm X * frobeniusNorm Y := by
     intro X Y
-    -- Placeholder: the submultiplicativity proof is deferred.
-    -- In Mathlib: `frobenius_norm_mul` in `Analysis/Matrix/Normed.lean`
-    -- For the finite prototype, we accept the inequality as a known matrix norm property.
-    sorry
+    rw [frobeniusNorm_eq_matrix_norm (X * Y), frobeniusNorm_eq_matrix_norm X,
+      frobeniusNorm_eq_matrix_norm Y]
+    exact Matrix.frobenius_norm_mul X Y
   have h_triangle : frobeniusNorm (G * A - A * G) ≤ frobeniusNorm (G * A) + frobeniusNorm (A * G) := by
-    -- Triangle inequality: ‖X - Y‖_F ≤ ‖X‖_F + ‖Y‖_F
-    -- For the Frobenius norm ‖Z‖_F = sqrt(sum |Z_ij|²), this follows from Minkowski inequality.
-    -- We use the fact that |a-b|² ≤ (|a|+|b|)² for complex a,b, giving the result entrywise.
-    -- Placeholder: full proof deferred.
-    sorry
+    rw [frobeniusNorm_eq_matrix_norm (G * A - A * G), frobeniusNorm_eq_matrix_norm (G * A),
+      frobeniusNorm_eq_matrix_norm (A * G)]
+    exact norm_sub_le (G * A) (A * G)
+  have hA_nn : 0 ≤ frobeniusNorm A := by unfold frobeniusNorm; exact Real.sqrt_nonneg _
+  have hG_nn : 0 ≤ frobeniusNorm G := by unfold frobeniusNorm; exact Real.sqrt_nonneg _
   have h_mul_comm : frobeniusNorm (A * G) * frobeniusNorm G ≤ frobeniusNorm A * (frobeniusNorm G * frobeniusNorm G) := by
-    nlinarith
-  nlinarith
+    nlinarith [h_submul A G, hG_nn]
+  nlinarith [h_submul G A, h_submul A G, h_triangle, hA_nn, hG_nn]
 
 end UFPFormalization

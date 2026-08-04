@@ -52,9 +52,7 @@ structure KerrHom (X Y : KerrObj) where
 instance kerrCategory : Category KerrObj where
   Hom X Y := KerrHom X Y
   id X := ⟨1, 1, by norm_num, by norm_num, by simp, by simp, by
-    have ha_nonneg : 0 ≤ X.a := X.a_nonneg
-    have hM_pos : 0 < X.M := X.pos
-    nlinarith⟩
+    simpa using X.a_le_M⟩
   comp {X Y Z} f g :=
     { r_M := g.r_M * f.r_M
       r_a := g.r_a * f.r_a
@@ -71,9 +69,12 @@ instance kerrCategory : Category KerrObj where
           _ = g.r_a * Y.a := by rw [f.eq_a]
           _ = Z.a := g.eq_a
       extremal_bound := by
-        have h1 : g.r_a * (f.r_a * X.a) ≤ g.r_M * (f.r_M * X.M) := by
-          nlinarith [f.extremal_bound, g.extremal_bound]
-        nlinarith
+        calc
+          (g.r_a * f.r_a) * X.a = g.r_a * (f.r_a * X.a) := by ring
+          _ = g.r_a * Y.a := by rw [f.eq_a]
+          _ ≤ g.r_M * Y.M := g.extremal_bound
+          _ = g.r_M * (f.r_M * X.M) := by rw [f.eq_M]
+          _ = (g.r_M * f.r_M) * X.M := by ring
     }
   id_comp := by
     intro X Y f; apply KerrHom.ext <;> simp
@@ -111,28 +112,35 @@ structure SpectralBundleKerr where
   base : KerrObj
   fiberData : SpecFiberKerr base
 
-/-- Morphisms in Bun(Kerr, Spec). -/
+/-- Morphisms in Bun(Kerr, Spec).
+    Note (2026-08-04): `commut` 采用协变方向 `fiberMap (X.ω_220) = Y.ω_220`，
+    使复合 `f ≫ g` 的交换条件可闭合（fiberMap 是全局 ℂ→ℂ 函数，
+    原逆变方向仅约束一个点、复合不闭合，属 mathlib 4.31 迁移中暴露的定义性缺口）。 -/
 @[ext]
 structure BundleKerrHom (X Y : SpectralBundleKerr) where
   baseMap : X.base ⟶ Y.base
   fiberMap : ℂ → ℂ  -- spectral mode mapping
-  commut : fiberMap (Y.fiberData.ω_220) = X.fiberData.ω_220
+  commut : fiberMap (X.fiberData.ω_220) = Y.fiberData.ω_220
 
 instance bundleKerrCategory : Category SpectralBundleKerr where
   Hom X Y := BundleKerrHom X Y
   id X := { baseMap := 𝟙 X.base, fiberMap := id, commut := rfl }
-  comp f g :=
+  comp {X Y Z} f g :=
     { baseMap := f.baseMap ≫ g.baseMap
       fiberMap := g.fiberMap ∘ f.fiberMap
       commut := by
         calc
-          (g.fiberMap ∘ f.fiberMap) (Z.fiberData.ω_220) = g.fiberMap (f.fiberMap (Z.fiberData.ω_220)) := rfl
+          (g.fiberMap ∘ f.fiberMap) (X.fiberData.ω_220) = g.fiberMap (f.fiberMap (X.fiberData.ω_220)) := rfl
           _ = g.fiberMap (Y.fiberData.ω_220) := by rw [f.commut]
-          _ = X.fiberData.ω_220 := g.commut
+          _ = Z.fiberData.ω_220 := g.commut
     }
   id_comp := by intro X Y f; apply BundleKerrHom.ext <;> simp
   comp_id := by intro X Y f; apply BundleKerrHom.ext <;> simp
-  assoc := by intro W X Y Z f g h; apply BundleKerrHom.ext <;> simp
+  assoc := by
+    intro W X Y Z f g h
+    apply BundleKerrHom.ext
+    · simp
+    · funext x; rfl
 
 /-- Projection π_Ma : Bun(Kerr, Spec) → Kerr. -/
 abbrev π_Ma : SpectralBundleKerr ⥤ KerrObj where
@@ -157,13 +165,31 @@ noncomputable def horizon_r_minus (M a : ℝ) (haM : a ≤ M) : ℝ :=
 theorem horizon_schwarzschild_limit (M : ℝ) (hM : M > 0) :
     horizon_r_plus M 0 (by nlinarith) = 2 * M ∧
     horizon_r_minus M 0 (by nlinarith) = 0 := by
-  constructor <;> unfold horizon_r_plus horizon_r_minus <;> norm_num
+  constructor
+  · unfold horizon_r_plus
+    have hs : Real.sqrt (M ^ 2 - 0 ^ 2) = M := by
+      norm_num
+      rw [Real.sqrt_sq_eq_abs]
+      exact abs_of_pos hM
+    rw [hs]
+    ring
+  · unfold horizon_r_minus
+    have hs : Real.sqrt (M ^ 2 - 0 ^ 2) = M := by
+      norm_num
+      rw [Real.sqrt_sq_eq_abs]
+      exact abs_of_pos hM
+    rw [hs]
+    ring
 
 /-- In the extreme limit (a = M): r₊ = r₋ = M (horizon degeneracy). -/
 theorem horizon_extreme_limit (M : ℝ) (hM : M > 0) :
     horizon_r_plus M M (le_refl _) = M ∧
     horizon_r_minus M M (le_refl _) = M := by
-  unfold horizon_r_plus horizon_r_minus; simp
+  constructor
+  · unfold horizon_r_plus
+    simp
+  · unfold horizon_r_minus
+    simp
 
 /-- Kerr spectral gap: Δλ_min^(Kerr) = Δλ_min⁰ · (1 - a²/M²) for slow rotation. -/
 noncomputable def kerrGap (M a : ℝ) (haM : a ≤ M) (hM : M > 0) : ℝ :=
@@ -177,7 +203,9 @@ theorem kerrGap_schwarzschild (M : ℝ) (hM : M > 0) :
 /-- At a = M (extreme): Δλ_min^(Kerr) = 0 (gap closure). -/
 theorem kerrGap_extreme (M : ℝ) (hM : M > 0) :
     kerrGap M M (le_refl _) hM = 0 := by
-  unfold kerrGap; ring
+  unfold kerrGap
+  field_simp [show M ≠ 0 from (ne_of_gt hM)]
+  ring
 
 /-- The spectral gap closes linearly in (M - a) near the extreme limit. -/
 theorem kerrGap_near_extreme (M a : ℝ) (haM : a ≤ M) (hM : M > 0) (hNear : 0 < M - a) :
@@ -190,7 +218,7 @@ theorem kerrGap_near_extreme (M a : ℝ) (haM : a ≤ M) (hM : M > 0) (hNear : 0
     Section 4: Grothendieck Fibration
    ========================================================= -/
 
-abbrev liftKerrObj (e : SpectralBundleKerr) (b' : KerrObj) : SpectralBundleKerr :=
+noncomputable abbrev liftKerrObj (e : SpectralBundleKerr) (b' : KerrObj) : SpectralBundleKerr :=
   { base := b'
     fiberData :=
       { ω_220 := e.fiberData.ω_220
@@ -216,7 +244,8 @@ noncomputable def π_Ma_cartesianLift : CartesianLiftData π_Ma where
     }
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     apply BundleKerrHom.ext
-    · simpa [π_Ma] using h_comp
+    · change h.baseMap = w ≫ f
+      simpa [π_Ma] using h_comp
     · rfl
   cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
 
@@ -271,25 +300,43 @@ theorem spectralGap8_pos : 0 < spectralGap 8 := by
     apply Real.sqrt_pos.mpr; norm_num
   positivity
 
-/-- Kerr Hawking temperature from spectral gap: T_H = Δλ_min^(Kerr) / (2π).
-    In the slow-rotation approximation: Δλ_min^(Kerr) = Δλ_min⁰·(1-a²/M²). -/
+/-- Kerr Hawking temperature from spectral gap: T_H = Δλ_min^(Kerr) / (2π·M).
+    In the slow-rotation approximation: Δλ_min^(Kerr) = Δλ_min⁰·(1-a²/M²).
+    
+    Note (2026-08-04): 分母加入质量因子 M（真实 Hawking 温度 T_H ∝ 1/M）。
+    原定义缺 1/M 因子导致 spin-preserving 缩放下 T_H 不变（而 TempHom 的
+    温度按缩放 r 变换），使 H_functor_spin 的 map 交换条件无法成立；
+    修正后 T_H 按 1/M 缩放（逆变），映射取 r = 1/r_M 即闭合。 -/
 noncomputable def hawkingTemp (X : KerrObj) : ℝ :=
-  spectralGap 8 * (1 - (X.a ^ 2 / X.M ^ 2)) / (2 * Real.pi)
+  spectralGap 8 * (1 - (X.a ^ 2 / X.M ^ 2)) / (2 * Real.pi * X.M)
 
 theorem hawkingTemp_nonneg (X : KerrObj) : 0 ≤ hawkingTemp X := by
   unfold hawkingTemp
   have h_gap_nonneg : 0 ≤ spectralGap 8 := by linarith [spectralGap8_pos]
   have h_factor_nonneg : 0 ≤ 1 - (X.a ^ 2 / X.M ^ 2) := by
-    have h_a_sq : X.a ^ 2 ≤ X.M ^ 2 := by nlinarith [X.a_le_M, X.pos]
-    nlinarith
-  positivity
+    have h_a_sq : X.a ^ 2 ≤ X.M ^ 2 := by nlinarith [X.a_le_M, X.a_nonneg]
+    have hM2_pos : 0 < X.M ^ 2 := sq_pos_of_pos X.pos
+    have h_div : X.a ^ 2 / X.M ^ 2 ≤ 1 := (div_le_one hM2_pos).mpr h_a_sq
+    linarith
+  have hnum : 0 ≤ spectralGap 8 * (1 - (X.a ^ 2 / X.M ^ 2)) :=
+    mul_nonneg h_gap_nonneg h_factor_nonneg
+  have hden : 0 < 2 * Real.pi * X.M := by
+    have hpi : 0 < 2 * Real.pi := by positivity
+    exact mul_pos hpi X.pos
+  exact div_nonneg hnum (le_of_lt hden)
 
 theorem hawkingTemp_extreme (X : KerrObj) (hExtreme : X.a = X.M) : hawkingTemp X = 0 := by
-  subst hExtreme; unfold hawkingTemp; ring
+  unfold hawkingTemp
+  rw [hExtreme]
+  have hNe : X.M ≠ 0 := by nlinarith [X.pos]
+  field_simp [hNe, show (2 : ℝ) * Real.pi ≠ 0 by positivity]
+  ring
 
 theorem hawkingTemp_schwarzschild (X : KerrObj) (hA : X.a = 0) :
-    hawkingTemp X = spectralGap 8 / (2 * Real.pi) := by
-  subst hA; unfold hawkingTemp; ring
+    hawkingTemp X = spectralGap 8 / (2 * Real.pi * X.M) := by
+  unfold hawkingTemp
+  rw [hA]
+  simp
 
 /-- The dimensionless spin ratio a/M. -/
 noncomputable def spinRatio (X : KerrObj) : ℝ := X.a / X.M
@@ -300,154 +347,189 @@ theorem spinRatio_range (X : KerrObj) : 0 ≤ spinRatio X ∧ spinRatio X ≤ 1 
   · exact div_nonneg X.a_nonneg (by linarith [X.pos])
   · exact (div_le_one (by linarith [X.pos])).mpr X.a_le_M
 
-/-- Subcategory of Kerr with spin-preserving morphisms (r_a = r_M).
-    In this subcategory, a/M is invariant and H_functor is well-defined. -/
+/-- Subcategory of Kerr with spin-preserving morphisms (r_a = r_M), restricted to
+    non-extremal objects (a < M).
+    
+    Note (2026-08-04): 原定义只有自旋保持约束。H_functor 要求 T_H > 0（TempObj 的
+    T > 0 约束），而极端黑洞（a = M）T_H = 0；原 H_functor_spin 尝试在极端情形
+    exfalso 推出矛盾（假，极端情形合法），故为诚实修正，将 a < M 提升为对象结构
+    条件（H_functor 仅在非极端自旋保持子范畴上有定义）。 -/
 structure SpinPreservingKerrObj where
-  Kerr : KerrObj
+  kerr : KerrObj
+  a_lt_M : kerr.a < kerr.M
 
+@[ext]
 structure SpinPreservingKerrHom (X Y : SpinPreservingKerrObj) where
-  KerrHom : KerrHom X.Kerr Y.Kerr
-  spin_preserving : KerrHom.r_a = KerrHom.r_M
+  kerrHom : KerrHom X.kerr Y.kerr
+  spin_preserving : kerrHom.r_a = kerrHom.r_M
 
 instance spinPreservingCategory : Category SpinPreservingKerrObj where
   Hom X Y := SpinPreservingKerrHom X Y
-  id X := ⟨𝟙 X.Kerr, by simp⟩
-  comp f g :=
-    ⟨f.KerrHom ≫ g.KerrHom, by
-      have hf : f.KerrHom.r_a = f.KerrHom.r_M := f.spin_preserving
-      have hg : g.KerrHom.r_a = g.KerrHom.r_M := g.spin_preserving
-      simp [hf, hg]⟩
+  id X := ⟨𝟙 X.kerr, by rfl⟩
+  comp {X Y Z} f g :=
+    ⟨kerrCategory.comp f.kerrHom g.kerrHom, by
+      have hf : f.kerrHom.r_a = f.kerrHom.r_M := f.spin_preserving
+      have hg : g.kerrHom.r_a = g.kerrHom.r_M := g.spin_preserving
+      change g.kerrHom.r_a * f.kerrHom.r_a = g.kerrHom.r_M * f.kerrHom.r_M
+      rw [hf, hg]⟩
   id_comp := by intro X Y f; apply SpinPreservingKerrHom.ext; simp
   comp_id := by intro X Y f; apply SpinPreservingKerrHom.ext; simp
   assoc := by intro W X Y Z f g h; apply SpinPreservingKerrHom.ext; simp
 
-/-- H_functor on the spin-preserving subcategory:
-    ℋ : SpinPreservingKerr → Temp where T_H₂ = T_H₁ / r_M. -/
+/-- H_functor on the (non-extremal) spin-preserving subcategory:
+    ℋ : SpinPreservingKerr → Temp where T_H₂ = T_H₁ / r_M.
+    Note (2026-08-04): 定义域限定为非极端对象（X.a_lt_M : a < M），
+    从而 T_H > 0 严格成立（原极端情形 a = M 时 T_H = 0 无法满足 TempObj 约束）。 -/
 noncomputable def H_functor_spin : SpinPreservingKerrObj ⥤ TempObj where
   obj X :=
-    { T := hawkingTemp X.Kerr
+    { T := hawkingTemp X.kerr
       pos := by
-        have hT_nonneg : 0 ≤ hawkingTemp X.Kerr := hawkingTemp_nonneg X.Kerr
-        by_cases hzero : hawkingTemp X.Kerr = 0
-        · -- T_H = 0 only at extreme limit a = M. At that point, the BH is extremal
-          -- and T_H = 0 exactly (third law). The strict positivity condition
-          -- in TempObj means the functor is only defined for non-extremal BHs.
-          have h_extreme : X.Kerr.a = X.Kerr.M := by
-            have h_eq : spectralGap 8 * (1 - (X.Kerr.a ^ 2 / X.Kerr.M ^ 2)) / (2 * Real.pi) = 0 := hzero
-            have h_gap_pos : spectralGap 8 > 0 := spectralGap8_pos
-            have h_factor : 1 - (X.Kerr.a ^ 2 / X.Kerr.M ^ 2) = 0 := by
-              nlinarith
-            nlinarith [X.Kerr.pos, X.Kerr.a_le_M, h_factor]
-          exfalso
-          nlinarith [X.Kerr.pos, X.Kerr.a_le_M, h_extreme]
-        · exact hT_nonneg.lt_of_ne hzero
+        unfold hawkingTemp
+        have hgap : 0 < spectralGap 8 := spectralGap8_pos
+        have hfac : 0 < 1 - (X.kerr.a ^ 2 / X.kerr.M ^ 2) := by
+          have ha2 : X.kerr.a ^ 2 < X.kerr.M ^ 2 := by
+            nlinarith [X.a_lt_M, X.kerr.a_nonneg, X.kerr.pos]
+          have hM2 : 0 < X.kerr.M ^ 2 := sq_pos_of_pos X.kerr.pos
+          have hdiv : X.kerr.a ^ 2 / X.kerr.M ^ 2 < 1 := (div_lt_one hM2).mpr ha2
+          linarith
+        have hprod : 0 < spectralGap 8 * (1 - (X.kerr.a ^ 2 / X.kerr.M ^ 2)) := mul_pos hgap hfac
+        have hpi : 0 < 2 * Real.pi := by positivity
+        have hden : 0 < 2 * Real.pi * X.kerr.M := mul_pos hpi X.kerr.pos
+        exact div_pos hprod hden
     }
-  map f :=
-    { r := f.KerrHom.r_M
-      r_pos := f.KerrHom.rM_pos
+  map {X Y} f :=
+    { r := (f.kerrHom.r_M)⁻¹
+      r_pos := inv_pos.mpr f.kerrHom.rM_pos
       eq := by
-        have hM_eq : f.KerrHom.r_M * X.Kerr.M = (f.KerrHom.r_M * X.Kerr.M) := rfl
-        have hSpin : f.KerrHom.r_a = f.KerrHom.r_M := f.spin_preserving
-        calc
-          f.KerrHom.r_M * hawkingTemp X.Kerr
-              = f.KerrHom.r_M * (spectralGap 8 * (1 - (X.Kerr.a ^ 2 / X.Kerr.M ^ 2)) / (2 * Real.pi)) := rfl
-          _ = spectralGap 8 / (2 * Real.pi) *
-              (f.KerrHom.r_M - (f.KerrHom.r_M * (X.Kerr.a ^ 2 / X.Kerr.M ^ 2))) := by ring
-          _ = spectralGap 8 / (2 * Real.pi) *
-              (f.KerrHom.r_M - ((f.KerrHom.r_a * X.Kerr.a) ^ 2 / (f.KerrHom.r_M * X.Kerr.M ^ 2))) := by
-            rw [hSpin]
-            field_simp [show X.Kerr.M ≠ 0 from by linarith [X.Kerr.pos]]
-            ring
-          _ = spectralGap 8 * (1 - ((f.KerrHom.r_a * X.Kerr.a) ^ 2 / (f.KerrHom.r_M * X.Kerr.M) ^ 2)) / (2 * Real.pi) := by
-            field_simp [show f.KerrHom.r_M * X.Kerr.M ≠ 0 from by
-              nlinarith [f.KerrHom.rM_pos, X.Kerr.pos]]
-            ring
-          _ = hawkingTemp Y.Kerr := by
-            -- Using Y.M = r_M·X.M, Y.a = r_a·X.a = r_M·X.a (by hSpin)
-            have hY_M : Y.Kerr.M = f.KerrHom.r_M * X.Kerr.M := f.KerrHom.eq_M.symm
-            have hY_a : Y.Kerr.a = f.KerrHom.r_a * X.Kerr.a := f.KerrHom.eq_a.symm
-            rw [hY_M, hY_a, hSpin]
-            unfold hawkingTemp
-            ring
+        -- 目标：r · (H_functor_spin.obj X).T = (H_functor_spin.obj Y).T
+        -- T_H ∝ 1/M，缩放 M → r_M·M 使 T_H → T_H/r_M，故取 r = 1/r_M 逆变。
+        change (f.kerrHom.r_M)⁻¹ * hawkingTemp X.kerr = hawkingTemp Y.kerr
+        have hSpin : f.kerrHom.r_a = f.kerrHom.r_M := f.spin_preserving
+        have hY_M : Y.kerr.M = f.kerrHom.r_M * X.kerr.M := f.kerrHom.eq_M.symm
+        have hY_a : Y.kerr.a = f.kerrHom.r_a * X.kerr.a := f.kerrHom.eq_a.symm
+        unfold hawkingTemp
+        rw [hY_M, hY_a, hSpin]
+        field_simp [show X.kerr.M ≠ 0 from by nlinarith [X.kerr.pos],
+                    show f.kerrHom.r_M ≠ 0 from by nlinarith [f.kerrHom.rM_pos]]
     }
   map_id X := by
-    apply TempHom.ext; simp
+    apply TempHom.ext
+    change (1 : ℝ)⁻¹ = 1
+    simp
   map_comp f g := by
-    apply TempHom.ext; simp
+    apply TempHom.ext
+    change (g.kerrHom.r_M * f.kerrHom.r_M)⁻¹ = (g.kerrHom.r_M)⁻¹ * (f.kerrHom.r_M)⁻¹
+    rw [mul_inv_rev]
+    ring
 
 /-- The forgetful functor SpinPreservingKerr → Kerr. -/
 noncomputable def forgetSpin : SpinPreservingKerrObj ⥤ KerrObj where
-  obj X := X.Kerr
-  map f := f.KerrHom
+  obj X := X.kerr
+  map f := f.kerrHom
   map_id X := rfl
   map_comp f g := rfl
 
 /-- Spin-preserving spectral Kerr bundle: a spectral bundle whose
-    base morphisms are restricted to spin-preserving ones (r_a = r_M). -/
+    base morphisms are restricted to spin-preserving ones (r_a = r_M),
+    restricted to non-extremal bases (a < M) so that Ĥ is well-defined. -/
 structure SpinPreservingSpectralBundle where
   bundle : SpectralBundleKerr
+  a_lt_M : bundle.base.a < bundle.base.M
 
 instance spCat : Category SpinPreservingSpectralBundle where
-  Hom X Y := { f : BundleKerrHom X.bundle Y.bundle // f.baseMap.r_a = f.baseMap.r_M }
-  id X := ⟨𝟙 X.bundle, by simp⟩
-  comp f g := ⟨f.1 ≫ g.1, by
-    have hf : f.1.baseMap.r_a = f.1.baseMap.r_M := f.2
-    have hg : g.1.baseMap.r_a = g.1.baseMap.r_M := g.2
-    simp [hf, hg]⟩
-  id_comp _ := by ext; simp
-  comp_id _ := by ext; simp
-  assoc _ _ _ := by ext; simp
+  Hom X Y := { f : BundleKerrHom X.bundle Y.bundle //
+    f.baseMap.r_a = f.baseMap.r_M ∧ X.bundle.fiberData.gap = Y.bundle.fiberData.gap }
+  id X := ⟨𝟙 X.bundle, by
+    constructor <;> rfl⟩
+  comp {X Y Z} f g := ⟨bundleKerrCategory.comp f.1 g.1, by
+    have hf_spin : f.1.baseMap.r_a = f.1.baseMap.r_M := f.2.1
+    have hg_spin : g.1.baseMap.r_a = g.1.baseMap.r_M := g.2.1
+    have hf_gap : X.bundle.fiberData.gap = Y.bundle.fiberData.gap := f.2.2
+    have hg_gap : Y.bundle.fiberData.gap = Z.bundle.fiberData.gap := g.2.2
+    constructor
+    · change g.1.baseMap.r_a * f.1.baseMap.r_a = g.1.baseMap.r_M * f.1.baseMap.r_M
+      rw [hf_spin, hg_spin]
+    · exact hf_gap.trans hg_gap⟩
+  id_comp := by
+    intro X Y f
+    ext
+    · simp
+    · simp
+  comp_id := by
+    intro X Y f
+    ext
+    · simp
+    · simp
+  assoc := by
+    intro W X Y Z f g h
+    ext
+    · simp
+    · simp
 
 /-- The fibered functor Ĥ : Bun(Kerr, Spec) → Bun(Temp, Spec) on the
     spin-preserving subcategory. Maps Kerr spectral gap → temperature via T_H = gap/(2π). -/
 noncomputable def H_hat_spin : SpinPreservingSpectralBundle ⥤ SpectralBundleTemp where
   obj X :=
-    { base := H_functor_spin.obj ⟨X.bundle.base⟩
+    { base := H_functor_spin.obj ⟨X.bundle.base, X.a_lt_M⟩
       fiberData := { n := 1, A := !![X.bundle.fiberData.gap] }
     }
   map f :=
-    { baseMap := H_functor_spin.map ⟨f.1.baseMap, f.2⟩
+    { baseMap := H_functor_spin.map ⟨f.1.baseMap, f.2.1⟩
       fiberMap := 1
-      commut := by simp
+      commut := by
+        -- 需要 X.bundle.fiberData.gap = Y.bundle.fiberData.gap（gap 保持条件 f.2.2）
+        rw [f.2.2]
+        simp
     }
   map_id X := by
-    apply BundleTempHom.ext <;> simp
-  map_comp f g := by
-    apply BundleTempHom.ext <;> simp
+    apply BundleTempHom.ext
+    · change H_functor_spin.map (𝟙 ⟨X.bundle.base, X.a_lt_M⟩) =
+          𝟙 (H_functor_spin.obj ⟨X.bundle.base, X.a_lt_M⟩)
+      rw [H_functor_spin.map_id]
+    · rfl
+  map_comp {X Y Z} f g := by
+    apply BundleTempHom.ext
+    · change H_functor_spin.map
+          ((⟨f.1.baseMap, f.2.1⟩ : SpinPreservingKerrHom ⟨X.bundle.base, X.a_lt_M⟩ ⟨Y.bundle.base, Y.a_lt_M⟩) ≫
+           (⟨g.1.baseMap, g.2.1⟩ : SpinPreservingKerrHom ⟨Y.bundle.base, Y.a_lt_M⟩ ⟨Z.bundle.base, Z.a_lt_M⟩)) =
+          H_functor_spin.map (⟨f.1.baseMap, f.2.1⟩ : SpinPreservingKerrHom ⟨X.bundle.base, X.a_lt_M⟩ ⟨Y.bundle.base, Y.a_lt_M⟩) ≫
+          H_functor_spin.map (⟨g.1.baseMap, g.2.1⟩ : SpinPreservingKerrHom ⟨Y.bundle.base, Y.a_lt_M⟩ ⟨Z.bundle.base, Z.a_lt_M⟩)
+      rw [H_functor_spin.map_comp]
+    · change (1 : Matrix (Fin 1) (Fin 1) ℂ) = 1 * 1
+      simp
 
 /-! =========================================================
     Section 7: Extreme Limit & Non-Product Bundle
    ========================================================= -/
 
 /-- In the extreme limit a → M, the spectral gap closes: Δλ_min → 0.
-    For any bundle X whose base is at the extremal boundary (a = M),
-    the spectral gap fiber data is zero. This follows from:
-    1. kerrGap(M, M) = 0 (proven in kerrGap_extreme)
-    2. The gap section assigns kerrGap to the fiber -/
+    For any bundle X at the extremal boundary (a = M) **lying in the image of the gap
+    section** (i.e. satisfying the section condition hX_section), the fiber gap is zero.
+    This follows from kerrGap(M, M) = 0 (kerrGap_extreme).
+    
+    Note (2026-08-04): 原声明对任意 SpectralBundleKerr 成立不真——`fiberData.gap` 是
+    任意结构字段，须显式假设 X 处于 KerrGapSection 的像中（Section 条件）。-/
 theorem extreme_limit_gap_closure (X : SpectralBundleKerr)
+    (hX_section : X.fiberData.gap = kerrGap X.base.M X.base.a X.base.a_le_M X.base.pos)
     (hExtreme : X.base.a = X.base.M) :
     X.fiberData.gap = 0 := by
-  -- The gap section assigns kerrGap, but X.fiberData.gap is the general fiber data.
-  -- For a bundle in the image of KerrGapSection, this follows from kerrGap_extreme.
-  -- For a general bundle, we need the projection condition.
-  have hGap : kerrGap X.base.M X.base.a X.base.a_le_M X.base.pos = 0 :=
-    kerrGap_extreme X.base.M X.base.pos
-  -- In the finite prototype, the fiber gap is always kerrGap by construction
-  -- (since SpectralBundleKerr objects are constructed with kerrGap as the gap).
-  -- Full generality requires a section condition: X is in the essential image of KerrGapSection.
-  have hX_in_section : X.fiberData.gap = kerrGap X.base.M X.base.a X.base.a_le_M X.base.pos := by
-    -- This holds by construction for our finite prototype bundles.
-    -- A rigorous proof would require a lemma that any SpectralBundleKerr with
-    -- base (M,a) has fiber gap = kerrGap(M,a), which follows from the definition
-    -- of SpecFiberKerr.
-    -- In the finite prototype, this is true by definition of the gap field.
-    rfl
-  rw [hX_in_section, hGap]
+  rw [hX_section]
+  -- 展开 kerrGap 以消除 Prop 参数（haM/hM）的依赖，使 rw [hExtreme] 无 motive 障碍
+  unfold kerrGap
+  rw [hExtreme]
+  field_simp [show X.base.M ≠ 0 from by nlinarith [X.base.pos]]
+  ring
 
-/-- In the extreme limit, the Hawking temperature vanishes (third law of black hole
-    thermodynamics: a extremal black hole has zero surface gravity). -/
-theorem extreme_limit_T_H_zero (X : SpectralBundleKerr) (hExtreme : X.base.a = X.base.M) :
-    H_hat.obj X = H_hat.obj X := rfl  -- T_H = 0 follows from gap closure
+/-
+In the extreme limit, the Hawking temperature vanishes (third law of black hole
+thermodynamics: a extremal black hole has zero surface gravity).
+
+※ 开放项登记（2026-08-04）：原声明引用了未定义的 `H_hat`（此文件仅有 H_hat_spin，且作用于
+SpinPreservingSpectralBundle），且内容为平凡 `rfl` 占位，属假定理。温度为零的数学
+内容由 hawkingTemp_extreme 严格给出；此处登记为开放项，不再声明占位定理。
+-/
+-- theorem extreme_limit_T_H_zero (X : SpectralBundleKerr) (hExtreme : X.base.a = X.base.M) :
+--     H_hat.obj X = H_hat.obj X := rfl  -- T_H = 0 follows from gap closure
 
 /-- Theorem: Bun(Kerr, Spec) is a non-product bundle.
     Proof: There is no global section that extends continuously to the extreme boundary
@@ -475,9 +557,14 @@ noncomputable def bekensteinHawkingEntropy (X : KerrObj) : ℝ :=
 /-- At a = 0 (Schwarzschild): S_BH = 4π·M². -/
 theorem bh_entropy_schwarzschild (X : KerrObj) (hA : X.a = 0) :
     bekensteinHawkingEntropy X = 4 * Real.pi * X.M ^ 2 := by
-  subst hA
   unfold bekensteinHawkingEntropy
+  rw [hA]
   simp
+  have hs : Real.sqrt (X.M ^ 4) = X.M ^ 2 := by
+    calc
+      Real.sqrt (X.M ^ 4) = Real.sqrt ((X.M ^ 2) ^ 2) := by congr 1; ring
+      _ = X.M ^ 2 := Real.sqrt_sq (sq_nonneg X.M)
+  rw [hs]
   ring
 
 end UFPFormalization

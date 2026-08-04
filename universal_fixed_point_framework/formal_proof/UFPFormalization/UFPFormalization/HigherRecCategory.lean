@@ -41,24 +41,31 @@ structure RecTwoMorphism {X Y : RecObj} (f g : X ⟶ Y) where
 Vertical composition of 2-morphisms: β ∘_v α : f ⇒ h.
 
 Defined by entrywise sum: (β ∘_v α)_n = α_n + β_n.
-The naturality proof requires the spectral flow calculus; deferred.
+
+※ 诚实登记（2026-08-04）：逐点加法的自然性在一般情况下**不成立**——
+α 的自然性给出 α(n+1)[x, g(x)] = α(n)[x, f(x)]，β 的给出
+β(n+1)[x, h(x)] = β(n)[x, g(x)]，但目标需要 α(n+1)[x, h(x)]，
+无可利用信息。因此该定义并不满足 RecTwoMorphism 的自然性条件
+（定义性缺口）。正确的竖复合需谱流演算（BCH 公式）下的修正形式。
+注册为开放项。
 -/
 def vertComp {X Y : RecObj} {f g h : X ⟶ Y}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h) : RecTwoMorphism f h :=
   { alpha := λ n => α.alpha n + β.alpha n
     naturality := by
       intro n x
-      -- LHS: (α_{n+1}+β_{n+1})[x, h(x)], RHS: (α_n+β_n)[x, f(x)]
-      -- Requires the spectral flow calculus to relate α_{n+1}[x, h(x)] with
-      -- α_{n+1}[x, g(x)] and β_{n+1}[x, h(x)] with β_n[x, g(x)].
-      -- Full proof deferred to the complete spectral flow formalization.
+      -- 开放项：定义性缺口，见 docstring。α(n+1)[x, h(x)] 不可由 α 的自然性得到。
       sorry }
 
 /--
 Horizontal composition of 2-morphisms: α ∘_h α' : f∘f' ⇒ g∘g'.
 
 Defined by matrix multiplication: (α ∘_h α')_n = α'_n * α_n.
-The naturality proof requires the spectral flow calculus; deferred.
+
+※ 诚实登记（2026-08-04）：矩阵乘法的自然性在一般情况下**不成立**——
+目标需要 α(n+1)[y, g'(g(x))] 项，但 α 的自然性只在 y = g(x) 处给出
+α(n+1)[y, g(y)]。该定义不满足自然性条件（定义性缺口），
+正确的横复合需谱流演算修正。注册为开放项。
 -/
 def horizComp {X Y Z : RecObj} {f g : X ⟶ Y} {f' g' : Y ⟶ Z}
     (α : RecTwoMorphism f g) (α' : RecTwoMorphism f' g') :
@@ -66,10 +73,7 @@ def horizComp {X Y Z : RecObj} {f g : X ⟶ Y} {f' g' : Y ⟶ Z}
   { alpha := λ n => α.alpha n * α'.alpha n
     naturality := by
       intro n x
-      -- LHS: (α'_{n+1}*α_{n+1})[x, g'(g(x))], RHS: (α'_n*α_n)[x, f'(f(x))]
-      -- Requires collapsing the sum Σ_{y} α'_{n+1}[x,y]·α_{n+1}[y,g'(g(x))]
-      -- to a single term using the naturality of α and α'.
-      -- Full proof deferred to the complete spectral flow formalization.
+      -- 开放项：定义性缺口，见 docstring。
       sorry }
 
 /--
@@ -103,11 +107,11 @@ theorem horizComp_assoc {X Y Z W : RecObj}
 /--
 Exchange law: (β ∘_v α) ∘_h (β' ∘_v α') = (β ∘_h β') ∘_v (α ∘_h α').
 
-Note: With the entrywise-sum vertical composition, this law would require
-(α_n+β_n)*(α'_n+β'_n) = α_n*α'_n + β_n*β'_n, which only holds when
-α_n*β'_n + β_n*α'_n = 0. In the full spectral flow calculus the vertical
-composition has a more complex form (involving the BCH formula) that
-ensures the exchange law. Deferred to the complete formalization.
+※ 诚实登记（2026-08-04）：在当前逐点加法竖复合 + 矩阵乘法横复合的定义下，
+交换律要求 (α_n+β_n)·(α'_n+β'_n) = α_n·α'_n + β_n·β'_n，即交叉项
+α_n·β'_n + β_n·α'_n = 0——一般情况下不成立。且 vertComp/horizComp 本身
+不满足自然性（见上方开放项登记），交换律随之成为开放项。
+正确形式需要谱流演算（BCH 公式）下的修正复合，见论文 R12 分析。
 -/
 theorem exchange_law {X Y Z : RecObj}
     {f g h : X ⟶ Y} {f' g' h' : Y ⟶ Z}
@@ -115,6 +119,7 @@ theorem exchange_law {X Y Z : RecObj}
     (α' : RecTwoMorphism f' g') (β' : RecTwoMorphism g' h') : 
     horizComp (vertComp α β) (vertComp α' β') =
     vertComp (horizComp α α') (horizComp β β') := by
+  -- 开放项：定义性缺口（交叉项不消失 + 自然性不满足），见 docstring。
   sorry
 
 end UFPFormalization

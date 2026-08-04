@@ -368,27 +368,25 @@ theorem deviation_spectral_bound_simplified {X Y Z : SpObj}
     ‖B·(A - λ₁I)·C‖_F² ≤ Δλ_min²·‖B‖_F²·‖C‖_F²
     其中 λ₁ = agEigenvalue 1 n 是 A 的最小特征值，Δλ_min = spectralGap n 是谱间隙。
 
-    证明需要 Hermitian 谱定理（Mathlib `Matrix.Spectrum` 尚未完全稳定）。
-    数学思路：谱分解 A = Σ_k λ_k·Proj_k, (A-λ₁I) = Σ_{k>1} (λ_k-λ₁)·Proj_k,
-    算子范数 = λ₂-λ₁ = Δλ_min。于是 ‖(A-λ₁I)·C‖_F² = Tr(C^†·(A-λ₁I)²·C)
-    ≤ Δλ_min²·Tr(C^†·C) = Δλ_min²·‖C‖_F²，再由 ‖B·M‖_F ≤ ‖B‖_F·‖M‖₂ 完成。
-
-    待 Mathlib `Matrix.Spectrum` 稳定后替换为完整证明。（2026-07-28 标注） -/
+※ 诚实登记（2026-08-04）：该陈述对**任意** Hermitian 矩阵 A 不成立——
+`agEigenvalue`/`spectralGap` 是 Cl(1,7)/SU(2) 谱框架的**特定常数**
+（√{k(k+1)} 归一化），而非任意 A 的特征值。正确陈述需要额外假设
+"A 具有 A_GR 谱 {λ_k = agEigenvalue k n}"（物理模型断言，非数学定理）。
+在此假设下证明需要 Hermitian 谱定理 + 算子范数估计（Mathlib Matrix.Spectrum），
+当前注册为开放项（对应 §5.6-5.7 及 paperX_gravity_c_constant.py 的数值验证）。 -/
 lemma spectral_gap_estimate {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
     (B : Matrix (Fin n) (Fin n) ℂ) (C : Matrix (Fin n) (Fin n) ℂ) :
     frobNormSq (B * (A - (agEigenvalue 1 n) • 1) * C) ≤
     (spectralGap n) ^ 2 * frobNormSq B * frobNormSq C := by
-  -- 需要 Hermitian 谱定理：A = U·Λ·U^†, Λ = diag(λ₁,...,λₙ)
-  -- (A-λ₁I) = U·diag(0, λ₂-λ₁, ..., λₙ-λ₁)·U^†
-  -- ‖A-λ₁I‖₂ = λ₂-λ₁ = spectralGap n
-  -- 则 ‖(A-λ₁I)·C‖_F ≤ Δλ_min·‖C‖_F，再由次可乘性得证
-  -- 待 Mathlib 更新 Matrix.Spectrum 模块后补全此证明
+  -- 开放项：需要 (1) A 具有 A_GR 谱的假设；(2) Hermitian 谱定理
+  -- (A-λ₁I) 的算子范数 = 谱间隙；(3) Frobenius 次可乘性。
+  -- 当前缺假设 (1)，陈述本身在一般 Hermitian A 下为假，不可证。
   sorry
 
 /-- 基于谱间隙的定量绑定（部分证明，Rayleigh 商估计已就位）。
 
-    完整证明需补全 `spectral_gap_estimate`（依赖 Mathlib `Matrix.Spectrum`）。
-    当前数学框架中已确认不等式成立（见 §5.6-5.7 及 paperX_gravity_c_constant.py）。
+    完整证明依赖 `spectral_gap_estimate`（开放项：需 A 具有 A_GR 谱的假设 +
+    Hermitian 谱定理，见该引理的诚实登记）。
 
     推导结构：
       1. spExchangeLaw_deviation_partial_commutator → Δ = S.A·H - 2·β.h·S.A·α'.h + H·S.A
@@ -397,10 +395,11 @@ lemma spectral_gap_estimate {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
          Δ_gap = β.h·(S.A-λ₁·I)·α'.h （谱间隙项）
       3. ‖Δ‖² ≤ 2·(‖Δ_self‖² + 4·‖Δ_gap‖²) （三角不等式）
       4. ‖Δ_self‖² = 0（严格极限下）或 ≤ 8·‖β.h‖²·‖α'.h‖²（Cl(1,7) 归一化）
-      5. ‖Δ_gap‖² ≤ Δλ_min²·‖β.h‖²·‖α'.h‖²（Rayleigh 商估计，缺谱定理）
+      5. ‖Δ_gap‖² ≤ Δλ_min²·‖β.h‖²·‖α'.h‖²（Rayleigh 商估计，开放项）
       6. 组合 → ‖Δ‖² ≤ (4·Δλ_min)²·‖β.h‖²·‖α'.h‖²
 
-    待 Mathlib `Matrix.Spectrum` 更新后补全 `spectral_gap_estimate` 即可。 -/
+    开放项（2026-08-04）：步骤 5 依赖 spectral_gap_estimate，其陈述缺
+    A_GR 谱假设，一般 Hermitian S.A 下不可证。此定理一并注册为开放项。 -/
 theorem deviation_spectral_bound (S : SpObj)
     {P Q R : S ⟶ S} {P' Q' R' : S ⟶ S}
     (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
