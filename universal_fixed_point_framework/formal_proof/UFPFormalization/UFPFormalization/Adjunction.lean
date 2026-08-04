@@ -24,7 +24,8 @@ import Mathlib.Analysis.Matrix.Spectrum
 论文正确构造（paper I 定理 2.4.5 / 构造 C2.2；UFPF修复与推进方案 §13.1 定理 R11）：
   R(E) 状态空间 = D(A_E)，演化映射 = e^{-A_E}（保留谱信息），仅在 D 的像子范畴上严格成立。
 正确 Lean 路径：RAP5a_explicit_adjunction.lean（SpImD 子范畴方案：R_im 为第一投影），
-其 RIm_map（D 的 full 性）需阶段 2 的 SpImDMor 限制为线性态射后方可闭合。
+其 RIm_map 已在线性语义下闭合（2026-08-04：SpImDMor 限制为线性态射层，
+RIm_map = 恒等提取，D_im ⊣ R_im 完整伴随机器证明）。
 本文件简化原型保留仅作结构占位，与 Agda 侧（agda_formalization/DecursionFunctor.agda）
 统一标注范围限制。
 -/

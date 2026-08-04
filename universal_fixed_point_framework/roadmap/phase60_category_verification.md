@@ -283,7 +283,7 @@ agda_formalization/
 |:--------|:-----|:-----|:---------|
 | ~~`spExchangeLaw`~~ | ~~`HigherSpCategory.lean:103`~~ | ~~🔴 L3 概念特征~~ | ✅ **已消除**（2026-08-04，改为偏差定理引用） |
 | `RFunctor.map`/`map_id`/`map_comp` | `Adjunction.lean:53,58,60` | 🔴 L3 全范畴不可构造 | 对齐 Agda `postulate R-map`；阶段 2 SpImDMor 限制后闭合 |
-| `RIm_map` | `RAP5a_explicit_adjunction.lean:103` | 🔴 L3 D 不 full（基数反例） | 阶段 2 SpImDMor 限制为线性态射后闭合 |
+| ~~`RIm_map`~~ | ~~`RAP5a_explicit_adjunction.lean:103`~~ | ~~🔴 L3 D 不 full（基数反例）~~ | ✅ **已闭合**（2026-08-04 阶段 1 线性语义：SpImDMor 限制为线性态射层，RIm_map = 恒等提取，`DImAdjRIm` 完整伴随） |
 | `vertComp`/`horizComp`/`exchange_law` | `HigherRecCategory.lean:58,77,123` | 🔴 L3 自然性定义性缺口（逐点加法/矩阵乘法不满足） | 需重新定义竖/横复合（2026-08-04 补录，此前遗漏于本表） |
 | `spectral_gap_estimate` | `DeviationBound.lean:384` | 🟡 L2 待 Mathlib + 缺 A_GR 谱假设 | 监视 `Matrix.Spectrum` 进展 + 补假设 |
 | `deviation_spectral_bound` | `DeviationBound.lean:411` | 🟡 L2 依赖上者 | 自动闭合 |

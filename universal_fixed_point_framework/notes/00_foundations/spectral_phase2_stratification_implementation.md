@@ -15,7 +15,7 @@
 - Rec 层"线性谱匹配映射"在有限维原型中等价于"经 D 映射后为转移矩阵"，二者通过 `DFunctor_image_is_transfer` 桥接
 - Sp 层分层直接落地到 `Silence.lean` 的 `deltaSilence`（交换子 Frobenius 范数），物理诠释更直接
 
-两者等价性：在有限维原型中，Rec_lin ↔ SpImD 通过 D functor 建立 1-1 对应（RAP5a 已闭合）。
+两者等价性：在有限维原型中，Rec_lin ↔ SpImD 通过 D functor 建立 1-1 对应（RAP5a 已闭合，2026-08-04：SpImDMor 限制为线性态射层后 RIm_map = 恒等提取，D_im ⊣ R_im 完整伴随机器证明）。
 
 ## 2. 核心构造
 

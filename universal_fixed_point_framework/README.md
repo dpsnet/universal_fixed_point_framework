@@ -14,7 +14,7 @@
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
 | 最新论文 / Latest Papers | **XXXIX**（暴涨完整动力学）+ **XL**（色规范完整动力学）+ **XLI**（量子重整化链条）+ **XLII**（黑洞量子演化）+ Paper XXXVIII（Agda 交叉验证） |
 | Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**）+ **Phase 61A-D 7 模块**（InflationDynamics/ColorDynamics/RenormalizationChain/BlackHoleEvolution/HawkingSpectrum/BlackHoleInformation/BlackHoleBounce，全部零 `sorry`） |
-| 遗留 `sorry` | 13 处 `sorry` + 1 处 `axiom DAdjR`（2026-08-04 审计，全部为诚实登记的开放项；`HigherSpCategory` spExchangeLaw 与 `Silence` 已闭合，Phase 61A-D 模块零 `sorry`；详见下文"Lean 4 形式化"表） |
+| 遗留 `sorry` | **6 处 `sorry`** + 1 处 `axiom DAdjR`（2026-08-04 审计，全部为 S0 范畴层诚实登记的开放项：Adjunction 3+1 + HigherRecCategory 3；非 S0 全部闭合——ThermoFormalism/DeviationBound（O8/O11）+ **RAP5a RIm_map（线性语义，D_im ⊣ R_im 完整伴随）**；`HigherSpCategory` spExchangeLaw 与 `Silence` 已闭合，Phase 61A-D 模块零 `sorry`；详见下文"Lean 4 形式化"表） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
 
 ---
@@ -102,7 +102,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | 总 Lean 模块数 | 81（其中 15 个模块存在预存编译错误：GelfandDuality/RAP4 bad import、NoiseCategory 读取失败、Test*/Fiber 家族等，均为遗留损坏，非 Phase 61A-D 引入） |
 | 构建状态 | 默认目标 `lake build` ✅ 零错误；全库 `lean_lib` 15 模块预存编译错误（登记）；Phase 61A-D 7 模块零 `sorry` |
 | 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.10 §六）+ Phase 61A-D 7 模块 |
-| 活动 `sorry`（2026-08-04 审计） | 13 处 `sorry` + 1 处 `axiom DAdjR`（`Adjunction.lean:89`，未计入 sorry 统计），**全部为诚实登记的开放项**：ThermoFormalism 4（`legendreTransform_convex`/Bowen τ(0)/sup BddAbove/`interpolateMeasure` 不变性）、Adjunction 3（泛化映射/恒等/复合占位，简化原型）+ axiom 1、HigherRecCategory 3（竖/横复合自然性定义性缺口 + 交换律）、DeviationBound 2（`spectral_gap_estimate`/`deviation_spectral_bound` 缺 A_GR 谱假设 + 待 Matrix.Spectrum）、RAP5a 1（RIm_map，D 不 full）。`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合（2026-08-04） |
+| 活动 `sorry`（2026-08-04 审计） | **6 处 `sorry`** + 1 处 `axiom DAdjR`（`Adjunction.lean:89`，未计入 sorry 统计），全部为 S0 范畴层诚实登记的开放项：Adjunction 3（泛化映射/恒等/复合占位，简化原型；正确构造见 RAP5a SpImD）+ axiom 1、HigherRecCategory 3（竖/横复合自然性定义性缺口 + 交换律，需谱流 BCH 修正复合）。非 S0 全部清零：ThermoFormalism 4（O11 闭合）、DeviationBound 2（O8 闭合）、**RAP5a 1（RIm_map——2026-08-04 线性语义闭合：SpImD 态射层限制为线性（Rec）态射，RIm_map = 恒等提取，D_im ⊣ R_im 完整伴随机器证明）**；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合（2026-08-04） |
 
 **Phase 61A（P1-4 暴涨完整动力学）✅ 2026-08-03** — `InflationDynamics.lean`（酉共轭/谱流保 Hermitian F1-F3 + 动态连续极限 F4）；论文 `paper39_inflation_dynamics.md`（Paper XXXIX，N_e 闭式 55 + 预言闭环）；数值 15/15。
 **Phase 61B（P0-1 色规范完整动力学）✅ 2026-08-03** — `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）；论文 `paper40_qcd_color_dynamics.md`（Paper XL，禁闭/渐近自由 + 4 强子谱）；数值 15/15。

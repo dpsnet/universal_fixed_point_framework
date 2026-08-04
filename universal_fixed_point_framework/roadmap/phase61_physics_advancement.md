@@ -112,7 +112,7 @@
 - `DeviationBound.lean`：`spectral_gap_estimate` 缺"A 具有 A_GR 谱"假设（一般 Hermitian A 下陈述为假），登记开放项。
 - `HigherRecCategory.lean`：`vertComp`/`horizComp` 自然性为定义性缺口（逐点加法/矩阵乘法不满足自然性），`exchange_law` 随之开放，均登记。
 
-**不可证项（诚实登记的开放项，保留编译占位）**：`legendreTransform_convex`（ℝ 条件完备格 sup 交换需 BddAbove）；Bowen 公式 τ(0)=-d_H；`interpolateMeasure` 不变性（线性组合不满足自相似性）；RIm_map 结构性障碍（D 不 full）。~~`spExchangeLaw`~~ 已闭合（2026-08-04，偏差定理族覆盖，见勘误 O7）。
+**不可证项（诚实登记的开放项，保留编译占位）**：`legendreTransform_convex`（ℝ 条件完备格 sup 交换需 BddAbove）；Bowen 公式 τ(0)=-d_H；`interpolateMeasure` 不变性（线性组合不满足自相似性）。~~`spExchangeLaw`~~ 已闭合（2026-08-04，偏差定理族覆盖，见勘误 O7）；~~`RIm_map`~~ 已闭合（2026-08-04 阶段 1 线性语义，见勘误 O12）。
 
 **遗留损坏文件（非本次范围，登记）**：`TempRGFiber.lean` 预存约 45 处编译错误（mathlib 4.31 API 迁移，含 `IsHomLift` 重构消解问题），其依赖链上的 Fiber 模块（WeaveProductFiber/WeaveBCS 等）一并受阻；WeaveBCS 的源级诚实登记已完成，待该链迁移后编译验证。
 
@@ -257,7 +257,7 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 | 归属 | 位置 | 数量 | 性质 | 处理方向（衔接已有规划） |
 |:----|:-----|:--:|:-----|:--------|
 | **S0 表示静默/范畴基础** | `Adjunction.lean:53,58,60` + `:89 axiom` | 3+1 | 🔴 全范畴不可构造（nS≠nT 态射不存在） | phase60 阶段 2 **SpImDMor 限制**后闭合（对应 R11 有限维化，对象层已闭合 L198） |
-| **S0 表示静默/范畴基础** | `RAP5a_explicit_adjunction.lean:103`（RIm_map） | 1 | 🔴 D 不 full（基数反例，已机器证明） | phase60 已定性为 **S0 表示静默**（L199/L242-244）；闭合路径 = 态射限制为转移矩阵 或 转无限维（T3 R11 谱定理验证） |
+| **S0 表示静默/范畴基础** | ~~`RAP5a_explicit_adjunction.lean:103`（RIm_map）~~ | 1 | 🔴 D 不 full（基数反例，已机器证明） | **✅ 已闭合（2026-08-04 阶段 1 线性语义）**：按 `spectral_category_scope_stratification.md` 将 `SpImDMor` 限制为线性（Rec）态射层（谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明）。D 不 full 的基数反例保留为全范畴负结果 |
 | **S0 边缘/范畴基础** | `HigherRecCategory.lean:58,77,123`（竖/横复合自然性） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | 随 phase60 路径 A 范畴演进持续跟进：限制态射层或修正复合定义后评估闭合（2026-08-04 补录，此前遗漏于 phase60 表） |
 | 非 S0（物理） | ~~`ThermoFormalism.lean:168,215,223,297`~~ | 4 | 🔶 不可证（legendreTransform 需 BddAbove / Bowen τ(0) / interpolateMeasure 为假定理 / sup 交换） | **✅ 已闭合（2026-08-04）**：`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）；`singularity_spectrum_bound` 改条件定理（加 hτ0 Bowen 公式 + hBdd）；`singularity_spectrum_concave` 改条件定理（加 hBdd，占位 τ 下原陈述为假）；`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
 | 非 S0（物理） | ~~`DeviationBound.lean:384,411`~~ | 2 | 🟡 缺 A_GR 谱假设 + 待 Mathlib Matrix.Spectrum | **✅ 已闭合（2026-08-04）**：不再依赖 Mathlib `Matrix.Spectrum`——A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）。DeviationBound 现零 `sorry`（勘误 O8 闭合） |

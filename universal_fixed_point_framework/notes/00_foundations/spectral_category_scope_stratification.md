@@ -4,7 +4,7 @@
 > 对应 P1 线性语义裁决后的理论圈定与分层扩张需求。
 >
 > **日期**：2026-08-04
-> **状态**：规划草案
+> **状态**：规划草案（阶段 1 圈定 ✅、阶段 2 分层 ✅、**RAP5a RIm_map 闭合 ✅（2026-08-04）**）
 
 ---
 
@@ -66,11 +66,11 @@ D ⊣ R 伴随（`DAdjR`/`adjUnit`/`adjCounit`）在整个形式化框架中是*
 
 | 形式化层 | 当前状态 | 圈定后状态 |
 |:--|:--|:--|
-| `Adjunction.lean` DAdjR | `sorry`（全 Rec 声明） | 改为 SpImD 上的构造（对齐 RAP5a） |
-| `Adjunction.lean` adjUnit | `sorry` | 移植 Agda 构造（常零函数，§4） |
-| `Adjunction.lean` adjCounit | `sorry` | 移植 Agda 构造（零矩阵，§4） |
-| `RAP5a` RIm_map | `sorry` | 线性语义下 = 恒等映射（SpImD 上） |
-| `RAP5a` DAdjR_SpImD | 未构造 | SpImD 上的完整伴随（对象层已闭合） |
+| `Adjunction.lean` DAdjR | `axiom`（全 Rec 声明） | ✅ SpImD 上的构造（RAP5a `DImAdjRIm`，2026-08-04 闭合） |
+| `Adjunction.lean` adjUnit | ✅ 已移植（常零函数，§4） | 保持 |
+| `Adjunction.lean` adjCounit | ✅ 已移植（零矩阵，§4） | 保持 |
+| `RAP5a` RIm_map | ✅ 已闭合（2026-08-04） | 线性语义下 = 恒等提取（SpImD 上） |
+| `RAP5a` DAdjR_SpImD | ✅ 已构造（`DImAdjRIm`） | SpImD 上的完整伴随（对象层 + 态射层均闭合） |
 
 ---
 

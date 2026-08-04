@@ -239,8 +239,9 @@ left-triangle-img : {X : RecObj} →
   compose (D-map (adjCounit-img X)) (adjUnit-img (DIm-obj X)) ≡ idSp-real (D-obj X)
 left-triangle-img {X} = SpHom-≡ (*mat-id-l (𝟙-matrix {SpObj.n (D-obj X)}))
 
--- 态射层（RIm_map/右三角）结构性不可闭合（基数反例）：
+-- 态射层（RIm_map/右三角）结构性不可闭合（基数反例，全范畴/集合语义）：
 --   2 状态平凡系统下 Hom_Sp(D(X),D(Y)) = ℂ⁴（不可数）vs Hom_Rec(X,Y) = 4（有限），
 --   自然同构无双射；P = [[1,0],[1,1]] 是合法谱态射但非转移矩阵（D 的 full 性为假）。
---   闭合仅当态射限制为转移矩阵（平庸化）或转无限维（论文 R11，需 T3 谱定理）。
---   对应 RAP5a RIm_map 的 sorry。
+--   闭合仅当态射限制为转移矩阵（线性语义，Lean 侧已实现：RAP5a SpImDMor
+--   限制为线性态射层后 RIm_map = 恒等提取，D_im ⊣ R_im 完整伴随，2026-08-04）
+--   或转无限维（论文 R11，需 T3 谱定理）。

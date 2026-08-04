@@ -3,6 +3,8 @@
 > **来源**：UFPF 路径 B（Agda 重形式化）交叉校验发现。SpImD 子范畴方案的态射层（RIm_map/右三角）在有限维原型中结构性不可闭合，其数学本质是一种新的静默类型——**表示/编码层静默**。
 >
 > **状态**：研究笔记 v0.1（2026-07-31）。推导完整，未进入论文。
+>
+> **2026-08-04 更新**：阶段 1 圈定（线性语义）后，RAP5a `RIm_map` 已闭合（SpImDMor 限制为线性态射层，`RIm_map` = 恒等提取，`DImAdjRIm` 完整伴随机器证明，见勘误 O12）。本笔记所述**表示静默**作为**全范畴（集合语义）下**的结构性障碍仍然成立（`D_not_full`/`no_bijection_homSp_homRec` 机器证明保留），其理论地位按 `spectral_category_scope_stratification.md` §3.2 重新定位为 **Rec_lin 与 Rec_set 边界上的层间现象**。
 
 ---
 
@@ -86,7 +88,7 @@ $$\boxed{S_D(\varphi) = 1 - \frac{\|P_{\mathrm{Im}(D)}(\varphi)\|}{\|\varphi\|}}
 
 - Agda：`agda_formalization/DecursionFunctor/DecursionFunctor.agda §5`（对象层闭合 + 态射层反例注释）
 - Agda：`agda_formalization/Cardinality/Cardinality.agda`（**P4 已形式化 2026-07-31**：`P-spectral` 合法谱态射、`transferMatrix-not-P`/`D-not-full`（D 不 full，P 非转移矩阵像）、`fun2-card`/`rec-hom-card`（Hom_Rec 恰 4 函数）、`transfers-distinct`/`P-distinct-transfers`（Hom_Sp ≥ 5 互异元素）；**§5 鸽笼补全**：`分类` 枚举别名 + `fun2-excl-all` + `fun2-no-5`（5 个互异 F2→F2 函数不可能，g0 四分支分类排除树，模式变量改名 q1..q4 避免与 ℂ 构造子 c2 冲突）；**§6 无双射主定理**：`no-bijection : Equiv (SpHom (D-obj trivial2) (D-obj trivial2)) (F2 → F2) → ⊥`（4 转移矩阵态射 `D-map` + `P-spectral` 五个互异 SpHom 经双射单射 + 鸽笼 fun2-no-5）。设计说明：Agda 侧计数落在**函数层**（Hom_Sp ≥ 5 vs |F2→F2| = 4）——RecHom-≡（记录外延性）需依赖版 funext，超出库公理范围（仅非依赖 funext），RecHom 经 `rec-hom-card` 落入同 4 个函数类关联；Lean 侧为 Hom_Sp 不可数 vs Hom_Rec 有限。新增 Set₁ 级工具 `_≢₁_`/`congL1`/`sym₁`/`trans₁`。已注册 `Everything.agda`，整体编译通过，无新增 postulate）
-- Lean：`RAP5a_explicit_adjunction.lean`（**P4 已形式化 2026-07-31，§7-§8**：`P_counter_morph` 合法谱态射（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`（D 不 full）、`complex_emb`（ℂ↪Hom_Sp，`homSp_infinite` 不可数）、`recHomTrivialEquiv`/`homRec_finite`（Hom_Rec 有限）、`no_bijection_homSp_homRec`（**无双射**）。仅 L97 `RIm_map` sorry 为既有登记项，无新增 sorry）
+- Lean：`RAP5a_explicit_adjunction.lean`（**P4 已形式化 2026-07-31，§7-§8**：`P_counter_morph` 合法谱态射（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`（D 不 full）、`complex_emb`（ℂ↪Hom_Sp，`homSp_infinite` 不可数）、`recHomTrivialEquiv`/`homRec_finite`（Hom_Rec 有限）、`no_bijection_homSp_homRec`（**无双射**）。L97 `RIm_map` sorry 为既有登记项，**2026-08-04 已按线性语义闭合（勘误 O12）**，§7-8 反例保留为全范畴负结果，无新增 sorry）
 - 账目：`roadmap/phase60_category_verification.md`（v0.13-v0.16）
 - 论文：`paper1_fractal_spectral_derecursion.md`（**P1 论文层限定 2026-07-31**：注 C2.3b 态射对应语义限定 + 注 2.4.5a 无限维闭合声明注明"受限态射层 = 线性连续谱匹配映射"，引用 `spectral_R11_morphism_layer.md`）
 
