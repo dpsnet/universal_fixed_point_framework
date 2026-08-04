@@ -258,11 +258,11 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 |:----|:-----|:--:|:-----|:--------|
 | **S0 表示静默/范畴基础** | `Adjunction.lean:53,58,60` + `:89 axiom` | 3+1 | 🔴 全范畴不可构造（nS≠nT 态射不存在） | phase60 阶段 2 **SpImDMor 限制**后闭合（对应 R11 有限维化，对象层已闭合 L198） |
 | **S0 表示静默/范畴基础** | ~~`RAP5a_explicit_adjunction.lean:103`（RIm_map）~~ | 1 | 🔴 D 不 full（基数反例，已机器证明） | **✅ 已闭合（2026-08-04 阶段 1 线性语义）**：按 `spectral_category_scope_stratification.md` 将 `SpImDMor` 限制为线性（Rec）态射层（谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明）。D 不 full 的基数反例保留为全范畴负结果 |
-| **S0 边缘/范畴基础** | `HigherRecCategory.lean:58,77,123`（竖/横复合自然性） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | 随 phase60 路径 A 范畴演进持续跟进：限制态射层或修正复合定义后评估闭合（2026-08-04 补录，此前遗漏于 phase60 表） |
+| **S0 边缘/范畴基础** | ~~`HigherRecCategory.lean:58,77,123`~~（竖/横复合自然性 + 交换律） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | **✅ 已闭合（2026-08-04 O13，路径 B：D-拉回）**：`paperX_rec2_exchange_deviation.py` 诊断最小修正复合非结合（D7/D8）后，`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 线性条件），竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明（镜像 `spExchangeLaw_*`）。详见 `notes/00_foundations/spectral_rec2_exchange_deviation.md` |
 | 非 S0（物理） | ~~`ThermoFormalism.lean:168,215,223,297`~~ | 4 | 🔶 不可证（legendreTransform 需 BddAbove / Bowen τ(0) / interpolateMeasure 为假定理 / sup 交换） | **✅ 已闭合（2026-08-04）**：`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）；`singularity_spectrum_bound` 改条件定理（加 hτ0 Bowen 公式 + hBdd）；`singularity_spectrum_concave` 改条件定理（加 hBdd，占位 τ 下原陈述为假）；`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
 | 非 S0（物理） | ~~`DeviationBound.lean:384,411`~~ | 2 | 🟡 缺 A_GR 谱假设 + 待 Mathlib Matrix.Spectrum | **✅ 已闭合（2026-08-04）**：不再依赖 Mathlib `Matrix.Spectrum`——A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）。DeviationBound 现零 `sorry`（勘误 O8 闭合） |
 
-**处理优先级**：可证项（ThermoFormalism 可证部分 + DeviationBound 加假设）优先；假定理（interpolateMeasure）删除；**S0/范畴相关 7+1 处按 phase60 既有范畴演进计划推进**（S0 表示静默理论 → SpImD 限制 → R11 无限维），非"转 axiom"替代方案。不在 Phase 61 物理推进范围，作为基础层支撑持续跟进（phase60 路径 A）。
+**处理优先级**：可证项（ThermoFormalism 可证部分 + DeviationBound 加假设）优先；假定理（interpolateMeasure）删除；**余 S0/范畴相关 3+1 处（`Adjunction.lean`）按 phase60 既有范畴演进计划推进**（S0 表示静默理论 → SpImD 限制 → R11 无限维；RAP5a RIm_map 与 HigherRecCategory 已按该路径闭合），非"转 axiom"替代方案。不在 Phase 61 物理推进范围，作为基础层支撑持续跟进（phase60 路径 A）。
 
 ---
 
