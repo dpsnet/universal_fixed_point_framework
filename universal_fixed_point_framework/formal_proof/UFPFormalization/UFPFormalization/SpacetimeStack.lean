@@ -6,7 +6,7 @@ establishing the equivalence between general covariance and the sheaf gluing axi
 Fills the gap in Paper XVI Theorem 21 (curvature-matter correspondence functor).
 
 Deepened v0.2:
-  - SpectralPresheafIsSheaf theorem with proper gluing (fix sorry)
+  - SpectralPresheafIsSheaf theorem with proper gluing
   - general_covariance_iff_sheaf as proper equivalence
   - CurvatureMatterFunctor with concrete Einstein tensor constraint
   - MinkowskiSheaf / KerrSection as concrete examples

@@ -89,13 +89,16 @@ instance : Category SpImD where
 
 def RIm_obj (E : SpImD) : RecObj := E.src
 
-/-- R_im 态射映射（开放项，结构性障碍）。
+/-- R_im 态射映射（开放项，阶段 2 待闭合）。
     通过同构 conn 传递得 ψ: D(E.src) → D(F.src)。
     需要 D 的 full 性以构造 RecHom 对应；但 **P4（2026-07-31）已证明 D 不 full**：
     有限维原型中 P=[[1,0],[1,1]] 是合法谱态射但非任何转移矩阵（见本文件 §7-§8 no_bijection_homSp_homRec）。
     无限维闭合路径（P1 分析，`notes/00_foundations/spectral_R11_morphism_layer.md`）：
     谱匹配双射在线性语义（受限态射层 = 有界线性谱匹配算子）下成立（恒等双射），
-    在集合语义（Rec 态射为连续集合映射）下不成立。当前：标记为开放项，使用 sorry。 -/
+    在集合语义（Rec 态射为连续集合映射）下不成立。
+    **阶段 1 圈定（2026-08-04）**：D ⊣ R 伴随有效范围 = Rec_lin(SpImD)。
+    本项需阶段 2 将 SpImDMor 限制为线性态射后方可闭合（届时 RIm_map = 恒等映射）。
+    当前：标记为开放项，使用 sorry。 -/
 noncomputable def RIm_map {E F : SpImD} (φ : SpImDMor E F) : RecHom (RIm_obj E) (RIm_obj F) := by
   sorry
 

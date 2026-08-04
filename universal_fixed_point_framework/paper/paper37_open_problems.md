@@ -41,7 +41,7 @@ UFPF 框架经过 37 篇论文的系统建设，以下核心问题已闭合：
 | 引力 | $G_N$ Phase C 闭式、$\Delta$ 方向性、1/r² 五环链 | XXXI, XXXV |
 | 连续极限 | B2 六步理论闭合 | XXXIV |
 | 质量预测 | 15 项严格结果 + 14 项部分拟合 | XVII |
-| Lean | `DeviationBound.lean` 全链（除 2 个 `sorry` 待 mathlib） | XXXI |
+| Lean | `DeviationBound.lean` 全链（除 2 个 `sorry` 待 mathlib）；`Adjunction.lean` 阶段 1 圈定后 sorry 从 8 处降至 4 处 + 1 处 axiom | XXXI |
 
 ---
 

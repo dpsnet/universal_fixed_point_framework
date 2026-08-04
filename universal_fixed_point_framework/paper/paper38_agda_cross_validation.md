@@ -119,7 +119,7 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 ### 5.1 结构性限制（B 类，不可/不应闭合）
 
 1. **funext 受限**（8-5b 算子层等式版公理 + 对象映射 op-lin 等式保结构）——库公理范围外。
-2. **`HigherSpCategory.lean` spExchangeLaw `sorry`**——**概念特征**（非技术缺口）：填补为等式 ⇒ $G_N \to 0$（物理错误）。已由 `spExchangeLaw_deviation_partial_commutator` / `spExchangeLaw_homotopy_deviation` 覆盖。
+2. ~~**`HigherSpCategory.lean` spExchangeLaw `sorry`**~~——✅ **已消除**（2026-08-04，改为偏差定理引用 `spExchangeLaw_homotopy_deviation`）。原概念特征（非技术缺口）：填补为等式 ⇒ $G_N \to 0$（物理错误），已由 `spExchangeLaw_deviation_partial_commutator` / `spExchangeLaw_homotopy_deviation` 覆盖。
 3. **钉住 sup 语义**（spec-int-general 定义语义）——框架设计决策，已文档化（§1b）。
 
 ### 5.2 待基础设施（C 类，可自然闭合）
@@ -141,7 +141,7 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 2. 纯结构核心（B1-B8 组合/代数/集合结构）直接证明，无 postulate 依赖。
 3. 谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证。
 4. 技术债清单 A 类（实质可闭合项）全闭合：E-σ-add 收敛、spec-int MCT、fc-poly-le-spec-int（方案 A）、谱对象映射（A/E/fc/exp-tA）。
-5. Lean 侧核心 10 模块零 `sorry`（`lake build` 零错误）。
+5. Lean 侧核心模块 `lake build` 零错误；`spExchangeLaw` sorry 已消除（2026-08-04），`Adjunction.lean` 阶段 1 圈定后 sorry 从 8 处降至 4 处 + 1 处 axiom（对齐 Agda postulate）。
 
 **不可声称**：
 

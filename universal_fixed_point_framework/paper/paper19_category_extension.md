@@ -626,7 +626,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 5. 完全静默的 $\mathbf{Rec}$ 对象与 $\mathbf{Rec}_{\text{id}}$ 对象在 $\mathbf{Sp}$ 中不可区分（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）
 6. 涨落-耗散定理是 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的具体实现（$\Sigma$-$D(N) \cong D(R)$）
 
-*证明*：由 Paper I 定理 2.4.5（$D \dashv R$，对象层与受限态射层严格，见 Paper I 注 2.4.5a：有限维态射层结构性不可闭合，基数反例，定性为 S0 表示静默；无限维态射层依赖 T3 谱定理验证）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）、定理 8.5（谱等价桥 $\Sigma$-$D(N) \cong D(R)$）组合。∎
+*证明*：由 Paper I 定理 2.4.5（$D \dashv R$，对象层与受限态射层严格，见 Paper I 注 2.4.5a：有限维态射层结构性不可闭合，基数反例，定性为 S0 表示静默；无限维态射层依赖 T3 谱定理验证；**阶段 1 圈定（2026-08-04）**：D ⊣ R 伴随有效范围 = Rec_lin(SpImD) 已显式声明，Lean 侧 adjUnit/adjCounit 已从 sorry 改为具体构造，DAdjR 改为 axiom 对齐 Agda postulate）与 Paper XIX 定理 4.2（$\mathcal{L} \dashv \iota$）、定理 8.3（$\mathcal{S}el \dashv \mathcal{D}iss$）、定理 6.2（谱等价桥 $D(R) \cong D^{\text{id}}(M)$）、定理 8.5（谱等价桥 $\Sigma$-$D(N) \cong D(R)$）组合。∎
 
 **推论 13.1**（框架覆盖范围）。$\mathbf{Rec}/\mathbf{Sp}$ 框架统一覆盖了从纯确定性动力学（Paper I）到纯静态拓扑（Paper XIX §3）、从纯确定性（$\eta=0$）到纯随机噪声（$\eta\to\infty$）的全部连续谱。框架可嵌入广泛物理系统；该穷尽性命题不属于当前可证明范围。
 

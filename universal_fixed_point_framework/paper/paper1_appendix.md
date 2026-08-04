@@ -316,7 +316,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | 1 | $\mathbf{Rec}$ 范畴形式化 | `RecCategory.lean` | ✅ 对象、态射、复合、恒等态射已证 |
 | 2 | $\mathbf{Sp}$ 范畴形式化 | `SpecCategory.lean` | ✅ 谱对象、谱态射、谱复合已证 |
 | 3 | $D$ 函子良定义 | `DecursionFunctor.lean` | ✅ `map_id`/`map_comp` 完整 Functor 律与 `transferMatrix_comp` 反变合成、intertwine 性质均已证 |
-| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `RFunctor` 使用 `Fin n` 非平凡状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，`DAdjR` 三角恒等式已证 |
+| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `adjUnit`（常零函数，Agda 移植）/ `adjCounit`（零矩阵，Agda 移植）已证；`DAdjR` 为 `axiom`（对齐 Agda postulate）；`RFunctor.map`/`map_id`/`map_comp` 为 sorry（全范畴不可构造，阶段 2 SpImD 限制后闭合） |
 | 5 | 谱对应 $M \cong L$ | `SpectralCorrespondence.lean` | ✅ `spectralInv_leftInv`（基于 `Complex.log_exp` 的辐角范围处理）/ `spectralMap_rightInv`（基于 `Complex.exp_log`）双向逆已证 |
 | 6 | 有限维轨道函子 | `OrbitFunctor.lean` | ✅ `orbitFintype` 实例、`orbitWeight` 定义、`orbitStabilizer` 等式已证 |
 | 7 | Clifford 矩阵表示 | `Clifford.lean` | ✅ $e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 两生成元反对易与平方已证 |

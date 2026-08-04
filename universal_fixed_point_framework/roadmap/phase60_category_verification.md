@@ -16,7 +16,7 @@
 |:-----|:------|:----:|:---------|:---:|:-----|
 | **C** | Python 可执行范畴语义 | 数天 | 运行时自洽性 | ✅ **已完成** | `python -m verify.run_all` → 8/8 PASS |
 | **B** | Agda/Coq 独立重形式化 | 数周 | 证明助理交叉验证 | ✅ **已完成** | `agda_formalization/` 8 模块编译通过（Agda 2.8.0） |
-| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 🔄 持续 | 全库零 `sorry` |
+| **A** | Lean 零 `sorry` 持续闭合 | 长期 | 机器证明完备化 | 🔄 持续 | 全库 4 处 `sorry` + 1 处 `axiom`（阶段 1 圈定后从 8 处降至 4+1） |
 
 ---
 
@@ -281,9 +281,12 @@ agda_formalization/
 
 | `sorry` | 位置 | 性质 | 闭合路径 |
 |:--------|:-----|:-----|:---------|
-| `spExchangeLaw` | `HigherSpCategory.lean:103` | 🔴 L3 概念特征 | **不消除**，已由偏差代数定理覆盖 |
+| ~~`spExchangeLaw`~~ | ~~`HigherSpCategory.lean:103`~~ | ~~🔴 L3 概念特征~~ | ✅ **已消除**（2026-08-04，改为偏差定理引用） |
+| `RFunctor.map`/`map_id`/`map_comp` | `Adjunction.lean:46,51,53` | 🔴 L3 全范畴不可构造 | 对齐 Agda `postulate R-map`；阶段 2 SpImDMor 限制后闭合 |
+| `RIm_map` | `RAP5a_explicit_adjunction.lean:102` | 🔴 L3 D 不 full（基数反例） | 阶段 2 SpImDMor 限制为线性态射后闭合 |
 | `spectral_gap_estimate` | `DeviationBound.lean:386` | 🟡 L2 待 Mathlib | 监视 `Matrix.Spectrum` 进展 |
 | `deviation_spectral_bound` | `DeviationBound.lean:412` | 🟡 L2 依赖上者 | 自动闭合 |
+| `DAdjR` (axiom) | `Adjunction.lean:89` | 🔴 L3 右三角恒等式 | `noncomputable axiom`（对齐 Agda `postulate right-triangle`） |
 
 ### 时间线
 
