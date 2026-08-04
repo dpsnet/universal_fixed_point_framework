@@ -9,7 +9,7 @@ Phase 61B (P0-1): SU(3) 色规范完整动力学验证
   T3  禁闭/渐近自由：α_s(M_Z) 谱值 + Λ_QCD 谱生成 + 裸耦合 Z-链必要性
   T4  强子谱：π/K（手征 GOR）+ ρ/N/Δ（组分模型）+ SU(6) 关系
 
-论文：paper/paper61B_qcd_color_dynamics.md（定理 2.1/3.1/4.1/4.2/5.1/5.2）
+论文：paper/paper40_qcd_color_dynamics.md（定理 2.1/3.1/4.1/4.2/5.1/5.2）
 """
 
 import numpy as np

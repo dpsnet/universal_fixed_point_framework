@@ -14,7 +14,7 @@ namespace UFPFormalization
 /-!
 # Inflation Dynamics: Dynamic Continuum Limit (Phase 61A)
 
-Formalization of Paper 61A, Theorem D3.1（动态连续极限）的算子代数核心：
+Formalization of Paper XXXIX, Theorem D3.1（动态连续极限）的算子代数核心：
 
   F1  unitary_conj_self_adjoint: 酉共轭 U·D·U† 保持 Hermitian（D3.1(1)）
   F2  spectral_flow_self_adjoint: 谱流 D(t)=exp(tG)·D₀·exp(-tG)（G 反 Hermitian）

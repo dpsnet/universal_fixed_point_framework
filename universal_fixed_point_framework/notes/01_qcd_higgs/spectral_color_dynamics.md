@@ -18,7 +18,7 @@
 | Paper 11 §7.2 | 规范反常消去（$[SU(3)]^3$ Vector-like 自动消去） | ✅ |
 | Paper 25 §3 | QCD 五层纤维（UV→Hadron），$\ell_{\mathrm{QCD}} = \Lambda_{\mathrm{QCD}}^{-1}$ | ✅ |
 | `notes/01_qcd_higgs/spectral_low_energy_QCD.md` | 禁闭=$\partial\mathbf{Rec}_D$ 边界穿越、$\Lambda_{\mathrm{QCD}}$ 谱推导、$\chi$PT、$\langle\bar{q}q\rangle$、$T_c$、$F_\pi$、$Z_s$ 方案转换 | ✅ 定性 |
-| 数值 | `paper39_theta_qcd.py`、`paper31_threeloop_beta.py`、`paperX_spectral_SM.py` | ✅ |
+| 数值 | `phase39_theta_qcd.py`、`paper31_threeloop_beta.py`、`paperX_spectral_SM.py` | ✅ |
 
 缺失：完整色规范拉氏量谱翻译（三/四胶子顶点谱版本）、色荷守恒谱表述、$\Lambda_{\mathrm{QCD}}$ 内禀生成的定量定理、强子谱（$\pi/\rho/N/\Delta$）第一性推导。
 

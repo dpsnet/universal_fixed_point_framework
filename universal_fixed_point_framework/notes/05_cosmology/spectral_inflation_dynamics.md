@@ -16,7 +16,7 @@
 - Paper 12 §12：原初引力波张量功率谱 + 谱修正 + 一致性关系（定理 12.1/12.2）。
 - Paper 25 §7：宇宙学六层纤维分解，Cosmo-1（Inflation）/ Cosmo-2（Reheat）谱生成元。
 - Paper 34 + `notes/08_first_principles/b2_continuum_limit_analysis.md`：静态 IFS → $R^4$ 拟对称嵌入（定理 5.3）+ 谱流保持可微结构（定理 5.5）。
-- 数值：`paper28_inflation_powerspectra.py`（6/6）、`paper42_inflation_R4.py`、`paper5_cosmology.py`。
+- 数值：`paper28_inflation_powerspectra.py`（6/6）、`phase42_inflation_R4.py`、`paper5_cosmology.py`。
 - 笔记：`notes/04_lorentz_gravity/spectral_inflation_silence.md`（$N_e \approx 55$ 的分形边界定性来源）。
 
 缺失的完整链条：**e 折叠数闭式积分 → 再加热温度谱推导 → 暴涨时空动态连续极限（时间依赖）→ 原初引力波预言闭环**。
@@ -68,7 +68,20 @@ $$\varphi_{\text{cmb}} \approx \frac{4.367}{b} \approx 5.35,\qquad \varphi_{\tex
 
 $$N_e = \frac{3}{4}\left(e^{b_{\text{eff}}\varphi_{\text{cmb}}} - b_{\text{eff}}\varphi_{\text{cmb}}\right)\left[1 + \mathcal{O}(\Delta\lambda_{\min}^2)\right] - N_{\text{end}} + N_{R^4}$$
 
-其中 $N_{R^4}$ 为 Paper 42 $R^4$ 修正（$V$ 的高阶 $e^{-b\varphi}$ 因子）对 e 折叠积分的相对修正，量级 $|N_{R^4}| \approx (c_3/c_1)\cdot(\text{slow-roll 因子})^2 \lesssim 0.1$。
+其中 $N_{R^4}$ 为 Phase 42 $R^4$ 修正（$V$ 的高阶 $e^{-b\varphi}$ 因子）对 e 折叠积分的相对修正。
+
+**$N_{R^4}$ 精确闭式**（2026-08-04 推导，`paperX_nR4_closed_form.py` 验证 ✅）：
+谱势 R⁴ 修正 $V(\varphi) = V_0(1-e^{-b\varphi})^2(1+\delta_2 e^{-2b\varphi})$，$\delta_2 = c_3/c_1^2$（R⁴ 相对强度，Phase 42），$x = e^{-b\varphi}$。慢滚积分 $N_e = \int (V/V')\,d\varphi$ 对 $x$ 变量精确计算：
+
+$$V/V' = \frac{(1-x)(1+\delta_2 x^2)}{2b\,x\,(1-\delta_2 x+2\delta_2 x^2)} = \frac{1-x}{2bx}\left(1+\delta_2 x - \delta_2 x^2\right) + \mathcal{O}(\delta_2^2)$$
+
+一阶 $\delta_2$ 贡献：
+
+$$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$$
+
+其中 $x_{\text{end}} = e^{-b\varphi_{\text{end}}} = \sqrt{3}/(2+\sqrt{3}) \approx 0.4641$，$x_{\text{cmb}} = e^{-b\varphi_{\text{cmb}}}$（$\varphi_{\text{cmb}}$ 由定理 3.1 闭式解出）。主导项 $\frac{3\delta_2}{4}\ln(x_{\text{cmb}}/x_{\text{end}})$，次主导项（$-2\Delta x$ 与 $x^2$ 项）合计约 28% 修正，须保留。
+
+数值（$N_e = 55$）：$\delta_2 = c_3/c_1^2 = 4.7240/25.1948^2 = 0.007442$，$N_{R^4} = -0.01567$，闭式 vs 数值积分（$\int_{\varphi_{\text{cmb}}}^{\varphi_{\text{end}}} (V_{R4}/V'_{R4} - V_0/V'_0)\,d\varphi$）相对偏差 0.044% ✅。$|N_{R^4}| = 0.0157 < 0.1$ 与原先量级估计一致，但现在是**精确闭式**而非量级界。
 
 ### 2.3 观测对齐
 
@@ -92,7 +105,7 @@ Paper 25 宇宙学六层纤维分解中 Cosmo-2（Reheat）层的谱生成元为
 
 暴涨子凝聚体衰变：标准结果 $T_{\mathrm{RH}} = (90/\pi^2 g_*)^{1/4}\sqrt{\Gamma\,M_{\mathrm{Pl}}}$（$\Gamma$ = 凝聚体衰变率）。谱动力学给出【谱新增】：
 
-- 暴涨子质量 $m_\varphi = \sqrt{V''(0)} = b\sqrt{2V_0}$（$V_0$ 由 Paper 42 的 $R^2$–$R^4$ 收敛值 $V_0^{1/4} \approx 8.1\times10^{15}$ GeV 确定）。
+- 暴涨子质量 $m_\varphi = \sqrt{V''(0)} = b\sqrt{2V_0}$（$V_0$ 由 Phase 42 的 $R^2$–$R^4$ 收敛值 $V_0^{1/4} \approx 8.1\times10^{15}$ GeV 确定）。
 - 衰变率 $\Gamma = \gamma_\varphi\cdot m_\varphi^3/M_{\mathrm{Pl}}^2$（$\gamma_\varphi$ 为谱耦合系数，量级 $\mathcal{O}(0.1)$；此处不额外输入自由度，$\gamma_\varphi$ 取引力衰变标准量级并给出 $T_{\mathrm{RH}}$ 区间）。
 - 再加热温度：
 
@@ -100,9 +113,9 @@ $$T_{\mathrm{RH}} = \left(\frac{90}{\pi^2 g_*}\right)^{1/4}\sqrt{\frac{\gamma_\v
 
 数值（脚本 §3）：$V_0^{1/4} = 8.1\times10^{15}$ GeV $\to$ $m_\varphi \approx 3.1\times10^{13}$ GeV $\to$ $\gamma_\varphi \in [0.01, 1]$ $\to$ $T_{\mathrm{RH}} \in [2\times10^{9}, 2\times10^{10}]$ GeV（标准再加热温度区间）。
 
-### 3.3 重子生成的谱推导【既有：Paper 40 数值 + 本笔记串联】
+### 3.3 重子生成的谱推导【既有：Phase 40 数值 + 本笔记串联】
 
-Paper 40：$\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta t_{\mathrm{neq}})/s_\gamma$，其中 $\delta_{\mathrm{CP}}$ 为谱 CP 破缺参数（Cl(1,7) $\theta$-项统一结构），sphaleron 率 $\Gamma_{\mathrm{sph}}$ 以 $T_{\mathrm{sph}} = T_{\mathrm{RH}}$ 为输入。$\eta_B \approx 6.1\times10^{-10}$ 与观测同量级。**本篇串联作用**：把 $T_{\mathrm{sph}}$ 从"输入"变为 D2 的 $T_{\mathrm{RH}}$ 闭式输出，使再加热 → 重子生成的链条闭合。
+Phase 40：$\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta t_{\mathrm{neq}})/s_\gamma$，其中 $\delta_{\mathrm{CP}}$ 为谱 CP 破缺参数（Cl(1,7) $\theta$-项统一结构），sphaleron 率 $\Gamma_{\mathrm{sph}}$ 以 $T_{\mathrm{sph}} = T_{\mathrm{RH}}$ 为输入。$\eta_B \approx 6.1\times10^{-10}$ 与观测同量级。**本篇串联作用**：把 $T_{\mathrm{sph}}$ 从"输入"变为 D2 的 $T_{\mathrm{RH}}$ 闭式输出，使再加热 → 重子生成的链条闭合。
 
 ### 3.4 与观测对齐
 
@@ -158,7 +171,7 @@ $$\frac{d}{dt}\lambda_k(t) = -2H(t)\,\lambda_k(t) \;\Longrightarrow\; a(t) = a_0
 完整暴涨动力学预言链：
 
 ```
-V₀^{1/4} (Paper 42 R²–R⁴) ──→ H_inf, m_φ (D2)
+V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
      │
      ├──→ b_eff (谱间隙修正) ──→ ε, η @ φ_cmb (D1 闭式) ──→ n_s, α_s
      │                                                     └──→ r = 16ε, n_T = −2ε
@@ -204,7 +217,7 @@ V₀^{1/4} (Paper 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 ## 8. 诚实边界与未决问题
 
 1. **$\gamma_\varphi$ 未谱定**：再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定，登记为开放项。
-2. **$R^4$ 修正对 $N_e$ 的定量影响**（$N_{R^4}$）：Paper 42 的 $R^4$ 系数 $c_2/c_1 \approx 0.1$ 量级，对 $N_e$ 影响 $\lesssim 0.1$，本笔记以量级处理，未做精确闭式。
+2. **$R^4$ 修正对 $N_e$ 的定量影响**（$N_{R^4}$）：Phase 42 的 $R^4$ 系数 $c_2/c_1 \approx 0.1$ 量级，对 $N_e$ 影响 $\lesssim 0.1$，本笔记以量级处理，未做精确闭式。
 3. **动态连续极限的严格度规推导**：D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续。
 4. **$N_e$ 一致性**：D1 闭式（$\approx 55$）与 $S_4$ 分形边界（$\approx 55$）一致，但二者共享观测输入 $H_{\mathrm{inf}}/T_{\mathrm{RH}}/T_{\mathrm{CMB}}$ 的近似，非完全独立测量。
 
@@ -216,3 +229,4 @@ V₀^{1/4} (Paper 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。D1–D4 四项子任务理论笔记 + 形式化路线 + 数值验证清单。 |
 | v0.2 | 2026-08-03 | 内联公式统一为标准 `$...$` LaTeX 格式。 |
+| v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（§2.2）**：R⁴ 修正对 e 折叠数贡献由量级估计升级为精确闭式（一阶 δ₂ 展开 + x 变量积分），数值 −0.0157；`paperX_nR4_closed_form.py` 闭式 vs 数值积分验证（相对偏差 0.044%）。 |

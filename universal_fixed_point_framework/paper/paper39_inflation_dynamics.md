@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 61A：暴涨完整动力学——e 折叠解析、再加热、动态连续极限与原初引力波闭环
+# 通用不动点范畴框架 XXXIX：暴涨完整动力学——e 折叠解析、再加热、动态连续极限与原初引力波闭环
 
 **版本**：v0.1（2026-08-03）
 **系列定位**：Phase 61 物理理论补缺计划 P1-4（`roadmap/phase61_physics_advancement.md`）
@@ -85,9 +85,13 @@ $$\varphi_{\text{end}} = \frac{1}{b}\ln\frac{2+\sqrt{3}}{\sqrt{3}} \approx 0.940
 
 $$N_e = \frac{3}{4}\left(e^{b_{\text{eff}}\varphi_{\text{cmb}}} - b_{\text{eff}}\varphi_{\text{cmb}}\right)\left[1+\mathcal{O}(\Delta\lambda_{\min}^2)\right] - N_{\text{end}} + N_{R^4},$$
 
-其中 $N_{R^4}$ 为 $R^4$ 修正（Paper 42）对 e 折叠积分的相对修正，$|N_{R^4}| \lesssim 0.1$。
+其中 $N_{R^4}$ 为 $R^4$ 修正（Phase 42）对 e 折叠积分的相对修正。**精确闭式**（2026-08-04，`paperX_nR4_closed_form.py` 验证 ✅）：
 
-*证明*。定理 3.1 以 $b_{\mathrm{eff}}$ 替换 $b$（谱间隙修正进入势的斜率，定义 2.2），$R^4$ 修正使 $V$ 出现高阶 $e^{-b\varphi}$ 因子，对慢滚积分贡献 $\mathcal{O}((c_3/c_1)\cdot\varepsilon^2)$ 量级修正，即 $N_{R^4}$。□
+$$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right],\qquad x = e^{-b\varphi}$$
+
+其中 $\delta_2 = c_3/c_1^2 = 0.007442$ 为 R⁴ 修正相对强度（Phase 42 BCH 系数），$x_{\text{end}} = \sqrt{3}/(2+\sqrt{3}) \approx 0.4641$，$x_{\text{cmb}} = e^{-b\varphi_{\text{cmb}}}$。数值（$N_e = 55$）：$N_{R^4} = -0.0157$，与数值积分相对偏差 0.044%。
+
+*证明*。谱势 R⁴ 修正 $V(\varphi) = V_0(1-e^{-b\varphi})^2(1+\delta_2 e^{-2b\varphi})$。以 $x = e^{-b\varphi}$ 变量，$V/V' = \frac{(1-x)(1+\delta_2 x^2)}{2bx(1-\delta_2 x+2\delta_2 x^2)}$，展开至一阶 $\delta_2$ 得 $V/V' = \frac{1-x}{2bx}(1+\delta_2 x-\delta_2 x^2)$。对 $x$ 积分 $\int (V/V')(-dx/(bx))$，标准项给出定理 3.1，$\delta_2$ 项精确积分即上式。□
 
 **推论 3.1**（主导闭式）。$N_e \gg 1$ 时，$\varphi_{\text{cmb}} \approx \frac{1}{b_{\text{eff}}}\ln\frac{4N_e}{3}$，代入定理 3.1 得自洽闭式。
 
@@ -111,13 +115,13 @@ Paper XXV 宇宙学六层纤维分解中，Cosmo-2（Reheat）层的谱生成元
 
 $$T_{\mathrm{RH}} = \left(\frac{90}{\pi^2 g_*}\right)^{1/4}\sqrt{\frac{\gamma_\varphi m_\varphi^3}{M_{\mathrm{Pl}}}},\qquad g_* = 106.75.$$
 
-*证明*。标准再加热公式 $T_{\mathrm{RH}} = (90/\pi^2 g_*)^{1/4}\sqrt{\Gamma\,M_{\mathrm{Pl}}}$（势能转化为辐射，$H(T_{\mathrm{RH}}) = \Gamma$ 条件），代入定义 4.1 的 $m_\varphi$ 与 $\Gamma$。谱动力学贡献在于 $m_\varphi$ 由谱势 $V_0$ 确定（$V_0$ 来自 Paper 42 的 $R^2$–$R^4$ 收敛值 $V_0^{1/4} \approx 8.1\times10^{15}$ GeV），而非自由参数。□
+*证明*。标准再加热公式 $T_{\mathrm{RH}} = (90/\pi^2 g_*)^{1/4}\sqrt{\Gamma\,M_{\mathrm{Pl}}}$（势能转化为辐射，$H(T_{\mathrm{RH}}) = \Gamma$ 条件），代入定义 4.1 的 $m_\varphi$ 与 $\Gamma$。谱动力学贡献在于 $m_\varphi$ 由谱势 $V_0$ 确定（$V_0$ 来自 Phase 42 的 $R^2$–$R^4$ 收敛值 $V_0^{1/4} \approx 8.1\times10^{15}$ GeV），而非自由参数。□
 
 **命题 4.1**（数值区间）。$V_0^{1/4} = 8.1\times10^{15}$ GeV $\Longrightarrow$ $m_\varphi \approx 3.1\times10^{13}$ GeV $\Longrightarrow$ $\gamma_\varphi \in [0.01, 1]$ $\Longrightarrow$ $T_{\mathrm{RH}} \in [2\times10^{9}, 2\times10^{10}]$ GeV（标准再加热温度区间）。
 
 ### 4.3 重子生成链条
 
-**命题 4.2**（重子生成串联）。Paper 40 的谱重子不对称公式 $\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta t_{\mathrm{neq}})/s_\gamma$ 以 sphaleron 温度 $T_{\mathrm{sph}} = T_{\mathrm{RH}}$ 为输入，本文定理 4.1 将 $T_{\mathrm{sph}}$ 从外部输入变为闭式输出，闭合再加热 → 重子生成链条，$\eta_B \approx 6.1\times10^{-10}$ 与观测同量级。
+**命题 4.2**（重子生成串联）。Phase 40 的谱重子不对称公式 $\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta t_{\mathrm{neq}})/s_\gamma$ 以 sphaleron 温度 $T_{\mathrm{sph}} = T_{\mathrm{RH}}$ 为输入，本文定理 4.1 将 $T_{\mathrm{sph}}$ 从外部输入变为闭式输出，闭合再加热 → 重子生成链条，$\eta_B \approx 6.1\times10^{-10}$ 与观测同量级。
 
 ---
 
@@ -163,7 +167,7 @@ $$r^{\mathrm{(spec)}} = -8\,n_T^{\mathrm{(spec)}}\left[1 - \frac{\xi_1}{2\vareps
 
 **定理 6.1**（暴涨预言闭环）。以下链条由单一谱势输入 $V_0$ 生成完整暴涨动力学预言：
 
-1. $V_0^{1/4}$（Paper 42 $R^2$–$R^4$ 收敛值 $8.1\times10^{15}$ GeV）→ $m_\varphi$（定义 4.1）、$H_{\mathrm{inf}}$；
+1. $V_0^{1/4}$（Phase 42 $R^2$–$R^4$ 收敛值 $8.1\times10^{15}$ GeV）→ $m_\varphi$（定义 4.1）、$H_{\mathrm{inf}}$；
 2. $b_{\mathrm{eff}}$（定义 2.2）→ $\varepsilon, \eta$ @ $\varphi_{\text{cmb}}$（定理 3.1/推论 3.1）→ $n_s = 0.9606$、$\alpha_s$；
 3. $r = 16\varepsilon = 0.0042$、$n_T = -2\varepsilon = -0.0005$；
 4. 一致性关系：$r = -8n_T \Longrightarrow -8\cdot(-0.0005) = 0.0040 \approx 0.0042$（±5%，慢滚一阶截断内）；
@@ -206,7 +210,7 @@ F1–F3 构成定理 D3.1 的算子代数核心，分别在 Lean `InflationDynam
 
 **开放问题**：
 1. $\gamma_\varphi$（再加热衰变耦合）的谱第一性确定——需 Cosmo-2 层粒子谱内容；
-2. $N_{R^4}$ 的精确闭式（本文为量级估计）；
+2. ~~$N_{R^4}$ 的精确闭式（本文为量级估计）~~ **✅ 已解决（2026-08-04）**：$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$，$\delta_2 = c_3/c_1^2 = 0.007442$，数值 $-0.0157$，`paperX_nR4_closed_form.py` 数值积分验证（相对偏差 0.044%）。详见定理 3.2 注记；
 3. 定理 D3.1(3) 的严格微分几何度规诱导验证（本文为结构论证）；
 4. 动态连续极限与 P1-3 黑洞方向的衔接（Phase 61 计划中 P1-3 依赖动态连续极限）。
 
@@ -220,8 +224,8 @@ F1–F3 构成定理 D3.1 的算子代数核心，分别在 Lean `InflationDynam
 - [Paper XXV] 谱覆盖纤维精细分解：§7 宇宙学六层分解、Cosmo-2 再加热层。
 - [Paper XXXIV] 连续极限：静态拟对称嵌入定理 5.3。
 - [B2] notes/08_first_principles/b2_continuum_limit_analysis.md：定理 5.5 谱流保持可微结构。
-- [Paper 40] 重子不对称 $\eta_B$ 的谱动力学推导（`paper40_baryogenesis.py`）。
-- [Paper 42] 暴胀谱势的 $R^4$ 修正（`paper42_inflation_R4.py`）。
+- [Phase 40] 重子不对称 $\eta_B$ 的谱动力学推导（`phase40_baryogenesis.py`）。
+- [Phase 42] 暴胀谱势的 $R^4$ 修正（`phase42_inflation_R4.py`）。
 - [D28.1] `paper28_inflation_powerspectra.py`：原初功率谱 6/6。
 - Planck 2018（Aghanim et al. 2020）、BICEP/Keck 2021（$r < 0.036$）。
 
@@ -233,3 +237,4 @@ F1–F3 构成定理 D3.1 的算子代数核心，分别在 Lean `InflationDynam
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 D3.1 动态连续极限；预言闭环定理 6.1；形式化 F1–F3。 |
 | v0.2 | 2026-08-03 | 自包含修订（正文移除笔记引用）+ 内联公式统一为标准 `$...$` LaTeX 格式。 |
+| v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（补缺）**：定理 3.2 的 $N_{R^4}$ 由量级估计升级为精确闭式 $N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}}-x_{\text{end}}) + \frac{x_{\text{cmb}}^2-x_{\text{end}}^2}{2}\right]$（$\delta_2 = c_3/c_1^2$，数值 $-0.0157$）；开放问题 2 移出（标记 ✅ 已解决）；`paperX_nR4_closed_form.py` 数值积分验证（相对偏差 0.044%）。 |

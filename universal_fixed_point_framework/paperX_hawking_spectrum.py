@@ -3,7 +3,7 @@
 """
 Phase 61D (P1-3) 黑洞量子演化数值验证
 ======================================
-对应：paper/paper61D_black_hole_quantum_evolution.md
+对应：paper/paper42_black_hole_quantum_evolution.md
 验证 P1-3 四项验收标准的数值层面：
   C1 霍金辐射谱（温度 + Planck 分布 + greybody 因子 + 功率谱）
   C2 蒸发动力学（M(t) = (M₀³-3αt)^(1/3) 质量单调递减）

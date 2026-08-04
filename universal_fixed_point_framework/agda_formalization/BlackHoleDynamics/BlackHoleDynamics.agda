@@ -1,7 +1,7 @@
 -- BlackHoleDynamics.agda
 -- Phase 61D (P1-3) 黑洞量子演化：信息保持、蒸发终点与量子反弹的 Hilbert 层形式化
 --
--- 对应论文 paper/paper61D_black_hole_quantum_evolution.md：
+-- 对应论文 paper/paper42_black_hole_quantum_evolution.md：
 --   F1  flow-self-adjoint：谱流 A_t = U·A₀·U† 保持自伴（信息载体结构稳定）
 --   F2  spectrum-preserved（登记）：谱保持 σ(A₀) = σ(A_t)，双向机器证明在 Lean
 --       （BlackHoleInformation.lean：bhInformationPreserved_iff / spectralFlow_inv）

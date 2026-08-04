@@ -10,7 +10,7 @@ Phase 61C (P0-2): 量子重整化完整链条验证
   T3  谱流 → β 函数统一定理（λφ⁴ 单圈 + 规范单圈 + 三圈 DS 12/12）
   T4  EFT 层级（谱静默单向转化）
 
-论文：paper/paper61C_renormalization_chain.md（定理 2.1/3.1/3.2/4.1）
+论文：paper/paper41_renormalization_chain.md（定理 2.1/3.1/3.2/4.1）
 """
 
 import numpy as np

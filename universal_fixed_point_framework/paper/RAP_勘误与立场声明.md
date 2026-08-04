@@ -1,4 +1,4 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.13）
+# UFPF 勘误与立场声明（RAP-Errata v0.14）
 
 **发布日期**：2026-08-03
 **版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `8587511c`（v0.8）→ `706ef820`（v0.9）
@@ -133,12 +133,12 @@
 | **XXXV** | **引力的范畴论起源** | **`paper35_gravity_origin.md`** | **✅** | 交换律偏差 = 引力；Δ 结构常数地位；引力不可屏蔽的范畴论根源；引力子等效性；GW 极化计数；牛顿引力定律范畴论推导。本轮新增（v0.4/v0.9，现稳定） |
 | **XXXVII** | **开放问题、未来方向与层次距离** | **`paper37_open_problems.md`** | **✅** | A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥恒等式。本轮新增（v0.4/v0.9，现稳定） |
 | **XXXVIII** | **Agda 独立交叉验证——双实现证明** | **`paper38_agda_cross_validation.md`** | **✅** | 系统说明 Agda 重形式化目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程（v1.17–v1.36）、S0 静默/待基础设施边界与声明纪律，内容自包含。本轮新增（v0.4/v0.9，现稳定） |
-| **61A** | **暴涨完整动力学（Phase 61，P1-4）** | **`paper61A_inflation_dynamics.md`** | **✅** | N_e 闭式 + 再加热 + 动态连续极限（定理 D3.1）+ PGW 预言闭环。对应 `roadmap/phase61_physics_advancement.md` Phase 61A。P1-4 升格"纳入"（2026-08-03） |
-| **61B** | **色规范完整动力学（Phase 61，P0-1）** | **`paper61B_qcd_color_dynamics.md`** | **✅** | 色丛 + 胶子顶点谱封闭 + 禁闭/渐近自由 + 4 强子谱（π/ρ/N/Δ）。P0-1 升格"纳入"（2026-08-03） |
-| **61C** | **量子重整化完整链条（Phase 61，P0-2）** | **`paper61C_renormalization_chain.md`** | **✅** | 谱 Feynman + 谱正则化 + 谱流→β 函数（定理 3.1）+ EFT 层级。P0-2 升格"纳入"（2026-08-04） |
-| **61D** | **黑洞量子演化（Phase 61，P1-3）** | **`paper61D_black_hole_quantum_evolution.md`** | **✅** | 霍金谱 + 蒸发动力学 + Page 曲线谱公理推导 + 视界涨落 + 蒸发终点-反弹衔接 + 信息保持。P1-3 升格"纳入"（2026-08-04） |
+| **XXXIX** | **暴涨完整动力学（Phase 61，P1-4）** | **`paper39_inflation_dynamics.md`** | **✅** | N_e 闭式 + 再加热 + 动态连续极限（定理 D3.1）+ PGW 预言闭环。对应 `roadmap/phase61_physics_advancement.md` Phase 61A。P1-4 升格"纳入"（2026-08-03） |
+| **XL** | **色规范完整动力学（Phase 61，P0-1）** | **`paper40_qcd_color_dynamics.md`** | **✅** | 色丛 + 胶子顶点谱封闭 + 禁闭/渐近自由 + 4 强子谱（π/ρ/N/Δ）。P0-1 升格"纳入"（2026-08-03） |
+| **XLI** | **量子重整化完整链条（Phase 61，P0-2）** | **`paper41_renormalization_chain.md`** | **✅** | 谱 Feynman + 谱正则化 + 谱流→β 函数（定理 3.1）+ EFT 层级。P0-2 升格"纳入"（2026-08-04） |
+| **XLII** | **黑洞量子演化（Phase 61，P1-3）** | **`paper42_black_hole_quantum_evolution.md`** | **✅** | 霍金谱 + 蒸发动力学 + Page 曲线谱公理推导 + 视界涨落 + 蒸发终点-反弹衔接 + 信息保持。P1-3 升格"纳入"（2026-08-04） |
 
-**状态汇总**：全部 42 篇论文中 38 篇（Papers I–XXXVIII）全部 ✅ 稳定 + 4 篇 Phase 61（61A–61D）✅ 已纳入，零 ⚠️、零待办。
+**状态汇总**：全部 42 篇论文中 38 篇（Papers I–XXXVIII）全部 ✅ 稳定 + 4 篇（Papers XXXIX–XLII，对应 Phase 61A–61D 四方向）✅ 已纳入，零 ⚠️、零待办。
 
 ### Lean 4 形式化状态总表
 
@@ -191,7 +191,7 @@
 ## 七、系列论文状态
 
 1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。**v0.9 追加（2026-08-03）**：新增 Paper XXXVIII（Agda 独立交叉验证专论——双实现证明协议、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程、S0 静默/待基础设施边界，内容自包含）。
-2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。**v0.10 追加（2026-08-04）**：Phase 61 四个物理方向论文 61A–61D（暴涨完整动力学 / 色规范完整动力学 / 量子重整化完整链条 / 黑洞量子演化），全部达到完成判据并升格"纳入"，详见 `roadmap/phase61_physics_advancement.md`。
+2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。**v0.10 追加（2026-08-04）**：Phase 61 四个物理方向论文 XXXIX–XLII（暴涨完整动力学 / 色规范完整动力学 / 量子重整化完整链条 / 黑洞量子演化），全部达到完成判据并升格"纳入"，详见 `roadmap/phase61_physics_advancement.md`。
 3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.9，2026-08-03，与勘误 1:1 同步）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
 ---
@@ -213,7 +213,8 @@
 | **v0.7** | **2026-08-03** | **路径 B 推进 + 理论闭合**：Agda 侧扩至 16 模块——T3 谱定理层进一步闭合（fc-integral 公理完整降为可证明定理 `fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步（注 C2.3b/2.4.5a 理论闭合审计补充）。各级 README / 盲登记协议同步更新 |
 | **v0.8** | **2026-08-03** | **技术债清单 A 类全闭合 + 谱对象映射完整**：路径 B 推进 v1.17–v1.36——① E-σ-add 收敛闭合（v1.17-1.18，Vigier 桥接）；② spec-int MCT 构造化闭合（v1.19-1.20，Archimedean 登记）；③ fc-poly-le-spec-int 构造化（方案 A）收官（v1.22-1.34，正负分解 4 阶段 + SimpleF 阶梯/MCT + 依赖循环解决——`fc-poly-le-spec-int` 降为可证定理，桥接减一，fc 侧唯一剩余 D 类 = `fc-integral`）；④ 跨层谱对象映射完整闭合（v1.21 E/exp-tA + v1.36 A/fc：A-hilb/fc-hilb 谱定理降定理链端点桥接）；⑤ 术语更新（scoped 数值公理标注"工程计算资源不足"，v1.35 实测确认）。各级 README / 盲登记协议同步更新至 v0.8 |
 | **v0.9** | **2026-08-03** | **新增 Paper XXXVIII（Agda 独立交叉验证专论）**：系统说明路径 B 全貌——目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性、闭合历程（T1/T2/T3 + 技术债 A 类全闭合 v1.17–v1.36）、剩余开放项（funext/spExchangeLaw 概念特征/S0 静默/待基础设施）与声明纪律。论文总数 37 → 38；勘误 §六 论文状态总表更新；盲登记同步更新至 v0.9（1:1，预言数值不变）。各级 README 同步 |
-| **v0.10** | **2026-08-04** | **Phase 61A–61D 四个物理方向全部纳入**：新增论文 61A（暴涨完整动力学，P1-4）、61B（色规范完整动力学，P0-1）、61C（量子重整化完整链条，P0-2）、61D（黑洞量子演化，P1-3）。论文总数 38 → 42。Lean 模块数 74 → 81（Phase 61A-D 新增 7 模块，全部零 `sorry`）；`lake build` 零错误（Phase 61D 攻克 rpow 立方根引理：精确熵平衡 + 蒸发 Planck 终止 + 量子反弹衔接）。勘误 §六 论文状态总表与 Lean 统计更新；开放项任务池详见 `roadmap/phase61_physics_advancement.md` §七。盲登记同步更新至 v0.10（1:1，预言数值不变）。各级 README 同步 |
+| **v0.10** | **2026-08-04** | **Phase 61A–61D 四个物理方向全部纳入**：新增论文 XXXIX（暴涨完整动力学，P1-4）、XL（色规范完整动力学，P0-1）、XLI（量子重整化完整链条，P0-2）、XLII（黑洞量子演化，P1-3）。论文总数 38 → 42。Lean 模块数 74 → 81（Phase 61A-D 新增 7 模块，全部零 `sorry`）；`lake build` 零错误（Phase 61D 攻克 rpow 立方根引理：精确熵平衡 + 蒸发 Planck 终止 + 量子反弹衔接）。勘误 §六 论文状态总表与 Lean 统计更新；开放项任务池详见 `roadmap/phase61_physics_advancement.md` §七。盲登记同步更新至 v0.10（1:1，预言数值不变）。各级 README 同步 |
 | **v0.11** | **2026-08-04** | **O9 闭合（假命题修正）**：审计发现 `ContinuumLimit.lean` hDiamLeOne 缺口根因是**假命题**——原 `physicalIFS` f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1（f₂ 不动点 >1），"A ⊆ [0,1]"注释错误，非缺证明。修正：f₂ 平移 1.0 → **1−c₃**（不动点精确落在 1），收缩率 ratios 与 O2 排序/Moran/维数定理全部不变（理论体系零破坏）。`ContinuumLimit.lean §3.5` 新增机器证明链：`maps_monotone` + `maps0/1/2_fixedPoint` + `attractor_subset_unitInterval_of`（sSup/sInf 极值论证 ⟹ A ⊆ [0,1]）+ `attractor_diam_le_one`；`exists_attractorAxioms` 完整填充含 hDiamLeOne（零 `sorry`），O9 由"🔶 部分闭合"升格"✅ 已闭合"。`lake build` 通过（2454 jobs）。Agda 侧 B8（IFSFractal.agda）无 maps/直径形式化，不受影响。盲登记同步更新（预言数值不变）。各级 README 同步 |
 | **v0.12** | **2026-08-04** | **非 S0 遗留 6 处全部闭合（O8 + O11）**：① `DeviationBound.lean` 2 处（O8）——不再依赖 Mathlib `Matrix.Spectrum`，A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）；② `ThermoFormalism.lean` 4 处（O11）——`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）、`singularity_spectrum_bound`/`singularity_spectrum_concave` 改条件定理（加 hτ0/hBdd，占位 τ 下原陈述为假）、`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。**全库非 S0 活动 `sorry` 清零**；余 S0 范畴层 7 `sorry` + 1 `axiom`（phase60 演进计划）。`lake build` 通过（2454 jobs）。盲登记同步更新（预言数值不变）。各级 README 同步 |
 | **v0.13** | **2026-08-04** | **论证方法论立场确立（§一·补充）**：在范畴层之上假设 Cl(1,7)/SU(2) 谱框架（A_GR 谱）物理存在、再论证其合理性——正式确立为**假设-演绎（公理化辩护）**方法论，明确论证强度三层级（① 预测检验 ✅ / ② 框架自洽 ✅ / ③ 先验导出 🔶 未完成）与非循环性判据。方法论章节提炼于 Paper XXXVII §4.4（§一·补充 论证方法论）。假设-断言分类账（hGap/hNorm 物理断言不可证、hτ0/hBdd 数学定理可证）。盲登记同步更新（预言数值不变）。各级 README 同步 |
+| **v0.14** | **2026-08-04** | **61A N_{R⁴} 精确闭式（Phase 61 任务池兑现）**：暴涨谱势 R⁴ 修正（Phase 42）对 e 折叠数的贡献由量级估计 $|N_{R^4}| \lesssim 0.1$ 升级为**精确闭式** $N_{R^4} = \frac{3\delta_2}{4}[\ln(x_{\text{cmb}}/x_{\text{end}}) - 2(x_{\text{cmb}}-x_{\text{end}}) + (x_{\text{cmb}}^2-x_{\text{end}}^2)/2]$（$\delta_2 = c_3/c_1^2$，数值 $-0.0157$）。`paperX_nR4_closed_form.py` 闭式 vs 数值积分相对偏差 0.044% ✅，注册 `run_all_tests.py`。笔记/paper39（定理 3.2 + 开放问题 2 移出）/phase61 路线图 §七 同步。盲登记同步更新（预言数值不变）。各级 README 同步 |

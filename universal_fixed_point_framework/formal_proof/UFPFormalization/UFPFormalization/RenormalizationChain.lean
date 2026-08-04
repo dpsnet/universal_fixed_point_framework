@@ -11,7 +11,7 @@ namespace UFPFormalization
 /-!
 # Renormalization Chain (Phase 61C)
 
-量子重整化完整链条（论文 `paper/paper61C_renormalization_chain.md`）：
+量子重整化完整链条（论文 `paper/paper41_renormalization_chain.md`）：
 
   F1  adG_preserves_hermitian：G 反 Hermitian 时 [G,A] 保 Hermitian——
       一阶对易子 = 单圈 β 的谱生成元（定理 3.2 的代数基础）。

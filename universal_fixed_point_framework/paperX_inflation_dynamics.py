@@ -8,7 +8,7 @@ Phase 61A (P1-4): 暴涨完整动力学验证
   D3  动态连续极限：谱流 U(t)=exp(tG) 保拟对称嵌入 + FLRW 尺度因子涌现
   D4  原初引力波闭环：n_s, r, n_T 一致性关系 r ≈ -8n_T
 
-论文：paper/paper61A_inflation_dynamics.md（定理 D3.1 / 定理 6.1）
+论文：paper/paper39_inflation_dynamics.md（定理 D3.1 / 定理 6.1）
 单位：M_Pl = 1（除非注明 GeV）；M_Pl = 2.435e18 GeV
 """
 
@@ -30,7 +30,7 @@ OBS = {
 }
 B_STD = np.sqrt(2.0 / 3.0)   # 标准 Starobinsky 斜率
 DELTA_LAMBDA = 0.122         # 谱间隙 (M_Pl, Paper XX)
-V0_14_GEV = 8.1e15           # Paper 42 R²-R⁴ 收敛值 (GeV)
+V0_14_GEV = 8.1e15           # Phase 42 R²-R⁴ 收敛值 (GeV)
 G_STAR = 106.75              # SM 有效自由度
 
 RESULTS = []
@@ -176,7 +176,7 @@ def run_d3():
 
     V0 = V0_14_GEV**4                       # GeV⁴
     m_phi = B_STD * np.sqrt(2.0 * V0) / M_PL_GEV  # GeV（定义 4.1）
-    print(f"  V₀^{{1/4}} = {V0_14_GEV:.3e} GeV (Paper 42)")
+    print(f"  V₀^{{1/4}} = {V0_14_GEV:.3e} GeV (Phase 42)")
     print(f"  m_φ = b√(2V₀) = {m_phi:.3e} GeV")
 
     # 预期 m_φ ≈ 3.1e13 GeV
@@ -203,11 +203,11 @@ def run_d3():
 
 
 # ============================================================
-# 4. D2 → 重子生成串联（Paper 40 公式结构 + T_RH 输入）
+# 4. D2 → 重子生成串联（Phase 40 公式结构 + T_RH 输入）
 # ============================================================
 
 def sphaleron_rate(T_GeV):
-    """Paper 40 Sphaleron 跃迁率 Γ_sph(T)。"""
+    """Phase 40 Sphaleron 跃迁率 Γ_sph(T)。"""
     alpha_w = 1.0 / 29.0
     v_0 = 246.0
     delta_lambda_sph = 2.0 * np.pi * alpha_w
@@ -219,7 +219,7 @@ def sphaleron_rate(T_GeV):
 
 
 def eta_B_formula(T_GeV, J_CP=2.8e-4):
-    """η_B = (J_CP·Γ_sph·Δt_neq)/s_γ（Paper 40 谱公式结构）。"""
+    """η_B = (J_CP·Γ_sph·Δt_neq)/s_γ（Phase 40 谱公式结构）。"""
     Gamma = sphaleron_rate(T_GeV)
     xi = min(1.0, 1.0 / (1.0 + (T_GeV / 160.0)**2))
     delta_t = 1.0 / (0.1 * max(xi, 1e-30))      # S_eq/(dS/dt)，ln6 消去
@@ -240,7 +240,7 @@ def run_d4(T_RHs):
     print(f"  T_RH(min) = {T_RH_min:.2e} GeV > T_sph = {T_sph} GeV")
     check("C9 T_RH > T_sph（热历史一致）", ok_th)
 
-    # C10: η_B 公式在 T_sph 处与观测同量级（复现 Paper 40 结果）
+    # C10: η_B 公式在 T_sph 处与观测同量级（复现 Phase 40 结果）
     eta_pred = eta_B_formula(T_sph)
     ratio = eta_pred / OBS['eta_B_obs']
     print(f"  η_B(T_sph=140 GeV) = {eta_pred:.3e} (观测 {OBS['eta_B_obs']:.1e}, 比 {ratio:.2f})")

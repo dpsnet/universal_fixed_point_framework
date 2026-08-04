@@ -122,7 +122,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper IX；`paper39_theta_qcd.py`；`notes/spectral_strong_CP.md`；`notes/spectral_axion_silence.md` |
+| **理论来源** | Paper IX；`phase39_theta_qcd.py`；`notes/spectral_strong_CP.md`；`notes/spectral_axion_silence.md` |
 | **预言公式** | $\theta_{\text{QCD}} = 0$（来自谱算符的自伴性要求：$\theta = \arg\det(D) = 0$） |
 | **轴子来源** | 辫静默 $S_4$ 的 braid silence 层自发破缺产生类轴子模 |
 | **置信度** | 中高 — $\theta = 0$ 是谱自伴性的直接推论。但轴子质量/耦合依赖于 silence 破缺标度 |

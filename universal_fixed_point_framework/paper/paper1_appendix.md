@@ -248,7 +248,7 @@ $$\frac{m_c}{m_t} \approx 0.0052,\quad \frac{m_u}{m_t} \approx 1.55 \times 10^{-
 
 **核心结论**：SM 三代费米子质量谱由 $\mathbf{Sp}$ 4-范畴的静默层级结构在 IFS 递归深度上的投影唯一确定。$\rho = 0$ 表明 IFS 自然为分离型，质量层级由三重静默压制编码。第四代轻子需不同 IFS 结构。
 
-#### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`paper41_cosmological_constant.py`）
+#### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`phase41_cosmological_constant.py`）
 
 $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整解答。
 
@@ -278,7 +278,7 @@ $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整�
 
 **6 量级来源**：$S_2 = e^{-2\pi/\alpha_{\text{eff}}}$，$\alpha_{\text{eff}}$ 在 Planck 能标的 RG 跑动引入 $\pm 0.02$ 不确定度（$\alpha \in [0.08, 0.12]$），$\alpha$ 变化 $+6.2\%$（$\alpha \to 0.1062$）→ 总压制从 126 变至 120。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。
 
-#### A.15.10 暴胀 $R^4$ 修正（Phase 42，`paper42_inflation_R4.py`）
+#### A.15.10 暴胀 $R^4$ 修正（Phase 42，`phase42_inflation_R4.py`）
 
 BCH 展开 $[A_{\text{GR}}, A_t]$ 至 $R^4$ 阶确定高阶曲率系数（7/7 验证通过）：
 

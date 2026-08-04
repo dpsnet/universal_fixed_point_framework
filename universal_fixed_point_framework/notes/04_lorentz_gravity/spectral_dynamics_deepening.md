@@ -13,13 +13,13 @@
 > 
 > **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱表述 + 暴胀能标 V₀ 精确化（`paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
 > 
-> **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`paper39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
+> **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`phase39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
 > 
-> **Phase 40**（2026-07-17）：重子不对称 η_B 谱动力学推导（`paper40_baryogenesis.py` 6/6）。η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）。
+> **Phase 40**（2026-07-17）：重子不对称 η_B 谱动力学推导（`phase40_baryogenesis.py` 6/6）。η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）。
 > 
-> **Phase 41**（2026-07-17）：宇宙学常数 Λ 多重静默机制（`paper41_cosmological_constant.py` 6/6）。四力层叠静默：126 量级压制覆盖所需 120，理论根因见 `notes/99_archive/paper41_theoretical_root.md`。**半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**。
+> **Phase 41**（2026-07-17）：宇宙学常数 Λ 多重静默机制（`phase41_cosmological_constant.py` 6/6）。四力层叠静默：126 量级压制覆盖所需 120，理论根因见 `notes/99_archive/paper41_theoretical_root.md`。**半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**。
 > 
-> **Phase 42**（2026-07-17）：暴胀 R⁴ 修正（`paper42_inflation_R4.py` 7/7）。BCH 至 R⁴ 阶：c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定，与 c₁, n_s, r 三路自洽。
+> **Phase 42**（2026-07-17）：暴胀 R⁴ 修正（`phase42_inflation_R4.py` 7/7）。BCH 至 R⁴ 阶：c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定，与 c₁, n_s, r 三路自洽。
 > 
 > 详见 `roadmap/README.md`。
 

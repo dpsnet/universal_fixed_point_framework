@@ -11,7 +11,7 @@
 
 | 交付物 | 文件 | 状态 |
 |:--|:--|:--|
-| 自包含论文 | `paper/paper61D_black_hole_quantum_evolution.md` | ✅ v0.1 |
+| 自包含论文 | `paper/paper42_black_hole_quantum_evolution.md` | ✅ v0.1 |
 | Lean 形式化（四模块零 sorry） | `formal_proof/.../BlackHoleEvolution.lean` `HawkingSpectrum.lean` `BlackHoleInformation.lean` `BlackHoleBounce.lean` | ✅ |
 | Agda 镜像 | `agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda` | ✅ |
 | 数值验证 | `paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`） | ✅ |

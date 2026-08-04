@@ -49,7 +49,7 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 
 **笔记→论文覆盖率：57/57（100%），详见 `notes/07_validation/notes_to_papers_audit.md`。**
 **多重静默理论笔记：8 篇，详见 `notes/01_qcd_higgs/spectral_root_cause_analysis.md`。**
-**Phase 61 物理方向笔记（2026-08-03/04）**：`notes/05_cosmology/spectral_inflation_dynamics.md`（61A 暴涨）、`notes/01_qcd_higgs/spectral_color_dynamics.md`（61B 色规范）、`notes/00_foundations/spectral_renormalization_chain.md`（61C 重整化链）、`notes/04_lorentz_gravity/spectral_black_hole_evolution_formalization.md`（61D 黑洞演化）——均对应论文 `paper61A-D`，全部达到完成判据（Lean/Agda 双语言 + 数值验证）。
+**Phase 61 物理方向笔记（2026-08-03/04）**：`notes/05_cosmology/spectral_inflation_dynamics.md`（61A 暴涨）、`notes/01_qcd_higgs/spectral_color_dynamics.md`（61B 色规范）、`notes/00_foundations/spectral_renormalization_chain.md`（61C 重整化链）、`notes/04_lorentz_gravity/spectral_black_hole_evolution_formalization.md`（61D 黑洞演化）——均对应论文 `paper39-42`，全部达到完成判据（Lean/Agda 双语言 + 数值验证）。
 
 ## 当前重点问题（开放问题推进中）
 

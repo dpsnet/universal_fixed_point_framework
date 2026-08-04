@@ -1,7 +1,7 @@
 -- InflationDynamics.agda
 -- Phase 61A (P1-4) 暴涨完整动力学：动态连续极限的 Hilbert 层形式化
 --
--- 对应论文 paper/paper61A_inflation_dynamics.md 定理 D3.1 的算子代数核心：
+-- 对应论文 paper/paper39_inflation_dynamics.md 定理 D3.1 的算子代数核心：
 --   F1  unitary-conj-self-adjoint：酉共轭 U·D·U† 保持自伴（D3.1(1)）
 --   F2  flow-self-adjoint：谱流族 D(t) = Uₜ·D₀·Uₜ† 保持自伴（D3.1(2)）
 --

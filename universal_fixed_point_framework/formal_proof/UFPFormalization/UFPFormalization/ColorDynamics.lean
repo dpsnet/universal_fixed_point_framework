@@ -9,7 +9,7 @@ namespace UFPFormalization
 /-!
 # Color Dynamics (Phase 61B)
 
-SU(3) 色规范完整动力学（论文 `paper/paper61B_qcd_color_dynamics.md`）：
+SU(3) 色规范完整动力学（论文 `paper/paper40_qcd_color_dynamics.md`）：
 
   F1  color_jacobi_identity：色雅可比恒等式（矩阵环）——胶子自相互作用谱封闭
       （定理 3.1）与 SU(3) 结构常数闭合（推论 2.1）的代数核心。

@@ -1,7 +1,7 @@
 -- ColorDynamics.agda
 -- Phase 61B (P0-1) SU(3) 色规范完整动力学：色雅可比恒等式的算子代数层镜像
 --
--- 对应论文 paper/paper61B_qcd_color_dynamics.md 推论 2.1 / 定理 3.1：
+-- 对应论文 paper/paper40_qcd_color_dynamics.md 推论 2.1 / 定理 3.1：
 --   F1  color-jacobi：色雅可比恒等式 [[X,Y],Z] + [[Y,Z],X] + [[Z,X],Y] = 0
 --        （胶子三/四顶点谱封闭的代数核心）
 --
