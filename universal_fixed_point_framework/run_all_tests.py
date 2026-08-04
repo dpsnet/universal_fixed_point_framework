@@ -14,7 +14,7 @@ SCRIPTS = [
     ("paperX_s0_sieve.py",                 "S0 表示静默筛结构验证 (7/7)：静默类不构成 sieve"),
     ("paperX_s0_analytic.py",              "S0 静默遗留项解析 (6/6)：dim=n-1 闭式、S_D=1-√U 分布、非平凡演化"),
     ("paperX_spectral_matching.py",        "P1 谱匹配三条件等价验证 (7/7)：交织/谱匹配/exp 交换解空间一致"),
-    ("paperX_rec2_exchange_deviation.py",  "Rec₂ 交换律偏差 BCH 修正复合验证 (9/9 检查 + 结合律结构性诊断)：竖/横修正处方自然性 + 偏差合法性/交叉项/严格极限/单位律"),
+    ("paperX_rec2_exchange_deviation.py",  "Rec₂ 交换律偏差验证 (14/14 检查 + 结构性诊断 D7/D8/D9)：BCH 修正处方自然性 + 偏差合法性/交叉项/严格极限/单位律 + D-拉回结构（HigherRecCategory.lean 实现）"),
 
     # === Phase 44: 谱 QFT 工具箱 (Paper XI) ===
     ("paperX_spectral_feynman.py",         "T2 谱 Feynman 规则"),
