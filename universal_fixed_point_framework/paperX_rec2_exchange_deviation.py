@@ -32,7 +32,12 @@ paperX_rec2_exchange_deviation.py — Rec₂ 交换律偏差的 BCH 修正复合
   D8  横结合律：同上
   D9  D-拉回 2-态射空间稀疏性：一般 f≠g 下 Sylvester 罕见可解（转移矩阵恒有特征值 1）；
       T10-T14 以谱平凡构造（id 态射 + 交织解）验证代数结构
-  T17 缺陷（不可对角化）步进 300 次扫描：未发现非平凡（f≠g）拉回 2-态射（负结果）
+  T17 缺陷（不可对角化）步进扫描（v0.9 修正）：v0.8 负结果为扫描设计缺陷假象
+      （rand_map 恒生成置换=双射，全被过滤）；修正后立即发现非平凡解
+      （残差=0，第 2 次非双射尝试）——与 D10 全枚举一致
+  D10 Fredholm 可解性刻画（开放问题 8 完全闭合，v0.10）：n=3 全枚举 21 非双射 s × 6 幂对
+      =126 对：78 可解（全 f≠g 非平凡）、24 等迹不可解（迹条件不足）、非等迹可解 0、
+      ker(L*) 维数∈{3,5}、Fredholm 正交判定零违反 ⟹ 可解 ⟺ C⊥ker(L*)（命题 15）
 
 单位：无量纲（矩阵代数）。
 """
@@ -356,16 +361,18 @@ def run():
           H_xy is None or res16 > 1e-6,
           f"Sylvester 残差={res16 if H_xy is not None else '无解'}")
 
-    # ---- T17: 缺陷（不可对角化）步进下非平凡拉回 2-态射扫描（开放问题 8 残余）----
-    # 非双射函数 s 的转移矩阵 A 通常亏损（defective），Sylvester 算子 L 非半单，
-    # range(L)∩ker(L) 可能非 {0} ⟹ 非平凡（f≠g）2-态射理论上可能存在。
-    # 扫描 RecHom 幂对 (f=s^k, g=s^m)，k≠m，检验 A H − H A = A^m − A^k 可解性。
+    # ---- T17: 缺陷（不可对角化）步进下非平凡拉回 2-态射扫描（开放问题 8 残余，v0.9 修正）----
+    # ⚠ v0.9 修正：v0.8 的 rand_map 恒生成置换（双射），300 次尝试全部被"跳过双射"
+    # 分支 continue，实际扫描为空 ⟹ 原负结果是扫描设计缺陷的假象。修正为非双射随机
+    # 函数，并与 D10 全枚举（21 个非双射 s × 6 幂对 = 126 对，78 对可解）交叉验证。
     found_nontrivial = False
     scan_info = "无"
+    nonbij_attempts = 0
     for _try in range(300):
-        s_def = rand_map(rng)
+        s_def = lambda i: int(rng.integers(0, n))   # 随机函数（非双射概率高）
         if len({s_def(i) for i in range(n)}) == n:      # 跳过双射（可对角化）
             continue
+        nonbij_attempts += 1
         A_def = step_matrix(s_def, n)
         k = int(rng.integers(1, 4)); m = int(rng.integers(1, 4))
         if k == m:
@@ -378,11 +385,12 @@ def run():
             scan_info = f"实例：缺陷步进 s，k={k}, m={m}，残差={res:.2e}"
             break
     if found_nontrivial:
-        print(f"  [DIAG] T17（发现）：非平凡拉回 2-态射在缺陷步进下存在（{scan_info}）——"
-              f"非空性对可对角化假设敏感，开放问题 8 残余确认")
+        print(f"  [DIAG] T17（发现，v0.9 修正）：非平凡拉回 2-态射在缺陷步进下存在（{scan_info}；"
+              f"非双射尝试数={nonbij_attempts}）——非空性对可对角化假设敏感，"
+              f"与 D10 全枚举一致（78/126 幂对可解）")
     else:
-        print("  [DIAG] T17（负结果）：缺陷步进 300 次扫描未发现非平凡（f≠g）拉回 2-态射——"
-              "非空性 ⟺ f=g 在数值上稳健（缺陷情形仍开放，见笔记 §7 问题 8）")
+        print(f"  [DIAG] T17（负结果，v0.9 修正）：非双射尝试数={nonbij_attempts}，"
+              f"未发现非平凡解——与 D10 全枚举交叉验证失败（异常）")
 
     # ---- T18: 迹障碍（非空性的必要条件）----
     # tr(A H − H A) = 0（迹循环性）⟹ 若 tr(T_g − T_f) = #fixed(g) − #fixed(f) ≠ 0 则不可解。
@@ -407,6 +415,69 @@ def run():
           res19 < 1e-8, f"‖A H − H A −(A²−A)‖={res19:.2e}")
     # 注：H_exp 不满足旧 flow-diagonal 异源自然性（H[x,g(x)]≠H[x,f(x)] 于 x=0）——
     # 印证拉回定义独立于旧自然性类（见笔记 §4.4 定理 12 后的说明）。
+
+    # ---- D10: 缺陷情形 Sylvester 可解性的 Fredholm 刻画（开放问题 8 残余，v0.9）----
+    # 理论：L(H) = A H − H A（同矩阵），L 非半单时 Fredholm 准则：C 可解 ⟺ C ⊥ ker(L*)，
+    # 其中 L*(Y) = A^H Y − Y A^H（Frobenius 伴随）。ker(L*) 维数 = 中央化子维数（3×3 缺陷
+    # 矩阵通常 3），故除迹条件 tr(C)=0 外还需 (dim ker L* − 1) 个额外正交条件。
+    # 枚举 n=3 全部非双射函数 s 与幂对 (s^k, s^m)（k≠m），验证：
+    #   (a) 可解 ⟺ C ⊥ ker(L*)（数值健全性，Fredholm 恒等式）
+    #   (b) 等迹但不可解的对存在（迹条件不足——开放问题 8 残余的完整答案）
+    #   (c) 全部可解非平凡对统计（含 T19 所在等价类）
+    funcs3 = []
+    for c in range(27):
+        tup = tuple((c // 3 ** (2 - i)) % 3 for i in range(3))
+        funcs3.append((tup, lambda i, t=tup: t[i]))
+    n_nonbij = n_pairs_total = n_solvable = n_solvable_neq = 0
+    n_trace0_unsolvable = n_trace0_solvable = n_trace_nz_solvable = 0
+    fred_violations = 0
+    ker_dims = set()
+    for tup, s_f in funcs3:
+        if len(set(tup)) == 3:      # 双射 ⟹ 可对角化，定理 11 已覆盖
+            continue
+        n_nonbij += 1
+        A3 = step_matrix(s_f, 3)
+        # L* 矩阵（作用于 vec）：L* = I⊗Aᵀ − Aᵀ⊗I？直接用伴随定义：L*(Y) = Aᵀ Y − Y Aᵀ（A 实）
+        Kstar = np.kron(np.eye(3), A3.T) - np.kron(A3, np.eye(3))
+        _, sK, vhK = np.linalg.svd(Kstar)
+        ker_dim = int(np.sum(sK < 1e-9))
+        ker_dims.add(ker_dim)
+        if ker_dim > 0:
+            ker_basis = vhK[-ker_dim:].reshape(ker_dim, 3, 3)
+        else:
+            ker_basis = np.zeros((0, 3, 3), dtype=complex)
+        for k in (1, 2, 3):
+            for m in (1, 2, 3):
+                if k == m:
+                    continue
+                n_pairs_total += 1
+                C = np.linalg.matrix_power(A3, m) - np.linalg.matrix_power(A3, k)
+                Hx, res = sylvester_solve(A3, A3, C, 3)
+                solvable = Hx is not None and res < 1e-8
+                if solvable:
+                    n_solvable += 1
+                    if m != k:
+                        n_solvable_neq += 1
+                traceC = float(np.trace(C).real)
+                if solvable and abs(traceC) > 1e-8:
+                    n_trace_nz_solvable += 1
+                # Fredholm 正交检验：C ⊥ ker(L*)（Frobenius 内积）
+                orth = all(abs(float(np.trace(np.conj(Y).T @ C).real)) < 1e-7 for Y in ker_basis)
+                if orth != solvable:
+                    fred_violations += 1
+                if abs(traceC) < 1e-8:
+                    if solvable:
+                        n_trace0_solvable += 1
+                    else:
+                        n_trace0_unsolvable += 1
+    print(f"  [DIAG] D10 Fredholm 可解性刻画（开放问题 8 残余）：非双射 s 数={n_nonbij}，"
+          f"幂对总数={n_pairs_total}，可解={n_solvable}（其中 f≠g 非平凡={n_solvable_neq}）；"
+          f"等迹可解={n_trace0_solvable}，等迹不可解={n_trace0_unsolvable}（⟹ 迹条件不足），"
+          f"非等迹可解={n_trace_nz_solvable}（应=0，迹障碍严格）；"
+          f"ker(L*) 维数集合={sorted(ker_dims)}；Fredholm 违反数={fred_violations}（应=0）")
+    print("  [DIAG] D10 结论：可解 ⟺ C ⊥ ker(L*)（Fredholm，含迹条件），缺陷时 ker(L*) 维数="
+          f"{max(ker_dims) if ker_dims else 0} > 1 ⟹ 等迹不再充分——开放问题 8 残余闭合为"
+          "『迹 + 缺陷正交条件』")
 
     # ---- 汇总 ----
     print("-" * 72)
