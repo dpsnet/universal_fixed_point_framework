@@ -1,7 +1,7 @@
 # 阶段 3：IFS 分形扩张——Σ-Rec coproduct 谱对应与 Weierstrass 谱隙导出
 
 > **来源**：`notes/00_foundations/spectral_category_scope_stratification.md` §3.3（分形扩张路径）与阶段 3 任务（"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec；至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出"）。
-> **状态**：研究笔记 v0.4（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）完成**：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价，`lake build` 通过，零 `sorry`）；**障碍清除**：`NoiseCategory.lean` 既有编译错误全部闭合。
+> **状态**：研究笔记 v0.5（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）+ Σ-D Functor 律闭合**完成：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价，`lake build` 通过，零 `sorry`）；`NoiseCategory.lean` **Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**并组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）。
 > **规范声明**：本文为**谱新增**推导——"IFS 分解 → Σ-Rec coproduct → 谱对应"的数值验证与构造是阶段 3 的推进记录；`IFSFractal.lean`（IFS/Attractor/SelfSimilarMeasure/HausdorffDim 基础设施）与 `NoiseCategory.lean`（Σ-Rec/ι_Σ，§15.3 D 保持 coproduct 机器证明）为既有资产。
 
 ---
@@ -71,10 +71,15 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 - Σ-Rec/Σ-Spec `Category` 实例：comp 改用显式态射构造（原 `fij ≫ gjk` 触发 mathlib `instCategory (Hom)` 递归歧义）；律用 `simp [CategoryStruct.id/comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map]` + `Matrix.mul_assoc`/`Function.comp_def` 证明；
 - `sigmaRecInclusion`：map 的 i≠0 分量改为 default 恒等（与 `Category.id` 约定一致，原 `[]` 导致 `map_id`/`map_comp` 失败）；`Full` 诚实修正为 `Faithful`（`Functor.Full` 在无约束 Hom 下不成立——态射对 none 分量可任意，见 §15.1 注）；
 - `Inhabited SpObj` 对齐 `DFunctor.obj (default : RecObj)`（原 `⟨0, 0⟩` 与 Σ-D 的 none 分量类型不匹配）；
-- Σ-D：`sigmaDFunctorObj`/`sigmaDFunctorMap` 对象-态射层构造 + `option_map_getD` 逐分量 getD 桥接 + `sigmaD_preserves_coproduct`（对象层，§15.3 定理 15.3 保留）。Functor 结构（`map_id`/`map_comp`）因类型转换 cast 的 instances 透明度问题暂以函数层承载——诚实边界，后续可攻坚。
+- **Σ-D 对象层**：`sigmaDFunctorObj` + `sigmaD_preserves_coproduct`（§15.3 定理 15.3 保留）；
+- **Σ-D 态射层与 Functor 律（2026-08-05 闭合）**：
+  - **关键设计**：内层态射搬运 `dfunctorMapTransport'` 直接对 `A B : Option RecObj` 两个**变量**做 `cases`——`(some R).getD default = R` 与 `(none.getD default) = default`（`Inhabited SpObj` 定义性等于 `DFunctor.obj default`）在四个分支均**定义性归约，产物无任何显式 cast**（原 `rw [option_map_getD]` 方案产生非 rfl 级 cast，且 `cases X.components i`/`match` 均因参数类型不被分支精化而失败——`generalize failed`/`Type mismatch`）；
+  - `dfunctorMapTransport'_comp`（保复合）与 `dfunctorMapTransport'_id`（保恒等）为元素层核心，逐 `cases A B C` 归约后用 `DFunctor.map_comp`/`DFunctor.map_id` 闭合（`simpa` 需避开对引理自身的自简化，`exact` 直接可用）；
+  - `sigmaDFunctorMap_id`/`sigmaDFunctorMap_comp` 在列表层用归纳 + `rw [ih]` + `congr 1`（头部元素用 `congrArg`+`funext ⟨k, gjk⟩`+`ext`+`simp`），`simp` 中**不展开 `dfunctorMapTransport'`**（展开后 `Option.rec` 不可归约且破坏重写匹配）；
+  - 组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`map_id := sigmaDFunctorMap_id`，`map_comp := sigmaDFunctorMap_comp`）。**诚实边界闭合：Σ-D Functor 律从"函数层承载"升格为"正式函子"**。
 
 **下一步候选**：
-1. Σ-D 的 Functor 律（`map_id`/`map_comp`）补证（需处理 getD 类型转换 cast）；
+1. ✅ ~~Σ-D 的 Functor 律（`map_id`/`map_comp`）补证~~（**已闭合**，2026-08-05：见上 Σ-D 态射层记录）；
 2. 符号转移与各片谱的精确关系（谱 coproduct 分解的 Lean 侧，IFSRecCoding 诚实边界）；
 3. 将 Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题（依赖有限维谱积分层，mathlib `ContinuousFunctionalCalculus` 桥接）。
 

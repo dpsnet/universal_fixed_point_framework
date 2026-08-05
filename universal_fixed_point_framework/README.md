@@ -102,7 +102,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | 总 Lean 模块数 | 81（其中 15 个模块存在预存编译错误：GelfandDuality/RAP4 bad import、NoiseCategory 读取失败、Test*/Fiber 家族等，均为遗留损坏，非 Phase 61A-D 引入） |
 | 构建状态 | 默认目标 `lake build` ✅ 零错误；全库 `lean_lib` 15 模块预存编译错误（登记）；Phase 61A-D 7 模块零 `sorry` |
 | 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.10 §六）+ Phase 61A-D 7 模块 |
-| 活动 `sorry`（2026-08-04 审计） | **3 处 `sorry`** + 1 处 `axiom DAdjR`（`Adjunction.lean:89`，未计入 sorry 统计），全部为 `Adjunction.lean` 全范畴结构性开放项（泛化映射/恒等/复合占位，简化原型；nS≠nT 时 `Fin S.n → Fin T.n` 不存在，正确构造见 RAP5a SpImD 与 Rec₂ D-拉回）。非 S0 全部清零：ThermoFormalism 4（O11）、DeviationBound 2（O8）、RAP5a 1（RIm_map，线性语义）、**HigherRecCategory 3（O13——Rec₂ 2-态射按 D-拉回重定义，竖/横复合良定义且结合，交换律偏差定理族 `recExchangeLaw_*` 机器证明）**；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合（2026-08-04） |
+| 活动 `sorry`（2026-08-05 审计） | **全库零 `sorry` 零 `axiom`**（里程碑）：`Adjunction.lean` 原 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——`RFunctor` 降为对象映射（`Fin S.n` 状态 + 恒等步进），原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）经判定**结构性不可构造**（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在）后删除；`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）**2026-08-05 闭合**并组装为正式函子 `sigmaDFunctor`。非 S0 全部清零：ThermoFormalism 4（O11）、DeviationBound 2（O8）、RAP5a 1（RIm_map，线性语义）、HigherRecCategory 3（O13——Rec₂ 2-态射按 D-拉回重定义）；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合 |
 
 **Phase 61A（P1-4 暴涨完整动力学）✅ 2026-08-03** — `InflationDynamics.lean`（酉共轭/谱流保 Hermitian F1-F3 + 动态连续极限 F4）；论文 `paper39_inflation_dynamics.md`（Paper XXXIX，N_e 闭式 55 + 预言闭环）；数值 15/15。
 **Phase 61B（P0-1 色规范完整动力学）✅ 2026-08-03** — `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）；论文 `paper40_qcd_color_dynamics.md`（Paper XL，禁闭/渐近自由 + 4 强子谱）；数值 15/15。

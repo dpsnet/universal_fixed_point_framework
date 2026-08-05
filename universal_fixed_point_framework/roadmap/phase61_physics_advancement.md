@@ -199,7 +199,7 @@
 | 支撑项 | 现状 | 与物理方向的关系 | 优先级 |
 |:------|:----|:----------------|:------:|
 | T3 测度论完整层（fc-integral 完整降定理） | 唯一剩余 D 类桥接 | **P0-2 圈图积分的直接前置**；测度论 sup 交换 | P0 |
-| S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；`NoiseCategory.lean` 既有编译错误已于 **2026-08-05 全部修复**（`lake build` 3172 jobs 通过，零 `sorry`）——Σ-Rec/Σ-Spec Category 律、`sigmaRecInclusion`（Faithful 诚实修正）、`Inhabited SpObj` 对齐、Σ-D 对象-态射层（`sigmaDFunctorObj`/`sigmaD_preserves_coproduct`）恢复可用；此前"编译恢复待 mathlib 修复"表述更正 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
+| S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；`NoiseCategory.lean` 既有编译错误已于 **2026-08-05 全部修复**（`lake build` 3172 jobs 通过，零 `sorry`）——Σ-Rec/Σ-Spec Category 律、`sigmaRecInclusion`（Faithful 诚实修正）、`Inhabited SpObj` 对齐、Σ-D 对象-态射层（`sigmaDFunctorObj`/`sigmaD_preserves_coproduct`）恢复可用；**2026-08-05 追加：Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**——内层态射搬运 `dfunctorMapTransport'` 对分量变量直接 `cases`（四分支定义性归约，无 cast），元素层 `dfunctorMapTransport'_comp/_id` + 列表层归纳（`rw [ih]` + `congr 1`），组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）；此前"编译恢复待 mathlib 修复"表述更正 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
 | d_H 物理约束 | δ 为 RMS 统计约束（闭式已排除） | 维持现状，不追闭式；经实验精化 | P2 |
 | funext 结构性限制 | 库公理范围外 | 接受为构造数学通用短板 | P2 |
 

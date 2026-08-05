@@ -197,7 +197,8 @@ noncomputable instance : Category SigmaSpObj where
 
 /-- 逐分量 getD 桥接（不引用 sigmaDFunctor，可在其定义前声明）：
     Option.map DFunctor.obj 的 getD = DFunctor.obj (源 getD)。
-    修正 sigmaDFunctor.map 的类型匹配（原 `DFunctor.map` 与 `getD (Option.map ...)` 类型不匹配）。 -/
+    由于 `Inhabited SpObj` 的 default 定义性等于 `DFunctor.obj (default : RecObj)`，
+    该等式在 `some`/`none` 两个分支均定义性成立（`rfl`）。 -/
 @[simp]
 lemma option_map_getD (X : SigmaRecObj) (i : ℕ) :
     (Option.map DFunctor.obj (X.components i)).getD default = DFunctor.obj ((X.components i).getD default) := by
@@ -205,23 +206,113 @@ lemma option_map_getD (X : SigmaRecObj) (i : ℕ) :
   | some R => rfl
   | none => rfl
 
-/-- 自反等式诱导的 cast 是恒等。 -/
-lemma cast_rfl_id {α : Type} (h : α = α) (x : α) : cast h x = x := by
-  cases h
-  rfl
+/-- 内层态射搬运（分量参数版）：直接对 `A B : Option RecObj` 两个**变量**做 `cases`，
+    使 `f` 的类型在分支中定义性归约（`(some R).getD default = R` 等），产物无显式 cast。 -/
+noncomputable def dfunctorMapTransport' (A B : Option RecObj)
+    (f : RecHom (A.getD default) (B.getD default)) :
+    SpHom ((Option.map DFunctor.obj A).getD default) ((Option.map DFunctor.obj B).getD default) := by
+  cases A with
+  | some R =>
+      cases B with
+      | some S => exact DFunctor.map f
+      | none => exact DFunctor.map f
+  | none =>
+      cases B with
+      | some S => exact DFunctor.map f
+      | none => exact DFunctor.map f
+
+/-- 内层态射搬运：将 `DFunctor.map f` 从 `getD (X.components i)` 类型搬到
+    `getD (Option.map DFunctor.obj (X.components i))` 类型。
+    经 `dfunctorMapTransport'` 逐分支消解源/目标分量，产物**不含任何显式 cast**
+    （这是与 `rw [option_map_getD]` 方案的关键区别），
+    使 Σ-D 的 Functor 律（map_id/map_comp）可机读证明。 -/
+noncomputable def dfunctorMapTransport {X Y : SigmaRecObj} {i j : ℕ}
+    (f : RecHom ((X.components i).getD default) ((Y.components j).getD default)) :
+    SpHom ((Option.map DFunctor.obj (X.components i)).getD default)
+          ((Option.map DFunctor.obj (Y.components j)).getD default) :=
+  dfunctorMapTransport' (X.components i) (Y.components j) f
+
+/-- `dfunctorMapTransport'` 保复合：搬运后的 `f ≫ g` = 搬运后各自的复合。
+    这是 Σ-D map 保复合（Functor 律 2）的元素层核心。
+    注意：`fij ≫ gjk` 记号在 mathlib `instCategory (Hom)` 递归歧义下不可靠，
+    此处显式写出复合态射 `⟨gjk.toFun ∘ fij.toFun, ...⟩`（与 Rec 范畴 comp 定义性一致）。 -/
+lemma dfunctorMapTransport'_comp (A B C : Option RecObj)
+    (fij : RecHom (A.getD default) (B.getD default))
+    (gjk : RecHom (B.getD default) (C.getD default)) :
+    dfunctorMapTransport' A C
+      (⟨gjk.toFun ∘ fij.toFun, by intro x; simp [fij.comm, gjk.comm]⟩) =
+      @CategoryStruct.comp SpObj _ _ _ _ (dfunctorMapTransport' A B fij)
+        (dfunctorMapTransport' B C gjk) := by
+  cases A <;> cases B <;> cases C
+  all_goals
+    simp only [dfunctorMapTransport']
+    exact DFunctor.map_comp fij gjk
+
+/-- `dfunctorMapTransport'` 保恒等：搬运后的 `𝟙` = 目标类型的 `𝟙`。
+    这是 Σ-D map 保恒等（Functor 律 1）的元素层核心。 -/
+lemma dfunctorMapTransport'_id (A : Option RecObj) :
+    dfunctorMapTransport' A A (𝟙 (A.getD default)) =
+      (𝟙 ((Option.map DFunctor.obj A).getD default)) := by
+  cases A with
+  | some R => simp [dfunctorMapTransport', DFunctor.map_id]
+  | none => simp [dfunctorMapTransport', DFunctor.map_id]; rfl
+
 /-- Σ-D 的 obj：Σ-D(⨁_i R_i) = ⨁_i D(R_i)（对象层构造）。 -/
 noncomputable def sigmaDFunctorObj (X : SigmaRecObj) : SigmaSpObj :=
   { components := λ i => Option.map DFunctor.obj (X.components i) }
 
-/-- Σ-D 的 map：逐分量作用 DFunctor.map（态射层构造；getD 类型转换经 option_map_getD）。 -/
+/-- Σ-D 的 map：逐分量经 `dfunctorMapTransport` 作用 DFunctor.map（态射层构造）。
+    元素构造无 cast（见 `dfunctorMapTransport` 的依赖匹配设计）。 -/
 noncomputable def sigmaDFunctorMap {X Y : SigmaRecObj} (f : SigmaRecHom X Y) :
     SigmaSpHom (sigmaDFunctorObj X) (sigmaDFunctorObj Y) :=
   { components := λ i =>
       (f.components i).map λ pair_j =>
-        ⟨pair_j.1, by
-          dsimp [sigmaDFunctorObj]
-          rw [option_map_getD, option_map_getD]
-          exact DFunctor.map pair_j.2⟩ }
+        ⟨pair_j.1, dfunctorMapTransport pair_j.2⟩ }
+
+/-- Σ-D map 保恒等（Functor 律 1）。 -/
+lemma sigmaDFunctorMap_id (X : SigmaRecObj) :
+    sigmaDFunctorMap (𝟙 X) = 𝟙 (sigmaDFunctorObj X) := by
+  apply SigmaSpHom.ext
+  funext i
+  simp [sigmaDFunctorMap, sigmaDFunctorObj, CategoryStruct.id, dfunctorMapTransport]
+  exact dfunctorMapTransport'_id (X.components i)
+
+/-- Σ-D map 保复合（Functor 律 2）。 -/
+lemma sigmaDFunctorMap_comp {X Y Z : SigmaRecObj} (f : SigmaRecHom X Y) (g : SigmaRecHom Y Z) :
+    sigmaDFunctorMap (@CategoryStruct.comp SigmaRecObj _ X Y Z f g) =
+      (@CategoryStruct.comp SigmaSpObj _ (sigmaDFunctorObj X) (sigmaDFunctorObj Y) (sigmaDFunctorObj Z)
+        (sigmaDFunctorMap f) (sigmaDFunctorMap g)) := by
+  apply SigmaSpHom.ext
+  funext i
+  simp only [sigmaDFunctorMap, CategoryStruct.comp, List.map_flatMap, List.flatMap_map, List.map_map]
+  induction f.components i with
+  | nil => rfl
+  | cons hd tl ih =>
+      rw [List.flatMap_cons, List.flatMap_cons]
+      cases hd with
+      | mk j fij =>
+          -- 先处理尾部（用归纳假设），再证头部
+          rw [ih]
+          congr 1
+          -- 头部元素：map 保复合（dfunctorMapTransport'_comp）
+          dsimp
+          apply congrArg (fun h => (g.components j).map h)
+          funext ⟨k, gjk⟩
+          apply congrArg (Sigma.mk k)
+          ext
+          -- 注意：不展开 dfunctorMapTransport'（展开后 Option.rec 不可归约，且会破坏
+          -- dfunctorMapTransport'_comp 的重写匹配）；只展开外层 dfunctorMapTransport。
+          simp [dfunctorMapTransport, dfunctorMapTransport'_comp, SpHom.comp_P]
+          rfl
+
+/-- Σ-D 函子（定理 15.3 完整版）：Σ-Rec → Σ-Spec。
+    对象层 = 逐分量 D 作用，态射层 = `dfunctorMapTransport` 搬运；
+    Functor 律由 `sigmaDFunctorMap_id` / `sigmaDFunctorMap_comp` 闭合。 -/
+noncomputable def sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj where
+  obj := sigmaDFunctorObj
+  map := sigmaDFunctorMap
+  map_id := sigmaDFunctorMap_id
+  map_comp := sigmaDFunctorMap_comp
 
 /-- Theorem 15.3: Σ-D preserves countable coproducts.
     Σ-D(⨁_i R_i) = ⨁_i D(R_i) by construction. -/
