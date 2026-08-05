@@ -146,6 +146,24 @@ $$
 
 > **完整生命周期**（框架立场）：形成 → Hawking 蒸发（信息保持于谱不变性）→ Planck 截断 → 量子反弹（Paper IX §4.3）。所有环节在 Lean 中机器证明（`BlackHoleEvolution.lean` + `BlackHoleBounce.lean`，零 sorry）。
 
+### 5.5 Kerr 蒸发动力学推广【谱新增，v0.2】
+
+**定理 5.10**（Kerr 谱温度归约与转动蒸发动力学）。转动黑洞（Kerr，a* = J/M² ∈ [0,1)）的霍金温度以 Schwarzschild 谱温度为基准按归约因子衰减：
+
+$$T_{\mathrm{Kerr}}(M, a^*) = \frac{\Delta\lambda_{\min}}{2\pi M}\cdot f(a^*),\qquad f(a^*) = \frac{2\sqrt{1-a^{*2}}}{1+\sqrt{1-a^{*2}}} \in (0,1],$$
+
+且 (i) 归约：f(0) = 1（Schwarzschild 谱极限 T_Kerr = Δλ_min/(2πM)）；(ii) 转动降温：f 随 a* 单调递减（T_Kerr(a*₁) > T_Kerr(a*₂) for a*₁ < a*₂）；(iii) 极端冷却：a* → 1 时 f → 0（极端 Kerr 蒸发终止）。蒸发动力学（超辐射优先辐射角动量，r_J > 1）：
+
+$$dM/dt = -\alpha\, f(a^*)^4/M^2,\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M.$$
+
+*证明要点*。（1）标准 Bekenstein-Hawking Kerr 温度 T ∝ (r_+ − r_−)/(r_+² + a²) 与 Schwarzschild 温度之比化简为 f(a*)。（2）f(0) = 2·1/(1+1) = 1；（3）f'(a*) < 0 for a* ∈ (0,1)（分子 √(1−a*²) 递减、分母递增）；（4）a*→1：√(1−a*²) → 0 ⟹ f → 0。（5）dM/dt ∝ T⁴（Stefan-Boltzmann）+ 超辐射 dJ/dt（r_J > 1）给出蒸发动力学。□
+
+**数值**（`paperX_hawking_kerr.py`，6/6 检查，注册 `run_all_tests.py`）：f(0)=1（归约）、T(a*=0.9)/T_S = 0.61（转动降温）、f(1−1e-9) = 8.9e-5（极端冷却）、t_evap(a*₀=0.9)/t_evap(0) = 1.93（蒸发寿命延长，f ≤ 1 数学保证）、a*(t)：0.9 → 0.166 单调递减（超辐射优先辐射角动量，Kerr → Schwarzschild 演化方向）。
+
+**关键结论**：Kerr 转动使霍金温度降低（f ≤ 1）→ 蒸发减慢（寿命延长 1.93×）→ 极端 Kerr 冷却终止蒸发；超辐射优先辐射角动量使 a* 单调递减，转动黑洞演化趋向 Schwarzschild——与谱框架温度判据（Δλ_min 定标）自洽。`KerrFiber.lean` 的线性近似 (1−a*²) 在 a*→0 与标准形状一致（标准形状降温更缓，a*=0.5：0.928 vs 0.75），蒸发动力学采用标准形状。
+
+**诚实边界**：dJ/dt 采用简化超辐射模型（r_J 常数），完整 Kerr 超辐射谱（散射系数 + 转动增强因子）登记为后续精确化；蒸发终点-反弹衔接（定理 5.4–5.9）在 a*=0 极限下保持成立。
+
 ---
 
 ## §6 信息保持
@@ -188,7 +206,7 @@ $$
 
 1. **视界涨落的全量子化**：δT/T 的谱表述已定量化（§5.1-5.3），但度规涨落 δg_μν 的完整谱动力学方程待后续（Paper 16 §10.9.2 定性 → 定量）。
 2. **反弹后宇宙学演化**：a(t) 完整动力学、原初谱的推导属 Paper IX/XXXIX 范畴，不在 P1-3 范围。
-3. **Kerr 推广**：当前为 Schwarzschild（a=0）；Kerr 温度谱（`KerrFiber.lean` 已有）的蒸发动力学推广待后续。
+3. **Kerr 推广**：~~当前为 Schwarzschild（a=0）；Kerr 温度谱（`KerrFiber.lean` 已有）的蒸发动力学推广待后续~~ **🔶 部分闭合（2026-08-05，定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×，a* 单调递减）；`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`。诚实边界：简化超辐射模型（r_J 常数），完整超辐射谱为后续。
 
 ---
 
@@ -198,3 +216,12 @@ $$
 - Page (1993) Information in black hole radiation. *Phys. Rev. Lett.* 71, 3743.
 - Paper 8/12/16（本框架黑洞谱动力学纸面层）
 - Paper 27 `paper27_hawking_evaporation.py`（Page 时间 0.647 数值锚点）
+
+---
+
+## 版本记录
+
+| 版本 | 日期 | 变更 |
+|:--:|:--|:--|
+| v0.1 | 2026-08-04 | 初版。定理 2.1–2.7（霍金谱）、3.1–3.4（蒸发动力学）、4.1–4.7（Page 曲线，含精确熵平衡）、5.1–5.9（视界涨落 + 蒸发终点-反弹衔接）、6.1–6.5（信息保持）；Lean 四模块零 sorry + Agda 镜像；数值 `paperX_hawking_spectrum.py` 35/35。 |
+| v0.2 | 2026-08-05 | **Kerr 蒸发动力学推广（定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（Schwarzschild 归约 + 转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×、a* 单调递减）；`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；§8 开放项 3 更新（诚实边界：简化超辐射模型）。 |

@@ -121,6 +121,7 @@ SCRIPTS = [
 
     # === Phase 61D (P1-3): 黑洞量子演化 ===
     ("paperX_hawking_spectrum.py",            "黑洞量子演化：霍金谱 + 蒸发动力学 + Page 曲线 + 视界涨落 + 信息保持 + 量子反弹 (35/35)"),
+    ("paperX_hawking_kerr.py",                "61D Kerr 蒸发动力学：谱温度归约 f(a*) + 转动降温 + 极端冷却 + 超辐射角动量优先辐射 (6/6)"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

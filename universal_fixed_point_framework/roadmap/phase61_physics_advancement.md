@@ -248,7 +248,7 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 | 61C | ~~非微扰重整化与 P0-1 禁闭谱判据衔接~~ | **🔶 部分闭合（2026-08-05）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管（`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`，笔记 §9.3，论文定理 5.3）；诚实边界：pole 为微扰约定函数，完整非微扰求值（瞬子/DS/格点）为后续 |
 | 61D（P1-3 黑洞） | δT/T → δg_μν 全量子化 | P2-5 量子引力深化 |
 | 61D | 反弹后宇宙学演化（a(t)、原初谱） | Paper IX/61A 范畴 |
-| 61D | Kerr 蒸发动力学推广 | P2-5 量子引力深化 |
+| 61D | ~~Kerr 蒸发动力学推广~~ | **🔶 部分闭合（2026-08-05）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温（T(a*=0.9)/T_S = 0.61）+ 极端冷却（f(1−1e-9) = 8.9e-5，蒸发终止）；蒸发动力学（超辐射优先辐射角动量）：t_evap 延长 1.93×、a* 单调递减 0.9→0.166（Kerr → Schwarzschild 演化方向）（`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`，笔记 §1.2，论文定理 5.10）；诚实边界：简化超辐射模型（r_J 常数），完整超辐射谱为后续 |
 
 **已解决并移出任务池**（2026-08-04）：61D 精确熵平衡（定理 4.7）、蒸发终点-反弹衔接（定理 5.4-5.9）；61C 部分可证 sorry（Silence/ThermoFormalism/TestSpectralEquivalence）与假定理正本清源（WeaveBCS）均已完成；61A N_{R⁴} 精确闭式（2026-08-04，`paperX_nR4_closed_form.py` 验证）。
 
@@ -283,3 +283,4 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 | v0.9 | 2026-08-05 | **61C 深化（§七 任务池两项兑现）**：① 谱静默"单向转化"严格定理——定理 5.1 严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$），δ_silence ≥ 1 数值边界（幂律拟合 0.992、大间隙局部指数 → 1）；② β 完整圈图求和测度论严格化——定理 5.2（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 R = 49.4）。`paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.2（§9.1/9.2）+ paper41 v0.2（定理 5.1/5.2，§6/§8 更新）；§七 61C 两行 🔶。 |
 | v0.10 | 2026-08-05 | **61C 非微扰衔接（§七 任务池兑现）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈跨味 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管。`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.3（§9.3）+ paper41 v0.3（定理 5.3，§6/§8 更新）；§七 61C 第三行 🔶。 |
 | v0.11 | 2026-08-05 | **61B κ 机制 Dyson-Schwinger 确认（§七 任务池兑现）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程，禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），解析临界强度 d_crit = 4/(3C_F) = 1.0 GeV²。`paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.7（§5.9）+ paper40 v0.6（定理 5.7，§5.5/§8 更新）；§七 61B κ 行机制确认。 |
+| v0.12 | 2026-08-05 | **61D Kerr 蒸发动力学推广（§七 任务池兑现）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温 + 极端冷却（蒸发终止）；蒸发动力学（超辐射优先辐射角动量）t_evap 延长 1.93×、a* 单调递减（Kerr → Schwarzschild）。`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_black_hole_evolution_formalization.md`（§1.2）+ paper42 v0.2（定理 5.10，§8 开放项 3 更新）；§七 61D Kerr 行 🔶。 |
