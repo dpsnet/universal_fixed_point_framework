@@ -27,7 +27,7 @@ import math
 
 # ---- 两圈跨味 RGE（谱值起步） ----
 M_Z = 91.1876
-M_B, M_C, M_S = 4.2, 1.27, 0.095        # GeV
+M_B, M_C, M_S = 4.2, 1.27, 0.095        # GeV，夸克质量阈值（RGE 分段用，勿覆盖）
 A_INV_MZ = 8.7                            # 谱值 α_s(M_Z)⁻¹（三圈谱值，偏差 2.7%）
 ALPHA_S_EMP = 0.39                        # Cornell 经验有效耦合（待谱定替代）
 
@@ -106,10 +106,10 @@ print("61B 重味 Cornell 有效参数谱定替代：α_s = 0.39 → α_s(m_c) =
 print("=" * 72)
 
 KAPPA = 0.18
-M_C, M_B_Q = 1.5, 4.8    # 有效 charm/bottom 质量（dressing 后，保持）
+M_C_EF, M_B_EF = 1.5, 4.8    # 有效 charm/bottom 质量（dressing 后，保持；勿覆盖 RGE 阈值 M_C）
 
 # === N1：两圈跨味 α_s(m_c) 复核 ===
-a_mc = alpha_s_2loop(M_C_MS := 1.27)
+a_mc = alpha_s_2loop(M_C)
 a_mb = alpha_s_2loop(M_B)
 print(f"\nN1. 两圈跨味跑动：α_s(m_c = 1.27 GeV) = {a_mc:.3f}、α_s(m_b = 4.2 GeV) = {a_mb:.3f}")
 check("N1 两圈跨味 α_s(m_c) ≈ 0.413（61C 独立锚点，PDG 0.40 ± 0.05）",
@@ -117,18 +117,18 @@ check("N1 两圈跨味 α_s(m_c) ≈ 0.413（61C 独立锚点，PDG 0.40 ± 0.05
 
 # === N2/N3/N4：谱定替代 Cornell 求解 ===
 # 经验值 0.39 基准
-L_c_emp = schrodinger_spectrum(M_C, ALPHA_S_EMP, KAPPA)
-L_b_emp = schrodinger_spectrum(M_B_Q, ALPHA_S_EMP, KAPPA)
+L_c_emp = schrodinger_spectrum(M_C_EF, ALPHA_S_EMP, KAPPA)
+L_b_emp = schrodinger_spectrum(M_B_EF, ALPHA_S_EMP, KAPPA)
 # 谱定 0.413（统一标度 m_c，最保守替代：保留 Cornell 单参数结构）
 a_spec = a_mc
-L_c_sp = schrodinger_spectrum(M_C, a_spec, KAPPA)
-L_b_sp = schrodinger_spectrum(M_B_Q, a_spec, KAPPA)
+L_c_sp = schrodinger_spectrum(M_C_EF, a_spec, KAPPA)
+L_b_sp = schrodinger_spectrum(M_B_EF, a_spec, KAPPA)
 
 def dev(M, key):
     return abs(M - PDG[key]) / PDG[key] * 100
 
 def masses(Lc, Lb):
-    return (2 * M_C + Lc[0], 2 * M_C + Lc[1], 2 * M_B_Q + Lb[0], 2 * M_B_Q + Lb[1])
+    return (2 * M_C_EF + Lc[0], 2 * M_C_EF + Lc[1], 2 * M_B_EF + Lb[0], 2 * M_B_EF + Lb[1])
 
 J0, P0, U0, U20 = masses(L_c_emp, L_b_emp)
 J1, P1, U1, U21 = masses(L_c_sp, L_b_sp)
