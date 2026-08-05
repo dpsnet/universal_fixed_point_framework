@@ -1,5 +1,6 @@
 import UFPFormalization.RecCategory
 import UFPFormalization.IFSFractal
+import UFPFormalization.NoiseCategory
 import Mathlib.Data.Fin.Basic
 
 namespace UFPFormalization
@@ -7,7 +8,7 @@ namespace UFPFormalization
 noncomputable section
 
 /-!
-# IFS → Σ-Rec 符号编码（阶段 3 子任务 2，2026-08-05）
+# IFS → Σ-Rec 符号编码（阶段 3 子任务 2，2026-08-05，v0.2）
 
 规划出处：`notes/00_foundations/spectral_category_scope_stratification.md` 阶段 3 任务 1-2
 （"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec"、
@@ -21,30 +22,24 @@ noncomputable section
      （点 = lim f_{i₁}∘f_{i₂}∘⋯(x)）；有限 L 截断给出确定性转移。
   2. `symbolicSlice`：**局部线性片** RecObj——首符号固定为 i 的片（状态 = 长度 L−1
      的符号序列），每片是独立的 RecObj（阶段 3"每片 = Rec_lin 对象"）。
-  3. `symbolicCoproductObj`：**coproduct 对象编码**——分量 = 各片
+  3. `symbolicSigmaRecObj`：**正式 Σ-Rec coproduct 编码**——分量 = 各片
      （`components i = some (slice i)`，i ≥ n 时为 none），整体 = ⨁ᵢ Rᵢ
-     （阶段 3"分形 = ⨁ Rᵢ"的对象层构造，自包含定义）。
+     （阶段 3"分形 = ⨁ Rᵢ"的对象层构造，用 `NoiseCategory.SigmaRecObj`）。
+  4. `symbolicSliceInjection`：**片注入态射**——第 i 片（单点 coproduct）嵌入
+     整体 coproduct 的第 i 分量（阶段 3"线性片的组合"的态射层构造）。
 
-核心引理：`symbolicStep_fixedPoint_eq_zero`——左移补 0 步进不动点的**必要方向**：
-末位为 0（`symbolicStep_fixed_last_zero`）+ 平移链（`symbolicStep_fixed_shift`）
-⟹ 不动点必为全零序列（转移矩阵的迹 = #Fix = 1，对应笔记 §4.4 的谱障碍公式
-tr(T_f) = #Fix(f) 在符号层的结构实例；充分方向见 `symbolicStep_zero_fixed`）。
+核心定理：`symbolicStep_fixedPoint_iff`——左移补 0 步进的**唯一不动点 = 全零序列**
+（完整等价；转移矩阵的迹 = #Fix = 1，对应笔记 §4.4 的谱障碍公式
+tr(T_f) = #Fix(f) 在符号层的实例）。
 
-诚实边界：
-  - 本文件给出**对象级构造**（RecObj / coproduct 编码）与不动点刻画；
-  - 态射层（片嵌入 RecHom、符号转移与各片谱的精确关系）与 Weierstrass 谱隙的
+诚实边界（v0.2 更新）：
+  - v0.1 的自包含 `CoproductObj`/`symbolicCoproductObj` 已被正式 `SigmaRecObj` 编码
+    （`symbolicSigmaRecObj`）替代——`NoiseCategory.lean` 既有编译错误已于 2026-08-05
+    全部修复（`lake build` 3172 jobs 通过，零 `sorry`）；
+  - 符号转移与各片谱的精确关系（谱 coproduct 分解）与 Weierstrass 谱隙的
     Lean 表述依赖有限维谱积分层（mathlib `ContinuousFunctionalCalculus` 桥接），
-    留待阶段 3 子任务 3-4；
-  - `NoiseCategory.lean` 的完整 Σ-Rec 范畴（SigmaRecObj/SigmaRecHom/ι_Σ）当前存在
-    既有编译错误（缺 `CategoryTheory` import 等，2026-08-05 核实），本文件用自包含的
-    `symbolicCoproductObj` 承载构造层；NoiseCategory 编译修复为独立任务。
+    留待阶段 3 子任务 3-4。
 -/
-
-/-- 最小 coproduct 对象编码（自包含）：分量 i = Option RecObj，i ≥ n 时为 none。
-    对齐 NoiseCategory.SigmaRecObj 的 components 结构。 -/
-structure CoproductObj where
-  /-- 分量：索引 i 处的 RecObj（none = 无对象）。 -/
-  components : ℕ → Option RecObj
 
 /-- 符号动力学 RecObj：状态 = 长度 L 的符号序列（Fin L → Fin n），
     步进 = 截断左移 + 末位补 0（确定性、保长）。 -/
@@ -66,10 +61,23 @@ def symbolicSlice (n L : ℕ) (hn : 1 ≤ n) (_hL : 1 ≤ L) (_i : Fin n) : RecO
     if h : j.1 + 1 < L - 1 then s ⟨j.1 + 1, h⟩
     else ⟨0, Nat.lt_of_lt_of_le (Nat.succ_pos 0) hn⟩
 
-/-- coproduct 对象编码：分量 i = 第 i 片（symbolicSlice i），i ≥ n 时无对象。
-    这是"分形 = ⨁ᵢ Rᵢ"（阶段 3）的对象层构造。 -/
-def symbolicCoproductObj (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) : CoproductObj where
+/-- 正式 Σ-Rec coproduct 编码：分量 i = 第 i 片（symbolicSlice i），i ≥ n 时无对象。
+    这是"分形 = ⨁ᵢ Rᵢ"（阶段 3）用 `NoiseCategory.SigmaRecObj` 的对象层构造。 -/
+def symbolicSigmaRecObj (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) : SigmaRecObj where
   components := fun i => if h : i < n then some (symbolicSlice n L hn hL ⟨i, h⟩) else none
+
+/-- 片注入：第 i 片（单点 coproduct）嵌入整体 coproduct 的第 i 分量。
+    态射层构造（阶段 3"线性片的组合"）。 -/
+def symbolicSliceInjection (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) (i : Fin n) :
+    SigmaRecHom (sigmaRecInclusion.obj (symbolicSlice n L hn hL i)) (symbolicSigmaRecObj n L hn hL) where
+  components := fun j =>
+    match j with
+    | 0 => [⟨i.1, by
+      -- 源分量 0 = some (slice i)（inclusion 定义）；目标分量 i.1 = some (slice i)（i.isLt）
+      simp [symbolicSigmaRecObj]
+      exact recCategory.id (symbolicSlice n L hn hL i)
+    ⟩]
+    | _ => []
 
 /-- 符号步进的直接形式：左移 + 末位补 0。 -/
 @[simp]
@@ -142,6 +150,19 @@ lemma symbolicStep_fixedPoint_eq_zero (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L)
   have him : i.1 ≤ i.1 := le_rfl
   have hmL : i.1 ≤ L - 1 := by omega
   exact hmain ((L - 1) - i.1) i.1 rfl him hmL i.isLt
+
+/-- 核心定理（完整等价）：左移补 0 步进的唯一不动点 = 全零序列。
+    转移矩阵的迹 = #Fix = 1——笔记 §4.4 谱障碍公式 tr(T_f) = #Fix(f) 在符号层的实例。 -/
+theorem symbolicStep_fixedPoint_iff (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) (s : Fin L → Fin n) :
+    (symbolicRecObj n L hn hL).step s = s ↔
+      s = fun _ => (⟨0, Nat.lt_of_lt_of_le (Nat.succ_pos 0) hn⟩ : Fin n) := by
+  constructor
+  · intro hs
+    funext i
+    exact symbolicStep_fixedPoint_eq_zero n L hn hL s hs i
+  · intro hs
+    subst hs
+    exact symbolicStep_zero_fixed n L hn hL
 
 end
 

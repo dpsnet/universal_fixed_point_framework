@@ -1,7 +1,7 @@
 # 阶段 3：IFS 分形扩张——Σ-Rec coproduct 谱对应与 Weierstrass 谱隙导出
 
 > **来源**：`notes/00_foundations/spectral_category_scope_stratification.md` §3.3（分形扩张路径）与阶段 3 任务（"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec；至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出"）。
-> **状态**：研究笔记 v0.3（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码）完成**：数值验证 **7/7 检查通过**（`paperX_ifs_sigma_rec_spectral.py`，已注册 `run_all_tests.py`）；Lean 侧 `IFSRecCoding.lean` **编译通过（`lake build`，零 `sorry`）**；**障碍清除**：`NoiseCategory.lean` 既有编译错误全部闭合（3172 jobs 通过，零 `sorry`）。
+> **状态**：研究笔记 v0.4（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）完成**：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价，`lake build` 通过，零 `sorry`）；**障碍清除**：`NoiseCategory.lean` 既有编译错误全部闭合。
 > **规范声明**：本文为**谱新增**推导——"IFS 分解 → Σ-Rec coproduct → 谱对应"的数值验证与构造是阶段 3 的推进记录；`IFSFractal.lean`（IFS/Attractor/SelfSimilarMeasure/HausdorffDim 基础设施）与 `NoiseCategory.lean`（Σ-Rec/ι_Σ，§15.3 D 保持 coproduct 机器证明）为既有资产。
 
 ---
@@ -62,7 +62,7 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 | 阶段 3 组件 | Lean 侧 | 状态 |
 |:--|:--|:--|
 | IFS / 吸引子 / 维数 | `IFSFractal.lean`（IFS、Attractor、SelfSimilarMeasure、HausdorffDim） | ✅ 已有 |
-| **IFS → Σ-Rec 符号编码** | **`IFSRecCoding.lean`（新，2026-08-05，`lake build` 通过，零 `sorry`）**：`symbolicRecObj`（符号动力学 RecObj，左移补 0 步进）、`symbolicSlice`（局部线性片 RecObj）、`symbolicCoproductObj`（coproduct 对象编码）、`symbolicStep_fixedPoint_eq_zero`（不动点 ⟹ 全零，末位为 0 + 平移链） | ✅ 新增 |
+| **IFS → Σ-Rec 符号编码** | **`IFSRecCoding.lean`（v0.2，`lake build` 通过，零 `sorry`）**：`symbolicRecObj`（符号动力学 RecObj）、`symbolicSlice`（局部线性片）、**`symbolicSigmaRecObj`（正式 `SigmaRecObj` coproduct 编码）**、**`symbolicSliceInjection`（片注入态射 `SigmaRecHom`）**、`symbolicStep_fixedPoint_iff`（唯一不动点 = 全零，完整等价） | ✅ 新增 |
 | Σ-Rec coproduct 谱保持 | `NoiseCategory.lean` §15.3（Σ-D 对象层：`sigmaDFunctorObj`，`sigmaD_preserves_coproduct`） | ✅ 已修复（2026-08-05） |
 | Σ-Rec/Σ-Spec Category 与 ι_Σ | `NoiseCategory.lean`（Category 律、`sigmaRecInclusion` 语义修正、`sigmaRecInclusion_faithful`） | ✅ 已修复（2026-08-05） |
 | 谱隙从压缩比导出 | 待（依赖有限维谱积分层） | ⏳ 阶段 3 依赖 |
@@ -75,7 +75,7 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 
 **下一步候选**：
 1. Σ-D 的 Functor 律（`map_id`/`map_comp`）补证（需处理 getD 类型转换 cast）；
-2. 态射层桥接：片嵌入 RecHom（符号转移与各片谱的精确关系，IFSRecCoding 诚实边界）；
+2. 符号转移与各片谱的精确关系（谱 coproduct 分解的 Lean 侧，IFSRecCoding 诚实边界）；
 3. 将 Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题（依赖有限维谱积分层，mathlib `ContinuousFunctionalCalculus` 桥接）。
 
 ---
