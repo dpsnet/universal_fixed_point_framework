@@ -152,6 +152,55 @@ $N{-}\Delta$ 分裂 $m_\Delta - m_N = 294$ MeV（PDG 293.8，锚点校准）。S
 
 $M_{ud}$ 由 $m_\rho$ 定标、$\Delta_{\text{hf}}$ 由 $\Delta{-}N$ 分裂定标——两个锚点为实验输入而非纯第一性；谱框架的"第一性"贡献在于：(1) 手征部分（$\pi$、$K$）完全由谱量（$\langle\bar{q}q\rangle$、$F_\pi$、$m_q$）闭式给出；(2) 组分 dressing $\Delta_{\mathrm{dress}} = \kappa\Lambda_{\mathrm{QCD}}$ 与谱间隙机制挂钩；(3) 色单态分类来自色丛结构（T1）；(4) SU(6) 关系为模型内无输入恒等式。组分模型对 $N/\Delta$ 的 6–8% 偏差为标准已知精度。
 
+### 5.6 κ 组分 dressing 独立谱定【谱新增，2026-08-05】
+
+**开放项 1 部分闭合**：原 $\kappa$ 由 $m_\rho$ 定标反推（§5.5 诚实边界），现给出**纯谱量闭式**（不依赖任何强子质量锚点）：
+
+$$\kappa \;=\; \frac{N_c}{\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}\right)^{\!2}$$
+
+**机制**（谱静默吸收）：禁闭区内（$\mu < \Lambda_{\mathrm{QCD}}$）夸克自能的红外饱和值 $\Sigma(0) = \Delta_{\mathrm{dress}}$ 由谱间隙闭合的"临界耦合"确定——$(\Delta\lambda_3/\Delta\lambda_{\min})^2$ 编码 $M_{\mathrm{Pl}} \to \Lambda_{\mathrm{QCD}}$ 的耦合强度积分，$\pi$ 因子与 $F_\pi$ 谱公式 $F_\pi = \sqrt{N_c}\,\Lambda\,\frac{\Delta\lambda_3}{4\pi\Delta\lambda_{\min}}C_{\mathrm{QCD}}$ 同构（谱积分分母 $2\pi^2$）。组分质量 $M_Q = m_Q + \kappa\Lambda_{\mathrm{QCD}}$。
+
+**数值**（`paperX_qcd_kappa_dressing.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+
+| 量 | 谱定值 | 对标 | 偏差 |
+|:--|:--|:--|:--:|
+| $\kappa$ | $1.909$ | 旧定标 $1.830$ | 4.3% |
+| $\Delta_{\mathrm{dress}}$ | $401$ MeV | — | — |
+| $M_{ud}$ | $404.4$ MeV | 旧定标 $387.6$ | 4.3% |
+| **$m_\rho = 2M_{ud}$（预言）** | **$808.7$ MeV** | PDG $775.3$ | **4.3%** |
+| $\Delta_{\mathrm{dress}}/F_\pi$ | $4.35$ | $M_{ud}/F_\pi = 4.39$ | 自洽 |
+
+**关键**：$m_\rho$ 从"定标锚点"变为"预言"（$F_\pi$ 谱公式复核 $92.1$ MeV vs 实验 $92.2$ 同时自洽）。
+
+**诚实边界**：
+1. $\Lambda_{\mathrm{QCD}}$ 敏感性：$\Delta_{\mathrm{dress}} \propto \Lambda_{\mathrm{QCD}}$ 线性——谱框架值 $210 \pm 10$ MeV 内 $m_\rho$ 预言偏差 $0.6$–$6.8\%$（单标度组分模型的固有敏感性）；
+2. $\Delta_{\mathrm{hf}}$（超精细分裂）仍为第二锚点（开放项 2），$N/\Delta$ 需其定标后方可预言；
+3. 谱积分形式（谱间隙比平方 + $\pi$ 因子）为**谱框架内自洽假设**，与 $F_\pi$ 谱公式同构（结构性一致），但需 Dyson-Schwinger 式独立确认（登记为机制级开放项）。
+
+### 5.7 弦张力与组分 dressing 的谱统一【谱新增，2026-08-05】
+
+**开放项 4 闭合**：Cornell 线性势斜率（弦张力）$\kappa_{\mathrm{lin}}$ 从拟合量变为纯谱量预言，并与定理 5.3 的组分 dressing 系数 $\kappa$ 统一：
+
+$$\sigma \;=\; 4\Lambda_{\mathrm{QCD}}^2,\qquad \sqrt{\sigma} \;=\; 2\Lambda_{\mathrm{QCD}},\qquad \alpha' \;=\; \frac{1}{2\pi\sigma},$$
+
+$$\kappa \;=\; \frac{N_c}{\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}\right)^{\!2} \;\approx\; \frac{\sqrt{\sigma}}{\Lambda_{\mathrm{QCD}}} \;\approx\; 2.$$
+
+**机制**（禁闭标度统一）：线性禁闭势的能量密度由禁闭标度确定——弦张力是"禁闭尺度的平方"（$\sigma = 4\Lambda^2$），组分 dressing 是"禁闭尺度的线性量"（$\Delta_{\mathrm{dress}} = \kappa\Lambda \approx 2\Lambda = \sqrt{\sigma}$），二者构成 2 倍标度统一（$\kappa \approx 2$）。
+
+**数值**（`paperX_qcd_string_tension.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+
+| 量 | 谱定值 | 对标 | 偏差 |
+|:--|:--|:--|:--:|
+| $\sigma = 4\Lambda^2$ | $0.1764$ GeV² | Cornell 拟合 $0.18$（61B） | **2.0%** |
+| $\sqrt{\sigma} = 2\Lambda$ | $420$ MeV | — | 定义恒等 |
+| $\alpha' = 1/(2\pi\sigma)$ | $0.902$ GeV⁻² | 实验 $0.93$ | **3.0%** |
+| $\Delta_{\mathrm{dress}} \approx \sqrt{\sigma}$ | $401 \approx 420$ MeV | — | 4.5% |
+| $\kappa \approx \sqrt{\sigma}/\Lambda$ | $1.909 \approx 2.000$ | — | 4.5% |
+
+**闭环自洽**：σ 谱定（0.1764）替代 61B 拟合（0.18）后，重味 Cornell 径向间距仅变化 $0.67\%$（间距标度 $\propto (\sigma/\mu)^{1/3}$）——61B 重味结果在谱定弦张力下保持成立。
+
+**诚实边界**：$\sigma = 4\Lambda^2$ 与 $\kappa \approx 2$ 的 2 倍统一是谱框架内自洽关系（基于谱框架 $\Lambda = 210$ MeV 三味值），$\sqrt{\sigma} = 2\Lambda$ 为精确恒等、$\sigma$ 与 $\alpha'$ 预言偏差 < 5%；弦张力标度的微观机制（Regge 斜率的谱起源）登记为机制级开放项。
+
 ---
 
 ## 6. 形式化路线（Lean + Agda）
@@ -186,14 +235,15 @@ $M_{ud}$ 由 $m_\rho$ 定标、$\Delta_{\text{hf}}$ 由 $\Delta{-}N$ 分裂定�
 
 ## 8. 未决问题
 
-1. **$\kappa$（dressing 系数）谱定**：组分 dressing 系数 $\kappa$ 由 $m_\rho$ 定标反推，非独立谱推导——需禁闭微扰框架。
-2. **$\Delta_{\text{hf}}$ 谱形式**：超精细分裂的色-Coulomb 谱势严格推导登记为后续。
+1. **$\kappa$（dressing 系数）谱定**——**🔶 部分闭合（2026-08-05，61B 开放项）**：κ 纯谱量闭式 $\kappa = \frac{N_c}{\pi}(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.909$（§5.6），$m_\rho$ 从锚点变预言 $808.7$ MeV（偏差 4.3%）；`paperX_qcd_kappa_dressing.py` 6/6 注册 `run_all_tests.py`。诚实边界：谱积分形式为谱框架内自洽假设，需 Dyson-Schwinger 式独立确认（机制级开放项）。
+2. **$\Delta_{\text{hf}}$ 谱形式**：超精细分裂的色-Coulomb 谱势严格推导登记为后续（$N/\Delta$ 完整预言前置）。
 3. **$\Lambda_{\mathrm{QCD}}$ 味数依赖**：$b_0$ 取 $N_f = 3$（低能）与 PDG $\Lambda^{(5)}$ 的匹配需跨味阈值处理（Phase 61 P0-2 支撑）。
 4. **重味强子（$J/\psi$、$B$、$\Upsilon$）**：含重夸克的束缚态需非相对论谱势（Cornell）扩展——**✅ 部分闭合（2026-08-05，61B 开放项）**：`paperX_qcd_heavy_flavor.py`（6/6 检查，已注册 `run_all_tests.py`）用 Cornell 势 $V(r) = -\tfrac{4\alpha_s}{3r} + \kappa r$ 解重夸克偶素径向 Schrödinger 方程，对标 PDG：
    - **charmonium**（$\alpha_s = 0.39$、$m_c = 1.5$ GeV 有效值）：$J/\psi$ = 3.33 GeV（PDG 3.097，偏差 7.5%）、$\psi(2S)$ = 3.93 GeV（PDG 3.686，6.7%）；径向激发间距 603 MeV（PDG 589，2.3%）；
    - **bottomonium**（$m_b = 4.8$ GeV 有效值）：$\Upsilon$ = 9.476 GeV（PDG 9.460，**0.2%**）、$\Upsilon(2S)$ = 10.050 GeV（PDG 10.023，0.3%）；间距 574 MeV（PDG 563，2.0%）；
    - **紧致性**：1S rms 半径 $J/\psi$ ≈ 0.42 fm、$\Upsilon$ ≈ 0.22 fm（重味紧致，物理合理）；
-   - **诚实边界**：$\alpha_s = 0.39$ 为 Cornell 有效耦合（拟合值，非跑动；跑动值 $\alpha_s(M_Z) \approx 0.118$，1 GeV 标度有效值 ~0.4 一致）；$m_c$/$m_b$ 为有效质量（dressing 后，裸 MS-bar 值 1.27/4.18 GeV）。$\kappa$ 独立谱定与超精细分裂仍开放（见下 1/2）。
+   - **诚实边界**：$\alpha_s = 0.39$ 为 Cornell 有效耦合（拟合值，非跑动；跑动值 $\alpha_s(M_Z) \approx 0.118$，1 GeV 标度有效值 ~0.4 一致）；$m_c$/$m_b$ 为有效质量（dressing 后，裸 MS-bar 值 1.27/4.18 GeV）。
+5. **弦张力 $\kappa_{\mathrm{lin}}$ 与 $\kappa$ 的谱统一**——**✅ 闭合（2026-08-05，61B 开放项）**：σ = 4Λ²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式（§5.7），Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ（偏差 4.5%）、κ ≈ √σ/Λ ≈ 2；`paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`。诚实边界：2 倍标度统一为谱框架内自洽关系，Regge 斜率谱起源登记为机制级开放项。
 
 ---
 
@@ -204,3 +254,5 @@ $M_{ud}$ 由 $m_\rho$ 定标、$\Delta_{\text{hf}}$ 由 $\Delta{-}N$ 分裂定�
 | v0.1 | 2026-08-03 | 初版。T1 色丛、T2 胶子顶点谱封闭、T3 禁闭/渐近自由定量定理、T4 强子谱第一性推导 + 形式化路线 + 数值清单。 |
 | v0.2 | 2026-08-03 | 内联公式统一为标准 `$...$` LaTeX 格式；修正 §4.2 数值（裸耦合 Z-链必要性 + 物理 Λ 单圈值）与 §7 验证清单（对齐脚本 C1–C15）。 |
 | v0.3 | 2026-08-05 | §8 开放项 4（重味强子 Cornell 扩展）**部分闭合**（61B）：`paperX_qcd_heavy_flavor.py` 6/6 通过（J/ψ/ψ'/Υ/Υ' 对标 PDG + 间距 + 紧致性），诚实标注 Cornell 有效参数边界。 |
+| v0.4 | 2026-08-05 | **§5.6 κ 组分 dressing 独立谱定（新增）**：κ = (N_c/π)(Δλ₃/Δλ_min)² 纯谱量闭式，m_ρ 从锚点变预言 808.7 MeV（偏差 4.3%）；§8 开放项 1 **部分闭合**——`paperX_qcd_kappa_dressing.py` 6/6 注册 `run_all_tests.py`，诚实登记 Λ_QCD 敏感性 + 谱积分形式需 Dyson-Schwinger 独立确认。 |
+| v0.5 | 2026-08-05 | **§5.7 弦张力与组分 dressing 谱统一（新增）**：σ = 4Λ²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式，Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ、κ ≈ √σ/Λ ≈ 2；§8 开放项 4（弦张力谱统一）**闭合**——`paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`，诚实登记 Regge 斜率谱起源为机制级开放项。 |

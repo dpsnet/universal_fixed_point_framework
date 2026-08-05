@@ -108,6 +108,8 @@ SCRIPTS = [
     # === Phase 61B (P0-1): SU(3) 色规范完整动力学 ===
     ("paperX_qcd_spectrum.py",                "色规范完整动力学：色丛 + 胶子顶点 + 禁闭渐近自由 + 强子谱 (15/15)"),
     ("paperX_qcd_heavy_flavor.py",            "重味夸克偶素 Cornell 谱势（61B 扩展）：J/ψ/ψ'/Υ/Υ' 对标 PDG + 间距 + 紧致性 (6/6)"),
+    ("paperX_qcd_kappa_dressing.py",          "61B κ 组分 dressing 独立谱定：κ = (N_c/π)(Δλ₃/Δλ_min)² 纯谱量闭式，m_ρ 从锚点变预言 (6/6)"),
+    ("paperX_qcd_string_tension.py",          "61B 弦张力谱统一：σ = 4Λ_QCD²、√σ = 2Λ、κ ≈ √σ/Λ ≈ 2，Cornell 斜率从拟合变预言 (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
