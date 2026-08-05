@@ -204,7 +204,7 @@ Rec_set（集合语义：连续映射）
 - ✅ **子任务 1（数值层）**：`paperX_ifs_sigma_rec_spectral.py`（7/7 检查，已注册 `run_all_tests.py`）+ 笔记 `spectral_phase3_fractal_expansion.md`（v0.2）——Σ-Rec coproduct 谱保持（S3）、Cantor 谱有效秩随维数单调（S4）、**Weierstrass 谱隙从 IFS 参数导出（S5，验证目标命中，gap: 0.0142→0.0043 vs d: 0.904→1.904）**；
 - ✅ **子任务 2（Lean 符号编码）**：新文件 `IFSRecCoding.lean`（`lake build` 通过，零 `sorry`）——`symbolicRecObj`（符号动力学 RecObj，左移补 0 步进）、`symbolicSlice`（局部线性片）、`symbolicCoproductObj`（coproduct 对象编码）、`symbolicStep_fixedPoint_eq_zero`（不动点 ⟹ 全零：末位为 0 + 平移链）；
 - ⏳ 子任务 3-4：D 保持 coproduct 的 Lean 侧 + Weierstrass 谱隙的 Lean 命题（依赖有限维谱积分层）；
-- ⚠️ 障碍登记：`NoiseCategory.lean` 完整 Σ-Rec 范畴存在**既有编译错误**（缺 `CategoryTheory` import、`Full`/`Faithful` 解析失败、ext 失败等），为独立修复任务（阶段 3 完整桥接前置）。
+- ✅ **障碍清除（2026-08-05）**：`NoiseCategory.lean` 既有编译错误**全部闭合**（`lake build` 3172 jobs 通过，零 `sorry`）——Σ-Rec/Σ-Spec Category 律、`sigmaRecInclusion`（map 语义修正 + `Faithful` 诚实修正，`Full` 在无约束 Hom 下不成立）、`Inhabited SpObj` 对齐、Σ-D 对象-态射层构造（`sigmaDFunctorObj`/`sigmaDFunctorMap`/`sigmaD_preserves_coproduct`）。残余：Σ-D 的 Functor 律（`map_id`/`map_comp`）因类型转换 cast 暂以函数层承载（诚实边界）。
 
 **依赖**：mathlib `ContinuousFunctionalCalculus` 桥接（有限维谱积分层）
 

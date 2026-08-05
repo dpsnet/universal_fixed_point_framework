@@ -7,6 +7,7 @@ import UFPFormalization.StaticTopologyFormalization
 import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
 -- mathlib 4.31 中 `Shapes.Coproducts` 模块已不存在（coproduct 定义并入
 -- `Shapes.Products`/`Colimits` 体系），且本文件未使用任何 Limits API，删除该 import。
+import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
 
@@ -69,7 +70,7 @@ private lemma list_flatMap_singleton_eq_map {α β : Type*} (l : List α) (f : �
     l.flatMap (fun a => [f a]) = l.map f := by
   induction l with
   | nil => rfl
-  | cons hd tl ih => simp [List.flatMap, ih, List.map]
+  | cons hd tl ih => simp [ih]
 
 -- Helper: (l.map f).flatMap g = l.flatMap (fun a => g (f a))
 private lemma list_map_flatMap' {α β γ : Type*} (l : List α)
@@ -78,7 +79,16 @@ private lemma list_map_flatMap' {α β γ : Type*} (l : List α)
   induction l with
   | nil => rfl
   | cons hd tl ih =>
-    simp [List.flatMap, List.map, ih, List.append_assoc]
+    simp [ih]
+
+-- Helper: flatMap 结合律（mathlib 4.31 无 `List.bind_assoc`，自建）
+private lemma list_flatMap_assoc {α β γ : Type*} (l : List α)
+    (f : α → List β) (g : β → List γ) :
+    (l.flatMap f).flatMap g = l.flatMap (fun a => (f a).flatMap g) := by
+  induction l with
+  | nil => rfl
+  | cons hd tl ih =>
+    simp [ih, List.append_assoc]
 
 instance : Category SigmaRecObj where
   Hom := SigmaRecHom
@@ -86,24 +96,27 @@ instance : Category SigmaRecObj where
   comp f g := { components := fun i =>
     (f.components i).flatMap fun ⟨j, fij⟩ =>
       (g.components j).map fun ⟨k, gjk⟩ =>
-        ⟨k, (fij ≫ gjk : RecHom _ _)⟩ }
+        ⟨k, ⟨gjk.toFun ∘ fij.toFun, by
+          intro x
+          simp [fij.comm, gjk.comm]⟩⟩ }
   id_comp := by
     intro X Y f
     ext i
-    simp only [List.flatMap_singleton, Category.id_comp, List.map_id]
+    simp [CategoryStruct.id, CategoryStruct.comp, RecHom.id_toFun]
   comp_id := by
     intro X Y f
     ext i
-    simp only [list_flatMap_singleton_eq_map, List.map_singleton,
-               Category.comp_id, List.map_id]
+    simp [CategoryStruct.id, CategoryStruct.comp, RecHom.comp_toFun]
   assoc := by
     intro W X Y Z f g h
     ext i
-    simp only [List.flatMap_assoc, list_map_flatMap', List.map_flatMap,
-               List.map_map, Category.assoc]
+    simp [CategoryStruct.comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map]
+    rfl
 
 /-- Inclusion functor ι_Σ : Rec → Σ-Rec (full and faithful).
-    Maps each Rec object to a singleton Σ-Rec object. -/
+    Maps each Rec object to a singleton Σ-Rec object.
+    i ≠ 0 分量（none 源）给 default 对象的恒等态射——与 `Category.id` 的
+    `[(⟨i, 𝟙 (getD default)⟩)]` 约定一致（原实现给 `[]` 导致 `map_id`/`map_comp` 失败）。 -/
 def sigmaRecInclusion : RecObj ⥤ SigmaRecObj where
   obj R :=
     { components := λ i =>
@@ -114,35 +127,39 @@ def sigmaRecInclusion : RecObj ⥤ SigmaRecObj where
     { components := λ i =>
         match i with
         | 0 => [(⟨0, f⟩)]
-        | _ => [] }
+        | Nat.succ k => [(⟨Nat.succ k, (𝟙 (default : RecObj))⟩)] }
   map_id R := by
-    ext i
-    simp
+    apply SigmaRecHom.ext
+    funext i
+    cases i with
+    | zero => rfl
+    | succ k => rfl
   map_comp f g := by
-    ext i
-    simp
+    apply SigmaRecHom.ext
+    funext i
+    cases i with
+    | zero => rfl
+    | succ k => rfl
 
-/-- Theorem 15.1: Σ-Rec is a well-defined category and ι_Σ is full and faithful. -/
-theorem sigmaRecInclusion_full_faithful : Full sigmaRecInclusion ∧ Faithful sigmaRecInclusion := by
-  constructor
-  · apply Full.mk
-    · intro X Y f
-      exact ⟨{ components := λ i => [(⟨0, f⟩)] }, by
-        ext i; simp⟩
-    · intro X Y f; simp
-  · apply Faithful.mk
-    intro X Y f g h
-    apply RecHom.ext
-    have h0 := congrArg (λ φ => φ.components 0) h
-    simp at h0
-    exact h0
+/-- Theorem 15.1: Σ-Rec is a well-defined category and ι_Σ is faithful（map 单射）。
+    `Functor.Full`（map 满射）在无约束的 `SigmaRecHom` 表示下**不成立**：态射对
+    i ≠ 0（none 源）分量可任意，而 `map f` 强制其为 default 恒等。
+    诚实修正：Faithful 成立；Full 需限定"i ≠ 0 分量恒等"的子类（见 §15.1 注）。 -/
+theorem sigmaRecInclusion_faithful : Functor.Faithful sigmaRecInclusion := by
+  apply Functor.Faithful.mk
+  intro X Y f g h
+  have h0 := congrArg (fun φ => φ.components 0) h
+  simp [sigmaRecInclusion] at h0
+  exact h0
 
 
 /-!
 ## §15.3: Σ-Spec Category and Σ-D Functor Extension
 -/
 
-instance : Inhabited SpObj := ⟨⟨0, 0⟩⟩
+-- Inhabited SpObj：与 `DFunctor.obj (default : RecObj)` 对齐（原 `⟨0, 0⟩` 与
+-- sigmaDFunctor 的 none 分量类型不匹配——Σ-D map 的 getD 需 `default SpObj = DFunctor.obj default`）。
+noncomputable instance : Inhabited SpObj := ⟨DFunctor.obj (default : RecObj)⟩
 
 /-- Σ-Spec object: a countable coproduct of Spec objects. -/
 structure SigmaSpObj where
@@ -154,51 +171,62 @@ structure SigmaSpObj where
 structure SigmaSpHom (X Y : SigmaSpObj) where
   components : ∀ (i : ℕ), List (Σ (j : ℕ), SpHom ((X.components i).getD default) ((Y.components j).getD default))
 
-instance : Category SigmaSpObj where
+noncomputable instance : Category SigmaSpObj where
   Hom := SigmaSpHom
   id X := { components := fun i => [(⟨i, 𝟙 ((X.components i).getD default)⟩)] }
   comp f g := { components := fun i =>
     (f.components i).flatMap fun ⟨j, fij⟩ =>
       (g.components j).map fun ⟨k, gjk⟩ =>
-        ⟨k, (fij ≫ gjk : SpHom _ _)⟩ }
+        ⟨k, ⟨fij.P * gjk.P, by
+          rw [Matrix.mul_assoc, gjk.intertwine]
+          rw [← Matrix.mul_assoc, fij.intertwine]
+          rw [Matrix.mul_assoc]⟩⟩ }
   id_comp := by
     intro X Y f
     ext i
-    simp only [List.flatMap_singleton, Category.id_comp, List.map_id]
+    simp [CategoryStruct.id, CategoryStruct.comp, SpHom.id_P]
   comp_id := by
     intro X Y f
     ext i
-    simp only [list_flatMap_singleton_eq_map, List.map_singleton,
-               Category.comp_id, List.map_id]
+    simp [CategoryStruct.id, CategoryStruct.comp, SpHom.comp_P]
   assoc := by
     intro W X Y Z f g h
     ext i
-    simp only [List.flatMap_assoc, list_map_flatMap', List.map_flatMap,
-               List.map_map, Category.assoc]
+    simp [CategoryStruct.comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map,
+          Matrix.mul_assoc, Function.comp_assoc, Function.comp_apply, Function.comp_def]
 
-/-- Σ-D functor: extension of D : Rec → Spec to Σ-Rec → Σ-Spec.
-    Σ-D(⨁_i R_i) = ⨁_i D(R_i). -/
-noncomputable def sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj where
-  obj X :=
-    { components := λ i =>
-        match X.components i with
-        | some R => some (DFunctor.obj R)
-        | none => none }
-  map f :=
-    { components := λ i =>
-        (f.components i).map λ pair_j =>
-          ⟨pair_j.1, DFunctor.map pair_j.2⟩ }
-  map_id X := by
-    ext i
-    simp
-  map_comp f g := by
-    ext i
-    simp
+/-- 逐分量 getD 桥接（不引用 sigmaDFunctor，可在其定义前声明）：
+    Option.map DFunctor.obj 的 getD = DFunctor.obj (源 getD)。
+    修正 sigmaDFunctor.map 的类型匹配（原 `DFunctor.map` 与 `getD (Option.map ...)` 类型不匹配）。 -/
+@[simp]
+lemma option_map_getD (X : SigmaRecObj) (i : ℕ) :
+    (Option.map DFunctor.obj (X.components i)).getD default = DFunctor.obj ((X.components i).getD default) := by
+  cases h : X.components i with
+  | some R => rfl
+  | none => rfl
+
+/-- 自反等式诱导的 cast 是恒等。 -/
+lemma cast_rfl_id {α : Type} (h : α = α) (x : α) : cast h x = x := by
+  cases h
+  rfl
+/-- Σ-D 的 obj：Σ-D(⨁_i R_i) = ⨁_i D(R_i)（对象层构造）。 -/
+noncomputable def sigmaDFunctorObj (X : SigmaRecObj) : SigmaSpObj :=
+  { components := λ i => Option.map DFunctor.obj (X.components i) }
+
+/-- Σ-D 的 map：逐分量作用 DFunctor.map（态射层构造；getD 类型转换经 option_map_getD）。 -/
+noncomputable def sigmaDFunctorMap {X Y : SigmaRecObj} (f : SigmaRecHom X Y) :
+    SigmaSpHom (sigmaDFunctorObj X) (sigmaDFunctorObj Y) :=
+  { components := λ i =>
+      (f.components i).map λ pair_j =>
+        ⟨pair_j.1, by
+          dsimp [sigmaDFunctorObj]
+          rw [option_map_getD, option_map_getD]
+          exact DFunctor.map pair_j.2⟩ }
 
 /-- Theorem 15.3: Σ-D preserves countable coproducts.
     Σ-D(⨁_i R_i) = ⨁_i D(R_i) by construction. -/
 theorem sigmaD_preserves_coproduct (X : SigmaRecObj) (i : ℕ) :
-    (sigmaDFunctor.obj X).components i = Option.map DFunctor.obj (X.components i) := by
+    (sigmaDFunctorObj X).components i = Option.map DFunctor.obj (X.components i) := by
   rfl
 
 

@@ -1,7 +1,7 @@
 # 阶段 3：IFS 分形扩张——Σ-Rec coproduct 谱对应与 Weierstrass 谱隙导出
 
 > **来源**：`notes/00_foundations/spectral_category_scope_stratification.md` §3.3（分形扩张路径）与阶段 3 任务（"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec；至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出"）。
-> **状态**：研究笔记 v0.2（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码）完成**：数值验证 **7/7 检查通过**（`paperX_ifs_sigma_rec_spectral.py`，已注册 `run_all_tests.py`）；Lean 侧 `IFSRecCoding.lean` **编译通过（`lake build`，零 `sorry`）**——符号动力学 RecObj、局部线性片、coproduct 对象编码、不动点刻画。`NoiseCategory.lean` 完整 Σ-Rec 范畴存在**既有编译错误**（独立修复任务）。
+> **状态**：研究笔记 v0.3（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码）完成**：数值验证 **7/7 检查通过**（`paperX_ifs_sigma_rec_spectral.py`，已注册 `run_all_tests.py`）；Lean 侧 `IFSRecCoding.lean` **编译通过（`lake build`，零 `sorry`）**；**障碍清除**：`NoiseCategory.lean` 既有编译错误全部闭合（3172 jobs 通过，零 `sorry`）。
 > **规范声明**：本文为**谱新增**推导——"IFS 分解 → Σ-Rec coproduct → 谱对应"的数值验证与构造是阶段 3 的推进记录；`IFSFractal.lean`（IFS/Attractor/SelfSimilarMeasure/HausdorffDim 基础设施）与 `NoiseCategory.lean`（Σ-Rec/ι_Σ，§15.3 D 保持 coproduct 机器证明）为既有资产。
 
 ---
@@ -63,11 +63,18 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 |:--|:--|:--|
 | IFS / 吸引子 / 维数 | `IFSFractal.lean`（IFS、Attractor、SelfSimilarMeasure、HausdorffDim） | ✅ 已有 |
 | **IFS → Σ-Rec 符号编码** | **`IFSRecCoding.lean`（新，2026-08-05，`lake build` 通过，零 `sorry`）**：`symbolicRecObj`（符号动力学 RecObj，左移补 0 步进）、`symbolicSlice`（局部线性片 RecObj）、`symbolicCoproductObj`（coproduct 对象编码）、`symbolicStep_fixedPoint_eq_zero`（不动点 ⟹ 全零，末位为 0 + 平移链） | ✅ 新增 |
-| Σ-Rec coproduct 谱保持 | `NoiseCategory.lean` §15.3（Σ-D 保持 coproduct） | ⚠️ 既有编译错误（缺 `CategoryTheory` import 等，2026-08-05 核实，独立修复任务） |
+| Σ-Rec coproduct 谱保持 | `NoiseCategory.lean` §15.3（Σ-D 对象层：`sigmaDFunctorObj`，`sigmaD_preserves_coproduct`） | ✅ 已修复（2026-08-05） |
+| Σ-Rec/Σ-Spec Category 与 ι_Σ | `NoiseCategory.lean`（Category 律、`sigmaRecInclusion` 语义修正、`sigmaRecInclusion_faithful`） | ✅ 已修复（2026-08-05） |
 | 谱隙从压缩比导出 | 待（依赖有限维谱积分层） | ⏳ 阶段 3 依赖 |
 
+**NoiseCategory.lean 修复记录（2026-08-05）**：既有编译错误全部闭合（`lake build` 3172 jobs 通过，零 `sorry`）：
+- Σ-Rec/Σ-Spec `Category` 实例：comp 改用显式态射构造（原 `fij ≫ gjk` 触发 mathlib `instCategory (Hom)` 递归歧义）；律用 `simp [CategoryStruct.id/comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map]` + `Matrix.mul_assoc`/`Function.comp_def` 证明；
+- `sigmaRecInclusion`：map 的 i≠0 分量改为 default 恒等（与 `Category.id` 约定一致，原 `[]` 导致 `map_id`/`map_comp` 失败）；`Full` 诚实修正为 `Faithful`（`Functor.Full` 在无约束 Hom 下不成立——态射对 none 分量可任意，见 §15.1 注）；
+- `Inhabited SpObj` 对齐 `DFunctor.obj (default : RecObj)`（原 `⟨0, 0⟩` 与 Σ-D 的 none 分量类型不匹配）；
+- Σ-D：`sigmaDFunctorObj`/`sigmaDFunctorMap` 对象-态射层构造 + `option_map_getD` 逐分量 getD 桥接 + `sigmaD_preserves_coproduct`（对象层，§15.3 定理 15.3 保留）。Functor 结构（`map_id`/`map_comp`）因类型转换 cast 的 instances 透明度问题暂以函数层承载——诚实边界，后续可攻坚。
+
 **下一步候选**：
-1. 修复 `NoiseCategory.lean` 的既有编译错误（`CategoryTheory` import、`Full`/`Faithful` 解析、ext 失败），使完整 Σ-Rec 范畴可用；
+1. Σ-D 的 Functor 律（`map_id`/`map_comp`）补证（需处理 getD 类型转换 cast）；
 2. 态射层桥接：片嵌入 RecHom（符号转移与各片谱的精确关系，IFSRecCoding 诚实边界）；
 3. 将 Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题（依赖有限维谱积分层，mathlib `ContinuousFunctionalCalculus` 桥接）。
 
@@ -79,7 +86,7 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 |:--|:--|
 | `paperX_ifs_sigma_rec_spectral.py` | 本笔记的数值验证附件（S1-S5，7/7，已注册 `run_all_tests.py`） |
 | `formal_proof/.../IFSRecCoding.lean` | IFS → Σ-Rec 符号编码（子任务 2，编译通过，零 `sorry`） |
+| `formal_proof/.../NoiseCategory.lean` | Σ-Rec/Σ-Spec Category、ι_Σ、Σ-D 对象层（✅ 既有编译错误已全部修复，2026-08-05） |
 | `formal_proof/.../IFSFractal.lean` | IFS 分解基础设施（阶段 3 依赖） |
-| `formal_proof/.../NoiseCategory.lean` | Σ-Rec / ι_Σ / §15.3 D 保持 coproduct（⚠️ 既有编译错误，待修复） |
 | `notes/00_foundations/spectral_category_scope_stratification.md` | 阶段 3 规划出处（§3.3、§4 阶段 3） |
 | `paper/paper1_fractal_spectral_derecursion.md` | 分形 RKHS / IFS 收敛率理论（上层论文） |
