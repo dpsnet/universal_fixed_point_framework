@@ -1,7 +1,7 @@
 # 阶段 3：IFS 分形扩张——Σ-Rec coproduct 谱对应与 Weierstrass 谱隙导出
 
 > **来源**：`notes/00_foundations/spectral_category_scope_stratification.md` §3.3（分形扩张路径）与阶段 3 任务（"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec；至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出"）。
-> **状态**：研究笔记 v0.5（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）+ Σ-D Functor 律闭合**完成：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价，`lake build` 通过，零 `sorry`）；`NoiseCategory.lean` **Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**并组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）。
+> **状态**：研究笔记 v0.6（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）+ Σ-D Functor 律闭合 + 谱 coproduct 分解 Lean 侧（函子层）**完成：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2+**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价 + **谱 coproduct 分解三定理**，`lake build` 通过，零 `sorry`）；`NoiseCategory.lean` **Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**并组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）。
 > **规范声明**：本文为**谱新增**推导——"IFS 分解 → Σ-Rec coproduct → 谱对应"的数值验证与构造是阶段 3 的推进记录；`IFSFractal.lean`（IFS/Attractor/SelfSimilarMeasure/HausdorffDim 基础设施）与 `NoiseCategory.lean`（Σ-Rec/ι_Σ，§15.3 D 保持 coproduct 机器证明）为既有资产。
 
 ---
@@ -78,9 +78,14 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
   - `sigmaDFunctorMap_id`/`sigmaDFunctorMap_comp` 在列表层用归纳 + `rw [ih]` + `congr 1`（头部元素用 `congrArg`+`funext ⟨k, gjk⟩`+`ext`+`simp`），`simp` 中**不展开 `dfunctorMapTransport'`**（展开后 `Option.rec` 不可归约且破坏重写匹配）；
   - 组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`map_id := sigmaDFunctorMap_id`，`map_comp := sigmaDFunctorMap_comp`）。**诚实边界闭合：Σ-D Functor 律从"函数层承载"升格为"正式函子"**。
 
+**谱 coproduct 分解 Lean 侧（2026-08-05，IFSRecCoding v0.2+ 闭合）**：借助 `sigmaDFunctor` 正式函子与 `symbolicStep_fixedPoint_iff` 唯一不动点定理，`IFSRecCoding.lean` 新增三定理，闭合"符号转移与各片谱的精确关系"的**函子层**：
+- **对象层** `symbolicSigmaRecObj_spectral_components`：Σ-D(symbolicSigmaRecObj) 的第 i 分量 = D(slice i)（i < n），i ≥ n 为空——"整体谱 = 各片谱的 coproduct"（对齐 `sigmaD_preserves_coproduct`，定理 15.3）；
+- **态射层** `symbolicSliceInjection_spectral_component0`：片注入的 Σ-D 像在分量 0 恰含一个态射（`length = 1`）且指向分量 i（`head?.map Sigma.fst = some i.1`）——片嵌入经 Σ-D 保持。注：态射层取列表结构度量而非 SpHom 字面量——后者在语句层需 getD 类型定义性归约（`sigmaDFunctor`/`sigmaRecInclusion` 展开），受透明度限制，诚实登记为表述选择；
+- **迹公式实例** `symbolicTransferMatrix_trace_eq_one`：tr(T_step) = #Fix = 1——`symbolicStep_fixedPoint_iff`（唯一不动点）接到谱侧的机器证明，对齐笔记 §4.4 的谱障碍公式 tr(T_f) = #Fix(f)（`Matrix.trace` + `Finset.sum_eq_single`，含 `Matrix.diag` 展开与 `∑` binder 显式类型标注）。
+
 **下一步候选**：
 1. ✅ ~~Σ-D 的 Functor 律（`map_id`/`map_comp`）补证~~（**已闭合**，2026-08-05：见上 Σ-D 态射层记录）；
-2. 符号转移与各片谱的精确关系（谱 coproduct 分解的 Lean 侧，IFSRecCoding 诚实边界）；
+2. ✅ ~~符号转移与各片谱的精确关系（谱 coproduct 分解的 Lean 侧）~~（**函子层已闭合**，2026-08-05：见上三定理；特征值级谱分解仍依赖有限维谱积分层）；
 3. 将 Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题（依赖有限维谱积分层，mathlib `ContinuousFunctionalCalculus` 桥接）。
 
 ---

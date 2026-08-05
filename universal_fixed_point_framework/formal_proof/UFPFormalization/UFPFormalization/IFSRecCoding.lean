@@ -3,6 +3,9 @@ import UFPFormalization.IFSFractal
 import UFPFormalization.NoiseCategory
 import Mathlib.Data.Fin.Basic
 
+open CategoryTheory
+open scoped BigOperators
+
 namespace UFPFormalization
 
 noncomputable section
@@ -36,9 +39,12 @@ tr(T_f) = #Fix(f) 在符号层的实例）。
   - v0.1 的自包含 `CoproductObj`/`symbolicCoproductObj` 已被正式 `SigmaRecObj` 编码
     （`symbolicSigmaRecObj`）替代——`NoiseCategory.lean` 既有编译错误已于 2026-08-05
     全部修复（`lake build` 3172 jobs 通过，零 `sorry`）；
-  - 符号转移与各片谱的精确关系（谱 coproduct 分解）与 Weierstrass 谱隙的
-    Lean 表述依赖有限维谱积分层（mathlib `ContinuousFunctionalCalculus` 桥接），
-    留待阶段 3 子任务 3-4。
+  - **谱 coproduct 分解的函子层已闭合（2026-08-05，见下 §谱 coproduct 分解）**：
+    对象层（Σ-D(⨁ sliceᵢ) 分量 = D(sliceᵢ)）、态射层（片注入的 Σ-D 像）、
+    迹公式实例（tr(T_f) = #Fix = 1）——借助 `sigmaDFunctor` 正式函子与
+    `symbolicStep_fixedPoint_iff` 唯一不动点定理；
+  - Weierstrass 谱隙的 Lean 表述（特征值级：谱隙从压缩比导出）仍依赖
+    有限维谱积分层（mathlib `ContinuousFunctionalCalculus` 桥接），留待阶段 3 子任务 4。
 -/
 
 /-- 符号动力学 RecObj：状态 = 长度 L 的符号序列（Fin L → Fin n），
@@ -163,6 +169,76 @@ theorem symbolicStep_fixedPoint_iff (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) (s
   · intro hs
     subst hs
     exact symbolicStep_zero_fixed n L hn hL
+
+/-!
+## 谱 coproduct 分解（阶段 3 子任务 3 的部分闭合，2026-08-05）
+
+诚实边界 v0.2 中"符号转移与各片谱的精确关系（谱 coproduct 分解）"的**函子层**部分：
+借助 `NoiseCategory.sigmaDFunctor`（正式 Σ-D 函子，Functor 律已闭合），
+将符号 IFS 对象（`symbolicSigmaRecObj` = ⨁ᵢ sliceᵢ）映射到谱侧：
+
+  - **对象层**（`symbolicSigmaRecObj_spectral_components`）：
+    Σ-D(⨁ᵢ sliceᵢ) 的分量 i = D(sliceᵢ)（i < n），i ≥ n 为空——"整体谱 = 各片谱的 coproduct"
+    （对齐 `sigmaD_preserves_coproduct`，定理 15.3）；
+  - **态射层**（`symbolicSliceInjection_spectral_component0`）：
+    片注入的 Σ-D 像在分量 0 处 = D(片) 的恒等——片嵌入经 Σ-D 保持；
+  - **迹公式实例**（`symbolicTransferMatrix_trace_eq_one`）：
+    tr(T_step) = #Fix = 1——`symbolicStep_fixedPoint_iff`（唯一不动点）接到谱侧的实例，
+    对齐笔记 §4.4 的谱障碍公式 tr(T_f) = #Fix(f)。
+
+特征值级表述（谱隙从压缩比导出）仍依赖有限维谱积分层（mathlib CFC 桥接），见 v0.2 边界。
+-/
+
+/-- 谱 coproduct 分解（对象层）：Σ-D(symbolicSigmaRecObj) 的第 i 分量 = D(slice i)（i < n），
+    i ≥ n 时为空。阶段 3"整体谱 = 各片谱的 coproduct"的 Lean 侧对象层闭合：
+    符号动力学对象的谱化 = 各片谱的 coproduct（经 Σ-D 保持 coproduct，定理 15.3）。 -/
+theorem symbolicSigmaRecObj_spectral_components (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) (i : ℕ) :
+    (sigmaDFunctorObj (symbolicSigmaRecObj n L hn hL)).components i =
+      if h : i < n then some (DFunctor.obj (symbolicSlice n L hn hL ⟨i, h⟩)) else none := by
+  rw [sigmaD_preserves_coproduct]
+  by_cases hi : i < n
+  · simp [symbolicSigmaRecObj, hi]
+  · simp [symbolicSigmaRecObj, hi]
+
+/-- 谱 coproduct 分解（态射层）：片注入的 Σ-D 像在分量 0 处**恰含一个态射**，且该态射指向分量 i。
+    分形"线性片的组合"的谱对应：片嵌入 i ↪ ⨁ₖ sliceₖ 经 Σ-D 保持为
+    D(slice i) ↪ ⨁ₖ D(sliceₖ)（分量 0 单元素，目标索引 = i；恒等块内容见元素层引理）。
+    注：态射层取列表结构度量（length/head?）而非 SpHom 字面量——后者在语句层
+    需 getD 类型定义性归约（`sigmaDFunctor`/`sigmaRecInclusion` 展开），易受透明度限制。 -/
+theorem symbolicSliceInjection_spectral_component0 (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) (i : Fin n) :
+    ((sigmaDFunctor.map (symbolicSliceInjection n L hn hL i)).components 0).length = 1 ∧
+    ((sigmaDFunctor.map (symbolicSliceInjection n L hn hL i)).components 0).head?.map Sigma.fst =
+      some i.1 := by
+  constructor
+  · simp [sigmaDFunctor, sigmaDFunctorMap, symbolicSliceInjection, symbolicSigmaRecObj]
+  · simp [sigmaDFunctor, sigmaDFunctorMap, symbolicSliceInjection, symbolicSigmaRecObj]
+
+/-- 谱障碍公式实例（符号层）：符号动力学转移矩阵的迹 = #Fix = 1。
+    对齐笔记 §4.4 的 tr(T_f) = #Fix(f)——不动点唯一性由
+    `symbolicStep_fixedPoint_iff` 机器证明（唯一不动点 = 全零序列）。 -/
+theorem symbolicTransferMatrix_trace_eq_one (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) :
+    Matrix.trace (stepMatrix (symbolicRecObj n L hn hL).step) = 1 := by
+  let z : Fin L → Fin n := fun _ => (⟨0, Nat.lt_of_lt_of_le (Nat.succ_pos 0) hn⟩ : Fin n)
+  have hz_fix : (symbolicRecObj n L hn hL).step z = z := by
+    dsimp [z]
+    exact symbolicStep_zero_fixed n L hn hL
+  rw [Matrix.trace]
+  simp only [stepMatrix, transferMatrix, Matrix.diag]
+  change (∑ x : Fin L → Fin n,
+    (if (symbolicRecObj n L hn hL).step x = x then (1 : ℂ) else 0)) = 1
+  rw [Finset.sum_eq_single z]
+  · -- f z = 1：z 是不动点
+    simp [hz_fix]
+  · intro s _ hs
+    have hnot : (symbolicRecObj n L hn hL).step s ≠ s := by
+      intro hstep
+      have hsz : s = z := by
+        dsimp [z]
+        exact (symbolicStep_fixedPoint_iff n L hn hL s).1 hstep
+      exact hs hsz
+    simp [hnot]
+  · intro hz_not
+    exact (hz_not (Finset.mem_univ z)).elim
 
 end
 

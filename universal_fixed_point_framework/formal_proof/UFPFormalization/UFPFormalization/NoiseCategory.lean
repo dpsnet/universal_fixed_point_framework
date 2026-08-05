@@ -257,6 +257,14 @@ lemma dfunctorMapTransport'_id (A : Option RecObj) :
   | some R => simp [dfunctorMapTransport', DFunctor.map_id]
   | none => simp [dfunctorMapTransport', DFunctor.map_id]; rfl
 
+/-- `dfunctorMapTransport'` 在 `some` 分量上的恒等特化：搬运 `𝟙 R` = `𝟙 (D R)`。
+    供 IFSRecCoding 的片注入谱像定理使用。 -/
+@[simp]
+lemma dfunctorMapTransport'_some_id (R : RecObj) :
+    dfunctorMapTransport' (some R) (some R) (𝟙 R) =
+      (𝟙 (DFunctor.obj R) : SpHom (DFunctor.obj R) (DFunctor.obj R)) := by
+  simp [dfunctorMapTransport', DFunctor.map_id]
+
 /-- Σ-D 的 obj：Σ-D(⨁_i R_i) = ⨁_i D(R_i)（对象层构造）。 -/
 noncomputable def sigmaDFunctorObj (X : SigmaRecObj) : SigmaSpObj :=
   { components := λ i => Option.map DFunctor.obj (X.components i) }
