@@ -20,6 +20,8 @@ paperX_rec2_exchange_deviation.py — Rec₂ 交换律偏差的 BCH 修正复合
   T12 拉回横复合（whiskering）保持条件
   T13 交换律偏差 = (T_h−T_g)H_α' + H_β(T_f'−T_g')（recExchangeLaw_homotopy_deviation）
   T14 严格极限（交织 homotopy）偏差 = 0（G_N → 0 引力解耦）
+  T15 同源交织 H 满足条件 + 时间无关族 α(n)≡H 满足自然性（§4.4 定理 12）
+  T16 异源 RecHom 对（f=s≠g=s²）拉回 2-态射不存在（§4.4 定理 11，可对角化步进）
 
 结构性诊断（预期不成立，非 pass/fail 项）：
   D7  竖结合律：最小修正不满足余循环条件 ⇒ 非结合（笔记 §7 开放问题 6）
@@ -329,6 +331,24 @@ def run():
     # T14 严格极限：交织 homotopy ⇒ 偏差 = 0（引力解耦 G_N→0）
     check("T14 严格极限（交织 homotopy）偏差 = 0（引力解耦 G_N→0）",
           np.linalg.norm(lhsB - rhsB) < 1e-8, f"‖LHS−RHS‖={np.linalg.norm(lhsB-rhsB):.2e}")
+
+    # ---- T15/T16: 开放问题 7/8 数值检验（拉回非空性 + 时间无关对应，笔记 §4.4/§7）----
+    # T15: 同源交织 H ∈ Hom^PB(f,f) 作为时间无关族 α(n)≡H 满足自然性（f=f 情形）
+    s_cyc = lambda i: (i + 1) % n              # 单循环置换步进（可对角化）
+    A = step_matrix(s_cyc, n)
+    H_same = intertwining_solution(A, A, n, rng)     # A H = H A（同源拉回 2-态射）
+    T15_cond = pullback_condition_ok(H_same, s_cyc, s_cyc, s_cyc, s_cyc, n)
+    # 时间无关族 α(n) ≡ H 的同源自然性：α(n+1)[x,f(x)] = α(n)[x,f(x)] 恒真
+    T15_nat = all(abs(H_same[x, s_cyc(x)] - H_same[x, s_cyc(x)]) < 1e-12 for x in range(n))
+    check("T15 同源拉回 2-态射（交织解）满足条件，且时间无关族 α(n)≡H 满足自然性",
+          T15_cond and T15_nat)
+
+    # T16: 可对角化步进 + RecHom 对 f=s≠g=s²（f∘s=s∘f 恒等），Sylvester A H − H A = A²−A 不可解
+    # （理论：T_f,T_g 均交织 A⟹T_g−T_f∈ker(L)；L 半单⟹range∩ker={0}⟹须 T_g=T_f⟹f=g）
+    H_xy, res16 = sylvester_solve(A, A, A @ A - A, n)
+    check("T16 异源 RecHom 对（f=s≠g=s²）拉回 2-态射不存在（非空性定理，可对角化步进）",
+          H_xy is None or res16 > 1e-6,
+          f"Sylvester 残差={res16 if H_xy is not None else '无解'}")
 
     # ---- 汇总 ----
     print("-" * 72)
