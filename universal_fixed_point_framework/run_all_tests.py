@@ -104,6 +104,7 @@ SCRIPTS = [
     # === Phase 61A (P1-4): 暴涨完整动力学 ===
     ("paperX_inflation_dynamics.py",          "暴涨完整动力学：N_e 闭式 + 再加热 + 动态连续极限 + PGW 闭环 (15/15)"),
     ("paperX_nR4_closed_form.py",             "N_{R⁴} 精确闭式：R⁴ 修正对 e 折叠数贡献 (闭式 vs 数值积分，相对偏差 < 0.1%)"),
+    ("paperX_bounce_inflation.py",            "61A P1-3↔P1-4 衔接：蒸发终点(Planck 残留)→量子反弹→暴涨(D3.1 FLRW 谱流)，Δλ_min 统一判据 (6/6)"),
 
     # === Phase 61B (P0-1): SU(3) 色规范完整动力学 ===
     ("paperX_qcd_spectrum.py",                "色规范完整动力学：色丛 + 胶子顶点 + 禁闭渐近自由 + 强子谱 (15/15)"),

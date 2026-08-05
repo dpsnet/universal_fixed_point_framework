@@ -149,6 +149,16 @@ $$\frac{d}{dt}\lambda_k(t) = -2H(t)\,\lambda_k(t)\;\Longrightarrow\; a(t) = a_0\
 
 **推论 5.1**（动态替代静态）。定理 D3.1 将 Paper XXXIV 的静态嵌入 $\Phi$ 推广为单参数族 $\{\Phi_t\}$，直接回应终评"当前只有静态嵌入"的缺口。
 
+**推论 5.2**（P1-3 ↔ P1-4 动态连续极限衔接，v0.4）。黑洞蒸发终点（Planck 残留 $M(t_{pl}) = M_{\mathrm{Pl}}$，Paper 42 定理 5.5/5.9）→ 量子反弹（$H^2(\rho_c) = 0$，$a_{\min} = 1/\Delta\lambda_{\min}^2$，Paper 42 定理 5.7/5.8）→ 反弹后膨胀 → 本文动态连续极限（定理 D3.1），**完整链由单一谱参数 $\Delta\lambda_{\min}$ 贯穿**：
+
+$$a_{\min} = \frac{1}{\Delta\lambda_{\min}^2},\qquad H \to H_{\inf},\qquad \lambda_k(t) = \lambda_k(0)\left(\frac{a_{\min}}{a(t)}\right)^2.$$
+
+*证明要点*。（1）反弹尺度 $a_{\min} \propto 1/\Delta\lambda_{\min}^2$（谱截断最小尺度，Paper 42 定理 5.8 的 $\Delta\lambda_{\min}$ 依赖）。（2）反弹后能量密度 $\rho(N) = (\rho_c - V_\varphi)e^{-4N} + V_\varphi$（辐射 + 慢滚常数势），有效 Friedmann $H^2 = (8\pi/3)\rho(1-\rho/\rho_c)$ 在 $N \to \infty$ 时 $H \to \sqrt{(8\pi/3)V_\varphi} = H_{\inf}$（定理 D3.1 的 FLRW 谱生成元一致）。（3）D3.1 特征值动力学 $d\lambda_k/dt = -2H\lambda_k$ 与 $a = a_{\min}e^N$ 结合给出 $\lambda_k = \lambda_k(0)(a_{\min}/a)^2$（红移闭式）。□
+
+**数值**（`paperX_bounce_inflation.py`，6/6 检查，注册 `run_all_tests.py`）：反弹点 $H^2(\rho_c) = 0$、$a_{\min} = 1/\Delta\lambda_{\min}^2 = 67.2$；反弹后 $a$ 单调增长（67.2 → 1.1×10⁷）；暴涨衔接 $H \to H_{\inf} = 6.6\times10^{-4}$（比值 1.000，与 §6.2 预言 $V_0^{1/4} = 8.1\times10^{15}$ GeV 一致）；谱流特征值红移 $\lambda_k = \lambda_k(0)e^{-2N} = \lambda_k(0)(a_{\min}/a)^2$（闭式自洽，偏差 5.6×10⁻¹⁶）；$\Delta\lambda_{\min}$ 同时终止蒸发与定标反弹尺度（统一谱判据）。
+
+**诚实边界**：反弹后能量模型为辐射 + 慢滚常数势简化（完整再加热动力学 $\gamma_\varphi$ 属 §9 开放问题 1 范畴）；反弹前收缩相为量级处理。
+
 ---
 
 ## 6. D4：原初引力波预言闭环
@@ -212,7 +222,7 @@ F1–F3 构成定理 D3.1 的算子代数核心，分别在 Lean `InflationDynam
 1. $\gamma_\varphi$（再加热衰变耦合）的谱第一性确定——需 Cosmo-2 层粒子谱内容；
 2. ~~$N_{R^4}$ 的精确闭式（本文为量级估计）~~ **✅ 已解决（2026-08-04）**：$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$，$\delta_2 = c_3/c_1^2 = 0.007442$，数值 $-0.0157$，`paperX_nR4_closed_form.py` 数值积分验证（相对偏差 0.044%）。详见定理 3.2 注记；
 3. 定理 D3.1(3) 的严格微分几何度规诱导验证（本文为结构论证）；
-4. 动态连续极限与 P1-3 黑洞方向的衔接（Phase 61 计划中 P1-3 依赖动态连续极限）。
+4. ~~动态连续极限与 P1-3 黑洞方向的衔接~~ **🔶 部分闭合（2026-08-05，推论 5.2）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 动态连续极限（D3.1）由单一谱判据 Δλ_min 贯穿（a_min = 1/Δλ_min²、H → H_inf、谱流特征值红移闭式）；`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`。诚实边界：反弹后能量模型简化（完整再加热动力学 $\gamma_\varphi$ 属开放问题 1）。
 
 ---
 
@@ -238,3 +248,4 @@ F1–F3 构成定理 D3.1 的算子代数核心，分别在 Lean `InflationDynam
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 D3.1 动态连续极限；预言闭环定理 6.1；形式化 F1–F3。 |
 | v0.2 | 2026-08-03 | 自包含修订（正文移除笔记引用）+ 内联公式统一为标准 `$...$` LaTeX 格式。 |
 | v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（补缺）**：定理 3.2 的 $N_{R^4}$ 由量级估计升级为精确闭式 $N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}}-x_{\text{end}}) + \frac{x_{\text{cmb}}^2-x_{\text{end}}^2}{2}\right]$（$\delta_2 = c_3/c_1^2$，数值 $-0.0157$）；开放问题 2 移出（标记 ✅ 已解决）；`paperX_nR4_closed_form.py` 数值积分验证（相对偏差 0.044%）。 |
+| v0.4 | 2026-08-05 | **P1-3 ↔ P1-4 动态连续极限衔接（推论 5.2，§5）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 动态连续极限（定理 D3.1）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、暴涨衔接 H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)²（闭式自洽）；`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`；开放问题 4 更新（🔶 部分闭合）。 |
