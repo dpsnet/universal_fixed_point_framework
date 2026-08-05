@@ -221,6 +221,26 @@ $$\kappa \;=\; \frac{N_c}{\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}
 
 **诚实边界**：$\sigma = 4\Lambda^2$ 与 $\kappa \approx 2$ 的 2 倍统一是谱框架内自洽关系（基于谱框架 $\Lambda = 210$ MeV 三味值），$\sqrt{\sigma} = 2\Lambda$ 为精确恒等、$\sigma$ 与 $\alpha'$ 预言偏差 < 5%；弦张力标度的微观机制（Regge 斜率的谱起源）登记为机制级开放项。
 
+### 5.8 $\Delta_{\text{hf}}$ 色-Coulomb 谱势严格推导【谱新增，2026-08-05】
+
+**开放项 2 部分闭合**：超精细分裂 $\Delta_{\text{hf}}$（原由 $\Delta{-}N$ 分裂定标的第二锚点）现由色-Coulomb + 线性禁闭势数值解严格推导——对轻味 u-d 系统（$\mu = M_{ud}/2$），解 Cornell 势 $V(r) = -\tfrac{4\alpha_s}{3r} + \sigma r$ 的 1S 径向 Schrödinger 方程，从波函数计算原点值 $|\psi(0)|^2$（$\psi(r) = u(r)/r$，$r \to 0$ 极限），代入色磁矩公式：
+
+$$\Delta_{\text{hf}} = \frac{8}{9}\,\alpha_s\,\frac{|\psi(0)|^2}{M_{ud}^2},\qquad m_N = 3M_{ud} - \tfrac{3}{4}\Delta_{\text{hf}},\qquad m_\Delta = 3M_{ud} + \tfrac{3}{4}\Delta_{\text{hf}}.$$
+
+**数值**（`paperX_qcd_hyperfine.py`，6/6 检查通过，已注册 `run_all_tests.py`；$\alpha_s = 0.39$、$\sigma = 0.18$ GeV²、$M_{ud} = 387.6$ MeV）：
+
+| 量 | 谱推导值 | 对标 | 偏差 |
+|:--|:--|:--|:--:|
+| $\|\psi(0)\|^2$（Cornell） | $0.1095$ GeV³ | 纯 Coulomb $0.0003$ | 线性禁闭紧致 ×330 |
+| $\Delta_{\text{hf}}$ | $252.8$ MeV | 定标值 $195.9$ | 量级再现 |
+| $m_N$ | $973$ MeV | PDG $938.3$ | 3.7% |
+| $m_\Delta$ | $1352$ MeV | PDG $1232.0$ | 9.8% |
+| SU(6) $m_N+m_\Delta = 3m_\rho$ | $2326$ MeV | PDG 数据 | 恒等式（$M_{ud}$ 定标） |
+
+**关键**：色-Coulomb + 线性势把 $|\psi(0)|^2$ 从纯 Coulomb 的 $0.0003$ 放大 330 倍到 $0.1095$ GeV³——**线性禁闭的紧致效应使 $\Delta_{\text{hf}}$ 达到百 MeV 量级**（纯 Coulomb 仅 0.75 MeV），$N/\Delta$ 质量预言在 4–10% 内。
+
+**诚实边界**：$\Delta_{\text{hf}}$ 精确值对轻味有效耦合 $\alpha_s$ 敏感（$\alpha_s \in [0.35, 0.45]$ 内 $\Delta_{\text{hf}} \in [216, 313]$ MeV）——$\Delta_{\text{hf}}$ 从定标锚点变为**量级预言**，轻味 $\alpha_s$ 的独立谱定登记为开放项（与 κ 谱积分形式同类的机制级开放项）。
+
 ---
 
 ## 6. 形式化路线（Lean + Agda）

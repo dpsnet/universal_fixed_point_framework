@@ -111,6 +111,7 @@ SCRIPTS = [
     ("paperX_qcd_kappa_dressing.py",          "61B κ 组分 dressing 独立谱定：κ = (N_c/π)(Δλ₃/Δλ_min)² 纯谱量闭式，m_ρ 从锚点变预言 (6/6)"),
     ("paperX_qcd_string_tension.py",          "61B 弦张力谱统一：σ = 4Λ_QCD²、√σ = 2Λ、κ ≈ √σ/Λ ≈ 2，Cornell 斜率从拟合变预言 (6/6)"),
     ("paperX_qcd_flavor_thresholds.py",       "61B Λ_QCD 跨味阈值：N_f 分段 RGE 跑动，跨味比值 Λ^(3)/Λ^(5) 对标 PDG + 谱值跨味 Λ (6/6)"),
+    ("paperX_qcd_hyperfine.py",               "61B Δ_hf 色-Coulomb 谱势严格推导：Cornell 势波函数 |ψ(0)|² → Δ_hf 量级预言 → N/Δ 质量 (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
