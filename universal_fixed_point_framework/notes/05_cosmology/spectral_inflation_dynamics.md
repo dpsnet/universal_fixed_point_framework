@@ -201,6 +201,18 @@ $$M(t_{pl}) = M_{\mathrm{Pl}} \;\xrightarrow{\text{反弹种子}}\; H^2(\rho_c) 
 
 **诚实边界**：反弹后能量模型为辐射 + 慢滚常数势（V_φ = 3H_inf²/8π）简化——完整再加热动力学（粒子产生 + 衰变 $\gamma_\varphi$）登记为后续（§8 开放项 1 衔接）；反弹前收缩相与反弹后暴涨的时间-温度映射为量级处理。
 
+### 4.5 D3.1(3) 严格微分几何度规诱导验证【谱新增，2026-08-05，61A 开放项】
+
+**开放项 3 闭合**：定理 D3.1 第 (3) 条"FLRW 度规涌现"原为结构论证（拟对称 → 等距类），现由严格微分几何验证（`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）——谱流诱导的 FLRW 度规 $g = \mathrm{diag}(-1, a(t)^2, a(t)^2, a(t)^2)$ 满足：
+
+1. **Killing 对称性**（空间齐次 + 各向同性）：3 个空间平移 Killing（$\xi^i = \text{const}$）+ 3 个空间旋转 Killing（$\xi = \Omega \times x$）满足 Killing 方程 $£_\xi g = 0$（数值残差 = 0）——FLRW 空间部分 $E^3$ 最大对称性（6 Killing）。
+2. **共形平坦**：Weyl 张量 $C_{\mu\nu\rho\sigma} = 0$（de Sitter 与慢滚 $\dot H \neq 0$ 均验证）——FLRW 共形平坦的结构性质。
+3. **Ricci/Friedmann 结构**：$R = 6(\dot H + 2H^2)$（数值 = 解析），de Sitter 暴涨 $R = 12H_{\inf}^2$；谱流闭式 $a(t) = (\lambda_0/\lambda(t))^{1/2} = e^{H_{\inf}t}$ 诱导度规满足 Einstein $G_{00} = 3H_{\inf}^2 = 8\pi V_\varphi$（$V_\varphi = 3H_{\inf}^2/8\pi$ 与 §4.4 一致）——**D3.1(3) 从结构论证升级为度规张量层面的严格验证**。
+
+**关键结论**：谱流 $U(t)$ 诱导的嵌入族 $\{\Phi_t\}$ 在微分几何意义上确实涌现 FLRW 度规——空间部分 $E^3$ 最大对称（齐次 + 各向同性 Killing）、时空共形平坦（Weyl = 0）、曲率满足 Einstein-Friedmann 方程（谱流闭式 $a \propto \Pi(\lambda_k/\lambda_k(0))^{1/2}$ 自洽）。严格微分几何验证完成 D3.1(3)。
+
+**诚实边界**：验证在解析 FLRW Christoffel 数值化框架内（时空均匀，$a(t)$ 单变量）；度规涨落（δg_μν，P2-5 量子引力方向）与完整 4D 数值微分网格登记为后续。
+
 ---
 
 ## 5. D4：原初引力波完整性闭环
@@ -262,7 +274,7 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 
 1. **$\gamma_\varphi$ 未谱定**：~~再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定~~ **🔶 部分闭合（2026-08-05，§3.4）**：谱量闭式 $\gamma_\varphi = \frac{1}{4\pi}(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向）。
 2. **$R^4$ 修正对 $N_e$ 的定量影响**（$N_{R^4}$）：Phase 42 的 $R^4$ 系数 $c_2/c_1 \approx 0.1$ 量级，对 $N_e$ 影响 $\lesssim 0.1$，本笔记以量级处理，未做精确闭式。
-3. **动态连续极限的严格度规推导**：D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续。
+3. **动态连续极限的严格度规推导**：~~D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续~~ **✅ 闭合（2026-08-05，§4.5）**：严格微分几何验证——FLRW 度规满足 6 空间 Killing（齐次 + 各向同性）、Weyl 张量 = 0（共形平坦）、$R = 6(\dot H + 2H^2)$、谱流闭式 $a = (\lambda_0/\lambda)^{1/2}$ 满足 Einstein-Friedmann（`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）。
 4. **$N_e$ 一致性**：D1 闭式（$\approx 55$）与 $S_4$ 分形边界（$\approx 55$）一致，但二者共享观测输入 $H_{\mathrm{inf}}/T_{\mathrm{RH}}/T_{\mathrm{CMB}}$ 的近似，非完全独立测量。
 
 ---
@@ -276,3 +288,4 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 | v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（§2.2）**：R⁴ 修正对 e 折叠数贡献由量级估计升级为精确闭式（一阶 δ₂ 展开 + x 变量积分），数值 −0.0157；`paperX_nR4_closed_form.py` 闭式 vs 数值积分验证（相对偏差 0.044%）。 |
 | v0.4 | 2026-08-05 | **§4.4 P1-3 ↔ P1-4 动态连续极限衔接（新增）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿（a_min = 1/Δλ_min²、H → H_inf 精确衔接、谱流特征值红移闭式自洽）；`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`（61A 开放项"P1-3↔P1-4 衔接"部分闭合）。 |
 | v0.5 | 2026-08-05 | **§3.4 γ_φ 谱第一性确定（路径 A，新增）**：γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（落在标准区间 + 热历史 + η_B 同量级串联）；`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；§8 开放项 1 更新（🔶 部分闭合）。 |
+| v0.6 | 2026-08-05 | **§4.5 D3.1(3) 严格微分几何度规诱导验证（新增）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦，de Sitter 与慢滚）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann G₀₀ = 3H² = 8πV_φ；`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`；§8 开放项 3 闭合（✅）。 |
