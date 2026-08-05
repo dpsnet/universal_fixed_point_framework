@@ -120,6 +120,7 @@ SCRIPTS = [
     ("paperX_qcd_alpha_s_light.py",           "61B 轻味 α_s 独立谱定：谱定 M_ud+σ+Cornell 波函数+N-Δ 目标 → 反解 α_s*=0.338 (6/6)"),
     ("paperX_qcd_ds_ab.py",                   "61B κ A/B 耦合精确化：完整 A(p²)/B(p²) DS 求解，匹配 κΛ 所需 d 2.0→1.485 GeV² (6/6)"),
     ("paperX_qcd_flavor_bridge.py",           "61B 跨味衔接：微扰 Λ 122 MeV ↔ 有效值 210 MeV 三层证据闭环（漂移带包含 + DS 桥 + 反证 + ξ≈√N_c）(6/6)"),
+    ("paperX_qcd_heavy_flavor_spectral.py",   "61B 重味 Cornell 参数谱定替代：α_s 0.39→0.419（两圈跨味），4 态平均偏差 3.66%→3.33%，μ_eff=1.39 GeV (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
