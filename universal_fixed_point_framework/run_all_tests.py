@@ -118,6 +118,7 @@ SCRIPTS = [
     ("paperX_qcd_ds_dressing.py",             "61B κ 机制 Dyson-Schwinger 确认：彩虹近似 + MT 红外胶子 → M(0)=353 MeV vs κΛ=401 MeV，临界 d_crit=1.0 (6/6)"),
     ("paperX_regge_origin.py",                "61B Regge 斜率谱起源：ρ/N 强子轨迹线性(r≈1.0) + 转动弦机制 + α'=1/(8πΛ²) 纯谱量闭式 (6/6)"),
     ("paperX_qcd_alpha_s_light.py",           "61B 轻味 α_s 独立谱定：谱定 M_ud+σ+Cornell 波函数+N-Δ 目标 → 反解 α_s*=0.338 (6/6)"),
+    ("paperX_qcd_ds_ab.py",                   "61B κ A/B 耦合精确化：完整 A(p²)/B(p²) DS 求解，匹配 κΛ 所需 d 2.0→1.485 GeV² (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
