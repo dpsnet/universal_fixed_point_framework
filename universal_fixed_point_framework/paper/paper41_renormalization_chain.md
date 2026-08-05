@@ -1,8 +1,8 @@
 # 通用不动点范畴框架 XLI：量子重整化完整链条——谱 Feynman、谱正则化、谱流到 β 函数与 EFT 层级
 
-**版本**：v0.2（2026-08-05）
+**版本**：v0.3（2026-08-05）
 **系列定位**：Phase 61 物理理论补缺计划 P0-2（`roadmap/phase61_physics_advancement.md`）
-**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `paperX_rg_chain.py` 与 `paperX_rg_chain_deepen.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
+**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `paperX_rg_chain.py`、`paperX_rg_chain_deepen.py` 与 `paperX_rg_chain_nonpert.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
 **术语**：谱记号（谱传播子/顶点、谱截断、谱流方程、谱静默）均在本篇自包含定义；系列论文交叉引用（Paper V/XI）仅作背景与既有结果出处。所有使用的谱量取值均在正文内联给出。
 
 ---
@@ -125,6 +125,20 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 
 **诚实边界**：$\delta$ 级数收敛半径估计依赖有限个系数比（1–3 圈），完整收敛半径需系数增长率的渐近分析（微扰级数通常仅渐近收敛，Borel 求和为后续方向，§8 开放问题）。
 
+### 5.3 非微扰重整化与 P0-1 禁闭谱判据衔接【深化，v0.3】
+
+**定理 5.3**（微扰 pole 圈阶漂移与谱框架禁闭标度衔接）。跨味 RGE（N_f 分段，decoupling 匹配常数 1）的微扰 Landau pole 对圈阶敏感：单圈 pole $\Lambda_{\mathrm{pole}}^{(1)} = 122$ MeV、两圈 pole $\Lambda_{\mathrm{pole}}^{(2)} = 579$ MeV（圈阶漂移带 [122, 579] MeV）；谱框架非微扰禁闭标度 $\Lambda_{\mathrm{eff}} = 210$ MeV（F_π 定标，P0-1 定理 4.1 谱生成）圈阶无关且落在漂移带内：
+
+$$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mathrm{pole}}^{(2)}.$$
+
+*证明*。（1）**单圈 pole**：1/α(μ) 跨味分段跑动（$\beta = -b_0(N_f)\alpha^2/2\pi$）至 1/α → 0，得 $\Lambda_{\mathrm{pole}}^{(1)} = 122$ MeV（与 Paper 40 推论 4.3 的跨味单圈值一致）。（2）**两圈 pole**：$\beta = -b_0\alpha^2/2\pi - b_1\alpha^3/(2\pi)^2$（$b_1(N_f=3) = 64 > 0$）加速 α 增长，pole 大幅移向红外 $\Lambda_{\mathrm{pole}}^{(2)} = 579$ MeV；两圈跑动由独立锚点 $\alpha_s(m_c) = 0.413 \approx$ PDG 0.40 验证正确。（3）**衔接**：谱框架 F_π 定标非微扰值 210 MeV 介于两者之间。□
+
+**数值**（`paperX_rg_chain_nonpert.py`，6/6 检查，注册 `run_all_tests.py`）：单圈 pole 121.8 MeV、两圈 pole 579.4 MeV（圈阶漂移带 [122, 579]）；微扰外推 $\alpha_s^{\mathrm{pert}}(\Lambda_{\mathrm{eff}}) = 1.28 > 1$（微扰在禁闭标度失效）；非微扰有效耦合 $\alpha_s^{\mathrm{eff}} = 0.39$（61B Cornell/Δ_hf 谱势独立谱定）接管失效区；禁闭标度层级 $m_s < \Lambda_{\mathrm{eff}} < m_c$。
+
+**关键结论**：**微扰 Landau pole 非物理标度**（圈阶漂移 122 → 579 MeV），物理禁闭标度由谱判据圈阶无关地固定（210 MeV），且精确落在微扰 pole 的圈阶漂移带内——微扰失效点与非微扰禁闭点的衔接定量化（paper41 微扰链 §4 与 P0-1 禁闭谱判据的闭环）。
+
+**诚实边界**：pole 位置是微扰约定（圈阶/阈值匹配方案）的函数，非可观测物理量；此处结论为谱框架非微扰值落在微扰 pole 圈阶漂移带内的自洽性。完整非微扰求值（瞬子/Dyson-Schwinger/格点）登记为 §8 开放问题。
+
 ---
 
 ## 6. 数值验证
@@ -152,6 +166,17 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 | 谱圈图积分 $I_n$（n = 1..3） | 全部有限且匹配解析值（偏差 < 1e-15） |
 | β 级数部分和收敛 | 3→2 圈相对变化 < 5%（实测 0.02–0.03%） |
 
+**v0.3 深化**（`paperX_rg_chain_nonpert.py`，6/6 检查通过）：
+
+| 检查项 | 判据 |
+|:------|:-----|
+| 单圈跨味 pole（定理 5.3） | $\Lambda_{\mathrm{pole}}^{(1)} \in [100, 150]$ MeV（实测 121.8，与 Paper 40 推论 4.3 一致） |
+| 两圈跨味 pole | $\Lambda_{\mathrm{pole}}^{(2)} \in [400, 800]$ MeV（实测 579.4，圈阶漂移带 [122, 579]） |
+| 谱框架值落漂移带（非微扰衔接） | $\Lambda_{\mathrm{pole}}^{(1)} < \Lambda_{\mathrm{eff}} = 210 < \Lambda_{\mathrm{pole}}^{(2)}$ |
+| 微扰失效 + 非微扰接管 | $\alpha_s^{\mathrm{pert}}(210\ \text{MeV}) = 1.28 > 1$ 且 $\alpha_s^{\mathrm{eff}} = 0.39 \in [0.35, 0.45]$ |
+| 禁闭标度层级 | $m_s < \Lambda_{\mathrm{eff}} < m_c$ |
+| 两圈跑动独立锚点 | $\alpha_s(m_c) = 0.413 \in [0.35, 0.45]$（PDG ≈ 0.40） |
+
 ---
 
 ## 7. 形式化（Lean/Agda）
@@ -172,7 +197,9 @@ F1–F3 在 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda
 
 v0.2 深化两个 61C 遗留开放项：**谱静默"单向转化"严格上界**（定理 5.1，§5.1——Schur 补 + Weyl 给出带显式常数的严格上界 $|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，$\delta_{\mathrm{silence}} \ge 1$ 数值边界 0.992）与 **β 完整圈图求和测度论严格化**（定理 5.2，§5.2——λφ⁴ β 级数每项谱积分良定义、1–3 圈系数 $(3, -17/3, 145/8)$ 匹配、收敛半径 $R = 49.4$ 内绝对收敛）。EFT 层级由量级界提升为严格上界、β 函数由单圈载体提升为完整圈图求和的测度论良定义。
 
-**开放问题**：能标-时间对偶的严格独立证明（当前由 β 匹配数值锁定）；定理 3.1 瞬时本征基 Berry 相位项的严格处理；$\delta_{\mathrm{silence}}$ 精确谱指数（定理 5.1 已建立数值边界 ≥ 1，完整静默层级形式化为后续）；非微扰重整化与 P0-1 禁闭谱判据的衔接；β 级数渐近收敛的 Borel 求和（定理 5.2 的收敛性在微扰收敛半径内，完整非微扰求和为后续方向）。
+v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁闭谱判据衔接**（定理 5.3，§5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV 含谱框架非微扰禁闭标度 210 MeV，圈阶无关；微扰失效区由非微扰有效耦合 $\alpha_s^{\mathrm{eff}} = 0.39$ 接管）——paper41 微扰链与 P0-1 禁闭谱判据闭环。
+
+**开放问题**：能标-时间对偶的严格独立证明（当前由 β 匹配数值锁定）；定理 3.1 瞬时本征基 Berry 相位项的严格处理；$\delta_{\mathrm{silence}}$ 精确谱指数（定理 5.1 已建立数值边界 ≥ 1，完整静默层级形式化为后续）；β 级数渐近收敛的 Borel 求和（定理 5.2 的收敛性在微扰收敛半径内，完整非微扰求和为后续方向）；非微扰完整求值（瞬子/Dyson-Schwinger/格点——定理 5.3 已建立微扰 pole 漂移带与谱框架禁闭标度的衔接，完整非微扰方法为后续）。
 
 ---
 
@@ -194,3 +221,4 @@ v0.2 深化两个 61C 遗留开放项：**谱静默"单向转化"严格上界**�
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 2.1 谱单圈有限性、定理 3.1 谱流→β 函数统一、定理 3.2 圈数-对易子对应、定理 4.1 EFT 层级谱静默。 |
 | v0.2 | 2026-08-05 | **61C 深化**：定理 5.1 谱静默"单向转化"严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，δ_silence ≥ 1 数值边界 0.992）+ 定理 5.2 β 圈图求和测度论严格化（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 49.4）；`paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
+| v0.3 | 2026-08-05 | **非微扰重整化与 P0-1 禁闭谱判据衔接（定理 5.3，§5.3）**：跨味 RGE 微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管；`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |

@@ -116,6 +116,7 @@ SCRIPTS = [
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
     ("paperX_rg_chain_deepen.py",             "61C 深化：谱静默严格上界 + δ_silence ≥ 1 + β 圈图求和测度论严格化 (8/8)"),
+    ("paperX_rg_chain_nonpert.py",            "61C 深化：非微扰重整化与 P0-1 禁闭谱判据衔接——微扰 pole 圈阶漂移带 [122,579] 含 Λ_eff=210 (6/6)"),
 
     # === Phase 61D (P1-3): 黑洞量子演化 ===
     ("paperX_hawking_spectrum.py",            "黑洞量子演化：霍金谱 + 蒸发动力学 + Page 曲线 + 视界涨落 + 信息保持 + 量子反弹 (35/35)"),
