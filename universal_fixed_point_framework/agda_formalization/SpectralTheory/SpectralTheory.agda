@@ -2695,6 +2695,83 @@ mono-even-le-id n =
 --   剩余：n 奇半边（需谱支集受限单调性）+ 线性组合（Σ aᵢA^{nᵢ} ≤ₒ ∫Σaᵢx^{nᵢ}，
 --   需 sup 线性/正负分解逐项）——后续路线。
 
+-- ==================================================================
+-- 阶段 4 组合替换收官（2026-08-05）：单项式 ≤ 方向（任意 n，奇偶统一）
+-- 目标：∫xⁿ ≤ₒ fc(xⁿ)（任意 n）——**n 奇半边闭合的关键洞察**：无需谱支集
+--   受限单调性。链：fc(sₖ) = ∫sₖ（fc-simple-integral）≤ₒ ∫xⁿ⁺（spec-int-mono：
+--   sₖ ≤ xⁿ⁺ 逐点全 ℝ，dyadic-below-pt）= ∫xⁿ（mono-pos-eq，任意 n）
+--   ≤ₒ fc(xⁿ)（fc-integral-le，**可证**，不依赖 fc-integral postulate——
+--   1964 用 fc-simple-integral + fc-mono + sup-op-least）。
+--   ⟹ supₖ fc(sₖ) ≤ₒ fc(xⁿ)（sup-op-least）⟹ ∫xⁿ⁺ = supₖ∫sₖ = supₖ fc(sₖ）
+--   （stair-int-full + stair-fc-seq）⟹ ∫xⁿ ≤ₒ fc(xⁿ)。全部**可证**，零新增公理。
+-- ==================================================================
+
+-- **可证**：dyadic 阶梯逐点 ≤ (xⁿ)⁺——sₖ ≤ xⁿ⁺ 逐点（全 ℝ）：
+-- cover 定位到原子（dyadic-cover3）+ simple-fn-eq-atom + dyadic-stair-below（逐原子）
+dyadic-below-pt : (k : ℕ) (c : ℝ) (hcₖ : zeroℝ <ℝ c) → (n : ℕ) → (x : ℝ)
+  → simple-fn (dyadic-stair k c hcₖ (dyadic-vc k c n)) x ≤ℝ pos-part (λ y → ℝ-power n y) x
+dyadic-below-pt k c hcₖ n x with dyadic-cover3 k c hcₖ x
+dyadic-below-pt k c hcₖ n x | i , px =
+  subst (λ z → z ≤ℝ pos-part (λ y → ℝ-power n y) x)
+        (sym (simple-fn-eq-atom (dyadic-stair k c hcₖ (dyadic-vc k c n)) i x px))
+        (dyadic-stair-below k c hcₖ n i x px)
+
+-- **可证**：每项 fc(sⱼ) ≤ₒ fc(xⁿ)——∫sⱼ ≤ₒ ∫xⁿ⁺（spec-int-mono，dyadic-below-pt）
+--   = ∫xⁿ（mono-pos-eq）≤ₒ fc(xⁿ)（fc-integral-le）⟹ fc(sⱼ) = ∫sⱼ（fc-simple-integral）
+stair-fc-below-any : (n : ℕ) → (j : ℕ)
+  → fc (simple-fn (dyadic-stair j (natℝ (suc j)) (natℝ-pos-embed z<s) (dyadic-vc j (natℝ (suc j)) n)))
+    ≤ₒ fc (λ y → ℝ-power n y)
+stair-fc-below-any n j =
+  subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (fc-simple-integral sⱼ) core
+  where
+  sⱼ : SimpleF
+  sⱼ = dyadic-stair j (natℝ (suc j)) (natℝ-pos-embed z<s) (dyadic-vc j (natℝ (suc j)) n)
+  -- ∫sⱼ ≤ₒ spec-int-general (simple-fn sⱼ)（sⱼ 自身是下界族成员 + sup-op-upper）
+  member-upper : simple-int sⱼ ≤ₒ spec-int-general (simple-fn sⱼ)
+  member-upper = sup-op-upper (spec-int-below (simple-fn sⱼ)) (simple-int sⱼ)
+                   (pair₁Σ sⱼ (refl , λ i x px →
+                     subst (λ z → SimpleF.c sⱼ i ≤ℝ z)
+                           (sym (simple-fn-eq-atom sⱼ i x px)) (refl-≤ℝ {SimpleF.c sⱼ i})))
+  -- spec-int-general (simple-fn sⱼ) ≤ₒ spec-int-general (xⁿ⁺)（spec-int-mono，dyadic-below-pt）
+  mono-upper : spec-int-general (simple-fn sⱼ) ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))
+  mono-upper = spec-int-mono {f = simple-fn sⱼ} {g = pos-part (λ y → ℝ-power n y)}
+                             (dyadic-below-pt j (natℝ (suc j)) (natℝ-pos-embed z<s) n)
+  -- ∫sⱼ ≤ₒ ∫xⁿ⁺（≤ₒ-trans：member-upper + mono-upper）
+  step1 : simple-int sⱼ ≤ₒ spec-int-general (pos-part (λ y → ℝ-power n y))
+  step1 = ≤ₒ-trans (simple-int sⱼ) (spec-int-general (simple-fn sⱼ))
+                   (spec-int-general (pos-part (λ y → ℝ-power n y)))
+                   member-upper mono-upper
+  -- ∫sⱼ ≤ₒ ∫xⁿ（∫sⱼ ≤ₒ ∫xⁿ⁺ + ∫xⁿ⁺ = ∫xⁿ（mono-pos-eq））
+  step12 : simple-int sⱼ ≤ₒ spec-int-general (λ y → ℝ-power n y)
+  step12 = subst (λ Z → simple-int sⱼ ≤ₒ Z) (sym (mono-pos-eq n)) step1
+  -- ∫sⱼ ≤ₒ fc(xⁿ)（≤ₒ-trans：step12 + fc-integral-le）
+  core : simple-int sⱼ ≤ₒ fc (λ y → ℝ-power n y)
+  core = ≤ₒ-trans (simple-int sⱼ) (spec-int-general (λ y → ℝ-power n y))
+                  (fc (λ y → ℝ-power n y)) step12 (fc-integral-le (λ y → ℝ-power n y))
+
+-- **可证**：单项式 ≤ 方向完整（任意 n）——∫xⁿ ≤ₒ fc(xⁿ)
+--（∫xⁿ = ∫xⁿ⁺（mono-pos-eq）⟹ = supₖ∫sₖ（stair-int-full）⟹ = supₖ fc(sₖ）
+--  （stair-fc-seq）⟹ 每项 fc(sₖ) ≤ₒ fc(xⁿ)（stair-fc-below-any）+ sup-op-least——
+--  C1 单项式层闭合（n 偶/奇统一），零新增公理）
+mono-le-any : (n : ℕ) → spec-int-general (λ y → ℝ-power n y) ≤ₒ fc (λ y → ℝ-power n y)
+mono-le-any n =
+  subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (sym (mono-pos-eq n))
+  (subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (sym (stair-int-full n))
+  (subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (sym (stair-fc-seq n))
+  (sup-op-least (stair-fc-seq-P n) (fc (λ y → ℝ-power n y)) bound)))
+  where
+  bound : (Y : Op) → stair-fc-seq-P n Y → Y ≤ₒ fc (λ y → ℝ-power n y)
+  bound Y (pair₀₁ j eq) = subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (sym eq)
+                                 (stair-fc-below-any n j)
+
+-- 阶段 4 组合替换状态（2026-08-05 终）：
+--   **单项式 ≤ 方向闭合（mono-le-any：∫xⁿ ≤ₒ fc(xⁿ)，任意 n，零新增公理）**——
+--   n 奇半边经 ∫sₖ ≤ₒ ∫xⁿ⁺（全 ℝ spec-int-mono）+ mono-pos-eq + fc-integral-le
+--   （可证）闭合，无需谱支集受限单调性。
+--   剩余：线性组合（Σ aᵢA^{nᵢ} ≤ₒ ∫Σaᵢx^{nᵢ}：fc(poly) = Σ aᵢA^{nᵢ}（fc-monomial）
+--   逐项 fc(x^{nᵢ}) ≤ₒ ∫x^{nᵢ}（mono-le-any）⟹ 需 ∫ 的线性/正负分解逐项
+--   （sup 层线性公理）——后续路线。
+
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel
 σ-union P x = Σ ℕ (λ n → P n x)

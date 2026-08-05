@@ -3155,3 +3155,32 @@ fc-poly-le-spec-int 完整构造化（fc-integral 零登记项）仍缺"单项�
 - **线性组合**：Σ aᵢA^{nᵢ} ≤ₒ ∫(Σaᵢx^{nᵢ})——需 sup 线性/正负分解逐项
 
 **验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
+
+---
+
+## T3 C1 单项式 ≤ 方向闭合（任意 n，2026-08-05，SpectralTheory §1d 后段）
+
+**目标**：fc-poly-le-spec-int 构造化的"单项式 ≤ 方向"完整闭合——∫xⁿ ≤ₒ fc(xⁿ)（任意 n，奇偶统一）。
+
+### 关键洞察（n 奇无需谱支集受限单调性）
+
+`fc(sₖ) = ∫sₖ（fc-simple-integral）≤ₒ ∫xⁿ⁺（spec-int-mono：sₖ ≤ xⁿ⁺ 逐点全 ℝ，dyadic-below-pt）= ∫xⁿ（mono-pos-eq，任意 n）≤ₒ fc(xⁿ)（fc-integral-le，**可证**，不依赖 fc-integral postulate）`——绕开 n 奇"x<0 区 sₖ=0 而 xⁿ<0"的逐点失败。
+
+### 新增可证引理（零新增公理）
+
+1. **`dyadic-below-pt`**：dyadic 阶梯逐点 ≤ (xⁿ)⁺（全 ℝ）——cover 定位 + sym simple-fn-eq-atom + dyadic-stair-below。
+2. **`stair-fc-below-any`**：每项 fc(sⱼ) ≤ₒ fc(xⁿ)——≤ₒ-trans 链：∫sⱼ ≤ₒ ∫(xⁿ)⁺（member-upper：sⱼ 自身是下界族成员 + sup-op-upper；mono-upper：spec-int-mono）→ subst mono-pos-eq → fc-integral-le → subst fc-simple-integral。
+3. **`mono-le-any`**：**∫xⁿ ≤ₒ fc(xⁿ)（任意 n）**——subst 链（mono-pos-eq / stair-int-full / stair-fc-seq）+ sup-op-least + bound。
+
+### 组合替换链（单项式层闭合）
+
+```
+∫xⁿ = ∫(xⁿ)⁺（mono-pos-eq）⟹ = supₖ∫sₖ（stair-int-full）⟹ = supₖ fc(sₖ）（stair-fc-seq）
+  ⟹ 每项 fc(sₖ) ≤ₒ fc(xⁿ）（stair-fc-below-any）⟹ ∫xⁿ ≤ₒ fc(xⁿ）
+```
+
+### C1 剩余（如实记录）
+
+**线性组合**：fc(poly-fn) = Σ aᵢ·A^{nᵢ}（fc-monomial + fc-add）≤ₒ ∫(Σ aᵢx^{nᵢ}) 需 ∫ 的加法性（sup-add，方案 A 明确规避的"sup 层线性公理"，蓝图 §5.16.8 479 行）或定义重构（v1.25 已否决）——**按 v1.34 决策保持 fc-integral 为健全 D 类桥接，单项式层闭合为"零新增公理"下的最大推进**。
+
+**验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
