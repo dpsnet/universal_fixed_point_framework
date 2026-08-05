@@ -2539,6 +2539,72 @@ stair-int-full n =
   ≤ₒ-antisym (spec-int-general (pos-part (λ y → ℝ-power n y))) (sup-op (stair-seq n))
              (stair-MCT n) (stair-seq-le n)
 
+-- ==================================================================
+-- 阶段 4 组合替换（2026-08-05，维持 v1.25 decomp 显式化路线）：
+-- 单项式 ∫xⁿ 的正负分解闭合——负部零化 + ∫xⁿ = ∫(xⁿ)⁺ + dyadic 阶梯 fc 表示。
+-- 目标：fc-poly-le-spec-int 构造化的组合替换组件（∫xⁿ = ∫xⁿ⁺ = supₖ∫sₖ =
+--   supₖ fc(sₖ) 的表示链；完整构造化仍需谱支集受限单调性，见下方注释）。
+-- 全部**可证**，零新增公理（复用 spec-int-general-decomp / spec-int-nonneg-zero-
+--   off-support（桥接登记）/ fc-simple-integral（§5h））。
+-- ==================================================================
+
+-- **可证**：单项式负部在谱支集上为零——0 ≤ x ⟹ (xⁿ)⁻ x = 0
+--（x ≥ 0 ⟹ xⁿ ≥ 0（power-nonneg）⟹ neg-part-zero-point）
+mono-neg-part-zero : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ x → neg-part (λ y → ℝ-power n y) x ≡ zeroℝ
+mono-neg-part-zero n x hx = neg-part-zero-point (λ y → ℝ-power n y) x (power-nonneg n x hx)
+
+-- **可证**：单项式负部积分零化——∫(xⁿ)⁻ dE = 𝟘ₒ
+--（(xⁿ)⁻ 非负（neg-part-nonneg）+ 在谱支集 [0,∞) 上 = 0（mono-neg-part-zero）
+--  ⟹ spec-int-nonneg-zero-off-support（谱支集外零贡献桥接登记））
+mono-neg-int-zero : (n : ℕ) → spec-int-general (neg-part (λ y → ℝ-power n y)) ≡ 𝟘ₒ
+mono-neg-int-zero n = spec-int-nonneg-zero-off-support (neg-part (λ y → ℝ-power n y))
+                        (λ x → neg-part-nonneg (λ y → ℝ-power n y) x)
+                        (λ x hx → mono-neg-part-zero n x hx)
+
+-- **可证**：单项式正部等式——∫xⁿ = ∫(xⁿ)⁺
+--（spec-int-general-decomp（∫xⁿ = ∫xⁿ⁺ −ₒ ∫xⁿ⁻）+ mono-neg-int-zero（∫xⁿ⁻ = 0）
+--  + op-sub-zero-r（X −ₒ 0 = X）——阶段 4 组合替换第一步：∫xⁿ 的正部表示）
+mono-pos-eq : (n : ℕ) → spec-int-general (λ y → ℝ-power n y)
+                    ≡ spec-int-general (pos-part (λ y → ℝ-power n y))
+mono-pos-eq n =
+  trans (spec-int-general-decomp (λ y → ℝ-power n y))
+        (trans (cong₂ _-ₒ_ refl (mono-neg-int-zero n))
+               (op-sub-zero-r (spec-int-general (pos-part (λ y → ℝ-power n y)))))
+
+-- **可证**：dyadic 阶梯 sup 的 fc 表示——supₖ∫sₖ = supₖ fc(sₖ)
+--（每成员等价：simple-int sₖ ≡ fc (simple-fn sₖ)（fc-simple-integral，§5h）
+--  + sup-op-ext——组合替换第二步：把 stair-seq 的 simple-int 换成 fc）
+
+-- dyadic 阶梯 sup 的 fc 版谓词（本地，供 stair-fc-seq 引用；前置于引用处）
+stair-fc-seq-P : (n : ℕ) → Op → Set₁
+stair-fc-seq-P n Y = Σ₀₁ ℕ (λ k →
+  Y ≡ fc (simple-fn (dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) n))))
+
+stair-fc-seq : (n : ℕ) → sup-op (stair-seq n) ≡ sup-op (stair-fc-seq-P n)
+stair-fc-seq n = sup-op-ext (λ Y yb → stair-fc-l n Y yb) (λ Y yb → stair-fc-r n Y yb)
+  where
+  -- 左 → 右：Y = ∫sₖ ⟹ Y = fc(sₖ)（fc-simple-integral 替换）
+  stair-fc-l : (n : ℕ) (Y : Op) → stair-seq n Y → stair-fc-seq-P n Y
+  stair-fc-l n Y (pair₀₁ k eq) = pair₀₁ k (trans eq (fc-simple-integral sₖ))
+    where
+    sₖ : SimpleF
+    sₖ = dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) n)
+  -- 右 → 左：Y = fc(sₖ) ⟹ Y = ∫sₖ（fc-simple-integral 反向）
+  stair-fc-r : (n : ℕ) (Y : Op) → stair-fc-seq-P n Y → stair-seq n Y
+  stair-fc-r n Y (pair₀₁ k eq) = pair₀₁ k (trans eq (sym (fc-simple-integral sₖ)))
+    where
+    sₖ : SimpleF
+    sₖ = dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) n)
+
+-- 阶段 4 组合替换状态（2026-08-05）：
+--   ∫xⁿ = ∫xⁿ⁺（mono-pos-eq）⟹ ∫xⁿ⁺ = supₖ∫sₖ（stair-int-full）⟹ supₖ∫sₖ = supₖ fc(sₖ)
+--   （stair-fc-seq）——表示链闭合（∫xⁿ 的 fc 阶梯表示）。
+--   完整 fc-poly-le-spec-int 构造化（fc-integral 零登记项）仍缺"单项式 ≤ 方向"
+--   （Aⁿ ≤ₒ ∫xⁿ）：n 偶时 xⁿ ≥ 0 全 ℝ（dyadic 阶梯 ≤ xⁿ 逐点）可证；
+--   n 奇时 x < 0 区 dyadic 阶梯取 0（= xⁿ⁺）而 xⁿ < 0，fc-mono 逐点假设失效，
+--   需谱支集受限单调性（E-support-pos 推受限外延，测度论层）——与 v1.34
+--   （fc-integral 保持唯一 D 类桥接）一致，为后续路线。
+
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel
 σ-union P x = Σ ℕ (λ n → P n x)

@@ -3096,3 +3096,31 @@ ln 2 = Σ_{k=1}^∞ 1/(k·2^k)
 - DHStructuralAnalysis.agda 单独编译 + **Everything.agda 全量 20 模块编译通过（exit 0）**。
 - §1 postulate `ln15-arith-ax` 移除（633 行注释同步）。
 - 账目同步：phase60 211 行 / spectral_T3_analysis_foundation.md 165/175/290/467 行 / agda_cross_validation_notes.md 144 行 / paper38 128 行——**C 类 T3 数值项全部清零，T3 阶段 3 log 级数开放项（ln2-lt / ln1615-lb / ln15-arith-ax）全部闭合**。
+
+---
+
+## T3 阶段 4 组合替换增量（2026-08-05，SpectralTheory §1d 后段）
+
+**背景**：A-2b₂（spec-int-general 定义重构）经用户确认**维持 v1.25 决策**（decomp 显式化路线，不重构定义——v1.25 已评估破坏面过大：MCT/fc-integral 系列依赖定义性）。本轮推进阶段 4（fc-poly-le-spec-int 构造化）中**不依赖定义重构的可证组件**。
+
+### 新增可证引理（零新增公理，全部编译通过）
+
+1. **`mono-neg-part-zero`**：0 ≤ x ⟹ (xⁿ)⁻ x = 0（power-nonneg + neg-part-zero-point）。
+2. **`mono-neg-int-zero`**：∫(xⁿ)⁻ dE = 𝟘ₒ——(xⁿ)⁻ 非负 + 谱支集 [0,∞) 上 = 0 ⟹ spec-int-nonneg-zero-off-support（桥接登记复用）。
+3. **`mono-pos-eq`**：∫xⁿ = ∫(xⁿ)⁺——decomp（∫xⁿ = ∫xⁿ⁺ −ₒ ∫xⁿ⁻）+ 负部零化 + op-sub-zero-r。**阶段 4 组合替换第一步：∫xⁿ 的正部表示**。
+4. **`stair-fc-seq`**：supₖ∫sₖ = supₖ fc(sₖ)——每成员等价（fc-simple-integral）+ sup-op-ext。**组合替换第二步：dyadic 阶梯 sup 的 fc 表示**（stair-fc-seq-P 前置规避前向引用）。
+
+### 表示链闭合
+
+```
+∫xⁿ = ∫xⁿ⁺（mono-pos-eq）⟹ ∫xⁿ⁺ = supₖ∫sₖ（stair-int-full，v1.29-33）
+  ⟹ supₖ∫sₖ = supₖ fc(sₖ)（stair-fc-seq）——∫xⁿ 的 fc 阶梯表示
+```
+
+### 完整构造化的剩余障碍（如实记录）
+
+fc-poly-le-spec-int 完整构造化（fc-integral 零登记项）仍缺"单项式 ≤ 方向"（Aⁿ ≤ₒ ∫xⁿ）：
+- n 偶：xⁿ ≥ 0 全 ℝ ⟹ dyadic 阶梯 ≤ xⁿ 逐点 ⟹ 可证（需 power-even-nonneg 引理链，(-x)ⁿ = xⁿ）
+- n 奇：x < 0 区 dyadic 阶梯取 0（= xⁿ⁺）而 xⁿ < 0，fc-mono 逐点假设失效 ⟹ 需**谱支集受限单调性**（E-support-pos 推受限外延，测度论层）——与 v1.34（fc-integral 保持唯一 D 类桥接）一致，为后续路线
+
+**验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
