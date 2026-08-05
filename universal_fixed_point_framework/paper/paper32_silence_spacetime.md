@@ -98,7 +98,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 
 **时空维数 = 范畴阶数（T3）**。1 个时间维 $+ (n-1)$ 个可见空间维 $= n$，因此四维时空 $\Longleftrightarrow$ 4-范畴 $\Longleftrightarrow$ $\text{Cl}(1,7)$ 三者等价。
 
-**自洽不动点**。$d_H \rightarrow S_4 \rightarrow$ 权重筛选 $\rightarrow$ 可见 $1+3$ / 静默 $4 \rightarrow n=4 \rightarrow d_H = \ln 15 + \delta$。$n=4$ 是循环的唯一不动点（数值验证 `paperX_spacetime_emergence.py` S3）。
+**自洽不动点**。$d_H \rightarrow S_4 \rightarrow$ 权重筛选 $\rightarrow$ 可见 $1+3$ / 静默 $4 \rightarrow n=4 \rightarrow d_H = \ln 15 + \delta$。$n=4$ 是循环的唯一不动点（数值验证 `scripts/paperX_spacetime_emergence.py` S3）。
 
 **扰动鲁棒性**。50,000 次对数正态扰动实验显示四维计数在 $\sigma \lesssim 2.5$ 下 $100\%$ 稳定，断裂点 $\sigma \approx 3 = \ln(e^3)$ 恰为分离裕度——内部维度需 $\sim e^3$ 倍扰动才能越过阈值。
 
@@ -182,8 +182,8 @@ $\text{Cl}(1,7)$ 的 8 维既不是 Euclidean 空间 $\mathbb{R}^8$、也不是�
 
 | 脚本 | 内容 | 状态 |
 |:----|:-----|:----:|
-| `paperX_silence_dimensions.py` | $1+3+4=8$ 维度分裂数值验证 | ✅ 已注册 |
-| `paperX_spacetime_emergence.py` | 自洽不动点 $n=4$ 验证，50,000 次扰动实验 | ✅ 已注册 |
+| `scripts/paperX_silence_dimensions.py` | $1+3+4=8$ 维度分裂数值验证 | ✅ 已注册 |
+| `scripts/paperX_spacetime_emergence.py` | 自洽不动点 $n=4$ 验证，50,000 次扰动实验 | ✅ 已注册 |
 
 ---
 

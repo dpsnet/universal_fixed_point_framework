@@ -104,7 +104,7 @@ $$\boxed{\delta_{\text{CP}} = 2(\alpha_u - \alpha_l) = 2 \times 0.5901 = 1.180\ 
 $$\boxed{\varepsilon_K = 2.14 \times 10^{-3} \quad (\text{实验 } 2.23 \times 10^{-3})}$$
 
 偏差 **4.0%**。ε_K 由谱 CKM 矩阵通过标准模型 Inami-Lim 圈图函数计算，验证了谱 CKM 相位的正确性。
-详见 [`paperX_epsilon_K.py`](../../paperX_epsilon_K.py)。
+详见 [`scripts/paperX_epsilon_K.py`](../../paperX_epsilon_K.py)。
 
 ---
 

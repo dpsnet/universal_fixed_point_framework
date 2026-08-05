@@ -46,7 +46,7 @@ $$E(k) = C_K \varepsilon^{2/3} k^{-5/3}$$
 
 ### 3.1 DNS 求解器实现
 
-`paperX_dns_turbulence.py` 实现了完整的 3D 伪谱 DNS 求解器：
+`scripts/paperX_dns_turbulence.py` 实现了完整的 3D 伪谱 DNS 求解器：
 
 | 组件 | 实现 | 说明 |
 |:----|:----|:------|
@@ -61,8 +61,8 @@ $$E(k) = C_K \varepsilon^{2/3} k^{-5/3}$$
 
 | 脚本 | 功能 | 状态 |
 |:----|:----|:----:|
-| `paperX_dns_turbulence.py` | 核心求解器 + 能谱分析 + 谱静默度诊断 | ✅ 已实现 |
-| `_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 正在运行 |
+| `scripts/paperX_dns_turbulence.py` | 核心求解器 + 能谱分析 + 谱静默度诊断 | ✅ 已实现 |
+| `scripts/dns/_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 正在运行 |
 | `run_all_tests.py` | 注册为批量验证项 | ✅ 已注册 |
 
 ## 4. 验证协议

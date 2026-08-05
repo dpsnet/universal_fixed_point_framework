@@ -7,10 +7,10 @@
 > - m_ν₃ = 49.5 meV, Σm_ν = 59.7 meV（Planck 兼容）✅
 > - NO |m_ee| ∈ [0.62, 4.62] meV, IO |m_ee| ∈ [19.3, 48.2] meV ✅
 > - M_R₃(m_top_GUT) = 2.91×10¹⁴ GeV（典型 See-saw）✅
-> - 见 `paperX_neutrino_absolute.py`, `notes/03_neutrino/spectral_neutrino_absolute.md`
+> - 见 `scripts/paperX_neutrino_absolute.py`, `notes/03_neutrino/spectral_neutrino_absolute.md`
 > 
 > **Phase 42**（暴胀 R⁴ 修正—V₀ 精确化）：
-> - BCH 展开至 R⁴ 阶：c₁=25.19 (Phase 36), c₂=8.92, c₃=4.72 ✅（`phase42_inflation_R4.py` 7/7）
+> - BCH 展开至 R⁴ 阶：c₁=25.19 (Phase 36), c₂=8.92, c₃=4.72 ✅（`scripts/phase42_inflation_R4.py` 7/7）
 > - n_s=0.9651, r=0.0040 与 CMB 一致
 > - V₀ 由 Planck 归一化独立确定：V₀¹⁄⁴=8.1×10¹⁵ GeV
 > - R²系数 + n_s + r 三路自洽 ✅
@@ -22,64 +22,64 @@
 > - 压制后 10⁻¹²⁶ M_Pl⁴ vs 观测 10⁻¹²⁰ M_Pl⁴（6量级差由 α_eff 不确定性自然解释 ✅）
 > 
 > **Phase 40**（重子不对称 η_B 谱推导）：
-> - η_B = (J_CP · Γ_sph · Δt_neq) / s_γ 从谱动力学第一原理导出 ✅（`phase40_baryogenesis.py` 6/6）
+> - η_B = (J_CP · Γ_sph · Δt_neq) / s_γ 从谱动力学第一原理导出 ✅（`scripts/phase40_baryogenesis.py` 6/6）
 > - 谱 CP 破缺 J_CP = 2.80×10⁻⁴（SM + Rec_diss 额外贡献）
 > - Sphaleron 冻结 T_sph = 140 GeV（电弱标度）
 > - η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）
 > 
 > **Phase 39**（θ_QCD 谱对应）：
-> - SU(3)→Cl(1,7) 谱嵌入完成，谱拓扑荷 Q_vac = 0（真空纯规范）✅（`phase39_theta_qcd.py` 6/6）
+> - SU(3)→Cl(1,7) 谱嵌入完成，谱拓扑荷 Q_vac = 0（真空纯规范）✅（`scripts/phase39_theta_qcd.py` 6/6）
 > - 强 CP 问题三机制解答：谱流守恒、UV 截断（δθ∼10⁻⁶⁴）、Det 压制（δθ∼10⁻⁵⁵）
 > - 与 Phase 37 ρ=0 共享同一 Cl(1,7) 代数结构
 > 
 > **Phase 38**（中微子质量层级 + 暴胀能标推进）：
-> - Seesaw→Rec_diss 谱表述完成，正常层级从非 Hermite 谱自然涌现 ✅（`paper38_neutrino_inflation.py` 7/7）
+> - Seesaw→Rec_diss 谱表述完成，正常层级从非 Hermite 谱自然涌现 ✅（`scripts/paper38_neutrino_inflation.py` 7/7）
 > - 暴胀能标 V₀¹⁄⁴ = 8.1×10¹⁵ GeV 与 Planck 归一化自洽，R² 系数 c₁=25.19 框架内一致
 > - 剩余开放：V₀ 精确值需 A_GR 算符展开至 R⁴ 阶
 > 
 > **Phase 37**（IFS 重叠因子去外部输入）：
-> - ρ 由 Cl(1,7) 代子空间正交结构唯一确定 ✅（`paper37_ifs_overlap_derivation.py` 7/7）
+> - ρ 由 Cl(1,7) 代子空间正交结构唯一确定 ✅（`scripts/paper37_ifs_overlap_derivation.py` 7/7）
 > - ρ = 0（分离 IFS），收缩因子 c₁=0.163, c₂=0.096, c₃=0.997（Moran 方程 Σcᵢ^d = 1 ✅）
 > - 三代质量谱从 Cl(1,7) 旋量表示自然涌现
 > - **所有半涌现量（ρ, Δλ_min, 耦合初值）全部去外部输入化**
 > 
 > **Phase 36**（谱间隙去外部输入）：
-> - Δλ_min 第一性原理推导 ✅（`paper36_spectral_gap_derivation.py` 7/7）
+> - Δλ_min 第一性原理推导 ✅（`scripts/paper36_spectral_gap_derivation.py` 7/7）
 > - Cl(1,7) → k_max=8 → Δλ_min=0.122 M_Pl（解析闭式）
 > - 全系常数自洽：ρ_c=0.333 (偏差 -1%)、r=0.0040、n_s=0.9636
 > - **所有半涌现量（a_min, c₁, ρ_c, r, n_s）全部去外部输入化**
 > 
 > **Phase 30**（有限维→无限维桥梁）：
-> - P30.1 数值收敛性验证 ✅（`paper30_infinite_dimensional_bridge.py` 6/6）
-> - P30.2 C* 代数框架 ✅（`paper33_cstar_framework.py` 5/5）
-> - P30.3 无界算子与连续谱 ✅（`paper34_unbounded_operator.py` 6/6）
-> - P30.4 A∞/∞-范畴无限维 ✅（`paper35_infinity_category_infinite_dim.py` 6/6）
+> - P30.1 数值收敛性验证 ✅（`scripts/paper30_infinite_dimensional_bridge.py` 6/6）
+> - P30.2 C* 代数框架 ✅（`scripts/paper33_cstar_framework.py` 5/5）
+> - P30.3 无界算子与连续谱 ✅（`scripts/paper34_unbounded_operator.py` 6/6）
+> - P30.4 A∞/∞-范畴无限维 ✅（`scripts/paper35_infinity_category_infinite_dim.py` 6/6）
 > - 路线文档 ✅（`roadmap/phase30_infinite_dimensional_bridge.md`）
 > 
 > **Phase 31**（三圈 β 函数）：
-> - 谱流 + DS 顶点减除 → SM β 至三圈全部匹配 ✅（`paper31_threeloop_beta.py` 12/12）
+> - 谱流 + DS 顶点减除 → SM β 至三圈全部匹配 ✅（`scripts/paper31_threeloop_beta.py` 12/12）
 > 
 > **Phase 32**（非线性 LSS 修正）：
-> - 谱流对易子 → SPT F₂ 核 ✅（`paper32_lss_nonlinear_v3.py` 7/7）
+> - 谱流对易子 → SPT F₂ 核 ✅（`scripts/paper32_lss_nonlinear_v3.py` 7/7）
 > - k_NL = 0.161 h/Mpc 与 ΛCDM 一致
 > 
 > **Phase 27**（谱动力学深化）：
-> - 双圈 β 匹配 SU(2)/SU(3) 精确匹配 ✅（`paper27_fermion_twoloop.py`）
-> - 暗物质 3 候选 + relic density ✅（`paper27_dark_matter_spectral.py`）
-> - 黑洞蒸发完整演化 + Page 曲线 ✅（`paper27_hawking_evaporation.py`）
-> - 非线性 LSS F₂ 核 + 1-loop SPT ✅（`paper27_lss_nonlinear_v2.py`）
+> - 双圈 β 匹配 SU(2)/SU(3) 精确匹配 ✅（`scripts/paper27_fermion_twoloop.py`）
+> - 暗物质 3 候选 + relic density ✅（`scripts/paper27_dark_matter_spectral.py`）
+> - 黑洞蒸发完整演化 + Page 曲线 ✅（`scripts/paper27_hawking_evaporation.py`）
+> - 非线性 LSS F₂ 核 + 1-loop SPT ✅（`scripts/paper27_lss_nonlinear_v2.py`）
 >
 > **Phase 28**（数值验证与高阶范畴）：
-> - D28.1 原初功率谱 ✅（`paper28_inflation_powerspectra.py` 6/6）
-> - D28.2 Paper IV vs VIII 熵统一 ✅（`paper28_dfunctor_entropy_unify.py` 6/6）
-> - D28.3 量子反弹引力波谱 ✅（`paper28_bounce_gravitational_waves.py` 6/6）
-> - D28.4 高阶范畴严格化 ✅（`paper28_higher_category_formalization.py` 8/8）
+> - D28.1 原初功率谱 ✅（`scripts/paper28_inflation_powerspectra.py` 6/6）
+> - D28.2 Paper IV vs VIII 熵统一 ✅（`scripts/paper28_dfunctor_entropy_unify.py` 6/6）
+> - D28.3 量子反弹引力波谱 ✅（`scripts/paper28_bounce_gravitational_waves.py` 6/6）
+> - D28.4 高阶范畴严格化 ✅（`scripts/paper28_higher_category_formalization.py` 8/8）
 >
 > **Phase 29**（形式化整合）：
 > - P29.1 Lean 4 高阶范畴 ✅（4 新模块: HigherRec/Spec/DecursionFunctor/InfinityCategory）
 > - P29.2 Paper II 谱动力学整合 ✅（v2.18→v2.19）
 > - P29.3 全谱系版本统一 ✅（4 处引用修正 + Paper VIII v0.1→v0.2）
-> - P29.4 熵产生率严格证明 ✅（`paper29_entropy_production_proof.py` 7/7）
+> - P29.4 熵产生率严格证明 ✅（`scripts/paper29_entropy_production_proof.py` 7/7）
 >
 > 以下为原始差距分析，保留以供参考。
 
@@ -91,7 +91,7 @@
 
 ### 当前状态
 
-**已全部完成 ✅**（`paper27_dyson_schwinger.py` + `paper27_fermion_twoloop.py` + `paper31_threeloop_beta.py`）
+**已全部完成 ✅**（`scripts/paper27_dyson_schwinger.py` + `scripts/paper27_fermion_twoloop.py` + `scripts/paper31_threeloop_beta.py`）
 
 ### 差距分析（已完成）
 
@@ -113,7 +113,7 @@ Dyson-Schwinger 顶点减除每阶去除一个 $C_A$ 因子，使修正后 = $C_
     = SM β_n · (16π²)^(-n) · g^(2n+1)
 ```
 
-### 三圈数值验证（`paper31_threeloop_beta.py`）
+### 三圈数值验证（`scripts/paper31_threeloop_beta.py`）
 
 | 系统 | 1-loop | 2-loop | 3-loop |
 |------|--------|--------|--------|
@@ -133,7 +133,7 @@ DS 减除模式：每阶去除一个 $C_A$ 因子，可**系统推广至任意�
 
 ### 当前状态
 
-暗物质仅在 Paper V §4.2 的谱统一能标 $\mu_U \sim 10^{15-16}$ GeV 中间接提及。**已建立三个候选的完整谱模型**（`paper27_dark_matter_spectral.py`，P27.2 ✅）：
+暗物质仅在 Paper V §4.2 的谱统一能标 $\mu_U \sim 10^{15-16}$ GeV 中间接提及。**已建立三个候选的完整谱模型**（`scripts/paper27_dark_matter_spectral.py`，P27.2 ✅）：
 
 | 候选 | 质量 | $\Omega h^2$ | 探测状态 |
 |------|------|-------------|----------|
@@ -174,11 +174,11 @@ DS 减除模式：每阶去除一个 $C_A$ 因子，可**系统推广至任意�
 
 ### 当前状态
 
-**已完成**（`paper27_lss_nonlinear_v2.py` → `paper32_lss_nonlinear_v3.py`，P27.4 → P32 ✅）
+**已完成**（`scripts/paper27_lss_nonlinear_v2.py` → `scripts/paper32_lss_nonlinear_v3.py`，P27.4 → P32 ✅）
 
 **核心物理**：谱流对易子 $[A_{\text{GR}}, A_t]$ 的 BCH 展开直接生成 SPT 模式耦合核 $F_2$。
 
-**数值验证**（`paper32_lss_nonlinear_v3.py`，7/7 通过 ✅）：
+**数值验证**（`scripts/paper32_lss_nonlinear_v3.py`，7/7 通过 ✅）：
 
 | 量 | 验证结果 |
 |----|---------|
@@ -218,7 +218,7 @@ DS 减除模式：每阶去除一个 $C_A$ 因子，可**系统推广至任意�
 
 ### 当前状态
 
-**已完成**（`paper27_hawking_evaporation.py` + Paper VIII §5.1，P27.1 ✅）：
+**已完成**（`scripts/paper27_hawking_evaporation.py` + Paper VIII §5.1，P27.1 ✅）：
 
 验证项：
 
@@ -271,10 +271,10 @@ DS 减除模式：每阶去除一个 $C_A$ 因子，可**系统推广至任意�
 | 方向 | 难点 | 潜在路径 | 当前状态 |
 |------|------|---------|---------|
 | **宇宙学常数 Λ** | 真空期待值 $\sim 10^{-122} M_{\text{Pl}}^4$ 与 Planck 尺度差 60 个数量级 | **多重谱静默**：四力(GR/EM/强/弱)层叠，每力4层(谱/态射/对象/辫子)，共16层 | 🟢 **Phase 41 完成**（理论根因：`notes/99_archive/paper41_theoretical_root.md`）。Cl(1,7)代数⇒4力、4-范畴⇒4层静默、独立谱测度⇒乘积形式，三路必然推论导出 $\rho_\Lambda$ 量级。126 量级压制 vs 观测-120 的 6 量级差已精确归因为 S₂ 有效耦合 $\alpha_{\text{eff}}$ 的 RG 跑动不确定性（`notes/99_archive/paper41_positive_contributions.py`）。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。 |
-| **CP 破坏角 $\theta_{\text{QCD}}$** | 强 CP 问题需谱流中的拓扑 $\theta$-项 | Cl(1,7) 的 $\theta$-项谱对应（非平凡拓扑类） | 🟢 **Phase 39 完成**：SU(3)→Cl(1,7) 谱嵌入、谱流守恒⇒Q_top=0、UV 截断 δθ∼(Λ_QCD/M_Pl)⁴∼10⁻⁶⁴、Det 压制∼10⁻⁵⁵ 三机制共同满足 |θ_QCD|<10⁻¹⁰（`phase39_theta_qcd.py` 6/6） |
-| **重子不对称 $\eta_B$** | 需 CP 破缺 + 非平衡动力学 | 谱流方程 + 谱熵产生（Paper VII §3）$\to$ Sakharov 条件 | 🟢 **Phase 40 完成**：η_B = (J_CP·Γ_sph·Δt_neq)/s_γ = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，0.91x ✅）（`phase40_baryogenesis.py` 6/6）。三 Sakharov 条件谱对应：B 破坏↔sphaleron 谱跃迁、C/CP 破缺↔谱 CP 角、非平衡↔谱熵产生 dS/dt>0。 |
-| **中微子绝对质量标度** | 绝对质量、Σm、0νββ、M_R 标度的精确数值 | Phase 45 E2 完成 | 🟢 **Phase 45 E2 完成**（2026-07-19）：α_ν=0.636（三层推导 + 1.4%自洽）、m_ν₃=49.5 meV、Σm=59.7 meV（Planck ✅）、NO |m_ee|∈[0.62,4.62] meV、IO |m_ee|∈[19.3,48.2] meV、M_R₃(m_top_GUT)=2.91×10¹⁴ GeV。NO 层级从 IFS 结构自然涌现，IO 需代重排且 α_ν≈0.200 与谱流严重偏离。见 `paperX_neutrino_absolute.py`、`notes/03_neutrino/spectral_neutrino_absolute.md`。 |
-| **暴胀能标 $V_0^{1/4}$** | 需 $A_{\text{GR}}$ 谱势的具体形状 | BCH 展至 R⁴ + Planck 归一化 | 🟢 **Phase 42 完成**：BCH 至 R⁴ 阶（`phase42_inflation_R4.py` 7/7），c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定（8.1×10¹⁵ GeV），与 c₁, n_s, r 三路自洽。 |
+| **CP 破坏角 $\theta_{\text{QCD}}$** | 强 CP 问题需谱流中的拓扑 $\theta$-项 | Cl(1,7) 的 $\theta$-项谱对应（非平凡拓扑类） | 🟢 **Phase 39 完成**：SU(3)→Cl(1,7) 谱嵌入、谱流守恒⇒Q_top=0、UV 截断 δθ∼(Λ_QCD/M_Pl)⁴∼10⁻⁶⁴、Det 压制∼10⁻⁵⁵ 三机制共同满足 |θ_QCD|<10⁻¹⁰（`scripts/phase39_theta_qcd.py` 6/6） |
+| **重子不对称 $\eta_B$** | 需 CP 破缺 + 非平衡动力学 | 谱流方程 + 谱熵产生（Paper VII §3）$\to$ Sakharov 条件 | 🟢 **Phase 40 完成**：η_B = (J_CP·Γ_sph·Δt_neq)/s_γ = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，0.91x ✅）（`scripts/phase40_baryogenesis.py` 6/6）。三 Sakharov 条件谱对应：B 破坏↔sphaleron 谱跃迁、C/CP 破缺↔谱 CP 角、非平衡↔谱熵产生 dS/dt>0。 |
+| **中微子绝对质量标度** | 绝对质量、Σm、0νββ、M_R 标度的精确数值 | Phase 45 E2 完成 | 🟢 **Phase 45 E2 完成**（2026-07-19）：α_ν=0.636（三层推导 + 1.4%自洽）、m_ν₃=49.5 meV、Σm=59.7 meV（Planck ✅）、NO |m_ee|∈[0.62,4.62] meV、IO |m_ee|∈[19.3,48.2] meV、M_R₃(m_top_GUT)=2.91×10¹⁴ GeV。NO 层级从 IFS 结构自然涌现，IO 需代重排且 α_ν≈0.200 与谱流严重偏离。见 `scripts/paperX_neutrino_absolute.py`、`notes/03_neutrino/spectral_neutrino_absolute.md`。 |
+| **暴胀能标 $V_0^{1/4}$** | 需 $A_{\text{GR}}$ 谱势的具体形状 | BCH 展至 R⁴ + Planck 归一化 | 🟢 **Phase 42 完成**：BCH 至 R⁴ 阶（`scripts/phase42_inflation_R4.py` 7/7），c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定（8.1×10¹⁵ GeV），与 c₁, n_s, r 三路自洽。 |
 
 > **已解决**：IFS 重叠因子 $\rho$（Phase 37 ✅）——由 Cl(1,7) 旋量表示正交性唯一确定，不再为开放问题。
 > 

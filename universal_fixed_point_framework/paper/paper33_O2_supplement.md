@@ -10,7 +10,7 @@
 
 本文补充 Paper XXXIII §6（O2 动力层面统一）的数值验证细节。§6 已给出统一定理的结构核心和 Lean 4 机器证明，本文补充三路径排序一致性的高精度数值验证。
 
-所有数值结果由 `paperX_O2_unification.py` 生成（已注册 `run_all_tests.py`，mpmath 50 位精度）。
+所有数值结果由 `scripts/paperX_O2_unification.py` 生成（已注册 `run_all_tests.py`，mpmath 50 位精度）。
 
 ---
 
@@ -90,5 +90,5 @@ IFS 映射数 $n$ 的自洽性检验（Moran 方程 $\sum_{i=1}^n c_i^{d_H} = 1$
 ## 参考文献
 
 - Paper XXXIII §6：O2 动力层面统一（核心定理 + Lean 机器证明）
-- `paperX_O2_unification.py`：数值验证脚本（已注册 `run_all_tests.py`）
+- `scripts/paperX_O2_unification.py`：数值验证脚本（已注册 `run_all_tests.py`）
 - `IFSFractal.lean` §6：`c_physical_strictly_ordered` 等 4 个定理的机器证明

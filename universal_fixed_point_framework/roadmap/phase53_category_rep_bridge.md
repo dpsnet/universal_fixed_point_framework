@@ -312,7 +312,7 @@ theorem kmax_from_cl17 (h : Cl(1,7) ≅ Matrix (Fin 8) (Fin 8) ℝ) : k_max = 8 
 
 ### 7.4 与 Phase 36 的关系
 
-Phase 36（`paper36_spectral_gap_derivation.py`）提供了谱间隙 Δλ_min 的数值验证（Python, 64-bit float）。Phase 53 提供了从范畴论到 Cl(1,7) 的形式化桥梁和 Lean 证明。两者互为补充：Phase 36 的数值验证提供了浮点置信度，Phase 53 的 Lean 形式化提供了逻辑严格性。
+Phase 36（`scripts/paper36_spectral_gap_derivation.py`）提供了谱间隙 Δλ_min 的数值验证（Python, 64-bit float）。Phase 53 提供了从范畴论到 Cl(1,7) 的形式化桥梁和 Lean 证明。两者互为补充：Phase 36 的数值验证提供了浮点置信度，Phase 53 的 Lean 形式化提供了逻辑严格性。
 
 ---
 

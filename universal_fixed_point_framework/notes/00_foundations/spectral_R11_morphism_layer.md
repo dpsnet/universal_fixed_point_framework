@@ -157,7 +157,7 @@ $$M_{\mathrm{Rec}}^{\mathrm{set}} = \{f\in C(\mathcal D(A_E),\mathcal H_S) : f\c
 
 ---
 
-## 10. 数值验证（`paperX_spectral_matching.py`，7/7 PASS）
+## 10. 数值验证（`scripts/paperX_spectral_matching.py`，7/7 PASS）
 
 有限维数值验证（n=4,5,6 随机自伴 Hermitian 矩阵，解空间经 Kronecker 展开 + SVD 零空间）确认 §4/§5 的全部结构断言：
 
@@ -175,4 +175,4 @@ $$M_{\mathrm{Rec}}^{\mathrm{set}} = \{f\in C(\mathcal D(A_E),\mathcal H_S) : f\c
 
 ---
 
-*关联*：paper I 定理 C2.3/2.4.5（限定修正）；`notes/00_foundations/spectral_representation_silence.md` §9（P1 判定）；RAP5a `RIm_map`；路线图 `phase60_category_verification.md`（T3 账目 + P1 状态）；数值脚本 `paperX_spectral_matching.py`（注册 `run_all_tests.py`）；Agda 形式化：`P1Spectral/P1Spectral.agda`（有限维特例）+ `SpectralTheory/SpectralTheory.agda`（无限维，§9 形式化落点）。
+*关联*：paper I 定理 C2.3/2.4.5（限定修正）；`notes/00_foundations/spectral_representation_silence.md` §9（P1 判定）；RAP5a `RIm_map`；路线图 `phase60_category_verification.md`（T3 账目 + P1 状态）；数值脚本 `scripts/paperX_spectral_matching.py`（注册 `run_all_tests.py`）；Agda 形式化：`P1Spectral/P1Spectral.agda`（有限维特例）+ `SpectralTheory/SpectralTheory.agda`（无限维，§9 形式化落点）。

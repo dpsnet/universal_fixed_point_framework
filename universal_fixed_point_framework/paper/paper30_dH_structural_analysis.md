@@ -46,8 +46,8 @@
 
 | 脚本 | 内容 | 检查项 |
 |:---|:---|---:|
-| `paperX_dH_moran_perturbation.py` | δ 一阶响应公式的数值验证 | 6/6 ✅ |
-| `paperX_dH_recursion_test.py` | 两级粘合递归 IFS 检验 | 6/6 ✅ |
+| `scripts/paperX_dH_moran_perturbation.py` | δ 一阶响应公式的数值验证 | 6/6 ✅ |
+| `scripts/paperX_dH_recursion_test.py` | 两级粘合递归 IFS 检验 | 6/6 ✅ |
 
 ---
 
@@ -228,7 +228,7 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 
 ### 5.2 δ 一阶响应公式的数值验证
 
-数值脚本 `paperX_dH_moran_perturbation.py` 对 $\delta = \ln(15)\cdot\bar{\varepsilon}$ 公式进行系统验证：
+数值脚本 `scripts/paperX_dH_moran_perturbation.py` 对 $\delta = \ln(15)\cdot\bar{\varepsilon}$ 公式进行系统验证：
 
 | 检查项 | 内容 | 结果 |
 |:---|---:|:---:|
@@ -243,7 +243,7 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 
 ### 5.3 两级粘合递归 IFS 的数值验证
 
-数值脚本 `paperX_dH_recursion_test.py` 对定理 2 和响应公式进行独立检验：
+数值脚本 `scripts/paperX_dH_recursion_test.py` 对定理 2 和响应公式进行独立检验：
 
 | 检查项 | 内容 | 结果 |
 |:---|---:|:---:|
@@ -286,7 +286,7 @@ $$\delta \stackrel{?}{=} \left(\frac{3}{2} - \frac{1}{20}\right) \times 10^{-3} 
 
 **核心问题**：$\delta = \ln 15 \cdot \bar{\varepsilon}$ 中 $\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 从何而来？
 
-**新发现**（`paperX_dH_epsbar_3map.py`）：3-map IFS（$c_1 = e^{-(3+d_H)}$, $c_2 = e^{-d_H}$, $c_3$ 自由）的自洽性分析揭示 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{N_{\text{total}}} = \sqrt{5}$ 在 $d_H = 2.7095$ 处以浮点精度成立，其中 $\varepsilon_3 = 1 - c_3$ 是 $c_3$ 偏离 1 的量。
+**新发现**（`scripts/paperX_dH_epsbar_3map.py`）：3-map IFS（$c_1 = e^{-(3+d_H)}$, $c_2 = e^{-d_H}$, $c_3$ 自由）的自洽性分析揭示 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{N_{\text{total}}} = \sqrt{5}$ 在 $d_H = 2.7095$ 处以浮点精度成立，其中 $\varepsilon_3 = 1 - c_3$ 是 $c_3$ 偏离 1 的量。
 
 **结构诠释**：$\sqrt{N_{\text{total}}} = \sqrt{5}$ 是 $N_{\text{total}} = 5$ 个范畴层的"标准差传播"因子——$c_3$ 的偏离 $\varepsilon_3$ 通过 5 个范畴层传播到有效平均扰动 $\bar{\varepsilon}$：
 
@@ -301,10 +301,10 @@ $$d(d - \ln 15) = \sqrt{5} \cdot \ln 15 \cdot (e^{-d^2} + e^{-d(3+d)})$$
 **与假说 I 的关系**：本项目仅涉及 $N_{\text{total}}$ 一个结构常数（优于假说 I 的 $3, 20$ 两个参数），将 $\delta$ 的"预测"从数值拟合升级为单参数自洽条件。
 
 **诚实标注**：
-- $\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$ 是数值发现，非数学推导——解析尝试（`paperX_dH_analytic_ratio.py`）显示 $\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（$\partial(\bar{\varepsilon}/\varepsilon_3)/\partial d \approx 1556$），从 $d = \ln 15$（零穿越）到 $d_H$ 快速穿过 $\sqrt{5}$，而非函数的渐近极限
-- 残差 $8\times 10^{-7}$ 与 $2^3 \times 10^{-7}$（$N_{\text{active}} = 3$ 的 Bott 翻倍因子）吻合在 4.2%，需更高精度 $d_H$ 确认（`paperX_dH_residual_check.py`）
+- $\bar{\varepsilon} = \sqrt{N_{\text{total}}} \cdot \varepsilon_3$ 是数值发现，非数学推导——解析尝试（`scripts/paperX_dH_analytic_ratio.py`）显示 $\bar{\varepsilon}/\varepsilon_3$ 对 $d$ 极度敏感（$\partial(\bar{\varepsilon}/\varepsilon_3)/\partial d \approx 1556$），从 $d = \ln 15$（零穿越）到 $d_H$ 快速穿过 $\sqrt{5}$，而非函数的渐近极限
+- 残差 $8\times 10^{-7}$ 与 $2^3 \times 10^{-7}$（$N_{\text{active}} = 3$ 的 Bott 翻倍因子）吻合在 4.2%，需更高精度 $d_H$ 确认（`scripts/paperX_dH_residual_check.py`）
 
-**一阶闭式解析表达式**（`paperX_dH_closed_form.py`。从自洽方程 $d(d-\ln 15) = \sqrt{5}\ln 15\cdot A(d)$ 在 $d_0 = \ln 15$ 处做一阶展开，其中 $A(d) = e^{-d^2} + e^{-d(3+d)}$，可得：
+**一阶闭式解析表达式**（`scripts/paperX_dH_closed_form.py`。从自洽方程 $d(d-\ln 15) = \sqrt{5}\ln 15\cdot A(d)$ 在 $d_0 = \ln 15$ 处做一阶展开，其中 $A(d) = e^{-d^2} + e^{-d(3+d)}$，可得：
 
 $$d_H \approx \ln 15 + \frac{\sqrt{5}\cdot\ln 15\cdot A_0}{\ln 15 - \sqrt{5}\cdot\ln 15\cdot A'_0} + \Delta_1$$
 
@@ -320,11 +320,11 @@ $$d_H \approx \ln 15 + \frac{\sqrt{5}\cdot\ln 15\cdot A_0}{\ln 15 - \sqrt{5}\cdo
 
 所有闭式均依赖 $\bar{\varepsilon} = \sqrt{5}\cdot\varepsilon_3$，完整的解析证明仍有待未来的概念突破。
 
-**选择原理形式化**（`paperX_dH_selection_principle.py`，2026-07-28 新增）。将 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{5}$ 视为固定点方程的选择原理。定义 $\varepsilon_3(d) = 1 - (1 - e^{-d^2} - e^{-d(3+d)})^{1/d}$，则对任意比例因子 $k$，固定点方程
+**选择原理形式化**（`scripts/paperX_dH_selection_principle.py`，2026-07-28 新增）。将 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{5}$ 视为固定点方程的选择原理。定义 $\varepsilon_3(d) = 1 - (1 - e^{-d^2} - e^{-d(3+d)})^{1/d}$，则对任意比例因子 $k$，固定点方程
 $$d = \ln 15 + \ln 15 \cdot k \cdot \varepsilon_3(d)$$
 有唯一解 $d(k)$。$d(k)$ 是 $k$ 的严格增函数，$k = \sqrt{5}$ 时 $d = 2.70949946$，与 $\chi^2$ 拟合值 $2.7095$ 差 $5.41\times 10^{-7}$（$\chi^2$ 精度内）。该形式化将 $\bar{\varepsilon}/\varepsilon_3 = \sqrt{5}$ 从数值发现升级为精确定义的变分选择原理。
 
-**RMS 传播定理**（2026-07-28 新增）。$\bar{\varepsilon} = \sqrt{N_{\text{total}}}\cdot\varepsilon_3$ 是 $N_{\text{total}} = 5$ 个独立范畴层的 RMS 传播的必然结果。设 $X_i$ ($i=1,\dots,5$) 为各层扰动的贡献，由严格 4-范畴的层正交性（`layerIndex_independent`/`activeLayer_independent`）保证独立性，由范畴结构的对偶性保证均匀性 $\sqrt{\mathbb{E}[X_i^2]} = \varepsilon_3$，则 $\bar{\varepsilon} = \sqrt{\mathbb{E}[(\sum X_i)^2]} = \sqrt{5}\varepsilon_3$。蒙特卡洛验证（`paperX_dH_RMS_propagation.py`，100,000 次试验）：RMS 求和 $=5.3435\times10^{-4}$ 与 $\sqrt{5}\cdot\varepsilon_3 = 5.3517\times10^{-4}$ 偏差 $0.15\%$。诚实限制：条件 (b)（跨层正关联 $\rho > 0$ 时 $\bar{\varepsilon}/\varepsilon_3 < \sqrt{5}$）尚未被排除——$\chi^2$ 拟合精度下 $\rho$ 在 $\pm 2\times 10^{-4}$ 范围内无法区分。
+**RMS 传播定理**（2026-07-28 新增）。$\bar{\varepsilon} = \sqrt{N_{\text{total}}}\cdot\varepsilon_3$ 是 $N_{\text{total}} = 5$ 个独立范畴层的 RMS 传播的必然结果。设 $X_i$ ($i=1,\dots,5$) 为各层扰动的贡献，由严格 4-范畴的层正交性（`layerIndex_independent`/`activeLayer_independent`）保证独立性，由范畴结构的对偶性保证均匀性 $\sqrt{\mathbb{E}[X_i^2]} = \varepsilon_3$，则 $\bar{\varepsilon} = \sqrt{\mathbb{E}[(\sum X_i)^2]} = \sqrt{5}\varepsilon_3$。蒙特卡洛验证（`scripts/paperX_dH_RMS_propagation.py`，100,000 次试验）：RMS 求和 $=5.3435\times10^{-4}$ 与 $\sqrt{5}\cdot\varepsilon_3 = 5.3517\times10^{-4}$ 偏差 $0.15\%$。诚实限制：条件 (b)（跨层正关联 $\rho > 0$ 时 $\bar{\varepsilon}/\varepsilon_3 < \sqrt{5}$）尚未被排除——$\chi^2$ 拟合精度下 $\rho$ 在 $\pm 2\times 10^{-4}$ 范围内无法区分。
 
 ---
 
@@ -392,18 +392,18 @@ $$d = \ln 15 + \ln 15 \cdot k \cdot \varepsilon_3(d)$$
 
 | 脚本 | 路径 | 状态 |
 |:---|:---|---:|
-| `paperX_dH_moran_perturbation.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
-| `paperX_dH_recursion_test.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
-| `paperX_dH_epsbar_3map.py` | `universal_fixed_point_framework/` | 📊 ε̄/ε₃ = √5 数值发现 |
-| `paperX_dH_analytic_ratio.py` | `universal_fixed_point_framework/` | 📊 解析推导尝试（无闭式解） |
-| `paperX_dH_residual_check.py` | `universal_fixed_point_framework/` | 📊 残差 8×10⁻⁷ 分析 |
-| `paperX_dH_closed_form.py` | `universal_fixed_point_framework/` | 📊 一阶闭式表达式验证 |
-| `paperX_dH_eta_origin.py` | `universal_fixed_point_framework/` | 📊 η 谱间隙来源扫描 |
-| **`paperX_dH_selection_principle.py`** | `universal_fixed_point_framework/` | ✅ **选择原理形式化（固定点分析）** |
-| **`paperX_dH_RMS_propagation.py`** | `universal_fixed_point_framework/` | ✅ **RMS 传播定理数值验证** |
-| **`paperX_dH_3cluster_attractor.py`** | `universal_fixed_point_framework/` | ✅ **3-map IFS 3-簇结构（O2 路径 B）** |
-| **`paperX_dH_IFS_optimality.py`** | `universal_fixed_point_framework/` | ✅ **n-map 信息论最优性（O2 路径 C）** |
-| **`paperX_dH_spectral_flow_3fixed.py`** | `universal_fixed_point_framework/` | ✅ **谱流 RG 3-不动点（O2 路径 A）** |
+| `scripts/paperX_dH_moran_perturbation.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
+| `scripts/paperX_dH_recursion_test.py` | `universal_fixed_point_framework/` | ✅ 6/6 检查通过 |
+| `scripts/paperX_dH_epsbar_3map.py` | `universal_fixed_point_framework/` | 📊 ε̄/ε₃ = √5 数值发现 |
+| `scripts/paperX_dH_analytic_ratio.py` | `universal_fixed_point_framework/` | 📊 解析推导尝试（无闭式解） |
+| `scripts/paperX_dH_residual_check.py` | `universal_fixed_point_framework/` | 📊 残差 8×10⁻⁷ 分析 |
+| `scripts/paperX_dH_closed_form.py` | `universal_fixed_point_framework/` | 📊 一阶闭式表达式验证 |
+| `scripts/paperX_dH_eta_origin.py` | `universal_fixed_point_framework/` | 📊 η 谱间隙来源扫描 |
+| **`scripts/paperX_dH_selection_principle.py`** | `universal_fixed_point_framework/` | ✅ **选择原理形式化（固定点分析）** |
+| **`scripts/paperX_dH_RMS_propagation.py`** | `universal_fixed_point_framework/` | ✅ **RMS 传播定理数值验证** |
+| **`scripts/paperX_dH_3cluster_attractor.py`** | `universal_fixed_point_framework/` | ✅ **3-map IFS 3-簇结构（O2 路径 B）** |
+| **`scripts/paperX_dH_IFS_optimality.py`** | `universal_fixed_point_framework/` | ✅ **n-map 信息论最优性（O2 路径 C）** |
+| **`scripts/paperX_dH_spectral_flow_3fixed.py`** | `universal_fixed_point_framework/` | ✅ **谱流 RG 3-不动点（O2 路径 A）** |
 
 前 2 个 + 后 5 个已注册 `run_all_tests.py`，全量回归通过。
 

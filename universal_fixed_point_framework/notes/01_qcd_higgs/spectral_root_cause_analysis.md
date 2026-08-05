@@ -78,7 +78,7 @@ S₄ 层: β_d · ln(M_Pl/M_R)/d_H ≈ 4%        → Δm²比 = 0.0304  (+2.9%)
 | $\Sigma m_i$（$m_{\text{light}}=0$）| 58 meV | 100 meV |
 | $m_{\beta\beta}$ 范围 | 1.5–3.7 meV | 18–49 meV |
 
-**结论**：谱框架强烈预测 Normal Ordering，与当前实验倾向一致。见 [`paperX_neutrino_IO_check.py`](../../paperX_neutrino_IO_check.py)。
+**结论**：谱框架强烈预测 Normal Ordering，与当前实验倾向一致。见 [`scripts/paperX_neutrino_IO_check.py`](../../paperX_neutrino_IO_check.py)。
 
 **"为何"上型夸克 $\alpha_u > \alpha_l$**：QCD 强耦合增强 $\alpha$。上型和下型的 QCD 部分相同，但上型超荷 $Y = 1/3$（左）/$4/3$（右）与下型 $Y = 1/3$（左）/$-2/3$（右）不同，导致 $\alpha_u > \alpha_d$。
 
@@ -312,7 +312,7 @@ $$\boxed{\tau_p \sim 10^{52}\ \text{年}}$$
 
 远大于当前实验下限 $>10^{34}$ 年（Super-Kamiokande）和下一代实验灵敏度 $10^{35}$ 年（Hyper-Kamiokande）。谱框架预测质子衰变**不可观测**——这与所有实验无质子衰变证据完全一致。
 
-**谱几何解释**：谱规范耦合的单化发生在 Planck 能标而非 GUT 能标，因为规范群 $U(1)\times SU(2)\times SU(3)$ 来自 $\text{Cl}(1,7)$ 根系的不同投影，非 SU(5)/SO(10) 大统一群的破缺。$S_4$ 层辫子静默 $e^{-d_H}$ 编码了 Planck 能标处的分形边界条件，使单化自然发生在 $M_{\text{Pl}}$。详见 [`paperX_gut_unification.py`](../../paperX_gut_unification.py)。
+**谱几何解释**：谱规范耦合的单化发生在 Planck 能标而非 GUT 能标，因为规范群 $U(1)\times SU(2)\times SU(3)$ 来自 $\text{Cl}(1,7)$ 根系的不同投影，非 SU(5)/SO(10) 大统一群的破缺。$S_4$ 层辫子静默 $e^{-d_H}$ 编码了 Planck 能标处的分形边界条件，使单化自然发生在 $M_{\text{Pl}}$。详见 [`scripts/paperX_gut_unification.py`](../../paperX_gut_unification.py)。
 
 ---
 
@@ -353,7 +353,7 @@ $$\Lambda_{\text{QCD}} = M_{\text{Pl}} \cdot \left(\frac{\Delta\lambda_{\min}}{\
 
 **数值预测**：$\Lambda_{\text{QCD}} \approx 210$ MeV（实验 $217 \pm 25$ MeV，偏差 3%）。
 
-**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。但由于框架的 $\alpha_s^{(0)}(M_{\text{Pl}}) = 0.0137$ 取值较小，高阶修正占比增大反而使偏差增加（2-loop: 230 MeV, 6%; 3-loop: 245 MeV, 13%）。这反映了谱框架与标准 $\overline{\text{MS}}$ 方案在耦合定义上的差异——谱框架的裸耦合 $\alpha_s^{(0)} = \Delta\lambda_3/(4\pi)$ 对应 S₁ 层的谱间隙比，而非 $\overline{\text{MS}}$ 方案的重整化耦合。两者需通过方案转换因子联系，这是 Phase 46 Q1 的开放问题之一。
+**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`scripts/paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。但由于框架的 $\alpha_s^{(0)}(M_{\text{Pl}}) = 0.0137$ 取值较小，高阶修正占比增大反而使偏差增加（2-loop: 230 MeV, 6%; 3-loop: 245 MeV, 13%）。这反映了谱框架与标准 $\overline{\text{MS}}$ 方案在耦合定义上的差异——谱框架的裸耦合 $\alpha_s^{(0)} = \Delta\lambda_3/(4\pi)$ 对应 S₁ 层的谱间隙比，而非 $\overline{\text{MS}}$ 方案的重整化耦合。两者需通过方案转换因子联系，这是 Phase 46 Q1 的开放问题之一。
 
 #### 6.2 手征对称性破缺 = 零模谱密度非零
 

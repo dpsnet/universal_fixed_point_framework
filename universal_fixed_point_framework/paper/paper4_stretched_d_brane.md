@@ -58,7 +58,7 @@ $$U_{\text{str}} = \mathrm{diag}(\lambda_1, \dots, \lambda_N), \quad \lambda_k =
 
 $$\dim_{\text{spec}} D(R_{\text{str}}) = \sum_{k=1}^N e^{-k\Delta A/N} \xrightarrow{N\to\infty} \frac{N}{\Delta A}(1 - e^{-\Delta A}).$$
 
-与 Sen 的拉伸视界熵公式对比，识别 $\Delta A = \frac{2\pi C}{g_s}\sqrt{m^2 - Q_L^2/(8g_s^2)} \cdot \frac{N}{\log N}$（细节见 `paper3_bps_spectral_verification.py`），得：
+与 Sen 的拉伸视界熵公式对比，识别 $\Delta A = \frac{2\pi C}{g_s}\sqrt{m^2 - Q_L^2/(8g_s^2)} \cdot \frac{N}{\log N}$（细节见 `scripts/paper3_bps_spectral_verification.py`），得：
 
 $$S_{\text{str}}(C,g_s) = \frac{2\pi C}{g_s}\sqrt{m^2 - \frac{Q_L^2}{8g_s^2}}.$$
 
@@ -127,7 +127,7 @@ $$C(g_s) = \frac{1}{\sqrt{2}\,\sqrt{1 - 1/(8g_s^2)}}\qquad (g_s > 1/(2\sqrt{2}) 
 因此：
 
 - **反向推导**：若已知拉伸视界截断常数 $C$，由上式可约束弦耦合 $g_s$；反之亦然。
-- **数值验证**：`paper3_bps_spectral_verification.py` 在 $g_s = 0.5$（此时 $C=1$）下确认谱零误差匹配。
+- **数值验证**：`scripts/paper3_bps_spectral_verification.py` 在 $g_s = 0.5$（此时 $C=1$）下确认谱零误差匹配。
 
 | $g_s$ | $C(g_s)$ |
 |-------|----------|

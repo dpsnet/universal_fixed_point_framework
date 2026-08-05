@@ -615,7 +615,7 @@ $$\text{上界链：}\quad \sqrt{6} - \sqrt{2} < 1.036 < 0.123 \cdot 8.485 < 0.1
 
 ### 6.3 与圈量子引力的数值一致
 
-有趣的是，LQG 的面积谱 $A_j \propto \sqrt{j(j+1)}$ 导出相同的数值关系，相关系数 $R^2 = 0.999984$（`paper36_spectral_gap_derivation.py`）。但要注意推导路径的根本差异：LQG 从量子几何出发，本文从范畴论出发。数值的一致性是深层代数结构（SU(2) Casimir 谱）的必然结果，不依赖具体量子引力方案。
+有趣的是，LQG 的面积谱 $A_j \propto \sqrt{j(j+1)}$ 导出相同的数值关系，相关系数 $R^2 = 0.999984$（`scripts/paper36_spectral_gap_derivation.py`）。但要注意推导路径的根本差异：LQG 从量子几何出发，本文从范畴论出发。数值的一致性是深层代数结构（SU(2) Casimir 谱）的必然结果，不依赖具体量子引力方案。
 
 ### 6.4 谱交织精度 $\epsilon$ 的第一性原理推导
 
@@ -727,7 +727,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ~~1. **SU(2) 的范畴涌现**：$G_{\text{GR}} = \text{ad}(G)(A)$ 作为谱流生成元已在范畴框架内定义，但"为什么是 SU(2) 而不是其他 Lie 代数"的范畴来源尚未完全形式化（方向 B1：SpObj 纤维丛结构约束待完成）。~~ **✅ 已解决（§3.5）。** 五个范畴约束 C1-C5（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$。秩-1 紧实非交换 Lie 代数连同 Casimir 谱的半整数 $j$ 条件排除所有其他 Lie 代数（包括 $\mathfrak{so}(3)$）。
 2. **Bott 周期分类的完全形式化**：Cl(1,7) ≅ M₁₆(ℝ) 当前引用已知代数分类定理。完整的形式化需在 Lean 中实现 Bott 周期性，超出当前 Mathlib 能力。
-~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`phase41_cosmological_constant.py` 6/6 验证通过。
+~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`scripts/phase41_cosmological_constant.py` 6/6 验证通过。
 
 ---
 
@@ -739,7 +739,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 [4] `CategoryRepBridge.lean`: SU(2) 结构、Casimir、agEigenvalue 桥接.
 [5] `SpectralGap.lean`: 谱间隙 Δλ_min 的 Cl(1,7) 第一性推导.
 [6] `Clifford.lean`: Clifford 代数基础与 Cl(1,7) 分类.
-[7] `paper36_spectral_gap_derivation.py`: 数值验证 Python 脚本.
+[7] `scripts/paper36_spectral_gap_derivation.py`: 数值验证 Python 脚本.
 [8] Rovelli, C. & Vidotto, F. (2014). *Covariant Loop Quantum Gravity*. CUP.
 [9] Bott, R. (1958). The stable homotopy of the classical groups. *Ann. Math.*, 70(2), 313–337.
 

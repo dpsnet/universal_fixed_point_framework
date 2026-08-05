@@ -20,11 +20,11 @@ if os.path.exists(torch_lib):
     os.environ.setdefault("CUDA_PATH", os.path.dirname(torch_lib))
     os.environ["PATH"] = torch_lib + ";" + os.environ.get("PATH", "")
 
-sys.path.insert(0, '.')
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from paperX_dns_turbulence_gpu import PseudoSpectralDNS3DGPU, DNSConfig
 from paperX_dns_turbulence import EnergySpectrumAnalyzer
 
-OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR = Path(__file__).resolve().parents[2] / 'dns_output'
 OUTPUT_DIR.mkdir(exist_ok=True)
 SUMMARY_FILE = OUTPUT_DIR / 'gpu_summary.json'
 

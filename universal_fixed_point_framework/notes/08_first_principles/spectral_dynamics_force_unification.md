@@ -254,11 +254,11 @@ $$[A_{\text{GR}}, A_{\text{SM}}] = A_{\text{GR}} A_{\text{SM}} - A_{\text{SM}} A
 
 当 $T$ 与 $A_{\text{GR}}$ 对易时 $[A_{\text{GR}}, A_{\text{SM}}] = 0$（经典极限 $G_N \to 0$）。$G_N \neq 0$ 时 $[A_{\text{GR}}, A_{\text{SM}}] \neq 0$ 对应**引力诱导的量子退相干**。
 
-**数值验证**：`paper5_spectral_commutator.py`，在有限维原型中计算 $\|[A_{\text{GR}}, A_{\text{SM}}]\|_{\text{HS}} / \|A_{\text{GR}}\|_{\text{HS}} \|A_{\text{SM}}\|_{\text{HS}}$。Planck 尺度估计 $\approx 10^{-13}$，缩放依赖谱交织算子 $T$ 结构。
+**数值验证**：`scripts/paper5_spectral_commutator.py`，在有限维原型中计算 $\|[A_{\text{GR}}, A_{\text{SM}}]\|_{\text{HS}} / \|A_{\text{GR}}\|_{\text{HS}} \|A_{\text{SM}}\|_{\text{HS}}$。Planck 尺度估计 $\approx 10^{-13}$，缩放依赖谱交织算子 $T$ 结构。
 
 ### A.4 谱流方程数值验证
 
-**验证脚本**：`paper5_spectral_flow_test.py`。在简谐振子（$4\times4$ SHO）上验证：
+**验证脚本**：`scripts/paper5_spectral_flow_test.py`。在简谐振子（$4\times4$ SHO）上验证：
 - 谱不变性：$|\lambda_k(t) - \lambda_k(0)| < 10^{-10}$ 对 $t \in [0, 100]$
 - 守恒律：$|\mathrm{Tr}(A_{\text{mech}} A_t) - \mathrm{Tr}(A_{\text{mech}} A_0)| < 10^{-10}$
 - 与解析解 $A_t = e^{tA_F} A_0 e^{-tA_F}$ 偏差 $< 10^{-8}$
@@ -295,7 +295,7 @@ $$F_{\text{grav}} \propto \frac{G_N m_1 m_2}{r^2}, \qquad F_{\text{Coulomb}} \pr
 
 **结论**：$1/r^2$ 规律不是偶然的——它是 $\mathbf{Sp}$ 中谱流在 3+1 维时空中的几何传播的必然结果。如果时空维数 $d \neq 3$，力的衰减律将相应变化。这是谱动力学的第一个"独立预言"——它**解释了**逆平方律的起源，而不是将其作为公理接受。
 
-**数值验证**（`paper5_inverse_square_law.py`）：通量守恒偏差 d=1: 0.00e+00, d=2: 3.85e-17, d=3: **3.68e-17**。三个维度的通量守恒均达到机器精度，确认 $\rho(r) \propto 1/r^{d-1}$ 是谱流在 $d$ 维空间中几何传播的必然结果。
+**数值验证**（`scripts/paper5_inverse_square_law.py`）：通量守恒偏差 d=1: 0.00e+00, d=2: 3.85e-17, d=3: **3.68e-17**。三个维度的通量守恒均达到机器精度，确认 $\rho(r) \propto 1/r^{d-1}$ 是谱流在 $d$ 维空间中几何传播的必然结果。
 
 ### 7.2 谱统一能标
 
@@ -426,7 +426,7 @@ $$g_i = \frac{\Lambda_{\text{break},i}}{\Lambda_{\text{UV}}}$$
 
 ### 8.6 与数值构造的对应
 
-`paper5_force_generators.py` 中的 $A_{\text{GR}}$ 和 $A_{\text{SM}}$ 矩阵可以通过以下方式匹配：
+`scripts/paper5_force_generators.py` 中的 $A_{\text{GR}}$ 和 $A_{\text{SM}}$ 矩阵可以通过以下方式匹配：
 
 $$A_{\text{GR}} = \sum_{i=1}^{n_{\text{GR}}} \lambda_i^{\text{GR}} P_i, \quad A_{\text{SM}} = \sum_{j=1}^{17} m_j^{\text{SM}} Q_j$$
 
@@ -548,7 +548,7 @@ $\epsilon, \eta$ 是慢滚参数，来自 $A_{\text{GR}}$ 零模式有效势 $V(
 
 ### 10.4 谱动力学宇宙学预言（D28.1 完整结果）
 
-`paper28_inflation_powerspectra.py` 从谱流方程线性化导出完整功率谱（6/6 通过 ✅）：
+`scripts/paper28_inflation_powerspectra.py` 从谱流方程线性化导出完整功率谱（6/6 通过 ✅）：
 
 | 量 | 谱动力学预言 | 观测约束 | 状态 |
 |---|------------|---------|------|
@@ -574,18 +574,18 @@ $$\lim_{t \to \infty} A_t = A_{\text{vac}}$$
 
 ### 10.6 数值验证脚本 (Phase 27–28)
 
-`paper5_cosmology.py`（基础验证）：
+`scripts/paper5_cosmology.py`（基础验证）：
 - 数值解 FLRW 谱方程，验证 $n_s = 0.9650$ 与 Planck 2018 一致（0.0σ 偏差）
 - 计算谱原初功率谱 $P(k)$，与标准慢滚暴胀一致
 - 暗能量渐近行为 $w \to -1$，真空谱生成元给出 $\rho_{\text{vac}} = \lambda_{\min}^4$
 
-`paper28_inflation_powerspectra.py`（D28.1 完整功率谱，6/6 通过 ✅）：
+`scripts/paper28_inflation_powerspectra.py`（D28.1 完整功率谱，6/6 通过 ✅）：
 - 谱流方程线性化 → 标量/张量功率谱
 - 张量标量比 $r = 0.0042$、谱指数运行 $\alpha_s = -8.2\times10^{-5}$
 - 三种模型 (混沌/Starobinsky/谱动力学) 与 Planck+BICEP 系统对比
 - 谱流方程功率谱直接验证
 
 **Phase 28 其他相关脚本**：
-- `paper28_quantum_bounce.py` (7/7) — 奇点谱消解数值验证：谱截断、量子反弹、有效 Friedmann
-- `paper28_dfunctor_entropy_unify.py` (6/6) — Paper IV vs VIII 黑洞熵统一交叉验证
-- `paper28_bounce_gravitational_waves.py` (6/6) — 反弹引力波谱 Ω_GW(f) 与分析
+- `scripts/paper28_quantum_bounce.py` (7/7) — 奇点谱消解数值验证：谱截断、量子反弹、有效 Friedmann
+- `scripts/paper28_dfunctor_entropy_unify.py` (6/6) — Paper IV vs VIII 黑洞熵统一交叉验证
+- `scripts/paper28_bounce_gravitational_waves.py` (6/6) — 反弹引力波谱 Ω_GW(f) 与分析

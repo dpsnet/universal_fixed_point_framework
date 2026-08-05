@@ -10,7 +10,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper X §3；`paperX_collapse_time.py` / `paperX_collapse_experiment_sim.py` |
+| **理论来源** | Paper X §3；`scripts/paperX_collapse_time.py` / `scripts/paperX_collapse_experiment_sim.py` |
 | **预言公式** | $\tau_{\text{collapse}} = \ln(1/\varepsilon) / \kappa$，其中 $\kappa$ 为测量交互强度（可调），$\varepsilon$ 为收敛阈值 |
 | **数值估计** | 超导量子比特实验中 $\tau \sim \mu\text{s}$ 量级 |
 | **置信度** | 中高 — 谱流方程直接导出，参数 $\kappa$ 由实验设定。但 $\varepsilon$ 与量子系统退相干率的耦合需进一步实验标定 |
@@ -27,7 +27,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper II §4；`paperX_categorical_generation.py`；`notes/02_ckm_pmns_flavor/spectral_remaining_SM_params.md` |
+| **理论来源** | Paper II §4；`scripts/paperX_categorical_generation.py`；`notes/02_ckm_pmns_flavor/spectral_remaining_SM_params.md` |
 | **预言公式** | $m_{L4} = c_1^{-\alpha_L} \cdot \Lambda_{\text{weak}}$，由 $\rho = 0$（分离 IFS）导出 |
 | **数值预测** | $m_{L4} \approx 1470\ \text{GeV}$ |
 | **置信度** | 中 — 依赖于 IFS 收缩因子的精确标度关系。若 $\rho$ 存在微小非零值，质量可能偏移 $\pm 200\ \text{GeV}$ |
@@ -41,7 +41,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper II §6；`paperX_dark_matter_fit.py`；`notes/04_lorentz_gravity/spectral_axion_silence.md` |
+| **理论来源** | Paper II §6；`scripts/paperX_dark_matter_fit.py`；`notes/04_lorentz_gravity/spectral_axion_silence.md` |
 | **预言质量点** | |
 
 ### 3.1 A_GR 零模（超轻轴子）
@@ -84,7 +84,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | 本文 (`this work`)；`paperX_pmns_diagonalization.py`；`notes/02_ckm_pmns_flavor/spectral_PMNS_theta13.md`；`notes/02_ckm_pmns_flavor/spectral_see_saw_rotation.md` |
+| **理论来源** | 本文 (`this work`)；`scripts/paperX_pmns_diagonalization.py`；`notes/02_ckm_pmns_flavor/spectral_PMNS_theta13.md`；`notes/02_ckm_pmns_flavor/spectral_see_saw_rotation.md` |
 | **预言公式** | $U_{\text{PMNS}} = U_e^\dagger U_\nu$，其中 $U_e$（带电轻子基）和 $U_\nu$（中微子质量基）来自谱 See-saw 对角化，旋转角 $\eta_{ij}$ 由收缩因子 $c_i$ 和谱指数 $\alpha_\nu$ 决定 |
 | **数值预测** | |
 | | $\sin^2\theta_{12} \approx 0.318$ |
@@ -101,7 +101,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | 本文 (`this work`)；`paperX_pmns_diagonalization.py`；`notes/03_neutrino/spectral_neutrino_seeSaw.md` |
+| **理论来源** | 本文 (`this work`)；`scripts/paperX_pmns_diagonalization.py`；`notes/03_neutrino/spectral_neutrino_seeSaw.md` |
 | **预言公式** | $m_\nu \sim c^{\alpha_\nu}$，由谱 See-saw 机制 $m_\nu \approx m_D M_R^{-1} m_D^T$ 导出 |
 | **质量序** | **正序（Normal Hierarchy）** |
 | **数值预测** | |
@@ -122,7 +122,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper IX；`phase39_theta_qcd.py`；`notes/01_qcd_higgs/spectral_strong_CP.md`；`notes/04_lorentz_gravity/spectral_axion_silence.md` |
+| **理论来源** | Paper IX；`scripts/phase39_theta_qcd.py`；`notes/01_qcd_higgs/spectral_strong_CP.md`；`notes/04_lorentz_gravity/spectral_axion_silence.md` |
 | **预言公式** | $\theta_{\text{QCD}} = 0$（来自谱算符的自伴性要求：$\theta = \arg\det(D) = 0$） |
 | **轴子来源** | 辫静默 $S_4$ 的 braid silence 层自发破缺产生类轴子模 |
 | **置信度** | 中高 — $\theta = 0$ 是谱自伴性的直接推论。但轴子质量/耦合依赖于 silence 破缺标度 |
@@ -136,7 +136,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper XII §3；`paperX_graviton_propagator.py`；`notes/04_lorentz_gravity/spectral_graviton.md` |
+| **理论来源** | Paper XII §3；`scripts/paperX_graviton_propagator.py`；`notes/04_lorentz_gravity/spectral_graviton.md` |
 | **预言公式** | $G(k) \sim \frac{1}{k^2} \left[ 1 + \left(\frac{k}{M_{\text{Pl}}}\right)^\gamma + \cdots \right]$，修正来自谱作用量的高阶项 |
 | **指数 $\gamma$** | 由谱维数 $d_H$ 决定：$\gamma = 2 - d_H/2 \approx 0.645$ |
 | **置信度** | 中低 — 修正的存在具有理论必然性（谱作用量截断），但指数数值依赖 $d_H$ 的精确值 |
@@ -150,7 +150,7 @@
 
 | 属性 | 内容 |
 |:-----|:-----|
-| **理论来源** | Paper VI §2；`paper5_spectral_flow_test.py`；`notes/05_condensed_matter/spectral_fluid_dynamics.md` |
+| **理论来源** | Paper VI §2；`scripts/paper5_spectral_flow_test.py`；`notes/05_condensed_matter/spectral_fluid_dynamics.md` |
 | **预言公式** | $E(k) \propto k^{-5/3}$（Kolmogorov-Obukhov 标度律），从谱流方程的非线性项导出 |
 | **置信度** | 高 — 已在经典流体实验中广泛验证 |
 | **当前实验状态** | **已确认** — 经典 K41 谱是实验流体力学最成熟的标度律之一 |

@@ -2,7 +2,7 @@
 
 **版本**：v0.3（2026-08-05）
 **系列定位**：Phase 61 物理理论补缺计划 P0-2（`roadmap/phase61_physics_advancement.md`）
-**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `paperX_rg_chain.py`、`paperX_rg_chain_deepen.py` 与 `paperX_rg_chain_nonpert.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
+**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `scripts/paperX_rg_chain.py`、`scripts/paperX_rg_chain_deepen.py` 与 `scripts/paperX_rg_chain_nonpert.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
 **术语**：谱记号（谱传播子/顶点、谱截断、谱流方程、谱静默）均在本篇自包含定义；系列论文交叉引用（Paper V/XI）仅作背景与既有结果出处。所有使用的谱量取值均在正文内联给出。
 
 ---
@@ -33,7 +33,7 @@ v0.9 客观终评缺口②：量子重整化"未纳入"——现有成果（Pape
 
 ### 2.1 谱翻译管线
 
-Phase 44 已建立谱拉格朗日量 → 谱 Feynman 规则 → 谱路径积分的工具箱（`paperX_spectral_lagrangian.py`、`paperX_spectral_feynman.py`、`paperX_spectral_renormalization.py`）。本文补齐**圈图积分与谱传播子谱和的衔接**。
+Phase 44 已建立谱拉格朗日量 → 谱 Feynman 规则 → 谱路径积分的工具箱（`scripts/paperX_spectral_lagrangian.py`、`scripts/paperX_spectral_feynman.py`、`scripts/paperX_spectral_renormalization.py`）。本文补齐**圈图积分与谱传播子谱和的衔接**。
 
 **定义 2.1**（谱圈图积分）。动量圈积分翻译为谱积分（谱参数 $\lambda = k^2$）：
 
@@ -75,7 +75,7 @@ $$\beta^{(n)} \;\longleftrightarrow\; \mathrm{ad}_G^n(A_t) = \underbrace{[G,[G,\
 
 一阶对易子生成单圈 β；DS 顶点减除对 $n \ge 2$ 提供圈间修正。
 
-*证明*。谱流方程 $dA_t/dt = [G,A_t]$ 的 n 阶迭代展开（BCH 结构）对应 n 阶对易子；单圈 = 一阶项，双圈 = 二阶 + DS 顶点修正，三圈 = 三阶 + 推广 DS 减除。数值锚点：`paper31_threeloop_beta.py` 12/12 匹配。□
+*证明*。谱流方程 $dA_t/dt = [G,A_t]$ 的 n 阶迭代展开（BCH 结构）对应 n 阶对易子；单圈 = 一阶项，双圈 = 二阶 + DS 顶点修正，三圈 = 三阶 + 推广 DS 减除。数值锚点：`scripts/paper31_threeloop_beta.py` 12/12 匹配。□
 
 ### 4.3 匹配数值
 
@@ -111,7 +111,7 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 
 *证明*。分块矩阵的 Schur 补精确公式：$\sigma(A_{\mathrm{UV}})$ 的低能部分（远离 $\sigma(A_H)$）恰为 $A_{\mathrm{IR}} + \varepsilon^2 W_{lh}(\lambda I - A_H)^{-1}W_{lh}^\dagger$ 的谱（$\det(A_{\mathrm{UV}} - \lambda I) = \det(A_H - \lambda I)\cdot\det(A_{\mathrm{IR}} - \lambda I - \varepsilon^2 W_{lh}(A_H - \lambda I)^{-1}W_{lh}^\dagger)$）。块间修正矩阵谱范数 $\le \varepsilon^2\|W_{lh}\|_2^2 / \mathrm{dist}(\lambda, \sigma(A_H)) \le \varepsilon^2\|W_{lh}\|_{\mathrm{HS}}^2/d$（$\mathrm{dist}(\lambda, \sigma(A_H)) \ge d$ 对 $\lambda \le \max\sigma(A_{\mathrm{IR}})$）。Weyl 谱间隔定理给出特征值偏差上界 $|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \|\text{修正}\|$。误差随层级间隙幂律衰减 $\propto 1/d$，即 $\delta_{\mathrm{silence}} \ge 1$。□
 
-**数值**（`paperX_rg_chain_deepen.py` D1–D3，8/8 注册 `run_all_tests.py`）：100 次随机 Hermitian 分层矩阵 100% 满足严格上界（最坏 dev/界 = 0.90）；层级间隙扫描 $\Delta E \in [20, 640]$ 幂律拟合 $\delta_{\mathrm{silence}} = 0.992$（局部指数 0.97–1.02，大间隙极限 → 1）；高能块细节扰动（平移 + 块内重随机）下低能谱变化 ≤ 二阶界（8% 界内）——**单向转化定量化：IR 有效理论不含 UV 精细结构，其影响被层级间隙 $d$ 幂律压制**。
+**数值**（`scripts/paperX_rg_chain_deepen.py` D1–D3，8/8 注册 `run_all_tests.py`）：100 次随机 Hermitian 分层矩阵 100% 满足严格上界（最坏 dev/界 = 0.90）；层级间隙扫描 $\Delta E \in [20, 640]$ 幂律拟合 $\delta_{\mathrm{silence}} = 0.992$（局部指数 0.97–1.02，大间隙极限 → 1）；高能块细节扰动（平移 + 块内重随机）下低能谱变化 ≤ 二阶界（8% 界内）——**单向转化定量化：IR 有效理论不含 UV 精细结构，其影响被层级间隙 $d$ 幂律压制**。
 
 **诚实边界**：定理 5.1 的严格上界在弱耦合 regime（$\varepsilon\|W\|_2 \ll d$）下成立（Schur 补 + Weyl，数学严格）；$\delta_{\mathrm{silence}} = 1$ 为本框架分层谱数值边界（拟合指数 ≈ 0.99），精确谱指数依赖完整静默层级形式化（§8 开放问题）。
 
@@ -121,7 +121,7 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 
 *证明*。（1）**测度论良定义**：谱测度 $\mu$ 有限（T3 fc-integral 框架），被积因子 $(\lambda-m^2)^{-n}$ 在积分区 $[\lambda_c, \Lambda_{\max}]$ 上连续有界（$\lambda_c > m^2$ 极点外），故谱圈图积分 $I_n = \int_{\lambda_c}^{\Lambda_{\max}} d\mu(\lambda)\,(\lambda-m^2)^{-n}$ 良定义且有限。（2）**有限性**：$I_1 = \ln\frac{\Lambda_{\max}-m^2}{\lambda_c-m^2}$（对数发散被谱截断吸收）、$I_n = \frac{1}{(n-1)(\lambda_c-m^2)^{n-1}} - \frac{1}{(n-1)(\Lambda_{\max}-m^2)^{n-1}}$（$n \ge 2$ 幂次收敛）。（3）**级数收敛**：系数比 $|c_{n+1}/c_n|$ 有界（$|c_1/c_2| = 9/17$、$|c_2/c_3| = 136/435$），相邻项比值 $|\beta_{n+1}/\beta_n| \to (\lambda/16\pi^2)\cdot|c_{n+1}/c_n|$，比值检验给出收敛半径 $R := 16\pi^2\min_k|c_k/c_{k+1}| = 49.4$——部分和在 $|\lambda| < R$ 内绝对收敛（微扰参数 $\lambda/16\pi^2 \ll 1$ 时快速收敛）。□
 
-**数值**（`paperX_rg_chain_deepen.py` D4–D6）：λφ⁴ 1–3 圈系数 $c = (3, -\tfrac{17}{3}, \tfrac{145}{8})$ 匹配 MS-bar 标准值（Chetyrkin et al.）；谱圈图积分 $n = 1,2,3$ 全部有限且匹配解析值（$I_2 = 0.156250$、$I_3 = 0.013835$，偏差 < 1e-15）；β 级数部分和 $S_1, S_2, S_3$ 在 $\lambda \in [0.1, 1.0]$ 内收敛（3→2 圈相对变化 0.02–0.03%）——**完整圈图求和从"以单圈为主定理载体"提升为"每项谱积分良定义 + 级数收敛性"的测度论严格表述**。
+**数值**（`scripts/paperX_rg_chain_deepen.py` D4–D6）：λφ⁴ 1–3 圈系数 $c = (3, -\tfrac{17}{3}, \tfrac{145}{8})$ 匹配 MS-bar 标准值（Chetyrkin et al.）；谱圈图积分 $n = 1,2,3$ 全部有限且匹配解析值（$I_2 = 0.156250$、$I_3 = 0.013835$，偏差 < 1e-15）；β 级数部分和 $S_1, S_2, S_3$ 在 $\lambda \in [0.1, 1.0]$ 内收敛（3→2 圈相对变化 0.02–0.03%）——**完整圈图求和从"以单圈为主定理载体"提升为"每项谱积分良定义 + 级数收敛性"的测度论严格表述**。
 
 **诚实边界**：$\delta$ 级数收敛半径估计依赖有限个系数比（1–3 圈），完整收敛半径需系数增长率的渐近分析（微扰级数通常仅渐近收敛，Borel 求和为后续方向，§8 开放问题）。
 
@@ -133,7 +133,7 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 
 *证明*。（1）**单圈 pole**：1/α(μ) 跨味分段跑动（$\beta = -b_0(N_f)\alpha^2/2\pi$）至 1/α → 0，得 $\Lambda_{\mathrm{pole}}^{(1)} = 122$ MeV（与 Paper 40 推论 4.3 的跨味单圈值一致）。（2）**两圈 pole**：$\beta = -b_0\alpha^2/2\pi - b_1\alpha^3/(2\pi)^2$（$b_1(N_f=3) = 64 > 0$）加速 α 增长，pole 大幅移向红外 $\Lambda_{\mathrm{pole}}^{(2)} = 579$ MeV；两圈跑动由独立锚点 $\alpha_s(m_c) = 0.413 \approx$ PDG 0.40 验证正确。（3）**衔接**：谱框架 F_π 定标非微扰值 210 MeV 介于两者之间。□
 
-**数值**（`paperX_rg_chain_nonpert.py`，6/6 检查，注册 `run_all_tests.py`）：单圈 pole 121.8 MeV、两圈 pole 579.4 MeV（圈阶漂移带 [122, 579]）；微扰外推 $\alpha_s^{\mathrm{pert}}(\Lambda_{\mathrm{eff}}) = 1.28 > 1$（微扰在禁闭标度失效）；非微扰有效耦合 $\alpha_s^{\mathrm{eff}} = 0.39$（61B Cornell/Δ_hf 谱势独立谱定）接管失效区；禁闭标度层级 $m_s < \Lambda_{\mathrm{eff}} < m_c$。
+**数值**（`scripts/paperX_rg_chain_nonpert.py`，6/6 检查，注册 `run_all_tests.py`）：单圈 pole 121.8 MeV、两圈 pole 579.4 MeV（圈阶漂移带 [122, 579]）；微扰外推 $\alpha_s^{\mathrm{pert}}(\Lambda_{\mathrm{eff}}) = 1.28 > 1$（微扰在禁闭标度失效）；非微扰有效耦合 $\alpha_s^{\mathrm{eff}} = 0.39$（61B Cornell/Δ_hf 谱势独立谱定）接管失效区；禁闭标度层级 $m_s < \Lambda_{\mathrm{eff}} < m_c$。
 
 **关键结论**：**微扰 Landau pole 非物理标度**（圈阶漂移 122 → 579 MeV），物理禁闭标度由谱判据圈阶无关地固定（210 MeV），且精确落在微扰 pole 的圈阶漂移带内——微扰失效点与非微扰禁闭点的衔接定量化（paper41 微扰链 §4 与 P0-1 禁闭谱判据的闭环）。
 
@@ -143,7 +143,7 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 
 ## 6. 数值验证
 
-数值验证由 `paperX_rg_chain.py` 完成并注册 `run_all_tests.py`（检查项见脚本 §1–§6）：
+数值验证由 `scripts/paperX_rg_chain.py` 完成并注册 `run_all_tests.py`（检查项见脚本 §1–§6）：
 
 | 检查项 | 判据 |
 |:------|:-----|
@@ -155,7 +155,7 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 | 三圈 DS 匹配 | 12/12 |
 | EFT 层级 decoupling | 误差 < 5% |
 
-**v0.2 深化**（`paperX_rg_chain_deepen.py`，8/8 检查通过）：
+**v0.2 深化**（`scripts/paperX_rg_chain_deepen.py`，8/8 检查通过）：
 
 | 检查项 | 判据 |
 |:------|:-----|
@@ -166,7 +166,7 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 | 谱圈图积分 $I_n$（n = 1..3） | 全部有限且匹配解析值（偏差 < 1e-15） |
 | β 级数部分和收敛 | 3→2 圈相对变化 < 5%（实测 0.02–0.03%） |
 
-**v0.3 深化**（`paperX_rg_chain_nonpert.py`，6/6 检查通过）：
+**v0.3 深化**（`scripts/paperX_rg_chain_nonpert.py`，6/6 检查通过）：
 
 | 检查项 | 判据 |
 |:------|:-----|
@@ -209,8 +209,8 @@ v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁�
 - [Paper XI] 谱量子场论：A5/A6 公理（§2.5/2.6）、谱 Dyson 级数与谱 β 函数定理（§2.9）、谱截断正则化（§5.2）、Cl(1,7) 谱间隙比（§1.5）。
 - [Paper XII] 谱量子引力：§8 RG 流、§10 引力三圈 β。
 - [Paper XIX] 范畴扩展：§15 四层谱静默机制。
-- Phase 44 工具箱：`paperX_spectral_lagrangian.py`、`paperX_spectral_feynman.py`、`paperX_spectral_renormalization.py`。
-- 数值：`paper5_beta_functions.py`、`paper31_threeloop_beta.py`、`paper27_dyson_schwinger.py`。
+- Phase 44 工具箱：`scripts/paperX_spectral_lagrangian.py`、`scripts/paperX_spectral_feynman.py`、`scripts/paperX_spectral_renormalization.py`。
+- 数值：`scripts/paper5_beta_functions.py`、`scripts/paper31_threeloop_beta.py`、`scripts/paper27_dyson_schwinger.py`。
 - PDG 2022（SM 耦合）。
 
 ---
@@ -220,5 +220,5 @@ v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁�
 | 版本 | 日期 | 变更 |
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 2.1 谱单圈有限性、定理 3.1 谱流→β 函数统一、定理 3.2 圈数-对易子对应、定理 4.1 EFT 层级谱静默。 |
-| v0.2 | 2026-08-05 | **61C 深化**：定理 5.1 谱静默"单向转化"严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，δ_silence ≥ 1 数值边界 0.992）+ 定理 5.2 β 圈图求和测度论严格化（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 49.4）；`paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
-| v0.3 | 2026-08-05 | **非微扰重整化与 P0-1 禁闭谱判据衔接（定理 5.3，§5.3）**：跨味 RGE 微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管；`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
+| v0.2 | 2026-08-05 | **61C 深化**：定理 5.1 谱静默"单向转化"严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，δ_silence ≥ 1 数值边界 0.992）+ 定理 5.2 β 圈图求和测度论严格化（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 49.4）；`scripts/paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
+| v0.3 | 2026-08-05 | **非微扰重整化与 P0-1 禁闭谱判据衔接（定理 5.3，§5.3）**：跨味 RGE 微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管；`scripts/paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |

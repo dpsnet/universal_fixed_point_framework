@@ -37,7 +37,7 @@ Werner 态 $\rho(p) = p|\Phi^+\rangle\langle\Phi^+| + (1-p)I/4$ 模拟白噪声�
 | CHSH $S > 2$ | $p_{\text{CHSH}} = 0.707$ | $1/\sqrt{2} = 0.707$ | Bell 不等式违反 |
 
 ```python
-# 核心扫描（见 paperX_entanglement_spectrum.py 完整实现）
+# 核心扫描（见 scripts/paperX_entanglement_spectrum.py 完整实现）
 def threshold_scan():
     for p in linspace(0, 1, 500):
         rho = p * bell_state() + (1-p) * I/4
@@ -172,4 +172,4 @@ Bob 的谱:  Tr_A(P_A A_AB P_A) = Tr_A(A_AB)  不变！
 - [`spectral_interpretation_comparison.md`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/notes/00_foundations/spectral_interpretation_comparison.md) — 六大诠释范畴论对比
 - [`spectral_quantum_extensions.md`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/notes/05_condensed_matter/spectral_quantum_extensions.md) — K-S/PBR/达尔文/速度极限
 - [`spectral_resource_theory.md`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/notes/00_foundations/spectral_resource_theory.md) — 量子资源理论（纠缠作为资源）
-- **数值脚本**：`paperX_entanglement_spectrum.py`、`paperX_chsh_noise.py`
+- **数值脚本**：`scripts/paperX_entanglement_spectrum.py`、`scripts/paperX_chsh_noise.py`

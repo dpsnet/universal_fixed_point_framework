@@ -60,7 +60,7 @@ $$G_N = \frac{c}{\hbar} (\Delta\lambda_{\min}^{(\text{GR})})^2$$
 | **标度比率** $M_{\text{Pl}}/M_{\text{SM}}$ | $O(1)$ | 自由参数（$M_{\text{Pl}}$ 和 $M_{\text{SM}}$ 无关联） | 若 $M_{\text{SM}} \notin (10^2, 10^4)$ GeV → 证伪（$M_{\text{SM}} \sim \epsilon \cdot M_{\text{Pl}}$ 给出 $10^3$ GeV）| ✅ 与 Higgs VEV 一致 |
 | **耦合比率** $\alpha_{\text{Gravity}}/\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ | $\approx 1$ | 两个无关的自由参数 | 若 $\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ 被精确测定且 $\neq \alpha_{\text{Gravity}} \pm 20\%$ → 证伪 | ⏳ 需 Planck 标度实验 |
 
-**关键区别**：GR+SM 对这组比率不做任何预测——它们是"自由的"。而 UFPF 框架预测它们固定——任何一个被实验否定即证伪整个框架。`paperX_falsifiable_predictions.py` 已注册 `run_all_tests.py`。
+**关键区别**：GR+SM 对这组比率不做任何预测——它们是"自由的"。而 UFPF 框架预测它们固定——任何一个被实验否定即证伪整个框架。`scripts/paperX_falsifiable_predictions.py` 已注册 `run_all_tests.py`。
 
 ### 5.5 引力作为范畴 coherence 条件（2026-07-28 新增，⚠️ 假说层级）
 
@@ -87,9 +87,9 @@ $$G_N = \frac{c}{\hbar} (\Delta\lambda_{\min}^{(\text{GR})})^2$$
 
 **量级自洽性**：coherence 层刚度 = $M_{\text{Pl}}$（Planck 标度），exchange law 偏差的谱投影 = $\Delta\lambda_{\min}^{(\text{GR})} \approx 0.122$，$S_4 = e^{-d_H} \approx 0.0666$ 与 $\Delta\lambda_{\min}^{(\text{GR})}$ 同量级。通过 $\epsilon \sim 10^{-16}$ 的谱交织精度，三个关键量（Planck 标度、谱间隙、静默因子）自洽地绑定在一起。
 
-**定量验证**（`paperX_exchange_law_deviation.py`）：LHS 和 RHS 的 homotopy 矩阵在浮点精度内严格相等（差异 $< 10^{-15}$）——偏差不在矩阵结果层面，而在 **condition 的证明路径**层面。**更正（2026-07-28 形式化修正）**：偏差的精确代数形式不是简单的交换子 $X.A\!\cdot\!H - H\!\cdot\!Z.A$，而是 $X.A\!\cdot\!\beta.h\!\cdot\!\alpha'.h - 2\!\cdot\!\beta.h\!\cdot\!Y.A\!\cdot\!\alpha'.h + \beta.h\!\cdot\!\alpha'.h\!\cdot\!Z.A$。中间项 $2\!\cdot\!\beta.h\!\cdot\!Y.A\!\cdot\!\alpha'.h$ 不抵消，反映了 $\beta.h$ 和 $\alpha'.h$ 与中间谱算子 $Y.A$ 的非交织性。该形式已在 Lean 中机器证明（`spExchangeLaw_deviation_partial_commutator`）。在严格极限 $(\beta.h\!\cdot\!Y.A = X.A\!\cdot\!\beta.h,\; Y.A\!\cdot\!\alpha'.h = \alpha'.h\!\cdot\!Z.A)$ 下偏差为零（`spExchangeLaw_deviation_strict_limit`），对应引力退耦极限 $G_N \to 0$。
+**定量验证**（`scripts/paperX_exchange_law_deviation.py`）：LHS 和 RHS 的 homotopy 矩阵在浮点精度内严格相等（差异 $< 10^{-15}$）——偏差不在矩阵结果层面，而在 **condition 的证明路径**层面。**更正（2026-07-28 形式化修正）**：偏差的精确代数形式不是简单的交换子 $X.A\!\cdot\!H - H\!\cdot\!Z.A$，而是 $X.A\!\cdot\!\beta.h\!\cdot\!\alpha'.h - 2\!\cdot\!\beta.h\!\cdot\!Y.A\!\cdot\!\alpha'.h + \beta.h\!\cdot\!\alpha'.h\!\cdot\!Z.A$。中间项 $2\!\cdot\!\beta.h\!\cdot\!Y.A\!\cdot\!\alpha'.h$ 不抵消，反映了 $\beta.h$ 和 $\alpha'.h$ 与中间谱算子 $Y.A$ 的非交织性。该形式已在 Lean 中机器证明（`spExchangeLaw_deviation_partial_commutator`）。在严格极限 $(\beta.h\!\cdot\!Y.A = X.A\!\cdot\!\beta.h,\; Y.A\!\cdot\!\alpha'.h = \alpha'.h\!\cdot\!Z.A)$ 下偏差为零（`spExchangeLaw_deviation_strict_limit`），对应引力退耦极限 $G_N \to 0$。
 
-**诚实标注**：当前为概念框架层面的假说——连接 `spExchangeLaw` 的 `sorry` 与引力常数的精确解析关系尚未建立，但从该方向突破 G_N 循环推导问题的潜力明显大于传统路径（`paperX_gravity_coherence.py`、`paperX_exchange_law_deviation.py`）。
+**诚实标注**：当前为概念框架层面的假说——连接 `spExchangeLaw` 的 `sorry` 与引力常数的精确解析关系尚未建立，但从该方向突破 G_N 循环推导问题的潜力明显大于传统路径（`scripts/paperX_gravity_coherence.py`、`scripts/paperX_exchange_law_deviation.py`）。
 
 ### 5.6 形式化推进计划：偏差→谱间隙→引力定量绑定（2026-07-28 新增）
 
@@ -184,7 +184,7 @@ $$r_{\text{cat}}^{\text{(LO)}} \equiv \frac{E[\|\Delta\|_F^2]}{\Delta\lambda_{\m
 
 $$= \frac{4}{64}\cdot\frac{10}{3} - \frac{4}{512}\cdot(4.6818)^2 = \frac{5}{24} - \frac{21.919}{128} \approx 0.03709$$
 
-数值模拟（$N=2000$ 独立采样）给出 $r_{\text{cat}}=0.0402$，前导阶公式偏差约 $8\%$，来自 $O(\Delta\lambda_{\min}^2)$ 高阶修正和有限采样效应。（**v1.39 归因修正**：`paperX_gravity_NLO_sign.py` 的 LO/NLO 严格分解显示——总偏差 8.3% = **LO 公式自身失准 6.4%**（归一化采样 $\beta = (f+\delta\beta)/\|f+\delta\beta\|$ 的 $O(\Delta\lambda)$ 随机重标度使 LO 扰动统计偏离公式假设，约 3/4）+ **真 NLO 1.9%**（约 1/4）；并非全部来自高阶修正，也与采样噪声无关（$N=50000$ 时标准误 $4\times10^{-5}$）。）
+数值模拟（$N=2000$ 独立采样）给出 $r_{\text{cat}}=0.0402$，前导阶公式偏差约 $8\%$，来自 $O(\Delta\lambda_{\min}^2)$ 高阶修正和有限采样效应。（**v1.39 归因修正**：`scripts/paperX_gravity_NLO_sign.py` 的 LO/NLO 严格分解显示——总偏差 8.3% = **LO 公式自身失准 6.4%**（归一化采样 $\beta = (f+\delta\beta)/\|f+\delta\beta\|$ 的 $O(\Delta\lambda)$ 随机重标度使 LO 扰动统计偏离公式假设，约 3/4）+ **真 NLO 1.9%**（约 1/4）；并非全部来自高阶修正，也与采样噪声无关（$N=50000$ 时标准误 $4\times10^{-5}$）。）
 
 **$c$ 的完整解析结构**：
 
@@ -340,7 +340,7 @@ $$\frac{G_N \cdot M_{\text{Pl}}^2}{(\Delta\lambda_{\min})^2} = c_{\text{Planck}}
 
 **目标**：建立从 spExchangeLaw 偏差 $\Delta$ 到 $G_N$ 的完整无参数数值路径，与 Phase C 闭式交叉验证。
 
-**数值结果**（`paperX_gravity_exact_quantification.py`，N=50000 Monte Carlo）：
+**数值结果**（`scripts/paperX_gravity_exact_quantification.py`，N=50000 Monte Carlo）：
 
 | 量 | 符号 | 数值 | 来源 |
 |:---|:---|:---:|:---:|
@@ -373,7 +373,7 @@ $$\frac{c_{\text{偏差路径}}}{c_{\text{Phase C}}} = \frac{r_{\text{cat}} \cdo
 
 **直觉 1：$\Delta$ 稳定不衰减**
 
-$\|\Delta\|_F^2 = r_{\text{cat}} \cdot \Delta\lambda_{\min}^2$ 中的 $r_{\text{cat}} \approx 0.0404$ 由 Cl(1,7) 谱数据完全决定，~~不随距离、能量标度或时间变化~~。**v1.40 修订**（`paperX_gravity_rcat_scale.py` 检验）："不随距离/时间变化"成立（$r_{\text{cat}}$ 是常数而非场）；但"**不随能量标度变化**"**不成立**——在谱重标度 $\lambda \to c\lambda$ 下 $r_{\text{cat}} \to c^2 \cdot r_{\text{cat}}$（LO 精确，$\delta$ 绑定 $\Delta\lambda_{\min}$ 模型；$\delta$ 绝对固定对照组则不变，故标度行为依赖同伦扰动的物理标度）；且 $r_{\text{cat}}$ 显著依赖谱内容（$k_{\max} = 4..16$ 变化因子 3.1，$r \approx 0.006 + 0.27\cdot\Delta\lambda_{\min}$，$R^2 = 0.993$；低/高谱窗口因子 3.8）。**修订表述**：$r_{\text{cat}}$ 是给定 Cl(1,7) **完整谱**（$k_{\max} = 8$，Bott 塔机器证明）下的结构常数——不随时空点、测量方式变化，但**编码谱形**；真正标度不变的量是 $\mathbb{E}\|\Delta\|_F^2/\Delta\lambda_{\min}^4$。$\Delta$ 不是量子场（无传播子、无 Compton 波长），而是 $\mathbf{Sp}$ 4-范畴的结构常数——地位等同于 $\pi$ 或 $e$。
+$\|\Delta\|_F^2 = r_{\text{cat}} \cdot \Delta\lambda_{\min}^2$ 中的 $r_{\text{cat}} \approx 0.0404$ 由 Cl(1,7) 谱数据完全决定，~~不随距离、能量标度或时间变化~~。**v1.40 修订**（`scripts/paperX_gravity_rcat_scale.py` 检验）："不随距离/时间变化"成立（$r_{\text{cat}}$ 是常数而非场）；但"**不随能量标度变化**"**不成立**——在谱重标度 $\lambda \to c\lambda$ 下 $r_{\text{cat}} \to c^2 \cdot r_{\text{cat}}$（LO 精确，$\delta$ 绑定 $\Delta\lambda_{\min}$ 模型；$\delta$ 绝对固定对照组则不变，故标度行为依赖同伦扰动的物理标度）；且 $r_{\text{cat}}$ 显著依赖谱内容（$k_{\max} = 4..16$ 变化因子 3.1，$r \approx 0.006 + 0.27\cdot\Delta\lambda_{\min}$，$R^2 = 0.993$；低/高谱窗口因子 3.8）。**修订表述**：$r_{\text{cat}}$ 是给定 Cl(1,7) **完整谱**（$k_{\max} = 8$，Bott 塔机器证明）下的结构常数——不随时空点、测量方式变化，但**编码谱形**；真正标度不变的量是 $\mathbb{E}\|\Delta\|_F^2/\Delta\lambda_{\min}^4$。$\Delta$ 不是量子场（无传播子、无 Compton 波长），而是 $\mathbf{Sp}$ 4-范畴的结构常数——地位等同于 $\pi$ 或 $e$。
 
 | 对象 | 是否随距离衰减 | 机制 |
 |:---|---:|:---:|
@@ -556,7 +556,7 @@ UFPF 的独特贡献在于**指明 UV 完备理论的性质**：
 2. **等效相互作用的截断**：引力子自相互作用在 $E \sim \|\Delta\|_F \cdot M_{\text{Pl}}$ 处偏离微扰展开
 3. **UV-IR 对应**：高能行为由范畴层的离散结构决定，不存在传统意义的紫外发散
 
-→ **v1.42 定量化（2026-07-29，`paperX_propagator_spectral.py`，A4 闭合）**：离散谱塔模型 $D(k^2) = 1/k^2 + g_{\text{eff}}\cdot\sum_{n=1}^{8} 1/(k^2 + \lambda_n^2)$（$g_{\text{eff}} = \|\Delta\|_F^2 = r_{\text{cat}}\cdot\Delta\lambda_{\min}^2 \approx 6.01\times 10^{-4}$）。**谱矩闭式**：$\sum 1/\lambda_n^2 = 72\cdot 8/9 = \mathbf{64}$（精确），$\sum 1/\lambda_n^4 / \sum 1/\lambda_n^2 = 23.44$。第 1 条定量化：低 $k$ 接触项 $\alpha = -64\cdot g_{\text{eff}} \approx -0.0385/M_{\text{Pl}}^2$（$\alpha < 0$，吸引方向增强，与 A1 的 NLO 恒正一致）；精确谱和显示偏离比 $R(k^2)$ **有界**——起始 $k \sim \lambda_1 \cdot M_{\text{Pl}} \approx 0.17\,M_{\text{Pl}}$（第一塔模式），高 $k$ 饱和于 $8\cdot g_{\text{eff}} \approx \mathbf{0.48\%}$（任何能标不超过）。第 2 条定量化：$E_{\text{cutoff}} = \|\Delta\|_F \cdot M_{\text{Pl}} = \sqrt{r_{\text{cat}}}\cdot\Delta\lambda_{\min} \approx \mathbf{0.0245}\,M_{\text{Pl}} \approx M_{\text{Pl}}/41$——自耦合 EFT 在远低于 Planck 标度即失效（比传播子通道更早）。诚实标注：$g_{\text{eff}}$ 与权重 $w_n = 1$ 为建模指派；动量空间表述受 B1④/B2 制约（模型化级别）；但谱矩闭式 64、23.44 与饱和上限 $8\cdot g_{\text{eff}}$ 不依赖这些指派。
+→ **v1.42 定量化（2026-07-29，`scripts/paperX_propagator_spectral.py`，A4 闭合）**：离散谱塔模型 $D(k^2) = 1/k^2 + g_{\text{eff}}\cdot\sum_{n=1}^{8} 1/(k^2 + \lambda_n^2)$（$g_{\text{eff}} = \|\Delta\|_F^2 = r_{\text{cat}}\cdot\Delta\lambda_{\min}^2 \approx 6.01\times 10^{-4}$）。**谱矩闭式**：$\sum 1/\lambda_n^2 = 72\cdot 8/9 = \mathbf{64}$（精确），$\sum 1/\lambda_n^4 / \sum 1/\lambda_n^2 = 23.44$。第 1 条定量化：低 $k$ 接触项 $\alpha = -64\cdot g_{\text{eff}} \approx -0.0385/M_{\text{Pl}}^2$（$\alpha < 0$，吸引方向增强，与 A1 的 NLO 恒正一致）；精确谱和显示偏离比 $R(k^2)$ **有界**——起始 $k \sim \lambda_1 \cdot M_{\text{Pl}} \approx 0.17\,M_{\text{Pl}}$（第一塔模式），高 $k$ 饱和于 $8\cdot g_{\text{eff}} \approx \mathbf{0.48\%}$（任何能标不超过）。第 2 条定量化：$E_{\text{cutoff}} = \|\Delta\|_F \cdot M_{\text{Pl}} = \sqrt{r_{\text{cat}}}\cdot\Delta\lambda_{\min} \approx \mathbf{0.0245}\,M_{\text{Pl}} \approx M_{\text{Pl}}/41$——自耦合 EFT 在远低于 Planck 标度即失效（比传播子通道更早）。诚实标注：$g_{\text{eff}}$ 与权重 $w_n = 1$ 为建模指派；动量空间表述受 B1④/B2 制约（模型化级别）；但谱矩闭式 64、23.44 与饱和上限 $8\cdot g_{\text{eff}}$ 不依赖这些指派。
 
 #### 5.7f.5 $\Delta$ 在等效场图像中的双重角色
 
@@ -628,7 +628,7 @@ $$\Delta \approx [A_{\text{GR}}, \delta\beta]\cdot g(A_{\text{GR}}) + f(A_{\text
 
 **预测**：如果存在中子星合并事件中的引力波异常（偏离 GR 后牛顿展开），可能是高阶 $\Delta$ 修正的信号。但这是**修正引力**（sign-changing correction），不是"反引力场"。
 
-→ **v1.39 判定（2026-07-29，`paperX_gravity_NLO_sign.py`，A1 闭合）**：途径 B 在**期望层面排除**。精确恒等式 $\Delta = [A, \delta\beta]\cdot\alpha' + \beta\cdot[\delta\alpha, A]$（200 样本验证误差 $1.9\times10^{-16}$）使 LO/NLO 严格可分；50,000 样本 Monte Carlo 给出 $r_{\text{cross}} = -3.4\times10^{-5} \approx 0$（独立零均值采样下奇次项消失）与 $r_{\text{NLO}} = +8.06\times10^{-4} \geq 0$（范数恒正，采样模型无关的代数事实），NLO 净贡献 $+7.7\times10^{-4}$ **严格为正**——高阶修正只会**增强**引力。诚实标注：27% 样本的净 NLO 贡献为负（交叉项涨落幅度大于 NLO 均值），但这是零均值、不累积的涨落，不构成系统性排斥；若未来物理模型要求关联同伦扰动（$\mathbb{E}[\delta\beta\cdot\delta\alpha] \neq 0$），交叉项可非零——这是途径 B 重新开放的唯一通道，已是明确的可检验模型假设。
+→ **v1.39 判定（2026-07-29，`scripts/paperX_gravity_NLO_sign.py`，A1 闭合）**：途径 B 在**期望层面排除**。精确恒等式 $\Delta = [A, \delta\beta]\cdot\alpha' + \beta\cdot[\delta\alpha, A]$（200 样本验证误差 $1.9\times10^{-16}$）使 LO/NLO 严格可分；50,000 样本 Monte Carlo 给出 $r_{\text{cross}} = -3.4\times10^{-5} \approx 0$（独立零均值采样下奇次项消失）与 $r_{\text{NLO}} = +8.06\times10^{-4} \geq 0$（范数恒正，采样模型无关的代数事实），NLO 净贡献 $+7.7\times10^{-4}$ **严格为正**——高阶修正只会**增强**引力。诚实标注：27% 样本的净 NLO 贡献为负（交叉项涨落幅度大于 NLO 均值），但这是零均值、不累积的涨落，不构成系统性排斥；若未来物理模型要求关联同伦扰动（$\mathbb{E}[\delta\beta\cdot\delta\alpha] \neq 0$），交叉项可非零——这是途径 B 重新开放的唯一通道，已是明确的可检验模型假设。
 
 **途径 C：反范畴 / 镜像 $\mathbf{Sp}$ 结构（纯猜测，当前框架内不成立）**
 
@@ -671,7 +671,7 @@ $$\Delta \approx [A_{\text{GR}}, \delta\beta]\cdot g(A_{\text{GR}}) + f(A_{\text
 
 ### 5.7h 引力波极化计数：2 个张量模式的框架推导（2026-07-29 新增，A3 闭合）
 
-§5.7d 直觉 4 中"2 个张量模式"此前引用 GR（$\square h_{\mu\nu} = 0$）。本节给出框架自身的推导——约束来自范畴结构而非 GR 的微分同胚不变性（`paperX_gw_mode_counting.py`，已注册）。
+§5.7d 直觉 4 中"2 个张量模式"此前引用 GR（$\square h_{\mu\nu} = 0$）。本节给出框架自身的推导——约束来自范畴结构而非 GR 的微分同胚不变性（`scripts/paperX_gw_mode_counting.py`，已注册）。
 
 **三段约束链**：
 
@@ -691,13 +691,13 @@ $$\Delta \approx [A_{\text{GR}}, \delta\beta]\cdot g(A_{\text{GR}}) + f(A_{\text
 | 标量-张量 | 3 | +, ×, 呼吸 |
 | 有质量引力 | 5 | +, ×, 矢量×2, 呼吸 |
 
-**框架的独特预测**：极化数 = 2（与 GR 一致，与标量-张量/有质量引力区分），但 +/× 模式对应不同层间振荡——层刚度各向异性（X.A ≠ Y.A ≠ Z.A）导致**双折射**（两模式传播差异），这是 GR 没有的特征信号（`paperX_gw_polarization.py` 已量化各向异性 ~1% 时的到达时间差）。**极化数 = 2 同 GR + 双折射异 GR** 构成框架在该通道的完整可证伪签名。
+**框架的独特预测**：极化数 = 2（与 GR 一致，与标量-张量/有质量引力区分），但 +/× 模式对应不同层间振荡——层刚度各向异性（X.A ≠ Y.A ≠ Z.A）导致**双折射**（两模式传播差异），这是 GR 没有的特征信号（`scripts/paperX_gw_polarization.py` 已量化各向异性 ~1% 时的到达时间差）。**极化数 = 2 同 GR + 双折射异 GR** 构成框架在该通道的完整可证伪签名。
 
 **诚实标注**：(i) "迹模式 ↔ IFS 均匀重标度"的识别是建模指派（呼吸扰动与收缩率缩放的对应未经谱流算子推导）；(ii) 通量守恒用于度规微扰是线性理论假设（与 paper18 的"正比于"同级，B1 第 ④ 环缺失的同等待遇）；(iii) 框架的增量是给出约束的**范畴来源**（Moran 自洽替代微分同胚不变性的角色），在 GR 极限（X.A = Y.A = Z.A）下与 GR 等价。地位：🔶 结构论证完成，非机器证明。
 
 ### 5.7i 1/r² 定律完整推导链（2026-07-29 新增，B1 闭合）
 
-本节汇总 B1 的五环推导链最终状态（`paperX_flux_conservation.py` + `paperX_source_defect.py`，均已注册）。
+本节汇总 B1 的五环推导链最终状态（`scripts/paperX_flux_conservation.py` + `scripts/paperX_source_defect.py`，均已注册）。
 
 | 环 | 内容 | 关键结果 | 级别 |
 |:---:|:---|:---|:---:|
@@ -737,7 +737,7 @@ $$[A, \delta b]_{ij} = (\lambda_i - \lambda_j)\,\delta b_{ij}$$
 
 因此 $\Delta$ 的所有对角元恒为零，其非零支撑完全位于"模式间"分量——谱空间中不同本征模式之间的耦合通道。这是"$\Delta$ 的方向不在时空内"的最简定量形式。
 
-**定义 J1（扇区分支撑）**。在 $4+4$ 分块（可见扇区 $V$ + 静默扇区 $S$）下，数值分析给出 $\|\Delta_V\|_F^2 / \|\Delta\|_F^2 \approx 0.13$，即 $\Delta$ 的 **87% 范数支撑位于 $V$-$S$ 混合块中**（`paperX_delta_block_decomp.py`，v1.46）。该数值依赖于分块建模指派，但"支撑主要位于混合扇区间"的定性结论是稳健的。
+**定义 J1（扇区分支撑）**。在 $4+4$ 分块（可见扇区 $V$ + 静默扇区 $S$）下，数值分析给出 $\|\Delta_V\|_F^2 / \|\Delta\|_F^2 \approx 0.13$，即 $\Delta$ 的 **87% 范数支撑位于 $V$-$S$ 混合块中**（`scripts/paperX_delta_block_decomp.py`，v1.46）。该数值依赖于分块建模指派，但"支撑主要位于混合扇区间"的定性结论是稳健的。
 
 **命题 J3（正交投影恢复力）**。引力是 $\mathbf{Sp}$ 4-范畴中 coherence 层（层 4）的结构刚度 $\Delta$ 对主动生成层（层 1-3，对应三维空间）中谱缺陷的正交投影恢复力。
 

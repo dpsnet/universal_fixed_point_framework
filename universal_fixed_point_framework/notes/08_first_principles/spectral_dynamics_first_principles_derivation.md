@@ -571,7 +571,7 @@ $d_H$ 的不等式链与 Moran 条件定理已在 Lean 4 + Mathlib 中完成形�
 
 $$\delta = \frac{d_0}{\ln(1/r)}\cdot\bar{\varepsilon} = \ln(15)\cdot\bar{\varepsilon}$$
 
-数值验证（`paperX_dH_moran_perturbation.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+数值验证（`scripts/paperX_dH_moran_perturbation.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
 - 一阶公式 vs 精确解（$\varepsilon \le 10^{-3}$）：相对误差 ≤ 5×10⁻⁴
 - 反演：$\delta_{\text{obs}} = 0.00145 \Leftrightarrow \bar{\varepsilon} \approx 5.35\times 10^{-4}$（0.054% 平均权重上调）
 - 实际 3-映射 IFS 灵敏度 $\partial d/\partial\ln c_3 \approx 721$（解析与差分一致）——定量证实命题 R2：$c_3$ 的 $10^{-6}$ 相对扰动即可移动 $d$ 约 $7\times 10^{-4}$（与 δ 同量级）

@@ -3,11 +3,11 @@ toolName: Write
 status: success
 
 
-filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\_run_dns_adaptive.py
+filePath: d:\trae-work\hyper-resolution\universal_fixed_point_framework\scripts/dns/_run_dns_adaptive.py
 
 changes: undefined
 
-自适应参数扫描脚本已创建：[`_run_dns_adaptive.py`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/_run_dns_adaptive.py)。
+自适应参数扫描脚本已创建：[`scripts/dns/_run_dns_adaptive.py`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/scripts/dns/_run_dns_adaptive.py)。
 
 ## 自适应策略
 
@@ -37,7 +37,7 @@ toolName: run_command
 
 status: running
 
-command: python _run_dns_adaptive.py undefined
+command: python scripts/dns/_run_dns_adaptive.py undefined
 
 自适应扫描已启动（第 1/8 轮）。
 

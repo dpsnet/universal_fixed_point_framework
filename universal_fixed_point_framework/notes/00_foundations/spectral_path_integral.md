@@ -130,7 +130,7 @@ $$D_F^{(R)}(p^2) \approx \frac{i}{p^2 - m_R^2 + \Sigma_R(p^2) + i\varepsilon},$$
 
 ## 4. 鏁板€奸獙璇?
 
-閰嶅鑴氭湰 `paperX_spectral_renormalization.py` 楠岃瘉浠ヤ笅鍐呭锛?
+閰嶅鑴氭湰 `scripts/paperX_spectral_renormalization.py` 楠岃瘉浠ヤ笅鍐呭锛?
 
 1. **鑷敱璋辫矾寰勭Н鍒?*锛欸aussian 绉垎鍦ㄧ鏁ｈ氨涓嬬殑绮剧‘鎬?
 2. **璋辨埅鏂鍒欏寲**锛?\int_0^{\Lambda^2} d\lambda/(\lambda - m^2)$ 鏈夐檺鎬?

@@ -111,7 +111,7 @@ $$\mathcal{L}_{\text{SM}}^{\text{spec}} = \mathcal{L}_{\text{KG}}^{\text{spec}} 
 璋辫〃杩扮殑楠岃瘉鏍囧噯锛氳繍鍔ㄦ柟绋嬪湪璋辫瑷€涓繀椤昏繕鍘熷凡鐭ョ殑鍦烘柟绋嬨€?
 
 ```python
-# paperX_spectral_lagrangian.py 涓殑楠岃瘉閫昏緫
+# scripts/paperX_spectral_lagrangian.py 涓殑楠岃瘉閫昏緫
 def verify_kg_reduction():
     """楠岃瘉璋?KG 鈫?鏍囧噯 KG 鐨勮繕鍘?""
     # 鏋勯€犺氨鏍囬噺鍦哄璞?

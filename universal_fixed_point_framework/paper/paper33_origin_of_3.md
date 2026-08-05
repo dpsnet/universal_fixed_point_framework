@@ -236,7 +236,7 @@ $$\ln 15 = 4\ln 2 - \ln\frac{16}{15} = 2.772589 - 0.064539$$
 
 | 脚本 | 内容 | 状态 |
 |:-----|:------|:----:|
-| `paperX_O2_unification.py` | mpmath 50 位验证 $c_1<c_2<c_3$ 全域成立 | ✅ 已注册 |
+| `scripts/paperX_O2_unification.py` | mpmath 50 位验证 $c_1<c_2<c_3$ 全域成立 | ✅ 已注册 |
 | `paper33_O2_supplement.md` | 补充材料：全域扫描参数、三路径数值一致性、可证伪陈述 | ✅ 已发布 |
 
 ---

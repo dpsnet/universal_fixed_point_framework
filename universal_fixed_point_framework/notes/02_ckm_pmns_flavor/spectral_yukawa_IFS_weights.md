@@ -87,7 +87,7 @@ Phase 51A 证明超算子方程 $\Phi(M) = M$ 无解。进一步的旋转分析�
 2. **RG 跑动**——$y_\tau$ 和 $y_\mu$ 从 Planck 到 $M_Z$ 的跑动不同
 3. **谱流非微扰效应**——$D_F$ 的手征结构导致有效 Yukawa 耦合的修正
 
-**当前状态**：已识别的开放问题，根源在于 IFS 有限谱三元组中不同扇区的详细表示结构。纳入统一路线图。见 [`paperX_yukawa_rotation.py`](../../paperX_yukawa_rotation.py) 和 [`paperX_yukawa_eigenvalue_pattern.py`](../../paperX_yukawa_eigenvalue_pattern.py)。
+**当前状态**：已识别的开放问题，根源在于 IFS 有限谱三元组中不同扇区的详细表示结构。纳入统一路线图。见 [`scripts/paperX_yukawa_rotation.py`](../../paperX_yukawa_rotation.py) 和 [`scripts/paperX_yukawa_eigenvalue_pattern.py`](../../paperX_yukawa_eigenvalue_pattern.py)。
 
 ---
 
@@ -97,4 +97,4 @@ Phase 51A 证明超算子方程 $\Phi(M) = M$ 无解。进一步的旋转分析�
 2. Connes & Marcolli (2008), *Noncommutative Geometry, Quantum Fields and Motives*, §1.8-1.15
 3. Chamseddine, Connes & Marcolli (2007), "Gravity and the standard model with neutrino mixing", *Adv. Theor. Math. Phys.* 11, 991-1089
 4. Phase 50A: [`spectral_finite_IFS_triple.md`](spectral_finite_IFS_triple.md)
-5. Phase 50D: [`paperX_alpha_first_principles.py`](../../paperX_alpha_first_principles.py)
+5. Phase 50D: [`scripts/paperX_alpha_first_principles.py`](../../paperX_alpha_first_principles.py)

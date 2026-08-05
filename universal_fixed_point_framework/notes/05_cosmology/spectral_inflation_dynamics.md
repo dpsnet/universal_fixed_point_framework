@@ -16,7 +16,7 @@
 - Paper 12 §12：原初引力波张量功率谱 + 谱修正 + 一致性关系（定理 12.1/12.2）。
 - Paper 25 §7：宇宙学六层纤维分解，Cosmo-1（Inflation）/ Cosmo-2（Reheat）谱生成元。
 - Paper 34 + `notes/08_first_principles/b2_continuum_limit_analysis.md`：静态 IFS → $R^4$ 拟对称嵌入（定理 5.3）+ 谱流保持可微结构（定理 5.5）。
-- 数值：`paper28_inflation_powerspectra.py`（6/6）、`phase42_inflation_R4.py`、`paper5_cosmology.py`。
+- 数值：`scripts/paper28_inflation_powerspectra.py`（6/6）、`scripts/phase42_inflation_R4.py`、`scripts/paper5_cosmology.py`。
 - 笔记：`notes/04_lorentz_gravity/spectral_inflation_silence.md`（$N_e \approx 55$ 的分形边界定性来源）。
 
 缺失的完整链条：**e 折叠数闭式积分 → 再加热温度谱推导 → 暴涨时空动态连续极限（时间依赖）→ 原初引力波预言闭环**。
@@ -56,7 +56,7 @@ $$N(\varphi) = \frac{1}{4b^2}\left(e^{b\varphi} - b\varphi - e^{b\varphi_{\text{
 
 $$\varphi_{\text{end}} = \frac{1}{b}\ln\left(\frac{2+\sqrt{3}}{\sqrt{3}}\right) \approx 0.9402\,M_{\mathrm{Pl}},\qquad N_{\text{end}} = \frac{3}{4}\left(e^{b\varphi_{\text{end}}} - b\varphi_{\text{end}}\right) \approx 1.04$$
 
-（$\varepsilon = (4/3)(e^{-b\varphi}/(1-e^{-b\varphi}))^2 = 1 \iff e^{-b\varphi} = \sqrt{3}/(2+\sqrt{3}) = 0.4641 \Longrightarrow b\varphi_{\text{end}} = \ln(2.1547) \approx 0.7678$；$e^{b\varphi} - b\varphi = 2.1547 - 0.7678 = 1.3869$，$\times 3/4 \approx 1.04$。脚本 `paperX_inflation_dynamics.py` C1/C2 验证。）
+（$\varepsilon = (4/3)(e^{-b\varphi}/(1-e^{-b\varphi}))^2 = 1 \iff e^{-b\varphi} = \sqrt{3}/(2+\sqrt{3}) = 0.4641 \Longrightarrow b\varphi_{\text{end}} = \ln(2.1547) \approx 0.7678$；$e^{b\varphi} - b\varphi = 2.1547 - 0.7678 = 1.3869$，$\times 3/4 \approx 1.04$。脚本 `scripts/paperX_inflation_dynamics.py` C1/C2 验证。）
 
 CMB 尺度 e 折叠数 $N_e \equiv N(\varphi_{\text{cmb}})$。对 $N_e = 55$，闭式 $(3/4)(e^{b\varphi}-b\varphi) = 55 + N_{\text{end}} = 56.04$，解得 $b\varphi_{\text{cmb}} \approx 4.367$：
 
@@ -70,7 +70,7 @@ $$N_e = \frac{3}{4}\left(e^{b_{\text{eff}}\varphi_{\text{cmb}}} - b_{\text{eff}}
 
 其中 $N_{R^4}$ 为 Phase 42 $R^4$ 修正（$V$ 的高阶 $e^{-b\varphi}$ 因子）对 e 折叠积分的相对修正。
 
-**$N_{R^4}$ 精确闭式**（2026-08-04 推导，`paperX_nR4_closed_form.py` 验证 ✅）：
+**$N_{R^4}$ 精确闭式**（2026-08-04 推导，`scripts/paperX_nR4_closed_form.py` 验证 ✅）：
 谱势 R⁴ 修正 $V(\varphi) = V_0(1-e^{-b\varphi})^2(1+\delta_2 e^{-2b\varphi})$，$\delta_2 = c_3/c_1^2$（R⁴ 相对强度，Phase 42），$x = e^{-b\varphi}$。慢滚积分 $N_e = \int (V/V')\,d\varphi$ 对 $x$ 变量精确计算：
 
 $$V/V' = \frac{(1-x)(1+\delta_2 x^2)}{2b\,x\,(1-\delta_2 x+2\delta_2 x^2)} = \frac{1-x}{2bx}\left(1+\delta_2 x - \delta_2 x^2\right) + \mathcal{O}(\delta_2^2)$$
@@ -119,7 +119,7 @@ Phase 40：$\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta 
 
 ### 3.4 γ_φ 谱第一性确定（路径 A）【谱新增，2026-08-05，61A 开放项 1 部分闭合】
 
-**开放项 1 部分闭合**：原 γ_φ ∈ [0.01, 1] 区间输入（标准量级 O(0.1)）现由**谱量闭式**确定（κ/F_π 同构模式，`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）：
+**开放项 1 部分闭合**：原 γ_φ ∈ [0.01, 1] 区间输入（标准量级 O(0.1)）现由**谱量闭式**确定（κ/F_π 同构模式，`scripts/paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）：
 
 $$\gamma_\varphi \;=\; \frac{1}{4\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}\right)^2 C_{\mathrm{reheat}} \;=\; \frac{1.9992}{4\pi}\,C_{\mathrm{reheat}} \;=\; 0.159\cdot C_{\mathrm{reheat}}$$
 
@@ -186,7 +186,7 @@ $$\frac{d}{dt}\lambda_k(t) = -2H(t)\,\lambda_k(t) \;\Longrightarrow\; a(t) = a_0
 
 $$M(t_{pl}) = M_{\mathrm{Pl}} \;\xrightarrow{\text{反弹种子}}\; H^2(\rho_c) = 0,\; a_{\min} = \frac{1}{\Delta\lambda_{\min}^2} \;\xrightarrow{\text{反弹后膨胀}}\; H \to H_{\inf} \;\xrightarrow{\text{D3.1}}\; \lambda_k(t) = \lambda_k(0)\left(\frac{a_{\min}}{a(t)}\right)^2$$
 
-**数值**（`paperX_bounce_inflation.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+**数值**（`scripts/paperX_bounce_inflation.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
 
 | 检查项 | 数值 | 物理 |
 |:--|:--|:--|
@@ -203,7 +203,7 @@ $$M(t_{pl}) = M_{\mathrm{Pl}} \;\xrightarrow{\text{反弹种子}}\; H^2(\rho_c) 
 
 ### 4.5 D3.1(3) 严格微分几何度规诱导验证【谱新增，2026-08-05，61A 开放项】
 
-**开放项 3 闭合**：定理 D3.1 第 (3) 条"FLRW 度规涌现"原为结构论证（拟对称 → 等距类），现由严格微分几何验证（`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）——谱流诱导的 FLRW 度规 $g = \mathrm{diag}(-1, a(t)^2, a(t)^2, a(t)^2)$ 满足：
+**开放项 3 闭合**：定理 D3.1 第 (3) 条"FLRW 度规涌现"原为结构论证（拟对称 → 等距类），现由严格微分几何验证（`scripts/paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）——谱流诱导的 FLRW 度规 $g = \mathrm{diag}(-1, a(t)^2, a(t)^2, a(t)^2)$ 满足：
 
 1. **Killing 对称性**（空间齐次 + 各向同性）：3 个空间平移 Killing（$\xi^i = \text{const}$）+ 3 个空间旋转 Killing（$\xi = \Omega \times x$）满足 Killing 方程 $£_\xi g = 0$（数值残差 = 0）——FLRW 空间部分 $E^3$ 最大对称性（6 Killing）。
 2. **共形平坦**：Weyl 张量 $C_{\mu\nu\rho\sigma} = 0$（de Sitter 与慢滚 $\dot H \neq 0$ 均验证）——FLRW 共形平坦的结构性质。
@@ -257,7 +257,7 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 
 ---
 
-## 7. 数值验证清单（paperX_inflation_dynamics.py）
+## 7. 数值验证清单（scripts/paperX_inflation_dynamics.py）
 
 | 节 | 检查项 | 判据 |
 |:--|:------|:-----|
@@ -272,9 +272,9 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 
 ## 8. 诚实边界与未决问题
 
-1. **$\gamma_\varphi$ 未谱定**：~~再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定~~ **🔶 部分闭合（2026-08-05，§3.4）**：谱量闭式 $\gamma_\varphi = \frac{1}{4\pi}(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向）。
+1. **$\gamma_\varphi$ 未谱定**：~~再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定~~ **🔶 部分闭合（2026-08-05，§3.4）**：谱量闭式 $\gamma_\varphi = \frac{1}{4\pi}(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`scripts/paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向）。
 2. **$R^4$ 修正对 $N_e$ 的定量影响**（$N_{R^4}$）：Phase 42 的 $R^4$ 系数 $c_2/c_1 \approx 0.1$ 量级，对 $N_e$ 影响 $\lesssim 0.1$，本笔记以量级处理，未做精确闭式。
-3. **动态连续极限的严格度规推导**：~~D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续~~ **✅ 闭合（2026-08-05，§4.5）**：严格微分几何验证——FLRW 度规满足 6 空间 Killing（齐次 + 各向同性）、Weyl 张量 = 0（共形平坦）、$R = 6(\dot H + 2H^2)$、谱流闭式 $a = (\lambda_0/\lambda)^{1/2}$ 满足 Einstein-Friedmann（`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）。
+3. **动态连续极限的严格度规推导**：~~D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续~~ **✅ 闭合（2026-08-05，§4.5）**：严格微分几何验证——FLRW 度规满足 6 空间 Killing（齐次 + 各向同性）、Weyl 张量 = 0（共形平坦）、$R = 6(\dot H + 2H^2)$、谱流闭式 $a = (\lambda_0/\lambda)^{1/2}$ 满足 Einstein-Friedmann（`scripts/paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`）。
 4. **$N_e$ 一致性**：D1 闭式（$\approx 55$）与 $S_4$ 分形边界（$\approx 55$）一致，但二者共享观测输入 $H_{\mathrm{inf}}/T_{\mathrm{RH}}/T_{\mathrm{CMB}}$ 的近似，非完全独立测量。
 
 ---
@@ -285,7 +285,7 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。D1–D4 四项子任务理论笔记 + 形式化路线 + 数值验证清单。 |
 | v0.2 | 2026-08-03 | 内联公式统一为标准 `$...$` LaTeX 格式。 |
-| v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（§2.2）**：R⁴ 修正对 e 折叠数贡献由量级估计升级为精确闭式（一阶 δ₂ 展开 + x 变量积分），数值 −0.0157；`paperX_nR4_closed_form.py` 闭式 vs 数值积分验证（相对偏差 0.044%）。 |
-| v0.4 | 2026-08-05 | **§4.4 P1-3 ↔ P1-4 动态连续极限衔接（新增）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿（a_min = 1/Δλ_min²、H → H_inf 精确衔接、谱流特征值红移闭式自洽）；`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`（61A 开放项"P1-3↔P1-4 衔接"部分闭合）。 |
-| v0.5 | 2026-08-05 | **§3.4 γ_φ 谱第一性确定（路径 A，新增）**：γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（落在标准区间 + 热历史 + η_B 同量级串联）；`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；§8 开放项 1 更新（🔶 部分闭合）。 |
-| v0.6 | 2026-08-05 | **§4.5 D3.1(3) 严格微分几何度规诱导验证（新增）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦，de Sitter 与慢滚）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann G₀₀ = 3H² = 8πV_φ；`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`；§8 开放项 3 闭合（✅）。 |
+| v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（§2.2）**：R⁴ 修正对 e 折叠数贡献由量级估计升级为精确闭式（一阶 δ₂ 展开 + x 变量积分），数值 −0.0157；`scripts/paperX_nR4_closed_form.py` 闭式 vs 数值积分验证（相对偏差 0.044%）。 |
+| v0.4 | 2026-08-05 | **§4.4 P1-3 ↔ P1-4 动态连续极限衔接（新增）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿（a_min = 1/Δλ_min²、H → H_inf 精确衔接、谱流特征值红移闭式自洽）；`scripts/paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`（61A 开放项"P1-3↔P1-4 衔接"部分闭合）。 |
+| v0.5 | 2026-08-05 | **§3.4 γ_φ 谱第一性确定（路径 A，新增）**：γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（落在标准区间 + 热历史 + η_B 同量级串联）；`scripts/paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；§8 开放项 1 更新（🔶 部分闭合）。 |
+| v0.6 | 2026-08-05 | **§4.5 D3.1(3) 严格微分几何度规诱导验证（新增）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦，de Sitter 与慢滚）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann G₀₀ = 3H² = 8πV_φ；`scripts/paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`；§8 开放项 3 闭合（✅）。 |

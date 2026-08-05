@@ -22,7 +22,7 @@ $$\alpha_i^{\text{(phys)}} \neq \frac{\Delta\lambda_i}{4\pi}$$
 
 ## 2. DS 顶点减除提供的结构
 
-Paper V §6.2 和 `paper31_threeloop_beta.py` 已证明：
+Paper V §6.2 和 `scripts/paper31_threeloop_beta.py` 已证明：
 
 1. 谱流对易子展开 $[G, [G, \ldots, [G, A]]]$ 的 $n$ 圈朴素 β 函数比 SM β 函数多一个 $C_A$ 因子
 2. Dyson-Schwinger 顶点减除每阶去除一个 $C_A$，使 $\beta_n^{\text{(spec)}} = \beta_n^{\text{(SM)}}$
@@ -170,6 +170,6 @@ $$g_i \propto \|[A_i, \psi]\|_{\text{HS}}$$
 ## 参考文献
 
 - `spectral_root_cause_analysis.md` §4/§4a（根因链）
-- `paper31_threeloop_beta.py`（DS 顶点减除验证）
+- `scripts/paper31_threeloop_beta.py`（DS 顶点减除验证）
 - `spectral_rge_running.py`（数值偏差诊断）
 - `spectral_RG_open_problems.md`（RGE 开放问题）

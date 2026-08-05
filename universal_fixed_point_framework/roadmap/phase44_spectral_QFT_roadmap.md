@@ -78,14 +78,14 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 #### A1: 坍缩时间实验提案
 - **目标**：将 τ = ln(1/ε)/κ 转化为超导量子比特实验设计
 - **做法**：基于 IBM/Google 量子处理器参数（T₂~100μs, 门保真度>99.9%），设计测量 τ 的脉冲序列
-- **产出**：`notes/09_experimental/spectral_collapse_experiment.md` + `paperX_collapse_experiment_sim.py`
+- **产出**：`notes/09_experimental/spectral_collapse_experiment.md` + `scripts/paperX_collapse_experiment_sim.py`
 - **独有性**：标准 QM 认为坍缩瞬时；GRW 预测 τ~10⁻¹⁶s；UFPF 预测 τ~1/κ（μs 量级可测）
 - **依赖**：无（直接基于 Paper X）
 
 #### A2: K-S 语境性实验定量匹配
 - **目标**：将 Spec ≠ Spec_com 与 Yu-Oh 2012 / Kulikov 2020 实验定量对比
 - **做法**：在 Sp 中构建投影态射族，计算 M 个测量语境下的真值赋值一致性
-- **产出**：`paperX_contextuality_match.py` + `notes/00_foundations/spectral_contextuality_experiment.md`
+- **产出**：`scripts/paperX_contextuality_match.py` + `notes/00_foundations/spectral_contextuality_experiment.md`
 - **独有性**：首次将语境性归因为范畴非对易结构
 - **依赖**：无（直接基于 spectral_quantum_extensions.md）
 
@@ -99,7 +99,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
   - Yang-Mills: 谱规范连接 ∇_Sp（已有纤维丛结构）
   - Higgs: 谱自发对称破缺
 - **验证标准**：运动方程在谱语言中还原 KG/Dirac/YM
-- **产出**：`notes/00_foundations/spectral_lagrangian.md` + `paperX_spectral_lagrangian.py`
+- **产出**：`notes/00_foundations/spectral_lagrangian.md` + `scripts/paperX_spectral_lagrangian.py`
 - **依赖**：Paper I（Sp 范畴）、Paper V（谱流方程）、已有纤维丛代码
 
 ---
@@ -111,13 +111,13 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 #### A3: 暗物质候选的 Fermi-LAT/AMS-02 拟合
 - **目标**：将 Paper II 的 5 个暗物质候选质量点与观测数据做 χ² 拟合
 - **做法**：扩展 `bsm_relic_calibration.py`，添加 Fermi-LAT 伽马射线过剩、AMS-02 反质子比
-- **产出**：`paperX_dark_matter_fit.py` + 拟合报告
+- **产出**：`scripts/paperX_dark_matter_fit.py` + 拟合报告
 - **依赖**：Paper II 暗物质候选预言
 
 #### B1: 谱引力子传播子
 - **目标**：从 Paper V 的 A_GR 离散谱构造谱引力子传播子 G_spec(k)
 - **做法**：将 A_GR 的谱分解 ∑λ_i P_i 代入 Feynman 传播子定义
-- **产出**：`paperX_graviton_propagator.py` + `notes/04_lorentz_gravity/spectral_graviton.md`
+- **产出**：`scripts/paperX_graviton_propagator.py` + `notes/04_lorentz_gravity/spectral_graviton.md`
 - **依赖**：Paper V（A_GR 谱结构）、Paper VIII（BH 谱公式）
 
 ### Track B：工具翻译 Step 2
@@ -129,7 +129,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
   - 谱顶点 V(λ₁, λ₂, λ₃) 从 L_spectral 的相互作用项读取
   - 谱 Dyson 级数 
 - **验证标准**：φ⁴ 理论的 2→2 树图散射振幅在谱语言中还原
-- **产出**：`notes/00_foundations/spectral_feynman_rules.md` + `paperX_spectral_feynman.py`
+- **产出**：`notes/00_foundations/spectral_feynman_rules.md` + `scripts/paperX_spectral_feynman.py`
 - **依赖**：T1 完成
 - **状态**：✅ **完成** 7/7 检查通过
 
@@ -142,7 +142,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 #### B2: 普朗克尺度散射振幅
 - **目标**：在 A_GR 截断 λ_max ∼ M_Pl 下计算 2→2 散射
 - **做法**：将谱截断 λ_max 作为紫外正则化器，计算 M(s,t)
-- **产出**：`paperX_planck_scattering.py`
+- **产出**：`scripts/paperX_planck_scattering.py`
 - **依赖**：B1（引力子传播子）+ T2（谱 Feynman 规则）+ T3（谱路径积分）
 - **状态**：🚧 **进行中**
 
@@ -154,7 +154,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
   - 谱生成泛函 Z_spectral[J]
   - 谱重整化程序（counter-term + 减除方案）
 - **验证标准**：λφ⁴ 的单圈 β 函数在谱语言中还原
-- **产出**：`notes/00_foundations/spectral_path_integral.md` + `paperX_spectral_renormalization.py`
+- **产出**：`notes/00_foundations/spectral_path_integral.md` + `scripts/paperX_spectral_renormalization.py`
 - **依赖**：T2 完成
 - **状态**：✅ **完成**（提前完成: Phase 1 收尾时一并交付）
 
@@ -173,7 +173,7 @@ Track B   │ T1 谱拉格朗日量   │  │ T2 谱 Feynman 规则│  │ T3 
 #### C2: 完整跨尺度 RG 流
 - **目标**：连接 Planck → TeV → meV 的单链流方程
 - **做法**：构造 dλ/dlogμ = β(λ) 在 μ ∈ [M_Pl, Λ_QCD] 上的完整解
-- **产出**：`paperX_cross_scale_RG.py` + `notes/10_gauge_RG/spectral_cross_scale_RG.md`
+- **产出**：`scripts/paperX_cross_scale_RG.py` + `notes/10_gauge_RG/spectral_cross_scale_RG.md`
 - **依赖**：T3（谱重整化程序）
 
 ### Track B：第一原理谱 QFT
@@ -240,7 +240,7 @@ $$c_1 = k \cdot S_3 S_4,\quad c_2 = k \cdot S_4,\quad c_3 = k, \quad S_3=e^{-3},
 - **PMNS 矩阵**：sin²θ₂₃匹配 ×1.5，θ₁₂在因子 3 内，θ₁₃需精细 See-saw
 - **产出**：
   - 笔记：`notes/02_ckm_pmns_flavor/spectral_zero_parameter_derivation.md`（含 §§9-11 全费米子扩展）
-  - 脚本：`paperX_zero_parameter_check.py`（8/8 通过）、`paperX_zero_parameter_all_fermions.py`、`paperX_yukawa_splitting.py`、`paperX_pmns_derivation.py`
+  - 脚本：`scripts/paperX_zero_parameter_check.py`（8/8 通过）、`scripts/paperX_zero_parameter_all_fermions.py`、`scripts/paperX_yukawa_splitting.py`、`scripts/paperX_pmns_derivation.py`
   - 论文：Paper I §A.15.8 更新（字段来源从"反推"改为"范畴静默预测"）
   - 论文：Paper XI §8.5 更新（新增零输入质量预测段落）
 
@@ -299,21 +299,21 @@ Phase 0                    Phase 1                    Phase 2                   
 | 产出 | 预计阶段 | 类型 |
 |:----|:-------:|:----:|
 | `notes/09_experimental/spectral_collapse_experiment.md` | Phase 0 | 笔记 |
-| `paperX_collapse_experiment_sim.py` | Phase 0 | 数值脚本 |
-| `paperX_contextuality_match.py` | Phase 0 | 数值脚本 |
+| `scripts/paperX_collapse_experiment_sim.py` | Phase 0 | 数值脚本 |
+| `scripts/paperX_contextuality_match.py` | Phase 0 | 数值脚本 |
 | `notes/00_foundations/spectral_contextuality_experiment.md` | Phase 0 | 笔记 |
 | `notes/00_foundations/spectral_lagrangian.md` | Phase 0 | 笔记 |
-| `paperX_spectral_lagrangian.py` | Phase 0 | 数值脚本 |
-| `paperX_dark_matter_fit.py` | Phase 1 | 数值脚本 |
-| `paperX_graviton_propagator.py` | Phase 1 | 数值脚本 |
+| `scripts/paperX_spectral_lagrangian.py` | Phase 0 | 数值脚本 |
+| `scripts/paperX_dark_matter_fit.py` | Phase 1 | 数值脚本 |
+| `scripts/paperX_graviton_propagator.py` | Phase 1 | 数值脚本 |
 | `notes/04_lorentz_gravity/spectral_graviton.md` | Phase 1 | 笔记 |
 | `notes/00_foundations/spectral_feynman_rules.md` | Phase 1 | 笔记 |
-| `paperX_spectral_feynman.py` | Phase 1 | 数值脚本 |
-| `paperX_planck_scattering.py` | Phase 2 | 数值脚本 |
+| `scripts/paperX_spectral_feynman.py` | Phase 1 | 数值脚本 |
+| `scripts/paperX_planck_scattering.py` | Phase 2 | 数值脚本 |
 | `notes/00_foundations/spectral_path_integral.md` | Phase 2 | 笔记 |
-| `paperX_spectral_renormalization.py` | Phase 2 | 数值脚本 |
+| `scripts/paperX_spectral_renormalization.py` | Phase 2 | 数值脚本 |
 | `notes/10_gauge_RG/spectral_alpha_derivation.md` | Phase 3 | 笔记 |
-| `paperX_cross_scale_RG.py` | Phase 3 | 数值脚本 |
+| `scripts/paperX_cross_scale_RG.py` | Phase 3 | 数值脚本 |
 | `notes/10_gauge_RG/spectral_cross_scale_RG.md` | Phase 3 | 笔记 |
 | `notes/00_foundations/spectral_QFT_axioms.md` | Phase 3 | 笔记 → Paper XI |
 | `notes/04_lorentz_gravity/spectral_lorentz_axiom.md` | Phase 4 | 笔记 → Paper XI §2.8 |
@@ -327,9 +327,9 @@ Phase 0                    Phase 1                    Phase 2                   
 | `notes/04_lorentz_gravity/spectral_AdS_CFT.md` | Phase 4 | 笔记 → Paper XII §9.4 |
 | `notes/05_condensed_matter/spectral_fluid_dynamics.md` | Phase 4 | 笔记 → Paper VI (增强版) |
 | `notes/02_ckm_pmns_flavor/spectral_zero_parameter_derivation.md` | Phase 4 | 笔记（零参数预测全记录）|
-| `paperX_zero_parameter_check.py` | Phase 4 | 数值脚本（8/8 通过）|
-| `paperX_zero_parameter_all_fermions.py` | Phase 4 | 数值脚本（全费米子扩展）|
-| `paperX_yukawa_splitting.py` | Phase 4 | 数值脚本（Yukawa 分裂）|
-| `paperX_pmns_derivation.py` | Phase 4 | 数值脚本（PMNS 矩阵）|
+| `scripts/paperX_zero_parameter_check.py` | Phase 4 | 数值脚本（8/8 通过）|
+| `scripts/paperX_zero_parameter_all_fermions.py` | Phase 4 | 数值脚本（全费米子扩展）|
+| `scripts/paperX_yukawa_splitting.py` | Phase 4 | 数值脚本（Yukawa 分裂）|
+| `scripts/paperX_pmns_derivation.py` | Phase 4 | 数值脚本（PMNS 矩阵）|
 | `notes/02_ckm_pmns_flavor/spectral_PMNS_theta13.md` | Phase 4 | 笔记（θ₁₃ 精细机制）|
 | `notes/01_qcd_higgs/spectral_strong_CP.md` | Phase 4 | 笔记（强 CP 谱解）|

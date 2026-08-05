@@ -23,6 +23,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
+import os
+
+FIGS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'figs')
 
 # ============================================================
 # 物理常数（SI 单位制）
@@ -383,8 +386,8 @@ def main():
     print(f"  干木: 模拟完成, t_max={t_wood[-1]:.0f}s, 最大位移={max(x_wood)*1000:.2f}mm")
 
     # 绘图
-    plot_motion(glass_cfg, save_path="paperX_em_switching_glass.png")
-    plot_motion(wood_cfg, save_path="paperX_em_switching_wood.png")
+    plot_motion(glass_cfg, save_path=os.path.join(FIGS_DIR, "paperX_em_switching_glass.png"))
+    plot_motion(wood_cfg, save_path=os.path.join(FIGS_DIR, "paperX_em_switching_wood.png"))
     print()
 
     # §4 可证伪判据

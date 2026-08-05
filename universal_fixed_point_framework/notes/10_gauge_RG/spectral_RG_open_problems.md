@@ -38,7 +38,7 @@ d(Δλ)/d ln μ = 4π · β(α = Δλ/(4π))
 **已有**：
 - Paper XI §8.3：SM 规范耦合三圈系数 $b_{1,2,3}$ 列表（SU(3): 7, SU(2): 19/6, U(1): 41/10）
 - Paper XII §9.3：引力子自相互作用三圈 β 函数 + 谱修正项 $\beta_3^{\text{(spec)}}$
-- Phase 31（`paper31_threeloop_beta.py`）：12/12 数值验证通过
+- Phase 31（`scripts/paper31_threeloop_beta.py`）：12/12 数值验证通过
 - Paper XI §5.3：$\lambda\phi^4$ 单圈谱 β 函数 $\beta(\lambda_R)=3\lambda_R²/(16\pi²)$
 
 **缺少的**（这才是真正的开放问题）：

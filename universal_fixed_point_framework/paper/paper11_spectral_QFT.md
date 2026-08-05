@@ -52,12 +52,12 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 | 脚本 | 验证内容 | 通过率 | 关键结果 |
 |:----|---------|:-----:|---------|
-| `paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{Sp}} = i/(\lambda-m^2+i\varepsilon)$ |
-| `paperX_spectral_renormalization.py` | 路径积分 + $\beta$ 函数 | **4/4** | $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ |
-| `paperX_spectral_gauge.py` | BRST 幂零性 + Ward 恒等式 | **6/6** | $s^2=0$, Landau 纵向=0 |
-| `paperX_spectral_chiral.py` | 反常消去 + 瞬子拓扑荷 | **7/7** | SM 4 反常全消去, $Q_{\text{top}}=1$ |
-| `paperX_spectral_SM.py` | 完整 SM 量子数/质量/$\beta$ | **8/8** | $W/Z/h$ 匹配 $<0.3\%$ |
-| `paperX_spectral_formalization.py` | LSZ/幺正性/Cutkosky/KL | **4/4** | $Z$ 因子 0.99%, 求和规则 $=1$ |
+| `scripts/paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{Sp}} = i/(\lambda-m^2+i\varepsilon)$ |
+| `scripts/paperX_spectral_renormalization.py` | 路径积分 + $\beta$ 函数 | **4/4** | $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ |
+| `scripts/paperX_spectral_gauge.py` | BRST 幂零性 + Ward 恒等式 | **6/6** | $s^2=0$, Landau 纵向=0 |
+| `scripts/paperX_spectral_chiral.py` | 反常消去 + 瞬子拓扑荷 | **7/7** | SM 4 反常全消去, $Q_{\text{top}}=1$ |
+| `scripts/paperX_spectral_SM.py` | 完整 SM 量子数/质量/$\beta$ | **8/8** | $W/Z/h$ 匹配 $<0.3\%$ |
+| `scripts/paperX_spectral_formalization.py` | LSZ/幺正性/Cutkosky/KL | **4/4** | $Z$ 因子 0.99%, 求和规则 $=1$ |
 | | **合计** | **36/36** | |
 
 ### 1.5 SM 参数的谱根因结构
@@ -221,7 +221,7 @@ $$\mathcal{L}_{\text{SM}}^{\text{Sp}} = \mathcal{L}_{\text{YM}}^{\text{Sp}} + \m
 
 ### 4.1 谱传播子
 
-谱传播子的严格对角形式 $D_F^{\text{Sp}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`paperX_spectral_feynman.py`）：
+谱传播子的严格对角形式 $D_F^{\text{Sp}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`scripts/paperX_spectral_feynman.py`）：
 
 - 谱传播子还原无质量传播子：相对误差 $1.47 \times 10^{-16}$
 - 谱传播子为严格对角矩阵：非对角范数 $0.00$
@@ -586,7 +586,7 @@ $$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangl
 
 $$D_F^{\text{Sp}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{连续谱},\quad Z = \lim_{\lambda \to m^2} (\lambda - m^2)(-i) D_F^{\text{Sp}}(\lambda).$$
 
-数值验证（`paperX_spectral_formalization.py`）：在 Lorentzian 峰近似下，$Z_{\text{extracted}} = 0.792$（真值 $0.8$），相对误差 $0.99\%$，验证了谱 LSZ 残差提取的可行性。
+数值验证（`scripts/paperX_spectral_formalization.py`）：在 Lorentzian 峰近似下，$Z_{\text{extracted}} = 0.792$（真值 $0.8$），相对误差 $0.99\%$，验证了谱 LSZ 残差提取的可行性。
 
 ### 9.2 谱 Cutkosky 切割规则
 
@@ -812,12 +812,12 @@ $$\operatorname{Im} G_R(\omega) = \frac{1}{2} \tanh\left(\frac{\beta\omega}{2}\r
 
 | 脚本 | 验证内容 | 通过 | 总计 |
 |:----|---------|:---:|:----:|
-| `paperX_spectral_feynman.py` | 传播子/顶点/散射/UV 有限性 | 7 | 7 |
-| `paperX_spectral_renormalization.py` | 路径积分/$\beta$ 函数 | 4 | 4 |
-| `paperX_spectral_gauge.py` | 规范传播子/BRST/Ward/鬼场 | 6 | 6 |
-| `paperX_spectral_chiral.py` | 手性投影/反常消去/瞬子 | 7 | 7 |
-| `paperX_spectral_SM.py` | SM 量子数/质量/$\beta$/Yukawa | 8 | 8 |
-| `paperX_spectral_formalization.py$^\ddagger$` | LSZ/幺正性/Cutkosky/Källén-Lehmann | 4 | 4 |
+| `scripts/paperX_spectral_feynman.py` | 传播子/顶点/散射/UV 有限性 | 7 | 7 |
+| `scripts/paperX_spectral_renormalization.py` | 路径积分/$\beta$ 函数 | 4 | 4 |
+| `scripts/paperX_spectral_gauge.py` | 规范传播子/BRST/Ward/鬼场 | 6 | 6 |
+| `scripts/paperX_spectral_chiral.py` | 手性投影/反常消去/瞬子 | 7 | 7 |
+| `scripts/paperX_spectral_SM.py` | SM 量子数/质量/$\beta$/Yukawa | 8 | 8 |
+| `scripts/paperX_spectral_formalization.py$^\ddagger$` | LSZ/幺正性/Cutkosky/Källén-Lehmann | 4 | 4 |
 | | **合计** | **36** | **36** |
 
 $^\ddagger$ 谱 QFT 形式化内容见 §9。
@@ -837,7 +837,7 @@ $^\ddagger$ 谱 QFT 形式化内容见 §9。
 | 谱规范理论的三圈验证 ${}^\dagger$ | 🟢 | 已由 Phase 31 覆盖 |
 | PMNS CP 相 $\delta_{\text{CP}}$ 与 Majorana 相的定量预测 | 🟡 | 复谱几何路径已建立，数值验证待完成 |
 
-$^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函数的谱流 + DS 修正匹配（12/12 检查通过）。
+$^\dagger$ Phase 31（`scripts/paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函数的谱流 + DS 修正匹配（12/12 检查通过）。
 
 ---
 
@@ -845,11 +845,11 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 | 脚本 | 代码行数 | 检查项数 | 运行时间 | 依赖 |
 |:----|:-------:|:-------:|:--------:|:----|
-| `paperX_spectral_feynman.py` | 327 | 7 | < 1s | numpy |
-| `paperX_spectral_renormalization.py` | 317 | 4 | < 2s | numpy |
-| `paperX_spectral_gauge.py` | 432 | 6 | < 1s | numpy |
-| `paperX_spectral_chiral.py` | 370 | 7 | < 3s | numpy |
-| `paperX_spectral_SM.py` | 380 | 8 | < 1s | numpy |
+| `scripts/paperX_spectral_feynman.py` | 327 | 7 | < 1s | numpy |
+| `scripts/paperX_spectral_renormalization.py` | 317 | 4 | < 2s | numpy |
+| `scripts/paperX_spectral_gauge.py` | 432 | 6 | < 1s | numpy |
+| `scripts/paperX_spectral_chiral.py` | 370 | 7 | < 3s | numpy |
+| `scripts/paperX_spectral_SM.py` | 380 | 8 | < 1s | numpy |
 
 
 

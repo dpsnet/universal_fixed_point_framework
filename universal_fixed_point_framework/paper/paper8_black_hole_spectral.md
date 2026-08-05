@@ -60,7 +60,7 @@ $$\dot{\lambda}_0 = [A_{\text{GR}}, \pi]_{00} \approx 2\pi T_H \cdot \lambda_0$$
 
 ### 2.3 数值验证
 
-`paper22_horizon_spectrum.py` 对 $M=10 M_{\text{Pl}}$：
+`scripts/paper22_horizon_spectrum.py` 对 $M=10 M_{\text{Pl}}$：
 
 $$T_H = \frac{1}{8\pi M} = 3.98 \times 10^{-3} M_{\text{Pl}} = \frac{\Delta\lambda_{\min}}{2\pi}, \quad \Delta\lambda_{\min} = 0.025$$
 
@@ -68,7 +68,7 @@ $$T_H = \frac{1}{8\pi M} = 3.98 \times 10^{-3} M_{\text{Pl}} = \frac{\Delta\lamb
 
 ### 2.4 Hille-Yosida 半群与蒸发动力学
 
-黑洞蒸发 $M(t)$ 的演化由谱流方程的 Hille-Yosida 半群严格控制（`paper34_unbounded_operator.py`，定理 2.10.2）。
+黑洞蒸发 $M(t)$ 的演化由谱流方程的 Hille-Yosida 半群严格控制（`scripts/paper34_unbounded_operator.py`，定理 2.10.2）。
 
 **定理 2.2**（蒸发半群）。$A_{\text{GR}}$ 在 $\partial\mathbf{Rec}_D$ 上是 m-增生算子，$e^{-tA_{\text{GR}}}$ 是压缩半群：
 
@@ -76,7 +76,7 @@ $$\|e^{-tA_{\text{GR}}}\| \le 1, \quad e^{-(t+s)A_{\text{GR}}} = e^{-tA_{\text{G
 
 蒸发过程 $M(t) = (M_0^3 - 3\alpha t)^{1/3}$ 是该半群在质量参数上的投影。Hille-Yosida 定理保证了解的存在唯一性和半群压缩性——蒸发不会产生任何奇异性（如暴烈终结），与 Paper IX 的量子反弹自然衔接。
 
-**证明**。$A_{\text{GR}}$ 正定（$\min\sigma(A_{\text{GR}}) = 0$ at horizon），满足增生条件 $\text{Re}\langle A_{\text{GR}}x,x\rangle \ge 0$；$I + A_{\text{GR}}$ 可逆（$\text{cond}(I+A_{\text{GR}}) < \infty$）。由 Hille-Yosida 定理，$-A_{\text{GR}}$ 生成压缩半群。数值验证见 `paper34_unbounded_operator.py` 谐振子类比（$\min\sigma(H)=1$，$\text{cond}(I+H)=30$，$\max\|e^{-tH}\|=0.999$）。□
+**证明**。$A_{\text{GR}}$ 正定（$\min\sigma(A_{\text{GR}}) = 0$ at horizon），满足增生条件 $\text{Re}\langle A_{\text{GR}}x,x\rangle \ge 0$；$I + A_{\text{GR}}$ 可逆（$\text{cond}(I+A_{\text{GR}}) < \infty$）。由 Hille-Yosida 定理，$-A_{\text{GR}}$ 生成压缩半群。数值验证见 `scripts/paper34_unbounded_operator.py` 谐振子类比（$\min\sigma(H)=1$，$\text{cond}(I+H)=30$，$\max\|e^{-tH}\|=0.999$）。□
 
 ## 3. Bekenstein-Hawking 熵的谱推导
 
@@ -154,7 +154,7 @@ $$M(t) = (M_0^3 - 3\alpha t)^{1/3}$$
 
 **证明**。谱流方程在视界边的线性化给出 Hawking 辐射功率 $P = \alpha/M^2$（$\alpha \approx 2.8\times10^{-4}$ 为辐射常数，包含 greybody 因子）。由 $dM/dt = -P$ 积分得 $M(t)$。□
 
-**数值验证**（`paper27_hawking_evaporation.py`）：
+**数值验证**（`scripts/paper27_hawking_evaporation.py`）：
 
 | 量 | 谱动力学值 | 理论值 |
 |----|-----------|--------|
@@ -210,7 +210,7 @@ $$\frac{A}{4} = \frac{\pi}{\Delta\lambda_{\min}^2} \cdot \frac{n^2}{64} \cdot \f
 
 其中 $n^2/64 = 1$（$n=8$），因子 $1/(4\pi)$ 来自球面积分。因此在谱框架中，Bekenstein-Hawking 熵 $S = A/4$ 等价于谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$。
 
-**数值交叉验证**（D28.2，`paper28_dfunctor_entropy_unify.py` 6/6 通过）：对 Schwarzschild/RN/Kerr 三种黑洞，谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$ 与 Bekenstein-Hawking 熵 $S = A/4$ 精确一致。D 函子谱等价性（Paper IV）与谱间隙推导（本文）通过不同数学路径导出同一熵公式，从结构上完成了黑洞熵的统一。
+**数值交叉验证**（D28.2，`scripts/paper28_dfunctor_entropy_unify.py` 6/6 通过）：对 Schwarzschild/RN/Kerr 三种黑洞，谱间隙熵 $S = \pi/(4\Delta\lambda_{\min}^2)$ 与 Bekenstein-Hawking 熵 $S = A/4$ 精确一致。D 函子谱等价性（Paper IV）与谱间隙推导（本文）通过不同数学路径导出同一熵公式，从结构上完成了黑洞熵的统一。
 
 ## 7. 推广到 Kerr 黑洞
 
@@ -252,9 +252,9 @@ $$A_{\text{GR}}|\psi_n\rangle = E_n|\psi_n\rangle$$
 
 $$I_{\text{tot}} = S_{\text{BH}} + S_{\text{rad}} + I_{\text{corr}} = \text{const}$$
 
-**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Sp}$ 分支。数值验证见 `paperX_bh_interior_spectral.py` 和 `paperX_bh_interior_deep.py`（6/6 ✅，含谱流匹配、信息守恒、Page 曲线、奇点反射）。
+**推论 7.2**（奇点谱消解）。$r \to 0$ 时 $A_{\text{GR}}$ 的谱流到达 $\partial\mathbf{Rec}_D$ 边界，发生谱分支反射——类似 Paper IX 宇宙学量子反弹的机制。黑洞内部不形成经典奇点，而是经历谱流相变到另一 $\mathbf{Sp}$ 分支。数值验证见 `scripts/paperX_bh_interior_spectral.py` 和 `scripts/paperX_bh_interior_deep.py`（6/6 ✅，含谱流匹配、信息守恒、Page 曲线、奇点反射）。
 
-**推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `paperX_page_curve.py`。
+**推论 7.3**（Page 曲线）。蒸发过程中，内部离散模逐步释放为 Hawking 辐射。纠缠熵 $S_{\text{ent}}(t)$ 在蒸发一半时（Page 时间 $f = 0.5$）达到最大 $\ln(N_0/2)$，之后下降——信息守恒。见 `scripts/paperX_page_curve.py`。
 
 ### 7.3 静态极限与恒等延拓
 

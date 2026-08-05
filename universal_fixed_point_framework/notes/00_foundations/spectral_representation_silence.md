@@ -156,7 +156,7 @@ P1 的理论分析已完成，落点：`notes/00_foundations/spectral_R11_morphi
 $$\mathcal{S}_D = \{\varphi \in \mathrm{Hom}_{\mathbf{Sp}} : P_{\mathrm{Im}(D)}(\varphi) = 0\}$$
 是否也构成 sieve（对复合封闭）？答案：**否**——左、右复合均破坏静默。
 
-### 10.2 数值验证（`paperX_s0_sieve.py`，7/7 PASS）
+### 10.2 数值验证（`scripts/paperX_s0_sieve.py`，7/7 PASS）
 
 平凡 2 态系统（$A_X = A_Y = I_2$，$\mathrm{Hom}_{\mathbf{Sp}} = \mathbb{C}^{2\times2}$）：
 
@@ -178,7 +178,7 @@ $$\mathcal{S}_D = \{\varphi \in \mathrm{Hom}_{\mathbf{Sp}} : P_{\mathrm{Im}(D)}(
 3. **物理解读**：S0 静默对应"编码前不可表示"，但其破坏（复合到可表示）恰恰说明——**表示性是相对结构而非绝对性质**：态射的表示可达性依赖它所在的复合上下文。这与 §6 的"态射限制为转移矩阵"的规范语义相容（限制 = 固定在无复合上下文中的表示层）。
 4. **修正开放问题 #3 的预期**：原问"S0 静默态射是否在复合下封闭？是否形成 sieve？"——答案：均否。sieve 判定为负，进一步研究应转向"S_D 在复合下下降的精确速率/结构"。
 
-### 10.4 遗留（**已推进 2026-07-31**，`paperX_s0_analytic.py` 6/6 PASS）
+### 10.4 遗留（**已推进 2026-07-31**，`scripts/paperX_s0_analytic.py` 6/6 PASS）
 
 **遗留 1（S_D 下降率解析刻画）——已解决**：平凡 2 态系统左复合 $M=\psi\cdot\phi$（$\phi=[[1,1],[-1,-1]]$，$\psi$ 标准复高斯）解析分布为
 $$S_D(M) = 1 - \sqrt{U},\qquad U\sim\mathrm{Uniform}(0,1),$$

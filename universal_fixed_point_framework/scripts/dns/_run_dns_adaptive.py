@@ -7,7 +7,7 @@ DNS 湍流 k^-5/3 自适应参数扫描
 3. 若能量稳态但无惯性区，拓宽 force_kf；
 4. 找到稳态湍流参数后，延长 T=80 做完整验证。
 """
-import sys; sys.path.insert(0, '.')
+import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
 import json
 import numpy as np
@@ -15,7 +15,7 @@ from pathlib import Path
 from dataclasses import asdict
 from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrumAnalyzer
 
-OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR = Path(__file__).resolve().parents[2] / 'dns_output'
 OUTPUT_DIR.mkdir(exist_ok=True)
 SUMMARY_FILE = OUTPUT_DIR / 'adaptive_summary.json'
 

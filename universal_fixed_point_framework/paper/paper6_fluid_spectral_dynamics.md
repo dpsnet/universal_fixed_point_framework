@@ -180,7 +180,7 @@ $$\frac{d}{dt} S_{\mathcal{B}}(t) \geq 0$$
 
 等号成立当且仅当谱流达到平衡态 $[A_{\text{adv}}, \rho_t] = 0$ 且 $\nu\Delta_{\text{spec}} A_t = 0$。
 
-**证明**。将 N-S 谱流方程分解为保守部分 $[A_{\text{adv}}, A_t]$ 和耗散部分 $-\nu\Delta_{\text{spec}} A_t$。保守部分对应西演化，不改变 $\rho_t$ 的谱（仅旋转基）；耗散部分对应 $\rho_t$ 特征值向均匀分布演化。由相对熵单调性（Lindblad 1975），固定基投影下的熵 $S_{\mathcal{B}}(t)$ 单调递增。连续谱推广通过投影值谱测度 $E(\lambda)$ 直接成立（详见 `paper29_entropy_production_proof.py`，定理 P29.4）。□
+**证明**。将 N-S 谱流方程分解为保守部分 $[A_{\text{adv}}, A_t]$ 和耗散部分 $-\nu\Delta_{\text{spec}} A_t$。保守部分对应西演化，不改变 $\rho_t$ 的谱（仅旋转基）；耗散部分对应 $\rho_t$ 特征值向均匀分布演化。由相对熵单调性（Lindblad 1975），固定基投影下的熵 $S_{\mathcal{B}}(t)$ 单调递增。连续谱推广通过投影值谱测度 $E(\lambda)$ 直接成立（详见 `scripts/paper29_entropy_production_proof.py`，定理 P29.4）。□
 
 ### 4.2 能量耗散率与熵产生率
 
@@ -192,7 +192,7 @@ $$\varepsilon = T_{\text{turb}} \cdot \frac{dS}{dt}, \quad T_{\text{turb}} = \fr
 
 **证明**。在能级串区域，能量通量 $\Pi(k) = \int_k^\infty \varepsilon(k') dk'$ 与谱熵流 $J_S(k)$ 通过 $\Pi(k) = T_{\text{turb}}(k) \cdot J_S(k)$ 联系。在惯性子区，$T_{\text{turb}}(k) \propto k^{2/3}$ 为常数，恢复 Onsager 的湍流热力学类比。□
 
-### 4.3 C* 代数诠释（`paper33_cstar_framework.py`）
+### 4.3 C* 代数诠释（`scripts/paper33_cstar_framework.py`）
 
 将湍流速度场 $\mathbf{v}$ 的提升为 C* 代数 $\mathcal{A}_{\text{NS}}$ 中的元素。N-S 谱流方程中的完全正映射 $\Phi_t: \mathcal{A}_{\text{NS}} \to \mathcal{A}_{\text{NS}}$ 由速度场的 Koopman 算子定义。
 
@@ -226,7 +226,7 @@ Kolmogorov 尺度 $k_\nu = (\varepsilon/\nu^3)^{1/4}$ 由能量通量平衡给�
 
 ## 6. 数值验证
 
-`paper22_fluid_dynamics.py` 实现了 N-S 谱流方程的离散化求解。在波数空间 $k \in [1, 100]$ 上：
+`scripts/paper22_fluid_dynamics.py` 实现了 N-S 谱流方程的离散化求解。在波数空间 $k \in [1, 100]$ 上：
 
 | 验证项 | 结果 | 理论值 |
 |--------|------|--------|

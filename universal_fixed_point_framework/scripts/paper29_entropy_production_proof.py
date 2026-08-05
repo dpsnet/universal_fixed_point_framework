@@ -22,7 +22,7 @@ P29.4 连续极限熵产生率严格证明
 
 import numpy as np
 from scipy.linalg import expm, norm, sqrtm, logm
-from scipy.special import entropy as kl_divergence
+from scipy.stats import entropy as kl_divergence
 from scipy.integrate import simpson
 from scipy.stats import ortho_group
 import warnings
@@ -569,7 +569,7 @@ def test_second_law_correspondence():
     # 在谱动力学中, dQ = -dE (能量流出系统)
     # 验证: dS + dE/T ≥ 0
     dE_dt = -np.diff(E_list) / dt
-    clausius = dS + dE_dt[:-1] / np.array(T_list[:-1])
+    clausius = dS + dE_dt / np.array(T_list[:-1])
     clausius_valid = np.all(clausius >= -1e-10)
     
     print(f"  克劳修斯不等式 dS + dE/T ≥ 0: {'✅' if clausius_valid else '❌'}")

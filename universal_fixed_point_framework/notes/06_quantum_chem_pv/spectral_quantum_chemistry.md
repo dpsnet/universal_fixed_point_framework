@@ -4,7 +4,7 @@
 > 
 > **作者**: 王斌 | **版本**: v2.0 (2026-07-19)
 > 
-> **数值验证**: `paperX_hydrogen_spectral.py` (7/7 ✅), `paperX_H2plus_spectral.py` (6/6 ✅)
+> **数值验证**: `scripts/paperX_hydrogen_spectral.py` (7/7 ✅), `scripts/paperX_H2plus_spectral.py` (6/6 ✅)
 
 ---
 
@@ -95,7 +95,7 @@ $$
 
 ## 附录 A：数值验证
 
-### A.1 氢原子精确谱 (`paperX_hydrogen_spectral.py`) — 7/7 ✅
+### A.1 氢原子精确谱 (`scripts/paperX_hydrogen_spectral.py`) — 7/7 ✅
 
 验证 Paper XV §2 的谱表述：$A_H = e^{-\beta H}$ 将无界 Coulomb Hamiltonian 映射为有界谱生成元。
 
@@ -108,7 +108,7 @@ $$
 | $\beta \to 0$ 极限: $H = (I - A_H)/\beta + O(\beta)$ | 偏差 $0.025\%$ (β=0.001) ✅ |
 | 径向波函数归一化 $\int R_{nl}^2 r^2 dr = 1$ | $1.00000000 \pm 10^{-9}$ ✅ |
 
-### A.2 H₂⁺ 分子离子 (`paperX_H2plus_spectral.py`) — 6/6 ✅
+### A.2 H₂⁺ 分子离子 (`scripts/paperX_H2plus_spectral.py`) — 6/6 ✅
 
 验证 Paper XV §3 的化学键谱表述：$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
 

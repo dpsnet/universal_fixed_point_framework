@@ -630,8 +630,7 @@ postulate
   *-/cancel-ℝ : (a b : ℝ) → a *ℝ (b /ℝ a) ≡ b
   neg-<-ℝ : {x y : ℝ} → x <ℝ y → negℝ y <ℝ negℝ x
   -- log 级数截断（定义性公理，scoped；进闭合账目为开放项）
-  ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)   -- ln2 < 0.69317
-  ln1615-lb : (natℝ 29 /ℝ natℝ 450) <ℝ log (natℝ 16 /ℝ natℝ 15)  -- ln(1+1/15) > 29/450
+  ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)   -- ln2 < 0.69317（scoped；ln1615-lb 已于 2026-08-05 经 §2b 级数机制闭合为定理）
   -- ln15 算术比较（账目开放项，scoped 数值公理）：4·0.69317 - 29/450 ≈ 2.7082356 < 65/24 ≈ 2.7083333。
   -- 分母 100000/450/24，交叉乘积 ~1e9-1e11 超出可手写 ℕ 链（对比 e < 3 的 288 规模可手算），
   -- 属工程计算资源不足：纯有理比较在标准分析中可计算验证（数值见注释），但框架归一化能力不可达。
@@ -702,6 +701,621 @@ frac-cancel-ℝ a c b =
 -- 内存不足（大数归一化），确认"工程计算资源不足"，保留 scoped 公理（降定理路径 =
 -- 大整数算术实现/ℕ 高效比较）。*-div-impl/frac-cancel-ℝ 已前移至 674 后（可证引理，
 -- 供未来闭合与既有使用处引用）。
+
+-- ==================================================================
+-- §2b T3 阶段 3+ 级数机制：exp 任意点级数 + ln1615-lb 闭合（2026-08-05）
+-- 蓝图：notes/00_foundations/spectral_T3_analysis_foundation.md §5.5 开放项
+-- ------------------------------------------------------------------
+-- 目标：scoped 公理 ln1615-lb（ln(16/15) > 29/450）闭合为可证明定理。
+-- 等价路径：29/450 < ln(16/15) ⟺ exp(29/450) < 16/15（exp-log + exp-lt-inj）。
+-- 机制（新增 1 条定义性公理 exp-tail-bound，替代 1 条 scoped 数值公理）：
+--   exp-partial-at ：Σ_{k=0}^n x^k/k!（任意点 exp 级数部分和）
+--   exp-tail-bound ：0 ≤ x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
+--                    （几何尾部上界：Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_j x^j，
+--                      与 exp-partial-< 同层，exp 级数内容）
+-- 闭合链（x = 29/450，0 < x < 1/15 < 1/10）：
+--   exp x < S₃(x) + (x⁴/24)·1/(1-x)                [exp-tail-bound 3]
+--         < 1 + x + x²/2 + x²/60 + x²/2160         [x³/6 < x²/60、尾部 < x²/2160]
+--         = 1 + x + 1117x²/2160
+--         < 1 + x + (15/29)x²                      [1117/2160 < 15/29，交叉 32393 < 32400]
+--         < 1 + x + x·(1/29)                       [x² < x·(1/15)，15/29·(1/15) = 1/29]
+--         < 1 + x + 1/450 = 16/15                  [x = 29/450，29/450·(1/29) = 1/450]
+-- 关键设计：全部交叉乘积 ≤ 939600（远低于 1e9 工程墙）；大数 ℕ 比较经
+-- <-add-r（m < m + suc k）+ +ℕ 定义性归约构造。
+-- ==================================================================
+
+-- 自然数次幂（迭代乘法；独立于 rpow 避免 exp/log 循环）
+_^ℕ_ : ℝ → ℕ → ℝ
+x ^ℕ zero = oneℝ
+x ^ℕ (suc n) = x *ℝ (x ^ℕ n)
+
+-- exp 级数任意点部分和：S_n(x) = Σ_{k=0}^n x^k/k!
+exp-partial-at : ℕ → ℝ → ℝ
+exp-partial-at zero x = oneℝ
+exp-partial-at (suc n) x = exp-partial-at n x +ℝ ((x ^ℕ (suc n)) *ℝ recip-factorial (suc n))
+
+-- 几何尾部上界（机制层定义性公理，2026-08-05）：
+--   0 ≤ x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
+-- 依据：exp x = Σ_{k≥0} x^k/k!，尾部 Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_{j≥0}x^j。
+-- 记账：exp 级数内容（与 exp-partial-< 同层），替代 scoped 公理 ln1615-lb。
+postulate
+  exp-tail-bound : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ x → x <ℝ oneℝ →
+    exp x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+
+-- m < m + (k+1)（大数 ℕ 比较构造工具：m +ℕ suc k 定义性归约到 m+k+1）
+<-add-r : (m k : ℕ) → m <ℕ (m +ℕ suc k)
+<-add-r zero k = z<s
+<-add-r (suc m) k = s<s (<-add-r m k)
+
+-- exp 严格单调之逆：exp x < exp y ⟹ x < y（exp-mono 严格 + 三分律 + 反自反，零新增公理）
+exp-lt-inj : {x y : ℝ} → exp x <ℝ exp y → x <ℝ y
+exp-lt-inj {x} {y} h with trichotomy-ℝ x y
+exp-lt-inj {x} {y} h | inj₁ x<y = x<y
+exp-lt-inj {x} {y} h | inj₂ (inj₁ x=y) =
+  ⊥-elim (irreflexive-ℝ (subst (λ z → z <ℝ exp y) (cong exp x=y) h))
+exp-lt-inj {x} {y} h | inj₂ (inj₂ y<x) =
+  ⊥-elim (irreflexive-ℝ (trans-<ℝ h (exp-mono y<x)))
+
+-- (a/c)·c = a（商消去，可证：*-comm + *-/cancel-ℝ）
+x-over-c-mul-c : {x c : ℝ} → (x /ℝ c) *ℝ c ≡ x
+x-over-c-mul-c {x} {c} = trans (*-comm-ℝ (x /ℝ c) c) (*-/cancel-ℝ c x)
+
+-- (x/c)/d = x/(c·d)（双重分数，可证：/-cross-ℝ）
+frac-frac-ℝ : (x c d : ℝ) → (x /ℝ c) /ℝ d ≡ x /ℝ (c *ℝ d)
+frac-frac-ℝ x c d = /-cross-ℝ {a = x /ℝ c} {b = x} {c = d} {d = c *ℝ d}
+  (trans (sym (*-assoc-ℝ (x /ℝ c) c d)) (cong (λ u → u *ℝ d) (x-over-c-mul-c {x} {c})))
+
+-- (a/c)·(b/d) = (a·b)/(c·d)（分数乘法，可证）
+mul-div-ℝ : (a b c d : ℝ) → (a /ℝ c) *ℝ (b /ℝ d) ≡ (a *ℝ b) /ℝ (c *ℝ d)
+mul-div-ℝ a b c d =
+  trans (*-/ℝ (a /ℝ c) b d)
+    (trans (cong (λ u → u /ℝ d) (trans (*-comm-ℝ (a /ℝ c) b) (*-/ℝ b a c)))
+           (trans (frac-frac-ℝ (b *ℝ a) c d)
+                  (cong (λ u → u /ℝ (c *ℝ d)) (*-comm-ℝ b a))))
+
+-- (a/b)·(c/a) = c/b（分子分母对消，可证：mul-div-ℝ + frac-cancel-ℝ）
+cancel-div : (a b c : ℝ) → (a /ℝ b) *ℝ (c /ℝ a) ≡ (c /ℝ b)
+cancel-div a b c =
+  trans (mul-div-ℝ a c b a)
+    (trans (cong (λ u → u /ℝ (b *ℝ a)) (*-comm-ℝ a c))
+           (frac-cancel-ℝ c b a))
+
+-- 分数放大（可证）：a/c = (a·d)/(c·d)
+frac-scaled-ℝ : (a c d : ℝ) → (a /ℝ c) ≡ ((a *ℝ d) /ℝ (c *ℝ d))
+frac-scaled-ℝ a c d = /-cross-ℝ {a = a} {b = a *ℝ d} {c = c} {d = c *ℝ d}
+  (trans (cong (λ u → a *ℝ u) (*-comm-ℝ c d)) (sym (*-assoc-ℝ a d c)))
+
+-- x = 29/450；x² = x·x
+x-29-450 : ℝ
+x-29-450 = natℝ 29 /ℝ natℝ 450
+
+x2 : ℝ
+x2 = x-29-450 *ℝ x-29-450
+
+-- x > 0、x² > 0、15/29 > 0
+x-pos-29-450 : zeroℝ <ℝ x-29-450
+x-pos-29-450 = /-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)
+
+x2-pos : zeroℝ <ℝ x2
+x2-pos = lt-*-pos-ℝ x-pos-29-450 x-pos-29-450
+
+pos-15-29 : zeroℝ <ℝ (natℝ 15 /ℝ natℝ 29)
+pos-15-29 = /-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)
+
+-- x < 1/15（29/450 < 30/450 = 1/15，29 < 30）
+x-lt-15th : x-29-450 <ℝ (natℝ 1 /ℝ natℝ 15)
+x-lt-15th = subst (λ y → x-29-450 <ℝ y) one-15th-eq
+                  (/-lt-same-den-ℝ {natℝ 29} {natℝ 30} {natℝ 450} (natℝ-<-embed (<-suc 29)))
+  where
+  one-15th-eq : (natℝ 30 /ℝ natℝ 450) ≡ (natℝ 1 /ℝ natℝ 15)
+  one-15th-eq = /-cross-ℝ (trans (sym (natℝ-* 30 15)) (natℝ-* 1 450))
+
+-- 1/15 < 1/10（倒数单调：0 < 10 < 15）
+one-15th-lt-tenth : (natℝ 1 /ℝ natℝ 15) <ℝ (natℝ 1 /ℝ natℝ 10)
+one-15th-lt-tenth =
+  subst (λ v → (natℝ 1 /ℝ natℝ 15) <ℝ v) (sym e2)
+  (subst (λ u → u <ℝ (oneℝ /ℝ natℝ 10)) (sym e1)
+         (recip-mono-ℝ {a = natℝ 10} {b = natℝ 15} (natℝ-pos-embed z<s) (natℝ-<-embed 10-lt-15)))
+  where
+  e1 : (natℝ 1 /ℝ natℝ 15) ≡ (oneℝ /ℝ natℝ 15)
+  e1 = cong₂ _/ℝ_ natℝ-one refl
+  e2 : (natℝ 1 /ℝ natℝ 10) ≡ (oneℝ /ℝ natℝ 10)
+  e2 = cong₂ _/ℝ_ natℝ-one refl
+  10-lt-15 : 10 <ℕ 15
+  10-lt-15 = <-trans (<-suc 10) (<-trans (<-suc 11) (<-trans (<-suc 12) (<-trans (<-suc 13) (<-suc 14))))
+
+-- x < 1/10（经 1/15 传递）
+x-lt-tenth : x-29-450 <ℝ (natℝ 1 /ℝ natℝ 10)
+x-lt-tenth = trans-<ℝ x-lt-15th one-15th-lt-tenth
+
+-- x² < x·(1/15)（x > 0 且 x < 1/15）
+x-sq-lt-x-15th : x2 <ℝ (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 15))
+x-sq-lt-x-15th = *-pos-mono-ℝ {a = x-29-450} {b = natℝ 1 /ℝ natℝ 15} {c = x-29-450} x-pos-29-450 x-lt-15th
+
+-- x·(1/15) = 29/6750
+x-mul-15th : x-29-450 *ℝ (natℝ 1 /ℝ natℝ 15) ≡ (natℝ 29 /ℝ natℝ 6750)
+x-mul-15th =
+  trans (mul-div-ℝ (natℝ 29) (natℝ 1) (natℝ 450) (natℝ 15))
+        (cong₂ _/ℝ_ m29 den6750)
+  where
+  m29 : (natℝ 29 *ℝ natℝ 1) ≡ natℝ 29
+  m29 = sym (natℝ-* 29 1)
+  den6750 : (natℝ 450 *ℝ natℝ 15) ≡ natℝ 6750
+  den6750 = sym (natℝ-* 450 15)
+
+-- x² < 29/6750
+x-sq-lt-29-6750 : x2 <ℝ (natℝ 29 /ℝ natℝ 6750)
+x-sq-lt-29-6750 = subst (λ y → x2 <ℝ y) x-mul-15th x-sq-lt-x-15th
+
+-- 系数和：1/2 + 1/60 + 1/2160 = 1117/2160（1/2 = 1080/2160、1/60 = 36/2160）
+half-2160 : (natℝ 1 /ℝ natℝ 2) ≡ (natℝ 1080 /ℝ natℝ 2160)
+half-2160 = /-cross-ℝ (trans (sym (natℝ-* 1 2160)) (natℝ-* 1080 2))
+
+one60-2160 : (natℝ 1 /ℝ natℝ 60) ≡ (natℝ 36 /ℝ natℝ 2160)
+one60-2160 = /-cross-ℝ (trans (sym (natℝ-* 1 2160)) (natℝ-* 36 60))
+
+-- 同分母分数加法（本地版，复刻 /-add-same-ℝ，避免前向引用）
+same-den-add : (a b c : ℝ) → (a /ℝ c) +ℝ (b /ℝ c) ≡ ((a +ℝ b) /ℝ c)
+same-den-add a b c =
+  trans (/-add-ℝ a b c c)
+        (/-cross-ℝ (trans (*-comm-ℝ ((a *ℝ c) +ℝ (b *ℝ c)) c)
+                          (trans (distrib-ℝ c (a *ℝ c) (b *ℝ c))
+                                 (trans (cong₂ _+ℝ_ c-mul-ac c-mul-bc)
+                                        (trans (cong₂ _+ℝ_ (*-comm-ℝ a (c *ℝ c)) (*-comm-ℝ b (c *ℝ c)))
+                                               (trans (sym (distrib-ℝ (c *ℝ c) a b))
+                                                      (*-comm-ℝ (c *ℝ c) (a +ℝ b))))))))
+  where
+  c-mul-ac : (c *ℝ (a *ℝ c)) ≡ (a *ℝ (c *ℝ c))
+  c-mul-ac =
+    trans (sym (*-assoc-ℝ c a c))
+          (trans (cong (λ x → x *ℝ c) (*-comm-ℝ c a))
+                 (*-assoc-ℝ a c c))
+  c-mul-bc : (c *ℝ (b *ℝ c)) ≡ (b *ℝ (c *ℝ c))
+  c-mul-bc =
+    trans (sym (*-assoc-ℝ c b c))
+          (trans (cong (λ x → x *ℝ c) (*-comm-ℝ c b))
+                 (*-assoc-ℝ b c c))
+
+coeff-sum : ((natℝ 1 /ℝ natℝ 2) +ℝ (natℝ 1 /ℝ natℝ 60)) +ℝ (natℝ 1 /ℝ natℝ 2160)
+            ≡ (natℝ 1117 /ℝ natℝ 2160)
+coeff-sum =
+  trans (cong (λ u → u +ℝ (natℝ 1 /ℝ natℝ 2160)) inner)
+        (trans (same-den-add (natℝ 1116) (natℝ 1) (natℝ 2160))
+               (cong₂ _/ℝ_ n1117 refl))
+  where
+  n1116 : (natℝ 1080 +ℝ natℝ 36) ≡ natℝ 1116
+  n1116 = sym (natℝ-+ 1080 36)
+  n1117 : (natℝ 1116 +ℝ natℝ 1) ≡ natℝ 1117
+  n1117 = sym (natℝ-+ 1116 1)
+  inner : (natℝ 1 /ℝ natℝ 2) +ℝ (natℝ 1 /ℝ natℝ 60) ≡ (natℝ 1116 /ℝ natℝ 2160)
+  inner = trans (cong₂ _+ℝ_ half-2160 one60-2160)
+                (trans (same-den-add (natℝ 1080) (natℝ 36) (natℝ 2160))
+                       (cong₂ _/ℝ_ n1116 refl))
+
+-- 32393 < 32400（ℕ 层，<-add-r + 定义性归约 32393 + 7 = 32400）
++eq-32393 : 32393 +ℕ 7 ≡ 32400
++eq-32393 = refl
+
+32393<32400 : 32393 <ℕ 32400
+32393<32400 = subst (λ n → 32393 <ℕ n) (sym +eq-32393) (<-add-r 32393 6)
+
+-- 1117/2160 < 15/29（交叉乘积 32393 < 32400）
+C-lt-15-29 : (natℝ 1117 /ℝ natℝ 2160) <ℝ (natℝ 15 /ℝ natℝ 29)
+C-lt-15-29 =
+  subst (λ y → (natℝ 1117 /ℝ natℝ 2160) <ℝ y) (sym r15)
+  (subst (λ x → x <ℝ ((natℝ 15 *ℝ natℝ 2160) /ℝ (natℝ 29 *ℝ natℝ 2160))) (sym r1117)
+  (subst (λ d → ((natℝ 1117 *ℝ natℝ 29) /ℝ (natℝ 2160 *ℝ natℝ 29)) <ℝ ((natℝ 15 *ℝ natℝ 2160) /ℝ d)) denom-comm
+  (/-lt-same-den-ℝ {natℝ 1117 *ℝ natℝ 29} {natℝ 15 *ℝ natℝ 2160} {natℝ 2160 *ℝ natℝ 29} cross-lt)))
+  where
+  r1117 : (natℝ 1117 /ℝ natℝ 2160) ≡ ((natℝ 1117 *ℝ natℝ 29) /ℝ (natℝ 2160 *ℝ natℝ 29))
+  r1117 = frac-scaled-ℝ (natℝ 1117) (natℝ 2160) (natℝ 29)
+  r15 : (natℝ 15 /ℝ natℝ 29) ≡ ((natℝ 15 *ℝ natℝ 2160) /ℝ (natℝ 29 *ℝ natℝ 2160))
+  r15 = frac-scaled-ℝ (natℝ 15) (natℝ 29) (natℝ 2160)
+  denom-comm : (natℝ 2160 *ℝ natℝ 29) ≡ (natℝ 29 *ℝ natℝ 2160)
+  denom-comm = *-comm-ℝ (natℝ 2160) (natℝ 29)
+  m1 : (natℝ 1117 *ℝ natℝ 29) ≡ natℝ 32393
+  m1 = sym (natℝ-* 1117 29)
+  m2 : (natℝ 15 *ℝ natℝ 2160) ≡ natℝ 32400
+  m2 = sym (natℝ-* 15 2160)
+  cross-lt : (natℝ 1117 *ℝ natℝ 29) <ℝ (natℝ 15 *ℝ natℝ 2160)
+  cross-lt = subst (λ x → x <ℝ (natℝ 15 *ℝ natℝ 2160)) (sym m1)
+             (subst (λ y → natℝ 32393 <ℝ y) (sym m2) (natℝ-<-embed 32393<32400))
+
+-- ==================================================================
+-- §2b 续：S₃ 计算、尾部界、x² 块界与 ln1615-lb 闭合
+-- ==================================================================
+
+-- 幂（迭代乘法定义性展开，可证）
+pow1 : (x : ℝ) → (x ^ℕ 1) ≡ x
+pow1 x = *-ident-ℝ x
+
+pow2 : (x : ℝ) → (x ^ℕ 2) ≡ (x *ℝ x)
+pow2 x = cong (λ u → x *ℝ u) (*-ident-ℝ x)
+
+pow3 : (x : ℝ) → (x ^ℕ 3) ≡ ((x *ℝ x) *ℝ x)
+pow3 x = trans (cong (λ u → x *ℝ u) (pow2 x)) (sym (*-assoc-ℝ x x x))
+
+-- x^ℕ 4 = (x·x)·(x·x)
+x4 : ℝ
+x4 = x2 *ℝ x2
+
+pow4-x : (x-29-450 ^ℕ 4) ≡ x4
+pow4-x =
+  trans (cong (λ u → x-29-450 *ℝ u) (pow3 x-29-450))
+        (trans (sym (*-assoc-ℝ x-29-450 x2 x-29-450))
+               (trans (cong (λ u → u *ℝ x-29-450) (sym (*-assoc-ℝ x-29-450 x-29-450 x-29-450)))
+                      (*-assoc-ℝ x2 x-29-450 x-29-450)))
+
+-- 单位分数具体值（factorial 定义性归约）
+rf1 : recip-factorial 1 ≡ oneℝ
+rf1 = trans (cong₂ _/ℝ_ refl natℝ-one) (trans (div-one-ℝ (natℝ 1)) natℝ-one)
+
+rf2 : recip-factorial 2 ≡ (natℝ 1 /ℝ natℝ 2)
+rf2 = refl
+
+rf3 : recip-factorial 3 ≡ (natℝ 1 /ℝ natℝ 6)
+rf3 = refl
+
+rf4 : recip-factorial 4 ≡ (natℝ 1 /ℝ natℝ 24)
+rf4 = refl
+
+-- S₃ 项：x·1、x²/2、x³/6
+term1-x : (x-29-450 ^ℕ 1) *ℝ recip-factorial 1 ≡ x-29-450
+term1-x = trans (cong₂ _*ℝ_ (pow1 x-29-450) rf1) (*-ident-ℝ x-29-450)
+
+term2-x : (x-29-450 ^ℕ 2) *ℝ recip-factorial 2 ≡ x2 /ℝ (natℝ 2)
+term2-x =
+  trans (cong₂ _*ℝ_ (pow2 x-29-450) refl)
+        (trans (*-/ℝ x2 (natℝ 1) (natℝ 2))
+               (cong₂ _/ℝ_ (trans (cong₂ _*ℝ_ refl natℝ-one) (*-ident-ℝ x2)) refl))
+
+x3-6 : ℝ
+x3-6 = (x2 *ℝ x-29-450) /ℝ (natℝ 6)
+
+term3-x : (x-29-450 ^ℕ 3) *ℝ recip-factorial 3 ≡ x3-6
+term3-x =
+  trans (cong₂ _*ℝ_ (pow3 x-29-450) refl)
+        (trans (*-/ℝ (x2 *ℝ x-29-450) (natℝ 1) (natℝ 6))
+               (cong₂ _/ℝ_ (trans (cong₂ _*ℝ_ refl natℝ-one) (*-ident-ℝ (x2 *ℝ x-29-450))) refl))
+
+-- S₃ = exp-partial-at 3 x ≡ ((1 + x) + x²/2) + x³/6
+S3-value : exp-partial-at 3 x-29-450 ≡ ((oneℝ +ℝ x-29-450) +ℝ (x2 /ℝ (natℝ 2))) +ℝ x3-6
+S3-value =
+  trans (cong (λ u → u +ℝ ((x-29-450 ^ℕ 3) *ℝ recip-factorial 3)) s2)
+        (cong (λ u → ((oneℝ +ℝ x-29-450) +ℝ (x2 /ℝ (natℝ 2))) +ℝ u) term3-x)
+  where
+  s1 : exp-partial-at 1 x-29-450 ≡ oneℝ +ℝ x-29-450
+  s1 = cong (λ u → oneℝ +ℝ u) term1-x
+  s2 : exp-partial-at 2 x-29-450 ≡ (oneℝ +ℝ x-29-450) +ℝ (x2 /ℝ (natℝ 2))
+  s2 = trans (cong (λ u → u +ℝ ((x-29-450 ^ℕ 2) *ℝ recip-factorial 2)) s1)
+             (cong (λ u → (oneℝ +ℝ x-29-450) +ℝ u) term2-x)
+
+-- x² < 1/100（x < 1/10）
+x2-lt-1-100 : x2 <ℝ (natℝ 1 /ℝ natℝ 100)
+x2-lt-1-100 = subst (λ y → x2 <ℝ y) tenth-sq
+  (trans-<ℝ x-sq-lt-tenth tenth-lt-tenth-sq)
+  where
+  x-sq-lt-tenth : x2 <ℝ (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 10))
+  x-sq-lt-tenth = *-pos-mono-ℝ {a = x-29-450} {b = natℝ 1 /ℝ natℝ 10} {c = x-29-450} x-pos-29-450 x-lt-tenth
+  tenth-lt-tenth-sq : (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 10)) <ℝ ((natℝ 1 /ℝ natℝ 10) *ℝ (natℝ 1 /ℝ natℝ 10))
+  tenth-lt-tenth-sq =
+    subst (λ u → u <ℝ ((natℝ 1 /ℝ natℝ 10) *ℝ (natℝ 1 /ℝ natℝ 10))) (sym (*-comm-ℝ x-29-450 (natℝ 1 /ℝ natℝ 10)))
+    (*-pos-mono-ℝ {a = x-29-450} {b = natℝ 1 /ℝ natℝ 10} {c = natℝ 1 /ℝ natℝ 10}
+                  (/-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)) x-lt-tenth)
+  tenth-sq : ((natℝ 1 /ℝ natℝ 10) *ℝ (natℝ 1 /ℝ natℝ 10)) ≡ (natℝ 1 /ℝ natℝ 100)
+  tenth-sq = trans (mul-div-ℝ (natℝ 1) (natℝ 1) (natℝ 10) (natℝ 10))
+                   (cong₂ _/ℝ_ (sym (natℝ-* 1 1)) (sym (natℝ-* 10 10)))
+
+-- x⁴ < x²·(1/100)
+x4-lt-x2-100 : x4 <ℝ (x2 *ℝ (natℝ 1 /ℝ natℝ 100))
+x4-lt-x2-100 = *-pos-mono-ℝ {a = x2} {b = natℝ 1 /ℝ natℝ 100} {c = x2} x2-pos x2-lt-1-100
+
+-- 负分数（可证）：-(a/c) = (-a)/c
+a-over-c-one : (a c : ℝ) → (a /ℝ c) ≡ a *ℝ (oneℝ /ℝ c)
+a-over-c-one a c = trans (cong₂ _/ℝ_ (sym (*-ident-ℝ a)) refl) (sym (*-/ℝ a oneℝ c))
+
+neg-frac-ℝ : (a c : ℝ) → negℝ (a /ℝ c) ≡ (negℝ a) /ℝ c
+neg-frac-ℝ a c =
+  trans (cong negℝ (a-over-c-one a c))
+        (trans (sym (loc-neg-mul a (oneℝ /ℝ c)))
+               (trans (*-/ℝ (negℝ a) oneℝ c)
+                      (cong₂ _/ℝ_ (*-ident-ℝ (negℝ a)) refl)))
+  where
+  -- (-x)·y = -(x·y)（仅用域公理；等价于后文顶层 neg-mul-ℝ）
+  loc-neg-mul : (x y : ℝ) → (negℝ x) *ℝ y ≡ negℝ (x *ℝ y)
+  loc-neg-mul x y =
+    loc-neg-unique {a = x *ℝ y} {b = (negℝ x) *ℝ y}
+      (trans (sym expand)
+             (trans (cong (λ u → u *ℝ y) (+-inv-ℝ x)) (*-zero-l y)))
+    where
+    -- 加性逆唯一（仅用群公理；等价于后文顶层 neg-unique-ℝ）
+    loc-neg-unique : {a b : ℝ} → a +ℝ b ≡ zeroℝ → b ≡ negℝ a
+    loc-neg-unique {a} {b} h =
+      trans (sym (trans (sym (+-comm-ℝ b zeroℝ)) (+-ident-ℝ b)))
+            (trans (cong (λ x → x +ℝ b) (sym (+-inv-ℝ a)))
+                   (trans (cong (λ x → x +ℝ b) (+-comm-ℝ a (negℝ a)))
+                          (trans (+-assoc-ℝ (negℝ a) a b)
+                                 (trans (cong (λ x → negℝ a +ℝ x) h)
+                                        (+-ident-ℝ (negℝ a))))))
+    -- 0·y = 0（仅用域公理；等价于后文顶层 *-zero-l-ℝ）
+    *-zero-l : (y : ℝ) → zeroℝ *ℝ y ≡ zeroℝ
+    *-zero-l y = trans (*-comm-ℝ zeroℝ y) (*-zero-ℝ y)
+    -- (x + (-x))·y = x·y + (-x)·y
+    expand : (x +ℝ negℝ x) *ℝ y ≡ (x *ℝ y) +ℝ ((negℝ x) *ℝ y)
+    expand =
+      trans (*-comm-ℝ (x +ℝ negℝ x) y)
+            (trans (distrib-ℝ y x (negℝ x))
+                   (cong₂ _+ℝ_ (*-comm-ℝ y x) (*-comm-ℝ y (negℝ x))))
+
+-- x/6 < 1/60（x < 1/10：x·(1/6) < (1/10)·(1/6) = 1/60）
+one-60-eq : ((natℝ 1 /ℝ natℝ 10) *ℝ (natℝ 1 /ℝ natℝ 6)) ≡ (natℝ 1 /ℝ natℝ 60)
+one-60-eq = trans (mul-div-ℝ (natℝ 1) (natℝ 1) (natℝ 10) (natℝ 6))
+                  (cong₂ _/ℝ_ (sym (natℝ-* 1 1)) (sym (natℝ-* 10 6)))
+
+x-over-6-lt-1-60 : (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6)) <ℝ (natℝ 1 /ℝ natℝ 60)
+x-over-6-lt-1-60 =
+  subst (λ w → (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6)) <ℝ w) one-60-eq
+  (subst (λ v → (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6)) <ℝ v) (*-comm-ℝ (natℝ 1 /ℝ natℝ 6) (natℝ 1 /ℝ natℝ 10))
+  (subst (λ u → u <ℝ ((natℝ 1 /ℝ natℝ 6) *ℝ (natℝ 1 /ℝ natℝ 10))) (sym (*-comm-ℝ x-29-450 (natℝ 1 /ℝ natℝ 6)))
+  (*-pos-mono-ℝ {a = x-29-450} {b = natℝ 1 /ℝ natℝ 10} {c = natℝ 1 /ℝ natℝ 6}
+                (/-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)) x-lt-tenth)))
+
+-- x³/6 < x²/60（x³/6 = x²·(x/6)，x/6 < 1/60）
+x3-over-6 : x3-6 ≡ x2 *ℝ (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6))
+x3-over-6 =
+  trans (sym (*-/ℝ x2 x-29-450 (natℝ 6)))
+        (cong (λ u → x2 *ℝ u) (x-over-6))
+  where
+  x-over-6 : (x-29-450 /ℝ (natℝ 6)) ≡ (x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6))
+  x-over-6 = trans (cong₂ _/ℝ_ (trans (sym (*-ident-ℝ x-29-450)) (cong₂ _*ℝ_ refl (sym natℝ-one))) refl)
+                   (sym (*-/ℝ x-29-450 (natℝ 1) (natℝ 6)))
+
+x3-6-lt-x2-60 : x3-6 <ℝ (x2 /ℝ (natℝ 60))
+x3-6-lt-x2-60 =
+  subst (λ y → x3-6 <ℝ y) one60
+  (subst (λ x → x <ℝ (x2 *ℝ (natℝ 1 /ℝ natℝ 60))) (sym x3-over-6)
+    (*-pos-mono-ℝ {a = x-29-450 *ℝ (natℝ 1 /ℝ natℝ 6)} {b = natℝ 1 /ℝ natℝ 60} {c = x2}
+                  x2-pos x-over-6-lt-1-60))
+  where
+  one60 : (x2 *ℝ (natℝ 1 /ℝ natℝ 60)) ≡ (x2 /ℝ (natℝ 60))
+  one60 = trans (*-/ℝ x2 (natℝ 1) (natℝ 60))
+                (cong₂ _/ℝ_ (trans (sym (cong₂ _*ℝ_ refl (sym natℝ-one))) (*-ident-ℝ x2)) refl)
+
+-- 9/10 < 1−x（x < 1/10 ⟹ −x > −1/10，1−x = 1+(−x) > 1+(−1/10) = 9/10）
+one-tenth : oneℝ ≡ (natℝ 10 /ℝ natℝ 10)
+one-tenth = trans (sym nat1-over-1) (/-cross-ℝ (trans (sym (natℝ-* 1 10)) (natℝ-* 10 1)))
+  where
+  -- (natℝ 1 /ℝ natℝ 1) ≡ oneℝ（natℝ-one + div-one-ℝ 桥接）
+  nat1-over-1 : (natℝ 1 /ℝ natℝ 1) ≡ oneℝ
+  nat1-over-1 = trans (cong₂ _/ℝ_ natℝ-one refl)
+                      (trans (sym (cong₂ _/ℝ_ refl (sym natℝ-one))) (div-one-ℝ oneℝ))
+
+ten-neg-one : (natℝ 10 +ℝ negℝ (natℝ 1)) ≡ natℝ 9
+ten-neg-one =
+  trans (sym (cong₂ _+ℝ_ (sym (natℝ-+ 9 1)) refl))
+        (trans (+-assoc-ℝ (natℝ 9) (natℝ 1) (negℝ (natℝ 1)))
+               (trans (cong (λ u → (natℝ 9 +ℝ u)) inv1) (+-ident-ℝ (natℝ 9))))
+  where
+  inv1 : (natℝ 1 +ℝ negℝ (natℝ 1)) ≡ zeroℝ
+  inv1 = trans (cong₂ _+ℝ_ natℝ-one (cong negℝ natℝ-one)) (+-inv-ℝ oneℝ)
+
+one-neg-tenth : (oneℝ +ℝ negℝ (natℝ 1 /ℝ natℝ 10)) ≡ (natℝ 9 /ℝ natℝ 10)
+one-neg-tenth =
+  subst (λ u → u +ℝ negℝ (natℝ 1 /ℝ natℝ 10) ≡ natℝ 9 /ℝ natℝ 10) (sym one-tenth)
+  (subst (λ v → (natℝ 10 /ℝ natℝ 10) +ℝ v ≡ (natℝ 9 /ℝ natℝ 10)) (sym (neg-frac-ℝ (natℝ 1) (natℝ 10)))
+    (trans (same-den-add (natℝ 10) (negℝ (natℝ 1)) (natℝ 10))
+           (cong₂ _/ℝ_ ten-neg-one refl)))
+
+nine-tenth-lt : (natℝ 9 /ℝ natℝ 10) <ℝ (oneℝ +ℝ negℝ x-29-450)
+nine-tenth-lt =
+  subst (λ u → u <ℝ (oneℝ +ℝ negℝ x-29-450)) one-neg-tenth
+        (lt-+-mono-r-ℝ (neg-<-ℝ x-lt-tenth))
+
+-- ==================================================================
+-- §2b 续：尾部界、x² 块界、总装配与 ln1615-lb 闭合
+-- ==================================================================
+
+-- 尾部项（与 exp-tail-bound 3 的尾项逐点一致）
+T-term : ℝ
+T-term = ((x-29-450 ^ℕ 4) *ℝ recip-factorial 4) *ℝ (oneℝ /ℝ (oneℝ -ℝ x-29-450))
+
+T-expand : T-term ≡ (x4 /ℝ (natℝ 24)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x-29-450))
+T-expand = cong₂ _*ℝ_ (trans (cong₂ _*ℝ_ pow4-x rf4)
+                             (trans (*-/ℝ x4 (natℝ 1) (natℝ 24))
+                                    (cong₂ _/ℝ_ (trans (sym (cong₂ _*ℝ_ refl (sym natℝ-one))) (*-ident-ℝ x4)) refl))) refl
+
+-- 1/(9/10) = 10/9
+one-over-nine-tenth : (oneℝ /ℝ (natℝ 9 /ℝ natℝ 10)) ≡ (natℝ 10 /ℝ natℝ 9)
+one-over-nine-tenth = /-cross-ℝ (trans (one-mul-9) (sym (*-/cancel-ℝ (natℝ 10) (natℝ 9))))
+  where
+  -- 1·9 = 9（仅用域公理；等价于后文顶层 one-mul-ℝ 实例）
+  one-mul-9 : oneℝ *ℝ natℝ 9 ≡ natℝ 9
+  one-mul-9 = trans (*-comm-ℝ oneℝ (natℝ 9)) (*-ident-ℝ (natℝ 9))
+
+pos-nine-tenth : zeroℝ <ℝ (natℝ 9 /ℝ natℝ 10)
+pos-nine-tenth = /-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)
+
+pos-10-9 : zeroℝ <ℝ (natℝ 10 /ℝ natℝ 9)
+pos-10-9 = /-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)
+
+-- 1/(1−x) < 10/9（9/10 < 1−x，倒数单调）
+tail-factor-lt : (oneℝ /ℝ (oneℝ -ℝ x-29-450)) <ℝ (natℝ 10 /ℝ natℝ 9)
+tail-factor-lt =
+  subst (λ y → (oneℝ /ℝ (oneℝ -ℝ x-29-450)) <ℝ y) one-over-nine-tenth
+  (recip-mono-ℝ pos-nine-tenth
+    (subst (λ z → (natℝ 9 /ℝ natℝ 10) <ℝ z) (sym (sub-ℝ-def oneℝ x-29-450)) nine-tenth-lt))
+
+-- 尾部 < x²/2160
+T-lt : T-term <ℝ (x2 /ℝ (natℝ 2160))
+T-lt =
+  subst (λ z → z <ℝ (x2 /ℝ (natℝ 2160))) (sym T-expand)
+  (subst (λ y → ((x4 /ℝ (natℝ 24)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x-29-450))) <ℝ y) step3-eq
+    (trans-<ℝ step1 step2))
+  where
+  pos-x4-24 : zeroℝ <ℝ (x4 /ℝ (natℝ 24))
+  pos-x4-24 = /-pos-ℝ (lt-*-pos-ℝ x2-pos x2-pos) (natℝ-pos-embed z<s)
+  step1 : ((x4 /ℝ (natℝ 24)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x-29-450))) <ℝ ((x4 /ℝ (natℝ 24)) *ℝ (natℝ 10 /ℝ natℝ 9))
+  step1 = *-pos-mono-ℝ {a = oneℝ /ℝ (oneℝ -ℝ x-29-450)} {b = natℝ 10 /ℝ natℝ 9} {c = x4 /ℝ natℝ 24}
+                       pos-x4-24 tail-factor-lt
+  x4-24-lt : (x4 /ℝ (natℝ 24)) <ℝ ((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24))
+  x4-24-lt = /-lt-same-den-ℝ {x4} {x2 *ℝ (natℝ 1 /ℝ natℝ 100)} {natℝ 24} x4-lt-x2-100
+  step2 : ((x4 /ℝ (natℝ 24)) *ℝ (natℝ 10 /ℝ natℝ 9)) <ℝ (((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24)) *ℝ (natℝ 10 /ℝ natℝ 9))
+  step2 =
+    subst (λ u → u <ℝ (((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24)) *ℝ (natℝ 10 /ℝ natℝ 9)))
+          (sym (*-comm-ℝ (x4 /ℝ natℝ 24) (natℝ 10 /ℝ natℝ 9)))
+    (subst (λ v → ((natℝ 10 /ℝ natℝ 9) *ℝ (x4 /ℝ natℝ 24)) <ℝ v)
+           (sym (*-comm-ℝ ((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24)) (natℝ 10 /ℝ natℝ 9)))
+    (*-pos-mono-ℝ {a = x4 /ℝ natℝ 24} {b = (x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ natℝ 24} {c = natℝ 10 /ℝ natℝ 9}
+                  pos-10-9 x4-24-lt))
+  step3a : ((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24)) ≡ (x2 /ℝ (natℝ 2400))
+  step3a = trans (cong (λ u → u /ℝ (natℝ 24)) (trans (*-/ℝ x2 (natℝ 1) (natℝ 100))
+                                                      (cong₂ _/ℝ_ (trans (sym (cong₂ _*ℝ_ refl (sym natℝ-one))) (*-ident-ℝ x2)) refl)))
+                 (trans (frac-frac-ℝ x2 (natℝ 100) (natℝ 24))
+                        (cong₂ _/ℝ_ refl (sym (natℝ-* 100 24))))
+  step3b : (x2 /ℝ (natℝ 2400)) *ℝ (natℝ 10 /ℝ natℝ 9) ≡ (x2 *ℝ (natℝ 10)) /ℝ (natℝ 21600)
+  step3b = trans (mul-div-ℝ x2 (natℝ 10) (natℝ 2400) (natℝ 9))
+                 (cong₂ _/ℝ_ refl (sym (natℝ-* 2400 9)))
+  ten-21600 : (natℝ 10 /ℝ natℝ 21600) ≡ (natℝ 1 /ℝ natℝ 2160)
+  ten-21600 = /-cross-ℝ (trans (sym (natℝ-* 10 2160)) (natℝ-* 1 21600))
+  step3c : (x2 *ℝ (natℝ 10)) /ℝ (natℝ 21600) ≡ x2 *ℝ (natℝ 1 /ℝ natℝ 2160)
+  step3c = trans (sym (*-/ℝ x2 (natℝ 10) (natℝ 21600))) (cong (λ u → x2 *ℝ u) ten-21600)
+  step3d : x2 *ℝ (natℝ 1 /ℝ natℝ 2160) ≡ (x2 /ℝ (natℝ 2160))
+  step3d = trans (*-/ℝ x2 (natℝ 1) (natℝ 2160))
+                 (cong₂ _/ℝ_ (trans (sym (cong₂ _*ℝ_ refl (sym natℝ-one))) (*-ident-ℝ x2)) refl)
+  step3-eq : (((x2 *ℝ (natℝ 1 /ℝ natℝ 100)) /ℝ (natℝ 24)) *ℝ (natℝ 10 /ℝ natℝ 9)) ≡ (x2 /ℝ (natℝ 2160))
+  step3-eq = trans (cong (λ u → u *ℝ (natℝ 10 /ℝ natℝ 9)) step3a)
+             (trans step3b (trans step3c step3d))
+
+-- x²/k = x²·(1/k)
+x2-over-k : (k : ℕ) → (x2 /ℝ (natℝ k)) ≡ (x2 *ℝ (natℝ 1 /ℝ natℝ k))
+x2-over-k k = trans (cong₂ _/ℝ_ (trans (sym (*-ident-ℝ x2)) (cong₂ _*ℝ_ refl (sym natℝ-one))) refl)
+                     (sym (*-/ℝ x2 (natℝ 1) (natℝ k)))
+
+-- x² 块：(x²/2 + x²/60) + x²/2160 = x²·(1117/2160)
+x2-block : ℝ
+x2-block = ((x2 /ℝ (natℝ 2)) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160))
+
+x2-block-eq : x2-block ≡ x2 *ℝ (natℝ 1117 /ℝ natℝ 2160)
+x2-block-eq =
+  trans (cong (λ u → (u +ℝ (x2 /ℝ (natℝ 2160)))) inner1)
+        (trans (cong₂ _+ℝ_ refl (x2-over-k 2160))
+               (trans (sym (distrib-ℝ x2 ((natℝ 1 /ℝ natℝ 2) +ℝ (natℝ 1 /ℝ natℝ 60)) (natℝ 1 /ℝ natℝ 2160)))
+                      (cong (λ u → x2 *ℝ u) coeff-sum)))
+  where
+  inner1 : (x2 /ℝ (natℝ 2)) +ℝ (x2 /ℝ (natℝ 60)) ≡ x2 *ℝ ((natℝ 1 /ℝ natℝ 2) +ℝ (natℝ 1 /ℝ natℝ 60))
+  inner1 = trans (cong₂ _+ℝ_ (x2-over-k 2) (x2-over-k 60))
+                 (sym (distrib-ℝ x2 (natℝ 1 /ℝ natℝ 2) (natℝ 1 /ℝ natℝ 60)))
+
+-- (15/29)·(29/6750) = 15/6750
+cancel-15-29-6750 : ((natℝ 15 /ℝ natℝ 29) *ℝ (natℝ 29 /ℝ natℝ 6750)) ≡ (natℝ 15 /ℝ natℝ 6750)
+cancel-15-29-6750 = trans (*-comm-ℝ (natℝ 15 /ℝ natℝ 29) (natℝ 29 /ℝ natℝ 6750))
+                          (cancel-div (natℝ 29) (natℝ 6750) (natℝ 15))
+
+-- 15/6750 = 1/450
+fifteen-6750-eq : (natℝ 15 /ℝ natℝ 6750) ≡ (natℝ 1 /ℝ natℝ 450)
+fifteen-6750-eq = /-cross-ℝ (trans (sym (natℝ-* 15 450)) (natℝ-* 1 6750))
+
+-- x² 块 < 1/450
+x2-block-lt-450 : x2-block <ℝ (natℝ 1 /ℝ natℝ 450)
+x2-block-lt-450 =
+  subst (λ u → u <ℝ (natℝ 1 /ℝ natℝ 450)) (sym x2-block-eq)
+  (subst (λ v → (x2 *ℝ (natℝ 1117 /ℝ natℝ 2160)) <ℝ v) fifteen-6750-eq
+  (subst (λ w → (x2 *ℝ (natℝ 1117 /ℝ natℝ 2160)) <ℝ w) cancel-15-29-6750
+  (trans-<ℝ (*-pos-mono-ℝ {a = natℝ 1117 /ℝ natℝ 2160} {b = natℝ 15 /ℝ natℝ 29} {c = x2} x2-pos C-lt-15-29)
+         (subst (λ z → z <ℝ ((natℝ 15 /ℝ natℝ 29) *ℝ (natℝ 29 /ℝ natℝ 6750))) (sym (*-comm-ℝ x2 (natℝ 15 /ℝ natℝ 29)))
+           (*-pos-mono-ℝ {a = x2} {b = natℝ 29 /ℝ natℝ 6750} {c = natℝ 15 /ℝ natℝ 29} pos-15-29 x-sq-lt-29-6750)))))
+
+-- x < 1（经 1/15 < 1）
+one-15th-lt-one : (natℝ 1 /ℝ natℝ 15) <ℝ oneℝ
+one-15th-lt-one =
+  subst (λ y → (natℝ 1 /ℝ natℝ 15) <ℝ y) one-over-one
+  (subst (λ y → (natℝ 1 /ℝ natℝ 15) <ℝ y) (cong₂ _/ℝ_ (sym natℝ-one) refl)
+  (subst (λ x → x <ℝ (oneℝ /ℝ natℝ 1)) (sym (cong₂ _/ℝ_ natℝ-one refl))
+    (recip-mono-ℝ {natℝ 1} {natℝ 15} (natℝ-pos-embed z<s) (natℝ-<-embed 1-lt-15))))
+  where
+  one-over-one : (natℝ 1 /ℝ natℝ 1) ≡ oneℝ
+  one-over-one = trans (cong₂ _/ℝ_ natℝ-one natℝ-one) (div-one-ℝ oneℝ)
+  1-lt-15 : 1 <ℕ 15
+  1-lt-15 = <-trans (<-suc 1) (<-trans (<-suc 2) (<-trans (<-suc 3) (<-trans (<-suc 4) (<-trans (<-suc 5) (<-trans (<-suc 6) (<-trans (<-suc 7) (<-trans (<-suc 8) (<-trans (<-suc 9) (<-trans (<-suc 10) (<-trans (<-suc 11) (<-trans (<-suc 12) (<-trans (<-suc 13) (<-suc 14)))))))))))))
+
+x-lt-one : x-29-450 <ℝ oneℝ
+x-lt-one = trans-<ℝ x-lt-15th one-15th-lt-one
+
+x-≤-0 : zeroℝ ≤ℝ x-29-450
+x-≤-0 = <-≤-ℝ x-pos-29-450
+
+-- 装配：exp x < S₃ + T < (A+B+C+D) ≡ A + x²块 < A + 1/450 = 16/15
+A : ℝ
+A = oneℝ +ℝ x-29-450
+
+assoc-shuffle : (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160)))
+                ≡ A +ℝ x2-block
+assoc-shuffle =
+  trans (+-assoc-ℝ (A +ℝ (x2 /ℝ (natℝ 2))) (x2 /ℝ (natℝ 60)) (x2 /ℝ (natℝ 2160)))
+  (trans (+-assoc-ℝ A (x2 /ℝ (natℝ 2)) ((x2 /ℝ (natℝ 60)) +ℝ (x2 /ℝ (natℝ 2160))))
+         (cong (λ u → A +ℝ u) (sym (+-assoc-ℝ (x2 /ℝ (natℝ 2)) (x2 /ℝ (natℝ 60)) (x2 /ℝ (natℝ 2160))))))
+
+exp-lt-A-E : exp x-29-450 <ℝ (A +ℝ (natℝ 1 /ℝ natℝ 450))
+exp-lt-A-E =
+  trans-<ℝ (exp-tail-bound 3 x-29-450 x-≤-0 x-lt-one)
+  (trans-<ℝ (subst (λ z → z <ℝ (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160))))
+                (sym S3T-eq) (two-mono))
+         (subst (λ w → w <ℝ (A +ℝ (natℝ 1 /ℝ natℝ 450))) (sym assoc-shuffle)
+                (lt-+-mono-r-ℝ x2-block-lt-450)))
+  where
+  S3T-eq : (exp-partial-at 3 x-29-450 +ℝ T-term) ≡ (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ x3-6) +ℝ T-term)
+  S3T-eq = cong (λ u → u +ℝ T-term) S3-value
+  two-mono : (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ x3-6) +ℝ T-term)
+             <ℝ (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160)))
+  two-mono = trans-<ℝ Q1 Q2
+    where
+    -- a < b ⟹ a + c < b + c（本地版，等价于后文顶层 lt-+-mono-l-ℝ）
+    loc-mono-l : {a b c : ℝ} → b <ℝ c → (b +ℝ a) <ℝ (c +ℝ a)
+    loc-mono-l {a} {b} {c} h =
+      subst (λ x → x <ℝ (c +ℝ a)) (sym (+-comm-ℝ b a))
+            (subst (λ y → (a +ℝ b) <ℝ y) (sym (+-comm-ℝ c a))
+                   (lt-+-mono-r-ℝ {a = a} h))
+    U : ℝ
+    U = A +ℝ (x2 /ℝ (natℝ 2))
+    m1 : (U +ℝ x3-6) <ℝ (U +ℝ (x2 /ℝ (natℝ 60)))
+    m1 = lt-+-mono-r-ℝ x3-6-lt-x2-60
+    Q1 : ((U +ℝ x3-6) +ℝ T-term) <ℝ ((U +ℝ (x2 /ℝ (natℝ 60))) +ℝ T-term)
+    Q1 = loc-mono-l m1
+    Q2 : ((U +ℝ (x2 /ℝ (natℝ 60))) +ℝ T-term) <ℝ (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160)))
+    Q2 = lt-+-mono-r-ℝ T-lt
+
+-- A + 1/450 = 16/15
+final-eq : (A +ℝ (natℝ 1 /ℝ natℝ 450)) ≡ (natℝ 16 /ℝ natℝ 15)
+final-eq =
+  trans (cong (λ u → u +ℝ (natℝ 1 /ℝ natℝ 450)) (cong (λ u → u +ℝ x-29-450) one-450))
+        (trans (cong (λ u → u +ℝ (natℝ 1 /ℝ natℝ 450)) x-450-as-29-450)
+               (trans (same-den-add (natℝ 479) (natℝ 1) (natℝ 450))
+                      (trans (cong₂ _/ℝ_ n480 refl)
+                             (/-cross-ℝ (trans (sym (natℝ-* 480 15)) (natℝ-* 16 450))))))
+  where
+  nat1-over-1 : (natℝ 1 /ℝ natℝ 1) ≡ oneℝ
+  nat1-over-1 = trans (cong₂ _/ℝ_ natℝ-one natℝ-one) (div-one-ℝ oneℝ)
+  one-450 : oneℝ ≡ (natℝ 450 /ℝ natℝ 450)
+  one-450 = trans (sym nat1-over-1) (/-cross-ℝ (trans (sym (natℝ-* 1 450)) (natℝ-* 450 1)))
+  x-450-as-29-450 : (natℝ 450 /ℝ natℝ 450) +ℝ x-29-450 ≡ (natℝ 479 /ℝ natℝ 450)
+  x-450-as-29-450 = trans (same-den-add (natℝ 450) (natℝ 29) (natℝ 450))
+                          (cong₂ _/ℝ_ (sym (natℝ-+ 450 29)) refl)
+  n480 : (natℝ 479 +ℝ natℝ 1) ≡ natℝ 480
+  n480 = sym (natℝ-+ 479 1)
+
+-- exp(29/450) < 16/15
+exp-lt-16-15 : exp x-29-450 <ℝ (natℝ 16 /ℝ natℝ 15)
+exp-lt-16-15 = subst (λ y → exp x-29-450 <ℝ y) final-eq exp-lt-A-E
+
+-- ==================================================================
+-- ln1615-lb 闭合（2026-08-05，T3 级数机制）：
+-- 29/450 < ln(16/15) ⟸ exp(29/450) < exp(ln(16/15)) = 16/15 [exp-log + exp-lt-inj]
+-- 不再是 postulate（自 §1 移除）；记账：scoped 数值公理 → 可证明定理
+-- ==================================================================
+ln1615-lb : (natℝ 29 /ℝ natℝ 450) <ℝ log (natℝ 16 /ℝ natℝ 15)
+ln1615-lb =
+  exp-lt-inj (subst (λ y → exp x-29-450 <ℝ y) (sym (exp-log (natℝ 16 /ℝ natℝ 15))) exp-lt-16-15)
+
 
 
 -- exp 单射（**闭合 2026-08-01**：exp-mono 严格单调 + trichotomy-ℝ 三分律 +

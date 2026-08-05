@@ -23,7 +23,7 @@
 ## 二、推进总原则
 
 1. **物理理论为第一驱动力，形式化为验收标准**：每个方向先完成物理理论链条（论文层），再以 Lean/Agda 形式化模块 + 数值脚本锁定，杜绝"只有纸面"或"只有脚本"的半成品。
-2. **研究操作规范闭环**：笔记先行 → 论文提炼（自包含）→ 形式化 → 数值验证（`paperX_*.py` 注册 `run_all_tests.py`）→ 路线图记录。
+2. **研究操作规范闭环**：笔记先行 → 论文提炼（自包含）→ 形式化 → 数值验证（`scripts/paperX_*.py` 注册 `run_all_tests.py`）→ 路线图记录。
 3. **诚实边界**：结构内生 vs 外部输入严格区分；未达完成判据前，仅登记为"推进中"，不升格为"纳入"。
 4. **复用既有基础设施**：T3 谱定理层（SpectralTheory 16 模块）、Hilbert 层、测度论逼近引理库、CrossLayer 跨层模型，均为各方向的公共地基，避免重复建设。
 
@@ -43,7 +43,7 @@
 
 **形式化配套**：Lean `SpCategory`/`SpectralGap` 扩展色规范模块 + Agda 镜像；跨层模型（CrossLayer）扩充色扇区字段。
 
-**数值验证**：`paperX_qcd_spectrum.py`（胶子传播子、跑动耦合、束缚态谱对比 PDG）。
+**数值验证**：`scripts/paperX_qcd_spectrum.py`（胶子传播子、跑动耦合、束缚态谱对比 PDG）。
 
 **验收标准**：完整色规范拉氏量谱翻译 + 禁闭/渐近自由定理 + 至少 4 个强子质量谱推导 + 双语言形式化模块。
 
@@ -53,11 +53,11 @@
 |:----|:----|:----:|
 | 研究笔记（T1 色丛 / T2 胶子顶点谱封闭 / T3 禁闭渐近自由 / T4 强子谱 + 诚实边界） | `notes/01_qcd_higgs/spectral_color_dynamics.md` | ✅ v0.1 |
 | 自包含论文（定理 2.1 色荷守恒 / 定理 3.1 谱封闭 / 定理 4.1-4.2 禁闭渐近自由 / 定理 5.1-5.2 强子谱） | `paper/paper40_qcd_color_dynamics.md` | ✅ v0.1 |
-| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `paperX_qcd_spectrum.py` | ✅ 15/15 |
+| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `scripts/paperX_qcd_spectrum.py` | ✅ 15/15 |
 | Lean 形式化（色雅可比恒等式，`noncomm_ring` 全证；`lake build` 全量通过） | `formal_proof/.../ColorDynamics.lean` | ✅ |
 | Agda 形式化（对易子定义 + 色雅可比桥接登记；`agda Everything.agda` 全量通过） | `agda_formalization/ColorDynamics/ColorDynamics.agda` | ✅ |
 
-**关键数值**（`paperX_qcd_spectrum.py`）：SU(3) 雅可比残差 3.3×10⁻¹⁶；胶子传播子 Landau 横向性/规范无关 ✓；α_s(M_Z)⁻¹ = 8.7（PDG 2.7%）；Λ_QCD^(5) 单圈 = 73 MeV（强子标度带）；m_π = 130（树级 GOR，NLO ~7% 补齐）、m_K = 488（1.2%）、m_N = 1016（8.3%）、m_Δ = 1310（6.3%）；SU(6) m_N+m_Δ = 3m_ρ（PDG 偏差 6.7%）。
+**关键数值**（`scripts/paperX_qcd_spectrum.py`）：SU(3) 雅可比残差 3.3×10⁻¹⁶；胶子传播子 Landau 横向性/规范无关 ✓；α_s(M_Z)⁻¹ = 8.7（PDG 2.7%）；Λ_QCD^(5) 单圈 = 73 MeV（强子标度带）；m_π = 130（树级 GOR，NLO ~7% 补齐）、m_K = 488（1.2%）、m_N = 1016（8.3%）、m_Δ = 1310（6.3%）；SU(6) m_N+m_Δ = 3m_ρ（PDG 偏差 6.7%）。
 
 **验收判定**：完整色规范拉氏量谱翻译 ✅（三/四胶子顶点谱封闭）+ 禁闭/渐近自由定理 ✅（定理 4.1/4.2）+ 4 个强子质量谱推导 ✅（π/ρ/N/Δ）+ 双语言形式化模块 ✅ —— **达到完成判据，P0-1 由"推进中"升格为"纳入"**。
 
@@ -67,7 +67,7 @@
 
 ### P0-2 量子重整化完整链条【最高优先，依赖 T3 测度论层】
 
-**现状**：纸面推导层面成果完整（终评已认可）——Paper 11 谱 β 函数定义 + λφ⁴ 单圈 β=3λ²/16π²、Wick 定理；Paper 12 规范 β 系数 (41/10,−19/6,−7) + 跑动方向；Paper 5 三圈 DS 顶点减除匹配（`paper27_*`/`paper31_threeloop_beta.py`）。缺：从拉氏量到 RG 流的全链路**形式化**。
+**现状**：纸面推导层面成果完整（终评已认可）——Paper 11 谱 β 函数定义 + λφ⁴ 单圈 β=3λ²/16π²、Wick 定理；Paper 12 规范 β 系数 (41/10,−19/6,−7) + 跑动方向；Paper 5 三圈 DS 顶点减除匹配（`paper27_*`/`scripts/paper31_threeloop_beta.py`）。缺：从拉氏量到 RG 流的全链路**形式化**。
 
 **物理理论方案**：
 1. **谱 Feynman 规则完整化**：Phase 44 工具箱（谱拉格朗日量 → Feynman 规则 → 路径积分）与圈图积分衔接。
@@ -77,7 +77,7 @@
 
 **形式化配套**：**前置条件 = T3 测度论完整层**（fc-integral 完整降定理、sup 交换、Lebesgue 积分机制，v1.29–1.33 基础设施备用）。这是所有方向中最重的形式化依赖。
 
-**数值验证**：已有 `paper27_fermion_twoloop.py`/`paper31_threeloop_beta.py`/`paper27_dyson_schwinger.py`（12/12 匹配）作为锚点。
+**数值验证**：已有 `scripts/paper27_fermion_twoloop.py`/`scripts/paper31_threeloop_beta.py`/`scripts/paper27_dyson_schwinger.py`（12/12 匹配）作为锚点。
 
 **验收标准**：拉氏量 → 圈图 → 正则化 → RG 流的谱形式化链条（Lean/Agda），β 函数从谱流方程导出。
 
@@ -88,12 +88,12 @@
 | 前置：T3 测度论层闭合（fc-integral 完整降定理、sup 交换、技术债 A1 全闭合） | Agda `SpectralTheory` | ✅ v1.36 |
 | 研究笔记（谱圈图积分/正则化/谱流→β/EFT 层级 + 诚实边界） | `notes/00_foundations/spectral_renormalization_chain.md` | ✅ v0.1 |
 | 自包含论文（C1 定义 2.1 谱圈图积分 + 定理 2.1 有限性 / C2 定义 3.1-3.2 谱截断 / C3 定理 3.1 谱流→β 主定理 + 定理 3.2 圈数-对易子阶数 / C4 定理 4.1 EFT 谱静默） | `paper/paper41_renormalization_chain.md` | ✅ v0.1 |
-| 数值验证（12/12 检查通过，已注册 `run_all_tests.py`） | `paperX_rg_chain.py` | ✅ 12/12 |
+| 数值验证（12/12 检查通过，已注册 `run_all_tests.py`） | `scripts/paperX_rg_chain.py` | ✅ 12/12 |
 | Lean 形式化（F1/F2/F3 ad_G 保 Hermitian + 迭代对易子闭合 → 谱流→β 代数基础；`lake build` 全量通过 2454 jobs + P0-2 模块 3110 jobs） | `formal_proof/.../RenormalizationChain.lean` | ✅ |
 | Lean 顺带修复（SpectralDynamics/ThermoFormalism/TestSpectralEquivalence 编译与可证证明填充，见下） | `formal_proof/.../` | ✅ |
 | Agda 形式化（对应 postulate 登记） | `agda_formalization/` | ✅ |
 
-**关键数值**（`paperX_rg_chain.py`）：12/12 检查（谱流→β 匹配、圈数-对易子阶数、EFT 层级谱静默）全部通过。
+**关键数值**（`scripts/paperX_rg_chain.py`）：12/12 检查（谱流→β 匹配、圈数-对易子阶数、EFT 层级谱静默）全部通过。
 
 **验收判定**：拉氏量 → 圈图 → 正则化 → RG 流谱形式化链条 ✅（C1–C3，T3 前置闭合）+ β 函数从谱流方程导出 ✅（C3，定理 3.1）+ EFT 层级 ✅（C4）+ 双语言形式化 ✅（C5）—— **达到完成判据，P0-2 由"推进中"升格为"纳入"**。
 
@@ -130,7 +130,7 @@
 
 **形式化配套**：Hille-Yosida 五条件（T3 §12 已齐备）+ 谱流方程形式化。
 
-**数值验证**：`paperX_hawking_spectrum.py`（辐射谱 + 蒸发演化）。
+**数值验证**：`scripts/paperX_hawking_spectrum.py`（辐射谱 + 蒸发演化）。
 
 **验收标准**：霍金辐射谱完整推导 + Page 曲线谱公理推导 + 视界涨落谱表述 + 双语言模块。
 
@@ -140,11 +140,11 @@
 |:----|:----|:----:|
 | 研究笔记（形式化路线，2026-08-04 更新为执行记录） | `notes/04_lorentz_gravity/spectral_black_hole_evolution_formalization.md` | ✅ v0.2 |
 | 自包含论文（定理 2.1-2.7 霍金谱 / 3.1-3.4 蒸发动力学 / 4.1-4.6 Page 曲线谱公理推导 / 5.1-5.3 视界涨落 / 6.1-6.5 信息保持） | `paper/paper42_black_hole_quantum_evolution.md` | ✅ v0.1 |
-| 数值验证（35/35 检查通过，已注册 `run_all_tests.py`） | `paperX_hawking_spectrum.py` | ✅ 35/35 |
+| 数值验证（35/35 检查通过，已注册 `run_all_tests.py`） | `scripts/paperX_hawking_spectrum.py` | ✅ 35/35 |
 | Lean 形式化（质量演化/温度单调/Planck 分布/熵守恒/Page 曲线早期增-晚期减+熵平衡/视界涨落/信息保持双向/蒸发 Planck 终止/量子反弹衔接；`lake build` 四模块全通过，零 sorry） | `formal_proof/.../BlackHoleEvolution.lean` `HawkingSpectrum.lean` `BlackHoleInformation.lean` `BlackHoleBounce.lean` | ✅ |
 | Agda 形式化（谱流保自伴镜像；`agda Everything.agda` 全量通过） | `agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda` | ✅ |
 
-**关键数值**（`paperX_hawking_spectrum.py`）：35/35 检查（霍金谱 8 + 蒸发动力学 4 + Page 曲线 7 + 视界涨落 3 + 信息保持 2 + 谱间隙/温度 3 + 量子反弹 8）全部通过。t_Page/t_evap = 0.646447 ≈ 0.647（谱公理推导 1−1/(2√2)）；M(t_Page) = M₀/√2；ρ_c = 0.499 M_Pl⁴（与 Paper IX 0.335 同量级）；t_pl < t_evap 且 M(t_pl) = M_Pl（蒸发在 Planck 尺度终止）；反弹点 H²(ρ_c) = 0。
+**关键数值**（`scripts/paperX_hawking_spectrum.py`）：35/35 检查（霍金谱 8 + 蒸发动力学 4 + Page 曲线 7 + 视界涨落 3 + 信息保持 2 + 谱间隙/温度 3 + 量子反弹 8）全部通过。t_Page/t_evap = 0.646447 ≈ 0.647（谱公理推导 1−1/(2√2)）；M(t_Page) = M₀/√2；ρ_c = 0.499 M_Pl⁴（与 Paper IX 0.335 同量级）；t_pl < t_evap 且 M(t_pl) = M_Pl（蒸发在 Planck 尺度终止）；反弹点 H²(ρ_c) = 0。
 
 **验收判定**：霍金辐射谱完整推导 ✅（定理 2.1-2.7）+ Page 曲线谱公理推导 ✅（定理 4.1-4.7，含精确熵平衡 rpow 机器证明）+ 视界涨落谱表述 ✅（定理 5.1-5.3）+ 蒸发终点-反弹衔接 ✅（定理 5.4-5.9，`BlackHoleBounce.lean` 零 sorry）+ 双语言模块 ✅（Lean 四模块零 sorry + Agda）—— **达到完成判据，P1-3 由"推进中"升格为"纳入"**。
 
@@ -164,7 +164,7 @@
 
 **形式化配套**：谱流方程（Paper 5 已有）+ 动态连续极限（B2 扩展）。
 
-**数值验证**：`paperX_inflation_dynamics.py`（e 折叠 + 再加热温度 + 功率谱全链）。
+**数值验证**：`scripts/paperX_inflation_dynamics.py`（e 折叠 + 再加热温度 + 功率谱全链）。
 
 **验收标准**：N_e 闭式 + 再加热推导 + 动态连续极限定理 + CMB 预言闭环 + 形式化模块。
 
@@ -174,11 +174,11 @@
 |:----|:----|:----:|
 | 研究笔记（D1–D4 四项子任务 + 形式化路线 + 数值清单 + 诚实边界） | `notes/05_cosmology/spectral_inflation_dynamics.md` | ✅ v0.1 |
 | 自包含论文（定理 D3.1 动态连续极限 / 定理 6.1 预言闭环 / C1–C5 贡献） | `paper/paper39_inflation_dynamics.md` | ✅ v0.1 |
-| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `paperX_inflation_dynamics.py` | ✅ 15/15 |
+| 数值验证（15/15 检查通过，已注册 `run_all_tests.py`） | `scripts/paperX_inflation_dynamics.py` | ✅ 15/15 |
 | Lean 形式化（F1 酉共轭保 Hermitian / F2 谱流保 Hermitian / F3 对易子 / F4 动态连续极限；`lake build` 全量通过 2454 jobs） | `formal_proof/.../InflationDynamics.lean` | ✅ |
 | Agda 形式化（F1 酉共轭保自伴 / F2 谱流族保自伴；`agda Everything.agda` 全量通过） | `agda_formalization/InflationDynamics/InflationDynamics.agda` | ✅ |
 
-**关键数值**（`paperX_inflation_dynamics.py`）：N_e 闭式 = 55（与数值积分一致）；φ_cmb ≈ 5.35 M_Pl；n_s = 0.9650（Planck 0.02σ）；r = 0.00350（< 0.036）；n_T = −4.4×10⁻⁴（一致性 r ≈ −8n_T 偏差 0.00%）；m_φ ≈ 3.1×10¹³ GeV；T_RH ∈ [6×10⁹, 6×10¹⁰] GeV；η_B = 5.6×10⁻¹⁰（观测 6.1×10⁻¹⁰）。
+**关键数值**（`scripts/paperX_inflation_dynamics.py`）：N_e 闭式 = 55（与数值积分一致）；φ_cmb ≈ 5.35 M_Pl；n_s = 0.9650（Planck 0.02σ）；r = 0.00350（< 0.036）；n_T = −4.4×10⁻⁴（一致性 r ≈ −8n_T 偏差 0.00%）；m_φ ≈ 3.1×10¹³ GeV；T_RH ∈ [6×10⁹, 6×10¹⁰] GeV；η_B = 5.6×10⁻¹⁰（观测 6.1×10⁻¹⁰）。
 
 **验收判定**：N_e 闭式 ✅ + 再加热推导 ✅ + 动态连续极限定理（D3.1，含双语言形式化）✅ + CMB 预言闭环 ✅ + 形式化模块 ✅ —— **达到完成判据，P1-4 由"推进中"升格为"纳入"**。
 
@@ -198,7 +198,7 @@
 
 | 支撑项 | 现状 | 与物理方向的关系 | 优先级 |
 |:------|:----|:----------------|:------:|
-| T3 测度论完整层（fc-integral 完整降定理） | 唯一剩余 D 类桥接 | **P0-2 圈图积分的直接前置**；测度论 sup 交换 | P0 |
+| T3 测度论完整层（fc-integral 完整降定理） | **唯一剩余 D 类桥接**（fc-poly-le-spec-int 已于 phase60 v1.34 降为可证定理；fc-integral（fc = ∫）仍为 D 类基础假设——钉住 sup 语义、健全，完整降为定理需测度论完整层 sup 交换，见 phase60 v1.16 决策） | ~~P0-2 圈图积分的直接前置~~（**P0-2 已于 2026-08-04 升格"纳入"，Phase 61C**）；本项降为后续深化，非阻塞 | P1 |
 | S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；`NoiseCategory.lean` 既有编译错误已于 **2026-08-05 全部修复**（`lake build` 3172 jobs 通过，零 `sorry`）——Σ-Rec/Σ-Spec Category 律、`sigmaRecInclusion`（Faithful 诚实修正）、`Inhabited SpObj` 对齐、Σ-D 对象-态射层（`sigmaDFunctorObj`/`sigmaD_preserves_coproduct`）恢复可用；**2026-08-05 追加：Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**——内层态射搬运 `dfunctorMapTransport'` 对分量变量直接 `cases`（四分支定义性归约，无 cast），元素层 `dfunctorMapTransport'_comp/_id` + 列表层归纳（`rw [ih]` + `congr 1`），组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）；此前"编译恢复待 mathlib 修复"表述更正 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
 | d_H 物理约束 | δ 为 RMS 统计约束（闭式已排除） | 维持现状，不追闭式；经实验精化 | P2 |
 | funext 结构性限制 | 库公理范围外 | 接受为构造数学通用短板 | P2 |
@@ -223,7 +223,7 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 
 1. **论文层**：每方向一篇自包含论文（Phase 61A–61E），定义/定理/证明完整，不引用笔记。
 2. **形式化层**：Lean + Agda 双语言模块，`lake build` / `agda Everything.agda` 全量通过。
-3. **数值层**：`paperX_*.py` 注册 `run_all_tests.py`，对标 PDG/Planck/LIGO 数据。
+3. **数值层**：`scripts/paperX_*.py` 注册 `run_all_tests.py`，对标 PDG/Planck/LIGO 数据。
 4. **登记层**：每方向验收后更新路线图 + 勘误（"推进中"→"纳入"）+ 盲登记联动检查。
 
 ---
@@ -234,23 +234,23 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 
 | 来源 | 开放项 | 后续归属 |
 |:----:|:------|:--------|
-| 61A（P1-4 暴涨） | ~~γ_φ 谱第一性确定~~ | **🔶 部分闭合（2026-08-05）**：谱量闭式 $\gamma_\varphi = (1/4\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]，κ/F_π 同构，谱间隙比平方 1.999 复核 κ）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`，论文推论 4.1，笔记 §3.4）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向） |
-| 61A | ~~N_{R⁴} 精确闭式~~ | **✅ 已解决（2026-08-04）**：$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$，$\delta_2 = c_3/c_1^2$，数值 $-0.0157$；`paperX_nR4_closed_form.py` 数值积分验证（偏差 0.044%）；笔记 §2.2 + paper39 定理 3.2 更新 |
-| 61A | ~~D3.1(3) 严格微分几何度规诱导~~ | **✅ 闭合（2026-08-05）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦，de Sitter 与慢滚）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann G₀₀ = 3H² = 8πV_φ（`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`，论文推论 5.3，笔记 §4.5）；D3.1(3) 从结构论证升级为度规张量层面严格验证 |
-| 61A | ~~P1-3↔P1-4 动态连续极限衔接~~ | **🔶 部分闭合（2026-08-05）**：蒸发终点（Planck 残留，paper42 定理 5.4-5.9）→ 量子反弹 → 反弹后膨胀 → 暴涨（paper39 定理 D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽（`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`，笔记 §4.4，论文推论 5.2）；诚实边界：反弹后能量模型简化（完整再加热动力学 γ_φ 属开放项） |
-| 61B（P0-1 色规范） | ~~κ 组分 dressing 独立谱定~~ | **🔶 部分闭合（2026-08-05）**：κ 纯谱量闭式 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.909$——$m_\rho$ 从锚点变预言 $808.7$ MeV（偏差 4.3%，`paperX_qcd_kappa_dressing.py` 6/6 注册 `run_all_tests.py`）；**机制确认（2026-08-05）**：DS 方程（彩虹近似 + MT 红外胶子）独立给出禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），临界强度 d_crit = 1.0 GeV²（`paperX_qcd_ds_dressing.py` 6/6 注册，论文定理 5.7，笔记 §5.9）；**A/B 耦合精确化（2026-08-05）**：完整 A(p²)/B(p²) DS 求解——匹配 κΛ 所需 d 从 2.0 降至 1.485 GeV²（文献差距 2.1×→1.6×）、A(p_max) = 0.95 < 1（`paperX_qcd_ds_ab.py` 6/6 注册，论文推论 5.9，笔记 §5.12）；诚实边界：Λ_QCD 敏感性（210±10 MeV 内偏差 <7%）+ 剩余差距（UV 尾 + 完整顶点）登记后续 |
-| 61B | ~~Δ_hf 色-Coulomb 谱势严格推导~~ | **🔶 部分闭合（2026-08-05）**：Cornell 势 $V = -\tfrac{4\alpha_s}{3r} + \sigma r$ 解轻味 1S 径向 Schrödinger，$|\psi(0)|^2 = 0.1095$ GeV³（纯 Coulomb 放大 330 倍，线性禁闭紧致机制），Δ_hf = 252.8 MeV 从定标锚点变**量级预言**、N/Δ 质量偏差 3.7%/9.8%（`paperX_qcd_hyperfine.py` 6/6 注册 `run_all_tests.py`，论文定理 5.6 + 推论 5.5，笔记 §5.8）；**轻味 α_s 独立谱定闭合（2026-08-05）**：谱定 M_ud + σ + Cornell 波函数 + N-Δ 目标反解 α_s* = 0.3380（61B 经验 0.39）——N-Δ 精确匹配 PDG（偏差 0.00%）（`paperX_qcd_alpha_s_light.py` 6/6 注册，论文推论 5.8，笔记 §5.11）；诚实边界：α_s* 依赖实验 N-Δ 锚点（非纯谱量闭式） |
-| 61B | ~~Λ_QCD 跨味阈值~~ | **✅ 闭合（2026-08-05）**：N_f 分段 RGE（推论 4.3，笔记 §4.4）——跨味比值 Λ^(3)/Λ^(5) = 1.625 vs PDG 1.558（偏差 4.2%），N_f 分段一致性与标准 QCD 相符（`paperX_qcd_flavor_thresholds.py` 6/6 注册 `run_all_tests.py`）；**跨味衔接闭合（2026-08-05）**：微扰 Λ^(3) = 121.8 ↔ 有效值 210.3 MeV 三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）（`paperX_qcd_flavor_bridge.py` 6/6 注册，论文推论 4.4，笔记 §4.5）；诚实边界：ξ ≈ √N_c 机制性存疑（主证据为 DS 桥 + 带包含） |
-| 61B | ~~弦张力 κ_lin 与 κ 谱统一~~ | **✅ 闭合（2026-08-05）**：σ = 4Λ_QCD²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式——Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ、κ ≈ √σ/Λ ≈ 2（`paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`）；**Regge 谱起源闭合（2026-08-05）**：转动弦 J = α'E² + 弦张力谱定 ⟹ α' = 1/(8πΛ²)（`paperX_regge_origin.py` 6/6 注册，ρ 轨迹线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988、截距 α₀=0.463≈0.5，论文推论 5.7，笔记 §5.10）；**Regge 截距动力学起源闭合（2026-08-05）**：转动弦零点能（Casimir）推导——ζ 正则化 → a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463 偏差 8.0%；基态 |M₀| = 2√πΛ = 0.744 GeV 与 ρ 同量级；谱定轨迹 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5% 全谱定无拟合）（`paperX_regge_intercept.py` 6/6 注册，论文推论 5.12，笔记 §5.13）；诚实边界：D = 10 与谱框架 Cl(1,7) 8 维结构衔接登记为后续 |
-| 61B | ~~重味强子 Cornell 谱势扩展~~ | **🔶 部分闭合（2026-08-05）**：`paperX_qcd_heavy_flavor.py` 6/6——Cornell 势 $V=-\tfrac{4\alpha_s}{3r}+\kappa r$ 解重夸克偶素径向 Schrödinger：J/ψ 3.33（7.5%）、ψ' 3.93（6.7%）、Υ 9.476（**0.2%**）、Υ' 10.050（0.3%）、间距 2.3%/2.0%、rms 0.42/0.22 fm；**α_s 谱定替代（2026-08-05）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致/PDG 0.40，经验值反解有效标度 μ_eff = 1.37 GeV ≈ m_c）——4 态平均偏差 3.66%→3.39%（`paperX_qcd_heavy_flavor_spectral.py` 6/6 注册，论文推论 5.10，笔记 §8 问题 4）；**m_c/m_b 有效质量谱定替代（2026-08-05）**：重味有效质量 = pole 质量——m_c_eff = 1.492 GeV（单圈 pole-MS，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS，C₂ = 13.44，α_s(m_b) = 0.224），圈阶选择由收敛性决定；联合谱定 α_s：4 态平均偏差 3.39%→3.64%（charmonium 改进 6.4%/6.0%、bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持（`paperX_qcd_heavy_mass_spectral.py` 6/6 注册，论文推论 5.11，笔记 §8 问题 4）；诚实边界：**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**，重味 dressing 标度依赖（charm 222 MeV、bottom 681 MeV）登记为后续 |
-| 61C（P0-2 重整化） | ~~谱静默"单向转化"严格定理~~ | **🔶 部分闭合（2026-08-05）**：定理 5.1 严格上界 $|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$（Schur 补 + Weyl，显式常数）——δ_silence ≥ 1 数值边界（幂律拟合 0.992、大间隙局部指数 → 1），单向转化定量化（IR 对 UV 细节影响被层级间隙幂律压制）（`paperX_rg_chain_deepen.py` D1–D3，8/8 注册 `run_all_tests.py`，笔记 §9.1，论文定理 5.1）；诚实边界：精确谱指数依赖完整静默层级形式化 |
-| 61C | ~~β 函数完整圈图求和测度论严格化~~ | **🔶 部分闭合（2026-08-05）**：定理 5.2——λφ⁴ β 级数每项谱圈图积分良定义（测度论层 T3 衔接）、1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 R = 49.4 内绝对收敛（`paperX_rg_chain_deepen.py` D4–D6，笔记 §9.2，论文定理 5.2）；诚实边界：渐近收敛的 Borel 求和为后续方向 |
-| 61C | ~~非微扰重整化与 P0-1 禁闭谱判据衔接~~ | **🔶 部分闭合（2026-08-05）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管（`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`，笔记 §9.3，论文定理 5.3）；诚实边界：pole 为微扰约定函数，完整非微扰求值（瞬子/DS/格点）为后续 |
+| 61A（P1-4 暴涨） | ~~γ_φ 谱第一性确定~~ | **🔶 部分闭合（2026-08-05）**：谱量闭式 $\gamma_\varphi = (1/4\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]，κ/F_π 同构，谱间隙比平方 1.999 复核 κ）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`scripts/paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`，论文推论 4.1，笔记 §3.4）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向） |
+| 61A | ~~N_{R⁴} 精确闭式~~ | **✅ 已解决（2026-08-04）**：$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$，$\delta_2 = c_3/c_1^2$，数值 $-0.0157$；`scripts/paperX_nR4_closed_form.py` 数值积分验证（偏差 0.044%）；笔记 §2.2 + paper39 定理 3.2 更新 |
+| 61A | ~~D3.1(3) 严格微分几何度规诱导~~ | **✅ 闭合（2026-08-05）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦，de Sitter 与慢滚）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann G₀₀ = 3H² = 8πV_φ（`scripts/paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`，论文推论 5.3，笔记 §4.5）；D3.1(3) 从结构论证升级为度规张量层面严格验证 |
+| 61A | ~~P1-3↔P1-4 动态连续极限衔接~~ | **🔶 部分闭合（2026-08-05）**：蒸发终点（Planck 残留，paper42 定理 5.4-5.9）→ 量子反弹 → 反弹后膨胀 → 暴涨（paper39 定理 D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽（`scripts/paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`，笔记 §4.4，论文推论 5.2）；诚实边界：反弹后能量模型简化（完整再加热动力学 γ_φ 属开放项） |
+| 61B（P0-1 色规范） | ~~κ 组分 dressing 独立谱定~~ | **🔶 部分闭合（2026-08-05）**：κ 纯谱量闭式 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.909$——$m_\rho$ 从锚点变预言 $808.7$ MeV（偏差 4.3%，`scripts/paperX_qcd_kappa_dressing.py` 6/6 注册 `run_all_tests.py`）；**机制确认（2026-08-05）**：DS 方程（彩虹近似 + MT 红外胶子）独立给出禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），临界强度 d_crit = 1.0 GeV²（`scripts/paperX_qcd_ds_dressing.py` 6/6 注册，论文定理 5.7，笔记 §5.9）；**A/B 耦合精确化（2026-08-05）**：完整 A(p²)/B(p²) DS 求解——匹配 κΛ 所需 d 从 2.0 降至 1.485 GeV²（文献差距 2.1×→1.6×）、A(p_max) = 0.95 < 1（`scripts/paperX_qcd_ds_ab.py` 6/6 注册，论文推论 5.9，笔记 §5.12）；诚实边界：Λ_QCD 敏感性（210±10 MeV 内偏差 <7%）+ 剩余差距（UV 尾 + 完整顶点）登记后续 |
+| 61B | ~~Δ_hf 色-Coulomb 谱势严格推导~~ | **🔶 部分闭合（2026-08-05）**：Cornell 势 $V = -\tfrac{4\alpha_s}{3r} + \sigma r$ 解轻味 1S 径向 Schrödinger，$|\psi(0)|^2 = 0.1095$ GeV³（纯 Coulomb 放大 330 倍，线性禁闭紧致机制），Δ_hf = 252.8 MeV 从定标锚点变**量级预言**、N/Δ 质量偏差 3.7%/9.8%（`scripts/paperX_qcd_hyperfine.py` 6/6 注册 `run_all_tests.py`，论文定理 5.6 + 推论 5.5，笔记 §5.8）；**轻味 α_s 独立谱定闭合（2026-08-05）**：谱定 M_ud + σ + Cornell 波函数 + N-Δ 目标反解 α_s* = 0.3380（61B 经验 0.39）——N-Δ 精确匹配 PDG（偏差 0.00%）（`scripts/paperX_qcd_alpha_s_light.py` 6/6 注册，论文推论 5.8，笔记 §5.11）；诚实边界：α_s* 依赖实验 N-Δ 锚点（非纯谱量闭式） |
+| 61B | ~~Λ_QCD 跨味阈值~~ | **✅ 闭合（2026-08-05）**：N_f 分段 RGE（推论 4.3，笔记 §4.4）——跨味比值 Λ^(3)/Λ^(5) = 1.625 vs PDG 1.558（偏差 4.2%），N_f 分段一致性与标准 QCD 相符（`scripts/paperX_qcd_flavor_thresholds.py` 6/6 注册 `run_all_tests.py`）；**跨味衔接闭合（2026-08-05）**：微扰 Λ^(3) = 121.8 ↔ 有效值 210.3 MeV 三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）（`scripts/paperX_qcd_flavor_bridge.py` 6/6 注册，论文推论 4.4，笔记 §4.5）；诚实边界：ξ ≈ √N_c 机制性存疑（主证据为 DS 桥 + 带包含） |
+| 61B | ~~弦张力 κ_lin 与 κ 谱统一~~ | **✅ 闭合（2026-08-05）**：σ = 4Λ_QCD²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式——Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ、κ ≈ √σ/Λ ≈ 2（`scripts/paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`）；**Regge 谱起源闭合（2026-08-05）**：转动弦 J = α'E² + 弦张力谱定 ⟹ α' = 1/(8πΛ²)（`scripts/paperX_regge_origin.py` 6/6 注册，ρ 轨迹线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988、截距 α₀=0.463≈0.5，论文推论 5.7，笔记 §5.10）；**Regge 截距动力学起源闭合（2026-08-05）**：转动弦零点能（Casimir）推导——ζ 正则化 → a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463 偏差 8.0%；基态 |M₀| = 2√πΛ = 0.744 GeV 与 ρ 同量级；谱定轨迹 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5% 全谱定无拟合）（`scripts/paperX_regge_intercept.py` 6/6 注册，论文推论 5.12，笔记 §5.13）；诚实边界：D = 10 与谱框架 Cl(1,7) 8 维结构衔接登记为后续 |
+| 61B | ~~重味强子 Cornell 谱势扩展~~ | **🔶 部分闭合（2026-08-05）**：`scripts/paperX_qcd_heavy_flavor.py` 6/6——Cornell 势 $V=-\tfrac{4\alpha_s}{3r}+\kappa r$ 解重夸克偶素径向 Schrödinger：J/ψ 3.33（7.5%）、ψ' 3.93（6.7%）、Υ 9.476（**0.2%**）、Υ' 10.050（0.3%）、间距 2.3%/2.0%、rms 0.42/0.22 fm；**α_s 谱定替代（2026-08-05）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致/PDG 0.40，经验值反解有效标度 μ_eff = 1.37 GeV ≈ m_c）——4 态平均偏差 3.66%→3.39%（`scripts/paperX_qcd_heavy_flavor_spectral.py` 6/6 注册，论文推论 5.10，笔记 §8 问题 4）；**m_c/m_b 有效质量谱定替代（2026-08-05）**：重味有效质量 = pole 质量——m_c_eff = 1.492 GeV（单圈 pole-MS，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS，C₂ = 13.44，α_s(m_b) = 0.224），圈阶选择由收敛性决定；联合谱定 α_s：4 态平均偏差 3.39%→3.64%（charmonium 改进 6.4%/6.0%、bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持（`scripts/paperX_qcd_heavy_mass_spectral.py` 6/6 注册，论文推论 5.11，笔记 §8 问题 4）；诚实边界：**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**，重味 dressing 标度依赖（charm 222 MeV、bottom 681 MeV）登记为后续 |
+| 61C（P0-2 重整化） | ~~谱静默"单向转化"严格定理~~ | **🔶 部分闭合（2026-08-05）**：定理 5.1 严格上界 $|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$（Schur 补 + Weyl，显式常数）——δ_silence ≥ 1 数值边界（幂律拟合 0.992、大间隙局部指数 → 1），单向转化定量化（IR 对 UV 细节影响被层级间隙幂律压制）（`scripts/paperX_rg_chain_deepen.py` D1–D3，8/8 注册 `run_all_tests.py`，笔记 §9.1，论文定理 5.1）；诚实边界：精确谱指数依赖完整静默层级形式化 |
+| 61C | ~~β 函数完整圈图求和测度论严格化~~ | **🔶 部分闭合（2026-08-05）**：定理 5.2——λφ⁴ β 级数每项谱圈图积分良定义（测度论层 T3 衔接）、1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 R = 49.4 内绝对收敛（`scripts/paperX_rg_chain_deepen.py` D4–D6，笔记 §9.2，论文定理 5.2）；诚实边界：渐近收敛的 Borel 求和为后续方向 |
+| 61C | ~~非微扰重整化与 P0-1 禁闭谱判据衔接~~ | **🔶 部分闭合（2026-08-05）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管（`scripts/paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`，笔记 §9.3，论文定理 5.3）；诚实边界：pole 为微扰约定函数，完整非微扰求值（瞬子/DS/格点）为后续 |
 | 61D（P1-3 黑洞） | δT/T → δg_μν 全量子化 | P2-5 量子引力深化 |
 | 61D | 反弹后宇宙学演化（a(t)、原初谱） | Paper IX/61A 范畴 |
-| 61D | ~~Kerr 蒸发动力学推广~~ | **🔶 部分闭合（2026-08-05）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温（T(a*=0.9)/T_S = 0.61）+ 极端冷却（f(1−1e-9) = 8.9e-5，蒸发终止）；蒸发动力学（超辐射优先辐射角动量）：t_evap 延长 1.93×、a* 单调递减 0.9→0.166（Kerr → Schwarzschild 演化方向）（`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`，笔记 §1.2，论文定理 5.10）；诚实边界：简化超辐射模型（r_J 常数），完整超辐射谱为后续 |
+| 61D | ~~Kerr 蒸发动力学推广~~ | **🔶 部分闭合（2026-08-05）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温（T(a*=0.9)/T_S = 0.61）+ 极端冷却（f(1−1e-9) = 8.9e-5，蒸发终止）；蒸发动力学（超辐射优先辐射角动量）：t_evap 延长 1.93×、a* 单调递减 0.9→0.166（Kerr → Schwarzschild 演化方向）（`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`，笔记 §1.2，论文定理 5.10）；诚实边界：简化超辐射模型（r_J 常数），完整超辐射谱为后续 |
 
-**已解决并移出任务池**（2026-08-04）：61D 精确熵平衡（定理 4.7）、蒸发终点-反弹衔接（定理 5.4-5.9）；61C 部分可证 sorry（Silence/ThermoFormalism/TestSpectralEquivalence）与假定理正本清源（WeaveBCS）均已完成；61A N_{R⁴} 精确闭式（2026-08-04，`paperX_nR4_closed_form.py` 验证）。
+**已解决并移出任务池**（2026-08-04）：61D 精确熵平衡（定理 4.7）、蒸发终点-反弹衔接（定理 5.4-5.9）；61C 部分可证 sorry（Silence/ThermoFormalism/TestSpectralEquivalence）与假定理正本清源（WeaveBCS）均已完成；61A N_{R⁴} 精确闭式（2026-08-04，`scripts/paperX_nR4_closed_form.py` 验证）。
 
 ### 遗留 `sorry`/`axiom` 处理规划（2026-08-04 补录，区分 S0 归属）
 
@@ -260,7 +260,7 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 |:----|:-----|:--:|:-----|:--------|
 | **S0 表示静默/范畴基础** | ~~`Adjunction.lean:53,58,60` + `:89 axiom`~~ | 3+1 | 🔴 全范畴不可构造（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 时不存在） | **✅ 已闭合（2026-08-05）**：原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）结构性不可构造且**无任何使用方**（仅 `RFunctor.obj`/`adjUnit`/`adjCounit` 被用，均无 sorry）——已删除，`RFunctor` 保留为对象映射；全范畴右伴随（map 层）正确构造见 `RAP5a_explicit_adjunction.lean`（SpImD 子范畴 `DIm ⊣ RIm` 完整伴随）。**全库 Lean 零 sorry 零 axiom** |
 | **S0 表示静默/范畴基础** | ~~`RAP5a_explicit_adjunction.lean:103`（RIm_map）~~ | 1 | 🔴 D 不 full（基数反例，已机器证明） | **✅ 已闭合（2026-08-04 阶段 1 线性语义）**：按 `spectral_category_scope_stratification.md` 将 `SpImDMor` 限制为线性（Rec）态射层（谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明）。D 不 full 的基数反例保留为全范畴负结果 |
-| **S0 边缘/范畴基础** | ~~`HigherRecCategory.lean:58,77,123`~~（竖/横复合自然性 + 交换律） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | **✅ 已闭合（2026-08-04 O13，路径 B：D-拉回）**：`paperX_rec2_exchange_deviation.py` 诊断最小修正复合非结合（D7/D8）后，`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 线性条件），竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明（镜像 `spExchangeLaw_*`）。**2026-08-05 追加**：开放问题 8 **完全闭合**（命题 15 Fredholm 可解性刻画：可解 ⟺ $T_g - T_f \perp \ker L^*$；等迹缺陷正面例 T19；T17 扫描设计缺陷更正）。详见 `notes/00_foundations/spectral_rec2_exchange_deviation.md` v0.10 |
+| **S0 边缘/范畴基础** | ~~`HigherRecCategory.lean:58,77,123`~~（竖/横复合自然性 + 交换律） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | **✅ 已闭合（2026-08-04 O13，路径 B：D-拉回）**：`scripts/paperX_rec2_exchange_deviation.py` 诊断最小修正复合非结合（D7/D8）后，`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 线性条件），竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明（镜像 `spExchangeLaw_*`）。**2026-08-05 追加**：开放问题 8 **完全闭合**（命题 15 Fredholm 可解性刻画：可解 ⟺ $T_g - T_f \perp \ker L^*$；等迹缺陷正面例 T19；T17 扫描设计缺陷更正）。详见 `notes/00_foundations/spectral_rec2_exchange_deviation.md` v0.10 |
 | 非 S0（物理） | ~~`ThermoFormalism.lean:168,215,223,297`~~ | 4 | 🔶 不可证（legendreTransform 需 BddAbove / Bowen τ(0) / interpolateMeasure 为假定理 / sup 交换） | **✅ 已闭合（2026-08-04）**：`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）；`singularity_spectrum_bound` 改条件定理（加 hτ0 Bowen 公式 + hBdd）；`singularity_spectrum_concave` 改条件定理（加 hBdd，占位 τ 下原陈述为假）；`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
 | 非 S0（物理） | ~~`DeviationBound.lean:384,411`~~ | 2 | 🟡 缺 A_GR 谱假设 + 待 Mathlib Matrix.Spectrum | **✅ 已闭合（2026-08-04）**：不再依赖 Mathlib `Matrix.Spectrum`——A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）。DeviationBound 现零 `sorry`（勘误 O8 闭合） |
 
@@ -273,24 +273,25 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 | 版本 | 日期 | 变更 |
 |:----:|:----:|:-----|
 | v0.1 | 2026-08-03 | 初版。基于 `docs/针对v0.9版系列论文的客观评价.md`（修正版完整客观终评）§二-3 五大物理缺口制定补缺规划。P0-1/P0-2 最高优先；P1-4 独立可最快推进。 |
-| v0.2 | 2026-08-03 | **Phase 61A（P1-4 暴涨完整动力学）完成**：笔记 `notes/05_cosmology/spectral_inflation_dynamics.md` + 论文 `paper/paper39_inflation_dynamics.md`（定理 D3.1）+ 数值 `paperX_inflation_dynamics.py`（15/15，注册 `run_all_tests.py`）+ Lean `InflationDynamics.lean`/Agda `InflationDynamics.agda`（`lake build`/`agda Everything.agda` 全量通过）。P1-4 升格"纳入"。顺带修复 `Silence.lean` 预先存在的编译失败（mathlib API 变更：`Real.sqrt_eq_zero.mp` → 新 API + 显式实例化/nlinarith 修复）。 |
-| v0.3 | 2026-08-03 | **Phase 61B（P0-1 色规范/强子谱）完成**：笔记 `notes/01_qcd_higgs/spectral_color_dynamics.md` + 论文 `paper/paper40_qcd_color_dynamics.md`（定理 2.1/3.1/4.1/4.2/5.1/5.2）+ 数值 `paperX_qcd_spectrum.py`（15/15，注册 `run_all_tests.py`）+ Lean `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）/Agda `ColorDynamics.agda`（桥接登记）。P0-1 升格"纳入"。 |
-| v0.4 | 2026-08-04 | **Phase 61C（P0-2 量子重整化完整链条）完成**：T3 测度论层闭合（v1.36）+ 笔记 `notes/00_foundations/spectral_renormalization_chain.md` + 论文 `paper/paper41_renormalization_chain.md`（C1-C5，定理 2.1/3.1/3.2/4.1）+ 数值 `paperX_rg_chain.py`（12/12，注册 `run_all_tests.py`）+ Lean `RenormalizationChain.lean`（ad_G 保 Hermitian + 迭代对易子闭合）/Agda 登记。P0-2 升格"纳入"。顺带执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3 + TestSpectralEquivalence 编译错误）、正本清源假定理 5 处（WeaveBCS）+ hBound 文档纠正 + DeviationBound/HigherRecCategory 开放项登记；登记遗留损坏文件 TempRGFiber（约 45 处 mathlib 4.31 迁移错误）。 |
-| v0.5 | 2026-08-04 | **Phase 61D（P1-3 黑洞量子演化）完成**：笔记更新 v0.2 + 论文 `paper/paper42_black_hole_quantum_evolution.md`（定理 2.1-2.7/3.1-3.4/4.1-4.7/5.1-5.9/6.1-6.5，含精确熵平衡与蒸发终点-反弹衔接）+ 数值 `paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`）+ Lean `BlackHoleEvolution.lean`/`HawkingSpectrum.lean`/`BlackHoleInformation.lean`/`BlackHoleBounce.lean`（四模块 `lake build` 全通过，零 sorry，含信息保持双向、Page 曲线早期增/晚期减+熵平衡、蒸发 Planck 终止、量子反弹衔接）/Agda `BlackHoleDynamics.agda`（`agda Everything.agda` 通过）。P1-3 升格"纳入"。新增第七章遗留开放项汇总与后续规划（61A-D 开放项统一纳入任务池）。 |
+| v0.2 | 2026-08-03 | **Phase 61A（P1-4 暴涨完整动力学）完成**：笔记 `notes/05_cosmology/spectral_inflation_dynamics.md` + 论文 `paper/paper39_inflation_dynamics.md`（定理 D3.1）+ 数值 `scripts/paperX_inflation_dynamics.py`（15/15，注册 `run_all_tests.py`）+ Lean `InflationDynamics.lean`/Agda `InflationDynamics.agda`（`lake build`/`agda Everything.agda` 全量通过）。P1-4 升格"纳入"。顺带修复 `Silence.lean` 预先存在的编译失败（mathlib API 变更：`Real.sqrt_eq_zero.mp` → 新 API + 显式实例化/nlinarith 修复）。 |
+| v0.3 | 2026-08-03 | **Phase 61B（P0-1 色规范/强子谱）完成**：笔记 `notes/01_qcd_higgs/spectral_color_dynamics.md` + 论文 `paper/paper40_qcd_color_dynamics.md`（定理 2.1/3.1/4.1/4.2/5.1/5.2）+ 数值 `scripts/paperX_qcd_spectrum.py`（15/15，注册 `run_all_tests.py`）+ Lean `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）/Agda `ColorDynamics.agda`（桥接登记）。P0-1 升格"纳入"。 |
+| v0.4 | 2026-08-04 | **Phase 61C（P0-2 量子重整化完整链条）完成**：T3 测度论层闭合（v1.36）+ 笔记 `notes/00_foundations/spectral_renormalization_chain.md` + 论文 `paper/paper41_renormalization_chain.md`（C1-C5，定理 2.1/3.1/3.2/4.1）+ 数值 `scripts/paperX_rg_chain.py`（12/12，注册 `run_all_tests.py`）+ Lean `RenormalizationChain.lean`（ad_G 保 Hermitian + 迭代对易子闭合）/Agda 登记。P0-2 升格"纳入"。顺带执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3 + TestSpectralEquivalence 编译错误）、正本清源假定理 5 处（WeaveBCS）+ hBound 文档纠正 + DeviationBound/HigherRecCategory 开放项登记；登记遗留损坏文件 TempRGFiber（约 45 处 mathlib 4.31 迁移错误）。 |
+| v0.5 | 2026-08-04 | **Phase 61D（P1-3 黑洞量子演化）完成**：笔记更新 v0.2 + 论文 `paper/paper42_black_hole_quantum_evolution.md`（定理 2.1-2.7/3.1-3.4/4.1-4.7/5.1-5.9/6.1-6.5，含精确熵平衡与蒸发终点-反弹衔接）+ 数值 `scripts/paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`）+ Lean `BlackHoleEvolution.lean`/`HawkingSpectrum.lean`/`BlackHoleInformation.lean`/`BlackHoleBounce.lean`（四模块 `lake build` 全通过，零 sorry，含信息保持双向、Page 曲线早期增/晚期减+熵平衡、蒸发 Planck 终止、量子反弹衔接）/Agda `BlackHoleDynamics.agda`（`agda Everything.agda` 通过）。P1-3 升格"纳入"。新增第七章遗留开放项汇总与后续规划（61A-D 开放项统一纳入任务池）。 |
 | v0.6 | 2026-08-04 | **勘误 O9 闭合（假命题修正，非 Phase 61 新增）**：审计确认 `ContinuumLimit.lean` hDiamLeOne 缺口根因是假命题——原 `physicalIFS` f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1，"A ⊆ [0,1]"注释错误，Agda 侧（B8）无 maps 形式化无可参照。修正 f₂ 平移 1.0 → **1−c₃**（不动点精确落 1；ratios 与 O2 排序/Moran/维数定理不变，理论体系零破坏），`ContinuumLimit.lean §3.5` 新增 `maps_monotone`/`maps0/1/2_fixedPoint`/`attractor_subset_unitInterval_of`/`attractor_diam_le_one` 机器证明，`exists_attractorAxioms` 完整填充（零 sorry）。`lake build` 通过（2454 jobs）。勘误 v0.11/盲登记 v0.11/notes b2 笔记同步。 |
 | v0.7 | 2026-08-04 | **非 S0 遗留 6 处全部闭合（§七 规划表兑现，勘误 O8 + O11）**：① `DeviationBound.lean` 2 处——不再依赖 Mathlib `Matrix.Spectrum`，A_GR 谱断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）；② `ThermoFormalism.lean` 4 处——`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）、`singularity_spectrum_bound`/`singularity_spectrum_concave` 改条件定理（加 hτ0/hBdd，占位 τ 下原陈述为假）、`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）；TestApplications/TestSpectralEquivalence 引用同步。**全库非 S0 活动 `sorry` 清零**（余 S0 范畴层 7 + 1 axiom 由 phase60 演进计划推进）。`lake build` 通过（2454 jobs）。勘误 v0.12/盲登记 v0.12 同步。 |
-| v0.8 | 2026-08-04 | **61A N_{R⁴} 精确闭式（§七 任务池兑现）**：谱势 R⁴ 修正 $V = V_0(1-e^{-b\varphi})^2(1+\delta_2 e^{-2b\varphi})$ 的慢滚 e 折叠修正由量级估计升级为精确闭式 $N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}}-x_{\text{end}}) + \frac{x_{\text{cmb}}^2-x_{\text{end}}^2}{2}\right]$（$\delta_2 = c_3/c_1^2$，数值 $-0.0157$）。`paperX_nR4_closed_form.py` 闭式 vs 数值积分相对偏差 0.044% ✅，注册 `run_all_tests.py`。笔记 `spectral_inflation_dynamics.md` §2.2 + paper39 定理 3.2/开放问题 2 更新（移出开放项）。 |
-| v0.9 | 2026-08-05 | **61C 深化（§七 任务池两项兑现）**：① 谱静默"单向转化"严格定理——定理 5.1 严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$），δ_silence ≥ 1 数值边界（幂律拟合 0.992、大间隙局部指数 → 1）；② β 完整圈图求和测度论严格化——定理 5.2（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 R = 49.4）。`paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.2（§9.1/9.2）+ paper41 v0.2（定理 5.1/5.2，§6/§8 更新）；§七 61C 两行 🔶。 |
-| v0.10 | 2026-08-05 | **61C 非微扰衔接（§七 任务池兑现）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈跨味 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管。`paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.3（§9.3）+ paper41 v0.3（定理 5.3，§6/§8 更新）；§七 61C 第三行 🔶。 |
-| v0.11 | 2026-08-05 | **61B κ 机制 Dyson-Schwinger 确认（§七 任务池兑现）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程，禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），解析临界强度 d_crit = 4/(3C_F) = 1.0 GeV²。`paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.7（§5.9）+ paper40 v0.6（定理 5.7，§5.5/§8 更新）；§七 61B κ 行机制确认。 |
-| v0.12 | 2026-08-05 | **61D Kerr 蒸发动力学推广（§七 任务池兑现）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温 + 极端冷却（蒸发终止）；蒸发动力学（超辐射优先辐射角动量）t_evap 延长 1.93×、a* 单调递减（Kerr → Schwarzschild）。`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_black_hole_evolution_formalization.md`（§1.2）+ paper42 v0.2（定理 5.10，§8 开放项 3 更新）；§七 61D Kerr 行 🔶。 |
-| v0.13 | 2026-08-05 | **61A P1-3↔P1-4 动态连续极限衔接（§七 任务池兑现）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽。`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.4（§4.4）+ paper39 v0.4（推论 5.2，§9 开放问题 4 更新）；§七 61A 衔接行 🔶。 |
-| v0.14 | 2026-08-05 | **61A γ_φ 谱第一性确定（§七 任务池兑现）**：谱量闭式 γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]，κ/F_π 同构）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（标准区间 + T_RH > T_sph 热历史 + η_B 同量级串联）。`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.5（§3.4）+ paper39 v0.5（推论 4.1，§9 开放问题 1 更新）；§七 61A γ_φ 行 🔶。 |
-| v0.15 | 2026-08-05 | **61A D3.1(3) 严格微分几何度规诱导（§七 任务池兑现）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann。`paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.6（§4.5）+ paper39 v0.6（推论 5.3，§9 开放问题 3 闭合 ✅）；§七 61A D3.1(3) 行 ✅。 |
-| v0.16 | 2026-08-05 | **61B Regge 斜率谱起源（§七 任务池兑现）**：转动弦 J = α'E² + 弦张力谱定 ⟹ 谱起源闭式 α' = 1/(8πΛ²) = 0.902 GeV⁻²（实验 0.93，偏差 3.0%）；强子 Regge 轨迹验证——ρ 介子 J=1..5 线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988、截距 α₀=0.463≈0.5。`paperX_regge_origin.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.8（§5.10）+ paper40 v0.7（推论 5.7，§5.7/§8 更新）；§七 61B 弦张力行 Regge 起源闭合。 |
-| v0.17 | 2026-08-05 | **61B 轻味 α_s 独立谱定（§七 任务池兑现）**：谱定 M_ud = 404.4 + σ = 0.1764 + Cornell 波函数 + N-Δ 目标 293.8 MeV 反解 α_s* = 0.3380（61B 经验 0.39，偏差 13.3%）——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 量级预言升级精确谱定预言。`paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.9（§5.11）+ paper40 v0.8（推论 5.8，§8.1/§8.2 开放问题 1 闭合 ✅）；§七 61B Δ_hf 行轻味 α_s 谱定闭合。 |
-| v0.18 | 2026-08-05 | **61B κ A/B 耦合精确化（§七 任务池兑现）**：完整 A(p²)/B(p²) 耦合 DS 求解（朗道规范彩虹近似，球对称角结构 V(μ)）——波函数重整化 A(p_max) = 0.95 < 1，匹配 κΛ = 401 MeV 所需红外强度 d 从 2.0（A≈1 近似）降至 1.485 GeV²（文献 Maris-Tandy 差距 2.1×→1.6×），A→1 极限复核 M(0) = 353.2 MeV 偏差 0.1% 自洽。`paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.10（§5.12）+ paper40 v0.9（推论 5.9，§8.1 结论更新、§8.2 开放问题 3 闭合 ✅，剩余 UV 尾 + 完整顶点登记后续）；§七 61B κ 行诚实边界更新。 |
-| v0.19 | 2026-08-05 | **61B 跨味衔接（§七 任务池兑现）**：微扰 Λ^(3) = 121.8 ↔ 有效值 210.3 MeV 三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0)(d_AB) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% 不可用 vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）。`paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.11（§4.5）+ paper40 v0.10（推论 4.4，§8.1 结论更新、§8.2 开放问题 2 闭合 ✅）；§七 61B 跨味阈值行 ✅。 |
-| v0.20 | 2026-08-05 | **61B 重味 Cornell 有效参数谱定替代（§七 任务池兑现）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致/PDG 0.40）——经验值获谱框架来源（反解有效标度 μ_eff = 1.37 GeV ≈ m_c）；4 态平均偏差 3.66% → 3.39%（J/ψ 7.5%→6.8%、ψ' 6.7%→6.3%、Υ' 0.3%→0.1%）、径向间距 3.8%/6.3% 保持。`paperX_qcd_heavy_flavor_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.12（§8 问题 4）+ paper40 v0.11（推论 5.10，§8.1 结论更新、§8.2 新增开放问题 5）；§七 61B 重味行 α_s 谱定。 |
-| v0.21 | 2026-08-05 | **61B 重味有效质量谱定替代（§七 任务池兑现）**：重味有效质量 = 谱框架 pole 质量——m_c_eff = 1.492 GeV（单圈 pole-MS，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS，C₂ = 13.44，α_s(m_b) = 0.224），圈阶选择由收敛性决定（charm 单圈、bottom 两圈）；联合谱定 α_s 求解 Cornell：4 态平均偏差 3.39% → 3.64%（charmonium 改进 6.8→6.4%、6.3→6.0%；bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持。`paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.13（§8 问题 4）+ paper40 v0.12（推论 5.11，§8.1 结论更新、§8.2 开放问题 5 闭合 ✅，摘要更新）；§七 61B 重味行三参数全谱定、经验锚点清零。 |
-| v0.22 | 2026-08-05 | **61B Regge 截距动力学起源（§七 任务池兑现）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%；D=8 给 0.375 偏差 19%，支持超弦分支）；基态 |M₀| = 2√πΛ = 0.744 GeV（ρ 同量级，偏差 4.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）。`paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.15（§5.13）+ paper40 v0.13（推论 5.12，§8.1 结论更新、§8.2 开放问题 4 闭合 ✅，摘要更新）；§七 61B 弦张力行 Regge 截距闭合，弦张力方向全部开放项闭合。 |
+| v0.8 | 2026-08-04 | **61A N_{R⁴} 精确闭式（§七 任务池兑现）**：谱势 R⁴ 修正 $V = V_0(1-e^{-b\varphi})^2(1+\delta_2 e^{-2b\varphi})$ 的慢滚 e 折叠修正由量级估计升级为精确闭式 $N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}}-x_{\text{end}}) + \frac{x_{\text{cmb}}^2-x_{\text{end}}^2}{2}\right]$（$\delta_2 = c_3/c_1^2$，数值 $-0.0157$）。`scripts/paperX_nR4_closed_form.py` 闭式 vs 数值积分相对偏差 0.044% ✅，注册 `run_all_tests.py`。笔记 `spectral_inflation_dynamics.md` §2.2 + paper39 定理 3.2/开放问题 2 更新（移出开放项）。 |
+| v0.9 | 2026-08-05 | **61C 深化（§七 任务池两项兑现）**：① 谱静默"单向转化"严格定理——定理 5.1 严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$），δ_silence ≥ 1 数值边界（幂律拟合 0.992、大间隙局部指数 → 1）；② β 完整圈图求和测度论严格化——定理 5.2（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 R = 49.4）。`scripts/paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.2（§9.1/9.2）+ paper41 v0.2（定理 5.1/5.2，§6/§8 更新）；§七 61C 两行 🔶。 |
+| v0.10 | 2026-08-05 | **61C 非微扰衔接（§七 任务池兑现）**：定理 5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈跨味 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管。`scripts/paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_renormalization_chain.md` v0.3（§9.3）+ paper41 v0.3（定理 5.3，§6/§8 更新）；§七 61C 第三行 🔶。 |
+| v0.11 | 2026-08-05 | **61B κ 机制 Dyson-Schwinger 确认（§七 任务池兑现）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程，禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），解析临界强度 d_crit = 4/(3C_F) = 1.0 GeV²。`scripts/paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.7（§5.9）+ paper40 v0.6（定理 5.7，§5.5/§8 更新）；§七 61B κ 行机制确认。 |
+| v0.12 | 2026-08-05 | **61D Kerr 蒸发动力学推广（§七 任务池兑现）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温 + 极端冷却（蒸发终止）；蒸发动力学（超辐射优先辐射角动量）t_evap 延长 1.93×、a* 单调递减（Kerr → Schwarzschild）。`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_black_hole_evolution_formalization.md`（§1.2）+ paper42 v0.2（定理 5.10，§8 开放项 3 更新）；§七 61D Kerr 行 🔶。 |
+| v0.13 | 2026-08-05 | **61A P1-3↔P1-4 动态连续极限衔接（§七 任务池兑现）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽。`scripts/paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.4（§4.4）+ paper39 v0.4（推论 5.2，§9 开放问题 4 更新）；§七 61A 衔接行 🔶。 |
+| v0.14 | 2026-08-05 | **61A γ_φ 谱第一性确定（§七 任务池兑现）**：谱量闭式 γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]，κ/F_π 同构）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（标准区间 + T_RH > T_sph 热历史 + η_B 同量级串联）。`scripts/paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.5（§3.4）+ paper39 v0.5（推论 4.1，§9 开放问题 1 更新）；§七 61A γ_φ 行 🔶。 |
+| v0.15 | 2026-08-05 | **61A D3.1(3) 严格微分几何度规诱导（§七 任务池兑现）**：FLRW 度规严格验证——6 空间 Killing（3 平移齐次 + 3 旋转各向同性，残差 0）、Weyl 张量 = 0（共形平坦）、R = 6(Ḣ+2H²) 数值=解析、谱流闭式 a = (λ₀/λ)^{1/2} 满足 Einstein-Friedmann。`scripts/paperX_d31_metric_induction.py` 8/8 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.6（§4.5）+ paper39 v0.6（推论 5.3，§9 开放问题 3 闭合 ✅）；§七 61A D3.1(3) 行 ✅。 |
+| v0.16 | 2026-08-05 | **61B Regge 斜率谱起源（§七 任务池兑现）**：转动弦 J = α'E² + 弦张力谱定 ⟹ 谱起源闭式 α' = 1/(8πΛ²) = 0.902 GeV⁻²（实验 0.93，偏差 3.0%）；强子 Regge 轨迹验证——ρ 介子 J=1..5 线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988、截距 α₀=0.463≈0.5。`scripts/paperX_regge_origin.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.8（§5.10）+ paper40 v0.7（推论 5.7，§5.7/§8 更新）；§七 61B 弦张力行 Regge 起源闭合。 |
+| v0.17 | 2026-08-05 | **61B 轻味 α_s 独立谱定（§七 任务池兑现）**：谱定 M_ud = 404.4 + σ = 0.1764 + Cornell 波函数 + N-Δ 目标 293.8 MeV 反解 α_s* = 0.3380（61B 经验 0.39，偏差 13.3%）——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 量级预言升级精确谱定预言。`scripts/paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.9（§5.11）+ paper40 v0.8（推论 5.8，§8.1/§8.2 开放问题 1 闭合 ✅）；§七 61B Δ_hf 行轻味 α_s 谱定闭合。 |
+| v0.18 | 2026-08-05 | **61B κ A/B 耦合精确化（§七 任务池兑现）**：完整 A(p²)/B(p²) 耦合 DS 求解（朗道规范彩虹近似，球对称角结构 V(μ)）——波函数重整化 A(p_max) = 0.95 < 1，匹配 κΛ = 401 MeV 所需红外强度 d 从 2.0（A≈1 近似）降至 1.485 GeV²（文献 Maris-Tandy 差距 2.1×→1.6×），A→1 极限复核 M(0) = 353.2 MeV 偏差 0.1% 自洽。`scripts/paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.10（§5.12）+ paper40 v0.9（推论 5.9，§8.1 结论更新、§8.2 开放问题 3 闭合 ✅，剩余 UV 尾 + 完整顶点登记后续）；§七 61B κ 行诚实边界更新。 |
+| v0.19 | 2026-08-05 | **61B 跨味衔接（§七 任务池兑现）**：微扰 Λ^(3) = 121.8 ↔ 有效值 210.3 MeV 三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0)(d_AB) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% 不可用 vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）。`scripts/paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.11（§4.5）+ paper40 v0.10（推论 4.4，§8.1 结论更新、§8.2 开放问题 2 闭合 ✅）；§七 61B 跨味阈值行 ✅。 |
+| v0.20 | 2026-08-05 | **61B 重味 Cornell 有效参数谱定替代（§七 任务池兑现）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致/PDG 0.40）——经验值获谱框架来源（反解有效标度 μ_eff = 1.37 GeV ≈ m_c）；4 态平均偏差 3.66% → 3.39%（J/ψ 7.5%→6.8%、ψ' 6.7%→6.3%、Υ' 0.3%→0.1%）、径向间距 3.8%/6.3% 保持。`scripts/paperX_qcd_heavy_flavor_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.12（§8 问题 4）+ paper40 v0.11（推论 5.10，§8.1 结论更新、§8.2 新增开放问题 5）；§七 61B 重味行 α_s 谱定。 |
+| v0.21 | 2026-08-05 | **61B 重味有效质量谱定替代（§七 任务池兑现）**：重味有效质量 = 谱框架 pole 质量——m_c_eff = 1.492 GeV（单圈 pole-MS，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS，C₂ = 13.44，α_s(m_b) = 0.224），圈阶选择由收敛性决定（charm 单圈、bottom 两圈）；联合谱定 α_s 求解 Cornell：4 态平均偏差 3.39% → 3.64%（charmonium 改进 6.8→6.4%、6.3→6.0%；bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持。`scripts/paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.13（§8 问题 4）+ paper40 v0.12（推论 5.11，§8.1 结论更新、§8.2 开放问题 5 闭合 ✅，摘要更新）；§七 61B 重味行三参数全谱定、经验锚点清零。 |
+| v0.22 | 2026-08-05 | **61B Regge 截距动力学起源（§七 任务池兑现）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%；D=8 给 0.375 偏差 19%，支持超弦分支）；基态 |M₀| = 2√πΛ = 0.744 GeV（ρ 同量级，偏差 4.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）。`scripts/paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.15（§5.13）+ paper40 v0.13（推论 5.12，§8.1 结论更新、§8.2 开放问题 4 闭合 ✅，摘要更新）；§七 61B 弦张力行 Regge 截距闭合，弦张力方向全部开放项闭合。 |
+| v0.23 | 2026-08-05 | **账目状态同步（纯文档）**：§四 基础层表 T3 行更新——fc-poly-le-spec-int 已于 phase60 v1.34 降为可证定理；fc-integral（fc = ∫）为唯一剩余 D 类桥接（钉住 sup 语义、健全，完整降为定理需测度论完整层 sup 交换，见 phase60 v1.16 决策）；P0-2 已升格"纳入"（Phase 61C，2026-08-04），本行由前置阻塞降为后续深化（优先级 P0→P1） |

@@ -40,14 +40,14 @@ Phase 45 (推进中)    Phase 46             Phase 47             Phase 48-49
 
 ### E2: 中微子质量绝对标度 ✅ 已完成
 
-**产出**：`notes/03_neutrino/spectral_neutrino_absolute.md` + `paperX_neutrino_absolute.py`
+**产出**：`notes/03_neutrino/spectral_neutrino_absolute.md` + `scripts/paperX_neutrino_absolute.py`
 
 **成果**：
 - α_ν = 0.636（三层根因树推导，Δm² 自洽 1.4%）
 - m_ν₃ = 49.5 meV, Σm_ν = 59.7 meV（Planck 兼容）
 - NO |m_ee| ∈ [0.62, 4.62] meV, IO |m_ee| ∈ [19.3, 48.2] meV
 - M_R₃(m_top_GUT) = 2.91×10¹⁴ GeV（典型 See-saw）
-- 集成 paperX_all_predictions.py（26 项预测）和 paper17
+- 集成 scripts/paperX_all_predictions.py（26 项预测）和 paper17
 
 ### E3: α_d/α_l 指数公式精细修正 ✅ 已完成
 

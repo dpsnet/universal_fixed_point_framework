@@ -2,24 +2,24 @@
 
 **背景**：本文档在谱动力学基础框架（§1–§10）之上，推进四个深层理论方向。
 
-> **Phase 30 更新**：有限维→无限维桥梁已建立（`paper30_infinite_dimensional_bridge.py`，6/6 通过 ✅）。
+> **Phase 30 更新**：有限维→无限维桥梁已建立（`scripts/paper30_infinite_dimensional_bridge.py`，6/6 通过 ✅）。
 > 收敛性验证覆盖谱截断（L2 ∼ n⁻²）、D 函子（→Koopman 算子）、熵（连续极限一致）、同伦（A∞ 可近似）、谱流（→PDE）。
 > 
-> **Phase 33–35**：C* 代数框架（`paper33_cstar_framework.py` 5/5）、无界算子与 Hille-Yosida 半群（`paper34_unbounded_operator.py` 6/6）、A∞/∞-范畴无限维推广（`paper35_infinity_category_infinite_dim.py` 6/6）已全部完成。
+> **Phase 33–35**：C* 代数框架（`scripts/paper33_cstar_framework.py` 5/5）、无界算子与 Hille-Yosida 半群（`scripts/paper34_unbounded_operator.py` 6/6）、A∞/∞-范畴无限维推广（`scripts/paper35_infinity_category_infinite_dim.py` 6/6）已全部完成。
 > 
-> **Phase 36**（2026-07-17）：谱间隙 $\Delta\lambda_{\min}$ 第一性原理推导完成（`paper36_spectral_gap_derivation.py` 7/7）。$\Delta\lambda_{\min} = 0.122 M_{\text{Pl}}$ 由 $A_{\text{GR}}$ 的 $SU(2)$ 表示（$\sqrt{k(k+1)}$ 谱）与 $\text{Cl}(1,7)$ 代数结构（$k_{\max}=8$）唯一确定。所有半涌现量（$a_{\min}$, $c_1$, $\rho_c$, $r$, $n_s$）全部去外部输入化。
+> **Phase 36**（2026-07-17）：谱间隙 $\Delta\lambda_{\min}$ 第一性原理推导完成（`scripts/paper36_spectral_gap_derivation.py` 7/7）。$\Delta\lambda_{\min} = 0.122 M_{\text{Pl}}$ 由 $A_{\text{GR}}$ 的 $SU(2)$ 表示（$\sqrt{k(k+1)}$ 谱）与 $\text{Cl}(1,7)$ 代数结构（$k_{\max}=8$）唯一确定。所有半涌现量（$a_{\min}$, $c_1$, $\rho_c$, $r$, $n_s$）全部去外部输入化。
 > 
-> **Phase 37**（2026-07-17）：IFS 重叠因子 $\rho$ 第一性原理推导完成（`paper37_ifs_overlap_derivation.py` 7/7）。Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）$\Rightarrow$ Moran 方程 $\sum c_i^d = 1$ 确定收缩因子 $c_i$。三代质量谱从 Cl(1,7) 代数结构自然涌现，所有半涌现量（$\rho$, $\Delta\lambda_{\min}$, 耦合初值）全部去外部输入化。
+> **Phase 37**（2026-07-17）：IFS 重叠因子 $\rho$ 第一性原理推导完成（`scripts/paper37_ifs_overlap_derivation.py` 7/7）。Cl(1,7) 旋量表示中代标记算子 $\{T_1, T_2, T_3\}$ 相互正交（$\cos\theta = 0$）$\Rightarrow$ $\rho = 0$（分离 IFS）$\Rightarrow$ Moran 方程 $\sum c_i^d = 1$ 确定收缩因子 $c_i$。三代质量谱从 Cl(1,7) 代数结构自然涌现，所有半涌现量（$\rho$, $\Delta\lambda_{\min}$, 耦合初值）全部去外部输入化。
 > 
-> **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱表述 + 暴胀能标 V₀ 精确化（`paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
+> **Phase 38**（2026-07-17）：Seesaw→Rec_diss 谱表述 + 暴胀能标 V₀ 精确化（`scripts/paper38_neutrino_inflation.py` 7/7）。正常层级从非 Hermite 谱涌现，M_R ∼ $10^{14}$ GeV 自洽。暴胀 R² 系数 c₁=25.19 框架内一致。
 > 
-> **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`phase39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
+> **Phase 39**（2026-07-17）：θ_QCD 谱对应完成（`scripts/phase39_theta_qcd.py` 6/6）。三机制（谱流守恒、UV 截断、Det 压制）共同满足 $|\theta_{\text{QCD}}| < 10^{-10}$。
 > 
-> **Phase 40**（2026-07-17）：重子不对称 η_B 谱动力学推导（`phase40_baryogenesis.py` 6/6）。η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）。
+> **Phase 40**（2026-07-17）：重子不对称 η_B 谱动力学推导（`scripts/phase40_baryogenesis.py` 6/6）。η_B = 5.58×10⁻¹⁰（观测 6.10×10⁻¹⁰，比值 0.91x ✅）。
 > 
-> **Phase 41**（2026-07-17）：宇宙学常数 Λ 多重静默机制（`phase41_cosmological_constant.py` 6/6）。四力层叠静默：126 量级压制覆盖所需 120，理论根因见 `notes/99_archive/paper41_theoretical_root.md`。**半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**。
+> **Phase 41**（2026-07-17）：宇宙学常数 Λ 多重静默机制（`scripts/phase41_cosmological_constant.py` 6/6）。四力层叠静默：126 量级压制覆盖所需 120，理论根因见 `notes/99_archive/paper41_theoretical_root.md`。**半涌现量（Δλ_min, ρ, 耦合初值, Λ）全部去外部输入化**。
 > 
-> **Phase 42**（2026-07-17）：暴胀 R⁴ 修正（`phase42_inflation_R4.py` 7/7）。BCH 至 R⁴ 阶：c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定，与 c₁, n_s, r 三路自洽。
+> **Phase 42**（2026-07-17）：暴胀 R⁴ 修正（`scripts/phase42_inflation_R4.py` 7/7）。BCH 至 R⁴ 阶：c₂=8.92, c₃=4.72。V₀ 由 Planck 归一化确定，与 c₁, n_s, r 三路自洽。
 > 
 > 详见 `roadmap/README.md`。
 
@@ -46,7 +46,7 @@ $$\alpha_t: f(R)_t \to g(R)_t, \quad \forall t \in \mathbb{R}$$
 
 **证明**。$D_2$ 在 2-态射上的作用由 $D_2(\alpha)_t = D(\alpha_t)$ 定义。自然性由 $D$ 的函子性保证。□
 
-**形式化验证**（`paper28_higher_category_formalization.py`，D28.4，8/8 通过 ✅）：
+**形式化验证**（`scripts/paper28_higher_category_formalization.py`，D28.4，8/8 通过 ✅）：
 - 2-范畴框架（对象/1-态射/2-态射 + 垂直/水平复合）
 - $D_2$ 满足全部 4 条 2-函子公理：
   1. $D(g \circ f) = D(g) \circ D(f)$ ✅
@@ -79,9 +79,9 @@ $$S_{\text{basis}}(t_f) \ge S_{\text{basis}}(t_0), \quad \frac{d}{dt}S_{\text{ba
 
 当且仅当 $[A_{F,i}, \rho_t] = 0$ 对所有 $i$ 成立时取等（平衡态）。
 
-**证明**。在固定基下，$A_t$ 的投影 $\tilde{A}_t = U^\dagger A_t U$ 非对角元携带信息熵。谱流 $A_t = e^{tG}A_0 e^{-tG}$ 将信息从对角元转移到非对角元，在固定基观测下表现为熵增。数值验证（`paper22_spectral_entropy.py`）：随机 6×6 Hermite 矩阵在谱流下 200 步演化，$\Delta S = 0.054 > 0$，晚期 $dS/dt \to 0$。□
+**证明**。在固定基下，$A_t$ 的投影 $\tilde{A}_t = U^\dagger A_t U$ 非对角元携带信息熵。谱流 $A_t = e^{tG}A_0 e^{-tG}$ 将信息从对角元转移到非对角元，在固定基观测下表现为熵增。数值验证（`scripts/paper22_spectral_entropy.py`）：随机 6×6 Hermite 矩阵在谱流下 200 步演化，$\Delta S = 0.054 > 0$，晚期 $dS/dt \to 0$。□
 
-**连续极限严格证明**（`paper29_entropy_production_proof.py`，P29.4，7/7 验证通过 ✅）：
+**连续极限严格证明**（`scripts/paper29_entropy_production_proof.py`，P29.4，7/7 验证通过 ✅）：
 
 **定理 P29.4**（连续极限熵产生率）。在谱流方程 $dA_t/dt = [G, A_t]$ 作用下，对任意固定观测基 $U$，固定基熵 $S_{\text{basis}}(t) = -\sum_i p_i(t) \log p_i(t)$ 满足：
 
@@ -189,7 +189,7 @@ $$a(t) \to a_{\min} > 0, \quad t \to 0$$
 
 ### D.4 数值验证 (Phase 28)
 
-`paper28_quantum_bounce.py` 完成 7 项交叉验证（全部通过 ✅）：
+`scripts/paper28_quantum_bounce.py` 完成 7 项交叉验证（全部通过 ✅）：
 1. **谱截断**：$||A_{\text{GR}}||_{\text{HS}}$ 对 $k_{\max}$ 有限 ✅
 2. **LQG 面积谱拟合**：R² = 0.999984 ✅
 3. **量子反弹**：有效 Friedmann 方程 $H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ 给出 $\rho_c = 0.335 M_{\text{Pl}}^4$ ✅
@@ -200,7 +200,7 @@ $$a(t) \to a_{\min} > 0, \quad t \to 0$$
 
 ### D.5 原初功率谱完整推导 (D28.1)
 
-`paper28_inflation_powerspectra.py` 从谱流方程线性化导出完整功率谱（6/6 通过 ✅）：
+`scripts/paper28_inflation_powerspectra.py` 从谱流方程线性化导出完整功率谱（6/6 通过 ✅）：
 
 | 量 | 谱动力学预言 | 观测约束 | 状态 |
 |---|------------|---------|------|
@@ -213,7 +213,7 @@ $$a(t) \to a_{\min} > 0, \quad t \to 0$$
 
 ### D.6 反弹引力波谱 (D28.3)
 
-`paper28_bounce_gravitational_waves.py` 从有效 Friedmann 方程计算张量扰动演化（6/6 通过 ✅）：
+`scripts/paper28_bounce_gravitational_waves.py` 从有效 Friedmann 方程计算张量扰动演化（6/6 通过 ✅）：
 
 反弹转移函数：
 $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\sigma^2)}\right], \quad x = k/k_b$$
@@ -232,7 +232,7 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 |------|---------|-----------|--------|
 | 高阶范畴 | A.1–A.3 | ✅ Python 原型 8/8 + **Lean 4 4 模块** ✅（P29.1） | — |
 | 非平衡热力学 | B.1–B.4 | ✅ `paper22` + `paper29` 7/7 | — |
-| 黑洞视界 | C.1–C.3 + D28.2 | ✅ `paper28_dfunctor_entropy_unify.py` 6/6 | — |
+| 黑洞视界 | C.1–C.3 + D28.2 | ✅ `scripts/paper28_dfunctor_entropy_unify.py` 6/6 | — |
 | 奇点消解 | D.1–D.6 | ✅ `paper28_quantum_bounce` 7/7 + `paper28_inflation` 6/6 + `paper28_bounce` 6/6 | — |
 
 > **Phase 27–29 全部完成**。四个深化方向均已达到 Python 数值验证 + Lean 4 形式化路径完备状态。
@@ -294,7 +294,7 @@ $$\frac{d}{d\log k} \lambda_k = \beta(\lambda_k)$$
 
 ### F.6 数值验证脚本
 
-`paper22_fluid_dynamics.py`（待实现）：
+`scripts/paper22_fluid_dynamics.py`（待实现）：
 - N-S 谱流方程数值求解
 - Kolmogorov $-5/3$ 谱重现
 - 湍流 RG $\beta$ 函数计算

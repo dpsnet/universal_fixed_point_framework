@@ -111,7 +111,7 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 
 | 文件 | 角色 |
 |:--|:--|
-| `paperX_ifs_sigma_rec_spectral.py` | 本笔记的数值验证附件（S1-S5，7/7，已注册 `run_all_tests.py`） |
+| `scripts/paperX_ifs_sigma_rec_spectral.py` | 本笔记的数值验证附件（S1-S5，7/7，已注册 `run_all_tests.py`） |
 | `formal_proof/.../IFSRecCoding.lean` | IFS → Σ-Rec 符号编码（v0.2+，含谱 coproduct 分解三定理，编译通过，零 `sorry`） |
 | `formal_proof/.../WeierstrassGap.lean` | Weierstrass 图 IFS 谱隙结构支撑（v1.0：收缩/维数/迹公式，编译通过，零 `sorry`） |
 | `formal_proof/.../NoiseCategory.lean` | Σ-Rec/Σ-Spec Category、ι_Σ、Σ-D 正式函子（✅ 编译错误已修复 + Functor 律闭合，2026-08-05） |

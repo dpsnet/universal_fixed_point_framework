@@ -201,7 +201,7 @@ Rec_set（集合语义：连续映射）
 **验证**：至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出
 
 **进度（2026-08-05）**：
-- ✅ **子任务 1（数值层）**：`paperX_ifs_sigma_rec_spectral.py`（7/7 检查，已注册 `run_all_tests.py`）+ 笔记 `spectral_phase3_fractal_expansion.md`（v0.2）——Σ-Rec coproduct 谱保持（S3）、Cantor 谱有效秩随维数单调（S4）、**Weierstrass 谱隙从 IFS 参数导出（S5，验证目标命中，gap: 0.0142→0.0043 vs d: 0.904→1.904）**；
+- ✅ **子任务 1（数值层）**：`scripts/paperX_ifs_sigma_rec_spectral.py`（7/7 检查，已注册 `run_all_tests.py`）+ 笔记 `spectral_phase3_fractal_expansion.md`（v0.2）——Σ-Rec coproduct 谱保持（S3）、Cantor 谱有效秩随维数单调（S4）、**Weierstrass 谱隙从 IFS 参数导出（S5，验证目标命中，gap: 0.0142→0.0043 vs d: 0.904→1.904）**；
 - ✅ **子任务 2（Lean 符号编码，v0.2）**：`IFSRecCoding.lean`（`lake build` 通过，零 `sorry`）——`symbolicRecObj`（符号动力学 RecObj，左移补 0 步进）、`symbolicSlice`（局部线性片）、**`symbolicSigmaRecObj`（正式 `SigmaRecObj` coproduct 编码，替代 v0.1 自包含 `CoproductObj`）**、**`symbolicSliceInjection`（片注入态射 `SigmaRecHom`）**、`symbolicStep_fixedPoint_iff`（唯一不动点 = 全零，完整等价：谱障碍 tr = #Fix = 1 的符号层实例）；
 - ✅ **子任务 3（Σ-D Functor 律闭合 + 谱 coproduct 分解 Lean 侧）**：`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）**完全闭合**——内层态射搬运 `dfunctorMapTransport'` 对分量变量直接 `cases`（四分支定义性归约，无显式 cast），组装**正式函子** `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）；`IFSRecCoding.lean` 谱 coproduct 分解三定理（对象层 `symbolicSigmaRecObj_spectral_components`、态射层 `symbolicSliceInjection_spectral_component0`、迹公式 `symbolicTransferMatrix_trace_eq_one` = tr(T_f) = #Fix = 1）；
 - ✅ **子任务 4（Weierstrass 谱隙结构支撑）**：`WeierstrassGap.lean` v1.0（零 `sorry`）——Weierstrass 图 IFS 收缩率 1/b 机器证明、Moran 维数 d_H = log 2 / log b、图维数 d(a) = 2 + ln a / ln b 且**随 a 严格递增**、谱障碍公式实例（2 片 tr(T_f) = #Fix = 1）；**核谱隙 gap = 1 − λ₂/λ₁ 随 d 单调递减的特征值级证明仍依赖有限维谱积分层（开放项登记，见笔记 §5 诚实边界）**；
@@ -218,7 +218,7 @@ Rec_set（集合语义：连续映射）
 2. 将 S0 静默的物理诠释统一为"线性层边界现象"
 3. 更新 `Silence.lean` / `SilenceHierarchy.lean` 的形式化以反映分层诠释
 
-**验证**：静默的范畴论刻画与已有数值结果（`paperX_silence_dimensions.py` 等）一致
+**验证**：静默的范畴论刻画与已有数值结果（`scripts/paperX_silence_dimensions.py` 等）一致
 
 **依赖**：无限维谱定理（mathlib 社区前沿）
 

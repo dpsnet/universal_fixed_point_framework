@@ -218,6 +218,6 @@ $$E_{\text{cm}}^{(0)} \xrightarrow{2\to N_1} E_{\text{cm}}^{(1)} \xrightarrow{2\
 - `src/dynamic_spectrum/planck_scattering_2to2.py` — B1 实现
 - `src/dynamic_spectrum/planck_scattering_2ton.py` — B2 实现
 - `src/dynamic_spectrum/spectral_numerics.py` — C1 基础框架
-- `paperX_graviton_propagator.py` — 谱引力子传播子数值验证
+- `scripts/paperX_graviton_propagator.py` — 谱引力子传播子数值验证
 - `notes/00_foundations/spectral_feynman_rules.md` — 谱 Feynman 规则
 - `notes/00_foundations/spectral_path_integral.md` — 谱路径积分

@@ -7,7 +7,7 @@
 | 50A | IFS 有限谱三元组构造 | ✅ 完成 | `notes/10_gauge_RG/spectral_finite_IFS_triple.md` |
 | 50B | α_base = d_H/2 证明 | ✅ 完成 | `notes/10_gauge_RG/spectral_dimension_alpha.md` |
 | 50C | KO-维数手征修正 δ_u, δ_d | ✅ 完成 | `notes/10_gauge_RG/spectral_KO_dimension_gauge_correction.md` |
-| 50D | 完整链数值验证 | ✅ 完成 | `paperX_alpha_first_principles.py` |
+| 50D | 完整链数值验证 | ✅ 完成 | `scripts/paperX_alpha_first_principles.py` |
 | 50E | Yukawa 权重精细结构 | 🟡 开放问题 | 扇区依赖 IFS 表示结构 ($\times$2.34, $\S$3a.4) |
 
 ## 核心成果
@@ -98,7 +98,7 @@ Step 4: 数值验证
 
 **产出**：
 - `notes/10_gauge_RG/spectral_dimension_alpha.md` — 谱维数 → α 的严格推导
-- 数值验证脚本 `paperX_alpha_spectral_dimension.py`
+- 数值验证脚本 `scripts/paperX_alpha_spectral_dimension.py`
 
 **验证标准**：
 - α_l = d_H/2 的推导误差 < 1%
@@ -147,7 +147,7 @@ Step 4: 数值验证
 4. 更新 `spectral_root_cause_analysis.md` 第 3 层
 
 **产出**：
-- `paperX_alpha_first_principles.py` — 第一性 α 计算脚本
+- `scripts/paperX_alpha_first_principles.py` — 第一性 α 计算脚本
 - `spectral_root_cause_analysis.md` 更新（闭合 α 缺口）
 
 **验证标准**：
@@ -188,6 +188,6 @@ Phase 50A (2-3周)     Phase 50B (1-2周)     Phase 50C (3-4周)     Phase 50D (
 
 - `notes/01_qcd_higgs/spectral_alpha_exponent.md` — γ_m 路径的现有推导（已弃用，仅作参考）
 - `notes/10_gauge_RG/spectral_alpha_silence.md` — 当前探索记录（含已闭合路径和发现）
-- `paperX_alpha_exponent_v2.py` — γ_m 积分数值脚本
+- `scripts/paperX_alpha_exponent_v2.py` — γ_m 积分数值脚本
 - Paper XI (`paper11_spectral_QFT.md`) — 谱 QFT 形式化基础
 - Paper I §6 — Clifford 值谱与纤维丛理论

@@ -31,7 +31,8 @@ C2 = 13.44                             # 两圈 pole-MS 系数
 A_MC = 0.413                           # 谱定 α_s(m_c)（两圈跨味，推论 5.10）
 A_MB = 0.224                           # 谱定 α_s(m_b)
 M_C_EMP, M_B_EMP = 1.5, 4.8            # Cornell 经验有效质量
-PNG = "paperX_qcd_heavy_mass_conv.png"
+PNG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                   'figs', 'paperX_qcd_heavy_mass_conv.png')
 
 def m_c_1loop(a):
     return M_C_MS * (1.0 + (4.0 / 3.0) * (a / math.pi))

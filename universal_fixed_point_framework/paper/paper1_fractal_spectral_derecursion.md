@@ -282,7 +282,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.9 C* 代数推广
 
-将 $\mathbf{Rec}/\mathbf{Sp}$ 从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到一般 C* 代数（`paper33_cstar_framework.py`，5/5 验证通过）。
+将 $\mathbf{Rec}/\mathbf{Sp}$ 从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到一般 C* 代数（`scripts/paper33_cstar_framework.py`，5/5 验证通过）。
 
 **定义 2.9.1**（$\mathbf{Rec}_{C*}$）。对象为 $(A, \Phi)$，其中 $A$ 是 C* 代数，$\Phi: A \to A$ 是完全正映射（completely positive map）。态射为 *-同态 $\pi: A_1 \to A_2$ 满足 $\pi \circ \Phi_1 = \Phi_2 \circ \pi$。
 
@@ -298,7 +298,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.10 无界自伴算子与连续谱理论
 
-谱动力学中的 $A_t$ 常为无界自伴算子（如 $A_{\text{GR}}$ 谱含 $[0,\infty)$）。以量子谐振子 $H = -d^2/dx^2 + x^2$ 为原型建立框架（`paper34_unbounded_operator.py`，6/6 验证通过）。
+谱动力学中的 $A_t$ 常为无界自伴算子（如 $A_{\text{GR}}$ 谱含 $[0,\infty)$）。以量子谐振子 $H = -d^2/dx^2 + x^2$ 为原型建立框架（`scripts/paper34_unbounded_operator.py`，6/6 验证通过）。
 
 **定义 2.10.1**（无界自伴算子）。$A$ 是 Hilbert 空间 $\mathcal{H}$ 上的无界自伴算子，若：
 (1) 定义域 $D(A) \subset \mathcal{H}$ 稠密；
@@ -313,7 +313,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.11 A∞/∞-范畴结构
 
-谱流方程 $dA_t/dt = [G, A_t]$ 生成自然的 L∞ 代数结构，将 $\mathbf{Sp}_\infty$ 诠释为 Banach 流形上的 ∞-范畴（`paper35_infinity_category_infinite_dim.py`，6/6 验证通过）。
+谱流方程 $dA_t/dt = [G, A_t]$ 生成自然的 L∞ 代数结构，将 $\mathbf{Sp}_\infty$ 诠释为 Banach 流形上的 ∞-范畴（`scripts/paper35_infinity_category_infinite_dim.py`，6/6 验证通过）。
 
 **定义 2.11.1**（谱流 L∞ 代数）。$m_n = \text{ad}_G^n$ 满足 Jacobi 恒等式：
 - $m_1(A) = [G, A]$（谱流方程）
@@ -1448,7 +1448,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **19. 实验可证伪预言的误差预算**：L4 质量、$8\pi G_N$ 精度、Kerr ringdown 误差等已给出初步数值，但系统误差传播与贝叶斯模型比较仍待完善。
 
-**20. 高阶 ∞-范畴完整形式化**（**骨架已实现并通过 Lean 4 编译**）：六个 Lean 4 模块已完成并全部通过 `lake build` 编译——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式）、`InfinityCategory.lean`（Spec_∞ 切空间、Killing 向量场、统一谱流方程）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释）。核心定理的证明以 `sorry` 占位，待后续严格化；Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
+**20. 高阶 ∞-范畴完整形式化**（**骨架已实现并通过 Lean 4 编译**）：六个 Lean 4 模块已完成并全部通过 `lake build` 编译——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式）、`InfinityCategory.lean`（Spec_∞ 切空间、Killing 向量场、统一谱流方程）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释）。核心定理的证明以 `sorry` 占位，待后续严格化；Python 原型（`scripts/paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
 
 **21. 完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正**：$N=4$ SYM 当前实现停留在 $O(g^6)$ dressing phase + 多模 Lüscher wrapping 原型，未达完整 BES/TBA 数值解，也未包含有限 $N_c$ 修正。目标是将 $O(g^6)$ 截断替换为完整 BES/TBA 数值解，并引入 $1/N_c^2$ 展开的首阶修正。
 

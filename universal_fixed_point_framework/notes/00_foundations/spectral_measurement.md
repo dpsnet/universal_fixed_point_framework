@@ -110,10 +110,10 @@ $$\tau_{\text{collapse}}(\varepsilon) = \frac{1}{\kappa} \ln\left(\frac{\|A_0 - 
 
 ### 2.4 数值验证
 
-以下数值扫描使用 `paperX_collapse_time.py` 严格验证上述结论。
+以下数值扫描使用 `scripts/paperX_collapse_time.py` 严格验证上述结论。
 
 ```python
-# 核心逻辑（见 paperX_collapse_time.py 完整实现）
+# 核心逻辑（见 scripts/paperX_collapse_time.py 完整实现）
 def collapse_time(dim, kappa, eps=1e-6):
     # 初始随机纯态 → 密度矩阵 A0
     # 解析解: A_ij(t) = A_ij(0) · exp(-(κ + i·ΔE_ij)·t)
@@ -212,7 +212,7 @@ Wigner 朋友类佯谬在谱框架中自然消解——两个观察者对应两�
 
 | 方向 | 可推进性 | 现有基础 |
 |------|---------|---------|
-| 谱坍缩时间数值验证 | ✅ 已完成 | `paperX_collapse_time.py` 严格推导 |
+| 谱坍缩时间数值验证 | ✅ 已完成 | `scripts/paperX_collapse_time.py` 严格推导 |
 | 量子-经典边界谱判据 | ✅ 已完成 | 定量阈值 $R_{\text{qc}} \gtrsim 5$ |
 | Wigner 朋友函子模型 | 🟡 需范畴形式化 | Paper I §3 伴随函子 |
 | 量子纠缠的谱表述 | ✅ 直截 | 轨道函子乘积结构 |

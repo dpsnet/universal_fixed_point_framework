@@ -25,10 +25,10 @@ D. 奇点谱消解
 | P22.3 黑洞视界谱动力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §C | ✅ |
 | P22.4 奇点谱消解 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §D | ✅ |
 | P22.5 2-态射的谱流显式构造 | — | 🔲 |
-| P22.6 谱熵产生率数值验证 | `paper22_spectral_entropy.py`（ΔS=0.054>0，固定基熵增验证热力学箭头） | ✅ |
-| P22.7 视界谱数值模拟 (Kerr) | `paper22_horizon_spectrum.py`（T_H、S_BH匹配 0.00%、信息持守） | ✅ |
+| P22.6 谱熵产生率数值验证 | `scripts/paper22_spectral_entropy.py`（ΔS=0.054>0，固定基熵增验证热力学箭头） | ✅ |
+| P22.7 视界谱数值模拟 (Kerr) | `scripts/paper22_horizon_spectrum.py`（T_H、S_BH匹配 0.00%、信息持守） | ✅ |
 | P22.8 量子反弹宇宙数值模型 | — | 🔲 |
-| P22.9 谱流体动力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §F + `paper22_fluid_dynamics.py`（K41谱、N-S谱流方程、跨领域类比） | ✅ |
+| P22.9 谱流体动力学 | `notes/04_lorentz_gravity/spectral_dynamics_deepening.md` §F + `scripts/paper22_fluid_dynamics.py`（K41谱、N-S谱流方程、跨领域类比） | ✅ |
 
 ---
 

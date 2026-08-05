@@ -136,7 +136,7 @@ $$M_{\text{Pl}} \xrightarrow{\text{谱间隙}} g_i(M_{\text{Pl}}) \xrightarrow{\
 
 $\boldsymbol{v}$ 的零输入预测是最后一个未攻克的 SM 参数。
 
-**关键发现**（`paperX_higgs_vev_prediction.py`）：
+**关键发现**（`scripts/paperX_higgs_vev_prediction.py`）：
 
 从静默层级公式 $v = m_t \cdot c_1^{\alpha_v - \alpha_t}$，代入 $m_t = 172.69\ \text{GeV}$，$c_1 = S_3 S_4 = 0.00331$，$\alpha_t = 1.945$，反推 Higgs 指数：
 

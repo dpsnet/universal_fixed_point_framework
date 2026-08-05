@@ -1,9 +1,12 @@
 """GPU 结果重分析（使用修复后的 slope 拟合）"""
 import sys, os, numpy as np, json
+from pathlib import Path
 torch_lib = r'C:\Users\qinxi\AppData\Local\Programs\Python\Python313\Lib\site-packages\torch\lib'
 os.environ['PATH'] = torch_lib + ';' + os.environ.get('PATH', '')
-sys.path.insert(0, '.')
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from paperX_dns_turbulence import EnergySpectrumAnalyzer
+
+DNS_OUT = Path(__file__).resolve().parents[2] / 'dns_output'
 
 RUNS = [
     ("gpu_N128_E005_amp5", dict(N=128, nu=0.01, force_kf=1.0, force_amp=5.0, target_energy=0.05)),
@@ -12,7 +15,7 @@ RUNS = [
 ]
 
 for tag, cfg in RUNS:
-    data = np.load(f'dns_output/{tag}.npz')
+    data = np.load(DNS_OUT / f'{tag}.npz')
     k = data['k']
     Ek = data['Ek_avg']
     E_hist = data['energy_history']

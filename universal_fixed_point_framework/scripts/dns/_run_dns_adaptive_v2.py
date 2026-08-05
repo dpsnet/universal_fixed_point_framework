@@ -13,7 +13,7 @@ v2 策略:
   3. 长期 run 在最佳参数上 (T=80)
   4. 重启恢复使用上次的 cfg, 而非初始 cfg
 """
-import sys; sys.path.insert(0, '.')
+import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
 import json
 import numpy as np
@@ -21,7 +21,7 @@ from pathlib import Path
 from dataclasses import asdict
 from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrumAnalyzer
 
-OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR = Path(__file__).resolve().parents[2] / 'dns_output'
 OUTPUT_DIR.mkdir(exist_ok=True)
 SUMMARY_FILE = OUTPUT_DIR / 'adaptive_summary_v2.json'
 STATE_FILE = OUTPUT_DIR / 'adaptive_state_v2.json'

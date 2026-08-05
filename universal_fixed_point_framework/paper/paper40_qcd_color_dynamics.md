@@ -2,7 +2,7 @@
 
 **版本**：v0.1（2026-08-03）
 **系列定位**：Phase 61 物理理论补缺计划 P0-1（`roadmap/phase61_physics_advancement.md`）
-**状态**：自包含论文（定义/定理/证明完整；数值验证见 `paperX_qcd_spectrum.py`；形式化见 Lean `ColorDynamics.lean` 与 Agda `ColorDynamics.agda`）
+**状态**：自包含论文（定义/定理/证明完整；数值验证见 `scripts/paperX_qcd_spectrum.py`；形式化见 Lean `ColorDynamics.lean` 与 Agda `ColorDynamics.agda`）
 **术语**：谱记号（谱传播子/顶点、谱间隙、谱跑动耦合）均在本篇自包含定义；系列论文交叉引用（Paper XI/XVI/XXV）仅作背景与既有结果出处。本文所有使用的谱量取值（$\Delta\lambda_{\min}$、$Z_1$–$Z_3$、$\langle\bar{q}q\rangle$、$F_\pi$、$m_q$）均在正文内联给出。
 
 **摘要**：本文完成 Phase 61 P0-1 色规范完整动力学建模——色谱丛与色荷守恒（定理 2.1）、胶子顶点谱封闭（定理 3.1）、$\Lambda_{\mathrm{QCD}}$ 谱生成与禁闭谱判据（定理 4.1/4.2）、强子谱第一性推导（定理 5.1–5.4）。经 61B 系列精确化：组分 dressing $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.909$ 获 DS 机制确认并完整 A/B 耦合精确化（红外强度 d 2.0→1.485 GeV²）；有效标度 $\Lambda = 210$ MeV 获跨味衔接三层证据（微扰 122 MeV ↔ 有效值）；轻味 $\alpha_s^* = 0.3380$ 使 N-Δ 分裂精确匹配 PDG（偏差 0.00%）；**Regge 截距 $\alpha_0 = 1/2$ 由转动弦零点能（Casimir）谱定**（ζ 正则化 → 正常序常数 a_NS = (D−2)/16 → 超弦临界维数 D = 10；对实验拟合 0.463 偏差 8.0% 统计不显著，有效维数反解 D_eff = 16α₀+2 = 9.41 介于谱框架 8 维与超弦临界 10 之间、偏向超弦分支，推论 5.12 + 偏差分析）；**重味 Cornell 三参数全部谱定**——有效耦合 $\alpha_s(m_c) = 0.413$（替代经验 0.39，经验值获有效标度 $\mu_{\mathrm{eff}} = 1.37$ GeV $\approx m_c$ 来源，推论 5.10）、有效质量 $m_{c,\mathrm{eff}} = 1.492$ GeV/$m_{b,\mathrm{eff}} = 4.861$ GeV（pole 质量谱定，推论 5.11），4 态平均偏差 3.66% → 3.39% → 3.64%（锚点清零的合理代价）：
@@ -109,7 +109,7 @@ $$\Lambda_{\text{QCD}}^{(5)} = M_Z\,\exp\!\left(-\frac{2\pi}{b_0^{(5)}\,\alpha_s
 
 该值落在强子标度带（50–400 MeV）内；PDG $\Lambda_{\overline{\mathrm{MS}}}^{(5)} = 213$ MeV 为 5-loop 值（单圈低估为已知效应，数值脚本 §3 C9）。
 
-**推论 4.3**（$\Lambda_{\mathrm{QCD}}$ 跨味阈值）。$b_0$ 的 $N_f$ 依赖分段处理（decoupling，单圈匹配常数 = 1，$\alpha_s$ 在阈值处连续）：$b_0(N_f) = 11 - 2N_f/3$，在夸克阈值 $m_t/m_b/m_c/m_s$ 处切换 $N_f$，$\frac{1}{\alpha_s(\mu_{i+1})} = \frac{1}{\alpha_s(\mu_i)} + \frac{b_0^{(i)}}{2\pi}\ln\frac{\mu_{i+1}}{\mu_i}$。跨味单圈给出 $\Lambda^{(5)} = 87.3$ MeV（PDG 锚）映射到 $\Lambda^{(3)} = 141.8$ MeV，**比值 $\Lambda^{(3)}/\Lambda^{(5)} = 1.625$ 与 PDG $1.558$ 偏差 4.2%**——$N_f$ 分段一致性与标准 QCD 相符，单圈绝对值低估归因于圈阶效应而非 $N_f$ 处理（数值脚本 §3 跨味检查，`paperX_qcd_flavor_thresholds.py` 6/6）。
+**推论 4.3**（$\Lambda_{\mathrm{QCD}}$ 跨味阈值）。$b_0$ 的 $N_f$ 依赖分段处理（decoupling，单圈匹配常数 = 1，$\alpha_s$ 在阈值处连续）：$b_0(N_f) = 11 - 2N_f/3$，在夸克阈值 $m_t/m_b/m_c/m_s$ 处切换 $N_f$，$\frac{1}{\alpha_s(\mu_{i+1})} = \frac{1}{\alpha_s(\mu_i)} + \frac{b_0^{(i)}}{2\pi}\ln\frac{\mu_{i+1}}{\mu_i}$。跨味单圈给出 $\Lambda^{(5)} = 87.3$ MeV（PDG 锚）映射到 $\Lambda^{(3)} = 141.8$ MeV，**比值 $\Lambda^{(3)}/\Lambda^{(5)} = 1.625$ 与 PDG $1.558$ 偏差 4.2%**——$N_f$ 分段一致性与标准 QCD 相符，单圈绝对值低估归因于圈阶效应而非 $N_f$ 处理（数值脚本 §3 跨味检查，`scripts/paperX_qcd_flavor_thresholds.py` 6/6）。
 
 *诚实边界*：跨味微扰单圈 $\Lambda^{(3)} = 122$ MeV（谱值）不能直接用于 κ 谱定（定理 5.3 使用谱框架有效值 $\Lambda = 210$ MeV，$F_\pi$ 定标含非微扰/高圈修正；$210/122 = 1.72$ 落在 PDG 单圈→5-loop 修正因子 2.44 范围内，量级自洽）——跨味与有效值的精确衔接见推论 4.4（~~登记为开放项~~ **✅ 已闭合，2026-08-05**）。
 
@@ -121,7 +121,7 @@ $$\Lambda_{\text{QCD}}^{(5)} = M_Z\,\exp\!\left(-\frac{2\pi}{b_0^{(5)}\,\alpha_s
 
 *证明要点*。① 单圈跨味（推论 4.3 数值）+ 两圈跨味 RK4 积分给出漂移带端点；$F_\pi$ 谱公式 $\Lambda_{\mathrm{eff}} = F_\pi/(\sqrt{N_c}\cdot\frac{\Delta\lambda_3}{4\pi\Delta\lambda_{\min}}C_{\mathrm{QCD}}) = 210.3$ MeV（定理 5.3 配套，与 210 一致）——pole 圈阶漂移非物理，$\Lambda_{\mathrm{eff}}$ 为圈阶无关有效标度。② $\kappa\Lambda_{\mathrm{eff}} = 1.909\times210.3 = 401.4$ MeV 与完整 A/B 耦合 DS 的 $M(0) = 401.0$ MeV 一致（推论 5.9 数值）。③ 代入定理 5.3 的 $m_\rho = 2M_{ud}$ 闭式分别以 $\Lambda_{\mathrm{pert}}$ 与 $\Lambda_{\mathrm{eff}}$ 求值。□
 
-**数值**（`paperX_qcd_flavor_bridge.py`，6/6 检查通过，已注册 `run_all_tests.py`）：单圈跨味 $\Lambda^{(3)} = 121.8$ MeV、两圈 pole $577$ MeV、$\Lambda_{\mathrm{eff}} = 210.3$ MeV（带内）、$\kappa\Lambda_{\mathrm{eff}} = 401.4 \approx M(0) = 401.0$（偏差 0.1%）、$m_\rho(\Lambda_{\mathrm{pert}}) = 472$ MeV（39.1%）vs $m_\rho(\Lambda_{\mathrm{eff}}) = 810$ MeV（4.4%）。
+**数值**（`scripts/paperX_qcd_flavor_bridge.py`，6/6 检查通过，已注册 `run_all_tests.py`）：单圈跨味 $\Lambda^{(3)} = 121.8$ MeV、两圈 pole $577$ MeV、$\Lambda_{\mathrm{eff}} = 210.3$ MeV（带内）、$\kappa\Lambda_{\mathrm{eff}} = 401.4 \approx M(0) = 401.0$（偏差 0.1%）、$m_\rho(\Lambda_{\mathrm{pert}}) = 472$ MeV（39.1%）vs $m_\rho(\Lambda_{\mathrm{eff}}) = 810$ MeV（4.4%）。
 
 *诚实边界*：衔接比 $\xi = \Lambda_{\mathrm{eff}}/\Lambda_{\mathrm{pert}} = 1.7264 \approx \sqrt{N_c} = 1.7321$（偏差 0.3%）为数值近似登记——$\xi \approx \sqrt{N_c}$ 的机制性存疑（$F_\pi$ 定标与跨味微扰为独立输入，色因子衔接仅为近似），主衔接证据为证据 B（DS 桥）+ 证据 A（带包含）；$\xi$ 谱量近似登记为精确化方向。
 
@@ -189,7 +189,7 @@ $$\kappa \;=\; \frac{N_c}{\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}
 
 *证明要点*。禁闭区内（$\mu < \Lambda_{\mathrm{QCD}}$）夸克自能的红外饱和值 $\Sigma(0) = \Delta_{\mathrm{dress}}$ 由谱间隙闭合的"临界耦合"确定：$(\Delta\lambda_3/\Delta\lambda_{\min})^2$ 编码 $M_{\mathrm{Pl}} \to \Lambda_{\mathrm{QCD}}$ 的耦合强度积分，$\pi$ 因子来自谱积分（与 $F_\pi$ 谱公式 $F_\pi = \sqrt{N_c}\,\Lambda\,\frac{\Delta\lambda_3}{4\pi\Delta\lambda_{\min}}C_{\mathrm{QCD}}$ 同构，$C_{\mathrm{QCD}} = 2.25$ 复核 $F_\pi = 92.1$ MeV）。□
 
-**数值**（`paperX_qcd_kappa_dressing.py`，6/6 检查，注册 `run_all_tests.py`）：$\kappa = 1.909$，$\Delta_{\mathrm{dress}} = \kappa\Lambda_{\mathrm{QCD}} = 401$ MeV（$\Lambda_{\mathrm{QCD}} = 210$ MeV 谱框架三味值），$M_{ud} = m_{ud} + \Delta_{\mathrm{dress}} = 404.4$ MeV（$m_{ud} = 3.45$ MeV），**$m_\rho = 2M_{ud} = 808.7$ MeV（PDG 775.3，偏差 4.3%）**——$m_\rho$ 从定标锚点变为预言。$\Delta_{\mathrm{dress}}/F_\pi = 4.35$ 与 $M_{ud}/F_\pi = 4.39$ 自洽。
+**数值**（`scripts/paperX_qcd_kappa_dressing.py`，6/6 检查，注册 `run_all_tests.py`）：$\kappa = 1.909$，$\Delta_{\mathrm{dress}} = \kappa\Lambda_{\mathrm{QCD}} = 401$ MeV（$\Lambda_{\mathrm{QCD}} = 210$ MeV 谱框架三味值），$M_{ud} = m_{ud} + \Delta_{\mathrm{dress}} = 404.4$ MeV（$m_{ud} = 3.45$ MeV），**$m_\rho = 2M_{ud} = 808.7$ MeV（PDG 775.3，偏差 4.3%）**——$m_\rho$ 从定标锚点变为预言。$\Delta_{\mathrm{dress}}/F_\pi = 4.35$ 与 $M_{ud}/F_\pi = 4.39$ 自洽。
 
 **推论 5.3**（κ 谱定预言）。以谱定 $M_{ud} = 404.4$ MeV 重定标，$m_N = 3M_{ud} - \tfrac{3}{4}\Delta_{\text{hf}}$、$m_\Delta = 3M_{ud} + \tfrac{3}{4}\Delta_{\text{hf}}$（$\Delta_{\text{hf}} = 195.8$ MeV 沿用 §5.3 定标值）给出 $m_N = 1066$ MeV（偏差 13.7%）、$m_\Delta = 1340$ MeV（偏差 8.8%）——$N/\Delta$ 对 $M_{ud}$ 敏感，完整预言需 $\Delta_{\text{hf}}$ 独立谱定（开放问题）。
 
@@ -199,7 +199,7 @@ $$\kappa \;=\; \frac{N_c}{\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}
 
 **定理 5.4**（重夸克偶素 Cornell 谱势）。含重夸克的束缚态由非相对论 Cornell 势描述：$V(r) = -\tfrac{4\alpha_s}{3r} + \kappa_{\mathrm{lin}} r$（Coulomb 项来自单胶子交换，线性项来自弦禁闭），代入径向 Schrödinger 方程 $[-\tfrac{1}{2\mu}\tfrac{d^2}{dr^2} + V(r)]\psi = E\psi$（$\mu$ 为约化质量）解出基态与径向激发质量。
 
-**数值**（`paperX_qcd_heavy_flavor.py`，6/6 检查，注册 `run_all_tests.py`）：
+**数值**（`scripts/paperX_qcd_heavy_flavor.py`，6/6 检查，注册 `run_all_tests.py`）：
 
 | 强子 | 谱推导 | 数值 | PDG | 偏差 |
 |:--|:--|:--:|:--:|:--:|
@@ -245,7 +245,7 @@ $$\mu_{\mathrm{eff}} = 1.27 + \frac{0.39 - 0.413}{0.384 - 0.413}\,(1.4 - 1.27)\ 
 
 **④ 综合**：4 态平均偏差 3.66% $\to$ 3.39%，重味 Cornell 消除经验耦合锚点。□
 
-**数值**（`paperX_qcd_heavy_flavor_spectral.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
+**数值**（`scripts/paperX_qcd_heavy_flavor_spectral.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
 
 *诚实边界*：谱定替代采用**统一标度 $m_c$**（保留 Cornell 单参数结构，最保守替代）；$\alpha_s(m_c) = 0.413$ 与 61C 独立实现完全一致（同一两圈跨味 RGE，RK4 数值）；$m_c/m_b = 1.5/4.8$ GeV 有效质量仍为输入（裸 MS-bar $1.27/4.18$ GeV 的 dressing 精确化登记为后续）——~~登记为开放问题 5~~ **✅ 已谱定（推论 5.11，2026-08-05）**。
 
@@ -267,7 +267,7 @@ $$m_{c,\mathrm{eff}} = m_{c,\mathrm{MS}}\!\left(1 + \frac{4\alpha_s(m_c)}{3\pi}\
 
 *证明要点*。① pole-MS 圈阶修正：$m_{\mathrm{pole}} = m_{\mathrm{MS}}(1 + \tfrac{4\alpha_s}{3\pi} + C_2(\alpha_s/\pi)^2 + \cdots)$（重夸克微扰修正，$C_2$ 与 flavor 无关）。② 谱定 $\alpha_s(m_c)/\alpha_s(m_b)$ 代入（推论 5.10 数值）。③ 谱定质量代入定理 5.4 的 Cornell 求解——charmonium 因 $m_c$ 略降（1.5→1.492）偏差进一步下降（6.8%→6.4%）；bottomonium 因 $m_b$ 谱定值（4.861 vs 经验 4.8）整体上移，偏差从 0.3%/0.1% 升至 0.9%/1.2%（m_b 锚点消除的代价，仍 < 2%）。□
 
-**数值**（`paperX_qcd_heavy_mass_spectral.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
+**数值**（`scripts/paperX_qcd_heavy_mass_spectral.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
 
 *诚实边界*：m_c 单圈、m_b 两圈的圈阶选择由 pole-MS 微扰收敛性决定（charm 大 α_s 两圈不收敛）——honest 登记为截断选择；4 态平均偏差 3.39% → 3.64% 为质量锚点消除的合理代价；重味 dressing（$m_{\mathrm{eff}} - m_{\mathrm{MS}}$）charm 222 MeV（55% κΛ）、bottom 681 MeV（170% κΛ），其标度依赖（随夸克质量增大而增强）与 pole 圈阶修正的 μ 依赖关联，完整动力学起源登记为后续。**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**。
 
@@ -283,7 +283,7 @@ $$a_{\text{NS}}(D) = \frac{D-2}{16},\qquad \alpha_0 = a_{\text{NS}}(10) = \frac{
 
 *证明要点*。① ζ 正则化解析延拓零点能求和（$\zeta(-1) = -1/12$、$\zeta(-1,1/2) = 1/24$）。② Virasoro 正常序常数 $a$（世界sheet 零点能）：玻色 $a_B = (D-2)/24$（D=26→1）、超弦 NS $a_{NS} = (D-2)/16$（D=10→1/2）、R 扇区 $a_R = 0$。③ 中心荷消去（量子自洽）固定临界维数 D=10。④ 截距基态解释 $\alpha_0 = -\alpha'M_0^2$。⑤ 谱定值代入 $J = \alpha'm^2 + \alpha_0$ 预测强子 Regge 轨迹。□
 
-**数值**（`paperX_regge_intercept.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
+**数值**（`scripts/paperX_regge_intercept.py`，6/6 检查通过，已注册 `run_all_tests.py`）。
 
 *诚实边界*：$D = 10$ 为超弦临界维数（量子自洽第一性，非外部输入），与谱框架 Cl(1,7) 的 8 维代数结构精确衔接登记为后续；零点能 ζ 正则化为解析延拓；$\alpha_0 = 1/2$ 为 NS 扇区 GSO 投影后值。**Regge 截距从拟合值变谱定预言，§8.2 开放问题 4 闭合**。
 
@@ -304,7 +304,7 @@ $$\sigma \;=\; 4\Lambda_{\mathrm{QCD}}^2,\qquad \sqrt{\sigma} \;=\; 2\Lambda_{\m
 
 *证明要点*。线性禁闭势的能量密度由禁闭标度确定——弦张力是"禁闭尺度的平方"（$\sigma = 4\Lambda^2$），组分 dressing 是"禁闭尺度的线性量"（$\Delta_{\mathrm{dress}} = \kappa\Lambda \approx 2\Lambda = \sqrt{\sigma}$），构成 2 倍标度统一。□
 
-**数值**（`paperX_qcd_string_tension.py`，6/6 检查，注册 `run_all_tests.py`）：$\sigma = 4\Lambda^2 = 0.1764$ GeV²（61B Cornell 拟合 $0.18$，偏差 **2.0%**）、$\alpha' = 1/(2\pi\sigma) = 0.902$ GeV⁻²（实验 $0.93$，偏差 **3.0%**）、$\Delta_{\mathrm{dress}} = 401$ MeV $\approx \sqrt{\sigma} = 420$ MeV（偏差 4.5%）、$\kappa = 1.909 \approx \sqrt{\sigma}/\Lambda = 2$。
+**数值**（`scripts/paperX_qcd_string_tension.py`，6/6 检查，注册 `run_all_tests.py`）：$\sigma = 4\Lambda^2 = 0.1764$ GeV²（61B Cornell 拟合 $0.18$，偏差 **2.0%**）、$\alpha' = 1/(2\pi\sigma) = 0.902$ GeV⁻²（实验 $0.93$，偏差 **3.0%**）、$\Delta_{\mathrm{dress}} = 401$ MeV $\approx \sqrt{\sigma} = 420$ MeV（偏差 4.5%）、$\kappa = 1.909 \approx \sqrt{\sigma}/\Lambda = 2$。
 
 **推论 5.4**（闭环自洽）。σ 谱定（0.1764）替代 61B 拟合（0.18）后，重味 Cornell 径向间距仅变化 $0.67\%$（间距标度 $\propto (\sigma/\mu)^{1/3}$）——定理 5.4 的重味结果在谱定弦张力下保持成立。
 
@@ -318,7 +318,7 @@ $$\Delta_{\text{hf}} \;=\; \frac{8}{9}\,\alpha_s\,\frac{|\psi(0)|^2}{M_{ud}^2},\
 
 *证明要点*。色磁矩相互作用（定理 5.2 证明中的 $H_{\mathrm{hf}}$）的强度由波函数原点密度决定——$|\psi(0)|^2$ 对 $u$-$d$ 系统 1S 态由禁闭势数值确定，替代实验定标。线性禁闭项 $\sigma r$ 使波函数较纯 Coulomb 更紧致，把 $|\psi(0)|^2$ 从 $0.0003$ 放大 330 倍到 $0.1095$ GeV³——**线性禁闭的紧致效应是 $\Delta_{\text{hf}}$ 达到百 MeV 量级的机制**（纯 Coulomb 仅 0.75 MeV）。□
 
-**数值**（`paperX_qcd_hyperfine.py`，6/6 检查，注册 `run_all_tests.py`；$\alpha_s = 0.39$、$\sigma = 0.18$ GeV²、$M_{ud} = 387.6$ MeV）：
+**数值**（`scripts/paperX_qcd_hyperfine.py`，6/6 检查，注册 `run_all_tests.py`；$\alpha_s = 0.39$、$\sigma = 0.18$ GeV²、$M_{ud} = 387.6$ MeV）：
 
 | 量 | 谱推导 | 数值 | 对标 | 偏差 |
 |:--|:--|:--:|:--:|:--:|
@@ -351,7 +351,7 @@ $$\alpha' \;=\; \frac{1}{2\pi\sigma} \;=\; \frac{1}{8\pi\Lambda_{\mathrm{QCD}}^2
 
 *证明要点*。（1）转动开弦角动量-能量关系 $J = \alpha'E^2$（弦理论标准结果，端点光速转动）。（2）弦张力 $\sigma = 4\Lambda^2$（定理 5.5）。（3）强子 Regge 轨迹验证：ρ 介子序列（J = 1..5）$m^2$ vs $J$ 线性（r = 0.9988），核心 3 点（ρ/a₂/ρ₃ 高精度）拟合 $J = 0.888\,m^2 + 0.463$——拟合斜率 vs 谱定偏差 1.5%；N 重子序列（J = 1/2, 5/2, 9/2）线性（r = 0.9997）、斜率 $\alpha'_N = 0.988$ 同量级。□
 
-**数值**（`paperX_regge_origin.py`，6/6 检查，注册 `run_all_tests.py`）：谱闭式 $\alpha' = 1/(8\pi\Lambda^2) = 0.902$ GeV⁻² vs 实验 0.93（偏差 3.0%）；Regge 截距 $\alpha_0 = 0.463 \approx 0.5$（转动弦 + 截距结构）；重子斜率 0.988（与介子同量级）。
+**数值**（`scripts/paperX_regge_origin.py`，6/6 检查，注册 `run_all_tests.py`）：谱闭式 $\alpha' = 1/(8\pi\Lambda^2) = 0.902$ GeV⁻² vs 实验 0.93（偏差 3.0%）；Regge 截距 $\alpha_0 = 0.463 \approx 0.5$（转动弦 + 截距结构）；重子斜率 0.988（与介子同量级）。
 
 **关键结论**：弦张力微观机制闭合——**Regge 斜率从拟合/实验量变纯谱量预言**（$\alpha' = 1/(8\pi\Lambda_{\mathrm{QCD}}^2)$），强子 Regge 轨迹（介子 + 重子）验证线性与斜率量级。
 
@@ -363,7 +363,7 @@ $$\alpha_s\,|\psi(0)|^2(\alpha_s) = \frac{9}{8}\cdot\frac{2}{3}\,(m_\Delta - m_N
 
 *证明要点*。（1）Δ_hf 公式（定理 5.2）与 $m_\Delta - m_N = \tfrac{3}{2}\Delta_{\mathrm{hf}}$ 联立。（2）$|\psi(0)|^2(\alpha_s)$ 由谱定势数值解（brentq 求根，目标 α_s·|ψ(0)|² = 0.03604 GeV³）。（3）反解 $\alpha_s^* = 0.3380$（61B 经验 0.39 偏差 13.3%）。□
 
-**数值**（`paperX_qcd_alpha_s_light.py`，6/6 检查，注册 `run_all_tests.py`）：α_s* = 0.3380 代入 N-Δ 分裂 = 293.8 MeV（PDG，偏差 0.00%）；m_N/m_Δ = 1066/1360 MeV（PDG 938.3/1232.0）；衔接 α_s* = 0.338 < α_s(m_c) = 0.413（红外冻结方向，轻味区微扰 pole 之下有效耦合冻结）。
+**数值**（`scripts/paperX_qcd_alpha_s_light.py`，6/6 检查，注册 `run_all_tests.py`）：α_s* = 0.3380 代入 N-Δ 分裂 = 293.8 MeV（PDG，偏差 0.00%）；m_N/m_Δ = 1066/1360 MeV（PDG 938.3/1232.0）；衔接 α_s* = 0.338 < α_s(m_c) = 0.413（红外冻结方向，轻味区微扰 pole 之下有效耦合冻结）。
 
 **关键结论**：轻味 α_s 独立谱定（α_s* = 0.338）——**Δ_hf 从量级预言升级为精确谱定预言**（N-Δ 分裂精确匹配 PDG），替代 61B 经验取值 0.39。
 
@@ -373,7 +373,7 @@ $$\alpha_s\,|\psi(0)|^2(\alpha_s) = \frac{9}{8}\cdot\frac{2}{3}\,(m_\Delta - m_N
 
 *证明要点*。（1）A/B 耦合自能分母 $k^2A(k^2)^2 + B(k^2)^2$ 中 $A < 1$ 增强自能 ⟹ 相同 M(0) 所需 d 降低。（2）A→1 极限（关闭 A 方程）复核回到 A≈1 结果 M(0) = 353.2 MeV（偏差 0.1%，自洽）。（3）brentq 求 d 使 M(0) = κΛ = 401 MeV：$d_{AB} = 1.485$ GeV²。□
 
-**数值**（`paperX_qcd_ds_ab.py`，6/6 检查，注册 `run_all_tests.py`）：A(0) = 1.0000、A(p_max) = 0.95 < 1（波函数重整化）；$d_{AB} = 1.485$ GeV² < $d_{A\approx1} = 2.0$（降低 ~25%）；文献差距 2.1× → 1.6×；M(0)(d_AB) = 401 MeV（精确化匹配）。
+**数值**（`scripts/paperX_qcd_ds_ab.py`，6/6 检查，注册 `run_all_tests.py`）：A(0) = 1.0000、A(p_max) = 0.95 < 1（波函数重整化）；$d_{AB} = 1.485$ GeV² < $d_{A\approx1} = 2.0$（降低 ~25%）；文献差距 2.1× → 1.6×；M(0)(d_AB) = 401 MeV（精确化匹配）。
 
 **关键结论**：κ DS 机制的 A≈1 简化精确化——A/B 耦合增强自能、降低匹配 κΛ 所需红外强度，与文献 Maris-Tandy 参数差距缩小至 1.6×（剩余来自 UV 尾与完整顶点修正）。
 
@@ -381,7 +381,7 @@ $$\alpha_s\,|\psi(0)|^2(\alpha_s) = \frac{9}{8}\cdot\frac{2}{3}\,(m_\Delta - m_N
 
 ## 6. 数值验证
 
-数值验证由 `paperX_qcd_spectrum.py` 完成并注册 `run_all_tests.py`（15/15 检查通过）。检查项与判据：
+数值验证由 `scripts/paperX_qcd_spectrum.py` 完成并注册 `run_all_tests.py`（15/15 检查通过）。检查项与判据：
 
 | 检查项（脚本编号） | 判据 |
 |:------|:-----|
@@ -449,11 +449,11 @@ v0.13 完成 61B 弦机制收官：**Regge 截距动力学起源**（推论 5.12
 
 ### 8.2 开放问题
 
-1. **轻味 $\alpha_s$ 独立谱定**：~~Δ_hf 色-Coulomb 谱势量级预言已闭合（定理 5.6，§5.8），精确值对轻味有效耦合 $\alpha_s$ 敏感（$\alpha_s \in [0.35, 0.45]$ 内 $\Delta_{\text{hf}} \in [216, 313]$ MeV）——需谱框架第一性确定轻味 $\alpha_s$ 以完成 $N/\Delta$ 精确预言（推论 5.5）~~ **✅ 闭合（2026-08-05，推论 5.8，§5.9）**：谱定 M_ud + σ + Cornell 波函数 + N-Δ 目标反解 α_s* = 0.3380——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 升级为精确谱定预言（`paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`）。
-2. **跨味与谱框架有效值 $\Lambda$ 的精确衔接**：~~推论 4.3 的跨味微扰 $\Lambda^{(3)} = 122$ MeV 与定理 5.3 使用有效值 $210$ MeV 的圈阶修正衔接（P0-2 支撑）~~ **✅ 闭合（2026-08-05，推论 4.4，§4.2）**：三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）（`paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`）。
-3. **$\kappa$ 谱积分形式的精确化**：~~定理 5.3 的谱积分形式已获 DS 机制确认（定理 5.7，§5.9——禁闭区动力学质量 $M(0) = 353$ MeV ≈ $\Delta_{\mathrm{dress}} = 401$ MeV）；精确数值需完整 $A/B$ 耦合 DS 求解（当前彩虹近似 + A ≈ 1 简化，临界强度相对文献移位约 2 倍）~~ **✅ A/B 耦合已精确化（2026-08-05，推论 5.9，§5.9）**：完整 A(p²)/B(p²) DS 求解——匹配 κΛ 所需 d 从 2.0 降至 1.485 GeV²（文献差距 2.1×→1.6×）、A(p_max) = 0.95 波函数重整化、A→1 极限复核自洽（`paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`）；剩余差距（UV 尾 + 完整顶点）登记后续。
-4. **Regge 截距的动力学起源**：~~弦张力微观机制已闭合（推论 5.7，§5.9——$\alpha' = 1/(8\pi\Lambda_{\mathrm{QCD}}^2)$ 纯谱量闭式，强子 Regge 轨迹验证）；Regge 截距 $\alpha_0 \approx 0.5$ 的精确动力学起源登记为后续~~ **✅ 闭合（2026-08-05，推论 5.12，§5.7）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）（`paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`）；诚实边界：D = 10 与谱框架 Cl(1,7) 8 维结构衔接登记为后续。
-5. **重味有效质量 $m_c/m_b$ 的 dressing 精确化**：~~定理 5.4 使用 dressing 后有效质量 $m_c/m_b = 1.5/4.8$ GeV（裸 MS-bar $1.27/4.18$ GeV）——$\alpha_s$ 已谱定（推论 5.10，§5.6），有效质量的谱框架 dressing 精确化登记为后续~~ **✅ 闭合（2026-08-05，推论 5.11，§5.6）**：重味有效质量 = 谱框架 pole 质量——$m_{c,\mathrm{eff}} = 1.492$ GeV（单圈 pole，$\alpha_s(m_c) = 0.413$）、$m_{b,\mathrm{eff}} = 4.861$ GeV（两圈 pole，$C_2 = 13.44$，$\alpha_s(m_b) = 0.224$），圈阶选择由收敛性决定；联合谱定 α_s 后 4 态平均偏差 3.64%（charmonium 改进 6.4%/6.0%，bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）——**重味 Cornell 三参数全部谱定，经验锚点清零**（`paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`）；重味 dressing 标度依赖（charm 222 MeV、bottom 681 MeV）的完整动力学起源登记为后续。
+1. **轻味 $\alpha_s$ 独立谱定**：~~Δ_hf 色-Coulomb 谱势量级预言已闭合（定理 5.6，§5.8），精确值对轻味有效耦合 $\alpha_s$ 敏感（$\alpha_s \in [0.35, 0.45]$ 内 $\Delta_{\text{hf}} \in [216, 313]$ MeV）——需谱框架第一性确定轻味 $\alpha_s$ 以完成 $N/\Delta$ 精确预言（推论 5.5）~~ **✅ 闭合（2026-08-05，推论 5.8，§5.9）**：谱定 M_ud + σ + Cornell 波函数 + N-Δ 目标反解 α_s* = 0.3380——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 升级为精确谱定预言（`scripts/paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`）。
+2. **跨味与谱框架有效值 $\Lambda$ 的精确衔接**：~~推论 4.3 的跨味微扰 $\Lambda^{(3)} = 122$ MeV 与定理 5.3 使用有效值 $210$ MeV 的圈阶修正衔接（P0-2 支撑）~~ **✅ 闭合（2026-08-05，推论 4.4，§4.2）**：三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）（`scripts/paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`）。
+3. **$\kappa$ 谱积分形式的精确化**：~~定理 5.3 的谱积分形式已获 DS 机制确认（定理 5.7，§5.9——禁闭区动力学质量 $M(0) = 353$ MeV ≈ $\Delta_{\mathrm{dress}} = 401$ MeV）；精确数值需完整 $A/B$ 耦合 DS 求解（当前彩虹近似 + A ≈ 1 简化，临界强度相对文献移位约 2 倍）~~ **✅ A/B 耦合已精确化（2026-08-05，推论 5.9，§5.9）**：完整 A(p²)/B(p²) DS 求解——匹配 κΛ 所需 d 从 2.0 降至 1.485 GeV²（文献差距 2.1×→1.6×）、A(p_max) = 0.95 波函数重整化、A→1 极限复核自洽（`scripts/paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`）；剩余差距（UV 尾 + 完整顶点）登记后续。
+4. **Regge 截距的动力学起源**：~~弦张力微观机制已闭合（推论 5.7，§5.9——$\alpha' = 1/(8\pi\Lambda_{\mathrm{QCD}}^2)$ 纯谱量闭式，强子 Regge 轨迹验证）；Regge 截距 $\alpha_0 \approx 0.5$ 的精确动力学起源登记为后续~~ **✅ 闭合（2026-08-05，推论 5.12，§5.7）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）（`scripts/paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`）；诚实边界：D = 10 与谱框架 Cl(1,7) 8 维结构衔接登记为后续。
+5. **重味有效质量 $m_c/m_b$ 的 dressing 精确化**：~~定理 5.4 使用 dressing 后有效质量 $m_c/m_b = 1.5/4.8$ GeV（裸 MS-bar $1.27/4.18$ GeV）——$\alpha_s$ 已谱定（推论 5.10，§5.6），有效质量的谱框架 dressing 精确化登记为后续~~ **✅ 闭合（2026-08-05，推论 5.11，§5.6）**：重味有效质量 = 谱框架 pole 质量——$m_{c,\mathrm{eff}} = 1.492$ GeV（单圈 pole，$\alpha_s(m_c) = 0.413$）、$m_{b,\mathrm{eff}} = 4.861$ GeV（两圈 pole，$C_2 = 13.44$，$\alpha_s(m_b) = 0.224$），圈阶选择由收敛性决定；联合谱定 α_s 后 4 态平均偏差 3.64%（charmonium 改进 6.4%/6.0%，bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）——**重味 Cornell 三参数全部谱定，经验锚点清零**（`scripts/paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`）；重味 dressing 标度依赖（charm 222 MeV、bottom 681 MeV）的完整动力学起源登记为后续。
 
 ---
 
@@ -498,15 +498,15 @@ v0.13 完成 61B 弦机制收官：**Regge 截距动力学起源**（推论 5.12
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 2.1 色荷守恒、定理 3.1 谱封闭、定理 4.1/4.2 禁闭渐近自由、定理 5.1/5.2 强子谱。 |
 | v0.2 | 2026-08-03 | 自包含修订（正文移除笔记依赖、修正推论 4.1 数值、补充定理 5.2 证明）+ 内联公式统一为标准 `$...$` LaTeX 格式。 |
-| v0.3 | 2026-08-05 | **61B 三项开放项部分闭合提炼**：闭合内容的完整推导在正文专门章节——定理 5.3（κ 谱定闭式 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2$，§5.5，$m_\rho$ 从锚点变预言 808.7 MeV 偏差 4.3%，`paperX_qcd_kappa_dressing.py` 6/6）+ 定理 5.4（重味 Cornell 谱势，§5.6，J/ψ/ψ'/Υ/Υ' 对标 PDG，`paperX_qcd_heavy_flavor.py` 6/6）+ 定理 5.5（弦张力谱定与统一 $\sigma = 4\Lambda^2$、$\kappa \approx \sqrt{\sigma}/\Lambda \approx 2$，§5.7，Cornell 斜率从拟合变预言 0.1764 GeV² 偏差 2.0%，`paperX_qcd_string_tension.py` 6/6）；**§8 结论保持简洁**（简短总结闭合成果并指引正文章节），开放问题列表仅保留未闭合项（含闭合衍生的机制级开放项）；定义 5.2 与诚实边界同步更新。 |
-| v0.4 | 2026-08-05 | **Λ_QCD 跨味阈值（推论 4.3，§4.2）**：N_f 分段 RGE 跑动（decoupling），跨味比值 Λ^(3)/Λ^(5) = 1.625 vs PDG 1.558（偏差 4.2%）——N_f 分段一致性与标准 QCD 相符；`paperX_qcd_flavor_thresholds.py` 6/6 注册 `run_all_tests.py`；§8.2 开放问题 2 更新为"跨味与谱框架有效值 Λ 的精确衔接"（诚实边界）。 |
-| v0.5 | 2026-08-05 | **Δ_hf 色-Coulomb 谱势严格推导（定理 5.6，§5.8）**：Cornell 势 $V = -\tfrac{4\alpha_s}{3r} + \sigma r$ 解轻味 1S 径向 Schrödinger，$|\psi(0)|^2 = 0.1095$ GeV³（放大纯 Coulomb 330 倍，线性禁闭紧致机制），Δ_hf = 252.8 MeV 从定标锚点变**量级预言**，$m_N/m_\Delta$ 偏差 3.7%/9.8%；推论 5.5 双锚点消除全谱定预言；`paperX_qcd_hyperfine.py` 6/6 注册 `run_all_tests.py`；§8.1 结论更新、§8.2 开放问题 1 更新为"轻味 α_s 独立谱定"（诚实边界）。 |
-| v0.6 | 2026-08-05 | **κ 谱积分形式的 DS 机制确认（定理 5.7，§5.9）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程（4D 球对称角权重 √(1−μ²)），禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），临界强度 d_crit = 4/(3C_F) = 1.0 GeV²；`paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；§5.5 诚实边界更新、§8.1 结论更新、§8.2 开放问题 3 更新为"κ 谱积分形式的精确化"（完整 A/B 耦合）。 |
-| v0.7 | 2026-08-05 | **Regge 斜率谱起源（推论 5.7，§5.9）**：转动弦 J = α'E² + 弦张力谱定 ⟹ 谱起源闭式 α' = 1/(8πΛ_QCD²) = 0.902 GeV⁻²（实验 0.93，偏差 3.0%）；强子 Regge 轨迹验证——ρ 介子 J=1..5 线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988 同量级、截距 α₀=0.463≈0.5；`paperX_regge_origin.py` 6/6 注册 `run_all_tests.py`；§5.7 诚实边界更新、§8.1 结论更新、§8.2 开放问题 4 更新为"Regge 截距的动力学起源"。 |
-| v0.8 | 2026-08-05 | **轻味 α_s 独立谱定（推论 5.8，§5.9）**：谱定 M_ud = 404.4（定理 5.3）+ σ = 0.1764（定理 5.5）+ Cornell 波函数 + N-Δ 目标 293.8 MeV 反解 α_s* = 0.3380（61B 经验 0.39，偏差 13.3%）——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 量级预言升级精确谱定预言；`paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`；§8.1 结论更新、§8.2 开放问题 1 闭合（✅）。 |
-| v0.9 | 2026-08-05 | **κ A/B 耦合精确化（推论 5.9，§5.9）**：完整 A(p²)/B(p²) 耦合 DS 求解（朗道规范彩虹近似，球对称角结构 V(μ)）——波函数重整化 A(p_max) = 0.95 < 1，匹配 κΛ = 401 MeV 所需红外强度 d 从 2.0（A≈1 近似）降至 1.485 GeV²（文献 Maris-Tandy 差距 2.1×→1.6×），A→1 极限复核 M(0) = 353.2 MeV 偏差 0.1% 自洽；`paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`；§5.9 诚实边界更新、§8.1 结论更新、§8.2 开放问题 3 闭合（✅，剩余 UV 尾 + 完整顶点登记后续）。 |
-| v0.10 | 2026-08-05 | **跨味衔接：微扰 Λ ↔ 有效值精确衔接（推论 4.4，§4.2）**：三层证据闭环——证据 A（圈阶漂移带 [122, 577] MeV 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0)(d_AB) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% 不可用 vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）；`paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`；推论 4.3 诚实边界更新、§8.1 结论更新、§8.2 开放问题 2 闭合（✅）。 |
-| v0.11 | 2026-08-05 | **重味 Cornell 有效参数谱定替代（推论 5.10，§5.6）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致、PDG 0.40）——经验值获谱框架来源（反解有效标度 μ_eff = 1.37 GeV ≈ m_c）；4 态平均偏差 3.66% → 3.39%（J/ψ 7.5%→6.8%、ψ' 6.7%→6.3%、Υ' 0.3%→0.1%），径向间距 3.8%/6.3% 保持；`paperX_qcd_heavy_flavor_spectral.py` 6/6 注册 `run_all_tests.py`；定理 5.4 诚实边界更新、§8.1 结论更新、§8.2 新增开放问题 5（m_c/m_b dressing 精确化）。 |
-| v0.12 | 2026-08-05 | **重味有效质量谱定替代（推论 5.11，§5.6）**：m_c_eff = 1.492 GeV（单圈 pole-MS 修正，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS 修正，C₂ = 13.44，α_s(m_b) = 0.224）——圈阶选择由收敛性决定（charm 单圈、bottom 两圈）；联合谱定 α_s 求解 Cornell：4 态平均偏差 3.39% → 3.64%（charmonium 改进 6.8→6.4%、6.3→6.0%；bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持；`paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`；**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**；§8.1 结论更新、§8.2 开放问题 5 闭合（✅）。 |
-| v0.13 | 2026-08-05 | **Regge 截距动力学起源（推论 5.12，§5.7）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%；D=8 给 0.375 偏差 19%，支持超弦分支）；基态 |M₀| = 2√πΛ = 0.744 GeV（ρ 同量级，偏差 4.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）；`paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`；**Regge 截距从拟合值变谱定预言**；§8.1 结论更新、§8.2 开放问题 4 闭合（✅，D=10 与 Cl(1,7) 衔接登记后续）。 |
+| v0.3 | 2026-08-05 | **61B 三项开放项部分闭合提炼**：闭合内容的完整推导在正文专门章节——定理 5.3（κ 谱定闭式 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2$，§5.5，$m_\rho$ 从锚点变预言 808.7 MeV 偏差 4.3%，`scripts/paperX_qcd_kappa_dressing.py` 6/6）+ 定理 5.4（重味 Cornell 谱势，§5.6，J/ψ/ψ'/Υ/Υ' 对标 PDG，`scripts/paperX_qcd_heavy_flavor.py` 6/6）+ 定理 5.5（弦张力谱定与统一 $\sigma = 4\Lambda^2$、$\kappa \approx \sqrt{\sigma}/\Lambda \approx 2$，§5.7，Cornell 斜率从拟合变预言 0.1764 GeV² 偏差 2.0%，`scripts/paperX_qcd_string_tension.py` 6/6）；**§8 结论保持简洁**（简短总结闭合成果并指引正文章节），开放问题列表仅保留未闭合项（含闭合衍生的机制级开放项）；定义 5.2 与诚实边界同步更新。 |
+| v0.4 | 2026-08-05 | **Λ_QCD 跨味阈值（推论 4.3，§4.2）**：N_f 分段 RGE 跑动（decoupling），跨味比值 Λ^(3)/Λ^(5) = 1.625 vs PDG 1.558（偏差 4.2%）——N_f 分段一致性与标准 QCD 相符；`scripts/paperX_qcd_flavor_thresholds.py` 6/6 注册 `run_all_tests.py`；§8.2 开放问题 2 更新为"跨味与谱框架有效值 Λ 的精确衔接"（诚实边界）。 |
+| v0.5 | 2026-08-05 | **Δ_hf 色-Coulomb 谱势严格推导（定理 5.6，§5.8）**：Cornell 势 $V = -\tfrac{4\alpha_s}{3r} + \sigma r$ 解轻味 1S 径向 Schrödinger，$|\psi(0)|^2 = 0.1095$ GeV³（放大纯 Coulomb 330 倍，线性禁闭紧致机制），Δ_hf = 252.8 MeV 从定标锚点变**量级预言**，$m_N/m_\Delta$ 偏差 3.7%/9.8%；推论 5.5 双锚点消除全谱定预言；`scripts/paperX_qcd_hyperfine.py` 6/6 注册 `run_all_tests.py`；§8.1 结论更新、§8.2 开放问题 1 更新为"轻味 α_s 独立谱定"（诚实边界）。 |
+| v0.6 | 2026-08-05 | **κ 谱积分形式的 DS 机制确认（定理 5.7，§5.9）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程（4D 球对称角权重 √(1−μ²)），禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），临界强度 d_crit = 4/(3C_F) = 1.0 GeV²；`scripts/paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；§5.5 诚实边界更新、§8.1 结论更新、§8.2 开放问题 3 更新为"κ 谱积分形式的精确化"（完整 A/B 耦合）。 |
+| v0.7 | 2026-08-05 | **Regge 斜率谱起源（推论 5.7，§5.9）**：转动弦 J = α'E² + 弦张力谱定 ⟹ 谱起源闭式 α' = 1/(8πΛ_QCD²) = 0.902 GeV⁻²（实验 0.93，偏差 3.0%）；强子 Regge 轨迹验证——ρ 介子 J=1..5 线性 r=0.9988、核心拟合 α'=0.888 偏差 1.5%、N 重子 α'_N=0.988 同量级、截距 α₀=0.463≈0.5；`scripts/paperX_regge_origin.py` 6/6 注册 `run_all_tests.py`；§5.7 诚实边界更新、§8.1 结论更新、§8.2 开放问题 4 更新为"Regge 截距的动力学起源"。 |
+| v0.8 | 2026-08-05 | **轻味 α_s 独立谱定（推论 5.8，§5.9）**：谱定 M_ud = 404.4（定理 5.3）+ σ = 0.1764（定理 5.5）+ Cornell 波函数 + N-Δ 目标 293.8 MeV 反解 α_s* = 0.3380（61B 经验 0.39，偏差 13.3%）——N-Δ 分裂精确匹配 PDG（偏差 0.00%），Δ_hf 量级预言升级精确谱定预言；`scripts/paperX_qcd_alpha_s_light.py` 6/6 注册 `run_all_tests.py`；§8.1 结论更新、§8.2 开放问题 1 闭合（✅）。 |
+| v0.9 | 2026-08-05 | **κ A/B 耦合精确化（推论 5.9，§5.9）**：完整 A(p²)/B(p²) 耦合 DS 求解（朗道规范彩虹近似，球对称角结构 V(μ)）——波函数重整化 A(p_max) = 0.95 < 1，匹配 κΛ = 401 MeV 所需红外强度 d 从 2.0（A≈1 近似）降至 1.485 GeV²（文献 Maris-Tandy 差距 2.1×→1.6×），A→1 极限复核 M(0) = 353.2 MeV 偏差 0.1% 自洽；`scripts/paperX_qcd_ds_ab.py` 6/6 注册 `run_all_tests.py`；§5.9 诚实边界更新、§8.1 结论更新、§8.2 开放问题 3 闭合（✅，剩余 UV 尾 + 完整顶点登记后续）。 |
+| v0.10 | 2026-08-05 | **跨味衔接：微扰 Λ ↔ 有效值精确衔接（推论 4.4，§4.2）**：三层证据闭环——证据 A（圈阶漂移带 [122, 577] MeV 包含 F_π 定标 Λ_eff = 210.3）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0)(d_AB) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% 不可用 vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）；`scripts/paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`；推论 4.3 诚实边界更新、§8.1 结论更新、§8.2 开放问题 2 闭合（✅）。 |
+| v0.11 | 2026-08-05 | **重味 Cornell 有效参数谱定替代（推论 5.10，§5.6）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致、PDG 0.40）——经验值获谱框架来源（反解有效标度 μ_eff = 1.37 GeV ≈ m_c）；4 态平均偏差 3.66% → 3.39%（J/ψ 7.5%→6.8%、ψ' 6.7%→6.3%、Υ' 0.3%→0.1%），径向间距 3.8%/6.3% 保持；`scripts/paperX_qcd_heavy_flavor_spectral.py` 6/6 注册 `run_all_tests.py`；定理 5.4 诚实边界更新、§8.1 结论更新、§8.2 新增开放问题 5（m_c/m_b dressing 精确化）。 |
+| v0.12 | 2026-08-05 | **重味有效质量谱定替代（推论 5.11，§5.6）**：m_c_eff = 1.492 GeV（单圈 pole-MS 修正，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole-MS 修正，C₂ = 13.44，α_s(m_b) = 0.224）——圈阶选择由收敛性决定（charm 单圈、bottom 两圈）；联合谱定 α_s 求解 Cornell：4 态平均偏差 3.39% → 3.64%（charmonium 改进 6.8→6.4%、6.3→6.0%；bottomonium 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持；`scripts/paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`；**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**；§8.1 结论更新、§8.2 开放问题 5 闭合（✅）。 |
+| v0.13 | 2026-08-05 | **Regge 截距动力学起源（推论 5.12，§5.7）**：转动弦零点能（Casimir）推导——ζ 正则化（ζ(-1) = -1/12、ζ(-1,1/2) = 1/24）→ 正常序常数 a_NS(D) = (D-2)/16 → 超弦临界维数 D = 10 → α₀ = 1/2（实验拟合 0.463，偏差 8.0%；D=8 给 0.375 偏差 19%，支持超弦分支）；基态 |M₀| = 2√πΛ = 0.744 GeV（ρ 同量级，偏差 4.0%）；谱定轨迹 J = α'm² + 1/2 预测 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5%（全谱定无拟合）；`scripts/paperX_regge_intercept.py` 6/6 注册 `run_all_tests.py`；**Regge 截距从拟合值变谱定预言**；§8.1 结论更新、§8.2 开放问题 4 闭合（✅，D=10 与 Cl(1,7) 衔接登记后续）。 |
 | v0.14 | 2026-08-05 | **8.0% 偏差来源分析（推论 5.12 后）+ 附录 A（Regge 轨迹对比表）**：偏差四方面（实验拟合不确定性 ±0.03 内 1–2σ / D_eff = 16×0.463+2 = 9.41 维数反解为动力学来源 / 圈阶投影 / 非弦效应）；附录 A 补充材料——ρ/a₂/ρ₃ 理论-实验对比表（平均偏差 2.56%，最高阶 ρ₃ 1.50% 最准）+ 轨迹参数对比（α' 1.6%、α₀ 8.0%、r = 0.9988）+ 解读；摘要同步更新核心结论。 |

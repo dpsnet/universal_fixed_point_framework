@@ -2,7 +2,7 @@
 DNS 湍流数值验证 v6.1 — 恒定能量注入率 forcing + 提高 ε
   64³, Re_λ=200, force_type='energy_injection', ε_target=1.0, T=20
 """
-import sys; sys.path.insert(0, '.')
+import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
 import numpy as np
 from pathlib import Path
@@ -11,7 +11,7 @@ from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrum
 # ============================================================
 # 配置与日志持久化
 # ============================================================
-OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR = Path(__file__).resolve().parents[2] / 'dns_output'
 OUTPUT_DIR.mkdir(exist_ok=True)
 RUN_TAG = f"v6_1_N64_Re200_einj_1.0_T20_{int(time.time())}"
 LOG_FILE = OUTPUT_DIR / f"{RUN_TAG}.log"

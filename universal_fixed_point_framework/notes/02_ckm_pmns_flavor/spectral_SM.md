@@ -106,7 +106,7 @@ $$\mathcal{L}_{\text{ghost}}^{\text{spec}} = \operatorname{Tr}_{\mathfrak{g}}\le
 
 $$\beta(g_i) = \frac{dg_i}{d\ln\mu} = -\frac{b_i^{(1)}}{16\pi^2} g_i^3 - \frac{b_i^{(2)}}{(16\pi^2)^2} g_i^5 - \frac{b_i^{(3)}}{(16\pi^2)^3} g_i^7 + \cdots,$$
 
-其中 $b_i^{(n)}$ 来自 Phase 31 的三圈计算（`paper31_threeloop_beta.py`）。
+其中 $b_i^{(n)}$ 来自 Phase 31 的三圈计算（`scripts/paper31_threeloop_beta.py`）。
 
 对 SU(3) ($N=3, n_f=6$)：
 - $b_1 = 7$

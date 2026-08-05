@@ -53,10 +53,10 @@ UFPF 框架经过 37 篇论文的系统建设，以下核心问题已闭合：
 
 | # | 问题 | 优先级 | 当前状态 | 推进路径 |
 |:-:|:-----|:------:|:---------|:---------|
-| A1 | $r_{\text{cat}}$ 的标度不变性检验 | **中** | ✅ 已闭合：①"不随距离/时间变化"成立；②"不随能标变化"**不成立**（$r_{\text{cat}} \to c^2 r_{\text{cat}}$）；③ 真正不变量 $\mathbb{E}\|\Delta\|_F^2/\Delta\lambda_{\min}^4 \approx 2.71$；④ $r_{\text{cat}}$ 是全谱（$k_{\max}=8$）结构常数 | `paperX_gravity_rcat_scale.py` 已注册 |
-| A2 | GW 极化计数的结构论证 | **中** | ✅ 已闭合：6（对称 $3\times3$）− 1（Moran 冻结）− 3（通量横向性）= 2（+, ×）。框架特征信号 = 极化数 2（同 GR）+ 层各向异性双折射（异 GR） | `paperX_gw_mode_counting.py` 已注册 |
-| A3 | 等效传播子修正 | **中** | ✅ 已闭合：谱塔模型 $D(k^2) = 1/k^2 + g_{\text{eff}}\sum 1/(k^2+\lambda_n^2)$，谱矩闭式 64，饱和 0.48%，截断 0.0245 $M_{\text{Pl}}$ | `paperX_propagator_spectral.py` 已注册 |
-| A4 | 高阶修正 $O(\Delta\lambda^2)$ 符号与大小 | **高** | ✅ 已闭合：NLO 严格正定 $+0.000806 > 0$（$N=50000$，$\|\text{NLO}\|^2 \geq 0$ 代数事实），途径 B 在期望层面排除 | `paperX_gravity_NLO_sign.py` 已注册 |
+| A1 | $r_{\text{cat}}$ 的标度不变性检验 | **中** | ✅ 已闭合：①"不随距离/时间变化"成立；②"不随能标变化"**不成立**（$r_{\text{cat}} \to c^2 r_{\text{cat}}$）；③ 真正不变量 $\mathbb{E}\|\Delta\|_F^2/\Delta\lambda_{\min}^4 \approx 2.71$；④ $r_{\text{cat}}$ 是全谱（$k_{\max}=8$）结构常数 | `scripts/paperX_gravity_rcat_scale.py` 已注册 |
+| A2 | GW 极化计数的结构论证 | **中** | ✅ 已闭合：6（对称 $3\times3$）− 1（Moran 冻结）− 3（通量横向性）= 2（+, ×）。框架特征信号 = 极化数 2（同 GR）+ 层各向异性双折射（异 GR） | `scripts/paperX_gw_mode_counting.py` 已注册 |
+| A3 | 等效传播子修正 | **中** | ✅ 已闭合：谱塔模型 $D(k^2) = 1/k^2 + g_{\text{eff}}\sum 1/(k^2+\lambda_n^2)$，谱矩闭式 64，饱和 0.48%，截断 0.0245 $M_{\text{Pl}}$ | `scripts/paperX_propagator_spectral.py` 已注册 |
+| A4 | 高阶修正 $O(\Delta\lambda^2)$ 符号与大小 | **高** | ✅ 已闭合：NLO 严格正定 $+0.000806 > 0$（$N=50000$，$\|\text{NLO}\|^2 \geq 0$ 代数事实），途径 B 在期望层面排除 | `scripts/paperX_gravity_NLO_sign.py` 已注册 |
 
 > **状态说明**：A 组 4 项已全部闭合，非开放问题。记录于此以供未来引用。
 
@@ -141,7 +141,7 @@ $$\ln(B+1) = \ln 16 = 4\ln 2, \qquad \ln 15 = 4\ln 2 - \ln\frac{16}{15}$$
 
 | 层级 | 形式 | 强度 | 框架实例 |
 |:---:|:-----|:-----|:---------|
-| ① 预测检验 | 假设 → 可观测预言 → 实验吻合 → 似然辩护 | 解释力累积 | 29 参数验证、Fisher p≈0、paperX_gravity_c_constant.py |
+| ① 预测检验 | 假设 → 可观测预言 → 实验吻合 → 似然辩护 | 解释力累积 | 29 参数验证、Fisher p≈0、scripts/paperX_gravity_c_constant.py |
 | ② 框架自洽 | 假设 → 框架内部结构咬合 | 结构涌现 | 静默机制、Bott 塔、O2 统一、$d_H \approx \ln 15$ |
 | ③ 先验导出 | 范畴层纯结构直接导出谱结构 | 最强 | 🔶 **未完成**（Bott 塔部分达成；Cl(1,7)/SU(2) 谱完整导出为开放方向） |
 
@@ -174,4 +174,4 @@ $$\ln(B+1) = \ln 16 = 4\ln 2, \qquad \ln 15 = 4\ln 2 - \ln\frac{16}{15}$$
 3. Paper XXXV：引力的范畴论起源
 4. Paper XXXI：质量-$\Delta$ 方向性关系
 5. Paper XXXIII："3"的范畴论起源
-6. `paperX_*.py` 系列：各开放问题的数值验证脚本（已注册 `run_all_tests.py`）
+6. `scripts/paperX_*.py` 系列：各开放问题的数值验证脚本（已注册 `run_all_tests.py`）

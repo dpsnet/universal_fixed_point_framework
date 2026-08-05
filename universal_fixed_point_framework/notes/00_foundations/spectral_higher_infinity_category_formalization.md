@@ -8,7 +8,7 @@
 
 ## 1. 问题陈述
 
-当前 ∞-范畴结构已在 Python 原型 `paper35_infinity_category_infinite_dim.py` 中验证（6/6 通过），包含：
+当前 ∞-范畴结构已在 Python 原型 `scripts/paper35_infinity_category_infinite_dim.py` 中验证（6/6 通过），包含：
 - Rec₂/Spec₂ 2-范畴 + D₂ 2-函子（4 条公理）
 - Spec_∞ 切空间结构
 - L∞ 代数结构 $m_n = \text{ad}_G^n$

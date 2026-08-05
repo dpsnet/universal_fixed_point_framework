@@ -119,7 +119,7 @@ Kim 1999（PRL 84, 1, 2000）的延迟选择量子擦除实验是最著名的实
 
 ```python
 # 延迟选择擦除的谱动力学扫描（简化）
-# 完整实现见 paperX_chsh_noise.py 概念类比
+# 完整实现见 scripts/paperX_chsh_noise.py 概念类比
 
 def kim1999_experiment_match():
     """模拟 Kim 1999 实验条件"""
@@ -140,7 +140,7 @@ def kim1999_experiment_match():
         '部分擦除': 0.35,
         '完全擦除': 0.82,
     }
-    # 匹配误差 < 6%（见 paperX_chsh_noise.py 相同的噪声模型）
+    # 匹配误差 < 6%（见 scripts/paperX_chsh_noise.py 相同的噪声模型）
 ```
 
 ### 5.3 结论

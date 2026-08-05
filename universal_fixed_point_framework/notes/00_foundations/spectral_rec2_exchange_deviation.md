@@ -219,7 +219,7 @@ $$D\big((\beta\circ_v\alpha)\circ_h(\beta'\circ_v\alpha')\big) - D\big((\beta\ci
 **前置依赖**：
 - `transferMatrix`/`stepMatrix`/`DFunctor`（`DecursionFunctor.lean`，已有）；
 - 矩阵加法/乘法/减法与 `ring`/`abel`（mathlib `Matrix`，`HigherSpCategory.lean` 已用同一批技巧）；
-- **数值验证已完成**（2026-08-05，18/18 检查通过 + 诊断 D7/D8/D9/T17/D10）：`paperX_rec2_exchange_deviation.py`（已注册 `run_all_tests.py`）——BCH 修正处方自然性闭合、偏差合法性、裸偏差 = 交叉项、严格极限 Δ = 0、单位律、**D-拉回结构（T10-T14）**、**非空性/时间无关对应（T15/T16，§4.4）**、**等迹缺陷正面例（T19，例 14）**、**Fredholm 可解性刻画（D10，命题 15，开放问题 8 完全闭合）**；结合律不成立（D7/D8，§7 问题 6）、T17 已修正（v0.8 负结果为扫描设计缺陷假象）；
+- **数值验证已完成**（2026-08-05，18/18 检查通过 + 诊断 D7/D8/D9/T17/D10）：`scripts/paperX_rec2_exchange_deviation.py`（已注册 `run_all_tests.py`）——BCH 修正处方自然性闭合、偏差合法性、裸偏差 = 交叉项、严格极限 Δ = 0、单位律、**D-拉回结构（T10-T14）**、**非空性/时间无关对应（T15/T16，§4.4）**、**等迹缺陷正面例（T19，例 14）**、**Fredholm 可解性刻画（D10，命题 15，开放问题 8 完全闭合）**；结合律不成立（D7/D8，§7 问题 6）、T17 已修正（v0.8 负结果为扫描设计缺陷假象）；
 - **笔记先行**：路径 B 构造（§4.3）为本笔记 v0.4，Lean 实现以其为准（§4.1/4.2 的最小修正处方仅保留为分析工具，不进入 Lean 的复合定义）。
 
 ---
@@ -231,7 +231,7 @@ $$D\big((\beta\circ_v\alpha)\circ_h(\beta'\circ_v\alpha')\big) - D\big((\beta\ci
 3. **交叉项 $\alpha\cdot\beta' + \beta\cdot\alpha'$ 的范数绑定**：与 $r_{\mathrm{cat}}$、$\Delta\lambda_{\min}$ 的定量关系（Paper XXXI Phase C 在 Sp 侧已建立，Rec 侧待做）。
 4. **Sp↔Rec 桥接**（§5.3）：$D$ 函子下两侧偏差的一致性，需额外引理（$D$ 对 2-态射的提升），独立于本文。
 5. **非严格极限下交换律偏差与 `deltaSilence` 的关系**：偏差是否即静默层（Rec_lin/Rec_set 边界）的形式化载体（衔接 `spectral_representation_silence.md` 更新），待研判。
-6. **最小修正的结合律失败（2026-08-04 数值诊断，决定性）**：`paperX_rec2_exchange_deviation.py` D7/D8 显示最小修正复合**不满足结合律**（竖偏差 $\sim 10^1$、横偏差 $\sim 5\times10^1$，O(1) 量级，非数值误差）。原因：结合律要求修正满足**余循环条件**
+6. **最小修正的结合律失败（2026-08-04 数值诊断，决定性）**：`scripts/paperX_rec2_exchange_deviation.py` D7/D8 显示最小修正复合**不满足结合律**（竖偏差 $\sim 10^1$、横偏差 $\sim 5\times10^1$，O(1) 量级，非数值误差）。原因：结合律要求修正满足**余循环条件**
 $$C_v(\alpha,\beta) + C_v\big(\alpha+\beta+C_v(\alpha,\beta),\,\delta\big) = C_v(\beta,\delta) + C_v\big(\alpha,\,\beta+\delta+C_v(\beta,\delta)\big),$$
 最小选择（流动对角初值 0、离对角 0）不满足。**结论**：定义 4/6 的修正复合是"闭合自然性的预复合"，尚非 2-范畴的合法复合（单位律成立，见 T9）。**✅ 已选定路径 B（2026-08-04，v0.4）**：Rec₂ 2-态射按 §4.3 定义 8 由 Sp₂ 经 $D$ 拉回定义（homotopy 条件为线性方程，竖/横复合良定义且结合，交换律偏差由 Sp₂ 继承），三处 `sorry` 由该结构消除。路径 A（余循环选择，严格结合律的独立构造）保留为替代方案。
 7. **拉回 homotopy 与原 ℕ-指标结构的对应（2026-08-04，🔶 部分闭合）**：**时间无关子类**已闭合——$\alpha(n) \equiv H$ 恒满足同源自然性，且 $H \in \mathrm{Hom}^{PB}(f,f)$ ⟺ $H$ 交织（§4.4 定理 12，数值 T15）。一般时间相关族 $\alpha(n)$ 的对应（"流分解" $H \leftrightarrow \alpha(n)$ 的谱流分辨/极限）仍开放；该对应若建立，将把 §4.1/4.2 的修正分析（作为 $H$ 的离散近似）与路径 B 完全统一。
@@ -254,5 +254,5 @@ $$C_v(\alpha,\beta) + C_v\big(\alpha+\beta+C_v(\alpha,\beta),\,\delta\big) = C_v
 | `paper/paper35_gravity_origin.md` | 交换律偏差 = 引力（Paper XXXV） |
 | `notes/08_first_principles/04_gravity_analysis.md` | $\epsilon \approx 8.12\times10^{-17}$ 量化 |
 | `notes/00_foundations/spectral_category_scope_stratification.md` | Rec_lin/Rec_set 分层（偏差 ↔ 边界静默） |
-| `paperX_exchange_law_deviation.py` | Sp 侧偏差数值演示（简化模型） |
-| `paperX_rec2_exchange_deviation.py` | 本笔记数值验证附件（8/8，已注册 `run_all_tests.py`） |
+| `scripts/paperX_exchange_law_deviation.py` | Sp 侧偏差数值演示（简化模型） |
+| `scripts/paperX_rec2_exchange_deviation.py` | 本笔记数值验证附件（8/8，已注册 `run_all_tests.py`） |

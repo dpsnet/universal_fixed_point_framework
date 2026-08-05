@@ -24,11 +24,11 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
 
 ### 现有理论基础
 
-- **谱引力子传播子**：✅ 已完成（`paperX_graviton_propagator.py`）
+- **谱引力子传播子**：✅ 已完成（`scripts/paperX_graviton_propagator.py`）
 - **谱 Feynman 规则**：✅ 已完成（`notes/00_foundations/spectral_feynman_rules.md`）
 - **谱路径积分**：✅ 已完成（`notes/00_foundations/spectral_path_integral.md`）
-- **谱重整化程序**：✅ 已完成（`paperX_spectral_renormalization.py`）
-- **普朗克尺度散射振幅**：🚧 进行中（`paperX_planck_scattering.py`）
+- **谱重整化程序**：✅ 已完成（`scripts/paperX_spectral_renormalization.py`）
+- **普朗克尺度散射振幅**：🚧 进行中（`scripts/paperX_planck_scattering.py`）
 
 ---
 
@@ -210,16 +210,16 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
 
 | 阶段 | 对接内容 | 产出 |
 |:----|:--------|:----|
-| Ringdown 对接 | QNM 谱与 LIGO ringdown 数据对比 | `paperX_ligo_ringdown_comparison.py` |
-| Full IMRD 对接 | 全波形谱与 LIGO 观测波形对比 | `paperX_ligo_full_waveform.py` |
-| 参数估计 | 利用谱信息约束黑洞参数 | `paperX_ligo_parameter_estimation.py` |
+| Ringdown 对接 | QNM 谱与 LIGO ringdown 数据对比 | `scripts/paperX_ligo_ringdown_comparison.py` |
+| Full IMRD 对接 | 全波形谱与 LIGO 观测波形对比 | `scripts/paperX_ligo_full_waveform.py` |
+| 参数估计 | 利用谱信息约束黑洞参数 | `scripts/paperX_ligo_parameter_estimation.py` |
 
 ### 普朗克卫星对接
 
 | 阶段 | 对接内容 | 产出 |
 |:----|:--------|:----|
 | CMB 谱对比 | 静态宇宙谱与 CMB 温度功率谱对比 | 已有（Paper II） |
-| 引力波背景 | 双星并合背景谱与 PTA/LISA 灵敏度对比 | `paperX_gravitational_wave_background.py` |
+| 引力波背景 | 双星并合背景谱与 PTA/LISA 灵敏度对比 | `scripts/paperX_gravitational_wave_background.py` |
 
 ---
 

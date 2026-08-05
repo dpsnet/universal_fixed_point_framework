@@ -14,7 +14,7 @@
 | 自包含论文 | `paper/paper42_black_hole_quantum_evolution.md` | ✅ v0.1 |
 | Lean 形式化（四模块零 sorry） | `formal_proof/.../BlackHoleEvolution.lean` `HawkingSpectrum.lean` `BlackHoleInformation.lean` `BlackHoleBounce.lean` | ✅ |
 | Agda 镜像 | `agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda` | ✅ |
-| 数值验证 | `paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`） | ✅ |
+| 数值验证 | `scripts/paperX_hawking_spectrum.py`（35/35，注册 `run_all_tests.py`） | ✅ |
 
 **Lean 定理清单**：
 - `BlackHoleEvolution.lean`：`bhMass_pos`/`bhMassCubed_decreasing`/`bhMass_decreasing`/`bhEvaporationTime_condition`/`bhMass_at_evaporation_time`/`rpow_cube_root`/`bhMassCubed_at_planck`/`bhMass_at_planck`/`bhPlanckTime_lt_evaporationTime`/`bhMass_above_planck_before`/`hawkingTempSchwarzschild_pos`/`hawkingTempSchwarzschild_decreasing`/`hawkingTempTime_increasing`/`planckOccupation_pos`/`bhEntropySchwarzschild_pos`/`bhEntropySchwarzschild_increasing`/`bhEntropyTime_decreasing`/`bhInformationPreserved_forward`。
@@ -24,7 +24,7 @@
 
 **验收判定**：霍金辐射谱 ✅ + Page 曲线谱公理推导（早期增/晚期减 + Page 时间分数 0.647 + 精确熵平衡）✅ + 视界涨落谱表述 ✅ + 蒸发终点-反弹衔接 ✅ + 双语言模块 ✅ —— **达到完成判据**。
 
-**遗留开放项**：视界涨落 δT/T → δg_μν 全量子化；反弹后的宇宙学演化（a(t) 完整动力学）属 Paper IX/61A 范畴；~~Kerr 推广~~ **🔶 部分闭合（2026-08-05，§1.2）**——Kerr 蒸发动力学谱温度归约 + 转动降温 + 极端冷却 + 超辐射角动量优先辐射（`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；论文 paper42 v0.2 定理 6.1）。（精确熵平衡、蒸发终点-反弹衔接已于 2026-08-04 解决并移出开放项。）
+**遗留开放项**：视界涨落 δT/T → δg_μν 全量子化；反弹后的宇宙学演化（a(t) 完整动力学）属 Paper IX/61A 范畴；~~Kerr 推广~~ **🔶 部分闭合（2026-08-05，§1.2）**——Kerr 蒸发动力学谱温度归约 + 转动降温 + 极端冷却 + 超辐射角动量优先辐射（`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；论文 paper42 v0.2 定理 6.1）。（精确熵平衡、蒸发终点-反弹衔接已于 2026-08-04 解决并移出开放项。）
 
 ---
 
@@ -66,7 +66,7 @@ a*=0 → f=1（Schwarzschild 极限，与谱温度 T_S = Δλ_min/(2πM) 归约�
 
 $$dM/dt = -\alpha\, f(a^*)^4/M^2 \quad(\text{Stefan-Boltzmann } P \propto T^4),\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M \quad(r_J > 1 \text{ 超辐射})$$
 
-**数值**（`paperX_hawking_kerr.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
+**数值**（`scripts/paperX_hawking_kerr.py`，6/6 检查通过，已注册 `run_all_tests.py`）：
 
 | 量 | 数值 | 物理 |
 |:--|:--|:--|
@@ -142,7 +142,7 @@ theorem page_curve_property (ev : BHEvol M₀ α) ... :
 ## 3. 验证方案
 
 - `lake build` 全量通过
-- 数值验证对接：`paper27_hawking_evaporation.py`（Page 曲线 0.647）
+- 数值验证对接：`scripts/paper27_hawking_evaporation.py`（Page 曲线 0.647）
 - 定理覆盖：蒸发动力学 + Page 时间 + 信息保持
 
 ## 4. 关联文件

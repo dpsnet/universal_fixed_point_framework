@@ -1,14 +1,19 @@
 """
-DNS 湍流 k^-5/3 扫描 v4
+DNS 湍流 k^-5/3 扫描 v5
 
-v3 诊断: N=64, Re_λ=200 下 k_η ≈ 40-53 > k_max≈21, DNS 严重欠解析
-v4 方案: N=64, Re_λ=100 (ν=0.01)
-  - ν 增大 2x → k_η = (ε/ν³)^(1/4) 减小 ~1.68x
-  - ε_target=0.03: k_η ≈ 13 → k_max/k_η ≈ 1.6 ✅
-  - ε_target=0.10: k_η ≈ 18 → k_max/k_η ≈ 1.2 ⚠️
-  - ε_target=0.30: k_η ≈ 23 → borderline
+v4 诊断: energy_injection 模式实际注入率远低于 ε_target(1-5% 效率)
+v5 方案: energy_controlled 模式
+  - 直接维持目标能量 E_target
+  - 强迫幅度正比于 (E_target - E_current) → 稳定快
+  - 无需等待注入-耗散平衡 → 收敛时间 ~2-3 τ_L
+
+参数选取:
+  N=64, ν=0.01 (Re_λ≈100), kf=1.0
+  target_energy=0.05 (量纲估计: 合理的大尺度能量水平)
+  force_amp=0.5 (能量控制响应速率)
+  T=80, T_stats=40
 """
-import sys; sys.path.insert(0, '.')
+import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import time
 import json
 import numpy as np
@@ -16,10 +21,10 @@ from pathlib import Path
 from dataclasses import asdict
 from paperX_dns_turbulence import DNSConfig, PseudoSpectralDNS3D, EnergySpectrumAnalyzer
 
-OUTPUT_DIR = Path('dns_output')
+OUTPUT_DIR = Path(__file__).resolve().parents[2] / 'dns_output'
 OUTPUT_DIR.mkdir(exist_ok=True)
-SUMMARY_FILE = OUTPUT_DIR / 'adaptive_summary_v4.json'
-STATE_FILE = OUTPUT_DIR / 'adaptive_state_v4.json'
+SUMMARY_FILE = OUTPUT_DIR / 'adaptive_summary_v5.json'
+STATE_FILE = OUTPUT_DIR / 'adaptive_state_v5.json'
 
 
 class TeeLogger:
@@ -40,15 +45,11 @@ def run_single(cfg: DNSConfig, tag: str, original_stdout):
     npz_file = OUTPUT_DIR / f"{tag}.npz"
     sys.stdout = TeeLogger(log_file, original_stdout)
 
-    # 打印 k_η 预报
-    k_eta_est = (cfg.force_amp / cfg.nu**3)**0.25
-    k_max = cfg.N / 3.0
     print("=" * 65)
-    print(f"DNS 扫描 v4: {tag}")
+    print(f"DNS v5: {tag}")
     print(f"  N={cfg.N}³, Re_λ={cfg.Re_lambda:.0f}, ν={cfg.nu:.6f}")
-    print(f"  kf={cfg.force_kf}, ε_target={cfg.force_amp}, type={cfg.force_type}")
-    print(f"  T={cfg.T_total}, T_stats={cfg.T_stats_start}")
-    print(f"  k_η(est)={k_eta_est:.1f}, k_max(dealias)={k_max:.1f}, ratio={k_max/k_eta_est:.2f}")
+    print(f"  kf={cfg.force_kf}, amp={cfg.force_amp}, type={cfg.force_type}")
+    print(f"  E_target={cfg.target_energy}, T={cfg.T_total}, T_stats={cfg.T_stats_start}")
     print("=" * 65)
 
     t0 = time.time()
@@ -92,12 +93,15 @@ def run_single(cfg: DNSConfig, tag: str, original_stdout):
         "energy_first_half": float(E_first),
         "energy_last_half": float(E_last),
         "energy_growth_rate": float(energy_growth_rate),
-        "slope": float(fit.get("slope", np.nan)),
-        "slope_err": float(fit.get("slope_err", np.nan)),
-        "C_K": float(fit.get("C_K", np.nan)),
+        "slope": float(fit.get("slope", np.nan)) if "slope" in fit else np.nan,
+        "slope_err": float(fit.get("slope_err", np.nan)) if "slope_err" in fit else np.nan,
+        "C_K": float(fit.get("C_K", np.nan)) if "C_K" in fit else np.nan,
         "S_spec": float(silence["S_spec"]) if silence else np.nan,
         "k_nu": float(silence["k_nu"]) if silence else np.nan,
-        "R2": float(fit.get("R2", np.nan)),
+        "R2": float(fit.get("R2", np.nan)) if "R2" in fit else np.nan,
+        "k_min_fit": float(fit.get("k_min", np.nan)) if "k_min" in fit else np.nan,
+        "k_max_fit": float(fit.get("k_max", np.nan)) if "k_max" in fit else np.nan,
+        "n_points_fit": int(fit.get("n_points", 0)) if "n_points" in fit else 0,
         "cfg": asdict(cfg),
     }
 
@@ -110,21 +114,20 @@ def run_single(cfg: DNSConfig, tag: str, original_stdout):
     print(f"\n结果摘要:")
     print(f"  最终能量: {result['final_energy']:.4e}")
     print(f"  能量增长率: {result['energy_growth_rate']:.3f}")
-    print(f"  斜率: {result['slope']:.4f} (目标 -1.667, 偏差 {result['slope']+5/3:.4f})")
-    print(f"  C_K: {result['C_K']:.3f} (目标 1.5)")
-    print(f"  S_spec: {result['S_spec']:.6f} (目标 < 0.05)")
-    print(f"  k_ν(实测): {result['k_nu']:.1f}")
+    print(f"  斜率: {result['slope']:.4f}" + (f" (偏差 {result['slope']+5/3:.4f})" if not np.isnan(result['slope']) else " (NaN)"))
+    print(f"  拟合范围: k∈[{result['k_min_fit']:.1f},{result['k_max_fit']:.1f}], {result['n_points_fit']}点")
+    print(f"  C_K: {result['C_K']:.3f}, S_spec: {result['S_spec']:.6f}")
     print(f"  R²: {result['R2']:.4f}, 耗时: {elapsed:.1f}s")
 
     sys.stdout = original_stdout
     return result
 
 
-# N=64, Re_λ=100 (ν=0.01), 扫描 ε_target
+# energy_controlled 模式扫描 (v2: amp 提高 10x 以平衡耗散)
 SCAN_PARAMS = [
-    (1.0, 0.03, "很低注入, k_η≈13 ✅"),
-    (1.0, 0.10, "低注入, k_η≈18 ✅"),
-    (1.0, 0.30, "中注入, k_η≈23 ⚠️"),
+    (1.0, 0.05, 5.0, "E_target=0.05, amp=5.0"),
+    (1.0, 0.10, 10.0, "E_target=0.10, amp=10.0"),
+    (1.0, 0.03, 3.0, "E_target=0.03, amp=3.0"),
 ]
 
 
@@ -152,20 +155,20 @@ def main():
 
     if state.get("completed_scan"):
         print(f"扫描已完成. 最佳参数: #{state['best_idx']}, 偏差 {state['best_slope_dev']:.4f}")
-        best = SCAN_PARAMS[state['best_idx']]
-        long_tag = f"v4_long_N64_kf{best[0]}_fa{best[1]:.3f}_T80"
+        best_params = SCAN_PARAMS[state['best_idx']]
+        long_tag = f"v5_long_N64_Etarget{best_params[1]:.3f}_amp{best_params[2]:.3f}_T80"
         long_npz = OUTPUT_DIR / f"{long_tag}.npz"
         if long_npz.exists():
             print(f"长时验证已有: {long_tag}")
             return
         yn = input(f"\n对最佳运行长时验证 T=80? [Y/n]: ")
         if yn.lower() in ('', 'y', 'yes'):
-            kf, fa, desc = best
+            kf, et, amp, desc = best_params
             cfg = DNSConfig(N=64, Re_lambda=100.0, nu=0.01,
                 dt=0.004, T_total=80.0, T_stats_start=40.0,
-                force_kf=kf, force_amp=fa,
-                force_type="energy_injection", target_energy=0.5, seed=42)
-            tag = f"v4_long_N64_kf{kf}_fa{fa:.3f}_T80"
+                force_kf=kf, force_amp=amp,
+                force_type="energy_controlled", target_energy=et, seed=42)
+            tag = f"v5_long_N64_Etarget{et:.3f}_amp{amp:.3f}_T80"
             result = run_single(cfg, tag, original_stdout)
             if result:
                 results.append(result)
@@ -174,20 +177,21 @@ def main():
         return
 
     print(f"{'='*65}")
-    print("DNS v4: N=64, Re_λ=100 (ν=0.01), energy_injection")
-    for i, (kf, fa, desc) in enumerate(SCAN_PARAMS):
+    print("DNS v5: energy_controlled 模式")
+    print(f"  N=64, Re_λ=100 (ν=0.01), kf=1.0")
+    for i, (kf, et, amp, desc) in enumerate(SCAN_PARAMS):
         mark = " ← 继续" if i == start_idx else (" ✅" if i < start_idx else "")
-        print(f"  [{i}] kf={kf}, ε={fa:.2f}  {desc}{mark}")
+        print(f"  [{i}] {desc}{mark}")
 
     for scan_idx in range(start_idx, len(SCAN_PARAMS)):
-        kf, fa, desc = SCAN_PARAMS[scan_idx]
-        tag = f"v4_N64_kf{kf}_fa{fa:.3f}_T40"
+        kf, et, amp, desc = SCAN_PARAMS[scan_idx]
+        tag = f"v5_N64_Etarget{et:.3f}_amp{amp:.3f}_T60"
         print(f"\n扫描 [{scan_idx+1}/{len(SCAN_PARAMS)}]: {desc}")
 
         cfg = DNSConfig(N=64, Re_lambda=100.0, nu=0.01,
-            dt=0.004, T_total=40.0, T_stats_start=20.0,
-            force_kf=kf, force_amp=fa,
-            force_type="energy_injection", target_energy=0.5, seed=42)
+            dt=0.004, T_total=60.0, T_stats_start=30.0,
+            force_kf=kf, force_amp=amp,
+            force_type="energy_controlled", target_energy=et, seed=42)
 
         result = run_single(cfg, tag, original_stdout)
         if result is None:
@@ -197,8 +201,8 @@ def main():
         with open(SUMMARY_FILE, 'w') as f:
             json.dump(results, f, indent=2, default=str)
 
-        slope_dev = abs(result["slope"] + 5/3)
-        if not np.isnan(slope_dev) and slope_dev < state["best_slope_dev"]:
+        slope_dev = abs(result["slope"] + 5/3) if not np.isnan(result["slope"]) else 999.0
+        if slope_dev < state["best_slope_dev"]:
             state["best_slope_dev"] = slope_dev
             state["best_idx"] = scan_idx
             print(f"  ★ 新最佳: 偏差 {slope_dev:.4f}")
@@ -214,10 +218,10 @@ def main():
     for r in valid:
         dev = abs(r["slope"] + 5/3)
         star = "★" if dev == min(abs(v["slope"] + 5/3) for v in valid) else " "
-        print(f"  {star} {r['tag']:35s} slope={r['slope']:+.4f} dev={dev:.4f} C_K={r.get('C_K',0):.2f}")
+        print(f"  {star} {r['tag']:35s} slope={r['slope']:+.4f} dev={dev:.4f} C_K={r.get('C_K',0):.2f} n_fit={r.get('n_points_fit',0)}")
 
     if state["best_idx"] >= 0:
-        print(f"\n最佳: kf={SCAN_PARAMS[state['best_idx']][0]}, ε={SCAN_PARAMS[state['best_idx']][1]}")
+        print(f"\n最佳: #{state['best_idx']}")
 
 
 if __name__ == "__main__":

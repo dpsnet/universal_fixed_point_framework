@@ -1,12 +1,12 @@
 # 多体谱散射笔记
 
 > **状态**: ✅ 已完结 (2026-07-19)
-> **数值验证**: `paperX_multi_body_scatter.py` v1-v5, 全部 8/8 ✅
+> **数值验证**: `scripts/paperX_multi_body_scatter.py` v1-v5, 全部 8/8 ✅
 > **基础**: Paper XII §4 (2→2 散射)
 
 ## 1. 现状
 
-Paper XII §4 完成了谱引力子的 2→2 散射（`paperX_planck_scattering.py` 5/5 通过），但多体碰撞 (N≥3) 未涵盖。
+Paper XII §4 完成了谱引力子的 2→2 散射（`scripts/paperX_planck_scattering.py` 5/5 通过），但多体碰撞 (N≥3) 未涵盖。
 
 ## 2. N 体谱散射框架
 
@@ -38,7 +38,7 @@ $$\sigma_N / \sigma_2 \propto (E/M_{\text{Pl}})^{2(N-2)} \cdot \exp\left(-2(NE/\
 
 ## 3. 验证结果
 
-### v1: 因子化框架 (`paperX_multi_body_scatter.py`) — **8/8 ✅**
+### v1: 因子化框架 (`scripts/paperX_multi_body_scatter.py`) — **8/8 ✅**
 
 | 检验 | 结果 |
 |:----|:----:|
@@ -51,7 +51,7 @@ $$\sigma_N / \sigma_2 \propto (E/M_{\text{Pl}})^{2(N-2)} \cdot \exp\left(-2(NE/\
 | 截面标度律自洽 | ✅ |
 | F_N 保证所有 N 有限 | ✅ |
 
-### v2: Explicit 3→3 振幅 + 截面 (`paperX_multi_body_scatter_v2.py`) — **8/8 ✅**
+### v2: Explicit 3→3 振幅 + 截面 (`scripts/paperX_multi_body_scatter_v2.py`) — **8/8 ✅**
 
 | 检验 | 结果 |
 |:----|:----:|
@@ -64,7 +64,7 @@ $$\sigma_N / \sigma_2 \propto (E/M_{\text{Pl}})^{2(N-2)} \cdot \exp\left(-2(NE/\
 | 截面标度律自洽 | ✅ |
 | 相空间 MC 收敛 | ✅ |
 
-### v3: N 体解析闭式 + 光学定理 (`paperX_multi_body_scatter_v3.py`) — **8/8 ✅**
+### v3: N 体解析闭式 + 光学定理 (`scripts/paperX_multi_body_scatter_v3.py`) — **8/8 ✅**
 
 统一公式 (N≥2):
 
@@ -86,7 +86,7 @@ $$M_{\text{spec}}^{(N)}(E) = \kappa^{N-2} \cdot N! \cdot \left[G_{\text{spec}}(E
 | 10 | -6475 | ✅ |
 | 100 | -650287 | ✅ |
 
-### v4: 谱 Cutkosky 规则 (`paperX_cutkosky_spectral.py`) — **8/8 ✅**
+### v4: 谱 Cutkosky 规则 (`scripts/paperX_cutkosky_spectral.py`) — **8/8 ✅**
 
 谱传播子的解析结构 → 割线不连续 → S-矩阵幺正性:
 
@@ -109,7 +109,7 @@ $$\text{Disc}[M^{(N)}] = i \cdot \sum_{k=1}^{\lfloor N/2 \rfloor} \sum_{\text{cu
 | N 体推广: 任意 N 的幺正性关系 | ✅ |
 | SS† = I: 谱 S-矩阵满足完整幺正性 | ✅ |
 
-### v5: 完整 LIPS MC + 实验截面 (`paperX_multi_body_scatter_v5.py`) — **8/8 ✅**
+### v5: 完整 LIPS MC + 实验截面 (`scripts/paperX_multi_body_scatter_v5.py`) — **8/8 ✅**
 
 | 检验 | 结果 |
 |:----|:----:|

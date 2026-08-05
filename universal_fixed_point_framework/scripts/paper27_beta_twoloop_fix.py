@@ -87,7 +87,8 @@ def dyson_schwinger_correction():
     N = 3
     C2_adj = N
     n_f = 6
-    
+    C2_f = (N**2 - 1) / (2 * N)   # 基础表示二次 Casimir
+
     # Naive spectral two-loop
     B3_naive = -(34/3)*N*C2_adj**2 + (4/3)*0.5*n_f*C2_adj
     

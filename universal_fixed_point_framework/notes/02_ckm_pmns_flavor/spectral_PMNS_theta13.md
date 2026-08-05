@@ -70,7 +70,7 @@ $$\tan\xi \approx \frac{\Delta\lambda_{\min}^{(\nu_R)}}{\Delta\lambda_{\min}^{(H
 
 ## 6. 数值结果
 
-**对角化结果**（`paperX_pmns_diagonalization.py` v2，U_e-U_ν 特征基失配扫描）：
+**对角化结果**（`scripts/paperX_pmns_diagonalization.py` v2，U_e-U_ν 特征基失配扫描）：
 
 最佳匹配参数：$\eta_{12}=0.58,\ \eta_{23}=0.06,\ \eta_{13}=0.22$（U_e 与 U_ν 之间的旋转角）
 

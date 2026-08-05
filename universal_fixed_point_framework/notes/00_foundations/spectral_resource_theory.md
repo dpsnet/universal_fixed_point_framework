@@ -2,7 +2,7 @@
 
 **隶属**：Paper X（`paper/paper10_spectral_quantum.md` 第 10 章）
 **前提笔记**：`spectral_measurement.md`（M1-M4 公理）、`spectral_entanglement.md`（纠缠结构）
-**数值脚本**：`paperX_resource_measures.py`
+**数值脚本**：`scripts/paperX_resource_measures.py`
 **相关拓展**：`spectral_quantum_extensions.md`（语境性、PBR、速度极限）
 
 ## 核心论题

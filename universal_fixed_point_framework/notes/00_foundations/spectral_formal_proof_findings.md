@@ -254,7 +254,7 @@ $$\delta_{\text{silence}} \leq \|A\| \cdot \|G\| + \|G\| \cdot \|A\| = 2\|A\|\cd
 
 ### 2.6 谱间隙形式化：填补 Cl(1,7) → 物理常数的跳步
 
-创建了 `SpectralGap.lean`——将 `paper36_spectral_gap_derivation.py` 的数值推导形式化为 Lean 定理链：
+创建了 `SpectralGap.lean`——将 `scripts/paper36_spectral_gap_derivation.py` 的数值推导形式化为 Lean 定理链：
 
 | 定理 | 内容 | 状态 |
 |------|------|:----:|

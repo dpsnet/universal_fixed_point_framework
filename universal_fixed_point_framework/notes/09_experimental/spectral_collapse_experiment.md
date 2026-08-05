@@ -13,7 +13,7 @@ $$\boxed{\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa}}$$
 
 **关键预言**：
 1. $\tau \propto 1/\kappa$：交互越强，坍缩越快
-2. $\tau$ 与谱间隙 $\Delta\lambda_{\min}$ 无关（已由 `paperX_collapse_time.py` 数值验证）
+2. $\tau$ 与谱间隙 $\Delta\lambda_{\min}$ 无关（已由 `scripts/paperX_collapse_time.py` 数值验证）
 3. $\tau$ 是有限、原则上可直接观测的物理量
 
 ---
@@ -167,7 +167,7 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 | 维度 | 评估 |
 |------|------|
-| 理论成熟度 | 已严格推导（`paperX_collapse_time.py`），数值验证通过 |
+| 理论成熟度 | 已严格推导（`scripts/paperX_collapse_time.py`），数值验证通过 |
 | 硬件可用性 | IBM/OIST/Google 量子处理器可直接实现（或云平台访问） |
 | 信号强度 | $\tau \in [1,100]\,\mu\text{s}$ 量级，远在 $T_2$ 限制内 |
 | 与 GRW 区分 | $\tau$ 差异 $10^{10}$ 倍，单次实验即可排除 GRW |
@@ -178,7 +178,7 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 ## 参考文献
 
-1. UFPF Paper X: Spectral collapse time derivation (`paperX_collapse_time.py`)
+1. UFPF Paper X: Spectral collapse time derivation (`scripts/paperX_collapse_time.py`)
 2. Ghirardi, Rimini, Weber (1986). Unified dynamics for microscopic and macroscopic systems. *Phys. Rev. D*, 34, 470.
 3. IBM Quantum Experience. https://quantum-computing.ibm.com/
 4. Google Quantum AI. https://quantumai.google/
