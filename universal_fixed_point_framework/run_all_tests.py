@@ -123,6 +123,7 @@ SCRIPTS = [
     ("paperX_qcd_heavy_flavor_spectral.py",   "61B 重味 Cornell 参数谱定替代：α_s 0.39→0.413（两圈跨味，61C 锚点一致），4 态平均偏差 3.66%→3.39%，μ_eff=1.37 GeV (6/6)"),
     ("paperX_qcd_heavy_mass_spectral.py",     "61B 重味有效质量谱定替代：m_c/m_b = pole 质量（单圈/两圈 pole-MS 修正），Cornell 三参数全谱定，4 态平均 3.64% (6/6)"),
     ("paperX_qcd_heavy_mass_conv.py",         "61B 重味 dressing 收敛性可视化：m_c/m_b 随 α_s 的 pole-MS 曲线（charm 不收敛→单圈、bottom 收敛→两圈），图 paperX_qcd_heavy_mass_conv.png (6/6)"),
+    ("paperX_regge_intercept.py",             "61B Regge 截距动力学起源：零点能 ζ 正则化 → a_NS=(D-2)/16 → D=10 → α₀=1/2，谱定轨迹 ρ/a₂/ρ₃ 偏差 4.0%/2.2%/1.5% (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
