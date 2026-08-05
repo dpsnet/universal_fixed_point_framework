@@ -22,12 +22,14 @@ paperX_rec2_exchange_deviation.py — Rec₂ 交换律偏差的 BCH 修正复合
   T14 严格极限（交织 homotopy）偏差 = 0（G_N → 0 引力解耦）
   T15 同源交织 H 满足条件 + 时间无关族 α(n)≡H 满足自然性（§4.4 定理 12）
   T16 异源 RecHom 对（f=s≠g=s²）拉回 2-态射不存在（§4.4 定理 11，可对角化步进）
+  T18 迹障碍：tr(A²−A)=#fixed(s²)−#fixed(s)≠0 ⟹ (s,s²) 不可解（命题 13 必要条件）
 
-结构性诊断（预期不成立，非 pass/fail 项）：
+结构性诊断（预期不成立/探索性，非 pass/fail 项）：
   D7  竖结合律：最小修正不满足余循环条件 ⇒ 非结合（笔记 §7 开放问题 6）
   D8  横结合律：同上
   D9  D-拉回 2-态射空间稀疏性：一般 f≠g 下 Sylvester 罕见可解（转移矩阵恒有特征值 1）；
       T10-T14 以谱平凡构造（id 态射 + 交织解）验证代数结构
+  T17 缺陷（不可对角化）步进 300 次扫描：未发现非平凡（f≠g）拉回 2-态射（负结果）
 
 单位：无量纲（矩阵代数）。
 """
@@ -349,6 +351,45 @@ def run():
     check("T16 异源 RecHom 对（f=s≠g=s²）拉回 2-态射不存在（非空性定理，可对角化步进）",
           H_xy is None or res16 > 1e-6,
           f"Sylvester 残差={res16 if H_xy is not None else '无解'}")
+
+    # ---- T17: 缺陷（不可对角化）步进下非平凡拉回 2-态射扫描（开放问题 8 残余）----
+    # 非双射函数 s 的转移矩阵 A 通常亏损（defective），Sylvester 算子 L 非半单，
+    # range(L)∩ker(L) 可能非 {0} ⟹ 非平凡（f≠g）2-态射理论上可能存在。
+    # 扫描 RecHom 幂对 (f=s^k, g=s^m)，k≠m，检验 A H − H A = A^m − A^k 可解性。
+    found_nontrivial = False
+    scan_info = "无"
+    for _try in range(300):
+        s_def = rand_map(rng)
+        if len({s_def(i) for i in range(n)}) == n:      # 跳过双射（可对角化）
+            continue
+        A_def = step_matrix(s_def, n)
+        k = int(rng.integers(1, 4)); m = int(rng.integers(1, 4))
+        if k == m:
+            m = (m % 3) + 1
+        Ak = np.linalg.matrix_power(A_def, k)
+        Am = np.linalg.matrix_power(A_def, m)
+        Hx, res = sylvester_solve(A_def, A_def, Am - Ak, n)
+        if Hx is not None and res < 1e-8:
+            found_nontrivial = True
+            scan_info = f"实例：缺陷步进 s，k={k}, m={m}，残差={res:.2e}"
+            break
+    if found_nontrivial:
+        print(f"  [DIAG] T17（发现）：非平凡拉回 2-态射在缺陷步进下存在（{scan_info}）——"
+              f"非空性对可对角化假设敏感，开放问题 8 残余确认")
+    else:
+        print("  [DIAG] T17（负结果）：缺陷步进 300 次扫描未发现非平凡（f≠g）拉回 2-态射——"
+              "非空性 ⟺ f=g 在数值上稳健（缺陷情形仍开放，见笔记 §7 问题 8）")
+
+    # ---- T18: 迹障碍（非空性的必要条件）----
+    # tr(A H − H A) = 0（迹循环性）⟹ 若 tr(T_g − T_f) = #fixed(g) − #fixed(f) ≠ 0 则不可解。
+    # 构造非双射 s：0↦1, 1↦0, 2↦0（#fixed(s)=0, #fixed(s²)=2 ⟹ tr(A²−A)=2≠0）。
+    s_trace = lambda i: {0: 1, 1: 0, 2: 0}[i]
+    A_tr = step_matrix(s_trace, n)
+    tr_dev = float(np.trace(A_tr @ A_tr - A_tr).real)
+    H_tr, res_tr = sylvester_solve(A_tr, A_tr, A_tr @ A_tr - A_tr, n)
+    check("T18 迹障碍：tr(A²−A)=#fixed(s²)−#fixed(s)≠0 ⟹ (s,s²) 不可解（必要条件）",
+          abs(tr_dev) > 1e-8 and (H_tr is None or res_tr > 1e-6),
+          f"tr(A²−A)={tr_dev:.3f}, Sylvester 残差={res_tr if H_tr is not None else '无解'}")
 
     # ---- 汇总 ----
     print("-" * 72)

@@ -1,7 +1,7 @@
 # Rec₂ 交换律偏差的 BCH 修正复合：数学推导与引力根源
 
 > **来源**：`HigherRecCategory.lean` 三处 `sorry` 的闭合路径（R12 分析；`spectral_category_scope_stratification.md` 阶段 2/3 衔接；Sp 侧 `spExchangeLaw` 偏差化先例）。
-> **状态**：研究笔记 v0.7（2026-08-04）。数学推导完成，数值验证 **16/16 检查通过** + 结构性诊断（D7/D8 结合律失败、D9 拉回 2-态射空间稀疏性），**选定路径 B（D-拉回）**，**Lean 实现完成**（`HigherRecCategory.lean` 重写，零 `sorry`，`lake build` 通过）；开放问题 7/8 **部分闭合**（§4.4 定理 11/12）。
+> **状态**：研究笔记 v0.8（2026-08-04）。数学推导完成，数值验证 **17/17 检查通过** + 结构性诊断（D7/D8 结合律失败、D9 拉回 2-态射空间稀疏性、T17 缺陷扫描），**选定路径 B（D-拉回）**，**Lean 实现完成**（`HigherRecCategory.lean` 重写，零 `sorry`，`lake build` 通过）；开放问题 7/8 **部分闭合**（§4.4 定理 11/12 + 命题 13 迹障碍）。
 > **规范声明**：本文为**谱新增**推导——Rec₂ 2-态射复合的修正形式与交换律偏差结构均为本框架新贡献，非既有文献结果。Sp 侧 `spExchangeLaw` 偏差定理（`HigherSpCategory.lean`，已机器证明）为既有资产，作为镜像模板引用。
 > **理论地位**：交换律偏差 = 引力（Paper XXXV §2）。本文给出 Rec₂ 侧该机制的精确数学构造，作为 `HigherRecCategory.lean` 三处 `sorry` 由"定义性缺口登记"升级为"偏差定理族"的基础。
 >
@@ -143,6 +143,12 @@ $$\{\text{拉回 2-态射}\} = \{\text{时间无关自然性族}\} \cap \{\text{
 
 > **结构诠释**：拉回定义比旧自然性定义**更严格**——Rec₂ 的 2-范畴结构本质上是**同源自交**（id 型 2-态射 + 交织矩阵），非平凡异源 2-态射在可对角化步进下不存在（数值 T15/T16 确认）。这与阶段 1 圈定"谱匹配双射 = 恒等映射（线性语义）"完全一致。开放问题 8 的非空性刻画**闭合**（可对角化情形）；不可对角化步进的一般情形仍开放。开放问题 7 的对应**部分闭合**（时间无关子类）。
 
+**命题 13（迹障碍，非空性的必要条件）**。$\operatorname{tr}(T_f) = \#\operatorname{Fix}(f)$（$f$ 的不动点数）；若 $\operatorname{tr}(T_g - T_f) \neq 0$，则 $\mathrm{Hom}^{PB}(f,g) = \varnothing$。
+
+*证*。$\operatorname{tr}(A_X H - H A_Y) = 0$（迹循环性），故 $T_g - T_f \in \mathrm{range}(L)$ 蕴含 $\operatorname{tr}(T_g - T_f) = 0$；而 $\operatorname{tr}(T_f) = \#\{x : f(x) = x\}$（转移矩阵对角元恰为不动点指示）。□
+
+> **数值（T17/T18）**：缺陷（不可对角化）步进 300 次扫描未发现非平凡（$f \neq g$）拉回 2-态射——非空性 $\iff f = g$ 在数值上稳健；T18 确认迹障碍（$\#\operatorname{Fix}(s^2) = 2 \neq \#\operatorname{Fix}(s) = 0$ ⟹ $(s,s^2)$ 不可解）。迹障碍只是必要条件：等迹（$\#\operatorname{Fix}(f) = \#\operatorname{Fix}(g)$）情形是否可能存在非平凡解（缺陷步进下）仍开放。
+
 ---
 
 ## 5. 交换律偏差定理（引力根源的精确形式）
@@ -215,7 +221,7 @@ $$D\big((\beta\circ_v\alpha)\circ_h(\beta'\circ_v\alpha')\big) - D\big((\beta\ci
 $$C_v(\alpha,\beta) + C_v\big(\alpha+\beta+C_v(\alpha,\beta),\,\delta\big) = C_v(\beta,\delta) + C_v\big(\alpha,\,\beta+\delta+C_v(\beta,\delta)\big),$$
 最小选择（流动对角初值 0、离对角 0）不满足。**结论**：定义 4/6 的修正复合是"闭合自然性的预复合"，尚非 2-范畴的合法复合（单位律成立，见 T9）。**✅ 已选定路径 B（2026-08-04，v0.4）**：Rec₂ 2-态射按 §4.3 定义 8 由 Sp₂ 经 $D$ 拉回定义（homotopy 条件为线性方程，竖/横复合良定义且结合，交换律偏差由 Sp₂ 继承），三处 `sorry` 由该结构消除。路径 A（余循环选择，严格结合律的独立构造）保留为替代方案。
 7. **拉回 homotopy 与原 ℕ-指标结构的对应（2026-08-04，🔶 部分闭合）**：**时间无关子类**已闭合——$\alpha(n) \equiv H$ 恒满足同源自然性，且 $H \in \mathrm{Hom}^{PB}(f,f)$ ⟺ $H$ 交织（§4.4 定理 12，数值 T15）。一般时间相关族 $\alpha(n)$ 的对应（"流分解" $H \leftrightarrow \alpha(n)$ 的谱流分辨/极限）仍开放；该对应若建立，将把 §4.1/4.2 的修正分析（作为 $H$ 的离散近似）与路径 B 完全统一。
-8. **D-拉回 2-态射空间稀疏性（2026-08-04，🔶 部分闭合）**：转移矩阵恒有特征值 1（$\mathbf 1$ 为特征向量），故 Sylvester 方程 $A_X H - H A_Y = T_g - T_f$ 对一般 $f \neq g$ 罕见可解。**可对角化步进情形已闭合（§4.4 定理 11）**：$\mathrm{Hom}^{PB}(f,g) \neq \varnothing \iff f = g$（$T_g - T_f \in \ker L$ 且 $L$ 半单 ⟹ 须 $T_g = T_f$；数值 T16）。**不可对角化步进的一般情形仍开放**（如非双射函数的转移矩阵，亏损情形）。物理诠释：2-态射稀少 = 谱对应层的强约束（Rec₂ 本质为同源自交结构）。
+8. **D-拉回 2-态射空间稀疏性（2026-08-04，🔶 部分闭合）**：转移矩阵恒有特征值 1（$\mathbf 1$ 为特征向量），故 Sylvester 方程 $A_X H - H A_Y = T_g - T_f$ 对一般 $f \neq g$ 罕见可解。**可对角化步进情形已闭合（§4.4 定理 11）**：$\mathrm{Hom}^{PB}(f,g) \neq \varnothing \iff f = g$。**缺陷（不可对角化）情形**：300 次扫描未发现非平凡解（T17 负结果）+ **迹障碍必要条件**（命题 13：$\operatorname{tr}(T_g-T_f) = \#\operatorname{Fix}(g)-\#\operatorname{Fix}(f) \neq 0 \Rightarrow$ 空）——非空性 $\iff f=g$ 数值稳健；**等迹缺陷情形是否可能存在非平凡解仍开放**。物理诠释：2-态射稀少 = 谱对应层的强约束（Rec₂ 本质为同源自交结构）。
 
 ---
 
