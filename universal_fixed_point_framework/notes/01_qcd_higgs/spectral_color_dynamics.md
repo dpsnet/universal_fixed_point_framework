@@ -392,6 +392,24 @@ $$A(p^2) = 1 + \frac{C_F}{4\pi^3}\int dk\, k^3\, \frac{A}{k^2A^2+B^2}\, J_V(p,k)
    - **m_c/m_b 有效质量谱定替代（2026-08-05，闭合）**：重味有效质量由谱框架 pole 质量谱定——$m_{c,\mathrm{eff}} = m_{c,\mathrm{MS}}(1 + \tfrac{4\alpha_s(m_c)}{3\pi}) = 1.492$ GeV（单圈 pole 修正，$\alpha_s(m_c) = 0.413$，vs 经验 1.5 偏差 0.5%）；$m_{b,\mathrm{eff}} = m_{b,\mathrm{MS}}(1 + \tfrac{4\alpha_s(m_b)}{3\pi} + C_2(\alpha_s(m_b)/\pi)^2) = 4.861$ GeV（两圈 pole 修正，$C_2 = 13.44$，$\alpha_s(m_b) = 0.224$，vs 经验 4.8 偏差 1.3%）；圈阶选择由收敛性决定（charm 两圈修正 0.232 ≈ 单圈 0.175 不收敛 → 单圈；bottom 两圈 0.068 << 单圈 0.095 收敛 → 两圈）；`paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`：4 态平均偏差 3.39% → 3.64%（charmonium 改进 $J/\psi$ 6.8%→6.4%、$\psi(2S)$ 6.3%→6.0%；bottomonium 略增 0.3%/0.1% → 0.9%/1.2%，m_b 锚点消除代价）、间距 3.9%/6.5% 保持——**重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零**；重味 dressing（$m_{\mathrm{eff}} - m_{\mathrm{MS}}$）charm 222 MeV（55% κΛ）、bottom 681 MeV（170% κΛ），标度依赖登记。
 5. **弦张力 $\kappa_{\mathrm{lin}}$ 与 $\kappa$ 的谱统一**——**✅ 闭合（2026-08-05，61B 开放项）**：σ = 4Λ²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式（§5.7），Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ（偏差 4.5%）、κ ≈ √σ/Λ ≈ 2；`paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`。诚实边界：2 倍标度统一为谱框架内自洽关系，Regge 斜率谱起源登记为机制级开放项。
 
+### 8.2 重味 dressing 的标度依赖分析【谱新增：分析，2026-08-05】
+
+**定义**。重味 dressing $\Delta_Q = m_{Q,\mathrm{eff}} - m_{Q,\mathrm{MS}}$（推论 5.11 的 pole 质量谱定引入的 MS-bar → 有效质量差值）。
+
+**数值**（`paperX_qcd_heavy_mass_spectral.py` 6/6）：$\Delta_c = 222$ MeV（轻味 $\Delta_{\mathrm{dress}} = \kappa\Lambda = 401$ MeV 的 55%）、$\Delta_b = 681$ MeV（170% $\kappa\Lambda$）。
+
+**标度依赖机制**（三层）：
+
+1. **圈阶修正随 $\alpha_s$ 变化**：$\delta_Q(\alpha_s) = \tfrac{4}{3}\cdot\tfrac{\alpha_s}{\pi} + C_2(\tfrac{\alpha_s}{\pi})^2$——$\alpha_s$ 随夸克标度增高而减小（$\alpha_s(m_c) = 0.413 \to \alpha_s(m_b) = 0.224$），单圈 pole 修正 $\tfrac{4\alpha_s}{3\pi}$ 从 0.175 降至 0.095；
+2. **绝对 dressing 由 $m_{\mathrm{MS}}$ 主导**：$\Delta_Q = m_{Q,\mathrm{MS}}\cdot\delta_Q(\alpha_s(m_Q))$——$m_b/m_c = 3.29$ 的裸质量差主导，$\Delta_b/\Delta_c = 3.07$（近线性标度依赖，残差 7% 来自 $\alpha_s$ 随标度下降）；
+3. **轻味-重味分段结构**：轻味 $\Delta_{\mathrm{dress}} = \kappa\Lambda = 401$ MeV 由禁闭非微扰主导（DS 动力学质量生成，§5.9/§5.12），重味 dressing 由 pole-MS 微扰圈阶主导——微扰/非微扰贡献随夸克质量的分段切换。
+
+**交叉标度**。微扰 pole 修正达到轻味非微扰 dressing 的标度 $m^{*}$：$\delta(m^{*}) = \kappa\Lambda/m^{*}$，取 $\delta \in [0.13, 0.17]$（对应 $\alpha_s \in [0.3, 0.4]$）给出 $m^{*} \approx 2.4$–$3.1$ GeV——**重味 dressing 与轻味禁闭 dressing 的衔接标度在 $m_c$ 量级**（量级估计，诚实边界）。
+
+**收敛性**（`paperX_qcd_heavy_mass_conv.py`，6/6，图 `paperX_qcd_heavy_mass_conv.png`）：charm 处两圈修正（0.232）≈ 单圈（0.175），比值 1.33 > 0.8 → **不收敛** → 单圈截断；bottom 处两圈修正（0.068）<< 单圈（0.095），比值 0.72 < 0.8 → **收敛** → 两圈——圈阶选择由 pole-MS 微扰收敛性决定（推论 5.11 的圈阶选择可视化）。
+
+**诚实边界**：pole-MS 修正为微扰量，完整非微扰（DS/格点）重味自能精确值登记为后续；交叉标度 $m^{*}$ 为量级估计（$\delta$ 取值区间对应 $\alpha_s$ 扫描）；重味 dressing 标度依赖的完整动力学起源（pole 修正与非微扰自能的统一）登记为后续精确化方向。
+
 ---
 
 ## 版本记录
@@ -411,3 +429,4 @@ $$A(p^2) = 1 + \frac{C_F}{4\pi^3}\int dk\, k^3\, \frac{A}{k^2A^2+B^2}\, J_V(p,k)
 | v0.11 | 2026-08-05 | **§4.5 跨味衔接方案（新增，开放项 3 闭合）**：微扰 Λ^(3) = 121.8 ↔ 有效值 210.3 MeV 三层证据闭环——证据 A（圈阶漂移带 [122, 577] 包含 Λ_eff）、证据 B（DS 非微扰桥：κΛ_eff = 401.4 ≈ M(0) = 401.0，偏差 0.1%）、证据 C（有效性反证：m_ρ(Λ_pert) = 472 MeV 偏差 39.1% vs m_ρ(Λ_eff) = 810 MeV 偏差 4.4%）+ 谱量近似 ξ = 1.7264 ≈ √N_c（偏差 0.3%，机制存疑登记）；`paperX_qcd_flavor_bridge.py` 6/6 注册 `run_all_tests.py`。 |
 | v0.12 | 2026-08-05 | **§8 未决问题 4 重味 α_s 谱定替代（开放项闭合）**：经验 α_s = 0.39 由两圈跨味 α_s(m_c) = 0.413 谱定替代（与 61C 锚点 0.413 一致/PDG 0.40）——经验值获谱框架来源（反解有效标度 μ_eff = 1.37 GeV ≈ m_c）；4 态平均偏差 3.66% → 3.39%（J/ψ 7.5%→6.8%、Υ(2S) 0.3%→0.1%）、径向间距 3.8%/6.3% 保持；`paperX_qcd_heavy_flavor_spectral.py` 6/6 注册 `run_all_tests.py`；m_c/m_b 有效质量 dressing 登记为精确化方向。 |
 | v0.13 | 2026-08-05 | **§8 未决问题 4 重味 m_c/m_b 有效质量谱定替代（开放项闭合）**：重味有效质量 = 谱框架 pole 质量——m_c_eff = 1.492 GeV（单圈 pole，α_s(m_c) = 0.413）、m_b_eff = 4.861 GeV（两圈 pole，C₂ = 13.44，α_s(m_b) = 0.224）；圈阶选择由收敛性决定（charm 单圈、bottom 两圈）；`paperX_qcd_heavy_mass_spectral.py` 6/6 注册 `run_all_tests.py`：4 态平均偏差 3.39% → 3.64%（charmonium 改进 6.8→6.4%、bottomonium 略增 0.9%/1.2% 为 m_b 锚点消除代价）、间距 3.9%/6.5% 保持——重味 Cornell 三参数（α_s、m_c、m_b）全部谱定，经验锚点清零；重味 dressing charm 222 MeV（55% κΛ）、bottom 681 MeV（170% κΛ）。 |
+| v0.14 | 2026-08-05 | **§8.2 重味 dressing 标度依赖分析（新增）**：三层机制（α_s 标度下降 / m_MS 主导近线性 Δ_b/Δ_c = 3.07 vs m_MS 比 3.29 / 轻味非微扰-重味微扰分段切换）+ 交叉标度 m* ≈ 2.4–3.1 GeV（微扰 pole 修正达轻味 κΛ 的标度，m_c 量级）+ 收敛性可视化（charm 比值 1.33 不收敛→单圈、bottom 比值 0.72 收敛→两圈）；`paperX_qcd_heavy_mass_conv.py` 6/6 注册 `run_all_tests.py`（图 `paperX_qcd_heavy_mass_conv.png`）。 |

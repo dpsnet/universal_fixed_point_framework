@@ -298,7 +298,7 @@ $$\Delta_{\text{hf}} \;=\; \frac{8}{9}\,\alpha_s\,\frac{|\psi(0)|^2}{M_{ud}^2},\
 | 量 | 谱推导 | 数值 | 对标 | 偏差 |
 |:--|:--|:--:|:--:|:--:|
 | $|\psi(0)|^2$ | Cornell 1S 波函数 | $0.1095$ GeV³ | 纯 Coulomb $0.0003$ | 紧致 ×330 |
-| $\Delta_{\text{hf}}$ | $(8/9)\alpha_s|\psi(0)|^2/M_{ud}^2$ | $252.8$ MeV | 定标值 $195.9$ | 量级再现 |
+| $\Delta_{\text{hf}}$ | $(8/9)\alpha_s\|\psi(0)\|^2/M_{ud}^2$ | $252.8$ MeV | 定标值 $195.9$ | 量级再现 |
 | $m_N$ | $3M_{ud} - \tfrac{3}{4}\Delta_{\text{hf}}$ | $973$ MeV | PDG $938.3$ | 3.7% |
 | $m_\Delta$ | $3M_{ud} + \tfrac{3}{4}\Delta_{\text{hf}}$ | $1352$ MeV | PDG $1232.0$ | 9.8% |
 
