@@ -1,7 +1,7 @@
 # 阶段 3：IFS 分形扩张——Σ-Rec coproduct 谱对应与 Weierstrass 谱隙导出
 
 > **来源**：`notes/00_foundations/spectral_category_scope_stratification.md` §3.3（分形扩张路径）与阶段 3 任务（"桥接 `IFSFractal.lean` 的 IFS 分解到 `NoiseCategory.lean` 的 Σ-Rec；至少 1 个分形函数（Weierstrass）的谱隙从 IFS 参数导出"）。
-> **状态**：研究笔记 v0.6（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）+ Σ-D Functor 律闭合 + 谱 coproduct 分解 Lean 侧（函子层）**完成：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2+**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价 + **谱 coproduct 分解三定理**，`lake build` 通过，零 `sorry`）；`NoiseCategory.lean` **Σ-D Functor 律（`map_id`/`map_comp`）完全闭合**并组装为正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）。
+> **状态**：研究笔记 v0.7（2026-08-05）。阶段 3 **子任务 1（数值层）+ 子任务 2（Lean 符号编码，v0.2）+ Σ-D Functor 律闭合 + 谱 coproduct 分解 Lean 侧（函子层）+ Weierstrass 图 IFS 谱隙结构支撑**完成：数值验证 **7/7 检查通过**；`IFSRecCoding.lean` **v0.2+**（正式 `SigmaRecObj` coproduct 编码 + 片注入态射 + 不动点完整等价 + 谱 coproduct 分解三定理）；`WeierstrassGap.lean` **v1.0**（Weierstrass 图 IFS 收缩机器证明 + Moran/图维数 + 迹公式实例）；`NoiseCategory.lean` **Σ-D Functor 律完全闭合**并组装为正式函子 `sigmaDFunctor`（`lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`）。
 > **规范声明**：本文为**谱新增**推导——"IFS 分解 → Σ-Rec coproduct → 谱对应"的数值验证与构造是阶段 3 的推进记录；`IFSFractal.lean`（IFS/Attractor/SelfSimilarMeasure/HausdorffDim 基础设施）与 `NoiseCategory.lean`（Σ-Rec/ι_Σ，§15.3 D 保持 coproduct 机器证明）为既有资产。
 
 ---
@@ -86,7 +86,24 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 **下一步候选**：
 1. ✅ ~~Σ-D 的 Functor 律（`map_id`/`map_comp`）补证~~（**已闭合**，2026-08-05：见上 Σ-D 态射层记录）；
 2. ✅ ~~符号转移与各片谱的精确关系（谱 coproduct 分解的 Lean 侧）~~（**函子层已闭合**，2026-08-05：见上三定理；特征值级谱分解仍依赖有限维谱积分层）；
-3. 将 Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题（依赖有限维谱积分层，mathlib `ContinuousFunctionalCalculus` 桥接）。
+3. ✅ ~~Weierstrass 图 IFS 的压缩比 → 谱隙关系整理为 Lean 命题~~（**结构支撑已闭合**，2026-08-05：见下 §Weierstrass 图 IFS 谱隙；特征值级 gap = 1 − λ₂/λ₁ 依赖有限维谱积分层，登记为开放项）。
+
+---
+
+## 5. Weierstrass 图 IFS 谱隙 Lean（2026-08-05，`WeierstrassGap.lean` v1.0）
+
+对齐 §2.3 S5 的 Weierstrass 图 IFS（f₁(t,y) = (t/b, y/b)、f₂(t,y) = ((t+1)/b, (y+a)/b)，b > 1、0 < a < 1）。本文件在**零 sorry** 下闭合其结构层：
+
+| 组件 | Lean 定理 | 内容 |
+|:--|:--|:--|
+| 分量仿射 Lipschitz | `lipschitz_affine_prod` | p ↦ (c·p.1+t₁, c·p.2+t₂) 是 LipschitzWith c（ℝ² sup 距离，`max` 分解 + `mul_le_mul_of_nonneg_left`） |
+| 收缩率 | `weierstrassGraphMap₁/₂_contracting` | f₁、f₂ 均 `ContractingWith (1/b)`，率 < 1 用 `div_lt_one`（b > 1） |
+| IFS 构造 | `weierstrassGraphIFS` | 2 映射均匀 IFS（率均 1/b），`weierstrassGraphIFS_uniform` 机器证明 |
+| Moran 维数 | `weierstrassGraph_dH` | 吸引子 d_H = log 2 / log b（`uniform_ifs_dH_unique` 桥梁） |
+| 图维数（Falconer） | `weierstrassGraphDimension` = 2 + ln a / ln b；**`_strictMono_a`** | **d(a) 随 a 严格递增**（`Real.log_lt_log` + `div_lt_div_of_pos_right`）——S5"a↑ → 维数↑"的 Lean 侧结构支撑 |
+| 谱障碍公式实例 | `weierstrassGraph_symbolic_trace` | 2 片符号动力学 tr(T_f) = #Fix = 1（复用 IFSRecCoding） |
+
+**诚实边界（开放项登记）**：S5 的**核谱隙** gap = 1 − λ₂/λ₁ 随 d 单调递减的完整机器证明依赖有限维谱积分层——mathlib `Matrix.IsHermitian` 特征值 / CFC 桥接（`Mathlib.LinearAlgebra.Matrix.Spectrum` 未在 lean_lib 构建）。本文件给出其**结构支撑**（收缩率机器证明 + 维数单调性 + 迹公式实例），特征值级表述留待谱积分层。
 
 ---
 
@@ -95,8 +112,9 @@ $$f_1(t, y) = \Big(\tfrac{t}{b}, \tfrac{y}{b}\Big), \qquad f_2(t, y) = \Big(\tfr
 | 文件 | 角色 |
 |:--|:--|
 | `paperX_ifs_sigma_rec_spectral.py` | 本笔记的数值验证附件（S1-S5，7/7，已注册 `run_all_tests.py`） |
-| `formal_proof/.../IFSRecCoding.lean` | IFS → Σ-Rec 符号编码（子任务 2，编译通过，零 `sorry`） |
-| `formal_proof/.../NoiseCategory.lean` | Σ-Rec/Σ-Spec Category、ι_Σ、Σ-D 对象层（✅ 既有编译错误已全部修复，2026-08-05） |
+| `formal_proof/.../IFSRecCoding.lean` | IFS → Σ-Rec 符号编码（v0.2+，含谱 coproduct 分解三定理，编译通过，零 `sorry`） |
+| `formal_proof/.../WeierstrassGap.lean` | Weierstrass 图 IFS 谱隙结构支撑（v1.0：收缩/维数/迹公式，编译通过，零 `sorry`） |
+| `formal_proof/.../NoiseCategory.lean` | Σ-Rec/Σ-Spec Category、ι_Σ、Σ-D 正式函子（✅ 编译错误已修复 + Functor 律闭合，2026-08-05） |
 | `formal_proof/.../IFSFractal.lean` | IFS 分解基础设施（阶段 3 依赖） |
 | `notes/00_foundations/spectral_category_scope_stratification.md` | 阶段 3 规划出处（§3.3、§4 阶段 3） |
 | `paper/paper1_fractal_spectral_derecursion.md` | 分形 RKHS / IFS 收敛率理论（上层论文） |

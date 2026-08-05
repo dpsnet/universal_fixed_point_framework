@@ -279,20 +279,22 @@ agda_formalization/
 
 ### 当前状态
 
+**✅ 全库零 `sorry` 零 `axiom`（2026-08-05 里程碑，`lake build` 2454 jobs 通过）**
+
 | `sorry` | 位置 | 性质 | 闭合路径 |
 |:--------|:-----|:-----|:---------|
 | ~~`spExchangeLaw`~~ | ~~`HigherSpCategory.lean:103`~~ | ~~🔴 L3 概念特征~~ | ✅ **已消除**（2026-08-04，改为偏差定理引用） |
-| `RFunctor.map`/`map_id`/`map_comp` | `Adjunction.lean:53,58,60` | 🔴 L3 全范畴不可构造 | 对齐 Agda `postulate R-map`；阶段 2 SpImDMor 限制后闭合 |
-| ~~`RIm_map`~~ | ~~`RAP5a_explicit_adjunction.lean:103`~~ | ~~🔴 L3 D 不 full（基数反例）~~ | ✅ **已闭合**（2026-08-04 阶段 1 线性语义：SpImDMor 限制为线性态射层，RIm_map = 恒等提取，`DImAdjRIm` 完整伴随） |
-| ~~`vertComp`/`horizComp`/`exchange_law`~~ | ~~`HigherRecCategory.lean:58,77,123`~~ | ~~🔴 L3 自然性定义性缺口~~ | ✅ **已闭合**（2026-08-04 O13：Rec₂ 2-态射按 D-拉回重定义，竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明） |
-| `spectral_gap_estimate` | `DeviationBound.lean:384` | 🟡 L2 待 Mathlib + 缺 A_GR 谱假设 | 监视 `Matrix.Spectrum` 进展 + 补假设 |
-| `deviation_spectral_bound` | `DeviationBound.lean:411` | 🟡 L2 依赖上者 | 自动闭合 |
-| `DAdjR` (axiom) | `Adjunction.lean:89` | 🔴 L3 右三角恒等式 | `noncomputable axiom`（对齐 Agda `postulate right-triangle`） |
+| ~~`RFunctor.map`/`map_id`/`map_comp`~~ | ~~`Adjunction.lean:53,58,60`~~ | ~~🔴 L3 全范畴不可构造~~ | ✅ **已闭合**（2026-08-05：判定结构性不可构造后删除，`RFunctor` 降为对象映射） |
+| ~~`RIm_map`~~ | ~~`RAP5a_explicit_adjunction.lean:103`~~ | ~~🔴 L3 D 不 full（基数反例）~~ | ✅ **已闭合**（2026-08-04 阶段 1 线性语义：SpImDMor 限制为线性态射层，`DImAdjRIm` 完整伴随） |
+| ~~`vertComp`/`horizComp`/`exchange_law`~~ | ~~`HigherRecCategory.lean:58,77,123`~~ | ~~🔴 L3 自然性定义性缺口~~ | ✅ **已闭合**（2026-08-04 O13：Rec₂ 2-态射按 D-拉回重定义，`recExchangeLaw_*` 偏差定理族机器证明） |
+| ~~`spectral_gap_estimate`~~ | ~~`DeviationBound.lean:384`~~ | ~~🟡 L2 待 Mathlib + 缺 A_GR 谱假设~~ | ✅ **已闭合**（2026-08-04 O8，改经 `deviation_spectral_bound_simplified` 传递） |
+| ~~`deviation_spectral_bound`~~ | ~~`DeviationBound.lean:411`~~ | ~~🟡 L2 依赖上者~~ | ✅ **已闭合**（2026-08-04，`theorem deviation_spectral_bound`） |
+| ~~`DAdjR` (axiom)~~ | ~~`Adjunction.lean:89`~~ | ~~🔴 L3 右三角恒等式~~ | ✅ **已删除**（2026-08-05：`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在，结构性不可构造） |
 
 ### 时间线
 
-- **短期**：路径 C 完成后，用 Python 验证结果交叉确认偏差代数形式（$\Delta$ 的 Frobenius 范数行为）的正确性
-- **中期**：Mathlib `Matrix.Spectrum` 稳定后，2 个 L2 `sorry` 数小时内可补全
+- **短期** ✅：路径 C（Python 8/8）+ 路径 B（Agda 16 模块）完成后，Lean 侧 **全库零 `sorry` 零 `axiom`**（Adjunction 3 sorry + 1 axiom 经结构性判定删除，DeviationBound 2 经简化定理闭合，Σ-D Functor 律 + 阶段 3 分形扩张全部闭合）
+- **中期**：Mathlib `Matrix.Spectrum` 稳定后，可补有限维谱积分层（Weierstrass 核谱隙特征值级证明等，登记为阶段 3 开放项）
 - **长期**：Agda 版本完成后，对比两个证明助理的实现一致性
 
 ---
@@ -451,3 +453,4 @@ agda_formalization/
 | v1.34 | 2026-08-03 | **方案 A 阶段 4 收官：fc-poly-le-spec-int 依赖循环解决**：SpectralTheory 登记 `≤ₒ-refl`（C 类补充：X ≤ₒ X——Hilbert 层 ⟨(X−X)v,v⟩ = 0 ≥ 0，降定理路径 = 算子序 + 内积正定性）+ **`fc-poly-le-spec-int` 由 postulate 降为可证定理**（fc(p) ≡ spec-int-general p（fc-integral §5c）⟹ ≤ₒ，subst + ≤ₒ-refl）——**桥接减一**。**依赖循环分析**：原 postulate 构造化路径自循环——fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous（fc = 多项式下界 sup）展开为 {fc(q) : q ≤ p⁺}，fc(q)≤ₒ∫q 正是目标本身，循环不可经方案 A 正负分解绕过（p⁺ 非多项式，fc(p⁺) 侧唯一工具是 fc-continuous/fc-integral）；改用更基础 fc-integral（§5c：fc f ≡ spec-int-general f，谱定理函数演算 = 谱积分，与 spec-int-A 同层 D 类基础假设）直接降为定理。**方案 A 收官，技术债 A1 闭合**：fc 侧唯一剩余 D 类桥接 = fc-integral（健全）。§15 审计更新 8。Everything.agda 全量编译通过（16 模块，退出码 0）。**待**：fc-integral（fc = ∫）完整降为定理需测度论完整层（sup 交换/函数演算），方案 A 阶段 4 余项基础设施（dyadic 阶梯 + MCT，v1.29-1.33）备用 |
 | v1.36 | 2026-08-03 | **方案② 谱对象映射完整闭合：A/fc Hilbert 层模型桥接**：HilbertSpace §12' 登记 `A-hilb`（自伴算子 A 的 Hilbert 层模型）+ `A-hilb-self-adjoint`（A 自伴）+ `A-hilb-comm-E`（A 与谱投影交换：A E(P) = E(P) A——M-Sp/M-σ 的 Hilbert 侧）+ `fc-hilb`（Borel 函数演算模型）+ `fc-hilb-id`（恒等函数演算 = A）+ `fc-hilb-exponential`（指数函数演算 = 半群：fc-hilb(e^(-t·)) = exp-hilb-tA t，§8c 的 Hilbert 侧）——**谱定理降定理链端点桥接**（与 spectral-subspace/exp-hilb-tA 同层，链体 = 谱定理证明文档化为降定理路径）+ CrossLayer SpectralObjPt 扩展 4 字段（A-self-adjoint-hilb/A-comm-E-hilb-pt/fc-hilb-id-A-pt/fc-hilb-exp-tA-pt）并实例化——**技术债项 4 谱对象映射（A/E/fc/exp-tA）完整闭合**（剩余：算子层等式版，funext 结构性 P4 先例）。排坑：HilbertSpace/CrossLayer import 补 exp/negℝ/_*ℝ_。Everything.agda 全量编译通过（16 模块，退出码 0）。**待**：项 4 剩余（funext 结构性）；ln2-lt/ln1615-lb/ln15-arith-ax（工程计算资源不足）；fc-integral 完整降定理（测度论层） |
 | v1.37 | 2026-08-03 | **Paper XXXVIII 产出（Agda 交叉验证专论）**：系统整理路径 B 全貌为独立论文 `paper38_agda_cross_validation.md`（v0.1）——目的（消除单一实现偏差/类型论正交/结构真独立证据）、16 模块清单、B1-B8 双实现一致性表、闭合历程（T1/T2/T3 + 技术债 A 类全闭合 v1.17–v1.36）、剩余开放项（funext/spExchangeLaw 概念特征/S0 静默/待基础设施）、声明纪律。研究操作规范"笔记先行→论文提炼"闭环：先建笔记 `notes/00_foundations/agda_cross_validation_notes.md` v0.1（完整推导与讨论），再提炼论文。同步：两级 README 论文计数 37→38、勘误 §六 论文状态总表。纯文档，无代码改动。**待**：勘误版本升版与发布（视用户决策） |
+| v1.38 | 2026-08-05 | **Lean 侧（路径 A）全库零 `sorry` 零 `axiom` 里程碑 + 阶段 3 分形扩张闭合**：路径 A 当前状态表全部 sorry/axiom 项闭合——`Adjunction.lean` 原 3 处 `sorry`（RFunctor.map/map_id/map_comp）+ 1 处 `axiom DAdjR` 经判定**结构性不可构造**（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在）后删除，`RFunctor` 降为对象映射；`DeviationBound.lean` 2 处 L2（`spectral_gap_estimate`/`deviation_spectral_bound`）经简化定理闭合（O8）；`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）闭合（`dfunctorMapTransport'` 无 cast 设计）并组装正式函子 `sigmaDFunctor`；`IFSRecCoding.lean` 谱 coproduct 分解三定理 + `WeierstrassGap.lean`（Weierstrass 图 IFS 收缩/维数/迹公式结构支撑，核谱隙特征值级证明登记为开放项）。**Lean 全库 `lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`**。**待**：Mathlib `Matrix.Spectrum` 稳定后补有限维谱积分层（阶段 3 开放项） |

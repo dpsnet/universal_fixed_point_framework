@@ -99,9 +99,9 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 | 指标 | 数值 |
 |------|------|
-| 总 Lean 模块数 | 81（其中 15 个模块存在预存编译错误：GelfandDuality/RAP4 bad import、NoiseCategory 读取失败、Test*/Fiber 家族等，均为遗留损坏，非 Phase 61A-D 引入） |
-| 构建状态 | 默认目标 `lake build` ✅ 零错误；全库 `lean_lib` 15 模块预存编译错误（登记）；Phase 61A-D 7 模块零 `sorry` |
-| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.10 §六）+ Phase 61A-D 7 模块 |
+| 总 Lean 模块数 | 82（含新增 `WeierstrassGap.lean`；"15 个预存编译错误"为 2026-07 历史登记基数——`NoiseCategory.lean` 已于 **2026-08-05 修复移出**，`TestCategoryTheory` 亦已修复） |
+| 构建状态 | 默认目标 `lake build` ✅ 零错误（**2454 jobs**）；全库零 `sorry` 零 `axiom`；Phase 61A-D 7 模块零 `sorry` |
+| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.10 §六）+ Phase 61A-D 7 模块 + NoiseCategory/IFSRecCoding/WeierstrassGap |
 | 活动 `sorry`（2026-08-05 审计） | **全库零 `sorry` 零 `axiom`**（里程碑）：`Adjunction.lean` 原 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——`RFunctor` 降为对象映射（`Fin S.n` 状态 + 恒等步进），原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）经判定**结构性不可构造**（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在）后删除；`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）**2026-08-05 闭合**并组装为正式函子 `sigmaDFunctor`。非 S0 全部清零：ThermoFormalism 4（O11）、DeviationBound 2（O8）、RAP5a 1（RIm_map，线性语义）、HigherRecCategory 3（O13——Rec₂ 2-态射按 D-拉回重定义）；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合 |
 
 **Phase 61A（P1-4 暴涨完整动力学）✅ 2026-08-03** — `InflationDynamics.lean`（酉共轭/谱流保 Hermitian F1-F3 + 动态连续极限 F4）；论文 `paper39_inflation_dynamics.md`（Paper XXXIX，N_e 闭式 55 + 预言闭环）；数值 15/15。
@@ -118,6 +118,15 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 **路径 B 推进 ✅（2026-08-03，v1.13–v1.16）** — Agda 侧扩至 **16 模块**，T3 谱定理层进一步闭合：fc-integral 公理完整降为可证明定理（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步。
 
 **向外推形式化 ✅** — `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`，维数间隙 $\ln 15 < 3$ 与层正交分离 $S_4/c_1 = e^3$ 已形式化绑定（`lake build` 编译通过）；Agda 侧由 B7 镜像。
+
+### 阶段 3：IFS 分形扩张（Σ-Rec coproduct 谱对应，✅ 2026-08-05）
+
+**全部子任务闭合**（数值 7/7 + Lean 零 `sorry`）：
+- **Σ-D Functor 律闭合**：`NoiseCategory.lean` `dfunctorMapTransport'`（对分量变量 cases、无 cast）→ `sigmaDFunctorMap_id/_comp` → 正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`
+- **谱 coproduct 分解 Lean 侧**：`IFSRecCoding.lean` 三定理——对象层 `symbolicSigmaRecObj_spectral_components`、态射层 `symbolicSliceInjection_spectral_component0`、迹公式 `symbolicTransferMatrix_trace_eq_one`（tr(T_f) = #Fix = 1）
+- **Weierstrass 谱隙结构支撑**：`WeierstrassGap.lean` v1.0——图 IFS 收缩率 1/b 机器证明、Moran 维数 log 2/log b、图维数 2 + ln a/ln b 随 a 严格递增、谱障碍公式实例；核谱隙特征值级证明登记为开放项（依赖有限维谱积分层）
+
+详见 [`notes/00_foundations/spectral_phase3_fractal_expansion.md`](notes/00_foundations/spectral_phase3_fractal_expansion.md)（v0.7）。
 
 ### Phase 27 深化方向（全部完成 ✅）
 

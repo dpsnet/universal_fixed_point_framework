@@ -639,7 +639,9 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 | 模块 | 形式化内容 | 对应定理 |
 |:----|:---------|:-------:|
 | `StaticTopologyFormalization.lean` | $\mathbf{Rec}_{\text{id}}$ 范畴、`ContRecObj`、$\mathcal{L}$/$\iota$ 函子、$\mathcal{L} \dashv \iota$ 伴随对、S1–S4 静默判定、`𝒟ynFunctor`、谱等价桥、冻结-解冻 | Thm 3.1–4.2, 5.1–6.4 |
-| `NoiseCategory.lean` | $\Sigma$-$\mathbf{Rec}$/$\Sigma$-$\mathbf{Sp}$ 范畴、$\Sigma$-$D$ 函子、`selFunctor`、`extFunctor`、`dissFunctor`、`NoiseSpectralFlow` | Thm 7.1–8.5, 11.1–11.2 |
+| `NoiseCategory.lean` | $\Sigma$-$\mathbf{Rec}$/$\Sigma$-$\mathbf{Sp}$ 范畴、$\Sigma$-$D$ 函子（**2026-08-05 升格为正式函子 `sigmaDFunctor`：Functor 律 `map_id`/`map_comp` 完全闭合**）、`selFunctor`、`extFunctor`、`dissFunctor`、`NoiseSpectralFlow` | Thm 7.1–8.5, 11.1–11.2 |
+| `IFSRecCoding.lean` | IFS → Σ-Rec 符号编码（`symbolicRecObj`/`symbolicSlice`/`symbolicSigmaRecObj`/`symbolicSliceInjection`）+ 不动点完整等价 + **谱 coproduct 分解三定理**（对象层分量 = D(片)、态射层片注入 Σ-D 像、迹公式 tr(T_f) = #Fix = 1） | Thm 15.3 的 IFS 实例（阶段 3） |
+| `WeierstrassGap.lean` | Weierstrass 图 IFS 谱隙结构支撑：收缩率 1/b 机器证明、Moran 维数 log 2/log b、图维数 2 + ln a/ln b 随 a 严格递增、谱障碍公式实例 | 阶段 3（核谱隙特征值级证明为开放项） |
 | `MultiSilenceMethodology.lean` | S₁–S₄ 数值因子、`SilenceDecomposition` 结构、5 步分析流水线、四种已解案例 | §5 |
 | `PhysicalSilenceAnalysis.lean` | Higgs VEV、Kerr QNM、暴胀张量谱、暗物质 relic 密度的静默分析 | §6.4, §8.5 |
 | `SilenceHierarchyDeepened.lean` | M1–M4 判据、四层静默度算符 $\mathcal{S}$、$C_{\text{crit}}$ 辫子退化判据、B1–B3 数值验证流程、$K_{\text{crit}}$ Kerr 标定、Fibonacci Wilson-辫子对应、BTZ $C_{\text{crit}}$ 稳定性、Tangherlini $K_{\text{crit}}^{(D)}$ 维度标定 | §15.1–§15.6, Thm 15.1–15.9 |
