@@ -189,7 +189,11 @@ $M_{ud}$ 由 $m_\rho$ 定标、$\Delta_{\text{hf}}$ 由 $\Delta{-}N$ 分裂定�
 1. **$\kappa$（dressing 系数）谱定**：组分 dressing 系数 $\kappa$ 由 $m_\rho$ 定标反推，非独立谱推导——需禁闭微扰框架。
 2. **$\Delta_{\text{hf}}$ 谱形式**：超精细分裂的色-Coulomb 谱势严格推导登记为后续。
 3. **$\Lambda_{\mathrm{QCD}}$ 味数依赖**：$b_0$ 取 $N_f = 3$（低能）与 PDG $\Lambda^{(5)}$ 的匹配需跨味阈值处理（Phase 61 P0-2 支撑）。
-4. **重味强子（$J/\psi$、$B$、$\Upsilon$）**：含重夸克的束缚态需非相对论谱势（Cornell）扩展，登记为后续。
+4. **重味强子（$J/\psi$、$B$、$\Upsilon$）**：含重夸克的束缚态需非相对论谱势（Cornell）扩展——**✅ 部分闭合（2026-08-05，61B 开放项）**：`paperX_qcd_heavy_flavor.py`（6/6 检查，已注册 `run_all_tests.py`）用 Cornell 势 $V(r) = -\tfrac{4\alpha_s}{3r} + \kappa r$ 解重夸克偶素径向 Schrödinger 方程，对标 PDG：
+   - **charmonium**（$\alpha_s = 0.39$、$m_c = 1.5$ GeV 有效值）：$J/\psi$ = 3.33 GeV（PDG 3.097，偏差 7.5%）、$\psi(2S)$ = 3.93 GeV（PDG 3.686，6.7%）；径向激发间距 603 MeV（PDG 589，2.3%）；
+   - **bottomonium**（$m_b = 4.8$ GeV 有效值）：$\Upsilon$ = 9.476 GeV（PDG 9.460，**0.2%**）、$\Upsilon(2S)$ = 10.050 GeV（PDG 10.023，0.3%）；间距 574 MeV（PDG 563，2.0%）；
+   - **紧致性**：1S rms 半径 $J/\psi$ ≈ 0.42 fm、$\Upsilon$ ≈ 0.22 fm（重味紧致，物理合理）；
+   - **诚实边界**：$\alpha_s = 0.39$ 为 Cornell 有效耦合（拟合值，非跑动；跑动值 $\alpha_s(M_Z) \approx 0.118$，1 GeV 标度有效值 ~0.4 一致）；$m_c$/$m_b$ 为有效质量（dressing 后，裸 MS-bar 值 1.27/4.18 GeV）。$\kappa$ 独立谱定与超精细分裂仍开放（见下 1/2）。
 
 ---
 
@@ -199,3 +203,4 @@ $M_{ud}$ 由 $m_\rho$ 定标、$\Delta_{\text{hf}}$ 由 $\Delta{-}N$ 分裂定�
 |:--:|:--|:--|
 | v0.1 | 2026-08-03 | 初版。T1 色丛、T2 胶子顶点谱封闭、T3 禁闭/渐近自由定量定理、T4 强子谱第一性推导 + 形式化路线 + 数值清单。 |
 | v0.2 | 2026-08-03 | 内联公式统一为标准 `$...$` LaTeX 格式；修正 §4.2 数值（裸耦合 Z-链必要性 + 物理 Λ 单圈值）与 §7 验证清单（对齐脚本 C1–C15）。 |
+| v0.3 | 2026-08-05 | §8 开放项 4（重味强子 Cornell 扩展）**部分闭合**（61B）：`paperX_qcd_heavy_flavor.py` 6/6 通过（J/ψ/ψ'/Υ/Υ' 对标 PDG + 间距 + 紧致性），诚实标注 Cornell 有效参数边界。 |

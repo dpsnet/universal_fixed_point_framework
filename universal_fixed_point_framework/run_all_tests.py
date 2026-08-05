@@ -107,6 +107,7 @@ SCRIPTS = [
 
     # === Phase 61B (P0-1): SU(3) 色规范完整动力学 ===
     ("paperX_qcd_spectrum.py",                "色规范完整动力学：色丛 + 胶子顶点 + 禁闭渐近自由 + 强子谱 (15/15)"),
+    ("paperX_qcd_heavy_flavor.py",            "重味夸克偶素 Cornell 谱势（61B 扩展）：J/ψ/ψ'/Υ/Υ' 对标 PDG + 间距 + 紧致性 (6/6)"),
 
     # === Phase 61C (P0-2): 量子重整化完整链条 ===
     ("paperX_rg_chain.py",                    "量子重整化链条：谱 Feynman + 谱正则化 + 谱流→β 函数 + EFT 层级 (12/12)"),
