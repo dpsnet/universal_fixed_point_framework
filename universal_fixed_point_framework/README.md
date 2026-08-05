@@ -14,7 +14,7 @@
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
 | 最新论文 / Latest Papers | **XXXIX**（暴涨完整动力学）+ **XL**（色规范完整动力学）+ **XLI**（量子重整化链条）+ **XLII**（黑洞量子演化）+ Paper XXXVIII（Agda 交叉验证） |
 | Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**）+ **Phase 61A-D 7 模块**（InflationDynamics/ColorDynamics/RenormalizationChain/BlackHoleEvolution/HawkingSpectrum/BlackHoleInformation/BlackHoleBounce，全部零 `sorry`） |
-| 遗留 `sorry` | **3 处 `sorry`** + 1 处 `axiom DAdjR`（2026-08-04 审计，全部为 `Adjunction.lean` 全范畴结构性开放项；非 S0 全部闭合——ThermoFormalism/DeviationBound（O8/O11）+ **RAP5a RIm_map（线性语义）** + **HigherRecCategory（D-拉回，O13）**；`HigherSpCategory` spExchangeLaw 与 `Silence` 已闭合，Phase 61A-D 模块零 `sorry`；详见下文"Lean 4 形式化"表） |
+| 遗留 `sorry` | **全库 Lean 零 `sorry` 零 `axiom`**（2026-08-05：`Adjunction.lean` 的 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——原 `RFunctor.map`/`DAdjR` 全范畴结构性不可构造且无使用方，删除后 `RFunctor` 保留对象映射；全范畴右伴随正确构造由 RAP5a SpImD `DIm ⊣ RIm` 覆盖；此前已闭合：ThermoFormalism/DeviationBound（O8/O11）+ RAP5a RIm_map（线性语义）+ HigherRecCategory（D-拉回，O13）；详见下文"Lean 4 形式化"表） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
 
 ---

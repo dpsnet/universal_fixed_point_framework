@@ -199,7 +199,7 @@
 | 支撑项 | 现状 | 与物理方向的关系 | 优先级 |
 |:------|:----|:----------------|:------:|
 | T3 测度论完整层（fc-integral 完整降定理） | 唯一剩余 D 类桥接 | **P0-2 圈图积分的直接前置**；测度论 sup 交换 | P0 |
-| S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；注：`NoiseCategory.lean` 存在预存编译错误（mathlib ProxyType 读取失败，2026-08-04 实测），其"lake build 通过"表述已更正——分层结论基于理论推导，编译恢复待 mathlib 修复 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
+| S0 R11 无限维验证 | ✅ 阶段 1 圈定 + ✅ 阶段 2 分层均闭合（理论层）；`NoiseCategory.lean` 既有编译错误已于 **2026-08-05 全部修复**（`lake build` 3172 jobs 通过，零 `sorry`）——Σ-Rec/Σ-Spec Category 律、`sigmaRecInclusion`（Faithful 诚实修正）、`Inhabited SpObj` 对齐、Σ-D 对象-态射层（`sigmaDFunctorObj`/`sigmaD_preserves_coproduct`）恢复可用；此前"编译恢复待 mathlib 修复"表述更正 | P1-3 黑洞无限维谱匹配的判定已就绪 | P1 |
 | d_H 物理约束 | δ 为 RMS 统计约束（闭式已排除） | 维持现状，不追闭式；经实验精化 | P2 |
 | funext 结构性限制 | 库公理范围外 | 接受为构造数学通用短板 | P2 |
 
@@ -252,17 +252,17 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 
 ### 遗留 `sorry`/`axiom` 处理规划（2026-08-04 补录，区分 S0 归属）
 
-Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代码遗留。**S0/范畴相关的 7+1 处已由 phase60 范畴演进计划（S0 表示静默 + SpImD 子范畴限制 + R11 无限维验证）规划闭合路径**，本表与其衔接而非另起炉灶：
+Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代码遗留，**已于 2026-08-04/08-05 全部闭合**（见下表）。S0/范畴相关的 7+1 处按 phase60 范畴演进计划（S0 表示静默 + SpImD 子范畴限制 + R11 无限维验证）推进完成：
 
 | 归属 | 位置 | 数量 | 性质 | 处理方向（衔接已有规划） |
 |:----|:-----|:--:|:-----|:--------|
-| **S0 表示静默/范畴基础** | `Adjunction.lean:53,58,60` + `:89 axiom` | 3+1 | 🔴 全范畴不可构造（nS≠nT 态射不存在） | phase60 阶段 2 **SpImDMor 限制**后闭合（对应 R11 有限维化，对象层已闭合 L198） |
+| **S0 表示静默/范畴基础** | ~~`Adjunction.lean:53,58,60` + `:89 axiom`~~ | 3+1 | 🔴 全范畴不可构造（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 时不存在） | **✅ 已闭合（2026-08-05）**：原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）结构性不可构造且**无任何使用方**（仅 `RFunctor.obj`/`adjUnit`/`adjCounit` 被用，均无 sorry）——已删除，`RFunctor` 保留为对象映射；全范畴右伴随（map 层）正确构造见 `RAP5a_explicit_adjunction.lean`（SpImD 子范畴 `DIm ⊣ RIm` 完整伴随）。**全库 Lean 零 sorry 零 axiom** |
 | **S0 表示静默/范畴基础** | ~~`RAP5a_explicit_adjunction.lean:103`（RIm_map）~~ | 1 | 🔴 D 不 full（基数反例，已机器证明） | **✅ 已闭合（2026-08-04 阶段 1 线性语义）**：按 `spectral_category_scope_stratification.md` 将 `SpImDMor` 限制为线性（Rec）态射层（谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明）。D 不 full 的基数反例保留为全范畴负结果 |
-| **S0 边缘/范畴基础** | ~~`HigherRecCategory.lean:58,77,123`~~（竖/横复合自然性 + 交换律） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | **✅ 已闭合（2026-08-04 O13，路径 B：D-拉回）**：`paperX_rec2_exchange_deviation.py` 诊断最小修正复合非结合（D7/D8）后，`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 线性条件），竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明（镜像 `spExchangeLaw_*`）。详见 `notes/00_foundations/spectral_rec2_exchange_deviation.md` |
+| **S0 边缘/范畴基础** | ~~`HigherRecCategory.lean:58,77,123`~~（竖/横复合自然性 + 交换律） | 3 | 🔴 定义性缺口（逐点加法/矩阵乘法不满足自然性） | **✅ 已闭合（2026-08-04 O13，路径 B：D-拉回）**：`paperX_rec2_exchange_deviation.py` 诊断最小修正复合非结合（D7/D8）后，`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 线性条件），竖/横复合良定义且结合，`recExchangeLaw_*` 偏差定理族机器证明（镜像 `spExchangeLaw_*`）。**2026-08-05 追加**：开放问题 8 **完全闭合**（命题 15 Fredholm 可解性刻画：可解 ⟺ $T_g - T_f \perp \ker L^*$；等迹缺陷正面例 T19；T17 扫描设计缺陷更正）。详见 `notes/00_foundations/spectral_rec2_exchange_deviation.md` v0.10 |
 | 非 S0（物理） | ~~`ThermoFormalism.lean:168,215,223,297`~~ | 4 | 🔶 不可证（legendreTransform 需 BddAbove / Bowen τ(0) / interpolateMeasure 为假定理 / sup 交换） | **✅ 已闭合（2026-08-04）**：`legendreTransform_convex` 加 `BddAbove` 假设（csSup_le 证明）；`singularity_spectrum_bound` 改条件定理（加 hτ0 Bowen 公式 + hBdd）；`singularity_spectrum_concave` 改条件定理（加 hBdd，占位 τ 下原陈述为假）；`interpolateMeasure` **删除**（测度凸组合不自相似，结构性假定理）→ `theorem_DC_concavity` 重构为权重层面（`hausdorffDimensionOfWeights`/`interpolateWeights`）。ThermoFormalism 现零 `sorry` |
 | 非 S0（物理） | ~~`DeviationBound.lean:384,411`~~ | 2 | 🟡 缺 A_GR 谱假设 + 待 Mathlib Matrix.Spectrum | **✅ 已闭合（2026-08-04）**：不再依赖 Mathlib `Matrix.Spectrum`——A_GR 谱物理断言显式化为假设 `hGap`（`spectral_gap_estimate`，Frobenius 次可乘性两次机器证明）+ `hNorm`（`deviation_spectral_bound`，由 `deviation_spectral_bound_simplified` 传递）。DeviationBound 现零 `sorry`（勘误 O8 闭合） |
 
-**处理优先级**：可证项（ThermoFormalism 可证部分 + DeviationBound 加假设）优先；假定理（interpolateMeasure）删除；**余 S0/范畴相关 3+1 处（`Adjunction.lean`）按 phase60 既有范畴演进计划推进**（S0 表示静默理论 → SpImD 限制 → R11 无限维；RAP5a RIm_map 与 HigherRecCategory 已按该路径闭合），非"转 axiom"替代方案。不在 Phase 61 物理推进范围，作为基础层支撑持续跟进（phase60 路径 A）。
+**处理优先级（已执行完毕）**：可证项（ThermoFormalism 可证部分 + DeviationBound 加假设）优先；假定理（interpolateMeasure）删除；**S0/范畴相关 3+1 处（`Adjunction.lean`）已按 phase60 既有范畴演进计划闭合**（2026-08-05：结构性不可构造的 `RFunctor.map`/`DAdjR` 删除，全范畴右伴随正确构造由 RAP5a SpImD 覆盖；**全库 Lean 现零 `sorry` 零 `axiom`**）。
 
 ---
 
