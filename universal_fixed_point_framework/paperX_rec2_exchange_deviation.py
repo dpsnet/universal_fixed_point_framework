@@ -23,6 +23,9 @@ paperX_rec2_exchange_deviation.py — Rec₂ 交换律偏差的 BCH 修正复合
   T15 同源交织 H 满足条件 + 时间无关族 α(n)≡H 满足自然性（§4.4 定理 12）
   T16 异源 RecHom 对（f=s≠g=s²）拉回 2-态射不存在（§4.4 定理 11，可对角化步进）
   T18 迹障碍：tr(A²−A)=#fixed(s²)−#fixed(s)≠0 ⟹ (s,s²) 不可解（命题 13 必要条件）
+  T19 缺陷等迹情形非平凡拉回 2-态射（例 14 正面例，v0.9）：s:0↦1,1↦2,2↦2（缺陷），
+      f=s, g=s²（#fix 等迹=1），显式 H=[[1,0,-1],[0,0,0],[0,0,0]] 精确满足
+      A H − H A = A²−A（残差 <1e-8）⟹ 非空性 ⟺ f=g 在缺陷等迹下不成立
 
 结构性诊断（预期不成立/探索性，非 pass/fail 项）：
   D7  竖结合律：最小修正不满足余循环条件 ⇒ 非结合（笔记 §7 开放问题 6）
@@ -72,14 +75,15 @@ def step_matrix(step, n):
     return transfer_matrix(step, n)
 
 def sylvester_solve(A, B, C, n):
-    """解 Sylvester 方程 A X − X B = C（Kronecker 方法）。返回 (X, 残差) 或 (None, None)。"""
+    """解 Sylvester 方程 A X − X B = C。返回 (X, 残差) 或 (None, None)。
+    用最小二乘（lstsq）：对奇异 K 也返回最小范数解，残差指示可解性
+    （可解残差 ~1e-14，不可解残差大）。"""
     K = np.kron(np.eye(n), A) - np.kron(B.T, np.eye(n))
-    try:
-        vecX = np.linalg.solve(K, C.reshape(-1))
-    except np.linalg.LinAlgError:
-        return None, None
+    vecC = C.reshape(-1)
+    vecX, _, _, _ = np.linalg.lstsq(K, vecC, rcond=None)
     X = vecX.reshape(n, n)
-    return X, np.linalg.norm(A @ X - X @ B - C)
+    res = np.linalg.norm(A @ X - X @ B - C)
+    return X, res
 
 def pullback_2morphism(f, g, stepX, stepY, n):
     """路径 B 拉回 2-态射：解 T_g − T_f = A_X H − H A_Y。返回 H 或 None。"""
@@ -390,6 +394,19 @@ def run():
     check("T18 迹障碍：tr(A²−A)=#fixed(s²)−#fixed(s)≠0 ⟹ (s,s²) 不可解（必要条件）",
           abs(tr_dev) > 1e-8 and (H_tr is None or res_tr > 1e-6),
           f"tr(A²−A)={tr_dev:.3f}, Sylvester 残差={res_tr if H_tr is not None else '无解'}")
+
+    # ---- T19: 缺陷等迹情形非平凡拉回 2-态射（显式构造，开放问题 8 正面例）----
+    # s: 0↦1, 1↦2, 2↦2（非双射，转移矩阵 A 缺陷）；f=s, g=s²（#fix(s)=#fix(s²)=1，等迹）。
+    # 显式解 H = [[1,0,-1],[0,0,0],[0,0,0]]：A H − H A = A² − A（手算 + 数值验证）。
+    s_def2 = lambda i: {0: 1, 1: 2, 2: 2}[i]
+    A_d2 = step_matrix(s_def2, n)
+    H_exp = np.zeros((n, n), dtype=complex)
+    H_exp[0, 0] = 1; H_exp[0, 2] = -1
+    res19 = np.linalg.norm(A_d2 @ H_exp - H_exp @ A_d2 - (A_d2 @ A_d2 - A_d2))
+    check("T19 缺陷等迹情形非平凡拉回 2-态射（显式构造：f=s≠g=s²，#fix 等迹）",
+          res19 < 1e-8, f"‖A H − H A −(A²−A)‖={res19:.2e}")
+    # 注：H_exp 不满足旧 flow-diagonal 异源自然性（H[x,g(x)]≠H[x,f(x)] 于 x=0）——
+    # 印证拉回定义独立于旧自然性类（见笔记 §4.4 定理 12 后的说明）。
 
     # ---- 汇总 ----
     print("-" * 72)
