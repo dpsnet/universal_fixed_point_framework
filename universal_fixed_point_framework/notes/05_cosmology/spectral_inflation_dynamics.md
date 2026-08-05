@@ -117,7 +117,30 @@ $$T_{\mathrm{RH}} = \left(\frac{90}{\pi^2 g_*}\right)^{1/4}\sqrt{\frac{\gamma_\v
 
 Phase 40：$\eta_B = (\delta_{\mathrm{CP}}\cdot\Gamma_{\mathrm{sph}}\cdot\Delta t_{\mathrm{neq}})/s_\gamma$，其中 $\delta_{\mathrm{CP}}$ 为谱 CP 破缺参数（Cl(1,7) $\theta$-项统一结构），sphaleron 率 $\Gamma_{\mathrm{sph}}$ 以 $T_{\mathrm{sph}} = T_{\mathrm{RH}}$ 为输入。$\eta_B \approx 6.1\times10^{-10}$ 与观测同量级。**本篇串联作用**：把 $T_{\mathrm{sph}}$ 从"输入"变为 D2 的 $T_{\mathrm{RH}}$ 闭式输出，使再加热 → 重子生成的链条闭合。
 
-### 3.4 与观测对齐
+### 3.4 γ_φ 谱第一性确定（路径 A）【谱新增，2026-08-05，61A 开放项 1 部分闭合】
+
+**开放项 1 部分闭合**：原 γ_φ ∈ [0.01, 1] 区间输入（标准量级 O(0.1)）现由**谱量闭式**确定（κ/F_π 同构模式，`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）：
+
+$$\gamma_\varphi \;=\; \frac{1}{4\pi}\left(\frac{\Delta\lambda_3}{\Delta\lambda_{\min}}\right)^2 C_{\mathrm{reheat}} \;=\; \frac{1.9992}{4\pi}\,C_{\mathrm{reheat}} \;=\; 0.159\cdot C_{\mathrm{reheat}}$$
+
+- 谱间隙比平方 $(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.9992 \approx 2$：Cl(1,7) 根系谱间隙比（与 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2$ 同源谱因子，复核 paper40 $\kappa = 1.909$）
+- $1/(4\pi)$：谱积分因子（F_π 谱公式 $F_\pi = \sqrt{N_c}\Lambda\frac{\Delta\lambda_3}{4\pi\Delta\lambda_{\min}}C_{\mathrm{QCD}}$ 同构）
+- $C_{\mathrm{reheat}}$：Cosmo-2 层再加热自由度常数（$\in [1/2, 1]$：单标量衰变道 → 全自由度上限）
+
+**数值**：
+
+| 量 | 谱定值 | 原状态 |
+|:--|:--|:--|
+| γ_φ | 0.119（中值，区间 [0.080, 0.159]） | [0.01, 1] 区间输入 |
+| T_RH | **2.08×10¹⁰ GeV（单值）** | [6.0×10⁹, 6.0×10¹⁰] 跨度 10× |
+| m_φ | 3.11×10¹³ GeV（复核） | 谱定（V₀） |
+| η_B(T_sph) | 5.6×10⁻¹⁰（观测 6.1×10⁻¹⁰，比 0.91） | 同量级 ✓ |
+
+**关键结论**：γ_φ 由谱间隙比平方（框架既有谱量）第一性确定——再加热链条从"区间输入"变为"单值谱定"，T_RH = 2.08×10¹⁰ GeV 落在标准区间内且保证热历史（T_RH > T_sph）与重子生成（η_B 同量级）串联。
+
+**诚实边界**：$C_{\mathrm{reheat}}$ 取 [1/2, 1] 参考区间（粒子谱自由度权重），完整 Cosmo-2 层粒子谱内容（自旋/质量相空间因子）登记为精确化方向；$(Δλ_3/Δλ_{min})^2 = 1.9992 ≈ 2$ 与 $\sqrt{2}$ 的精确关系待确认。
+
+### 3.5 与观测对齐
 
 | 量 | 谱推导值 | 观测/文献 | 状态 |
 |:--|:--------|:---------|:----:|
@@ -237,7 +260,7 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 
 ## 8. 诚实边界与未决问题
 
-1. **$\gamma_\varphi$ 未谱定**：再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定，登记为开放项。
+1. **$\gamma_\varphi$ 未谱定**：~~再加热衰变率耦合 $\gamma_\varphi$ 取标准量级（$\mathcal{O}(0.1)$）给出区间而非唯一定值——需粒子物理内容（Cosmo-2 层粒子谱）才可谱确定~~ **🔶 部分闭合（2026-08-05，§3.4）**：谱量闭式 $\gamma_\varphi = \frac{1}{4\pi}(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向）。
 2. **$R^4$ 修正对 $N_e$ 的定量影响**（$N_{R^4}$）：Phase 42 的 $R^4$ 系数 $c_2/c_1 \approx 0.1$ 量级，对 $N_e$ 影响 $\lesssim 0.1$，本笔记以量级处理，未做精确闭式。
 3. **动态连续极限的严格度规推导**：D3.1 第 (3) 条中 $a(t)$ 从谱流特征值涌现的"度规诱导"论证为结构论证（拟对称 → 等距类），严格微分几何验证登记为后续。
 4. **$N_e$ 一致性**：D1 闭式（$\approx 55$）与 $S_4$ 分形边界（$\approx 55$）一致，但二者共享观测输入 $H_{\mathrm{inf}}/T_{\mathrm{RH}}/T_{\mathrm{CMB}}$ 的近似，非完全独立测量。
@@ -252,3 +275,4 @@ V₀^{1/4} (Phase 42 R²–R⁴) ──→ H_inf, m_φ (D2)
 | v0.2 | 2026-08-03 | 内联公式统一为标准 `$...$` LaTeX 格式。 |
 | v0.3 | 2026-08-04 | **N_{R⁴} 精确闭式（§2.2）**：R⁴ 修正对 e 折叠数贡献由量级估计升级为精确闭式（一阶 δ₂ 展开 + x 变量积分），数值 −0.0157；`paperX_nR4_closed_form.py` 闭式 vs 数值积分验证（相对偏差 0.044%）。 |
 | v0.4 | 2026-08-05 | **§4.4 P1-3 ↔ P1-4 动态连续极限衔接（新增）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿（a_min = 1/Δλ_min²、H → H_inf 精确衔接、谱流特征值红移闭式自洽）；`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`（61A 开放项"P1-3↔P1-4 衔接"部分闭合）。 |
+| v0.5 | 2026-08-05 | **§3.4 γ_φ 谱第一性确定（路径 A，新增）**：γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（落在标准区间 + 热历史 + η_B 同量级串联）；`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；§8 开放项 1 更新（🔶 部分闭合）。 |

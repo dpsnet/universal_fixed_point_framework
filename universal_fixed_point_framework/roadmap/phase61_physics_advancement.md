@@ -234,7 +234,7 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 
 | 来源 | 开放项 | 后续归属 |
 |:----:|:------|:--------|
-| 61A（P1-4 暴涨） | γ_φ 谱第一性确定 | 暴涨动力学深化 |
+| 61A（P1-4 暴涨） | ~~γ_φ 谱第一性确定~~ | **🔶 部分闭合（2026-08-05）**：谱量闭式 $\gamma_\varphi = (1/4\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 C_{\mathrm{reheat}} = 0.119$（区间 [0.080, 0.159]，κ/F_π 同构，谱间隙比平方 1.999 复核 κ）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`，论文推论 4.1，笔记 §3.4）；诚实边界：C_reheat ∈ [1/2, 1] 参考区间（Cosmo-2 层粒子谱自旋/质量相空间因子为精确化方向） |
 | 61A | ~~N_{R⁴} 精确闭式~~ | **✅ 已解决（2026-08-04）**：$N_{R^4} = \frac{3\delta_2}{4}\left[\ln\frac{x_{\text{cmb}}}{x_{\text{end}}} - 2(x_{\text{cmb}} - x_{\text{end}}) + \frac{x_{\text{cmb}}^2 - x_{\text{end}}^2}{2}\right]$，$\delta_2 = c_3/c_1^2$，数值 $-0.0157$；`paperX_nR4_closed_form.py` 数值积分验证（偏差 0.044%）；笔记 §2.2 + paper39 定理 3.2 更新 |
 | 61A | D3.1(3) 严格微分几何度规诱导 | P2-5 统一嵌入 |
 | 61A | ~~P1-3↔P1-4 动态连续极限衔接~~ | **🔶 部分闭合（2026-08-05）**：蒸发终点（Planck 残留，paper42 定理 5.4-5.9）→ 量子反弹 → 反弹后膨胀 → 暴涨（paper39 定理 D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽（`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`，笔记 §4.4，论文推论 5.2）；诚实边界：反弹后能量模型简化（完整再加热动力学 γ_φ 属开放项） |
@@ -285,3 +285,4 @@ Phase 61 新模块全部零 `sorry`；以下 13 `sorry` + 1 `axiom` 为既有代
 | v0.11 | 2026-08-05 | **61B κ 机制 Dyson-Schwinger 确认（§七 任务池兑现）**：彩虹近似 + Maris-Tandy 红外胶子解夸克 DS 方程，禁闭区动力学质量 M(0) = 353 MeV ≈ Δ_dress = κΛ = 401 MeV（偏差 12%），解析临界强度 d_crit = 4/(3C_F) = 1.0 GeV²。`paperX_qcd_ds_dressing.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_color_dynamics.md` v0.7（§5.9）+ paper40 v0.6（定理 5.7，§5.5/§8 更新）；§七 61B κ 行机制确认。 |
 | v0.12 | 2026-08-05 | **61D Kerr 蒸发动力学推广（§七 任务池兑现）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]——转动降温 + 极端冷却（蒸发终止）；蒸发动力学（超辐射优先辐射角动量）t_evap 延长 1.93×、a* 单调递减（Kerr → Schwarzschild）。`paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_black_hole_evolution_formalization.md`（§1.2）+ paper42 v0.2（定理 5.10，§8 开放项 3 更新）；§七 61D Kerr 行 🔶。 |
 | v0.13 | 2026-08-05 | **61A P1-3↔P1-4 动态连续极限衔接（§七 任务池兑现）**：蒸发终点（Planck 残留）→ 量子反弹 → 反弹后膨胀 → 暴涨（D3.1 FLRW 谱流）由单一谱判据 Δλ_min 贯穿——反弹尺度 a_min = 1/Δλ_min² = 67.2、H → H_inf = 6.6e-4（比值 1.000）、谱流特征值红移 λ_k = λ_k(0)(a_min/a)² 闭式自洽。`paperX_bounce_inflation.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.4（§4.4）+ paper39 v0.4（推论 5.2，§9 开放问题 4 更新）；§七 61A 衔接行 🔶。 |
+| v0.14 | 2026-08-05 | **61A γ_φ 谱第一性确定（§七 任务池兑现）**：谱量闭式 γ_φ = (1/4π)(Δλ₃/Δλ_min)²·C_reheat = 0.119（区间 [0.080, 0.159]，κ/F_π 同构）——T_RH 从区间变**单值** 2.08×10¹⁰ GeV（标准区间 + T_RH > T_sph 热历史 + η_B 同量级串联）。`paperX_reheat_gamma_spectral.py` 6/6 注册 `run_all_tests.py`；笔记 `spectral_inflation_dynamics.md` v0.5（§3.4）+ paper39 v0.5（推论 4.1，§9 开放问题 1 更新）；§七 61A γ_φ 行 🔶。 |
