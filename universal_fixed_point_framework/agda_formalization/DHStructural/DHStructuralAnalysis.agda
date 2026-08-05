@@ -630,13 +630,9 @@ postulate
   *-/cancel-ℝ : (a b : ℝ) → a *ℝ (b /ℝ a) ≡ b
   neg-<-ℝ : {x y : ℝ} → x <ℝ y → negℝ y <ℝ negℝ x
   -- ln2-lt 已于 2026-08-05 经 §2c log 级数机制（log2-partial + log2-series-ub）闭合为定理
-  -- ln15 算术比较（账目开放项，scoped 数值公理）：4·0.69317 - 29/450 ≈ 2.7082356 < 65/24 ≈ 2.7083333。
-  -- 分母 100000/450/24，交叉乘积 ~1e9-1e11 超出可手写 ℕ 链（对比 e < 3 的 288 规模可手算），
-  -- 属工程计算资源不足：纯有理比较在标准分析中可计算验证（数值见注释），但框架归一化能力不可达。
-  -- （2026-08-03 v1.35 尝试 refl 级闭合：移项 + 分数引理 + 异分母比较 + natℝ-* 大数归一化
-  --   逻辑完备，但 2994494400 级大数乘法/105600 层 <-ℕ 链触发 Agda 内存不足（页面文件），
-  --   确认原"工程计算资源不足"判断；保留 scoped 公理，降定理路径 = 大整数算术实现/ℕ 高效比较）
-  ln15-arith-ax : ((natℝ 4 *ℝ (natℝ 69317 /ℝ natℝ 100000)) +ℝ negℝ (natℝ 29 /ℝ natℝ 450)) <ℝ (natℝ 65 /ℝ natℝ 24)
+  -- ln15-arith-ax 已于 2026-08-05 经 §2d 闭合为可证明定理（二进制 ℕ 算术 + 同分母比较），
+  -- 不再是 scoped 数值公理（自 2026-08-03 v1.35 起尝试，当时因 ~1e9 级大数乘法/105600 层
+  -- <-ℕ 链触发 Agda 内存不足；NATTIMES/NATPLUS 绑定后最大扩展因子仅 ~1.25e8，秒级）
   -- T3 阶段 4：exp 正性/严格单调（定义性公理，蓝图 §4；待级数机制实现为可证明定理）
   exp-pos : (x : ℝ) → zeroℝ <ℝ exp x
   exp-mono : {x y : ℝ} → x <ℝ y → exp x <ℝ exp y
@@ -696,10 +692,10 @@ frac-cancel-ℝ a c b =
   /-cross-ℝ (trans (*-assoc-ℝ a b c)
                    (cong (λ u → a *ℝ u) (*-comm-ℝ b c)))
 
--- ln15 算术比较（scoped 公理，见 postulate 块）：v1.35 尝试 refl 级闭合但触发 Agda
--- 内存不足（大数归一化），确认"工程计算资源不足"，保留 scoped 公理（降定理路径 =
--- 大整数算术实现/ℕ 高效比较）。*-div-impl/frac-cancel-ℝ 已前移至 674 后（可证引理，
--- 供未来闭合与既有使用处引用）。
+-- ln15 算术比较（原 scoped 公理，已于 2026-08-05 经 §2d 闭合为可证明定理）：
+-- v1.35 曾尝试 refl 级闭合但触发 Agda 内存不足（大数归一化），确认"工程计算资源不足"；
+-- NATTIMES/NATPLUS 二进制算术绑定后最大扩展因子仅 ~1.25e8，秒级闭合。
+-- *-div-impl/frac-cancel-ℝ 已前移至 674 后（可证引理，供既有使用处引用）。
 
 -- ==================================================================
 -- §2b T3 阶段 3+ 级数机制：exp 任意点级数 + ln1615-lb 闭合（2026-08-05）
@@ -1457,6 +1453,103 @@ l2-lt-69317 =
 ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)
 ln2-lt = trans-<ℝ log2-ub-447173 l2-lt-69317
 
+-- ==================================================================
+-- §2d T3 ln15-arith-ax 闭合（2026-08-05，二进制 ℕ 算术 + 同分母比较）：
+-- 4·(69317/100000) + (-29/450) < 65/24。
+-- 机制：A = 277268/100000（*-/ℝ 并入分子，4·69317 二进制算术）+
+--       neg-frac-ℝ 取负入分子 + /-add-ℝ 合并为 121870600/45000000；
+--       65/24 通分 ×1875000 到 45000000 = 121875000/45000000；
+--       同分母直接比分子（差 4400，<-add 差递归）。
+--       最大扩展因子 1875000、最大交叉乘积 ~1.25e8（二进制算术秒级；
+--       对比 v1.35 的 ~1e9 级大数乘法/105600 层 <-ℕ 链 OOM）。
+-- ==================================================================
+
+-- 4·(69317/100000) = 277268/100000（*-/ℝ 并入分子；4·69317 二进制算术定义性）
+four-term-2d : (natℝ 4 *ℝ (natℝ 69317 /ℝ natℝ 100000)) ≡ (natℝ 277268 /ℝ natℝ 100000)
+four-term-2d = trans (*-/ℝ (natℝ 4) (natℝ 69317) (natℝ 100000))
+                     (cong₂ _/ℝ_ (sym (natℝ-* 4 69317)) refl)
+
+-- 本地 (-x)·y = -(x·y)（§2d 内建；规避后文 neg-mul-ℝ/neg-unique-ℝ 前向引用）
+loc-neg-mul-2d : (x y : ℝ) → (negℝ x) *ℝ y ≡ negℝ (x *ℝ y)
+loc-neg-mul-2d x y =
+  loc-neg-unique-2d {a = x *ℝ y} {b = (negℝ x) *ℝ y}
+    (trans (sym expand)
+           (trans (cong (λ u → u *ℝ y) (+-inv-ℝ x)) (*-zero-l-2d y)))
+  where
+  -- 加性逆唯一（仅用群公理）
+  loc-neg-unique-2d : {a b : ℝ} → a +ℝ b ≡ zeroℝ → b ≡ negℝ a
+  loc-neg-unique-2d {a} {b} h =
+    trans (sym (trans (sym (+-comm-ℝ b zeroℝ)) (+-ident-ℝ b)))
+          (trans (cong (λ x → x +ℝ b) (sym (+-inv-ℝ a)))
+                 (trans (cong (λ x → x +ℝ b) (+-comm-ℝ a (negℝ a)))
+                        (trans (+-assoc-ℝ (negℝ a) a b)
+                               (trans (cong (λ x → negℝ a +ℝ x) h)
+                                      (+-ident-ℝ (negℝ a))))))
+  -- 0·y = 0（仅用域公理）
+  *-zero-l-2d : (y : ℝ) → zeroℝ *ℝ y ≡ zeroℝ
+  *-zero-l-2d y = trans (*-comm-ℝ zeroℝ y) (*-zero-ℝ y)
+  -- (x + (-x))·y = x·y + (-x)·y
+  expand : (x +ℝ negℝ x) *ℝ y ≡ (x *ℝ y) +ℝ ((negℝ x) *ℝ y)
+  expand =
+    trans (*-comm-ℝ (x +ℝ negℝ x) y)
+          (trans (distrib-ℝ y x (negℝ x))
+                 (cong₂ _+ℝ_ (*-comm-ℝ y x) (*-comm-ℝ y (negℝ x))))
+
+-- a + (-b) = c（前提 a ≡ c + b，ℕ 层二进制算术下 h 常为 refl）
+add-neg-eq-2d : {a b c : ℕ} → a ≡ (c +ℕ b) → (natℝ a +ℝ negℝ (natℝ b)) ≡ natℝ c
+add-neg-eq-2d {a} {b} {c} h =
+  trans (cong (λ x → x +ℝ negℝ (natℝ b)) na-eq)
+        (trans (+-assoc-ℝ (natℝ c) (natℝ b) (negℝ (natℝ b)))
+               (trans (cong (λ x → natℝ c +ℝ x) (+-inv-ℝ (natℝ b)))
+                      (+-ident-ℝ (natℝ c))))
+  where
+  na-eq : natℝ a ≡ (natℝ c +ℝ natℝ b)
+  na-eq = trans (cong natℝ h) (natℝ-+ c b)
+
+-- 合并：277268/100000 + (-29/450) = 121870600/45000000
+sum-2d : ((natℝ 277268 /ℝ natℝ 100000) +ℝ negℝ (natℝ 29 /ℝ natℝ 450)) ≡ (natℝ 121870600 /ℝ natℝ 45000000)
+sum-2d = trans (cong₂ _+ℝ_ refl (neg-frac-ℝ (natℝ 29) (natℝ 450)))
+          (trans (/-add-ℝ (natℝ 277268) (negℝ (natℝ 29)) (natℝ 100000) (natℝ 450))
+                 (cong₂ _/ℝ_ sum-eq den-eq))
+  where
+  -- 277268·450 = 124770600
+  m-124770600 : (natℝ 277268 *ℝ natℝ 450) ≡ natℝ 124770600
+  m-124770600 = sym (natℝ-* 277268 450)
+  -- (-29)·100000 = -2900000
+  m-2900000 : (negℝ (natℝ 29) *ℝ natℝ 100000) ≡ negℝ (natℝ 2900000)
+  m-2900000 = trans (loc-neg-mul-2d (natℝ 29) (natℝ 100000))
+                    (cong negℝ (sym (natℝ-* 29 100000)))
+  -- 124770600 + (-2900000) = 121870600
+  add-neg : (natℝ 124770600 +ℝ negℝ (natℝ 2900000)) ≡ natℝ 121870600
+  add-neg = add-neg-eq-2d refl
+  -- (124770600 + (-2900000)) / 45000000
+  sum-eq : ((natℝ 277268 *ℝ natℝ 450) +ℝ (negℝ (natℝ 29) *ℝ natℝ 100000)) ≡ natℝ 121870600
+  sum-eq = trans (cong₂ _+ℝ_ m-124770600 m-2900000) add-neg
+  -- 100000·450 = 45000000
+  den-eq : (natℝ 100000 *ℝ natℝ 450) ≡ natℝ 45000000
+  den-eq = sym (natℝ-* 100000 450)
+
+-- 65/24 = 121875000/45000000（通分 ×1875000）
+right-2d : (natℝ 65 /ℝ natℝ 24) ≡ (natℝ 121875000 /ℝ natℝ 45000000)
+right-2d = trans (frac-scaled-ℝ (natℝ 65) (natℝ 24) (natℝ 1875000))
+                 (cong₂ _/ℝ_ (sym (natℝ-* 65 1875000)) (sym (natℝ-* 24 1875000)))
+
+-- 同分母比分子：121870600 < 121875000（差 4400）
+num-lt-2d : (natℝ 121870600 /ℝ natℝ 45000000) <ℝ (natℝ 121875000 /ℝ natℝ 45000000)
+num-lt-2d = /-lt-same-den-ℝ (natℝ-<-embed num-lt-ℕ)
+  where
+  num-lt-ℕ : 121870600 <ℕ 121875000
+  num-lt-ℕ = <-add 121870600 4399
+
+-- ln15-arith-ax 闭合（2026-08-05）：不再是 postulate（自 §1 移除）
+ln15-arith-ax : ((natℝ 4 *ℝ (natℝ 69317 /ℝ natℝ 100000)) +ℝ negℝ (natℝ 29 /ℝ natℝ 450)) <ℝ (natℝ 65 /ℝ natℝ 24)
+ln15-arith-ax =
+  subst (λ y → L <ℝ y) (sym right-2d)
+        (subst (λ x → x <ℝ (natℝ 121875000 /ℝ natℝ 45000000)) (sym sum-l) num-lt-2d)
+  where
+  L = ((natℝ 4 *ℝ (natℝ 69317 /ℝ natℝ 100000)) +ℝ negℝ (natℝ 29 /ℝ natℝ 450))
+  sum-l : L ≡ (natℝ 121870600 /ℝ natℝ 45000000)
+  sum-l = trans (cong₂ _+ℝ_ four-term-2d refl) sum-2d
 
 
 -- exp 单射（**闭合 2026-08-01**：exp-mono 严格单调 + trichotomy-ℝ 三分律 +
@@ -2386,7 +2479,7 @@ log1516-lt =
 
 -- ln 15 < 65/24（**T3 阶段 3 闭合 2026-07-31**：ln15 = 4ln2 + ln(15/16)
 -- < 4·0.69317 - 29/450 < 65/24，不再是 postulate；
--- log 代数部分全部可证，仅纯有理比较按 scoped 公理 ln15-arith-ax 登记）
+-- log 代数部分全部可证，纯有理比较 ln15-arith-ax 已于 2026-08-05 闭合为定理（§2d））
 ln15-lt-65-24 : ln15 <ℝ sixtyfive-over-24
 ln15-lt-65-24 =
   subst (λ x → x <ℝ sixtyfive-over-24) (sym (ln15-decomp))
