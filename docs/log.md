@@ -3025,3 +3025,44 @@ Everything.agda 全量编译验证 + 更新账目（phase60/蓝图笔记）
 Thought
 
 T3 阶段 3 开放项 ln1615-lb 闭合完成。剩余 log 级数开放项：ln2-lt（ln2 < 0.69317）与 ln15-arith-ax（纯有理比较，工程计算资源不足）——ln2-lt 可复用本机制（ln2 = ln(4/3)+ln(3/2) 交错级数，但交叉乘积 ~5e9 实测撞工程墙，非结构性）。61D 物理方向仍按 Phase 61 流程推进。
+
+---
+
+## T3 ln2-lt 闭合（2026-08-05）
+
+**目标**：闭合 B4 链的 log 级数开放项 `ln2-lt : log (natℝ 2) <ℝ 69317/100000`（ln2 ≈ 0.693147 < 0.69317）。
+
+### 工程计算墙（实测数据）
+
+`_*ℕ_` 递归（unary）归约大数交叉乘积的耗时/OOM 阈值：
+
+| 量级 | 耗时 | 结果 |
+|:--|:--|:--|
+| 3e7 | ~6s | 通过 |
+| 1e8 | 232s | 通过 |
+| 2.8e8（447173·625） | >5min | OOM（`VirtualAlloc MEM_COMMIT failed`，exit 251） |
+
+**根源**：unary 递归 `_*ℕ_` 的归一化成本 ~m·n，2.8e8 级交叉乘积使 Agda 检查挂死。数学路径（S₉ + 尾界 = 447173/645120 < 69317/100000）可行，纯工程资源不可达。
+
+### 突破：二进制 ℕ 算术基础设施（NatArith.agda）
+
+1. **BUILTIN 绑定**：`{-# BUILTIN NATPLUS _+ℕ_ #-}` + `{-# BUILTIN NATTIMES _*ℕ_ #-}` → Agda 用内建任意精度算术。实测 2.8e8 级乘积 **0.65s**（对比递归版 OOM）。
+2. **`<-add` 差递归**：`<-add m k : m <ℕ (m +ℕr suc k)`，证明深度 = 差值 k 而非被比较数 m，使 2.8e8 级不等式 `447173·625 < 69317·4032` 的构造 O(diff²) 完成（`prod-lt = <-add 279483125 3018`）。
+
+### §2c 实现（DHStructuralAnalysis.agda 1318-1437 行）
+
+```
+ln 2 = Σ_{k=1}^∞ 1/(k·2^k)
+上界：S₉ + 尾界 1/5120 = 447173/645120 ≈ 0.6931621 < 69317/100000 ≈ 0.69317
+```
+
+链：`log2-series-ub 9`（定义性公理，log 级数截断）→ `log2-ub-447173`（逐项 l2p-1…l2p-9 通分到 645120 分母 + 尾界 tail-5120 = 126/645120）→ `cross-lt-l2`（二进制算术交叉乘积 447173·625 < 69317·4032）→ `l2-lt-69317`（同分母比较）→ `ln2-lt = trans-<ℝ log2-ub-447173 l2-lt-69317`。
+
+**本地引理规避前向引用**：loc-one-mul（oneℝ·x = x）、loc-zero-add 等段内自建，不依赖后文定义。
+
+### 验证与账目
+
+- DHStructuralAnalysis.agda 单独编译 + **Everything.agda 全量 20 模块编译通过（exit 0）**。
+- §1 的 `ln2-lt` postulate 移除（633 行注释同步）。
+- 账目同步：phase60 209 行 / spectral_T3_analysis_foundation.md 163/175 行 / agda_cross_validation_notes.md 144 行 / paper38 128 行——开放项缩减为仅 **ln15-arith-ax**。
+- ln15-arith-ax 同理可闭合（纯有理比较，二进制算术已就绪），待后续会话处理。

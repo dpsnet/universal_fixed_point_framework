@@ -629,8 +629,7 @@ postulate
   *-pos-mono-ℝ : {a b c : ℝ} → zeroℝ <ℝ c → a <ℝ b → (c *ℝ a) <ℝ (c *ℝ b)
   *-/cancel-ℝ : (a b : ℝ) → a *ℝ (b /ℝ a) ≡ b
   neg-<-ℝ : {x y : ℝ} → x <ℝ y → negℝ y <ℝ negℝ x
-  -- log 级数截断（定义性公理，scoped；进闭合账目为开放项）
-  ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)   -- ln2 < 0.69317（scoped；ln1615-lb 已于 2026-08-05 经 §2b 级数机制闭合为定理）
+  -- ln2-lt 已于 2026-08-05 经 §2c log 级数机制（log2-partial + log2-series-ub）闭合为定理
   -- ln15 算术比较（账目开放项，scoped 数值公理）：4·0.69317 - 29/450 ≈ 2.7082356 < 65/24 ≈ 2.7083333。
   -- 分母 100000/450/24，交叉乘积 ~1e9-1e11 超出可手写 ℕ 链（对比 e < 3 的 288 规模可手算），
   -- 属工程计算资源不足：纯有理比较在标准分析中可计算验证（数值见注释），但框架归一化能力不可达。
@@ -1315,6 +1314,148 @@ exp-lt-16-15 = subst (λ y → exp x-29-450 <ℝ y) final-eq exp-lt-A-E
 ln1615-lb : (natℝ 29 /ℝ natℝ 450) <ℝ log (natℝ 16 /ℝ natℝ 15)
 ln1615-lb =
   exp-lt-inj (subst (λ y → exp x-29-450 <ℝ y) (sym (exp-log (natℝ 16 /ℝ natℝ 15))) exp-lt-16-15)
+
+-- ==================================================================
+-- §2c T3 ln2-lt 闭合（2026-08-05，log 级数机制 + 二进制 ℕ 算术）：
+-- ln2 < 0.69317。机制：log2-partial（ln 2 的 Σ_{k=1}^n 1/(k·2^k) 部分和）+
+-- log2-series-ub（定义性公理：上界 = 部分和 + 几何尾界 1/((n+1)·2^n)）。
+-- 大数交叉乘积经 NatArith 的 NATTIMES/NATPLUS 二进制算术 + <-add 差递归
+-- （2026-08-05 二进制 ℕ 算术降级路径；此前 v1.35 因 2.8e8 级归一化 OOM）。
+-- ==================================================================
+
+-- ln 2 级数部分和：Σ_{k=1}^n 1/(k·2^k)
+log2-partial : ℕ → ℝ
+log2-partial zero    = zeroℝ
+log2-partial (suc n) = log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n))))
+
+-- log 级数上界（定义性公理，替代 scoped 公理 ln2-lt）：
+-- ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)
+postulate
+  log2-series-ub : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
+
+-- 级数项：1/(k·2^k) 形如 (natℝ 1)/(natℝ (k·2^k))
+-- 本地 one-mul-ℝ/zero-add-ℝ（等价于后文顶层同名引理，避免前向引用）
+loc-one-mul : (x : ℝ) → oneℝ *ℝ x ≡ x
+loc-one-mul x = trans (*-comm-ℝ oneℝ x) (*-ident-ℝ x)
+
+loc-zero-add : (x : ℝ) → zeroℝ +ℝ x ≡ x
+loc-zero-add x = trans (+-comm-ℝ zeroℝ x) (+-ident-ℝ x)
+
+log2-term : (k : ℕ) → (oneℝ /ℝ (natℝ k *ℝ natℝ (2^ k))) ≡ (natℝ 1 /ℝ natℝ (k *ℕ 2^ k))
+log2-term k =
+  /-cross-ℝ (trans (loc-one-mul (natℝ (k *ℕ 2^ k)))
+                   (sym (trans (cong₂ _*ℝ_ refl (sym (natℝ-* k (2^ k))))
+                               (trans (cong₂ _*ℝ_ natℝ-one refl)
+                                      (loc-one-mul (natℝ (k *ℕ 2^ k)))))))
+
+-- 通分到 645120：1/m = s/645120（s·m = 645120）
+scale-645120 : (s m : ℕ) → (s *ℕ m) ≡ 645120 → (natℝ 1 /ℝ natℝ m) ≡ (natℝ s /ℝ natℝ 645120)
+scale-645120 s m h =
+  /-cross-ℝ (trans (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 645120)))
+                   (trans (cong natℝ (sym h))
+                          (natℝ-* s m)))
+
+-- 尾项：1/(10·2^9) = 1/5120（并入 645120 分母：126/645120）
+tail-5120 : (oneℝ /ℝ (natℝ 10 *ℝ natℝ (2^ 9))) ≡ (natℝ 126 /ℝ natℝ 645120)
+tail-5120 = trans tail-1 (scale-645120 126 5120 refl)
+  where
+  tail-1 : (oneℝ /ℝ (natℝ 10 *ℝ natℝ (2^ 9))) ≡ (natℝ 1 /ℝ natℝ 5120)
+  tail-1 = /-cross-ℝ (trans (loc-one-mul (natℝ 5120))
+                            (sym (trans (cong₂ _*ℝ_ refl (sym (natℝ-* 10 (2^ 9))))
+                                        (trans (cong₂ _*ℝ_ natℝ-one refl)
+                                               (loc-one-mul (natℝ 5120))))))
+
+-- log2-partial 9 = Σ 1/(k·2^k)（k=1..9）各通分到 645120
+l2p-1 : log2-partial 1 ≡ (natℝ 322560 /ℝ natℝ 645120)
+l2p-1 = trans (loc-zero-add (oneℝ /ℝ (natℝ 1 *ℝ natℝ (2^ 1))))
+              (trans (log2-term 1) (scale-645120 322560 2 refl))
+
+l2p-2 : log2-partial 2 ≡ (natℝ 403200 /ℝ natℝ 645120)
+l2p-2 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 2 *ℝ natℝ (2^ 2)))) (l2p-1))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 2) (scale-645120 80640 8 refl)))
+                     (trans (same-den-add (natℝ 322560) (natℝ 80640) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 322560 80640)) refl)))
+
+l2p-3 : log2-partial 3 ≡ (natℝ 430080 /ℝ natℝ 645120)
+l2p-3 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 3 *ℝ natℝ (2^ 3)))) (l2p-2))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 3) (scale-645120 26880 24 refl)))
+                     (trans (same-den-add (natℝ 403200) (natℝ 26880) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 403200 26880)) refl)))
+
+l2p-4 : log2-partial 4 ≡ (natℝ 440160 /ℝ natℝ 645120)
+l2p-4 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 4 *ℝ natℝ (2^ 4)))) (l2p-3))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 4) (scale-645120 10080 64 refl)))
+                     (trans (same-den-add (natℝ 430080) (natℝ 10080) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 430080 10080)) refl)))
+
+l2p-5 : log2-partial 5 ≡ (natℝ 444192 /ℝ natℝ 645120)
+l2p-5 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 5 *ℝ natℝ (2^ 5)))) (l2p-4))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 5) (scale-645120 4032 160 refl)))
+                     (trans (same-den-add (natℝ 440160) (natℝ 4032) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 440160 4032)) refl)))
+
+l2p-6 : log2-partial 6 ≡ (natℝ 445872 /ℝ natℝ 645120)
+l2p-6 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 6 *ℝ natℝ (2^ 6)))) (l2p-5))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 6) (scale-645120 1680 384 refl)))
+                     (trans (same-den-add (natℝ 444192) (natℝ 1680) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 444192 1680)) refl)))
+
+l2p-7 : log2-partial 7 ≡ (natℝ 446592 /ℝ natℝ 645120)
+l2p-7 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 7 *ℝ natℝ (2^ 7)))) (l2p-6))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 7) (scale-645120 720 896 refl)))
+                     (trans (same-den-add (natℝ 445872) (natℝ 720) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 445872 720)) refl)))
+
+l2p-8 : log2-partial 8 ≡ (natℝ 446907 /ℝ natℝ 645120)
+l2p-8 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 8 *ℝ natℝ (2^ 8)))) (l2p-7))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 8) (scale-645120 315 2048 refl)))
+                     (trans (same-den-add (natℝ 446592) (natℝ 315) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 446592 315)) refl)))
+
+l2p-9 : log2-partial 9 ≡ (natℝ 447047 /ℝ natℝ 645120)
+l2p-9 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 9 *ℝ natℝ (2^ 9)))) (l2p-8))
+              (trans (cong₂ _+ℝ_ refl (trans (log2-term 9) (scale-645120 140 4608 refl)))
+                     (trans (same-den-add (natℝ 446907) (natℝ 140) (natℝ 645120))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 446907 140)) refl)))
+
+-- log 2 < 447173/645120（部分和 9 = 447047/645120 + 尾界 1/5120 = 126/645120）
+log2-ub-447173 : log (natℝ 2) <ℝ (natℝ 447173 /ℝ natℝ 645120)
+log2-ub-447173 =
+  subst (λ y → log (natℝ 2) <ℝ y) sum-eq (log2-series-ub 9)
+  where
+  sum-eq : (log2-partial 9 +ℝ (oneℝ /ℝ (natℝ 10 *ℝ natℝ (2^ 9)))) ≡ (natℝ 447173 /ℝ natℝ 645120)
+  sum-eq = trans (cong₂ _+ℝ_ l2p-9 tail-5120)
+                 (trans (same-den-add (natℝ 447047) (natℝ 126) (natℝ 645120))
+                        (cong₂ _/ℝ_ (sym (natℝ-+ 447047 126)) refl))
+
+-- 交叉乘积比较（二进制算术 + <-add 差递归）：279483125 < 279486144
+cross-lt-l2 : (natℝ 447173 *ℝ natℝ 625) <ℝ (natℝ 69317 *ℝ natℝ 4032)
+cross-lt-l2 = subst (λ z → z <ℝ (natℝ 69317 *ℝ natℝ 4032)) (natℝ-* 447173 625)
+              (subst (λ y → natℝ (447173 *ℕ 625) <ℝ y) (natℝ-* 69317 4032)
+                     (natℝ-<-embed prod-lt))
+  where
+  -- (447173·625 = 279483125) < (69317·4032 = 279486144)，差 3019
+  prod-lt : (447173 *ℕ 625) <ℕ (69317 *ℕ 4032)
+  prod-lt = <-add 279483125 3018
+
+-- 447173/645120 < 69317/100000（通分到 403200000 后比分子）
+l2-lt-69317 : (natℝ 447173 /ℝ natℝ 645120) <ℝ (natℝ 69317 /ℝ natℝ 100000)
+l2-lt-69317 =
+  subst (λ y → (natℝ 447173 /ℝ natℝ 645120) <ℝ y) (sym r15)
+  (subst (λ x → x <ℝ ((natℝ 69317 *ℝ natℝ 4032) /ℝ (natℝ 100000 *ℝ natℝ 4032))) (sym r1117)
+  (subst (λ d → ((natℝ 447173 *ℝ natℝ 625) /ℝ (natℝ 645120 *ℝ natℝ 625)) <ℝ ((natℝ 69317 *ℝ natℝ 4032) /ℝ d)) denom-comm
+  (/-lt-same-den-ℝ {natℝ 447173 *ℝ natℝ 625} {natℝ 69317 *ℝ natℝ 4032} {natℝ 645120 *ℝ natℝ 625} cross-lt-l2)))
+  where
+  r1117 : (natℝ 447173 /ℝ natℝ 645120) ≡ ((natℝ 447173 *ℝ natℝ 625) /ℝ (natℝ 645120 *ℝ natℝ 625))
+  r1117 = frac-scaled-ℝ (natℝ 447173) (natℝ 645120) (natℝ 625)
+  r15 : (natℝ 69317 /ℝ natℝ 100000) ≡ ((natℝ 69317 *ℝ natℝ 4032) /ℝ (natℝ 100000 *ℝ natℝ 4032))
+  r15 = frac-scaled-ℝ (natℝ 69317) (natℝ 100000) (natℝ 4032)
+  denom-comm : (natℝ 645120 *ℝ natℝ 625) ≡ (natℝ 100000 *ℝ natℝ 4032)
+  denom-comm = trans (sym (natℝ-* 645120 625)) (natℝ-* 100000 4032)
+
+-- ln2-lt 闭合（2026-08-05）：不再是 postulate（自 §1 移除）
+ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)
+ln2-lt = trans-<ℝ log2-ub-447173 l2-lt-69317
 
 
 

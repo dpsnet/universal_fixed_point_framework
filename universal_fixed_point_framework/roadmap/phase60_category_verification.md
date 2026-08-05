@@ -206,7 +206,7 @@ agda_formalization/
 | | B3 `D-map-intertwine` | `transferMatrix-comp` + `RecHom.comm`（对应 Lean `DFunctor_map`） | ✅ 已闭合（2026-07-31） |
 | | B3 `transferMatrix-inj`（D 忠实性） | `Fin-eq?-refl/true` + `if-c1` + 逐点单射（对应 Lean `transferMatrix_injective`） | ✅ 已闭合（2026-07-31） |
 | **T3 实分析** | B4 不等式链（`ln15-lt-65-24` 等） | exp/log 分析开发 | ✅ 已闭合（2026-07-31）：`ln15-lt-65-24`/`sixtyfive-over-24-lt-e`/`e-lt-3` 全为定理（阶段 2-3）；其余见下方阶段 3 开放项 |
-| | T3 阶段 3 scoped 公理 `ln2-lt`（ln2 < 0.69317） | Σ 1/(k·2^k) 级数上界（定义性公理，待实现为可证明定理） | ⏳ 登记开放（log 级数机制，阶段 3+ 待建） |
+| | T3 阶段 3 scoped 公理 `ln2-lt`（ln2 < 0.69317） | Σ 1/(k·2^k) 级数上界（定义性公理，待实现为可证明定理） | ✅ 已闭合（2026-08-05，log 级数机制 + 二进制 ℕ 算术）：`log2-partial`（Σ 1/(k·2^k) 部分和）+ 定义性公理 `log2-series-ub`（上界 = 部分和 + 几何尾界），ln2 < 447173/645120 < 69317/100000；交叉乘积 2.8e8 经 NatArith NATTIMES/NATPLUS 二进制算术 + `<-add` 差递归（此前 v1.35 因 OOM 失败）——不再是 postulate |
 | | T3 阶段 3 scoped 公理 `ln1615-lb`（ln(1+1/15) > 29/450） | ln(1+u) 交替级数下界（定义性公理） | ✅ 已闭合（2026-08-05，T3 级数机制）：exp 任意点级数部分和 `exp-partial-at` + 截断/几何尾部桥接公理 `exp-tail-bound`（新增 1 条定义性公理），exp(29/450) < S₃+T < 16/15 ⟹ 29/450 < ln(16/15) [exp-log + exp-lt-inj]——不再是 postulate |
 | | T3 阶段 3 scoped 数值公理 `ln15-arith-ax`（4·0.69317-29/450 < 65/24） | 纯有理比较；分母 ~1e5、交叉乘积 1e9-1e11 超出 `_*ℕ_` 归一化能力（实测挂起）——工程计算资源不足，非结构性；标准分析中可计算验证 | ⏳ 登记开放（需算术决策机制/反射，或更高效的 ℕ 算术） |
 | | T3 exp 单射（`exp-inj`） | exp-mono 严格单调 + 三分律 | ✅ 已闭合（2026-08-01）：trichotomy-ℝ 三分律 + exp-mono（严格单调）+ irreflexive-ℝ 排除两严格分支，零新增公理——不再为 postulate |

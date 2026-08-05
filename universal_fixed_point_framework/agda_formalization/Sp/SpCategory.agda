@@ -20,7 +20,7 @@ open import Agda.Primitive using (Level; lzero)
 open import Agda.Builtin.Equality using (_≡_; refl)
 open import Agda.Builtin.Bool using (Bool; true; false)
 
--- ℕ 定义（Agda.Builtin.Nat 导出的是 Nat 而非 ℕ）
+-- ℕ 定义（Agda.Builtin.Nat 导出的是 Nat 而非 ℕ；BUILTIN NATURAL 使字面量二进制紧凑）
 data ℕ : Set where
   zero : ℕ
   suc  : ℕ → ℕ
