@@ -240,7 +240,7 @@ P2-5 统一嵌入 ──依赖── P0-1/P0-2/P1-3/P1-4 全部
 | 61A | P1-3↔P1-4 动态连续极限衔接 | P2-5 统一嵌入 |
 | 61B（P0-1 色规范） | ~~κ 组分 dressing 独立谱定~~ | **🔶 部分闭合（2026-08-05）**：κ 纯谱量闭式 $\kappa = (N_c/\pi)(\Delta\lambda_3/\Delta\lambda_{\min})^2 = 1.909$——$m_\rho$ 从锚点变预言 $808.7$ MeV（偏差 4.3%，`paperX_qcd_kappa_dressing.py` 6/6 注册 `run_all_tests.py`）；诚实边界：Λ_QCD 敏感性（210±10 MeV 内偏差 <7%）+ 谱积分形式需 Dyson-Schwinger 独立确认 |
 | 61B | Δ_hf 色-Coulomb 谱势严格推导 | 强子谱深化 |
-| 61B | Λ_QCD 跨味阈值 | P0-2/P2-5 支撑 |
+| 61B | ~~Λ_QCD 跨味阈值~~ | **🔶 部分闭合（2026-08-05）**：N_f 分段 RGE（推论 4.3，笔记 §4.4）——跨味比值 Λ^(3)/Λ^(5) = 1.625 vs PDG 1.558（偏差 4.2%），N_f 分段一致性与标准 QCD 相符（`paperX_qcd_flavor_thresholds.py` 6/6 注册 `run_all_tests.py`）；诚实边界：跨味微扰值 vs 谱框架有效值 210 MeV 的圈阶衔接登记为开放项 |
 | 61B | ~~弦张力 κ_lin 与 κ 谱统一~~ | **✅ 闭合（2026-08-05）**：σ = 4Λ_QCD²、√σ = 2Λ、α' = 1/(2πσ) 纯谱量闭式——Cornell 斜率从拟合变预言 0.1764 GeV²（偏差 2.0%）、Regge 斜率 0.902 GeV⁻²（偏差 3.0%）、Δ_dress ≈ √σ、κ ≈ √σ/Λ ≈ 2（`paperX_qcd_string_tension.py` 6/6 注册 `run_all_tests.py`）；诚实边界：Regge 斜率谱起源登记为机制级开放项 |
 | 61B | ~~重味强子 Cornell 谱势扩展~~ | **🔶 部分闭合（2026-08-05）**：`paperX_qcd_heavy_flavor.py` 6/6——Cornell 势 $V=-\tfrac{4\alpha_s}{3r}+\kappa r$ 解重夸克偶素径向 Schrödinger：J/ψ 3.33（7.5%）、ψ' 3.93（6.7%）、Υ 9.476（**0.2%**）、Υ' 10.050（0.3%）、间距 2.3%/2.0%、rms 0.42/0.22 fm；诚实边界：α_s=0.39 有效值 + m_c/m_b 有效质量（dressing） |
 | 61C（P0-2 重整化） | 谱静默"单向转化"严格定理 | EFT 层级深化 |
