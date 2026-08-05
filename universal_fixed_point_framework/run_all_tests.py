@@ -15,6 +15,7 @@ SCRIPTS = [
     ("paperX_s0_analytic.py",              "S0 静默遗留项解析 (6/6)：dim=n-1 闭式、S_D=1-√U 分布、非平凡演化"),
     ("paperX_spectral_matching.py",        "P1 谱匹配三条件等价验证 (7/7)：交织/谱匹配/exp 交换解空间一致"),
     ("paperX_rec2_exchange_deviation.py",  "Rec₂ 交换律偏差验证 (18/18 + 诊断 D7/D8/D9/T17/D10)：BCH 修正处方 + D-拉回 + 非空性 Fredholm 刻画（开放问题 8 完全闭合）"),
+    ("paperX_ifs_sigma_rec_spectral.py",   "阶段 3 分形扩张 (7/7)：IFS 分解→Σ-Rec coproduct 谱保持 + Cantor 谱有效秩随维数单调 + Weierstrass 谱隙从 IFS 参数导出"),
 
     # === Phase 44: 谱 QFT 工具箱 (Paper XI) ===
     ("paperX_spectral_feynman.py",         "T2 谱 Feynman 规则"),
