@@ -48,7 +48,8 @@ open import DHStructural.DHStructuralAnalysis
          max-ℝ; max-≤-l; max-≤-r; max-sub-decomp; max-pos-mul-neg-zero;
          max-pos-value; max-neg-value; max-zero-zero;
          natℝ-nonneg; div-nonneg; 2^-pos; natℝ-pos-embed; natℝ-<-embed; /-lt-same-den-ℝ;
-         sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound)
+         sup-ℝ; sup-upper; sup-least; archimedean-ub; archimedean-ub-bound;
+         sq-nonneg-ℝ; *-assoc-ℝ)
 
 -- 复用 P1Spectral 的算子代数（using 只取 Op 代数公理，避免有限维谱设定名字冲突）
 open import P1Spectral.P1Spectral
@@ -2604,6 +2605,95 @@ stair-fc-seq n = sup-op-ext (λ Y yb → stair-fc-l n Y yb) (λ Y yb → stair-f
 --   n 奇时 x < 0 区 dyadic 阶梯取 0（= xⁿ⁺）而 xⁿ < 0，fc-mono 逐点假设失效，
 --   需谱支集受限单调性（E-support-pos 推受限外延，测度论层）——与 v1.34
 --   （fc-integral 保持唯一 D 类桥接）一致，为后续路线。
+
+-- ==================================================================
+-- 阶段 4 组合替换第三步（2026-08-05）：单项式偶次 ≤ 方向（n 偶）
+-- 目标：∫xⁿ ≤ₒ fc(xⁿ) = Aⁿ（n 偶）——fc-poly-le-spec-int 构造化的
+--   偶次半边（n 奇需谱支集受限单调性，后续路线）。
+-- 链：∫xⁿ = ∫xⁿ⁺（mono-pos-eq）⟹ ∫xⁿ⁺ = supₖ∫sₖ（stair-int-full）
+--   ⟹ supₖ fc(sₖ)（stair-fc-seq）⟹ 每个 fc(sₖ) ≤ₒ fc(xⁿ)（sₖ ≤ xⁿ 逐点：
+--   n 偶 ⟹ xⁿ ≥ 0 全 ℝ（power-even-nonneg，sq-nonneg-ℝ + 归纳）
+--   ⟹ xⁿ⁺ ≡ xⁿ（pos-part-absorp-even）+ dyadic-stair-below）
+--   ⟹ sup-op-least。全部**可证**，零新增公理。
+-- 注：偶次幂指标用显式递归 double（不经 NATPLUS——`n +ℕ n` 对开放项
+--   不归约，二进制算术仅对闭合项求值；与 `<-add` 的 `+ℕr` 同思路）。
+-- ==================================================================
+
+-- 偶次幂指标：double n = 2n（显式 unary 递归，可归约）
+double : ℕ → ℕ
+double zero    = zero
+double (suc n) = suc (suc (double n))
+
+-- **可证**：偶次幂非负——x^{2n} ≥ 0 全 ℝ（归纳：基例 0 ≤ 1；步进
+-- x²·x^{2n} ≥ 0（sq-nonneg-ℝ 全 ℝ + 归纳 + *-nonneg-ℝ））
+power-even-nonneg : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ ℝ-power (double n) x
+power-even-nonneg zero x = <-≤-ℝ zero-lt-one-ℝ
+power-even-nonneg (suc n) x =
+  subst (λ z → zeroℝ ≤ℝ z) (*-assoc-ℝ x x (ℝ-power (double n) x))
+        (*-nonneg-ℝ (x *ℝ x) (ℝ-power (double n) x)
+                     (sq-nonneg-ℝ x) (power-even-nonneg n x))
+
+-- **可证**：偶次幂正部吸收——x^{2n} ≥ 0 ⟹ (x^{2n})⁺ x ≡ x^{2n}
+--（pos-part-absorp 特化，power-even-nonneg 提供非负前提）
+pos-part-absorp-even : (n : ℕ) (x : ℝ)
+  → pos-part (λ y → ℝ-power (double n) y) x ≡ ℝ-power (double n) x
+pos-part-absorp-even n x = pos-part-absorp (λ y → ℝ-power (double n) y) x (power-even-nonneg n x)
+
+-- **可证**：dyadic 阶梯逐原子 ≤ x^{2n}（n 偶）——sₖ ≤ (x^{2n})⁺ 逐原子
+--（dyadic-stair-below）+ (x^{2n})⁺ ≡ x^{2n}（pos-part-absorp-even，subst）
+stair-below-even : (k n : ℕ) → (i : Fin (suc (suc (2^ k)))) → (x : ℝ)
+  → dyadic-Ω3 k (natℝ (suc k)) i x
+  → dyadic-vc k (natℝ (suc k)) (double n) i ≤ℝ ℝ-power (double n) x
+stair-below-even k n i x px =
+  subst (λ z → dyadic-vc k (natℝ (suc k)) (double n) i ≤ℝ z)
+        (pos-part-absorp-even n x)
+        (dyadic-stair-below k (natℝ (suc k)) (natℝ-pos-embed z<s) (double n) i x px)
+
+-- **可证**：dyadic 阶梯逐点 ≤ x^{2n}（n 偶）——经 cover 定位到原子 +
+-- simple-fn-eq-atom（x ∈ Ωᵢ ⟹ simple-fn s x = vc i）
+stair-below-even-pt : (k n : ℕ) (x : ℝ)
+  → simple-fn (dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) (double n))) x
+    ≤ℝ ℝ-power (double n) x
+stair-below-even-pt k n x with dyadic-cover3 k (natℝ (suc k)) (natℝ-pos-embed z<s) x
+stair-below-even-pt k n x | i , px =
+  subst (λ z → z ≤ℝ ℝ-power (double n) x)
+        (sym (simple-fn-eq-atom (dyadic-stair k (natℝ (suc k)) (natℝ-pos-embed z<s) (dyadic-vc k (natℝ (suc k)) (double n)))
+                                i x px))
+        (stair-below-even k n i x px)
+
+-- **可证**：每个阶梯的 fc ≤ₒ fc(x^{2n})——sₖ ≤ x^{2n} 逐点（stair-below-even-pt）
+--   + fc-mono
+stair-fc-below-even : (n : ℕ) → (j : ℕ)
+  → fc (simple-fn (dyadic-stair j (natℝ (suc j)) (natℝ-pos-embed z<s) (dyadic-vc j (natℝ (suc j)) (double n))))
+    ≤ₒ fc (λ y → ℝ-power (double n) y)
+stair-fc-below-even n j = fc-mono {f = simple-fn sⱼ} {g = λ y → ℝ-power (double n) y}
+                                   (stair-below-even-pt j n)
+  where
+  sⱼ : SimpleF
+  sⱼ = dyadic-stair j (natℝ (suc j)) (natℝ-pos-embed z<s) (dyadic-vc j (natℝ (suc j)) (double n))
+
+-- **可证**：∫(x^{2n})⁺ ≤ₒ fc(x^{2n})——∫xⁿ⁺ = supₖ∫sₖ（stair-int-full）
+--   = supₖ fc(sₖ)（stair-fc-seq）≤ₒ fc(xⁿ)（每项 fc(sₖ) ≤ₒ fc(xⁿ) + sup-op-least）
+mono-even-le : (n : ℕ) → spec-int-general (pos-part (λ y → ℝ-power (double n) y)) ≤ₒ fc (λ y → ℝ-power (double n) y)
+mono-even-le n =
+  subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power (double n) y)) (sym (stair-int-full (double n)))
+  (subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power (double n) y)) (sym (stair-fc-seq (double n)))
+  (sup-op-least (stair-fc-seq-P (double n)) (fc (λ y → ℝ-power (double n) y)) bound))
+  where
+  bound : (Y : Op) → stair-fc-seq-P (double n) Y → Y ≤ₒ fc (λ y → ℝ-power (double n) y)
+  bound Y (pair₀₁ j eq) = subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power (double n) y)) (sym eq)
+                                 (stair-fc-below-even n j)
+
+-- **可证**：单项式偶次 ≤ 方向完整——∫x^{2n} ≤ₒ fc(x^{2n}) = A^{2n}
+--（∫xⁿ = ∫xⁿ⁺（mono-pos-eq）+ mono-even-le——C1 n 偶半边闭合）
+mono-even-le-id : (n : ℕ) → spec-int-general (λ y → ℝ-power (double n) y) ≤ₒ fc (λ y → ℝ-power (double n) y)
+mono-even-le-id n =
+  subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power (double n) y)) (sym (mono-pos-eq (double n))) (mono-even-le n)
+
+-- 阶段 4 组合替换状态（2026-08-05 更新）：
+--   C1 n 偶半边闭合（mono-even-le-id：∫x^{2n} ≤ₒ A^{2n}，零新增公理）。
+--   剩余：n 奇半边（需谱支集受限单调性）+ 线性组合（Σ aᵢA^{nᵢ} ≤ₒ ∫Σaᵢx^{nᵢ}，
+--   需 sup 线性/正负分解逐项）——后续路线。
 
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel

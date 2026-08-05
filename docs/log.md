@@ -3124,3 +3124,34 @@ fc-poly-le-spec-int 完整构造化（fc-integral 零登记项）仍缺"单项�
 - n 奇：x < 0 区 dyadic 阶梯取 0（= xⁿ⁺）而 xⁿ < 0，fc-mono 逐点假设失效 ⟹ 需**谱支集受限单调性**（E-support-pos 推受限外延，测度论层）——与 v1.34（fc-integral 保持唯一 D 类桥接）一致，为后续路线
 
 **验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
+
+---
+
+## T3 C1 单项式偶次 ≤ 方向闭合（2026-08-05，SpectralTheory §1d 后段）
+
+**目标**：fc-poly-le-spec-int 构造化的"单项式 ≤ 方向"偶次半边——∫x^{2n} ≤ₒ fc(x^{2n}) = A^{2n}（C1 完整构造化除 n 奇 + 线性组合外的一步）。
+
+### 新增可证引理（零新增公理，全部编译通过）
+
+1. **`double`**：偶次幂指标 2n 的显式 unary 递归——**关键排坑**：`n +ℕ n`（NATPLUS 绑定）对开放项不归约（二进制算术仅对闭合项求值），`ℝ-power (suc n +ℕ suc n)` 无法展开；`double` 自递归可归约（与 `<-add` 的 `+ℕr` 同思路）。
+2. **`power-even-nonneg`**：x^{2n} ≥ 0 全 ℝ——归纳 + `sq-nonneg-ℝ`（全 ℝ a²≥0）+ `*-nonneg-ℝ`（subst 方向：*-assoc 直接给出，无需 sym）。
+3. **`pos-part-absorp-even`**：(x^{2n})⁺ ≡ x^{2n}（pos-part-absorp 特化）。
+4. **`stair-below-even`** / **`stair-below-even-pt`**：dyadic 阶梯逐原子/逐点 ≤ x^{2n}——dyadic-stair-below + pos-part-absorp-even（subst）+ cover 定位 + sym simple-fn-eq-atom。
+5. **`stair-fc-below-even`**：fc(sₖ) ≤ₒ fc(x^{2n})（fc-mono）。
+6. **`mono-even-le`**：∫(x^{2n})⁺ ≤ₒ fc(x^{2n})——stair-int-full + stair-fc-seq + sup-op-least。
+7. **`mono-even-le-id`**：**∫x^{2n} ≤ₒ A^{2n}**（mono-pos-eq 桥接，subst 方向 sym）。
+
+### 组合替换链（偶次闭合）
+
+```
+∫x^{2n} = ∫(x^{2n})⁺（mono-pos-eq）⟹ ∫(x^{2n})⁺ = supₖ∫sₖ（stair-int-full）
+  ⟹ supₖ fc(sₖ)（stair-fc-seq）⟹ 每项 fc(sₖ) ≤ₒ fc(x^{2n})（sₖ ≤ x^{2n} 逐点，
+  n 偶 ⟹ x^{2n} ≥ 0 全 ℝ ⟹ (x^{2n})⁺ = x^{2n}）⟹ ∫x^{2n} ≤ₒ fc(x^{2n}) = A^{2n}
+```
+
+### C1 剩余（如实记录）
+
+- **n 奇半边**：x < 0 区 dyadic 阶梯取 0（= xⁿ⁺）而 xⁿ < 0，fc-mono 逐点假设失效——需谱支集受限单调性（E-support-pos 推受限外延）
+- **线性组合**：Σ aᵢA^{nᵢ} ≤ₒ ∫(Σaᵢx^{nᵢ})——需 sup 线性/正负分解逐项
+
+**验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
