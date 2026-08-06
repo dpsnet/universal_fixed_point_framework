@@ -180,7 +180,9 @@ postulate
 5. **固定间隙 B''n**（不依赖 m）：`tail-branch` + `log2-all-partial-le-B''`（∀m 部分和 ≤ 部分和 n + B''n）⟹ `log2-le-B''`（ln 2 ≤ 部分和 n + B''n，log2-least-ub-any）
 6. **严格**（`B''-tail-lt`：B''n < 尾界 1/((n+1)·2^n)，1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）⟹ `log2-series-ub-thm`（≤-lt-trans-ℝ）
 
-使用处：`log2-ub-447173` 改用 `log2-series-ub-thm 9`；`ln2-lt` 链保持。Everything.agda 全量 20 模块编译通过（exit 0）。**剩余**：log 级数下界侧机制（后续路线）。
+使用处：`log2-ub-447173` 改用 `log2-series-ub-thm 9`；`ln2-lt` 链保持。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+**下界侧机制（v1.44，2026-08-05，§2c''）**：log 级数下界侧收口——`log2-series-lb-thm`（部分和严格低于 ln 2，零新增公理；`log2-partial n < log2-partial (suc n)` [项正严格递增，add-pos-ℝ] `≤ ln 2` [log2-partial-≤-ub (suc n)]）+ `log2-lb-447047`（447047/645120 < ln 2，部分和 9）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120，双侧夹逼，间隙 126/645120 = 1/5120）。**log 级数机制两侧收口**：上界侧 log2-series-ub-thm（v1.43）+ 下界侧 log2-series-lb-thm（v1.44）。Everything.agda 全量 20 模块编译通过（exit 0）。
 
 ### 5.5 阶段 3：log/exp 微积分与 ln15 闭合（2026-07-31）
 

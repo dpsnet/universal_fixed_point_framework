@@ -2452,6 +2452,28 @@ B''-lt-B n = lt-+-mono-r-ℝ {a = log2-partial n} {b = B''n n}
 log2-series-ub-thm : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
 log2-series-ub-thm n = ≤-lt-trans-ℝ (log2-le-B'' n) (B''-lt-B n)
 
+-- ==================================================================
+-- §2c'' log 级数下界侧机制（2026-08-05）
+-- 目标：部分和严格低于 ln 2（下界侧严格化）——与上界侧 log2-series-ub-thm
+--       形成 ln 2 的双侧夹逼；具体下界经部分和计算（l2p-9 = 447047/645120）。
+-- 机制（零新增公理；sup 刻画前置登记 §2c）：
+--   log2-partial n < log2-partial (suc n) [项正严格递增，add-pos-ℝ]
+--   ≤ ln 2 [log2-partial-≤-ub (suc n)] ⟹ 部分和严格低于 ln 2。
+-- ==================================================================
+
+-- **可证**：部分和严格递增：log2-partial n < log2-partial (suc n)
+log2-partial-suc-< : (n : ℕ) → log2-partial n <ℝ log2-partial (suc n)
+log2-partial-suc-< n = add-pos-ℝ (log2-term-pos n)
+
+-- **可证**：log 级数下界侧严格化——部分和严格低于 ln 2
+--（log2-partial n < log2-partial (suc n) [严格递增] ≤ ln 2 [sup 刻画]）
+log2-series-lb-thm : (n : ℕ) → log2-partial n <ℝ log (natℝ 2)
+log2-series-lb-thm n = lt-≤-trans-ℝ (log2-partial-suc-< n) (log2-partial-≤-ub (suc n))
+
+-- ln 2 具体下界：部分和 9 = 447047/645120 < ln 2（log2-series-lb-thm 9）
+log2-lb-447047 : (natℝ 447047 /ℝ natℝ 645120) <ℝ log (natℝ 2)
+log2-lb-447047 = subst (λ x → x <ℝ log (natℝ 2)) l2p-9 (log2-series-lb-thm 9)
+
 -- log 2 < 447173/645120（部分和 9 = 447047/645120 + 尾界 1/5120 = 126/645120）
 log2-ub-447173 : log (natℝ 2) <ℝ (natℝ 447173 /ℝ natℝ 645120)
 log2-ub-447173 =
@@ -2461,6 +2483,13 @@ log2-ub-447173 =
   sum-eq = trans (cong₂ _+ℝ_ l2p-9 tail-5120)
                  (trans (same-den-add (natℝ 447047) (natℝ 126) (natℝ 645120))
                         (cong₂ _/ℝ_ (sym (natℝ-+ 447047 126)) refl))
+
+-- ln 2 双侧夹逼（部分和 9）：447047/645120 < ln 2 < 447173/645120
+--（下界：部分和 9 = 447047/645120 [log2-series-lb-thm 9]；
+--  上界：部分和 9 + 尾界 1/5120 = 447173/645120 [log2-series-ub-thm 9]）
+ln2-squeeze-9 : ((natℝ 447047 /ℝ natℝ 645120) <ℝ log (natℝ 2))
+             × (log (natℝ 2) <ℝ (natℝ 447173 /ℝ natℝ 645120))
+ln2-squeeze-9 = log2-lb-447047 , log2-ub-447173
 
 -- 交叉乘积比较（二进制算术 + <-add 差递归）：279483125 < 279486144
 cross-lt-l2 : (natℝ 447173 *ℝ natℝ 625) <ℝ (natℝ 69317 *ℝ natℝ 4032)

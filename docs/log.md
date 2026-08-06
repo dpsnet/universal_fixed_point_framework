@@ -3403,3 +3403,24 @@ log2-series-ub-thm : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (one
 **排坑**：`subst` 方向纪律（recip-half-two/geo-half2-lt/rest-geo-ub/tail2-le/B''-tail-lt 多处）；分子 oneℝ vs natℝ 1（/-pos-ℝ 直接 zero-lt-one-ℝ）；同级运算符 20 级括号；`natℝ(2·suc n)·natℝ(2^n)` 需 natℝ-* 合并 + ℕ 层 2^suc-expand 搬运；where 缩进层级；add-le-l 前移（前向引用）；名字冲突（all-partial-le-B'' → log2- 前缀）。
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**log 级数机制定义性公理剩余**：log2-series 下界侧（后续路线）。
+
+---
+
+## T3 log 级数下界侧机制（2026-08-05，DHStructural §2c''）
+
+**目标达成**：log 级数**下界侧**机制就位——部分和严格低于 ln 2（`log2-series-lb-thm`），与上界侧 `log2-series-ub-thm` 形成 ln 2 的双侧夹逼；具体下界经部分和计算认证：
+```
+log2-series-lb-thm : (n : ℕ) → log2-partial n <ℝ log (natℝ 2)   -- 部分和严格低于 ln 2
+log2-lb-447047      : (natℝ 447047 /ℝ natℝ 645120) <ℝ log (natℝ 2)   -- 部分和 9 具体下界
+ln2-squeeze-9       : 447047/645120 < ln 2 < 447173/645120           -- 双侧夹逼（间隙 126/645120 = 1/5120）
+```
+
+**机制（零新增公理；sup 刻画前置登记 §2c，未增任何 postulate）**：
+- **严格递增**（可证）：`log2-partial-suc-<`（项正 ⟹ add-pos-ℝ）——部分和单步严格增
+- **下界侧严格化**：`log2-series-lb-thm`（`log2-partial n < log2-partial (suc n)` [严格递增] `≤ ln 2` [log2-partial-≤-ub (suc n)]，lt-≤-trans-ℝ）——ln 2 非任何部分和（级数不有限终止）
+- **具体认证**：`log2-lb-447047`（l2p-9 = 447047/645120，subst 替换左侧）
+- **双侧夹逼**：`ln2-squeeze-9`（下界 = 部分和 9；上界 = 部分和 9 + 尾界 1/5120）
+
+**排坑**：`subst` 方向——下界侧用 `subst (λ x → x <ℝ log 2) l2p-9`（l2p-9 方向为 lhs ≡ rhs，无需 sym；与上界侧 `subst (λ y → log 2 <ℝ y) sum-eq` 对称）；`×` 与 `<ℝ` 同级运算符（20 级）需显式括号。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**log 级数机制两侧收口**：上界侧 log2-series-ub-thm（v1.43）+ 下界侧 log2-series-lb-thm（v1.44）。
