@@ -738,9 +738,98 @@ exp-partial-at (suc n) x = exp-partial-at n x +ℝ ((x ^ℕ (suc n)) *ℝ recip-
 --   0 ≤ x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
 -- 依据：exp x = Σ_{k≥0} x^k/k!，尾部 Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_{j≥0}x^j。
 -- 记账：exp 级数内容（与 exp-partial-< 同层），替代 scoped 公理 ln1615-lb。
+-- 注（2026-08-05 降定理前置）：x = 0 时 exp 0 = 1 = S_n(0)，结论为等号——严格 <
+--   需前提 0 < x（数学上必要）；降定理路径 = geo-x 几何级数机制（下方）。
 postulate
   exp-tail-bound : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ x → x <ℝ oneℝ →
     exp x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+
+-- ==================================================================
+-- 几何级数机制（exp-tail-bound 降定理核心前置，2026-08-05）
+-- 目标：一般几何和 Σ_{j=0}^m x^j（geo-x）的闭式与 < 1/(1-x) 上界——
+--   exp-tail-bound 的尾部界 Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_{j≥0}x^j 的基础。
+-- 全部**可证**，零新增公理（+/-/*/div 域公理 + 现有 /-add-ℝ、*-/ℝ、div-one-ℝ、
+--   *-/cancel-ℝ、add-pos-ℝ、lt-*-pos-ℝ、/-pos-ℝ）。
+-- ==================================================================
+
+-- **可证**：(1−x) + x = 1（sub-ℝ-def 展开 + 加法群）
+one-sub-add : (x : ℝ) → (oneℝ -ℝ x) +ℝ x ≡ oneℝ
+one-sub-add x =
+  trans (cong (λ y → y +ℝ x) (sub-ℝ-def oneℝ x))
+        (trans (+-assoc-ℝ oneℝ (negℝ x) x)
+               (trans (cong (λ y → oneℝ +ℝ y) (+-comm-ℝ (negℝ x) x))
+                      (trans (cong (λ y → oneℝ +ℝ y) (+-inv-ℝ x))
+                             (+-ident-ℝ oneℝ))))
+
+-- **可证**：x < 1 ⟹ 0 < 1−x（neg-<-ℝ：-1 < -x ⟹ 0 = 1+(-1) < 1+(-x) = 1-x）
+one-sub-pos : {x : ℝ} → x <ℝ oneℝ → zeroℝ <ℝ (oneℝ -ℝ x)
+one-sub-pos {x} hx =
+  subst (λ z → zeroℝ <ℝ z) (sym one-minus-x)
+        (subst (λ u → u <ℝ (oneℝ +ℝ negℝ x)) (+-inv-ℝ oneℝ)
+               (lt-+-mono-r-ℝ {a = oneℝ} {b = negℝ oneℝ} {c = negℝ x} (neg-<-ℝ hx)))
+  where
+  one-minus-x : (oneℝ -ℝ x) ≡ (oneℝ +ℝ negℝ x)
+  one-minus-x = sub-ℝ-def oneℝ x
+
+-- **可证**：G = 1/(1−x) 满足不动点 G = 1 + x·G
+--（1 + x·(1/(1−x)) = (1/(1−x))：/-add-ℝ 通分 + one-sub-add）
+G-ident : (x : ℝ) → (oneℝ +ℝ (x *ℝ (oneℝ /ℝ (oneℝ -ℝ x)))) ≡ (oneℝ /ℝ (oneℝ -ℝ x))
+G-ident x = trans (cong₂ _+ℝ_ (sym (div-one-ℝ oneℝ)) step2)
+            (trans (/-add-ℝ oneℝ x oneℝ (oneℝ -ℝ x))
+                   (cong₂ _/ℝ_ sum-eq den-eq))
+  where
+  step2 : (x *ℝ (oneℝ /ℝ (oneℝ -ℝ x))) ≡ (x /ℝ (oneℝ -ℝ x))
+  step2 = trans (*-/ℝ x oneℝ (oneℝ -ℝ x)) (cong₂ _/ℝ_ (*-ident-ℝ x) refl)
+  sum-eq : ((oneℝ *ℝ (oneℝ -ℝ x)) +ℝ (x *ℝ oneℝ)) ≡ oneℝ
+  sum-eq = trans (cong₂ _+ℝ_ (trans (*-comm-ℝ oneℝ (oneℝ -ℝ x)) (*-ident-ℝ (oneℝ -ℝ x))) (*-ident-ℝ x))
+                 (one-sub-add x)
+  den-eq : (oneℝ *ℝ (oneℝ -ℝ x)) ≡ (oneℝ -ℝ x)
+  den-eq = trans (*-comm-ℝ oneℝ (oneℝ -ℝ x)) (*-ident-ℝ (oneℝ -ℝ x))
+
+-- 一般几何和：geo-x x m = Σ_{j=0}^m x^j（公比 x 任意）
+geo-x : ℝ → ℕ → ℝ
+geo-x x zero = oneℝ
+geo-x x (suc m) = geo-x x m +ℝ (x ^ℕ (suc m))
+
+-- **可证**：x^ℕ 幂正性——0 < x ⟹ 0 < x^{n+1}（归纳，lt-*-pos-ℝ）
+power-pos-ℕ : (x : ℝ) → zeroℝ <ℝ x → (n : ℕ) → zeroℝ <ℝ (x ^ℕ (suc n))
+power-pos-ℕ x hx zero = subst (λ z → zeroℝ <ℝ z) (sym (*-ident-ℝ x)) hx
+power-pos-ℕ x hx (suc n) =
+  lt-*-pos-ℝ hx (power-pos-ℕ x hx n)
+
+-- **可证**：几何和闭式（不动点）——geo-x x m + x^{m+1}·G = G（G = 1/(1−x)）
+geo-x-ident : (x : ℝ) → (m : ℕ) → (geo-x x m +ℝ ((x ^ℕ (suc m)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x)))) ≡ (oneℝ /ℝ (oneℝ -ℝ x))
+geo-x-ident x zero = trans (cong (λ w → oneℝ +ℝ (w *ℝ G)) (*-ident-ℝ x)) (G-ident x)
+  where
+  G : ℝ
+  G = oneℝ /ℝ (oneℝ -ℝ x)
+geo-x-ident x (suc m) =
+  trans (+-assoc-ℝ (geo-x x m) (x ^ℕ (suc m)) ((x ^ℕ (suc (suc m))) *ℝ G))
+        (trans (cong (λ y → geo-x x m +ℝ y) inner-ident) (geo-x-ident x m))
+  where
+  G : ℝ
+  G = oneℝ /ℝ (oneℝ -ℝ x)
+  -- x^{m+2} = x·x^{m+1}（定义性）
+  pow-expand : (x ^ℕ (suc (suc m))) ≡ (x *ℝ (x ^ℕ (suc m)))
+  pow-expand = refl
+  -- x^{m+1} + x^{m+2}·G = x^{m+1}·G（x^{m+2} = x·x^{m+1} + 不动点 G = 1 + xG）
+  inner-ident : ((x ^ℕ (suc m)) +ℝ ((x ^ℕ (suc (suc m))) *ℝ G)) ≡ ((x ^ℕ (suc m)) *ℝ G)
+  inner-ident =
+    trans (cong₂ _+ℝ_ (sym (*-ident-ℝ (x ^ℕ (suc m)))) (cong (λ w → w *ℝ G) pow-expand))
+          (trans (cong (λ w → ((x ^ℕ (suc m)) *ℝ oneℝ) +ℝ w)
+                       (trans (cong (λ w → w *ℝ G) (*-comm-ℝ x (x ^ℕ (suc m))))
+                              (*-assoc-ℝ (x ^ℕ (suc m)) x G)))
+                 (trans (sym (distrib-ℝ (x ^ℕ (suc m)) oneℝ (x *ℝ G)))
+                        (cong (λ w → (x ^ℕ (suc m)) *ℝ w) (G-ident x))))
+
+-- **可证**：几何和 < 闭式——geo-x x m < 1/(1−x)（x > 0；闭式 + 尾项正）
+geo-x-lt : (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ → (m : ℕ) → geo-x x m <ℝ (oneℝ /ℝ (oneℝ -ℝ x))
+geo-x-lt x hx hlt m =
+  subst (λ z → geo-x x m <ℝ z) (geo-x-ident x m)
+        (add-pos-ℝ (lt-*-pos-ℝ (power-pos-ℕ x hx m) G-pos))
+  where
+  G-pos : zeroℝ <ℝ (oneℝ /ℝ (oneℝ -ℝ x))
+  G-pos = /-pos-ℝ zero-lt-one-ℝ (one-sub-pos hlt)
 
 -- m < m + (k+1)（大数 ℕ 比较构造工具：m +ℕ suc k 定义性归约到 m+k+1）
 <-add-r : (m k : ℕ) → m <ℕ (m +ℕ suc k)

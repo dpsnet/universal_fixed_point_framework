@@ -3215,3 +3215,32 @@ DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）�
 ### 后续（exp-tail-bound / log2-series-ub 降定理）
 
 需完整 exp 级数机制前置：① **几何级数求和**（Σ_{j≥0} x^j = 1/(1-x)，0 ≤ x < 1）；② **exp 任意点级数 sup 定义**（exp-partial-at ≤ exp x 的任意点版登记）；③ **尾部逐项比较**（x^{n+1+j}/(n+1+j)! ≤ x^{n+1}/(n+1)!·x^j）。工程量数倍于 exp-partial-<，为后续路线。
+
+---
+
+## T3 几何级数机制（geo-x，2026-08-05，exp-tail-bound 降定理前置）
+
+**目标**：一般几何和 Σ_{j=0}^m x^j 的闭式与 < 1/(1-x) 上界——exp-tail-bound 尾部界的基础。全部**可证**，零新增公理。
+
+### 新增引理（7 个，DHStructuralAnalysis.agda §2b 后段）
+
+1. **`one-sub-add`**：(1−x) + x = 1（sub-ℝ-def 展开 + 加法群）。
+2. **`one-sub-pos`**：x < 1 ⟹ 0 < 1−x（neg-<-ℝ：-1 < -x ⟹ 0 = 1+(-1) < 1+(-x) = 1-x——**比 pos-sub 前向引用更简洁的路径**）。
+3. **`G-ident`**：G = 1/(1−x) 满足不动点 G = 1 + x·G（/-add-ℝ 通分 + one-sub-add）。
+4. **`geo-x`**：几何和递归定义（Σ_{j=0}^m x^j）。
+5. **`power-pos-ℕ`**：x^ℕ 幂正性（0 < x ⟹ 0 < x^{n+1}，归纳）。
+6. **`geo-x-ident`**：闭式（不动点）——geo-x m + x^{m+1}·G = G（归纳，inner-ident：x^{m+1}+x^{m+2}·G = x^{m+1}·G 经 G-ident）。
+7. **`geo-x-lt`**：geo-x m < 1/(1−x)（x > 0；闭式 + 尾项正（power-pos-ℕ × G-pos）+ add-pos-ℝ）。
+
+### 排坑记录
+
+- `neg-zero`/`neg-unique-ℝ`/`pos-sub` 均在引用点后（前向引用）——one-sub-pos 改走 neg-<-ℝ 直接路径
+- `subst` 方向 3 处（+-inv-ℝ 需正向、geo-x-ident 需正向、geo-x-lt 需正向）
+- `*-ident-ℝ` 是右单位（oneℝ·(1-x) 需先 *-comm-ℝ）
+- `geo-x-ident` 归纳的 +-assoc 需正向（(a+b)+c → a+(b+c)）
+- `inner-ident` 需先 *-comm-ℝ（x·x^{m+1} → x^{m+1}·x）再 *-assoc-ℝ
+- `power-pos-ℕ` base 需 subst（x·1 定义性 ≠ x，*-ident-ℝ 是引理）
+
+### 状态
+
+exp-tail-bound 降定理的前置 ①（几何级数求和）**就绪**。剩余：② exp 任意点级数 sup 定义（登记）；③ 尾部逐项比较；④ 组合 + 严格性。Everything.agda 全量 20 模块编译通过（exit 0）。
