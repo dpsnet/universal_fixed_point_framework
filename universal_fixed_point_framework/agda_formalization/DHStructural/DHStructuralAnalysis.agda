@@ -567,9 +567,8 @@ postulate
 postulate
   e-def : e ≡ exp oneℝ
 
--- exp 的级数截断：部分和 < exp x（定义性公理，对应 Lean exp 级数；T3 阶段 2）
-postulate
-  exp-partial-< : (n : ℕ) → partial-e n <ℝ exp oneℝ
+-- exp 部分和 < exp x（原"exp 级数截断"定义性公理，**已降为可证明定理**：
+-- 见下方 exp-partial-<（2026-08-05，partial-e-suc + exp-partial-≤-ub + lt-≤-trans-ℝ））
 
 -- ==================================================================
 -- 完备性与 exp 上确界（T3 阶段 3，2026-07-31）
@@ -582,6 +581,12 @@ postulate
   sup-least : (S : ℝ → Set) (b : ℝ) → ((x : ℝ) → S x → x ≤ℝ b) → sup-ℝ S ≤ℝ b
   exp-partial-≤-ub : (n : ℕ) → partial-e n ≤ℝ exp oneℝ  -- exp 1 是部分和上界
   exp-least-ub : (b : ℝ) → ((n : ℕ) → partial-e n ≤ℝ b) → exp oneℝ ≤ℝ b  -- exp 1 是最小上界
+
+-- **可证**：exp 部分和 < exp 1（**降定理 2026-08-05**，原"exp 级数截断"定义性公理
+-- exp-partial-< 不再是 postulate）——partial-e 严格递增（partial-e-suc）+ exp 1 是
+-- 部分和上界（exp-partial-≤-ub）+ < 与 ≤ 混合传递（lt-≤-trans-ℝ，阶段 0 基础假设）
+exp-partial-< : (n : ℕ) → partial-e n <ℝ exp oneℝ
+exp-partial-< n = lt-≤-trans-ℝ (partial-e-suc n) (exp-partial-≤-ub (suc n))
 
 -- Archimedean 性质（桥接登记，2026-08-03）：任意实数存在自然数上界
 --（∀a:ℝ. ∃n:ℕ. a ≤ natℝ n；与 sup-ℝ 同级的 ℝ 完备性族标准公理——标准实数模型真。

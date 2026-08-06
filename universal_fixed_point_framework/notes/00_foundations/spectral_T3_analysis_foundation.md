@@ -111,7 +111,8 @@ partial-e n = Σ_{k=0}^n recip-factorial k        -- e 的部分和
 postulate
   /-add-ℝ : (a /ℝ c) +ℝ (b /ℝ d) ≡ ((a *ℝ d) +ℝ (b *ℝ c)) /ℝ (c *ℝ d)  -- 分数加法
   /-cross-ℝ : (a *ℝ d) ≡ (b *ℝ c) → (a /ℝ c) ≡ (b /ℝ d)                 -- 交叉相乘消去
-  exp-partial-< : (n : ℕ) → partial-e n <ℝ exp oneℝ  -- exp 级数截断（定义性公理，对应 Lean exp 级数）
+  -- exp-partial-< 已降为可证明定理（2026-08-05，阶段 3 定义性公理降定理）：
+  -- partial-e-suc（严格递增）+ exp-partial-≤-ub（exp 1 是部分和上界）+ lt-≤-trans-ℝ
 ```
 
 **闭合链**：`65/24 < e` 已闭合（2026-07-31）——

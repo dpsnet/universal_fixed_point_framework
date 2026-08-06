@@ -3188,3 +3188,30 @@ fc-poly-le-spec-int 完整构造化（fc-integral 零登记项）仍缺"单项�
 **决策（用户："决策的标准是数学上要成立"）**：`fc-integral`（函数演算 = 谱积分）数学上恒真（自伴算子谱定理的定义性内容），保持为健全 D 类桥接符合标准，C1 收官。线性组合（sup-add）与受限 fc-mono 均数学上成立，若后续要"零登记项"可再登记推进——非当前决策。
 
 **验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
+
+---
+
+## T3 阶段 3 定义性公理降定理：exp-partial-<（2026-08-05，DHStructuralAnalysis.agda）
+
+**目标**：把 exp 级数相关的定义性公理（exp-partial-< / exp-tail-bound / log2-series-ub）降为可证明定理。首个成果：**`exp-partial-<` 降定理**。
+
+### 降定理论证（零新增公理）
+
+`partial-e n <ℝ exp oneℝ` 从三件现有事实推出：
+1. `partial-e-suc`（部分和严格递增，可证）：partial-e n < partial-e (suc n)
+2. `exp-partial-≤-ub`（exp 1 是部分和上界，级数 sup 定义部分）：partial-e (suc n) ≤ exp oneℝ
+3. `lt-≤-trans-ℝ`（阶段 0 基础假设，< 与 ≤ 混合传递）
+
+```
+exp-partial-< n = lt-≤-trans-ℝ (partial-e-suc n) (exp-partial-≤-ub (suc n))
+```
+
+原"exp 级数截断"定义性公理（postulate）**删除**，改为可证定理——对齐纪律：可推导的不占 postulate 名额。exp-partial-≤-ub/exp-least-ub 保持（exp 级数 sup 定义部分，基础假设层）。
+
+### 验证
+
+DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
+
+### 后续（exp-tail-bound / log2-series-ub 降定理）
+
+需完整 exp 级数机制前置：① **几何级数求和**（Σ_{j≥0} x^j = 1/(1-x)，0 ≤ x < 1）；② **exp 任意点级数 sup 定义**（exp-partial-at ≤ exp x 的任意点版登记）；③ **尾部逐项比较**（x^{n+1+j}/(n+1+j)! ≤ x^{n+1}/(n+1)!·x^j）。工程量数倍于 exp-partial-<，为后续路线。
