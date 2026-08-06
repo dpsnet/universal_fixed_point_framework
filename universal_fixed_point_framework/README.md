@@ -2,7 +2,7 @@
 
 > **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.10](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 >
-> **项目状态**：42 篇论文（Paper I–XLII，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向）+ **RAP-Errata v0.10**（勘误基线）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 两侧收口，Paper XXXVIII 专论）**
+> **项目状态**：42 篇论文（Paper I–XLII，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向）+ **RAP-Errata v0.10**（勘误基线）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
@@ -93,7 +93,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XXXIV 🆕**：连续极限——分形吸引子到光滑时空涌现 | v1.0 | B2 六步理论证明：编码树分层→拟弧→对称→Lipschitz 映射→拟对称嵌入→谱流保持。**B2 理论闭合** | ✅ |
 | **Paper XXXV 🆕**：引力的范畴论起源 | v0.3 | 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 + **§3.2 向外推几何阐述** | ✅ |
 | **Paper XXXVII 🆕**：开放问题、未来方向与层次距离 | v0.1 | A/B/C 三组开放问题 + 层次距离度量 + Bott-Moran 桥 | ✅ |
-| **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.4 | 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 两侧收口）、S0 静默/待基础设施边界 | ✅ |
+| **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.8 | 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 | ✅ |
 
 ### Lean 4 形式化
 
@@ -117,7 +117,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 **路径 B 推进 ✅（2026-08-03，v1.13–v1.16）** — Agda 侧扩至 **16 模块**，T3 谱定理层进一步闭合：fc-integral 公理完整降为可证明定理（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步。
 
-**路径 B 推进 ✅（2026-08-05，v1.38–v1.44）** — Agda 侧扩至 **20 模块**（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）：C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）经二进制 ℕ 算术全部闭合清零（v1.38）；`mono-le-any`（∫xⁿ ≤ₒ fc(xⁿ)）+ 方向核验（v1.40）；**T3 定义性公理降定理**——`exp-partial-<`（v1.41）、**`exp-tail-bound`（v1.42，固定间隙路径）** 与 **`log2-series-ub`（v1.43，固定间隙路径）** 由 postulate 降为可证明定理（阶乘强估计/1/2 几何机制 → 逐项/求和/geo-x → 固定间隙 → exp/log-least-ub-any → recip 单调或分数对消，零新增公理）；**log 级数下界侧机制收口（v1.44）**——`log2-series-lb-thm`（部分和严格低于 ln 2）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120 双侧夹逼），两侧收口零新增公理。Lean 侧同里程碑：全库 `lake build` 2454 jobs 零 `sorry` 零 `axiom`。Paper XXXVIII v0.4。
+**路径 B 推进 ✅（2026-08-05，v1.38–v1.47）** — Agda 侧扩至 **20 模块**（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）：C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）经二进制 ℕ 算术全部闭合清零（v1.38）；`mono-le-any`（∫xⁿ ≤ₒ fc(xⁿ)）+ 方向核验（v1.40）；**T3 定义性公理降定理**——`exp-partial-<`（v1.41）、**`exp-tail-bound`（v1.42，固定间隙路径）** 与 **`log2-series-ub`（v1.43，固定间隙路径）** 由 postulate 降为可证明定理（阶乘强估计/1/2 几何机制 → 逐项/求和/geo-x → 固定间隙 → exp/log-least-ub-any → recip 单调或分数对消，零新增公理）；**log 级数下界侧机制收口（v1.44）**——`log2-series-lb-thm`（部分和严格低于 ln 2）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120 双侧夹逼）；**ln 级数高阶精化（v1.45）**——k 阶 = n+k 实例化（`log2-series-ub2-thm` 固定界 B''n 严格化 + `ln2-squeeze-10`：4918210/7096320 < ln 2 < 4918840/7096320，T3 阶段 3 log 级数机制收官）；**ln(16/15) 级数直接截断机制（v1.46，base-16）**——级数路径独立交叉验证 ln1615-lb（`ln1615-lb-direct`：29/450 < ln(16/15)）+ 夹逼 `ln16-15-squeeze-2`（33/512 < ln(16/15) < 397/6144）；**ln(16/15) 二阶精化（v1.47，base-16 高阶）**——`log16-series-ub2-thm` + 二阶夹逼 `ln16-15-squeeze-2b`（33/512 < ln(16/15) < 25379/393216），**T3 阶段 3 ln 级数双侧机制全面收官**，全程零新增公理。Lean 侧同里程碑：全库 `lake build` 2454 jobs 零 `sorry` 零 `axiom`。Paper XXXVIII v0.8。
 
 **向外推形式化 ✅** — `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`，维数间隙 $\ln 15 < 3$ 与层正交分离 $S_4/c_1 = e^3$ 已形式化绑定（`lake build` 编译通过）；Agda 侧由 B7 镜像。
 
