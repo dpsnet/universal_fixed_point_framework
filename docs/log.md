@@ -3307,3 +3307,18 @@ Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径�
 - **`_≤ℕ_` 全局冲突**：CoherenceToBranching 本地重复定义（只定义未用）删除，改用 NatArith §6 版本
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：幂加法性（x^{a+b} = x^a·x^b）+ tail 逐项（j=0 相等/j≥1 严格）+ x/2 几何级数 + recip 单调 + 组合。
+
+---
+
+## T3 固定间隙路径：幂加法性 + x/2 引理（2026-08-05，DHStructural）
+
+**新增（零新增公理）**：
+- **`pow-add`**：幂加法性 x^{a+b} = x^a·x^b（归纳，*-assoc/comm）——tail-sum 逐项拆 x^{n+1+j} = x^{n+1}·x^j 的基础
+- **`half-x`**：x/2 记号（x /ℝ natℝ 2）
+- **`div-half-pos`**：x > 0 ⟹ x/2 > 0（/-pos-ℝ）
+- **`div-half-lt-one`**：x < 1 ⟹ x/2 < 1（x < 1 < 2 ⟹ x/2 < 2/2 = 1）
+- **`recip-half-gap`**：1/(1-x/2) < 1/(1-x)（recip-mono-ℝ + x/2 < x（half-add-half：x/2+x/2 = x）+ neg-<-ℝ + 加法单调）——**固定间隙 B'' < B 的关键间隙**
+
+**排坑**：where 内前向引用（two-eq/half-add-half 前置）；`subst` 方向 3 处（natℝ-one 正向、half-add-half 正向、sub-ℝ-def sym）；`cross`（2/2=1）组合需 *-ident 正向 + sym(comm+ident)。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：tail-sum 逐项 ≤ x^{n+1}/(n+1)!·(x/2)^j（pow-add + factorial-strong + (x/2)^j 除法）+ geo-x (x/2) < 1/(1-x/2) + sup 组合（固定间隙 B'' < B ⟹ exp x ≤ B'' < B）。

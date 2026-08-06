@@ -905,6 +905,79 @@ factorial-strong n (suc j) =
   +ℕr-suc : (n j : ℕ) → n +ℕr (suc j) ≡ suc (n +ℕr j)
   +ℕr-suc n j = refl
 
+-- ==================================================================
+-- 幂加法性与 x/2 引理（固定间隙路径组合前置，2026-08-05）
+-- 目标：tail-sum 逐项 ≤ x^{n+1}/(n+1)!·(x/2)^j（pow-add + factorial-strong）
+--   + geo-x (x/2) < 1/(1-x/2)（x/2 正性/小于 1）+ 1/(1-x/2) < 1/(1-x)（recip 单调）
+-- ==================================================================
+
+-- **可证**：幂加法性——x^{a+b} = x^a·x^b（归纳 b，*-assoc/comm）
+pow-add : (x : ℝ) (a b : ℕ) → (x ^ℕ (a +ℕr b)) ≡ (x ^ℕ a) *ℝ (x ^ℕ b)
+pow-add x a zero = sym (*-ident-ℝ (x ^ℕ a))
+pow-add x a (suc b) =
+  trans (cong (λ w → x *ℝ w) (pow-add x a b))
+        (trans (sym (*-assoc-ℝ x (x ^ℕ a) (x ^ℕ b)))
+               (trans (cong (λ w → w *ℝ (x ^ℕ b)) (*-comm-ℝ x (x ^ℕ a)))
+                      (*-assoc-ℝ (x ^ℕ a) x (x ^ℕ b))))
+
+-- 半量记号：x/2
+half-x : ℝ → ℝ
+half-x x = x /ℝ natℝ 2
+
+-- **可证**：x > 0 ⟹ x/2 > 0（/-pos-ℝ + natℝ-pos-embed z<s）
+div-half-pos : {x : ℝ} → zeroℝ <ℝ x → zeroℝ <ℝ half-x x
+div-half-pos {x} hx = /-pos-ℝ hx (natℝ-pos-embed z<s)
+
+-- **可证**：x < 1 ⟹ x/2 < 1（x < 1 < 2 ⟹ x/2 < 2/2 = 1，/-lt-same-den-ℝ）
+div-half-lt-one : {x : ℝ} → x <ℝ oneℝ → half-x x <ℝ oneℝ
+div-half-lt-one {x} hx =
+  subst (λ y → half-x x <ℝ y) two-over-two
+        (subst (λ w → (x /ℝ natℝ 2) <ℝ w) (cong (λ z → z /ℝ natℝ 2) (sym natℝ-two))
+               (/-lt-same-den-ℝ {x} {natℝ 2} {natℝ 2} x-lt-two))
+  where
+  -- 1 < 2（natℝ 层）
+  one-lt-two : oneℝ <ℝ natℝ 2
+  one-lt-two = subst (λ z → z <ℝ natℝ 2) natℝ-one (natℝ-<-embed (s<s z<s))
+  -- x < 2（x < 1 < 2）
+  x-lt-two : x <ℝ natℝ 2
+  x-lt-two = trans-<ℝ hx one-lt-two
+  natℝ-two : natℝ 2 ≡ natℝ (suc (suc zero))
+  natℝ-two = refl
+  -- 2/2 = 1
+  two-over-two : (natℝ 2 /ℝ natℝ 2) ≡ oneℝ
+  two-over-two = trans (/-cross-ℝ {natℝ 2} {oneℝ} {natℝ 2} {oneℝ} cross) (div-one-ℝ oneℝ)
+    where
+    cross : (natℝ 2 *ℝ oneℝ) ≡ (oneℝ *ℝ natℝ 2)
+    cross = trans (*-ident-ℝ (natℝ 2))
+                  (sym (trans (*-comm-ℝ oneℝ (natℝ 2)) (*-ident-ℝ (natℝ 2))))
+
+-- **可证**：1/(1-x/2) < 1/(1-x)（recip-mono-ℝ：0 < 1-x < 1-x/2 ⟸ x > 0）
+recip-half-gap : {x : ℝ} → zeroℝ <ℝ x → x <ℝ oneℝ →
+  (oneℝ /ℝ (oneℝ -ℝ half-x x)) <ℝ (oneℝ /ℝ (oneℝ -ℝ x))
+recip-half-gap {x} hx hlt = recip-mono-ℝ (one-sub-pos hlt) sub-gap
+  where
+  -- x/2 + x/2 = x（x/2·1 + x/2·1 = x/2·(1+1) = x/2·2 = 2·(x/2) = x）
+  two-eq : (oneℝ +ℝ oneℝ) ≡ natℝ 2
+  two-eq = trans (cong₂ _+ℝ_ (sym natℝ-one) (sym natℝ-one)) (sym (natℝ-+ 1 1))
+  half-add-half : (half-x x +ℝ half-x x) ≡ x
+  half-add-half = trans step1 step2
+    where
+    step1 : (half-x x +ℝ half-x x) ≡ ((half-x x) *ℝ natℝ 2)
+    step1 = trans (cong₂ _+ℝ_ (sym (*-ident-ℝ (half-x x))) (sym (*-ident-ℝ (half-x x))))
+                  (trans (sym (distrib-ℝ (half-x x) oneℝ oneℝ))
+                         (cong (λ w → (half-x x) *ℝ w) two-eq))
+    step2 : ((half-x x) *ℝ natℝ 2) ≡ x
+    step2 = trans (*-comm-ℝ (half-x x) (natℝ 2)) (*-/cancel-ℝ (natℝ 2) x)
+  -- x/2 < x（x/2 + x/2 = x ⟹ x/2 < x 经 add-pos-ℝ）
+  half-lt-x : half-x x <ℝ x
+  half-lt-x = subst (λ z → half-x x <ℝ z) half-add-half (add-pos-ℝ (div-half-pos hx))
+  -- 1-x < 1-x/2（x/2 < x ⟹ -x < -x/2（neg-<-ℝ）⟹ 1+(-x) < 1+(-x/2)）
+  sub-gap : (oneℝ -ℝ x) <ℝ (oneℝ -ℝ half-x x)
+  sub-gap = subst (λ u → u <ℝ (oneℝ -ℝ half-x x)) (sym (sub-ℝ-def oneℝ x))
+                  (subst (λ w → (oneℝ +ℝ negℝ x) <ℝ w) (sym (sub-ℝ-def oneℝ (half-x x)))
+                         (lt-+-mono-r-ℝ {a = oneℝ} {b = negℝ x} {c = negℝ (half-x x)}
+                                        (neg-<-ℝ half-lt-x)))
+
 -- m < m + (k+1)（大数 ℕ 比较构造工具：m +ℕ suc k 定义性归约到 m+k+1）
 <-add-r : (m k : ℕ) → m <ℕ (m +ℕ suc k)
 <-add-r zero k = z<s
