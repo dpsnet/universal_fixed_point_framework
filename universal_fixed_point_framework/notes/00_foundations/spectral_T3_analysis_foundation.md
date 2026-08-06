@@ -514,8 +514,8 @@ postulate
 
 - **阶段 4 组合替换 ✅（2026-08-05，v1.29-1.33 + 增量收官）**：
   - **dyadic 阶梯基础设施（v1.29-1.33）**：`dyadic-vc`（网格点幂值，负部/正部 0）+ `dyadic-stair`（三段式 SimpleF：x<0 负部 / [0,c) dyadic 分划 / x≥c 正部）+ `dyadic-stair-below`（sₖ ≤ p⁺ 逐原子，power-mono）+ `dyadic-int-below`（∫sₖ ≤ₒ ∫p⁺）+ `stair-seq`/`stair-seq-le`（supₖ∫sₖ ≤ₒ ∫p⁺）+ **桥接登记** `stair-MCT`（∫p⁺ ≤ₒ supₖ∫sₖ，Lebesgue 单调收敛 dyadic 版）+ `stair-int-full`（∫p⁺ = supₖ∫sₖ）。
-  - **组合替换（2026-08-05）**：`mono-neg-int-zero`（∫(xⁿ)⁻ = 𝟘ₒ：谱支集 [0,∞) 上 (xⁿ)⁻ = 0 + spec-int-nonneg-zero-off-support）+ `mono-pos-eq`（∫xⁿ = ∫(xⁿ)⁺）+ `stair-fc-seq`（supₖ∫sₖ = supₖ fc(sₖ)，fc-simple-integral 替换）+ **`mono-le-any`**（**∫xⁿ ≤ₒ fc(xⁿ)，任意 n**：每项 fc(sₖ) = ∫sₖ ≤ₒ ∫xⁿ⁺（spec-int-mono 全 ℝ，sₖ ≤ xⁿ⁺ 逐点）≤ₒ fc(xⁿ)（fc-integral-le，**可证**，不依赖 fc-integral postulate）+ sup-op-least）——**n 奇半边经此闭合，无需谱支集受限单调性**（此前误判）。
-  - **阶段 4 状态**：**单项式层闭合（mono-le-any，零新增公理）**；`fc-poly-le-spec-int` 完整构造化仅剩**线性组合**（fc(poly) = Σ aᵢ·A^{nᵢ} ≤ₒ ∫(Σ aᵢx^{nᵢ})，需 sup-add——方案 A 明确规避的 sup 层线性公理，见 §5.16.8 479 行）——**按 v1.34 决策保持 fc-integral 为健全 D 类桥接**。
+  - **组合替换（2026-08-05）**：`mono-neg-int-zero`（∫(xⁿ)⁻ = 𝟘ₒ：谱支集 [0,∞) 上 (xⁿ)⁻ = 0 + spec-int-nonneg-zero-off-support）+ `mono-pos-eq`（∫xⁿ = ∫(xⁿ)⁺）+ `stair-fc-seq`（supₖ∫sₖ = supₖ fc(sₖ)，fc-simple-integral 替换）+ **`mono-le-any`**（**∫xⁿ ≤ₒ fc(xⁿ)，任意 n——∫ ≤ fc 方向（fc-integral-le 的单项式可证版）**：每项 fc(sₖ) = ∫sₖ ≤ₒ ∫xⁿ⁺（spec-int-mono 全 ℝ，sₖ ≤ xⁿ⁺ 逐点）≤ₒ fc(xⁿ)（fc-integral-le，可证）+ sup-op-least）。
+  - **阶段 4 状态（2026-08-05 方向核验修正）**：`mono-le-any` 方向为 **∫ ≤ fc**（与 `fc-poly-le-spec-int` 的 **fc ≤ ∫** 相反），**不构成 fc-poly-le-spec-int 构造化组件**。fc ≤ ∫ 方向（单项式原子 Aⁿ ≤ₒ ∫xⁿ）需受限 fc-mono（谱支集受限单调性）或 fc-integral（v1.34 现状）——未推进。**决策（用户："决策的标准是数学上要成立"）**：`fc-integral`（函数演算 = 谱积分）数学上恒真（自伴算子谱定理定义性内容），保持健全 D 类桥接符合标准，C1 收官；sup-add/受限 fc-mono 均数学上成立，可后续再登记推进。
 
 - **阶段 4 第一/二步 ✅（v1.28，fc 侧分解组件）**：`fn-sub`（函数减法定义：(f−g)(x) = f x −ℝ g x）+ **可证** `fc-sub`（**fc 保减法**：fc(f−g) ≡ fc f −ₒ fc g——fn-sub 点态展开（sub-ℝ-def + fc-ext）+ fc-add + fc-scalar-mul（−1 标量）+ _−ₒ_ 定义）+ **`fc-decomp-pos-neg`**（**fc 正负分解**：fc(p) ≡ fc(p⁺) −ₒ fc(p⁻)——fc-ext（p = p⁺ − p⁻ 逐点，decomp-pos-neg）+ fc-sub）——**fc(p) 分解为两个非负函数 p⁺/p⁻ 的 fc**，fc-poly-le-spec-int 构造化（fc(p) ≤ₒ ∫p⁺ −ₒ ∫p⁻，各自由非负 sup 逼近）的 fc 侧前置。
 

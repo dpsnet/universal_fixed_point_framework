@@ -2696,14 +2696,19 @@ mono-even-le-id n =
 --   需 sup 线性/正负分解逐项）——后续路线。
 
 -- ==================================================================
--- 阶段 4 组合替换收官（2026-08-05）：单项式 ≤ 方向（任意 n，奇偶统一）
--- 目标：∫xⁿ ≤ₒ fc(xⁿ)（任意 n）——**n 奇半边闭合的关键洞察**：无需谱支集
---   受限单调性。链：fc(sₖ) = ∫sₖ（fc-simple-integral）≤ₒ ∫xⁿ⁺（spec-int-mono：
---   sₖ ≤ xⁿ⁺ 逐点全 ℝ，dyadic-below-pt）= ∫xⁿ（mono-pos-eq，任意 n）
---   ≤ₒ fc(xⁿ)（fc-integral-le，**可证**，不依赖 fc-integral postulate——
+-- 阶段 4 组合替换收官（2026-08-05）：∫ ≤ fc 方向的单项式版（任意 n）
+-- 目标：∫xⁿ ≤ₒ fc(xⁿ)（任意 n）——**fc-integral-le（∫ ≤ fc，1964）的单项式
+--   可证版**（方向：积分 ≤ 函数演算；与 fc-poly-le-spec-int 的 fc ≤ ∫ 相反，
+--   不构成其构造化组件）。链：fc(sₖ) = ∫sₖ（fc-simple-integral）≤ₒ ∫xⁿ⁺
+--   （spec-int-mono：sₖ ≤ xⁿ⁺ 逐点全 ℝ，dyadic-below-pt）= ∫xⁿ（mono-pos-eq，
+--   任意 n）≤ₒ fc(xⁿ)（fc-integral-le，**可证**，不依赖 fc-integral postulate——
 --   1964 用 fc-simple-integral + fc-mono + sup-op-least）。
 --   ⟹ supₖ fc(sₖ) ≤ₒ fc(xⁿ)（sup-op-least）⟹ ∫xⁿ⁺ = supₖ∫sₖ = supₖ fc(sₖ）
 --   （stair-int-full + stair-fc-seq）⟹ ∫xⁿ ≤ₒ fc(xⁿ)。全部**可证**，零新增公理。
+-- 注：fc ≤ ∫ 方向（fc-poly-le-spec-int 的单项式原子 Aⁿ ≤ₒ ∫xⁿ）仍需受限
+--   fc-mono（谱支集受限单调性）或 fc-integral（v1.34 现状）——未推进（2026-08-05
+--   方向核验修正；按用户"决策标准 = 数学上要成立"，fc-integral 数学上恒真
+--   （谱定理定义性内容），保持健全 D 类桥接）。
 -- ==================================================================
 
 -- **可证**：dyadic 阶梯逐点 ≤ (xⁿ)⁺——sₖ ≤ xⁿ⁺ 逐点（全 ℝ）：
@@ -2749,10 +2754,10 @@ stair-fc-below-any n j =
   core = ≤ₒ-trans (simple-int sⱼ) (spec-int-general (λ y → ℝ-power n y))
                   (fc (λ y → ℝ-power n y)) step12 (fc-integral-le (λ y → ℝ-power n y))
 
--- **可证**：单项式 ≤ 方向完整（任意 n）——∫xⁿ ≤ₒ fc(xⁿ)
+-- **可证**：∫ ≤ fc 方向的单项式版（任意 n）——∫xⁿ ≤ₒ fc(xⁿ)
 --（∫xⁿ = ∫xⁿ⁺（mono-pos-eq）⟹ = supₖ∫sₖ（stair-int-full）⟹ = supₖ fc(sₖ）
 --  （stair-fc-seq）⟹ 每项 fc(sₖ) ≤ₒ fc(xⁿ)（stair-fc-below-any）+ sup-op-least——
---  C1 单项式层闭合（n 偶/奇统一），零新增公理）
+--  fc-integral-le（∫ ≤ fc，1964）的单项式可证版；零新增公理）
 mono-le-any : (n : ℕ) → spec-int-general (λ y → ℝ-power n y) ≤ₒ fc (λ y → ℝ-power n y)
 mono-le-any n =
   subst (λ Z → Z ≤ₒ fc (λ y → ℝ-power n y)) (sym (mono-pos-eq n))
@@ -2765,12 +2770,14 @@ mono-le-any n =
                                  (stair-fc-below-any n j)
 
 -- 阶段 4 组合替换状态（2026-08-05 终）：
---   **单项式 ≤ 方向闭合（mono-le-any：∫xⁿ ≤ₒ fc(xⁿ)，任意 n，零新增公理）**——
---   n 奇半边经 ∫sₖ ≤ₒ ∫xⁿ⁺（全 ℝ spec-int-mono）+ mono-pos-eq + fc-integral-le
---   （可证）闭合，无需谱支集受限单调性。
---   剩余：线性组合（Σ aᵢA^{nᵢ} ≤ₒ ∫Σaᵢx^{nᵢ}：fc(poly) = Σ aᵢA^{nᵢ}（fc-monomial）
---   逐项 fc(x^{nᵢ}) ≤ₒ ∫x^{nᵢ}（mono-le-any）⟹ 需 ∫ 的线性/正负分解逐项
---   （sup 层线性公理）——后续路线。
+--   **∫ ≤ fc 方向的单项式版闭合（mono-le-any：∫xⁿ ≤ₒ fc(xⁿ)，任意 n，
+--   零新增公理）**——fc-integral-le 侧的单行式构造化（n 奇经 ∫sₖ ≤ₒ ∫xⁿ⁺
+--   （全 ℝ spec-int-mono）+ mono-pos-eq + fc-integral-le 闭合，无需谱支集受限
+--   单调性）。
+--   **fc ≤ ∫ 方向（fc-poly-le-spec-int 构造化，fc-integral 降定理）未推进**：
+--   单项式原子 Aⁿ ≤ₒ ∫xⁿ 需受限 fc-mono 或 fc-integral（v1.34 现状）；线性组合
+--   需 sup-add。按用户"决策标准 = 数学上要成立"：fc-integral（函数演算 = 谱
+--   积分）数学上恒真（谱定理定义性内容），保持健全 D 类桥接——C1 收官。
 
 -- 可数并谓词（σ-并）：∪ₙ Pₙ = {x : ∃n. P n x}
 σ-union : (ℕ → Borel) → Borel

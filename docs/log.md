@@ -3179,8 +3179,12 @@ fc-poly-le-spec-int 完整构造化（fc-integral 零登记项）仍缺"单项�
   ⟹ 每项 fc(sₖ) ≤ₒ fc(xⁿ）（stair-fc-below-any）⟹ ∫xⁿ ≤ₒ fc(xⁿ）
 ```
 
-### C1 剩余（如实记录）
+### C1 剩余（如实记录，2026-08-05 方向核验修正）
 
-**线性组合**：fc(poly-fn) = Σ aᵢ·A^{nᵢ}（fc-monomial + fc-add）≤ₒ ∫(Σ aᵢx^{nᵢ}) 需 ∫ 的加法性（sup-add，方案 A 明确规避的"sup 层线性公理"，蓝图 §5.16.8 479 行）或定义重构（v1.25 已否决）——**按 v1.34 决策保持 fc-integral 为健全 D 类桥接，单项式层闭合为"零新增公理"下的最大推进**。
+**方向核验**：`mono-le-any` 为 ∫xⁿ ≤ₒ fc(xⁿ)（**∫ ≤ fc 方向**，fc-integral-le 的单项式可证版）——与 `fc-poly-le-spec-int`（**fc ≤ ∫ 方向**）相反，**不构成其构造化组件**。
+
+**fc ≤ ∫ 方向（fc-poly-le-spec-int 完整构造化）真实状态**：单项式原子 Aⁿ ≤ₒ ∫xⁿ 需受限 fc-mono（谱支集受限单调性）或 fc-integral（v1.34 现状）——**未推进**。
+
+**决策（用户："决策的标准是数学上要成立"）**：`fc-integral`（函数演算 = 谱积分）数学上恒真（自伴算子谱定理的定义性内容），保持为健全 D 类桥接符合标准，C1 收官。线性组合（sup-add）与受限 fc-mono 均数学上成立，若后续要"零登记项"可再登记推进——非当前决策。
 
 **验证**：SpectralTheory 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
