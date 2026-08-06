@@ -3272,3 +3272,19 @@ DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）�
 **排坑**：trans 第二段需 q : B ≡ C 方向——`+-assoc-ℝ`（(a+b)+c → a+(b+c)）直接使用，sym 反。
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**前置③ 剩余**：幂加法性（x^{a+b} = x^a·x^b）+ 阶乘/recip 单调（1/(n+1+m)! ≤ 1/(n+1)!）+ tail-sum ≤ x^{n+1}/(n+1)!·geo-x（逐项比较）。
+
+---
+
+## T3 固定间隙路径：ℕ 层半环代数（2026-08-05，NatArith §5）
+
+**目标**：exp-tail-bound 严格 < 降定理的固定间隙路径基础——阶乘强估计（(n+1+j)! ≥ (n+1)!·2^j）需 `*ℕ` 代数。
+
+**新增 8 引理**（NatArith，零新增公理）：
+- `+ℕ-comm` / `+ℕ-assoc`：加法交换/结合
+- `*ℕ-zero-r` / `*ℕ-ident-r`：乘法右零/右单位
+- `*ℕ-suc-r`：n·(1+m) = n + n·m（*ℕ 右端 suc 展开）
+- `*ℕ-comm` / `*ℕ-distrib-r` / `*ℕ-assoc`：乘法交换/右分配/结合
+
+**排坑**：NatArith import 补 `sym`；`*ℕ-distrib-r` base 定义性 refl（zero·c=0、0+b=b、0+x=x 全方程）；`*ℕ-suc-r` 归纳步需 `+ℕ-assoc` 正向 + `+ℕ-suc`（n + suc(m+a) = suc(n+(m+a))）。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：阶乘强估计（DHStructural）+ 幂加法性 + tail 逐项（j=0 相等/j≥1 严格）+ x/2 几何级数 + recip 单调 + 组合。

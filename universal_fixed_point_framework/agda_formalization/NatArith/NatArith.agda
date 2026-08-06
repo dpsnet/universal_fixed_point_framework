@@ -19,7 +19,7 @@ module NatArith.NatArith where
 -}
 
 open import Agda.Builtin.Equality using (_≡_; refl)
-open import Sp.SpCategory using (ℕ; zero; suc; cong; trans)
+open import Sp.SpCategory using (ℕ; zero; suc; sym; cong; trans)
 
 -- ==================================================================
 -- §0 基础运算（从 Unified3 迁入，作为算术基础库）
@@ -190,3 +190,59 @@ log2 = rec (λ _ → ℕ) log2-step
 -- log₂ 8 = 3（具体计算，refl）
 log2-8 : log2 8 ≡ 3
 log2-8 = refl
+
+-- ==================================================================
+-- §5 ℕ 半环代数（2026-08-05，exp-tail-bound 降定理阶乘强估计基础）
+-- +ℕ/*ℕ 的交换/结合/单位（归纳按定义方程，BUILTIN 绑定不影响方程匹配）
+-- ==================================================================
+
+-- 加法交换
++ℕ-comm : (m n : ℕ) → m +ℕ n ≡ n +ℕ m
++ℕ-comm zero    n = sym (+ℕ-zero n)
++ℕ-comm (suc m) n = trans (cong suc (+ℕ-comm m n)) (sym (+ℕ-suc n m))
+
+-- 加法结合
++ℕ-assoc : (m n p : ℕ) → (m +ℕ n) +ℕ p ≡ m +ℕ (n +ℕ p)
++ℕ-assoc zero    n p = refl
++ℕ-assoc (suc m) n p = cong suc (+ℕ-assoc m n p)
+
+-- 乘法右零：m·0 = 0
+*ℕ-zero-r : (m : ℕ) → m *ℕ zero ≡ zero
+*ℕ-zero-r zero    = refl
+*ℕ-zero-r (suc m) = cong (λ x → zero +ℕ x) (*ℕ-zero-r m)
+
+-- 乘法右单位：m·1 = m
+*ℕ-ident-r : (m : ℕ) → m *ℕ 1 ≡ m
+*ℕ-ident-r zero    = refl
+*ℕ-ident-r (suc m) = cong (λ x → 1 +ℕ x) (*ℕ-ident-r m)
+
+-- 乘法右端 suc：n·(1+m) = n + n·m
+*ℕ-suc-r : (n m : ℕ) → n *ℕ (suc m) ≡ n +ℕ (n *ℕ m)
+*ℕ-suc-r zero m = refl
+*ℕ-suc-r (suc n) m =
+  trans (cong (λ x → suc m +ℕ x) (*ℕ-suc-r n m))
+        (trans (sym (+ℕ-assoc (suc m) n (n *ℕ m)))
+               (trans (cong (λ x → x +ℕ (n *ℕ m)) (+ℕ-comm (suc m) n))
+                      (trans (+ℕ-assoc n (suc m) (n *ℕ m))
+                             (+ℕ-suc n (m +ℕ (n *ℕ m))))))
+
+-- 乘法交换
+*ℕ-comm : (m n : ℕ) → m *ℕ n ≡ n *ℕ m
+*ℕ-comm zero    n = sym (*ℕ-zero-r n)
+*ℕ-comm (suc m) n =
+  trans (cong (λ x → n +ℕ x) (*ℕ-comm m n))
+        (sym (*ℕ-suc-r n m))
+
+-- 乘法右分配：(a+b)·c = a·c + b·c
+*ℕ-distrib-r : (a b c : ℕ) → (a +ℕ b) *ℕ c ≡ (a *ℕ c) +ℕ (b *ℕ c)
+*ℕ-distrib-r zero    b c = refl
+*ℕ-distrib-r (suc a) b c =
+  trans (cong (λ x → c +ℕ x) (*ℕ-distrib-r a b c))
+        (sym (+ℕ-assoc c (a *ℕ c) (b *ℕ c)))
+
+-- 乘法结合
+*ℕ-assoc : (m n p : ℕ) → (m *ℕ n) *ℕ p ≡ m *ℕ (n *ℕ p)
+*ℕ-assoc zero n p = refl
+*ℕ-assoc (suc m) n p =
+  trans (*ℕ-distrib-r n (m *ℕ n) p)
+        (cong (λ x → (n *ℕ p) +ℕ x) (*ℕ-assoc m n p))
