@@ -246,3 +246,43 @@ log2-8 = refl
 *ℕ-assoc (suc m) n p =
   trans (*ℕ-distrib-r n (m *ℕ n) p)
         (cong (λ x → (n *ℕ p) +ℕ x) (*ℕ-assoc m n p))
+
+-- ==================================================================
+-- §6 ≤ℕ 非严格序（2026-08-05，阶乘强估计基础）
+-- ==================================================================
+
+infix 4 _≤ℕ_
+data _≤ℕ_ : ℕ → ℕ → Set where
+  z≤n : {n : ℕ} → zero ≤ℕ n
+  s≤s : {m n : ℕ} → m ≤ℕ n → suc m ≤ℕ suc n
+
+-- 自反
+≤ℕ-refl : {m : ℕ} → m ≤ℕ m
+≤ℕ-refl {zero}    = z≤n
+≤ℕ-refl {suc m}   = s≤s ≤ℕ-refl
+
+-- 传递
+≤ℕ-trans : {m n p : ℕ} → m ≤ℕ n → n ≤ℕ p → m ≤ℕ p
+≤ℕ-trans z≤n       _         = z≤n
+≤ℕ-trans (s≤s hmn) (s≤s hnp) = s≤s (≤ℕ-trans hmn hnp)
+
+-- 从 <ℕ 到 ≤ℕ
+<-≤ℕ : {m n : ℕ} → m <ℕ n → m ≤ℕ n
+<-≤ℕ z<s        = z≤n
+<-≤ℕ (s<s h)    = s≤s (<-≤ℕ h)
+
+-- suc 单调
+≤ℕ-suc : {m n : ℕ} → m ≤ℕ n → suc m ≤ℕ suc n
+≤ℕ-suc = s≤s
+
+-- *ℕ 保序（右因子）：a ≤ b ⟹ 0 < c ⟹ a·c ≤ b·c
+*ℕ-≤-mono-r : {a b c : ℕ} → a ≤ℕ b → 0 <ℕ c → (a *ℕ c) ≤ℕ (b *ℕ c)
+*ℕ-≤-mono-r {c = zero}  _ ()
+*ℕ-≤-mono-r {a = zero}  {b} {suc k} z≤n _ = z≤n
+*ℕ-≤-mono-r {a = suc a} {suc b} {suc k} (s≤s hab) _ =
+  +ℕ-≤-mono-r {a = a *ℕ suc k} {b = b *ℕ suc k} {c = suc k}
+               (*ℕ-≤-mono-r {a} {b} {suc k} hab z<s)
+  where
+  +ℕ-≤-mono-r : {a b c : ℕ} → a ≤ℕ b → (c +ℕ a) ≤ℕ (c +ℕ b)
+  +ℕ-≤-mono-r {c = zero}  h = h
+  +ℕ-≤-mono-r {c = suc c} h = s≤s (+ℕ-≤-mono-r {c = c} h)

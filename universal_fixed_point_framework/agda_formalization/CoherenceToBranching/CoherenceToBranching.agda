@@ -41,10 +41,7 @@ record _↔_ (A B : Set) : Set where
 data ⊤ : Set where
   tt : ⊤
 
-infix 4 _≤ℕ_
-data _≤ℕ_ : ℕ → ℕ → Set where
-  z≤n : {n : ℕ} → zero ≤ℕ n
-  s≤s : {m n : ℕ} → m ≤ℕ n → suc m ≤ℕ suc n
+-- _≤ℕ_ 使用 NatArith §6 版本（2026-08-05，本地重复定义删除）
 
 -- ==================================================================
 -- §1 𝐒𝐩 严格 4-范畴的层次互异性

@@ -3288,3 +3288,22 @@ Everything.agda 全量 20 模块编译通过（exit 0）。**前置③ 剩余**�
 **排坑**：NatArith import 补 `sym`；`*ℕ-distrib-r` base 定义性 refl（zero·c=0、0+b=b、0+x=x 全方程）；`*ℕ-suc-r` 归纳步需 `+ℕ-assoc` 正向 + `+ℕ-suc`（n + suc(m+a) = suc(n+(m+a))）。
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：阶乘强估计（DHStructural）+ 幂加法性 + tail 逐项（j=0 相等/j≥1 严格）+ x/2 几何级数 + recip 单调 + 组合。
+
+---
+
+## T3 固定间隙路径：≤ℕ + 阶乘强估计（2026-08-05，NatArith §6 + DHStructural）
+
+**目标**：exp-tail-bound 严格 < 降定理的固定间隙路径核心——(n+1+j)! ≥ (n+1)!·2^j（每个额外因子 ≥ 2 ⟹ 几何公比折半 x/2 ⟹ 固定间隙 B'' < B）。
+
+**NatArith §6（≤ℕ 基础设施）**：`_≤ℕ_`（z≤n/s≤s）+ `≤ℕ-refl`/`≤ℕ-trans`/`<-≤ℕ`/`≤ℕ-suc`/`*ℕ-≤-mono-r`（*ℕ 保序，归纳 + 方程 + where 内 +ℕ-≤-mono-r）。
+
+**DHStructural（阶乘强估计）**：
+- `two-≤-sucsuc`：2 ≤ 2+k
+- **`factorial-strong`**：(n+1)!·2^j ≤ (n+1+j)!——归纳 j：base `*ℕ-ident-r`；step 左端 `*ℕ-assoc`/`*ℕ-comm` + 2^ 定义 ⟹ 归纳·2（`*ℕ-≤-mono-r`）⟹ factorial·2 ≤ (n+2+j)!（`two-≤-sucsuc` + `*ℕ-≤-mono-r` + factorial 递归 + `*ℕ-comm`）。
+
+**排坑**：
+- `2^j` 缺空格解析为 `2 ^j` → 全部改 `2^ j`
+- `subst` 方向：eq-left 需 `(factorial·2^j)·2 ≡ factorial·2^(suc j)`（sym）
+- **`_≤ℕ_` 全局冲突**：CoherenceToBranching 本地重复定义（只定义未用）删除，改用 NatArith §6 版本
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：幂加法性（x^{a+b} = x^a·x^b）+ tail 逐项（j=0 相等/j≥1 严格）+ x/2 几何级数 + recip 单调 + 组合。

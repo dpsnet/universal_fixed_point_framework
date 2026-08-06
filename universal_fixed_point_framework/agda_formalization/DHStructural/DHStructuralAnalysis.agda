@@ -863,6 +863,48 @@ exp-decomp n (suc m) x =
         (+-assoc-ℝ (exp-partial-at n x) (tail-sum n m x)
                    ((x ^ℕ (suc (suc (n +ℕr m)))) *ℝ recip-factorial (suc (suc (n +ℕr m)))))
 
+-- ==================================================================
+-- 阶乘强估计（固定间隙路径关键，2026-08-05）
+-- 目标：(n+1+j)! ≥ (n+1)!·2^ j（ℕ 层，≤ℕ）——tail-sum 逐项 ≤ x^{n+1}/(n+1)!·(x/2)^j
+--   的基础（每个额外因子 ≥ 2 ⟹ 几何公比折半 x/2 ⟹ 固定间隙）。
+-- 依赖：NatArith §5-6 半环代数 + ≤ℕ（*ℕ-comm/assoc/ident-r、*ℕ-≤-mono-r、z≤n/s≤s）。
+-- ==================================================================
+
+-- 2 ≤ 2+k（ℕ 层，≤ℕ）
+two-≤-sucsuc : (k : ℕ) → 2 ≤ℕ suc (suc k)
+two-≤-sucsuc k = s≤s (s≤s z≤n)
+
+-- **可证**：阶乘强估计——factorial (suc n) *ℕ 2^ j ≤ℕ factorial (suc (n +ℕr j))
+--（归纳 j：base *ℕ-ident-r；step 左端 (n+1)!·2^{j+1} = ((n+1)!·2^ j)·2（*ℕ-assoc/comm
+--  + 2^ 定义）⟹ 归纳·2（*ℕ-≤-mono-r）⟹ factorial·2 ≤ (n+2+j)!（2 ≤ suc(suc k) +
+--  *ℕ-≤-mono-r + factorial 递归 + *ℕ-comm））
+factorial-strong : (n j : ℕ) → (factorial (suc n) *ℕ 2^ j) ≤ℕ factorial (suc (n +ℕr j))
+factorial-strong n zero =
+  subst (λ x → x ≤ℕ factorial (suc n)) (sym (*ℕ-ident-r (factorial (suc n)))) ≤ℕ-refl
+factorial-strong n (suc j) =
+  subst (λ y → (factorial (suc n) *ℕ 2^ (suc j)) ≤ℕ y)
+        (sym (cong (λ z → factorial (suc z)) (+ℕr-suc n j)))
+        (subst (λ x → x ≤ℕ factorial (suc (suc (n +ℕr j)))) (sym eq-left)
+               (≤ℕ-trans step1 step2))
+  where
+  -- 归纳 ×2：((n+1)!·2^ j)·2 ≤ ((n+1+j)!)·2
+  step1 : ((factorial (suc n) *ℕ 2^ j) *ℕ 2) ≤ℕ (factorial (suc (n +ℕr j)) *ℕ 2)
+  step1 = *ℕ-≤-mono-r {a = factorial (suc n) *ℕ 2^ j} {b = factorial (suc (n +ℕr j))} {c = 2}
+                      (factorial-strong n j) z<s
+  -- 左端：factorial (suc n)·2^{j+1} ≡ ((factorial (suc n)·2^ j)·2)
+  eq-left : (factorial (suc n) *ℕ 2^ (suc j)) ≡ ((factorial (suc n) *ℕ 2^ j) *ℕ 2)
+  eq-left = trans (cong (λ x → factorial (suc n) *ℕ x) (*ℕ-comm 2 (2^ j)))
+                  (sym (*ℕ-assoc (factorial (suc n)) (2^ j) 2))
+  -- 右端：((n+1+j)!)·2 ≤ (n+2+j)!（2 ≤ suc(suc k) + *ℕ 保序 + factorial 递归 + *ℕ-comm）
+  step2 : (factorial (suc (n +ℕr j)) *ℕ 2) ≤ℕ factorial (suc (suc (n +ℕr j)))
+  step2 = subst (λ x → x ≤ℕ ((suc (suc (n +ℕr j))) *ℕ factorial (suc (n +ℕr j))))
+                (sym (*ℕ-comm (factorial (suc (n +ℕr j))) 2))
+                (*ℕ-≤-mono-r {a = 2} {b = suc (suc (n +ℕr j))} {c = factorial (suc (n +ℕr j))}
+                             (two-≤-sucsuc (n +ℕr j)) (factorial-pos (suc (n +ℕr j))))
+  -- +ℕr 右端 suc：n +ℕr (suc j) ≡ suc (n +ℕr j)
+  +ℕr-suc : (n j : ℕ) → n +ℕr (suc j) ≡ suc (n +ℕr j)
+  +ℕr-suc n j = refl
+
 -- m < m + (k+1)（大数 ℕ 比较构造工具：m +ℕ suc k 定义性归约到 m+k+1）
 <-add-r : (m k : ℕ) → m <ℕ (m +ℕ suc k)
 <-add-r zero k = z<s
