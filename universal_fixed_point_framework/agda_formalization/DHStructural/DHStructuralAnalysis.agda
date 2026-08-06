@@ -734,6 +734,14 @@ exp-partial-at : ℕ → ℝ → ℝ
 exp-partial-at zero x = oneℝ
 exp-partial-at (suc n) x = exp-partial-at n x +ℝ ((x ^ℕ (suc n)) *ℝ recip-factorial (suc n))
 
+-- exp 任意点级数 sup 定义（2026-08-05，exp-tail-bound 降定理前置②）：
+-- exp x = Σ_{k≥0} x^k/k! 的级数 sup 刻画（与 exp-partial-≤-ub/exp-least-ub 同层，
+-- exp oneℝ 版的任意点推广；数学上成立 = exp 的级数定义，登记为基础假设层。
+-- 用途：exp-tail-bound 降定理的 sup 论证（部分和 ≤ exp x + exp x ≤ 最小上界））
+postulate
+  exp-partial-at-≤-ub : (n : ℕ) (x : ℝ) → exp-partial-at n x ≤ℝ exp x  -- 部分和 ≤ exp x（任意点）
+  exp-least-ub-any : (x : ℝ) (b : ℝ) → ((n : ℕ) → exp-partial-at n x ≤ℝ b) → exp x ≤ℝ b  -- exp x 是最小上界
+
 -- 几何尾部上界（机制层定义性公理，2026-08-05）：
 --   0 ≤ x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
 -- 依据：exp x = Σ_{k≥0} x^k/k!，尾部 Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_{j≥0}x^j。

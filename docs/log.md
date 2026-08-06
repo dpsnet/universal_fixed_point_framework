@@ -3244,3 +3244,19 @@ DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）�
 ### 状态
 
 exp-tail-bound 降定理的前置 ①（几何级数求和）**就绪**。剩余：② exp 任意点级数 sup 定义（登记）；③ 尾部逐项比较；④ 组合 + 严格性。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+---
+
+## T3 exp 任意点级数 sup 定义（2026-08-05，exp-tail-bound 降定理前置②）
+
+**登记**（基础假设层，数学上成立 = exp 级数定义，与 exp-partial-≤-ub/exp-least-ub 同层的任意点推广）：
+- `exp-partial-at-≤-ub`：(n : ℕ) (x : ℝ) → exp-partial-at n x ≤ℝ exp x（部分和 ≤ exp x）
+- `exp-least-ub-any`：(x : ℝ) (b : ℝ) → ((n : ℕ) → exp-partial-at n x ≤ℝ b) → exp x ≤ℝ b（exp x 是最小上界）
+
+DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）。
+
+### 严格性分析（如实记录，④ 的关键难点）
+
+**exp-tail-bound（严格 <）的 sup 论证缺口**：部分和 exp-partial-at (n+1+m) x < B（严格，经 geo-x-lt）只给 sup ≤ B（sup 层"每项 < B ⟹ sup ≤ B"非严格——成员可趋 B）。数学上严格性来自尾部逐项因子 (n+1)!/k! < 1（k > n+1），但 sup 丢逐项严格性。
+
+**可行路径**：① ≤ 版（exp x ≤ B）可经 sup-least-any 直接可证（前置③组合）；② 严格 < 需 sup 严格性机制（Archimedean + 反证 exp = B 矛盾）或保持 postulate（数学上成立、健全）——与 fc-integral 决策同类。**下一步**：先做前置③（部分和分解 + 尾部逐项比较，给出 ≤ 版），严格性再评估。
