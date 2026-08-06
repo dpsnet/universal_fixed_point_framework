@@ -2,12 +2,12 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.1（2026-08-03）
+**版本**：v0.2（2026-08-05）
 
-**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，74 模块，核心 10 模块零 `sorry`）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，16 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
+**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 `lake build` 2454 jobs **零 `sorry` 零 `axiom`**）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，20 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。2026-08-05 继续推进 **T3 定义性公理降定理**：`exp-partial-<`（v1.41）与 `exp-tail-bound`（v1.42，固定间隙路径）由 postulate 降为可证明定理（零新增公理），同时 C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
 
 ---
-**记号与引用**：本文引用 RAP-Errata v0.8（宣称基线）。Agda 代码位于 `agda_formalization/`（`Everything.agda` 整体编译 exit=0）。本文自包含：路径 B 闭合账目、技术债分类（A/B/C/D）与推导要点均已内嵌正文，不依赖外部笔记或路线图文档。
+**记号与引用**：本文引用 RAP-Errata v0.10（宣称基线）。Agda 代码位于 `agda_formalization/`（`Everything.agda` 整体编译 exit=0）。本文自包含：路径 B 闭合账目、技术债分类（A/B/C/D）与推导要点均已内嵌正文，不依赖外部笔记或路线图文档。
 
 ---
 
@@ -29,18 +29,18 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 
 ---
 
-## 2. 架构与模块清单（16 模块）
+## 2. 架构与模块清单（20 模块）
 
-`agda_formalization/`（`UFPF.agda-lib` 注册，name: UFPF）。**计数口径**：15 个业务模块 + `Everything.agda` 主入口 = 16 模块（另有 `Categories/` 基础库 3 模块：Category/Functor/NaturalTransformation）。
+`agda_formalization/`（`UFPF.agda-lib` 注册，name: UFPF）。**计数口径**：18 个业务模块 + `Everything.agda` 主入口 = 19 模块 + `Categories/` 基础库 1 项 = 20 模块（全量编译口径，与路线图 v1.40 起一致；另有 `Categories/` 基础库 Category/Functor/NaturalTransformation 不重复计数）。
 
 | 模块 | 编号 | 对应 Lean | 内容 |
 |:-----|:----:|:----------|:-----|
 | `Sp/SpCategory.agda` | B1 | `SpCategory.lean` | $\mathbf{Sp}$ 4-范畴（对象/1-态射/层结构/层对计数） |
 | `Sp/HigherSpCategory.agda` | B2 | `HigherSpCategory.lean` | 2-/3-态射、交换律偏差结构 |
 | `Rec/RecCategory.agda` | — | `RecCategory.lean` | Rec 范畴（有限状态 + 演化规则） |
-| `NatArith/NatArith.agda` | — | — | ℕ 算术引理库（良基递归 §3，T1 闭合基础） |
+| `NatArith/NatArith.agda` | — | — | ℕ 算术引理库（良基递归 §3，T1 闭合基础；§5-6 半环代数/≤ℕ） |
 | `DecursionFunctor/DecursionFunctor.agda` | B3 | `DecursionFunctor.lean` | D 函子 + 右伴随 R + 伴随对 D ⊣ R |
-| `DHStructural/DHStructuralAnalysis.agda` | B4 | `DHStructuralAnalysis.lean` | d_H 不等式链（ln 15 < 65/24 < e < 3）+ ℝ 序代数基础 |
+| `DHStructural/DHStructuralAnalysis.agda` | B4 | `DHStructuralAnalysis.lean` | d_H 不等式链（ln 15 < 65/24 < e < 3）+ ℝ 序代数基础 + exp 级数机制（几何级数/尾部分解/阶乘强估计） |
 | `HilbertSpace/HilbertSpace.agda` | T4 | — | Hilbert 空间/拓扑层（内积→范数→有界算子→谱投影） |
 | `Unified3/Unified3Theorem.agda` | B5 | `Unified3Theorem.lean` | 统一 3 定理（card = 3 双射 + GenSpace + Bott 截断） |
 | `BottTower/BottTower.agda` | B6 | `BottTower.lean` | Bott 塔（旋量维数翻倍 + log₂ k_max = 3） |
@@ -50,6 +50,9 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 | `P1Spectral/P1Spectral.agda` | P1 | — | 谱匹配有限维特例（定理 3 退化版 + 推论 4） |
 | `SpectralTheory/SpectralTheory.agda` | T3 | — | 谱定理层（谱测度/Fuglede/Hille-Yosida/函数演算 fc） |
 | `CrossLayer/CrossLayer.agda` | — | — | 跨层模型 Op → LinOp 点态对应证书（OpAlgPt/SpectralObjPt） |
+| `InflationDynamics/InflationDynamics.agda` | — | — | 膨胀动力学（物理应用层） |
+| `ColorDynamics/ColorDynamics.agda` | — | — | 色动力学（物理应用层） |
+| `BlackHoleDynamics/BlackHoleDynamics.agda` | — | — | 黑洞动力学（物理应用层） |
 
 ### 2.1 与 Lean 的双实现一致性（核心 8 模块 B1-B8）
 
@@ -105,12 +108,17 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 | v1.34 | **方案 A 收官** | `fc-poly-le-spec-int` **依赖循环解决**：fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 自循环（结构性）→ 改用更基础 `fc-integral` 直接降为可证定理——桥接减一，fc 侧唯一剩余 D 类 = fc-integral |
 | v1.35 | ln15-arith-ax 尝试 | 逻辑链完备（refl 级），组装触发 Agda 内存不足 → 确认为**工程计算资源不足**（非结构性），保留 scoped 公理 |
 | v1.36 | 谱对象映射完整 | HilbertSpace §12' `A-hilb`/`fc-hilb`（谱定理降定理链端点桥接）+ SpectralObjPt 扩展 A/fc 字段——**谱对象映射（A/E/fc/exp-tA）完整闭合** |
+| v1.38 | C 类数值项清零 | 二进制 ℕ 算术（NATTIMES/NATPLUS + `<-add` 差递归）⟹ `ln2-lt`/`ln1615-lb`/`ln15-arith-ax` 全部降为可证明定理——**T3 scoped 数值公理清零**（"工程计算资源不足"路径替代） |
+| v1.40 | 方案 A 阶段 4 组合替换 + 方向核验 | `mono-le-any`（∫xⁿ ≤ₒ fc(xⁿ)，∫ ≤ fc 方向）+ **方向核验修正**（mono-le-any 为 ∫≤fc，非 fc-poly-le-spec-int 组件）；决策：fc-integral 保持健全 D 类桥接，C1 收官 |
+| v1.41 | exp-partial-< 降定理 | 原"exp 级数截断"定义性公理（partial-e n < exp 1）由 postulate 降为可证明定理（partial-e-suc + exp-partial-≤-ub + lt-≤-trans-ℝ），零新增公理 |
+| v1.42 | **exp-tail-bound 降定理（固定间隙路径）** | 原"几何尾部上界"定义性公理由 postulate 降为可证明定理 `exp-tail-bound-thm`：逐项 `tail-term-le`（pow-add + 阶乘强估计 factorial-strong + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''**（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)，ℕ 层 ≤-total/tail-repr 三分 + 部分和递增）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。**零新增公理** |
 
 ### 4.4 关键技术决策
 
 1. **方案 A 正负分解（∫f = ∫f⁺ −ₒ ∫f⁻）**：完全避开 sup 的加法/线性公理，`spec-int-general-decomp` 桥接 + 非负一致性（`spec-int-nonneg-consistent`）保证新旧定义对非负函数一致；定义重构破坏面过大，改走"decomp 显式化"路线（破坏面为零）。
 2. **依赖循环解决（v1.34）**：fc(p⁺)≤ₒ∫p⁺ 经 fc-continuous 自循环为结构性（p⁺ 非多项式侧唯一工具是 fc-continuous/fc-integral），改用更基础 `fc-integral`（§5c，fc = ∫，谱定理函数演算，与 spec-int-A 同层 D 类）直接降 `fc-poly-le-spec-int`——桥接减一。
 3. **术语统一（v1.35）**：scoped 数值公理（`ln15-arith-ax` 等）归类标注由"资源/实践静默"改为 **"工程计算资源不足"**（实测确认：refl 级闭合逻辑完备，但 2994494400 级大数归一化触发 `osCommitMemory: VirtualAlloc MEM_COMMIT failed`）。
+4. **exp 级数降定理固定间隙（v1.42）**：sup 论证中"每项 < B 只给 sup ≤ B"是严格性缺口——用**固定间隙 B''**（S_n + 系数·1/(1-x/2)，不依赖截断点 m）分离为 `exp x ≤ B''`（exp-least-ub-any）与 `B'' < B`（recip-half-gap：1/(1-x/2) < 1/(1-x)，x/2 < x），`≤-lt-trans-ℝ` 收口——与 e < 3 统一上界（67/24 < 3）同构的"间隙保持严格"策略。
 
 ---
 
@@ -124,8 +132,16 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 
 ### 5.2 待基础设施（C 类，可自然闭合）
 
-1. **`DeviationBound.lean` 2 个 `sorry`**——依赖 Mathlib `Matrix.Spectrum` 模块稳定。
+1. ~~**`DeviationBound.lean` 2 个 `sorry`**~~——✅ **已消除**（2026-08-05，L2 简化定理闭合：`spectral_gap_estimate`/`deviation_spectral_bound`，O8）。Lean 侧当前开放项：`WeierstrassGap.lean` 核谱隙特征值级证明（登记为开放项）+ Mathlib `Matrix.Spectrum` 稳定后补有限维谱积分层（阶段 3 开放项）。
 2. **T3 阶段 3 scoped 数值公理**（`ln15-arith-ax`；`ln1615-lb` 与 `ln2-lt` **已于 2026-08-05 闭合为定理**：exp/log 级数机制 + 二进制 ℕ 算术）——纯有理/数值比较，逻辑完备但工程计算资源不足；降定理路径 = 算术决策机制/反射或更高效 ℕ 算术。**`ln15-arith-ax` 已于 2026-08-05 闭合**（§2d 同分母比较，最大扩展因子 ~1.25e8 秒级）——**C 类 T3 数值项全部清零**。
+
+### 5.2b T3 定义性公理降定理（2026-08-05，D 类推进）
+
+exp 级数机制层定义性公理持续降为可证明定理（零新增公理）：
+
+1. ~~**`exp-partial-<`（v1.41）**~~——✅ **已降为可证明定理**：partial-e n < exp 1（partial-e-suc 部分和严格递增 + exp-partial-≤-ub + lt-≤-trans-ℝ）。
+2. ~~**`exp-tail-bound`（v1.42）**~~——✅ **已降为可证明定理** `exp-tail-bound-thm`（0 < x < 1）：**固定间隙路径**——逐项 `tail-term-le`（pow-add + 阶乘强估计 `factorial-strong`：(n+1)!·2^j ≤ (n+1+j)!（每个额外因子 ≥ 2，几何公比折半 x/2）+ `recip-factorial-strong-le` + `recip-≤-ℝ` + `div-pow`）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''** = S_n + 系数·1/(1-x/2)（不依赖 m：`all-partial-le-B''`，ℕ 层 `≤-total` 三分 + `tail-repr` 截断减法分解 + 部分和递增）⟹ `exp-le-B''`（exp-least-ub-any 任意点级数 sup 刻画）⟹ `B''-lt-B'`（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。
+3. 剩余：`log2-series-ub` 等 log 级数机制定义性公理（后续路线）。
 
 ### 5.3 结构性障碍：R11 有限维态射层（S0 表示静默）
 
@@ -137,18 +153,19 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 
 **可诚实声称**：
 
-1. Agda 16 模块全量类型检查通过（`Everything.agda` exit=0），与 Lean 主实现形成双类型论交叉验证。
+1. Agda 20 模块全量类型检查通过（`Everything.agda` exit=0），与 Lean 主实现形成双类型论交叉验证。
 2. 纯结构核心（B1-B8 组合/代数/集合结构）直接证明，无 postulate 依赖。
 3. 谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证。
 4. 技术债清单 A 类（实质可闭合项）全闭合：E-σ-add 收敛、spec-int MCT、fc-poly-le-spec-int（方案 A）、谱对象映射（A/E/fc/exp-tA）。
-5. Lean 侧核心模块 `lake build` 零错误；`spExchangeLaw` sorry 已消除（2026-08-04），`Adjunction.lean` 阶段 1 圈定后 sorry 从 8 处降至 4 处 + 1 处 axiom（对齐 Agda postulate）。
+5. T3 定义性公理降定理推进（2026-08-05）：`exp-partial-<`、`exp-tail-bound` 由 postulate 降为可证明定理（零新增公理）；C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。
+6. Lean 侧 2026-08-05 里程碑：**全库 `lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`**——Adjunction 3 sorry + 1 axiom 经结构性判定删除、DeviationBound 2 经简化定理闭合、NoiseCategory Σ-D Functor 律闭合、阶段 3 分形扩张（IFSRecCoding/WeierstrassGap 结构支撑）全部闭合（对齐 Agda postulate 侧纪律）。
 
 **不可声称**：
 
-1. "全部闭合/零公理"——ℝ 公理体系是基础假设层；scoped 数值公理因工程计算资源不足保留登记；fc-integral 本身为谱定理层模型保证（D 类登记）。
+1. "全部闭合/零公理"——ℝ 公理体系是基础假设层；log 级数机制定义性公理（log2-series-ub 等）与 fc-integral 本身仍为登记项（D 类，降定理路径文档化）。
 2. R11 无限维态射层的完整闭合——有限维侧为 S0 结构性障碍，无限维侧断言（论文 R11）依赖 T3 谱定理，待严格验证。
 
-**结论**：Agda 独立交叉验证是 UFPF 形式化体系可信度的关键组成部分。它在与 Lean 正交的类型论体系下独立证明纯结构核心，并以登记纪律将分析层假设透明化。技术债清单 A 类全闭合后，剩余开放项均为结构性限制（funext、概念特征、S0 静默）或待基础设施（Mathlib 稳定、大整数算术机制），无实质技术债遗留。
+**结论**：Agda 独立交叉验证是 UFPF 形式化体系可信度的关键组成部分。它在与 Lean 正交的类型论体系下独立证明纯结构核心，并以登记纪律将分析层假设透明化。技术债清单 A 类全闭合、T3 定义性公理降定理持续推进（exp-partial-< / exp-tail-bound 已降，C 类数值项清零）后，剩余开放项均为结构性限制（funext、概念特征、S0 静默）或待基础设施（Mathlib 稳定、log 级数机制剩余项），无实质技术债遗留。
 
 ---
 
@@ -157,3 +174,4 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 | 版本 | 日期 | 主要变更 |
 |:---:|:---:|:---|
 | v0.1 | 2026-08-03 | 初版。系统说明 Agda 交叉验证目的、16 模块清单、双实现一致性、闭合历程（v1.17–v1.36 技术债 A 类全闭合）、剩余开放项与声明边界。内容自包含。 |
+| v0.2 | 2026-08-05 | 状态同步至 v1.42：模块数 16→20（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）；Lean 侧里程碑同步（81 模块全库 2454 jobs 零 sorry 零 axiom，v1.38）；闭合历程补 v1.38（C 类数值项清零）/v1.40（mono-le-any + 方向核验）/v1.41（exp-partial-< 降定理）/v1.42（exp-tail-bound 固定间隙路径降定理）；§4.4 加固定间隙决策；§5 新增 5.2b（T3 定义性公理降定理清单）+ DeviationBound 闭合；§6 声明边界与结论更新。 |

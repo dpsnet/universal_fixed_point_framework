@@ -1,7 +1,7 @@
 # Agda 交叉验证笔记（路径 B 完整报告，第一手研究资料）
 
 > **定位**：UFPF 形式化验证体系（Lean 4 主实现 + Agda 独立重形式化）的 Agda 侧完整记录。
-> **状态**：v1.36 收官（2026-08-03）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII）。
+> **状态**：2026-08-05（T3 定义性公理降定理 exp-partial-< / exp-tail-bound 固定间隙路径闭合，v1.41/v1.42；C 类数值项清零 v1.38）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII v0.2）。
 > **关联**：路线图 [`phase60_category_verification.md`](../../roadmap/phase60_category_verification.md) §路径 B；笔记 [`spectral_T3_analysis_foundation.md`](./spectral_T3_analysis_foundation.md)（技术债清单 §5.16.7 / 方案 A §5.16.8）；主日志 `docs/log.md`。
 
 ---
@@ -10,7 +10,7 @@
 
 ### 1.1 为什么需要 Agda 交叉验证
 
-Lean 4（`formal_proof/UFPFormalization/`，74 模块）是**单一实现**。交叉验证动机：
+Lean 4（`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 2454 jobs 零 `sorry` 零 `axiom`）是**单一实现**。交叉验证动机：
 
 1. **消除单一实现偏差**：证明助理 bug、Mathlib 假设、形式化风格的潜在偏差需要第二实现独立检验。
 2. **类型论体系正交**：Lean 依赖 CIC（归纳构造演算）；Agda 用 Martin-Löf 依赖类型论。同一定理在两套类型论下同时通过，可信度高于单实现。
@@ -24,7 +24,7 @@ Lean 4（`formal_proof/UFPFormalization/`，74 模块）是**单一实现**。�
 
 ---
 
-## 2. 架构与模块清单（16 模块）
+## 2. 架构与模块清单（20 模块）
 
 `agda_formalization/` 目录（UFPF.agda-lib 注册，name: UFPF）：
 
@@ -60,11 +60,17 @@ agda_formalization/
 │   └── P1Spectral.agda              # P1: 谱匹配有限维特例（定理 3 退化版 + 推论 4 恒等双射）
 ├── SpectralTheory/
 │   └── SpectralTheory.agda          # T3: 谱定理层（谱测度/Fuglede/Hille-Yosida/函数演算 fc）
-└── CrossLayer/
-    └── CrossLayer.agda              # 跨层模型 Op → LinOp 点态对应证书（OpAlgPt/SpectralObjPt）
+├── CrossLayer/
+│   └── CrossLayer.agda              # 跨层模型 Op → LinOp 点态对应证书（OpAlgPt/SpectralObjPt）
+├── InflationDynamics/
+│   └── InflationDynamics.agda       # 膨胀动力学（物理应用层）
+├── ColorDynamics/
+│   └── ColorDynamics.agda           # 色动力学（物理应用层）
+└── BlackHoleDynamics/
+    └── BlackHoleDynamics.agda       # 黑洞动力学（物理应用层）
 ```
 
-**计数口径**：15 个业务模块 + `Everything.agda` 主入口 = **16 模块**（`Categories/` 3 模块为基础库，不单独计数）。
+**计数口径**：18 个业务模块 + `Everything.agda` 主入口 = 19 模块 + `Categories/` 基础库 1 项 = **20 模块**（全量编译口径，与路线图 v1.40 起一致；`Categories/` Category/Functor/NaturalTransformation 不重复计数）。
 
 ### 2.1 与 Lean 的双实现一致性（核心 8 模块 B1-B8）
 
@@ -122,11 +128,12 @@ agda_formalization/
 
 ---
 
-## 4. 当前状态（v1.36，2026-08-03）
+## 4. 当前状态（2026-08-05）
 
-- **编译**：`agda Everything.agda` 全量类型检查通过（exit=0）。
+- **编译**：`agda Everything.agda` 全量类型检查通过（exit=0），20 模块。
 - **技术债清单 A 类（实质技术债）全闭合**：fc-poly-le-spec-int 构造化、E-σ-add 收敛、spec-int MCT、跨层谱对象映射——四项全部收官。
-- **可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（唯一剩余 D 类 = fc-integral 本身，即"函数演算 = 谱积分"谱定理层的模型保证）；spec-int MCT 构造化闭合；Agda 16 模块全量通过；Lean 核心 10 模块零错误。
+- **T3 定义性公理降定理推进（2026-08-05）**：`exp-partial-<`（v1.41，部分和递增 + lt-≤-trans-ℝ）与 **`exp-tail-bound`（v1.42，固定间隙路径）** 由 postulate 降为可证明定理——逐项 `tail-term-le`（pow-add + factorial-strong 阶乘强估计 + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ 固定间隙 B''（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap）⟹ exp x < B。零新增公理。
+- **可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（唯一剩余 D 类 = fc-integral 本身，即"函数演算 = 谱积分"谱定理层的模型保证）；spec-int MCT 构造化闭合；Agda 20 模块全量通过；Lean 核心 10 模块零错误。
 
 ---
 
@@ -163,3 +170,4 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 | 版本 | 日期 | 变更 |
 |:----:|:-----|:-----|
 | v0.1 | 2026-08-03 | 初版。基于路线图 phase60 §路径 B、技术债清单 §5.16.7、方案 A §5.16.8、主日志 v1.17-v1.36 整理。对应 Paper XXXVIII 笔记。 |
+| v0.2 | 2026-08-05 | 状态同步：模块数 16→20；T3 定义性公理降定理（exp-partial-< v1.41、exp-tail-bound v1.42 固定间隙路径，零新增公理）记入 §4；C 类 T3 数值项清零（ln2-lt/ln1615-lb/ln15-arith-ax 闭合，v1.38-1.42 期间）。对应 Paper XXXVIII v0.2。 |

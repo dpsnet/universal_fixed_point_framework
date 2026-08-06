@@ -742,15 +742,14 @@ postulate
   exp-partial-at-≤-ub : (n : ℕ) (x : ℝ) → exp-partial-at n x ≤ℝ exp x  -- 部分和 ≤ exp x（任意点）
   exp-least-ub-any : (x : ℝ) (b : ℝ) → ((n : ℕ) → exp-partial-at n x ≤ℝ b) → exp x ≤ℝ b  -- exp x 是最小上界
 
--- 几何尾部上界（机制层定义性公理，2026-08-05）：
---   0 ≤ x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
+-- 几何尾部上界（**已闭合为可证定理 exp-tail-bound-thm，2026-08-05 固定间隙路径**）：
+--   0 < x < 1 ⟹ exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)
 -- 依据：exp x = Σ_{k≥0} x^k/k!，尾部 Σ_{k≥n+1} x^k/k! ≤ x^{n+1}/(n+1)!·Σ_{j≥0}x^j。
--- 记账：exp 级数内容（与 exp-partial-< 同层），替代 scoped 公理 ln1615-lb。
--- 注（2026-08-05 降定理前置）：x = 0 时 exp 0 = 1 = S_n(0)，结论为等号——严格 <
---   需前提 0 < x（数学上必要）；降定理路径 = geo-x 几何级数机制（下方）。
-postulate
-  exp-tail-bound : (n : ℕ) (x : ℝ) → zeroℝ ≤ℝ x → x <ℝ oneℝ →
-    exp x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+-- 闭合路径：tail-term-le（pow-add + factorial-strong + div-pow）⟹ tail-sum ≤
+--   系数·geo-x(x/2)（tail-sum-le）⟹ geo-x(x/2) < 1/(1-x/2)（geo-x-lt 特化）⟹
+--   部分和 ≤ S_n + 系数·1/(1-x/2)（B''，固定）⟹ exp x ≤ B''（exp-least-ub-any）
+--   < S_n + 系数·1/(1-x)（recip-half-gap，固定间隙保持严格）⟹ exp x < B。
+-- 注：x = 0 时 exp 0 = 1 = S_n(0)，结论为等号——严格 < 需前提 0 < x（数学上必要）。
 
 -- ==================================================================
 -- 几何级数机制（exp-tail-bound 降定理核心前置，2026-08-05）
@@ -1008,6 +1007,420 @@ mul-div-ℝ a b c d =
     (trans (cong (λ u → u /ℝ d) (trans (*-comm-ℝ (a /ℝ c) b) (*-/ℝ b a c)))
            (trans (frac-frac-ℝ (b *ℝ a) c d)
                   (cong (λ u → u /ℝ (c *ℝ d)) (*-comm-ℝ b a))))
+
+-- ==================================================================
+-- 固定间隙路径组合（exp-tail-bound 降定理收官，2026-08-05）
+-- 目标：tail-sum 逐项 ≤ 系数·(x/2)^j（pow-add + factorial-strong + div-pow）
+--   + geo-x (x/2) < 1/(1-x/2)（geo-x-lt 特化）+ sup 组合（固定间隙 B'' < B）。
+-- ==================================================================
+
+-- **可证**：natℝ 0 = 0（natℝ-one + natℝ-suc zero ⟹ 1 = natℝ 0 + 1 ⟹ 加右消去）
+natℝ-zero : natℝ zero ≡ zeroℝ
+natℝ-zero = trans (sym (+-ident-ℝ (natℝ zero)))
+            (trans (cong (λ u → natℝ zero +ℝ u) (sym (+-inv-ℝ oneℝ)))
+            (trans (sym (+-assoc-ℝ (natℝ zero) oneℝ (negℝ oneℝ)))
+            (trans (sym (cong (λ u → u +ℝ negℝ oneℝ) h-one))
+                   (+-inv-ℝ oneℝ))))
+  where
+  h-one : oneℝ ≡ (natℝ zero +ℝ oneℝ)
+  h-one = trans (sym natℝ-one) (natℝ-suc zero)
+
+-- **可证**：加法右保序（≤ 版）——a ≤ b ⟹ a+c ≤ b+c（三分律）
+≤-+-mono-r-ℝ : {a b c : ℝ} → a ≤ℝ b → (a +ℝ c) ≤ℝ (b +ℝ c)
+≤-+-mono-r-ℝ {a} {b} {c} hab with trichotomy-ℝ a b
+≤-+-mono-r-ℝ {a} {b} {c} hab | inj₁ a<b =
+  <-≤-ℝ (subst (λ u → u <ℝ (b +ℝ c)) (sym (+-comm-ℝ a c))
+         (subst (λ v → (c +ℝ a) <ℝ v) (sym (+-comm-ℝ b c))
+                (lt-+-mono-r-ℝ {a = c} {b = a} {c = b} a<b)))
+≤-+-mono-r-ℝ {a} {b} {c} hab | inj₂ (inj₁ a=b) = subst (λ z → (a +ℝ c) ≤ℝ (z +ℝ c)) a=b (refl-≤ℝ)
+≤-+-mono-r-ℝ {a} {b} {c} hab | inj₂ (inj₂ b<a) = ⊥-elim (irreflexive-ℝ (≤-lt-trans-ℝ hab b<a))
+
+-- **可证**：suc 保序嵌入——natℝ m ≤ natℝ n ⟹ natℝ (suc m) ≤ natℝ (suc n)
+natℝ-suc-mono : {m n : ℕ} → natℝ m ≤ℝ natℝ n → natℝ (suc m) ≤ℝ natℝ (suc n)
+natℝ-suc-mono {m} {n} h =
+  subst (λ z → natℝ (suc m) ≤ℝ z) (sym (natℝ-suc n))
+    (subst (λ w → w ≤ℝ (natℝ n +ℝ oneℝ)) (sym (natℝ-suc m))
+           (≤-+-mono-r-ℝ {a = natℝ m} {b = natℝ n} {c = oneℝ} h))
+
+-- **可证**：natℝ zero ≤ natℝ n（n = 0 refl；n ≥ 1 经 natℝ-zero + natℝ-pos-embed）
+natℝ-zero-le : (n : ℕ) → natℝ zero ≤ℝ natℝ n
+natℝ-zero-le zero = refl-≤ℝ
+natℝ-zero-le (suc n) = subst (λ z → z ≤ℝ natℝ (suc n)) (sym natℝ-zero) (<-≤-ℝ (natℝ-pos-embed (z<s {n})))
+
+-- **可证**：倒数非严格单调——0 < a ≤ b ⟹ 1/b ≤ 1/a（三分律：a<b 走 recip-mono-ℝ，
+--   a=b 替换，b<a 矛盾）
+recip-≤-ℝ : {a b : ℝ} → zeroℝ <ℝ a → a ≤ℝ b → (oneℝ /ℝ b) ≤ℝ (oneℝ /ℝ a)
+recip-≤-ℝ {a} {b} ha hab with trichotomy-ℝ a b
+recip-≤-ℝ {a} {b} ha hab | inj₁ a<b = <-≤-ℝ (recip-mono-ℝ ha a<b)
+recip-≤-ℝ {a} {b} ha hab | inj₂ (inj₁ a=b) = subst (λ z → (oneℝ /ℝ b) ≤ℝ (oneℝ /ℝ z)) (sym a=b) (refl-≤ℝ {oneℝ /ℝ b})
+recip-≤-ℝ {a} {b} ha hab | inj₂ (inj₂ b<a) = ⊥-elim (irreflexive-ℝ (≤-lt-trans-ℝ hab b<a))
+
+-- **可证**：幂乘性——(x·y)^j = x^j·y^j（归纳，*-assoc/comm）
+pow-mul : (x y : ℝ) (j : ℕ) → ((x *ℝ y) ^ℕ j) ≡ ((x ^ℕ j) *ℝ (y ^ℕ j))
+pow-mul x y zero = sym (*-ident-ℝ oneℝ)
+pow-mul x y (suc j) =
+  trans (cong (λ w → (x *ℝ y) *ℝ w) (pow-mul x y j))
+        (trans (sym (*-assoc-ℝ (x *ℝ y) (x ^ℕ j) (y ^ℕ j)))
+               (trans (cong (λ w → w *ℝ (y ^ℕ j)) inner)
+                      (*-assoc-ℝ (x *ℝ (x ^ℕ j)) y (y ^ℕ j))))
+  where
+  -- (x·y)·x^j = (x·x^j)·y（assoc + comm + assoc）
+  inner : ((x *ℝ y) *ℝ (x ^ℕ j)) ≡ ((x *ℝ (x ^ℕ j)) *ℝ y)
+  inner = trans (*-assoc-ℝ x y (x ^ℕ j))
+                (trans (cong (λ w → x *ℝ w) (*-comm-ℝ y (x ^ℕ j)))
+                       (sym (*-assoc-ℝ x (x ^ℕ j) y)))
+
+-- **可证**：1^j = 1（归纳，*-ident-ℝ）
+one-pow : (j : ℕ) → (oneℝ ^ℕ j) ≡ oneℝ
+one-pow zero = refl
+one-pow (suc j) = trans (cong (λ w → oneℝ *ℝ w) (one-pow j)) (*-ident-ℝ oneℝ)
+
+-- **可证**：除法幂——(x/y)^j = x^j/y^j（归纳，mul-div-ℝ）
+div-pow : (x y : ℝ) (j : ℕ) → ((x /ℝ y) ^ℕ j) ≡ ((x ^ℕ j) /ℝ (y ^ℕ j))
+div-pow x y zero = sym (div-one-ℝ oneℝ)
+div-pow x y (suc j) =
+  trans (cong (λ w → (x /ℝ y) *ℝ w) (div-pow x y j))
+        (mul-div-ℝ x (x ^ℕ j) y (y ^ℕ j))
+
+-- **可证**：ℕ 层——suc n +ℕr m = suc (n +ℕr m)（归纳 m，+ℕr 第二参数变量不归约）
++ℕr-comm-suc : (n m : ℕ) → (suc n +ℕr m) ≡ suc (n +ℕr m)
++ℕr-comm-suc n zero = refl
++ℕr-comm-suc n (suc m) = cong suc (+ℕr-comm-suc n m)
+
+-- **可证**：ℕ 层保序嵌入（≤ 版）——m ≤ n ⟹ natℝ m ≤ natℝ n
+--（归纳 ≤ℕ：z≤n 经 natℝ-zero-le；s≤s 经 ≤-+-mono-r-ℝ 保序 + natℝ-suc-mono）
+natℝ-≤-embed : {m n : ℕ} → m ≤ℕ n → natℝ m ≤ℝ natℝ n
+natℝ-≤-embed z≤n = natℝ-zero-le _
+natℝ-≤-embed (s≤s h) = natℝ-suc-mono (natℝ-≤-embed h)
+
+-- ==================================================================
+-- 固定间隙路径·尾部逐项（exp-tail-bound 降定理，2026-08-05）
+-- 目标：tail-sum 逐项 ≤ x^{n+1}/(n+1)!·(x/2)^j（recip-factorial-strong-le +
+--   pow-add + *-≤-mono-ℝ），全部**可证**，零新增公理。
+-- ==================================================================
+
+-- **可证**：x > 0 ⟹ 1−x < 1（(1−x) + x = 1 且 x > 0）
+one-sub-lt-one : {x : ℝ} → zeroℝ <ℝ x → (oneℝ -ℝ x) <ℝ oneℝ
+one-sub-lt-one {x} hx = subst (λ z → (oneℝ -ℝ x) <ℝ z) (one-sub-add x) (add-pos-ℝ hx)
+
+-- **可证**：1 < 1/(1−x)（recip-mono-ℝ：0 < 1−x < 1 ⟹ 1/1 < 1/(1−x)）
+G-gt-one : {x : ℝ} → zeroℝ <ℝ x → x <ℝ oneℝ → oneℝ <ℝ (oneℝ /ℝ (oneℝ -ℝ x))
+G-gt-one {x} hx hlt =
+  subst (λ z → z <ℝ (oneℝ /ℝ (oneℝ -ℝ x))) (div-one-ℝ oneℝ)
+        (recip-mono-ℝ (one-sub-pos hlt) (one-sub-lt-one hx))
+
+-- **可证**：1/(a·b) = (1/a)·(1/b)（mul-div-ℝ 反向）
+recip-mul-split : (a b : ℝ) → (oneℝ /ℝ (a *ℝ b)) ≡ ((oneℝ /ℝ a) *ℝ (oneℝ /ℝ b))
+recip-mul-split a b =
+  sym (trans (mul-div-ℝ oneℝ oneℝ a b) (cong₂ _/ℝ_ (trans (*-ident-ℝ oneℝ) refl) refl))
+
+-- **可证**：1/(n+1+j)! ≤ (1/(n+1)!)·(1/2^j)（factorial-strong + natℝ-≤-embed +
+--   recip-≤-ℝ + recip-mul-split）
+recip-factorial-strong-le : (n j : ℕ) →
+  recip-factorial (suc (n +ℕr j)) ≤ℝ (recip-factorial (suc n) *ℝ (natℝ 1 /ℝ natℝ (2^ j)))
+recip-factorial-strong-le n j = stepC
+  where
+  fs1 : ℝ
+  fs1 = natℝ (factorial (suc (n +ℕr j)))
+  fsl : ℝ
+  fsl = natℝ (factorial (suc n))
+  f2 : ℝ
+  f2 = natℝ (2^ j)
+  -- 分母比较：0 < (n+1)!·2^j ≤ (n+1+j)!
+  fs-pos : zeroℝ <ℝ (fsl *ℝ f2)
+  fs-pos = lt-*-pos-ℝ (natℝ-pos-embed (factorial-pos (suc n))) (natℝ-pos-embed (2^-pos j))
+  fs : (fsl *ℝ f2) ≤ℝ fs1
+  fs = subst (λ u → u ≤ℝ fs1) (natℝ-* (factorial (suc n)) (2^ j))
+            (natℝ-≤-embed (factorial-strong n j))
+  -- 倒数非严格单调：1/(n+1+j)! ≤ 1/((n+1)!·2^j)
+  core : (oneℝ /ℝ fs1) ≤ℝ (oneℝ /ℝ (fsl *ℝ f2))
+  core = recip-≤-ℝ fs-pos fs
+  -- 1/((n+1)!·2^j) = (1/(n+1)!)·(1/2^j)
+  split-le : (oneℝ /ℝ fs1) ≤ℝ ((oneℝ /ℝ fsl) *ℝ (oneℝ /ℝ f2))
+  split-le = subst (λ z → (oneℝ /ℝ fs1) ≤ℝ z) (recip-mul-split fsl f2) core
+  -- natℝ 1 ≡ oneℝ 归位
+  stepB : (natℝ 1 /ℝ fs1) ≤ℝ ((oneℝ /ℝ fsl) *ℝ (oneℝ /ℝ f2))
+  stepB = subst (λ u → u ≤ℝ ((oneℝ /ℝ fsl) *ℝ (oneℝ /ℝ f2)))
+                (sym (cong (λ w → w /ℝ fs1) natℝ-one)) split-le
+  stepC : (natℝ 1 /ℝ fs1) ≤ℝ ((natℝ 1 /ℝ fsl) *ℝ (natℝ 1 /ℝ f2))
+  stepC = subst (λ v → (natℝ 1 /ℝ fs1) ≤ℝ v)
+                (cong₂ _*ℝ_ (sym (cong (λ w → w /ℝ fsl) natℝ-one))
+                            (sym (cong (λ w → w /ℝ f2) natℝ-one))) stepB
+
+-- **可证**：2^j 嵌入 = (natℝ 2)^j（归纳 j，natℝ-*）
+nat-pow-embed : (j : ℕ) → natℝ (2^ j) ≡ ((natℝ 2) ^ℕ j)
+nat-pow-embed zero = natℝ-one
+nat-pow-embed (suc j) =
+  trans (cong natℝ (2^suc-def j))
+        (trans (natℝ-* 2 (2^ j)) (cong (λ w → natℝ 2 *ℝ w) (nat-pow-embed j)))
+  where
+  -- NATTIMES 绑定下 2^ (suc j) 与 2 *ℕ (2^ j) 不定义性归约，显式搬运
+  2^suc-def : (j : ℕ) → 2^ (suc j) ≡ 2 *ℕ (2^ j)
+  2^suc-def zero = refl
+  2^suc-def (suc j) = refl
+
+-- **可证**：tail-sum 逐项——x^{n+1+j}/(n+1+j)! ≤ (x^{n+1}/(n+1)!)·(x/2)^j
+--（pow-add 拆幂 + recip-factorial-strong-le + *-≤-mono-ℝ + div-pow）
+tail-term-le : (n j : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  ((x ^ℕ (suc (n +ℕr j))) *ℝ recip-factorial (suc (n +ℕr j)))
+    ≤ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (half-x x ^ℕ j))
+tail-term-le n j x hx hlt = ≤-trans-ℝ step1 (≤-trans-ℝ step2 final)
+  where
+  h : ℝ
+  h = half-x x
+  D : ℝ
+  D = x ^ℕ (suc (n +ℕr j))
+  X : ℝ
+  X = x ^ℕ (suc n)
+  Xj : ℝ
+  Xj = x ^ℕ j
+  R : ℝ
+  R = recip-factorial (suc (n +ℕr j))
+  Rc : ℝ
+  Rc = recip-factorial (suc n)
+  Hj : ℝ
+  Hj = natℝ 1 /ℝ natℝ (2^ j)
+  coef : ℝ
+  coef = X *ℝ Rc
+  -- D ≡ X·Xj（pow-add + +ℕr-comm-suc）
+  eq-D : D ≡ (X *ℝ Xj)
+  eq-D = trans (cong (λ w → x ^ℕ w) (sym (+ℕr-comm-suc n j))) (pow-add x (suc n) j)
+  -- R ≤ Rc·Hj（recip-factorial-strong-le）
+  R-le : R ≤ℝ (Rc *ℝ Hj)
+  R-le = recip-factorial-strong-le n j
+  -- 0 ≤ D 与 0 ≤ Rc·Hj（乘保序前提）
+  D-nonneg : zeroℝ ≤ℝ D
+  D-nonneg = <-≤-ℝ (power-pos-ℕ x hx (n +ℕr j))
+  RcHj-pos : zeroℝ <ℝ (Rc *ℝ Hj)
+  RcHj-pos = lt-*-pos-ℝ (recip-factorial-pos (suc n))
+                        (/-pos-ℝ (subst (zeroℝ <ℝ_) (sym natℝ-one) zero-lt-one-ℝ) (natℝ-pos-embed (2^-pos j)))
+  -- ① D·R ≤ D·(Rc·Hj)
+  step1 : (D *ℝ R) ≤ℝ (D *ℝ (Rc *ℝ Hj))
+  step1 = subst (λ u → u ≤ℝ (D *ℝ (Rc *ℝ Hj))) (*-comm-ℝ R D)
+          (subst (λ v → (R *ℝ D) ≤ℝ v) (*-comm-ℝ (Rc *ℝ Hj) D)
+                 (*-≤-mono-ℝ {a = R} {b = Rc *ℝ Hj} {c = D} D-nonneg R-le))
+  -- ② D·(Rc·Hj) ≤ (X·Xj)·(Rc·Hj)
+  step2 : (D *ℝ (Rc *ℝ Hj)) ≤ℝ ((X *ℝ Xj) *ℝ (Rc *ℝ Hj))
+  step2 = *-≤-mono-ℝ {a = D} {b = X *ℝ Xj} {c = Rc *ℝ Hj} (<-≤-ℝ RcHj-pos)
+                     (subst (λ u → D ≤ℝ u) eq-D (refl-≤ℝ {D}))
+  -- ③ 代数重排：(X·Xj)·(Rc·Hj) ≡ (X·Rc)·(Xj·Hj)
+  step3 : ((X *ℝ Xj) *ℝ (Rc *ℝ Hj)) ≡ (coef *ℝ (Xj *ℝ Hj))
+  step3 = trans (*-assoc-ℝ X Xj (Rc *ℝ Hj))
+          (trans (cong (λ w → X *ℝ w) (sym (*-assoc-ℝ Xj Rc Hj)))
+          (trans (cong (λ w → X *ℝ w) (cong₂ _*ℝ_ (*-comm-ℝ Xj Rc) refl))
+          (trans (cong (λ w → X *ℝ w) (*-assoc-ℝ Rc Xj Hj))
+                 (sym (*-assoc-ℝ X Rc (Xj *ℝ Hj))))))
+  -- ④ Xj·Hj ≡ Xj/2^j ≡ h^j（*-/ℝ + div-pow + nat-pow-embed）
+  XjHj-eq : (Xj *ℝ Hj) ≡ ((x ^ℕ j) /ℝ natℝ (2^ j))
+  XjHj-eq = trans (*-/ℝ Xj (natℝ 1) (natℝ (2^ j)))
+            (cong₂ _/ℝ_ (trans (cong (λ w → Xj *ℝ w) natℝ-one) (*-ident-ℝ Xj)) refl)
+  h-eq : (half-x x ^ℕ j) ≡ ((x ^ℕ j) /ℝ natℝ (2^ j))
+  h-eq = trans (div-pow x (natℝ 2) j) (cong₂ _/ℝ_ refl (sym (nat-pow-embed j)))
+  -- 最终：≤ 链收于 系数·h^j
+  final : ((X *ℝ Xj) *ℝ (Rc *ℝ Hj)) ≤ℝ (coef *ℝ (h ^ℕ j))
+  final = subst (λ v → ((X *ℝ Xj) *ℝ (Rc *ℝ Hj)) ≤ℝ (coef *ℝ v))
+                (sym h-eq)
+                (subst (λ u → u ≤ℝ (coef *ℝ ((x ^ℕ j) /ℝ natℝ (2^ j))))
+                       (sym step3)
+                       (subst (λ w → (coef *ℝ (Xj *ℝ Hj)) ≤ℝ w) (cong₂ _*ℝ_ refl XjHj-eq) (refl-≤ℝ)))
+
+-- ==================================================================
+-- 固定间隙路径·尾部求和（exp-tail-bound 降定理，2026-08-05）
+-- 目标：T_n(m) ≤ x^{n+1}/(n+1)!·geo-x(x/2,m)（归纳求和：逐项 tail-term-le +
+--   ≤-+-mono-r-ℝ + distrib 反向），全部**可证**。
+-- ==================================================================
+
+-- **可证**：geo-x (x/2) < 1/(1−x/2)（geo-x-lt 特化；x/2 > 0 且 x/2 < 1）
+geo-half-lt : (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ → (m : ℕ) →
+  geo-x (half-x x) m <ℝ (oneℝ /ℝ (oneℝ -ℝ half-x x))
+geo-half-lt x hx hlt m = geo-x-lt (half-x x) (div-half-pos hx) (div-half-lt-one hlt) m
+
+-- **可证**：tail-sum 和式 ≤ 系数·geo-x(x/2,m)
+--（归纳 m：base 定义性 + *-ident-ℝ；step 逐项 tail-term-le + 加法保序 + 分配律）
+tail-sum-le : (n m : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  tail-sum n m x ≤ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ geo-x (half-x x) m)
+tail-sum-le n zero x hx hlt =
+  subst (λ u → coef ≤ℝ u) (sym (*-ident-ℝ coef)) (refl-≤ℝ)
+  where
+  coef : ℝ
+  coef = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+tail-sum-le n (suc m) x hx hlt =
+  ≤-trans-ℝ stepA (≤-trans-ℝ stepB stepC)
+  where
+  h : ℝ
+  h = half-x x
+  coef : ℝ
+  coef = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+  T : ℝ
+  T = (x ^ℕ (suc (suc (n +ℕr m)))) *ℝ recip-factorial (suc (suc (n +ℕr m)))
+  -- 逐项：T ≤ coef·h^{suc m}
+  T-le : T ≤ℝ (coef *ℝ (h ^ℕ (suc m)))
+  T-le = tail-term-le n (suc m) x hx hlt
+  -- 归纳：tail-sum n m x ≤ coef·geo-x h m
+  IH : tail-sum n m x ≤ℝ (coef *ℝ geo-x h m)
+  IH = tail-sum-le n m x hx hlt
+  -- ① 和式 ≤ coef·geo-x h m + T
+  stepA : (tail-sum n m x +ℝ T) ≤ℝ ((coef *ℝ geo-x h m) +ℝ T)
+  stepA = ≤-+-mono-r-ℝ {a = tail-sum n m x} {b = coef *ℝ geo-x h m} {c = T} IH
+  -- ② ≤ coef·geo-x h m + coef·h^{suc m}
+  stepB : ((coef *ℝ geo-x h m) +ℝ T) ≤ℝ ((coef *ℝ geo-x h m) +ℝ (coef *ℝ (h ^ℕ (suc m))))
+  stepB = subst (λ v → ((coef *ℝ geo-x h m) +ℝ T) ≤ℝ v)
+                (sym (+-comm-ℝ (coef *ℝ geo-x h m) (coef *ℝ (h ^ℕ (suc m)))))
+          (subst (λ u → u ≤ℝ ((coef *ℝ (h ^ℕ (suc m))) +ℝ (coef *ℝ geo-x h m)))
+                 (+-comm-ℝ T (coef *ℝ geo-x h m))
+                 (≤-+-mono-r-ℝ {a = T} {b = coef *ℝ (h ^ℕ (suc m))} {c = coef *ℝ geo-x h m} T-le))
+  -- ③ = coef·geo-x h (suc m)（分配律反向 + geo-x 定义）
+  stepC : ((coef *ℝ geo-x h m) +ℝ (coef *ℝ (h ^ℕ (suc m)))) ≤ℝ (coef *ℝ geo-x h (suc m))
+  stepC = subst (λ u → ((coef *ℝ geo-x h m) +ℝ (coef *ℝ (h ^ℕ (suc m)))) ≤ℝ u)
+                (trans (sym (distrib-ℝ coef (geo-x h m) (h ^ℕ (suc m))))
+                       (cong (λ w → coef *ℝ w) (sym geo-x-def)))
+                (refl-≤ℝ)
+    where
+    -- geo-x h (suc m) ≡ geo-x h m + h^{suc m}（定义性）
+    geo-x-def : geo-x h (suc m) ≡ (geo-x h m +ℝ (h ^ℕ (suc m)))
+    geo-x-def = refl
+
+-- ==================================================================
+-- 固定间隙路径·sup 组合（exp-tail-bound 降定理收官，2026-08-05）
+-- 目标：∀k 部分和 ≤ S_n + 系数·1/(1−x/2)（B''，固定）⟹ exp x ≤ B''
+--   < S_n + 系数·1/(1−x)（B，recip-half-gap）⟹ exp-tail-bound 降为可证定理。
+-- 全部**可证**，零新增公理。
+-- ==================================================================
+
+-- **可证**：≤ 后继分解——n ≤ suc k ⟹ n = suc k 或 n ≤ k
+≤-suc-decomp : {n k : ℕ} → n ≤ℕ suc k → (n ≡ suc k) ⊎ (n ≤ℕ k)
+≤-suc-decomp {zero} {k} z≤n = inj₂ z≤n
+≤-suc-decomp {suc zero} {zero} (s≤s z≤n) = inj₁ refl
+≤-suc-decomp {suc n} {suc k} (s≤s h) with ≤-suc-decomp {n} {k} h
+≤-suc-decomp {suc n} {suc k} (s≤s h) | inj₁ e = inj₁ (cong suc e)
+≤-suc-decomp {suc n} {suc k} (s≤s h) | inj₂ h' = inj₂ (s≤s h')
+
+-- **可证**：ℕ 层 ≤ 三分——a ≤ b 或 b ≤ a
+≤-total : (a b : ℕ) → (a ≤ℕ b) ⊎ (b ≤ℕ a)
+≤-total zero b = inj₁ z≤n
+≤-total (suc a) zero = inj₂ z≤n
+≤-total (suc a) (suc b) with ≤-total a b
+≤-total (suc a) (suc b) | inj₁ h = inj₁ (s≤s h)
+≤-total (suc a) (suc b) | inj₂ h = inj₂ (s≤s h)
+
+-- **可证**：0 +ℕr k = k（归纳 k）
++ℕr-zero-l : (k : ℕ) → 0 +ℕr k ≡ k
++ℕr-zero-l zero = refl
++ℕr-zero-l (suc k) = cong suc (+ℕr-zero-l k)
+
+-- **可证**：n ≤ k ⟹ n +ℕr (k ∸ n) = k（截断减法 = 差）
++ℕr-∸ : (n k : ℕ) → n ≤ℕ k → n +ℕr (k ∸ n) ≡ k
++ℕr-∸ zero k z≤n = trans (cong (λ w → 0 +ℕr w) (∸-zero k)) (+ℕr-zero-l k)
++ℕr-∸ (suc n) (suc k) (s≤s h) = trans (+ℕr-comm-suc n (k ∸ n)) (cong suc (+ℕr-∸ n k h))
+
+-- **可证**：k ≥ n+1 ⟹ k = suc (n +ℕr (k ∸ (n+1)))
+tail-repr : (n k : ℕ) → suc n ≤ℕ k → suc (n +ℕr (k ∸ (suc n))) ≡ k
+tail-repr n zero ()
+tail-repr n (suc k) (s≤s h) = cong suc (+ℕr-∸ n k h)
+
+-- **可证**：部分和单步递增（≤ 版）——S_n ≤ S_{n+1}（项正）
+exp-partial-suc-≤ : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → exp-partial-at n x ≤ℝ exp-partial-at (suc n) x
+exp-partial-suc-≤ n x hx =
+  <-≤-ℝ (add-pos-ℝ {x = exp-partial-at n x}
+                    {y = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)}
+                    (lt-*-pos-ℝ (power-pos-ℕ x hx n) (recip-factorial-pos (suc n))))
+
+-- **可证**：部分和递增（≤ 版）——n ≤ k ⟹ S_n ≤ S_k（归纳 k，≤-suc-decomp）
+exp-partial-at-le : (n k : ℕ) → n ≤ℕ k → (x : ℝ) → zeroℝ <ℝ x →
+  exp-partial-at n x ≤ℝ exp-partial-at k x
+exp-partial-at-le n zero nk x hx with nk
+... | z≤n = refl-≤ℝ
+exp-partial-at-le n (suc k) nk x hx with ≤-suc-decomp {n} {k} nk
+... | inj₁ e =
+  subst (λ z → exp-partial-at n x ≤ℝ exp-partial-at z x) e (refl-≤ℝ)
+... | inj₂ h' =
+  ≤-trans-ℝ (exp-partial-at-le n k h' x hx) (exp-partial-suc-≤ k x hx)
+
+-- 固定间隙上界 B'' = S_n + 系数·1/(1−x/2)
+B''-ub : ℕ → ℝ → ℝ
+B''-ub n x = exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ half-x x)))
+
+-- **可证**：尾部部分和 S_{n+1+m} < B''（tail-sum-le + geo-half-lt + 乘正 + 加法严格）
+tail-lt-B'' : (n m : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  exp-partial-at (suc (n +ℕr m)) x <ℝ B''-ub n x
+tail-lt-B'' n m x hx hlt =
+  subst (λ u → u <ℝ (B''-ub n x)) (sym (exp-decomp n m x))
+        (≤-lt-trans-ℝ stepA
+                      (lt-+-mono-r-ℝ {a = exp-partial-at n x} {b = coef *ℝ geo-x h m}
+                                     {c = coef *ℝ G''} coefgeo-lt))
+  where
+  h : ℝ
+  h = half-x x
+  coef : ℝ
+  coef = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+  G'' : ℝ
+  G'' = oneℝ /ℝ (oneℝ -ℝ half-x x)
+  coef-pos : zeroℝ <ℝ coef
+  coef-pos = lt-*-pos-ℝ (power-pos-ℕ x hx n) (recip-factorial-pos (suc n))
+  -- coef·geo-x h m < coef·G''（geo-half-lt 乘正）
+  coefgeo-lt : (coef *ℝ geo-x h m) <ℝ (coef *ℝ G'')
+  coefgeo-lt = *-pos-mono-ℝ {a = geo-x h m} {b = G''} {c = coef} coef-pos (geo-half-lt x hx hlt m)
+  -- S_n + tail-sum ≤ S_n + coef·geo-x h m（tail-sum-le + 交换）
+  stepA : (exp-partial-at n x +ℝ tail-sum n m x) ≤ℝ (exp-partial-at n x +ℝ (coef *ℝ geo-x h m))
+  stepA = subst (λ v → (exp-partial-at n x +ℝ tail-sum n m x) ≤ℝ v)
+                (sym (+-comm-ℝ (exp-partial-at n x) (coef *ℝ geo-x h m)))
+          (subst (λ u → u ≤ℝ ((coef *ℝ geo-x h m) +ℝ (exp-partial-at n x)))
+                 (+-comm-ℝ (tail-sum n m x) (exp-partial-at n x))
+                 (≤-+-mono-r-ℝ {a = tail-sum n m x} {b = coef *ℝ geo-x h m}
+                               {c = exp-partial-at n x} (tail-sum-le n m x hx hlt)))
+
+-- **可证**：k ≤ n+1 ⟹ S_k ≤ B''（递增 + coef < coef·G''，1 < G''）
+partial-suc-le-B'' : (n k : ℕ) → k ≤ℕ suc n → (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  exp-partial-at k x ≤ℝ B''-ub n x
+partial-suc-le-B'' n k hk x hx hlt =
+  <-≤-ℝ (≤-lt-trans-ℝ (exp-partial-at-le k (suc n) hk x hx)
+         (lt-+-mono-r-ℝ {a = exp-partial-at n x} {b = coef} {c = coef *ℝ G''} coef-lt))
+  where
+  coef : ℝ
+  coef = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+  G'' : ℝ
+  G'' = oneℝ /ℝ (oneℝ -ℝ half-x x)
+  coef-pos : zeroℝ <ℝ coef
+  coef-pos = lt-*-pos-ℝ (power-pos-ℕ x hx n) (recip-factorial-pos (suc n))
+  -- coef < coef·G''（1 < G''：x/2 > 0、x/2 < 1）
+  coef-lt : coef <ℝ (coef *ℝ G'')
+  coef-lt = subst (λ z → z <ℝ (coef *ℝ G'')) (*-ident-ℝ coef)
+            (*-pos-mono-ℝ {a = oneℝ} {b = G''} {c = coef} coef-pos
+                          (G-gt-one (div-half-pos hx) (div-half-lt-one hlt)))
+
+-- **可证**：∀k 部分和 ≤ B''（≤-total 三分：k ≤ n+1 或 k ≥ n+1 经 tail-repr）
+all-partial-le-B'' : (n k : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ → exp-partial-at k x ≤ℝ B''-ub n x
+all-partial-le-B'' n k x hx hlt with ≤-total k (suc n)
+all-partial-le-B'' n k x hx hlt | inj₁ hk = partial-suc-le-B'' n k hk x hx hlt
+all-partial-le-B'' n k x hx hlt | inj₂ hn =
+  <-≤-ℝ (subst (λ z → exp-partial-at z x <ℝ B''-ub n x) (tail-repr n k hn)
+               (tail-lt-B'' n (k ∸ suc n) x hx hlt))
+
+-- **可证**：exp x ≤ B''（exp 最小上界 + ∀k 部分和 ≤ B''）
+exp-le-B'' : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ → exp x ≤ℝ B''-ub n x
+exp-le-B'' n x hx hlt = exp-least-ub-any x (B''-ub n x) (λ k → all-partial-le-B'' n k x hx hlt)
+
+-- **可证**：B'' < B'（recip-half-gap 乘正 + 加法严格）——固定间隙，sup 保持严格
+B''-lt-B' : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  B''-ub n x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+B''-lt-B' n x hx hlt =
+  lt-+-mono-r-ℝ {a = exp-partial-at n x} {b = coef *ℝ G''} {c = coef *ℝ G'}
+                (*-pos-mono-ℝ {a = G''} {b = G'} {c = coef} coef-pos (recip-half-gap hx hlt))
+  where
+  coef : ℝ
+  coef = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+  G'' : ℝ
+  G'' = oneℝ /ℝ (oneℝ -ℝ half-x x)
+  G' : ℝ
+  G' = oneℝ /ℝ (oneℝ -ℝ x)
+  coef-pos : zeroℝ <ℝ coef
+  coef-pos = lt-*-pos-ℝ (power-pos-ℕ x hx n) (recip-factorial-pos (suc n))
+
+-- **可证**：exp-tail-bound 降定理（原 postulate 闭合）——0 < x < 1 ⟹
+--   exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1−x)（固定间隙路径：exp ≤ B'' < B'）
+exp-tail-bound-thm : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  exp x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+exp-tail-bound-thm n x hx hlt = ≤-lt-trans-ℝ (exp-le-B'' n x hx hlt) (B''-lt-B' n x hx hlt)
 
 -- (a/b)·(c/a) = c/b（分子分母对消，可证：mul-div-ℝ + frac-cancel-ℝ）
 cancel-div : (a b c : ℝ) → (a /ℝ b) *ℝ (c /ℝ a) ≡ (c /ℝ b)
@@ -1493,7 +1906,7 @@ assoc-shuffle =
 
 exp-lt-A-E : exp x-29-450 <ℝ (A +ℝ (natℝ 1 /ℝ natℝ 450))
 exp-lt-A-E =
-  trans-<ℝ (exp-tail-bound 3 x-29-450 x-≤-0 x-lt-one)
+  trans-<ℝ (exp-tail-bound-thm 3 x-29-450 x-pos-29-450 x-lt-one)
   (trans-<ℝ (subst (λ z → z <ℝ (((A +ℝ (x2 /ℝ (natℝ 2))) +ℝ (x2 /ℝ (natℝ 60))) +ℝ (x2 /ℝ (natℝ 2160))))
                 (sym S3T-eq) (two-mono))
          (subst (λ w → w <ℝ (A +ℝ (natℝ 1 /ℝ natℝ 450))) (sym assoc-shuffle)
@@ -2260,18 +2673,6 @@ max-pos-mul-neg-zero a | inj₂ (inj₂ 0<a) =
 -- 用途：fc-poly-le-spec-int 构造化的 dyadic 阶梯逼近——[0,c] 的 2^k 等分
 --   网格点 xⱼ = (j·c)/2^k（natℝ 嵌入 + 除法的非负/保序基础）。
 -- ==================================================================
-
--- **可证**：natℝ 嵌入零——natℝ 0 = 0（可证：natℝ-suc zero + natℝ-one ⟹ 1 = natℝ 0 + 1
---  ⟹ 加消去（add-neg-cancel + 交换）⟹ natℝ 0 = 0）
-natℝ-zero : natℝ zero ≡ zeroℝ
-natℝ-zero =
-  sym (trans (sym (+-inv-ℝ oneℝ))
-             (trans (cong (λ x → x +ℝ negℝ oneℝ) h-one)
-                    (trans (cong (λ x → x +ℝ negℝ oneℝ) (+-comm-ℝ (natℝ zero) oneℝ))
-                           (add-neg-cancel oneℝ (natℝ zero)))))
-  where
-  h-one : oneℝ ≡ natℝ zero +ℝ oneℝ
-  h-one = trans (sym natℝ-one) (natℝ-suc zero)
 
 -- **可证**：natℝ 嵌入非负——0 ≤ natℝ j（j=0 经 natℝ-zero；j>0 经 natℝ-pos-embed + <-≤-ℝ）
 natℝ-nonneg : (j : ℕ) → zeroℝ ≤ℝ natℝ j

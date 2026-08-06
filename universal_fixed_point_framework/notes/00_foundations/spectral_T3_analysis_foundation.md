@@ -148,6 +148,27 @@ postulate
 
 **已完成（e < 3 统一上界，2026-07-31）**：新增基础假设 5 条（`*-/ℝ` 标量并入分子、`div-one-ℝ` x/1=x、`lt-+-mono-r-ℝ` 加法右单调、`/-lt-same-den-ℝ` 同分母比较、`<-≤-ℝ` 严格蕴含非严格）+ 可证明引理链 `factorial-2^-4` → `recip-factorial-<-half4` → `dbl-recip`/`geo4-ident`/`geo4-lt-18` → `tail-e4-lt-geo4` → `partial-e-decomp`/`partial-e-3-value` → `partial-e-lt-67-24` → `sixtyseven-over-24-lt-3` → `e-lt-3`（Everything.agda 编译通过）。
 
+### 5.4b 阶段 3 定义性公理降定理：exp-partial-< 与 exp-tail-bound（2026-08-05）
+
+**`exp-partial-<` 降定理（v1.41）**：原"exp 级数截断"定义性公理（partial-e n < exp 1）由 postulate 降为**可证明定理**——`lt-≤-trans-ℝ`（阶段 0）组合 `partial-e-suc`（部分和严格递增，可证）+ `exp-partial-≤-ub`（exp 1 是部分和上界）⟹ partial-e n < partial-e (suc n) ≤ exp 1。零新增公理。
+
+**`exp-tail-bound` 降定理（v1.42，固定间隙路径）**：原"几何尾部上界"定义性公理（exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)，前提 0 ≤ x < 1）由 postulate 降为**可证明定理** `exp-tail-bound-thm`（前提严格化 0 < x < 1）。闭合链（零新增公理）：
+
+1. **逐项**（`tail-term-le`）：x^{n+1+j}/(n+1+j)! ≤ (x^{n+1}/(n+1)!)·(x/2)^j——`pow-add` 拆幂 + **`recip-factorial-strong-le`**（1/(n+1+j)! ≤ (1/(n+1)!)·(1/2^j)，ℕ 层 `factorial-strong`：(n+1)!·2^j ≤ (n+1+j)!（每个额外因子 ≥ 2）+ `natℝ-≤-embed` + `recip-≤-ℝ` + `recip-mul-split`）+ `*-≤-mono-ℝ`（基础假设）+ `div-pow`（(x/2)^j = x^j/2^j）
+2. **求和**（`tail-sum-le`）：T_n(m) ≤ 系数·geo-x(x/2,m)（归纳，逐项 + 加法保序 + 分配律反向）
+3. **geo-x (x/2)**（`geo-half-lt`）：geo-x(x/2,m) < 1/(1-x/2)（geo-x-lt 特化，div-half-pos/lt-one）
+4. **固定间隙 B'' = S_n + 系数·1/(1-x/2)**（不依赖 m）：`tail-lt-B''`（S_{n+1+m} < B''，tail-sum-le + geo-half-lt 乘正 + 加法严格）+ `partial-suc-le-B''`（k ≤ n+1 ⟹ S_k ≤ B''，部分和递增 + 1 < 1/(1-x/2)）+ `all-partial-le-B''`（∀k，ℕ 层 `≤-total` 三分 + `tail-repr` 截断减法分解 k = suc(n +ℕr (k∸(n+1)))）
+5. **sup**（`exp-le-B''`）：exp x ≤ B''（`exp-least-ub-any` 任意点级数 sup 刻画，2026-08-05 前置② 登记）
+6. **严格**（`B''-lt-B'`）：B'' < B（`recip-half-gap`：1/(1-x/2) < 1/(1-x)，x/2 < x 固定间隙，乘正 + 加法严格）⟹ exp x < B
+
+**关键设计**：绕开 sup"每项 < B 只给 sup ≤ B"的严格性缺口——固定间隙 B''（不依赖 m）使 exp x ≤ B'' 与 B'' < B 分离，`≤-lt-trans-ℝ` 收口。
+
+**基础设施（可证）**：`natℝ-zero`（natℝ 0 = 0，纯域公理）、`≤-+-mono-r-ℝ`（≤ 加法右保序，三分律）、`natℝ-≤-embed`（≤ℕ 保序嵌入）、`recip-≤-ℝ`（倒数非严格单调）、`pow-mul`/`div-pow`/`one-pow`、`nat-pow-embed`（2^j 嵌入 = (natℝ 2)^j）、`exp-partial-suc-≤`/`exp-partial-at-le`（部分和递增 ≤ 版）。
+
+**排坑**：NATTIMES 绑定下 2^ (suc j) 与 2 *ℕ 2^j 不定义性归约（`2^suc-def` 显式搬运）；`natℝ (2^j)` 与 (natℝ 2)^j 定义性不等（`nat-pow-embed` 桥接）；where 块作用域（suc-≤-inv 提升顶层）；同级运算符 20 级强制括号。
+
+使用处：`exp-lt-A-E` 改用 `exp-tail-bound-thm 3 x-29-450 x-pos-29-450 x-lt-one`（0 < x 前提）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
 ### 5.5 阶段 3：log/exp 微积分与 ln15 闭合（2026-07-31）
 
 **目标**：闭合 B4 末项 `ln15-lt-65-24`（ln15 ≈ 2.70805 < 65/24 ≈ 2.70833，相对间隙 ~1e-4）。

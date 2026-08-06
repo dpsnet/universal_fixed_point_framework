@@ -3322,3 +3322,60 @@ Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径�
 **排坑**：where 内前向引用（two-eq/half-add-half 前置）；`subst` 方向 3 处（natℝ-one 正向、half-add-half 正向、sub-ℝ-def sym）；`cross`（2/2=1）组合需 *-ident 正向 + sym(comm+ident)。
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**固定间隙路径剩余**：tail-sum 逐项 ≤ x^{n+1}/(n+1)!·(x/2)^j（pow-add + factorial-strong + (x/2)^j 除法）+ geo-x (x/2) < 1/(1-x/2) + sup 组合（固定间隙 B'' < B ⟹ exp x ≤ B'' < B）。
+
+---
+
+## T3 固定间隙路径收官：tail-sum + geo-x (x/2) + sup 组合（2026-08-05，DHStructural）
+
+**目标达成**：**exp-tail-bound 降为可证定理**（postulate 删除），闭式：
+```
+exp-tail-bound-thm : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ →
+  exp x <ℝ (exp-partial-at n x +ℝ (((x ^ℕ (suc n)) *ℝ recip-factorial (suc n)) *ℝ (oneℝ /ℝ (oneℝ -ℝ x))))
+```
+
+**新增引理（全部**可证**，零新增公理）**：
+
+*组合块基础设施*：
+- **`natℝ-zero`**：natℝ 0 = 0（natℝ-one + natℝ-suc zero ⟹ 1 = natℝ 0 + 1 ⟹ 加右消去，纯域公理）——原 2349 后置版本删除（前向引用），前置版取代
+- **`≤-+-mono-r-ℝ`**：a ≤ b ⟹ a+c ≤ b+c（三分律 + lt-+-mono-r-ℝ 交换）
+- **`natℝ-suc-mono`**/`natℝ-zero-le`：suc 保序 + 0 ≤ natℝ n
+- **`natℝ-≤-embed`**：m ≤ n ⟹ natℝ m ≤ natℝ n（归纳 ≤ℕ，重构——原 where 块作用域错误删除）
+- **`recip-≤-ℝ`**：0 < a ≤ b ⟹ 1/b ≤ 1/a（三分律）
+- **`pow-mul`**：幂乘性 (x·y)^j = x^j·y^j（inductive inner 辅助）
+- **`div-pow`**：除法幂 (x/y)^j = x^j/y^j
+- **`one-pow`**、**`+ℕr-comm-suc`**
+
+*逐项与求和*：
+- **`one-sub-lt-one`**：x > 0 ⟹ 1-x < 1
+- **`G-gt-one`**：x > 0、x < 1 ⟹ 1 < 1/(1-x)（recip-mono）
+- **`recip-mul-split`**：1/(a·b) = (1/a)·(1/b)
+- **`recip-factorial-strong-le`**：1/(n+1+j)! ≤ (1/(n+1)!)·(1/2^j)（factorial-strong + natℝ-≤-embed + recip-≤-ℝ + recip-mul-split）
+- **`nat-pow-embed`**：2^j 嵌入 = (natℝ 2)^j（归纳，natℝ-*；NATTIMES 下 2^ (suc j) ≠ 2 *ℕ 2^j 定义性 → 2^suc-def 显式搬运）
+- **`tail-term-le`**：逐项 x^{n+1+j}/(n+1+j)! ≤ (x^{n+1}/(n+1)!)·(x/2)^j（pow-add 拆幂 + recip-factorial-strong-le + *-≤-mono-ℝ + 代数重排 + div-pow）
+- **`geo-half-lt`**：geo-x(x/2) < 1/(1-x/2)（geo-x-lt 特化，div-half-pos/lt-one）
+- **`tail-sum-le`**：T_n(m) ≤ 系数·geo-x(x/2,m)（归纳：base *-ident；step 逐项 + 加法保序 + distrib 反向）
+
+*sup 组合*：
+- **`≤-suc-decomp`**/**`≤-total`**/**`+ℕr-zero-l`**/**`+ℕr-∸`**/**`tail-repr`**：ℕ 层 ≤ 三分 + 截断减法分解（k ≥ n+1 ⟹ k = suc(n +ℕr (k∸(n+1)))）
+- **`exp-partial-suc-≤`**/**`exp-partial-at-le`**：部分和单步递增/任意两点递增（≤ 版，项正）
+- **`B''-ub`**：S_n + 系数·1/(1-x/2)（固定上界，不依赖 m）
+- **`tail-lt-B''`**：S_{n+1+m} < B''（tail-sum-le + geo-half-lt + *-pos-mono-ℝ + lt-+-mono-r-ℝ）
+- **`partial-suc-le-B''`**：k ≤ n+1 ⟹ S_k ≤ B''（递增 + 1 < G''）
+- **`all-partial-le-B''`**：∀k 部分和 ≤ B''（≤-total 三分 + tail-repr）
+- **`exp-le-B''`**：exp x ≤ B''（exp-least-ub-any）
+- **`B''-lt-B'`**：B'' < B（recip-half-gap 乘正 + lt-+-mono-r-ℝ）——**固定间隙保持严格**
+- **`exp-tail-bound-thm`**：exp x < B（≤-lt-trans-ℝ exp ≤ B'' < B）
+
+**使用处更新**：exp-lt-A-E 改用 `exp-tail-bound-thm 3 x-29-450 x-pos-29-450 x-lt-one`（0 < x 前提，x-pos-29-450）；原 `x-≤-0` 保留但不再用于此处。
+
+**排坑**：
+- `subst` 方向纪律多次（natℝ-suc-mono 双 sym、recip-≤-ℝ a=b 分支、G-gt-one 去 sym、tail-sum-le base 反向、stepB 交换）
+- 同级运算符 `^ℕ`/`/ℝ`/`*ℝ`/`≤ℝ` 全 20 级 → 组合表达式强制括号（`x ^ℕ j /ℝ natℝ (2^ j)` 等）
+- where 块作用域：`suc-≤-inv` 引用外层绑定 m/n 无法模式匹配 → 提升为顶层
+- `natℝ (2^j)` 与 `(natℝ 2)^j` 定义性不等 → `nat-pow-embed` 桥接
+- exp-partial-at 追加项索引是 suc n（非 suc(suc n)）——add-pos-ℝ y 显式实例化
+- `with` 子句语法：`... |` 形式 + 点模式 `.zero` 混用报 Missing with-clauses
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**exp-tail-bound 降定理完成**，后续 ln1615-lb 闭合链保持既有路径。
+
+**文档同步（2026-08-05）**：笔记蓝图 [`spectral_T3_analysis_foundation.md`](../universal_fixed_point_framework/notes/00_foundations/spectral_T3_analysis_foundation.md) §5.4b 新增阶段 3 定义性公理降定理记录（exp-partial-< / exp-tail-bound 固定间隙路径闭合链）；笔记 [`agda_cross_validation_notes.md`](../universal_fixed_point_framework/notes/00_foundations/agda_cross_validation_notes.md) §4/版本记录更新至 2026-08-05（v0.2）；论文 [`paper38_agda_cross_validation.md`](../universal_fixed_point_framework/paper/paper38_agda_cross_validation.md) v0.1→v0.2（模块数 16→20、闭合历程补 v1.38/v1.40/v1.41/v1.42、§4.4 固定间隙决策、§5.2b 降定理清单、§6 边界更新）；两级 README + 勘误 §六 Paper XXXVIII 状态同步。
