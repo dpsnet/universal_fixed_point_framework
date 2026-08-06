@@ -839,6 +839,30 @@ geo-x-lt x hx hlt m =
   G-pos : zeroℝ <ℝ (oneℝ /ℝ (oneℝ -ℝ x))
   G-pos = /-pos-ℝ zero-lt-one-ℝ (one-sub-pos hlt)
 
+-- ==================================================================
+-- 部分和分解（exp-tail-bound 降定理前置③核心，2026-08-05）
+-- 目标：exp-partial-at (n+1+m) x = exp-partial-at n x + T_n(m)（尾部有限和分解），
+--   T_n(m) = Σ_{j=0}^m x^{n+1+j}/(n+1+j)!。索引用 _+ℕr_（未绑定递归，可归约；
+--   NATPLUS 绑定的 _+ℕ_ 对开放项不归约——与 <-add 同思路）。
+-- ==================================================================
+
+-- 尾部有限和：T_n(m) = Σ_{j=0}^m x^{suc (n +ℕr j)}/factorial(suc (n +ℕr j))
+--（m+1 项：k = n+1, ..., n+1+m；索引用 suc 外层（可展开）——suc n +ℕr m 第二个参数
+--  为变量不归约）
+tail-sum : ℕ → ℕ → ℝ → ℝ
+tail-sum n zero x = (x ^ℕ (suc n)) *ℝ recip-factorial (suc n)
+tail-sum n (suc m) x = tail-sum n m x +ℝ ((x ^ℕ (suc (suc (n +ℕr m)))) *ℝ recip-factorial (suc (suc (n +ℕr m))))
+
+-- **可证**：部分和分解——exp-partial-at (n+1+m) x = exp-partial-at n x + T_n(m)
+--（归纳：base 定义性；step 递归展开 + assoc；n +ℕr (suc m) = suc (n +ℕr m) 定义性）
+exp-decomp : (n m : ℕ) (x : ℝ) → exp-partial-at (suc (n +ℕr m)) x ≡ exp-partial-at n x +ℝ tail-sum n m x
+exp-decomp n zero x = refl
+exp-decomp n (suc m) x =
+  trans (cong (λ u → u +ℝ ((x ^ℕ (suc (suc (n +ℕr m)))) *ℝ recip-factorial (suc (suc (n +ℕr m)))))
+             (exp-decomp n m x))
+        (+-assoc-ℝ (exp-partial-at n x) (tail-sum n m x)
+                   ((x ^ℕ (suc (suc (n +ℕr m)))) *ℝ recip-factorial (suc (suc (n +ℕr m)))))
+
 -- m < m + (k+1)（大数 ℕ 比较构造工具：m +ℕ suc k 定义性归约到 m+k+1）
 <-add-r : (m k : ℕ) → m <ℕ (m +ℕ suc k)
 <-add-r zero k = z<s

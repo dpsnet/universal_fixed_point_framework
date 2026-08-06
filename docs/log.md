@@ -3260,3 +3260,15 @@ DHStructural 单独 + Everything.agda 全量 20 模块编译通过（exit 0）�
 **exp-tail-bound（严格 <）的 sup 论证缺口**：部分和 exp-partial-at (n+1+m) x < B（严格，经 geo-x-lt）只给 sup ≤ B（sup 层"每项 < B ⟹ sup ≤ B"非严格——成员可趋 B）。数学上严格性来自尾部逐项因子 (n+1)!/k! < 1（k > n+1），但 sup 丢逐项严格性。
 
 **可行路径**：① ≤ 版（exp x ≤ B）可经 sup-least-any 直接可证（前置③组合）；② 严格 < 需 sup 严格性机制（Archimedean + 反证 exp = B 矛盾）或保持 postulate（数学上成立、健全）——与 fc-integral 决策同类。**下一步**：先做前置③（部分和分解 + 尾部逐项比较，给出 ≤ 版），严格性再评估。
+
+---
+
+## T3 部分和分解 exp-decomp（2026-08-05，exp-tail-bound 降定理前置③核心）
+
+**新增**：
+- **`tail-sum`**：尾部有限和 T_n(m) = Σ_{j=0}^m x^{n+1+j}/(n+1+j)!——索引用 `_+ℕr_`（未绑定递归，可归约；NATPLUS 绑定的 `_+ℕ_` 对开放项不归约，与 `<-add` 同思路）+ **suc 外层形式**（`suc n +ℕr m` 第二个参数为变量不归约，改用 `suc (suc (n +ℕr m))` 可展开）。
+- **`exp-decomp`**：**部分和分解**——exp-partial-at (n+1+m) x = exp-partial-at n x + T_n(m)（归纳：base 定义性 refl；step 递归展开 + `+-assoc-ℝ` 正向）。
+
+**排坑**：trans 第二段需 q : B ≡ C 方向——`+-assoc-ℝ`（(a+b)+c → a+(b+c)）直接使用，sym 反。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**前置③ 剩余**：幂加法性（x^{a+b} = x^a·x^b）+ 阶乘/recip 单调（1/(n+1+m)! ≤ 1/(n+1)!）+ tail-sum ≤ x^{n+1}/(n+1)!·geo-x（逐项比较）。
