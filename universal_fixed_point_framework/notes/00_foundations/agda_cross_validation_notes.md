@@ -1,7 +1,7 @@
 # Agda 交叉验证笔记（路径 B 完整报告，第一手研究资料）
 
 > **定位**：UFPF 形式化验证体系（Lean 4 主实现 + Agda 独立重形式化）的 Agda 侧完整记录。
-> **状态**：2026-08-05（T3 定义性公理降定理 exp-partial-< / exp-tail-bound 固定间隙路径闭合，v1.41/v1.42；C 类数值项清零 v1.38）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII v0.2）。
+> **状态**：2026-08-05（T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径闭合，v1.41/v1.42/v1.43；C 类数值项清零 v1.38）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII v0.3）。
 > **关联**：路线图 [`phase60_category_verification.md`](../../roadmap/phase60_category_verification.md) §路径 B；笔记 [`spectral_T3_analysis_foundation.md`](./spectral_T3_analysis_foundation.md)（技术债清单 §5.16.7 / 方案 A §5.16.8）；主日志 `docs/log.md`。
 
 ---
@@ -132,7 +132,8 @@ agda_formalization/
 
 - **编译**：`agda Everything.agda` 全量类型检查通过（exit=0），20 模块。
 - **技术债清单 A 类（实质技术债）全闭合**：fc-poly-le-spec-int 构造化、E-σ-add 收敛、spec-int MCT、跨层谱对象映射——四项全部收官。
-- **T3 定义性公理降定理推进（2026-08-05）**：`exp-partial-<`（v1.41，部分和递增 + lt-≤-trans-ℝ）与 **`exp-tail-bound`（v1.42，固定间隙路径）** 由 postulate 降为可证明定理——逐项 `tail-term-le`（pow-add + factorial-strong 阶乘强估计 + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ 固定间隙 B''（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap）⟹ exp x < B。零新增公理。
+- **T3 定义性公理降定理推进（2026-08-05）**：`exp-partial-<`（v1.41）与 **`exp-tail-bound`（v1.42，固定间隙路径）** 由 postulate 降为可证明定理——逐项 `tail-term-le`（pow-add + factorial-strong 阶乘强估计 + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ 固定间隙 B''（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap）⟹ exp x < B。零新增公理。
+- **`log2-series-ub` 降定理（v1.43，固定间隙路径）**：原"log 级数上界"定义性公理由 postulate 降为可证明定理 `log2-series-ub-thm`——前置登记 log 级数 sup 刻画（log2-partial-≤-ub/log2-least-ub-any）+ 部分和递增 + log2-decomp + **1/2 几何机制**（geo-x(1/2) < 2、geo-shift 错位提取公因子、half-pow）⟹ 尾部上界（tail2-term-le）⟹ 固定间隙 B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1}) ⟹ ln 2 ≤ 部分和 n + B''n ⟹ B''n < 尾界 ⟹ ln 2 < 部分和 n + 尾界。零新增公理。
 - **可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（唯一剩余 D 类 = fc-integral 本身，即"函数演算 = 谱积分"谱定理层的模型保证）；spec-int MCT 构造化闭合；Agda 20 模块全量通过；Lean 核心 10 模块零错误。
 
 ---
@@ -171,3 +172,4 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 |:----:|:-----|:-----|
 | v0.1 | 2026-08-03 | 初版。基于路线图 phase60 §路径 B、技术债清单 §5.16.7、方案 A §5.16.8、主日志 v1.17-v1.36 整理。对应 Paper XXXVIII 笔记。 |
 | v0.2 | 2026-08-05 | 状态同步：模块数 16→20；T3 定义性公理降定理（exp-partial-< v1.41、exp-tail-bound v1.42 固定间隙路径，零新增公理）记入 §4；C 类 T3 数值项清零（ln2-lt/ln1615-lb/ln15-arith-ax 闭合，v1.38-1.42 期间）。对应 Paper XXXVIII v0.2。 |
+| v0.3 | 2026-08-05 | 状态同步至 v1.43：log2-series-ub 降定理（固定间隙路径，log 级数 sup 刻画前置登记 + 1/2 几何机制 + 固定间隙 B''n，零新增公理）记入 §4。对应 Paper XXXVIII v0.3。 |

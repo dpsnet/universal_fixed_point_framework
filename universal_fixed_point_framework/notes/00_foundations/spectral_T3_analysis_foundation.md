@@ -169,6 +169,19 @@ postulate
 
 使用处：`exp-lt-A-E` 改用 `exp-tail-bound-thm 3 x-29-450 x-pos-29-450 x-lt-one`（0 < x 前提）。Everything.agda 全量 20 模块编译通过（exit 0）。
 
+### 5.4c 阶段 3 定义性公理降定理：log2-series-ub（2026-08-05，固定间隙路径）
+
+**`log2-series-ub` 降定理（v1.43）**：原"log 级数上界"定义性公理（ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)）由 postulate 降为**可证明定理** `log2-series-ub-thm`。闭合链（零新增公理；前置登记 log 级数 sup 刻画）：
+
+1. **前置登记**（postulate，与 exp-partial-at-≤-ub/exp-least-ub-any 同层）：`log2-partial-≤-ub`（部分和 ≤ ln 2）+ `log2-least-ub-any`（ln 2 是最小上界）——ln 2 = Σ_{k≥1} 1/(k·2^k) 的级数 sup 定义（-ln(1/2) = Σ 1/(k·2^k)）
+2. **部分和递增**（`log2-partial-suc-≤`/`log2-partial-at-le`，项正）+ **分解**（`log2-decomp`：部分和 (n+1+m) = 部分和 n + 尾部）
+3. **1/2 几何机制**（全部可证）：`geo-half2-lt`（geo-x(1/2) < 2，1/(1−1/2) = 2 数值）+ `geo-shift`（错位提取公因子 x^a·geo-x x j）+ `half-pow`（(1/2)^k = 1/2^k）+ `half-pow-mul2`（(1/2)^{a+1}·2 = 1/2^a）
+4. **尾部上界**：`tail2-term-le`（1/(k·2^k) ≤ 1/((n+2)·2^k)）⟹ Σ_{k≥n+2} ≤ (1/(n+2))·1/2^{n+1}（`tail2-rest-le`/`rest-geo-ub`/`tail2-rest-ub`）⟹ 尾部总 ≤ **B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})**（`log2-tail-decomp`/`tail2-le`）
+5. **固定间隙 B''n**（不依赖 m）：`tail-branch` + `log2-all-partial-le-B''`（∀m 部分和 ≤ 部分和 n + B''n）⟹ `log2-le-B''`（ln 2 ≤ 部分和 n + B''n，log2-least-ub-any）
+6. **严格**（`B''-tail-lt`：B''n < 尾界 1/((n+1)·2^n)，1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）⟹ `log2-series-ub-thm`（≤-lt-trans-ℝ）
+
+使用处：`log2-ub-447173` 改用 `log2-series-ub-thm 9`；`ln2-lt` 链保持。Everything.agda 全量 20 模块编译通过（exit 0）。**剩余**：log 级数下界侧机制（后续路线）。
+
 ### 5.5 阶段 3：log/exp 微积分与 ln15 闭合（2026-07-31）
 
 **目标**：闭合 B4 末项 `ln15-lt-65-24`（ln15 ≈ 2.70805 < 65/24 ≈ 2.70833，相对间隙 ~1e-4）。

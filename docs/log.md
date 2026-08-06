@@ -3379,3 +3379,27 @@ exp-tail-bound-thm : (n : ℕ) (x : ℝ) → zeroℝ <ℝ x → x <ℝ oneℝ �
 Everything.agda 全量 20 模块编译通过（exit 0）。**exp-tail-bound 降定理完成**，后续 ln1615-lb 闭合链保持既有路径。
 
 **文档同步（2026-08-05）**：笔记蓝图 [`spectral_T3_analysis_foundation.md`](../universal_fixed_point_framework/notes/00_foundations/spectral_T3_analysis_foundation.md) §5.4b 新增阶段 3 定义性公理降定理记录（exp-partial-< / exp-tail-bound 固定间隙路径闭合链）；笔记 [`agda_cross_validation_notes.md`](../universal_fixed_point_framework/notes/00_foundations/agda_cross_validation_notes.md) §4/版本记录更新至 2026-08-05（v0.2）；论文 [`paper38_agda_cross_validation.md`](../universal_fixed_point_framework/paper/paper38_agda_cross_validation.md) v0.1→v0.2（模块数 16→20、闭合历程补 v1.38/v1.40/v1.41/v1.42、§4.4 固定间隙决策、§5.2b 降定理清单、§6 边界更新）；两级 README + 勘误 §六 Paper XXXVIII 状态同步。
+
+---
+
+## T3 log2-series-ub 降定理（2026-08-05，DHStructural §2c'）
+
+**目标达成**：**log2-series-ub 由 postulate 降为可证明定理**（`log2-series-ub-thm`，闭式与原公理签名一致）：
+```
+log2-series-ub-thm : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
+```
+
+**机制（与 exp-tail-bound 固定间隙路径平行，零新增公理；前置登记 log 级数 sup 刻画）**：
+- **前置登记**（postulate，与 exp-partial-at-≤-ub/exp-least-ub-any 同层）：`log2-partial-≤-ub`（部分和 ≤ ln 2）+ `log2-least-ub-any`（ln 2 是最小上界）——ln 2 = Σ_{k≥1} 1/(k·2^k) 的级数 sup 定义
+- **部分和递增**：`log2-term-pos`（项正）+ `log2-partial-suc-≤`/`log2-partial-at-le`（≤ 版递增）
+- **分解**：`log2-decomp`（log2-partial (n+1+m) = 部分和 n + 尾部 T_n(m)）
+- **1/2 几何机制**：`half-one-pos`/`half-one-lt-one`、`one-plus-one-two`、`half-add-half-one`、`one-sub-half`、`recip-half-two`（1/(1−1/2) = 2）、`geo-half2-lt`（geo-x(1/2) < 2）、`shift-sum`/`geo-shift`（错位提取公因子 x^a·geo-x x j）、`half-pow`（(1/2)^k = 1/2^k）、`half-pow-mul2`（(1/2)^{a+1}·2 = 1/2^a）、`2^suc-expand`/`pow2-mul2`（ℕ 层 2^ 展开）
+- **尾部上界**：`tail2-term-le`（1/(k·2^k) ≤ 1/((n+2)·2^k)，recip-≤-ℝ）、`tail2-rest-le`（Σ ≤ (1/(n+2))·Σ 1/2^k，逐项 + 分配律）、`rest-geo-shift`/`rest-geo-ub`（Σ 1/2^k < 1/2^{n+1}）、`tail2-rest-ub`（剩余尾部 ≤ 1/((n+2)·2^{n+1})）、`log2-tail-decomp`/`tail2-le`（尾部总 ≤ B''n）
+- **固定间隙 B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})**（不依赖 m）：`tail-branch`（m ≥ n+1 部分和 ≤ 部分和 n + B''n）+ `log2-all-partial-le-B''`（∀m，≤-total 三分 + tail-repr）⟹ `log2-le-B''`（ln 2 ≤ 部分和 n + B''n）
+- **严格**：`B''-tail-lt`（B''n < 尾界 1/((n+1)·2^n)，1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）+ `B''-lt-B` ⟹ `log2-series-ub-thm`（≤-lt-trans-ℝ）
+
+**使用处**：`log2-ub-447173` 改用 `log2-series-ub-thm 9`；`ln2-lt` 链保持。
+
+**排坑**：`subst` 方向纪律（recip-half-two/geo-half2-lt/rest-geo-ub/tail2-le/B''-tail-lt 多处）；分子 oneℝ vs natℝ 1（/-pos-ℝ 直接 zero-lt-one-ℝ）；同级运算符 20 级括号；`natℝ(2·suc n)·natℝ(2^n)` 需 natℝ-* 合并 + ℕ 层 2^suc-expand 搬运；where 缩进层级；add-le-l 前移（前向引用）；名字冲突（all-partial-le-B'' → log2- 前缀）。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**log 级数机制定义性公理剩余**：log2-series 下界侧（后续路线）。

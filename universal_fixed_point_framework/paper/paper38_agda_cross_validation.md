@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.2（2026-08-05）
+**版本**：v0.3（2026-08-05）
 
-**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 `lake build` 2454 jobs **零 `sorry` 零 `axiom`**）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，20 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。2026-08-05 继续推进 **T3 定义性公理降定理**：`exp-partial-<`（v1.41）与 `exp-tail-bound`（v1.42，固定间隙路径）由 postulate 降为可证明定理（零新增公理），同时 C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
+**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 `lake build` 2454 jobs **零 `sorry` 零 `axiom`**）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，20 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。2026-08-05 继续推进 **T3 定义性公理降定理**：`exp-partial-<`（v1.41）、`exp-tail-bound`（v1.42，固定间隙路径）与 `log2-series-ub`（v1.43，固定间隙路径）由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画），同时 C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
 
 ---
 **记号与引用**：本文引用 RAP-Errata v0.10（宣称基线）。Agda 代码位于 `agda_formalization/`（`Everything.agda` 整体编译 exit=0）。本文自包含：路径 B 闭合账目、技术债分类（A/B/C/D）与推导要点均已内嵌正文，不依赖外部笔记或路线图文档。
@@ -112,6 +112,7 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 | v1.40 | 方案 A 阶段 4 组合替换 + 方向核验 | `mono-le-any`（∫xⁿ ≤ₒ fc(xⁿ)，∫ ≤ fc 方向）+ **方向核验修正**（mono-le-any 为 ∫≤fc，非 fc-poly-le-spec-int 组件）；决策：fc-integral 保持健全 D 类桥接，C1 收官 |
 | v1.41 | exp-partial-< 降定理 | 原"exp 级数截断"定义性公理（partial-e n < exp 1）由 postulate 降为可证明定理（partial-e-suc + exp-partial-≤-ub + lt-≤-trans-ℝ），零新增公理 |
 | v1.42 | **exp-tail-bound 降定理（固定间隙路径）** | 原"几何尾部上界"定义性公理由 postulate 降为可证明定理 `exp-tail-bound-thm`：逐项 `tail-term-le`（pow-add + 阶乘强估计 factorial-strong + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''**（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)，ℕ 层 ≤-total/tail-repr 三分 + 部分和递增）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。**零新增公理** |
+| v1.43 | **log2-series-ub 降定理（固定间隙路径）** | 原"log 级数上界"定义性公理由 postulate 降为可证明定理 `log2-series-ub-thm`：前置登记 log 级数 sup 刻画（log2-partial-≤-ub/log2-least-ub-any）+ 部分和递增 + `log2-decomp` + **1/2 几何机制**（geo-x(1/2) < 2（1/(1−1/2) = 2）、geo-shift 错位提取公因子、half-pow）⟹ 尾部上界（tail2-term-le：1/(k·2^k) ≤ 1/((n+2)·2^k)）⟹ **固定间隙 B''n** = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})（∀m 部分和 ≤ 部分和 n + B''n）⟹ ln 2 ≤ B''n（log2-least-ub-any）⟹ B''n < 尾界（1/(n+2) < 1/(n+1) 固定间隙）⟹ ln 2 < 部分和 n + 尾界。**零新增公理** |
 
 ### 4.4 关键技术决策
 
@@ -141,7 +142,8 @@ exp 级数机制层定义性公理持续降为可证明定理（零新增公理�
 
 1. ~~**`exp-partial-<`（v1.41）**~~——✅ **已降为可证明定理**：partial-e n < exp 1（partial-e-suc 部分和严格递增 + exp-partial-≤-ub + lt-≤-trans-ℝ）。
 2. ~~**`exp-tail-bound`（v1.42）**~~——✅ **已降为可证明定理** `exp-tail-bound-thm`（0 < x < 1）：**固定间隙路径**——逐项 `tail-term-le`（pow-add + 阶乘强估计 `factorial-strong`：(n+1)!·2^j ≤ (n+1+j)!（每个额外因子 ≥ 2，几何公比折半 x/2）+ `recip-factorial-strong-le` + `recip-≤-ℝ` + `div-pow`）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''** = S_n + 系数·1/(1-x/2)（不依赖 m：`all-partial-le-B''`，ℕ 层 `≤-total` 三分 + `tail-repr` 截断减法分解 + 部分和递增）⟹ `exp-le-B''`（exp-least-ub-any 任意点级数 sup 刻画）⟹ `B''-lt-B'`（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。
-3. 剩余：`log2-series-ub` 等 log 级数机制定义性公理（后续路线）。
+3. ~~**`log2-series-ub`（v1.43）**~~——✅ **已降为可证明定理** `log2-series-ub-thm`：前置登记 log 级数 sup 刻画（`log2-partial-≤-ub`/`log2-least-ub-any`，与 exp 侧同层）——**固定间隙路径**——部分和递增 + `log2-decomp` + **1/2 几何机制**（`geo-half2-lt`：geo-x(1/2) < 2（1/(1−1/2) = 2 数值）、`geo-shift` 错位提取公因子、`half-pow`）⟹ 尾部上界（`tail2-term-le`：1/(k·2^k) ≤ 1/((n+2)·2^k)，剩余 ≤ 1/((n+2)·2^{n+1})）⟹ **固定间隙 B''n** = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})（`tail-branch` + `log2-all-partial-le-B''`）⟹ ln 2 ≤ 部分和 n + B''n（log2-least-ub-any）⟹ B''n < 尾界（1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）⟹ ln 2 < 部分和 n + 尾界。
+4. 剩余：log 级数下界侧机制（后续路线）。
 
 ### 5.3 结构性障碍：R11 有限维态射层（S0 表示静默）
 
@@ -157,7 +159,7 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 2. 纯结构核心（B1-B8 组合/代数/集合结构）直接证明，无 postulate 依赖。
 3. 谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证。
 4. 技术债清单 A 类（实质可闭合项）全闭合：E-σ-add 收敛、spec-int MCT、fc-poly-le-spec-int（方案 A）、谱对象映射（A/E/fc/exp-tA）。
-5. T3 定义性公理降定理推进（2026-08-05）：`exp-partial-<`、`exp-tail-bound` 由 postulate 降为可证明定理（零新增公理）；C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。
+5. T3 定义性公理降定理推进（2026-08-05）：`exp-partial-<`、`exp-tail-bound`、`log2-series-ub` 由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画）；C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。
 6. Lean 侧 2026-08-05 里程碑：**全库 `lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`**——Adjunction 3 sorry + 1 axiom 经结构性判定删除、DeviationBound 2 经简化定理闭合、NoiseCategory Σ-D Functor 律闭合、阶段 3 分形扩张（IFSRecCoding/WeierstrassGap 结构支撑）全部闭合（对齐 Agda postulate 侧纪律）。
 
 **不可声称**：
@@ -175,3 +177,4 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 |:---:|:---:|:---|
 | v0.1 | 2026-08-03 | 初版。系统说明 Agda 交叉验证目的、16 模块清单、双实现一致性、闭合历程（v1.17–v1.36 技术债 A 类全闭合）、剩余开放项与声明边界。内容自包含。 |
 | v0.2 | 2026-08-05 | 状态同步至 v1.42：模块数 16→20（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）；Lean 侧里程碑同步（81 模块全库 2454 jobs 零 sorry 零 axiom，v1.38）；闭合历程补 v1.38（C 类数值项清零）/v1.40（mono-le-any + 方向核验）/v1.41（exp-partial-< 降定理）/v1.42（exp-tail-bound 固定间隙路径降定理）；§4.4 加固定间隙决策；§5 新增 5.2b（T3 定义性公理降定理清单）+ DeviationBound 闭合；§6 声明边界与结论更新。 |
+| v0.3 | 2026-08-05 | 状态同步至 v1.43：闭合历程补 v1.43（log2-series-ub 固定间隙路径降定理：log 级数 sup 刻画前置登记 + 1/2 几何机制 + 固定间隙 B''n）；§5.2b 第 3 条 log2-series-ub 已降；§6 声称 5 更新。 |

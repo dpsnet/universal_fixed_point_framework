@@ -1978,10 +1978,13 @@ log2-partial : ℕ → ℝ
 log2-partial zero    = zeroℝ
 log2-partial (suc n) = log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n))))
 
--- log 级数上界（定义性公理，替代 scoped 公理 ln2-lt）：
--- ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)
+-- log 级数 sup 刻画（登记，2026-08-05 log2-series-ub 降定理前置）：
+-- ln 2 = Σ_{k≥1} 1/(k·2^k) 的级数 sup 定义（与 exp-partial-at-≤-ub/exp-least-ub-any
+-- 同层，log 级数内容；数学上 ln 2 = -ln(1/2) = Σ_{k≥1} 1/(k·2^k)）。
+-- 用途：log2-series-ub 降定理的 sup 论证（部分和 ≤ ln 2 + ln 2 ≤ 最小上界）。
 postulate
-  log2-series-ub : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
+  log2-partial-≤-ub : (n : ℕ) → log2-partial n ≤ℝ log (natℝ 2)  -- 部分和 ≤ ln 2
+  log2-least-ub-any : (b : ℝ) → ((n : ℕ) → log2-partial n ≤ℝ b) → log (natℝ 2) ≤ℝ b  -- ln 2 是最小上界
 
 -- 级数项：1/(k·2^k) 形如 (natℝ 1)/(natℝ (k·2^k))
 -- 本地 one-mul-ℝ/zero-add-ℝ（等价于后文顶层同名引理，避免前向引用）
@@ -2068,10 +2071,391 @@ l2p-9 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 9 *ℝ natℝ (2^ 9)))
                      (trans (same-den-add (natℝ 446907) (natℝ 140) (natℝ 645120))
                             (cong₂ _/ℝ_ (sym (natℝ-+ 446907 140)) refl)))
 
+-- ==================================================================
+-- §2c' log2-series-ub 降定理（2026-08-05，固定间隙路径）
+-- 目标：ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)（log2-series-ub）
+--   由 postulate 降为可证明定理。机制（与 exp-tail-bound 平行）：
+--   部分和 ≤ ln 2（log2-partial-≤-ub）+ ln 2 ≤ 最小上界（log2-least-ub-any）
+--   + 更紧尾界 B''n = 第一项 + (1/(n+2))·Σ_{k≥n+2} 1/2^k（固定，不依赖 m）
+--   + 固定间隙 B''n < B_n（间隙 = [1/(n+1) - 1/(n+2)]/2^{n+1} > 0）⟹ ln 2 < B_n。
+-- ==================================================================
+
+-- **可证**：级数项正——0 < 1/(k·2^k)
+log2-term-pos : (n : ℕ) → zeroℝ <ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n))))
+log2-term-pos n = /-pos-ℝ zero-lt-one-ℝ
+                           (lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (2^-pos (suc n))))
+
+-- **可证**：部分和单步递增（≤ 版）
+log2-partial-suc-≤ : (n : ℕ) → log2-partial n ≤ℝ log2-partial (suc n)
+log2-partial-suc-≤ n = <-≤-ℝ (add-pos-ℝ {x = log2-partial n}
+                                        {y = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n)))} (log2-term-pos n))
+
+-- **可证**：部分和递增（≤ 版）——n ≤ k ⟹ log2-partial n ≤ log2-partial k
+log2-partial-at-le : (n k : ℕ) → n ≤ℕ k → log2-partial n ≤ℝ log2-partial k
+log2-partial-at-le n zero nk with nk
+... | z≤n = refl-≤ℝ
+log2-partial-at-le n (suc k) nk with ≤-suc-decomp {n} {k} nk
+... | inj₁ e = subst (λ z → log2-partial n ≤ℝ log2-partial z) e (refl-≤ℝ)
+... | inj₂ h' = ≤-trans-ℝ (log2-partial-at-le n k h') (log2-partial-suc-≤ k)
+
+-- 尾部有限和：T_n(m) = Σ_{j=0}^m 1/((n+1+j)·2^{n+1+j})
+log2-tail : ℕ → ℕ → ℝ
+log2-tail n zero = oneℝ /ℝ (natℝ (suc (n +ℕr zero)) *ℝ natℝ (2^ (suc (n +ℕr zero))))
+log2-tail n (suc m) = log2-tail n m +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (2^ (suc (suc (n +ℕr m))))))
+
+-- **可证**：部分和分解——log2-partial (n+1+m) = log2-partial n + T_n(m)
+log2-decomp : (n m : ℕ) → log2-partial (suc (n +ℕr m)) ≡ (log2-partial n +ℝ log2-tail n m)
+log2-decomp n zero = refl
+log2-decomp n (suc m) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (2^ (suc (suc (n +ℕr m))))))) (log2-decomp n m))
+        (+-assoc-ℝ (log2-partial n) (log2-tail n m)
+                   (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (2^ (suc (suc (n +ℕr m)))))))
+
+-- ==================================================================
+-- §2c' 基础：1/2 的几何机制（2026-08-05，可证）
+-- ==================================================================
+
+-- ℕ 层：2^ (suc j) = 2·2^j（NATTIMES 下显式搬运）
+2^suc-expand : (j : ℕ) → 2^ (suc j) ≡ 2 *ℕ (2^ j)
+2^suc-expand zero = refl
+2^suc-expand (suc j) = refl
+
+-- ℕ 层：2^n·2 = 2^{n+1}
+pow2-mul2 : (n : ℕ) → (2^ n) *ℕ 2 ≡ 2^ (suc n)
+pow2-mul2 n = trans (*ℕ-comm (2^ n) 2) (2^suc-expand n)
+
+-- **可证**：0 < 1/2
+half-one-pos : zeroℝ <ℝ (oneℝ /ℝ natℝ 2)
+half-one-pos = /-pos-ℝ zero-lt-one-ℝ (natℝ-pos-embed z<s)
+
+-- **可证**：1 < 2
+one-lt-two : oneℝ <ℝ natℝ 2
+one-lt-two = subst (λ z → z <ℝ natℝ 2) natℝ-one (natℝ-<-embed (s<s z<s))
+
+-- **可证**：2/2 = 1
+two-over-two : (natℝ 2 /ℝ natℝ 2) ≡ oneℝ
+two-over-two = trans (/-cross-ℝ {natℝ 2} {oneℝ} {natℝ 2} {oneℝ} cross) (div-one-ℝ oneℝ)
+  where
+  cross : (natℝ 2 *ℝ oneℝ) ≡ (oneℝ *ℝ natℝ 2)
+  cross = trans (*-ident-ℝ (natℝ 2))
+                (sym (trans (*-comm-ℝ oneℝ (natℝ 2)) (*-ident-ℝ (natℝ 2))))
+
+-- **可证**：1/2 < 1
+half-one-lt-one : (oneℝ /ℝ natℝ 2) <ℝ oneℝ
+half-one-lt-one = subst (λ y → (oneℝ /ℝ natℝ 2) <ℝ y) two-over-two
+                  (/-lt-same-den-ℝ {oneℝ} {natℝ 2} {natℝ 2} one-lt-two)
+
+-- **可证**：1 + 1 = 2
+one-plus-one-two : (oneℝ +ℝ oneℝ) ≡ natℝ 2
+one-plus-one-two = trans (cong₂ _+ℝ_ (sym natℝ-one) (sym natℝ-one)) (sym (natℝ-+ 1 1))
+
+-- **可证**：1/2 + 1/2 = 1（(1/2)·2 = 1）
+half-add-half-one : ((oneℝ /ℝ natℝ 2) +ℝ (oneℝ /ℝ natℝ 2)) ≡ oneℝ
+half-add-half-one = trans step1 step2
+  where
+  step1 : ((oneℝ /ℝ natℝ 2) +ℝ (oneℝ /ℝ natℝ 2)) ≡ ((oneℝ /ℝ natℝ 2) *ℝ natℝ 2)
+  step1 = trans (cong₂ _+ℝ_ (sym (*-ident-ℝ (oneℝ /ℝ natℝ 2))) (sym (*-ident-ℝ (oneℝ /ℝ natℝ 2))))
+                (trans (sym (distrib-ℝ (oneℝ /ℝ natℝ 2) oneℝ oneℝ))
+                       (cong (λ w → (oneℝ /ℝ natℝ 2) *ℝ w) one-plus-one-two))
+  step2 : ((oneℝ /ℝ natℝ 2) *ℝ natℝ 2) ≡ oneℝ
+  step2 = trans (*-comm-ℝ (oneℝ /ℝ natℝ 2) (natℝ 2)) (*-/cancel-ℝ (natℝ 2) oneℝ)
+
+-- **可证**：1 − 1/2 = 1/2（1/2 + 1/2 = 1 + 加法群消去）
+one-sub-half : (oneℝ -ℝ (oneℝ /ℝ natℝ 2)) ≡ (oneℝ /ℝ natℝ 2)
+one-sub-half =
+  trans (sub-ℝ-def oneℝ a)
+        (trans (cong (λ u → u +ℝ negℝ a) (sym half-add-half-one))
+               (trans (+-assoc-ℝ a a (negℝ a))
+                      (trans (cong (λ u → a +ℝ u) (+-inv-ℝ a))
+                             (+-ident-ℝ a))))
+  where
+  a : ℝ
+  a = oneℝ /ℝ natℝ 2
+
+-- **可证**：1/(1 − 1/2) = 2（交叉相乘 + 消去）
+recip-half-two : (oneℝ /ℝ (oneℝ -ℝ (oneℝ /ℝ natℝ 2))) ≡ natℝ 2
+recip-half-two =
+  trans (cong₂ _/ℝ_ refl one-sub-half)
+        (trans (/-cross-ℝ {a = oneℝ} {b = natℝ 2} {c = oneℝ /ℝ natℝ 2} {d = oneℝ}
+                          (trans (*-ident-ℝ oneℝ) (sym (*-/cancel-ℝ (natℝ 2) oneℝ))))
+               (div-one-ℝ (natℝ 2)))
+
+-- **可证**：geo-x (1/2) j < 2（geo-x-lt 特化：1/(1−1/2) = 2）
+geo-half2-lt : (j : ℕ) → geo-x (oneℝ /ℝ natℝ 2) j <ℝ natℝ 2
+geo-half2-lt j = subst (λ z → geo-x (oneℝ /ℝ natℝ 2) j <ℝ z) recip-half-two
+                 (geo-x-lt (oneℝ /ℝ natℝ 2) half-one-pos half-one-lt-one j)
+
+-- 错位几何和：shift-sum x a j = Σ_{i=0}^j x^{a+i}（归纳定义）
+shift-sum : ℝ → ℕ → ℕ → ℝ
+shift-sum x a zero = x ^ℕ a
+shift-sum x a (suc j) = shift-sum x a j +ℝ (x ^ℕ (a +ℕr (suc j)))
+
+-- **可证**：错位提取公因子——x^a·geo-x x j = shift-sum x a j
+geo-shift : (x : ℝ) (a j : ℕ) → ((x ^ℕ a) *ℝ geo-x x j) ≡ shift-sum x a j
+geo-shift x a zero = *-ident-ℝ (x ^ℕ a)
+geo-shift x a (suc j) =
+  trans (distrib-ℝ (x ^ℕ a) (geo-x x j) (x ^ℕ (suc j)))
+        (trans (cong₂ _+ℝ_ (geo-shift x a j) refl)
+               (cong (λ w → shift-sum x a j +ℝ w) (sym (pow-add x a (suc j)))))
+
+-- **可证**：(1/2)^k = 1/2^k（div-pow + one-pow + nat-pow-embed）
+half-pow : (k : ℕ) → ((oneℝ /ℝ natℝ 2) ^ℕ k) ≡ (oneℝ /ℝ natℝ (2^ k))
+half-pow k = trans (div-pow oneℝ (natℝ 2) k)
+                   (cong₂ _/ℝ_ (one-pow k) (sym (nat-pow-embed k)))
+
+-- **可证**：(1/2)^{a+1}·2 = 1/2^a（分数对消，2·2^a = 2^{a+1}）
+half-pow-mul2 : (a : ℕ) → (((oneℝ /ℝ natℝ 2) ^ℕ (suc a)) *ℝ natℝ 2) ≡ (oneℝ /ℝ natℝ (2^ a))
+half-pow-mul2 a =
+  trans (cong₂ _*ℝ_ (half-pow (suc a)) refl)
+        (trans (*-comm-ℝ (oneℝ /ℝ natℝ (2^ (suc a))) (natℝ 2))
+               (trans (*-/ℝ (natℝ 2) oneℝ (natℝ (2^ (suc a))))
+                      (trans (cong₂ _/ℝ_ (*-ident-ℝ (natℝ 2)) refl)
+                             (/-cross-ℝ cross))))
+  where
+  cross : (natℝ 2 *ℝ natℝ (2^ a)) ≡ (oneℝ *ℝ natℝ (2^ (suc a)))
+  cross = trans (sym (natℝ-* 2 (2^ a)))
+                (trans (cong natℝ (2^suc-expand a))
+                       (sym (loc-one-mul (natℝ (2^ (suc a))))))
+
+-- ==================================================================
+-- §2c' 尾部上界（log2-series-ub 降定理，2026-08-05）
+-- 目标：Σ_{k≥n+1} 1/(k·2^k) ≤ 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})（B''n，固定）
+-- ==================================================================
+
+-- **可证**：1/(k·2^k) ≤ 1/((n+2)·2^k)（k ≥ n+2；1/k ≤ 1/(n+2)）
+tail2-term-le : (n k : ℕ) → (suc (suc n)) ≤ℕ k →
+  (oneℝ /ℝ (natℝ k *ℝ natℝ (2^ k))) ≤ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ k)))
+tail2-term-le n k h = recip-≤-ℝ den-pos den-le
+  where
+  den-pos : zeroℝ <ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ k))
+  den-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (2^-pos k))
+  den-le : (natℝ (suc (suc n)) *ℝ natℝ (2^ k)) ≤ℝ (natℝ k *ℝ natℝ (2^ k))
+  den-le = *-≤-mono-ℝ {a = natℝ (suc (suc n))} {b = natℝ k} {c = natℝ (2^ k)}
+                      (<-≤-ℝ (natℝ-pos-embed (2^-pos k))) (natℝ-≤-embed h)
+
+-- 剩余尾部：Σ_{k=n+2}^{n+2+j} 1/(k·2^k)
+log2-rest-sum : ℕ → ℕ → ℝ
+log2-rest-sum n zero = oneℝ /ℝ (natℝ (suc (suc (n +ℕr zero))) *ℝ natℝ (2^ (suc (suc (n +ℕr zero)))))
+log2-rest-sum n (suc j) = log2-rest-sum n j +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc j)))) *ℝ natℝ (2^ (suc (suc (n +ℕr (suc j)))))))
+
+-- 剩余几何和：Σ_{k=n+2}^{n+2+j} 1/2^k
+rest-geo-sum : ℕ → ℕ → ℝ
+rest-geo-sum n zero = oneℝ /ℝ natℝ (2^ (suc (suc (n +ℕr zero))))
+rest-geo-sum n (suc j) = rest-geo-sum n j +ℝ (oneℝ /ℝ natℝ (2^ (suc (suc (n +ℕr (suc j))))))
+
+-- **可证**：剩余尾部 ≤ (1/(n+2))·剩余几何和（逐项 tail2-term-le + 加法保序 + 分配律）
+tail2-rest-le : (n j : ℕ) → log2-rest-sum n j ≤ℝ ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum n j)
+tail2-rest-le n zero =
+  subst (λ u → u ≤ℝ ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum n zero))
+        (sym (recip-mul-split (natℝ (suc (suc n))) (natℝ (2^ (suc (suc n))))))
+        (refl-≤ℝ)
+tail2-rest-le n (suc j) =
+  ≤-trans-ℝ stepA (≤-trans-ℝ stepB stepC)
+  where
+  coef : ℝ
+  coef = oneℝ /ℝ natℝ (suc (suc n))
+  T : ℝ
+  T = oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc j)))) *ℝ natℝ (2^ (suc (suc (n +ℕr (suc j))))))
+  G : ℝ
+  G = oneℝ /ℝ natℝ (2^ (suc (suc (n +ℕr (suc j)))))
+  -- 逐项：T ≤ coef·G（tail2-term-le + recip-mul-split）
+  T-le : T ≤ℝ (coef *ℝ G)
+  T-le = subst (λ w → T ≤ℝ w)
+               (recip-mul-split (natℝ (suc (suc n))) (natℝ (2^ (suc (suc (n +ℕr (suc j)))))))
+               (tail2-term-le n (suc (suc (n +ℕr (suc j)))) (s≤s (s≤s (<-≤ℕ (<-add n j)))))
+  -- ① 和 ≤ coef·rest-geo + T
+  stepA : (log2-rest-sum n j +ℝ T) ≤ℝ ((coef *ℝ rest-geo-sum n j) +ℝ T)
+  stepA = ≤-+-mono-r-ℝ {a = log2-rest-sum n j} {b = coef *ℝ rest-geo-sum n j} {c = T} (tail2-rest-le n j)
+  -- ② ≤ coef·rest-geo + coef·G
+  stepB : ((coef *ℝ rest-geo-sum n j) +ℝ T) ≤ℝ ((coef *ℝ rest-geo-sum n j) +ℝ (coef *ℝ G))
+  stepB = subst (λ v → ((coef *ℝ rest-geo-sum n j) +ℝ T) ≤ℝ v)
+                (sym (+-comm-ℝ (coef *ℝ rest-geo-sum n j) (coef *ℝ G)))
+          (subst (λ u → u ≤ℝ ((coef *ℝ G) +ℝ (coef *ℝ rest-geo-sum n j)))
+                 (+-comm-ℝ T (coef *ℝ rest-geo-sum n j))
+                 (≤-+-mono-r-ℝ {a = T} {b = coef *ℝ G} {c = coef *ℝ rest-geo-sum n j} T-le))
+  -- ③ = coef·rest-geo (suc j)（分配律反向 + 定义）
+  stepC : ((coef *ℝ rest-geo-sum n j) +ℝ (coef *ℝ G)) ≤ℝ (coef *ℝ rest-geo-sum n (suc j))
+  stepC = subst (λ u → ((coef *ℝ rest-geo-sum n j) +ℝ (coef *ℝ G)) ≤ℝ u)
+                (trans (sym (distrib-ℝ coef (rest-geo-sum n j) G))
+                       (cong (λ w → coef *ℝ w) (sym geo-suc-def)))
+                (refl-≤ℝ)
+    where
+    geo-suc-def : rest-geo-sum n (suc j) ≡ (rest-geo-sum n j +ℝ G)
+    geo-suc-def = refl
+
+-- **可证**：剩余几何和 = 错位 (1/2)^k 和（归纳 j，half-pow + 索引搬运）
+rest-geo-shift : (n j : ℕ) → rest-geo-sum n j ≡ shift-sum (oneℝ /ℝ natℝ 2) (suc (suc n)) j
+rest-geo-shift n zero = sym (half-pow (suc (suc n)))
+rest-geo-shift n (suc j) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ natℝ (2^ (suc (suc (n +ℕr (suc j))))))) (rest-geo-shift n j))
+        (cong (λ w → shift-sum h (suc (suc n)) j +ℝ w)
+              (sym (trans (half-pow ((suc (suc n)) +ℕr (suc j)))
+                          (cong (λ v → oneℝ /ℝ natℝ (2^ v)) idx-eq))))
+  where
+  h : ℝ
+  h = oneℝ /ℝ natℝ 2
+  idx-eq : ((suc (suc n)) +ℕr (suc j)) ≡ (suc (suc (n +ℕr (suc j))))
+  idx-eq = trans (+ℕr-comm-suc (suc n) (suc j)) (cong suc (+ℕr-comm-suc n (suc j)))
+
+-- **可证**：剩余几何和 < 1/2^{n+1}（提取公因子 + geo-x(1/2) < 2）
+rest-geo-ub : (n j : ℕ) → rest-geo-sum n j <ℝ (oneℝ /ℝ natℝ (2^ (suc n)))
+rest-geo-ub n j = subst (λ w → rest-geo-sum n j <ℝ w) (half-pow-mul2 (suc n))
+                  (subst (λ u → u <ℝ ((h ^ℕ (suc (suc n))) *ℝ natℝ 2)) (sym eq) mult-lt)
+  where
+  h : ℝ
+  h = oneℝ /ℝ natℝ 2
+  eq : rest-geo-sum n j ≡ ((h ^ℕ (suc (suc n))) *ℝ geo-x h j)
+  eq = trans (rest-geo-shift n j) (sym (geo-shift h (suc (suc n)) j))
+  hpow-pos : zeroℝ <ℝ (h ^ℕ (suc (suc n)))
+  hpow-pos = power-pos-ℕ h half-one-pos (suc n)
+  mult-lt : ((h ^ℕ (suc (suc n))) *ℝ geo-x h j) <ℝ ((h ^ℕ (suc (suc n))) *ℝ natℝ 2)
+  mult-lt = *-pos-mono-ℝ {a = geo-x h j} {b = natℝ 2} {c = h ^ℕ (suc (suc n))} hpow-pos (geo-half2-lt j)
+
+-- **可证**：剩余尾部 ≤ 1/((n+2)·2^{n+1})（tail2-rest-le + rest-geo-ub + 乘正 + 分数）
+tail2-rest-ub : (n j : ℕ) → log2-rest-sum n j ≤ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n))))
+tail2-rest-ub n j = <-≤-ℝ (≤-lt-trans-ℝ (tail2-rest-le n j) (subst (λ z → ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum n j) <ℝ z)
+                                                                   (sym (recip-mul-split (natℝ (suc (suc n))) (natℝ (2^ (suc n)))))
+                                                                   (*-pos-mono-ℝ {a = rest-geo-sum n j}
+                                                                                 {b = oneℝ /ℝ natℝ (2^ (suc n))}
+                                                                                 {c = oneℝ /ℝ natℝ (suc (suc n))}
+                                                                                 coef-pos
+                                                                                 (rest-geo-ub n j))))
+  where
+  coef-pos : zeroℝ <ℝ (oneℝ /ℝ natℝ (suc (suc n)))
+  coef-pos = /-pos-ℝ zero-lt-one-ℝ (natℝ-pos-embed z<s)
+
+-- **可证**：尾部分解——log2-tail n (suc m) = 首项 + 剩余（归纳 m）
+log2-tail-decomp : (n m : ℕ) → log2-tail n (suc m) ≡ (log2-tail n zero +ℝ log2-rest-sum n m)
+log2-tail-decomp n zero = refl
+log2-tail-decomp n (suc m) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (2^ (suc (suc (n +ℕr (suc m)))))))) (log2-tail-decomp n m))
+        (trans (+-assoc-ℝ (log2-tail n zero) (log2-rest-sum n m)
+                          (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (2^ (suc (suc (n +ℕr (suc m))))))))
+               (cong (λ u → (log2-tail n zero) +ℝ u) (sym log2-rest-sum-def)))
+  where
+  log2-rest-sum-def : log2-rest-sum n (suc m) ≡ (log2-rest-sum n m +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (2^ (suc (suc (n +ℕr (suc m))))))))
+  log2-rest-sum-def = refl
+
+-- **可证**：左常数 ≤ 保序——b ≤ c ⟹ a+b ≤ a+c
+add-le-l : {a b c : ℝ} → b ≤ℝ c → (a +ℝ b) ≤ℝ (a +ℝ c)
+add-le-l {a} {b} {c} h =
+  subst (λ v → (a +ℝ b) ≤ℝ v) (sym (+-comm-ℝ a c))
+        (subst (λ u → u ≤ℝ (c +ℝ a)) (+-comm-ℝ b a)
+               (≤-+-mono-r-ℝ {a = b} {b = c} {c = a} h))
+
+-- 固定上界 B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})
+B''n : ℕ → ℝ
+B''n n = (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n)))) +ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n))))
+
+-- **可证**：尾部 T_n(m) ≤ B''n（m ≥ 1；首项 + 剩余 ≤ 首项 + 1/((n+2)·2^{n+1})）
+tail2-le : (n m : ℕ) → log2-tail n (suc m) ≤ℝ (B''n n)
+tail2-le n m =
+  subst (λ u → u ≤ℝ (B''n n)) (sym (log2-tail-decomp n m))
+        (add-le-l {a = log2-tail n zero} {b = log2-rest-sum n m}
+                  {c = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n)))}
+                  (tail2-rest-ub n m))
+
+-- ==================================================================
+-- §2c' 组合收官：log2-series-ub 降定理（2026-08-05）
+-- ==================================================================
+
+-- **可证**：a + a = a·2
+mul-two-add : (a : ℝ) → (a +ℝ a) ≡ (a *ℝ natℝ 2)
+mul-two-add a = trans (cong₂ _+ℝ_ (sym (*-ident-ℝ a)) (sym (*-ident-ℝ a)))
+                (trans (sym (distrib-ℝ a oneℝ oneℝ))
+                       (cong (λ w → a *ℝ w) one-plus-one-two))
+
+-- **可证**：m ≥ n+1 ⟹ 部分和 m ≤ 部分和 n + B''n（m = n+1 首项吸收；m ≥ n+2 尾部上界）
+tail-branch : (n m' : ℕ) → log2-partial (suc (n +ℕr m')) ≤ℝ (log2-partial n +ℝ B''n n)
+tail-branch n zero =
+  subst (λ u → u ≤ℝ (log2-partial n +ℝ B''n n)) (sym log2-partial-suc-def)
+        (add-le-l {a = log2-partial n} {b = t0} {c = t0 +ℝ t1} t0-le)
+  where
+  t0 : ℝ
+  t0 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n)))
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n)))
+  log2-partial-suc-def : log2-partial (suc (n +ℕr zero)) ≡ (log2-partial n +ℝ t0)
+  log2-partial-suc-def = refl
+  t1-pos : zeroℝ <ℝ t1
+  t1-pos = /-pos-ℝ zero-lt-one-ℝ
+                   (lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (2^-pos (suc n))))
+  t0-le : t0 ≤ℝ (t0 +ℝ t1)
+  t0-le = <-≤-ℝ (add-pos-ℝ t1-pos)
+tail-branch n (suc m') =
+  subst (λ u → u ≤ℝ (log2-partial n +ℝ B''n n)) (sym (log2-decomp n (suc m')))
+        (add-le-l {a = log2-partial n} {b = log2-tail n (suc m')} {c = B''n n} (tail2-le n m'))
+
+-- **可证**：∀m 部分和 ≤ 部分和 n + B''n（≤-total 三分 + tail-branch）
+log2-all-partial-le-B'' : (n m : ℕ) → log2-partial m ≤ℝ (log2-partial n +ℝ B''n n)
+log2-all-partial-le-B'' n m with ≤-total m (suc n)
+log2-all-partial-le-B'' n m | inj₁ h = ≤-trans-ℝ (log2-partial-at-le m (suc n) h) (tail-branch n zero)
+log2-all-partial-le-B'' n m | inj₂ h = subst (λ z → log2-partial z ≤ℝ (log2-partial n +ℝ B''n n)) (tail-repr n m h)
+                                     (tail-branch n (m ∸ suc n))
+
+-- **可证**：ln 2 ≤ 部分和 n + B''n（log2-least-ub-any）
+log2-le-B'' : (n : ℕ) → log (natℝ 2) ≤ℝ (log2-partial n +ℝ B''n n)
+log2-le-B'' n = log2-least-ub-any (log2-partial n +ℝ B''n n) (log2-all-partial-le-B'' n)
+
+-- **可证**：B''n < 尾界 1/((n+1)·2^n)（1/(n+2) < 1/(n+1) 固定间隙）
+B''-tail-lt : (n : ℕ) → B''n n <ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n)))
+B''-tail-lt n = subst (λ u → (t0 +ℝ t1) <ℝ u) big-eq
+                 (lt-+-mono-r-ℝ {a = t0} {b = t1} {c = t0} t1-lt-t0)
+  where
+  t0 : ℝ
+  t0 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n)))
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n)))
+  big : ℝ
+  big = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))
+  den0 : ℝ
+  den0 = natℝ (suc n) *ℝ natℝ (2^ (suc n))
+  den1 : ℝ
+  den1 = natℝ (suc n) *ℝ natℝ (2^ n)
+  den0-pos : zeroℝ <ℝ den0
+  den0-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (2^-pos (suc n)))
+  den0-lt-den1 : den0 <ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n)))
+  den0-lt-den1 = subst (λ u → u <ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n))))
+                       (sym (*-comm-ℝ (natℝ (suc n)) (natℝ (2^ (suc n)))))
+                       (subst (λ v → (natℝ (2^ (suc n)) *ℝ natℝ (suc n)) <ℝ v)
+                              (sym (*-comm-ℝ (natℝ (suc (suc n))) (natℝ (2^ (suc n)))))
+                              (*-pos-mono-ℝ {a = natℝ (suc n)} {b = natℝ (suc (suc n))} {c = natℝ (2^ (suc n))}
+                                            (natℝ-pos-embed (2^-pos (suc n))) (natℝ-<-embed (s<s (<-suc n)))))
+  -- 1/((n+2)·2^{n+1}) < 1/((n+1)·2^{n+1})
+  t1-lt-t0 : t1 <ℝ t0
+  t1-lt-t0 = recip-mono-ℝ den0-pos den0-lt-den1
+  -- 2·(1/((n+1)·2^{n+1})) = 1/((n+1)·2^n)
+  big-eq : (t0 +ℝ t0) ≡ big
+  big-eq = trans (mul-two-add t0)
+           (trans (*-comm-ℝ t0 (natℝ 2))
+           (trans (*-/ℝ (natℝ 2) oneℝ den0)
+           (trans (cong₂ _/ℝ_ (*-ident-ℝ (natℝ 2)) refl)
+                  (/-cross-ℝ cross))))
+    where
+      cross : (natℝ 2 *ℝ den1) ≡ (oneℝ *ℝ den0)
+      cross = trans (sym (*-assoc-ℝ (natℝ 2) (natℝ (suc n)) (natℝ (2^ n))))
+              (trans (cong₂ _*ℝ_ (sym (natℝ-* 2 (suc n))) refl)
+                     (trans (sym (natℝ-* (2 *ℕ suc n) (2^ n)))
+                            (trans (cong natℝ (trans (cong (λ w → w *ℕ (2^ n)) (*ℕ-comm 2 (suc n)))
+                                                   (trans (*ℕ-assoc (suc n) 2 (2^ n))
+                                                          (cong (λ w → (suc n) *ℕ w) (sym (2^suc-expand n))))))
+                                   (trans (natℝ-* (suc n) (2^ (suc n)))
+                                          (sym (loc-one-mul den0))))))
+
+-- **可证**：固定间隙——部分和 n + B''n < 部分和 n + 尾界（lt-+-mono-r-ℝ）
+B''-lt-B : (n : ℕ) → (log2-partial n +ℝ B''n n) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
+B''-lt-B n = lt-+-mono-r-ℝ {a = log2-partial n} {b = B''n n}
+                          {c = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))} (B''-tail-lt n)
+
+-- **可证**：log2-series-ub 降定理——ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)
+--（ln 2 ≤ 部分和 n + B''n（log2-least-ub-any）< 部分和 n + 尾界（固定间隙））
+log2-series-ub-thm : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ n))))
+log2-series-ub-thm n = ≤-lt-trans-ℝ (log2-le-B'' n) (B''-lt-B n)
+
 -- log 2 < 447173/645120（部分和 9 = 447047/645120 + 尾界 1/5120 = 126/645120）
 log2-ub-447173 : log (natℝ 2) <ℝ (natℝ 447173 /ℝ natℝ 645120)
 log2-ub-447173 =
-  subst (λ y → log (natℝ 2) <ℝ y) sum-eq (log2-series-ub 9)
+  subst (λ y → log (natℝ 2) <ℝ y) sum-eq (log2-series-ub-thm 9)
   where
   sum-eq : (log2-partial 9 +ℝ (oneℝ /ℝ (natℝ 10 *ℝ natℝ (2^ 9)))) ≡ (natℝ 447173 /ℝ natℝ 645120)
   sum-eq = trans (cong₂ _+ℝ_ l2p-9 tail-5120)
