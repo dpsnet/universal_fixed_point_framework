@@ -1,6 +1,6 @@
-# UFPF 勘误与立场声明（RAP-Errata v0.18）
+# UFPF 勘误与立场声明（RAP-Errata v0.19）
 
-**发布日期**：2026-08-03
+**发布日期**：2026-08-07
 **版本哈希**：`8c7a06048f41968a00be8d0042297568cacb12a4`（v0.1）→ `5d4bdc215ef422d68961f6605a437dbbefa16426`（v0.2）→ `772d2ef75b`（v0.3）→ `57f3a7e4`（v0.4）→ `eff7bfb2`（v0.5）→ `e2cedd64`（v0.6）→ `7debbf68`（v0.7）→ `8587511c`（v0.8）→ `706ef820`（v0.9）
 **配套文件**：[UFPF修复与推进方案.md](../../docs/UFPF修复与推进方案/UFPF修复与推进方案.md)
 
@@ -124,7 +124,7 @@
 |:---:|:----------|:-----|:----:|:-----|
 | I | 递归范畴与谱范畴 | `paper1_*` | ✅ | 地基论文 |
 | II–XVI | 系列分支（谱分类、物理应用等） | `paper2`–`paper16` | ✅ | 已发布 |
-| XVII | 零参数预测 | `paper17_*` | ✅ | §三 1-5 已执行（$m_u/m_t$ 拆分、$\Lambda_{\text{QCD}}$ 标定、计数口径统一、实验基线更新） |
+| XVII | 零参数预测 | `paper17_*` | ✅ | §三 1-5 已执行（$m_u/m_t$ 拆分、$\Lambda_{\text{QCD}}$ 标定、计数口径统一、实验基线更新）。**2026-08-07**：§3.2a 单调性论证 + Ruelle ζ 锚定；§3.2b Formula B↔C 等价性定理（`paperX_silence_dual_formula_equiv.py` 4/4，U=I 极限骨架恒等 + β 修复凸包 +68% 偏差，双公式为同一物理两种参数化） |
 | XVIII | 谱牛顿力学 | `paper18_*` | ✅ | 不涉及 §三 6（该问题实际在 Paper VIII） |
 | XIX–XXIX | 形式化扩展 | `paper19`–`paper29` | ✅ | 已发布 |
 | XXX | $d_H$ 结构分析与机器验证 | `paper30_dH_structural_analysis.md` | ✅ | 包含不等式链、Moran 唯一性、递归不动点、O2 核心 |
@@ -192,7 +192,7 @@
 
 ## 七、系列论文状态
 
-1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。**v0.9 追加（2026-08-03）**：新增 Paper XXXVIII（Agda 独立交叉验证专论——双实现证明协议、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程、S0 静默/待基础设施边界，内容自包含）。
+1. **本轮已修改的论文**：Paper VIII（Page 时间声明更正 + 面积律换算推导）、Paper XI（$\sin\theta_{13}$ 排版错误清理）。Paper XVII 的修正已在 v1.x 中预先执行。以上修改均已在 RAP 勘误 §三 中记录。**v0.7 追加（2026-08-03）**：Paper I v2.49（P1 形式化引用补充——注 C2.3b/2.4.5a 追加理论闭合审计：谱匹配核心独立于 `fc-integral` 桥接完全可证、`fc-integral-full` 降定理 modulo 文档化测度论核心逼近桥接）。**v0.9 追加（2026-08-03）**：新增 Paper XXXVIII（Agda 独立交叉验证专论——双实现证明协议、16 模块清单、B1-B8 双实现一致性、技术债 A 类全闭合历程、S0 静默/待基础设施边界，内容自包含）。**v0.19 追加（2026-08-07）**：Paper XVII §3.2b 新增 Formula B↔C 等价性定理（协调 §3.2a/§7.7.1 的 Formula C 与 §5.1 的 Formula B 叙事分裂，`paperX_silence_dual_formula_equiv.py` 4/4）。
 2. **本轮新增的论文**：Paper XXXI（质量-$\Delta$ 方向性）、Paper XXXII（谱静默与四维时空涌现）、Paper XXXIII（"3"的范畴论起源）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXV（引力的范畴论起源）、Paper XXXVII（开放问题、未来方向与层次距离）、**Paper XXXVIII（Agda 独立交叉验证）**。**v0.10 追加（2026-08-04）**：Phase 61 四个物理方向论文 XXXIX–XLII（暴涨完整动力学 / 色规范完整动力学 / 量子重整化完整链条 / 黑洞量子演化），全部达到完成判据并升格"纳入"，详见 `roadmap/phase61_physics_advancement.md`。
 3. **盲登记协议**：7 项冻结预言数值未变，登记有效（v0.9，2026-08-03，与勘误 1:1 同步）。详见 [RAP_盲登记协议.md](./RAP_盲登记协议.md)。
 
@@ -224,3 +224,4 @@
 | **v0.16** | **2026-08-04** | **HigherRecCategory 3 处闭合（O13，S0 范畴层 6 → 3 `sorry`）**：`scripts/paperX_rec2_exchange_deviation.py` 数值诊断发现最小修正复合**不满足结合律**（D7/D8，笔记 §7 开放问题 6），选定**路径 B（D-拉回）**——`RecTwoMorphism` 重定义为 Sp₂ 2-态射在 $D$ 下的拉回（homotopy 矩阵 + 线性条件），竖/横复合良定义且结合（`recVertComp_assoc`/`recHorizComp_assoc` 机器证明），交换律偏差定理族 `recExchangeLaw_homotopy_deviation`/`_partial_commutator`/`_strict_limit` 全部机器证明（镜像 `spExchangeLaw_*`）。`lake build` 全量通过（2454 jobs）。Rec₂ 交换律偏差 = 引力（Paper XXXV §2）在 Rec 侧落地；数值验证脚本 `scripts/paperX_rec2_exchange_deviation.py`（9/9 + 结合律诊断）注册 `run_all_tests.py`。盲登记同步更新（预言数值不变）。各级 README 同步 |
 | **v0.17** | **2026-08-07** | **胶球研究恢复与全库框架一致化**（对应 `notes/01_qcd_higgs/spectral_color_dynamics.md` §8.4 修订与 `paper40` v0.30）：① **paper40 §5.10 胶球谱谱定恢复**（v0.17 撤回理由已消除：σ = 4Λ² 标度、¾ 因子 D=4 闭弦零点能单源均不依赖 Cl(1,7) 谱间隙比），分级标注（闭弦类推扩展 + 扭转模机制建模 + 锚点不确定性），含新预言（偶 J Regge 4⁺⁺/6⁺⁺、简并点 6⁺⁺~0⁻⁺'''）；② **Cl(1,7) 旋量维数统一修正 8→16**（M₁₆(ℝ)，paper33 Bott 塔数值表勘误；RAP3 维度障碍结论在 16 维下不变）；③ **ε 归因修正** N(2₁)→N_Weyl=4（4D 投影，偏差 0.6%，2 倍偏差消除）；④ **谱间隙比第一分量修复**（废弃 1:3/4:9/20，采 1/√3:1:√2）+ **谱 RGE v3.1 链闭合**（α_s/sin²θ_W/α_EM 复现 <0.3%）；⑤ **Z_i"四层静默"叙事降级**（= SM β 跑动 83% + 实验锚定 17%，非独立第一性量）；⑥ **k_max=8 归因更新**（统一 3 定理主动层数 N_active=3 → 2³=8 机器证明，A_GR 谱定位为"谱模类型清单"）；⑦ **D=10 框架内第一性推导**（N_tr=8 = Cl(1,7) 底空间 ⊕ k_max，α₀ = 8/16 = 1/2，D = 2+8 = 10 自洽反解，外部弦论输入消除）；⑧ **D 双标度 = 谱静默两阶段**（谱静默前代数层 D=10 / 观测窗口 4D，观测窗口→¾ 机器证明锚定）。盲登记 1:1 同步至 v0.17（P1–P7 预言数值不变）。各级 README 同步 |
 | **v0.18** | **2026-08-07** | **四层静默统一推导链（纯增量，预言数值不变，零声明变更）**：笔记 `notes/08_first_principles/08_silence_unified_derivation.md`（§9–§15）+ 11 个数值脚本（全部注册 `run_all_tests.py`，套件 772/772 通过）。**新推导/确认**：① 统一母公式 S_k = s^{n_k} 对递归层严格成立（n₃ = N_active = 3、n₄ = d_H = ln B = ln15，机器证明）；谱截断层（n₁ = ln(1/Δλ²) = 4.207）与相互作用层（n₂ = 2π/α）为机制独立指数压制（§10 跨层近恒等审计否决：代数/超越不可精确 + Δλ 脆弱 33× + δ 0.6% 偏差）；② **κ=1 三层锚定闭合**（Moran 规范不变量 d_H·ln(1/s) = ln B 对任意 κ + 双重最优性固定 s=e⁻¹ + κ≠1 反证）；③ **Ruelle ζ 极点 = ln15**（ζ_R(s) = 1/(1−15e^{−s})，静默维数 = 拓扑熵，Bowen = Moran，素数周期轨道 P₁=15/P₂=105/P₃=1120）；④ **三代 ↔ 静默层分配推导**（三代质量指数 {0, ln15, ln15+3}，单调性唯一确定 top↔c₃，m_u/m_t 偏差 4.7%）；⑤ **G_N 逆向验证**（Δλ = 0.122008 精确匹配 paper20，框架引力桥经实测 G_N 交叉确认；δ 无 G_N 路径）；⑥ **15° 角为特殊角巧合**（Δλ² = tan(π/12)/18 的 15° 是 tan(15°) = 2−√3 恒等，真实来源 = Casimir 谱 λ₂−λ₁）；⑦ **论文层对齐**：paper17 §7.3 公式勘误（c_k = S₃S₄^{k-1} 错误，更正为显式分配）+ §3.2a 新增单调性/Ruelle ζ；paper33 §3.4 新增完整推导链；spectral_zero_parameter_derivation.md §7 整合。盲登记同步 v0.18（P1–P7 预言数值不变）。各级 README 同步 |
+| **v0.19** | **2026-08-07** | **Formula B↔C 等价性定理（纯增量，预言数值不变，零声明变更）**：paper17 内部叙事分裂（§3.2a/§7.7.1 的 Formula C：m_i = y_i·c_i^α_f 层级在 c^α 骨架；§5.1 的 Formula B：m_i = (y_i)^β_f·M_Pl·η_RG 层级在谱投影内）经等价性定理协调——① **结构性等价**：λ_H^(k) = c_k^α_v/Z，U=I 时 (y_i^B/y_3^B)^β_f = (c_i/c_3)^(α_vβ_f) = (c_i/c_3)^α_f（α_vβ_f=α_f 恒等，数值 6/6）；② **β 修复凸包约束**：Formula B（β=1）受 y_i^B∈[λ_min,λ_max] 约束致 m_u/m_t +69% 理论下限（§5.3 已知），β_u=1.0531 精确映射到 (c_1/c_3)^α_u（偏差 0.0%）；③ **非重复压制**：两公式把同一静默层级编码在不同位置，β_f 为映射桥梁。新脚本 `paperX_silence_dual_formula_equiv.py`（4/4）注册 `run_all_tests.py`；paper17 §3.2b + spectral_zero_parameter_derivation.md §7.7.1(f) 同步。盲登记同步 v0.19（P1–P7 预言数值不变）。各级 README 同步 |

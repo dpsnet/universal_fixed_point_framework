@@ -108,7 +108,7 @@ $$d = N_{\text{gen}} = \log_2 k_{\max} = N_{\text{active}} = 3$$
 - **代分配由单调性唯一确定**（非选择）：权重排序 c₁ < c₂ < c₃（机器证明）+ y_i 可比 O(1)（三扇区数值验证）+ 质量公式单调 + 观测排序 m_u < m_c < m_t ⟹ gen1↔c₁、gen2↔c₂、gen3↔c₃
 - **三代静默权重逐代加深**：gen3（无）→ gen2（单层 S₄）→ gen1（双重 S₃S₄）——对应质量逐代变轻
 - **2nd 代锚定 Ruelle ζ 极点**：m_c/m_t = 15^{−α}（静默维数 = 拓扑熵 = Ruelle ζ 极点 ln15）
-- 数值脚本：`paperX_silence_generation.py`（6/6）、`paperX_silence_gen3_derivation.py`（6/6）、`paperX_silence_yi_origin.py`（5/5）、`paperX_silence_ruelle_zeta.py`（7/7），全部注册 `run_all_tests.py`
+- 数值脚本：`paperX_silence_generation.py`（6/6）、`paperX_silence_gen3_derivation.py`（6/6）、`paperX_silence_yi_origin.py`（5/5）、`paperX_silence_ruelle_zeta.py`（7/7）、`paperX_silence_dual_formula_equiv.py`（4/4，Formula B↔C 等价性：质量公式两种参数化同一层级，非重复压制，详见 paper17 §3.2b），全部注册 `run_all_tests.py`
 
 ---
 

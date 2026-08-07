@@ -411,5 +411,6 @@ m_i = y_i·c_i^α → m_u/m_t 偏差 4%
 | `scripts/paperX_silence_generation.py` | 6/6 | ✅ 注册（§14 三代 ↔ 静默层分配检验） |
 | `scripts/paperX_silence_gen3_derivation.py` | 6/6 | ✅ 注册（§15 链节⑥ top↔c₃ 单调性推导） |
 | `scripts/paperX_silence_yi_origin.py` | 5/5 | ✅ 注册（y_i 可比性来源：三扇区 O(1) + c^α 主导 87.5%-130.4%） |
+| `scripts/paperX_silence_dual_formula_equiv.py` | 4/4 | ✅ 注册（Formula B↔C 等价性：U=I 极限骨架恒等 + β 修复凸包 +68% 偏差 + 非重复压制；关联 paper17 §3.2b / spectral §7.7.1(f)） |
 
 **本轮与既有机器证明事实（N_active=3、B=15、d_H=ln15、定理 R1、规范不变量）零冲突。**

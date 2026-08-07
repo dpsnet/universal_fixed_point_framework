@@ -227,6 +227,7 @@ SCRIPTS = [
     ("scripts/paperX_silence_generation.py", "三代分配检验 (6/6)：三代指数={0,ln15,ln15+3} 分段等差；m_u/m_t=(15e³)^(-α_u) 偏差 4%；m₁/m₂=e^(-3α) 只依赖 N_active；2nd 代锚定 Ruelle ζ 极点"),
     ("scripts/paperX_silence_gen3_derivation.py", "链节⑥推导 (6/6)：top↔c₃ 由单调性唯一确定——权重排序(机器证明)+y_i 可比(O(1))+质量排序+单调公式；m_u/m_t 偏差 4.7%；y_t≈1 与无静默一致"),
     ("scripts/paperX_silence_yi_origin.py", "y_i 可比性来源 (5/5)：三扇区 y_i/y₃∈[0.5,5] O(1)；c^α 捕获 log 层级 87.5%-130.4%；O(1) 来源=c^α 主导+RG α 推导 (副产品非拟合)"),
+    ("scripts/paperX_silence_dual_formula_equiv.py", "Formula B↔C 等价性 (4/4)：U=I 极限精确退化为 c^α_f 骨架 (α_v·β_f=α_f 恒等) + 骨架同源 + β 修复凸包 +68% 偏差 + 凸包自洽——双公式为同一物理两种参数化，非重复压制"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
