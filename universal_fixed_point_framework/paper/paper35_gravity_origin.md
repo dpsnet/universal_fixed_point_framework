@@ -120,7 +120,7 @@ $$G_N = \frac{(\Delta\lambda_{\min})^2}{M_{\text{Pl}}^2} \times 18(2+\sqrt{3})$$
 
 2. **谱几何连接**：$\|\Delta\|_F^2 = r_{\text{cat}} \cdot \Delta\lambda_{\min}^2$，其中 $r_{\text{cat}} \approx 0.0404$。该关系由 Cl(1,7) 实际谱数据的 Monte Carlo 模拟确立（$N=50000$，`scripts/paperX_gravity_exact_quantification.py`），将抽象范畴偏差与具体的谱间隙绑定。
 
-3. **引力常数闭式**：$G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$。该闭式中的常数 $18(2+\sqrt{3})$ 由 Cl(1,7) 旋量维数 $n=8$、Einstein-Hilbert 归一化 $16\pi$、谱结构因子 $F_{\text{Cl}(1,7)}=8(2-\sqrt{3})$ 共同决定（Phase C，`scripts/paperX_gravity_gEH_analysis.py`，双路径交叉验证比值 $1.000000000000000$）。
+3. **引力常数闭式**：$G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$。该闭式中的常数 $18(2+\sqrt{3})$ 由谱间隙恒等式 $\Delta\lambda_{\min}^2 = (2-\sqrt{3})/18$ 唯一确定【2026-08-07 勘误：原"由 Cl(1,7) 旋量维数 $n=8$、Einstein-Hilbert 归一化 $16\pi$、谱结构因子 $F_{\text{Cl}(1,7)}=8(2-\sqrt{3})$ 共同决定"归因错误——$18(2+\sqrt{3}) = 1/\Delta\lambda_{\min}^2$ 是纯代数恒等式（$(2+\sqrt{3})(2-\sqrt{3})=1$），不依赖旋量维数；Cl(1,7) 标准旋量维数为 16（M₁₆(ℝ)，paper20 权威），数值 $G_N$ 不受影响】（Phase C，`scripts/paperX_gravity_gEH_analysis.py`，双路径交叉验证比值 $1.000000000000000$）。
 
 三层分别对应：范畴论、谱分析、物理唯象。其中 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122$ 由 SU(2) 谱间隙和 $k_{\max}=8$（Bott 塔机器证明）确定。
 
@@ -421,7 +421,7 @@ $$\text{LO} = [A,\delta\beta]\cdot g + f\cdot[\delta\alpha,A], \quad \text{NLO} 
 |:-----|:---------:|:----------|:-----------|
 | $M_{\text{Pl}}/M_{\text{SM}}$ | $O(1)$ | 无关自由参数 | $M_{\text{SM}} \notin (10^2,10^4)$ GeV ⇒ 证伪 |
 | $\alpha_{\text{Gravity}}/\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ | $\approx 1$ | 无关自由参数 | $\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ 精确测定 ≠ 1 ⇒ 证伪 |
-| $\epsilon$（谱交织精度） | $8.12\times10^{-17}$ | GR+SM 无此量 | $\epsilon > 10^{-15}$ 被检测 ⇒ 证伪 |
+| $\epsilon$（谱交织精度） | $8.12\times10^{-17}$【2026-08-07 已解决：原"N(2₁)=8 闭式给 1.6×10⁻¹⁶（2 倍），数值待校准"已更新——正确因子 = 4D Weyl 数 4（RAP3/paper17 机器证明），ε = 4 × v_EW/M_Pl = 8.07×10⁻¹⁷，仍 ≪ 证伪阈值，结论不变；见 paper20 §6.4 / paperX_epsilon_resolution.py】 | GR+SM 无此量 | $\epsilon > 10^{-15}$ 被检测 ⇒ 证伪 |
 
 这些比率的实验检验是框架的锐利可证伪预测。任一比率被排除即否证框架核心结构。
 

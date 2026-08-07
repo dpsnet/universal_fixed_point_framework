@@ -17,7 +17,7 @@ paperX_dark_energy_scan.py — B3：暗能量压制的候选因子判别扫描�
 import numpy as np
 
 rho_L = 2.9e-123
-eps = 8.12e-17
+eps = 8.12e-17  # 谱交织精度框架观测值（2026-08-07：推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 8.07e-17，N_Weyl=4 = 4D Weyl 数（RAP3 机器证明）；观测值未变，偏差 0.6%）
 S4 = np.exp(-2.7095)
 DL = 0.122022
 rcat = 0.040391

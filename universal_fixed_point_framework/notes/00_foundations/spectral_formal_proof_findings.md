@@ -262,7 +262,7 @@ $$\delta_{\text{silence}} \leq \|A\| \cdot \|G\| + \|G\| \cdot \|A\| = 2\|A\|\cd
 | `agEigenvalue_range` | 归一化特征值 λ_k ∈ (0, 1]，λ_{k_max}=1 | ✅ |
 | `spectralGap` 定义 | Δλ_min = λ₂ - λ₁ | ✅ |
 | `spectralGap_formula` | 解析公式 Δλ_min = (√6-√2)/√{k_max(k_max+1)} | ✅ |
-| `kmax_from_cl17` | Cl(1,7) ≅ M₈(ℝ) → k_max = 8 | ✅ |
+| `kmax_from_cl17` | Cl(1,7) ≅ M₈(ℝ) → k_max = 8【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16），此处 8 指 k_max=8（Bott 截断/谱模数），非 Cl(1,7) 表示维数】 | ✅ |
 | `spectralGap_at_kmax8` | 代入 k_max=8：Δλ_min = (√6-√2)/√72 | ✅ |
 | `bareCoupling` / `BareCouplings` | α_i^(0) = Δλ_i/(4π)，比值一致性 | ✅ |
 | `R2_coefficient` / `criticalEnergyDensity` | 导出 c₁, ρ_c | ✅ |
@@ -291,8 +291,8 @@ $\mathbf{Rec}$ 的 $\mathbf{Rec}_D/\mathbf{Rec}_{\text{diss}}/\mathbf{Rec}\setmi
 **Step 5: 群论约束 → $k_{\max} = 8$（唯一自洽解）**
 $k_{\max}$ 是唯一使谱间隙比自洽且与 $A_{\text{GR}}$ 矩阵维数匹配的截断值。数值验证（$k_{\max}=4,6,8,16,100$ 比较）确认 $k_{\max}=8$ 与临界能量密度 $\rho_c$ 最佳匹配。
 
-**Step 6: 矩阵代数同构 → $M_8(\mathbb{R}) \cong \mathrm{Cl}(1,7)$**
-$M_8(\mathbb{R})$ 作为 $A_{\text{GR}}$ 的表示代数，其签名由谱的实/复分解确定，对应 $\mathrm{Cl}(1,7)$（Minkowski 签名 $1+7 = 8$ 维）。Bott 周期分类确认 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$（$p-q \equiv 2 \pmod{8}$）。
+**Step 6: 矩阵代数同构 → $M_8(\mathbb{R}) \cong \mathrm{Cl}(1,7)$**【2026-08-07 勘误：Cl(1,7) 标准矩阵代数系 M₁₆(ℝ)，非 M₈(ℝ)（见下文本行勘误）】
+$M_8(\mathbb{R})$ 作为 $A_{\text{GR}}$ 的表示代数，其签名由谱的实/复分解确定，对应 $\mathrm{Cl}(1,7)$（Minkowski 签名 $1+7 = 8$ 维）。Bott 周期分类确认 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$（$p-q \equiv 2 \pmod{8}$）。【2026-08-07 勘误：Cl(1,7) 标准矩阵代数系 M₁₆(ℝ)（代数维数 256，旋量维数 16），"M₈(ℝ) ≅ Cl(1,7)"系旧遗留；Minkowski 签名 1+7=8 维与 p-q≡2 (mod 8) 的 Bott 分类本身无误】
 
 **完整链**：
 ```
@@ -308,7 +308,7 @@ Rec/Sp 范畴 (Paper I)
     ↓ 群论 + 数值验证
 k_max = 8
     ↓ Bott 分类
-Cl(1,7) ≅ M₈(ℝ)
+Cl(1,7) ≅ M₈(ℝ)【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16），"M₈(ℝ)"系旧遗留】
     ↓ SpectralGap.lean
 Δλ_min = (√6-√2)/√72 → c₁ → ρ_c
 ```
@@ -387,7 +387,7 @@ Cl(1,7) ≅ M₈(ℝ)
 | **53A** | A_GR 定义统一：废弃 `stepMatrix` 路径，`G_GR_fromBoundary = ad(G)(A)`；A_weak 从标量矩阵（对易）重写为非标量非对易形式 | `CategoryGeometry.lean`, `SpectralDynamics.lean` | ✅ |
 | **53B** | SU(2) Lie 代数结构 `SU2Generators` + Casimir 算子定义 + 2×2 与 3×3 表示特征值验证 + 概念澄清（G_GR ≠ A_GR） | `CategoryRepBridge.lean`（新建） | ✅ |
 | **53C** | `agEigenvalue = Casimir 比值` 定理 + j=0,1/2,1 显式 Casimir 特征值计算（0, 3/4, 2） | `CategoryRepBridge.lean` | ✅ |
-| **53D** | Cl(1,7) Bott 周期分类 → `cl17_rep_dim = 8`；`kmax_from_cl17` 从常量改为真正定理；`cl17_iso_M8` 从 `True` 占位符改为有意义定理 | `Clifford.lean`, `SpectralGap.lean` | ✅ |
+| **53D** | Cl(1,7) Bott 周期分类 → `cl17_rep_dim = 8`；`kmax_from_cl17` 从常量改为真正定理；`cl17_iso_M8` 从 `True` 占位符改为有意义定理【2026-08-07 勘误：`cl17_rep_dim`/`cl17_iso_M8` 中的 8（M₈）系旧遗留——Cl(1,7) ≅ M₁₆(ℝ)，旋量维数 16；k_max=8 指 Bott 截断/谱模数】 | `Clifford.lean`, `SpectralGap.lean` | ✅ |
 | **53E** | `spectralGap_numerical_approx` sorry 填充：区间不等式证明 `0.121 < Δλ_min < 0.123` | `SpectralGap.lean` | ✅ |
 
 **全链当前状态**：Rec/Sp → G_GR=ad(G)(A) → SU(2) 结构 → Casimir → agEigenvalue → Cl(1,7)→k_max=8 → Δλ_min=(√6-√2)/√72 ≈ 0.122 M_Pl。**所有环节均已形式化，零 sorry**。

@@ -12,7 +12,7 @@ import numpy as np
 DL_EM = 0.0229    # 电磁
 DL_GR = 0.122     # 引力 (= SU(2) 弱耦合)
 DL_SM = 0.122     # SM 统一谱间隙
-epsilon = 8.12e-17 # 谱交织精度
+epsilon = 8.12e-17 # 谱交织精度框架观测值（2026-08-07：推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 8.07e-17，N_Weyl=4 = 4D Weyl 数（RAP3 机器证明）；观测值未变，偏差 0.6%）
 
 print("=" * 72)
 print("§1 specExchangeLaw 偏差的结构")

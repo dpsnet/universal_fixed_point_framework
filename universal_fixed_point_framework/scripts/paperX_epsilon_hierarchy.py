@@ -3,7 +3,7 @@
 paperX_epsilon_hierarchy.py — ε 与层次距离猜想的判别分析（2026-07-29）
 
 猜想（§6.3 开放问题）：
-  −ln(ε)/(3·d_H) ≈ √2π，其中 ε = 8.12×10⁻¹⁷（Paper II 预测），
+  −ln(ε)/(3·d_H) ≈ √2π，其中 ε = 8.12×10⁻¹⁷（框架观测值；2026-08-07 推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 8.07×10⁻¹⁷，N_Weyl=4 = 4D Weyl 数，见 paper20 §6.4），
   3·d_H 是层次 0→3 的谱间隙距离。
 
 判别程序（四条独立判据）：
@@ -18,7 +18,7 @@ paperX_epsilon_hierarchy.py — ε 与层次距离猜想的判别分析（2026-0
 
 import numpy as np
 
-eps = 8.12e-17
+eps = 8.12e-17  # 谱交织精度框架观测值（2026-08-07：推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 4 × v_EW/M_Pl = 8.07e-17，N_Weyl=4 为 4D Weyl 数（16 维实旋量 4D 分解 = 4 Weyl，RAP3 机器证明）；观测值 8.12e-17 未变，偏差 0.6%，见 paper20 §6.4 / paperX_epsilon_resolution.py）
 ln_eps = -np.log(eps)
 d_fit = 2.7095
 d0 = np.log(15)

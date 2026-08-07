@@ -355,7 +355,7 @@ def main():
     
     print(f"\n  A_GR 离散谱 (Phase 36):")
     print(f"  Δλ_min = {bare.delta_lambda:.3f} M_Pl")
-    print(f"  k_max = {bare.k_max} (Cl(1,7) → M₈(ℝ))")
+    print(f"  k_max = {bare.k_max} (Cl(1,7) → M₈(ℝ))")  # 【2026-08-07 勘误：Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)（非 M₈(ℝ)），旋量维数 16】
     print(f"  λ_k = Δλ_min · √(k(k+1)):")
     for i, lam in enumerate(bare.lambdas):
         print(f"    λ_{i+1} = {lam:.4f} M_Pl")

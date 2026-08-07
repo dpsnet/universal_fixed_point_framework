@@ -202,11 +202,11 @@ BCS 谱框架预测对两个假设敏感：
 
 QCD 的 $\Delta\lambda_3 = 0.1725$ 来自 SU(3) 规范群在 Cl(1,7) 代数中的谱嵌入。谱框架给出了三个规范群的谱间隙比（Paper XX §4，`SpectralGap.lean`）：
 
-$$\Delta\lambda_1 : \Delta\lambda_2 : \Delta\lambda_3 = \sqrt{2/3} : 1 : \sqrt{2}$$
+$$\Delta\lambda_1 : \Delta\lambda_2 : \Delta\lambda_3 = \sqrt{1/3} : 1 : \sqrt{2}$$
 
-其中 $\Delta\lambda_2 = \Delta\lambda_{\min} = 0.122$（SU(2) Casimir 谱间隙）。因此：
+其中 $\Delta\lambda_2 = \Delta\lambda_{\min} = 0.122$（SU(2) Casimir 谱间隙）。【2026-08-06 修复】比值第一分量由 √(2/3) 更正为 √(1/3)：SU(2) Casimir 特征值归一化 $\lambda_k = \sqrt{k(k+1)}$ 严格给出 $1/\sqrt3:1:\sqrt2$（原 √(2/3) 为拼凑值，见 spectral_color_dynamics.md §8.4 修复子节）。因此：
 
-$$\Delta\lambda_1 = \Delta\lambda_{\min} \cdot \sqrt{2/3} \approx 0.122 \cdot 0.816497 = 0.0996 \quad \text{(U(1) 谱间隙)}$$
+$$\Delta\lambda_1 = \Delta\lambda_{\min} \cdot \sqrt{1/3} \approx 0.122 \cdot 0.577350 = 0.0704 \quad \text{(U(1) 谱间隙)}$$
 $$\Delta\lambda_3 = \Delta\lambda_{\min} \cdot \sqrt{2} \approx 0.122 \cdot 1.414214 = 0.1725 \quad \text{(SU(3) 谱间隙)}$$
 
 ### 5.2 BCS 谱间隙的三候选方案

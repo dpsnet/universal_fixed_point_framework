@@ -95,6 +95,8 @@ if len(u13)==2:
 if len(u4)==2:
     print(f"  SO(4): 8 维分裂为 {c4[0]}+{c4[1]}")
     print(f"  → 4 + 4 = 8 旋量在内部空间中也有分裂")
+print(f"  【2026-08-07 勘误：本脚本基于旧框架 Cl(1,7) ≅ M₈(ℝ) 的 8 维旋量构造（历史探索脚本，未注册 run_all_tests.py）；")
+print(f"   标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20 权威），4D 分解为 4 个 Weyl（RAP3 机器证明）。")
     
 print(f"\n谱静默检查:")
 S4 = np.exp(-2.7095)
@@ -107,4 +109,4 @@ n_chir_plus = np.sum(ch_ev > 0)
 n_chir_minus = np.sum(ch_ev < 0)
 print(f"  正手征维数: {n_chir_plus}")
 print(f"  负手征维数: {n_chir_minus}")
-print(f"  → 8 维旋量按手征分裂为 {n_chir_plus}+{n_chir_minus}")
+print(f"  → 8 维旋量按手征分裂为 {n_chir_plus}+{n_chir_minus}【2026-08-07 勘误：旧 8 维旋量构造；标准旋量 16 维，见上】")

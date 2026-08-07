@@ -89,7 +89,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 | `spacetime_dimension_split` | $1 + N_{\text{active}} + (N_{\text{total}} - 1) = 8$ | 1+3+4=8 分解机器证明 |
 | `dimension_counting_eq_two_mul` | $1 + (n-1) + ((n+1)-1) = 2n$ | **涌现 Clifford 维数 m = 2n**（范畴阶数的 2 倍） |
 | `spacetime_dim_eq_category_order` | $1 + (n-1) = n$ | **时空维数 = 范畴阶数**：4D 时空 ⟺ 4-范畴 |
-| `category_order_unique` | $2n = 8 \Rightarrow n = 4$ | **逆方向唯一性**：给定 Cl(1,7)（旋量表示 8_s 独立确定），"𝐒𝐩 是 4-范畴"从设定升级为**推论** |
+| `category_order_unique` | $2n = 8 \Rightarrow n = 4$ | **逆方向唯一性**：给定 Cl(1,7)（旋量表示 8_s【2026-08-07 勘误：旧遗留记号 "8_s" 应理解为 16 维旋量 S₁₆，旋量维数 16（非 8）】独立确定），"𝐒𝐩 是 4-范畴"从设定升级为**推论** |
 | `silence_separation` | $e^{-3} \cdot e^{-d} < e^{-d}$（∀d） | 静默维度严格低于阈值，与 d_H 取值无关 |
 | `silence_margin` | $S_4 / c_1 = e^3$ | 分离裕度精确为 e³ ≈ 20（鲁棒性定量） |
 | `visible_dimensions_eq_four` | ∀d>0，可见维度 = 1+3 = 4 | 4D 结论对 d_H 不确定性（δ 修正、拟合误差）完全鲁棒 |

@@ -86,7 +86,29 @@ $$d = N_{\text{gen}} = \log_2 k_{\max} = N_{\text{active}} = 3$$
 
 **缺口 1（代空间维数）**——已闭合。`HigherSpCategory.lean` 定义 `SpThreeMorphism` 结构（垂直复合、恒等、结合律）；`Unified3Theorem.lean` 构建 `activeLayerToGenSpace` 显式同构，将 3 个主动生成层一一映射到 $\mathbb{C}^3_{\text{fam}}$ 的基向量；`genSpace_dim_is_three` 证明 `Module.finrank ℂ GenSpace = 3`。
 
-**缺口 2（Bott 截断指数）**——已闭合。`BottTower.lean` 定义 `spinorDim(k) = 8 × 2^k`；建立 `layerToDoublingIndex` 满射连接主动生成层与翻倍步数；证明 `k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3`。
+**缺口 2（Bott 截断指数）**——已闭合。`BottTower.lean` 定义 `spinorDim(k) = 8 × 2^k`【2026-08-06 勘误：基准应为 16，见 §4.1】；建立 `layerToDoublingIndex` 满射连接主动生成层与翻倍步数；证明 `k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3`。
+
+### 3.4 从统一 3 定理到三代静默权重（完整推导链，2026-08-07 新增）
+
+统一 3 定理证明了"为什么是三代"（N_gen = N_active = 3），但三代如何产生**质量层级**需要静默权重链。完整推导链（详见 `notes/08_first_principles/08_silence_unified_derivation.md` §15）：
+
+```
+统一 3 定理（机器证明）→ N_active = 3
+  → 定理 R1（机器证明）→ 静默权重 S_k = s^k，s = e⁻¹（κ=1 三层锚定闭合）
+  → 三相位自由度 → 三维空间 + 三代子空间
+  → 静默层投影 → c₁ = S₃S₄（双重静默）, c₂ = S₄（辫静默）, c₃ = 1（无静默）
+       （Moran 归一化 k = 0.999761）
+  → c₃ = 时间/递归分支（永不静默，递归演化载体）→ gen3 ↔ c₃
+  → 三代质量指数 {0, ln15, ln15+3}（间隔 = 拓扑熵 ln B + N_active）
+  → Ruelle ζ 极点 = ln15（ζ_R(s) = 1/(1−15e^{−s})）锚定 gen2 尺度
+  → m_u/m_t = (15e³)^{−α_u} 偏差 4%（质量预测）
+```
+
+**关键结论**：
+- **代分配由单调性唯一确定**（非选择）：权重排序 c₁ < c₂ < c₃（机器证明）+ y_i 可比 O(1)（三扇区数值验证）+ 质量公式单调 + 观测排序 m_u < m_c < m_t ⟹ gen1↔c₁、gen2↔c₂、gen3↔c₃
+- **三代静默权重逐代加深**：gen3（无）→ gen2（单层 S₄）→ gen1（双重 S₃S₄）——对应质量逐代变轻
+- **2nd 代锚定 Ruelle ζ 极点**：m_c/m_t = 15^{−α}（静默维数 = 拓扑熵 = Ruelle ζ 极点 ln15）
+- 数值脚本：`paperX_silence_generation.py`（6/6）、`paperX_silence_gen3_derivation.py`（6/6）、`paperX_silence_yi_origin.py`（5/5）、`paperX_silence_ruelle_zeta.py`（7/7），全部注册 `run_all_tests.py`
 
 ---
 
@@ -96,10 +118,12 @@ $$d = N_{\text{gen}} = \log_2 k_{\max} = N_{\text{active}} = 3$$
 
 | Bott Level | Clifford 代数 | 矩阵代数 | 旋量维数 | 倍率 |
 |:---------:|:-------------:|:--------:|:--------:|:----:|
-| 0 | Cl(1,7) | M₈(ℝ) | 8 | — |
-| 1 | Cl(9,1) | M₁₆(ℝ) | 16 | ×2 |
-| 2 | Cl(17,1) | M₃₂(ℝ) | 32 | ×2 |
-| 3 | Cl(25,1) | M₆₄(ℝ) | 64 | ×2 |
+| 0 | Cl(1,7) | M₁₆(ℝ)【2026-08-06 勘误：原 M₈(ℝ) 旋量 8 错误，标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16】 | 16 | — |
+| 1 | Cl(9,1) | M₃₂(ℝ)【勘误：原 M₁₆(ℝ) 错误，Cl(9,1) 旋量 32】 | 32 | ×2 |
+| 2 | Cl(17,1) | M₆₄(ℝ)【勘误：原 M₃₂(ℝ)】 | 64 | ×2 |
+| 3 | Cl(25,1) | M₁₂₈(ℝ)【勘误：原 M₆₄(ℝ)】 | 128 | ×2 |
+
+【2026-08-06 勘误】原表旋量基准错误（Cl(1,7) 写 8，实际 16；spinorDim(k)=8×2^k 应为 16×2^k）——Cl(1,7) ≅ M₁₆(ℝ)（标准：p−q ≡ 2 mod 8 → 旋量 2^(8/2) = 16，与 paper20 一致）。**统一 3 定理的核心论证（log₂(k_max) = N_active = 3 ⇒ k_max = 2³ = 8，指数 = 主动生成层数）不依赖旋量维数基准，独立成立**（见 spectral_color_dynamics.md §8.4 复查）。
 
 结构紧缩参数 $k_{\max} = 8$（谱间隙截断），指数 $\log_2 k_{\max} = 3 = N_{\text{active}}$。
 

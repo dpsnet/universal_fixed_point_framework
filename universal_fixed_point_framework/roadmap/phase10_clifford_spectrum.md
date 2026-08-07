@@ -50,17 +50,17 @@ $$\sigma_L(T) = \sigma_R(T) = \sigma(T) \subseteq \mathbb{R},$$
 
 **证明**。对 $\mathcal{A} \cong M_n(\mathbb{R})$，左可逆等价于右可逆。自伴条件 $T = T^*$ 保证谱为实数。取 $\mathcal{A} \cong \mathbb{R}^n$（通过正则表示），得标量谱的对应。□
 
-> **注**：对 $\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$，左谱 = 右谱 = 双向谱，且等于标量谱。
+> **注**：对 $\mathrm{Cl}(1,7) \cong M_{16}(\mathbb{R})$【2026-08-07 勘误：原"$M_8(\mathbb{R})$"——标准 Cl(1,7) ≅ M₁₆(ℝ)，paper20】，左谱 = 右谱 = 双向谱，且等于标量谱。
 > 这解释了为什么 SM 实例中只取标量谱是充分的。
 
 ### 2.3 $\mathrm{Cl}(1,7)$ 与 $\mathrm{Cl}(9,1)$ 的具体结构
 
 | 代数 | 矩阵同构 | 签名差 $p-q$ | Bott 周期 |
 |---|---|---|---|
-| $\mathrm{Cl}(1,7)$ | $M_8(\mathbb{R})$ | $-6 \equiv 2 \bmod 8$ | 复型 |
-| $\mathrm{Cl}(9,1)$ | $M_{16}(\mathbb{R})$ | $8 \equiv 0 \bmod 8$ | 实型 |
+| $\mathrm{Cl}(1,7)$ | $M_{16}(\mathbb{R})$【2026-08-07 勘误：原"$M_8(\mathbb{R})$"】 | $-6 \equiv 2 \bmod 8$ | 实型 |
+| $\mathrm{Cl}(9,1)$ | $M_{32}(\mathbb{R})$【2026-08-07 勘误：原"$M_{16}(\mathbb{R})$"，Cl(9,1) 标准 ≅ M₃₂(ℝ)】 | $8 \equiv 0 \bmod 8$ | 实型 |
 
-**命题 2.4**。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 和 $\mathrm{Cl}(9,1) \cong M_{16}(\mathbb{R})$ 均为实矩阵代数。因此其上自伴算子的谱等于标量谱，当前框架中标量谱的处理是充分的。
+**命题 2.4**。$\mathrm{Cl}(1,7) \cong M_{16}(\mathbb{R})$ 和 $\mathrm{Cl}(9,1) \cong M_{32}(\mathbb{R})$ 均为实矩阵代数。因此其上自伴算子的谱等于标量谱，当前框架中标量谱的处理是充分的。
 
 ---
 
