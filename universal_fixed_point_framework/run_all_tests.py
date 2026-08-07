@@ -118,6 +118,10 @@ SCRIPTS = [
     ("scripts/paperX_qcd_alpha_s_light.py",           "61B 轻味 α_s 独立谱定：谱定 M_ud+σ+Cornell 波函数+N-Δ 目标 → 反解 α_s*=0.338 (6/6)"),
     ("scripts/paperX_qcd_ds_ab.py",                   "61B κ A/B 耦合精确化：完整 A(p²)/B(p²) DS 求解，匹配 κΛ 所需 d 2.0→1.485 GeV² (6/6)"),
     ("scripts/paperX_qcd_ds_full_vertex.py",           "paper40 开放问题 2 框架内拓展：彩虹近似 → Ball-Chiu 完整顶点（BC1）+ UV 尾（MT 1999）——匹配 κΛ 所需 d 1.485→0.926 GeV²，与文献 d≈0.87-1.0 差距 1.6×→1.0×（落入文献范围）；UV 尾贡献 0.231 + 顶点贡献 0.328 GeV²；剩余横向顶点（BC2/CP）登记精确化 (6/6)"),
+    ("scripts/paperX_beta_borel.py",                    "61C β 级数 Borel 求和评估：文献 6 圈 MS 系数（Kompaniets-Kniehl 2017 + Schnetz 独立确认）确认 λφ⁴ β 级数发散（渐近）；Borel 变换收敛半径有限但 IR renormalon 正实轴奇点 ⟹ Borel 求和非唯一——'渐近收敛 Borel 求和'方向受障碍，完整非微扰求值（瞬子/DS/格点）为主线 (5/5)"),
+    ("scripts/paperX_spectral_flow_isospectral.py",     "61C 定理 3.1 严格性审计 + 修正定理 3.1'：① 无 i 形式 dA/dt=[G,A] 不保 Hermitian（Herm 残差 ~28）→ 修正为 i[G,A]（Heisenberg）；② 标准谱流等谱（⟨k|[G,A]|k⟩≈0）⟹ 原 β 公式为零——**修正定理 3.1'**：β(λ_k)=Σ⟨k|A_{F,i}|k⟩β_i(g)（Feynman-Hellmann 链式法则，C5 单耦合精确 1e-16 / C6 多耦合欧拉 1e-6 数值验证）；机制分离：等谱本征基旋转 + 耦合跑动（β 来源）(7/7)"),
+    ("scripts/paperX_silence_exponent.py",               "61C δ_silence 精确谱指数闭合：宽层级间隙扫描（20→10^4）渐近拟合 δ_asymp=1.000（±0.01）、大间隙局部指数单调收敛→1（0.901→0.999）、解析界比值 dev/Bound 稳定（0.548<1）——Schur 补块间修正 ∝ε²‖W_lh‖²/d 为精确 1/d 幂律 ⟹ δ_silence=1（最低静默指数），原'精确谱指数依赖完整静默层级形式化'开放项闭合 (4/4)"),
+    ("scripts/paperX_instanton_borel.py",                 "61C 非微扰求值：λφ⁴ 瞬子路径评估——Fubini-Lipatov 解满足场方程 □φ+λφ³=0（五点差分残差<1e-6）、作用量 S_inst=8π²/λ（数值积分 vs 解析偏差 0.08%）；Borel 奇点 t*=S_inst（renormalon 障碍物理来源，与 paperX_beta_borel 衔接）；e^{−S} 强耦合区显著（λ≳10），α_s^eff 接管物理图像；完整非微扰=瞬子路径（完成）+格点/DS（外部）(4/4)"),
     ("scripts/paperX_qcd_flavor_bridge.py",           "61B 跨味衔接：微扰 Λ 122 MeV ↔ 有效值 210 MeV 三层证据闭环（漂移带包含 + DS 桥 + 反证 + ξ≈√N_c）(6/6)"),
     ("scripts/paperX_qcd_heavy_flavor_spectral.py",   "61B 重味 Cornell 参数谱定替代：α_s 0.39→0.413（两圈跨味，61C 锚点一致），4 态平均偏差 3.66%→3.39%，μ_eff=1.37 GeV (6/6)"),
     ("scripts/paperX_qcd_heavy_mass_spectral.py",     "61B 重味有效质量谱定替代：m_c/m_b = pole 质量（单圈/两圈 pole-MS 修正），Cornell 三参数全谱定，4 态平均 3.64% (6/6)"),
@@ -162,6 +166,7 @@ SCRIPTS = [
     # === Phase 61D (P1-3): 黑洞量子演化 ===
     ("scripts/paperX_hawking_spectrum.py",            "黑洞量子演化：霍金谱 + 蒸发动力学 + Page 曲线 + 视界涨落 + 信息保持 + 量子反弹 (35/35)"),
     ("scripts/paperX_hawking_kerr.py",                "61D Kerr 蒸发动力学：谱温度归约 f(a*) + 转动降温 + 极端冷却 + 超辐射角动量优先辐射 (6/6)"),
+    ("scripts/paperX_kerr_superradiance.py",          "61D Kerr 完整超辐射谱：数值求解标量径向方程 Z_slm(ω)=|R|²−1——窗口符号判据（Z>0⟺ω<mΩ_H）、转动增强（Z_max 随 a* 单调）、边界连续、l=m=2 窗口拓宽峰值降低、发射谱超辐射区占可观份额、dJ/dt>0 且 dJ/dE 与简化 R_J=2 同量级（8/8）"),
 
     # === Paper V: 力的谱动力学 ===
     ("scripts/paper5_spectral_flow_test.py",          "Paper V 谱流方程验证 (ALL PASSED)"),

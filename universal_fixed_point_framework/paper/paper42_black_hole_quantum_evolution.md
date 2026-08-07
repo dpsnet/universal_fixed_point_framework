@@ -1,6 +1,6 @@
 # 通用不动点范畴框架 XLII：黑洞量子演化——霍金谱、Page 曲线与信息保持的谱公理推导
 
-**版本**：v0.1（2026-08-04）
+**版本**：v0.3（2026-08-08）
 **系列**：Phase 61（物理理论补缺推进计划）P1-3
 **形式化**：[`BlackHoleEvolution.lean`](../formal_proof/UFPFormalization/UFPFormalization/BlackHoleEvolution.lean)、[`HawkingSpectrum.lean`](../formal_proof/UFPFormalization/UFPFormalization/HawkingSpectrum.lean)、[`BlackHoleInformation.lean`](../formal_proof/UFPFormalization/UFPFormalization/BlackHoleInformation.lean)、[`BlackHoleDynamics.agda`](../agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda)
 **数值验证**：[`scripts/paperX_hawking_spectrum.py`](../paperX_hawking_spectrum.py)（35/35 检查通过）
@@ -162,7 +162,7 @@ $$dM/dt = -\alpha\, f(a^*)^4/M^2,\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M.$$
 
 **关键结论**：Kerr 转动使霍金温度降低（f ≤ 1）→ 蒸发减慢（寿命延长 1.93×）→ 极端 Kerr 冷却终止蒸发；超辐射优先辐射角动量使 a* 单调递减，转动黑洞演化趋向 Schwarzschild——与谱框架温度判据（Δλ_min 定标）自洽。`KerrFiber.lean` 的线性近似 (1−a*²) 在 a*→0 与标准形状一致（标准形状降温更缓，a*=0.5：0.928 vs 0.75），蒸发动力学采用标准形状。
 
-**诚实边界**：dJ/dt 采用简化超辐射模型（r_J 常数），完整 Kerr 超辐射谱（散射系数 + 转动增强因子）登记为后续精确化；蒸发终点-反弹衔接（定理 5.4–5.9）在 a*=0 极限下保持成立。
+**诚实边界**：dJ/dt 动力学采用简化超辐射模型（r_J 常数）；**完整 Kerr 超辐射谱已推进（2026-08-08，`scripts/paperX_kerr_superradiance.py` 8/8 注册 `run_all_tests.py`）**——数值求解 Kerr 无质量标量径向方程逐模计算超辐射增益 $Z_{slm}(\omega) = |R(\omega)|^2-1$：经典判据 $Z > 0 \iff \omega < m\Omega_H$ 逐点符号确认（a*=0.9、l=m=1）、转动增强（Z_max 随 a* 单调 0.001→0.008）、窗口边界连续、发射谱超辐射区占可观份额（负吸收 × Bose 因子）、角动量提取 dJ/dt > 0 且 dJ/dE = 4.5/M 与简化 R_J·a*/f³ = 8.04/M 同量级（比值 0.56，简化图像获支持）；诚实边界：s=0 标量 l=m=1/2 模（自旋 1/2 费米子与自旋 2 引力子需 Teukolsky 方程推广，登记后续）。蒸发终点-反弹衔接（定理 5.4–5.9）在 a*=0 极限下保持成立。
 
 ---
 
@@ -206,7 +206,7 @@ $$dM/dt = -\alpha\, f(a^*)^4/M^2,\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M.$$
 
 1. **视界涨落的全量子化**：δT/T 的谱表述已定量化（§5.1-5.3），但度规涨落 δg_μν 的完整谱动力学方程待后续（Paper 16 §10.9.2 定性 → 定量）。
 2. **反弹后宇宙学演化**：a(t) 完整动力学、原初谱的推导属 Paper IX/XXXIX 范畴，不在 P1-3 范围。
-3. **Kerr 推广**：~~当前为 Schwarzschild（a=0）；Kerr 温度谱（`KerrFiber.lean` 已有）的蒸发动力学推广待后续~~ **🔶 部分闭合（2026-08-05，定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×，a* 单调递减）；`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`。诚实边界：简化超辐射模型（r_J 常数），完整超辐射谱为后续。
+3. **Kerr 推广**：~~当前为 Schwarzschild（a=0）；Kerr 温度谱（`KerrFiber.lean` 已有）的蒸发动力学推广待后续~~ **🔶 部分闭合（2026-08-05，定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×，a* 单调递减）；`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`。**完整超辐射谱推进（2026-08-08，§5.5 定理 5.10 诚实边界）**：数值求解 Kerr 标量径向方程逐模计算 Z_slm(ω) = |R|²−1（s=0、l=m=1/2）——窗口符号判据 Z > 0 ⟺ ω < mΩ_H、转动增强、边界连续、发射谱超辐射区占可观份额、dJ/dE = 4.5/M 与简化 R_J = 2 同量级；`scripts/paperX_kerr_superradiance.py` 8/8 注册 `run_all_tests.py`。诚实边界：s=0 标量模（费米子/引力子需 Teukolsky 推广）登记后续。
 
 ---
 
@@ -225,3 +225,4 @@ $$dM/dt = -\alpha\, f(a^*)^4/M^2,\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M.$$
 |:--:|:--|:--|
 | v0.1 | 2026-08-04 | 初版。定理 2.1–2.7（霍金谱）、3.1–3.4（蒸发动力学）、4.1–4.7（Page 曲线，含精确熵平衡）、5.1–5.9（视界涨落 + 蒸发终点-反弹衔接）、6.1–6.5（信息保持）；Lean 四模块零 sorry + Agda 镜像；数值 `scripts/paperX_hawking_spectrum.py` 35/35。 |
 | v0.2 | 2026-08-05 | **Kerr 蒸发动力学推广（定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（Schwarzschild 归约 + 转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×、a* 单调递减）；`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；§8 开放项 3 更新（诚实边界：简化超辐射模型）。 |
+| v0.3 | 2026-08-08 | **Kerr 完整超辐射谱推进（§5.5 定理 5.10 诚实边界 + §8 开放项 3）**：数值求解 Kerr 无质量标量径向方程（Boyer-Lindquist）逐模计算 Z_slm(ω) = |R|²−1——窗口符号判据（Z > 0 ⟺ ω < mΩ_H，a*=0.9、l=m=1 逐点确认）、Schwarzschild 自检（恒吸收）、转动增强（Z_max 随 a* 单调 0.001→0.008）、边界连续、l=m=2 窗口拓宽峰值降低、发射谱超辐射区占 29%（负吸收 × Bose 因子）、角动量提取 dJ/dt > 0 且 dJ/dE = 4.5/M 与简化 R_J·a*/f³ = 8.04/M 同量级（比值 0.56）；`scripts/paperX_kerr_superradiance.py` 8/8 注册 `run_all_tests.py`；诚实边界：s=0 标量模（费米子/引力子需 Teukolsky 推广）登记后续。 |

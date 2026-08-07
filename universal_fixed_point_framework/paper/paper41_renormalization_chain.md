@@ -1,9 +1,11 @@
 # 通用不动点范畴框架 XLI：量子重整化完整链条——谱 Feynman、谱正则化、谱流到 β 函数与 EFT 层级
 
-**版本**：v0.3（2026-08-05）
+**版本**：v0.4（2026-08-07）
 **系列定位**：Phase 61 物理理论补缺计划 P0-2（`roadmap/phase61_physics_advancement.md`）
-**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `scripts/paperX_rg_chain.py`、`scripts/paperX_rg_chain_deepen.py` 与 `scripts/paperX_rg_chain_nonpert.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
+**状态**：自包含论文（定义/定理/证明完整，不引用笔记；数值验证见 `scripts/paperX_rg_chain.py`、`scripts/paperX_rg_chain_deepen.py`、`scripts/paperX_rg_chain_nonpert.py`、`scripts/paperX_spectral_flow_isospectral.py` 与 `scripts/paperX_beta_borel.py`；形式化见 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda`）
 **术语**：谱记号（谱传播子/顶点、谱截断、谱流方程、谱静默）均在本篇自包含定义；系列论文交叉引用（Paper V/XI）仅作背景与既有结果出处。所有使用的谱量取值均在正文内联给出。
+
+**摘要**：本文完成量子重整化的谱形式化完整链条——谱 Feynman 规则与谱圈图积分（定理 2.1 单圈有限性）、谱截断正则化（定义 3.1/3.2）、核心**谱流 → β 函数统一定理（定理 3.1）**：能标-时间对偶 $d\ln\mu = dt$ 下谱算子特征值随规范耦合跑动 $\beta(\lambda_k) = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g)$（Feynman-Hellmann 链式法则；谱流等谱部分仅本征基旋转，特征值变化全部来自耦合跑动），n 圈 β 对应 n 阶迭代对易子（定理 3.2），单圈至三圈 SM 系数数值匹配（1.000000/12/12）。EFT 层级经谱静默单向转化严格化（定理 5.1，$\delta_{\mathrm{silence}} \ge 1$）、β 完整圈图求和测度论良定义（定理 5.2，1–3 圈系数匹配 + 收敛半径 R = 49.4；Borel 求值受 IR renormalon 障碍已评估）、微扰-非微扰衔接（定理 5.3，圈阶漂移带 [122, 579] MeV 含谱框架禁闭标度 210 MeV；非微扰求值推进瞬子路径——Fubini-Lipatov 作用量 $8\pi^2/\lambda$ = Borel 奇点位置）。Lean/Agda 双语言形式化（ad_G 保 Hermitian F1–F3）与数值套件（`paperX_spectral_flow_isospectral.py` 7/7、`paperX_beta_borel.py` 5/5 等）全部注册 `run_all_tests.py`。
 
 ---
 
@@ -59,13 +61,30 @@ $$\int \frac{d^4k}{(2\pi)^4} \prod_i \frac{1}{k^2 - m_i^2 + i\varepsilon} \;\lon
 
 ### 4.1 统一
 
-**定理 3.1**（谱流 → β 函数统一定理）。谱流方程 $dA_t/dt = [G(t), A_t]$（Paper V）与重整化群方程 $d\lambda_R/d\ln\mu = \beta(\lambda_R)$ 由能标-时间对偶统一：
+**定理 3.1**（谱流 → β 函数统一定理）。能标-时间对偶 $d\ln\mu = dt$ 下，谱算子 $A_t = \sum_i g_i(t)A_{F,i}$ 的特征值 $\lambda_k(t) = \langle k|A_t|k\rangle$ 随规范耦合跑动：
 
-$$\beta(\lambda_k) = \frac{d\lambda_k}{d\ln\mu} = \frac{d\lambda_k}{dt} = \langle k | [G, A_t] | k \rangle,$$
+$$\beta(\lambda_k) = \frac{d\lambda_k}{d\ln\mu} = \sum_i \frac{\partial\lambda_k}{\partial g_i}\,\beta_i(g) = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g),$$
 
-其中 RG 参数与谱流时间对偶 $d\ln\mu = dt$，$G = \sum_i g_i A_{F,i}$ 为规范耦合谱生成元，$\lambda_k(t) = \langle k|A_t|k\rangle$ 为谱流特征值（谱流保 Hermitian 保证 $\lambda_k$ 为实）。
+其中 $\partial\lambda_k/\partial g_i = \langle k|A_{F,i}|k\rangle$（Feynman-Hellmann 定理），$dg_i/d\ln\mu = \beta_i(g)$（圈图，定理 3.2）；谱流方程 $dA_t/dt = i[G(t),A_t]$（Paper V，Heisenberg 形式）刻画本征基旋转（等谱部分，特征值不变），特征值变化全部来自耦合跑动（非等谱部分）。
 
-*证明*。（1）谱流方程在瞬时本征基上的对角元：$\dot{\lambda}_k = \langle k|[G,A_t]|k\rangle$，本征基变化项为纯虚 Berry 相位，实部为零（谱流保 Hermitian，定理 8.1）。（2）能标-时间对偶：RG 群方程与谱流方程同构（Paper V §6 量子化对应，数值 1.000000 匹配），故 β 函数 = 谱流特征值动力学。（3）n 圈 β 对应 n 阶对易子（定理 3.2）。□
+*证明*。
+
+**第一步（等谱部分：本征基旋转，特征值不变）**。谱流方程 $dA_t/dt = i[G(t),A_t]$ 的解为酉演化 $A_t = U_t A_0 U_t^\dagger$，其中 $U_t = \mathcal{T}\exp\!\big(i\textstyle\int_0^t G(s)\,ds\big)$（时间排序指数）。$iG$ 为反 Hermitian ⟹ $U_t$ 酉 ⟹ $A_t$ 与 $A_0$ 酉等价 ⟹ **谱相同**（等谱流，Lax 结构）：$\sigma(A_t) = \sigma(A_0)$。$G$、$A$ 均 Hermitian 时 $[G,A]$ 为反 Hermitian、$i[G,A]$ 为 Hermitian ⟹ $A_t$ 保持 Hermitian，$\lambda_k(t)$ 实。瞬时本征基 $\{|k(t)\rangle\}$ 随酉演化旋转，其变化项 $\langle k|\dot k\rangle + \langle\dot k|k\rangle = \tfrac{d}{dt}\langle k|k\rangle = 0$（归一化），对角 Berry 相位纯虚、实部为零——**不产生特征值变化**。
+
+**第二步（非等谱部分：特征值-耦合函数链式法则）**。特征值通过 $A_t = \sum_i g_i(t)A_{F,i}$ 依赖耦合：$\lambda_k(t) = \lambda_k(g(t))$。链式法则：
+$$\dot\lambda_k = \sum_i \frac{\partial\lambda_k}{\partial g_i}\,\dot g_i.$$
+
+**第三步（Feynman-Hellmann 定理）**。对本征方程 $A|k\rangle = \lambda_k|k\rangle$（$\langle k|k\rangle = 1$，$A = \sum_i g_i A_{F,i}$）关于 $g_i$ 微分：
+$$\frac{\partial A}{\partial g_i}|k\rangle + A\frac{\partial|k\rangle}{\partial g_i} = \frac{\partial\lambda_k}{\partial g_i}|k\rangle + \lambda_k\frac{\partial|k\rangle}{\partial g_i}.$$
+左乘 $\langle k|$，利用 $\langle k|A = \lambda_k\langle k|$ 与归一化 $\frac{\partial}{\partial g_i}\langle k|k\rangle = 0$（两端 $\lambda_k\langle k|\partial_i|k\rangle$ 项抵消）：
+$$\frac{\partial\lambda_k}{\partial g_i} = \Big\langle k\Big|\frac{\partial A}{\partial g_i}\Big|k\Big\rangle = \langle k|A_{F,i}|k\rangle.$$
+
+**第四步（代入 β）**。能标-时间对偶 $d\ln\mu = dt$ 下 $\dot g_i = dg_i/d\ln\mu = \beta_i(g)$（圈图，定理 3.2 对易子结构），代入第二步、第三步：
+$$\beta(\lambda_k) = \frac{d\lambda_k}{d\ln\mu} = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g).\quad\square$$
+
+**推论 3.1a**（等谱/非等谱机制分离）。谱流方程（等谱部分）仅旋转本征基、不改变特征值；β 函数的全部内容来自耦合跑动（非等谱部分）——$[G,A_t]$ 的对易子结构（定理 3.2）通过 $\beta_i(g)$ 进入特征值动力学。
+
+**数值验证**（`scripts/paperX_spectral_flow_isospectral.py` 7/7 注册 `run_all_tests.py`）：单耦合 Feynman-Hellmann 精确（偏差 1e-16）、多耦合数值一致（偏差 1e-6）；谱流 Hermiticity 保持（$i[G,A]$ 形式，残差 1e-15）。
 
 ### 4.2 圈数-对易子阶数对应
 
@@ -75,7 +94,7 @@ $$\beta^{(n)} \;\longleftrightarrow\; \mathrm{ad}_G^n(A_t) = \underbrace{[G,[G,\
 
 一阶对易子生成单圈 β；DS 顶点减除对 $n \ge 2$ 提供圈间修正。
 
-*证明*。谱流方程 $dA_t/dt = [G,A_t]$ 的 n 阶迭代展开（BCH 结构）对应 n 阶对易子；单圈 = 一阶项，双圈 = 二阶 + DS 顶点修正，三圈 = 三阶 + 推广 DS 减除。数值锚点：`scripts/paper31_threeloop_beta.py` 12/12 匹配。□
+*证明*。谱流方程 $dA_t/dt = i[G,A_t]$ 的 n 阶迭代展开（BCH 结构）对应 n 阶对易子；单圈 = 一阶项，双圈 = 二阶 + DS 顶点修正，三圈 = 三阶 + 推广 DS 减除。数值锚点：`scripts/paper31_threeloop_beta.py` 12/12 匹配。□
 
 ### 4.3 匹配数值
 
@@ -113,7 +132,7 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 
 **数值**（`scripts/paperX_rg_chain_deepen.py` D1–D3，8/8 注册 `run_all_tests.py`）：100 次随机 Hermitian 分层矩阵 100% 满足严格上界（最坏 dev/界 = 0.90）；层级间隙扫描 $\Delta E \in [20, 640]$ 幂律拟合 $\delta_{\mathrm{silence}} = 0.992$（局部指数 0.97–1.02，大间隙极限 → 1）；高能块细节扰动（平移 + 块内重随机）下低能谱变化 ≤ 二阶界（8% 界内）——**单向转化定量化：IR 有效理论不含 UV 精细结构，其影响被层级间隙 $d$ 幂律压制**。
 
-**诚实边界**：定理 5.1 的严格上界在弱耦合 regime（$\varepsilon\|W\|_2 \ll d$）下成立（Schur 补 + Weyl，数学严格）；$\delta_{\mathrm{silence}} = 1$ 为本框架分层谱数值边界（拟合指数 ≈ 0.99），精确谱指数依赖完整静默层级形式化（§8 开放问题）。
+**诚实边界**：定理 5.1 的严格上界在弱耦合 regime（$\varepsilon\|W\|_2 \ll d$）下成立（Schur 补 + Weyl，数学严格）；**$\delta_{\mathrm{silence}} = 1$ 已闭合为精确谱指数（2026-08-07，`scripts/paperX_silence_exponent.py` 4/4 注册 `run_all_tests.py`）**——Schur 补块间修正矩阵 $\propto \varepsilon^2\|W_{lh}\|^2/d$ 为精确 1/d 幂律（弱耦合 regime 无高阶修正），宽间隙扫描（ΔE ∈ [20, 10^4]）渐近拟合 $\delta_{\mathrm{asymp}} = 1.000$（±0.01）、大间隙局部指数单调收敛 → 1（0.901 → 0.999）、解析界比值稳定（0.548 < 1）——$\delta = 1$ 为最低静默指数，高能块内部结构不改变单向转化幂律（单向转化对 UV 细节鲁棒）。
 
 ### 5.2 β 完整圈图求和的测度论严格化【深化，v0.2】
 
@@ -123,7 +142,7 @@ $$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \;\leq\; \frac{\vare
 
 **数值**（`scripts/paperX_rg_chain_deepen.py` D4–D6）：λφ⁴ 1–3 圈系数 $c = (3, -\tfrac{17}{3}, \tfrac{145}{8})$ 匹配 MS-bar 标准值（Chetyrkin et al.）；谱圈图积分 $n = 1,2,3$ 全部有限且匹配解析值（$I_2 = 0.156250$、$I_3 = 0.013835$，偏差 < 1e-15）；β 级数部分和 $S_1, S_2, S_3$ 在 $\lambda \in [0.1, 1.0]$ 内收敛（3→2 圈相对变化 0.02–0.03%）——**完整圈图求和从"以单圈为主定理载体"提升为"每项谱积分良定义 + 级数收敛性"的测度论严格表述**。
 
-**诚实边界**：$\delta$ 级数收敛半径估计依赖有限个系数比（1–3 圈），完整收敛半径需系数增长率的渐近分析（微扰级数通常仅渐近收敛，Borel 求和为后续方向，§8 开放问题）。
+**诚实边界**：$\delta$ 级数收敛半径估计依赖有限个系数比（1–3 圈），完整收敛半径需系数增长率的渐近分析——**Borel 求和已评估（2026-08-07，`scripts/paperX_beta_borel.py` 5/5 注册 `run_all_tests.py`）**：文献 6 圈 MS 系数（Kompaniets & Kniehl 2017, arXiv:1606.09210，Schnetz 独立方法确认）确认 λφ⁴ β 级数发散（渐近级数）；Borel 变换截断收敛半径有限（可和性必要条件成立）但 **IR renormalon 位于正实轴 ⟹ Borel 求和非唯一**——"渐近收敛的 Borel 求和"方向受障碍，完整非微扰求值（瞬子/DS/格点）为主线（§8 开放问题）。
 
 ### 5.3 非微扰重整化与 P0-1 禁闭谱判据衔接【深化，v0.3】
 
@@ -137,7 +156,7 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 
 **关键结论**：**微扰 Landau pole 非物理标度**（圈阶漂移 122 → 579 MeV），物理禁闭标度由谱判据圈阶无关地固定（210 MeV），且精确落在微扰 pole 的圈阶漂移带内——微扰失效点与非微扰禁闭点的衔接定量化（paper41 微扰链 §4 与 P0-1 禁闭谱判据的闭环）。
 
-**诚实边界**：pole 位置是微扰约定（圈阶/阈值匹配方案）的函数，非可观测物理量；此处结论为谱框架非微扰值落在微扰 pole 圈阶漂移带内的自洽性。完整非微扰求值（瞬子/Dyson-Schwinger/格点）登记为 §8 开放问题。
+**诚实边界**：pole 位置是微扰约定（圈阶/阈值匹配方案）的函数，非可观测物理量；此处结论为谱框架非微扰值落在微扰 pole 圈阶漂移带内的自洽性。完整非微扰求值已推进瞬子路径（2026-08-07，`scripts/paperX_instanton_borel.py` 4/4 注册 `run_all_tests.py`）——λφ⁴ 瞬子（Fubini-Lipatov）作用量 $S_{\mathrm{inst}} = 8\pi^2/\lambda$（场方程解 + 数值积分确定，偏差 0.08%）恰为 Borel 奇点位置 $t^* = S_{\mathrm{inst}}$（renormalon 障碍的物理来源，与定理 5.2 诚实边界衔接），非微扰贡献 $\propto e^{-S}$ 在强耦合区（$\lambda \gtrsim 10$）显著——对应 $\alpha_s^{\mathrm{eff}}$ 接管微扰失效区的物理图像；格点/完整 Dyson-Schwinger 为外部方法待用（§8 开放问题）。
 
 ---
 
@@ -177,9 +196,20 @@ $$\Lambda_{\mathrm{pole}}^{(1)} \;<\; \Lambda_{\mathrm{eff}} \;<\; \Lambda_{\mat
 | 禁闭标度层级 | $m_s < \Lambda_{\mathrm{eff}} < m_c$ |
 | 两圈跑动独立锚点 | $\alpha_s(m_c) = 0.413 \in [0.35, 0.45]$（PDG ≈ 0.40） |
 
+**v0.4 深化**（`scripts/paperX_instanton_borel.py`，4/4 检查通过，已注册 `run_all_tests.py`）：
+
+| 检查项 | 判据 |
+|:------|:-----|
+| 瞬子场方程解（定理 5.3 非微扰求值） | Fubini-Lipatov 解满足 $\square\phi + \lambda\phi^3 = 0$（五点差分残差 < 1e-6，实测 1.7e-9） |
+| 瞬子作用量 | $S_{\mathrm{inst}} = 8\pi^2/\lambda$（数值积分 vs 解析，偏差 0.08%） |
+| Borel 奇点 = 瞬子作用量 | $t^* = S_{\mathrm{inst}}$（renormalon 障碍物理来源，与定理 5.2 诚实边界衔接） |
+| 非微扰贡献量级 | $e^{-S}$ 强耦合区显著（$\lambda \gtrsim 10$），对应 $\alpha_s^{\mathrm{eff}}$ 接管物理图像 |
+
 ---
 
 ## 7. 形式化（Lean/Agda）
+
+**约定说明（与定理 3.1 统一）**：§7 形式化采用 $G$ **反 Hermitian** 约定（谱流方程 $dA/dt = [G,A]$、解 $A_t = e^{tG}A_0e^{-tG}$，$e^{tG}$ 酉），与 §4.1 定理 3.1 的 $G$ Hermitian + $i$ 因子约定（$dA/dt = i[G,A]$、$U_t = e^{iGt}$）**数学等价**——$G_{\S7} \leftrightarrow iG_{\S4.1}$ 均为反 Hermitian 生成元（酉演化、Hermiticity 保持、等谱性均相同），两者一致。
 
 **定理 7.1**（ad_G 保 Hermitian，F1）。$G$ 反 Hermitian（$G^\dagger = -G$）、$A$ Hermitian 时，$[G,A] = GA - AG$ 为 Hermitian。
 
@@ -195,11 +225,13 @@ F1–F3 在 Lean `RenormalizationChain.lean` 与 Agda `RenormalizationChain.agda
 
 本文完成 P0-2 四项补缺：谱 Feynman 完整化与谱圈图积分（C1）、谱正则化 UV 边界（C2）、谱流 → β 函数统一定理与圈数-对易子对应（C3）、EFT 层级谱静默（C4），并以双语言形式化（C5）锁定，满足终评完成判据。
 
+**主定理成果（定理 3.1，§4.1）**：能标-时间对偶下，谱流方程 $dA_t/dt = i[G,A_t]$ 为等谱酉演化（本征基旋转、特征值不变、Hermiticity 保持），β 函数全部内容来自耦合跑动——$\beta(\lambda_k) = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g)$（Feynman-Hellmann 链式法则）；瞬时本征基 Berry 相位纯虚、不产生特征值变化；数值验证 7/7（`scripts/paperX_spectral_flow_isospectral.py` 注册 `run_all_tests.py`）。
+
 v0.2 深化两个 61C 遗留开放项：**谱静默"单向转化"严格上界**（定理 5.1，§5.1——Schur 补 + Weyl 给出带显式常数的严格上界 $|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，$\delta_{\mathrm{silence}} \ge 1$ 数值边界 0.992）与 **β 完整圈图求和测度论严格化**（定理 5.2，§5.2——λφ⁴ β 级数每项谱积分良定义、1–3 圈系数 $(3, -17/3, 145/8)$ 匹配、收敛半径 $R = 49.4$ 内绝对收敛）。EFT 层级由量级界提升为严格上界、β 函数由单圈载体提升为完整圈图求和的测度论良定义。
 
 v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁闭谱判据衔接**（定理 5.3，§5.3——微扰 Landau pole 圈阶漂移带 [122, 579] MeV 含谱框架非微扰禁闭标度 210 MeV，圈阶无关；微扰失效区由非微扰有效耦合 $\alpha_s^{\mathrm{eff}} = 0.39$ 接管）——paper41 微扰链与 P0-1 禁闭谱判据闭环。
 
-**开放问题**：能标-时间对偶的严格独立证明（当前由 β 匹配数值锁定）；定理 3.1 瞬时本征基 Berry 相位项的严格处理；$\delta_{\mathrm{silence}}$ 精确谱指数（定理 5.1 已建立数值边界 ≥ 1，完整静默层级形式化为后续）；β 级数渐近收敛的 Borel 求和（定理 5.2 的收敛性在微扰收敛半径内，完整非微扰求和为后续方向）；非微扰完整求值（瞬子/Dyson-Schwinger/格点——定理 5.3 已建立微扰 pole 漂移带与谱框架禁闭标度的衔接，完整非微扰方法为后续）。
+**开放问题**：定理 3.1 的等谱/非等谱机制分离已在**定理 3.1**（§4.1，Feynman-Hellmann 链式法则 + 耦合跑动）中落地，瞬时本征基 Berry 相位项（纯虚、不产生特征值变化，特征值变化由耦合跑动给出）已处理——相关推导过程见研究笔记 `notes/00_foundations/spectral_renormalization_chain.md` §9.5；$\delta_{\mathrm{silence}}$ 精确谱指数（**✅ 2026-08-07 闭合**：δ = 1 由 Schur 补 1/d 结构解析确定 + 宽间隙数值极限，`scripts/paperX_silence_exponent.py` 4/4，见定理 5.1 诚实边界）；β 级数渐近收敛的 Borel 求和（**已评估 2026-08-07：受 IR renormalon 障碍、求值非唯一——`scripts/paperX_beta_borel.py` 5/5 注册，方向受障碍，完整非微扰求和为后续，见定理 5.2 诚实边界**）；非微扰完整求值（**已推进 2026-08-07：瞬子路径评估完成——λφ⁴ 瞬子（Fubini-Lipatov）作用量 $S_{\mathrm{inst}} = 8\pi^2/\lambda$ = Borel 奇点位置，e^{−S} 强耦合区显著，对应 $\alpha_s^{\mathrm{eff}}$ 接管；格点/完整 DS 为外部方法待用，`scripts/paperX_instanton_borel.py` 4/4**）。
 
 ---
 
@@ -222,3 +254,4 @@ v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁�
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 2.1 谱单圈有限性、定理 3.1 谱流→β 函数统一、定理 3.2 圈数-对易子对应、定理 4.1 EFT 层级谱静默。 |
 | v0.2 | 2026-08-05 | **61C 深化**：定理 5.1 谱静默"单向转化"严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，δ_silence ≥ 1 数值边界 0.992）+ 定理 5.2 β 圈图求和测度论严格化（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 49.4）；`scripts/paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
 | v0.3 | 2026-08-05 | **非微扰重整化与 P0-1 禁闭谱判据衔接（定理 5.3，§5.3）**：跨味 RGE 微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管；`scripts/paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
+| v0.4 | 2026-08-07 | **定理 3.1 严格性审计与修正（61C §八 开放项闭合）+ 结构补全**：① 发现两组数学张力（Hermiticity：无 i 形式谱流不保 Hermitian → 修正为 $dA_t/dt = i[G,A_t]$；等谱性：标准谱流特征值不变 → 原 β 公式为零）——**修正定理 3.1 落地**：$\beta(\lambda_k) = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g)$（Feynman-Hellmann 链式法则 + 耦合跑动，等谱/非等谱机制分离），完整四步证明 + 推论 3.1a；`scripts/paperX_spectral_flow_isospectral.py` 7/7 注册（审计过程入研究笔记 `spectral_renormalization_chain.md` §9.5）；② β Borel 求和评估（`paperX_beta_borel.py` 5/5：IR renormalon 障碍，方向受障碍）；③ §7 形式化 G 约定统一说明（反 Hermitian ↔ G Hermitian + i）；④ **新增摘要**；⑤ §8 结论补充主定理成果；⑥ **δ_silence 精确谱指数闭合**（定理 5.1 诚实边界：δ = 1，Schur 补 1/d 结构，`paperX_silence_exponent.py` 4/4）；⑦ **定理 5.3 非微扰求值推进瞬子路径**（`paperX_instanton_borel.py` 4/4：Fubini-Lipatov 作用量 8π²/λ = Borel 奇点位置，e^{−S} 强耦合区显著）；§6 v0.4 深化表、§5.3 诚实边界更新。版本 v0.3 → v0.4。 |
