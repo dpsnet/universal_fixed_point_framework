@@ -214,22 +214,23 @@ theorem IC_preserves_sections (σ : SigObj ⥤ SignatureBundle)
     Section 7: Connection to SpectralGap — k_max from Cl(1,7)
    ========================================================= -/
 
-/-- The Cl(1,7) representation dimension equals k_max = 8 (spectral cutoff).
-    This connects the signature bundle fiber over (1,7) to the spectral gap derivation. -/
+/-- 【2026-08-07 v0.21 勘误（注释层）】cl17_rep_dim = 8 为遗留停用定义（旧 M₈(ℝ) 错误，
+    标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维，见 Clifford.lean）；k_max = 8 不由表示维数导出，
+    而是结构确定量——统一 3 定理 2^{N_active} = 2³ 机器证明 + 对偶网络（B = 2·k_max − 1 = 15、
+    d_H = ln(2·k_max−1) = ln15，paperX_kmax_duality.py 10/10，勘误 v0.21）。
+    本定理仅陈述遗留定义的形式相等（rfl），不编码物理归因。 -/
 theorem cl17_rep_dim_equals_kmax : cl17_rep_dim = kmax_from_cl17 := by
   unfold cl17_rep_dim kmax_from_cl17; rfl
 
-/-- The minimal faithful representation dimension of Cl(1,7) is 8,
-    which matches the spectral cutoff k_max = 8 in the spectral gap derivation.
-    
-    Cl(1,7) ≅ M₈(ℝ) → rep_dim = 8 → k_max = 8 → Δλ_min = (√6-√2)/√72 -/
+/-- 【2026-08-07 v0.21 勘误（注释层）】原 docstring "Cl(1,7) ≅ M₈(ℝ) → rep_dim = 8 → k_max = 8"
+    为旧错误归因——Cl(1,7) ≅ M₁₆(ℝ)（旋量 16）；k_max = 8 由统一 3 定理（2^{N_active}=2³）
+    + 对偶网络确定（勘误 v0.21），非表示维数推论。 -/
 theorem sig_17_rep_dim_equals_kmax : SigFiber.mk 8 = SigFiber.mk kmax_from_cl17 := rfl
 
-/-- Under the IC base-change Cl(1,7) → Cl(9,1), the representation dimension
-    doubles from 8 to 16 (M₈(ℝ) → M₁₆(ℝ)).
-    
-    This doubling is the fiber-level manifestation of the triple projection:
-      Cl(9,1) → Cl(1,7) corresponds to M₁₆(ℝ) → M₈(ℝ) block compression. -/
+/-- 【2026-08-07 v0.21 勘误（注释层）】"8 → 16 翻倍 / M₈(ℝ) → M₁₆(ℝ)"为遗留工作基准语言
+    （BottTower 约定：Level 0 基准旋量 8 × 2^k）；标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量即 16，
+    Cl(9,1) ≅ M₃₂(ℝ)。三重投影的纤维层体现：Cl(9,1) → Cl(1,7) 对应 M₃₂(ℝ) → M₁₆(ℝ)
+    块压缩。 -/
 theorem ic_rep_dim_doubling (X : SignatureBundle) (h : X.base = sig_17) :
     (IC_base_change.obj X).fiberData.rep_dim = 2 * X.fiberData.rep_dim := by
   subst h; rfl

@@ -35,6 +35,7 @@
 
 import UFPFormalization.BranchCounting
 import UFPFormalization.Unified3Theorem
+import UFPFormalization.BottTower
 import UFPFormalization.DHStructuralAnalysis
 import UFPFormalization.IFSFractal
 import Mathlib.Data.Fintype.Prod
@@ -326,6 +327,43 @@ theorem branchIndex_dH_unique (d : ℝ) :
     mod_cast branchIndex_card_eq_15
   rw [hcard]
   exact DHStructural.dH_moran_solution_unique
+
+/-! ---------------------------------------------------------
+   §5.6 对偶网络恒等式（v0.21，勘误对齐）
+
+   k_max = 8 的结构确定由统一 3 定理（2^{N_active} = 2³ 机器证明，
+   BottTower.lean）与对偶网络（paperX_kmax_duality.py 10/10）共同支撑。
+   对偶网络中的**算术恒等式**部分可在类型系统中验证，形式化如下：
+     · 分支对偶：B = 2·k_max − 1（15 = 2×8 − 1）
+     · 旋量对偶：16 = 2·k_max（Cl(1,7) ≅ M₁₆(ℝ) 旋量维数；物理归因见 Clifford.lean）
+     · 维数对偶：d_H = ln(2·k_max − 1) = ln 15
+   注意：这些恒等式本身是初等算术事实（norm_num 可判），其"结构对偶"解释
+   属于物理论证（paper33 §4.1），不在形式化范围内；离散截断对偶
+   log₂ k_max = N_active = 3 已由 log2_k_max_eq_active_layers 证明；
+   Δλ_min·k_max ≈ 0.976 ≠ 1 为已登记的非精确对偶（paperX_kmax_derivation.py K4），
+   不予形式化。 -/
+
+theorem branch_dual_eq_kmax :
+    UFPFormalization.BranchCounting.B = 2 * UFPFormalization.BottTower.k_max - 1 := by
+  norm_num [UFPFormalization.BranchCounting.B_eq_15, UFPFormalization.BottTower.k_max_value]
+
+theorem spinor_dual_eq_kmax : 16 = 2 * UFPFormalization.BottTower.k_max := by
+  norm_num [UFPFormalization.BottTower.k_max_value]
+
+theorem dH_dual_eq_ln15 :
+    Real.log (2 * (UFPFormalization.BottTower.k_max : ℝ) - 1) = Real.log 15 := by
+  norm_num [UFPFormalization.BottTower.k_max_value]
+
+/-- 对偶网络综合定理：分支对偶 + 旋量对偶 + 维数对偶（v0.21）。 -/
+theorem kmax_duality_network :
+    UFPFormalization.BranchCounting.B = 2 * UFPFormalization.BottTower.k_max - 1 ∧
+      16 = 2 * UFPFormalization.BottTower.k_max ∧
+      Real.log (2 * (UFPFormalization.BottTower.k_max : ℝ) - 1) = Real.log 15 := by
+  constructor
+  · exact branch_dual_eq_kmax
+  · constructor
+    · exact spinor_dual_eq_kmax
+    · exact dH_dual_eq_ln15
 
 /-! =========================================================
    第六章 已闭合与仍开放的问题
@@ -696,13 +734,13 @@ theorem dimension_gap : Real.log (15 : ℝ) < (3 : ℝ) := by
   --    ∧ DHStructural.sixtyfive_over_24 < DHStructural.e
   --    ∧ DHStructural.e < (3 : ℝ)
   -- 其中 DHStructural.ln15 = Real.log 15
-  have hln15_lt_e : Real.log (15 : ℝ) < Real.e := by
+  have hln15_lt_e : Real.log (15 : ℝ) < DHStructural.e := by
     calc
       Real.log (15 : ℝ) = DHStructural.ln15 := rfl
       _ < DHStructural.sixtyfive_over_24 := h.1
-      _ < Real.e := h.2.1
+      _ < DHStructural.e := h.2.1
   calc
-    Real.log (15 : ℝ) < Real.e := hln15_lt_e
+    Real.log (15 : ℝ) < DHStructural.e := hln15_lt_e
     _ < (3 : ℝ) := h.2.2
 
 /-- 向外推定理：维数间隙 ∧ 层 4 正交性。

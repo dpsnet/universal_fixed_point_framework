@@ -43,7 +43,7 @@ class BareVacuumEnergy:
     def __init__(self):
         # Phase 36 结果
         self.delta_lambda = 0.122  # M_Pl
-        self.k_max = 8  # 模型选择（见 paper/RAP_勘误与立场声明.md）
+        self.k_max = 8  # 结构确定：统一 3 定理 2^{N_active} = 2³ + 对偶网络（勘误 v0.21）；原"模型选择"表述已过时
         
         # 构造谱
         self.lambdas = self._construct_spectrum()

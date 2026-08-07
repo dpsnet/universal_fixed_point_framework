@@ -228,6 +228,7 @@ SCRIPTS = [
     ("scripts/paperX_silence_gen3_derivation.py", "链节⑥推导 (6/6)：top↔c₃ 由单调性唯一确定——权重排序(机器证明)+y_i 可比(O(1))+质量排序+单调公式；m_u/m_t 偏差 4.7%；y_t≈1 与无静默一致"),
     ("scripts/paperX_silence_yi_origin.py", "y_i 可比性来源 (5/5)：三扇区 y_i/y₃∈[0.5,5] O(1)；c^α 捕获 log 层级 87.5%-130.4%；O(1) 来源=c^α 主导+RG α 推导 (副产品非拟合)"),
     ("scripts/paperX_silence_dual_formula_equiv.py", "Formula B↔C 等价性 (4/4)：U=I 极限精确退化为 c^α_f 骨架 (α_v·β_f=α_f 恒等) + 骨架同源 + β 修复凸包 +68% 偏差 + 凸包自洽——双公式为同一物理两种参数化，非重复压制"),
+    ("scripts/paperX_kmax_duality.py", "k_max=8 对偶映射结构 (10/10)：B=15=2·k_max−1 + 旋量16=2·k_max + d_H=ln(2·k_max−1)=ln15 + 底空间8=γ生成元 + log₂k_max=3=N_active——k_max 处于旋量/分支/维数/底空间/离散截断对偶网络中心节点"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

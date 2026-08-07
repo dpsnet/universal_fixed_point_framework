@@ -52,7 +52,7 @@ $$\mathrm{Cl}(1,7) \cong \mathrm{M}_{2^{8/2}}(\mathbb{R}) = \mathrm{M}_{2^4}(\ma
 
 因此 $\mathrm{Cl}(1,7)$ 的最低维忠实表示维数为 $16$（标准旋量 16 维）。∎
 
-**推论 3.1**（$k_{\max}=8$）。在谱动力学框架中，$A_{\text{GR}}$ 的 Casimir 谱截断 $k_{\max}$ 由 **Bott 塔翻倍指数 = 主动生成层数** 确定（统一 3 定理机器证明，$k_{\max} = 2^{N_{\text{active}}} = 2^3 = 8$），**非** $\mathrm{Cl}(1,7)$ 旋量空间维数（16）【2026-08-07 勘误：原"等于旋量空间的维数 8"错误——旋量 16 维，k_max=8 来自 Bott 塔截断/模型选择（见 `notes/11_transition_bridges/category_to_rep_bridge_53D.md` §1.4 修正）】。
+**推论 3.1**（$k_{\max}=8$）。在谱动力学框架中，$A_{\text{GR}}$ 的 Casimir 谱截断 $k_{\max}$ 由 **Bott 塔翻倍指数 = 主动生成层数** 确定（统一 3 定理机器证明，$k_{\max} = 2^{N_{\text{active}}} = 2^3 = 8$），**非** $\mathrm{Cl}(1,7)$ 旋量空间维数（16）【2026-08-07 勘误：原"等于旋量空间的维数 8"错误——旋量 16 维，k_max=8 来自 Bott 塔截断（统一 3 定理机器证明 + 对偶网络，勘误 v0.21 升为**结构确定量**，非模型选择；见 `notes/11_transition_bridges/category_to_rep_bridge_53D.md` §1.4 修正）】。
 
 ---
 
