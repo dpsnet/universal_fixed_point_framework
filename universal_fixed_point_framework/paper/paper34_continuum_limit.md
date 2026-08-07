@@ -69,6 +69,8 @@ $$k \geq \frac{\ln S_4 - \ln \operatorname{diam}(K^*)}{\ln c_1}.$$
 
 $$\ln S_4 = -d_H \approx -2.7095,\quad \ln c_1 = -(3+d_H) \approx -5.7095,\quad \operatorname{diam}(K^*) \leq 1,$$
 
+> **归一化注记（2026-08-04）**：$\operatorname{diam}(K^*) \leq 1$ 已机器证明（`ContinuumLimit.lean §3.5`，`attractor_diam_le_one`/`exists_attractorAxioms` 完整填充含 `hDiamLeOne`，零 `sorry`）。关键：物理 IFS 的 f₂ 平移取 $1-c_3$（不动点精确落在 1）而非固定 1.0，保证三个映射均把 $[0,1]$ 映到 $[0,1]$，吸引子 $K^* \subseteq [0,1]$，故直径 ≤ 1。收缩率 $c_i$ 及 O2 排序/Moran 方程不受影响。
+
 得 $t_0 = \lceil (-2.7095)/(-5.7095) \rceil = \lceil 0.475 \rceil = 1$。即**仅需 $1$ 级编码后，所有 $c_1$ 分支的直径已降至静默阈值以下**。关键在于 $S_4/c_1 = e^3 \approx 20$（定理 A）——三个量级的分离保证 $t_0 = 1$。
 
 **推论 2.1b（有效分支降阶）**。记 $\Sigma_3^{(1)} = \{\sigma \in \Sigma_3 \mid \sigma_i \neq 1 \text{ 对 } i \geq 1\}$，即编码树第一级后排除符号 $1$ 的序列集。则 $\pi(\Sigma_3^{(1)})$ 在 $K^*$ 中 Hausdorff 稠密，且 $\pi(\Sigma_3^{(1)}) \cong \Sigma_2$（2-符号移位空间）。

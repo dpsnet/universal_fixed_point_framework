@@ -13,6 +13,8 @@
 状态：缺口 1 已闭合 —— 3-态射 (SpThreeMorphism) 已在 HigherSpCategory.lean
       中定义，本文件建立从主动生成层到 GenSpace 的显式同构。
       缺口 2 已闭合 —— BottTower.lean 建立 spinorDim(k) = 8×2^k 的翻倍结构，
+      （注释层勘误 2026-08-07：spinorDim(0)=8 为工作基准；标准 Cl(1,7) ≅ M₁₆(ℝ)
+       旋量 16 维（paper20）；引理 3 论证仅依赖翻倍指数 = 主动层数，不依赖基准）
       证明 k_max = 2^{N_active}，因此 log₂(k_max) = N_active = 3。
       统一 3 定理的完整形式（含所有三个等式）见 BottTower.unified_3_theorem_fully_closed。
 -/

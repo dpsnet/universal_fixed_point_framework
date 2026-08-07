@@ -118,9 +118,9 @@ $$G_N = \frac{(\Delta\lambda_{\min})^2}{M_{\text{Pl}}^2} \times 18(2+\sqrt{3})$$
 
 1. **范畴论源头**：$\Delta = 0 \iff$ 严格 4-范畴 $\iff$ 引力消失（spExchangeLaw 严格成立）。这是概念起点——引力不是"加入"范畴的，而是从范畴的非严格性中"涌现"的。
 
-2. **谱几何连接**：$\|\Delta\|_F^2 = r_{\text{cat}} \cdot \Delta\lambda_{\min}^2$，其中 $r_{\text{cat}} \approx 0.0404$。该关系由 Cl(1,7) 实际谱数据的 Monte Carlo 模拟确立（$N=50000$，`paperX_gravity_exact_quantification.py`），将抽象范畴偏差与具体的谱间隙绑定。
+2. **谱几何连接**：$\|\Delta\|_F^2 = r_{\text{cat}} \cdot \Delta\lambda_{\min}^2$，其中 $r_{\text{cat}} \approx 0.0404$。该关系由 Cl(1,7) 实际谱数据的 Monte Carlo 模拟确立（$N=50000$，`scripts/paperX_gravity_exact_quantification.py`），将抽象范畴偏差与具体的谱间隙绑定。
 
-3. **引力常数闭式**：$G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$。该闭式中的常数 $18(2+\sqrt{3})$ 由 Cl(1,7) 旋量维数 $n=8$、Einstein-Hilbert 归一化 $16\pi$、谱结构因子 $F_{\text{Cl}(1,7)}=8(2-\sqrt{3})$ 共同决定（Phase C，`paperX_gravity_gEH_analysis.py`，双路径交叉验证比值 $1.000000000000000$）。
+3. **引力常数闭式**：$G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$。该闭式中的常数 $18(2+\sqrt{3})$ 由谱间隙恒等式 $\Delta\lambda_{\min}^2 = (2-\sqrt{3})/18$ 唯一确定【2026-08-07 勘误：原"由 Cl(1,7) 旋量维数 $n=8$、Einstein-Hilbert 归一化 $16\pi$、谱结构因子 $F_{\text{Cl}(1,7)}=8(2-\sqrt{3})$ 共同决定"归因错误——$18(2+\sqrt{3}) = 1/\Delta\lambda_{\min}^2$ 是纯代数恒等式（$(2+\sqrt{3})(2-\sqrt{3})=1$），不依赖旋量维数；Cl(1,7) 标准旋量维数为 16（M₁₆(ℝ)，paper20 权威），数值 $G_N$ 不受影响】（Phase C，`scripts/paperX_gravity_gEH_analysis.py`，双路径交叉验证比值 $1.000000000000000$）。
 
 三层分别对应：范畴论、谱分析、物理唯象。其中 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122$ 由 SU(2) 谱间隙和 $k_{\max}=8$（Bott 塔机器证明）确定。
 
@@ -139,7 +139,7 @@ $$G_N = \frac{(\Delta\lambda_{\min})^2}{M_{\text{Pl}}^2} \times 18(2+\sqrt{3})$$
 
 $\Delta$ 不是量子场——它没有动力学、没有传播子、没有 Compton 波长。$\Delta$ 是 $\mathbf{Sp}$ 4-范畴的**结构常数**，地位等同于 $\pi$ 或 $e$。
 
-$r_{\text{cat}}$ 的标度不变性检验（`paperX_gravity_rcat_scale.py`，v1.40，A2 闭合）深入验证了这一结构常数地位：
+$r_{\text{cat}}$ 的标度不变性检验（`scripts/paperX_gravity_rcat_scale.py`，v1.40，A2 闭合）深入验证了这一结构常数地位：
 
 *（i）距离/时间不变性*。$r_{\text{cat}}$ 是常数而非场，不随观测点的时空位置变化。$\|\Delta\|_F$ 是 $\mathbf{Sp}$ 范畴的全局属性。
 
@@ -253,7 +253,7 @@ $$\vec{F}_{\text{real}} = (0, 0, 0, F_w)$$
 
 ### 4.3 可证伪区分
 
-框架的 GW 扇区在一切可达能标下与 GR 不可区分（C1 负结果闭合，`paperX_gw_observables.py`）。真正可证伪区分落在非 GW 通道：
+框架的 GW 扇区在一切可达能标下与 GR 不可区分（C1 负结果闭合，`scripts/paperX_gw_observables.py`）。真正可证伪区分落在非 GW 通道：
 
 - 三组无量纲比率（§5.4b）
 - $L_4 \approx 1470$ GeV
@@ -262,7 +262,7 @@ $$\vec{F}_{\text{real}} = (0, 0, 0, F_w)$$
 
 ### 4.4 引力波的极化计数——范畴论推导
 
-框架给出"2 个张量模式"的推导不引用 GR 的微分同胚不变性，而是来自范畴结构的自洽性约束（`paperX_gw_mode_counting.py`，v1.41，A3 闭合）。
+框架给出"2 个张量模式"的推导不引用 GR 的微分同胚不变性，而是来自范畴结构的自洽性约束（`scripts/paperX_gw_mode_counting.py`，v1.41，A3 闭合）。
 
 **三段约束链**：
 
@@ -290,7 +290,7 @@ $$\vec{F}_{\text{real}} = (0, 0, 0, F_w)$$
 
 ### 4.5 GW 观测通道的定量评估（C1 负结果闭合）
 
-`paperX_gw_observables.py`（v1.43）对 §4.4 及前述结构的六个 GW 观测通道进行了全面定量评估。结论：**所有通道在当前和近中期观测精度下与 GR 不可区分**。
+`scripts/paperX_gw_observables.py`（v1.43）对 §4.4 及前述结构的六个 GW 观测通道进行了全面定量评估。结论：**所有通道在当前和近中期观测精度下与 GR 不可区分**。
 
 | # | 通道 | 框架的结构估计 | 观测约束 | 差距 | 判定 |
 |:-:|:-----|:-------------:|:---------|:----:|:-----|
@@ -346,7 +346,7 @@ $$\delta\Delta = \delta\lambda \cdot (P_0\cdot H - 2\beta\cdot P_0\cdot\alpha' +
 
 ### 5.3 环②——等谱守恒（机器证明）
 
-谱流 $dD/dt = [G,D]$ 的解为 $D(t) = U(t) D(0) U(t)^\dagger$（$U(t) = \exp(Gt)$ 酉）。Frobenius 范数在酉变换下不变（`frobNormSq_unitary_conj`，`DeviationBound.lean` §1.5），因此共演化对易子范数 $\|[A(t),D(t)]\|_F$ 守恒（数值验证 expm 偏差 $1\times10^{-14}$，`paperX_flux_conservation.py`）。
+谱流 $dD/dt = [G,D]$ 的解为 $D(t) = U(t) D(0) U(t)^\dagger$（$U(t) = \exp(Gt)$ 酉）。Frobenius 范数在酉变换下不变（`frobNormSq_unitary_conj`，`DeviationBound.lean` §1.5），因此共演化对易子范数 $\|[A(t),D(t)]\|_F$ 守恒（数值验证 expm 偏差 $1\times10^{-14}$，`scripts/paperX_flux_conservation.py`）。
 
 守恒 ⇒ 每球面通量相同 + 球面积 $\propto r^{d-1}$（$d=3$ 机器证明）⇒ $\rho \propto 1/r^2$。
 
@@ -366,11 +366,11 @@ $$F = 18(2+\sqrt{3})\cdot\frac{(\Delta\lambda_{\min})^2}{M_{\text{Pl}}^2} \cdot 
 
 质量各线性一次（环①）× 耦合平方（Phase C）× 球面几何（环③）。两体检验通过。
 
-**数值验证**：`paperX_source_defect.py` 确认 $\delta\Delta$ 线性残余 = 浮点噪声，`paperX_flux_conservation.py` 确认对易子范数守恒偏差 $1\times10^{-14}$（expm）/ $1.9\times10^{-11}$（RK4）。
+**数值验证**：`scripts/paperX_source_defect.py` 确认 $\delta\Delta$ 线性残余 = 浮点噪声，`scripts/paperX_flux_conservation.py` 确认对易子范数守恒偏差 $1\times10^{-14}$（expm）/ $1.9\times10^{-11}$（RK4）。
 
 ### 5.7 等效引力传播子修正（A4 闭合）
 
-离散谱塔模型（`paperX_propagator_spectral.py`，v1.42）给出引力传播子的谱修正：
+离散谱塔模型（`scripts/paperX_propagator_spectral.py`，v1.42）给出引力传播子的谱修正：
 
 $$D(k^2) = \frac{1}{k^2} + g_{\text{eff}} \cdot \sum_{n=1}^{8} \frac{1}{k^2 + \lambda_n^2}, \qquad g_{\text{eff}} = \|\Delta\|_F^2 \approx 6.01\times10^{-4}$$
 
@@ -385,7 +385,7 @@ $$D(k^2) = \frac{1}{k^2} + g_{\text{eff}} \cdot \sum_{n=1}^{8} \frac{1}{k^2 + \l
 
 ### 5.8 高阶修正的符号与大小（A1 闭合）
 
-`paperX_gravity_NLO_sign.py`（v1.39，MC $N=50000$）对前导阶（LO）与 NLO 的严格分解：
+`scripts/paperX_gravity_NLO_sign.py`（v1.39，MC $N=50000$）对前导阶（LO）与 NLO 的严格分解：
 
 $$\Delta = [A,\delta\beta]\cdot\alpha' + \beta\cdot[\delta\alpha,A]$$
 $$\text{LO} = [A,\delta\beta]\cdot g + f\cdot[\delta\alpha,A], \quad \text{NLO} = [A,\delta\beta]\cdot\delta\alpha + \delta\beta\cdot[\delta\alpha,A]$$
@@ -421,7 +421,7 @@ $$\text{LO} = [A,\delta\beta]\cdot g + f\cdot[\delta\alpha,A], \quad \text{NLO} 
 |:-----|:---------:|:----------|:-----------|
 | $M_{\text{Pl}}/M_{\text{SM}}$ | $O(1)$ | 无关自由参数 | $M_{\text{SM}} \notin (10^2,10^4)$ GeV ⇒ 证伪 |
 | $\alpha_{\text{Gravity}}/\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ | $\approx 1$ | 无关自由参数 | $\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ 精确测定 ≠ 1 ⇒ 证伪 |
-| $\epsilon$（谱交织精度） | $8.12\times10^{-17}$ | GR+SM 无此量 | $\epsilon > 10^{-15}$ 被检测 ⇒ 证伪 |
+| $\epsilon$（谱交织精度） | $8.12\times10^{-17}$【2026-08-07 已解决：原"N(2₁)=8 闭式给 1.6×10⁻¹⁶（2 倍），数值待校准"已更新——正确因子 = 4D Weyl 数 4（RAP3/paper17 机器证明），ε = 4 × v_EW/M_Pl = 8.07×10⁻¹⁷，仍 ≪ 证伪阈值，结论不变；见 paper20 §6.4 / paperX_epsilon_resolution.py】 | GR+SM 无此量 | $\epsilon > 10^{-15}$ 被检测 ⇒ 证伪 |
 
 这些比率的实验检验是框架的锐利可证伪预测。任一比率被排除即否证框架核心结构。
 

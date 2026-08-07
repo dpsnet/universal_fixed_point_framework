@@ -26,7 +26,7 @@ $$\operatorname{Tr}_{\mathfrak{g}}(\mathcal{F} \wedge \mathcal{F}) = 0 \quad \te
 
 **证明**：谱规范曲率 $\mathcal{F}$ 由 $A_{\text{gauge}}$ 的谱分解决定。若 $A_{\text{gauge}}$ 是自伴的，则其特征值全为实数。谱拓扑荷（Pontryagin 指数）$Q_{\text{top}} = \frac{g^2}{32\pi^2} \int \operatorname{Tr}(\mathcal{F} \wedge \mathcal{F})$ 是特征值的交替和。在 $\mathbf{Sp}$ 的 $\mathbb{Z}_2$ 分级下，自伴算子的谱分解自动满足 $Q_{\text{top}} = 0$，因此 $\theta_{\text{QCD}} = 0$。
 
-**数值验证**（`paperX_spectral_chiral.py`）：BPST 单瞬子的谱拓扑荷 $Q_{\text{top}} = 0.99998 \neq 0$，说明瞬子本身贡献非零——但瞬子对应非自伴的规范连接。在 $\mathbf{Sp}$ 中，物理真空对应的 $A_{\text{gauge}}$ 是自伴的，因此物理 $\theta$ 角为零。
+**数值验证**（`scripts/paperX_spectral_chiral.py`）：BPST 单瞬子的谱拓扑荷 $Q_{\text{top}} = 0.99998 \neq 0$，说明瞬子本身贡献非零——但瞬子对应非自伴的规范连接。在 $\mathbf{Sp}$ 中，物理真空对应的 $A_{\text{gauge}}$ 是自伴的，因此物理 $\theta$ 角为零。
 
 ## 4. 与 Peccei-Quinn 机制的关系
 

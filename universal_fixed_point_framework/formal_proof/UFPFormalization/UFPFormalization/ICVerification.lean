@@ -42,6 +42,8 @@ structure IFSConfig where
   numMaps : ℕ
   /-- Contraction ratios (each < 1 for contractive IFS) -/
   contractionRatios : Fin numMaps → ℝ
+  /-- At least one contraction map (non-empty index set) -/
+  hNonempty : 0 < numMaps
   /-- Contraction ratios satisfy 0 < c_i < 1 -/
   hContractive : ∀ i, 0 < contractionRatios i ∧ contractionRatios i < 1
 
@@ -63,11 +65,11 @@ Any two IFS systems with bounded contraction ratio ratios satisfy SSC.
 theorem IFS_IC_self (cfg₁ cfg₂ : IFSConfig)
     (hBound : ∃ C : ℝ, (Finset.sup' (Finset.univ : Finset (Fin cfg₁.numMaps))
       (by
-        have h := cfg₁.hContractive 0
+        haveI : Nonempty (Fin cfg₁.numMaps) := ⟨⟨0, cfg₁.hNonempty⟩⟩
         exact Finset.univ_nonempty) (fun i => cfg₁.contractionRatios i)) /
       (Finset.sup' (Finset.univ : Finset (Fin cfg₂.numMaps))
         (by
-          have h := cfg₂.hContractive 0
+          haveI : Nonempty (Fin cfg₂.numMaps) := ⟨⟨0, cfg₂.hNonempty⟩⟩
           exact Finset.univ_nonempty) (fun i => cfg₂.contractionRatios i)) ≤ C) :
     isolationConstraint (IFSToRecObj cfg₁) (IFSToRecObj cfg₂) := by
   -- In the finite-dimensional prototype, isolationConstraint is defined as True ∧ True ∧ True

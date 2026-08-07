@@ -20,7 +20,7 @@ $$[A_{\text{bulk}}^{(i)}, A_{\text{bulk}}^{(j)}] = i \Theta^{ij} \cdot I + \text
 
 其中 $\Theta^{ij}$ 是非对易参数张量，来自 $A_{\text{bulk}}$ 谱投影的非交换性。
 
-*证明概要*。由谱全息字典（Paper XII 定义 9.4），$A_{\text{bulk}}$ 谱分解给出 bulk 场算符的代数结构。$[A_{\text{bulk}}^{(i)}, A_{\text{bulk}}^{(j)}] \neq 0$ 等价于 Paper X 定理 C1 的 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$，这是 Kochen-Specker 定理的谱版本。$A_{\text{bulk}}$ 的对易子结构是 $\mathbf{Sp}$ 范畴的固有属性，而非额外假设。非对易参数 $\Theta^{ij}$ 由谱间隙比固定：$\Theta^{ij} \propto \epsilon \cdot \delta^{ij}$，其中 $\epsilon = 8.068 \times 10^{-17}$ 是谱交织精度。□
+*证明概要*。由谱全息字典（Paper XII 定义 9.4），$A_{\text{bulk}}$ 谱分解给出 bulk 场算符的代数结构。$[A_{\text{bulk}}^{(i)}, A_{\text{bulk}}^{(j)}] \neq 0$ 等价于 Paper X 定理 C1 的 $\mathbf{Sp} \neq \mathbf{Sp}_{\text{com}}$，这是 Kochen-Specker 定理的谱版本。$A_{\text{bulk}}$ 的对易子结构是 $\mathbf{Sp}$ 范畴的固有属性，而非额外假设。非对易参数 $\Theta^{ij}$ 由谱间隙比固定：$\Theta^{ij} \propto \epsilon \cdot \delta^{ij}$，其中 $\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.07 \times 10^{-17}$ 是谱交织精度【2026-08-07 已解决：原"$8.068 \times 10^{-17}$"数值更新为 8.07×10⁻¹⁷；因子 = 4D Weyl 数 4（16 维实旋量 4D 分解 = 4 Weyl，RAP3/paper17 机器证明），见 paper20 §6.4 / paperX_epsilon_resolution.py】。□
 
 **定理 2**（边界 OPE 的对偶）。$A_{\text{bulk}}$ 的对易子通过谱全息字典映射到边界 CFT 的算子积展开：
 

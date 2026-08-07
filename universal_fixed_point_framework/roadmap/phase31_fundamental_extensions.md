@@ -14,7 +14,7 @@ Phase 31 针对 Paper I v2.41 之后提出的四个根本性开放问题，建�
 
 ### P31.1 高阶 ∞-范畴完整形式化
 
-**动机**：当前 ∞-范畴结构仅完成 Python 原型验证（`paper35_infinity_category_infinite_dim.py`，6/6 通过），需翻译为 Lean 4 机器证明。
+**动机**：当前 ∞-范畴结构仅完成 Python 原型验证（`scripts/paper35_infinity_category_infinite_dim.py`，6/6 通过），需翻译为 Lean 4 机器证明。
 
 **交付物**（5 个 Lean 文件）：
 
@@ -36,7 +36,7 @@ Phase 31 针对 Paper I v2.41 之后提出的四个根本性开放问题，建�
 - 修复 `SpectralFlowHomotopy.lean` 的 `∑ i ∈` 语法、标量类型、`noncomputable` 标记，解析恒等式以 `sorry` 占位；
 - 修复 `HigherSpecCategory.lean` 的 `.matrix` → `.P` 字段名不一致、`specExchangeLaw` 参数错误，并添加 `@[ext]`。
 
-Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
+Python 原型（`scripts/paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
 
 **预计工作量**：骨架已实现并通过编译；剩余 `sorry` 填充约 300–500 行 Lean 4，1–2 周
 
@@ -72,8 +72,8 @@ Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通�
 
 | 模块 | 内容 | 状态 |
 |------|------|:----:|
-| `paperX_dns_turbulence.py` | 三维伪谱 DNS 求解器 + 能谱分析 + 谱静默度诊断 | ✅ 已实现 (668 行) |
-| `_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 运行中 |
+| `scripts/paperX_dns_turbulence.py` | 三维伪谱 DNS 求解器 + 能谱分析 + 谱静默度诊断 | ✅ 已实现 (668 行) |
+| `scripts/dns/_run_dns_full.py` | 完整验证运行脚本（48³, Re_λ=150, T=20） | 🔄 运行中 |
 | `run_all_tests.py` | 注册为批量验证项 | ✅ 已注册 |
 
 **研究笔记**：[spectral_dns_turbulence_validation.md](../notes/05_condensed_matter/spectral_dns_turbulence_validation.md)

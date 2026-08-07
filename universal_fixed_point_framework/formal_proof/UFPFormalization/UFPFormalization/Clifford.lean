@@ -76,8 +76,10 @@ p+q = 8, p-q = -6 ≡ 2 (mod 8) → entry in periodicity table:
 (p-q) mod 8 = 2 → M_{2^{n/2}}(ℝ) = M_{2^4}(ℝ) = M₁₆(ℝ).
 (Note: earlier versions incorrectly used M₈(ℝ); corrected by RAP v0.1.)
 
-**Irreducible spinor (8_s):** The Majorana spinor of Spin(1,7) is 8-dimensional
-over ℝ. In the spectral gap derivation, k_max = 8 is a model choice
+**Irreducible spinor (S₁₆):** The Majorana spinor of Spin(1,7) is 16-dimensional
+over ℝ. 【2026-08-07 勘误：原"8_s is 8-dimensional"为旧 M₈(ℝ) 遗留记号——Cl(1,7) ≅ M₁₆(ℝ)，
+标准旋量 16 维（paper20 权威）。k_max = 8 是模型选择/谱截断，非旋量维数。】
+In the spectral gap derivation, k_max = 8 is a model choice
 (see RAP 修复方案 §5.3).
 -/
 
@@ -95,8 +97,9 @@ noncomputable def cl17_to_M16 : Type :=
   Matrix (Fin 16) (Fin 16) ℝ
 
 /--
-The irreducible Majorana spinor of Cl(1,7) (8_s) is 8-dimensional over ℝ.
-Under Spin(1,3)×Spin(4) ⊂ Spin(1,7), 8_s → (2_L,2) ⊕ (2_R,2'),
+The irreducible Majorana spinor of Cl(1,7) (S₁₆) is 16-dimensional over ℝ.
+【2026-08-07 勘误：原"(8_s) is 8-dimensional"同前——标准旋量 16 维（paper20）】
+Under Spin(1,3)×Spin(4) ⊂ Spin(1,7), S₁₆ → 4 × (4D Weyl),
 giving 4 Weyl fermions in 4-dimensional spacetime.
 
 In the spectral framework, this representation space carries the A_GR operator

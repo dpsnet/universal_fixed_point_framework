@@ -54,9 +54,21 @@ instance prodBaseCategory : Category TempRGObj where
   Hom X Y := TempRGHom X Y
   id X := { tempMap := 𝟙 X.T, rgMap := 𝟙 X.μ }
   comp f g := { tempMap := f.tempMap ≫ g.tempMap, rgMap := f.rgMap ≫ g.rgMap }
-  id_comp := by intro X Y f; apply TempRGHom.ext; simp
-  comp_id := by intro X Y f; apply TempRGHom.ext; simp
-  assoc := by intro W X Y Z f g h; apply TempRGHom.ext; simp
+  id_comp := by
+    intro X Y f
+    apply TempRGHom.ext
+    · simp
+    · simp
+  comp_id := by
+    intro X Y f
+    apply TempRGHom.ext
+    · simp
+    · simp
+  assoc := by
+    intro W X Y Z f g h
+    apply TempRGHom.ext
+    · simp
+    · simp
 
 /-! =========================================================
     Section 2: Coordinate Embeddings and Pullbacks
@@ -67,14 +79,22 @@ noncomputable def ι_T (μ₀ : RGObj) : TempObj ⥤ TempRGObj where
   obj T := { T := T, μ := μ₀ }
   map f := { tempMap := f, rgMap := 𝟙 μ₀ }
   map_id T := rfl
-  map_comp f g := rfl
+  map_comp f g := by
+    apply TempRGHom.ext
+    · rfl
+    · change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀
+      simp
 
 /-- Embedding ι_μ: RG → Temp × RG, fixing Temp coordinate T₀. -/
 noncomputable def ι_μ (T₀ : TempObj) : RGObj ⥤ TempRGObj where
   obj μ := { T := T₀, μ := μ }
   map g := { tempMap := 𝟙 T₀, rgMap := g }
   map_id μ := rfl
-  map_comp f g := rfl
+  map_comp f g := by
+    apply TempRGHom.ext
+    · change 𝟙 T₀ = 𝟙 T₀ ≫ 𝟙 T₀
+      simp
+    · rfl
 
 /-! =========================================================
     Section 3: Spectral Bundle over Temp × RG
@@ -101,7 +121,7 @@ structure BundleProdHom (X Y : SpectralBundleProd) where
 instance bundleProdCategory : Category SpectralBundleProd where
   Hom X Y := BundleProdHom X Y
   id X := { baseMap := 𝟙 X.base, fiberMap := 1, commut := by simp }
-  comp f g :=
+  comp {X Y Z} f g :=
     { baseMap := f.baseMap ≫ g.baseMap
       fiberMap := f.fiberMap * g.fiberMap
       commut := by
@@ -140,7 +160,8 @@ noncomputable def π_Tμ_cartesianLift : CartesianLiftData π_Tμ where
     { baseMap := w, fiberMap := h.fiberMap, commut := h.commut }
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     apply BundleProdHom.ext
-    · simpa [π_Tμ] using h_comp
+    · change h.baseMap = w ≫ f
+      simpa [π_Tμ] using h_comp
     · exact (Matrix.mul_one h.fiberMap).symm
   cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
 
@@ -151,33 +172,48 @@ noncomputable instance π_Tμ_fibration : GrothendieckFibration π_Tμ :=
     Section 5: Pullback Functors Along Coordinate Embeddings
    ========================================================= -/
 
-/-- Pullback functor along ι_T (fix μ): restricts a product bundle to Temp. -/
+/-- Pullback functor along ι_T (fix μ): restricts a product bundle to Temp.
+    Note (2026-08-04): obj 的 base 应为原始 Temp 坐标 X.base.T（原代码误用
+    嵌入对象 (ι_T μ₀).obj X.base.T : TempRGObj，与陪域 SpectralBundleTemp 不符）。 -/
 noncomputable def pullback_ι_T (μ₀ : RGObj) : SpectralBundleProd ⥤ SpectralBundleTemp where
   obj X :=
-    { base := (ι_T μ₀).obj X.base.T
+    { base := X.base.T
       fiberData := { n := X.fiberData.n, A := X.fiberData.A }
     }
-  map f :=
+  map {X Y} f :=
     { baseMap := f.baseMap.tempMap
       fiberMap := f.fiberMap
       commut := f.commut
     }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id X := by
+    apply BundleTempHom.ext
+    · rfl
+    · rfl
+  map_comp {X Y Z} f g := by
+    apply BundleTempHom.ext
+    · rfl
+    · rfl
 
-/-- Pullback functor along ι_μ (fix T): restricts a product bundle to RG. -/
+/-- Pullback functor along ι_μ (fix T): restricts a product bundle to RG.
+    Note (2026-08-04): obj 的 base 应为原始 RG 坐标 X.base.μ（同 pullback_ι_T 的修正）。 -/
 noncomputable def pullback_ι_μ (T₀ : TempObj) : SpectralBundleProd ⥤ SpectralBundleRG where
   obj X :=
-    { base := (ι_μ T₀).obj X.base.μ
+    { base := X.base.μ
       fiberData := { n := X.fiberData.n, A := X.fiberData.A }
     }
-  map f :=
+  map {X Y} f :=
     { baseMap := f.baseMap.rgMap
       fiberMap := f.fiberMap
       commut := f.commut
     }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id X := by
+    apply BundleRGHom.ext
+    · rfl
+    · rfl
+  map_comp {X Y Z} f g := by
+    apply BundleRGHom.ext
+    · rfl
+    · rfl
 
 /-! =========================================================
     Section 6: ∂Rec_D Gluing Condition (Spectral Weave)
@@ -191,25 +227,42 @@ theorem spectral_weave_equality (T : TempObj) (μ : RGObj) (n : ℕ) (A : Matrix
     π_Tμ.obj ({ base := { T := T, μ := μ }, fiberData := { n := n, A := A } } : SpectralBundleProd) =
     { T := T, μ := μ } := rfl
 
-/-- Gluing condition: the pullbacks along ι_T and ι_μ agree on the diagonal
-    subspace where the spectral weave constraint holds.
-    
-    This expresses the cartesian square:
-      Bun(Temp × RG) --ι_μ*→ Bun(RG)
-         ↓ ι_T*            ↓ σ_QCD
-      Bun(Temp)  ---σ_BCS→ Spec  -/
-theorem weave_gluing_square (T₀ : TempObj) (μ₀ : RGObj) (X : SpectralBundleProd)
-    (hT : X.base.T = T₀) (hμ : X.base.μ = μ₀) :
-    (pullback_ι_T μ₀).obj X = (pullback_ι_μ T₀).obj X := by
-  subst hT; subst hμ; rfl
+/-
+Gluing condition: the pullbacks along ι_T and ι_μ agree on the diagonal
+subspace where the spectral weave constraint holds.
 
-/-- The weave constraint at the critical boundary ∂Rec_D:
-    (T_c, 0) and (0, Λ_QCD) are identified when the spectral data matches.
-    In the Cl(1,7) prototype, this holds when the spectral gap at both points
-    equals spectralGap 8. -/
-theorem weave_boundary_identification (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
-    (QCDSection_cl17.obj (⟨0, by norm_num⟩ : TempObj)) = 
-    (QCDSection_cl17.obj (⟨0, by norm_num⟩ : TempObj)) := rfl
+This expresses the cartesian square:
+  Bun(Temp × RG) --ι_μ*→ Bun(RG)
+     ↓ ι_T*            ↓ σ_QCD
+  Bun(Temp)  ---σ_BCS→ Spec
+
+※ 开放项登记（2026-08-04）：原 `weave_gluing_square` 声明
+`(pullback_ι_T μ₀).obj X = (pullback_ι_μ T₀).obj X` 类型不成立——
+左侧是 SpectralBundleTemp（Bun(Temp,Spec)），右侧是 SpectralBundleRG
+（Bun(RG,Spec)），不同范畴对象无法直接比较。正确的 gluing 陈述需经
+T_hat_Riem : Bun(Temp,Spec) → Bun(RG,Spec) 桥接（见
+diag_weave_via_T_hat_Riem / diag_weave_fiber_preserved），或比较 fiberData。
+原声明随同登记。
+-/
+-- theorem weave_gluing_square (T₀ : TempObj) (μ₀ : RGObj) (X : SpectralBundleProd)
+--     (hT : X.base.T = T₀) (hμ : X.base.μ = μ₀) :
+--     (pullback_ι_T μ₀).obj X = (pullback_ι_μ T₀).obj X := by
+--   rw [hT, hμ]
+--   rfl
+
+/-
+The weave constraint at the critical boundary ∂Rec_D:
+(T_c, 0) and (0, Λ_QCD) are identified when the spectral data matches.
+
+※ 开放项登记（2026-08-04）：原 `weave_boundary_identification` 引用了非法的
+`⟨0, by norm_num⟩ : TempObj`——TempObj 要求 T > 0，0 不满足（norm_num 无法证明
+`0 > 0`）。且原声明为平凡 `rfl` 占位（同对象相等），无实质内容。
+边界识别（T_c, 0）≃（0, Λ_QCD）的严格陈述需基于临界温度/尺度的谱隙相等，
+留作后续工作。
+-/
+-- theorem weave_boundary_identification (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) :
+--     (QCDSection_cl17.obj (⟨0, by norm_num⟩ : TempObj)) = 
+--     (QCDSection_cl17.obj (⟨0, by norm_num⟩ : TempObj)) := rfl
 
 /-! =========================================================
     Section 7: Diagonal Subcategory Diag ↪ Temp × RG
@@ -233,8 +286,16 @@ instance diagCategory : Category DiagObj where
   Hom X Y := DiagHom X Y
   id X := ⟨𝟙 X.T⟩
   comp f g := ⟨f.tempMap ≫ g.tempMap⟩
-  id_comp := by intro X Y f; apply DiagHom.ext; simp
-  comp_id := by intro X Y f; apply DiagHom.ext; simp
+  id_comp := by
+    intro X Y f
+    apply DiagHom.ext
+    change 𝟙 X.T ≫ f.tempMap = f.tempMap
+    simp
+  comp_id := by
+    intro X Y f
+    apply DiagHom.ext
+    change f.tempMap ≫ 𝟙 Y.T = f.tempMap
+    simp
   assoc := by intro W X Y Z f g h; apply DiagHom.ext; simp
 
 /-- Diagonal embedding Δ: Temp → Temp × RG, Δ(T) = (T, 𝒯(T)). -/
@@ -242,16 +303,26 @@ noncomputable def diagEmbedding : TempObj ⥤ TempRGObj where
   obj T := { T := T, μ := TFunctor.obj T }
   map f := { tempMap := f, rgMap := TFunctor.map f }
   map_id T := by
-    apply TempRGHom.ext <;> simp
+    apply TempRGHom.ext
+    · rfl
+    · rfl
   map_comp f g := by
-    apply TempRGHom.ext <;> simp
+    apply TempRGHom.ext
+    · rfl
+    · rfl
 
 /-- The diagonal embedding factors through DiagObj. -/
 noncomputable def diagObjEmbedding : DiagObj ⥤ TempRGObj where
   obj D := { T := D.T, μ := TFunctor.obj D.T }
   map f := { tempMap := f.tempMap, rgMap := TFunctor.map f.tempMap }
-  map_id D := by apply TempRGHom.ext <;> simp
-  map_comp f g := by apply TempRGHom.ext <;> simp
+  map_id D := by
+    apply TempRGHom.ext
+    · rfl
+    · rfl
+  map_comp f g := by
+    apply TempRGHom.ext
+    · rfl
+    · rfl
 
 /-- Theorem: diagObjEmbedding lands in the diagonal (isDiag holds). -/
 theorem diagObjEmbedding_isDiag (D : DiagObj) : isDiag (diagObjEmbedding.obj D) := by
@@ -272,7 +343,9 @@ theorem diag_projection_section (T : TempObj) :
 theorem diag_morphism_form (T₁ T₂ : TempObj) (f : T₁ ⟶ T₂) :
     diagObjEmbedding.map (⟨f⟩ : DiagHom (⟨T₁⟩ : DiagObj) (⟨T₂⟩ : DiagObj)) = 
     { tempMap := f, rgMap := TFunctor.map f } := by
-  apply TempRGHom.ext <;> simp
+  apply TempRGHom.ext
+  · rfl
+  · rfl
 
 /-! =========================================================
     Section 8: Spectral Weave Natural Transformation
@@ -290,117 +363,121 @@ theorem diag_weave_via_T_hat_Riem (T₀ : TempObj) (X : SpectralBundleProd)
     (h : X.base.μ = TFunctor.obj X.base.T) :
     T_hat_Riem.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X) = 
     (pullback_ι_μ T₀).obj X := by
-  unfold pullback_ι_T pullback_ι_μ T_hat_Riem ι_T ι_μ
-  simp
+  unfold pullback_ι_T pullback_ι_μ T_hat_Riem
+  dsimp
+  rw [h]
+  rfl
 
-/-- Corollary: on the diagonal, the Temp-pullback and RG-pullback share 
-    the same spectral data (fiberData is preserved). -/
-theorem diag_weave_fiber_preserved (T₀ : TempObj) (X : SpectralBundleProd)
-    (h : X.base.μ = TFunctor.obj X.base.T) :
-    (T_hat_Riem.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X)).fiberData = 
-    ((pullback_ι_μ T₀).obj X).fiberData := by
-  simpa using congrArg (fun (b : SpectralBundleRG) => b.fiberData) (diag_weave_via_T_hat_Riem T₀ X h)
+/-
+Corollary: on the diagonal, the Temp-pullback and RG-pullback share
+the same spectral data (fiberData is preserved).
 
-/-- The spectral weave natural transformation θ.
-    For each product bundle X, θ_X is the comparison isomorphism between
-    the Temp-pullback (flowed to RG via T_hat_Riem) and the RG-pullback,
-    defined when the base point lies on the diagonal.
-    
-    θ_X : T_hat_Riem((pullback_ι_T μ).obj X) → (pullback_ι_μ T).obj X
-    which is an isomorphism when μ = 𝒯(T). -/
-theorem weave_naturality (T₀ T₁ : TempObj) (X : SpectralBundleProd) (Y : SpectralBundleProd)
-    (f : X ⟶ Y) (hX : X.base.μ = TFunctor.obj X.base.T)
-    (hY : Y.base.μ = TFunctor.obj Y.base.T) (hBase : X.base.T = T₀) (hBase' : Y.base.T = T₁) :
-    (pullback_ι_μ T₁).map f ∘ 
-      (by
-        -- θ_X: the comparison isomorphism
-        have h_eq := diag_weave_via_T_hat_Riem T₀ X hX
-        exact (eqToIso h_eq).hom) =
-    (by
-        -- θ_Y: the comparison isomorphism
-        have h_eq := diag_weave_via_T_hat_Riem T₁ Y hY
-        exact (eqToIso h_eq).hom) ∘
-      T_hat_Riem.map ((pullback_ι_T (TFunctor.obj T₀)).map f) := by
-  -- Both sides reduce to the same morphism data due to the identity action on fibers.
-  -- This is a coherence condition that follows from functoriality of pullbacks and T_hat_Riem.
-  subst hBase hBase'
-  apply SpectralBundleRG.ext
-  · -- base map equality
-    simp [pullback_ι_μ, pullback_ι_T, T_hat_Riem, ι_T, ι_μ, TFunctor]
-  · rfl
+※ 开放项登记（2026-08-04）：原 `diag_weave_fiber_preserved` 声明
+`(T_hat_Riem.obj ...).fiberData = ((pullback_ι_μ T₀).obj X).fiberData`
+在依赖类型下不成立——两侧 fiberData 的依赖参数 base 不同
+（`SpecFiberRG (T_hat_Riem.obj ...).base` vs `SpecFiberRG ((pullback_ι_μ T₀).obj X).base`），
+类型不同无法直接声明等式。fiberData 保持已隐含于
+diag_weave_via_T_hat_Riem 的对象等式（transport 下），独立陈述需
+显式 base 相等前提或 HEq，留作后续工作。
+-/
+-- theorem diag_weave_fiber_preserved (T₀ : TempObj) (X : SpectralBundleProd)
+--     (h : X.base.μ = TFunctor.obj X.base.T) :
+--     (T_hat_Riem.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X)).fiberData = 
+--     ((pullback_ι_μ T₀).obj X).fiberData := by
+--   rw [diag_weave_via_T_hat_Riem T₀ X h]
+--   rfl
 
-/-- The weave square (pullback diagram) as a naturality condition:
-    The composition σ_BCS ∘ (pullback_ι_T μ₀) 
-    equals σ_QCD ∘ (pullback_ι_μ T₀)
-    when μ₀ = 𝒯(T₀).
-    
-    Here σ_BCS = QCDSection_cl17 (BCS uses the same Cl(1,7) gap matrix),
-    and σ_QCD = HPSection_cl17 (the HP section is the RG-analog of QCD). -/
-theorem weave_square_commutes (T₀ : TempObj) (X : SpectralBundleProd)
-    (h : X.base.μ = TFunctor.obj X.base.T) (hT : X.base.T = T₀) :
-    QCDSection_cl17.obj (π_T.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X)) =
-    HPSection_cl17.obj (π_μ.obj ((pullback_ι_μ T₀).obj X)) := by
-  subst hT
-  simp [pullback_ι_T, pullback_ι_μ, ι_T, ι_μ, QCDSection_cl17, HPSection_cl17]
+/-
+The spectral weave natural transformation θ and the weave square:
+
+※ 开放项登记（2026-08-04）：
+  1. `weave_naturality`（θ 的自然性）：原证明 `subst hBase hBase'` 失败（X.base.T 非
+     变量），且 θ 由 eqToIso 构造依赖 diag_weave_via_T_hat_Riem 的同构性（需对象等式
+     而非仅基坐标等式），自然性方场的严格验证留作后续工作；
+  2. `weave_square_commutes`：原声明
+     `QCDSection_cl17.obj (π_T.obj ...) = HPSection_cl17.obj (π_μ.obj ...)` 类型不成立——
+     左侧是 SpectralBundleTemp，右侧是 SpectralBundleRG，不同范畴对象无法直接相等；
+     正确的谱编织方块需经 T_hat_Riem 桥接（见 diag_weave_via_T_hat_Riem）。
+-/
+-- theorem weave_naturality (T₀ T₁ : TempObj) (X : SpectralBundleProd) (Y : SpectralBundleProd)
+--     (f : X ⟶ Y) (hX : X.base.μ = TFunctor.obj X.base.T)
+--     (hY : Y.base.μ = TFunctor.obj Y.base.T) (hBase : X.base.T = T₀) (hBase' : Y.base.T = T₁) :
+--     (pullback_ι_μ T₁).map f ∘ 
+--       (by
+--         have h_eq := diag_weave_via_T_hat_Riem T₀ X hX
+--         exact (eqToIso h_eq).hom) =
+--     (by
+--         have h_eq := diag_weave_via_T_hat_Riem T₁ Y hY
+--         exact (eqToIso h_eq).hom) ∘
+--       T_hat_Riem.map ((pullback_ι_T (TFunctor.obj T₀)).map f) := by
+--   subst hBase hBase'
+--   apply SpectralBundleRG.ext
+--   · simp [pullback_ι_μ, pullback_ι_T, T_hat_Riem, ι_T, ι_μ, TFunctor]
+--   · rfl
+
+-- theorem weave_square_commutes (T₀ : TempObj) (X : SpectralBundleProd)
+--     (h : X.base.μ = TFunctor.obj X.base.T) (hT : X.base.T = T₀) :
+--     QCDSection_cl17.obj (π_T.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X)) =
+--     HPSection_cl17.obj (π_μ.obj ((pullback_ι_μ T₀).obj X)) := by
+--   subst hT
+--   simp [pullback_ι_T, pullback_ι_μ, ι_T, ι_μ, QCDSection_cl17, HPSection_cl17]
 
 /-! =========================================================
     Section 9: 𝒯̂_Riem Extension to the Product Base
     (Direction 3: extending T_hat_Riem to Temp × RG)
    ========================================================= -/
 
-/-- Extension of T_hat_Riem to the product base:
-    acts as T_hat_Riem on the Temp coordinate, identity on the RG coordinate.
-    The result is a bundle over (𝒯(T), μ) in the product base.
-    
-    Note: since TFunctor.obj maps TempObj → RGObj, the extended functor
-    maps SpectralBundleProd to a bundle whose first coordinate is an RGObj.
-    In this prototype, we keep the structure by tracking both coordinates. -/
-noncomputable def T_hat_Riem_prod : SpectralBundleProd ⥤ SpectralBundleProd where
-  obj X :=
-    { base := { T := TFunctor.obj X.base.T, μ := X.base.μ }
-      fiberData := X.fiberData
-    }
-  map f :=
-    { baseMap := { tempMap := TFunctor.map f.baseMap.tempMap, rgMap := f.baseMap.rgMap }
-      fiberMap := f.fiberMap
-      commut := f.commut
-    }
-  map_id X := by
-    apply BundleProdHom.ext
-    · apply TempRGHom.ext <;> simp
-    · rfl
-  map_comp f g := by
-    apply BundleProdHom.ext
-    · apply TempRGHom.ext <;> simp
-    · rfl
+/-
+Extension of T_hat_Riem to the product base (T_hat_Riem_prod) 及其派生定理
+（T_hat_Riem_prod_base_commutes / T_hat_Riem_prod_preserves_fiber /
+ T_hat_Riem_prod_diag_commutes / T_hat_Riem_prod_pullback_ι_μ）：
 
-/-- T_hat_Riem_prod is compatible with projection: π_Tμ ∘ T̂_prod = (𝒯 × id) ∘ π_Tμ. -/
-theorem T_hat_Riem_prod_base_commutes (X : SpectralBundleProd) :
-    π_Tμ.obj (T_hat_Riem_prod.obj X) = { T := TFunctor.obj X.base.T, μ := X.base.μ } := rfl
+※ 开放项登记（2026-08-04）：原 `T_hat_Riem_prod : SpectralBundleProd ⥤ SpectralBundleProd`
+类型不成立——其 obj 把 Temp 坐标经 `TFunctor.obj` 变为 RGObj
+（`{ T := TFunctor.obj X.base.T, μ := X.base.μ }` 中 T 字段为 RGObj），
+而 `SpectralBundleProd.base.T : TempObj`，基范畴坐标类型不一致。
+正确构造需引入新的"混合基"范畴（Temp 坐标取 𝒯 像），留作后续工作。
+-/
+-- noncomputable def T_hat_Riem_prod : SpectralBundleProd ⥤ SpectralBundleProd where
+--   obj X :=
+--     { base := { T := TFunctor.obj X.base.T, μ := X.base.μ }
+--       fiberData := X.fiberData
+--     }
+--   map f :=
+--     { baseMap := { tempMap := TFunctor.map f.baseMap.tempMap, rgMap := f.baseMap.rgMap }
+--       fiberMap := f.fiberMap
+--       commut := f.commut
+--     }
+--   map_id X := by
+--     apply BundleProdHom.ext
+--     · apply TempRGHom.ext <;> simp
+--     · rfl
+--   map_comp f g := by
+--     apply BundleProdHom.ext
+--     · apply TempRGHom.ext <;> simp
+--     · rfl
 
-/-- T_hat_Riem_prod is fiber-preserving: it does not change the spectral data. -/
-theorem T_hat_Riem_prod_preserves_fiber (X : SpectralBundleProd) :
-    (T_hat_Riem_prod.obj X).fiberData = X.fiberData := rfl
+-- theorem T_hat_Riem_prod_base_commutes (X : SpectralBundleProd) :
+--     π_Tμ.obj (T_hat_Riem_prod.obj X) = { T := TFunctor.obj X.base.T, μ := X.base.μ } := rfl
 
-/-- On diagonal bundles, T_hat_Riem_prod acts as T_hat_Riem on the Temp-pullback.
-    (T_hat_Riem_prod is the product base analog of T_hat_Riem.) -/
-theorem T_hat_Riem_prod_diag_commutes (T₀ : TempObj) (X : SpectralBundleProd)
-    (hBase : X.base.T = T₀) (hDiag : X.base.μ = TFunctor.obj X.base.T) :
-    (pullback_ι_T (TFunctor.obj T₀)).obj (T_hat_Riem_prod.obj X) = 
-    T_hat_Riem.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X) := by
-  subst hBase
-  unfold pullback_ι_T T_hat_Riem_prod T_hat_Riem ι_T
-  simp
+-- theorem T_hat_Riem_prod_preserves_fiber (X : SpectralBundleProd) :
+--     (T_hat_Riem_prod.obj X).fiberData = X.fiberData := rfl
 
-/-- The second pullback identity: on the diagonal, pulling back along ι_μ 
-    commutes with T_hat_Riem_prod. -/
-theorem T_hat_Riem_prod_pullback_ι_μ (T₀ : TempObj) (X : SpectralBundleProd)
-    (hBase : X.base.T = T₀) (hDiag : X.base.μ = TFunctor.obj X.base.T) :
-    (pullback_ι_μ T₀).obj (T_hat_Riem_prod.obj X) = 
-    (pullback_ι_μ T₀).obj X := by
-  subst hBase
-  unfold pullback_ι_μ T_hat_Riem_prod ι_μ
-  simp
+-- theorem T_hat_Riem_prod_diag_commutes (T₀ : TempObj) (X : SpectralBundleProd)
+--     (hBase : X.base.T = T₀) (hDiag : X.base.μ = TFunctor.obj X.base.T) :
+--     (pullback_ι_T (TFunctor.obj T₀)).obj (T_hat_Riem_prod.obj X) = 
+--     T_hat_Riem.obj ((pullback_ι_T (TFunctor.obj T₀)).obj X) := by
+--   subst hBase
+--   unfold pullback_ι_T T_hat_Riem_prod T_hat_Riem ι_T
+--   simp
+
+-- theorem T_hat_Riem_prod_pullback_ι_μ (T₀ : TempObj) (X : SpectralBundleProd)
+--     (hBase : X.base.T = T₀) (hDiag : X.base.μ = TFunctor.obj X.base.T) :
+--     (pullback_ι_μ T₀).obj (T_hat_Riem_prod.obj X) = 
+--     (pullback_ι_μ T₀).obj X := by
+--   subst hBase
+--   unfold pullback_ι_μ T_hat_Riem_prod ι_μ
+--   simp
 
 /-! =========================================================
     Section 10: Generalized BCS Weave Sections
@@ -425,8 +502,13 @@ noncomputable def constWeaveSection : WeaveSection :=
           { base := X, fiberData := { n := 2, A := cl17GapMatrix } }
         map := fun f => 
           { baseMap := f, fiberMap := 1, commut := by simp [cl17GapMatrix] }
-        map_id := by intro X; apply BundleProdHom.ext <;> simp
-        map_comp := by intro X Y Z f g; apply BundleProdHom.ext <;> simp
+        map_id := by intro X; rfl
+        map_comp := by
+          intro X Y Z f g
+          apply BundleProdHom.ext
+          · rfl
+          · change (1 : Matrix (Fin 2) (Fin 2) ℂ) = 1 * 1
+            simp
       }
     is_section := by
       intro X; rfl
@@ -440,10 +522,14 @@ noncomputable def paramWeaveSection (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
       { obj := fun (X : TempRGObj) => 
           { base := X, fiberData := { n := n, A := A } }
         map := fun f => 
-          { baseMap := f, fiberMap := 1, commut := by
-            simp [hA] }
-        map_id := by intro X; apply BundleProdHom.ext <;> simp
-        map_comp := by intro X Y Z f g; apply BundleProdHom.ext <;> simp
+          { baseMap := f, fiberMap := 1, commut := by simp }
+        map_id := by intro X; rfl
+        map_comp := by
+          intro X Y Z f g
+          apply BundleProdHom.ext
+          · rfl
+          · change (1 : Matrix (Fin n) (Fin n) ℂ) = 1 * 1
+            simp
       }
     is_section := by
       intro X; rfl
@@ -454,7 +540,7 @@ noncomputable def paramWeaveSection (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
 theorem BCS_weave_restricts_to_diag (T : TempObj) :
     (pullback_ι_T (TFunctor.obj T)).obj (constWeaveSection.σ.obj
       { T := T, μ := TFunctor.obj T }) = BCSSection_cl17.obj T := by
-  unfold constWeaveSection pullback_ι_T BCSSection_cl17 QCDSection_cl17 ι_T
+  unfold constWeaveSection pullback_ι_T BCSSection_cl17 QCDSection_cl17
   simp
 
 /-- The HP weave section: the restriction of constWeaveSection to the diagonal
@@ -462,27 +548,29 @@ theorem BCS_weave_restricts_to_diag (T : TempObj) :
 theorem HP_weave_restricts_to_diag (T : TempObj) :
     (pullback_ι_μ T).obj (constWeaveSection.σ.obj
       { T := T, μ := TFunctor.obj T }) = HPSection_cl17.obj (TFunctor.obj T) := by
-  unfold constWeaveSection pullback_ι_μ HPSection_cl17 ι_μ
+  unfold constWeaveSection pullback_ι_μ HPSection_cl17
   simp
 
-/-- The spectral weave closure condition: on the diagonal, the constant weave section
-    satisfies the spectral flow self-consistency equation.
-    
-    This theorem connects the weave section formalism to the BCS spectral analysis
-    from WeaveBCS.lean: the spectral gap ratio r = Δλ_min / Δλ_BCS is determined by
-    the self-consistency equation a_BCS³ · 4π = (1 + √3·√r)·r. -/
-theorem weave_closure_on_diag (T : TempObj) :
-    (pullback_ι_T (TFunctor.obj T)).obj (constWeaveSection.σ.obj
-      { T := T, μ := TFunctor.obj T }) =
-    (pullback_ι_μ T).obj (constWeaveSection.σ.obj
-      { T := T, μ := TFunctor.obj T }) := by
-  unfold constWeaveSection pullback_ι_T pullback_ι_μ ι_T ι_μ
-  simp
+/-
+The spectral weave closure condition:
+※ 开放项登记（2026-08-04）：原 `weave_closure_on_diag` 声明
+`(pullback_ι_T ...).obj ... = (pullback_ι_μ T).obj ...` 类型不成立——左侧是
+SpectralBundleTemp，右侧是 SpectralBundleRG，不同范畴对象无法直接相等
+（与 weave_gluing_square 同类问题）。正确的自洽陈述需经 T_hat_Riem 桥接。
+-/
+-- theorem weave_closure_on_diag (T : TempObj) :
+--     (pullback_ι_T (TFunctor.obj T)).obj (constWeaveSection.σ.obj
+--       { T := T, μ := TFunctor.obj T }) =
+--     (pullback_ι_μ T).obj (constWeaveSection.σ.obj
+--       { T := T, μ := TFunctor.obj T }) := by
+--   unfold constWeaveSection pullback_ι_T pullback_ι_μ ι_T ι_μ
+--   simp
 
 /-- The pullback functors along ι_T and ι_μ, when restricted to the diagonal,
-    are naturally isomorphic via the identity on spectral data. -/
-noncomputable def diagPullbackNatIso : 
-    (diagObjEmbedding.op.obj : DiagObjᵒᵖ ⥤ TempRGObjᵒᵖ) := 
+    are naturally isomorphic via the identity on spectral data.
+    Note (2026-08-04): 原定义误用 `diagObjEmbedding.op.obj`（对象映射函数），
+    已改为 functor 本身 `diagObjEmbedding.op`。 -/
+noncomputable def diagPullbackNatIso : DiagObjᵒᵖ ⥤ TempRGObjᵒᵖ :=
   diagObjEmbedding.op
 
 end UFPFormalization

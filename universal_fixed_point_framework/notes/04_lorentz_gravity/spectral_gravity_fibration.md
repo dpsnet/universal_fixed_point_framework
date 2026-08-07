@@ -68,7 +68,7 @@ $$\ell_{\mathrm{corr}}^{(\mathrm{GR})} \;\longmapsto\; M^{-1} \;\sim\; r_+^{-1}$
 
 ### 2.2 谱间隙
 
-**Schwarzschild 情形**（Paper VIII §2.3，`paper22_horizon_spectrum.py` 数值验证）：
+**Schwarzschild 情形**（Paper VIII §2.3，`scripts/paper22_horizon_spectrum.py` 数值验证）：
 $$\Delta\lambda_{\min}^{(\mathrm{Schwarz})} = \frac{\sqrt{6} - \sqrt{2}}{\sqrt{72}} \approx 0.122$$
 
 **Kerr 情形**（`spectral_kerr_fibration.md` 定义 2.1，Paper VIII §7）：

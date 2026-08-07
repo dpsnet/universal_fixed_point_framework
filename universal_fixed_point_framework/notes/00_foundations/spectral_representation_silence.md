@@ -3,6 +3,8 @@
 > **来源**：UFPF 路径 B（Agda 重形式化）交叉校验发现。SpImD 子范畴方案的态射层（RIm_map/右三角）在有限维原型中结构性不可闭合，其数学本质是一种新的静默类型——**表示/编码层静默**。
 >
 > **状态**：研究笔记 v0.1（2026-07-31）。推导完整，未进入论文。
+>
+> **2026-08-04 更新**：阶段 1 圈定（线性语义）后，RAP5a `RIm_map` 已闭合（SpImDMor 限制为线性态射层，`RIm_map` = 恒等提取，`DImAdjRIm` 完整伴随机器证明，见勘误 O12）。本笔记所述**表示静默**作为**全范畴（集合语义）下**的结构性障碍仍然成立（`D_not_full`/`no_bijection_homSp_homRec` 机器证明保留），其理论地位按 `spectral_category_scope_stratification.md` §3.2 重新定位为 **Rec_lin 与 Rec_set 边界上的层间现象**。
 
 ---
 
@@ -86,7 +88,7 @@ $$\boxed{S_D(\varphi) = 1 - \frac{\|P_{\mathrm{Im}(D)}(\varphi)\|}{\|\varphi\|}}
 
 - Agda：`agda_formalization/DecursionFunctor/DecursionFunctor.agda §5`（对象层闭合 + 态射层反例注释）
 - Agda：`agda_formalization/Cardinality/Cardinality.agda`（**P4 已形式化 2026-07-31**：`P-spectral` 合法谱态射、`transferMatrix-not-P`/`D-not-full`（D 不 full，P 非转移矩阵像）、`fun2-card`/`rec-hom-card`（Hom_Rec 恰 4 函数）、`transfers-distinct`/`P-distinct-transfers`（Hom_Sp ≥ 5 互异元素）；**§5 鸽笼补全**：`分类` 枚举别名 + `fun2-excl-all` + `fun2-no-5`（5 个互异 F2→F2 函数不可能，g0 四分支分类排除树，模式变量改名 q1..q4 避免与 ℂ 构造子 c2 冲突）；**§6 无双射主定理**：`no-bijection : Equiv (SpHom (D-obj trivial2) (D-obj trivial2)) (F2 → F2) → ⊥`（4 转移矩阵态射 `D-map` + `P-spectral` 五个互异 SpHom 经双射单射 + 鸽笼 fun2-no-5）。设计说明：Agda 侧计数落在**函数层**（Hom_Sp ≥ 5 vs |F2→F2| = 4）——RecHom-≡（记录外延性）需依赖版 funext，超出库公理范围（仅非依赖 funext），RecHom 经 `rec-hom-card` 落入同 4 个函数类关联；Lean 侧为 Hom_Sp 不可数 vs Hom_Rec 有限。新增 Set₁ 级工具 `_≢₁_`/`congL1`/`sym₁`/`trans₁`。已注册 `Everything.agda`，整体编译通过，无新增 postulate）
-- Lean：`RAP5a_explicit_adjunction.lean`（**P4 已形式化 2026-07-31，§7-§8**：`P_counter_morph` 合法谱态射（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`（D 不 full）、`complex_emb`（ℂ↪Hom_Sp，`homSp_infinite` 不可数）、`recHomTrivialEquiv`/`homRec_finite`（Hom_Rec 有限）、`no_bijection_homSp_homRec`（**无双射**）。仅 L97 `RIm_map` sorry 为既有登记项，无新增 sorry）
+- Lean：`RAP5a_explicit_adjunction.lean`（**P4 已形式化 2026-07-31，§7-§8**：`P_counter_morph` 合法谱态射（交织经 A=1 平凡闭合）、`P_counter_not_transferMatrix`/`D_not_full`（D 不 full）、`complex_emb`（ℂ↪Hom_Sp，`homSp_infinite` 不可数）、`recHomTrivialEquiv`/`homRec_finite`（Hom_Rec 有限）、`no_bijection_homSp_homRec`（**无双射**）。L97 `RIm_map` sorry 为既有登记项，**2026-08-04 已按线性语义闭合（勘误 O12）**，§7-8 反例保留为全范畴负结果，无新增 sorry）
 - 账目：`roadmap/phase60_category_verification.md`（v0.13-v0.16）
 - 论文：`paper1_fractal_spectral_derecursion.md`（**P1 论文层限定 2026-07-31**：注 C2.3b 态射对应语义限定 + 注 2.4.5a 无限维闭合声明注明"受限态射层 = 线性连续谱匹配映射"，引用 `spectral_R11_morphism_layer.md`）
 
@@ -154,7 +156,7 @@ P1 的理论分析已完成，落点：`notes/00_foundations/spectral_R11_morphi
 $$\mathcal{S}_D = \{\varphi \in \mathrm{Hom}_{\mathbf{Sp}} : P_{\mathrm{Im}(D)}(\varphi) = 0\}$$
 是否也构成 sieve（对复合封闭）？答案：**否**——左、右复合均破坏静默。
 
-### 10.2 数值验证（`paperX_s0_sieve.py`，7/7 PASS）
+### 10.2 数值验证（`scripts/paperX_s0_sieve.py`，7/7 PASS）
 
 平凡 2 态系统（$A_X = A_Y = I_2$，$\mathrm{Hom}_{\mathbf{Sp}} = \mathbb{C}^{2\times2}$）：
 
@@ -176,7 +178,7 @@ $$\mathcal{S}_D = \{\varphi \in \mathrm{Hom}_{\mathbf{Sp}} : P_{\mathrm{Im}(D)}(
 3. **物理解读**：S0 静默对应"编码前不可表示"，但其破坏（复合到可表示）恰恰说明——**表示性是相对结构而非绝对性质**：态射的表示可达性依赖它所在的复合上下文。这与 §6 的"态射限制为转移矩阵"的规范语义相容（限制 = 固定在无复合上下文中的表示层）。
 4. **修正开放问题 #3 的预期**：原问"S0 静默态射是否在复合下封闭？是否形成 sieve？"——答案：均否。sieve 判定为负，进一步研究应转向"S_D 在复合下下降的精确速率/结构"。
 
-### 10.4 遗留（**已推进 2026-07-31**，`paperX_s0_analytic.py` 6/6 PASS）
+### 10.4 遗留（**已推进 2026-07-31**，`scripts/paperX_s0_analytic.py` 6/6 PASS）
 
 **遗留 1（S_D 下降率解析刻画）——已解决**：平凡 2 态系统左复合 $M=\psi\cdot\phi$（$\phi=[[1,1],[-1,-1]]$，$\psi$ 标准复高斯）解析分布为
 $$S_D(M) = 1 - \sqrt{U},\qquad U\sim\mathrm{Uniform}(0,1),$$

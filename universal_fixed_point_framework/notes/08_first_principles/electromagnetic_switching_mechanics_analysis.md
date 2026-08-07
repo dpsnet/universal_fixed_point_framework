@@ -166,7 +166,7 @@ $$x(t) = \underbrace{\frac{F_{\text{es}}}{k}\left(1 - e^{-\gamma t/2m}\cos\omega
 
 ## 8. 程序文件
 
-数值计算程序：`paperX_em_switching_force_calc.py`（位于项目根目录）
+数值计算程序：`scripts/paperX_em_switching_force_calc.py`（位于项目根目录）
 
 程序功能：
 - 计算不同材料的弛豫时间 $\tau$

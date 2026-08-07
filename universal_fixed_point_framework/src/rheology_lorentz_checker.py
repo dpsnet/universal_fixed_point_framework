@@ -40,6 +40,7 @@ from scipy.stats import chi2 as chi2_dist
 from dataclasses import dataclass, field
 from typing import Callable, Optional
 import json
+import os
 
 
 # -----------------------------------------------------------------------------
@@ -362,7 +363,8 @@ def main():
     }
 
     # 保存到 JSON
-    output_path = "rheology_lorentz_checker_results.json"
+    output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                               'results', 'rheology_lorentz_checker_results.json')
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
     print(f"\n[输出] 结果已保存至 {output_path}")

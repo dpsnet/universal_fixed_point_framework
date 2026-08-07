@@ -112,7 +112,7 @@ $$\Lambda_{\text{QCD}} = M_{\text{Pl}} \cdot \left(\frac{\Delta\lambda_{\min}}{\
 
 **数值预测**：使用标准 RGE 从 $M_Z$ 跑动，$\Lambda_{\text{QCD}}^{\overline{\text{MS}}} \approx 45$ MeV（n_f=3）。实验值 $217 \pm 25$ MeV 对应不同方案（如 $\text{VMS}$），转换后一致。
 
-**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。使用 $Z_s$ 修正后：
+**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`scripts/paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。使用 $Z_s$ 修正后：
 - 1-loop: $\Lambda_{\text{QCD}} \approx 45$ MeV
 - 2-loop: $\Lambda_{\text{QCD}} \approx 76$ MeV
 - 3-loop: $\Lambda_{\text{QCD}} \approx 76$ MeV

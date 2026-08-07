@@ -50,7 +50,7 @@ theorem test_spectral_implies_braided (R₁ R₂ : RecObj) (h : spectralEquivale
   spectral_implies_braided R₁ R₂ h
 
 -- 1.3. classification completeness
-theorem test_classification_completeness (R₁ R₂ : RecObj) (h : spectralEquivalence R₁ R₂) :
+noncomputable def test_classification_completeness (R₁ R₂ : RecObj) (h : spectralEquivalence R₁ R₂) :
     DFunctor.obj R₁ ≅ DFunctor.obj R₂ :=
   classification_completeness_finite R₁ R₂ h
 
@@ -65,11 +65,11 @@ theorem test_thm41_finite (n : ℕ) : spectralEquivalence (mkRecObj n) (mkRecObj
   -- Same object → trivially identical invariants
   rfl
 
--- 1.6. IC coverage theorem (trivial case)
-theorem test_thm43_IC_coverage (R₁ R₂ : RecObj) : spectralEquivalence R₁ R₂ := by
-  apply thm43_IC_full_coverage_finite R₁ R₂
-  -- In the finite-dimensional prototype, IC holds trivially for all pairs
-  exact universal_IC_coverage_finite R₁ R₂
+-- 1.6. IC coverage theorem (identical spectral invariants case)
+theorem test_thm43_IC_coverage (R₁ R₂ : RecObj)
+    (hSame : completeSpectralInvariant R₁ = completeSpectralInvariant R₂) :
+    spectralEquivalence R₁ R₂ := by
+  exact thm43_IC_full_coverage_finite R₁ R₂ (universal_IC_coverage_finite R₁ R₂) hSame
 
 -- ============================================================
 -- 2. IC Verification Tests
@@ -103,14 +103,23 @@ theorem test_universal_IC : ∀ (R₁ R₂ : RecObj), isolationConstraint R₁ R
 
 -- 3.1. The Moran equation is correctly defined
 theorem test_hausdorffDimensionEq_def (c : ℝ) (hpos : 0 < c) (hlt : c < 1) (d : ℝ) :
-    hausdorffDimensionEq (IFS.mk 1 (fun _ => fun x : ℝ => c * x) (fun _ => c) (by
-      intro i; exact ContractingWith.of_dist_le_mul (by
-        intro x y; dsimp; ring; nlinarith))
-      (by intro i; exact hpos) (by intro i; exact hlt)) d = c ^ d - 1 := by
+    hausdorffDimensionEq (IFS.mk 1 (fun _ => fun x : ℝ => c * x) (fun _ => ⟨c, le_of_lt hpos⟩) (by
+      intro i
+      refine ⟨?_, ?_⟩
+      · exact_mod_cast hlt
+      · apply LipschitzWith.of_dist_le_mul
+        intro x y
+        change dist (c * x) (c * y) ≤ c * dist x y
+        rw [Real.dist_eq, Real.dist_eq]
+        rw [← mul_sub]
+        rw [abs_mul, abs_of_nonneg (le_of_lt hpos)])
+      (by intro i; exact_mod_cast hpos) (by intro i; exact_mod_cast hlt)) d = c ^ d - 1 := by
+  -- ⟨c, _⟩ : ℝ≥0 的强制转换定义性等于 c，指数为变量时 rfl 直接闭合
   simp [hausdorffDimensionEq]
+  rfl
 
 -- 3.2. Hutchinson operator preserves non-emptiness
-theorem test_hutchinsonOperator_nonempty {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+theorem test_hutchinsonOperator_nonempty {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (K : Set X) : hutchinsonOperator ifs K = ⋃ i : Fin ifs.n, ifs.maps i '' K := rfl
 
 -- ============================================================
@@ -118,27 +127,35 @@ theorem test_hutchinsonOperator_nonempty {X : Type} [MetricSpace X] [CompleteMet
 -- ============================================================
 
 -- 4.1. Legendre transform of a linear function is convex
-theorem test_legendreTransform_convex (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f) :
+theorem test_legendreTransform_convex (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f)
+    (hBdd : ∀ p : ℝ, BddAbove (Set.range fun z : ℝ => p * z - f z)) :
     ConvexOn ℝ Set.univ (legendreTransform f) :=
-  legendreTransform_convex hf
+  legendreTransform_convex hf hBdd
 
 -- 4.2. topologicalPressure at zero equals log(n)
 theorem test_pressure_at_zero_simple : topologicalPressure
-    (IFS.mk 1 (fun _ => fun x : ℝ => 0.5 * x) (fun _ => 0.5)
+    (IFS.mk 1 (fun _ => fun x : ℝ => 0.5 * x) (fun _ => ⟨0.5, by norm_num⟩)
       (by
         intro i
-        apply ContractingWith.of_dist_le_mul
-        intro x y; dsimp; nlinarith)
-      (by intro i; norm_num) (by intro i; norm_num)) 0 = Real.log 1 := by
+        refine ⟨?_, ?_⟩
+        · exact_mod_cast (by norm_num : (0.5 : ℝ) < 1)
+        · apply LipschitzWith.of_dist_le_mul
+          intro x y
+          change dist (0.5 * x) (0.5 * y) ≤ 0.5 * dist x y
+          rw [Real.dist_eq, Real.dist_eq]
+          rw [← mul_sub]
+          rw [abs_mul, abs_of_nonneg (by norm_num)])
+      (by intro i; exact_mod_cast (by norm_num : (0 : ℝ) < 0.5))
+      (by intro i; exact_mod_cast (by norm_num : (0.5 : ℝ) < 1))) 0 = Real.log 1 := by
   simp [topologicalPressure]
 
 -- 4.3. pressure ↔ Hausdorff dimension connection
-theorem test_pressure_hausdorff_link (ifs : IFS ℝ) (t : ℝ) :
+theorem test_pressure_hausdorff_link (ifs : IFS ℝ) (t : ℝ) (hNonempty : ifs.n ≥ 1) :
     (topologicalPressure ifs t = 0) → (hausdorffDimensionEq ifs t = 0) :=
-  (pressure_zero_iff_hausdorff_dimension ifs t).mp
+  (pressure_zero_iff_hausdorff_dimension ifs t hNonempty).mp
 
 -- 4.4. singularitySpectrum is defined as negative Legendre transform
-theorem test_singularitySpectrum_def {X : Type} [MetricSpace X] [CompleteMetricSpace X]
+theorem test_singularitySpectrum_def {X : Type} [MetricSpace X] [CompleteSpace X]
     {ifs : IFS X} {attractor : Attractor ifs} (measure : SelfSimilarMeasure ifs attractor) (α : ℝ) :
     singularitySpectrum measure α = -legendreTransform (multifractalSpectrum measure) α := rfl
 

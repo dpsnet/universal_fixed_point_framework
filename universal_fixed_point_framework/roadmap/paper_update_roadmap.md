@@ -83,7 +83,7 @@
 | Paper XVII § | 需写入的数学内容 | 当前在笔记中的位置 |
 |:-----------|:---------------|:------------------|
 | §7 味扇区 | $\mathbf{Flt}$ 离散范畴（$S = \{u,d,e,\nu\}$）、闭回路 $\gamma: u\to d\to \nu\to e\to u$ | `spectral_flavor_fibration.md` §1 |
-| §7.1 实结构 | $J_f: \mathbb{C}^3 \to \mathbb{C}^3$、$J_f^2 = I$、IFS 权重 $c_k = S_3 S_4^{k-1}$ 与超荷 $Y_f$ 构造 $J_f$ | `spectral_flavor_fibration.md` §2 |
+| §7.1 实结构 | $J_f: \mathbb{C}^3 \to \mathbb{C}^3$、$J_f^2 = I$、IFS 权重 $c_1 = S_3 S_4, c_2 = S_4, c_3 = 1$【2026-08-07 勘误：原 $c_k = S_3 S_4^{k-1}$ 与 §3.1 表矛盾，更正为显式分配】与超荷 $Y_f$ 构造 $J_f$ | `spectral_flavor_fibration.md` §2 |
 | §7.2 转移函数 | $V_{f_1 f_2} = J_{f_1}^{-1} J_{f_2}$、CKM = $J_u^{-1}J_d$、PMNS = $J_e^{-1}J_\nu$ | `spectral_flavor_fibration.md` §3 |
 | §7.3 Cocycle 条件 | $V_{12}V_{23} = V_{13}$ 的证明、$V^\dagger V = I$ 作为推论、么正性从拟合性质到 cocycle 公理的升级 | `spectral_flavor_fibration.md` §4 |
 | §7.4 $\delta_{\text{CP}}$ | $\text{Hol}(\gamma) = V_{ud}V_{d\nu}V_{\nu e}V_{eu}$、$J_f$ 交换时 Hol=id（平坦丛）、$\delta_{\text{CP}}\neq0$ = 非平坦丛 | `spectral_flavor_fibration.md` §5 |

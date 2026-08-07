@@ -149,7 +149,7 @@ $$
 | 下型夸克 | 0.941 | 0.632 | ×1.49 |
 | 带电轻子 | 0.260 | 0.698 | ×2.69 |
 
-（详细数值见配套脚本 `paperX_alpha_exponent_derivation.py`）
+（详细数值见配套脚本 `scripts/paperX_alpha_exponent_derivation.py`）
 
 ---
 

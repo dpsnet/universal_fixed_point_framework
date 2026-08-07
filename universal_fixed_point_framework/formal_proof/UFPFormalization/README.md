@@ -18,10 +18,14 @@ UFPFormalization/
     ├── RecCategory.lean          # Rec 范畴（mathlib 版本）
     ├── SpCategory.lean           # Sp 范畴（mathlib 版本）
     ├── DecursionFunctor.lean     # D : Rec → Spec 函子（完整 Functor 律证明）
-    ├── Adjunction.lean           # D ⊣ R 伴随关系（R 为原型，DAdjR 仍 sorry）
+    ├── Adjunction.lean           # D ⊣ R 伴随（RFunctor 对象映射，零 sorry 零 axiom）
     ├── SpectralCorrespondence.lean # 谱对应 η(μ)=e^{-μ} 双向逆证明
     ├── OrbitFunctor.lean         # 有限维轨道函子与 orbit-stabilizer 定理
-    └── Clifford.lean             # 低维 Clifford 矩阵表示与验证
+    ├── Clifford.lean             # 低维 Clifford 矩阵表示与验证
+    ├── NoiseCategory.lean        # Σ-Rec/Σ-Spec 范畴、Σ-D 正式函子（Functor 律闭合）
+    ├── IFSRecCoding.lean         # IFS → Σ-Rec 符号编码 + 谱 coproduct 分解（阶段 3）
+    ├── WeierstrassGap.lean       # Weierstrass 图 IFS 谱隙结构支撑（阶段 3）
+    └── ...（其余阶段 44/60/61 模块）
 ```
 
 ## 当前阶段
@@ -34,12 +38,15 @@ UFPFormalization/
 | Rec 范畴 | `RecCategory.lean` | ✅ 完成 |
 | Sp 范畴 | `SpCategory.lean` | ✅ 完成 |
 | D 函子 | `DecursionFunctor.lean` | ✅ Functor 律 + intertwine 已证 |
-| D ⊣ R 伴随 | `Adjunction.lean` | 🔄 RFunctor 原型；DAdjR 三角恒等式 sorry |
+| D ⊣ R 伴随 | `Adjunction.lean` | ✅ 零 `sorry` 零 `axiom`（RFunctor 降为对象映射，原 3 sorry + 1 axiom 结构性不可构造后删除） |
 | 谱对应 M ≅ L | `SpectralCorrespondence.lean` | ✅ 双向逆已证 |
 | 轨道函子 | `OrbitFunctor.lean` | ✅ orbitWeight + orbit-stabilizer 已证 |
 | Clifford 表示 | `Clifford.lean` | ✅ 矩阵表示与平方/反对易验证 |
+| Σ-Rec/Σ-Spec + Σ-D 函子 | `NoiseCategory.lean` | ✅ Category 律 + `sigmaDFunctor` 正式函子（Functor 律闭合，2026-08-05） |
+| IFS → Σ-Rec 符号编码 | `IFSRecCoding.lean` | ✅ 符号编码 + 谱 coproduct 分解三定理（2026-08-05） |
+| Weierstrass 图 IFS 谱隙 | `WeierstrassGap.lean` | ✅ 收缩/维数/迹公式结构支撑（2026-08-05） |
 
-**构建状态**：`lake build --no-cache` 成功，仅剩 `Adjunction.lean` 中 1 个 `sorry`（DAdjR）。
+**构建状态**：`lake build` **2454 jobs 全量通过，全库零 `sorry` 零 `axiom`**。
 
 ## 环境要求
 

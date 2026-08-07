@@ -15,10 +15,10 @@
 ### 第 1 层：4-范畴结构 → $S_3 = e^{-3}$, $S_4 = e^{-d_H}$
 
 **"如何"**：$\mathbf{Sp}$ 是严格 4-范畴。其四个层级的态射各有静默衰减因子：
-- 对象层（第 0 层）：对象静默 $S_3 = e^{-N_{\text{gen}}}$，其中 $N_{\text{gen}} = 3$ 是代的数量（来自 Cl(1,7) 旋量表示的不可约子空间数）
+- 对象层（第 0 层）：对象静默 $S_3 = e^{-N_{\text{gen}}}$，其中 $N_{\text{gen}} = 3$ 是代的数量（来自主动态射层数 $N_{\text{active}} = 3$，统一 3 定理机器证明）【2026-08-07 勘误：原"来自 Cl(1,7) 旋量表示的不可约子空间数"错误——Cl(1,7) 提供单代载体，三代来自代空间 C³_fam（paper33）】
 - 辫子层（第 3 层）：辫子静默 $S_4 = e^{-d_H}$，其中 $d_H = 2.7095$ 来自分形 IFS 吸引子的 Hausdorff 维数
 
-**"为何"**：在严格 $n$-范畴中，第 $k$ 层态射的规范化幅度呈 $e^{-k}$ 衰减 (从范畴的 coherence 定理)。代的数量 $N_{\text{gen}} = 3$ 来自 Cl(1,7) $\cong M_8(\mathbb{R})$ 的旋量表示分解为 4 个不可约子空间（对应 4 种力），其中 3 个子空间对应 3 代费米子。
+**"为何"**：在严格 $n$-范畴中，第 $k$ 层态射的规范化幅度呈 $e^{-k}$ 衰减 (从范畴的 coherence 定理)。代的数量 $N_{\text{gen}} = 3$ 来自统一 3 定理（paper33 机器证明）——$N_{\text{gen}} = N_{\text{active}} = 3$（严格 4-范畴的 3 个主动生成层：1/2/3-态射）【2026-08-07 勘误：原"来自 Cl(1,7) ≅ M₈(ℝ) 的旋量表示分解为 4 个不可约子空间（对应 4 种力），其中 3 个子空间对应 3 代费米子"双重错误——① Cl(1,7) 标准旋量为 16 维（M₁₆(ℝ)，paper20）；② 三代与 4 种子空间无此归因关系；Cl(1,7) 提供单代载体，代空间 C³_fam 为独立输入（RAP 勘误/paper17），其维数 3 由主动态射层数给出】。
 
 **数值固化**：无需拟合。$S_3 = e^{-3} = 0.049787$, $S_4 = e^{-2.7095} = 0.066570$。
 
@@ -78,7 +78,7 @@ S₄ 层: β_d · ln(M_Pl/M_R)/d_H ≈ 4%        → Δm²比 = 0.0304  (+2.9%)
 | $\Sigma m_i$（$m_{\text{light}}=0$）| 58 meV | 100 meV |
 | $m_{\beta\beta}$ 范围 | 1.5–3.7 meV | 18–49 meV |
 
-**结论**：谱框架强烈预测 Normal Ordering，与当前实验倾向一致。见 [`paperX_neutrino_IO_check.py`](../../paperX_neutrino_IO_check.py)。
+**结论**：谱框架强烈预测 Normal Ordering，与当前实验倾向一致。见 [`scripts/paperX_neutrino_IO_check.py`](../../paperX_neutrino_IO_check.py)。
 
 **"为何"上型夸克 $\alpha_u > \alpha_l$**：QCD 强耦合增强 $\alpha$。上型和下型的 QCD 部分相同，但上型超荷 $Y = 1/3$（左）/$4/3$（右）与下型 $Y = 1/3$（左）/$-2/3$（右）不同，导致 $\alpha_u > \alpha_d$。
 
@@ -312,7 +312,7 @@ $$\boxed{\tau_p \sim 10^{52}\ \text{年}}$$
 
 远大于当前实验下限 $>10^{34}$ 年（Super-Kamiokande）和下一代实验灵敏度 $10^{35}$ 年（Hyper-Kamiokande）。谱框架预测质子衰变**不可观测**——这与所有实验无质子衰变证据完全一致。
 
-**谱几何解释**：谱规范耦合的单化发生在 Planck 能标而非 GUT 能标，因为规范群 $U(1)\times SU(2)\times SU(3)$ 来自 $\text{Cl}(1,7)$ 根系的不同投影，非 SU(5)/SO(10) 大统一群的破缺。$S_4$ 层辫子静默 $e^{-d_H}$ 编码了 Planck 能标处的分形边界条件，使单化自然发生在 $M_{\text{Pl}}$。详见 [`paperX_gut_unification.py`](../../paperX_gut_unification.py)。
+**谱几何解释**：谱规范耦合的单化发生在 Planck 能标而非 GUT 能标，因为规范群 $U(1)\times SU(2)\times SU(3)$ 来自 $\text{Cl}(1,7)$ 根系的不同投影，非 SU(5)/SO(10) 大统一群的破缺。$S_4$ 层辫子静默 $e^{-d_H}$ 编码了 Planck 能标处的分形边界条件，使单化自然发生在 $M_{\text{Pl}}$。详见 [`scripts/paperX_gut_unification.py`](../../paperX_gut_unification.py)。
 
 ---
 
@@ -353,7 +353,7 @@ $$\Lambda_{\text{QCD}} = M_{\text{Pl}} \cdot \left(\frac{\Delta\lambda_{\min}}{\
 
 **数值预测**：$\Lambda_{\text{QCD}} \approx 210$ MeV（实验 $217 \pm 25$ MeV，偏差 3%）。
 
-**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。但由于框架的 $\alpha_s^{(0)}(M_{\text{Pl}}) = 0.0137$ 取值较小，高阶修正占比增大反而使偏差增加（2-loop: 230 MeV, 6%; 3-loop: 245 MeV, 13%）。这反映了谱框架与标准 $\overline{\text{MS}}$ 方案在耦合定义上的差异——谱框架的裸耦合 $\alpha_s^{(0)} = \Delta\lambda_3/(4\pi)$ 对应 S₁ 层的谱间隙比，而非 $\overline{\text{MS}}$ 方案的重整化耦合。两者需通过方案转换因子联系，这是 Phase 46 Q1 的开放问题之一。
+**高阶修正说明**：3-loop β 函数已在 Phase 31 完成（`scripts/paper31_threeloop_beta.py`），系数 $b_1 = 7$, $b_2 = 26$, $b_3 = -109/3$。但由于框架的 $\alpha_s^{(0)}(M_{\text{Pl}}) = 0.0137$ 取值较小，高阶修正占比增大反而使偏差增加（2-loop: 230 MeV, 6%; 3-loop: 245 MeV, 13%）。这反映了谱框架与标准 $\overline{\text{MS}}$ 方案在耦合定义上的差异——谱框架的裸耦合 $\alpha_s^{(0)} = \Delta\lambda_3/(4\pi)$ 对应 S₁ 层的谱间隙比，而非 $\overline{\text{MS}}$ 方案的重整化耦合。两者需通过方案转换因子联系，这是 Phase 46 Q1 的开放问题之一。
 
 #### 6.2 手征对称性破缺 = 零模谱密度非零
 
@@ -546,4 +546,4 @@ S₄: T_f ≈ m_DM/20 ≈ 5 GeV                       ← 分形冻结
 
 **为何暗物质遗迹密度 $\Omega h^2 = 0.12$？** 因为谱静默粒子（$A_{\text{GR}}$ 零模，Paper I §5）的质量 $m_{\text{DM}} \sim 100$ GeV 来自 $S_1$ 层谱间隙，湮灭截面 $\langle\sigma v\rangle \approx 2.5\times10^{-26}$ 来自 $S_2$ 层 $[A_{\text{DM}}, A_{\text{SM}}]$ 态射，湮道数 $N_{\text{eff}} \approx 5$ 来自 $S_3$ 层 $N_{\text{gen}} = 3$ 代结构，冻结温度 $x_f \approx 20$ 来自 $S_4$ 层分形边界 $\ln(M_{\text{Pl}}/m_{\text{DM}})$。四者结合得 $\Omega h^2 = 0.12$。
 
-**为何有 4 种力？** 因为 $\text{Cl}(1,7) \cong M_8(\mathbb{R})$ 旋量表示有 4 个不可约子空间。
+**为何有 4 种力？** 因为 $\text{Cl}(1,7) \cong M_{16}(\mathbb{R})$【2026-08-07 勘误：原"$M_8(\mathbb{R})$"——标准 Cl(1,7) ≅ M₁₆(ℝ)，paper20】 的 16 维旋量表示可以分解为 4 个不可约子空间，每个对应一种力的谱生成元的作用域（paper9 定理）。

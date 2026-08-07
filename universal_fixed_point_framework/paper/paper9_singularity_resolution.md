@@ -4,7 +4,7 @@
 
 **版本**：v1.4（2026-07-27）
 
-**摘要**：广义相对论的奇点问题在谱动力学框架中得到自然解决——$A_{\text{GR}}$ 的离散谱结构在 Planck 尺度提供内在截断 $\|A_{\text{GR}}\|_{\text{HS}} \le \lambda_{\max} \sim M_{\text{Pl}}$，将经典奇点替换为有限谱截断。宇宙在大爆炸处经历量子反弹 $a(t) \to a_{\min}>0$，反弹尺度由谱间隙 $\Delta\lambda_{\min}$ 决定。该机制与 LQG 面积谱量化（R²=0.999984）和 FLRW 宇宙学（$n_s\approx0.965$）定量一致。数值验证脚本 `paper28_quantum_bounce.py` 完成 7 项交叉检查（谱截断、LQG 拟合、量子反弹、$R^2$ 修正、原初谱指数、黑洞蒸发连接、有效 Friedmann 方程），全部通过。
+**摘要**：广义相对论的奇点问题在谱动力学框架中得到自然解决——$A_{\text{GR}}$ 的离散谱结构在 Planck 尺度提供内在截断 $\|A_{\text{GR}}\|_{\text{HS}} \le \lambda_{\max} \sim M_{\text{Pl}}$，将经典奇点替换为有限谱截断。宇宙在大爆炸处经历量子反弹 $a(t) \to a_{\min}>0$，反弹尺度由谱间隙 $\Delta\lambda_{\min}$ 决定。该机制与 LQG 面积谱量化（R²=0.999984）和 FLRW 宇宙学（$n_s\approx0.965$）定量一致。数值验证脚本 `scripts/paper28_quantum_bounce.py` 完成 7 项交叉检查（谱截断、LQG 拟合、量子反弹、$R^2$ 修正、原初谱指数、黑洞蒸发连接、有效 Friedmann 方程），全部通过。
 
 
 
@@ -73,7 +73,7 @@ LQG 面积算子谱（Paper V §4.5）：
 
 $$A_j = 8\pi\gamma l_P^2 \sqrt{j(j+1)}, \quad j \in \{\tfrac12, 1, \tfrac32, \ldots\}$$
 
-$A_{\text{GR}}$ 离散谱与之线性拟合 R² = 0.999984（数值验证 `paper28_quantum_bounce.py` §2），与纸面推导值 R² = 0.999952 一致，证实两种理论的量子化结构相同。
+$A_{\text{GR}}$ 离散谱与之线性拟合 R² = 0.999984（数值验证 `scripts/paper28_quantum_bounce.py` §2），与纸面推导值 R² = 0.999952 一致，证实两种理论的量子化结构相同。
 
 | 量子化机制 | 谱结构 | 截断来源 |
 |------------|--------|----------|
@@ -108,19 +108,19 @@ $$\frac{d}{dt} \lambda_k(t) = -2H(t) \cdot \lambda_k(t)$$
 
 $\Delta\lambda_{\min} \sim 0.1 M_{\text{Pl}}$ 时，含 $R^2$ 修正的 $\rho_c = 0.335 M_{\text{Pl}}^4$ 与 LQG 值 $0.41 M_{\text{Pl}}^4$ 在同一量级（比值 0.82），差异源于两种框架对 Planck 尺度量子几何的细节处理不同。
 
-数值验证 `paper28_quantum_bounce.py` §3 精确复现反弹结构：$H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ 在 $\rho_c$ 处 $H=0$，$|H| \le \lambda_{\max}$ 由谱截断自动保证。
+数值验证 `scripts/paper28_quantum_bounce.py` §3 精确复现反弹结构：$H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ 在 $\rho_c$ 处 $H=0$，$|H| \le \lambda_{\max}$ 由谱截断自动保证。
 
 ### 4.3 与黑洞蒸发的连接
 
-Phase 27 的黑洞蒸发演化（`paper27_hawking_evaporation.py`，Paper VIII §5.1 扩展）在 $M \to M_{\text{Pl}}$ 处自然终止，剩余质量进入 Paper IX 的量子反弹阶段：
+Phase 27 的黑洞蒸发演化（`scripts/paper27_hawking_evaporation.py`，Paper VIII §5.1 扩展）在 $M \to M_{\text{Pl}}$ 处自然终止，剩余质量进入 Paper IX 的量子反弹阶段：
 
 $$M(t) = (M_0^3 - 3\alpha t)^{1/3}, \quad M \ge M_{\text{Pl}}$$
 
-蒸发时间 $\tau = M_0^3/(3\alpha)$ 有限，Page 时间 $t_{\text{Page}}/\tau = 1-2^{-3/2} \approx 0.6464$ 与理论精确匹配（数值验证 `paper28_quantum_bounce.py` §6）。蒸发残留的 Planck 质量量子黑洞成为反弹种子，构成完整的黑洞生命周期：形成 → Hawking 蒸发（信息保持于谱不变性）→ Planck 截断 → 量子反弹。
+蒸发时间 $\tau = M_0^3/(3\alpha)$ 有限，Page 时间 $t_{\text{Page}}/\tau = 1-2^{-3/2} \approx 0.6464$ 与理论精确匹配（数值验证 `scripts/paper28_quantum_bounce.py` §6）。蒸发残留的 Planck 质量量子黑洞成为反弹种子，构成完整的黑洞生命周期：形成 → Hawking 蒸发（信息保持于谱不变性）→ Planck 截断 → 量子反弹。
 
 ### 4.4 原初谱指数与完整功率谱
 
-由 Paper V §7.2 和谱流方程线性化（D28.1，`paper28_inflation_powerspectra.py`），原初功率谱从谱涨落 $\delta A_k$ 导出：
+由 Paper V §7.2 和谱流方程线性化（D28.1，`scripts/paper28_inflation_powerspectra.py`），原初功率谱从谱涨落 $\delta A_k$ 导出：
 
 $$\langle |\delta A_k|^2 \rangle \propto k^{n_s-1}$$
 
@@ -130,7 +130,7 @@ $$n_s - 1 = 2\eta - 6\epsilon$$
 
 慢滚参数 $(\epsilon, \eta)$ 来自 $A_{\text{GR}}$ 零模式有效势 $V(\varphi) = \lambda_0(\varphi)^4/4$。$R^2$ 修正（§5）自然给出 Starobinsky 型势 $V(\varphi) = V_0(1 - e^{-\sqrt{2/3}\,\varphi})^2$，带谱间隙修正 $b_{\text{eff}} = \sqrt{2/3}(1 + \delta_b)$。
 
-**完整功率谱预言**（数值验证 `paper28_inflation_powerspectra.py` 6/6 通过）：
+**完整功率谱预言**（数值验证 `scripts/paper28_inflation_powerspectra.py` 6/6 通过）：
 
 | 量 | 谱动力学预言 | 观测约束 | 状态 |
 |---|------------|---------|------|
@@ -144,7 +144,7 @@ $$n_s - 1 = 2\eta - 6\epsilon$$
 
 ### 4.5 非线性 LSS 与谱流宇宙学完备性
 
-谱流对易子 $[A_{\text{GR}}, A_t]$ 的 BCH 展开在二阶生成 SPT 模式耦合核 $F_2$（`paper32_lss_nonlinear_v3.py`，7/7 通过），建立从量子反弹到非线性大尺度结构的完整宇宙学链：
+谱流对易子 $[A_{\text{GR}}, A_t]$ 的 BCH 展开在二阶生成 SPT 模式耦合核 $F_2$（`scripts/paper32_lss_nonlinear_v3.py`，7/7 通过），建立从量子反弹到非线性大尺度结构的完整宇宙学链：
 
 $$ \underbrace{a(t) \to a_{\min}}_{\text{谱量子反弹（§4.1）}} \xrightarrow{\text{暴胀}} \underbrace{\delta A_k \to P_L(k)}_{\text{原初谱（§4.4）}} \xrightarrow{\text{引力坍缩}} \underbrace{P_{\text{NL}}(k) = P_L(k) + P_{22}(k) + P_{13}(k)}_{\text{非线性 LSS}} $$
 
@@ -157,7 +157,7 @@ $$ \underbrace{a(t) \to a_{\min}}_{\text{谱量子反弹（§4.1）}} \xrightarr
 | 2 阶 | $[A_{\text{GR}}, [A_{\text{GR}}, A_t]]$ | 非线性 LSS $F_2$ 核, $k_{\text{NL}}=0.161$ | ✅ DESI/Euclid |
 | 3 阶 | $[A_{\text{GR}}, [A_{\text{GR}}, [A_{\text{GR}}, A_t]]]$ | 双谱 $B(k_1,k_2,k_3)$、高阶修正 | 🔄 未来巡天 |
 
-**证明**。各阶展开对应 BCH 公式的不同截断。0 阶即 $A_{\text{GR}}$ 本身的谱离散化（定理 2.2）。1 阶是谱流方程的标准形式（Paper V §2.1），线性化给出 FLRW 动力学。2 阶对易子通过函数演算映射到 SPT $F_2$ 核（`paper32_lss_nonlinear_v3.py` 定理 7.4）。3 阶及以上给出高阶关联函数。□
+**证明**。各阶展开对应 BCH 公式的不同截断。0 阶即 $A_{\text{GR}}$ 本身的谱离散化（定理 2.2）。1 阶是谱流方程的标准形式（Paper V §2.1），线性化给出 FLRW 动力学。2 阶对易子通过函数演算映射到 SPT $F_2$ 核（`scripts/paper32_lss_nonlinear_v3.py` 定理 7.4）。3 阶及以上给出高阶关联函数。□
 
 ## 5. 高阶曲率修正
 
@@ -175,7 +175,7 @@ $$\mathcal{L}_{\text{spec}} = R + \frac{c_1}{M_{\text{Pl}}^2} R^2 + \cdots$$
 
 ### 5.2 有效 Friedmann 方程
 
-$R^2$ 修正的宇宙学效应体现为有效 Friedmann 方程（数值验证 `paper28_quantum_bounce.py` §7）：
+$R^2$ 修正的宇宙学效应体现为有效 Friedmann 方程（数值验证 `scripts/paper28_quantum_bounce.py` §7）：
 
 $$H^2 = \frac{8\pi}{3}\rho - \frac{c_1}{M_{\text{Pl}}^2}\rho^2$$
 
@@ -186,7 +186,7 @@ $\Delta\lambda_{\min} \sim 0.1 M_{\text{Pl}}$ 时 $\rho_c = 0.335 M_{\text{Pl}}^
 
 ### 5.3 量子反弹引力波谱 (D28.3)
 
-反弹宇宙在张量扰动中留下特征印记。从有效 Friedmann 方程出发，张量功率谱可分解为标准暴胀谱与反弹转移函数的乘积（数值验证 `paper28_bounce_gravitational_waves.py` 6/6）：
+反弹宇宙在张量扰动中留下特征印记。从有效 Friedmann 方程出发，张量功率谱可分解为标准暴胀谱与反弹转移函数的乘积（数值验证 `scripts/paper28_bounce_gravitational_waves.py` 6/6）：
 
 $$\Delta^2_T(k) = \Delta^2_T^{(0)}(k) \times T_{\text{bounce}}(k/k_b)$$
 
@@ -213,8 +213,8 @@ $k_b = a_b H_b$ 是反弹特征尺度，$A_b \sim 2$ 是放大因子。
 | Planck 截断 $\lambda_{\max} \sim M_{\text{Pl}}$ | 谱离散化 | 🔄 量子引力实验 |
 | 量子反弹 $a_{\min}>0$ | 谱截断 | 🔄 原初引力波 |
 | $R^2$ 修正 | BCH 展开 | 🔄 早期宇宙/黑洞内部 |
-| 有效 Friedmann 方程 $H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ | $R^2$ 修正的宇宙学体现 | ✅ 数值验证（`paper28_quantum_bounce.py`） |
-| 反弹引力波谱 $\Delta^2_T(k) = \Delta^2_T^{(0)}(k) \times T_{\text{bounce}}(k/k_b)$ | 有效 Friedmann 的张量扰动 | ✅ 数值框架（`paper28_bounce_gravitational_waves.py`） |
+| 有效 Friedmann 方程 $H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ | $R^2$ 修正的宇宙学体现 | ✅ 数值验证（`scripts/paper28_quantum_bounce.py`） |
+| 反弹引力波谱 $\Delta^2_T(k) = \Delta^2_T^{(0)}(k) \times T_{\text{bounce}}(k/k_b)$ | 有效 Friedmann 的张量扰动 | ✅ 数值框架（`scripts/paper28_bounce_gravitational_waves.py`） |
 | 张量标量比 $r = 0.0042$ | 谱动力学自然势 (D28.1) | 🔄 CMB-S4/LiteBIRD 可检验 |
 | 与 LQG 面积谱一致 | R²=0.999984 | ✅ 理论交叉验证 |
 
@@ -236,7 +236,7 @@ $$\rho_{\text{bare}} \sim \frac12\sum_{k=1}^{8}\lambda_k \approx 2.4\,M_{\text{P
 
 Paper I §5.7 建立了**四层谱静默体系**（谱/态射/对象/辫子静默）。核心发现（Phase 41）是：这四层静默并非一次性作用于总真空能，而是**每种力的谱生成元 $A_{F,i}$ 各自经历完整的四层静默**。
 
-四种力（GR、EM、强、弱）的层叠压制（见 `paper41_cosmological_constant.py`，6/6 验证通过）：
+四种力（GR、EM、强、弱）的层叠压制（见 `scripts/phase41_cosmological_constant.py`，6/6 验证通过）：
 
 | 压制机制 | 表达式 | $\log_{10}$ 压制 | 来源 |
 |---------|--------|-----------------|------|
@@ -397,7 +397,7 @@ $\Lambda$ 是**唯一的有量纲全扇区求和量**——因此呈现 16 层�
 6. **$R^2$ 修正**：BCH 展开自然产生 $R^2/M_{\text{Pl}}^2$ 项，有效 Friedmann 方程 $H^2 = (8\pi/3)\rho - (c_1/M_{\text{Pl}}^2)\rho^2$ 给出有限 $\rho_c$（数值验证 ✅）
 7. **黑洞-反弹连接**：蒸发在 $M_{\text{Pl}}$ 自然终止，残留黑洞成为反弹种子（Phase 27 整合 ✅）
 8. **谱指数**：$n_s = 0.9650$，与 Planck 2018 偏差 $0.0001$（数值验证 ✅）
-9. **$\Lambda$ 多重静默**（§6）：四力层叠静默压制 126 量级，覆盖观测所需 120 量级（安全余量 6），**宇宙学常数问题在谱动力学框架内得到理论解答**（`paper41_cosmological_constant.py` 6/6）
+9. **$\Lambda$ 多重静默**（§6）：四力层叠静默压制 126 量级，覆盖观测所需 120 量级（安全余量 6），**宇宙学常数问题在谱动力学框架内得到理论解答**（`scripts/phase41_cosmological_constant.py` 6/6）
 
 
 
@@ -408,13 +408,13 @@ $\Lambda$ 是**唯一的有量纲全扇区求和量**——因此呈现 16 层�
 - [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞视界的谱动力学》，v1.0。谱间隙 $\Delta\lambda_{\min}$、Hille-Yosida 蒸发半群。
 - [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
 - [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
-- [P27.1] Phase 27.1 黑洞蒸发完整演化：`paper27_hawking_evaporation.py`，数值验证 Page 曲线
-- [P28] Phase 28 数值验证：`paper28_quantum_bounce.py`，7 项交叉检查全部通过
-- [D28.1] D28.1 谱动力学功率谱：`paper28_inflation_powerspectra.py`，6 项检查全部通过
-- [D28.2] D28.2 Paper IV 交叉验证：`paper28_dfunctor_entropy_unify.py`，6 项检查全部通过
-- [D28.3] D28.3 反弹引力波谱：`paper28_bounce_gravitational_waves.py`，6 项检查全部通过
-- [D28.4] D28.4 高阶范畴严格化：`paper28_higher_category_formalization.py`，8 项检查全部通过
-- [P32] Phase 32 非线性 LSS：`paper32_lss_nonlinear_v3.py`，7/7 通过（$k_{\text{NL}}=0.161$ h/Mpc）
+- [P27.1] Phase 27.1 黑洞蒸发完整演化：`scripts/paper27_hawking_evaporation.py`，数值验证 Page 曲线
+- [P28] Phase 28 数值验证：`scripts/paper28_quantum_bounce.py`，7 项交叉检查全部通过
+- [D28.1] D28.1 谱动力学功率谱：`scripts/paper28_inflation_powerspectra.py`，6 项检查全部通过
+- [D28.2] D28.2 Paper IV 交叉验证：`scripts/paper28_dfunctor_entropy_unify.py`，6 项检查全部通过
+- [D28.3] D28.3 反弹引力波谱：`scripts/paper28_bounce_gravitational_waves.py`，6 项检查全部通过
+- [D28.4] D28.4 高阶范畴严格化：`scripts/paper28_higher_category_formalization.py`，8 项检查全部通过
+- [P32] Phase 32 非线性 LSS：`scripts/paper32_lss_nonlinear_v3.py`，7/7 通过（$k_{\text{NL}}=0.161$ h/Mpc）
 - Ashtekar, A. & Bojowald, M. (2005). "Quantum geometry and the Schwarzschild singularity." *Class. Quant. Grav.* 22, 3349.
 - Planck Collaboration (2020). "Planck 2018 results. VI. Cosmological parameters." *A&A* 641, A6.
 

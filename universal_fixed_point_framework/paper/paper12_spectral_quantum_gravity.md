@@ -8,7 +8,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）与 Paper XI（谱 QFT 公理 A1–A6）。配套数值代码见 `paperX_graviton_propagator.py`、`paperX_planck_scattering.py`。本文为 Paper VIII（黑洞视界谱动力学）与 Paper IX（奇点谱消解）的上层整合，后者为本文 §5–6 提供细化的黑洞与奇点描述。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）与 Paper XI（谱 QFT 公理 A1–A6）。配套数值代码见 `scripts/paperX_graviton_propagator.py`、`scripts/paperX_planck_scattering.py`。本文为 Paper VIII（黑洞视界谱动力学）与 Paper IX（奇点谱消解）的上层整合，后者为本文 §5–6 提供细化的黑洞与奇点描述。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **$\mathbf{Sp}$**：谱范畴（Spectral Category）
@@ -42,12 +42,12 @@
 | 章节 | 内容 | 来源 |
 |:----|------|:----|
 | §2 | $A_{\text{GR}}$ 离散谱构造 | Paper XX（谱间隙第一性原理） |
-| §3 | 谱引力子传播子 | `paperX_graviton_propagator.py` |
-| §4 | Planck 尺度散射与多体碰撞 | `paperX_planck_scattering.py` + v2-v5 |
+| §3 | 谱引力子传播子 | `scripts/paperX_graviton_propagator.py` |
+| §4 | Planck 尺度散射与多体碰撞 | `scripts/paperX_planck_scattering.py` + v2-v5 |
 | §5 | 黑洞视界谱动力学 | Paper VIII |
 | §6 | 奇点谱消解 | Paper IX |
 | §7 | 黑洞蒸发与 Page 曲线 | Paper VIII（黑洞视界谱动力学） |
-| §8 | 跨尺度 RG 流 | `paperX_cross_scale_RG.py` |
+| §8 | 跨尺度 RG 流 | `scripts/paperX_cross_scale_RG.py` |
 | §9 | Kerr 度规的全谱分解 | — |
 | §10 | 谱引力子自相互作用的三圈 $\beta$ 函数 | — |
 | §11 | 谱 AdS/CFT 对应 | — |
@@ -58,12 +58,12 @@
 
 | 脚本 | 验证内容 | 通过率 | 关键结果 |
 |:----|---------|:-----:|---------|
-| `paperX_graviton_propagator.py` | 谱引力子传播子 | **7 项** | IR 还原 GR, UV 有限 |
-| `paperX_planck_scattering.py` | Planck 尺度 2→2 散射 | **5/5** | $M_{\text{spec}}/M_{\text{GR}} \to 0$ for $E > M_{\text{Pl}}$ |
-| `paperX_multi_body_scatter_v3.py` | N 体谱散射统一闭式 | **8/8** | |$M_{\text{spec}}^{(N)}| < \infty\ \forall N$ |
-| `paperX_cutkosky_spectral.py` | 谱 Cutkosky 规则 + 幺正性 | **8/8** | |$SS^\dagger = I$ |
-| `paperX_multi_body_scatter_v5.py` | RAMBO LIPS 实验截面 | **8/8** | LHC → Planck 全能标 |
-| `paperX_dynamic_QG_complete.py` | Paper XI ↔ XII 公理对接 | **8/8** | Axiom A1-A7 + Thm 9.1 |
+| `scripts/paperX_graviton_propagator.py` | 谱引力子传播子 | **7 项** | IR 还原 GR, UV 有限 |
+| `scripts/paperX_planck_scattering.py` | Planck 尺度 2→2 散射 | **5/5** | $M_{\text{spec}}/M_{\text{GR}} \to 0$ for $E > M_{\text{Pl}}$ |
+| `scripts/paperX_multi_body_scatter_v3.py` | N 体谱散射统一闭式 | **8/8** | |$M_{\text{spec}}^{(N)}| < \infty\ \forall N$ |
+| `scripts/paperX_cutkosky_spectral.py` | 谱 Cutkosky 规则 + 幺正性 | **8/8** | |$SS^\dagger = I$ |
+| `scripts/paperX_multi_body_scatter_v5.py` | RAMBO LIPS 实验截面 | **8/8** | LHC → Planck 全能标 |
+| `scripts/paperX_dynamic_QG_complete.py` | Paper XI ↔ XII 公理对接 | **8/8** | Axiom A1-A7 + Thm 9.1 |
 | | **合计** | **44/44** | |
 
 $^\dagger$ 同时归属于 Paper XI。
@@ -215,7 +215,7 @@ $$\log|M_{\text{spec}}^{(N)}(E)| \xrightarrow{E \to \infty} -\frac{N^2 E^2}{\lam
 
 **证明**。$|G_{\text{spec}}(s)|$ 在 $s \to \infty$ 时以 $1/s$ 衰减，而 $F_N = e^{-(NE/\lambda_{\max})^2}$ 提供 Gaussian 压制，指数增长率 $N(N-1)/2$ 被 $N^2$ 压制超越。□
 
-数值验证（`paperX_multi_body_scatter_v3.py` 8/8 ✅）：N=2,3,4,5,10,100 全部 UV 有限，N=100 时 $\log|M| \approx -6.5\times 10^5$。
+数值验证（`scripts/paperX_multi_body_scatter_v3.py` 8/8 ✅）：N=2,3,4,5,10,100 全部 UV 有限，N=100 时 $\log|M| \approx -6.5\times 10^5$。
 
 ### 4.5 谱 Cutkosky 规则与 S-矩阵幺正性
 
@@ -237,7 +237,7 @@ $$S_{\text{spec}}^\dagger S_{\text{spec}} = I \quad \Leftrightarrow \quad 2\,\te
 
 该幺正性对所有 N 成立，与 Paper XI 定理 9.1 一致。
 
-数值验证（`paperX_cutkosky_spectral.py` 8/8 ✅）：谱传播子割线结构、2→2 光学定理、3→3 多重割线、N 体推广全部通过。
+数值验证（`scripts/paperX_cutkosky_spectral.py` 8/8 ✅）：谱传播子割线结构、2→2 光学定理、3→3 多重割线、N 体推广全部通过。
 
 ### 4.6 实验截面与能标依赖
 
@@ -251,7 +251,7 @@ $$\frac{\sigma_N(E)}{\sigma_2(E)} \propto \left(\frac{E}{M_{\text{Pl}}}\right)^{
 
 **UV 极限**（$E \gg M_{\text{Pl}}$）：$\sigma_N \to 0$——所有多体过程被谱截断统一压制，无需额外重整化。
 
-**数值验证**（`paperX_multi_body_scatter_v5.py` 8/8 ✅）：
+**数值验证**（`scripts/paperX_multi_body_scatter_v5.py` 8/8 ✅）：
 
 | 检验项 | 验证内容 | 结果 |
 |:-----|:---------|:----:|
@@ -380,13 +380,13 @@ $$g_i^{-2}(\Lambda)_{\text{full}} = Z_i \cdot \left[ g_i^{-2}(M_{\text{Pl}}) + \
 | $S_3$ | $n_f = 2\cdot(-\ln S_3) = 6$ | 费米子圈计数 |
 | $S_4$ | $\ln(M_{\text{Pl}}/M_Z)$ | RGE 积分区间 |
 
-数值结果（Paper XI §9.7，`paperX_spectral_SM.py` 8/8 ✅）：$Z_1 = 3.67$，$Z_2 = 2.12$，$Z_3 = 1.44$。§8.3 将给出两种方法的完整对比。
+数值结果（Paper XI §9.7，`scripts/paperX_spectral_SM.py` 8/8 ✅）：$Z_1 = 3.67$，$Z_2 = 2.12$，$Z_3 = 1.44$。§8.3 将给出两种方法的完整对比。
 
 ### 8.3 从 Planck 到 QCD
 
 以下给出两种方法的完整对比。
 
-**方法 A：简化单圈跑动**（均一化 GUT 边界条件，不含 $Z$ 因子；`paperX_cross_scale_RG.py` 4/4 ✅）：
+**方法 A：简化单圈跑动**（均一化 GUT 边界条件，不含 $Z$ 因子；`scripts/paperX_cross_scale_RG.py` 4/4 ✅）：
 
 | 能标 | $\log_{10}(E/\text{GeV})$ | $\alpha_1^{-1}$ | $\alpha_2^{-1}$ | $\alpha_3^{-1}$ | $y_t$ |
 |:----:|:--------------------------:|:--------------:|:--------------:|:--------------:|:----:|
@@ -396,7 +396,7 @@ $$g_i^{-2}(\Lambda)_{\text{full}} = Z_i \cdot \left[ g_i^{-2}(M_{\text{Pl}}) + \
 | $M_Z$ | 1.96 | 49.3 | 29.7 | 19.3 | 0.70 |
 | $\Lambda_{\text{QCD}}$ | -0.70 | 51.1 | 28.2 | 16.2 | 0.76 |
 
-**方法 B：完整四层静默方法论**（含 $Z_i$ 因子态射修正；Paper XI §9.7，`paperX_spectral_SM.py` 8/8 ✅）：
+**方法 B：完整四层静默方法论**（含 $Z_i$ 因子态射修正；Paper XI §9.7，`scripts/paperX_spectral_SM.py` 8/8 ✅）：
 
 | 能标 | $\log_{10}(E/\text{GeV})$ | $\alpha_1^{-1}$ | $\alpha_2^{-1}$ | $\alpha_3^{-1}$ | $y_t$ |
 |:----:|:--------------------------:|:--------------:|:--------------:|:--------------:|:----:|

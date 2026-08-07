@@ -1,0 +1,58 @@
+% =============================================================================
+% 附录 A：Regge 轨迹理论-实验对比表（LaTeX 片段，61B）
+% -----------------------------------------------------------------------------
+% 来源：paper/paper40_qcd_color_dynamics.md 附录 A（补充材料）
+%       谱定轨迹 J = α'·m² + α₀（α' = 1/(8πΛ²) = 0.902 GeV⁻²、α₀ = 1/2，
+%       推论 5.7 + 推论 5.12，全谱定无拟合参数）vs PDG 2022。
+% 插入位置：主论文模板参考文献之后（附录）。
+% 依赖宏包：amsmath, amssymb, amsthm（模板已加载）；无 booktabs 依赖。
+% =============================================================================
+
+\section*{附录 A：Regge 轨迹理论-实验对比表}
+\label{app:regge-table}
+
+谱定 Regge 轨迹 $J = \alpha'\cdot m^2 + \alpha_0$（$\alpha' = 1/(8\pi\Lambda_{\mathrm{QCD}}^2)
+= 0.902\ \mathrm{GeV}^{-2}$、$\alpha_0 = 1/2$，全谱定无拟合参数）对强子实验数据
+（PDG 2022）的对比见表 \ref{tab:regge-appendix}。
+
+\begin{table}[htbp]
+\centering
+\caption{Regge 轨迹理论预测值与实验值对比（$\rho/a_2/\rho_3$）}
+\label{tab:regge-appendix}
+\begin{tabular}{lcccc}
+\hline
+强子 & 自旋 $J$ & 理论预测 $m_{\mathrm{th}}$ & 实验 $m_{\mathrm{exp}}$（PDG） & 偏差 \\
+\hline
+$\rho(770)$   & 1 & $\sqrt{0.5/0.902} = 0.744\ \mathrm{GeV}$ & $0.7753\ \mathrm{GeV}$ & $3.98\%$ \\
+$a_2(1320)$   & 2 & $\sqrt{1.5/0.902} = 1.289\ \mathrm{GeV}$ & $1.3183\ \mathrm{GeV}$ & $2.19\%$ \\
+$\rho_3(1690)$& 3 & $\sqrt{2.5/0.902} = 1.665\ \mathrm{GeV}$ & $1.6900\ \mathrm{GeV}$ & $1.50\%$ \\
+\hline
+平均偏差 & & & & $\mathbf{2.56\%}$ \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Regge 轨迹参数：理论谱定 vs 实验/拟合}
+\label{tab:regge-params}
+\begin{tabular}{lccc}
+\hline
+参数 & 理论谱定 & 实验/拟合 & 偏差 \\
+\hline
+斜率 $\alpha'$ & $0.902\ \mathrm{GeV}^{-2}$ & 核心拟合 $0.888\ \mathrm{GeV}^{-2}$ & $1.6\%$ \\
+截距 $\alpha_0$ & $1/2 = 0.500$ & 拟合 $0.463$ & $8.0\%$ \\
+轨迹线性 & --- & $r = 0.9988$（核心 3 点） & --- \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{remark}[解读]
+(1) 谱定轨迹对 $\rho/a_2/\rho_3$ 平均偏差 $2.56\%$，最高阶 $\rho_3$ 最准
+（$1.50\%$），偏差随 $J$ 递减——谱定截距 $\alpha_0 = 1/2$ 与斜率
+$\alpha' = 1/(8\pi\Lambda_{\mathrm{QCD}}^2)$ 的联合预言在无拟合参数下复现
+强子 Regge 轨迹；(2) 截距 $8.0\%$ 偏差分析见推论 5.12 后偏差来源分析
+（统计不显著，$D_{\mathrm{eff}} \approx 9.4$ 维数衔接为动力学来源）；
+(3) 理论截距 $0.500$ 与拟合 $0.463$ 的差使 $\rho$（$J=1$）理论值偏低
+$3.98\%$，是平均偏差的主要贡献者。
+\end{remark}

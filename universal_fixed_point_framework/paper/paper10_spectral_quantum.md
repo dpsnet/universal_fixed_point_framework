@@ -8,7 +8,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `paperX_*.py`（共 7 脚本，合计 40/40 检查通过）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$）。数值代码见 `scripts/paperX_*.py`（共 7 脚本，合计 40/40 检查通过）。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **CHSH**：Clauser-Horne-Shimony-Holt（克劳泽-霍恩-希莫尼-霍尔特）不等式
@@ -61,13 +61,13 @@
 
 | 脚本 | 验证内容 | 通过率 | 关键结果 |
 |:----|---------|:-----:|---------|
-| `paperX_collapse_time.py` | 坍缩时间 $\tau = \ln(1/\varepsilon)/\kappa$ | **5/5** | 幂律 $-0.000$，$\tau \cdot \kappa$ 常数 |
-| `paperX_entanglement_spectrum.py` | 纠缠阈值 $p=1/3$, CHSH $p=1/\sqrt{2}$ | **6/6** | Werner/退相干双模型匹配 |
-| `paperX_chsh_noise.py` | 7 组 Bell 实验退相干曲线 | **7/7** | 平均偏差 **0.03%** |
-| `paperX_spectral_redundancy.py` | 谱冗余 = M4 分支客观化 | **5/5** | 碎片 $>5$ → 客观性成立 |
-| `paperX_fixed_basis_entropy.py` | 熵产生率 vs 基选择 | **6/6** | W 型对称: 两端高中间低, $\theta=\pi/4$ 最小 |
-| `paperX_page_curve.py` | Page 曲线 + 信息守恒 | **5/5** | Page 时间 $\approx 0.5$ |
-| `paperX_resource_measures.py` | 资源衰减 + $R_{\text{tot}}$ 守恒 | **6/6** | $C(t)=C(0)e^{-\kappa t}$ |
+| `scripts/paperX_collapse_time.py` | 坍缩时间 $\tau = \ln(1/\varepsilon)/\kappa$ | **5/5** | 幂律 $-0.000$，$\tau \cdot \kappa$ 常数 |
+| `scripts/paperX_entanglement_spectrum.py` | 纠缠阈值 $p=1/3$, CHSH $p=1/\sqrt{2}$ | **6/6** | Werner/退相干双模型匹配 |
+| `scripts/paperX_chsh_noise.py` | 7 组 Bell 实验退相干曲线 | **7/7** | 平均偏差 **0.03%** |
+| `scripts/paperX_spectral_redundancy.py` | 谱冗余 = M4 分支客观化 | **5/5** | 碎片 $>5$ → 客观性成立 |
+| `scripts/paperX_fixed_basis_entropy.py` | 熵产生率 vs 基选择 | **6/6** | W 型对称: 两端高中间低, $\theta=\pi/4$ 最小 |
+| `scripts/paperX_page_curve.py` | Page 曲线 + 信息守恒 | **5/5** | Page 时间 $\approx 0.5$ |
+| `scripts/paperX_resource_measures.py` | 资源衰减 + $R_{\text{tot}}$ 守恒 | **6/6** | $C(t)=C(0)e^{-\kappa t}$ |
 
 所有代码位于项目根目录。
 
@@ -181,7 +181,7 @@ $$\boxed{\tau_{\text{collapse}}(\varepsilon) = \frac{1}{\kappa} \ln\left(\frac{\
 
 ### 3.3 数值验证
 
-数值扫描使用 `paperX_collapse_time.py`（二分法搜索 $\|A_t - \mathcal{D}(A_t)\|_F < \varepsilon$ 的最小时刻）。
+数值扫描使用 `scripts/paperX_collapse_time.py`（二分法搜索 $\|A_t - \mathcal{D}(A_t)\|_F < \varepsilon$ 的最小时刻）。
 
 **结果 A：$\tau$ 与 $\Delta\lambda_{\min}$ 无关**
 
@@ -228,7 +228,7 @@ $$C(\rho) = \max\left(0, \lambda_1 - \lambda_2 - \lambda_3 - \lambda_4\right),$$
 
 ### 4.3 噪声退化阈值
 
-数值扫描（`paperX_entanglement_spectrum.py`，500 点）得到关键阈值：
+数值扫描（`scripts/paperX_entanglement_spectrum.py`，500 点）得到关键阈值：
 
 **Werner 态 $\rho(p) = p|\Phi^+\rangle\langle\Phi^+| + (1-p)I/4$：**
 
@@ -305,7 +305,7 @@ $$\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa}$$
 
 ### 6.2 CHSH 实验匹配
 
-`paperX_chsh_noise.py` 使用 Werner 模型 $S(p) = 2\sqrt{2} \cdot p$ 匹配 7 组经典 Bell 实验（平均偏差 **0.03%**）：
+`scripts/paperX_chsh_noise.py` 使用 Werner 模型 $S(p) = 2\sqrt{2} \cdot p$ 匹配 7 组经典 Bell 实验（平均偏差 **0.03%**）：
 
 | 实验 | $S_{\text{obs}}$ | $p_{\text{eq}}$ | 偏差 |
 |:---|:---:|:---:|:---:|
@@ -635,7 +635,7 @@ $$\mathcal{C}_B(A_t) = \mathcal{C}_B(A_0) \cdot e^{-\kappa t}.$$
 $$\mathcal{C}_B(A_t)^2 = \sum_{i \neq j} |A_{ij}(t)|^2 = \sum_{i \neq j} |A_{ij}(0)|^2 e^{-2\kappa t} = \mathcal{C}_B(A_0)^2 \cdot e^{-2\kappa t}.$$
 开方即得 $\mathcal{C}_B(A_t) = \mathcal{C}_B(A_0) \cdot e^{-\kappa t}$。□
 
-该指数衰减规律已由数值脚本 `paperX_resource_measures.py` 在多种初始态和退相干强度下验证（6/6 通过）。
+该指数衰减规律已由数值脚本 `scripts/paperX_resource_measures.py` 在多种初始态和退相干强度下验证（6/6 通过）。
 
 #### 资源关系与谱表达式
 
@@ -656,7 +656,7 @@ $$\mathcal{C}_B(A_t)^2 = \sum_{i \neq j} |A_{ij}(t)|^2 = \sum_{i \neq j} |A_{ij}
 2. 总谱资源 $R_{\text{tot}}(A_t) = \sum_i \lambda_i \cdot \omega(P_i)$ 在 $\kappa=0$ 时守恒
 3. 转化效率 $\eta = (R(A_0) - R(A_t))/R(A_0)$ 由 $\kappa$ 控制
 
-**数值验证**（`paperX_resource_measures.py`，6/6 通过）：
+**数值验证**（`scripts/paperX_resource_measures.py`，6/6 通过）：
 
 | 检查项 | 结果 |
 |-------|:----:|
@@ -1076,13 +1076,13 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 
 | 主题 | 数值脚本 | 通过率 |
 |:----|:--------|:-----:|
-| M1-M4 公理 + 坍缩时间 | `paperX_collapse_time.py` | 5/5 |
-| 纠缠 + CHSH | `paperX_entanglement_spectrum.py` | 6/6 |
-| 量子资源理论 | `paperX_resource_measures.py` | 6/6 |
-| CHSH 实验匹配 | `paperX_chsh_noise.py` | 7/7 |
-| 谱冗余扫描 | `paperX_spectral_redundancy.py` | 5/5 |
-| 熵产生率基选择 | `paperX_fixed_basis_entropy.py` | 6/6 |
-| Page 曲线 | `paperX_page_curve.py` | 5/5 |
+| M1-M4 公理 + 坍缩时间 | `scripts/paperX_collapse_time.py` | 5/5 |
+| 纠缠 + CHSH | `scripts/paperX_entanglement_spectrum.py` | 6/6 |
+| 量子资源理论 | `scripts/paperX_resource_measures.py` | 6/6 |
+| CHSH 实验匹配 | `scripts/paperX_chsh_noise.py` | 7/7 |
+| 谱冗余扫描 | `scripts/paperX_spectral_redundancy.py` | 5/5 |
+| 熵产生率基选择 | `scripts/paperX_fixed_basis_entropy.py` | 6/6 |
+| Page 曲线 | `scripts/paperX_page_curve.py` | 5/5 |
 
 ---
 

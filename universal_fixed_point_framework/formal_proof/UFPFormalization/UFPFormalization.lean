@@ -66,3 +66,7 @@ import UFPFormalization.RAP5a_explicit_adjunction
 import UFPFormalization.DeviationBound
 import UFPFormalization.HutchinsonAttractor
 import UFPFormalization.ContinuumLimit
+import UFPFormalization.InflationDynamics
+import UFPFormalization.ColorDynamics
+import UFPFormalization.RenormalizationChain
+import UFPFormalization.BlackHoleEvolution

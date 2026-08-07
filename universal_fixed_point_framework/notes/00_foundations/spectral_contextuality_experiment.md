@@ -1,7 +1,7 @@
 # 语境性实验匹配笔记：Spec ≠ Spec_com 的实验确认
 
 > 基于 Paper X 拓展笔记 §1（Kochen-Specker 语境性）与现有语境性实验的定性对比。
-> 对应 `paperX_contextuality_match.py` 的数值模拟。
+> 对应 `scripts/paperX_contextuality_match.py` 的数值模拟。
 
 ---
 
@@ -140,7 +140,7 @@ $$\boxed{S_{\text{KS}} \propto f(N_{\text{nc}}), \quad f(N) = \alpha \sqrt{N} + 
 
 ---
 
-## 6. 与 `paperX_contextuality_match.py` 的对应
+## 6. 与 `scripts/paperX_contextuality_match.py` 的对应
 
 | 数值模块 | 对应概念 | 检查项 |
 |---------|---------|:------:|

@@ -35,9 +35,10 @@ alpha_1_MZ = (5.0/3.0) / (exp_alpha_inv * (1 - exp_sin2))
 alpha_2_MZ = 1.0 / (exp_alpha_inv * exp_sin2)
 alpha_3_MZ = exp_alpha_s
 
-# 谱裸耦合
+# 谱裸耦合（【2026-08-06 修复】U(1) 分量 √(2/3) → √(1/3)，SU(2) 特征值归一化，
+# 见 paperX_ratio_fix.py 与笔记 §8.4 修复子节）
 alpha_bare = {
-    'U1': 0.122 * np.sqrt(2/3) / (4*np.pi),
+    'U1': 0.122 * np.sqrt(1/3) / (4*np.pi),
     'SU2': 0.122 * 1.0 / (4*np.pi),
     'SU3': 0.122 * np.sqrt(2) / (4*np.pi),
 }

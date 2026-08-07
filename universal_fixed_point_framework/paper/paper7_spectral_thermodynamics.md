@@ -57,7 +57,7 @@ $$S_{\mathcal{B}}(t) = -\sum_i p_i(t) \log p_i(t), \quad p_i(t) = |\langle e_i| 
 
 ### 2.3 连续谱推广
 
-对连续谱系统（如湍流、量子场），固定基熵通过投影值谱测度 $E(\lambda)$ 推广（`paper34_unbounded_operator.py`，定理 2.10.3）。
+对连续谱系统（如湍流、量子场），固定基熵通过投影值谱测度 $E(\lambda)$ 推广（`scripts/paper34_unbounded_operator.py`，定理 2.10.3）。
 
 **定义 2.2**（连续谱熵）。对自伴算子 $A$ 的谱分解 $A = \int \lambda \, dE(\lambda)$，固定基 $\mathcal{B}$ 下的谱熵为：
 
@@ -65,11 +65,11 @@ $$S_{\mathcal{B}}^{\text{cont}}(t) = -\int p(\lambda,t) \log p(\lambda,t) \, d\l
 
 其中 $E_t(\lambda) = U_t E^{(0)}(\lambda) U_t^{-1}$ 是演化后的谱测度。
 
-**定理 2.1**（连续谱熵增，`paper29_entropy_production_proof.py` 定理 P29.4）。对连续谱 $\lambda(k) \in [k_{\min}, k_{\max}]$，熵密度 $s(k,t) = -p(k,t)\log p(k,t)$ 满足：
+**定理 2.1**（连续谱熵增，`scripts/paper29_entropy_production_proof.py` 定理 P29.4）。对连续谱 $\lambda(k) \in [k_{\min}, k_{\max}]$，熵密度 $s(k,t) = -p(k,t)\log p(k,t)$ 满足：
 
 $$S_{\text{cont}}(t_f) \ge S_{\text{cont}}(t_0), \quad S_{\text{cont}}(t) = \int s(k,t) \, dk$$
 
-**证明要点**。使用 Lindblad 相对熵单调性：$S(T(\rho)||T(\sigma)) \le S(\rho||\sigma)$。令 $\sigma_{\text{flat}} = I/d$，则 $S_{\text{basis}}(t) = \log d - S(p(t)||p_{\text{flat}})$。相对熵单调 $\Rightarrow$ $S_{\mathcal{B}}(t+dt) \ge S_{\mathcal{B}}(t)$。连续谱推广通过测度论直接成立。详细证明及数值验证（离散谱 $\Delta S > 0$、连续谱 $\Delta S_{\text{cont}} > 0$）见 `paper29_entropy_production_proof.py`。□
+**证明要点**。使用 Lindblad 相对熵单调性：$S(T(\rho)||T(\sigma)) \le S(\rho||\sigma)$。令 $\sigma_{\text{flat}} = I/d$，则 $S_{\text{basis}}(t) = \log d - S(p(t)||p_{\text{flat}})$。相对熵单调 $\Rightarrow$ $S_{\mathcal{B}}(t+dt) \ge S_{\mathcal{B}}(t)$。连续谱推广通过测度论直接成立。详细证明及数值验证（离散谱 $\Delta S > 0$、连续谱 $\Delta S_{\text{cont}} > 0$）见 `scripts/paper29_entropy_production_proof.py`。□
 
 ## 3. 热力学第二定律的谱推导
 
@@ -93,7 +93,7 @@ $$\langle e_i|A_t|e_i\rangle = \sum_{jk} a_{jk} \langle e_i|U_t|e_j\rangle\langl
 
 ### 3.2 数值验证
 
-`paper22_spectral_entropy.py` 对随机 $6\times6$ Hermite 矩阵在谱流下 200 步演化：
+`scripts/paper22_spectral_entropy.py` 对随机 $6\times6$ Hermite 矩阵在谱流下 200 步演化：
 
 | 指标 | 值 |
 |------|-----|

@@ -3,6 +3,7 @@ import UFPFormalization.SpCategory
 import UFPFormalization.DecursionFunctor
 import UFPFormalization.SpectralCorrespondence
 import UFPFormalization.OperatorTheory
+import UFPFormalization.LeaverComplexity
 import Mathlib.Analysis.SpecialFunctions.Exp
 
 namespace UFPFormalization
@@ -38,18 +39,19 @@ def contractiveDual {n : ℕ} (eifs : ExpansiveIFS n) : RecObj :=
     dec := inferInstance
     step := id }  -- Placeholder: represents the inverse dynamics
 
-/-- Extend D to expansive IFS via the contractive dual.
-    D_ext(R_expansive) := D(R_contractive_dual) -/
+/-- Extend D to expansive IFS via the contractive dual with sign reversal.
+    D_ext(R_expansive) := -D(R_contractive_dual), where the minus sign encodes
+    the expansion→contraction duality of the spectrum. -/
 noncomputable def D_ext_expansive {n : ℕ} (eifs : ExpansiveIFS n) : SpObj :=
-  DFunctor.obj (contractiveDual eifs)
+  { n := (DFunctor.obj (contractiveDual eifs)).n
+    A := -(DFunctor.obj (contractiveDual eifs)).A }
 
 /-- The extended D functor satisfies the same spectral correspondence:
-    the spectrum of the expansive system is the image of the contractive dual
-    under the exponential map, with the sign reversed for the expansion rates. -/
+    the spectrum of the expansive system is the negative of the contractive
+    dual spectrum (sign reversal for the expansion rates). -/
 theorem expansive_spectral_correspondence {n : ℕ} (eifs : ExpansiveIFS n) :
     (D_ext_expansive eifs).A = -(DFunctor.obj (contractiveDual eifs)).A := by
-  -- The sign reversal accounts for expansion vs. contraction
-  simp [D_ext_expansive]
+  rfl
 
 /-- Consistency check: For a contractive IFS (c_i < 1), the original D and
     the extended D give the same result (up to a sign). -/
@@ -73,7 +75,7 @@ structure NonCompressiveRGFlow where
     Uses the adjoint (backward) RG flow as the contractive dual. -/
 noncomputable def D_ext_rg (rg : NonCompressiveRGFlow) : SpObj :=
   -- Placeholder: detailed construction requires RG-specific analysis
-  ⟨1, fun _ _ => 0, inferInstance⟩
+  ⟨1, fun _ _ => 0⟩
 
 /-- The extended D functor maps expansive/non-compressive systems to Spec,
     completing the coverage of Rec\Rec_D ∪ Rec_diss.

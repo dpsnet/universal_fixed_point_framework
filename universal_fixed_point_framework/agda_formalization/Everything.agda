@@ -169,3 +169,6 @@ open import Cardinality.Cardinality
 open import P1Spectral.P1Spectral
 open import SpectralTheory.SpectralTheory
 open import CrossLayer.CrossLayer
+open import InflationDynamics.InflationDynamics
+open import ColorDynamics.ColorDynamics
+open import BlackHoleDynamics.BlackHoleDynamics

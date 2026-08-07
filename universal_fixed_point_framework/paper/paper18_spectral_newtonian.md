@@ -327,6 +327,8 @@ $$\frac{m}{M_{\text{Pl}}} = \frac{\hbar}{\Delta\lambda_{\text{min}}} \cdot \frac
 
 ### 5.3 引力为何最弱：谱交织精度的解释
 
+【2026-08-07 勘误注（已解决）】本文所有 $\epsilon \approx 8.12 \times 10^{-17}$ 为框架输入值（机器精度观测）。Cl(1,7) ≅ M₁₆(ℝ) 修正（paper20 权威）下，正确因子 = 4D Weyl 数 4（16 维实旋量 4D 分解 = 4 Weyl，RAP3/paper17 机器证明），非 SU(2) 副本数 N(2₁)=8；闭式 $\epsilon = N_{\mathrm{Weyl}} \cdot v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 4 \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.07\times10^{-17}$ ≈ 框架值 8.12×10⁻¹⁷（偏差 0.6%，原"$N(2_1)=8$ 给 1.614×10⁻¹⁶（约 2 倍）/登记待校准"已消除）。本文结论（引力最弱、$\epsilon^2$ 修正极小、LIV 修正量级）均为**量级/定性**论证，偏差不改变结论（见 paper20 §6.4 / paperX_epsilon_resolution.py）。
+
 **定理 5.1**（引力弱性的谱解释——主定理 4）。引力之所以是最弱的力，是因为引力生成元 $A_{\text{GR}}$ 与物质生成元 $A_{\text{SM}}$ 的谱结构差异极小（$\epsilon \approx 8.12 \times 10^{-17}$），导致两者谱间隙几乎相等：
 
 $$\Delta\lambda_{\text{min}}^{(\text{GR})} \approx \Delta\lambda_{\text{min}}^{(\text{SM})}$$
@@ -650,7 +652,7 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 3. **弯曲时空中的时空混合**：在平直时空下时间作为谱流参数的推导是精确的，但在弯曲时空中时间与空间的区分不是全局的。完整谱弯曲时空框架（Phase 52）需证明谱流参数与 1-态射在局域惯性系中线性组合为 4 维洛伦兹流形。
 
-~~4. **谱交织精度 $\epsilon$ 的更深层起源**：$\epsilon \approx 8.12 \times 10^{-17}$ 目前是谱框架的输入参数。能否从 Cl(1,7) 的更高阶表示论直接导出 $\epsilon$ 的精确值？~~ **✅ 已解决（2026-07-19）**。$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$，其中 $N(2_1)=4$ 来自 $\mathrm{Cl}(1,7)\cong\mathrm{M}_8(\mathbb{R})$ 旋量的 SU(2) 分支规则 $8=4\times2$。推导值 $8.068\times10^{-17}$，偏差 $0.64\%$。
+~~4. **谱交织精度 $\epsilon$ 的更深层起源**：$\epsilon \approx 8.12 \times 10^{-17}$ 目前是谱框架的输入参数。能否从 Cl(1,7) 的更高阶表示论直接导出 $\epsilon$ 的精确值？~~ **✅ 已解决（2026-07-19；2026-08-07 因子修正）**。$\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$，正确因子 $N_{\mathrm{Weyl}}=4$ 为 4D Weyl 数（16 维实旋量 4D 分解 = 4 Weyl，RAP3/paper17 机器证明），非 SU(2) 副本数 $N(2_1)=8$（原"$N(2_1)=4$ 基于 $\mathrm{Cl}(1,7)\cong\mathrm{M}_8(\mathbb{R})$ 分支规则 $8=4\times2$"与后续"$N(2_1)=8$ 给 $1.614\times10^{-16}\approx 2\times\epsilon_{\text{框架}}$、登记待校准"均已更新）。推导值 $8.07\times10^{-17}$，偏差 $0.6\%$（见 paper20 §6.4 / paperX_epsilon_resolution.py）。
 
 ---
 

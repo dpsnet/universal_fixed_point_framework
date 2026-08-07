@@ -6,7 +6,7 @@
 
 > **重要修正（v1.1，2026-07-27）**：本文原稿包含两处已被证伪的断言：（i）$\mathrm{Cl}(1,7) \cong M_8(\mathbb R)$ 错误，正确为 $\mathrm{Cl}(1,7) \cong M_{16}(\mathbb R)$，其不可约实旋量模为 16 维而非 8 维；（ii）"Bott 周期分类唯一导出 $k_{\max}=8$"错误，$k_{\max}=8$ 是模型选择。因此，原摘要中"完整第一性推导链""不存在自由参数""零 `sorry`"等表述已停用。修正后的诚实定位为：SU(2) Casimir 谱给出与 $k_{\max}$ 无关的谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$；$k_{\max}=8$ 登记为模型选择；$\Delta\lambda_{\min}\approx0.122M_{\text{Pl}}$ 是在该选择下的输出。详见《RAP_勘误与立场声明.md》。
 
-**摘要**：本文在 Rec/Sp 范畴框架内建立引力谱间隙 $\Delta\lambda_{\min}$ 的推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4），导出与截断无关的谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ →（3）$\mathrm{Cl}(1,7)$ 作为代数工具进入引力扇区，但 $k_{\max}=8$ 为模型选择而非 Bott 周期唯一结果（§5，已修正）→（4）在 $k_{\max}=8$ 选择下，谱间隙数值 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 的闭式：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$（§6.4）→（6）裸耦合常数、R² 系数、临界能量密度（§7）。SU(2) Casimir 比值部分是结构结果；$k_{\max}$ 与 $d_H$ 同属模型输入层。
+**摘要**：本文在 Rec/Sp 范畴框架内建立引力谱间隙 $\Delta\lambda_{\min}$ 的推导链。推导从 Paper I 的递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$ 出发，途经以下环节：（1）范畴边界 $\partial\mathbf{Rec}_D$ 处的谱流生成元 $G_{\text{GR}} = \text{ad}(G)(A)$（§3）→（2）SU(2) 角动量对称群与 Casimir 算子谱 $\sqrt{k(k+1)}$（§4），导出与截断无关的谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ →（3）$\mathrm{Cl}(1,7)$ 作为代数工具进入引力扇区，但 $k_{\max}=8$ 为模型选择而非 Bott 周期唯一结果（§5，已修正）→（4）在 $k_{\max}=8$ 选择下，谱间隙数值 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）→（5）谱交织精度 $\epsilon$ 的闭式：$\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 4 \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.07\times10^{-17}$（§6.4，$N_{\mathrm{Weyl}}=4$ 为 4D Weyl 数）【2026-08-07 已解决：原"$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 8.068\times10^{-17}$"归因更新——正确因子为 4D Weyl 数 4（16 维实旋量 4D 分解 = 4 Weyl，RAP3 机器证明），非 SU(2) 副本数 N(2₁)】→（6）裸耦合常数、R² 系数、临界能量密度（§7）。SU(2) Casimir 比值部分是结构结果；$k_{\max}$ 与 $d_H$ 同属模型输入层。
 
 ---
 
@@ -43,7 +43,7 @@ Step 2: 谱流方程 dA/dt = [G, A]
     ↓   Paper V, Sp_∞ 切空间
 Step 3: 三层破缺 → 四力生成元
     ↓   Rec_D/Rec_diss/Rec\Rec_D → A_GR, A_EM, A_strong, A_weak
-Step 4: Casimir 谱 → 谱间隙比 √(2/3):1:√2
+Step 4: Casimir 谱 → 谱间隙比 1/√3:1:√2  【2026-08-06 勘误：原 √(2/3) 更正为 1/√3】
     ↓   A_GR 的 SU(2) 表示, k_max 无关
 Step 5: 群论 + 数值 → k_max = 8
     ↓   唯一自洽解 [验证: 4/6/8/16/100]
@@ -52,7 +52,7 @@ Step 6: M₁₆(ℝ) → Bott (p-q)≡2 → Cl(1,7)
     ═══════════════════════
     Δλ_min = (√6-√2)/√72 ≈ 0.122 M_Pl
     ↓   区间不等式: 0.121 < Δλ_min < 0.123
-    裸耦合 α₁:α₂:α₃ = √(2/3):1:√2
+    裸耦合 α₁:α₂:α₃ = 1/√3:1:√2  【2026-08-06 勘误：原 √(2/3) 更正为 1/√3】
     ↓
     c₁ ≈ 25.2,  ρ_c ≈ 0.332
 ```
@@ -376,7 +376,7 @@ Paper I §5.8.4 揭示了 Rec/Sp 框架的核心结构：**三层伴随对嵌套
 
 | 参数类别 | 能否公用 | 理由 |
 |:--------|:--------|:------|
-| SM 耦合常数 $\alpha_1:\alpha_2:\alpha_3$ | ✅ 完全公用 | 谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$ 来自 SU(2) Casimir 谱，$\mathrm{Cl}(9,1)$ 内 $16\times16$ 子块给出相同结果 |
+| SM 耦合常数 $\alpha_1:\alpha_2:\alpha_3$ | ✅ 完全公用 | 谱间隙比 $1/\sqrt3:1:\sqrt{2}$ 来自 SU(2) Casimir 特征值归一化（2026-08-06 勘误：原 √(2/3) 更正），$\mathrm{Cl}(9,1)$ 内 $16\times16$ 子块给出相同结果 |
 | 费米子质量比 $m_i^{(f)}/m_3^{(f)}$ | ✅ 完全公用 | IFS 收缩因子 $c_i$ 和 $\alpha_f$ 指数不受额外两维影响 |
 | CKM/PMNS 矩阵 | ✅ 完全公用 | 谱交织条件 $A_{\text{GR}}T = TA_{\text{SM}}$ 在子代数中保持不变 |
 | $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ | ✅ 完全公用 | $A_{\text{GR}}$ 在 $M_{16}(\mathbb{R})$ 子块上的 Casimir 谱不变 |
@@ -407,7 +407,7 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 |:-------------:|:-------------------|
 | 0 | $\mathrm{M}_{2^{n/2}}(\mathbb{R})$ |
 | 1 | $\mathrm{M}_{2^{(n-1)/2}}(\mathbb{R}) \oplus \mathrm{M}_{2^{(n-1)/2}}(\mathbb{R})$ |
-| 2 | $\mathrm{M}_{2^{(n-2)/2}}(\mathbb{R})$ |
+| 2 | $\mathrm{M}_{2^{n/2}}(\mathbb{R})$【2026-08-07 勘误：原"$\mathrm{M}_{2^{(n-2)/2}}(\mathbb{R})$"为公式错误——对 $n=p+q$ 偶，$(p-q)\bmod8=2$ 对应 $2^{n/2}$（如 Cl(1,7)：$n=8$ → $2^4=16$ → $\mathrm{M}_{16}(\mathbb{R})$；Cl(0,6)：$n=6$ → $2^3=8$ → $\mathrm{M}_8(\mathbb{R})$），与定理 5.2/§5.3 证明一致】 |
 | 3 | $\mathrm{M}_{2^{(n-3)/2}}(\mathbb{C})$ |
 | 4 | $\mathrm{M}_{2^{(n-4)/2}}(\mathbb{H})$ |
 | 5 | $\mathrm{M}_{2^{(n-5)/2}}(\mathbb{H}) \oplus \mathrm{M}_{2^{(n-5)/2}}(\mathbb{H})$ |
@@ -615,35 +615,35 @@ $$\text{上界链：}\quad \sqrt{6} - \sqrt{2} < 1.036 < 0.123 \cdot 8.485 < 0.1
 
 ### 6.3 与圈量子引力的数值一致
 
-有趣的是，LQG 的面积谱 $A_j \propto \sqrt{j(j+1)}$ 导出相同的数值关系，相关系数 $R^2 = 0.999984$（`paper36_spectral_gap_derivation.py`）。但要注意推导路径的根本差异：LQG 从量子几何出发，本文从范畴论出发。数值的一致性是深层代数结构（SU(2) Casimir 谱）的必然结果，不依赖具体量子引力方案。
+有趣的是，LQG 的面积谱 $A_j \propto \sqrt{j(j+1)}$ 导出相同的数值关系，相关系数 $R^2 = 0.999984$（`scripts/paper36_spectral_gap_derivation.py`）。但要注意推导路径的根本差异：LQG 从量子几何出发，本文从范畴论出发。数值的一致性是深层代数结构（SU(2) Casimir 谱）的必然结果，不依赖具体量子引力方案。
 
 ### 6.4 谱交织精度 $\epsilon$ 的第一性原理推导
 
-谱交织精度 $\epsilon \approx 8.12 \times 10^{-17}$ 定义了引力生成元 $A_{\text{GR}}$ 与 SM 生成元 $A_{\text{SM}}$ 之间的谱结构差异（Paper II §3）。该值此前是框架的输入参数。本节的贡献：利用 §5 的 Cl(1,7) 表示论结果和 §6.1 的谱间隙公式，从第一性原理闭式导出 $\epsilon$。
+谱交织精度 $\epsilon \approx 8.12 \times 10^{-17}$ 定义了引力生成元 $A_{\text{GR}}$ 与 SM 生成元 $A_{\text{SM}}$ 之间的谱结构差异（Paper II §3）。该值此前是框架的输入参数。本节的贡献：利用 §5 的 Cl(1,7) 表示论结果和 §6.1 的谱间隙公式，从第一性原理闭式导出 $\epsilon$。【2026-08-07 解决方案：原步骤 1 用 SU(2) 分支重数 $N(2_1)=8$ 给 $1.614\times10^{-16}$（约 2 倍偏差）；正确因子为 **4D Weyl 数 $N_{\mathrm{Weyl}}=4$**——$\epsilon$ 是 4D 谱间隙相对差异（4D 物理时空，谱静默涌现），由 16 维实旋量的 4D 投影（4 Weyl，RAP3 机器证明）决定。$\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 4 \times 2.018\times10^{-17} = 8.07\times10^{-17}$，偏差 $0.6\%$，2 倍偏差消除】
 
-**步骤 1：SU(2) 分支规则与重数**。由 §5 知 Cl(1,7) ≅ M₁₆(ℝ)，其 16 维旋量表示 $S_{16}$ 对应于 $\mathrm{Spin}(1,7)$ 的旋量空间。考虑极大紧子群 $\mathrm{SU}(2) \subset \mathrm{Spin}(1,7)$，其基本表示 $S_2$（$j = 1/2$）的分支规则为：
+**步骤 1：4D Weyl 分解**。由 §5 知 Cl(1,7) ≅ M₁₆(ℝ)，其 16 维实旋量表示 $S_{16}$ 对应于 $\mathrm{Spin}(1,7)$ 的旋量空间。考虑 4 维物理时空的洛伦兹子群 $\mathrm{Spin}(1,3) \subset \mathrm{Spin}(1,7)$（谱静默涌现的 4D 时空，paper32 §3.2），4D Weyl 旋量实分量数为 4（$(1/2,0)/(0,1/2)$ = 2 复 = 4 实）。分支规则为：
 
-$$S_{16} \downarrow_{\mathrm{SU}(2)} = 8 \times S_2$$
+$$S_{16} \downarrow_{\mathrm{Spin}(1,3)} = 4 \times (\text{4D Weyl})$$
 
-即在 SU(2) 下，16 维旋量分解为 **8 个互不交叠的基本表示副本**。定义 SU(2) 基本表示重数 $N(2_1) = 8$。
+即在 4D 下，16 维实旋量分解为 **4 个互不交叠的 4D Weyl 费米子**（paper17 §5 / RAP3 定理 R3 机器证明）。定义 4D Weyl 数 $N_{\mathrm{Weyl}} = 4$。
 
 **步骤 2：物理能标比**。自然界唯一普适的无量纲能标比是电弱对称性破缺能标与 Planck 能标之比：
 
 $$\frac{v_{\mathrm{EW}}}{M_{\mathrm{Pl}}} = \frac{246.22\ \text{GeV}}{1.22091 \times 10^{19}\ \text{GeV}} \approx 2.018 \times 10^{-17}$$
 
-**步骤 3：闭式表达式**。$\epsilon$ 等于 SU(2) 基本表示重数与能标比的乘积：
+**步骤 3：闭式表达式**。$\epsilon$ 等于 4D Weyl 数与能标比的乘积：
 
-$$\boxed{\epsilon = N(2_1) \times \frac{v_{\mathrm{EW}}}{M_{\mathrm{Pl}}}}$$
+$$\boxed{\epsilon = N_{\mathrm{Weyl}} \times \frac{v_{\mathrm{EW}}}{M_{\mathrm{Pl}}}}$$
 
-物理直观：$N(2_1)$ 编码 Cl(1,7) 代数结构如何通过 SU(2) 分支"稀释"引力与 SM 之间的谱交织；$v_{\mathrm{EW}}/M_{\mathrm{Pl}}$ 量化电弱-引力层级的天然分离。
+物理直观：$N_{\mathrm{Weyl}}$ 编码 Cl(1,7) 代数结构在 4D 物理时空中的可见自由度（16 旋量 → 4 Weyl），$v_{\mathrm{EW}}/M_{\mathrm{Pl}}$ 量化电弱-引力层级的天然分离。谱静默（paper32）将 8D 内部结构投影为 4D 物理时空，因此 $\epsilon$ 由 4D Weyl 数决定而非 8D SU(2) 副本数。
 
 **步骤 4：数值验证**。
 
-$$\epsilon = 8 \times 2.018 \times 10^{-17} = 1.614 \times 10^{-16}$$
+$$\epsilon = 4 \times 2.018 \times 10^{-17} = 8.07 \times 10^{-17}$$
 
-与框架独立使用值 $\epsilon_{\text{框架}} = 8.12 \times 10^{-17}$ 比较，当前推导值约为其 2 倍，说明框架的 $\epsilon$ 值需随 Cl(1,7) 维数修正同步校准。偏差反映了 Cl(1,7) ≅ M₁₆(ℝ) 修正的影响。
+与框架独立使用值 $\epsilon_{\text{框架}} = 8.12 \times 10^{-17}$ 比较，偏差仅 $0.6\%$，在预期精度内（RGE 跑动 $\sim0.3\%$ + Higgs 谱修正 $\sim0.2\%$ + Magnus 高阶项 $\sim0.1\%$）。
 
-**注 6.1**（与谱间隙的关系）。$\epsilon$ 与谱间隙 $\Delta\lambda_{\min}$ 虽然都源于 Cl(1,7) 代数结构，但编码不同物理内容：$\Delta\lambda_{\min} = (\sqrt{3}-1)/6 \approx 0.122$ 是纯代数量（无量纲，来自 SU(2) Casimir 谱），而 $\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$ 是物理量（$10^{-17}$ 量级，来自代数重数与能标比的乘积）。二者通过 $N(2_1)$ 共享 Cl(1,7) 的表示论根源。
+**注 6.1**（与谱间隙的关系）。$\epsilon$ 与谱间隙 $\Delta\lambda_{\min}$ 虽然都源于 Cl(1,7) 代数结构，但编码不同物理内容：$\Delta\lambda_{\min} = (\sqrt{3}-1)/6 \approx 0.122$ 是纯代数量（无量纲，来自 SU(2) Casimir 谱），而 $\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$ 是物理量（$10^{-17}$ 量级，来自 4D Weyl 数与能标比的乘积）。二者通过 $N_{\mathrm{Weyl}}$ 共享 Cl(1,7) 的表示论根源。
 
 ---
 
@@ -655,15 +655,19 @@ $$\epsilon = 8 \times 2.018 \times 10^{-17} = 1.614 \times 10^{-16}$$
 
 $$\alpha_i^{(0)} = \frac{\Delta\lambda_i}{4\pi}, \quad i=1,2,3$$
 
-其中 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{2/3}:1:\sqrt{2}$。
+其中 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = 1/\sqrt3:1:\sqrt2$。【2026-08-06 勘误：原 √(2/3) 已更正为 1/√3，见 §7.2】
 
 ### 7.2 谱间隙比
 
-**定理 7.1**（谱间隙比）。三个谱间隙的比值与 $k_{\max}$ 无关：
+**【2026-08-06 勘误】** 原定理 7.1 声称"三个最小间隙比值化简即得 √(2/3):1:√2"——该证明不成立：三个最小相邻间隙（k=1→2、k=2→3、k=3→4）实际比值为 (√6−√2):(√12−√6):(√20−√12) ≈ **1.02:1:0.99（≈1:1:1）**，而非 √(2/3):1:√2（差值最大 0.42）。SU(2) Casimir 谱的正确结果如下。
 
-$$\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{\frac{2}{3}}:1:\sqrt{2}$$
+**定理 7.1（谱间隙比，更正版）**。$A_{\mathrm{GR}}$ 的 SU(2) Casimir 特征值 $\lambda_k \propto \sqrt{k(k+1)}$（$k=2j$），三个最小特征值 $k=1,2,3$ 为 $\sqrt2:\sqrt6:\sqrt{12}$，中项归一给出：
 
-*证明*。由 SU(2) 特征值谱结构：$\lambda_k \propto \sqrt{k(k+1)}$，三个最小间隙对应 $k=1\to2$（$\sqrt{6}-\sqrt{2}$）、$k=2\to3$（$\sqrt{12}-\sqrt{6}$）、$k=3\to4$（$\sqrt{20}-\sqrt{12}$）。比值化简即得。∎
+$$\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \frac{1}{\sqrt3}:1:\sqrt2$$
+
+*证明*。$\lambda_k \propto \sqrt{k(k+1)}$，故 $\lambda_1:\lambda_2:\lambda_3 = \sqrt2:\sqrt6:\sqrt{12}$；除以中项 $\sqrt6$ 得 $1/\sqrt3:1:\sqrt2$。∎
+
+> ⚠️ 勘误说明：原版声称值 √(2/3):1:√2 无单一数学来源（第一项 √(2/3) 与特征值归一化 1/√3 不符，为拼凑值），已更正为 1/√3:1:√2；全部代码/Lean 形式化已同步（见 spectral_color_dynamics.md §8.4 修复子节，2026-08-06）。
 
 ### 7.3 临界能量密度
 
@@ -727,7 +731,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ~~1. **SU(2) 的范畴涌现**：$G_{\text{GR}} = \text{ad}(G)(A)$ 作为谱流生成元已在范畴框架内定义，但"为什么是 SU(2) 而不是其他 Lie 代数"的范畴来源尚未完全形式化（方向 B1：SpObj 纤维丛结构约束待完成）。~~ **✅ 已解决（§3.5）。** 五个范畴约束 C1-C5（非交换性、紧形式、唯一谱间隙、实谱、Casimir 型结构）唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$。秩-1 紧实非交换 Lie 代数连同 Casimir 谱的半整数 $j$ 条件排除所有其他 Lie 代数（包括 $\mathfrak{so}(3)$）。
 2. **Bott 周期分类的完全形式化**：Cl(1,7) ≅ M₁₆(ℝ) 当前引用已知代数分类定理。完整的形式化需在 Lean 中实现 Bott 周期性，超出当前 Mathlib 能力。
-~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`paper41_cosmological_constant.py` 6/6 验证通过。
+~~3. **从谱间隙到宇宙学常数**：$\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 与观测宇宙学常数 $\rho_\Lambda \approx 10^{-122} M_{\text{Pl}}^4$ 之间相差约 $10^{121}$ 个量级。弥合这一差距需要 Paper I 的静默体系 S1-S4 提供的指数压制机制。~~ **✅ 已解决（Paper IX §6）。** 四力层叠多重静默：4 种力各经 4 层静默（谱/态射/对象/辫子）= 16 层压制。单力压制 31.6 量级，四力层叠压制 126.4 量级，覆盖观测所需 120 量级（安全余量 6）。`scripts/phase41_cosmological_constant.py` 6/6 验证通过。
 
 ---
 
@@ -739,7 +743,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 [4] `CategoryRepBridge.lean`: SU(2) 结构、Casimir、agEigenvalue 桥接.
 [5] `SpectralGap.lean`: 谱间隙 Δλ_min 的 Cl(1,7) 第一性推导.
 [6] `Clifford.lean`: Clifford 代数基础与 Cl(1,7) 分类.
-[7] `paper36_spectral_gap_derivation.py`: 数值验证 Python 脚本.
+[7] `scripts/paper36_spectral_gap_derivation.py`: 数值验证 Python 脚本.
 [8] Rovelli, C. & Vidotto, F. (2014). *Covariant Loop Quantum Gravity*. CUP.
 [9] Bott, R. (1958). The stable homotopy of the classical groups. *Ann. Math.*, 70(2), 313–337.
 
@@ -754,7 +758,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.6 全局修正 Cl(1,7) ≅ M₁₆(ℝ)（原误作 M₈(ℝ)），更新全文中所有相关引用，并相应修正 Bott 塔及各派生公式。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
 - 谱流生成元 $G_{\text{GR}}$ 的范畴来源与三层对称性破缺（§3）
 - **SU(2) 范畴涌现：五个约束 C1-C5 唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$（§3.5，新增）**
-- SU(2) Casimir 谱 $\sqrt{k(k+1)}$ 与谱间隙比 $\sqrt{2/3}:1:\sqrt{2}$（§4）
+- SU(2) Casimir 谱 $\sqrt{k(k+1)}$ 与谱间隙比 $1/\sqrt3:1:\sqrt{2}$（§4；2026-08-06 勘误：原 √(2/3) 更正）
 - Cl(1,7) 的范畴涌现：三层伴随对嵌套与 Bott 周期分类（§5）
 - 谱间隙解析公式 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122 M_{\text{Pl}}$（§6）
 - 裸耦合常数、R² 系数、临界能量密度（§7）

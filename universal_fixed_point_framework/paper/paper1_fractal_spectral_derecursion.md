@@ -282,7 +282,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.9 C* 代数推广
 
-将 $\mathbf{Rec}/\mathbf{Sp}$ 从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到一般 C* 代数（`paper33_cstar_framework.py`，5/5 验证通过）。
+将 $\mathbf{Rec}/\mathbf{Sp}$ 从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到一般 C* 代数（`scripts/paper33_cstar_framework.py`，5/5 验证通过）。
 
 **定义 2.9.1**（$\mathbf{Rec}_{C*}$）。对象为 $(A, \Phi)$，其中 $A$ 是 C* 代数，$\Phi: A \to A$ 是完全正映射（completely positive map）。态射为 *-同态 $\pi: A_1 \to A_2$ 满足 $\pi \circ \Phi_1 = \Phi_2 \circ \pi$。
 
@@ -298,7 +298,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.10 无界自伴算子与连续谱理论
 
-谱动力学中的 $A_t$ 常为无界自伴算子（如 $A_{\text{GR}}$ 谱含 $[0,\infty)$）。以量子谐振子 $H = -d^2/dx^2 + x^2$ 为原型建立框架（`paper34_unbounded_operator.py`，6/6 验证通过）。
+谱动力学中的 $A_t$ 常为无界自伴算子（如 $A_{\text{GR}}$ 谱含 $[0,\infty)$）。以量子谐振子 $H = -d^2/dx^2 + x^2$ 为原型建立框架（`scripts/paper34_unbounded_operator.py`，6/6 验证通过）。
 
 **定义 2.10.1**（无界自伴算子）。$A$ 是 Hilbert 空间 $\mathcal{H}$ 上的无界自伴算子，若：
 (1) 定义域 $D(A) \subset \mathcal{H}$ 稠密；
@@ -313,7 +313,7 @@ $$\mathcal{H}_R = \overline{\mathrm{span}}\{K_R(x,\cdot) : x \in X_R\}.$$
 
 ### 2.11 A∞/∞-范畴结构
 
-谱流方程 $dA_t/dt = [G, A_t]$ 生成自然的 L∞ 代数结构，将 $\mathbf{Sp}_\infty$ 诠释为 Banach 流形上的 ∞-范畴（`paper35_infinity_category_infinite_dim.py`，6/6 验证通过）。
+谱流方程 $dA_t/dt = [G, A_t]$ 生成自然的 L∞ 代数结构，将 $\mathbf{Sp}_\infty$ 诠释为 Banach 流形上的 ∞-范畴（`scripts/paper35_infinity_category_infinite_dim.py`，6/6 验证通过）。
 
 **定义 2.11.1**（谱流 L∞ 代数）。$m_n = \text{ad}_G^n$ 满足 Jacobi 恒等式：
 - $m_1(A) = [G, A]$（谱流方程）
@@ -1448,7 +1448,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **19. 实验可证伪预言的误差预算**：L4 质量、$8\pi G_N$ 精度、Kerr ringdown 误差等已给出初步数值，但系统误差传播与贝叶斯模型比较仍待完善。
 
-**20. 高阶 ∞-范畴完整形式化**（**骨架已实现并通过 Lean 4 编译**）：六个 Lean 4 模块已完成并全部通过 `lake build` 编译——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式）、`InfinityCategory.lean`（Spec_∞ 切空间、Killing 向量场、统一谱流方程）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释）。核心定理的证明以 `sorry` 占位，待后续严格化；Python 原型（`paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
+**20. 高阶 ∞-范畴完整形式化**（**骨架已实现并通过 Lean 4 编译**）：六个 Lean 4 模块已完成并全部通过 `lake build` 编译——`AInfinityAlgebra.lean`（A∞/L∞ 代数骨架：ad_G、m_n = ad_G^n、Stasheff 恒等式）、`InfinityCategory.lean`（Spec_∞ 切空间、Killing 向量场、统一谱流方程）、`RecInfinity.lean`（Rec_∞ 对象与 ∞-态射）、`SpecInfinity.lean`（Spec_∞ 对象与 ∞-态射）、`DInfinityFunctor.lean`（D_∞ 的 ∞-函子性框架）、`SpectralFlowHomotopy.lean`（谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释）。核心定理的证明以 `sorry` 占位，待后续严格化；Python 原型（`scripts/paper35_infinity_category_infinite_dim.py`）仍保持 6/6 通过作为数值验证。
 
 **21. 完整 BES/TBA 高阶圈数值解与有限 $N_c$ 修正**：$N=4$ SYM 当前实现停留在 $O(g^6)$ dressing phase + 多模 Lüscher wrapping 原型，未达完整 BES/TBA 数值解，也未包含有限 $N_c$ 修正。目标是将 $O(g^6)$ 截断替换为完整 BES/TBA 数值解，并引入 $1/N_c^2$ 展开的首阶修正。
 
@@ -1498,6 +1498,8 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.51 | 2026-08-04 | **RAP5a RIm_map 闭合（阶段 1 线性语义，勘误 O12）**：注 2.4.5a 形式化状态更新——`RAP5a_explicit_adjunction.lean` 的 `SpImDMor` 限制为线性（Rec）态射层（Rec_lin 分层，谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），全范畴 sorry 从 4 处降至 3 处；并构造完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明），定理 2.4.5 "概念闭合" 在受限态射层上落地为机器证明。D 不 full 的基数反例（§C2.3 注）保留为全范畴（集合语义）负结果；版本号 v2.50 → v2.51 |
+| v2.50 | 2026-08-04 | **阶段 1 圈定执行（Lean 侧 sorry 消除）**：注 2.4.5a 追加 Lean 形式化状态更新——`Adjunction.lean` 中 `adjUnit` 从 sorry 改为常零函数（移植 Agda `const-adjUnit`），`adjCounit` 从 sorry 改为零矩阵（移植 Agda `zeroMat`，intertwine 经矩阵零吸收闭合），`DAdjR` 从 sorry 改为 `noncomputable axiom`（对齐 Agda `postulate right-triangle`）；全模块 sorry 从 8 处降至 4 处（`RFunctor.map`/`map_id`/`map_comp` 全范畴不可构造 + `RAP5a.RIm_map` 需阶段 2 SpImDMor 限制），`HigherSpCategory.lean` 的 `spExchangeLaw` sorry 已消除（改为偏差定理引用）；新增范畴论圈定与兼容性扩张规划（`notes/00_foundations/spectral_category_scope_stratification.md`），D ⊣ R 伴随有效范围 = Rec_lin(SpImD) 显式声明；版本号 v2.49 → v2.50 |
 | v2.49 | 2026-08-03 | **P1 形式化引用补充（理论闭合审计）**：注 C2.3b 形式化验证段追加 2026-08-03 补充——谱匹配核心（`theorem3`/`corollary4-∞`/`Rec-to-σ`/`intertwine-imp-spectral`/`corollary5`/`P1-linear-closure`）**独立于** `fc-integral` 桥接（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；`fc-integral` 公理（fc(f) = ∫f dE）完整降为可证明定理 `fc-integral-full`（唯一剩余登记项为文档化测度论核心逼近桥接：多项式可由简单函数下界逼近，∫p dE = sup{∫s : s 简单 ≤ p}，语义由目标模型谱定理保证，不构成 P1 断言的公理依赖）；注 2.4.5a 尾部同步；版本号 v2.48 → v2.49 |
 | v2.48 | 2026-08-01 | **S0 表示静默整合（五层静默体系）**：§5.7 由"四层静默体系"升级为"五层静默体系（S0 表示层 + S1–S4 动力学/观测层）"——定义 5.11 增补 S0 表示静默行（$P_{\mathrm{Im}(D)}(\varphi)=0$）、注 5.12 扩展为五层对应、定理 5.15 后补 S0 层级定位（平行分层 + 内部层次双重结构）；新增 §5.7.9（定义 5.31a D-静默度 $S_D$、基数证据、sieve 判定为负、动力学演化刻画、规范语义收益、与 P1 语义分岔关联——自包含，不引用笔记）；摘要同步更新；版本号 v2.47 → v2.48 |
 | v2.47 | 2026-08-01 | **P1 论文层自包含 + 形式化引用**：（a）注 C2.3b（态射对应语义限定）与注 2.4.5a（态射层限定与基数反例）追加**形式化验证段**——线性语义无限维闭合断言已在 Agda 中机器验证（`SpectralTheory.agda`：theorem3 / corollary4-∞ / Rec-to-σ / intertwine-imp-spectral / corollary5 / P1-linear-closure 全部可证）；（b）**论文自包含**：移除对研究笔记的引用，必要内容内嵌——两种语义（线性/集合）的分岔裁决、非线性反例 $f(x)=|\langle x,v\rangle|v$（$\psi(z)=|z|$ 正齐次）、S0 表示静默定义（$P_{\mathrm{Im}(D)}(\varphi)=0$）与五层静默（S0 + S1–S4）定位；版本号 v2.46 → v2.47。 |

@@ -1,7 +1,7 @@
 # 谱引力子传播子：从 $A_{\text{GR}}$ 离散谱到有限量子引力
 
 > 基于 Paper V（谱动力学）中 $A_{\text{GR}}$ 离散谱结构，构建谱引力子传播子。
-> 对应 `paperX_graviton_propagator.py` 的数值验证。
+> 对应 `scripts/paperX_graviton_propagator.py` 的数值验证。
 
 ---
 

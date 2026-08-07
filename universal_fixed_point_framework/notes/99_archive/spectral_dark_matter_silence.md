@@ -8,7 +8,7 @@
 
 ## 1. 问题框架
 
-谱静默粒子的质量 $m_{\text{DM}} \sim 100$ GeV **不是半经验输入**，而是 $A_{\text{GR}}$ 谱结构中静默分量谱间隙的预测（`paper27_dark_matter_spectral.py`，`silence_particle_mass`）。
+谱静默粒子的质量 $m_{\text{DM}} \sim 100$ GeV **不是半经验输入**，而是 $A_{\text{GR}}$ 谱结构中静默分量谱间隙的预测（`scripts/paper27_dark_matter_spectral.py`，`silence_particle_mass`）。
 
 多重静默分析回答的问题是：**为什么恰好是这个质量的 WIMP 给出 $\Omega h^2 = 0.12$？**——即截面与质量的定量关系由静默层决定。
 

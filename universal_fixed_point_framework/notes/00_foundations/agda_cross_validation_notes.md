@@ -1,7 +1,7 @@
 # Agda 交叉验证笔记（路径 B 完整报告，第一手研究资料）
 
 > **定位**：UFPF 形式化验证体系（Lean 4 主实现 + Agda 独立重形式化）的 Agda 侧完整记录。
-> **状态**：v1.36 收官（2026-08-03）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII）。
+> **状态**：2026-08-05（T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径闭合，v1.41/v1.42/v1.43；log 级数下界侧机制收口 v1.44；**ln 级数高阶精化 v1.45**；**ln(16/15) 级数直接截断机制 v1.46**；**ln(16/15) 二阶精化 v1.47**；C 类数值项清零 v1.38）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII v0.8）。
 > **关联**：路线图 [`phase60_category_verification.md`](../../roadmap/phase60_category_verification.md) §路径 B；笔记 [`spectral_T3_analysis_foundation.md`](./spectral_T3_analysis_foundation.md)（技术债清单 §5.16.7 / 方案 A §5.16.8）；主日志 `docs/log.md`。
 
 ---
@@ -10,7 +10,7 @@
 
 ### 1.1 为什么需要 Agda 交叉验证
 
-Lean 4（`formal_proof/UFPFormalization/`，74 模块）是**单一实现**。交叉验证动机：
+Lean 4（`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 2454 jobs 零 `sorry` 零 `axiom`）是**单一实现**。交叉验证动机：
 
 1. **消除单一实现偏差**：证明助理 bug、Mathlib 假设、形式化风格的潜在偏差需要第二实现独立检验。
 2. **类型论体系正交**：Lean 依赖 CIC（归纳构造演算）；Agda 用 Martin-Löf 依赖类型论。同一定理在两套类型论下同时通过，可信度高于单实现。
@@ -24,7 +24,7 @@ Lean 4（`formal_proof/UFPFormalization/`，74 模块）是**单一实现**。�
 
 ---
 
-## 2. 架构与模块清单（16 模块）
+## 2. 架构与模块清单（20 模块）
 
 `agda_formalization/` 目录（UFPF.agda-lib 注册，name: UFPF）：
 
@@ -60,11 +60,17 @@ agda_formalization/
 │   └── P1Spectral.agda              # P1: 谱匹配有限维特例（定理 3 退化版 + 推论 4 恒等双射）
 ├── SpectralTheory/
 │   └── SpectralTheory.agda          # T3: 谱定理层（谱测度/Fuglede/Hille-Yosida/函数演算 fc）
-└── CrossLayer/
-    └── CrossLayer.agda              # 跨层模型 Op → LinOp 点态对应证书（OpAlgPt/SpectralObjPt）
+├── CrossLayer/
+│   └── CrossLayer.agda              # 跨层模型 Op → LinOp 点态对应证书（OpAlgPt/SpectralObjPt）
+├── InflationDynamics/
+│   └── InflationDynamics.agda       # 膨胀动力学（物理应用层）
+├── ColorDynamics/
+│   └── ColorDynamics.agda           # 色动力学（物理应用层）
+└── BlackHoleDynamics/
+    └── BlackHoleDynamics.agda       # 黑洞动力学（物理应用层）
 ```
 
-**计数口径**：15 个业务模块 + `Everything.agda` 主入口 = **16 模块**（`Categories/` 3 模块为基础库，不单独计数）。
+**计数口径**：18 个业务模块 + `Everything.agda` 主入口 = 19 模块 + `Categories/` 基础库 1 项 = **20 模块**（全量编译口径，与路线图 v1.40 起一致；`Categories/` Category/Functor/NaturalTransformation 不重复计数）。
 
 ### 2.1 与 Lean 的双实现一致性（核心 8 模块 B1-B8）
 
@@ -78,6 +84,8 @@ agda_formalization/
 | B6 | Bott 塔 | `BottTower.lean` | `spinorDim-suc` 递归定义 refl、`spinorDim-eq-pow` 归纳 | `log2` 公理（已闭合为良基递归） |
 | B7 | 静默定理组 | `CoherenceToBranching.lean` | `layers-distinct`（≃ Fin 5）、`branchIndex-dH-unique` 双向、层独立性、维数分解、§11 向外推 | ℝ 分析（已闭合） |
 | B8 | IFS 排序 | `IFSFractal.lean §6` | `physicalIFS-n ≡ 3`（refl） | 收缩率正性/排序/Moran（已闭合） |
+
+> **B8 范围边界注记（2026-08-04）**：Agda 侧 `PhysicalIFS` 记录仅含 `n` + 三个收缩率（`ratio0/1/2`），**无 maps 字段，无吸引子/直径形式化**（无 ContinuumLimit 对应模块）。Lean 侧 `ContinuumLimit.lean` 的 hDiamLeOne 缺口（勘误 O9）因此**不可参照 Agda 侧闭合**——它属 Lean 特有几何层。2026-08-04 O9 闭合的 Lean 修正发生在 maps 层（`physicalIFS` f₂ 平移 1.0 → 1−c₃），**收缩率 ratios 未变**，故 B8 全部定理（`physicalIFS-n`/`physicalIFS-ratios-ordered` 及 c₁<c₂<c₃ 排序链）不受影响，双实现交叉验证一致性保持。
 
 ---
 
@@ -120,11 +128,17 @@ agda_formalization/
 
 ---
 
-## 4. 当前状态（v1.36，2026-08-03）
+## 4. 当前状态（2026-08-05）
 
-- **编译**：`agda Everything.agda` 全量类型检查通过（exit=0）。
+- **编译**：`agda Everything.agda` 全量类型检查通过（exit=0），20 模块。
 - **技术债清单 A 类（实质技术债）全闭合**：fc-poly-le-spec-int 构造化、E-σ-add 收敛、spec-int MCT、跨层谱对象映射——四项全部收官。
-- **可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（唯一剩余 D 类 = fc-integral 本身，即"函数演算 = 谱积分"谱定理层的模型保证）；spec-int MCT 构造化闭合；Agda 16 模块全量通过；Lean 核心 10 模块零错误。
+- **T3 定义性公理降定理推进（2026-08-05）**：`exp-partial-<`（v1.41）与 **`exp-tail-bound`（v1.42，固定间隙路径）** 由 postulate 降为可证明定理——逐项 `tail-term-le`（pow-add + factorial-strong 阶乘强估计 + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ 固定间隙 B''（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap）⟹ exp x < B。零新增公理。
+- **`log2-series-ub` 降定理（v1.43，固定间隙路径）**：原"log 级数上界"定义性公理由 postulate 降为可证明定理 `log2-series-ub-thm`——前置登记 log 级数 sup 刻画（log2-partial-≤-ub/log2-least-ub-any）+ 部分和递增 + log2-decomp + **1/2 几何机制**（geo-x(1/2) < 2、geo-shift 错位提取公因子、half-pow）⟹ 尾部上界（tail2-term-le）⟹ 固定间隙 B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1}) ⟹ ln 2 ≤ 部分和 n + B''n ⟹ B''n < 尾界 ⟹ ln 2 < 部分和 n + 尾界。零新增公理。
+- **log 级数下界侧机制（v1.44）**：log 级数机制两侧收口——`log2-series-lb-thm`（部分和严格低于 ln 2：项正严格递增 `log2-partial-suc-<` + `log2-partial-≤-ub (suc n)`，lt-≤-trans-ℝ）+ `log2-lb-447047`（447047/645120 < ln 2，部分和 9）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120 双侧夹逼，间隙 126/645120 = 1/5120）。零新增公理。
+- **ln 级数高阶精化（v1.45）**：利用 log2-series-ub-thm/lb-thm 对截断序 n 的均匀性——k 阶精化 = 在 n+k 实例化（k 阶上界：ln 2 < 部分和 n + Σ_{j=1}^{k} t_{n+j} + 1/((n+k+1)·2^{n+k})）。`log2-series-ub2-thm`（v1.43 固定界 B''n 由"≤"严格化为"<"，ub-thm (suc n) 移位 + 结合律）+ `log2-series-lb2-thm`（= lb-thm (suc n) 展开）+ `ln2-squeeze-10`（4918210/7096320 < ln 2 < 4918840/7096320，宽度 630/7096320 ≈ 8.9e-5）。零新增公理。
+- **ln(16/15) 级数直接截断机制（v1.46，base-16）**：ln(16/15) = Σ_{k≥1} 1/(k·16^k) 级数直接机制（镜像 §2c' 的 base-16 版：前置登记 log16 sup 刻画 + 1/16 几何（1/(1−1/16) = 16/15）+ 固定界 B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1}) + 固定间隙 B''16n < 2·t_{n+1}）⟹ `log16-series-ub-thm`/`log16-series-lb-thm` + 具体夹逼 `ln16-15-squeeze-2`（33/512 < ln(16/15) < 397/6144）+ **`ln1615-lb-direct`（29/450 < ln(16/15) 级数路径独立交叉验证，原 ln1615-lb 为 exp 路径）**。零新增公理。
+- **ln(16/15) 二阶精化（v1.47，base-16 高阶）**：镜像 v1.45——`log16-series-ub2-thm`（ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}，二阶固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2}) 严格化；剩余移位 log16-rest-shift + 二阶尾部分解 log16-tail2-decomp + ≤-total 在 n+2 三分 + 固定间隙）+ 具体二阶夹逼 `ln16-15-squeeze-2b`（33/512 < ln(16/15) < 25379/393216）。零新增公理。
+- **可诚实声称的边界**：谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证；fc-integral 公理已降为定理（唯一剩余 D 类 = fc-integral 本身，即"函数演算 = 谱积分"谱定理层的模型保证）；spec-int MCT 构造化闭合；Agda 20 模块全量通过；Lean 核心 10 模块零错误。
 
 ---
 
@@ -139,7 +153,7 @@ agda_formalization/
 ### 5.2 待基础设施（C 类，可自然闭合）
 
 1. **`DeviationBound.lean` 2 sorry**——依赖 Mathlib `Matrix.Spectrum` 模块稳定。
-2. **T3 阶段 3 scoped 数值公理**（`ln2-lt`/`ln1615-lb`/`ln15-arith-ax`）——纯有理/数值比较，逻辑完备但工程计算资源不足（大整数算术/级数机制）；降定理路径 = 算术决策机制/反射或更高效 ℕ 算术。
+2. **T3 阶段 3 scoped 数值公理**（`ln15-arith-ax`；`ln1615-lb` 与 `ln2-lt` **已于 2026-08-05 闭合为定理**：exp 级数机制 + log 级数机制 + 二进制 ℕ 算术（NATTIMES/NATPLUS + `<-add` 差递归））——纯有理/数值比较，逻辑完备但工程计算资源不足（大整数算术/级数机制）。**`ln15-arith-ax` 已于 2026-08-05 闭合**（§2d：`*-/ℝ` 并入分子 + `neg-frac-ℝ` 取负 + `/-add-ℝ` 合并为 121870600/45000000，65/24 通分 ×1875000 同分母比分子，差 4400 经 `<-add`，最大扩展因子 ~1.25e8 秒级）——**C 类 T3 数值项全部清零**。
 
 ### 5.3 结构性障碍：R11 有限维态射层（S0 表示静默）
 
@@ -161,3 +175,9 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 | 版本 | 日期 | 变更 |
 |:----:|:-----|:-----|
 | v0.1 | 2026-08-03 | 初版。基于路线图 phase60 §路径 B、技术债清单 §5.16.7、方案 A §5.16.8、主日志 v1.17-v1.36 整理。对应 Paper XXXVIII 笔记。 |
+| v0.2 | 2026-08-05 | 状态同步：模块数 16→20；T3 定义性公理降定理（exp-partial-< v1.41、exp-tail-bound v1.42 固定间隙路径，零新增公理）记入 §4；C 类 T3 数值项清零（ln2-lt/ln1615-lb/ln15-arith-ax 闭合，v1.38-1.42 期间）。对应 Paper XXXVIII v0.2。 |
+| v0.3 | 2026-08-05 | 状态同步至 v1.43：log2-series-ub 降定理（固定间隙路径，log 级数 sup 刻画前置登记 + 1/2 几何机制 + 固定间隙 B''n，零新增公理）记入 §4。对应 Paper XXXVIII v0.3。 |
+| v0.4 | 2026-08-05 | 状态同步至 v1.44：log 级数下界侧机制（log2-series-lb-thm 部分和严格低于 ln 2 + log2-lb-447047 + ln2-squeeze-9 双侧夹逼，两侧收口零新增公理）记入 §4。对应 Paper XXXVIII v0.4。 |
+| v0.5 | 2026-08-05 | 状态同步至 v1.45：ln 级数高阶精化（log2-series-ub2-thm/lb2-thm 二阶机制 + ln2-squeeze-10 二阶夹逼，k 阶 = n+k 实例化，零新增公理）记入 §4。对应 Paper XXXVIII v0.5。 |
+| v0.6 | 2026-08-05 | 状态同步至 v1.46：ln(16/15) 级数直接截断机制（base-16：log16-series-ub/lb-thm + ln16-15-squeeze-2 + ln1615-lb-direct 级数路径独立交叉验证，零新增公理）记入 §4。对应 Paper XXXVIII v0.6。 |
+| v0.7 | 2026-08-05 | 状态同步至 v1.47：ln(16/15) 二阶精化（base-16 高阶：log16-series-ub2-thm + ln16-15-squeeze-2b，T3 阶段 3 ln 级数双侧机制全面收官，零新增公理）记入 §4。对应 Paper XXXVIII v0.8。 |

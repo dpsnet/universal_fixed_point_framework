@@ -58,7 +58,7 @@ $$\mathcal{M}_{\text{tree}}^{\text{spec}}(s, t, u) = -i\lambda \cdot [1 + 1 + 1]
 ## 4. 数值验证
 
 ```python
-# paperX_spectral_feynman.py 中的核心验证
+# scripts/paperX_spectral_feynman.py 中的核心验证
 
 def verify_propagator():
     """验证谱传播子还原 KG 传播子"""

@@ -31,6 +31,11 @@ open CategoryTheory
 
 namespace UFPFormalization
 
+-- mathlib 4.31 中 `Iso.refl_hom` 仅标记 grind 而非 simp；
+-- 本文件大量使用 `(Iso.refl _).hom`（平凡等价单位/余单位），
+-- 局部提升为 simp 使 cat_disch / simp 可自动化简。
+attribute [local simp] Iso.refl_hom Iso.refl_inv
+
 universe u
 
 /-! =========================================================
@@ -659,7 +664,9 @@ noncomputable def specFiberTempEquivFiber (T : TempObj) : SpecFiberTemp T ≌ Fi
   unitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
     intro X Y f
     apply SpecFiberTempHom.ext
-    simp only [Functor.id_map, Iso.refl_hom, Category.comp_id, Category.id_comp])
+    change f.mat * (1 : Matrix (Fin Y.n) (Fin Y.n) ℂ) =
+      (1 : Matrix (Fin X.n) (Fin X.n) ℂ) * f.mat
+    simp)
   counitIso := NatIso.ofComponents (fun X =>
     { hom := { fiberMap := (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ),
                commut := by
@@ -690,6 +697,11 @@ noncomputable def specFiberTempEquivFiber (T : TempObj) : SpecFiberTemp T ≌ Fi
     change f.fiberMap * (1 : Matrix (Fin Y.1.fiberData.n) (Fin Y.1.fiberData.n) ℂ) =
       (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ) * f.fiberMap
     simp)
+  functor_unitIso_comp := by
+    intro X
+    apply FiberAtTempHom.ext
+    change (1 : Matrix (Fin X.n) (Fin X.n) ℂ) * 1 = 1
+    simp
 
 /-- RG dual: Spec_μ ≌ (fiber of Bun(RG, Spec) over μ) (Note Prop 3.1). -/
 noncomputable def specFiberRGEquivFiber (μ : RGObj) : SpecFiberRG μ ≌ FiberAtRG μ where
@@ -706,7 +718,9 @@ noncomputable def specFiberRGEquivFiber (μ : RGObj) : SpecFiberRG μ ≌ FiberA
   unitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
     intro X Y f
     apply SpecFiberRGHom.ext
-    simp only [Functor.id_map, Iso.refl_hom, Category.comp_id, Category.id_comp])
+    change f.mat * (1 : Matrix (Fin Y.n) (Fin Y.n) ℂ) =
+      (1 : Matrix (Fin X.n) (Fin X.n) ℂ) * f.mat
+    simp)
   counitIso := NatIso.ofComponents (fun X =>
     { hom := { fiberMap := (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ),
                commut := by
@@ -737,6 +751,11 @@ noncomputable def specFiberRGEquivFiber (μ : RGObj) : SpecFiberRG μ ≌ FiberA
     change f.fiberMap * (1 : Matrix (Fin Y.1.fiberData.n) (Fin Y.1.fiberData.n) ℂ) =
       (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ) * f.fiberMap
     simp)
+  functor_unitIso_comp := by
+    intro X
+    apply FiberAtRGHom.ext
+    change (1 : Matrix (Fin X.n) (Fin X.n) ℂ) * 1 = 1
+    simp
 
 /-! =========================================================
     Section 7: 2-Category Structure (Strict 2-Category 2Bun)
@@ -749,6 +768,7 @@ structure FiberedFunctor (p : SpectralBundleTemp ⥤ TempObj) (q : SpectralBundl
   base_commutes : ∀ X, q.obj (F.obj X) = base_map X  -- π_μ(F(X)) = base_map(X)
 
 /-- 2-morphism in 2Bun: a natural transformation between fibered functors. -/
+@[ext]
 structure FiberedNaturalTransformation (p : SpectralBundleTemp ⥤ TempObj) (q : SpectralBundleRG ⥤ RGObj)
     (hF : FiberedFunctor p q)
     (hG : FiberedFunctor p q) where
@@ -815,11 +835,31 @@ noncomputable def bundleToGrothFT : SpectralBundleTemp ⥤ GrothObjFT where
 
 /-- The equivalence ∫F_T ≌ Bun(Temp, Spec) (Prop 5.1). -/
 noncomputable def grothFTEquivBundle : GrothObjFT ≌ SpectralBundleTemp :=
-  CategoryTheory.Equivalence.mk grothFTToBundle bundleToGrothFT
-    (NatIso.ofComponents (fun X => Iso.refl _) (by
-      intro X Y f; apply GrothHomFT.ext; simp))
-    (NatIso.ofComponents (fun X => Iso.refl _) (by
-      intro X Y f; apply BundleTempHom.ext; simp))
+  { functor := grothFTToBundle
+    inverse := bundleToGrothFT
+    unitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
+      intro X Y f
+      apply GrothHomFT.ext
+      · change f.baseMap ≫ 𝟙 Y.T = 𝟙 X.T ≫ f.baseMap
+        simp
+      · change f.fiberMap * (1 : Matrix (Fin Y.X.n) (Fin Y.X.n) ℂ) =
+          (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) * f.fiberMap
+        simp)
+    counitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
+      intro X Y f
+      apply BundleTempHom.ext
+      · change f.baseMap ≫ 𝟙 Y.base = 𝟙 X.base ≫ f.baseMap
+        simp
+      · change f.fiberMap * (1 : Matrix (Fin Y.fiberData.n) (Fin Y.fiberData.n) ℂ) =
+          (1 : Matrix (Fin X.fiberData.n) (Fin X.fiberData.n) ℂ) * f.fiberMap
+        simp)
+    functor_unitIso_comp := by
+      intro X
+      apply BundleTempHom.ext
+      · change 𝟙 X.T ≫ 𝟙 X.T = 𝟙 X.T
+        simp
+      · change (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) * (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) = 1
+        simp }
 
 /-- RG dual: ∫F_μ ≌ Bun(RG, Spec) (Prop 5.2). -/
 @[ext]
@@ -867,11 +907,31 @@ noncomputable def bundleToGrothFμ : SpectralBundleRG ⥤ GrothObjFμ where
 
 /-- The equivalence ∫F_μ ≌ Bun(RG, Spec) (Prop 5.2). -/
 noncomputable def grothFμEquivBundle : GrothObjFμ ≌ SpectralBundleRG :=
-  CategoryTheory.Equivalence.mk grothFμToBundle bundleToGrothFμ
-    (NatIso.ofComponents (fun X => Iso.refl _) (by
-      intro X Y f; apply GrothHomFμ.ext; simp))
-    (NatIso.ofComponents (fun X => Iso.refl _) (by
-      intro X Y f; apply BundleRGHom.ext; simp))
+  { functor := grothFμToBundle
+    inverse := bundleToGrothFμ
+    unitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
+      intro X Y f
+      apply GrothHomFμ.ext
+      · change f.baseMap ≫ 𝟙 Y.μ = 𝟙 X.μ ≫ f.baseMap
+        simp
+      · change f.fiberMap * (1 : Matrix (Fin Y.X.n) (Fin Y.X.n) ℂ) =
+          (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) * f.fiberMap
+        simp)
+    counitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
+      intro X Y f
+      apply BundleRGHom.ext
+      · change f.baseMap ≫ 𝟙 Y.base = 𝟙 X.base ≫ f.baseMap
+        simp
+      · change f.fiberMap * (1 : Matrix (Fin Y.fiberData.n) (Fin Y.fiberData.n) ℂ) =
+          (1 : Matrix (Fin X.fiberData.n) (Fin X.fiberData.n) ℂ) * f.fiberMap
+        simp)
+    functor_unitIso_comp := by
+      intro X
+      apply BundleRGHom.ext
+      · change 𝟙 X.μ ≫ 𝟙 X.μ = 𝟙 X.μ
+        simp
+      · change (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) * (1 : Matrix (Fin X.X.n) (Fin X.X.n) ℂ) = 1
+        simp }
 
 /-! =========================================================
     Section 9: Natural Transformation η̂ (Theorem 6.1)
@@ -880,18 +940,18 @@ noncomputable def grothFμEquivBundle : GrothObjFμ ≌ SpectralBundleRG :=
 /-- The natural transformation η̂ : T̂_Riem ⇒ T̂_Riem.
     In our finite prototype, η̂ is the identity natural transformation,
     which is fiber-restricted: π_μ(η̂_X) = id_{𝒯(π_T(X))}. -/
-noncomputable def η_hat : T_hat_Riem ⟹ T_hat_Riem :=
+noncomputable def η_hat : T_hat_Riem ⟶ T_hat_Riem :=
   NatTrans.id T_hat_Riem
 
 /-- η̂ is fiber-restricted: for every X, the base of η̂_X is identity (Theorem 6.1). -/
 theorem η_hat_fiber_restricted (X : SpectralBundleTemp) :
     π_μ.map (η_hat.app X) = 𝟙 (TFunctor.obj (π_T.obj X)) := by
-  simp [η_hat]
+  simp [η_hat, T_hat_Riem, TFunctor]
 
 /-- η̂ is a natural transformation (corollary of NatTrans.id being natural). -/
 theorem η_hat_naturality {X Y : SpectralBundleTemp} (f : X ⟶ Y) :
-    η_hat.app Y ≫ T_hat_Riem.map f = T_hat_Riem.map f ≫ η_hat.app X := by
-  simpa [η_hat] using (NatTrans.id_naturality (T_hat_Riem.map f))
+    T_hat_Riem.map f ≫ η_hat.app Y = η_hat.app X ≫ T_hat_Riem.map f := by
+  simp [η_hat]
 
 /-! =========================================================
     Section 10: Strict 2-Category 2Bun (Theorems 7.1–7.3)
@@ -905,18 +965,16 @@ theorem η_hat_naturality {X Y : SpectralBundleTemp} (f : X ⟶ Y) :
       - Strict 2-functor theorems for T̂_Riem
    ========================================================= -/
 
-/-- Composition of fibered functors (1-cell composition in 2Bun).
-    Given F: p → q and G: q → r, F.comp G: p → r acts as F then G. -/
-noncomputable def FiberedFunctor.comp {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} (F : FiberedFunctor p q) (G : FiberedFunctor q r) :
-    FiberedFunctor p r :=
-  { F := F.F ⋙ G.F
-    base_map := fun X => G.base_map (F.F.obj X)
-    base_commutes := fun X => by
-      calc
-        r.obj ((F.F ⋙ G.F).obj X) = r.obj (G.F.obj (F.F.obj X)) := rfl
-        _ = G.base_map (F.F.obj X) := G.base_commutes (F.F.obj X)
-  }
+/-
+※ 开放项登记（2026-08-04）：1-胞腔复合 `FiberedFunctor.comp` 不可构造。
+`FiberedFunctor p q` 的 `F` 字段硬编码为 `SpectralBundleTemp ⥤ SpectralBundleRG`
+（无论 p, q 如何），因此对任意 F, G : p → q，`F.F ⋙ G.F` 需要 G.F 的
+定义域为 SpectralBundleRG（实为 SpectralBundleTemp），类型不匹配。
+2Bun 的 1-胞腔复合需将 `FiberedFunctor` 泛化为 `F : C ⥤ D` 才能闭合；
+当前框架下注册为开放项。`FiberedNatTrans.whiskerLeft`/`whiskerLeft_exchange`/
+`twoT_hat_Riem_preserves_vcomp`/`twoT_hat_Riem_fiber_preserving` 依赖复合，
+一并登记为开放项（不再以伪定理形式保留）。
+-/
 
 /-- Identity 2-cell for a fibered functor (the identity natural transformation). -/
 noncomputable def idFiberedNatTrans {p : SpectralBundleTemp ⥤ TempObj} {q : SpectralBundleRG ⥤ RGObj}
@@ -932,54 +990,17 @@ noncomputable def FiberedNatTrans.vcomp {p : SpectralBundleTemp ⥤ TempObj} {q 
     {F G H : FiberedFunctor p q} (α : FiberedNaturalTransformation p q F G)
     (β : FiberedNaturalTransformation p q G H) : FiberedNaturalTransformation p q F H :=
   { base_map_eq := α.base_map_eq.trans β.base_map_eq
-    η := NatTrans.comp α.η β.η
+    η := α.η ≫ β.η
     fiber_restricted := fun X => by
       simp [α.fiber_restricted X, β.fiber_restricted X, Category.assoc]
   }
 
-/-- Right whiskering: given F: p → q and α: G ⇒ H between q → r,
-    produce α ▹ F: G∘F ⇒ H∘F between p → r.
-    Corresponds to Bicategory.whiskerRight. -/
-noncomputable def FiberedNatTrans.whiskerRight {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} {G H : FiberedFunctor q r}
-    (α : FiberedNaturalTransformation q r G H) (F : FiberedFunctor p q) :
-    FiberedNaturalTransformation p r (FiberedFunctor.comp F G) (FiberedFunctor.comp F H) :=
-  { base_map_eq := by
-      ext X
-      exact congr_fun α.base_map_eq (F.F.obj X)
-    η := NatTrans.whiskerLeft F.F α.η
-    fiber_restricted := fun X => by
-      have h := α.fiber_restricted (F.F.obj X)
-      simpa [FiberedFunctor.comp, Category.assoc] using h
-  }
-
-/-- Left whiskering: given F: p → q and α: G ⇒ H between q → r,
-    produce F ◃ α: F∘G ⇒ F∘H between p → r.
-    Corresponds to Bicategory.whiskerLeft. -/
-noncomputable def FiberedNatTrans.whiskerLeft {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} {G H : FiberedFunctor q r}
-    (F : FiberedFunctor p q) (α : FiberedNaturalTransformation q r G H) :
-    FiberedNaturalTransformation p r (FiberedFunctor.comp F G) (FiberedFunctor.comp F H) :=
-  { base_map_eq := by
-      ext X
-      exact congr_fun α.base_map_eq (F.F.obj X)
-    η := NatTrans.whiskerLeft F.F α.η
-    fiber_restricted := fun X => by
-      have h := α.fiber_restricted (F.F.obj X)
-      simpa [FiberedFunctor.comp, Category.assoc] using h
-  }
-
-/-- Horizontal composition (Godement product) of fibered natural transformations.
-    α ◫ β = (α ▹ G₁) • (F₂ ◃ β)  gives (F₁∘G₁ ⇒ F₂∘G₂) between p → r.
-    
-    Definition via whiskering:
-      α ◫ β := (α ▹ G₁) • (F₂ ◃ β) = (F₁ ◃ β) • (α ▹ G₂)
-    (both definitions are equal by the interchange law). -/
-noncomputable def FiberedNatTrans.hcomp {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} {F₁ F₂ : FiberedFunctor p q} {G₁ G₂ : FiberedFunctor q r}
-    (α : FiberedNaturalTransformation p q F₁ F₂) (β : FiberedNaturalTransformation q r G₁ G₂) :
-    FiberedNaturalTransformation p r (FiberedFunctor.comp F₁ G₁) (FiberedFunctor.comp F₂ G₂) :=
-  FiberedNatTrans.vcomp (FiberedNatTrans.whiskerRight α G₁) (FiberedNatTrans.whiskerLeft F₂ β)
+/-
+※ 开放项登记（2026-08-04）：`FiberedNatTrans.whiskerLeft`/`whiskerLeft_exchange`
+及右 whiskering/Godement 横复合/完整交换律均依赖不可构造的 1-胞腔复合
+`FiberedFunctor.comp`（见上方登记），一并注册为开放项。
+正确闭合需将 `FiberedFunctor` 泛化（`F : C ⥤ D`）+ `base_map` 派生化。
+-/
 
 /-- Theorem 7.1 (vertical composition associativity). -/
 theorem twoBun_vcomp_assoc {p q} {F G H K : FiberedFunctor p q}
@@ -1002,47 +1023,6 @@ theorem twoBun_vcomp_id_right {p q} {F G : FiberedFunctor p q}
     FiberedNatTrans.vcomp α (idFiberedNatTrans G) = α := by
   ext <;> simp [FiberedNatTrans.vcomp, idFiberedNatTrans]
 
-/-- Right whiskering distributes over vertical composition (part of the interchange law):
-    (α • β) ▹ F = (α ▹ F) • (β ▹ F). -/
-theorem whiskerRight_exchange {p q r} {G H K : FiberedFunctor q r} (F : FiberedFunctor p q)
-    (α : FiberedNaturalTransformation q r G H) (β : FiberedNaturalTransformation q r H K) :
-    FiberedNatTrans.whiskerRight (FiberedNatTrans.vcomp α β) F =
-    FiberedNatTrans.vcomp (FiberedNatTrans.whiskerRight α F) (FiberedNatTrans.whiskerRight β F) := by
-  ext <;> simp [FiberedNatTrans.vcomp, FiberedNatTrans.whiskerRight, FiberedFunctor.comp]
-
-/-- Left whiskering distributes over vertical composition (part of the interchange law):
-    F ◃ (α • β) = (F ◃ α) • (F ◃ β). -/
-theorem whiskerLeft_exchange {p q r} {G H K : FiberedFunctor q r} (F : FiberedFunctor p q)
-    (α : FiberedNaturalTransformation q r G H) (β : FiberedNaturalTransformation q r H K) :
-    FiberedNatTrans.whiskerLeft F (FiberedNatTrans.vcomp α β) =
-    FiberedNatTrans.vcomp (FiberedNatTrans.whiskerLeft F α) (FiberedNatTrans.whiskerLeft F β) := by
-  ext <;> simp [FiberedNatTrans.vcomp, FiberedNatTrans.whiskerLeft, FiberedFunctor.comp]
-
-/-- Lemma: the two definitions of horizontal composition are equal:
-    (α ▹ G₁) • (F₂ ◃ β) = (F₁ ◃ β) • (α ▹ G₂).
-    This is the interchange law applied to the Godement product definition. -/
-theorem hcomp_definition_equality {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} {F₁ F₂ : FiberedFunctor p q} {G₁ G₂ : FiberedFunctor q r}
-    (α : FiberedNaturalTransformation p q F₁ F₂) (β : FiberedNaturalTransformation q r G₁ G₂) :
-    FiberedNatTrans.vcomp (FiberedNatTrans.whiskerRight α G₁) (FiberedNatTrans.whiskerLeft F₂ β) =
-    FiberedNatTrans.vcomp (FiberedNatTrans.whiskerLeft F₁ β) (FiberedNatTrans.whiskerRight α G₂) := by
-  ext <;> simp [FiberedNatTrans.vcomp, FiberedNatTrans.whiskerRight, FiberedNatTrans.whiskerLeft,
-    FiberedFunctor.comp]
-
-/-- Theorem 7.1 (full interchange law).
-    (α₁ • α₂) ◫ (β₁ • β₂) = (α₁ ◫ β₁) • (α₂ ◫ β₂)
-    where ◫ = FiberedNatTrans.hcomp (the Godement product). -/
-theorem twoBun_interchange_law {p : SpectralBundleTemp ⥤ TempObj}
-    {q r : SpectralBundleRG ⥤ RGObj} {F₁ F₂ F₃ : FiberedFunctor p q}
-    {G₁ G₂ G₃ : FiberedFunctor q r}
-    (α₁ : FiberedNaturalTransformation p q F₁ F₂) (α₂ : FiberedNaturalTransformation p q F₂ F₃)
-    (β₁ : FiberedNaturalTransformation q r G₁ G₂) (β₂ : FiberedNaturalTransformation q r G₂ G₃) :
-    FiberedNatTrans.hcomp (FiberedNatTrans.vcomp α₁ α₂) (FiberedNatTrans.vcomp β₁ β₂) =
-    FiberedNatTrans.vcomp (FiberedNatTrans.hcomp α₁ β₁) (FiberedNatTrans.hcomp α₂ β₂) := by
-  unfold FiberedNatTrans.hcomp
-  simp [FiberedNatTrans.vcomp, FiberedNatTrans.whiskerRight, FiberedNatTrans.whiskerLeft,
-    FiberedFunctor.comp, Category.assoc]
-
 /-- T̂_Riem as a fibration-preserving functor (1-cell in 2Bun from π_T to π_μ). -/
 noncomputable def T_hat_Riem_fibered : FiberedFunctor π_T π_μ :=
   { F := T_hat_Riem
@@ -1050,37 +1030,8 @@ noncomputable def T_hat_Riem_fibered : FiberedFunctor π_T π_μ :=
     base_commutes := fun X => rfl
   }
 
-/-- Theorem 7.2: 2T̂_Riem preserves vertical composition of 2-cells.
-    
-    The 2-functor 2T̂_Riem acts on 2-cells by left whiskering with T_hat_Riem_fibered.
-    By whiskerLeft_exchange (already proved), left whiskering distributes over
-    vertical composition, so the theorem follows immediately:
-    
-      T̂_Riem ◃ (α • β) = (T̂_Riem ◃ α) • (T̂_Riem ◃ β) -/
-theorem twoT_hat_Riem_preserves_vcomp {G H K : FiberedFunctor π_T π_μ}
-    (α : FiberedNaturalTransformation π_T π_μ G H)
-    (β : FiberedNaturalTransformation π_T π_μ H K) :
-    FiberedNatTrans.whiskerLeft T_hat_Riem_fibered (FiberedNatTrans.vcomp α β) =
-    FiberedNatTrans.vcomp (FiberedNatTrans.whiskerLeft T_hat_Riem_fibered α)
-      (FiberedNatTrans.whiskerLeft T_hat_Riem_fibered β) :=
-  whiskerLeft_exchange T_hat_Riem_fibered α β
-
-/-- Theorem 7.3: 2T̂_Riem preserves fibers.
-    
-    For any fibered functor F : π_T → π_μ, the composition T_hat_Riem_fibered ∘ F
-    remains fibered because:
-      1. T_hat_Riem is base-preserving (T_hat_Riem_base_commutes)
-      2. F is fibered by definition (F.base_commutes)
-    
-    Concretely: π_μ(T̂_Riem(F(X))) = 𝒯(π_T(F(X))) = 𝒯(F_0(π_T(X)))
-    where F_0 is the base map of F. -/
-theorem twoT_hat_Riem_fiber_preserving (F : FiberedFunctor π_T π_μ) (X : SpectralBundleTemp) :
-    π_μ.obj ((FiberedFunctor.comp T_hat_Riem_fibered F).F.obj X) =
-    TFunctor.obj (π_T.obj (F.F.obj X)) := by
-  calc
-    π_μ.obj ((FiberedFunctor.comp T_hat_Riem_fibered F).F.obj X)
-        = π_μ.obj (T_hat_Riem.obj (F.F.obj X)) := rfl
-    _ = TFunctor.obj (π_T.obj (F.F.obj X)) := T_hat_Riem_base_commutes (F.F.obj X)
+/- 定理 7.2（twoT_hat_Riem_preserves_vcomp）与定理 7.3 相关声明依赖
+   1-胞腔复合，已随 `FiberedFunctor.comp` 一并登记为开放项（见上方）。 -/
 
 /-! =========================================================
     Section 11: Physical Fiber Sections (Theorems 8.1–8.4)
@@ -1111,8 +1062,15 @@ theorem cl17GapMatrix_gap_real : spectralGap 8 = (Real.sqrt 6 - Real.sqrt 2) / R
 noncomputable def QCDSection_cl17 : TempObj ⥤ SpectralBundleTemp where
   obj T := { base := T, fiberData := { n := 2, A := cl17GapMatrix } }
   map f := { baseMap := f, fiberMap := 1, commut := by simp [cl17GapMatrix] }
-  map_id T := rfl
-  map_comp f g := rfl
+  map_id T := by
+    apply BundleTempHom.ext
+    · rfl
+    · rfl
+  map_comp f g := by
+    apply BundleTempHom.ext
+    · rfl
+    · change 1 = 1 * 1
+      simp
 
 /-- QCD section is a section of π_T: π_T ∘ σ = id_Temp (Theorem 8.1). -/
 theorem QCDSection_cl17_is_section (T : TempObj) :
@@ -1146,8 +1104,15 @@ theorem BCSSection_cl17_gap_eq_qcd :
 noncomputable def HPSection_cl17 : RGObj ⥤ SpectralBundleRG where
   obj μ := { base := μ, fiberData := { n := 2, A := cl17GapMatrix } }
   map f := { baseMap := f, fiberMap := 1, commut := by simp [cl17GapMatrix] }
-  map_id μ := rfl
-  map_comp f g := rfl
+  map_id μ := by
+    apply BundleRGHom.ext
+    · rfl
+    · rfl
+  map_comp f g := by
+    apply BundleRGHom.ext
+    · rfl
+    · change 1 = 1 * 1
+      simp
 
 /-- HP section is related to QCD section via T̂_Riem (Theorem 8.3). -/
 theorem HPSection_cl17_is_T_hat_Riem_image (T : TempObj) :
@@ -1174,7 +1139,17 @@ theorem cl17_spectral_gap_ratio : (agEigenvalue 1 8 : ℝ) = Real.sqrt 2 / Real.
   unfold agEigenvalue
   have h : (1 : ℕ) ≥ 1 ∧ (1 : ℕ) ≤ 8 := by omega
   simp [h]
-  ring
+  -- 目标：√2 · (√8)⁻¹ · (1/3) = √2 · (√72)⁻¹；√72 = 3·√8
+  have h72 : Real.sqrt (72 : ℝ) = 3 * Real.sqrt 8 := by
+    rw [show (72 : ℝ) = 9 * 8 by norm_num]
+    rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 9)]
+    have hsq : Real.sqrt (9 : ℝ) = 3 := by
+      rw [show (9 : ℝ) = 3 ^ 2 by norm_num]
+      exact Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 3)
+    rw [hsq]
+  rw [h72]
+  field_simp
+  ring_nf
 
 /-! =========================================================
     Corollary 8.4a: Rheology-Hawking Duality via Wick Rotation
@@ -1214,7 +1189,7 @@ theorem seven_class_unification (T : TempObj) :
     π_T.obj (QCDSection_cl17.obj T) = T ∧
     π_T.obj (BCSSection_cl17.obj T) = T ∧
     π_T.obj (RheoSection_cl17.obj T) = T := by
-  simp
+  simp [QCDSection_cl17, BCSSection_cl17, RheoSection_cl17]
 
 /-! =========================================================
     Section 12: Connection to Mathlib's FiberedCategory Framework
@@ -1223,100 +1198,35 @@ theorem seven_class_unification (T : TempObj) :
 
 open Functor
 
-/-- Lemma: π_T.map of our Cartesian morphism equals the base morphism f. -/
-lemma π_T_map_cartesian_eq_base {e : SpectralBundleTemp} {b' : TempObj}
-    (f : b' ⟶ π_T.obj e) : π_T.map (π_T_cartesianLift.cartesian_morphism f) = f := by
-  simpa [π_T] using π_T_cartesianLift.cartesian_base f
+/-
+※ 开放项登记（2026-08-04）：本节"与 Mathlib FiberedCategory 框架的连接"
+（π_T_map_cartesian_eq_base / π_μ_map_cartesian_eq_base /
+π_T_cartesian_strongly_cartesian / π_μ_cartesian_strongly_cartesian /
+π_T_is_fibered / π_μ_is_fibered）在 mathlib 4.31 下不可闭合：
 
-/-- Each Cartesian lift from π_T_cartesianLift is a strongly Cartesian morphism
-    in the sense of Mathlib's IsStronglyCartesian (SGA1 VI.5.1). -/
-instance π_T_cartesian_strongly_cartesian {e : SpectralBundleTemp} {b' : TempObj}
-    (f : b' ⟶ π_T.obj e) : IsStronglyCartesian π_T f (π_T_cartesianLift.cartesian_morphism f) :=
-  { toIsHomLift := by
-      -- Show π_T.map (cartesian_morphism f) = f → IsHomLift π_T f (...)
-      simpa [π_T_map_cartesian_eq_base f] using IsHomLift.map (p := π_T)
-        (π_T_cartesianLift.cartesian_morphism f)
-    universal_property' := fun {a'} g φ' hφ' => by
-      -- hφ' : IsHomLift π_T (g ≫ f) φ', so π_T.map φ' = g ≫ f
-      subst_hom_lift π_T (g ≫ f) φ'
-      -- Now π_T.map φ' = g ≫ f holds definitionally
-      let χ : a' ⟶ π_T_cartesianLift.lift f :=
-        π_T_cartesianLift.cartesian_universal f a' φ' g rfl
-      have h_base_χ : π_T.map χ = g := by
-        simpa [π_T] using π_T_cartesianLift.cartesian_universal_base f a' φ' g rfl
-      have h_comp_χ : χ ≫ π_T_cartesianLift.cartesian_morphism f = φ' := by
-        apply (π_T_cartesianLift.cartesian_universal_prop f a' φ' g rfl).symm
-      have h_unique : ∀ (χ' : a' ⟶ π_T_cartesianLift.lift f),
-          (IsHomLift π_T g χ') → (χ' ≫ π_T_cartesianLift.cartesian_morphism f = φ') → χ' = χ := by
-        intro χ' hχ'_lift hχ'_comp
-        apply BundleTempHom.ext
-        · -- baseMap: both equal g
-          subst_hom_lift π_T g χ'
-          -- Now π_T.map χ' = g, and h_base_χ gives π_T.map χ = g
-          -- π_T.map = .baseMap, so both baseMaps are g
-          simpa [π_T] using h_base_χ.symm
-        · -- fiberMap: both equal φ'.fiberMap
-          calc
-            χ'.fiberMap = (χ' ≫ π_T_cartesianLift.cartesian_morphism f).fiberMap := by
-              simp
-            _ = φ'.fiberMap := by rw [hχ'_comp]
-            _ = (χ ≫ π_T_cartesianLift.cartesian_morphism f).fiberMap := by rw [h_comp_χ]
-            _ = χ.fiberMap := by simp
-      exact ⟨χ, ⟨by simpa [h_base_χ] using IsHomLift.map (p := π_T) χ, h_comp_χ⟩, h_unique⟩
-  }
+1. `CartesianLiftData.cartesian_base` 的类型改为带 `eqToHom (lift_base f) ≫ f`
+   （域传输），不再等于裸 `f`；
+2. `Functor.IsHomLift` 重构为带依赖索引的归纳类，`subst_hom_lift` 宏对
+   假设型实例做 `cases` 时无法消解对象方程 `a'.1 = a✝.1`（域相等仅是
+   命题性，非定义性）。
 
-/-- π_T : Bun(Temp, Spec) → Temp is an IsFibered functor in the sense of SGA1
-    (connection between our custom framework and Mathlib's standard typeclass). -/
-instance π_T_is_fibered : IsFibered (π_T : SpectralBundleTemp ⥤ TempObj) :=
-  IsFibered.of_exists_isStronglyCartesian (fun e R f => by
-    refine ⟨π_T_cartesianLift.lift f, π_T_cartesianLift.cartesian_morphism f, inferInstance⟩)
+正确闭合需按 mathlib 4.31 的 `IsHomLift.comp`/`fac'`/eqToHom 传输机制
+重写整个 SGA1 桥接构造。本文件保留自建的 `CartesianLiftData` 与
+`GrothendieckFibration` 实例（Section 5，已编译通过），mathlib
+`IsFibered` 类型类桥接注册为开放项（对应论文 §定理 1.1 的后续工作）。
+-/
 
-/-- RG dual: π_μ : Bun(RG, Spec) → RG is also IsFibered. -/
-instance π_μ_is_fibered : IsFibered (π_μ : SpectralBundleRG ⥤ RGObj) := by
-  -- Dual construction: same structure as π_T, just adjusted types
-  apply IsFibered.of_exists_isStronglyCartesian
-  intro e R f
-  refine ⟨π_μ_cartesianLift.lift f, π_μ_cartesianLift.cartesian_morphism f, ?_⟩
-  -- Construct IsStronglyCartesian π_μ f (π_μ_cartesianLift.cartesian_morphism f)
-  -- This is dual to the π_T case
-  have h_base : π_μ.map (π_μ_cartesianLift.cartesian_morphism f) = f := by
-    simpa [π_μ] using π_μ_cartesianLift.cartesian_base f
-  exact
-    { toIsHomLift := by
-        simpa [h_base] using IsHomLift.map (p := π_μ) (π_μ_cartesianLift.cartesian_morphism f)
-      universal_property' := fun {a'} g φ' hφ' => by
-        subst_hom_lift π_μ (g ≫ f) φ'
-        let χ : a' ⟶ π_μ_cartesianLift.lift f :=
-          π_μ_cartesianLift.cartesian_universal f a' φ' g rfl
-        have h_base_χ : π_μ.map χ = g := by
-          simpa [π_μ] using π_μ_cartesianLift.cartesian_universal_base f a' φ' g rfl
-        have h_comp_χ : χ ≫ π_μ_cartesianLift.cartesian_morphism f = φ' := by
-          apply (π_μ_cartesianLift.cartesian_universal_prop f a' φ' g rfl).symm
-        have h_unique : ∀ (χ' : a' ⟶ π_μ_cartesianLift.lift f),
-            (IsHomLift π_μ g χ') → (χ' ≫ π_μ_cartesianLift.cartesian_morphism f = φ') → χ' = χ := by
-          intro χ' hχ'_lift hχ'_comp
-          apply BundleRGHom.ext
-          · subst_hom_lift π_μ g χ'
-            simpa [π_μ] using h_base_χ.symm
-          · calc
-            χ'.fiberMap = (χ' ≫ π_μ_cartesianLift.cartesian_morphism f).fiberMap := by simp
-            _ = φ'.fiberMap := by rw [hχ'_comp]
-            _ = (χ ≫ π_μ_cartesianLift.cartesian_morphism f).fiberMap := by rw [h_comp_χ]
-            _ = χ.fiberMap := by simp
-        exact ⟨χ, ⟨by simpa [h_base_χ] using IsHomLift.map (p := π_μ) χ, h_comp_χ⟩, h_unique⟩
-    }
-
-/-- Theorem 1.1 (special case): The Grothendieck construction ∫F_T (from Mathlib's
-    CoGrothendieck) is equivalent to our SpectralBundleTemp as fibered categories over Temp.
-    
-    More precisely, π_T : SpectralBundleTemp → Temp is isomorphic in Fib(Temp) to the
-    projection forget F_T : ∫ᶜ F_T → Temp, where F_T : Tempᵒᵖ → Cat is the pseudofunctor
-    sending T → SpecFiberTemp T.
-    
-    The category-level equivalence is already established by grothFTEquivBundle.
-    The fibered equivalence follows from both being IsFibered with equivalent fibers. -/
-theorem grothFTEquivBundle_is_fibered_equivalence :
-    IsFibered (π_T : SpectralBundleTemp ⥤ TempObj) := by
-  infer_instance
+/-
+※ 开放项登记（2026-08-04）：定理 grothFTEquivBundle_is_fibered_equivalence
+（π_T : SpectralBundleTemp ⥤ TempObj 上的 `IsFibered` 实例）在 mathlib 4.31 下
+不可闭合——`Functor.IsFibered` 基于 `IsHomLift`（带依赖索引的归纳类）+ `IsCartesian`
+（SGA 1 VI 5.1），而本文件的 `BundleTempHom` 交换条件（fiberMap 与谱矩阵的交换性）
+无法自动满足其构造条件；需按 mathlib 4.31 的 `IsHomLift.comp`/`fac'`/eqToHom
+传输机制手工构造 `IsCartesian` 实例（对应论文 §定理 1.1 的后续工作，与本文件
+Section 12 其余 5 个 SGA1 桥接声明同一批次登记）。
+-/
+-- theorem grothFTEquivBundle_is_fibered_equivalence :
+--     IsFibered (π_T : SpectralBundleTemp ⥤ TempObj) := by
+--   infer_instance
 
 end UFPFormalization

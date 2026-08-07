@@ -15,13 +15,14 @@
 | **CKM 五参数第一性推导** | ✅ 已完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` |
 | **PMNS 四参数第一性推导（含 δ_CP）** | ✅ 已完成 | `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md` |
 | **强 CP 谱解** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_strong_CP.md` |
-| **全 29 参数验证 + ε_K 交叉检验** | ✅ **29/29 已验证** | `paperX_all_predictions.py` |
+| **全 29 参数验证 + ε_K 交叉检验** | ✅ **29/29 已验证** | `scripts/paperX_all_predictions.py` |
 | **d_H 结构分析与机器验证** | ✅ **Paper 30 v1.1** （11 项 Lean 证明 + 2 项数值验证） | `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper30_dH_structural_analysis.md` |
 | **B2 连续极限（分形→光滑时空）** | ✅ **理论闭合（Paper XXXIV v1.2）** — 6/6 子步骤 | `notes/08_first_principles/b2_continuum_limit_analysis.md`、`paper/paper34_continuum_limit.md` |
-| **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 定理完整证明链 | `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` |
+| **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 完整证明链；**hDiamLeOne 闭合（2026-08-04，O9）**——吸引子 ⊆ [0,1] 与 diam ≤ 1 机器证明 | `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` |
+| **假设-演绎论证方法论** | ✅ **已确立（2026-08-04）** — 三层级论证强度（①预测检验 ②框架自洽 ③先验导出）+ A_GR 谱假设定位 + 非循环性判据；提炼于 Paper XXXVII §4.4 与勘误 §一·补充 | `notes/00_foundations/spectral_hypothesis_deductive_methodology.md`、`paper/paper37_open_problems.md` |
 | **引力范畴论起源** | ✅ **Paper XXXV v0.2** — 交换律偏差 = 引力 | `notes/08_first_principles/04_gravity_analysis.md`、`paper/paper35_gravity_origin.md` |
 | **开放问题系统综述** | ✅ **Paper XXXVII v0.1** — A/B/C 三组分类 + 层次距离 + Bott-Moran 桥 | `notes/08_first_principles/05_hierarchy_distance.md`、`notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper37_open_problems.md` |
-| **p-value 统计分析** | ✅ **Fisher p≈0** | `paperX_pvalue_analysis.py` |
+| **p-value 统计分析** | ✅ **Fisher p≈0** | `scripts/paperX_pvalue_analysis.py` |
 | **根因分析** | ✅ 已完成 | `notes/01_qcd_higgs/spectral_root_cause_analysis.md` |
 | **框架完整推导综述** | ✅ 已完成 | `notes/00_foundations/spectral_comprehensive_review.md` |
 | **独有实验预言汇总** | ✅ 已完成 | `notes/09_experimental/spectral_unique_predictions.md` |
@@ -48,6 +49,7 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 
 **笔记→论文覆盖率：57/57（100%），详见 `notes/07_validation/notes_to_papers_audit.md`。**
 **多重静默理论笔记：8 篇，详见 `notes/01_qcd_higgs/spectral_root_cause_analysis.md`。**
+**Phase 61 物理方向笔记（2026-08-03/04）**：`notes/05_cosmology/spectral_inflation_dynamics.md`（61A 暴涨）、`notes/01_qcd_higgs/spectral_color_dynamics.md`（61B 色规范）、`notes/00_foundations/spectral_renormalization_chain.md`（61C 重整化链）、`notes/04_lorentz_gravity/spectral_black_hole_evolution_formalization.md`（61D 黑洞演化）——均对应论文 `paper39-42`，全部达到完成判据（Lean/Agda 双语言 + 数值验证）。
 
 ## 当前重点问题（开放问题推进中）
 

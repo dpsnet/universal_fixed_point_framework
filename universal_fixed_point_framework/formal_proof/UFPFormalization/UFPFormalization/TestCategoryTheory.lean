@@ -31,18 +31,19 @@ example (n : ℕ) : (𝟙 (testRecObj n) : RecHom (testRecObj n) (testRecObj n))
 
 -- RecHom composition
 example (n : ℕ) (f g : RecHom (testRecObj n) (testRecObj n)) (x : Fin n) :
-    ((f ≫ g) : RecHom (testRecObj n) (testRecObj n)).toFun x = g.toFun (f.toFun x) := rfl
+    (@CategoryStruct.comp RecObj _ (testRecObj n) (testRecObj n) (testRecObj n) f g).toFun x =
+      g.toFun (f.toFun x) := rfl
 
 -- Category axioms: identity
 theorem test_recCategory_id_comp (n : ℕ) (f : RecHom (testRecObj n) (testRecObj n)) :
-    (𝟙 (testRecObj n) ≫ f) = f := by
+    (@CategoryStruct.comp RecObj _ (testRecObj n) (testRecObj n) (testRecObj n) (𝟙 (testRecObj n)) f) = f := by
   apply RecHom.ext
-  intro x; simp
+  simp
 
 theorem test_recCategory_comp_id (n : ℕ) (f : RecHom (testRecObj n) (testRecObj n)) :
-    (f ≫ 𝟙 (testRecObj n)) = f := by
+    (@CategoryStruct.comp RecObj _ (testRecObj n) (testRecObj n) (testRecObj n) f (𝟙 (testRecObj n))) = f := by
   apply RecHom.ext
-  intro x; simp
+  simp
 
 -- ============================================================
 -- SpCategory Tests
@@ -77,11 +78,11 @@ theorem test_DFunctor_map_id (n : ℕ) : DFunctor.map (𝟙 (testRecObj n)) = �
 -- ============================================================
 
 -- D ⊣ R adjunction unit exists
-theorem test_adjUnit_exists (R : RecObj) : Nonempty (R ⟶ RFunctor.obj (DFunctor.obj R)) :=
+theorem test_adjUnit_exists (R : RecObj) : Nonempty (R ⟶ RFunctor (DFunctor.obj R)) :=
   ⟨adjUnit R⟩
 
 -- D ⊣ R adjunction counit exists
-theorem test_adjCounit_exists (S : SpObj) : Nonempty (DFunctor.obj (RFunctor.obj S) ⟶ S) :=
+theorem test_adjCounit_exists (S : SpObj) : Nonempty (DFunctor.obj (RFunctor S) ⟶ S) :=
   ⟨adjCounit S⟩
 
 -- ============================================================
@@ -90,13 +91,13 @@ theorem test_adjCounit_exists (S : SpObj) : Nonempty (DFunctor.obj (RFunctor.obj
 
 -- recTensorProduct is symmetric for self-adjoint case
 theorem test_braiding_symmetric (n : ℕ) :
-    recBraiding (testRecObj n) (testRecObj n) ≫ recBraiding (testRecObj n) (testRecObj n) =
+    (recBraiding (testRecObj n) (testRecObj n)).hom ≫ (recBraiding (testRecObj n) (testRecObj n)).hom =
     𝟙 (recTensorProduct (testRecObj n) (testRecObj n)) := by
   apply braiding_symmetric
 
 -- recBraiding is natural
 theorem test_braiding_natural (R₁ R₂ : RecObj) :
-    (recBraiding R₁ R₂).toFun = fun (x, y) => (y, x) := rfl
+    (recBraiding R₁ R₂).hom.toFun = fun (x, y) => (y, x) := rfl
 
 -- ============================================================
 -- IsolationConstraint Tests

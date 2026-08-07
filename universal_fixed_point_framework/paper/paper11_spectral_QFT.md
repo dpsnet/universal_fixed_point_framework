@@ -52,12 +52,12 @@ Phase 44 路线图的目标是将已知物理方程用谱语言重写，补齐 U
 
 | 脚本 | 验证内容 | 通过率 | 关键结果 |
 |:----|---------|:-----:|---------|
-| `paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{Sp}} = i/(\lambda-m^2+i\varepsilon)$ |
-| `paperX_spectral_renormalization.py` | 路径积分 + $\beta$ 函数 | **4/4** | $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ |
-| `paperX_spectral_gauge.py` | BRST 幂零性 + Ward 恒等式 | **6/6** | $s^2=0$, Landau 纵向=0 |
-| `paperX_spectral_chiral.py` | 反常消去 + 瞬子拓扑荷 | **7/7** | SM 4 反常全消去, $Q_{\text{top}}=1$ |
-| `paperX_spectral_SM.py` | 完整 SM 量子数/质量/$\beta$ | **8/8** | $W/Z/h$ 匹配 $<0.3\%$ |
-| `paperX_spectral_formalization.py` | LSZ/幺正性/Cutkosky/KL | **4/4** | $Z$ 因子 0.99%, 求和规则 $=1$ |
+| `scripts/paperX_spectral_feynman.py` | 谱传播子/顶点/散射振幅 | **7/7** | $D_F^{\text{Sp}} = i/(\lambda-m^2+i\varepsilon)$ |
+| `scripts/paperX_spectral_renormalization.py` | 路径积分 + $\beta$ 函数 | **4/4** | $\beta(\lambda_R) = 3\lambda_R^2/(16\pi^2)$ |
+| `scripts/paperX_spectral_gauge.py` | BRST 幂零性 + Ward 恒等式 | **6/6** | $s^2=0$, Landau 纵向=0 |
+| `scripts/paperX_spectral_chiral.py` | 反常消去 + 瞬子拓扑荷 | **7/7** | SM 4 反常全消去, $Q_{\text{top}}=1$ |
+| `scripts/paperX_spectral_SM.py` | 完整 SM 量子数/质量/$\beta$ | **8/8** | $W/Z/h$ 匹配 $<0.3\%$ |
+| `scripts/paperX_spectral_formalization.py` | LSZ/幺正性/Cutkosky/KL | **4/4** | $Z$ 因子 0.99%, 求和规则 $=1$ |
 | | **合计** | **36/36** | |
 
 ### 1.5 SM 参数的谱根因结构
@@ -72,9 +72,11 @@ $\alpha$ 已从 IFS 有限谱三元组 + KO-维数修正推导。该公式在登
 
 **(2) Cl(1,7) 根系 → 规范耦合谱间隙比**。Cl(1,7) Clifford 代数在 $\mathbf{Rec}$ 范畴中编码标准模型规范群 $SU(3)_C \times SU(2)_L \times U(1)_Y$ 的根系结构。根系权重向量 $\{\alpha_i\}$ 的归一化直接确定 $M_{\text{Pl}}$ 处规范耦合谱间隙比：
 
-$$\lambda_3 : \lambda_2 : \lambda_1 = 1 : \frac34 : \frac{9}{20}$$
+$$\Delta\lambda_1 : \Delta\lambda_2 : \Delta\lambda_3 = \frac{1}{\sqrt3} : 1 : \sqrt{2}$$
 
-经四层谱静默 $Z$-因子修正（$Z_1=3.67, Z_2=2.12, Z_3=1.44$）后，三圈 RGE 跑动至 $M_Z$ 给出 $\alpha_3^{-1}(M_Z)=8.7$（偏差 2.4%）、$\alpha^{-1}(M_Z)=127.95$（偏差 0.04%）、$\sin^2\theta_W(M_Z)=0.2312$（偏差 1.3%）。
+> ⚠️ **勘误（2026-08-06）**：原 §1.5 声称 $\lambda_3:\lambda_2:\lambda_1 = 1:3/4:9/20$ 已**废弃**（为 Casimir/弱混合角等不同物理量混合，无推导基础；§8.4 权威判定）；此前工作设定 $\sqrt{2/3}:1:\sqrt{2}$ 亦为拼凑值（无单一数学来源），已**修复为 SU(2) Casimir 特征值归一化 $1/\sqrt3:1:\sqrt2$**（λ_k = √(k(k+1))，k=1,2,3 → √2:√6:√12 中项归一；见 spectral_color_dynamics.md §8.4 修复子节）。
+
+经谱静默 $Z$-因子修正（$Z_1=2.13, Z_2=2.12, Z_3=1.44$，修复后 $Z_1$ 更新）后，三圈 RGE 跑动至 $M_Z$：$Z_i$ 的第一性内容为 SM β 函数跑动（~83%），数值由实验 α(M_Z) 反演锚定（~17%，非纯第一性）；修复后谱 RGE 链（v3.0）给出 $\alpha_3(M_Z)=0.1228$（偏差 +4.2%，链闭合）。
 
 **(3) Yukawa 特征基重叠 → CKM/PMNS 混合角**。上/下型 Yukawa 谱算符在 $\mathbf{Sp}$ 中的特征基旋转由 $\mathbf{Rec}$ 范畴的纤维-基伴随结构控制。三族纤维间的相对倾斜角 $\theta_{ij} = \arccos(\langle \varphi_i^u | \varphi_j^d \rangle)$ 直接给出 CKM 矩阵的 $|V_{us}| \approx e^{-N_{\text{gen}}/3} \approx 0.22$、$|V_{cb}| \approx 0.041$、$|V_{ub}| \approx 0.0035$。PMNS 角来自带电轻子-中微子 Yukawa 谱算符在双重 Higgs 耦合下的纤维基旋转（原 §8.6 给出 $\sin\theta_{13}\approx 0.011$，已撤回，见 §8.6 修订说明）；正确的 $\theta_{13}^{\text{PMNS}}=d_H/18$（Paper XVII 数值 $0.1505$）已登记为冻结预言 P7。
 
@@ -221,7 +223,7 @@ $$\mathcal{L}_{\text{SM}}^{\text{Sp}} = \mathcal{L}_{\text{YM}}^{\text{Sp}} + \m
 
 ### 4.1 谱传播子
 
-谱传播子的严格对角形式 $D_F^{\text{Sp}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`paperX_spectral_feynman.py`）：
+谱传播子的严格对角形式 $D_F^{\text{Sp}} = \text{diag}(i/(\lambda_i - m^2 + i\varepsilon))$ 通过数值验证（`scripts/paperX_spectral_feynman.py`）：
 
 - 谱传播子还原无质量传播子：相对误差 $1.47 \times 10^{-16}$
 - 谱传播子为严格对角矩阵：非对角范数 $0.00$
@@ -545,8 +547,8 @@ $$\beta(\lambda_H) = \frac{1}{16\pi^2} \left( 24\lambda_H^2 - 6y_t^4 + \frac{9}{
 | 胶子 $g$ | $D_{\mu\nu}^{ab}(\lambda) = -\frac{i\delta^{ab}}{\lambda}\left(g_{\mu\nu} - (1-\xi_3)\frac{k_\mu k_\nu}{\lambda}\right)$ |
 | 弱玻色子 $W^\pm, Z$ | $D_{\mu\nu}(\lambda) = -\frac{i}{\lambda - M_V^2}\left(g_{\mu\nu} - (1-\xi_2)\frac{k_\mu k_\nu}{\lambda - \xi_2 M_V^2}\right)$ |
 | 光子 $\gamma$ | $D_{\mu\nu}(\lambda) = -\frac{i}{\lambda}\left(g_{\mu\nu} - (1-\xi_1)\frac{k_\mu k_\nu}{\lambda}\right)$ |
-| 夸克 $q$ | $S_F(\lambda) = \frac{i(\slashed{k} + m_q)}{\lambda - m_q^2}$ |
-| 轻子 $\ell$ | $S_F(\lambda) = \frac{i(\slashed{k} + m_\ell)}{\lambda - m_\ell^2}$ |
+| 夸克 $q$ | $S_F(\lambda) = \frac{i(\not{k} + m_q)}{\lambda - m_q^2}$ |
+| 轻子 $\ell$ | $S_F(\lambda) = \frac{i(\not{k} + m_\ell)}{\lambda - m_\ell^2}$ |
 | Higgs $h$ | $\Delta_F(\lambda) = \frac{i}{\lambda - m_h^2}$ |
 
 **谱顶点**：
@@ -586,7 +588,7 @@ $$\boxed{\langle p_1,\ldots,p_n^{\text{out}} | k_1,\ldots,k_m^{\text{in}} \rangl
 
 $$D_F^{\text{Sp}}(\lambda) = \frac{iZ}{\lambda - m^2 + i\varepsilon} + \text{连续谱},\quad Z = \lim_{\lambda \to m^2} (\lambda - m^2)(-i) D_F^{\text{Sp}}(\lambda).$$
 
-数值验证（`paperX_spectral_formalization.py`）：在 Lorentzian 峰近似下，$Z_{\text{extracted}} = 0.792$（真值 $0.8$），相对误差 $0.99\%$，验证了谱 LSZ 残差提取的可行性。
+数值验证（`scripts/paperX_spectral_formalization.py`）：在 Lorentzian 峰近似下，$Z_{\text{extracted}} = 0.792$（真值 $0.8$），相对误差 $0.99\%$，验证了谱 LSZ 残差提取的可行性。
 
 ### 9.2 谱 Cutkosky 切割规则
 
@@ -812,12 +814,12 @@ $$\operatorname{Im} G_R(\omega) = \frac{1}{2} \tanh\left(\frac{\beta\omega}{2}\r
 
 | 脚本 | 验证内容 | 通过 | 总计 |
 |:----|---------|:---:|:----:|
-| `paperX_spectral_feynman.py` | 传播子/顶点/散射/UV 有限性 | 7 | 7 |
-| `paperX_spectral_renormalization.py` | 路径积分/$\beta$ 函数 | 4 | 4 |
-| `paperX_spectral_gauge.py` | 规范传播子/BRST/Ward/鬼场 | 6 | 6 |
-| `paperX_spectral_chiral.py` | 手性投影/反常消去/瞬子 | 7 | 7 |
-| `paperX_spectral_SM.py` | SM 量子数/质量/$\beta$/Yukawa | 8 | 8 |
-| `paperX_spectral_formalization.py$^\ddagger$` | LSZ/幺正性/Cutkosky/Källén-Lehmann | 4 | 4 |
+| `scripts/paperX_spectral_feynman.py` | 传播子/顶点/散射/UV 有限性 | 7 | 7 |
+| `scripts/paperX_spectral_renormalization.py` | 路径积分/$\beta$ 函数 | 4 | 4 |
+| `scripts/paperX_spectral_gauge.py` | 规范传播子/BRST/Ward/鬼场 | 6 | 6 |
+| `scripts/paperX_spectral_chiral.py` | 手性投影/反常消去/瞬子 | 7 | 7 |
+| `scripts/paperX_spectral_SM.py` | SM 量子数/质量/$\beta$/Yukawa | 8 | 8 |
+| `scripts/paperX_spectral_formalization.py$^\ddagger$` | LSZ/幺正性/Cutkosky/Källén-Lehmann | 4 | 4 |
 | | **合计** | **36** | **36** |
 
 $^\ddagger$ 谱 QFT 形式化内容见 §9。
@@ -837,7 +839,7 @@ $^\ddagger$ 谱 QFT 形式化内容见 §9。
 | 谱规范理论的三圈验证 ${}^\dagger$ | 🟢 | 已由 Phase 31 覆盖 |
 | PMNS CP 相 $\delta_{\text{CP}}$ 与 Majorana 相的定量预测 | 🟡 | 复谱几何路径已建立，数值验证待完成 |
 
-$^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函数的谱流 + DS 修正匹配（12/12 检查通过）。
+$^\dagger$ Phase 31（`scripts/paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函数的谱流 + DS 修正匹配（12/12 检查通过）。
 
 ---
 
@@ -845,11 +847,11 @@ $^\dagger$ Phase 31（`paper31_threeloop_beta.py`）已实现三圈 $\beta$ 函�
 
 | 脚本 | 代码行数 | 检查项数 | 运行时间 | 依赖 |
 |:----|:-------:|:-------:|:--------:|:----|
-| `paperX_spectral_feynman.py` | 327 | 7 | < 1s | numpy |
-| `paperX_spectral_renormalization.py` | 317 | 4 | < 2s | numpy |
-| `paperX_spectral_gauge.py` | 432 | 6 | < 1s | numpy |
-| `paperX_spectral_chiral.py` | 370 | 7 | < 3s | numpy |
-| `paperX_spectral_SM.py` | 380 | 8 | < 1s | numpy |
+| `scripts/paperX_spectral_feynman.py` | 327 | 7 | < 1s | numpy |
+| `scripts/paperX_spectral_renormalization.py` | 317 | 4 | < 2s | numpy |
+| `scripts/paperX_spectral_gauge.py` | 432 | 6 | < 1s | numpy |
+| `scripts/paperX_spectral_chiral.py` | 370 | 7 | < 3s | numpy |
+| `scripts/paperX_spectral_SM.py` | 380 | 8 | < 1s | numpy |
 
 
 
@@ -959,7 +961,7 @@ $$\alpha^{-1}(M_Z) \approx \frac{4\pi}{0.6 \times 0.0229} + 8.0 \approx 128.0.$$
 |:-:|:----|:----|:----|:------:|:------:|:----:|:----|
 | 1 | 规范 | 强耦合 | $\alpha_s(M_Z)$ | 0.1179 | 0.1179 | ✅ | 谱间隙 + RG |
 | 2 | 规范 | 精细结构常数 | $\alpha^{-1}(M_Z)$ | 128.0 | 127.95 | ✅ | 谱间隙 + GUT + RG |
-| 3 | 规范 | 弱混合角 | $\sin^2\theta_W(M_Z)$ | 0.234 | 0.231 | 🟡 | $\alpha_1/\alpha_2$ 谱间隙比 |
+| 3 | 规范 | 弱混合角 | $\sin^2\theta_W(M_Z)$ | 0.234 | 0.231 | 🟡 | $\alpha_1/\alpha_2$ 谱间隙比【2026-08-06 修复后需重算：比值第一分量 √(2/3)→1/√3，裸角 0.4495→0.3660，RGE 后 sin²θ_W 预测待更新】 |
 | 4 | 质量 | 上夸克 | $m_u$ | 2.2 MeV | 2.16 MeV | ✅ | Cl(1,7)+IFS+静默 |
 | 5 | 质量 | 粲夸克 | $m_c$ | 1.27 GeV | 1.27 GeV | ✅ | Cl(1,7)+IFS+静默 |
 | 6 | 质量 | 顶夸克 | $m_t$ | 172.7 GeV | 172.7 GeV | ✅ | Cl(1,7)+IFS+静默 |

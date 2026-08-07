@@ -79,8 +79,8 @@ $$\mathcal{L}_{\text{ghost}}^{\text{spec}} = \operatorname{Tr}_{\mathfrak{g}}\le
 | 胶子 $g$ | $D_{\mu\nu}^{ab}(k) = -\frac{i\delta^{ab}}{k^2}\left(g_{\mu\nu} - (1-\xi_3)\frac{k_\mu k_\nu}{k^2}\right)$ |
 | 弱玻色子 $W^\pm, Z$ | $D_{\mu\nu}(k) = -\frac{i}{k^2 - M_V^2}\left(g_{\mu\nu} - (1-\xi_2)\frac{k_\mu k_\nu}{k^2 - \xi_2 M_V^2}\right)$ |
 | 光子 $\gamma$ | $D_{\mu\nu}(k) = -\frac{i}{k^2}\left(g_{\mu\nu} - (1-\xi_1)\frac{k_\mu k_\nu}{k^2}\right)$ |
-| 夸克 $q$ | $S_F(k) = \frac{i(\slashed{k} + m_q)}{k^2 - m_q^2}$ |
-| 轻子 $\ell$ | $S_F(k) = \frac{i(\slashed{k} + m_\ell)}{k^2 - m_\ell^2}$ |
+| 夸克 $q$ | $S_F(k) = \frac{i(\not{k} + m_q)}{k^2 - m_q^2}$ |
+| 轻子 $\ell$ | $S_F(k) = \frac{i(\not{k} + m_\ell)}{k^2 - m_\ell^2}$ |
 | Higgs $h$ | $\Delta_F(k) = \frac{i}{k^2 - m_h^2}$ |
 
 ### 3.2 谱顶点
@@ -106,7 +106,7 @@ $$\mathcal{L}_{\text{ghost}}^{\text{spec}} = \operatorname{Tr}_{\mathfrak{g}}\le
 
 $$\beta(g_i) = \frac{dg_i}{d\ln\mu} = -\frac{b_i^{(1)}}{16\pi^2} g_i^3 - \frac{b_i^{(2)}}{(16\pi^2)^2} g_i^5 - \frac{b_i^{(3)}}{(16\pi^2)^3} g_i^7 + \cdots,$$
 
-其中 $b_i^{(n)}$ 来自 Phase 31 的三圈计算（`paper31_threeloop_beta.py`）。
+其中 $b_i^{(n)}$ 来自 Phase 31 的三圈计算（`scripts/paper31_threeloop_beta.py`）。
 
 对 SU(3) ($N=3, n_f=6$)：
 - $b_1 = 7$

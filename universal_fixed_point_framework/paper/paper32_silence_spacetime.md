@@ -4,7 +4,7 @@
 
 **版本**：v1.0（2026-07-29）
 
-**摘要**：本文在 UFPF 框架内，对 **四维时空从 Cl(1,7) Clifford 代数涌现** 的核心机制进行严格的机器证明与结构分析。主要结果包括：（1）**谱静默筛选机制**的量化实现：正交投影为零的谱条件 $P_{V_\Lambda}D(f)=0$ 将 Cl(1,7) 的 8 维旋量空间分裂为 1 时间维 + 3 可见空间维 + 4 静默内部维；（2）**严格谱静默定理组**（8 个定理，Lean 4 机器证明，`CoherenceToBranching.lean` §9，`lake build` 零错误）：$1+3+4=8$ 分解（`spacetime_dimension_split`）、涌现 Clifford 维数 $m=2n$（`dimension_counting_eq_two_mul`）、**时空维数 = 范畴阶数**（`spacetime_dim_eq_category_order`）、逆方向唯一性 $2n=8\Rightarrow n=4$（`category_order_unique`）、静默维度严格分离（`silence_separation`）及精确裕度 $e^3$（`silence_margin`）、四维鲁棒性（`visible_dimensions_eq_four`、`spacetime_emergence_4d`）；（3）**力程约束的谱解释**：色、弱、电磁三种规范相互作用的力程差异由静默维度的投影保留度唯一决定，两元比值 $c_1/c_2=e^{-3}$、$c_2/c_3\approx 0.067$ 无自由参数；（4）**$\text{Cl}(1,7)$ 几何空间的代数本质**澄清：8 维不是坐标空间，而是 8 个 Clifford 生成元的代数。本文同时附带修复两处预先存在的 Lean 假命题。
+**摘要**：本文在 UFPF 框架内，对 **四维时空从 Cl(1,7) Clifford 代数涌现** 的核心机制进行严格的机器证明与结构分析。主要结果包括：（1）**谱静默筛选机制**的量化实现：正交投影为零的谱条件 $P_{V_\Lambda}D(f)=0$ 将 Cl(1,7) 的 8 维空间【2026-08-07 勘误：原"8 维旋量空间"表述错误——Cl(1,7) 旋量标准维数为 16（M₁₆(ℝ)，paper20 权威）；此处"8 维"指底空间 8 个 Clifford 生成元（§6），非旋量维数】分裂为 1 时间维 + 3 可见空间维 + 4 静默内部维；（2）**严格谱静默定理组**（8 个定理，Lean 4 机器证明，`CoherenceToBranching.lean` §9，`lake build` 零错误）：$1+3+4=8$ 分解（`spacetime_dimension_split`）、涌现 Clifford 维数 $m=2n$（`dimension_counting_eq_two_mul`）、**时空维数 = 范畴阶数**（`spacetime_dim_eq_category_order`）、逆方向唯一性 $2n=8\Rightarrow n=4$（`category_order_unique`）、静默维度严格分离（`silence_separation`）及精确裕度 $e^3$（`silence_margin`）、四维鲁棒性（`visible_dimensions_eq_four`、`spacetime_emergence_4d`）；（3）**力程约束的谱解释**：色、弱、电磁三种规范相互作用的力程差异由静默维度的投影保留度唯一决定，两元比值 $c_1/c_2=e^{-3}$、$c_2/c_3\approx 0.067$ 无自由参数；（4）**$\text{Cl}(1,7)$ 几何空间的代数本质**澄清：8 维不是坐标空间，而是 8 个 Clifford 生成元的代数。本文同时附带修复两处预先存在的 Lean 假命题。
 
 ---
 
@@ -14,7 +14,7 @@
 
 ## 1. 引言
 
-Clifford 代数 $\text{Cl}(1,7)$ 在 UFPF 框架中扮演核心几何角色：它由 $\mathbf{Sp}$ 4-范畴通过 Bott 塔在 $k_{\max}=8$ 处的截断自然涌现（Paper XXX，§7），其 8 维不可约旋量表示 $8_s$ 承载单代标准模型费米子（Paper XVII，§3）。然而，"$\text{Cl}(1,7)$ 的 8 维空间如何变为四维物理时空"这一核心问题此前只有定性的谱静默图像（Paper XVII，§4），缺乏严格的机器证明。
+Clifford 代数 $\text{Cl}(1,7)$ 在 UFPF 框架中扮演核心几何角色：它由 $\mathbf{Sp}$ 4-范畴通过 Bott 塔在 $k_{\max}=8$ 处的截断自然涌现（Paper XXX，§7），其 16 维不可约旋量表示 $S_{16}$【2026-08-07 勘误：原"8 维不可约旋量表示 8_s"错误——标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20 权威）；$8_s$ 为旧遗留说法，此处 8 是 SU(2) 基本表示重数 N(2₁)=8 而非旋量维数】承载单代标准模型费米子（Paper XVII，§3）。然而，"$\text{Cl}(1,7)$ 的 8 维空间如何变为四维物理时空"这一核心问题此前只有定性的谱静默图像（Paper XVII，§4），缺乏严格的机器证明。
 
 本文填补这一缺口。核心贡献是将四维时空涌现的直觉升级为 **8 个机器证明的定理**，全部通过 Lean 4 的 `lake build` 验证。这些定理证明：四维时空是 $\mathbf{Sp}$ 严格 4-范畴的层计数在谱权重筛选下的**唯一自洽结果**——不是微调、不是假设、不是近似，而是数学结构本身的推论。
 
@@ -66,7 +66,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 
 其中：
 - **时间维度**：谱流参数 $t$，作为递归步骤的连续极限，不由层计数决定
-- **3 个可见空间维度** = $N_{\text{active}}$（三个主动态射层的相位投影）
+- **3 个可见空间维度** = $N_{\text{active}}$（三个主动态射层的相位投影）【2026-08-07 关联标注：这与统一 3 定理（paper33 机器证明）一致——同一"3 个相位自由度"机制既产生三维空间（本行正交投影 $P_{V_1},P_{V_2},P_{V_3}$），也产生三代费米子（Φ_R^k 在代空间 $\mathbb{C}^3_{\text{fam}}$ 上的递归迭代，paper33 §2.3）；Cl(1,7)（≅ M₁₆(ℝ)，16 维旋量）提供单代载体，"3 个相位"提供代结构（N_gen = N_active = 3）】
 - **4 个静默内部维度** = $N_{\text{total}} - 1$（总层数减去时间对应的递归层）
 
 检验：$1 + N_{\text{active}} + (N_{\text{total}} - 1) = 1 + 3 + 4 = 8 = \dim \text{Cl}(1,7)$，且 $3+4 = 7 = \text{Cl}(1,7)$ 的空间维数。
@@ -98,7 +98,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 
 **时空维数 = 范畴阶数（T3）**。1 个时间维 $+ (n-1)$ 个可见空间维 $= n$，因此四维时空 $\Longleftrightarrow$ 4-范畴 $\Longleftrightarrow$ $\text{Cl}(1,7)$ 三者等价。
 
-**自洽不动点**。$d_H \rightarrow S_4 \rightarrow$ 权重筛选 $\rightarrow$ 可见 $1+3$ / 静默 $4 \rightarrow n=4 \rightarrow d_H = \ln 15 + \delta$。$n=4$ 是循环的唯一不动点（数值验证 `paperX_spacetime_emergence.py` S3）。
+**自洽不动点**。$d_H \rightarrow S_4 \rightarrow$ 权重筛选 $\rightarrow$ 可见 $1+3$ / 静默 $4 \rightarrow n=4 \rightarrow d_H = \ln 15 + \delta$。$n=4$ 是循环的唯一不动点（数值验证 `scripts/paperX_spacetime_emergence.py` S3）。
 
 **扰动鲁棒性**。50,000 次对数正态扰动实验显示四维计数在 $\sigma \lesssim 2.5$ 下 $100\%$ 稳定，断裂点 $\sigma \approx 3 = \ln(e^3)$ 恰为分离裕度——内部维度需 $\sim e^3$ 倍扰动才能越过阈值。
 
@@ -182,8 +182,8 @@ $\text{Cl}(1,7)$ 的 8 维既不是 Euclidean 空间 $\mathbb{R}^8$、也不是�
 
 | 脚本 | 内容 | 状态 |
 |:----|:-----|:----:|
-| `paperX_silence_dimensions.py` | $1+3+4=8$ 维度分裂数值验证 | ✅ 已注册 |
-| `paperX_spacetime_emergence.py` | 自洽不动点 $n=4$ 验证，50,000 次扰动实验 | ✅ 已注册 |
+| `scripts/paperX_silence_dimensions.py` | $1+3+4=8$ 维度分裂数值验证 | ✅ 已注册 |
+| `scripts/paperX_spacetime_emergence.py` | 自洽不动点 $n=4$ 验证，50,000 次扰动实验 | ✅ 已注册 |
 
 ---
 

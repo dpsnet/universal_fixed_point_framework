@@ -49,6 +49,7 @@ from scipy.integrate import solve_ivp
 from dataclasses import dataclass
 from typing import Callable
 import json
+import os
 
 
 # -----------------------------------------------------------------------------
@@ -401,7 +402,8 @@ def main():
             "success": bool(result["sol_success"]),
         }
 
-    output_path = "non_newtonian_k41_results.json"
+    output_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                               'results', 'non_newtonian_k41_results.json')
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     print(f"\n[输出] 结果已保存至 {output_path}")

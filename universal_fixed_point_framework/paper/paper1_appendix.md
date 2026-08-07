@@ -96,7 +96,7 @@
 
 Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹配、非线性大尺度结构修正、C* 代数框架、无界算子理论与 A∞/∞-范畴推广。
 
-#### A.15.1 有限维→无限维收敛性桥梁（Phase 30.1，`paper30_infinite_dimensional_bridge.py`）
+#### A.15.1 有限维→无限维收敛性桥梁（Phase 30.1，`scripts/paper30_infinite_dimensional_bridge.py`）
 
 量化有限维矩阵近似向无限维连续极限的收敛率，五个方向全部通过：
 
@@ -108,7 +108,7 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 | 同伦 | H_n = D(g)−D(f) → A∞ 结构 | 有效秩 ∼ n | ✅ |
 | 谱流 | ODE → PDE | 大 n 诊断量稳定 | ✅ |
 
-#### A.15.2 C* 代数框架（Phase 30.2，`paper33_cstar_framework.py`）
+#### A.15.2 C* 代数框架（Phase 30.2，`scripts/paper33_cstar_framework.py`）
 
 将 $\mathbf{Rec}/\mathbf{Sp}$ 范畴和 D 函子从有限维矩阵代数 $M_n(\mathbb{C})$ 推广到 C* 代数：
 
@@ -118,7 +118,7 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 - **Gelfand 变换**：commutative C* 代数 $C(X)$ 的谱 $\cong$ 紧 Hausdorff 空间 $X$
 - **GNS 表示**：一般 C* 代数 → $B(H)$，谱对应 $\lambda = e^{-\mu}$ 在 C* 框架中保持（corr = 1.0000）
 
-#### A.15.3 无界算子与连续谱理论（Phase 30.3，`paper34_unbounded_operator.py`）
+#### A.15.3 无界算子与连续谱理论（Phase 30.3，`scripts/paper34_unbounded_operator.py`）
 
 以量子谐振子 $H = -d^2/dx^2 + x^2$ 为原型，建立无界自伴算子的完整框架：
 
@@ -148,9 +148,9 @@ Phase 30–35 系统推进了有限维→无限维桥梁、多圈 β 函数匹�
 | `DInfinityFunctor.lean` | $D_\infty : \mathbf{Rec}_\infty \to \mathbf{Sp}_\infty$ 的 $\infty$-函子性框架 | ✅ 已实现并通过 `lake build` |
 | `SpectralFlowHomotopy.lean` | 谱流方程 F_t = exp(t·ad_G) 的 ∞-同伦解释 | ✅ 已实现并通过 `lake build` |
 
-Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过。核心定理（D_∞ 函子性、谱流 ODE、同伦等价、切向量 = m_1、Killing 条件、Sp₂ 交换律）以 `sorry` 占位，待后续严格证明。
+Python 原型 `scripts/paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过。核心定理（D_∞ 函子性、谱流 ODE、同伦等价、切向量 = m_1、Killing 条件、Sp₂ 交换律）以 `sorry` 占位，待后续严格证明。
 
-#### A.15.5 三圈 β 函数匹配（Phase 31，`paper31_threeloop_beta.py`）
+#### A.15.5 三圈 β 函数匹配（Phase 31，`scripts/paper31_threeloop_beta.py`）
 
 推导谱流方程的 Dyson-Schwinger 顶点减除模式至三圈，与 SM β 函数完全匹配（12/12 对比通过）：
 
@@ -163,7 +163,7 @@ Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过�
 
 **核心发现**：对易子展开 $[G, [G, ..., [G, A]]]$ 在 $n$ 圈产生群因子 $C_A^{n+1}$（纯规范），Dyson-Schwinger 顶点减除每阶去除一个 $C_A$ 因子，使修正后 = $C_A^n =$ SM。
 
-#### A.15.6 非线性大尺度结构（Phase 32，`paper32_lss_nonlinear_v3.py`）
+#### A.15.6 非线性大尺度结构（Phase 32，`scripts/paper32_lss_nonlinear_v3.py`）
 
 将谱流对易子 $[A_{\text{GR}}, A_t]$ 的 BCH 展开映射到 SPT 模式耦合核：
 
@@ -173,7 +173,7 @@ Python 原型 `paper35_infinity_category_infinite_dim.py` 仍保持 6/6 通过�
 - **非线性标度**：$k_{\text{NL}}(50\%) = 0.161$ h/Mpc（ΛCDM 标准 $\sim 0.15$）✅
 - **结论**：谱流方程为 SPT 提供了第一性原理推导
 
-#### A.15.7 谱间隙第一性原理推导（Phase 36，`paper36_spectral_gap_derivation.py`）
+#### A.15.7 谱间隙第一性原理推导（Phase 36，`scripts/paper36_spectral_gap_derivation.py`）
 
 半涌现量去外部输入化，全系常数由谱动力学框架唯一确定（7/7 验证通过）。
 
@@ -211,9 +211,9 @@ $$
 
 **核心结论**：$\Delta\lambda_{\min}$ 不再为自由参数。所有半涌现量（反弹尺度、R² 系数、BH 热力学）全部去外部输入化。
 
-**形式化验证**。上述推导链已在 Lean 4 中完成形式化（`SpectralGap.lean`），覆盖 SU(2) 特征值谱定义、解析公式 $\Delta\lambda_{\min} = (\sqrt{6} - \sqrt{2})/\sqrt{k_{\max}(k_{\max}+1)}$、$k_{\max}=8$ 的群论约束、以及 $c_1 = 3/(8\Delta\lambda^2)$、$\rho_c = 8\pi/(3c_1)$ 等导出常数的定理链。数值验证 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 依赖浮点库（`paper36_spectral_gap_derivation.py`，双精度 64 位验证通过）。
+**形式化验证**。上述推导链已在 Lean 4 中完成形式化（`SpectralGap.lean`），覆盖 SU(2) 特征值谱定义、解析公式 $\Delta\lambda_{\min} = (\sqrt{6} - \sqrt{2})/\sqrt{k_{\max}(k_{\max}+1)}$、$k_{\max}=8$ 的群论约束、以及 $c_1 = 3/(8\Delta\lambda^2)$、$\rho_c = 8\pi/(3c_1)$ 等导出常数的定理链。数值验证 $\Delta\lambda_{\min} \approx 0.122 M_{\text{Pl}}$ 依赖浮点库（`scripts/paper36_spectral_gap_derivation.py`，双精度 64 位验证通过）。
 
-#### A.15.8 IFS 收缩因子第一性原理推导（Phase 37，`paper37_ifs_overlap_derivation.py` 补充）
+#### A.15.8 IFS 收缩因子第一性原理推导（Phase 37，`scripts/paper37_ifs_overlap_derivation.py` 补充）
 
 半涌现量 $\rho$（IFS 重叠因子）去外部输入化，三代质量谱从 $\mathbf{Sp}$ 4-范畴的静默层级结构自然涌现（7/7 验证通过）。
 
@@ -248,7 +248,7 @@ $$\frac{m_c}{m_t} \approx 0.0052,\quad \frac{m_u}{m_t} \approx 1.55 \times 10^{-
 
 **核心结论**：SM 三代费米子质量谱由 $\mathbf{Sp}$ 4-范畴的静默层级结构在 IFS 递归深度上的投影唯一确定。$\rho = 0$ 表明 IFS 自然为分离型，质量层级由三重静默压制编码。第四代轻子需不同 IFS 结构。
 
-#### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`paper41_cosmological_constant.py`）
+#### A.15.9 宇宙学常数 $\Lambda$ 的多重静默机制（Phase 41，`scripts/phase41_cosmological_constant.py`）
 
 $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整解答。
 
@@ -278,7 +278,7 @@ $\Lambda$ 问题（122 量级差距）通过**四力层叠多重静默**完整�
 
 **6 量级来源**：$S_2 = e^{-2\pi/\alpha_{\text{eff}}}$，$\alpha_{\text{eff}}$ 在 Planck 能标的 RG 跑动引入 $\pm 0.02$ 不确定度（$\alpha \in [0.08, 0.12]$），$\alpha$ 变化 $+6.2\%$（$\alpha \to 0.1062$）→ 总压制从 126 变至 120。希格斯 VEV/Seesaw/引力子缺层等候选源已定量排除。
 
-#### A.15.10 暴胀 $R^4$ 修正（Phase 42，`paper42_inflation_R4.py`）
+#### A.15.10 暴胀 $R^4$ 修正（Phase 42，`scripts/phase42_inflation_R4.py`）
 
 BCH 展开 $[A_{\text{GR}}, A_t]$ 至 $R^4$ 阶确定高阶曲率系数（7/7 验证通过）：
 
@@ -303,7 +303,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | A（极易） | $\mathbf{Rec}/\mathbf{Sp}$ 范畴公理、$D \dashv R$ 伴随、谱对应 $M \cong L$、轨道函子、Clifford 矩阵表示 | ✅ 已完成（24 个模块，零诊断错误，50 个测试定理） |
 | B（中等） | Koopman 压缩半群、m-增生生成元 $A_R$、谱测度 Lebesgue 分解、S1–S4 静默判据、辫子幺半结构、IC 隔离约束 | ✅ 已完成 |
 | C（中等偏高） | IFS 分形吸引子、Hausdorff 维数、遍历论三项定理（Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）、热力学形式论（压力函数/Legendre 变换/Hausdorff 维数凹性定理）——基于 mathlib `Dynamics.Ergodic`（完整内置）与 `HausdorffMeasure`/`ContractingMap`（底层齐备），已全部自主实现 | ✅ **全部完成**（Phase 16C-I/II/III 三个子阶段，详见 `roadmap/phase16_machine_proof.md`） |
-| D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ✅ **Phase 30.4 数值推进**（`paper35_infinity_category_infinite_dim.py` 6/6）；**Phase 31.1 Lean 4 骨架已实现并通过 `lake build`**（六个模块：`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`），核心定理证明以 `sorry` 占位 |
+| D（远景） | ∞-范畴/同伦范畴拓展、紧致化极限渐近测度估计、Kerr Teukolsky 复谱全局解析 | ✅ **Phase 30.4 数值推进**（`scripts/paper35_infinity_category_infinite_dim.py` 6/6）；**Phase 31.1 Lean 4 骨架已实现并通过 `lake build`**（六个模块：`AInfinityAlgebra.lean`、`InfinityCategory.lean`、`RecInfinity.lean`、`SpecInfinity.lean`、`DInfinityFunctor.lean`、`SpectralFlowHomotopy.lean`），核心定理证明以 `sorry` 占位 |
 
 #### A.16.2 当前进展（2026-07-16 更新）
 
@@ -316,7 +316,7 @@ $V_0^{1/4}$ 由 Planck 归一化独立确定：$8.1 \times 10^{15}$ GeV，与 $c
 | 1 | $\mathbf{Rec}$ 范畴形式化 | `RecCategory.lean` | ✅ 对象、态射、复合、恒等态射已证 |
 | 2 | $\mathbf{Sp}$ 范畴形式化 | `SpecCategory.lean` | ✅ 谱对象、谱态射、谱复合已证 |
 | 3 | $D$ 函子良定义 | `DecursionFunctor.lean` | ✅ `map_id`/`map_comp` 完整 Functor 律与 `transferMatrix_comp` 反变合成、intertwine 性质均已证 |
-| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `RFunctor` 使用 `Fin n` 非平凡状态空间，`adjUnit`/`adjCounit` 通过谱对应构造，`DAdjR` 三角恒等式已证 |
+| 4 | $D \dashv R$ 伴随 | `Adjunction.lean` | ✅ `adjUnit`（常零函数，Agda 移植）/ `adjCounit`（零矩阵，Agda 移植）已证；`DAdjR` 为 `axiom`（对齐 Agda postulate）；`RFunctor.map`/`map_id`/`map_comp` 为 sorry（全范畴不可构造，阶段 2 SpImD 限制后闭合） |
 | 5 | 谱对应 $M \cong L$ | `SpectralCorrespondence.lean` | ✅ `spectralInv_leftInv`（基于 `Complex.log_exp` 的辐角范围处理）/ `spectralMap_rightInv`（基于 `Complex.exp_log`）双向逆已证 |
 | 6 | 有限维轨道函子 | `OrbitFunctor.lean` | ✅ `orbitFintype` 实例、`orbitWeight` 定义、`orbitStabilizer` 等式已证 |
 | 7 | Clifford 矩阵表示 | `Clifford.lean` | ✅ $e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 两生成元反对易与平方已证 |

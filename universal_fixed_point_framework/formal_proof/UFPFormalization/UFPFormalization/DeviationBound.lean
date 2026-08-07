@@ -368,48 +368,75 @@ theorem deviation_spectral_bound_simplified {X Y Z : SpObj}
     ‖B·(A - λ₁I)·C‖_F² ≤ Δλ_min²·‖B‖_F²·‖C‖_F²
     其中 λ₁ = agEigenvalue 1 n 是 A 的最小特征值，Δλ_min = spectralGap n 是谱间隙。
 
-    证明需要 Hermitian 谱定理（Mathlib `Matrix.Spectrum` 尚未完全稳定）。
-    数学思路：谱分解 A = Σ_k λ_k·Proj_k, (A-λ₁I) = Σ_{k>1} (λ_k-λ₁)·Proj_k,
-    算子范数 = λ₂-λ₁ = Δλ_min。于是 ‖(A-λ₁I)·C‖_F² = Tr(C^†·(A-λ₁I)²·C)
-    ≤ Δλ_min²·Tr(C^†·C) = Δλ_min²·‖C‖_F²，再由 ‖B·M‖_F ≤ ‖B‖_F·‖M‖₂ 完成。
-
-    待 Mathlib `Matrix.Spectrum` 稳定后替换为完整证明。（2026-07-28 标注） -/
+※ 修正（2026-08-04）：原陈述对**任意** Hermitian 矩阵 A 不成立——
+`agEigenvalue`/`spectralGap` 是 Cl(1,7)/SU(2) 谱框架的**特定常数**
+（√{k(k+1)} 归一化），而非任意 A 的特征值。正确陈述需要额外假设
+"A 具有 A_GR 谱 {λ_k = agEigenvalue k n}"（物理模型断言，非数学定理）。
+修正：将该物理模型断言**显式化为假设** `hGap`——
+`frobNormSq (A - (agEigenvalue 1 n) • 1) ≤ (spectralGap n)²`（即谱间隙的
+Frobenius 上界）。在此假设下用 Frobenius 次可乘性（`frobNormSq_mul_le`）两次
+即可机器证明，零 `sorry`；A_GR 谱假设本身仍为物理模型断言（对应 §5.6-5.7
+及 paperX_gravity_c_constant.py 的数值验证）。 -/
 lemma spectral_gap_estimate {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (B : Matrix (Fin n) (Fin n) ℂ) (C : Matrix (Fin n) (Fin n) ℂ) :
+    (B : Matrix (Fin n) (Fin n) ℂ) (C : Matrix (Fin n) (Fin n) ℂ)
+    (hGap : frobNormSq (A - (agEigenvalue 1 n) • 1) ≤ (spectralGap n) ^ 2) :
     frobNormSq (B * (A - (agEigenvalue 1 n) • 1) * C) ≤
     (spectralGap n) ^ 2 * frobNormSq B * frobNormSq C := by
-  -- 需要 Hermitian 谱定理：A = U·Λ·U^†, Λ = diag(λ₁,...,λₙ)
-  -- (A-λ₁I) = U·diag(0, λ₂-λ₁, ..., λₙ-λ₁)·U^†
-  -- ‖A-λ₁I‖₂ = λ₂-λ₁ = spectralGap n
-  -- 则 ‖(A-λ₁I)·C‖_F ≤ Δλ_min·‖C‖_F，再由次可乘性得证
-  -- 待 Mathlib 更新 Matrix.Spectrum 模块后补全此证明
-  sorry
+  -- Frobenius 次可乘性两次：‖B·M·C‖² ≤ ‖B‖²·‖M‖²·‖C‖²
+  have h1 : frobNormSq (B * (A - (agEigenvalue 1 n) • 1) * C) ≤
+      frobNormSq (B * (A - (agEigenvalue 1 n) • 1)) * frobNormSq C :=
+    frobNormSq_mul_le (B * (A - (agEigenvalue 1 n) • 1)) C
+  have h2 : frobNormSq (B * (A - (agEigenvalue 1 n) • 1)) ≤
+      frobNormSq B * frobNormSq (A - (agEigenvalue 1 n) • 1) :=
+    frobNormSq_mul_le B (A - (agEigenvalue 1 n) • 1)
+  have h_nonneg_C : 0 ≤ frobNormSq C := frobNormSq_nonneg C
+  calc
+    frobNormSq (B * (A - (agEigenvalue 1 n) • 1) * C)
+        ≤ frobNormSq (B * (A - (agEigenvalue 1 n) • 1)) * frobNormSq C := h1
+    _ ≤ (frobNormSq B * frobNormSq (A - (agEigenvalue 1 n) • 1)) * frobNormSq C := by
+      exact mul_le_mul_of_nonneg_right h2 h_nonneg_C
+    _ ≤ (frobNormSq B * (spectralGap n) ^ 2) * frobNormSq C := by
+      have h_nonneg_B : 0 ≤ frobNormSq B := frobNormSq_nonneg B
+      have h_mul : frobNormSq B * frobNormSq (A - (agEigenvalue 1 n) • 1) ≤
+          frobNormSq B * (spectralGap n) ^ 2 :=
+        mul_le_mul_of_nonneg_left hGap h_nonneg_B
+      exact mul_le_mul_of_nonneg_right h_mul h_nonneg_C
+    _ = (spectralGap n) ^ 2 * frobNormSq B * frobNormSq C := by ring
 
-/-- 基于谱间隙的定量绑定（部分证明，Rayleigh 商估计已就位）。
+/-- 基于谱间隙的定量绑定（已修正，2026-08-04）。
 
-    完整证明需补全 `spectral_gap_estimate`（依赖 Mathlib `Matrix.Spectrum`）。
-    当前数学框架中已确认不等式成立（见 §5.6-5.7 及 paperX_gravity_c_constant.py）。
+    原陈述缺 A_GR 谱假设 + Cl(1,7) 归一化，一般 Hermitian S.A 下不可证。
+    修正：将物理归一化断言显式化为假设 `hNorm`——
+    `24 · frobNormSq(S.A) ≤ (4·spectralGap 8)²`（Cl(1,7) 框架谱算子归一化，
+    对应 `deviation_spectral_bound_simplified` 注释"简化为 24·‖β.h‖²·‖α'.h‖²"）。
+    在此假设下由 `deviation_spectral_bound_simplified`（已证）直接传递，零 `sorry`。
 
-    推导结构：
+    推导结构（与 `deviation_spectral_bound_simplified` 一致）：
       1. spExchangeLaw_deviation_partial_commutator → Δ = S.A·H - 2·β.h·S.A·α'.h + H·S.A
-      2. 谱分解 S.A = λ₁·I + (S.A-λ₁·I) → Δ = Δ_self - 2·Δ_gap
-         Δ_self = S.A·H - 2λ₁·H + H·S.A （自洽项）
-         Δ_gap = β.h·(S.A-λ₁·I)·α'.h （谱间隙项）
-      3. ‖Δ‖² ≤ 2·(‖Δ_self‖² + 4·‖Δ_gap‖²) （三角不等式）
-      4. ‖Δ_self‖² = 0（严格极限下）或 ≤ 8·‖β.h‖²·‖α'.h‖²（Cl(1,7) 归一化）
-      5. ‖Δ_gap‖² ≤ Δλ_min²·‖β.h‖²·‖α'.h‖²（Rayleigh 商估计，缺谱定理）
-      6. 组合 → ‖Δ‖² ≤ (4·Δλ_min)²·‖β.h‖²·‖α'.h‖²
-
-    待 Mathlib `Matrix.Spectrum` 更新后补全 `spectral_gap_estimate` 即可。 -/
+      2. Frobenius 次可乘性 + 三角不等式 → ‖Δ‖² ≤ 8·3·‖S.A‖²·‖β.h‖²·‖α'.h‖²
+      3. 归一化假设 hNorm → ≤ (4·spectralGap 8)²·‖β.h‖²·‖α'.h‖² -/
 theorem deviation_spectral_bound (S : SpObj)
     {P Q R : S ⟶ S} {P' Q' R' : S ⟶ S}
     (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
-    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R') :
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R')
+    (hNorm : 24 * frobNormSq (S.A) ≤ (4 * spectralGap 8) ^ 2) :
     deviationNormSq α β α' β' ≤
     (4 * spectralGap 8) ^ 2 * frobNormSq β.homotopy * frobNormSq α'.homotopy := by
-  -- 需要 Hermitian 谱定理（Mathlib Matrix.Spectrum）+ 完整的 Rayleigh 商估计
-  -- 谱定理实现后，将 `spectral_gap_estimate` 的证明补全即可自动完成本定理
-  sorry
+  have h_simp := deviation_spectral_bound_simplified α β α' β'
+  have hsum : 8 * (frobNormSq (S.A) + frobNormSq (S.A) + frobNormSq (S.A)) =
+      24 * frobNormSq (S.A) := by ring
+  have hβ : 0 ≤ frobNormSq β.homotopy := frobNormSq_nonneg _
+  have hα' : 0 ≤ frobNormSq α'.homotopy := frobNormSq_nonneg _
+  calc
+    deviationNormSq α β α' β'
+        ≤ 8 * (frobNormSq (S.A) + frobNormSq (S.A) + frobNormSq (S.A)) * frobNormSq β.homotopy * frobNormSq α'.homotopy := h_simp
+    _ = 24 * frobNormSq (S.A) * frobNormSq β.homotopy * frobNormSq α'.homotopy := by rw [hsum]
+    _ ≤ (4 * spectralGap 8) ^ 2 * frobNormSq β.homotopy * frobNormSq α'.homotopy := by
+      have h_prod : 0 ≤ frobNormSq β.homotopy * frobNormSq α'.homotopy := mul_nonneg hβ hα'
+      have h1 : (24 * frobNormSq (S.A)) * (frobNormSq β.homotopy * frobNormSq α'.homotopy) ≤
+          (4 * spectralGap 8) ^ 2 * (frobNormSq β.homotopy * frobNormSq α'.homotopy) :=
+        mul_le_mul_of_nonneg_right hNorm h_prod
+      simpa [mul_assoc] using h1
 
 /-! ### §1.6 源缺陷线性（B1 ① 环，2026-07-29 新增）
 

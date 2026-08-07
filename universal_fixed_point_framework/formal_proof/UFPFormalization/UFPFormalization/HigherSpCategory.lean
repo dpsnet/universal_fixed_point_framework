@@ -89,24 +89,17 @@ theorem spVertComp_assoc {X Y : SpObj} {P Q R S : X ⟶ Y}
   ext
   simp [spVertComp, add_assoc]
 
-/-- Exchange law for Sp₂ 2-morphisms.
+/-! ## Exchange law deviation for Sp₂ 2-morphisms
 
-    This is NOT provable as a strict equality in the current spectral
+    The strict exchange law does NOT hold in the current spectral
     framework because SpTwoMorphism.homotopy does NOT satisfy the
     intertwining condition (homotopy·Y.A = X.A·homotopy).
+    The deviation is quantified by `spExchangeLaw_homotopy_deviation` below.
 
     **Gravitational interpretation (2026-07-28)**:
     The deviation of the exchange law — measured by the norm of the commutator
     [A, homotopy] — is proportional to the spectral gap Δλ_min^(GR) ≈ 0.122,
-    providing a categorical origin for the gravitational constant G_N.
--/
-theorem spExchangeLaw {X Y Z : SpObj}
-    {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
-    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
-    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R') :
-    spHorizComp (spVertComp α β) (spVertComp α' β') =
-    spVertComp (spHorizComp α α') (spHorizComp β β') :=
-  sorry
+    providing a categorical origin for the gravitational constant G_N. -/
 
 /-- Lemma: the homotopy matrices of LHS and RHS of spExchangeLaw differ by
     two terms involving the differences of intertwining matrices along the

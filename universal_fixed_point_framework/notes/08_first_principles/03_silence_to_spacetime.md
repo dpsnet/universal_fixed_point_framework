@@ -60,7 +60,7 @@ Cl(1,7) 8维空间（描述工具，非本源）
 
 ### 4.5 维度筛选的范畴论计数
 
-上述 1+3+4 = 8 的 Cl(1,7) 分解并非来自随机配分，而是由 $\mathbf{Sp}$ 严格 4-范畴的层结构直接决定（`paperX_silence_dimensions.py`）：
+上述 1+3+4 = 8 的 Cl(1,7) 分解并非来自随机配分，而是由 $\mathbf{Sp}$ 严格 4-范畴的层结构直接决定（`scripts/paperX_silence_dimensions.py`）：
 
 $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \underbrace{3}_{\text{可见空间}} \oplus \underbrace{4}_{\text{静默内部}}$$
 
@@ -89,7 +89,7 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 | `spacetime_dimension_split` | $1 + N_{\text{active}} + (N_{\text{total}} - 1) = 8$ | 1+3+4=8 分解机器证明 |
 | `dimension_counting_eq_two_mul` | $1 + (n-1) + ((n+1)-1) = 2n$ | **涌现 Clifford 维数 m = 2n**（范畴阶数的 2 倍） |
 | `spacetime_dim_eq_category_order` | $1 + (n-1) = n$ | **时空维数 = 范畴阶数**：4D 时空 ⟺ 4-范畴 |
-| `category_order_unique` | $2n = 8 \Rightarrow n = 4$ | **逆方向唯一性**：给定 Cl(1,7)（旋量表示 8_s 独立确定），"𝐒𝐩 是 4-范畴"从设定升级为**推论** |
+| `category_order_unique` | $2n = 8 \Rightarrow n = 4$ | **逆方向唯一性**：给定 Cl(1,7)（旋量表示 8_s【2026-08-07 勘误：旧遗留记号 "8_s" 应理解为 16 维旋量 S₁₆，旋量维数 16（非 8）】独立确定），"𝐒𝐩 是 4-范畴"从设定升级为**推论** |
 | `silence_separation` | $e^{-3} \cdot e^{-d} < e^{-d}$（∀d） | 静默维度严格低于阈值，与 d_H 取值无关 |
 | `silence_margin` | $S_4 / c_1 = e^3$ | 分离裕度精确为 e³ ≈ 20（鲁棒性定量） |
 | `visible_dimensions_eq_four` | ∀d>0，可见维度 = 1+3 = 4 | 4D 结论对 d_H 不确定性（δ 修正、拟合误差）完全鲁棒 |
@@ -98,10 +98,10 @@ $$\text{Cl}(1,7) = \underbrace{1}_{\text{时间（递归参数）}} \oplus \unde
 **新结构结果**：
 1. **m = 2n 恒等式**：strict n-范畴（N_active = n−1，N_total = n+1）经 §4.5 分解规则涌现的 Clifford 维数恰为 2n。对 n = 4 给出 Cl(1,7)。逆方向：m = 8 ⟹ n = 4 唯一——框架的两个独立设定（4-范畴、Cl(1,7)）互为推论。
 2. **时空维数 = 范畴阶数**：1 个时间维 + (n−1) 个可见空间维 = n，因此四维时空 ⟺ 4-范畴 ⟺ Cl(1,7) 三者等价。
-3. **自洽不动点**：d_H → S₄ → 权重筛选 → 可见 1+3 / 静默 4 → n = 4 → d_H = ln 15 + δ，n = 4 是循环的唯一不动点（数值验证 `paperX_spacetime_emergence.py` S3）。
+3. **自洽不动点**：d_H → S₄ → 权重筛选 → 可见 1+3 / 静默 4 → n = 4 → d_H = ln 15 + δ，n = 4 是循环的唯一不动点（数值验证 `scripts/paperX_spacetime_emergence.py` S3）。
 4. **扰动鲁棒性**：50,000 次对数正态扰动实验显示 4D 计数在 σ ≲ 2.5 下 100% 稳定，断裂点 σ ≈ 3 = ln(e³) 恰为分离裕度——内部维度需 ~e³ 倍扰动才能越过阈值。
 
-**临界情形的诚实说明**（`paperX_spacetime_emergence.py` S4）：3 个空间维度的权重 c₂ = e^{−d} 与阈值 S₄ = e^{−d} 由同一参数决定，"恰好位于阈值"是定义性的而非微调。可见性判据 w ≥ S₄（含等号）由与范畴计数的一致性唯一强制——若改用严格不等号，空间维度也被静默，与 N_active = 3 矛盾。
+**临界情形的诚实说明**（`scripts/paperX_spacetime_emergence.py` S4）：3 个空间维度的权重 c₂ = e^{−d} 与阈值 S₄ = e^{−d} 由同一参数决定，"恰好位于阈值"是定义性的而非微调。可见性判据 w ≥ S₄（含等号）由与范畴计数的一致性唯一强制——若改用严格不等号，空间维度也被静默，与 N_active = 3 矛盾。
 
 **剩余缺口（诚实标注）**：Lean 定理组证明的是**计数结构**（1+3+4=8 的唯一性）与**阈值分离**（c₁ < S₄ ≤ c₂，裕度 e³）。"各 Clifford 方向的谱权重恰好是 c₁/c₂/c₃"这一映射仍是框架的建模指派——其物理实现需要谱流算子 D(f) 层面的论证，超出本轮范围。
 

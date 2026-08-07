@@ -1,6 +1,6 @@
 # 中微子绝对质量标度与 0νββ 预测
 
-> **Phase 45 E2** | 2026-07-19 | 数值验证: `paperX_neutrino_absolute.py`
+> **Phase 45 E2** | 2026-07-19 | 数值验证: `scripts/paperX_neutrino_absolute.py`
 
 ---
 

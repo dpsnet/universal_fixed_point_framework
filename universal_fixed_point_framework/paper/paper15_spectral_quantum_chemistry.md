@@ -494,7 +494,7 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 
 ## 7. 数值验证
 
-### 7.1 氢原子精确谱 (`paperX_hydrogen_spectral.py`)
+### 7.1 氢原子精确谱 (`scripts/paperX_hydrogen_spectral.py`)
 
 **验证目标**：§2 的谱表述 $D(H) = (\mathcal{H}_{\text{QC}}, A_H, \sigma(A_H))$ 在 Coulomb 势下的精确成立。
 
@@ -509,7 +509,7 @@ $$S_{\text{2D}}(\omega_1, \omega_2, \tau) \propto \text{Re} \int_0^\infty dt_1 \
 
 **结论**: §2 的谱表述在氢原子精确解下得到完全验证。7/7 自洽性检验通过。
 
-### 7.2 H₂⁺ 分子离子 (`paperX_H2plus_spectral.py`)
+### 7.2 H₂⁺ 分子离子 (`scripts/paperX_H2plus_spectral.py`)
 
 **验证目标**：§3 的化学键谱表述——$A_{\text{mol}}$ 谱隙打开 $\Leftrightarrow$ 化学键形成。
 

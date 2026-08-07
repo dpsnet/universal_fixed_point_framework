@@ -1,20 +1,20 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.9](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.19](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 >
-> **项目状态**：38 篇论文（Papers I–XXXVIII）+ **RAP-Errata v0.9**（勘误基线）✅ + Lean 4 形式化 10 核心模块零错误 + **Agda 交叉验证 16 模块推进（技术债清单 A 类全闭合，Paper XXXVIII 专论）**
+> **项目状态**：42 篇论文（Paper I–XLII，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向）+ **RAP-Errata v0.19**（勘误基线）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
-| 论文总数 / Papers | **38**（Paper I–XXXVIII，含本轮新增 XXXI–XXXV, XXXVII, XXXVIII） |
+| 论文总数 / Papers | **42**（Paper I–XLII，含本轮新增 XXXI–XXXV, XXXVII–XLII） |
 | 严格拟合 / Strict results | **15 项** |
 | 部分拟合 / Partial fits | **14 项** |
 | 冻结预言 / Frozen predictions | **7 项**（盲登记有效，数值未变） |
-| 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 |
+| 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 + **Phase 61 四大物理方向（暴涨/色规范/重整化链/黑洞演化）** |
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
-| 最新论文 / Latest Papers | **Paper XXXV**（引力范畴论起源）+ **Paper XXXVII**（开放问题综述）+ **Paper XXXVIII**（Agda 独立交叉验证） |
-| Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推 🆕、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**） |
-| 遗留 `sorry` | 2（`spectral_gap_estimate`、`deviation_spectral_bound`，依赖 Mathlib `Matrix.Spectrum`） |
+| 最新论文 / Latest Papers | **XXXIX**（暴涨完整动力学）+ **XL**（色规范完整动力学）+ **XLI**（量子重整化链条）+ **XLII**（黑洞量子演化）+ Paper XXXVIII（Agda 交叉验证） |
+| Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**）+ **Phase 61A-D 7 模块**（InflationDynamics/ColorDynamics/RenormalizationChain/BlackHoleEvolution/HawkingSpectrum/BlackHoleInformation/BlackHoleBounce，全部零 `sorry`） |
+| 遗留 `sorry` | **全库 Lean 零 `sorry` 零 `axiom`**（2026-08-05：`Adjunction.lean` 的 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——原 `RFunctor.map`/`DAdjR` 全范畴结构性不可构造且无使用方，删除后 `RFunctor` 保留对象映射；全范畴右伴随正确构造由 RAP5a SpImD `DIm ⊣ RIm` 覆盖；此前已闭合：ThermoFormalism/DeviationBound（O8/O11）+ RAP5a RIm_map（线性语义）+ HigherRecCategory（D-拉回，O13）；详见下文"Lean 4 形式化"表） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
 
 ---
@@ -54,7 +54,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ---
 
-## 现状速览（2026-08-03，RAP-Errata v0.7）
+## 现状速览（2026-08-07，RAP-Errata v0.19）
 
 ### 论文
 
@@ -93,16 +93,21 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XXXIV 🆕**：连续极限——分形吸引子到光滑时空涌现 | v1.0 | B2 六步理论证明：编码树分层→拟弧→对称→Lipschitz 映射→拟对称嵌入→谱流保持。**B2 理论闭合** | ✅ |
 | **Paper XXXV 🆕**：引力的范畴论起源 | v0.3 | 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 + **§3.2 向外推几何阐述** | ✅ |
 | **Paper XXXVII 🆕**：开放问题、未来方向与层次距离 | v0.1 | A/B/C 三组开放问题 + 层次距离度量 + Bott-Moran 桥 | ✅ |
-| **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.1 | 双实现证明协议：16 模块清单、B1-B8 直接证明、技术债 A 类全闭合、S0 静默/待基础设施边界 | ✅ |
+| **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.8 | 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 | ✅ |
 
 ### Lean 4 形式化
 
 | 指标 | 数值 |
 |------|------|
-| 总 Lean 模块数 | 74 |
-| 构建状态 | `lake build` 零错误（仅 8 条编译器警告） |
-| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.7 §六） |
-| 活动 `sorry` | 3 处：`HigherSpCategory.lean:103` 概念特征 + `DeviationBound.lean:386/412` 待 Mathlib 更新 |
+| 总 Lean 模块数 | 82（含新增 `WeierstrassGap.lean`；"15 个预存编译错误"为 2026-07 历史登记基数——`NoiseCategory.lean` 已于 **2026-08-05 修复移出**，`TestCategoryTheory` 亦已修复） |
+| 构建状态 | 默认目标 `lake build` ✅ 零错误（**2454 jobs**）；全库零 `sorry` 零 `axiom`；Phase 61A-D 7 模块零 `sorry` |
+| 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.19 §六）+ Phase 61A-D 7 模块 + NoiseCategory/IFSRecCoding/WeierstrassGap |
+| 活动 `sorry`（2026-08-05 审计） | **全库零 `sorry` 零 `axiom`**（里程碑）：`Adjunction.lean` 原 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——`RFunctor` 降为对象映射（`Fin S.n` 状态 + 恒等步进），原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）经判定**结构性不可构造**（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在）后删除；`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）**2026-08-05 闭合**并组装为正式函子 `sigmaDFunctor`。非 S0 全部清零：ThermoFormalism 4（O11）、DeviationBound 2（O8）、RAP5a 1（RIm_map，线性语义）、HigherRecCategory 3（O13——Rec₂ 2-态射按 D-拉回重定义）；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合 |
+
+**Phase 61A（P1-4 暴涨完整动力学）✅ 2026-08-03** — `InflationDynamics.lean`（酉共轭/谱流保 Hermitian F1-F3 + 动态连续极限 F4）；论文 `paper39_inflation_dynamics.md`（Paper XXXIX，N_e 闭式 55 + 预言闭环）；数值 15/15。
+**Phase 61B（P0-1 色规范完整动力学）✅ 2026-08-03** — `ColorDynamics.lean`（色雅可比 `noncomm_ring` 全证）；论文 `paper40_qcd_color_dynamics.md`（Paper XL，禁闭/渐近自由 + 4 强子谱）；数值 15/15。
+**Phase 61C（P0-2 量子重整化完整链条）✅ 2026-08-04** — 谱流→β 函数代数基础形式化完成：`RenormalizationChain.lean`（ad_G 保 Hermitian F1/F2/F3 + 迭代对易子闭合）；`SpectralDynamics.lean`/`ThermoFormalism.lean`/`TestSpectralEquivalence.lean` 修复；`Silence.lean` Frobenius 范数不等式全证（借 mathlib `frobenius_norm_mul`/`norm_sub_le`）；论文 `paper41_renormalization_chain.md`（Paper XLI）。详见 [`roadmap/phase61_physics_advancement.md`](roadmap/phase61_physics_advancement.md) §Phase 61C。遗留损坏文件 `TempRGFiber.lean`（约 45 处 mathlib 4.31 API 迁移错误）已登记，其依赖链（Fiber 模块族）待迁移。
+**Phase 61D（P1-3 黑洞量子演化）✅ 2026-08-04** — `BlackHoleEvolution.lean`/`HawkingSpectrum.lean`/`BlackHoleInformation.lean`/`BlackHoleBounce.lean` 四模块零 `sorry`（霍金谱 + 蒸发动力学 + Page 曲线谱公理推导含精确熵平衡 + 视界涨落 + 蒸发 Planck 终止 + 量子反弹衔接 + 信息保持双向）；论文 `paper42_black_hole_quantum_evolution.md`（Paper XLII）；数值 35/35。攻克 rpow 立方根引理（`rpow_cube_root`）。
 
 ### 范畴理论绝对性验证（Phase 60 🆕）
 
@@ -112,37 +117,48 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 **路径 B 推进 ✅（2026-08-03，v1.13–v1.16）** — Agda 侧扩至 **16 模块**，T3 谱定理层进一步闭合：fc-integral 公理完整降为可证明定理（`fc-integral-full`，唯一剩余登记项为文档化测度论核心逼近桥接 `fc-poly-le-spec-int`）；理论闭合审计（谱匹配核心 theorem3/corollary4-∞/corollary5/P1-linear-closure 独立于 fc-integral 桥接、完全可证；钉住 sup 语义文档化）；跨层模型 Op → LinOp 点态对应闭合（CrossLayer OpAlgPt 证书）；测度论逼近引理库阶段 1。paper I v2.49 同步。
 
+**路径 B 推进 ✅（2026-08-05，v1.38–v1.47）** — Agda 侧扩至 **20 模块**（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）：C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）经二进制 ℕ 算术全部闭合清零（v1.38）；`mono-le-any`（∫xⁿ ≤ₒ fc(xⁿ)）+ 方向核验（v1.40）；**T3 定义性公理降定理**——`exp-partial-<`（v1.41）、**`exp-tail-bound`（v1.42，固定间隙路径）** 与 **`log2-series-ub`（v1.43，固定间隙路径）** 由 postulate 降为可证明定理（阶乘强估计/1/2 几何机制 → 逐项/求和/geo-x → 固定间隙 → exp/log-least-ub-any → recip 单调或分数对消，零新增公理）；**log 级数下界侧机制收口（v1.44）**——`log2-series-lb-thm`（部分和严格低于 ln 2）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120 双侧夹逼）；**ln 级数高阶精化（v1.45）**——k 阶 = n+k 实例化（`log2-series-ub2-thm` 固定界 B''n 严格化 + `ln2-squeeze-10`：4918210/7096320 < ln 2 < 4918840/7096320，T3 阶段 3 log 级数机制收官）；**ln(16/15) 级数直接截断机制（v1.46，base-16）**——级数路径独立交叉验证 ln1615-lb（`ln1615-lb-direct`：29/450 < ln(16/15)）+ 夹逼 `ln16-15-squeeze-2`（33/512 < ln(16/15) < 397/6144）；**ln(16/15) 二阶精化（v1.47，base-16 高阶）**——`log16-series-ub2-thm` + 二阶夹逼 `ln16-15-squeeze-2b`（33/512 < ln(16/15) < 25379/393216），**T3 阶段 3 ln 级数双侧机制全面收官**，全程零新增公理。Lean 侧同里程碑：全库 `lake build` 2454 jobs 零 `sorry` 零 `axiom`。Paper XXXVIII v0.8。
+
 **向外推形式化 ✅** — `CoherenceToBranching.lean §11` 新增 `dimension_gap` + `outward_proof_maps_to_orthogonal_layer`，维数间隙 $\ln 15 < 3$ 与层正交分离 $S_4/c_1 = e^3$ 已形式化绑定（`lake build` 编译通过）；Agda 侧由 B7 镜像。
+
+### 阶段 3：IFS 分形扩张（Σ-Rec coproduct 谱对应，✅ 2026-08-05）
+
+**全部子任务闭合**（数值 7/7 + Lean 零 `sorry`）：
+- **Σ-D Functor 律闭合**：`NoiseCategory.lean` `dfunctorMapTransport'`（对分量变量 cases、无 cast）→ `sigmaDFunctorMap_id/_comp` → 正式函子 `sigmaDFunctor : SigmaRecObj ⥤ SigmaSpObj`
+- **谱 coproduct 分解 Lean 侧**：`IFSRecCoding.lean` 三定理——对象层 `symbolicSigmaRecObj_spectral_components`、态射层 `symbolicSliceInjection_spectral_component0`、迹公式 `symbolicTransferMatrix_trace_eq_one`（tr(T_f) = #Fix = 1）
+- **Weierstrass 谱隙结构支撑**：`WeierstrassGap.lean` v1.0——图 IFS 收缩率 1/b 机器证明、Moran 维数 log 2/log b、图维数 2 + ln a/ln b 随 a 严格递增、谱障碍公式实例；核谱隙特征值级证明登记为开放项（依赖有限维谱积分层）
+
+详见 [`notes/00_foundations/spectral_phase3_fractal_expansion.md`](notes/00_foundations/spectral_phase3_fractal_expansion.md)（v0.7）。
 
 ### Phase 27 深化方向（全部完成 ✅）
 
 | 方向 | 交付物 | 状态 |
 |------|--------|------|
-| P27.1 黑洞蒸发完整演化 | `paper27_hawking_evaporation.py`（Page曲线 ✅） | ✅ |
-| P27.2 暗物质完整谱模型 | `paper27_dark_matter_spectral.py`（3候选 + relic density） | ✅ |
-| P27.3 多圈重整化 | `paper27_fermion_twoloop.py`（SU(2)/SU(3) 精确匹配） | ✅ |
-| P27.4 非线性大尺度修正 | `paper27_lss_nonlinear_v2.py`（F₂核+1-loop SPT） | ✅ |
+| P27.1 黑洞蒸发完整演化 | `scripts/paper27_hawking_evaporation.py`（Page曲线 ✅） | ✅ |
+| P27.2 暗物质完整谱模型 | `scripts/paper27_dark_matter_spectral.py`（3候选 + relic density） | ✅ |
+| P27.3 多圈重整化 | `scripts/paper27_fermion_twoloop.py`（SU(2)/SU(3) 精确匹配） | ✅ |
+| P27.4 非线性大尺度修正 | `scripts/paper27_lss_nonlinear_v2.py`（F₂核+1-loop SPT） | ✅ |
 
 ### Phase 28 数值验证（全部完成 ✅）
 
 | 方向 | 交付物 | 状态 |
 |------|--------|------|
-| D28.1 原初扰动功率谱 | `paper28_inflation_powerspectra.py`（$n_s=0.9606$, $r=0.0042$, $\alpha_s=-8.2\times10^{-5}$）| ✅ 6/6 |
-| D28.2 Paper IV vs VIII 熵统一 | `paper28_dfunctor_entropy_unify.py`（Schwarzschild/RN/Kerr 统一验证）| ✅ 6/6 |
-| D28.3 量子反弹引力波谱 | `paper28_bounce_gravitational_waves.py`（Ω_GW频谱 + 可探测性分析）| ✅ 6/6 |
-| D28.4 高阶范畴严格化 | `paper28_higher_category_formalization.py`（Rec₂/Spec₂ 2-范畴 + D₂ 2-函子 4 公理 + ∞-范畴切空间）| ✅ 8/8 |
+| D28.1 原初扰动功率谱 | `scripts/paper28_inflation_powerspectra.py`（$n_s=0.9606$, $r=0.0042$, $\alpha_s=-8.2\times10^{-5}$）| ✅ 6/6 |
+| D28.2 Paper IV vs VIII 熵统一 | `scripts/paper28_dfunctor_entropy_unify.py`（Schwarzschild/RN/Kerr 统一验证）| ✅ 6/6 |
+| D28.3 量子反弹引力波谱 | `scripts/paper28_bounce_gravitational_waves.py`（Ω_GW频谱 + 可探测性分析）| ✅ 6/6 |
+| D28.4 高阶范畴严格化 | `scripts/paper28_higher_category_formalization.py`（Rec₂/Spec₂ 2-范畴 + D₂ 2-函子 4 公理 + ∞-范畴切空间）| ✅ 8/8 |
 
 ### Phases 36–42 理论推进（全部完成 ✅）
 
 | Phase | 方向 | 交付物 | 状态 | 核心结果 |
 |-------|------|--------|------|---------|
-| **36** | 谱间隙第一性原理 | `paper36_spectral_gap_derivation.py` | ✅ 7/7 | Δλ_min = 0.122 M_Pl |
-| **37** | IFS 重叠因子 ρ 去外部输入 | `paper37_ifs_overlap_derivation.py` | ✅ 7/7 | ρ=0 从 Cl(1,7) 唯一确定 |
-| **38** | 中微子层级+暴胀能标 | `paper38_neutrino_inflation.py` | ✅ 7/7 | Seesaw→Rec_diss, V₀=8.1×10¹⁵ GeV |
-| **39** | θ_QCD 谱对应 | `paper39_theta_qcd.py` | ✅ 6/6 | 三机制满足 |θ|<10⁻¹⁰ |
-| **40** | η_B 重子不对称 | `paper40_baryogenesis.py` | ✅ 6/6 | η_B=5.58×10⁻¹⁰ (0.91x) |
-| **41** | Λ 多重静默机制 | `paper41_cosmological_constant.py` | ✅ 6/6 | 126量级压制覆盖120 |
-| **42** | 暴胀 R⁴ 修正 | `paper42_inflation_R4.py` | ✅ 7/7 | BCH→R⁴, c₂=8.92, c₃=4.72 |
+| **36** | 谱间隙第一性原理 | `scripts/paper36_spectral_gap_derivation.py` | ✅ 7/7 | Δλ_min = 0.122 M_Pl |
+| **37** | IFS 重叠因子 ρ 去外部输入 | `scripts/paper37_ifs_overlap_derivation.py` | ✅ 7/7 | ρ=0 从 Cl(1,7) 唯一确定 |
+| **38** | 中微子层级+暴胀能标 | `scripts/paper38_neutrino_inflation.py` | ✅ 7/7 | Seesaw→Rec_diss, V₀=8.1×10¹⁵ GeV |
+| **39** | θ_QCD 谱对应 | `scripts/phase39_theta_qcd.py` | ✅ 6/6 | 三机制满足 |θ|<10⁻¹⁰ |
+| **40** | η_B 重子不对称 | `scripts/phase40_baryogenesis.py` | ✅ 6/6 | η_B=5.58×10⁻¹⁰ (0.91x) |
+| **41** | Λ 多重静默机制 | `scripts/phase41_cosmological_constant.py` | ✅ 6/6 | 126量级压制覆盖120 |
+| **42** | 暴胀 R⁴ 修正 | `scripts/phase42_inflation_R4.py` | ✅ 7/7 | BCH→R⁴, c₂=8.92, c₃=4.72 |
 
 **半涌现量全部去外部输入化**：Δλ_min, ρ, 耦合初值, Λ 均由第一性原理确定。理论根因见 `notes/paper41_theoretical_root.md`，分层表现验证见 `notes/paper41_layered_manifestations.py`。
 
@@ -156,7 +172,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | D4 谱流体动力学 | Paper VI v2.5 | N-S谱流方程 + K41 + 湍流RG + 九类临界现象统一（含IQHE新增） |
 | **D5 零参数质量预测** | **Paper I §A.15.8, Paper XI §8.4** | **$c_i$ 从静默层级唯一确定，9费米子质量比零输入** |
 | D6 全费米子扩展+强CP | Paper XI §§7.5, 8.4 | 全部29参数覆盖，15/29严格零参数 |
-| 验证脚本 | paperX_zero_parameter_check.py (8/8) | 完整推导链自动化验证 |
+| 验证脚本 | scripts/paperX_all_predictions.py（29 项全覆盖）、scripts/paperX_pvalue_analysis.py（Fisher p≈0） | 完整推导链自动化验证 |
 
 ### 零参数突破：核心数值
 
@@ -193,10 +209,10 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | $F_\pi$ (π衰变常数) | 92 MeV | 92.2 MeV ✅ 偏差 0.1% |
 
 ### 数值验证脚本
-- **Phase 22**：`paper22_spectral_entropy.py`（ΔS=0.054>0），`paper22_horizon_spectrum.py`（S_BH精确 0.00%），`paper22_fluid_dynamics.py`
-- **Phase 27**：`paper27_hawking_evaporation.py`，`paper27_dark_matter_spectral.py`，`paper27_fermion_twoloop.py`，`paper27_lss_nonlinear_v2.py`，`paper27_beta_multiloop.py`，`paper27_dyson_schwinger.py`
-- **Phase 28**：`paper28_quantum_bounce.py`（7/7），`paper28_inflation_powerspectra.py`（6/6），`paper28_dfunctor_entropy_unify.py`（6/6），`paper28_bounce_gravitational_waves.py`（6/6），`paper28_higher_category_formalization.py`（8/8）
-- **其他**：`paper5_cosmology.py`，`paper5_beta_functions.py`，`paper5_force_generators.py`，`paper3_bps_spectral_verification.py` 等
+- **Phase 22**：`scripts/paper22_spectral_entropy.py`（ΔS=0.054>0），`scripts/paper22_horizon_spectrum.py`（S_BH精确 0.00%），`scripts/paper22_fluid_dynamics.py`
+- **Phase 27**：`scripts/paper27_hawking_evaporation.py`，`scripts/paper27_dark_matter_spectral.py`，`scripts/paper27_fermion_twoloop.py`，`scripts/paper27_lss_nonlinear_v2.py`，`scripts/paper27_beta_multiloop.py`，`scripts/paper27_dyson_schwinger.py`
+- **Phase 28**：`scripts/paper28_quantum_bounce.py`（7/7），`scripts/paper28_inflation_powerspectra.py`（6/6），`scripts/paper28_dfunctor_entropy_unify.py`（6/6），`scripts/paper28_bounce_gravitational_waves.py`（6/6），`scripts/paper28_higher_category_formalization.py`（8/8）
+- **其他**：`scripts/paper5_cosmology.py`，`scripts/paper5_beta_functions.py`，`scripts/paper5_force_generators.py` 等
 
 ### 关键设计决策
 - **双轨 Koopman 存在性**：$\ell^\infty(X)$ 上零前提定义 + $L^2/C(X)$ 上谱对应有效（`DynSys.lean` + Paper I 注 2.2a）
@@ -208,7 +224,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
-- **声明基线**：RAP-Errata v0.7（详见 `paper/RAP_勘误与立场声明.md`）
+- **声明基线**：RAP-Errata v0.19（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -267,37 +283,54 @@ universal_fixed_point_framework/
 │   ├── causal_set/                 # 因果集离散时空实例
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
-├── paper/                          # 论文手稿（34 篇）
+├── paper/                          # 论文手稿（42 篇）
 │   ├── paper1_*.md                  # 基础理论（Paper I–XVI）
 │   ├── paper17_zero_parameter_predictions.md   # 零参数预测（勘误合规）
 │   ├── paper18_spectral_newtonian.md           # 谱牛顿力学
 │   ├── paper19–paper29/                        # 形式化扩展
 │   ├── paper30_dH_structural_analysis.md       # $d_H$ 结构分析
-│   ├── paper31_mass_delta_directionality.md    # 🆕 质量-$\Delta$ 方向性
-│   ├── paper32_silence_spacetime.md            # 🆕 谱静默与时空涌现
-│   ├── paper33_origin_of_3.md                  # 🆕 "3"的范畴论起源
-│   ├── paper34_continuum_limit.md              # 🆕 B2 连续极限
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.7
-├── paper3_bps_spectral_verification.py          # Paper III 数值验证脚本
-├── paper5_spectral_flow_test.py                 # Paper V 谱流方程验证 (ALL PASSED)
-├── paper5_inverse_square_law.py                 # Paper V 逆平方律谱几何验证
-├── paper5_spectral_commutator.py                # Paper V [A_GR, A_SM] 谱对易子
-├── paper5_force_generators.py                   # Paper V A_GR/A_SM 显式构造
-├── paper5_lwg_connection.py                    # Paper V LQG 面积谱对应 (R²=0.999952)
-├── paper5_beta_functions.py                    # Paper V β函数匹配 (v3)
-├── paper5_normal_ordering.py                   # Paper V 正规排序数值验证
-├── paper5_u1_beta.py                           # Paper V U(1) β函数匹配
- ├── paper5_cosmology.py                         # Paper V 宇宙学谱动力学 (FLRW + n_s + DE)
- ├── paper22_spectral_entropy.py                 # Phase 22 谱熵产生率 (ΔS=0.054>0)
- ├── paper22_fluid_dynamics.py                   # Phase 22 谱流体动力学 (K41谱)
- ├── paper22_horizon_spectrum.py                 # Phase 22 黑洞视界谱 (S_BH匹配 0.00%)
- ├── paper27_hawking_evaporation.py              # Phase 27 黑洞蒸发 (Page 0.647)
- ├── paper27_dark_matter_spectral.py             # Phase 27 暗物质 (WIMP奇迹 Ωh²=0.12)
- ├── paper27_beta_multiloop.py                   # Phase 27 双圈β对比
- ├── paper27_dyson_schwinger.py                  # Phase 27 DS顶点修正
- ├── paper27_fermion_twoloop.py                  # Phase 27 费米子双圈β
- ├── paper27_lss_nonlinear_v2.py                 # Phase 27 非线性LSS (F₂核)
- ├── formal_proof/                   # Lean 4 机器证明形式化项目
+│   ├── paper31_mass_delta_directionality.md    # 质量-$\Delta$ 方向性
+│   ├── paper32_silence_spacetime.md            # 谱静默与时空涌现
+│   ├── paper33_origin_of_3.md                  # "3"的范畴论起源
+│   ├── paper34_continuum_limit.md              # B2 连续极限
+│   ├── paper39_inflation_dynamics.md            # Paper XXXIX 暴涨完整动力学
+│   ├── paper40_qcd_color_dynamics.md            # Paper XL 色规范完整动力学
+│   ├── paper41_renormalization_chain.md         # Paper XLI 量子重整化链条
+│   ├── paper42_black_hole_quantum_evolution.md  # Paper XLII 黑洞量子演化
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.19
+├── scripts/                        # 论文/阶段数值验证脚本（在 run_all_tests.py 中注册）
+│   ├── paperX_*.py                 # Phase 44/60/61 及后续数值验证脚本（约 130 个）
+│   ├── paper5_spectral_flow_test.py     # Paper V 谱流方程验证 (ALL PASSED)
+│   ├── paper5_inverse_square_law.py     # Paper V 逆平方律谱几何验证
+│   ├── paper5_spectral_commutator.py    # Paper V [A_GR, A_SM] 谱对易子
+│   ├── paper5_force_generators.py       # Paper V A_GR/A_SM 显式构造
+│   ├── paper5_lwg_connection.py         # Paper V LQG 面积谱对应 (R²=0.999952)
+│   ├── paper5_beta_functions.py         # Paper V β函数匹配 (v3)
+│   ├── paper5_normal_ordering.py        # Paper V 正规排序数值验证
+│   ├── paper5_u1_beta.py                # Paper V U(1) β函数匹配
+│   ├── paper5_cosmology.py              # Paper V 宇宙学谱动力学 (FLRW + n_s + DE)
+│   ├── paper22_spectral_entropy.py      # Phase 22 谱熵产生率 (ΔS=0.054>0)
+│   ├── paper22_fluid_dynamics.py        # Phase 22 谱流体动力学 (K41谱)
+│   ├── paper22_horizon_spectrum.py      # Phase 22 黑洞视界谱 (S_BH匹配 0.00%)
+│   ├── paper27_hawking_evaporation.py   # Phase 27 黑洞蒸发 (Page 0.647)
+│   ├── paper27_dark_matter_spectral.py  # Phase 27 暗物质 (WIMP奇迹 Ωh²=0.12)
+│   ├── paper27_beta_multiloop.py        # Phase 27 双圈β对比
+│   ├── paper27_dyson_schwinger.py       # Phase 27 DS顶点修正
+│   ├── paper27_fermion_twoloop.py       # Phase 27 费米子双圈β
+│   ├── paper27_lss_nonlinear_v2.py      # Phase 27 非线性LSS (F₂核)
+│   └── dns/                             # DNS/GPU 运行与重分析脚本
+│       ├── _run_dns_adaptive*.py        # DNS k^-5/3 自适应参数扫描 v1–v5
+│       ├── _run_dns_full.py             # DNS 湍流数值验证 v6.1
+│       ├── _run_dns_gpu.py              # DNS GPU 加速扫描 (N=128, CuPy)
+│       ├── _run_gpu_linear.py           # GPU 线性 forcing 测试
+│       ├── _run_gpu_deterministic.py    # GPU 确定性 forcing 测试
+│       ├── _run_gpu_detc.py             # GPU deterministic_controlled forcing
+│       ├── _run_gpu_re200.py            # GPU Re_λ=200 运行
+│       └── _reanalyze_gpu_results.py    # GPU 结果重分析（slope 拟合）
+├── results/                        # 数值分析结果（JSON）
+│   ├── non_newtonian_k41_results.json   # 非牛顿 K41 谱修正结果
+│   └── rheology_lorentz_checker_results.json  # DST 临界硬化指数比对结果
+├── formal_proof/                   # Lean 4 机器证明形式化项目
 │   └── UFPFormalization/           # 9 核心模块，`lake build` 零错误
 ├── roadmap/                        # 分阶段路线图文档
 └── notes/                          # 研究笔记与中间推导
@@ -584,6 +617,8 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
+| **2026-08-05** | **目录整理 + 全量脚本登记**：① 散落脚本归位——全部 `paperX_*.py`/`paper5/22/27/28-38_*.py`/`phase39-42_*.py` 数值脚本迁入 `scripts/`，DNS/GPU 运行与重分析脚本迁入 `scripts/dns/`，输出路径改为文件相对；图片归入 `figs/`，结果 JSON 归入 `results/`；② 早期论文脚本（paper5/22/27/28/29-35、phase36-42 共 39 个）批量登记进 `run_all_tests.py`（现共 130 项，全部存在性校验通过）；③ 修复两个脚本缺陷：`paper27_beta_twoloop_fix.py` 未定义 `C2_f`、`paper29_entropy_production_proof.py` scipy 导入错误 + 克劳修斯数组形状不匹配（改为 scipy.stats.entropy）；④ `scripts/paper3_bps_spectral_verification.py` 重建并登记（BPS 黑洞谱等价 19/19）；100 个 .md 文档 840 处引用同步更新 | 目录整理 |
+| **2026-08-04** | **Phase 61C（P0-2 量子重整化完整链条）完成并纳入**：T3 测度论层闭合 + 笔记/论文（paper41，定理 2.1/3.1/3.2/4.1）+ 数值 `scripts/paperX_rg_chain.py`（12/12）+ Lean `RenormalizationChain.lean` 形式化。执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3）、正本清源假定理 5 处（WeaveBCS）、hBound 文档纠正、DeviationBound/HigherRecCategory 开放项登记；`lake build` 全量通过 | Phase 61C |
 | **2026-07-29** | **RAP-Errata v0.3 发布**：全部宣称边界重新划定。参数总账归约为 0 自由参数 + 1 外部标度 $M_{\text{Pl}}$。新增 Paper XXXI–XXXIV（质量-$\Delta$ 方向性、谱静默与时空涌现、"3"的范畴论起源、B2 连续极限理论闭合）。B1①环机器证明完成。研究笔记 v1.48 全部内容已提炼完毕 |
 | 2026-07-23 | **QCD/Higgs+量子Hall研究笔记更新至论文**：Paper VI v2.5（IQHE临界指数过渡新增至九类临界现象统一）、Paper XIV v1.3（量子Hall双参数RGE+噪声范畴+谱化+倾斜磁场Lifshitz转变四项预言）、Paper XVII v1.8（电荷量子化谱定理新增——Cl(1,7)旋量表示强制电荷谱{+2/3, -1/3, 0, -1, +1}） |
 | 2026-07-19 | **八类临界现象统一**：Paper VI v2.4（主定理 E3 扩展至八类临界现象，新增 QCD 禁闭发散）、Paper XVI v1.1（跨领域统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$ 统一八类）、Paper XVII v1.2（零参数预测从 24 增至 29 项，$m_\mu/m_\tau$ 偏差从 58% 降至 0.7%，$T_c$ 预测 153 MeV 偏差 1.1%，$F_\pi$ 偏差 0.1%） |

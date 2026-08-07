@@ -111,7 +111,8 @@ partial-e n = Σ_{k=0}^n recip-factorial k        -- e 的部分和
 postulate
   /-add-ℝ : (a /ℝ c) +ℝ (b /ℝ d) ≡ ((a *ℝ d) +ℝ (b *ℝ c)) /ℝ (c *ℝ d)  -- 分数加法
   /-cross-ℝ : (a *ℝ d) ≡ (b *ℝ c) → (a /ℝ c) ≡ (b /ℝ d)                 -- 交叉相乘消去
-  exp-partial-< : (n : ℕ) → partial-e n <ℝ exp oneℝ  -- exp 级数截断（定义性公理，对应 Lean exp 级数）
+  -- exp-partial-< 已降为可证明定理（2026-08-05，阶段 3 定义性公理降定理）：
+  -- partial-e-suc（严格递增）+ exp-partial-≤-ub（exp 1 是部分和上界）+ lt-≤-trans-ℝ
 ```
 
 **闭合链**：`65/24 < e` 已闭合（2026-07-31）——
@@ -147,6 +148,48 @@ postulate
 
 **已完成（e < 3 统一上界，2026-07-31）**：新增基础假设 5 条（`*-/ℝ` 标量并入分子、`div-one-ℝ` x/1=x、`lt-+-mono-r-ℝ` 加法右单调、`/-lt-same-den-ℝ` 同分母比较、`<-≤-ℝ` 严格蕴含非严格）+ 可证明引理链 `factorial-2^-4` → `recip-factorial-<-half4` → `dbl-recip`/`geo4-ident`/`geo4-lt-18` → `tail-e4-lt-geo4` → `partial-e-decomp`/`partial-e-3-value` → `partial-e-lt-67-24` → `sixtyseven-over-24-lt-3` → `e-lt-3`（Everything.agda 编译通过）。
 
+### 5.4b 阶段 3 定义性公理降定理：exp-partial-< 与 exp-tail-bound（2026-08-05）
+
+**`exp-partial-<` 降定理（v1.41）**：原"exp 级数截断"定义性公理（partial-e n < exp 1）由 postulate 降为**可证明定理**——`lt-≤-trans-ℝ`（阶段 0）组合 `partial-e-suc`（部分和严格递增，可证）+ `exp-partial-≤-ub`（exp 1 是部分和上界）⟹ partial-e n < partial-e (suc n) ≤ exp 1。零新增公理。
+
+**`exp-tail-bound` 降定理（v1.42，固定间隙路径）**：原"几何尾部上界"定义性公理（exp x < S_n(x) + x^{n+1}/(n+1)!·1/(1-x)，前提 0 ≤ x < 1）由 postulate 降为**可证明定理** `exp-tail-bound-thm`（前提严格化 0 < x < 1）。闭合链（零新增公理）：
+
+1. **逐项**（`tail-term-le`）：x^{n+1+j}/(n+1+j)! ≤ (x^{n+1}/(n+1)!)·(x/2)^j——`pow-add` 拆幂 + **`recip-factorial-strong-le`**（1/(n+1+j)! ≤ (1/(n+1)!)·(1/2^j)，ℕ 层 `factorial-strong`：(n+1)!·2^j ≤ (n+1+j)!（每个额外因子 ≥ 2）+ `natℝ-≤-embed` + `recip-≤-ℝ` + `recip-mul-split`）+ `*-≤-mono-ℝ`（基础假设）+ `div-pow`（(x/2)^j = x^j/2^j）
+2. **求和**（`tail-sum-le`）：T_n(m) ≤ 系数·geo-x(x/2,m)（归纳，逐项 + 加法保序 + 分配律反向）
+3. **geo-x (x/2)**（`geo-half-lt`）：geo-x(x/2,m) < 1/(1-x/2)（geo-x-lt 特化，div-half-pos/lt-one）
+4. **固定间隙 B'' = S_n + 系数·1/(1-x/2)**（不依赖 m）：`tail-lt-B''`（S_{n+1+m} < B''，tail-sum-le + geo-half-lt 乘正 + 加法严格）+ `partial-suc-le-B''`（k ≤ n+1 ⟹ S_k ≤ B''，部分和递增 + 1 < 1/(1-x/2)）+ `all-partial-le-B''`（∀k，ℕ 层 `≤-total` 三分 + `tail-repr` 截断减法分解 k = suc(n +ℕr (k∸(n+1)))）
+5. **sup**（`exp-le-B''`）：exp x ≤ B''（`exp-least-ub-any` 任意点级数 sup 刻画，2026-08-05 前置② 登记）
+6. **严格**（`B''-lt-B'`）：B'' < B（`recip-half-gap`：1/(1-x/2) < 1/(1-x)，x/2 < x 固定间隙，乘正 + 加法严格）⟹ exp x < B
+
+**关键设计**：绕开 sup"每项 < B 只给 sup ≤ B"的严格性缺口——固定间隙 B''（不依赖 m）使 exp x ≤ B'' 与 B'' < B 分离，`≤-lt-trans-ℝ` 收口。
+
+**基础设施（可证）**：`natℝ-zero`（natℝ 0 = 0，纯域公理）、`≤-+-mono-r-ℝ`（≤ 加法右保序，三分律）、`natℝ-≤-embed`（≤ℕ 保序嵌入）、`recip-≤-ℝ`（倒数非严格单调）、`pow-mul`/`div-pow`/`one-pow`、`nat-pow-embed`（2^j 嵌入 = (natℝ 2)^j）、`exp-partial-suc-≤`/`exp-partial-at-le`（部分和递增 ≤ 版）。
+
+**排坑**：NATTIMES 绑定下 2^ (suc j) 与 2 *ℕ 2^j 不定义性归约（`2^suc-def` 显式搬运）；`natℝ (2^j)` 与 (natℝ 2)^j 定义性不等（`nat-pow-embed` 桥接）；where 块作用域（suc-≤-inv 提升顶层）；同级运算符 20 级强制括号。
+
+使用处：`exp-lt-A-E` 改用 `exp-tail-bound-thm 3 x-29-450 x-pos-29-450 x-lt-one`（0 < x 前提）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+### 5.4c 阶段 3 定义性公理降定理：log2-series-ub（2026-08-05，固定间隙路径）
+
+**`log2-series-ub` 降定理（v1.43）**：原"log 级数上界"定义性公理（ln 2 < Σ_{k=1}^n 1/(k·2^k) + 1/((n+1)·2^n)）由 postulate 降为**可证明定理** `log2-series-ub-thm`。闭合链（零新增公理；前置登记 log 级数 sup 刻画）：
+
+1. **前置登记**（postulate，与 exp-partial-at-≤-ub/exp-least-ub-any 同层）：`log2-partial-≤-ub`（部分和 ≤ ln 2）+ `log2-least-ub-any`（ln 2 是最小上界）——ln 2 = Σ_{k≥1} 1/(k·2^k) 的级数 sup 定义（-ln(1/2) = Σ 1/(k·2^k)）
+2. **部分和递增**（`log2-partial-suc-≤`/`log2-partial-at-le`，项正）+ **分解**（`log2-decomp`：部分和 (n+1+m) = 部分和 n + 尾部）
+3. **1/2 几何机制**（全部可证）：`geo-half2-lt`（geo-x(1/2) < 2，1/(1−1/2) = 2 数值）+ `geo-shift`（错位提取公因子 x^a·geo-x x j）+ `half-pow`（(1/2)^k = 1/2^k）+ `half-pow-mul2`（(1/2)^{a+1}·2 = 1/2^a）
+4. **尾部上界**：`tail2-term-le`（1/(k·2^k) ≤ 1/((n+2)·2^k)）⟹ Σ_{k≥n+2} ≤ (1/(n+2))·1/2^{n+1}（`tail2-rest-le`/`rest-geo-ub`/`tail2-rest-ub`）⟹ 尾部总 ≤ **B''n = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})**（`log2-tail-decomp`/`tail2-le`）
+5. **固定间隙 B''n**（不依赖 m）：`tail-branch` + `log2-all-partial-le-B''`（∀m 部分和 ≤ 部分和 n + B''n）⟹ `log2-le-B''`（ln 2 ≤ 部分和 n + B''n，log2-least-ub-any）
+6. **严格**（`B''-tail-lt`：B''n < 尾界 1/((n+1)·2^n)，1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）⟹ `log2-series-ub-thm`（≤-lt-trans-ℝ）
+
+使用处：`log2-ub-447173` 改用 `log2-series-ub-thm 9`；`ln2-lt` 链保持。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+**下界侧机制（v1.44，2026-08-05，§2c''）**：log 级数下界侧收口——`log2-series-lb-thm`（部分和严格低于 ln 2，零新增公理；`log2-partial n < log2-partial (suc n)` [项正严格递增，add-pos-ℝ] `≤ ln 2` [log2-partial-≤-ub (suc n)]）+ `log2-lb-447047`（447047/645120 < ln 2，部分和 9）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120，双侧夹逼，间隙 126/645120 = 1/5120）。**log 级数机制两侧收口**：上界侧 log2-series-ub-thm（v1.43）+ 下界侧 log2-series-lb-thm（v1.44）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+**ln 级数高阶精化（v1.45，2026-08-05，§2c'''）**：利用 log2-series-ub-thm/lb-thm 对截断序 n 的均匀性——**k 阶精化 = 在 n+k 实例化**（部分和推进 k 项、尾界收紧 k 阶；k 阶上界一般形式：ln 2 < 部分和 n + Σ_{j=1}^{k} t_{n+j} + 1/((n+k+1)·2^{n+k})）。`log2-series-ub2-thm`（**v1.43 固定界 B''n = t_{n+1} + 1/((n+2)·2^{n+1}) 由"≤"严格化为"<"**：ub-thm (suc n) 移位 + 结合律展开，零新增公理）+ `log2-series-lb2-thm`（= lb-thm (suc n) 定义性展开）+ 具体二阶夹逼 `ln2-squeeze-10`（**4918210/7096320 < ln 2 < 4918840/7096320**，宽度 630/7096320 ≈ 8.9e-5，较 v1.44 的 126/645120 ≈ 2.0e-4 收窄；下界 = 部分和 10，上界 = 部分和 9 + B''n 9，通分 7096320 = 645120·11）。**T3 阶段 3 log 级数机制收官**（上界 v1.43 + 下界 v1.44 + 高阶精化 v1.45）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+**ln(16/15) 级数直接截断机制（v1.46，2026-08-05，§2c''''，base-16）**：ln(16/15) = -ln(1-1/16) = Σ_{k≥1} 1/(k·16^k) 由级数直接机制给出双侧夹逼，**独立交叉验证 ln1615-lb**（原 exp 路径外第二条机制）。机制（镜像 §2c' 的 base-16 版，零新增公理；前置登记 base-16 级数 sup 刻画 log16-partial-≤-ub/log16-least-ub-any）：**1/16 几何**（one-sub-sixteenth：1−1/16 = 15/16；recip-1615：1/(1−1/16) = 16/15；geo-16th-lt；sixteenth-pow/mul16/geo-tight：(1/16)^{n+2}·(16/15) = 1/(15·16^{n+1})；nat-pow16-embed）⟹ 尾部上界（tail16-term-le/rest-geo-ub16：剩余 < 1/(15·16^{n+1})/tail16-rest-ub/tail16-le）⟹ **固定界 B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1})**（1/15 因子是 base-16 与 base-2 之差）⟹ `log16-le-B''16`（log16-least-ub-any）⟹ 固定间隙 `B''16-lt-2t`（B''16n < 2·t_{n+1}）⟹ `log16-series-ub-thm`（ln(16/15) < 部分和 n + 2·t_{n+1}）；`log16-series-lb-thm`（部分和严格低于 ln(16/15)）。具体：**33/512 < ln(16/15) < 397/6144**（ln16-15-squeeze-2）+ **ln1615-lb-direct**（29/450 < 33/512 ⟹ 29/450 < ln(16/15)，级数路径独立验证）。**T3 阶段 3 ln 级数双侧机制完成**（ln 2 base-2 v1.43-45 + ln(16/15) base-16 v1.46）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
+**ln(16/15) 二阶精化（v1.47，2026-08-05，§2c'''''，base-16 高阶）**：镜像 v1.45 的二阶上界——`log16-series-ub2-thm`（**ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}**，二阶固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2}) 由"≤"严格化为"<"，零新增公理）。机制：**剩余移位** `log16-rest-shift`（log16-rest-sum n (suc m) = t_{n+2} + 剩余 (suc n) m，索引经 +ℕr-comm-suc）+ **二阶尾部分解** `log16-tail2-decomp`（T16_n(m≥2) = (t_{n+1}+t_{n+2}) + 剩余 (suc n) m）+ ≤-total 在 n+2 三分（tail16-branch2/log16-all-partial-le-B2''）⟹ `log16-le-B2''`（log16-least-ub-any）⟹ 固定间隙 `B2''-lt-2t2`（1/((n+3)·15·16^{n+2}) < t_{n+2}）⟹ `log16-series-ub2-thm`。具体：**33/512 < ln(16/15) < 25379/393216**（ln16-15-squeeze-2b，宽度 35/393216 ≈ 8.9e-5，较 v1.46 的 1/6144 ≈ 1.6e-4 收窄）。**T3 阶段 3 ln 级数双侧机制全面收官**（ln 2 base-2 v1.43-45 + ln(16/15) base-16 v1.46-47）。Everything.agda 全量 20 模块编译通过（exit 0）。
+
 ### 5.5 阶段 3：log/exp 微积分与 ln15 闭合（2026-07-31）
 
 **目标**：闭合 B4 末项 `ln15-lt-65-24`（ln15 ≈ 2.70805 < 65/24 ≈ 2.70833，相对间隙 ~1e-4）。
@@ -160,9 +203,9 @@ postulate
   exp-log : (x : ℝ) → exp (log x) ≡ x
   exp-zero : exp zeroℝ ≡ oneℝ
   exp-add : (x y : ℝ) → exp (x +ℝ y) ≡ exp x *ℝ exp y   -- 换底公式基础
-  ln2-lt : log (natℝ 2) <ℝ (natℝ 69317 /ℝ natℝ 100000)  -- ln2 < 0.69317（Σ 1/(k·2^k) 截断）
-  ln1615-lb : (natℝ 29 /ℝ natℝ 450) <ℝ log (natℝ 16 /ℝ natℝ 15)  -- ln(1+1/15) > 29/450（交替级数下界）
-  ln15-arith-ax : (4·(69317/100000) + neg(29/450)) <ℝ 65/24       -- 纯有理比较（scoped）
+  -- ln2-lt 已闭合（2026-08-05，log 级数机制 + 二进制 ℕ 算术）：log2-partial + log2-series-ub 定义性公理 ⟹ ln2 < 447173/645120 < 69317/100000，不再是 postulate（见 §2c 实现）
+  -- ln1615-lb 已闭合（2026-08-05，T3 级数机制）：exp 任意点级数机制 + 几何尾部界 ⟹ 29/450 < ln(16/15)，不再是 postulate（见 §2b 实现）
+  -- ln15-arith-ax 已闭合（2026-08-05，二进制 ℕ 算术 + 同分母比较）：4·(69317/100000) - 29/450 = 121870600/45000000 < 121875000/45000000 = 65/24，不再是 postulate（见 §2d 实现）
 ```
 
 **基础假设补充**（3 条，均为标准有序域的定理——**模型必然性**由"ℝ 是有序域"保证，非任意添加；与现有序域公理集独立，缺乘法保序/商消去/取负-序交互三条机制，故登记）：`*-pos-mono-ℝ`（正乘保序）、`*-/cancel-ℝ`（a·(b/a)=b，商消去）、`neg-<-ℝ`（取负保序反转）。
@@ -172,7 +215,7 @@ postulate
 
 **闭合链**：`ln15` ≡ `4log2 + log(15/16)` [ln15-decomp] < `4·(69317/100000) + log(15/16)` [four-log2-lt] < `4·(69317/100000) + neg(29/450)` [log1516-lt] < `65/24` [ln15-arith-ax]。`ln15-lt-65-24` 不再是 postulate。
 
-**关键设计决策（数值规模）**：65/24 与 ln15 的相对间隙 ~1e-4，任何有理比较需分母 ~1e5（对比 e<3 的 288 可手算）。`_*ℕ_` 定义性归一化成本 ~m·n，1e9-1e11 的交叉乘积使 Agda 检查超时（实测挂起），故纯有理比较 `ln15-arith-ax` 按 **账目开放项**（scoped 数值公理）登记——它不含 log 内容（纯有理算术），本质是**工程计算资源不足**（框架归一化能力不可达，非结构性；标准分析中可计算验证：4·0.69317 - 29/450 = 2.77268 - 0.064444 ≈ 2.7082356 < 65/24 ≈ 2.7083333），与 S0 表示静默（语义结构性不可闭合）不同。`ln2-lt`/`ln1615-lb` 为 log 级数内容（定义性公理，待阶段 3+ 级数机制实现为可证明定理），同为账目开放项。
+**关键设计决策（数值规模）**：65/24 与 ln15 的相对间隙 ~1e-4，任何有理比较需分母 ~1e5（对比 e<3 的 288 可手算）。`_*ℕ_` 定义性归一化成本 ~m·n，1e9-1e11 的交叉乘积使 Agda 检查超时（实测挂起），故纯有理比较 `ln15-arith-ax` 按 **账目开放项**（scoped 数值公理）登记——它不含 log 内容（纯有理算术），本质是**工程计算资源不足**（框架归一化能力不可达，非结构性；标准分析中可计算验证：4·0.69317 - 29/450 = 2.77268 - 0.064444 ≈ 2.7082356 < 65/24 ≈ 2.7083333），与 S0 表示静默（语义结构性不可闭合）不同。`ln2-lt` **已于 2026-08-05 经 log 级数机制 + 二进制 ℕ 算术闭合**：NatArith 的 `_+ℕ_`/`_*ℕ_` 绑定 NATPLUS/NATTIMES（内置任意精度算术，2.8e8 级交叉乘积秒级，此前 v1.35 因 OOM 失败）+ `<-add` 差递归（证明深度 = 差值而非被比较数）；`ln1615-lb` **已于 2026-08-05 经 T3 级数机制（exp-partial-at + exp-tail-bound 桥接公理）闭合为可证明定理**；`ln15-arith-ax` **已于 2026-08-05 经二进制 ℕ 算术 + 同分母比较闭合**（§2d）：`*-/ℝ` 并入分子（4·69317 = 277268）+ `neg-frac-ℝ` 取负入分子 + `/-add-ℝ` 合并为 121870600/45000000，65/24 通分 ×1875000 同分母比分子（差 4400 经 `<-add`，最大扩展因子 ~1.25e8 秒级）——**T3 阶段 3 log 级数开放项全部闭合，零剩余**。
 
 ### 5.6 阶段 4 首批：exp 正性/单调 + B7 收缩率/静默分离（2026-07-31）
 
@@ -287,7 +330,7 @@ postulate
 - `log-1-over-r` 的 subst 方向：`neg-one-ℝ-def`（neg-oneℝ ≡ negℝ oneℝ）需 `sym` 后正向替换谓词 `negℝ x ≡ oneℝ`。
 - `moran-solution-iff` 依赖 `log-nat-1-over-r`（natℝ 1 形式，经 natℝ-one），与 glued 特化的 `log-1-over-r` 独立存在。
 
-**阶段 4 最终状态**：✅ B4/B7/B8 + `glued-recursion-*` 全部闭合，Everything.agda 全量编译通过。开放项（记入账目，非阶段 4 阻断）：`ln2-lt`/`ln1615-lb`/`ln15-arith-ax`（log 级数机制）、`exp-inj`（exp 单射）。
+**阶段 4 最终状态**：✅ B4/B7/B8 + `glued-recursion-*` 全部闭合，Everything.agda 全量编译通过。开放项（记入账目，非阶段 4 阻断）：`ln2-lt`/`ln1615-lb`/`ln15-arith-ax`（log 级数机制）——**三者均已于 2026-08-05 闭合**（exp/log 级数机制 + 二进制 ℕ 算术，见 §2b/§2c/§2d），`exp-inj`（exp 单射，**已闭合 2026-08-01**：三分律 + exp-mono）。
 
 ### 5.13 阶段 5 启动：P1 谱匹配有限维特例（定理 3 退化版，2026-08-01）
 
@@ -464,7 +507,7 @@ postulate
 
 **B. 结构性限制（不可/不应"扫除"）**：funext 受限（8-5b 算子层等式版，库公理范围外）；`HigherSpCategory.lean` spExchangeLaw sorry（概念特征，填补为等式 ⇒ G_N→0 物理错误）；钉住 sup 语义（框架设计决策，已文档化 §1b）。
 
-**C. 待基础设施（可自然闭合）**：`DeviationBound.lean` 2 sorry（Mathlib `Matrix.Spectrum` 未稳定）；T3 阶段 3 scoped 数值公理（`ln2-lt`/`ln1615-lb`/`ln15-arith-ax` 类，数值比较超可手算 ℕ 链，工程计算资源不足）。
+**C. 待基础设施（可自然闭合）**：`DeviationBound.lean` 2 sorry（Mathlib `Matrix.Spectrum` 未稳定）。T3 阶段 3 scoped 数值公理（`ln2-lt`/`ln1615-lb`/`ln15-arith-ax`）——**已全部闭合（2026-08-05）**：log 级数机制 + 二进制 ℕ 算术（NATTIMES/NATPLUS + `<-add` 差递归）替代"工程计算资源不足"降路径。
 
 **D. 范畴层完备化**：RAP-5d–5f（耗散半边统一、连续谱 Lean 形式化）。
 
@@ -511,6 +554,11 @@ postulate
 - **阶段 3 第一步 ✅（v1.26，钉住解析到值级）**：`spec-int-nonneg-exp`（∫e^(-x) = 非负 sup = spec-int-exp：exp 全 ℝ 非负（exp-pos）⟹ spec-int-nonneg-consistent + spec-int-general-exp 桥接组合）+ `spec-int-nonneg-phi-t`（∫φ_t = 非负 sup = e^(-tA)：φ_t 全 ℝ 非负（phi-t-pos）+ spec-int-general-phi-t 桥接组合）——**钉住从 spec-int-general 定义级解析为"非负 sup 明确值 + 谱表示值"**（spec-int-A/-exp/e^(-tA) 本身为谱表示 postulate，是真正的基础假设；钉住残留即谱表示值，健全）。
 
 - **阶段 3 余项 ✅（v1.27，id 钉住完全解析）**：**桥接登记** `spec-int-nonneg-zero-off-support`（非负 g 在 [0,∞) 上 = 0 ⟹ ∫g dE = 0——谱支集外零贡献，模型必然性 = E-support-pos + 测度论零函数性，降定理路径 = Hilbert 层谱投影非负 + E-support-pos + sup-least）+ **可证** `spec-int-A-decomp`（spec-int-A ≡ ∫id⁺ −ₒ ∫id⁻——id 钉住桥接改写为分解形式，sym spec-int-general-id + decomp id）+ **`spec-int-general-id-pos`**（**∫id⁺ = spec-int-A**：spec-int-A-decomp + 零贡献桥接（∫id⁻ = 0：id⁻ 非负 + 在 [0,∞) = 0）+ op-sub-zero-r）——**spec-int-general-id 钉住完全解析为 id⁺ 的非负积分值（id⁺ 与 id 在 [0,∞) 相等）**。**阶段 3 收官**（三个钉住桥接全部解析：exp/φ_t 到非负 sup，id 到 id⁺ 非负积分；钉住残留 = 谱表示 postulate 值）。**待**：阶段 4（fc-poly-le-spec-int 组合替换：∫p = ∫p⁺ −ₒ ∫p⁻ 各自由非负 sup 构造化 + v1.15 幂单调性引理库 + dyadic 阶梯逼近）。
+
+- **阶段 4 组合替换 ✅（2026-08-05，v1.29-1.33 + 增量收官）**：
+  - **dyadic 阶梯基础设施（v1.29-1.33）**：`dyadic-vc`（网格点幂值，负部/正部 0）+ `dyadic-stair`（三段式 SimpleF：x<0 负部 / [0,c) dyadic 分划 / x≥c 正部）+ `dyadic-stair-below`（sₖ ≤ p⁺ 逐原子，power-mono）+ `dyadic-int-below`（∫sₖ ≤ₒ ∫p⁺）+ `stair-seq`/`stair-seq-le`（supₖ∫sₖ ≤ₒ ∫p⁺）+ **桥接登记** `stair-MCT`（∫p⁺ ≤ₒ supₖ∫sₖ，Lebesgue 单调收敛 dyadic 版）+ `stair-int-full`（∫p⁺ = supₖ∫sₖ）。
+  - **组合替换（2026-08-05）**：`mono-neg-int-zero`（∫(xⁿ)⁻ = 𝟘ₒ：谱支集 [0,∞) 上 (xⁿ)⁻ = 0 + spec-int-nonneg-zero-off-support）+ `mono-pos-eq`（∫xⁿ = ∫(xⁿ)⁺）+ `stair-fc-seq`（supₖ∫sₖ = supₖ fc(sₖ)，fc-simple-integral 替换）+ **`mono-le-any`**（**∫xⁿ ≤ₒ fc(xⁿ)，任意 n——∫ ≤ fc 方向（fc-integral-le 的单项式可证版）**：每项 fc(sₖ) = ∫sₖ ≤ₒ ∫xⁿ⁺（spec-int-mono 全 ℝ，sₖ ≤ xⁿ⁺ 逐点）≤ₒ fc(xⁿ)（fc-integral-le，可证）+ sup-op-least）。
+  - **阶段 4 状态（2026-08-05 方向核验修正）**：`mono-le-any` 方向为 **∫ ≤ fc**（与 `fc-poly-le-spec-int` 的 **fc ≤ ∫** 相反），**不构成 fc-poly-le-spec-int 构造化组件**。fc ≤ ∫ 方向（单项式原子 Aⁿ ≤ₒ ∫xⁿ）需受限 fc-mono（谱支集受限单调性）或 fc-integral（v1.34 现状）——未推进。**决策（用户："决策的标准是数学上要成立"）**：`fc-integral`（函数演算 = 谱积分）数学上恒真（自伴算子谱定理定义性内容），保持健全 D 类桥接符合标准，C1 收官；sup-add/受限 fc-mono 均数学上成立，可后续再登记推进。
 
 - **阶段 4 第一/二步 ✅（v1.28，fc 侧分解组件）**：`fn-sub`（函数减法定义：(f−g)(x) = f x −ℝ g x）+ **可证** `fc-sub`（**fc 保减法**：fc(f−g) ≡ fc f −ₒ fc g——fn-sub 点态展开（sub-ℝ-def + fc-ext）+ fc-add + fc-scalar-mul（−1 标量）+ _−ₒ_ 定义）+ **`fc-decomp-pos-neg`**（**fc 正负分解**：fc(p) ≡ fc(p⁺) −ₒ fc(p⁻)——fc-ext（p = p⁺ − p⁻ 逐点，decomp-pos-neg）+ fc-sub）——**fc(p) 分解为两个非负函数 p⁺/p⁻ 的 fc**，fc-poly-le-spec-int 构造化（fc(p) ≤ₒ ∫p⁺ −ₒ ∫p⁻，各自由非负 sup 逼近）的 fc 侧前置。
 

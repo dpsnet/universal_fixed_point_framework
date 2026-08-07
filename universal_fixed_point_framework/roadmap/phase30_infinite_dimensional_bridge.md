@@ -18,7 +18,7 @@
 
 ## Phase 30.1：数值收敛性验证（✅ 已完成）
 
-`paper30_infinite_dimensional_bridge.py` 量化了五个关键收敛方向：
+`scripts/paper30_infinite_dimensional_bridge.py` 量化了五个关键收敛方向：
 
 | # | 收敛方向 | 有限维量 | 无限极限 | 收敛率 | 状态 |
 |---|---------|---------|---------|-------|------|
@@ -84,7 +84,7 @@
 
 ## Phase 30.4：A∞ / ∞-范畴结构的无限维推广（✅ 已完成）
 
-**Paper 35**：`paper35_infinity_category_infinite_dim.py`（6/6 通过 ✅）
+**Paper 35**：`scripts/paper35_infinity_category_infinite_dim.py`（6/6 通过 ✅）
 
 ### 动机
 
@@ -167,12 +167,12 @@ Phase 36–37 在 Phase 30 建立的无限维框架基础上，将所有半涌�
 
 ### Phase 36：谱间隙 Δλ_min 第一性原理推导（✅ 已完成）
 
-**Paper 36**：`paper36_spectral_gap_derivation.py`（7/7 通过 ✅）
+**Paper 36**：`scripts/paper36_spectral_gap_derivation.py`（7/7 通过 ✅）
 
 利用 Phase 30.2（C* 代数框架）和 Phase 30.3（无界算子理论）建立的无限维语言：
 
 - A_GR 的 SU(2) 表示 → λ_k ∝ √(k(k+1)) 谱
-- Cl(1,7) ≅ M_8(R) 代数维数 → k_max = 8
+- Cl(1,7) ≅ M_8(R) 代数维数 → k_max = 8【2026-08-07 勘误：Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)（非 M₈(ℝ)），代数维数 256、旋量维数 16；k_max=8 来自 Bott 截断/谱模数】
 - Δλ_min = (√6−√2)/√72 = 0.122 M_Pl（解析闭式）
 
 | 导出常数 | 公式 | 值 |
@@ -186,7 +186,7 @@ Phase 36–37 在 Phase 30 建立的无限维框架基础上，将所有半涌�
 
 ### Phase 37：IFS 重叠因子 ρ 第一性原理推导（✅ 已完成）
 
-**Paper 37**：`paper37_ifs_overlap_derivation.py`（7/7 通过 ✅）
+**Paper 37**：`scripts/paper37_ifs_overlap_derivation.py`（7/7 通过 ✅）
 
 利用 Cl(1,7) 旋量表示的子空间正交结构：
 

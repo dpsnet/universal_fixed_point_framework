@@ -78,9 +78,9 @@ Phase 27 完成谱动力学四深化方向，Phase 28 完成奇点谱消解数�
 **目标**：
 - 从谱流方程出发，在连续谱极限下证明熵产生率非负
 - 建立与第 2 类热力学第二定律的严格对应
-- 数值验证（扩展 `paper22_spectral_entropy.py`）
+- 数值验证（扩展 `scripts/paper22_spectral_entropy.py`）
 
-**交付物**：`paper29_entropy_production_proof.py` + `notes/` 更新
+**交付物**：`scripts/paper29_entropy_production_proof.py` + `notes/` 更新
 
 **状态**：✅ 完成
 

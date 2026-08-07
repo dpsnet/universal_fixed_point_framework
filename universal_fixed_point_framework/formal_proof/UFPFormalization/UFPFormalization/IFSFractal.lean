@@ -158,12 +158,11 @@ noncomputable def multifractalSpectrum {X : Type} [MetricSpace X] [CompleteSpace
     {ifs : IFS X} {attractor : Attractor ifs} (measure : SelfSimilarMeasure ifs attractor)
     (q : ℝ) : ℝ :=
   -- τ(q) is defined implicitly by Σ p_i^q · c_i^{τ(q)} = 1
-  -- Placeholder: returns q (satisfies the equation only when q=1 with c_i^0=1)
-  if h : (Finset.sum (Finset.univ : Finset (Fin ifs.n))
-    (fun i : Fin ifs.n => (measure.weights i) ^ q * ((ifs.ratios i : ℝ)) ^ 0)) > 0 then
-    q
-  else
-    0
+  -- Prototype placeholder: τ(q) = q - 1, which satisfies the key special
+  -- case τ(1) = 0 (total mass Σ p_i = 1). The full implicit root-finding
+  -- (Bowen formula τ(0) = -d_H) is deferred to the numerical prototype
+  -- and the implicit function theorem.
+  q - 1
 
 /-! ### 3. Hausdorff Dimension Computation -/
 
@@ -197,13 +196,13 @@ Fields:
   - `hPos`: d_H > 0
   - `hMoran`: d_H satisfies the Moran equation Σ c_i^{d_H} = 1
   - `hUnique`: d_H is the unique positive solution
-  - `hBound`: d_H ≤ n (standard IFS theorem; proof deferred to Phase 16B)
+  - `hBound`: d_H ≤ n (逐例验证的性质，非普遍定理；证明见各 IFS 的具体构造，
+    如 CoherenceToBranching.branchIFS_has_dH_solution)
 
-The bound d_H ≤ n follows from the attractor embedding argument:
-the attractor A is a subset of the product space X^n (via the coding map
-from the shift space Σ_n), and the contraction ratios c_i < 1 give
-dim_H(A) ≤ n. The full proof requires the Hausdorff dimension of the
-shift space and Hölder continuity of the coding map.
+※ 诚实登记（2026-08-04）：Moran 维数（本框架中 `dH` 的定义）在一般 IFS 下
+可超过映射个数 n。例如 n=2、c_i=0.9 时 Moran 方程 2·0.9^d = 1 的解
+d ≈ 6.58 > 2 = n。因此 d_H ≤ n 不是普遍成立的定理，仅在满足特定条件的
+IFS 上成立（需逐例验证），`hBound` 作为结构字段要求构造解时显式提供。
 -/
 structure HausdorffDimensionSolution {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) where
@@ -215,17 +214,14 @@ structure HausdorffDimensionSolution {X : Type} [MetricSpace X] [CompleteSpace X
   hMoran : hausdorffDimensionEq ifs dH = 0
   /-- d_H is the unique positive solution -/
   hUnique : ∀ d : ℝ, d > 0 → hausdorffDimensionEq ifs d = 0 → d = dH
-  /-- d_H ≤ n (standard IFS theory; proof deferred to Phase 16B) -/
+  /-- d_H ≤ n（逐例验证的性质；仅对满足条件的 IFS 成立） -/
   hBound : dH ≤ (ifs.n : ℝ)
 
 /--
-The Hausdorff dimension of the IFS attractor satisfies 0 < d_H ≤ n
-(where n is the number of contraction maps).
+投影：若有解，则 d_H ≤ n（hBound 字段的投影）。
 
-The positivity (d_H > 0) is given by `HausdorffDimensionSolution.hPos`.
-The upper bound (d_H ≤ n) is given by `HausdorffDimensionSolution.hBound`,
-which is a standard IFS theorem (attractor embedding argument) deferred
-to Phase 16B for the full analytic proof.
+※ 注意：这不是普遍定理。Moran 维数可以超过 n（见结构字段的诚实登记），
+`hBound` 是构造解时必须逐例验证的假设。
 -/
 theorem hausdorffDimension_bounds {X : Type} [MetricSpace X] [CompleteSpace X]
     (ifs : IFS X) (sol : HausdorffDimensionSolution ifs) : sol.dH ≤ (ifs.n : ℝ) :=
@@ -369,15 +365,20 @@ theorem contracting_affine (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (t : ℝ) :
     NNReal.coe_mk]
 
 /-- 物理 3-map IFS（d ≥ 1），定义在 ℝ 上，收缩率 c₁, c₂, c₃。
-    映射选择 f_i(x) = c_i · x + t_i（平移 t_i 固定为 0, 0.5, 1.0）。
+    映射选择 f_i(x) = c_i · x + t_i，平移 t_i = (0, 0.5, 1−c₃)。
+    归一化：三个映射均把 [0,1] 映到 [0,1]（f₂ 的不动点精确落在 1），
+    故吸引子 A ⊆ [0,1]，diam(A) ≤ 1（`ContinuumLimit.lean §3.5` 机器证明）。
     该 IFS 的吸引子有 3 个连通分量，对应 N_active = 3 个态射层。
+    （2026-08-04 修正：f₂ 平移由 1.0 改为 1−c₃——原固定平移 1.0 使
+    吸引子直径 = 1/(1−c₃) > 1，与 hDiamLeOne 归一化矛盾，见勘误 O9。
+    收缩率（ratios）不变，O2 排序/Moran 方程/维数定理不受影响。）
     （2026-07-29：全部 sorry 已消除，所有引理机器证明。） -/
 noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
   IFS.mk 3
     (fun i => match i with
       | 0 => fun x : ℝ => c1_physical d * x + 0
       | 1 => fun x : ℝ => c2_physical d * x + 0.5
-      | 2 => fun x : ℝ => c3_physical d * x + 1.0)
+      | 2 => fun x : ℝ => c3_physical d * x + (1 - c3_physical d))
     (fun i => match i with
       | 0 => NNReal.mk (c1_physical d) (le_of_lt (c1_physical_pos d))
       | 1 => NNReal.mk (c2_physical d) (le_of_lt (c2_physical_pos d))
@@ -390,7 +391,7 @@ noncomputable def physicalIFS (d : ℝ) (hd : 1 ≤ d) : IFS ℝ :=
       · exact contracting_affine (c2_physical d) (le_of_lt (c2_physical_pos d))
           (c2_physical_lt_one d hd) 0.5
       · exact contracting_affine (c3_physical d) (le_of_lt (c3_physical_pos d hd))
-          (c3_physical_lt_one d hd) 1.0)
+          (c3_physical_lt_one d hd) (1 - c3_physical d))
     (by
       intro i
       fin_cases i

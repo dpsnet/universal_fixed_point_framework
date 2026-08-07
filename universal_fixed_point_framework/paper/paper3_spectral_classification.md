@@ -160,7 +160,7 @@ $$S_{\text{BH}} = \dim_{\text{spec}} D(R_{\text{BH}})$$
 
 ### 4.5 数值验证（BPS 黑洞谱匹配）
 
-定理 4.3（IC 全覆盖）的物理案例已验证：BPS 黑洞拉伸视界与 D-brane 两种描述的谱等价性。验证脚本 [`paper3_bps_spectral_verification.py`](../../paper3_bps_spectral_verification.py) 计算 $D(R_{\text{str}})$ 与 $D(R_{\text{dbr}})$ 的 Koopman 算子谱，结果：
+定理 4.3（IC 全覆盖）的物理案例已验证：BPS 黑洞拉伸视界与 D-brane 两种描述的谱等价性。验证脚本 [`scripts/paper3_bps_spectral_verification.py`](../scripts/paper3_bps_spectral_verification.py) 计算 $D(R_{\text{str}})$ 与 $D(R_{\text{dbr}})$ 的 Koopman 算子谱，结果：
 
 | 检验项 | 结果 |
 |--------|------|
@@ -292,7 +292,7 @@ Cl ───→ D(Cl) ──┤     谱等价！
 - 三层谱分类完备性定理（定理 4.1-4.3）
 - 跨领域 IC 全覆盖定理（定理 4.3）
 - 15/19 个 Lean 4 形式化模块零 `sorry` 完成机器核验
-- BPS 黑洞谱匹配数值验证（`paper3_bps_spectral_verification.py`，谱距离 0.00）
+- BPS 黑洞谱匹配数值验证（`scripts/paper3_bps_spectral_verification.py`，谱距离 0.00）
 - §4.4 形式化验证状态（19 模块，~3,700 行）
 - §4.5 数值验证（BPS 黑洞参数扫描 M = 0.5 ~ 10.0 全部通过）
 
