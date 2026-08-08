@@ -34,6 +34,7 @@
   M5 长7段 TOC-生烃潜量线性正相关（10 样品）：线性回归 R^2 + 夹层识别（CY-04/CY-07 低 TOC 夹层）
   M6 跨盆地干酪根降解谱流（合并 18 样品）：青山口（高成熟 Tmax~446）HI 中位数 vs 长7段（低成熟 Tmax~441）
   M7 Thomeer 双孔隙 HPMI 分形（单样品 118 点，GitHub 公开数据）：整体+两段压汞分形，双孔隙两段证据
+  M8 B1 修正标定（长7段 10 样品）：替代标度"可动油比例 ≈ 已生烃指数 S1/TOC"线性注入 vs 幂律 α=d_f-1
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -352,6 +353,38 @@ def check_m7():
     return ok
 
 
+def check_m8():
+    """M8 B1 修正标定（长7段 10 样品）：替代标度"可动油比例 ≈ 已生烃指数 S1/TOC"
+    B1 原候选 S_o ∝ f_s^α（α = d_f-1）量级偏低被否（S_o∈[0.006,0.190] vs 文献锚点 [0.2,0.6]）。
+    M5 实证 TOC-生烃潜量完美线性（R^2=0.999）提示系统为"线性注入"而非幂律标度。
+    替代标度：可动油比例（代理 = 已生烃指数 S1/TOC），量级应与文献可动油锚点 [L2]（20%-60%）重叠。
+    """
+    csv_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    if not os.path.exists(csv_path):
+        print("M8 B1 修正标定：数据文件缺失 -> 失败")
+        return False
+    with open(csv_path, "r") as f:
+        rows = list(csv.DictReader(f))
+    n = len(rows)
+    toc = np.array([float(r["TOC_wt"]) for r in rows])
+    s1 = np.array([float(r["S1_mgg"]) for r in rows])
+    # 线性注入标定：S1 = beta*TOC + intercept
+    slope, intercept = np.polyfit(toc, s1, 1)
+    y_pred = slope * toc + intercept
+    r2 = 1 - np.sum((s1 - y_pred) ** 2) / np.sum((s1 - s1.mean()) ** 2)
+    # 替代标度量级：S1/TOC（已生烃指数）应覆盖文献可动油锚点
+    s1_toc = s1 / toc
+    lo = float(s1_toc.min())
+    hi = float(s1_toc.max())
+    overlap = hi > LIT_SO_RANGE[0] and lo < LIT_SO_RANGE[1]
+    ok = r2 > 0.9 and overlap
+    print("M8 B1 修正标定（长7段 %d 样品）：线性注入 S1=%.2f*TOC%+.2f（R^2=%.3f）；"
+          "替代标度 S1/TOC∈[%.3f,%.3f] vs 文献可动油锚点[%.2f,%.2f] %s -> %s"
+          % (n, slope, intercept, r2, lo, hi, LIT_SO_RANGE[0], LIT_SO_RANGE[1],
+             "重叠" if overlap else "无重叠", "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -452,14 +485,14 @@ def check_b3():
 
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
-               check_m5(), check_m6(), check_m7(),
+               check_m5(), check_m6(), check_m7(), check_m8(),
                check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
     print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；M3 用 [L2] 排序锚定；")
     print("         M4-M6 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；M7 用 Thomeer 双孔隙单曲线；")
-    print("         B1/M2 负结果已登记。")
+    print("         M8 用长7段真实数据修正 B1 标度（线性注入 S1/TOC）；M2/B1 原候选负结果已登记。")
 
 
 if __name__ == "__main__":
