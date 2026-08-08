@@ -2,7 +2,7 @@
 
 **版本**：v0.3（2026-07-22）
 
-**摘要**：本笔记将 Clifford 代数签名空间 $(p,q)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Sig}$，构造签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$。核心成果包括：(1) $\mathbf{Sig}$ 是签名对 $(p,q)$ 的范畴，态射为块嵌入 $\mathrm{Cl}(p,q) \hookrightarrow \mathrm{Cl}(p',q')$；(2) 投影 $\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化——Cartan 提升由 Bott 周期的块嵌入诱导；(3) 三重投影表统一为三个基变更函子，共享 $M_{16} \cong M_8 \otimes M_2$ 张量积分解和 $\iota\dashv\pi$ 伴随结构；(4) **深入分析**发现：Bott 塔无限层级、三重投影可能是 Level 4 静默的推论而非独立假说、Bott 塔与 RG 流之间存在深层对应。
+**摘要**：本笔记将 Clifford 代数签名空间 $(p,q)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Sig}$，构造签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$。核心成果包括：(1) $\mathbf{Sig}$ 是签名对 $(p,q)$ 的范畴，态射为块嵌入 $\mathrm{Cl}(p,q) \hookrightarrow \mathrm{Cl}(p',q')$；(2) 投影 $\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化——Cartan 提升由 Bott 周期的块嵌入诱导；(3) 三重投影表统一为三个基变更函子，共享 $M_{16} \cong M_8 \otimes M_2$ 张量积分解和 $\iota\dashv\pi$ 伴随结构；【2026-08-07 勘误：按 paper20，Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16）、Cl(9,1) ≅ M₃₂(ℝ)，故 Cl(9,1)→Cl(1,7) 投影的分解应为 M₃₂(ℝ) ≅ M₁₆(ℝ) ⊗ M₂(ℝ)，"M₁₆ ≅ M₈ ⊗ M₂"系旧框架表述】(4) **深入分析**发现：Bott 塔无限层级、三重投影可能是 Level 4 静默的推论而非独立假说、Bott 塔与 RG 流之间存在深层对应。
 
 **前置依赖**：[`Clifford.lean`](../../formal_proof/UFPFormalization/UFPFormalization/Clifford.lean)（Cl(1,7) 结构定理）、[`IsolationConstraints.lean`](../../formal_proof/UFPFormalization/UFPFormalization/IsolationConstraints.lean)（IC 条件）、`spectral_Grothendieck_fibration.md`（纤维化模板）。
 
@@ -25,7 +25,7 @@
 | 签名 | Clifford 代数 | 表示维数 | 物理意义 |
 |:----|:-------------|:--------:|:--------|
 | $(1,3)$ | $\mathrm{Cl}(1,3) \cong \mathrm{M}_2(\mathbb{H})$ | 4 | 闵氏时空 |
-| $(1,7)$ | $\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$ | 8 | 谱间隙截止 ($k_{\max}=8$) |
+| $(1,7)$ | $\mathrm{Cl}(1,7) \cong \mathrm{M}_8(\mathbb{R})$ | 8 | 谱间隙截止 ($k_{\max}=8$)【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（代数维数 256，旋量维数 16），"M₈/8 维"系旧遗留，"8"仅指 k_max=8（Bott 截断/谱模数）；Cl(9,1) 相应为 M₃₂(ℝ)/32】 |
 | $(9,1)$ | $\mathrm{Cl}(9,1) \cong \mathrm{M}_{16}(\mathbb{R})$ | 16 | 弦论/终极理论 |
 
 ---
@@ -54,7 +54,7 @@
 
 ## 3. IC 三重投影的基变更
 
-### 3.1 共享结构：$M_{16} \cong M_8 \otimes M_2$ 张量积分解
+### 3.1 共享结构：$M_{16} \cong M_8 \otimes M_2$ 张量积分解【2026-08-07 勘误：本节及后文（§3.3 几何类比图、§6 方向 1）的 M₁₆ ≅ M₈ ⊗ M₂ 分解系旧框架（M₈ 对应 Cl(1,7)）；按 paper20，Cl(1,7) ≅ M₁₆(ℝ)、Cl(9,1) ≅ M₃₂(ℝ)，对应分解应为 M₃₂(ℝ) ≅ M₁₆(ℝ) ⊗ M₂(ℝ)，投影 π = id⊗Tr 作用于 M₁₆ 因子】
 
 Cl(9,1) → Cl(1,7) 的精确投影不是任意的折叠，而是由 Bott 周期律确定的张量积分解：
 
@@ -191,7 +191,7 @@ IC 条件的纤维范畴翻译 (精确化)
 $M_{16} \cong M_8 \otimes M_2$ 的结构不是一对一的。Bott 周期给出一个**无限塔**：
 
 ```
-Level 0:  Cl(1,7)   ≅  M₈(ℝ)       8 维
+Level 0:  Cl(1,7)   ≅  M₈(ℝ)       8 维【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16），Bott 塔维数整体上移一档：Level 1 相应为 Cl(9,1) ≅ M₃₂(ℝ) 32 维；"8 维"系旧遗留，"8"仅指 k_max=8】
 Level 1:  Cl(9,1)   ≅  M₁₆(ℝ)     16 维 = 8 × 2
 Level 2:  Cl(17,1)  ≅  M₃₂(ℝ)     32 维 = 16 × 2
 Level 3:  Cl(25,1)  ≅  M₆₄(ℝ)     64 维

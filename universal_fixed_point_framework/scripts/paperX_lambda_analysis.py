@@ -19,7 +19,7 @@ lam = lam / lam[-1]
 DL = lam[1] - lam[0]           # Δλ_min ≈ 0.122
 DLsq = DL**2                    # Δλ² ≈ 0.0149
 d_H = 2.7095
-eps = 8.12e-17                  # 谱交织精度
+eps = 8.12e-17                  # 谱交织精度框架观测值（2026-08-07：推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 8.07e-17，N_Weyl=4 = 4D Weyl 数（RAP3 机器证明）；观测值未变，偏差 0.6%）
 r_cat = 0.040391                # ‖Δ‖_F²/Δλ² (from MC)
 r_cat_DLsq = r_cat * DLsq       # E[‖Δ‖_F²] ≈ 0.0006
 S3 = np.exp(-3)                 # 对象静默因子 ≈ 0.05

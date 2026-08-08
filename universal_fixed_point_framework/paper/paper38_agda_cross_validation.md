@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.4（2026-08-05）
+**版本**：v0.8（2026-08-05）
 
-**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 `lake build` 2454 jobs **零 `sorry` 零 `axiom`**）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，20 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。2026-08-05 继续推进 **T3 定义性公理降定理**：`exp-partial-<`（v1.41）、`exp-tail-bound`（v1.42，固定间隙路径）与 `log2-series-ub`（v1.43，固定间隙路径）由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画），同时 C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零；**log 级数下界侧机制**（v1.44）收口——部分和严格低于 ln 2（`log2-series-lb-thm`）并与上界侧形成双侧夹逼（447047/645120 < ln 2 < 447173/645120）。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
+**摘要**：本文系统说明 UFPF 形式化验证体系的 **Agda 独立重形式化**（路径 B）：目的、完成情况、与 Lean 4 主实现的双实现一致性，以及诚实标注的边界与剩余开放项。UFPF 的形式化验证采用**双实现协议**——Lean 4（CIC，`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 `lake build` 2454 jobs **零 `sorry` 零 `axiom`**）为主实现，Agda（Martin-Löf 依赖类型论，`agda_formalization/`，20 模块）为独立验证路径。纯结构部分（层双射、计数、Moran 方程绑定、层独立性、维数分解、伴随构造）在 Agda 中**直接证明**；ℝ 实数公理与解析定理以 `postulate` 声明（对应 Lean 侧 Mathlib 分析库，属于框架基础假设层）。2026-07-31 完成核心 8 模块（B1-B8）独立重形式化；随后按闭合路线图持续推进 T3 谱定理层，至 2026-08-03（v1.36）技术债清单 A 类（实质可闭合项）**全闭合**：E-σ-add 收敛、spec-int 单调收敛定理（MCT）构造化、fc-poly-le-spec-int 构造化（方案 A 收官，含依赖循环解决）、跨层谱对象映射（A/E/fc/exp-tA）完整闭合。2026-08-05 继续推进 **T3 定义性公理降定理**：`exp-partial-<`（v1.41）、`exp-tail-bound`（v1.42，固定间隙路径）与 `log2-series-ub`（v1.43，固定间隙路径）由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画），同时 C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零；**log 级数下界侧机制**（v1.44）收口——部分和严格低于 ln 2（`log2-series-lb-thm`）并与上界侧形成双侧夹逼（447047/645120 < ln 2 < 447173/645120）；**ln 级数高阶精化**（v1.45）——k 阶精化 = 在 n+k 实例化，二阶夹逼 4918210/7096320 < ln 2 < 4918840/7096320；**ln(16/15) 级数直接截断机制**（v1.46，base-16）——级数路径独立交叉验证 ln1615-lb（29/450 < ln(16/15)），具体夹逼 33/512 < ln(16/15) < 397/6144；**ln(16/15) 二阶精化**（v1.47，base-16 高阶）——二阶夹逼 33/512 < ln(16/15) < 25379/393216，T3 阶段 3 ln 级数双侧机制全面收官。`Everything.agda` 全量类型检查通过。本文逐项区分"可证 / 桥接登记 / 基础假设 / 待基础设施 / 结构性限制"，避免绝对化表述。
 
 ---
 **记号与引用**：本文引用 RAP-Errata v0.10（宣称基线）。Agda 代码位于 `agda_formalization/`（`Everything.agda` 整体编译 exit=0）。本文自包含：路径 B 闭合账目、技术债分类（A/B/C/D）与推导要点均已内嵌正文，不依赖外部笔记或路线图文档。
@@ -114,6 +114,9 @@ UFPF 的核心定理此前仅在 Lean 4 中形式化。Lean 4 是**单一实现*
 | v1.42 | **exp-tail-bound 降定理（固定间隙路径）** | 原"几何尾部上界"定义性公理由 postulate 降为可证明定理 `exp-tail-bound-thm`：逐项 `tail-term-le`（pow-add + 阶乘强估计 factorial-strong + recip-≤-ℝ + div-pow）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''**（∀k 部分和 ≤ S_n + 系数·1/(1-x/2)，ℕ 层 ≤-total/tail-repr 三分 + 部分和递增）⟹ exp x ≤ B''（exp-least-ub-any）⟹ B'' < B（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。**零新增公理** |
 | v1.43 | **log2-series-ub 降定理（固定间隙路径）** | 原"log 级数上界"定义性公理由 postulate 降为可证明定理 `log2-series-ub-thm`：前置登记 log 级数 sup 刻画（log2-partial-≤-ub/log2-least-ub-any）+ 部分和递增 + `log2-decomp` + **1/2 几何机制**（geo-x(1/2) < 2（1/(1−1/2) = 2）、geo-shift 错位提取公因子、half-pow）⟹ 尾部上界（tail2-term-le：1/(k·2^k) ≤ 1/((n+2)·2^k)）⟹ **固定间隙 B''n** = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})（∀m 部分和 ≤ 部分和 n + B''n）⟹ ln 2 ≤ B''n（log2-least-ub-any）⟹ B''n < 尾界（1/(n+2) < 1/(n+1) 固定间隙）⟹ ln 2 < 部分和 n + 尾界。**零新增公理** |
 | v1.44 | **log 级数下界侧机制** | log 级数机制两侧收口——`log2-series-lb-thm`（部分和严格低于 ln 2：项正严格递增 log2-partial-suc-< + log2-partial-≤-ub (suc n)，lt-≤-trans-ℝ）+ `log2-lb-447047`（447047/645120 < ln 2，部分和 9）+ `ln2-squeeze-9`（447047/645120 < ln 2 < 447173/645120 双侧夹逼，间隙 126/645120 = 1/5120）。**零新增公理**（sup 刻画前置登记 v1.43） |
+| v1.45 | **ln 级数高阶精化** | 利用 log2-series-ub-thm/lb-thm 对截断序 n 的均匀性——**k 阶精化 = 在 n+k 实例化**（k 阶上界：ln 2 < 部分和 n + Σ_{j=1}^{k} t_{n+j} + 1/((n+k+1)·2^{n+k})）。`log2-series-ub2-thm`（v1.43 固定界 B''n 由"≤"严格化为"<"：ub-thm (suc n) 移位 + 结合律）+ `log2-series-lb2-thm`（= lb-thm (suc n) 展开）+ `ln2-squeeze-10`（4918210/7096320 < ln 2 < 4918840/7096320，宽度 630/7096320 ≈ 8.9e-5，较 v1.44 收窄）。**零新增公理** |
+| v1.46 | **ln(16/15) 级数直接截断机制（base-16）** | ln(16/15) = Σ_{k≥1} 1/(k·16^k) 级数直接机制（镜像 §2c' 的 base-16 版：前置登记 log16 sup 刻画 + 1/16 几何（1/(1−1/16) = 16/15）+ 固定界 B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1}) + 固定间隙 B''16n < 2·t_{n+1}）⟹ `log16-series-ub/lb-thm` + 具体夹逼 `ln16-15-squeeze-2`（33/512 < ln(16/15) < 397/6144）+ **`ln1615-lb-direct`（29/450 < ln(16/15) 级数路径独立交叉验证，原 ln1615-lb 为 exp 路径）**。**零新增公理** |
+| v1.47 | **ln(16/15) 二阶精化（base-16 高阶）** | 镜像 v1.45——`log16-series-ub2-thm`（**ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}**，二阶固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2}) 由"≤"严格化为"<"；剩余移位 log16-rest-shift + 二阶尾部分解 log16-tail2-decomp + ≤-total 在 n+2 三分 + 固定间隙）+ 具体二阶夹逼 `ln16-15-squeeze-2b`（33/512 < ln(16/15) < 25379/393216）——**T3 阶段 3 ln 级数双侧机制全面收官**。**零新增公理** |
 
 ### 4.4 关键技术决策
 
@@ -145,6 +148,9 @@ exp 级数机制层定义性公理持续降为可证明定理（零新增公理�
 2. ~~**`exp-tail-bound`（v1.42）**~~——✅ **已降为可证明定理** `exp-tail-bound-thm`（0 < x < 1）：**固定间隙路径**——逐项 `tail-term-le`（pow-add + 阶乘强估计 `factorial-strong`：(n+1)!·2^j ≤ (n+1+j)!（每个额外因子 ≥ 2，几何公比折半 x/2）+ `recip-factorial-strong-le` + `recip-≤-ℝ` + `div-pow`）⟹ `tail-sum-le`（T_n(m) ≤ 系数·geo-x(x/2,m)）⟹ `geo-half-lt`（geo-x(x/2) < 1/(1-x/2)）⟹ **固定间隙 B''** = S_n + 系数·1/(1-x/2)（不依赖 m：`all-partial-le-B''`，ℕ 层 `≤-total` 三分 + `tail-repr` 截断减法分解 + 部分和递增）⟹ `exp-le-B''`（exp-least-ub-any 任意点级数 sup 刻画）⟹ `B''-lt-B'`（recip-half-gap 乘正，sup 保持严格）⟹ exp x < B。
 3. ~~**`log2-series-ub`（v1.43）**~~——✅ **已降为可证明定理** `log2-series-ub-thm`：前置登记 log 级数 sup 刻画（`log2-partial-≤-ub`/`log2-least-ub-any`，与 exp 侧同层）——**固定间隙路径**——部分和递增 + `log2-decomp` + **1/2 几何机制**（`geo-half2-lt`：geo-x(1/2) < 2（1/(1−1/2) = 2 数值）、`geo-shift` 错位提取公因子、`half-pow`）⟹ 尾部上界（`tail2-term-le`：1/(k·2^k) ≤ 1/((n+2)·2^k)，剩余 ≤ 1/((n+2)·2^{n+1})）⟹ **固定间隙 B''n** = 1/((n+1)·2^{n+1}) + 1/((n+2)·2^{n+1})（`tail-branch` + `log2-all-partial-le-B''`）⟹ ln 2 ≤ 部分和 n + B''n（log2-least-ub-any）⟹ B''n < 尾界（1/(n+2) < 1/(n+1) 固定间隙 + 分数对消）⟹ ln 2 < 部分和 n + 尾界。
 4. ~~**log 级数下界侧机制（v1.44）**~~——✅ **已闭合**：`log2-series-lb-thm`（部分和严格低于 ln 2：项正严格递增 `log2-partial-suc-<` + `log2-partial-≤-ub (suc n)`，lt-≤-trans-ℝ）+ `log2-lb-447047`（447047/645120 < ln 2）+ `ln2-squeeze-9`（双侧夹逼，间隙 126/645120 = 1/5120）——log 级数机制两侧收口（上界侧 v1.43 + 下界侧 v1.44），**零新增公理**。
+5. ~~**ln 级数高阶精化（v1.45）**~~——✅ **已闭合**：利用 ub-thm/lb-thm 对截断序 n 的均匀性，**k 阶精化 = 在 n+k 实例化**——`log2-series-ub2-thm`（v1.43 固定界 B''n 由"≤"严格化为"<"，ub-thm (suc n) 移位 + 结合律）+ `log2-series-lb2-thm` + `ln2-squeeze-10`（4918210/7096320 < ln 2 < 4918840/7096320，宽度 630/7096320 ≈ 8.9e-5）——**T3 阶段 3 log 级数机制收官**，**零新增公理**。
+6. ~~**ln(16/15) 级数直接截断机制（v1.46，base-16）**~~——✅ **已闭合**：ln(16/15) = Σ_{k≥1} 1/(k·16^k) 级数直接机制（镜像 §2c' 的 base-16 版：前置登记 log16 sup 刻画 + 1/16 几何（1/(1−1/16) = 16/15）+ 固定界 B''16n + 固定间隙 B''16n < 2·t_{n+1}）⟹ `log16-series-ub/lb-thm` + 具体夹逼 `ln16-15-squeeze-2`（33/512 < ln(16/15) < 397/6144）+ **`ln1615-lb-direct`（29/450 < ln(16/15) 级数路径独立交叉验证，原 ln1615-lb 为 exp 路径）**——**T3 阶段 3 ln 级数双侧机制完成**，**零新增公理**。
+7. ~~**ln(16/15) 二阶精化（v1.47，base-16 高阶）**~~——✅ **已闭合**：`log16-series-ub2-thm`（ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}，二阶固定界 B2''16n 严格化；剩余移位 log16-rest-shift + 二阶尾部分解 log16-tail2-decomp + ≤-total 在 n+2 三分 + 固定间隙）+ `ln16-15-squeeze-2b`（33/512 < ln(16/15) < 25379/393216）——**T3 阶段 3 ln 级数双侧机制全面收官**，**零新增公理**。
 
 ### 5.3 结构性障碍：R11 有限维态射层（S0 表示静默）
 
@@ -160,7 +166,7 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 2. 纯结构核心（B1-B8 组合/代数/集合结构）直接证明，无 postulate 依赖。
 3. 谱匹配核心（theorem3/corollary4-∞/corollary5/P1-linear-closure）零桥接依赖完全可证。
 4. 技术债清单 A 类（实质可闭合项）全闭合：E-σ-add 收敛、spec-int MCT、fc-poly-le-spec-int（方案 A）、谱对象映射（A/E/fc/exp-tA）。
-5. T3 定义性公理降定理推进（2026-08-05）：`exp-partial-<`、`exp-tail-bound`、`log2-series-ub` 由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画）；**log 级数下界侧机制（v1.44）**收口（log2-series-lb-thm + 双侧夹逼 ln2-squeeze-9）；C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。
+5. T3 定义性公理降定理推进（2026-08-05）：`exp-partial-<`、`exp-tail-bound`、`log2-series-ub` 由 postulate 降为可证明定理（零新增公理；前置登记 exp/log 级数 sup 刻画）；**log 级数下界侧机制（v1.44）**收口（log2-series-lb-thm + 双侧夹逼 ln2-squeeze-9）；**ln 级数高阶精化（v1.45）**（k 阶 = n+k 实例化，二阶夹逼 ln2-squeeze-10，T3 阶段 3 log 级数机制收官）；**ln(16/15) 级数直接截断机制（v1.46，base-16）**（log16-series-ub/lb-thm + ln16-15-squeeze-2 + ln1615-lb-direct 级数路径独立交叉验证）；**ln(16/15) 二阶精化（v1.47，base-16 高阶）**（log16-series-ub2-thm + ln16-15-squeeze-2b，T3 阶段 3 ln 级数双侧机制全面收官）；C 类 scoped 数值公理（ln2-lt/ln1615-lb/ln15-arith-ax）全部闭合清零。
 6. Lean 侧 2026-08-05 里程碑：**全库 `lake build` 2454 jobs 通过，零 `sorry` 零 `axiom`**——Adjunction 3 sorry + 1 axiom 经结构性判定删除、DeviationBound 2 经简化定理闭合、NoiseCategory Σ-D Functor 律闭合、阶段 3 分形扩张（IFSRecCoding/WeierstrassGap 结构支撑）全部闭合（对齐 Agda postulate 侧纪律）。
 
 **不可声称**：
@@ -168,7 +174,7 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 1. "全部闭合/零公理"——ℝ 公理体系是基础假设层；log 级数 sup 刻画（log2-partial-≤-ub/log2-least-ub-any，log2-series-ub/-lb 侧均由此收口）与 fc-integral 本身仍为登记项（D 类，降定理路径文档化）。
 2. R11 无限维态射层的完整闭合——有限维侧为 S0 结构性障碍，无限维侧断言（论文 R11）依赖 T3 谱定理，待严格验证。
 
-**结论**：Agda 独立交叉验证是 UFPF 形式化体系可信度的关键组成部分。它在与 Lean 正交的类型论体系下独立证明纯结构核心，并以登记纪律将分析层假设透明化。技术债清单 A 类全闭合、T3 定义性公理降定理持续推进（exp-partial-< / exp-tail-bound / log2-series-ub 已降，log 级数机制下界侧 v1.44 收口，C 类数值项清零）后，剩余开放项均为结构性限制（funext、概念特征、S0 静默）或待基础设施（Mathlib 稳定），无实质技术债遗留。
+**结论**：Agda 独立交叉验证是 UFPF 形式化体系可信度的关键组成部分。它在与 Lean 正交的类型论体系下独立证明纯结构核心，并以登记纪律将分析层假设透明化。技术债清单 A 类全闭合、T3 定义性公理降定理持续推进（exp-partial-< / exp-tail-bound / log2-series-ub 已降，log 级数机制下界侧 v1.44 收口 + 高阶精化 v1.45 收官 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47（ln1615-lb 双机制交叉验证），C 类数值项清零）后，剩余开放项均为结构性限制（funext、概念特征、S0 静默）或待基础设施（Mathlib 稳定），无实质技术债遗留。
 
 ---
 
@@ -180,3 +186,6 @@ B3 R11 有限维 SpImD 态射层**结构性不可闭合**（基数反例）：2 
 | v0.2 | 2026-08-05 | 状态同步至 v1.42：模块数 16→20（补 InflationDynamics/ColorDynamics/BlackHoleDynamics）；Lean 侧里程碑同步（81 模块全库 2454 jobs 零 sorry 零 axiom，v1.38）；闭合历程补 v1.38（C 类数值项清零）/v1.40（mono-le-any + 方向核验）/v1.41（exp-partial-< 降定理）/v1.42（exp-tail-bound 固定间隙路径降定理）；§4.4 加固定间隙决策；§5 新增 5.2b（T3 定义性公理降定理清单）+ DeviationBound 闭合；§6 声明边界与结论更新。 |
 | v0.3 | 2026-08-05 | 状态同步至 v1.43：闭合历程补 v1.43（log2-series-ub 固定间隙路径降定理：log 级数 sup 刻画前置登记 + 1/2 几何机制 + 固定间隙 B''n）；§5.2b 第 3 条 log2-series-ub 已降；§6 声称 5 更新。 |
 | v0.4 | 2026-08-05 | 状态同步至 v1.44：闭合历程补 v1.44（log 级数下界侧机制：log2-series-lb-thm 部分和严格低于 ln 2 + log2-lb-447047 + ln2-squeeze-9 双侧夹逼，两侧收口零新增公理）；§5.2b 第 4 条下界侧已闭合；§6 声称 5 / 不可声称 1 / 结论更新。 |
+| v0.5 | 2026-08-05 | 状态同步至 v1.45：闭合历程补 v1.45（ln 级数高阶精化：k 阶 = n+k 实例化，log2-series-ub2-thm 固定界 B''n 严格化 + ln2-squeeze-10 二阶夹逼，T3 阶段 3 log 级数机制收官零新增公理）；§5.2b 第 5 条高阶精化已闭合；§6 声称 5 / 结论更新。 |
+| v0.6 | 2026-08-05 | 状态同步至 v1.46：闭合历程补 v1.46（ln(16/15) 级数直接截断机制 base-16：log16-series-ub/lb-thm + ln16-15-squeeze-2 + ln1615-lb-direct 级数路径独立交叉验证，T3 阶段 3 ln 级数双侧机制完成零新增公理）；§5.2b 第 6 条已闭合；§6 声称 5 / 结论更新。 |
+| v0.8 | 2026-08-05 | 状态同步至 v1.47：闭合历程补 v1.47（ln(16/15) 二阶精化 base-16 高阶：log16-series-ub2-thm + ln16-15-squeeze-2b，T3 阶段 3 ln 级数双侧机制全面收官零新增公理）；§5.2b 第 7 条已闭合；§6 声称 5 / 结论更新。 |

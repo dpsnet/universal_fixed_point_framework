@@ -44,6 +44,7 @@
 | **中微子质量层级多重静默分析** | ✅ 已完成 | `notes/03_neutrino/spectral_neutrino_hierarchy_silence.md` |
 | **暗物质遗迹密度多重静默分析** | ✅ 已完成 | `notes/04_lorentz_gravity/spectral_dark_matter_silence.md` |
 | **表示静默（D-静默）S0 层** | ✅ 研究笔记 v0.1（交叉校验发现：SpImD 态射层基数反例 → 静默度同构推广） | `notes/00_foundations/spectral_representation_silence.md` |
+| **页岩油气成藏谱流（应用推演）** | 🟢 研究笔记 v0.1（跨领域探索：多孔介质多相流 + 微型圈闭集合的谱流/谱隙/静默重构，预测分级 A/B/C，待数据标定） | `notes/05_condensed_matter/spectral_shale_accumulation.md` |
 
 See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained derivation chain from first principles to all 29 SM parameters.
 
@@ -77,7 +78,7 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 | `02_ckm_pmns_flavor/` | 14 | CKM、PMNS、Yukawa、味道物理 |
 | `03_neutrino/` | 4 | 中微子质量、Seesaw、层级 |
 | `04_lorentz_gravity/` | 20 | Lorentz 谱流、引力、Kerr、暴涨 |
-| `05_condensed_matter/` | 10 | 凝聚态、超导、临界现象、流变学 |
+| `05_condensed_matter/` | 11 | 凝聚态、超导、临界现象、流变学、页岩成藏谱流 |
 | `06_quantum_chem_pv/` | 2 | 量子化学、光伏 |
 | `07_validation/` | 4 | 开放数据验证报告 |
 | `08_first_principles/` | 13 | 第一性原理推导、力统一、B2 连续极限 |

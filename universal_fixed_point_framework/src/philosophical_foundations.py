@@ -198,7 +198,7 @@ class FalsifiabilityAnalysis:
                 criterion="引力与SM的谱交织精度 8πG_N 导出",
                 experimental_test="引力常数精确测量",
                 falsification_threshold=1e-15,
-                current_status=f"精度 {8.12e-17}，优于阈值",
+                current_status=f"精度 {8.12e-17}，优于阈值" + "（2026-08-07 已解决：N_Weyl=4 闭式给 8.07e-17，仍 ≪ 1e-15 阈值，结论不变；见 paper20 §6.4 / paperX_epsilon_resolution.py）",
             ),
             FalsificationCriterion(
                 name="Kerr QNM谱对应",

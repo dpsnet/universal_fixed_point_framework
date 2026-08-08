@@ -3424,3 +3424,67 @@ ln2-squeeze-9       : 447047/645120 < ln 2 < 447173/645120           -- 双侧�
 **排坑**：`subst` 方向——下界侧用 `subst (λ x → x <ℝ log 2) l2p-9`（l2p-9 方向为 lhs ≡ rhs，无需 sym；与上界侧 `subst (λ y → log 2 <ℝ y) sum-eq` 对称）；`×` 与 `<ℝ` 同级运算符（20 级）需显式括号。
 
 Everything.agda 全量 20 模块编译通过（exit 0）。**log 级数机制两侧收口**：上界侧 log2-series-ub-thm（v1.43）+ 下界侧 log2-series-lb-thm（v1.44）。
+
+---
+
+## T3 ln 级数高阶精化（2026-08-05，DHStructural §2c'''，v1.45）
+
+**目标达成**：ln 级数**高阶精化**机制就位——利用 log2-series-ub-thm / log2-series-lb-thm 对截断序 n 的均匀性，k 阶精化 = 在 n+k 实例化（部分和推进 k 项、尾界收紧 k 阶）：
+```
+log2-series-ub2-thm : (n : ℕ) → log 2 <ℝ (log2-partial n +ℝ B''n n)      -- 二阶上界（B''n 严格化）
+log2-series-lb2-thm : (n : ℕ) → (log2-partial n + t_{n+1}) <ℝ log 2      -- 二阶下界（部分和推进一项）
+ln2-squeeze-10      : 4918210/7096320 < ln 2 < 4918840/7096320           -- 二阶夹逼（宽度 630/7096320 ≈ 8.9e-5）
+```
+
+**机制（零新增公理；sup 刻画前置登记 §2c）**：
+- **二阶上界** `log2-series-ub2-thm`：v1.43 的固定界 **B''n = t_{n+1} + 1/((n+2)·2^{n+1}) 由"≤"严格化为"<"**——`log2-series-ub-thm (suc n)` 移位（ln 2 < 部分和 n + t_{n+1} + 1/((n+2)·2^{n+1})）+ 结合律展开（subst + +-assoc-ℝ）。k 阶一般形式：ln 2 < 部分和 n + Σ_{j=1}^{k} t_{n+j} + 1/((n+k+1)·2^{n+k})
+- **二阶下界** `log2-series-lb2-thm`：= log2-series-lb-thm (suc n) 定义性展开
+- **具体夹逼**：下界 = 部分和 10 = 4918210/7096320（l2p-10-7096）；上界 = 部分和 9 + B''n 9 = 4918840/7096320（scale-7096320 通分，7096320 = 645120·11 覆盖 k ≤ 11 尾项）
+
+**排坑**：subst 方向——ub2 用 `subst (λ w → log 2 <ℝ w) (+-assoc-ℝ ...)`（assoc 直连，非 sym）；oneℝ vs natℝ 1（b2-11-1 经 /-cross-ℝ 交叉相乘，镜像 tail-5120 的 tail-1 模式）；`natℝ 11 *ℝ natℝ (2^ 10)`（B''n 第二项形状 k·2^{n+1}）需 natℝ-* + 交叉相乘搬运（非 log2-term 形状）。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**T3 阶段 3 log 级数机制收官**：上界侧 v1.43 + 下界侧 v1.44 + 高阶精化 v1.45。
+
+---
+
+## T3 ln(16/15) 级数直接截断机制（2026-08-05，DHStructural §2c''''，v1.46）
+
+**目标达成**：**ln(16/15) 级数直接截断机制（base-16）**就位——ln(16/15) = -ln(1-1/16) = Σ_{k≥1} 1/(k·16^k) 由级数直接机制给出双侧夹逼，并**独立交叉验证 ln1615-lb**（原为 exp 路径，现级数路径第二条机制）：
+```
+log16-series-ub-thm : (n) → ln(16/15) < 部分和 n + 2·t_{n+1}   -- 上界机制（固定间隙）
+log16-series-lb-thm : (n) → 部分和 n < ln(16/15)              -- 下界机制（严格）
+ln16-15-squeeze-2   : 33/512 < ln(16/15) < 397/6144           -- 具体夹逼（宽度 1/6144 ≈ 1.6e-4）
+ln1615-lb-direct    : 29/450 < ln(16/15)                      -- 独立交叉验证（级数路径）
+```
+
+**机制（镜像 §2c' log2-series-ub 的 base-16 版，零新增公理）**：
+- **前置登记** base-16 级数 sup 刻画（`log16-partial-≤-ub`/`log16-least-ub-any`，与 log2 同层的定义性级数刻画）
+- **1/16 几何机制**：`one-sub-sixteenth`（1−1/16 = 15/16）+ `recip-1615`（1/(1−1/16) = 16/15）+ `geo-16th-lt`（geo-x(1/16) < 16/15）+ `sixteenth-pow`/`sixteenth-pow-mul16`/`sixteenth-geo-tight`（(1/16)^{n+2}·(16/15) = 1/(15·16^{n+1})）+ `nat-pow16-embed`（ℕ 层 16^n 桥接）
+- **尾部上界**：`tail16-term-le`/`tail16-rest-le`/`rest-geo-shift16`/`rest-geo-ub16`（剩余 < 1/(15·16^{n+1})）/`tail16-rest-ub`/`log16-tail-decomp`/`tail16-le` ⟹ **固定界 B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1})**（Σ_{k≥n+2} 1/16^k = 1/(15·16^{n+1}) 的 1/15 因子是 base-16 与 base-2 之差）
+- **固定间隙**：`tail16-branch` + `log16-all-partial-le-B''` ⟹ `log16-le-B''16`（ln(16/15) ≤ 部分和 n + B''16n）⟹ `B''16-lt-2t`（B''16n < 2·t_{n+1}）⟹ `log16-series-ub-thm`（≤-lt-trans-ℝ）；下界 `log16-series-lb-thm`（严格递增 + sup 刻画）
+- **具体**：部分和 2 = 33/512（l16p-1/l16p-2）< ln(16/15)（log16-lb-33-512）；29/450 < 33/512（29·512 = 14848 < 33·450 = 14850）⟹ **ln1615-lb-direct**（trans-<ℝ，级数路径独立验证）；上界 397/6144（2·t_3 = 1/6144，two-t3）
+
+**排坑**：where 块按序解析（非互递归——pow16-suc-def 提升顶层，B''16-lt-2t 的 step1/step2/den1-eq/den0-lt-den1 顺序调整）；名字冲突（A → A16）；`*-comm-ℝ` 参数顺序与 sym 去留（big-eq 用 `*-comm-ℝ t0 (natℝ 2)` 无 sym）；recip-mul-split 的 a·b 结合方向（target 需 `(n+2)·(15·16^{n+1})` → `((n+2)·15)·16^{n+1}` 经 *-assoc 搬运）；step1 需 *-comm 交换因子顺序；two-t3 分子 natℝ 1（非 oneℝ）；nat-pow16-embed zero = natℝ-one（pow16 0 = 1 ≠ oneℝ 定义性）。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**T3 阶段 3 ln 级数双侧机制完成**：ln 2（base-2，v1.43-45）+ ln(16/15)（base-16，v1.46），ln1615-lb 双机制（exp + 级数）交叉验证。
+
+---
+
+## T3 ln(16/15) 二阶精化（2026-08-05，DHStructural §2c'''''，v1.47）
+
+**目标达成**：ln(16/15) **二阶精化**（base-16 高阶，镜像 v1.45）——二阶上界 `ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}`（t_k = 1/(k·16^k)），即二阶固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2}) 严格化：
+```
+log16-series-ub2-thm : (n) → ln(16/15) < 部分和 n + (t_{n+1} + 2·t_{n+2})   -- 二阶上界机制
+ln16-15-squeeze-2b   : 33/512 < ln(16/15) < 25379/393216                   -- 二阶夹逼（宽度 35/393216 ≈ 8.9e-5）
+```
+
+**机制（零新增公理；复用 tail16-rest-ub (suc n) 剩余移位）**：
+- **剩余移位** `log16-rest-shift`（归纳 m：log16-rest-sum n (suc m) = t_{n+2} + 剩余 (suc n) m，索引经 +ℕr-comm-suc 搬运）
+- **二阶尾部分解** `log16-tail2-decomp`（T16_n(m≥2) = (t_{n+1} + t_{n+2}) + 剩余 (suc n) m，经 log16-tail-decomp + rest-shift + 结合律）
+- **固定界** B2''16n + ≤-total 在 n+2 三分（`tail16-branch2` + `log16-all-partial-le-B2''`）⟹ `log16-le-B2''`（log16-least-ub-any）
+- **固定间隙** `B2''-lt-2t2`（1/((n+3)·15·16^{n+2}) < t_{n+2}，recip-mono + 两步分母比较）⟹ `log16-series-ub2-thm`
+- **具体**：部分和 2 + (t_3 + 2·t_4) = 25344/393216 + 35/393216 = 25379/393216（two-t4：2·t_4 = 1/131072；scale-393216 通分）⟹ `log16-ub2-25379` + `ln16-15-squeeze-2b`
+
+**排坑**：`+-assoc-ℝ` 方向（rest-shift 的 suc 步用 assoc 直连、log16-partial-2-def 用 +-assoc-ℝ）；idx-eq 方向（sym (cong suc ...)）；≤-total 在 n+2 三分的索引形状差（tail16-branch2 索引 `suc(suc(n+ℕr m'))` vs tail-repr 的 `suc((suc n)+ℕr m')` 需 sym (cong suc (+ℕr-comm-suc)) 桥接）；B2''16n 三连 +ℝ 需显式括号。
+
+Everything.agda 全量 20 模块编译通过（exit 0）。**T3 阶段 3 ln 级数双侧机制全面收官**：ln 2（base-2，v1.43-45：上界/下界/高阶精化）+ ln(16/15)（base-16，v1.46-47：上界/下界/二阶精化）。

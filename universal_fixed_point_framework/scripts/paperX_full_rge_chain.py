@@ -8,9 +8,9 @@ M_Pl, M_GUT, M_Z = 1.22e19, 1e16, 91.19
 b = np.array([41/10, -19/6, -7])  # U(1), SU(2), SU(3)
 C_gut = np.array([3/5, 1.0, 1.0])
 
-# 在 M_Pl 的谱间隙
+# 在 M_Pl 的谱间隙（【2026-08-06 修复】U(1) 分量 √(2/3)→√(1/3)，SU(2) 特征值归一化）
 dl_GR = 0.122
-gaps = np.array([np.sqrt(2/3), 1.0, np.sqrt(2)]) * dl_GR
+gaps = np.array([np.sqrt(1/3), 1.0, np.sqrt(2)]) * dl_GR
 
 # α⁻¹(M_Pl)
 alpha_inv_pl = 4*np.pi / (C_gut * gaps)

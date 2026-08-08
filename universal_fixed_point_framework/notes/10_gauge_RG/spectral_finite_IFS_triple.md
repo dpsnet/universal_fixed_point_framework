@@ -126,7 +126,7 @@ $$\mathcal{H}_{\text{sector}} = \mathcal{H}_{\text{up}} \oplus \mathcal{H}_{\tex
 
 ### 4.1 与 Paper I §6 的 Clifford 值的兼容
 
-Paper I §6 建立了 $\mathrm{Cl}(1,7)$ 旋量模结构。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 的旋量模 $S \cong \mathbb{R}^8$ 对应 SM 一代的 16 个 Weyl 分量（左右手各 8 维）。三代对应三个拷贝：
+Paper I §6 建立了 $\mathrm{Cl}(1,7)$ 旋量模结构。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 的旋量模 $S \cong \mathbb{R}^8$ 对应 SM 一代的 16 个 Weyl 分量（左右手各 8 维）。【2026-08-07 勘误：Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)（非 M₈(ℝ)），旋量模 S ≅ ℝ¹⁶（维数 16，非 8）；"左右手各 8 维" 系按 8 维 Weyl 半旋量的旧口径，标准旋量为 16 维 S₁₆】三代对应三个拷贝：
 
 $$\mathcal{H}_F = S \otimes \mathbb{C}^3 = \mathbb{R}^8 \otimes \mathbb{C}^3$$
 

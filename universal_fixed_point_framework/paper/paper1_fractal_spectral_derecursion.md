@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.49（2026-08-03）
+**版本**：v2.52（2026-08-07）
 
 **摘要**：本文提出分形谱化理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$，构造谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.3.1），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.4.5）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然同构 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将谱化理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"双初始向量逆迭代法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 IFS 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：Hausdorff 维数凹性定理（Hausdorff 维数 $d_H(\rho)$ 凹性）、Ledrappier-Young 维数分解定理（高维可逆系统 Ledrappier-Young 维数分解）、拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，静默体系（§5.7，五层：S0 表示层 + S1–S4 动力学/观测层）——S1–S4 的层次包含关系已在 Lean 4 中形式化验证（`SilenceHierarchy.lean`），S0 表示静默见 §5.7.9；自伴骨架的循环论证已通过显式余伴随构造（RAP-5a/定理 R11）清除。范畴层完备化的其余开放问题（耗散半边统一、连续谱 Lean 形式化）已登记为 RAP-5d–5f。**借助 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入，该框架可嵌入所有以集合为底层对象的数学系统；其作为物理预言理论的适用范围由桥梁假设与实验检验决定，不构成“覆盖所有数学系统”的元数学宣称（参见《RAP_勘误与立场声明.md》）。**
 
@@ -73,7 +73,7 @@
 
 **从谱理论到物理**。当 $D$ 函子的谱像 $\mathbf{Sp}$ 被赋予物理诠释（$A_R = -\log U_R$ 对应谱算子，$\sigma(A_R)$ 对应物理可观测量的谱），一个意外的统一开始浮现：Kerr 黑洞的 QNM 谱、标准模型的费米子质量谱、NTK 的收敛谱——这些表面上无关的谱结构，在 $\mathbf{Sp}$ 范畴中共享同一数学形式。这一发现将框架从机器学习工具推向了物理基础理论。
 
-**从 $\mathrm{Cl}(1,7)$ 到谱唯象体系**。框架与 Clifford 代数 $\mathrm{Cl}(1,7)$ 的结合提供了一条从代数结构到低能谱的翻译通道。修正后的诚实定位为：以 $(d_H, \lambda_{\text{静默}})$ 两个登记参数为核心、覆盖 15 项严格结果与 14 项唯象关系的跨领域谱唯象体系。其中 $k_{\max}=8$ 是模型选择而非 Bott 周期唯一锁定；$\mathrm{Cl}(1,7)$ 提供单代旋量载体，三代结构 $N_{\text{gen}}=3$ 作为独立输入加入；$d_H=2.7095$ 目前登记为味数术关系联合最优值，Moran 方程本身不对 $d_H$ 构成约束。详见《RAP_勘误与立场声明.md》。
+**从 $\mathrm{Cl}(1,7)$ 到谱唯象体系**。框架与 Clifford 代数 $\mathrm{Cl}(1,7)$ 的结合提供了一条从代数结构到低能谱的翻译通道。修正后的诚实定位为：以 $(d_H, \lambda_{\text{静默}})$ 两个登记参数为核心、覆盖 15 项严格结果与 14 项唯象关系的跨领域谱唯象体系。其中 $k_{\max}=8$ 是模型选择而非 Bott 周期唯一锁定；$\mathrm{Cl}(1,7)$ 提供单代旋量载体，三代结构 $N_{\text{gen}}=3$ 由统一 3 定理机器证明（$N_{\text{gen}}=N_{\text{active}}=3$，Paper XXXIII）；$d_H=2.7095$ 目前登记为味数术关系联合最优值，Moran 方程本身不对 $d_H$ 构成约束。详见《RAP_勘误与立场声明.md》。
 
 **方法论特点**。与弦论从几何美学出发、圈量子引力从广义相对论量子化出发不同，本框架从**工程痛点**出发——谱化最初是一个计算问题，而非物理问题。这一起源使框架具有独特的实用主义特征：所有公理都有明确的工程动机，所有定理都有可检验的数值后果。
 
@@ -1498,6 +1498,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.52 | 2026-08-07 | **$N_{\text{gen}}=3$ 表述修正（勘误 v0.20 口径统一）**：§1.4（从 Cl(1,7) 到谱唯象体系）中"三代结构 $N_{\text{gen}}=3$ 作为独立输入加入"修正为"由统一 3 定理机器证明（$N_{\text{gen}}=N_{\text{active}}=3$，Paper XXXIII）"；Cl(1,7) 提供单代旋量载体不变。修正痕迹仅保留于勘误文档 v0.20；版本号 v2.51 → v2.52 |
 | v2.51 | 2026-08-04 | **RAP5a RIm_map 闭合（阶段 1 线性语义，勘误 O12）**：注 2.4.5a 形式化状态更新——`RAP5a_explicit_adjunction.lean` 的 `SpImDMor` 限制为线性（Rec）态射层（Rec_lin 分层，谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），全范畴 sorry 从 4 处降至 3 处；并构造完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明），定理 2.4.5 "概念闭合" 在受限态射层上落地为机器证明。D 不 full 的基数反例（§C2.3 注）保留为全范畴（集合语义）负结果；版本号 v2.50 → v2.51 |
 | v2.50 | 2026-08-04 | **阶段 1 圈定执行（Lean 侧 sorry 消除）**：注 2.4.5a 追加 Lean 形式化状态更新——`Adjunction.lean` 中 `adjUnit` 从 sorry 改为常零函数（移植 Agda `const-adjUnit`），`adjCounit` 从 sorry 改为零矩阵（移植 Agda `zeroMat`，intertwine 经矩阵零吸收闭合），`DAdjR` 从 sorry 改为 `noncomputable axiom`（对齐 Agda `postulate right-triangle`）；全模块 sorry 从 8 处降至 4 处（`RFunctor.map`/`map_id`/`map_comp` 全范畴不可构造 + `RAP5a.RIm_map` 需阶段 2 SpImDMor 限制），`HigherSpCategory.lean` 的 `spExchangeLaw` sorry 已消除（改为偏差定理引用）；新增范畴论圈定与兼容性扩张规划（`notes/00_foundations/spectral_category_scope_stratification.md`），D ⊣ R 伴随有效范围 = Rec_lin(SpImD) 显式声明；版本号 v2.49 → v2.50 |
 | v2.49 | 2026-08-03 | **P1 形式化引用补充（理论闭合审计）**：注 C2.3b 形式化验证段追加 2026-08-03 补充——谱匹配核心（`theorem3`/`corollary4-∞`/`Rec-to-σ`/`intertwine-imp-spectral`/`corollary5`/`P1-linear-closure`）**独立于** `fc-integral` 桥接（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；`fc-integral` 公理（fc(f) = ∫f dE）完整降为可证明定理 `fc-integral-full`（唯一剩余登记项为文档化测度论核心逼近桥接：多项式可由简单函数下界逼近，∫p dE = sup{∫s : s 简单 ≤ p}，语义由目标模型谱定理保证，不构成 P1 断言的公理依赖）；注 2.4.5a 尾部同步；版本号 v2.48 → v2.49 |

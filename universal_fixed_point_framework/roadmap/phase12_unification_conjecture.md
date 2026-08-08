@@ -162,7 +162,7 @@ $$[T_{\mathrm{GR}}, A_{\mathrm{SM}}] = T_{\mathrm{GR}} A_{\mathrm{SM}} - A_{\mat
 | 标准 ($n=8$, $N=500$) | $0.00$ | $0.0000\%$ |
 | 高精度 ($n=20$, $N=1000$) | $0.00$ | $0.0000\%$ |
 
-引力谱对应 $D(R(E)) \approx E$ 误差: $8.12 \times 10^{-17}$（机器精度）。该精度已从 Cl(1,7) 表示论第一性原理闭式导出（2026-07-19）：$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$，$N(2_1)=4$ 来自 $\mathrm{Cl}(1,7)\cong\mathrm{M}_8(\mathbb{R})$ 旋量的 SU(2) 分支规则 $8=4\times2$，推导值 $8.068\times10^{-17}$（偏差 $0.64\%$）。
+引力谱对应 $D(R(E)) \approx E$ 误差: $8.12 \times 10^{-17}$（机器精度）。该精度已从 Cl(1,7) 表示论第一性原理闭式导出（2026-07-19；2026-08-07 因子修正）：$\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}}$，正确因子 $N_{\mathrm{Weyl}}=4$ 为 4D Weyl 数（16 维实旋量 4D 分解 = 4 Weyl，RAP3/paper17 机器证明），非 SU(2) 副本数 $N(2_1)=8$（原"$N(2_1)=4$ 基于 $\mathrm{Cl}(1,7)\cong\mathrm{M}_8(\mathbb{R})$ 分支规则 $8=4\times2$"与后续"$N(2_1)=8$ 给 $1.614\times10^{-16}\approx 2\times\epsilon_{\text{框架}}$、ε 链登记待校准"均已更新），推导值 $8.07\times10^{-17}$（偏差 $0.6\%$，见 paper20 §6.4 / paperX_epsilon_resolution.py）。
 
 **结论**：**谱交织条件与谱对应两端精度均达机器极限**。
 

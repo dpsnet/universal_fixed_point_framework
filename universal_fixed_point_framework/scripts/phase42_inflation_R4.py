@@ -237,7 +237,7 @@ def main():
     
     print(f"\n  输入 (Phase 36):")
     print(f"    Δλ_min = {bch_info['delta_lambda']:.3f} M_Pl")
-    print(f"    k_max = {bch_info['k_max']} (Cl(1,7)→M₈(ℝ))")
+    print(f"    k_max = {bch_info['k_max']} (Cl(1,7)→M₈(ℝ))")  # 【2026-08-07 勘误：Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)（非 M₈(ℝ)），旋量维数 16】
     
     print(f"\n  BCH 系数:")
     print(f"    c₁ (R²) = {bch_info['c1_R2']:.4f}  (Phase 36 确定)")

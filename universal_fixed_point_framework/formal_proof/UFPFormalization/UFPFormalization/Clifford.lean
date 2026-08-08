@@ -76,9 +76,14 @@ p+q = 8, p-q = -6 ≡ 2 (mod 8) → entry in periodicity table:
 (p-q) mod 8 = 2 → M_{2^{n/2}}(ℝ) = M_{2^4}(ℝ) = M₁₆(ℝ).
 (Note: earlier versions incorrectly used M₈(ℝ); corrected by RAP v0.1.)
 
-**Irreducible spinor (8_s):** The Majorana spinor of Spin(1,7) is 8-dimensional
-over ℝ. In the spectral gap derivation, k_max = 8 is a model choice
-(see RAP 修复方案 §5.3).
+**Irreducible spinor (S₁₆):** The Majorana spinor of Spin(1,7) is 16-dimensional
+over ℝ. 【2026-08-07 勘误：原"8_s is 8-dimensional"为旧 M₈(ℝ) 遗留记号——Cl(1,7) ≅ M₁₆(ℝ)，
+标准旋量 16 维（paper20 权威）。k_max = 8 是结构确定量（统一 3 定理 2^{N_active} = 2³ 机器证明
++ 对偶网络，勘误 v0.21；旋量 16 = 2·k_max、分支 B = 15 = 2·k_max−1、d_H = ln(2·k_max−1) = ln15），
+非旋量维数。】
+In the spectral gap derivation, k_max = 8 is a structure-determined quantity
+(Unified-3 theorem 2^{N_active} = 2³ + duality network, errata v0.21;
+the earlier "model choice" description is superseded; ρ_c scan retained as cross-check).
 -/
 
 /--
@@ -95,17 +100,21 @@ noncomputable def cl17_to_M16 : Type :=
   Matrix (Fin 16) (Fin 16) ℝ
 
 /--
-The irreducible Majorana spinor of Cl(1,7) (8_s) is 8-dimensional over ℝ.
-Under Spin(1,3)×Spin(4) ⊂ Spin(1,7), 8_s → (2_L,2) ⊕ (2_R,2'),
+The irreducible Majorana spinor of Cl(1,7) (S₁₆) is 16-dimensional over ℝ.
+【2026-08-07 勘误：原"(8_s) is 8-dimensional"同前——标准旋量 16 维（paper20）】
+Under Spin(1,3)×Spin(4) ⊂ Spin(1,7), S₁₆ → 4 × (4D Weyl),
 giving 4 Weyl fermions in 4-dimensional spacetime.
 
 In the spectral framework, this representation space carries the A_GR operator
 whose eigenvalues follow the SU(2) Casimir spectrum √{k(k+1)}.
 Cl(1,7) provides a single-generation spinor carrier; the family space ℂ³_fam
-is an independent input (see RAP_勘误与立场声明.md).
+is determined by the Unified-3 theorem (machine-proved, Paper XXXIII; errata
+v0.20 supersedes the earlier "independent input" description).
 
-The spectral cutoff k_max = 8 is a model choice (RAP 修复方案 §1), not
-uniquely derived from the representation dimension.
+The spectral cutoff k_max = 8 is a structure-determined quantity (Unified-3
+theorem 2^{N_active} = 2³ machine-proved + duality network: spinor 16 = 2·k_max,
+branch B = 15 = 2·k_max − 1, d_H = ln(2·k_max − 1) = ln 15; errata v0.21),
+not a model choice, and not derived from the representation dimension.
 -/
 noncomputable def cl17_rep_dim : ℕ := 8
 

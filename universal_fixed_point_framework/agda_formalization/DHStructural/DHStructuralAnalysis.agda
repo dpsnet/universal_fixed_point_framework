@@ -2491,6 +2491,774 @@ ln2-squeeze-9 : ((natℝ 447047 /ℝ natℝ 645120) <ℝ log (natℝ 2))
              × (log (natℝ 2) <ℝ (natℝ 447173 /ℝ natℝ 645120))
 ln2-squeeze-9 = log2-lb-447047 , log2-ub-447173
 
+-- ==================================================================
+-- §2c''' ln 级数高阶精化（2026-08-05）
+-- 目标：利用 log2-series-ub-thm / log2-series-lb-thm 对截断序 n 的均匀性，
+--       k 阶精化 = 在 n+k 实例化（部分和推进 k 项、尾界收紧 k 阶）：
+--         k 阶上界：ln 2 < 部分和 n + Σ_{j=1}^{k} t_{n+j} + 1/((n+k+1)·2^{n+k})
+--       一阶（v1.43）：尾界 1/((n+1)·2^n)；**二阶（本节）**：尾界 B''n
+--       = t_{n+1} + 1/((n+2)·2^{n+1})——v1.43 的固定界 B''n 由"≤"严格化为
+--       "<"（log2-series-ub-thm (suc n) 移位 + 结合律展开），零新增公理。
+-- ==================================================================
+
+-- **可证**：二阶下界——部分和推进一项：部分和 n + t_{n+1} < ln 2
+--（= log2-series-lb-thm (suc n) 定义性展开，项正严格递增 + sup 刻画）
+log2-series-lb2-thm : (n : ℕ) → (log2-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n))))) <ℝ log (natℝ 2)
+log2-series-lb2-thm n = log2-series-lb-thm (suc n)
+
+-- **可证**：二阶上界——ln 2 < 部分和 n + B''n（B''n = t_{n+1} + 1/((n+2)·2^{n+1})，
+-- v1.43 固定界 B''n 严格化；log2-series-ub-thm (suc n) 移位 + 结合律）
+log2-series-ub2-thm : (n : ℕ) → log (natℝ 2) <ℝ (log2-partial n +ℝ B''n n)
+log2-series-ub2-thm n = subst (λ w → log (natℝ 2) <ℝ w) (+-assoc-ℝ (log2-partial n) t1 t2) (log2-series-ub-thm (suc n))
+  where
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (2^ (suc n)))
+  t2 : ℝ
+  t2 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (2^ (suc n)))
+
+-- ==================================================================
+-- §2c''' 具体高阶夹逼（n=9 二阶上界 / n=10 下界，通分 7096320）
+-- ==================================================================
+
+-- 通分到 7096320（= 645120·11 = 2^11·3²·5·7·11，覆盖 k ≤ 11 的 k·2^k 尾项）
+scale-7096320 : (s m : ℕ) → (s *ℕ m) ≡ 7096320 → (natℝ 1 /ℝ natℝ m) ≡ (natℝ s /ℝ natℝ 7096320)
+scale-7096320 s m h =
+  /-cross-ℝ (trans (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 7096320)))
+                   (trans (cong natℝ (sym h)) (natℝ-* s m)))
+
+-- 部分和 9 通分到 7096320：447047/645120 = 4917517/7096320（×11）
+l2p-9-7096 : (natℝ 447047 /ℝ natℝ 645120) ≡ (natℝ 4917517 /ℝ natℝ 7096320)
+l2p-9-7096 = trans (frac-scaled-ℝ (natℝ 447047) (natℝ 645120) (natℝ 11))
+                   (cong₂ _/ℝ_ (sym (natℝ-* 447047 11)) (sym (natℝ-* 645120 11)))
+
+-- 部分和 10 = 部分和 9 + 1/10240 = 4918210/7096320（1/10240 = 693/7096320）
+l2p-10-7096 : log2-partial 10 ≡ (natℝ 4918210 /ℝ natℝ 7096320)
+l2p-10-7096 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 10 *ℝ natℝ (2^ 10)))) (trans l2p-9 l2p-9-7096))
+                    (trans (cong₂ _+ℝ_ refl (trans (log2-term 10) (scale-7096320 693 10240 refl)))
+                           (trans (same-den-add (natℝ 4917517) (natℝ 693) (natℝ 7096320))
+                                  (cong₂ _/ℝ_ (sym (natℝ-+ 4917517 693)) refl)))
+
+-- B''n 9 第二项：1/(11·2^10) = 1/11264 = 630/7096320
+l2-b2-11264 : (oneℝ /ℝ (natℝ 11 *ℝ natℝ (2^ 10))) ≡ (natℝ 630 /ℝ natℝ 7096320)
+l2-b2-11264 = trans b2-11-1 (scale-7096320 630 11264 refl)
+  where
+  b2-11-1 : (oneℝ /ℝ (natℝ 11 *ℝ natℝ (2^ 10))) ≡ (natℝ 1 /ℝ natℝ 11264)
+  b2-11-1 = /-cross-ℝ (trans (loc-one-mul (natℝ 11264))
+                             (sym (trans (cong₂ _*ℝ_ refl (sym (natℝ-* 11 (2^ 10))))
+                                         (trans (cong₂ _*ℝ_ natℝ-one refl)
+                                                (loc-one-mul (natℝ 11264))))))
+
+-- B''n 9 = 1/(10·2^10) + 1/(11·2^10) = 693/7096320 + 630/7096320 = 1323/7096320
+B''n-9-7096 : B''n 9 ≡ (natℝ 1323 /ℝ natℝ 7096320)
+B''n-9-7096 = trans (cong₂ _+ℝ_ (trans (log2-term 10) (scale-7096320 693 10240 refl)) l2-b2-11264)
+                    (trans (same-den-add (natℝ 693) (natℝ 630) (natℝ 7096320))
+                           (cong₂ _/ℝ_ (sym (natℝ-+ 693 630)) refl))
+
+-- 二阶上界具体化：ln 2 < 部分和 9 + B''n 9 = 4918840/7096320（log2-series-ub2-thm 9）
+log2-ub2-4918840 : log (natℝ 2) <ℝ (natℝ 4918840 /ℝ natℝ 7096320)
+log2-ub2-4918840 = subst (λ y → log (natℝ 2) <ℝ y) sum-eq (log2-series-ub2-thm 9)
+  where
+  sum-eq : (log2-partial 9 +ℝ B''n 9) ≡ (natℝ 4918840 /ℝ natℝ 7096320)
+  sum-eq = trans (cong₂ _+ℝ_ (trans l2p-9 l2p-9-7096) B''n-9-7096)
+                 (trans (same-den-add (natℝ 4917517) (natℝ 1323) (natℝ 7096320))
+                        (cong₂ _/ℝ_ (sym (natℝ-+ 4917517 1323)) refl))
+
+-- 二阶下界具体化：部分和 10 = 4918210/7096320 < ln 2（log2-series-lb-thm 10）
+log2-lb2-4918210 : (natℝ 4918210 /ℝ natℝ 7096320) <ℝ log (natℝ 2)
+log2-lb2-4918210 = subst (λ x → x <ℝ log (natℝ 2)) l2p-10-7096 (log2-series-lb-thm 10)
+
+-- 二阶夹逼：4918210/7096320 < ln 2 < 4918840/7096320
+--（较 v1.44 一阶夹逼 447047/645120 < ln 2 < 447173/645120 收窄：
+--  宽度 630/7096320 ≈ 8.9e-5 < 126/645120 ≈ 2.0e-4）
+ln2-squeeze-10 : ((natℝ 4918210 /ℝ natℝ 7096320) <ℝ log (natℝ 2))
+              × (log (natℝ 2) <ℝ (natℝ 4918840 /ℝ natℝ 7096320))
+ln2-squeeze-10 = log2-lb2-4918210 , log2-ub2-4918840
+
+-- ==================================================================
+-- §2c'''' ln(16/15) 级数直接截断机制（2026-08-05，base-16）
+-- 目标：ln(16/15) = -ln(15/16) = -ln(1-1/16) = Σ_{k≥1} 1/(k·16^k)
+--       由级数直接机制给出双侧夹逼，独立交叉验证 ln1615-lb（exp 侧外第二条路径）。
+-- 机制（镜像 §2c' log2-series-ub 的 base-16 版，零新增公理）：
+--   前置登记 base-16 级数 sup 刻画（log16-partial-≤-ub + log16-least-ub-any，
+--   与 log2 同层的定义性级数刻画）；
+--   部分和递增/分解 + 1/16 几何机制（1/(1-1/16) = 16/15）+ 尾部上界
+--   B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1})（固定，不依赖 m；
+--   Σ_{k≥n+2} 1/16^k = 1/(15·16^{n+1}) 的 1/15 因子是 base-16 与 base-2 之差）
+--   + 固定间隙 B''16n < 2·t_{n+1} ⟹ ln(16/15) < 部分和 n + 2·t_{n+1}。
+-- ==================================================================
+
+-- 16 的幂（本地定义，避免 NATTIMES 定义性坑）
+pow16 : ℕ → ℕ
+pow16 zero = 1
+pow16 (suc n) = 16 *ℕ pow16 n
+
+-- ℕ 层：16^{n+1} = 16·16^n（pow16 定义性展开）
+pow16-suc-def : (a : ℕ) → pow16 (suc a) ≡ 16 *ℕ pow16 a
+pow16-suc-def a = refl
+
+-- 16 的幂恒正：0 < 16^n
+pow16-pos : (n : ℕ) → 0 <ℕ pow16 n
+pow16-pos zero = z<s
+pow16-pos (suc n) = helper n (pow16-pos n)
+  where
+  helper : (n : ℕ) → 0 <ℕ pow16 n → 0 <ℕ (16 *ℕ pow16 n)
+  helper n h with pow16 n
+  helper n h | suc k = z<s
+
+-- ℕ 层：natℝ (16^n) = (natℝ 16)^n（归纳 + natℝ-* + ^ℕ 左乘定义性）
+nat-pow16-embed : (n : ℕ) → natℝ (pow16 n) ≡ ((natℝ 16) ^ℕ n)
+nat-pow16-embed zero = natℝ-one
+nat-pow16-embed (suc n) = trans (natℝ-* 16 (pow16 n))
+                               (cong (λ x → natℝ 16 *ℝ x) (nat-pow16-embed n))
+
+-- ln(16/15) 级数部分和：Σ_{k=1}^n 1/(k·16^k)
+log16-partial : ℕ → ℝ
+log16-partial zero    = zeroℝ
+log16-partial (suc n) = log16-partial n +ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n))))
+
+-- base-16 级数 sup 刻画（前置登记，与 log2 同层）：
+-- ln(16/15) = Σ_{k≥1} 1/(k·16^k)（-ln(1-1/16) 展开）。
+postulate
+  log16-partial-≤-ub : (n : ℕ) → log16-partial n ≤ℝ log (natℝ 16 /ℝ natℝ 15)
+  log16-least-ub-any : (b : ℝ) → ((n : ℕ) → log16-partial n ≤ℝ b) → log (natℝ 16 /ℝ natℝ 15) ≤ℝ b
+
+-- 级数项：1/(k·16^k) 形如 (natℝ 1)/(natℝ (k·16^k))
+log16-term : (k : ℕ) → (oneℝ /ℝ (natℝ k *ℝ natℝ (pow16 k))) ≡ (natℝ 1 /ℝ natℝ (k *ℕ pow16 k))
+log16-term k = /-cross-ℝ (trans (loc-one-mul (natℝ (k *ℕ pow16 k)))
+                                (sym (trans (cong₂ _*ℝ_ refl (sym (natℝ-* k (pow16 k))))
+                                            (trans (cong₂ _*ℝ_ natℝ-one refl)
+                                                   (loc-one-mul (natℝ (k *ℕ pow16 k)))))))
+
+-- 项正：0 < 1/(k·16^k)
+log16-term-pos : (n : ℕ) → zeroℝ <ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n))))
+log16-term-pos n = /-pos-ℝ zero-lt-one-ℝ
+                           (lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos (suc n))))
+
+-- 部分和严格递增：log16-partial n < log16-partial (suc n)
+log16-partial-suc-< : (n : ℕ) → log16-partial n <ℝ log16-partial (suc n)
+log16-partial-suc-< n = add-pos-ℝ (log16-term-pos n)
+
+-- 部分和递增（≤ 版）
+log16-partial-suc-≤ : (n : ℕ) → log16-partial n ≤ℝ log16-partial (suc n)
+log16-partial-suc-≤ n = <-≤-ℝ (log16-partial-suc-< n)
+
+-- 部分和递增（≤ 版）——n ≤ k ⟹ log16-partial n ≤ log16-partial k
+log16-partial-at-le : (n k : ℕ) → n ≤ℕ k → log16-partial n ≤ℝ log16-partial k
+log16-partial-at-le n zero nk with nk
+... | z≤n = refl-≤ℝ
+log16-partial-at-le n (suc k) nk with ≤-suc-decomp {n} {k} nk
+... | inj₁ e = subst (λ z → log16-partial n ≤ℝ log16-partial z) e (refl-≤ℝ)
+... | inj₂ h' = ≤-trans-ℝ (log16-partial-at-le n k h') (log16-partial-suc-≤ k)
+
+-- 尾部有限和：T16_n(m) = Σ_{j=0}^m 1/((n+1+j)·16^{n+1+j})
+log16-tail : ℕ → ℕ → ℝ
+log16-tail n zero = oneℝ /ℝ (natℝ (suc (n +ℕr zero)) *ℝ natℝ (pow16 (suc (n +ℕr zero))))
+log16-tail n (suc m) = log16-tail n m +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (pow16 (suc (suc (n +ℕr m))))))
+
+-- 部分和分解：log16-partial (n+1+m) = log16-partial n + T16_n(m)
+log16-decomp : (n m : ℕ) → log16-partial (suc (n +ℕr m)) ≡ (log16-partial n +ℝ log16-tail n m)
+log16-decomp n zero = refl
+log16-decomp n (suc m) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (pow16 (suc (suc (n +ℕr m))))))) (log16-decomp n m))
+        (+-assoc-ℝ (log16-partial n) (log16-tail n m)
+                   (oneℝ /ℝ (natℝ (suc (suc (n +ℕr m))) *ℝ natℝ (pow16 (suc (suc (n +ℕr m)))))))
+
+-- ==================================================================
+-- §2c'''' 基础：1/16 的几何机制（2026-08-05，可证）
+-- ==================================================================
+
+-- **可证**：0 < 1/16
+sixteenth-pos : zeroℝ <ℝ (oneℝ /ℝ natℝ 16)
+sixteenth-pos = /-pos-ℝ zero-lt-one-ℝ (natℝ-pos-embed z<s)
+
+-- **可证**：1 < 16
+one-lt-16 : oneℝ <ℝ natℝ 16
+one-lt-16 = subst (λ z → z <ℝ natℝ 16) natℝ-one (natℝ-<-embed (<-add 1 14))
+
+-- **可证**：1 < 15
+one-lt-15 : oneℝ <ℝ natℝ 15
+one-lt-15 = subst (λ z → z <ℝ natℝ 15) natℝ-one (natℝ-<-embed (<-add 1 13))
+
+-- **可证**：16/16 = 1
+sixteen-over-sixteen : (natℝ 16 /ℝ natℝ 16) ≡ oneℝ
+sixteen-over-sixteen = trans (/-cross-ℝ {natℝ 16} {oneℝ} {natℝ 16} {oneℝ} cross) (div-one-ℝ oneℝ)
+  where
+  cross : (natℝ 16 *ℝ oneℝ) ≡ (oneℝ *ℝ natℝ 16)
+  cross = trans (*-ident-ℝ (natℝ 16))
+                (sym (trans (*-comm-ℝ oneℝ (natℝ 16)) (*-ident-ℝ (natℝ 16))))
+
+-- **可证**：1/16 < 1
+sixteenth-lt-one : (oneℝ /ℝ natℝ 16) <ℝ oneℝ
+sixteenth-lt-one = subst (λ y → (oneℝ /ℝ natℝ 16) <ℝ y) sixteen-over-sixteen
+                  (/-lt-same-den-ℝ {oneℝ} {natℝ 16} {natℝ 16} one-lt-16)
+
+-- **可证**：1/16 + 15/16 = 1（同分母合并）
+sixteen-add : (oneℝ /ℝ natℝ 16) +ℝ (natℝ 15 /ℝ natℝ 16) ≡ oneℝ
+sixteen-add = trans (cong₂ _+ℝ_ (cong₂ _/ℝ_ (sym natℝ-one) refl) refl)
+                    (trans (same-den-add (natℝ 1) (natℝ 15) (natℝ 16))
+                           (trans (cong₂ _/ℝ_ (sym (natℝ-+ 1 15)) refl) sixteen-over-sixteen))
+
+-- **可证**：1 − 1/16 = 15/16（1/16 + 15/16 = 1 + 加法群消去）
+one-sub-sixteenth : (oneℝ -ℝ (oneℝ /ℝ natℝ 16)) ≡ (natℝ 15 /ℝ natℝ 16)
+one-sub-sixteenth =
+  trans (sub-ℝ-def oneℝ a)
+        (trans (cong (λ u → u +ℝ negℝ a) (sym sixteen-add))
+               (trans (+-assoc-ℝ a b (negℝ a))
+                      (trans (cong (λ u → a +ℝ u) (+-comm-ℝ b (negℝ a)))
+                             (trans (sym (+-assoc-ℝ a (negℝ a) b))
+                                    (trans (cong (λ u → u +ℝ b) (+-inv-ℝ a))
+                                           (loc-zero-add b))))))
+  where
+  a : ℝ
+  a = oneℝ /ℝ natℝ 16
+  b : ℝ
+  b = natℝ 15 /ℝ natℝ 16
+
+-- **可证**：1/(1 − 1/16) = 16/15（交叉相乘 + 商消去）
+recip-1615 : (oneℝ /ℝ (oneℝ -ℝ (oneℝ /ℝ natℝ 16))) ≡ (natℝ 16 /ℝ natℝ 15)
+recip-1615 = trans (cong₂ _/ℝ_ refl one-sub-sixteenth)
+                   (/-cross-ℝ (trans (loc-one-mul (natℝ 15)) (sym (*-/cancel-ℝ (natℝ 16) (natℝ 15)))))
+
+-- **可证**：(1/16)^k = 1/16^k（div-pow + one-pow + nat-pow16-embed）
+sixteenth-pow : (k : ℕ) → ((oneℝ /ℝ natℝ 16) ^ℕ k) ≡ (oneℝ /ℝ natℝ (pow16 k))
+sixteenth-pow k = trans (div-pow oneℝ (natℝ 16) k)
+                        (cong₂ _/ℝ_ (one-pow k) (sym (nat-pow16-embed k)))
+
+-- **可证**：(1/16)^{a+1}·16 = 1/16^a（分数对消，16·16^a = 16^{a+1}）
+sixteenth-pow-mul16 : (a : ℕ) → (((oneℝ /ℝ natℝ 16) ^ℕ (suc a)) *ℝ natℝ 16) ≡ (oneℝ /ℝ natℝ (pow16 a))
+sixteenth-pow-mul16 a =
+  trans (cong₂ _*ℝ_ (sixteenth-pow (suc a)) refl)
+        (trans (*-comm-ℝ (oneℝ /ℝ natℝ (pow16 (suc a))) (natℝ 16))
+               (trans (*-/ℝ (natℝ 16) oneℝ (natℝ (pow16 (suc a))))
+                      (trans (cong₂ _/ℝ_ (*-ident-ℝ (natℝ 16)) refl)
+                             (/-cross-ℝ cross))))
+  where
+  cross : (natℝ 16 *ℝ natℝ (pow16 a)) ≡ (oneℝ *ℝ natℝ (pow16 (suc a)))
+  cross = trans (sym (natℝ-* 16 (pow16 a)))
+                (trans (cong natℝ (pow16-suc-def a))
+                       (sym (loc-one-mul (natℝ (pow16 (suc a))))))
+
+-- **可证**：geo-x (1/16) j < 16/15（geo-x-lt 特化：1/(1−1/16) = 16/15）
+geo-16th-lt : (j : ℕ) → geo-x (oneℝ /ℝ natℝ 16) j <ℝ (natℝ 16 /ℝ natℝ 15)
+geo-16th-lt j = subst (λ z → geo-x (oneℝ /ℝ natℝ 16) j <ℝ z) recip-1615
+                 (geo-x-lt (oneℝ /ℝ natℝ 16) sixteenth-pos sixteenth-lt-one j)
+
+-- **可证**：(1/16)^{n+2}·(16/15) = 1/(15·16^{n+1})（乘 16 对消 + 倒数拆分）
+sixteenth-geo-tight : (n : ℕ) → (((oneℝ /ℝ natℝ 16) ^ℕ (suc (suc n))) *ℝ (natℝ 16 /ℝ natℝ 15))
+                                 ≡ (oneℝ /ℝ (natℝ 15 *ℝ natℝ (pow16 (suc n))))
+sixteenth-geo-tight n =
+  trans (cong (λ w → A16 *ℝ w) (sym frac-16-15))
+        (trans (sym (*-assoc-ℝ A16 (natℝ 16) (oneℝ /ℝ natℝ 15)))
+               (trans (cong (λ w → w *ℝ (oneℝ /ℝ natℝ 15)) (sixteenth-pow-mul16 (suc n)))
+                      (trans (*-comm-ℝ (oneℝ /ℝ natℝ (pow16 (suc n))) (oneℝ /ℝ natℝ 15))
+                             (sym (recip-mul-split (natℝ 15) (natℝ (pow16 (suc n))))))))
+  where
+  A16 : ℝ
+  A16 = (oneℝ /ℝ natℝ 16) ^ℕ (suc (suc n))
+  -- 16/15 = 16·(1/15)
+  frac-16-15 : (natℝ 16 *ℝ (oneℝ /ℝ natℝ 15)) ≡ (natℝ 16 /ℝ natℝ 15)
+  frac-16-15 = trans (*-/ℝ (natℝ 16) oneℝ (natℝ 15))
+                     (cong₂ _/ℝ_ (*-ident-ℝ (natℝ 16)) refl)
+
+-- ==================================================================
+-- §2c'''' 尾部上界（base-16，镜像 §2c' 尾部块）
+-- 目标：Σ_{k≥n+1} 1/(k·16^k) ≤ 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1})（B''16n，固定）
+-- ==================================================================
+
+-- **可证**：1/(k·16^k) ≤ 1/((n+2)·16^k)（k ≥ n+2）
+tail16-term-le : (n k : ℕ) → (suc (suc n)) ≤ℕ k →
+  (oneℝ /ℝ (natℝ k *ℝ natℝ (pow16 k))) ≤ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 k)))
+tail16-term-le n k h = recip-≤-ℝ den-pos den-le
+  where
+  den-pos : zeroℝ <ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 k))
+  den-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos k))
+  den-le : (natℝ (suc (suc n)) *ℝ natℝ (pow16 k)) ≤ℝ (natℝ k *ℝ natℝ (pow16 k))
+  den-le = *-≤-mono-ℝ {a = natℝ (suc (suc n))} {b = natℝ k} {c = natℝ (pow16 k)}
+                      (<-≤-ℝ (natℝ-pos-embed (pow16-pos k))) (natℝ-≤-embed h)
+
+-- 剩余尾部：Σ_{k=n+2}^{n+2+j} 1/(k·16^k)
+log16-rest-sum : ℕ → ℕ → ℝ
+log16-rest-sum n zero = oneℝ /ℝ (natℝ (suc (suc (n +ℕr zero))) *ℝ natℝ (pow16 (suc (suc (n +ℕr zero)))))
+log16-rest-sum n (suc j) = log16-rest-sum n j +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc j)))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc j)))))))
+
+-- 剩余几何和：Σ_{k=n+2}^{n+2+j} 1/16^k
+rest-geo-sum16 : ℕ → ℕ → ℝ
+rest-geo-sum16 n zero = oneℝ /ℝ natℝ (pow16 (suc (suc (n +ℕr zero))))
+rest-geo-sum16 n (suc j) = rest-geo-sum16 n j +ℝ (oneℝ /ℝ natℝ (pow16 (suc (suc (n +ℕr (suc j))))))
+
+-- **可证**：剩余尾部 ≤ (1/(n+2))·剩余几何和（逐项 tail16-term-le + 加法保序 + 分配律）
+tail16-rest-le : (n j : ℕ) → log16-rest-sum n j ≤ℝ ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum16 n j)
+tail16-rest-le n zero =
+  subst (λ u → u ≤ℝ ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum16 n zero))
+        (sym (recip-mul-split (natℝ (suc (suc n))) (natℝ (pow16 (suc (suc n))))))
+        (refl-≤ℝ)
+tail16-rest-le n (suc j) =
+  ≤-trans-ℝ stepA (≤-trans-ℝ stepB stepC)
+  where
+  coef : ℝ
+  coef = oneℝ /ℝ natℝ (suc (suc n))
+  T : ℝ
+  T = oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc j)))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc j))))))
+  G : ℝ
+  G = oneℝ /ℝ natℝ (pow16 (suc (suc (n +ℕr (suc j)))))
+  -- 逐项：T ≤ coef·G（tail16-term-le + recip-mul-split）
+  T-le : T ≤ℝ (coef *ℝ G)
+  T-le = subst (λ w → T ≤ℝ w)
+               (recip-mul-split (natℝ (suc (suc n))) (natℝ (pow16 (suc (suc (n +ℕr (suc j)))))))
+               (tail16-term-le n (suc (suc (n +ℕr (suc j)))) (s≤s (s≤s (<-≤ℕ (<-add n j)))))
+  -- ① 和 ≤ coef·rest-geo + T
+  stepA : (log16-rest-sum n j +ℝ T) ≤ℝ ((coef *ℝ rest-geo-sum16 n j) +ℝ T)
+  stepA = ≤-+-mono-r-ℝ {a = log16-rest-sum n j} {b = coef *ℝ rest-geo-sum16 n j} {c = T} (tail16-rest-le n j)
+  -- ② ≤ coef·rest-geo + coef·G
+  stepB : ((coef *ℝ rest-geo-sum16 n j) +ℝ T) ≤ℝ ((coef *ℝ rest-geo-sum16 n j) +ℝ (coef *ℝ G))
+  stepB = subst (λ v → ((coef *ℝ rest-geo-sum16 n j) +ℝ T) ≤ℝ v)
+                (sym (+-comm-ℝ (coef *ℝ rest-geo-sum16 n j) (coef *ℝ G)))
+          (subst (λ u → u ≤ℝ ((coef *ℝ G) +ℝ (coef *ℝ rest-geo-sum16 n j)))
+                 (+-comm-ℝ T (coef *ℝ rest-geo-sum16 n j))
+                 (≤-+-mono-r-ℝ {a = T} {b = coef *ℝ G} {c = coef *ℝ rest-geo-sum16 n j} T-le))
+  -- ③ = coef·rest-geo (suc j)（分配律反向 + 定义）
+  stepC : ((coef *ℝ rest-geo-sum16 n j) +ℝ (coef *ℝ G)) ≤ℝ (coef *ℝ rest-geo-sum16 n (suc j))
+  stepC = subst (λ u → ((coef *ℝ rest-geo-sum16 n j) +ℝ (coef *ℝ G)) ≤ℝ u)
+                (trans (sym (distrib-ℝ coef (rest-geo-sum16 n j) G))
+                       (cong (λ w → coef *ℝ w) (sym geo-suc-def)))
+                (refl-≤ℝ)
+    where
+    geo-suc-def : rest-geo-sum16 n (suc j) ≡ (rest-geo-sum16 n j +ℝ G)
+    geo-suc-def = refl
+
+-- **可证**：剩余几何和 = 错位 (1/16)^k 和（归纳 j，sixteenth-pow + 索引搬运）
+rest-geo-shift16 : (n j : ℕ) → rest-geo-sum16 n j ≡ shift-sum (oneℝ /ℝ natℝ 16) (suc (suc n)) j
+rest-geo-shift16 n zero = sym (sixteenth-pow (suc (suc n)))
+rest-geo-shift16 n (suc j) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ natℝ (pow16 (suc (suc (n +ℕr (suc j))))))) (rest-geo-shift16 n j))
+        (cong (λ w → shift-sum h16 (suc (suc n)) j +ℝ w)
+              (sym (trans (sixteenth-pow ((suc (suc n)) +ℕr (suc j)))
+                          (cong (λ v → oneℝ /ℝ natℝ (pow16 v)) idx-eq))))
+  where
+  h16 : ℝ
+  h16 = oneℝ /ℝ natℝ 16
+  idx-eq : ((suc (suc n)) +ℕr (suc j)) ≡ (suc (suc (n +ℕr (suc j))))
+  idx-eq = trans (+ℕr-comm-suc (suc n) (suc j)) (cong suc (+ℕr-comm-suc n (suc j)))
+
+-- **可证**：剩余几何和 < 1/(15·16^{n+1})（提取公因子 + geo-x(1/16) < 16/15）
+rest-geo-ub16 : (n j : ℕ) → rest-geo-sum16 n j <ℝ (oneℝ /ℝ (natℝ 15 *ℝ natℝ (pow16 (suc n))))
+rest-geo-ub16 n j = subst (λ w → rest-geo-sum16 n j <ℝ w) (sixteenth-geo-tight n)
+                    (subst (λ u → u <ℝ ((h16 ^ℕ (suc (suc n))) *ℝ (natℝ 16 /ℝ natℝ 15))) (sym eq) mult-lt)
+  where
+  h16 : ℝ
+  h16 = oneℝ /ℝ natℝ 16
+  eq : rest-geo-sum16 n j ≡ ((h16 ^ℕ (suc (suc n))) *ℝ geo-x h16 j)
+  eq = trans (rest-geo-shift16 n j) (sym (geo-shift h16 (suc (suc n)) j))
+  hpow-pos : zeroℝ <ℝ (h16 ^ℕ (suc (suc n)))
+  hpow-pos = power-pos-ℕ h16 sixteenth-pos (suc n)
+  mult-lt : ((h16 ^ℕ (suc (suc n))) *ℝ geo-x h16 j) <ℝ ((h16 ^ℕ (suc (suc n))) *ℝ (natℝ 16 /ℝ natℝ 15))
+  mult-lt = *-pos-mono-ℝ {a = geo-x h16 j} {b = natℝ 16 /ℝ natℝ 15} {c = h16 ^ℕ (suc (suc n))} hpow-pos (geo-16th-lt j)
+
+-- **可证**：剩余尾部 ≤ 1/((n+2)·15·16^{n+1})（tail16-rest-le + rest-geo-ub16 + 乘正 + 分数）
+tail16-rest-ub : (n j : ℕ) → log16-rest-sum n j ≤ℝ (oneℝ /ℝ ((natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n))))
+tail16-rest-ub n j = <-≤-ℝ (≤-lt-trans-ℝ (tail16-rest-le n j) (subst (λ z → ((oneℝ /ℝ natℝ (suc (suc n))) *ℝ rest-geo-sum16 n j) <ℝ z)
+                                                                   (trans (sym (recip-mul-split (natℝ (suc (suc n))) (natℝ 15 *ℝ natℝ (pow16 (suc n)))))
+                                                                          (cong₂ _/ℝ_ refl (sym (*-assoc-ℝ (natℝ (suc (suc n))) (natℝ 15) (natℝ (pow16 (suc n)))))))
+                                                                   (*-pos-mono-ℝ {a = rest-geo-sum16 n j}
+                                                                                 {b = oneℝ /ℝ (natℝ 15 *ℝ natℝ (pow16 (suc n)))}
+                                                                                 {c = oneℝ /ℝ natℝ (suc (suc n))}
+                                                                                 coef-pos
+                                                                                 (rest-geo-ub16 n j))))
+  where
+  coef-pos : zeroℝ <ℝ (oneℝ /ℝ natℝ (suc (suc n)))
+  coef-pos = /-pos-ℝ zero-lt-one-ℝ (natℝ-pos-embed z<s)
+
+-- **可证**：尾部分解——log16-tail n (suc m) = 首项 + 剩余（归纳 m）
+log16-tail-decomp : (n m : ℕ) → log16-tail n (suc m) ≡ (log16-tail n zero +ℝ log16-rest-sum n m)
+log16-tail-decomp n zero = refl
+log16-tail-decomp n (suc m) =
+  trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc m)))))))) (log16-tail-decomp n m))
+        (trans (+-assoc-ℝ (log16-tail n zero) (log16-rest-sum n m)
+                          (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc m))))))))
+               (cong (λ u → (log16-tail n zero) +ℝ u) (sym log16-rest-sum-def)))
+  where
+  log16-rest-sum-def : log16-rest-sum n (suc m) ≡ (log16-rest-sum n m +ℝ (oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc m)))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc m))))))))
+  log16-rest-sum-def = refl
+
+-- 固定上界 B''16n = 1/((n+1)·16^{n+1}) + 1/((n+2)·15·16^{n+1})
+B''16n : ℕ → ℝ
+B''16n n = (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (oneℝ /ℝ ((natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n))))
+
+-- **可证**：尾部 T16_n(m) ≤ B''16n（m ≥ 1；首项 + 剩余）
+tail16-le : (n m : ℕ) → log16-tail n (suc m) ≤ℝ (B''16n n)
+tail16-le n m =
+  subst (λ u → u ≤ℝ (B''16n n)) (sym (log16-tail-decomp n m))
+        (add-le-l {a = log16-tail n zero} {b = log16-rest-sum n m}
+                  {c = oneℝ /ℝ ((natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n)))}
+                  (tail16-rest-ub n m))
+
+-- ==================================================================
+-- §2c'''' 组合收官：log16-series-ub / log16-series-lb（base-16）
+-- ==================================================================
+
+-- **可证**：m ≥ n+1 ⟹ 部分和 m ≤ 部分和 n + B''16n（m = n+1 首项吸收；m ≥ n+2 尾部上界）
+tail16-branch : (n m' : ℕ) → log16-partial (suc (n +ℕr m')) ≤ℝ (log16-partial n +ℝ B''16n n)
+tail16-branch n zero =
+  subst (λ u → u ≤ℝ (log16-partial n +ℝ B''16n n)) (sym log16-partial-suc-def)
+        (add-le-l {a = log16-partial n} {b = t0} {c = t0 +ℝ t1} t0-le)
+  where
+  t0 : ℝ
+  t0 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t1 : ℝ
+  t1 = oneℝ /ℝ ((natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n)))
+  log16-partial-suc-def : log16-partial (suc (n +ℕr zero)) ≡ (log16-partial n +ℝ t0)
+  log16-partial-suc-def = refl
+  t1-pos : zeroℝ <ℝ t1
+  t1-pos = /-pos-ℝ zero-lt-one-ℝ (lt-*-pos-ℝ (lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)) (natℝ-pos-embed (pow16-pos (suc n))))
+  t0-le : t0 ≤ℝ (t0 +ℝ t1)
+  t0-le = <-≤-ℝ (add-pos-ℝ t1-pos)
+tail16-branch n (suc m') =
+  subst (λ u → u ≤ℝ (log16-partial n +ℝ B''16n n)) (sym (log16-decomp n (suc m')))
+        (add-le-l {a = log16-partial n} {b = log16-tail n (suc m')} {c = B''16n n} (tail16-le n m'))
+
+-- **可证**：∀m 部分和 ≤ 部分和 n + B''16n（≤-total 三分 + tail16-branch）
+log16-all-partial-le-B'' : (n m : ℕ) → log16-partial m ≤ℝ (log16-partial n +ℝ B''16n n)
+log16-all-partial-le-B'' n m with ≤-total m (suc n)
+log16-all-partial-le-B'' n m | inj₁ h = ≤-trans-ℝ (log16-partial-at-le m (suc n) h) (tail16-branch n zero)
+log16-all-partial-le-B'' n m | inj₂ h = subst (λ z → log16-partial z ≤ℝ (log16-partial n +ℝ B''16n n)) (tail-repr n m h)
+                                     (tail16-branch n (m ∸ suc n))
+
+-- **可证**：ln(16/15) ≤ 部分和 n + B''16n（log16-least-ub-any）
+log16-le-B''16 : (n : ℕ) → log (natℝ 16 /ℝ natℝ 15) ≤ℝ (log16-partial n +ℝ B''16n n)
+log16-le-B''16 n = log16-least-ub-any (log16-partial n +ℝ B''16n n) (log16-all-partial-le-B'' n)
+
+-- **可证**：B''16n < 2·t_{n+1}（1/((n+2)·15·16^{n+1}) < 1/((n+1)·16^{n+1}) 固定间隙）
+B''16-lt-2t : (n : ℕ) → B''16n n <ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))))
+B''16-lt-2t n = subst (λ u → (t0 +ℝ t1) <ℝ u) big-eq
+                 (lt-+-mono-r-ℝ {a = t0} {b = t1} {c = t0} t1-lt-t0)
+  where
+  t0 : ℝ
+  t0 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t1 : ℝ
+  t1 = oneℝ /ℝ ((natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n)))
+  den0 : ℝ
+  den0 = natℝ (suc n) *ℝ natℝ (pow16 (suc n))
+  mid : ℝ
+  mid = natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc n))
+  den1 : ℝ
+  den1 = (natℝ (suc (suc n)) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc n))
+  den0-pos : zeroℝ <ℝ den0
+  den0-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos (suc n)))
+  mid-pos : zeroℝ <ℝ mid
+  mid-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos (suc n)))
+  -- (n+1)·16^{n+1} < (n+2)·16^{n+1}
+  step1 : den0 <ℝ mid
+  step1 = subst (λ u → u <ℝ mid) (sym (*-comm-ℝ (natℝ (suc n)) (natℝ (pow16 (suc n)))))
+          (subst (λ v → (natℝ (pow16 (suc n)) *ℝ natℝ (suc n)) <ℝ v)
+                 (sym (*-comm-ℝ (natℝ (suc (suc n))) (natℝ (pow16 (suc n)))))
+                 (*-pos-mono-ℝ {a = natℝ (suc n)} {b = natℝ (suc (suc n))} {c = natℝ (pow16 (suc n))}
+                               (natℝ-pos-embed (pow16-pos (suc n))) (natℝ-<-embed (s<s (<-suc n)))))
+  -- mid·15 = (n+2)·15·16^{n+1}
+  den1-eq : (mid *ℝ natℝ 15) ≡ den1
+  den1-eq = trans (*-assoc-ℝ (natℝ (suc (suc n))) (natℝ (pow16 (suc n))) (natℝ 15))
+                  (trans (cong (λ w → natℝ (suc (suc n)) *ℝ w) (*-comm-ℝ (natℝ (pow16 (suc n))) (natℝ 15)))
+                         (sym (*-assoc-ℝ (natℝ (suc (suc n))) (natℝ 15) (natℝ (pow16 (suc n))))))
+  -- (n+2)·16^{n+1} < (n+2)·15·16^{n+1}
+  step2 : mid <ℝ den1
+  step2 = subst (λ u → u <ℝ den1) (*-ident-ℝ mid)
+          (subst (λ v → (mid *ℝ oneℝ) <ℝ v) den1-eq
+                 (*-pos-mono-ℝ {a = oneℝ} {b = natℝ 15} {c = mid} mid-pos one-lt-15))
+  -- den0 < den1
+  den0-lt-den1 : den0 <ℝ den1
+  den0-lt-den1 = trans-<ℝ step1 step2
+  -- 1/((n+2)·15·16^{n+1}) < 1/((n+1)·16^{n+1})
+  t1-lt-t0 : t1 <ℝ t0
+  t1-lt-t0 = recip-mono-ℝ den0-pos den0-lt-den1
+  -- t0 + t0 = 2·t0
+  big-eq : (t0 +ℝ t0) ≡ (natℝ 2 *ℝ t0)
+  big-eq = trans (mul-two-add t0) (*-comm-ℝ t0 (natℝ 2))
+
+-- **可证**：log16-series-ub 机制——ln(16/15) < 部分和 n + 2·t_{n+1}
+--（ln(16/15) ≤ 部分和 n + B''16n（log16-least-ub-any）< 部分和 n + 2·t_{n+1}（固定间隙））
+log16-series-ub-thm : (n : ℕ) → log (natℝ 16 /ℝ natℝ 15) <ℝ (log16-partial n +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n))))))
+log16-series-ub-thm n = ≤-lt-trans-ℝ (log16-le-B''16 n)
+                             (lt-+-mono-r-ℝ {a = log16-partial n} {b = B''16n n} (B''16-lt-2t n))
+
+-- **可证**：log 级数下界——部分和严格低于 ln(16/15)
+--（log16-partial n < log16-partial (suc n) [严格递增] ≤ ln(16/15) [sup 刻画]）
+log16-series-lb-thm : (n : ℕ) → log16-partial n <ℝ log (natℝ 16 /ℝ natℝ 15)
+log16-series-lb-thm n = lt-≤-trans-ℝ (log16-partial-suc-< n) (log16-partial-≤-ub (suc n))
+
+-- ==================================================================
+-- §2c'''' 具体夹逼（n=2）：33/512 < ln(16/15) < 397/6144
+--        + 29/450 < ln(16/15) 独立交叉验证（级数路径，原 ln1615-lb 为 exp 路径）
+-- ==================================================================
+
+-- 通分到 512：1/m = s/512（s·m = 512）
+scale-512 : (s m : ℕ) → (s *ℕ m) ≡ 512 → (natℝ 1 /ℝ natℝ m) ≡ (natℝ s /ℝ natℝ 512)
+scale-512 s m h =
+  /-cross-ℝ (trans (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 512)))
+                   (trans (cong natℝ (sym h)) (natℝ-* s m)))
+
+-- log16-partial 1 = 1/16 = 32/512
+l16p-1 : log16-partial 1 ≡ (natℝ 32 /ℝ natℝ 512)
+l16p-1 = trans (loc-zero-add (oneℝ /ℝ (natℝ 1 *ℝ natℝ (pow16 1))))
+              (trans (log16-term 1) (scale-512 32 16 refl))
+
+-- log16-partial 2 = 1/16 + 1/512 = 33/512
+l16p-2 : log16-partial 2 ≡ (natℝ 33 /ℝ natℝ 512)
+l16p-2 = trans (cong (λ u → u +ℝ (oneℝ /ℝ (natℝ 2 *ℝ natℝ (pow16 2)))) (l16p-1))
+              (trans (cong₂ _+ℝ_ refl (trans (log16-term 2) (scale-512 1 512 refl)))
+                     (trans (same-den-add (natℝ 32) (natℝ 1) (natℝ 512))
+                            (cong₂ _/ℝ_ (sym (natℝ-+ 32 1)) refl)))
+
+-- 下界具体化：部分和 2 = 33/512 < ln(16/15)
+log16-lb-33-512 : (natℝ 33 /ℝ natℝ 512) <ℝ log (natℝ 16 /ℝ natℝ 15)
+log16-lb-33-512 = subst (λ x → x <ℝ log (natℝ 16 /ℝ natℝ 15)) l16p-2 (log16-series-lb-thm 2)
+
+-- 29/450 < 33/512（交叉：29·512 = 14848 < 33·450 = 14850）
+29-450-lt-33-512 : (natℝ 29 /ℝ natℝ 450) <ℝ (natℝ 33 /ℝ natℝ 512)
+29-450-lt-33-512 =
+  subst (λ y → (natℝ 29 /ℝ natℝ 450) <ℝ y) (sym r33)
+  (subst (λ x → x <ℝ ((natℝ 33 *ℝ natℝ 450) /ℝ (natℝ 512 *ℝ natℝ 450))) (sym r29)
+  (subst (λ d → ((natℝ 29 *ℝ natℝ 512) /ℝ (natℝ 450 *ℝ natℝ 512)) <ℝ ((natℝ 33 *ℝ natℝ 450) /ℝ d)) denom-comm
+  (/-lt-same-den-ℝ {natℝ 29 *ℝ natℝ 512} {natℝ 33 *ℝ natℝ 450} {natℝ 450 *ℝ natℝ 512} cross-lt-29-33)))
+  where
+  r29 : (natℝ 29 /ℝ natℝ 450) ≡ ((natℝ 29 *ℝ natℝ 512) /ℝ (natℝ 450 *ℝ natℝ 512))
+  r29 = frac-scaled-ℝ (natℝ 29) (natℝ 450) (natℝ 512)
+  r33 : (natℝ 33 /ℝ natℝ 512) ≡ ((natℝ 33 *ℝ natℝ 450) /ℝ (natℝ 512 *ℝ natℝ 450))
+  r33 = frac-scaled-ℝ (natℝ 33) (natℝ 512) (natℝ 450)
+  denom-comm : (natℝ 450 *ℝ natℝ 512) ≡ (natℝ 512 *ℝ natℝ 450)
+  denom-comm = trans (sym (natℝ-* 450 512)) (natℝ-* 512 450)
+  cross-lt-29-33 : (natℝ 29 *ℝ natℝ 512) <ℝ (natℝ 33 *ℝ natℝ 450)
+  cross-lt-29-33 = subst (λ z → z <ℝ (natℝ 33 *ℝ natℝ 450)) (natℝ-* 29 512)
+                  (subst (λ y → natℝ (29 *ℕ 512) <ℝ y) (natℝ-* 33 450)
+                         (natℝ-<-embed prod-lt))
+    where
+    prod-lt : (29 *ℕ 512) <ℕ (33 *ℕ 450)
+    prod-lt = <-add 14848 1
+
+-- 独立交叉验证：29/450 < ln(16/15)（级数路径；原 ln1615-lb 为 exp 路径）
+ln1615-lb-direct : (natℝ 29 /ℝ natℝ 450) <ℝ log (natℝ 16 /ℝ natℝ 15)
+ln1615-lb-direct = trans-<ℝ (29-450-lt-33-512) log16-lb-33-512
+
+-- 通分到 6144：部分和 2 = 396/6144（33·12 = 396，512·12 = 6144）
+l16p-2-6144 : (natℝ 33 /ℝ natℝ 512) ≡ (natℝ 396 /ℝ natℝ 6144)
+l16p-2-6144 = trans (frac-scaled-ℝ (natℝ 33) (natℝ 512) (natℝ 12))
+                    (cong₂ _/ℝ_ (sym (natℝ-* 33 12)) (sym (natℝ-* 512 12)))
+
+-- 2·t_3 = 2/(3·16^3) = 2/12288 = 1/6144
+two-t3 : (natℝ 2 *ℝ (oneℝ /ℝ (natℝ 3 *ℝ natℝ (pow16 3)))) ≡ (natℝ 1 /ℝ natℝ 6144)
+two-t3 = trans (cong₂ _*ℝ_ refl (log16-term 3))
+               (trans (*-/ℝ (natℝ 2) (natℝ 1) (natℝ 12288))
+                      (trans (cong₂ _/ℝ_ (trans (cong (λ w → natℝ 2 *ℝ w) natℝ-one) (*-ident-ℝ (natℝ 2))) refl)
+                             (/-cross-ℝ cross)))
+  where
+  cross : (natℝ 2 *ℝ natℝ 6144) ≡ (natℝ 1 *ℝ natℝ 12288)
+  cross = trans (sym (natℝ-* 2 6144))
+                (sym (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 12288))))
+
+-- 上界具体化：ln(16/15) < 部分和 2 + 2·t_3 = 33/512 + 1/6144 = 397/6144
+log16-ub-397-6144 : log (natℝ 16 /ℝ natℝ 15) <ℝ (natℝ 397 /ℝ natℝ 6144)
+log16-ub-397-6144 = subst (λ y → log (natℝ 16 /ℝ natℝ 15) <ℝ y) sum-eq (log16-series-ub-thm 2)
+  where
+  sum-eq : (log16-partial 2 +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ 3 *ℝ natℝ (pow16 3))))) ≡ (natℝ 397 /ℝ natℝ 6144)
+  sum-eq = trans (cong₂ _+ℝ_ (trans l16p-2 l16p-2-6144) two-t3)
+                 (trans (same-den-add (natℝ 396) (natℝ 1) (natℝ 6144))
+                        (cong₂ _/ℝ_ (sym (natℝ-+ 396 1)) refl))
+
+-- 双侧夹逼（n=2）：33/512 < ln(16/15) < 397/6144（宽度 1/6144 ≈ 1.6e-4）
+ln16-15-squeeze-2 : ((natℝ 33 /ℝ natℝ 512) <ℝ log (natℝ 16 /ℝ natℝ 15))
+                 × (log (natℝ 16 /ℝ natℝ 15) <ℝ (natℝ 397 /ℝ natℝ 6144))
+ln16-15-squeeze-2 = log16-lb-33-512 , log16-ub-397-6144
+
+-- ==================================================================
+-- §2c''''' ln(16/15) 二阶精化（2026-08-05，base-16 高阶，镜像 v1.45）
+-- 目标：二阶上界——ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}（t_k = 1/(k·16^k)），
+--       即固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2}) 严格化。
+-- 机制（零新增公理；复用 tail16-rest-ub (suc n) 剩余移位）：
+--   剩余移位 log16-rest-shift（log16-rest-sum n (suc m) = t_{n+2} + 剩余 (suc n) m）
+--   + 尾部分解 log16-tail2-decomp（T16_n(m≥2) = t_{n+1} + t_{n+2} + 剩余 (suc n)）
+--   + ≤-total 在 n+2 三分 + 固定间隙 1/((n+3)·15·16^{n+2}) < t_{n+2}。
+-- ==================================================================
+
+-- 二阶固定界 B2''16n = t_{n+1} + t_{n+2} + 1/((n+3)·15·16^{n+2})
+B2''16n : ℕ → ℝ
+B2''16n n = ((oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n)))))) +ℝ (oneℝ /ℝ ((natℝ (suc (suc (suc n))) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc (suc n)))))
+
+-- **可证**：剩余移位——log16-rest-sum n (suc m) = t_{n+2} + 剩余 (suc n) m（归纳 m）
+log16-rest-shift : (n m : ℕ) → log16-rest-sum n (suc m) ≡ ((oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))) +ℝ log16-rest-sum (suc n) m)
+log16-rest-shift n zero = refl
+log16-rest-shift n (suc m) =
+  trans (cong (λ u → u +ℝ term-idx1) (log16-rest-shift n m))
+        (trans (+-assoc-ℝ (t2n n) (log16-rest-sum (suc n) m) term-idx1)
+               (cong (λ v → (t2n n) +ℝ ((log16-rest-sum (suc n) m) +ℝ v))
+                     (cong (λ w → oneℝ /ℝ (natℝ w *ℝ natℝ (pow16 w))) idx-eq)))
+  where
+  t2n : ℕ → ℝ
+  t2n n = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))
+  term-idx1 : ℝ
+  term-idx1 = oneℝ /ℝ (natℝ (suc (suc (n +ℕr (suc (suc m))))) *ℝ natℝ (pow16 (suc (suc (n +ℕr (suc (suc m)))))))
+  idx-eq : (suc (suc (n +ℕr (suc (suc m))))) ≡ (suc (suc ((suc n) +ℕr (suc m))))
+  idx-eq = sym (cong (λ w → suc (suc (suc w))) (+ℕr-comm-suc n m))
+
+-- **可证**：二阶尾部分解——log16-tail n (suc (suc m)) = (t_{n+1} + t_{n+2}) + 剩余 (suc n) m
+log16-tail2-decomp : (n m : ℕ) → log16-tail n (suc (suc m)) ≡ ((oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n)))))) +ℝ log16-rest-sum (suc n) m
+log16-tail2-decomp n m =
+  trans (log16-tail-decomp n (suc m))
+        (trans (cong (λ u → (t1n n) +ℝ u) (log16-rest-shift n m))
+               (sym (+-assoc-ℝ (t1n n) (t2n n) (log16-rest-sum (suc n) m))))
+  where
+  t1n : ℕ → ℝ
+  t1n n = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t2n : ℕ → ℝ
+  t2n n = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))
+
+-- **可证**：m ≥ n+2 ⟹ 部分和 m ≤ 部分和 n + B2''16n（m = n+2 前两项吸收；m ≥ n+3 二阶尾部上界）
+tail16-branch2 : (n m' : ℕ) → log16-partial (suc (suc (n +ℕr m'))) ≤ℝ (log16-partial n +ℝ B2''16n n)
+tail16-branch2 n zero =
+  subst (λ u → u ≤ℝ (log16-partial n +ℝ B2''16n n)) (sym log16-partial-2-def)
+        (add-le-l {a = log16-partial n} {b = (t1 +ℝ t2)} {c = B2''16n n} t12-le)
+  where
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t2 : ℝ
+  t2 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))
+  R : ℝ
+  R = oneℝ /ℝ ((natℝ (suc (suc (suc n))) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc (suc n))))
+  log16-partial-2-def : log16-partial (suc (suc (n +ℕr zero))) ≡ (log16-partial n +ℝ (t1 +ℝ t2))
+  log16-partial-2-def = +-assoc-ℝ (log16-partial n) t1 t2
+  R-pos : zeroℝ <ℝ R
+  R-pos = /-pos-ℝ zero-lt-one-ℝ (lt-*-pos-ℝ (lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed z<s)) (natℝ-pos-embed (pow16-pos (suc (suc n)))))
+  t12-le : (t1 +ℝ t2) ≤ℝ B2''16n n
+  t12-le = <-≤-ℝ (add-pos-ℝ R-pos)
+tail16-branch2 n (suc m') =
+  subst (λ u → u ≤ℝ (log16-partial n +ℝ B2''16n n)) (sym (log16-decomp n (suc (suc m'))))
+        (subst (λ v → (log16-partial n +ℝ v) ≤ℝ (log16-partial n +ℝ B2''16n n)) (sym (log16-tail2-decomp n m'))
+               (add-le-l {a = log16-partial n} {b = (t1 +ℝ t2) +ℝ log16-rest-sum (suc n) m'}
+                         {c = B2''16n n}
+                         (add-le-l {a = t1 +ℝ t2} {b = log16-rest-sum (suc n) m'} {c = R'}
+                                   (tail16-rest-ub (suc n) m'))))
+  where
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t2 : ℝ
+  t2 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))
+  R' : ℝ
+  R' = oneℝ /ℝ ((natℝ (suc (suc (suc n))) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc (suc n))))
+
+-- **可证**：∀m 部分和 ≤ 部分和 n + B2''16n（≤-total 在 n+2 三分 + tail16-branch2）
+log16-all-partial-le-B2'' : (n m : ℕ) → log16-partial m ≤ℝ (log16-partial n +ℝ B2''16n n)
+log16-all-partial-le-B2'' n m with ≤-total m (suc (suc n))
+log16-all-partial-le-B2'' n m | inj₁ h = ≤-trans-ℝ (log16-partial-at-le m (suc (suc n)) h) (tail16-branch2 n zero)
+log16-all-partial-le-B2'' n m | inj₂ h = subst (λ z → log16-partial z ≤ℝ (log16-partial n +ℝ B2''16n n)) (tail-repr (suc n) m h)
+                                     (subst (λ z → log16-partial z ≤ℝ (log16-partial n +ℝ B2''16n n))
+                                            (sym (cong suc (+ℕr-comm-suc n (m ∸ suc (suc n)))))
+                                            (tail16-branch2 n (m ∸ suc (suc n))))
+
+-- **可证**：ln(16/15) ≤ 部分和 n + B2''16n（log16-least-ub-any）
+log16-le-B2'' : (n : ℕ) → log (natℝ 16 /ℝ natℝ 15) ≤ℝ (log16-partial n +ℝ B2''16n n)
+log16-le-B2'' n = log16-least-ub-any (log16-partial n +ℝ B2''16n n) (log16-all-partial-le-B2'' n)
+
+-- **可证**：B2''16n < t_{n+1} + 2·t_{n+2}（1/((n+3)·15·16^{n+2}) < t_{n+2} 固定间隙）
+B2''-lt-2t2 : (n : ℕ) → B2''16n n <ℝ ((oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n)))))))
+B2''-lt-2t2 n = subst (λ u → u <ℝ (t1 +ℝ (natℝ 2 *ℝ t2))) (sym (+-assoc-ℝ t1 t2 R)) step-t1
+  where
+  t1 : ℝ
+  t1 = oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))
+  t2 : ℝ
+  t2 = oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))
+  R : ℝ
+  R = oneℝ /ℝ ((natℝ (suc (suc (suc n))) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc (suc n))))
+  den2 : ℝ
+  den2 = natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n)))
+  mid2 : ℝ
+  mid2 = natℝ (suc (suc (suc n))) *ℝ natℝ (pow16 (suc (suc n)))
+  denR : ℝ
+  denR = (natℝ (suc (suc (suc n))) *ℝ natℝ 15) *ℝ natℝ (pow16 (suc (suc n)))
+  den2-pos : zeroℝ <ℝ den2
+  den2-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos (suc (suc n))))
+  mid2-pos : zeroℝ <ℝ mid2
+  mid2-pos = lt-*-pos-ℝ (natℝ-pos-embed z<s) (natℝ-pos-embed (pow16-pos (suc (suc n))))
+  -- (n+2)·16^{n+2} < (n+3)·16^{n+2}
+  step1 : den2 <ℝ mid2
+  step1 = subst (λ u → u <ℝ mid2) (sym (*-comm-ℝ (natℝ (suc (suc n))) (natℝ (pow16 (suc (suc n))))))
+          (subst (λ v → (natℝ (pow16 (suc (suc n))) *ℝ natℝ (suc (suc n))) <ℝ v)
+                 (sym (*-comm-ℝ (natℝ (suc (suc (suc n)))) (natℝ (pow16 (suc (suc n))))))
+                 (*-pos-mono-ℝ {a = natℝ (suc (suc n))} {b = natℝ (suc (suc (suc n)))} {c = natℝ (pow16 (suc (suc n)))}
+                               (natℝ-pos-embed (pow16-pos (suc (suc n)))) (natℝ-<-embed (s<s (s<s (<-suc n))))))
+  -- mid2·15 = (n+3)·15·16^{n+2}
+  denR-eq : (mid2 *ℝ natℝ 15) ≡ denR
+  denR-eq = trans (*-assoc-ℝ (natℝ (suc (suc (suc n)))) (natℝ (pow16 (suc (suc n)))) (natℝ 15))
+                  (trans (cong (λ w → natℝ (suc (suc (suc n))) *ℝ w) (*-comm-ℝ (natℝ (pow16 (suc (suc n)))) (natℝ 15)))
+                         (sym (*-assoc-ℝ (natℝ (suc (suc (suc n)))) (natℝ 15) (natℝ (pow16 (suc (suc n)))))))
+  -- (n+3)·16^{n+2} < (n+3)·15·16^{n+2}
+  step2 : mid2 <ℝ denR
+  step2 = subst (λ u → u <ℝ denR) (*-ident-ℝ mid2)
+          (subst (λ v → (mid2 *ℝ oneℝ) <ℝ v) denR-eq
+                 (*-pos-mono-ℝ {a = oneℝ} {b = natℝ 15} {c = mid2} mid2-pos one-lt-15))
+  den2-lt-denR : den2 <ℝ denR
+  den2-lt-denR = trans-<ℝ step1 step2
+  -- R < t2（recip-mono）
+  R-lt-t2 : R <ℝ t2
+  R-lt-t2 = recip-mono-ℝ den2-pos den2-lt-denR
+  -- (t2 + R) < (t2 + t2)
+  inner : (t2 +ℝ R) <ℝ (t2 +ℝ t2)
+  inner = lt-+-mono-r-ℝ {a = t2} {b = R} {c = t2} R-lt-t2
+  -- t2 + t2 = 2·t2
+  big-eq2 : (t2 +ℝ t2) ≡ (natℝ 2 *ℝ t2)
+  big-eq2 = trans (mul-two-add t2) (*-comm-ℝ t2 (natℝ 2))
+  -- t1 + (t2 + R) < t1 + 2·t2
+  step-t1 : (t1 +ℝ (t2 +ℝ R)) <ℝ (t1 +ℝ (natℝ 2 *ℝ t2))
+  step-t1 = subst (λ v → (t1 +ℝ (t2 +ℝ R)) <ℝ v) (cong (λ u → t1 +ℝ u) big-eq2)
+                  (lt-+-mono-r-ℝ {a = t1} {b = t2 +ℝ R} {c = t2 +ℝ t2} inner)
+
+-- **可证**：log16-series-ub2 机制——ln(16/15) < 部分和 n + t_{n+1} + 2·t_{n+2}
+--（ln(16/15) ≤ 部分和 n + B2''16n（log16-least-ub-any）< 部分和 n + (t_{n+1} + 2·t_{n+2})（固定间隙））
+log16-series-ub2-thm : (n : ℕ) → log (natℝ 16 /ℝ natℝ 15) <ℝ (log16-partial n +ℝ ((oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))))))
+log16-series-ub2-thm n = ≤-lt-trans-ℝ (log16-le-B2'' n)
+                             (lt-+-mono-r-ℝ {a = log16-partial n} {b = B2''16n n} {c = (oneℝ /ℝ (natℝ (suc n) *ℝ natℝ (pow16 (suc n)))) +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ (suc (suc n)) *ℝ natℝ (pow16 (suc (suc n))))))} (B2''-lt-2t2 n))
+
+-- ==================================================================
+-- §2c''''' 具体二阶夹逼（n=2）：33/512 < ln(16/15) < 25379/393216
+-- ==================================================================
+
+-- 通分到 393216：1/m = s/393216（s·m = 393216）
+scale-393216 : (s m : ℕ) → (s *ℕ m) ≡ 393216 → (natℝ 1 /ℝ natℝ m) ≡ (natℝ s /ℝ natℝ 393216)
+scale-393216 s m h =
+  /-cross-ℝ (trans (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 393216)))
+                   (trans (cong natℝ (sym h)) (natℝ-* s m)))
+
+-- 2·t_4 = 2/(4·16^4) = 2/262144 = 1/131072
+two-t4 : (natℝ 2 *ℝ (oneℝ /ℝ (natℝ 4 *ℝ natℝ (pow16 4)))) ≡ (natℝ 1 /ℝ natℝ 131072)
+two-t4 = trans (cong₂ _*ℝ_ refl (log16-term 4))
+               (trans (*-/ℝ (natℝ 2) (natℝ 1) (natℝ 262144))
+                      (trans (cong₂ _/ℝ_ (trans (cong (λ w → natℝ 2 *ℝ w) natℝ-one) (*-ident-ℝ (natℝ 2))) refl)
+                             (/-cross-ℝ cross)))
+  where
+  cross : (natℝ 2 *ℝ natℝ 131072) ≡ (natℝ 1 *ℝ natℝ 262144)
+  cross = trans (sym (natℝ-* 2 131072))
+                (sym (trans (cong₂ _*ℝ_ natℝ-one refl) (loc-one-mul (natℝ 262144))))
+
+-- 部分和 2 通分到 393216：33/512 = 25344/393216（33·768 = 25344，512·768 = 393216）
+l16p-2-393216 : (natℝ 33 /ℝ natℝ 512) ≡ (natℝ 25344 /ℝ natℝ 393216)
+l16p-2-393216 = trans (frac-scaled-ℝ (natℝ 33) (natℝ 512) (natℝ 768))
+                      (cong₂ _/ℝ_ (sym (natℝ-* 33 768)) (sym (natℝ-* 512 768)))
+
+-- 二阶上界具体化：ln(16/15) < 部分和 2 + (t_3 + 2·t_4) = 25344/393216 + 35/393216 = 25379/393216
+log16-ub2-25379 : log (natℝ 16 /ℝ natℝ 15) <ℝ (natℝ 25379 /ℝ natℝ 393216)
+log16-ub2-25379 = subst (λ y → log (natℝ 16 /ℝ natℝ 15) <ℝ y) sum-eq (log16-series-ub2-thm 2)
+  where
+  sum-eq : (log16-partial 2 +ℝ ((oneℝ /ℝ (natℝ 3 *ℝ natℝ (pow16 3))) +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ 4 *ℝ natℝ (pow16 4)))))) ≡ (natℝ 25379 /ℝ natℝ 393216)
+  sum-eq = trans (cong₂ _+ℝ_ (trans l16p-2 l16p-2-393216) inner)
+                 (trans (same-den-add (natℝ 25344) (natℝ 35) (natℝ 393216))
+                        (cong₂ _/ℝ_ (sym (natℝ-+ 25344 35)) refl))
+    where
+    inner : ((oneℝ /ℝ (natℝ 3 *ℝ natℝ (pow16 3))) +ℝ (natℝ 2 *ℝ (oneℝ /ℝ (natℝ 4 *ℝ natℝ (pow16 4))))) ≡ (natℝ 35 /ℝ natℝ 393216)
+    inner = trans (cong₂ _+ℝ_ (trans (log16-term 3) (scale-393216 32 12288 refl)) (trans two-t4 (scale-393216 3 131072 refl)))
+                  (trans (same-den-add (natℝ 32) (natℝ 3) (natℝ 393216))
+                         (cong₂ _/ℝ_ (sym (natℝ-+ 32 3)) refl))
+
+-- 二阶夹逼：33/512 < ln(16/15) < 25379/393216（宽度 35/393216 ≈ 8.9e-5，较 v1.46 的 1/6144 ≈ 1.6e-4 收窄）
+ln16-15-squeeze-2b : ((natℝ 33 /ℝ natℝ 512) <ℝ log (natℝ 16 /ℝ natℝ 15))
+                  × (log (natℝ 16 /ℝ natℝ 15) <ℝ (natℝ 25379 /ℝ natℝ 393216))
+ln16-15-squeeze-2b = log16-lb-33-512 , log16-ub2-25379
+
 -- 交叉乘积比较（二进制算术 + <-add 差递归）：279483125 < 279486144
 cross-lt-l2 : (natℝ 447173 *ℝ natℝ 625) <ℝ (natℝ 69317 *ℝ natℝ 4032)
 cross-lt-l2 = subst (λ z → z <ℝ (natℝ 69317 *ℝ natℝ 4032)) (natℝ-* 447173 625)

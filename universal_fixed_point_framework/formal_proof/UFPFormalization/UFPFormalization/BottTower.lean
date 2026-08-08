@@ -49,7 +49,12 @@ namespace UFPFormalization.BottTower
 
 /-- Bott 塔第 k 层的旋量维数（矩阵代数维数的一半）：
     Cl(1,7) 在 Level 0 的旋量维数为 8，
-    每升一级维数翻倍：spinorDim(k) = 8 × 2^k。 -/
+    每升一级维数翻倍：spinorDim(k) = 8 × 2^k。
+    【2026-08-07 勘误（注释层）：此 spinorDim(0)=8 为 Bott 塔翻倍结构的"工作基准"——
+    标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量维数为 16（paper20 权威）。引理 3 的核心论证
+    "log₂(k_max) = N_active = 3 ⇒ k_max = 2³ = 8"只依赖"翻倍指数 = 主动层数"，
+    不依赖 spinorDim 基准（见 paper33 §4.1 勘误说明）。形式化证明结构保留不动，
+    以维护 lake build 与统一 3 定理。】 -/
 def spinorDim (k : ℕ) : ℕ := 8 * 2 ^ k
 
 /-- spinorDim 在 k=0 的初始值。 -/

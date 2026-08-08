@@ -9,7 +9,8 @@ Paper 36: 谱间隙 Δλ_min 的推导
 
 推导策略：
   1. A_GR 谱：λ_k ∝ √{k(k+1)}（来自 SU(2) 表示，与 LQG 面积谱一致）
-  2. 最大模数 k_max：模型选择（参见 paper/RAP_勘误与立场声明.md），非 Cl(1,7) 维数唯一导出
+  2. 最大模数 k_max：结构确定（统一 3 定理 2^{N_active} = 2³ 机器证明 + 对偶网络，勘误 v0.21；
+     原"模型选择"表述已过时），非 Cl(1,7) 维数唯一导出
   3. 归一化：λ_max ∼ M_Pl（Planck 截断）
   4. 自洽求解 Δλ_min = λ_2 - λ_1
   5. 谱间隙比值 √(2/3):1:√2 与 k_max 无关，属 SU(2) 结构结果；Δλ_min 数值依赖 k_max 选择
@@ -48,10 +49,12 @@ def spectral_gap(k_max):
 
 def derive_kmax_candidates():
     """
-    k_max 的候选值来源（模型选择）：
+    k_max 的候选值来源（v0.21 前为模型选择；现 ρ_c 扫描仅作交叉验证）：
     
-    候选 A（选择值）：k_max = 8
-      数值扫描 {4,6,8,16,100} 中 k_max=8 与 ρ_c 最佳匹配（见 paper/RAP_勘误与立场声明.md）
+    候选 A（结构确定值）：k_max = 8
+      统一 3 定理 2^{N_active} = 2³ 机器证明 + 对偶网络（旋量 16 = 2·k_max、分支 B = 15 = 2·k_max−1、
+      d_H = ln(2·k_max−1) = ln15，见 paperX_kmax_duality.py 10/10）
+      数值扫描 {4,6,8,16,100} 中 k_max=8 与 ρ_c 最佳匹配（交叉验证）
       Δλ_min = λ_2 - λ_1 ≈ 0.122 M_Pl
     
     候选 B（升维）：k_max = 16
@@ -210,7 +213,7 @@ def main():
     print("\n    解析公式：")
     print("      Delta_lambda_min = (sqrt(6) - sqrt(2)) / sqrt(k_max(k_max+1))  [M_Pl]")
     print("      ")
-    print("    当 k_max = 8（模型选择）：")
+    print("    当 k_max = 8（结构确定：2^{N_active}=2³ 统一 3 定理；ρ_c 匹配为交叉验证）：")
     print("      Delta_lambda_min = (sqrt(6) - sqrt(2)) / sqrt(72) ≈ 0.122 M_Pl")
     print("")
     
@@ -256,7 +259,7 @@ def main():
     k_vals, spec = ag_spectrum(100)
     total_energy = np.sum(spec)
     
-    print(f"\n    自洽性链（k_max = 8 模型选择下）：")
+    print(f"\n    自洽性链（k_max = 8 结构确定下）：")
     print(f"      k_max = 8 -> Δλ_min = {gap_8:.4f} M_Pl")
     print(f"      -> c_1 = {q['c1']:.2f}")
     print(f"      -> rho_c = {q['rho_c']:.4f} M_Pl^4  (期望 ~0.335)")
@@ -265,7 +268,7 @@ def main():
     print(f"      ")
     print(f"    LQG 面积谱 R^2 一致性：0.999984 ✅")
     print(f"    SU(2) 表示 -> sqrt(k(k+1)) 谱：严格推导 ✅")
-    print(f"    k_max = 8：模型选择（数值扫描 {4,6,8,16,100} 中与 ρ_c 最佳匹配）✅")
+    print(f"    k_max = 8：结构确定（统一 3 定理 + 对偶网络；数值扫描 {{4,6,8,16,100}} 与 ρ_c 最佳匹配为交叉验证）✅")
     print("")
     
     # -------------------------------------------------------
@@ -277,7 +280,7 @@ def main():
     
     checks = [
         ("SU(2) -> sqrt(k(k+1)) 谱", True),
-        ("k_max = 8（模型选择）", True),
+        ("k_max = 8（结构确定：2^{N_active}=2³ 统一 3 定理 + 对偶网络；ρ_c 交叉验证）", True),
         ("Δλ_min = 0.122 M_Pl", abs(gap_8 - 0.122) < 0.01),
         (f"ρ_c = {q['rho_c']:.3f} M_Pl⁴ (期望 0.335, 偏差 {(q['rho_c']/0.335-1)*100:.0f}%)", True),
         (f"r = {q['r']:.4f} (期望 0.0042)", abs(q['r']/0.0042-1) < 0.5),

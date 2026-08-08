@@ -16,7 +16,7 @@ print("=" * 65)
 # =========================================================================
 # 第 1 层: 4-范畴结构 → S₃, S₄
 # =========================================================================
-N_gen = 3                      # Cl(1,7) 旋量表示的不可约子空间数
+N_gen = 3                      # 主动态射层数 N_active=3（统一 3 定理机器证明；2026-08-07 勘误：原注释"Cl(1,7) 旋量表示的不可约子空间数"错误——Cl(1,7) 提供单代载体，三代来自代空间 C³_fam，paper33）
 S3 = math.exp(-N_gen)          # 对象静默: e⁻³
 dH = 2.7095                    # IFS 吸引子 Hausdorff 维数 (来自 Moran 方程)
 S4 = math.exp(-dH)             # 辫子静默: e^{-d_H}
@@ -124,9 +124,9 @@ for label, sector, pred, exp_val, ratio, mark in results:
 # =========================================================================
 # 第 4 层: 规范耦合
 # =========================================================================
-# 谱间隙比 (来自 Cl(1,7) 根系)
+# 谱间隙比 (来自 SU(2) Casimir 特征值归一化)【2026-08-06 修复】√(2/3)→√(1/3
 delta_lambda_min = 0.122       # GR 谱间隙 (Phase 36)
-ratio_u1 = math.sqrt(2/3)      # U(1)
+ratio_u1 = math.sqrt(1/3)      # U(1) = 1/√3（SU(2) 特征值归一化）
 ratio_su2 = 1.0                # SU(2)
 ratio_su3 = math.sqrt(2)       # SU(3)
 
@@ -137,27 +137,38 @@ alpha3_0 = delta_lambda_min * ratio_su3 / (4*math.pi)
 # RGE Z_i 因子 (来自 S₂+S₃+S₄ 积分)
 Z1, Z2, Z3 = 3.674, 2.118, 1.439
 
-alpha1_MZ = alpha1_0 * Z1
-alpha2_MZ = alpha2_0 * Z2
-alpha3_MZ = alpha3_0 * Z3
+# 【2026-08-06 勘误】Z_i = α_i^MS-bar(M_Pl)/α_i^bare(M_Pl)，为 M_Pl 标度方案转换因子
+# （数值由实验 α(M_Z) 反演得出，非独立第一性推导——见 scripts/paperX_rge_gap_analysis.py）。
+# α_i^bare·Z_i 给出 M_Pl 标度的 MS-bar 值，**不是** α(M_Z) 预测。
+# 真实 α(M_Z) 预测需从 Z_i·α_i^bare 初值跑 RGE 至 M_Z（spectral_rge_running.py，
+# Z₃ 修正后 α_s(M_Z) = 0.1179 复现实验）。原"α(M_Z)预测"标注错误已更正。
+alpha1_MSbar_Pl = alpha1_0 * Z1
+alpha2_MSbar_Pl = alpha2_0 * Z2
+alpha3_MSbar_Pl = alpha3_0 * Z3
 
 print(f"\n{'─'*65}")
-print("第 4 层: 规范耦合 (Cl(1,7) 根系 + RGE)")
+print("第 4 层: 规范耦合 (Cl(1,7) 根系 + RGE)  【2026-08-06 勘误版】")
 print(f"{'─'*65}")
-print(f"  {'规范群':<12s} {'裸耦合':<12s} {'Z_i':<8s} {'α(M_Z)预测':<12s} {'α(M_Z)实验':<12s}")
-print(f"  {'─'*56}")
+print(f"  {'规范群':<12s} {'裸耦合':<12s} {'Z_i':<8s} {'α^MS-bar(M_Pl)':<16s} {'α(M_Z)实验':<12s}")
+print(f"  {'─'*60}")
 gauge_data = [
-    ('U(1)', alpha1_0, Z1, alpha1_MZ, 1/127.951),
-    ('SU(2)', alpha2_0, Z2, alpha2_MZ, 1/29.587),
-    ('SU(3)', alpha3_0, Z3, alpha3_MZ, 0.11792),
+    ('U(1)', alpha1_0, Z1, alpha1_MSbar_Pl, 1/127.951),
+    ('SU(2)', alpha2_0, Z2, alpha2_MSbar_Pl, 1/29.587),
+    ('SU(3)', alpha3_0, Z3, alpha3_MSbar_Pl, 0.11792),
     ('', 0, 0, 0, 0),
     ('sin²θ_W', 0, 0, 0.2223, 0.23122),
 ]
 for g, a0, z, ap, ae in gauge_data:
     if g == '':
         continue
-    print(f"  {g:<12s} {a0:<12.5f} {z:<8.3f} {ap:<12.5f} {ae:<12.5f}")
+    print(f"  {g:<12s} {a0:<12.5f} {z:<8.3f} {ap:<16.5f} {ae:<12.5f}")
 print(f"  sin²θ_W                        {0.2223:<12.4f} {0.23122:<12.4f}")
+print(f"\n  ※ 勘误说明：α^bare·Z_i 是 M_Pl 标度 MS-bar 值（原误标为 α(M_Z) 预测，"
+      f"偏差 -83%~+272% 系标注错误所致）；")
+print(f"    α(M_Z) 的真实预测需从 Z_i·α^bare 初值 RGE 跑动（见 spectral_rge_running.py 与 "
+      f"paperX_rge_gap_analysis.py）；")
+print(f"    sin²θ_W = 0.2223 为硬编码展示值，与裸比值 α₁⁰/(α₁⁰+α₂⁰) = "
+      f"{alpha1_0/(alpha1_0+alpha2_0):.4f} 不符，来源待澄清（§8.4 F3）。")
 
 # =========================================================================
 # 第 5 层: CKM 角度 (J 生成元旋转)

@@ -46,12 +46,15 @@ noncomputable def dl_min : ℝ := spectralGap 8
 
 /-- SU(3) spectral gap: dl_3 = √2 · dl_min (from Cl(1,7) spectral embedding).
     In the spectral framework, the three gauge group gaps satisfy:
-    dl_1 : Δλ_2 : dl_3 = √(2/3) : 1 : √2
+    dl_1 : Δλ_2 : dl_3 = √(1/3) : 1 : √2    【2026-08-06 修复】√(2/3)→√(1/3)
     where Δλ_2 = dl_min (SU(2) Casimir spectral gap). -/
 noncomputable def dl_3 : ℝ := Real.sqrt 2 * dl_min
 
-/-- U(1) spectral gap: dl_1 = √(2/3) · dl_min. -/
-noncomputable def dl_1 : ℝ := Real.sqrt (2/3) * dl_min
+/-- U(1) spectral gap: dl_1 = √(1/3) · dl_min.
+    【2026-08-06 修复】第一分量由 √(2/3) 更正为 √(1/3)：SU(2) Casimir 特征值归一化
+    λ_k = √(k(k+1)) 严格给出 Δλ₁:Δλ₂:Δλ₃ = 1/√3:1:√2（见 scripts/paperX_ratio_fix.py
+    与笔记 spectral_color_dynamics.md §8.4 修复子节）。原 √(2/3) 为拼凑值。 -/
+noncomputable def dl_1 : ℝ := Real.sqrt (1/3) * dl_min
 
 /-- SU(2) representation Casimir: C₂(𝔰𝔲(2)_fund) = 3/4. -/
 noncomputable def C2_su2_fund : ℝ := (3 : ℝ)/4

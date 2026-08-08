@@ -18,7 +18,7 @@ DL = lam[1] - lam[0]
 d_H = 2.7095
 c_Planck = 18 * (2 + np.sqrt(3))
 
-eps_obs = 8.12e-17  # 谱交织精度观测值 (Paper II)
+eps_obs = 8.12e-17  # 谱交织精度观测值（2026-08-07：推导归因已更新为 ε = N_Weyl × v_EW/M_Pl = 8.07e-17，N_Weyl=4 = 4D Weyl 数（RAP3 机器证明）；观测值未变，偏差 0.6%，见 paper20 §6.4）
 
 print("=" * 72)
 print("  UFPF 可证伪预测 — 与 GR 的区分判据")

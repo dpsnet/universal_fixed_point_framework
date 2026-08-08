@@ -31,13 +31,13 @@ DL = lam[1] - lam[0]
 # 精确解析值
 DLsq_exact = (2 - np.sqrt(3)) / 18
 c_Planck_exact = 18 * (2 + np.sqrt(3))
-n_dim = 8
+n_dim = 8  # A_GR 谱模数 k_max=8（2026-08-07 勘误标注：原注释"旋量维数"错误——Cl(1,7) 标准旋量 16 维；此 n 为 A_GR 矩阵谱模数，非旋量维数）
 F_cl17_exact = 8 * (2 - np.sqrt(3))
 tr_A = np.sum(lam)
 tr_A2 = np.sum(lam ** 2)
 
 print(f"\n§0 Cl(1,7) 精确谱数据")
-print(f"  n (旋量维数)          = {n_dim}")
+print(f"  n (A_GR 谱模数 k_max)  = {n_dim}")
 print(f"  Δλ_min                = {DL:.12f}")
 print(f"  Δλ_min² = (2-√3)/18   = {DLsq_exact:.12f}")
 print(f"  c_Planck = 18(2+√3)   = {c_Planck_exact:.10f}")

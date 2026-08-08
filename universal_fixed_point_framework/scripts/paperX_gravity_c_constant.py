@@ -206,7 +206,7 @@ def cl17_structure_factors(gammas, A_GR, DL):
     # A_GR 的本征分解
     evals, evecs = LA.eigh(A_GR)
 
-    # 旋量空间维数
+    # A_GR 谱空间维数（k_max=8 谱模数；2026-08-07 勘误标注：原注释"旋量空间维数"错误——Cl(1,7) 标准旋量 16 维，此 n 为 A_GR 谱模数非旋量维数）
     dim_spinor = n
     dim_spacetime = 4  # 涌现时空维数
 
@@ -310,7 +310,7 @@ def main():
     factors = cl17_structure_factors(gammas, A_GR, DL)
 
     print(f"\n  涌现时空维数: 4")
-    print(f"  Cl(1,7) 旋量空间维数: 8")
+    print(f"  A_GR 谱空间维数 (k_max=8): 8")
     print(f"  dim_ratio (8/4)           = {factors['dim_ratio']}")
     print(f"  trace_ratio (4/8)         = {factors['trace_ratio']}")
     print(f"  λ₁                         = {factors['lambda_1']:.6f}")

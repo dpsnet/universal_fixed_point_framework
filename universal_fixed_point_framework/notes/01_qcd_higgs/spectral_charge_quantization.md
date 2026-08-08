@@ -30,7 +30,7 @@ $$Q_{\text{EM}}: \mathcal{H}_{\text{SM}} \to \mathbb{R}, \quad Q_{\text{EM}} = \
 
 **定理 1.1**（电荷量子化的谱重构）。在谱框架中，电荷量子化等价于以下三个条件的联立结果：
 
-1. **代数条件**：Cl(1,7) 在 $8_s$ 旋量表示中的 Cartan 子代数固定了超荷 $Y$ 的本征值集
+1. **代数条件**：Cl(1,7) 在 $8_s$ 旋量表示中的 Cartan 子代数固定了超荷 $Y$ 的本征值集【2026-08-07 勘误：旧遗留记号 "$8_s$" 应理解为 16 维旋量 S₁₆；Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)，代数维数 256，旋量维数 16（非 8 维）】
 2. **嵌入条件**：$\mathfrak{so}(1,7) \to \mathfrak{su}(4) \to \mathfrak{su}(3) \oplus \mathfrak{u}(1)_Y$ 的分支规则确定了 $Y$ 的具体分数值
 3. **谱间隙条件**：U(1)$_{\text{EM}}$ 的谱间隙 $\Delta\lambda_{\min}^{(\text{EM})} = 0.0229$ 确保了电荷算符的离散谱结构在 RG 跑动下的稳定性
 
@@ -51,11 +51,11 @@ $$Q_{\text{EM}}: \mathcal{H}_{\text{SM}} \to \mathbb{R}, \quad Q_{\text{EM}} = \
 
 ### 2.1 Cartan 子代数的谱分解
 
-参照 [spectral_hypercharge_derivation.md](../10_gauge_RG/spectral_hypercharge_derivation.md) §3，Cl(1,7) 的 Cartan 子代数 $\mathfrak{h}$ 有四个生成元 $\{H_1, H_2, H_3, H_4\}$。在 $8_s$ 旋量表示中，它们同时对角化，其联合本征值谱为 $(\pm 1/2, \pm 1/2, \pm 1/2, \pm 1/2)$——全部 16 种符号组合中只有 8 种在 $8_s$ 中实现。
+参照 [spectral_hypercharge_derivation.md](../10_gauge_RG/spectral_hypercharge_derivation.md) §3，Cl(1,7) 的 Cartan 子代数 $\mathfrak{h}$ 有四个生成元 $\{H_1, H_2, H_3, H_4\}$。在 $8_s$ 旋量表示中，它们同时对角化，其联合本征值谱为 $(\pm 1/2, \pm 1/2, \pm 1/2, \pm 1/2)$——全部 16 种符号组合中只有 8 种在 $8_s$ 中实现。【2026-08-07 勘误：两处 "$8_s$" 均为旧遗留记号，应理解为 16 维旋量 S₁₆（基向量共 16 个）；"只有 8 种在 $8_s$ 中实现" 的 8 系 8 维 Weyl 半旋量的旧口径，标准旋量维数为 16】
 
-**定理 2.1**（$8_s$ 的谱嵌入）。$8_s$ 旋量表示的谱像（joint spectrum）为：
+**定理 2.1**（$8_s$ 的谱嵌入）。$8_s$ 旋量表示的谱像（joint spectrum）为：【2026-08-07 勘误：两处 "$8_s$" 均为旧遗留记号，应理解为 16 维旋量 S₁₆（旋量维数 16，非 8）】
 
-$$\sigma_{8_s} = \left\{ \left(\frac{\epsilon_1}{2}, \frac{\epsilon_2}{2}, \frac{\epsilon_3}{2}, \frac{\epsilon_4}{2}\right) \;\Big|\; \epsilon_i \in \{\pm 1\}, \prod_{i=1}^4 \epsilon_i = +1 \right\}$$
+$$\sigma_{8_s} = \left\{ \left(\frac{\epsilon_1}{2}, \frac{\epsilon_2}{2}, \frac{\epsilon_3}{2}, \frac{\epsilon_4}{2}\right) \;\Big|\; \epsilon_i \in \{\pm 1\}, \prod_{i=1}^4 \epsilon_i = +1 \right\}$$【2026-08-07 勘误：下标 "$8_s$" 为旧遗留记号，对应 16 维旋量 S₁₆ 的谱像】
 
 其中 $\prod \epsilon_i = +1$ 的 chirality 约束排除了另外 8 种组合。
 
@@ -80,7 +80,7 @@ $$\langle T^3, Y \rangle = \langle T^3, C_3 \rangle = \langle Y, C_3 \rangle = 0
 
 **证明**。由 $\mathfrak{so}(1,7)$ 的分解 $\mathfrak{h} \cong \mathfrak{h}_{\mathfrak{so}(1,3)} \oplus \mathfrak{h}_{\mathfrak{su}(4)}$ 可知，$T^3$ 张成第一个因子而 $Y, C_3$ 张成第二个因子。$\mathfrak{so}(1,3)$ 的 Cartan 子代数与 $\mathfrak{su}(4)$ 的 Cartan 子代数在 $\mathfrak{h}$ 中正交。$\square$
 
-**系 2.2a**（量子数的谱独立性）。$T^3$、$Y$、$C_3$ 本征值的所有组合在 $8_s$ 中最多出现一次——这意味着 SM 费米子的三代结构不会在此谱量子数层面产生简并。
+**系 2.2a**（量子数的谱独立性）。$T^3$、$Y$、$C_3$ 本征值的所有组合在 $8_s$ 中最多出现一次——这意味着 SM 费米子的三代结构不会在此谱量子数层面产生简并。【2026-08-07 勘误：旧遗留记号 "$8_s$" 应理解为 16 维旋量 S₁₆，旋量维数 16（非 8）】
 
 ---
 
@@ -92,9 +92,9 @@ $$\langle T^3, Y \rangle = \langle T^3, C_3 \rangle = \langle Y, C_3 \rangle = 0
 
 $$Q_{\text{EM}} = T^3 + Y = \frac{i}{4}[\gamma_1, \gamma_2] + \frac{1}{2\sqrt{3}}(H_3 + \sqrt{3}H_4)$$
 
-**定理 3.1**（电荷谱的唯一性）。$Q_{\text{EM}}$ 在 $8_s$ 上的本征值谱为 $\{+2/3, -1/3, 0, -1, +1\}$，其多重度分布为：
+**定理 3.1**（电荷谱的唯一性）。$Q_{\text{EM}}$ 在 $8_s$ 上的本征值谱为 $\{+2/3, -1/3, 0, -1, +1\}$，其多重度分布为：【2026-08-07 勘误：旧遗留记号 "$8_s$" 应理解为 16 维旋量 S₁₆（旋量维数 16，非 8）】
 
-| $Q$ | 出现次数 | 对应的 $8_s$ 态 | SM 场 |
+| $Q$ | 出现次数 | 对应的 $8_s$ 态【2026-08-07 勘误：旧遗留记号，即 16 维旋量 S₁₆】 | SM 场 |
 |:--:|:-------:|:---------------|:-----|
 | $+2/3$ | 2 | $|+\!+\!+\rangle$, $|-\!+\!+\rangle$ | $u_L$, $u_R$ |
 | $-1/3$ | 2 | $|+\!-\!+\rangle$, $|-\!+\!-\rangle$ | $d_L$, $d_R$ |
@@ -102,7 +102,7 @@ $$Q_{\text{EM}} = T^3 + Y = \frac{i}{4}[\gamma_1, \gamma_2] + \frac{1}{2\sqrt{3}
 | $-1$ | 1 | $|+\!-\!-\rangle$ | $e_L$ |
 | $+1$ | 1 | $|-\!-\!-\rangle$ | $e_R$ |
 
-**证明**。对 $8_s$ 的 8 个基向量逐一计算 $Q_{\text{EM}}$ 的本征值：
+**证明**。对 $8_s$ 的 8 个基向量逐一计算 $Q_{\text{EM}}$ 的本征值：【2026-08-07 勘误：旧遗留记号 "$8_s$" 应理解为 16 维旋量 S₁₆，基向量 16 个（非 8 个）】
 
 1. 对任意 $|s_1s_2s_3\rangle$，$T^3$ 的本征值为 $\pm 1/2$（取决于 $s_1s_2$ 的组合）或 $0$（右旋态）
 2. $Y$ 的值由 $\{|s_1s_2s_3\rangle\}$ 的谱嵌入表（[spectral_hypercharge_derivation.md](../10_gauge_RG/spectral_hypercharge_derivation.md) §4.1）给出
@@ -207,7 +207,7 @@ $$y_e \leq \frac{2\sqrt{2}}{3} \cdot \frac{\Delta\lambda_{\min}^{(\text{EM})}}{\
 | 问题 | 状态 | 结果 |
 |:----|:----:|:----|
 | 电荷为什么量子化 | ✅ | Cl(1,7) Cartan 本征值离散性（定理 3.2） |
-| 电荷值为什么是 $\pm 2/3, \pm 1/3, 0, \pm 1$ | ✅ | 8_s 旋量表示的全部 $T^3+Y$ 组合枚举 |
+| 电荷值为什么是 $\pm 2/3, \pm 1/3, 0, \pm 1$ | ✅ | 8_s 旋量表示的全部 $T^3+Y$ 组合枚举【2026-08-07 勘误：旧遗留记号 "8_s" 应理解为 16 维旋量 S₁₆】 |
 | 电荷与超荷、弱同位旋的关系 | ✅ | $Q = T^3 + Y$ 是谱算符 |
 | 谱间隙如何保护电荷谱 | ✅ | $\Delta\lambda_{\min}^{(\text{EM})} > 0$ 保证离散性（引理 3.3） |
 | **Higgs-费米子谱交织子显式构造** | ✅ | **v0.5** 谱 Yukawa 闭合公式 $y_i^{(f)} = \sum_k\|U_{ki}\|^2 \lambda_H^{(k)}$ |

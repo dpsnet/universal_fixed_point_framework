@@ -43,7 +43,7 @@ class BareVacuumEnergy:
     def __init__(self):
         # Phase 36 结果
         self.delta_lambda = 0.122  # M_Pl
-        self.k_max = 8  # 模型选择（见 paper/RAP_勘误与立场声明.md）
+        self.k_max = 8  # 结构确定：统一 3 定理 2^{N_active} = 2³ + 对偶网络（勘误 v0.21）；原"模型选择"表述已过时
         
         # 构造谱
         self.lambdas = self._construct_spectrum()
@@ -355,7 +355,7 @@ def main():
     
     print(f"\n  A_GR 离散谱 (Phase 36):")
     print(f"  Δλ_min = {bare.delta_lambda:.3f} M_Pl")
-    print(f"  k_max = {bare.k_max} (Cl(1,7) → M₈(ℝ))")
+    print(f"  k_max = {bare.k_max} (Cl(1,7) → M₈(ℝ))")  # 【2026-08-07 勘误：Cl(1,7) 标准矩阵代数 = M₁₆(ℝ)（非 M₈(ℝ)），旋量维数 16】
     print(f"  λ_k = Δλ_min · √(k(k+1)):")
     for i, lam in enumerate(bare.lambdas):
         print(f"    λ_{i+1} = {lam:.4f} M_Pl")

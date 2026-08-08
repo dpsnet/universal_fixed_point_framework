@@ -204,7 +204,7 @@ $$M(t) = (M_0^3 - 3\alpha t)^{1/3}$$
 
 谱公式连接了前三者——$\Delta\lambda_{\min}$ 既决定引力几何又决定谱分布。面积律换算推导如下：
 
-Schwarzschild 黑洞的视界面积 $A = 4\pi r_s^2$，其中 $r_s = 2M$（自然单位制）。谱-几何对应关系（Paper IV §4）给出 $A \propto 1/\Delta\lambda_{\min}^2$，比例系数由 Cl(1,7) 旋量维数 $n=8$ 和谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72}$ 确定：
+Schwarzschild 黑洞的视界面积 $A = 4\pi r_s^2$，其中 $r_s = 2M$（自然单位制）。谱-几何对应关系（Paper IV §4）给出 $A \propto 1/\Delta\lambda_{\min}^2$，比例系数由 Cl(1,7) 的 SU(2) 基本表示重数 $n = N(2_1) = 8$【2026-08-07 勘误：原"Cl(1,7) 旋量维数 $n=8$"表述错误——Cl(1,7) 标准旋量维数为 16（M₁₆(ℝ)）；此式中的 $n=8$ 实为 16 维旋量 SU(2) 分解的副本数 N(2₁)=8（$16 = 8\times 2$），见 paper20 §5】和谱间隙 $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72}$ 确定：
 
 $$\frac{A}{4} = \frac{\pi}{\Delta\lambda_{\min}^2} \cdot \frac{n^2}{64} \cdot \frac{1}{4\pi} = \frac{\pi}{4\Delta\lambda_{\min}^2}$$
 

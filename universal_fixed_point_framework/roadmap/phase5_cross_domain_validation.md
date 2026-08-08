@@ -97,7 +97,7 @@ $$K_R(x,y) = \int_{\sigma(U_R)} \frac{1}{1 - |\lambda|^2/2} \, dP_{x,y}(\lambda)
 
 **问题**：`spectral_correspondence_equivalence.md` §9 给出 Clifford 指数的显式公式，但完整谱理论尚未建立。
 
-**状态**：✅ 已完成（Phase 10）。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$ 和 $\mathrm{Cl}(9,1) \cong M_{16}(\mathbb{R})$ 均为实矩阵代数，左谱 = 右谱 = 双向谱 = 标量谱。谱映射定理在 $C^*$ 代数框架下直接适用，当前标量谱处理完全充分。详见 `phase10_clifford_spectrum.md` 与 `clifford_spectrum_demo.py`（5 项数值验证全部通过）。
+**状态**：✅ 已完成（Phase 10）。$\mathrm{Cl}(1,7) \cong M_8(\mathbb{R})$【2026-08-07 勘误：Cl(1,7) 标准 = M₁₆(ℝ)（非 M₈(ℝ)），旋量维数 16】和 $\mathrm{Cl}(9,1) \cong M_{16}(\mathbb{R})$【2026-08-07 勘误：Cl(9,1) 标准 = M₃₂(ℝ)（非 M₁₆(ℝ)），旋量维数 32】均为实矩阵代数，左谱 = 右谱 = 双向谱 = 标量谱。谱映射定理在 $C^*$ 代数框架下直接适用，当前标量谱处理完全充分。详见 `phase10_clifford_spectrum.md` 与 `clifford_spectrum_demo.py`（5 项数值验证全部通过）。
 
 **关键子问题**（均已解决）：
 - Clifford 值自伴算子的谱定义（左谱、右谱、双向谱）。↦ 对实矩阵代数三者一致，等于标量谱。定理 2.3。

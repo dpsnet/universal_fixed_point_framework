@@ -82,6 +82,6 @@ for gm in gammas: gamma_ch = gamma_ch @ gm
 ev_ch = LA.eigvals(gamma_ch)
 print(f"\n手征特征值: {np.unique(np.round(ev_ch,6))}")
 
-print(f"\n结论: 8 维旋量在 SO(1,3)×SO(4) 下分解为")
+print(f"\n结论: 8 维旋量在 SO(1,3)×SO(4) 下分解为【2026-08-07 勘误：本脚本基于旧框架 Cl(1,7) ≅ M₈(ℝ) 的 8 维旋量构造（历史探索脚本，未注册 run_all_tests.py）；标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20 权威），4D 分解为 4 个 Weyl（RAP3 机器证明）】")
 print(f"  SO(1,3) Casimir 简并: {c13}")
 print(f"  SO(4) Casimir 简并: {c4}")

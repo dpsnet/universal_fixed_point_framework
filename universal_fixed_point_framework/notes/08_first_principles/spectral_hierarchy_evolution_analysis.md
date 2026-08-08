@@ -41,8 +41,8 @@
 │                                                               │
 │  层次1：Cl(1,7) 代数（几何实现）                               │
 │    ├── 签名 (1,7)：1类时 + 7类空维度                          │
-│    ├── 矩阵表示：M₈(ℝ) × M₈(ℝ) ≅ M₁₆(ℝ)                    │
-│    ├── 旋量表示：8_s（单代SM载体）                             │
+│    ├── 矩阵表示：M₈(ℝ) × M₈(ℝ) ≅ M₁₆(ℝ)                    │【2026-08-07 勘误：Cl(1,7) 标准矩阵代数系 M₁₆(ℝ)（代数维数 256，旋量维数 16），M₈(ℝ)×M₈(ℝ) 系旧遗留记号】
+│    ├── 旋量表示：8_s（单代SM载体）                             │【2026-08-07 勘误：8_s 系旧遗留记号，应理解为 16 维旋量 S₁₆（Cl(1,7) ≅ M₁₆(ℝ)，标准旋量维数 16）】
 │    ├── Cartan子代数：4维 {H₁, H₂, H₃, H₄}                    │
 │    └── 特点：Gamma矩阵、生成元全部无量纲                      │
 │                                                               │
@@ -63,7 +63,7 @@
 │  层次4：唯象参数层（实验验证）                                │
 │    ├── d_H ≈ 2.7095（结构：ln15 + δ，δ ≈ 0.00145）        │
 │    ├── S_k = s^k（压制率，s=e⁻¹，信息论最优）               │
-│    ├── 三代费米子：8_s ⊗ ℂ³_fam（统一3定理，机器证明）      │
+│    ├── 三代费米子：8_s ⊗ ℂ³_fam（统一3定理，机器证明）      │【2026-08-07 勘误：8_s 系旧遗留记号，应理解为 16 维旋量 S₁₆；三代结构来自代空间 C³_fam（统一 3 定理机器证明，paper33），Cl(1,7) 仅提供单代载体】
 │    ├── G_N = 18(2+√3)·(Δλ_min)²/M_Pl²（Phase C 闭式 ✅ **双路径交叉验证：比值 1.000000000000000**）      │
 │    └── 参数总账：2-3个（消减70-80%，仅余 M_Pl 外部标度 + δ 修正）│
 │                                                               │
@@ -123,7 +123,7 @@ $$\boxed{\ln 15 < \frac{65}{24} < d_H < e < 3}$$
 |:---|:---:|:---|
 | 从 $\mathbf{Sp}$ 4-范畴的 coherence 定理严格证明 $d_H = \ln(15)$ | **高** | 🆕 **类型级封闭 + IFS 构造完成** —— 结构推导已建立（§3.5）：$B = N_{\text{active}} \times N_{\text{total}} = 15$ 的分支组合原理 + $r = e^{-1}$ 的均匀收缩假设 ⇒ Moran 方程 ⇒ $d_H = \ln 15$。**新进展**（2026-07-28）：`CoherenceToBranching.lean` 新增 `BranchIndex := LayerPair` 显式分支索引类型（`Fintype.card = 15 = B`），以及三个绑定定理：`branchIndex_moran_eq_1`（基数满足 Moran 方程）、`branchIndex_moran_solution`（两种等价形式）、`branchIndex_dH_unique`（充要刻画 `B'·r^d = 1 ⟺ d = ln 15`）。**BranchIndex→IFS 映射已构造**（§8）：`branchIFS : IFS ℝ` 以 `Fintype.card BranchIndex = 15` 为映射数、`e⁻¹` 为均匀收缩率，`branchIFS_dH_eq_ln15` 定理机器证明其 Hausdorff 维数 = ln 15。`lake build` 零错误通过。**层独立性已形式化**：`layerIndex_independent` + `activeLayer_independent` 通过归纳类型构造子互异性保证。**开放**：𝐒𝐩 严格 4-范畴的完整范畴论定义（需 mathlib 高阶范畴论基础设施） |
 | **统一 3 定理：证明 $N_{\text{gen}} = 3$ 从范畴结构** | **高** | ✅ **已闭合** —— `SpThreeMorphism` 在 `HigherSpCategory.lean` 中完成定义；`Unified3Theorem.lean` 建立主动生成层→ℂ³显式同构 + 链复形结构与修复方案桥梁 |
-| **统一 3 定理：证明 $\log_2 k_{\max} = 3$ 从范畴结构** | **高** | ✅ **已闭合** —— `BottTower.lean` 建立旋量维数翻倍结构 spinorDim(k) = 8×2^k，通过 layerToDoublingIndex 满射证明翻倍步数 = 主动生成层数，即 k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3 |
+| **统一 3 定理：证明 $\log_2 k_{\max} = 3$ 从范畴结构** | **高** | ✅ **已闭合** —— `BottTower.lean` 建立旋量维数翻倍结构 spinorDim(k) = 8×2^k，通过 layerToDoublingIndex 满射证明翻倍步数 = 主动生成层数，即 k_max = 2^{N_active} ⇒ log₂(k_max) = N_active = 3【2026-08-07 勘误：spinorDim(k) = 8×2^k 的基准 8 系旧框架遗留（对应旧框架 Cl(1,7) 8 维旋量）；按 paper20，Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16），旋量维数翻倍链应为 16→32→64；此处 8 也可理解为 k_max=8（Bott 截断）】 |
 | 修正项 $\delta$ 的结构推导 | **中** | 🆕 **进展** —— $\delta = \ln(15)\cdot\bar{\varepsilon}$（§3.5.4a，数值验证 6/6）基础上新增 **ε̄ = √N_total · ε₃ 选择原理**（§3.5.4d）：3-map IFS 自洽性揭示 ε̄/ε₃ = √5 在 d_H = 2.7095 处以浮点精度成立（偏差 < 10⁻¹⁵），等价于 χ² 拟合值。完整链：ε̄ = √N_total · ε₃ ⇒ δ = ln 15 · √5 · ε₃，其中 ε₃ 由 Moran 方程自洽确定；闭式解析表达式已建立：$d_H \approx \ln 15 + \sqrt{5}\cdot\ln 15\cdot A_0/(\ln 15 - \sqrt{5}\cdot\ln 15\cdot A'_0) + \Delta$（一阶自洽展开精度 1.1×10⁻⁷，`scripts/paperX_dH_closed_form.py`）。**新进展**（2026-07-28）：选择原理形式化为固定点方程 + **RMS 传播定理**：$\bar{\varepsilon} = \sqrt{N_{\text{total}}}\cdot\varepsilon_3$ 是 $N_{\text{total}}=5$ 个独立范畴层的 RMS 传播必然结果。层独立性由严格 4-范畴的正交性保证，均匀性由范畴结构的统一性保证。$\bar{\varepsilon}/\varepsilon_3 = \sqrt{5}$ 从"数值发现"升级为"范畴结构假说"。`scripts/paperX_dH_selection_principle.py` 已注册。**v1.31（2026-07-29）**：残差 Δ 高精度分析完成（`scripts/paperX_dH_residual_deep.py`，mpmath 50 位）——① Δ_lin = 8.35×10⁻⁷ 完全分解为 Δ_exact = 5.41×10⁻⁷（精确固定点 d* = 2.70949946）+ 线性化误差 2.94×10⁻⁷（有闭式解释，ε₃ 二阶展开项）；② **2³×10⁻⁷ 假说证伪**：对 Δ_exact 失配 32%，原 4.2% 吻合是线性化误差污染的 artifact；③ 二阶自洽闭式收敛（误差 4.1×10⁻⁸），δ 闭式表达完备无需外加残差结构；④ Δ_exact 仅为 χ² 分辨率的 0.27%，不可检验——δ 问题在现有 d_H 精度下已达分析极限；⑤ 修正"ε̄/ε₃ 以浮点精度 <10⁻¹⁵ 等于 √5"的错误声明（实际穿越点偏差 5.41×10⁻⁷，拟合点处偏差 8.42×10⁻⁴）。**v1.32（2026-07-29）**：k = √N_total 的最大熵推导（`scripts/paperX_dH_maxent_RMS.py`）——RMS 定理的独立性 + 均匀性假设均为最大熵变分原理推论（信息论标准定理 + Jensen，数值验证通过）；k ≠ √N 的所有替代有正信息代价 ΔH > 0，被 Occam 剔除。"为何 k = √5？"归约为最大熵原理（认识论层面闭合，与统计力学最大熵同逻辑地位）。**开放**：ε̄ = √N_total · ε₃ 的严格范畴论证明（形式化层独立性定理，需 mathlib 高阶范畴论基础设施）；η = δ/(√5·ln15) 非独立参数 |
 | 谱交织精度 $\epsilon$ 与层次距离的关系 | **低** | ❌ **已判别排除（负结果闭合，v1.35）** —— `scripts/paperX_epsilon_hierarchy.py` 四判据：① 失配 2.59% = 1017σ（确定性失配）；② 精确形式 ε = e^{−3d_H·√2π} 预测值失配因子 2.55 ≫ ε 精度 0.6%（排除）；③ δ 无关性确认（ΔR 仅 0.054%，非近似）；④ 多重比较：√2π 在 27 候选中排名 16，π+√2/41/9 以 0.05% 居首，基线概率 100%（无判别力）。−ln(ε) = 37.05 的结构分解仍开放，但"3·d_H × 简单常数"形式已排除 |
 | 绝对质量标度的非循环推导 — Phase A/B/C 全部完成 | **高** | ✅ **全部完成** —— Phase A（`SpectralGap.lean` 独立可编译）+ Phase B（`DeviationBound.lean` 全部定理机器证明，零错误编译）+ Phase C（§5.7a-b）：c 常数解析闭式 + $g_{\text{EH}} \approx 779$ 因子分解 + $G_N = 18(2+\sqrt{3})\cdot(\Delta\lambda_{\min})^2/M_{\text{Pl}}^2$ 无自由参数；`scripts/paperX_gravity_c_constant.py`、`scripts/paperX_gravity_gEH_analysis.py` 数值验证 |

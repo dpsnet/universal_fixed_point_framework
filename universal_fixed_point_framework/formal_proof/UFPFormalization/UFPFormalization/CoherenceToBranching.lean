@@ -35,6 +35,7 @@
 
 import UFPFormalization.BranchCounting
 import UFPFormalization.Unified3Theorem
+import UFPFormalization.BottTower
 import UFPFormalization.DHStructuralAnalysis
 import UFPFormalization.IFSFractal
 import Mathlib.Data.Fintype.Prod
@@ -327,6 +328,43 @@ theorem branchIndex_dH_unique (d : ℝ) :
   rw [hcard]
   exact DHStructural.dH_moran_solution_unique
 
+/-! ---------------------------------------------------------
+   §5.6 对偶网络恒等式（v0.21，勘误对齐）
+
+   k_max = 8 的结构确定由统一 3 定理（2^{N_active} = 2³ 机器证明，
+   BottTower.lean）与对偶网络（paperX_kmax_duality.py 10/10）共同支撑。
+   对偶网络中的**算术恒等式**部分可在类型系统中验证，形式化如下：
+     · 分支对偶：B = 2·k_max − 1（15 = 2×8 − 1）
+     · 旋量对偶：16 = 2·k_max（Cl(1,7) ≅ M₁₆(ℝ) 旋量维数；物理归因见 Clifford.lean）
+     · 维数对偶：d_H = ln(2·k_max − 1) = ln 15
+   注意：这些恒等式本身是初等算术事实（norm_num 可判），其"结构对偶"解释
+   属于物理论证（paper33 §4.1），不在形式化范围内；离散截断对偶
+   log₂ k_max = N_active = 3 已由 log2_k_max_eq_active_layers 证明；
+   Δλ_min·k_max ≈ 0.976 ≠ 1 为已登记的非精确对偶（paperX_kmax_derivation.py K4），
+   不予形式化。 -/
+
+theorem branch_dual_eq_kmax :
+    UFPFormalization.BranchCounting.B = 2 * UFPFormalization.BottTower.k_max - 1 := by
+  norm_num [UFPFormalization.BranchCounting.B_eq_15, UFPFormalization.BottTower.k_max_value]
+
+theorem spinor_dual_eq_kmax : 16 = 2 * UFPFormalization.BottTower.k_max := by
+  norm_num [UFPFormalization.BottTower.k_max_value]
+
+theorem dH_dual_eq_ln15 :
+    Real.log (2 * (UFPFormalization.BottTower.k_max : ℝ) - 1) = Real.log 15 := by
+  norm_num [UFPFormalization.BottTower.k_max_value]
+
+/-- 对偶网络综合定理：分支对偶 + 旋量对偶 + 维数对偶（v0.21）。 -/
+theorem kmax_duality_network :
+    UFPFormalization.BranchCounting.B = 2 * UFPFormalization.BottTower.k_max - 1 ∧
+      16 = 2 * UFPFormalization.BottTower.k_max ∧
+      Real.log (2 * (UFPFormalization.BottTower.k_max : ℝ) - 1) = Real.log 15 := by
+  constructor
+  · exact branch_dual_eq_kmax
+  · constructor
+    · exact spinor_dual_eq_kmax
+    · exact dH_dual_eq_ln15
+
 /-! =========================================================
    第六章 已闭合与仍开放的问题
    =========================================================
@@ -360,6 +398,11 @@ theorem branchIndex_dH_unique (d : ℝ) :
         （`suppression_geometric`：范畴复合强制几何级数 S_k = s^k）；
         归一化层（底数 = e ⟺ 生成元匹配）为分析性论证，
         见笔记 §3.5.2a。规范不变量 d_H·ln(1/s) = ln 15。
+        → **v1.38 补充（§10a，2026-08-08）**：归一化层升级为 **Moran 结构封闭**——
+        `moran_closed_s_eq_exp_neg_one`（Moran 方程 15·s^{ln15} = 1 + d_H = ln 15
+        机器证明 ⟹ s = e⁻¹，纯代数）+ `moran_closed_unique`（κ≠1 反证）；
+        不再依赖信息论变分（基数经济/最大熵降级为独立佐证）——
+        08 笔记 §5.1 路线 D。
 
    尽管如此，本文件已建立了从 𝐒𝐩 严格 4-范畴结构到
    分支计数 B = 15 的**类型级形式化链条**：
@@ -560,7 +603,7 @@ theorem branchIFS_dH_eq_ln15 : (∃ (sol : HausdorffDimensionSolution branchIFS)
    (1) 计数定理：1（时间/递归参数）+ N_active（可见空间）+ (N_total − 1)（静默内部）= 8
    (2) 一般恒等式：strict n-范畴（N_active = n−1, N_total = n+1）⇒ 涌现维数 = 2n，
        时空维数（1 时间 + (n−1) 空间）= n —— **时空维数 = 范畴阶数**
-   (3) 唯一性（逆方向）：涌现 Clifford 维数 = 8（Cl(1,7)，由旋量表示 8_s 独立确定）
+   (3) 唯一性（逆方向）：涌现 Clifford 维数 = 8（Cl(1,7)，由旋量表示 S₁₆ 独立确定）【2026-08-07 勘误：原"8_s"遗留记号——标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20）；此处"8"指底空间维数/截断 k_max=8，非旋量维数】
        ⟹ 范畴阶数 n = 4 唯一 —— "𝐒𝐩 是 4-范畴"从设定升级为推论
    (4) 阈值分离定理：c₁ = e⁻³·e⁻ᵈ < e⁻ᵈ = S₄（静默维度严格低于阈值，
        分离因子 e³ ≈ 20，对所有 d 成立）
@@ -583,7 +626,8 @@ theorem spacetime_dim_eq_category_order (n : ℕ) (hn : 1 ≤ n) :
 
 /-- (3) 唯一性（逆方向）：若涌现 Clifford 代数为 8 维（Cl(1,7)），
     则范畴阶数被唯一确定为 n = 4。
-    结合旋量表示 8_s 对 Cl(1,7) 的独立选择，"𝐒𝐩 是 4-范畴"成为推论。 -/
+    结合旋量表示 S₁₆ 对 Cl(1,7) 的独立选择【2026-08-07 勘误：原"8_s"——标准旋量 16 维（paper20）；8 指底空间/k_max 截断】，
+    "𝐒𝐩 是 4-范畴"成为推论。 -/
 theorem category_order_unique (n : ℕ) (h : 2 * n = 8) : n = 4 := by omega
 
 /-- (4) 阈值分离定理：静默维度权重 c₁ = e⁻³·e⁻ᵈ 严格低于静默阈值 S₄ = e⁻ᵈ，
@@ -673,6 +717,118 @@ theorem suppression_exp_neg (S : ℕ → ℝ) (h0 : S 0 = 1)
   ring
 
 /-! =========================================================
+   §10a Moran 封闭：s = e⁻¹ 的范畴层独立推导（2026-08-08 新增）
+   =========================================================
+
+   路线 D（08 笔记 §5.1）：s = e⁻¹ 不依赖信息论变分（基数经济/最大熵），
+   由 Moran 方程 + 结构量机器证明纯代数封闭：
+
+     Moran 方程：15·s^{ln 15} = 1（B = 15 分支 × 均匀收缩率 s）
+     d_H = ln 15（机器证明，branchIndex_moran_eq_1 / branchIndex_dH_unique）
+     ⟹ s^{ln 15} = 1/15 ⟹ ln(1/s)·ln 15 = ln 15 ⟹ ln(1/s) = 1 ⟹ s = e⁻¹
+
+   本定理形式化核心步骤：Moran 方程 15·s^{ln15} = 1（s > 0）⟹ s = e⁻¹。
+   这是"为何 D 函子保持生成元（κ=1）"的代数封闭（开放项 2 的归一化层
+   从分析性论证（生成元匹配）升级为 Moran 结构封闭）。 -/
+
+/-- 路线 D 核心：Moran 方程 15·s^{ln15} = 1（s > 0）的唯一解为 s = e⁻¹。
+    纯代数（取对数 + 消去 ln15），不依赖信息论变分。 -/
+theorem moran_closed_s_eq_exp_neg_one (s : ℝ) (hs0 : 0 < s)
+    (hmoran : (15 : ℝ) * s ^ (Real.log 15) = 1) :
+    s = Real.exp (-1) := by
+  have h15nz : (15 : ℝ) ≠ 0 := by norm_num
+  -- s^{ln15} = 1/15（由 Moran 方程除以 15）
+  have hpow : s ^ Real.log 15 = 1 / (15 : ℝ) := by
+    rw [eq_div_iff h15nz, mul_comm]
+    exact hmoran
+  -- ln(s^{ln15}) = ln(1/15)
+  have hln_pow : Real.log (s ^ Real.log 15) = Real.log 15 * Real.log s := by
+    exact Real.log_pow hs0 (Real.log 15)
+  have hln_r : Real.log (1 / (15 : ℝ)) = -Real.log 15 := by
+    rw [Real.log_div Real.one_ne_zero h15nz, Real.log_one, zero_sub]
+  have heq : Real.log 15 * Real.log s = -Real.log 15 := by
+    rw [← hln_pow, hpow, hln_r]
+  -- ln 15 ≠ 0（e^{ln 15} = 15 ≠ 1）
+  have hln15ne0 : Real.log (15 : ℝ) ≠ 0 := by
+    intro hlog
+    have he : Real.exp (Real.log (15 : ℝ)) = Real.exp 0 := by rw [hlog]
+    have h15 : (15 : ℝ) = 1 := by
+      rw [Real.exp_log (by norm_num : 0 < (15 : ℝ))] at he
+      simpa using he
+    norm_num at h15
+  -- ln s = -1（heq 除以 ln15）
+  have hlns : Real.log s = -1 := by
+    calc
+      Real.log s = (Real.log (15 : ℝ) * Real.log s) / Real.log (15 : ℝ) := by
+        field_simp [hln15ne0]
+      _ = (-Real.log (15 : ℝ)) / Real.log (15 : ℝ) := by rw [heq]
+      _ = -1 := by field_simp [hln15ne0]
+  -- s = e^{ln s} = e⁻¹
+  calc
+    s = Real.exp (Real.log s) := by rw [← Real.exp_log hs0]
+    _ = Real.exp (-1) := by rw [hlns]
+
+/-- 路线 D 推论：κ ≠ 1（s ≠ e⁻¹）与 Moran 方程 + d_H = ln 15 矛盾
+    （Moran 方程唯一解为 e⁻¹，唯一性直接来自 moran_closed_s_eq_exp_neg_one）。 -/
+theorem moran_closed_unique {s : ℝ} (hs0 : 0 < s)
+    (hs : s ≠ Real.exp (-1)) :
+    (15 : ℝ) * s ^ (Real.log 15) ≠ 1 := by
+  intro hmoran
+  exact hs (moran_closed_s_eq_exp_neg_one s hs0 hmoran)
+
+/-! =========================================================
+   §10b c₃ 时间方向：唯一永不静默分支（2026-08-08 新增）
+   =========================================================
+
+   c₃ 分支"时间诠释"的可形式化部分（08 笔记 §5.2 T1–T2）：
+   IFS 收缩因子比 c₁⁰:c₂⁰:c₃⁰ = S₃S₄:S₄:1（S₃ = e⁻³、S₄ = e^{−d}）：
+
+     T1  c₃ 是唯一静默因子 = 1 的分支（c₁ 双重静默 < 1、c₂ 单重静默 < 1、c₃ = 1）
+     T2  静默因子 = 1 的分支唯一 ⟹ 时间维数 = 1（永不静默 = 递归演化承载方向）
+
+   对任意 d > 0 成立（d = ln 15 为机器证明实例）。 -/
+
+/-- 收缩因子比（静默分层）：c₁₀ = S₃·S₄（双重静默）、c₂₀ = S₄（单重静默）、
+    c₃₀ = 1（无静默——时间分支，谱流参数 t 沿此演化永不静默）。 -/
+def silent_factor_c1 (d : ℝ) : ℝ := Real.exp (-3) * Real.exp (-d)
+def silent_factor_c2 (d : ℝ) : ℝ := Real.exp (-d)
+def silent_factor_c3 (d : ℝ) : ℝ := 1
+
+/-- T1：c₃ 是唯一静默因子 = 1 的分支——
+    c₁ 双重静默 < 1、c₂ 单重静默 < 1、c₃ 无静默 = 1（权重排序 S₃S₄ < S₄ < 1）。 -/
+theorem c3_unique_silent_factor (d : ℝ) (hd : 0 < d) :
+    silent_factor_c1 d < 1 ∧ silent_factor_c2 d < 1 ∧ silent_factor_c3 d = 1 := by
+  constructor
+  · rw [silent_factor_c1, ← Real.exp_add]
+    rw [show (-3 : ℝ) + -d = -(3 + d) by ring]
+    exact Real.exp_lt_one_iff.mpr (by linarith)
+  constructor
+  · rw [silent_factor_c2]
+    exact Real.exp_lt_one_iff.mpr (by linarith)
+  · rfl
+
+/-- T2：静默因子 = 1 的分支唯一（在 {c₁₀, c₂₀, c₃₀} 中恰为 c₃₀）
+    ⟹ 时间维数 = 1（永不静默分支唯一，递归演化方向唯一）。 -/
+theorem c3_silent_factor_unique (d : ℝ) (hd : 0 < d) :
+    ∀ x : ℝ, (x = silent_factor_c1 d ∨ x = silent_factor_c2 d ∨ x = silent_factor_c3 d) →
+      x = 1 → x = silent_factor_c3 d := by
+  intro x hx h1
+  rcases hx with h | h | h
+  · rw [h] at h1
+    have hc1 : silent_factor_c1 d < 1 := (c3_unique_silent_factor d hd).1
+    linarith
+  · rw [h] at h1
+    have hc2 : silent_factor_c2 d < 1 := (c3_unique_silent_factor d hd).2.1
+    linarith
+  · rw [h]
+
+/-- T2 推论（存在性）：c₃₀ = 1（时间分支存在）——结合唯一性给出
+    "静默因子 = 1 的分支恰有一个"（时间维数 = 1）。 -/
+theorem c3_silent_factor_exists (d : ℝ) :
+    silent_factor_c3 d = 1 := by
+  rfl
+
+/-! =========================================================
    §11 向外推：维数间隙与层正交性（2026-07-30 新增）
    =========================================================
 
@@ -695,13 +851,13 @@ theorem dimension_gap : Real.log (15 : ℝ) < (3 : ℝ) := by
   --    ∧ DHStructural.sixtyfive_over_24 < DHStructural.e
   --    ∧ DHStructural.e < (3 : ℝ)
   -- 其中 DHStructural.ln15 = Real.log 15
-  have hln15_lt_e : Real.log (15 : ℝ) < Real.e := by
+  have hln15_lt_e : Real.log (15 : ℝ) < DHStructural.e := by
     calc
       Real.log (15 : ℝ) = DHStructural.ln15 := rfl
       _ < DHStructural.sixtyfive_over_24 := h.1
-      _ < Real.e := h.2.1
+      _ < DHStructural.e := h.2.1
   calc
-    Real.log (15 : ℝ) < Real.e := hln15_lt_e
+    Real.log (15 : ℝ) < DHStructural.e := hln15_lt_e
     _ < (3 : ℝ) := h.2.2
 
 /-- 向外推定理：维数间隙 ∧ 层 4 正交性。

@@ -826,7 +826,7 @@ $\mathbf{Rec}_D$ 内蕴动力学 → 谱力 $F_{\text{spec}} = [G, D(R)]$
 1. **$d_H = \ln(3 \times 5)$ 的严格证明**：从 $\mathbf{Sp}$ 4-范畴的 coherence 定理出发，证明 $d_H = \ln(N_{\text{IFS}} \times N_{\text{layers}})$ 是精确关系而非近似（§3.8）
 2. **$\hbar$ 的范畴起源**：谱间隙 $\Delta\lambda_{\text{min}}$ 到物理质量 $m = \hbar/\Delta\lambda_{\text{min}}$ 的转换中，$\hbar$ 是否是 $\mathbf{Sp}$ 4-范畴的内蕴结构常数？能否从范畴结构导出 $\hbar$ 的数值？（§4.5）
 3. **弯曲时空中的时空混合**：在平直时空下时间作为谱流参数的推导是精确的，但在弯曲时空中时间与空间的区分不是全局的。完整的谱弯曲时空框架需证明谱流参数与 1-态射在局域惯性系中线性组合为 4 维洛伦兹流形（§3.6）
-~~4. **谱交织精度 $\epsilon$ 的更深层起源**：$\epsilon \approx 8.12 \times 10^{-17}$ 目前是谱框架的输入参数。能否从 Cl(1,7) 的更高阶表示论直接导出 $\epsilon$ 的精确值？~~ **✅ 已解决（2026-07-19）**。$\epsilon = N(2_1) \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 4 \times 2.018\times10^{-17} = 8.068\times10^{-17}$。详见 `notes/02_ckm_pmns_flavor/spectral_epsilon_derivation.md`。
+~~4. **谱交织精度 $\epsilon$ 的更深层起源**：$\epsilon \approx 8.12 \times 10^{-17}$ 目前是谱框架的输入参数。能否从 Cl(1,7) 的更高阶表示论直接导出 $\epsilon$ 的精确值？~~ **✅ 已解决（2026-07-19；2026-08-07 因子修正）**。$\epsilon = N_{\mathrm{Weyl}} \times v_{\mathrm{EW}}/M_{\mathrm{Pl}} = 4 \times 2.018\times10^{-17} = 8.07\times10^{-17}$，其中 $N_{\mathrm{Weyl}}=4$ 为 4D Weyl 数（16 维实旋量 4D 分解 = 4 Weyl，RAP3/paper17 机器证明）【原"$N(2_1)=4$"系数值巧合归因（错误 M₈ 的 8/2=4 = 4D Weyl 数），已更新为正确归因】。详见 `notes/02_ckm_pmns_flavor/spectral_epsilon_derivation.md`。
 
 ---
 
