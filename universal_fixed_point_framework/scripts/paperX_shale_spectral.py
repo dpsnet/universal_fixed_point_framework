@@ -764,7 +764,28 @@ def check_p1_falsify():
     r2_hyper_supp = _r2(logPt_supp, np.polyval(np.polyfit(xh, logPt_supp, 1), xh))
     r2_lin_supp = _r2(logPt_supp, np.polyval(np.polyfit(D_syn, logPt_supp, 1), D_syn))
     f1a_detected = r2_lin_supp > r2_hyper_supp
-    # F1b H2 破缺：C 的涨落与 D 二次相关（a-D 解耦破坏），双曲残差应呈 D 相关模式
+    # F1b H2 标度因子解耦破缺检测（残差结构检测，非 R² 检测）
+    # ============================================================
+    # 目标：验证 §4.1 H2 假设——样品间 C=ln(S_min/a) 的涨落与 (D-2) 不相关
+    # （几何常数 a 与结构复杂度 D 解耦），常数截距 B 方可吸收均值。
+    #
+    # 为何不依赖 R² 劣化：C 对 (D-2) 的线性依赖会被双曲拟合完全吸收。设
+    #   C(D) = C0 + c1·(D-2)  ⟹  C(D)/(D-2) = C0/(D-2) + c1
+    # c1 项并入截距 B，数据仍严格落在双曲族上（R² 不降）——线性耦合不可检。
+    # 故真正的破缺须为非线性耦合：取 C(D) = C0 + c2·(D-2.5)²，令 x=D-2：
+    #   C(D)/(D-2) = C0/x + c2·(x-0.5)²/x
+    #              = C0/x + c2·(x² - x + 0.25)/x
+    #              = (C0 + c2/4)/x - c2 + c2·x          （c2·x 项无法被 C/x+B 吸收）
+    # 得到 c2·x 项（随 D 线性增长的剩余项）——双曲拟合无法表示，成为系统残差，
+    # 残差因而与 D 呈强相关模式。此为"残差结构检测"的数学基础。
+    #
+    # 检测步骤：
+    #   1) 合成 logP_t,i = C_i/(D_i-2) + B + 噪声，其中 C_i = C0 + c2·(D_i-2.5)²
+    #      （c2=5 放大破缺信号，种子固定保证可复现）；
+    #   2) 对合成数据做双曲拟合 logP = C/x + B，得残差 res = logP - (C/x + B)；
+    #   3) 计算 Pearson 相关 rho(res, D)：破缺时残差含 c2·x 项 → |rho| 显著非零；
+    #      未破缺（残差为白噪声）→ |rho|≈0（阳性对照实测 ~0.06）。
+    # 阈值 rho>0.3：种子 11 下破缺信号 rho≈0.44 vs 对照 ~0.06，分离充分且对噪声鲁棒。
     C_i = -1.6 + 5.0 * (D_syn - 2.5) ** 2
     logPt_h2 = C_i / (D_syn - 2) + 10.4 + rng.normal(0, 0.05, len(D_syn))
     Ch2, Bh2 = np.polyfit(xh, logPt_h2, 1)
