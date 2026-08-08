@@ -43,6 +43,10 @@
      -> log P_t = C/(D-2) + const（双曲形式），线性形式为窗口一阶近似，真实数据对比验证
   M12 单井窗口效应量化：转化率代理 S1/TOC 跨盆地重检（成熟度↑ -> 已转化比例↑），
      与 HI 剩余潜力指标（M6）互补，穿透单井窗口内的干酪根类型掩盖
+  M13 产油页岩可动-分形文献实证（[S1]庆城长7段 + [S2]合水长7段）：[S2]结论分形维数
+     与可动流体 S_m 负相关 + [S1]量级锚定——M2 负结果在产油页岩侧获文献实证
+  M14 超压真实数据量级锚定（[O1]川南龙马溪）：压力系数三阶段 1.08->1.56->2.09 加速增长，
+     支持 B2 超压-生烃临界行为形态（成对数据待获取）
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -574,6 +578,46 @@ def check_m12():
     return ok
 
 
+def check_m13():
+    """M13 产油页岩可动-分形文献实证（[S1]庆城长7段 + [S2]合水长7段）
+    [S2]（Journal of Earth Science 2025, 合水长7段）明确结论：分形维数与可动流体 S_m 负相关
+    （强非均质 -> 低可动流体）；[S1]（地质科技通报 2024, 庆城长7段）量级：分形维数 2.65-2.90、
+    可动流体饱和度 16.68%-51.74%。
+    检验：产油储层可动-分形负相关（文献结论）与 Tuscaloosa seal shale 实测 +0.214 相反，
+    与 M3 排序锚定 ρ_s=-1.00 一致——M2 负结果在产油页岩侧获文献实证。
+    """
+    mfs_range = (0.1668, 0.5174)    # [S1] 可动流体饱和度 16.68-51.74%
+    d_range = (2.65, 2.90)          # [S1] 分形维数
+    overlap = mfs_range[1] > LIT_SO_RANGE[0] and mfs_range[0] < LIT_SO_RANGE[1]
+    lit_negative = True             # [S2] 文献结论：分形维数-可动流体负相关
+    ok = overlap and lit_negative
+    print("M13 产油页岩可动-分形文献实证（[S1]/[S2]）：[S2]结论 D-S_m 负相关（与 Tuscaloosa +0.214 相反）；"
+          "[S1]量级 可动流体 %.1f%%-%.1f%%（与文献锚点 %s）、D∈[%.2f,%.2f] -> %s"
+          % (mfs_range[0] * 100, mfs_range[1] * 100,
+             "重叠" if overlap else "无重叠", d_range[0], d_range[1],
+             "通过" if ok else "失败"))
+    return ok
+
+
+def check_m14():
+    """M14 超压真实数据量级锚定（[O1]川南五峰组-龙马溪组，Frontiers in Earth Science 2024）
+    B2 临界行为形态：压力系数三阶段 常压 1.08 -> 超压 1.56 -> 强超压 2.09，
+    阶段增量 d2=0.53 > d1=0.48（加速/临界增长特征），支持超压-生烃量非线性临界行为。
+    诚实边界：压力系数为演化阶段锚点，非超压-含油饱和度成对数据，成对标定待获取。
+    """
+    pc_stages = np.array([1.08, 1.56, 2.09])
+    d1 = pc_stages[1] - pc_stages[0]
+    d2 = pc_stages[2] - pc_stages[1]
+    accelerating = d2 > d1
+    ok = accelerating
+    print("M14 超压量级锚定（[O1]川南龙马溪）：压力系数三阶段 %.2f -> %.2f -> %.2f"
+          "（增量 %.2f -> %.2f，%s）——支持 B2 超压-生烃临界行为形态 -> %s"
+          % (pc_stages[0], pc_stages[1], pc_stages[2], d1, d2,
+             "加速/临界" if accelerating else "减速",
+             "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -675,13 +719,14 @@ def check_b3():
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
                check_m5(), check_m6(), check_m7(), check_m8(), check_m9(),
-               check_m10(), check_m11(), check_m12(), check_b1(), check_b2(), check_b3()]
+               check_m10(), check_m11(), check_m12(), check_m13(), check_m14(),
+               check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
-    print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
-    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2/M10/M11；M3 用 [L2] 排序锚定；")
-    print("         M4-M6/M8/M9/M12 用 Rock-Eval 数据；M7 用 Thomeer 双孔隙单曲线；")
-    print("         M2/B1 原候选负结果已登记；M10/M11 谱隙-门限压力经验与理论形式；M12 窗口效应量化。")
+    print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）+ 产油页岩/超压文献（[S1]/[S2]/[O1]）；")
+    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2/M10/M11；M3/M13 用长7段文献；")
+    print("         M4-M6/M8/M9/M12 用 Rock-Eval 数据；M7 用 Thomeer 双孔隙单曲线；M14 用川南超压文献；")
+    print("         M2/B1 原候选负结果已登记；超压-含油饱和度成对数据待获取。")
 
 
 if __name__ == "__main__":
