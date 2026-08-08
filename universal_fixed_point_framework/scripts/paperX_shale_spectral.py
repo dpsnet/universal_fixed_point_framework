@@ -744,6 +744,66 @@ def _r2(y, y_pred):
     return 1 - np.sum((y - y_pred) ** 2) / np.sum((y - y.mean()) ** 2)
 
 
+def _detect_h2_decoupling(D_syn, seed=11, c2=5.0, sigma=0.05, C0=-1.6, B_true=10.4):
+    """F1b H2 标度因子解耦破缺检测——残差结构检测（§4.1 H2 假设的证伪测试）
+
+    文档注释：目的 / 原理 / 三步流程 / 复现 / 调试
+    ================================================================
+    【目的】
+      验证 §4.1 H2 假设：样品间 C = ln(S_min/a) 的涨落与 (D-2) 不相关
+      （几何常数 a 与结构复杂度 D 解耦），常数截距 B 方可吸收均值。
+      若 H2 破缺（a-D 相关），则 C = C(D)，双曲形式 log P_t = C/(D-2) + B
+      在样品集合上不严格成立——本检测器负责识别该破缺。
+
+    【原理：为何不依赖 R² 劣化】
+      C 对 (D-2) 的线性依赖会被双曲拟合完全吸收。设 x = D-2：
+        C(D) = C0 + c1·(D-2)  ⟹  C(D)/x = C0/x + c1
+      c1 项并入截距 B，数据仍严格落在双曲族上（R² 不降）——线性耦合不可检。
+      因此真正的破缺须为非线性耦合。取二次形式 C(D) = C0 + c2·(D-2.5)²：
+        C(D)/x = C0/x + c2·(x-0.5)²/x
+               = C0/x + c2·(x² - x + 0.25)/x
+               = (C0 + c2/4)/x - c2 + c2·x
+      其中 c2·x 项（随 D 线性增长的剩余项）无法被双曲形式 C/x + B 表示，
+      成为系统残差——残差因而与 D 呈强相关模式。检测即基于该结构特征。
+
+    【三步流程】
+      1) 合成：logP_t,i = C_i/(D_i-2) + B_true + N(0, sigma)，
+         其中 C_i = C0 + c2·(D_i-2.5)²（默认 c2=5 放大破缺信号）；
+      2) 拟合：对合成数据做双曲回归 logP = C/x + B，取残差
+         res = logP - (C/x + B)；
+      3) 判定：计算 Pearson 相关 rho(res, D)。破缺时残差含 c2·x 项
+         → |rho| 显著非零；未破缺（白噪声残差）→ |rho| ≈ 0。
+
+    【复现参数（默认值即论文报告值）】
+      D_syn  分形维数样品  rng.uniform(2.15, 3.0, 60)，由调用方生成（种子 11）
+      seed   噪声种子      11（固定保证可复现）
+      c2     破缺幅度      5.0（放大信号，使 rho 与对照分离充分）
+      sigma  噪声幅度      0.05
+      C0/B_true            -1.6 / 10.4（与 M11 实测同量级）
+
+    【预期输出（种子 11，n=60）】
+      破缺合成数据：rho(res, D) ≈ 0.44 → detected = True
+      阳性对照（C 恒定）：rho ≈ 0.06 → detected = False
+      阈值 0.3：破缺信号 (0.44) 与对照 (0.06) 分离充分且对噪声鲁棒。
+
+    【调试提示】
+      · 若破缺数据未被检出（rho < 0.3）：增大 c2（信号 ∝ c2·x 幅度）
+        或减小 sigma；确认 D_syn 覆盖范围包含 x 足够大的样品。
+      · 若阳性对照误报（rho > 0.3）：检查 D_syn 分布是否极端不均
+        （残差矩相关性可能被端点样品主导）；改用秩相关（spearman）复核。
+      · 数值一致性：rho ≈ c2·Var(x)/sqrt(Var(c2·x)+Var(噪声)) 的一阶近似，
+        可据此估算所需 c2 幅度。
+    """
+    rng = np.random.default_rng(seed)
+    xh = 1.0 / (D_syn - 2)
+    C_i = C0 + c2 * (D_syn - 2.5) ** 2
+    logPt = C_i / (D_syn - 2) + B_true + rng.normal(0, sigma, len(D_syn))
+    C_fit, B_fit = np.polyfit(xh, logPt, 1)
+    res = logPt - (C_fit * xh + B_fit)
+    rho_resD = float(np.corrcoef(res, D_syn)[0, 1])
+    return rho_resD, abs(rho_resD) > 0.3
+
+
 def check_p1_falsify():
     """P1 谱隙-门限压力双曲标度的证伪边界测试（§5.1 可证伪检验）
     F1a D->2 发散检测：合成'发散被抑制'（门限压力随 D 线性、D->2 不发散）数据，
@@ -765,33 +825,9 @@ def check_p1_falsify():
     r2_lin_supp = _r2(logPt_supp, np.polyval(np.polyfit(D_syn, logPt_supp, 1), D_syn))
     f1a_detected = r2_lin_supp > r2_hyper_supp
     # F1b H2 标度因子解耦破缺检测（残差结构检测，非 R² 检测）
-    # ============================================================
-    # 目标：验证 §4.1 H2 假设——样品间 C=ln(S_min/a) 的涨落与 (D-2) 不相关
-    # （几何常数 a 与结构复杂度 D 解耦），常数截距 B 方可吸收均值。
-    #
-    # 为何不依赖 R² 劣化：C 对 (D-2) 的线性依赖会被双曲拟合完全吸收。设
-    #   C(D) = C0 + c1·(D-2)  ⟹  C(D)/(D-2) = C0/(D-2) + c1
-    # c1 项并入截距 B，数据仍严格落在双曲族上（R² 不降）——线性耦合不可检。
-    # 故真正的破缺须为非线性耦合：取 C(D) = C0 + c2·(D-2.5)²，令 x=D-2：
-    #   C(D)/(D-2) = C0/x + c2·(x-0.5)²/x
-    #              = C0/x + c2·(x² - x + 0.25)/x
-    #              = (C0 + c2/4)/x - c2 + c2·x          （c2·x 项无法被 C/x+B 吸收）
-    # 得到 c2·x 项（随 D 线性增长的剩余项）——双曲拟合无法表示，成为系统残差，
-    # 残差因而与 D 呈强相关模式。此为"残差结构检测"的数学基础。
-    #
-    # 检测步骤：
-    #   1) 合成 logP_t,i = C_i/(D_i-2) + B + 噪声，其中 C_i = C0 + c2·(D_i-2.5)²
-    #      （c2=5 放大破缺信号，种子固定保证可复现）；
-    #   2) 对合成数据做双曲拟合 logP = C/x + B，得残差 res = logP - (C/x + B)；
-    #   3) 计算 Pearson 相关 rho(res, D)：破缺时残差含 c2·x 项 → |rho| 显著非零；
-    #      未破缺（残差为白噪声）→ |rho|≈0（阳性对照实测 ~0.06）。
-    # 阈值 rho>0.3：种子 11 下破缺信号 rho≈0.44 vs 对照 ~0.06，分离充分且对噪声鲁棒。
-    C_i = -1.6 + 5.0 * (D_syn - 2.5) ** 2
-    logPt_h2 = C_i / (D_syn - 2) + 10.4 + rng.normal(0, 0.05, len(D_syn))
-    Ch2, Bh2 = np.polyfit(xh, logPt_h2, 1)
-    res_h2 = logPt_h2 - (Ch2 * xh + Bh2)
-    rho_resD = float(np.corrcoef(res_h2, D_syn)[0, 1])
-    f1b_detected = abs(rho_resD) > 0.3
+    # 完整的目的/原理/三步流程/复现参数/预期输出/调试提示见 _detect_h2_decoupling()
+    # docstring（§4.1 H2 假设的证伪测试），此处仅调用并报告结果。
+    rho_resD, f1b_detected = _detect_h2_decoupling(D_syn)
     # F1c 真实数据：双曲 vs 线性 + C-D 解耦秩相关
     D_arr, Pt_arr = _load_tuscaloosa_d_pt()
     logPt = np.log(Pt_arr)
