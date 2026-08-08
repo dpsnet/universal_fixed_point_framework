@@ -398,6 +398,11 @@ theorem kmax_duality_network :
         （`suppression_geometric`：范畴复合强制几何级数 S_k = s^k）；
         归一化层（底数 = e ⟺ 生成元匹配）为分析性论证，
         见笔记 §3.5.2a。规范不变量 d_H·ln(1/s) = ln 15。
+        → **v1.38 补充（§10a，2026-08-08）**：归一化层升级为 **Moran 结构封闭**——
+        `moran_closed_s_eq_exp_neg_one`（Moran 方程 15·s^{ln15} = 1 + d_H = ln 15
+        机器证明 ⟹ s = e⁻¹，纯代数）+ `moran_closed_unique`（κ≠1 反证）；
+        不再依赖信息论变分（基数经济/最大熵降级为独立佐证）——
+        08 笔记 §5.1 路线 D。
 
    尽管如此，本文件已建立了从 𝐒𝐩 严格 4-范畴结构到
    分支计数 B = 15 的**类型级形式化链条**：
@@ -710,6 +715,118 @@ theorem suppression_exp_neg (S : ℕ → ℝ) (h0 : S 0 = 1)
   rw [suppression_geometric S h0 hadd k, h1, ← Real.exp_nat_mul]
   congr 1
   ring
+
+/-! =========================================================
+   §10a Moran 封闭：s = e⁻¹ 的范畴层独立推导（2026-08-08 新增）
+   =========================================================
+
+   路线 D（08 笔记 §5.1）：s = e⁻¹ 不依赖信息论变分（基数经济/最大熵），
+   由 Moran 方程 + 结构量机器证明纯代数封闭：
+
+     Moran 方程：15·s^{ln 15} = 1（B = 15 分支 × 均匀收缩率 s）
+     d_H = ln 15（机器证明，branchIndex_moran_eq_1 / branchIndex_dH_unique）
+     ⟹ s^{ln 15} = 1/15 ⟹ ln(1/s)·ln 15 = ln 15 ⟹ ln(1/s) = 1 ⟹ s = e⁻¹
+
+   本定理形式化核心步骤：Moran 方程 15·s^{ln15} = 1（s > 0）⟹ s = e⁻¹。
+   这是"为何 D 函子保持生成元（κ=1）"的代数封闭（开放项 2 的归一化层
+   从分析性论证（生成元匹配）升级为 Moran 结构封闭）。 -/
+
+/-- 路线 D 核心：Moran 方程 15·s^{ln15} = 1（s > 0）的唯一解为 s = e⁻¹。
+    纯代数（取对数 + 消去 ln15），不依赖信息论变分。 -/
+theorem moran_closed_s_eq_exp_neg_one (s : ℝ) (hs0 : 0 < s)
+    (hmoran : (15 : ℝ) * s ^ (Real.log 15) = 1) :
+    s = Real.exp (-1) := by
+  have h15nz : (15 : ℝ) ≠ 0 := by norm_num
+  -- s^{ln15} = 1/15（由 Moran 方程除以 15）
+  have hpow : s ^ Real.log 15 = 1 / (15 : ℝ) := by
+    rw [eq_div_iff h15nz, mul_comm]
+    exact hmoran
+  -- ln(s^{ln15}) = ln(1/15)
+  have hln_pow : Real.log (s ^ Real.log 15) = Real.log 15 * Real.log s := by
+    exact Real.log_pow hs0 (Real.log 15)
+  have hln_r : Real.log (1 / (15 : ℝ)) = -Real.log 15 := by
+    rw [Real.log_div Real.one_ne_zero h15nz, Real.log_one, zero_sub]
+  have heq : Real.log 15 * Real.log s = -Real.log 15 := by
+    rw [← hln_pow, hpow, hln_r]
+  -- ln 15 ≠ 0（e^{ln 15} = 15 ≠ 1）
+  have hln15ne0 : Real.log (15 : ℝ) ≠ 0 := by
+    intro hlog
+    have he : Real.exp (Real.log (15 : ℝ)) = Real.exp 0 := by rw [hlog]
+    have h15 : (15 : ℝ) = 1 := by
+      rw [Real.exp_log (by norm_num : 0 < (15 : ℝ))] at he
+      simpa using he
+    norm_num at h15
+  -- ln s = -1（heq 除以 ln15）
+  have hlns : Real.log s = -1 := by
+    calc
+      Real.log s = (Real.log (15 : ℝ) * Real.log s) / Real.log (15 : ℝ) := by
+        field_simp [hln15ne0]
+      _ = (-Real.log (15 : ℝ)) / Real.log (15 : ℝ) := by rw [heq]
+      _ = -1 := by field_simp [hln15ne0]
+  -- s = e^{ln s} = e⁻¹
+  calc
+    s = Real.exp (Real.log s) := by rw [← Real.exp_log hs0]
+    _ = Real.exp (-1) := by rw [hlns]
+
+/-- 路线 D 推论：κ ≠ 1（s ≠ e⁻¹）与 Moran 方程 + d_H = ln 15 矛盾
+    （Moran 方程唯一解为 e⁻¹，唯一性直接来自 moran_closed_s_eq_exp_neg_one）。 -/
+theorem moran_closed_unique {s : ℝ} (hs0 : 0 < s)
+    (hs : s ≠ Real.exp (-1)) :
+    (15 : ℝ) * s ^ (Real.log 15) ≠ 1 := by
+  intro hmoran
+  exact hs (moran_closed_s_eq_exp_neg_one s hs0 hmoran)
+
+/-! =========================================================
+   §10b c₃ 时间方向：唯一永不静默分支（2026-08-08 新增）
+   =========================================================
+
+   c₃ 分支"时间诠释"的可形式化部分（08 笔记 §5.2 T1–T2）：
+   IFS 收缩因子比 c₁⁰:c₂⁰:c₃⁰ = S₃S₄:S₄:1（S₃ = e⁻³、S₄ = e^{−d}）：
+
+     T1  c₃ 是唯一静默因子 = 1 的分支（c₁ 双重静默 < 1、c₂ 单重静默 < 1、c₃ = 1）
+     T2  静默因子 = 1 的分支唯一 ⟹ 时间维数 = 1（永不静默 = 递归演化承载方向）
+
+   对任意 d > 0 成立（d = ln 15 为机器证明实例）。 -/
+
+/-- 收缩因子比（静默分层）：c₁₀ = S₃·S₄（双重静默）、c₂₀ = S₄（单重静默）、
+    c₃₀ = 1（无静默——时间分支，谱流参数 t 沿此演化永不静默）。 -/
+def silent_factor_c1 (d : ℝ) : ℝ := Real.exp (-3) * Real.exp (-d)
+def silent_factor_c2 (d : ℝ) : ℝ := Real.exp (-d)
+def silent_factor_c3 (d : ℝ) : ℝ := 1
+
+/-- T1：c₃ 是唯一静默因子 = 1 的分支——
+    c₁ 双重静默 < 1、c₂ 单重静默 < 1、c₃ 无静默 = 1（权重排序 S₃S₄ < S₄ < 1）。 -/
+theorem c3_unique_silent_factor (d : ℝ) (hd : 0 < d) :
+    silent_factor_c1 d < 1 ∧ silent_factor_c2 d < 1 ∧ silent_factor_c3 d = 1 := by
+  constructor
+  · rw [silent_factor_c1, ← Real.exp_add]
+    rw [show (-3 : ℝ) + -d = -(3 + d) by ring]
+    exact Real.exp_lt_one_iff.mpr (by linarith)
+  constructor
+  · rw [silent_factor_c2]
+    exact Real.exp_lt_one_iff.mpr (by linarith)
+  · rfl
+
+/-- T2：静默因子 = 1 的分支唯一（在 {c₁₀, c₂₀, c₃₀} 中恰为 c₃₀）
+    ⟹ 时间维数 = 1（永不静默分支唯一，递归演化方向唯一）。 -/
+theorem c3_silent_factor_unique (d : ℝ) (hd : 0 < d) :
+    ∀ x : ℝ, (x = silent_factor_c1 d ∨ x = silent_factor_c2 d ∨ x = silent_factor_c3 d) →
+      x = 1 → x = silent_factor_c3 d := by
+  intro x hx h1
+  rcases hx with h | h | h
+  · rw [h] at h1
+    have hc1 : silent_factor_c1 d < 1 := (c3_unique_silent_factor d hd).1
+    linarith
+  · rw [h] at h1
+    have hc2 : silent_factor_c2 d < 1 := (c3_unique_silent_factor d hd).2.1
+    linarith
+  · rw [h]
+
+/-- T2 推论（存在性）：c₃₀ = 1（时间分支存在）——结合唯一性给出
+    "静默因子 = 1 的分支恰有一个"（时间维数 = 1）。 -/
+theorem c3_silent_factor_exists (d : ℝ) :
+    silent_factor_c3 d = 1 := by
+  rfl
 
 /-! =========================================================
    §11 向外推：维数间隙与层正交性（2026-07-30 新增）

@@ -167,6 +167,7 @@ SCRIPTS = [
     ("scripts/paperX_hawking_spectrum.py",            "黑洞量子演化：霍金谱 + 蒸发动力学 + Page 曲线 + 视界涨落 + 信息保持 + 量子反弹 (35/35)"),
     ("scripts/paperX_hawking_kerr.py",                "61D Kerr 蒸发动力学：谱温度归约 f(a*) + 转动降温 + 极端冷却 + 超辐射角动量优先辐射 (6/6)"),
     ("scripts/paperX_kerr_superradiance.py",          "61D Kerr 完整超辐射谱：数值求解标量径向方程 Z_slm(ω)=|R|²−1——窗口符号判据（Z>0⟺ω<mΩ_H）、转动增强（Z_max 随 a* 单调）、边界连续、l=m=2 窗口拓宽峰值降低、发射谱超辐射区占可观份额、dJ/dt>0 且 dJ/dE 与简化 R_J=2 同量级（8/8）"),
+    ("scripts/paperX_kerr_sr_evaporation.py",         "61D 超辐射谱→蒸发衔接：超辐射增强因子 η(a*) 随转动单调（0.008→0.777→220）、角动量效率 dJ/dE>1/M、l=m=2 模贡献 36.5%、简化模型双向偏差（低转动低估 8.7×/中等 a*≈0.9 近似/极端高估 0.02——诚实边界）、a*(t) 单调递减蒸发轨迹（5/5）"),
 
     # === Paper V: 力的谱动力学 ===
     ("scripts/paper5_spectral_flow_test.py",          "Paper V 谱流方程验证 (ALL PASSED)"),
@@ -234,6 +235,8 @@ SCRIPTS = [
     ("scripts/paperX_silence_yi_origin.py", "y_i 可比性来源 (5/5)：三扇区 y_i/y₃∈[0.5,5] O(1)；c^α 捕获 log 层级 87.5%-130.4%；O(1) 来源=c^α 主导+RG α 推导 (副产品非拟合)"),
     ("scripts/paperX_silence_dual_formula_equiv.py", "Formula B↔C 等价性 (4/4)：U=I 极限精确退化为 c^α_f 骨架 (α_v·β_f=α_f 恒等) + 骨架同源 + β 修复凸包 +68% 偏差 + 凸包自洽——双公式为同一物理两种参数化，非重复压制"),
     ("scripts/paperX_kmax_duality.py", "k_max=8 对偶映射结构 (10/10)：B=15=2·k_max−1 + 旋量16=2·k_max + d_H=ln(2·k_max−1)=ln15 + 底空间8=γ生成元 + log₂k_max=3=N_active——k_max 处于旋量/分支/维数/底空间/离散截断对偶网络中心节点"),
+    ("scripts/paperX_cl17_first_principle.py", "Cl(1,7) 代数选择第一性推导 (7/7)：8 生成元（k_max=2³ 统一 3 定理）× 时间维（c₃ 分支：IFS 递归根基静默因子=1 永不静默，权重排序机器证明）⟹ M₁₆(ℝ)——Cl(1,1)≅M₂(ℝ)/Cl(0,6) 复构造/Cl(1,7) 复构造 256 单词全秩 = M₁₆(ℂ) + 16 实 Majorana 忠实模 ⟹ 实代数 M₁₆(ℝ)（非 M₈(ℍ)）；旋量 16=2·k_max、B=15、D=10 衔接 N_tr=8、α₀=1/2 复核"),
+    ("scripts/paperX_s_categorical_time.py", "s=e⁻¹ 范畴层独立推导 + c₃ 时间诠释形式化 (9/9)：Moran 方程 15·s^ln15=1 + d_H=ln15/B=15（机器证明）⟹ s=e⁻¹ 纯代数封闭（ln(1/s)=ln15/ln15=1，不依赖信息论变分；κ≠1 反证 Moran 破坏）；信息论（基数经济/最大熵）降级为独立佐证；时间维=c₃ 分支（唯一静默因子=1 永不静默，谱流 t 演化承载）⟹ 时间维数=1、Cl(1,7) 签名 (1,7)≅M₁₆(ℝ) 唯一洛伦兹类"),
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))

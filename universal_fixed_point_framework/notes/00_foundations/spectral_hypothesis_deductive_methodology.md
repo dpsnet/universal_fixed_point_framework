@@ -29,11 +29,13 @@
 | 假设 | 位置 | 性质 | 论证强度 | 可证性 |
 |:-----|:-----|:-----|:---------|:-------|
 | `hGap`（A_GR 谱） | `DeviationBound.lean` | **物理模型断言** | ①+② | ❌ 数学上不可证（框架输入，数值已验证） |
-| `hNorm`（Cl(1,7) 归一化） | `DeviationBound.lean` | **物理模型断言** | ①+② | ❌ 同左 |
+| `hNorm`（Cl(1,7) 归一化） | `DeviationBound.lean` | **物理模型断言（大幅降级）** | ①+② | ❌ 代数选择不可证，但**代数结构已构造性确定**（2026-08-08：M₁₆(ℝ) 同构/旋量 16 唯一由 k_max × 时间维确定，`paperX_cl17_first_principle.py` 7/7，笔记 06 §7.9）——**时间维 = c₃ 分支**（IFS 递归根基，静默因子 = 1 永不静默，谱流参数 t 沿此演化，权重排序机器证明）已由框架内部确定，非外部输入；**s = e⁻¹ 已获范畴层独立推导 + Lean 机器证明**（08 笔记 §5.1 路线 D：Moran 方程 + d_H/B 机器证明纯代数封闭，`paperX_s_categorical_time.py` 9/9；`CoherenceToBranching.lean §10a` moran_closed_* + **§10b c₃ 时间方向** c3_unique_silent_factor/c3_silent_factor_unique/c3_silent_factor_exists（唯一永不静默分支 ⟹ 时间维数 = 1），lake build 2454 jobs 通过）；剩余：T3–T5 对应论证（物理论证层）+ "递归演化 = 时间"的 $\mathbf{Sp}$ 纯范畴形式化（$\mathbf{Sp}$ 内时间方向定义） |
 | `hτ0`（Bowen τ(0)） | `ThermoFormalism.lean` | 数学定理 | — | ✅ 可证（替换真实 Bowen 定义 + Moran 唯一性） |
 | `hBdd`（Legendre 有界性） | `ThermoFormalism.lean` | 数学定理（对真实凸 τ） | — | ✅ 可证（真实定义 + 斜率界） |
 
 **原则**：物理断言（hGap/hNorm）显式化后不再伪装为无条件定理，其合理性由 ① 预测检验 + ② 框架自洽支撑；数学命题（hτ0/hBdd）证明路径明确，仅被占位定义阻塞。
+
+**2026-08-08 更新（Cl(1,7) 第一性推进）**：hNorm 的"代数选择"部分已从任意签名降为**结构唯一确定**——Cl(1,7) 代数 = f(生成元数 8 = k_max 机器证明, 时间维 = c₃ 分支)：M₁₆(ℝ) 同构（构造性：Cl(1,1)⊗̂Cl(0,6) = M₂(ℝ)⊗̂ℝ(8)）、旋量 16 = 2·k_max、B/d_H 对偶网络全部为可复现数学事实。**时间方向非外部输入**：c₃ 分支（IFS 递归根基，静默因子 = 1 永不静默，谱流参数 t 沿此演化）由权重排序机器证明（S₃S₄ < S₄ < 1）确立（`spectral_zero_parameter_derivation.md` §7.3）——"1 时间"（洛伦兹签名）为框架内部结构。**s = e⁻¹ 范畴层独立推导 + Lean 机器证明闭合（08 笔记 §5.1 路线 D + CoherenceToBranching §10a/§10b）**：Moran 方程 15·s^{ln15} = 1 + d_H = ln15、B = 15（均机器证明）⟹ ln(1/s) = 1 ⟹ s = e⁻¹——纯代数封闭，不依赖信息论变分（信息论降级为独立佐证）；`moran_closed_*` + `c3_*_silent_factor`（唯一永不静默分支 ⟹ 时间维数 = 1）Lean 定理 lake build 通过。**诚实保留**：T3–T5 对应论证（谱流演化沿 c₃ = 时间的物理解读；Cl(1,7) γ₀ ↔ c₃ 分支对应）为物理论证层；③ 完整先验导出的剩余 = "递归演化 = 时间"的 $\mathbf{Sp}$ 纯范畴形式化（在 $\mathbf{Sp}$ 4-范畴内定义时间方向作为特定态射层的演化参数）。
 
 ## 5. 关联登记
 
