@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 批量验证脚本：运行所有 paperX_*.py 并汇总检查通过率。
 """
