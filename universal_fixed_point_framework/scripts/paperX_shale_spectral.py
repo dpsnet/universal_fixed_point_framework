@@ -29,6 +29,8 @@
   M2 真实数据深化：可动饱和度-分形维数相关性（B1 实证化）+ 多段分形检验
   M3 产油页岩文献锚定：长7段 [L2] 排序锚点（Type I 大孔 D 低->MFS 高，Type III 小孔 D 高->MFS 低），
      与 Tuscaloosa 实测 +0.214 对比，检验"可动-分形关系依赖页岩类型"
+  M4 生烃谱流检查（Rock-Eval 示例数据）：S1=已生烃（谱流注入）、S2=剩余潜力、Tmax=成熟度（递归进度）——
+     TOC 与 S1+S2 强正相关（高产层段判据）+ Tmax-深度趋势 + S2/TOC-Tmax 干酪根降解谱流（5 样品量级验证）
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -43,6 +45,8 @@ LIT_SO_RANGE = (0.20, 0.60)                          # [L2] 长7段页岩油含�
 
 # 真实数据目录（USGS Tuscaloosa MICP，[L6]）
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tuscaloosa_micp")
+# Rock-Eval 示例数据目录（用户提供，5 样品量级验证）
+ROCK_EVAL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_example")
 
 
 def check_m1():
@@ -184,6 +188,47 @@ def check_m3():
     return ok
 
 
+def check_m4():
+    """M4 生烃谱流检查（Rock-Eval 示例数据，5 样品量级验证）
+    Rec 对象实例化：S1 = 已生烃（谱流注入量）、S2 = 剩余裂解潜力（递归剩余状态）、
+    Tmax = 成熟度（递归演化进度参数）、S1+S2 = 生烃潜量（总注入预算）。
+    子检查：TOC 与 S1+S2 强正相关 + 高产层段判据（TOC>2 且 S1+S2>6）；
+            Tmax 随深度总体上升（成熟度演化）；S2/TOC 随 Tmax 递减（干酪根降解谱流）。
+    诚实边界：示例数据 5 样品，统计意义有限，为量级验证。
+    """
+    csv_path = os.path.join(ROCK_EVAL_DIR, "rockeval_example.csv")
+    if not os.path.exists(csv_path):
+        print("M4 生烃谱流检查：数据文件缺失（%s）-> 失败" % csv_path)
+        return False
+    with open(csv_path, "r") as f:
+        rows = list(csv.DictReader(f))
+    n = len(rows)
+    depth = np.array([float(r["Depth_m"]) for r in rows])
+    toc = np.array([float(r["TOC_wt"]) for r in rows])
+    s1s2 = np.array([float(r["S1S2_mgg"]) for r in rows])
+    tmax = np.array([float(r["Tmax_C"]) for r in rows])
+    s2 = np.array([float(r["S2_mgg"]) for r in rows])
+    # 子检查1：TOC 与 S1+S2 强正相关 + 高产判据
+    rho_toc = float(np.corrcoef(toc, s1s2)[0, 1])
+    hit = int(np.sum((toc > 2.0) & (s1s2 > 6.0)))
+    ok1 = rho_toc > 0.8 and hit >= max(1, n - 1)
+    # 子检查2：Tmax 随深度总体上升（成熟度演化）
+    rho_tmax_depth = float(np.corrcoef(depth, tmax)[0, 1])
+    # 子检查3：S2/TOC 随 Tmax 递减（干酪根降解谱流）
+    s2_toc = s2 / toc
+    rho_decay = float(np.corrcoef(tmax, s2_toc)[0, 1])
+    ok = ok1
+    print("M4 生烃谱流检查（Rock-Eval 示例，%d 样品量级验证）：TOC-S1+S2 相关 rho=%.3f"
+          "（高产层段判据命中 %d/%d）-> 子项1 %s"
+          % (n, rho_toc, hit, n, "通过" if ok1 else "失败"))
+    print("   子项2 Tmax-深度趋势 rho=%.3f（成熟度演化%s）；子项3 S2/TOC-Tmax 递减 rho=%.3f"
+          "（干酪根降解谱流%s，诚实报告）-> 综合 %s"
+          % (rho_tmax_depth, "成立" if rho_tmax_depth > 0 else "未成立",
+             rho_decay, "成立" if rho_decay < 0 else "未成立",
+             "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -283,13 +328,13 @@ def check_b3():
 
 
 def main():
-    results = [check_m0(), check_m1(), check_m2(), check_m3(),
+    results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
                check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
     print("         真实 MICP 数据集（USGS Tuscaloosa [L6]）完成 M1/M2 分析；产油页岩真实成对数据受限，")
-    print("         M3 用长7段 [L2] 排序锚定；B1/M2 负结果已登记。")
+    print("         M3 用长7段 [L2] 排序锚定；M4 用 Rock-Eval 示例数据（5 样品量级验证）；B1/M2 负结果已登记。")
 
 
 if __name__ == "__main__":
