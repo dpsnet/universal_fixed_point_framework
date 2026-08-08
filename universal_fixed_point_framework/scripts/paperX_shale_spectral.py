@@ -33,6 +33,7 @@
      TOC 与 S1+S2 强正相关（高产层段判据）+ Tmax-深度趋势 + S2/TOC-Tmax 干酪根降解谱流（5 样品量级验证）
   M5 长7段 TOC-生烃潜量线性正相关（10 样品）：线性回归 R^2 + 夹层识别（CY-04/CY-07 低 TOC 夹层）
   M6 跨盆地干酪根降解谱流（合并 18 样品）：青山口（高成熟 Tmax~446）HI 中位数 vs 长7段（低成熟 Tmax~441）
+  M7 Thomeer 双孔隙 HPMI 分形（单样品 118 点，GitHub 公开数据）：整体+两段压汞分形，双孔隙两段证据
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -52,6 +53,8 @@ ROCK_EVAL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data",
 # Rock-Eval 长7段（10 样品）与青山口（8 样品）真实数据目录
 ROCK_EVAL_CHANG7_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_chang7")
 ROCK_EVAL_QS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_qingshankou")
+# Thomeer 双孔隙 HPMI 数据目录（GitHub 公开仓库，用户手动下载）
+THOMEER_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "thomeer_hpmi")
 
 
 def check_m1():
@@ -290,6 +293,65 @@ def check_m6():
     return ok
 
 
+def _read_thomeer_xlsx(path):
+    """解析 Thomeer Pc_data_dual_porosity.xlsx（sheet1：Pc, BVocc 列，无 openpyxl 依赖）"""
+    import zipfile
+    import xml.etree.ElementTree as ET
+    z = zipfile.ZipFile(path)
+    NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+    root = ET.fromstring(z.read("xl/worksheets/sheet1.xml"))
+    pc, bv = [], []
+    for row in root.iter(NS + "row"):
+        vals = [c.find(NS + "v").text if c.find(NS + "v") is not None else None
+                for c in row.iter(NS + "c")]
+        if (vals and len(vals) >= 2 and vals[0] is not None and vals[0] != "0"
+                and vals[1] is not None):
+            pc.append(float(vals[0]))
+            bv.append(float(vals[1]))
+    return np.array(pc), np.array(bv)
+
+
+def check_m7():
+    """M7 Thomeer 双孔隙 HPMI 分形（单样品 118 点，GitHub 公开数据）
+    Pc-BVocc 双孔隙曲线：整体 + 两段（低压大孔段 / 高压小孔段）压汞分形维数；
+    双孔隙证据 = 分段拟合 R^2 显著优于整体且两段维数分化。
+    """
+    xlsx_path = os.path.join(THOMEER_DIR, "Pc_data_dual_porosity.xlsx")
+    if not os.path.exists(xlsx_path):
+        print("M7 Thomeer 双孔隙分形：数据文件缺失 -> 失败")
+        return False
+    pc, bv = _read_thomeer_xlsx(xlsx_path)
+    s = bv / bv.max()
+    mask = (s > 0.02) & (s < 0.98) & (pc > 0)
+    if mask.sum() < 10:
+        print("M7 Thomeer 双孔隙分形：有效点数不足 -> 失败")
+        return False
+    x = np.log(pc[mask])
+    y = np.log(s[mask])
+    a0, b0 = np.polyfit(x, y, 1)
+    yp0 = a0 * x + b0
+    r2_over = 1 - np.sum((y - yp0) ** 2) / np.sum((y - y.mean()) ** 2)
+    D_over = 2 - a0
+    seg_r2, seg_D = [], []
+    for lo, hi in ((0.02, 0.5), (0.5, 0.98)):
+        m2 = (s > lo) & (s < hi) & (pc > 0)
+        if m2.sum() >= 5:
+            x2 = np.log(pc[m2])
+            y2 = np.log(s[m2])
+            a2, b2 = np.polyfit(x2, y2, 1)
+            yp2 = a2 * x2 + b2
+            seg_r2.append(1 - np.sum((y2 - yp2) ** 2) / np.sum((y2 - y2.mean()) ** 2))
+            seg_D.append(2 - a2)
+    r2_seg = float(np.mean(seg_r2)) if seg_r2 else 0.0
+    D_seg_med = float(np.median(seg_D)) if seg_D else 0.0
+    ok = r2_seg > r2_over and len(seg_D) >= 2
+    print("M7 Thomeer 双孔隙 HPMI 分形（%d 点，单样品）：整体 R^2=%.3f（D=%.2f）；"
+          "两段 R^2=%.3f（D 中位 %.2f）-> %s"
+          % (mask.sum(), r2_over, D_over, r2_seg, D_seg_med,
+             "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -390,12 +452,14 @@ def check_b3():
 
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
-               check_m5(), check_m6(), check_b1(), check_b2(), check_b3()]
+               check_m5(), check_m6(), check_m7(),
+               check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
-    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；产油页岩真实成对数据受限，M3 用 [L2] 排序锚定；")
-    print("         M4-M6 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；B1/M2 负结果已登记。")
+    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；M3 用 [L2] 排序锚定；")
+    print("         M4-M6 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；M7 用 Thomeer 双孔隙单曲线；")
+    print("         B1/M2 负结果已登记。")
 
 
 if __name__ == "__main__":
