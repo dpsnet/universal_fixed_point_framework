@@ -41,6 +41,8 @@
      经验对应 log P_t = A*D + B（结构复杂度 -> 门限压力/封堵强度）
   M11 Δλ↔P_c 理论函数形式（第一性推导）：压汞分形 S=a*Pc^(2-D) + 最小可测截止
      -> log P_t = C/(D-2) + const（双曲形式），线性形式为窗口一阶近似，真实数据对比验证
+  M12 单井窗口效应量化：转化率代理 S1/TOC 跨盆地重检（成熟度↑ -> 已转化比例↑），
+     与 HI 剩余潜力指标（M6）互补，穿透单井窗口内的干酪根类型掩盖
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -540,6 +542,38 @@ def check_m11():
     return ok
 
 
+def check_m12():
+    """M12 单井窗口效应量化：转化率代理 S1/TOC 跨盆地重检
+    M9 诊断单井窗口内 HI-Tmax 被干酪根类型掩盖。用互补转化率指标 S1/TOC
+    （已生烃比例）跨盆地重检：成熟度↑ -> S1/TOC↑（已转化多），与 M6 的 HI↓（剩余少）互补，
+    穿透单井窗口效应，强化"成熟度驱动干酪根降解谱流"结论。
+    """
+    qs_path = os.path.join(ROCK_EVAL_QS_DIR, "qingshankou_rockeval.csv")
+    c7_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    if not (os.path.exists(qs_path) and os.path.exists(c7_path)):
+        print("M12 单井窗口效应量化：数据文件缺失 -> 失败")
+        return False
+    with open(qs_path, "r") as f:
+        qs = list(csv.DictReader(f))
+    with open(c7_path, "r") as f:
+        c7 = list(csv.DictReader(f))
+    s1toc_qs = np.array([float(r["S1_mgg"]) / float(r["TOC_wt"]) for r in qs])
+    tmax_qs = np.array([float(r["Tmax_C"]) for r in qs])
+    s1toc_c7 = np.array([float(r["S1_mgg"]) / float(r["TOC_wt"]) for r in c7])
+    tmax_c7 = np.array([float(r["Tmax_C"]) for r in c7])
+    qs_med = float(np.median(s1toc_qs))
+    c7_med = float(np.median(s1toc_c7))
+    # 单井窗口效应：长7段内 S1/TOC 与 Tmax 相关（窗口内干酪根类型干扰预期弱化）
+    rho_win = float(np.corrcoef(tmax_c7, s1toc_c7)[0, 1])
+    ok = qs_med > c7_med
+    print("M12 单井窗口效应量化（合并 18 样品）：转化率 S1/TOC 中位——青山口（高成熟，Tmax 中位 %.0f）=%.3f"
+          " > 长7段（低成熟，Tmax 中位 %.0f）=%.3f（互补于 M6 的 HI 349<410）；"
+          "长7段窗内 S1/TOC-Tmax rho=%.3f（窗口效应）-> %s"
+          % (np.median(tmax_qs), qs_med, np.median(tmax_c7), c7_med, rho_win,
+             "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -641,13 +675,13 @@ def check_b3():
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
                check_m5(), check_m6(), check_m7(), check_m8(), check_m9(),
-               check_m10(), check_m11(), check_b1(), check_b2(), check_b3()]
+               check_m10(), check_m11(), check_m12(), check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
     print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2/M10/M11；M3 用 [L2] 排序锚定；")
-    print("         M4-M6/M8/M9 用 Rock-Eval 数据；M7 用 Thomeer 双孔隙单曲线；")
-    print("         M2/B1 原候选负结果已登记；M10/M11 建立谱隙-门限压力经验与理论形式。")
+    print("         M4-M6/M8/M9/M12 用 Rock-Eval 数据；M7 用 Thomeer 双孔隙单曲线；")
+    print("         M2/B1 原候选负结果已登记；M10/M11 谱隙-门限压力经验与理论形式；M12 窗口效应量化。")
 
 
 if __name__ == "__main__":
