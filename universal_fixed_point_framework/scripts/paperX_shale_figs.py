@@ -52,6 +52,16 @@ def load_qs():
         open(os.path.join(BASE, 'data', 'rockeval_qingshankou', 'qingshankou_rockeval.csv'))))
 
 
+def load_qs_d86():
+    return list(csv.DictReader(
+        open(os.path.join(BASE, 'data', 'rockeval_qingshankou_d86', 'qingshankou_d86_rockeval.csv'))))
+
+
+def load_shahai():
+    return list(csv.DictReader(
+        open(os.path.join(BASE, 'data', 'rockeval_shahai', 'shahai_rockeval.csv'))))
+
+
 def fig1():
     D, Pt = load_tuscaloosa()
     m = np.isfinite(Pt) & (Pt > 0) & (D > 2)
@@ -108,21 +118,35 @@ def fig2():
 def fig3():
     c7 = load_chang7()
     qs = load_qs()
-    hi_c7 = np.array([float(x['S2_mgg']) / float(x['TOC_wt']) * 100 for x in c7])
+    d86 = load_qs_d86()
+    sh = load_shahai()
+    # 四体系 HI 与 S1/TOC（沙海组剔除 #11 Tmax=541 煤系异常）
+    def _hi(x, s2='S2_mgg', toc='TOC_wt'):
+        return float(x[s2]) / float(x[toc]) * 100
+    def _st(x, s1='S1_mgg', toc='TOC_wt'):
+        return float(x[s1]) / float(x[toc])
+    hi_c7 = np.array([_hi(x) for x in c7])
     hi_qs = np.array([float(x['HI']) for x in qs])
-    st_c7 = np.array([float(x['S1_mgg']) / float(x['TOC_wt']) for x in c7])
-    st_qs = np.array([float(x['S1_mgg']) / float(x['TOC_wt']) for x in qs])
-    fig, ax = plt.subplots(1, 2, figsize=(9.5, 4))
-    ax[0].boxplot([hi_c7, hi_qs], labels=['长7段\n低成熟 Tmax~441', '青山口\n高成熟 Tmax~446'])
+    hi_d86 = np.array([float(x['HI']) for x in d86])
+    hi_sh = np.array([float(x['HI']) for i, x in enumerate(sh, start=1) if i != 11])
+    st_c7 = np.array([_st(x) for x in c7])
+    st_qs = np.array([_st(x) for x in qs])
+    st_d86 = np.array([_st(x) for x in d86])
+    st_sh = np.array([_st(x) for i, x in enumerate(sh, start=1) if i != 11])
+    labels = ['长7段\n(零阈值型)', '青山口SL\n(c 型)', '青山口D86\n(c 型)', '沙海组\n(c 型,煤系注入)']
+    fig, ax = plt.subplots(1, 2, figsize=(11, 4.4))
+    ax[0].boxplot([hi_c7, hi_qs, hi_d86, hi_sh], labels=labels)
     ax[0].set_ylabel('HI 氢指数')
-    ax[0].set_title('剩余潜力：成熟度↑ → HI↓（M6）', fontsize=10)
-    ax[1].boxplot([st_c7, st_qs], labels=['长7段', '青山口'])
+    ax[0].set_title('剩余潜力：成熟度/干酪根类型双因素（M6 扩展）', fontsize=10)
+    ax[1].boxplot([st_c7, st_qs, st_d86, st_sh], labels=labels)
     ax[1].set_ylabel(r'$S_1$/TOC 转化率')
-    ax[1].set_title('已转化比例：成熟度↑ → 转化率↑（M12）', fontsize=10)
-    fig.suptitle('跨盆地干酪根降解谱流——双互补指标确认（窗口效应穿透）', fontsize=11)
+    ax[1].set_title('已转化比例：跨体系分布（M12 扩展）', fontsize=10)
+    fig.suptitle('中国湖相跨体系干酪根降解谱流——双互补指标（含新获取 D86/沙海组）', fontsize=11)
     fig.tight_layout()
     fig.savefig(os.path.join(FIG, 'shale_fig3_cross_basin.png'), dpi=150)
     plt.close(fig)
+    print('fig3 更新：长7段 n=%d / 青山口SL n=%d / 青山口D86 n=%d / 沙海组 n=%d'
+          % (len(c7), len(qs), len(d86), len(sh) - 1))
 
 
 def fig4():
