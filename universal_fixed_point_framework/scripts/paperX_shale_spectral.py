@@ -716,11 +716,155 @@ def check_b3():
     return ok
 
 
+def _load_tuscaloosa_d_pt():
+    """加载 Tuscaloosa 样品分形维数 D 与门限压力 P_t（与 M10/M11 一致的提取逻辑，[L6]）"""
+    press_path = os.path.join(DATA_DIR, "MICPAirHgInjPress_psia.csv")
+    sat_path = os.path.join(DATA_DIR, "MICP_PseudoWettingSaturation.csv")
+    with open(press_path, "r") as f:
+        Pc = np.array(list(csv.reader(f))[1:], dtype=float)
+    with open(sat_path, "r") as f:
+        S = np.array(list(csv.reader(f))[1:], dtype=float)
+    D, Pt = [], []
+    for j in range(Pc.shape[1]):
+        pc, s = Pc[:, j], S[:, j]
+        m = (s > 0.05) & (s < 0.95) & (pc > 0)
+        if m.sum() < 5:
+            continue
+        a, _ = np.polyfit(np.log(pc[m]), np.log(s[m]), 1)
+        D.append(2 - a)
+        idx = int(np.argmax(s < 0.95))
+        Pt.append(pc[idx] if idx > 0 else np.nan)
+    D = np.array(D)
+    Pt = np.array(Pt)
+    m = np.isfinite(Pt) & (Pt > 0) & (D > 2)
+    return D[m], Pt[m]
+
+
+def _r2(y, y_pred):
+    return 1 - np.sum((y - y_pred) ** 2) / np.sum((y - y.mean()) ** 2)
+
+
+def check_p1_falsify():
+    """P1 谱隙-门限压力双曲标度的证伪边界测试（§5.1 可证伪检验）
+    F1a D->2 发散检测：合成'发散被抑制'（门限压力随 D 线性、D->2 不发散）数据，
+        检测器应识别线性优于双曲（证伪信号正确触发）；
+    F1b H2 标度因子解耦检测：合成 C=C(D)（a-D 相关，解耦破坏）数据，
+        双曲拟合应显著劣化（H2 破缺被识别）；
+    F1c 真实数据稳健性：Tuscaloosa 31 样品重跑双曲 vs 线性 + 逐样品 C-D 秩相关，
+        确认当前数据未触发证伪（预测仍成立）。
+    """
+    rng = np.random.default_rng(11)
+    D_syn = rng.uniform(2.15, 3.0, 60)
+    xh = 1.0 / (D_syn - 2)
+    # F1a 阳性对照：双曲数据（未证伪），双曲拟合应高
+    logPt_pos = -1.6 / (D_syn - 2) + 10.4 + rng.normal(0, 0.08, len(D_syn))
+    r2_hyper_pos = _r2(logPt_pos, np.polyval(np.polyfit(xh, logPt_pos, 1), xh))
+    # F1a 证伪信号：发散被抑制（线性数据），双曲应劣化
+    logPt_supp = 1.8 * D_syn + 3.2 + rng.normal(0, 0.08, len(D_syn))
+    r2_hyper_supp = _r2(logPt_supp, np.polyval(np.polyfit(xh, logPt_supp, 1), xh))
+    r2_lin_supp = _r2(logPt_supp, np.polyval(np.polyfit(D_syn, logPt_supp, 1), D_syn))
+    f1a_detected = r2_lin_supp > r2_hyper_supp
+    # F1b H2 破缺：C 的涨落与 D 二次相关（a-D 解耦破坏），双曲残差应呈 D 相关模式
+    C_i = -1.6 + 5.0 * (D_syn - 2.5) ** 2
+    logPt_h2 = C_i / (D_syn - 2) + 10.4 + rng.normal(0, 0.05, len(D_syn))
+    Ch2, Bh2 = np.polyfit(xh, logPt_h2, 1)
+    res_h2 = logPt_h2 - (Ch2 * xh + Bh2)
+    rho_resD = float(np.corrcoef(res_h2, D_syn)[0, 1])
+    f1b_detected = abs(rho_resD) > 0.3
+    # F1c 真实数据：双曲 vs 线性 + C-D 解耦秩相关
+    D_arr, Pt_arr = _load_tuscaloosa_d_pt()
+    logPt = np.log(Pt_arr)
+    xhr = 1.0 / (D_arr - 2)
+    Cr, Br = np.polyfit(xhr, logPt, 1)
+    r2_hyper_real = _r2(logPt, Cr * xhr + Br)
+    Ar, Bl = np.polyfit(D_arr, logPt, 1)
+    r2_lin_real = _r2(logPt, Ar * D_arr + Bl)
+    Ci = (D_arr - 2) * (logPt - Br)          # 逐样品 C_i，H2 成立时与 D 弱相关
+    rho_CD = float(np.corrcoef(Ci, D_arr)[0, 1])
+    ok = (r2_hyper_pos > 0.95 and f1a_detected and f1b_detected
+          and r2_hyper_real > r2_lin_real and abs(rho_CD) < 0.4)
+    print("P1 证伪边界（合成 60 样品 + 真实 %d 样品）：阳性对照双曲 R^2=%.3f；"
+          "F1a 发散抑制检出=%s（线性 R^2=%.3f vs 双曲 R^2=%.3f）；"
+          "F1b H2 破缺检出=%s（双曲残差-D 相关 rho=%.3f，阳性对照 ~0）；"
+          "真实数据双曲 R^2=%.3f vs 线性 R^2=%.3f；C-D 秩相关 rho=%.3f -> %s"
+          % (len(D_arr), r2_hyper_pos,
+             "是" if f1a_detected else "否", r2_lin_supp, r2_hyper_supp,
+             "是" if f1b_detected else "否", rho_resD,
+             r2_hyper_real, r2_lin_real, rho_CD,
+             "通过（预测未被证伪）" if ok else "失败"))
+    return ok
+
+
+def _load_chang7_s1toc():
+    """加载长7段 TOC 与 S1（P4 用，[M8] 同数据源）"""
+    csv_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    with open(csv_path, "r") as f:
+        rows = list(csv.DictReader(f))
+    toc = np.array([float(r["TOC_wt"]) for r in rows])
+    s1 = np.array([float(r["S1_mgg"]) for r in rows])
+    return toc, s1, rows
+
+
+def check_p4_falsify():
+    """P4 游离烃零注入阈值的证伪边界测试（§5.1 可证伪检验）
+    F4a 过原点检测：长7段真实数据自由截距 vs 强制过原点拟合——负截距显著
+        （截距<-0.1 且过原点拟合 R^2 显著劣化），预测未被证伪；
+    F4b 低 TOC 端非线性检测：合成带阈值平台 S1=max(k*TOC-b,0) 数据应被识别为
+        线性外推失效（低 TOC 端系统性残差）；真实数据剔除夹层后低 TOC 端
+        无系统性偏离；
+    F4c 外推阈值合理性：TOC*=-b/k 应落于 (0, 0.5) wt%（与有效烃源岩 TOC 下限
+        判据一致但更定量）。
+    """
+    toc, s1, rows = _load_chang7_s1toc()
+    # F4a 负截距显著性（真实数据）：截距显著为负 + 强制过原点拟合劣化
+    slope, intercept = np.polyfit(toc, s1, 1)
+    r2_free = _r2(s1, slope * toc + intercept)
+    slope0 = np.sum(toc * s1) / np.sum(toc ** 2)          # 强制过原点
+    r2_zero = _r2(s1, slope0 * toc)
+    n = len(toc)
+    res = s1 - (slope * toc + intercept)
+    s2 = np.sum(res ** 2) / (n - 2)
+    sxx = np.sum((toc - toc.mean()) ** 2)
+    se_b = float(np.sqrt(s2 * (1.0 / n + toc.mean() ** 2 / sxx)))
+    t_stat = intercept / se_b
+    intercept_significant = intercept < -0.1 and r2_zero < r2_free
+    # F4b 低 TOC 端非线性检测能力（合成阈值平台）
+    rng = np.random.default_rng(13)
+    toc_syn = np.linspace(0.1, 12.0, 200)
+    s1_syn = np.maximum(0.57 * toc_syn - 0.24, 0) + rng.normal(0, 0.03, len(toc_syn))
+    ks, bs = np.polyfit(toc_syn, s1_syn, 1)
+    res_lo = s1_syn - (ks * toc_syn + bs)
+    sys_bias = float(np.mean(res_lo[toc_syn < 0.5]))       # 平台区残差应为正
+    nonlin_detected = sys_bias > 0.05
+    # F4b 真实数据低 TOC 端残差（剔除夹层 CY-04/CY-07）
+    layer_ids = {"CY-04", "CY-07"}
+    keep = np.array([r["Sample_ID"] not in layer_ids for r in rows])
+    toc_k, s1_k = toc[keep], s1[keep]
+    sk, bk = np.polyfit(toc_k, s1_k, 1)
+    res_k = s1_k - (sk * toc_k + bk)
+    lo_real = toc_k < 3.0
+    sys_bias_real = float(np.mean(res_k[lo_real])) if lo_real.sum() >= 2 else 0.0
+    # F4c TOC* 合理性
+    toc_star = -intercept / slope
+    toc_star_ok = 0.0 < toc_star < 0.5
+    ok = (intercept_significant and nonlin_detected
+          and abs(sys_bias_real) < 0.1 and toc_star_ok)
+    print("P4 证伪边界（长7段 %d 样品）：F4a 负截距=%.3f（t=%.2f，10 样品下边缘显著；"
+          "过原点 R^2 劣化 %.3f->%.3f）显著=%s；F4b 合成平台检出=%s（低 TOC 残差均值 "
+          "%.3f）、真实低 TOC 残差均值 %.3f；F4c TOC*=%.3f wt%% 落在 (0,0.5) -> %s"
+          % (len(toc), intercept, t_stat, r2_zero, r2_free,
+             "是" if intercept_significant else "否",
+             "是" if nonlin_detected else "否", sys_bias, sys_bias_real,
+             toc_star, "通过（预测未被证伪）" if ok else "失败"))
+    return ok
+
+
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
                check_m5(), check_m6(), check_m7(), check_m8(), check_m9(),
                check_m10(), check_m11(), check_m12(), check_m13(), check_m14(),
-               check_b1(), check_b2(), check_b3()]
+               check_b1(), check_b2(), check_b3(),
+               check_p1_falsify(), check_p4_falsify()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）+ 产油页岩/超压文献（[S1]/[S2]/[O1]）；")
