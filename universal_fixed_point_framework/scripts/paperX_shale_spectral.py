@@ -37,6 +37,8 @@
   M8 B1 修正标定（长7段 10 样品）：替代标度"可动油比例 ≈ 已生烃指数 S1/TOC"线性注入 vs 幂律 α=d_f-1
   M9 长7段生烃谱流全子项检验（10 样品）：诊断 M4 子项3（S2/TOC-Tmax 递减）未确认根因——
      单井成熟度窗口宽度 + 夹层干扰分析
+  M10 谱隙-毛管压力定量对应标定（Tuscaloosa 31 样品）：门槛压力 P_t 与分形维数 D 的
+     经验对应 log P_t = A*D + B（结构复杂度 -> 门限压力/封堵强度）
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -427,6 +429,57 @@ def check_m9():
     return ok
 
 
+def check_m10():
+    """M10 谱隙-毛管压力定量对应（Tuscaloosa 31 样品，[L6]）
+    UFPF 谱隙（反向势垒）↔ 毛细管门限压力 P_t：结构越复杂（分形维数 D 大）→
+    孔喉越小 → 门限压力越高（封堵强度）。经验对应 log P_t = A*D + B。
+    诚实边界：经验标定，物理机制为结构复杂度驱动。
+    """
+    press_path = os.path.join(DATA_DIR, "MICPAirHgInjPress_psia.csv")
+    sat_path = os.path.join(DATA_DIR, "MICP_PseudoWettingSaturation.csv")
+    if not (os.path.exists(press_path) and os.path.exists(sat_path)):
+        print("M10 谱隙-毛管压力对应：数据文件缺失 -> 失败")
+        return False
+    with open(press_path, "r") as f:
+        pc_rows = list(csv.reader(f))
+    with open(sat_path, "r") as f:
+        s_rows = list(csv.reader(f))
+    Pc = np.array(pc_rows[1:], dtype=float)
+    S = np.array(s_rows[1:], dtype=float)
+    n_samp = Pc.shape[1]
+    D_list, Pt_list = [], []
+    for j in range(n_samp):
+        pc = Pc[:, j]
+        s = S[:, j]
+        mask = (s > 0.05) & (s < 0.95) & (pc > 0)
+        if mask.sum() < 5:
+            continue
+        x = np.log(pc[mask])
+        y = np.log(s[mask])
+        a, _ = np.polyfit(x, y, 1)
+        D_list.append(2 - a)
+        idx = int(np.argmax(s < 0.95))
+        Pt_list.append(pc[idx] if idx > 0 else np.nan)
+    D_arr = np.array(D_list)
+    Pt_arr = np.array(Pt_list)
+    m = np.isfinite(Pt_arr) & (Pt_arr > 0)
+    D_arr, Pt_arr = D_arr[m], Pt_arr[m]
+    if len(D_arr) < 10:
+        print("M10 谱隙-毛管压力对应：有效样品不足 -> 失败")
+        return False
+    logPt = np.log(Pt_arr)
+    rho = float(np.corrcoef(D_arr, logPt)[0, 1])
+    A, B = np.polyfit(D_arr, logPt, 1)
+    y_pred = A * D_arr + B
+    r2 = 1 - np.sum((logPt - y_pred) ** 2) / np.sum((logPt - logPt.mean()) ** 2)
+    ok = rho > 0.4
+    print("M10 谱隙-毛管压力定量对应（%d 样品）：log P_t = %.2f*D %+.2f（R^2=%.3f，"
+          "rho(D,logP_t)=%.3f）——结构复杂度->门限压力%s -> %s"
+          % (len(D_arr), A, B, r2, rho,
+             "正相关" if rho > 0 else "无/负相关", "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -528,13 +581,13 @@ def check_b3():
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
                check_m5(), check_m6(), check_m7(), check_m8(), check_m9(),
-               check_b1(), check_b2(), check_b3()]
+               check_m10(), check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
-    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；M3 用 [L2] 排序锚定；")
-    print("         M4-M6/M8/M9 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；M7 用 Thomeer 双孔隙单曲线；")
-    print("         M2/B1 原候选负结果已登记；M9 诊断 M4 子项3 根因。")
+    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2/M10；M3 用 [L2] 排序锚定；")
+    print("         M4-M6/M8/M9 用 Rock-Eval 数据；M7 用 Thomeer 双孔隙单曲线；")
+    print("         M2/B1 原候选负结果已登记；M10 建立谱隙-门限压力经验对应。")
 
 
 if __name__ == "__main__":
