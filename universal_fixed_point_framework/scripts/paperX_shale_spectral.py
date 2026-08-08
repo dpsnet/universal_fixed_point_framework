@@ -31,6 +31,8 @@
      与 Tuscaloosa 实测 +0.214 对比，检验"可动-分形关系依赖页岩类型"
   M4 生烃谱流检查（Rock-Eval 示例数据）：S1=已生烃（谱流注入）、S2=剩余潜力、Tmax=成熟度（递归进度）——
      TOC 与 S1+S2 强正相关（高产层段判据）+ Tmax-深度趋势 + S2/TOC-Tmax 干酪根降解谱流（5 样品量级验证）
+  M5 长7段 TOC-生烃潜量线性正相关（10 样品）：线性回归 R^2 + 夹层识别（CY-04/CY-07 低 TOC 夹层）
+  M6 跨盆地干酪根降解谱流（合并 18 样品）：青山口（高成熟 Tmax~446）HI 中位数 vs 长7段（低成熟 Tmax~441）
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -47,6 +49,9 @@ LIT_SO_RANGE = (0.20, 0.60)                          # [L2] 长7段页岩油含�
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tuscaloosa_micp")
 # Rock-Eval 示例数据目录（用户提供，5 样品量级验证）
 ROCK_EVAL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_example")
+# Rock-Eval 长7段（10 样品）与青山口（8 样品）真实数据目录
+ROCK_EVAL_CHANG7_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_chang7")
+ROCK_EVAL_QS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "rockeval_qingshankou")
 
 
 def check_m1():
@@ -229,6 +234,62 @@ def check_m4():
     return ok
 
 
+def check_m5():
+    """M5 长7段 TOC-生烃潜量线性正相关（10 样品）+ 夹层识别（CY-04/CY-07）
+    用户提示：TOC 与 S1+S2 呈完美线性正相关；夹层（低 TOC 粉砂岩/低烃泥岩）生烃潜量暴跌。
+    """
+    csv_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    if not os.path.exists(csv_path):
+        print("M5 长7段生烃正相关：数据文件缺失 -> 失败")
+        return False
+    with open(csv_path, "r") as f:
+        rows = list(csv.DictReader(f))
+    n = len(rows)
+    toc = np.array([float(r["TOC_wt"]) for r in rows])
+    s1s2 = np.array([float(r["S1S2_mgg"]) for r in rows])
+    slope, intercept = np.polyfit(toc, s1s2, 1)
+    y_pred = slope * toc + intercept
+    r2 = 1 - np.sum((s1s2 - y_pred) ** 2) / np.sum((s1s2 - s1s2.mean()) ** 2)
+    layers = [r["Sample_ID"] for r in rows if float(r["TOC_wt"]) < 2.0]
+    ok = r2 > 0.95 and len(layers) >= 2
+    print("M5 长7段 TOC-生烃潜量线性正相关（%d 样品）：R^2=%.4f，斜率=%.2f mg/g/wt%%，"
+          "夹层识别 %s（%d 个低 TOC 样品）-> %s"
+          % (n, r2, slope, ",".join(layers), len(layers), "通过" if ok else "失败"))
+    return ok
+
+
+def check_m6():
+    """M6 跨盆地干酪根降解谱流（合并 18 样品）：青山口（高成熟 Tmax~446）vs 长7段（低成熟 Tmax~441）
+    预期：成熟度更高组氢指数（HI）中位数更低 -> 干酪根降解谱流跨盆地成立。
+    """
+    qs_path = os.path.join(ROCK_EVAL_QS_DIR, "qingshankou_rockeval.csv")
+    c7_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    if not (os.path.exists(qs_path) and os.path.exists(c7_path)):
+        print("M6 跨盆地干酪根谱流：数据文件缺失 -> 失败")
+        return False
+    with open(qs_path, "r") as f:
+        qs = list(csv.DictReader(f))
+    with open(c7_path, "r") as f:
+        c7 = list(csv.DictReader(f))
+    hi_qs = np.array([float(r["HI"]) for r in qs])
+    tmax_qs = np.array([float(r["Tmax_C"]) for r in qs])
+    toc_c7 = np.array([float(r["TOC_wt"]) for r in c7])
+    s2_c7 = np.array([float(r["S2_mgg"]) for r in c7])
+    tmax_c7 = np.array([float(r["Tmax_C"]) for r in c7])
+    hi_c7 = s2_c7 / toc_c7 * 100.0
+    hi_all = np.concatenate([hi_qs, hi_c7])
+    tmax_all = np.concatenate([tmax_qs, tmax_c7])
+    rho = float(np.corrcoef(tmax_all, hi_all)[0, 1])
+    hi_qs_med = float(np.median(hi_qs))
+    hi_c7_med = float(np.median(hi_c7))
+    ok = hi_qs_med < hi_c7_med
+    print("M6 跨盆地干酪根降解谱流：合并 18 样品 HI-Tmax 相关 rho=%.3f；"
+          "青山口（Tmax 中位 %.0f）HI 中位=%.0f < 长7段（Tmax 中位 %.0f）HI 中位=%.0f -> %s"
+          % (rho, np.median(tmax_qs), hi_qs_med, np.median(tmax_c7), hi_c7_med,
+             "通过" if ok else "失败"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -329,12 +390,12 @@ def check_b3():
 
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
-               check_b1(), check_b2(), check_b3()]
+               check_m5(), check_m6(), check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
-    print("         真实 MICP 数据集（USGS Tuscaloosa [L6]）完成 M1/M2 分析；产油页岩真实成对数据受限，")
-    print("         M3 用长7段 [L2] 排序锚定；M4 用 Rock-Eval 示例数据（5 样品量级验证）；B1/M2 负结果已登记。")
+    print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；产油页岩真实成对数据受限，M3 用 [L2] 排序锚定；")
+    print("         M4-M6 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；B1/M2 负结果已登记。")
 
 
 if __name__ == "__main__":
