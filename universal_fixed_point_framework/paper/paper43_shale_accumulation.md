@@ -2,9 +2,9 @@
 
 ## Spectral-Flow Mechanism of Shale Oil/Gas Accumulation and Its Empirical Validation
 
-**版本**：v0.8 草稿（2026-08-08，未纳入 RAP 登记）
+**版本**：v1.0（2026-08-08，已纳入 RAP 登记 v0.25）
 **来源笔记**：[notes/05_condensed_matter/spectral_shale_accumulation.md](../notes/05_condensed_matter/spectral_shale_accumulation.md)
-**理论归属**：UFPF 框架跨领域应用支线（候选编号 Paper XLIII）
+**理论归属**：UFPF 框架跨领域应用支线（Paper XLIII）
 **验证脚本**：[scripts/paperX_shale_spectral.py](../scripts/paperX_shale_spectral.py)（20 项检查 19/20 + 1 项负结果登记 + 2 项证伪边界测试）
 **图件脚本**：[scripts/paperX_shale_figs.py](../scripts/paperX_shale_figs.py)
 
@@ -199,7 +199,7 @@ UFPF 给出的可检验预测中，以下五项在传统石油地质/压汞理�
 - 超压-含油饱和度成对数据待获取（M14 目前仅压力系数三阶段量级锚定）；
 - §4.2 独有预测的针对性检验数据待获取：极端均匀样品（低复杂度页岩，检验 P1 的 D→2 发散）、微 CT/FMI 突破通道成像（P3）、多盆地 S₁-TOC 回归（P4 零注入阈值证伪/确认）；
 - 单井成熟度窗口效应已量化（M12）但仍限制谱流方向性的单井直接观测；
-- 本稿为 v0.8 草稿：验证通过后按流程纳入 RAP 论文状态表并提炼正式版本。
+- 本稿 v1.0（2026-08-08）已纳入 RAP 论文状态表（勘误 v0.25，1:1 同步）；属跨领域应用支线，不新增盲登记冻结预言（P1–P7 数值不变）。
 
 ## 参考文献
 
