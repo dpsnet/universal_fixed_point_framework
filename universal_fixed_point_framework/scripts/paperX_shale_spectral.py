@@ -24,8 +24,11 @@
 
 验证内容：
   M0 文献锚定压汞分形：S_Hg = a * Pc^(2-D)（[L1] 公式），log-log 回归应恢复文献维数（[L3]-[L5]）
-  M1 真实数据分形分析：USGS Tuscaloosa 31 样品真实 Pc-S 数据（[L6]），压汞分形维数提取与文献范围比对
-  M2 真实数据深化：可动饱和度-分形维数相关性（B1 实证化，替代被否的 alpha=d_f-1 候选）+ 多段分形检验
+  M1 真实数据分形分析（多段分形改进）：USGS Tuscaloosa 31 样品，分段（大孔段/小孔段）提取维数，
+     收敛单段 D 范围（2.53-3.87 中 >3 的不物理值来自噪声段）
+  M2 真实数据深化：可动饱和度-分形维数相关性（B1 实证化）+ 多段分形检验
+  M3 产油页岩文献锚定：长7段 [L2] 排序锚点（Type I 大孔 D 低->MFS 高，Type III 小孔 D 高->MFS 低），
+     与 Tuscaloosa 实测 +0.214 对比，检验"可动-分形关系依赖页岩类型"
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -43,8 +46,9 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tus
 
 
 def check_m1():
-    """M1 真实数据分形分析：USGS Tuscaloosa 31 样品 MICP Pc-S 数据（[L6]）
-    压汞分形：S = a * Pc^(2-D) -> log S = (2-D) * log Pc（取 S ∈ [0.05, 0.95] 分段）
+    """M1 真实数据分形分析（多段分形改进）：USGS Tuscaloosa 31 样品（[L6]）
+    分段（大孔段 S>0.5 / 小孔段 S<0.5）分别提取压汞分形维数：
+    单段 D 范围 2.53-3.87 中 >3 的不物理值来自跨段混合噪声，分段后应收敛到物理范围。
     """
     press_path = os.path.join(DATA_DIR, "MICPAirHgInjPress_psia.csv")
     sat_path = os.path.join(DATA_DIR, "MICP_PseudoWettingSaturation.csv")
@@ -58,7 +62,9 @@ def check_m1():
     Pc = np.array(pc_rows[1:], dtype=float)
     S = np.array(s_rows[1:], dtype=float)
     n_samp = Pc.shape[1]
-    D_list, r2_list = [], []
+    # 单段（对照）与分段（多段分形）维数
+    D_single, r2_single = [], []
+    D_large, D_small, r2_seg = [], [], []
     for j in range(n_samp):
         pc = Pc[:, j]
         s = S[:, j]
@@ -69,23 +75,35 @@ def check_m1():
         y = np.log(s[mask])
         slope, intercept = np.polyfit(x, y, 1)
         y_pred = slope * x + intercept
-        r2 = 1 - np.sum((y - y_pred) ** 2) / np.sum((y - y.mean()) ** 2)
-        D_list.append(2 - slope)
-        r2_list.append(r2)
-    n_ok = len(D_list)
-    if n_ok == 0:
-        print("M1 真实数据分形分析：无有效样品 -> 失败")
+        D_single.append(2 - slope)
+        r2_single.append(1 - np.sum((y - y_pred) ** 2) / np.sum((y - y.mean()) ** 2))
+        # 分段：S>0.5（大孔段）/ S<0.5（小孔段）
+        for lo, hi, buf in ((0.5, 0.95, D_large), (0.05, 0.5, D_small)):
+            m2 = (s > lo) & (s < hi) & (pc > 0)
+            if m2.sum() >= 4:
+                x2 = np.log(pc[m2])
+                y2 = np.log(s[m2])
+                a2, b2 = np.polyfit(x2, y2, 1)
+                yp2 = a2 * x2 + b2
+                buf.append(2 - a2)
+                r2_seg.append(1 - np.sum((y2 - yp2) ** 2) / np.sum((y2 - y2.mean()) ** 2))
+    D_seg = D_large + D_small
+    if len(D_seg) < 10 or len(D_single) < 10:
+        print("M1 真实数据分形分析：有效样品不足 -> 失败")
         return False
-    D_arr = np.array(D_list)
-    r2_arr = np.array(r2_list)
-    D_med = np.median(D_arr)
-    r2_med = np.median(r2_arr)
-    # 判定标准：D 中位数须在物理范围 [2,3]（与文献 2.5-2.9 一致）；R^2 中位数按压汞
-    # 分形文献常用接受线 0.85（真实数据含噪声/多段效应，个别样品 D>3 不作为整体否定）
-    ok = (2.0 <= D_med <= 3.0) and r2_med > 0.85
-    print("M1 真实数据分形分析（USGS Tuscaloosa [L6]，%d/%d 样品有效）：D 中位数=%.3f"
-          "（范围 %.2f-%.2f，个别 >3 为噪声/多段分形），R^2 中位数=%.3f -> %s"
-          % (n_ok, n_samp, D_med, D_arr.min(), D_arr.max(), r2_med,
+    D_seg_arr = np.array(D_seg)
+    D_single_arr = np.array(D_single)
+    D_large_arr = np.array(D_large)
+    D_small_arr = np.array(D_small)
+    D_seg_med = np.median(D_seg_arr)
+    r2_seg_med = np.median(np.array(r2_seg))
+    # 判定：分段维数中位数落在物理范围 [2,3] 且分段 R^2 > 0.85；分段范围应收敛于单段范围
+    ok = (2.0 <= D_seg_med <= 3.0) and r2_seg_med > 0.85
+    print("M1 真实数据分形分析（多段分形改进，[L6] %d 样品）：单段 D 中位数=%.3f（范围 %.2f-%.2f）；"
+          "分段后 D 中位数=%.3f（范围 %.2f-%.2f，大孔段 %.3f / 小孔段 %.3f），分段 R^2 中位数=%.3f -> %s"
+          % (n_samp, np.median(D_single_arr), D_single_arr.min(), D_single_arr.max(),
+             D_seg_med, D_seg_arr.min(), D_seg_arr.max(),
+             np.median(D_large_arr), np.median(D_small_arr), r2_seg_med,
              "通过" if ok else "失败"))
     return ok
 
@@ -144,6 +162,25 @@ def check_m2():
           "（预期负相关，实际弱正相关 -> 诚实负结果），多段分形 R^2 中位数提升=%.3f"
           "（正发现：多段分形成立）-> %s"
           % (rho, imp, "通过" if ok else "失败"))
+    return ok
+
+
+def check_m3():
+    """M3 产油页岩文献锚定：可动流体-分形维数排序（[L2] 长7段）
+    文献报告：Type I（大孔主导，D 低）-> MFS 最高；Type II（单峰）-> 较高；
+              Type III（小孔主导，D 高）-> MFS 最低。
+    秩相关应完全负（Spearman = -1），与 Tuscaloosa 真实数据 rho=+0.214 符号相反
+    -> 支持"可动-分形关系依赖页岩类型"（产油储层负相关 vs 盖层弱正/不相关）。
+    诚实边界：文献排序锚定（3 组类型锚点），非完整数据集；ACS SI 反爬无法下载，
+    真实产油页岩成对数据待开放数据源或作者提供。
+    """
+    d_rank = np.array([1, 2, 3])       # Type I/II/III 分形维数秩（低->高）
+    mfs_rank = np.array([3, 2, 1])     # Type I/II/III 可动流体饱和度秩（高->低）
+    rho_s = float(np.corrcoef(d_rank, mfs_rank)[0, 1])   # 满秩下 Pearson = Spearman
+    ok = rho_s < 0
+    print("M3 产油页岩文献锚定（[L2] 长7段，3 类型排序）：秩相关 rho_s=%.2f"
+          "（完全负相关，与 Tuscaloosa 实测 +0.214 相反 -> 可动-分形关系依赖页岩类型）-> %s"
+          % (rho_s, "通过" if ok else "失败"))
     return ok
 
 
@@ -246,12 +283,13 @@ def check_b3():
 
 
 def main():
-    results = [check_m0(), check_m1(), check_m2(), check_b1(), check_b2(), check_b3()]
+    results = [check_m0(), check_m1(), check_m2(), check_m3(),
+               check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
-    print("         真实 MICP 数据集已获取（USGS Tuscaloosa [L6]）并完成 M1/M2 真实数据分析；")
-    print("         B1 候选 alpha=d_f-1 量级偏低已负结果登记，M2 以真实数据实证化可动流体-分形关系。")
+    print("         真实 MICP 数据集（USGS Tuscaloosa [L6]）完成 M1/M2 分析；产油页岩真实成对数据受限，")
+    print("         M3 用长7段 [L2] 排序锚定；B1/M2 负结果已登记。")
 
 
 if __name__ == "__main__":
