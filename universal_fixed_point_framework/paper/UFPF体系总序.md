@@ -316,7 +316,7 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XLI | [paper41_renormalization_chain.md](paper41_renormalization_chain.md) | 量子重整化完整链条 |
 | XLII | [paper42_black_hole_quantum_evolution.md](paper42_black_hole_quantum_evolution.md) | 黑洞量子演化（Page 曲线、超辐射） |
 
-配套文档：[RAP 勘误与立场声明 v0.24](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.24](RAP_盲登记协议.md)、[进度总览](../../docs/《通用不动点范畴框架（UFPF）》物理试炼与万物理论进度总览.md)。
+配套文档：[RAP 勘误与立场声明 v0.24](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.24](RAP_盲登记协议.md)。
 
 ## 附录 B：冻结预言盲登记摘要（P1–P7，v0.24）
 
