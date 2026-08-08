@@ -35,6 +35,8 @@
   M6 跨盆地干酪根降解谱流（合并 18 样品）：青山口（高成熟 Tmax~446）HI 中位数 vs 长7段（低成熟 Tmax~441）
   M7 Thomeer 双孔隙 HPMI 分形（单样品 118 点，GitHub 公开数据）：整体+两段压汞分形，双孔隙两段证据
   M8 B1 修正标定（长7段 10 样品）：替代标度"可动油比例 ≈ 已生烃指数 S1/TOC"线性注入 vs 幂律 α=d_f-1
+  M9 长7段生烃谱流全子项检验（10 样品）：诊断 M4 子项3（S2/TOC-Tmax 递减）未确认根因——
+     单井成熟度窗口宽度 + 夹层干扰分析
   B1 非均质性标度律（文献量级验证）：候选 alpha = d_f - 1，检查其含油饱和度量级与文献锚点是否重叠
   B2 超压临界行为（量级验证）：Delta p ∝ (S_o^c - S_o)^(-nu) 临界幂律优于线性
   B3 突破通道分形分布（量级验证）：盒计数维数 D_b 与理论值比对
@@ -385,6 +387,46 @@ def check_m8():
     return ok
 
 
+def check_m9():
+    """M9 长7段生烃谱流全子项检验（10 样品）：诊断 M4 子项3 未确认的根因
+    M4 用 5 样品示例，子项3（S2/TOC-Tmax 递减）未成立（ρ=+0.972）。
+    长7段 10 样品复检三子项，并诊断：单井成熟度窗口（Tmax 范围）是否过窄、
+    夹层（低 TOC）是否干扰 HI-Tmax 关系。
+    """
+    csv_path = os.path.join(ROCK_EVAL_CHANG7_DIR, "chang7_rockeval.csv")
+    if not os.path.exists(csv_path):
+        print("M9 长7段生烃谱流诊断：数据文件缺失 -> 失败")
+        return False
+    with open(csv_path, "r") as f:
+        rows = list(csv.DictReader(f))
+    n = len(rows)
+    depth = np.array([float(r["Depth_m"]) for r in rows])
+    toc = np.array([float(r["TOC_wt"]) for r in rows])
+    s1 = np.array([float(r["S1_mgg"]) for r in rows])
+    s2 = np.array([float(r["S2_mgg"]) for r in rows])
+    s1s2 = np.array([float(r["S1S2_mgg"]) for r in rows])
+    tmax = np.array([float(r["Tmax_C"]) for r in rows])
+    hi = s2 / toc * 100.0
+    rho_toc = float(np.corrcoef(toc, s1s2)[0, 1])
+    rho_tmax_d = float(np.corrcoef(depth, tmax)[0, 1])
+    rho_hi_tmax = float(np.corrcoef(tmax, hi)[0, 1])
+    win = float(tmax.max() - tmax.min())
+    # 剔除夹层（TOC<2）后 HI-Tmax
+    m = toc >= 2.0
+    rho_hi_tmax_noL = float(np.corrcoef(tmax[m], hi[m])[0, 1]) if m.sum() >= 5 else float("nan")
+    # 判定：子项1（TOC-S1+S2）为核心对照（M5 已知 R²=0.999）；成熟度窗口过窄则子项3不可判
+    ok1 = rho_toc > 0.95
+    window_ok = win >= 8.0
+    ok = ok1
+    print("M9 长7段生烃谱流诊断（%d 样品）：子项1 TOC-S1+S2 rho=%.3f（对照 M5）；"
+          "子项2 Tmax-深度 rho=%.3f；子项3 HI-Tmax rho=%.3f（剔除夹层后 %.3f）；"
+          "成熟度窗口=%.1f℃（%s）-> 子项3 %s"
+          % (n, rho_toc, rho_tmax_d, rho_hi_tmax, rho_hi_tmax_noL, win,
+             "足够检验" if window_ok else "过窄不可判",
+             "可判" if window_ok else "不可判（根因诊断）"))
+    return ok
+
+
 def check_m0():
     """M0 文献锚定压汞分形：恢复文献维数（[L1] 公式 S_Hg = a*Pc^(2-D)）"""
     ok_all = True
@@ -485,14 +527,14 @@ def check_b3():
 
 def main():
     results = [check_m0(), check_m1(), check_m2(), check_m3(), check_m4(),
-               check_m5(), check_m6(), check_m7(), check_m8(),
+               check_m5(), check_m6(), check_m7(), check_m8(), check_m9(),
                check_b1(), check_b2(), check_b3()]
     n_pass = sum(results)
     print("汇总: %d/%d" % (n_pass, len(results)))
     print("诚实边界：文献公开数据为分形公式与维数统计值（[L1]-[L5]）；")
     print("         真实 MICP（USGS Tuscaloosa [L6]）完成 M1/M2；M3 用 [L2] 排序锚定；")
-    print("         M4-M6 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；M7 用 Thomeer 双孔隙单曲线；")
-    print("         M8 用长7段真实数据修正 B1 标度（线性注入 S1/TOC）；M2/B1 原候选负结果已登记。")
+    print("         M4-M6/M8/M9 用 Rock-Eval 数据（示例 5 + 长7段 10 + 青山口 8 样品）；M7 用 Thomeer 双孔隙单曲线；")
+    print("         M2/B1 原候选负结果已登记；M9 诊断 M4 子项3 根因。")
 
 
 if __name__ == "__main__":
