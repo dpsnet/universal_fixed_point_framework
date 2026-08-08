@@ -1,7 +1,7 @@
 # UFPF 冻结预言盲登记协议（RAP-Registry v0.24）
 
 **登记日期**：2026-08-08（v0.24）
-**版本哈希**：`437bdf847b`（v0.24，与勘误 1:1 同步）
+**版本哈希**：`e2ca644323`（v0.24，与勘误 1:1 同步）
 **登记协议**：本文件发布后，表内公式与数值冻结。任何后续修改将自动降级为后验拟合，除非按 §3 的联动规则更新并重新登记。
 
 ---
@@ -102,7 +102,7 @@ P4、P6、P7 的数值均间接或直接依赖 $d_H$，构成**相关预言簇**
 | **v0.21** | **2026-08-07** | **（与勘误 v0.21 同步）** | **勘误更新至 v0.21（1:1 同步）**；① $d_H$ 表述全库修正（纯口径统一）——论文层残留"登记为输入参数/味数术联合最优"旧口径修正为"$d_H = \ln 15 + \delta$（ln15 机器证明 + δ RMS 约束，结构确定量）"（paper17 9 处 + paper2 + paper11 + paper21 + paper33）；② $k_{\max}=8$ 对偶映射推导（新脚本 `paperX_kmax_duality.py` 10/10 注册）——旋量 16 = 2·k_max、分支 B = 15 = 2·k_max−1、d_H = ln(2·k_max−1) = ln15、底空间 8 = γ 生成元、log₂k_max = 3 = N_active，k_max 处于对偶网络中心。**P1–P7 冻结预言数值全部不变**，冻结不受影响 |
 | **v0.22** | **2026-08-08** | **（与勘误 v0.22 同步）** | **勘误更新至 v0.22（1:1 同步）**；Phase61 61C/61D 深化成果发布（纯增量，零声明变更；commit `aa3603e3d9`）——① 61C 定理 3.1 严格性审计与修正（Hermiticity 修正 dA/dt=i[G,A] + Feynman-Hellmann 链式法则 β(λ_k)=Σ⟨k|A_{F,i}|k⟩β_i(g)，`paperX_spectral_flow_isospectral.py` 7/7）；② δ_silence 精确谱指数闭合（Schur 补 1/d 结构，δ=1，`paperX_silence_exponent.py` 4/4）；③ β 级数 Borel 求和评估（IR renormalon 障碍、方向受障碍，`paperX_beta_borel.py` 5/5）；④ 非微扰求值瞬子路径（Fubini-Lipatov 作用量 8π²/λ = Borel 奇点位置，`paperX_instanton_borel.py` 4/4）；⑤ 61D Kerr 完整超辐射谱（经典判据 Z>0⟺ω<mΩ_H 逐点确认 + 转动增强 + 发射谱 + dJ/dE 与简化 R_J=2 同量级，`paperX_kerr_superradiance.py` 8/8）；paper41 v0.4、paper42 v0.3、全库 run_all_tests 811/811。**P1–P7 冻结预言数值全部不变**，冻结不受影响 |
 | **v0.23** | **2026-08-08** | **（与勘误 v0.23 同步）** | **勘误更新至 v0.23（1:1 同步）**；Phase61 基础层/61D 深化成果发布（纯增量，零声明变更；commit `498c9ed2`）——① Cl(1,7) 代数选择第一性推导（8 生成元 k_max×时间维 c₃ 分支 ⟹ M₁₆(ℝ) 构造性，`paperX_cl17_first_principle.py` 7/7）；② s=e⁻¹ 范畴层独立推导（Moran 封闭：15·s^ln15=1 + d_H/B 机器证明 ⟹ s=e⁻¹ 纯代数，`paperX_s_categorical_time.py` 9/9）+ c₃ 时间诠释 T1–T5；③ Lean 机器证明（CoherenceToBranching §10a moran_closed_* + §10b c3_*_silent_factor：时间维数=1，lake build 2454 jobs）；④ 61D 超辐射-蒸发衔接（η(a*) 单调、dJ/dE=4.15/M、简化模型双向偏差定量化——有效范围=中等转动，`paperX_kerr_sr_evaporation.py` 5/5）；paper42 定理 5.10 诚实边界。**P1–P7 冻结预言数值全部不变**，冻结不受影响 |
-| **v0.24** | **2026-08-08** | **（与勘误 v0.24 同步）** | **勘误更新至 v0.24（1:1 同步）**；新增《UFPF体系总序》全局导论（纯增量，零声明变更；commit `2f4c155deb`）——全局导航 + 逻辑主线 + 版本勘误汇总 + 分层阅读指引，含 42 篇论文清单与本协议 P1–P7 摘要；根 README / framework README 补总序入口。**修订（2026-08-08）**：总序版本对齐更新至 v0.24、framework README 基线同步 v0.24（内容 commit `437bdf847b`）。**P1–P7 冻结预言数值全部不变**，冻结不受影响 |
+| **v0.24** | **2026-08-08** | **（与勘误 v0.24 同步）** | **勘误更新至 v0.24（1:1 同步）**；新增《UFPF体系总序》全局导论（纯增量，零声明变更；commit `2f4c155deb`）——全局导航 + 逻辑主线 + 版本勘误汇总 + 分层阅读指引，含 42 篇论文清单与本协议 P1–P7 摘要；根 README / framework README 补总序入口。**修订（2026-08-08）**：总序版本对齐更新至 v0.24、framework README 基线同步 v0.24（内容 commit `437bdf847b`）。**再修订（2026-08-08）**：总序配套文档移除进度总览链接（旧口径文档，内容 commit `e2ca644323`）。**P1–P7 冻结预言数值全部不变**，冻结不受影响 |
 
 ---
 
