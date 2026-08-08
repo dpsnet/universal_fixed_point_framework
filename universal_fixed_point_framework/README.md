@@ -58,6 +58,8 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 论文
 
+> **系列总序（全局导论，推荐先读）**：[UFPF体系总序.md](UFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
+
 | 论文 | 版本 | 定位 | 状态 |
 |:-----|:----:|:-----|:----:|
 | **Paper I**：分形谱化理论 | **v2.35** | 纯数学理论 + Phase 41 Λ + Phase 42 R⁴ | ✅ |

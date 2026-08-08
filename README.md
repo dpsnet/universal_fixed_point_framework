@@ -38,7 +38,9 @@
 
 ---
 
-## 三、论文系列（共 38 篇）
+## 三、论文系列（共 42 篇）
+
+> **系列总序（全局导论，推荐先读）**：[UFPF体系总序.md](universal_fixed_point_framework/paper/UFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
 
 | 范围 | 数量 | 状态 |
 |:-----|:----:|:----:|
@@ -53,6 +55,7 @@
 | Paper XXXV（引力的范畴论起源） | 1 | 🆕 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 |
 | Paper XXXVII（开放问题、未来方向与层次距离） | 1 | 🆕 A/B/C 三组开放问题分类 + 层次距离度量 + Bott-Moran 桥 |
 | Paper XXXVIII（Agda 独立交叉验证） | 1 | 🆕 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 |
+| Paper XXXIX–XLII（Phase 61：暴涨/色规范/重整化链/黑洞演化） | 4 | ✅ 已纳入 |
 
 关键开放线状态：
 - **O1/O6** ✅ 已闭合；**O2/O3/O5** 🔶 已大幅推进；**O4** ❌ 仍开放
@@ -155,7 +158,7 @@ universal_fixed_point_framework/
 
 ## 七、如何阅读
 
-**所有读者应先阅读**：`paper/RAP_勘误与立场声明.md`（基础性纠正与当前宣称边界）
+**所有读者应先阅读**：[总序（全局导论）](universal_fixed_point_framework/paper/UFPF体系总序.md) → [RAP 勘误与立场声明](universal_fixed_point_framework/paper/RAP_勘误与立场声明.md)（基础性纠正与当前宣称边界）
 **数学研究者**：`paper30` → `paper32` → `paper34` → `formal_proof/`
 **物理研究者**：`paper17` → `paper18` → `paper31` → `paper32` → `paper33`
 **形式化方法研究者**：`formal_proof/UFPFormalization/` 下的 `.lean` 文件
