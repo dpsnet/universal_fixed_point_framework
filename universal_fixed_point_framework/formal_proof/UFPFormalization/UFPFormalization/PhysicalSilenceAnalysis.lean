@@ -73,7 +73,7 @@ noncomputable def kerr_QNM_frequency (params : KerrParameters) (frequency_0 : �
 def kerr_m0_converged : Bool := true
 
 /-- High-spin m≠0 mode: Leaver CF coefficient discrepancy (Berti table vs our implementation). -/
-def kerr_high_spin_discrepancy (a : ℝ) : ℝ :=
+noncomputable def kerr_high_spin_discrepancy (a : ℝ) : ℝ :=
   if a > 0.7 then 0.05 else 0.0
 
 
@@ -84,16 +84,16 @@ Primordial gravitational wave spectrum from A_GR spectral gap.
 -/
 
 /-- S₁ bare quantity: A_GR spectral gap at Planck scale. -/
-noncomputable def inflation_S₁_bare (Δλ_min : ℝ) (M_Pl : ℝ) : ℝ :=
-  (Δλ_min / M_Pl)^2
+noncomputable def inflation_S₁_bare (Dlambda_min : ℝ) (M_Pl : ℝ) : ℝ :=
+  (Dlambda_min / M_Pl)^2
 
 /-- S₂ morphism contribution: inflaton-graviton coupling. -/
 noncomputable def inflation_S₂_coupling (coupling : ℝ) : ℝ :=
   coupling
 
 /-- Primordial tensor power spectrum amplitude including silence corrections. -/
-noncomputable def inflation_tensor_power (A_t_bare : ℝ) (Δλ_min M_Pl : ℝ) (coupling : ℝ) : ℝ :=
-  A_t_bare * inflation_S₁_bare Δλ_min M_Pl * inflation_S₂_coupling coupling
+noncomputable def inflation_tensor_power (A_t_bare : ℝ) (Dlambda_min M_Pl : ℝ) (coupling : ℝ) : ℝ :=
+  A_t_bare * inflation_S₁_bare Dlambda_min M_Pl * inflation_S₂_coupling coupling
 
 /-- Tensor-to-scalar ratio r predicted by silence analysis. -/
 noncomputable def inflation_tensor_scalar_ratio (A_t : ℝ) (A_s : ℝ) : ℝ :=
@@ -117,7 +117,7 @@ noncomputable def dm_relic_density (σv : ℝ) : ℝ :=
   (2.0e-26 : ℝ) / σv * (0.12 : ℝ)
 
 /-- WIMP miracle check: whether Ωh² ≈ 0.12 is naturally obtained. -/
-noncomputable def dm_wimp_miracle_check (Ωh²_pred : ℝ) : Bool :=
-  |Ωh²_pred - 0.12| / 0.12 < 0.1
+noncomputable def dm_wimp_miracle_check (Omega_h_sq_pred : ℝ) : Bool :=
+  |Omega_h_sq_pred - 0.12| / 0.12 < 0.1
 
 end UFPFormalization

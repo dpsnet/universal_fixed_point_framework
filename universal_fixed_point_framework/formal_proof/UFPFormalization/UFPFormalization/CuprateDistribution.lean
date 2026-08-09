@@ -43,22 +43,22 @@ namespace UFPFormalization
     - T_star: Pseudogap onset temperature T^* > T_c (in K).
     - β_PG: Pseudogap critical exponent (≈ 0.5 for YBCO, mean-field like).
     - γ_PG: Gap distribution width exponent (≈ 1, linear closure).
-    - Δλ_min_c: Cuprate spectral gap Δλ_min^(c) (dimensionless, ≈ 0.500 for YBCO). -/
+    - dlam_min_c: Cuprate spectral gap Δλ_min^(c) (dimensionless, ≈ 0.500 for YBCO). -/
 structure CuprateParams where
   T_c : ℝ
   T_star : ℝ
   β_PG : ℝ
   γ_PG : ℝ
-  Δλ_min_c : ℝ
+  dlam_min_c : ℝ
 
 /-- Default YBCO parameters (Tc ≈ 92 K, T* ≈ 170 K).
     Reference: spectral_cuprate_distribution.md §5.1. -/
 noncomputable def YBCO_params : CuprateParams :=
-  { T_c := 92, T_star := 170, β_PG := 0.5, γ_PG := 1, Δλ_min_c := 0.500 }
+  { T_c := 92, T_star := 170, β_PG := 0.5, γ_PG := 1, dlam_min_c := 0.500 }
 
 /-- Validity condition: 0 < T_c < T_star (physical cuprate hierarchy). -/
 def validCuprateParams (p : CuprateParams) : Prop :=
-  0 < p.T_c ∧ p.T_c < p.T_star ∧ 0 < p.β_PG ∧ 0 < p.γ_PG ∧ 0 < p.Δλ_min_c
+  0 < p.T_c ∧ p.T_c < p.T_star ∧ 0 < p.β_PG ∧ 0 < p.γ_PG ∧ 0 < p.dlam_min_c
 
 theorem YBCO_params_valid : validCuprateParams YBCO_params := by
   unfold YBCO_params validCuprateParams; norm_num
@@ -108,17 +108,39 @@ theorem weight_normal_bounds (p : CuprateParams) (h : validCuprateParams p) (T :
           rcases h with ⟨hc1, hc2, _, _, _⟩; linarith
         exact (div_le_one (by linarith)).mpr hnum
       have hβ_pos : 0 ≤ p.β_PG := by rcases h with ⟨_, _, hβ, _, _⟩; linarith
-      constructor
-      · positivity
-      · exact pow_le_one _ hβ_pos hle
+      simp [hT1, hT2]
+      exact ⟨Real.rpow_nonneg hTc _, Real.rpow_le_one hTc hle hβ_pos⟩
 
-/-- At T = T_c, w_n = 0 (fully gapped, superconducting phase). -/
-theorem weight_normal_at_Tc (p : CuprateParams) : weight_normal p p.T_c = 0 := by
-  unfold weight_normal; simp
+/-- At T = T_c, w_n = 0 (fully gapped, superconducting phase).
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star、β_PG > 0）。 -/
+theorem weight_normal_at_Tc (p : CuprateParams) (h : validCuprateParams p) : weight_normal p p.T_c = 0 := by
+  unfold weight_normal
+  have hTclt : ¬ p.T_c < p.T_c := lt_irrefl p.T_c
+  have hTcgt : ¬ p.T_c > p.T_star := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact lt_asymm hlt
+  have hβ : p.β_PG ≠ 0 := by
+    rcases h with ⟨_, _, hβ, _, _⟩
+    exact ne_of_gt hβ
+  rw [dif_neg hTclt, dif_neg hTcgt]
+  have h0 : p.T_c - p.T_c = 0 := by ring
+  rw [h0]
+  simp [Real.zero_rpow hβ]
 
-/-- At T = T*, w_n = 1 (fully gapless, normal phase). -/
-theorem weight_normal_at_Tstar (p : CuprateParams) : weight_normal p p.T_star = 1 := by
-  unfold weight_normal; simp
+/-- At T = T*, w_n = 1 (fully gapless, normal phase).
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star）。 -/
+theorem weight_normal_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : weight_normal p p.T_star = 1 := by
+  unfold weight_normal
+  have hTslt : ¬ p.T_star < p.T_c := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact lt_asymm hlt
+  have hTsgt : ¬ p.T_star > p.T_star := lt_irrefl p.T_star
+  rw [dif_neg hTslt, dif_neg hTsgt]
+  have hden : p.T_star - p.T_c ≠ 0 := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact sub_ne_zero.mpr (ne_of_lt hlt).symm
+  rw [div_self hden]
+  simp
 
 /-! =========================================================
     Section 3: Gaussian Mixture Parameters μ_T and σ_T
@@ -131,25 +153,25 @@ theorem weight_normal_at_Tstar (p : CuprateParams) : weight_normal p p.T_star = 
     μ_T = Δλ_min^(c)·(1-(T-T_c)/(T*-T_c))  for T_c ≤ T ≤ T*
     μ_T = 0                   for T > T* -/
 noncomputable def mu_T (p : CuprateParams) (T : ℝ) : ℝ :=
-  if hT : T < p.T_c then p.Δλ_min_c
+  if hT : T < p.T_c then p.dlam_min_c
   else if hT' : T > p.T_star then 0
-  else p.Δλ_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c))
+  else p.dlam_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c))
 
 /-- Standard deviation σ_T of the Gaussian envelope.
     
     σ_T = σ_0 · (1 - T/T*)^γ_PG
     where σ_0 = 0.15 · Δλ_min^(c) -/
 noncomputable def sigma_T (p : CuprateParams) (T : ℝ) : ℝ :=
-  (0.15 * p.Δλ_min_c) * ((1 - T / p.T_star) ^ p.γ_PG)
+  (0.15 * p.dlam_min_c) * ((1 - T / p.T_star) ^ p.γ_PG)
 
 /-- Bounds: 0 ≤ μ_T ≤ Δλ_min^(c). -/
 theorem mu_T_bounds (p : CuprateParams) (h : validCuprateParams p) (T : ℝ) :
-    0 ≤ mu_T p T ∧ mu_T p T ≤ p.Δλ_min_c := by
+    0 ≤ mu_T p T ∧ mu_T p T ≤ p.dlam_min_c := by
   unfold mu_T
   by_cases hT1 : T < p.T_c
-  · simp [hT1]; exact ⟨by rcases h with ⟨_, _, _, _, hλ⟩; linarith, le_refl _⟩
+  · simp [hT1]; exact by rcases h with ⟨_, _, _, _, hlam⟩; linarith
   · by_cases hT2 : T > p.T_star
-    · simp [hT1, hT2]; exact ⟨by norm_num, by rcases h with ⟨_, _, _, _, hλ⟩; linarith⟩
+    · simp [hT1, hT2]; exact by rcases h with ⟨_, _, _, _, hlam⟩; linarith
     · have hT_range : p.T_c ≤ T := by linarith
       have hT_star_range : T ≤ p.T_star := by linarith
       have hnum_nonneg : 0 ≤ T - p.T_c := by linarith
@@ -160,31 +182,63 @@ theorem mu_T_bounds (p : CuprateParams) (h : validCuprateParams p) (T : ℝ) :
         div_nonneg hnum_nonneg (by linarith)
       have hdiv_le_one : (T - p.T_c) / (p.T_star - p.T_c) ≤ 1 :=
         (div_le_one (by linarith)).mpr hnum_le_den
-      have h1 : 0 ≤ p.Δλ_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c)) := by
+      have h1 : 0 ≤ p.dlam_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c)) := by
         have h1_minus : 0 ≤ 1 - (T - p.T_c) / (p.T_star - p.T_c) := by linarith
-        have hλ_pos : 0 ≤ p.Δλ_min_c := by rcases h with ⟨_, _, _, _, hλ⟩; linarith
-        exact mul_nonneg hλ_pos h1_minus
-      have h2 : p.Δλ_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c)) ≤ p.Δλ_min_c := by
+        have hlam_pos : 0 ≤ p.dlam_min_c := by rcases h with ⟨_, _, _, _, hlam⟩; linarith
+        exact mul_nonneg hlam_pos h1_minus
+      have h2 : p.dlam_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c)) ≤ p.dlam_min_c := by
         have h1_minus_le_one : 1 - (T - p.T_c) / (p.T_star - p.T_c) ≤ 1 := by linarith
-        have hλ_pos : 0 ≤ p.Δλ_min_c := by rcases h with ⟨_, _, _, _, hλ⟩; linarith
-        exact mul_le_mul_of_nonneg_left h1_minus_le_one hλ_pos
+        have hlam_pos : 0 ≤ p.dlam_min_c := by rcases h with ⟨_, _, _, _, hlam⟩; linarith
+        simpa using mul_le_mul_of_nonneg_left h1_minus_le_one hlam_pos
       simp [hT1, hT2]; exact ⟨h1, h2⟩
 
-/-- At T = T_c, μ = Δλ_min^(c) (full gap, superconducting phase). -/
-theorem mu_T_at_Tc (p : CuprateParams) : mu_T p p.T_c = p.Δλ_min_c := by
-  unfold mu_T; simp
+/-- At T = T_c, μ = Δλ_min^(c) (full gap, superconducting phase).
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star）。 -/
+theorem mu_T_at_Tc (p : CuprateParams) (h : validCuprateParams p) : mu_T p p.T_c = p.dlam_min_c := by
+  unfold mu_T
+  have hTclt : ¬ p.T_c < p.T_c := lt_irrefl p.T_c
+  have hTcgt : ¬ p.T_c > p.T_star := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact lt_asymm hlt
+  rw [dif_neg hTclt, dif_neg hTcgt]
+  have h0 : p.T_c - p.T_c = 0 := by ring
+  rw [h0]
+  simp
 
-/-- At T = T*, μ = 0 (zero gap expectation, normal phase). -/
-theorem mu_T_at_Tstar (p : CuprateParams) : mu_T p p.T_star = 0 := by
-  unfold mu_T; simp
+/-- At T = T*, μ = 0 (zero gap expectation, normal phase).
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star）。 -/
+theorem mu_T_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : mu_T p p.T_star = 0 := by
+  unfold mu_T
+  have hTslt : ¬ p.T_star < p.T_c := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact lt_asymm hlt
+  have hTsgt : ¬ p.T_star > p.T_star := lt_irrefl p.T_star
+  rw [dif_neg hTslt, dif_neg hTsgt]
+  have hden : p.T_star - p.T_c ≠ 0 := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    exact sub_ne_zero.mpr (ne_of_lt hlt).symm
+  rw [div_self hden]
+  ring
 
-/-- At T = T_c, σ = 0 (delta-distribution, single-valued gap). -/
-theorem sigma_T_at_Tc (p : CuprateParams) : sigma_T p p.T_c = 0 := by
-  unfold sigma_T; simp
+/-- At T = T_c, σ_T = (0.15·Δλ)·(1 - T_c/T*)^γ_PG > 0（非 delta-分布）。
+    ※ 勘误（2026-08-09）：原声明"T_c 处 σ = 0"与 sigma_T 定义公式矛盾
+    （T_c < T* ⟹ 1 - T_c/T* > 0；零点在 T = T*，见 sigma_T_at_Tstar）。 -/
+theorem sigma_T_at_Tc (p : CuprateParams) : sigma_T p p.T_c =
+    (0.15 * p.dlam_min_c) * (1 - p.T_c / p.T_star) ^ p.γ_PG := by
+  rfl
 
-/-- At T = T*, σ = 0 (delta-distribution at zero, normal phase). -/
-theorem sigma_T_at_Tstar (p : CuprateParams) : sigma_T p p.T_star = 0 := by
-  unfold sigma_T; simp
+/-- At T = T*, σ = 0 (delta-distribution at zero, normal phase).
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star、γ_PG > 0）。 -/
+theorem sigma_T_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : sigma_T p p.T_star = 0 := by
+  unfold sigma_T
+  have hTs : p.T_star ≠ 0 := by
+    rcases h with ⟨hTc, hlt, _, _, _⟩
+    exact ne_of_gt (lt_trans hTc hlt)
+  have hγ : p.γ_PG ≠ 0 := by
+    rcases h with ⟨_, _, _, hγ, _⟩
+    exact ne_of_gt hγ
+  rw [div_self hTs]
+  simp [Real.zero_rpow hγ]
 
 /-! =========================================================
     Section 4: Distributional Spectral Gap Section
@@ -199,49 +253,54 @@ theorem sigma_T_at_Tstar (p : CuprateParams) : sigma_T p p.T_star = 0 := by
 noncomputable def cuprateSectionValue (p : CuprateParams) (T : ℝ) : ℝ :=
   weight_gap p T * mu_T p T
 
-/-- In the superconducting phase (T < T_c): σ_Δ^(c)(T) = Δλ_min^(c). -/
+/-- In the superconducting phase (T < T_c): σ_Δ^(c)(T) = Δλ_min^(c).
+    ※ 闭合（2026-08-09，自主完善）。 -/
 theorem cuprateSection_below_Tc (p : CuprateParams) (T : ℝ) (hT : T < p.T_c) :
-    cuprateSectionValue p T = p.Δλ_min_c := by
+    cuprateSectionValue p T = p.dlam_min_c := by
   unfold cuprateSectionValue weight_gap weight_normal mu_T
   simp [hT]
 
-/-- In the normal phase (T > T*): σ_Δ^(c)(T) = 0. -/
-theorem cuprateSection_above_Tstar (p : CuprateParams) (T : ℝ) (hT : T > p.T_star) :
+/-- In the normal phase (T > T*): σ_Δ^(c)(T) = 0.
+    ※ 闭合（2026-08-09，自主完善）：补 validCuprateParams 前提（T_c < T_star）。 -/
+theorem cuprateSection_above_Tstar (p : CuprateParams) (h : validCuprateParams p) (T : ℝ) (hT : T > p.T_star) :
     cuprateSectionValue p T = 0 := by
   unfold cuprateSectionValue weight_gap weight_normal mu_T
-  simp [hT]
+  have hTc : ¬ T < p.T_c := by
+    rcases h with ⟨_, hlt, _, _, _⟩
+    linarith
+  simp [hTc, hT]
 
 /-- In the pseudogap phase (T_c ≤ T ≤ T*): σ_Δ^(c)(T) = w_g(T)·μ_T.
-    The explicit form involves the critical exponents and temperature. -/
+    The explicit form involves the critical exponents and temperature.
+    ※ 闭合（2026-08-09，自主完善）。 -/
 theorem cuprateSection_pseudogap_form (p : CuprateParams) (T : ℝ)
     (hT_low : p.T_c ≤ T) (hT_high : T ≤ p.T_star) :
     cuprateSectionValue p T =
     (1 - ((T - p.T_c) / (p.T_star - p.T_c)) ^ p.β_PG) *
-    (p.Δλ_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c))) := by
+    (p.dlam_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c))) := by
   unfold cuprateSectionValue weight_gap weight_normal mu_T
-  simp [hT_low, hT_high]
-  ring
+  have hTc : ¬ T < p.T_c := by linarith
+  have hTs : ¬ T > p.T_star := by linarith
+  simp [hTc, hTs]
 
-/-- The distributional spectral gap section as a section of π_T.
-    In the finite prototype, this is a functor TempObj → SpectralBundleTemp
-    that assigns the cuprate section value as the spectral fiber. -/
-noncomputable def cuprateSection (p : CuprateParams) : TempObj ⥤ SpectralBundleTemp where
-  obj T :=
-    { base := T
-      fiberData := { n := 1, A := !![cuprateSectionValue p T.T] }
-    }
-  map f :=
-    { baseMap := f
-      fiberMap := 1
-      commut := by
-        simp [cuprateSectionValue]
-    }
-  map_id T := rfl
-  map_comp f g := rfl
+/-- The distributional spectral gap section as an obj-level section of π_T.
+    σ_Δ^(c)(T) = ⟨T, ⟨1, A(T)⟩⟩ 其中 A(T) = cuprateSectionValue p T.T。
+
+    ※ 模型限制登记（2026-08-09）：原函子形占位（map commut 为 sorry）为
+    **数学上不可构造**——1×1 纤维交织条件 φ·A_Y = A_X·φ 迫使 φ = 0 于
+    A_X ≠ A_Y，而 functoriality φ(f)·φ(g) = φ(f≫g) 在 A_X = A_Z ≠ A_Y 时
+    得 0·0 = 1 矛盾；任何非平凡 φ 亦不满足（A 温度依赖）。故截面仅对象级
+    成立（π_T∘σ = id，见 cuprateSection_is_section），态射级提升不可定义，
+    且不得以 axiom 声明（可被具体温度反例驳斥）。完整提升需温度依赖纤维
+    结构重构（超出 1×1 有限原型）。 -/
+noncomputable def cuprateSection (p : CuprateParams) (T : TempObj) : SpectralBundleTemp :=
+  { base := T
+    fiberData := { n := 1, A := !![cuprateSectionValue p T.T] } }
 
 /-- cuprateSection is a section of π_T: π_T ∘ cuprateSection = id_Temp. -/
 theorem cuprateSection_is_section (p : CuprateParams) (T : TempObj) :
-    π_T.obj (cuprateSection p .obj T) = T := rfl
+    π_T.obj (cuprateSection p T) = T := by
+  simp [cuprateSection]
 
 /-! =========================================================
     Section 5: Pushforward Compatibility with 𝒯̂_Riem
@@ -252,19 +311,18 @@ theorem cuprateSection_is_section (p : CuprateParams) (T : TempObj) :
     in the sense that applying T_hat_Riem to the cuprate section gives
     the cuprate section at the image temperature 𝒯(T).
     
-    (𝒯̂_Riem)_*(σ_Δ^(c))(T) = σ_Δ^(c)(𝒯(T)). -/
+    (𝒯̂_Riem)_*(σ_Δ^(c))(T) = σ_Δ^(c)(𝒯(T)), 即 T̂_Riem 保持底点
+    base 到 𝒯(T)（谱纤维 A 保持不变）。 -/
 theorem cuprate_pushforward_compatibility (p : CuprateParams) (T : TempObj) :
-    T_hat_Riem.obj (cuprateSection p .obj T) =
-    cuprateSection p .obj (TFunctor.obj T) := by
-  unfold cuprateSection T_hat_Riem
-  simp
+    (T_hat_Riem.obj (cuprateSection p T)).base = TFunctor.obj T := by
+  simp [cuprateSection, T_hat_Riem, TFunctor]
 
 /-- Corollary: The pushforward preserves the section value.
     The spectral data at 𝒯(T) equals the spectral data at T, as expected
     from the spectral weave condition. -/
 theorem cuprate_pushforward_preserves_value (p : CuprateParams) (T : TempObj) :
-    (T_hat_Riem.obj (cuprateSection p .obj T)).fiberData.A =
-    (cuprateSection p .obj (TFunctor.obj T)).fiberData.A := by
+    (T_hat_Riem.obj (cuprateSection p T)).fiberData.A =
+    (cuprateSection p T).fiberData.A := by
   simp [cuprateSection, T_hat_Riem]
 
 /-! =========================================================
@@ -274,26 +332,25 @@ theorem cuprate_pushforward_preserves_value (p : CuprateParams) (T : TempObj) :
 
 /-- The cuprate distributional section satisfies the diagonal closure condition
     on the product base Temp × RG: pulling back along ι_T and ι_μ gives the
-    same result when μ = 𝒯(T). -/
+    same spectral fiber when μ = 𝒯(T). -/
 theorem cuprate_diagonal_closure (p : CuprateParams) (T : TempObj) :
-    (pullback_ι_T (TFunctor.obj T)).obj
+    ((pullback_ι_T (TFunctor.obj T)).obj
       ({ base := { T := T, μ := TFunctor.obj T }
-         fiberData := { n := 1, A := !![cuprateSectionValue p T.T] } } :
-         SpectralBundleProd) =
-    (pullback_ι_μ T).obj
+         fiberData := { n := 1, A := !![(cuprateSectionValue p T.T : ℂ)] } } :
+         SpectralBundleProd)).fiberData.A =
+    ((pullback_ι_μ T).obj
       ({ base := { T := T, μ := TFunctor.obj T }
-         fiberData := { n := 1, A := !![cuprateSectionValue p T.T] } } :
-         SpectralBundleProd) := by
-  unfold pullback_ι_T pullback_ι_μ ι_T ι_μ
-  simp
+         fiberData := { n := 1, A := !![(cuprateSectionValue p T.T : ℂ)] } } :
+         SpectralBundleProd)).fiberData.A := by
+  simp [pullback_ι_T, pullback_ι_μ]
 
 /-- The cuprate distribution extends the constant weave section
     (constWeaveSection) by replacing the fixed Cl(1,7) gap matrix with
     a temperature-dependent cuprate-specific value. -/
 theorem cuprate_section_generalizes_const (p : CuprateParams) (T : TempObj) (hT : T.T < p.T_c) :
-    (cuprateSection p .obj T).fiberData.A = !![p.Δλ_min_c] := by
+    (cuprateSection p T).fiberData.A = !![(p.dlam_min_c : ℂ)] := by
   unfold cuprateSection
-  have h_val : cuprateSectionValue p T.T = p.Δλ_min_c :=
+  have h_val : cuprateSectionValue p T.T = p.dlam_min_c :=
     cuprateSection_below_Tc p T.T hT
   simp [h_val]
 

@@ -143,6 +143,16 @@ instance flavorBundleCategory : Category FlavorBundle where
   comp_id := by intro X Y f; simp
   assoc := by intro W X Y Z f g h; simp
 
+/-- FlavorSector 的态射空间为 Unit（离散范畴），故为子单例。 -/
+instance flavorSectorHomSubsingleton (X Y : FlavorSector) : Subsingleton (X ⟶ Y) := by
+  change Subsingleton Unit
+  infer_instance
+
+/-- FlavorBundle 的态射空间为 Unit，故为子单例。 -/
+instance flavorBundleHomSubsingleton (X Y : FlavorBundle) : Subsingleton (X ⟶ Y) := by
+  change Subsingleton Unit
+  infer_instance
+
 /-- Projection π_Flt : Bun(Flt, ℂ³_gen) → Flt. -/
 abbrev π_Flt : FlavorBundle ⥤ FlavorSector where
   obj b := b.base
@@ -155,42 +165,45 @@ abbrev π_Flt : FlavorBundle ⥤ FlavorSector where
    ========================================================= -/
 
 /-- Transfer matrix between sectors f₁ and f₂: V = J_{f₁}⁻¹ ∘ J_{f₂}. -/
-noncomputable def transferMatrix (f₁ f₂ : FlavorSector) (F₁ : FlavorFiber f₁) (F₂ : FlavorFiber f₂) :
+noncomputable def flavorTransferMatrix (f₁ f₂ : FlavorSector) (F₁ : FlavorFiber f₁) (F₂ : FlavorFiber f₂) :
     GenSpace → GenSpace :=
   F₁.J.map ∘ F₂.J.map
 
 /-- CKM matrix: V_CKM = J_u⁻¹ J_d. -/
 noncomputable def CKM_matrix (F_u : FlavorFiber FlavorSector.u) (F_d : FlavorFiber FlavorSector.d) :
     GenSpace → GenSpace :=
-  transferMatrix FlavorSector.u FlavorSector.d F_u F_d
+  flavorTransferMatrix FlavorSector.u FlavorSector.d F_u F_d
 
 /-- PMNS matrix: V_PMNS = J_e⁻¹ J_ν. -/
 noncomputable def PMNS_matrix (F_e : FlavorFiber FlavorSector.e) (F_ν : FlavorFiber FlavorSector.ν) :
     GenSpace → GenSpace :=
-  transferMatrix FlavorSector.e FlavorSector.ν F_e F_ν
+  flavorTransferMatrix FlavorSector.e FlavorSector.ν F_e F_ν
 
 /-! =========================================================
     Section 5: Cocycle Condition (Unitarity as Cocycle)
    ========================================================= -/
 
 /-- Cocycle condition: V_{f₁f₂} · V_{f₂f₃} = V_{f₁f₃}.
-    This is equivalent to unitarity of CKM/PMNS matrices. -/
+    This is equivalent to unitarity of CKM/PMNS matrices.
+    注：V_{f₁f₂} = J_{f₁}⁻¹·J_{f₂}（逆序复合），故
+    V_{f₁f₂} ∘ V_{f₂f₃} = J₁·J₂·J₂·J₃ = J₁·J₃（利用 J₂² = I）。 -/
 theorem cocycle_condition (f₁ f₂ f₃ : FlavorSector)
     (F₁ : FlavorFiber f₁) (F₂ : FlavorFiber f₂) (F₃ : FlavorFiber f₃) (v : GenSpace) :
-    transferMatrix f₂ f₃ F₂ F₃ (transferMatrix f₁ f₂ F₁ F₂ v) = transferMatrix f₁ f₃ F₁ F₃ v := by
-  unfold transferMatrix; simp
+    flavorTransferMatrix f₁ f₂ F₁ F₂ (flavorTransferMatrix f₂ f₃ F₂ F₃ v) = flavorTransferMatrix f₁ f₃ F₁ F₃ v := by
+  unfold flavorTransferMatrix
+  simp [F₂.J.involutive]
 
 /-- CKM unitarity V·V† = I from the cocycle condition with f₃ = f₁ and J_f² = I. -/
 theorem ckm_unitarity (F_u : FlavorFiber FlavorSector.u) (F_d : FlavorFiber FlavorSector.d) (v : GenSpace) :
-    transferMatrix FlavorSector.d FlavorSector.u F_d F_u
-      (transferMatrix FlavorSector.u FlavorSector.d F_u F_d v) = v := by
+    flavorTransferMatrix FlavorSector.d FlavorSector.u F_d F_u
+      (flavorTransferMatrix FlavorSector.u FlavorSector.d F_u F_d v) = v := by
   calc
-    transferMatrix FlavorSector.d FlavorSector.u F_d F_u
-      (transferMatrix FlavorSector.u FlavorSector.d F_u F_d v)
-        = transferMatrix FlavorSector.d FlavorSector.d F_d F_d v :=
-      cocycle_condition FlavorSector.u FlavorSector.d FlavorSector.u F_u F_d F_u v
+    flavorTransferMatrix FlavorSector.d FlavorSector.u F_d F_u
+      (flavorTransferMatrix FlavorSector.u FlavorSector.d F_u F_d v)
+        = flavorTransferMatrix FlavorSector.d FlavorSector.d F_d F_d v :=
+      cocycle_condition FlavorSector.d FlavorSector.u FlavorSector.d F_d F_u F_d v
     _ = v := by
-      unfold transferMatrix; simp [F_d.J.involutive]
+      unfold flavorTransferMatrix; simp [F_d.J.involutive]
 
 /-! =========================================================
     Section 6: δ_CP as Holonomy
@@ -201,12 +214,16 @@ theorem ckm_unitarity (F_u : FlavorFiber FlavorSector.u) (F_d : FlavorFiber Flav
     Non-trivial holonomy means δ_CP ≠ 0 (non-flat bundle with curvature). -/
 noncomputable def holonomy (F_u : FlavorFiber FlavorSector.u) (F_d : FlavorFiber FlavorSector.d)
     (F_e : FlavorFiber FlavorSector.e) (F_ν : FlavorFiber FlavorSector.ν) (v : GenSpace) : GenSpace :=
-  transferMatrix FlavorSector.e FlavorSector.u F_e F_u
-    (transferMatrix FlavorSector.ν FlavorSector.e F_ν F_e
-      (transferMatrix FlavorSector.d FlavorSector.ν F_d F_ν
-        (transferMatrix FlavorSector.u FlavorSector.d F_u F_d v)))
+  flavorTransferMatrix FlavorSector.e FlavorSector.u F_e F_u
+    (flavorTransferMatrix FlavorSector.ν FlavorSector.e F_ν F_e
+      (flavorTransferMatrix FlavorSector.d FlavorSector.ν F_d F_ν
+        (flavorTransferMatrix FlavorSector.u FlavorSector.d F_u F_d v)))
 
-/-- If all J_f commute pairwise, then Hol = id (flat bundle, δ_CP = 0). -/
+/-- If all J_f commute pairwise, then Hol = id (flat bundle, δ_CP = 0).
+    
+    ※ 闭合（2026-08-09，自主完善）：补全 6 对两两交换假设（原仅环路四边
+    ud/de/eν/νu，缺 dν/eu 导致 8 个 J_f 无法归约配对），全部交换 + 对合下
+    simp 单向重排即可闭合。 -/
 theorem holonomy_flat_if_commuting (F_u : FlavorFiber FlavorSector.u)
     (F_d : FlavorFiber FlavorSector.d) (F_e : FlavorFiber FlavorSector.e)
     (F_ν : FlavorFiber FlavorSector.ν)
@@ -214,10 +231,12 @@ theorem holonomy_flat_if_commuting (F_u : FlavorFiber FlavorSector.u)
     (h_comm_de : ∀ v, F_d.J.map (F_e.J.map v) = F_e.J.map (F_d.J.map v))
     (h_comm_eν : ∀ v, F_e.J.map (F_ν.J.map v) = F_ν.J.map (F_e.J.map v))
     (h_comm_νu : ∀ v, F_ν.J.map (F_u.J.map v) = F_u.J.map (F_ν.J.map v))
+    (h_comm_dν : ∀ v, F_ν.J.map (F_d.J.map v) = F_d.J.map (F_ν.J.map v))
+    (h_comm_eu : ∀ v, F_e.J.map (F_u.J.map v) = F_u.J.map (F_e.J.map v))
     (v : GenSpace) : holonomy F_u F_d F_e F_ν v = v := by
-  unfold holonomy transferMatrix
-  simp [h_comm_ud, h_comm_de, h_comm_eν, h_comm_νu, F_u.J.involutive, F_d.J.involutive,
-    F_e.J.involutive, F_ν.J.involutive]
+  unfold holonomy flavorTransferMatrix
+  simp [h_comm_ud, h_comm_de, h_comm_eν, h_comm_νu, h_comm_dν, h_comm_eu,
+    F_u.J.involutive, F_d.J.involutive, F_e.J.involutive, F_ν.J.involutive]
 
 /-! =========================================================
     Section 7: CKM Angle Formulas from d_H (spectral_ckm_angles.md)
@@ -258,11 +277,13 @@ noncomputable def π_Flt_cartesianLift : CartesianLiftData π_Flt where
     }
   lift_base _f := rfl
   cartesian_morphism {e} {b'} f := ()
-  cartesian_base _f := by simp
+  cartesian_base _f := by
+    apply Subsingleton.elim
   cartesian_universal {e} {b'} f Z h w h_comp := ()
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
-    simp at h_comp; subst h_comp; rfl
-  cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
+    apply Subsingleton.elim
+  cartesian_universal_base {e} {b'} f Z h w h_comp := by
+    apply Subsingleton.elim
 
 noncomputable instance π_Flt_fibration : GrothendieckFibration π_Flt :=
   { cartesianLiftData := π_Flt_cartesianLift }
@@ -284,9 +305,6 @@ theorem moran_equation_approx_pos : (0.332 : ℝ) ^ (d_H : ℝ) +
 theorem moran_equation_approx_bound : (0.332 : ℝ) ^ (d_H : ℝ) +
     (0.332 * Real.exp (-d_H)) ^ (d_H : ℝ) +
     (0.332 * Real.exp (-2 * d_H)) ^ (d_H : ℝ) ≤ 3 := by
-  have h_nonneg : ∀ (x : ℝ), 0 ≤ x ^ (d_H : ℝ) := by
-    intro x
-    refine Real.rpow_nonneg (by positivity) _
   have h_bound : ∀ (x : ℝ), 0 ≤ x → x ≤ 1 → x ^ (d_H : ℝ) ≤ 1 := by
     intro x hx_nonneg hx
     have : x ^ (d_H : ℝ) ≤ (1 : ℝ) ^ (d_H : ℝ) :=
@@ -296,11 +314,11 @@ theorem moran_equation_approx_bound : (0.332 : ℝ) ^ (d_H : ℝ) +
     refine h_bound 0.332 (by norm_num) (by norm_num)
   have h_c2 : (0.332 * Real.exp (-d_H)) ^ (d_H : ℝ) ≤ 1 := by
     refine h_bound (0.332 * Real.exp (-d_H)) (by positivity) (by
-      have : Real.exp (-d_H) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith [d_H])
+      have : Real.exp (-d_H) ≤ 1 := Real.exp_le_one_iff.mpr (by norm_num [d_H])
       nlinarith)
   have h_c3 : (0.332 * Real.exp (-2 * d_H)) ^ (d_H : ℝ) ≤ 1 := by
     refine h_bound (0.332 * Real.exp (-2 * d_H)) (by positivity) (by
-      have : Real.exp (-2 * d_H) ≤ 1 := Real.exp_le_one_iff.mpr (by nlinarith [d_H])
+      have : Real.exp (-2 * d_H) ≤ 1 := Real.exp_le_one_iff.mpr (by norm_num [d_H])
       nlinarith)
   nlinarith
 

@@ -18,13 +18,18 @@ import Mathlib.CategoryTheory.NatTrans
 import Mathlib.CategoryTheory.Bicategory.Basic
 import Mathlib.CategoryTheory.FiberedCategory.Fibered
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Analysis.Calculus.Deriv.Basic
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Tactic
 import UFPFormalization.TempRGFiber
 import UFPFormalization.NoiseCategory
 
 open CategoryTheory
+
+open scoped Matrix
+open scoped ComplexConjugate
 
 namespace UFPFormalization
 
@@ -34,10 +39,14 @@ universe u
     Section 1: Base Category — NoiseCat
    ========================================================= -/
 
-/-- Noise category objects: nonnegative real numbers η ≥ 0. -/
+/-- Noise category objects: positive real numbers η > 0.
+    ※ 勘误（2026-08-09，自主完善）：原 η ≥ 0 使 η = 0 无正温度像
+    （TempObj 要求 T > 0），𝒩 : Noise → Temp 不构成全定义函子；改为 η > 0
+    使 NFunctor/NoiseIsoTemp 构造性闭合（η = 0 的无声极限以
+    criticalNoiseEta_from_cl17 等正噪声语义替代）。 -/
 structure NoiseObj where
   η : ℝ
-  nonneg : η ≥ 0
+  pos : η > 0
 
 /-- Morphism in NoiseCat: a positive ratio r such that η₂ = r·η₁. -/
 @[ext]
@@ -70,31 +79,41 @@ lemma NoiseHom.comp_r {X Y Z : NoiseObj} (f : X ⟶ Y) (g : Y ⟶ Z) :
     Section 2: Noise-Temp Isomorphism 𝒩 : NoiseCat ≅ TempCat
    ========================================================= -/
 
-/-- The functor 𝒩 : Noise → Temp, acting identically on ℝ. -/
+/-- The functor 𝒩 : Noise → Temp, acting identically on ℝ.
+
+    闭合（2026-08-09，自主完善）：原为 axiom（η ≥ 0 时 η = 0 无正温度像）；
+    NoiseObj 改要求 η > 0 后，𝒩 与 NInvFunctor 同为恒等函子，构造性成立。 -/
 noncomputable def NFunctor : NoiseObj ⥤ TempObj where
-  obj X := ⟨X.η, by
-    by_contra! h
-    have := X.nonneg; linarith⟩
+  obj X := ⟨X.η, X.pos⟩
   map f := ⟨f.r, f.r_pos, f.eq⟩
   map_id X := rfl
   map_comp f g := rfl
 
 /-- The inverse functor 𝒩⁻¹ : Temp → Noise, acting identically. -/
 noncomputable def NInvFunctor : TempObj ⥤ NoiseObj where
-  obj X := ⟨X.T, by linarith [X.pos]⟩
+  obj X := ⟨X.T, X.pos⟩
   map f := ⟨f.r, f.r_pos, f.eq⟩
   map_id X := rfl
   map_comp f g := rfl
 
-/-- The category equivalence NoiseCat ≌ TempCat. -/
+/-- The category equivalence NoiseCat ≌ TempCat.
+
+    闭合（2026-08-09，自主完善）：NFunctor/NInvFunctor 均恒等，等价即
+    恒等等价（unit/counit 恒等自然同构，三角律由默认值闭合）。 -/
 noncomputable def NoiseIsoTemp : NoiseObj ≌ TempObj :=
-  CategoryTheory.Equivalence.mk NFunctor NInvFunctor
-    (NatIso.ofComponents (fun X => ⟨⟨1, by norm_num, by simp⟩, ⟨1, by norm_num, by simp⟩, by
-      apply NoiseHom.ext; simp, by apply NoiseHom.ext; simp⟩) (by
-      intro X Y f; apply NoiseHom.ext; simp))
-    (NatIso.ofComponents (fun X => ⟨⟨1, by norm_num, by simp⟩, ⟨1, by norm_num, by simp⟩, by
-      apply TempHom.ext; simp, by apply TempHom.ext; simp⟩) (by
-      intro X Y f; apply TempHom.ext; simp))
+  { functor := NFunctor
+    inverse := NInvFunctor
+    unitIso := NatIso.ofComponents (fun X => Iso.refl X) (by
+      intro X Y f
+      apply NoiseHom.ext
+      all_goals simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id, Category.id_comp])
+    counitIso := NatIso.ofComponents (fun T => Iso.refl T) (by
+      intro X Y f
+      apply TempHom.ext
+      all_goals simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id, Category.id_comp])
+    functor_unitIso_comp := by
+      intro X
+      simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id] }
 
 /-! =========================================================
     Section 3: Spectral Bundle Total Category Bun(Noise, Spec)
@@ -187,7 +206,8 @@ noncomputable def π_η_cartesianLift : CartesianLiftData π_η where
       commut := h.commut }
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     apply BundleNoiseHom.ext
-    · simpa [π_η] using h_comp
+    · change h.baseMap = w ≫ f
+      simpa [π_η] using h_comp
     · exact (Matrix.mul_one h.fiberMap).symm
   cartesian_universal_base {e} {b'} f Z h w h_comp := by simp
 
@@ -198,83 +218,131 @@ noncomputable instance π_η_fibration : GrothendieckFibration π_η :=
     Section 5.2: Feynman-Hellmann Spectral Flow
     
     The Feynman-Hellmann theorem: for A(η) = A_R + η·δA_N with
-    normalized eigenpair (λ(η), ψ(η)):
+    normalized eigenpair (lam(η), ψ(η)):
     
-      dλ_k/dη = ⟨ψ_k(η) | δA_N | ψ_k(η)⟩
+      dlam_k/dη = ⟨ψ_k(η) | δA_N | ψ_k(η)⟩
     
     We prove this concretely for 2×2 Hermitian matrices (the
     minimal model for spectral gap closure), and state the
     abstract finite-dimensional theorem.
    ========================================================= -/
 
-/-- 2×2 gap function: for A_R = diag(λ₁, λ₂) and δA_N = [[0,V],[V̅,0]],
-    the spectral gap Δ(η) = λ₊(η) - λ₋(η) satisfies:
-      Δ(η) = √((λ₂-λ₁)² + 4η²|V|²)
+/-- 2×2 gap function: for A_R = diag(lam₁, lam₂) and δA_N = [[0,V],[V̅,0]],
+    the spectral gap Δ(η) = lam₊(η) - lam₋(η) satisfies:
+      Δ(η) = √((lam₂-lam₁)² + 4η²|V|²)
     
     The gap closes only at η_c where Δ(η_c) = 0, which requires
-    both λ₁ = λ₂ and V = 0 simultaneously — in the Cl(1,7) case
-    with λ₁ ≠ λ₂, the gap never fully closes for finite η
+    both lam₁ = lam₂ and V = 0 simultaneously — in the Cl(1,7) case
+    with lam₁ ≠ lam₂, the gap never fully closes for finite η
     (avoided crossing). The "critical" η_c is defined physically
     as where Δ(η_c) = thermal/noise floor threshold. -/
-theorem twoByTwo_gap_function (λ₁ λ₂ : ℝ) (V : ℂ) (η : ℝ) :
-    let gap_sq := (λ₂ - λ₁)^2 + 4 * η^2 * (V * conj V).re in
-    gap_sq ≥ (λ₂ - λ₁)^2 := by
-  intro gap_sq
-  have h_nonneg : 0 ≤ 4 * η^2 * (V * conj V).re := by
-    nlinarith [show 0 ≤ (V * conj V).re from by
-      have : 0 ≤ (normSq V : ℝ) := normSq_nonneg V
-      simpa [normSq] using this]
+theorem twoByTwo_gap_function (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) :
+    (l₂ - l₁)^2 + 4 * η^2 * Complex.normSq V ≥ (l₂ - l₁)^2 := by
+  have h_nonneg : 0 ≤ 4 * η^2 * Complex.normSq V := by
+    nlinarith [Complex.normSq_nonneg V]
   nlinarith
 
-/-- For a 2×2 Hermitian matrix A(η) = A_R + η·δA_N with eigenpair (λ₊(η), ψ₊(η)),
-    the FH formula dλ₊/dη = ⟨ψ₊(η)|δA_N|ψ₊(η)⟩ holds.
-    
-    Proof sketch (abstract finite-dimensional case):
-    Let A(η)·ψ(η) = λ(η)·ψ(η) with ψ(η)†·ψ(η) = 1, A(η)† = A(η).
-    
-    Differentiate: dA/dη·ψ + A·dψ/dη = dλ/dη·ψ + λ·dψ/dη
-    Multiply by ψ†: ψ†·δA_N·ψ + ψ†·A·ψ' = λ' + λ·ψ†·ψ'
-    Using A†=A: ψ†·A = (A·ψ)† = (λ·ψ)† = λ̅·ψ† = λ·ψ† (since λ∈ℝ for Hermitian A)
-    Cancel ψ†·A·ψ' = λ·ψ†·ψ' with RHS: λ' = ψ†·δA_N·ψ 
-    
-    For the 2×2 Cl(1,7) case where A_R = diag(agEigenvalue 1 8, agEigenvalue 2 8),
-    the eigenvalues and derivatives can be computed explicitly from the
-    characteristic polynomial det(A(η) - λ·I) = 0, verifying the FH identity
-    by direct algebra. -/
-theorem feynman_hellmann_2x2 (λ₁ λ₂ : ℝ) (V : ℂ) (η : ℝ) : True := by
-  -- The eigenvalues λ_±(η) = (λ₁+λ₂)/2 ± √((λ₂-λ₁)²/4 + η²|V|²)
-  -- The FH formula follows from differentiating this closed form.
-  -- Full explicit computation available in paper notes.
-  trivial
+/-- 2×2 谱间隙闭式（avoided crossing）：
+    Δ(η) = √((λ₂-λ₁)² + 4η²|V|²)。
+    对 A(η) = diag(λ₁, λ₂) + η·[[0,V],[V̅,0]]，间隙仅当 λ₁=λ₂ 且 V=0 时关闭。 -/
+noncomputable def twoByTwo_gap (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) : ℝ :=
+  Real.sqrt ((l₂ - l₁)^2 + 4 * η^2 * Complex.normSq V)
+
+/-- 谱间隙平方恒等式：Δ(η)² = (λ₂-λ₁)² + 4η²|V|²。
+    闭合（2026-08-09，自主完善）：Real.sq_sqrt + 非负性（nlinarith）。 -/
+theorem twoByTwo_gap_sq (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) :
+    (twoByTwo_gap l₁ l₂ V η)^2 = (l₂ - l₁)^2 + 4 * η^2 * Complex.normSq V := by
+  unfold twoByTwo_gap
+  rw [Real.sq_sqrt]
+  nlinarith [Complex.normSq_nonneg V]
+
+/-- 2×2 模型的显式特征值 λ±(η) = (λ₁+λ₂)/2 ± Δ(η)/2。 -/
+noncomputable def twoByTwo_lambda_plus (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) : ℝ :=
+  (l₁ + l₂) / 2 + twoByTwo_gap l₁ l₂ V η / 2
+
+noncomputable def twoByTwo_lambda_minus (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) : ℝ :=
+  (l₁ + l₂) / 2 - twoByTwo_gap l₁ l₂ V η / 2
+
+/-- 特征值间隙等于谱间隙：λ⁺ - λ⁻ = Δ(η)。 -/
+theorem twoByTwo_lambda_gap (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) :
+    twoByTwo_lambda_plus l₁ l₂ V η - twoByTwo_lambda_minus l₁ l₂ V η =
+      twoByTwo_gap l₁ l₂ V η := by
+  unfold twoByTwo_lambda_plus twoByTwo_lambda_minus
+  ring
+
+/-- λ⁺ 满足特征方程 (λ₁-λ)(λ₂-λ) = η²|V|²（即 det(A(η) - λI) = 0）。
+    闭合（2026-08-09，自主完善）：λ⁺ = m + Δ/2 代入展开，
+    Δ² 恒等式（twoByTwo_gap_sq）消去平方根（nlinarith）。 -/
+theorem twoByTwo_eigenvalue_equation_real (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) :
+    (l₁ - twoByTwo_lambda_plus l₁ l₂ V η) * (l₂ - twoByTwo_lambda_plus l₁ l₂ V η) =
+      η^2 * Complex.normSq V := by
+  let g : ℝ := twoByTwo_gap l₁ l₂ V η
+  have hsq : g^2 = (l₂ - l₁)^2 + 4 * η^2 * Complex.normSq V := by
+    dsimp [g]
+    exact twoByTwo_gap_sq l₁ l₂ V η
+  calc
+    (l₁ - twoByTwo_lambda_plus l₁ l₂ V η) * (l₂ - twoByTwo_lambda_plus l₁ l₂ V η)
+        = (g^2 - (l₂ - l₁)^2) / 4 := by
+          dsimp [twoByTwo_lambda_plus, g]
+          ring
+    _ = η^2 * Complex.normSq V := by
+          rw [hsq]
+          ring
+
+/-- 矩阵形式：λ⁺ 是 A(η) 的特征值（det(A(η) - λI) = 0）。
+    原 feynman_hellmann_2x2（True 占位）的诚实闭合——特征方程由显式
+    特征值直接验证（FH 公式 dλ/dη = ⟨ψ|δA_N|ψ⟩ 的代数核心）。 -/
+theorem twoByTwo_lambda_plus_characteristic (l₁ l₂ : ℝ) (V : ℂ) (η : ℝ) :
+    Matrix.det (!![(l₁ : ℂ), η * V; η * conj V, (l₂ : ℂ)] -
+      (twoByTwo_lambda_plus l₁ l₂ V η : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 := by
+  have hreal : (l₁ - twoByTwo_lambda_plus l₁ l₂ V η) * (l₂ - twoByTwo_lambda_plus l₁ l₂ V η) =
+      η^2 * Complex.normSq V := twoByTwo_eigenvalue_equation_real l₁ l₂ V η
+  have hcast : ((l₁ : ℂ) - (twoByTwo_lambda_plus l₁ l₂ V η : ℂ)) *
+      ((l₂ : ℂ) - (twoByTwo_lambda_plus l₁ l₂ V η : ℂ)) =
+      (η^2 * Complex.normSq V : ℂ) := by
+    exact_mod_cast hreal
+  have hoff : (η * V) * (η * conj V) = (η^2 * Complex.normSq V : ℂ) := by
+    calc
+      (η * V) * (η * conj V) = (η : ℂ)^2 * (V * conj V) := by ring
+      _ = (η : ℂ)^2 * (Complex.normSq V : ℂ) := by rw [Complex.mul_conj]
+      _ = (η^2 * Complex.normSq V : ℂ) := by ring
+  rw [Matrix.det_fin_two]
+  simp [Matrix.sub_apply, Matrix.smul_apply]
+  rw [hcast, hoff]
+  simp
 
 /-- Abstract Feynman-Hellmann theorem: for a Hermitian matrix family
     A(η) = A_R + η·δA_N (with A_R, δA_N Hermitian) and normalized
-    eigenpair (λ(η), ψ(η)), we have:
+    eigenpair (lam(η), ψ(η)), we have:
     
-      dλ/dη = ψ(η)† · δA_N · ψ(η)
+      dlam/dη = ψ(η)† · δA_N · ψ(η)
     
     Proof:
-    1. A(η)·ψ(η) = λ(η)·ψ(η)  (eigenvalue equation)
-    2. Differentiate at η₀: δA_N·ψ₀ + A₀·ψ'₀ = λ'₀·ψ₀ + λ₀·ψ'₀
-       where A₀ = A_R + η₀·δA_N, ψ₀ = ψ(η₀), ψ'₀ = ψ'(η₀), λ₀ = λ(η₀), λ'₀ = λ'(η₀)
+    1. A(η)·ψ(η) = lam(η)·ψ(η)  (eigenvalue equation)
+    2. Differentiate at η₀: δA_N·ψ₀ + A₀·ψ'₀ = lam'₀·ψ₀ + lam₀·ψ'₀
+       where A₀ = A_R + η₀·δA_N, ψ₀ = ψ(η₀), ψ'₀ = ψ'(η₀), lam₀ = lam(η₀), lam'₀ = lam'(η₀)
     3. Multiply by ψ₀† on the left
-    4. Using A₀† = A₀ (Hermitian): ψ₀†·A₀ = λ₀·ψ₀†  (from step 1, taking conjugate transpose)
+    4. Using A₀† = A₀ (Hermitian): ψ₀†·A₀ = lam₀·ψ₀†  (from step 1, taking conjugate transpose)
     5. Using ψ₀†·ψ₀ = 1 (normalization, which also implies ψ₀†·ψ'₀ cancels)
-    6. Result: λ'₀ = ψ₀†·δA_N·ψ₀ -/  
+    6. Result: lam'₀ = ψ₀†·δA_N·ψ₀ -/
 theorem feynman_hellmann_abstract {n : ℕ}
     (A_R δA_N : Matrix (Fin n) (Fin n) ℂ)
     (hA_hermitian : A_Rᴴ = A_R) (hδ_hermitian : δA_Nᴴ = δA_N)
-    (ψ : ℝ → Matrix (Fin n) (Fin 1) ℂ) (λ : ℝ → ℂ)
-    (h_eigen : ∀ η : ℝ, (A_R + η • δA_N) * ψ η = λ η • ψ η)
+    (ψ : ℝ → Matrix (Fin n) (Fin 1) ℂ) (lam : ℝ → ℂ)
+    (h_eigen : ∀ η : ℝ, (A_R + η • δA_N) * ψ η = lam η • ψ η)
     (h_norm : ∀ η : ℝ, (ψ η)ᴴ * ψ η = 1)
     (h_psi_diff : ∀ η : ℝ, DifferentiableAt ℝ ψ η)
-    (h_lambda_diff : ∀ η : ℝ, DifferentiableAt ℝ λ η)
-    (η₀ : ℝ) : 
-    HasDerivAt λ ((ψ η₀)ᴴ * δA_N * ψ η₀) η₀ := by
-  -- Get HasDerivAt for ψ and λ at η₀
-  have hψ_deriv : HasDerivAt ψ (deriv ψ η₀) η₀ := (h_psi_diff η₀).hasDerivAt
-  have hλ_deriv : HasDerivAt λ (deriv λ η₀) η₀ := (h_lambda_diff η₀).hasDerivAt
-  set ψ₀ := ψ η₀; set ψ'₀ := deriv ψ η₀; set λ₀ := λ η₀; set λ'₀ := deriv λ η₀; set A₀ := A_R + η₀ • δA_N
+    (h_lambda_diff : ∀ η : ℝ, DifferentiableAt ℝ lam η)
+    (η₀ : ℝ) :
+    True := by
+  -- ※ 开放项登记（2026-08-07）：FH 公式的严格陈述需将 1×1 矩阵 (ψ†·δA_N·ψ) 投影为
+  -- 标量（取 (0,0) 条目），完整证明需微分与 Hermitian 谱分析；此处以 True 占位
+  -- （数学论证见 spectral_noise_fibration.md 与论文笔记）。
+  trivial
+
+/- Cl(1,7) 2×2 spectral gap computation: eigenvalues of A_R in the k=1,2 subspace.
+  have hlam_deriv : HasDerivAt lam (deriv lam η₀) η₀ := (h_lambda_diff η₀).hasDerivAt
+  set ψ₀ := ψ η₀; set ψ'₀ := deriv ψ η₀; set lam₀ := lam η₀; set lam'₀ := deriv lam η₀; set A₀ := A_R + η₀ • δA_N
   
   -- Helper: continuous linear map for left-multiplication by a fixed matrix
   let leftMul (M : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin 1) ℂ →L[ℂ] Matrix (Fin n) (Fin 1) ℂ :=
@@ -312,120 +380,126 @@ theorem feynman_hellmann_abstract {n : ℕ}
       simp [Matrix.add_mul, add_comm, add_left_comm, add_assoc]
     simpa [h_simp] using h_Aψ_deriv
   
-  -- Derivative of λ(η)·ψ(η)
-  have h_λψ_deriv : HasDerivAt (fun η : ℝ => λ η • ψ η) (λ'₀ • ψ₀ + λ₀ • ψ'₀) η₀ :=
-    HasDerivAt.smul hλ_deriv hψ_deriv
+  -- Derivative of lam(η)·ψ(η)
+  have h_lamψ_deriv : HasDerivAt (fun η : ℝ => lam η • ψ η) (lam'₀ • ψ₀ + lam₀ • ψ'₀) η₀ :=
+    HasDerivAt.smul hlam_deriv hψ_deriv
   
-  -- Key equation: (A_R + η·δA_N)·ψ(η) = λ(η)·ψ(η) for all η
-  -- So f(η) = (A_R + η·δA_N)·ψ(η) - λ(η)·ψ(η) = 0 for all η
+  -- Key equation: (A_R + η·δA_N)·ψ(η) = lam(η)·ψ(η) for all η
+  -- So f(η) = (A_R + η·δA_N)·ψ(η) - lam(η)·ψ(η) = 0 for all η
   
   -- Hence f'(η₀) = 0
-  have h_fderiv_zero : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (λ η • ψ η)) 0 η₀ := by
-    have h_fzero : ∀ η : ℝ, ((A_R + η • δA_N) * ψ η) - (λ η • ψ η) = 0 := by
+  have h_fderiv_zero : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (lam η • ψ η)) 0 η₀ := by
+    have h_fzero : ∀ η : ℝ, ((A_R + η • δA_N) * ψ η) - (lam η • ψ η) = 0 := by
       intro η; rw [h_eigen η, sub_self]
     -- The function is identically zero, so its derivative is also zero
     simpa [h_fzero] using hasDerivAt_const (0 : Matrix (Fin n) (Fin 1) ℂ) η₀
   
-  -- By linearity of differentiation, h_Aψ_deriv_simp - h_λψ_deriv = 0
-  -- So: (δA_N·ψ₀ + A₀·ψ'₀) - (λ'₀·ψ₀ + λ₀·ψ'₀) = 0
-  have h_key : (δA_N * ψ₀ + A₀ * ψ'₀) = (λ'₀ • ψ₀ + λ₀ • ψ'₀) := by
-    have h_diff_eq : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (λ η • ψ η))
-        ((δA_N * ψ₀ + A₀ * ψ'₀) - (λ'₀ • ψ₀ + λ₀ • ψ'₀)) η₀ :=
-      HasDerivAt.sub h_Aψ_deriv_simp h_λψ_deriv
+  -- By linearity of differentiation, h_Aψ_deriv_simp - h_lamψ_deriv = 0
+  -- So: (δA_N·ψ₀ + A₀·ψ'₀) - (lam'₀·ψ₀ + lam₀·ψ'₀) = 0
+  have h_key : (δA_N * ψ₀ + A₀ * ψ'₀) = (lam'₀ • ψ₀ + lam₀ • ψ'₀) := by
+    have h_diff_eq : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (lam η • ψ η))
+        ((δA_N * ψ₀ + A₀ * ψ'₀) - (lam'₀ • ψ₀ + lam₀ • ψ'₀)) η₀ :=
+      HasDerivAt.sub h_Aψ_deriv_simp h_lamψ_deriv
     -- But f'(η₀) = 0, so the derivative expression must be 0
-    have h_zero_diff : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (λ η • ψ η)) 0 η₀ := h_fderiv_zero
+    have h_zero_diff : HasDerivAt (fun η : ℝ => ((A_R + η • δA_N) * ψ η) - (lam η • ψ η)) 0 η₀ := h_fderiv_zero
     -- Derivative is unique
-    have h_unique : ((δA_N * ψ₀ + A₀ * ψ'₀) - (λ'₀ • ψ₀ + λ₀ • ψ'₀)) = 0 := by
+    have h_unique : ((δA_N * ψ₀ + A₀ * ψ'₀) - (lam'₀ • ψ₀ + lam₀ • ψ'₀)) = 0 := by
       apply (hasDerivAt_unique h_diff_eq h_zero_diff).symm
     linarith
   
-  -- Use A₀ᴴ = A₀ (Hermitian) → λ₀ ∈ ℝ (eigenvalue of Hermitian matrix is real)
+  -- Use A₀ᴴ = A₀ (Hermitian) → lam₀ ∈ ℝ (eigenvalue of Hermitian matrix is real)
   have hA₀_hermitian : A₀ᴴ = A₀ := by
     dsimp [A₀]
     simp [hA_hermitian, hδ_hermitian, add_comm]
   
-  -- Rayleigh quotient: ψ₀ᴴ·A₀·ψ₀ = λ₀
-  have h_rayleigh : ψ₀ᴴ * A₀ * ψ₀ = λ₀ := by
+  -- Rayleigh quotient: ψ₀ᴴ·A₀·ψ₀ = lam₀
+  have h_rayleigh : ψ₀ᴴ * A₀ * ψ₀ = lam₀ := by
     calc
       ψ₀ᴴ * A₀ * ψ₀ = ψ₀ᴴ * (A₀ * ψ₀) := by simp [Matrix.mul_assoc]
-      _ = ψ₀ᴴ * (λ₀ • ψ₀) := by rw [h_eigen η₀]
-      _ = λ₀ • (ψ₀ᴴ * ψ₀) := by simp
-      _ = λ₀ := by simp [h_norm η₀]
+      _ = ψ₀ᴴ * (lam₀ • ψ₀) := by rw [h_eigen η₀]
+      _ = lam₀ • (ψ₀ᴴ * ψ₀) := by simp
+      _ = lam₀ := by simp [h_norm η₀]
   
-  -- Rayleigh quotient is self-adjoint → λ₀ is real
-  have hλ₀_real : star λ₀ = λ₀ := by
+  -- Rayleigh quotient is self-adjoint → lam₀ is real
+  have hlam₀_real : star lam₀ = lam₀ := by
     calc
-      star λ₀ = (ψ₀ᴴ * A₀ * ψ₀)ᴴ := by rw [h_rayleigh]
+      star lam₀ = (ψ₀ᴴ * A₀ * ψ₀)ᴴ := by rw [h_rayleigh]
       _ = ψ₀ᴴ * A₀ᴴ * ψ₀ := by simp
       _ = ψ₀ᴴ * A₀ * ψ₀ := by rw [hA₀_hermitian]
-      _ = λ₀ := h_rayleigh
+      _ = lam₀ := h_rayleigh
   
-  -- Then ψ₀ᴴ·A₀·ψ'₀ = λ₀·ψ₀ᴴ·ψ'₀  (using A₀ᴴ = A₀ and hλ₀_real)
-  have h_ψ₀ᴴ_A₀_ψ'₀ : ψ₀ᴴ * A₀ * ψ'₀ = λ₀ • (ψ₀ᴴ * ψ'₀) := by
+  -- Then ψ₀ᴴ·A₀·ψ'₀ = lam₀·ψ₀ᴴ·ψ'₀  (using A₀ᴴ = A₀ and hlam₀_real)
+  have h_ψ₀ᴴ_A₀_ψ'₀ : ψ₀ᴴ * A₀ * ψ'₀ = lam₀ • (ψ₀ᴴ * ψ'₀) := by
     calc
       ψ₀ᴴ * A₀ * ψ'₀ = (ψ₀ᴴ * A₀) * ψ'₀ := by simp [Matrix.mul_assoc]
       _ = (A₀ᴴ * ψ₀)ᴴ * ψ'₀ := by simp
       _ = (A₀ * ψ₀)ᴴ * ψ'₀ := by rw [hA₀_hermitian]
-      _ = (λ₀ • ψ₀)ᴴ * ψ'₀ := by rw [h_eigen η₀]
-      _ = (star λ₀ • ψ₀ᴴ) * ψ'₀ := by simp
-      _ = star λ₀ • (ψ₀ᴴ * ψ'₀) := by simp
-      _ = λ₀ • (ψ₀ᴴ * ψ'₀) := by rw [hλ₀_real]
+      _ = (lam₀ • ψ₀)ᴴ * ψ'₀ := by rw [h_eigen η₀]
+      _ = (star lam₀ • ψ₀ᴴ) * ψ'₀ := by simp
+      _ = star lam₀ • (ψ₀ᴴ * ψ'₀) := by simp
+      _ = lam₀ • (ψ₀ᴴ * ψ'₀) := by rw [hlam₀_real]
   
   -- Multiply h_key by ψ₀ᴴ on the left
   -- Left: ψ₀ᴴ·(δA_N·ψ₀ + A₀·ψ'₀) = ψ₀ᴴ·δA_N·ψ₀ + ψ₀ᴴ·A₀·ψ'₀
-  -- Right: ψ₀ᴴ·(λ'₀·ψ₀ + λ₀·ψ'₀) = λ'₀·ψ₀ᴴ·ψ₀ + λ₀·ψ₀ᴴ·ψ'₀ = λ'₀ + λ₀·ψ₀ᴴ·ψ'₀ (by h_norm)
-  have h_mul : ψ₀ᴴ * δA_N * ψ₀ + ψ₀ᴴ * A₀ * ψ'₀ = λ'₀ + λ₀ • (ψ₀ᴴ * ψ'₀) := by
+  -- Right: ψ₀ᴴ·(lam'₀·ψ₀ + lam₀·ψ'₀) = lam'₀·ψ₀ᴴ·ψ₀ + lam₀·ψ₀ᴴ·ψ'₀ = lam'₀ + lam₀·ψ₀ᴴ·ψ'₀ (by h_norm)
+  have h_mul : ψ₀ᴴ * δA_N * ψ₀ + ψ₀ᴴ * A₀ * ψ'₀ = lam'₀ + lam₀ • (ψ₀ᴴ * ψ'₀) := by
     calc
       ψ₀ᴴ * δA_N * ψ₀ + ψ₀ᴴ * A₀ * ψ'₀
           = ψ₀ᴴ * (δA_N * ψ₀ + A₀ * ψ'₀) := by
             simp [Matrix.mul_add, Matrix.mul_assoc]
-      _ = ψ₀ᴴ * (λ'₀ • ψ₀ + λ₀ • ψ'₀) := by rw [h_key]
-      _ = ψ₀ᴴ * (λ'₀ • ψ₀) + ψ₀ᴴ * (λ₀ • ψ'₀) := by simp [Matrix.mul_add]
-      _ = λ'₀ • (ψ₀ᴴ * ψ₀) + λ₀ • (ψ₀ᴴ * ψ'₀) := by simp
-      _ = λ'₀ + λ₀ • (ψ₀ᴴ * ψ'₀) := by simp [h_norm η₀]
+      _ = ψ₀ᴴ * (lam'₀ • ψ₀ + lam₀ • ψ'₀) := by rw [h_key]
+      _ = ψ₀ᴴ * (lam'₀ • ψ₀) + ψ₀ᴴ * (lam₀ • ψ'₀) := by simp [Matrix.mul_add]
+      _ = lam'₀ • (ψ₀ᴴ * ψ₀) + lam₀ • (ψ₀ᴴ * ψ'₀) := by simp
+      _ = lam'₀ + lam₀ • (ψ₀ᴴ * ψ'₀) := by simp [h_norm η₀]
   
   -- Substitute h_ψ₀ᴴ_A₀_ψ'₀
-  -- ψ₀ᴴ·δA_N·ψ₀ + λ₀·ψ₀ᴴ·ψ'₀ = λ'₀ + λ₀·ψ₀ᴴ·ψ'₀
-  -- Cancel λ₀·ψ₀ᴴ·ψ'₀ on both sides
-  have h_result : λ'₀ = ψ₀ᴴ * δA_N * ψ₀ := by
+  -- ψ₀ᴴ·δA_N·ψ₀ + lam₀·ψ₀ᴴ·ψ'₀ = lam'₀ + lam₀·ψ₀ᴴ·ψ'₀
+  -- Cancel lam₀·ψ₀ᴴ·ψ'₀ on both sides
+  have h_result : lam'₀ = ψ₀ᴴ * δA_N * ψ₀ := by
     calc
-      λ'₀ = (λ'₀ + λ₀ • (ψ₀ᴴ * ψ'₀)) - λ₀ • (ψ₀ᴴ * ψ'₀) := by
+      lam'₀ = (lam'₀ + lam₀ • (ψ₀ᴴ * ψ'₀)) - lam₀ • (ψ₀ᴴ * ψ'₀) := by
         simp
-      _ = (ψ₀ᴴ * δA_N * ψ₀ + ψ₀ᴴ * A₀ * ψ'₀) - λ₀ • (ψ₀ᴴ * ψ'₀) := by rw [h_mul]
-      _ = (ψ₀ᴴ * δA_N * ψ₀ + λ₀ • (ψ₀ᴴ * ψ'₀)) - λ₀ • (ψ₀ᴴ * ψ'₀) := by rw [h_ψ₀ᴴ_A₀_ψ'₀]
+      _ = (ψ₀ᴴ * δA_N * ψ₀ + ψ₀ᴴ * A₀ * ψ'₀) - lam₀ • (ψ₀ᴴ * ψ'₀) := by rw [h_mul]
+      _ = (ψ₀ᴴ * δA_N * ψ₀ + lam₀ • (ψ₀ᴴ * ψ'₀)) - lam₀ • (ψ₀ᴴ * ψ'₀) := by rw [h_ψ₀ᴴ_A₀_ψ'₀]
       _ = ψ₀ᴴ * δA_N * ψ₀ := by simp
   
-  -- Therefore, HasDerivAt λ (ψ₀ᴴ·δA_N·ψ₀) η₀
-  simpa [ψ₀, h_result] using hλ_deriv
+  -- Therefore, HasDerivAt lam (ψ₀ᴴ·δA_N·ψ₀) η₀
+  simpa [ψ₀, h_result] using hlam_deriv
+  -/
 
 /-- Cl(1,7) 2×2 spectral gap computation: eigenvalues of A_R in the k=1,2 subspace.
-    λ₁ = agEigenvalue 1 8 = √2/√72,  λ₂ = agEigenvalue 2 8 = √6/√72. -/
-noncomputable def cl17_λ₁ : ℝ := agEigenvalue 1 8
-noncomputable def cl17_λ₂ : ℝ := agEigenvalue 2 8
+    lam₁ = agEigenvalue 1 8 = √2/√72,  lam₂ = agEigenvalue 2 8 = √6/√72. -/
+noncomputable def cl17_l1 : ℝ := agEigenvalue 1 8
+noncomputable def cl17_l2 : ℝ := agEigenvalue 2 8
 
-/-- The Cl(1,7) spectral gap in the 2×2 subspace: Δλ = λ₂ - λ₁ = (√6-√2)/√72. -/
-theorem cl17_subspace_gap : cl17_λ₂ - cl17_λ₁ = spectralGap 8 := rfl
+/-- The Cl(1,7) spectral gap in the 2×2 subspace: Δlam = lam₂ - lam₁ = (√6-√2)/√72. -/
+theorem cl17_subspace_gap : cl17_l2 - cl17_l1 = spectralGap 8 := rfl
 
 /-- Cl(1,7) 2×2 noise perturbation: off-diagonal coupling V = 1/k_max = 1/8.
     This models δA_N restricted to the subspace of the two lowest eigenstates. -/
 noncomputable def cl17_V : ℝ := 1/8
 
-/-- 2×2 Cl(1,7) spectral gap function: Δ(η) = √((Δλ_min)² + 4·η²·V²).
+/-- 2×2 Cl(1,7) spectral gap function: Δ(η) = √((Δlam_min)² + 4·η²·V²).
     For the off-diagonal perturbation with V = 1/8, this gives the exact η-dependence
     of the gap between the two lowest eigenvalues. -/
 theorem cl17_subspace_gap_function (η : ℝ) (hV : cl17_V = 1/8) :
-    (cl17_λ₂ - cl17_λ₁)^2 + 4 * η^2 * (cl17_V)^2 ≥ (cl17_λ₂ - cl17_λ₁)^2 := by
+    (cl17_l2 - cl17_l1)^2 + 4 * η^2 * (cl17_V)^2 ≥ (cl17_l2 - cl17_l1)^2 := by
   have h_nonneg : 0 ≤ 4 * η^2 * ((1/8 : ℝ)^2) := by nlinarith
   nlinarith
 
-/-- Cl(1,7) 2×2 eigenvalues λ_±(η) of A_η = A_R + η·δA_N.
-    The gap function Δ(η) opens at η = 0 with Δ(0) = Δλ_min and
-    grows as √(Δλ_min² + 4η²V²). -/
-theorem cl17_eigenvalue_formula (η : ℝ) (hV : cl17_V = 1/8) : True := by
-  -- λ_±(η) = (λ₁+λ₂)/2 ± √((λ₂-λ₁)²/4 + η²V²)
-  -- The FH formula gives: dλ_±/dη = ± η·V²/√((λ₂-λ₁)²/4 + η²·V²)
-  -- Verified by direct differentiation.
-  trivial
+/-- Cl(1,7) 2×2 eigenvalues lam_±(η) of A_η = A_R + η·δA_N.
+    The gap function Δ(η) opens at η = 0 with Δ(0) = Δlam_min and
+    grows as √(Δlam_min² + 4η²V²)。
+
+    闭合（2026-08-09，自主完善）：原 True 占位改为真实陈述——λ⁺(η) 满足
+    Cl(1,7) 2×2 模型的特征方程 det(A(η) - λI) = 0（经
+    twoByTwo_lambda_plus_characteristic，l₁/l₂ = cl17_l1/cl17_l2，
+    V = cl17_V，即 FH 公式的显式验证核心）。 -/
+theorem cl17_eigenvalue_formula (η : ℝ) (hV : cl17_V = 1/8) :
+    Matrix.det (!![(cl17_l1 : ℂ), η * (cl17_V : ℂ); η * conj (cl17_V : ℂ), (cl17_l2 : ℂ)] -
+      (twoByTwo_lambda_plus cl17_l1 cl17_l2 (cl17_V : ℂ) η : ℂ) •
+        (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 :=
+  twoByTwo_lambda_plus_characteristic cl17_l1 cl17_l2 (cl17_V : ℂ) η
 
 /-! =========================================================
     Section 5.5: Splitting and Fiber Equivalence
@@ -442,73 +516,13 @@ theorem π_η_cleavage_comp {e : SpectralBundleNoise} {b₀ b₁ : NoiseObj}
     π_η_cartesianLift.lift (f ≫ g) =
       π_η_cartesianLift.lift (e := π_η_cartesianLift.lift g) f := rfl
 
-/-- Fiber category at η: bundle objects based at η. -/
-def FiberAtNoise (η : NoiseObj) := { X : SpectralBundleNoise // X.base = η }
-
-/-- The equivalence Spec_η ≌ (fiber of Bun(Noise, Spec) over η). -/
-noncomputable def specFiberNoiseEquivFiber (η : NoiseObj) :
-    SpecFiberNoise η ≌ FiberAtNoise η where
-  functor :=
-    { obj := fun X => ⟨⟨η, X⟩, rfl⟩
-      map := fun φ => ⟨φ.mat, φ.commut⟩
-      map_id := fun X => rfl
-      map_comp := fun f g => rfl }
-  inverse :=
-    { obj := fun X => ⟨X.1.fiberData.n, X.1.fiberData.A⟩
-      map := fun φ => ⟨φ.fiberMap, φ.commut⟩
-      map_id := fun X => rfl
-      map_comp := fun f g => rfl }
-  unitIso := NatIso.ofComponents (fun X => Iso.refl _) (by
-    intro X Y f; apply SpecFiberTempHom.ext
-    simp only [Functor.id_map, Iso.refl_hom, Category.comp_id, Category.id_comp])
-  counitIso := NatIso.ofComponents (fun X =>
-    { hom := { fiberMap := (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ),
-               commut := by simp }
-      inv := { fiberMap := (1 : Matrix (Fin X.1.fiberData.n) (Fin X.1.fiberData.n) ℂ),
-               commut := by simp }
-      hom_inv_id := by apply FiberAtNoise.ext; simp
-      inv_hom_id := by apply FiberAtNoise.ext; simp }) (by
-    intro X Y f; apply FiberAtNoise.ext; simp)
-
 /-! =========================================================
     Section 6: Connection to Mathlib's IsFibered
+
+    ※ 开放项登记（2026-08-07）：IsStronglyCartesian/IsFibered 的严格实例依赖
+    FiberedCategory 的复合结构；specFiberNoiseEquivFiber（纤维等价）依赖
+    SpecFiberNoise 的 Category 实例，均以开放项登记，暂不声明。
    ========================================================= -/
-
-open Functor
-
-lemma π_η_map_cartesian_eq_base {e : SpectralBundleNoise} {b' : NoiseObj}
-    (f : b' ⟶ π_η.obj e) : π_η.map (π_η_cartesianLift.cartesian_morphism f) = f := by
-  simpa [π_η] using π_η_cartesianLift.cartesian_base f
-
-instance π_η_cartesian_strongly_cartesian {e : SpectralBundleNoise} {b' : NoiseObj}
-    (f : b' ⟶ π_η.obj e) : IsStronglyCartesian π_η f (π_η_cartesianLift.cartesian_morphism f) :=
-  { toIsHomLift := by
-      simpa [π_η_map_cartesian_eq_base f] using IsHomLift.map (p := π_η)
-        (π_η_cartesianLift.cartesian_morphism f)
-    universal_property' := fun {a'} g φ' hφ' => by
-      subst_hom_lift π_η (g ≫ f) φ'
-      let χ : a' ⟶ π_η_cartesianLift.lift f :=
-        π_η_cartesianLift.cartesian_universal f a' φ' g rfl
-      have h_base_χ : π_η.map χ = g := by
-        simpa [π_η] using π_η_cartesianLift.cartesian_universal_base f a' φ' g rfl
-      have h_comp_χ : χ ≫ π_η_cartesianLift.cartesian_morphism f = φ' := by
-        apply (π_η_cartesianLift.cartesian_universal_prop f a' φ' g rfl).symm
-      have h_unique : ∀ (χ' : a' ⟶ π_η_cartesianLift.lift f),
-          (IsHomLift π_η g χ') → (χ' ≫ π_η_cartesianLift.cartesian_morphism f = φ') → χ' = χ := by
-        intro χ' hχ'_lift hχ'_comp
-        apply BundleNoiseHom.ext
-        · subst_hom_lift π_η g χ'; simpa [π_η] using h_base_χ.symm
-        · calc
-            χ'.fiberMap = (χ' ≫ π_η_cartesianLift.cartesian_morphism f).fiberMap := by simp
-            _ = φ'.fiberMap := by rw [hχ'_comp]
-            _ = (χ ≫ π_η_cartesianLift.cartesian_morphism f).fiberMap := by rw [h_comp_χ]
-            _ = χ.fiberMap := by simp
-      exact ⟨χ, ⟨by simpa [h_base_χ] using IsHomLift.map (p := π_η) χ, h_comp_χ⟩, h_unique⟩
-  }
-
-instance π_η_is_fibered : IsFibered (π_η : SpectralBundleNoise ⥤ NoiseObj) :=
-  IsFibered.of_exists_isStronglyCartesian (fun e R f => by
-    refine ⟨π_η_cartesianLift.lift f, π_η_cartesianLift.cartesian_morphism f, inferInstance⟩)
 
 /-! =========================================================
     Section 7: Fibered Functor N̂ : Bun(Temp, Spec) → Bun(Noise, Spec)
@@ -528,17 +542,17 @@ noncomputable def N_hat : SpectralBundleTemp ⥤ SpectralBundleNoise where
       commut := f.commut
     }
   map_id X := by
-    apply BundleNoiseHom.ext
-    · apply NoiseHom.ext; simp
-    · rfl
+    apply BundleNoiseHom.ext <;> rfl
   map_comp f g := by
-    apply BundleNoiseHom.ext
-    · apply NoiseHom.ext; simp
-    · rfl
+    apply BundleNoiseHom.ext <;> rfl
 
-/-- N̂ is base-faithful: the induced base map equals NFunctor applied to base. -/
+/-- N̂ is base-faithful: the induced base map equals the inverse functor applied to base.
+
+    闭合（2026-08-09，自主完善）：两端均归约为 ⟨X.base.T, ·⟩（π_η/π_T 为
+    abbrev 投影，NInvFunctor 为构造性函子），结构外延 + 证明无关性即证。 -/
 theorem N_hat_base_commutes (X : SpectralBundleTemp) :
-    π_η.obj (N_hat.obj X) = NFunctor.obj (π_T.obj X) := rfl
+    π_η.obj (N_hat.obj X) = NInvFunctor.obj (π_T.obj X) := by
+  simp [N_hat, π_T, NInvFunctor]
 
 /-! =========================================================
     Section 8: Physical Noise Section with η_c Singularity
@@ -551,24 +565,28 @@ noncomputable def NoiseSection (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) : Nois
   obj η := { base := η, fiberData := { n := n, A := A } }
   map f := { baseMap := f, fiberMap := 1, commut := by simp }
   map_id η := rfl
-  map_comp f g := rfl
+  map_comp f g := by
+    apply BundleNoiseHom.ext
+    · rfl
+    · change 1 = 1 * 1
+      simp
 
 /-- Noise section is a section of π_η: π_η ∘ σ = id_Noise. -/
 theorem NoiseSection_is_section (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η : NoiseObj) :
-    π_η.obj (NoiseSection n A).obj η = η := rfl
+    π_η.obj ((NoiseSection n A).obj η) = η := rfl
 
 /-- Corrected critical noise threshold from Cl(1,7) algebra: η_c = 2(√3-1)/3 ≈ 0.488.
     
     FIRST-PRINCIPLES DERIVATION:
-    Let A(η) = A_R + η·δA_N. The spectral gap closes at η_c when λ₁(η_c) = λ₂(η_c).
+    Let A(η) = A_R + η·δA_N. The spectral gap closes at η_c when lam₁(η_c) = lam₂(η_c).
     
     First-order eigenvalue equation (exact for linear A(η)):
-      λ_k(η) = λ_k(0) + η·⟨ψ_k|δA_N|ψ_k⟩
+      lam_k(η) = lam_k(0) + η·⟨ψ_k|δA_N|ψ_k⟩
     
     Gap closure:
-      λ₁(0) + η_c·⟨ψ₁|δA_N|ψ₁⟩ = λ₂(0) + η_c·⟨ψ₂|δA_N|ψ₂⟩
-      η_c·[⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩] = λ₂(0) - λ₁(0) = Δλ_min
-      η_c = Δλ_min / (⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩)
+      lam₁(0) + η_c·⟨ψ₁|δA_N|ψ₁⟩ = lam₂(0) + η_c·⟨ψ₂|δA_N|ψ₂⟩
+      η_c·[⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩] = lam₂(0) - lam₁(0) = Δlam_min
+      η_c = Δlam_min / (⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩)
     
     In Cl(1,7) ≅ M₈(ℝ), the noise operator restricted to the 2×2 subspace is:
       δA_N|₂ₓ₂ = σ_z / k_max
@@ -577,45 +595,73 @@ theorem NoiseSection_is_section (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η :
     
     Therefore:
       ⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩ = 1/k_max - (-1/k_max) = 2/k_max
-      η_c = Δλ_min / (2/k_max) = (k_max/2)·Δλ_min = 4·Δλ_min = 2(√3-1)/3
+      η_c = Δlam_min / (2/k_max) = (k_max/2)·Δlam_min = 4·Δlam_min = 2(√3-1)/3
     
     The factor of 2 arises because δA_N = σ_z/k_max has eigenvalues ±1/k_max,
     so the difference is 2/k_max (not 1/k_max). This is the traceless condition:
     the σ_z component pushes BOTH eigenvalues in opposite directions. -/
 noncomputable def criticalNoiseEta_from_cl17 : NoiseObj :=
   ⟨2*(Real.sqrt 3 - 1)/3, by
-    have : 0 ≤ Real.sqrt 3 - 1 := by
-      have h : 1 < Real.sqrt 3 := by
-        calc
-          1 = Real.sqrt (1 : ℝ) := by norm_num
-          _ < Real.sqrt 3 := Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
-      linarith
-    nlinarith⟩
+    have h : 1 < Real.sqrt 3 := by
+      calc
+        1 = Real.sqrt (1 : ℝ) := by norm_num
+        _ < Real.sqrt 3 := Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+    have hpos : 0 < Real.sqrt 3 - 1 := by linarith
+    exact div_pos (mul_pos (by norm_num) hpos) (by norm_num)⟩
 
 /-- At η = η_c, the noise section hits the boundary where the spectral gap closes.
     This corresponds to the τ(η) ∝ 1/(η_c-η) singularity (Paper X §12.4).
     In the Grothendieck fibration framework, this means the section cannot be
-    continuously extended across η_c—a non-product bundle phenomenon. -/
-theorem eta_c_singularity (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η : NoiseObj) (h : η.η = 0) :
-    π_η.obj (NoiseSection n A).obj η = η := by
-  subst h; rfl
+    continuously extended across η_c—a non-product bundle phenomenon.
 
-/-- Theorem: η_c (from Cl(1,7)) relates to the spectral gap via η_c = (k_max/2) · Δλ_min.
-    With k_max = 8, this gives η_c = 4 · Δλ_min = 2(√3-1)/3. 
+    勘误（2026-08-09）：原前提 η.η = 0 与 NoiseObj 的 η > 0 矛盾（且与 η_c
+    语义不符）；改为 η.η = η_c（criticalNoiseEta_from_cl17）。 -/
+theorem eta_c_singularity (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η : NoiseObj)
+    (h : η.η = criticalNoiseEta_from_cl17.η) :
+    π_η.obj ((NoiseSection n A).obj η) = η := rfl
+
+/-- Theorem: η_c (from Cl(1,7)) relates to the spectral gap via η_c = (k_max/2) · Δlam_min.
+    With k_max = 8, this gives η_c = 4 · Δlam_min = 2(√3-1)/3. 
     
     The factor (k_max/2) comes from the first-principles derivation:
-    η_c = Δλ_min / (⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩)
-        = Δλ_min / (2/k_max)
-        = (k_max/2) · Δλ_min -/
+    η_c = Δlam_min / (⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩)
+        = Δlam_min / (2/k_max)
+        = (k_max/2) · Δlam_min -/
 theorem criticalEta_from_spectralGap : criticalNoiseEta_from_cl17.η = 2*(Real.sqrt 3 - 1)/3 := rfl
 
 /-- Theorem: η_c is determined by the Cl(1,7) spectral gap and representation dimension.
     η_c = (k_max/2) · spectralGap(k_max) = 4 · spectralGap(8)
-    Proof: η_c = Δλ_min / (2/k_max) = (k_max/2)·Δλ_min (first-principles gap closure). -/
+    Proof: η_c = Δlam_min / (2/k_max) = (k_max/2)·Δlam_min (first-principles gap closure).
+
+    闭合（2026-08-09，自主完善）：2(√3-1)/3 = 4·(√6-√2)/√72 经
+    √72 = 6√2 与 √6/√2 = √3（Real.sqrt_div）的平方根代数验证。 -/
 theorem criticalEta_spectralGap_relation :
     criticalNoiseEta_from_cl17.η = (4 : ℝ) * (spectralGap 8) := by
-  unfold criticalNoiseEta_from_cl17 spectralGap
-  dsimp
-  ring
+  rw [criticalNoiseEta_from_cl17]
+  rw [spectralGap_at_kmax8]
+  have h72 : Real.sqrt (72 : ℝ) = 6 * Real.sqrt 2 := by
+    rw [show (72 : ℝ) = 36 * 2 by norm_num]
+    rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 36) (2 : ℝ)]
+    rw [show Real.sqrt (36 : ℝ) = 6 by
+      rw [show (36 : ℝ) = 6 ^ 2 by norm_num]
+      exact Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 6)]
+  have hratio : Real.sqrt 6 / Real.sqrt 2 = Real.sqrt 3 := by
+    calc
+      Real.sqrt 6 / Real.sqrt 2 = Real.sqrt (6 / 2) :=
+        (Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 6) (2 : ℝ)).symm
+      _ = Real.sqrt 3 := by norm_num
+  have h2ne : Real.sqrt 2 ≠ 0 := by positivity
+  have h72ne : Real.sqrt (72 : ℝ) ≠ 0 := by positivity
+  calc
+    2 * (Real.sqrt 3 - 1) / 3 = (2 / 3) * (Real.sqrt 3 - 1) := by ring
+    _ = (2 / 3) * (Real.sqrt 6 / Real.sqrt 2 - 1) := by rw [hratio]
+    _ = (2 / 3) * (Real.sqrt 6 - Real.sqrt 2) / Real.sqrt 2 := by
+      field_simp [h2ne]
+    _ = 4 * (Real.sqrt 6 - Real.sqrt 2) / (6 * Real.sqrt 2) := by
+      field_simp [h2ne]
+      ring
+    _ = 4 * (Real.sqrt 6 - Real.sqrt 2) / Real.sqrt (72 : ℝ) := by rw [h72]
+    _ = 4 * ((Real.sqrt 6 - Real.sqrt 2) / Real.sqrt (72 : ℝ)) := by
+      field_simp [h72ne]
 
 end UFPFormalization

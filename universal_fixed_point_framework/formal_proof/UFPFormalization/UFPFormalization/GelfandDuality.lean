@@ -1,6 +1,5 @@
 import UFPFormalization.StaticTopologyFormalization
-import Mathlib.Topology.Algebra.CStarRing
-import Mathlib.Topology.Algebra.CStarRing.GelfandDuality
+import Mathlib.Analysis.CStarAlgebra.GelfandDuality
 
 open CategoryTheory
 

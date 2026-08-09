@@ -141,7 +141,7 @@ noncomputable def topologicalEntropy {X : Type*} [MetricSpace X] [CompactSpace X
 
 /-- Spectral gap of the Koopman operator U_R = exp(-A_R).
     γ = 1 - |λ₂|/|λ₁| where λ₁ is the leading eigenvalue and λ₂ is the second. -/
-noncomputable def spectralGap {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
+noncomputable def koopmanSpectralGap {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   if h : n = 0 then 0 else
     1  -- Placeholder: requires eigenvalue computation
 
@@ -159,7 +159,7 @@ noncomputable def spectralGap {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :
     gap and relates it to the topological entropy of the geodesic flow. -/
 theorem theoremTE_GM {X : Type*} [MetricSpace X] [CompactSpace X]
     (f : X → X) {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (h : n > 0) :
-    topologicalEntropy f * spectralGap A ≤ 1 := by
+    topologicalEntropy f * koopmanSpectralGap A ≤ 1 := by
   -- 在有限维占位定义（topologicalEntropy := 0）下平凡成立；
   -- 完整证明需要 Perron-Frobenius 定理 + 变分原理（开放项）。
   simp [topologicalEntropy]
@@ -168,15 +168,15 @@ theorem theoremTE_GM {X : Type*} [MetricSpace X] [CompactSpace X]
     implies a universal bound on the ringdown SNR. -/
 theorem kerrSpectralGapConstraint {n : ℕ} [MetricSpace (Fin n)] [CompactSpace (Fin n)]
     (A : Matrix (Fin n) (Fin n) ℂ)
-    (h : spectralGap A > 0) (hTop : topologicalEntropy (id : Fin n → Fin n) > 0) :
-    topologicalEntropy (id : Fin n → Fin n) * spectralGap A ≤ 1 := by
+    (h : koopmanSpectralGap A > 0) (hTop : topologicalEntropy (id : Fin n → Fin n) > 0) :
+    topologicalEntropy (id : Fin n → Fin n) * koopmanSpectralGap A ≤ 1 := by
   -- Direct consequence of Theorem TE-G-M
   exact theoremTE_GM (id : Fin n → Fin n) A (by
     have hnpos : n > 0 := by
       by_contra! hzero
       have hn0 : n = 0 := by omega
-      have : spectralGap A = 0 := by
-        dsimp [spectralGap]
+      have : koopmanSpectralGap A = 0 := by
+        dsimp [koopmanSpectralGap]
         simp [hn0]
       rw [this] at h
       linarith
