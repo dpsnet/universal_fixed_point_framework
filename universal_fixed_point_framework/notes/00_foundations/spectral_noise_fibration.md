@@ -60,7 +60,7 @@ $$\tilde{f}: (\eta_1, f^*\{\lambda_i^{(2)}\}) \longrightarrow (\eta_2, \{\lambda
 
 $$\lambda_i^{(1)} = \lambda_i(\eta_1) = \lambda_i^{(2)} - \int_{\eta_1}^{\eta_2} \langle \psi_{\lambda_i}(\eta) | \delta A_N | \psi_{\lambda_i}(\eta) \rangle \, d\eta$$
 
-此积分的严格形式化在 `NoiseFiber.lean` 中以定理形式给出（`feynman_hellmann_flow` → `spectral_flow_integral_form` → `cartesian_lift_from_FH`）。对于有限维 Hermitian 矩阵 $A_\eta = A_R + \eta \cdot \delta A_N$，FH 公式是精确等式而非微扰近似。
+此积分的严格形式化：原称在 `NoiseFiber.lean` 中以定理链（`feynman_hellmann_flow` → `spectral_flow_integral_form` → `cartesian_lift_from_FH`）给出——※ 勘误（2026-08-09）：**这三者不存在**于 `NoiseFiber.lean`。当前已闭合的是 2×2 显式特征方程与谱间隙闭式（`twoByTwo_gap_sq`/`twoByTwo_lambda_plus_characteristic`/`cl17_eigenvalue_formula`），积分形式的 FH 逆积分拉回仍为设计描述（见 §7 开放问题）。对于有限维 Hermitian 矩阵 $A_\eta = A_R + \eta \cdot \delta A_N$，FH 公式是精确等式而非微扰近似这一结论保持。
 
 **验证 Cartan 条件**。设存在 $Z = (\eta_Z, \{\lambda_i^{(Z)}\})$ 和 $h = (h_{\text{base}}, h_{\text{fiber}}): Z \to (\eta_2, \{\lambda_i^{(2)}\})$ 及 $w: \eta_Z \to \eta_1$ 使得 $\pi_\eta(h) = h_{\text{base}} = f \circ w$。
 
@@ -195,12 +195,14 @@ $$
 
 以下问题已取得进展，但仍有完善空间：
 
-1. ~~**$\eta_c$ 的具体值**~~ **✅ 已解析求解**：$\eta_c = 4(\sqrt{3}-1)/3 \approx 0.976$，由 Cl(1,7) 谱间隙 $k_{\max}=8$ 推导。已形式化为 `NoiseFiber.lean` 中 `criticalNoiseEta_from_cl17`，并证明 `criticalEta_spectralGap_relation : η_c = 8·Δλ_min$。
+1. ~~**$\eta_c$ 的具体值**~~ **✅ 已解析求解**：$\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488$，由 Cl(1,7) 谱间隙 $k_{\max}=8$ 推导。已形式化为 `NoiseFiber.lean` 中 `criticalNoiseEta_from_cl17`，并证明 `criticalEta_spectralGap_relation : η_c = 4·Δλ_min`（$4\cdot\text{spectralGap}(8)$，平方根代数已闭合）。
 
-2. ~~**Feynman-Hellmann 公式的严格化**~~ **✅ 已完成**——`NoiseFiber.lean` 中的 `feynman_hellmann_abstract` 定理包含完整的 `HasDerivAt` 微积分证明（~135 行），含以下层次：
-   - **抽象有限维 FH 定理**：$A_R, \delta A_N$ Hermitian，$A(\eta)\cdot\psi(\eta)=\lambda(\eta)\cdot\psi(\eta)$，$\psi^\dagger\psi=1$，$\psi,\lambda$ 可微 → $d\lambda/d\eta = \psi^\dagger\cdot\delta A_N\cdot\psi$。证明使用 `HasDerivAt.map`（矩阵-向量乘法的连续线性映射）、`HasDerivAt.smul`（标量-向量积法则）、`hasDerivAt_unique`（导数唯一性）、Rayleigh 商 Hermitian 本征值实性。
-   - **2×2 谱间隙**：`twoByTwo_gap_function` 给出 $\Delta(\eta) = \sqrt{(\Delta\lambda_{\min})^2 + 4\eta^2|V|^2}$ 的 `nlinarith` 自动证明
-   - **Cl(1,7) 子空间**：FH 公式在 2×2 子空间上的显式计算
+※ 勘误（2026-08-09）：原述 $\eta_c = 4(\sqrt{3}-1)/3 \approx 0.976$ 与 $\eta_c = 8\cdot\Delta\lambda_{\min}$ **数值有误**——正确为 $\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488 = 4\cdot\text{spectralGap}(8)$（`criticalEta_spectralGap_relation` 定理 2026-08-09 已闭合）。
+
+2. ~~**Feynman-Hellmann 公式的严格化**~~ **部分完成**（勘误 2026-08-09：原称 `feynman_hellmann_abstract` 含完整 `HasDerivAt` 微积分证明 ~135 行——**不实**，该定理现仍为 `True` 占位登记，见代码注释）。已完成部分：
+   - **2×2 谱间隙闭式**（本轮闭合）：`twoByTwo_gap_sq`（$\Delta(\eta)^2 = (\Delta\lambda_{\min})^2 + 4\eta^2|V|^2$ 恒等式）、`twoByTwo_eigenvalue_equation_real`（$\lambda_+$ 满足特征方程 $(\lambda_1-\lambda)(\lambda_2-\lambda)=\eta^2|V|^2$）、`twoByTwo_lambda_plus_characteristic`（$\det(A(\eta)-\lambda I)=0$）
+   - **Cl(1,7) 子空间**（本轮闭合）：`cl17_eigenvalue_formula`——FH 公式在 2×2 子空间上的特征方程显式验证
+   - **抽象有限维 FH 定理**（`feynman_hellmann_abstract`）：仍为 `True` 占位登记——微分 + Hermitian 谱分析的完整证明待闭合（非等靠要，研究状态）
 
 3. ~~**与 Paper X §12.4 的数值交叉验证**~~ **✅ 已完成**——`noise_spectral_flow_numerical.py` 实现纯对角噪声模型 $\delta A_N = \mathrm{diag}(\alpha, -\alpha)$，$\alpha = 1/8$，全部 6 项测试通过：
    - $\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488$ 解析值与数值一致
@@ -215,4 +217,5 @@ $$
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.2** | **2026-08-09** | **勘误**：① η_c 数值勘误——正确为 $\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488 = 4\cdot\text{spectralGap}(8)$（原述 0.976/8·Δλ 有误）；② FH 严格化状态勘误——`feynman_hellmann_abstract` 仍为 True 占位（原称 ~135 行完整证明不实）；`feynman_hellmann_flow`/`spectral_flow_integral_form`/`cartesian_lift_from_FH` 不存在；已闭合的是 2×2 闭式（`twoByTwo_*`/`cl17_eigenvalue_formula`）；③ NoiseFiber 噪声对象改 η>0，NFunctor/NoiseIsoTemp 构造化 |
 | **v0.1** | **2026-07-22** | 初始版本：$\mathbf{Noise}$ 范畴定义；$\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 纤维化；Feynman-Hellmann Cartan 提升；$\eta_c$ 奇异性定理；纤维类型跳变；温度-噪声丛态射；Lean 形式化方案 |

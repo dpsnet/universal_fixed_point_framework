@@ -1421,3 +1421,22 @@ reflective True 占位）：
 谱序列/归纳极限、Kerr 非乘积丛、OperatorTheory 谱映射、SilenceHierarchy 层级
 蕴含等——均为连续/无穷维机制缺位下的诚实登记，待 Phase 后续闭合。
 ================================================================================
+2026-08-09 继续推进（文档勘误同步）：代码勘误后，6 处文档过时声明已同步更新。
+- paper/paper21_grothendieck_fibration_synthesis.md：定理 9.1 条目 1 与模块表
+  ——"π_T/π_μ/π_η/π_Sig 均满足 Level 4"改述为"π_T/π_μ"，加勘误注记
+  （π_Sig 的 Level 4 counit 可证不存在；π_η 未声明实例；cod 同受此限）。
+- notes/00_foundations/spectral_signature_fibration.md：complete_chain 图移除
+  π_η/π_Sig 两行，证明方式按实际 refine 更新，加勘误注记。
+- notes/00_foundations/spectral_eft_codomain_fibration.md：§3.4 S4 加勘误
+  （cod 的 ι⊣π 不可构造，cod_is_not_level4）；5.1 表 cod_level4 行标注；版本
+  记录加 v0.3 勘误。
+- roadmap/phase55_grothendieck_fibration_extensions.md：Phase 55B 行标注
+  Level4 勘误；版本记录加 v0.7。
+- notes/00_foundations/spectral_noise_fibration.md：三处不实声明勘误——
+  ① η_c 数值（4(√3-1)/3≈0.976/8·Δλ 有误 → 2(√3-1)/3≈0.488=4·spectralGap 8）；
+  ② FH 严格化状态（feynman_hellmann_abstract 仍为 True 占位，原称 ~135 行
+  完整证明不实；feynman_hellmann_flow/spectral_flow_integral_form/
+  cartesian_lift_from_FH 不存在；已闭合的是 twoByTwo_*/cl17_eigenvalue_formula）；
+  ③ NoiseObj η>0 重构。版本记录加 v0.2。
+- 其余 0.976 表述（K4 Δλ·k_max 非精确对偶）与本勘误无关，保持。
+================================================================================

@@ -233,14 +233,22 @@ Level 4 静默 = ι⊣π 伴随对 (定义, SignatureFiber.lean §9: `Level4Exte
 ```
 Level4Extension (π_T)                       ← TempRGFiber.lean
   ∧ Level4Extension (π_μ)                   ← TempRGFiber.lean
-  ∧ Level4Extension (π_η)                   ← NoiseFiber.lean
-  ∧ Level4Extension (π_Sig)                 ← SignatureFiber.lean
   ∧ cl17_rep_dim = kmax_from_cl17 = 8       ← Clifford.lean + SpectralGap.lean
   ∧ spectralGap 8 = (√6-√2)/√72             ← SpectralGap.lean
   ∧ η_c = 2(√3-1)/3                         ← NoiseFiber.lean
 ```
 
-证明方式：两条 `infer_instance` + `rfl` + `spectralGap_at_kmax8`。该定理连接了四个形式化框架（TempRGFiber、NoiseFiber、SignatureFiber、SpectralGap），统一了 Level 4 纤维化结构从抽象范畴论到具体物理预言的全部推导链。
+※ 勘误（2026-08-09）：原图含 `Level4Extension (π_η)` 与 `Level4Extension (π_Sig)`
+两行——**π_Sig 的 Level4 counit 可证不存在**（`SignatureFiber.lean` §`π_Sig_is_not_level4`：
+纤维态射 ℕ→ℕ 无零吸收结构，counit 自然性在任意自态射处矛盾；对任意 ι 选择
+均成立），π_η 亦未声明 Level 4 实例（NoiseFiber 仅含 Grothendieck 纤维化结构）。
+Level 4（$\iota\dashv\pi$ 伴随）结构在本有限原型中**仅 π_T/π_μ 可构造满足**。
+另：η_c 分量随 `NoiseFiber.lean` 修复（NoiseObj η>0 重构）保持成立。
+
+证明方式：`refine ⟨⟨inferInstance⟩, ⟨inferInstance⟩, ?_, rfl, spectralGap_at_kmax8⟩`
+（两条 `infer_instance` + `rfl` + `spectralGap_at_kmax8`）。该定理连接了
+TempRGFiber、SignatureFiber、SpectralGap 三个形式化框架，统一了 Level 4
+纤维化结构（π_T/π_μ）从抽象范畴论到具体物理预言的全部推导链。
 
 ---
 
