@@ -163,6 +163,19 @@ $$\lambda\cdot\nu=c.$$
 
 **温和兼容标注**：$c=\lambda\nu$ 本身是经典运动学公式，本定理为经典结论的拓扑重述，不构成 UFPF 独有预言。
 
+### 3.5 光速-能量-动量三恒等式闭环
+
+**命题 3.3**（三恒等式闭环）：$E=h\nu$（命题 4.1）、$\lambda\nu=c$（定理 3.2）、$p=h/\lambda$（de Broglie）三者代数一致——通过波速恒等式消去 $\lambda,\nu$ 统一为零质量分支能量-动量关系：
+$$E = p\cdot c.$$
+
+**推导**：$p=h/\lambda \wedge \lambda\nu=c \Longrightarrow p\cdot c = h\nu = E$（数值 500 采样 rel < 1e-12；SI 值：光学 500nm $p\approx1.3\times10^{-27}$ kg·m/s、$E\approx4\times10^{-19}$ J）。
+
+**零质量衔接（§3.2 闭环）**：$E=p\cdot c$ 恰为零质量分支（$E^2=p^2c^2+m^2c^4$ 在 $m=0$ 的正动量支）的能量-动量结构——群速度 $v_g = pc^2/E = c$（光速锁定）；非零质量对照（$E>pc$）$v_g<c$（判别性）。**Lean 机器证明**（2966 jobs 零 sorry）：`Momentum` 结构 + `energy_momentum_consistency`（三恒等式 ⟹ $E=pc$）+ `p1_zero_mass_structure`（闭环给出零质量分支结构）。
+
+**物理意义**：零质量光速锁定是 Planck + de Broglie + 波速恒等式（公共基础 $\{h,c\}$，SI 定义值）的**共同推论**——P1 温和兼容部分闭环。
+
+**诚实边界**：三恒等式均为已知物理（温和兼容，经典结论的拓扑重述），本节验证其代数闭环一致性（非新预言）；P1 颠覆性部分（$\Delta$-偏振红移差）见 §6.1。
+
 ---
 
 ## 4 $E=h\nu$ 拓扑释义
@@ -283,7 +296,7 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 
 ### 7.3 形式化依赖
 
-$h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整形式化（部分已有 Lean 模块）、电磁纤维粘合拓扑形式化（待建设）、跨层谱对象映射完整闭合（部分已有）。当前仅存在定性拓扑推导，缺少 Lean 机器证明闭环。**已形式化的代数骨架**（3022 jobs 零 sorry）：公理 A4 方向性阶跃（$\chi_\Phi$/$\sigma_{\text{S3}}$ 的过程性/方向性/不可逆定理）、公理 A3 并置结构 $\Phi_+$（原子保留 + 光子新生 + 能量重分配，§2.2）、$\Phi$ 态射层忠实嵌入（光子拓扑范畴忠实嵌入 Rec 范畴）、零静质量 $v<c$ 不自洽（命题 3.2）、静默-跃迁门控（§7.4 S9）、纤维丛层内积正交与联络-度量相容选取（$V\perp H \Longrightarrow V\sqcap H=\bot$；$V\sqcup V^\perp=\top$；沿 $V^\perp$ 的幂等联络投影 $P^2=P$、$\ker P=V^\perp$、$\operatorname{im}P=V$）、Fock 空间自由演化算子（$[N,H_0]=0$、$[N,a^\dagger]=a^\dagger$、$[N,a]=-a$、$\|e^{-i\omega nt}\|=1$，§2.3 推论 2.1 的树级骨架）、光速锁定与能量量子骨架（$\lambda\nu=c$ 与 $E=h\nu$ 结构，$E=hc/\lambda$ 衔接定理，§3.1 温和兼容）、dagger 有限维骨架（`dagger`=共轭转置、对合性 `dagger(dagger A)=A`、JC 矩阵厄米性 $H_{\text{int}}^\dagger=H_{\text{int}}$，§2.3 开放问题 #6 的 dagger-假设临时登记）+ **dagger 第一性原理骨架（2026-08-11：`stdInner` 标准内积 + `IsAdjoint` 伴随方程 + `adjoint_unique` 伴随唯一性（dagger 良定义）+ `conjTranspose_satisfies_adjoint`（共轭转置 = 内积伴随矩阵表示）+ `dagger_is_adjoint`（满足伴随方程 ⟹ 等于 $M^\dagger$）——dagger-假设被内积结构推导替代，有限维骨架零 sorry）+ **dagger 范畴公理完整化（2026-08-11：`dagger_antimultiplicative`（反变 $(AB)^\dagger=B^\dagger A^\dagger$）+ `dagger_identity`（$I^\dagger=I$）+ `dagger_additive` + `dagger_antilinear`——全部由内积伴随推导，无需独立结构假设）** + **曲率层代数骨架（2026-08-11：`skew_antisymm`（$A-A^\dagger$ 转置变号）+ `lie_bracket_antisymm`（李括号反对称）+ `curvature_antisymm`（曲率反对称组合）——李代数值曲率的 2-形式反对称结构，#7）**。**未形式化**：双层正交的完整几何——范畴层（4-范畴态射方向与伴随函子方向的几何正交，已建立光子 1-态射层单点性作为代数核心）与纤维丛层（联络形式/曲率/挠率的完整流形微分几何，李代数值曲率代数骨架已建）均未在 Lean 中严格证明。
+$h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整形式化（部分已有 Lean 模块）、电磁纤维粘合拓扑形式化（待建设）、跨层谱对象映射完整闭合（部分已有）。当前仅存在定性拓扑推导，缺少 Lean 机器证明闭环。**已形式化的代数骨架**（3022 jobs 零 sorry）：公理 A4 方向性阶跃（$\chi_\Phi$/$\sigma_{\text{S3}}$ 的过程性/方向性/不可逆定理）、公理 A3 并置结构 $\Phi_+$（原子保留 + 光子新生 + 能量重分配，§2.2）、$\Phi$ 态射层忠实嵌入（光子拓扑范畴忠实嵌入 Rec 范畴）、零静质量 $v<c$ 不自洽（命题 3.2）、静默-跃迁门控（§7.4 S9）、纤维丛层内积正交与联络-度量相容选取（$V\perp H \Longrightarrow V\sqcap H=\bot$；$V\sqcup V^\perp=\top$；沿 $V^\perp$ 的幂等联络投影 $P^2=P$、$\ker P=V^\perp$、$\operatorname{im}P=V$）、Fock 空间自由演化算子（$[N,H_0]=0$、$[N,a^\dagger]=a^\dagger$、$[N,a]=-a$、$\|e^{-i\omega nt}\|=1$，§2.3 推论 2.1 的树级骨架）、光速锁定与能量量子骨架（$\lambda\nu=c$ 与 $E=h\nu$ 结构，$E=hc/\lambda$ 衔接定理，§3.1 温和兼容）+ **三恒等式闭环骨架（2026-08-11：`Momentum`（$p=h/\lambda$ de Broglie）+ `energy_momentum_consistency`（$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$）+ `p1_zero_mass_structure`（三恒等式闭环给出零质量分支结构，衔接 #2 `zero_mass_group_velocity`）——零质量光速锁定为三恒等式共同推论，P1 温和兼容部分闭环，§3.5）**、dagger 有限维骨架（`dagger`=共轭转置、对合性 `dagger(dagger A)=A`、JC 矩阵厄米性 $H_{\text{int}}^\dagger=H_{\text{int}}$，§2.3 开放问题 #6 的 dagger-假设临时登记）+ **dagger 第一性原理骨架（2026-08-11：`stdInner` 标准内积 + `IsAdjoint` 伴随方程 + `adjoint_unique` 伴随唯一性（dagger 良定义）+ `conjTranspose_satisfies_adjoint`（共轭转置 = 内积伴随矩阵表示）+ `dagger_is_adjoint`（满足伴随方程 ⟹ 等于 $M^\dagger$）——dagger-假设被内积结构推导替代，有限维骨架零 sorry）+ **dagger 范畴公理完整化（2026-08-11：`dagger_antimultiplicative`（反变 $(AB)^\dagger=B^\dagger A^\dagger$）+ `dagger_identity`（$I^\dagger=I$）+ `dagger_additive` + `dagger_antilinear`——全部由内积伴随推导，无需独立结构假设）** + **曲率层代数骨架（2026-08-11：`skew_antisymm`（$A-A^\dagger$ 转置变号）+ `lie_bracket_antisymm`（李括号反对称）+ `curvature_antisymm`（曲率反对称组合）——李代数值曲率的 2-形式反对称结构，#7）**。**未形式化**：双层正交的完整几何——范畴层（4-范畴态射方向与伴随函子方向的几何正交，已建立光子 1-态射层单点性作为代数核心）与纤维丛层（联络形式/曲率/挠率的完整流形微分几何，李代数值曲率代数骨架已建）均未在 Lean 中严格证明。
 
 ### 7.4 数值自洽性验证
 
@@ -291,7 +304,7 @@ $h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整�
 
 **验证性质声明**：上述数值验证确认的是公理/已知物理重述的**数值自洽性**——其中恒等式类（光速、$\lambda\nu$、$E=h\nu$）由 SI 定义值直接构造，模型演示类（不可逆、时间解耦）为模型设定内自洽演示，均不构成对六项颠覆性预言（P1–P6）的实验验证。
 
-**辅助定量化脚本（2026-08-11）**：纤维丛层正交（`paperX_photon_fiber_orthogonality.py` 5/5）、$h$-$c$-$\Delta$ 量纲限定与参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）、JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）、κ_Δ 框架候选 + 自旋霍尔判别性锚定（`paperX_photon_kappa_delta.py` 14/14）、κ_Δ 候选选择原理推进（`paperX_photon_kappa_select.py` 11/11，候选族收窄 4→2）、dagger 第一性原理推导（`paperX_photon_dagger_derivation.py` 17/17，Riesz 伴随方程 + dagger 公理由内积推导 + R=D† 检验准则）、曲率层（`paperX_photon_curvature.py` 14/14，结构方程/Bianchi/U(1) 无源/挠率反对称 + 联络算子衔接）——均为预言定量形式/量级结构的数值自洽性验证，不构成实验验证（已随文登记至 `run_all_tests.py`）。
+**辅助定量化脚本（2026-08-11）**：纤维丛层正交（`paperX_photon_fiber_orthogonality.py` 5/5）、$h$-$c$-$\Delta$ 量纲限定与参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）、JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）、κ_Δ 框架候选 + 自旋霍尔判别性锚定（`paperX_photon_kappa_delta.py` 14/14）、κ_Δ 候选选择原理推进（`paperX_photon_kappa_select.py` 11/11，候选族收窄 4→2）、dagger 第一性原理推导（`paperX_photon_dagger_derivation.py` 17/17，Riesz 伴随方程 + dagger 公理由内积推导 + R=D† 检验准则）、曲率层（`paperX_photon_curvature.py` 14/14，结构方程/Bianchi/U(1) 无源/挠率反对称 + 联络算子衔接）、三恒等式闭环（`paperX_photon_p1_consistency.py` 8/8，$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$ + 零质量光速锁定衔接 #2）、$\lambda_{\min}$ 近-Planck 候选锚定（`paperX_hcdelta_lmin.py` 8/8，15³ 等框架量组合候选 + k~O(1) 相容）——均为预言定量形式/量级结构的数值自洽性验证，不构成实验验证（已随文登记至 `run_all_tests.py`）。
 
 ### 7.5 开放问题
 
@@ -300,7 +313,7 @@ $h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整�
 3. 纤维丛层正交的垂直-水平分解严格化（联络/度量结构选择）——已建立 (V, H, g) 相容选取结论 + 度量正交补为典范相容补空间 + 沿 $V^\perp$ 的幂等联络投影闭合 + **曲率层推进（2026-08-11，`paperX_photon_curvature.py` 14/14 + Lean `skew_antisymm`/`lie_bracket_antisymm`/`curvature_antisymm`）**：su(2) 值联络结构方程 $\Omega=d\omega+\omega\wedge\omega$ + 曲率反对称（2-形式）+ Bianchi 恒等式（解析残差 ~1e-14）+ U(1) 无源特例 + 挠率反对称——**李代数值曲率的代数/结构层已闭合**；完整流形微分几何（联络形式/曲率/挠率的流形形式化，需微分几何库）登记开放；
 4. 静默指标 $\sigma_{\text{S3}}$ 与量子跃迁概率（爱因斯坦系数 $A_{ij}/B_{12}$）的定量对应——已建立门控模型 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$；
 5. 介质中"光速变慢"的捕获-再分岔模型数值模拟（命题 3.2）——已完成（真空段 $v=c$ + 宏观 $v_{\text{avg}}<c$，解析与模拟 rel 1.0%）；
-6. $h$-$c$-$\Delta$ 三常数约束的具体代数形式（预言 P3）——已量纲限定为 $\Delta=F(\lambda_{\min}/\lambda_P)$ + 参数空间负结果（已知物理尺度排除，近-Planck $\lambda_{\min}$ 允许 $k\sim O(1)$，`paperX_hcdelta_dimension.py` 20/20）；$k$、$n$、$\lambda_{\min}$ 数值仍待模型指定；
+6. $h$-$c$-$\Delta$ 三常数约束的具体代数形式（预言 P3）——已量纲限定为 $\Delta=F(\lambda_{\min}/\lambda_P)$ + 参数空间负结果（已知物理尺度排除，近-Planck $\lambda_{\min}$ 允许 $k\sim O(1)$，`paperX_hcdelta_dimension.py` 20/20）+ **近-Planck 框架量候选锚定（`paperX_hcdelta_lmin.py` 8/8）**：允许带 $\lambda_{\min}/\lambda_P\in[10^3,10^4]$ 内存在简洁框架量组合候选（$15^3=3375$ 最简、$15^{d_H}\approx1530$ 等），仅 $n=1$ 线性律与 $k\sim O(1)$ 相容，最简候选 $15^3$ 取 $k=1$ ⟹ $\Delta\approx3\times10^{-4}$ 落在预言带内；$k$、$n$、$\lambda_{\min}$ 精确确定仍待模型指定（登记开放，候选扫描非第一性推导）；
 7. 偏振相关红移差的 $\Delta$ 修正系数精确值（预言 P1）——已建立判别性锚定（与标准自旋霍尔相差 10–12 量级，P1 非重述）+ 框架内生候选族（$S_4^2$、$S_4/(N_{\text{Weyl}}d_H)$、$S_4^2N_{\text{Weyl}}/2$、$S_4^2d_H/2$ 均在预言带内，`paperX_photon_kappa_delta.py` 14/14）+ 选择原理推进（`paperX_photon_kappa_select.py` 11/11：候选族收窄 4→2 为 $K_a$（MDL 最简）与 $K_c$（手性配对结构匹配），剔除 $K_b/K_e$；两原则冲突且无实验锚定，精确值仍登记开放，锁定需 4-范畴 $\Delta$ 结构推导或远期偏振观测）。
 
 ---

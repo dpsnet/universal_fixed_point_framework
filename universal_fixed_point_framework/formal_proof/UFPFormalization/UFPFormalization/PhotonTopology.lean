@@ -317,6 +317,50 @@ theorem energy_from_wavelength (EL : SpeedLocked) (EQ : EnergyQuantum) (h_nu : E
   rw [hc]
   ring
 
+/-! ## 光速-能量-动量三恒等式闭环（P1 验收推进）
+   E = hν（Planck，`EnergyQuantum`）、λν = c（波速，`SpeedLocked`）、
+   p = h/λ（de Broglie，`Momentum`）三者代数一致 ⟹ E = p·c
+   （零质量分支的能量-动量关系，衔接 #2 `zero_mass_group_velocity`）。
+   本节省在将 P1 骨架的"温和兼容"部分闭环：
+   ① 三恒等式通过波速恒等式 λν=c 统一为 E = p·c；
+   ② E = p·c 恰为 `ZeroMassPhoton` 结构（#2），故零质量光速锁定 v_g = c
+      是 Planck + de Broglie + 波速恒等式的共同推论。
+   数值验证见 paperX_photon_p1_consistency.py。 -/
+
+/-- de Broglie 动量：p = h/λ（波长-动量关系，与 Planck E=hν 通过 λν=c 统一）。 -/
+structure Momentum where
+  p : ℝ
+  h : ℝ
+  lam : ℝ
+  wave : p = h / lam
+  h_pos : 0 < h
+  lam_pos : 0 < lam
+
+/-- 三恒等式闭环：E = hν、λν = c、p = h/λ ⟹ E = p·c
+    （Planck-Einstein 能量与 de Broglie 动量通过波速恒等式统一，
+      给出零质量分支的能量-动量关系 E = pc）。 -/
+theorem energy_momentum_consistency (EL : SpeedLocked) (EQ : EnergyQuantum)
+    (M : Momentum) (h_nu : EL.nu = EQ.nu) (h_lam : M.lam = EL.lam)
+    (h_h : M.h = EQ.h) : EQ.E = M.p * EL.c := by
+  have hE : EQ.E = EQ.h * EL.c / EL.lam := energy_from_wavelength EL EQ h_nu
+  rw [hE]
+  have hp : M.p = EQ.h / EL.lam := by
+    rw [M.wave, h_lam, h_h]
+  rw [hp]
+  field_simp [EL.lam_pos.ne']
+
+/-- P1 验收衔接：三恒等式闭环给出 E = p·c，恰为零质量分支结构
+    （`ZeroMassPhoton`，#2）——零质量光速锁定 v_g = c 是 Planck +
+    de Broglie + 波速恒等式（λν=c）的共同推论（P1 温和兼容部分闭环）。 -/
+theorem p1_zero_mass_structure (EL : SpeedLocked) (EQ : EnergyQuantum)
+    (M : Momentum) (h_nu : EL.nu = EQ.nu) (h_lam : M.lam = EL.lam)
+    (h_h : M.h = EQ.h) (hp_pos : 0 < M.p) (hc_pos : 0 < EL.c) :
+    ∃ P : ZeroMassPhoton, P.E = EQ.E ∧ P.p = M.p ∧ P.c = EL.c := by
+  refine ⟨{ p := M.p, c := EL.c, hp_pos := hp_pos, hc_pos := hc_pos,
+            E := EQ.E, hE := energy_momentum_consistency EL EQ M h_nu h_lam h_h },
+         ?_, rfl, rfl⟩
+  rfl
+
 /-! ## dagger 结构与 H_int 厄米性（开放问题 #6 范畴等价的有限维骨架）
    机制层开放项"R 伴随函子 ↔ H_int 算子"的 **dagger-假设**（2026-08-11 临时登记）：
    若 Rec/Sp 装备 dagger 范畴结构且 R = D†（dagger-伴随），则 R 的"折叠"对应厄米共轭，
