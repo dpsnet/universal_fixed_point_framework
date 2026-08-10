@@ -146,12 +146,12 @@
 
 | 阶段 | 方向 | 产出 | 状态 |
 |:----:|:------|:------|:----:|
-| 62A | P1 基础理论 | 研究笔记 `notes/06_photon_topology/photon_topology_theory.md` | 🔨 进行中（主体完成：§1-9；新增 A4 方向性阶跃、双层正交、可拦截性公式集、推论 4 时间解耦） |
+| 62A | P1 基础理论 | 研究笔记 `notes/06_photon_topology/photon_topology_theory.md` | ✅ 已完成（§1-9 主体 + A4 方向性阶跃、双层正交、可拦截性公式集、推论 4 时间解耦、自旋/偏振/纵向截面层、§5/§6 定量化） |
 | 62B | P1 基础理论 | 数值脚本 `scripts/paperX_photon_topology.py` | ✅ 已完成（21/21：方向性阶跃/光速不变/λν 一致/Bohr 匹配/时间解耦/零质量不自洽，已注册 run_all_tests.py） |
 | 62C | P1 基础理论 | 论文 `paper/paper44_photon_topology.md`（自包含） | ✅ 初稿完成（2026-08-10 v0.1：§1-7 + 附录 A/B + 参考文献，自包含定义 + 6 项预言 + 诚实边界） |
 | 62D | P2 红移统一 | 研究笔记红移拓扑推导 + 数值脚本 | ✅ 已完成（笔记 §5.2.1/§5.3.1 定量化 + `paperX_redshift_topology.py` 14/14，δz_Δ 量级带与预言 P1 重叠） |
 | 62E | P3 交叉衍生 | 研究笔记交叉效应定量化 + 数值脚本 | ✅ 已完成（笔记 §6 六项预言定量化 + `paperX_photon_cross_effects.py` 18/18，P1 偏振差/P2 标度/P3 量级/P4 震荡/P5 康普顿/P6 静默层数） |
-| 62F | P4 形式化 | Lean `PhotonTopology.lean` + Agda 镜像 | ⏳ 待启动（已登记 A4 阶跃公理 + 双层正交垂直-水平分解开放项） |
+| 62F | P4 形式化 | Lean `PhotonTopology.lean` + Agda 镜像 | ✅ 已完成（Lean 827 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件 + Agda 镜像，Everything.agda 全量通过） |
 
 ---
 

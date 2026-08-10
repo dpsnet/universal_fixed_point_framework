@@ -559,7 +559,7 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 3. **62C**：论文 `paper/paper44_photon_topology.md`（自包含，仅纳入颠覆性预言）✅ 初稿（2026-08-10 v0.1）
 4. **62D**：红移拓扑推导定量公式 ✅（§5.2.1 多普勒推导链 $\gamma(1+\beta)$ + §5.3.1 $\delta z_\Delta$ 量级估计 + 数值脚本 14/14）
 5. **62E**：交叉衍生效应定量化 ✅（§6 六项预言定量形式：P1 $\delta z_{\text{pol}}=\kappa_\Delta z_{\text{grav}}$、P2 线性标度、P3 候选量级、P4 $S_4$ 震荡、P5 $\lambda_e(1-\cos\theta)$、P6 $N_{\text{crit}}$；数值脚本 18/18）
-6. **62F**：Lean/Agda 形式化
+6. **62F**：Lean/Agda 形式化 ✅（`PhotonTopology.lean` 827 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件 + Agda 镜像，Everything.agda 全量通过；登记开放项：几何正交、垂直-水平分解、$R$ 作用规则）
 
 ---
 
