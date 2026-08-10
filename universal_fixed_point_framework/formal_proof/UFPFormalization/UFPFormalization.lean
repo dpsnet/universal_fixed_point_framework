@@ -71,3 +71,4 @@ import UFPFormalization.ColorDynamics
 import UFPFormalization.RenormalizationChain
 import UFPFormalization.BlackHoleEvolution
 import UFPFormalization.PhotonTopology
+import UFPFormalization.PhotonTopologyFunctor

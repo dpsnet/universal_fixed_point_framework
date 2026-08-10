@@ -1,5 +1,6 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Tactic.Linarith
+import Mathlib.Tactic
 
 /-!
 # PhotonTopology — 光子拓扑-范畴理论形式化（Phase 62F）
@@ -126,5 +127,92 @@ structure BohrCondition where
 theorem bohr_matching_necessary (bc : BohrCondition) :
     bc.h * bc.nu = bc.deltaE :=
   bc.match_cond
+
+/-! ## 公理 A3 并置结构（分岔并存对象，开放问题 #1 漏洞修正）
+   分岔后"电子低能驻波 + 光子行波"**并存**（能量重分配 E_atom = E_low + hν），
+   而非旧 Φ（bifurcationMap）的"全转换"（源对象信息丢失）。
+   Φ₊ 编码并置；旧 Φ = Φ₊ 的光子分量投影。 -/
+
+/-- 分岔并存对象：原子低能驻波（保留）+ 光子行波（新生）+ 能量重分配（公理 A3 代数骨架）。 -/
+structure CoexistingAfterBifurcation where
+  atomLow : PhotonTopology
+  photon : PhotonTopology
+  cls_atomLow : atomLow.cls = TopologicalClass.closed
+  cls_photon : photon.cls = TopologicalClass.opened
+  E_atom : ℝ
+  E_low : ℝ
+  hNu : ℝ
+  energy_split : E_atom = E_low + hNu    -- 公理 A3: 总能量不变, 重分配为低能驻波 + 光子行波
+
+/-- Φ₊: 原子 ↦ (原子低能驻波, 光子行波)——编码"原子保留 + 光子新生"的并置结构
+    （修正旧 Φ 的对象层语义漏洞: 源对象 X 被保留为低能驻波分量, 体现 A3 能量重分配）。
+    前提 hX_closed: 分岔源必为封闭拓扑（紧致驻波）。 -/
+def bifurcateCoexisting (X : PhotonTopology) (hX_closed : X.cls = TopologicalClass.closed)
+    (E_atom hNu : ℝ) : CoexistingAfterBifurcation :=
+  { atomLow := X
+    photon := ⟨TopologicalClass.opened⟩
+    cls_atomLow := hX_closed
+    cls_photon := rfl
+    E_atom := E_atom
+    E_low := E_atom - hNu
+    hNu := hNu
+    energy_split := by
+      simp [sub_eq_add_neg] }
+
+/-- 原子保留定理：Φ₊ 的并置结构中低能驻波分量 = 源原子拓扑（A3"原子保留"的形式编码）。 -/
+theorem coexisting_atom_retained (X : PhotonTopology) (hX_closed : X.cls = TopologicalClass.closed)
+    (E_atom hNu : ℝ) :
+    (bifurcateCoexisting X hX_closed E_atom hNu).atomLow = X := rfl
+
+/-- 旧 Φ（bifurcationMap）= Φ₊ 的光子分量投影（并置结构的光子视角）。 -/
+theorem bifurcationMap_is_photon_projection (X : PhotonTopology)
+    (hX_closed : X.cls = TopologicalClass.closed) (E_atom hNu : ℝ) :
+    (bifurcateCoexisting X hX_closed E_atom hNu).photon = bifurcationMap X := rfl
+
+/-! ## 静默-跃迁门控（开放问题 #8 代数骨架）
+   W_eff(t) = (1 − σ_S3(t))·W_ij：静默屏障 = 跃迁率的乘法门控因子
+   （离散拓扑开关 σ ∈ {0,1} × 连续量子速率 W_ij，爱因斯坦系数）。
+   数值验证: paperX_photon_topology.py §S9 (36/36) + 爱因斯坦关系 A_21 = (8πhν³/c³)B_21。 -/
+
+/-- 门控因子 (1 − σ)：静默（true）→ 0，解除（false）→ 1。 -/
+def gatingFactor (silent : Bool) : ℝ :=
+  if silent then 0 else 1
+
+/-- 定理：静默时跃迁率归零（σ=1 → W_eff = 0，无跃迁）。 -/
+theorem gating_silent_zero (W : ℝ) : gatingFactor true * W = 0 := by
+  simp [gatingFactor]
+
+/-- 定理：静默解除时跃迁率全速（σ=0 → W_eff = W_ij，爱因斯坦系数激活）。 -/
+theorem gating_open_full (W : ℝ) : gatingFactor false * W = W := by
+  simp [gatingFactor]
+
+/-! ## 命题 3.1：零静质量 v<c 不自洽（代数骨架，开放问题 #2 推进） -/
+
+/-- 零静质量光子结构：能量-动量关系 E² = p²c² + m²c⁴ 在 m=0 的正动量支（E = p·c）。 -/
+structure ZeroMassPhoton where
+  p : ℝ
+  c : ℝ
+  hp_pos : p > 0
+  hc_pos : c > 0
+  E : ℝ
+  hE : E = p * c
+
+/-- 群速度 v = p·c²/E（标准相对论群速度公式）。 -/
+noncomputable def groupVelocity (P : ZeroMassPhoton) : ℝ :=
+  P.p * P.c^2 / P.E
+
+/-- 定理：m = 0 ⟹ 群速度 v_g = c（被强制锁定）。 -/
+theorem zero_mass_group_velocity (P : ZeroMassPhoton) :
+    groupVelocity P = P.c := by
+  unfold groupVelocity
+  rw [P.hE]
+  field_simp [P.hp_pos.ne', P.hc_pos.ne']
+
+/-- 定理：v < c 不自洽——群速度唯一值 = c，低速电磁拓扑无解。 -/
+theorem zero_mass_no_sublight (P : ZeroMassPhoton) :
+    ¬ groupVelocity P < P.c := by
+  intro h
+  have hv : groupVelocity P = P.c := zero_mass_group_velocity P
+  linarith
 
 end UFPFormalization

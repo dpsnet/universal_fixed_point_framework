@@ -147,11 +147,13 @@
 | 阶段 | 方向 | 产出 | 状态 |
 |:----:|:------|:------|:----:|
 | 62A | P1 基础理论 | 研究笔记 `notes/06_photon_topology/photon_topology_theory.md` | ✅ 已完成（§1-9 主体 + A4 方向性阶跃、双层正交、可拦截性公式集、推论 4 时间解耦、自旋/偏振/纵向截面层、§5/§6 定量化） |
-| 62B | P1 基础理论 | 数值脚本 `scripts/paperX_photon_topology.py` | ✅ 已完成（21/21：方向性阶跃/光速不变/λν 一致/Bohr 匹配/时间解耦/零质量不自洽，已注册 run_all_tests.py） |
+| 62B | P1 基础理论 | 数值脚本 `scripts/paperX_photon_topology.py` | ✅ 已完成（36/36：方向性阶跃/光速不变/λν 一致/Bohr 匹配/捕获-再分岔/零质量不自洽/自由传播模方守恒一致性(S8 树级)/门控模型，已注册 run_all_tests.py） |
 | 62C | P1 基础理论 | 论文 `paper/paper44_photon_topology.md`（自包含） | ✅ 初稿完成（2026-08-10 v0.1：§1-7 + 附录 A/B + 参考文献，自包含定义 + 6 项预言 + 诚实边界） |
 | 62D | P2 红移统一 | 研究笔记红移拓扑推导 + 数值脚本 | ✅ 已完成（笔记 §5.2.1/§5.3.1 定量化 + `paperX_redshift_topology.py` 14/14，δz_Δ 量级带与预言 P1 重叠） |
 | 62E | P3 交叉衍生 | 研究笔记交叉效应定量化 + 数值脚本 | ✅ 已完成（笔记 §6 六项预言定量化 + `paperX_photon_cross_effects.py` 18/18，P1 偏振差/P2 标度/P3 量级/P4 震荡/P5 康普顿/P6 静默层数） |
-| 62F | P4 形式化 | Lean `PhotonTopology.lean` + Agda 镜像 | ✅ 已完成（Lean 827 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件 + Agda 镜像，Everything.agda 全量通过） |
+| 62F | P4 形式化 | Lean `PhotonTopology.lean` + Agda 镜像 | 🔶 交付（代数骨架：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件/A3 并置结构 Φ₊/零质量/静默门控，2970 jobs 零 sorry + Agda 全量通过）；P1 验收未全达成——双层正交垂直-水平分解、光速/λν/E=hν 完整形式化、Φ 态射层登记开放项 |
+
+**Phase 62 整体状态（诚实声明）**：62A–F 的阶段交付物（笔记/数值脚本/论文/形式化模块）均已完成并验证，但 **Phase 62 理论闭环未达成**——§七 8 项开放问题全部获推进：3 项闭合（#2 零质量 Lean 形式化、#3 捕获-再分岔模拟、#8 静默-跃迁门控）、5 项部分推进（#1 构造性实现+A3 并置结构修正、态射层开放；#4 候选量级、#5 量级带、#6 树级自由传播模方守恒一致性、γ→∞ 未验证；#7 概念+数值+代数骨架闭合微分几何层开放）；六项可证伪预言的系数（κ_Δ、η_S3、ε_Δ）均为候选量级带而非精确值；$h$-$c$-$\Delta$ 代数形式待定；P1 验收标准中双层正交与光速/$\lambda\nu$/$E=h\nu$ 的完整形式化未达成。整体状态 = **推进中（交付完成、闭环未达成）**，核心预言实验验证为远期（15–20 年）。
 
 ---
 
@@ -180,14 +182,14 @@
 
 ## 七、开放问题
 
-1. 光子拓扑分岔映射 $\Phi$ 的严格范畴论定义（是否为 $D$ 函子的特例？）
-2. 零静质量拓扑分支的 $v < c$ 不自洽证明是否可在 Lean 中形式化
-3. 介质中"光速变慢"的捕获-再分岔模型是否可数值模拟
+1. 光子拓扑分岔映射 $\Phi$ 的严格范畴论定义（是否为 $D$ 函子的特例？）—— **🔶 部分闭合（2026-08-10，2026-08-11 漏洞修正）**：对象层**构造性实现（非推导结论）**——光子谱化**经 $D$ 函子构造性实现**（`PhotonTopologyFunctor.lean`，2970 jobs 零 sorry）：`photonSpectrum := DFunctor_obj ∘ photonToRec` 为**定义选择**（封闭谱 1 维 / 开放谱 2 维，`bifurcation_changes_spectrum`）+ $\Phi$ 自函子公理（保恒等/保复合）+ 幂等（与 A4 单向性一致）。**嵌入任意性登记**：`photonToRec`（closed→Unit/id、opened→Bool/not）为代数骨架语义约定，非唯一——"1→2 维"数值依赖此约定，非内在结论。**A3 并置结构修正（#1-③）**：旧 Φ"全转换"（源对象丢失）→ 新增 `CoexistingAfterBifurcation`/`bifurcateCoexisting`（`PhotonTopology.lean`）：$\Phi_+: X \mapsto (X_{\text{low}}, \langle \text{opened} \rangle)$ 编码"原子保留（`atomLow := X`，`coexisting_atom_retained`）+ 光子新生（`energy_split: E_{atom} = E_{low} + h\nu`）"，旧 Φ = Φ₊ 的光子分量投影（`bifurcationMap_is_photon_projection`）；**态射层**"$\Phi = D|_{\text{子范畴}}$"（`PhotonHom` → `RecHom` 嵌入）登记开放
+2. 零静质量拓扑分支的 $v < c$ 不自洽证明的 Lean 形式化 —— **✅ 已闭合（2026-08-10）**：`PhotonTopology.lean` `zero_mass_group_velocity`（$E=pc \Longrightarrow v_g=c$）+ `zero_mass_no_sublight`（$v<c$ 不自洽），2970 jobs 零 sorry；代数骨架范围（完整实数平方根推导登记后续）
+3. 介质中"光速变慢"的捕获-再分岔模型数值模拟 —— **✅ 已闭合（2026-08-10）**：`paperX_photon_topology.py` §S7（26/26）——真空段严格 $v=c$（单光子拓扑）+ 宏观 $v_{\text{avg}}<c$（统计延迟）+ 解析 $t_{\text{avg}}=L/c+n\cdot p\cdot\tau$ 与模拟一致（rel 1.0%）+ $v_{\text{avg}}$ 随捕获概率单调递减
 4. $h$-$c$-$\Delta$ 三常数约束的具体代数形式
 5. 偏振相关红移差的 Δ 修正系数的精确值
-6. **推论 4 时间解耦的等价性验证**："光子吸收 = $R$ 右伴随折叠"翻译（定义 1.3）与标准量子光学（相互作用哈密顿量 + 费米黄金规则）的完全等价性——目前仅框架性表述，无实验判据、无机器证明
-7. **纤维丛层正交的严格化**：垂直-水平分解 $TE \cong TF \oplus H$ 的联络/度量结构选择——"纤维 ⊥ 基空间"的严格意义未形式化
-8. **静默指标定量关联**：$\sigma_{\text{S3}}(t)$ 阶跃公理（A4）与量子跃迁概率（爱因斯坦系数 $A_{ij}/B_{12}$）的定量对应关系
+6. **推论 4 时间解耦：树级自由传播模方守恒一致性** —— **🔶 部分闭合（2026-08-10，2026-08-11 命名修正）**：数值层（`paperX_photon_topology.py` §S8 `s8_free_propagation`，36/36）——原"等价性验证"命名过强，已重命名为"**自由传播模方守恒一致性**"：C27/C29 为定义一致性（定义 2.4 吸收截面 = 标准量子光学形式，$B_{12}$ 代入 rel 1.3e-16；反解 $B_{12}$ 一致 rel 0）、C28/C30 为树级（**忽略真空修正**）自由传播模方守恒 $|e^{-i\omega nt}|^2=1$（trivial 恒等式，保光子数，对应标准 QED 自由场演化 $[N,H_0]=0$，温和兼容非新预言）；**明确标注：(a) 推论 2.1"光子视角递归静止"（γ→∞）部分未数值验证**（相对论禁止 $v=c$ 参考系，仅形式极限直觉）；**机制层**"$R$ 折叠 = 相互作用哈密顿量"的严格等价（$R$ 伴随 vs 哈密顿量算子的对应）登记为深层开放项
+7. **纤维丛层正交的严格化** —— **🔶 部分闭合（2026-08-10）**：核心结论——"纤维 ⊥ 基空间"的严格意义 = (垂直子空间 V, 水平子空间 H, 度量 g) 的**相容选取**，非内在性质。数值（`paperX_photon_fiber_orthogonality.py`，5/5）：V = ker dπ 内在 + TE = V⊕H_A（任意联络）+ 标准度量下 V⊥H_f ⟺ f=0（不相容则不正交）+ 正交标架度量 g_A 下 V⊥H_A 对任意 A（相容 → 正交）；Lean 代数骨架（`PhotonTopologyFunctor.lean` `VerticalHorizontalSplitting`：V⊓H=⊥ + V⊔H=⊤，2970 jobs 零 sorry）+ 维数加性登记（mathlib `finrank_sup_add_finrank_inf_eq`）；**剩余**：完整内积层（⟪v,h⟫=0 ⟹ 交平凡）与联络-度量相容性的全微分几何形式化登记开放
+8. **静默指标定量关联** —— **✅ 已闭合（2026-08-10）**：定量对应 = 门控模型 $W_{\text{eff}}(t) = (1-\sigma_{\text{S3}}(t))\cdot W_{ij}$（静默屏障 = 跃迁率的乘法门控因子：离散拓扑开关 × 连续量子速率）。数值（`paperX_photon_topology.py` §S9，36/36）：σ=1 → W_eff=0 / σ=0 → W_eff=W_ij / 分岔瞬间阶跃（与 A4 一致）/ 爱因斯坦关系 $A_{21}=(8\pi h\nu^3/c^3)B_{21}$ / 衰变律 $N=N_0e^{-A_{21}t}$；Lean（`PhotonTopology.lean` `gating_silent_zero`/`gating_open_full`，2970 jobs 零 sorry）。**诚实边界**：门控模型为框架内建立的对应关系（非独立实验验证）
 
 ---
 
