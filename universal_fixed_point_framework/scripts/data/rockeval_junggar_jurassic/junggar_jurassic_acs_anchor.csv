@@ -1,0 +1,7 @@
+Sample_ID,Well,Formation,Sample_type,S1_mgg,S2_mgg,TOC_wt,HI_mggTOC,vRo_pct
+J1bc,Sikeshu_coal_mine,J1b,Coal,1.4,181.54,67.96,267.1,0.45
+J2xc,Cai-35,J2x,Coal,4.92,90.38,80.32,112.5,0.62
+J1bcm,Wucan-2,J1b,Carbonaceous_mudstone,0.24,27.56,18.47,149.2,0.51
+J1bm,Fu-1,J1b,Dark_mudstone,0.35,12.55,3.28,382.6,0.43
+J1sm,Pen-6,J1s,Dark_mudstone,0.06,1.5,1.08,138.9,0.57
+J2xm,Pencan-2,J2x,Dark_mudstone,0.2,1.73,1.18,146.6,0.55

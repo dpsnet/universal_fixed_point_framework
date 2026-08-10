@@ -1,0 +1,930 @@
+===== PAGE 1 =====
+METHODS
+published:28June2021
+doi:10.3389/feart.2021.684592
+Evaluation Method of Movable Shale
+Oil Resource: A Case Study of the
+Shahejie Formation in the Dongying
+Sag, Jiyang Depression
+LiangXu1,MinWang1*, JinbuLi1*, MingLi1, ZhengLi2, RifangZhu2andHuimin Liu2
+1KeyLaboratoryofDeepOilandGas,ChinaUniversityofPetroleum(EastChina),Qingdao,China,2GeologyScientificResearch
+InstituteofShengliOilfieldCompany,Sinopec,Dongying,China
+AlthoughChinahasenormousshaleoilresourcepotential,oilrecoveryislimitedatpresent,
+largelybecauseitsmovableresourceisnotevaluated.Inthisstudy,anevaluationmethod
+formovableshaleoilresourcesisproposed.Theprocessfirstevaluatesthetotalshaleoil
+resource(Q ),andthentwo-dimensionalnuclearmagneticresonance(NMR)technology
+total
+isusedtomeasurethefreeoilratio(R )andfurtherdefinethequantitativerelationship(F)
+free
+between the movable ratio (R ) in the free oil and centrifugal force. The movable oil
+m
+Editedby: resourceiscalculatedbythetotalshaleoilresource,freeoilratio,andmovableoilratio
+DaweiLv, (Q (cid:1) Q × R × R ). This method was applied to the Shahejie Formation of the
+m total free m
+ShandongUniversityofScienceand
+DongyingSag,JiyangDepression,inBohaiBayBasin,andtherelationshipbetweenthe
+Technology,China
+free oil ratio (R ) and depth was established based on several core 2D NMR data.
+Reviewedby: free
+CliveFrancisBurrett,
+Basedontheformationpressure,flowingbottomholepressure,andrelationship(F),the
+MahasarakhamUniversity,Thailand movableshaleoilratio(R )inthetargetareawasdetermined.Theresultsshowedthat
+XianfengTan, m
+the movable shale oil ratio (R ) of the lower Es3 is approximately 18.9–20% in the depth
+ChongqingUniversityofScienceand m
+Technology,China rangeof3,200–3,700m,andthemovableshaleoilresourceisapproximately2.52×108t.
+*Correspondence:
+MinWang Keywords:shaleoil,movableoil,freeoil,nuclearmagneticresonance,jiyangdepression
+wangm@upc.edu.cn
+JinbuLi
+INTRODUCTION
+498891492@qq.com
+Afterdecadesofdevelopment,theglobalshaleoilandgasboomledbytheUnitedStateshasentered
+Specialtysection:
+anactiveperiodofdiscovery,andunconventionaloilandgashasnowbecomeanimportantpartof
+Thisarticlewassubmittedto
+EconomicGeology, globaloilandgasgrowth(Capuano,2018;UsEia,2019).Thesuccessfulexploitationofshaleoiland
+asectionofthejournal gashasgreatlyimprovedtheoilandgasself-sufficiencyratesoftheUnitedStates.In2018,thetotal
+FrontiersinEarthScience energyconsumptionoftheUnitedStateswas28×108toilequivalent,totalproductionwas21.1×
+Received:23March2021 108t oil equivalent, and external dependence was only 8.3%. The country may achieve “Energy
+Accepted:28May2021 independence”in2022(Zouetal.,2020).In2019,China’scrudeoilimportvolumereached505.72
+Published:28June2021
+million tons, and its degree of dependence on foreign countries reached 70.8%. To meet national
+Citation: energy security needs, China must strengthen its oil exploration and development (CEP, 2020).
+XuL,WangM,LiJ,LiM,LiZ,ZhuR Currently, China has achieved remarkable results in unconventional oil and gas exploration and
+andLiuH(2021)EvaluationMethodof development, especially the rapid growth in tight oil, tight gas, and shale gas production, which
+MovableShaleOilResource:ACase
+makes the exploration and development of shale oil rise to national strategic prominence (Li and
+StudyoftheShahejieFormationinthe
+Zhu, 2020a).
+DongyingSag,JiyangDepression.
+In recent years, China’s Ministry of Natural Resources (Ministry of Land and Resources),
+Front.EarthSci.9:684592.
+doi:10.3389/feart.2021.684592 PetroChina, Sinopec, and other companies have launched shale oil resource evaluations. In
+FrontiersinEarthScience|www.frontiersin.org 1 June2021|Volume9|Article684592
+===== PAGE 2 =====
+Xuetal. MovableShaleOilResource
+2014, the shale oil resource in Sinopec’s exploration area was in shale reservoirs, the feasibility and effectiveness of the
+approximately204×108t.In2016,PetroChinaestimatedthatthe displacement experiment technology remain debatable.
+shaleoilresourceinitsexplorationareawasapproximately145× Inthisstudy,anewmethodforevaluatingmovableshaleoil
+108t,andsimultaneously,theevaluationbytheMinistryofLand resourcesisproposed.Themovableshaleoilresource(Q )was
+m
+and Resources showed that the shale oil resource in China was calculatedusingthetotalshaleoilresource(Q ),freeoilratio
+total
+153×108t.Specifically,continentalshaleoilinChinaismainly (R ,andmovableoilratio(R ).Theapplicationofthismethod
+free) m
+developed in the Permian, Cretaceous, and Paleogene. The is introduced by considering the Shahejie Formation in the
+favorable shale oil area of the Permian Lucaogou Formation in Dongying Sag as an example. This method is of great
+theJimusaerSag,JunggarBasinis11.12×108t,wherelarge-scale significance for finding the “sweet spot” in shale oil, thereby
+productionbeganin2019(WuB.C.etal.,2019;Guoetal.,2019; guiding future exploration and development.
+Lv et al., 2019; Zhi et al., 2019). The Paleogene Kongdian
+Formation and Shahejie Formation in the Cangdong Sag in
+Bohai Bay Basin also have good oil and gas resource potential, METHODS
+and the total shale oil resources of fifteen vertical wells in the
+secondmemberoftheKongdianFormationareestimatedtobe ThelacustrineshalereservoirsinChinaarecharacterizedbylarge
+6.8 × 108t (Pu et al., 2019; Zhao et al., 2019). Lu et al. (2016a) thickness, strong longitudinal heterogeneity, ultra-low porosity,
+showed that the total amount of oil trapped in the Bonan Sag ultra-low permeability, and ultra-strong hydrocarbon–rock
+shalewithanareaoflessthan1,000km2intheShenglioilfieldis interaction. Therefore, shale oil mobility should be fully
+ashighas88×108t.Moreover,Songetal.(2013)estimatedthe considered while evaluating the degree of shale oil recovery
+shaleoilresourceofthelowerEs3intheBonanSagtobe5.47× (Lu et al., 2016a). For the above reasons, based on total shale
+108t. In addition, Daqing oilfield performed a geological oil resources (Q ) and free shale oil resources (Q ), a new
+total free
+evaluation of the shale of the first Qingshankou Formation method for evaluating movable shale oil resources (Q ) is
+m
+member in the Qijia–Gulong to Sanzhao area of the Songliao established in this study. The specific ideas are as follows.
+Basin and obtained many industrial flowing oil wells, such as First, combined with conventional logging curves and
+Guyeyouping 1 (Wu H. Y. et al., 2019). Although high initial measured core data, an improved ΔlogR model was used to
+production can be obtained using fracturing technology from evaluate the organic heterogeneity and obtain the vertical
+shale oil exploration wells, with time, shale oil production variation in S (Huang et al., 2014; Lu et al., 2017). Then, the
+1
+decreases rapidly, resulting in poor economic benefits from totalshaleoilresources(Q )werecalculatedusingS lightand
+total 1
+those wells (Chen F. et al., 2019; Wang et al., 2019; Lv et al., heavyhydrocarboncorrections(Wangetal.,2014;Lietal.,2016;
+2020).Thisisbecauseundergeologicalconditions,shaleoilinthe Xue et al., 2016). Second, after clarifying the total resource
+pores is not completely movable due to the limitations in calculation results, to calculate free shale oil resources (Q ),
+free
+reservoir physical properties and formation pressure. it was necessary to use the nuclear magnetic resonance (NMR)
+The marine shale oil mobility was characterized by the T –T spectrum toevaluatethefreeoilratio(R ).Finally,the
+1 2 free
+geochemical parameter OSI (oil saturation index) (cid:1) S1/TOC × quantitative relationship (F) between the movable ratio (R ) in
+m
+100. Some scholars also use this method to characterize the free oil and centrifugal force (ΔP (cid:1) formation
+mobility of continental shale oil. It is considered that there is overpressure—flowing bottom hole pressure) was further
+acertainlowerlimitforOSIinthestudyarea,andshaleoilcan defined by a centrifugal experiment, and the movable oil
+flow only when it exceeds this value (Jarvie and Daniel, 2012; resource was calculated using the total shale oil resource, free
+Wangetal.,2015;Xueetal.,2015;Jiangetal.,2016).Zhouetal. oil ratio, and movable oil ratio (Q (cid:1) Q × R ×R ). The
+m total free m
+(2016) analyzed movable fluids in marine shale reservoirs in evaluation process is illustrated in Figure 1.
+southern China through NMR-centrifugal experiments and
+discussed the fluid mobility under optimal centrifugal force
+conditions. Wang et al. (2010) discussed the mobility of crude CASE STUDY
+oil in low-permeability reservoirs by NMR displacement
+experiments on cores from the Yanchang Formation in the Geological Setting
+Ordos Basin. Zhang et al. (2014) analyzed continental shale oil The Dongying Sag is a secondary structural unit located in the
+mobility from the perspective of formation energy. The above Jiyang Depression in the Bohai Bay rift basin in eastern China,
+research methods accelerated the understanding of shale oil whichisatypicaldustpanstructurewith“northfaultandsouth
+mobility to accurately evaluate movable shale oil resources. overlap” characteristics. The sag starts from Qingtuozi uplift in
+However, due to the constraints of geological data and theeastandendsatQingchengupliftinthewestandstartsfrom
+geological conditions, some methods need to be improved. LuxiupliftinthesouthandendsatChenjiazhuangupliftinthe
+When analyzing shale oil mobility by NMR centrifugation, north. Overall, the sag trends east–west, and the northern fault
+only considering shale oil mobility under the condition of activity is relatively developed, which controls the structural
+optimal centrifugal force is not an actual geological condition. evolutionary characteristics of the entire sag (Figure 3). A
+Different driving forces of shale oil under different formation large set of lacustrine shales in the lower sub-member of the
+overpressuresleadtodifferentmobilities.Becauseofthesmaller Shahejie Formation (Es3x) developed in a brackish water
+porethroatstructureandstrongerhydrocarbon–rockinteraction environment (Zhang et al., 2014; Zhu et al., 2019). The
+FrontiersinEarthScience|www.frontiersin.org 2 June2021|Volume9|Article684592
+===== PAGE 3 =====
+Xuetal. MovableShaleOilResource
+FIGURE1|Movableshaleoilresourcesevaluationworkflow.
+washeldata1×10 −4Pavacuumfor24h.Thesamplewasthen
+saturated with n-dodecane at 20MPa. The saturated samples
+weremeasuredatdifferenttimesandwhenthequalitywasstable
+(the test variability was within 0.5%), the rock samples were
+considered to be saturated.
+Nuclear Magnetic Resonance Experiment
+NMR experiments were performed using a micromr23-060h-1
+instrument from Shanghai Niumag Company. The instrument
+was operated at a resonance frequency of 21.36MHz and
+magnetic strength of 0.5T using a 25.4mm coil diameter; the
+magnettemperaturewasmaintainedat32°C.WhentestingtheT
+2
+andtheT 1–T
+2
+spectra,theCarr–Purcell–Meiboom–Gill(CPMG)
+FIGURE2|PresentdaynorthtosouthstructuralsectionofDongying sequence was used. For inversion recovery, the CPMG (IR-
+Depression(modifiedafterSongetal.,2014).
+CPMG) sequence was detected for the T -T spectrum. The
+1 2
+measurement parameters used an echo time (TE) of 0.07ms,
+waiting time (TW) of 1,000ms, 90 pulse width (P90) of 5.4μs,
+lithologyismainlylayeredwithlaminarshalesofhighcarbonate and included 32 scans and 6,000 echoes.
+content. The organic carbon content of Es3x shales ranges
+between 1 and 5% and contain type Ⅰ and type Ⅱ organic Centrifugation Experiment
+1
+matter, with a small amount of type Ⅱ kerogen. The shale Inthiscentrifugalexperiment,thesaturatedoilsamplewasplaced
+2
+burial depth is between 1,500 and 4,000m, and most shales intherotorofaCSC-12centrifugefor8h.Thepropertiesofthe
+are mature. These characteristics define a set of favorable centrifuge were as follows: rotor radius, 13.5 cm; centrifugal
+source rocks with high abundance and good organic matter temperature, 21°C; The centrifugal rotation speed was
+qualities (Wang et al., 2019). increased by 2000 rotations until the rotation speed was
+According to the response characteristics of lithology and 12,000 rotations, and the corresponding centrifugal forces were
+logging curves, the lower Es3 sub-member of the Dongying 0.08, 0.33, 0.75, 1.34, 2.09, and 3.01MPa. Six centrifugation
+Sag is subdivided into four sub-layers (Li, 2012; Zhang S. experiments were performed.
+et al., 2015; Liu, 2018). By estimating the thickness of each
+Evaluation of Total Shale Oil Resource
+sub-layer, the thickness contour of each layer is established
+(Figure 4). Figure 4 shows that the thick center is the center The total shale oil resource is the total amount of shale oil
+ofeachdepression,andthemaximumthicknessisbetween100 contained in the shale reservoir. The total shale oil resource
+and150m.Anareaofapproximately2,468.21km2iscalculated evaluation method is roughly divided into dynamic and static
+as the effective area. categories. The former uses the dynamic parameters during
+reservoir development to calculate shale oil resources through
+Experiment numerical simulation, decline curve calculations, and material
+Pressure Saturation Experiment balance,whichusesstaticparameterstocalculatethetotalshale
+Rock samples were dried at 60°C for 24h to remove impurities oilresources.Becauseof thedifferent calculationmethods,they
+andplacedinavacuumpressuresaturator.First,therocksample can be subdivided into analog, statistical, and genetic methods
+FrontiersinEarthScience|www.frontiersin.org 3 June2021|Volume9|Article684592
+===== PAGE 4 =====
+Xuetal. MovableShaleOilResource
+FIGURE3|Locationmapofstudyarea(A)schematicmapofBohaiBayBasinanditslocationinChina.(B)LocationofDongyingDepression(modifiedafterZhang
+etal.,2020).
+(Wangetal.,2014;Wrightetal.,2015;Luetal.,2016b;Chenetal., 2010, in Calgary, Canada, the Third International Symposium
+2017). on oil and gas resource evaluation methods was held. Hood of
+Theanalogmethodistypicallyusedtoevaluateareaswithlow ExxonMobil used this method to accurately evaluate reservoirs
+exploration degree.It considersanareawithahighexploration with continuous oil and gas distributions (Hood et al., 2012).
+degreeastheanalogarea,mainlybasedontheestimatedultimate The statistical method, subdivided small area unit volume
+recoverable reserves (EUR) of production wells. It includes the method,andstochasticsimulationmethodareusedtoestablish
+FORSPAN model and its improved method from the U.S. relevantmathematicalmodelstopredictfuturechangeprocesses
+Geological Survey (Schmoker, 2002; Salazar et al., 2010). In accordingtotheknownsystembehavior.Amongthem,thesmall
+FrontiersinEarthScience|www.frontiersin.org 4 June2021|Volume9|Article684592
+===== PAGE 5 =====
+Xuetal. MovableShaleOilResource
+FIGURE4|ThicknesscontourmapofeachsublayerinEs3x(A):firstsublayer;(B):secondsublayer;(C):thirdsublayer;(D):fourthsublayer).
+area unit volume method is often used by the International Santanghu basin, Ordos Basin, Qingshankou formation of
+Energy Agency (EIA). Almanza used the small area unit Songliao Basin, Damintun Sag, and Dongying sag of Bohai
+volume method to evaluate the tight oil of the Bakken Bay Basin, by volume method, respectively. To obtain the final
+Formation in the Elm Coulee Oilfield in the Williston Basin in resource amounts, the material balance method focuses on the
+2011 (Guo et al., 2015). In 2010, after summarizing the calculation of hydrocarbon generation, expulsion, and loss
+shortcomings of the traditional analog method, Olea et al. through geochemical parameters (Jiang et al., 2002). Chen
+(2010) proposed a stochastic simulation method. Chen and et al. (2020) evaluated the shale/tight oil resources of the
+Kirk (2013) used a stochastic simulation method to evaluate Lucaogou Formation in the Jimusaer depression using the
+tight oil resources in the Cardium Formation of the Upper material balance method. However, the calculation models of
+Cretaceous Colorado Group in the Western Canada hydrocarbon expulsion threshold, hydrocarbon generation
+Sedimentary Basin. The results showed that the total resources conversion rate, and hydrocarbon expulsion efficiency involved
+of tight oil in the work area were 29 × 108m3. inthematerialbalancemethodarerelativelycomplex,resulting
+The genetic method evaluation process embodies the in a low utilization rate of this method.
+principles of oil and gas generation, migration, and In practical applications, the volume method is subdivided
+accumulation in reservoirs. The residual amount of oil and gas intothechloroformpitch“A”methodandpyrolysisS method
+1
+in the final stage is determined by calculating the generation, (Songetal.,2013;Zhuetal.,2015;Lietal.,2020c).Inthisstudy,
+adsorption, discharge, and loss of hydrocarbons in the source thepyrolysisS methodwasusedtocalculatethetotalshaleoil
+1
+rock. The genetic method can be divided into volume, material resources. The pyrolysis parameter S represents the thermal
+1
+balance,andsoon.Thevolumemethodisthemosteffectiveand evaporationoftherockbelow300°Cduringpyrolysisheating.It
+applicable method for calculating shale oil resources by is the hydrocarbon that has been generated in the source rock
+multiplying the residual hydrocarbon content in shale by the but has not been discharged, which is the object of shale oil
+shalevolume.Therefore,itisthemostcommonlyusedmethodin evaluation and exploration. The calculation formula is as
+the shale oil exploration stage in China. Liu et al. (2013), Yang follows:
+etal.(2013),LiuB.etal.(2014),Luetal.(2016b)andZhuetal.
+(2019) evaluated the shale oil resource of Malang sag of Q total (cid:1)S×h×ρ×S 1 ×K L ×K H (1)
+FrontiersinEarthScience|www.frontiersin.org 5 June2021|Volume9|Article684592
+===== PAGE 6 =====
+Xuetal. MovableShaleOilResource
+FIGURE5|Heavyhydrocarbonrecoverycoefficient(A)andlighthydrocarbonrecoverycoefficient(B)[modifiedafterZhuetal.(2015)]
+where Q is total shale oil resource, h is the effective shale comparison of hydrocarbon generation kinetic parameters of
+total
+thickness, S is effective shale area, ρ is shale density, measured shale organic matter before and after extraction (Wang and
+density of the sample is 1.9–2.6g/cm3 (Zhu et al., 2019), S is Zheng, 1987; Wang et al., 2014; Li et al., 2019).
+1
+pyrolytic hydrocarbon content, K is the light hydrocarbon The heavy hydrocarbon correction of S is carried out by
+L 1
+correction coefficient of S , and K is the heavy hydrocarbon lookingfortherelationshipbetweenS andchloroformpitch“A.”
+1 H 1
+correction factor of S . As shown in Figure 5A, the heavy hydrocarbon correction
+1
+Inthisstudy,thevariablecoefficientΔlogRmodelwasusedto coefficient (K ) is 2.588 in this area. For the light
+H
+evaluatetheverticalchangeinparameterS .Thismethodisbased hydrocarbon correction coefficient of S , this study adopts the
+1 1
+ontheminimumerrorbetweenthecoremeasureddataandthe relationship between the light hydrocarbon recovery coefficient
+predicted log value and automatically selects the baseline and (K L ) and depth established by Zhu et al. (2015). As shown in
+optimizes the scale factor K (Liu C. et al., 2014). Huang et al. Figure 5B, with an increase in depth, the light hydrocarbon
+(2014) and Li et al. (2020c) used this method to evaluate the
+recoverycoefficientgraduallyincreases,whichcanbeinterpreted
+organicheterogeneityoftheShahejieFormationintheSongliao asthematurityofthesourcerockincreaseswiththeincreasein
+depth,resultinginmorelightcomponents,whicharemorelikely
+BasinBonanandQingshankouformations,andtheresultswere
+to be lost in the process of handling and preservation.
+in good agreement with the measured data. The variable
+coefficient ΔlogR model calculation was completed by a
+Evaluation of Free Shale Oil Resource
+computer. The calculation model is as follows:
+It is generally considered that shale oil mainly exists in the
+ΔlogR(cid:1)K×log(R(cid:1)R )+(1−K)×(Δt−Δt ) (2) adsorbed and free states in the reservoir, and the content of
+baseline baseline
+S (cid:1)A×logR+B (3) free shale oil plays a major role in shale oil productivity.
+1
+Theoretically, the maximum movable shale oil resource is
+where R and R baseline are the measured value and the baseline directly determined by the free oil content (Zhang et al., 2012;
+valueoftheresistivitylog(Ω·m);ΔtandΔt baseline arethemeasured Zouetal.,2013;Jiangetal.,2016;Ningetal.,2017;Lietal.,2019;
+value and the baseline value of the acoustic log(Ω·m); K is the Wangetal.,2019).Therefore,thecalculationofmovableshaleoil
+proportionoftheresistivitypartinΔlogRmodel,rangingfrom0 resources should first clarify the free oil content in shale
+to 1; and A and B are fitting coefficients. reservoirs.
+Previous studies have shown that hydrocarbons with low Itisnoteasytodeterminethefreestateofshaleoil.Different
+molecular weights are lost during transportation, preservation, scholarshaveanalyzedextensivelyfromdifferentangles(Ribeiro
+andsamplepreparation(JarvieandDaniel,2012;Michael,2013; et al., 2009; Zhang L. Y. et al., 2015; Jiang et al., 2016; Li et al.,
+Wang et al., 2014). The methods of light hydrocarbon recovery 2016; Qian et al., 2017; Li et al., 2018; Li et al., 2019). One
+include component hydrocarbon generation kinetics, formation approachistodirectlydeterminethefreestateshaleoilcontent
+volume coefficient, chromatography, experimental comparison, through experimental methods such as stepwise solvent
+and material balance (Jarvie and Daniel, 2012; Michael, 2013; extraction, heating release, and NMR. The second method is
+Wangetal.,2014;Zhuetal.,2015;Chenetal.,2018;ChenZ.etal., to determine the adsorbed shale oil content and calculate the
+2019).Inaddition,bycomparingthepyrolysisexperimentsofthe amount of free oil from the difference between the total and
+extracted and unextracted samples, it was found that when adsorbedoilcontents.Themainmethodinthelaboratoryisthe
+measured at 300°C, there were still some high carbon numbers adsorption experiment of an oil solution (swelling experiment).
+thatcouldnotbepyrolyzed,resultinginalowmeasuredS 1 value Compared with the complicated and cumbersome analytical
+(Delvaux et al., 1990). Heavy hydrocarbon recovery methods process of the solvent stepwise extraction method, the heating
+include the comparison of pyrolysis parameters of shale before releasemethodisrelativelysimpleandeasytoimplement(Jiang
+and after extraction, comparison of the cumulative sum of the et al., 2016). However, it is debatable whether the thermally
+FID curve of pyrolysis before and after extraction, and released hydrocarbons at a certain temperature in the heating
+FrontiersinEarthScience|www.frontiersin.org 6 June2021|Volume9|Article684592
+===== PAGE 7 =====
+Xuetal. MovableShaleOilResource
+NMR T spectra. According to thesignal difference of kerogen,
+2
+adsorbedwater,freewater,andstructuralwaterevaluatedbythe
+NMRT and NMRT –T spectra,theadsorbedoiland freeoil
+2 1 2
+contents in saturated samples were obtained.
+Based on the results of Li et al. (2020b), the 1-ms relaxation
+timeintheT spectrumwasdeterminedastheboundarybetween
+2
+theadsorbedoilandfreeoil,andthentheevolutionchartbetween
+thefreeoilratio(R )andthedepthofsaturatedoilshalewas
+free
+establishedaccordingtotherelationshipbetweenoil/watersignal
+intensity and volume/mass in the NMR T /T –T spectrum
+2 1 2
+(Figure 6). Finally, according to this chart and the total shale
+oil resources calculated above, the free shale oil resources were
+estimated.
+Evaluation of Movable Shale Oil Resource
+As mentioned above, the resource potential of free shale oil
+represents the theoretical maximum movable resource
+potential. However, restricted by factors such as the size and
+shape of pores throats, free shale oil cannot drain completely.
+Therefore, an accurate evaluation of the movable shale oil
+resource potential is of great significance in the exploration for
+“sweetspots.”Theimportantfactorthatrestrictstheevaluation
+accuracyofmovableshaleoilresourcesisshaleoilmobility(Lu
+et al., 2016a; Chen F. et al., 2019). Hence, as the introduction
+describes, many scholars have conducted extensive research on
+shale oil mobility.
+Basedonpreviousresearchresultsandconsideringtheactual
+formationconditions,toretaintheresidualoilandwaterinshale,
+this study performed the pressure saturation treatment on the
+unwashedoilshalesamplesandestablishedanevolutionchartof
+theshaleoilmovableratio(movableoil/freeoil)underdifferent
+centrifugalforcesaccordingtotheNMRcentrifugalexperiment.
+FIGURE6|Evolutiontrendoffreeoilratiowithdepth. As shown in Figure 7, the relationship between the shale oil
+movable ratio and centrifugal force conforms to a Langmuir
+shape, that is, a curve passing through the origin. With the
+releasemethodarealladsorbedorfreecompoundsarepresent(Li increase in centrifugal force, the shale oil movable ratio
+et al., 2019). In this study, the free shale oil content was
+determined using the NMR method according to the
+distribution position of different hydrogen components in the
+NMR T /T –T spectrum (Li et al., 2018; Li et al., 2020b).
+2 1 2
+Because the rock samples are stored in the laboratory after
+extraction, light hydrocarbon loss will occur. To determine the
+free oil content of the saturated shale under the formation
+conditions, the rock sample needs to be pressurized and
+saturated, and then the free oil content of the saturated shale
+canbecalculatedaccordingtotheNMRT –T spectrum.Dueto
+1 2
+thelimitationsintheexperimentalequipment,theNMRT –T
+1 2
+spectrumtesttimeislong(40min),andthelightcomponentscan
+be lost during the test. To avoid the above situation, this study
+combines the NMR T spectrum (1min) and NMR T –T
+1 1 2
+spectrum technology to characterize the free oil content of
+saturated shale. The test process was as follows.
+First,coresampleswithdifferentlithofaciesandmaturitywere
+selectedtotesttheNMRT –T spectrum,andthesignalvaluesof
+1 2
+kerogen, adsorbed water, free water, and structural water were
+quantitativelyevaluated.Second,therocksamplesweresaturated
+FIGURE7|Relationshipbetweenmovableratioandcentrifugalforce.
+underpressure,andthesamplesaftersaturationwereanalyzedby
+FrontiersinEarthScience|www.frontiersin.org 7 June2021|Volume9|Article684592
+===== PAGE 8 =====
+Xuetal. MovableShaleOilResource
+increases,andtherateofincreasegraduallydecreases.Themodel
+can be expressed as follows:
+R ×ΔP
+R (cid:1) f (4)
+m ΔP+ΔP
+L
+whereR isthemovableratio,ΔPisthecentrifugalpressure,R is
+m f
+thetheoreticalmaximummovableratio,andΔP isthemedian
+L
+pressure.
+The above equation is further rewritten as follows:
+1 ΔP 1 1
+(cid:1) L + (5)
+R R ΔP R
+m f f
+By plotting the relationship between 1/movable ratio and
+1/centrifugal force, the theoretical maximum movable ratio (R)
+f
+and median pressure (ΔP ) of shale oil can be obtained. When
+L
+appliedtothetargethorizoninthestudyarea,R was 20.83and
+f
+ΔP was1.09.Therefore,themathematicalexpressionoftheshale FIGURE8|Variationinflowingbottomholepressurewithdepth.
+L
+oil movable ratioisas follows (Eq.6):
+R m (cid:1) 2 Δ 0 P .8 + 3× 1. Δ 09 P (6) σ max (cid:1)(cid:14) (v max − A 5000) (cid:15) B 1 (9)
+Eq.6showsthatthedifferenceinproductionpressure,thatis,the
+wherevisacousticvelocity(m/s),v isacousticvelocityatthe
+difference between the formation overpressure evaluation and max
+flowing bottom hole pressure, needs to be determined when
+inflectionpoint(m/s),σisverticaleffectivestress(kPa),AandB
+are constant parameters, P is overburden pressure, P is pore
+calculating movable shale oil resources by the movable ratio. 0 P
+pressure,σ iseffectivestressattheunloadingpoint(kPa),and
+Hence, this study performed a formation overpressure evaluation max
+andbottomholeflowpressureevaluation.Atpresent,somescholars U is the elastic coefficient.
+Basedontheabovemethodcombinedwithactualgeologicaldata,
+have explored different quantitative evaluation methods for
+thisstudyestablishesanoverpressureidentificationequationforthe
+overpressure caused by different origins; however, they mainly
+workarea(Eq.10andEq.11).Usingthismethod,theformation
+rely on logging methods to analyze the relationship between
+pressure coefficient of each well position was calculated, and the
+porosity (acoustic curve, density) and stress (depth) to determine
+formationpressureofthetargetlayerwaspredicted.
+thereasonofoverpressure.Themainmethodsforthequantitative
+Loading:
+overpressurepredictionaredirectestimation,effectiveverticalstress,
+effective horizontal stress (e.g., Eaton method), and other effective v(cid:1)5000+(cid:16)4p10 −15(cid:17)σ5.0255
+stress methods (e.g., Bowers method) (Hottmann and Johnson, (cid:3) P (cid:1)P −σ (10)
+P 0
+1965; Magara and Kinji, 1978; Bilgeri and Ademeno, 1982; Eaton
+Unloading:
+and Eaton, 1997; Dutta, 2002; Xue et al., 2004; Wen, 2019). This
+s
+th
+tu
+e
+d
+a
+y
+b
+c
+o
+o
+v
+m
+em
+pr
+e
+e
+t
+h
+h
+e
+o
+n
+d
+s
+s
+iv
+a
+e
+n
+l
+d
+ya
+th
+n
+e
+a
+i
+l
+r
+yz
+a
+e
+p
+s
+p
+t
+l
+h
+ic
+e
+a
+a
+b
+d
+le
+v
+c
+a
+o
+n
+n
+ta
+d
+g
+i
+e
+ti
+s
+o
+a
+n
+n
+s
+d
+an
+d
+d
+isa
+c
+d
+o
+v
+m
+a
+b
+n
+i
+t
+n
+a
+e
+g
+s
+es
+th
+o
+e
+f ⎧⎪⎪⎨
+v(cid:1)5000+(cid:16)4p10 −15(cid:17)⎡⎣σ (cid:10)
+σ
+(cid:11)
+1/1.65
+⎤⎦
+5.0255
+characteristicsofthestratigraphicdevelopmentinthestudyareato ⎪⎪⎩ max σ max (11)
+usetheBowersmethodforoverpressureevaluation.TheBowers P (cid:1)P −σ
+P 0
+method is divided into loading and unloading curves. The
+normal compaction and under-compacted formations are on The flowing bottom hole pressure is an important parameter for
+the loading curve, and the fluid expansion-causing formations calculatingthemovableratio.Therehasbeenconsiderableresearch
+are on the unloading curve. The corresponding mathematical
+ontheevaluationofflowingbottomholepressureinconventional
+expressions were established as follows: gasandcoalbedmethane,andthecommonmethodsaretheaverage
+Loading: temperature average deviation coefficient, Cullender–Smith, Chen
+Jialang–Yue Xiangan, Podio modified “s” curve, and Hasan Kabir
+(cid:3)
+v(cid:1)5000+AσB
+(7) analytical methods (Cullender and Smith, 1956; Aziz and Khalid,
+P P (cid:1)P 0 −σ 1967;HasanandKabir,1988;Mccoyetal.,1988;Chenetal.,1994).
+Unloading:
+Fortheflowingbottomholepressurecalculationinshaleoilwells,
+goodcorrelationwasobservedbetweenoillayerdepthandflowing
+⎧⎪⎪⎨
+⎪⎪⎩
+v(cid:1)5000+A ⎡⎣σ
+max
+(cid:10)
+σ m
+σ
+ax
+(cid:11)
+1/U
+⎤⎦
+B
+(8)
+(
+b
+r
+F
+e
+o
+p
+i
+t
+g
+t
+o
+o
+u
+r
+m
+t
+r
+s
+e
+a
+h
+n
+8
+o
+d
+)
+l
+,
+e
+c
+t
+o
+p
+h
+m
+r
+e
+e
+r
+p
+s
+e
+s
+l
+b
+u
+e
+y
+t
+r
+i
+e
+o
+e
+n
+t
+s
+h
+t
+r
+a
+r
+e
+o
+b
+p
+u
+l
+o
+i
+g
+s
+r
+h
+h
+ts
+in
+i
+i
+n
+n
+g
+tu
+o
+t
+i
+i
+h
+t
+lfi
+i
+e
+v
+e
+e
+l
+c
+d
+a
+st
+l
+g
+c
+a
+e
+u
+t
+o
+i
+l
+s
+a
+l
+t
+o
+t
+ic
+i
+g
+o
+s
+i
+n
+c
+o
+a
+f
+l
+f
+p
+o
+se
+r
+r
+v
+o
+m
+e
+d
+u
+r
+u
+a
+l
+c
+a
+l
+t
+w
+io
+fo
+e
+n
+l
+r
+l
+d
+t
+t
+a
+e
+h
+t
+s
+a
+e
+t
+P P (cid:1)P 0 −σ flowingbottomholepressure.
+FrontiersinEarthScience|www.frontiersin.org 8 June2021|Volume9|Article684592
+===== PAGE 9 =====
+Xuetal. MovableShaleOilResource
+TABLE1|StatisticsofresourcesofeachsmalllayerinEs3x.
+Layer Total Free Movable
+oilcontent(×108t) oilcontent(×108t) oilcontent(×108t)
+FirstsublayerofEs3x 8.78 1.79 0.35
+SecondsublayerofEs3x 14.74 3.63 0.71
+ThirdsublayerofEs3x 22.13 6.00 1.18
+FourthsublayeroflowerEs3 5.06 1.45 0.28
+Total 50.70 12.87 2.52
+FIGURE9|ResourceabundancecontourmapoftheShahejieFormationEs3xintheDongyingSag(A):totalresourceabundance;(B):freeresourceabundance;
+(C):movableresourceabundance).
+RESULTS AND DISCUSSION distributed in each sag belt, gradually decreasing from the
+center to the edge of the sag, and Lijin Sag was the most
+The total shale oil, free shale oil, and movable shale oil abundant, with relatively small resource potential near the
+resources were calculated through the above process. The BoxingandNiuzhuangdepressions(Figure9).Fromtheplane
+results show that the total oil resource of the Es3x in the distribution characteristics of free resource and movable
+Dongying Sag was 50.7 × 108t, free oil resource was 12.87 × resource abundances, compared with the total shale oil
+108t, and movable oil resource was 2.52 × 108t. The second resource abundance, the shale oil enrichment area basically
+and third layers were more abundant, accounting for 74% of remains unchanged.
+Es3x(Table1).Themovableratioofshaleoil(movableoil/free
+oil) was approximately 18.9–20% within a buried depth of
+3,200–3,700m. According to the plane distribution CONCLUSION
+characteristics of the total shale oil resource abundance in
+theEs3xinDongyingSag(consideringthefirstlowerlayerof (1) This study explores the relationship between different
+Es3x as an example), shale oil resources were mainly centrifugal forces and movable ratios through NMR
+FrontiersinEarthScience|www.frontiersin.org 9 June2021|Volume9|Article684592
+===== PAGE 10 =====
+Xuetal. MovableShaleOilResource
+centrifugal experiments and proposes a new method for DATA AVAILABILITY STATEMENT
+evaluating movable shale oil resources. When applied to
+geological conditions, the movable ratio of shale oil can be The raw data supporting the conclusion of this article will be
+determinedbyevaluatingtheformationpressureandflowing made available by the authors, without undue reservation.
+bottomholepressure,andthenthemovableoilresourcecan
+be estimated. The above method provides new insights for
+future shale oil resource evaluations. AUTHOR CONTRIBUTIONS
+(2) Considering the Dongying Sag as an example, this study
+calculatesthatthemovableratioofshaleoil(movableoil/free LX,MW,JL,andMLcontributedtotheconceptionanddesignof
+oil) within the range of 3,200–3,700m in Es3x is thestudy.LXwrotethefirstdraftofthemanuscriptandledthe
+approximately 18.9–20%. The shale oil resource is 50.7 × dataanalysisandinterpretedtheresultswithMW,ZL,RZ,and
+108t, free shale oil resource is 12.87 × 108t, and movable HL. All authors contributed to manuscript revision, read and
+shaleoilresourceis2.52×108t,ofwhichtheresourcesofthe approved it for publication.
+secondandthirdlayersaccountforapproximately74%ofthe
+resources of the Es3x.
+(3) From the distribution of Es3x in Dongying Sag, the ACKNOWLEDGMENTS
+movable shale oil resource is mainly concentrated in
+the Lijin Sag, and the potential of movable shale oil This study was funded by the National Natural Science
+resources near Boxing and Niuzhuang sags is low. The Foundation of China (41922015, 42072147), Fundamental
+LijinSagisafavorableexplorationareaintheEs3xofthe Research Funds for the Central Universities (20CX06085A)
+Dongying Sag. and Qingdao Postdoctoral (ZX20210070).
+REFERENCES Delvaux,D.,Martin,H.,Leplat,P.,andPaulet,J.(1990).ComparativeRock-Eval
+PyrolysisasanImprovedToolforSedimentaryOrganicMatterAnalysis.Org.
+Geochem.16(4),1221–1229.doi:10.1016/0146-6380(90)90157-U
+AzizandKhalid(1967).CalculationofBottom-HolePressureinGasWells.J.Pet. Dutta,N.C.(2002).GeopressurePredictionUsingSeismicData:CurrentStatus
+Techn.19(07),897–899. andtheRoadAhead.Geophysics67(6),2012–2041.doi:10.1190/1.1527101
+Bilgeri, D., and Ademeno, E. B. (1982). Predicting Abnormally Pressured Eaton,B.A.,andEaton,T.L.(1997).FractureGradientPredictionfortheNew
+Sedimentary Rocks*. Geophys. Prospect 30 (5), 608–621. doi:10.1111/j.1365- Generation.WorldOil218(10),93–100.
+2478.1982.tb01329.x Guo,Q.L.,Chen,N.S.,Liu,C.L.,Xie,H.B.,Wu,X.Z.,Wang,S.J.,etal.(2015).
+Capuano,L.(2018).InternationalEnergyOutlook2018(IEO2018).Washington, ResearchadvanceofHydrocarbonResourceAssessmentMethodandaNew
+DC,USA:USEnergyInformationAdministration(EIA),21. Assessment Software. Acta Petrolei Sinica 36 (10), 1305–1314. doi:10.7623/
+Chen,F.,Zhao,H.,Wang,S.,Lu,S.,Wang,M.,andDing,X.(2019a).Evaluationof syxb201510014
+MovableShaleOilReservesintheEs1LoftheRaoyangSag,JizhongDepression. Guo,X.G.,He,W.J.,Yang,S.,Wang,J.T.,Feng,Y.L.,Jia,X.Y.,etal.(2019).
+OilGasGeol.40(03),593–601.doi:10.11743/ogg20190314 EvaluationandApplicationofKeyTechnologiesof“SweetArea”ofShaleOilin
+Chen,G.,Lu,S.,Li,J.,Xue,H.,Wang,M.,Tian,S.,etal.(2017).AMethodtoRecover Junggar Basin: Case Study of Permian Lucaogou Formation in Jimusar
+theOriginalTotalOrganicCarbonContentandCrackingPotentialofSource Depression. Nat. Gas Geosci. 30 (08), 1168–1179. doi:10.11764/j.issn.1672-
+Rocks Accurately Based on the Hydrocarbon Generation Kinetics Theory. 1926.2019.05.020
+J.Nanosci.Nanotechnol.17(9),6169–6177.doi:10.1166/jnn.2017.14407 Hasan,A.R.,andKabir,C.S.(1988).AStudyofMultiphaseFlowBehaviorin
+Chen, J., Pang, X., Pang, H., Chen, Z., and Jiang, C. (2018). Hydrocarbon Verticalwells.Spede3(02),263–272.doi:10.2118/15138-pa
+EvaporativeLossEvaluationofLacustrineShaleOilBasedonMassBalance HoodYurewiczStefen,K.C.D.A.K.J.,Yurewicz,D.A.,andStefen,K.J.(2012).
+Method:PermianLucaogouFormationinJimusaerDepression,JunggarBasin. AssessingContinuousResources-BuildingtheBridgebetweenStaticandDynamic
+Mar.Pet.Geol.91,422–431.doi:10.1016/j.marpetgeo.2018.01.021 Analyses.Bull.Can.Pet.Geol.60(3),112–133.doi:10.2113/gscpgbull.60.3.112
+Chen,J.,Pang,X.,Wang,X.,andWang,Y.(2020).ANewMethodforAssessing Hottmann,C.E.,andJohnson,R.K.(1965).EstimationofFormationPressuresfrom
+Tight Oil, with Application to the Lucaogou Formation in the Jimusaer Log-DerivedShaleProperties.J.Pet.Techn.17(06),717–722.doi:10.2118/1110-pa
+Depression,JunggarBasin,China.Bulletin104(6),1199–1229.doi:10.1306/ Huang,W.B.,Deng,S.W.,Lu,S.F.,Yu,L.,Hu,S.,andZhang,J.(2014).Shale
+12191917401 Organic Heterogeneity Evaluation Method and its Application to Shale Oil
+Chen,J.,Shi,Z.,andXu,J.(1994).FlowPatternsofGas-LiquidTwo-phaseUpward ResourceEvaluation—ACaseStudyfromQingshankouFormation,Southern
+FlowinVerticalAnnuli.J.DaqingPet.Inst.(04),23–26. SongliaoBasin.OilGasGeol.35(05),704–711.doi:10.11743/ogg201405
+Chen,Z.,andKirk,G.O.(2013).AnAssessmentofTightOilResourcePotentialin Jarvie,D.M.,andDaniel,M.(2012).ShaleResourceSystemsforOilandGas:Part
+the Upper Cretaceous Cardium Formation, Western Canada Sedimentary 1—Shale-Gas Resource Systems. Aapg Memoir, 89–119. doi:10.1306/
+Basin. Pet. Exploration Dev. 40 (03), 320–328. doi:10.1016/s1876-3804(13) 13321446M973489
+60041-5 Jiang,Q.G.,Li,M.W.,Qian,M.H.,Li,Z.M.,Li,Z.,Huang,Z.K.,etal.(2016).
+Chen,Z.,Li,M.,Jiang,C.,andQian,M.(2019b).ShaleOilResourcePotentialand QuantitativeCharacterizationofShaleOilinDifferentOccurrenceStatesand
+itsMobilityAssessment:ACaseStudyofUpperDevonianDuvernayShalein itsApplication.Pet.Geol.Exp.38(6),842–849.doi:10.11781/sysydz201606842
+WesternCanadaSedimentaryBasin.OilGasGeol.40(03),459–468.doi:10. Jiang,Z.X.,Pang,X.Q.,Jin,Z.J.,Zhou,H.Y.,andWang,X.D.(2002).Threshold
+11743/ogg20190302 ControloverHydrocarbonsanditsApplicationinDistinguishingValidSource
+China Petroleum Enterprise Association (2020). China’s Oil and Gas Industry Rock.EarthSci.(06),689–695.
+DevelopmentAnalysisandOutlookReportBlueBook(2019-2020).ChinaPet. Li, G. X., and Zhu, R. K. (2020a). Progress, Challenges and Key Issues of
+Enterprise(04),25–26. UnconventionalOilandGasDevelopmentofCNPC.ChinaPet.Exploration
+Cullender, M. H., and Smith, R. V. (1956). Practical Solution of Gas-Flow 25(02),1–13.doi:10.3969/j.issn.1672-7703.2020.02.001
+Equations for Wells and Pipelines with Large Temperature Gradients. Li,J.B.,Lu,S.F.,Chen,G.H.,Shan,J.F.,Hu,Y.J.,Mao,J.L.,etal.(2016).
+Trans.AIME207(1),281–287.doi:10.2118/696-g CorrectionofLightandHeavyHydrocarbonLossforResidualHydrocarbonS
+1
+FrontiersinEarthScience|www.frontiersin.org 10 June2021|Volume9|Article684592
+===== PAGE 11 =====
+Xuetal. MovableShaleOilResource
+and its Significance to Assessing Resource Potential of Es4(2) Member in Ning,F.X.,Wang,X.J.,Hao,X.F.,Yang,W.Q.,Yin,Y.,Ding,J.H.,etal.(2017).
+2
+DamintunSag,BohaiBayBasin.OilGasGeol.37(04),538–545.doi:10.11743/ Occurrence Mechanism of Shale Oil with Different Lithofacies in Jiyang
+ogg20160410 Depression.ActaPetroLeiSinica38(02),185–195.doi:10.7623/syxb201702006
+Li,J.,Huang,W.,Lu,S.,Wang,M.,Chen,G.,Tian,W.,etal.(2018).Nuclear Olea, R. A., Cook, T. A., and Coleman, J. L. (2010). A Methodology for the
+Magnetic Resonance T1-T2 Map Division Method for Hydrogen-Bearing AssessmentofUnconventional(Continuous)ResourceswithanApplicationto
+Components in Continental Shale. Energy Fuels 32 (9), 9043–9054. doi:10. theGreaterNaturalButtesGasField,Utah.Nat.Resour.Res.19(4),237–251.
+1021/acs.energyfuels.8b01541 doi:10.1007/s11053-010-9127-8
+Li,J.,Jiang,C.,Wang,M.,Lu,S.,Chen,Z.,Chen,G.,etal.(2020b).AdsorbedandFree Pu,X.G.,Jin,F.M.,Han,Z.W.,Shi,Z.F.,Cai,A.B.,Wang,A.G.,etal.(2019).
+HydrocarbonsinUnconventionalShaleReservoir:ANewInsightfromNMRT1- SweetSpotsGeologicalCharacteristicsandKeyExplorationTechnologiesof
+T2Maps.Mar.Pet.Geol.116,104311.doi:10.1016/j.marpetgeo.2020.104311 continentalShaleOil:aCaseStudyofMember2ofKongdianFormationin
+Li,J.Q.,Lu,S.F.,Zhang,J.,Zhang,P.F.,andXue,H.T.(2019).Quantitative Cangdong Sag. Acta PetroLei Sinica 40 (08), 997–1012. doi:10.7623/
+Evaluation Models of Adsorbed and Free Shale Oil and its Microscopic syxb201908011
+Occurrence Mechanism. Oil Gas Geol. 40 (03), 583–592. doi:10.11743/ Qian,M.H.,Jiang,Q.G.,Li,M.W.,Li,Z.M.,Liu,P.,Ma,Y.Y.,etal.(2017).
+ogg20190313 Quantitative Characterization of Extractable Organic Matter in Lacustrine
+Li,J.,Wang,M.,Chen,Z.,Lu,S.,Jiang,C.,Chen,G.,etal.(2019).Evaluatingthe Shale with Different Occurrences. Pet. Geol. Exp. 39 (02), 278–286. doi:10.
+TotalOilYieldUsingaSingleRoutineRock-EvalexperimentonAs-Received 11781/sysydz201702278
+Shales.J.Anal.Appl.Pyrolysis144,104707.doi:10.1016/j.jaap.2019.104707 Ribeiro,R.C.,Correia,J.C.G.,andSeidl,P.R.(2009).TheInfluenceofDifferent
+Li,J.,Wang,M.,Lu,S.,Chen,G.,Tian,W.,Jiang,C.,etal.(2020c).ANewMethod MineralsontheMechanicalResistanceofAsphaltMixtures.J.Pet.Sci.Eng.65
+forPredictingSweetSpotsofShaleOilUsingConventionalWellLogs.Mar.Pet. (3),171–174.doi:10.1016/j.petrol.2008.12.025
+Geol.113,104097.doi:10.1016/j.marpetgeo.2019.104097 Salazar, J., Mcvay, D.A., andLee,W.J.(2010). Development ofan Improved
+Li,W.J.(2012).TheSedimentarySystemofEs-Es MemberofShahejieFormation MethodologytoAssessPotentialUnconventionalGasResources.Nat.Resour.
+4 3x
+on the Southern Slope of Dongying Sag. EastChina: China University of Res.19(4),253–268.doi:10.1007/s11053-010-9126-9
+Petroleum. Schmoker,J.W.(2002).Resource-assessmentPerspectivesforUnconventionalGas
+Li,Z.,Zou,Y.-R.,Xu,X.-Y.,Sun,J.-N.,Li,M.,andPeng,P.A.(2016).Adsorptionof Systems. AAPG Bull. 86 (11), 1993–1999. doi:10.1306/61EEDDDC-173E-
+MudstoneSourceRockforShaleOil-Experiments,ModelandaCaseStudy. 11D7-8645000102C1865D
+Org.Geochem.92,55–62.doi:10.1016/j.orggeochem.2015.12.009 Song,G.Q.,Hao,X.F.,andLiu,K.Q.(2014).TectonicEvolution,Sedimentary
+Liu, B., Guo, X. B., Huang, Z. L., Tu, X. X., Shen, Y., and Wang, R. (2013). SystemandPetroleumDistributionPatternsinDustpan-ShapedRiftbasin:a
+DiscussiononPredictionMethodforHydrocarbonResourcePotentialofShale CaseStudyfromJiyangDepression,BohaiBayBasin.OilGasGeol.35(03),
+Oil:TakingLucaogouFormationShaleOilofMalangSagasCase.J.Cent.South 303–310.doi:10.11743/ogg201402
+Univ.(ScienceTechnology)44(04),1472–1478. Song,G.Q.,Zhang,L.Y.,Lu,S.F.,Xu,X.Y.,Zhu,R.F.,Wang,M.,etal.(2013).
+Liu,B.,He,J.,Lv,Y.F.,Ran,Q.C.,Dai,C.L.,andLi,M.(2014a).Parametersand ResourceEvaluationMethodforShaleOilanditsApplication.EarthSci.Front.
+MethodforShaleOilAssessment:TakingQinshankouFormationShaleOilof 20(4),221–228.
+NorthernSongliaoBasin.J.Cent.SouthUniv.(ScienceTechnology)45(11), UsEia,U.(2019).AnnualEnergyOutlook2019withProjectionsto2050.Technical
+3846–3852. Report.
+Liu,C.,Lu,S.F.,andXue,H.T.(2014b).Variable-coefficientΔlogRModelandits Wang,A.Q.,andZheng,B.M.(1987).CalibrationofAnalyticParametersfor
+Application in Shale Organic Evaluation. Prog. Geophys. 29 (01), 312–317. PyrolyticChromatography.Exp.Pet.Geol.(04),342–350.
+doi:10.6038/pg20140144 Wang, M., Ma, R., Li, J. B., Lu, S. F., Li, C. M., Guo, Z. Q., et al. (2019).
+Liu,Y.(2018).StudyonShaleOilReservoirCharacteristicsofShahejieFormationin OccurrenceMechanismofLacustrineShaleOilinthePaleogeneShahejie
+JiyangDepression,BohaiBayBasin.Chengdu,China:ChengduUniversityof FormationofJiyangDepression,BohaiBayBasin,China.Pet.Exploration
+Technology. Dev. 46 (04), 789–802. doi:10.11698/PED.2019.04.1910.1016/s1876-
+Lu,S.F.,Chen,G.H.,Wang,M.,Li,J.B.,Wang,X.,Shan,J.F.,etal.(2016a). 3804(19)60242-9
+Potential Evaluation of Enriched Shale Oil Resource of Member 4 of the Wang,M.,Tian,S.,Chen,G.,Xue,H.,Huang,A.,andWang,W.(2014).Correction
+ShahejieFormationintheDamintunSag,LiaoheDepression.OilGasGeol. MethodofLightHydrocarbonsLosingandHeavyHydrocarbonHandlingfor
+37(1),8–14.doi:10.11743/ogg20160102 ResidualHydrocarbon(S1)fromShale.ActaGeologicaSinica-EnglishEdition
+Lu,S.F.,Xue,H.T.,Wang,M.,Xiao,D.S.,Huang,W.B.,Li,J.Q.,etal.(2016b). 88(6),1792–1797.doi:10.1111/1755-6724.12345
+SeveralKeyIssuesandResearchTrendsinEvaluationofShaleOil.ActaPetrolei Wang,R.F.,Sun,W.,andYang,H.(2010).MicroMechanismofWaterDrivein
+Sinica37(10),1309–1322.doi:10.7623/syxb201610012 Ultra-low Permeability sandstone Reservoir. J. Lanzhou Univ. (Natural
+Lu,S.,Liu,W.,Wang,M.,Zhang,L.,Wang,Z.,Chen,G.,etal.(2017).Lacustrine Sciences)46(06),29–33.doi:10.13885/j.issn.0455-2059.2010.06.012
+ShaleOilResourcePotentialofEs3LSub-memberofBonanSag,BohaiBay Wang,W.G.,Zheng,M.,Wang,M.,Lu,S.F.,Peng,J.,Lu,K.,etal.(2015).The
+Basin,EasternChina.J.EarthSci.28(6),996–1005.doi:10.1007/s12583-016- DiscussionoftheEvaluationMethodofShaleOilMovableResourcesAmount
+0945-4 and Palaeogene Shahejie Formation Application Effect in the Northern of
+Lv,D.,Li,Z.,Wang,D.,Li,Y.,Liu,H.,Liu,Y.,etal.(2019).SedimentaryModelof DongpuDepression.Nat.GasGeosci.26(4),771–781.doi:10.11764/j.issn.1672-
+CoalandShaleinthePaleogeneLijiayaFormationoftheHuangxianBasin: 1926.2015.04.0771
+InsightfromPetrologicalandGeochemicalCharacteristicsofCoalandShale. Wen,C.X.(2019).IdentificationandQuantitativeEvaluationofOverpressureof
+EnergyFuels33(11),10442–10456.doi:10.1021/acs.energyfuels.9b01299 Different Origin in Kuqa Depression. Xi'an, China: Northwest University.
+Lv,D.,Song,Y.,Shi,L.,Wang,Z.,Cong,P.,vanLoon,A.J.,etal.(2020).The doi:10.1109/iceaa.2019.8879378
+ComplexTransgressionandRegressionHistoryoftheNorthernMarginofthe Wright,M.C.,Court,R.W.,Kafantaris,F.-C.A.,Spathopoulos,F.,andSephton,
+Palaeogene Tarim Sea (NW China), and Implications for Potential M.A.(2015).ANewRapidMethodforShaleOilandShaleGasAssessment.
+Hydrocarbon Occurrences. Mar. Pet. Geol. 112, 104041. doi:10.1016/j. Fuel153,231–239.doi:10.1016/j.fuel.2015.02.089
+marpetgeo.2019.104041 Wu,B.C.,Li,J.M.,Wu,Y.Y.,Han,L.,Zhao,T.F.,andZou,Y.S.(2019a).
+MagaraKinji (1978). Compaction and Fluid Migration : Practical Petroleum Development Practices of Geology-Engineering Integration on Upper
+Geology.ElsevierScientificPublishignCo. Sweet Spots of Lucaogou Formation Shale Oil in Jimsar Sag, Junggar
+Mccoy,J.N.,Podio,A.L.,andHuddleston,K.L.(1988).AcousticDeterminationof Basin. China Pet. Exploration 24 (05), 679–690. doi:10.3969/j.issn.1672-
+ProducingBottomholePressure.SpeFormationEval.3(03),617–621.doi:10. 7703.2019.05.014
+2118/14254-pa Wu,H.Y.,Lin,T.F.,Bai,Y.F.,Zhang,J.Y.,Liu,X.,Huo,Q.L.,etal.(2019b).
+Michael,G.E.,Packwood,J.,Holba,A.,andHouston,C.(2013).Determinationof AnalysesoftheMudstone(Shale)OilExplorationPotentialinNorthSongliao
+In-Situ Hydrocarbon Volumes in Liquid Rich Shale Plays. doi:10.1190/ Basin.Pet.Geol.OilfieldDev.Daqing.38(05),78–86.doi:10.19597/J.ISSN.1000-
+urtec2013-211 3754.201907007
+FrontiersinEarthScience|www.frontiersin.org 11 June2021|Volume9|Article684592
+===== PAGE 12 =====
+Xuetal. MovableShaleOilResource
+Xu,G.,Guan,L.P.,Wang,L.S.,Yang,Z.X.,andSun,C.L.(2004).TheTechnology FormationinCangdongSag,BohaiBayBasin.ActaPetroleiSinica40(09),
+forDetectionofOverpressured ZonesinFormations:anExamplefromthe 1013–1029.doi:10.7623/syxb201909001
+Tongnanbafold-belt,Sichuanbasin,China.Prog.Geophys.(03),645–651. Zhi,D.M.,Tang,Y.,Yang,Z.F.,Guo,X.G.,Zheng,M.L.,Wan,M.,etal.(2019).
+Xue, G., Guan, L. P., Wang, L. S., Yang, Z. X., and Sun, C. L. (1995). The GeologicalCharacteristicsandAccumulationMechanismofcontinentalShale
+Technology for Detection of Overpressured Zones in Formations: an Oilin Jimusaer Sag, Junggar Basin. Oil Gas Geol. 40(03), 524–534.doi:10.
+Example From the Tongnanba Fold-Belt, Sichuan Basin, China. Prog. 11743/ogg20190308
+Geophys.(3),645–651. Zhou,S.W.,Liu,L.H.,Yan,G.,Xue,H.Q.,andGuo,W.(2016).NMRResearchof
+Xue,H.T.,Tian,S.S.,Lu,S.F.,Zhang,W.H.,Du,T.T.,andMu,G.D.(2015). MovableFluidandT CutoffofmarineShaleinSouthChina.OilGasGeol.37
+2
+SelectionandVerificationofKeyParametersintheQuantitativeEvaluationof (04),612–616.doi:10.11743/ogg20160420
+ShaleOil:ACaseStudyattheQingshankouFormation,NorthernSongliao Zhu,R.F.,Zhang,L.Y.,Li,J.Y.,Liu,Q.,Li,Z.,Wang,R.,etal.(2015).Quantitative
+Basin.Bull.Mineral.Petrol.Geochem.34(01),70–78+2. EvaluationofResidualLiquidHydrocarbonsinShale.ActaPetroleiSinica36
+Xue,H.T.,Tian,S.S.,Wang,W.M.,Zhang,W.H.,Du,T.T.,andMu,G.D.(2016). (1),13–18.doi:10.7623/syxb201501002
+Correction of Oil Content—One Key Parameter in Shale Oil Resource Zhu,R.F.,Zhang,L.Y.,Li,Z.,Wang,R.,andZhang,S.L.(2019).Evaluationof
+Assessment.OilGasGeol.37(01),15–22.doi:10.11743/ogg20160103 ShaleOilResourcePotentialincontinentalRiftbasinACaseStudyofLower
+Yang,H.,Li,S.X.,andLiu,X.Y.(2013).CharacteristicsandResourceProspectsof Es3MemberinDongyingSag.Pet.Geol.RecoveryEfficiency26(01),129–136.
+TightOilandShale OilinOrdosBasin.ActaPetrolei Sinica34(01),1–11. doi:10.13673/j.cnki.cn37-1359/te.2019.01.014
+doi:10.7623/syxb201301001 Zou,C.N.,Pan,S.Q.,Jing,Z.H.,Gao,J.L.,Yang,Z.,Wu,S.T.,etal.(2020).Shale
+Zhang,H., Huang, H.,Li, Z., andLiu,M.(2020).ComparativeStudybetween Oil and Gas Revolution and its Impact. Acta Petrolei Sinica 41 (01), 1–12.
+SequentialSolvent-ExtractionandMultipleIsothermalStagesPyrolysis:ACase doi:10.7623/syxb202001001
+StudyonEoceneShahejieFormationShales,DongyingDepression,EastChina. Zou,C.N.,Yang,Z.,Cui,J.W.,Zhu,R.K.,Hou,L.H.,Tao,S.Z.,etal.(2013).
+Fuel263,116591.doi:10.1016/j.fuel.2019.116591 FormationMechanism,GeologicalCharacteristicsandDevelopmentStrategy
+Zhang,J.C.,Lin,L.M.,Li,Y.X.,Tang,X.,Zhu,L.L.,Xing,Y.W.,etal.(2012). ofNonmarineShaleOilinChina.Pet.ExplorationDev.40(01),14–26.doi:10.
+ClassificationandEvaluationofShaleOil.EarthSci.Front.19(05),322–331. 1016/s1876-3804(13)60002-6
+Zhang, L. Y., Bao, Y. S., Li, J. Y., Li, Z., Zhu, R. F., and Zhang, J. G. (2014).
+Movability of Lacustrine Shale Oil: A Case Study of Dongying Sag, Jiyang Conflict of Interest:ZL,RZ, andHLwereemployed bythecompany Shengli
+Depression,BohaiBayBasin.Pet.ExplorationDev.41(06),641–649.doi:10. OilfieldCompany,SInopec.
+1016/s1876-3804(14)60084-7
+Zhang, L. Y., Bao, Y. S., Li, J. Y., Li, Z., Zhu, R. F., Zhang, L., et al. (2015a). Theremainingauthorsdeclarethattheresearchwasconductedintheabsenceof
+HydrocarbonandCrudeOilAdsorptionAbilitiesofMineralsandKerogensin anycommercialorfinancialrelationshipsthatcouldbeconstruedasapotential
+Lacustrine Shales. Pet. Geol. Exp. 37 (06), 776–780. doi:10.11781/ conflictofinterest.
+sysydz201506776
+Zhang,S.,Chen,S.J.,Yan,J.H.,Tan,M.Y.,Zhang,Y.Y.,Gong,W.L.,etal. Copyright©2021Xu,Wang,Li,Li,Li,ZhuandLiu.Thisisanopen-accessarticle
+(2015b).CharacteristicsofShaleLithofaciesandReservoirSpaceinthe3rdand distributedunderthetermsoftheCreativeCommonsAttributionLicense(CCBY).
+4thMembersofShahejieFormation,theWestofDongyingSag.Nat.GasGeosci. Theuse,distributionorreproductioninotherforumsispermitted,providedthe
+26(02),320–332.doi:10.11764/j.issn.1672-1926.2015.02.0320 original author(s) andthecopyright owner(s) arecredited andthattheoriginal
+Zhao,Y.Z.,Zhou,L.H.,Pu,X.G.,Jin,F.M.,Shi,Z.N.,Xiao,D.Q.,etal.(2019). publicationinthisjournaliscited,inaccordancewithacceptedacademicpractice.
+FavorableFormationConditionsandEnrichmentCharacteristicsofLacustrine No use, distribution or reproduction is permitted which does not comply with
+FaciesShaleOilinFaultedlakebasin:aCaseStudyofMember2ofKongdian theseterms.
+FrontiersinEarthScience|www.frontiersin.org 12 June2021|Volume9|Article684592
