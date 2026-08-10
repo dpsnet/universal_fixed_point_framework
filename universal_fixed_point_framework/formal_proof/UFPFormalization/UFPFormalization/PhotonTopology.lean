@@ -1,6 +1,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Tactic.Linarith
@@ -342,5 +343,70 @@ theorem jc_hermitian (g : ℝ) :
     (![![0, (g : ℂ)], ![(g : ℂ), 0]] : Matrix (Fin 2) (Fin 2) ℂ) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [dagger]
+
+/-! ## dagger 第一性原理（开放问题 #6 深化：内积伴随唯一性）
+   从纤维丛内积层（Hilbert 结构）推导 dagger 性质的代数骨架：
+   1. `stdInner`：有限维列向量标准内积（共轭在左参数）；
+   2. `IsAdjoint M B`：内积伴随方程 <Mv,w> = <v,Bw>（∀ v w）；
+   3. `adjoint_unique`：满足伴随方程的 B 唯一 —— dagger 是良定义（非任意选择）；
+   4. `conjTranspose_satisfies_adjoint`：共轭转置满足伴随方程
+      —— dagger（= 共轭转置）是内积伴随的矩阵表示；
+   5. `dagger_is_adjoint`：满足伴随方程的 B 必等于 M† ——
+      dagger-假设被内积结构推导替代（第一性原理，有限维骨架）。
+   数值验证见 paperX_photon_dagger_derivation.py（17/17）。 -/
+
+/-- 有限维列向量标准内积：<v,w> = ∑ i, conj(v i) * w i（star 为 ℂ 共轭）。 -/
+noncomputable def stdInner {n : ℕ} (v w : Fin n → ℂ) : ℂ :=
+  ∑ i, star (v i) * w i
+
+/-- 内积伴随方程：B 是 M 的伴随 ⟺ <Mv,w> = <v,Bw>（∀ v w）。 -/
+def IsAdjoint {n : ℕ} (M B : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+  ∀ v w : Fin n → ℂ, stdInner (M.mulVec v) w = stdInner v (B.mulVec w)
+
+/-- 标准基向量：e_i j = δ_ij。 -/
+def evec {n : ℕ} (i : Fin n) : Fin n → ℂ := fun j => if i = j then (1 : ℂ) else 0
+
+/-- 内积引理：<M e_i, e_j> = conj(M j i)。 -/
+lemma stdInner_mulVec_evec_evec {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) :
+    stdInner (M.mulVec (evec i)) (evec j) = star (M j i) := by
+  simp [stdInner, evec, Matrix.mulVec, dotProduct]
+
+/-- 内积引理：<e_i, B e_j> = B i j。 -/
+lemma stdInner_evec_mulVec {n : ℕ} (B : Matrix (Fin n) (Fin n) ℂ) (i j : Fin n) :
+    stdInner (evec i) (B.mulVec (evec j)) = B i j := by
+  simp [stdInner, evec, Matrix.mulVec, dotProduct]
+
+/-- 伴随唯一性：满足内积伴随方程（∀ v w）的 B 唯一
+    —— dagger 是良定义，非任意选择。 -/
+theorem adjoint_unique {n : ℕ} {M B1 B2 : Matrix (Fin n) (Fin n) ℂ}
+    (h1 : IsAdjoint M B1) (h2 : IsAdjoint M B2) : B1 = B2 := by
+  ext i j
+  have h1_ij := h1 (evec i) (evec j)
+  have h2_ij := h2 (evec i) (evec j)
+  have h1' : star (M j i) = B1 i j := by
+    simpa [stdInner_mulVec_evec_evec, stdInner_evec_mulVec] using h1_ij
+  have h2' : star (M j i) = B2 i j := by
+    simpa [stdInner_mulVec_evec_evec, stdInner_evec_mulVec] using h2_ij
+  rw [← h1', ← h2']
+
+/-- 共轭转置满足伴随方程：<Mv,w> = <v,M†w>
+    —— dagger（共轭转置）是内积伴随的矩阵表示。 -/
+theorem conjTranspose_satisfies_adjoint {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
+    IsAdjoint M M.conjTranspose := by
+  intro v w
+  simp [IsAdjoint, stdInner, Matrix.mulVec, dotProduct, map_sum, map_mul,
+    Finset.mul_sum, Finset.sum_mul]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro k hk
+  apply Finset.sum_congr rfl
+  intro l hl
+  ring
+
+/-- dagger = 唯一内积伴随：满足伴随方程的 B 必等于 M†（= conjTranspose）
+    —— dagger-假设被内积结构推导替代（第一性原理，有限维骨架）。 -/
+theorem dagger_is_adjoint {n : ℕ} (M B : Matrix (Fin n) (Fin n) ℂ)
+    (hB : IsAdjoint M B) : B = M.conjTranspose := by
+  exact adjoint_unique hB (conjTranspose_satisfies_adjoint M)
 
 end UFPFormalization
