@@ -42,3 +42,4 @@ Data.zip
 .wsl-venv/
 .tmp/
 .pip-cache/
+Temp/

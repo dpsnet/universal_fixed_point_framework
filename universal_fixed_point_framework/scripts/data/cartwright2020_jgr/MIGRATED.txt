@@ -1,0 +1,5 @@
+This storage directory has been migrated and can be deleted.
+
+	            Migrated /datacentre/archvol5/qb158/archive/spot-43708-R001693-1 -> Disk : /datacentre/archvol7/ssde228 (2025-11-26 12:34:54.778623+00:00)
+	            Storage pot: archive/spot-43708-R001693-1
+	            Logical path: /ngdc/R001693-1

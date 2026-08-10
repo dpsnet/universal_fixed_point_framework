@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-页岩油气成藏谱流论文图件生成 II（Paper XLIII 正式版配套，2026-08-08）
-图7 shale_fig7_zero_threshold.png   零注入阈值判据（长7段 S1-TOC 低端趋零 + TOC* 外推 + 三判据）
+页岩油气成藏谱流论文图件生成 II（Paper XLIII 正式版配套，2026-08-08 扩展多井）
+图7 shale_fig7_zero_threshold.png   零注入阈值判据（长7段 CY 井 S1-TOC 低端趋零 + TOC* 外推 + 三判据；F75/N228 井 c 型对照）
 图8 shale_fig8_c_attr_drive.png     c 项成熟度结构驱动（EGDB 体系 c 代理 vs Tmax p95）
 """
 import csv
@@ -43,9 +43,34 @@ def load_chang7():
     return np.array(out)
 
 
+def load_chang7_wells():
+    """多井/多区分组：{'CY': (n,2), 'F75': ..., 'N228': ..., 'Zhou': ..., 'Fan': ...}"""
+    wells = {}
+    for key, rel in (("CY", os.path.join("data", "rockeval_chang7", "chang7_rockeval.csv")),
+                     ("F75", os.path.join("data", "rockeval_chang7_f75", "chang7_f75_rockeval.csv")),
+                     ("N228", os.path.join("data", "rockeval_chang7_n228", "chang7_n228_rockeval.csv")),
+                     ("Zhou", os.path.join("data", "rockeval_chang7_zhou", "zhou2024_tbl3.csv")),
+                     ("Fan", os.path.join("data", "rockeval_chang7_fan2023", "chang7_fan2023_rockeval.csv"))):
+        pts = []
+        with open(os.path.join(BASE, rel), encoding="utf-8-sig", errors="replace") as f:
+            reader = csv.reader(f)
+            header = next(r for r in reader if r and not r[0].lstrip().startswith("#"))
+            idx_t, idx_s = header.index("TOC_wt"), header.index("S1_mgg")
+            for r in reader:
+                if not r or r[0].lstrip().startswith("#"):
+                    continue
+                toc, s1 = _tof(r[idx_t]), _tof(r[idx_s])
+                if np.isfinite(toc) and np.isfinite(s1) and 0 < toc < 30 and s1 >= 0:
+                    pts.append((toc, s1))
+        wells[key] = np.array(pts)
+    return wells
+
+
 def fig7():
-    """零注入阈值判据（P4）：长7段 S1-TOC 线性注入 + 负截距外推 TOC* + 低端趋零放大"""
-    d = load_chang7()
+    """零注入阈值判据（P4）：长7段多井/多区——CY 井零阈值（线性注入+TOC*+低端趋零）
+    vs F75/N228 井 c 型（低端 S1 底板）vs Zhou2024 中央区（低端趋零但线性度受限）"""
+    wells = load_chang7_wells()
+    d = wells["CY"]
     toc, s1 = d[:, 0], d[:, 1]
     a, b = np.polyfit(toc, s1, 1)
     r2 = 1.0 - np.sum((s1 - (a * toc + b)) ** 2) / np.sum((s1 - s1.mean()) ** 2)
@@ -55,13 +80,11 @@ def fig7():
     lo, hi = s1[toc <= med], s1[toc > med]
     z2 = float(np.median(lo) / np.median(hi))
     z3 = float(s1.min())
-    fig, ax = plt.subplots(1, 2, figsize=(11, 4.4))
-    xs = np.linspace(0, 8, 100)
-    ax[0].scatter(toc, s1, s=45, c='steelblue', zorder=3, label='长7段样品')
-    ax[0].plot(xs, a * xs + b, 'k-', lw=1.5,
-               label='S1=%.2f·TOC%+.2f（R²=%.3f）' % (a, b, r2))
-    ax[0].plot(xs, a * xs + b, 'k-', lw=0)
-    # 负截距外推至零点：TOC*
+    fig, ax = plt.subplots(2, 2, figsize=(11, 8.6))
+    xs = np.linspace(0, 24, 100)
+    ax = ax.ravel()
+    # (a) CY 井线性注入与负截距外推
+    ax[0].scatter(toc, s1, s=45, c='steelblue', zorder=3, label='CY井（n=10）')
     ax[0].plot(xs, np.clip(a * xs + b, -9, 9), 'r--', lw=1.2)
     ax[0].axvline(toc_star, color='red', ls=':', lw=1.4)
     ax[0].text(toc_star + 0.12, 0.55, 'TOC*≈%.2f wt%%' % toc_star,
@@ -69,10 +92,10 @@ def fig7():
     ax[0].axhline(0, color='gray', lw=.6)
     ax[0].set_xlabel('TOC (wt%)')
     ax[0].set_ylabel('S1 (mg/g)')
-    ax[0].set_title('线性注入与负截距外推（Z1：R²=%.3f）' % r2, fontsize=10)
+    ax[0].set_title('(a) CY井线性注入与负截距外推（Z1：R²=%.3f）' % r2, fontsize=10)
     ax[0].legend(fontsize=8)
     ax[0].grid(alpha=.3)
-    # 低端放大：TOC < 4 wt%
+    # (b) CY 井低端放大
     m = toc < 4.0
     ax[1].scatter(toc[m], s1[m], s=55, c='#d9534f', zorder=3)
     ax[1].plot(xs[xs < 4], np.clip(a * xs[xs < 4] + b, 0, 9), 'k-', lw=1.5)
@@ -82,16 +105,53 @@ def fig7():
                    arrowprops=dict(arrowstyle='->', color='red', lw=1))
     ax[1].set_xlabel('TOC (wt%)')
     ax[1].set_ylabel('S1 (mg/g)')
-    ax[1].set_title('低端趋零放大：Z2 低/高比=%.3f，Z3 minS1=%.3f' % (z2, z3), fontsize=10)
+    ax[1].set_title('(b) CY井低端趋零：Z2 低/高比=%.3f，Z3 minS1=%.3f' % (z2, z3), fontsize=10)
     ax[1].grid(alpha=.3)
-    fig.suptitle('长7段零注入阈值判据（三判据齐备：Z1 线性度≥0.90 + Z2 低端趋零<0.35 + Z3 c→0）',
-                 fontsize=11)
+    # (c) 多井/多区 S1-TOC 叠加
+    colors = {'CY': 'steelblue', 'F75': '#d9534f', 'N228': 'seagreen', 'Zhou': '#8e44ad', 'Fan': '#e67e22'}
+    marks = {'CY': 'o', 'F75': 's', 'N228': '^', 'Zhou': 'D', 'Fan': 'v'}
+    labels = {'CY': 'CY井（n=10，零阈值型）', 'F75': 'F75井（n=23，Chen 2021）',
+              'N228': 'N228井（n=9，崔德艺2023）', 'Zhou': 'Zhou2024中央区（n=38）',
+              'Fan': 'Fan2023陇东（n=10）'}
+    fits = {}
+    for k in ("CY", "F75", "N228", "Zhou", "Fan"):
+        w = wells[k]
+        xk, yk = w[:, 0], w[:, 1]
+        ak, bk = np.polyfit(xk, yk, 1)
+        r2k = 1.0 - np.sum((yk - (ak * xk + bk)) ** 2) / np.sum((yk - yk.mean()) ** 2)
+        fits[k] = (ak, bk, r2k)
+        ax[2].scatter(xk, yk, s=40, c=colors[k], marker=marks[k],
+                      zorder=3, label='%s（S1=%.2f·TOC%+.2f，R²=%.2f）' % (labels[k], ak, bk, r2k))
+        xr = np.linspace(xk.min(), xk.max(), 60)
+        ax[2].plot(xr, ak * xr + bk, ls='--', lw=1.0, c=colors[k], alpha=.7)
+    ax[2].set_xlabel('TOC (wt%)')
+    ax[2].set_ylabel('S1 (mg/g)')
+    ax[2].set_title('(c) 长7段多井/多区 S1-TOC：零阈值型 vs c 型并存', fontsize=10)
+    ax[2].legend(fontsize=7.5, loc='upper left')
+    ax[2].grid(alpha=.3)
+    # (d) 低 TOC 窗口：c 型低端 S1 底板 vs CY 零阈值
+    for k in ("CY", "F75", "N228", "Zhou", "Fan"):
+        w = wells[k]
+        wk = w[(w[:, 0] < 6.0)] if k not in ("N228", "Fan") else w
+        ax[3].scatter(wk[:, 0], wk[:, 1], s=40, c=colors[k], marker=marks[k],
+                      zorder=3, label=labels[k])
+        if len(wk) > 0:
+            ax[3].axhline(np.median(wk[:, 1]), color=colors[k], ls=':', lw=1.0)
+    ax[3].set_xlabel('TOC (wt%)')
+    ax[3].set_ylabel('S1 (mg/g)')
+    ax[3].set_title('(d) 低端 TOC 窗口：c 型 S1 底板非零 vs CY 井趋零', fontsize=10)
+    ax[3].legend(fontsize=8, loc='upper left')
+    ax[3].grid(alpha=.3)
+    fig.suptitle('长7段零注入阈值判据（CY 井三判据齐备 vs F75/N228/Fan 井 c 型背景 vs Zhou2024 中央区弱背景）', fontsize=11)
     fig.tight_layout()
     out = os.path.join(FIG, 'shale_fig7_zero_threshold.png')
     fig.savefig(out, dpi=150)
     plt.close(fig)
-    print('图7 已生成：%s（TOC*=%.3f wt%%，R²=%.3f，Z2=%.3f，Z3=%.3f）'
+    print('图7 已生成：%s（CY TOC*=%.3f wt%%，R²=%.3f，Z2=%.3f，Z3=%.3f）'
           % (out, toc_star, r2, z2, z3))
+    for k in ("CY", "F75", "N228", "Zhou", "Fan"):
+        ak, bk, r2k = fits[k]
+        print('   %s：S1=%.3f·TOC%+.3f（R²=%.3f，n=%d）' % (k, ak, bk, r2k, len(wells[k])))
 
 
 def load_egdb_systems():
