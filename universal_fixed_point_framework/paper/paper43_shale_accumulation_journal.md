@@ -646,7 +646,7 @@ Pfeifer-Avnir 定理（Pfeifer & Avnir, 1983）$S(P_c)\propto P_c^{-(2-D)}$ 是�
 
 ## 7 数据可用性声明
 
-本文全部真实数据来源与 DOI 见 §3.1 表 1 与参考文献；分析脚本与复现流程可向通讯作者索取（wang.bin@foxmail.com），其中长7段 Bootstrap 95% 置信区间计算脚本（百分位 Bootstrap 法、10,000 次有放回重采样、固定随机种子 42）与绘图脚本随文提供，结果可逐位复现（§4.5）。中国体系数据（长7段、青山口、沙海组、苏北阜宁 GY1）与金刚烷逐油样数据（塔里木 STGL 21、古龙 49、库车 60）均自开放获取论文原始表格逐样品提取；芦草沟组、Green River、Eagle Ford GC-2、怀俄明三组、Bakken、Permian、EGDB、GCSRD 均取自开放数据仓储（USGS data release / Mendeley Data，CC 协议，见参考文献）。
+本文全部真实数据来源与 DOI 见 §3.1 表 1 与参考文献。全部统计分析、正向数值仿真与绘图脚本已随项目公开（**https://gitee.com/dpsnet/universal_fixed_point_framework**；`universal_fixed_point_framework/scripts/` 下 `paperX_shale_*` 系列复现脚本、`figs/` 下 `shale_fig*.png` 图件、`paper/` 下论文正文，许可证 CC-BY-4.0/MIT），其中长7段 Bootstrap 95% 置信区间计算脚本（百分位 Bootstrap 法、10,000 次有放回重采样、固定随机种子 42）与绘图脚本结果可逐位复现（§4.5）；亦可向通讯作者索取（wang.bin@foxmail.com）。中国体系数据（长7段、青山口、沙海组、苏北阜宁 GY1）与金刚烷逐油样数据（塔里木 STGL 21、古龙 49、库车 60）均自开放获取论文原始表格逐样品提取；芦草沟组、Green River、Eagle Ford GC-2、怀俄明三组、Bakken、Permian、EGDB、GCSRD 均取自开放数据仓储（USGS data release / Mendeley Data，CC 协议，见参考文献）。
 
 ## 参考文献
 
