@@ -36,17 +36,17 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 | 1 | Φ 的严格范畴论定义（是否 D 函子特例） | ✅ 闭合 | 对象层**构造性实现（非推导结论）**（`PhotonTopologyFunctor.lean`）：光子谱化**经 D 构造性实现** = D∘嵌入（封闭谱 1 维/开放谱 2 维 + `bifurcation_changes_spectrum`，`photonToRec` 嵌入任意性已登记）+ Φ 自函子公理 + 幂等；**A3 并置结构**：`CoexistingAfterBifurcation`/`bifurcateCoexisting`（Φ₊ : X ↦ (X_low, ⟨opened⟩)，原子保留 + 能量重分配，旧 Φ = 光子分量投影）；**态射层闭合（2026-08-11）**：`photonHomToRecHom` + `photonToRecFunctor`（忠实函子，`Functor.Faithful` 机器证明）——光子拓扑范畴忠实嵌入 Rec 范畴 |
 | 2 | 零质量 $v<c$ 不自洽 Lean 形式化 | ✅ 闭合 | `PhotonTopology.lean` `zero_mass_group_velocity`（$E=pc\Rightarrow v_g=c$）+ `zero_mass_no_sublight` |
 | 3 | 捕获-再分岔模型数值模拟 | ✅ 闭合 | S7：真空段严格 $v=c$ + 宏观 $v_{\text{avg}}<c$ + 解析 $t=L/c+n·p·τ$（rel 1.0%）+ 单调性 |
-| 4 | $h$-$c$-$\Delta$ 具体代数形式 | 🔶 部分 | **量纲限定（2026-08-11，`paperX_hcdelta_dimension.py` 15/15）**：Buckingham π ⟹ 任意 h-c-Δ 约束必为 $\Delta=F(\lambda_{\min}/\lambda_P)$；候选族 $k(\lambda_P/\lambda_{\min})^n$；n=2 反推 λ_min~4e-32 m（登记困难）；数值待定 |
-| 5 | 偏振红移差 κ_Δ 精确值 | 🔶 部分 | E1 锁定量级带 $[10^{-4},10^{-2}]$ + 与预言 P1 带重叠；精确值待定 |
-| 6 | 推论 4 时间解耦：树级自由传播模方守恒一致性 | 🔶 部分 | S8 `s8_free_propagation`（36/36）：C27/29 定义一致性（定义 2.4 = 标准量子光学，rel 1.3e-16）+ C28/30 树级（忽略真空修正）模方守恒 $|e^{-i\omega nt}|^2=1$（trivial 恒等式，非等价性验证）；**机制层 Lean 骨架（2026-08-11）**：Fock 算子 $[N,H_0]=0$/$[N,a^\dagger]=a^\dagger$/$[N,a]=-a$/$\|e^{-i\omega nt}\|=1$；**γ→∞ 部分未数值验证**；完整 R 折叠 = 哈密顿量（Jaynes-Cummings 桥接）开放 |
-| 7 | 纤维丛层正交严格化 | 🔶 部分 | 核心结论：正交 = (V, H, g) 相容选取。数值 5/5（标准度量 V⊥H_f⟺f=0；g_A 下 V⊥H_A）+ Lean `VerticalHorizontalSplitting` + **内积层 + 联络-度量相容选取闭合（2026-08-11）**：`inf_eq_bot_of_le_orthogonal`/`inf_eq_bot_of_inner_orthogonal`/`sup_orthogonal_eq_top`（V⊔Vᗮ=⊤）/`isCompl_orthogonal_standard`（度量正交补 = 典范相容补空间，3022 jobs 零 sorry）；全微分几何层（联络形式/曲率/挠率）开放 |
+| 4 | $h$-$c$-$\Delta$ 具体代数形式 | 🔶 部分 | **量纲限定 + 参数空间负结果（2026-08-11，`paperX_hcdelta_dimension.py` 20/20）**：Buckingham π ⟹ 任意 h-c-Δ 约束必为 $\Delta=F(\lambda_{\min}/\lambda_P)$；候选族 $k(\lambda_P/\lambda_{\min})^n$；诚实负结果：已知物理尺度全部排除，仅近-Planck λ_min 允许 k~O(1)；数值待定 |
+| 5 | 偏振红移差 κ_Δ 精确值 | 🔶 部分 | **框架内生候选 + 判别性锚定（2026-08-11，`paperX_photon_kappa_delta.py` 14/14）**：自旋霍尔偏振比（太阳 ~1e-16/白矮星 ~1e-14）与预言带 $[10^{-4},10^{-2}]$ 差 10–12 量级 ⟹ P1 非重述（锚定仅判别器可剔除）；纯框架候选 $S_4^2$/ $S_4/(N_{\text{Weyl}}d_H)$/ $S_4^2N_{\text{Weyl}}/2$/ $S_4^2d_H/2$ 均在带内；精确挑选需选择原理（开放子项） |
+| 6 | 推论 4 时间解耦：树级自由传播模方守恒一致性 | 🔶 部分 | S8 `s8_free_propagation`（36/36）：C27/29 定义一致性（定义 2.4 = 标准量子光学，rel 1.3e-16）+ C28/30 树级（忽略真空修正）模方守恒 $|e^{-i\omega nt}|^2=1$；**机制层（2026-08-11）**：Fock Lean 骨架（$[N,H_0]=0$/$[N,a^\dagger]=a^\dagger$/$[N,a]=-a$）+ **JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）**：共振矩阵元/Rabi/费米黄金规则/树级 vs 机制层破缺 + **dagger-假设临时登记**（Rec/Sp dagger 结构且 R=D†，有限维骨架 `dagger`/`dagger_involution`/`jc_hermitian`；第一性原理目标：从伴随 D⊣R + 纤维丛内积推导并剔除假设）；**γ→∞ 未验证**；完整范畴等价（R ↔ H_int 态射层同构）开放 |
+| 7 | 纤维丛层正交严格化 | 🔶 部分 | 核心结论：正交 = (V, H, g) 相容选取。数值 5/5 + Lean `VerticalHorizontalSplitting` + **内积层 + 联络-度量相容选取 + 联络算子闭合（2026-08-11）**：`inf_eq_bot_of_le_orthogonal`/`inf_eq_bot_of_inner_orthogonal`/`sup_orthogonal_eq_top`/`isCompl_orthogonal_standard`/`projection_along_orthogonal_idempotent`（P²=P）/`_ker`/`_range`（`LinearMap.IsProj`，3022 jobs 零 sorry）；全微分几何层（联络形式/曲率/挠率）开放 |
 | 8 | 静默指标与爱因斯坦系数关联 | ✅ 闭合 | 门控模型 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$：S9 数值（36/36）+ Lean `gating_silent_zero`/`gating_open_full` |
 
 ---
 
 ## 四、关键代码变更
 
-### 数值脚本（4 个，全部注册 `run_all_tests.py`）
+### 数值脚本（7 个，全部注册 `run_all_tests.py`）
 
 | 脚本 | 检查数 | 覆盖 |
 |:--|:--|:--|
@@ -54,13 +54,16 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 | `scripts/paperX_redshift_topology.py` | **14/14** | 多普勒推导链（γ(1+β)=√((1+β)/(1-β))，rel 7e-15）；引力基础项（2.12e-6/6.95e-10）；δz_Δ 量级带；宇宙学/统一公式；c=λν 保持；弱场组合（rel 0.009） |
 | `scripts/paperX_photon_cross_effects.py` | **18/18** | P1 偏振红移差（κ_Δ 扫描带重叠）；P2 S3 标度；P3 hcΔλ_min²~ħc 量级；P4 分形震荡（S₄=1/15）；P5 康普顿（λ_e=2.426e-12）；P6 多层静默（N_crit=3/6） |
 | `scripts/paperX_photon_fiber_orthogonality.py` | **5/5** | #7 纤维正交：V=ker dπ + TE=V⊕H_A + 标准度量 V⊥H_f⟺f=0 + g_A 下 V⊥H_A + 维数 |
+| `scripts/paperX_hcdelta_dimension.py` | **20/20** | #4 量纲限定（Buckingham π ⟹ Δ=F(λ_min/λ_P)）+ 候选族 + 参数空间负结果（已知尺度排除，近-Planck 允许 k~O(1)） |
+| `scripts/paperX_photon_jc_bridge.py` | **14/14** | #6 JC 定量桥接：共振矩阵元/Rabi 劈裂/费米黄金规则（共振非零失谐压制）/树级 vs 机制层破缺（⟨n⟩=1/2）/A3 能量重分配 |
+| `scripts/paperX_photon_kappa_delta.py` | **14/14** | #5 κ_Δ：自旋霍尔判别性锚定（太阳/白矮星 vs 预言带差 9.9–11.9 量级）+ 框架内生候选族（S₄² 等 4 候选均在带内） |
 
 ### Lean 形式化（2 模块，零 sorry）
 
 | 模块 | 内容 | 验证 |
 |:--|:--|:--|
-| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopology.lean` | 拓扑类；A4 阶跃（χ_Φ/σ_S3）；6 定理；**A3 并置结构 Φ₊（#1）**；零质量（#2）；门控（#8）；**Fock 空间算子（#6 机制层骨架）** | 3022 jobs |
-| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyFunctor.lean` | 光子嵌入 Rec（#1）；谱化 = D∘嵌入；分岔改变谱；Φ 函子公理/幂等；**态射层忠实嵌入（#1）**；**范畴层方向正交（光子 1-态射层单点性）**；垂直-水平分解 + **内积层正交⟹交平凡 + 联络-度量相容选取（#7）** | 3022 jobs |
+| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopology.lean` | 拓扑类；A4 阶跃（χ_Φ/σ_S3）；6 定理；**A3 并置结构 Φ₊（#1）**；零质量（#2）；门控（#8）；**Fock 空间算子（#6 机制层骨架）**；**光速锁定 λν=c 与能量量子 E=hν 骨架（P1 验收子项）**；**dagger 有限维骨架（dagger 对合 + JC 矩阵厄米性，#6 dagger-假设）** | 3022 jobs |
+| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyFunctor.lean` | 光子嵌入 Rec（#1）；谱化 = D∘嵌入；分岔改变谱；Φ 函子公理/幂等；**态射层忠实嵌入（#1）**；**范畴层方向正交（光子 1-态射层单点性）**；垂直-水平分解 + **内积层正交⟹交平凡 + 联络-度量相容选取 + 联络算子（幂等投影 ker=Vᗮ im=V，#7）** | 3022 jobs |
 
 ### Agda 镜像
 
@@ -105,4 +108,4 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 | `49102250a5` | Phase 62 62F：Lean PhotonTopology（827 jobs 零 sorry）+ Agda 镜像 |
 | `phase62-photon-topology-v0.1` | tag：62A–F 阶段交付完成 |
 
-**注**：开放问题推进（#1/#2/#3/#4/#6/#7/#8：PhotonTopology.lean + PhotonTopologyFunctor.lean 扩展至 3022 jobs、S7–S9 追加、新增 fiber_orthogonality + hcdelta_dimension 脚本、run_all_tests 更新）与 2026-08-11 #1/#6 漏洞修正（A3 并置结构 Φ₊、谱化经 D 构造性实现 + 嵌入任意性登记、S8 重命名为树级自由传播模方守恒一致性 + γ→∞ 未验证标注）均尚未提交，待用户确认后提交。
+**注**：开放问题推进（#1/#2/#3/#4/#5/#6/#7/#8：PhotonTopology.lean + PhotonTopologyFunctor.lean 扩展至 3022 jobs、S7–S9 追加、新增 fiber_orthogonality + hcdelta_dimension + jc_bridge + kappa_delta 脚本、run_all_tests 更新）与 2026-08-11 #1/#6 漏洞修正（A3 并置结构 Φ₊、谱化经 D 构造性实现 + 嵌入任意性登记、S8 重命名为树级自由传播模方守恒一致性 + γ→∞ 未验证标注）均尚未提交，待用户确认后提交。

@@ -7,6 +7,8 @@ import Mathlib.CategoryTheory.Functor.FullyFaithful
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Orthogonal
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
+import Mathlib.LinearAlgebra.Projection
+import Mathlib.Algebra.Group.Idempotent
 import Mathlib.Tactic
 
 /-!
@@ -282,18 +284,69 @@ theorem sup_orthogonal_eq_top [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
     simp [hInf]
   rw [hV, V.finrank_add_finrank_orthogonal]
 
-/-- 典范相容选取（#7 微分几何层代数核心）：V ⊓ Vᗮ = ⊥ 且 V ⊔ Vᗮ = ⊤，
-    即 (V, Vᗮ) 构成 g-正交补空间对——联络的相容选取由度量典范地给出。 -/
+/-- 典范相容选取（#7 微分几何层代数核心）：度量正交补给出 IsCompl 补空间对
+    （V ⊓ Vᗮ = ⊥ 且 V ⊔ Vᗮ = ⊤）——联络的相容选取由度量典范地给出
+    （mathlib `isCompl_orthogonal`，有限维下正交投影存在）。 -/
 theorem isCompl_orthogonal_standard [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
-    V ⊓ Vᗮ = ⊥ ∧ V ⊔ Vᗮ = ⊤ := by
-  constructor
-  · exact V.inf_orthogonal_eq_bot
-  · exact sup_orthogonal_eq_top V
+    IsCompl V Vᗮ := by
+  haveI : V.HasOrthogonalProjection := inferInstance
+  exact V.isCompl_orthogonal
 
 /-- 与 VerticalHorizontalSplitting 的衔接：g-正交分解 (V, Vᗮ) 满足代数骨架的全部断言
     （inf_bot + sup_top）——联络-度量相容选取存在且典范。 -/
 theorem standard_splitting_satisfies (V : Submodule ℝ E) :
     V ⊓ Vᗮ = ⊥ :=
   V.inf_orthogonal_eq_bot
+
+/-! ## 联络 = 幂等投影（开放问题 #7 全微分几何层推进）
+   联络（水平子空间选取）的**算子核心** = 幂等投影 P : E →ₗ E（P² = P）：
+   沿 H 到 V 的投影满足 ker P = H（水平）、im P = V（垂直）、E = V ⊕ H。
+   度量正交补 H = Vᗮ 给出**相容**联络算子（mathlib `LinearMap.projection`/
+   `isIdempotentElem_projection`）——联络-度量相容选取的算子表述。 -/
+
+/-- 联络算子的代数形式：幂等投影（P² = P）。 -/
+abbrev LinearProjection (P : E →ₗ[ℝ] E) : Prop := IsIdempotentElem P
+
+/-- 联络算子幂等性：沿度量正交补 Vᗮ 到 V 的投影是幂等的（P² = P，
+    mathlib `Submodule.isIdempotentElem_projection`）——H = Vᗮ 给出相容联络。 -/
+theorem projection_along_orthogonal_idempotent [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
+    LinearProjection (V.projection Vᗮ (isCompl_orthogonal_standard V)) :=
+  Submodule.isIdempotentElem_projection (isCompl_orthogonal_standard V)
+
+/-- 联络的水平子空间 = 度量正交补：ker P = Vᗮ
+    （投影的核 = 沿之投影的子空间，`Submodule.projection_apply_eq_zero_iff`）——相容选取的算子表述。 -/
+theorem projection_along_orthogonal_ker [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
+    LinearMap.ker (V.projection Vᗮ (isCompl_orthogonal_standard V)) = Vᗮ := by
+  ext x
+  rw [LinearMap.mem_ker]
+  exact Submodule.projection_apply_eq_zero_iff (isCompl_orthogonal_standard V)
+
+/-- 联络的垂直子空间 = V：im P = V（IsProj 唯一性：投影的像 = 其固定点子空间）。 -/
+theorem projection_along_orthogonal_range [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
+    LinearMap.range (V.projection Vᗮ (isCompl_orthogonal_standard V)) = V := by
+  let P : E →ₗ[ℝ] E := V.projection Vᗮ (isCompl_orthogonal_standard V)
+  have hIdem : IsIdempotentElem P := by
+    exact Submodule.isIdempotentElem_projection (isCompl_orthogonal_standard V)
+  have hV : LinearMap.IsProj V P := by
+    constructor
+    · intro x
+      rw [← Submodule.projection_eq_self_iff (isCompl_orthogonal_standard V)]
+      change (P * P) x = P x
+      exact DFunLike.congr_fun (show P * P = P from hIdem) x
+    · intro x hx
+      exact (Submodule.projection_eq_self_iff (isCompl_orthogonal_standard V) x).2 hx
+  exact LinearMap.IsProj.range hV
+
+/-- 联络-度量相容选取的算子闭合：P 是沿 Vᗮ 到 V 的幂等投影，
+    即 E = V ⊕ Vᗮ（IsCompl）由投影算子 P 构造性给出（#7 联络层的代数核心）。 -/
+theorem connection_metric_compatible [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
+    LinearProjection (V.projection Vᗮ (isCompl_orthogonal_standard V)) ∧
+    LinearMap.ker (V.projection Vᗮ (isCompl_orthogonal_standard V)) = Vᗮ ∧
+    LinearMap.range (V.projection Vᗮ (isCompl_orthogonal_standard V)) = V := by
+  constructor
+  · exact projection_along_orthogonal_idempotent V
+  · constructor
+    · exact projection_along_orthogonal_ker V
+    · exact projection_along_orthogonal_range V
 
 end UFPFormalization

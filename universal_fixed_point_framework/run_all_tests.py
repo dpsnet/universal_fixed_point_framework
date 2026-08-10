@@ -295,7 +295,13 @@ SCRIPTS = [
     ("scripts/paperX_photon_fiber_orthogonality.py", "光子拓扑 62#7：纤维丛层正交严格化——V=ker dπ + TE=V⊕H_A + 标准度量 V⊥H_f⟺f=0 + g_A 下 V⊥H_A(任意 A, 相容选取) + 维数 (5/5)"),
 
     # === Phase 62: 光子拓扑-范畴理论 (62 #4) ===
-    ("scripts/paperX_hcdelta_dimension.py", "光子拓扑 62#4：h-c-Δ 三常数约束代数形式量纲限定——Buckingham π(5 变量-3 量纲=2 无量纲群) + Δ=F(λ_min/λ_P) 形式族 + 候选族量纲一致 + E3 量纲确认(Δλ_min 无量纲谱间距) + n=2 反推 λ_min 诚实量化 (15/15)"),
+    ("scripts/paperX_hcdelta_dimension.py", "光子拓扑 62#4：h-c-Δ 三常数约束代数形式量纲限定——Buckingham π(5 变量-3 量纲=2 无量纲群) + Δ=F(λ_min/λ_P) 形式族 + 候选族量纲一致 + E3 量纲确认 + n=2 反推 + 参数空间诚实负结果(已知尺度排除/近-Planck 约束) (20/20)"),
+
+    # === Phase 62: 光子拓扑-范畴理论 (62 #6) ===
+    ("scripts/paperX_photon_jc_bridge.py", "光子拓扑 62#6：机制层桥接——R 折叠 = JC 相互作用哈密顿量定量对应——共振矩阵元/Rabi 劈裂/费米黄金规则(共振最大失谐压制)/sinc² 线型/爱因斯坦衔接/树级保光子数 vs 机制层破缺/A3 能量重分配 (14/14)"),
+
+    # === Phase 62: 光子拓扑-范畴理论 (62 #5) ===
+    ("scripts/paperX_photon_kappa_delta.py", "光子拓扑 62#5：κ_Δ 偏振红移差系数——第一性原理框架内生候选族(S4², S4/(N_Weyl·d_H) 等在带内, 无外部参数) + 自旋霍尔判别性锚定(P1 带与标准自旋霍尔比差 10-12 量级, 锚定仅判别器可剔除) + 选择原理开放子项 (14/14)"),
 ]
 
 # 耗时脚本（如 DNS 湍流高精度验证），默认跳过；设置环境变量 RUN_SLOW=1 时运行

@@ -1,5 +1,7 @@
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
+import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Fin.VecNotation
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic
@@ -280,5 +282,65 @@ theorem norm_phase_one (omega : ℝ) (n : ℕ) (t : ℝ) :
     ring
   rw [hE]
   simpa using Complex.norm_exp_ofReal_mul_I (-(omega * (n : ℝ) * t))
+
+/-! ## 光速锁定与能量量子（P1 验收子项推进）
+   温和兼容：c = λν 与 E = hν 为已知物理的恒等式重述（SI 定义构造），
+   本节省在给出**代数骨架**（关系结构 + 衔接定理），并诚实标注非新预言。
+   数值验证见 paperX_photon_topology.py §S2/S3/S4（c=1/√(μ₀ε₀)、λν=c、E=hν）。 -/
+
+/-- 光速锁定结构：λ·ν = c（粘合函子锁定的传播标度，定理 2.1 的代数骨架）。 -/
+structure SpeedLocked where
+  lam : ℝ
+  nu : ℝ
+  c : ℝ
+  lock : lam * nu = c
+  c_pos : 0 < c
+  lam_pos : 0 < lam
+
+/-- 能量量子结构：E = hν（Planck 关系，命题 3.1 的代数骨架）。 -/
+structure EnergyQuantum where
+  E : ℝ
+  h : ℝ
+  nu : ℝ
+  quant : E = h * nu
+  h_pos : 0 < h
+
+/-- 波长-频率-能量衔接：λ·ν = c 与 E = hν 联立 ⟹ E = hc/λ
+    （Planck-Einstein 关系与波速恒等式在共同频率下的衔接，温和兼容）。 -/
+theorem energy_from_wavelength (EL : SpeedLocked) (EQ : EnergyQuantum) (h_nu : EL.nu = EQ.nu) :
+    EQ.E = EQ.h * EL.c / EL.lam := by
+  rw [EQ.quant, ← h_nu]
+  have hc : EL.nu = EL.c / EL.lam := by
+    rw [← EL.lock]
+    field_simp [EL.lam_pos.ne']
+  rw [hc]
+  ring
+
+/-! ## dagger 结构与 H_int 厄米性（开放问题 #6 范畴等价的有限维骨架）
+   机制层开放项"R 伴随函子 ↔ H_int 算子"的 **dagger-假设**（2026-08-11 临时登记）：
+   若 Rec/Sp 装备 dagger 范畴结构且 R = D†（dagger-伴随），则 R 的"折叠"对应厄米共轭，
+   且 H_int† = H_int（厄米性）对应"R 是 D 的 dagger-伴随"。
+   本节省在**有限维代数骨架**：dagger = 共轭转置（mathlib `Matrix.conjTranspose`），
+   dagger 对合性 + JC 相互作用矩阵厄米性（数值对应见 paperX_photon_jc_bridge.py）。
+   第一性原理目标（登记）：从框架既有结构（Paper I 伴随 D⊣R + 纤维丛内积）推导
+   dagger 性质，最终剔除 dagger-假设（非外部输入）。 -/
+
+/-- dagger 算子：共轭转置（量子力学厄米共轭的代数骨架）。 -/
+abbrev dagger {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
+  A.conjTranspose
+
+/-- dagger 是对合：dagger (dagger A) = A（dagger 范畴公理之一的代数骨架）。 -/
+theorem dagger_involution {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+    dagger (dagger A) = A := by
+  simp [dagger]
+
+/-- JC 相互作用矩阵的厄米性：H_int = [[0,g],[g,0]]（g 实数）满足 H† = H
+    ——"R 折叠 = 相互作用哈密顿量"中哈密顿量厄米性的代数骨架
+    （R = D† 假设下，厄米性对应 R 是 D 的 dagger-伴随）。 -/
+theorem jc_hermitian (g : ℝ) :
+    dagger (![![0, (g : ℂ)], ![(g : ℂ), 0]] : Matrix (Fin 2) (Fin 2) ℂ) =
+    (![![0, (g : ℂ)], ![(g : ℂ), 0]] : Matrix (Fin 2) (Fin 2) ℂ) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [dagger]
 
 end UFPFormalization

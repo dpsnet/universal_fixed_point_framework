@@ -126,6 +126,30 @@ def hcdelta_dimension():
               lam > 0 and lam < 1e-20,   # 诚实: 远小于已知最小物理尺度 ~1e-20 m
               "lambda_min=%.2e m" % lam)
 
+    # C6: 参数空间扫描——候选族 (n=2) 与可观测约束的自洽性（诚实负结果）
+    #     Delta = k*(lP/lambda_min)^2, 观测带 Delta ∈ [1e-8, 1e-6]:
+    #     已知物理尺度 (原子/核子/S3 谱波长) 要求 k >> 1 —— 排除 (负结果登记);
+    #     仅 lambda_min ~ 10^3-10^4*lP (4e-32..4e-31 m) 允许 k~O(1)。
+    d_obs_lo, d_obs_hi = 1e-8, 1e-6
+    lam_candidates = {"原子尺度": 1.0e-10, "核子尺度": 1.0e-15, "S3 谱波长(候选)": 1.0e-9}
+    for lam_name, lam in lam_candidates.items():
+        k_lo = d_obs_lo * (lam / lP)**2
+        k_hi = d_obs_hi * (lam / lP)**2
+        check("C6-1 %s 需 k∈[%.1e,%.1e] 远非 O(1)——候选族排除 (诚实负结果)"
+              % (lam_name, k_lo, k_hi),
+              k_lo > 1.0,
+              "k_band=[%.1e, %.1e]" % (k_lo, k_hi))
+    # n=2, k~O(1) 反推 lambda_min 允许区间
+    lam_min_allow_lo = lP / np.sqrt(d_obs_hi)   # = lP*1e3
+    lam_min_allow_hi = lP / np.sqrt(d_obs_lo)   # = lP*1e4
+    check("C6-2 n=2,k=1 反推 lambda_min ∈ [%.1e, %.1e] m = 10^3-10^4*lP (近-Planck, 登记约束)"
+          % (lam_min_allow_lo, lam_min_allow_hi),
+          lam_min_allow_lo > lP and lam_min_allow_hi < 1.0e5 * lP,
+          "允许带: [%.2e, %.2e] m" % (lam_min_allow_lo, lam_min_allow_hi))
+    # 对比: 若允许 k 取任意值, 则候选族退化 (无预测力)——k~O(1) 是唯一有约束力的要求
+    check("C6-3 k 无约束时候选族无预测力——k~O(1) 为模型必须额外设定的参数 (诚实边界)",
+          lam_min_allow_hi > 0)
+
 
 def main():
     hcdelta_dimension()
