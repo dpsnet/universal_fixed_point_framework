@@ -514,7 +514,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 |:-----|:---------|:----:|
 | `TempRGFiber.lean` | $\pi_T/\pi_\mu$ 纤维化、$\hat{\mathcal{T}}_{\text{Riem}}$ 函子 | ✅ |
 | `NoiseFiber.lean` | $\pi_\eta$ 纤维化、FH 定理、$\eta_c$ 奇异性 | ✅ |
-| `SignatureFiber.lean` | $\pi_{\text{Sig}}$ 纤维化、Bott 塔、Level4Extension | ✅ |
+| `SignatureFiber.lean` | $\pi_{\text{Sig}}$ 纤维化、Bott 塔、Level4Extension | ✅（π_Sig 的 Level4 已勘误，见下） |
 | `KerrFiber.lean` | $\pi_{M,a}$ 纤维化、Hawking 温度、非乘积丛 | ✅ |
 | `FlavorFiber.lean` | $\mathbf{Flt}$ 范畴、转移函数、cocycle 条件 | ✅ |
 | `WeaveProductFiber.lean` | $\mathbf{Temp}\times\mathbf{RG}$ 乘积基、辫子截面 | ✅ |
@@ -526,12 +526,20 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 ### 9.2 complete_chain 定理
 
 **定理 9.1**（complete_chain）。以下条件在总参数丛上同时成立：
-1. **Level 扩展**：$\pi_T$、$\pi_\mu$、$\pi_\eta$、$\pi_{\text{Sig}}$ 均满足 Level 4 静默扩展（$\iota\dashv\pi$ 结构）
+1. **Level 扩展**：$\pi_T$、$\pi_\mu$ 满足 Level 4 静默扩展（$\iota\dashv\pi$ 结构）
 2. **Clifford 维数**：$\mathrm{Cl}(1,7)$ 的忠实表示维数为 8，即 $k_{\max}=8$
 3. **谱间隙**：$\Delta\lambda_{\min}(8) = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122$
 4. **临界噪声**：$\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488$
 
-该定理连接了四个形式化框架（TempRGFiber、NoiseFiber、SignatureFiber、SpectralGap），统一了 Level 4 纤维化结构从抽象范畴论到具体物理预言的全部推导链。
+> ※ 勘误（2026-08-09）：原条目 1 称 $\pi_\eta$、$\pi_{\text{Sig}}$ 亦满足 Level 4
+> ——**π_Sig 的 Level 4 counit 可证不存在**（`SignatureFiber.lean`
+> $\pi_{\text{Sig}}\_\text{is\_not\_level4}$：纤维态射 ℕ→ℕ 无零吸收结构，
+> counit 自然性在任意自态射处矛盾），π_η 未声明 Level 4 实例；EFTCodomainFiber
+> 的 `cod_level4` 同受此限（`cod_is_not_level4`）。Level 4（$\iota\dashv\pi$）
+> 结构在本有限原型中仅 $\pi_T$/$\pi_\mu$ 可构造满足，其余纤维化的 Level 4
+> 主张均以可证障碍定理记录（诚实负结果）。
+
+该定理连接了 TempRGFiber、SignatureFiber、SpectralGap 等形式化框架，统一了 Level 4 纤维化结构（π_T/π_μ）从抽象范畴论到具体物理预言的全部推导链（η_c 分量见 NoiseFiber.lean 的 criticalNoiseEta_from_cl17）。
 
 ---
 

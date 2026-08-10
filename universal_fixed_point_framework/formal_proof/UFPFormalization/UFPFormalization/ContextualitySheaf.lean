@@ -54,7 +54,7 @@ inductive PMContext : Type where
   deriving DecidableEq
 
 /-- The observables belonging to a given context. -/
-noncomputable def pmContextObjects (c : PMContext) : Set PMObservable :=
+def pmContextObjects (c : PMContext) : Set PMObservable :=
   match c with
   | PMContext.RowA => {PMObservable.A1, PMObservable.A2, PMObservable.A3}
   | PMContext.RowB => {PMObservable.B1, PMObservable.B2, PMObservable.B3}
@@ -66,8 +66,16 @@ noncomputable def pmContextObjects (c : PMContext) : Set PMObservable :=
 /-- Every observable belongs to exactly 2 contexts (one row, one column). -/
 theorem pm_observable_in_two_contexts (o : PMObservable) :
     ∃ (c₁ c₂ : PMContext), c₁ ≠ c₂ ∧ o ∈ pmContextObjects c₁ ∧ o ∈ pmContextObjects c₂ := by
-  rcases o with _ | _ | _ | _ | _ | _ | _ | _ | _ <;>
-    refine ⟨_, _, by decide, by decide, by decide⟩
+  rcases o with _ | _ | _ | _ | _ | _ | _ | _ | _
+  · exact ⟨PMContext.RowA, PMContext.Col1, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowA, PMContext.Col2, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowA, PMContext.Col3, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowB, PMContext.Col1, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowB, PMContext.Col2, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowB, PMContext.Col3, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowC, PMContext.Col1, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowC, PMContext.Col2, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
+  · exact ⟨PMContext.RowC, PMContext.Col3, by decide, by simp [pmContextObjects], by simp [pmContextObjects]⟩
 
 /-! =========================================================
     Section 2: Truth Assignment and Product Constraints
@@ -115,11 +123,11 @@ theorem pm_no_global_assignment : ¬ Nonempty (PMContextProduct) := by
   have h_row_total : (v PMObservable.A1 * v PMObservable.A2 * v PMObservable.A3) *
     (v PMObservable.B1 * v PMObservable.B2 * v PMObservable.B3) *
     (v PMObservable.C1 * v PMObservable.C2 * v PMObservable.C3) = 1 := by
-    nlinarith
+    rw [rA, rB, rC]
   have h_col_total : (v PMObservable.A1 * v PMObservable.B1 * v PMObservable.C1) *
     (v PMObservable.A2 * v PMObservable.B2 * v PMObservable.C2) *
     (v PMObservable.A3 * v PMObservable.B3 * v PMObservable.C3) = 0 := by
-    nlinarith
+    rw [c1, c2, c3]
   -- Rewrite both sides: each observable appears once in rows and once in columns,
   -- so they're the same product. Hence 1 = 0, impossible.
   have h_same_product : (v PMObservable.A1 * v PMObservable.A2 * v PMObservable.A3) *
@@ -136,15 +144,42 @@ theorem pm_no_global_assignment : ¬ Nonempty (PMContextProduct) := by
     Section 4: Presheaf Formulation of the PM Cover
    ========================================================= -/
 
+/-- PM 上下文覆盖：6 个上下文（3 行 + 3 列）覆盖全部 9 个可观测量。 -/
+structure ContextCover where
+  contexts : Set PMContext
+  covering : ∀ (o : PMObservable), ∃ (c : PMContext), c ∈ contexts ∧ o ∈ pmContextObjects c
+
+/-- 真值预层 F：对每个上下文 C 给出满足其乘积约束的真值指派集合。
+    限制态射为恒等（有限原型）。 -/
+structure TruthPresheaf (cover : ContextCover) where
+  sections (C : PMContext) : Set PMTruthAssignment
+  restrict (C₁ C₂ : PMContext) (_h : C₁ ∈ cover.contexts) : PMTruthAssignment → PMTruthAssignment
+
+/-- 全局截面：对所有覆盖中的上下文，全局真值指派都满足该上下文的乘积约束。 -/
+structure GlobalSection (cover : ContextCover) (F : TruthPresheaf cover) where
+  global_val : PMTruthAssignment
+  consistent : ∀ (C : PMContext), C ∈ cover.contexts → global_val ∈ F.sections C
+
+/-- The 6 PM contexts (3 rows + 3 columns). -/
+def PMContexts : Set PMContext :=
+  {PMContext.RowA, PMContext.RowB, PMContext.RowC,
+   PMContext.Col1, PMContext.Col2, PMContext.Col3}
+
 /-- The PM context cover as a concrete ContextCover. -/
 noncomputable def PMContextCover : ContextCover :=
-  { contexts := {PMContext.RowA, PMContext.RowB, PMContext.RowC,
-                  PMContext.Col1, PMContext.Col2, PMContext.Col3}
+  { contexts := PMContexts
     covering := by
       intro obj
-      -- Every observable belongs to at least one context (in fact, exactly two).
-      rcases obj with _ | _ | _ | _ | _ | _ | _ | _ | _ <;>
-        refine ⟨_, by decide, by decide⟩
+      rcases obj with _ | _ | _ | _ | _ | _ | _ | _ | _
+      · exact ⟨PMContext.RowA, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowA, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowA, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowB, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowB, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowB, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowC, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowC, by simp [PMContexts], by simp [pmContextObjects]⟩
+      · exact ⟨PMContext.RowC, by simp [PMContexts], by simp [pmContextObjects]⟩
   }
 
 /-- The truth assignment presheaf F on the PM context cover.
@@ -171,32 +206,32 @@ noncomputable def PMPresheaf : TruthPresheaf PMContextCover where
 theorem pm_presheaf_no_global_section : ¬ Nonempty (GlobalSection PMContextCover PMPresheaf) := by
   intro h_gs
   rcases h_gs with ⟨gs, h_consistent⟩
-  -- Extract the global truth assignment
-  let v_global : PMTruthAssignment := gs.global_val
+  -- Extract the global truth assignment (rcases 已分解 global_val 与 consistent)
+  let v_global : PMTruthAssignment := gs
   -- For each context, the restricted assignment must satisfy the context product condition
   have h_rowA : v_global.v PMObservable.A1 * v_global.v PMObservable.A2 * v_global.v PMObservable.A3 = 1 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.RowA :=
-      h_consistent PMContext.RowA (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.RowA :=
+      h_consistent PMContext.RowA (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   have h_rowB : v_global.v PMObservable.B1 * v_global.v PMObservable.B2 * v_global.v PMObservable.B3 = 1 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.RowB :=
-      h_consistent PMContext.RowB (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.RowB :=
+      h_consistent PMContext.RowB (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   have h_rowC : v_global.v PMObservable.C1 * v_global.v PMObservable.C2 * v_global.v PMObservable.C3 = 1 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.RowC :=
-      h_consistent PMContext.RowC (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.RowC :=
+      h_consistent PMContext.RowC (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   have h_col1 : v_global.v PMObservable.A1 * v_global.v PMObservable.B1 * v_global.v PMObservable.C1 = 1 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.Col1 :=
-      h_consistent PMContext.Col1 (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.Col1 :=
+      h_consistent PMContext.Col1 (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   have h_col2 : v_global.v PMObservable.A2 * v_global.v PMObservable.B2 * v_global.v PMObservable.C2 = 1 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.Col2 :=
-      h_consistent PMContext.Col2 (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.Col2 :=
+      h_consistent PMContext.Col2 (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   have h_col3 : v_global.v PMObservable.A3 * v_global.v PMObservable.B3 * v_global.v PMObservable.C3 = 0 := by
-    have h_section : gs.global_val ∈ PMPresheaf.sections PMContext.Col3 :=
-      h_consistent PMContext.Col3 (by decide)
+    have h_section : v_global ∈ PMPresheaf.sections PMContext.Col3 :=
+      h_consistent PMContext.Col3 (by simp [PMContextCover, PMContexts])
     simpa [PMPresheaf] using h_section
   -- Construct a PMContextProduct from the global assignment (contradiction)
   have h_pm : Nonempty PMContextProduct := by

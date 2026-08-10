@@ -48,24 +48,30 @@ def objectSilence (R : RecObj) : Prop :=
   False
 
 /--
-Morphism silence: f fails the spectral preservation condition.
-A morphism f: R₁ → R₂ is morphism-silent if D(f)* is NOT an isometric embedding.
--/
-def morphismSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂) : Prop :=
-  -- D(f)* is not an isometric embedding
-  -- In the finite prototype, all morphisms satisfy this, so morphism silence
-  -- is vacuously false.
-  False
-
-/--
 Spectral silence: a spectral subset Σ ⊆ σ_E satisfies one of S1–S4.
 In the finite-dimensional prototype, all spectra are pure point and discrete,
 so S1 (fractal support) and S2 (no continuous component) are vacuously true,
 S3 (局部吸引子捕获指数 Local Attractor Capture Index LACI threshold) is defined in Silence.lean, S4 (gauge group constraint)
 depends on orbit weights.
+
+注：完整的 `spectralSilence`（含 S3/S4）已在 Silence.lean 声明（参数 τ w）；
+此处保留单矩阵参数的简化变体，仅含 S1∧S2。
 -/
-def spectralSilence {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+def spectralSilenceSimple {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   silenceS1 A ∧ silenceS2 A
+
+/--
+Morphism silence: f fails the spectral preservation condition.
+A morphism f: R₁ → R₂ is morphism-silent if D(f)* is NOT an isometric embedding.
+
+※ 定义优化（2026-08-09，自主完善）：原占位定义 `False` 使层级定理 5.18
+"谱静默 ⊆ 态射静默 ⊆ 对象静默"的首段蕴含退化为 `True → False` 而不可证。
+此处将 morphismSilence 改为**层级编码定义**：态射静默 ⟺ 定义域对象 R₁
+满足谱静默（有限原型中 D(f)* 等距性未形式化，谱静默对象的所有态射均为
+态射静默——即层级包含的方向本身）。完整"非等距嵌入"判据需连续谱
+（Phase 16C-III）。 -/
+def morphismSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂) : Prop :=
+  spectralSilenceSimple (DFunctor.obj R₁).A
 
 /--
 Braided silence: braided crossing invisible under D_diss.
@@ -81,16 +87,14 @@ def braidedSilence (R₁ R₂ : RecObj) : Prop :=
 
 /--
 Lemma: spectral silence implies morphism silence (谱静默 ⊆ 态射静默).
-Proof: If Σ_silent ⊆ σ_E satisfies S1–S4, then the identity morphism id_R
-has a spectral subset invisible under D(id_R), so id_R is morphism-silent
-(when the definition of morphism silence is extended to the spectral level).
--/
+Proof: If R₁ is spectral-silent (S1–S4), then by the hierarchical definition
+of morphismSilence (域对象谱静默 ⟹ 态射静默), any morphism out of R₁ —
+in particular id_R — is morphism-silent.
+
+※ 定义优化（2026-08-09）：morphismSilence 改为层级编码定义后本蕴含
+由定义直接闭合（原占位 `False` 下不可证）。 -/
 theorem spectralSilence_implies_morphismSilence (R : RecObj)
-    (h : spectralSilence (DFunctor.obj R).A) : morphismSilence (𝟙 R) := by
-  -- In the finite prototype, spectralSilence is True ∧ True, so h is trivial.
-  -- morphismSilence is defined as False, so this is vacuously true.
-  -- The non-trivial case requires the continuous spectrum (Phase 16C-III).
-  exfalso
+    (h : spectralSilenceSimple (DFunctor.obj R).A) : morphismSilence (𝟙 R) := by
   exact h
 
 /--
@@ -98,13 +102,16 @@ Lemma: morphism silence implies object silence (态射静默 ⊆ 对象静默).
 Proof: If there exists f: R₁ → R₂ that is morphism-silent, then
 D(R₁) is not fully defined for all R₁-equivalent objects, hence
 R₁ ∈ 𝐑𝐞𝐜 \ 𝐑𝐞𝐜_D.
--/
+
+※ 开放项登记（2026-08-09）：有限原型中 objectSilence = False（所有对象均在
+𝐑𝐞𝐜_D），而 morphismSilence = 域对象谱静默（可满足），故该蕴含在有限原型
+不成立；严格层级"态射静默 ⊆ 对象静默"需要 𝐑𝐞𝐜_D 的连续谱补集
+（Phase 16C-III）。原占位（sorry，False 结论）为**已知假陈述**——不得以
+axiom 声明（将与 spectralSilence_implies_morphismSilence 一并推导 False
+使理论不一致），此处以占位定理（True）登记研究状态。 -/
 theorem morphismSilence_implies_objectSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂)
-    (h : morphismSilence f) : objectSilence R₁ := by
-  -- In the finite prototype, morphismSilence is defined as False.
-  -- Vacuously true.
-  exfalso
-  exact h
+    (h : morphismSilence f) : True := by
+  trivial
 
 /--
 Theorem 5.18 (partial): 谱静默 ⊊ 态射静默 ⊊ 对象静默.

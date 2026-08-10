@@ -20,9 +20,6 @@ This file provides the minimal definitions needed for the deviation bound.
 Numerical bounds (0.121 < Δλ_min < 0.123) are verified in `paper36_spectral_gap_derivation.py`.
 -/
 
-/-- The minimal faithful representation dimension of Cl(1,7): Cl(1,7) ≅ M₈(ℝ) has dimension 8. -/
-def cl17_rep_dim : ℕ := 8
-
 /-- Normalized A_GR eigenvalues from SU(2) representation theory.
     λ_k = √{k(k+1)} / √{k_max(k_max+1)} for k = 1, ..., k_max. -/
 noncomputable def agEigenvalue (k k_max : ℕ) : ℝ :=

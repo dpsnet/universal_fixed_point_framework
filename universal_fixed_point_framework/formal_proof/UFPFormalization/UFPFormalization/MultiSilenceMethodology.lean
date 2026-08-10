@@ -3,6 +3,7 @@ import UFPFormalization.SilenceHierarchy
 import UFPFormalization.SpCategory
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
+import Mathlib.Analysis.Real.Pi.Bounds
 
 open Real
 
@@ -43,7 +44,7 @@ def S₁_factor : ℝ :=
     α governs the rate of exponential decay in the morphism
     spectral preservation condition. -/
 noncomputable def S₂_factor : ℝ :=
-  Real.exp (-2 * π / (1/127 : ℝ))
+  Real.exp (-2 * π / (127 : ℝ))
 
 /-- S₃: Object silence factor.
     Exact value: e^{-3} ≈ 0.049787.
@@ -100,7 +101,7 @@ inductive CombinationType : Type where
 
 /-- Silence decomposition: a physical quantity expressed as
     Q_bare combined with S₁–S₄ via a specified operation. -/
-structure SilenceDecomposition (Q : Type) [OfNat Q ℝ] where
+structure SilenceDecomposition (Q : Type) where
   /-- The bare (un-silenced) value. -/
   bare : Q
   /-- Silence factors applied. -/
@@ -152,9 +153,8 @@ noncomputable def allSilenceLayers : List SilenceLayer :=
 /-- Lemma: S₂ > S₄ (exponential argument comparison).
     S₂ = exp(-2π/127) > exp(-2.7) = S₄ since -2π/127 ≈ -0.049 > -2.7. -/
 lemma S₂_gt_S₄ : S₂_factor > S₄_factor_default := by
-  have hArg : (-2 * π / (1/127 : ℝ)) > (-2.7 : ℝ) := by
-    have hπ : (π : ℝ) > 3.14 := Real.pi_gt_three
-    nlinarith
+  have hArg : (-2 * π / (127 : ℝ)) > (-2.7 : ℝ) := by
+    nlinarith [Real.pi_lt_four]
   exact Real.exp_lt_exp.mpr hArg
 
 /-- Lemma: S₄ > S₃ (exponential argument comparison).
@@ -162,7 +162,7 @@ lemma S₂_gt_S₄ : S₂_factor > S₄_factor_default := by
 lemma S₄_gt_S₃ : S₄_factor_default > S₃_factor :=
   Real.exp_lt_exp.mpr (by norm_num : (-2.7 : ℝ) > (-3 : ℝ))
 
-/-- Note: S₃ > S₁ is a verified numerical fact (exp(-3) ≈ 0.050 > 0.015)
+/- Note: S₃ > S₁ is a verified numerical fact (exp(-3) ≈ 0.050 > 0.015)
     that can be admitted in the finite prototype. Full proof requires
     numeric computation with Real.exp bounds (deferred to Phase 16C). -/
 
@@ -179,7 +179,7 @@ The standard procedure for analyzing a physical observable Q:
 -/
 
 /-- Step 1: Extract the bare quantity from spectral data. -/
-structure AnalysisStep₁ (Q : Type) [OfNat Q ℝ] where
+structure AnalysisStep₁ (Q : Type) where
   /-- Spectral gap or eigenvalue providing the bare value. -/
   spectralGap : ℝ
   /-- Resulting bare quantity. -/
@@ -209,7 +209,7 @@ structure AnalysisStep₄ where
   s4Contribution : ℝ
 
 /-- Step 5: Combine all contributions and validate. -/
-structure AnalysisStep₅ (Q : Type) [OfNat Q ℝ] where
+structure AnalysisStep₅ (Q : Type) where
   /-- Theoretical prediction after applying all four silence layers. -/
   prediction : Q
   /-- Experimental value for comparison. -/
@@ -220,7 +220,7 @@ structure AnalysisStep₅ (Q : Type) [OfNat Q ℝ] where
   validationPassed : Bool
 
 /-- Complete analysis pipeline for a physical observable. -/
-structure SilenceAnalysis (Q : Type) [OfNat Q ℝ] where
+structure SilenceAnalysis (Q : Type) where
   step₁ : AnalysisStep₁ Q
   step₂ : AnalysisStep₂
   step₃ : AnalysisStep₃

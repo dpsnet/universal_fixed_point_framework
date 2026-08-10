@@ -86,6 +86,13 @@ E_{\Lambda_1} @>{g}>> E_{\Lambda_2} \\
 **S4（Cartan 翻译）**。S4 对应 $\iota \dashv \pi$ 伴随结构的存在性：在 $\mathbf{EFT}/\Lambda$ 中，$\iota$ 是嵌入（精细化），$\pi$ 是投影（粗粒化），且 $\iota$ 是 $\mathbf{cod}$ 的右伴随：
 $$\mathbf{cod} \circ \iota = \text{id}_\Lambda, \quad \iota(\Lambda) = (E_{\text{UV}}, \Lambda, \text{id}_\Lambda)$$
 
+※ 勘误（2026-08-09）：S4（$\iota\dashv\pi$ 伴随）在本有限原型中**不可构造**——
+`EFTCodomainFiber.lean` 的 `cod_is_not_level4` 证明 counit 可证不存在
+（EFTSliceHom.theoryMap : String→String 无零吸收结构，counit 自然性在
+theoryMap := 常 "a" 与 常 "b" 两个自态射处迫使矛盾；对任意 $\iota$ 选择
+均成立）。原 `cod_level4` 实例主张撤销；S1-S3 判据不受影响，$p_{after}\iota$
+与单位部分仍可构造（`Functor.ext` + 恒等分量）。
+
 ---
 
 ## 4. 与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系
@@ -119,7 +126,7 @@ EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过�
 | **`scalePullback`** | **v0.2 新增**：$\Lambda$ 的拉回结构（max 为 pullback）|
 | **`S2_cartesian_proper`** | **v0.2 新增**：S2 Cartesian 态射严格刻画（$\Lambda_1 = \Lambda_2$）|
 | **`S3_boundary_IR/UV`** | **v0.2 新增**：S3 物理边界奇异性（IR/UV 极限）|
-| **`cod_level4`** | **v0.2 新增**：Level4Extension 实例（统一 $\iota\dashv\pi$ 公理体系）|
+| **`cod_level4`** | **v0.2 新增（已勘误，2026-08-09）**：Level4Extension 实例主张——**不可构造**，见 §3.4 勘误 |
 | **`D_hat_functor`** | **v0.2 新增**：谱退归连接（使用 Cl(1,7) 间隙矩阵）|
 
 ---
@@ -128,5 +135,6 @@ EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过�
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.3** | **2026-08-09** | **勘误**：`cod_level4` Level4Extension 实例主张撤销——counit 可证不存在（`EFTCodomainFiber.lean` `cod_is_not_level4`，theoryMap : String→String 无零吸收结构，自然性在任意自态射处矛盾）；`scalePullback_fst/snd` 投影闭合；S2/S3 保持 |
 | **v0.2** | **2026-07-23** | **深化**新增：`scalePullback` $\Lambda$ 拉回结构；`S2_cartesian_proper` 严格 Cartesian 刻画；`S3_boundary_IR/UV` 物理边界；`cod_level4` Level4Extension 实例；`D_hat_functor` 使用 `cl17GapMatrix` 连接谱退归 |
 | **v0.1** | **2026-07-23** | 初始版本：能标范畴定义；EFT slice 范畴；余域函子 Grothendieck 纤维化；S1-S4 谱静默判据的 Cartan 翻译；EFT↔谱对应；Lean 形式化方案 |

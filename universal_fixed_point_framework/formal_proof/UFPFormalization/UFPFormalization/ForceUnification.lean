@@ -26,7 +26,7 @@ to a common value g_U, reflecting the Cl(1,7) algebraic unification.
 /-- Running coupling constant as a function of energy scale t.
     In the spectral framework, t = ln(M_Pl / μ) where μ is the RG scale. -/
 noncomputable def runningCoupling (g₀ α β : ℝ) (t : ℝ) : ℝ :=
-  g₀ / (1 + α * g₀ * t / (2 * π))
+  g₀ / (1 + α * g₀ * t / (2 * Real.pi))
 
 /-- Unified force generator: a linear combination of individual force generators.
     G_unified = Σ_i g_i · A_{F,i} where g_i are determined by the Cl(1,7) structure. -/
@@ -79,8 +79,8 @@ noncomputable def multiForceSpectralFlow {n : ℕ} (A₀ : Matrix (Fin n) (Fin n
     (generators : List (ℝ × Matrix (Fin n) (Fin n) ℂ)) (t : ℝ) :
     Matrix (Fin n) (Fin n) ℂ :=
   let G := unifiedGenerator generators
-  (Real.exp (t • G : Matrix (Fin n) (Fin n) ℂ)) * A₀ *
-  (Real.exp ((-t) • G : Matrix (Fin n) (Fin n) ℂ))
+  (NormedSpace.exp (t • G : Matrix (Fin n) (Fin n) ℂ)) * A₀ *
+  (NormedSpace.exp ((-t) • G : Matrix (Fin n) (Fin n) ℂ))
 
 /-- Nöther conservation law for force unification:
     If [A_{F,i}, A_S] = 0 for all i, then Tr(A_S · A(t)) is conserved. -/

@@ -48,7 +48,7 @@ Proof: Applying Weyl quantization to the classical equation.
 theorem quantumSpectralFlow {n : ℕ} (Â₀ Ĝ : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
     -- The quantum spectral flow is the Weyl quantization of the classical flow
     weylQuantize (spectralFlow (weylQuantize Â₀) (weylQuantize Ĝ) t) =
-    (Real.exp (t • (weylQuantize Ĝ))) * (weylQuantize Â₀) * (Real.exp (-t • (weylQuantize Ĝ))) := by
+    (NormedSpace.exp (t • (weylQuantize Ĝ))) * (weylQuantize Â₀) * (NormedSpace.exp (-t • (weylQuantize Ĝ))) := by
   simp [weylQuantize, spectralFlow]
 
 /--
@@ -84,7 +84,7 @@ If [Â_S, Ĝ] = 0, then Tr(Â_S·Â_t) is conserved in the quantum theory.
 -/
 theorem quantumWardIdentity {n : ℕ} (Â_S Â₀ Ĝ : Matrix (Fin n) (Fin n) ℂ) (t : ℝ)
     (h_commutes : Â_S * Ĝ = Ĝ * Â_S) :
-    Matrix.trace (Â_S * (Real.exp (t • Ĝ) * Â₀ * (Real.exp (-t • Ĝ)))) =
+    Matrix.trace (Â_S * (NormedSpace.exp (t • Ĝ) * Â₀ * (NormedSpace.exp (-t • Ĝ)))) =
     Matrix.trace (Â_S * Â₀) := by
   have h := noether_conservation Â_S Â₀ Ĝ t h_commutes
   -- In the finite prototype, the quantum Nöther theorem 

@@ -46,7 +46,7 @@ normal-ordered part + contraction.
 theorem wickTheorem {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) :
     A₁ * A₂ = (A₁ * A₂ - (wickContraction A₁ A₂) • (1 : Matrix (Fin n) (Fin n) ℂ)) +
     (wickContraction A₁ A₂) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
-  ring
+  abel
 
 /--
 Normal ordering of a product: :A₁·A₂: = A₁·A₂ - ⟨A₁·A₂⟩_0.
@@ -56,12 +56,17 @@ noncomputable def normalOrderedProduct {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fi
   A₁ * A₂ - (wickContraction A₁ A₂) • (1 : Matrix (Fin n) (Fin n) ℂ)
 
 /--
-The normal-ordered product has zero vacuum expectation.
+The normal-ordered product has zero vacuum expectation
+(在真空期望 vanish 的假设 trace A₁ = 0 下成立；
+一般情形的迹为 trace A₁ · trace A₂，非零，见 wickTheorem 的分解）。
 -/
-theorem normalOrdered_vacuum_zero {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) :
+theorem normalOrdered_vacuum_zero {n : ℕ} [NeZero n] (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ)
+    (hA₁ : Matrix.trace A₁ = 0) :
     Matrix.trace (normalOrderedProduct A₁ A₂) = 0 := by
   dsimp [normalOrderedProduct, wickContraction]
-  ring
+  rw [Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_one]
+  rw [hA₁]
+  simp
 
 /--
 Normal ordering of the quantum spectral flow equation.
@@ -71,16 +76,53 @@ the flow equation holds with finite vacuum expectation.
 -/
 noncomputable def normalOrderedFlow {n : ℕ} (Â₀ Ĝ : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
     Matrix (Fin n) (Fin n) ℂ :=
-  let Â_t := (Real.exp (t • Ĝ)) * Â₀ * (Real.exp (-t • Ĝ))
+  let Â_t := (NormedSpace.exp (t • Ĝ)) * Â₀ * (NormedSpace.exp (-t • Ĝ))
   normalOrderedProduct Â_t (1 : Matrix (Fin n) (Fin n) ℂ)
 
 /--
 The normal-ordered spectral flow has zero trace (finite vacuum expectation).
--/
-theorem normalOrderedFlow_finite {n : ℕ} (Â₀ Ĝ : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :
+
+※ 闭合（2026-08-09，自主完善）：trace 循环性 trace(exp(tG)·Â₀·exp(-tG)) = trace Â₀
+经 Matrix.trace_mul_comm + exp(-tG)·exp(tG) = 1（exp_add_of_commute + exp_zero），
+再经 normalOrdered_vacuum_zero 得证（Â₀ 迹零假设即真空期望为零）。 -/
+theorem normalOrderedFlow_finite {n : ℕ} [NeZero n] (Â₀ Ĝ : Matrix (Fin n) (Fin n) ℂ) (t : ℝ)
+    (hÂ₀ : Matrix.trace Â₀ = 0) :
     Matrix.trace (normalOrderedFlow Â₀ Ĝ t) = 0 := by
   dsimp [normalOrderedFlow]
-  apply normalOrdered_vacuum_zero
+  -- Â_t = exp(t·Ĝ)·Â₀·exp(-t·Ĝ)，其迹 = trace Â₀（trace 循环性 + exp 群性质）
+  have htrace_cycle : Matrix.trace
+      (NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) * Â₀ *
+        NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ)) = Matrix.trace Â₀ := by
+    calc
+      Matrix.trace (NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) * Â₀ *
+            NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ))
+          = Matrix.trace (NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ) *
+              (NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) * Â₀)) := by
+              rw [Matrix.trace_mul_comm]
+      _ = Matrix.trace (NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ) *
+              NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) * Â₀) := by
+              rw [Matrix.mul_assoc]
+      _ = Matrix.trace ((1 : Matrix (Fin n) (Fin n) ℂ) * Â₀) := by
+              rw [exp_inv_mul_exp]
+      _ = Matrix.trace Â₀ := by simp
+  -- normalOrderedProduct Â_t 1 的迹 = 0（经 normalOrdered_vacuum_zero）
+  exact normalOrdered_vacuum_zero (n := n)
+    (NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) * Â₀ *
+      NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ)) (1 : Matrix (Fin n) (Fin n) ℂ)
+    (htrace_cycle.trans hÂ₀)
+  where
+  -- exp(-t·Ĝ)·exp(t·Ĝ) = 1
+  exp_inv_mul_exp : NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ) *
+      NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) = (1 : Matrix (Fin n) (Fin n) ℂ) := by
+    calc
+      NormedSpace.exp (-t • Ĝ : Matrix (Fin n) (Fin n) ℂ) *
+          NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ)
+          = NormedSpace.exp ((-t • Ĝ) + (t • Ĝ) : Matrix (Fin n) (Fin n) ℂ) := by
+              have hc : Commute ((-t) • Ĝ : Matrix (Fin n) (Fin n) ℂ) (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) := by
+                simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • Ĝ : Matrix (Fin n) (Fin n) ℂ)).neg_left
+              rw [Matrix.exp_add_of_commute ((-t) • Ĝ : Matrix (Fin n) (Fin n) ℂ) (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) hc]
+      _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by simp [smul_neg]
+      _ = 1 := by simp
 
 /--
 β-function from the normal-ordered spectral flow.

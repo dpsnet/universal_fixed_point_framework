@@ -22,7 +22,7 @@
 | Lean 4 验证（π_T/π_μ、T̂_Riem） | ✅ 完成 | `TempRGFiber.lean` 通过 `lake build` |
 | Lean 4 补全（Grothendieck 构造、η̂、2-范畴、物理截面） | ✅ **完成** | **Phase 55F**，`TempRGFiber.lean` ~970 行 |
 | 扩展候选扫描与分类 | ✅ 完成 | `spectral_grothendieck_extension_candidates.md` v0.1 |
-| **Phase 55B：Clifford 签名丛 + IC 投影** | ✅ **完成** | `SignatureFiber.lean`（§1-§11：Sig 范畴、Bott 商、Grothendieck 纤维化、Level4Extension、Bott 塔、RG 流对应、complete_chain 定理）|
+| **Phase 55B：Clifford 签名丛 + IC 投影** | ✅ **完成**（Level4 部分已勘误，见下）| `SignatureFiber.lean`（§1-§11：Sig 范畴、Bott 商、Grothendieck 纤维化、Bott 塔、RG 流对应、complete_chain 定理）|
 | **Phase 55C：谱粘合 Temp×RG 乘积基** | ✅ **完成** | `WeaveProductFiber.lean` 474 行（§1-§10：乘积基、拉回函子、对角子范畴 Diag、编织自然变换 θ、T_hat_Riem_prod、参数化截面 WeaveSection）|
 | **Phase 55D：BCS 谱粘合** | ✅ **完成** | `WeaveBCS.lean`（BCS 参数、d_BCS=√3·√r、谱流自洽封闭形式、强耦合两步方案、5 材料参数结构、η_c 一致性）|
 | **Phase 55E：Cuprate 分布论** | ✅ **完成** | `CuprateDistribution.lean`（cuprate 参数、双组分高斯混合模型、推前兼容性、对角闭包）|
@@ -259,6 +259,7 @@ BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱粘合约束 $S
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| **v0.7** | **2026-08-09** | **勘误**：π_Sig 与 cod 的 Level4Extension 主张撤销（counit 可证不存在——纤维态射 ℕ→ℕ / String→String 无零吸收结构，见 `π_Sig_is_not_level4` / `cod_is_not_level4` 障碍定理）；Level 4 结构仅 π_T/π_μ 可构造满足；NoiseFiber 的 NFunctor/NoiseIsoTemp 构造化（NoiseObj η>0 重构）；`complete_chain` 相应收紧 |
 | **v0.6** | **2026-07-23** | **总参数丛汇总完成**：Phase 55 路线图全部交付。新增 `TotalParameterFiber.lean`（总参数乘积范畴、坐标嵌入、拉回结构、丛态射网络）；`spectral_total_parameter_fibration.md` v0.1；状态表总参数丛从❌→✅；执行顺序更新为"全部完成"|
 | **v0.4** | **2026-07-23** | **Phase 55F 全部深化完成**：F1 Kerr（SpinPreservingKerr + H_functor_spin + extreme_limit + BH entropy）；F2 EFT（scalePullback + S2严格 + Level4Extension + D_hat改进）；F3 Flavor（IFS权重J_f + Grothendieck纤维化 + Moran方程）；F4 Contextuality（Peres-Mermin方具体证明，无 sorry）|
 | **v0.3** | **2026-07-23** | **Phase 55A 状态修正**：噪声丛从❌待启动→✅完成；更新完成汇总表；更新执行顺序 |

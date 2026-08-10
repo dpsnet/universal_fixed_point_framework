@@ -4,6 +4,8 @@ import UFPFormalization.DecursionFunctor
 import UFPFormalization.AInfinityAlgebra
 import Mathlib.Data.Matrix.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.Tactic
+import Mathlib.Tactic.Abel
 
 open UFPFormalization
 open CategoryTheory
@@ -47,10 +49,8 @@ in the finite prototype.
 Note: The perturbation δR is a modification of the step function.
 The linearity holds because stepMatrix ∘ (step + ε·δstep) = stepMatrix(step) + ε·stepMatrix(δstep).
 -/
-noncomputable def directionalDerivative (R δR : RecObj) : Matrix (Fin (Fintype.card R.T)) (Fin (Fintype.card R.T)) ℂ :=
-  let n := Fintype.card R.T
-  let stepR := Fintype.equivFin R.T ∘ R.step ∘ (Fintype.equivFin R.T).symm
-  let stepδR := Fintype.equivFin R.T ∘ δR.step ∘ (Fintype.equivFin R.T).symm
+noncomputable def directionalDerivative (R δR : RecObj) : Matrix (Fin (Fintype.card δR.T)) (Fin (Fintype.card δR.T)) ℂ :=
+  let stepδR := Fintype.equivFin δR.T ∘ δR.step ∘ (Fintype.equivFin δR.T).symm
   stepMatrix stepδR
 
 /--
@@ -58,7 +58,7 @@ Theorem: The directional derivative is well-defined (independent of ε).
 Proof: stepMatrix is linear, so (1/ε)·[stepMatrix(step + ε·δstep) - stepMatrix(step)] = stepMatrix(δstep).
 -/
 theorem directionalDerivative_unique (R δR : RecObj) :
-    directionalDerivative R δR = stepMatrix (Fintype.equivFin R.T ∘ δR.step ∘ (Fintype.equivFin R.T).symm) := by
+    directionalDerivative R δR = stepMatrix (Fintype.equivFin δR.T ∘ δR.step ∘ (Fintype.equivFin δR.T).symm) := by
   rfl
 
 /--
@@ -77,10 +77,10 @@ noncomputable def G_GR_fromBoundary {n : ℕ} (G A : Matrix (Fin n) (Fin n) ℂ)
     Matrix (Fin n) (Fin n) ℂ :=
   ad G A
 
-/-- Note: The previous `A_GR_fromBoundary` and `directionalDerivative` definitions
+/- Note: The previous `A_GR_fromBoundary` and `directionalDerivative` definitions
 using `stepMatrix` have been deprecated. `stepMatrix` corresponds to discrete
 transfer matrices whose spectrum (roots of unity) is unrelated to the
-SU(2) Casimir spectrum √{k(k+1)}.
+SU(2) Casimir spectrum (k(k+1)).
 
 The correct gravitational spectral flow generator is `ad(G)(A)` above.
 Use `G_GR_fromBoundary` for the generator, and refer to `CategoryRepBridge.lean`
@@ -108,7 +108,7 @@ Theorem (Antisymmetry): [A, B] = -[B, A].
 theorem spectralCommutator_antisymm {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
     spectralCommutator A B = -(spectralCommutator B A) := by
   dsimp [spectralCommutator]
-  ring
+  abel
 
 /--
 Theorem (Jacobi identity): [A, [B, C]] + [B, [C, A]] + [C, [A, B]] = 0.
@@ -124,7 +124,9 @@ theorem spectralCommutator_jacobi {n : ℕ} (A B C : Matrix (Fin n) (Fin n) ℂ)
     spectralCommutator B (spectralCommutator C A) +
     spectralCommutator C (spectralCommutator A B) = 0 := by
   dsimp [spectralCommutator]
-  ring
+  rw [mul_sub, sub_mul, mul_sub, sub_mul, mul_sub, sub_mul]
+  simp_rw [Matrix.mul_assoc]
+  abel
 
 /--
 Theorem (Bilinearity): [αA + βB, C] = α[A, C] + β[B, C].
@@ -132,17 +134,17 @@ Theorem (Bilinearity): [αA + βB, C] = α[A, C] + β[B, C].
 theorem spectralCommutator_bilinear {n : ℕ} (α β : ℂ) (A B C : Matrix (Fin n) (Fin n) ℂ) :
     spectralCommutator (α • A + β • B) C = α • spectralCommutator A C + β • spectralCommutator B C := by
   dsimp [spectralCommutator]
-  ring
+  simp_rw [add_mul, mul_add, smul_mul_assoc, mul_smul_comm]
+  rw [smul_sub, smul_sub]
+  abel
 
 /--
 Theorem: The D functor maps morphism composition to matrix multiplication.
 For f: R₁ → R₂ in 𝐑𝐞𝐜, D[f] is a matrix in 𝐒𝐩𝐞𝐜.
 -/
 theorem D_preserves_composition {R₁ R₂ R₃ : RecObj} (f : R₁ ⟶ R₂) (g : R₂ ⟶ R₃) :
-    (DFunctor.map (f ≫ g)).A = (DFunctor.map f).A * (DFunctor.map g).A := by
-  -- By definition of DFunctor.map for the finite prototype.
-  -- The DFunctor maps f: R₁ → R₂ to a matrix representing the induced map on spectra.
-  -- Functoriality: D[g∘f] = D[g]·D[f] is part of the DFunctor definition.
+    (DFunctor.map (f ≫ g)).P = (DFunctor.map f).P * (DFunctor.map g).P := by
+  rw [DFunctor.map_comp]
   rfl
 
 /--
@@ -151,12 +153,14 @@ Theorem: The D functor preserves commutators:
 where [f,g] is the morphism commutator at the categorical level,
 and [D[f], D[g]] is the matrix commutator.
 
-This is the categorial emergence theorem (Paper V §5.3).
+注：spectralCommutator 仅对方阵定义，而 D(f) : R₁ → R₂ 的转移矩阵是 n₁×n₂ 矩形
+（n₁ ≠ n₂ 时非方阵，交换子无定义）。有限原型中限制到同对象端态射 f, g : R ⟶ R，
+此时 D(f), D(g) 均为方阵，恒等式由 spectralCommutator 定义直接给出。
 -/
-theorem D_preserves_commutator {R₁ R₂ : RecObj} (f g : R₁ ⟶ R₂) :
-    spectralCommutator ((DFunctor.map f).A) ((DFunctor.map g).A) =
-    (DFunctor.map f).A * (DFunctor.map g).A - (DFunctor.map g).A * (DFunctor.map f).A := by
-  dsimp [spectralCommutator]
+theorem D_preserves_commutator {R : RecObj} (f g : R ⟶ R) :
+    spectralCommutator ((DFunctor.map f).P) ((DFunctor.map g).P) =
+    (DFunctor.map f).P * (DFunctor.map g).P - (DFunctor.map g).P * (DFunctor.map f).P := by
+  rfl
 
 /--
 Corollary: The SU(N) Lie algebra structure [A_a, A_b] = i·f_abc·A_c emerges
@@ -169,7 +173,9 @@ space of traceless Hermitian matrices, which is closed under [·,·].
 theorem SU_N_closure {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
     Matrix.trace (spectralCommutator A B) = 0 := by
   dsimp [spectralCommutator]
-  simp [Matrix.trace_mul_comm]
+  rw [Matrix.trace_sub]
+  rw [Matrix.trace_mul_comm]
+  ring
 
 /--
 G_GR as the adjoint action: G_GR = ad(G)(A) = [G, A].

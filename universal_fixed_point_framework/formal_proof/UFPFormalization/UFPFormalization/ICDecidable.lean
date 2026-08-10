@@ -32,13 +32,13 @@ and the solvability of operator Sylvester equations.
 IC is decidable in the finite prototype: it's always true.
 -/
 instance (R₁ R₂ : RecObj) : Decidable (isolationConstraint R₁ R₂) :=
-  decidableTrue
+  isTrue (by simp [isolationConstraint, spectralScaleCompatible, morphismExtendable, topologicallyCompatible])
 
 /--
 Spectral scale compatibility is decidable for finite matrices:
 it reduces to computing and comparing spectral radii.
 -/
-def spectralScaleCompatibleDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) : Bool :=
+noncomputable def spectralScaleCompatibleDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) : Bool :=
   let r₁ := spectralRadius A₁
   let r₂ := spectralRadius A₂
   if h : r₂ = 0 then true
@@ -59,19 +59,9 @@ def morphismExtendableDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) �
 
 /--
 Topological compatibility is trivially decidable in the finite prototype
-(all finite-dimensional spaces are Polish).
+(所有有限维空间都是 Polish 空间，拓扑性质自动可判定；spectralRadius 已在 IsolationConstraints 中声明)。
 -/
 def topologicallyCompatibleDecidable {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Bool :=
   true
-
-/--
-Spectral radius of a finite matrix: max |λ|, computed via eigenvalues.
--/
-noncomputable def spectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  -- For the finite prototype, approximate by the Frobenius norm.
-  -- Full computation requires eigenvalue decomposition.
-  Real.sqrt (Finset.sum (Finset.univ : Finset (Fin n))
-    (fun i => Finset.sum (Finset.univ : Finset (Fin n))
-      (fun j => |A i j| ^ 2)))
 
 end UFPFormalization
