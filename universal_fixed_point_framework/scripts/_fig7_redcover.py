@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""检查：1) x 940-982, y 60-300 (3.01MPa处) 是否有任何彩色像素；
+2) x 850-930, y 100-250 (最右点) 红/绿/蓝分布 ASCII。"""
+from PIL import Image
+
+im = Image.open(r"e:\workspace\hyper-resolution\universal_fixed_point_framework\scripts\data\xu2021_fig7_pdf\xu2021_fig7_screenshot.png").convert("RGB")
+px = im.load()
+
+# 1) 3.01 MPa 位置 (x≈963) 彩色像素统计
+print("== x 940-982, y 60-300 非背景像素 ==")
+cnt = {'red': 0, 'green': 0, 'blue': 0, 'other': 0}
+for x in range(940, 982):
+    for y in range(60, 300):
+        r, g, b = px[x, y]
+        if r > 245 and g > 245 and b > 245:
+            continue
+        if r > 130 and r > g + 40 and r > b + 40:
+            cnt['red'] += 1
+        elif b > 130 and b > r + 30 and g < 150:
+            cnt['blue'] += 1
+        elif g > 100 and g > r + 20 and g > b + 20:
+            cnt['green'] += 1
+        else:
+            cnt['other'] += 1
+print(cnt)
+
+# 2) x 850-930, y 100-250 ASCII
+def ch(r, g, b):
+    if r > 130 and r > g + 40 and r > b + 40:
+        return 'R'
+    if b > 130 and b > r + 30 and g < 150:
+        return 'B'
+    if g > 100 and g > r + 20 and g > b + 20:
+        return 'G'
+    return '.'
+
+print("== x 860-930, y 110-250 ASCII ==")
+for y in range(110, 250, 2):
+    line = []
+    for x in range(860, 930, 1):
+        r, g, b = px[x, y]
+        line.append(ch(r, g, b))
+    s = ''.join(line)
+    if any(c != '.' for c in s):
+        print(f"{y:3d} {s}")
