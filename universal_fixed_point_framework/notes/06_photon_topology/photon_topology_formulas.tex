@@ -1,0 +1,65 @@
+% ============================================================
+% 可拦截性核心公式集（定义 1.3 / 命题 1.4 / 定义 1.4）
+% 笔记来源：notes/06_photon_topology/photon_topology_theory.md §1.2.2
+% 理论基底：UFPF（Paper I：D \dashv R 伴随对；Paper XXII：谱纤维丛）
+% ------------------------------------------------------------
+% 宏包：\usepackage{amsmath, amsthm}
+% 环境：\newtheorem{definition}{Definition}
+%       \newtheorem{proposition}{Proposition}
+% 用法：
+%   - \input{photon_topology_formulas}（放在 \begin{document} 之后）
+%   - 或仅复制所需环境
+% 编号由 \newtheorem 自动管理；引用用 \label / \ref
+% ============================================================
+
+% ---------- 定义 1.3：R 右伴随折叠函子 ----------
+\begin{definition}[R-right adjoint folding functor]\label{def:R-folding}
+Let $D \dashv R$ be an adjoint pair, where
+$D: \mathbf{Rec} \to \mathbf{Sp}$ is the spectralization functor (topological
+bifurcation) and $R: \mathbf{Sp} \to \mathbf{Rec}$ is its right adjoint
+(absorption/folding functor), satisfying the natural isomorphism
+\[
+\mathrm{Hom}_{\mathbf{Sp}}(D(A), B) \;\cong\; \mathrm{Hom}_{\mathbf{Rec}}(A, R(B)),
+\qquad \forall A \in \mathbf{Rec},\; B \in \mathbf{Sp}.
+\]
+The action of $R$ on topological objects is
+\[
+R\bigl(M_{\mathrm{photon}},\, \emptyset\bigr) \;=\;
+\bigl(M'_{\mathrm{atom}},\, \partial M'_{\mathrm{atom}}\bigr),
+\]
+where $M'_{\mathrm{atom}}$ is the excited-state atomic topology
+(containing the folded deformation cycles).
+\end{definition}
+
+% ---------- 命题 1.4：拦截的必要条件（频率匹配 / Bohr 条件） ----------
+\begin{proposition}[Necessary condition for interception: frequency matching]\label{prop:interception}
+A necessary condition for the photon to be intercepted by matter
+(the $R$-folding to occur) is that the photon deformation-cycle
+frequency $\nu$ matches the matter topological level difference:
+\[
+h\nu_{\mathrm{photon}} \;=\; E_j - E_i \;=\; \Delta E_{\mathrm{atom}},
+\]
+where $E_i, E_j$ are the initial and final energy levels of the atom.
+\end{proposition}
+
+% ---------- 定义 1.4：拦截概率 / 吸收截面 ----------
+\begin{definition}[Interception probability / absorption cross-section]\label{def:abs-cross-section}
+When Proposition~\ref{prop:interception} holds, the probability that the photon is
+intercepted is described by the absorption cross-section
+\[
+\sigma_{\mathrm{abs}}(\nu) \;=\; \frac{h\nu}{c}\; B_{12}\; g(\nu),
+\]
+where $B_{12}$ is the Einstein absorption coefficient and $g(\nu)$
+is the line-shape function.
+\end{definition}
+
+% ============================================================
+% 诚实边界（引用时必须保留，见笔记 §1.2.2）：
+% 1) 命题 1.4 / 定义 1.4 为已知量子光学的拓扑重述
+%    （Bohr 条件、爱因斯坦 B_{12} 系数），不构成新物理预言；
+% 2) 定义 1.3 的 "光子吸收 = R 右伴随折叠" 是 UFPF 框架性表述，
+%    标准量子光学（相互作用哈密顿量 + 费米黄金规则）中无 R 伴随概念，
+%    该翻译与标准描述的等价性尚未独立验证；
+% 3) 定义 1.3 依赖 Paper I 已建立的 D \dashv R 伴随对，
+%    但 R 在具体拓扑对象（光子 → 激发态原子）上的作用规则尚未 Lean 形式化。
+% ============================================================
