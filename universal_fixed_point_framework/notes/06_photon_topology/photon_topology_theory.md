@@ -1,6 +1,6 @@
 # 光子拓扑-范畴理论研究笔记
 
-**文档编号**：Note-PHOTON-TOPO-v2.1（2026-08-11：#1 A3 并置结构修正 + #6 树级自由传播模方守恒一致性重命名）
+**文档编号**：Note-PHOTON-TOPO-v2.3（2026-08-11：Fock 空间 Lean 骨架 + 联络-度量相容选取 + h-c-Δ 量纲限定 + 范畴层方向正交；此前 v2.2：#1 态射层忠实嵌入 + #7 内积层 Lean 化；v2.1：#1 A3 并置结构修正 + #6 树级自由传播模方守恒一致性重命名）
 **创建日期**：2026-08-10
 **母笔记**：[`docs/关于光子的理论研究笔记.md`](../../../docs/关于光子的理论研究笔记.md)（v1.0 + Addendum 01-04，定性拓扑叙事）
 **路线图**：[`roadmap/phase62_photon_topology.md`](../../roadmap/phase62_photon_topology.md)
@@ -108,7 +108,7 @@ $$\Phi: (M_{\text{atom}}, \partial M_{\text{atom}}) \to (M_{\text{photon}}, \emp
 - $\langle \text{opened} \rangle$：新生光子行波（**光子新生**，携带 $E = h\nu$）；
 - 能量重分配 $E_{\text{atom}} = E_{\text{low}} + h\nu$（公理 A3 代数形式）。
 
-单值 $\Phi$（旧） = $\Phi_+$ 的**光子分量投影**（并置结构的光子视角）。Lean 形式化：`PhotonTopology.lean` `CoexistingAfterBifurcation`/`bifurcateCoexisting`/`coexisting_atom_retained`/`bifurcationMap_is_photon_projection`（2970 jobs 零 sorry）。
+单值 $\Phi$（旧） = $\Phi_+$ 的**光子分量投影**（并置结构的光子视角）。Lean 形式化：`PhotonTopology.lean` `CoexistingAfterBifurcation`/`bifurcateCoexisting`/`coexisting_atom_retained`/`bifurcationMap_is_photon_projection` + `PhotonTopologyFunctor.lean` `photonHomToRecHom`/`photonToRecFunctor`（态射层忠实嵌入）（3022 jobs 零 sorry）。
 
 **公理 A4**（方向性阶跃）：设 $t_*$ 为分岔时刻，$\Theta$ 为 Heaviside 阶跃函数，定义拓扑类指标 $\chi_\Phi(t) = \Theta(t - t_*)$ 与静默指标 $\sigma_{\text{S3}}(t) = 1 - \chi_\Phi(t)$，其中 $\chi_\Phi = 0$（$t < t_*$）对应封闭拓扑类（S3 静默，驻波），$\chi_\Phi = 1$（$t \ge t_*$）对应开放拓扑类（S3 解除，行波）。此公式同时编码**过程性**与**方向性**：
 - **过程性**（与公理 A2 一致）：$\lim_{t \uparrow t_*} \mathcal{M}(t) = (M_{\text{atom}}, \partial M)$，$\lim_{t \downarrow t_*} \mathcal{M}(t) = (M_{\text{photon}}, \emptyset)$——转变在 $t_*$ 处瞬间完成，无连续中间拓扑；
@@ -241,7 +241,7 @@ $$R(M_{\text{photon}}, \emptyset) \to (M'_{\text{atom}}, \partial M')$$
 - "光子拓扑垂直于物理三维空间"在此处指**纤维方向 vs 基空间方向的几何正交**（谱纤维丛意义：$\pi: E \to B$ 中纤维 $F_b$ 与基空间 $B$ 正交），**并非 KK 式的几何额外空间维度**——三维空间之外不存在紧致化的空间维度，光子拓扑仍沿三维空间传播（$c$）。正交性发生在**拓扑自由度方向（纤维方向）与三维空间（基空间）**之间，而非三维空间内部的某个方向关系。
 - **新增公式均为已知物理的拓扑重述**：命题 1.4（Bohr 条件 $h\nu = \Delta E$）与定义 1.4（吸收截面 $\sigma_{\text{abs}}$，爱因斯坦 $B_{12}$ 系数）是标准量子光学结果，本节 UFPF 贡献在于将其表述为"$R$ 右伴随折叠的必要条件/概率"，**不构成新物理预言**。
 - **命题 1.3 是框架性表述，非独立验证结论**："光子吸收 = $R$ 右伴随折叠"是 UFPF 独有的翻译——标准量子光学以相互作用哈密顿量 + 费米黄金规则描述光子吸收，其中不存在 $R$ 伴随概念。本节将该机制翻译为伴随函子语言，属于**框架等价性叙事**：该翻译与标准描述的完全等价性**尚未独立验证**（既无实验判据，也无机器证明）。定义 1.3 的自然同构 $\text{Hom}_{\text{Sp}}(D(A), B) \cong \text{Hom}_{\text{Rec}}(A, R(B))$ 依赖 $D \dashv R$ 伴随对的严格存在性——该伴随对在 Paper I 中已建立，但 $R$ 在具体拓扑对象（光子 → 激发态原子）上的作用规则尚未在 Lean 中形式化。
-- 本节的"正交性"是定性几何直觉的**几何表述**，而非严格证明。§1.2.1 确立的"双层正交"两个层面均未在 Lean 中严格证明：范畴层（4-范畴态射方向与伴随函子方向的几何正交）与纤维丛层（纤维方向与基空间方向的"正交"依赖垂直-水平分解 $TE \cong TF \oplus H$ 及其联络/度量结构，该结构的严格意义未形式化）。
+- 本节的"正交性"是定性几何直觉的**几何表述**，而非严格证明。§1.2.1 确立的"双层正交"两个层面在 Lean 中的状态（2026-08-11）：**纤维丛层内积层已机器证明**——内积意义正交 ⟹ 交平凡（$V \perp H \Longrightarrow V \sqcap H = \bot$，`PhotonTopologyFunctor.lean` `inf_eq_bot_of_inner_orthogonal`，用 mathlib `Submodule.orthogonal`/`inf_orthogonal_eq_bot`）；**范畴层完整几何与纤维丛层联络/度量结构未形式化**——4-范畴态射方向与伴随函子方向的几何正交、垂直-水平分解 $TE \cong TF \oplus H$ 的联络/度量结构，其严格意义登记开放项（路线图 §七 #7）。
 
 ### 1.2.3 可拦截性核心公式集（LaTeX 可直接引用）
 
@@ -487,7 +487,14 @@ $\delta z_{\Delta}$ 是 UFPF 独有修正项，其量级由 4-范畴偏差 $\Del
 
 **预言 6.3**：普朗克常数 $h$、真空光速 $c$、引力范畴偏差 $\Delta$ 由同一套全域拓扑几何绑定，存在固定代数关联。
 
-**候选代数形式**（62E）：以框架既有量构造——$G_N = c\,(\Delta\lambda_{\min})^2$（Paper 35 路径，$\Delta\lambda_{\min} = (\sqrt6-\sqrt2)/\sqrt{k_{\max}(k_{\max}+1)}$，$k_{\max}=8$）；候选关联 $hc/\Delta\lambda_{\min}^2 \sim$ 框架能量标度（量级合理性检验见数值脚本 E3）。
+**候选代数形式**（62E）：以框架既有量构造——$G_N = c\,(\Delta\lambda_{\min})^2$（Paper 35 路径，$\Delta\lambda_{\min} = (\sqrt6-\sqrt2)/\sqrt{k_{\max}(k_{\max}+1)}$，$k_{\max}=8$，模型选择非 Bott 分类）；候选关联 $hc/\Delta\lambda_{\min}^2 \sim$ 框架能量标度（量级合理性检验见数值脚本 E3，ratio 0.094，其中 $\Delta\lambda_{\min}$ 为**无量纲谱间距**）。
+
+**量纲分析限定（开放问题 #4 推进，2026-08-11，`paperX_hcdelta_dimension.py` 15/15）**：Buckingham π 定理 + 量纲向量 $\{h, c, G_N, \lambda_{\min}, \Delta\}$（5 变量 - 3 基本量纲 M/L/T = 2 独立无量纲群）：
+- 独立无量纲群恰为 $\Pi_1 = \Delta$（无量纲）与 $\Pi_2 = \lambda_{\min}/\lambda_P$（$\lambda_P = \sqrt{hG_N/c^3}$ 为 Planck 长度）；
+- 因此**任意量纲齐次的 h-c-Δ 约束必取形式 $\Delta = F(\lambda_{\min}/\lambda_P)$**——Δ 只能依赖"最小尺度/Planck 尺度"的无量纲比值，而非任意代数形式；
+- 候选族 $\Delta = k\,(\lambda_P/\lambda_{\min})^n$，$n \in \{1,2,3\}$（$n=2$ 面积律直觉候选）；
+- 诚实量化：目标 $\Delta \sim 10^{-6}$–$10^{-8}$ 下 $n=2$ 候选反推 $\lambda_{\min} \sim 4\times10^{-32}$–$4\times10^{-31}$ m（亚原子，远小于任何已知物理尺度，登记为困难）；
+- **诚实边界**：量纲分析只限定"形式族"，不决定 $k$、$n$ 与 $\lambda_{\min}$ 的数值——需模型额外指定（开放项）。
 
 **推导思路**：全域纤维粘合拓扑 → 三类基础拓扑不变量（形变能量量子 $h$、传播标度 $c$、范畴偏差 $\Delta$）→ 代数约束式。
 
@@ -569,13 +576,13 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 按路线图 [`phase62_photon_topology.md`](../../roadmap/phase62_photon_topology.md) §四执行：
 
 1. **62A**（当前）：系统化研究笔记（本文件）✅
-2. **62B**：数值脚本 `scripts/paperX_photon_topology.py`（拓扑分岔模拟、$c$ 不变性检验）✅ 36/36（方向性阶跃 A4 + 光速不变 + λν 一致 + Bohr 匹配/吸收截面 + 推论 4 时间解耦 + 零质量不自洽 + 捕获-再分岔 + 时间解耦等价性 + 静默-跃迁门控）
+2. **62B**：数值脚本 `scripts/paperX_photon_topology.py`（拓扑分岔模拟、$c$ 不变性检验）✅ 36/36（方向性阶跃 A4 + 光速不变 + λν 一致 + Bohr 匹配/吸收截面 + 推论 4 时间解耦 + 零质量不自洽 + 捕获-再分岔 + 自由传播模方守恒一致性(树级) + 静默-跃迁门控）
 3. **62C**：论文 `paper/paper44_photon_topology.md`（自包含，仅纳入颠覆性预言）✅ 初稿（2026-08-10 v0.1）
 4. **62D**：红移拓扑推导定量公式 ✅（§5.2.1 多普勒推导链 $\gamma(1+\beta)$ + §5.3.1 $\delta z_\Delta$ 量级估计 + 数值脚本 14/14）
 5. **62E**：交叉衍生效应定量化 ✅（§6 六项预言定量形式：P1 $\delta z_{\text{pol}}=\kappa_\Delta z_{\text{grav}}$、P2 线性标度、P3 候选量级、P4 $S_4$ 震荡、P5 $\lambda_e(1-\cos\theta)$、P6 $N_{\text{crit}}$；数值脚本 18/18）
-6. **62F**：Lean/Agda 形式化 🔶 交付（`PhotonTopology.lean` 827 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件 + Agda 镜像，Everything.agda 全量通过）——P1 验收未全达成，双层正交垂直-水平分解、光速/$\lambda\nu$/$E=h\nu$ 完整形式化、$\Phi$ 范畴论定义登记开放项
+6. **62F**：Lean/Agda 形式化 🔶 交付（`PhotonTopology.lean` + `PhotonTopologyFunctor.lean`，3022 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件/A3 并置结构 Φ₊/零质量/静默门控/Φ 态射层忠实嵌入/范畴层方向正交（1-态射层单点性）/内积层正交⟹交平凡/联络-度量相容选取/Fock 空间算子 + Agda 镜像，Everything.agda 全量通过）——P1 验收未全达成，双层正交完整几何（范畴层 4-态射方向正交、纤维丛层全微分几何）、光速/$\lambda\nu$/$E=h\nu$ 完整形式化登记开放项
 
-**Phase 62 整体状态（诚实声明）**：62A–F 阶段交付物完成，但**理论闭环未达成**——§七 8 项开放问题全部获推进：3 项闭合（#2 零质量 Lean 形式化、#3 捕获-再分岔模拟、#8 静默-跃迁门控 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$），5 项部分（#1 对象层闭合态射层开放、#4/#5 候选量级、#6/#7 数值+概念层闭合深层结构开放）；预言系数（$\kappa_\Delta$、$\eta_{\text{S3}}$、$\varepsilon_\Delta$）为候选量级带非精确值，$h$-$c$-$\Delta$ 代数形式待定；整体 = 推进中（交付完成、闭环未达成）。
+**Phase 62 整体状态（诚实声明）**：62A–F 阶段交付物完成，但**理论闭环未达成**——§七 8 项开放问题全部获推进：4 项闭合（#1 Φ 范畴论对象层+态射层（构造性实现+忠实嵌入）、#2 零质量 Lean 形式化、#3 捕获-再分岔模拟、#8 静默-跃迁门控 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$），4 项部分（#4 量纲限定 $\Delta=F(\lambda_{\min}/\lambda_P)$ 形式族、#5 候选量级、#6 树级模方守恒+机制层 Fock Lean 骨架 γ→∞ 未验证、#7 内积层+联络-度量相容选取闭合全微分几何开放）；预言系数（$\kappa_\Delta$、$\eta_{\text{S3}}$、$\varepsilon_\Delta$）为候选量级带非精确值，$h$-$c$-$\Delta$ 代数形式量纲限定数值待定；整体 = 推进中（交付完成、闭环未达成）。
 
 ---
 

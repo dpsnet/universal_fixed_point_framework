@@ -1,4 +1,6 @@
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Complex.Basic
+import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic
 
@@ -214,5 +216,69 @@ theorem zero_mass_no_sublight (P : ZeroMassPhoton) :
   intro h
   have hv : groupVelocity P = P.c := zero_mass_group_velocity P
   linarith
+
+/-! ## Fock 空间自由演化（开放问题 #6 机制层 Lean 骨架）
+   玻色 Fock 空间算子：数算子 N、湮灭 a、产生 a†、自由哈密顿量 H₀ = ℏωN。
+   机器证明：① [N, H₀] = 0（自由传播保光子数——S8-C28/C30 的代数骨架）；
+   ② [N, a†] = a†（产生算子是数提升算子）；③ [N, a] = −a（湮灭是数降算子）。
+   "R 折叠 = 相互作用哈密顿量"的完整范畴-算子桥接仍登记开放（机制层），
+   本节省在自由场骨架（无相互作用部分）的机器证明。 -/
+
+/-- 玻色 Fock 空间：ℕ → ℂ 序列（|n⟩ 的系数）。 -/
+abbrev FockSpace := ℕ → ℂ
+
+/-- 数算子：N|n⟩ = n|n⟩。 -/
+def numberOp (f : FockSpace) : FockSpace := fun n => (n : ℂ) * f n
+
+/-- 湮灭算子：a|n⟩ = √n|n−1⟩（(a f)(n) = √(n+1)·f(n+1)）。 -/
+noncomputable def annihilate (f : FockSpace) : FockSpace :=
+  fun n => (Real.sqrt ((n + 1 : ℕ) : ℝ) : ℂ) * f (n + 1)
+
+/-- 产生算子：a†|n⟩ = √(n+1)|n+1⟩（(a† f)(n) = √n·f(n−1)，n=0 时为 0）。 -/
+noncomputable def create (f : FockSpace) : FockSpace :=
+  fun n => if n = 0 then 0 else (Real.sqrt (n : ℝ) : ℂ) * f (n - 1)
+
+/-- 自由哈密顿量：H₀ = ℏωN（无相互作用）。 -/
+def freeHamiltonian (hbar omega : ℂ) (f : FockSpace) : FockSpace :=
+  fun n => (hbar * omega * (n : ℂ)) * f n
+
+/-- 数守恒（[N, H₀] = 0）：自由传播保光子数——S8-C28/C30"树级模方守恒（保光子数）"
+    的代数骨架（数值验证见 paperX_photon_topology.py §S8）。 -/
+theorem number_conserved_free_evolution (hbar omega : ℂ) (f : FockSpace) :
+    numberOp (freeHamiltonian hbar omega f) = freeHamiltonian hbar omega (numberOp f) := by
+  funext n
+  simp [numberOp, freeHamiltonian]
+  ring
+
+/-- 产生算子是数提升算子（[N, a†] = a†）：(N a† − a† N)|n⟩ = a†|n⟩。 -/
+theorem commutator_number_create (f : FockSpace) :
+    numberOp (create f) = create (numberOp f) + create f := by
+  funext n
+  by_cases hn : n = 0
+  · subst hn
+    simp [numberOp, create]
+  · have hn0 : n ≠ 0 := hn
+    have hn1 : ((n - 1 : ℕ) : ℂ) + 1 = (n : ℂ) := by
+      exact_mod_cast Nat.sub_add_cancel (Nat.succ_le_of_lt (Nat.pos_of_ne_zero hn0))
+    simp [numberOp, create, hn0]
+    rw [← hn1]
+    ring
+
+/-- 湮灭算子是数降算子（[N, a] = −a）：(N a − a N)|n⟩ = −a|n⟩。 -/
+theorem commutator_number_annihilate (f : FockSpace) :
+    numberOp (annihilate f) = annihilate (numberOp f) - annihilate f := by
+  funext n
+  simp [numberOp, annihilate]
+  ring
+
+/-- 树级模方守恒的解析核心：自由演化相位模方 |e^{−iωnt}| = 1（S8-C28 的代数骨架）。 -/
+theorem norm_phase_one (omega : ℝ) (n : ℕ) (t : ℝ) :
+    ‖Complex.exp (-Complex.I * ((omega * (n : ℝ) * t) : ℂ))‖ = 1 := by
+  have hE : -Complex.I * ((omega * (n : ℝ) * t) : ℂ) =
+      -((omega * (n : ℝ) * t : ℂ)) * Complex.I := by
+    push_cast
+    ring
+  rw [hE]
+  simpa using Complex.norm_exp_ofReal_mul_I (-(omega * (n : ℝ) * t))
 
 end UFPFormalization

@@ -293,6 +293,9 @@ SCRIPTS = [
 
     # === Phase 62: 光子拓扑-范畴理论 (62 #7) ===
     ("scripts/paperX_photon_fiber_orthogonality.py", "光子拓扑 62#7：纤维丛层正交严格化——V=ker dπ + TE=V⊕H_A + 标准度量 V⊥H_f⟺f=0 + g_A 下 V⊥H_A(任意 A, 相容选取) + 维数 (5/5)"),
+
+    # === Phase 62: 光子拓扑-范畴理论 (62 #4) ===
+    ("scripts/paperX_hcdelta_dimension.py", "光子拓扑 62#4：h-c-Δ 三常数约束代数形式量纲限定——Buckingham π(5 变量-3 量纲=2 无量纲群) + Δ=F(λ_min/λ_P) 形式族 + 候选族量纲一致 + E3 量纲确认(Δλ_min 无量纲谱间距) + n=2 反推 λ_min 诚实量化 (15/15)"),
 ]
 
 # 耗时脚本（如 DNS 湍流高精度验证），默认跳过；设置环境变量 RUN_SLOW=1 时运行
