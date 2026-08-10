@@ -315,9 +315,9 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XL | [paper40_qcd_color_dynamics.md](paper40_qcd_color_dynamics.md) | 色规范完整动力学（胶球谱） |
 | XLI | [paper41_renormalization_chain.md](paper41_renormalization_chain.md) | 量子重整化完整链条 |
 | XLII | [paper42_black_hole_quantum_evolution.md](paper42_black_hole_quantum_evolution.md) | 黑洞量子演化（Page 曲线、超辐射） |
-| XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线） |
+| XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线；v0.28 正向仿真验证 P1/P3/P2 机制层闭合） |
 
-配套文档：[RAP 勘误与立场声明 v0.25](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.25](RAP_盲登记协议.md)。
+配套文档：[RAP 勘误与立场声明 v0.28](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.25](RAP_盲登记协议.md)。
 
 ## 附录 B：冻结预言盲登记摘要（P1–P7，v0.25）
 
