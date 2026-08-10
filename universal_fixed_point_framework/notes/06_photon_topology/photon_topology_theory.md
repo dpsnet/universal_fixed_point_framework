@@ -1,6 +1,6 @@
 # 光子拓扑-范畴理论研究笔记
 
-**文档编号**：Note-PHOTON-TOPO-v2.4（2026-08-11：#7 联络算子（幂等投影）+ P1 光速锁定/能量量子骨架 + #6 JC 定量桥接 + #4 参数空间负结果；此前 v2.3：Fock 骨架 + 联络-度量相容选取 + h-c-Δ 量纲限定 + 范畴层方向正交）
+**文档编号**：Note-PHOTON-TOPO-v2.5（2026-08-11：#7 曲率层推进（结构方程/Bianchi/U(1)/挠率）+ #6 dagger 范畴公理完整 Lean 化；此前 v2.4：#7 联络算子（幂等投影）+ P1 光速锁定/能量量子骨架 + #6 JC 定量桥接 + #4 参数空间负结果）
 **创建日期**：2026-08-10
 **母笔记**：[`docs/关于光子的理论研究笔记.md`](../../../docs/关于光子的理论研究笔记.md)（v1.0 + Addendum 01-04，定性拓扑叙事）
 **路线图**：[`roadmap/phase62_photon_topology.md`](../../roadmap/phase62_photon_topology.md)
@@ -253,6 +253,16 @@ $$R(M_{\text{photon}}, \emptyset) \to (M'_{\text{atom}}, \partial M')$$
 - **新增公式均为已知物理的拓扑重述**：命题 1.4（Bohr 条件 $h\nu = \Delta E$）与定义 1.4（吸收截面 $\sigma_{\text{abs}}$，爱因斯坦 $B_{12}$ 系数）是标准量子光学结果，本节 UFPF 贡献在于将其表述为"$R$ 右伴随折叠的必要条件/概率"，**不构成新物理预言**。
 - **命题 1.3 是框架性表述，非独立验证结论**："光子吸收 = $R$ 右伴随折叠"是 UFPF 独有的翻译——标准量子光学以相互作用哈密顿量 + 费米黄金规则描述光子吸收，其中不存在 $R$ 伴随概念。本节将该机制翻译为伴随函子语言，属于**框架等价性叙事**：该翻译与标准描述的完全等价性**尚未独立验证**（既无实验判据，也无机器证明）。定义 1.3 的自然同构 $\text{Hom}_{\text{Sp}}(D(A), B) \cong \text{Hom}_{\text{Rec}}(A, R(B))$ 依赖 $D \dashv R$ 伴随对的严格存在性——该伴随对在 Paper I 中已建立，但 $R$ 在具体拓扑对象（光子 → 激发态原子）上的作用规则尚未在 Lean 中形式化。
 - 本节的"正交性"是定性几何直觉的**几何表述**，而非严格证明。§1.2.1 确立的"双层正交"两个层面在 Lean 中的状态（2026-08-11）：**纤维丛层内积层已机器证明**——内积意义正交 ⟹ 交平凡（$V \perp H \Longrightarrow V \sqcap H = \bot$，`PhotonTopologyFunctor.lean` `inf_eq_bot_of_inner_orthogonal`，用 mathlib `Submodule.orthogonal`/`inf_orthogonal_eq_bot`）；**联络-度量相容选取已机器证明**——度量正交补 $V^\perp$ 是 $V$ 的典范补空间（$V \sqcup V^\perp = \top$，`sup_orthogonal_eq_top`），且沿 $V^\perp$ 到 $V$ 的投影是幂等联络算子（$P^2=P$、$\ker P = V^\perp$、$\operatorname{im} P = V$，`projection_along_orthogonal_*`，用 mathlib `LinearMap.projection`/`IsProj`）；**范畴层完整几何与纤维丛层全微分几何未形式化**——4-范畴态射方向与伴随函子方向的几何正交（代数核心：光子 1-态射层 Hom 集单点、Δ 无投影）、联络形式/曲率/挠率的全微分结构，登记开放项（路线图 §七 #7）。
+
+**曲率层推进（开放问题 #7 深化，2026-08-11，`paperX_photon_curvature.py` 14/14 + Lean 骨架）**：在已闭合的联络算子层（幂等投影）之上推进李代数值曲率的代数/结构层：
+- **结构方程**：$\Omega_{ij} = \partial_i \omega_j - \partial_j \omega_i + [\omega_i, \omega_j]$（su(2) 值联络形式 $\omega$，光滑解析构造）——曲率矩阵反厄米（$\Omega^\dagger = -\Omega$，李代数值）；
+- **曲率反对称**：$\Omega_{ji} = -\Omega_{ij}$（2-形式 $(i,j)$ 指标反对称）⟹ 曲率是 2-形式；
+- **Bianchi 恒等式**：$\partial\Omega + [\omega,\Omega] = 0$（循环求和，解析残差 ~1e-14，源自雅可比恒等式）；
+- **U(1) 特例**：$F_{ij} = \partial_i A_j - \partial_j A_i$，$dF = 0$（阿贝尔联络无源，与光子场强结构一致）；
+- **联络算子衔接**：幂等自伴投影 $P$（$P^2=P$、$P^\dagger=P$）编码垂直-水平分解 $V\oplus V^\perp$（$\ker P = V^\perp$、$\operatorname{im} P = V$）——联络 = 水平提升算子（与 `PhotonTopologyFunctor.lean` 闭合一致）；
+- **挠率结构方程**：$T^k_{ij} = \Gamma^k_{ij} - \Gamma^k_{ji}$ 下指标反对称、对角元为零；
+- **Lean 代数骨架**（`PhotonTopologyFunctor.lean`，2966 jobs 零 sorry）：`skew_antisymm`（反对称化算子 $A-A^\dagger$ 转置变号）、`lie_bracket_antisymm`（李括号反对称）、`curvature_antisymm`（曲率反对称组合——外微分项反对称 + 李括号反对称）；
+- **诚实边界**：本节为李代数值曲率的代数/结构验证（光滑解析构造），非完整流形微分几何——联络形式/曲率/挠率的**完整流形形式化仍登记开放**（需微分几何库）。
 
 ### 1.2.3 可拦截性核心公式集（LaTeX 可直接引用）
 

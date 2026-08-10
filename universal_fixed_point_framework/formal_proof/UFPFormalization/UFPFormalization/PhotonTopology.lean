@@ -409,4 +409,30 @@ theorem dagger_is_adjoint {n : ℕ} (M B : Matrix (Fin n) (Fin n) ℂ)
     (hB : IsAdjoint M B) : B = M.conjTranspose := by
   exact adjoint_unique hB (conjTranspose_satisfies_adjoint M)
 
+/-! ## dagger 范畴公理由内积推导（开放问题 #6 完整化）
+   `dagger_involution`（对合）已证；本节补齐 dagger 范畴其余公理——
+   反变/恒等/加性/反线性——全部为共轭转置（内积伴随的矩阵表示）的
+   标准性质（数值验证见 paperX_photon_dagger_derivation.py D3a-d，17/17），
+   无需作为独立结构假设。 -/
+
+/-- dagger 反变：(AB)† = B†A†（dagger 范畴复合公理，由内积伴随推导）。 -/
+theorem dagger_antimultiplicative {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
+    dagger (A * B) = dagger B * dagger A := by
+  simp [dagger]
+
+/-- dagger 保持恒等：I† = I。 -/
+theorem dagger_identity {n : ℕ} :
+    dagger (1 : Matrix (Fin n) (Fin n) ℂ) = 1 := by
+  simp [dagger]
+
+/-- dagger 加性：(A+B)† = A† + B†。 -/
+theorem dagger_additive {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
+    dagger (A + B) = dagger A + dagger B := by
+  simp [dagger]
+
+/-- dagger 反线性：(c·A)† = conj(c)·A†（c 为复数标量，ℂ 上 star = conj）。 -/
+theorem dagger_antilinear {n : ℕ} (c : ℂ) (A : Matrix (Fin n) (Fin n) ℂ) :
+    dagger (c • A) = star c • dagger A := by
+  simp [dagger]
+
 end UFPFormalization
