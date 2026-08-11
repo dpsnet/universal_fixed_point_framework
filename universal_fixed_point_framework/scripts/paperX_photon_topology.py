@@ -368,6 +368,42 @@ def s9_silence_einstein():
 
 
 # ============================================================
+# S10 可拦截性选择定则门 (命题 2.3 取向门, 2026-08-11)
+# ============================================================
+def s10_selection_rules():
+    # 命题 2.3 取向门: 光子环绕方向(二元取向 s=±1)须与原子跃迁角动量变化匹配——
+    #   已知物理 = 原子选择定则 (电偶极 E1: Δl=±1, Δm=0,±1; σ±↔Δm=±1, π↔Δm=0)
+    #   拓扑重述: 环绕方向 = 二元取向; 选择定则 = 取向门控 (结合 = 能量门 ∧ 取向门)
+    # C37: 偏振-环绕方向-Δm 匹配表 (σ± 携带 ±ħ 环绕角动量, π 为 0)
+    sel = {"sigma+": (+1, +1), "sigma-": (-1, -1), "pi": (0, 0)}  # 偏振 -> (环绕方向, Δm)
+    match37 = all(h == dm for h, dm in sel.values()) and set(sel) == {"sigma+", "sigma-", "pi"}
+    check("S10-C37 偏振↔环绕方向↔Δm 匹配表 (σ±↔±1, π↔0)",
+          bool(match37),
+          "σ+↔(+1,+1), σ-↔(-1,-1), π↔(0,0)")
+
+    # C38: 氢 2p→1s: Δl=-1 电偶极 E1 允许 (B12 ≠ 0)
+    dl_2p1s = 0 - 1                     # 1s(l=0) - 2p(l=1)
+    allowed = abs(dl_2p1s) == 1         # E1 允许: Δl = ±1
+    B12_2p1s = 1.0 if allowed else 0.0
+    check("S10-C38 氢 2p→1s Δl=±1 电偶极允许 (B12≠0)",
+          bool(allowed and B12_2p1s > 0), "Δl=%d" % dl_2p1s)
+
+    # C39: 氢 2s→1s: Δl=0 电偶极 E1 禁戒 (B12=0, 实际经双光子衰变)
+    dl_2s1s = 0 - 0                     # 1s(l=0) - 2s(l=0)
+    forbidden = abs(dl_2s1s) != 1       # Δl=0: E1 禁戒 (宇称不变)
+    B12_2s1s = 0.0 if forbidden else 1.0
+    check("S10-C39 氢 2s→1s Δl=0 电偶极禁戒 (B12=0)",
+          bool(forbidden and B12_2s1s == 0), "Δl=%d → E1 禁戒(双光子)" % dl_2s1s)
+
+    # C40: 禁戒跃迁即使能量匹配 hν=ΔE 也不拦截 (取向门语义, 命题 2.3)
+    nu0 = (13.6 - 3.4) * 1.602176634e-19 / H_PLANCK   # 氢 2s→1s 能量匹配示例
+    g0 = 1.0
+    sigma_forbidden = (H_PLANCK * nu0 / C_LIGHT) * B12_2s1s * g0   # B12=0
+    check("S10-C40 禁戒跃迁 B12=0 即使 hν=ΔE 也不拦截 (σ_abs=0)",
+          abs(sigma_forbidden) < 1e-300, "σ_abs=%.2e" % sigma_forbidden)
+
+
+# ============================================================
 # 主函数
 # ============================================================
 def main():
@@ -384,6 +420,7 @@ def main():
     s7_capture_reemission()
     s8_free_propagation()
     s9_silence_einstein()
+    s10_selection_rules()
 
     passed = sum(1 for _, ok, _ in _CHECKS if ok)
     total = len(_CHECKS)

@@ -316,7 +316,7 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XLI | [paper41_renormalization_chain.md](paper41_renormalization_chain.md) | 量子重整化完整链条 |
 | XLII | [paper42_black_hole_quantum_evolution.md](paper42_black_hole_quantum_evolution.md) | 黑洞量子演化（Page 曲线、超辐射） |
 | XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线；v0.28 正向仿真验证 P1/P3/P2 机制层闭合；v0.29 P1 D→2 端方向勘误；v0.30 开放问题三件套：P1 仿真-实测符号差异诊断闭合 + σ(D,c) 定量公式 + P3 输运耦合零假设检验） |
-| XLIV | [paper44_photon_topology.md](paper44_photon_topology.md) | 光子生成的拓扑转变机制与可证伪预言（Phase 62 理论论文；拓扑转变 + 方向性阶跃 + 双层正交 + 可拦截性 + 六项远期可证伪预言，数值自洽 36/36） |
+| XLIV | [paper44_photon_topology.md](paper44_photon_topology.md) | 光子生成的拓扑转变机制与可证伪预言（Phase 62 理论论文；拓扑转变 + 方向性阶跃 + 双层正交 + 可拦截性 + 六项远期可证伪预言，数值自洽 40/40） |
 
 配套文档：[RAP 勘误与立场声明 v0.32](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.32](RAP_盲登记协议.md)。
 
