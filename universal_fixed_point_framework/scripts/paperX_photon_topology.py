@@ -4,11 +4,11 @@ paperX_photon_topology.py — Phase 62B 光子拓扑-范畴理论数值验证
 
 笔记来源: notes/06_photon_topology/photon_topology_theory.md (Note-PHOTON-TOPO-v2.0)
 验证项:
-  S1 拓扑分岔的方向性阶跃 (公理 A4): chi_Phi = Theta(t - t*) 与 sigma_S3 单向 1->0 不可逆
+  S1 拓扑转变的方向性阶跃 (公理 A4): chi_Phi = Theta(t - t*) 与 sigma_S3 单向 1->0 不可逆
   S2 光速不变拓扑定理 (定理 2.1): c = 1/sqrt(mu0*eps0) + 洛伦兹速度加法不变 + 空间平移不变
   S3 c = lambda*nu 自洽定理 (定理 3.1): lambda*nu = c 恒等式 + 反比关系 + 红移保持
   S4 E = h*nu 拓扑释义 + 可拦截性 (命题 4.1 / 1.4 / 定义 1.4): Bohr 匹配 + 吸收截面共振选择性
-  S5 推论 4 时间解耦: 传播途中零时间耦合, 耦合仅在端点 (发射 D 分岔 / 吸收 R 折叠)
+  S5 推论 4 时间解耦: 传播途中零时间耦合, 耦合仅在端点 (发射 D 转变 / 吸收 R 折叠)
   S6 零静质量 v < c 不自洽 (命题 2.2): m = 0 -> E = pc -> v_g = c (E^2 = p^2 c^2 + m^2 c^4)
 
 诚实边界: 本脚本验证的是公理 A4 / 定理 2.1 / 定理 3.1 / 命题 1.4 / 推论 4 / 命题 2.2
@@ -36,7 +36,7 @@ EPS0 = 1.0 / (MU0 * C_LIGHT**2)   # eps0 由 c 与 mu0 定义导出
 
 
 # ============================================================
-# S1 拓扑分岔的方向性阶跃 (公理 A4)
+# S1 拓扑转变的方向性阶跃 (公理 A4)
 # ============================================================
 def s1_bifurcation_step():
     t = np.linspace(0.0, 2.0, 2001)
@@ -160,7 +160,7 @@ def s5_time_decoupling():
     # 光子位置 x(t) = c*t, t in [0, T_total]
     t_path = np.linspace(0.0, T_total, 10001)
 
-    # 耦合事件仅发生在端点 (t=0 发射 D 分岔, t=T_total 吸收 R 折叠)
+    # 耦合事件仅发生在端点 (t=0 发射 D 转变, t=T_total 吸收 R 折叠)
     coupling_times = np.array([0.0, T_total])
 
     # C16: 传播途中 (0, T) 无耦合事件
@@ -209,15 +209,15 @@ def s6_zero_mass():
 
 
 # ============================================================
-# S7 捕获-再分岔模型 (命题 3.2, 开放问题 #3 推进)
+# S7 捕获-再转变模型 (命题 3.2, 开放问题 #3 推进)
 # ============================================================
 def s7_capture_reemission():
-    # 介质中"光速变慢"的拓扑补充: 光子被介质原子捕获(R 折叠) -> 重新分岔(D) -> 继续
-    # 真空段单光子拓扑严格 v = c; 宏观 v_avg < c 为捕获-再分岔延迟的统计效应
+    # 介质中"光速变慢"的拓扑补充: 光子被介质原子捕获(R 折叠) -> 重新转变(D) -> 继续
+    # 真空段单光子拓扑严格 v = c; 宏观 v_avg < c 为捕获-再转变延迟的统计效应
     c = C_LIGHT
     L = 100.0                  # 介质长度 (m)
     n_atoms = 200              # 捕获点数量
-    tau_mean = 5.0e-9          # 平均捕获-再分岔延迟 (s)
+    tau_mean = 5.0e-9          # 平均捕获-再转变延迟 (s)
     p_capture = 0.5
 
     def simulate(seed, pc):
@@ -232,7 +232,7 @@ def s7_capture_reemission():
             seg.append(c)
             x = pos
             if rng.random() < pc:
-                t_tot += rng.exponential(tau_mean)   # 捕获-再分岔延迟
+                t_tot += rng.exponential(tau_mean)   # 捕获-再转变延迟
         t_tot += (L - x) / c
         seg.append(c)
         return t_tot, seg
@@ -244,8 +244,8 @@ def s7_capture_reemission():
     check("S7-C22 真空传播段严格 v = c (单光子拓扑)",
           bool(all(abs(s - c) < 1e-6 for s in seg)))
 
-    # C23: 宏观平均速度 < c (捕获-再分岔统计延迟)
-    check("S7-C23 宏观 v_avg < c (捕获-再分岔统计延迟)",
+    # C23: 宏观平均速度 < c (捕获-再转变统计延迟)
+    check("S7-C23 宏观 v_avg < c (捕获-再转变统计延迟)",
           v_avg < c, "v_avg=%.4e m/s" % v_avg)
 
     # C24: 解析公式 t_avg = L/c + n_atoms*p_capture*tau_mean 与多次模拟平均一致
@@ -332,14 +332,14 @@ def s9_silence_einstein():
     check("S9-C31 门控模型: sigma=1 -> W_eff=0, sigma=0 -> W_eff=W_ij",
           abs(W_eff_silent) < 1e-12 and abs(W_eff_open - A21_std) / A21_std < 1e-12)
 
-    # C32: 分岔瞬间跃迁率阶跃 (与公理 A4 一致): sigma 1->0 时 W_eff 0->W_ij
+    # C32: 转变瞬间跃迁率阶跃 (与公理 A4 一致): sigma 1->0 时 W_eff 0->W_ij
     t_star = 1.0
     t_grid = np.linspace(0.0, 2.0, 2001)
     sigma = np.where(t_grid < t_star, 1.0, 0.0)
     W_eff = (1.0 - sigma) * A21_std
     W_before = W_eff[t_grid < t_star]
     W_after = W_eff[t_grid >= t_star]
-    check("S9-C32 分岔瞬间跃迁率阶跃 (sigma 1->0, W_eff 0->W_ij)",
+    check("S9-C32 转变瞬间跃迁率阶跃 (sigma 1->0, W_eff 0->W_ij)",
           np.max(W_before) < 1e-12 and abs(np.min(W_after) - A21_std) < 1e-12)
 
     # C33: 爱因斯坦关系 A_21 = (8*pi*h*nu^3/c^3)*B_21 (黑体辐射一致性)

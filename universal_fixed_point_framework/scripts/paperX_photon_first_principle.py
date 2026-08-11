@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""光子拓扑分岔第一性起源验证（2026-08-11，开放问题 §7.5 #1 推进）
+"""光子拓扑转变第一性起源验证（2026-08-11，开放问题 §7.5 #1 推进）
 理论依据：notes/06_photon_topology/photon_first_principle_origin.md
 
 三个方向：
   S1  S3 谱静默互补对应（paper44 光子 ↔ paper40 胶子）：规范玻色子传播性 = S3 静默层状态，
       自相互作用顶点数 N_vert 为调控量（阿贝尔 0 顶点 ⟹ 静默解除可传播；非阿贝尔顶点谱封闭 ⟹ 静默驻留禁闭）
-  S2  Φ ⊆ D 函子特例：光子拓扑分岔 Φ = 谱化函子 D 在束缚原子拓扑子范畴上的限制（函子律验证）
-  S3  分岔定量化：拓扑分岔 = 驻波/行波谱带间谱间隙闭合的离散跳变，Bohr 条件 hν=ΔE 从谱间隙重建
+  S2  Φ ⊆ D 函子特例：光子拓扑转变 Φ = 谱化函子 D 在束缚原子拓扑子范畴上的限制（函子律验证）
+  S3  转变定量化：拓扑转变 = 驻波/行波谱带间谱间隙闭合的离散跳变，Bohr 条件 hν=ΔE 从谱间隙重建
 """
 
 import numpy as np
@@ -93,18 +93,18 @@ def s1_verification():
 # ------------------------------------------------------------
 
 def s2_verification():
-    print("== S2  Φ ⊆ D 函子特例（拓扑分岔 = D 在光子子范畴上的限制） ==")
+    print("== S2  Φ ⊆ D 函子特例（拓扑转变 = D 在光子子范畴上的限制） ==")
     ok = []
     # 对象：A(束缚驻波, S3 静默) ∈ Rec；P(行波, 静默解除) ∈ Sp
     # 基向量：|A> = [1,0]^T（束缚态），|P> = [0,1]^T（行波态）
     # 态射矩阵（作用于列向量）：
-    U = np.array([[0.0, 0.0], [1.0, 0.0]])  # unfold: A→P（拓扑分岔）
+    U = np.array([[0.0, 0.0], [1.0, 0.0]])  # unfold: A→P（拓扑转变）
     F = np.array([[0.0, 1.0], [0.0, 0.0]])  # fold: P→A（R 右伴随折叠）
     id_A = np.array([[1.0, 0.0], [0.0, 0.0]])
     id_P = np.array([[0.0, 0.0], [0.0, 1.0]])
     A = np.array([1.0, 0.0]); P = np.array([0.0, 1.0])
 
-    # 检查 fold∘unfold = id_A（在 A 上：拓扑分岔 + 折叠 = 恒等，能量守恒重述）
+    # 检查 fold∘unfold = id_A（在 A 上：拓扑转变 + 折叠 = 恒等，能量守恒重述）
     FU = F @ U
     on_A = np.allclose(FU @ A, A)
     print("fold∘unfold 作用于 A = A（恒等，能量守恒重述）：%s" % on_A)
@@ -132,7 +132,7 @@ def s2_verification():
     right = F @ (U @ A)  # = F @ P = A
     b2 = np.allclose(left, right)
     print("函子律保复合：D(fold∘unfold) 与 D(fold)∘D(unfold) 在 D(A) 上像一致：%s" % b2)
-    # Φ = D|_Rec_photon 一致：Φ(A)=P（公理 A1：分岔到行波），D(A)=A'（静默解除的开放类）
+    # Φ = D|_Rec_photon 一致：Φ(A)=P（公理 A1：转变到行波），D(A)=A'（静默解除的开放类）
     # 一致判据：Φ 与 D 都实现"S3 静默解除"（封闭拓扑类 → 开放拓扑类）
     b3 = True  # 对象层映射一致（均映射为静默解除的开放拓扑）
     print("Φ(A)=(M_photon,∅) 与 D(A)=开放类一致（均实现 S3 静默解除）：%s" % b3)
@@ -144,11 +144,11 @@ def s2_verification():
 
 
 # ------------------------------------------------------------
-# S3: 分岔定量化（谱间隙闭合离散跳变）
+# S3: 转变定量化（谱间隙闭合离散跳变）
 # ------------------------------------------------------------
 
 def s3_verification():
-    print("== S3  分岔定量化（谱间隙闭合离散跳变，Bohr 条件谱表示） ==")
+    print("== S3  转变定量化（谱间隙闭合离散跳变，Bohr 条件谱表示） ==")
     ok = []
     # 束缚谱带：激发使束缚能级上升 E_i(E) = E_0 + E
     # 自由谱带：传播阈值 E_j 固定（行波最低模）
@@ -160,18 +160,18 @@ def s3_verification():
     print("谱间隙 Δλ_gap(E) 随激发单调减小：%s（%g → %g）" % (mono, gap[0], gap[-1]))
     ok.append(("C1 谱间隙随激发单调减小", mono))
 
-    # 2. 分岔离散性（公理 A2 定量实现）：无连续中间拓扑
+    # 2. 转变离散性（公理 A2 定量实现）：无连续中间拓扑
     # 谱权重：Δλ_gap>0 全在束缚带，Δλ_gap≤0 跳变到自由带（阶跃，无中间态）
     hnu = 3.0  # 光子能量（Bohr 条件：hν = ΔE 待验证）
-    E_crit = E_j - E_0 - hnu  # 分岔临界激发：Δλ_gap = hν
+    E_crit = E_j - E_0 - hnu  # 转变临界激发：Δλ_gap = hν
     idx = np.argmin(np.abs(gap - hnu))
     E_at = E_grid[idx]
     # 权重阶跃：束缚权重 w_b = 1 (Δλ_gap>hν)，w_b = 0 (Δλ_gap<hν)
     w_b = (gap > hnu).astype(float)
-    steps = np.sum(np.abs(np.diff(w_b)))  # 跳变次数（应为 1，单次离散分岔）
-    print("分岔临界激发 E* = %.3f（Δλ_gap = hν = %.2f），谱权重跳变次数 = %d（应 = 1 单次离散）"
+    steps = np.sum(np.abs(np.diff(w_b)))  # 跳变次数（应为 1，单次离散转变）
+    print("转变临界激发 E* = %.3f（Δλ_gap = hν = %.2f），谱权重跳变次数 = %d（应 = 1 单次离散）"
           % (E_at, hnu, int(steps)))
-    ok.append(("C2 分岔离散性（单次阶跃，无中间拓扑）", steps == 1 and E_at > 0))
+    ok.append(("C2 转变离散性（单次阶跃，无中间拓扑）", steps == 1 and E_at > 0))
 
     # 3. Bohr 条件 hν=ΔE 从谱间隙重建（解析临界值，精确验证）
     E_crit_ana = E_j - E_0 - hnu  # 解析临界：Δλ_gap(E*)=hν
@@ -183,7 +183,7 @@ def s3_verification():
 
 
 def main():
-    print("== 光子拓扑分岔第一性起源验证 ==")
+    print("== 光子拓扑转变第一性起源验证 ==")
     all_ok = []
     for fn in (s1_verification, s2_verification, s3_verification):
         for name, cond, *extra in fn():
@@ -192,8 +192,8 @@ def main():
             all_ok.append(cond)
     print("汇总：%d/%d 通过" % (sum(all_ok), len(all_ok)))
     print("结论：规范玻色子传播性 = S3 静默状态（方向 1）；Φ ⊆ D 函子特例（方向 2）；"
-          "拓扑分岔 = 谱间隙闭合离散跳变 + Bohr 条件谱表示（方向 3）——"
-          "光子拓扑分岔第一性起源获三方向机制验证")
+          "拓扑转变 = 谱间隙闭合离散跳变 + Bohr 条件谱表示（方向 3）——"
+          "光子拓扑转变第一性起源获三方向机制验证")
     return 0 if all(all_ok) else 1
 
 
