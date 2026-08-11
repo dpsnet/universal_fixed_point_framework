@@ -4,7 +4,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.3（2026-08-11，纳入 UFPF 论文系列 Paper XLIV，对应 RAP-Errata v0.31；此前 v0.1 初稿 2026-08-10、v0.2 提炼笔记更新 2026-08-11）
+**版本**：v0.4（2026-08-11，新增 §7.6 第一性起源独立章节 + §7.5 开放问题重构 + 内容自包含化；此前 v0.1 初稿 2026-08-10、v0.2 内容更新 2026-08-11、v0.3 纳入 UFPF 论文系列 Paper XLIV，对应 RAP-Errata v0.31）
 
 **稿态**：自洽成稿。本文为理论论文，全部核心结构（拓扑分岔公理体系、方向性阶跃、双层正交、可拦截性机制、六项可证伪预言）均于本文内完整建立，不依赖外部未刊文献；UFPF 特有结构（Rec/Sp 谱范畴、$D$ 谱化函子、S3 谱静默、4-范畴偏差 $\Delta$、Grothendieck 谱纤维丛）的自包含定义见附录 A；已知物理结论（Bohr 条件、爱因斯坦系数、光速不变、Planck 关系）在本文中均明确标注为"经典结论的拓扑重述"，不构成新物理声称。理论自洽性的数值验证脚本随文提供（§7.4）。
 
@@ -256,7 +256,7 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 - **候选族收窄 4→2**：剔除 $K_b$（稀释解释无机制来源）、$K_e$（$d_H$ 无偏振机制关联），保留 $K_a$（最简）与 $K_c$（结构匹配）——双候选白矮星 $\delta z_{\text{pol}}$ 预测差 2 倍（$K_c/K_a=N_{\text{Weyl}}/2$），实验上可判别；
 - **诚实边界**：两个原则（最简 vs 结构匹配）冲突，且均无实验锚定与框架内固定点方程（对比 $\sqrt5$ 选择原理有 χ² 拟合锚定）——$\kappa_\Delta$ 精确值**仍登记开放**，精确锁定需 4-范畴 $\Delta$ 结构完整推导或远期偏振光谱观测。
 
-**#5×#4 交叉约束（2026-08-11，`paperX_photon_epsilon_kappa.py` 10/10）**：利用笔记既有诚实边界 $\kappa_\Delta \le \varepsilon_\Delta$（$\delta z_{\text{pol}} \le \delta z_\Delta$ 系数形式）与 #4 的 $\lambda_{\min}$ 候选（15³ 取 k=1 ⟹ $\Delta=(1/15)^3\approx2.96\times10^{-4}$）交叉约束：
+**#5×#4 交叉约束（2026-08-11，`paperX_photon_epsilon_kappa.py` 10/10）**：利用 §6.1 既有诚实边界 $\kappa_\Delta \le \varepsilon_\Delta$（$\delta z_{\text{pol}} \le \delta z_\Delta$ 系数形式）与 #4 的 $\lambda_{\min}$ 候选（15³ 取 k=1 ⟹ $\Delta=(1/15)^3\approx2.96\times10^{-4}$）交叉约束：
 - **条件性排除**：若 $\varepsilon_\Delta=\Delta$（15³ 候选值），则 $\kappa_\Delta\le2.96\times10^{-4}$——双候选 $K_a$、$K_c$ 违反约束被排除；
 - **结构自洽**：$K_a/\Delta=15=S_4^{-1}$、$K_c/\Delta=30=2S_4^{-1}$（$\kappa_\Delta=S_4^2$ 与 $\Delta=(1/15)^3$ 代数形式之比为框架量）；
 - **收窄带**：$\kappa_\Delta\in[10^{-4},2.96\times10^{-4}]$；新候选 $S_4^3=(1/15)^3=\Delta$（$\kappa_\Delta=\varepsilon_\Delta$ 等号边界）在带内；
@@ -312,17 +312,42 @@ $h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整�
 
 **验证性质声明**：上述数值验证确认的是公理/已知物理重述的**数值自洽性**——其中恒等式类（光速、$\lambda\nu$、$E=h\nu$）由 SI 定义值直接构造，模型演示类（不可逆、时间解耦）为模型设定内自洽演示，均不构成对六项颠覆性预言（P1–P6）的实验验证。
 
-**辅助定量化脚本（2026-08-11）**：纤维丛层正交（`paperX_photon_fiber_orthogonality.py` 5/5）、$h$-$c$-$\Delta$ 量纲限定与参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）、JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）、κ_Δ 框架候选 + 自旋霍尔判别性锚定（`paperX_photon_kappa_delta.py` 14/14）、κ_Δ 候选选择原理推进（`paperX_photon_kappa_select.py` 11/11，候选族收窄 4→2）、dagger 第一性原理推导（`paperX_photon_dagger_derivation.py` 17/17，Riesz 伴随方程 + dagger 公理由内积推导 + R=D† 检验准则）、曲率层（`paperX_photon_curvature.py` 14/14，结构方程/Bianchi/U(1) 无源/挠率反对称 + 联络算子衔接）、三恒等式闭环（`paperX_photon_p1_consistency.py` 8/8，$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$ + 零质量光速锁定衔接 #2）、$\lambda_{\min}$ 近-Planck 候选锚定（`paperX_hcdelta_lmin.py` 8/8，15³ 等框架量组合候选 + k~O(1) 相容）、#5×#4 交叉约束（`paperX_photon_epsilon_kappa.py` 10/10，$\kappa_\Delta\le\varepsilon_\Delta$ 条件性排除双候选 + 收窄带新候选 $S_4^3=\Delta$）——均为预言定量形式/量级结构的数值自洽性验证，不构成实验验证（已随文登记至 `run_all_tests.py`）。
+**辅助定量化脚本（2026-08-11）**：纤维丛层正交（`paperX_photon_fiber_orthogonality.py` 5/5）、$h$-$c$-$\Delta$ 量纲限定与参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）、JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）、κ_Δ 框架候选 + 自旋霍尔判别性锚定（`paperX_photon_kappa_delta.py` 14/14）、κ_Δ 候选选择原理推进（`paperX_photon_kappa_select.py` 11/11，候选族收窄 4→2）、dagger 第一性原理推导（`paperX_photon_dagger_derivation.py` 17/17，Riesz 伴随方程 + dagger 公理由内积推导 + R=D† 检验准则）、曲率层（`paperX_photon_curvature.py` 14/14，结构方程/Bianchi/U(1) 无源/挠率反对称 + 联络算子衔接）、三恒等式闭环（`paperX_photon_p1_consistency.py` 8/8，$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$ + 零质量光速锁定衔接 #2）、$\lambda_{\min}$ 近-Planck 候选锚定（`paperX_hcdelta_lmin.py` 8/8，15³ 等框架量组合候选 + k~O(1) 相容）、#5×#4 交叉约束（`paperX_photon_epsilon_kappa.py` 10/10，$\kappa_\Delta\le\varepsilon_\Delta$ 条件性排除双候选 + 收窄带新候选 $S_4^3=\Delta$）、**第一性起源三方向验证（`paperX_photon_first_principle.py` 10/10，§7.6：$\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$ 函子特例 + S3 谱静默互补对应 + 谱间隙闭合离散跳变/Bohr 条件谱表示）**——均为预言定量形式/量级结构的数值自洽性验证，不构成实验验证（已随文登记至 `run_all_tests.py`）。
 
 ### 7.5 开放问题
 
-1. 分岔映射 $\Phi$ 的严格范畴论定义（是否为 $D$ 函子的特例？）——对象层已给出**构造性实现**（$\Phi_+: X \mapsto (X_{\text{low}}, \langle\text{opened}\rangle)$ 并置结构编码"原子保留 + 光子新生"，公理 A3）且态射层已建立**忠实嵌入**（光子拓扑范畴忠实嵌入 Rec 范畴，§7.3）；**第一性起源三方向机制验证（2026-08-11，`paperX_photon_first_principle.py` 10/10，笔记 `notes/06_photon_topology/photon_first_principle_origin.md`）**：① **$\Phi\subseteq D$ 函子特例**——$\mathrm{fold}\circ\mathrm{unfold}=\mathrm{id}_A$（能量守恒重述）+ $D$ 函子律保复合 + $\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$ 对象层一致（S3 静默解除），拓扑分岔从公理降为 $D$ 函子定理；② **S3 谱静默互补对应（paper44↔paper40）**——光子（阿贝尔零自相互作用顶点 ⟹ $\sigma_{\text{S3}}=0$ 静默解除可传播）vs 胶子（SU(3) 顶点谱封闭，雅可比恒等式 5.6e-17 ⟹ $\sigma_{\text{S3}}=1$ 静默驻留禁闭，paper40 定理 4.2），规范玻色子传播性 = S3 谱静默状态（阿贝尔-非阿贝尔判据）；③ **分岔定量化**——拓扑分岔 = 驻波/行波谱带间谱间隙闭合的离散跳变（$\Delta\lambda_{\text{gap}}$ 随激发单调减 + 单次阶跃无中间拓扑），Bohr 条件 $h\nu=\Delta\lambda_{\text{gap}}=\Delta E$ 获谱表示（类比 paper40 定理 4.2 禁闭谱判据）；剩余登记：4-范畴态射方向的几何正交（范畴层完整几何）+ 完整函子律 Lean 机器证明；
-2. 推论 2.1 时间解耦的树级自由传播模方守恒一致性（§2.3 框架翻译的独立确认——当前仅完成定义一致性与树级模方守恒，γ→∞ 部分未数值验证）；**机制层（2026-08-11）**：Fock 空间算子 Lean 骨架（$[N,H_0]=0$ 等）+ JC 定量桥接（$H_{\text{int}}=g(a^\dagger\sigma^-+a\sigma^+)$，共振矩阵元/Rabi/费米黄金规则，`paperX_photon_jc_bridge.py` 14/14）+ **dagger 第一性原理推进（2026-08-11）**：dagger-假设从"独立结构假设"降级为"Hilbert 内积结构的推论"——Riesz 伴随方程 $\langle Ax,y\rangle=\langle x,A^\dagger y\rangle$ 在标准正交基下由共轭转置满足（`conjTranspose_satisfies_adjoint`）、伴随唯一性（`adjoint_unique`）保证 dagger 良定义、dagger 范畴公理（对合/反变/恒等）由内积推导、$R=D^\dagger$ 由伴随性方程检验（`dagger_is_adjoint`）——dagger-假设在内积层为 Hilbert 范围内被剔除（`paperX_photon_dagger_derivation.py` 17/17 + Lean 骨架 2966 jobs 零 sorry）+ **R 态射层伴随性方程验证（JC 模型实例 `jcD g`：`jc_R_adjoint`/`jc_R_is_dagger_adjoint`/`jc_R_hermitian`——R=D† 在机制层是定理，#6 收尾）**；剩余登记：纤维丛内积全局（无穷维）构造、完整函子层验证；
-3. 纤维丛层正交的垂直-水平分解严格化（联络/度量结构选择）——已建立 (V, H, g) 相容选取结论 + 度量正交补为典范相容补空间 + 沿 $V^\perp$ 的幂等联络投影闭合 + **曲率层推进（2026-08-11，`paperX_photon_curvature.py` 14/14 + Lean `skew_antisymm`/`lie_bracket_antisymm`/`curvature_antisymm`）**：su(2) 值联络结构方程 $\Omega=d\omega+\omega\wedge\omega$ + 曲率反对称（2-形式）+ Bianchi 恒等式（解析残差 ~1e-14）+ U(1) 无源特例 + 挠率反对称——**李代数值曲率的代数/结构层已闭合**；完整流形微分几何（联络形式/曲率/挠率的流形形式化，需微分几何库）登记开放；
-4. 静默指标 $\sigma_{\text{S3}}$ 与量子跃迁概率（爱因斯坦系数 $A_{ij}/B_{12}$）的定量对应——已建立门控模型 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$；
-5. 介质中"光速变慢"的捕获-再分岔模型数值模拟（命题 3.2）——已完成（真空段 $v=c$ + 宏观 $v_{\text{avg}}<c$，解析与模拟 rel 1.0%）；
-6. $h$-$c$-$\Delta$ 三常数约束的具体代数形式（预言 P3）——已量纲限定为 $\Delta=F(\lambda_{\min}/\lambda_P)$ + 参数空间负结果（已知物理尺度排除，近-Planck $\lambda_{\min}$ 允许 $k\sim O(1)$，`paperX_hcdelta_dimension.py` 20/20）+ **近-Planck 框架量候选锚定（`paperX_hcdelta_lmin.py` 8/8）**：允许带 $\lambda_{\min}/\lambda_P\in[10^3,10^4]$ 内存在简洁框架量组合候选（$15^3=3375$ 最简、$15^{d_H}\approx1530$ 等），仅 $n=1$ 线性律与 $k\sim O(1)$ 相容，最简候选 $15^3$ 取 $k=1$ ⟹ $\Delta\approx3\times10^{-4}$ 落在预言带内；$k$、$n$、$\lambda_{\min}$ 精确确定仍待模型指定（登记开放，候选扫描非第一性推导）；
-7. 偏振相关红移差的 $\Delta$ 修正系数精确值（预言 P1）——已建立判别性锚定（与标准自旋霍尔相差 10–12 量级，P1 非重述）+ 框架内生候选族（$S_4^2$、$S_4/(N_{\text{Weyl}}d_H)$、$S_4^2N_{\text{Weyl}}/2$、$S_4^2d_H/2$ 均在预言带内，`paperX_photon_kappa_delta.py` 14/14）+ 选择原理推进（`paperX_photon_kappa_select.py` 11/11：候选族收窄 4→2 为 $K_a$（MDL 最简）与 $K_c$（手性配对结构匹配））+ **#5×#4 交叉约束（`paperX_photon_epsilon_kappa.py` 10/10：$\kappa_\Delta\le\varepsilon_\Delta$ 与 $\varepsilon_\Delta=\Delta(15^3)$ 联立 ⟹ 双候选条件性排除，收窄带新候选 $S_4^3=\Delta$；依赖 $\varepsilon_\Delta=\Delta$ 假设）**——精确值仍登记开放，锁定需 $\varepsilon_\Delta$ 关系框架推导或远期偏振观测。
+**已闭合开放问题**（内容已在正文相应章节展开）：第一性起源（分岔映射 $\Phi$ 的范畴论地位与定量谱机制）已解决并独立成节——见 **§7.6**；静默-跃迁门控模型（$\sigma_{\text{S3}}$ 与爱因斯坦系数 $A_{ij}/B_{12}$ 的定量对应）已建立——见 §2.3 与 §7.4；介质"光速变慢"捕获-再分岔模型已完成——见 §3.3。以下为**未完全解决**项：
+
+1. 推论 2.1 时间解耦的树级自由传播模方守恒一致性（§2.3 框架翻译的独立确认）——**机制层已闭合（2026-08-11）**：Fock 空间算子 Lean 骨架（$[N,H_0]=0$ 等）+ JC 定量桥接（$H_{\text{int}}=g(a^\dagger\sigma^-+a\sigma^+)$，共振矩阵元/Rabi/费米黄金规则，`paperX_photon_jc_bridge.py` 14/14）+ **dagger 第一性原理**（dagger-假设从"独立结构假设"降级为"Hilbert 内积结构的推论"——Riesz 伴随方程由共轭转置满足、伴随唯一性、dagger 公理由内积推导、$R=D^\dagger$ 检验准则，`paperX_photon_dagger_derivation.py` 17/17 + Lean 骨架零 sorry）+ R 态射层伴随性方程验证（JC 模型实例：`jc_R_adjoint`/`jc_R_is_dagger_adjoint`/`jc_R_hermitian`，R=D† 在机制层是定理）；剩余登记：$\gamma\to\infty$ 部分未数值验证、纤维丛内积全局（无穷维）构造、完整函子层验证；
+2. 纤维丛层正交的垂直-水平分解严格化（联络/度量结构选择）——已建立 (V, H, g) 相容选取 + 度量正交补典范性 + 幂等联络投影闭合 + **曲率层闭合（2026-08-11，`paperX_photon_curvature.py` 14/14 + Lean 机器证明）**：su(2) 值联络结构方程 $\Omega=d\omega+\omega\wedge\omega$ + 曲率反对称 + Bianchi 恒等式（解析残差 ~1e-14）+ U(1) 无源特例 + 挠率反对称——李代数值曲率代数/结构层已闭合；剩余：完整流形微分几何（联络形式/曲率/挠率的流形形式化，需微分几何库）；
+3. $h$-$c$-$\Delta$ 三常数约束的具体代数形式（预言 P3）——已量纲限定 $\Delta=F(\lambda_{\min}/\lambda_P)$ + 参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）+ **近-Planck 候选锚定（`paperX_hcdelta_lmin.py` 8/8）**：允许带 $\lambda_{\min}/\lambda_P\in[10^3,10^4]$ 内存在简洁框架量组合候选（$15^3=3375$ 最简、$15^{d_H}\approx1530$ 等），仅 $n=1$ 线性律与 $k\sim O(1)$ 相容，最简候选 $15^3$ 取 $k=1$ ⟹ $\Delta\approx3\times10^{-4}$ 落在预言带内；剩余：$k$、$n$、$\lambda_{\min}$ 精确确定待模型指定（候选扫描非第一性推导）；
+4. 偏振相关红移差的 $\Delta$ 修正系数精确值（预言 P1）——已建立判别性锚定（与标准自旋霍尔相差 10–12 量级，P1 非重述）+ 框架内生候选族（$S_4^2$、$S_4/(N_{\text{Weyl}}d_H)$、$S_4^2N_{\text{Weyl}}/2$、$S_4^2d_H/2$ 均在预言带内，`paperX_photon_kappa_delta.py` 14/14）+ 选择原理收窄 4→2（$K_a$ MDL 最简 / $K_c$ 手性配对结构匹配，`paperX_photon_kappa_select.py` 11/11）+ **#5×#4 交叉约束（`paperX_photon_epsilon_kappa.py` 10/10）**：$\kappa_\Delta\le\varepsilon_\Delta$ 与 $\varepsilon_\Delta=\Delta(15^3)$ 联立 ⟹ 双候选条件性排除，收窄带新候选 $S_4^3=\Delta$（依赖 $\varepsilon_\Delta=\Delta$ 假设）；剩余：精确值待 $\varepsilon_\Delta$ 关系框架推导或远期偏振观测。
+
+---
+
+### 7.6 光子拓扑分岔的第一性起源（开放问题 #1 闭合）
+
+本节将 §2.2 公理 A1（拓扑分岔）从"假设"降级为谱化函子 $D$ 的结构定理，并给出分岔的定量谱机制。全部内容自包含；数值验证见 `scripts/paperX_photon_first_principle.py`（10/10 通过，已随文提供）。
+
+**命题 7.1（$\Phi$ 为 $D$ 函子特例——拓扑分岔从公理降为定理）**。设 $D:\mathbf{Rec}\to\mathbf{Sp}$ 为谱化函子（主框架地基结构），$\mathbf{Rec}_{\text{photon}}\subset\mathbf{Rec}$ 为束缚原子拓扑子范畴（对象 $A=(M_{\text{atom}},\partial M_{\text{atom}})$：紧致带边界、S3 静默），则公理 A1 的分岔映射
+$$\Phi = D|_{\mathbf{Rec}_{\text{photon}}}$$
+为 $D$ 在 $\mathbf{Rec}_{\text{photon}}$ 上的限制。证明要点：(i) **对象层**——$\Phi(A)=(M_{\text{photon}},\emptyset)$（公理 A1）与 $D(A)$ 均实现"S3 静默解除的开放拓扑类"（公理 A4：$\sigma_{\text{S3}}:1\to0$），映射一致；(ii) **态射层**——分岔态射 unfold: $A\to P$ 与 $R$ 折叠态射 fold: $P\to A$（§2.3 定义 2.3）满足 $\mathrm{fold}\circ\mathrm{unfold}=\mathrm{id}_A$（公理 A3 能量守恒重述：分岔释放 $h\nu$、折叠回收 $h\nu$，复合恒等）；(iii) **函子律**——$D(\mathrm{id}_A)=\mathrm{id}_{D(A)}$、$D(g\circ f)=D(g)\circ D(f)$ 在 $\mathbf{Rec}_{\text{photon}}$ 上由伴随三角恒等式与能量守恒传递成立。
+
+**推论 7.1a**。光子生成（能级跃迁 = 拓扑分岔）的第一性起源 = **$D$ 函子定义本身**；公理 A1 降级为定理，公理 A2（离散性）/A4（方向性）由 S3 静默单向破缺机制承载（定理 7.3 定量化）。
+
+**命题 7.2（规范玻色子传播性 = S3 谱静默状态）**。规范玻色子的传播性由 S3 谱静默层状态决定：静默解除（$\sigma_{\text{S3}}=0$，开放拓扑类）⟹ 可传播（光子）；静默驻留（$\sigma_{\text{S3}}=1$，封闭拓扑类）⟹ 禁闭（胶子）。**机制判据（阿贝尔-非阿贝尔）**：S3 谱静默屏障的维持需要**自相互作用顶点的谱封闭**——非阿贝尔 SU(3) 三/四胶子顶点满足雅可比恒等式（结构常数 $f^{abc}$，$[T^a,T^b]=if^{abc}T^c$；矩阵形式雅可比恒等式最大偏差 $5.6\times10^{-17}$，即顶点谱封闭，Paper XL 定理 3.1），为谱静默提供自我维持反馈通道（禁闭驻留，Paper XL 定理 4.2：$\Delta\lambda_{\min}\to0$）；阿贝尔 U(1) 无自相互作用顶点（$N_{\text{vert}}=0$），谱静默屏障无维持源，$\sigma_{\text{S3}}$ 自发解除（$1\to0$），封闭拓扑类失稳、行波释放（光子生成）。即：**自相互作用顶点数 $N_{\text{vert}}$ 为 S3 静默状态调控量**——$N_{\text{vert}}=0$（阿贝尔）⟹ 静默解除可传播；$N_{\text{vert}}>0$（非阿贝尔）⟹ 静默驻留禁闭。
+
+**推论 7.2a（生成-禁闭对偶）**。光子生成（驻波→行波的静默解除）与胶子禁闭（谱间隙闭合）是同一 S3 谱静默机制在阿贝尔/非阿贝尔端点上的**互补表现**——将本文光子拓扑分岔与 Paper XL 色动力学统一于"规范玻色子谱静默图景"，并给出"为何光子可传播而胶子禁闭"的机制判据。
+
+**定理 7.3（拓扑分岔 = 谱间隙闭合的离散跳变）**。设束缚（驻波）谱带 $\Lambda_{\text{bound}}$ 与自由（行波）谱带 $\Lambda_{\text{free}}$ 之间的谱间隙
+$$\Delta\lambda_{\text{gap}}= \min\Lambda_{\text{free}} - \max\Lambda_{\text{bound}},$$
+则光子拓扑分岔发生在谱间隙闭合临界 $\Delta\lambda_{\text{gap}}\to0^{+}$，且释放能量满足
+$$h\nu = \Delta\lambda_{\text{gap}} = \Delta E_{\text{atom}} \qquad (\text{Bohr 条件谱表示}).$$
+推导：束缚带最高模 $\max\Lambda_{\text{bound}}=E_i$（初态能级）、自由带最低模 $\min\Lambda_{\text{free}}=E_j$（末态行波模）⟹ $\Delta\lambda_{\text{gap}}=E_j-E_i=\Delta E$；激发使 $E_i$ 上升 → 谱间隙单调减小 → 达临界 $E_j-E_i=h\nu$ 时谱间隙闭合、$\sigma_{\text{S3}}:1\to0$ 静默解除、行波释放——**Bohr 条件从谱间隙闭合推导**（§2.3 命题 2.3 由经验输入降级为谱机制结果）；离散性（公理 A2）由"谱权重单次阶跃、无中间连续拓扑"实现。类比：Paper XL 定理 4.2（禁闭 = Landau 极点 ↔ 谱间隙闭合）——本文分岔为其**离散跳变对应**（连续跑动耦合 vs 离散拓扑跳变）。
+
+**数值验证**（`paperX_photon_first_principle.py`，10/10）：S1 命题 7.2（光子 U(1) 顶点数 0 vs 胶子 SU(3) 非零结构常数 54、雅可比恒等式 5.6e-17、$\sigma_{\text{S3}}$ 状态对照 4/4）；S2 命题 7.1（$\mathrm{fold}\circ\mathrm{unfold}=\mathrm{id}_A$、函子律保复合、对象层一致 3/3）；S3 定理 7.3（$\Delta\lambda_{\text{gap}}$ 随激发单调减、单次离散阶跃无中间拓扑、$h\nu=\Delta\lambda_{\text{gap}}=\Delta E$ 解析精确 3/3）。
+
+**诚实边界**：(i) 命题 7.2 的顶点调控为机制对照 + 代数验证（非阿贝尔顶点谱封闭 → 静默维持的完整场论动力学推导待后续）；(ii) 命题 7.1 函子律在有限子范畴 $\mathbf{Rec}_{\text{photon}}=\{A,P\}$ 上验证，完整（无穷维）范畴的 Lean 机器证明待扩展；(iii) 定理 7.3 谱带为概念模型，谱带参数未从原子物理第一性标定（工程参数化）；(iv) 本节解决的是**机制层第一性起源**，不改变六项预言（P1–P6）的实验待验证状态（远期 15–20 年）。
 
 ---
 
