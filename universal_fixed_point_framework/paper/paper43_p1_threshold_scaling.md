@@ -218,7 +218,10 @@ $$\ln P_t = -1.66/(D-2) + 10.47$$
 
 - 主数据：USGS Tuscaloosa 海相页岩 MICP 数据（Lohr & Hackley, 2018，DOI: 10.5066/F7BC3XTK，CC0）；
 - 维数锚点：安成等（2023，DOI: 10.11781/sysydz202303576）；高显达等（2026，DOI: 10.3969/j.issn.1004-5589.2026.01.006）；李一鸣等（2024，DOI: 10.12029/gc20230920002）；Li et al.（2025，DOI: 10.11764/j.issn.1672-1926.2025.01.009）；Zhang et al.（2024，DOI: 10.1021/acsomega.4c02056）；
-- 分析脚本与复现流程：已随项目公开（**https://gitee.com/dpsnet/universal_fixed_point_framework**；`universal_fixed_point_framework/scripts/` 下 `paperX_shale_spectral.py` 复现脚本，含分形维数提取、门限压力提取、线性/双曲拟合对比、证伪边界检验、正演仿真，许可证 CC-BY-4.0/MIT）；亦可向通讯作者索取。
+- 分析脚本与复现流程：已随项目公开（**https://gitee.com/dpsnet/universal_fixed_point_framework**，许可证 CC-BY-4.0/MIT）：
+  - 真实数据复现（分形维数提取、门限压力提取、线性/双曲拟合对比、证伪边界检验）：`universal_fixed_point_framework/scripts/paperX_shale_spectral.py`；
+  - P1 双曲标度正演仿真（分形孔隙网络 + Washburn 阈值映射 + 动态侵入渗流，6 组 D 扫描 D=2.2–3.2）：`universal_fixed_point_framework/scripts/paper43_coupled_spectral_dip.py`；
+  - 亦可向通讯作者索取。
 
 ---
 
