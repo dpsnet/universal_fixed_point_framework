@@ -1,6 +1,6 @@
 # 光子拓扑转变第一性起源研究笔记（Photon Topological Transition: First-Principle Origin）
 
-**状态**：🟢 研究笔记 v0.5（2026-08-11，术语定名同步 + 方向 4 闭合结构方向转变 + 方向 5 跨粒子推广与边界 + 同步 paper44 四图：方向性阶跃/共振双门/闭合结构方向转变/环绕方向螺旋度）
+**状态**：🟢 研究笔记 v0.6（2026-08-11，术语定名同步 + 方向 4/5 + 四图同步 + 曲率层代数骨架（开放问题 #7）机器证明与验证记录）
 **理论归属**：Paper XLIV（`paper/paper44_photon_topology.md`）↔ Paper XL（`paper/paper40_qcd_color_dynamics.md`）跨论文对应
 **验证脚本**：`scripts/paperX_photon_first_principle.py`
 **母笔记**：[photon_topology_theory.md](photon_topology_theory.md)（§1 已有 Step 2 半程：S3 静默破缺 → D 谱化函子激活）
@@ -154,13 +154,43 @@ $$h\nu = \Delta\lambda_{\text{gap}}|_{\text{闭}} = \Delta E_{\text{atom}} \qqua
 - 有质量费米子须用 $\mathbb{Z}_2$ 自旋语言 + 泡利排斥重构，"天然排斥"从"排斥静止"变为"排斥同态共占"；
 - 若要进入论文，须按"非物理机制类比"标注（法拉第笼类比同款），本方向暂留笔记层。
 
-## 7 数值验证（paperX_photon_first_principle.py）
+## 7 曲率层代数骨架（开放问题 #7 推进）
+
+### 7.1 问题
+
+paper44 §2.5/§3.1 的纤维丛几何（正交性、联络/曲率）依赖的微分几何结构——李代数值曲率的代数层是否闭合？完整流形微分几何仍开放（paper44 §7.5 开放问题 3）。
+
+### 7.2 代数骨架（对应 paper44 §7.3 完整数学表述）
+
+设 $\omega$ 为 $\mathfrak{su}(2)$ 值联络 1-形式（$A^\dagger=-A$ 反厄米），李代数值曲率 2-形式由结构方程给出
+
+$$\Omega=d\omega+\omega\wedge\omega,$$
+
+代数骨架闭合项（均机器证明）：
+
+1. **2-形式反对称**：$\Omega_{ij}=-\Omega_{ji}$（`skew_antisymm`：$A-A^\dagger$ 转置变号；`curvature_antisymm`：曲率反对称组合）；
+2. **李括号反对称**：$[\omega,\Omega]=-[\Omega,\omega]$（`lie_bracket_antisymm`）；
+3. **Bianchi 内核**：外微分项反对称（`dOmega_antisymm`）；完整 Bianchi $d\Omega+[\omega,\Omega]=0$ 需外微分幂零 $d^2=0$ 与雅可比恒等式——待微分几何库；
+4. **U(1) 阿贝尔特例**：$[\omega,\Omega]=0$ 时结构方程退化为 $F=dA$、$dF=0$（无源，光子场强）——`lie_bracket_zero_of_commute`/`curvature_abelian`；
+5. **挠率**：$T=d\theta+\omega\wedge\theta$ 反对称（`torsion_antisymm`）；
+6. **联络算子衔接**：垂直-水平分解 $TE\cong V\oplus H$（$V\perp H$）、幂等投影 $P(Pv)=Pv$、补投影 $(1-P)^2=1-P$——`proj_idem_apply`/`compl_projection_idem`。
+
+### 7.3 机器证明与验证
+
+- Lean：`PhotonTopologyCurvature.lean`（新增：`torsion_antisymm`/`dOmega_antisymm`/`proj_idem_apply`/`compl_projection_idem`）+ `PhotonTopologyFunctor.lean`（既有：`skew_antisymm`/`lie_bracket_antisymm`/`curvature_antisymm`）——零 sorry，`lake env lean` 编译通过；
+- 数值：`paperX_photon_curvature.py` 14/14（结构方程/Bianchi 残差 ~1e-14/U(1) 无源/挠率反对称）+ `paperX_photon_fiber_orthogonality.py` 5/5（垂直-水平分解/度量正交补/幂等投影）。
+
+### 7.4 诚实边界
+
+代数骨架闭合不替代完整流形微分几何——外微分形式理论（$d^2=0$）、流形级 Bianchi（雅可比恒等式）、联络/曲率/挠率的流形级形式化均待微分几何库（paper44 §7.5 开放问题 3）。
+
+## 8 数值验证（paperX_photon_first_principle.py）
 
 - **S1**：阿贝尔（光子 0 顶点）vs 非阿贝尔（胶子 3/4 顶点）顶点计数 + 静默状态/传播性对照——验证命题 P1（$N_{\text{vert}}=0\iff$ 静默解除可传播）；
 - **S2**：$\Phi\subseteq D$ 函子律数值/结构验证（对象/态射映射 + 保恒等/保复合）——验证 $\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$；
 - **S3**：谱间隙闭合跳变模型（束缚/自由谱带，能级差扫描）——验证定理 T3 与 Bohr 条件谱表示 $h\nu=\Delta\lambda_{\text{gap}}=\Delta E$。
 
-## 8 诚实边界
+## 9 诚实边界
 
 1. 方向 1 的"顶点数调控静默"为机制论证 + 对照验证，非动力学推导（非阿贝尔顶点谱封闭 → 静默维持的完整场论推导待后续）；
 2. 方向 2 函子律为有限子范畴验证（$\mathbf{Rec}_{\text{photon}}=\{A,P\}$），完整 $\mathbf{Rec}$ 子范畴（无穷维）形式化待 Lean 扩展；
