@@ -22,7 +22,7 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 |:--|:--|:--|:--|
 | 62A | 研究笔记 `notes/06_photon_topology/photon_topology_theory.md`（§1–9） | 拓扑类/A4 方向性阶跃/双层正交/可拦截性/推论 4 时间解耦/自旋-偏振-纵向截面层/§5-6 定量化 | ✅ |
 | 62B | 数值脚本 `scripts/paperX_photon_topology.py` | **36/36**（S1–S9） | ✅ |
-| 62C | 论文 `paper/paper44_photon_topology.md` v0.1 | §1–7 + 附录 A（自包含定义）+ 附录 B（LaTeX）+ 参考文献 | ✅ 初稿 |
+| 62C | 论文 `paper/paper44_photon_topology.md` v0.1 | §1–7 + 附录 A（自包含定义）+ 参考文献（v0.3 移除附录 B LaTeX 源码块——公式已以渲染形式在正文 §2.3） | ✅ 初稿 |
 | 62D | 笔记 §5.2.1/§5.3.1 + `scripts/paperX_redshift_topology.py` | **14/14**（三类红移 + δz_Δ 量级） | ✅ |
 | 62E | 笔记 §6 六项预言定量化 + `scripts/paperX_photon_cross_effects.py` | **18/18**（P1–P6） | ✅ |
 | 62F | Lean `PhotonTopology.lean` + `PhotonTopologyFunctor.lean`（3022 jobs）+ Agda 镜像 | 全部**零 sorry**；`Everything.agda` 全量通过 | 🔶 交付（P1 验收未全达成） |
@@ -79,7 +79,7 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 
 ### 文档与配置
 
-- **论文** `paper/paper44_photon_topology.md`：自包含（附录 A UFPF 定义）、§1–7 + 附录 B LaTeX + 参考文献（已发表文献，无自媒体）
+- **论文** `paper/paper44_photon_topology.md`：自包含（附录 A UFPF 定义）、§1–7 + 参考文献（已发表文献，无自媒体）；附录 B LaTeX 源码块已于 v0.3 移除（公式以渲染形式在正文 §2.3）
 - **LaTeX 公式文件** `notes/06_photon_topology/photon_topology_formulas.tex`：可拦截性公式集（定义 1.3/命题 1.4/定义 1.4）
 - **注册** `run_all_tests.py`：新增 4 个脚本注册；**UTF-8 BOM 每次 Edit 后验证修复**（项目已知问题）
 

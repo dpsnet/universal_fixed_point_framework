@@ -340,55 +340,6 @@ $h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整�
 
 **A.6 温和兼容 vs 颠覆性判据**：经典结论（Bohr、Planck、Einstein、GR）的拓扑重述归为温和兼容（无新预言）；UFPF 独有结构（$\Delta$ 修正、S3 标度、$h$-$c$-$\Delta$ 约束等）归为颠覆性预言。
 
----
-
-## 附录 B　可拦截性核心公式集（LaTeX）
-
-以下为 §2.3 核心公式的独立 LaTeX 块，可直接引用。需要宏包 `amsmath, amsthm`，环境 `\newtheorem{definition}{Definition}`、`\newtheorem{proposition}{Proposition}`。
-
-```latex
-% ---------- 定义 2.3：R 右伴随折叠函子 ----------
-\begin{definition}[R-right adjoint folding functor]
-Let $D \dashv R$ be an adjoint pair, where
-$D: \mathbf{Rec} \to \mathbf{Sp}$ is the spectralization functor (topological
-bifurcation) and $R: \mathbf{Sp} \to \mathbf{Rec}$ is its right adjoint
-(absorption/folding functor), satisfying the natural isomorphism
-\[
-\mathrm{Hom}_{\mathbf{Sp}}(D(A), B) \;\cong\; \mathrm{Hom}_{\mathbf{Rec}}(A, R(B)),
-\qquad \forall A \in \mathbf{Rec},\; B \in \mathbf{Sp}.
-\]
-The action of $R$ on topological objects is
-\[
-R\bigl(M_{\mathrm{photon}},\, \emptyset\bigr) \;=\;
-\bigl(M'_{\mathrm{atom}},\, \partial M'_{\mathrm{atom}}\bigr),
-\]
-where $M'_{\mathrm{atom}}$ is the excited-state atomic topology.
-\end{definition}
-
-% ---------- 命题 2.3：拦截的必要条件（Bohr 条件） ----------
-\begin{proposition}[Necessary condition for interception: frequency matching]
-A necessary condition for the photon to be intercepted by matter
-(the $R$-folding to occur) is that the photon deformation-cycle
-frequency $\nu$ matches the matter topological level difference:
-\[
-h\nu_{\mathrm{photon}} \;=\; E_j - E_i \;=\; \Delta E_{\mathrm{atom}}.
-\]
-\end{proposition}
-
-% ---------- 定义 2.4：拦截概率 / 吸收截面 ----------
-\begin{definition}[Interception probability / absorption cross-section]
-When the above proposition holds, the probability that the photon is
-intercepted is described by the absorption cross-section
-\[
-\sigma_{\mathrm{abs}}(\nu) \;=\; \frac{h\nu}{c}\; B_{12}\; g(\nu),
-\]
-where $B_{12}$ is the Einstein absorption coefficient and $g(\nu)$
-is the line-shape function.
-\end{definition}
-```
-
----
-
 ## 参考文献
 
 - Bohr, N. (1913). On the constitution of atoms and molecules. *Philosophical Magazine*, 26(151), 1–25.
