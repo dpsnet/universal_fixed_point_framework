@@ -114,6 +114,10 @@ $$\Phi_+: X \mapsto (X_{\text{low}},\langle\text{opened}\rangle),$$
 
 **诚实边界**：$t_*$ 与 $\chi_\Phi$ 为抽象叙事参数化，具体转变时刻由量子跃迁概率（爱因斯坦系数）决定；本公理仅编码"离散阶跃 + 单向不可逆"的抽象结构，不预言 $t_*$ 数值。记号 $\mathcal{M}(t)$ 表示 $t$ 时刻系统所属的拓扑等价类，非时间连续拓扑路径。
 
+![图 1：方向性阶跃公理 A4 —— χ_Φ(t) 与 σ_S3(t) 阶跃曲线](../figs/photon_fig1_directionality_step.png)
+
+**图 1**（方向性阶跃公理 A4，数据图）：$\chi_\Phi(t)=\Theta(t-t_*)$（实线）与 $\sigma_{\text{S3}}(t)=1-\chi_\Phi(t)$（虚线）——$t_*$ 处由封闭拓扑类瞬间切换至开放拓扑类；静默指标单向 $1\to0$（发射自发），反向 $0\to1$ 须由 $R$ 右伴随折叠驱动（吸收）。脚本：`scripts/paperX_photon_topology_figs.py`。
+
 **命题 2.1**（方向性与双层正交）：光子拓扑转变方向为法向自由度，与引力范畴偏差 $\Delta$（Sp 水平 2-态射方向，范畴层正交）及物理三维空间（谱纤维丛基空间方向，纤维丛层正交）构成双层正交。
 
 **物理推论 2.1**（时间解耦）：正交性（纤维方向 $\perp$ 基空间方向）意味着光子时间标度（纤维内形变循环周期 $T=1/\nu$）与递归层时间演化（基空间方向）无相互投影。结合粘合函子对 $c$ 的锁定（定理 3.1）与相对论固有时极限（$\gamma\to\infty$，$d\tau=dt/\gamma\to0$），在形式极限意义下：光子与递归层仅在转变瞬间（$h\nu=\Delta E$）与吸收瞬间（$R$ 折叠）发生时间耦合，传播途中零时间耦合——对应"光子传播途中无相互作用、观测仅发生在吸收/散射时刻"的物理事实。
@@ -137,6 +141,10 @@ $$h\nu_{\text{photon}}=E_j-E_i=\Delta E_{\text{atom}} \;\wedge\; \Delta m=m_j-m_
 **定义 2.4**（拦截概率 / 吸收截面）：满足命题 2.3 时，光子被拦截的概率由吸收截面描述：
 $$\sigma_{\text{abs}}(\nu)=\frac{h\nu}{c}\,B_{12}\,g(\nu),$$
 其中 $B_{12}$ 为爱因斯坦吸收系数，$g(\nu)$ 为线型函数。拓扑表述：拦截概率 = $R$ 折叠的跃迁概率振幅。**$B_{12}$ 编码取向门**：$B_{12}$ 仅在选择定则允许的跃迁非零——禁戒跃迁（如氢 $2s\to1s$ 电偶极禁戒，实际经双光子衰变）$B_{12}=0$，即使 $h\nu=\Delta E$ 也不拦截；$g(\nu)$ 编码能量门（洛伦兹线型，失谐时拦截概率按线型衰减，数值验证见 §7.4）。
+
+![图 2：可拦截性共振双门 —— 洛伦兹能量门曲线与选择定则取向门表](../figs/photon_fig2_resonance_dual_gate.png)
+
+**图 2**（可拦截性共振双门，数据图）：左——能量门：$\sigma_{\text{abs}}(\nu)\propto h\nu B_{12}g(\nu)/c$ 的洛伦兹共振曲线（失谐 20Γ 时衰减至 <10⁻³，数值验证见 §7.4）；右——取向门：选择定则匹配 $\Delta m=J_z^{\text{photon}}$（$\sigma^\pm\leftrightarrow\pm1$、$\pi\leftrightarrow0$），禁戒跃迁（氢 $2s\to1s$）$B_{12}=0$ 即使能量匹配也不拦截（命题 2.3 / 定义 2.4）。
 
 **诚实边界**：命题 2.3 与定义 2.4 为已知量子光学（Bohr 条件、爱因斯坦 $B_{12}$ 系数、原子选择定则）的拓扑重述，不构成新物理预言；定义 2.3 的"光子吸收 = $R$ 右伴随折叠"是 UFPF 独有的框架性翻译（标准量子光学以相互作用哈密顿量 + 费米黄金规则描述，无 $R$ 伴随概念），该翻译与标准描述的完全等价性尚未独立验证（无实验判据、无机器证明）。命题 2.3 的取向门（角动量匹配 $\Delta m=J_z^{\text{photon}}\in\{0,\pm1\}$，$\sigma^\pm\leftrightarrow\pm1$、$\pi\leftrightarrow0$）为原子选择定则的拓扑重述；完整选择定则尚含总角动量 $\Delta J$、宇称等，本文只取"能量 + 角动量"的**拓扑最小集**，不排除其余门（剩余门由 $B_{12}$ 以已知物理方式编码）。
 
@@ -166,6 +174,10 @@ $$h\nu = \Delta\lambda_{\text{gap}} = \Delta E_{\text{atom}} \qquad (\text{Bohr 
 
 **命题 2.6（闭合结构方向转变——拓扑转变的完整几何内容）**。光子生成不仅是公理 A1 的"边界闭合解除"（$\partial M_{\text{atom}}\to\emptyset$），而是**闭合结构的方向转变**：驻波的**边界空间闭合**（$\partial M\neq\emptyset$，电磁形变在库仑势垒内闭合成驻波）转变为行波的**环绕轴闭合**（$\partial M=\emptyset$，电磁形变在法向平面内绕传播轴 $k$ 闭环）。三维空间观察到的直线传播（类光测地线）是环绕闭环沿 $k$ 方向的**宏观投影**（螺旋线在轴线方向的投影为直线）；螺旋度 $s=\pm1$ 即环绕闭环的两个缠绕定向（拓扑表述 2.5.1）——"闭合方向"从空间边界转向传播轴，是量子跃迁拓扑本质的完整刻画。此转变与双层正交自洽：法向自由度 ⊥ 基空间传播轴（正交性）⟹ 电磁场被限制在法向平面 ⟹ 环绕闭环在法向平面内发生（环绕性）。
 
+![图 3：闭合结构方向转变（命题 2.6）—— 驻波边界空间闭合（左）与行波环绕轴闭合 + 轴向投影（右）](../figs/photon_fig3_closure_direction_transition.png)
+
+**图 3**（闭合结构方向转变，命题 2.6，几何示意）：左——驻波的边界空间闭合（$\partial M\neq\emptyset$，电磁形变在库仑势垒内闭合为驻波）；右——行波的环绕轴闭合（$\partial M=\emptyset$，法向平面内绕传播轴 $k$ 闭环），红色直线即三维空间观察到的直线传播 = 环绕闭环沿 $k$ 方向的宏观投影；螺旋度 $s=\pm1$ 即两个缠绕定向。
+
 **诚实边界**：(i) 命题 2.5 的顶点调控为机制对照 + 代数验证（非阿贝尔顶点谱封闭 → 静默维持的完整场论动力学推导待后续）；(ii) 命题 2.4 函子律在有限子范畴 $\mathbf{Rec}_{\text{photon}}=\{A,P\}$ 上验证，完整（无穷维）范畴的 Lean 机器证明待扩展；(iii) 定理 2.1 谱带为概念模型，谱带参数未从原子物理第一性标定（工程参数化）；(iv) 本节解决的是**机制层第一性起源**，不改变六项预言（P1–P6）的实验待验证状态（远期 15–20 年）。
 
 ### 2.5 光子的自旋与横向偏振结构
@@ -173,6 +185,10 @@ $$h\nu = \Delta\lambda_{\text{gap}} = \Delta E_{\text{atom}} \qquad (\text{Bohr 
 **拓扑表述 2.5.1**（自旋 = 形变循环的手性自由度）：光子开放行波拓扑的形变循环携带内部旋转自由度——圆偏振对应螺旋形变循环（沿传播方向旋转），线偏振对应平面形变循环（沿固定方向振荡）；两种手性（自旋 $s=\pm1$）对应形变循环的两个定向（orientation）拓扑类。其定量实现为标准圆偏振基矢
 $$\varepsilon_\pm(\mathbf{k})=\frac{\varepsilon_1\pm i\varepsilon_2}{\sqrt2},\qquad \operatorname{Im}\big(\varepsilon_\pm^{*}\times\varepsilon_\pm\big)\cdot\hat{\mathbf{k}}=\pm1=s,$$
 （$\varepsilon_1,\varepsilon_2$ 为法向平面内正交线偏振基矢，$\varepsilon_\pm\cdot\mathbf{k}=0$）：**环绕方向 $s=\pm1$ 即 $\varepsilon_\pm$ 在法向平面内绕 $\mathbf{k}$ 的相位环绕定向**（$\sigma^\pm$），由 Im 部公式直接读出；线偏振 $\varepsilon_1,\varepsilon_2$（平面形变循环）为 $\varepsilon_+,\varepsilon_-$ 的等权叠加（$\operatorname{Im}(\varepsilon^*\times\varepsilon)=0$，无净环绕定向，**非 $s=0$ 本征态**）。标准螺旋度算符形式：$h=\mathbf{J}\cdot\hat{\mathbf{k}}$，$h\,|\varepsilon_\pm,\mathbf{k}\rangle=\pm1\,|\varepsilon_\pm,\mathbf{k}\rangle$。无螺旋度 0 模（无纵向分量）是零静质量分支的拓扑结果（命题 3.1：$v<c$ 不自洽 → 无低速过渡拓扑 → 无纵向传播模式）。
+
+![图 4：环绕方向/螺旋度 s=±1 —— 圆偏振电场矢量绕 k 的相位环绕（拓扑表述 2.5.1）](../figs/photon_fig4_helicity_winding.png)
+
+**图 4**（环绕方向/螺旋度 $s=\pm1$，拓扑表述 2.5.1，几何示意）：圆偏振电场矢量在法向平面内绕 $\mathbf{k}$ 的相位环绕——左 $s=+1$（$\sigma^+$）、右 $s=-1$（$\sigma^-$），环绕方向由 $\operatorname{Im}(\varepsilon_\pm^{*}\times\varepsilon_\pm)\cdot\hat{\mathbf{k}}=\pm1$ 定量编码；线偏振为 $\varepsilon_\pm$ 等权叠加（无净环绕定向，非 $s=0$ 本征态）。
 
 **拓扑表述 2.5.2**（E⊥B⊥k 横向传播条件）：平面波解中电场 $\mathbf{E}$、磁场 $\mathbf{B}$ 与传播方向 $\mathbf{k}$ 两两正交（右手系：$\mathbf{E}\times\mathbf{B}\parallel\mathbf{k}$，Poynting 方向即传播方向；圆偏振 $\varepsilon_\pm$ 的环绕方向 $s=\pm1$ 即 $\mathbf{E}$ 绕 $\mathbf{k}$ 的旋转定向，与 $\operatorname{Im}(\varepsilon^{*}\times\varepsilon)\cdot\hat{\mathbf{k}}=s$ 一致），对应电磁形变循环在基空间中的横向传播结构——形变循环仅在垂直传播方向的平面内振荡，无沿传播方向的纵向分量。这与命题 3.1（零静质量强制 $v=c$）自洽：**横向性 = 零静质量拓扑分支的传播结构约束**。
 
