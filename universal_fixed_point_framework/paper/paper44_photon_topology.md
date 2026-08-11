@@ -4,11 +4,34 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.6（2026-08-11，系列化格式重构——前置依赖替代自包含附录、§7.5 只留真正开放问题、已解决成果移入各自章节；此前 v0.1 初稿 2026-08-10、v0.2 内容更新 2026-08-11、v0.3 纳入 UFPF 论文系列 Paper XLIV 对应 RAP-Errata v0.31、v0.4 内容自包含化 + §7.5 开放问题重构、v0.5 §2.4 第一性起源章节重排）
+**版本**：v0.7（2026-08-11，头部补缩写表与自创术语-标准概念对照，参照 paper19/paper29 系列格式；此前 v0.1 初稿 2026-08-10、v0.2 内容更新 2026-08-11、v0.3 纳入 UFPF 论文系列 Paper XLIV 对应 RAP-Errata v0.31、v0.4 内容自包含化 + §7.5 开放问题重构、v0.5 §2.4 第一性起源章节重排、v0.6 系列化格式重构 + 前置依赖 + §7.5 精简）
 
 **稿态**：自洽成稿。本文为理论论文，全部核心结构（拓扑分岔公理体系、方向性阶跃、双层正交、可拦截性机制、六项可证伪预言）均于本文内完整建立；已知物理结论（Bohr 条件、爱因斯坦系数、光速不变、Planck 关系）在本文中均明确标注为"经典结论的拓扑重述"，不构成新物理声称。理论自洽性的数值验证脚本随文提供（§7.4）。
 
-**前置依赖**：本文为 UFPF 系列论文（Paper XLIV），UFPF 基础结构的记号与定义沿用系列前文，不自包含重定义——**Paper I**（Rec/Sp 谱范畴与 $D\dashv R$ 伴随）、**Paper XXXII**（S3 谱静默体系）、**Paper XXXV**（4-范畴偏差 $\Delta$ 与引力范畴论起源）、**Paper XXI/XXII**（Grothendieck 谱纤维丛）。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。术语说明与自创术语对照见 §1 与 §7.1。
+**前置依赖**：本文为 UFPF 系列论文（Paper XLIV），UFPF 基础结构的记号与定义沿用系列前文，不自包含重定义——**Paper I**（Rec/Sp 谱范畴与 $D\dashv R$ 伴随）、**Paper XXXII**（S3 谱静默体系）、**Paper XXXV**（4-范畴偏差 $\Delta$ 与引力范畴论起源）、**Paper XXI/XXII**（Grothendieck 谱纤维丛）。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。本文首次使用的记号：$\Phi$（拓扑分岔映射）、$\Phi_+$（分岔并存对象）、$\chi_\Phi$（拓扑类指标）、$\sigma_{\text{S3}}$（静默指标）、$\Delta\lambda_{\text{gap}}$（驻波/行波谱间隙）。
+
+本文使用以下缩写，首次出现时均已给出完整中英文名称：
+- **UFPF**：通用不动点分形谱范畴框架（Universal Fixed Point Functorial Framework）
+- **Rec/Sp**：递归范畴 / 谱范畴（Recursive / Spectral category）
+- **S3**：第三层谱静默（Spectral Silence layer S3）
+- **$\Delta$**：4-范畴偏差（4-category deviation）
+- **KK**：Kaluza–Klein（紧致化/额外维度）
+- **GR**：广义相对论（General Relativity）
+- **QED**：量子电动力学（Quantum Electrodynamics）
+- **JC**：Jaynes–Cummings 模型
+- **MDL**：最小描述长度（Minimum Description Length）
+- **SI**：国际单位制（International System of Units）
+- **P1–P6**：本文六项可证伪预言
+
+本文自创术语及其与标准概念的对照如下：
+- **拓扑分岔**（topological bifurcation）：量子跃迁的拓扑表述——驻波拓扑解离为行波拓扑的离散跳变
+- **方向性阶跃**（directional step）：自发辐射不可逆性的编码——Heaviside 阶跃 $\chi_\Phi=\Theta(t-t_*)$ 与静默指标 $\sigma_{\text{S3}}=1-\chi_\Phi$ 承载过程性与单向性
+- **双层正交**（double-layer orthogonality）：光子为法向拓扑自由度的结构表述——分岔方向⊥引力 $\Delta$ 方向（范畴层）⊥三维空间（纤维丛层）
+- **可拦截性**（interceptability）：与 KK 纯几何额外维度的本质区分——光子法向自由度可被物质吸收（Bohr 条件 $h\nu=\Delta E$）
+- **$R$ 右伴随折叠**（$R$-folding）：爱因斯坦 $B_{12}$ 吸收的伴随函子表述——行波拓扑折叠回驻波拓扑（$R=D^\dagger$ 在机制层是定理，§2.3）
+- **静默指标** $\sigma_{\text{S3}}(t)$：谱静默屏障的开关函数——封闭拓扑类对外传播通道的开/关
+- **分岔并存对象** $\Phi_+$：能量守恒的并置结构编码——"原子保留 + 光子新生"（公理 A3）
+- **生成-禁闭对偶**（generation-confinement duality，命题 2.5）：阿贝尔（静默解除可传播）与非阿贝尔（静默驻留禁闭）规范玻色子传播性的互补机制
 
 ---
 
