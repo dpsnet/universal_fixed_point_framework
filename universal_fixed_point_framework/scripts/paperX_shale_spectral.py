@@ -807,7 +807,7 @@ def _detect_h2_decoupling(D_syn, seed=11, c2=5.0, sigma=0.05, C0=-1.6, B_true=10
 
 def check_p1_falsify():
     """P1 谱隙-门限压力双曲标度的证伪边界测试（§5.1 可证伪检验）
-    F1a D->2 发散检测：合成'发散被抑制'（门限压力随 D 线性、D->2 不发散）数据，
+    F1a 线性替代数据判别：合成线性替代（门限压力随 D 线性、双曲不占优）数据，
         检测器应识别线性优于双曲（证伪信号正确触发）；
     F1b H2 标度因子解耦检测：合成 C=C(D)（a-D 相关，解耦破坏）数据，
         双曲拟合应显著劣化（H2 破缺被识别）；
@@ -820,7 +820,7 @@ def check_p1_falsify():
     # F1a 阳性对照：双曲数据（未证伪），双曲拟合应高
     logPt_pos = -1.6 / (D_syn - 2) + 10.4 + rng.normal(0, 0.08, len(D_syn))
     r2_hyper_pos = _r2(logPt_pos, np.polyval(np.polyfit(xh, logPt_pos, 1), xh))
-    # F1a 证伪信号：发散被抑制（线性数据），双曲应劣化
+    # F1a 证伪信号：线性替代数据（门限压力随 D 线性），双曲应劣化
     logPt_supp = 1.8 * D_syn + 3.2 + rng.normal(0, 0.08, len(D_syn))
     r2_hyper_supp = _r2(logPt_supp, np.polyval(np.polyfit(xh, logPt_supp, 1), xh))
     r2_lin_supp = _r2(logPt_supp, np.polyval(np.polyfit(D_syn, logPt_supp, 1), D_syn))
@@ -842,7 +842,7 @@ def check_p1_falsify():
     ok = (r2_hyper_pos > 0.95 and f1a_detected and f1b_detected
           and r2_hyper_real > r2_lin_real and abs(rho_CD) < 0.4)
     print("P1 证伪边界（合成 60 样品 + 真实 %d 样品）：阳性对照双曲 R^2=%.3f；"
-          "F1a 发散抑制检出=%s（线性 R^2=%.3f vs 双曲 R^2=%.3f）；"
+          "F1a 线性替代数据判别检出=%s（线性 R^2=%.3f vs 双曲 R^2=%.3f）；"
           "F1b H2 破缺检出=%s（双曲残差-D 相关 rho=%.3f，阳性对照 ~0）；"
           "真实数据双曲 R^2=%.3f vs 线性 R^2=%.3f；C-D 秩相关 rho=%.3f -> %s"
           % (len(D_arr), r2_hyper_pos,
