@@ -479,4 +479,36 @@ theorem dagger_antilinear {n : ℕ} (c : ℂ) (A : Matrix (Fin n) (Fin n) ℂ) :
     dagger (c • A) = star c • dagger A := by
   simp [dagger]
 
+/-! ## R 态射层伴随性方程验证（开放问题 #6 收尾：JC 模型实例）
+   dagger 第一性原理（`dagger_is_adjoint`）在具体机制层的落地——
+   JC 模型（`paperX_photon_jc_bridge.py` 14/14）：D 取相互作用哈密顿量
+   H_int = [[0,g],[g,0]]（2 维），R 折叠算子的态射层矩阵表示 = D†：
+   ① `jc_R_adjoint`：R = dagger D 满足伴随性方程 <Dx,y>=<x,Ry>（由
+      `conjTranspose_satisfies_adjoint` 直接给出）；
+   ② `jc_R_is_dagger_adjoint`：任意满足伴随性方程的 B 必等于 D†
+      （R=D† 是定理，dagger-假设在 JC 机制层被剔除）；
+   ③ `jc_R_hermitian`：D† = D（自伴，JC 矩阵厄米性）。 -/
+
+/-- JC 模型的 D 矩阵（相互作用哈密顿量 H_int = [[0,g],[g,0]]，g 实数）。 -/
+def jcD (g : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  ![![0, (g : ℂ)], ![(g : ℂ), 0]]
+
+/-- R 态射层 = dagger D：R = D† 满足伴随性方程 <Dx,y>=<x,Ry>
+    （dagger 第一性原理在 JC 机制层的实例——R 折叠 = 哈密顿量厄米共轭）。 -/
+theorem jc_R_adjoint (g : ℝ) :
+    IsAdjoint (jcD g) (dagger (jcD g)) := by
+  exact conjTranspose_satisfies_adjoint (jcD g)
+
+/-- R=D† 定理（JC 模型实例）：任意满足伴随性方程的 B 必等于 D†
+    （由伴随唯一性 + 共轭转置满足伴随方程，`dagger_is_adjoint` 实例化）。 -/
+theorem jc_R_is_dagger_adjoint (g : ℝ) (B : Matrix (Fin 2) (Fin 2) ℂ)
+    (hB : IsAdjoint (jcD g) B) : B = dagger (jcD g) := by
+  exact dagger_is_adjoint (jcD g) B hB
+
+/-- JC 模型 R 自伴：dagger (jcD g) = jcD g（D† = D，厄米矩阵自伴）。 -/
+theorem jc_R_hermitian (g : ℝ) :
+    dagger (jcD g) = jcD g := by
+  unfold jcD
+  exact jc_hermitian g
+
 end UFPFormalization
