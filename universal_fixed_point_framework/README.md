@@ -1,8 +1,8 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.33](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.34](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 >
-> **项目状态**：44 篇论文（Paper I–XLIV，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向，XLIII–XLIV 为跨领域/新理论支线）+ **RAP-Errata v0.33**（勘误基线，与盲登记 1:1 同步，P1–P7 冻结预言数值不变）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
+> **项目状态**：44 篇论文（Paper I–XLIV，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向，XLIII–XLIV 为跨领域/新理论支线）+ **RAP-Errata v0.34**（勘误基线，与盲登记 1:1 同步，P1–P7 冻结预言数值不变）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
@@ -54,7 +54,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ---
 
-## 现状速览（2026-08-11，RAP-Errata v0.33）
+## 现状速览（2026-08-11，RAP-Errata v0.34）
 
 ### 论文
 
@@ -226,7 +226,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
-- **声明基线**：RAP-Errata v0.33（详见 `paper/RAP_勘误与立场声明.md`）
+- **声明基线**：RAP-Errata v0.34（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -300,7 +300,7 @@ universal_fixed_point_framework/
 │   ├── paper41_renormalization_chain.md         # Paper XLI 量子重整化链条
 │   ├── paper42_black_hole_quantum_evolution.md  # Paper XLII 黑洞量子演化
 │   ├── paper43_shale_accumulation.md            # Paper XLIII 页岩油气成藏谱流
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.33（含 paper44 纳入）
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.34（含 paper44 纳入）
 ├── scripts/                        # 论文/阶段数值验证脚本（在 run_all_tests.py 中注册）
 │   ├── paperX_*.py                 # Phase 44/60/61 及后续数值验证脚本（约 130 个）
 │   ├── paper5_spectral_flow_test.py     # Paper V 谱流方程验证 (ALL PASSED)
