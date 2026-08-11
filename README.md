@@ -57,6 +57,7 @@
 | Paper XXXVIII（Agda 独立交叉验证） | 1 | 🆕 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 |
 | Paper XXXIX–XLII（Phase 61：暴涨/色规范/重整化链/黑洞演化） | 4 | ✅ 已纳入 |
 | Paper XLIII（页岩油气成藏的谱流机制与实证） | 1 | ✅ 跨领域应用支线（2026-08-08 发布，20 项检查 19/20；v0.29 P1 D→2 端方向勘误 + v0.30 开放问题三件套：符号差异诊断闭合/σ(D,c) 公式/P3 输运耦合检验） |
+| Paper XLIV（光子生成的拓扑分岔机制与可证伪预言） | 1 | 🆕 Phase 62 理论论文（2026-08-11 纳入）：拓扑分岔 + 方向性阶跃 + 双层正交 + 可拦截性 + 六项远期可证伪预言（均尚未实验验证，数值自洽 36/36） |
 
 关键开放线状态：
 - **O1/O6** ✅ 已闭合；**O2/O3/O5** 🔶 已大幅推进；**O4** ❌ 仍开放
@@ -141,7 +142,7 @@ universal_fixed_point_framework/
 │   ├── paper34_continuum_limit.md                  # 🆕
 │   ├── paper35_gravity_origin.md                   # 🆕 引力范畴论起源
 │   ├── paper37_open_problems.md                    # 🆕 开放问题综述
-│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.30
+│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.31
 │   └── RAP_盲登记协议.md                            # RAP-Registry v0.9（与勘误 1:1 同步）
 ├── notes/08_first_principles/       # 研究笔记
 │   ├── spectral_hierarchy_evolution_analysis.md    # 主索引
