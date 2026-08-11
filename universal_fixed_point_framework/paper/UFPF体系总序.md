@@ -2,7 +2,7 @@
 
 ## ——全域谱翻译统一理论：底层逻辑、完整脉络与阅读指引
 
-> **版本对齐**：本总序对应全套论文最新基线——勘误与立场声明 [RAP_勘误与立场声明.md](RAP_勘误与立场声明.md) **v0.28**（2026-08-10，哈希 `a645494ed5`），盲登记协议 [RAP_盲登记协议.md](RAP_盲登记协议.md) **v0.25**（1:1 同步）。全套共 43 篇论文（Papers I–XLIII），全部 ✅ 稳定；主框架论文（Paper I）当前版本 **v2.52**。凡与早期版本冲突的表述，一律以本基线为准。
+> **版本对齐**：本总序对应全套论文最新基线——勘误与立场声明 [RAP_勘误与立场声明.md](RAP_勘误与立场声明.md) **v0.30**（2026-08-11，哈希 `c67e524268`），盲登记协议 [RAP_盲登记协议.md](RAP_盲登记协议.md) **v0.26**（1:1 同步）。全套共 43 篇论文（Papers I–XLIII），全部 ✅ 稳定；主框架论文（Paper I）当前版本 **v2.52**。凡与早期版本冲突的表述，一律以本基线为准。
 
 ---
 
@@ -270,7 +270,7 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 
 ---
 
-## 附录 A：全套论文清单（Papers I–XLIII，对应 v0.28 基线）
+## 附录 A：全套论文清单（Papers I–XLIII，对应 v0.30 基线）
 
 | 编号 | 文件 | 主题 |
 |:---:|:---|:---|
@@ -315,9 +315,9 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XL | [paper40_qcd_color_dynamics.md](paper40_qcd_color_dynamics.md) | 色规范完整动力学（胶球谱） |
 | XLI | [paper41_renormalization_chain.md](paper41_renormalization_chain.md) | 量子重整化完整链条 |
 | XLII | [paper42_black_hole_quantum_evolution.md](paper42_black_hole_quantum_evolution.md) | 黑洞量子演化（Page 曲线、超辐射） |
-| XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线；v0.28 正向仿真验证 P1/P3/P2 机制层闭合） |
+| XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线；v0.28 正向仿真验证 P1/P3/P2 机制层闭合；v0.29 P1 D→2 端方向勘误；v0.30 开放问题三件套：P1 仿真-实测符号差异诊断闭合 + σ(D,c) 定量公式 + P3 输运耦合零假设检验） |
 
-配套文档：[RAP 勘误与立场声明 v0.28](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.25](RAP_盲登记协议.md)。
+配套文档：[RAP 勘误与立场声明 v0.30](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.26](RAP_盲登记协议.md)。
 
 ## 附录 B：冻结预言盲登记摘要（P1–P7，v0.25）
 
