@@ -30,7 +30,7 @@ UFPF（Universal Fixed-Point Fractal Spectral Category Framework）并非从纯�
 
 ## 2 整套理论唯一底层统一数学范式（全文核心骨架）
 
-> 本节是全部 43 篇分论文的共同根基。所有分领域的定量结果，最终都回溯到本节的范畴构造。
+> 本节是全部 44 篇分论文的共同根基。所有分领域的定量结果，最终都回溯到本节的范畴构造。
 
 ### 2.1 $\mathbf{Rec}$ 递归范畴、$\mathbf{Sp}$ 谱范畴与 $D\dashv R$ 谱化伴随函子
 

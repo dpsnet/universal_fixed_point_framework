@@ -285,7 +285,7 @@ universal_fixed_point_framework/
 │   ├── causal_set/                 # 因果集离散时空实例
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
-├── paper/                          # 论文手稿（43 篇）
+├── paper/                          # 论文手稿（44 篇）
 │   ├── paper1_*.md                  # 基础理论（Paper I–XVI）
 │   ├── paper17_zero_parameter_predictions.md   # 零参数预测（勘误合规）
 │   ├── paper18_spectral_newtonian.md           # 谱牛顿力学
