@@ -24,13 +24,14 @@
 - **P1–P6**：本文六项可证伪预言
 
 本文自创术语及其与标准概念的对照如下：
-- **拓扑转变**（topological transition）：量子跃迁的拓扑表述——驻波拓扑解离为行波拓扑的离散跳变，含闭合结构方向转变（边界空间闭合 → 环绕轴闭合，命题 2.6）；区别于动力系统"拓扑分岔理论"（拓扑度方法，Krasnosel'skii–Rabinowitz）
+- **拓扑转变**（topological transition）：量子跃迁的拓扑表述——驻波拓扑解离为行波拓扑的离散跳变，含闭合结构方向转变（边界空间闭合 → 环绕轴闭合，命题 2.6）；区别于动力系统"拓扑分岔理论"（拓扑度方法，Krasnosel'skii–Rabinowitz）与凝聚态"拓扑相变"（topological phase transition，Chern 数跳变等系统级相变）——本文的转变是单个光子生成事件的离散拓扑跳变，非系统级相变
+- **闭合结构方向转变**（closure-direction transition）：光子生成完整几何内容（命题 2.6）——驻波的**边界空间闭合**（$\partial M\neq\emptyset$，电磁形变在库仑势垒内闭合为驻波）转变为行波的**环绕轴闭合**（$\partial M=\emptyset$，电磁形变在法向平面内绕传播轴 $k$ 闭环），三维空间直线传播即环绕闭环沿 $k$ 方向的宏观投影；标准物理锚点：横波性（$\mathbf{E}\perp\mathbf{k}$）与螺旋度/圆偏振（$s=\pm1$），为已确立电动力学事实的拓扑重述
 - **方向性阶跃**（directional step）：自发辐射不可逆性的编码——Heaviside 阶跃 $\chi_\Phi=\Theta(t-t_*)$ 与静默指标 $\sigma_{\text{S3}}=1-\chi_\Phi$ 承载过程性与单向性
 - **双层正交**（double-layer orthogonality）：光子为法向拓扑自由度的结构表述——转变方向⊥引力 $\Delta$ 方向（范畴层）⊥三维空间（纤维丛层）
 - **可拦截性**（interceptability）：与 KK 纯几何额外维度的本质区分——光子法向自由度可被物质吸收（Bohr 条件 $h\nu=\Delta E$）
 - **$R$ 右伴随折叠**（$R$-folding）：爱因斯坦 $B_{12}$ 吸收的伴随函子表述——行波拓扑折叠回驻波拓扑（$R=D^\dagger$ 在机制层是定理，§2.3）
 - **静默指标** $\sigma_{\text{S3}}(t)$：谱静默屏障的开关函数——封闭拓扑类对外传播通道的开/关
-- **转变并存对象** $\Phi_+$：能量守恒的并置结构编码——"原子保留 + 光子新生"（公理 A3）
+- **转变并存对象** $\Phi_+$：能量守恒的并存结构编码——"原子保留 + 光子新生"（公理 A3）
 - **生成-禁闭对偶**（generation-confinement duality，命题 2.5）：阿贝尔（静默解除可传播）与非阿贝尔（静默驻留禁闭）规范玻色子传播性的互补机制
 
 ---
@@ -103,9 +104,9 @@ $$\Phi: (M_{\text{atom}}, \partial M_{\text{atom}}) \to (M_{\text{photon}}, \emp
 
 **公理 A2**（离散性）：转变映射 $\Phi$ 是离散的——不存在介于 $(M_{\text{atom}}, \partial M)$ 与 $(M_{\text{photon}}, \emptyset)$ 之间的连续中间拓扑。对应量子能级的分立性。
 
-**公理 A3**（能量守恒与并置结构）：转变前后总能量不变——跃迁前全部电磁能量存储于闭合驻波拓扑，转变后重分配为电子低能驻波与光子行波，总和不变。A3 的"并存"语义要求转变映射**保留源对象**（公理 A1 的单值 $\Phi$ 为全转换，不体现此语义），故定义**转变并存对象**（公理 A1 单值 $\Phi$ 的并置结构版本）：
+**公理 A3**（能量守恒与并存结构）：转变前后总能量不变——跃迁前全部电磁能量存储于闭合驻波拓扑，转变后重分配为电子低能驻波与光子行波，总和不变。A3 的"并存"语义要求转变映射**保留源对象**（公理 A1 的单值 $\Phi$ 为全转换，不体现此语义），故定义**转变并存对象**（公理 A1 单值 $\Phi$ 的并存结构版本）：
 $$\Phi_+: X \mapsto (X_{\text{low}},\langle\text{opened}\rangle),$$
-其中 $X_{\text{low}}$ 为源原子拓扑的低能驻波分量（**原子保留**：$X_{\text{low}}=X$ 作为拓扑对象，能量降至 $E_{\text{low}}=E_{\text{atom}}-h\nu$），$\langle\text{opened}\rangle$ 为新生光子行波（**光子新生**，携带 $E=h\nu$），且能量重分配 $E_{\text{atom}}=E_{\text{low}}+h\nu$。公理 A1 的单值 $\Phi$ 即 $\Phi_+$ 的**光子分量投影**（并置结构的光子视角）。其代数骨架已机器形式化（§7.3）。
+其中 $X_{\text{low}}$ 为源原子拓扑的低能驻波分量（**原子保留**：$X_{\text{low}}=X$ 作为拓扑对象，能量降至 $E_{\text{low}}=E_{\text{atom}}-h\nu$），$\langle\text{opened}\rangle$ 为新生光子行波（**光子新生**，携带 $E=h\nu$），且能量重分配 $E_{\text{atom}}=E_{\text{low}}+h\nu$。公理 A1 的单值 $\Phi$ 即 $\Phi_+$ 的**光子分量投影**（并存结构的光子视角）。其代数骨架已机器形式化（§7.3）。
 
 **公理 A4**（方向性阶跃）：设 $t_*$ 为转变时刻，$\Theta$ 为 Heaviside 阶跃函数，定义拓扑类指标 $\chi_\Phi(t)=\Theta(t-t_*)$ 与静默指标 $\sigma_{\text{S3}}(t)=1-\chi_\Phi(t)$，其中 $\chi_\Phi=0$（$t<t_*$）对应封闭拓扑类（S3 静默，驻波），$\chi_\Phi=1$（$t\ge t_*$）对应开放拓扑类（S3 解除，行波）。此公理同时编码**过程性**与**方向性**：
 - **过程性**（与 A2 一致）：$\lim_{t\uparrow t_*}\mathcal{M}(t)=(M_{\text{atom}},\partial M)$，$\lim_{t\downarrow t_*}\mathcal{M}(t)=(M_{\text{photon}},\emptyset)$——转变在 $t_*$ 处瞬间完成；
@@ -361,7 +362,7 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 
 ### 7.3 形式化依赖
 
-$h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整形式化（部分已有 Lean 模块）、电磁纤维粘合拓扑形式化（待建设）、跨层谱对象映射完整闭合（部分已有）。当前仅存在定性拓扑推导，缺少 Lean 机器证明闭环。**已形式化的代数骨架**（3022 jobs 零 sorry）：公理 A4 方向性阶跃（$\chi_\Phi$/$\sigma_{\text{S3}}$ 的过程性/方向性/不可逆定理）、公理 A3 并置结构 $\Phi_+$（原子保留 + 光子新生 + 能量重分配，§2.2）、$\Phi$ 态射层忠实嵌入（光子拓扑范畴忠实嵌入 Rec 范畴）、零静质量 $v<c$ 不自洽（命题 3.2）、静默-跃迁门控（§7.4 S9）、纤维丛层内积正交与联络-度量相容选取（$V\perp H \Longrightarrow V\sqcap H=\bot$；$V\sqcup V^\perp=\top$；沿 $V^\perp$ 的幂等联络投影 $P^2=P$、$\ker P=V^\perp$、$\operatorname{im}P=V$）、Fock 空间自由演化算子（$[N,H_0]=0$、$[N,a^\dagger]=a^\dagger$、$[N,a]=-a$、$\|e^{-i\omega nt}\|=1$，§2.3 推论 2.1 的树级骨架）、光速锁定与能量量子骨架（$\lambda\nu=c$ 与 $E=h\nu$ 结构，$E=hc/\lambda$ 衔接定理，§3.1 温和兼容）+ **三恒等式闭环骨架（2026-08-11：`Momentum`（$p=h/\lambda$ de Broglie）+ `energy_momentum_consistency`（$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$）+ `p1_zero_mass_structure`（三恒等式闭环给出零质量分支结构，衔接 #2 `zero_mass_group_velocity`）——零质量光速锁定为三恒等式共同推论，P1 温和兼容部分闭环，§3.5）**、dagger 有限维骨架（`dagger`=共轭转置、对合性 `dagger(dagger A)=A`、JC 矩阵厄米性 $H_{\text{int}}^\dagger=H_{\text{int}}$，§2.3 开放问题 #6 的 dagger-假设临时登记）+ **dagger 第一性原理骨架（2026-08-11：`stdInner` 标准内积 + `IsAdjoint` 伴随方程 + `adjoint_unique` 伴随唯一性（dagger 良定义）+ `conjTranspose_satisfies_adjoint`（共轭转置 = 内积伴随矩阵表示）+ `dagger_is_adjoint`（满足伴随方程 ⟹ 等于 $M^\dagger$）——dagger-假设被内积结构推导替代，有限维骨架零 sorry）+ **dagger 范畴公理完整化（2026-08-11：`dagger_antimultiplicative`（反变 $(AB)^\dagger=B^\dagger A^\dagger$）+ `dagger_identity`（$I^\dagger=I$）+ `dagger_additive` + `dagger_antilinear`——全部由内积伴随推导，无需独立结构假设）** + **R 态射层伴随性方程验证（2026-08-11：JC 模型实例 `jcD g`——`jc_R_adjoint`（R=D† 满足伴随性方程）+ `jc_R_is_dagger_adjoint`（任意满足伴随性方程的 B=D†，R=D† 在机制层是定理）+ `jc_R_hermitian`（D†=D 自伴）——dagger-假设在 JC 机制层被剔除，#6 收尾）** + **曲率层代数骨架（2026-08-11：`skew_antisymm`（$A-A^\dagger$ 转置变号）+ `lie_bracket_antisymm`（李括号反对称）+ `curvature_antisymm`（曲率反对称组合）——李代数值曲率的 2-形式反对称结构，#7）**。**未形式化**：双层正交的完整几何——范畴层（4-范畴态射方向与伴随函子方向的几何正交，已建立光子 1-态射层单点性作为代数核心）与纤维丛层（联络形式/曲率/挠率的完整流形微分几何，李代数值曲率代数骨架已建）均未在 Lean 中严格证明。
+$h$-$c$-$\Delta$ 三常数约束（P3）的完整证明依赖：4-范畴完整形式化（部分已有 Lean 模块）、电磁纤维粘合拓扑形式化（待建设）、跨层谱对象映射完整闭合（部分已有）。当前仅存在定性拓扑推导，缺少 Lean 机器证明闭环。**已形式化的代数骨架**（3022 jobs 零 sorry）：公理 A4 方向性阶跃（$\chi_\Phi$/$\sigma_{\text{S3}}$ 的过程性/方向性/不可逆定理）、公理 A3 并存结构 $\Phi_+$（原子保留 + 光子新生 + 能量重分配，§2.2）、$\Phi$ 态射层忠实嵌入（光子拓扑范畴忠实嵌入 Rec 范畴）、零静质量 $v<c$ 不自洽（命题 3.2）、静默-跃迁门控（§7.4 S9）、纤维丛层内积正交与联络-度量相容选取（$V\perp H \Longrightarrow V\sqcap H=\bot$；$V\sqcup V^\perp=\top$；沿 $V^\perp$ 的幂等联络投影 $P^2=P$、$\ker P=V^\perp$、$\operatorname{im}P=V$）、Fock 空间自由演化算子（$[N,H_0]=0$、$[N,a^\dagger]=a^\dagger$、$[N,a]=-a$、$\|e^{-i\omega nt}\|=1$，§2.3 推论 2.1 的树级骨架）、光速锁定与能量量子骨架（$\lambda\nu=c$ 与 $E=h\nu$ 结构，$E=hc/\lambda$ 衔接定理，§3.1 温和兼容）+ **三恒等式闭环骨架（2026-08-11：`Momentum`（$p=h/\lambda$ de Broglie）+ `energy_momentum_consistency`（$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$）+ `p1_zero_mass_structure`（三恒等式闭环给出零质量分支结构，衔接 #2 `zero_mass_group_velocity`）——零质量光速锁定为三恒等式共同推论，P1 温和兼容部分闭环，§3.5）**、dagger 有限维骨架（`dagger`=共轭转置、对合性 `dagger(dagger A)=A`、JC 矩阵厄米性 $H_{\text{int}}^\dagger=H_{\text{int}}$，§2.3 开放问题 #6 的 dagger-假设临时登记）+ **dagger 第一性原理骨架（2026-08-11：`stdInner` 标准内积 + `IsAdjoint` 伴随方程 + `adjoint_unique` 伴随唯一性（dagger 良定义）+ `conjTranspose_satisfies_adjoint`（共轭转置 = 内积伴随矩阵表示）+ `dagger_is_adjoint`（满足伴随方程 ⟹ 等于 $M^\dagger$）——dagger-假设被内积结构推导替代，有限维骨架零 sorry）+ **dagger 范畴公理完整化（2026-08-11：`dagger_antimultiplicative`（反变 $(AB)^\dagger=B^\dagger A^\dagger$）+ `dagger_identity`（$I^\dagger=I$）+ `dagger_additive` + `dagger_antilinear`——全部由内积伴随推导，无需独立结构假设）** + **R 态射层伴随性方程验证（2026-08-11：JC 模型实例 `jcD g`——`jc_R_adjoint`（R=D† 满足伴随性方程）+ `jc_R_is_dagger_adjoint`（任意满足伴随性方程的 B=D†，R=D† 在机制层是定理）+ `jc_R_hermitian`（D†=D 自伴）——dagger-假设在 JC 机制层被剔除，#6 收尾）** + **曲率层代数骨架（2026-08-11：`skew_antisymm`（$A-A^\dagger$ 转置变号）+ `lie_bracket_antisymm`（李括号反对称）+ `curvature_antisymm`（曲率反对称组合）——李代数值曲率的 2-形式反对称结构，#7）**。**未形式化**：双层正交的完整几何——范畴层（4-范畴态射方向与伴随函子方向的几何正交，已建立光子 1-态射层单点性作为代数核心）与纤维丛层（联络形式/曲率/挠率的完整流形微分几何，李代数值曲率代数骨架已建）均未在 Lean 中严格证明。
 
 ### 7.4 数值自洽性验证
 
