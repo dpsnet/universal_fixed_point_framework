@@ -3,7 +3,7 @@
 **状态**：🟢 应用推演笔记 v0.1（2026-08-08，跨领域探索，未纳入论文）
 **动机来源**：李传亮《页岩油气藏的成藏机理》（`docs/页岩油藏气机理.md`）
 **理论归属**：UFPF 框架（Rec/Sp、谱流、谱静默、Grothendieck 纤维丛）在"多孔介质多相流 + 微型岩性圈闭集合"上的应用推演
-**子笔记**：[shale_application_roadmap.md](shale_application_roadmap.md)（应用技术路线图：煤系页岩油勘探/甜点评价/可动油校正/超压-压裂预测）、[shale_data_inventory.md](shale_data_inventory.md)（数据源汇总清单：11 项数据源完整度分级 A-D）
+**子笔记**：[shale_application_roadmap.md](shale_application_roadmap.md)（应用技术路线图：煤系页岩油勘探/甜点评价/可动油校正/超压-压裂预测）、[shale_data_inventory.md](shale_data_inventory.md)（数据源汇总清单：11 项数据源完整度分级 A-D）、[spectral_shale_p1_sign_diagnosis.md](spectral_shale_p1_sign_diagnosis.md)（P1 仿真-实测系数符号差异机制诊断，2026-08-11）
 
 ---
 
