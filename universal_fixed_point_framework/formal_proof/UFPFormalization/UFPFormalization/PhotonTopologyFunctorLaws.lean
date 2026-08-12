@@ -1,10 +1,13 @@
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Functor.Basic
+import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic
 
 namespace UFPFormalization
 
 open CategoryTheory
+open Filter
+open scoped Topology
 
 /-!
 # PhotonTopologyFunctorLaws — 命题 2.4 函子律：Φ = D|_Rec_photon 小范畴函子
@@ -256,5 +259,53 @@ theorem phiMulti_preserves_transition {ι : Type u} (i m k : ι) :
     (phiMultiFunctor ι).map (multiComp (MultiMor.transition i m) (MultiMor.transition m k)) =
     multiComp ((phiMultiFunctor ι).map (MultiMor.transition i m)) ((phiMultiFunctor ι).map (MultiMor.transition m k)) := by
   rfl
+
+/-! ## 无穷维子范畴（ι = ℕ，§3.4）：Rydberg 组合原理 + 无穷性实例 + 带边极限 -/
+
+/-- Rydberg 频率函数（§3.4 层次 A，物理锚定 §4.4 氢原子 E_n = -13.6/n²）：
+    f(i,k) = R·(1/k² − 1/i²)（i 为高能级、k 为低能级，发射；R = R_H 为 Rydberg 频率常数）。
+    **组合原理 f(i,m)+f(m,k) = f(i,k) 对任意能函数成立**（telescoping：ΔE 可加），
+    故 §3.3 范畴复合律 transition∘transition = transition（ν_ik = ν_im + ν_mk）在无穷维（ι = ℕ）
+    下自动保持——本函数将物理内容具体化到 Rydberg 谱。 -/
+noncomputable def rydbergFreq (R : ℝ) (i k : ℕ) : ℝ :=
+  R * ((1 : ℝ) / (k : ℝ) ^ 2 - (1 : ℝ) / (i : ℝ) ^ 2)
+
+/-- **Rydberg–Ritz 组合原理（§3.4 机器证明）**：f(i,m) + f(m,k) = f(i,k)
+    ——无穷维情形"复合保持 = 跃迁频率可加性 = 能量守恒"的显式机器证明
+    （telescoping：ΔE_im + ΔE_mk = ΔE_ik，ring_nf 规范化）。 -/
+theorem rydberg_combination (R : ℝ) (i m k : ℕ) :
+    rydbergFreq R i m + rydbergFreq R m k = rydbergFreq R i k := by
+  unfold rydbergFreq
+  ring_nf
+
+/-- **能级无穷性实例（§3.4 层次 A）**：MultiObj ℕ 有可数无穷多个原子对象
+    （n ↦ atom n 为 ℕ → MultiObj ℕ 的单射）——"无穷维 Rec 子范畴"的无穷性机器证明。 -/
+instance multiObjInfinite : Infinite (MultiObj ℕ) := by
+  refine Infinite.of_injective (fun n : ℕ => MultiObj.atom n) ?_
+  intro a b h
+  cases h
+  rfl
+
+/-- **带边极限（§3.4 层次 A）**：固定低能级 k、高能级 i → ∞ 时，跃迁频率收敛到带边
+    f(i,k) → R/k²（1/i² → 0）——氢原子谱在 i → ∞ 处到达电离阈（k=1 时极限 h·R = 13.6 eV，
+    §4.4 锚定；数值层 paperX_functor_extended.py S7）。 -/
+theorem rydberg_band_edge (R : ℝ) (k : ℕ) :
+    Tendsto (fun i : ℕ => rydbergFreq R i k) atTop (𝓝 (R / (k : ℝ) ^ 2)) := by
+  have h_inv_sq : Tendsto (fun i : ℕ => (1 : ℝ) / (i : ℝ) ^ 2) atTop (𝓝 0) := by
+    -- (1:ℝ)/(i:ℝ)^2 = ((i:ℝ)⁻¹)^2，且 (i:ℝ)⁻¹ → 0（tendsto_inv_atTop_nhds_zero_nat）
+    have h1 : Tendsto (fun i : ℕ => ((i : ℝ)⁻¹) ^ 2) atTop (𝓝 0) := by
+      simpa using ((tendsto_inv_atTop_nhds_zero_nat (𝕜 := ℝ)).pow 2)
+    refine h1.congr' ?_
+    exact Eventually.of_forall fun i => by
+      ring_nf
+  -- f(i,k) = R/k² − R/i² = R/k² − R·(1/i²)，1/i² → 0
+  have hmain :
+      Tendsto (fun i : ℕ => (R / (k : ℝ) ^ 2) - R * ((1 : ℝ) / (i : ℝ) ^ 2)) atTop
+        (𝓝 (R / (k : ℝ) ^ 2)) := by
+    simpa using tendsto_const_nhds.sub (tendsto_const_nhds.mul h_inv_sq)
+  refine hmain.congr' ?_
+  exact Eventually.of_forall fun i => by
+    unfold rydbergFreq
+    ring_nf
 
 end UFPFormalization
