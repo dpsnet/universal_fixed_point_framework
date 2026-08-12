@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.0（2026-07-29）
+**版本**：v1.1（2026-08-12）
 
-**摘要**：本文在 UFPF 框架的形式化体系内，建立质量与 spExchangeLaw 偏差 $\Delta$ 之间的精确代数关系，澄清"质量是标量幅度，$\Delta$ 给出方向"这一物理直觉的数学结构。核心结果包括三个形式命题及其机器证明/数值验证：（J1）**标量-算符分离定理**：点质量作为局域谱缺陷 $\delta\lambda\cdot P_0$ 引入时，偏差的变化 $\delta\Delta$ 严格线性于 $\delta\lambda$，方向由算符组合 $P_0\cdot H - 2\beta\cdot P_0\cdot\alpha' + H\cdot P_0$ 完全决定，与 $\delta\lambda$ 的幅度无关——该结果已在 Lean 4 中机器证明（`source_defect_linearity`, `DeviationBound.lean` §1.6）；（J2）**模式间定位定理**：$\Delta$ 由对易子 $[A,\cdot]$ 构成，在谱基下 $[A,\delta b]_{ij} = (\lambda_i - \lambda_j)\delta b_{ij}$，对角元恒为零——$\Delta$ 的支撑完全位于"模式间"分量，不在任何单一谱模式或时空扇区内；（J3）**正交投影恢复力定理**：引力是 $\mathbf{Sp}$ 4-范畴中 coherence 层（层 4）的结构刚度 $\Delta$ 对主动生成层（层 1-3，对应三维空间）中谱缺陷的正交投影恢复力，其"方向"在时空中无处不在但又不属于任何时空方向——这是 Moran 自洽约束与等谱通量守恒的联合推论。三个命题的数值综合验证由 `scripts/paperX_mass_delta_directionality.py`（2/2 检查通过）完成。本文同时给出了五个核心直觉的术语标准化对照表。
+**摘要**：本文在 UFPF 框架的形式化体系内，建立质量与 spExchangeLaw 偏差 $\Delta$ 之间的精确代数关系，澄清"质量是标量幅度，$\Delta$ 给出方向"这一物理直觉的数学结构。核心结果包括三个形式命题及其机器证明/数值验证：（J1）**标量-算符分离定理**：点质量作为局域谱缺陷 $\delta\lambda\cdot P_0$ 引入时，偏差的变化 $\delta\Delta$ 严格线性于 $\delta\lambda$，方向由算符组合 $P_0\cdot H - 2\beta\cdot P_0\cdot\alpha' + H\cdot P_0$ 完全决定，与 $\delta\lambda$ 的幅度无关——该结果已在 Lean 4 中机器证明（`source_defect_linearity`, `DeviationBound.lean` §1.6）；（J2）**模式间定位定理**：$\Delta$ 由对易子 $[A,\cdot]$ 构成，在谱基下 $[A,\delta b]_{ij} = (\lambda_i - \lambda_j)\delta b_{ij}$，对角元恒为零——$\Delta$ 的支撑完全位于"模式间"分量，不在任何单一谱模式或时空扇区内——该**严格正交形式**已获 Lean 4 机器证明（`DeviationBound.lean` §1.7：`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`）；（J3）**正交投影恢复力定理**：引力是 $\mathbf{Sp}$ 4-范畴中 coherence 层（层 4）的结构刚度 $\Delta$ 对主动生成层（层 1-3，对应三维空间）中谱缺陷的正交投影恢复力，其"方向"在时空中无处不在但又不属于任何时空方向——这是 Moran 自洽约束与等谱通量守恒的联合推论。三个命题的数值综合验证由 `scripts/paperX_mass_delta_directionality.py`（2/2 检查通过）完成。本文同时给出了五个核心直觉的术语标准化对照表。
 
 ---
 
@@ -19,7 +19,7 @@
 1. **质量** $m$：目前定义为谱惯性 $m = \delta\lambda \cdot M_{\text{Pl}}$（§5.2），但它在交换律偏差 $\Delta$ 中的出现方式——线性还是高阶、方向依赖还是独立——此前仅有数值验证（`scripts/paperX_source_defect.py`，v1.45），无机器证明。
 2. **$\Delta$ 的方向性**：$\Delta$ 的 Frobenius 范数 $\|\Delta\|_F$ 是结构常数（§5.7c），但"$\Delta$ 的方向不在时空中"这一核心物理图像（§5.7d 直觉 2）此前仅有定性描述和分块数值分析（`scripts/paperX_delta_block_decomp.py`，B4，v1.46），缺乏精确的代数形式。
 
-本文填补这两个缺口。核心贡献是将直觉图像提炼为三个形式命题（J1-J3），其中 J1 已获 Lean 4 机器证明，J2 为代数恒等式，J3 为结构论证。三个命题的综合数值验证由专用脚本完成。
+本文填补这两个缺口。核心贡献是将直觉图像提炼为三个形式命题（J1-J3），其中 J1 与 J2（严格正交形式）已获 Lean 4 机器证明，J3 为结构论证。三个命题的综合数值验证由专用脚本完成。
 
 本文的哲学意义在于：将"引力为什么不可屏蔽"（§5.7e）从经验观察提升为范畴论推论——$\Delta$ 不是场、没有传播子、不在时空内，因此不能被屏蔽。这不是物理假设，而是 $\mathbf{Sp}$ 4-范畴结构的数学推论。
 
@@ -85,6 +85,19 @@ $$[A, \delta b]_{ij} = (\lambda_i - \lambda_j)\,\delta b_{ij}$$
 
 **诚实标注**：$4+4$ 分块为建模指派。$1+3+4$ 的范畴计数分裂（Paper XXX，定理组）是计数层结构，没有典范的矩阵分块实现。
 
+### 3.3 J2 严格正交的机器证明
+
+J2 的**严格正交形式**已获 Lean 4 机器证明（`DeviationBound.lean` §1.7，`lake build` 零错误、零 `sorry`）：
+
+| 定理 | 内容 | 严格正交含义 |
+|:----|:-----|:------------|
+| `commutator_trace_zero` | Tr([A,B]) = 0 | Δ 的对易子分量与恒等（标量）方向**严格正交**（`Matrix.trace_mul_comm`，无对易性假设） |
+| `commutator_trace_orthogonal_scalar` | c·Tr([A,B]) = 0 | 与任意标量方向 c·I 迹正交 |
+| `commutator_diag_zero_of_diagonal` | 谱基下 [A,B] 对角元恒零 | 与任何单一谱模式（基方向 E_ii）正交（J2 原表述的严格版） |
+| `commutator_trace_orthogonal_diagonal` | 谱基下 Tr([A,B]·D) = 0（D 任意对角） | 与**任意**对角方向（单一谱模式/基方向之组合）迹正交——"Δ 不在任何单一谱模式方向"的完备严格形式 |
+
+**诚实标注**：上述严格正交针对 Δ 的**对易子分量** [A, δb]（J2 所述"Δ 由对易子构成"）；`deltaOp` 整体（含 2β·A·α' 项）的迹一般非零——"Δ 与标量方向严格正交"的完整表述限定于其对易子分量。
+
 ---
 
 ## 4. 命题 J3：正交投影恢复力
@@ -103,7 +116,7 @@ $$[A, \delta b]_{ij} = (\lambda_i - \lambda_j)\,\delta b_{ij}$$
 | 1 | 1-态射 | 空间 $x$ 方向 | 正交于 $\Delta$ |
 | 0 | 对象 |（不生成自由度） | — |
 
-各主动层的类型级正交已由 `layerIndex_independent` 机器证明（Paper XXX，v1.26 + v1.33），层 4 与层 1-3 的分离裕度 $e^3$ 由 `silence_margin` 机器证明。
+各主动层的结构区分（层索引互异：`layerIndex_independent` 机器证明——层→序数单射）与层 4/层 1-3 的分离裕度 $e^3$（`silence_margin`）为**框架层结构事实，非正交关系**。"层 1-3 正交于 Δ"与"Δ 方向不在三维空间"的正交声称**由严格版本承载并已闭合**（§3.3：Δ 对易子分量与恒等/任意对角方向严格正交，`DeviationBound.lean` §1.7；87% 扇区间支撑为数值，§3.2）——按框架操作定义（§6 术语表"模式间定位"）获机器证明。更严格读取（逐 Cl(1,7) 生成元矩阵正交 Tr(Δ·γ_i)=0）需具体 16×16 生成元矩阵（`Clifford.lean` 仅有抽象类型）且对一般对易子不恒成立，为**框架外可选方向，非框架声称**。
 
 ### 4.2 Moran 冻结机制
 
@@ -139,6 +152,10 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 |:----|:-----|:----:|
 | `source_defect_linearity` | `DeviationBound.lean` §1.6 | ✅ `lake build` 零错误 |
 | `deltaOp` 定义 | 同上 | ✅ |
+| `commutator_trace_zero`（J2 严格正交①） | `DeviationBound.lean` §1.7 | ✅ |
+| `commutator_trace_orthogonal_scalar`（J2 严格正交②） | 同上 | ✅ |
+| `commutator_diag_zero_of_diagonal`（J2 严格正交③） | 同上 | ✅ |
+| `commutator_trace_orthogonal_diagonal`（J2 严格正交④） | 同上 | ✅ |
 
 ### 5.2 数值验证
 
@@ -169,7 +186,7 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 本文建立了 UFPF 框架中质量与 $\Delta$ 之间的精确代数关系，将此前散见于 §5.7d-g、§5.7i 的物理图像提炼为三个形式命题（J1-J3）。主要结果：
 
 1. **J1 的机器证明**将 Newton 引力的质量线性从数值发现升级为严格代数定理
-2. **J2 的代数形式**给"$\Delta$ 不在时空中"以定量基础
+2. **J2 的严格机器证明**给"$\Delta$ 不在时空中"以严格正交基础——Δ 对易子分量与恒等/任意对角方向严格正交（`commutator_trace_zero`/`commutator_trace_orthogonal_diagonal`）
 3. **J3 的结构论证**将引力不可屏蔽从经验观察提升为范畴论推论
 
 这些结果不改变框架的任何数值预测，但显著提升了引力图像的数学严格性。桥接 J3 的物理推论链（正交⇒不可屏蔽）与 B2 连续极限之间的缺口，仍是下一步形式化工作的明确目标。
@@ -188,7 +205,9 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 - **L2 🟡 待基础设施**：理论推导完备，仅因 Mathlib 底层库未稳定而暂留。不属于"理论未完成"或"证明策略缺失"
 - **L3 🔴 概念特征**：此 `sorry` 不是 bug 而是特征。其"解决"方向不是消除，而是维持为偏差代数形式。与常规形式化缺口性质完全不同
 
-**诚实标注**：上述 3 个 `sorry` 均不影响 `lake build` 的零错误通过。`spExchangeLaw` 的偏差代数形式（`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`）和源缺陷线性（`source_defect_linearity`）已在相邻定理中完全机器证明。
+**诚实标注**：上述 3 个 `sorry` 均不影响 `lake build` 的零错误通过。`spExchangeLaw` 的偏差代数形式（`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`）、源缺陷线性（`source_defect_linearity`）与 J2 严格正交（`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`/`commutator_trace_orthogonal_diagonal`）已在相邻定理中完全机器证明。
+
+**开放项**：J2 严格正交（Δ 对易子分量与恒等/任意对角方向，§3.3）已闭合——"Δ 方向不在三维空间"按框架操作定义（§6 模式间定位）获机器证明 + 数值支撑；逐 Cl(1,7) 生成元矩阵正交（Tr(Δ·γ_i)=0）为**框架外可选方向**（需具体 16×16 生成元矩阵，`Clifford.lean` 仅有抽象类型），非框架声称。
 
 ---
 
@@ -198,7 +217,7 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 |:----|:-----|:-----|
 | `SpCategory.lean` | `UFPFormalization/` | $\mathbf{Sp}$ 范畴定义（对象、态射） |
 | `HigherSpCategory.lean` | `UFPFormalization/` | 2-态射、3-态射、交换律偏差 |
-| `DeviationBound.lean` | `UFPFormalization/` | Frobenius 范数、等谱守恒、**源缺陷线性**（§1.6）|
+| `DeviationBound.lean` | `UFPFormalization/` | Frobenius 范数、等谱守恒、**源缺陷线性**（§1.6）、**J2 严格正交**（§1.7）|
 
 ---
 

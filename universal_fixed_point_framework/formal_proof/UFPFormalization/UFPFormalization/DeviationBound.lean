@@ -487,4 +487,51 @@ theorem source_defect_linearity {n : ℕ}
     _ = dlambda • (P₀ * (beta_h * alpha'_h) - 2 • (beta_h * P₀ * alpha'_h) + (beta_h * alpha'_h) * P₀) := by
       simp [H, Matrix.mul_assoc]
 
+/-! ### §1.7 J2 严格正交：对易子模式间定位的机器证明（paper31 §3，2026-08-12 补）
+
+    paper31 §3 命题 J2（模式间定位）：[A, δb]_{ij} = (λ_i − λ_j)·δb_{ij}，对角元恒为零——
+    "Δ 的方向不在任何单一谱模式/标量方向"。J2 原本就应以**严格正交**为验证标准
+    （非仅代数恒等式或数值检查）。本子节在既有 deltaOp/spExchangeLaw_deviation_partial_commutator
+    的对易子结构上给出 J2 的严格机器证明（不另起炉灶）：
+    1. `commutator_trace_zero`：Tr([A,B]) = 0——对易子与恒等（标量）方向投影为零；
+    2. `commutator_trace_orthogonal_scalar`：与任意标量矩阵 c·I 迹正交（Hilbert-Schmidt 意义）；
+    3. `commutator_diag_zero_of_diagonal`：谱基（A 对角）下 [A,B] 对角元恒零（J2 原表述）。 -/
+
+/-- J2 严格形式（1）：对易子与恒等（标量）方向**严格正交**——Tr([A,B]) = 0
+    （`Matrix.trace_mul_comm`：Tr(AB)=Tr(BA)，纯代数，无对易性假设）。
+    "Δ 无标量分量"的机器证明。 -/
+theorem commutator_trace_zero {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
+    (A * B - B * A).trace = 0 := by
+  rw [Matrix.trace_sub, Matrix.trace_mul_comm]
+  simp
+
+/-- J2 严格形式（2）：对易子与任意标量方向 c·I **迹正交**——c·Tr([A,B]) = 0
+    （Tr([A,B]·(c·I)) = c·Tr([A,B]) = 0；"Δ 的方向与任何均匀/标量方向正交"）。 -/
+theorem commutator_trace_orthogonal_scalar {n : ℕ}
+    (A B : Matrix (Fin n) (Fin n) ℂ) (c : ℂ) :
+    c * (A * B - B * A).trace = 0 := by
+  rw [commutator_trace_zero]
+  simp
+
+/-- J2 严格形式（3，原表述）：谱基（A = diagonal lam）下对易子对角元恒零——
+    [A,B]_{ii} = lam_i·B_ii − B_ii·lam_i = 0。"Δ 与任何单一谱模式（基方向 E_ii）正交"的机器证明。 -/
+theorem commutator_diag_zero_of_diagonal {n : ℕ} (lam : Fin n → ℂ)
+    (B : Matrix (Fin n) (Fin n) ℂ) (i : Fin n) :
+    (Matrix.diagonal lam * B - B * Matrix.diagonal lam) i i = 0 := by
+  simp [Matrix.mul_apply, Matrix.diagonal_apply]
+  ring
+
+/-- J2 严格形式（4，谱方向完备）：谱基（A = diagonal lam）下，Δ 的对易子分量与**任意**对角方向
+    D = diagonal d **迹正交**——Tr([A,B]·D) = 0（对角元恒零逐项消去）。
+    "Δ 不在任何单一谱模式方向"的完备严格形式（任意对角方向，含每个基方向 E_ii 与恒等 I 之组合）。 -/
+theorem commutator_trace_orthogonal_diagonal {n : ℕ} (lam d : Fin n → ℂ)
+    (B : Matrix (Fin n) (Fin n) ℂ) :
+    ((Matrix.diagonal lam * B - B * Matrix.diagonal lam) * Matrix.diagonal d).trace = 0 := by
+  rw [Matrix.trace]
+  apply Finset.sum_eq_zero
+  intro i hi
+  simp [Matrix.diag, Matrix.mul_apply, Matrix.diagonal_apply]
+  left
+  ring
+
 end UFPFormalization
