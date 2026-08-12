@@ -65,11 +65,11 @@ theorem CellDirection.mul_assoc (a b c : CellDirection) :
     CellDirection.mul (CellDirection.mul a b) c = CellDirection.mul a (CellDirection.mul b c) := by
   cases a <;> cases b <;> cases c <;> rfl
 
-/-- Z₂ 中项交换（交换律在结合表达式中的应用）：
-    a·(b·(c·d)) = a·(c·(b·d))——横复合交换律（interchange）的方向代数核心。 -/
-theorem CellDirection.mul_middle_comm (a b c d : CellDirection) :
-    CellDirection.mul a (CellDirection.mul b (CellDirection.mul c d)) =
-      CellDirection.mul a (CellDirection.mul c (CellDirection.mul b d)) := by
+/-- Z₂ 交换律（interchange 的方向代数核心）：
+    (a·b)·(c·d) = (a·c)·(b·d)——横复合与竖复合相容性的方向代数形式。 -/
+theorem CellDirection.mul_interchange (a b c d : CellDirection) :
+    CellDirection.mul (CellDirection.mul a b) (CellDirection.mul c d) =
+      CellDirection.mul (CellDirection.mul a c) (CellDirection.mul b d) := by
   cases a <;> cases b <;> cases c <;> cases d <;> rfl
 
 /-! ## 2-胞腔竖/横复合定义 -/
@@ -118,6 +118,6 @@ theorem deltaHComp_interchange {ι : Type u} {A B C : MultiObj ι}
     deltaHComp (deltaVComp α β) (deltaVComp γ δ) =
       deltaVComp (deltaHComp α γ) (deltaHComp β δ) := by
   apply Delta2Cell.ext
-  simp [deltaHComp, deltaVComp, CellDirection.mul_middle_comm]
+  simp [deltaHComp, deltaVComp, CellDirection.mul_interchange]
 
 end UFPFormalization
