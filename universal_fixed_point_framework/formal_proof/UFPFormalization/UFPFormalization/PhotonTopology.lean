@@ -361,6 +361,47 @@ theorem p1_zero_mass_structure (EL : SpeedLocked) (EQ : EnergyQuantum)
          ?_, rfl, rfl⟩
   rfl
 
+/-! ## 光速不变拓扑定理完整形式化（P1 验收补全，P6-1：光速/λν/E=hν） -/
+
+/-- 真空光速结构（定理 2.1）：c = 1/√(μ₀ε₀)（真空中光速由电磁常数确定，SI 定义值；
+    数值核对 paperX_photon_topology.py §S2）。 -/
+structure VacuumLightSpeed where
+  mu0 : ℝ
+  eps0 : ℝ
+  c : ℝ
+  c_eq : c = 1 / Real.sqrt (mu0 * eps0)
+  mu0_pos : 0 < mu0
+  eps0_pos : 0 < eps0
+
+/-- **光速不变（拓扑不变量，定理 2.1 形式化）**：两个真空光速结构若电磁常数相同
+    （局域拓扑平移不改 μ₀ε₀——光源/观测者运动不改变电磁粘合拓扑），则 c 相同。 -/
+theorem light_speed_invariant (V1 V2 : VacuumLightSpeed)
+    (h_mu : V1.mu0 = V2.mu0) (h_eps : V1.eps0 = V2.eps0) : V1.c = V2.c := by
+  rw [V1.c_eq, V2.c_eq, h_mu, h_eps]
+
+/-- **λν = c 反比自洽（定理 3.1 推论）**：λ·ν = c 中波长增大 ⟹ 频率降低
+    （λ₁ < λ₂ ⟹ ν₂ < ν₁——拓扑自洽约束的反比形式，λ-ν 同步偏移）。 -/
+theorem speed_antiproportional (S1 S2 : SpeedLocked)
+    (h_c : S1.c = S2.c) (h_lam : S1.lam < S2.lam) : S2.nu < S1.nu := by
+  -- ν = c/λ（由 λ·ν = c 解出）
+  have hc1 : S1.nu = S1.c / S1.lam := by
+    rw [← S1.lock]
+    field_simp [S1.lam_pos.ne']
+  have hc2 : S2.nu = S2.c / S2.lam := by
+    rw [← S2.lock]
+    field_simp [S2.lam_pos.ne']
+  rw [hc1, hc2, h_c]
+  -- 目标：S2.c/S2.lam < S2.c/S1.lam ⟺ S2.c·λ₁ < S2.c·λ₂（乘正 λ₁λ₂）⟸ 0 < S2.c 且 λ₁ < λ₂
+  rw [div_lt_div_iff₀ S2.lam_pos S1.lam_pos]
+  exact mul_lt_mul_of_pos_left h_lam S2.c_pos
+
+/-- **光速统一（定理 2.1 × 定理 3.1 衔接）**：真空光速结构（c=1/√(μ₀ε₀)）与
+    光速锁定结构（λν=c）共享同一 c——λ·ν = 1/√(μ₀ε₀)
+    （光速 = 电磁粘合拓扑常数 = 形变传播标度，同一 c 的两个表述）。 -/
+theorem light_speed_unify (V : VacuumLightSpeed) (S : SpeedLocked) (h_c : S.c = V.c) :
+    S.lam * S.nu = 1 / Real.sqrt (V.mu0 * V.eps0) := by
+  rw [S.lock, h_c, V.c_eq]
+
 /-! ## dagger 结构与 H_int 厄米性（开放问题 #6 范畴等价的有限维骨架）
    机制层开放项"R 伴随函子 ↔ H_int 算子"的 **dagger-假设**（2026-08-11 临时登记）：
    若 Rec/Sp 装备 dagger 范畴结构且 R = D†（dagger-伴随），则 R 的"折叠"对应厄米共轭，

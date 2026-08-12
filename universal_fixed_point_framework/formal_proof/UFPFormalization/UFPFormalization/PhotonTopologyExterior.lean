@@ -2,6 +2,7 @@ import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Int.Cast.Defs
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Functor.Basic
+import Mathlib.LinearAlgebra.Matrix.Kronecker
 import Mathlib.Tactic
 import UFPFormalization.SpCategory
 
@@ -328,5 +329,70 @@ theorem winding_same_for_opposite (n : ℤ) :
   have h2 : (2 : ZMod 2) = 0 := by
     decide
   rw [h2, zero_mul]
+
+/-! ## SpObj ⊗ 结构（P6-2：§6.17 候选 A/B 范畴层落地，定义候选） -/
+
+/-- SpObj 张量积的维度乘法（P6-2 落地）：dim(X ⊗ Y) = dim X · dim Y
+    ——Kronecker 型 ⊗（§6.17 候选 B）的维度分量；完整矩阵内容
+    （Fin 维度重索引管道）与结合律登记开放（P6-2 诚实边界，不硬搭）。 -/
+def spTensorDim (X Y : SpObj) : ℕ := X.n * Y.n
+
+/-- **σ 的 ⊗ 封闭性（P6-2 核心定理）**：维度奇偶 σ(n) = n mod 2 在维度乘法 ⊗ 下保持
+    ——σ(X ⊗ Y) = σ(X)·σ(Y)（`Nat.mul_mod`；`dimParityCharge` 的 SpObj 维度实例，
+    §6.17 候选 B 的 σ 分量在维度层落地——乘法目标 ZMod 2 与 σ 一致）。 -/
+theorem spTensorDim_parity (X Y : SpObj) :
+    spTensorDim X Y % 2 = (X.n % 2) * (Y.n % 2) % 2 := by
+  rw [spTensorDim]
+  exact Nat.mul_mod X.n Y.n 2
+
+/-- **维度乘法的可交换性（P6-2 推论）**：dim(X ⊗ Y) = dim(Y ⊗ X)
+    ——维度乘法 ⊗ 交换（矩阵内容层 Kronecker 交换性登记开放）。 -/
+theorem spTensorDim_comm (X Y : SpObj) :
+    spTensorDim X Y = spTensorDim Y X := by
+  rw [spTensorDim, spTensorDim]
+  exact Nat.mul_comm X.n Y.n
+
+/-! ## SpObj 完整 Kronecker ⊗（P6-2 续：矩阵内容 + Fin 维度管道） -/
+
+/-- Fin m × Fin n ≃ Fin (m·n) 的显式等价（Kronecker ⊗ 的 Fin 维度重索引管道）。 -/
+noncomputable def finProdEquiv (m n : ℕ) : Fin m × Fin n ≃ Fin (m * n) :=
+  Fintype.equivFinOfCardEq (by simp [Fintype.card_prod])
+
+/-- **SpObj 上的 Kronecker 张量积（§6.17 候选 B 完整定义）**：X ⊗ Y =
+    (dim X · dim Y, A_X ⊗_kron A_Y)——矩阵 Kronecker 积（mathlib `Matrix.kroneckerMap`）
+    经 Fin 维度管道（`finProdEquiv` + `Matrix.reindex`）重索引到 Fin (m·n)。 -/
+noncomputable def spTensor (X Y : SpObj) : SpObj :=
+  ⟨X.n * Y.n,
+   Matrix.reindex (finProdEquiv X.n Y.n) (finProdEquiv X.n Y.n)
+     (Matrix.kroneckerMap (fun a b : ℂ => a * b) X.A Y.A)⟩
+
+/-- spTensor 维度 = 维度乘法（与 `spTensorDim` 一致）。 -/
+theorem spTensor_n (X Y : SpObj) : (spTensor X Y).n = X.n * Y.n := rfl
+
+/-- **维度结合律（P6-2 结合律的维度层）**：dim((X⊗Y)⊗Z) = dim(X⊗(Y⊗Z))
+    ——Kronecker ⊗ 结合律的维度分量（`Nat.mul_assoc`；矩阵层 Kronecker 结合律登记开放）。 -/
+theorem spTensorDim_assoc (X Y Z : SpObj) :
+    spTensorDim (spTensor X Y) Z = spTensorDim X (spTensor Y Z) := by
+  simp [spTensorDim, spTensor]
+  exact Nat.mul_assoc X.n Y.n Z.n
+
+/-! ## σ 幺半群同态在 SpObj ⊗ 上的实例化（P6-2 续：§6.17 候选 B 的 σ 分量落地） -/
+
+/-- SpObj 的维度奇偶 Z₂ 值拓扑荷（P6-2 实例）：σ(X) = dim X（ZMod 2 中自动 mod 2）
+    ——§6.9 公理化 A1-A4 在谱对象上的维度实例（`dimParityCharge` 的 SpObj 版本）。 -/
+def spSigma (X : SpObj) : ZMod 2 := X.n
+
+/-- **σ 的 ⊗ 封闭性（SpObj 完整 ⊗ 上）**：σ(X⊗Y) = σ(X)·σ(Y)
+    ——§6.17 候选 B 的 σ 幺半群同态在 SpObj 完整 Kronecker ⊗ 上的实例（维度层），
+    `ZMod 2` 中 Nat 乘法降级（`Nat.cast_mul`）。 -/
+theorem spSigma_tensor (X Y : SpObj) :
+    spSigma (spTensor X Y) = spSigma X * spSigma Y := by
+  simp [spSigma, spTensor]
+
+/-- **单位元保持（P6-2）**：σ(1 维平凡对象) = 1（ZMod 2 乘法单位）
+    ——σ 幺半群同态的单位元保持（§6.9 A 公理族单位元分量）。 -/
+theorem spSigma_unit :
+    spSigma (⟨1, 1⟩ : SpObj) = (1 : ZMod 2) := by
+  simp [spSigma]
 
 end UFPFormalization

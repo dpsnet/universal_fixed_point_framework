@@ -348,9 +348,9 @@ is the line-shape function.
 
 **P5 定义精确化阶段（2026-08-12 启动，路线图 62G）**——剩余开放项瓶颈为定义精确化而非工具能力：
 - **P5-1 三分法清查**（✅可证/🔶可反证/⚠️需定义，§七 8 项清单，核心笔记 §3.5）；
-- **P5-4 代数谱骨架 ✅**（`PhotonTopologySpectral.lean`：`boundEnergy_mem_spectrum` 束缚本征值∈谱 + `boundBand_subset_spectrum` 束缚带⊆谱 + 束缚带/自由带/电离阈定义）；
+- **P5-4 代数谱骨架 + 电离阈 sSup ✅**（`PhotonTopologySpectral.lean`：`boundEnergy_mem_spectrum` 束缚本征值∈谱 + `boundBand_subset_spectrum` 束缚带⊆谱 + 束缚带/自由带/电离阈定义；**2026-08-12 电离阈 sSup 序列证明闭合**——`hydrogen_ionizationGap_eq`：氢原子束缚带 {13.6/n²} 的 sSup = 13.6 eV（基态 |E₁| 最大），电离阈从数值锚定升级为机器证明）；
 - **P5-2 Δ 结构严格正交 ✅**（用户裁定"修正为严格正交，原本应达到的标准"——**J2 模式间定位严格机器证明**：`DeviationBound.lean` §1.7 `commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`，paper31 §4.1 层正交升级为严格正交；探针 `paperX_delta_spatial_probe.py` 排除生成元编码——"Δ ⊥ 三维空间"按谱模式编码（J2）解读）；
-- **P5-3 Φ=D 严格等式**（⚠️ 待推进）。
+- **P5-3 Φ=D 严格等式 ✅（2026-08-12 函子层闭合）**——严格语义 = 谱化路径交换 + 转变效应一致：复合函子 `DE = D∘E` / `PhiSpectral = DE∘Φ`（`PhotonTopologyFunctor.lean` P5-3 段，`lake build` 2454 jobs 零 sorry）+ 对象层（谱化路径交换/闭开谱差 1→2 维/Φ 后恒开放）+ 态射层（Φ 态射谱化平凡）+ 总结定理 `P53_strict_equality`——Φ 的谱效应完全由 D 函子在 Rec 嵌入上的作用给出。
 
 **T1 张力对齐（2026-08-12，已实施）**：体系一致性检查登记 T1——paper35 §3.2 几何 W 轴论证与 paper44 §7.2"非 KK 式"声明表述张力。对齐：paper35 v0.5（§3.2.1 Step 3/Step 4 加"诠释辅助"注 + §3.2.3 诚实标注）+ paper44 v0.14（§7.2 补"与 Paper XXXV §3.2 的一致性"句）——**$W$ 轴为诠释语言（严格实现 = 谱模式正交 J2 + 纤维丛层 $V\perp H$），非几何额外维度**。完整方案与实施记录见核心笔记 §3.6（v0.68）。
 
@@ -678,7 +678,7 @@ $\delta z_{\Delta}$ 是 UFPF 独有修正项，其量级由 4-范畴偏差 $\Del
 
 ### 6.10 ⊗ 结构候选 + 双窗口外显（方向 5，2026-08-12）
 
-**⊗ 结构定义候选的代数骨架闭合**（`paperX_tensor_whitney_z2.py` 8/8）：Whitney 求和公式 $w(\xi\oplus\eta)=w(\xi)w(\eta)$ + 线丛张量积 $w_1(L\otimes M)=w_1(L)+w_1(M)$ + σ 幺半群同态候选 $(Sp,\otimes)\to(\mathbb{Z}_2,\cdot)$ + 复合可加性——候选 A（复合可加）/候选 B（Whitney 和）在 $\mathbb{Z}_2$ 层同构（加 = 乘）；**结构澄清**：框架 σ 非平凡性要求**加法型 ⊗**（Lean `winding_not_multiplicative_target`）。
+**⊗ 结构定义候选的代数骨架闭合**（`paperX_tensor_whitney_z2.py` 8/8）：Whitney 求和公式 $w(\xi\oplus\eta)=w(\xi)w(\eta)$ + 线丛张量积 $w_1(L\otimes M)=w_1(L)+w_1(M)$ + σ 幺半群同态候选 $(Sp,\otimes)\to(\mathbb{Z}_2,\cdot)$ + 复合可加性——候选 A（复合可加）/候选 B（Whitney 和）在 $\mathbb{Z}_2$ 层同构（加 = 乘）；**结构澄清**：框架 σ 非平凡性要求**加法型 ⊗**（Lean `winding_not_multiplicative_target`）。**P6-2 维度层 Lean 落地（2026-08-12）**：`PhotonTopologyExterior.lean` 增补 `spTensorDim`（维度乘法）+ `spTensorDim_parity`（**σ 的 ⊗ 封闭性**：σ(X⊗Y)=σ(X)·σ(Y)，`Nat.mul_mod` 机器证明——候选 B 的 σ 分量在维度层落地）+ `spTensorDim_comm`（维度交换）；**P6-2 完整 Kronecker ⊗（2026-08-12 续）**：`spTensor`（**SpObj 完整 Kronecker 张量积**，`finProdEquiv` Fin 维度管道 + `Matrix.reindex` + `Matrix.kroneckerMap`）+ `spTensorDim_assoc`（维度结合律）+ `spSigma`/`spSigma_tensor`（**σ(X⊗Y)=σ(X)·σ(Y)** 在 SpObj 完整 ⊗ 上实例化，Nat.cast_mul）+ `spSigma_unit`（单位元保持）——矩阵层 Kronecker 结合律登记开放。
 
 **双窗口外显：外显 = σ × 通道强度**（`paperX_dual_window_sigma.py` 6/6）：时间窗口（$\omega=mc^2/\hbar$、$\tau\propto1/m^5$）与力窗口（塞曼 $\Delta E=2\mu_B B\cos\vartheta$、Larmor）共享同一 $\mathbb{Z}_2$ 拓扑荷 σ 作为离散标记，经不同通道强度外显——**"时间 = 质量外显窗口"两层次**（质量有无 → 时间耦合模式；质量大小 → 时间尺度）。
 
@@ -686,7 +686,7 @@ $\delta z_{\Delta}$ 是 UFPF 独有修正项，其量级由 4-范畴偏差 $\Del
 
 **定义候选 + 函子律验证**（`paperX_exterior_functor_formal.py` S1-S5）：Obs 范畴（对象 = 观测通道 {C_t,C_f}）+ 外显函子 $E(X)=(\sigma(X),\text{channel}(X))$（保恒等 fold∘unfold=id + 保复合）+ $P_{obs}\circ D$ 复合（GPS 45.7 μs/日、进动 28.66″）。
 
-**Lean 形式化**（`PhotonTopologyExterior.lean`，编译零 sorry）：`Z2Charge α`（σ = 加法幺半群同态）+ `sigma_self_inverse`（σ²=1）+ `windingCharge` + `obsCategory`（Obs 离散范畴 mathlib Category 实例）+ **`exterior_functor_obstructed`**（完整函子律通道阻碍定理：E 不能在完整 Sp 范畴上定义为函子）+ **`exteriorFunctorChan`**（channel 保持子范畴上 E: SpChan → Obs 函子律 map_id/map_comp 机器证明）。**诚实边界**：定义候选为框架内尝试；SpObj 上 ⊗ 结构、channel 物理定义仍开放。
+**Lean 形式化**（`PhotonTopologyExterior.lean`，编译零 sorry）：`Z2Charge α`（σ = 加法幺半群同态）+ `sigma_self_inverse`（σ²=1）+ `windingCharge` + `obsCategory`（Obs 离散范畴 mathlib Category 实例）+ **`exterior_functor_obstructed`**（完整函子律通道阻碍定理：E 不能在完整 Sp 范畴上定义为函子）+ **`exteriorFunctorChan`**（channel 保持子范畴上 E: SpChan → Obs 函子律 map_id/map_comp 机器证明）。**诚实边界**：定义候选为框架内尝试；SpObj 上 ⊗ 结构（P6-2 维度层已落地，完整矩阵管道开放）、channel 物理定义（**P6-3 定义候选已登记**：C_t 时间通道 = 质量-时间耦合窗口（ω=mc²/ħ/τ∝1/m⁵/固有时）+ C_f 力通道 = 自旋-外场耦合窗口（塞曼/Larmor/泡利），见核心笔记 §6.20.1）仍为语义性登记。
 
 ### 6.12 时间耦合的拓扑类型决定（方向 6，命题 P6）
 

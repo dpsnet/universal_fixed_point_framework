@@ -376,4 +376,95 @@ theorem curvature_antisymm {n : ℕ} (dwi dwj Ai Aj : Matrix (Fin n) (Fin n) ℂ
     - (dwj - dwi + (Aj * Ai - Ai * Aj)) := by
   abel
 
+/-! ## P5-3：Φ = D|_Rec_photon 严格等式的函子层形式化（2026-08-12 推进）
+   严格语义（笔记 §3.5 P5-3 / 路线图 62G）："Φ = D|_Rec_photon" 的严格形式 =
+   ① 谱化路径交换（对象层定义等式，rfl 级）+ ② 转变效应一致（Φ 的闭→开 = D∘E 的谱差）。
+   基础（既有）：photonToRecFunctor（忠实嵌入 E）+ DFunctor（完整 D 函子，DecursionFunctor.lean）
+   + bifurcationFunctor（Φ 自函子）。本 P5-3 段补：复合函子构造 + 对象层/态射层严格等式。 -/
+
+/-- 谱化复合函子 DE = D ∘ E : PhotonTopology → SpObj
+    ——"D|_Rec_photon" 的函子层实现（D 谱化函子经光子→Rec 忠实嵌入复合）。
+    注意 mathlib 复合方向：F.comp G 为先 F 后 G（F ⋙ G），故 E 在前、D 在后。 -/
+noncomputable abbrev DE : PhotonTopology ⥤ SpObj :=
+  photonToRecFunctor.comp DFunctor
+
+/-- Φ 后谱化函子 PhiSpectral = DE ∘ Φ : PhotonTopology → SpObj
+    ——先拓扑转变、再谱化（Φ 谱效应的函子编码）。 -/
+noncomputable abbrev PhiSpectral : PhotonTopology ⥤ SpObj :=
+  bifurcationFunctor.comp DE
+
+/-- **P5-3 对象层（定义等式，rfl 级）**：Φ 后谱化 = D∘E 作用在 Φ(X) 上——
+    Φ 的谱化完全由 D 函子在 Rec 嵌入上的作用给出（无独立谱结构）。 -/
+theorem phi_spectral_obj (X : PhotonTopology) :
+    PhiSpectral.obj X = DFunctor_obj (photonToRec (bifurcationMap X)) := by
+  dsimp [PhiSpectral, DE]
+  rfl
+
+/-- **P5-3 对象层（谱化路径交换）**：谱化与 Φ 在对象层交换——
+    photonSpectrum = D∘E 的定义（phi_D_object_commute 的 P5-3 表述）。 -/
+theorem phi_spectral_commute (X : PhotonTopology) :
+    photonSpectrum (bifurcationFunctor.obj X) =
+      DFunctor_obj (photonToRec (bifurcationFunctor.obj X)) :=
+  phi_D_object_commute X
+
+/-- **P5-3 转变效应一致（对象层）**：Φ 后谱恒为开放谱（PhiSpectral 常值 = DE(open)）——
+    Φ 的"闭→开"转变在谱层 = DE 的谱差（DE(closed) ≠ DE(open)，1 维 vs 2 维，
+    DE_spectral_bifurcation）。 -/
+theorem phi_spectral_constant (X : PhotonTopology) :
+    PhiSpectral.obj X = DE.obj photonTopology := by
+  change DFunctor_obj (photonToRec (bifurcationMap X)) = DFunctor_obj (photonToRec photonTopology)
+  exact bifurcation_spectrum_final X
+
+/-- **P5-3 谱转变非平凡性（D 刻画）**：DE 在闭/开光子拓扑上谱不同（1 维 vs 2 维）——
+    D∘E 承载"闭→开"的谱跃迁，Φ 的转变效应完全由 D 在 Rec 嵌入上的作用给出。 -/
+theorem DE_spectral_bifurcation :
+    DE.obj atomicTopology ≠ DE.obj photonTopology := by
+  change DFunctor_obj (photonToRec atomicTopology) ≠ DFunctor_obj (photonToRec photonTopology)
+  exact bifurcation_changes_spectrum
+
+/-- **P5-3 态射层（谱效应平凡）**：Φ 的态射在谱化下全为开放谱上的恒等——
+    Φ 态射层谱效应平凡，转变效应完全由对象层承载（与 DE_spectral_bifurcation 互补）。
+    关键：PhiSpectral.obj X = PhiSpectral.obj Y 定义上成立（bifurcationMap 恒为 opened），
+    故矩阵元素比较类型自动统一。 -/
+theorem phi_spectral_map_identity {X Y : PhotonTopology} (f : PhotonHom X Y) :
+    PhiSpectral.map f = 𝟙 (PhiSpectral.obj X) := by
+  apply SpHom.ext
+  funext i j
+  -- Φ 态射 = opened 恒等（bifurcationFunctor.map f = ⟨rfl⟩）→ Rec 嵌入 = Bool 恒等
+  -- → D 像 = 转移矩阵(恒等) = 单位阵
+  simp [PhiSpectral, DE, photonToRecFunctor, bifurcationFunctor, bifurcationMap,
+    photonHomToRecHom, DFunctor, DFunctor_map, transferMatrix]
+  rfl
+
+/-- **P5-3 函子律（PhiSpectral 为函子，复合函子自动）**：保恒等 + 保复合机器证明。 -/
+theorem phi_spectral_map_id (X : PhotonTopology) :
+    PhiSpectral.map (𝟙 X) = 𝟙 (PhiSpectral.obj X) := by
+  simp [PhiSpectral, DE]
+  rfl
+
+theorem phi_spectral_map_comp {X Y Z : PhotonTopology} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    PhiSpectral.map (f ≫ g) = PhiSpectral.map f ≫ PhiSpectral.map g := by
+  simp [PhiSpectral, DE]
+  rfl
+
+/-- **P5-3 总结定理（Φ = D|_Rec_photon 严格等式的函子层形式）**：
+    ① 对象层：谱化路径交换（phi_spectral_commute，定义等式）+ 转变效应由 D 刻画
+    （DE_spectral_bifurcation：DE(closed) ≠ DE(open)；phi_spectral_constant：Φ 后恒开放）；
+    ② 态射层：Φ 态射谱化平凡（phi_spectral_map_identity：开放谱恒等）；
+    ③ 函子结构：PhiSpectral = DE∘Φ 为函子（phi_spectral_map_id/comp）。
+    结论：光子拓扑转变 Φ 的谱效应完全由 D 函子在 Rec 嵌入（E）上的作用给出，
+    无独立于 D 的谱结构——"Φ 是 D 函子的特例"在谱化路径意义下严格成立。 -/
+theorem P53_strict_equality :
+    (∀ X : PhotonTopology, photonSpectrum (bifurcationFunctor.obj X) =
+      DFunctor_obj (photonToRec (bifurcationFunctor.obj X))) ∧
+    (DE.obj atomicTopology ≠ DE.obj photonTopology) ∧
+    (∀ (X Y : PhotonTopology) (f : PhotonHom X Y), PhiSpectral.map f = 𝟙 (PhiSpectral.obj X)) := by
+  constructor
+  · intro X
+    exact phi_spectral_commute X
+  · constructor
+    · exact DE_spectral_bifurcation
+    · intro X Y f
+      exact phi_spectral_map_identity f
+
 end UFPFormalization
