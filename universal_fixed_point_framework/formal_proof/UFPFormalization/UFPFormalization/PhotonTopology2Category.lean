@@ -19,14 +19,15 @@ namespace UFPFormalization
    结合律/交换律/单位元/自逆（mul d d = normal——与框架 σ²=1 同构，
    `PhotonTopologyExterior.lean` 的 `sigma_self_inverse` 2-层对应）；
 2. **竖复合 `deltaVComp` / 恒等 2-胞腔 `deltaId` / 横复合 `deltaHComp`** 定义；
-3. **严格 2-范畴律（代数核心）**：竖结合律 + 竖恒等律 + **交换律（interchange）**
-   ——(β∘α)⋆(δ∘γ) = (β⋆δ)∘(α⋆γ)，全部由 Z₂ 代数机器证明。
+3. **严格 2-范畴律（代数核心，已闭合）**：竖结合律 + 竖恒等律 + **交换律（interchange）**
+   ——(β∘α)⋆(δ∘γ) = (β⋆δ)∘(α⋆γ)，全部由 Z₂ 代数机器证明；
+4. **横结合律（2026-08-12 闭合）**：`deltaHComp_assoc`——类型不对齐由 1-层
+   `multiComp_assoc`（同态集单点性 `multiMor_subsingleton`）运输（`h₁ ▸ h₂ ▸`），
+   方向代数由 Z₂ 结合律闭合——**严格 2-范畴律完备**（竖结合/竖恒等/横结合/交换律）。
 
 ## 登记开放（后续工作）
-1. **横结合律**（deltaHComp 的严格结合）需 1-层 multiComp 结合律的等式运输
-   （`multiComp (multiComp f p) u` 与 `multiComp f (multiComp p u)` 类型不对齐，
-   multiComp 结合律仅有部分定理）——登记开放；
-2. 完整 mathlib `Bicategory` 实例（严格 2-范畴的双范畴编码）登记开放；
+1. 完整 mathlib `Bicategory` 实例（严格 2-范畴的双范畴编码）登记开放；
+2. Δ 2-胞腔的物理语义（偏差胞腔的具体编码）登记开放；
 3. 3-4 态射层与完整 4-范畴几何仍开放（自建路线见笔记 §3.10）。
 
 **严格化假设（沿用）**：2-态射层为严格结构（Z₂ 方向代数 + 代数复合律），
@@ -119,5 +120,52 @@ theorem deltaHComp_interchange {ι : Type u} {A B C : MultiObj ι}
       deltaVComp (deltaHComp α γ) (deltaHComp β δ) := by
   apply Delta2Cell.ext
   simp [deltaHComp, deltaVComp, CellDirection.mul_interchange]
+
+/-! ## 横结合律（multiComp 运输，2026-08-12 闭合） -/
+
+/-- **1-层同态集单点性**：MultiMor X Y 为 subsingleton（每个同态集至多一个态射——
+    atom i→atom j 仅 transition i j、atom i→photon 仅 unfold i、photon→atom j 仅 fold j、
+    photon→photon 仅 idPhoton）。这是 multiComp 结合律与横复合结合的运输基础。 -/
+instance multiMor_subsingleton {ι : Type u} (X Y : MultiObj ι) : Subsingleton (MultiMor X Y) := by
+  constructor
+  intro f g
+  cases X with
+  | atom i =>
+    cases Y with
+    | atom j => cases f; cases g; rfl
+    | photon => cases f; cases g; rfl
+  | photon =>
+    cases Y with
+    | atom j => cases f; cases g; rfl
+    | photon => cases f; cases g; rfl
+
+/-- **multiComp 结合律（1-层）**：multiComp (multiComp f p) u = multiComp f (multiComp p u)
+    ——由同态集单点性直接得出（两侧均为 MultiMor A D 的元素）。 -/
+theorem multiComp_assoc {ι : Type u} {A B C D : MultiObj ι}
+    (f : MultiMor A B) (p : MultiMor B C) (u : MultiMor C D) :
+    multiComp (multiComp f p) u = multiComp f (multiComp p u) := by
+  apply Subsingleton.elim
+
+/-- **Delta2Cell 沿 1-态射等式的运输保持方向**：h₁ ▸ h₂ ▸ c 的方向不变
+    （Delta2Cell 仅含方向字段，1-态射索引为幽灵参数）——横复合结合的类型运输工具。 -/
+theorem deltaCast_dir {ι : Type u} {X Y : MultiObj ι} {f g f' g' : MultiMor X Y}
+    (c : Delta2Cell f g) (h₁ : f = f') (h₂ : g = g') :
+    (h₁ ▸ h₂ ▸ c).dir = c.dir := by
+  subst h₁
+  subst h₂
+  rfl
+
+/-- **横结合律（严格 2-范畴律闭合）**：
+    (α⋆γ)⋆δ = α⋆(γ⋆δ)（经 multiComp 结合律的 1-态射运输）——
+    类型不对齐由 `multiComp_assoc` 运输（`h₁ ▸ h₂ ▸`），方向代数由 Z₂ 结合律闭合。
+    至此严格 2-范畴律完备：竖结合/竖恒等/横结合/交换律（interchange）。 -/
+theorem deltaHComp_assoc {ι : Type u} {A B C D : MultiObj ι}
+    {f g : MultiMor A B} {p q : MultiMor B C} {u v : MultiMor C D}
+    (α : Delta2Cell f g) (γ : Delta2Cell p q) (δ : Delta2Cell u v) :
+    (multiComp_assoc f p u) ▸ (multiComp_assoc g q v) ▸ (deltaHComp (deltaHComp α γ) δ) =
+      deltaHComp α (deltaHComp γ δ) := by
+  apply Delta2Cell.ext
+  rw [deltaCast_dir]
+  simp [deltaHComp, CellDirection.mul_assoc]
 
 end UFPFormalization
