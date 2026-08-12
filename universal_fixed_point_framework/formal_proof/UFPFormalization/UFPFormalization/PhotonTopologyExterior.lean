@@ -1,6 +1,7 @@
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Int.Cast.Defs
 import Mathlib.CategoryTheory.Category.Basic
+import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Tactic
 import UFPFormalization.SpCategory
 
@@ -25,13 +26,17 @@ open CategoryTheory
 5. `ExteriorData`（外显函子 E: Sp→Obs 对象层数据：σ + channel）。
 
 **未形式化（登记开放项，§6.20 诚实边界）**：
-- SpObj 上的 ⊗ 结构（§6.11① 开放项）——Z2Charge 在谱对象上的实例待其定义；
-- 外显函子在**完整** Sp 范畴上的函子律——`exterior_functor_obstructed` 已证通道阻碍
-  （须限制于 channel 保持子范畴，完整函子仍开放）；
+- SpObj 上的**完整** ⊗ 结构（Kronecker 矩阵内容 + 幺半群结合律的 Fin 维度管道）——§6.11①
+  开放项；其**维度分量**的 Z₂ 同态结构已澄清（`Z2ChargeMul`/`dimParityCharge`）；
 - channel 的物理定义（观测通道选择的严格构造）。
 
 **已形式化**：Obs 范畴实例 `obsCategory`（PLift 提升 Prop 值 Hom）；完整函子律的
-通道阻碍定理 `exterior_functor_obstructed`（维度奇偶 channel 具体实例）。
+通道阻碍定理 `exterior_functor_obstructed`（维度奇偶 channel 具体实例）；channel
+保持子范畴 `SpChan` + 外显函子正向构造 `exteriorFunctorChan`（map_id/map_comp
+机器证明）+ 阻碍态射不在子范畴 `obstruction_not_in_subcategory`；⊗ 结构候选的
+Z₂ 同态结构澄清——乘法目标 `Z2ChargeMul` + 维度奇偶实例 `dimParityCharge`
+（σ(n)=n mod 2 为 ℕ 乘法同态）+ `winding_not_multiplicative_target`
+（环绕数模型为加法目标、非乘法目标——框架 σ 非平凡性要求加法型 ⊗）。
 -/
 
 /-! ## §6.9/§6.17/§6.20：σ Z₂ 值拓扑荷 = 加法幺半群同态 -/
@@ -165,6 +170,108 @@ theorem exterior_functor_obstructed :
   refine ⟨⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ)⟩,
     ⟨2, (0 : Matrix (Fin 2) (Fin 2) ℂ)⟩, channelObstructionMorphism, ?_⟩
   norm_num [dimParityExterior]
+  decide
+
+/-! ## §6.20 诚实边界：channel 保持子范畴上的外显函子（正向构造） -/
+
+/-- channel 保持子范畴对象：谱对象（channel 由 dimParityExterior 决定，无需额外数据）。 -/
+structure SpChan where
+  obj : SpObj
+
+/-- channel 保持子范畴态射：Sp 态射 + channel 保持条件（两端通道相同）。 -/
+@[ext]
+structure SpChanHom (X Y : SpChan) where
+  mor : X.obj ⟶ Y.obj
+  chan : dimParityExterior.channel X.obj = dimParityExterior.channel Y.obj
+
+instance spChanCategory : Category.{0, 0} SpChan where
+  Hom X Y := SpChanHom X Y
+  id X := ⟨𝟙 X.obj, rfl⟩
+  comp f g := ⟨f.mor ≫ g.mor, f.chan.trans g.chan⟩
+  id_comp := by
+    intro X Y f
+    ext; simp
+  comp_id := by
+    intro X Y f
+    ext; simp
+  assoc := by
+    intro W X Y Z f g h
+    ext; simp
+
+/-- channel 保持子范畴上的外显函子 E: SpChan → Obs（§6.20 正向构造）：
+    对象映射 = channel、态射映射 = PLift (channel 相等)（由 SpChanHom.chan 提供）。
+    map_id/map_comp 机器证明——§6.20 诚实边界第 2 项正向闭合
+    （完整 Sp 范畴不可行由 exterior_functor_obstructed 阻碍定理证明）。 -/
+def exteriorFunctorChan : SpChan ⥤ ObsChannel where
+  obj X := dimParityExterior.channel X.obj
+  map {X Y} (f : X ⟶ Y) := ⟨f.chan⟩
+  map_id _ := rfl
+  map_comp _ _ := rfl
+
+/-- 阻碍态射不在 channel 保持子范畴中：SpChanHom (1,0) (2,0) 为空
+    （chan 条件要求两端通道相同，与阻碍定理矛盾）——阻碍定理与子范畴正向构造自洽
+    （完整 Sp 范畴受阻、channel 保持子范畴可行，两定理互补闭合 §6.20 诚实边界第 2 项）。 -/
+theorem obstruction_not_in_subcategory :
+    ¬ Nonempty (SpChanHom ⟨⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ)⟩⟩
+      ⟨⟨2, (0 : Matrix (Fin 2) (Fin 2) ℂ)⟩⟩) := by
+  rintro ⟨f⟩
+  have hneq : dimParityExterior.channel ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ)⟩ ≠
+      dimParityExterior.channel ⟨2, (0 : Matrix (Fin 2) (Fin 2) ℂ)⟩ := by
+    norm_num [dimParityExterior]
+    decide
+  exact hneq f.chan
+
+/-! ## §6.11① 推进：⊗ 结构候选的 Z₂ 同态结构澄清 -/
+
+/-- 乘法目标 Z₂ 值拓扑荷：σ : α → ZMod 2 为**乘法**幺半群同态
+    （σ(X⊗Y) = σ(X)·σ(Y) + σ(1) = 1——ZMod 2 乘法目标，对应维度/秩奇偶类
+    在维度相乘的 ⊗（Kronecker 型）下的结构；与 `Z2Charge`（加法目标，±1 乘法
+    同构下即框架 σ 的乘法形式）的环绕数模型（⊗=加法）互补）。 -/
+structure Z2ChargeMul (α : Type) [Monoid α] where
+  sigma : α → ZMod 2
+  sigma_mul : ∀ x y : α, sigma (x * y) = sigma x * sigma y
+  sigma_one : sigma 1 = 1
+
+namespace Z2ChargeMul
+
+variable {α : Type} [Monoid α]
+
+/-- 保复合（⊗，乘法目标）：σ(X⊗Y) = σ(X)·σ(Y)（ZMod 2 乘法）。 -/
+theorem sigma_tensor (C : Z2ChargeMul α) (x y : α) :
+    C.sigma (x * y) = C.sigma x * C.sigma y :=
+  C.sigma_mul x y
+
+/-- 保单位元：σ(1) = 1（乘法单位元）。 -/
+theorem sigma_unit (C : Z2ChargeMul α) :
+    C.sigma 1 = 1 :=
+  C.sigma_one
+
+end Z2ChargeMul
+
+/-- 维度奇偶 σ(n) = n mod 2：ℕ 乘法幺半群上的乘法目标同态
+    （§6.11① SpObj ⊗ 候选的维度分量——Kronecker 型 ⊗ 维度相乘 ⟹ σ 乘法保持）。 -/
+def dimParityCharge : Z2ChargeMul ℕ where
+  sigma n := (n : ZMod 2)
+  sigma_mul x y := by
+    exact Nat.cast_mul x y
+  sigma_one := by
+    rfl
+
+/-- 维度奇偶乘法保持：σ(n·m) = σ(n)·σ(m)（Kronecker 维度相乘的 Z₂ 结构）。 -/
+theorem dimParity_sigma_mul (x y : ℕ) :
+    dimParityCharge.sigma (x * y) = dimParityCharge.sigma x * dimParityCharge.sigma y :=
+  dimParityCharge.sigma_mul x y
+
+/-- 维度奇偶保单位元：σ(1) = 1。 -/
+theorem dimParity_sigma_one : dimParityCharge.sigma 1 = 1 := by
+  rfl
+
+/-- 环绕数模型非乘法目标：σ(1+1) ≠ σ(1)·σ(1)（加法型 ⊗ 不满足 ZMod 2 乘法目标
+    同态）——环绕数为**加法目标**同态（`Z2Charge`，±1 乘法同构下即框架 σ 的
+    σ(X⊗Y)=σ(X)·σ(Y)），与维度奇偶的**乘法目标**（`Z2ChargeMul`）互补。 -/
+theorem winding_not_multiplicative_target :
+    windingCharge.sigma (1 + 1) ≠ windingCharge.sigma 1 * windingCharge.sigma 1 := by
+  norm_num [windingCharge]
   decide
 
 end UFPFormalization
