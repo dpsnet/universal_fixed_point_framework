@@ -36,7 +36,11 @@ open CategoryTheory
 机器证明）+ 阻碍态射不在子范畴 `obstruction_not_in_subcategory`；⊗ 结构候选的
 Z₂ 同态结构澄清——乘法目标 `Z2ChargeMul` + 维度奇偶实例 `dimParityCharge`
 （σ(n)=n mod 2 为 ℕ 乘法同态）+ `winding_not_multiplicative_target`
-（环绕数模型为加法目标、非乘法目标——框架 σ 非平凡性要求加法型 ⊗）。
+（环绕数模型为加法目标、非乘法目标——框架 σ 非平凡性要求加法型 ⊗）；
+§6.10 S5 三层次区分形式化——`Particle`（光子/费米子）+ `statistics`（统计类）
++ `windingClass`（环绕模 2 类）+ `projectionValue`（投影值）+ 
+`photon_statistics_independent_of_winding`（统计类独立于环绕类，防混淆机器证明）
++ `winding_same_for_opposite`（投影值 ±1 → 同一环绕类，层级 1→2）。
 -/
 
 /-! ## §6.9/§6.17/§6.20：σ Z₂ 值拓扑荷 = 加法幺半群同态 -/
@@ -273,5 +277,56 @@ theorem winding_not_multiplicative_target :
     windingCharge.sigma (1 + 1) ≠ windingCharge.sigma 1 * windingCharge.sigma 1 := by
   norm_num [windingCharge]
   decide
+
+/-! ## §6.10 S5：三层次区分形式化（投影值 / 环绕模 2 类 / 统计类） -/
+
+/-- 粒子类型（代数骨架）：光子（整数自旋玻色子）/ 费米子（半整数自旋）。 -/
+inductive Particle where
+  | photon
+  | fermion
+
+/-- 统计类（层级 3）：玻色子 +1（ZMod 2 记 0）、费米子 −1（记 1）——自旋-统计定理
+    （整数/半整数自旋，交换对称/反对称）。 -/
+def statistics (p : Particle) : ZMod 2 :=
+  match p with
+  | Particle.photon => 0
+  | Particle.fermion => 1
+
+/-- 环绕模 2 类（层级 2）：光子 s=±1 模 2 同值（非平凡类）、费米子旋量 Z₂ 变号（非平凡类）。 -/
+def windingClass (p : Particle) : ZMod 2 :=
+  match p with
+  | Particle.photon => 1
+  | Particle.fermion => 1
+
+/-- 投影值（层级 1）：光子螺旋度 s=±1、费米子旋量 ±1/2——二元投影值（N_pts=2，§6.8②）。 -/
+def projectionValue (p : Particle) : ZMod 2 :=
+  match p with
+  | Particle.photon => 0
+  | Particle.fermion => 1
+
+/-- 三层次区分定理（§6.10 S5）：光子统计类（玻色子 +1）≠ 环绕模 2 类（非平凡）
+    ——统计类独立于环绕类（光子为玻色子但环绕非平凡，不可混为一谈）。 -/
+theorem photon_statistics_independent_of_winding :
+    statistics Particle.photon ≠ windingClass Particle.photon := by
+  norm_num [statistics, windingClass]
+
+/-- 费米子统计类 = 环绕类（均 −1）：费米子统计（反对称 −1）与其旋量 Z₂ 变号（非平凡）
+    一致——但三层次仍区分（投影值层级 ≠ 统计/环绕类层级，§6.10 S5）。 -/
+theorem fermion_statistics_eq_winding :
+    statistics Particle.fermion = windingClass Particle.fermion := by
+  norm_num [statistics, windingClass]
+
+/-- 光子环绕模 2 同值（§6.10② S2 / S5 层级 1→2）：环绕数 n 与 −n 的 σ 值相同
+    （ZMod 2 特征 2，−a = a）——投影值 s=±1 对应**同一**环绕模 2 类（层级 1 两值 → 层级 2 单值）。 -/
+theorem winding_same_for_opposite (n : ℤ) :
+    windingCharge.sigma n = windingCharge.sigma (-n) := by
+  dsimp [windingCharge]
+  rw [Int.cast_neg]
+  symm
+  rw [neg_eq_iff_add_eq_zero]
+  rw [← two_mul]
+  have h2 : (2 : ZMod 2) = 0 := by
+    decide
+  rw [h2, zero_mul]
 
 end UFPFormalization
