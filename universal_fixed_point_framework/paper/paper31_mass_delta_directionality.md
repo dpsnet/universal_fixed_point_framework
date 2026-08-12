@@ -207,7 +207,7 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 
 **诚实标注**：上述 3 个 `sorry` 均不影响 `lake build` 的零错误通过。`spExchangeLaw` 的偏差代数形式（`spExchangeLaw_deviation_partial_commutator`、`spExchangeLaw_homotopy_deviation`）、源缺陷线性（`source_defect_linearity`）与 J2 严格正交（`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`/`commutator_trace_orthogonal_diagonal`）已在相邻定理中完全机器证明。
 
-**开放项**：J2 严格正交（Δ 对易子分量与恒等/任意对角方向，§3.3）已闭合——"Δ 方向不在三维空间"按框架操作定义（§6 模式间定位）获机器证明 + 数值支撑；逐 Cl(1,7) 生成元矩阵正交（Tr(Δ·γ_i)=0）为**框架外可选方向**（需具体 16×16 生成元矩阵，`Clifford.lean` 仅有抽象类型），非框架声称。
+**开放项**：J2 严格正交（Δ 对易子分量与恒等/任意对角方向，§3.3）已闭合——"Δ 方向不在三维空间"按框架操作定义（§6 模式间定位）获机器证明 + 数值支撑；逐 Cl(1,7) 生成元矩阵正交（Tr(Δ·γ_i)=0）为**框架外可选方向**——数值判定探针（`scripts/paperX_delta_spatial_probe.py`，3/3 注册）给出负结果：假设 H（[A,γ_i]=0）在 M1 谱基对角/M2 Cl 乘积/M3 线性组合模型下均不成立（[A,γ_i] 相对范数 min 0.98），Tr([A,δb]·γ_i) 显著非零——该强版本在朴素模型下为假，需额外结构假设（谱结构-空间方向独立性）或改为定量耦合，非框架声称。
 
 ---
 

@@ -87,6 +87,7 @@ SCRIPTS = [
     ("scripts/paperX_delta_block_decomp.py",         "B4 Δ 分块支撑分布：对易子零对角 + 87% 混合块主导 (分析性)"),
     ("scripts/paperX_hutchinson_iteration.py",       "B2 Hutchinson 迭代收敛演示：c₃ 几何级数 + 三尺度簇 (分析性)"),
     ("scripts/paperX_mass_delta_directionality.py",  "§5.7j 标量-算符分离 + 模式间定位：J1/J2 数值综合验证"),
+    ("scripts/paperX_delta_spatial_probe.py",         "§4.1 Δ⊥空间方向 假设 H 数值判定探针（2026-08-12，S1-S5）：Cl(1,7) 16×16 生成元构造与合法性（平方 ±I/反对易 0.0e+00）+ H 判定（[A,γ_i] 相对范数 M1 谱基对角 ~1.0/M2 Cl 乘积 2.0/M3 线性组合 1.4-1.8——均显著非零 ⟹ H 不成立）+ Tr([A,δb]·γ_i) 随机采样（200 样本 max 27-117 显著非零）+ 迹恒等式 Tr([A,δb]·γ)=Tr(δb·[γ,A]) 核对（残差 <1e-14）——'Δ ⊥ Cl(1,7) 空间生成元方向'强版本在朴素模型下为假，框架操作定义（J2 模式间定位）仍为唯一无假设成立的严格版本"),
 
     # === 2026-07-28: 引力强度量化 (Phase C 闭式交叉验证) ===
     ("scripts/paperX_gravity_c_constant.py",         "c = r_cat × F_cl17 × g_EH 的 Cl(1,7) 确定"),

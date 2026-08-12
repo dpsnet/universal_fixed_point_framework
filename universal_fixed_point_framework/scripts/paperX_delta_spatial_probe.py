@@ -90,15 +90,12 @@ def main():
     A1 = np.diag([np.sqrt(k * (k + 1)) for k in range(16)]).astype(complex)
     A_models["M1 谱基对角"] = A1
 
-    # M2: SU(2) Casimir：J_k = (i/2)·[γ_i,γ_j] 型旋转生成元（su(2) 子代数），A = √(J²)
-    #    J1 = γ1γ2, J2 = γ1γ3, J3 = γ2γ3（共享指标，[J1,J2]=−2J3 型 su(2)）
-    g1, g2, g3 = gamma_spatial
-    J1, J2, J3 = g1 @ g2, g1 @ g3, g2 @ g3
-    Jsq = J1 @ J1 + J2 @ J2 + J3 @ J3
-    # 特征分解开根：A = √(J²)，特征值 √{j(j+1)}（Casimir 谱）
-    evals, evecs = np.linalg.eigh(Jsq)
-    A2 = (evecs * np.sqrt(np.clip(evals, 0, None))) @ evecs.conj().T
-    A_models["M2 SU(2) Casimir √J²"] = A2
+    # M2: Cl(1,7) 乘积元素 A = γ_0·γ_1·γ_2·γ_3（chirality 型，非标量 Cl 元素）
+    #    注：由空间生成元两两乘积构造的 su(2) Casimir（J_k = (i/2)γ_aγ_b）在 16 维
+    #    旋量表示下退化为标量 J² = (3/4)·I（A = √J² 平凡与 γ_i 对易，非判定性，排除）；
+    #    故用非退化 Cl(1,7) 乘积元素作为"A 为 Cl 元素"的模型。
+    A2 = G[0] @ gamma_spatial[0] @ gamma_spatial[1] @ gamma_spatial[2]
+    A_models["M2 Cl 乘积 γ0γ1γ2γ3"] = A2
 
     # M3: 空间线性组合 A = Σ c_i γ_i（c 单位随机）
     rng = np.random.default_rng(20260812)
@@ -108,18 +105,18 @@ def main():
 
     # S2-S4: [A, γ_i] Frobenius 相对范数 + H 判定
     print("\nS2-S4  [A, γ_i] 相对 Frobenius 范数 ‖[A,γ_i]‖_F/‖A‖_F（H：应 ≈ 0）")
-    ok_all = True
+    all_rel = []
     for name, A in A_models.items():
-        rels = []
-        for gi in gamma_spatial:
-            comm = A @ gi - gi @ A
-            rels.append(frob(comm) / frob(A))
+        rels = [frob(A @ gi - gi @ A) / frob(A) for gi in gamma_spatial]
+        all_rel.append(rels)
         h_holds = max(rels) < 1e-9
-        ok_all = ok_all and h_holds
         print(f"   {name:<22s} [A,γ1..3] 相对范数 = "
               f"{[f'{r:.3e}' for r in rels]}  H={'成立' if h_holds else '不成立'}")
-    check("S2-S4  H 判定：[A,γ_i]=0 在 M1/M2/M3 下均不成立（非标量谱算子与 Clifford 生成元不对易）",
-          not ok_all, "H 不成立 ⟹ 强版本需额外结构假设")
+    # 判定确定（负结果）：H 在三模型下均明确不成立（相对范数显著非零）
+    min_rel = min(min(r) for r in all_rel)
+    ok_verdict = min_rel > 1e-3
+    check("S2-S4  H 判定确定：[A,γ_i] 相对范数均显著非零（min "
+          f"{min_rel:.2e} ≫ 0）——H 不成立，强版本需额外结构假设", ok_verdict)
 
     # S5: Tr([A,δb]·γ_i) 随机 Hermitian δb + 迹恒等式核对 + 结论
     print("\nS5  Tr([A,δb]·γ_i) 随机 Hermitian δb（200 样本，各模型 max 残差）")
@@ -151,8 +148,8 @@ def main():
     print("  在框架朴素模型下为假，需额外结构假设（如谱结构-空间方向独立性）或改为定量耦合；")
     print("  框架操作定义（J2 模式间定位：对角元零 + 任意对角方向迹正交，paper31 §3.3/§6）")
     print("  是'Δ 不在任何单一谱模式方向'唯一无假设成立的严格版本（已机器证明）。")
-    results = [ok1, ok_all, ok5]
-    print(f"探针检查：{sum(results)}/3 通过（S1 合法性 ✓、S2-S4 H 判定 ✓（否定）、S5 恒等式 ✓）")
+    results = [ok1, ok_verdict, ok5]
+    print(f"探针检查：{sum(results)}/3 通过（S1 合法性 ✓、S2-S4 H 判定确定 ✓（负结果）、S5 恒等式 ✓）")
     if not all(results):
         raise SystemExit(1)
 
