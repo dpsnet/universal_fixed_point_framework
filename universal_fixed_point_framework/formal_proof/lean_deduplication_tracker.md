@@ -46,23 +46,116 @@
 5. **合并后验证**：`lake build` 必须保持 2454 jobs 零警告零 sorry；
 6. **跨上下文同步**：论文/笔记/路线图/RAP 引用被删符号处同步更新。
 
-## 附录：Lean→论文初筛索引（2026-08-13 扫描，NONE 待补）
+## 附录：全库 Lean 文件登记表（2026-08-13 逐项补查，96 文件全覆盖）
 
-扫描法：Lean 文件头 45 行注释中的 `paperX.md`/`Paper X` 引用。NONE = 头部无明确论文注释（可能对应正文引用/笔记，待逐文件补查）。
+角色标记：**推导结论**（自底向上，结构证明导出）/ **推导前提**（推导输入/基础设施，常被复用）/ **常数**（纯数学常数）/ **唯象**（拟合/实验值）/ **工具**（编码/骨架构造）/ **测试**。
 
-| 论文 | Lean 文件（头部注释直引） |
-|:-----|:-------------------------|
-| Paper I | ICVerification, PhotonTopologyFunctorLaws, Silence |
-| Paper III | ICDecidable, SpectralEquivalence |
-| Paper V | CategoryGeometry, InflationDynamics, NormalOrdering, Quantization, RenormalizationChain, SpectralDynamics |
-| Paper VIII | BlackHoleEvolution |
-| Paper IX | BlackHoleBounce |
-| Paper XVI | SpacetimeStack |
-| Paper XIX | GelfandDuality, InfinityReflection |
-| Paper XXXV | HigherRecCategory |
-| Paper XXXIX | InflationDynamics |
-| paper40 | ColorDynamics |
-| paper41 | RenormalizationChain |
-| paper44 | CategoryGeometryDictionary, KatoRellichSkeleton, PhotonTopology, PhotonTopology2Category, PhotonTopology2Lifting, PhotonTopologyCurvature, PhotonTopologyFunctor, PhotonTopologyFunctorLaws, PhotonTopologySpectral |
+### 组 A：Paper I 基础范畴/函子（Rec/Sp/D 函子/∞-范畴/算子论）
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| RecCategory | Paper I §2.1 | RecObj/RecHom/recCategory | 推导前提 |
+| SpCategory | Paper I §2.2 | SpObj/SpHom/spCategory | 推导前提 |
+| DecursionFunctor | Paper I §2.3（注 2.3.2a） | transferMatrix/DFunctor | 工具 |
+| Adjunction | Paper I §2.4 | adjUnit/adjCounit/RFunctor | 工具（伴随基础） |
+| Braided | Paper I §2.5（定义 2.11a） | recTensorProduct/辫子交叉数 k | 推导前提 |
+| DynSys | Paper I §2.7（推测，无显式声明） | DynSys/koopmanLinfty | 工具 |
+| OperatorTheory | Paper I §2.7/§4 | koopmanOperator/koopmanContraction/isMAccretive | 推导前提 |
+| OrbitFunctor | Paper I §3.5（定义 3.8/3.10） | orbitRel/orbitWeight/orbitStabilizer | 工具 |
+| AInfinityAlgebra | Paper I §2.11 + 附录 A.15.4 | ad/mN/stasheff_* | 推导前提 |
+| InfinityCategory | Paper I §2.11 + 附录 A.15.4 | KillingField/ForceGenerators/unifiedSpectralFlow | 推导结论+唯象 |
+| SpecInfinity | Paper I §2.11 + 附录 A.15.4 | SpecInfMorphism/SpecInfinity | 工具 |
+| RecInfinity | Paper I §2.11 + 附录 A.15.4 | RecInfinity/RecInfMorphism | 工具 |
+| DInfinityFunctor | Paper I §2.11 + 附录 A.15.4 | DInfinity_obj/one/inf | 推导结论 |
+| DomainExtension | Paper I §2.3/§2.8（推测，Phase 15 residual） | ExpansiveIFS/contractiveDual/D_ext_* | 工具 |
+| HigherDecursionFunctor | 笔记 deepening §A.2（定理 A.1）= Paper V §8.1 定理 8.1 | D2/D2_map_* | 工具 |
+| HigherRecCategory | 笔记 rec2_exchange_deviation §4.3（定义 8 路径 B）+ Paper XXXV §2 | RecTwoMorphism/recExchangeLaw_* | 工具+唯象（Δ=引力） |
 
-**已知出处补充（正文/笔记关联，非头部直引）**：BranchCounting/DHStructuralAnalysis/Unified3Theorem/BottTower → paper17/20/21/30/33（d_H=ln15、统一 3 定理、k_max=8、Bott 塔）；HigherSpCategory/CoherenceToBranching/DeviationBound → paper31/paper1；SilenceHierarchy/Braided → paper1 §5.7/§2.5；RecCategory/SpCategory/DecursionFunctor/Adjunction → paper1 §2-§4。
+### 组 B：Paper I 静默/谱/遍历/分形
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| Silence | Paper I §5.2（S1-S4）/§3.6（LACI）/§5.7.9（S_D） | silenceS1-S4/laciIndex/spectralSilence/deltaSilence | 推导前提 |
+| SilenceHierarchy | Paper I §5.7（定理 5.15 层次；头部"定理 5.18/四层"为旧口径，见口径偏差①） | objectSilence/morphismSilence/spectralSilenceSimple/braidedSilence | 推导结论 |
+| MultiSilenceMethodology | paper17 §2.2/§6.2 + 笔记 | S₁-S₄_factor/productDecomposition | 工具+唯象 |
+| PhysicalSilenceAnalysis | paper17 §3.1/§5.1/§9 + 笔记 | higgsVEV_silence_prediction/kerr_QNM_frequency/dm_relic_density | 唯象 |
+| SpectralCorrespondence | Paper I §3.4（定理 3.7a/3.7b，公式逐字对应） | spectralMap(μ↦e⁻μ)/spectralInv | 工具 |
+| SpectralFlowHomotopy | Paper I §5.7.6a（paper1 点名） | spectralFlowMap/h_silence/spectralFlowInfEndo | 推导结论 |
+| SpectralGap | paper20 §4.3/§5.4/§6 | agEigenvalue/spectralGap/Δλ_min | 推导结论 |
+| ErgodicTheory | Paper I §7.10（Ledrappier-Young + 拓扑熵-谱间隙） | lyapunovExponent/OseledetsSplitting/HD-D/TE-G-M | 推导前提 |
+| IFSFractal | Paper I 附录 Phase 16C-II + paper17 §3.1/§3.2 | IFS/hutchinsonOperator/HausdorffDimension/c1_physical | 工具 |
+| WeierstrassGap | 笔记 spectral_phase3_fractal_expansion §2.3（S5） | weierstrassGraphMap/weierstrassGraphDimension | 工具+唯象 |
+| HutchinsonAttractor | paper34 §1（Step 1）+ paper30 | hutchinsonK/hutchinson_attractor_exists_unique | 工具 |
+| ContinuumLimit | paper34 §2/§3.5（paper34 点名） | S₄/c1_physical/c1_lt_S₄/AttractorAxioms | 推导前提 |
+| CoherenceToBranching | paper30 §2.4/§2.5 + paper33 §4.1 + paper17（定理 R1） | LayerProduct/B(=15)/BranchCountingCorollary | 推导前提 |
+
+### 组 C：d_H=ln15 推导链（登记册 ②④ 相关，章节细化）
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| DHStructuralAnalysis | paper30 §2-§6 + paper17（定理 R1）+ paper37 | ln15/d_H_fit/delta_fit/sixtyfive_over_24/moran_solution_iff | 推导前提+常数 |
+| BranchCounting | paper30 §2/§2.4/§2.5 + paper17（定理 R1） | LayerIndex/N_total/N_active/B(=15) | 推导结论（计数） |
+| Unified3Theorem | paper33 §3/§5 | ActiveMorphismLayer/numActiveLayers/GenSpace/k_max | 推导结论 |
+| BottTower | paper33 §4.1 + paper20 §5.3/§5.4/§5.8 | spinorDim/k_max/bott_truncation_index | 推导前提 |
+
+### 组 D：Paper V/XVI/XIX/XX/XXI 谱动力学与纤维丛
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| SpectralDynamics | Paper V §2（谱流方程母定义，全库复用） | spectralFlow/A_F/A_t=exp(tA_F)A₀exp(−tA_F) | 推导前提 |
+| CategoryGeometry | Paper V §5 | directionalDerivative/A_GR=G(δR)/G_GR=ad(G)(A) | 工具 |
+| Quantization | Paper V §6 | hbar/weylQuantize/quantumCommutator/β(g) | 工具 |
+| NormalOrdering | Paper V §6.2 | wickContraction/normalOrderedProduct | 工具 |
+| ForceUnification | Paper V §2/§3（§3.4 统一公式） | runningCoupling/unifiedGenerator/α_U≈1/24 | 推导结论 |
+| SpacetimeStack | paper16 §10.3（主定理 21） | 谱曲率层 F_ε/谱 Einstein G_ε/CurvatureMatterFunctor | 推导结论 |
+| GelfandDuality | paper19 §3.3（开放问题 #2） | D^id/gelfandMap/SpectralDualityData | 工具 |
+| InfinityReflection | paper19 §4.2（开放问题 #1） | ℒ_∞/ι_∞/adjUnit_infty | 推导结论 |
+| StaticTopologyFormalization | paper19 §3/§5（Rec_id≅CompHaus） | IdExtObj/IdExtHom/Rec_id | 推导结论 |
+| NoiseCategory | paper19 §7/§8（Σ-Rec 嵌入） | SigmaRecObj/Sel/Ext/Diss/η_c | 工具 |
+| IsolationConstraints | Paper I §3.7（定义 C3.1/定理 C3.2） | isolationConstraint/spectralScaleCompatible 等 | 推导前提 |
+| IFSRecCoding | 笔记 category_scope_stratification 阶段 3（推测 paper19 Σ-Rec 系） | symbolicRecObj/symbolicSigmaRecObj | 工具 |
+| TempRGFiber | paper21 §3.1-3.2（§9.1 模块总览） | TempObj/RGObj/𝒯̂_Riem | 工具 |
+| NoiseFiber | paper21 §4.1 + paper19 §11-13 + paper10 §12.4 | NoiseObj(η)/η_c/𝒩̂ | 工具 |
+| SignatureFiber | paper21 §4.2 + paper20 §5.5-5.7 | SigObj(p,q)/sigBottIndex/π_Sig | 工具 |
+| KerrFiber | paper21 §5.1（+ paper12 §9） | KerrObj(M,a)/KerrHom | 推导前提 |
+| FlavorFiber | paper17 §7 + paper21 §5.2（"Paper XV"为笔误→paper17 §3） | FlavorSector/J_f/d_H/θ₁₂/δ_CP | 推导结论 |
+| TotalParameterFiber | paper21 §7/§9.1（Phase 55A-55G 收口） | TotalParamObj/complete_chain | 工具 |
+| EFTCodomainFiber | paper21 §9.1（cod 余域纤维化） | EnergyScale(Λ)/ScaleHom/cod | 工具 |
+| WeaveProductFiber | paper21 §6.1/§8.2 | TempRGObj/WeaveSection/∂Rec_D | 工具 |
+| WeaveBCS | 笔记 spectral_BCS_weave（+ paper21 §8.2/paper14 §2） | a_BCS=1/1.764/d_BCS | 推导结论+常数 |
+| CuprateDistribution | 笔记 spectral_cuprate_distribution（+ paper14 §5.1） | CuprateParams/YBCO_params | 唯象 |
+| YukawaIFSWeights | 笔记 spectral_yukawa_IFS_weights（+ paper17 §5.4/§3） | FermionSector/IFSContractionFactors/YukawaWeights | 唯象 |
+| CategoryRepBridge | paper20 §3.5/§4（SU(2) 范畴涌现） | SU2Generators/pauliSU2/C₂ | 推导结论 |
+
+### 组 E：黑洞/物理应用
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| BlackHoleInformation | paper42 §4-§6 + paper8 §5.3 | S_ent(t)/bhPageTime/bekensteinHawkingEntropy | 推导结论 |
+| HawkingSpectrum | paper42 §2 + paper8 §4 | greybodyFactor/T_H=C/M/βMω | 推导结论 |
+| LeaverComplexity | paper1 定理 7.27b（paper1_rkhs_and_applications） | TridiagonalData/Leaver 三对角矩阵/O(N) | 推导结论 |
+| ColorDynamics | paper40 §2.2/§3.2 | color_jacobi_identity/SU(3) f^abc/Q^a | 推导前提 |
+| RenormalizationChain | paper41 §4.2/§7 | ad_G^n(A)/β^(n)↔ad_G^n | 推导前提 |
+| InflationDynamics | paper39 §5（定理 D3.1） | D(t)=exp(tG)·D₀·exp(−tG) | 推导结论 |
+| ThermoFormalism | paper3 §4.4 + paper2（d_H 凹性） | topologicalPressure/Legendre/定理 DC 凹性 | 推导前提 |
+
+### 组 F：RAP 勘误专项（对应《RAP_勘误与立场声明.md》）
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| RAP1_weight_uniqueness | RAP 勘误（定理 R1） | w:ℕ→ℝ/s=w(1)/CauchyExponential/w_k=s^k | 推导结论 |
+| RAP2_moran_nonrigidity | RAP 勘误（命题 R2） | r_i(d)={S₃S₄,S₄,1}/k(d)/∂d/∂c₃ | 推导结论 |
+| RAP3_generation_obstruction | RAP 勘误（定理 R3） | irreducible_real_spinor_dim=16/Cl(1,7)≅M₁₆(ℝ) | 推导结论 |
+| RAP4_silence_strictification | RAP 勘误（R4-R9/R10） | V_Λ/P_V/v(f)=‖P_VD(f)‖/‖D(f)‖/SilenceLevel | 推导结论 |
+| RAP5a_explicit_adjunction | RAP 勘误（定理 R11） | transferMatrix/SpImD/R_im/D_im/adjUnit | 工具 |
+
+### 组 G：测试件（无单一论文出处，验证所 import 模块）
+| 文件 | 出处 | 核心符号 | 角色 |
+|:-----|:-----|:--------|:----:|
+| TestCategoryTheory | 测试（RecCategory/SpCategory/Adjunction 等） | RecObj/SpObj/DFunctor | 测试 |
+| TestOperatorTheory | 测试（OperatorTheory/Silence/Leaver 等） | koopmanLinfty/silenceS1/laciIndex | 测试 |
+| TestApplications | 测试（OrbitFunctor/Clifford/Ergodic 等） | orbitWeight/lyapunovExponent | 测试 |
+| TestSpectralEquivalence | 测试（SpectralEquivalence/ICVerification 等） | spectralEquivalence/thm41/thm43 | 测试 |
+
+### 组 H：头部注释直接对应（初筛已明确）
+Paper VIII→BlackHoleEvolution；Paper IX→BlackHoleBounce；Paper III→ICDecidable, SpectralEquivalence；Paper I→ICVerification；paper44→PhotonTopology, PhotonTopology2Lifting, PhotonTopology2Category, PhotonTopologyFunctor, PhotonTopologyFunctorLaws（+Paper I）, PhotonTopologySpectral, PhotonTopologyCurvature, PhotonTopologyExterior（笔记）, KatoRellichSkeleton, CategoryGeometryDictionary（+paper31 J3 §4.1）；笔记→PhotonTopologyExterior。
+
+## 补查发现的口径偏差（登记在册）
+
+1. **SilenceHierarchy 头部"四层静默/定理 5.18"为旧口径**：paper1 §5.7 现为**五层**（S0 表示层 + S1-S4），严格层次为**定理 5.15**。文件内四层（对象/态射/谱/辫子）是五层体系的动力学/观测子集，S0 表示层（§5.7.9）平行独立。
+2. **SpectralGap.lean 与 BottTower.lean 注释中 Cl(1,7)≅M₈(ℝ)/旋量 8 为勘误前旧记**：权威口径为 paper20 的 M₁₆(ℝ)/旋量 16（2026-08-07 勘误）。
+3. **FlavorFiber.lean 注释"d_H from Paper XV"为笔误**：d_H=ln15+δ 出自 paper17 §3（非 Paper XV）。
