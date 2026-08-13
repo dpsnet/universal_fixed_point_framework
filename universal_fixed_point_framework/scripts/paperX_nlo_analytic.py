@@ -100,6 +100,33 @@ check("S2-C2 交叉/项1 ≈ 1（0.999±0.001）", abs(tc / t1 - 1) < 0.001, "")
 check("S2-C3 项2 = 项1（对称）", abs(t2 / t1 - 1) < 0.001, "")
 
 # ============================================================
+# S2b 交叉=项1 恒等式普适性（多维度 n, 数值确立）
+# ============================================================
+print("\n[S2b] 交叉=项1 恒等式普适性（n = 4..16）")
+print("  n    项1/DL²        交叉/DL²       交叉/项1")
+ratios = []
+for nn in [4, 6, 8, 10, 12, 16]:
+    kk = np.arange(1, nn + 1)
+    ll = np.sqrt(kk * (kk + 1))
+    AA = np.diag(ll / ll[-1])
+    DDL = (ll[1] - ll[0]) / ll[-1]
+    Nn = 400000
+    tt1 = ttc = 0.0
+    for _ in range(Nn):
+        ddb = rand_herm(nn, rng)
+        dda = rand_herm(nn, rng)
+        cc = AA @ ddb - ddb @ AA
+        c2 = dda @ AA - AA @ dda
+        tt1 += LA.norm(cc @ dda, 'fro') ** 2
+        ttc += 2 * np.real(np.trace((cc @ dda).conj().T @ (ddb @ c2)))
+    tt1, ttc = tt1 / Nn, ttc / Nn
+    r = ttc / tt1 if tt1 > 0 else 0
+    ratios.append(r)
+    print(f"  {nn:3d}  {tt1/DDL**2:.6e}  {ttc/DDL**2:.6e}  {r:.6f}")
+check("S2b-C1 交叉=项1 对所有 n（4..16）成立（0.999±0.002）",
+      all(abs(r - 1) < 0.002 for r in ratios), "n=4..16 全部 ≈1（普适恒等式, 数值确立）")
+
+# ============================================================
 # S3 r_NLO 精确解析闭式
 # ============================================================
 print("\n[S3] r_NLO 精确解析闭式 = 3·项1")
