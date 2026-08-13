@@ -1,6 +1,6 @@
 # 光子拓扑-范畴理论研究笔记
 
-**文档编号**：Note-PHOTON-TOPO-v2.8（2026-08-12：六方向成果全量集成（同步核心笔记 photon_first_principle_origin.md v0.68）——方向 1 顶点数调控静默场论定量化 §2.5、方向 2 Φ⊆D 函子特例 + Lean 三阶段 + P5 定义精确化 + T1 对齐 §1.2.4、方向 3 谱间隙闭合定理 T3 + 氢原子锚定 §4.4/4.5、方向 4 闭合结构方向转变命题 2.6 §4.6、方向 5 跨粒子推广与自旋拓扑化 §6.7-6.13、方向 6 时间耦合拓扑类型 + 静默释放定量线 §7.10-7.30 摘要、曲率层代数骨架 §7.3 推进记录、诚实边界/推进计划更新；此前 v2.7：2026-08-11 #5×#4 交叉约束（κ_Δ≤ε_Δ 条件性排除双候选，收窄至 S4³）+ #6 R 态射层 JC 模型伴随方程验证；此前 v2.6：P1 三恒等式闭环 + #4 λ_min 近-Planck 候选锚定）
+**文档编号**：Note-PHOTON-TOPO-v2.9（2026-08-13：与 paper44 v0.30 同步治理——lake build jobs 计数统一为 2454（旧 2966/3022 残留清理，全库权威计数）、P1 盲登记冻结（§6.1 主候选 $\kappa_\Delta=\Delta=S_4^3$ + 备选 $K_a=S_4^2$ + 排除线 + 失效条件，回应 CNF 评价 §六批评 1，与 P2/P4/P6 治理口径一致）、§7.3 Agda 停滞标注（Lean 多模块 vs Agda 77 行单文件骨架，回应 CNF 评价 §10.2 新问题 4）+ 纤维丛层联络选取依赖登记（回应 CNF 评价 §3.3 批评 2）；此前 v2.8：2026-08-12 六方向成果全量集成（同步核心笔记 photon_first_principle_origin.md v0.68）——方向 1 顶点数调控静默场论定量化 §2.5、方向 2 Φ⊆D 函子特例 + Lean 三阶段 + P5 定义精确化 + T1 对齐 §1.2.4、方向 3 谱间隙闭合定理 T3 + 氢原子锚定 §4.4/4.5、方向 4 闭合结构方向转变命题 2.6 §4.6、方向 5 跨粒子推广与自旋拓扑化 §6.7-6.13、方向 6 时间耦合拓扑类型 + 静默释放定量线 §7.10-7.30 摘要、曲率层代数骨架 §7.3 推进记录、诚实边界/推进计划更新；此前 v2.7：2026-08-11 #5×#4 交叉约束（κ_Δ≤ε_Δ 条件性排除双候选，收窄至 S4³）+ #6 R 态射层 JC 模型伴随方程验证；此前 v2.6：P1 三恒等式闭环 + #4 λ_min 近-Planck 候选锚定）
 **创建日期**：2026-08-10
 **母笔记**：[`docs/关于光子的理论研究笔记.md`](../../../docs/关于光子的理论研究笔记.md)（v1.0 + Addendum 01-04，定性拓扑叙事）
 **路线图**：[`roadmap/phase62_photon_topology.md`](../../roadmap/phase62_photon_topology.md)
@@ -108,7 +108,7 @@ $$\Phi: (M_{\text{atom}}, \partial M_{\text{atom}}) \to (M_{\text{photon}}, \emp
 - $\langle \text{opened} \rangle$：新生光子行波（**光子新生**，携带 $E = h\nu$）；
 - 能量重分配 $E_{\text{atom}} = E_{\text{low}} + h\nu$（公理 A3 代数形式）。
 
-单值 $\Phi$（旧） = $\Phi_+$ 的**光子分量投影**（并置结构的光子视角）。Lean 形式化：`PhotonTopology.lean` `CoexistingAfterBifurcation`/`bifurcateCoexisting`/`coexisting_atom_retained`/`bifurcationMap_is_photon_projection` + `PhotonTopologyFunctor.lean` `photonHomToRecHom`/`photonToRecFunctor`（态射层忠实嵌入）（3022 jobs 零 sorry）。
+单值 $\Phi$（旧） = $\Phi_+$ 的**光子分量投影**（并置结构的光子视角）。Lean 形式化：`PhotonTopology.lean` `CoexistingAfterBifurcation`/`bifurcateCoexisting`/`coexisting_atom_retained`/`bifurcationMap_is_photon_projection` + `PhotonTopologyFunctor.lean` `photonHomToRecHom`/`photonToRecFunctor`（态射层忠实嵌入）（2454 jobs 零 sorry）。
 
 **公理 A4**（方向性阶跃）：设 $t_*$ 为转变时刻，$\Theta$ 为 Heaviside 阶跃函数，定义拓扑类指标 $\chi_\Phi(t) = \Theta(t - t_*)$ 与静默指标 $\sigma_{\text{S3}}(t) = 1 - \chi_\Phi(t)$，其中 $\chi_\Phi = 0$（$t < t_*$）对应封闭拓扑类（S3 静默，驻波），$\chi_\Phi = 1$（$t \ge t_*$）对应开放拓扑类（S3 解除，行波）。此公式同时编码**过程性**与**方向性**：
 - **过程性**（与公理 A2 一致）：$\lim_{t \uparrow t_*} \mathcal{M}(t) = (M_{\text{atom}}, \partial M)$，$\lim_{t \downarrow t_*} \mathcal{M}(t) = (M_{\text{photon}}, \emptyset)$——转变在 $t_*$ 处瞬间完成，无连续中间拓扑；
@@ -180,7 +180,7 @@ $$\Phi: (M_{\text{atom}}, \partial M_{\text{atom}}) \to (M_{\text{photon}}, \emp
   2. **树级（忽略真空修正）模方守恒（S8-C28/30）**：$|e^{-i\omega nt}|^2 = 1$（trivial 恒等式，保光子数），对应标准 QED 自由场演化 $H_0 = \hbar\omega a^\dagger a$ 保光子数（$[N,H_0]=0$）——自由传播无相互作用（已知物理，温和兼容，非新预言）。
 - **明确标注（诚实边界）**：(a) 推论 2.1"光子视角递归静止"的 **γ→∞ 部分未数值验证**——相对论禁止 $v=c$ 参考系，"递归静止"仅是形式极限直觉，非物理参考系命题；(b) 真空修正（量子涨落）未纳入——本节省略真空极化/自能修正，为**树级**一致性。
 - **机制层（2026-08-11 JC 定量桥接，`paperX_photon_jc_bridge.py` 14/14）**："光子吸收 = $R$ 右伴随折叠"（定义 2.3）与"相互作用哈密顿量 + 费米黄金规则"的桥接已**定量化**：Jaynes-Cummings 模型 $H_{\text{int}} = g(a^\dagger\sigma^- + a\sigma^+)$ 在 $\{|g,1\rangle, |e,0\rangle\}$ 上的矩阵 $[[0,g],[g,0]]$（共振矩阵元、Rabi 劈裂 $\pm g$）；费米黄金规则跃迁率仅在共振 $h\nu = \Delta E$ 非零（Bohr 条件 = R 折叠必要条件），失谐被线型函数压制（洛伦兹/sinc²，与定义 2.4 吸收截面衔接）；树级（$[N,H_0]=0$ 保光子数）vs 机制层（$H_{\text{int}}$ 破缺光子数，相互作用态 $\langle n\rangle = 1/2$）的机制差异定量化。**诚实边界**："$R$ 伴随函子 ↔ $H_{\text{int}}$ 算子"的范畴-算子对应本身仍为框架性语义映射（无独立验证），本桥接使其定量化但不等价于范畴等价证明；完整范畴等价（$R$ 的态射层与哈密顿量算子的同构）仍登记开放。
-- **dagger-假设（开放问题 #6 推进，2026-08-11 临时登记，`PhotonTopology.lean` 有限维骨架）**：范畴等价推进的**新的数学结构假设**——若 Rec/Sp 装备 **dagger 范畴结构**（对合反变结构，`dagger (dagger A) = A`）且 $R = D^\dagger$（dagger-伴随），则 $R$ 的"折叠"对应**厄米共轭**、$H_{\text{int}}^\dagger = H_{\text{int}}$（JC 矩阵 $[[0,g],[g,0]]$ 厄米性）对应"$R$ 是 $D$ 的 dagger-伴随"——将"R 折叠 = H_int"从定量桥接（上一项）升级为结构同构的前期。Lean 有限维骨架：`dagger`=共轭转置（mathlib `Matrix.conjTranspose`）、`dagger_involution`（对合公理）、`jc_hermitian`（JC 矩阵厄米性，3022 jobs 零 sorry）。**第一性原理目标（登记）**：从框架既有结构（Paper I 伴随 $D \dashv R$ + 纤维丛内积）推导 dagger 性质，**最终剔除 dagger-假设**（不引入外部理论输入）——完整 dagger 范畴结构与推导仍登记开放。
+- **dagger-假设（开放问题 #6 推进，2026-08-11 临时登记，`PhotonTopology.lean` 有限维骨架）**：范畴等价推进的**新的数学结构假设**——若 Rec/Sp 装备 **dagger 范畴结构**（对合反变结构，`dagger (dagger A) = A`）且 $R = D^\dagger$（dagger-伴随），则 $R$ 的"折叠"对应**厄米共轭**、$H_{\text{int}}^\dagger = H_{\text{int}}$（JC 矩阵 $[[0,g],[g,0]]$ 厄米性）对应"$R$ 是 $D$ 的 dagger-伴随"——将"R 折叠 = H_int"从定量桥接（上一项）升级为结构同构的前期。Lean 有限维骨架：`dagger`=共轭转置（mathlib `Matrix.conjTranspose`）、`dagger_involution`（对合公理）、`jc_hermitian`（JC 矩阵厄米性，2454 jobs 零 sorry）。**第一性原理目标（登记）**：从框架既有结构（Paper I 伴随 $D \dashv R$ + 纤维丛内积）推导 dagger 性质，**最终剔除 dagger-假设**（不引入外部理论输入）——完整 dagger 范畴结构与推导仍登记开放。
 - **诚实边界（dagger 部分）**：dagger-假设目前为**临时工作假设**（非框架导出结论）；有限维骨架仅验证"若假设成立则代数结构自洽"，不构成假设的独立验证；剔除路径（伴随 + 内积 → dagger）未完成，需纤维丛内积的伴随相容性推导（开放）。
 
 **dagger 第一性原理推导（开放问题 #6 深化，2026-08-11，`paperX_photon_dagger_derivation.py` + Lean 骨架）**：从框架既有结构（纤维丛内积层 + Paper I 伴随 $D\dashv R$）推导 dagger 性质，剔除 dagger-假设。推导链：
@@ -192,7 +192,7 @@ $$\Phi: (M_{\text{atom}}, \partial M_{\text{atom}}) \to (M_{\text{photon}}, \emp
 6. **第一性原理结论**：在内积层为 Hilbert 结构的范围内，**dagger 范畴结构是纤维丛内积 + Hilbert 结构的推导结果**，非独立外部输入；剩余登记：(a) 纤维丛内积的全局（无穷维）构造；(b) $R$ 态射层伴随性方程的完整验证（当前有限维骨架 + 数值验证，完整函子层验证开放）。
 - **诚实边界（第一性原理部分）**：本推导将 dagger-假设从"独立结构假设"降级为"Hilbert 内积结构的推论"，**在内积层为 Hilbert 的范围内**成立；无穷维谱纤维丛内积的全局构造、$R$ 的态射层伴随性方程完整验证仍未闭合（登记开放）。
 
-**R 态射层伴随性方程验证（开放问题 #6 收尾：JC 模型实例，2026-08-11，`PhotonTopology.lean` 2966 jobs 零 sorry）**：dagger 第一性原理在具体机制层（JC 模型，§1.2.1 机制层桥接）的落地——D 取相互作用哈密顿量 $H_{\text{int}}=[[0,g],[g,0]]$（2 维，`jcD g`），R 折叠算子的态射层矩阵表示 = $D^\dagger$：
+**R 态射层伴随性方程验证（开放问题 #6 收尾：JC 模型实例，2026-08-11，`PhotonTopology.lean` 2454 jobs 零 sorry）**：dagger 第一性原理在具体机制层（JC 模型，§1.2.1 机制层桥接）的落地——D 取相互作用哈密顿量 $H_{\text{int}}=[[0,g],[g,0]]$（2 维，`jcD g`），R 折叠算子的态射层矩阵表示 = $D^\dagger$：
 - **`jc_R_adjoint`**：$R = \text{dagger}\,D$ 满足伴随性方程 $\langle Dx,y\rangle=\langle x,Ry\rangle$（由 `conjTranspose_satisfies_adjoint` 直接给出）——R 态射层作用 = 厄米共轭的验证；
 - **`jc_R_is_dagger_adjoint`**：任意满足伴随性方程的 $B$ 必等于 $D^\dagger$（`dagger_is_adjoint` 实例化）——**R=D† 在 JC 机制层是定理**（dagger-假设在该层被剔除）；
 - **`jc_R_hermitian`**：$D^\dagger = D$（自伴，JC 矩阵厄米性）；
@@ -267,7 +267,7 @@ $$R(M_{\text{photon}}, \emptyset) \to (M'_{\text{atom}}, \partial M')$$
 - **U(1) 特例**：$F_{ij} = \partial_i A_j - \partial_j A_i$，$dF = 0$（阿贝尔联络无源，与光子场强结构一致）；
 - **联络算子衔接**：幂等自伴投影 $P$（$P^2=P$、$P^\dagger=P$）编码垂直-水平分解 $V\oplus V^\perp$（$\ker P = V^\perp$、$\operatorname{im} P = V$）——联络 = 水平提升算子（与 `PhotonTopologyFunctor.lean` 闭合一致）；
 - **挠率结构方程**：$T^k_{ij} = \Gamma^k_{ij} - \Gamma^k_{ji}$ 下指标反对称、对角元为零；
-- **Lean 代数骨架**（`PhotonTopologyFunctor.lean`，2966 jobs 零 sorry）：`skew_antisymm`（反对称化算子 $A-A^\dagger$ 转置变号）、`lie_bracket_antisymm`（李括号反对称）、`curvature_antisymm`（曲率反对称组合——外微分项反对称 + 李括号反对称）；
+- **Lean 代数骨架**（`PhotonTopologyFunctor.lean`，2454 jobs 零 sorry）：`skew_antisymm`（反对称化算子 $A-A^\dagger$ 转置变号）、`lie_bracket_antisymm`（李括号反对称）、`curvature_antisymm`（曲率反对称组合——外微分项反对称 + 李括号反对称）；
 - **诚实边界**：本节为李代数值曲率的代数/结构验证（光滑解析构造），非完整流形微分几何——联络形式/曲率/挠率的**完整流形形式化仍登记开放**（需微分几何库）。
 
 ### 1.2.3 可拦截性核心公式集（LaTeX 可直接引用）
@@ -430,7 +430,7 @@ $$\lambda \cdot \nu = c$$
 **闭环内容**：$E = h\nu$（Planck，§4.1）、$\lambda\nu = c$（波速，定理 3.1）、$p = h/\lambda$（de Broglie）三者代数一致——通过波速恒等式消去 $\lambda,\nu$ 统一为**零质量分支能量-动量关系** $E = p\cdot c$：
 - **消元链**：$p = h/\lambda \wedge \lambda\nu = c \Longrightarrow p\cdot c = h\nu = E$（数值 500 采样 rel < 1e-12；SI 值：光学 500nm $p \approx 1.3\times10^{-27}$ kg·m/s、$E \approx 4\times10^{-19}$ J）；
 - **零质量衔接（#2 闭环）**：$E = p\cdot c$ 恰为 `ZeroMassPhoton`（#2 已闭合）的能量-动量结构——群速度 $v_g = p c^2/E = c$（光速锁定）；非零质量对照（$E > pc$）$v_g < c$（判别性）；
-- **Lean 机器证明**（`PhotonTopology.lean` 2966 jobs 零 sorry）：`Momentum` 结构（$p=h/\lambda$）+ `energy_momentum_consistency`（三恒等式 ⟹ $E=pc$）+ `p1_zero_mass_structure`（三恒等式闭环给出零质量分支结构——$v_g=c$ 是 Planck + de Broglie + 波速恒等式的**共同推论**）；
+- **Lean 机器证明**（`PhotonTopology.lean` 2454 jobs 零 sorry）：`Momentum` 结构（$p=h/\lambda$）+ `energy_momentum_consistency`（三恒等式 ⟹ $E=pc$）+ `p1_zero_mass_structure`（三恒等式闭环给出零质量分支结构——$v_g=c$ 是 Planck + de Broglie + 波速恒等式的**共同推论**）；
 - **物理意义**：P1 温和兼容部分闭环——"零质量光速锁定"不再孤立于 #2，而是三恒等式的共同推论；公共基础为 $\{h, c\}$（SI 定义值）；
 - **诚实边界**：三恒等式均为已知物理（温和兼容），本节验证其代数闭环一致性（非新预言）；P1 颠覆性部分（$\Delta$-偏振红移差）见 §6.1。
 
@@ -582,6 +582,13 @@ $\delta z_{\Delta}$ 是 UFPF 独有修正项，其量级由 4-范畴偏差 $\Del
 - **候选比值（结构自洽）**：$K_a/\Delta = 15 = S_4^{-1}$、$K_c/\Delta = 30 = 2S_4^{-1}$——$\kappa_\Delta=S_4^2$ 与 $\Delta=(1/15)^3$ 的代数形式之比恰为框架量（两候选代数形式之比，结构自洽检查，非独立发现）；
 - **收窄后候选带**：$\kappa_\Delta \in [10^{-4}, 2.96\times10^{-4}]$；新候选 $S_4^3=(1/15)^3=2.96\times10^{-4}$（=Δ 等值，$\kappa_\Delta=\varepsilon_\Delta$ 等号边界——偏振差 = 总修正，弱物理）在带内；
 - **诚实边界**：交叉排除为**条件性**——依赖 $\varepsilon_\Delta=\Delta$ 假设（$\varepsilon_\Delta$ 与 $\Delta$ 的关系未定）；若 $\varepsilon_\Delta$ 取预言带上界（如 $10^{-2}$），双候选不被排除。$\kappa_\Delta$ 精确值**仍登记开放**，收窄依赖 #4/#5 联立求解（$\varepsilon_\Delta$ 关系的框架推导）。
+
+**盲登记冻结（2026-08-13，回应 CNF 评价 §六批评 1 建议——与 P2/P4/P6 治理口径一致，与 paper44 v0.30 §6.1 同步）**：
+- **主候选**：$\kappa_\Delta=\Delta=(1/15)^3\approx2.96\times10^{-4}$（#5×#4 交叉约束收窄带 $[10^{-4},2.96\times10^{-4}]$ 内等号边界候选 $S_4^3=\Delta$，路径 A 假设）；
+- **备选**：$\kappa_\Delta=K_a=S_4^2\approx4.4\times10^{-3}$（MDL 最简候选，路径 B 假设 $\varepsilon_\Delta=S_4^2$ 同源）；
+- **排除线**：$\kappa_\Delta>\varepsilon_\Delta$（#5×#4 交叉约束）；若 $\varepsilon_\Delta$ 取路径 A（=Δ）则 $K_a$、$K_c$ 被条件性排除；
+- **失效条件**：4-范畴 $\Delta$ 结构完整推导给出 $\varepsilon_\Delta\neq\Delta$ 或 $\kappa_\Delta$ 定义修正（开放问题 #5）；或远期偏振光谱观测 $\delta z_{\text{pol}}$ 白矮星判别（$K_c/K_a=N_{\text{Weyl}}/2=2$ 倍差，实验可判别）；
+- **登记语义**：冻结为**主候选工作值**（用于预言数值表述），不改变"$\kappa_\Delta$ 精确值开放"的诚实登记（判别仍依赖远期观测/推导）。
 
 **可证伪条件**：需下一代空间高分辨偏振光谱望远镜（规划周期 15 年以上）。
 
@@ -756,7 +763,11 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 - 电磁纤维粘合拓扑形式化（待建设）
 - 跨层谱对象映射完整闭合（部分已有）
 
-**Lean 形式化现状（2026-08-12 更新）**：已形式化的代数骨架（3022/2966 jobs 零 sorry）——公理 A4 方向性阶跃、A3 并置结构 Φ₊、Φ 态射层忠实嵌入、零静质量 $v<c$ 不自洽（命题 3.1）、静默-跃迁门控、纤维丛层内积正交与联络-度量相容选取（$V\perp H\Longrightarrow V\sqcap H=\bot$、幂等联络投影）、Fock 空间自由演化算子、**三恒等式闭环**（$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$，`energy_momentum_consistency`）、**dagger 第一性原理**（dagger 范畴公理由内积伴随推导 + R 态射层伴随性方程）、**函子律三阶段**（`PhotonTopologyFunctorLaws.lean`：两对象/多能级/无穷维）、**Δ 结构严格正交**（`DeviationBound.lean` J2）、**代数谱骨架**（`PhotonTopologySpectral.lean`）、**外显函子**（`PhotonTopologyExterior.lean`）。**未形式化**：双层正交完整几何（范畴层 4-态射方向几何正交、纤维丛层全微分几何）、层次 B 连续谱完整谱等式（库依赖开放项）。
+**Lean 形式化现状（2026-08-13 更新）**：已形式化的代数骨架（2454 jobs 零 sorry，2026-08-13 统一计数）——公理 A4 方向性阶跃、A3 并置结构 Φ₊、Φ 态射层忠实嵌入、零静质量 $v<c$ 不自洽（命题 3.1）、静默-跃迁门控、纤维丛层内积正交与联络-度量相容选取（$V\perp H\Longrightarrow V\sqcap H=\bot$、幂等联络投影）、Fock 空间自由演化算子、**三恒等式闭环**（$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$，`energy_momentum_consistency`）、**dagger 第一性原理**（dagger 范畴公理由内积伴随推导 + R 态射层伴随性方程）、**函子律三阶段**（`PhotonTopologyFunctorLaws.lean`：两对象/多能级/无穷维）、**Δ 结构严格正交**（`DeviationBound.lean` J2）、**代数谱骨架**（`PhotonTopologySpectral.lean`）、**外显函子**（`PhotonTopologyExterior.lean`）。**未形式化**：双层正交完整几何（范畴层 4-态射方向几何正交、纤维丛层全微分几何）、层次 B 连续谱完整谱等式（库依赖开放项）。
+
+**双证明器互证状态（Agda 停滞标注，2026-08-13，回应 CNF 评价 §10.2 新问题 4，与 paper44 v0.30 §7.3 同步）**：Lean 端光子拓扑形式化已形成多模块骨架（8 个 `PhotonTopology*` 模块 + `DeviationBound`/`HigherSpCategory` 配套，`lake build` 2454 jobs 零警告零 sorry）；Agda 端仅存单文件骨架（`agda_formalization/PhotonTopology/PhotonTopology.agda`，77 行），未随 Lean 端多模块推进同步——Lean ↔ Agda 双证明器互证（交叉验证）处于工程停滞状态，登记为工程待办；Agda 骨架尚未覆盖上文 Lean 已证结果的交叉验证。
+
+**纤维丛层联络选取依赖登记（2026-08-13，回应 CNF 评价 §3.3 批评 2，与 paper44 v0.30 §7.2/§7.5 同步）**：垂直-水平分解 $TE\cong V\oplus H$ 依赖联络选取，不同联络给出不同水平分布——已机器证明的是"联络-度量相容选取的存在性"（上文 + §7.3.1）而非唯一性；度量固定后 $V^\perp$ 正交补典范（`sup_orthogonal_eq_top` 机证）可部分缓解，但联络自由对"光子方向 ⊥ 基空间"分解的完整影响未直接讨论（登记开放，完整流形微分几何库依赖）。
 
 ### 7.3.1 曲率层代数骨架（开放问题 #7 推进，2026-08-11/12）
 
@@ -781,7 +792,7 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 3. **62C**：论文 `paper/paper44_photon_topology.md`（自包含，仅纳入颠覆性预言）✅ 初稿（2026-08-10 v0.1）
 4. **62D**：红移拓扑推导定量公式 ✅（§5.2.1 多普勒推导链 $\gamma(1+\beta)$ + §5.3.1 $\delta z_\Delta$ 量级估计 + 数值脚本 14/14）
 5. **62E**：交叉衍生效应定量化 ✅（§6 六项预言定量形式：P1 $\delta z_{\text{pol}}=\kappa_\Delta z_{\text{grav}}$、P2 线性标度、P3 候选量级、P4 $S_4$ 震荡、P5 $\lambda_e(1-\cos\theta)$、P6 $N_{\text{crit}}$；数值脚本 18/18）
-6. **62F**：Lean/Agda 形式化 🔶 交付（`PhotonTopology.lean` + `PhotonTopologyFunctor.lean`，3022 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件/A3 并置结构 Φ₊/零质量/静默门控/Φ 态射层忠实嵌入/范畴层方向正交（1-态射层单点性）/内积层正交⟹交平凡/联络-度量相容选取+联络算子/Fock 空间算子/光速锁定与能量量子骨架 + Agda 镜像，Everything.agda 全量通过）——P1 验收未全达成，双层正交完整几何（范畴层 4-态射方向正交、纤维丛层全微分几何）、光速/$\lambda\nu$/$E=h\nu$ 完整形式化（代数骨架已建）登记开放项；**2026-08-11/12 扩展**：三恒等式闭环（`energy_momentum_consistency`）+ dagger 第一性原理 + R 态射层伴随性方程 + 曲率层代数骨架（`PhotonTopologyCurvature.lean`）+ 函子律三阶段（`PhotonTopologyFunctorLaws.lean` 两对象/多能级/无穷维）+ 代数谱骨架（`PhotonTopologySpectral.lean`）+ Δ 结构严格正交（`DeviationBound.lean` J2）+ 外显函子（`PhotonTopologyExterior.lean`）
+6. **62F**：Lean/Agda 形式化 🔶 交付（`PhotonTopology.lean` + `PhotonTopologyFunctor.lean`，2454 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件/A3 并置结构 Φ₊/零质量/静默门控/Φ 态射层忠实嵌入/范畴层方向正交（1-态射层单点性）/内积层正交⟹交平凡/联络-度量相容选取+联络算子/Fock 空间算子/光速锁定与能量量子骨架 + Agda 镜像，Everything.agda 全量通过）——P1 验收未全达成，双层正交完整几何（范畴层 4-态射方向正交、纤维丛层全微分几何）、光速/$\lambda\nu$/$E=h\nu$ 完整形式化（代数骨架已建）登记开放项；**2026-08-11/12 扩展**：三恒等式闭环（`energy_momentum_consistency`）+ dagger 第一性原理 + R 态射层伴随性方程 + 曲率层代数骨架（`PhotonTopologyCurvature.lean`）+ 函子律三阶段（`PhotonTopologyFunctorLaws.lean` 两对象/多能级/无穷维）+ 代数谱骨架（`PhotonTopologySpectral.lean`）+ Δ 结构严格正交（`DeviationBound.lean` J2）+ 外显函子（`PhotonTopologyExterior.lean`）
 7. **62G**：P5 定义精确化 🔶 推进中（2026-08-12 启动，剩余开放项瓶颈为定义精确化而非工具能力）——**P5-1 三分法清查 ✅**、**P5-4 代数谱骨架 ✅**（`PhotonTopologySpectral.lean`）、**P5-2 Δ 结构严格正交 ✅**（J2 严格机器证明 + 探针排除生成元编码 + **体系一致性检查：T1 已对齐**、T2 登记）、**P5-3 Φ=D 严格等式 ⚠️ 待推进**；层次 B 完整谱等式保持库依赖开放项不硬搭
 
 **Phase 62 整体状态（诚实声明，2026-08-12 更新）**：62A–F 阶段交付物完成，**62G（P5 定义精确化）推进中**——§七 8 项开放问题全部获推进：4 项闭合（#1 Φ 范畴论对象层+态射层（构造性实现+忠实嵌入）、#2 零质量 Lean 形式化、#3 捕获-再转变模拟、#8 静默-跃迁门控 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$），4 项部分（#4 量纲限定 $\Delta=F(\lambda_{\min}/\lambda_P)$ 形式族 + 参数空间负结果 + 近-Planck 候选锚定 15³、#5 候选量级 + 判别性锚定 + 选择原理收窄 4→2 + #5×#4 交叉约束、#6 树级模方守恒+Fock Lean 骨架+JC 定量桥接+dagger 第一性原理+R 态射层伴随性方程、#7 内积层+联络-度量相容选取+联络算子+曲率层代数骨架闭合全微分几何开放）；预言系数（$\kappa_\Delta$、$\eta_{\text{S3}}$、$\varepsilon_\Delta$）为候选量级带非精确值，$h$-$c$-$\Delta$ 代数形式量纲限定数值待定（近-Planck 候选族已收窄）；P1 验收：三恒等式闭环（$\lambda\nu=c$、$E=h\nu$、$p=h/\lambda$ 一致）代数骨架已建（温和兼容）+ **六方向成果集成**（§1.2.4/§2.5/§4.4-4.6/§6.7-6.16/§7.3.1）；整体 = **推进中（交付完成、闭环未达成）**，核心预言实验验证为远期（15–20 年）。
