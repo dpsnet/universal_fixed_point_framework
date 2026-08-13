@@ -66,7 +66,7 @@ noncomputable def flavorLoop : FlavorSector → FlavorSector :=
 /-- Generation space ℂ³: 3-dimensional complex vector space. -/
 abbrev GenSpace : Type := ℂ × ℂ × ℂ
 
-/-- IFS Hausdorff dimension d_H ≈ 2.7095 (from Paper XV). -/
+/-- IFS Hausdorff dimension d_H ≈ 2.7095 (from Paper XVII §3; 2026-08-13 勘误：原注"Paper XV"为笔误，d_H=ln15+δ 出自 paper17 §3). -/
 noncomputable def d_H : ℝ := 2.7095
 
 /-- IFS contraction weights c_k for generation k (k=1,2,3).

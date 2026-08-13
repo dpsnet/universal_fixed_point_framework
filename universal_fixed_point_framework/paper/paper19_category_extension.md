@@ -717,7 +717,7 @@ $$\mathrm{id}_R \text{ 满足 M1–M4} \;\Leftrightarrow\; R \text{ 的谱满足
 
 ### 15.3 四层静默的统一度量
 
-Paper I §5.7.1–§5.7.5 给出了四层静默的定性描述与层次包含定理（定理 5.18），但未给出统一的定量度量。本节建立静默度算符 $\mathcal{S}$，将四层静默统一为 $[0, 1]$ 区间内的标量度量。核心定义与定理已整合至 Paper I §5.7.7（定义 5.27，定理 5.28），本节给出完整证明与相图分析。
+Paper I §5.7.1–§5.7.5 给出了四层静默的定性描述与层次包含定理（定理 5.15），但未给出统一的定量度量。本节建立静默度算符 $\mathcal{S}$，将四层静默统一为 $[0, 1]$ 区间内的标量度量。核心定义与定理已整合至 Paper I §5.7.7（定义 5.27，定理 5.28），本节给出完整证明与相图分析。
 
 **定义 15.2**（静默度算符 $\mathcal{S}$）。定义四层静默度函数：
 
@@ -984,7 +984,7 @@ $$K_{\text{crit}}^{(D)} = \left\lfloor \frac{\Delta\omega_I^{(D)}}{2\pi} \right\
 | `BTZ_Ccrit_stability` | 定理 15.8 | BTZ $K_{\text{crit}}^{\text{BTZ}} = 1$、$C_{\text{crit}}^{\text{BTZ}} = \pi$ 稳定性 |
 | `K_crit_tangherlini_dimension` | 定理 15.9 | Tangherlini $K_{\text{crit}}^{(D)} = 1$ 维度稳定性 |
 
-**与 Paper I `SilenceHierarchy.lean` 的关系**：Paper I 的形式化仅覆盖层次包含定理（定理 5.18），本文深化版本增加判据（M1–M4）、度量（$\mathcal{S}$）、退化阈值（$C_{\text{crit}}$）与数值算法（B1–B3），并扩展至 Fibonacci 任意子、BTZ 黑洞、Tangherlini 高维黑洞三类独立系统的数值验证。两个模块共同构成 S1–S4 静默体系的完整形式化基础设施。
+**与 Paper I `SilenceHierarchy.lean` 的关系**：Paper I 的形式化仅覆盖层次包含定理（定理 5.15），本文深化版本增加判据（M1–M4）、度量（$\mathcal{S}$）、退化阈值（$C_{\text{crit}}$）与数值算法（B1–B3），并扩展至 Fibonacci 任意子、BTZ 黑洞、Tangherlini 高维黑洞三类独立系统的数值验证。两个模块共同构成 S1–S4 静默体系的完整形式化基础设施。
 
 #### 15.7.1 谱流静默的形式化验证
 

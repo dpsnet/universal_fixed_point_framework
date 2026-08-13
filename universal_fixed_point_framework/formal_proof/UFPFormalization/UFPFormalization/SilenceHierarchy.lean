@@ -10,9 +10,10 @@ open CategoryTheory
 namespace UFPFormalization
 
 /-!
-# Four-Layer Silence Hierarchy (Phase 16C, §5.7)
+# Silence Hierarchy — 五层体系的 S1–S4 动力学/观测子集 (Phase 16C, §5.7)
 
-Formalizes the four-layer silence hierarchy:
+Formalizes the four-layer (S1–S4) silence hierarchy——paper1 §5.7 **五层静默体系**
+（S0 表示层 + S1–S4 动力学/观测层）中的动力学/观测四层；S0 表示层（paper1 §5.7.9）平行独立：
   1. Object silence (对象静默): R ∉ Obj(𝐑𝐞𝐜_D)
   2. Morphism silence (态射静默): f fails the spectral preservation condition
   3. Spectral silence (谱静默): S1–S4 criteria satisfied (defined in Silence.lean):
@@ -22,7 +23,7 @@ Formalizes the four-layer silence hierarchy:
      - S4: gauge group constraint (规范群轨道权重上界)
   4. Braided silence (辫子静默): braided crossing invisible under D_diss
 
-Hierarchy theorem (定理 5.18):
+Hierarchy theorem (定理 5.15，paper1 §5.7.3):
   - 谱静默 ⊊ 态射静默 ⊊ 对象静默
   - 谱静默 ⊊ 辫子静默 ⊊ 对象静默
   - 辫子静默 and 态射静默 are incomparable
@@ -65,7 +66,7 @@ def spectralSilenceSimple {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
 Morphism silence: f fails the spectral preservation condition.
 A morphism f: R₁ → R₂ is morphism-silent if D(f)* is NOT an isometric embedding.
 
-※ 定义优化（2026-08-09，自主完善）：原占位定义 `False` 使层级定理 5.18
+※ 定义优化（2026-08-09，自主完善）：原占位定义 `False` 使层级定理 5.15
 "谱静默 ⊆ 态射静默 ⊆ 对象静默"的首段蕴含退化为 `True → False` 而不可证。
 此处将 morphismSilence 改为**层级编码定义**：态射静默 ⟺ 定义域对象 R₁
 满足谱静默（有限原型中 D(f)* 等距性未形式化，谱静默对象的所有态射均为
@@ -115,7 +116,7 @@ theorem morphismSilence_implies_objectSilence {R₁ R₂ : RecObj} (f : R₁ ⟶
   trivial
 
 /--
-Theorem 5.18 (partial): 谱静默 ⊊ 态射静默 ⊊ 对象静默.
+Theorem 5.15 (paper1 §5.7.3; partial): 谱静默 ⊊ 态射静默 ⊊ 对象静默.
 In the finite prototype, the inclusions are vacuous but the strictness
 is established by the non-trivial examples in the continuous setting:
   - 𝐑𝐞𝐜_D ⊂ 𝐑𝐞𝐜 strict (object silence non-empty): dissipative systems

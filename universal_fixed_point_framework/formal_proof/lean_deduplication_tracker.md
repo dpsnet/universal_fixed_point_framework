@@ -154,8 +154,10 @@
 ### 组 H：头部注释直接对应（初筛已明确）
 Paper VIII→BlackHoleEvolution；Paper IX→BlackHoleBounce；Paper III→ICDecidable, SpectralEquivalence；Paper I→ICVerification；paper44→PhotonTopology, PhotonTopology2Lifting, PhotonTopology2Category, PhotonTopologyFunctor, PhotonTopologyFunctorLaws（+Paper I）, PhotonTopologySpectral, PhotonTopologyCurvature, PhotonTopologyExterior（笔记）, KatoRellichSkeleton, CategoryGeometryDictionary（+paper31 J3 §4.1）；笔记→PhotonTopologyExterior。
 
-## 补查发现的口径偏差（登记在册）
+## 补查发现的口径偏差（2026-08-13 已全部修正）
 
-1. **SilenceHierarchy 头部"四层静默/定理 5.18"为旧口径**：paper1 §5.7 现为**五层**（S0 表示层 + S1-S4），严格层次为**定理 5.15**。文件内四层（对象/态射/谱/辫子）是五层体系的动力学/观测子集，S0 表示层（§5.7.9）平行独立。
-2. **SpectralGap.lean 与 BottTower.lean 注释中 Cl(1,7)≅M₈(ℝ)/旋量 8 为勘误前旧记**：权威口径为 paper20 的 M₁₆(ℝ)/旋量 16（2026-08-07 勘误）。
-3. **FlavorFiber.lean 注释"d_H from Paper XV"为笔误**：d_H=ln15+δ 出自 paper17 §3（非 Paper XV）。
+1. **SilenceHierarchy 头部"四层静默/定理 5.18"为旧口径** → ✅ 已修正：paper1 §5.7 现为**五层**（S0 表示层 + S1-S4），严格层次为**定理 5.15**。修正：SilenceHierarchy.lean 头部（Four-Layer→"五层体系 S1-S4 动力学/观测子集"）L13/L25/L68/L118（定理 5.18→5.15）；paper19_category_extension.md L720/L987（引用 paper1 旧编号 5.18→5.15）。
+2. **SpectralGap.lean 与 BottTower.lean 注释中 Cl(1,7)≅M₈(ℝ)/旋量 8 为勘误前旧记** → ✅ 已修正：权威口径 M₁₆(ℝ)/旋量 16（paper20 v0.6 勘误）。修正：SpectralGap.lean L16、BottTower.lean L11 表格（标准旋量 16 | 翻倍工作基准 8）、**同类旧记顺带修正**：NoiseFiber.lean L591、SignatureFiber.lean L80。全库残留 M₈(ℝ) 均为有意保留的勘误说明文字（Clifford/BottTower/SpectralGap/SignatureFiber/RAP3 勘误注 + SignatureFiber 块嵌入数学事实）。
+3. **FlavorFiber.lean 注释"d_H from Paper XV"为笔误** → ✅ 已修正：d_H=ln15+δ 出自 paper17 §3。修正：FlavorFiber.lean L69（from Paper XVII §3 + 勘误标注）。
+
+**修正验证**：`lake build` 2454 jobs 零警告零 sorry（注释层修正不影响编译）。提交见 git log。

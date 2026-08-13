@@ -13,7 +13,8 @@ namespace UFPFormalization
 
 The spectral gap Δλ_min = λ₂ - λ₁ is determined by:
   1. SU(2) representation → λ_k ∝ √{k(k+1)}  (A_GR eigenvalue spectrum)
-  2. Cl(1,7) ≅ M₈(ℝ) → k_max = 8
+  2. k_max = 8 由统一 3 定理确定（2^{N_active} = 2³，paper20/33）；Cl(1,7) ≅ M₁₆(ℝ)
+     （旋量 16，2026-08-07 勘误；原注 M₈(ℝ)/旋量 8 为勘误前旧记，已按 paper20 v0.6 同步）
   3. Normalization: λ_max = M_Pl (Planck cutoff)
 
 This file provides the minimal definitions needed for the deviation bound.

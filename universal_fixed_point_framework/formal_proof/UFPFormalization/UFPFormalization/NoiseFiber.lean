@@ -588,7 +588,8 @@ theorem NoiseSection_is_section (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η :
       η_c·[⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩] = lam₂(0) - lam₁(0) = Δlam_min
       η_c = Δlam_min / (⟨ψ₁|δA_N|ψ₁⟩ - ⟨ψ₂|δA_N|ψ₂⟩)
     
-    In Cl(1,7) ≅ M₈(ℝ), the noise operator restricted to the 2×2 subspace is:
+    In Cl(1,7) ≅ M₁₆(ℝ)（旋量 16，2026-08-07 勘误；2×2 子空间为翻倍工作基准），
+    the noise operator restricted to the 2×2 subspace is:
       δA_N|₂ₓ₂ = σ_z / k_max
     where σ_z is the Pauli matrix with eigenvalues ±1.
     Hence ⟨ψ₁|δA_N|ψ₁⟩ = +1/k_max, ⟨ψ₂|δA_N|ψ₂⟩ = -1/k_max.

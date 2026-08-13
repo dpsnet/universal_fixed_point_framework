@@ -77,7 +77,7 @@ instance sigCategory : Category SigObj where
 
 /-- Key signatures in the Clifford hierarchy. -/
 noncomputable def sig_13 : SigObj := ⟨1, 3⟩  -- Minkowski spacetime
-noncomputable def sig_17 : SigObj := ⟨1, 7⟩  -- Cl(1,7) ≅ M₈(ℝ), spectral cutoff
+noncomputable def sig_17 : SigObj := ⟨1, 7⟩  -- Cl(1,7) ≅ M₁₆(ℝ)（旋量 16，2026-08-07 勘误；spectral cutoff 工作基准 8 见下）
 noncomputable def sig_91 : SigObj := ⟨9, 1⟩  -- Cl(9,1) ≅ M₁₆(ℝ), string theory
 
 /-- Bott 类判据：Cl(1,7) 与 Cl(9,1) 之间不存在 SigHom 嵌入 (1,7) → (9,1)
