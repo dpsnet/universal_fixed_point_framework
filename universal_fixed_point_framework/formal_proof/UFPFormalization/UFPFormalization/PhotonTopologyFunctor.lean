@@ -349,32 +349,10 @@ theorem connection_metric_compatible [FiniteDimensional ℝ E] (V : Submodule �
     · exact projection_along_orthogonal_ker V
     · exact projection_along_orthogonal_range V
 
-/-! ## 曲率层代数骨架（开放问题 #7 全微分几何层推进）
-   全微分几何（联络形式/曲率/挠率的完整形式化）登记开放；
-   本节给出**李代数值曲率的代数核心**：2-形式的反对称结构——
-   曲率 Ω_ij = ∂_i ω_j - ∂_j ω_i + [ω_i, ω_j] 满足 Ω_ji = -Ω_ij，由
-   (i) 外微分项的 (i,j) 反对称（差项交换变号）与
-   (ii) 李括号反对称 [A,B] = -[B,A] 组合给出。
-   数值验证见 paperX_photon_curvature.py。 -/
-
-/-- 反对称化算子：skew(A) = A - A†，满足 skew(A)† = -skew(A)
-    —— 曲率作为 2-形式的 (i,j) 指标反对称结构。 -/
-theorem skew_antisymm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
-    (A - A.conjTranspose).conjTranspose = -(A - A.conjTranspose) := by
-  simp
-
-/-- 李括号反对称：[A,B] = A·B - B·A 交换参数变号
-    —— 曲率 ω∧ω = [ω,ω] 项的李代数值反对称（矩阵李代数）。 -/
-theorem lie_bracket_antisymm {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
-    A * B - B * A = -(B * A - A * B) := by
-  abel
-
-/-- 曲率反对称性（代数形式）：Ω_ij 与 Ω_ji 反号
-    —— 由外微分项反对称（∂_i ω_j - ∂_j ω_i 交换变号）+ 李括号反对称组合。 -/
-theorem curvature_antisymm {n : ℕ} (dwi dwj Ai Aj : Matrix (Fin n) (Fin n) ℂ) :
-    (dwi - dwj + (Ai * Aj - Aj * Ai)) =
-    - (dwj - dwi + (Aj * Ai - Ai * Aj)) := by
-  abel
+/-! ## 曲率层代数骨架（2026-08-14 迁出）
+   通用微分几何内容（`skew_antisymm`/`lie_bracket_antisymm`/`curvature_antisymm`）
+   已按内容域命名原则迁至通用模块 `CurvatureSkeleton.lean`——
+   本模块（PhotonTopologyFunctor）仅保留光子函子内容。 -/
 
 /-! ## P5-3：Φ = D|_Rec_photon 严格等式的函子层形式化（2026-08-12 推进）
    严格语义（笔记 §3.5 P5-3 / 路线图 62G）："Φ = D|_Rec_photon" 的严格形式 =

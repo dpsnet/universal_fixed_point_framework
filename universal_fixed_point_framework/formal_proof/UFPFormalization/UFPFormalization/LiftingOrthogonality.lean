@@ -4,7 +4,7 @@ import Mathlib.Tactic
 namespace UFPFormalization
 
 /-!
-# PhotonTopology2Lifting — Δ 2-态射接入 lifting 框架（2-范畴结构骨架，P5-2 延伸）
+# LiftingOrthogonality — Δ 2-态射接入 lifting 框架（2-范畴结构骨架，P5-2 延伸；通用范畴论，2026-08-14 去光子前缀）
 
 笔记: notes/06_photon_topology/photon_first_principle_origin.md §3.5 P5-2
 （"Δ 2-态射接入 lifting 框架（2-范畴结构）登记开放"）

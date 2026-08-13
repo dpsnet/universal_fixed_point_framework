@@ -1,23 +1,23 @@
-import UFPFormalization.PhotonTopology2Lifting
+import UFPFormalization.LiftingOrthogonality
 import Mathlib.Tactic
 
 namespace UFPFormalization
 
 /-!
-# PhotonTopology2Category — 2-胞腔竖/横复合（严格 2-范畴结构，P5-2 延伸）
+# TwoCategoryLaws — 2-胞腔竖/横复合（严格 2-范畴结构，P5-2 延伸；通用范畴论，2026-08-14 去光子前缀）
 
 笔记: notes/06_photon_topology/photon_first_principle_origin.md §3.5 P5-2
 （"2-胞腔横/竖复合（完整严格 2-范畴结构）登记开放"）
 论文: paper/paper44_photon_topology.md §7.3（4-范畴几何未形式化声明）
 
 ## 目标
-闭合 `PhotonTopology2Lifting` 中登记开放的"2-胞腔横/竖复合（完整严格 2-范畴结构）"：
+闭合 `LiftingOrthogonality` 中登记开放的"2-胞腔横/竖复合（完整严格 2-范畴结构）"：
 2-胞腔方向代数（Z₂ 结构，与框架 σ 的 Z₂ 自逆 σ²=1 同构）+ 竖/横复合定义 + 严格 2-范畴律。
 
 ## 已闭合（零 sorry）
 1. **`CellDirection` Z₂ 方向代数**：乘法（Z₂ 加法：normal=单位元、horizontal=非平凡元）、
    结合律/交换律/单位元/自逆（mul d d = normal——与框架 σ²=1 同构，
-   `PhotonTopologyExterior.lean` 的 `sigma_self_inverse` 2-层对应）；
+   `ExteriorFunctor.lean` 的 `sigma_self_inverse` 2-层对应）；
 2. **竖复合 `deltaVComp` / 恒等 2-胞腔 `deltaId` / 横复合 `deltaHComp`** 定义；
 3. **严格 2-范畴律（代数核心，已闭合）**：竖结合律 + 竖恒等律 + **交换律（interchange）**
    ——(β∘α)⋆(δ∘γ) = (β⋆δ)∘(α⋆γ)，全部由 Z₂ 代数机器证明；

@@ -350,7 +350,7 @@ is the line-shape function.
 
 **P5 定义精确化阶段（2026-08-12 启动，路线图 62G）**——剩余开放项瓶颈为定义精确化而非工具能力：
 - **P5-1 三分法清查**（✅可证/🔶可反证/⚠️需定义，§七 8 项清单，核心笔记 §3.5）；
-- **P5-4 代数谱骨架 + 电离阈 sSup ✅**（`PhotonTopologySpectrum.lean`（原 `PhotonTopologySpectral`，2026-08-14 更名）：`boundEnergy_mem_spectrum` 束缚本征值∈谱 + `boundBand_subset_spectrum` 束缚带⊆谱 + 束缚带/自由带/电离阈定义；**2026-08-12 电离阈 sSup 序列证明闭合**——`hydrogen_ionizationGap_eq`：氢原子束缚带 {13.6/n²} 的 sSup = 13.6 eV（基态 |E₁| 最大），电离阈从数值锚定升级为机器证明）；
+- **P5-4 代数谱骨架 + 电离阈 sSup ✅**（`SpectralSkeleton.lean`（原 `PhotonTopologySpectrum`/`PhotonTopologySpectral`，2026-08-14 更名）：`boundEnergy_mem_spectrum` 束缚本征值∈谱 + `boundBand_subset_spectrum` 束缚带⊆谱 + 束缚带/自由带/电离阈定义；**2026-08-12 电离阈 sSup 序列证明闭合**——`hydrogen_ionizationGap_eq`：氢原子束缚带 {13.6/n²} 的 sSup = 13.6 eV（基态 |E₁| 最大），电离阈从数值锚定升级为机器证明）；
 - **P5-2 Δ 结构严格正交 ✅**（用户裁定"修正为严格正交，原本应达到的标准"——**J2 模式间定位严格机器证明**：`DeviationBound.lean` §1.7 `commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`，paper31 §4.1 层正交升级为严格正交；探针 `paperX_delta_spatial_probe.py` 排除生成元编码——"Δ ⊥ 三维空间"按谱模式编码（J2）解读）；
 - **P5-3 Φ=D 严格等式 ✅（2026-08-12 函子层闭合）**——严格语义 = 谱化路径交换 + 转变效应一致：复合函子 `DE = D∘E` / `PhiSpectral = DE∘Φ`（`PhotonTopologyFunctor.lean` P5-3 段，`lake build` 2454 jobs 零 sorry）+ 对象层（谱化路径交换/闭开谱差 1→2 维/Φ 后恒开放）+ 态射层（Φ 态射谱化平凡）+ 总结定理 `P53_strict_equality`——Φ 的谱效应完全由 D 函子在 Rec 嵌入上的作用给出。
 
@@ -797,7 +797,7 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 4. **62D**：红移拓扑推导定量公式 ✅（§5.2.1 多普勒推导链 $\gamma(1+\beta)$ + §5.3.1 $\delta z_\Delta$ 量级估计 + 数值脚本 14/14）
 5. **62E**：交叉衍生效应定量化 ✅（§6 六项预言定量形式：P1 $\delta z_{\text{pol}}=\kappa_\Delta z_{\text{grav}}$、P2 线性标度、P3 候选量级、P4 $S_4$ 震荡、P5 $\lambda_e(1-\cos\theta)$、P6 $N_{\text{crit}}$；数值脚本 18/18）
 6. **62F**：Lean/Agda 形式化 🔶 交付（`PhotonTopology.lean` + `PhotonTopologyFunctor.lean`，2454 jobs 零 sorry：拓扑类/A4 阶跃/方向性/不可逆/Bohr 条件/A3 并置结构 Φ₊/零质量/静默门控/Φ 态射层忠实嵌入/范畴层方向正交（1-态射层单点性）/内积层正交⟹交平凡/联络-度量相容选取+联络算子/Fock 空间算子/光速锁定与能量量子骨架 + Agda 镜像，Everything.agda 全量通过）——P1 验收未全达成，双层正交完整几何（范畴层 4-态射方向正交、纤维丛层全微分几何）、光速/$\lambda\nu$/$E=h\nu$ 完整形式化（代数骨架已建）登记开放项；**2026-08-11/12 扩展**：三恒等式闭环（`energy_momentum_consistency`）+ dagger 第一性原理 + R 态射层伴随性方程 + 曲率层代数骨架（`PhotonTopologyCurvature.lean`）+ 函子律三阶段（`PhotonTopologyFunctorLaws.lean` 两对象/多能级/无穷维）+ 代数谱骨架（`PhotonTopologySpectral.lean`）+ Δ 结构严格正交（`DeviationBound.lean` J2）+ 外显函子（`PhotonTopologyExterior.lean`）
-7. **62G**：P5 定义精确化 🔶 推进中（2026-08-12 启动，剩余开放项瓶颈为定义精确化而非工具能力）——**P5-1 三分法清查 ✅**、**P5-4 代数谱骨架 ✅**（`PhotonTopologySpectrum.lean`（原 `PhotonTopologySpectral`，2026-08-14 更名））、**P5-2 Δ 结构严格正交 ✅**（J2 严格机器证明 + 探针排除生成元编码 + **体系一致性检查：T1 已对齐**、T2 登记）、**P5-3 Φ=D 严格等式 ⚠️ 待推进**；层次 B 完整谱等式保持库依赖开放项不硬搭
+7. **62G**：P5 定义精确化 🔶 推进中（2026-08-12 启动，剩余开放项瓶颈为定义精确化而非工具能力）——**P5-1 三分法清查 ✅**、**P5-4 代数谱骨架 ✅**（`SpectralSkeleton.lean`（原 `PhotonTopologySpectrum`/`PhotonTopologySpectral`，2026-08-14 更名））、**P5-2 Δ 结构严格正交 ✅**（J2 严格机器证明 + 探针排除生成元编码 + **体系一致性检查：T1 已对齐**、T2 登记）、**P5-3 Φ=D 严格等式 ⚠️ 待推进**；层次 B 完整谱等式保持库依赖开放项不硬搭
 
 **Phase 62 整体状态（诚实声明，2026-08-12 更新）**：62A–F 阶段交付物完成，**62G（P5 定义精确化）推进中**——§七 8 项开放问题全部获推进：4 项闭合（#1 Φ 范畴论对象层+态射层（构造性实现+忠实嵌入）、#2 零质量 Lean 形式化、#3 捕获-再转变模拟、#8 静默-跃迁门控 $W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$），4 项部分（#4 量纲限定 $\Delta=F(\lambda_{\min}/\lambda_P)$ 形式族 + 参数空间负结果 + 近-Planck 候选锚定 15³、#5 候选量级 + 判别性锚定 + 选择原理收窄 4→2 + #5×#4 交叉约束、#6 树级模方守恒+Fock Lean 骨架+JC 定量桥接+dagger 第一性原理+R 态射层伴随性方程、#7 内积层+联络-度量相容选取+联络算子+曲率层代数骨架闭合全微分几何开放）；预言系数（$\kappa_\Delta$、$\eta_{\text{S3}}$、$\varepsilon_\Delta$）为候选量级带非精确值，$h$-$c$-$\Delta$ 代数形式量纲限定数值待定（近-Planck 候选族已收窄）；P1 验收：三恒等式闭环（$\lambda\nu=c$、$E=h\nu$、$p=h/\lambda$ 一致）代数骨架已建（温和兼容）+ **六方向成果集成**（§1.2.4/§2.5/§4.4-4.6/§6.7-6.16/§7.3.1）；整体 = **推进中（交付完成、闭环未达成）**，核心预言实验验证为远期（15–20 年）。
 
@@ -816,8 +816,8 @@ $h$-$c$-$\Delta$ 三常数约束的完整证明依赖：
 | $d_H = \ln 15 + \delta$ | Paper XXXIII 分形维数 | §6.4 |
 | 函子律（$\Phi=D|_{\mathbf{Rec}}$） | `PhotonTopologyFunctorLaws.lean`（三阶段） | §1.2.4 |
 | Δ 结构严格正交（J2） | `DeviationBound.lean`（Paper XXXI §1.7） | §1.2.4 |
-| 代数谱骨架（束缚带/电离阈） | `PhotonTopologySpectrum.lean`（原 `PhotonTopologySpectral`，2026-08-14 更名） | §1.2.4 |
-| 曲率层代数骨架 | `PhotonTopologyCurvature.lean` | §7.3.1 |
-| 外显函子 E: Sp→Obs | `PhotonTopologyExterior.lean` | §6.11 |
+| 代数谱骨架（束缚带/电离阈） | `SpectralSkeleton.lean`（原 `PhotonTopologySpectrum`/`PhotonTopologySpectral`，2026-08-14 更名） | §1.2.4 |
+| 曲率层代数骨架 | `CurvatureSkeleton.lean`（原 `PhotonTopologyCurvature`，2026-08-14 去光子前缀） | §7.3.1 |
+| 外显函子 E: Sp→Obs | `ExteriorFunctor.lean`（原 `PhotonTopologyExterior`，2026-08-14 去光子前缀） | §6.11 |
 | Z₂ 值拓扑荷 / w₂ 层级 | Paper XXXI（σ π₁ 级）/ 特征类理论 | §6.9 |
 | 胶球宽度（静默释放定量线） | Paper XL 定理 4.2/§5.11 | §6.15 |

@@ -1,4 +1,4 @@
-import UFPFormalization.PhotonTopology2Lifting
+import UFPFormalization.LiftingOrthogonality
 import UFPFormalization.PhotonTopologyFunctor
 import UFPFormalization.BranchCounting
 import Mathlib.Tactic
@@ -30,7 +30,7 @@ namespace UFPFormalization
 | 层 | 态射结构 | 来源模块 | 方向类载体 | 与字典映射 |
 |:--|:--|:--|:--|:--|
 | 1-层 | `MultiMor`（unfold/fold/transition） | PhotonTopologyFunctorLaws + mathlib `HasLiftingProperty`（1-层 lifting 正交实例化，复用 mathlib 不另建） | 法向=unfold、水平=transition | normal↦V、horizontal↦H |
-| 2-层 | `SpTwoMorphism`（homotopy 矩阵）+ `SpDelta2Cell`（Δ 偏差矩阵） | HigherSpCategory（链复形模式） | `CellDirection`（Z₂ 方向代数，PhotonTopology2Lifting/2Category） | normal↦V、horizontal↦H |
+| 2-层 | `SpTwoMorphism`（homotopy 矩阵）+ `SpDelta2Cell`（Δ 偏差矩阵） | HigherSpCategory（链复形模式） | `CellDirection`（Z₂ 方向代数，LiftingOrthogonality/TwoCategoryLaws） | normal↦V、horizontal↦H |
 | 3-层 | `SpThreeMorphism`（secondHomotopy 链复形） | HigherSpCategory | 方向类填充（层 3 交换律严格，非方向代数 lifting） | normal↦V、horizontal↦H |
 | 4-层 | `SpFourMorphism`（thirdHomotopy 链复形） | HigherSpCategory | coherence 层 = Δ 所在层 | normal↦V、horizontal↦H |
 
@@ -47,7 +47,7 @@ homotopy 矩阵为实质载体）与方向类路线（`CellDirection`，Z₂ 方
 ## 正交语义分层（核心：正交 ≠ 内积、≠ KK）
 
 **正交的代数核心 = 互补分解**（`inf_bot`/`sup_top`，本字典主结构，**无内积**）：
-- 范畴层（mathlib `HasLiftingProperty` 1-层实例/`PhotonTopology2Lifting`）：方向类填充性质
+- 范畴层（mathlib `HasLiftingProperty` 1-层实例/`LiftingOrthogonality`）：方向类填充性质
   （lifting 正交 = 唯一对角填充，非内积——正面回应 CNF 评价 (b)"4-范畴中没有内积定义"）；
 - 纤维丛层（`PhotonTopologyFunctor` #7 已闭合）：垂直-水平分解 V ⊕ H
   （`VerticalHorizontalSplitting`，谱纤维丛意义）；

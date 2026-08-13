@@ -6,7 +6,7 @@ import Mathlib.Tactic
 namespace UFPFormalization
 
 /-!
-# PhotonTopologyResonance — WW 复极点代数骨架（A4 涌现不可逆的极点侧）
+# PoleDecay — WW 复极点代数骨架（A4 涌现不可逆的极点侧；通用谱/复分析，2026-08-14 去光子前缀）
 
 笔记: notes/06_photon_topology/photon_first_principle_origin.md §3.7
       （自伴性闭合方案 (iii) Friedrichs 模型："约化分母 η(z) 下半平面零点即共振

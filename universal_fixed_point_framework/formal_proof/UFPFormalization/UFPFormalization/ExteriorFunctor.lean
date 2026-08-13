@@ -11,7 +11,7 @@ namespace UFPFormalization
 open CategoryTheory
 
 /-!
-# PhotonTopologyExterior — 外显结构形式化（§6.17/§6.19/§6.20）
+# ExteriorFunctor — 外显结构形式化（§6.17/§6.19/§6.20；框架通用结构，2026-08-14 去光子前缀）
 
 笔记: notes/06_photon_topology/photon_first_principle_origin.md §6.17–§6.20
 

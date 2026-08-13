@@ -163,13 +163,13 @@
 **理论方案（执行步骤）**：
 
 1. **P6-1 光速/λν/E=hν 完整形式化**（P1 验收补全）：光速不变（定理 2.1：c=1/√(μ₀ε₀) 拓扑不变量）+ c=λν 反比自洽（定理 3.1）+ E=hν/三恒等式闭环统一结构（已有 energy_momentum_consistency）；Lean 增补 `PhotonTopology.lean`（`VacuumLightSpeed`/`light_speed_invariant`/`speed_antiproportional`/`light_speed_unify`）。
-2. **P6-2 SpObj ⊗ 结构**（方向 5 剩余）：SpObj 上 Kronecker 张量积（矩阵内容 + Fin 维度管道），σ 幺半群同态在 ⊗ 上的实例化（`PhotonTopologyExterior.lean` 扩展，§6.17 候选 A/B 的范畴层落地）。
+2. **P6-2 SpObj ⊗ 结构**（方向 5 剩余）：SpObj 上 Kronecker 张量积（矩阵内容 + Fin 维度管道），σ 幺半群同态在 ⊗ 上的实例化（`ExteriorFunctor.lean`（原 PhotonTopologyExterior，2026-08-14 去光子前缀）扩展，§6.17 候选 A/B 的范畴层落地）。
 3. **P6-3 channel 物理定义**（方向 5 剩余）：观测通道（时间/力）的物理定义候选 + 实例核对（§6.20 剩余）。
 4. **P6-4 4-范畴方向正交完整几何**（P1 验收补全）：范畴层 4-态射方向与伴随函子方向正交的完整几何（代数核心已有：光子 1-态射层单点性、Δ 无投影；推进 2-范畴 lifting 接入）。
 5. **P6-5 开放问题 #4/#5**：h-c-Δ 模型指定（k/n/λ_min 候选锁定）与 ε_Δ 与 Δ 关系（框架推导）。
 6. **P6-6 库依赖评估**：层次 B 完整谱等式、纤维丛内积全局、流形级微分几何——全行业缺口登记，不硬搭。
 
-**形式化配套**：Lean（P6-1 `PhotonTopology.lean` / P6-2 `PhotonTopologyExterior.lean` / P6-4 范畴层扩展，`lake env lean` 编译零 sorry）；数值（`paperX_*` 已有，扩展时注册 run_all_tests.py）。
+**形式化配套**：Lean（P6-1 `PhotonTopology.lean` / P6-2 `ExteriorFunctor.lean`（原 PhotonTopologyExterior）/ P6-4 范畴层扩展，`lake env lean` 编译零 sorry）；数值（`paperX_*` 已有，扩展时注册 run_all_tests.py）。
 
 **验收标准**：P1 验收项推进 ≥2 项闭合/部分闭合（光速形式化 + 范畴层正交）；方向 5 剩余项推进 ≥1 项（⊗ 结构或 channel）；开放问题 #4/#5 登记推进状态；库依赖项保持登记不硬搭。
 

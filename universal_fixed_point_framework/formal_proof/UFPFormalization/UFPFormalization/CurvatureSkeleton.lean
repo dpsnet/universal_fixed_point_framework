@@ -1,17 +1,16 @@
-import UFPFormalization.PhotonTopologyFunctor
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Tactic
 
 /-!
-# PhotonTopologyCurvature — 曲率层代数骨架（§7.3 完整数学表述的机器证明）
+# CurvatureSkeleton — 曲率层代数骨架（§7.3 完整数学表述的机器证明；通用微分几何，2026-08-14 去光子前缀）
 
 论文: paper/paper44_photon_topology.md §7.3 曲率层代数骨架（完整数学表述，#7）
 笔记: notes/06_photon_topology/photon_topology_theory.md（纤维丛层曲率推进，开放问题 #7）
 
 内容（与 §7.3 六项一一对应）：
   1. 结构方程 Ω = dω + ω∧ω（代数形式：`curvature` 定义，ω∧ω 项在矩阵李代数表示下 = ω*ω）
-  2. 2-形式反对称 Ω_ij = -Ω_ji（复用 `PhotonTopologyFunctor.curvature_antisymm`）
-  3. 李括号反对称 [A,B] = -[B,A]（复用 `PhotonTopologyFunctor.lie_bracket_antisymm`）
+  2. 2-形式反对称 Ω_ij = -Ω_ji（`curvature_antisymm`，2026-08-14 自 PhotonTopologyFunctor 迁入）
+  3. 李括号反对称 [A,B] = -[B,A]（`lie_bracket_antisymm`，2026-08-14 自 PhotonTopologyFunctor 迁入）
   4. U(1) 阿贝尔特例：交换 ⟹ [A,B]=0，结构方程退化为纯外微分（`lie_bracket_zero_of_commute`/`curvature_abelian`）
   5. 挠率 T = dθ + ω∧θ 反对称（`torsion_antisymm`）
   6. 联络算子衔接：协变项反对称保持（`covariant_antisymm`，Bianchi 内核）+ 幂等投影
@@ -22,7 +21,7 @@ import Mathlib.Tactic
 ——与 §7.5 开放问题 3（完整流形微分几何）一致。
 -/
 
-namespace PhotonTopologyCurvature
+namespace UFPFormalization
 
 open Matrix
 open scoped Matrix
@@ -31,8 +30,21 @@ open scoped Matrix
 def curvature {n : ℕ} (dω ω : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   dω + ω * ω
 
--- 2/3. 2-形式反对称与李括号反对称：复用 PhotonTopologyFunctor.curvature_antisymm
---     与 PhotonTopologyFunctor.lie_bracket_antisymm（本文件不重复声明）
+-- 2. 2-形式反对称与反对称化算子（2026-08-14 自 PhotonTopologyFunctor 迁入，通用微分几何）
+theorem skew_antisymm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+    (A - A.conjTranspose).conjTranspose = -(A - A.conjTranspose) := by
+  simp
+
+-- 3. 李括号反对称（2026-08-14 自 PhotonTopologyFunctor 迁入）
+theorem lie_bracket_antisymm {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) :
+    A * B - B * A = -(B * A - A * B) := by
+  abel
+
+-- 2/3 组合：曲率反对称性（Ω_ij 与 Ω_ji 反号，外微分项 + 李括号组合）
+theorem curvature_antisymm {n : ℕ} (dwi dwj Ai Aj : Matrix (Fin n) (Fin n) ℂ) :
+    (dwi - dwj + (Ai * Aj - Aj * Ai)) =
+    - (dwj - dwi + (Aj * Ai - Ai * Aj)) := by
+  abel
 
 -- 4a. U(1) 阿贝尔特例：交换 ⟹ 李括号为零（[ω,Ω]=0 的代数内核）
 theorem lie_bracket_zero_of_commute {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ)
@@ -68,4 +80,4 @@ theorem compl_projection_idem {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (h : P * P = P) : (1 - P) * (1 - P) = 1 - P := by
   simp [Matrix.sub_mul, Matrix.mul_sub, h]
 
-end PhotonTopologyCurvature
+end UFPFormalization
