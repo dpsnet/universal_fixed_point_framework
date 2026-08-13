@@ -5,7 +5,9 @@ import Mathlib.Tactic
 namespace UFPFormalization
 
 /-!
-# PhotonTopologySpectral — P5-4 代数谱骨架：束缚带 ⊆ 谱 + 谱间隙集合表述（层次 B 代数层）
+# PhotonTopologySpectrum — P5-4 代数谱骨架：束缚带 ⊆ 谱 + 谱间隙集合表述（层次 B 代数层）
+# （原名 PhotonTopologySpectral，2026-08-14 更名：光子家族模块后缀为结构名词，见
+#   lean_deduplication_tracker 组 H 命名约定——前缀=理论话题标识、后缀=结构名词）
 
 笔记: notes/06_photon_topology/photon_first_principle_origin.md §3.4 层次 B / §3.5 P5-4
 论文: paper/paper44_photon_topology.md 定理 T3（谱间隙闭合）/ §4.4 氢原子谱带锚定

@@ -143,7 +143,7 @@ $$f(i,k)=R_H(1/k^2-1/i^2),\qquad f(i,m)+f(m,k)=f(i,k)\quad(\Delta E\ \text{teles
 | 状态 | 条目 | 说明 |
 |:--|:--|:--|
 | ✅可证 | #2 零质量实数平方根推导补全 | 定义已备（E=pc、v_g=c），直接补证 |
-| ✅可证 | **P5-4 束缚本征值 ∈ 谱（层次 B 代数骨架）** | **本会话已闭合**（`PhotonTopologySpectral.lean`） |
+| ✅可证 | **P5-4 束缚本征值 ∈ 谱（层次 B 代数骨架）** | **本会话已闭合**（`PhotonTopologySpectrum.lean`（原 `PhotonTopologySpectral`，2026-08-14 更名）） |
 | 🔶可反证 | #5 κ_Δ 双候选白矮星判别 | 双候选 δz_pol 差 2 倍，观测可判别 |
 | 🔶可反证 | #6 γ→∞ 形式极限 | 物理禁止 v=c 参考系，仅形式极限（已注明） |
 | ✅/🔶 | #1/#7 **4-范畴态射方向几何正交** | P5-2 二修：Δ 结构 J2 严格正交已机器证明（commutator_trace_zero/commutator_diag_zero_of_diagonal），Δ 2-态射接入 lifting 框架仍开放 |
