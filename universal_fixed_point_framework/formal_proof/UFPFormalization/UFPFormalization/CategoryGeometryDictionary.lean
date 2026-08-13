@@ -1,5 +1,5 @@
 import UFPFormalization.LiftingOrthogonality
-import UFPFormalization.PhotonTopologyFunctor
+import UFPFormalization.FiberOrthogonalSkeleton
 import UFPFormalization.BranchCounting
 import Mathlib.Tactic
 
@@ -49,7 +49,7 @@ homotopy 矩阵为实质载体）与方向类路线（`CellDirection`，Z₂ 方
 **正交的代数核心 = 互补分解**（`inf_bot`/`sup_top`，本字典主结构，**无内积**）：
 - 范畴层（mathlib `HasLiftingProperty` 1-层实例/`LiftingOrthogonality`）：方向类填充性质
   （lifting 正交 = 唯一对角填充，非内积——正面回应 CNF 评价 (b)"4-范畴中没有内积定义"）；
-- 纤维丛层（`PhotonTopologyFunctor` #7 已闭合）：垂直-水平分解 V ⊕ H
+- 纤维丛层（`FiberOrthogonalSkeleton` #7 已闭合，2026-08-14 自 PhotonTopologyFunctor 迁出）：垂直-水平分解 V ⊕ H
   （`VerticalHorizontalSplitting`，谱纤维丛意义）；
 - 字典把逐层方向类映射到子空间，使"方向正交（方向互补）"与"子空间分解（交平凡）"
   成为同一代数结构的两面——**不依赖内积**。
