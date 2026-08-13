@@ -89,6 +89,29 @@ theorem spVertComp_assoc {X Y : SpObj} {P Q R S : X ⟶ Y}
   ext
   simp [spVertComp, add_assoc]
 
+/-- SpTwoMorphism 沿 1-态射等式运输保持 homotopy（横结合律的类型运输工具，
+    与方向代数路线 `deltaCast_dir` 对应）。 -/
+theorem spTwoCast_homotopy {X Y : SpObj} {P Q P' Q' : X ⟶ Y}
+    (α : SpTwoMorphism P Q) (h₁ : P = P') (h₂ : Q = Q') :
+    (h₁ ▸ h₂ ▸ α).homotopy = α.homotopy := by
+  cases h₁
+  cases h₂
+  rfl
+
+/-- **横结合律（2-层，2026-08-13 闭合）**：(α⋆α')⋆α'' = α⋆(α'⋆α'')——
+    类型不对齐由 mathlib `Category.assoc` 运输（1-态射复合结合律），
+    homotopy 代数由矩阵乘法结合律闭合——严格 2-范畴横结合律，与方向代数
+    路线 `deltaHComp_assoc`（multiComp 运输）对应。 -/
+theorem spHorizComp_assoc {X Y Z W : SpObj}
+    {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z} {P'' Q'' : Z ⟶ W}
+    (α : SpTwoMorphism P Q) (α' : SpTwoMorphism P' Q') (α'' : SpTwoMorphism P'' Q'') :
+    (Category.assoc P P' P'') ▸ (Category.assoc Q Q' Q'') ▸
+        (spHorizComp (spHorizComp α α') α'') =
+      spHorizComp α (spHorizComp α' α'') := by
+  apply SpTwoMorphism.ext
+  rw [spTwoCast_homotopy]
+  simp [spHorizComp, Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc, add_assoc]
+
 /-! ## Exchange law deviation for Sp₂ 2-morphisms
 
     The strict exchange law does NOT hold in the current spectral
@@ -289,6 +312,18 @@ theorem spThreeVertComp_assoc {X Y : SpObj} {P Q : X ⟶ Y}
   ext
   simp [spThreeVertComp, add_assoc]
 
+/-- **横结合律（3-层，homotopy 层机器证明）**：(Ξ⋆Ξ')⋆Ξ'' = Ξ⋆(Ξ'⋆Ξ'')——
+    secondHomotopy 代数由矩阵乘法结合律闭合；类型不对齐（1-态射复合结合律
+    `(P≫P')≫P'' = P≫(P'≫P'')`）由 2-层横结合律 `spHorizComp_assoc`
+    （Category.assoc 运输）完成——编码层同构，3-层横结合律闭合。 -/
+theorem spThreeHorizComp_homotopy_assoc {X Y Z W : SpObj}
+    {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z} {P'' Q'' : Z ⟶ W}
+    {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'} {α'' β'' : SpTwoMorphism P'' Q''}
+    (Ξ : SpThreeMorphism α β) (Ξ' : SpThreeMorphism α' β') (Ξ'' : SpThreeMorphism α'' β'') :
+    (spThreeHorizComp (spThreeHorizComp Ξ Ξ') Ξ'').secondHomotopy =
+      (spThreeHorizComp Ξ (spThreeHorizComp Ξ' Ξ'')).secondHomotopy := by
+  simp [spThreeHorizComp, Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc, add_assoc]
+
 /-! =========================================================
     4-态射（SpFourMorphism）——层 4：coherence 层（paper31 §4.1）
    =========================================================
@@ -400,6 +435,19 @@ theorem spFourVertComp_assoc {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpTwoMorphis
   ext
   simp [spFourVertComp, add_assoc]
 
+/-- **横结合律（4-层，homotopy 层机器证明）**：(Φ⋆Φ')⋆Φ'' = Φ⋆(Φ'⋆Φ'')——
+    thirdHomotopy 代数由矩阵乘法结合律闭合；类型不对齐（1-态射复合结合律）
+    由 2-层横结合律 `spHorizComp_assoc`（Category.assoc 运输）完成——
+    编码层同构，**4-态射层律完备**（竖结合 + 横结合）。 -/
+theorem spFourHorizComp_homotopy_assoc {X Y Z W : SpObj}
+    {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z} {P'' Q'' : Z ⟶ W}
+    {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'} {α'' β'' : SpTwoMorphism P'' Q''}
+    {Ξ Τ : SpThreeMorphism α β} {Ξ' Τ' : SpThreeMorphism α' β'} {Ξ'' Τ'' : SpThreeMorphism α'' β''}
+    (Φ : SpFourMorphism Ξ Τ) (Φ' : SpFourMorphism Ξ' Τ') (Φ'' : SpFourMorphism Ξ'' Τ'') :
+    (spFourHorizComp (spFourHorizComp Φ Φ') Φ'').thirdHomotopy =
+      (spFourHorizComp Φ (spFourHorizComp Φ' Φ'')).thirdHomotopy := by
+  simp [spFourHorizComp, Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc, add_assoc]
+
 /-! ## Δ coherence 衔接：层 3 交换律严格成立（coherence 偏差定位于层 2 Δ） -/
 
 /-- **层 3 交换律严格成立（无假设）**：3-态射横复合与竖复合的互换精确成立
@@ -419,5 +467,57 @@ theorem spThreeExchangeLaw_strict {X Y Z : SpObj}
   ext
   simp [spThreeHorizComp, spThreeVertComp, Matrix.add_mul, Matrix.mul_add]
   abel
+
+/-! =========================================================
+    Δ 2-胞腔语义（偏差胞腔的具体编码，2026-08-13）
+   =========================================================
+
+  登记开放项闭合：Δ 2-胞腔物理语义（偏差胞腔的具体编码）。
+  层 2 交换律偏差 Δ（`spExchangeLaw_deviation_partial_commutator`，
+  部分对易子形式）的 2-胞腔编码——偏差胞腔携带 Δ 的矩阵内容，
+  与 spExchangeLaw 偏差同一性机器证明衔接。
+
+  语义要点：
+  - Δ 2-胞腔 = 层 2 交换律偏差的胞腔载体（`dev` 字段 = 偏差矩阵）；
+  - 存在性由部分对易子形式直接构造（`spDelta2Cell_exists`）；
+  - 与 spExchangeLaw 偏差的同一性（`spDelta2Cell_eq_homotopy_deviation`）；
+  - **非 KK 守卫**：偏差胞腔为代数结构（矩阵内容），不引入空间坐标，
+    其正交语义由 J2 模式间定位（`commutator_diag_zero_of_diagonal`）承载。 -/
+
+/-- Δ 2-胞腔（偏差胞腔）：层 2 交换律偏差 Δ 的 2-胞腔编码——
+    携带偏差 homotopy 矩阵，内容 = spExchangeLaw 偏差（部分对易子形式）。 -/
+structure SpDelta2Cell {X Y Z : SpObj}
+    {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
+    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R') where
+  /-- 偏差 homotopy：LHS − RHS 的 homotopy 差（层 2 交换律偏差的矩阵内容）。 -/
+  dev : Matrix (Fin X.n) (Fin Z.n) ℂ
+  /-- 偏差 = spExchangeLaw 偏差（部分对易子形式）。 -/
+  condition : dev = X.A * (β.homotopy * α'.homotopy) -
+    2 • (β.homotopy * (Y.A * α'.homotopy)) + (β.homotopy * α'.homotopy) * Z.A
+
+/-- **Δ 2-胞腔存在性**：spExchangeLaw 偏差的部分对易子形式构成 Δ 2-胞腔
+    （层 2 交换律偏差的 2-胞腔语义闭合）。 -/
+def spDelta2Cell_exists {X Y Z : SpObj}
+    {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
+    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R') :
+    SpDelta2Cell α β α' β' :=
+  { dev := X.A * (β.homotopy * α'.homotopy) -
+      2 • (β.homotopy * (Y.A * α'.homotopy)) + (β.homotopy * α'.homotopy) * Z.A
+    condition := rfl }
+
+/-- **Δ 2-胞腔与 spExchangeLaw 偏差的同一性**：偏差胞腔的 homotopy 差 =
+    spExchangeLaw_homotopy_deviation（层 2 交换律偏差的完整机器证明衔接）——偏差
+    胞腔的矩阵内容 = 交换律 LHS−RHS 的 homotopy 差（`spExchangeLaw_deviation_partial_commutator`）。 -/
+theorem spDelta2Cell_eq_homotopy_deviation {X Y Z : SpObj}
+    {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
+    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R')
+    (c : SpDelta2Cell α β α' β') :
+    (spHorizComp (spVertComp α β) (spVertComp α' β')).homotopy -
+      (spVertComp (spHorizComp α α') (spHorizComp β β')).homotopy = c.dev := by
+  rw [c.condition]
+  exact spExchangeLaw_deviation_partial_commutator α β α' β'
 
 end UFPFormalization

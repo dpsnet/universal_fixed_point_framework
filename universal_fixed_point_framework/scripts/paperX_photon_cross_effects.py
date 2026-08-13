@@ -8,7 +8,7 @@ paperX_photon_cross_effects.py — Phase 62E 交叉衍生效应定量化数值�
   E2 P2 S3 静默-辐射波长标度: nu(Z)/nu0 = 1 + eta_S3*(Z/Z_ref)
   E3 P3 h-c-Delta 三常数约束: 候选代数形式的量级合理性 (Delta_lambda_min, hc)
   E4 P4 分形宇宙红移震荡: S4 = e^(-d_H) = 1/15, 幅度与对数周期候选形式
-  E5 P5 无粒子假设康普顿散射: Delta_lambda = lambda_e*(1-cos(theta))
+  E5 P5 场表述康普顿散射: Delta_lambda = lambda_e*(1-cos(theta))
   E6 P6 多层静默无辐射跃迁判据: R_supp(N) = sigma_silent^N, N_crit
 
 诚实边界: 六项预言均为远期可证伪假说, 本脚本验证其定量形式/量级结构的
@@ -143,7 +143,7 @@ def e4_fractal_oscillation():
 
 
 # ============================================================
-# E5 预言 P5: 无粒子假设康普顿散射
+# E5 预言 P5: 场表述康普顿散射
 # ============================================================
 def e5_compton():
     lam_e = H / (M_E * C)

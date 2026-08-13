@@ -42,7 +42,7 @@ theorem spectral_flow_at_zero (n : ℕ) (G A : Matrix (Fin n) (Fin n) ℂ) (N : 
     spectralFlowMap n G A 0 (N + 1) = A := by
   induction N with
   | zero =>
-    simp [spectralFlowMap, Finset.sum_range_one, ad, Function.iterate_zero]
+    simp [spectralFlowMap, Function.iterate_zero]
   | succ k ih =>
     have hzero : (((0 : ℝ)^(k+1) / Nat.factorial (k+1) : ℝ) : ℂ) = (0 : ℂ) := by
       simp

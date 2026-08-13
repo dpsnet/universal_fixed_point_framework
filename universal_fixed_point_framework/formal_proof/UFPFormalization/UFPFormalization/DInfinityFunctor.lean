@@ -57,7 +57,7 @@ theorem DInfinity_preserves_id (X : RecObj) :
         SpHom.P (DFunctor_map (𝟙 X)) = SpHom.P (𝟙 (DFunctor_obj X)) :=
           congrArg SpHom.P (DFunctor.map_id X)
         _ = 1 := by
-          simpa using (SpHom.id_P (DFunctor_obj X))
+          simp
     simpa using congrArg (fun M : Matrix (Fin (DFunctor_obj X).n) (Fin (DFunctor_obj X).n) ℂ => M i j) hP_mat
   · simp [DInfinity_inf, DInfinity_one, recInfId, specInfId]
 
