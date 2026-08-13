@@ -127,6 +127,47 @@ check("S2b-C1 交叉=项1 对所有 n（4..16）成立（0.999±0.002）",
       all(abs(r - 1) < 0.002 for r in ratios), "n=4..16 全部 ≈1（普适恒等式, 数值确立）")
 
 # ============================================================
+# S2c 交叉=项1 恒等式普适性（所有 A 类型, 数值确立）
+# ============================================================
+print("\n[S2c] 交叉=项1 恒等式普适性（A 类型, n=8）")
+print("  A 类型              交叉/项1")
+A_types = {
+    "对角谱 A（SU(2)）": np.diag(lam / lam[-1]),
+    "随机厄米 A": None,
+    "随机对角 A": None,
+}
+rngA = np.random.default_rng(99)
+
+
+def rand_herm_A(nn, rng):
+    X = rng.standard_normal((nn, nn)) + 1j * rng.standard_normal((nn, nn))
+    H = (X + X.conj().T) / 2
+    return H / LA.norm(H, 'fro')
+
+
+A_rnd = rand_herm_A(n, rngA)
+A_dr = np.diag(np.random.default_rng(5).uniform(0.1, 2, n))
+A_types["随机厄米 A"] = A_rnd
+A_types["随机对角 A"] = A_dr
+ratios_A = []
+Nc = 200000
+for name, AA in A_types.items():
+    tt1 = ttc = 0.0
+    for _ in range(Nc):
+        ddb = rand_herm(n, rng)
+        dda = rand_herm(n, rng)
+        cc = AA @ ddb - ddb @ AA
+        c2 = dda @ AA - AA @ dda
+        tt1 += LA.norm(cc @ dda, 'fro') ** 2
+        ttc += 2 * np.real(np.trace((cc @ dda).conj().T @ (ddb @ c2)))
+    tt1, ttc = tt1 / Nc, ttc / Nc
+    r = ttc / tt1 if tt1 > 0 else 0
+    ratios_A.append(r)
+    print(f"  {name:<20s}  {r:.6f}")
+check("S2c-C1 交叉=项1 对所有 A 类型成立（0.999±0.002）",
+      all(abs(r - 1) < 0.002 for r in ratios_A), "对角谱/随机厄米/随机对角 A 全部 ≈1（普适恒等式, 非 SU(2) 特例）")
+
+# ============================================================
 # S3 r_NLO 精确解析闭式
 # ============================================================
 print("\n[S3] r_NLO 精确解析闭式 = 3·项1")
