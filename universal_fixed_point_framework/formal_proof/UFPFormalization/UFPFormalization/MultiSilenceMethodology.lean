@@ -129,6 +129,11 @@ For each physical quantity, the interpretation of each layer differs.
 
 /-- A single silence layer's contribution to a physical quantity.
     Each layer has a numerical factor and a physical interpretation. -/
+/-- 静默层数据记录（S1-S4）。
+    注（2026-08-13 去重核查）：与 RAP4 `SilenceLevel`（strict/asymptotic/epsilon
+    严格性分级）**不同义**——本处为静默层数据表，SilenceLevel 为严格性分级，
+    BranchCounting `LayerIndex` 为 4-范畴态射层索引。近名不同义，
+    引用时注意限定 namespace（信息偏差高风险源，见 lean_deduplication_tracker.md ⑧）。 -/
 structure SilenceLayer where
   /-- Name (S₁ through S₄). -/
   name : String

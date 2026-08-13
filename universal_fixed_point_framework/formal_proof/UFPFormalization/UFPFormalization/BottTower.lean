@@ -115,14 +115,12 @@ theorem doubling_steps_equal_active_layers :
     §3 Bott 塔截断参数 k_max 的范畴结构定义
    ========================================================= -/
 
-/-- Bott 塔截断参数 k_max = 基础层旋量维数 = spinorDim(0) = 8。
-    这是谱间隙截断的物理参数，取值由 𝐒𝐩 4-范畴的
-    主动生成层数 N_active = 3 决定：k_max = 2^{N_active}。 -/
-def k_max : ℕ := spinorDim 0
+/-- Bott 塔截断参数 k_max = 8（复用 Unified3Theorem.k_max，母定义，2026-08-13 去重）。
+    结构连接：k_max = Bott 塔基础层旋量维数 spinorDim(0)（k_max_eq_spinorDim_zero）。 -/
 
-/-- k_max 的数值：k_max = 8。 -/
-theorem k_max_value : k_max = 8 := by
-  unfold k_max; exact spinorDim_zero
+/-- 结构连接：k_max = spinorDim(0)（Bott 塔基础层旋量维数，工作基准）。 -/
+theorem k_max_eq_spinorDim_zero : k_max = spinorDim 0 := by
+  rw [k_max_value]; exact spinorDim_zero
 
 /-- k_max = 2^{N_active}：
     截断参数等于 2 的主动生成层数次幂。 -/
