@@ -16,19 +16,21 @@
 ### 论文索引（已确认部分，待扩展）
 | 论文 | 主题 | 对应 Lean 文件（初列） |
 |:-----|:-----|:----------------------|
-| Paper I (paper1_fractal_spectral_derecursion) | Rec/Sp 范畴、D 函子、谱静默、Clifford 纤维丛 | RecCategory, SpCategory, DecursionFunctor, Adjunction, Silence, SilenceHierarchy, Braided, Clifford, 等 |
-| Paper XXXI (paper31_mass_delta_directionality) | J1-J3 质量-Δ 方向性、层 1-3 正交于 Δ、层 4 coherence | HigherSpCategory, DeviationBound（§1.6/§1.7/§1.8）, CoherenceToBranching |
-| Paper XXXIII / d_H=ln15 推导 | 分支组合原理、统一 3 定理 | DHStructuralAnalysis, BranchCounting, BottTower, Unified3Theorem |
+| Paper I (paper1_fractal_spectral_derecursion) | Rec/Sp 范畴、D 函子、谱静默、Clifford 纤维丛；五层静默 S0-S4（§5.7） | RecCategory, SpCategory, DecursionFunctor, Adjunction, Silence, SilenceHierarchy, Braided, Clifford, 等 |
+| Paper XXXI (paper31_mass_delta_directionality) | J1-J3 质量-Δ 方向性；§4.1 层结构表（层 0-4，层 1-3 正交于 Δ、层 4 coherence=Δ） | HigherSpCategory, DeviationBound（§1.6/§1.7/§1.8）, CoherenceToBranching |
+| Paper XXXIII (paper33_origin_of_3) / Paper XVII (paper17_zero_parameter_predictions) | 统一 3 定理（N_gen=N_active=3 机器证明）；定理 R1（S_k=s^k 单参数族、s=e⁻¹ 物理选定特例）；d_H=ln15+δ（分支计数+Moran/Bowen 机器证明） | Unified3Theorem, DHStructuralAnalysis, BranchCounting, BottTower |
+| Paper XX/XXI (paper20/21) | k_max=8 由统一 3 定理（2^N_active）机器证明 + 对偶网络（B=2k_max−1）确定 | BottTower（Bott 塔翻倍工作基准）、Unified3Theorem |
+| Paper XXX (paper30_dH_structural_analysis) | 定理 1：给定 B=15 解唯一；"为何 B=15"由 Sp 严格 4-范畴结构回答（统一 3 定理） | DHStructuralAnalysis, BranchCounting |
 | Paper 33/XXVII（味/代） | GenSpace=ℂ³ 代空间 | FlavorFiber, Unified3Theorem（§3 主动生成层→GenSpace） |
 
 ## 去重候选重审（2026-08-13 恢复后，依据登记判定）
 
 | # | 候选 | 论文来源核查 | 判定 | 依据 |
 |:--|:-----|:------------|:----:|:-----|
-| ① | `LayerIndex`：BranchCounting（5 层 obj+1-4）vs CategoryGeometryDictionary（4 层 1-4） | ⏳ 待 paper1 §3.5/paper31 J3 §4.1 重读确认两处层结构的论文出处与角色 | ⏳ 待判定 | 两处均描述 Sp 4-范畴层结构；需确认论文中是否为同一登记（合并）还是不同角色（保留） |
-| ② | e/ln15/N_total/r/d_H_fit/delta_fit：BranchCounting vs DHStructuralAnalysis | ✅ 已确认：BranchCounting 侧 = 自底向上推导结论（N_total 关联 `total_layers_count`（LayerIndex 计数机器证明）、r = 定理 R1 谱静默因子）；DHStructuralAnalysis 侧 = 自顶向下推导前提（N_active/N_total/r 为 d_H=ln15 推导输入、ln15/e 为纯常数） | ❌ 不合并（已恢复） | 来源角色不同（结论 vs 前提） |
-| ③ | `GenSpace`：FlavorFiber vs Unified3Theorem | ✅ 已确认：Unified3Theorem 注释"为解除对损坏依赖链的耦合，此处本地定义（同一类型）" | ❌ 不合并（有意副本） | 有意设计，保留 |
-| ④ | `k_max`/`k_max_value`：Unified3Theorem vs BottTower | ⏳ 待重读：Unified3Theorem.k_max=8（数值）；BottTower.k_max=spinorDim 0（Bott 塔结构定义）——需确认论文中 k_max=8 的来源登记（模型选择 vs 统一 3 定理，参见勘误"k_max=8 不再声称来自 Cl(1,7) Bott 分类"） | ⏳ 待判定 | 定义路径不同（数值 vs spinorDim 结构）；且涉及 k_max=8 勘误语义，须以论文为准 |
+| ① | `LayerIndex`：BranchCounting（5 层 obj+1-4）vs CategoryGeometryDictionary（4 层 1-4） | paper31 §4.1 层结构表 = **5 层**（层 0 对象 + 层 1-4，层 1-3 正交于 Δ、层 4 coherence=Δ）——BranchCounting 与之完全一致；CategoryGeometryDictionary 为 4 层子集（去层 0，paper44 语境） | 🔶 倾向可合并（待用户确认） | 同一论文出处（paper31 J3 §4.1）；BranchCounting 完整 5 层实现，CategoryGeometryDictionary 为子集用法；层数差异（5 vs 4）源于是否含对象层 |
+| ② | e/ln15/N_total/r/d_H_fit/delta_fit：BranchCounting vs DHStructuralAnalysis | **r=e⁻¹ 来源 = 定理 R1**（RAP 勘误 L74：推导值，几何级数+生成元匹配+双重最优性；paper17：味物理选定特例）；**ln15 来源 = 分支计数+Moran/Bowen 机器证明**（paper17）；BranchCounting 侧 = 自底向上推导结论（N_total 关联 total_layers_count 机器证明）；DHStructuralAnalysis 侧 = 自顶向下推导前提 | ❌ 不合并（已恢复） | 来源角色不同（推导结论 vs 推导前提/常数） |
+| ③ | `GenSpace`：FlavorFiber vs Unified3Theorem | Unified3Theorem 注释"为解除对损坏依赖链的耦合，此处本地定义（同一类型）" | ❌ 不合并（有意副本） | 有意设计，保留 |
+| ④ | `k_max`/`k_max_value`：Unified3Theorem vs BottTower | **k_max=8 权威来源 = 统一 3 定理（2^N_active=2³）机器证明 + 对偶网络**（paper20 L439/paper21 L734）；**BottTower.k_max = spinorDim 0** = Bott 塔翻倍"工作基准"（paper2 L219 诠释 + 2026-08-07 勘误定位，不依赖 Cl(1,7) Bott 分类）；Unified3Theorem.k_max=8 = 数值（统一 3 定理） | ❌ 不合并（已恢复） | 论文来源不同（统一 3 定理 vs Bott 塔翻倍工作基准），数值同为 8 但角色不同 |
 | ⑤ | `frobeniusNorm`：RAP4（ℝ 桥接）vs Silence（ℂ 自建） | ⏳ 待登记 | ⏳ 待判定 | 标量域不同；语义同族 |
 | ⑥ | `adjUnit`/`adjCounit`：Adjunction vs RAP5a | ⏳ 待登记 | ⏳ 待判定 | 不同函子（DFunctor vs DIm） |
 | ⑦ | 静默度：S_D / silenceDegree / deltaSilence | ⏳ 待 paper1 §5.7.9 + 各文件注释登记 | ⏳ 待判定 | 同族公式、不同语义 |
