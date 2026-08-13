@@ -4,7 +4,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.30（2026-08-13）。本文为当前研究成果的静态表述——正文不含演进过程叙述；§5.3 纳入引力时间膨胀拓扑诠释（双法向偏转统一：运动学钟慢 ↔ 引力时间膨胀同为向法向自由度偏转，$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 量化统一 + 水星进动/光偏折 GR 分解重述 + 度规双通道互逆 $g_{00}\cdot g_{rr}=1$，`paperX_theta_esc_gravity.py` 5/5/`paperX_grr_categorical.py`   S1-S3，GR 结论拓扑重述、温和兼容）；P5 定名"场表述康普顿散射"（标准康普顿推导为场能量-动量守恒运动学，§6.5）；§7.3 如实登记当前形式化状态（范畴层完整 4-态射骨架 + 曲率层代数骨架 + Δ 2-胞腔语义，`lake build` 2454 jobs 零警告零 sorry）；六项可证伪预言 P1–P6 均为远期假说（§7.5）。版本演进历史见 RAP-Errata v0.38。
+**版本**：v0.30（2026-08-13）。本文为当前研究成果的静态表述——正文不含演进过程叙述；§5.3 纳入引力时间膨胀拓扑诠释（双法向偏转统一：运动学钟慢 ↔ 引力时间膨胀同为向法向自由度偏转，$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 量化统一 + 水星进动/光偏折 GR 分解重述 + 度规双通道互逆 $g_{00}\cdot g_{rr}=1$，`paperX_theta_esc_gravity.py` 5/5/`paperX_grr_categorical.py`   S1-S3，GR 结论拓扑重述、温和兼容）；P5 定名"场表述康普顿散射"（标准康普顿推导为场能量-动量守恒运动学，§6.5）；§7.3 如实登记当前形式化状态（范畴层完整 4-态射骨架 + 曲率层代数骨架 + Δ 2-胞腔语义，`lake build` 2454 jobs 零警告零 sorry）；六项可证伪预言 P1–P6 均为远期假说（§7.5）。版本演进历史见 RAP-Errata v0.38。2026-08-13 归属一致性修正：P5 归属表与 §6.5 同步为温和兼容重述（§7.1 表/§6 章标题/§7.4 口径统一）、lake build jobs 计数统一为 2454——回应 CNF 评价 §10.2 新问题 1/3。
 
 **稿态**：自洽成稿。本文为理论论文，全部核心结构（拓扑转变公理体系、方向性阶跃、双层正交、可拦截性机制、六项可证伪预言）均于本文内完整建立；已知物理结论（Bohr 条件、爱因斯坦系数、光速不变、Planck 关系）在本文中均明确标注为"经典结论的拓扑重述"，不构成新物理声称。理论自洽性的数值验证脚本随文提供（§7.4）。
 
@@ -284,7 +284,7 @@ $$E = p\cdot c.$$
 
 **推导**：$p=h/\lambda \wedge \lambda\nu=c \Longrightarrow p\cdot c = h\nu = E$（数值 500 采样 rel < 1e-12；SI 值：光学 500nm $p\approx1.3\times10^{-27}$ kg·m/s、$E\approx4\times10^{-19}$ J）。
 
-**零质量衔接（§3.2 闭环）**：$E=p\cdot c$ 恰为零质量分支（$E^2=p^2c^2+m^2c^4$ 在 $m=0$ 的正动量支）的能量-动量结构——群速度 $v_g = pc^2/E = c$（光速锁定）；非零质量对照（$E>pc$）$v_g<c$（判别性）。**Lean 机器证明**（2966 jobs 零 sorry）：`Momentum` 结构 + `energy_momentum_consistency`（三恒等式 ⟹ $E=pc$）+ `p1_zero_mass_structure`（闭环给出零质量分支结构）。
+**零质量衔接（§3.2 闭环）**：$E=p\cdot c$ 恰为零质量分支（$E^2=p^2c^2+m^2c^4$ 在 $m=0$ 的正动量支）的能量-动量结构——群速度 $v_g = pc^2/E = c$（光速锁定）；非零质量对照（$E>pc$）$v_g<c$（判别性）。**Lean 机器证明**（2454 jobs 零 sorry，2026-08-13 统一计数）：`Momentum` 结构 + `energy_momentum_consistency`（三恒等式 ⟹ $E=pc$）+ `p1_zero_mass_structure`（闭环给出零质量分支结构）。
 
 **物理意义**：零质量光速锁定是 Planck + de Broglie + 波速恒等式（公共基础 $\{h,c\}$，SI 定义值）的**共同推论**——P1 温和兼容部分闭环。
 
@@ -367,9 +367,9 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 
 ---
 
-## 6 六项颠覆性预言（UFPF 独有、远期可证伪）
+## 6 六项可证伪预言（UFPF 独有；P5 为温和兼容重述，其余五项为颠覆性）
 
-全部六项预言均为 UFPF 框架独有结构（经典理论无对应物），观测门槛见 §7.2，如实登记为"远期可证伪预言"。
+全部六项预言中五项（P1–P4、P6）均为 UFPF 框架独有结构（经典理论无对应物），P5 为场表述温和兼容重述（§6.5，不构成新预言）；观测门槛见 §7.2，如实登记为"远期可证伪预言"。
 
 ### 6.1 预言 P1：引力 $\Delta$-偏振红移差
 
@@ -439,8 +439,8 @@ $$R_{\text{supp}}(N)=\sigma_{\text{silent}}^N,\qquad \sigma_{\text{silent}}=S_4=
 
 | 类别 | 内容 | 本文地位 |
 |:--|:--|:--|
-| 温和兼容 | $c=\lambda\nu$（定理 3.2）、$E=h\nu$（命题 4.1）、基础多普勒红移（§5.2）、宇宙学红移（§5.4）、引力红移基础项与引力时间膨胀拓扑诠释（§5.3）、Bohr 条件、原子选择定则与吸收截面（命题 2.3/定义 2.4）、光速不变（定理 3.1）、光子自旋 $s=1$ 与 E⊥B⊥k 横向性（§2.5）、纵向模式为截面层涌现（§2.5） | 框架铺垫（经典结论拓扑重述） |
-| 颠覆性预言 | 引力 $\Delta$-偏振红移差（P1）、S3 静默-波长标度（P2）、$h$-$c$-$\Delta$ 约束（P3）、分形宇宙震荡（P4）、场表述康普顿散射（P5）、多层静默判据（P6） | 核心贡献（远期可证伪） |
+| 温和兼容 | $c=\lambda\nu$（定理 3.2）、$E=h\nu$（命题 4.1）、基础多普勒红移（§5.2）、宇宙学红移（§5.4）、引力红移基础项与引力时间膨胀拓扑诠释（§5.3）、Bohr 条件、原子选择定则与吸收截面（命题 2.3/定义 2.4）、光速不变（定理 3.1）、光子自旋 $s=1$ 与 E⊥B⊥k 横向性（§2.5）、纵向模式为截面层涌现（§2.5）、**场表述康普顿散射（P5，§6.5——温和兼容重述，不构成新预言；2026-08-13 归属表与 §6.5 自标同步）** | 框架铺垫（经典结论拓扑重述） |
+| 颠覆性预言 | 引力 $\Delta$-偏振红移差（P1）、S3 静默-波长标度（P2）、$h$-$c$-$\Delta$ 约束（P3）、分形宇宙震荡（P4）、多层静默判据（P6） | 核心贡献（远期可证伪） |
 
 **数学结构归属**（本文拓扑/几何/范畴语言的分层定位）：
 
@@ -473,7 +473,7 @@ $$\Omega=d\omega+\omega\wedge\omega,$$
 
 本文理论框架的数值自洽性经脚本 `scripts/paperX_photon_topology.py` 验证（40/40 通过，随文提供）：方向性阶跃（公理 A4 的 $\chi_\Phi$ 封闭/开放类切换与 $\sigma_{\text{S3}}$ 单向不可逆）、光速不变（$c=1/\sqrt{\mu_0\varepsilon_0}$ 精确复现 + 洛伦兹速度加法 501 点 $\beta\in[-0.999,0.999]$ 下 $v'=c$）、$c=\lambda\nu$ 恒等式（5000 采样 rel_err 2e-16）、Bohr 匹配与吸收截面共振选择性（失谐 20$\Gamma$ 时衰减至 6.3e-4）、选择定则匹配（$\Delta m=\pm1\leftrightarrow\sigma^\pm$ 表核对 + 氢 $2p\to1s$ 允许 / $2s\to1s$ 电偶极禁戒）、时间解耦（传播途中零耦合）、零静质量不自洽（$m=0$ 时 $v_g=c$，对照 $m>0$ 时 $v_g<c$）、自由传播模方守恒一致性（树级）、静默-跃迁门控模型（$W_{\text{eff}}=(1-\sigma_{\text{S3}})W_{ij}$）。**时间耦合线数值验证（S11-S15，6/6，脚本 `paperX_photon_time_coupling.py`，§7.5 开放问题 #1 数值层闭合）**：γ→∞ 极限收敛（$v\to c$ 时 $d\tau/dt=1/\gamma$ 单调递减至 $<10^{-6}$，渐近零不可达）、$\cos\theta(\theta=\arcsin(v/c))\equiv1/\gamma$（max err 1.8e-16）、boost 三角参数化 $\sec\theta/\tan\theta\equiv\gamma/\gamma\beta$（5 β 值 <1e-12）、牛顿斜线穿过光速 vs 相对论渐近贴近 1（θ→90° 不可达，§2.2 命题 2.7）、光速锁定 $E=pc$ 复核（$v_g=c$ 精确，命题 3.1）。
 
-**验证性质声明**：上述数值验证确认的是公理/已知物理重述的**数值自洽性**——其中恒等式类（光速、$\lambda\nu$、$E=h\nu$）由 SI 定义值直接构造，模型演示类（不可逆、时间解耦）为模型设定内自洽演示，均不构成对六项颠覆性预言（P1–P6）的实验验证。
+**验证性质声明**：上述数值验证确认的是公理/已知物理重述的**数值自洽性**——其中恒等式类（光速、$\lambda\nu$、$E=h\nu$）由 SI 定义值直接构造，模型演示类（不可逆、时间解耦）为模型设定内自洽演示，均不构成对六项可证伪预言（P1–P6）的实验验证（其中 P5 为温和兼容重述，§6.5）。
 
 **辅助定量化脚本**：纤维丛层正交（`paperX_photon_fiber_orthogonality.py` 5/5）、$h$-$c$-$\Delta$ 量纲限定与参数空间负结果（`paperX_hcdelta_dimension.py` 20/20）、JC 定量桥接（`paperX_photon_jc_bridge.py` 14/14）、κ_Δ 框架候选 + 自旋霍尔判别性锚定（`paperX_photon_kappa_delta.py` 14/14）、κ_Δ 候选选择原理（`paperX_photon_kappa_select.py` 11/11，候选族收窄 4→2）、dagger 第一性原理推导（`paperX_photon_dagger_derivation.py` 17/17，Riesz 伴随方程 + dagger 公理由内积推导 + R=D† 检验准则）、曲率层（`paperX_photon_curvature.py` 14/14，结构方程/Bianchi/U(1) 无源/挠率反对称 + 联络算子衔接）、三恒等式闭环（`paperX_photon_p1_consistency.py` 8/8，$E=h\nu\wedge\lambda\nu=c\wedge p=h/\lambda\Longrightarrow E=pc$ + 零质量光速锁定衔接 #2）、$\lambda_{\min}$ 近-Planck 候选锚定（`paperX_hcdelta_lmin.py` 8/8，15³ 等框架量组合候选 + k~O(1) 相容）、#5×#4 交叉约束（`paperX_photon_epsilon_kappa.py` 10/10，$\kappa_\Delta\le\varepsilon_\Delta$ 条件性排除双候选 + 收窄带新候选 $S_4^3=\Delta$）、**第一性起源三方向验证（`paperX_photon_first_principle.py` 10/10，§2.4：$\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$ 函子特例 + S3 谱静默互补对应 + 谱间隙闭合离散跳变/Bohr 条件谱表示）**、**引力时间膨胀双法向统一（`paperX_theta_esc_gravity.py` 5/5，§5.3：$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 地球/GPS/太阳偏差 <1e-15 + 逃逸速度对应 + 水星进动 43″ 分解 + 光偏折各半 + 黑洞视界 $\theta_{\rm esc}=90°$ 时间冻结；`paperX_grr_categorical.py` S1-S3，§5.3：$g_{00}\cdot g_{rr}=1$ 双通道互逆 + 进动 2/3 空间响应）**——均为预言定量形式/量级结构的数值自洽性验证，不构成实验验证（已随文登记至 `run_all_tests.py`）。
 
