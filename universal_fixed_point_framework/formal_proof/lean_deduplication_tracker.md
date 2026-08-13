@@ -45,3 +45,24 @@
 4. **import 而非重定义**：确认为纯复制时 `import UFPFormalization.<母文件>` + 限定名引用；
 5. **合并后验证**：`lake build` 必须保持 2454 jobs 零警告零 sorry；
 6. **跨上下文同步**：论文/笔记/路线图/RAP 引用被删符号处同步更新。
+
+## 附录：Lean→论文初筛索引（2026-08-13 扫描，NONE 待补）
+
+扫描法：Lean 文件头 45 行注释中的 `paperX.md`/`Paper X` 引用。NONE = 头部无明确论文注释（可能对应正文引用/笔记，待逐文件补查）。
+
+| 论文 | Lean 文件（头部注释直引） |
+|:-----|:-------------------------|
+| Paper I | ICVerification, PhotonTopologyFunctorLaws, Silence |
+| Paper III | ICDecidable, SpectralEquivalence |
+| Paper V | CategoryGeometry, InflationDynamics, NormalOrdering, Quantization, RenormalizationChain, SpectralDynamics |
+| Paper VIII | BlackHoleEvolution |
+| Paper IX | BlackHoleBounce |
+| Paper XVI | SpacetimeStack |
+| Paper XIX | GelfandDuality, InfinityReflection |
+| Paper XXXV | HigherRecCategory |
+| Paper XXXIX | InflationDynamics |
+| paper40 | ColorDynamics |
+| paper41 | RenormalizationChain |
+| paper44 | CategoryGeometryDictionary, KatoRellichSkeleton, PhotonTopology, PhotonTopology2Category, PhotonTopology2Lifting, PhotonTopologyCurvature, PhotonTopologyFunctor, PhotonTopologyFunctorLaws, PhotonTopologySpectral |
+
+**已知出处补充（正文/笔记关联，非头部直引）**：BranchCounting/DHStructuralAnalysis/Unified3Theorem/BottTower → paper17/20/21/30/33（d_H=ln15、统一 3 定理、k_max=8、Bott 塔）；HigherSpCategory/CoherenceToBranching/DeviationBound → paper31/paper1；SilenceHierarchy/Braided → paper1 §5.7/§2.5；RecCategory/SpCategory/DecursionFunctor/Adjunction → paper1 §2-§4。
