@@ -274,7 +274,11 @@ theorem commutator_number_annihilate (f : FockSpace) :
   simp [numberOp, annihilate]
   ring
 
-/-- 树级模方守恒的解析核心：自由演化相位模方 |e^{−iωnt}| = 1（S8-C28 的代数骨架）。 -/
+/-- 树级模方守恒的解析核心：自由演化相位模方 |e^{−iωnt}| = 1（S8-C28 的代数骨架）。
+    注：自由/幺正情形（相位 z 实，Im z = 0，能量守恒）；一般复 z 的模方衰减律
+    |e^{−i z t}|² = e^{2·Im z·t}（下半平面极点 ⟹ 指数衰减，A4 锚点 1 ③）见
+    `PhotonTopologyResonance.resonancePoleDecay`——本定理为其 Im z = 0 特例，
+    二者角色不同（能量守恒 vs 不可逆衰减，去重核查见 lean_deduplication_tracker 组 H）。 -/
 theorem norm_phase_one (omega : ℝ) (n : ℕ) (t : ℝ) :
     ‖Complex.exp (-Complex.I * ((omega * (n : ℝ) * t) : ℂ))‖ = 1 := by
   have hE : -Complex.I * ((omega * (n : ℝ) * t) : ℂ) =

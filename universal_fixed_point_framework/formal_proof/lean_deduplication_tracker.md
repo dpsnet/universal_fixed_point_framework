@@ -162,7 +162,9 @@
 | TestSpectralEquivalence | 测试（SpectralEquivalence/ICVerification 等） | spectralEquivalence/thm41/thm43 | 测试 |
 
 ### 组 H：头部注释直接对应（初筛已明确）
-Paper VIII→BlackHoleEvolution；Paper IX→BlackHoleBounce；Paper III→ICDecidable, SpectralEquivalence；Paper I→ICVerification；paper44→PhotonTopology, PhotonTopology2Lifting, PhotonTopology2Category, PhotonTopologyFunctor, PhotonTopologyFunctorLaws（+Paper I）, PhotonTopologySpectral, PhotonTopologyCurvature, PhotonTopologyExterior（笔记）, KatoRellichSkeleton, CategoryGeometryDictionary（+paper31 J3 §4.1）；笔记→PhotonTopologyExterior。
+Paper VIII→BlackHoleEvolution；Paper IX→BlackHoleBounce；Paper III→ICDecidable, SpectralEquivalence；Paper I→ICVerification；paper44→PhotonTopology, PhotonTopology2Lifting, PhotonTopology2Category, PhotonTopologyFunctor, PhotonTopologyFunctorLaws（+Paper I）, PhotonTopologySpectral, PhotonTopologyCurvature, PhotonTopologyExterior（笔记）, KatoRellichSkeleton, **PhotonTopologyResonance（2026-08-14 新增）**, CategoryGeometryDictionary（+paper31 J3 §4.1）；笔记→PhotonTopologyExterior。
+
+**PhotonTopologyResonance 去重核查（2026-08-14，新增模块）**：`resonancePoleDecay`（‖e^{−i z t}‖² = e^{2·Im z·t}，下半平面极点 ⟹ 指数衰减，A4 锚点 1 ③ 代数骨架）——**判定非重复**：(1) **mathlib 无等价引理**（`#check` 实证：`Complex.normSq_exp`/`Complex.abs_exp` 均不存在；本模块复用 `Complex.norm_exp`（‖exp z‖=exp z.re）+ `Complex.mul_re/mul_im` + `Real.exp_add` 等 import + 限定名，符合"禁止复制"规则）；(2) **与 PhotonTopology.lean `norm_phase_one`（‖e^{−iωnt}‖=1，S8-C28 树级模方守恒）角色区分**：`norm_phase_one` 为自由/幺正情形（Im z=0，能量守恒结论），本模块为**一般复 z 的推广**（Im z<0 衰减结论）——按"判定重复须核查推导来源角色（结论 vs 前提）"规则，二者结论角色不同（能量守恒 vs 不可逆衰减），并存非重复，`norm_phase_one` 已加交叉引用（本模块蕴含其自由情形）；(3) **与 KatoRellichSkeleton（锚点 2 自伴性，有界原型）锚点不同**（本模块为锚点 1 ③ 极点衰减）；(4) 与 SpectralCorrespondence `spectralMap=Complex.exp(-mu)`（谱对应定义）无重叠。
 
 ## 补查发现的口径偏差（2026-08-13 已全部修正）
 
