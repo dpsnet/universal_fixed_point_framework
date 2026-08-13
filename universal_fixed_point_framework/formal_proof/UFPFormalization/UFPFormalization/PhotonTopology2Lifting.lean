@@ -11,7 +11,7 @@ namespace UFPFormalization
 论文: paper/paper44_photon_topology.md §7.2 #2 / §7.3（4-范畴几何未形式化声明）
 
 ## 目标
-把 1-态射层 lifting 正交（`PhotonTopologyOrthogonality`，P5-2：法向 unfold ⊥ 水平 transition
+把 1-态射层 lifting 正交（mathlib `HasLiftingProperty` 实例，P5-2：法向 unfold ⊥ 水平 transition
 的唯一对角填充）**提升到 2-态射层**：Δ 2-胞腔的法向类 ⊥ 水平类（2-态射层唯一 lifting）。
 
 ## 骨架状态（诚实边界）
@@ -19,7 +19,7 @@ namespace UFPFormalization
    "正交"由 lifting/填充性质定义（**非内积**——正面回应 CNF 评价 (b)"4-范畴中没有内积定义"：
    框架的正交语义 = 填充性，非内积性）；
 2. **代数核心（已闭合）**：方向类内单点性（`horizontalCell_subsingleton`）⟹ 填充唯一
-   （与 1-层 `subsingleton_photon_to_atom` 类比）；`twoLifting_orthogonal` 证明 Δ 实例的
+   （与 1-层 mathlib `HasLiftingProperty` 的唯一对角填充类比）；`twoLifting_orthogonal` 证明 Δ 实例的
    2-态射层 lifting 正交成立；
 3. **登记开放（后续工作）**：①2-胞腔的横/竖复合（完整严格 2-范畴结构——本骨架的
    `DeltaCommSq` 仅含 1-层交换 + 方向互补，未含 2-胞腔全交换 α⋆x = u⋆β）；
@@ -97,7 +97,7 @@ def TwoLiftingProperty {ι : Type u} {A B C D : MultiObj ι}
 /-- **Δ 2-态射层 lifting 正交成立（代数核心机器证明）**：
     对任意 2-胞腔方块（α 法向 ⊥ β 水平），存在唯一水平填充——
     存在分量 = {dir := horizontal}；唯一分量 = `Delta2Cell.ext`
-    （2-层 Hom 集方向类内单点性，与 1-层 `subsingleton_photon_to_atom` 类比）。 -/
+    （2-层 Hom 集方向类内单点性，与 1-层 mathlib `HasLiftingProperty` 的唯一对角填充类比）。 -/
 theorem twoLifting_orthogonal {ι : Type u} {A B C D : MultiObj ι}
     (f g : MultiMor A B) (p q : MultiMor C D)
     (u : MultiMor A C) (x : MultiMor B D)

@@ -539,7 +539,7 @@ theorem commutator_trace_orthogonal_diagonal {n : ℕ} (lam d : Fin n → ℂ)
     **登记开放项推进：lifting 正交与 J2 迹正交的范畴-几何桥同构**。
 
     **桥接语义（范畴层 ↔ 矩阵层）**：
-    - 范畴层（`PhotonTopologyOrthogonality`/`PhotonTopology2Lifting`）：lifting 正交 =
+    - 范畴层（mathlib `HasLiftingProperty` 1-层实例/`PhotonTopology2Lifting`）：lifting 正交 =
       方向类内单点性（法向 unfold ⊥ 水平 transition，唯一填充 = fold m / 水平 2-胞腔）；
     - 矩阵层（本文件 §1.7 J2）：Δ 对易子分量与恒等/任意对角方向迹正交
       （`commutator_trace_zero`/`commutator_trace_orthogonal_diagonal`）；
