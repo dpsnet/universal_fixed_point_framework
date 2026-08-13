@@ -1,40 +1,45 @@
-# Lean 去重合并跟踪（Lean Deduplication Tracker）
+# Lean-论文登记册与去重判定（Lean–Paper Registry & Dedup Ruling）
 
-**目的**：跟踪 UFPFormalization 中重复建设（"另起炉灶"）的合并进度，防止丢失上下文后继续产生重复定义。
-**规则**：任何新 Lean 文件在定义顶层符号前，必须先 grep 该符号是否已存在（含 mathlib）；母定义一律保留，子文件 import + 限定名引用。
+**用途**：以论文为权威来源，登记 UFPFormalization 每个 Lean 文件/核心符号的**论文出处、参数语义、推导角色**（结论 vs 前提 vs 常数 vs 唯象拟合）。据此判定哪些可合并、哪些必须保留。
+**原则（2026-08-13 用户裁定）**：数值/字面相同的符号**不等于重复**——须以论文来源与推导角色为准；先登记造册，再依据登记判定合并。
 
-## 合并方案总表
+## 登记表（按论文组织，分阶段补齐）
 
-| # | 重复项 | 母定义（保留） | 重复处（合并） | 状态 | 备注 |
-|:--|:-------|:--------------|:---------------|:----:|:-----|
-| ① | `LayerIndex` 双定义 | BranchCounting（5 层：obj+one/two/three/four） | CategoryGeometryDictionary（4 层：layer1-4） | ✅ 已完成 | CategoryGeometryDictionary 删本地定义，import BranchCounting；`isCoherenceLayer` 改 `.four`；directionMap 对 obj 层一致成立（字典核心不依赖层） |
-| ② | d_H 结构常数批量复制（e/ln15/N_total/N_active/B/B_eq_15/r/d_H_fit/delta_fit/dH_from_branching） | DHStructuralAnalysis | BranchCounting（子 namespace 重定义） | ✅ 已完成 | BranchCounting 删 e/ln15/r/d_H_fit/delta_fit/N_total 6 个重定义 + `open DHStructural`；B/B_eq_15（LayerIndex 计数推导）与 dH_from_branching（无参数形式）保留为独立推导 |
-| ③ | `GenSpace` 双定义（ℂ³） | FlavorFiber | Unified3Theorem（注释已标"原定义在 FlavorFiber"） | ✅ 已核查保留 | **有意副本**（Unified3Theorem 注释"为解除对损坏依赖链的耦合"）；FlavorFiber 侧补反向注释，不强制 import（避免拉入重依赖链） |
-| ④ | `k_max`/`k_max_value` 双定义 | Unified3Theorem | BottTower | ✅ 已完成 | BottTower 删 k_max/k_max_value，open Unified3；新增 `k_max_eq_spinorDim_zero` 保留"k_max = Bott 塔基础层旋量维数"结构连接 |
-| ⑤ | `frobeniusNorm` 双实现 | RAP4（mathlib `‖A‖` 桥接，ℝ） | Silence（自建 `Real.sqrt ∑normSq`，ℂ） | ✅ 已核查保留 | 标量域不同（ℝ vs ℂ）；Silence 侧注释标注"勿新增第三处，优先 mathlib `‖A‖`" |
-| ⑥ | `adjUnit`/`adjCounit` 双实现 | Adjunction（抽象伴随） | RAP5a（线性语义 SpImD 实例） | ✅ 已核查保留 | 不同函子（DFunctor/RFunctor vs DIm/RIm），同一概念两个实现层级；RAP5a 侧注释"新增优先复用 Adjunction 抽象定义" |
-| ⑦ | 静默度三变体（S_D / silenceDegree / deltaSilence） | —（同一公式三处命名） | RAP4 `silenceDegree` + Silence `deltaSilence` | ✅ 已核查保留 | Silence `deltaSilence` 注释统一三者的"范数比定义静默度"同族结构（对易子/投影/表示层） |
-| ⑧ | 层术语混乱（SilenceLevel / SilenceLayer / LayerIndex / categoricalLevel） | — | 四处近名不同义 | ✅ 已核查保留 | RAP4 `SilenceLevel` ↔ MultiSilenceMethodology `SilenceLayer` 双向交叉注释，明确与 `LayerIndex` 不同义 |
-| ⑨ | `spectralSilence` vs `spectralSilenceSimple` | Silence `spectralSilence`（S1-S4 完整） | SilenceHierarchy `spectralSilenceSimple`（S1∧S2 子集） | ✅ 已核查保留 | 功能子集的有意简化；注释标注"勿扩展为第三个版本" |
+### 判定准则
+| 情形 | 判定 |
+|:-----|:-----|
+| 同一论文、同一符号、同一推导角色、纯复制 | ✅ 可合并（保留母定义，子处 import 引用） |
+| 数值相同但论文来源/推导角色不同（结论 vs 前提/常数） | ❌ 不可合并（保留各自定义 + 交叉注释） |
+| 注释明确"有意副本"（如解除依赖耦合） | ❌ 不可合并（保留 + 交叉注释） |
+| 不同标量域/不同函子实例（概念同族） | ❌ 不可合并（保留 + 注释标注同族） |
 
-## 执行记录（变更日志）
+### 论文索引（已确认部分，待扩展）
+| 论文 | 主题 | 对应 Lean 文件（初列） |
+|:-----|:-----|:----------------------|
+| Paper I (paper1_fractal_spectral_derecursion) | Rec/Sp 范畴、D 函子、谱静默、Clifford 纤维丛 | RecCategory, SpCategory, DecursionFunctor, Adjunction, Silence, SilenceHierarchy, Braided, Clifford, 等 |
+| Paper XXXI (paper31_mass_delta_directionality) | J1-J3 质量-Δ 方向性、层 1-3 正交于 Δ、层 4 coherence | HigherSpCategory, DeviationBound（§1.6/§1.7/§1.8）, CoherenceToBranching |
+| Paper XXXIII / d_H=ln15 推导 | 分支组合原理、统一 3 定理 | DHStructuralAnalysis, BranchCounting, BottTower, Unified3Theorem |
+| Paper 33/XXVII（味/代） | GenSpace=ℂ³ 代空间 | FlavorFiber, Unified3Theorem（§3 主动生成层→GenSpace） |
 
-| 日期 | 项 | 变更 | lake build | 备注 |
-|:-----|:---|:-----|:----------:|:-----|
-| 2026-08-13 | — | 全库扫描（96 文件/1505 声明，25 组重名），核查确认 9 项重复建设 | 2454 jobs ✅（基线） | 临时脚本 scan_lean_dupes.py 已删除 |
-| 2026-08-13 | ② | BranchCounting 删 e/ln15/r/d_H_fit/delta_fit/N_total 重定义 + `open UFPFormalization.DHStructural` | 2454 jobs ✅ | — |
-| 2026-08-13 | ④ | BottTower 删 k_max/k_max_value，新增 k_max_eq_spinorDim_zero 结构连接 | 2454 jobs ✅ | — |
-| 2026-08-13 | ① | CategoryGeometryDictionary 删本地 LayerIndex，import BranchCounting + open，isCoherenceLayer 改 `.four` | 2454 jobs ✅ | 层数约定统一为 5 层母定义 |
-| 2026-08-13 | ③ | FlavorFiber.GenSpace 补反向注释（确认有意副本，不合并） | 2454 jobs ✅ | — |
-| 2026-08-13 | ⑤⑦ | Silence.lean：frobeniusNorm 与 deltaSilence 注释（同族标注 + 勿新增第三处） | 2454 jobs ✅ | — |
-| 2026-08-13 | ⑥ | RAP5a adjUnit 注释（与 Adjunction 两个实现层级） | 2454 jobs ✅ | — |
-| 2026-08-13 | ⑧ | RAP4 SilenceLevel ↔ MultiSilenceMethodology SilenceLayer 双向注释 | 2454 jobs ✅ | — |
-| 2026-08-13 | ⑨ | SilenceHierarchy spectralSilenceSimple 注释（功能子集有意简化） | 2454 jobs ✅ | — |
+## 去重候选重审（2026-08-13 恢复后，依据登记判定）
+
+| # | 候选 | 论文来源核查 | 判定 | 依据 |
+|:--|:-----|:------------|:----:|:-----|
+| ① | `LayerIndex`：BranchCounting（5 层 obj+1-4）vs CategoryGeometryDictionary（4 层 1-4） | ⏳ 待 paper1 §3.5/paper31 J3 §4.1 重读确认两处层结构的论文出处与角色 | ⏳ 待判定 | 两处均描述 Sp 4-范畴层结构；需确认论文中是否为同一登记（合并）还是不同角色（保留） |
+| ② | e/ln15/N_total/r/d_H_fit/delta_fit：BranchCounting vs DHStructuralAnalysis | ✅ 已确认：BranchCounting 侧 = 自底向上推导结论（N_total 关联 `total_layers_count`（LayerIndex 计数机器证明）、r = 定理 R1 谱静默因子）；DHStructuralAnalysis 侧 = 自顶向下推导前提（N_active/N_total/r 为 d_H=ln15 推导输入、ln15/e 为纯常数） | ❌ 不合并（已恢复） | 来源角色不同（结论 vs 前提） |
+| ③ | `GenSpace`：FlavorFiber vs Unified3Theorem | ✅ 已确认：Unified3Theorem 注释"为解除对损坏依赖链的耦合，此处本地定义（同一类型）" | ❌ 不合并（有意副本） | 有意设计，保留 |
+| ④ | `k_max`/`k_max_value`：Unified3Theorem vs BottTower | ⏳ 待重读：Unified3Theorem.k_max=8（数值）；BottTower.k_max=spinorDim 0（Bott 塔结构定义）——需确认论文中 k_max=8 的来源登记（模型选择 vs 统一 3 定理，参见勘误"k_max=8 不再声称来自 Cl(1,7) Bott 分类"） | ⏳ 待判定 | 定义路径不同（数值 vs spinorDim 结构）；且涉及 k_max=8 勘误语义，须以论文为准 |
+| ⑤ | `frobeniusNorm`：RAP4（ℝ 桥接）vs Silence（ℂ 自建） | ⏳ 待登记 | ⏳ 待判定 | 标量域不同；语义同族 |
+| ⑥ | `adjUnit`/`adjCounit`：Adjunction vs RAP5a | ⏳ 待登记 | ⏳ 待判定 | 不同函子（DFunctor vs DIm） |
+| ⑦ | 静默度：S_D / silenceDegree / deltaSilence | ⏳ 待 paper1 §5.7.9 + 各文件注释登记 | ⏳ 待判定 | 同族公式、不同语义 |
+| ⑧ | SilenceLevel / SilenceLayer / LayerIndex 近名 | ⏳ 待登记 | ⏳ 待判定 | 近名不同义，登记对照 |
+| ⑨ | spectralSilence vs spectralSilenceSimple | ⏳ 待登记 | ⏳ 待判定 | 功能子集简化变体 |
 
 ## 防复发清单（新建/修改 Lean 文件前必查）
 
-1. **grep 符号名**：`Grep pattern="^def|^theorem|^structure|^inductive|^abbrev|^class" path=UFPFormalization` 确认不重复；
-2. **同概念近名检查**：Layer/Level/Silence/Degree/Norm 等词根可能近名不同义，优先复用母定义 + namespace 限定；
-3. **import 而非重定义**：需要既有定义时 `import UFPFormalization.<母文件>` + 限定名引用，禁止复制到新 namespace；
-4. **合并后验证**：每项合并后 `lake build` 必须保持 2454 jobs 零警告零 sorry；
-5. **跨上下文同步**：论文/笔记/路线图/RAP 中引用被删符号处同步更新（参照 2026-08-13 PhotonTopologyOrthogonality 清理流程）。
+1. **查登记册**：本文件登记表确认符号/概念是否已有论文登记；
+2. **grep 符号名**：`Grep pattern="^def|^theorem|^structure|^inductive|^abbrev|^class" path=UFPFormalization` 确认不重复；
+3. **核查论文来源**：数值/字面相同 ≠ 重复——须确认论文出处与推导角色（结论/前提/常数/唯象），禁止凭代码表面特征判定；
+4. **import 而非重定义**：确认为纯复制时 `import UFPFormalization.<母文件>` + 限定名引用；
+5. **合并后验证**：`lake build` 必须保持 2454 jobs 零警告零 sorry；
+6. **跨上下文同步**：论文/笔记/路线图/RAP 引用被删符号处同步更新。

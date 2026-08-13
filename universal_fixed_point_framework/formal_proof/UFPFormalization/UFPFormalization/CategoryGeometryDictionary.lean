@@ -1,9 +1,6 @@
 import UFPFormalization.PhotonTopology2Lifting
 import UFPFormalization.PhotonTopologyFunctor
-import UFPFormalization.BranchCounting
 import Mathlib.Tactic
-
-open UFPFormalization.BranchCounting
 
 namespace UFPFormalization
 
@@ -77,18 +74,21 @@ J2 模式间定位同样是非内积的迹正交。
 
 universe u v
 
-/-! ## 层索引（对齐 paper31 J3 §4.1 层结构表；复用 BranchCounting.LayerIndex，2026-08-13 去重） -/
+/-! ## 层索引（对齐 paper31 J3 §4.1 层结构表） -/
 
-/-- **4-范畴态射层层索引**（复用 BranchCounting.LayerIndex 母定义，5 层：
-    层 0 对象 + 层 1-4 态射）：层 1（1-态射，空间 x 方向）、层 2（2-态射，空间 y 方向 + Δ）、
+/-- **4-范畴态射层层索引**：层 1（1-态射，空间 x 方向）、层 2（2-态射，空间 y 方向 + Δ）、
     层 3（3-态射，空间 z 方向）、层 4（4-态射，coherence 层 = Δ 所在层）。
-    对齐 paper31 J3 §4.1 层结构表（层 1-3 正交于 Δ、层 4 = coherence = Δ 所在层）；
-    层 0 对象不生成方向自由度，`directionMap` 对其一致成立（任意层映射，字典核心不依赖层）。 -/
+    对齐 paper31 J3 §4.1 层结构表（层 1-3 正交于 Δ、层 4 = coherence = Δ 所在层）。 -/
+inductive LayerIndex : Type where
+  | layer1 : LayerIndex
+  | layer2 : LayerIndex
+  | layer3 : LayerIndex
+  | layer4 : LayerIndex
 
 /-- 层索引的"正交于 Δ / 位于 Δ"区分：层 1-3 = 正交于 Δ 的空间方向层；
     层 4 = coherence 层（Δ 所在层）。 -/
 def LayerIndex.isCoherenceLayer : LayerIndex → Prop
-  | .four => True
+  | .layer4 => True
   | _ => False
 
 /-! ## 字典结构：逐层方向类 → 纤维丛子空间的统一映射 -/

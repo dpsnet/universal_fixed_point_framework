@@ -63,10 +63,7 @@ noncomputable def flavorLoop : FlavorSector → FlavorSector :=
     Section 2: J_f Real Structure Matrices from IFS Weights
    ========================================================= -/
 
-/-- Generation space ℂ³: 3-dimensional complex vector space.
-    注：Unified3Theorem.lean 存在同型本地副本 `abbrev GenSpace`（2026-08-13 核查）——
-    为解除依赖链耦合的有意副本（Unified3Theorem 注释"为解除对损坏依赖链的耦合"），
-    非无意的重复建设；两处类型一致（ℂ × ℂ × ℂ）。 -/
+/-- Generation space ℂ³: 3-dimensional complex vector space. -/
 abbrev GenSpace : Type := ℂ × ℂ × ℂ
 
 /-- IFS Hausdorff dimension d_H ≈ 2.7095 (from Paper XV). -/

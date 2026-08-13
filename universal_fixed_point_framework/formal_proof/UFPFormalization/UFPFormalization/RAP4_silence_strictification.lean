@@ -275,11 +275,6 @@ noncomputable def visibility {m n : ℕ} (Df : Matrix (Fin m) (Fin n) ℝ)
   else (Matrix.frobeniusNorm (P * Df)) / (Matrix.frobeniusNorm Df)
 
 /-- 三级分层的类型定义。 -/
-/-- 静默严格性分级（strict/asymptotic/epsilon）。
-    注（2026-08-13 去重核查）：与 MultiSilenceMethodology `SilenceLayer`（S1-S4 数据表）
-    及 BranchCounting `LayerIndex`（5 层层索引）**不同义**——本处为严格性分级，
-    SilenceLayer 为静默层数据记录，LayerIndex 为 4-范畴态射层索引。近名不同义，
-    引用时注意限定 namespace（信息偏差高风险源，见 lean_deduplication_tracker.md ⑧）。 -/
 inductive SilenceLevel : Type where
   | strict    : SilenceLevel   -- P_V D(f) = 0，最强
   | asymptotic : SilenceLevel  -- 可见性指数衰减至 0

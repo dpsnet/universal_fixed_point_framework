@@ -56,8 +56,7 @@ depends on orbit weights.
 
 注：完整的 `spectralSilence`（含 S3/S4）已在 Silence.lean 声明（参数 τ w）；
 此处保留单矩阵参数的简化变体，仅含 S1∧S2。
-（2026-08-13 去重核查：功能子集的有意简化变体，保留；勿扩展为第三个版本，
-统一使用 Silence.spectralSilence 完整版。） -/
+-/
 def spectralSilenceSimple {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   silenceS1 A ∧ silenceS2 A
 

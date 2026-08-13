@@ -24,7 +24,6 @@ import UFPFormalization.DHStructuralAnalysis
 
 open CategoryTheory
 open UFPFormalization.Unified3
-open UFPFormalization.DHStructural
 
 namespace UFPFormalization.BranchCounting
 
@@ -53,7 +52,8 @@ inductive LayerIndex : Type
   | four   : LayerIndex    -- 层 4：coherence
   deriving DecidableEq, Fintype
 
-/-- 总层数 = 5（N_total 复用 DHStructural.N_total，母定义，2026-08-13 去重）。 -/
+/-- 总层数 = 5。 -/
+def N_total : ℕ := 5
 
 /-- 总层数等于 5 的验证。 -/
 theorem total_layers_count : Fintype.card LayerIndex = 5 := by
@@ -118,8 +118,14 @@ theorem B_eq_15 : B = 15 := by
    本节的"条件定理"形式化该推论：若假设成立，则 d_H = ln 15。
 -/
 
-/-- 均匀收缩率 r = e⁻¹、自然对数的底 e、ln(15) 复用 DHStructuralAnalysis
-    （DHStructural.r / e / ln15，母定义，2026-08-13 去重）。 -/
+/-- 均匀收缩率 r = e⁻¹（谱静默因子，定理 R1）。 -/
+noncomputable def r : ℝ := Real.exp (-1)
+
+/-- 自然对数的底 e。 -/
+noncomputable def e : ℝ := Real.exp 1
+
+/-- ln(15)。 -/
+noncomputable def ln15 : ℝ := Real.log 15
 
 /-- 条件定理：若有效分支数为 B = 15 且均匀收缩率为 r = e⁻¹，
     则 Moran 方程 B · r^{d_H} = 1 的解为 d_H = ln 15。
@@ -155,8 +161,11 @@ theorem exp_dH_eq_15 : Real.exp (ln15 : ℝ) = (15 : ℝ) :=
    3. 偏差量级 O(10⁻³) 与三代质量层级一致
 -/
 
-/-- d_H 的唯象拟合值 d_H_fit 与偏差 delta_fit = d_H_fit - ln15 复用
-    DHStructuralAnalysis（DHStructural.d_H_fit / delta_fit，母定义，2026-08-13 去重）。 -/
+/-- d_H 的唯象拟合值（来源：χ² 拟合）。 -/
+noncomputable def d_H_fit : ℝ := 2.7095
+
+/-- 偏差 δ = d_H_fit - ln15。 -/
+noncomputable def delta_fit : ℝ := d_H_fit - ln15
 
 /-- δ < 0.01（范畴底线偏差不超过 1%）。
     （2026-07-27：由 `DHStructural.ln15_gt_2708`（ln 15 > 2.708）闭合，
