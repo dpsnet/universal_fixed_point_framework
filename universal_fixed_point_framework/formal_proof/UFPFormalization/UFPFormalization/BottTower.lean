@@ -8,10 +8,10 @@
 
 Bott 塔是 Clifford 代数的无限层级：
 ```
-Level 0:  Cl(1,7)  ≅  M₁₆(ℝ)    标准旋量 16 | 翻倍工作基准 8 = 8 × 2⁰
-Level 1:  Cl(9,1)  ≅  M₃₂(ℝ)   旋量维数 32  = 8 × 2¹
-Level 2:  Cl(17,1) ≅  M₆₄(ℝ)   旋量维数 64  = 8 × 2²
-Level 3:  Cl(25,1) ≅  M₁₂₈(ℝ)  旋量维数 128 = 8 × 2³
+Level 0:  Cl(1,7)  ≅  M₁₆(ℝ)    旋量 16  （工作基准 spinorDim(0)=8，见勘误注）
+Level 1:  Cl(9,1)  ≅  M₃₂(ℝ)    旋量 32  （工作基准 spinorDim(1)=16）
+Level 2:  Cl(17,1) ≅  M₆₄(ℝ)    旋量 64  （工作基准 spinorDim(2)=32）
+Level 3:  Cl(25,1) ≅  M₁₂₈(ℝ)   旋量 128 （工作基准 spinorDim(3)=64）
 ...
 ```
 【2026-08-07 勘误（注释层）】：标准 Cl(1,7) ≅ M₁₆(ℝ)，旋量 16（paper20 权威，原误作 M₈(ℝ)/旋量 8）。
@@ -21,7 +21,8 @@ Level 3:  Cl(25,1) ≅  M₁₂₈(ℝ)  旋量维数 128 = 8 × 2³
 
 ## 核心定理（缺口 2 闭合）
 
-Bott 塔截断参数 k_max 取基础层（Level 0）的旋量维数 8。
+Bott 塔截断参数 k_max 取基础层（Level 0）的翻倍工作基准旋量 spinorDim(0) = 8
+（标准 Cl(1,7) 旋量 16，见 §1 勘误注；k_max = 8 亦由统一 3 定理 2^{N_active} 独立确定）。
 log₂(k_max) = 3 的**结构性原因**：
   1. 主动生成层数 N_active = 3（𝐒𝐩 4-范畴的非平凡态射层层数）
   2. k_max = 2^{N_active}（因为旋量维数从 1 开始经 N_active 次翻倍到达 8）
@@ -146,13 +147,13 @@ theorem log2_k_max_eq_active_layers :
    ========================================================= -/
 
 /-- **定理（缺口 2 闭合）**：Bott 塔截断指数 log₂(k_max) = N_active。
-    
+
     证明基于以下结构性事实：
     1. k_max = spinorDim(0) = 8（Bott 塔基础层旋量维数）
     2. spinorDim(k) = 8 × 2^k 每层翻倍
     3. k_max = 2^{N_active}（因为 N_active = 3）
     4. 因此 log₂(k_max) = N_active
-    
+
     此证明将 Bott 截断指数从"数值巧合"升级为"范畴结构推论"。
     翻倍次数由主动生成层数决定——若有第 4 个主动生成层，
     则应有 k_max ≥ 2⁴ = 16，但 4-态射是 coherence 层，
@@ -170,10 +171,10 @@ theorem truncation_index_is_three : Nat.log 2 k_max = 3 := by
    ========================================================= -/
 
 /-- 统一 3 定理的完整陈述（含 Bott 截断的范畴结构证明）。
-    
+
     定理：在 𝐒𝐩 严格 4-范畴中，以下四个数相等：
       d = N_gen = log₂(k_max) = N_active = 3
-    
+
     证明分为三部分：
     1. N_active = 3（card_active_layers）
     2. dim(GenSpace) = N_active = 3（genSpace_dim_is_three）

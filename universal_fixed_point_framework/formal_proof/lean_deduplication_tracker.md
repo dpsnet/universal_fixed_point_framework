@@ -158,6 +158,7 @@ Paper VIII→BlackHoleEvolution；Paper IX→BlackHoleBounce；Paper III→ICDec
 
 1. **SilenceHierarchy 头部"四层静默/定理 5.18"为旧口径** → ✅ 已修正：paper1 §5.7 现为**五层**（S0 表示层 + S1-S4），严格层次为**定理 5.15**。修正：SilenceHierarchy.lean 头部（Four-Layer→"五层体系 S1-S4 动力学/观测子集"）L13/L25/L68/L118（定理 5.18→5.15）；paper19_category_extension.md L720/L987（引用 paper1 旧编号 5.18→5.15）。
 2. **SpectralGap.lean 与 BottTower.lean 注释中 Cl(1,7)≅M₈(ℝ)/旋量 8 为勘误前旧记** → ✅ 已修正：权威口径 M₁₆(ℝ)/旋量 16（paper20 v0.6 勘误）。修正：SpectralGap.lean L16、BottTower.lean L11 表格（标准旋量 16 | 翻倍工作基准 8）、**同类旧记顺带修正**：NoiseFiber.lean L591、SignatureFiber.lean L80。全库残留 M₈(ℝ) 均为有意保留的勘误说明文字（Clifford/BottTower/SpectralGap/SignatureFiber/RAP3 勘误注 + SignatureFiber 块嵌入数学事实）。
+   **延伸修正（2026-08-13，Cl(9,1) 系列）**：SignatureFiber.lean L81 原注"Cl(9,1) ≅ M₁₆(ℝ)"为误 → M₃₂(ℝ)（权威 paper20 L518/paper33 L122）；BottTower.lean 表格 Level 1-3 理顺（真实旋量 32/64/128 与工作基准 spinorDim 8×2^k 分离标注）；paper21 L735 笔误"Cl(17,1) ≅ M₅₁₂(ℝ)"→ M₆₄(ℝ)（权威 paper20/33）。
 3. **FlavorFiber.lean 注释"d_H from Paper XV"为笔误** → ✅ 已修正：d_H=ln15+δ 出自 paper17 §3。修正：FlavorFiber.lean L69（from Paper XVII §3 + 勘误标注）。
 
 **修正验证**：`lake build` 2454 jobs 零警告零 sorry（注释层修正不影响编译）。提交见 git log。

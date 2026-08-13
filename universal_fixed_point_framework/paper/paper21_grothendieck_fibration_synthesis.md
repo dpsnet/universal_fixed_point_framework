@@ -733,7 +733,7 @@ $$\mathcal{F}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathbf{Bun}(\ma
 ```
 Level 0:  Cl(1,7)   ≅  M₁₆(ℝ)     16 维   k_max = 8（结构确定：2^{N_active} = 2³，统一 3 定理机器证明）
 Level 1:  Cl(9,1)   ≅  M₃₂(ℝ)     32 维
-Level 2:  Cl(17,1)  ≅  M₅₁₂(ℝ)    512 维
+Level 2:  Cl(17,1)  ≅  M₆₄(ℝ)    64 维【2026-08-13 勘误：原 M₅₁₂(ℝ)/512 维为笔误，权威 paper20/33：M₆₄(ℝ)/64 维】
 ...
 ```
 每一步的 $\iota\dashv\pi$ 伴随对（Paper XX 定理 5.8）提供了将高维代数投影到低维的标准操作。
