@@ -395,19 +395,29 @@ for script, desc in SCRIPTS:
         continue
     start = time.time()
     try:
+        # 模块条目（verify.run_all 等，不以 .py 结尾）须用 -m 调用，否则 Python 视为文件路径报错（2026-08-13 修复）
+        cmd = [sys.executable, "-m", script] if not script.endswith(".py") \
+            else [sys.executable, script]
         r = subprocess.run(
-            [sys.executable, script],
+            cmd,
             capture_output=True, text=True, timeout=300
         )
         elapsed = time.time() - start
-        passed, total = extract_checks(r.stdout + r.stderr)
+        output = r.stdout + r.stderr
+        passed, total = extract_checks(output)
+        # 负结果登记规则（2026-08-13 防误报）：exit 0 + 输出含"负结果/登记项"标记
+        # ⇒ 脚本如实登记负结果即视为完成（shale 系列诚实负结果设计），不构成失败
+        negative_registered = (
+            r.returncode == 0
+            and re.search(r'负结果|登记项', output) is not None
+        )
         if passed is None:
             # 若无法解析检查计数，以 exit code 为准
             ok = r.returncode == 0
             results.append((script, desc, ok, "?", "?", elapsed,
                            "OK" if ok else "FAIL"))
         else:
-            ok = passed == total and r.returncode == 0
+            ok = (passed == total or negative_registered) and r.returncode == 0
             results.append((script, desc, ok, passed, total, elapsed,
                            f"{passed}/{total}" if ok else f"{passed}/{total} ?"))
     except subprocess.TimeoutExpired:

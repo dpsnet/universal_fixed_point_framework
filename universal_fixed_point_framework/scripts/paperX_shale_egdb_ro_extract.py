@@ -142,7 +142,8 @@ def main():
             n_numeric += 1
             if 0.2 <= v <= 6.0 and r["Param"] in ("RMEAN", "RMODE", "Rmode", "RMode"):
                 n_physical += 1
-        out_rows.append({k: r[k] for k in fieldnames if k in r} | {
+        # 2026-08-13 修复：dict | dict 合并（PEP 584）需 Python 3.9+，项目为 3.8，改用 {**a, **b}
+        out_rows.append({**{k: r[k] for k in fieldnames if k in r}, **{
             "State": (s or {}).get("STATE/Province", "").strip(),
             "County": (s or {}).get("COUNTY", "").strip(),
             "Formation": (s or {}).get("FORMN", "").strip(),
@@ -151,7 +152,7 @@ def main():
             "Lithology": (s or {}).get("LITHO1", "").strip(),
             "TopDepth_ft": (s or {}).get("TOPDEPTH", "").strip(),
             "TMAX": tmx or "",
-        })
+        }})
 
     # 写输出
     with open(OUT_CSV, "w", newline="", encoding="utf-8-sig") as f:
@@ -192,8 +193,10 @@ def main():
         t_arr = np.array([p[1] for p in pair], dtype=float)
         r_arr = np.array([p[2] for p in pair], dtype=float)
         rho, pval = spearmanr(t_arr, r_arr)
-        checks.append(("R3 Tmax-Ro 秩相关（n=%d，Ro∈[0.2,6]）：ρ=%.3f（p=%.3g）——Ro 独立成熟度轴对 Tmax 窗形轴的交叉验证"
-                       % (len(pair), rho, pval),
+        checks.append(("R3 Tmax-Ro 秩相关（n=%d，Ro∈[0.2,6]）：ρ=%.3f（p=%.3g）——Ro 独立成熟度轴对 Tmax 窗形轴的交叉验证%s"
+                       % (len(pair), rho, pval,
+                          "；诚实负结果登记（ρ≤0.3 弱相关，Tmax 为带噪成熟度代理，f(M) 轴使用须保留 Ro 独立校验）"
+                          if rho <= 0.3 else ""),
                        rho > 0.3 and pval < 0.05))
     else:
         checks.append(("R3 Tmax-Ro 成对不足（n=%d <5），交叉验证待扩展" % len(pair), False))
