@@ -134,7 +134,10 @@ noncomputable def DR_iso (E : SpImD) : DIm_obj (RIm_obj E) ≅ E :=
     hom_inv_id := by rfl
     inv_hom_id := by rfl }
 
-/-- 伴随单位 η : 𝟭_Rec → R_im ∘ D_im（恒等态射）。 -/
+/-- 伴随单位 η : 𝟭_Rec → R_im ∘ D_im（恒等态射）。
+    注（2026-08-13 登记册⑥）：与 Adjunction.lean `adjUnit`（抽象 DFunctor/RFunctor）
+    为同一伴随概念的两个实现层级（本处为线性语义 SpImD 实例，DIm/RIm 为本文件定义）；
+    判定不合并；新增伴随结构应优先复用/实例化 Adjunction.lean 抽象定义。 -/
 noncomputable def adjUnit (S : RecObj) : S ⟶ (DIm.comp RIm).obj S :=
   𝟙 S
 

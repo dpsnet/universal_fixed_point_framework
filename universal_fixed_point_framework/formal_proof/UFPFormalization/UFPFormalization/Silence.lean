@@ -90,7 +90,10 @@ theorem silenceEquivalence {n : ℕ} (τ w : ℝ) (A : Matrix (Fin n) (Fin n) �
 /-! ### Continuous Silence Degree δ_silence -/
 
 /-- Frobenius norm (Hilbert-Schmidt norm) of a finite complex matrix.
-    ‖A‖_F = (∑_{i,j} |A_{ij}|²)^{1/2}. -/
+    ‖A‖_F = (∑_{i,j} |A_{ij}|²)^{1/2}.
+    注（2026-08-13 登记册⑤）：本文件自建 ℂ 版（早期实现）；RAP4_silence_strictification.lean
+    另有 ℝ 桥接版（`Matrix.frobeniusNorm := ‖A‖`，mathlib 类型类）。标量域不同（ℝ vs ℂ）、
+    语义同族（mathlib `‖·‖` 即 Frobenius 范数）；判定不合并，新增使用优先 mathlib `‖A‖`。 -/
 noncomputable def frobeniusNorm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   Real.sqrt (∑ i : Fin n, ∑ j : Fin n, Complex.normSq (A i j))
 
@@ -101,7 +104,11 @@ noncomputable def frobeniusNorm {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ
     δ_silence > 0  ⇒  non-zero commutator, indicating spectral flow deviation
     δ_silence → ∞  ⇒  unbounded commutator growth, spectral flow inapplicable
 
-    Standard correspondence: Frobenius norm of Lie bracket, cf. ad(A)(G) in operator theory. -/
+    Standard correspondence: Frobenius norm of Lie bracket, cf. ad(A)(G) in operator theory.
+    注（2026-08-13 登记册⑦）：静默度结构同族——本 `deltaSilence`（对易子范数）、
+    RAP4 `silenceDegree`（= 1 − ‖P·Df‖/‖Df‖，投影剩余）、paper1 §5.7.9 `S_D`（D-静默度，
+    投影到 Im(D)，表示层）三者共享"范数比定义静默度"的同一数学形式，语义各自限定
+    （对易子/投影/表示层）；判定不合并。 -/
 noncomputable def deltaSilence {n : ℕ} (A G : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   frobeniusNorm (ad G A)
 
