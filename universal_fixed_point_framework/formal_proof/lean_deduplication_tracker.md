@@ -17,7 +17,7 @@
 | 论文 | 主题 | 对应 Lean 文件（初列） |
 |:-----|:-----|:----------------------|
 | Paper I (paper1_fractal_spectral_derecursion) | Rec/Sp 范畴、D 函子、谱静默、Clifford 纤维丛；五层静默 S0-S4（§5.7） | RecCategory, SpCategory, DecursionFunctor, Adjunction, Silence, SilenceHierarchy, Braided, Clifford, 等 |
-| Paper XXXI (paper31_mass_delta_directionality) | J1-J3 质量-Δ 方向性；§4.1 层结构表（层 0-4，层 1-3 正交于 Δ、层 4 coherence=Δ） | HigherSpCategory, DeviationBound（§1.6/§1.7/§1.8）, CoherenceToBranching |
+| Paper XXXI (paper31_mass_delta_directionality) | J1-J3 质量-Δ 方向性；§4.1 层结构表（层 0-4，层 1-3 正交于 Δ、层 4 coherence=Δ） | HigherSpCategory, DeviationBound（§1.6/§1.7/§1.8/§1.9，§1.9 矩阵层完整字典 2026-08-14 新增）, CoherenceToBranching |
 | Paper XXXIII (paper33_origin_of_3) / Paper XVII (paper17_zero_parameter_predictions) | 统一 3 定理（N_gen=N_active=3 机器证明）；定理 R1（S_k=s^k 单参数族、s=e⁻¹ 物理选定特例）；d_H=ln15+δ（分支计数+Moran/Bowen 机器证明） | Unified3Theorem, DHStructuralAnalysis, BranchCounting, BottTower |
 | Paper XX/XXI (paper20/21) | k_max=8 由统一 3 定理（2^N_active）机器证明 + 对偶网络（B=2k_max−1）确定 | BottTower（Bott 塔翻倍工作基准）、Unified3Theorem |
 | Paper XXX (paper30_dH_structural_analysis) | 定理 1：给定 B=15 解唯一；"为何 B=15"由 Sp 严格 4-范畴结构回答（统一 3 定理） | DHStructuralAnalysis, BranchCounting |

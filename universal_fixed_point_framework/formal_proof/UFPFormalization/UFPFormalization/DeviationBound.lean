@@ -568,4 +568,58 @@ theorem delta2Cell_commutator_trace_orthogonal_diagonal {n : ℕ} (lam d : Fin n
     ((Matrix.diagonal lam * B - B * Matrix.diagonal lam) * Matrix.diagonal d).trace = 0 :=
   commutator_trace_orthogonal_diagonal lam d B
 
+/-! ### §1.9 矩阵层完整字典：对角方向空间的正交补刻画（2026-08-14）
+    **登记开放项推进（CategoryGeometryDictionary §骨架状态 4：矩阵层完整字典
+    "J2 迹正交 → 偏差矩阵全体方向的逐项对应"）**。
+    §1.7/§1.8 已证偏差矩阵 [A,B]（A 谱基对角）与**任意对角方向**迹正交
+    （`commutator_trace_orthogonal_diagonal`，逐条方向）。
+    本子节给出**空间级完整刻画**：在 Hilbert–Schmidt 内积（迹内积）下，
+    **对角矩阵空间的正交补 = 零对角元矩阵空间**——
+    "X 与任意对角方向迹正交 ⟺ X 对角元全零"（`hs_orthogonal_complement_diagonal`）。
+    这把 J2 定位从"逐条方向正交"提升为"全体方向的补空间表述"——
+    矩阵层完整字典的核心：偏差矩阵所在空间与谱模式方向空间正交分解。
+    **非 KK 守卫**：补空间刻画为矩阵代数性质（迹内积下的正交补对偶），
+    不引入空间坐标——正交不产生额外空间维度（paper44 §7.2 边界 1）。 -/
+
+/-- 对角矩阵空间的正交补（Hilbert–Schmidt 迹内积）：X 与任意对角方向 D = diagonal d
+    迹正交 ⟺ X 对角元全零——(Diag)ᗮ = {X | ∀i, X_ii = 0}。
+    J2 定位（偏差矩阵与谱模式方向正交）的空间级完整表述（矩阵层完整字典核心）。 -/
+theorem hs_orthogonal_complement_diagonal {n : ℕ} (X : Matrix (Fin n) (Fin n) ℂ) :
+    (∀ d : Fin n → ℂ, (X * Matrix.diagonal d).trace = 0) ↔
+      (∀ i : Fin n, X i i = 0) := by
+  constructor
+  · intro hX i
+    -- 取 d = 单点指示 e_i：Tr(X·diag e_i) = X_ii（其余 k≠i 项消去）
+    have htr : (X * Matrix.diagonal (fun j => if j = i then (1 : ℂ) else 0)).trace = X i i := by
+      rw [Matrix.trace]
+      rw [Finset.sum_eq_single i]
+      · simp [Matrix.mul_apply, Matrix.diagonal_apply]
+      · intro j _hj hne
+        simp [Matrix.mul_apply, Matrix.diagonal_apply, hne]
+      · intro hi
+        simp at hi
+    have h0 := hX (fun j => if j = i then (1 : ℂ) else 0)
+    rwa [htr] at h0
+  · intro hzero d
+    rw [Matrix.trace]
+    apply Finset.sum_eq_zero
+    intro k hk
+    calc
+      (X * Matrix.diagonal d) k k = X k k * d k := by
+        simp [Matrix.mul_apply, Matrix.diagonal_apply]
+      _ = 0 := by rw [hzero k]; simp
+
+/-- 矩阵层完整字典（偏差矩阵的补空间归属）：谱基（A = diagonal lam）下偏差矩阵 [A,B]
+    对角元全零（J2 原表述，`commutator_diag_zero_of_diagonal`）⟹ 其属于对角方向空间的
+    正交补——与**任意**对角方向迹正交（"全体方向"形式，`hs_orthogonal_complement_diagonal`
+    的 (←) 方向直接给出）。J2 定位从逐条方向提升为完整补空间表述。 -/
+theorem commutator_in_orthogonal_complement_diagonal {n : ℕ} (lam : Fin n → ℂ)
+    (B : Matrix (Fin n) (Fin n) ℂ) :
+    ∀ d : Fin n → ℂ,
+      ((Matrix.diagonal lam * B - B * Matrix.diagonal lam) * Matrix.diagonal d).trace = 0 := by
+  intro d
+  exact (hs_orthogonal_complement_diagonal
+    (Matrix.diagonal lam * B - B * Matrix.diagonal lam)).2
+      (fun i => commutator_diag_zero_of_diagonal lam B i) d
+
 end UFPFormalization

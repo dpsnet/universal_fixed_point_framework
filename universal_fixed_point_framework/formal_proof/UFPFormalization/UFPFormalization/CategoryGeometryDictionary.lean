@@ -70,9 +70,13 @@ J2 模式间定位同样是非内积的迹正交。
    由内积正交补构造（可选，谱纤维空间意义 Vᗮ，标注非 KK）；
 3. **一致性（已闭合）**：逐层方向映射保持（任意层 normal↦V、horizontal↦H）、
    方向互补保持（opposite 交换 V/H）、lifting 正交与字典正交衔接；
-4. **登记开放（后续）**：层 2 方向类 ↔ 链复形态射的逐项对应定理（CellDirection ↔
-   homotopy 矩阵完整同构）；矩阵层完整字典（J2 迹正交 → 偏差矩阵全体方向的
-   逐项对应）；各层态射方向 → 垂直/水平子空间的逐层几何实例化。
+4. **登记开放（推进中）**：层 2 方向类 ↔ 链复形态射的逐项对应定理（CellDirection ↔
+   homotopy 矩阵完整同构）；**矩阵层完整字典（J2 迹正交 → 偏差矩阵全体方向，
+   2026-08-14 空间级刻画已闭合——`DeviationBound.lean` §1.9 `hs_orthogonal_complement_diagonal`：
+   Hilbert–Schmidt 迹内积下对角矩阵空间的正交补 = 零对角元矩阵空间，即"X 与任意对角
+   方向迹正交 ⟺ X 对角元全零"；`commutator_in_orthogonal_complement_diagonal`：偏差矩阵
+   [A,B]（谱基对角）对角元全零 ⟹ 属于对角方向空间正交补——J2 定位从逐条方向提升为
+   完整补空间表述，零 sorry）**；各层态射方向 → 垂直/水平子空间的逐层几何实例化。
 -/
 
 universe u v
