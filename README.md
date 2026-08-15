@@ -142,8 +142,8 @@ universal_fixed_point_framework/
 │   ├── paper34_continuum_limit.md                  # 🆕
 │   ├── paper35_gravity_origin.md                   # 🆕 引力范畴论起源
 │   ├── paper37_open_problems.md                    # 🆕 开放问题综述
-│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.43
-│   └── RAP_盲登记协议.md                            # RAP-Registry v0.43（与勘误 1:1 同步）
+│   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.44
+│   └── RAP_盲登记协议.md                            # RAP-Registry v0.44（与勘误 1:1 同步）
 ├── notes/08_first_principles/       # 研究笔记
 │   ├── spectral_hierarchy_evolution_analysis.md    # 主索引
 │   ├── 01_origin_of_3.md … 07_e_less_than_3.md   # 各专题
