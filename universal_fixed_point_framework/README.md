@@ -300,7 +300,7 @@ universal_fixed_point_framework/
 │   ├── paper41_renormalization_chain.md         # Paper XLI 量子重整化链条
 │   ├── paper42_black_hole_quantum_evolution.md  # Paper XLII 黑洞量子演化
 │   ├── paper43_shale_accumulation.md            # Paper XLIII 页岩油气成藏谱流
-│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.40（含 paper44 纳入）
+│   └── RAP_勘误与立场声明.md                    # RAP-Errata v0.42（含 paper44 纳入）
 ├── scripts/                        # 论文/阶段数值验证脚本（在 run_all_tests.py 中注册）
 │   ├── paperX_*.py                 # Phase 44/60/61 及后续数值验证脚本（约 130 个）
 │   ├── paper5_spectral_flow_test.py     # Paper V 谱流方程验证 (ALL PASSED)

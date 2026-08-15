@@ -4,7 +4,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.33（2026-08-14）。2026-08-14 **Mourre 估计 Lean 代数骨架闭合**（§7.3：`MourreSkeleton.lean`——`mourre_estimate_of_lower_bound`（i[H,A]=H + 谱投影像内能量下限 ⟹ Mourre 估计，零 sorry）+ `spectralProjection_window_restrict`（E_I H E_I=H E_I）+ `commutator_conj`（U[H,A]U⁻¹=[UHU⁻¹,UAU⁻¹]，标度相似性骨架）+ `mourreAc`，2454 jobs——锚点 2 自由带 [0,∞) 纯 a.c. 谱前提获 Lean 代数核心，与 `paperX_mourre_ac_spectrum.py` 5/5（S2 精确对角 min eig=a）衔接；**A4 锚点 2 三前提（自伴 Kato–Rellich + a.c. Mourre + 位置表示）Lean 代数核心全部闭合**；无界完整形式化（谱测度库）仍登记开放）。2026-08-14 WW 复极点 Lean 代数骨架闭合（§7.3：`PoleDecay.lean`（原 PhotonTopologyResonance）"下半平面极点 ⟹ 指数衰减"零 sorry，2454 jobs——锚点 1 ③ 不可逆 = 因果性（下半平面极点）获机器证明代数骨架；极点位置 z_res 由 `paperX_friedrichs_resonance.py` 8/8 定量给出）。2026-08-14 A4 机制来源数学前提推导级闭合（回应评价 §10.4 追踪点 2 推进）：§7.5 开放问题 7 的锚点 2 数学前提（Kato–Rellich 自伴性 `paperX_kato_rellich_selfadjoint.py` 5/5 + Mourre 估计 a.c. 谱 `paperX_mourre_ac_spectrum.py` 5/5 + Friedrichs 模型共振极点 `paperX_friedrichs_resonance.py` 8/8）从库依赖开放项推进为推导级+数值佐证——A4 涌现候选获三锚点机制链完整定量支撑（推迟辐射条件=下半平面极点=因果性 + RAGE 谱逃逸 + 向内≡吸收 + WW 衰减率），失效条件（闭合系统⟹可逆）数值演示；剩余：Lean 完整形式化（自伴性/Mourre 无界版本，谱测度库依赖——代数骨架 KatoRellichSkeleton/MourreSkeleton 已闭合 2026-08-14）与耦合情形 a.c. 谱保持（FGSS 线文献）。本文为当前研究成果的静态表述——正文不含演进过程叙述；§5.3 纳入引力时间膨胀拓扑诠释（双法向偏转统一：运动学钟慢 ↔ 引力时间膨胀同为向法向自由度偏转，$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 量化统一 + 水星进动/光偏折 GR 分解重述 + 度规双通道互逆 $g_{00}\cdot g_{rr}=1$，`paperX_theta_esc_gravity.py` 5/5/`paperX_grr_categorical.py`   S1-S3，GR 结论拓扑重述、温和兼容）；P5 定名"场表述康普顿散射"（标准康普顿推导为场能量-动量守恒运动学，§6.5）；§7.3 如实登记当前形式化状态（范畴层完整 4-态射骨架 + 曲率层代数骨架 + Δ 2-胞腔语义 + WW 复极点代数骨架，`lake build` 2454 jobs 零警告零 sorry）；六项可证伪预言 P1–P6 均为远期假说（§7.5）。版本演进历史见 RAP-Errata v0.38。2026-08-13 归属一致性修正：P5 归属表与 §6.5 同步为温和兼容重述（§7.1 表/§6 章标题/§7.4 口径统一）、lake build jobs 计数统一为 2454——回应 CNF 评价 §10.2 新问题 1/3。2026-08-13 B 类推进：P1 盲登记冻结（§6.1 主候选 $\kappa_\Delta=\Delta=S_4^3$ + 备选 $K_a=S_4^2$ + 排除线 + 失效条件，回应评价 §六批评 1）、§7.2 联络选取依赖登记（回应评价 §3.3 批评 2）、§7.3 Agda 停滞标注（回应评价 §10.2 新问题 4）、jobs 计数残留补完（统一为 2454）。2026-08-13 次要项标注：§2.1 法拉第笼类比加"类比辅助语言不承担机制负载"声明、§2.3 "拓扑最小集"改标"本文截取集"（后验便利）——回应 CNF 评价 §3.1 批评 3/§3.4 批评 2。2026-08-13 ε_Δ 严格定义推进：§6.1 从 paper35 Δ 结构常数推导第一性候选 C1=‖Δ‖_F²≈6.01e-4（+独立验证 C2=r_NLO≈8.06e-4 同量级互证），量级判别支持路径 A（S4³）排除路径 B（S4²），开放问题 5 推进为"部分闭合"（`paperX_epsilon_delta_derivation.py` 14/14）——回应 CNF 评价 §10.4 追踪点 1。
+**版本**：v0.34（2026-08-15）。2026-08-15 **§5.3 动力学补充（力 = 偏转时间轴的驱动，能量转移动力学）**——双法向偏转统一的动力学侧：四动量偏转形式 $P^\mu=m(\sec\theta,\tan\theta\,\hat n)$（质量壳 = $\sec^2\theta-\tan^2\theta=1$）、三维力分解 $F_\parallel=m\sec\theta\,\dot\varphi=\gamma^3ma_\parallel$ / $F_\perp=m\tan\theta\,\dot\Omega=\gamma ma_\perp$、功率 $P=F\cdot v=dE/dt$（力做功 = 能量变化率）、谱侧衔接 $d\lambda/dt=F\cdot v$（[衔接] 建模）——全部为标准相对论结论的偏转语言重述（温和兼容，无新预言），谱侧衔接标注 [衔接] 不升级为独立推导（提炼自笔记 `force_essence_deflection.md` §2/§2.1/§3.1a）。v0.33 原记录（2026-08-14）：**Mourre 估计 Lean 代数骨架闭合**（§7.3：`MourreSkeleton.lean`——`mourre_estimate_of_lower_bound`（i[H,A]=H + 谱投影像内能量下限 ⟹ Mourre 估计，零 sorry）+ `spectralProjection_window_restrict`（E_I H E_I=H E_I）+ `commutator_conj`（U[H,A]U⁻¹=[UHU⁻¹,UAU⁻¹]，标度相似性骨架）+ `mourreAc`，2454 jobs——锚点 2 自由带 [0,∞) 纯 a.c. 谱前提获 Lean 代数核心，与 `paperX_mourre_ac_spectrum.py` 5/5（S2 精确对角 min eig=a）衔接；**A4 锚点 2 三前提（自伴 Kato–Rellich + a.c. Mourre + 位置表示）Lean 代数核心全部闭合**；无界完整形式化（谱测度库）仍登记开放）。2026-08-14 WW 复极点 Lean 代数骨架闭合（§7.3：`PoleDecay.lean`（原 PhotonTopologyResonance）"下半平面极点 ⟹ 指数衰减"零 sorry，2454 jobs——锚点 1 ③ 不可逆 = 因果性（下半平面极点）获机器证明代数骨架；极点位置 z_res 由 `paperX_friedrichs_resonance.py` 8/8 定量给出）。2026-08-14 A4 机制来源数学前提推导级闭合（回应评价 §10.4 追踪点 2 推进）：§7.5 开放问题 7 的锚点 2 数学前提（Kato–Rellich 自伴性 `paperX_kato_rellich_selfadjoint.py` 5/5 + Mourre 估计 a.c. 谱 `paperX_mourre_ac_spectrum.py` 5/5 + Friedrichs 模型共振极点 `paperX_friedrichs_resonance.py` 8/8）从库依赖开放项推进为推导级+数值佐证——A4 涌现候选获三锚点机制链完整定量支撑（推迟辐射条件=下半平面极点=因果性 + RAGE 谱逃逸 + 向内≡吸收 + WW 衰减率），失效条件（闭合系统⟹可逆）数值演示；剩余：Lean 完整形式化（自伴性/Mourre 无界版本，谱测度库依赖——代数骨架 KatoRellichSkeleton/MourreSkeleton 已闭合 2026-08-14）与耦合情形 a.c. 谱保持（FGSS 线文献）。本文为当前研究成果的静态表述——正文不含演进过程叙述；§5.3 纳入引力时间膨胀拓扑诠释（双法向偏转统一：运动学钟慢 ↔ 引力时间膨胀同为向法向自由度偏转，$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 量化统一 + 水星进动/光偏折 GR 分解重述 + 度规双通道互逆 $g_{00}\cdot g_{rr}=1$，`paperX_theta_esc_gravity.py` 5/5/`paperX_grr_categorical.py`   S1-S3，GR 结论拓扑重述、温和兼容）；P5 定名"场表述康普顿散射"（标准康普顿推导为场能量-动量守恒运动学，§6.5）；§7.3 如实登记当前形式化状态（范畴层完整 4-态射骨架 + 曲率层代数骨架 + Δ 2-胞腔语义 + WW 复极点代数骨架，`lake build` 2454 jobs 零警告零 sorry）；六项可证伪预言 P1–P6 均为远期假说（§7.5）。版本演进历史见 RAP-Errata v0.42。2026-08-13 归属一致性修正：P5 归属表与 §6.5 同步为温和兼容重述（§7.1 表/§6 章标题/§7.4 口径统一）、lake build jobs 计数统一为 2454——回应 CNF 评价 §10.2 新问题 1/3。2026-08-13 B 类推进：P1 盲登记冻结（§6.1 主候选 $\kappa_\Delta=\Delta=S_4^3$ + 备选 $K_a=S_4^2$ + 排除线 + 失效条件，回应评价 §六批评 1）、§7.2 联络选取依赖登记（回应评价 §3.3 批评 2）、§7.3 Agda 停滞标注（回应评价 §10.2 新问题 4）、jobs 计数残留补完（统一为 2454）。2026-08-13 次要项标注：§2.1 法拉第笼类比加"类比辅助语言不承担机制负载"声明、§2.3 "拓扑最小集"改标"本文截取集"（后验便利）——回应 CNF 评价 §3.1 批评 3/§3.4 批评 2。2026-08-13 ε_Δ 严格定义推进：§6.1 从 paper35 Δ 结构常数推导第一性候选 C1=‖Δ‖_F²≈6.01e-4（+独立验证 C2=r_NLO≈8.06e-4 同量级互证），量级判别支持路径 A（S4³）排除路径 B（S4²），开放问题 5 推进为"部分闭合"（`paperX_epsilon_delta_derivation.py` 14/14）——回应 CNF 评价 §10.4 追踪点 1。
 
 **稿态**：自洽成稿。本文为理论论文，全部核心结构（拓扑转变公理体系、方向性阶跃、双层正交、可拦截性机制、六项可证伪预言）均于本文内完整建立；已知物理结论（Bohr 条件、爱因斯坦系数、光速不变、Planck 关系）在本文中均明确标注为"经典结论的拓扑重述"，不构成新物理声称。理论自洽性的数值验证脚本随文提供（§7.4）。
 
@@ -343,6 +343,24 @@ $$\frac{d\tau}{dt}=\sqrt{1-\frac{2GM}{rc^2}}=\sqrt{1-\frac{v_{\rm esc}^2}{c^2}}=
 
 **诚实边界**：① 双法向偏转为**框架诠释重述**（GR 数学内容的框架语言组织），非新计算、非新预言；② 引力 $\Delta$ 为范畴层结构（Sp 2-态射方向），非三维空间之外的几何空间维度（§7.2 非 KK 声明）；③ 等效速度角统一仅在**时间流逝速率**层面（$\sqrt{g_{00}}$）严格成立；完整引力效应（进动、光偏折 2 倍、引力波、宇宙学红移）需双法向（$g_{00}+g_{rr}$），GR 仍为正确理论。
 
+**动力学补充：力 = 偏转时间轴的驱动（能量转移动力学）**：§5.3 以上为双法向偏转统一的**几何/运动学侧**（时间流逝改变 = 向法向偏转）。此处补充其**动力学侧**——谁在驱动偏转（力）与偏转做功 = 能量转移（功率）。全部为标准相对论结论的偏转语言重述，温和兼容（与 §5.6 归属表一致，无新预言）。
+
+**四动量的偏转语言形式**（标准结论重述）：对 §2.7 的 4-速度分解 $u^\mu=(\sec\theta,\tan\theta)$ 质量加权，
+$$P^\mu=(E,\mathbf p)=m\,(\sec\theta,\ \tan\theta\,\hat n),$$
+其中时间分量 $E=m\sec\theta$（质量 = 偏转难度系数，paper16 定理 6.3 的谱间隙读法）、空间分量 $\mathbf p=m\tan\theta\,\hat n$；质量壳 $E^2-p^2=m^2(\sec^2\theta-\tan^2\theta)=m^2$——$\sec^2\theta-\tan^2\theta=1$ 即偏转语言的质量壳恒等式（与图 5 语言一致）。
+
+**三维力分解**（标准结论重述）：$\mathbf F=d\mathbf p/dt$ 按偏转几何分解为纵向 + 横向，
+$$\mathbf F=m\sec\theta\,\dot\varphi\,\hat n+m\tan\theta\,\dot\Omega\,\hat\varphi_\perp,$$
+纵向 $F_\parallel=m\sec\theta\,\dot\varphi=\gamma^3 m\,a_\parallel$（沿 $\hat n$，改变速度角 = 能量转移方向）、横向 $F_\perp=m\tan\theta\,\dot\Omega=\gamma m\,a_\perp$（偏转面旋转，$\theta$ 不变）——与标准相对论分解 $\mathbf F=\gamma^3 m\,a_\parallel+\gamma m\,a_\perp$ 精确一致。
+
+**做功 = 能量转移动力学**（标准结论重述）：由 $E=m\sec\theta$，
+$$\frac{dE}{dt}=m\sec\theta\tan\theta\,\dot\theta=m\tan\theta\,\dot\varphi=F\cdot v,$$
+即**功率 $P=F\cdot v=dE/dt$——力做功恰为时间轴偏转的能量变化率，"力是能量转移的动力学机制"**。§2.2 的方向性阶跃（$\Phi$ 拓扑转变 = 时间耦合模式切换）在此读法下 = 系统偏转角 $\theta$ 的离散跳变事件（发射 = 0→90° 极限方向解绑、吸收 = 反向重绑），其能量交换由上述功率关系在转变瞬间结算。
+
+**谱侧衔接（[衔接] 建模，非独立推导）**：若时间耦合编码于谱特征值 $\lambda(t)=\lambda_0\sec\theta(t)$（图 5 时间耦合 cosθ + paper16 定理 6.3 质量 = 谱间隙的组合建模），则一阶谱演化 $d\lambda/dt=\lambda_0\tan\theta\,\dot\varphi=F\cdot v$——谱力 $F_{\rm spec}=[G,A]$（paper18 定义 3.1）驱动的是编码时间耦合的谱特征值，secθ 因子为其时间耦合依赖形态。**推导链严格，但前提（$\lambda=\lambda_0\sec\theta$）为 [衔接] 建模，不升级为独立推导**（笔记 `force_essence_deflection.md` §2/§2.1/§3.1a）。
+
+**温和兼容标注**：本动力学补充四动量/三维力分解/功率定理均为标准相对论结论的偏转语言重述，无新物理、无新预言；谱侧衔接为框架内建模（[衔接]），非既有结论的独立推导。与双法向偏转统一的几何侧互补：几何侧回答"时间流逝为何改变"（向法向偏转），动力学侧回答"谁驱动偏转、偏转做功几何"（力 = 能量转移动力学）。
+
 ### 5.4 宇宙学红移（谱纤维丛整体膨胀）
 
 Grothendieck 谱纤维丛随宇宙演化持续均匀拓扑膨胀：
@@ -363,6 +381,7 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 | 宇宙学红移拓扑公式 | 温和兼容 |
 | 引力红移基础项 $\Delta\Phi/c^2$ | 温和兼容（GR 结论拓扑重述） |
 | 引力时间膨胀拓扑诠释（双法向偏转统一） | 温和兼容（GR 结论拓扑重述） |
+| 动力学补充（力 = 偏转驱动：四动量偏转形式 / 三维力分解 / 功率 $P=F\cdot v=dE/dt$） | 温和兼容（标准相对论结论拓扑重述；谱侧衔接为 [衔接] 建模） |
 | **引力红移 UFPF 修正项 $\delta z_{\Delta}$** | **颠覆性预言**（UFPF 独有） |
 
 ---
@@ -448,7 +467,7 @@ $$R_{\text{supp}}(N)=\sigma_{\text{silent}}^N,\qquad \sigma_{\text{silent}}=S_4=
 
 | 类别 | 内容 | 本文地位 |
 |:--|:--|:--|
-| 温和兼容 | $c=\lambda\nu$（定理 3.2）、$E=h\nu$（命题 4.1）、基础多普勒红移（§5.2）、宇宙学红移（§5.4）、引力红移基础项与引力时间膨胀拓扑诠释（§5.3）、Bohr 条件、原子选择定则与吸收截面（命题 2.3/定义 2.4）、光速不变（定理 3.1）、光子自旋 $s=1$ 与 E⊥B⊥k 横向性（§2.5）、纵向模式为截面层涌现（§2.5）、**场表述康普顿散射（P5，§6.5——温和兼容重述，不构成新预言；2026-08-13 归属表与 §6.5 自标同步）** | 框架铺垫（经典结论拓扑重述） |
+| 温和兼容 | $c=\lambda\nu$（定理 3.2）、$E=h\nu$（命题 4.1）、基础多普勒红移（§5.2）、宇宙学红移（§5.4）、引力红移基础项与引力时间膨胀拓扑诠释（§5.3）、**动力学补充（力 = 偏转驱动：四动量偏转形式 / 三维力分解 / 功率 $P=F\cdot v=dE/dt$，§5.3——标准相对论结论拓扑重述）**、Bohr 条件、原子选择定则与吸收截面（命题 2.3/定义 2.4）、光速不变（定理 3.1）、光子自旋 $s=1$ 与 E⊥B⊥k 横向性（§2.5）、纵向模式为截面层涌现（§2.5）、**场表述康普顿散射（P5，§6.5——温和兼容重述，不构成新预言；2026-08-13 归属表与 §6.5 自标同步）** | 框架铺垫（经典结论拓扑重述） |
 | 颠覆性预言 | 引力 $\Delta$-偏振红移差（P1）、S3 静默-波长标度（P2）、$h$-$c$-$\Delta$ 约束（P3）、分形宇宙震荡（P4）、多层静默判据（P6） | 核心贡献（远期可证伪） |
 
 **数学结构归属**（本文拓扑/几何/范畴语言的分层定位）：
