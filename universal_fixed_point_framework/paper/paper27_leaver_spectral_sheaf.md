@@ -332,7 +332,7 @@ $$\mathcal{P}_{\text{II}} = \{(a,m,\omega) : \mathrm{Im}(\omega) = 0 \text{ 或 
 
 $$\boxed{\gamma(\omega_0) < \frac{\Delta\lambda_{\min}}{M_{\text{Pl}}} = 0.122}$$
 
-**证明**。由 LACI 公理化体系（Paper I §3.6），$\gamma < 0.122 \Rightarrow \text{LACI} > 2.0$（物理根辨识阈值）。此时候选根处于谱静默状态，物理不可辨识。反之，若 $\gamma \geq 0.122$，则 LACI 低于阈值，候选根可通过常规判据验证。$\square$
+**证明**。由 LACI 测度论定义（Paper I §7.43 A4，LACI = −log(min_gap)），谱静默判据为 −log γ ≥ 2（⟹ γ ≤ e^{−2} ≈ 0.135）；0.122 为满足该条件的更强约束，因此 $\gamma < 0.122 \Rightarrow \text{LACI} > 2.0$（物理根辨识阈值）。此时候选根处于谱静默状态，物理不可辨识。反之，若 $\gamma \geq 0.122$，则 LACI 低于阈值，候选根可通过常规判据验证。$\square$
 
 ### 4.3 III 型：零谱间隙退化
 
@@ -807,6 +807,8 @@ $$\varepsilon_{\text{total}}(a \to 1) \leq 10^{-6}.$$
 
 ## 8. 可证伪预言
 
+**LACI 操作定义注记（2026-08-16 修复）**：本文 §8 采用**谱间隙倒数** LACI = 1/γ（γ = 谱间隙 min_gap，定义 8.1）作为 Kerr ringdown 场景的**操作定义**，注册为 Paper I 系 LACI 函数族（主文件 §3.6 定义 3.12a）的成员 $F_{\text{op}}$。该定义与族内其他成员均不同：测度论成员 $F_{\text{mt}} = -\log(\min\text{-gap})$（伴生文件 §7.9.5 定义 7.43 A4，公理定义）、复合型 $F_{\text{comp}}$（主文件 §3.6 定义 3.11，起源形态，含残差/分散度/间隙三项）；谱比型 $1 - \lambda_2/\lambda_1$（伴生文件 §7.7 定义 7.19）为**相对间隙占比、方向相反、不属于判据族**（定位为等价判定不变量）。三者数值关系（γ = 0.122 时）：1/γ = 8.2、−log γ = 2.1——**非近似相等**。**精确换算恒等（避免判据误用）**：两测度同为 γ 的单调递减函数，经自然对数/指数精确互换算——LACI_测度论 = −log(min_gap) = ln(1/γ) = ln(LACI_操作)，反变换 LACI_操作 = e^{LACI_测度论}；判据严格等价：−log γ ≥ 2 ⟺ 1/γ ≥ e² ≈ 7.39（同一物理条件 γ ≤ e^{−2} ≈ 0.135 的两种函数呈现）。**数值混用规则**：两测度数值不可直接相加/比较，必须先经 ln/exp 换算（类比 pH ↔ [H⁺]，非线性换算，非固定系数）。§8 全部数值（表 3、骤变因子、证伪阈值）基于操作定义 1/γ；§4 判据（γ < 0.122 ⟹ LACI > 2.0）对应测度论定义 −log(γ) ≥ 2（⟹ γ ≤ e^{−2} = 0.135，0.122 为满足条件的更强约束）。两处定义的角色已分离，不再混用。
+
 ### 8.1 P1：谱间隙标度律
 
 **定义 8.1**（谱间隙标度律）。Kerr QNM 谱覆盖的谱间隙 $\gamma(a)$ 定义为基模与第一泛音之间的最小特征值间距：
@@ -831,7 +833,7 @@ $$|\lambda_i(M) - \lambda_j(M)| \geq |D_{ii} - D_{jj}| - \sum_{k \neq i} |M_{ik}
 
 **定义 8.2**（LACI 三段演化）。Kerr ringdown 的 LACI（谱覆盖谱间隙倒数）在时间域中呈现三段式演化模式：
 
-$$\mathrm{LACI}(t) = 
+$$\mathrm{LACI}(t) =
 \begin{cases}
 \text{递减段（合并段）}, & t < t_1, \\
 \text{递增段（铃荡段）}, & t_1 \leq t \leq t_2, \\
@@ -868,7 +870,7 @@ $$a_{\text{crit}}(l,m) = \frac{\operatorname{Re}(\omega) \cdot 2M^2}{m},$$
 
 且满足 $\mathcal{J}(a_{\text{crit}}) \geq 10$。
 
-**证明**。由定理 4.2（II 型奇异点对应视界/超辐射临界），在超辐射临界点 $a = a_{\text{crit}}$ 处，谱静默条件激活：$\gamma(a_{\text{crit}}) < 0.122$。LACI = $1/\gamma$（定义见 Paper I §3.6），因此 $\mathrm{LACI}(a_{\text{crit}}) > 1/0.122 \approx 8.2$。在临界点之前，$\gamma \approx 0.3$–$0.7$，LACI 在 $1.4$–$3.3$ 范围。因此 LACI 骤变因子至少为 $8.2/3.3 \approx 2.5$，典型值 $\geq 10$。$\square$
+**证明**。由定理 4.2（II 型奇异点对应视界/超辐射临界），在超辐射临界点 $a = a_{\text{crit}}$ 处，谱静默条件激活：$\gamma(a_{\text{crit}}) < 0.122$。LACI = $1/\gamma$（§8 开篇 LACI 操作定义注记），因此 $\mathrm{LACI}(a_{\text{crit}}) > 1/0.122 \approx 8.2$。在临界点之前，$\gamma \approx 0.3$–$0.7$，LACI 在 $1.4$–$3.3$ 范围。因此 LACI 骤变因子至少为 $8.2/3.3 \approx 2.5$，典型值 $\geq 10$。$\square$
 
 **表 3**：LACI 的超辐射临界值（$l=2$，$M=1$）
 
@@ -894,7 +896,7 @@ $$\boxed{\frac{\Delta\mathrm{LACI}}{\mathrm{LACI}} = \mathcal{O}(\delta a^2)}$$
 
 即 LACI 的一阶变化为零，初值扰动不影响 LACI 排序稳定性。
 
-**证明**。LACI 定义为谱间隙 $\gamma(a)$ 的倒数：$\mathrm{LACI}(a) = 1/\gamma(a)$。在正则纤维区域（非奇异点），谱间隙 $\gamma(a)$ 作为 $a$ 的解析函数，其一阶导数为零的临界点对应分支点位置（定理 4.5，正则纤维处 $\partial \gamma/\partial a$ 有界且非奇异）。由 Taylor 展开：
+**证明**。按 §8 开篇的 LACI 操作定义，LACI 为谱间隙 $\gamma(a)$ 的倒数：$\mathrm{LACI}(a) = 1/\gamma(a)$。在正则纤维区域（非奇异点），谱间隙 $\gamma(a)$ 作为 $a$ 的解析函数，其一阶导数为零的临界点对应分支点位置（定理 4.5，正则纤维处 $\partial \gamma/\partial a$ 有界且非奇异）。由 Taylor 展开：
 
 $$\gamma(a + \delta a) = \gamma(a) + \gamma'(a)\delta a + \frac{1}{2}\gamma''(a)\delta a^2 + \mathcal{O}(\delta a^3).$$
 

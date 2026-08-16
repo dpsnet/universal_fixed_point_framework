@@ -3,20 +3,36 @@ import Mathlib.Data.Complex.Basic
 
 namespace UFPFormalization
 
-/-- Generator of Cl(0,1): a 2×2 real matrix squaring to the identity. -/
-def e_01 : Matrix (Fin 2) (Fin 2) ℝ
-  | 0, 0 => 1
-  | 0, 1 => 0
-  | 1, 0 => 0
-  | 1, 1 => -1
-  | _, _ => 0
+/-!
+### 约定声明（2026-08-16 修正：e_01/e_10 命名颠倒 + Cl(1,7) 时间² 统一）
 
-/-- Generator of Cl(1,0): a 2×2 real matrix squaring to minus the identity. -/
-def e_10 : Matrix (Fin 2) (Fin 2) ℝ
+**数学标准 Cl(p,q) 索引**：p = 平方 +1 的生成元数（正号）、q = 平方 −1 的生成元数（负号）。
+
+- `e_10`（= Cl(1,0) 生成元）：平方 **+1**（diag(1,−1)）；
+- `e_01`（= Cl(0,1) 生成元）：平方 **−1**（反对称实阵）。
+- 历史命名颠倒（原 e_01 为平方 +1、e_10 为平方 −1，与标准相反）已于 2026-08-16 修正。
+
+**Cl(1,7) 时间² 统一约定**：Cl(1,7) = 1 正号（时间型，平方 **+1**）+ 7 负号（空间型，平方 −1）。
+这与主导物理脚本一致（`paperX_cl17_first_principle.py` / `gammas_fixed.py`：Γ⁰²=+I 时间、
+Γ¹..Γ⁷²=−I 空间；Dirac 度规 (+,−,−,...)）。历史探针 `paperX_delta_spatial_probe.py`
+用时间²=−1（= 主导约定表示整体乘 i，酉等价，探针判定不变）——见笔记
+`silence_direction_allocation.md` §4.7 S2 / §4.8 约定登记。
+-/
+
+/-- Cl(0,1) 生成元：2×2 实反对称矩阵，平方 = −1（数学标准 q=1 负号）。 -/
+def e_01 : Matrix (Fin 2) (Fin 2) ℝ
   | 0, 0 => 0
   | 0, 1 => -1
   | 1, 0 => 1
   | 1, 1 => 0
+  | _, _ => 0
+
+/-- Cl(1,0) 生成元：2×2 实对角矩阵，平方 = +1（数学标准 p=1 正号）。 -/
+def e_10 : Matrix (Fin 2) (Fin 2) ℝ
+  | 0, 0 => 1
+  | 0, 1 => 0
+  | 1, 0 => 0
+  | 1, 1 => -1
   | _, _ => 0
 
 /-- First generator of Cl(2,0): a 2×2 complex matrix. -/
@@ -40,13 +56,13 @@ private lemma sum_fin_two {α : Type} [AddCommMonoid α] (f : Fin 2 → α) :
   rw [Finset.sum_fin_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_one]
   simp
 
-/-- Verification that e_01 squares to the identity. -/
-theorem e_01_sq : e_01 * e_01 = 1 := by
+/-- Verification that e_01 (Cl(0,1)) squares to minus the identity. -/
+theorem e_01_sq : e_01 * e_01 = -1 := by
   funext i j
   fin_cases i <;> fin_cases j <;> simp [e_01, Matrix.mul_apply, sum_fin_two]
 
-/-- Verification that e_10 squares to minus the identity. -/
-theorem e_10_sq : e_10 * e_10 = -1 := by
+/-- Verification that e_10 (Cl(1,0)) squares to the identity. -/
+theorem e_10_sq : e_10 * e_10 = 1 := by
   funext i j
   fin_cases i <;> fin_cases j <;> simp [e_10, Matrix.mul_apply, sum_fin_two]
 

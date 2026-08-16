@@ -52,7 +52,7 @@ $$G^*(\omega) = G_\infty + \sum_{i=1}^N \frac{G_i i\omega\tau_i}{1 + i\omega\tau
 
 **定理 2.2**（流变学 LACI 的 T1-T3 迁移）。
 
-**T1（高 LACI ⇔ 物理弛豫谱）**：$\text{LACI}_{\text{rheo}} \ll 1$ 当且仅当 $\{G_i, \tau_i\}$ 不处于流变学"谱静默"区——即 $\kappa(J) < \kappa_{\text{ref}}$（非奇异反演）。噪声放大导致的伪峰对应 GMM 谱丛的"非物理弛豫模"，其 $\gamma_{\text{rheo}} \to 0$ 等价于 S3 静默条件激活。
+**T1（低 LACI ⇔ 物理弛豫谱）**：$\text{LACI}_{\text{rheo}} \ll 1$ 当且仅当 $\{G_i, \tau_i\}$ 不处于流变学"谱静默"区——即 $\kappa(J) < \kappa_{\text{ref}}$（非奇异反演）。噪声放大导致的伪峰对应 GMM 谱丛的"非物理弛豫模"，其 $\gamma_{\text{rheo}} \to 0$ 等价于 S3 静默条件激活。
 
 **T2（单调性沿正则化路径）**：设 $\Gamma_{\text{reg}}: \lambda \mapsto \{\tilde{G}_i(\lambda), \tilde{\tau}_i(\lambda)\}$ 为 Tikhonov 正则化参数 $\lambda$ 扫过可行域的路径。若谱丛同构 $\Phi_{\text{Teuk→Rheo}}$ 成立，则 T2 的严格证明（Kantorovich + 变分不等式）可直接迁移：$\text{LACI}_{\text{rheo}}$ 沿 $\Gamma_{\text{reg}}$ 局部单调递减。
 

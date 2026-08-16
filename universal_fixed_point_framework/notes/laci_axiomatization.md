@@ -1,6 +1,6 @@
 # 局部吸引子捕获指数（Local Attractor Capture Index, LACI）公理化：从启发式指标到定理系的升级
 
-**版本**：v0.1（2026-07-25）
+**版本**：v0.2（2026-08-16）——定理 T1 语义反转修正（"高 LACI ⇔ 静默分支"→"低 LACI ⇔ 可观测分支 ¬S3"），对齐全文"取最小 LACI 为物理根"与 LACI 判据族语义（paper1 定义 3.12a）
 
 **摘要**：局部吸引子捕获指数（Local Attractor Capture Index, LACI）原是用于 Leaver 连续分数法物理根选择的启发式指标，在 Kerr QNM 计算中经验证具有 100% 正确识别率。本笔记将 LACI 的三个分量（不动点残差 $\rho$、分散度 $\Delta$、谱间隙 $\gamma$）置于谱丛几何框架下进行公理化，建立三个核心定理，将 LACI 升级为有严格数学支撑的物理根选择判据。
 
@@ -45,12 +45,14 @@ $$\text{LACI}(\omega) = \frac{\rho(\omega)}{\rho_{\text{ref}}} + \frac{\Delta(\o
 
 ## 2. 定理系
 
-### 定理 T1：高 LACI ⇔ 谱丛静默分支（S3 判据）
+### 定理 T1：低 LACI ⇔ 谱丛可观测分支（¬S3）
 
 **定理 T1**（LACI-谱静默等价定理）。设 $\mathcal{S}(M)$ 为 Kerr 三对角谱丛，$\omega_0 \in \mathbb{C}$ 满足 $\det M(\omega_0) = 0$。则以下两个条件等价：
 
-1. **高 LACI**：$\text{LACI}(\omega_0) \ll 1$（即 LACI 在候选集中取最小值）
-2. **S3 静默**：$\omega_0$ 对应的谱丛截面 $(\omega_0, 0)$ 处于谱丛的**静默分支**上，即存在 $\delta > 0$ 使得谱间隔 $\min_{i \neq j} |\lambda_i(\omega_0) - \lambda_j(\omega_0)| \geq \delta > 0$，且 $\gamma(\omega_0) \geq \gamma_{\text{ref}}$
+1. **低 LACI**：$\text{LACI}(\omega_0) \ll 1$（即 LACI 在候选集中取最小值）
+2. **¬S3（可观测分支）**：$\omega_0$ 对应的谱丛截面 $(\omega_0, 0)$ 处于谱丛的**可观测分支**（非静默）上，即存在 $\delta > 0$ 使得谱间隔 $\min_{i \neq j} |\lambda_i(\omega_0) - \lambda_j(\omega_0)| \geq \delta > 0$，且 $\gamma(\omega_0) \geq \gamma_{\text{ref}}$
+
+**注（2026-08-16 语义反转修正）**：原定理题述"高 LACI ⇔ 谱丛静默分支（S3 判据）"方向反转——实际结论（依证明与推论 T1a）为**低 LACI ⟺ 可观测分支（¬S3）**，与全文"取最小 LACI 为物理根"及 LACI 判据族语义（主文件定义 3.12a）一致。
 
 **证明**。
 
@@ -60,9 +62,9 @@ $$\text{LACI}(\omega) = \frac{\rho(\omega)}{\rho_{\text{ref}}} + \frac{\Delta(\o
 - $\Delta(\omega_0)/\Delta_{\text{ref}} \ll 1 \Rightarrow \Delta(\omega_0) \ll 10^{-3}$。分散度极小意味着不同初值的 Newton 迭代均收敛到同一 $\omega_0$，即 $\omega_0$ 的吸引域明确且无竞争吸引子。
 - $1/(\gamma(\omega_0)/\gamma_{\text{ref}} + \varepsilon) \ll 1 \Rightarrow \gamma(\omega_0) \geq \gamma_{\text{ref}} = 0.1$。谱间隙非零，残差 Jacobian 的非退化奇异值比 $\sigma_2/\sigma_1 \leq 0.9$，保证 Newton 迭代在 $\omega_0$ 处二次收敛。
 
-由谱丛的纤维化结构（谱丛笔记 §2），谱间隙 $\gamma(\omega_0) \geq 0.1$ 意味着二叉树根节点处最近的两个特征值间距 $\min_{i \neq j} |\lambda_i(\omega_0) - \lambda_j(\omega_0)| \gg 0$。因此截面 $(\omega_0, 0)$ 远离所有分支点（分支点处特征值简并，谱间隙为零）。这与谱静默条件 S3（$\text{LACI}(\Sigma_{\text{silent}}) \to \infty$，即 $\gamma = 0$）的否定对应——高 LACI 等价于截面不在静默分支上，或者说截面处于"可观测分支"上。
+由谱丛的纤维化结构（谱丛笔记 §2），谱间隙 $\gamma(\omega_0) \geq 0.1$ 意味着二叉树根节点处最近的两个特征值间距 $\min_{i \neq j} |\lambda_i(\omega_0) - \lambda_j(\omega_0)| \gg 0$。因此截面 $(\omega_0, 0)$ 远离所有分支点（分支点处特征值简并，谱间隙为零）。这与谱静默条件 S3（$\text{LACI}(\Sigma_{\text{silent}}) \to \infty$，即 $\gamma = 0$）的否定对应——低 LACI 等价于截面不在静默分支上，或者说截面处于"可观测分支"上。
 
-更精确地，谱静默 S3 条件（Paper I §5.2）定义为 $\text{LACI}(\Sigma_{\text{silent}}) \to \infty$（即 $\gamma = 0$）。其否定即 $\gamma > 0$，这正是高 LACI 的第三个分量。因此高 LACI $\Rightarrow$ $\neg$S3，即截面不在静默分支中。□
+更精确地，谱静默 S3 条件（Paper I §5.2）定义为 $\text{LACI}(\Sigma_{\text{silent}}) \to \infty$（即 $\gamma = 0$）。其否定即 $\gamma > 0$，这正是低 LACI 的第三个分量。因此低 LACI $\Rightarrow$ $\neg$S3，即截面不在静默分支中。□
 
 **($\Leftarrow$)** 设 $(\omega_0, 0)$ 处于谱丛的非静默分支上，即 $\gamma(\omega_0) \geq \gamma_{\text{ref}} > 0$ 且存在 $\delta > 0$ 使 $\min_{i \neq j} |\lambda_i(\omega_0) - \lambda_j(\omega_0)| \geq \delta$。
 
@@ -141,7 +143,7 @@ $$\gamma(\omega) \geq \frac{\Delta\lambda_{\min}}{M_{\text{Pl}}} = 0.122$$
 
 若 $\gamma(\omega) < 0.122$，则残差 Jacobian 接近奇异，$\omega$ 处于分支点附近，谱丛叶间跳跃风险高，不是可靠的物理根。
 
-**步骤 2**（LACI 第三项下界）。由定理 T1，$\gamma \geq 0.1 = \gamma_{\text{ref}}$ 是高 LACI 的必要条件。结合 $\Delta\lambda_{\min}$ 约束，物理根必须满足 $\gamma \geq \max(\gamma_{\text{ref}}, \Delta\lambda_{\min}/M_{\text{Pl}}) = 0.122$。因此 LACI 第三项的下界为：
+**步骤 2**（LACI 第三项下界）。由定理 T1（低 LACI ⟺ 可观测分支），$\gamma \geq 0.1 = \gamma_{\text{ref}}$ 是低 LACI（物理根）的必要条件。结合 $\Delta\lambda_{\min}$ 约束，物理根必须满足 $\gamma \geq \max(\gamma_{\text{ref}}, \Delta\lambda_{\min}/M_{\text{Pl}}) = 0.122$。因此 LACI 第三项的下界为：
 
 $$\frac{1}{\gamma/\gamma_{\text{ref}} + \varepsilon} \leq \frac{1}{0.122/0.1 + 0.001} = \frac{1}{1.22 + 0.001} \approx 0.819$$
 
@@ -215,9 +217,9 @@ $$\text{LACI}_{\text{threshold}} = \frac{1}{\Delta\lambda_{\min}(a)/\gamma_{\tex
 
 | 判据 | 与 LACI 的关系 | LACI 公理化贡献 |
 |:----|:--------------|:--------------|
-| S1 连续谱 | LACI 仅适用于离散谱场景 | T1 将 LACI 等价于 S3 否定 |
+| S1 连续谱 | LACI 仅适用于离散谱场景 | T1 将低 LACI 等价于 S3 否定（¬S3） |
 | S2 零测度 | 测度论条件，独立于 LACI | — |
-| **S3 LACI 高** | $\gamma = 0 \Rightarrow \text{LACI} \to \infty$ | **T1 建立双向等价** |
+| **S3 LACI 高** | $\gamma = 0 \Rightarrow \text{LACI} \to \infty$ | **T1 建立低 LACI ⟺ ¬S3（对偶：高 LACI ⟺ S3）** |
 | S4 轨道权重 | 规范群条件，独立于 LACI | — |
 
 ### 4.2 S3 的量化升级

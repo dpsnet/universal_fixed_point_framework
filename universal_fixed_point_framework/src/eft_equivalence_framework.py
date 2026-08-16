@@ -483,7 +483,7 @@ class EFTInverseReconstruction:
         完备条件：四个谱静默判据全部满足：
         - 静默度 s > 0.5
         - 能标比 r < 0.1
-        - LACI 指数 γ > 10
+        - LACI 指数 γ > 10（谱间隙充分性指数，paper1 定义 7.22；与谱比型 1−λ₂/λ₁ 同名不同量，均非判据族成员，见 paper1 定义 3.12a）
         - 轨道权重 w < 0.5
         """
         s = silence_info.get("silence_degree", 0.0)
