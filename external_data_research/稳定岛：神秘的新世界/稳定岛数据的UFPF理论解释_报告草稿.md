@@ -62,9 +62,9 @@
 
 | 编号 | 实验名称 | 模型 | 系统尺寸 | 扫描参数 | 求解器 | 脚本路径 |
 |---|---|---|---|---|---|---|
-| E1 | 稳定岛探索 v2 | Heisenberg XXX 含矛盾边 | N=6，dim ℋ=64 | Δ∈[0,3.0]，step=0.002，1501点 | 精确对角化 (eigsh) | [stability_island_explorer.py](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛2/stability_island_explorer.py#L1-L184) |
-| E2 | 几何相图测量 v3 | 同上 + 环图 | N=6，4种图拓扑 | Δ∈[0,3.0]，step=0.002，1501点 | 精确对角化 (ED) | [stable_island_geometry.py](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry.py#L1-L305) |
-| E3 | 宇宙转换因子 v3 | XXZ 模型含矛盾边 | L=8，χ_max=100 | Δ∈[0,1.0]，step=0.002，501点 | DMRG (TeNPy) | [cosmic_invariant_superdense.py](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/追踪光因子1/cosmic_invariant_superdense.py#L1-L165) |
+| E1 | 稳定岛探索 v2 | Heisenberg XXX 含矛盾边 | N=6，dim ℋ=64 | Δ∈[0,3.0]，step=0.002，1501点 | 精确对角化 (eigsh) | [stability_island_explorer.py](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛2/stability_island_explorer.py#L1-L184) |
+| E2 | 几何相图测量 v3 | 同上 + 环图 | N=6，4种图拓扑 | Δ∈[0,3.0]，step=0.002，1501点 | 精确对角化 (ED) | [stable_island_geometry.py](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry.py#L1-L305) |
+| E3 | 宇宙转换因子 v3 | XXZ 模型含矛盾边 | L=8，χ_max=100 | Δ∈[0,1.0]，step=0.002，501点 | DMRG (TeNPy) | [cosmic_invariant_superdense.py](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/追踪光因子1/cosmic_invariant_superdense.py#L1-L165) |
 
 **矛盾边（contradiction_edge）装置——EDRN 原生设计**：在图中选取一条特殊边，赋予可调耦合强度 Δ（其余边固定 J=1）。该装置直接对应 EDRN **预言一 A(C) 拓扑标度检验** 与 **后续探索协议实验三（拓扑异质结对自旋激发的调控）** 中"局部键强度异质结"的简化玩具版本；预言一原本针对一维 Hubbard 模型自旋能隙前置因子 A(C) 与拓扑指数 C 的关系，此处迁移至多图拓扑 Heisenberg 自旋系统。该构造在 E1–E3 中**全部**产生可复现结构，见 §2.5 解释 E5。
 
@@ -458,11 +458,11 @@ UFPF 侧三项可证伪预测（P-SI-1 拓扑不变、P-SI-2 Fine×gap 近常数
 
 | 数据文件 | 说明 | 关键列（注释#去除后） |
 |---|---|---|
-| [stability_chain.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛2/stability_chain.csv) | 链式图 N=6 ED 1500 点 | delta, gap, coarse, fine |
-| [stability_star.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛2/stability_star.csv) | 星形图 N=6 ED 1500 点 | 同上 |
-| [stability_smallworld.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛2/stability_smallworld.csv) | 小世界图 N=6 ED 1500 点 | 同上 |
-| [stable_island_chain/star/ring/small_world.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/) | v3 四拓扑几何相图各 1500 点 | 同上 |
-| [stable_island_geometry_summary.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry_summary.csv) | v3 稳定岛自动识别汇总表 | graph_type, num_islands, total_width, avg_std, avg_left_slope, avg_right_slope |
-| [cosmic_invariant_superdense_results.csv](file:///e:/workspace/hyper-resolution/外部数据研究/稳定岛：神秘的新世界/追踪光因子1/cosmic_invariant_superdense_results.csv) | XXZ DMRG L=8 500 点 | delta, gap, coarse, fine |
+| [stability_chain.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛2/stability_chain.csv) | 链式图 N=6 ED 1500 点 | delta, gap, coarse, fine |
+| [stability_star.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛2/stability_star.csv) | 星形图 N=6 ED 1500 点 | 同上 |
+| [stability_smallworld.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛2/stability_smallworld.csv) | 小世界图 N=6 ED 1500 点 | 同上 |
+| [stable_island_chain/star/ring/small_world.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/) | v3 四拓扑几何相图各 1500 点 | 同上 |
+| [stable_island_geometry_summary.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry_summary.csv) | v3 稳定岛自动识别汇总表 | graph_type, num_islands, total_width, avg_std, avg_left_slope, avg_right_slope |
+| [cosmic_invariant_superdense_results.csv](file:///d:/trae-work/hyper-resolution/external_data_research/稳定岛：神秘的新世界/追踪光因子1/cosmic_invariant_superdense_results.csv) | XXZ DMRG L=8 500 点 | delta, gap, coarse, fine |
 
 全部数据由对应脚本原始生成，无后验手工修订；复现方式：`python <脚本名>.py` 直接运行即可生成同名 CSV 和图件。
