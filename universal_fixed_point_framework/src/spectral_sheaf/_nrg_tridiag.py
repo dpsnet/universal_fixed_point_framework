@@ -30,7 +30,7 @@ Phase 58B.1: NRG Wilson 链 → 三对角谱丛生成器
 关联:
   · generalization.md §5.2: S_NRG ≅ S_Teuk 同构
   · Paper XIV §5.7: 谱丛理论在凝聚态物理中的应用
-  · Leaver 谱丛剪枝算法 (spectral_sheaf_leaver.md §4.1)
+  · Leaver 谱丛剪枝算法 (notes/04_lorentz_gravity/spectral_sheaf_leaver.md §4.1)
 """
 
 import numpy as np

@@ -96,7 +96,7 @@ $$\varepsilon_{\text{qnm}} = \varepsilon_{\text{trunc}}^{\text{solver}} - \varep
 - 对 $a < 0.5$ 的低自旋区，$\varepsilon_{\text{branch}} \ll \varepsilon_{\text{trunc}}$，两者偏差主要由截断 $N$ 不同引起
 - 对 $a > 0.8$ 的高自旋区，$\varepsilon_{\text{branch}}$ 开始占主导，偏差反映谱丛分支处理的不同
 
-详见 `notes/leaver_benchmark_qnm.md`。
+详见 `notes/04_lorentz_gravity/leaver_benchmark_qnm.md`。
 
 ---
 

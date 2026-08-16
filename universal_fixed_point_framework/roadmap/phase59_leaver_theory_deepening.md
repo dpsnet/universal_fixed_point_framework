@@ -8,7 +8,7 @@
 
 **关联文档**：
 - `docs/关于Leaver求解器创新的讨论.md`（评估文档，已修正）
-- `notes/spectral_sheaf_leaver.md`（v0.2）
+- `notes/04_lorentz_gravity/spectral_sheaf_leaver.md`（v0.2）
 - `roadmap/phase53_spectral_sheaf_generalization.md`
 
 ---
@@ -41,8 +41,8 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 54A.1 | `notes/leaver_triple_parameter_sheaf.md`：三参数谱丛的纤维积构造，三个方向单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 的交换关系定理（$[\mathcal{M}_a,\mathcal{M}_m]=\{\text{id}\}$，$[\mathcal{M}_a,\mathcal{M}_\omega]\neq\{\text{id}\}$，$[\mathcal{M}_m,\mathcal{M}_\omega]\neq\{\text{id}\}$），群扩张结构 $1\to\mathcal{M}_\omega\to\mathfrak{M}\to\mathcal{M}_a\times\mathcal{M}_m\to1$，换位子大小比较 | ✅ |
-| 54A.2 | `notes/leaver_singular_fibers.md`：I 型分支交叉（Ia/Ib/Ic 子类），II 型静默边界（IIa/IIb/IIc 子类，LACI→∞ 对应超辐射临界），III 型零谱间隙退化（极值 Kerr 极限），奇异纤维三分定理（定理 5.1） | ✅ |
+| 54A.1 | `notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md`：三参数谱丛的纤维积构造，三个方向单值群 $\mathcal{M}_a, \mathcal{M}_m, \mathcal{M}_\omega$ 的交换关系定理（$[\mathcal{M}_a,\mathcal{M}_m]=\{\text{id}\}$，$[\mathcal{M}_a,\mathcal{M}_\omega]\neq\{\text{id}\}$，$[\mathcal{M}_m,\mathcal{M}_\omega]\neq\{\text{id}\}$），群扩张结构 $1\to\mathcal{M}_\omega\to\mathfrak{M}\to\mathcal{M}_a\times\mathcal{M}_m\to1$，换位子大小比较 | ✅ |
+| 54A.2 | `notes/04_lorentz_gravity/leaver_singular_fibers.md`：I 型分支交叉（Ia/Ib/Ic 子类），II 型静默边界（IIa/IIb/IIc 子类，LACI→∞ 对应超辐射临界），III 型零谱间隙退化（极值 Kerr 极限），奇异纤维三分定理（定理 5.1） | ✅ |
 
 **验证状态**：
 - 三重纤维积交换关系：$a$-$m$ 可交换已在双重同伦策略中经验确认；$a$-$\omega$ 和 $m$-$\omega$ 不可交换解释了为何 $\omega$ 必须是内循环变量
@@ -58,9 +58,9 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 54B.1 | `notes/leaver_benchmark_analytic.md`：三层基准体系（L1 解析/Schwarzschild、L2 数值/Cook-Zalutskiy、L3 收敛自洽/Richardson 外推），误差分离方案（截断 vs 分支偏差）；`tests/test_benchmark_analytic.py`：7 个测试用例覆盖全部基准层级 | ✅ |
-| 54B.2 | `notes/leaver_benchmark_qnm.md`：qnm 包偏差分析——两分量模型（系数形式差异 + 角向特征值差异），参数区间一致性准则 | ✅ |
-| 54B.3 | `notes/leaver_predictions.md`：4 个可证伪预言——P1 $\gamma(a)\propto(1-a)^{1/3}$、P2 Ringdown LACI 三段演化、P3 高自旋 LACI 骤变=超辐射临界、P4 LACI $O(\delta a^2)$ 稳定性 | ✅ |
+| 54B.1 | `notes/04_lorentz_gravity/leaver_benchmark_analytic.md`：三层基准体系（L1 解析/Schwarzschild、L2 数值/Cook-Zalutskiy、L3 收敛自洽/Richardson 外推），误差分离方案（截断 vs 分支偏差）；`tests/test_benchmark_analytic.py`：7 个测试用例覆盖全部基准层级 | ✅ |
+| 54B.2 | `notes/04_lorentz_gravity/leaver_benchmark_qnm.md`：qnm 包偏差分析——两分量模型（系数形式差异 + 角向特征值差异），参数区间一致性准则 | ✅ |
+| 54B.3 | `notes/04_lorentz_gravity/leaver_predictions.md`：4 个可证伪预言——P1 $\gamma(a)\propto(1-a)^{1/3}$、P2 Ringdown LACI 三段演化、P3 高自旋 LACI 骤变=超辐射临界、P4 LACI $O(\delta a^2)$ 稳定性 | ✅ |
 
 **验证标准**：
 - 三层对标覆盖 $a \in [0, 0.99]$ 全部常用模式 ✅
@@ -75,9 +75,9 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 54C.1 | `notes/leaver_diss_embedding.md` §1：Teukolsky 三项递推满足 Rec_diss 全部条件（压缩算子 ✅、伪谱扰动界 ✅ 修正了表 7.x 中 C 的量级、态射保持性 ✅） | ✅ |
-| 54C.2 | `notes/leaver_diss_embedding.md` §2：辫子交叉数与 D_diss 不变量理论对应 + 数值验证；`src/spectral_sheaf/_diss_braid_invariant.py`：Koopen 算子构造/非正规性度量/伪谱/辫子交叉数/D_diss 谱不变量实现；`src/spectral_sheaf/tests/test_diss_braid_teukolsky_validation.py`：实际 Teukolsky 递推系数验证 → 严格验证 ρ_s = 0.9177 (p=0.028) 通过 | ✅ |
-| 54C.3 | `notes/leaver_diss_embedding.md` §3：边界条件（超辐射边界 B1、极端自旋 B2、高泛音 B3）与扩展方向（次正规/奇异/纤维化范畴） | ✅ |
+| 54C.1 | `notes/04_lorentz_gravity/leaver_diss_embedding.md` §1：Teukolsky 三项递推满足 Rec_diss 全部条件（压缩算子 ✅、伪谱扰动界 ✅ 修正了表 7.x 中 C 的量级、态射保持性 ✅） | ✅ |
+| 54C.2 | `notes/04_lorentz_gravity/leaver_diss_embedding.md` §2：辫子交叉数与 D_diss 不变量理论对应 + 数值验证；`src/spectral_sheaf/_diss_braid_invariant.py`：Koopen 算子构造/非正规性度量/伪谱/辫子交叉数/D_diss 谱不变量实现；`src/spectral_sheaf/tests/test_diss_braid_teukolsky_validation.py`：实际 Teukolsky 递推系数验证 → 严格验证 ρ_s = 0.9177 (p=0.028) 通过 | ✅ |
+| 54C.3 | `notes/04_lorentz_gravity/leaver_diss_embedding.md` §3：边界条件（超辐射边界 B1、极端自旋 B2、高泛音 B3）与扩展方向（次正规/奇异/纤维化范畴） | ✅ |
 
 **关联评估**：来自 `docs/关于Leaver求解器创新的讨论.md` §1.3（方向正确 ✅，难度大）
 
@@ -88,9 +88,9 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 54D.1 | `notes/spec_infinity_prelim.md`：∞-范畴谱丛——三个核心方向（∞-Rec 范畴构造、谱丛 ∞-层解释、极限过渡问题），推荐路径 1（∞-层化）为近期方向，给出 5 个开放问题 | ✅ |
-| 54D.2 | `notes/leaver_multi_coupling_prelim.md`：多耦合谱丛——Kerr-Newman 可分性问题分析，定义多自旋联合谱丛的直积构造，推荐路径 1（s=±1 电磁谱丛）为近期方向，给出 5 个开放问题 | ✅ |
-| 54D.3 | `notes/leaver_global_existence_prelim.md`：全局存在性定理——Leaver 方法零点分布/分支割/存在性/唯一性系统分析，推荐路径 1（谱丛分支点与连分数发散面对应）为近期方向，给出 6 个开放问题 | ✅ |
+| 54D.1 | `notes/00_foundations/spec_infinity_prelim.md`：∞-范畴谱丛——三个核心方向（∞-Rec 范畴构造、谱丛 ∞-层解释、极限过渡问题），推荐路径 1（∞-层化）为近期方向，给出 5 个开放问题 | ✅ |
+| 54D.2 | `notes/04_lorentz_gravity/leaver_multi_coupling_prelim.md`：多耦合谱丛——Kerr-Newman 可分性问题分析，定义多自旋联合谱丛的直积构造，推荐路径 1（s=±1 电磁谱丛）为近期方向，给出 5 个开放问题 | ✅ |
+| 54D.3 | `notes/04_lorentz_gravity/leaver_global_existence_prelim.md`：全局存在性定理——Leaver 方法零点分布/分支割/存在性/唯一性系统分析，推荐路径 1（谱丛分支点与连分数发散面对应）为近期方向，给出 6 个开放问题 | ✅ |
 
 **关联评估**：来自 `docs/关于Leaver求解器创新的讨论.md` §5（方向正确 ✅）
 
@@ -149,7 +149,7 @@ spectral_sheaf/
 
 **目标**：s=±1 电磁谱丛的系数实现、QNM 精度验证、LACI 参数计算与引力对比。
 
-**详细方案**：`notes/leaver_em_sheaf_implementation.md`
+**详细方案**：`notes/04_lorentz_gravity/leaver_em_sheaf_implementation.md`
 
 **产出**：
 | 子阶段 | 产出 | 状态 |
@@ -169,7 +169,7 @@ spectral_sheaf/
 
 **目标**：Kerr-Newman 背景下构造块三对角耦合谱丛，Q 参数扫描，IV 型奇异纤维分类。
 
-**详细方案**：`notes/leaver_coupled_sheaf_implementation.md`
+**详细方案**：`notes/04_lorentz_gravity/leaver_coupled_sheaf_implementation.md`
 
 **产出**：
 | 子阶段 | 产出 | 状态 |
@@ -191,7 +191,7 @@ spectral_sheaf/
 
 **目标**：Dirac 谱丛系数实现、自旋结构数值检测、Dirac-引力张量积联合谱丛。
 
-**详细方案**：`notes/leaver_dirac_sheaf_prelim.md`
+**详细方案**：`notes/04_lorentz_gravity/leaver_dirac_sheaf_prelim.md`
 
 **产出**：
 | 子阶段 | 产出 | 状态 |

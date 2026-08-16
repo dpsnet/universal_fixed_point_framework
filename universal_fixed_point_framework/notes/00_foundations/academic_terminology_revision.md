@@ -482,7 +482,7 @@
 | `paper27_leaver_spectral_sheaf.md` | 定义2.1 后 | （无对照说明） | 添加**注 2.1a（与标准概念的关系）** | 1 |
 | `paper28_kerr_newman_coupled_sheaf.md` | §2.3 定义2.1（第129-133行） | 耦合谱丛 | 耦合谱覆盖 | 1 |
 | `paper29_dirac_spectral_sheaf.md` | §2（第55-58行） | Dirac 谱丛 | Dirac 谱覆盖 | 1 |
-| `notes/spec_infinity_prelim.md` | 全文（第1-598行） | 谱丛（43处） | 谱覆盖（43处） | 43 |
+| `notes/00_foundations/spec_infinity_prelim.md` | 全文（第1-598行） | 谱丛（43处） | 谱覆盖（43处） | 43 |
 
 **注**：笔记文件（`notes/`）和附录文件的术语修正留待后续同步处理。本笔记中的"三参数谱丛""∞-范畴谱丛"均指由 $\det(M(p)-\lambda I)=0$ 定义的具体代数结构，属于"谱覆盖"语境。
 
@@ -553,14 +553,14 @@
 
 | 术语 | 英文名称 | 定义位置 |
 |------|----------|----------|
-| 纵向剖面纤维 | Longitudinal Section Fiber | notes/longitudinal_section_fiber.md §1.1 |
+| 纵向剖面纤维 | Longitudinal Section Fiber | notes/00_foundations/longitudinal_section_fiber.md §1.1 |
 | 纵向剖面纤维对象 | Longitudinal Section Fiber Object | paper21 §10.1 |
 | 纵向剖面纤维化 | Longitudinal Section Fibration | paper21 §10.2 |
-| 观察窗口 | Observation Window | notes/longitudinal_section_fiber.md §1.3 |
+| 观察窗口 | Observation Window | notes/00_foundations/longitudinal_section_fiber.md §1.3 |
 | 有效域 | Effective Domain | paper21 §10.1 |
 | 域边界 | Domain Boundary | paper21 §10.1 |
 | 粘合条件 | Gluing Condition | paper21 §10.2 |
-| 域边界态射 | Domain Boundary Morphism | notes/longitudinal_section_fiber.md §1.5 |
+| 域边界态射 | Domain Boundary Morphism | notes/00_foundations/longitudinal_section_fiber.md §1.5 |
 | 谱静默对应 | Spectral Silence Correspondence | paper21 §10.3 |
 | 双纤维化 | Double Fibration | paper21 §10.5 |
 | 三维纤维化 | Three-Dimensional Fibration | paper22 §10.3 |
@@ -569,7 +569,7 @@
 
 | 文件 | 修订内容 |
 |------|----------|
-| `notes/longitudinal_section_fiber.md` | 新增完整的纵向剖面纤维笔记，包含定义、定理、实例 |
+| `notes/00_foundations/longitudinal_section_fiber.md` | 新增完整的纵向剖面纤维笔记，包含定义、定理、实例 |
 | `paper21_grothendieck_fibration_synthesis.md` | 新增 §10 纵向剖面纤维章节，包含定义、定理、QCD 实例 |
 | `paper22_spectral_fibration_synthesis.md` | 新增 §10 纵向剖面纤维章节，包含量子化学应用、三维纤维化 |
 

@@ -10,7 +10,7 @@
 
 ### 1.1 当前谱丛框架的单自旋局限
 
-现有谱丛理论（`notes/spectral_sheaf_leaver.md`, `notes/leaver_triple_parameter_sheaf.md`）的核心对象是单自旋 Teukolsky 方程的三项递推谱丛：
+现有谱丛理论（`notes/04_lorentz_gravity/spectral_sheaf_leaver.md`, `notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md`）的核心对象是单自旋 Teukolsky 方程的三项递推谱丛：
 
 $$\mathfrak{S}^{(s=-2)} = \{(a,m,\omega,\lambda): \det(M^{(s=-2)}_{a,m}(\omega) - \lambda I) = 0\}$$
 
@@ -229,7 +229,7 @@ $$U^{-1} M_{\text{total}} U = \bigoplus_{i} M^{(s_i)}$$
 
 ### 6.1 Phase 59A 奇异纤维分类的推广
 
-现有奇异纤维分类（`notes/leaver_singular_fibers.md`）的三分法对应单自旋系统：
+现有奇异纤维分类（`notes/04_lorentz_gravity/leaver_singular_fibers.md`）的三分法对应单自旋系统：
 
 | 类型 | 当前定义 | 耦合推广 |
 |:----|:--------|:--------|
@@ -242,7 +242,7 @@ $$U^{-1} M_{\text{total}} U = \bigoplus_{i} M^{(s_i)}$$
 
 ### 6.2 $D_{\mathrm{diss}}$ 函子在多自旋耦合系统的扩展
 
-现有 $D_{\mathrm{diss}}$ 函子（`notes/leaver_diss_embedding.md`）是在单自旋 **Rec**$_{\text{diss}}$ 范畴上定义的。在多自旋耦合系统中：
+现有 $D_{\mathrm{diss}}$ 函子（`notes/04_lorentz_gravity/leaver_diss_embedding.md`）是在单自旋 **Rec**$_{\text{diss}}$ 范畴上定义的。在多自旋耦合系统中：
 
 1. **对象扩展**：从单个 Koopman 算子 $U^{(s)}$ 扩展到耦合系统 Koopman 算子 $U_{\text{total}}$（分块结构）
 2. **态射扩展**：不同 $s$ 之间的 Chandrasekhar 变换成为范畴中的新态射
@@ -254,7 +254,7 @@ $$U^{-1} M_{\text{total}} U = \bigoplus_{i} M^{(s_i)}$$
 
 ### 6.3 三重参数谱丛的扩展
 
-当前谱丛是三重参数 $(a,m,\omega)$（`notes/leaver_triple_parameter_sheaf.md`）。耦合系统需要扩展为**四重参数** $(a,m,\omega,Q)$，其中 $Q$ 引入新的纤维维度和新的单值群 $\mathcal{M}_Q$。
+当前谱丛是三重参数 $(a,m,\omega)$（`notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md`）。耦合系统需要扩展为**四重参数** $(a,m,\omega,Q)$，其中 $Q$ 引入新的纤维维度和新的单值群 $\mathcal{M}_Q$。
 
 四重参数谱丛的群扩张结构：
 

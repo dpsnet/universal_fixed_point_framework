@@ -37,7 +37,7 @@ Phase 58C.1: 记忆函数连分数 → 三对角谱丛生成器
 关联:
   · generalization.md §5.3: S_mem ≅ S_Teuk 同构
   · Paper XIV §5.7.2: 光导率记忆函数连分数的谱丛等同
-  · Leaver 谱丛分支点分析 (spectral_sheaf_leaver.md §3-4)
+  · Leaver 谱丛分支点分析 (notes/04_lorentz_gravity/spectral_sheaf_leaver.md §3-4)
 """
 
 import numpy as np

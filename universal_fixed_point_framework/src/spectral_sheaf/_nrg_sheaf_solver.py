@@ -22,7 +22,7 @@ Phase 58B.2: 谱丛剪枝加速的 NRG 谱函数求解器
     · 剪枝至少实现 2× 加速 (典型参数 N=100)
 
 关联:
-  · Leaver 谱丛剪枝 (spectral_sheaf_leaver.md §4.1)
+  · Leaver 谱丛剪枝 (notes/04_lorentz_gravity/spectral_sheaf_leaver.md §4.1)
   · NRG 谱丛三对角生成 (_nrg_tridiag.py)
 """
 

@@ -1,9 +1,10 @@
 # 笔记结构映射表
 
-**版本**：2026-07-22
+**版本**：2026-08-16
 
 **说明**：旧文件保留原位不动，以下为复制到子目录的映射关系。
 所有交叉引用修复应基于此表将 `notes/xxx.md` 替换为 `notes/子目录/xxx.md`。
+**2026-08-16 增补**：序号 121–157 为 `git mv` 物理移动（旧路径已删除，非复制保留）——根目录谱丛/Leaver/LACI/双星/Planck 散射笔记归入 `04_lorentz_gravity/`，∞-范畴/谱纤维化/术语治理归入 `00_foundations/`。
 
 | 序号 | 旧路径 | 新路径 | 分类 |
 |:----:|:-------|:-------|:-----|
@@ -127,3 +128,40 @@
 | 118 | `notes/spectral_vs_GR_geometry.md` | `notes/04_lorentz_gravity/spectral_vs_GR_geometry.md` | notes/04_lorentz_gravity |
 | 119 | `notes/spectral_yukawa_IFS_weights.md` | `notes/02_ckm_pmns_flavor/spectral_yukawa_IFS_weights.md` | notes/02_ckm_pmns_flavor |
 | 120 | `notes/spectral_zero_parameter_derivation.md` | `notes/02_ckm_pmns_flavor/spectral_zero_parameter_derivation.md` | notes/02_ckm_pmns_flavor |
+| 121 | `notes/leaver_benchmark_analytic.md` | `notes/04_lorentz_gravity/leaver_benchmark_analytic.md` | notes/04_lorentz_gravity |
+| 122 | `notes/leaver_benchmark_qnm.md` | `notes/04_lorentz_gravity/leaver_benchmark_qnm.md` | notes/04_lorentz_gravity |
+| 123 | `notes/leaver_convergence_proof.md` | `notes/04_lorentz_gravity/leaver_convergence_proof.md` | notes/04_lorentz_gravity |
+| 124 | `notes/leaver_coupled_sheaf_implementation.md` | `notes/04_lorentz_gravity/leaver_coupled_sheaf_implementation.md` | notes/04_lorentz_gravity |
+| 125 | `notes/leaver_dirac_future_work_research.md` | `notes/04_lorentz_gravity/leaver_dirac_future_work_research.md` | notes/04_lorentz_gravity |
+| 126 | `notes/leaver_dirac_sheaf_prelim.md` | `notes/04_lorentz_gravity/leaver_dirac_sheaf_prelim.md` | notes/04_lorentz_gravity |
+| 127 | `notes/leaver_diss_embedding.md` | `notes/04_lorentz_gravity/leaver_diss_embedding.md` | notes/04_lorentz_gravity |
+| 128 | `notes/leaver_em_sheaf_implementation.md` | `notes/04_lorentz_gravity/leaver_em_sheaf_implementation.md` | notes/04_lorentz_gravity |
+| 129 | `notes/leaver_global_existence_prelim.md` | `notes/04_lorentz_gravity/leaver_global_existence_prelim.md` | notes/04_lorentz_gravity |
+| 130 | `notes/leaver_multi_coupling_prelim.md` | `notes/04_lorentz_gravity/leaver_multi_coupling_prelim.md` | notes/04_lorentz_gravity |
+| 131 | `notes/leaver_predictions.md` | `notes/04_lorentz_gravity/leaver_predictions.md` | notes/04_lorentz_gravity |
+| 132 | `notes/leaver_singular_fibers.md` | `notes/04_lorentz_gravity/leaver_singular_fibers.md` | notes/04_lorentz_gravity |
+| 133 | `notes/leaver_truncation_error.md` | `notes/04_lorentz_gravity/leaver_truncation_error.md` | notes/04_lorentz_gravity |
+| 134 | `notes/leaver_triple_parameter_sheaf.md` | `notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md` | notes/04_lorentz_gravity |
+| 135 | `notes/laci_axiomatization.md` | `notes/04_lorentz_gravity/laci_axiomatization.md` | notes/04_lorentz_gravity |
+| 136 | `notes/laci_cross_domain_generalization.md` | `notes/04_lorentz_gravity/laci_cross_domain_generalization.md` | notes/04_lorentz_gravity |
+| 137 | `notes/laci_deltalambda_independent_derivation.md` | `notes/04_lorentz_gravity/laci_deltalambda_independent_derivation.md` | notes/04_lorentz_gravity |
+| 138 | `notes/laci_high_overtone_validation.md` | `notes/04_lorentz_gravity/laci_high_overtone_validation.md` | notes/04_lorentz_gravity |
+| 139 | `notes/laci_t2_rigorous_proof.md` | `notes/04_lorentz_gravity/laci_t2_rigorous_proof.md` | notes/04_lorentz_gravity |
+| 140 | `notes/spectral_sheaf_leaver.md` | `notes/04_lorentz_gravity/spectral_sheaf_leaver.md` | notes/04_lorentz_gravity |
+| 141 | `notes/spectral_sheaf_monodromy.md` | `notes/04_lorentz_gravity/spectral_sheaf_monodromy.md` | notes/04_lorentz_gravity |
+| 142 | `notes/spectral_sheaf_pruning.md` | `notes/04_lorentz_gravity/spectral_sheaf_pruning.md` | notes/04_lorentz_gravity |
+| 143 | `notes/spectral_sheaf_generalization.md` | `notes/04_lorentz_gravity/spectral_sheaf_generalization.md` | notes/04_lorentz_gravity |
+| 144 | `notes/spectral_dirac_sheaf_profiles.md` | `notes/04_lorentz_gravity/spectral_dirac_sheaf_profiles.md` | notes/04_lorentz_gravity |
+| 145 | `notes/dynamic_binary_full_waveform.md` | `notes/04_lorentz_gravity/dynamic_binary_full_waveform.md` | notes/04_lorentz_gravity |
+| 146 | `notes/dynamic_binary_inspiral.md` | `notes/04_lorentz_gravity/dynamic_binary_inspiral.md` | notes/04_lorentz_gravity |
+| 147 | `notes/dynamic_binary_merger.md` | `notes/04_lorentz_gravity/dynamic_binary_merger.md` | notes/04_lorentz_gravity |
+| 148 | `notes/dynamic_binary_ringdown.md` | `notes/04_lorentz_gravity/dynamic_binary_ringdown.md` | notes/04_lorentz_gravity |
+| 149 | `notes/dual_homotopy_convergence.md` | `notes/04_lorentz_gravity/dual_homotopy_convergence.md` | notes/04_lorentz_gravity |
+| 150 | `notes/dynamic_spectral_viz.md` | `notes/04_lorentz_gravity/dynamic_spectral_viz.md` | notes/04_lorentz_gravity |
+| 151 | `notes/dynamic_spectral_ml.md` | `notes/04_lorentz_gravity/dynamic_spectral_ml.md` | notes/04_lorentz_gravity |
+| 152 | `notes/dynamic_planck_scattering.md` | `notes/04_lorentz_gravity/dynamic_planck_scattering.md` | notes/04_lorentz_gravity |
+| 153 | `notes/dynamic_planck_scattering_loop.md` | `notes/04_lorentz_gravity/dynamic_planck_scattering_loop.md` | notes/04_lorentz_gravity |
+| 154 | `notes/dynamic_planck_scattering_database.md` | `notes/04_lorentz_gravity/dynamic_planck_scattering_database.md` | notes/04_lorentz_gravity |
+| 155 | `notes/spec_infinity_prelim.md` | `notes/00_foundations/spec_infinity_prelim.md` | notes/00_foundations |
+| 156 | `notes/longitudinal_section_fiber.md` | `notes/00_foundations/longitudinal_section_fiber.md` | notes/00_foundations |
+| 157 | `notes/academic_terminology_revision.md` | `notes/00_foundations/academic_terminology_revision.md` | notes/00_foundations |

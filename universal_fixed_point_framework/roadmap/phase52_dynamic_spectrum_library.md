@@ -58,7 +58,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 双黑洞轨道运动的 PN 阶哈密顿量谱分解 ✅
   - 辐射功率谱 dE/df 的谱表示 ✅
   - 轨道参数（质量比、自旋）对谱的影响 ✅
-- **产出**：`src/dynamic_spectrum/binary_inspiral_spectrum.py` + `notes/dynamic_binary_inspiral.md`
+- **产出**：`src/dynamic_spectrum/binary_inspiral_spectrum.py` + `notes/04_lorentz_gravity/dynamic_binary_inspiral.md`
 - **验证**：5/5 测试通过（Newton 极限、PN 谱结构、修正因子、参数扫描、dE/df 幂律）
 - **依赖**：谱引力子传播子（B1）、谱 Feynman 规则（T2）
 
@@ -69,7 +69,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 引力子-引力子散射谱振幅 M(s,t) ✅
   - 引力子-物质散射谱振幅 ✅
   - 谱截断作为紫外正则化器的数值实现 ✅
-- **产出**：`src/dynamic_spectrum/planck_scattering_2to2.py` + `notes/dynamic_planck_scattering.md`
+- **产出**：`src/dynamic_spectrum/planck_scattering_2to2.py` + `notes/04_lorentz_gravity/dynamic_planck_scattering.md`
 - **验证**：6/6 测试通过（Mandelstam 一致性、传播子、树图振幅、截面、UV 正则化、能标扫描）
 - **依赖**：谱引力子传播子（B1）、谱路径积分（T3）
 
@@ -97,7 +97,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 合并过程的谱流方程数值解（sigmoid 过渡模型）✅
   - QNM 激发谱与初始扰动的关系（跃迁矩阵元振幅）✅
   - 质量/自旋对合并谱的影响（NR 拟合残余属性）✅
-- **产出**：`src/dynamic_spectrum/binary_merger_spectrum.py` + `notes/dynamic_binary_merger.md`
+- **产出**：`src/dynamic_spectrum/binary_merger_spectrum.py` + `notes/04_lorentz_gravity/dynamic_binary_merger.md`
 - **验证**：6/6 测试通过（残余属性、QNM 频率、谱流求解器、QNM 激发、间隙动力学、全波形 IMR）
 - **依赖**：A1 完成、谱流方程（Paper V）
 
@@ -134,7 +134,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - QNM 衰减谱的精确计算（Leaver 连续分数法谱实现）✅
   - 多模叠加谱分析（波形合成 + 谱分解 + 谱间隙恢复）✅
   - 与 LIGO 观测数据的对比框架（匹配滤波 + SNR + 参数估计）✅
-- **产出**：`src/dynamic_spectrum/binary_ringdown_spectrum.py` + `src/dynamic_spectrum/leaver_unified_solver.py` + `notes/dynamic_binary_ringdown.md`
+- **产出**：`src/dynamic_spectrum/binary_ringdown_spectrum.py` + `src/dynamic_spectrum/leaver_unified_solver.py` + `notes/04_lorentz_gravity/dynamic_binary_ringdown.md`
 - **验证**：7/7 测试通过（Leaver QNM、收敛性、多模合成、谱分解、谱间隙、LIGO对比、铃荡能流）；统一求解器集成谱化理论 + 修正 Leaver 系数 + LACI + Homotopy Continuation
 - **依赖**：A2 完成、QNM 求解器（已有）
 
@@ -147,7 +147,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 单圈 $e^+e^- \to \mu^+\mu^-$ 振幅（真空极化 + 顶点修正 + 箱图综合修正因子 1.113）✅
   - 谱重整化群改进（QED 耦合跑动 + 双圈 RGE + RG 改进截面增强 2.2%）✅
   - UV/IR 行为分析（截面 UV 截断不敏感 $<0.1\%$，IR 谱间隙稳定 $<5\%$）✅
-- **产出**：`src/dynamic_spectrum/planck_scattering_loop.py` + `notes/dynamic_planck_scattering_loop.md`
+- **产出**：`src/dynamic_spectrum/planck_scattering_loop.py` + `notes/04_lorentz_gravity/dynamic_planck_scattering_loop.md`
 - **验证**：7/7 测试通过（Dyson 求和、自能修正、顶点修正、单圈振幅、RG 演化、UV/IR 分析、解析自洽性）
 - **依赖**：B2 完成、谱重整化程序（T3）
 
@@ -159,7 +159,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 散射截面快速评估（SpectralInterpolator 1D/2D 插值 9 μs/次 + GaussianProcess 不确定性量化）✅
   - 实验数据拟合的贝叶斯推断（MCMC Metropolis-Hastings + 谱先验 + 可信区间）✅
   - PCA 谱数据降维与特征提取（3 主成分解释 >99% 方差 + 逆变换恢复）✅
-- **产出**：`src/dynamic_spectrum/spectral_machine_learning.py` + `notes/dynamic_spectral_ml.md`
+- **产出**：`src/dynamic_spectrum/spectral_machine_learning.py` + `notes/04_lorentz_gravity/dynamic_spectral_ml.md`
 - **验证**：6/6 测试通过（NN 近似、NumPy NN、插值器、GP 回归、贝叶斯推断、PCA 降维）
 - **依赖**：C1-C2 完成
 
@@ -174,7 +174,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 三阶段谱的无缝拼接（sigmoid 光滑窗口过渡）✅
   - 与 SEOBNR/IMRPhenom 波形的谱对比（失配度 0.27，谱重叠 0.74）✅
   - LIGO 观测数据对接框架（全波段 SNR + 匹配滤波）✅
-- **产出**：`src/dynamic_spectrum/binary_full_waveform.py` + `notes/dynamic_binary_full_waveform.md`
+- **产出**：`src/dynamic_spectrum/binary_full_waveform.py` + `notes/04_lorentz_gravity/dynamic_binary_full_waveform.md`
 - **验证**：7/7 测试通过（IMR 基础连续性、SEOBNR 对比、LIGO 全波形、参数扫描、谱流演化、功率谱）
 - **依赖**：A1-A3 全部完成
 
@@ -186,7 +186,7 @@ UFPF 框架目前在**静态/稳态解**方面已完全成熟（静态黑洞、�
   - 谱数据标准化存储（NPZ 压缩 + JSON 元数据 + 加载/保存往返验证）✅
   - 查询接口（能量区间、截面阈值、微扰有效区、主导过程识别）✅
   - 可视化工具（截面表、角分布、修正比较、过程主导图、CSV 导出）✅
-- **产出**：`src/dynamic_spectrum/planck_scattering_database.py` + `notes/dynamic_planck_scattering_database.md`
+- **产出**：`src/dynamic_spectrum/planck_scattering_database.py` + `notes/04_lorentz_gravity/dynamic_planck_scattering_database.md`
 - **验证**：6/6 测试通过（数据库创建、能量扫描(gg)、QED扫描、存储加载、查询接口、可视化）
 - **依赖**：B1-B3 全部完成
 
@@ -289,11 +289,11 @@ Phase 52A ──→ Phase 52B ──→ Phase 52C ──→ Phase 52D
 
 | 文件 | 说明 |
 |:----|:----|
-| `notes/dynamic_binary_inspiral.md` | 双星并合 inspiral 阶段谱分析 |
-| `notes/dynamic_binary_merger.md` | 双星并合合并阶段谱分析 |
-| `notes/dynamic_binary_ringdown.md` | 双星并合铃荡阶段谱分析 |
-| `notes/dynamic_binary_full_waveform.md` | 双星并合全波形谱分析 ✅ |
-| `notes/dynamic_planck_scattering.md` | 普朗克能标多体散射谱分析 |
+| `notes/04_lorentz_gravity/dynamic_binary_inspiral.md` | 双星并合 inspiral 阶段谱分析 |
+| `notes/04_lorentz_gravity/dynamic_binary_merger.md` | 双星并合合并阶段谱分析 |
+| `notes/04_lorentz_gravity/dynamic_binary_ringdown.md` | 双星并合铃荡阶段谱分析 |
+| `notes/04_lorentz_gravity/dynamic_binary_full_waveform.md` | 双星并合全波形谱分析 ✅ |
+| `notes/04_lorentz_gravity/dynamic_planck_scattering.md` | 普朗克能标多体散射谱分析 |
 
 ---
 
@@ -301,12 +301,12 @@ Phase 52A ──→ Phase 52B ──→ Phase 52C ──→ Phase 52D
 
 | 日期 | 更新内容 | 关联 |
 |:----|:----|:----|
-| 2026-07-25 | **代码整合与清理**：基于谱化理论的统一 Leaver 求解器 `LeaverUnifiedSolver` 定位为最终版本（集成 DerecursionAnalyzer + LeaverResidual + LACIEvaluator + Homotopy Continuation）；废弃的 32 个探索性 Leaver 实现/测试/诊断文件移入 `src/_archive/leaver_deprecated/`；`binary_ringdown_spectrum.py` 新增 `qnm_frequency_unified()` 和 `qnm_spectrum_unified()` 适配器函数；更新 Paper XXVI v1.2（§3.3 补充谱化求解器描述）和 dynamic_binary_ringdown.md v0.2（§1.3 新增谱化求解器节） | Phase 52C |
-| 2026-07-25 | **Phase 52A 完成**：C1 谱数值框架（SpectralOperator/SpectralMatrix/SpectralEvolutionSolver/SpectralCutoff/SpectralAccuracy 5/5 测试通过）、A1 后牛顿谱展开（PN 哈密顿量谱分解 + dE/df 谱表示 + 参数扫描 5/5 测试通过）、B1 普朗克散射谱（谱引力子传播子 + 2→2 谱振幅 + UV 正则化 6/6 测试通过）；创建研究笔记 dynamic_binary_inspiral.md v0.1 和 dynamic_planck_scattering.md v0.1 | Phase 52A |
-| 2026-07-25 | **Phase 52B: B2 完成** — 2→N 普朗克散射谱（N-体相空间谱表示 + 2→3/2→4 软因子振幅 + 末态谱分布 + 谱级联 7/7 测试通过）；更新 dynamic_planck_scattering.md v0.2 | Phase 52B |
+| 2026-07-25 | **代码整合与清理**：基于谱化理论的统一 Leaver 求解器 `LeaverUnifiedSolver` 定位为最终版本（集成 DerecursionAnalyzer + LeaverResidual + LACIEvaluator + Homotopy Continuation）；废弃的 32 个探索性 Leaver 实现/测试/诊断文件移入 `src/_archive/leaver_deprecated/`；`binary_ringdown_spectrum.py` 新增 `qnm_frequency_unified()` 和 `qnm_spectrum_unified()` 适配器函数；更新 Paper XXVI v1.2（§3.3 补充谱化求解器描述）和 notes/04_lorentz_gravity/dynamic_binary_ringdown.md v0.2（§1.3 新增谱化求解器节） | Phase 52C |
+| 2026-07-25 | **Phase 52A 完成**：C1 谱数值框架（SpectralOperator/SpectralMatrix/SpectralEvolutionSolver/SpectralCutoff/SpectralAccuracy 5/5 测试通过）、A1 后牛顿谱展开（PN 哈密顿量谱分解 + dE/df 谱表示 + 参数扫描 5/5 测试通过）、B1 普朗克散射谱（谱引力子传播子 + 2→2 谱振幅 + UV 正则化 6/6 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_binary_inspiral.md v0.1 和 notes/04_lorentz_gravity/dynamic_planck_scattering.md v0.1 | Phase 52A |
+| 2026-07-25 | **Phase 52B: B2 完成** — 2→N 普朗克散射谱（N-体相空间谱表示 + 2→3/2→4 软因子振幅 + 末态谱分布 + 谱级联 7/7 测试通过）；更新 notes/04_lorentz_gravity/dynamic_planck_scattering.md v0.2 | Phase 52B |
 | 2026-07-25 | **Phase 52B: C2 完成** — 并行计算加速（GPU加速器CPU降级模式 + 分布式求解器多进程/串行降级 + 内存优化 LRU/分块/稀疏/mmap 6/6 测试通过） | Phase 52B |
-| 2026-07-25 | **Phase 52D: A4 完成** — 全波形谱合成（IMRWaveformSynthesizer 三阶段无缝拼接 + SEOBNRComparator 失配度/谱重叠对比 + LIGOFullWaveformComparison 全波段 SNR 7/7 测试通过）；创建研究笔记 dynamic_binary_full_waveform.md v0.1。**双星并合方向 A1→A4 全线打通** | Phase 52D |
-| 2026-07-25 | **Phase 52C: B3 完成** — 圈图修正谱（谱 Dyson 级数 + 自能/顶点修正 + 单圈 $e^+e^- \to \mu^+\mu^-$ 振幅 + RG 改进 + UV/IR 分析 7/7 测试通过）；创建研究笔记 dynamic_planck_scattering_loop.md v0.1。**多体散射方向 B1→B3 全线打通** | Phase 52C |
-| 2026-07-25 | **Phase 52D: B4 完成** — 散射谱数据库（7 过程能量扫描 + NPZ/JSON 标准化存储 + 查询接口 + 可视化工具链 6/6 测试通过）；创建研究笔记 dynamic_planck_scattering_database.md v0.1。**多体散射方向 B1→B4 全线打通** | Phase 52D |
-| 2026-07-25 | **Phase 52C: C3 完成** — 机器学习辅助（NN 振幅近似 + 插值器 9 μs/次 + GP 不确定性回归 + MCMC 贝叶斯推断 + PCA 降维 6/6 测试通过）；创建研究笔记 dynamic_spectral_ml.md v0.1。**工具支撑方向 C1→C3 全线打通** | Phase 52C |
-| 2026-07-25 | **Phase 52D: C4 完成 — Phase 52 全线收官！** 可视化工具链（谱演化/散射/实验对比 ASCII 报告 + matplotlib 出版级扩展 + 综合报告生成器 6/6 测试通过）；创建研究笔记 dynamic_spectral_viz.md v0.1。**Phase 52 全部 16 项任务（A1-A4 + B1-B4 + C1-C4）全线完成！** 动态过程谱数值库 A（双星并合）、B（多体散射）、C（工具支撑）三大方向全部就绪 | Phase 52D |
+| 2026-07-25 | **Phase 52D: A4 完成** — 全波形谱合成（IMRWaveformSynthesizer 三阶段无缝拼接 + SEOBNRComparator 失配度/谱重叠对比 + LIGOFullWaveformComparison 全波段 SNR 7/7 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_binary_full_waveform.md v0.1。**双星并合方向 A1→A4 全线打通** | Phase 52D |
+| 2026-07-25 | **Phase 52C: B3 完成** — 圈图修正谱（谱 Dyson 级数 + 自能/顶点修正 + 单圈 $e^+e^- \to \mu^+\mu^-$ 振幅 + RG 改进 + UV/IR 分析 7/7 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_planck_scattering_loop.md v0.1。**多体散射方向 B1→B3 全线打通** | Phase 52C |
+| 2026-07-25 | **Phase 52D: B4 完成** — 散射谱数据库（7 过程能量扫描 + NPZ/JSON 标准化存储 + 查询接口 + 可视化工具链 6/6 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_planck_scattering_database.md v0.1。**多体散射方向 B1→B4 全线打通** | Phase 52D |
+| 2026-07-25 | **Phase 52C: C3 完成** — 机器学习辅助（NN 振幅近似 + 插值器 9 μs/次 + GP 不确定性回归 + MCMC 贝叶斯推断 + PCA 降维 6/6 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_spectral_ml.md v0.1。**工具支撑方向 C1→C3 全线打通** | Phase 52C |
+| 2026-07-25 | **Phase 52D: C4 完成 — Phase 52 全线收官！** 可视化工具链（谱演化/散射/实验对比 ASCII 报告 + matplotlib 出版级扩展 + 综合报告生成器 6/6 测试通过）；创建研究笔记 notes/04_lorentz_gravity/dynamic_spectral_viz.md v0.1。**Phase 52 全部 16 项任务（A1-A4 + B1-B4 + C1-C4）全线完成！** 动态过程谱数值库 A（双星并合）、B（多体散射）、C（工具支撑）三大方向全部就绪 | Phase 52D |

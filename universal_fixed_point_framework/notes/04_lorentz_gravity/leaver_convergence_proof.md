@@ -149,7 +149,7 @@ Leaver 方法将无限三项递推截断为有限 $N \times N$ 矩阵。截断�
 
 $$\|\lambda_N - \lambda_\infty\| = O\bigl(e^{-c N}\bigr)$$
 
-其中 $c > 0$ 由谱丛的 $\lambda = e^{-\mu}$ 对应关系决定（见 `leaver_truncation_error.md`）。
+其中 $c > 0$ 由谱丛的 $\lambda = e^{-\mu}$ 对应关系决定（见 `notes/04_lorentz_gravity/leaver_truncation_error.md`）。
 
 对于 Rayleigh 商迭代，截断误差 $\|\lambda_N - \lambda_\infty\| \ll \text{RQI 收敛阈值}$ 时可忽略其影响。数值验证：$N \geq 40$ 时 $\|\lambda_N - \lambda_\infty\| < 10^{-14}$。
 

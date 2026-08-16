@@ -286,7 +286,7 @@ Batic–Nowakowski–Redway (2018)[^Batic2018] 指出存在连分数法无法找
 
 III 型奇异纤维（$\gamma \to 0$）出现在极值黑洞极限 $(a \to 1)$ 和高泛音 $(n \to \infty)$ 区域：
 
-- **极值极限关联**：$a \to 1$ 时谱间隙 $\gamma \propto (1-a)^{1/3}$（见 `leaver_predictions.md` P1）
+- **极值极限关联**：$a \to 1$ 时谱间隙 $\gamma \propto (1-a)^{1/3}$（见 `notes/04_lorentz_gravity/leaver_predictions.md` P1）
 - **高泛音极限关联**：$n \to \infty$ 时 $\gamma \to 0$，截面趋于非正则点
 - **全局存在性的含义**：在 III 型纤维附近，截面虽存在但非解析（Hölder 连续而非解析延拓），这是路径 3 需要处理的关键边界情况
 
@@ -304,13 +304,13 @@ Phase 52 的动态谱库需要稳定计算 $n=0,1,2,\dots,10$ 的 QNM 频率：
 
 | 笔记 | 关联内容 |
 |:----|:--------|
-| `spectral_sheaf_leaver.md` | 谱丛-连分数对应、二叉树纤维化 |
-| `leaver_triple_parameter_sheaf.md` | 三参数谱丛、三重单值群 |
-| `leaver_singular_fibers.md` | 三类奇异纤维分类 |
-| `leaver_convergence_proof.md` | 两弦逆迭代收敛性（局部分析） |
-| `leaver_truncation_error.md` | 截断误差指数衰减 |
-| `leaver_diss_embedding.md` | $D_{\text{diss}}$ 嵌入和压缩算子验证 |
-| `laci_high_overtone_validation.md` | 高泛音 LACI 验证 |
+| `notes/04_lorentz_gravity/spectral_sheaf_leaver.md` | 谱丛-连分数对应、二叉树纤维化 |
+| `notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md` | 三参数谱丛、三重单值群 |
+| `notes/04_lorentz_gravity/leaver_singular_fibers.md` | 三类奇异纤维分类 |
+| `notes/04_lorentz_gravity/leaver_convergence_proof.md` | 两弦逆迭代收敛性（局部分析） |
+| `notes/04_lorentz_gravity/leaver_truncation_error.md` | 截断误差指数衰减 |
+| `notes/04_lorentz_gravity/leaver_diss_embedding.md` | $D_{\text{diss}}$ 嵌入和压缩算子验证 |
+| `notes/04_lorentz_gravity/laci_high_overtone_validation.md` | 高泛音 LACI 验证 |
 
 ---
 
@@ -356,9 +356,9 @@ Phase 52 的动态谱库需要稳定计算 $n=0,1,2,\dots,10$ 的 QNM 频率：
 
 ### 框架内部引用
 
-[^spectral_sheaf_leaver]: `notes/spectral_sheaf_leaver.md` — 谱丛理论与 Leaver 三对角矩阵的细分纤维化.
+[^spectral_sheaf_leaver]: `notes/04_lorentz_gravity/spectral_sheaf_leaver.md` — 谱丛理论与 Leaver 三对角矩阵的细分纤维化.
 
-[^triple_parameter_sheaf]: `notes/leaver_triple_parameter_sheaf.md` — 三参数谱丛：$(a,m,\omega)$ 上的纤维积与单值群交换关系.
+[^triple_parameter_sheaf]: `notes/04_lorentz_gravity/leaver_triple_parameter_sheaf.md` — 三参数谱丛：$(a,m,\omega)$ 上的纤维积与单值群交换关系.
 
 ---
 

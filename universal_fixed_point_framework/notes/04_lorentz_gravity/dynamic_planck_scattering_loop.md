@@ -254,7 +254,7 @@ RG 改进使截面增大 $\sim 2.2\%$（在 $\mu \sim M_{\text{Pl}}$ 处），�
 - `src/dynamic_spectrum/planck_scattering_2to2.py` — B1 2→2 散射谱基础
 - `src/dynamic_spectrum/planck_scattering_2ton.py` — B2 2→N 散射谱
 - `src/dynamic_spectrum/spectral_numerics.py` — C1 谱数值框架
-- `notes/dynamic_planck_scattering.md` — B1+B2 研究笔记（v0.2）
+- `notes/04_lorentz_gravity/dynamic_planck_scattering.md` — B1+B2 研究笔记（v0.2）
 - `notes/00_foundations/spectral_feynman_rules.md` — 谱 Feynman 规则
 - `notes/00_foundations/spectral_path_integral.md` — 谱路径积分
 - `notes/00_foundations/spectral_renormalization.md` — 谱重整化程序

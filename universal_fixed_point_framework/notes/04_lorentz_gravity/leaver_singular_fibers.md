@@ -117,7 +117,7 @@ $$\boxed{\gamma(\omega_0) < \frac{\Delta\lambda_{\min}}{M_{\text{Pl}}} = 0.122}$
 
 其中 $\gamma$ 为残差 Jacobian 的谱间隙（LACI 第三个分量）。
 
-**证明**。由 LACI 公理化定理 T3（`notes/laci_axiomatization.md`）：$\gamma < 0.122 \Rightarrow \text{LACI} > 2.0$（物理根阈值）。此时候选根处于谱静默分支 S3 中，物理不可辨识。□
+**证明**。由 LACI 公理化定理 T3（`notes/04_lorentz_gravity/laci_axiomatization.md`）：$\gamma < 0.122 \Rightarrow \text{LACI} > 2.0$（物理根阈值）。此时候选根处于谱静默分支 S3 中，物理不可辨识。□
 
 ---
 

@@ -119,7 +119,7 @@ $$\langle\Delta\lambda_{\min}^{(B)}\rangle \approx \frac{1}{0.99}\int_0^{0.99} \
 
 ### 3.1 截断误差与谱间隙的关系
 
-Leaver 连续分数的截断误差 $\varepsilon_N$ 与谱间隙 $\Delta\lambda_{\min}$ 的关系（`notes/leaver_truncation_error.md`）：
+Leaver 连续分数的截断误差 $\varepsilon_N$ 与谱间隙 $\Delta\lambda_{\min}$ 的关系（`notes/04_lorentz_gravity/leaver_truncation_error.md`）：
 
 $$\varepsilon_N \propto e^{-cN}, \quad c = \Phi(\Delta\lambda_{\min})$$
 
@@ -133,7 +133,7 @@ $$c = -\ln(1 - \Delta\lambda_{\min}) \approx \Delta\lambda_{\min} \quad (\text{�
 
 ### 3.2 从截断衰减率反推谱间隙
 
-由 `leaver_truncation_error.md` 表 1：
+由 `notes/04_lorentz_gravity/leaver_truncation_error.md` 表 1：
 
 | 自旋 $a$ | 衰减率 $c$ | 置信度 |
 |:-------:|:---------:|:-----:|

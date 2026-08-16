@@ -282,7 +282,7 @@ $$\frac{dE}{df} = \left| \mathcal{F}\left[ \frac{dE}{dt} \right] \right|^2$$
 - `src/dynamic_spectrum/binary_merger_spectrum.py` — A2 合并阶段（QNM 激发输入）
 - `src/dynamic_spectrum/spectral_numerics.py` — C1 基础框架
 - `notes/00_foundations/spectral_feynman_rules.md` — 谱 Feynman 规则
-- `notes/dynamic_binary_inspiral.md` — A1 Inspiral 阶段
+- `notes/04_lorentz_gravity/dynamic_binary_inspiral.md` — A1 Inspiral 阶段
 
 ---
 

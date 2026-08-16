@@ -178,5 +178,5 @@ NPZ + JSON 双文件格式：
 - `src/dynamic_spectrum/planck_scattering_2to2.py` — B1 2→2 散射谱
 - `src/dynamic_spectrum/planck_scattering_2ton.py` — B2 2→N 散射谱
 - `src/dynamic_spectrum/planck_scattering_loop.py` — B3 圈图修正谱
-- `notes/dynamic_planck_scattering.md` — B1+B2 研究笔记（v0.2）
-- `notes/dynamic_planck_scattering_loop.md` — B3 研究笔记（v0.1）
+- `notes/04_lorentz_gravity/dynamic_planck_scattering.md` — B1+B2 研究笔记（v0.2）
+- `notes/04_lorentz_gravity/dynamic_planck_scattering_loop.md` — B3 研究笔记（v0.1）

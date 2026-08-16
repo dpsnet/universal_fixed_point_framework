@@ -2,9 +2,9 @@
 
 **版本**：v0.1（2026-07-25）
 
-**摘要**：本笔记基于谱丛理论（spectral_sheaf_leaver.md §4.1），给出二叉树剪枝算法的完整理论设计与实现方案。算法利用三对角矩阵分裂时界面参量 $q(\omega)$ 的模值作为剪枝判据，在递归求解中只展开可能产生 $\lambda=0$ 的分支，将最坏情况 $O(N)$ 的 Leaver 求解压缩到最佳情况 $O(\log N)$。
+**摘要**：本笔记基于谱丛理论（notes/04_lorentz_gravity/spectral_sheaf_leaver.md §4.1），给出二叉树剪枝算法的完整理论设计与实现方案。算法利用三对角矩阵分裂时界面参量 $q(\omega)$ 的模值作为剪枝判据，在递归求解中只展开可能产生 $\lambda=0$ 的分支，将最坏情况 $O(N)$ 的 Leaver 求解压缩到最佳情况 $O(\log N)$。
 
-**关联笔记**：[spectral_sheaf_leaver.md](./spectral_sheaf_leaver.md) 定义了谱丛的二叉树纤维化结构和界面参量 $q(\omega)$ 的物理意义。
+**关联笔记**：[notes/04_lorentz_gravity/spectral_sheaf_leaver.md](notes/04_lorentz_gravity/spectral_sheaf_leaver.md) 定义了谱丛的二叉树纤维化结构和界面参量 $q(\omega)$ 的物理意义。
 
 ---
 
@@ -163,7 +163,7 @@ $$
 
 界面参量 $q(\omega)$ 的物理意义是谱丛中两片纤维（子块 $A$ 和子块 $B$ 对应的子谱）之间的**耦合强度**。
 
-考虑谱丛的二叉树纤维化（spectral_sheaf_leaver.md §2），$A$ 和 $B$ 对应两片子纤维 $F_\omega^A$ 和 $F_\omega^B$。全局谱丛 $F_\omega$ 通过 rank-1 耦合将两者粘合。$q(\omega)$ 就是这个"胶水"的粘性系数。
+考虑谱丛的二叉树纤维化（notes/04_lorentz_gravity/spectral_sheaf_leaver.md §2），$A$ 和 $B$ 对应两片子纤维 $F_\omega^A$ 和 $F_\omega^B$。全局谱丛 $F_\omega$ 通过 rank-1 耦合将两者粘合。$q(\omega)$ 就是这个"胶水"的粘性系数。
 
 **$q(\omega)$ 的三种极限情况**：
 
@@ -193,7 +193,7 @@ $$
 
 **$q(\omega)$ 的导数作为分支点预警**：
 
-谱丛曲率（spectral_sheaf_leaver.md §6 开放问题3）指出，$dq/d\omega$ 的模值可以作为分支点临近的预警指标。当 $|dq/d\omega|$ 很大时，意味着 $\omega$ 靠近分支点，此时 $q(\omega)$ 对 $\omega$ 敏感，剪枝策略应当保守（降低 $\varepsilon_{\text{prune}}$ 或暂时禁用剪枝）。
+谱丛曲率（notes/04_lorentz_gravity/spectral_sheaf_leaver.md §6 开放问题3）指出，$dq/d\omega$ 的模值可以作为分支点临近的预警指标。当 $|dq/d\omega|$ 很大时，意味着 $\omega$ 靠近分支点，此时 $q(\omega)$ 对 $\omega$ 敏感，剪枝策略应当保守（降低 $\varepsilon_{\text{prune}}$ 或暂时禁用剪枝）。
 
 ---
 
