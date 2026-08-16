@@ -43,3 +43,7 @@ Data.zip
 .tmp/
 .pip-cache/
 Temp/
+
+# 外部数据研究（第三方版权，不推送到 UFPF 公共仓库）
+# 包含 EDRN 原始数据（于见隐 Apache-2.0）、分析脚本、报告草稿等
+external_data_research/
