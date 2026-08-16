@@ -25,7 +25,7 @@ $$\text{Im}(\omega_n) \sim \text{Im}(\omega_0) - n \cdot \Delta_{\text{Im}}$$
 | 分支点密度 | 低 | 中 | 高 |
 | 谱间隙 $\gamma$ | $\sim 0.3$ | $\sim 0.15$ | $\to 0$（随 $n$ 递减） |
 
-**证明**。$\text{Im}(\omega_n)$ 的线性增长源自 QNM 频率的渐近行为（Berti & Cardoso 2006）。截断误差公式（`notes/leaver_truncation_error.md`）给出衰减率 $c \approx 1.5 - 0.05n$，因此高泛音需更大 $N_{\min}$。谱间隙 $\gamma(n)$ 随 $n$ 递减的原因在 §3 中详述。□
+**证明**。$\text{Im}(\omega_n)$ 的线性增长源自 QNM 频率的渐近行为（Berti & Cardoso 2006）。截断误差公式（`notes/04_lorentz_gravity/leaver_truncation_error.md`）给出衰减率 $c \approx 1.5 - 0.05n$，因此高泛音需更大 $N_{\min}$。谱间隙 $\gamma(n)$ 随 $n$ 递减的原因在 §3 中详述。□
 
 ### 1.2 有效矩阵维数的增长
 
@@ -35,7 +35,7 @@ $$N_{\text{eff}}(n) \approx N_{\text{eff}}(0) + \alpha \cdot n$$
 
 其中 $\alpha \sim 10\text{--}20$（取决于自旋 $a$ 和磁量子数 $m$）。
 
-**证明概要**。Leaver 连续分数的截断维数 $N_{\min}$ 随 $|\text{Im}(\omega)|$ 增大而增大（`leaver_truncation_error.md` 表 1：$a=0$ 时 $N_{\min}=27$，$a=0.998$ 时 $N_{\min}=91$）。高泛音的大 $|\text{Im}(\omega)|$ 等效于高自旋的截断需求——两者都需要更大的 $N$ 来保证精度。$\alpha$ 的经验估计来自插值。□
+**证明概要**。Leaver 连续分数的截断维数 $N_{\min}$ 随 $|\text{Im}(\omega)|$ 增大而增大（`notes/04_lorentz_gravity/leaver_truncation_error.md` 表 1：$a=0$ 时 $N_{\min}=27$，$a=0.998$ 时 $N_{\min}=91$）。高泛音的大 $|\text{Im}(\omega)|$ 等效于高自旋的截断需求——两者都需要更大的 $N$ 来保证精度。$\alpha$ 的经验估计来自插值。□
 
 ---
 
@@ -89,7 +89,7 @@ $$\rho_{\text{bp}}(n) \propto n^{\kappa}$$
 
 ### 3.2 对同伦延拓的影响
 
-**推论 3.1a**（同伦延拓步长需减小）。由 `notes/laci_t2_rigorous_proof.md` 定理 5.3，分支点密度增大意味着到最近分支点的平均距离 $d_{\min}$ 减小。步长条件：
+**推论 3.1a**（同伦延拓步长需减小）。由 `notes/04_lorentz_gravity/laci_t2_rigorous_proof.md` 定理 5.3，分支点密度增大意味着到最近分支点的平均距离 $d_{\min}$ 减小。步长条件：
 
 $$\Delta t_n \leq \frac{d_{\min}^{k-1}}{CM} \varepsilon_{\text{tol}}$$
 
@@ -125,7 +125,7 @@ $$\text{LACI}_n(\omega) = \frac{\rho(\omega)}{\rho_{\text{ref}}(n)} + \frac{\Del
 
 **T1 的验证**（低 LACI ⇔ 非静默分支）。T1 的证明不依赖 $n$——它基于谱丛几何而非特征频率的具体值。只要 $\gamma(\omega) > 0$（即不处于 III 型奇异纤维），低 LACI 与物理根的对应关系就成立。对高泛音，$\gamma(n) > 0$ 仍然成立（虽然后者在数值上更小），因此 T1 的范畴论证明无需修改。
 
-**T2 的验证**（单调性）。T2 的严格证明（`notes/laci_t2_rigorous_proof.md`）在步长 $\Delta t$ 满足分支点条件时普遍成立。高泛音仅要求更小的步长（推论 3.1a），不影响证明逻辑本身。
+**T2 的验证**（单调性）。T2 的严格证明（`notes/04_lorentz_gravity/laci_t2_rigorous_proof.md`）在步长 $\Delta t$ 满足分支点条件时普遍成立。高泛音仅要求更小的步长（推论 3.1a），不影响证明逻辑本身。
 
 **T3 的验证**（阈值）。T3 原本依赖于 $\Delta\lambda_{\min} = 0.122 M_{\text{Pl}}$。对高泛音，使用定义 4.1 的泛音依赖参考值后：
 

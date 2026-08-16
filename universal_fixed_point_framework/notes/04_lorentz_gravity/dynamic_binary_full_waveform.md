@@ -186,6 +186,6 @@ IMR 全波形的频域谱分布：
 - `src/dynamic_spectrum/binary_merger_spectrum.py` — A2 合并
 - `src/dynamic_spectrum/binary_ringdown_spectrum.py` — A3 Ringdown
 - `src/dynamic_spectrum/spectral_numerics.py` — C1 框架
-- `notes/dynamic_binary_inspiral.md` — A1 笔记
-- `notes/dynamic_binary_merger.md` — A2 笔记
-- `notes/dynamic_binary_ringdown.md` — A3 笔记
+- `notes/04_lorentz_gravity/dynamic_binary_inspiral.md` — A1 笔记
+- `notes/04_lorentz_gravity/dynamic_binary_merger.md` — A2 笔记
+- `notes/04_lorentz_gravity/dynamic_binary_ringdown.md` — A3 笔记

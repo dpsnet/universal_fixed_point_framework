@@ -18,7 +18,7 @@ $$\boxed{\gamma(a) \propto (1 - a)^{1/3}}$$
 
 ### 1.2 推导
 
-由 `notes/laci_deltalambda_independent_derivation.md` 定理 4.1 和奇异纤维分类 III 型（极值 Kerr 退化）：
+由 `notes/04_lorentz_gravity/laci_deltalambda_independent_derivation.md` 定理 4.1 和奇异纤维分类 III 型（极值 Kerr 退化）：
 
 $$\Delta\lambda_{\min}(a) \propto \kappa_{\text{surf}}(a) \propto \frac{r_+ - r_-}{2Mr_+}$$
 

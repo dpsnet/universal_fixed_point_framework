@@ -11,7 +11,7 @@ Phase 58E.2: 自适应截断维度选择
   3. 扫描式收敛验证
 
 数学基础:
-  notes/leaver_truncation_error.md
+  notes/04_lorentz_gravity/leaver_truncation_error.md
 
 关联:
   leaver_unified_solver.py 中的 TridiagonalSpectralSolver

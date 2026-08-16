@@ -10,7 +10,7 @@
 
 ### 1.1 谱丛设置
 
-回顾谱丛 $\mathcal{S}(M)$（详见 Paper I §7.11 和 `notes/spectral_sheaf_leaver.md`）：
+回顾谱丛 $\mathcal{S}(M)$（详见 Paper I §7.11 和 `notes/04_lorentz_gravity/spectral_sheaf_leaver.md`）：
 
 $$\mathcal{S}(M) = \{(\omega, \lambda) \in \mathbb{C}^2 : \det(M(\omega) - \lambda I) = 0\}$$
 
@@ -147,7 +147,7 @@ $$\gamma(\omega) \geq \frac{\Delta\lambda_{\min}}{M_{\text{Pl}}} = 0.122$$
 
 $$\frac{1}{\gamma/\gamma_{\text{ref}} + \varepsilon} \leq \frac{1}{0.122/0.1 + 0.001} = \frac{1}{1.22 + 0.001} \approx 0.819$$
 
-**步骤 3**（残差与分散度约束）。数值精度上限 $\delta_{\text{num}}$ 由双精度浮点运算决定（$\sim 10^{-15}$），但在实际实现中受连分数截断误差影响，典型值为 $\delta_{\text{num}} \sim 10^{-12}$（见 `notes/leaver_truncation_error.md`）。因此：
+**步骤 3**（残差与分散度约束）。数值精度上限 $\delta_{\text{num}}$ 由双精度浮点运算决定（$\sim 10^{-15}$），但在实际实现中受连分数截断误差影响，典型值为 $\delta_{\text{num}} \sim 10^{-12}$（见 `notes/04_lorentz_gravity/leaver_truncation_error.md`）。因此：
 
 $$\frac{\rho}{\rho_{\text{ref}}} \leq \frac{10^{-12}}{10^{-10}} = 0.01$$
 
@@ -234,10 +234,10 @@ $$\text{S3 激活} \iff \gamma < \frac{\Delta\lambda_{\min}}{M_{\text{Pl}}} = 0.
 
 ## 5. 开放问题
 
-1. **定理 T2 的严格证明**：**已解决**——在 `notes/laci_t2_rigorous_proof.md` 中基于 Kantorovich 定理、变分不等式和 Weierstrass 预备定理完成了严格泛函分析证明（v0.1, 2026-07-25）。
-2. **高泛音扩展**：**已解决**——在 `notes/laci_high_overtone_validation.md`（v0.1, 2026-07-25）中完成分析。核心发现：T1-T2 保持成立，T3 需引入泛音依赖的参考值（定义 4.1）。$\gamma(n) \propto e^{-\beta n}$ 指数衰减，LACI 适用范围上限 $n_{\text{crit}} \sim 5\text{--}7$。
-3. **跨领域推广**：**已解决**——在 `notes/laci_cross_domain_generalization.md`（v0.1, 2026-07-25）中完成 LACI 到流变学、NRG、记忆函数的映射。三个系统的 T1-T3 迁移均已论证，参考值已校准，验证方案已设计。
-4. **$\Delta\lambda_{\min}$ 的重新推导**：**已解决**——在 `notes/laci_deltalambda_independent_derivation.md`（v0.1, 2026-07-25）中通过三条独立路径（条件数、分支点间距、截断误差）完成推导。核心结论：自洽区间 $0.05 \lesssim \Delta\lambda_{\min} \lesssim 0.15$ 包含 Paper VI 值 0.122，独立确认其合理性。
+1. **定理 T2 的严格证明**：**已解决**——在 `notes/04_lorentz_gravity/laci_t2_rigorous_proof.md` 中基于 Kantorovich 定理、变分不等式和 Weierstrass 预备定理完成了严格泛函分析证明（v0.1, 2026-07-25）。
+2. **高泛音扩展**：**已解决**——在 `notes/04_lorentz_gravity/laci_high_overtone_validation.md`（v0.1, 2026-07-25）中完成分析。核心发现：T1-T2 保持成立，T3 需引入泛音依赖的参考值（定义 4.1）。$\gamma(n) \propto e^{-\beta n}$ 指数衰减，LACI 适用范围上限 $n_{\text{crit}} \sim 5\text{--}7$。
+3. **跨领域推广**：**已解决**——在 `notes/04_lorentz_gravity/laci_cross_domain_generalization.md`（v0.1, 2026-07-25）中完成 LACI 到流变学、NRG、记忆函数的映射。三个系统的 T1-T3 迁移均已论证，参考值已校准，验证方案已设计。
+4. **$\Delta\lambda_{\min}$ 的重新推导**：**已解决**——在 `notes/04_lorentz_gravity/laci_deltalambda_independent_derivation.md`（v0.1, 2026-07-25）中通过三条独立路径（条件数、分支点间距、截断误差）完成推导。核心结论：自洽区间 $0.05 \lesssim \Delta\lambda_{\min} \lesssim 0.15$ 包含 Paper VI 值 0.122，独立确认其合理性。
 
 ---
 

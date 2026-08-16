@@ -189,7 +189,7 @@ LACI 判据的三个分量：
 
 ### 6.1 问题 1：单值群的完整计算 ✓ 理论完成
 
-**状态**：理论框架完成，数值方案已设计，详见 [spectral_sheaf_monodromy.md](./spectral_sheaf_monodromy.md)
+**状态**：理论框架完成，数值方案已设计，详见 [notes/04_lorentz_gravity/spectral_sheaf_monodromy.md](notes/04_lorentz_gravity/spectral_sheaf_monodromy.md)
 
 **核心成果**：
 
@@ -214,7 +214,7 @@ LACI 判据的三个分量：
 
 ### 6.2 问题 2：剪枝算法的实现 ✓ 理论设计完成
 
-**状态**：完整算法设计完成，包含伪代码，详见 [spectral_sheaf_pruning.md](./spectral_sheaf_pruning.md)
+**状态**：完整算法设计完成，包含伪代码，详见 [notes/04_lorentz_gravity/spectral_sheaf_pruning.md](notes/04_lorentz_gravity/spectral_sheaf_pruning.md)
 
 **核心成果**：
 
@@ -317,7 +317,7 @@ Kerr a=0.9 m=2            10      5.98e+05      5.78
 
 ### 6.4 问题 4：推广到其他背景 ✓ 理论分析完成
 
-**状态**：度规分类完成，详见 [spectral_sheaf_generalization.md](./spectral_sheaf_generalization.md)
+**状态**：度规分类完成，详见 [notes/04_lorentz_gravity/spectral_sheaf_generalization.md](notes/04_lorentz_gravity/spectral_sheaf_generalization.md)
 
 **核心成果**：
 
@@ -362,9 +362,9 @@ Kerr a=0.9 m=2            10      5.98e+05      5.78
 
 | 文档 | 对应开放问题 | 状态 |
 |:----|:-----------:|:----:|
-| [spectral_sheaf_monodromy.md](./spectral_sheaf_monodromy.md) | Q1：单值群 | v0.1 理论完成 |
-| [spectral_sheaf_pruning.md](./spectral_sheaf_pruning.md) | Q2：剪枝算法 | v0.1 设计完成 |
-| [spectral_sheaf_generalization.md](./spectral_sheaf_generalization.md) | Q4：度规推广（v0.1） + 非引力推广（v0.2） | v0.2 包含流变学/NRG/记忆函数 |
+| [notes/04_lorentz_gravity/spectral_sheaf_monodromy.md](notes/04_lorentz_gravity/spectral_sheaf_monodromy.md) | Q1：单值群 | v0.1 理论完成 |
+| [notes/04_lorentz_gravity/spectral_sheaf_pruning.md](notes/04_lorentz_gravity/spectral_sheaf_pruning.md) | Q2：剪枝算法 | v0.1 设计完成 |
+| [notes/04_lorentz_gravity/spectral_sheaf_generalization.md](notes/04_lorentz_gravity/spectral_sheaf_generalization.md) | Q4：度规推广（v0.1） + 非引力推广（v0.2） | v0.2 包含流变学/NRG/记忆函数 |
 
 ---
 

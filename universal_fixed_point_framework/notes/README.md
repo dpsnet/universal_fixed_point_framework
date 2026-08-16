@@ -73,22 +73,43 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 
 | 目录 | 文件数 | 说明 |
 |:----|:-----:|:-----|
-| `00_foundations/` | 19 | 范畴基础、谱对应、形式化、路径积分、Feynman 规则 |
-| `01_qcd_higgs/` | 9 | QCD、Higgs、手征对称性、强 CP |
+| `00_foundations/` | 49 | 范畴基础、谱对应、形式化、路径积分、Feynman 规则、∞-范畴预研、术语治理 |
+| `01_qcd_higgs/` | 21 | QCD、Higgs、手征对称性、强 CP |
 | `02_ckm_pmns_flavor/` | 14 | CKM、PMNS、Yukawa、味道物理 |
+| `02_superconductivity/` | 5 | 超导、BCS 编织、迈斯纳、量子 Hall 拓扑 |
+| `03_condensed_fluid/` | 1 | 凝聚流体谱纤维化 |
 | `03_neutrino/` | 4 | 中微子质量、Seesaw、层级 |
-| `04_lorentz_gravity/` | 20 | Lorentz 谱流、引力、Kerr、暴涨 |
-| `05_condensed_matter/` | 11 | 凝聚态、超导、临界现象、流变学、页岩成藏谱流 |
-| `06_quantum_chem_pv/` | 2 | 量子化学、光伏 |
-| `07_validation/` | 4 | 开放数据验证报告 |
-| `08_first_principles/` | 13 | 第一性原理推导、力统一、B2 连续极限 |
+| `04_lorentz_gravity/` | 63 | Lorentz 谱流、引力、Kerr、暴涨、力/质量/静默方向/总账、Leaver 连分数、LACI、谱丛、双星动力学 |
+| `05_condensed_matter/` | 15 | 凝聚态、超导、临界现象、流变学、页岩成藏谱流 |
+| `05_cosmology/` | 2 | 暴涨动力学、宇宙学谱纤维化 |
+| `06_photon_topology/` | 3 | 光子拓扑、第一性原理起源、未知粒子 X |
+| `06_quantum_chem_pv/` | 13 | 量子化学、光伏、纤维化方法 |
+| `07_validation/` | 5 | 开放数据验证报告 |
+| `08_first_principles/` | 15 | 第一性原理推导、力统一、B2 连续极限 |
 | `09_experimental/` | 4 | 实验提案、独有预言 |
 | `10_gauge_RG/` | 13 | 规范理论、重整化群、方案转换 |
-| `11_transition_bridges/` | 5 | 范畴-表示桥接（Phase 53） |
+| `11_transition_bridges/` | 6 | 范畴-表示桥接（Phase 53）+ 融合路径 |
 | `12_phase_results/` | 3 | 阶段结果汇总 |
-| `99_archive/` | 10 | 已完成/合并到论文的旧笔记 |
+| `99_archive/` | 7 | 已完成/合并到论文的旧笔记 |
 
 完整映射关系见：[STRUCTURE_MAPPING.md](STRUCTURE_MAPPING.md)
+
+## 直觉/诠释与治理笔记备案（2026-08-16 增补）
+
+| 笔记 | 状态 | 位置 |
+|:--|:--|:--|
+| 力 = 偏转时间轴的驱动（力笔记，v0.25） | 🟡 直觉/诠释 + §4 [推导] 混合 | `04_lorentz_gravity/force_essence_deflection.md` |
+| 质量 = 偏转时间轴的难度（质量笔记，v0.26，含 T 纲领 CONJECTURE 与 §7.0a 讨论共识） | 🟡 直觉/诠释 | `04_lorentz_gravity/mass_time_deflection_intuition.md` |
+| 未闭合项总账（治理登记，含 §3 静默方向条目研究历程） | 🟡 治理登记 | `04_lorentz_gravity/force_open_items_ledger.md` |
+| 静默方向到法向/耦合自由度分配机制（v0.18，含 §8 研究历程日志） | 🟢 推导推进 + 机器证明骨架 | `04_lorentz_gravity/silence_direction_allocation.md` |
+| 自然单位制 ħ=1 规范固定（v0.24 配套） | 🟢 推导 | `04_lorentz_gravity/natural_unit_gauge_fixing.md` |
+| LACI 公理化（定理 T1–T3，v0.2，2026-08-16 语义反转修正） | 🟢 定理系 | `04_lorentz_gravity/laci_axiomatization.md` |
+| LACI 跨域推广（流变学等） | 🟢 推广 | `04_lorentz_gravity/laci_cross_domain_generalization.md` |
+| LACI 高泛音验证 | 🟢 验证 | `04_lorentz_gravity/laci_high_overtone_validation.md` |
+| LACI 谱丛解释（谱叶追踪） | 🟢 谱丛几何 | `04_lorentz_gravity/spectral_sheaf_leaver.md` |
+| 融合路径 4（Wigner 谱桥接） | 🟢 桥接 | `11_transition_bridges/fusion_path4_wigner_spectral_bridge.md` |
+
+**谱丛/Leaver/LACI 笔记群**（2026-08-16 自根目录归入 `04_lorentz_gravity/`）：`leaver_*`/`laci_*`/`spectral_sheaf_*`/`dynamic_*`/`dual_homotopy_convergence` 共 34 篇——Kerr 谱丛、Leaver 连分数、动态双星波形、LACI 系列研究线，与 paper27/26 配套；∞-范畴预研/谱纤维化/术语治理 3 篇归入 `00_foundations/`。根目录现仅存索引文件（README、STRUCTURE_MAPPING）。
 
 ## 教学辅助文档
 

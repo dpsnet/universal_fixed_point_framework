@@ -212,7 +212,7 @@ $$k(D_{\text{diss}}(U_{\text{Teuk}})) = k(U_{\text{Teuk}})$$
 
 **边界 B3：高泛音 $n \geq n_{\text{crit}}$ 退化**
 
-由 `notes/laci_high_overtone_validation.md`，$n \geq n_{\text{crit}} \sim 5$ 时 $\gamma$ 指数衰减，非正规性显著增加。虽然范畴归属不变，但数值验证伪谱扰动界的精度随 $n$ 下降。
+由 `notes/04_lorentz_gravity/laci_high_overtone_validation.md`，$n \geq n_{\text{crit}} \sim 5$ 时 $\gamma$ 指数衰减，非正规性显著增加。虽然范畴归属不变，但数值验证伪谱扰动界的精度随 $n$ 下降。
 
 ### 3.2 $\mathbf{Rec}_{\text{diss}}$ 的扩展方向
 

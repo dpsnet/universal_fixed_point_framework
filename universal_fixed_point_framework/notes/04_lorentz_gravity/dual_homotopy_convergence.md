@@ -257,7 +257,7 @@ $$\frac{1}{2} \kappa_a \Delta a^2 \leq \varepsilon_{\text{tol}} \quad \Rightarro
 
 ### 5.1 同伦延拓中的 LACI 失效检测
 
-结合 LACI 公理化（`notes/laci_axiomatization.md` 定理 T2a），同伦延拓可使用 LACI 进行实时诊断：
+结合 LACI 公理化（`notes/04_lorentz_gravity/laci_axiomatization.md` 定理 T2a），同伦延拓可使用 LACI 进行实时诊断：
 
 $$\text{若 } \text{LACI}(\omega^{(k)}_{\text{Newton}}) > 2.0 \text{ 或 } \text{LACI} \text{ 不降反升} \Rightarrow \text{ 谱叶跳跃，缩小步长回溯}$$
 

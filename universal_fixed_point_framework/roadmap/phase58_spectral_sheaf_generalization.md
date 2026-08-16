@@ -5,8 +5,8 @@
 **目标**：将 Kerr 三对角谱丛理论（Leaver 连续分数法的几何基础）推广到非牛顿流变学、凝聚态物理 NRG 和记忆函数连分数三个新领域，实现"连分数 → 三对角谱丛"的跨领域统一。
 
 **关联文档**：
-- 核心理论：`notes/spectral_sheaf_leaver.md`（v0.2）
-- 推广分析：`notes/spectral_sheaf_generalization.md`（v0.2）
+- 核心理论：`notes/04_lorentz_gravity/spectral_sheaf_leaver.md`（v0.2）
+- 推广分析：`notes/04_lorentz_gravity/spectral_sheaf_generalization.md`（v0.2）
 - 流变学基础：`notes/05_condensed_matter/spectral_rheology_lorentz_isomorphism.md`
 - 论文更新：Paper VI §9.3（新增谱丛流变学）、Paper XIV §5.7（新增谱丛凝聚态）
 
@@ -31,7 +31,7 @@
 优先级 4: 代码互惠实现           ██░░░░░░░░░░░░░░░░░░  待启动
 ```
 
-三者的理论翻译（$\mathcal{S}_{\text{rheo}} \cong \mathcal{S}_{\text{Teuk}}$ 等）已在 `notes/spectral_sheaf_generalization.md` §5 中建立。本路线图规划从理论到实现的完整路径。
+三者的理论翻译（$\mathcal{S}_{\text{rheo}} \cong \mathcal{S}_{\text{Teuk}}$ 等）已在 `notes/04_lorentz_gravity/spectral_sheaf_generalization.md` §5 中建立。本路线图规划从理论到实现的完整路径。
 
 ---
 
@@ -150,13 +150,13 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 53E.1 | `notes/leaver_convergence_proof.md`：两弦逆迭代收敛阶证明（定理 1-5） | ✅ |
-| 53E.2 | `notes/leaver_truncation_error.md` + `_adaptive_N.py`：截断误差解析估计与自适应截断维度类 | ✅ |
+| 53E.1 | `notes/04_lorentz_gravity/leaver_convergence_proof.md`：两弦逆迭代收敛阶证明（定理 1-5） | ✅ |
+| 53E.2 | `notes/04_lorentz_gravity/leaver_truncation_error.md` + `_adaptive_N.py`：截断误差解析估计与自适应截断维度类 | ✅ |
 | 53E.3 | `tests/test_complexity_comparison.py`：三方法复杂度对比 | ✅ |
 
 **验证结果**（2026-07-25）：
 
-**收敛阶**（`leaver_convergence_proof.md`）：
+**收敛阶**（`notes/04_lorentz_gravity/leaver_convergence_proof.md`）：
 
 | 参数区域 | 谱丛曲率 $|q'|$ | 预期收敛阶 | 典型步数 |
 |:-------|:--------------:|:---------:|:--------:|
@@ -164,7 +164,7 @@
 | 中自旋 $0.5<a<0.9$ | $0.1-0.5$ | 2.5–3 次 | 5–8 |
 | 高自旋 $a>0.9$ | $>0.5$ | 二次 | 8–12 |
 
-**截断误差**（`leaver_truncation_error.md` + `_adaptive_N.py`）：
+**截断误差**（`notes/04_lorentz_gravity/leaver_truncation_error.md` + `_adaptive_N.py`）：
 
 | 自旋 $a$ | 衰减率 $c$ | $N_{\min}$（双精度） | 置信度 |
 |:-------:|:---------:|:-----------------:|:-----:|
@@ -189,8 +189,8 @@
 **产出**：
 | 子阶段 | 产出 | 状态 |
 |:-----|:----|:----:|
-| 53F.1 | `notes/laci_axiomatization.md`：LACI 定理系（T1-T3）—— T1: 高LACI⇔谱丛静默分支（S3 判据）；T2: LACI 沿同伦路径局部单调；T3: $\Delta\lambda_{\min}=0.122M_{\mathrm{Pl}}$ 作为 LACI 物理阈值 | ✅ |
-| 53F.2 | `notes/dual_homotopy_convergence.md`：双重同伦收敛性定理——纤维积 $\mathcal{M}_a \times_{\mathrm{id}} \mathcal{M}_m$ 的代数解释；分步优于同步的严格证明（定理 3.2-3.3）；最优延拓步长公式（定理 4.2） | ✅ |
+| 53F.1 | `notes/04_lorentz_gravity/laci_axiomatization.md`：LACI 定理系（T1-T3）—— T1: 高LACI⇔谱丛静默分支（S3 判据）；T2: LACI 沿同伦路径局部单调；T3: $\Delta\lambda_{\min}=0.122M_{\mathrm{Pl}}$ 作为 LACI 物理阈值 | ✅ |
+| 53F.2 | `notes/04_lorentz_gravity/dual_homotopy_convergence.md`：双重同伦收敛性定理——纤维积 $\mathcal{M}_a \times_{\mathrm{id}} \mathcal{M}_m$ 的代数解释；分步优于同步的严格证明（定理 3.2-3.3）；最优延拓步长公式（定理 4.2） | ✅ |
 
 **验证状态**：
 - 定理系在现有 Kerr 参数空间 $a \in [0,0.9], l=2,3, m \in \{0,\pm1,\pm2\}$ 上与数值经验一致（8 模式 LACI 100% 识别率对应定理 T1）

@@ -195,5 +195,5 @@ h_{\text{ringdown}}(t - t_m), & t \geq t_m
 - `src/dynamic_spectrum/binary_inspiral_spectrum.py` — A1 Inspiral 阶段（谱流初态输入）
 - `src/dynamic_spectrum/binary_ringdown_spectrum.py` — A3 Ringdown 阶段（谱流终态对标）
 - `src/dynamic_spectrum/spectral_numerics.py` — C1 谱数值框架
-- `notes/dynamic_binary_inspiral.md` — A1 研究笔记
-- `notes/dynamic_binary_ringdown.md` — A3 研究笔记
+- `notes/04_lorentz_gravity/dynamic_binary_inspiral.md` — A1 研究笔记
+- `notes/04_lorentz_gravity/dynamic_binary_ringdown.md` — A3 研究笔记

@@ -20,7 +20,7 @@ Phase 58C.2: 记忆函数谱丛分支点探测
 
 关联:
     · _memory_tridiag.py (谱丛基类)
-    · spectral_sheaf_leaver.md §4 (分支点条件数预警)
+    · notes/04_lorentz_gravity/spectral_sheaf_leaver.md §4 (分支点条件数预警)
     · generalization.md §5.3 (S_mem 同构)
 """
 
