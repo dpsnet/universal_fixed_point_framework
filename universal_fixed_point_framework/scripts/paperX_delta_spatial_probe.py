@@ -8,6 +8,10 @@ paperX_delta_spatial_probe.py — 假设 H 数值判定探针（paper31 "Δ 方�
 
 模型（复用框架结构：Clifford.lean Cl(1,7) ≅ M₁₆(ℝ)、paper31 "A 特征值随 SU(2) Casimir 谱 √{k(k+1)}"）：
 - Cl(1,7) 生成元：8 个 16×16 矩阵（1 时间平方 −I + 7 空间平方 +I），Pauli tensor 积递归构造
+  【2026-08-16 约定登记：本探针用时间²=−1（历史约定）；框架已统一为数学标准时间²=+1
+  （主导脚本 paperX_cl17_first_principle.py / gammas_fixed.py 与 Lean Clifford.lean 修正后）。
+  本探针表示 = 统一约定表示整体乘 i（酉等价：γ → iγ 保持反交换、[A,γ] 范数不变）⟹
+  H 判定（相对范数 / Tr 采样）不受约定影响；见 silence_direction_allocation.md §4.7 S2】
 - A 候选模型：
   M1 谱基对角：A = diag(√{k(k+1)}), k=0..15（框架"A 由谱定义"最直接表述）
   M2 SU(2) Casimir：J_k = γ_iγ_j（su(2) 生成元，由空间生成元构造），A = √(J²)，特征值 √{j(j+1)}

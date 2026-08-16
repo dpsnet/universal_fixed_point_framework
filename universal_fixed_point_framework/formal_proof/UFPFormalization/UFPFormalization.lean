@@ -74,3 +74,5 @@ import UFPFormalization.PhotonTopology
 import UFPFormalization.PhotonTopologyFunctor
 import UFPFormalization.FiberOrthogonalSkeleton
 import UFPFormalization.MourreSkeleton
+import UFPFormalization.SilenceObservationAllocation
+import UFPFormalization.CliffordSpectralType
