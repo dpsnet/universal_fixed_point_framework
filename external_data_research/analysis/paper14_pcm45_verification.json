@@ -1,0 +1,355 @@
+{
+  "P-CM-4": {
+    "name": "谱丛分支点数学判据跨模型普适性",
+    "models_tested": [
+      "xxx (EDRN原始)",
+      "xxz (Jz/Jxy=2.0)",
+      "ising (h=1.0)"
+    ],
+    "N_tested": [
+      6,
+      8
+    ],
+    "per_model_verdict": {
+      "xxx": {
+        "n_abc_satisfied": 2,
+        "n_total": 2,
+        "verdict": "✅ 通过"
+      },
+      "xxz": {
+        "n_abc_satisfied": 0,
+        "n_total": 2,
+        "verdict": "❌ 证伪"
+      },
+      "ising": {
+        "n_abc_satisfied": 0,
+        "n_total": 2,
+        "verdict": "❌ 证伪"
+      }
+    },
+    "overall_verdict": "❌ P-CM-4 证伪",
+    "signature_details": {
+      "xxx": {
+        "chain_N6": {
+          "topo": "chain",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N6": {
+          "topo": "star",
+          "N": 6,
+          "n_bp": 118,
+          "sig_a": true,
+          "dz_ratio": 1.0,
+          "sig_b": true,
+          "D_mean": 183175234197.46216,
+          "n_inf_D": 10,
+          "sig_c": true,
+          "all_abc": true
+        },
+        "ring_N6": {
+          "topo": "ring",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N6": {
+          "topo": "small_world",
+          "N": 6,
+          "n_bp": 107,
+          "sig_a": true,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 215023878967.31357,
+          "n_inf_D": 5,
+          "sig_c": true,
+          "all_abc": false
+        },
+        "chain_N8": {
+          "topo": "chain",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N8": {
+          "topo": "star",
+          "N": 8,
+          "n_bp": 134,
+          "sig_a": true,
+          "dz_ratio": 0.835820895522388,
+          "sig_b": true,
+          "D_mean": 18505462972.543045,
+          "n_inf_D": 2,
+          "sig_c": true,
+          "all_abc": true
+        },
+        "ring_N8": {
+          "topo": "ring",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N8": {
+          "topo": "small_world",
+          "N": 8,
+          "n_bp": 8,
+          "sig_a": false,
+          "dz_ratio": 0.125,
+          "sig_b": false,
+          "D_mean": 0.08513229700698419,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        }
+      },
+      "xxz": {
+        "chain_N6": {
+          "topo": "chain",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N6": {
+          "topo": "star",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "ring_N6": {
+          "topo": "ring",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N6": {
+          "topo": "small_world",
+          "N": 6,
+          "n_bp": 122,
+          "sig_a": true,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 127570171999.12549,
+          "n_inf_D": 1,
+          "sig_c": true,
+          "all_abc": false
+        },
+        "chain_N8": {
+          "topo": "chain",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N8": {
+          "topo": "star",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "ring_N8": {
+          "topo": "ring",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N8": {
+          "topo": "small_world",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        }
+      },
+      "ising": {
+        "chain_N6": {
+          "topo": "chain",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N6": {
+          "topo": "star",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "ring_N6": {
+          "topo": "ring",
+          "N": 6,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N6": {
+          "topo": "small_world",
+          "N": 6,
+          "n_bp": 127,
+          "sig_a": true,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 35960440365.303894,
+          "n_inf_D": 5,
+          "sig_c": true,
+          "all_abc": false
+        },
+        "chain_N8": {
+          "topo": "chain",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "star_N8": {
+          "topo": "star",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "ring_N8": {
+          "topo": "ring",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        },
+        "small_world_N8": {
+          "topo": "small_world",
+          "N": 8,
+          "n_bp": 0,
+          "sig_a": false,
+          "dz_ratio": 0.0,
+          "sig_b": false,
+          "D_mean": 0.0,
+          "n_inf_D": 0,
+          "sig_c": false,
+          "all_abc": false
+        }
+      }
+    }
+  },
+  "P-CM-5": {
+    "name": "热力学极限下三重签名持续性",
+    "method": "基于N=6,8,10,12 XXX数据的标度律拟合+外推",
+    "signature_A_fit": {
+      "a": 123.10105907575654,
+      "slope": -0.9945720551060403
+    },
+    "signature_B_fit": {
+      "intercept": 0.9922484542208152,
+      "slope": -0.007991281275922293
+    },
+    "signature_C_fit": {
+      "a": 9.230594683646858e-39,
+      "slope": 50.76741299623748
+    },
+    "extrapolation_N16": {
+      "sig_a": true,
+      "n_bp_pred": 124.96767393392123,
+      "sig_b": true,
+      "dz_ratio_pred": 0.8643879538060585,
+      "sig_c": true,
+      "D_ratio_pred": 1.2453348391890211e+23,
+      "n_pass": 3
+    },
+    "verdict": "✅ P-CM-5 外推成立",
+    "note": "外推结果非直接验证。最终裁决需N=16,20,24的实际ED计算。"
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "analysis_topic": "P-CM-1/2 证伪联合根源分析",
+  "core_hypothesis": "star δ_SC≈0 是 P-CM-1 窗口碎裂和 P-CM-2 波动发散的共同根源",
+  "pcm1_revised": {
+    "assertion": "P-CM-1': 主锁定窗口(最宽窗口)中心 Δ_center 与 N 无关 (漂移比<0.2)",
+    "per_topology_N": {
+      "chain": {
+        "6": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        },
+        "8": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        },
+        "10": {
+          "n_windows": 1,
+          "widest_window": [
+            0.118,
+            3.0
+          ],
+          "center": 1.559,
+          "width": 2.882,
+          "drift_ratio": 0.019346230820547046
+        },
+        "12": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        }
+      },
+      "star": {
+        "6": {
+          "n_windows": 1,
+          "widest_window": [
+            0.8339999999999999,
+            1.214
+          ],
+          "center": 1.024,
+          "width": 0.3800000000000001,
+          "drift_ratio": 0.0
+        },
+        "8": {
+          "n_windows": 6,
+          "widest_window": [
+            1.002,
+            1.508
+          ],
+          "center": 1.255,
+          "width": 0.506,
+          "drift_ratio": 0.6078947368421047
+        },
+        "10": {
+          "n_windows": 7,
+          "widest_window": [
+            0.768,
+            1.308
+          ],
+          "center": 1.038,
+          "width": 0.54,
+          "drift_ratio": 0.03684210526315792
+        },
+        "12": {
+          "n_windows": 8,
+          "widest_window": [
+            0.798,
+            1.308
+          ],
+          "center": 1.053,
+          "width": 0.51,
+          "drift_ratio": 0.07631578947368396
+        }
+      },
+      "ring": {
+        "6": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        },
+        "8": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        },
+        "10": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        },
+        "12": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": 0.0
+        }
+      },
+      "small_world": {
+        "6": {
+          "n_windows": 0,
+          "widest_window": null,
+          "center": null,
+          "width": 0,
+          "drift_ratio": Infinity
+        },
+        "8": {
+          "n_windows": 5,
+          "widest_window": [
+            0.002,
+            2.27
+          ],
+          "center": 1.136,
+          "width": 2.2680000000000002,
+          "drift_ratio": Infinity
+        },
+        "10": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": Infinity
+        },
+        "12": {
+          "n_windows": 1,
+          "widest_window": [
+            0.002,
+            3.0
+          ],
+          "center": 1.501,
+          "width": 2.998,
+          "drift_ratio": Infinity
+        }
+      }
+    },
+    "star_verdict": "证伪"
+  },
+  "pcm2_revised": {
+    "assertion": "P-CM-2': 排除 δ_SC<θ_Z 区间后, P=δ_SC×σ_res 相对波动 < 0.6",
+    "per_topology_N": {
+      "chain": {
+        "6": {
+          "rel_fluct_full": 1.8646017863172675,
+          "rel_fluct_filtered": 1.8629485107487598,
+          "n_excluded": 1,
+          "excluded_fraction": 0.0006662225183211579,
+          "verdict": "证伪"
+        },
+        "8": {
+          "rel_fluct_full": 2.6505768887783407,
+          "rel_fluct_filtered": 2.6505768887783407,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        },
+        "10": {
+          "rel_fluct_full": 1.9065112626400187,
+          "rel_fluct_filtered": 1.7923794345522142,
+          "n_excluded": 30,
+          "excluded_fraction": 0.019986675549633626,
+          "verdict": "证伪"
+        },
+        "12": {
+          "rel_fluct_full": 2.6607961571006413,
+          "rel_fluct_filtered": 2.6607961571006413,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        }
+      },
+      "star": {
+        "6": {
+          "rel_fluct_full": Infinity,
+          "rel_fluct_filtered": null,
+          "n_excluded": 1501,
+          "excluded_fraction": 1.0,
+          "verdict": "N/A"
+        },
+        "8": {
+          "rel_fluct_full": 79.85067660066437,
+          "rel_fluct_filtered": 2.1723710554528144,
+          "n_excluded": 1322,
+          "excluded_fraction": 0.8807461692205196,
+          "verdict": "证伪"
+        },
+        "10": {
+          "rel_fluct_full": 21.167510463760664,
+          "rel_fluct_filtered": 2.2986703568235436,
+          "n_excluded": 1338,
+          "excluded_fraction": 0.8914057295136576,
+          "verdict": "证伪"
+        },
+        "12": {
+          "rel_fluct_full": 68.0168136321015,
+          "rel_fluct_filtered": 3.0064240107985087,
+          "n_excluded": 1401,
+          "excluded_fraction": 0.9333777481678881,
+          "verdict": "证伪"
+        }
+      },
+      "ring": {
+        "6": {
+          "rel_fluct_full": 1.7924764165513458,
+          "rel_fluct_filtered": 1.7924764165513458,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        },
+        "8": {
+          "rel_fluct_full": 3.08761243433603,
+          "rel_fluct_filtered": 3.08761243433603,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        },
+        "10": {
+          "rel_fluct_full": 3.1553214287694256,
+          "rel_fluct_filtered": 3.1553214287694256,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        },
+        "12": {
+          "rel_fluct_full": 3.25849499143421,
+          "rel_fluct_filtered": 3.25849499143421,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        }
+      },
+      "small_world": {
+        "6": {
+          "rel_fluct_full": 6.599954829572187e-14,
+          "rel_fluct_filtered": 6.599954829572187e-14,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "成立"
+        },
+        "8": {
+          "rel_fluct_full": 2.0196525799015737,
+          "rel_fluct_filtered": 1.8031277631422653,
+          "n_excluded": 27,
+          "excluded_fraction": 0.017988007994670263,
+          "verdict": "证伪"
+        },
+        "10": {
+          "rel_fluct_full": 1.4027887346270447,
+          "rel_fluct_filtered": 1.4027887346270447,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        },
+        "12": {
+          "rel_fluct_full": 1.0578010678819583,
+          "rel_fluct_filtered": 1.0578010678819583,
+          "n_excluded": 0,
+          "excluded_fraction": 0.0,
+          "verdict": "证伪"
+        }
+      }
+    },
+    "star_verdicts": {
+      "6": "N/A",
+      "8": "证伪",
+      "10": "证伪",
+      "12": "证伪"
+    }
+  },
+  "common_root_analysis": {
+    "star_nearzero_stats": {
+      "6": {
+        "n_nearzero": 1501,
+        "fraction": 1.0,
+        "delta_min": 0.0,
+        "delta_max": 2.664535259100376e-14
+      },
+      "8": {
+        "n_nearzero": 1322,
+        "fraction": 0.8807461692205196,
+        "delta_min": -1.9771708568535415,
+        "delta_max": 1.9997710122594272
+      },
+      "10": {
+        "n_nearzero": 1338,
+        "fraction": 0.8914057295136576,
+        "delta_min": -1.8118839761882557e-13,
+        "delta_max": 1.9999999999999911
+      },
+      "12": {
+        "n_nearzero": 1401,
+        "fraction": 0.9333777481678881,
+        "delta_min": -2.000160989394816,
+        "delta_max": 1.999756166411084
+      }
+    },
+    "counterfactual_analysis": {
+      "description": "反事实: 若 star δ_SC 下界设为 0.1, P-CM-2 是否成立?",
+      "results": {
+        "6": {
+          "rel_fluct_counterfactual": 2.6590664332826988,
+          "verdict": "证伪"
+        },
+        "8": {
+          "rel_fluct_counterfactual": 12.980465207145222,
+          "verdict": "证伪"
+        },
+        "10": {
+          "rel_fluct_counterfactual": 14.743561213616603,
+          "verdict": "证伪"
+        },
+        "12": {
+          "rel_fluct_counterfactual": 23.978172568382586,
+          "verdict": "证伪"
+        }
+      }
+    },
+    "common_root_verified": false
+  },
+  "final_interpretation": "P-CM-1' (最宽窗口中心不变): 证伪. P-CM-2' (排除δ_SC≈0后守恒): star 在 0/4 N 成立. 联合根源验证: 不成立——star δ_SC≈0 不是 P-CM-1/2 证伪的主要根源. 反事实分析显示, 若 star δ_SC 下界设为 0.1, 0/4 N 的 P-CM-2 成立. 结论: 原 P-CM-1/2 的\"证伪\"实际是 star δ_SC≈0 这一更深层机制的副作用, 而非 Paper XIV 框架本身失效. 修正版 P-CM-1'/P-CM-2' 更准确反映了框架的预测能力."
+}

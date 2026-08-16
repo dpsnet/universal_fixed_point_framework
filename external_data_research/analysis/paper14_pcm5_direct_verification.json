@@ -1,0 +1,215 @@
+{
+  "P-CM-5_direct_verification": {
+    "method": "ED计算N=14,16的XXX数据(与EDRN脚本物理一致: Heisenberg XXX + eigsh SA)",
+    "resolution": {
+      "N14": "751点(步长0.004)",
+      "N16": "501点(步长0.006)",
+      "note": "分支点判据按点数归一化为密度 n_bp/n_points, 与N=6..12的1501点数据可比"
+    },
+    "data_source": {
+      "N6_12": "EDRN原始(李广好, Apache-2.0)",
+      "N14_16": "UFPF新计算(王斌, CC-BY-4.0+MIT)"
+    },
+    "signatures": {
+      "chain_N6": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "star_N6": {
+        "n_bp": 118,
+        "n_points": 1501,
+        "bp_density": 0.07861425716189208,
+        "dz_ratio": 1.0,
+        "D_mean": 183175234197.46216,
+        "n_inf_D": 10
+      },
+      "ring_N6": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "small_world_N6": {
+        "n_bp": 107,
+        "n_points": 1501,
+        "bp_density": 0.07128580946035976,
+        "dz_ratio": 0.0,
+        "D_mean": 215023878967.31357,
+        "n_inf_D": 5
+      },
+      "chain_N8": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "star_N8": {
+        "n_bp": 134,
+        "n_points": 1501,
+        "bp_density": 0.08927381745502998,
+        "dz_ratio": 0.835820895522388,
+        "D_mean": 18505462972.543045,
+        "n_inf_D": 2
+      },
+      "ring_N8": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "small_world_N8": {
+        "n_bp": 8,
+        "n_points": 1501,
+        "bp_density": 0.005329780146568954,
+        "dz_ratio": 0.125,
+        "D_mean": 0.08513229700698419,
+        "n_inf_D": 0
+      },
+      "chain_N10": {
+        "n_bp": 5,
+        "n_points": 1501,
+        "bp_density": 0.0033311125916055963,
+        "dz_ratio": 0.0,
+        "D_mean": 0.16239158992120276,
+        "n_inf_D": 0
+      },
+      "star_N10": {
+        "n_bp": 129,
+        "n_points": 1501,
+        "bp_density": 0.08594270486342438,
+        "dz_ratio": 0.9302325581395349,
+        "D_mean": 9085485759.91019,
+        "n_inf_D": 0
+      },
+      "ring_N10": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "small_world_N10": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "chain_N12": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "star_N12": {
+        "n_bp": 118,
+        "n_points": 1501,
+        "bp_density": 0.07861425716189208,
+        "dz_ratio": 0.9152542372881356,
+        "D_mean": 6126838027.680382,
+        "n_inf_D": 1
+      },
+      "ring_N12": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "small_world_N12": {
+        "n_bp": 0,
+        "n_points": 1501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "chain_N14": {
+        "n_bp": 0,
+        "n_points": 751,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "star_N14": {
+        "n_bp": 59,
+        "n_points": 751,
+        "bp_density": 0.07856191744340879,
+        "dz_ratio": 1.0,
+        "D_mean": 37334820223.90795,
+        "n_inf_D": 2
+      },
+      "ring_N14": {
+        "n_bp": 0,
+        "n_points": 751,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "small_world_N14": {
+        "n_bp": 0,
+        "n_points": 751,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      },
+      "star_N16": {
+        "n_bp": 41,
+        "n_points": 501,
+        "bp_density": 0.08183632734530938,
+        "dz_ratio": 1.0,
+        "D_mean": 38717875485.94483,
+        "n_inf_D": 3
+      },
+      "small_world_N16": {
+        "n_bp": 0,
+        "n_points": 501,
+        "bp_density": 0.0,
+        "dz_ratio": 0.0,
+        "D_mean": 0.0,
+        "n_inf_D": 0
+      }
+    },
+    "verdicts": {
+      "14": {
+        "n_pass": 3,
+        "sig_a": true,
+        "sig_b": true,
+        "sig_c": true,
+        "star_bp_density": 0.07856191744340879,
+        "star_dz_ratio": 1.0,
+        "D_ratio": null,
+        "verdict": "✅ P-CM-5 直接验证成立"
+      },
+      "16": {
+        "n_pass": 3,
+        "sig_a": true,
+        "sig_b": true,
+        "sig_c": true,
+        "star_bp_density": 0.08183632734530938,
+        "star_dz_ratio": 1.0,
+        "D_ratio": null,
+        "verdict": "✅ P-CM-5 直接验证成立"
+      }
+    },
+    "overall": "✅ P-CM-5 直接验证成立 (所有新尺寸均满足)"
+  }
+}

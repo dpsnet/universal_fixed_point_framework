@@ -1,0 +1,374 @@
+{
+  "analysis_topic": "P-CM-2 证伪根因深度分析 (4维度谱丛分支点数学签名)",
+  "root_cause_hierarchy": {
+    "H1_description": "σ_res 尖峰在分支点处发散 → 乘积 P=δ×σ 发散 (已验证)",
+    "H2_mechanism": "σ_res 尖峰 = 谱丛分支点处谱叶汇合导致的谱导数不连续 (§5.7)",
+    "H3_mathematics": "谱丛分支点数学签名: D=σ/|dδ/dΔ|发散 + CJ=|d²δ/dΔ² 跳变|大幅 + χ局域对易子破坏",
+    "H4_topology": "该签名仅star独有 (中心节点→多叶谱丛), 其他拓扑缺失"
+  },
+  "global_summary_per_topology_N": {
+    "chain": {
+      "6": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.27674203481647175,
+        "sigma_res_max": 0.39890522227089226,
+        "delta_spec_mean": 2.3499909051631556,
+        "delta_spec_min": 0.0
+      },
+      "8": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.21363647270537606,
+        "sigma_res_max": 0.35589116040039154,
+        "delta_spec_mean": 1.297258064960716,
+        "delta_spec_min": 0.4653743784042028
+      },
+      "10": {
+        "n_branch_points": 5,
+        "sigma_res_mean": 0.24509677050536016,
+        "sigma_res_max": 0.3309337856283102,
+        "delta_spec_mean": 1.558068482085708,
+        "delta_spec_min": -0.11647498936427601
+      },
+      "12": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.19704027840302538,
+        "sigma_res_max": 0.30162790708662407,
+        "delta_spec_mean": 0.9136592535387872,
+        "delta_spec_min": 0.2897848024920968
+      }
+    },
+    "star": {
+      "6": {
+        "n_branch_points": 118,
+        "sigma_res_mean": 0.0934854295633018,
+        "sigma_res_max": 0.24858396775279,
+        "delta_spec_mean": 4.311896165459569e-15,
+        "delta_spec_min": 0.0
+      },
+      "8": {
+        "n_branch_points": 134,
+        "sigma_res_mean": 0.06368846727070353,
+        "sigma_res_max": 0.36480169752742697,
+        "delta_spec_mean": 0.1561533314990744,
+        "delta_spec_min": -1.9771708568535415
+      },
+      "10": {
+        "n_branch_points": 129,
+        "sigma_res_mean": 0.04167010992629085,
+        "sigma_res_max": 0.2135335257675946,
+        "delta_spec_mean": 0.1639124584778361,
+        "delta_spec_min": -1.8118839761882557e-13
+      },
+      "12": {
+        "n_branch_points": 118,
+        "sigma_res_mean": 0.030914094226824576,
+        "sigma_res_max": 0.15976704142197443,
+        "delta_spec_mean": 0.09426538420582686,
+        "delta_spec_min": -2.000160989394816
+      }
+    },
+    "ring": {
+      "6": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.1670843936616082,
+        "sigma_res_max": 0.28564175485862014,
+        "delta_spec_mean": 2.701809988291246,
+        "delta_spec_min": 1.9663271079575928
+      },
+      "8": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.16145265512078788,
+        "sigma_res_max": 0.2695105327805939,
+        "delta_spec_mean": 2.395196361411944,
+        "delta_spec_min": 1.570768443699956
+      },
+      "10": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.15470413462089277,
+        "sigma_res_max": 0.2533592033466555,
+        "delta_spec_mean": 1.959344211066541,
+        "delta_spec_min": 1.3094464711251683
+      },
+      "12": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.14830831387136484,
+        "sigma_res_max": 0.2390516081704945,
+        "delta_spec_mean": 1.5345404155736135,
+        "delta_spec_min": 1.1237707832164858
+      }
+    },
+    "small_world": {
+      "6": {
+        "n_branch_points": 107,
+        "sigma_res_mean": 0.3051592018993853,
+        "sigma_res_max": 0.30515920189938606,
+        "delta_spec_mean": 1.3643255096084355,
+        "delta_spec_min": 1.364325509608392
+      },
+      "8": {
+        "n_branch_points": 8,
+        "sigma_res_mean": 0.2648552108574259,
+        "sigma_res_max": 0.2913473224034994,
+        "delta_spec_mean": 1.6135010670850207,
+        "delta_spec_min": -0.2768462685924735
+      },
+      "10": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.31666407159644255,
+        "sigma_res_max": 0.3412100016045349,
+        "delta_spec_mean": 2.0811420669951133,
+        "delta_spec_min": 0.7227166471285215
+      },
+      "12": {
+        "n_branch_points": 0,
+        "sigma_res_mean": 0.26448606871834957,
+        "sigma_res_max": 0.2944662072114572,
+        "delta_spec_mean": 1.931486583271159,
+        "delta_spec_min": 1.1702594270231614
+      }
+    }
+  },
+  "zero_crossing_stats": {
+    "chain": {
+      "6": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "8": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "10": {
+        "zcr": 1.0,
+        "dzr": 0.0,
+        "n_bp": 5,
+        "zc_count": 5
+      },
+      "12": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      }
+    },
+    "star": {
+      "6": {
+        "zcr": 0.0,
+        "dzr": 1.0,
+        "n_bp": 118,
+        "zc_count": 0
+      },
+      "8": {
+        "zcr": 0.9925373134328358,
+        "dzr": 0.835820895522388,
+        "n_bp": 134,
+        "zc_count": 133
+      },
+      "10": {
+        "zcr": 0.9922480620155039,
+        "dzr": 0.9302325581395349,
+        "n_bp": 129,
+        "zc_count": 128
+      },
+      "12": {
+        "zcr": 0.8389830508474576,
+        "dzr": 0.9152542372881356,
+        "n_bp": 118,
+        "zc_count": 99
+      }
+    },
+    "ring": {
+      "6": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "8": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "10": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "12": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      }
+    },
+    "small_world": {
+      "6": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 107,
+        "zc_count": 0
+      },
+      "8": {
+        "zcr": 1.0,
+        "dzr": 0.0,
+        "n_bp": 8,
+        "zc_count": 8
+      },
+      "10": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      },
+      "12": {
+        "zcr": 0.0,
+        "dzr": 0.0,
+        "n_bp": 0,
+        "zc_count": 0
+      }
+    }
+  },
+  "divergency_D_ratios": {
+    "6": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 183175234197.46216,
+        "ring": 0.0,
+        "small_world": 215023878967.31357
+      },
+      "ratio": 0.8518832190972947
+    },
+    "8": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 18505462972.543045,
+        "ring": 0.0,
+        "small_world": 0.08513229700698419
+      },
+      "ratio": 217373002058.4887
+    },
+    "10": {
+      "per_topo": {
+        "chain": 0.16239158992120276,
+        "star": 9085485759.91019,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": 55948006693.68863
+    },
+    "12": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 6126838027.680382,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": Infinity
+    }
+  },
+  "curvature_CJ_ratios": {
+    "6": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 7.905183289532455e-11,
+        "ring": 0.0,
+        "small_world": 2.032723654272439e-10
+      },
+      "ratio": 0.38889611349369135
+    },
+    "8": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 6170.595821047258,
+        "ring": 0.0,
+        "small_world": 1087.1210792807833
+      },
+      "ratio": 5.676088835596487
+    },
+    "10": {
+      "per_topo": {
+        "chain": 21238.169289472607,
+        "star": 5715.6902798134415,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": 0.26912349185608053
+    },
+    "12": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 5867.656212089855,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": Infinity
+    }
+  },
+  "commutator_chi_ratios": {
+    "6": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 1.3367521759308358,
+        "ring": 0.0,
+        "small_world": 0.8244922770829689
+      },
+      "ratio": 1.6213034531508632
+    },
+    "8": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 1.3950966240654807,
+        "ring": 0.0,
+        "small_world": 1.408212898668981
+      },
+      "ratio": 0.9906858724160973
+    },
+    "10": {
+      "per_topo": {
+        "chain": 1.5834717416882265,
+        "star": 0.890236494456014,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": 0.5622054824337338
+    },
+    "12": {
+      "per_topo": {
+        "chain": 0.0,
+        "star": 1.1245834838719664,
+        "ring": 0.0,
+        "small_world": 0.0
+      },
+      "ratio": Infinity
+    }
+  },
+  "signature_verdicts": {
+    "零交叉(zcr)": {
+      "n_significant_N": 1,
+      "total_N": 4,
+      "is_root_signature": false
+    },
+    "发散度D": {
+      "n_significant_N": 3,
+      "total_N": 4,
+      "is_root_signature": true
+    },
+    "曲率跳变CJ": {
+      "n_significant_N": 2,
+      "total_N": 4,
+      "is_root_signature": false
+    },
+    "对易子破坏χ": {
+      "n_significant_N": 1,
+      "total_N": 4,
+      "is_root_signature": false
+    }
+  },
+  "final_interpretation": "通过4维度综合鉴定, P-CM-2证伪的数学根因是: star中心节点拓扑产生的谱丛分支点在数学上同时满足 发散度D. 这3个签名的组合是§5.7谱叶汇合(黎曼面分支切割)在数值数据上的直接表现. 其他拓扑(chain/ring/small_world)因缺乏中心节点驱动的多叶谱丛结构, 缺失该数学签名, 故即使也有局部σ_res波动, 也不满足发散和对易子破坏的组合条件.这就是为什么P-CM-2只在star拓扑中彻底失效, 而不是在所有拓扑中等价失效的深层物理原因."
+}

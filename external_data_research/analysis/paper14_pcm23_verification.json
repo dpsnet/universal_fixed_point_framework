@@ -1,0 +1,345 @@
+{
+  "P-CM-2": {
+    "prediction": "谱间隙-涨落乘积 P(Δ) = δ_SC × σ_res 的近不变性",
+    "assertion": "(max P - min P) / <P> < 0.30",
+    "threshold_pass": 0.3,
+    "threshold_falsify": 0.6,
+    "per_topology_N": {
+      "chain": {
+        "6": {
+          "P_max": 1.4266582523799678,
+          "P_min": 0.0,
+          "P_mean": 0.7651275799739139,
+          "relative_fluctuation": 1.8646017863172675,
+          "cv": 0.6293707467418903,
+          "verdict": "证伪(>0.6)"
+        },
+        "8": {
+          "P_max": 0.9387156853924316,
+          "P_min": 0.09573392894911406,
+          "P_mean": 0.3180370884588262,
+          "relative_fluctuation": 2.6505768887783407,
+          "cv": 0.8372252035934541,
+          "verdict": "证伪(>0.6)"
+        },
+        "10": {
+          "P_max": 0.783382966615274,
+          "P_min": 0.0005181978599198885,
+          "P_mean": 0.4279703766676286,
+          "relative_fluctuation": 1.8292499000774167,
+          "cv": 0.6110264444209349,
+          "verdict": "证伪(>0.6)"
+        },
+        "12": {
+          "P_max": 0.5936342508767003,
+          "P_min": 0.058690322690111235,
+          "P_mean": 0.20104656523914075,
+          "relative_fluctuation": 2.6607961571006413,
+          "cv": 0.8294537944747105,
+          "verdict": "证伪(>0.6)"
+        }
+      },
+      "star": {
+        "6": {
+          "P_max": 3.727086668554642e-15,
+          "P_min": 0.0,
+          "P_mean": 4.4226950416699777e-16,
+          "relative_fluctuation": Infinity,
+          "cv": Infinity,
+          "verdict": "证伪(>0.6)"
+        },
+        "8": {
+          "P_max": 0.6571568564851173,
+          "P_min": 0.0,
+          "P_mean": 0.015619148503371547,
+          "relative_fluctuation": 42.0737952740038,
+          "cv": 3.5395778491715437,
+          "verdict": "证伪(>0.6)"
+        },
+        "10": {
+          "P_max": 0.17722333427248857,
+          "P_min": 0.0,
+          "P_mean": 0.008372422188049903,
+          "relative_fluctuation": 21.167510463751142,
+          "cv": 3.6127761046712386,
+          "verdict": "证伪(>0.6)"
+        },
+        "12": {
+          "P_max": 0.14686805561620225,
+          "P_min": 0.0,
+          "P_mean": 0.003295088399096017,
+          "relative_fluctuation": 44.57181047297378,
+          "cv": 5.124956516119664,
+          "verdict": "证伪(>0.6)"
+        }
+      },
+      "ring": {
+        "6": {
+          "P_max": 0.8052521562063092,
+          "P_min": 6.685291355638933e-16,
+          "P_mean": 0.4492400283600841,
+          "relative_fluctuation": 1.7924764165513458,
+          "cv": 0.5077441352300347,
+          "verdict": "证伪(>0.6)"
+        },
+        "8": {
+          "P_max": 1.1289398632792498,
+          "P_min": 2.7217783421269873e-16,
+          "P_mean": 0.36563522374919455,
+          "relative_fluctuation": 3.08761243433603,
+          "cv": 0.5029753905176784,
+          "verdict": "证伪(>0.6)"
+        },
+        "10": {
+          "P_max": 0.8941303605998574,
+          "P_min": 6.276097233964546e-16,
+          "P_mean": 0.2833721954433553,
+          "relative_fluctuation": 3.1553214287694256,
+          "cv": 0.44453951934086255,
+          "verdict": "证伪(>0.6)"
+        },
+        "12": {
+          "P_max": 0.7151268390192377,
+          "P_min": 3.6679372822175705e-16,
+          "P_mean": 0.21946537923155682,
+          "relative_fluctuation": 3.25849499143421,
+          "cv": 0.46590213259891194,
+          "verdict": "证伪(>0.6)"
+        }
+      },
+      "small_world": {
+        "6": {
+          "P_max": 0.41633648364309667,
+          "P_min": 0.4163364836430692,
+          "P_mean": 0.41633648364308223,
+          "relative_fluctuation": 6.599954829572187e-14,
+          "cv": 8.19428774202825e-15,
+          "verdict": "成立(<0.3)"
+        },
+        "8": {
+          "P_max": 0.7992970713002635,
+          "P_min": 0.00020743450077913866,
+          "P_mean": 0.43525820298762935,
+          "relative_fluctuation": 1.8358979367063086,
+          "cv": 0.5675003123244337,
+          "verdict": "证伪(>0.6)"
+        },
+        "10": {
+          "P_max": 1.1360562005748405,
+          "P_min": 0.18367171887196404,
+          "P_mean": 0.678922248371266,
+          "relative_fluctuation": 1.4027887346270447,
+          "cv": 0.5072384838438949,
+          "verdict": "证伪(>0.6)"
+        },
+        "12": {
+          "P_max": 0.8149718341126906,
+          "P_min": 0.261409817776282,
+          "P_mean": 0.5233139133096256,
+          "relative_fluctuation": 1.0578010678819583,
+          "cv": 0.3926247587279458,
+          "verdict": "证伪(>0.6)"
+        }
+      }
+    },
+    "final_verdicts": {
+      "chain": {
+        "N12_verdict": "证伪(>0.6)",
+        "final": "证伪",
+        "fluctuations": [
+          1.8646017863172675,
+          2.6505768887783407,
+          1.8292499000774167,
+          2.6607961571006413
+        ],
+        "monotonic_diverge": false
+      },
+      "star": {
+        "N12_verdict": "证伪(>0.6)",
+        "final": "证伪",
+        "fluctuations": [
+          Infinity,
+          42.0737952740038,
+          21.167510463751142,
+          44.57181047297378
+        ],
+        "monotonic_diverge": false
+      },
+      "ring": {
+        "N12_verdict": "证伪(>0.6)",
+        "final": "证伪",
+        "fluctuations": [
+          1.7924764165513458,
+          3.08761243433603,
+          3.1553214287694256,
+          3.25849499143421
+        ],
+        "monotonic_diverge": true
+      },
+      "small_world": {
+        "N12_verdict": "证伪(>0.6)",
+        "final": "证伪",
+        "fluctuations": [
+          6.599954829572187e-14,
+          1.8358979367063086,
+          1.4027887346270447,
+          1.0578010678819583
+        ],
+        "monotonic_diverge": false
+      }
+    }
+  },
+  "P-CM-3": {
+    "prediction": "谱丛分支点密度的拓扑依赖性",
+    "assertion": "ρ_b^star > ρ_b^small_world > ρ_b^chain ≈ ρ_b^ring, n_b^star >= 3",
+    "per_topology_N": {
+      "chain": {
+        "6": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "8": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "10": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "12": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        }
+      },
+      "star": {
+        "6": {
+          "n_branch_points": 4,
+          "mean_branch_density": 1.3333333333333333
+        },
+        "8": {
+          "n_branch_points": 4,
+          "mean_branch_density": 1.3333333333333333
+        },
+        "10": {
+          "n_branch_points": 4,
+          "mean_branch_density": 1.3333333333333333
+        },
+        "12": {
+          "n_branch_points": 7,
+          "mean_branch_density": 2.3333333333333335
+        }
+      },
+      "ring": {
+        "6": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "8": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "10": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "12": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        }
+      },
+      "small_world": {
+        "6": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "8": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "10": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        },
+        "12": {
+          "n_branch_points": 0,
+          "mean_branch_density": 0
+        }
+      }
+    },
+    "per_N_verdicts": {
+      "6": {
+        "densities": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "n_star": 4,
+        "cond_star_ge3": true,
+        "cond_star_gt_sw": true,
+        "cond_sw_gt_chain": false,
+        "cond_chain_approx_ring": true,
+        "cond_chain_lt_star_50pct": true,
+        "verdict": "部分成立(star≥3 且 chain<star/2, 但排序不全)"
+      },
+      "8": {
+        "densities": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "n_star": 4,
+        "cond_star_ge3": true,
+        "cond_star_gt_sw": true,
+        "cond_sw_gt_chain": false,
+        "cond_chain_approx_ring": true,
+        "cond_chain_lt_star_50pct": true,
+        "verdict": "部分成立(star≥3 且 chain<star/2, 但排序不全)"
+      },
+      "10": {
+        "densities": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "n_star": 4,
+        "cond_star_ge3": true,
+        "cond_star_gt_sw": true,
+        "cond_sw_gt_chain": false,
+        "cond_chain_approx_ring": true,
+        "cond_chain_lt_star_50pct": true,
+        "verdict": "部分成立(star≥3 且 chain<star/2, 但排序不全)"
+      },
+      "12": {
+        "densities": {
+          "chain": 0,
+          "star": 2.3333333333333335,
+          "ring": 0,
+          "small_world": 0
+        },
+        "n_star": 7,
+        "cond_star_ge3": true,
+        "cond_star_gt_sw": true,
+        "cond_sw_gt_chain": false,
+        "cond_chain_approx_ring": true,
+        "cond_chain_lt_star_50pct": true,
+        "verdict": "部分成立(star≥3 且 chain<star/2, 但排序不全)"
+      }
+    },
+    "final_summary": {
+      "final_verdict": "部分证伪/弱成立",
+      "star_n_sequence": {
+        "6": 4,
+        "8": 4,
+        "10": 4,
+        "12": 7
+      },
+      "star_n_monotonic": true,
+      "all_star_ge3": true,
+      "sw_order_never_holds": true,
+      "interpretation": "P-CM-3 部分证伪: (1) star 分支点数 ≥ 3 在所有 N 中成立(star 中心节点的多叶结构确认); (2) star 分支点数随 N 单调不减,与窗口碎裂现象一致(P-CM-1 证伪中的发现); (3) 但完整排序 ρ_b^star > ρ_b^small_world > ρ_b^chain ≈ ρ_b^ring 不成立——small_world 的分支点密度与 chain/ring 相当(均接近 0),说明 small_world 的全域涨落大并非由分支点驱动,而是由长程连接导致的谱丛额外复杂度。"
+    }
+  }
+}

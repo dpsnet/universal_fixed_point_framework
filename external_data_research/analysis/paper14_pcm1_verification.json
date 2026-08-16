@@ -1,0 +1,73 @@
+{
+  "prediction": "P-CM-1",
+  "assertion": "|Δ_center(N) - Δ_center(N=6)| / IslandWidth(N=6) < 0.2",
+  "threshold_pass": 0.2,
+  "threshold_falsify": 0.5,
+  "baseline_N6": {
+    "center": 1.024,
+    "width": 0.3800000000000001,
+    "widest_center": 1.024,
+    "widest_width": 0.3800000000000001
+  },
+  "per_N_results_narrowest": {
+    "8": {
+      "center": 0.892,
+      "width": 0.02400000000000002,
+      "drift": 0.132,
+      "drift_ratio": 0.3473684210526315,
+      "verdict": "中间区(0.2-0.5)",
+      "n_islands": 6
+    },
+    "10": {
+      "center": 0.75,
+      "width": 0.02400000000000002,
+      "drift": 0.274,
+      "drift_ratio": 0.7210526315789472,
+      "verdict": "证伪(>0.5)",
+      "n_islands": 7
+    },
+    "12": {
+      "center": 1.336,
+      "width": 0.020000000000000018,
+      "drift": 0.31200000000000006,
+      "drift_ratio": 0.8210526315789473,
+      "verdict": "证伪(>0.5)",
+      "n_islands": 8
+    }
+  },
+  "per_N_results_widest": {
+    "8": {
+      "widest_center": 1.255,
+      "widest_width": 0.506,
+      "n_islands": 6,
+      "drift_ratio": 0.6078947368421047,
+      "verdict": "证伪(>0.5)"
+    },
+    "10": {
+      "widest_center": 1.038,
+      "widest_width": 0.54,
+      "n_islands": 7,
+      "drift_ratio": 0.03684210526315792,
+      "verdict": "成立(<0.2)"
+    },
+    "12": {
+      "widest_center": 1.053,
+      "widest_width": 0.51,
+      "n_islands": 8,
+      "drift_ratio": 0.07631578947368396,
+      "verdict": "成立(<0.2)"
+    }
+  },
+  "fragmentation_diagnosis": {
+    "n_islands_sequence": {
+      "6": 1,
+      "8": 6,
+      "10": 7,
+      "12": 8
+    },
+    "fragmentation_detected": true,
+    "interpretation": "star 拓扑单一锁定窗口随尺寸增大碎裂为多窗口 — P-CM-1 拓扑不变性假设失效"
+  },
+  "final_verdict_narrowest": "P-CM-1 证伪",
+  "final_verdict_interpretation": "P-CM-1 证伪: 最窄窗口中心漂移随 N 单调发散(N=10,12 漂移比>0.5)。物理原因: star 拓扑的谱丛分支点结构随尺寸增大而复杂化,单一锁定窗口碎裂为多窗口,导致\"窗口中心\"失去拓扑不变性。这是 Paper XIV §5.7 推论 5.7(谱丛纤维化)的间接体现: star 中心节点的多叶结构在有限尺寸下产生尺寸依赖的分支点重组。"
+}
