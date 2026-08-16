@@ -1,0 +1,12 @@
+N,graph_type,global_std,num_islands,island_std,k_raw,k_ceiling,note
+12,chain,4.705100e-02,1,4.698909e-02,0.0005,1,island_1_width=2.998
+12,star,2.104883e-02,8,1.943407e-03,0.8797,1,island_1_width=0.100
+12,star,2.104883e-02,8,2.013806e-03,0.8666,1,island_2_width=0.024
+12,star,2.104883e-02,8,1.804741e-03,0.9071,1,island_3_width=0.064
+12,star,2.104883e-02,8,1.589835e-03,0.9539,1,island_4_width=0.066
+12,star,2.104883e-02,8,3.152526e-03,0.7011,1,island_5_width=0.510
+12,star,2.104883e-02,8,1.229391e-03,1.0488,2,island_6_width=0.020
+12,star,2.104883e-02,8,1.722588e-03,0.9243,1,island_7_width=0.036
+12,star,2.104883e-02,8,1.963432e-03,0.8760,1,island_8_width=0.038
+12,ring,6.876827e-02,1,6.875125e-02,0.0001,1,island_1_width=2.998
+12,small_world,2.326790e-02,1,2.327332e-02,-0.0001,0,island_1_width=2.998

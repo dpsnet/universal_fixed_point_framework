@@ -44,6 +44,17 @@ Data.zip
 .pip-cache/
 Temp/
 
-# 外部数据研究（第三方版权，不推送到 UFPF 公共仓库）
-# 包含 EDRN 原始数据（于见隐 Apache-2.0）、分析脚本、报告草稿等
-external_data_research/
+# ===== 外部数据研究目录（精细区分：第三方原始数据排除 / 自有创作纳入）=====
+# 第三方（于见隐 EDRN Apache-2.0）：原始 zip 包 + 原始 CSV/脚本/png
+external_data_research/稳定岛：神秘的新世界.zip
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛2/
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_chain.csv
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_star.csv
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_ring.csv
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_small_world.csv
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry.py
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry.png
+external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集测试3/stable_island_geometry_summary.csv
+external_data_research/稳定岛：神秘的新世界/追踪光因子1/
+# 第三方原始脚本运行产物（pycache）
+external_data_research/**/__pycache__/

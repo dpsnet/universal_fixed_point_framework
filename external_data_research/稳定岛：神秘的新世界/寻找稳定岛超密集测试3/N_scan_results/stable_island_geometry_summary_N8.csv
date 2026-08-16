@@ -1,0 +1,5 @@
+graph_type,num_islands,total_width,avg_std,avg_left_slope,avg_right_slope
+chain,1,2.998000,6.635129e-02,0.014602,0.000000
+star,6,0.688000,3.993154e-03,0.235775,0.567722
+ring,1,2.998000,7.790622e-02,0.037830,0.000000
+small_world,5,2.472000,4.626480e-03,0.008609,0.660745
