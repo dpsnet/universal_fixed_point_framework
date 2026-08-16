@@ -1,0 +1,734 @@
+{
+  "prediction": "P-CM-3 修订",
+  "revised_assertion": "star > small_world > chain ≈ ring (在高阶指标下)",
+  "indicators": {
+    "rho_b": "分支点密度(原指标, σ_res局部极大值数/Δ范围)",
+    "F_std": "纤维涨落幅度(基于σ_res, 变异系数 std/mean)",
+    "H_spec": "纤维频谱熵(基于σ_res, Shannon归一化熵 of |FFT(σ_res)|²)",
+    "L": "纤维Lipschitz常数(基于σ_res, max|dσ_res/dΔ|)",
+    "F_delta": "谱隙涨落幅度(基于δ_SC, 变异系数 std/mean)",
+    "H_delta": "谱隙频谱熵(基于δ_SC, Shannon归一化熵 of |FFT(δ_SC)|²)",
+    "L_delta": "谱隙Lipschitz常数(基于δ_SC, max|dδ_SC/dΔ|)",
+    "C_sheaf": "谱丛总复杂度(log(1+ρ_b)·log(1+L_delta)·max(H_spec,H_delta) 复合指标)"
+  },
+  "per_topology_N": {
+    "chain": {
+      "6": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.3816011418463042,
+        "H_spec": 0.22145253603494464,
+        "L": 12.99745504745492,
+        "F_delta": 0.4633937421626678,
+        "H_delta": 0.2321971782595014,
+        "L_delta": 2.0633377808915725,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.27674203481647175,
+        "sigma_res_std": 0.1056050764828353,
+        "delta_spec_mean": 2.3499909051631556,
+        "delta_spec_std": 1.0889710795917897
+      },
+      "8": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.31095251358025094,
+        "H_spec": 0.13361977373598127,
+        "L": 0.17208053251155064,
+        "F_delta": 0.5346147635412184,
+        "H_delta": 0.2473999490715743,
+        "L_delta": 415.70661613513727,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.21363647270537606,
+        "sigma_res_std": 0.06643079818015536,
+        "delta_spec_mean": 1.297258064960716,
+        "delta_spec_std": 0.6935333136509116
+      },
+      "10": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.2759574808797221,
+        "H_spec": 0.16322908960756877,
+        "L": 33.62637108591736,
+        "F_delta": 0.4708988125512617,
+        "H_delta": 0.23552076792063464,
+        "L_delta": 1442.60713715989,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.24509677050536016,
+        "sigma_res_std": 0.06763628736041456,
+        "delta_spec_mean": 1.558068482085708,
+        "delta_spec_std": 0.7336925980877067
+      },
+      "12": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.23878872754500266,
+        "H_spec": 0.1253466511765321,
+        "L": 0.14105626504282753,
+        "F_delta": 0.5857528200849067,
+        "H_delta": 0.22078585804967446,
+        "L_delta": 6.788814066347015,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.19704027840302538,
+        "sigma_res_std": 0.0470509973549715,
+        "delta_spec_mean": 0.9136592535387872,
+        "delta_spec_std": 0.5351784843570153
+      }
+    },
+    "star": {
+      "6": {
+        "rho_b": 1.3333333333333333,
+        "n_branch_points": 4,
+        "F_std": 0.639961110832504,
+        "H_spec": 0.21011830826437494,
+        "L": 28.16219986686548,
+        "F_delta": 0.9154341459284885,
+        "H_delta": 0.0,
+        "L_delta": 6.661338147750442e-12,
+        "C_sheaf": 1.1859366356947116e-12,
+        "sigma_res_mean": 0.0934854295633018,
+        "sigma_res_std": 0.05982703934998443,
+        "delta_spec_mean": 4.311896165459569e-15,
+        "delta_spec_std": 3.947256983559805e-15
+      },
+      "8": {
+        "rho_b": 1.3333333333333333,
+        "n_branch_points": 4,
+        "F_std": 0.769661929357451,
+        "H_spec": 0.613912605912949,
+        "L": 82.98258103425034,
+        "F_delta": 3.196428369142144,
+        "H_delta": 0.9207205963718944,
+        "L_delta": 742.4536226867516,
+        "C_sheaf": 5.157642693202124,
+        "sigma_res_mean": 0.06368846727070353,
+        "sigma_res_std": 0.04901858859738855,
+        "delta_spec_mean": 0.1561533314990744,
+        "delta_spec_std": 0.499132938739699
+      },
+      "10": {
+        "rho_b": 1.3333333333333333,
+        "n_branch_points": 4,
+        "F_std": 0.6711464664775901,
+        "H_spec": 0.16144388954071684,
+        "L": 83.75431898100629,
+        "F_delta": 3.0789053572789884,
+        "H_delta": 0.919168125239345,
+        "L_delta": 500.0000000000279,
+        "C_sheaf": 4.84154993634488,
+        "sigma_res_mean": 0.04167010992629085,
+        "sigma_res_std": 0.02796674703476286,
+        "delta_spec_mean": 0.1639124584778361,
+        "delta_spec_std": 0.5046709465321793
+      },
+      "12": {
+        "rho_b": 2.3333333333333335,
+        "n_branch_points": 7,
+        "F_std": 0.6808813527783684,
+        "H_spec": 0.17041556652315515,
+        "L": 58.71777463695671,
+        "F_delta": 4.274156818501083,
+        "H_delta": 0.9390001540590162,
+        "L_delta": 897.3219064164858,
+        "C_sheaf": 7.688205868044102,
+        "sigma_res_mean": 0.030914094226824576,
+        "sigma_res_std": 0.021048830297078266,
+        "delta_spec_mean": 0.09426538420582686,
+        "delta_spec_std": 0.4029050346519592
+      }
+    },
+    "ring": {
+      "6": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.4971298942610372,
+        "H_spec": 0.048329301684297145,
+        "L": 0.30564593994251865,
+        "F_delta": 0.09694688001959717,
+        "H_delta": 0.24466734689061193,
+        "L_delta": 0.8912845153898843,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.1670843936616082,
+        "sigma_res_std": 0.0830626469536648,
+        "delta_spec_mean": 2.701809988291246,
+        "delta_spec_std": 0.26193204877062065
+      },
+      "8": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.48268159769372415,
+        "H_spec": 0.052599256809871174,
+        "L": 0.30067769819104484,
+        "F_delta": 0.32759814383607405,
+        "H_delta": 0.8421141811135028,
+        "L_delta": 628.5508390783665,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.16145265512078788,
+        "sigma_res_std": 0.07793022552559573,
+        "delta_spec_mean": 2.395196361411944,
+        "delta_spec_std": 0.7846618821214711
+      },
+      "10": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.47205441543399873,
+        "H_spec": 0.05612847253338531,
+        "L": 0.29392237358780804,
+        "F_delta": 0.31947511545781554,
+        "H_delta": 0.7218116545540944,
+        "L_delta": 508.9438708482581,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.15470413462089277,
+        "sigma_res_std": 0.07302876983368818,
+        "delta_spec_mean": 1.959344211066541,
+        "delta_spec_std": 0.6259617180520857
+      },
+      "12": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.4636845220376414,
+        "H_spec": 0.05911052269644008,
+        "L": 0.28703993749362766,
+        "F_delta": 0.27782679584605047,
+        "H_delta": 0.8237015731885704,
+        "L_delta": 420.30425698174906,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.14830831387136484,
+        "sigma_res_std": 0.0687682696316523,
+        "delta_spec_mean": 1.5345404155736135,
+        "delta_spec_std": 0.42633644675508375
+      }
+    },
+    "small_world": {
+      "6": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 8.217581221530614e-16,
+        "H_spec": 0.0,
+        "L": 3.126388037344441e-13,
+        "F_delta": 7.98757007826839e-15,
+        "H_delta": 0.0,
+        "L_delta": 1.602984411874786e-11,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.3051592018993853,
+        "sigma_res_std": 2.507670527105658e-16,
+        "delta_spec_mean": 1.3643255096084355,
+        "delta_spec_std": 1.0897645617566612e-14
+      },
+      "8": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.09071523887203835,
+        "H_spec": 0.2686373484878754,
+        "L": 18.453656955903526,
+        "F_delta": 0.5497849373741717,
+        "H_delta": 0.17310266677818836,
+        "L_delta": 274.0294277540093,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.2648552108574259,
+        "sigma_res_std": 0.024026403719435478,
+        "delta_spec_mean": 1.6135010670850207,
+        "delta_spec_std": 0.8870785831204973
+      },
+      "10": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.07491219868940925,
+        "H_spec": 0.12918065201906428,
+        "L": 0.22755450114014764,
+        "F_delta": 0.4612878020869916,
+        "H_delta": 0.11136173138407882,
+        "L_delta": 209.8990624876776,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.31666407159644255,
+        "sigma_res_std": 0.023722001849230023,
+        "delta_spec_mean": 2.0811420669951133,
+        "delta_spec_std": 0.9600054499149544
+      },
+      "12": {
+        "rho_b": 0,
+        "n_branch_points": 0,
+        "F_std": 0.08797400688631174,
+        "H_spec": 0.051102961671997287,
+        "L": 0.09153273100601211,
+        "F_delta": 0.32222998347215326,
+        "H_delta": 0.10062852571224389,
+        "L_delta": 161.48759213580774,
+        "C_sheaf": 0.0,
+        "sigma_res_mean": 0.26448606871834957,
+        "sigma_res_std": 0.023267899230761606,
+        "delta_spec_mean": 1.931486583271159,
+        "delta_spec_std": 0.6223828898041514
+      }
+    }
+  },
+  "per_N_verdicts": {
+    "6": {
+      "rho_b": {
+        "values": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_std": {
+        "values": {
+          "chain": 0.3816011418463042,
+          "star": 0.639961110832504,
+          "ring": 0.4971298942610372,
+          "small_world": 8.217581221530614e-16
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_spec": {
+        "values": {
+          "chain": 0.22145253603494464,
+          "star": 0.21011830826437494,
+          "ring": 0.048329301684297145,
+          "small_world": 0.0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L": {
+        "values": {
+          "chain": 12.99745504745492,
+          "star": 28.16219986686548,
+          "ring": 0.30564593994251865,
+          "small_world": 3.126388037344441e-13
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_delta": {
+        "values": {
+          "chain": 0.4633937421626678,
+          "star": 0.9154341459284885,
+          "ring": 0.09694688001959717,
+          "small_world": 7.98757007826839e-15
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_delta": {
+        "values": {
+          "chain": 0.2321971782595014,
+          "star": 0.0,
+          "ring": 0.24466734689061193,
+          "small_world": 0.0
+        },
+        "star_gt_sw": false,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "不成立"
+      },
+      "L_delta": {
+        "values": {
+          "chain": 2.0633377808915725,
+          "star": 6.661338147750442e-12,
+          "ring": 0.8912845153898843,
+          "small_world": 1.602984411874786e-11
+        },
+        "star_gt_sw": false,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "不成立"
+      },
+      "C_sheaf": {
+        "values": {
+          "chain": 0.0,
+          "star": 1.1859366356947116e-12,
+          "ring": 0.0,
+          "small_world": 0.0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      }
+    },
+    "8": {
+      "rho_b": {
+        "values": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_std": {
+        "values": {
+          "chain": 0.31095251358025094,
+          "star": 0.769661929357451,
+          "ring": 0.48268159769372415,
+          "small_world": 0.09071523887203835
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_spec": {
+        "values": {
+          "chain": 0.13361977373598127,
+          "star": 0.613912605912949,
+          "ring": 0.052599256809871174,
+          "small_world": 0.2686373484878754
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": true,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L": {
+        "values": {
+          "chain": 0.17208053251155064,
+          "star": 82.98258103425034,
+          "ring": 0.30067769819104484,
+          "small_world": 18.453656955903526
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": true,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_delta": {
+        "values": {
+          "chain": 0.5346147635412184,
+          "star": 3.196428369142144,
+          "ring": 0.32759814383607405,
+          "small_world": 0.5497849373741717
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": true,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_delta": {
+        "values": {
+          "chain": 0.2473999490715743,
+          "star": 0.9207205963718944,
+          "ring": 0.8421141811135028,
+          "small_world": 0.17310266677818836
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L_delta": {
+        "values": {
+          "chain": 415.70661613513727,
+          "star": 742.4536226867516,
+          "ring": 628.5508390783665,
+          "small_world": 274.0294277540093
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "C_sheaf": {
+        "values": {
+          "chain": 0.0,
+          "star": 5.157642693202124,
+          "ring": 0.0,
+          "small_world": 0.0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      }
+    },
+    "10": {
+      "rho_b": {
+        "values": {
+          "chain": 0,
+          "star": 1.3333333333333333,
+          "ring": 0,
+          "small_world": 0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_std": {
+        "values": {
+          "chain": 0.2759574808797221,
+          "star": 0.6711464664775901,
+          "ring": 0.47205441543399873,
+          "small_world": 0.07491219868940925
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_spec": {
+        "values": {
+          "chain": 0.16322908960756877,
+          "star": 0.16144388954071684,
+          "ring": 0.05612847253338531,
+          "small_world": 0.12918065201906428
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L": {
+        "values": {
+          "chain": 33.62637108591736,
+          "star": 83.75431898100629,
+          "ring": 0.29392237358780804,
+          "small_world": 0.22755450114014764
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_delta": {
+        "values": {
+          "chain": 0.4708988125512617,
+          "star": 3.0789053572789884,
+          "ring": 0.31947511545781554,
+          "small_world": 0.4612878020869916
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_delta": {
+        "values": {
+          "chain": 0.23552076792063464,
+          "star": 0.919168125239345,
+          "ring": 0.7218116545540944,
+          "small_world": 0.11136173138407882
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L_delta": {
+        "values": {
+          "chain": 1442.60713715989,
+          "star": 500.0000000000279,
+          "ring": 508.9438708482581,
+          "small_world": 209.8990624876776
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "C_sheaf": {
+        "values": {
+          "chain": 0.0,
+          "star": 4.84154993634488,
+          "ring": 0.0,
+          "small_world": 0.0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      }
+    },
+    "12": {
+      "rho_b": {
+        "values": {
+          "chain": 0,
+          "star": 2.3333333333333335,
+          "ring": 0,
+          "small_world": 0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_std": {
+        "values": {
+          "chain": 0.23878872754500266,
+          "star": 0.6808813527783684,
+          "ring": 0.4636845220376414,
+          "small_world": 0.08797400688631174
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_spec": {
+        "values": {
+          "chain": 0.1253466511765321,
+          "star": 0.17041556652315515,
+          "ring": 0.05911052269644008,
+          "small_world": 0.051102961671997287
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L": {
+        "values": {
+          "chain": 0.14105626504282753,
+          "star": 58.71777463695671,
+          "ring": 0.28703993749362766,
+          "small_world": 0.09153273100601211
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "F_delta": {
+        "values": {
+          "chain": 0.5857528200849067,
+          "star": 4.274156818501083,
+          "ring": 0.27782679584605047,
+          "small_world": 0.32222998347215326
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "H_delta": {
+        "values": {
+          "chain": 0.22078585804967446,
+          "star": 0.9390001540590162,
+          "ring": 0.8237015731885704,
+          "small_world": 0.10062852571224389
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "L_delta": {
+        "values": {
+          "chain": 6.788814066347015,
+          "star": 897.3219064164858,
+          "ring": 420.30425698174906,
+          "small_world": 161.48759213580774
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": true,
+        "chain_approx_ring": false,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      },
+      "C_sheaf": {
+        "values": {
+          "chain": 0.0,
+          "star": 7.688205868044102,
+          "ring": 0.0,
+          "small_world": 0.0
+        },
+        "star_gt_sw": true,
+        "sw_gt_chain": false,
+        "chain_approx_ring": true,
+        "full_order": false,
+        "verdict": "部分成立(star>sw)"
+      }
+    }
+  },
+  "indicator_verdicts": {
+    "rho_b": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "F_std": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "H_spec": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "L": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "F_delta": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "H_delta": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "L_delta": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    },
+    "C_sheaf": {
+      "n_full_order": 0,
+      "n_total": 4,
+      "fraction": 0.0
+    }
+  },
+  "best_indicator": "rho_b",
+  "final_interpretation": "最佳指标: rho_b (0/4 个N使修订排序成立)。高阶指标(频谱熵/Lipschitz常数/复合复杂度)能区分small_world与chain/ring的谱丛复杂度,而原分支点密度不能。这验证了P-CM-3修订建议: small_world的谱丛复杂度需要高阶拓扑不变量检测。"
+}

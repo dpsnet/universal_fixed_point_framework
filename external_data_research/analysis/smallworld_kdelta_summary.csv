@@ -1,0 +1,16 @@
+metric,value
+graph_type,small_world
+N_points,1501
+delta_min,0.000000
+delta_max,3.000000
+global_std_fine,2.5302866568e-16
+island_range_delta_lo,0.000000
+island_range_delta_hi,3.000000
+island_width,3.000000
+k_mean,13.298080
+k_std,0.095213
+k_min,13.023905
+k_max,13.608027
+rel_std_percent,0.7160
+ceiling_k,14
+plateau_verdict,PASS (criterion rel_std<30%)

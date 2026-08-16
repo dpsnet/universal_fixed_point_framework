@@ -287,7 +287,7 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XI | [paper11_spectral_QFT.md](paper11_spectral_QFT.md) | 谱量子场论（计数口径附录 D） |
 | XII | [paper12_spectral_quantum_gravity.md](paper12_spectral_quantum_gravity.md) | 谱量子引力（UV 有限） |
 | XIII | [paper13_spectral_complex_systems.md](paper13_spectral_complex_systems.md) | 谱复杂系统（NTK 等） |
-| XIV | [paper14_spectral_condensed_matter.md](paper14_spectral_condensed_matter.md) | 谱凝聚态（BCS、IQHE） |
+| XIV | [paper14_spectral_condensed_matter.md](paper14_spectral_condensed_matter.md) | 谱凝聚态（BCS、IQHE、稳定岛独立数值验证 §5.8） |
 | XV | [paper15_spectral_quantum_chemistry.md](paper15_spectral_quantum_chemistry.md) | 谱量子化学 |
 | XVI | [paper16_lorentz_spectral_dynamics.md](paper16_lorentz_spectral_dynamics.md) | Lorentz 谱动力学（LIV） |
 | XVII | [paper17_zero_parameter_predictions.md](paper17_zero_parameter_predictions.md) | 零参数预测（15+14+7 口径） |

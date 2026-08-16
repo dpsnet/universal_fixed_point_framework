@@ -1,0 +1,168 @@
+{
+  "new_predictions": {
+    "P-CM-4": {
+      "name": "谱丛分支点数学判据普适性预测",
+      "statement": "对任意含中心节点拓扑(star-like,存在度数≥N-2节点)的凝聚态自旋/电子系统,其ED/DMRG计算的(δ_SC, σ_res)数据必然满足三重签名A+B+C;无中心节点拓扑必然不满足。",
+      "basis": "Paper XIV §5.7:谱丛结构独立于具体物理体系;中心节点→多叶谱丛→分支点数学签名的因果链具有跨系统普适性",
+      "falsifiability": "若新系统中star拓扑存在≥2个N使得n_bp<50(A不满足)/或δ_SC≈0比例<50%(B不满足)/或D发散比<10×(C不满足),则证伪",
+      "status": "待验证(需新系统数据)"
+    },
+    "P-CM-5": {
+      "name": "热力学极限下签名持续性预测",
+      "statement": "当N从12扩展到16、20、24时,star拓扑的三重签名将持续满足:(i)n_bp(N)/N ≥ 5(分支点密度不衰减);(ii)分支点处δ_SC≈0比例仍≥70%;(iii)D发散仍≥100×。small_world即使在N=16,20,24时n_bp(N)仍<20。",
+      "basis": "§5.7结论:small_world N=6的107个分支点是有限尺寸赝像;star的持续多叶谱丛结构由中心节点拓扑保证,在热力学极限下保持",
+      "falsifiability": "若N=16时star的n_bp(16)/16<2或δ_SC≈0比例<50%或D发散比<5×,则证伪",
+      "status": "待验证(需N=16,20,24尺寸扫描)"
+    },
+    "P-CM-6": {
+      "name": "修正版乘积守恒预测",
+      "statement": "将star拓扑中满足局域三重签名条件的Δ区间(分支点±15点窗口,且同时满足:局域B条件(零交叉或δ≈0)和局域C条件(D>非bp均值×10))排除后,剩余Δ区间内P(Δ)=δ_SC(Δ)×σ_res(Δ)的相对波动<30%。",
+      "basis": "§5.7根因:只有满足A+B+C的谱丛分支点区域才导致P发散;剔除这些奇点后,在非分支点的谱丛正则区域内,δ_SC与σ_res的反比关系(P-CM-2原依据)恢复成立",
+      "falsifiability": "若star拓扑N=8,10,12中≥2个N的排除后波动仍≥30%,则证伪",
+      "status": "❌ P-CM-6 证伪",
+      "verification_detail": {
+        "chain": {
+          "6": {
+            "fluct_original": 1.8646017863172675,
+            "fluct_filtered": 1.8646017863172675,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "8": {
+            "fluct_original": 2.6505768887783407,
+            "fluct_filtered": 2.6505768887783407,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "10": {
+            "fluct_original": 1.9065112626400187,
+            "fluct_filtered": 1.9065112626400187,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "12": {
+            "fluct_original": 2.6607961571006413,
+            "fluct_filtered": 2.6607961571006413,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          }
+        },
+        "star": {
+          "6": {
+            "fluct_original": null,
+            "fluct_filtered": null,
+            "exclude_ratio": 0.29047301798800795,
+            "n_total": 1501,
+            "n_kept": 1065,
+            "pcm6_passed": false
+          },
+          "8": {
+            "fluct_original": 79.85067660066437,
+            "fluct_filtered": 51.760761938807796,
+            "exclude_ratio": 0.46902065289806794,
+            "n_total": 1501,
+            "n_kept": 797,
+            "pcm6_passed": false
+          },
+          "10": {
+            "fluct_original": 21.167510463760664,
+            "fluct_filtered": 30.237496473586116,
+            "exclude_ratio": 0.4510326449033978,
+            "n_total": 1501,
+            "n_kept": 824,
+            "pcm6_passed": false
+          },
+          "12": {
+            "fluct_original": 68.0168136321015,
+            "fluct_filtered": 71.61741061377857,
+            "exclude_ratio": 0.47301798800799466,
+            "n_total": 1501,
+            "n_kept": 791,
+            "pcm6_passed": false
+          }
+        },
+        "ring": {
+          "6": {
+            "fluct_original": 1.7924764165513458,
+            "fluct_filtered": 1.7924764165513458,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "8": {
+            "fluct_original": 3.08761243433603,
+            "fluct_filtered": 3.08761243433603,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "10": {
+            "fluct_original": 3.1553214287694256,
+            "fluct_filtered": 3.1553214287694256,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "12": {
+            "fluct_original": 3.25849499143421,
+            "fluct_filtered": 3.25849499143421,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          }
+        },
+        "small_world": {
+          "6": {
+            "fluct_original": 6.599954829572187e-14,
+            "fluct_filtered": 6.599954829572187e-14,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": true
+          },
+          "8": {
+            "fluct_original": 2.0196525799015737,
+            "fluct_filtered": 2.0196525799015737,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "10": {
+            "fluct_original": 1.4027887346270447,
+            "fluct_filtered": 1.4027887346270447,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          },
+          "12": {
+            "fluct_original": 1.0578010678819583,
+            "fluct_filtered": 1.0578010678819583,
+            "exclude_ratio": 0.0,
+            "n_total": 1501,
+            "n_kept": 1501,
+            "pcm6_passed": false
+          }
+        }
+      }
+    }
+  },
+  "prediction_relationships": {
+    "P-CM-6_is": "P-CM-2的根因修正版——在识别了证伪根因(A+B+C分支点)后,对正则区域重新断言乘积守恒",
+    "P-CM-4_5_6_independent": "三项预测相互独立,P-CM-4成立不蕴含P-CM-5成立,反之亦然",
+    "relationship_to_pcm123": "P-CM-4/5/6是P-CM-1/2/3证伪后的第二代预测,直接建立在§5.6-§5.7根因分析的发现之上,与第一代预测无蕴含关系"
+  }
+}

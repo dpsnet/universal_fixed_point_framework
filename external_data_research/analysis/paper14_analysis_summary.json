@@ -1,0 +1,83 @@
+{
+  "topologies": [
+    "chain",
+    "star",
+    "ring",
+    "small_world"
+  ],
+  "islands": {
+    "chain": [
+      {
+        "start": 0.002,
+        "end": 3.0,
+        "width": 2.998,
+        "sigma_res_mean": 0.27685022699895007,
+        "delta_spec_mean": 2.351557565766598,
+        "spec_gap_variation": 1.5193659497619751
+      }
+    ],
+    "star": [
+      {
+        "start": 0.8339999999999999,
+        "end": 1.214,
+        "width": 0.3800000000000001,
+        "sigma_res_mean": 0.01273677454147097,
+        "delta_spec_mean": 3.562013976388984e-15,
+        "spec_gap_variation": 3.69910966113697
+      }
+    ],
+    "ring": [
+      {
+        "start": 0.002,
+        "end": 3.0,
+        "width": 2.998,
+        "sigma_res_mean": 0.1670053554208102,
+        "delta_spec_mean": 2.702300310211469,
+        "spec_gap_variation": 0.3404695083145142
+      }
+    ],
+    "small_world": []
+  },
+  "qpt_critical_exponents": {
+    "chain": [],
+    "star": [
+      {
+        "boundary": "left",
+        "delta_c": 0.8339999999999999,
+        "alpha": -0.2792748895239994,
+        "n_points": 150
+      },
+      {
+        "boundary": "right",
+        "delta_c": 1.214,
+        "alpha": -0.2694691438439861,
+        "n_points": 149
+      }
+    ],
+    "ring": [],
+    "small_world": []
+  },
+  "casimir_ratios": {
+    "star": {
+      "n": 1,
+      "delta_spec": 3.562013976388984e-15,
+      "actual_ratio": 1.0,
+      "casimir_predicted": 1.0,
+      "deviation_pct": 0.0
+    },
+    "chain": {
+      "n": 2,
+      "delta_spec": 2.351557565766598,
+      "actual_ratio": 660176400585184.0,
+      "casimir_predicted": 1.732050807568877,
+      "deviation_pct": 3.811530225904933e+16
+    },
+    "ring": {
+      "n": 3,
+      "delta_spec": 2.702300310211469,
+      "actual_ratio": 758643937986718.5,
+      "casimir_predicted": 2.449489742783178,
+      "deviation_pct": 3.0971509075384976e+16
+    }
+  }
+}
