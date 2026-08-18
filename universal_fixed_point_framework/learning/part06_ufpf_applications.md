@@ -83,16 +83,49 @@
 5. **Profunctor**：可能用于研究 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 之间的分布对应
 6. **导出范畴/模型范畴**：可能用于谱复形与谱序列的严格化
 
-## 6.5 练习
+## 6.5 论文 ↔ 范畴概念 ↔ 形式化文件三向对照
+
+UFPF 的形式化仓库 `UFPFormalization` 并非独立范畴论库，而是为 paper 目录中的论文提供机证支撑。下表将论文、范畴概念与 `.lean` 文件对应起来，方便按任一维度学习。
+
+| 论文 | 核心范畴概念 | 形式化文件 |
+|------|-------------|-----------|
+| Paper I §2 | 范畴 $\mathbf{Rec}$、$\mathbf{Sp}$、谱化函子 $D$ | `RecCategory.lean`、`SpCategory.lean`、`DecursionFunctor.lean` |
+| Paper I §2.4 | 伴随对 $D \dashv R$ | `Adjunction.lean`、`RAP5a_explicit_adjunction.lean` |
+| Paper I §2.5 | 辫子幺半范畴 | `Braided.lean` |
+| Paper I §3 | 谱对应自然同构 | `SpectralCorrespondence.lean`、`SpectralEquivalence.lean` |
+| Paper I §5.7 | 静默体系 S1-S4 | `Silence.lean`、`SilenceHierarchy.lean` |
+| Paper V §8 | 2-范畴、$D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$ | `HigherRecCategory.lean`、`HigherSpCategory.lean`、`TwoCategoryLaws.lean` |
+| Paper XVI §10 | 谱预层/谱层、时空栈 | `SpacetimeStack.lean`、`ContextualitySheaf.lean` |
+| Paper XIX | $\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$、静态化/选择-溶解伴随 | `StaticTopologyFormalization.lean`、`NoiseCategory.lean` |
+| Paper XIX §17 / Paper XXI | Temp/RG/味/BCS 纤维化 | `TempRGFiber.lean`、`FlavorFiber.lean`、`WeaveBCS.lean`、`TotalParameterFiber.lean` |
+| Paper XXI §6 | 谱栈 | `SpacetimeStack.lean` |
+| Paper XXII | 纤维精细分解 | `WeaveProductFiber.lean` |
+| Paper XXVII | Kerr 谱覆盖、Leaver 复杂度 | `KerrFiber.lean`、`LeaverComplexity.lean` |
+| Paper XXXV | 引力起源、几何-谱对应 | `CategoryGeometry.lean`、`CurvatureSkeleton.lean` |
+| Paper XL | QCD 色动力学 | `ColorDynamics.lean` |
+| Paper XLI | 重整化链 | `RenormalizationChain.lean` |
+| Paper XLII / Paper VIII | 黑洞演化、霍金谱 | `BlackHoleEvolution.lean`、`HawkingSpectrum.lean` |
+| Paper XLIV | 光子拓扑函子 | `PhotonTopology.lean`、`PhotonTopologyFunctor.lean`、`PhotonTopologyFunctorLaws.lean` |
+| Paper I 附录 | Gelfand 对偶、$C^*$ 代数框架 | `GelfandDuality.lean` |
+| Paper I 附录 | A∞/L∞ 代数、∞-范畴 | `AInfinityAlgebra.lean`、`InfinityCategory.lean` |
+
+**使用建议**：
+- 读论文遇到范畴构造 → 查本表定位形式化文件
+- 学范畴概念 → 看对应论文如何应用、看 Lean 文件如何机证
+- 做形式化 → 从对应论文找数学动机，从本表找起点文件
+
+## 6.6 练习
 
 1. 为 Paper XXI 中的六个纤维化实例各写出：基空间、典型纤维、一个物理截面。
 2. 解释 Paper XVI 中"奇点 = 层公理破坏"如何具体对应到 Kerr 黑洞的奇点。
 3. 画出 Paper XIX 中三层伴随对嵌套的 Hasse 图，并标注每个伴随的左右伴随。
 4. 指出 Paper I 附录中 slice category $W \dashv S$ 与主文中 $D \dashv R$ 的异同。
 5. 选择上述 6 个"未来方向"中的一个，写一篇 500 字的短文，说明它可能如何解决 UFPF 中的哪个开放问题。
+6. **新增**：从三向对照表中选一条，打开对应的 `.lean` 文件，找出其中与论文定理同名的定理/定义。
 
-## 6.6 关键要点
+## 6.7 关键要点
 
 - UFPF 的范畴论工具箱以**函子、伴随、Grothendieck 纤维化、层论、2-范畴**为五大支柱。
 - 每篇论文都有明确的范畴论"任务"：Paper I 建基，Paper V 提升维度，Paper XVI 层论化时空，Paper XIX 扩展边界，Paper XXI 综合参数族，Paper XXII 计算协议化。
+- **论文、范畴概念、形式化文件三者一一对应**：读论文时可同步查概念和 Lean 源码，形式化时可回查论文动机。
 - 未来深化可引入 Kan 延拓、topos、导出范畴等更高级工具。
