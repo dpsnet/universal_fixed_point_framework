@@ -69,13 +69,13 @@ Paper XIX §11-13 已建立噪声谱流方程、临界阈值 $\eta_c$、(G, η) 
 | 子任务 | 描述 | 交付物 | 依赖 |
 |:------|:-----|:------|:----|
 | **A1** 噪声范畴定义 | Noise 范畴：对象 $\eta \in [0,\infty)$，态射为噪声增量；$\eta_c$ 为基边界点 | `notes/00_foundations/spectral_noise_fibration.md` §1-2 | `spectral_noise_category.md` |
-| **A2** Bun(Noise, Spec) 纤维化 | 总范畴构造 + π_η 分裂 Grothendieck 纤维化证明；Feynman-Hellmann 公式严格化为 Cartan 提升 | 同笔记 §3-4（仿 `spectral_Grothendieck_fibration.md` §2） | A1 |
+| **A2** Bun(Noise, Spec) 纤维化 | 总范畴构造 + π_η 分裂 Grothendieck 纤维化证明；Feynman-Hellmann 公式严格化为 Cartesian 提升 | 同笔记 §3-4（仿 `spectral_Grothendieck_fibration.md` §2） | A1 |
 | **A3** η_c 奇异性定理 | $\tau(\eta)$ 发散 = 截面在基边界的奇异性；纤维类型跳变 Rec→Σ-Rec 的非乘积丛刻画 | 同笔记 §5；更新 `paper10_spectral_quantum.md` §12.4 表述 | A2 |
 | **A4** Lean 验证 | 复用 `CartesianLiftData`/`GrothendieckFibration` 实例化 | `NoiseFiber.lean` 通过 `lake build` | A2 |
 
 ### 3.3 验收标准
 
-- π_η 的 Cartan 提升存在性与万有性质完整证明（纸面 + Lean）
+- π_η 的 Cartesian 提升存在性与万有性质完整证明（纸面 + Lean）
 - τ(η) 发散获得截面奇异性定理表述
 - 与 Bun(Temp) 的丛态射（温度-噪声联合参数）明确
 
@@ -93,7 +93,7 @@ Paper XX §5.1 三重投影表（代数 Cl(9,1)→Cl(1,7)、范畴 Rec_id→Rec�
 |:------|:-----|:------|:----|
 | **B1** 签名范畴 Sig | 对象 $(p,q)$，态射为代数包含，商结构 Bott $\mathbb{Z}/8$ | `notes/10_gauge_RG/spectral_signature_fibration.md` §1 | `Clifford.lean` |
 | **B2** 拉回函子构造 | 块嵌入 $\mathrm{M}_8(\mathbb{R}) \hookrightarrow \mathrm{M}_{16}(\mathbb{R})$ 诱导 $\mathbf{Cat}_H(\mathrm{Cl}(9,1)) \to \mathbf{Cat}_H(\mathrm{Cl}(1,7))$ 拉回 | 同笔记 §2 | B1 |
-| **B3** IC 基变更定理 | 三重投影表 = 三个基变更函子；IC 条件 = Cartan 提升存在性 + 投影误差范数条件；29 项公用性 = 拉回保持截面 | 同笔记 §3；更新 `spectral_cl17_cl91_inclusion_proof.md` §5 | B2 |
+| **B3** IC 基变更定理 | 三重投影表 = 三个基变更函子；IC 条件 = Cartesian 提升存在性 + 投影误差范数条件；29 项公用性 = 拉回保持截面 | 同笔记 §3；更新 `spectral_cl17_cl91_inclusion_proof.md` §5 | B2 |
 | **B4** Lean 验证 | 复用 `IsolationConstraints.lean`、`Clifford.lean` | `SignatureFiber.lean` 通过 `lake build` | B2 |
 
 ### 4.3 验收标准

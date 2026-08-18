@@ -160,11 +160,11 @@ $$\mathcal{F}(U) = \{f: U \to \mathbb{R} \mid f \text{ 是有界连续函数}\}$
 
 这不是层，因为局部有界函数可以粘合成整体无界函数（例如 $1/(\theta - \theta_0)$ 在 $S^1$ 上去掉一点后局部有界，但整体上无界）。
 
-### 4.3 Cartan 提升的万有性质
+### 4.3 Cartesian 提升的万有性质
 
 **解答**：给定 Grothendieck 纤维化 $\pi: \mathcal{E} \to \mathcal{B}$，对象 $e \in \mathcal{E}$ 满足 $\pi(e) = b'$，以及基范畴中态射 $f: b \to b'$。
 
-Cartan 提升是 $\tilde{f}: e' \to e$ 满足 $\pi(\tilde{f}) = f$。
+Cartesian 提升是 $\tilde{f}: e' \to e$ 满足 $\pi(\tilde{f}) = f$。
 
 万有性质：任意其他提升 $g: e'' \to e$（即 $\pi(g) = f$）唯一分解为：
 
@@ -178,7 +178,7 @@ $$e'' \xrightarrow{u} e' \xrightarrow{\tilde{f}} e$$
 - **基对象**：$T = 300 \text{ K}$
 - **纤维对象**：固定 $T$ 处的 QCD 谱对象 $(\mathcal{H}_T, A_T, \sigma(A_T))$
 - **截面**：$T \mapsto (T, A_T)$，即每个温度对应一个谱算子
-- **Cartan 提升**：沿温度变化 $T_1 \to T_2$，谱算子 $A_{T_1} \to A_{T_2}$ 由谱流方程演化
+- **Cartesian 提升**：沿温度变化 $T_1 \to T_2$，谱算子 $A_{T_1} \to A_{T_2}$ 由谱流方程演化
 
 ---
 

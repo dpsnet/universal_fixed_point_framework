@@ -2,7 +2,7 @@
 
 **版本**：v1.5（2026-07-24）
 
-**摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartan 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
+**摘要**：本笔记形式化分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，将其建立为 Grothendieck 纤维化实例。核构型空间 $\mathcal{M}$ 作为基范畴 $\mathbf{Reac}$，电子谱数据 $A_{\text{mol}}(R)$ 作为纤维，沿反应坐标 $\xi$ 的参量谱流方程作为 Cartesian 提升。该丛在谱间隙归零处（锥形交叉、键解离）具有非乘积丛结构，物理可观测量（反应速率、谱间隙、Fukui 函数）对应纤维截面。**v1.5 更新**：完成 P6 实验提案撰写，两个版本并存——纤维化理论版 (`proposal_p6_fibration.md`) 以 $\mathbf{Bun}(\mathbf{Ionic},\mathbf{Sp})$ 截面语言陈述，传统理论版 (`proposal_p6_conventional.md`) 以 Marcus 理论+超交换语言陈述。国内合作者调研完成（优先推荐尤晓/西湖大学、王建平/化学所）。§13.2 P0 状态更新。
 
 **前置依赖**：Paper XV（量子化学谱表述）、Paper XXI（Grothendieck 纤维化综合）、`spectral_quantum_chemistry.md`（量子化学谱表述笔记）。
 **延伸方法论**：`spectral_fibration_methodology.md` v1.0（量子化学多层次精细纤维拆分方法论）——基于 Paper XV 和 Paper XXI 建立的系统纤维化分解 8 步协议，将 Bun(Reac)/Bun(IntraIonic)/Bun(Ionic) 扩展为 7 层嵌套链（含 Bun(Corr)/Bun(Vib)/Bun(Solv)/Bun(Spin)），提供层次分类树、精度判据、自然变换检验和跨界粘合机制。
@@ -45,11 +45,11 @@
 
 **定义 3.2**（总范畴与投影）。总范畴 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$ 的对象为 $(R, A_{\text{mol}}(R))$，投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Reac}$ 遗忘谱数据，保留核构型参数。
 
-## 4. Cartan 提升与谱流
+## 4. Cartesian 提升与谱流
 
 **定理 4.1**（$\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化。
 
-*证明*。对任意基态射 $\phi_\xi: R_1 \to R_2$ 和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartan 提升由**参量谱流方程**给出（Paper XV 定理 4.1）：
+*证明*。对任意基态射 $\phi_\xi: R_1 \to R_2$ 和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartesian 提升由**参量谱流方程**给出（Paper XV 定理 4.1）：
 
 $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_{\text{spec}} A_{\text{mol}} \tag{4.1}$$
 
@@ -151,7 +151,7 @@ $$\mathcal{E}_{\text{ion},\mathcal{I}} = D(H_{\text{dim}}(R_A, R_B, \xi_{\text{C
 
 **定理 8.1**（$\pi_{\text{Ion}}$ 是分裂 Grothendieck 纤维化）。$\pi_{\text{Ion}}$ 是分裂 Grothendieck 纤维化。
 
-*证明*。与定理 4.1 平行。对 $\mathbf{Ionic}$ 中的态射 $(\phi_{\xi_A}, \phi_{\xi_B}, \psi_{\text{CT}})$，Cartan 提升由**扩展谱流方程**给出：
+*证明*。与定理 4.1 平行。对 $\mathbf{Ionic}$ 中的态射 $(\phi_{\xi_A}, \phi_{\xi_B}, \psi_{\text{CT}})$，Cartesian 提升由**扩展谱流方程**给出：
 
 $$\frac{d}{d\xi_{\text{tot}}} A_{\text{dim}} = [G_{\xi_A} + G_{\xi_B} + G_{\text{CT}}, A_{\text{dim}}] - \gamma_{\text{eff}} \cdot \Delta_{\text{spec}} A_{\text{dim}} \tag{8.1}$$
 
@@ -349,7 +349,7 @@ $$\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \xleftarrow{\hat{\mathcal{U}}_{\text{
 
 ### 11.1 预言 P1：反应速率超出 Eyring 的谱流耗散修正
 
-标准过渡态理论（TST）仅使用势垒高度 $\Delta E^{\ddagger}$。纤维化的 Cartan 提升（谱流方程 4.1）包含耗散项 $-\gamma \cdot \Delta_{\text{spec}} A_{\text{mol}}$，其谱通量 Eyring 公式添加了修正因子 $\mathcal{F}_{\text{spec}}$：
+标准过渡态理论（TST）仅使用势垒高度 $\Delta E^{\ddagger}$。纤维化的 Cartesian 提升（谱流方程 4.1）包含耗散项 $-\gamma \cdot \Delta_{\text{spec}} A_{\text{mol}}$，其谱通量 Eyring 公式添加了修正因子 $\mathcal{F}_{\text{spec}}$：
 
 $$k(T) = \frac{k_B T}{h} \cdot \frac{Z^{\ddagger}_{\text{spec}}}{Z^{\text{R}}_{\text{spec}}} \cdot \mathcal{F}_{\text{spec}}(\gamma, \delta_{\text{spec}}) \tag{9.1}$$
 

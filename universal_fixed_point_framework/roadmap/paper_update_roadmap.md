@@ -12,7 +12,7 @@
 
 | 优先级 | 论文 | 状态 | 最终版本 | 核心更新内容 |
 |:-----:|:-----|:----:|:--------:|:-----------|
-| **P0** | Paper XIX | ✅ 完成 | **v1.0** | 噪声范畴定义；FH 公式 Cartan 提升严格证明；Temp×RG 乘积基构造与粘合条件 |
+| **P0** | Paper XIX | ✅ 完成 | **v1.0** | 噪声范畴定义；FH 公式 Cartesian 提升严格证明；Temp×RG 乘积基构造与粘合条件 |
 | **P0** | Paper XX | ✅ 完成 | **v0.5→v1.0** | Sig 签名范畴定义与 Bott 商结构；三重投影基变更函子严格证明；complete_chain 定理 |
 | **P1** | Paper XVI | ✅ 完成 | **v1.1→v1.2** | Open(M) 开集范畴；谱预层与层公理；广义协变 $\Leftrightarrow$ 层公理等价性；主定理 21 层论形式 |
 | **P1** | Paper XVII | ✅ 完成 | **v1.3→v1.5** | $\mathbf{Flt}$ 离散范畴与 $J_f$ 实结构；转移函数 cocycle 么正性；$\delta_{CP}$ 和乐公式 |
@@ -39,7 +39,7 @@
 | Paper XIX § | 需写入的数学内容 | 当前在笔记中的位置 |
 |:-----------|:---------------|:------------------|
 | §11 噪声范畴 | $\mathbf{Noise}$ 范畴定义（对象 $\eta \in [0,\infty)$，态射为噪声增量）、与 $\mathbf{Temp}$ 的范畴同构 $\Phi,\Psi$ | `spectral_noise_fibration.md` §1 |
-| §12 Bun(Noise,Spec) | 总范畴定义、投影 $\pi_\eta$、Cartan 提升构造、FH 公式作为提升的严格证明（含有限维 Hermitian 矩阵 $A_\eta = A_R + \eta\cdot\delta A_N$ 的完整推导） | `spectral_noise_fibration.md` §2-§3 |
+| §12 Bun(Noise,Spec) | 总范畴定义、投影 $\pi_\eta$、Cartesian 提升构造、FH 公式作为提升的严格证明（含有限维 Hermitian 矩阵 $A_\eta = A_R + \eta\cdot\delta A_N$ 的完整推导） | `spectral_noise_fibration.md` §2-§3 |
 | §12.4 $\tau(\eta)$ | $\eta_c$ 的闭式表达式 $\eta_c = 2(\sqrt{3}-1)/3$ 的完整推导（从 Cl(1,7) 谱间隙到 $\delta A_N$ 的 $\sigma_z/k_{\max}$ 表示到间隙闭合条件求解）；$\tau(\eta) \propto 1/(\eta_c-\eta)$ 的发散证明 | `spectral_noise_fibration.md` §4 |
 | §17 Temp×RG 乘积基 | $\mathbf{Temp} \times \mathbf{RG}$ 乘积范畴定义、坐标嵌入 $\iota_T, \iota_\mu$、$\partial\mathbf{Rec}_D$ 粘合条件 $S_{\text{spec}}(\Lambda_{\text{QCD}}, 0) = S_{\text{spec}}(0, T_c)$ 的拉回方图表述 | `spectral_weave_product_fibration.md` §1-§3 |
 | 新增 §：对角粘合 | $\mathbf{Diag}$ 子范畴（态射 $(f, \mathcal{T}(f))$）、编织自然变换 $\theta_X: \hat{\mathcal{T}}_{\text{Riem}}(\iota_T^*(X)) \cong \iota_\mu^*(X)$、编织方图交换条件 | `spectral_weave_product_fibration.md` §4-§5 |
@@ -54,7 +54,7 @@
 | Paper XX § | 需写入的数学内容 | 当前在笔记中的位置 |
 |:-----------|:---------------|:------------------|
 | §5.1 签名范畴 | $\mathbf{Sig}$ 范畴定义（对象 $(p,q)$，态射为块嵌入）、Bott 商 $\mathbb{Z}/8$、关键签名 $(1,3)/(1,7)/(9,1)$ | `spectral_signature_fibration.md` §1 |
-| §5.2 签名谱丛 | Bun(Sig, Cat_H) 总范畴、投影 $\pi_{\text{Sig}}$、Grothendieck 纤维化的严格证明（Cartan 提升由限制函子 $f^*$ 的逆给出） | `spectral_signature_fibration.md` §2-§2.3 |
+| §5.2 签名谱丛 | Bun(Sig, Cat_H) 总范畴、投影 $\pi_{\text{Sig}}$、Grothendieck 纤维化的严格证明（Cartesian 提升由限制函子 $f^*$ 的逆给出） | `spectral_signature_fibration.md` §2-§2.3 |
 | §5.3 三重投影 | $M_{16} \cong M_8 \otimes M_2$ 张量积分解、部分迹 $\pi = \text{id}_{M_8} \otimes \text{Tr}_{M_2}$、$\iota(A) = A \otimes I_2$、$\iota \dashv \pi$ 伴随对的严格证明 | `spectral_signature_fibration.md` §3 |
 | §5.4 Bott 塔 | 无限塔 $\mathrm{Cl}(1,7) \to \mathrm{Cl}(9,1) \to \mathrm{Cl}(17,1) \to \ldots$、每步 $\iota\dashv\pi$、Bott 塔与 RG 流的对应 | `spectral_signature_fibration.md` §8-§10 |
 | 新增：Level4 | $\iota\dashv\pi$ 伴随作为 Level 4 静默的精确定义、三重投影是 Level 4 的推论（非假说） | `spectral_signature_fibration.md` §9 |

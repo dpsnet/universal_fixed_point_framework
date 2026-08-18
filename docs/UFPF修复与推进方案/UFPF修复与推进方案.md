@@ -283,7 +283,7 @@ $$v(f_t)\le C\,e^{-\gamma t},\qquad \gamma=\min|\mathrm{Im}\,\omega|_{\text{通�
 
 **真资产（修复工程直接依赖）**：(1) §15 的 M1–M4 形式化（定理 15.1–15.9）——本方案 §10–11 静默修复的直接基础，全系列中少数"定义+定理+数值验证"三件套齐全的部分；(2) $\Sigma$-$\mathbf{Rec}$ 与噪声范畴（命题 7.2、定理 9.2、定理 11.1）——§11 机制Ⅱ（耗散泄漏）进一步严格化的天然家园，Lax–Phillips 接入应建于此；(3) $\mathbf{Rec}_{\text{id}}\cong\mathbf{Riemann}$（定理 3.3）与 $\mathcal{L}\dashv\iota$（定理 4.2）——内容平凡但是**全框架唯一的范畴→时空几何接口**，Paper XX 的 Cl(1,7) 签名经此进入，无此接口引力扇区无定义域。
 
-**正确但平凡**：$\Sigma$-$\mathbf{Rec}$ 自由余完备化是标准构造；$\mathcal{S}el\dashv\mathcal{D}iss$ 自承"条件性存在"（命题 8.3 未完成证明）；定理 11.1 的 Cartan 提升用"Feynman–Hellmann 逆积分"，严格性存疑。
+**正确但平凡**：$\Sigma$-$\mathbf{Rec}$ 自由余完备化是标准构造；$\mathcal{S}el\dashv\mathcal{D}iss$ 自承"条件性存在"（命题 8.3 未完成证明）；定理 11.1 的 Cartesian 提升用"Feynman–Hellmann 逆积分"，严格性存疑。
 
 **结构性局限**：(a) 完备性定理 5.32 的证明以 Paper I 定理 2.4.5（$D\dashv R$）为前提——三层伴随对嵌套的地基仍是 §12.2.1 的循环论证，Paper XIX 不能替代 RAP-5a；(b) "覆盖所有以集合为底层的系统"通过平凡化实现（恒等演化嵌入 + 自由余完备化），范畴论上合法但不区分系统、不产生预测力——这解释了其物理输出（$K_{\text{crit}}$ 标定、Fibonacci Wilson-辫子对应定理 15.7）均为内部指标而非可观测量。
 

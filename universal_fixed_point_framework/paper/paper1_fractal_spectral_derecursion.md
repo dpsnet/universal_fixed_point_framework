@@ -1456,7 +1456,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 - **态射**：EFT 映射 $g: E_1 \to E_2$ 使 $f_1 = f_2 \circ \text{cod}(g)$
 - **余域函子** $\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，$\mathbf{cod}(E, \Lambda_E, f) = \Lambda$
 
-**定理**（$\mathbf{cod}$ 是分裂 Grothendieck 纤维化）。对任意 $(E, \Lambda_E, f)$ 和 $\Lambda' \to \Lambda$，Cartan 提升为 $(E, \Lambda_E, f \circ g)$。
+**定理**（$\mathbf{cod}$ 是分裂 Grothendieck 纤维化）。对任意 $(E, \Lambda_E, f)$ 和 $\Lambda' \to \Lambda$，Cartesian 提升为 $(E, \Lambda_E, f \circ g)$。
 
 **谱静默判据的 Cartan 翻译**：
 - **S1**：全局截面 $\sigma_{S1}(\Lambda) = (E_\Lambda, \Lambda, \text{id}_\Lambda)$ 存在
@@ -1464,7 +1464,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 - **S3**：边界 $\partial\Lambda$（$\Lambda \to 0$ 或 $\Lambda \to \infty$）处拉回不存在 → 不是 Cartesian
 - **S4**：$\iota \dashv \mathbf{cod}$ 伴随结构存在（$\iota(\Lambda) = (E_{\text{UV}}, \Lambda, \text{id}_\Lambda)$）
 
-**物理意义**：RG 粗粒化是 $\Lambda$ 中的态射，Cartan 提升保证在给定低能 EFT 和能标变换后，唯一确定高能 EFT。S1-S4 判据刻画了哪些 RG 流可以"反向提升"——即哪些谱静默条件下低能理论的信息足以重构高能理论。形式化实现在 `EnergyScale.lean`、`EFTSlice.lean` 中，`lake build` 通过。
+**物理意义**：RG 粗粒化是 $\Lambda$ 中的态射，Cartesian 提升保证在给定低能 EFT 和能标变换后，唯一确定高能 EFT。S1-S4 判据刻画了哪些 RG 流可以"反向提升"——即哪些谱静默条件下低能理论的信息足以重构高能理论。形式化实现在 `EnergyScale.lean`、`EFTSlice.lean` 中，`lake build` 通过。
 
 **19. 实验可证伪预言的误差预算**：L4 质量、$8\pi G_N$ 精度、Kerr ringdown 误差等已给出初步数值，但系统误差传播与贝叶斯模型比较仍待完善。
 

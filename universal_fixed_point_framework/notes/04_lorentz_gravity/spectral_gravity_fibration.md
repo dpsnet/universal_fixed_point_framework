@@ -107,7 +107,7 @@ $$T_H(M,a) = \frac{\Delta\lambda_{\min}^{(\mathrm{Kerr})}(M,a)}{2\pi}$$
 
 ### 3.2 与 Kerr 参数丛的对应
 
-根据 `spectral_kerr_fibration.md` §2，外部时空谱层可视为 Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 在固定 $(M,a)$ 处的纤维投影。该丛的 Grothendieck 纤维化结构（`spectral_kerr_fibration.md` 定理 3.1）保证了 QNM 谱沿参数方向的连续 Cartan 提升。
+根据 `spectral_kerr_fibration.md` §2，外部时空谱层可视为 Kerr 参数丛 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 在固定 $(M,a)$ 处的纤维投影。该丛的 Grothendieck 纤维化结构（`spectral_kerr_fibration.md` 定理 3.1）保证了 QNM 谱沿参数方向的连续 Cartesian 提升。
 
 ### 3.3 QNM 谱结构
 

@@ -47,8 +47,8 @@ $$\partial\sigma_F: \partial\mathcal{D}_F \to \partial\mathbf{Rec}_D$$
 
 **定理 2.1**（纵向剖面纤维化是 Grothendieck 纤维化）。设 $\mathcal{S}$ 为物理系统范畴，对每个 $s \in \mathcal{S}$，$\mathcal{F}_s$ 为其纵向剖面纤维范畴。投影函子 $\pi_{\text{long}}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathcal{S}$ 是 Grothendieck 纤维化，其中：
 
-- **Cartan 提升**：给定基态射 $f: s_1 \to s_2$（如 QCD→BCS 的约化）和纤维目标 $F_{s_2} \in \mathcal{F}_{s_2}$，提升为 $\tilde{f}: F_{s_1} \to F_{s_2}$，其中 $F_{s_1}$ 是 $s_1$ 的对应数学形式化
-- **分裂性**：Cartan 提升的选择可规范化为函子（恒等保持、复合保持）
+- **Cartesian 提升**：给定基态射 $f: s_1 \to s_2$（如 QCD→BCS 的约化）和纤维目标 $F_{s_2} \in \mathcal{F}_{s_2}$，提升为 $\tilde{f}: F_{s_1} \to F_{s_2}$，其中 $F_{s_1}$ 是 $s_1$ 的对应数学形式化
+- **分裂性**：Cartesian 提升的选择可规范化为函子（恒等保持、复合保持）
 
 **定理 2.2**（域边界存在性，Domain Boundary Existence）。对任意物理系统 $s$ 和数学工具 $F \in \mathcal{F}_s$，存在非空的域边界 $\partial\mathcal{D}_F \subset \mathcal{P}_s$，使得：
 - 在 $\mathcal{D}_F \setminus \partial\mathcal{D}_F$ 内，$F$ 的谱截面 $\sigma_F$ 连续且有界
@@ -73,7 +73,7 @@ $$\bigcup_{F \in \mathcal{F}_s} \mathcal{D}_F = \mathcal{P}_s$$
 
 ### 2.2 证明概要
 
-**定理 2.1 证明**。$\pi_{\text{long}}$ 是函子（对象和态射映射保持恒等和复合）。对任意 $e \in \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\})$ 和 $\mathcal{S}$ 中态射 $f: s \to \pi_{\text{long}}(e)$，Cartan 提升由理论间约化映射给出——将 $e$ 的数学形式化 $F$ 约化为 $s$ 的对应形式化 $F_s$。万有性质由约化映射的唯一性保证。分裂性由约化映射的函子性保证。$\square$
+**定理 2.1 证明**。$\pi_{\text{long}}$ 是函子（对象和态射映射保持恒等和复合）。对任意 $e \in \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\})$ 和 $\mathcal{S}$ 中态射 $f: s \to \pi_{\text{long}}(e)$，Cartesian 提升由理论间约化映射给出——将 $e$ 的数学形式化 $F$ 约化为 $s$ 的对应形式化 $F_s$。万有性质由约化映射的唯一性保证。分裂性由约化映射的函子性保证。$\square$
 
 **定理 2.2 证明**。假设不存在域边界，则 $F$ 在整个参数空间 $\mathcal{P}_s$ 上有效。但根据谱静默理论（Paper I §5），谱边界 $\partial\mathbf{Rec}_D$ 是普遍存在的——任何物理系统都存在谱间隙归零的参数点。因此 $F$ 在 $\partial\mathbf{Rec}_D$ 处必然失效，$\partial\mathcal{D}_F = \partial\mathbf{Rec}_D \cap \mathcal{P}_s \neq \emptyset$。$\square$
 

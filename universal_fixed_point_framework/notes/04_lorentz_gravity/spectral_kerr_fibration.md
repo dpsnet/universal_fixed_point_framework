@@ -69,9 +69,9 @@ $$\sigma_{\Delta}^{(\text{Kerr})}(M, a) = ((M, a), \Delta\lambda_{\min}^{(\text{
 
 ## 3. Grothendieck 纤维化结构
 
-### 3.1 Cartan 提升
+### 3.1 Cartesian 提升
 
-**定理 3.1**（$\pi_{M,a}$ 是 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化：对任意 $((M_2, a_2), \{\omega^{(2)}\})$ 和 $f: (M_1, a_1) \to (M_2, a_2)$，Cartan 提升由 QNM 谱沿参数方向的连续性给出。
+**定理 3.1**（$\pi_{M,a}$ 是 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化：对任意 $((M_2, a_2), \{\omega^{(2)}\})$ 和 $f: (M_1, a_1) \to (M_2, a_2)$，Cartesian 提升由 QNM 谱沿参数方向的连续性给出。
 
 **证明**（草图）。提升对象为 $((M_1, a_1), f^*\{\omega^{(2)}\})$，其中拉回谱通过 Leaver 连分数方程的连续性得到：
 $$f^*\omega_{lmn} = \omega_{lmn}(M_1, a_1) \text{ (Kerr QNM 方程在参数 $(M_1,a_1)$ 处的解)}$$
@@ -117,7 +117,7 @@ $$T_H(M, a) = \frac{\Delta\lambda_{\min}^{(\text{Kerr})}(M, a)}{2\pi}$$
 
 ### 5.2 非乘积丛的范畴论意义
 
-极端边界的纤维类型跳变使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为非乘积丛——这是 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$（乘积丛）的根本不同。在范畴论中，这意味着 $\pi_{M,a}$ 不是一个平凡的 Grothendieck 纤维化——虽然在普通点处有 Cartan 提升，但沿 $\partial\mathbf{Kerr}_{\text{ext}}$ 的全局截面不存在连续延拓。
+极端边界的纤维类型跳变使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为非乘积丛——这是 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$（乘积丛）的根本不同。在范畴论中，这意味着 $\pi_{M,a}$ 不是一个平凡的 Grothendieck 纤维化——虽然在普通点处有 Cartesian 提升，但沿 $\partial\mathbf{Kerr}_{\text{ext}}$ 的全局截面不存在连续延拓。
 
 ---
 

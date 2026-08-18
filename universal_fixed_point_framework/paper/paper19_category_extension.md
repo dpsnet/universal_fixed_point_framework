@@ -452,9 +452,9 @@ $\mathbf{Noise} \cong \mathbf{Temp}$ 作为范畴同构（两范畴对象集均�
 
 **定义 11.4**（投影 $\pi_\eta$）。$\pi_\eta: \mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp}) \to \mathbf{Noise}$ 定义为 $\pi_\eta(\eta, \{\lambda_i\}) = \eta$。
 
-### 11.3 Feynman-Hellmann 公式作为 Cartan 提升
+### 11.3 Feynman-Hellmann 公式作为 Cartesian 提升
 
-**定理 11.1**（$\pi_\eta$ 是分裂 Grothendieck 纤维化）。对任意谱对象 $(\eta_2, \{\lambda_i^{(2)}\})$ 和基态射 $f: \eta_1 \to \eta_2$，存在 Cartan 提升 $\tilde{f}: (\eta_1, f^*\{\lambda_i^{(2)}\}) \to (\eta_2, \{\lambda_i^{(2)}\})$，其中 $f^*\{\lambda_i^{(2)}\}$ 通过 Feynman-Hellmann 公式的逆积分得到：
+**定理 11.1**（$\pi_\eta$ 是分裂 Grothendieck 纤维化）。对任意谱对象 $(\eta_2, \{\lambda_i^{(2)}\})$ 和基态射 $f: \eta_1 \to \eta_2$，存在 Cartesian 提升 $\tilde{f}: (\eta_1, f^*\{\lambda_i^{(2)}\}) \to (\eta_2, \{\lambda_i^{(2)}\})$，其中 $f^*\{\lambda_i^{(2)}\}$ 通过 Feynman-Hellmann 公式的逆积分得到：
 $$\lambda_i^{(1)} = \lambda_i(\eta_1) = \lambda_i^{(2)} - \int_{\eta_1}^{\eta_2} \langle \psi_{\lambda_i}(\eta) | \delta A_N | \psi_{\lambda_i}(\eta) \rangle \, d\eta$$
 
 **证明**。对于有限维 Hermitian 矩阵族 $A_\eta = A_R + \eta \cdot \delta A_N$，Feynman-Hellmann 公式 $\frac{d\lambda}{d\eta} = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$ 是精确等式（因 $A_\eta$ 对 $\eta$ 线性）。积分得到 $\lambda_i^{(1)}$ 与 $\lambda_i^{(2)}$ 的关系。提升的万有性质由谱流的唯一性保证。分裂性由恒等提升（零积分区间）和复合保持（积分可加性）验证。$\square$
@@ -1112,7 +1112,7 @@ $$\delta_{\text{silence}}(A,G) = \|[A,G]\|, \qquad \delta_{\text{silence}}\leq 2
 
 **定义 17.4**（投影 $\pi_T$ 和 $\pi_\mu$）。$\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 定义为 $\pi_T(T, (n, A)) = T$；$\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$ 定义为 $\pi_\mu(\mu, (n, A)) = \mu$。两者都是函子（将态射映射到其基分量）。
 
-**定理 17.1**（$\pi_T$ 是分裂 Grothendieck 纤维化）。对任意温度谱对象 $X = (T', (n, A))$ 和基态射 $f: T \to T'$，存在 Cartan 提升 $\tilde{f}: (T, (n, A)) \to (T', (n, A))$，其基态射为 $f$，谱映射为单位矩阵。提升存在性由纤维数据的恒等保持保证，万有性质由谱映射的唯一性满足。
+**定理 17.1**（$\pi_T$ 是分裂 Grothendieck 纤维化）。对任意温度谱对象 $X = (T', (n, A))$ 和基态射 $f: T \to T'$，存在 Cartesian 提升 $\tilde{f}: (T, (n, A)) \to (T', (n, A))$，其基态射为 $f$，谱映射为单位矩阵。提升存在性由纤维数据的恒等保持保证，万有性质由谱映射的唯一性满足。
 
 **定理 17.2**（$\pi_\mu$ 是分裂 Grothendieck 纤维化）。与 $\pi_T$ 完全类似。
 

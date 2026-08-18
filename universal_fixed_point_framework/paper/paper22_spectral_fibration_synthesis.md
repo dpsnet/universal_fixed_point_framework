@@ -74,13 +74,13 @@
 | **S2** | 定义纤维范畴 $\mathcal{E}_b$ | 参数 $b$ 处的谱数据（$A_b$，$\sigma(A_b)$，$\delta_{\text{spec}}(b)$） |
 | **S3** | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$ | 对象 $= (b, A_b)$，态射 $= (f, \tilde{f})$ |
 | **S4** | 定义投影 $\pi_\mathcal{B}$ | 遗忘谱数据，保留参数 |
-| **S5** | 构造 **Cartan 提升** | 基态射 $f: b_1 \to b_2$ 提升为 $\tilde{f}: (b_1, A_{b_1}) \to (b_2, A_{b_2})$ |
+| **S5** | 构造 **Cartesian 提升** | 基态射 $f: b_1 \to b_2$ 提升为 $\tilde{f}: (b_1, A_{b_1}) \to (b_2, A_{b_2})$ |
 | **S6** | 验证分裂性 | 提升保持恒等和复合 |
 | **S7** | 定义物理截面 $\sigma$ | 可观测量作为参数上的函子 |
 
-### 2.2 核心操作：Cartan 提升的谱流形式
+### 2.2 核心操作：Cartesian 提升的谱流形式
 
-在量子化学中，**所有** Cartan 提升的统一物理载体是 **谱流方程**（Paper V §2, Paper XV §4）：
+在量子化学中，**所有** Cartesian 提升的统一物理载体是 **谱流方程**（Paper V §2, Paper XV §4）：
 
 $$\frac{d}{d\xi} A = [G_\xi, A] - \gamma_\xi \cdot \Delta_{\text{spec}} A$$
 
@@ -301,7 +301,7 @@ $$A_{\text{total}} = \frac{\kappa_H}{\kappa_H + \kappa_L} A_H + \frac{\kappa_L}{
 Step 1: 分子系统分析 ──→ 确定存在的耦合层次清单
 Step 2: 基空间定义 ──→ 每个层次定义基范畴 B_i
 Step 3: 谱生成元构造 ──→ 每个 B_i 处构造 A_{b_i} = e^{-βH_i}
-Step 4: Cartan 提升选择 ──→ 选择谱流生成元 G_ξ
+Step 4: Cartesian 提升选择 ──→ 选择谱流生成元 G_ξ
 Step 5: 精度判据设定 ──→ 确定截断阈值 ε_i
 Step 6: 截面计算 ──→ 沿基态的谱流积分
 Step 7: 自然变换检验 ──→ 检查谱交织条件
@@ -324,9 +324,9 @@ Step 8: 跨层修正 ──→ 若谱交织不满足，激活跨界粘合
 | 溶剂中反应 | Bun(Solv) | 介电效应 |
 | 重金属/自由基 | Bun(Spin) | SOC |
 
-#### Step 2–4：基空间、谱生成元、Cartan 提升
+#### Step 2–4：基空间、谱生成元、Cartesian 提升
 
-按 §3 的分类表为每个识别的层次填充 S1–S5（基范畴、纤维、投影、Cartan 提升）。
+按 §3 的分类表为每个识别的层次填充 S1–S5（基范畴、纤维、投影、Cartesian 提升）。
 
 #### Step 5：精度判据
 
@@ -381,7 +381,7 @@ Step 1: 激活 Bun(Reac) + Bun(Vib) + Bun(Ionic)
 Step 2: Bun(Reac): 基 = M (H₂O 单体构型)
         生成元 G_OH = 沿 OH 拉伸的谱流
 Step 3: Bun(Vib): 基 = {Q_s} (4 个分子间简正模)
-        Cartan 提升由 Duschinsky 旋转矩阵 U_D 决定
+        Cartesian 提升由 Duschinsky 旋转矩阵 U_D 决定
 Step 4: Bun(Ionic): 基 = (R_A, R_B, ξ_CT)
         ℓ_corr = 0.5 Å 来自谱丛不变量
 Step 5: 自然变换 ν: Bun(Ionic) → Bun(Vib) 给出
@@ -837,7 +837,7 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 - Paper XV：《谱量子化学》——量子化学在 $\mathbf{Sp}$ 范畴中的完整翻译，本方法论的电子态层级基础
 - Paper XXI：《Grothendieck 纤维化综合》——总参数丛和纤维化模板，本方法论的范畴论基础
-- Paper V：《力的谱动力学》——谱流方程 $dA/dt = [G,A]$，所有 Cartan 提升的统一载体
+- Paper V：《力的谱动力学》——谱流方程 $dA/dt = [G,A]$，所有 Cartesian 提升的统一载体
 - Paper I：《分形谱化理论》——Rec、Sp 范畴、D 函子、静默层级，本方法论的原始起点
 - Paper XXIII：《CH₃CHO n→π* 谱流第一性原理推导》——纤维精细分解的 7 层全链应用实例
 - **Paper XXIV-A：《Bun(Corr) 闭式定理在连续谱中的推广——强耦合超导 μ* 的谱框架第一性原理推导》**——从离散谱到连续谱，消除经验 μ* 参数

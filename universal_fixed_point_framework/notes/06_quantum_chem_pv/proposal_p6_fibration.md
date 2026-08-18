@@ -7,7 +7,7 @@
 
 ## 1. 理论背景：谱丛纤维化与普适关联长度
 
-在 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的范畴框架中，分子间电荷转移（CT）耦合强度 $J_{\text{CT}}(R_{AB})$ 是离子谱丛 $\pi_{\text{Ion}}$ 上的截面 $\sigma_{\text{CT}}$。沿分子间距离 $R_{AB}$，谱流方程（扩展 Cartan 提升）：
+在 $\mathbf{Bun}(\mathbf{Ionic}, \mathbf{Sp})$ 的范畴框架中，分子间电荷转移（CT）耦合强度 $J_{\text{CT}}(R_{AB})$ 是离子谱丛 $\pi_{\text{Ion}}$ 上的截面 $\sigma_{\text{CT}}$。沿分子间距离 $R_{AB}$，谱流方程（扩展 Cartesian 提升）：
 
 $$\frac{d}{d\xi_{\text{tot}}} A_{\text{dim}} = [G_{\xi_A} + G_{\xi_B} + G_{\text{CT}}, A_{\text{dim}}] - \gamma_{\text{eff}} \cdot \Delta_{\text{spec}} A_{\text{dim}}$$
 

@@ -108,7 +108,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 
 ### 4.2 验收标准
 
-- Grothendieck 纤维范畴定义通过同行/自审 ✅（§1-3：$\pi_T$、$\pi_\mu$ 的 Grothendieck 纤维化性质 + Cartan 提升构造已严格证明）
+- Grothendieck 纤维范畴定义通过同行/自审 ✅（§1-3：$\pi_T$、$\pi_\mu$ 的 Grothendieck 纤维化性质 + Cartesian 提升构造已严格证明）
 - Lean 4 模块 `TempRGFiber.lean` 已完成 ✅（7 节 ~465 行；沙箱限制无法本地运行 `lake build`，需在本地环境中编译验证）
 - 2-函子框架包含至少 2 个非平凡 2-细胞构造 ✅（定理 7.2：2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 严格 2-函子性 + 定理 7.3：纤维保持性）
 

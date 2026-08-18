@@ -72,7 +72,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 - **基**：噪声强度范畴 Noise（对象 $\eta \in [0,\infty)$，态射为噪声增量；$\eta_c$ 为基边界点）
 - **纤维**：混合算子 $A_\eta$ 的谱对象 $D(R_\eta)$（$\eta > \eta_c$ 时纤维类型从 Rec 变为 Σ-Rec——非乘积丛）
-- **天然 Cartan 提升**：Feynman-Hellmann 公式 $d\lambda/d\eta = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$（`paper19_category_extension.md` 定理 11.1）
+- **天然 Cartesian 提升**：Feynman-Hellmann 公式 $d\lambda/d\eta = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$（`paper19_category_extension.md` 定理 11.1）
 - **收益**：$\tau(\eta) \propto 1/(\eta_c - \eta)$ 发散预言升级为截面在基边界的奇异性定理；Paper XIX §17.4 已预留扩展位
 
 #### 候选 2：Clifford 签名丛 + IC 三重投影

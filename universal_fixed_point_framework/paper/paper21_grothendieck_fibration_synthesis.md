@@ -2,9 +2,11 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.7（2026-08-07）
+**版本**：v0.7a（2026-08-18）
 
-**摘要**：本文综合统一不动点框架中全部 Grothendieck 纤维化构造，将"物理系统是基空间（参数/对称性/几何）上的谱族"这一范式严格化。核心成果为**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp}) \to \mathbf{Param}$——一个 Grothendieck 纤维化，其基空间为 8 个独立参数方向的乘积范畴，其截面编码全部物理可观测量的谱数据。本文系统呈现：(1) Grothendieck 纤维化模板（基-纤维-投影-Cartan 提升-截面框架）；(2) 6 个已完成实例（Temp、RG、Noise、Sig、Kerr、Flt）的详细构造；(3) 两个复合结构（Temp×RG 乘积基谱编织、$\mathrm{Open}(M)$ 上的谱栈）及其粘合条件；(4) 总参数丛作为所有实例的统一收口，含 7 个坐标嵌入和 complete_chain 总成定理；(5) Lean 4 形式化实现总览（10 个模块、零错误编译）；(6) 物理截面（QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层）作为丛截面的实例化。
+**术语修正**：本版将 Grothendieck 纤维化中的 "Cartan 提升" 统一修正为标准术语 "Cartesian 提升"（对应标准范畴论文献中的 Cartesian lifting）。此前版本中所有 "Cartan 提升" 均为同一概念的非标准写法。
+
+**摘要**：本文综合统一不动点框架中全部 Grothendieck 纤维化构造，将"物理系统是基空间（参数/对称性/几何）上的谱族"这一范式严格化。核心成果为**总参数丛** $\pi_{\mathbf{Param}}: \mathbf{Bun}(\mathbf{Param}, \mathbf{Sp}) \to \mathbf{Param}$——一个 Grothendieck 纤维化，其基空间为 8 个独立参数方向的乘积范畴，其截面编码全部物理可观测量的谱数据。本文系统呈现：(1) Grothendieck 纤维化模板（基-纤维-投影-Cartesian 提升-截面框架）；(2) 6 个已完成实例（Temp、RG、Noise、Sig、Kerr、Flt）的详细构造；(3) 两个复合结构（Temp×RG 乘积基谱编织、$\mathrm{Open}(M)$ 上的谱栈）及其粘合条件；(4) 总参数丛作为所有实例的统一收口，含 7 个坐标嵌入和 complete_chain 总成定理；(5) Lean 4 形式化实现总览（10 个模块、零错误编译）；(6) 物理截面（QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层）作为丛截面的实例化。
 
 ---
 
@@ -27,6 +29,7 @@
 - **谱覆盖**（spectral cover）：代数几何中由特征多项式定义的分支覆盖结构
 - **谱编织**（spectral weave）：标准丛理论中截面编织的推广
 - **谱栈**（spectral stack）：层论中预谱层的推广，非标准代数几何中的谱层
+- **Cartesian 提升**（Cartesian lifting）：标准范畴论文献中的术语；本论文此前写作 "Cartan 提升"，属非标准用法，现已统一修正
 
 ## 1. 引言
 
@@ -38,7 +41,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 - **基空间** $\mathcal{B}$：参数范畴（如温度、能标、噪声强度等）
 - **纤维** $\mathcal{E}_b$：参数 $b$ 处的谱数据（如谱算子、特征值、谱间隙）
 - **投影** $\pi: \mathcal{E} \to \mathcal{B}$：将谱数据映射到底参数
-- **Cartan 提升**：参数态射到纤维间态射的提升（如沿温度变化连续演化谱数据）
+- **Cartesian 提升**：参数态射到纤维间态射的提升（如沿温度变化连续演化谱数据）
 - **截面** $\sigma: \mathcal{B} \to \mathcal{E}$：物理可观测量作为参数的函数（如 $T_c$、$\Delta\lambda_{\min}$）
 
 ### 1.3 研究缘起
@@ -95,9 +98,12 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 
 ### 2.1 基本定义
 
-**定义 2.1**（Grothendieck 纤维化）。函子 $\pi: \mathcal{E} \to \mathcal{B}$ 称为 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和 $\mathcal{B}$ 中态射 $f: b \to \pi(e)$，存在 $\mathcal{E}$ 中的 **Cartan 提升** $\tilde{f}: e' \to e$ 满足 $\pi(\tilde{f}) = f$ 且 $\tilde{f}$ 具有万有性质（任何其他提升唯一分解通过 $\tilde{f}$）。
+**定义 2.1**（Grothendieck 纤维化）。函子 $\pi: \mathcal{E} \to \mathcal{B}$ 称为 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和 $\mathcal{B}$ 中态射 $f: b \to \pi(e)$，存在 $\mathcal{E}$ 中的 **Cartesian 提升** $\tilde{f}: e' \to e$ 满足 $\pi(\tilde{f}) = f$ 且 $\tilde{f}$ 具有万有性质（任何其他提升唯一分解通过 $\tilde{f}$）。
 
-**定义 2.2**（分裂 Grothendieck 纤维化）。若 Cartan 提升的选择可规范化为函子（恒等保持、复合保持），则称 $\pi$ 为分裂 Grothendieck 纤维化。所有物理实例均为分裂纤维化。
+> **术语说明**：本论文此前使用 "Cartan 提升"，现已统一为标准术语 "Cartesian 提升"。
+
+
+**定义 2.2**（分裂 Grothendieck 纤维化）。若 Cartesian 提升的选择可规范化为函子（恒等保持、复合保持），则称 $\pi$ 为分裂 Grothendieck 纤维化。所有物理实例均为分裂纤维化。
 
 **定义 2.3**（截面）。截面 $\sigma: \mathcal{B} \to \mathcal{E}$ 是满足 $\pi \circ \sigma = \text{id}_\mathcal{B}$ 的函子。物理可观测量对应截面——在基空间每点给出一个谱对象。
 
@@ -111,7 +117,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 | 2 | 定义纤维范畴 $\mathcal{E}_b$ | 参数 $b$ 处的谱数据范畴 |
 | 3 | 定义总范畴 $\mathbf{Bun}(\mathcal{B}, \mathbf{Sp})$ | 对象 $= (b, e_b)$，态射 $= (f, \phi)$ |
 | 4 | 定义投影 $\pi_\mathcal{B}$ | 遗忘谱数据，保留参数 |
-| 5 | 构造 Cartan 提升 | 给定基态射 $f$ 和纤维目标，构造提升态射 |
+| 5 | 构造 Cartesian 提升 | 给定基态射 $f$ 和纤维目标，构造提升态射 |
 | 6 | 验证分裂性 | 恒等保持、复合保持 |
 | 7 | 定义物理截面 | 将可观测量参数化为 $\mathcal{B}$ 上的函子 |
 
@@ -132,7 +138,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 
 **定理 3.1**（$\pi_T$ 是分裂 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
 
-*证明概要*。Cartan 提升由热谱流方程 $\frac{d}{dT} A_T = [G_{\text{th}}(T), A_T]$ 的连续性给出。对基态射 $T_1 \to T_2$（$T_1 \geq T_2$）和纤维目标 $(T_2, A_{T_2})$，提升为从 $T_2$ 到 $T_1$ 沿热谱流的反向积分。分裂性来自热谱流方程解的唯一性。$\square$
+*证明概要*。Cartesian 提升由热谱流方程 $\frac{d}{dT} A_T = [G_{\text{th}}(T), A_T]$ 的连续性给出。对基态射 $T_1 \to T_2$（$T_1 \geq T_2$）和纤维目标 $(T_2, A_{T_2})$，提升为从 $T_2$ 到 $T_1$ 沿热谱流的反向积分。分裂性来自热谱流方程解的唯一性。$\square$
 
 **物理截面**。温度谱丛的典型物理截面包括：
 - **QCD 谱间隙截面**：$\sigma_\Delta^{(T)}(T) = (T, \Delta\lambda_{\min}(T))$，其中 $\Delta\lambda_{\min}(T) = \Delta\lambda_{\min}^{(0)}\sqrt{1-T^2/T_c^2}$，$T_c = 153$ MeV
@@ -149,7 +155,7 @@ Grothendieck 纤维化提供了一个严格的范畴论框架，将"一族对象
 
 **定理 3.2**（$\pi_\mu$ 是分裂 Grothendieck 纤维化）。投影 $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$ 是分裂 Grothendieck 纤维化。
 
-*证明概要*。结构与 $\pi_T$ 完全对称。Cartan 提升由 RG 谱流方程 $\mu \frac{d}{d\mu} A_\mu = [G_{\text{RG}}(\mu), A_\mu]$ 的连续性给出。$\square$
+*证明概要*。结构与 $\pi_T$ 完全对称。Cartesian 提升由 RG 谱流方程 $\mu \frac{d}{d\mu} A_\mu = [G_{\text{RG}}(\mu), A_\mu]$ 的连续性给出。$\square$
 
 **谱纤维丛上的 Riemann 函子**。Temp 与 RG 之间通过 **谱纤维丛上的 Riemann 函子** $\hat{\mathcal{T}}_{\text{Riem}}$ 连接——这是一个纤维保持函子：
 $$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$$
@@ -170,7 +176,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to 
 
 **定理 4.1**（$\pi_\eta$ 是分裂 Grothendieck 纤维化）。投影 $\pi_\eta$ 是分裂 Grothendieck 纤维化。
 
-*证明概要*。Cartan 提升由 Feynman-Hellmann 公式给出：
+*证明概要*。Cartesian 提升由 Feynman-Hellmann 公式给出：
 $$\frac{d\lambda_i}{d\eta} = \langle\psi_{\lambda_i}(\eta) | \delta A_N | \psi_{\lambda_i}(\eta) \rangle$$
 积分该公式得到沿 $\eta$ 方向的谱流，提升的万有性由谱流的唯一性保证。$\square$
 
@@ -189,7 +195,7 @@ $$\frac{d\lambda_i}{d\eta} = \langle\psi_{\lambda_i}(\eta) | \delta A_N | \psi_{
 
 **定义 4.4**（签名纤维）。对 $(p,q) \in \mathbf{Sig}$，纤维 $\mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 是 $\mathrm{Cl}(p,q)$-值 Hilbert 空间范畴。
 
-**定理 4.3**（$\pi_{\text{Sig}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Sig}}$ 是分裂 Grothendieck 纤维化，Cartan 提升由限制函子的逆给出。
+**定理 4.3**（$\pi_{\text{Sig}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Sig}}$ 是分裂 Grothendieck 纤维化，Cartesian 提升由限制函子的逆给出。
 
 **核心签名**：
 
@@ -221,7 +227,7 @@ $$\mathrm{Cl}(1,7) \to \mathrm{Cl}(9,1) \to \mathrm{Cl}(17,1) \to \cdots$$
 
 **定义 5.2**（Kerr 纤维）。对 $(M, a) \in \mathbf{Kerr}$，纤维包含 QNM 谱 $\{\omega_{lmn}(M,a)\}$、视界谱 $\lambda_{\text{horizon}}^{(\pm)} = M \pm \sqrt{M^2-a^2}$、谱间隙 $\Delta\lambda_{\min}^{(\text{Kerr})} = \Delta\lambda_{\min}^{(0)} \cdot \sqrt{1-a^2/M^2}$。
 
-**定理 5.1**（$\pi_{M,a}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化，Cartan 提升由 Kerr QNM 方程沿参数方向的连续性给出。
+**定理 5.1**（$\pi_{M,a}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化，Cartesian 提升由 Kerr QNM 方程沿参数方向的连续性给出。
 
 **定理 5.2**（非乘积丛结构）。在极端边界 $a=M$ 处纤维类型从 $\mathbf{Sp}$（离散 QNM 谱）跳变为 $\mathbf{Sp}_{\text{deg}}$（退化视界谱），使 $\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 成为非乘积丛。
 
@@ -266,7 +272,7 @@ $\delta_{CP} \neq 0$ 等价于味纤维丛具有非平凡曲率——CP 破坏�
 
 **定理 5.6**（$\pi_{\text{crit}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{crit}}: \mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D) \to \mathbf{PhysCrit}$ 是分裂 Grothendieck 纤维化。
 
-*证明概要*。由于 $\mathbf{PhysCrit}$ 是离散范畴（仅恒等态射），Cartan 提升平凡地由恒等态射给出——每个纤维对象自提升。分裂性自动满足。该实例虽构造上平凡，但其物理意义在于所有纤维在 $\partial\mathbf{Rec}_D$ 处的**粘合条件**（定理 5.7）。$\square$
+*证明概要*。由于 $\mathbf{PhysCrit}$ 是离散范畴（仅恒等态射），Cartesian 提升平凡地由恒等态射给出——每个纤维对象自提升。分裂性自动满足。该实例虽构造上平凡，但其物理意义在于所有纤维在 $\partial\mathbf{Rec}_D$ 处的**粘合条件**（定理 5.7）。$\square$
 
 **定理 5.7**（$\partial\mathbf{Rec}_D$ 作为粘合基）。存在全局截面 $\sigma_{\text{crit}}: \mathbf{PhysCrit} \to \mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$ 将所有纤维在 $\partial\mathbf{Rec}_D$ 处粘合。截面 $\sigma_{\text{crit}}$ 对应统一函子 $\mathcal{F}: \mathbf{PhysCrit} \to \partial\mathbf{Rec}_D$（Paper VI 主定理 F5），使下图交换：
 
@@ -313,7 +319,7 @@ DST 的 $\mathbf{Rate}$ 范畴以应变率 $\dot\gamma \in (0,\infty)$ 为对象
 
 **定理 5.8**（$\pi_{\text{Reac}}$ 是分裂 Grothendieck 纤维化）。投影 $\pi_{\text{Reac}}: \mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp}) \to \mathbf{Reac}$ 是分裂 Grothendieck 纤维化。
 
-*证明概要*。对基态射 $R_1 \to R_2$（沿反应坐标 $\xi$ 方向）和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartan 提升由沿核形变路径的**参量谱流方程**给出（Paper XV 定理 4.1）：
+*证明概要*。对基态射 $R_1 \to R_2$（沿反应坐标 $\xi$ 方向）和纤维目标 $(R_2, A_{\text{mol}}(R_2))$，Cartesian 提升由沿核形变路径的**参量谱流方程**给出（Paper XV 定理 4.1）：
 $$\frac{d}{d\xi} A_{\text{mol}} = [G_\xi, A_{\text{mol}}] - \gamma \cdot \Delta_{\text{spec}} A_{\text{mol}}$$
 其中 $G_\xi$ 是反应坐标谱流生成元。解的唯一性保证分裂性。$\square$
 
@@ -425,7 +431,7 @@ $$\mathbf{Param} = \mathbf{Gauge} \times \mathbf{Noise} \times \mathbf{Temp} \ti
 
 **定义 7.2**（总参数丛）。$\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$ 是 $\mathbf{Param}$ 上的谱丛总范畴，$\pi_{\mathbf{Param}}$ 是其投影。
 
-**定理 7.1**（$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化）。$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化——其 Cartan 提升由各分量 Cartan 提升的乘积给出。
+**定理 7.1**（$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化）。$\pi_{\mathbf{Param}}$ 是分裂 Grothendieck 纤维化——其 Cartesian 提升由各分量 Cartesian 提升的乘积给出。
 
 **定理 7.2**（拉回结构）。每个子丛可通过沿坐标嵌入拉回 $\pi_{\mathbf{Param}}$ 得到：
 $$\pi_T \cong \iota_{\text{Temp}}^*(\pi_{\mathbf{Param}}), \quad \pi_\mu \cong \iota_{\text{RG}}^*(\pi_{\mathbf{Param}}), \quad \text{等}$$
@@ -559,8 +565,8 @@ $$(F, \mathcal{D}_F, \partial\mathcal{D}_F, \sigma_F)$$
 
 **定义 10.2**（纵向剖面纤维化，Longitudinal Section Fibration）。设 $\mathcal{S}$ 为物理系统范畴，对每个 $s \in \mathcal{S}$，$\mathcal{F}_s$ 为其纵向剖面纤维范畴。投影函子 $\pi_{\text{long}}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathcal{S}$ 是 Grothendieck 纤维化，其中：
 
-- **Cartan 提升**：给定基态射 $f: s_1 \to s_2$（如 QCD→BCS 的约化）和纤维目标 $F_{s_2} \in \mathcal{F}_{s_2}$，提升为 $\tilde{f}: F_{s_1} \to F_{s_2}$
-- **分裂性**：Cartan 提升的选择可规范化为函子（恒等保持、复合保持）
+- **Cartesian 提升**：给定基态射 $f: s_1 \to s_2$（如 QCD→BCS 的约化）和纤维目标 $F_{s_2} \in \mathcal{F}_{s_2}$，提升为 $\tilde{f}: F_{s_1} \to F_{s_2}$
+- **分裂性**：Cartesian 提升的选择可规范化为函子（恒等保持、复合保持）
 
 ### 10.2 观察窗口与粘合条件
 

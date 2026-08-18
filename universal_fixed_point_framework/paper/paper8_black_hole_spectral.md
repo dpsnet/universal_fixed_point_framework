@@ -305,7 +305,7 @@ $$\lim_{a \to 0} \frac{d}{dt} D(R_{\text{Kerr}}) = 0$$
 **定义 7.7**（投影 $\pi_{M,a}$）。$\pi_{M,a}: \mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp}) \to \mathbf{Kerr}$ 定义为：
 $$\pi_{M,a}((M, a), \{\omega\}) = (M, a), \quad \pi_{M,a}(f, \phi) = f$$
 
-**定理 7.4**（$\pi_{M,a}$ 是 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化：对任意 $((M_2, a_2), \{\omega^{(2)}\})$ 和 $f: (M_1, a_1) \to (M_2, a_2)$，Cartan 提升由 QNM 谱沿参数方向的连续性给出。
+**定理 7.4**（$\pi_{M,a}$ 是 Grothendieck 纤维化）。投影 $\pi_{M,a}$ 是分裂 Grothendieck 纤维化：对任意 $((M_2, a_2), \{\omega^{(2)}\})$ 和 $f: (M_1, a_1) \to (M_2, a_2)$，Cartesian 提升由 QNM 谱沿参数方向的连续性给出。
 
 *证明*（草图）。提升对象为 $((M_1, a_1), f^*\{\omega^{(2)}\})$，其中拉回谱通过 Leaver 连分数方程的连续性得到：$f^*\omega_{lmn} = \omega_{lmn}(M_1, a_1)$（Kerr QNM 方程在参数 $(M_1,a_1)$ 处的解）。提升的万有性质由 QNM 谱对参数的连续依赖性保证。$\square$
 

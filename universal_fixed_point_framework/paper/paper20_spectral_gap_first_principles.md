@@ -472,7 +472,7 @@ $$e_i e_j + e_j e_i = 2\eta_{ij}, \quad \eta = \operatorname{diag}(\underbrace{1
 
 **定义 5.7**（总范畴与投影）。$\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$ 的对象为 $((p,q), (H,\rho))$，态射为 $((p,q), (H,\rho)) \to ((p',q'), (H',\rho'))$：对 $(f, \phi)$，其中 $f: (p,q) \to (p',q')$ 是签名包含，$\phi: (H,\rho) \to f^*(H',\rho')$ 是 $\mathrm{Cl}(p,q)$-等变映射。投影 $\pi_{\mathrm{Sig}}: \mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H) \to \mathbf{Sig}$ 定义为 $\pi_{\mathrm{Sig}}((p,q), (H,\rho)) = (p,q)$。
 
-**定理 5.4**（$\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化）。投影 $\pi_{\mathrm{Sig}}$ 是分裂 Grothendieck 纤维化：给定 $((p',q'), (H',\rho'))$ 和 $f: (p,q) \to (p',q')$，Cartan 提升由限制函子 $f^*: \mathbf{Cat}_H(\mathrm{Cl}(p',q')) \to \mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 的逆给出。分裂性由恒等映射的平凡提升和复合保持验证。
+**定理 5.4**（$\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化）。投影 $\pi_{\mathrm{Sig}}$ 是分裂 Grothendieck 纤维化：给定 $((p',q'), (H',\rho'))$ 和 $f: (p,q) \to (p',q')$，Cartesian 提升由限制函子 $f^*: \mathbf{Cat}_H(\mathrm{Cl}(p',q')) \to \mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 的逆给出。分裂性由恒等映射的平凡提升和复合保持验证。
 
 *证明概要*。与 $\pi_T$（TempRGFiber.lean）的构造完全类似。限制函子 $f^*$ 将 $\mathrm{Cl}(p',q')$ 表示限制为 $\mathrm{Cl}(p,q)$ 表示，其逆存在性由 Clifford 模的包含-限制伴随对保证。$\square$
 

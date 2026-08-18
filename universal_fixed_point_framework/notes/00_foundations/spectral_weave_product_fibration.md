@@ -77,7 +77,7 @@ $$\pi_{T,\mu}((T, \mu), (n, A)) = (T, \mu),\quad \pi_{T,\mu}(f, g, \phi) = (f, g
 
 ### 2.4 Grothendieck 纤维化
 
-**定理 2.1**（$\pi_{T,\mu}$ 是分裂 Grothendieck 纤维化）。对任意 $X = ((T', \mu'), (n, A))$ 和 $(f, g): (T, \mu) \to (T', \mu')$，存在 Cartan 提升 $\widetilde{(f,g)}: \widetilde{X} \to X$，其中：
+**定理 2.1**（$\pi_{T,\mu}$ 是分裂 Grothendieck 纤维化）。对任意 $X = ((T', \mu'), (n, A))$ 和 $(f, g): (T, \mu) \to (T', \mu')$，存在 Cartesian 提升 $\widetilde{(f,g)}: \widetilde{X} \to X$，其中：
 $$\widetilde{X} = ((T, \mu), (n, A))$$
 且 $\widetilde{(f,g)}$ 的底态射为 $(f,g)$，纤维映射为单位矩阵。
 

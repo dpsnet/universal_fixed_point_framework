@@ -2,7 +2,7 @@
 
 **版本**：v0.3（2026-07-22）
 
-**摘要**：本笔记将 Clifford 代数签名空间 $(p,q)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Sig}$，构造签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$。核心成果包括：(1) $\mathbf{Sig}$ 是签名对 $(p,q)$ 的范畴，态射为块嵌入 $\mathrm{Cl}(p,q) \hookrightarrow \mathrm{Cl}(p',q')$；(2) 投影 $\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化——Cartan 提升由 Bott 周期的块嵌入诱导；(3) 三重投影表统一为三个基变更函子，共享 $M_{16} \cong M_8 \otimes M_2$ 张量积分解和 $\iota\dashv\pi$ 伴随结构；【2026-08-07 勘误：按 paper20，Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16）、Cl(9,1) ≅ M₃₂(ℝ)，故 Cl(9,1)→Cl(1,7) 投影的分解应为 M₃₂(ℝ) ≅ M₁₆(ℝ) ⊗ M₂(ℝ)，"M₁₆ ≅ M₈ ⊗ M₂"系旧框架表述】(4) **深入分析**发现：Bott 塔无限层级、三重投影可能是 Level 4 静默的推论而非独立假说、Bott 塔与 RG 流之间存在深层对应。
+**摘要**：本笔记将 Clifford 代数签名空间 $(p,q)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Sig}$，构造签名谱丛 $\mathbf{Bun}(\mathbf{Sig}, \mathbf{Cat}_H)$。核心成果包括：(1) $\mathbf{Sig}$ 是签名对 $(p,q)$ 的范畴，态射为块嵌入 $\mathrm{Cl}(p,q) \hookrightarrow \mathrm{Cl}(p',q')$；(2) 投影 $\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化——Cartesian 提升由 Bott 周期的块嵌入诱导；(3) 三重投影表统一为三个基变更函子，共享 $M_{16} \cong M_8 \otimes M_2$ 张量积分解和 $\iota\dashv\pi$ 伴随结构；【2026-08-07 勘误：按 paper20，Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16）、Cl(9,1) ≅ M₃₂(ℝ)，故 Cl(9,1)→Cl(1,7) 投影的分解应为 M₃₂(ℝ) ≅ M₁₆(ℝ) ⊗ M₂(ℝ)，"M₁₆ ≅ M₈ ⊗ M₂"系旧框架表述】(4) **深入分析**发现：Bott 塔无限层级、三重投影可能是 Level 4 静默的推论而非独立假说、Bott 塔与 RG 流之间存在深层对应。
 
 **前置依赖**：[`Clifford.lean`](../../formal_proof/UFPFormalization/UFPFormalization/Clifford.lean)（Cl(1,7) 结构定理）、[`IsolationConstraints.lean`](../../formal_proof/UFPFormalization/UFPFormalization/IsolationConstraints.lean)（IC 条件）、`spectral_Grothendieck_fibration.md`（纤维化模板）。
 
@@ -46,7 +46,7 @@
 
 ### 2.3 Grothendieck 纤维化
 
-**定理 2.1**（$\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化）。投影 $\pi_{\mathrm{Sig}}$ 是分裂 Grothendieck 纤维化：给定 $((p',q'), (H',\rho'))$ 和 $f: (p,q) \to (p',q')$，Cartan 提升由限制函子 $f^*: \mathbf{Cat}_H(\mathrm{Cl}(p',q')) \to \mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 的逆给出。
+**定理 2.1**（$\pi_{\mathrm{Sig}}$ 是 Grothendieck 纤维化）。投影 $\pi_{\mathrm{Sig}}$ 是分裂 Grothendieck 纤维化：给定 $((p',q'), (H',\rho'))$ 和 $f: (p,q) \to (p',q')$，Cartesian 提升由限制函子 $f^*: \mathbf{Cat}_H(\mathrm{Cl}(p',q')) \to \mathbf{Cat}_H(\mathrm{Cl}(p,q))$ 的逆给出。
 
 **证明**。与 $\pi_T$ 的构造完全类似。$\square$
 
@@ -109,7 +109,7 @@ Rec_id → Rec        →  ∞ 截断被极限投影
 | IC 条件 | 纤维范畴翻译 |
 |:--------|:------------|
 | C1 谱标度相容 | 拉回保截面：$\iota^* \circ \sigma = \sigma \circ \iota$ |
-| C2 态射可延拓 | Cartan 提升存在性：$\forall f, \exists! \tilde{f}$ |
+| C2 态射可延拓 | Cartesian 提升存在性：$\forall f, \exists! \tilde{f}$ |
 | C3 拓扑相容 | 纤维限制：$\pi_{\mathrm{Sig}}(\hat{\eta}) = \mathrm{id}$ |
 
 ---

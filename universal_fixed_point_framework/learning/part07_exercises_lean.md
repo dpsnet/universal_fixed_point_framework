@@ -34,9 +34,9 @@
 
 **习题 4.2**：构造一个预层但不是层的例子。（提示：在 $S^1$ 上考虑常值预层的某些变体。）
 
-**习题 4.3**：验证 Grothendieck 纤维化的 Cartan 提升满足万有性质。
+**习题 4.3**：验证 Grothendieck 纤维化的 Cartesian 提升满足万有性质。
 
-**习题 4.4**：为 Paper XXI 中的 Temp 纤维化写出：一个基对象、一个纤维对象、一个截面、一个 Cartan 提升。
+**习题 4.4**：为 Paper XXI 中的 Temp 纤维化写出：一个基对象、一个纤维对象、一个截面、一个 Cartesian 提升。
 
 ### Level 3：精通（对应 Part 5-6）
 
@@ -148,7 +148,7 @@ import Mathlib.CategoryTheory.FiberedCategory.HomLift
 2. 定义纤维范畴（固定温度下的谱对象）
 3. 定义总范畴
 4. 构造投影函子
-5. 证明 Cartan 提升存在
+5. 证明 Cartesian 提升存在
 
 ## 7.3 UFPF 现有形式化模块参考
 

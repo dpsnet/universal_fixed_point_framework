@@ -2,7 +2,7 @@
 
 **版本**：v0.1（2026-07-22）
 
-**摘要**：本笔记将噪声强度参数 $\eta \in [0,\infty)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Noise}$，构造噪声谱丛 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 及其投影 $\pi_\eta$。核心成果包括：(1) 验证 $\pi_\eta$ 是分裂 Grothendieck 纤维化——Cartan 提升由 Feynman-Hellmann 公式 $d\lambda/d\eta = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$ 给出；(2) 证明 $\tau(\eta) \propto 1/(\eta_c - \eta)$ 发散预言是截面在基边界 $\eta = \eta_c$ 处的奇异性定理；(3) 建立与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的丛态射（温度-噪声联合参数 $(\eta,T)$）。本形式化为 Paper XIX §11-13 和 Paper X §12.4 的预言提供了严格的纤维范畴基础。
+**摘要**：本笔记将噪声强度参数 $\eta \in [0,\infty)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Noise}$，构造噪声谱丛 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 及其投影 $\pi_\eta$。核心成果包括：(1) 验证 $\pi_\eta$ 是分裂 Grothendieck 纤维化——Cartesian 提升由 Feynman-Hellmann 公式 $d\lambda/d\eta = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$ 给出；(2) 证明 $\tau(\eta) \propto 1/(\eta_c - \eta)$ 发散预言是截面在基边界 $\eta = \eta_c$ 处的奇异性定理；(3) 建立与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的丛态射（温度-噪声联合参数 $(\eta,T)$）。本形式化为 Paper XIX §11-13 和 Paper X §12.4 的预言提供了严格的纤维范畴基础。
 
 **前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 $\pi_T$/$\pi_\mu$ 的严格形式化与 Lean 4 验证）、[`NoiseCategory.lean`](../../formal_proof/UFPFormalization/UFPFormalization/NoiseCategory.lean)（Σ-Rec 范畴、噪声谱流、$\eta_c$ 阈值）。
 
@@ -48,11 +48,11 @@
 
 ## 3. Grothendieck 纤维化结构
 
-### 3.1 Feynman-Hellmann 公式作为 Cartan 提升
+### 3.1 Feynman-Hellmann 公式作为 Cartesian 提升
 
 **定理 3.1**（$\pi_\eta$ 是 Grothendieck 纤维化）。投影 $\pi_\eta: \mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp}) \to \mathbf{Noise}$ 是分裂 Grothendieck 纤维化。
 
-**证明**。对任意对象 $(\eta_2, \{\lambda_i^{(2)}\})$ 和 $\mathbf{Noise}$ 中的任意态射 $f: \eta_1 \to \eta_2$，构造 Cartan 提升：
+**证明**。对任意对象 $(\eta_2, \{\lambda_i^{(2)}\})$ 和 $\mathbf{Noise}$ 中的任意态射 $f: \eta_1 \to \eta_2$，构造 Cartesian 提升：
 
 $$\tilde{f}: (\eta_1, f^*\{\lambda_i^{(2)}\}) \longrightarrow (\eta_2, \{\lambda_i^{(2)}\})$$
 
@@ -186,7 +186,7 @@ $$
 |:----|:-----|:---------------------------|
 | `NoiseCategory` 扩展 | $\mathbf{Noise}$ 范畴定义（对象 $\eta \in \mathbb{R}_{\ge 0}$） | 现有 `NoiseSpectralFlow` 结构可复用 |
 | `NoiseFiber` | $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ + $\pi_\eta$ 纤维化 | 复用 `SpecFiberTemp` 模式 |
-| `NoiseFiber` | Cartan 提升 + Feynman-Hellmann | 引用 `noise_spectral_flow_eq` |
+| `NoiseFiber` | Cartesian 提升 + Feynman-Hellmann | 引用 `noise_spectral_flow_eq` |
 | `NoiseFiber` | 截面 $\sigma_\Delta^{(\text{noise})}$（$\eta_c$ 奇异性） | 引用 `criticalNoiseThreshold` |
 
 ---
@@ -218,4 +218,4 @@ $$
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
 | **v0.2** | **2026-08-09** | **勘误**：① η_c 数值勘误——正确为 $\eta_c = 2(\sqrt{3}-1)/3 \approx 0.488 = 4\cdot\text{spectralGap}(8)$（原述 0.976/8·Δλ 有误）；② FH 严格化状态勘误——`feynman_hellmann_abstract` 仍为 True 占位（原称 ~135 行完整证明不实）；`feynman_hellmann_flow`/`spectral_flow_integral_form`/`cartesian_lift_from_FH` 不存在；已闭合的是 2×2 闭式（`twoByTwo_*`/`cl17_eigenvalue_formula`）；③ NoiseFiber 噪声对象改 η>0，NFunctor/NoiseIsoTemp 构造化 |
-| **v0.1** | **2026-07-22** | 初始版本：$\mathbf{Noise}$ 范畴定义；$\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 纤维化；Feynman-Hellmann Cartan 提升；$\eta_c$ 奇异性定理；纤维类型跳变；温度-噪声丛态射；Lean 形式化方案 |
+| **v0.1** | **2026-07-22** | 初始版本：$\mathbf{Noise}$ 范畴定义；$\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 纤维化；Feynman-Hellmann Cartesian 提升；$\eta_c$ 奇异性定理；纤维类型跳变；温度-噪声丛态射；Lean 形式化方案 |

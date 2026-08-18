@@ -2,7 +2,7 @@
 
 **版本**：v0.1（2026-07-23）
 
-**摘要**：本笔记将有效场论（EFT）的能量标度层级提升为 Grothendieck 纤维范畴。核心结构为余域纤维化（codomain fibration）$\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，其中 $\Lambda$ 是能标范畴（对象为 RG 能标，态射为粗粒化流），$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴（对象为"能标 $\Lambda$ 处的有效场论"）。该构造在教科书层面是标准的——任意带拉回的范畴上的 codomain 函子都是 Grothendieck 纤维化。关键应用是将谱静默四判据 S1-S4 翻译为 Cartan 态射的存在性条件：哪些 RG 态射在 $\mathbf{EFT}$ 中具有 Cartan 提升。
+**摘要**：本笔记将有效场论（EFT）的能量标度层级提升为 Grothendieck 纤维范畴。核心结构为余域纤维化（codomain fibration）$\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，其中 $\Lambda$ 是能标范畴（对象为 RG 能标，态射为粗粒化流），$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴（对象为"能标 $\Lambda$ 处的有效场论"）。该构造在教科书层面是标准的——任意带拉回的范畴上的 codomain 函子都是 Grothendieck 纤维化。关键应用是将谱静默四判据 S1-S4 翻译为 Cartan 态射的存在性条件：哪些 RG 态射在 $\mathbf{EFT}$ 中具有 Cartesian 提升。
 
 **前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 Grothendieck 纤维化模板）、[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)（UFPF 五层架构）。
 
@@ -49,7 +49,7 @@ $$\mathbf{cod}(E, \Lambda_E, f) = \Lambda$$
 
 **定理 2.1**（$\mathbf{cod}$ 是 Grothendieck 纤维化）。$\mathbf{cod}$ 是分裂 Grothendieck 纤维化。
 
-**证明**（教科书标准证明）。对任意 $(E, \Lambda_E, f) \in \mathbf{EFT}/\Lambda$ 和 $\Lambda' \to \Lambda$ 在 $\Lambda$ 中，构造 Cartan 提升：
+**证明**（教科书标准证明）。对任意 $(E, \Lambda_E, f) \in \mathbf{EFT}/\Lambda$ 和 $\Lambda' \to \Lambda$ 在 $\Lambda$ 中，构造 Cartesian 提升：
 - 提升对象：$(E, \Lambda_E, f \circ g)$，其中 $g: \Lambda' \to \Lambda$ 是给定的基态射
 - Cartan 态射：由 slice 范畴的万有性质保证存在性
 
@@ -122,7 +122,7 @@ EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过�
 | `EnergyScale` / `ScaleHom` | 能标范畴 $\Lambda$（态射为粗粒化比例 $r \in (0,1]$）|
 | `EFTSliceObj` / `EFTSliceHom` | $\mathbf{EFT}/\Lambda$ slice 范畴 |
 | `cod_functor` | 余域函子 $\mathbf{cod}$ |
-| `cod_cartesianLift` | Cartan 提升构造 |
+| `cod_cartesianLift` | Cartesian 提升构造 |
 | **`scalePullback`** | **v0.2 新增**：$\Lambda$ 的拉回结构（max 为 pullback）|
 | **`S2_cartesian_proper`** | **v0.2 新增**：S2 Cartesian 态射严格刻画（$\Lambda_1 = \Lambda_2$）|
 | **`S3_boundary_IR/UV`** | **v0.2 新增**：S3 物理边界奇异性（IR/UV 极限）|

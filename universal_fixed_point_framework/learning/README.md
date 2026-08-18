@@ -15,6 +15,12 @@
 > 2. **物理实例的正确性**（需实验/观测验证）
 > 3. **学术界认可**（需同行评审与独立复现）
 
+## 术语标准化说明
+
+> 本学习资料采用**标准范畴论术语**。例如，Grothendieck 纤维化中的 lifting 使用 **"Cartesian 提升"**（对应英文 Cartesian lifting）。
+>
+> UFPF 原论文中曾使用 **"Cartan 提升"** 表述同一概念，属非标准用法。学习资料和 UFPF 论文已同步修正为标准术语，但读者可能在旧版本或外部引用中遇到 "Cartan 提升"，可视为 "Cartesian 提升" 的同义旧称。
+
 ## 已覆盖范畴概念速查
 
 | 概念 | 说明 | 所在文件 |
@@ -26,7 +32,7 @@
 | 极限、余极限 | 积、余积、拉回、推出等泛构造 | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
 | 单子、Kleisli 范畴、Eilenberg-Moore 范畴 | $T = R \circ D$、平凡单子 $T = \mathcal{L} \circ \iota$ | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
 | 预层、层、茎、层化 | 时空谱层、奇点的层论定义 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
-| Grothendieck 纤维化、Cartan 提升、截面 | Temp/RG/Noise/Kerr/Flt 谱丛 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
+| Grothendieck 纤维化、Cartesian 提升、截面 | Temp/RG/Noise/Kerr/Flt 谱丛 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
 | 谱栈 | 谱丛在开集范畴上的层论推广 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
 | 2-范畴、2-函子 | $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$ | [part05_higher_category_theory.md](part05_higher_category_theory.md) |
 | ∞-范畴、A∞/L∞ 代数 | 高阶括号与同伦结构 | [part05_higher_category_theory.md](part05_higher_category_theory.md) |

@@ -4,7 +4,7 @@
 
 **Lean 4 状态**：✅ 已完成全部形式化验证——`TempRGFiber.lean`（~970 行）通过 `lake build`（无 sorry），实现了本笔记 §1–§8 的全部核心定义与定理，以及 Grothendieck 构造（§5）、η̂ 提升（§6）、2-范畴定理（§7）、物理截面（§8）的 Lean 4 形式化。
 
-**摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartan 提升的反变分裂；(2) 证明谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartan 提升映射为 $\mathbf{RG}$ 上的 Cartan 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
+**摘要**：本笔记将谱丛范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 提升为严格的 Grothendieck 纤维范畴。核心成果包括：(1) 验证投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是 Grothendieck 纤维化——构造了所有 Cartesian 提升的反变分裂；(2) 证明谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是纤维保持函子——将 $\mathbf{Temp}$ 上的 Cartesian 提升映射为 $\mathbf{RG}$ 上的 Cartesian 提升；(3) 将 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 扩展为 Grothendieck 构造——从 2-函子 $F: \mathbf{Temp}^{\text{op}} \to \mathbf{Cat}$ 重建总范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$。本形式化为 Lean 4 实现提供了完整的范畴论定义体系（参见附录 A）。
 
 **前置依赖**：[`spectral_T_category.md`](spectral_T_category.md)（$\mathbf{Temp}$/$\mathbf{RG}$ 范畴定义）、[`spectral_Riem_functoriality.md`](spectral_Riem_functoriality.md)（函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 与 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$）、[`spectral_bundle_sections.md`](spectral_bundle_sections.md)（谱丛截面 $\sigma_\Delta$）。
 
@@ -16,9 +16,9 @@
 
 **定义 1.1**（Grothendieck 纤维化）。设 $p: \mathcal{E} \to \mathcal{B}$ 是函子。对 $\mathcal{E}$ 中的态射 $\varphi: X \to Y$，若 $\varphi$ 相对于 $p$ 是 **Cartan 态射**（Cartesian morphism），则对任意 $Z \in \text{Ob}(\mathcal{E})$ 和 $h: Z \to Y$ 及 $w: p(Z) \to p(X)$ 使得 $p(h) = p(\varphi) \circ w$，存在唯一的提升 $\tilde{w}: Z \to X$ 使得 $p(\tilde{w}) = w$ 且 $h = \varphi \circ \tilde{w}$。
 
-$p$ 是 **Grothendieck 纤维化**（fibred category / Grothendieck fibration）当对每个 $X \in \text{Ob}(\mathcal{E})$ 和每个 $\mathcal{B}$ 中的态射 $f: B \to p(X)$，存在 $X$ 上的 **Cartan 提升**（Cartesian lift）$\tilde{f}: f^*X \to X$ 使得 $p(\tilde{f}) = f$ 且 $\tilde{f}$ 是 Cartan 态射。
+$p$ 是 **Grothendieck 纤维化**（fibred category / Grothendieck fibration）当对每个 $X \in \text{Ob}(\mathcal{E})$ 和每个 $\mathcal{B}$ 中的态射 $f: B \to p(X)$，存在 $X$ 上的 **Cartesian 提升**（Cartesian lift）$\tilde{f}: f^*X \to X$ 使得 $p(\tilde{f}) = f$ 且 $\tilde{f}$ 是 Cartan 态射。
 
-**选择一个** Cartan 提升的体系称为 **分裂**（cleavage）。带有分裂的纤维化称为 **分裂纤维化**（split fibration）。
+**选择一个** Cartesian 提升的体系称为 **分裂**（cleavage）。带有分裂的纤维化称为 **分裂纤维化**（split fibration）。
 
 ### 1.2 Grothendieck 构造
 
@@ -44,13 +44,13 @@ $$\mathbf{Fib}(\mathcal{B}) \simeq \text{PseudoFun}(\mathcal{B}^{\text{op}}, \ma
 
 **证明**。$\pi_T(\text{id}_{(T,\{\lambda_i\})}) = \pi_T(\text{id}_T, \text{id}_{\text{Spec}}) = \text{id}_T = \text{id}_{\pi_T(T,\{\lambda_i\})}$。对复合：$\pi_T((f_2,\phi_2)\circ(f_1,\phi_1)) = \pi_T(f_2\circ f_1, \phi_2\circ\phi_1) = f_2\circ f_1 = \pi_T(f_2,\phi_2)\circ\pi_T(f_1,\phi_1)$。$\square$
 
-### 2.2 Cartan 提升的构造
+### 2.2 Cartesian 提升的构造
 
 **定理 2.1**（$\pi_T$ 是 Grothendieck 纤维化）。投影 $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$ 是分裂 Grothendieck 纤维化。
 
-**证明**。需证：对任意对象 $(T_2, \{\lambda_i^{(2)}\}) \in \text{Ob}(\mathbf{Bun})$ 和 $\mathbf{Temp}$ 中的任意态射 $f: T_1 \to T_2$，存在 $(T_2, \{\lambda_i^{(2)}\})$ 上的 Cartan 提升。
+**证明**。需证：对任意对象 $(T_2, \{\lambda_i^{(2)}\}) \in \text{Ob}(\mathbf{Bun})$ 和 $\mathbf{Temp}$ 中的任意态射 $f: T_1 \to T_2$，存在 $(T_2, \{\lambda_i^{(2)}\})$ 上的 Cartesian 提升。
 
-**Cartan 提升的构造**。给定 $f: T_1 \to T_2$ 及对象 $(T_2, \{\lambda_i^{(2)}\})$，定义：
+**Cartesian 提升的构造**。给定 $f: T_1 \to T_2$ 及对象 $(T_2, \{\lambda_i^{(2)}\})$，定义：
 
 $$\tilde{f}: (T_1, \{\lambda_i^{(1)}\}) \longrightarrow (T_2, \{\lambda_i^{(2)}\})$$
 
@@ -70,13 +70,13 @@ $$\tilde{w} = (w, \phi_w)$$
 
 $\tilde{w}$ 的唯一性由谱流方程解的唯一性保证。$\square$
 
-**定义 2.2**（分裂选择）。$\pi_T$ 的**分裂**（cleavage）$\text{Cl}_T$ 是对每个 $(T_2, \{\lambda_i^{(2)}\})$ 和每个 $f: T_1 \to T_2$，选取定理 2.1 中构造的 $\tilde{f}$ 作为 $f$ 在 $(T_2, \{\lambda_i^{(2)}\})$ 上的 Cartan 提升。
+**定义 2.2**（分裂选择）。$\pi_T$ 的**分裂**（cleavage）$\text{Cl}_T$ 是对每个 $(T_2, \{\lambda_i^{(2)}\})$ 和每个 $f: T_1 \to T_2$，选取定理 2.1 中构造的 $\tilde{f}$ 作为 $f$ 在 $(T_2, \{\lambda_i^{(2)}\})$ 上的 Cartesian 提升。
 
 **命题 2.2**（分裂性）。$\text{Cl}_T$ 是分裂——即对每个 $(T_2, \{\lambda_i^{(2)}\})$，$\text{id}_{T_2}$ 的提升是恒等态射，且提升在复合下保持：$\text{Cl}_T(g\circ f) = \text{Cl}_T(g) \circ \text{Cl}_T(f)$。
 
 **证明**。$\text{Cl}_T(\text{id}_{T_2})$ 是 $\text{id}_{T_2}$ 在 $(T_2, \{\lambda_i^{(2)}\})$ 上的提升。由构造，$\widetilde{\text{id}}_{T_2}: (T_2, f_{\text{id}}^*\{\lambda_i^{(2)}\}) \to (T_2, \{\lambda_i^{(2)}\})$。由于 $\text{id}_{T_2}$ 对应恒等谱流（$r=1$），拉回给出 $f_{\text{id}}^*\{\lambda_i^{(2)}\} = \{\lambda_i^{(2)}\}$，故 $\widetilde{\text{id}}_{T_2} = (\text{id}_{T_2}, \text{id}_{\text{Spec}}) = \text{id}_{(T_2, \{\lambda_i^{(2)}\})}$。
 
-对复合 $g\circ f: T_0 \to T_1 \to T_2$，Cartan 提升满足 $\text{Cl}_T(g\circ f) = \tilde{g} \circ \tilde{f}$。这可从谱流复合的唯一性直接推出。$\square$
+对复合 $g\circ f: T_0 \to T_1 \to T_2$，Cartesian 提升满足 $\text{Cl}_T(g\circ f) = \tilde{g} \circ \tilde{f}$。这可从谱流复合的唯一性直接推出。$\square$
 
 ### 2.3 纤维范畴
 

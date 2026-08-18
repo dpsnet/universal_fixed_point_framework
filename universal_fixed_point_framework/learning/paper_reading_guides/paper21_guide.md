@@ -17,7 +17,7 @@
   └─ 范式：物理系统 = 基空间上的谱族
 
 §2 Grothendieck 纤维化模板
-  ├─ §2.1 定义（Cartan 提升）
+  ├─ §2.1 定义（Cartesian 提升）
   └─ §2.2 分裂纤维化
 
 §3-5 六个已完成实例
@@ -57,16 +57,16 @@
 
 ### §2 纤维化模板
 
-**关键定义 2.1**：函子 $\pi: \mathcal{E} \to \mathcal{B}$ 是 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和基态射 $f: b \to \pi(e)$，存在 **Cartan 提升** $\tilde{f}: e' \to e$
+**关键定义 2.1**：函子 $\pi: \mathcal{E} \to \mathcal{B}$ 是 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和基态射 $f: b \to \pi(e)$，存在 **Cartesian 提升** $\tilde{f}: e' \to e$
 
-> **术语说明**：UFPF 论文统一使用 **"Cartan 提升"** 一词。标准范畴论文献中通常称为 **"Cartesian lifting / Cartesian 提升"**。本学习资料为保持与 UFPF 论文一致，采用 "Cartan 提升"。
+> **术语说明**：UFPF 此前使用 **"Cartan 提升"**，现已统一为标准术语 **"Cartesian 提升"**（对应标准范畴论文献中的 *Cartesian lifting*）。
 
-**关键定义 2.2**：分裂纤维化：Cartan 提升的选择可规范化为函子
+**关键定义 2.2**：分裂纤维化：Cartesian 提升的选择可规范化为函子
 
 **对照学习**：[part04_sheaves_fibrations_stacks.md](../part04_sheaves_fibrations_stacks.md) §4.3
 
 **思考问题**：
-- Cartan 提升的"万有性质"是什么？
+- Cartesian 提升的"万有性质"是什么？
 - 为什么 UFPF 中的所有物理实例都是**分裂**纤维化？
 - 非分裂纤维化可能在什么场景出现？
 
@@ -85,7 +85,7 @@
 
 **思考问题**：
 - 每个实例中，"基空间"和"纤维"分别对应什么物理量？
-- Cartan 提升在每个实例中是什么操作？
+- Cartesian 提升在每个实例中是什么操作？
 - 这些实例如何共享同一个"模板"？
 
 ### §6.1 谱编织
@@ -150,7 +150,7 @@
 ## 关键要点
 
 - Paper XXI 是 UFPF 上层建筑的"综合收口"：把 Paper XIX 的各种参数空间扩展统一为 Grothendieck 纤维化语言。
-- 六个物理实例共享同一模板：基空间 + 纤维 + 投影 + Cartan 提升 + 截面。
+- 六个物理实例共享同一模板：基空间 + 纤维 + 投影 + Cartesian 提升 + 截面。
 - 总参数丛是统一的数学图像，任何具体物理系统都是其截面的局部化。
 - 谱编织和谱栈把纤维化与层论结合，处理多参数和弯曲时空中的局域-整体关系。
 
