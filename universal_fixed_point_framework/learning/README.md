@@ -55,6 +55,22 @@
 - 跟踪 UFPF 形式化仓库中的 `UFPFormalization` 模块
 - 尝试为 Paper XIX、Paper XXI 或形式化仓库中的高级构造补充 Lean 形式化
 
+### 阶段四：前沿探索（按需）
+本教材未系统覆盖、但可能对 UFPF 深化有价值的高级范畴工具：
+
+| 工具 | 可能的应用场景 | 当前教材位置 |
+|------|--------------|-------------|
+| **Kan 延拓** | 统一不同参数空间上的谱丛构造 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **充实范畴（Enriched Category）** | 内蕴处理谱间隙、LACI、度量结构 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **逗号范畴（Comma Category）** | 构造谱对象之间的关系范畴 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **Topos 理论** | 为时空谱层提供内蕴逻辑与几何态射 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) §4.5 |
+| **导出范畴 / 模型范畴** | 谱复形、同伦代数、耗散系统的弱等价 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.6 |
+| **Profunctor / Distributor** | 研究 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 之间的分布对应 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **Operad** | 系统组织 A∞/L∞ 代数中的高阶运算 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.4 |
+| **∞-Topos** | 高阶谱栈、同伦下降、辫子静默严格化 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.3 |
+
+**说明**：这些工具属于博士阶段或研究前沿范畴，当前教材仅作方向性登记。建议在遇到具体数学瓶颈时再深入学习，避免过早抽象。
+
 ## 与 UFPF 核心理念的衔接
 
 UFPF 的范畴论不是抽象游戏，而是为以下物理直觉提供严格语言：
