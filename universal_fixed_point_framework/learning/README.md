@@ -13,6 +13,7 @@
 | [part05_higher_category_theory.md](part05_higher_category_theory.md) | 2-范畴、∞-范畴、A∞/L∞ 代数 | 精通 | 理解 $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$ 与层论的 2-函子形式 |
 | [part06_ufpf_applications.md](part06_ufpf_applications.md) | UFPF 论文映射与定理索引 | 应用 | 将范畴工具直接对应到 Paper I~XLIV |
 | [part07_exercises_lean.md](part07_exercises_lean.md) | 习题与 Lean 4 形式化路径 | 实践 | 能独立形式化简单伴随对与纤维化 |
+| [part08_advanced_formalization.md](part08_advanced_formalization.md) | 形式化仓库中的高级范畴结构 | 精通→前沿 | 掌握幺半范畴、对偶、表示桥接、同伦方法 |
 | [bibliography.md](bibliography.md) | 经典教材、论文与在线资源 | 参考 | 构建后续深入学习资源库 |
 
 ## 学习阶段建议
@@ -28,9 +29,9 @@
 - 完成 Level 2 习题，尝试用 Lean 4 证明一个小伴随对
 
 ### 阶段三：精通（持续）
-- 阅读 [part05_higher_category_theory.md](part05_higher_category_theory.md) 与 [part06_ufpf_applications.md](part06_ufpf_applications.md)
+- 阅读 [part05_higher_category_theory.md](part05_higher_category_theory.md)、[part06_ufpf_applications.md](part06_ufpf_applications.md) 与 [part08_advanced_formalization.md](part08_advanced_formalization.md)
 - 跟踪 UFPF 形式化仓库中的 `UFPFormalization` 模块
-- 尝试为 Paper XIX 或 Paper XXI 中的某个构造补充 Lean 形式化
+- 尝试为 Paper XIX、Paper XXI 或形式化仓库中的高级构造补充 Lean 形式化
 
 ## 与 UFPF 核心理念的衔接
 

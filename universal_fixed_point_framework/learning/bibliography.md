@@ -132,6 +132,21 @@
 2. Kerodon 第 1 章
 3. UFPF Paper I 附录 Phase 30.4/31.1
 
+### 如果想学习幺半范畴与辫子结构
+1. Kassel, *Quantum Groups*（辫子张量范畴标准参考）
+2. Etingof, Gelaki, Nikshych, Ostrik, *Tensor Categories*
+3. UFPF `Braided.lean`
+
+### 如果想学习 Gelfand 对偶与谱几何
+1. Connes, *Noncommutative Geometry* 第 1-2 章
+2. Gracia-Bondía, Várilly, Figueroa, *Elements of Noncommutative Geometry*
+3. UFPF `GelfandDuality.lean`
+
+### 如果想学习同伦与谱流
+1. Atiyah, Patodi, Singer, *Spectral Asymmetry and Riemannian Geometry*
+2. Riehl, *Categorical Homotopy Theory*
+3. UFPF `SpectralFlowHomotopy.lean`
+
 ## 版本
 
 - v0.1（2026-08-18）：初始版本
