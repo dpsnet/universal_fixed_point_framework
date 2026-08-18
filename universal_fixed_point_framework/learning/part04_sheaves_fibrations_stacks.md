@@ -44,6 +44,8 @@ Paper XVI 定义 10.10：奇点 = 层公理被破坏的位置。在切触条件�
 - $\pi(\tilde{f}) = f$
 - 万有性质：任何其他提升唯一分解通过 $\tilde{f}$
 
+> **术语说明**：UFPF 论文统一使用 **"Cartan 提升"**。标准范畴论文献中通常称为 **"Cartesian lifting / Cartesian 提升"**。本资料为与 UFPF 论文保持一致，采用 "Cartan 提升"。
+
 **定义 4.6**（分裂纤维化）。若 Cartan 提升的选择可规范化为函子（恒等保持、复合保持），则称分裂 Grothendieck 纤维化。
 
 ### UFPF 实例：谱丛总范畴

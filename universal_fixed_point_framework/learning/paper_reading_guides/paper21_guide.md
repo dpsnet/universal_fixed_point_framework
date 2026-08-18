@@ -57,14 +57,16 @@
 
 ### §2 纤维化模板
 
-**关键定义 2.1**：函子 $\pi: \mathcal{E} \to \mathcal{B}$ 是 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和基态射 $f: b \to \pi(e)$，存在 Cartesian 提升 $\tilde{f}: e' \to e$
+**关键定义 2.1**：函子 $\pi: \mathcal{E} \to \mathcal{B}$ 是 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和基态射 $f: b \to \pi(e)$，存在 **Cartan 提升** $\tilde{f}: e' \to e$
+
+> **术语说明**：UFPF 论文统一使用 **"Cartan 提升"** 一词。标准范畴论文献中通常称为 **"Cartesian lifting / Cartesian 提升"**。本学习资料为保持与 UFPF 论文一致，采用 "Cartan 提升"。
 
 **关键定义 2.2**：分裂纤维化：Cartan 提升的选择可规范化为函子
 
 **对照学习**：[part04_sheaves_fibrations_stacks.md](../part04_sheaves_fibrations_stacks.md) §4.3
 
 **思考问题**：
-- Cartesian 提升的"万有性质"是什么？
+- Cartan 提升的"万有性质"是什么？
 - 为什么 UFPF 中的所有物理实例都是**分裂**纤维化？
 - 非分裂纤维化可能在什么场景出现？
 
