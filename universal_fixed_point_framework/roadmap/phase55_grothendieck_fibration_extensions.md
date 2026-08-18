@@ -28,7 +28,7 @@
 | **Phase 55E：Cuprate 分布论** | ✅ **完成** | `CuprateDistribution.lean`（cuprate 参数、双组分高斯混合模型、推前兼容性、对角闭包）|
 | **Phase 55A：噪声丛 Bun(Noise, Spec)** | ✅ **完成** | `NoiseFiber.lean`（Grothendieck 纤维化 + FH 定理 + η_c 奇异性 + N_hat 丛态射）；`NoiseCategory.lean`（Σ-Rec/Σ-Spec + Sel/Ext/Diss）；`spectral_noise_fibration.md` v0.1 |
 | **Phase 55G：时空谱对象丛（stack 化）** | ✅ **完成** | `SpacetimeStack.lean`（Open(M) 开集范畴 + SpectralPresheaf + sheaf_condition 层公理 + general_covariance_iff_sheaf 等价性 + CurvatureMatterFunctor 主定理 21 填补）`spectral_spacetime_stack.md` v0.1 |
-| **Phase 55F：P1 批量（Kerr/EFT/味丛/语境性）** | ✅ **完成** | `KerrFiber.lean`（Kerr 参数丛 + 视界谱 + Hawking 温度 + 非乘积丛）；`EFTCodomainFiber.lean`（能标范畴 + cod 余域纤维化 + S1-S4 Cartan 翻译）；`FlavorFiber.lean`（味扇区离散范畴 + CKM/PMNS 转移函数 + cocycle 么正性 + δ_CP 和乐）；`ContextualitySheaf.lean`（语境覆盖 + 真值赋值预层 + K-S 无全局截面定理）|
+| **Phase 55F：P1 批量（Kerr/EFT/味丛/语境性）** | ✅ **完成** | `KerrFiber.lean`（Kerr 参数丛 + 视界谱 + Hawking 温度 + 非乘积丛）；`EFTCodomainFiber.lean`（能标范畴 + cod 余域纤维化 + S1-S4 Cartesian 翻译）；`FlavorFiber.lean`（味扇区离散范畴 + CKM/PMNS 转移函数 + cocycle 么正性 + δ_CP 和乐）；`ContextualitySheaf.lean`（语境覆盖 + 真值赋值预层 + K-S 无全局截面定理）|
 | 总参数丛汇总（$(G, \eta, T, \mu, \ldots)$ 公共基） | ✅ **完成** | `TotalParameterFiber.lean`（TotalParamObj 乘积范畴 + 坐标嵌入 + π_Param 投影 + 拉回结构定理 + 丛态射网络 + 全局截面）；`spectral_total_parameter_fibration.md` v0.1 |
 
 ---
@@ -200,7 +200,7 @@ BCS 笔记 §8.4 明确排队（"需先完成 Phase 54B"）。谱粘合约束 $S
 | 子任务 | 候选 | 交付物 |
 |:------|:-----|:------|
 | **F1** Kerr 参数丛 | 极端极限 $a \to M$ 谱型相变 = 非乘积丛；与 Bun(Temp) 的丛态射（$T_H(a)$） | `notes/04_lorentz_gravity/spectral_kerr_fibration.md` |
-| **F2** EFT 余域纤维化 | slice category → codomain 纤维化（近零成本）；S1-S4 判据的 Cartan 态射刻画 | `notes/00_foundations/spectral_eft_codomain_fibration.md` |
+| **F2** EFT 余域纤维化 | slice category → codomain 纤维化（近零成本）；S1-S4 判据的 Cartesian 态射刻画 | `notes/00_foundations/spectral_eft_codomain_fibration.md` |
 | **F3** 味丛转移函数 | $V_{\text{CKM}} = J_u^{-1}J_d$ = 转移函数；么正性 = cocycle；$\delta_{CP}$ = 和乐；19 参数单截面统一 | `notes/02_ckm_pmns_flavor/spectral_flavor_fibration.md` |
 | **F4** 语境性层 | K-S 定理 = 预层无全局截面；实验对比表的层上同调统一 | `notes/00_foundations/spectral_contextuality_sheaf.md` |
 

@@ -525,7 +525,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 | `FlavorFiber.lean` | $\mathbf{Flt}$ 范畴、转移函数、cocycle 条件 | ✅ |
 | `WeaveProductFiber.lean` | $\mathbf{Temp}\times\mathbf{RG}$ 乘积基、辫子截面 | ✅ |
 | `SpacetimeStack.lean` | $\mathrm{Open}(M)$ 层、广义协变等价性 | ✅ 0 sorry |
-| `EFTCodomainFiber.lean` | $\mathbf{cod}$ 余域纤维化、S1-S4 Cartan 翻译 | ✅ |
+| `EFTCodomainFiber.lean` | $\mathbf{cod}$ 余域纤维化、S1-S4 Cartesian 翻译 | ✅ |
 | `ContextualitySheaf.lean` | K-S 定理的层翻译 | ✅ |
 | **`TotalParameterFiber.lean`** | **总参数丛 $\pi_{\mathbf{Param}}$、complete_chain** | ✅ |
 

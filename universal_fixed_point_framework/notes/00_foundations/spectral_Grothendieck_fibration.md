@@ -14,9 +14,9 @@
 
 ### 1.1 范畴上的纤维化
 
-**定义 1.1**（Grothendieck 纤维化）。设 $p: \mathcal{E} \to \mathcal{B}$ 是函子。对 $\mathcal{E}$ 中的态射 $\varphi: X \to Y$，若 $\varphi$ 相对于 $p$ 是 **Cartan 态射**（Cartesian morphism），则对任意 $Z \in \text{Ob}(\mathcal{E})$ 和 $h: Z \to Y$ 及 $w: p(Z) \to p(X)$ 使得 $p(h) = p(\varphi) \circ w$，存在唯一的提升 $\tilde{w}: Z \to X$ 使得 $p(\tilde{w}) = w$ 且 $h = \varphi \circ \tilde{w}$。
+**定义 1.1**（Grothendieck 纤维化）。设 $p: \mathcal{E} \to \mathcal{B}$ 是函子。对 $\mathcal{E}$ 中的态射 $\varphi: X \to Y$，若 $\varphi$ 相对于 $p$ 是 **Cartesian 态射**（Cartesian morphism），则对任意 $Z \in \text{Ob}(\mathcal{E})$ 和 $h: Z \to Y$ 及 $w: p(Z) \to p(X)$ 使得 $p(h) = p(\varphi) \circ w$，存在唯一的提升 $\tilde{w}: Z \to X$ 使得 $p(\tilde{w}) = w$ 且 $h = \varphi \circ \tilde{w}$。
 
-$p$ 是 **Grothendieck 纤维化**（fibred category / Grothendieck fibration）当对每个 $X \in \text{Ob}(\mathcal{E})$ 和每个 $\mathcal{B}$ 中的态射 $f: B \to p(X)$，存在 $X$ 上的 **Cartesian 提升**（Cartesian lift）$\tilde{f}: f^*X \to X$ 使得 $p(\tilde{f}) = f$ 且 $\tilde{f}$ 是 Cartan 态射。
+$p$ 是 **Grothendieck 纤维化**（fibred category / Grothendieck fibration）当对每个 $X \in \text{Ob}(\mathcal{E})$ 和每个 $\mathcal{B}$ 中的态射 $f: B \to p(X)$，存在 $X$ 上的 **Cartesian 提升**（Cartesian lift）$\tilde{f}: f^*X \to X$ 使得 $p(\tilde{f}) = f$ 且 $\tilde{f}$ 是 Cartesian 态射。
 
 **选择一个** Cartesian 提升的体系称为 **分裂**（cleavage）。带有分裂的纤维化称为 **分裂纤维化**（split fibration）。
 
@@ -58,7 +58,7 @@ $$\tilde{f}: (T_1, \{\lambda_i^{(1)}\}) \longrightarrow (T_2, \{\lambda_i^{(2)}\
 - $\{\lambda_i^{(1)}\} = f^*(\{\lambda_i^{(2)}\})$ 是通过谱流逆变换的 **拉回谱数据**：$\{\lambda_i^{(1)}\} = \text{Spec}(A(T_1))$ 中使得 $A(T_1)$ 与 $A(T_2)$ 通过温度膨胀 $f_\text{temp}$ 的谱流方程相关联的谱
 - $\tilde{f} = (f, \phi_f)$，其中 $\phi_f: \text{Spec}(A(T_1)) \to \text{Spec}(A(T_2))$ 是谱流诱导的谱变换（KMS 条件的谱对应）
 
-**验证 Cartan 条件**。设存在 $Z = (T_Z, \{\lambda_i^{(Z)}\})$ 和 $h = (h_{\text{base}}, h_{\text{fiber}}): Z \to (T_2, \{\lambda_i^{(2)}\})$ 及 $w: T_Z \to T_1$ 使得 $\pi_T(h) = h_{\text{base}} = f \circ w$。
+**验证 Cartesian 条件**。设存在 $Z = (T_Z, \{\lambda_i^{(Z)}\})$ 和 $h = (h_{\text{base}}, h_{\text{fiber}}): Z \to (T_2, \{\lambda_i^{(2)}\})$ 及 $w: T_Z \to T_1$ 使得 $\pi_T(h) = h_{\text{base}} = f \circ w$。
 
 定义提升 $\tilde{w}: Z \to (T_1, \{\lambda_i^{(1)}\})$ 为：
 $$\tilde{w} = (w, \phi_w)$$
@@ -112,7 +112,7 @@ $\tilde{w}$ 的唯一性由谱流方程解的唯一性保证。$\square$
 
 **定义 4.1**（纤维保持函子）。设 $p: \mathcal{E} \to \mathcal{B}$ 和 $p': \mathcal{E}' \to \mathcal{B}'$ 是 Grothendieck 纤维化。函子 $F: \mathcal{E} \to \mathcal{E}'$ 称为 **纤维保持**（fibred functor / Cartesian functor）当：
 1. **基保持**：存在函子 $F_0: \mathcal{B} \to \mathcal{B}'$ 使得 $p' \circ F = F_0 \circ p$
-2. **Cartan 保持**：$F$ 将 $p$-Cartan 态射映射为 $p'$-Cartan 态射
+2. **Cartesian 保持**：$F$ 将 $p$-Cartesian 态射映射为 $p'$-Cartesian 态射
 
 条件 1 意味着当 $p(e)=B$ 时，$p'(F(e)) = F_0(B)$。
 
@@ -128,7 +128,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(f, \phi) = (\mathcal{T}(f), \phi_\mu)$$
 
 则 $\pi_\mu(\hat{\mathcal{T}}_{\text{Riem}}(T, \{\lambda_i\})) = \pi_\mu(\mathcal{T}(T), \{\lambda_i(\mathcal{T}(T))\}) = \mathcal{T}(T) = \mathcal{T}(\pi_T(T, \{\lambda_i\}))$。类似地对态射：$\pi_\mu(\hat{\mathcal{T}}_{\text{Riem}}(f, \phi)) = \mathcal{T}(f) = \mathcal{T}(\pi_T(f, \phi))$。故 $\pi_\mu \circ \hat{\mathcal{T}}_{\text{Riem}} = \mathcal{T} \circ \pi_T$。
 
-**条件 2：Cartan 保持**。设 $\tilde{f}: (T_1, f^*\{\lambda_i^{(2)}\}) \to (T_2, \{\lambda_i^{(2)}\})$ 是 $\pi_T$ 的 Cartan 态射（定理 2.1 的构造），需证 $\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f})$ 是 $\pi_\mu$ 的 Cartan 态射。
+**条件 2：Cartesian 保持**。设 $\tilde{f}: (T_1, f^*\{\lambda_i^{(2)}\}) \to (T_2, \{\lambda_i^{(2)}\})$ 是 $\pi_T$ 的 Cartesian 态射（定理 2.1 的构造），需证 $\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f})$ 是 $\pi_\mu$ 的 Cartesian 态射。
 
 由 $\hat{\mathcal{T}}_{\text{Riem}}$ 的态射映射：
 $$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f}) = (\mathcal{T}(f), \phi_{f,\mu})$$
@@ -141,7 +141,7 @@ $$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f}) = (\mathcal{T}(f), \phi_{f,\mu})$$
 
 由于 $h'_{\text{base}} = \mathcal{T}(f) \circ w'$ 且 $\mathcal{T}(f) = g_{\mathcal{T}}$（温度膨胀 $f$ 对应标度膨胀 $g_{\mathcal{T}}$），谱流方程在 $\mathbf{RG}$ 中具有唯一性。定义 $\phi_{w'}: \text{Spec}(A(\mu_Z)) \to \text{Spec}(A(\mathcal{T}(T_1)))$ 为 $\phi_{w'} = (\phi_{f,\mu})^{-1} \circ h'_{\text{fiber}}$。
 
-验证 $\tilde{w}' = (w', \phi_{w'})$ 满足所需性质——此过程与定理 2.1 中 Cartan 条件验证完全相同。$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f})$ 保持 Cartan 性。$\square$
+验证 $\tilde{w}' = (w', \phi_{w'})$ 满足所需性质——此过程与定理 2.1 中 Cartesian 条件验证完全相同。$\hat{\mathcal{T}}_{\text{Riem}}(\tilde{f})$ 保持 Cartesian 性。$\square$
 
 **推论 4.1**（纤维映射）。$\hat{\mathcal{T}}_{\text{Riem}}$ 在纤维间诱导一对一映射 $\hat{\mathcal{T}}_{\text{Riem}}|_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})_T \to \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})_{\mathcal{T}(T)}$。
 
@@ -467,6 +467,6 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
 |:----|:----|:--------|
 | **v0.5** | **2026-07-22** | **Lean 4 完整补全**：`TempRGFiber.lean` 新增 §5（Grothendieck 构造 ∫F_T ≅ Bun 及 ∫F_μ ≅ BunRG 等价性证明）、§6（η̂ 自然变换与纤维限制定理）、§7（2-范畴定理 7.1-7.3 的 Lean 骨架）、§8（QCD/BCS/HP/流变物理纤维截面定义）；通过 `lake build` 验证总计 ~970 行无 sorry |
 | **v0.4** | **2026-07-22** | **§8 重组**：标题由"在三个物理系统中的应用"改为"在物理临界系统中的应用"；§8.1-8.4 每节新增论文出处与对应 notes/ 笔记标注（QCD→`01_qcd_higgs/spectral_Tc_derivation.md`；BCS→`02_superconductivity/spectral_BCS_weave.md`；HP→`04_lorentz_gravity/spectral_Kerr.md`；流变→`05_condensed_matter/` 下 rheo_boundary/critical_unification/rheology_lorentz_isomorphism）；新增 §8.5 来源映射表（定理-论文-笔记三方对照，含 Paper VI 内部编号说明） |
-| **v0.3** | **2026-07-22** | **Lean 4 形式化验证完成**：`TempRGFiber.lean` 通过 `lake build`（无 sorry）。实现：TempCat/RGCat 范畴；𝒯: TempCat ≌ RGCat 范畴等价；Bun 总范畴；π_T/π_μ 分裂 Grothendieck 纤维化（Cartesian 提升 + 万有性质）；纤维保持函子 T̂_Riem 及 Cartan 保持定理；2Bun 1/2-态射结构 |
+| **v0.3** | **2026-07-22** | **Lean 4 形式化验证完成**：`TempRGFiber.lean` 通过 `lake build`（无 sorry）。实现：TempCat/RGCat 范畴；𝒯: TempCat ≌ RGCat 范畴等价；Bun 总范畴；π_T/π_μ 分裂 Grothendieck 纤维化（Cartesian 提升 + 万有性质）；纤维保持函子 T̂_Riem 及 Cartesian 保持定理；2Bun 1/2-态射结构 |
 | **v0.2** | **2026-07-22** | 新增 §8.4（流变谱边界纤维截面，嵌入 Paper VI 主定理 E1-E3 与 F5）；更新 §9.1 纤维截面行（增加 $\sigma_\Delta^{(\text{rheo})}$）与 §9.2 常数表（增加流变行）；新增推论 8.4a-8.4b（流变-HP 对偶与七类统一截面） |
 | **v0.1** | **2026-07-22** | 初始版本：Grothendieck 纤维化 $\pi_T$、$\pi_\mu$ 的严格定义（定理 2.1、3.1）；$\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持性证明（定理 4.1）；Grothendieck 构造的同构性证明（命题 5.1、5.2）；自然变换 $\eta$ 的纤维化提升（定理 6.1）；2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 的严格化（定理 7.2）；三个物理系统的纤维截面应用（定理 8.1-8.3）；Lean 4 形式化框架（附录 A） |

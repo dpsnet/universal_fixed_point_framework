@@ -62,7 +62,7 @@ $$\lambda_i^{(1)} = \lambda_i(\eta_1) = \lambda_i^{(2)} - \int_{\eta_1}^{\eta_2}
 
 此积分的严格形式化：原称在 `NoiseFiber.lean` 中以定理链（`feynman_hellmann_flow` → `spectral_flow_integral_form` → `cartesian_lift_from_FH`）给出——※ 勘误（2026-08-09）：**这三者不存在**于 `NoiseFiber.lean`。当前已闭合的是 2×2 显式特征方程与谱间隙闭式（`twoByTwo_gap_sq`/`twoByTwo_lambda_plus_characteristic`/`cl17_eigenvalue_formula`），积分形式的 FH 逆积分拉回仍为设计描述（见 §7 开放问题）。对于有限维 Hermitian 矩阵 $A_\eta = A_R + \eta \cdot \delta A_N$，FH 公式是精确等式而非微扰近似这一结论保持。
 
-**验证 Cartan 条件**。设存在 $Z = (\eta_Z, \{\lambda_i^{(Z)}\})$ 和 $h = (h_{\text{base}}, h_{\text{fiber}}): Z \to (\eta_2, \{\lambda_i^{(2)}\})$ 及 $w: \eta_Z \to \eta_1$ 使得 $\pi_\eta(h) = h_{\text{base}} = f \circ w$。
+**验证 Cartesian 条件**。设存在 $Z = (\eta_Z, \{\lambda_i^{(Z)}\})$ 和 $h = (h_{\text{base}}, h_{\text{fiber}}): Z \to (\eta_2, \{\lambda_i^{(2)}\})$ 及 $w: \eta_Z \to \eta_1$ 使得 $\pi_\eta(h) = h_{\text{base}} = f \circ w$。
 
 定义提升 $\tilde{w}: Z \to (\eta_1, f^*\{\lambda_i^{(2)}\})$ 为 $\tilde{w} = (w, \phi_w)$，其中 $\phi_w$ 由谱流的唯一性保证存在。
 

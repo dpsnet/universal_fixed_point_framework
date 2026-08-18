@@ -17,7 +17,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 已验证实例：
 - $\pi_T: \mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp}) \to \mathbf{Temp}$（分裂 Grothendieck 纤维化）
 - $\pi_\mu: \mathbf{Bun}(\mathbf{RG}, \mathbf{Sp}) \to \mathbf{RG}$
-- 纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 及 Cartan 保持性
+- 纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 及 Cartesian 保持性
 - 截面：$\sigma_\Delta^{(T)}$（QCD）、$\sigma_\Delta^{(\text{BCS})}$、$\sigma_\Delta^{(\text{HP})}$、$\sigma_\Delta^{(\text{rheo})}$
 - Lean 4：`TempRGFiber.lean` ~1317 行通过 `lake build`（无 sorry），覆盖 §1–§12（原 §1–§8 + Grothendieck 构造、η̂ 提升、2-范畴 Bicategory 结构、四类物理截面、Mathlib FiberedCategory 对接），零个 `by trivial`
 

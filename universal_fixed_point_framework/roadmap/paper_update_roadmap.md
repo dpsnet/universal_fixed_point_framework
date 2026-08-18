@@ -18,7 +18,7 @@
 | **P1** | Paper XVII | ✅ 完成 | **v1.3→v1.5** | $\mathbf{Flt}$ 离散范畴与 $J_f$ 实结构；转移函数 cocycle 么正性；$\delta_{CP}$ 和乐公式 |
 | **P1** | Paper VIII | ✅ 完成 | **v1.2→v1.4** | Kerr 参数范畴；视界谱间隙公式；$T_H = \Delta\lambda_{\min}/2\pi$ 丛态射；非乘积丛证据 |
 | **P2** | Paper X | ✅ 完成 | **v1.3→v1.4** | $\eta_c$ 解析推导完整步骤；$\tau(\eta)\propto 1/(\eta_c-\eta)$ 发散证明；Peres-Mermin 方构造 |
-| **P2** | Paper I | ✅ 完成 | §8.3.3 更新 | EFT 能标范畴定义；codomain 函子 Grothendieck 纤维化；S1-S4 Cartan 翻译 |
+| **P2** | Paper I | ✅ 完成 | §8.3.3 更新 | EFT 能标范畴定义；codomain 函子 Grothendieck 纤维化；S1-S4 Cartesian 翻译 |
 
 ### 新论文（Phase 59，理论框架已完成，待数值验证更新）
 
@@ -126,7 +126,7 @@
 |:---------|:---------------|:------------------|
 | §8.3.3 能标范畴 | $\Lambda$ 范畴定义（对象 $\Lambda \in \mathbb{R}^+$，态射为粗粒化比例 $r\in(0,1]$）、拉回结构（$\Lambda_1\times_\Lambda\Lambda_2 = \max(\Lambda_1,\Lambda_2)$） | `spectral_eft_codomain_fibration.md` §1 |
 | §8.3.3 余域纤维化 | $\mathbf{EFT}/\Lambda$ slice 范畴、$\mathbf{cod}$ 函子、教科书级 Grothendieck 纤维化证明 | `spectral_eft_codomain_fibration.md` §2 |
-| S1-S4 判据 | S1=全局截面存在性、S2=$\Lambda_1=\Lambda_2$ 时态射为 Cartan、S3=边界处拉回不存在、S4=$\iota\dashv\text{cod}$ 伴随结构 | `spectral_eft_codomain_fibration.md` §3 |
+| S1-S4 判据 | S1=全局截面存在性、S2=$\Lambda_1=\Lambda_2$ 时态射为 Cartesian、S3=边界处拉回不存在、S4=$\iota\dashv\text{cod}$ 伴随结构 | `spectral_eft_codomain_fibration.md` §3 |
 
 ---
 

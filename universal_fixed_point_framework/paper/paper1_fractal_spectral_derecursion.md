@@ -1458,7 +1458,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **定理**（$\mathbf{cod}$ 是分裂 Grothendieck 纤维化）。对任意 $(E, \Lambda_E, f)$ 和 $\Lambda' \to \Lambda$，Cartesian 提升为 $(E, \Lambda_E, f \circ g)$。
 
-**谱静默判据的 Cartan 翻译**：
+**谱静默判据的 Cartesian 翻译**：
 - **S1**：全局截面 $\sigma_{S1}(\Lambda) = (E_\Lambda, \Lambda, \text{id}_\Lambda)$ 存在
 - **S2**：$\Lambda_1 = \Lambda_2$ 时 $g$ 是 Cartesian 态射
 - **S3**：边界 $\partial\Lambda$（$\Lambda \to 0$ 或 $\Lambda \to \infty$）处拉回不存在 → 不是 Cartesian

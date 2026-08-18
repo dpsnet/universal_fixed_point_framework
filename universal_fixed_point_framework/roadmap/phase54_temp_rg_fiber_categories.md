@@ -96,7 +96,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 | 子任务 | 描述 | 预计 | 状态 |
 |:------|:-----|:----|:----:|
 | **B1** Grothendieck 纤维范畴定义 | $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的严格函子定义 | 1 周 | ✅ **已完成** — `spectral_Grothendieck_fibration.md` v0.1 |
-| **B2** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持证明 | 在 Grothendieck 框架中证明纤维保持性 | 0.5 周 | ✅ **已完成** — 定理 4.1 (Cartan 保持性 + 基保持性) |
+| **B2** $\hat{\mathcal{T}}_{\text{Riem}}$ 的纤维保持证明 | 在 Grothendieck 框架中证明纤维保持性 | 0.5 周 | ✅ **已完成** — 定理 4.1 (Cartesian 保持性 + 基保持性) |
 | **B3** Lean 4 形式化 | 核心定义与定理的 Lean 4 实现 | 1-2 周 | ✅ **已完成** — `TempRGFiber.lean` (11 节, ~1074 行) |
 | **B4** 2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 完备化 | 2-细胞的条件与组合律严格证明 | 0.5 周 | ✅ **已完成** — 竖复合 `vcomp` + 结合律/单位律 |
 | **F1** 分裂性（命题 2.2） | $\text{Cl}_T(g\circ f)=\text{Cl}_T(g)\circ\text{Cl}_T(f)$ | 低 | ✅ `π_T_cleavage_id/comp` + RG 对偶 |

@@ -2,7 +2,7 @@
 
 **版本**：v0.1（2026-07-23）
 
-**摘要**：本笔记将有效场论（EFT）的能量标度层级提升为 Grothendieck 纤维范畴。核心结构为余域纤维化（codomain fibration）$\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，其中 $\Lambda$ 是能标范畴（对象为 RG 能标，态射为粗粒化流），$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴（对象为"能标 $\Lambda$ 处的有效场论"）。该构造在教科书层面是标准的——任意带拉回的范畴上的 codomain 函子都是 Grothendieck 纤维化。关键应用是将谱静默四判据 S1-S4 翻译为 Cartan 态射的存在性条件：哪些 RG 态射在 $\mathbf{EFT}$ 中具有 Cartesian 提升。
+**摘要**：本笔记将有效场论（EFT）的能量标度层级提升为 Grothendieck 纤维范畴。核心结构为余域纤维化（codomain fibration）$\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，其中 $\Lambda$ 是能标范畴（对象为 RG 能标，态射为粗粒化流），$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴（对象为"能标 $\Lambda$ 处的有效场论"）。该构造在教科书层面是标准的——任意带拉回的范畴上的 codomain 函子都是 Grothendieck 纤维化。关键应用是将谱静默四判据 S1-S4 翻译为 Cartesian 态射的存在性条件：哪些 RG 态射在 $\mathbf{EFT}$ 中具有 Cartesian 提升。
 
 **前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 Grothendieck 纤维化模板）、[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)（UFPF 五层架构）。
 
@@ -51,25 +51,25 @@ $$\mathbf{cod}(E, \Lambda_E, f) = \Lambda$$
 
 **证明**（教科书标准证明）。对任意 $(E, \Lambda_E, f) \in \mathbf{EFT}/\Lambda$ 和 $\Lambda' \to \Lambda$ 在 $\Lambda$ 中，构造 Cartesian 提升：
 - 提升对象：$(E, \Lambda_E, f \circ g)$，其中 $g: \Lambda' \to \Lambda$ 是给定的基态射
-- Cartan 态射：由 slice 范畴的万有性质保证存在性
+- Cartesian 态射：由 slice 范畴的万有性质保证存在性
 
 分裂性由 identity 保持和复合保持自动成立。$\square$
 
 ---
 
-## 3. 谱静默判据的 Cartan 翻译
+## 3. 谱静默判据的 Cartesian 翻译
 
 谱静默四判据 S1-S4 在纤维范畴语言中获得精确的范畴论刻画。
 
 ### 3.1 S1：基本谱间隙
 
-**S1（Cartan 翻译）**。对于能标 $\Lambda$ 处的 EFT $E_\Lambda$，其基本谱间隙 $\Delta\lambda_{\min}$ 定义了截面：
+**S1（Cartesian 翻译）**。对于能标 $\Lambda$ 处的 EFT $E_\Lambda$，其基本谱间隙 $\Delta\lambda_{\min}$ 定义了截面：
 $$\sigma_{S1}(\Lambda) = (E_\Lambda, \Lambda, \text{id}_\Lambda) \in \mathbf{EFT}/\Lambda$$
 该截面是 $\mathbf{cod}$ 的全局截面：$\mathbf{cod} \circ \sigma_{S1} = \text{id}_\Lambda$。
 
 ### 3.2 S2：代数结构静默
 
-**S2（Cartan 翻译）**。给定 EFT 间的态射 $g: E_{\Lambda_1} \to E_{\Lambda_2}$（如规范群嵌入、对称性破缺），$g$ 是 Cartan 态射当且仅当存在 $\Lambda_2 \to \Lambda_1$ 使得以下图表交换：
+**S2（Cartesian 翻译）**。给定 EFT 间的态射 $g: E_{\Lambda_1} \to E_{\Lambda_2}$（如规范群嵌入、对称性破缺），$g$ 是 Cartesian 态射当且仅当存在 $\Lambda_2 \to \Lambda_1$ 使得以下图表交换：
 $$\begin{CD}
 E_{\Lambda_1} @>{g}>> E_{\Lambda_2} \\
 @V{\mathbf{cod}}VV @VV{\mathbf{cod}}V \\
@@ -79,11 +79,11 @@ E_{\Lambda_1} @>{g}>> E_{\Lambda_2} \\
 
 ### 3.3 S3：辫子静默
 
-**S3（Cartan 翻译）**。S3 对应截面在边界处的辫子奇异性：态射 $g$ 在边界点 $\partial\Lambda$（如 $\Lambda \to 0$ 或 $\Lambda \to \infty$）处不是 Cartan 态射，因为拉回不存在。
+**S3（Cartesian 翻译）**。S3 对应截面在边界处的辫子奇异性：态射 $g$ 在边界点 $\partial\Lambda$（如 $\Lambda \to 0$ 或 $\Lambda \to \infty$）处不是 Cartesian 态射，因为拉回不存在。
 
 ### 3.4 S4：Level 4 延拓
 
-**S4（Cartan 翻译）**。S4 对应 $\iota \dashv \pi$ 伴随结构的存在性：在 $\mathbf{EFT}/\Lambda$ 中，$\iota$ 是嵌入（精细化），$\pi$ 是投影（粗粒化），且 $\iota$ 是 $\mathbf{cod}$ 的右伴随：
+**S4（Cartesian 翻译）**。S4 对应 $\iota \dashv \pi$ 伴随结构的存在性：在 $\mathbf{EFT}/\Lambda$ 中，$\iota$ 是嵌入（精细化），$\pi$ 是投影（粗粒化），且 $\iota$ 是 $\mathbf{cod}$ 的右伴随：
 $$\mathbf{cod} \circ \iota = \text{id}_\Lambda, \quad \iota(\Lambda) = (E_{\text{UV}}, \Lambda, \text{id}_\Lambda)$$
 
 ※ 勘误（2026-08-09）：S4（$\iota\dashv\pi$ 伴随）在本有限原型中**不可构造**——
@@ -113,7 +113,7 @@ EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过�
 |:----|:-----|:-----|
 | `CartesianLiftData` / `GrothendieckFibration` | `TempRGFiber.lean` | $\mathbf{cod}$ 纤维化实例 |
 | `D_res` | `RecCategory.lean` / `DecursionFunctor.lean` | 谱退归函子 |
-| `SilenceHierarchy.lean` | S1-S4 判据 | Cartan 翻译 |
+| `SilenceHierarchy.lean` | S1-S4 判据 | Cartesian 翻译 |
 
 ### 5.2 新建内容与深化 (v0.2)
 
@@ -137,4 +137,4 @@ EFT 余域纤维化与 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的关系通过�
 |:----|:----|:--------|
 | **v0.3** | **2026-08-09** | **勘误**：`cod_level4` Level4Extension 实例主张撤销——counit 可证不存在（`EFTCodomainFiber.lean` `cod_is_not_level4`，theoryMap : String→String 无零吸收结构，自然性在任意自态射处矛盾）；`scalePullback_fst/snd` 投影闭合；S2/S3 保持 |
 | **v0.2** | **2026-07-23** | **深化**新增：`scalePullback` $\Lambda$ 拉回结构；`S2_cartesian_proper` 严格 Cartesian 刻画；`S3_boundary_IR/UV` 物理边界；`cod_level4` Level4Extension 实例；`D_hat_functor` 使用 `cl17GapMatrix` 连接谱退归 |
-| **v0.1** | **2026-07-23** | 初始版本：能标范畴定义；EFT slice 范畴；余域函子 Grothendieck 纤维化；S1-S4 谱静默判据的 Cartan 翻译；EFT↔谱对应；Lean 形式化方案 |
+| **v0.1** | **2026-07-23** | 初始版本：能标范畴定义；EFT slice 范畴；余域函子 Grothendieck 纤维化；S1-S4 谱静默判据的 Cartesian 翻译；EFT↔谱对应；Lean 形式化方案 |
