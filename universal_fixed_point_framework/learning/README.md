@@ -28,6 +28,9 @@
 | [part06_ufpf_applications.md](part06_ufpf_applications.md) | UFPF 论文映射与定理索引 | 应用 | 将范畴工具直接对应到 Paper I~XLIV |
 | [part07_exercises_lean.md](part07_exercises_lean.md) | 习题与 Lean 4 形式化路径 | 实践 | 能独立形式化简单伴随对与纤维化 |
 | [part08_advanced_formalization.md](part08_advanced_formalization.md) | 形式化仓库中的高级范畴结构 | 精通→前沿 | 掌握幺半范畴、对偶、表示桥接、同伦方法 |
+| [part07_solutions.md](part07_solutions.md) | Part 7 习题解答与提示 | 参考 | 对照检查分级习题 |
+| [lean_case_studies/](lean_case_studies/) | Lean 4 实战案例 | 实践 | 从 Set 范畴、伴随对到谱等价 |
+| [paper_reading_guides/](paper_reading_guides/) | 核心论文精读导引 | 应用 | Paper I / XIX / XXI 的范畴论路线 |
 | [bibliography.md](bibliography.md) | 经典教材、论文与在线资源 | 参考 | 构建后续深入学习资源库 |
 
 ## 学习阶段建议
