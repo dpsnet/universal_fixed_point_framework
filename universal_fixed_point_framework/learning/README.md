@@ -15,6 +15,26 @@
 > 2. **物理实例的正确性**（需实验/观测验证）
 > 3. **学术界认可**（需同行评审与独立复现）
 
+## 已覆盖范畴概念速查
+
+| 概念 | 说明 | 所在文件 |
+|------|------|---------|
+| 范畴、对象、态射、同构 | 基础定义与 UFPF 中的 $\mathbf{Rec}$、$\mathbf{Sp}$ | [part00_warmup.md](part00_warmup.md)、[part01_basics.md](part01_basics.md) |
+| 子范畴、宽子范畴、全子范畴 | 限制对象或态射的方式 | [part01_basics.md](part01_basics.md) |
+| 函子、自然变换、自然同构 | 范畴之间的结构保持映射及其比较 | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) |
+| 伴随对、单位、余单位 | UFPF 核心：$D \dashv R$、$\mathcal{L} \dashv \iota$、$\mathcal{S}el \dashv \mathcal{D}iss$ | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) |
+| 极限、余极限 | 积、余积、拉回、推出等泛构造 | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
+| 单子、Kleisli 范畴、Eilenberg-Moore 范畴 | $T = R \circ D$、平凡单子 $T = \mathcal{L} \circ \iota$ | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
+| 预层、层、茎、层化 | 时空谱层、奇点的层论定义 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
+| Grothendieck 纤维化、Cartan 提升、截面 | Temp/RG/Noise/Kerr/Flt 谱丛 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
+| 谱栈 | 谱丛在开集范畴上的层论推广 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
+| 2-范畴、2-函子 | $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$ | [part05_higher_category_theory.md](part05_higher_category_theory.md) |
+| ∞-范畴、A∞/L∞ 代数 | 高阶括号与同伦结构 | [part05_higher_category_theory.md](part05_higher_category_theory.md) |
+| 幺半范畴、辫子幺半范畴 | $\mathbf{Rec}$ 上的张量积与辫子结构 | [part08_advanced_formalization.md](part08_advanced_formalization.md) |
+| 范畴等价、Gelfand 对偶 | 谱等价、$D^{\text{id}}$ 与 Gelfand 对偶的对比 | [part08_advanced_formalization.md](part08_advanced_formalization.md) |
+| 表示范畴、几何范畴 | Koopman 表示桥接、几何-谱对应 | [part08_advanced_formalization.md](part08_advanced_formalization.md) |
+| 同伦、谱流 | 谱流方程的同伦不变性、辫子交叉数 | [part08_advanced_formalization.md](part08_advanced_formalization.md) |
+
 ## 目录
 
 | 文件 | 主题 | 难度 | 目标 |
