@@ -54,12 +54,15 @@
 | [part06_ufpf_applications.md](part06_ufpf_applications.md) | UFPF 论文映射与定理索引 | 应用 | 将范畴工具直接对应到 Paper I~XLIV |
 | [part07_exercises_lean.md](part07_exercises_lean.md) | 习题与 Lean 4 形式化路径 | 实践 | 能独立形式化简单伴随对与纤维化 |
 | [part08_advanced_formalization.md](part08_advanced_formalization.md) | 形式化仓库中的高级范畴结构 | 精通→前沿 | 掌握幺半范畴、对偶、表示桥接、同伦方法 |
+| [part09_standard_textbook_roadmap.md](part09_standard_textbook_roadmap.md) | UFPF 教程与标准教材对照学习路线 | 全阶段 | 按阶段并行阅读标准教材，兼顾速度与严密性 |
 | [part07_solutions.md](part07_solutions.md) | Part 7 习题解答与提示 | 参考 | 对照检查分级习题 |
 | [lean_case_studies/](lean_case_studies/) | Lean 4 实战案例 | 实践 | 从 Set 范畴、伴随对到谱等价 |
 | [paper_reading_guides/](paper_reading_guides/) | 核心论文精读导引 | 应用 | Paper I / XIX / XXI 的范畴论路线 |
 | [bibliography.md](bibliography.md) | 经典教材、论文与在线资源 | 参考 | 构建后续深入学习资源库 |
 
 ## 学习阶段建议
+
+> 如需将下面各阶段与标准教材（Awodey、Leinster、Riehl、Mac Lane 等）按章节对照阅读，参见 [part09_standard_textbook_roadmap.md](part09_standard_textbook_roadmap.md)。
 
 ### 阶段零：热身（0.5~1 周）
 - 如果你完全没接触过范畴论，先读 [part00_warmup.md](part00_warmup.md)
