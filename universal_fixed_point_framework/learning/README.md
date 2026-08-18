@@ -6,19 +6,20 @@
 
 > **本资料仅涉及 UFPF 框架的数学与范畴论结构。**
 >
-> UFPF 作为物理理论目前仍处于**预研阶段**：其物理预言（如耦合常数、禁闭尺度、anyon 编织相位、引力修正等）需经实验检验，且尚未获得学术界的广泛认可。
+> UFPF 本质上是一个以递归-谱翻译为核心的**数学/范畴论框架**。物理领域中的应用（如 QCD、引力、粒子谱、黑洞 QNM 等）只是该框架在特定领域的**理论实例**，其物理正确性仍需实验检验，且尚未获得学术界的广泛认可。
 >
 > 形式化机证（Lean 4 / Mathlib）与范畴论推导保证的是**数学自洽性**——即在给定公理与定义的前提下，定理在形式系统内部无矛盾。数学自洽性**不自动蕴含**物理真理性、实验符合性或学术共同体认可。
 >
 > 学习时应区分三个独立层级：
 > 1. **数学自洽性**（形式证明可验证）
-> 2. **物理对应性**（需实验/观测验证）
+> 2. **物理实例的正确性**（需实验/观测验证）
 > 3. **学术界认可**（需同行评审与独立复现）
 
 ## 目录
 
 | 文件 | 主题 | 难度 | 目标 |
 |------|------|------|------|
+| [part00_warmup.md](part00_warmup.md) | 范畴论直觉热身 | 零基础 | 用 3 个熟悉例子建立"对象 + 保持结构的映射"直觉 |
 | [part01_basics.md](part01_basics.md) | 范畴、对象、态射、同构 | 入门 | 能读懂 UFPF 中 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的定义 |
 | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) | 函子、自然变换、伴随 | 入门→进阶 | 理解谱化函子 $D \dashv R$ 的核心结构 |
 | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) | 极限/余极限、单子、Kleisli 范畴 | 进阶 | 理解 $\Sigma$-$\mathbf{Rec}$ 余完备化与 $T = \mathcal{L} \circ \iota$ 单子 |
@@ -30,6 +31,11 @@
 | [bibliography.md](bibliography.md) | 经典教材、论文与在线资源 | 参考 | 构建后续深入学习资源库 |
 
 ## 学习阶段建议
+
+### 阶段零：热身（0.5~1 周）
+- 如果你完全没接触过范畴论，先读 [part00_warmup.md](part00_warmup.md)
+- 完成其中的学前自测，确认理解"对象 + 保持结构的映射"这一核心直觉
+- 可选同步阅读 Awodey《Category Theory》第 1 章
 
 ### 阶段一：入门（1~2 周）
 - 阅读 [part01_basics.md](part01_basics.md) 与 [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md)
