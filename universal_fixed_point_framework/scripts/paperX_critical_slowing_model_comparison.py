@@ -166,13 +166,26 @@ def ufpm_log_likelihood(params: np.ndarray, df: pd.DataFrame) -> float:
 
 
 def fit_ufpm(df: pd.DataFrame) -> dict:
-    """最大似然拟合 UFPF toy 对数正态模型。"""
+    """最大似然拟合 UFPF toy 对数正态模型，使用网格搜索初始值。"""
     def neg_ll(params):
         return -ufpm_log_likelihood(params, df)
 
+    # 粗略网格搜索找到好的初始点
+    best_ll = -np.inf
+    best_x0 = [300.0, 1.2, 300.0, 0.18]
+    for C0 in [100.0, 250.0, 400.0]:
+        for gamma0 in [0.8, 1.0, 1.2, 1.5]:
+            for t00 in [100.0, 300.0, 500.0]:
+                for s0 in [0.10, 0.18, 0.25]:
+                    ll = ufpm_log_likelihood([C0, gamma0, t00, s0], df)
+                    if ll > best_ll:
+                        best_ll = ll
+                        best_x0 = [C0, gamma0, t00, s0]
+    print(f"    UFPF 初始网格最优 LL={best_ll:.2f}，参数 {best_x0}")
+
     result = minimize(
         neg_ll,
-        x0=[300.0, 1.2, 300.0, 0.2],
+        x0=best_x0,
         method="L-BFGS-B",
         bounds=[(1.0, 5000.0), (0.1, 3.0), (0.0, 2000.0), (0.001, 1.0)],
     )
@@ -219,17 +232,20 @@ def ddm_pdf(t: np.ndarray, v: np.ndarray, a: float, z: float, eps: float = 1e-20
     v = np.asarray(v, dtype=float)
     pdf = np.zeros_like(t, dtype=float)
 
-    # 小时间/大时间切换阈值（取 a²/2 作为经验阈值）
-    threshold = 0.5 * a ** 2
+    # 小时间/大时间切换阈值：取 a² * min(z,1-z)² / 2
+    # 当 z 接近 0 或 1 时，小时间展开需要更小的阈值以避免镜像项主导
+    z_eff = min(z, 1.0 - z)
+    threshold = 0.5 * a ** 2 * z_eff ** 2
+    threshold = max(threshold, 1e-4)
     small_mask = t < threshold
     large_mask = ~small_mask
 
-    # 小时间展开
+    # 小时间展开：增加镜像项以改善 z>0.5 时的对称性
     if small_mask.any():
         ts = t[small_mask]
         vs = v[small_mask]
         s = np.zeros_like(ts)
-        for k in range(-5, 6):
+        for k in range(-20, 21):
             ak = a * z + 2 * k * a
             s += (z + 2 * k) * np.exp(-(ak ** 2) / (2.0 * ts))
         pdf[small_mask] = (
@@ -238,12 +254,12 @@ def ddm_pdf(t: np.ndarray, v: np.ndarray, a: float, z: float, eps: float = 1e-20
             * s
         )
 
-    # 大时间展开
+    # 大时间展开：增加项数以改善大 a 或大 t 时的精度
     if large_mask.any():
         tl = t[large_mask]
         vl = v[large_mask]
         s = np.zeros_like(tl)
-        for k in range(1, 25):
+        for k in range(1, 50):
             s += k * np.sin(k * np.pi * z) * np.exp(-(k ** 2) * (np.pi ** 2) * tl / (2.0 * a ** 2))
         pdf[large_mask] = (
             np.pi / (a ** 2)
@@ -253,6 +269,61 @@ def ddm_pdf(t: np.ndarray, v: np.ndarray, a: float, z: float, eps: float = 1e-20
 
     # 防止下溢导致的 log(0)
     return np.maximum(pdf, eps)
+
+
+def check_ddm_stability() -> None:
+    """
+    数值稳定性与对称性自检。
+    检查：
+      1. 下边界 PDF 对称性：f_B(t|v,a,z) == f_A(t|-v,a,1-z)
+      2. 总概率归一化：∫[f_A + f_B] dt ≈ 1
+      3. 临界点附近（v→0）数值行为
+      4. 不同 a 下 PDF 的量级，提示下溢风险
+    """
+    print("\n[DDM 数值稳定性自检]")
+    print("-" * 50)
+
+    a = 0.5  # 用于对称性与归一化测试的边界间距
+
+    # 1. 对称性：f_B(t;v,a,z) == f_A(t;-v,a,1-z)
+    print("1. 对称性 f_B(v,z) == f_A(-v,1-z)：")
+    t = np.linspace(0.01, 5.0, 200)
+    v_val = 1.0
+    for z_test in [0.30, 0.50, 0.70]:
+        pdf_a = ddm_pdf(t, np.full_like(t, v_val), a, z_test)
+        pdf_b_ref = ddm_pdf(t, np.full_like(t, -v_val), a, 1.0 - z_test)
+        max_diff = np.max(np.abs(pdf_a - pdf_b_ref))
+        print(f"   z={z_test}: max diff = {max_diff:.2e}")
+
+    # 2. 总概率归一化（v=0, z=0.5）
+    dt = 0.01
+    t_long = np.arange(dt, 10.0, dt)
+    pdf_a_v0 = ddm_pdf(t_long, np.zeros_like(t_long), a, 0.5)
+    pdf_b_v0 = ddm_pdf(t_long, np.zeros_like(t_long), a, 0.5)
+    p_a = np.sum(pdf_a_v0) * dt
+    p_b = np.sum(pdf_b_v0) * dt
+    print(f"2. 归一化（v=0, z=0.5, a={a}）：P_A={p_a:.4f}, P_B={p_b:.4f}, total={p_a+p_b:.4f}")
+
+    # 3. 临界点附近 PDF 形状（使用 a=2.0 以匹配典型 RT 秒级尺度）
+    a_test = 2.0
+    print(f"3. 临界点附近行为（a={a_test}, z=0.5）：")
+    for vv in [0.0, 0.05, 0.2, 1.0]:
+        pdf_v = ddm_pdf(t_long, np.full_like(t_long, vv), a_test, 0.5)
+        mean_t = np.sum(t_long * pdf_v) * dt / (np.sum(pdf_v) * dt + 1e-12)
+        max_pdf = np.max(pdf_v)
+        min_pdf = np.min(pdf_v[pdf_v > 1e-20])
+        print(f"   v={vv:>5.2f}: mean T≈{mean_t:>6.2f}s, max pdf={max_pdf:.2e}")
+
+    # 4. 下溢风险：不同 a 下 PDF 在 t=1-4s 的量级
+    print("4. 下溢风险（v=0，典型 RT 1-4s）：")
+    for a_test in [0.5, 1.0, 2.0, 3.0]:
+        vals = []
+        for tt in [1.0, 2.0, 3.0, 4.0]:
+            pdf_t = ddm_pdf(np.array([tt]), np.array([0.0]), a_test, 0.5)[0]
+            vals.append(f"{pdf_t:.2e}")
+        print(f"   a={a_test}: " + ", ".join(vals))
+
+    print("-" * 50)
 
 
 def ddm_log_likelihood(params: np.ndarray, df: pd.DataFrame) -> float:
@@ -275,7 +346,10 @@ def ddm_log_likelihood(params: np.ndarray, df: pd.DataFrame) -> float:
     pdf_b = ddm_pdf(rt_s, -v, a, 1.0 - z)
 
     log_pdf = np.where(choice == 1, np.log(pdf_a), np.log(pdf_b))
-    return float(np.sum(log_pdf))
+    # 单位转换：DDM PDF 以 1/秒为单位；观测 RT 以 ms 为单位。
+    # f_ms(rt_ms) = f_s(rt_ms/1000) / 1000，故需减去每试次 log(1000)。
+    n_trials = len(df)
+    return float(np.sum(log_pdf) - n_trials * np.log(1000.0))
 
 
 def fit_ddm(df: pd.DataFrame) -> dict:
@@ -285,9 +359,9 @@ def fit_ddm(df: pd.DataFrame) -> dict:
 
     # 初始猜测：基于粗略网格搜索减小优化风险
     best_ll = -np.inf
-    best_x0 = [10.0, 0.10, 0.5, 300.0]
-    for k0 in [5.0, 10.0, 20.0]:
-        for a0 in [0.08, 0.12, 0.20]:
+    best_x0 = [10.0, 0.50, 0.5, 300.0]
+    for k0 in [5.0, 15.0, 40.0]:
+        for a0 in [0.20, 0.50, 1.00, 2.00]:
             for z0 in [0.45, 0.50, 0.55]:
                 for t00 in [200.0, 400.0]:
                     ll = ddm_log_likelihood([k0, a0, z0, t00], df)
@@ -301,7 +375,7 @@ def fit_ddm(df: pd.DataFrame) -> dict:
         neg_ll,
         x0=best_x0,
         method="L-BFGS-B",
-        bounds=[(0.5, 80.0), (0.02, 0.50), (0.10, 0.90), (50.0, 1200.0)],
+        bounds=[(0.1, 200.0), (0.02, 5.00), (0.10, 0.90), (50.0, 1200.0)],
         options={"maxiter": 300, "disp": False},
     )
     k, a, z, t0 = result.x
@@ -435,8 +509,12 @@ def main():
     else:
         print("\n  结论（AIC）：DDM 优于 UFPF toy 模型。")
 
-    # 5. 绘图并导出 PNG + SVG
-    print("\n[6] 绘图并导出 PNG 与 SVG...")
+    # 5. DDM 数值稳定性自检
+    print("\n[6] DDM 数值稳定性自检...")
+    check_ddm_stability()
+
+    # 7. 绘图并导出 PNG 与 SVG
+    print("\n[7] 绘图并导出 PNG 与 SVG...")
     fig, axes = plt.subplots(1, 3, figsize=(14, 4.2))
 
     ax = axes[0]
@@ -492,7 +570,8 @@ def main():
     print(f"  PNG: {fig_path_png}")
     print(f"  SVG: {fig_path_svg}")
 
-    # 6. 保存结果
+    # 8. 保存结果
+    print("\n[8] 保存结果摘要...")
     results = {
         "true_gamma": 1.2,
         "true_C": 250.0,
