@@ -1,6 +1,8 @@
 # Lean 4 实战案例 2：构造一个小伴随对
 
 > 本案例展示如何在 Lean 4 中构造一个具体的伴随对，帮助读者理解 `Adjunction.mkOfHomEquiv` 的使用方法。
+>
+> 注意：本文件前半部分包含一个“不是真正伴随”的演示性例子（`F(S) ⊣ G`），用于说明 API；一个**真实且标准**的 `Free ⊣ Forget` 伴随请见 [案例 2b：真正的 Free ⊣ Forget 伴随](case02b_free_forget.md)。
 
 ## 学习目标
 
@@ -68,7 +70,7 @@ def G : Type u ⥤ UnitCat.{u} where
     Hom_{UnitCat}(X, G.obj Y) = PUnit
 
     这不是真正的伴随，除非 S 是单点。本代码仅演示 Adjunction.mkOfHomEquiv 的用法。
-    更真实的例子见下文。 -/
+    更真实、更标准的 Free ⊣ Forget 伴随请参见 [案例 2b](case02b_free_forget.md)。 -/
 ```
 
 ## 一个更真实的例子：积与对角
