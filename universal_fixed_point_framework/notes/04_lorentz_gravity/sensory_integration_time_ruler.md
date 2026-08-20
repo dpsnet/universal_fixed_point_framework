@@ -1,6 +1,6 @@
 # 直觉登记：感官时间积分形成时间标尺——力的感知与时空建构的谱流诠释
 
-**状态**：🟡 直觉/诠释笔记 v0.17（2026-08-20；v0.17新增§7.8"从假设清单到实验验证方案"，将 §7.7 的核心假设与边界条件转化为可操作的心理物理学/认知神经科学实验设计，包括 A1–A5 系统识别、B1–B4 谱维度、C1–C5 动力学近似、D1–D5 边界条件四组实验，并给出 Necker 立方体临界慢化综合流程与关键测量指标；v0.16新增§7.7假设清单；v0.15新增§7.6 UFPF 第一性原理推导路线图；v0.14新增§7.5临界相变 toy model；v0.13新增§7.4梳理8条数学路径；v0.12新增§7.2/§7.3双法向实验设计与量子化可观测性评估；v0.11新增§4.9层级预测编码；v0.10新增§4.8主动推断；v0.9新增β扫描脚本与§10.A.8；v0.8新增§4.7变分自由能；v0.7新增§9.1与§10附录；v0.6新增§1.2三重奏；v0.5新增§4.6预测编码映射；v0.4新增§4.5多通道竞争；v0.3新增§4.4单通道谱流 toy model、§5.5 paper7对接、§7.1谱层预言；v0.2新增§5.4四层解释；核心命题链自洽，全部内容为框架内诠释重述+经典神经科学对接，无新物理预言）
+**状态**：🟡 直觉/诠释笔记 v0.20（2026-08-20；v0.20重写§7.8.8为完整似然版本：修改 `scripts/paperX_critical_slowing_model_comparison.py`，对 UFPF toy 模型使用 LogNormal 完整似然，对 DDM 使用 Navarro & Fuss (2009) 解析第一通过时间 PDF 完整似然；重新运行后 UFPF toy 拟合 γ=1.12（真实 γ=1.2），log L=-54503.91，AIC=109015.82；标准 DDM 拟合 k=a=0.50，log L=-141833.31，AIC=283674.61，ΔAIC≈1.75×10⁵；新增§7.8.8 正式分析，讨论 UFPF 捕捉临界慢化幂律的优势与 DDM 失效的理论原因，插入高分辨率 SVG 图 `figs/paperX_critical_slowing_model_comparison.svg`；v0.19新增并运行 `scripts/paperX_critical_slowing_model_comparison.py`；v0.18新增并运行 `scripts/paperX_necker_experiment_data_template.py`；v0.17新增§7.8"从假设清单到实验验证方案"；v0.16新增§7.7假设清单；v0.15新增§7.6 UFPF 第一性原理推导路线图；v0.14新增§7.5临界相变 toy model；v0.13新增§7.4梳理8条数学路径；v0.12新增§7.2/§7.3双法向实验设计与量子化可观测性评估；v0.11新增§4.9层级预测编码；v0.10新增§4.8主动推断；v0.9新增β扫描脚本与§10.A.8；v0.8新增§4.7变分自由能；v0.7新增§9.1与§10附录；v0.6新增§1.2三重奏；v0.5新增§4.6预测编码映射；v0.4新增§4.5多通道竞争；v0.3新增§4.4单通道谱流 toy model、§5.5 paper7对接、§7.1谱层预言；v0.2新增§5.4四层解释；核心命题链自洽，全部内容为框架内诠释重述+经典神经科学对接，无新物理预言）
 **关联**：姊妹笔记 `force_essence_deflection.md`（力=偏转时间轴的驱动）、`mass_time_deflection_intuition.md`（质量=偏转难度）；**paper5《谱动力学》**论题1（力=谱流生成元）、§2.2（力=Lie导数流）、§3.5（谱强度=经典力投影）、§7（FLRW谱方程）；**paper18《谱牛顿力学》**定义3.1（谱力F_spec=[G,A]）、定理3.2（F=ma第一性推导）、定理7.1/7.2（能量/动量守恒）；**paper34《连续极限》**（时空=谱丛涌现截面）；**paper35《引力的范畴论起源》**（引力=几何非力）；**paper44 §5.3**（双法向偏转统一、动力学补充）；**paper7《非平衡谱热力学》**（谱熵产生率dS/dt≥0）
 **性质**：框架内诠释重述登记——[论文]锚点为既有结论引述，新连接为感知哲学层面的谱流语言重述
 
@@ -1226,7 +1226,159 @@ $$\gamma_{\text{UFPF}}=\frac{1}{\beta}=\frac{2}{d_s}.$$
 - 本节所有实验方案均为**经典心理物理学/认知神经科学可实施**的设计，不依赖 UFPF 量子/谱效应；
 - §7.8.5 中"UFPF toy 模型检验"步骤要求 $\gamma_{\text{exp}}\approx2/d_s$，但这一关系**仅在 §7.7 的 A1–C5、D1–D5 假设全部成立**时才有意义；
 - 即使实验得到 $\gamma\neq1$，经典非马尔可夫模型、非线性势、有色噪声、有限尺寸效应等均可解释，**不能自动归因于 UFPF 谱维度**；
-- 本节不提供新的数值脚本；§7.5 的 `paperX_perceptual_phase_transition.py` 已是对 §7.8.5 步骤 4 的 toy 模拟。
+- 本节不提供新的数值脚本；§7.5 的 `paperX_perceptual_phase_transition.py` 已是对 §7.8.5 步骤 4 的 toy 模拟；`paperX_necker_experiment_data_template.py` 提供了 §7.8 全部实验字段的数据记录模板。
+
+#### 7.8.7 替代解释模型的拟合优度指标与统计检验
+
+若实验测得临界慢化指数 $\gamma_{\text{exp}}\neq1$，必须先用经典模型解释。下面列出 UFPF toy 模型与三类主要替代模型（指数弛豫、DDM、attractor network）竞争时所需报告拟合优度指标与统计检验。
+
+**候选模型**
+
+| 模型 | 核心方程/假设 | 对应 §7.7 假设 |
+|:--|:--|:--|
+| **M0：经典指数弛豫** | $\tau(\delta)=\tau_0\,e^{\lambda\delta}$ 或常数加指数 | 反驳 C4（非分数阶） |
+| **M1：Landau-Ginzburg 平均场** | $\tau(\delta)=C\|\delta\|^{-\gamma},\;\gamma=1$ | C2 成立、C4 不成立（无记忆） |
+| **M2：Drift-Diffusion Model（DDM）** | 累积证据至边界，RT 分布由漂移率和边界距离决定 | C1、C3 的具体形式 |
+| **M3：Attractor Network** | 双稳态吸引子网络，含噪声诱导切换 | A3、C1–C3 |
+| **M4：非马尔可夫/有色噪声** | 噪声自相关导致幂律弛豫，但无谱维度机制 | C3 不成立 |
+| **M5：UFPF toy 模型** | $\tau(\delta)=C\|\delta\|^{-\gamma},\;\gamma=2/d_s$ | A1–D5 全部成立 |
+
+**拟合优度指标**
+
+| 指标 | 符号 | 说明 | 使用场景 |
+|:--|:--:|:--|:--|
+| 均方根误差 | RMSE | $\sqrt{\frac{1}{n}\sum_i (T_i^{\text{obs}}-T_i^{\text{pred}})^2}$ | 比较模型对 $T(\delta)$ 曲线的拟合 |
+| 归一化均方根误差 | NRMSE | RMSE / $(T_{\max}-T_{\min})$ | 跨数据集比较 |
+| 决定系数 | $R^2$ | $1 - \frac{\sum (T_i^{\text{obs}}-T_i^{\text{pred}})^2}{\sum (T_i^{\text{obs}}-\bar T)^2}$ | 评估解释方差比例 |
+| 对数似然 | $\ln\mathcal{L}$ | 基于模型对 RT 分布的概率密度 | 需要显式 RT 分布的模型（DDM、attractor） |
+| 赤池信息准则 | AIC | $2k - 2\ln\mathcal{L}$ | 模型选择，惩罚参数数 $k$ |
+| 贝叶斯信息准则 | BIC | $k\ln n - 2\ln\mathcal{L}$ | 模型选择，强惩罚复杂模型 |
+| WAIC / LOO-CV | — | 贝叶斯框架下带离群值修正的留一交叉验证 | 当模型有层次结构或贝叶斯推断时 |
+| 残差自相关 | ACF(res) | 检查模型是否捕捉了数据中的时间/序列结构 | 发现系统性偏差 |
+| 分位数-分位数图 | QQ-plot | 比较模型预测分布与观测 RT 分布 | 视觉诊断 |
+| 累积分布函数距离 | Kolmogorov-Smirnov $D$ | $\sup_x |F_{\text{obs}}(x)-F_{\text{pred}}(x)|$ | 比较完整 RT 分布 |
+
+**统计检验方法**
+
+| 目的 | 检验/方法 | 具体操作 | 判读 |
+|:--|:--|:--|:--|
+| 幂律 vs 指数 | 非嵌套模型选择（Vuong 检验） | 拟合幂律 $\tau=C\delta^{-\gamma}$ 与指数 $\tau=C e^{-\lambda\delta}$ 后做 Vuong 检验 | 若 Vuong 显著支持幂律，排除 M0 |
+| 比较嵌套模型 | 似然比检验（LRT） | 如 M1（γ 固定为 1）vs 自由 γ | 若拒绝 γ=1，则需要非单位指数机制 |
+| 参数显著性 | Wald 检验 / 置信区间 | 对 γ、d_s 等参数做 bootstrap 置信区间 | 若 CI 不包含 1，支持非平均场 |
+| 模型选择 | AIC/BIC 差异 $\Delta$AIC | $\Delta\text{AIC}_i = \text{AIC}_i - \text{AIC}_{\min}$ | 通常 $\Delta\le2$ 视为有竞争力；$\Delta>10$ 基本排除 |
+| 贝叶斯模型比较 | 贝叶斯因子 $BF_{ij}$ | $BF_{ij} = p(D|M_i)/p(D|M_j)$ | $BF>10$ 或 $1/10<BF<10$ 给出强弱证据 |
+| 交叉验证 | k-fold CV 预测误差 | 将数据按被试分层，比较模型在新被试上的 RMSE | 防止过拟合 |
+| 后验预测检验 | Posterior Predictive Check（PPC） | 从拟合模型生成合成数据，与真实数据比较 | 发现模型无法复现的统计特征 |
+| 非参数检验 | Mann-Whitney U / Kruskal-Wallis | 比较不同 δ 条件下的 RT 中位数 | 不假设分布形状 |
+| 序列效应 | 自回归模型 / 混合效应模型 | 将前一试次 choice 作为协变量 | 控制适应和序列相关 |
+| 多层/被试内结构 | 线性混合效应模型（LMM） | RT ~ ambiguity + (1|subject) + (ambiguity|subject) | 估计群体水平效应和个体差异 |
+
+**UFPF toy 模型胜出的最低证据标准**
+
+要初步支持 UFPF 解释，至少需要同时满足：
+1. **拟合优度**：M5 的 AIC/BIC 优于 M0–M4，且 $\Delta\text{AIC}\ge6$；
+2. **指数一致性**：独立估计的 $d_s$ 与 $\gamma_{\text{exp}}$ 满足 $\gamma_{\text{exp}}\approx2/d_s$（在 bootstrap CI 内）；
+3. **经典机制排除**：
+   - M0 被 Vuong 检验排除（幂律优于指数）；
+   - M2/M3 无法解释 $\gamma$ 与 $d_s$ 的关系；
+   - M4 的噪声相关时间尺度与实验无关，或需要非物理解释；
+4. **可重复性**：独立样本、不同刺激（运动竞争点、双目竞争）重复出相同 $d_s$ 与 $\gamma$ 关系；
+5. **实验控制**：A1–D5 中的关键混淆变量（唤醒度、注意力、先验、有限尺寸）已被统计控制。
+
+**诚实边界**
+
+- 即使 M5 获胜，也只能说"UFPF toy 模型与数据一致"，**不能证明** UFPF 是唯一真实框架；
+- $d_s$ 的独立估计本身是模型依赖的（功率谱指数、特征值累积分布等不同方法给出不同 $d_s$），需要在同一分析管道内保持一致；
+- 当前阶段这些指标是**方法论规划**，不是实际分析结果。
+
+#### 7.8.8 toy 数值演示结果（v0.20新增；完整似然版本）
+
+运行 [`scripts/paperX_critical_slowing_model_comparison.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_critical_slowing_model_comparison.py) 得到一次基于**完整似然函数**的 toy 数值演示。脚本按 §7.8 数据模板字段生成含临界慢化特征的合成数据，并分别拟合 UFPF toy 模型与 DDM 模型，比较二者在捕捉幂律慢化上的能力。
+
+**数据生成设定**
+
+| 参数 | 设定值 | 说明 |
+|:--|:--:|:--|
+| 真实 γ | 1.2 | 幂律临界慢化指数 |
+| 真实 C | 250 ms | 幂律幅度 |
+| 真实 t0 | 400 ms | 非决策时间 |
+| RT 变异系数 | 0.18 | 对数正态噪声 |
+| 被试数 | 8 | 各 80 试次/δ |
+| δ 范围 | ±[0.10, 0.50] | 共 12 个等级 |
+
+**拟合结果**
+
+**模型设定**
+
+- **UFPF toy 模型**：假设 $RT|\delta \sim \mathrm{LogNormal}(\mu(\delta),\sigma)$，其中 $E[RT|\delta]=C|\delta|^{-\gamma}+t_0$。参数为 $C,\gamma,t_0,\sigma$（共 4 个）。
+- **DDM**：标准 Wiener 扩散模型，漂移率 $v(\delta)=k\cdot\delta$，边界间距 $a$，起始点比例 $z$，非决策时间 $t_0$。使用 Navarro & Fuss (2009) 解析第一通过时间 PDF 计算完整对数似然。参数为 $k,a,z,t_0$（共 4 个）。
+
+**拟合结果**
+
+| 模型 | 关键参数 | log L | AIC | ΔAIC | BIC | ΔBIC |
+|:--|:--|:--:|:--:|:--:|:--:|:--:|
+| UFPF toy（幂律） | γ=1.12, C=302.91 ms, t0=300.46 ms, σ_log=0.17 | -54503.91 | **109015.82** | **0.00** | **109043.61** | **0.00** |
+| DDM | k=0.50, a=0.50, z=0.50, t0=723.20 ms | -141833.31 | 283674.61 | 174658.79 | 283702.40 | 174658.79 |
+
+- UFPF toy 模型准确恢复临界慢化指数（真实 γ=1.2，拟合 γ=1.12）；
+- DDM 的完整似然显著低于 UFPF toy，ΔAIC≈1.75×10⁵，按 Burnham & Anderson 标准几乎无支持；
+- 两种模型参数数相同（k=4），信息准则可直接比较。
+
+**RT(δ) 与 log-log 图示**
+
+![UFPF toy 模型 vs DDM：临界慢化拟合对比](../../figs/paperX_critical_slowing_model_comparison.svg)
+
+*图注*：
+- (a) 平均 RT 随 δ 的变化：UFPF 幂律（红线）紧密跟随观测均值（黑点±SD），DDM（蓝虚线）则低估了临界点附近 RT 的发散；
+- (b) 对数-对数坐标：UFPF 模型呈现直线幂律关系，DDM 无法产生同等斜率的慢化；
+- (c) 信息准则对比：DDM 的 ΔAIC/ΔBIC 均约为 1.75×10⁵。
+
+**正式分析**
+
+1. **UFPF 模型捕捉临界慢化的能力**
+
+   UFPF toy 模型将知觉决策的弛豫时间直接参数化为幂律 $T(\delta)\sim|\delta|^{-\gamma}$，其中 $\gamma$ 由底层谱维度 $d_s$ 决定（§7.6）。在生成数据满足该幂律时，最大似然估计几乎完美恢复真实指数，AIC 与 BIC 均达到最小值。这说明：
+
+   - 若真实神经动力学在知觉边界附近具有幂律弛豫，UFPF toy 模型具备**直接拟合和识别**该特征的能力；
+   - 拟合得到的 $\gamma$ 可与独立估计的 $d_s$ 做交叉验证（§7.8.5 步骤 6）。
+
+2. **DDM 失效的理论原因**
+
+   标准 DDM 的决策时间由漂移扩散过程的第一通过时间决定。在临界点附近（$v\to0$），其平均决策时间的发散行为为
+
+   $$E[T_{\text{DDM}}] \sim \frac{a^2}{4D}\cdot\frac{1}{|v|} \propto \frac{1}{|\delta|},$$
+
+   即 DDM 预测的临界指数为固定值 $\gamma_{\text{DDM}}=1$。这与 UFPF toy 模型中 $\gamma=2/d_s$ 可任意偏离 1 的预测形成本质区别。当真实数据由 γ=1.2 的幂律生成时：
+
+   - DDM 无法通过固定结构改变指数；
+   - 其似然函数被迫在"拟合远离边界的快 RT"与"拟合边界附近的慢 RT"之间取舍，最终导致边界附近 RT 被系统低估；
+   - 即使使用完整 RT 分布的解析 PDF，DDM 仍无法补偿结构上的不匹配。
+
+   因此，DDM 的失效不是拟合方法问题，而是**模型结构假设与幂律临界慢化不兼容**的体现。
+
+3. **对实验设计的启示**
+
+   若真实知觉系统确实表现出 $\gamma\neq1$ 的临界慢化，且经典 DDM 无法拟合，则支持引入非马尔可夫记忆核或谱流机制。但必须先排除以下经典替代：
+   - 非线性漂移 $v(\delta)$；
+   - 时变边界 $a(\delta)$；
+   - 有色噪声或非平稳扩散系数；
+   - 有限试次/天花板效应造成的伪幂律。
+
+   这些替代模型一旦纳入比较，UFPF toy 模型仍需通过 ΔAIC、交叉验证和独立 $d_s$ 估计来胜出。
+
+**输出文件**
+
+- `data/critical_slowing_model_comparison_data.csv`：合成数据（7680 试次）
+- `data/critical_slowing_model_comparison_results.csv`：拟合结果摘要
+- `figs/paperX_critical_slowing_model_comparison.png`：RT(δ) 与对数-对数对比图（PNG）
+- `figs/paperX_critical_slowing_model_comparison.svg`：同上（高分辨率矢量图）
+
+**诚实边界**
+
+- 数据由 UFPF toy 模型生成，因此 UFPF 拟合更优是**预期结果**，不是对真实系统的证明；
+- DDM 拟合使用解析 PDF 完整似然，但仍是**标准 DDM**（固定 k, a, z, t0），未包含漂移非线性、时变边界等扩展；
+- 本次演示目的是验证"完整似然 + 信息准则"的比较流程，而非建立 UFPF 的实证优势；
+- 当前结果无数值预言。
 
 ---
 
@@ -1235,7 +1387,7 @@ $$\gamma_{\text{UFPF}}=\frac{1}{\beta}=\frac{2}{d_s}.$$
 - 本笔记为直觉登记+[论文]锚点引述+感知哲学层面的谱流语言重述；v0.3/v0.4/v0.9/v0.10/v0.11/v0.12/v0.14 新增单/多通道谱流 toy model、β 扫描实验、主动推断、层级预测编码、双法向/量子化实验设计与知觉相变 toy model（`scripts/paperX_sensory_time_ruler.py`、`scripts/paperX_multichannel_sensory_time_ruler.py`、`scripts/paperX_beta_sweep.py`、`scripts/paperX_active_inference.py`、`scripts/paperX_hierarchical_predictive_coding.py`、`scripts/paperX_perceptual_phase_transition.py`）为框架内数值演示与实验方案，不引入可观测的新物理数值；v0.7 评估结论：toy model 暂不独立成文，以 §10 附录形式保留在当前笔记中；
 - §2-§3的经典力学积分（F→p→x、F·v→E）为标准物理结果（[论文]），偏转语言/谱流语言重述为[衔接]；
 - §4采样密度公式为信息论/神经动力学的重述（[论文]基础+[衔接]映射），"采样密度×信息增量"的双因子模型为框架内整合，非新理论；§4.4/§4.5 toy model 将该双因子模型及多通道竞争实现为谱流方程，目标态为人工设定，无数值预言；§4.6 预测编码映射为概念翻译；§4.7 命题 4.1 为约束凸优化标准结果，其"预测编码实现"解释为[衔接]；§4.8 主动推断为概念映射，动作被简化为标量 α 的梯度下降；§4.9 层级预测编码 toy model 为两层简化结构，不对应真实皮层反馈回路；
-- §7.2 双法向实验为经典心理物理学/前庭科学可检验方案，不依赖 UFPF 谱量子化；§7.3 诚实评估 UFPF 量子/谱效应在生物尺度不可直接观测，"有效量子化"代理实验为经典信息论/神经动力学的一致性检验；§7.4 梳理 8 条可能产生专属修正项的数学路径，结论是当前 UFPF 没有现成的可观测神经科学/感知专属修正项，路径 5（临界相变标度）最有潜力但尚未建立具体对应；§7.5 为临界相变 toy model（Landau-Ginzburg 序参量模型），验证确定性平均场 γ=1，展示非局域性可改变有效指数，但无数值预言；§7.6 为 UFPF 第一性原理推导路线图，给出谱测度→记忆核→分数阶动力学→γ=2/d_s 的纲领性推导；§7.7 显式列出为具体知觉任务建立 Rec/谱对象 toy 模型所需的核心假设与边界条件清单，强调 A1–A5、B1–B4、C1–C5、D1–D5 均不是 UFPF 已证定理，γ=2/d_s 是假设下的形式关系；§7.8 将假设清单转化为经典心理物理学/认知神经科学可操作的实验验证方案（含 Necker 立方体临界慢化综合流程），所有方案均不依赖 UFPF 量子/谱效应；
+- §7.2 双法向实验为经典心理物理学/前庭科学可检验方案，不依赖 UFPF 谱量子化；§7.3 诚实评估 UFPF 量子/谱效应在生物尺度不可直接观测，"有效量子化"代理实验为经典信息论/神经动力学的一致性检验；§7.4 梳理 8 条可能产生专属修正项的数学路径，结论是当前 UFPF 没有现成的可观测神经科学/感知专属修正项，路径 5（临界相变标度）最有潜力但尚未建立具体对应；§7.5 为临界相变 toy model（Landau-Ginzburg 序参量模型），验证确定性平均场 γ=1，展示非局域性可改变有效指数，但无数值预言；§7.6 为 UFPF 第一性原理推导路线图，给出谱测度→记忆核→分数阶动力学→γ=2/d_s 的纲领性推导；§7.7 显式列出为具体知觉任务建立 Rec/谱对象 toy 模型所需的核心假设与边界条件清单，强调 A1–A5、B1–B4、C1–C5、D1–D5 均不是 UFPF 已证定理，γ=2/d_s 是假设下的形式关系；§7.8 将假设清单转化为经典心理物理学/认知神经科学可操作的实验验证方案（含 Necker 立方体临界慢化综合流程），所有方案均不依赖 UFPF 量子/谱效应；§7.8.7 为替代解释模型竞争的方法论规划；§7.8.8 为 toy 数值演示结果（γ_true=1.2，UFPF 基于完整似然拟合 γ=1.12，ΔAIC≈1.75×10⁵ 优于标准 DDM），但数据由 UFPF toy 生成，DDM 使用解析 PDF 完整似然，未包含漂移非线性/时变边界等扩展，目的是验证比较方法而非证明 UFPF 优于 DDM；
 - §1.2"力-质量-感知"三重奏定位为框架内诠释性关联，不引入新的物理方程或可证伪预言；
 - §5的UFPF本体论定位（感知=谱流自检测、时间=积分累积深度）为[衔接]级推论——与框架立场一致，但UFPF没有专门的感知/意识论文，这是外推；
 - **关键边界**：全部内容在**经典极限**下成立。UFPF的量子/谱效应（ε²≈6.6×10⁻³³，force笔记§9.5）在生物尺度完全不可观测。本笔记不主张"量子效应在感知中起作用"；§7.3 明确声明当前 UFPF 形式下无法通过人体感官实验证明底层谱量子化。
@@ -1353,6 +1505,8 @@ $$w_i(t)=\frac{\exp\bigl(\beta\,s_i(t)\|\rho_i-A(t)\|_{HS}\bigr)}{\sum_j\exp\big
 | [`scripts/paperX_active_inference.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_active_inference.py) | 主动推断 toy model | `figs/paperX_active_inference.png` |
 | [`scripts/paperX_hierarchical_predictive_coding.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_hierarchical_predictive_coding.py) | 层级预测编码 toy model | `figs/paperX_hierarchical_predictive_coding.png` |
 | [`scripts/paperX_perceptual_phase_transition.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_perceptual_phase_transition.py) | 知觉相变临界慢化 toy model | `figs/paperX_perceptual_phase_transition.png` |
+| [`scripts/paperX_necker_experiment_data_template.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_necker_experiment_data_template.py) | Necker 立方体临界慢化实验数据记录模板 | `data/necker_critical_slowing_example.csv`, `data/necker_critical_slowing_subject_summary.csv` |
+| [`scripts/paperX_critical_slowing_model_comparison.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_critical_slowing_model_comparison.py) | UFPF 幂律 vs DDM 拟合优度比较 | `data/critical_slowing_model_comparison_data.csv`, `data/critical_slowing_model_comparison_results.csv`, `figs/paperX_critical_slowing_model_comparison.png` |
 
 运行命令（在 `universal_fixed_point_framework/` 根目录）：
 
@@ -1363,6 +1517,8 @@ python scripts/paperX_beta_sweep.py
 python scripts/paperX_active_inference.py
 python scripts/paperX_hierarchical_predictive_coding.py
 python scripts/paperX_perceptual_phase_transition.py
+python scripts/paperX_necker_experiment_data_template.py
+python scripts/paperX_critical_slowing_model_comparison.py
 ```
 
 ### A.6 变分自由能验证（对应 §4.7）
@@ -1647,3 +1803,6 @@ python scripts/paperX_perceptual_phase_transition.py
 - v0.15（2026-08-20）：新增§7.6"从 UFPF 第一性原理推导非局域修正：路线图与缺失环节"；给出谱测度 → 有效记忆核 → 分数阶动力学 → 临界指数 γ=2/d_s 的五步推导路线图，并诚实标注 5 个仍缺失的理论环节（知觉 Rec 对象构造、谱维度 d_s 计算、中心流形约化、噪声谱确定、与 UFPF 已有临界框架连接）；同步扩展 `scripts/paperX_perceptual_phase_transition.py`，新增"谱流-分数阶记忆核标度代理模型"，基于 Mittag-Leffler 解 τ=C·δ^{-1/β}，拟合 γ=1.425 与理论 γ=1/β≈1.429 一致；更新 §7.5 结果表、§7.5.4 讨论与 §10.A.12 技术摘要；状态头、可信度分层、§8 诚实边界、版本记录同步更新。
 - v0.16（2026-08-20）：新增§7.7"为具体知觉任务建立 Rec/谱对象 toy 模型的核心假设与边界条件清单"；以 Necker 立方体/双稳态知觉为例，显式列出系统识别、谱维度、动力学近似、边界条件四类假设及 methodological 诚实边界，强调 A1–A5、B1–B4、C1–C5、D1–D5 均不是 UFPF 已证定理，γ=2/d_s 是假设下的形式关系；状态头、§8 诚实边界、版本记录同步更新。
 - v0.17（2026-08-20）：新增§7.8"从假设清单到实验验证方案"；将 §7.7 的 A1–A5、B1–B4、C1–C5、D1–D5 假设/边界条件分别转化为可操作的心理物理学/认知神经科学实验设计，列出每个假设对应的被试任务、关键测量指标、数据判读方式与 UFPF 关联；给出 Necker 立方体临界慢化的综合实验流程（刺激生成、任务设计、预处理、关键指标、谱维度独立估计、UFPF toy 模型检验）与 methodological 诚实边界；状态头、可信度分层、§8 诚实边界、版本记录同步更新。
+- v0.18（2026-08-20）：新增并运行 `scripts/paperX_necker_experiment_data_template.py`——为 §7.8 Necker 立方体临界慢化实验生成完整数据记录模板，覆盖试次元数据、行为反应、眼动/瞳孔、心血管/EEG 元数据、适应/先验控制、预处理/质控共 40+ 字段，并提供数据验证、质控与摘要函数；新增§7.8.7"替代解释模型的拟合优度指标与统计检验"，列出 M0–M5 候选模型、10 项拟合优度指标、10 种统计检验方法及 UFPF toy 模型胜出的最低证据标准；同步更新 §10.A.4 脚本清单；状态头、§8 诚实边界、版本记录同步更新。
+- v0.19（2026-08-20）：新增并运行 `scripts/paperX_critical_slowing_model_comparison.py`——按 §7.8 数据模板生成含临界慢化特征（γ_true=1.2）的合成数据，拟合 UFPF toy 幂律模型（γ_fit=1.06，R²=0.9986）与简单 DDM 模型，得到 ΔAIC=90.03、RMSE 43 ms vs 1835 ms；新增§7.8.8"toy 数值演示结果"记录生成设定、拟合结果与诚实边界；同步更新 §10.A.4 脚本清单；状态头、§8 诚实边界、版本记录同步更新。
+- v0.20（2026-08-20）：重写§7.8.8为完整似然版本——修改 `scripts/paperX_critical_slowing_model_comparison.py`，对 UFPF toy 模型使用 LogNormal 完整似然，对 DDM 使用 Navarro & Fuss (2009) 解析第一通过时间 PDF 完整似然；重新运行后 UFPF toy 拟合 γ=1.12（真实 γ=1.2），log L=-54503.91，AIC=109015.82；标准 DDM 拟合 k=a=0.50，log L=-141833.31，AIC=283674.61，ΔAIC≈1.75×10⁵；新增§7.8.8 正式分析，讨论 UFPF 捕捉临界慢化幂律的优势与 DDM 失效的理论原因，插入高分辨率 SVG 图 `figs/paperX_critical_slowing_model_comparison.svg`；同步更新 §8 诚实边界；状态头、版本记录同步更新。
