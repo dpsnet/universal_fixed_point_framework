@@ -37,7 +37,8 @@ def inject_eyetracking_pupil_noise(
     gaze_noise_std_deg: float = 0.50,
     gaze_drift_std_deg: float = 0.05,
     gaze_offscreen_rate: float = 0.03,
-    gaze_outlier_rate: float = 0.02,
+    gaze_outlier_rate: float = 0.005,
+    gaze_outlier_std_deg: float = 3.0,
     pupil_noise_std_mm: float = 0.15,
     pupil_baseline_drift_mm: float = 0.10,
     pupil_dropout_rate: float = 0.05,
@@ -53,6 +54,10 @@ def inject_eyetracking_pupil_noise(
       3. 瞳孔基线被试间漂移 + 高斯测量噪声；
       4. 瞳孔完全缺失（NaN）、部分缺失（mean/peak 但 baseline 缺失）、眨眼伪迹；
       5. 根据污染程度更新 pupil_quality 与 valid/excluded 标记。
+
+    校准说明（v0.26）：
+      - gaze_outlier_rate 从 0.02 降至 0.005，gaze_outlier_std_deg 从 5.0 降至 3.0，
+        使 gaze RMS 误差从约 1.23° 降至 0.7°–0.8°，更接近典型眼动仪精度 0.3°–1.0°。
     """
     df = df.copy()
     n = len(df)
@@ -77,8 +82,8 @@ def inject_eyetracking_pupil_noise(
 
     # 3. 空间离群点（少量错误校准点）
     outlier_mask = rng.random(size=n) < gaze_outlier_rate
-    df.loc[outlier_mask, "gaze_x"] = rng.normal(0.0, 5.0, size=outlier_mask.sum())
-    df.loc[outlier_mask, "gaze_y"] = rng.normal(0.0, 5.0, size=outlier_mask.sum())
+    df.loc[outlier_mask, "gaze_x"] = rng.normal(0.0, gaze_outlier_std_deg, size=outlier_mask.sum())
+    df.loc[outlier_mask, "gaze_y"] = rng.normal(0.0, gaze_outlier_std_deg, size=outlier_mask.sum())
 
     # 4. 眨眼/眼跳计数加入漏检与误检
     df["blinks_count"] = np.clip(df["blinks_count"] + rng.integers(-1, 2, size=n), 0, None).astype(int)
@@ -137,7 +142,8 @@ def generate_trial_records(
     gaze_noise_std_deg: float = 0.50,
     gaze_drift_std_deg: float = 0.05,
     gaze_offscreen_rate: float = 0.03,
-    gaze_outlier_rate: float = 0.02,
+    gaze_outlier_rate: float = 0.005,
+    gaze_outlier_std_deg: float = 3.0,
     pupil_noise_std_mm: float = 0.15,
     pupil_baseline_drift_mm: float = 0.10,
     pupil_dropout_rate: float = 0.05,
@@ -155,7 +161,8 @@ def generate_trial_records(
       gaze_noise_std_deg: 注视点仪器噪声标准差（度）
       gaze_drift_std_deg: 慢漂移标准差（度）
       gaze_offscreen_rate: 离屏试次比例
-      gaze_outlier_rate: 离群点比例
+      gaze_outlier_rate: 离群点比例（已校准至 0.005）
+      gaze_outlier_std_deg: 离群点标准差（度，已校准至 3.0）
       pupil_noise_std_mm: 瞳孔直径测量噪声（mm）
       pupil_baseline_drift_mm: 被试间基线漂移（mm）
       pupil_dropout_rate: 完全缺失比例
@@ -255,6 +262,7 @@ def generate_trial_records(
         gaze_drift_std_deg=gaze_drift_std_deg,
         gaze_offscreen_rate=gaze_offscreen_rate,
         gaze_outlier_rate=gaze_outlier_rate,
+        gaze_outlier_std_deg=gaze_outlier_std_deg,
         pupil_noise_std_mm=pupil_noise_std_mm,
         pupil_baseline_drift_mm=pupil_baseline_drift_mm,
         pupil_dropout_rate=pupil_dropout_rate,
