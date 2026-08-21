@@ -301,15 +301,110 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 
 ---
 
-## 11. 参考文献
+## 11. 附录 A：数据质量报告（模拟验证）
+
+### A.1 目的与数据来源
+
+本附录基于含噪声的模拟数据，验证预注册阶段的数据清洗流程、字段完整性、测量误差统计规律，以及在典型排除率下关键模型参数估计的稳健性。
+
+- **生成脚本**：[`scripts/paperX_necker_simulated_dataset.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_necker_simulated_dataset.py)（含噪声注入）、[`scripts/paperX_necker_data_cleaning_analysis.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_necker_data_cleaning_analysis.py)（清洗+建模）、[`scripts/paperX_necker_noise_distribution_check.py`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/scripts/paperX_necker_noise_distribution_check.py)（分布检查）
+- **完整独立报告**：[`notes/04_lorentz_gravity/prereg_necker_data_quality_report.md`](file:///e:/workspace/hyper-resolution/universal_fixed_point_framework/notes/04_lorentz_gravity/prereg_necker_data_quality_report.md)
+
+### A.2 噪声注入参数（v0.26 校准后）
+
+| 参数 | 默认值 | 说明 |
+|:--|:--:|:--|
+| `gaze_noise_std_deg` | 0.50° | 注视点仪器噪声 |
+| `gaze_drift_std_deg` | 0.05° | 被试内慢漂移 |
+| `gaze_offscreen_rate` | 0.03 | 离屏试次比例 |
+| `gaze_outlier_rate` | **0.005** | 空间离群点比例（校准后从 0.02 降低） |
+| `gaze_outlier_std_deg` | **3.0°** | 离群点标准差（校准后从 5.0° 降低） |
+| `pupil_noise_std_mm` | 0.15 mm | 瞳孔测量噪声 |
+| `pupil_baseline_drift_mm` | 0.10 mm | 被试间基线漂移 |
+| `pupil_dropout_rate` | 0.05 | 完全缺失比例 |
+| `pupil_partial_rate` | 0.10 | 部分缺失比例 |
+| `pupil_blink_artifact_rate` | 0.03 | 眨眼伪迹比例 |
+
+### A.3 数据质量统计
+
+#### A.3.1 原始与清洗后数据
+
+| 指标 | 数值 |
+|:--|:--|
+| 被试数 | 24 |
+| 原始总试次 | 115,200 |
+| 清洗后有效试次 | 101,117 |
+| 保留率 | **87.78%** |
+| 综合排除率 | **12.22%** |
+
+#### A.3.2 眼动噪声分布
+
+| 指标 | 数值 | 典型真实范围 | 评估 |
+|:--|:--|:--|:--|
+| gaze_x 标准差 | 0.544° | 0.3°–1.0° | 符合 |
+| gaze_y 标准差 | 0.540° | 0.3°–1.0° | 符合 |
+| **RMS 误差** | **0.767°** | **0.3°–1.0°** | **符合** |
+| 离屏率 | 2.93% | 2%–10% | 符合 |
+| 离群点率（\|gaze\| > 3°） | 0.17% | 1%–3% | 偏低 |
+
+#### A.3.3 瞳孔噪声分布
+
+| 指标 | 数值 | 典型真实范围 | 评估 |
+|:--|:--|:--|:--|
+| 瞳孔基线标准差 | 0.195 mm | 0.1–0.4 mm | 符合 |
+| 瞳孔平均直径标准差 | 0.397 mm | 0.1–0.5 mm | 符合 |
+| 完全缺失率 | 14.07% | 5%–20% | 符合 |
+| 部分缺失率 | 9.12% | 5%–15% | 符合 |
+| 眨眼伪迹率 | 1.48% | 1%–5% | 符合 |
+| pupil_quality < 0.5 比例 | 9.89% | 5%–15% | 符合 |
+
+### A.4 清洗后模型拟合结果
+
+#### A.4.1 UFPF toy 模型
+
+| 参数 | 估计值 | 真实值 | 偏差 |
+|:--|:--|:--|:--|
+| C | 288.88 ms | 250.00 ms | +15.6% |
+| **γ** | **1.1440** | **1.2000** | **-4.7%** |
+| t0 | 319.43 ms | 400.00 ms | -20.1% |
+| σ_log | 0.1680 | 0.1786 | -5.9% |
+
+#### A.4.2 标准 DDM 模型（10,000 试次子样本）
+
+| 参数 | 估计值 |
+|:--|:--|
+| k | 0.0010 |
+| a | 4.5876 |
+| z | 0.5041 |
+| t0 | 230.04 ms |
+
+#### A.4.3 模型比较（同一子样本）
+
+| 模型 | log L | AIC | BIC |
+|:--|:--|:--|:--|
+| UFPF toy | -80,535.10 | 161,078.21 | 161,107.05 |
+| 标准 DDM | -101,188.23 | 202,384.45 | 202,413.29 |
+| ΔAIC（DDM − UFPF） | — | **+41,306.24** | **+41,306.24** |
+
+### A.5 附录结论
+
+- 在 12.22% 综合排除率下，关键参数 γ 估计稳健（偏差 < 5%）；
+- 校准后 gaze RMS 误差降至 0.767°，进入典型眼动仪精度范围；
+- 瞳孔缺失/伪迹率均落在真实实验常见范围内；
+- UFPF toy 在由其生成的数据上显著优于标准 DDM，符合预期；
+- 本附录为 toy 模拟验证，真实实验需根据试点数据重新校准噪声参数。
+
+---
+
+## 12. 参考文献
 
 - Burnham, K. P., & Anderson, D. R. (2002). *Model selection and multimodal inference: A practical information-theoretic approach* (2nd ed.). Springer.
 - Navarro, D. J., & Fuss, I. G. (2009). Fast and accurate calculations for first-passage times in Wiener diffusion models. *Journal of Mathematical Psychology*, 53(4), 222–230.
 - Ratcliff, R., & McKoon, G. (2008). The diffusion decision model: Theory and data for two-choice decision tasks. *Neural Computation*, 20(4), 873–922.
-- Korenberg, M. J., et al. (2007). EEG-based estimation of human vigilance. (示例引用，实际需替换为 PSD/谱维度估计文献)
 - Burioni, R., & Cassi, D. (2005). Random walks on graphs: ideas, techniques and results. *Journal of Physics A: Mathematical and General*, 38(8), R45–R78.
 
 ---
 
 **版本记录**  
 - v0.1（2026-08-20）：初始预注册草案，含研究问题、样本量、实验流程、截断策略、统计模型与模型比较计划。
+- v0.2（2026-08-20）：新增附录 A（数据质量报告模拟验证），整合校准后的噪声注入参数、质量统计与模型拟合结果；对应 `scripts/paperX_necker_simulated_dataset.py` v0.26 校准（`gaze_outlier_rate` 0.02→0.005，`gaze_outlier_std_deg` 5.0°→3.0°）。
