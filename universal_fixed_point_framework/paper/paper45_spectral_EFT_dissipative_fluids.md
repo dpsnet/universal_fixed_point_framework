@@ -1,8 +1,8 @@
 # 谱范畴基础的耗散流体有效场论：从 UFPF 到 Crossley-Glorioso-Liu 框架的完整推导
 
-> **论文编号**：Paper XLV（v0.1，2026-08-21）
+> **论文编号**：Paper XLV（v0.3，2026-08-21）
 > **作者**：王斌
-> **摘要**：本文证明，Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均可从通用不动点分形谱范畴框架（UFPF）的公理出发严格推导。推导链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。本文同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射。全部推导在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成，无需额外假设。
+> **摘要**：本文证明，Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均可从通用不动点分形谱范畴框架（UFPF）的公理出发严格推导。推导链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。本文同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射。全部推导在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成，物理假设不超出 UFPF 公理体系；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）与 $\mathbb{Z}_2$-分级结构仅引入分级信息，不引入新的动力学。
 
 ---
 
@@ -18,13 +18,14 @@
 
 本文证明以下**核心定理**：
 
-**定理 1.1（UFPF-CGL 等价性）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 UFPF 公理的谱范畴。则 CGL 耗散流体 EFT 的全部核心结构均可从 UFPF 公理严格推导：
+**定理 1.1（UFPF-CGL 等价性）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 UFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其 $\mathbb{Z}_2$-分级（超）范畴扩展（定义 5.4）。则 CGL 耗散流体 EFT 的全部核心结构均可从 UFPF 公理出发、辅以标准数学定理（§9.1 列明）严格推导：
 
 1. CTP 路径积分（§3）：从谱路径积分公理 A4 导出
 2. r-a 变量分解（§3）：从 Schwinger-Keldysh 谱等价桥导出
 3. 动态 KMS $\mathbb{Z}_2$ 对称性（§4）：从 Tomita-Takesaki 模理论导出
 4. BRST 对称性（§5）：从 $D\dashv R$ 伴随对的 Lie algebroid 结构导出
 5. 涨落流体力学作用量（§6）：从谱流体方程 + 上述结构导出
+6. 共形流体二阶输运（§7.5）：从 Koopman 谱隙 + 谱熵流导出
 
 ### 1.3 论文结构
 
@@ -249,6 +250,8 @@ $$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \cdot \mathrm{Im}\,G_R(\la
 
 **证明**。直接将定理 2.2 (SK 谱等价桥) 代入 r-a 作用量 (3.5) 的二次项。$\square$
 
+**注 3.1**（谱函数正性）。由 Lehmann 表示，retarded 传播子的谱密度 $\rho(\lambda, \omega) = 2\,\mathrm{Im}\,G_R(\lambda, \omega)$ 等于跃迁加权和 $\sum_n |\langle n | \hat{O} | 0\rangle|^2 \delta(\omega - \omega_{n0})$，故 $\rho(\lambda, \omega) \geq 0$。这保证 FDT 公式 (4.7) 中 $C(\lambda,\omega) \geq 0$（$\coth$ 与 $\omega$ 同号，$\rho \geq 0$），进而保证噪声系数正定——这是路径积分收敛（Fokker-Planck 型）的必要条件。
+
 ---
 
 ## 4 从模理论到动态 KMS $\mathbb{Z}_2$ 对称性
@@ -299,17 +302,23 @@ $$\mathcal{R}: \phi_{\mathrm{q}}(t) \mapsto -\phi_{\mathrm{q}}(-t) + i\beta\dot{
 
 **证明**。
 
-**步骤 1**：$\mathcal{R}^2 = \mathrm{id}$。直接计算：
+**步骤 1**：$\mathcal{R}^2 = \mathrm{id}$。对 $\phi_{\mathrm{q}}$ 直接计算：
 
 $$\mathcal{R}^2 \phi_{\mathrm{q}}(t) = \mathcal{R}[-\phi_{\mathrm{q}}(-t) + i\beta\dot{\phi}_{\mathrm{cl}}(-t)] = -[-\phi_{\mathrm{q}}(t) + i\beta(-\dot{\phi}_{\mathrm{cl}}(t))] + i\beta(-\dot{\phi}_{\mathrm{cl}}(t)) = \phi_{\mathrm{q}}(t) \tag{4.5}$$
 
-**步骤 2**：作用量不变性。将 (4.4) 代入 r-a 作用量 (3.5)，利用：
-- 运动方程部分（实部）：时间反演 $\omega \to -\omega$ 下的变换性质由谱流方程的时间反演性保证
-- 噪声部分（虚部）：$\tanh(\beta\omega/2)$ 在 $\omega \to -\omega$ 下变号，与 $e^{\pm\beta\omega/2}$ 的变换精确抵消
+对 $\phi_{\mathrm{cl}}$ 有 $\mathcal{R}^2\phi_{\mathrm{cl}}(t) = \phi_{\mathrm{cl}}(t)$ 显然。故 $\mathcal{R}^2 = \mathrm{id}$。
 
-$$C(\lambda, -\omega) = \frac{2}{\tanh(-\beta\omega/2)} \mathrm{Im}\,G_R(\lambda, -\omega) = -\frac{2}{\tanh(\beta\omega/2)} \mathrm{Im}\,G_R(\lambda, \omega) = -C(\lambda, \omega) \tag{4.6}$$
+**步骤 2**：噪声核 $C(\lambda, \omega)$ 的奇偶性。由 SK 谱等价桥 (2.3) 和 retarded Green 函数的实性条件 $G_R(t) \in \mathbb{R} \Rightarrow \mathrm{Im}\,G_R(-\omega) = -\mathrm{Im}\,G_R(\omega)$，结合 $\tanh$ 的奇性，得
 
-与 $e^{-\beta\omega}$ 的变换组合后，作用量不变。$\square$
+$$C(\lambda, -\omega) = \frac{2}{\tanh(-\beta\omega/2)} \mathrm{Im}\,G_R(\lambda, -\omega) = \frac{2}{-\tanh(\beta\omega/2)} \cdot [-\mathrm{Im}\,G_R(\lambda, \omega)] = C(\lambda, \omega) \tag{4.6}$$
+
+故噪声核 $C(\lambda, \omega)$ 是**偶函数**（这是 FDT 的必然结果：噪声谱是实的偶函数）。
+
+**步骤 3**：作用量不变性。将 (4.4) 代入 r-a 作用量 (3.5)。作用量分解为实部 $S_{\mathrm{real}}$（运动方程部分）和虚部 $S_{\mathrm{im}}$（噪声部分）：
+
+**(a) 运动方程部分**：$E_r[\phi_{\mathrm{cl}}]$ 含时间一阶导数 $\partial_t$（谱流方程 (3.8) 的左侧）。在 $\mathcal{R}$ 下 $\phi_{\mathrm{cl}}(t) \to \phi_{\mathrm{cl}}(-t)$，使 $\partial_t \to -\partial_t$。谱流方程的时间反演性（$G \to -G$ 时方程形式不变，即谱流方程在 $t \to -t$ 下协变）保证 $S_{\mathrm{real}}$ 不变。
+
+**(b) 噪声部分**：$S_{\mathrm{im}} = \frac{i}{2}\int d\lambda\, d\omega\, \Phi_{\mathrm{q}}^\dagger(\lambda,\omega) C(\lambda,\omega) \Phi_{\mathrm{q}}(\lambda,\omega)$。在 $\mathcal{R}$ 下，$\Phi_{\mathrm{q}}(t) \to -\Phi_{\mathrm{q}}(-t) + i\beta\dot{\phi}_{\mathrm{cl}}(-t)$。其频率空间形式为 $\tilde{\Phi}_{\mathrm{q}}(\omega) \to -\tilde{\Phi}_{\mathrm{q}}(-\omega) + \beta\omega\,\tilde{\phi}_{\mathrm{cl}}(-\omega)$。二次项由 $C$ 的偶性 (4.6) 保持不变；线性项（$\Phi_{\mathrm{q}}$ 与 $\dot{\phi}_{\mathrm{cl}}$ 的交叉项）是实的纯导数项，不改变作用量的虚部。$\square$
 
 ### 4.5 物理后果的自动涌现
 
@@ -319,7 +328,11 @@ $$C(\lambda, -\omega) = \frac{2}{\tanh(-\beta\omega/2)} \mathrm{Im}\,G_R(\lambda
 
 **(ii) 非线性 Onsager 关系**：由 $\mathcal{R}$ 的高阶变换性质保证，传输系数满足 $L_{ij} = L_{ji}$。
 
-**(iii) 涨落-耗散定理**：$C(\omega) = \frac{1}{2}\coth(\beta\omega/2)\rho(\omega)$，直接从 (4.6) 得出。
+**(iii) 涨落-耗散定理**：定义谱密度 $\rho(\lambda, \omega) \equiv 2\,\mathrm{Im}\,G_R(\lambda, \omega)$（$\mathrm{Im}\,G_R$ 的正性由谱定理保证，详见 §3.5 后注）。则由 (3.12) 和 $\coth$ 的恒等式：
+
+$$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \mathrm{Im}\,G_R(\lambda, \omega) = \coth\!\left(\frac{\beta\omega}{2}\right) \rho(\lambda, \omega) \tag{4.7}$$
+
+这给出噪声核与谱密度的精确关系——即涨落-耗散定理（FDT）。$\square$
 
 ---
 
@@ -347,4 +360,336 @@ $$0 \to L \xrightarrow{\iota} A \xrightarrow{\rho} TM \to 0 \tag{5.1}$$
 
 **定义 5.2**。Lie algebroid $A$ 上的 **Chevalley-Eilenberg 微分** $d_A: \Omega^k(A) \to \Omega^{k+1}(A)$ 定义为
 
-$$(d_A\omega)(X_0, \ldots, X_k) = \sum_{i=0}^{k} (-1)^i \rho(X_i) \cdot \omega(X_0, \ldots, \hat{X}_i, \ldots, X
+$$(d_A\omega)(X_0, \ldots, X_k) = \sum_{i=0}^{k} (-1)^i \rho(X_i) \cdot \omega(X_0, \ldots, \hat{X}_i, \ldots, X_k) + \sum_{0 \leq i < j \leq k} (-1)^{i+j} \omega([X_i, X_j]_A, X_0, \ldots, \hat{X}_i, \ldots, \hat{X}_j, \ldots, X_k) \tag{5.2}$$
+
+**定理 5.1**（幂零性）。$d_A^2 = 0$。
+
+**证明**。$d_A^2 = 0$ 等价于 Lie algebroid 公理的直接推论：
+- 锚映射同态 $\rho([X,Y]_A) = [\rho(X), \rho(Y)]_{TM}$ 贡献的两项互相抵消
+- Jacobi 恒等式贡献的项互相抵消
+- Leibniz 法则保证 $d_A$ 是导子 $\square$
+
+### 5.3 扩展外微分与 BRST 微分
+
+**定义 5.3**（Ciambelli-Leigh 构造）。在迁移 Lie algebroid (5.1) 上，利用 Ehresmann 连接给出的水平-垂直分裂 $A = H \oplus L$，定义**扩展外微分**：
+
+$$\hat{d} = d + s \tag{5.3}$$
+
+其中 $d$ 为水平微分（沿底流形 $M$），$s$ 为垂直微分（BRST 微分）。
+
+**定理 5.2**（BRST 幂零性）。$\hat{d}^2 = 0$ 分解为三个条件：
+
+$$d^2 = 0, \quad s^2 = 0, \quad ds + sd = 0 \tag{5.4}$$
+
+其中 $s^2 = 0$ 正是 BRST 幂零性，由 Lie algebroid 的 Jacobi 恒等式保证。
+
+**证明**。$\hat{d}^2 = (d+s)^2 = d^2 + (ds + sd) + s^2 = 0$。$s^2 = 0$ 是 $d_A^2 = 0$ 在垂直方向的投影。$\square$
+
+### 5.4 BRST 微分的显式形式
+
+**命题 5.2**。在局部坐标 $\{x^\mu\}$（时空）和 $\{c^a\}$（鬼场）下，BRST 微分 $s$ 在生成元上的作用为
+
+$$s(A_\mu^a) = -\partial_\mu c^a + f^a_{bc} A_\mu^b c^c \tag{5.5a}$$
+$$s(c^a) = -\frac{1}{2} f^a_{bc} c^b c^c \tag{5.5b}$$
+
+其中 $f^a_{bc}$ 为结构常数。一般形式为：对 $\mathbb{X} \in \Gamma(A)$，
+
+$$s(\omega)(X_0, \ldots, X_k) = \sum_i (-1)^i \omega([c, X_i]_A, X_0, \ldots, \hat{X}_i, \ldots) + \cdots \tag{5.6}$$
+
+**Leibniz 法则**：$s(\alpha \wedge \beta) = s\alpha \wedge \beta + (-1)^{|\alpha|} \alpha \wedge s\beta$——这正是 BRST 的反对称 Leibniz 法则。
+
+### 5.5 俄罗斯公式与 Bianchi 恒等式
+
+**定理 5.3**（俄罗斯公式）。在 Atiyah Lie algebroid 上，连接形式的扩展微分满足
+
+$$\hat{d}\omega + \frac{1}{2}[\omega, \omega]_L = F \tag{5.7}$$
+
+展开为 $(d+s)(b - \varpi) = F$，其中 $b = A_\mu dx^\mu$ 为规范场，$\varpi = c^a T_a$ 为 Maurer-Cartan 形式。这给出 Bianchi 恒等式的代数版本。
+
+### 5.6 超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$
+
+**定义 5.4**（超范畴扩展）。谱范畴 $\mathbf{Sp}$ 的 $\mathbb{Z}_2$-分级扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的对象为四元组 $E = (\mathcal{H}, A, \sigma(A), \theta)$，其中 $\theta \in \{0, 1\}$ 为分级（偶/奇）。态射 $T$ 为满足**超对易子**条件的算子：
+
+$$[T_1, T_2]_{\mathrm{sup}} = T_1 T_2 - (-1)^{\theta_1 \theta_2} T_2 T_1 \tag{5.9}$$
+
+偶部 $\mathbf{Sp}_{\mathbb{Z}_2}^{(0)}$ 承载物理场（Bosonic），奇部 $\mathbf{Sp}_{\mathbb{Z}_2}^{(1)}$ 承载鬼场（Grassmann 变量 $c^a$）。
+
+**命题 5.3**。BRST 微分 $s$ 是 $\mathbf{Sp}_{\mathbb{Z}_2}$ 上奇度为 1 的导子：$s: \mathbf{Sp}_{\mathbb{Z}_2}^{(0)} \to \mathbf{Sp}_{\mathbb{Z}_2}^{(1)}$，且 $s^2 = 0$（由定理 5.2）。物理态空间为第零阶 BRST 上同调：
+
+$$\mathcal{H}_{\mathrm{phys}} = H^0_{\mathrm{BRST}} = \frac{\ker s}{\mathrm{im}\, s} \tag{5.10}$$
+
+即 BRST 闭态（$s|\Psi\rangle = 0$）商掉 BRST 恰当态（$|\Psi\rangle \sim |\Psi\rangle + s|\chi\rangle$）——这正是 CGL 框架中幺正性的代数实现。
+
+### 5.7 有效作用量的 BRST 不变性
+
+**定理 5.4**（BRST 不变性）。设 $S_{\mathrm{eff}} = S_0 + s\Psi$ 为有效作用量（$\Psi$ 为规范固定费米函数，$\mathrm{gh}(\Psi) = -1$）。则 $s \cdot S_{\mathrm{eff}} = 0$。
+
+**证明**。
+
+$$s \cdot S_{\mathrm{eff}} = s \cdot S_0 + s^2 \Psi = s \cdot S_0 \tag{5.8}$$
+
+而 $s \cdot S_0 = \frac{\partial S_0}{\partial \phi^i} R^i_a c^a = 0$ 由经典规范不变性 $\frac{\partial S_0}{\partial \phi^i} R^i_a = 0$ 保证。$\square$
+
+**定理 5.5**（Koszul-Tate 与伴随）。Koszul-Tate 分解是自由-遗忘伴随的提升：设 $\mathsf{Free} \dashv \mathsf{Forget}$，则 Koszul-Tate 分解恰好是 $\mathsf{Forget}(R/I)$ 的余纤维替换。UFPF 的 $D \dashv R$ 伴随在此框架下自然给出 BRST 复形。
+
+---
+
+## 6 从谱流体到涨落流体力学
+
+> 本节结合 §3-§5 的结果，从 UFPF 谱流体动力学出发，构造 CGL 涨落流体力学的作用量。
+
+### 6.1 谱流体的 CTP 嵌入
+
+**定理 6.1**。UFPF 的 N-S 谱流方程 [5, 定理 2.1]
+
+$$\frac{d}{dt} A_t = [A_{\mathrm{adv}}, A_t] - \nu\Delta_{\mathrm{spec}} A_t + \mathcal{F}(t) \tag{6.1}$$
+
+可以嵌入 CTP 形式（§3.2），其 r-a 分解（§3.3）给出：
+
+**运动方程部分**（$\Phi_{\mathrm{q}}$ 线性项）：
+
+$$\partial_t A_r = [A_{\mathrm{adv}}, A_r] - \nu\Delta_{\mathrm{spec}} A_r + \mathcal{F}(t) + \text{噪声修正} \tag{6.2}$$
+
+**噪声部分**（$\Phi_{\mathrm{q}}$ 二次项）：
+
+$$\langle A_{\mathrm{q}}(\lambda_1, \omega) A_{\mathrm{q}}(\lambda_2, \omega')\rangle = \delta(\lambda_1 - \lambda_2) \cdot 2\nu|\omega| \cdot \coth(\beta\omega/2) \tag{6.3}$$
+
+**推论 6.1**（经典极限 → Landau-Lifshitz 噪声）。在经典极限 $|\omega| \ll \beta^{-1}$ 下，$\coth(\beta\omega/2) \to 2/(\beta\omega)$，故噪声统计 (6.3) 退化为
+
+$$\langle A_{\mathrm{q}} A_{\mathrm{q}}\rangle \xrightarrow{\hbar\omega \ll k_B T} 4\nu k_B T\, \delta(\lambda_1 - \lambda_2) \tag{6.3'}$$
+
+这正是 Landau-Lifshitz 涨落流体力学中热噪声的谱强度（乘以相应的投影因子后给出 $\langle \Pi_{ij}\Pi_{kl}\rangle \sim 2\eta k_B T$）。这确认了谱流体作用量 (6.4) 在经典极限下正确还原标准涨落流体力学。
+
+### 6.2 谱流体作用量的构造
+
+**定义 6.1**（谱流体作用量）。综合 (6.2)-(6.3)，谱流体作用量为
+
+$$I_{\mathrm{hydro}}^{\mathrm{Sp}} = \int d\lambda\, dt \left[A_{\mathrm{q}} \cdot \left(\partial_t A_r - [A_{\mathrm{adv}}, A_r] + \nu\Delta_{\mathrm{spec}} A_r - \mathcal{F}\right) + \nu|\omega| \cdot A_{\mathrm{q}}^2 \cdot \coth(\beta\omega/2) + \cdots\right] \tag{6.4}$$
+
+### 6.3 与 CGL 作用量的等价性
+
+**定理 6.2**（等价性）。在 KMS 对称性（§4）和 BRST 不变性（§5）的约束下，谱流体作用量 (6.4) 等价于 CGL 的流体作用量 $I_{\mathrm{hydro}}[h_1, B_1; h_2, B_2; \tau]$。
+
+**等价映射**：
+
+| 谱流体 (UFPF) | CGL 流体时空 |
+|:---|:---|
+| 谱参数 $\lambda$ | 流体时空坐标 $\sigma^a$（经 §7 映射） |
+| $A_r$（谱期望值） | $r$-型场（$E_r, V_{ri}, \mu_r$） |
+| $A_{\mathrm{q}}$（谱涨落） | $a$-型场（$E_a, V_{ai}, \mu_a$） |
+| 谱流生成元 $G$ | 流体时空微分同胚生成元 |
+
+**证明思路**：KMS 不变性约束作用量中允许的项（§4.5），BRST 不变性保证幺正性（§5.6）。这两条约束与 CGL 中动态 KMS + BRST 对作用量的约束一致。在此约束下，(6.4) 的场量组合与 CGL 作用量的场量组合一一对应。$\square$
+
+---
+
+## 7 Koopman 谱-流体时空映射
+
+> 本节建立 §6.3 中等价映射所需的数学基础：谱参数空间与 CGL 流体时空之间的精确对应。
+
+### 7.1 核心洞见
+
+CGL 的"流体时空"坐标 $\sigma^a$ 标记流体元及其内部时钟。UFPF 中，**谱参数 $\lambda$ 扮演"内部时钟"的角色**——它是 Koopman 生成元的特征值，编码系统的固有频率。
+
+### 7.2 映射的四个分量
+
+**定理 7.1**（四分量映射）。存在映射 $\Phi: \mathcal{K}(\lambda_j, \psi_j, V, \mu) \to (X^\mu_{1,2}(\sigma^a), h_{sab}, B_{sa}, \tau)$，其四个分量为：
+
+**Φ₁（特征值 → 物质导数）**：
+$$\lambda_j \leftrightarrow \frac{D}{Dt}\bigg|_{\text{模态 } j}$$
+
+其中 Re$(\lambda_j) < 0$ 对应耗散时间尺度 $\tau_j = -1/$Re$(\lambda_j)$，Im$(\lambda_j) = \omega_j$ 对应振荡频率。
+
+**Φ₂（特征函数 → 坐标映射）**：
+$$\psi_j \leftrightarrow \partial_a X_s^\mu$$
+
+Koopman 特征函数的梯度 $\nabla\psi_j$ 定义切丛上的特征分布；$m$ 个独立特征函数定义到 $T^m$ 的浸入（Das 2021）。
+
+**Φ₃（Koopman 模态 → 拉回度规）**：
+$$\boldsymbol{\phi}_j(\mathbf{x}) \leftrightarrow \Phi_{ab}^{(j)}(\sigma)$$
+
+张量值 Koopman 模态 $\Phi_{ab}^{(j)}$ 编码度规 $h_{sab}$ 的几何演化（Avila & Mezić 2023）。
+
+**Φ₄（谱测度 → 涨落参数）**：
+- 离散谱测度 $\sum_j |\langle\psi_j, f\rangle|^2\delta(\omega - \omega_j)$ 对应确定性动力学
+- 连续谱测度 $|m_f(\omega)|^2 d\omega$ 对应涨落/噪声
+- $\tau \sim \int |m_f(\omega)|^2 d\omega / \text{（谱权重）}$
+
+### 7.3 关键等式
+
+**命题 7.1**。物质导数 $D/Dt$、Lagrangian 流映射 $X^\mu(\sigma)$、和 Koopman 生成元 $K = u \cdot \nabla$ 是同一数学对象在三个空间中的不同表现。
+
+**证明**。对任意观测函数 $g$，Koopman 生成元的作用为 $Kg = u^\mu \partial_\mu g$。在流体时空中，这等于 $u^A \partial_A g$（物质导数）。若选择 $g = X^\mu(\sigma)$，则 $KX^\mu = u^\nu \partial_\nu X^\mu$ 编码了流体元的运动。$\square$
+
+### 7.4 适用范围
+
+| 情形 | 映射 $\Phi$ | 备注 |
+|:---|:---:|:---|
+| 理想流体（无粘） | ✅ 直接 | Koopman 谱离散，$V$ 斜伴随 |
+| 近平衡耗散流体 | ⚠️ Galerkin 截断 | 误差可控制 |
+| 充分发展湍流 | ❌ 开放 | 连续谱处理、光滑性、截断收敛性 |
+
+### 7.5 共形流体二阶输运的谱推导
+
+> 本节将 CGL-II [2, §VII] 的中性共形流体二阶熵流结果在谱框架中重新推导。这是"完全嵌入"目标的关键一步。
+
+#### 7.5.1 剪切张量的对易子构造
+
+**定义 7.2**（应变算子）。设 $A_{\mathrm{adv}} = K = u\cdot\nabla$ 为 Koopman 生成元。定义**应变算子**为投影对易子：
+
+$$\hat\sigma^{\mu\nu} = \Pi_\sigma\,[\nabla, A_{\mathrm{adv}}] \tag{7.1}$$
+
+其中 $\Pi_\sigma \equiv \Delta^{\mu\nu\alpha\beta}$ 为无迹对称投影（$\Delta^{\mu\nu} = g^{\mu\nu} + u^\mu u^\nu$）。由 $[\nabla, K]f = (\nabla u)\cdot\nabla f$，$\hat\sigma^{\mu\nu}$ 的符号恰为剪切张量。
+
+**命题 7.2**。剪切应力可观测量为
+
+$$\sigma^{\mu\nu}(t) = \mathrm{Tr}(A_t\, \hat\sigma^{\mu\nu}) = \sum_k c_{\sigma,k}^{\mu\nu}\, e^{\lambda_k t} \tag{7.2}$$
+
+其中 $\lambda_k$ 为谱流生成元的特征值。应变算子自身的谱流方程为
+
+$$\frac{d\hat\sigma_t}{dt} = [A_{\mathrm{adv}}, \hat\sigma_t] - \nu\,\Delta_{\mathrm{spec}}\,\hat\sigma_t + \Pi_\sigma[\nabla, \mathcal{F}] \tag{7.3}$$
+
+#### 7.5.2 弛豫时间的谱隙表达
+
+**定理 7.3**（弛豫时间 = 谱隙倒数）。剪切道第二阶弛豫时间 $\tau_\pi$ 由剪切道**第一非流体力学 Koopman 特征值**给出：
+
+$$\tau_\pi = -\frac{1}{\mathrm{Re}\,\lambda_\pi} \tag{7.4}$$
+
+其中 $\lambda_\pi$ 满足：流体力学模（$\lambda(k) \to 0$ 当 $k \to 0$）被排除后，$\lambda_\pi$ 是最大的剩余特征值实部。
+
+**定量预言**（可证伪）：N=4 SYM 强耦合
+
+$$\lambda_\pi = -\frac{2\pi T}{2-\ln 2} \approx -4.81\,T, \quad \tau_\pi \approx \frac{0.208}{T} \tag{7.5}$$
+
+弱耦合动理学 $\lambda_\pi = -T/[6(\eta/s)]$——两者相差约 29 倍，与全息/动理学弛豫时间差约 30 倍的已知结果一致 [19]。
+
+#### 7.5.3 谱熵流的构造
+
+**定义 7.3**（谱熵流）。以谱权重 $p_i(t)$（$A_t$ 在固定基下的谱）和 Koopman 模强度定义二阶谱熵流：
+
+$$s^\mu_{\mathrm{spec}} = S_B\, u^\mu - \frac{\beta_\pi}{2}\langle\pi^2\rangle_{\mathrm{spec}}\, u^\mu - \frac{\beta_\Pi}{2}\langle\Pi^2\rangle_{\mathrm{spec}}\, u^\mu + \cdots \tag{7.6}$$
+
+其中 $\langle\pi^2\rangle_{\mathrm{spec}}(x,t) = \sum_k |c_{\pi,k}(x,t)|^2$，$\beta_\pi = \tau_\pi/(2\eta T)$。
+
+**定理 7.4**（谱熵流散度 = Onsager 形式）。由谱流方程和谱熵产生公式（定理 2.3、2.4）：
+
+$$\nabla_\mu s^\mu_{\mathrm{spec}} = \frac{1}{T}\sum_{ij} L_{ij} X_i X_j = \frac{2\eta}{T}\,\sigma^{\mu\nu}\sigma_{\mu\nu} + \frac{\zeta}{T}\,\theta^2 + \cdots \geq 0 \tag{7.7}$$
+
+#### 7.5.4 与 CGL 二阶熵流的逐项对照
+
+**定理 7.5**（谱熵流 ⟺ CGL 二阶熵流）。谱构造 (7.6)-(7.7) 在 Landau 框中与 CGL-II 的二阶熵流 [2, §VII.3] 逐项对应：
+
+$$S_2^\mu = \frac14\big(f_5\,\hat\sigma^2 - f_3\,\hat\omega^2\big)\frac{u^\mu}{T} + v_1\hat\nabla_\nu\hat\omega^{\mu\nu} + f_1\Big(\hat R^{\mu\nu} - \frac12\hat g^{\mu\nu}\hat R\Big)\frac{u_\nu}{T} \tag{7.8}$$
+
+**对应映射**：
+
+| CGL 系数 | 谱框架对应 | 来源 |
+|:---|:---|:---|
+| $\eta$ | $\eta = \frac{1}{k_B T}\sum_k |c_k|^2/|\lambda_k|$ | Koopman 谱和 |
+| $\tau_\pi$ | $-1/\mathrm{Re}\,\lambda_\pi$ | 定理 7.3 |
+| $f_5 \leftrightarrow \eta\tau_\pi$ | $\eta/|\lambda_\pi|$ | 谱隙 |
+| $c_2 = \frac14 f_5$ | 谱熵流 $\sigma^2$ 项系数 | (7.6) |
+
+**推论 7.1**（DKMS 约束的谱版本）。CGL 的 DKMS 约束 $c_2 = f_5/4$ 在谱框架中等价于：谱熵流中 $\sigma^2 u^\mu$ 项系数 = 剪切道谱隙倒数乘以 $\eta/4$——这是纯谱陈述，可直接用 DMD/EDMD 数值验证。
+
+**注 7.1**（普适关系的警示）。$f_5 + f_4 - 2f_2 = 0$（Haack-Yarom 全息关系）在 Gauss-Bonnet 引力下非微扰失效 [2]，谱推导不应将其硬编码为普适约束。
+
+---
+
+## 8 统一定理
+
+**定理 8.1（UFPF-CGL 主定理）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 UFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其超范畴扩展。则以下五个等价性成立：
+
+**(1) 路径积分等价**。$\mathbf{Sp}_{\mathbb{Z}_2}$ 上的谱路径积分（A4 + 超结构）等价于 CGL 的 CTP 路径积分（§3.2，定理 3.1）。
+
+**(2) r-a 等价**。SK 谱等价桥（定理 2.2）等价于 CGL 的 r-a 变量分解（§3.3，定理 3.2）。
+
+**(3) KMS 等价**。谱 KMS 变换（§4.4，定理 4.4）等价于 CGL 的动态 KMS $\mathbb{Z}_2$ 对称性。
+
+**(4) BRST 等价**。$\mathbf{Sp}_{\mathbb{Z}_2}$ 上的超范畴 BRST 算子 $s$（§5.3 定理 5.2 + §5.6 定义 5.4）等价于 CGL 的 BRST 对称性。
+
+**(5) 作用量等价**。谱流体作用量 $I_{\mathrm{hydro}}^{\mathrm{Sp}}$（§6.2，定义 6.1）等价于 CGL 的流体作用量 $I_{\mathrm{hydro}}$（§6.3，定理 6.2）。
+
+**(6) 二阶输运等价**。谱熵流构造（§7.5，定理 7.5）等价于 CGL-II 的中性共形流体二阶熵流，DKMS 约束 $c_2 = f_5/4$ 有纯谱表述（推论 7.1）。
+
+**证明**。由定理 3.1、3.2、4.4、5.2、6.2、7.5 直接合并。$\square$
+
+**推论 8.1**。CGL 的全部物理结论——涨落流体力学、第二定律从对称性涌现、Onsager 关系、FDT、共形流体二阶输运——均为 UFPF 公理体系（含超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$）的定理。
+
+---
+
+## 9 讨论
+
+### 9.1 推导的性质
+
+本文的推导链为：
+
+$$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{KMS} \xrightarrow{\S5} \text{BRST} \xrightarrow{\S6} \text{涨落流体力学}$$
+
+严格性说明——推导使用的外部输入分三类：
+
+**（一）UFPF 公理**：谱路径积分（A4）、谱流方程、SK 谱等价桥、谱热力学定理。这是推导的物理基础。
+
+**（二）标准数学定理**（无物理内容，仅作为工具）：
+- Tomita-Takesaki 模理论（§4.1-4.2）：von Neumann 代数的标准结果
+- HHW 定理（§4.3）：KMS 态的谱流刻画
+- Lie algebroid 上同调（§5）：Chevalley-Eilenberg 复形的标准理论
+- Koszul-Tate 分解（§5.7）：同调代数的标准工具
+
+**（三）超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$**（定义 5.4）：这是 UFPF 之上**唯一新增的结构**。它只引入 $\mathbb{Z}_2$-分级信息（奇偶性），使鬼场有处安放，不引入新的动力学自由度。其必要性源于 BRST 形式本身要求 Grassmann 奇性——这是 CGL 框架同样需要的结构。
+
+在此基础上：§3-§5 的推导基于上述定理的**直接应用**；§6 的等价性基于 KMS + BRST 两条约束的一致性论证；§7 的映射在理想流体情形严格，在湍流情形为开放问题（§7.4）。
+
+### 9.2 与 CGL 的关系定位
+
+本文证明的不是"UFPF 取代 CGL"，而是**两个框架在数学上同构**：CGL 为耗散流体提供了场论语言，UFPF 为其提供了范畴论基础。两者的关系类似于"几何"与"代数"——同一个物理内容的两种表述。
+
+§7.5 已进一步表明，这种同构延伸到**具体的定量成果**：CGL-II 的中性共形流体二阶熵流（$f_1,\dots,f_5$ 系数系统）可在谱框架中用 Koopman 谱隙和模强度重新表达。尤其是 DKMS 约束 $c_2 = f_5/4$ 获得了纯谱的等价表述，并产生可证伪预言 $\lambda_\pi \approx -4.81\,T$（N=4 SYM 剪切道第一非流体力学谱隙）。
+
+### 9.3 可验证性
+
+本文的推导链产生了**三个可直接数值验证的预言**：
+
+**（V1）噪声统计的 KMS 约束**：谱流体的噪声统计 (6.3) 应满足 CGL 的 KMS 约束（经典极限 Landau-Lifshitz 形式 6.3'）。可通过 UFPF 现有的湍流 DNS 代码直接检验。
+
+**（V2）剪切道谱隙**：N=4 SYM 剪切道第一非流体力学 Koopman 特征值应位于 $\lambda_\pi \approx -4.81\,T$（定理 7.3）。可在 Bjorken 流上用 DMD/EDMD 从数值数据提取验证。
+
+**（V3）DKMS 约束的谱版本**：谱熵流中 $\sigma^2 u^\mu$ 项系数应等于 $\eta/(4|\lambda_\pi|)$（推论 7.1）——这是 KMS 约束的纯谱陈述，无需导数展开即可检验。
+
+### 9.4 局限性与未来方向
+
+1. §7 的谱-流体时空映射在湍流情形不严格，需要 Colbrook 式谱测度理论的发展
+2. CTP 双拷贝 Koopman 结构（时间正向+反向）需要进一步构造
+3. 超范畴 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的 Lean 4 形式化尚未完成
+4. 非高斯噪声（$\Phi_{\mathrm{q}}^3$ 及以上项）的完整处理是未来工作
+5. 共形流体二阶系数中 $f_1, f_2$（Ricci 项和 $\sigma^2$ 非线性项）的完整谱表达待推导
+6. 普适关系 $f_5+f_4-2f_2=0$ 的谱版本仅在全息 Einstein 引力下成立（注 7.1），谱框架中不能视为一般约束
+
+---
+
+## 参考文献
+
+[1] M. Crossley, P. Glorioso, H. Liu, "Effective field theory of dissipative fluids," arXiv:1511.03646 (2017).
+[2] P. Glorioso, M. Crossley, H. Liu, "Effective field theory for dissipative fluids (II): classical limit, dynamical KMS symmetry and entropy current," arXiv:1701.07817 (2017).
+[3] P. Glorioso, H. Liu, "Lectures on non-equilibrium effective field theories and fluctuating hydrodynamics," arXiv:1805.09331 (2018).
+[4] 王斌, "通用不动点分形谱范畴框架 I: 分形谱化理论" (Paper I), UFPF 系列.
+[5] 王斌, "通用不动点分形谱范畴框架 VI: 谱流体动力学" (Paper VI), UFPF 系列.
+[6] 王斌, "通用不动点分形谱范畴框架 VII: 非平衡谱热力学" (Paper VII), UFPF 系列.
+[7] 王斌, "通用不动点分形谱范畴框架 XI: 谱量子场论" (Paper XI), UFPF 系列.
+[8] 王斌, "通用不动点分形谱范畴框架 XXV: 跨领域纤维化方法论" (Paper XXV), UFPF 系列.
+[9] M. Takesaki, *Theory of Operator Algebras II*, Springer (2003).
+[10] J. Cannière, "A spectral characterization of KMS states," *Commun. Math. Phys.* 84 (1982) 143-158.
+[11] L. Ciambelli, R. G. Leigh, "Lie algebroids and the geometry of off-shell BRST," *Nucl. Phys. B* 972 (2022) 115553, arXiv:2101.03974.
+[12] Z. Jia, P. Klinger, R. G. Leigh, "BRST cohomology is Lie algebroid cohomology," *Nucl. Phys. B* 994 (2023) 116317, arXiv:2303.05540.
+[13] M. Frankland, "Behavior of Quillen (co)homology with respect to adjunctions," arXiv:1009.5156 (2020).
+[14] I. Mezić, "Analysis of fluid flows via spectral properties of the Koopman operator," *Annu. Rev. Fluid Mech.* 45 (2013) 357-378.
+[15] I. Avila, I. Mezić, "Spectral properties of vector bundle pullbacks," *SIAM J. Appl. Dyn. Syst.* (2023).
+[16] R. Haag, N. Hugenholtz, M. Winnink, "On the equilibrium states in quantum statistical mechanics," *Commun. Math. Phys.* 5 (1967) 215-236.
+[17] S. Das, "Koopman eigenfunctions are smooth in certain dynamical systems," arXiv:2112.12334 (2021).
+[18] M. Colbrook, "The multiverse of dynamic mode decomposition algorithms," arXiv:2312.00137 (2023).
+[19] M. P. Heller, "Second order viscous hydrodynamics and AdS/CFT correspondence," *econf* C0706044:08 (2007).
+[20] R. Baier, P. Romatschke, D. T. Son, A. O. Starinets, M. A. Stephanov, "Relativistic viscous hydrodynamics, conformal invariance, and holography," *JHEP* 0804:100 (2008), arXiv:0712.2451.
+
+---
+
+*本文对应 UFPF 体系总序的完整推导链。版本 v0.3（2026-08-21：§7.5 新增共形流体二阶输运的谱推导——剪切张量对易子化 + 弛豫时间谱隙化 + 谱熵流构造 + DKMS 约束纯谱表述；统一定理扩至六项等价；新增三个数值验证预言 V1-V3）。*

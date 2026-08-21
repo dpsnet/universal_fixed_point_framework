@@ -738,4 +738,110 @@ $$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{K
 
 ---
 
-*本研究笔记 v0.3（2026-08-21 第三轮深度研究）。四个核心环节的数学构造已基本完成，论文主体框架可开始撰写。*
+## 10 "完全嵌入"缺口清单与推进路线（v0.4，2026-08-21）
+
+> 论文初稿完成（Paper XLV v0.2）后，用户追问"CGL 是否被完全嵌入 UFPF"——本节省略性记录"嵌入"的三个层次及剩余缺口。
+
+### 10.1 嵌入的三个层次
+
+| 层次 | 内容 | 状态 |
+|:---|:---|:---:|
+| **结构层** | CTP / r-a / KMS / BRST 框架性构件在 UFPF 中重新实现 | ✅ 论文 §3-§5 |
+| **物理内容层** | 流体时空映射、共形流体二阶输运、噪声非线性 | ⚠️ 部分 |
+| **预言层** | CGL 的可证伪物理预言全部还原 | ❌ 未开始 |
+
+### 10.2 剩余缺口清单（"完全嵌入"的障碍）
+
+| 缺口 | 描述 | 可行性 | 关键参考 |
+|:---|:---|:---:|:---|
+| **G1 湍流谱-流体时空映射** | §7 映射在充分发展湍流情形不严格（连续谱、特征函数不光滑、截断收敛性） | 低 | Colbrook ResDMD 2023 |
+| **G2 共形流体二阶熵流** | CGL 1701.07817 的 49 页推导：中性共形流体二阶输运系数的谱版本 | 中 | CGL-II §5 |
+| **G3 噪声非线性相互作用** | $a$-场（$\Phi_{\mathrm{q}}$）高阶项的系统处理 | 中 | CGL-I §4 |
+| **G4 流体时空的完整几何** | $X^\mu_{1,2}(\sigma^a)$ 映射的谱构造（含 CTP 双拷贝 Koopman） | 中 | §7 |
+| **G5 可证伪预言还原** | CGL 在重离子碰撞/QCD 临界点的应用预言在谱框架中重新导出 | 待定 | — |
+
+### 10.3 推进优先级（修正）
+
+1. **G2 共形流体二阶熵流**（最高）：CGL 标志性定量成果，且谱框架已有熵流基础（Paper VII 谱熵增）
+2. **G3 噪声非线性**（高）：补全谱流体作用量 (6.4) 的高阶项
+3. **G4 流体时空几何**（中）：需要先突破 G1
+4. **G1 湍流映射**（低）：数学硬骨头，长期方向
+
+### 10.4 论文状态
+
+- Paper XLV 初稿完成：v0.2（2026-08-21，审阅修订后）
+- 论文 §3-§5（结构层）✅、§6（部分）⚠️、§7（映射）⚠️、§8（数值）待执行
+
+---
+
+*本研究笔记 v0.4（2026-08-21）。下一阶段：攻克 G2（共形流体二阶输运的谱推导）。*
+
+---
+
+## 11 G2 攻克记录：共形流体二阶输运的谱推导（v0.5，2026-08-21）
+
+> 双线研究交叉对照成果：CGL-II (1701.07817) 的中性共形流体二阶熵流显式结果 × Koopman 谱框架的对应构造。
+
+### 11.1 CGL 标准结果（1701.07817，DKMS 唯一确定）
+
+**中性共形流体二阶应力张量**（Landau 框，5 个独立常数 $f_1,\dots,f_5$）：
+
+$$\hat T_2^{\mu\nu} = f_1\hat R^{<\mu\nu>} + f_2\hat\sigma^{<\mu}{}_{\alpha}\hat\sigma^{\nu>\alpha} + f_3\hat\omega^{<\mu}{}_{\alpha}\hat\omega^{\nu>\alpha} + f_4\hat\sigma^{<\mu}{}_{\alpha}\hat\omega^{\nu>\alpha} + f_5(\hat D\hat\sigma)^{<\mu\nu>}$$
+
+**二阶熵流**（DKMS 程序唯一固定）：
+
+$$\boxed{S_2^\mu = \frac14(f_5\hat\sigma^2 - f_3\hat\omega^2)\frac{u^\mu}{T} + v_1\hat\nabla_\nu\hat\omega^{\mu\nu} + f_1\Big(\hat R^{\mu\nu} - \tfrac12\hat g^{\mu\nu}\hat R\Big)\frac{u_\nu}{T}}$$
+
+**二阶 DKMS 约束**：$c_1 = 0,\ c_2 = \frac14 f_5,\ c_3 = -\frac14 f_3,\ v_2 = f_1,\ f_2 = -\frac18 h_1$。关键点：此前方法中 $c_2$（$\sigma^2 u^\mu$ 项系数）不确定，DKMS 将其唯一固定为 $f_5/4$。
+
+**散度到三阶**：$\nabla_\mu S^\mu = \frac12 T^{-1}\eta\,\sigma^2 - \frac12 T^{d-3}f_2\,\sigma^3 + O(\partial^4)$。
+
+### 11.2 谱框架的对应构造（UFPF 侧）
+
+**（P1）剪切张量的对易子构造**：
+
+$$\hat\sigma^{\mu\nu} = \Pi_\sigma[\nabla, A_{\mathrm{adv}}], \quad \sigma^{\mu\nu}(t) = \mathrm{Tr}(A_t \hat\sigma^{\mu\nu}) = \sum_k c_{\sigma,k}^{\mu\nu} e^{\lambda_k t}$$
+
+其中 $\Pi_\sigma = \Delta^{\mu\nu\alpha\beta}$ 为无迹对称投影，$A_{\mathrm{adv}} = K = u\cdot\nabla$ 为 Koopman 生成元。谱流方程给出应变算子自身的演化方程。
+
+**（P2）弛豫时间的谱隙表达**：
+
+$$\tau_\pi = -\frac{1}{\mathrm{Re}\,\lambda_\pi}, \quad \lambda_\pi = \text{剪切道第一非流体力学 Koopman 特征值}$$
+
+定量预言：N=4 SYM 强耦合 $\lambda_\pi = -2\pi T/(2-\ln 2) \approx -4.81\,T$（$\tau_\pi \approx 0.208/T$）；弱耦合 $\lambda_\pi = -T/[6(\eta/s)]$——两者差约 29 倍，与 Heller 的"强弱耦合弛豫时间差 30 倍"吻合。
+
+**（P3）谱熵流的构造**：
+
+$$s^\mu_{\mathrm{spec}} = S_B u^\mu - \frac{\beta_\pi}{2}\langle\pi^2\rangle_{\mathrm{spec}} u^\mu - \frac{\beta_\Pi}{2}\langle\Pi^2\rangle_{\mathrm{spec}} u^\mu + \cdots$$
+
+其中 $\langle\pi^2\rangle_{\mathrm{spec}} = \sum_k |c_{\pi,k}|^2$。散度自动回到 Onsager 形式 $\nabla_\mu s^\mu_{\mathrm{spec}} = \frac{1}{T}\sum_{ij}L_{ij}X_iX_j$。
+
+**（P4）导数展开 = 快模绝热消去**：Knudsen 数 $\mathrm{Kn} \sim \nabla/|\lambda_{\mathrm{gap}}|$，$\pi = 2\eta(1+\tau_\pi D)^{-1}\sigma = 2\eta\sigma - 2\eta\tau_\pi D\sigma + \cdots$——一阶 NS 粘性来自 $\Delta_{\mathrm{spec}}$ 平衡，二阶弛豫来自非流体力学谱隙。
+
+### 11.3 CGL 二阶系数 ↔ 谱参数的完整对照
+
+| CGL 系数 | 谱框架对应 | 状态 |
+|:---|:---|:---:|
+| $\eta$（剪切粘滞） | $\eta = \frac{1}{k_B T}\sum_k |c_k|^2/|\lambda_k|$（Koopman 谱和） | 半已知 |
+| $\tau_\pi$（弛豫时间） | $\tau_\pi = -1/\mathrm{Re}\,\lambda_\pi$（非流体力学谱隙） | 新（P2） |
+| $f_1$ ↔ $\kappa$ | Ricci 项，谱几何量 | 待推导 |
+| $f_2$ ↔ $\lambda_1$ | $\sigma^2$ 非线性项系数 | 待推导 |
+| $f_5$ ↔ $\eta\tau_\pi$ | $f_5 \propto \eta/\lambda_\pi$（由谱隙直接给出） | 新（P2） |
+| $c_2 = \frac14 f_5$（熵流系数） | 由谱熵流 P3 自然给出 | 新 |
+
+### 11.4 关键洞见
+
+1. **DKMS 约束的谱版本**：$c_2 = f_5/4$ 在谱框架中对应"熵流 $\sigma^2$ 项系数 = 剪切道谱隙倒数的四分之一"——这是纯谱陈述，无需导数展开即可验证。
+2. **$f_5+f_4-2f_2=0$ 的警示**：1701.07817 明确否定该全息关系的普适性（Gauss-Bonnet 下失效），谱推导不应硬编码此关系。
+3. **熵流歧义**：$v_1$ 项（零散度）不可定，对应谱构造中的纯拓扑项。
+4. **可证伪预测**：N=4 SYM 剪切道第一非流体力学 Koopman 特征值应在 $\lambda \approx -4.81\,T$，可在 Bjorken 流上用 DMD/EDMD 数值验证。
+
+### 11.5 下一步
+
+- [ ] 将 P1-P4 构造写成论文新增章节（§7 共形流体谱推导）
+- [ ] 用 EDMD 在 Bjorken 流上数值验证 $\lambda_\pi = -4.81T$
+- [ ] 推导 $f_1, f_2$ 的谱表达（谱几何量）
+
+---
+
+*本研究笔记 v0.5（2026-08-21）。G2 核心构造完成：剪切张量对易子化 + 弛豫时间谱隙化 + 谱熵流构造。*
