@@ -1,4 +1,4 @@
-﻿# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 UFPF 表述及可证伪预言
+# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 UFPF 表述及可证伪预言
 
 > **论文编号**：Paper XLV（v1.2，2026-08-22）
 > **作者**：王斌
@@ -377,7 +377,7 @@ $$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \cdot \mathrm{Im}\,G_R(\la
 
 **证明**。直接将定理 2.2 (SK 谱等价桥) 代入 r-a 作用量 (3.5) 的二次项。$\square$
 
-**注 3.5**（谱函数正性）。由 Lehmann 表示，retarded 传播子的谱密度 $\rho(\lambda, \omega) = 2\,\mathrm{Im}\,G_R(\lambda, \omega)$ 等于跃迁加权和 $\sum_n |\langle n | \hat{O} | 0\rangle|^2 \delta(\omega - \omega_{n0})$，故 $\rho(\lambda, \omega) \geq 0$。这保证 FDT 公式 (4.7) 中 $C(\lambda,\omega) \geq 0$（$\coth$ 与 $\omega$ 同号，$\rho \geq 0$），进而保证噪声系数正定——这是路径积分收敛（Fokker-Planck 型）的必要条件。
+**注 3.5**（谱函数正性）。由 Lehmann 表示，retarded 传播子的谱密度 $\rho(\lambda, \omega) = 2\,\mathrm{Im}\,G_R(\lambda, \omega)$ 等于跃迁加权和 $\sum_n |\langle n | \hat{O} | 0\rangle|^2 \delta(\omega - \omega_{n0})$，故 $\rho(\lambda, \omega) \geq 0$。这保证 FDT 公式 (3.12)（等价地，见 (4.7)）中 $C(\lambda,\omega) \geq 0$（$\coth$ 与 $\omega$ 同号，$\rho \geq 0$），进而保证噪声系数正定——这是路径积分收敛（Fokker-Planck 型）的必要条件。
 
 ---
 
@@ -1009,15 +1009,17 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 ### 9.4 局限性与开放问题
 
-以下按问题性质分为三类。
+以下按问题性质分为四类。
 
 **前提性局限**
 
 1. **UFPF 的地位局限**。UFPF 目前为个人独立研究的理论假说，未经学术共同体独立评审（§1.1 地位声明）。本文的全部论证以 UFPF 公理为前提——若 UFPF 公理体系本身被证伪或需修正，本文的重构结论将相应调整。这是本文最大的前提性局限，以下所有开放问题均以此为前提。
 
-**框架性缺口**
+**已解决**
 
 2. **CTP 双拷贝 Koopman 结构**（已在 §3.2a 完成）。反酉算子 $\mathcal{K}$（定理 3.1a）在 $A_R$-本征基下显式构造为复共轭算子 (3.3b)，满足 $U_- = \mathcal{K} U_+ \mathcal{K}^{-1}$ (3.3a)。$\mathcal{K}$ 对 r-a 变量给出静态 $\mathbb{Z}_2$（$\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$），是 DKMS 变换 $\mathcal{R} = \mathcal{K} \circ \mathcal{T} \circ \mathcal{S}_\beta$ (3.3d) 的代数分量。$\mathcal{K}$ 与模共轭 $J$ 的对应关系见注 3.2。
+
+**框架性缺口**
 
 3. **湍流映射的学习极限**。§7.6 的谱测度映射提供了严格框架，但存在学习极限（注 7.2）：对抗性光滑系统使任何数据驱动算法无法学习谱性质（成功率至多 50%）。这意味着湍流谱-时空映射的可操作性存在根本边界，实际应用需结合先验物理约束。
 
@@ -1027,7 +1029,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 **待完成的严格化与数值延伸**
 
-6. **非高斯噪声的高阶实现**。V1-V5 数值验证已通过（§9.3），但以下两项待完成：(a) 多谱塔双谱 $B(\omega_1,\omega_2)$ 与三谱 $T(\omega_1,\omega_2,\omega_3)$ 的显式频域计算——V4 仅验证了时域三阶累积量信号；(b) KMS 塔保持定理（定理 6.5）的严格形式化——当前仅验证了三点 FDT (6.8) 的代数结构自洽性，一般 $n$ 点情形的证明待补。
+6. **非高斯噪声的高阶实现**。V1-V5 数值验证已通过（§9.3）；(a) 多谱塔双谱 $B(\omega_1,\omega_2)$ 与三谱 $T(\omega_1,\omega_2,\omega_3)$ 的显式频域计算已由脚本 `scripts/paper45_bispectrum_frequency_domain.py` 完成（8/8 检查项通过：二次相位耦合双谱三波共振支撑、高斯三谱逐点为零、谱静默≠高斯均获验证），此项已闭合；(b) KMS 塔保持定理（定理 6.5）的严格形式化——当前仅验证了三点 FDT (6.8) 的代数结构自洽性，一般 $n$ 点情形的证明待补。
 
 7. **超范畴 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的形式化**。$\mathbf{Sp}_{\mathbb{Z}_2}$ 作为翻译接口引入了 $\mathbb{Z}_2$-分级信息（注 5.1），其 Lean 4 形式化验证尚未完成。关键检查点为 BRST 幂零性 $s^2=0$（定理 5.2）在超范畴语言中的机器可验证证明。
 
@@ -1047,7 +1049,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 ## 附录 A：强耗散极限下的谱场关联函数渐近行为
 
-本附录推导 §3.2a 中构造的反酉算子 $\mathcal{K}$（定理 3.1a）在强耗散极限 $\gamma \gg \omega$ 下对谱场关联函数的影响。结果在注 3.4 中引用，并可与 §4.2 的 FDT（定理 3.2）和 §7.5 的共形流体输运系数相互参照。
+本附录推导 §3.2a 中构造的反酉算子 $\mathcal{K}$（定理 3.1a）在强耗散极限 $\gamma \gg \omega$ 下对谱场关联函数的影响。结果在注 3.4 中引用，并可与 §4.5 的 FDT（定理 4.5(iii)）和 §7.5 的共形流体输运系数相互参照。
 
 ### A.1 设置
 
@@ -1130,7 +1132,7 @@ $\mathcal{K}$ 在相干层面的退化与在涨落层面的持续，定量地刻
 [10] J. Cannière, "A spectral characterization of KMS states," *Commun. Math. Phys.* 84 (1982) 143-158.
 [11] L. Ciambelli, R. G. Leigh, "Lie algebroids and the geometry of off-shell BRST," *Nucl. Phys. B* 972 (2022) 115553, arXiv:2101.03974.
 [12] Z. Jia, P. Klinger, R. G. Leigh, "BRST cohomology is Lie algebroid cohomology," *Nucl. Phys. B* 994 (2023) 116317, arXiv:2303.05540.
-[13] M. Frankland, "Behavior of Quillen (co)homology with respect to adjunctions," arXiv:1009.5156 (2020).
+[13] M. Frankland, "Behavior of Quillen (co)homology with respect to adjunctions," arXiv:1009.5156 (2010).
 [14] I. Mezić, "Analysis of fluid flows via spectral properties of the Koopman operator," *Annu. Rev. Fluid Mech.* 45 (2013) 357-378.
 [15] I. Avila, I. Mezić, "Spectral properties of vector bundle pullbacks," *SIAM J. Appl. Dyn. Syst.* (2023).
 [16] R. Haag, N. Hugenholtz, M. Winnink, "On the equilibrium states in quantum statistical mechanics," *Commun. Math. Phys.* 5 (1967) 215-236.
