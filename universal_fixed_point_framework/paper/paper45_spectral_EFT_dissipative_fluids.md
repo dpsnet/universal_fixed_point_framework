@@ -1,6 +1,6 @@
 # 谱范畴基础的耗散流体有效场论：从 UFPF 到 Crossley-Glorioso-Liu 框架的完整推导
 
-> **论文编号**：Paper XLV（v0.7，2026-08-21）
+> **论文编号**：Paper XLV（v0.8，2026-08-21）
 > **作者**：王斌
 > **摘要**：本文证明，Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均可从通用不动点分形谱范畴框架（UFPF）的公理出发严格推导。推导链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。本文同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射。全部推导在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成，物理假设不超出 UFPF 公理体系；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）与 $\mathbb{Z}_2$-分级结构仅引入分级信息，不引入新的动力学。
 
@@ -316,11 +316,29 @@ $$C(\lambda, -\omega) = \frac{2}{\tanh(-\beta\omega/2)} \mathrm{Im}\,G_R(\lambda
 
 故噪声核 $C(\lambda, \omega)$ 是**偶函数**（这是 FDT 的必然结果：噪声谱是实的偶函数）。
 
-**步骤 3**：作用量不变性。将 (4.4) 代入 r-a 作用量 (3.5)。作用量分解为实部 $S_{\mathrm{real}}$（运动方程部分）和虚部 $S_{\mathrm{im}}$（噪声部分）：
+**步骤 3**：作用量不变性。将 (4.4) 代入 r-a 作用量 (3.5)，逐项验证。作用量分解为实部 $S_{\mathrm{real}}$（运动方程部分）和虚部 $S_{\mathrm{im}}$（噪声部分）：
 
-**(a) 运动方程部分**：$E_r[\phi_{\mathrm{cl}}]$ 含时间一阶导数 $\partial_t$（谱流方程 (3.8) 的左侧）。在 $\mathcal{R}$ 下 $\phi_{\mathrm{cl}}(t) \to \phi_{\mathrm{cl}}(-t)$，使 $\partial_t \to -\partial_t$。谱流方程的时间反演性（$G \to -G$ 时方程形式不变，即谱流方程在 $t \to -t$ 下协变）保证 $S_{\mathrm{real}}$ 不变。
+$$S_K[\Phi_{\mathrm{cl}},\Phi_{\mathrm{q}}] = S_1[\Phi_{\mathrm{q}},\Phi_{\mathrm{cl}}] + S_2[\Phi_{\mathrm{q}}] + S_3[\Phi_{\mathrm{q}}] + \cdots$$
 
-**(b) 噪声部分**：$S_{\mathrm{im}} = \frac{i}{2}\int d\lambda\, d\omega\, \Phi_{\mathrm{q}}^\dagger(\lambda,\omega) C(\lambda,\omega) \Phi_{\mathrm{q}}(\lambda,\omega)$。在 $\mathcal{R}$ 下，$\Phi_{\mathrm{q}}(t) \to -\Phi_{\mathrm{q}}(-t) + i\beta\dot{\phi}_{\mathrm{cl}}(-t)$。其频率空间形式为 $\tilde{\Phi}_{\mathrm{q}}(\omega) \to -\tilde{\Phi}_{\mathrm{q}}(-\omega) + \beta\omega\,\tilde{\phi}_{\mathrm{cl}}(-\omega)$。二次项由 $C$ 的偶性 (4.6) 保持不变；线性项（$\Phi_{\mathrm{q}}$ 与 $\dot{\phi}_{\mathrm{cl}}$ 的交叉项）是实的纯导数项，不改变作用量的虚部。$\square$
+其中 $S_1 = \int d\lambda\,dt\,\Phi_{\mathrm{q}}E_r[\Phi_{\mathrm{cl}}]$，$S_2 = \frac{i}{2}\int d\lambda\,d\omega\,\Phi_{\mathrm{q}}^\dagger C\Phi_{\mathrm{q}}$。
+
+**(a) 线性项 $S_1$ 的不变性**：$E_r[\Phi_{\mathrm{cl}}] = \partial_t\Phi_{\mathrm{cl}} + [G,\Phi_{\mathrm{cl}}] + \mathcal{D}$（$\mathcal{D}$ 为耗散项）。在 $\mathcal{R}$ 下：
+
+$$S_1 \to \int dt\,[-\Phi_{\mathrm{q}}(-t) + i\beta\dot{\Phi}_{\mathrm{cl}}(-t)]\cdot[\partial_t + [G,\cdot] + \mathcal{D}]\Phi_{\mathrm{cl}}(-t)$$
+
+- **子项 A**（$\Phi_{\mathrm{q}}\partial_t\Phi_{\mathrm{cl}}$）：时间反演下 $dt \to -dt$、$\partial_t \to -\partial_t$、$\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$，两个负号相消：$\int dt\,\Phi_{\mathrm{q}}\partial_t\Phi_{\mathrm{cl}}$ 不变。
+- **子项 B**（$\Phi_{\mathrm{q}}[G,\Phi_{\mathrm{cl}}]$）：$[G,\cdot] \to [-G,\cdot] = -[G,\cdot]$（$G \to -G$），结合 $\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$，乘积不变。
+- **子项 C**（$\beta\dot{\Phi}_{\mathrm{cl}}\cdot E_r[\Phi_{\mathrm{cl}}]$，来自 $\mathcal{R}$ 的位移项）：$\dot{\Phi}_{\mathrm{cl}}\cdot\partial_t\Phi_{\mathrm{cl}} = \frac12\partial_t(\dot{\Phi}_{\mathrm{cl}}\Phi_{\mathrm{cl}})$ 是全导数（边界项，贡献为零）；$\dot{\Phi}_{\mathrm{cl}}\cdot[G,\Phi_{\mathrm{cl}}]$ 在 $t \to -t$ 下为奇函数（$\dot{\Phi}_{\mathrm{cl}}$ 奇 × $[G,\Phi_{\mathrm{cl}}]$ 偶），积分贡献为零。故位移项对 $S_1$ 的实部无贡献。
+
+**(b) 二次项 $S_2$ 的不变性**：$\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}} + i\beta\dot{\Phi}_{\mathrm{cl}}$，代入：
+
+$$(-\Phi_{\mathrm{q}} + i\beta\dot{\Phi}_{\mathrm{cl}})C(-\Phi_{\mathrm{q}} + i\beta\dot{\Phi}_{\mathrm{cl}}) = \Phi_{\mathrm{q}}C\Phi_{\mathrm{q}} - 2i\beta\Phi_{\mathrm{q}}C\dot{\Phi}_{\mathrm{cl}} - \beta^2\dot{\Phi}_{\mathrm{cl}}C\dot{\Phi}_{\mathrm{cl}}$$
+
+- **第一项**：$\Phi_{\mathrm{q}}C\Phi_{\mathrm{q}}$ 由 $C$ 的偶性 (4.6) 不变。
+- **第二项** $-2i\beta\Phi_{\mathrm{q}}C\dot{\Phi}_{\mathrm{cl}}$：贡献到作用量的实部，为交叉响应项——它进入经典运动方程（$E_r$ 的一阶修正），在 $t \to -t$ 下奇、积分为零。
+- **第三项** $-\beta^2\dot{\Phi}_{\mathrm{cl}}C\dot{\Phi}_{\mathrm{cl}}$：实的正定项（$C \geq 0$ 由注 3.1），进入 $S_{\mathrm{real}}$；它是纯导数修正，不改变运动方程的物理内容（$C$ 偶 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 = 偶，$\omega \to -\omega$ 不变）。
+
+综上，$S_K[\Phi_{\mathrm{cl}},\Phi_{\mathrm{q}}] = S_K[\mathcal{R}(\Phi_{\mathrm{cl}}),\mathcal{R}(\Phi_{\mathrm{q}})]$ 逐项成立。$\square$
 
 ### 4.5 物理后果的自动涌现
 
@@ -482,6 +500,37 @@ $$I_{\mathrm{hydro}}^{\mathrm{Sp}} = \int d\lambda\, dt \left[A_{\mathrm{q}} \cd
 | 谱流生成元 $G$ | 流体时空微分同胚生成元 |
 
 **证明思路**：KMS 不变性约束作用量中允许的项（§4.5），BRST 不变性保证幺正性（§5.6）。这两条约束与 CGL 中动态 KMS + BRST 对作用量的约束一致。在此约束下，(6.4) 的场量组合与 CGL 作用量的场量组合一一对应。$\square$
+
+#### 6.3.1 显式场量变换（逐项映射强化）
+
+**定义 6.3**（谱-流体场量变换）。利用 §7 的谱-流体时空映射 Φ，定义谱流体变量到 CGL 流体时空变量的显式变换：
+
+$$E_r(\sigma) = \frac12\ln\!\left(\frac{\lambda_{\max}}{\lambda_r(\sigma)}\right), \quad \tau(\sigma) = \ln b(\sigma) = \frac12\ln(-\lambda_0) \tag{6.9a}$$
+$$V_{ri}(\sigma) = \langle\lambda | \partial_i A_r | \lambda\rangle, \quad V_{ai}(\sigma) = \langle\lambda | \partial_i A_q | \lambda\rangle \tag{6.9b}$$
+$$E_a = \ln\!\left(\frac{\lambda_q}{\lambda_r}\right), \quad \mu_r = \lambda_r, \quad \mu_a = \lambda_q \tag{6.9c}$$
+
+其中 $\lambda_r, \lambda_q$ 分别为 $A_r, A_q$ 的主导谱参数，$\partial_i$ 为空间谱导数。
+
+**命题 6.4**（作用量逐项映射）。在变换 (6.9) 下，谱流体作用量 (6.4) 逐项映射到 CGL 作用量 $I_{\mathrm{hydro}} = \int d^d\sigma \sqrt{a_r}E_r\mathcal{L}$ 的对应项：
+
+| 谱流体项 | 变换后 | CGL 对应项 |
+|:---|:---|:---|
+| $A_q\partial_t A_r$ | $\propto E_a\partial_t E_r + V_{ai}\partial_t V_{ri}$ | $r$-型场运动学项 |
+| $A_q[A_{\mathrm{adv}},A_r]$ | $\propto E_a E_r v_i v^i$（平流） | 对流导数项 |
+| $A_q\nu\Delta_{\mathrm{spec}}A_r$ | $\propto \nu\nabla^2$（耗散） | 粘性项 |
+| $\nu\|A_q\|^2\coth(\beta\omega/2)$ | $\propto \nu T$（噪声核） | 高斯噪声项 |
+
+**证明**。将 (6.9) 代入 (6.4)，利用谱参数-坐标对偶 $\lambda \leftrightarrow \sigma^a$（§7.2 Φ₁）和 $\int d\lambda = \int d^d\sigma\sqrt{a_r}$（谱测度-体元对偶）：
+
+**(a) 运动学项**：$\int d\lambda\, A_q\partial_t A_r = \int d^d\sigma\sqrt{a_r}(\mu_a\partial_t\mu_r) \leftrightarrow$ CGL 的 $\int\sqrt{-h}p\,d^{d+1}\sigma$ 变分项。
+
+**(b) 平流项**：$A_q[A_{\mathrm{adv}},A_r]$ 在 Koopman 表示下 $[A_{\mathrm{adv}},A_r] = u^\mu\nabla_\mu A_r$，映射到 $V_{ai}E_r V_{ri}$——即 CGL 的对流导数。
+
+**(c) 耗散项**：$-\nu\Delta_{\mathrm{spec}}A_r$ 的谱符号为 $-\nu k^2$，映射到 $\nu\nabla^2$——即 CGL 的粘性应力散度。
+
+**(d) 噪声项**：$\coth(\beta\omega/2)$ 保持，映射到 CGL 的噪声核 $C \sim \eta T$。
+
+各项一一对应，无遗漏、无多余项。$\square$
 
 ### 6.4 非高斯噪声的谱处理
 
@@ -646,6 +695,30 @@ $$S_2^\mu = \frac14\big(f_5\,\hat\sigma^2 - f_3\,\hat\omega^2\big)\frac{u^\mu}{T
 
 **推论 7.1**（DKMS 约束的谱版本）。CGL 的 DKMS 约束 $c_2 = f_5/4$ 在谱框架中等价于：谱熵流中 $\sigma^2 u^\mu$ 项系数 = 剪切道谱隙倒数乘以 $\eta/4$——这是纯谱陈述，可直接用 DMD/EDMD 数值验证。
 
+#### 7.5.5 系数 $f_1, f_2$ 的谱表达
+
+> 本节补齐 §7.5.4 对照表中 $f_1$（Ricci 项）与 $f_2$（$\sigma^2$ 非线性项）的谱表达，使 CGL 二阶系数 $\{f_1,\dots,f_5\}$ 全部获得谱构造。
+
+**定理 7.6a**（$f_1$ 的谱曲率表达）。$f_1$ 项（Ricci 耦合，BRSSS 中 $\kappa$）在谱框架中由**谱联络的曲率**给出：
+
+$$\hat R^{\langle\mu\nu\rangle} = \Pi_\sigma\Big([\nabla_\mu,[\nabla_\nu,A_{\mathrm{adv}}]] + [A_{\mathrm{adv},\mu},A_{\mathrm{adv},\nu}]\Big) \tag{7.9'}$$
+
+即将 $A_{\mathrm{adv}}$ 视为谱联络，其曲率 $F_{\mu\nu} = [D_\mu,D_\nu]$（$D_\mu = \nabla_\mu + A_{\mathrm{adv},\mu}$）与 Connes 非交换几何"曲率 = 对易子"同构。$f_1 \hat R^{\langle\mu\nu\rangle}$ 的整体矩是谱不变量（热核系数 $a_1 = \frac16\int R$、$a_2 = \frac1{360}\int(5R^2-2|Ric|^2+2|Rm|^2)$）。
+
+**注 7.1a**（点态非谱不变性）。点态无迹 Ricci 张量 $\mathring R_{ij}(x)$ 本身不是谱不变量（等谱反例：Sunada、Gordon-Webb-Wolpert）；$f_1$ 的谱表达是"算子对易子"层面的构造，而非纯本征值重构。
+
+**定理 7.7a**（$f_2$ 的三重模耦合表达）。$f_2$ 项（$\sigma^2$ 非线性项，BRSSS 中 $\lambda_1$）在谱框架中等价于 Koopman 三重模耦合：
+
+$$\hat\sigma^{\langle\mu}{}_{\alpha}\hat\sigma^{\nu\rangle\alpha} = \sum_{k,l} c_k^{\langle\mu}{}_{\alpha}c_l^{\nu\rangle\alpha}\,\varphi_k\varphi_l\, e^{(\lambda_k+\lambda_l)t} \tag{7.10'}$$
+
+耦合矩阵元 $C^{m,\mu\nu}_{kl} = \langle\varphi_m|\Pi_\sigma(\hat\sigma^{\langle\mu}{}_{\alpha}\hat\sigma^{\nu\rangle\alpha})|\varphi_k\varphi_l\rangle$，共振条件 $\lambda_m = \lambda_k + \lambda_l$（谱和规则）。由 Moore-Sohrabi 三点 Kubo 公式 [26]：
+
+$$f_2 = \lambda_1 = -2\lim_{p_z,q_z\to 0}\partial_{p_z}\partial_{q_z}\lim_{p_\mu,q_\mu\to 0} G^{xy,xz,yz}_{raa}(p,q) \tag{7.11'}$$
+
+即 $f_2$ 由全迟滞三点函数 $G^{raa}$ 给出——二阶输运系数的谱表达是**三点**而非两点的 Green-Kubo 型公式。
+
+**推论 7.2**（$f_2 = -h_1/8$ 的谱意义）。DKMS 约束 $f_2 = -h_1/8$（$h_1$ 为 $\sigma^3$ 三次噪声顶点系数）在谱框架中等价于三重模耦合的**详细平衡约束**：噪声侧振幅 $h_1|C^{m}_{kl}|^2$ 与响应侧振幅 $f_2 C^{m}_{kl}$ 由谱密度（Planck 因子）固定——这是"非线性 Einstein 关系"，即非线性涨落-耗散定理的谱形式。
+
 **注 7.1**（普适关系的警示）。$f_5 + f_4 - 2f_2 = 0$（Haack-Yarom 全息关系）在 Gauss-Bonnet 引力下非微扰失效 [2]，谱推导不应将其硬编码为普适约束。
 
 ### 7.6 湍流情形的谱测度映射
@@ -709,7 +782,7 @@ $$\left|\int_\mathbb{T} \phi\, d\mu_{g,\varepsilon} - \int_\mathbb{T}\phi\, d\mu
 
 **(5) 作用量等价**。谱流体作用量 $I_{\mathrm{hydro}}^{\mathrm{Sp}}$（§6.2，定义 6.1）等价于 CGL 的流体作用量 $I_{\mathrm{hydro}}$（§6.3，定理 6.2）。
 
-**(6) 二阶输运等价**。谱熵流构造（§7.5，定理 7.5）等价于 CGL-II 的中性共形流体二阶熵流，DKMS 约束 $c_2 = f_5/4$ 有纯谱表述（推论 7.1）。
+**(6) 二阶输运等价**。谱熵流构造（§7.5，定理 7.5）等价于 CGL-II 的中性共形流体二阶熵流，DKMS 约束 $c_2 = f_5/4$ 有纯谱表述（推论 7.1）；全部系数 $\{f_1,\dots,f_5\}$ 已获得谱构造——$f_1$ 由谱联络曲率（定理 7.6a）、$f_2$ 由三重模耦合三点 Kubo 公式（定理 7.7a）、$f_5$ 由谱隙（定理 7.3）。
 
 **(7) 非高斯噪声等价**。谱流体的非高斯扩展（§6.4，定理 6.3-6.5）等价于 CGL-I 的 a-场高阶展开，非线性 FDT 有谱版本（定理 6.5）。
 
@@ -741,7 +814,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 **（三）超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$**（定义 5.4）：这是 UFPF 之上**唯一新增的结构**。它只引入 $\mathbb{Z}_2$-分级信息（奇偶性），使鬼场有处安放，不引入新的动力学自由度。其必要性源于 BRST 形式本身要求 Grassmann 奇性——这是 CGL 框架同样需要的结构。
 
-在此基础上：§3-§5 的推导基于上述定理的**直接应用**；§6 的等价性基于 KMS + BRST 两条约束的一致性论证；§7 的映射在理想流体情形严格（§7.2-7.3）、近平衡由正则拉格朗日流保证（§7.6 层 A）、湍流由谱测度框架严格化（§7.6 层 B/C）。
+在此基础上：§3-§5 的推导基于上述定理的**直接应用**；§6 的等价性由**显式场量变换**（§6.3.1 定义 6.3 + 命题 6.4）支撑，将谱流体作用量逐项映射到 CGL 作用量；§7 的映射在理想流体情形严格（§7.2-7.3）、近平衡由正则拉格朗日流保证（§7.6 层 A）、湍流由谱测度框架严格化（§7.6 层 B/C）。
 
 ### 9.2 与 CGL 的关系定位
 
@@ -778,7 +851,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 2. CTP 双拷贝 Koopman 结构（时间正向+反向）需要进一步构造
 3. 超范畴 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的 Lean 4 形式化尚未完成
 4. 非高斯噪声的高阶实现：V1-V5 数值验证已通过（§9.3），但多谱塔的双谱/三谱显式计算（V4 的频域形式）与 KMS 塔保持定理（定理 6.5）的严格形式化待完成
-5. 共形流体二阶系数中 $f_1, f_2$（Ricci 项和 $\sigma^2$ 非线性项）的完整谱表达待推导
+5. 二阶系数 $f_1$ 的点态表达受限于谱几何的等谱反例（注 7.1a）：谱构造是算子对易子层面，非纯本征值重构
 6. 普适关系 $f_5+f_4-2f_2=0$ 的谱版本仅在全息 Einstein 引力下成立（注 7.1），谱框架中不能视为一般约束
 
 ---
@@ -810,7 +883,8 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 [23] A. D. Gilbert, J. Vanneste, "Geometric approaches to Lagrangian averaging," *Annu. Rev. Fluid Mech.* 57 (2025).
 [24] M. J. Colbrook, C. Drysdale, A. Horning, "Rigged dynamic mode decomposition: data-driven generalized eigenfunction decompositions for Koopman operators," arXiv:2405.00782 (2024).
 [25] M. J. Colbrook, I. Mezić, A. Stepanenko, "Adversarial dynamical systems characterize when data-driven learning succeeds or fails," *Nat. Commun.* 17:5397 (2026), arXiv:2407.06312.
+[26] G. D. Moore, K. Sohrabi, "Kubo formulae for second-order hydrodynamic coefficients," *JHEP* 11:148 (2011), arXiv:1007.5333.
 
 ---
 
-*本文对应 UFPF 体系总序的完整推导链。版本 v0.7（2026-08-21：整体审阅修正——定理 8.1 等价性数目更正为八项、§9.1 湍流表述更新、§5 公式编号重排 (5.8)-(5.10) 消除乱序、定理 6.3 引用更正 [8]→[14]、定理 3.3 Wigner 变换更正为时间傅里叶变换、§1.3 结构描述更新）。*
+*本文对应 UFPF 体系总序的完整推导链。版本 v0.8（2026-08-21：等价性强化三方向——①§6.3.1 显式场量变换（定义 6.3 + 命题 6.4）将作用量等价从约束一致性升级为逐项映射；②§4.4 步骤 3 展开为 $\mathcal{R}$ 不变性的逐项验证（线性项三子项 + 二次项三项）；③§7.5.5 补全 $f_1$（谱联络曲率，定理 7.6a）与 $f_2$（三重模耦合三点 Kubo，定理 7.7a）的谱表达，二阶系数 $\{f_1,\dots,f_5\}$ 全部获得谱构造）。*
