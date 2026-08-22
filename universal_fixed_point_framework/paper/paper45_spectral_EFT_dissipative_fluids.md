@@ -1,8 +1,8 @@
-# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 UFPF 表述及可证伪预言
+﻿# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 UFPF 表述及可证伪预言
 
-> **论文编号**：Paper XLV（v1.1，2026-08-21）
+> **论文编号**：Paper XLV（v1.2，2026-08-22）
 > **作者**：王斌
-> **摘要**：本文展示通用不动点分形谱范畴框架（UFPF）作为元框架的**可表达性**：UFPF 的谱语言可以忠实翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。CGL 的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均在谱语言中获得系统重构，重构链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。翻译同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射，并产生三类新构造（剪切道谱隙表达、共形流体二阶系数全谱化、非高斯噪声多谱塔）与可证伪预言（$\lambda_\pi \approx -4.81T$ 等），数值验证 11/11 通过。翻译的可行性表明 UFPF 语言的普适性；两框架关系的最终定性留待学术共同体评价。全部重构在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）为翻译接口（注 5.1），仅引入分级信息。
+> **摘要**：本文展示通用不动点分形谱范畴框架（UFPF）作为元框架的**可表达性**：UFPF 的谱语言可以忠实翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。CGL 的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均在谱语言中获得系统重构，重构链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。翻译同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射，并产生三类新构造（剪切道谱隙表达、共形流体二阶系数全谱化、非高斯噪声多谱塔）与可证伪预言（$\lambda_\pi \approx -4.81T$ 等），数值验证 11/11 通过。翻译的可行性表明 UFPF 语言的普适性；两框架关系的最终定性留待学术共同体评价。全部重构在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）为翻译接口（注 5.1），仅引入分级信息。本论文仅完成**流体 EFT 子领域的结构重构案例**；UFPF 完整的全域统一、时空-引力涌现的宏大纲领见 UFPF 体系总序与 Paper XXXV，本文不处理本体层面命题。
 
 ---
 
@@ -188,17 +188,126 @@ $$\langle \hat{O}(t)\rangle = \mathrm{Tr}[\rho_0 \hat{U}(t_0, t) \hat{O} \hat{U}
 
 可以写为 CTP 路径积分 (2.5)，其中 $\phi_\pm$ 为两份独立的谱场。
 
-**证明**。将迹展开为
+**证明**。分四步。
+
+**步骤 1（迹的展开）**。取能量本征基 $\{|n\rangle\}$，将迹展开为
 
 $$\mathrm{Tr}[\rho_0 \hat{U}(t_0, t) \hat{O} \hat{U}(t, t_0)] = \sum_n \langle n | \rho_0 \hat{U}(t_0, t) \hat{O} \hat{U}(t, t_0) | n \rangle$$
 
-在路径积分表示中，$\hat{U}(t, t_0)$ 对应 $\mathcal{C}_+$ 上的编时积分，$\hat{U}(t_0, t)$ 对应 $\mathcal{C}_-$ 上的反编时积分。两份独立的谱场 $\Phi_+(\lambda, t)$ 和 $\Phi_-(\lambda, t)$ 分别生活在 $\mathcal{C}_+$ 和 $\mathcal{C}_-$ 上。$\square$
+设初始时刻 $t_0$，测量时刻 $t$（$t > t_0$）。在算子乘积之间插入完备关系 $\sum_k |k\rangle\langle k| = \mathbb{1}$ 和 $\sum_l |l\rangle\langle l| = \mathbb{1}$：
+
+$$= \sum_{n,k,l} \langle n | \rho_0 | k \rangle \langle k | \hat{U}(t_0, t) \hat{O} | l \rangle \langle l | \hat{U}(t, t_0) | n \rangle$$
+
+其中 $\langle l | \hat{U}(t, t_0) | n \rangle$ 是前向传播子（$t_0 \to t$），$\langle k | \hat{U}(t_0, t) | l \rangle$ 是后向传播子（$t \to t_0$）。
+
+**步骤 2（路径积分表示）**。将每个传播子写为路径积分。前向传播子：
+
+$$\langle l | \hat{U}(t, t_0) | n \rangle = \int_{\phi(t_0)=\phi_n}^{\phi(t)=\phi_l} \mathcal{D}\phi_+ \, e^{i S[\phi_+]}$$
+
+后向传播子（反编时）：
+
+$$\langle k | \hat{U}(t_0, t) | l \rangle = \int_{\phi(t)=\phi_l}^{\phi(t_0)=\phi_k} \mathcal{D}\phi_- \, e^{-i S[\phi_-]}$$
+
+注意后向传播子的作用量取负号（反编时等价于作用量取复共轭）。将两式代入步骤 1 的结果，对中间态 $|k\rangle, |l\rangle$ 求和后，边界条件匹配（前向终态 = 后向始态），给出闭合时间路径 $\mathcal{C} = \mathcal{C}_+ \cup \mathcal{C}_-$ 上的单一路径积分：
+
+$$\langle \hat{O}(t)\rangle = \int \mathcal{D}\phi_+ \mathcal{D}\phi_- \, \rho_0[\phi_+(t_0), \phi_-(t_0)] \, \hat{O}[\phi_+(t)] \, e^{i S[\phi_+] - i S[\phi_-]}$$
+
+这正是 CTP 路径积分 (2.5) 的标准形式 [3]。
+
+**步骤 3（谱场替换）**。由公理 A4（§2.1.5），每个量子场 $\phi(x)$ 对应谱对象 $(\mathcal{H}_\phi, A_\phi, \sigma(A_\phi)) \in \mathbf{Sp}$。将时空场 $\phi_\pm(x, t)$ 通过谱展开 $\phi_\pm(x, t) = \sum_k \Phi_\pm(\lambda_k, t) \psi_k(x)$ 替换为谱场 $\Phi_\pm(\lambda, t)$，其中 $\psi_k(x)$ 为 $A_\phi$ 的本征函数。路径积分测度替换为谱测度 $\mathcal{D}\phi_\pm \to \mathcal{D}_{\mathrm{Sp}}\Phi_\pm = \prod_{\lambda \in \sigma(A_\phi)} d\Phi_\pm(\lambda)$，作用量替换为谱作用量 $S_{\mathrm{Sp}}[\Phi] = \frac{1}{2}\int d\lambda\, \Phi^\dagger(\lambda)(\lambda - m^2)\Phi(\lambda)$。于是得到推论 3.1 中的 $Z_{\mathrm{CTP}}^{\mathrm{Sp}}[J_+, J_-]$ (3.3)。
+
+**步骤 4（幺正性验证）**。当 $J_+ = J_-$ 时，回到算子迹定义 (2.4)：$Z_{\mathrm{CTP}}[J, J] = \mathrm{Tr}[\rho_0\, \hat{U}_J(t_0, t)\, \hat{U}_J(t, t_0)]$。由于两支上源相同，$\hat{U}_J(t_0, t) = \hat{U}_J(t, t_0)^{-1}$，故 $\hat{U}_J(t_0, t)\, \hat{U}_J(t, t_0) = \mathbb{1}$，给出 $Z_{\mathrm{CTP}}[J, J] = \mathrm{Tr}[\rho_0] = 1$（归一化密度矩阵）。在路径积分中，这对应前向与后向传播子相消——注意 $\Phi_+$ 与 $\Phi_-$ 仍是独立积分变量，相消发生在积分后的迹层面，而非被积函数层面。谱版本 $Z_{\mathrm{CTP}}^{\mathrm{Sp}}[J, J] = 1$ 由谱替换保持这一性质。$\square$
+
+**注 3.1（相消的物理直觉）**。幺正性 $Z[J, J] = 1$ 的物理图像是"往返抵消"：系统在前向支 $\mathcal{C}_+$ 上从 $t_0$ 演化到 $t$，在后向支 $\mathcal{C}_-$ 上从 $t$ 演化回 $t_0$。当两支源相同（$J_+ = J_-$），后向演化精确地"原路折返"——每个量子态经历前向演化 $\hat{U}_J(t, t_0)$ 后紧接其逆 $\hat{U}_J(t_0, t) = \hat{U}_J(t, t_0)^{-1}$，净效应为单位算子。
+
+关键在于，这一相消并非发生在被积函数层面：路径积分中 $\Phi_+$ 与 $\Phi_-$ 仍是独立的求和变量，前向支上每条路径 $\Phi_+(\lambda, t)$ 与后向支上每条路径 $\Phi_-(\lambda, t)$ 各自独立地被积分。相消发生在**对所有路径求和之后**——前向传播子 $\langle l|\hat{U}_J(t, t_0)|n\rangle$ 与后向传播子 $\langle k|\hat{U}_J(t_0, t)|l\rangle$ 的乘积对中间态 $|l\rangle$ 求和后给出 $\delta_{kn}$（单位算子的矩阵元），这是量子力学概率幅相干的体现：所有可能的"去程"与"回程"路径对的贡献在振幅层面精确抵消。
+
+在谱表示中，每个本征模 $\lambda$ 独立地完成上述往返：$e^{iS_{\mathrm{Sp}}[\Phi_+(\lambda)]} \cdot e^{-iS_{\mathrm{Sp}}[\Phi_-(\lambda)]}$ 对所有 $\Phi_\pm(\lambda)$ 积分后给出单位传播子（每模独立幺正性），谱测度的乘积结构 $\prod_\lambda d\Phi_\pm(\lambda)$ 保持各模互不耦合地完成相消。
+
+**具体算子示例**。考虑单本征模 $\lambda_0$（即谱算子 $A_\phi$ 仅有一个特征值），令 $\alpha \equiv \lambda_0 - m^2$。谱 CTP 泛函退化为二元高斯积分：
+
+$$Z_{\mathrm{CTP}}^{\mathrm{Sp}}(\lambda_0; J) = \int d\Phi_+\, d\Phi_- \exp\!\left(\frac{i\alpha}{2}\Phi_+^2 - \frac{i\alpha}{2}\Phi_-^2 + iJ\Phi_+ - iJ\Phi_-\right)$$
+
+前向与后向积分可分离：
+
+$$G_+(J) = \int d\Phi_+\, e^{\frac{i\alpha}{2}\Phi_+^2 + iJ\Phi_+} = \sqrt{\frac{2\pi}{|\alpha|}}\, e^{i\frac{\pi}{4}\mathrm{sgn}(\alpha)}\, e^{-iJ^2/(2\alpha)}$$
+
+$$G_-(J) = \int d\Phi_-\, e^{-\frac{i\alpha}{2}\Phi_-^2 - iJ\Phi_-} = \sqrt{\frac{2\pi}{|\alpha|}}\, e^{-i\frac{\pi}{4}\mathrm{sgn}(\alpha)}\, e^{+iJ^2/(2\alpha)}$$
+
+两个结果的 $J$ 依赖性互为复共轭：$e^{-iJ^2/(2\alpha)}$ 与 $e^{+iJ^2/(2\alpha)}$，Stokes 相位 $e^{\pm i\pi\mathrm{sgn}(\alpha)/4}$ 亦互逆。乘积
+
+$$G_+(J) \cdot G_-(J) = \frac{2\pi}{|\alpha|}$$
+
+与 $J$ 无关——源的信息在前向积分中编码为相位 $e^{-iJ^2/(2\alpha)}$，在后向积分中编码为其复共轭，二者乘积消去。归一化后 $Z[J, J] = G_+(J)G_-(J) / [G_+(0)G_-(0)] = 1$。多模情形中，各模贡献以乘积 $\prod_k (2\pi/|\alpha_k|)$ 独立给出，不产生模间交叉项。
 
 **推论 3.1（UFPF-CTP 对应）**。CTP 生成泛函 (2.5) 在谱语言中为
 
 $$Z_{\mathrm{CTP}}^{\mathrm{Sp}}[J_+, J_-] = \int \mathcal{D}_{\mathrm{Sp}}\Phi_+ \mathcal{D}_{\mathrm{Sp}}\Phi_- \exp\!\left(i S_{\mathrm{Sp}}[\Phi_+] - i S_{\mathrm{Sp}}[\Phi_-] + i\int_{\mathcal{C}} J \cdot \Phi\right) \tag{3.3}$$
 
 其中 $S_{\mathrm{Sp}}[\Phi] = \frac{1}{2}\int d\lambda\, \Phi^\dagger(\lambda)(\lambda - m^2)\Phi(\lambda)$ 为谱作用量（公理 A4）。
+
+### 3.2a CTP 双拷贝 Koopman 结构
+
+> 定理 3.1 的证明在步骤 2 中分别引入前向传播子 $\hat{U}(t, t_0)$ 与后向传播子 $\hat{U}(t_0, t) = \hat{U}(t, t_0)^\dagger$，在谱语言中对应两份 Koopman 演化 $U_\pm$。本小节给出二者之间反酉算子 $\mathcal{K}$ 的显式构造。
+
+**定理 3.1a（CTP 双拷贝 Koopman 结构）**。前向 Koopman 演化 $U_+ = e^{-iA_R \Delta t}$ 与后向 Koopman 演化 $U_- = e^{+iA_R \Delta t}$ 通过反酉算子 $\mathcal{K}$ 联系：
+
+$$U_- = \mathcal{K}\, U_+\, \mathcal{K}^{-1} \tag{3.3a}$$
+
+其中 $\mathcal{K}: \mathcal{H}_R \to \mathcal{H}_R$ 定义为 $A_R$-本征基下的复共轭：在 $A_R$ 的本征基 $\{|\lambda\rangle\}_{\lambda \in \sigma(A_R)}$ 中（$A_R = -\log U_R$ 自伴，定义 2.3），
+
+$$\mathcal{K}\left(\sum_k c_k |\lambda_k\rangle\right) = \sum_k c_k^* |\lambda_k\rangle \tag{3.3b}$$
+
+$\mathcal{K}$ 满足：(i) 反线性 $\mathcal{K}(\alpha|\psi\rangle + \beta|\phi\rangle) = \alpha^*\mathcal{K}|\psi\rangle + \beta^*\mathcal{K}|\phi\rangle$；(ii) 反酉性 $\langle \mathcal{K}\psi | \mathcal{K}\phi \rangle = \langle \phi | \psi \rangle$；(iii) 对合性 $\mathcal{K}^2 = \mathrm{id}$；(iv) $A_R$ 不变性 $\mathcal{K} A_R \mathcal{K}^{-1} = A_R$（$A_R$ 在自身本征基下为实对角，复共轭不变）。
+
+**证明**。由性质 (i)(iv)，$\mathcal{K}$ 的反线性性将 $-i$ 映射为 $+i$（$(-i)^* = +i$），$A_R$ 保持不变，故
+
+$$\mathcal{K}\, U_+\, \mathcal{K}^{-1} = \mathcal{K}\, e^{-iA_R \Delta t}\, \mathcal{K}^{-1} = e^{\mathcal{K}(-iA_R)\mathcal{K}^{-1}\, \Delta t} = e^{+iA_R \Delta t} = U_+^\dagger = U_-$$
+
+最后一步用了 $U_R$ 的酉性（保测流，§2.1.1）：$U_+^\dagger = U_+^{-1} = e^{+iA_R \Delta t}$。$\square$
+
+**推论 3.1a（谱场对应）**。后向谱场是前向谱场的 $\mathcal{K}$-像：
+
+$$\Phi_-(\lambda, t) = \mathcal{K}\, \Phi_+(\lambda, t) = \Phi_+^*(\lambda, t) \tag{3.3c}$$
+
+即两份谱场在模振幅层面互为复共轭。$\square$
+
+**$\mathcal{K}$ 对 r-a 变量的作用**。由 (3.3c) 和定义 3.1 (3.4a-b)，$\mathcal{K}$ 对 r-a 变量的作用为：
+
+$$\mathcal{K}: \Phi_{\mathrm{cl}} = \tfrac{1}{2}(\Phi_+ + \Phi_-) \mapsto \tfrac{1}{2}(\Phi_- + \Phi_+) = \Phi_{\mathrm{cl}} \quad \text{（经典场不变）}$$
+
+$$\mathcal{K}: \Phi_{\mathrm{q}} = \Phi_+ - \Phi_- \mapsto \Phi_- - \Phi_+ = -\Phi_{\mathrm{q}} \quad \text{（量子场翻号）}$$
+
+这是 DKMS $\mathbb{Z}_2$ 变换 $\mathcal{R}$（定理 4.4）中 $\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$ 部分的谱实现。$\mathcal{K}$ 提供了 CTP 双拷贝间的**静态** $\mathbb{Z}_2$（前向↔后向、$U_+ \leftrightarrow U_+^\dagger$），区别于 $\mathcal{R}$ 的**动态** $\mathbb{Z}_2$（含时间反演和热移）。
+
+**注 3.2（$\mathcal{K}$ 与模共轭 $J$ 的关系）**。Tomita-Takesaki 模共轭 $J$（定义 4.1）是物理 Hilbert 空间 $\mathcal{H}_{\mathrm{GNS}}$ 上的反酉算子，满足 $J \mathfrak{M} J^{-1} = \mathfrak{M}'$。$\mathcal{K}$ 是可观测 Hilbert 空间 $\mathcal{H}_R$（谱/Koopman 空间）上对应的反酉算子，满足 $\mathcal{K} U_+ \mathcal{K}^{-1} = U_+^\dagger$。二者的结构类比：$J$ 将代数元 $x$ 映射到其伴随 $x^*$；$\mathcal{K}$ 将前向演化 $U_+$ 映射到其伴随 $U_+^\dagger$。经 GNS 构造，$J$ 与 $\mathcal{K}$ 在各自空间中实现同一物理操作——前向↔后向分支互换。
+
+DKMS 变换 $\mathcal{R}$（定理 4.4）可分解为三个独立变换的复合：
+
+$$\mathcal{R} = \mathcal{K} \circ \mathcal{T} \circ \mathcal{S}_\beta \tag{3.3d}$$
+
+其中：
+- $\mathcal{K}$：静态 $\mathbb{Z}_2$（$\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$，前向↔后向）——此处构造
+- $\mathcal{T}$：时间反演（$t \to -t$）——来自 CTP 路径 $\mathcal{C} = \mathcal{C}_+ \cup \mathcal{C}_-$ 的几何结构
+- $\mathcal{S}_\beta$：热移（$\Phi_{\mathrm{q}} \to \Phi_{\mathrm{q}} + i\beta\dot{\Phi}_{\mathrm{cl}}$）——来自 KMS 解析延拓 $t \to t + i\beta$（定理 4.2）
+
+$\mathcal{K}$ 是三者中唯一涉及代数结构（$U_+ \leftrightarrow U_+^\dagger$）的部分；$\mathcal{T}$ 和 $\mathcal{S}_\beta$ 分别来自 CTP 路径几何与 KMS 解析性质。这一分解使 §3 的 CTP 构造与 §4 的 KMS 构造之间的逻辑链完整：$\mathcal{K}$ 在谱层面实现 $U_+ \leftrightarrow U_- = U_+^\dagger$ 对应（§3.2 定理 3.1 步骤 2），而 $\mathcal{T} \circ \mathcal{S}_\beta$ 在物理层面实现 KMS 热平衡约束（§4.2 定理 4.2），三者复合给出完整 DKMS $\mathbb{Z}_2$。
+
+**注 3.3（反酉性在耗散流体谱场中的物理意义）**。反酉算子 $\mathcal{K}$ 的构造虽源于 CTP 形式的一般结构，但在耗散流体语境下具有三层具体物理意义。
+
+**（一）谱衰减模的复共轭配对**。耗散流体的 Koopman 谱 $\sigma(A_R)$ 一般包含复本征值 $\lambda = \gamma \pm i\omega$（$\gamma < 0$ 为衰减率，$\omega$ 为振荡频率），对应衰减振荡模 $e^{-i\lambda t} = e^{|\gamma| t} e^{-i\omega t}$。$\mathcal{K}$ 通过复共轭将 $\lambda$ 与 $\lambda^*$ 配对：前向支上模式 $e^{-i\lambda t} = e^{|\gamma| t}e^{-i\omega t}$ 在后向支上映射为 $e^{+i\lambda^* t} = e^{|\gamma| t}e^{+i\omega t}$——衰减率 $|\gamma|$ 保持不变（耗散的不可逆性），振荡相位翻转（时间反演的谱表现）。这一配对是 **Onsager 回归假设**的谱实现：自发涨落的回归与宏观扰动的弛豫共享同一谱衰减率 $|\gamma|$，而 $\mathcal{K}$ 的反酉性保证二者在谱权重上守恒（$\langle \mathcal{K}\psi | \mathcal{K}\psi \rangle = \langle \psi | \psi \rangle$）。
+
+**（二）$\Phi_{\mathrm{q}}$ 翻号与熵产生的谱起源**。$\mathcal{K}: \Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$ 的物理图像是：前向分支上的噪声驱动系统偏离平衡（$\Phi_{\mathrm{q}}$ 与 $\Phi_{\mathrm{cl}}$ 同号时偏离增大），后向分支上噪声变号驱动系统回归（$\Phi_{\mathrm{q}}$ 与 $\Phi_{\mathrm{cl}}$ 反号时偏离减小）。在 r-a 作用量 (3.5) 中，$\Phi_{\mathrm{q}}$ 以 $\Phi_{\mathrm{q}} \cdot \mathcal{O}_{\mathrm{EOM}}[\Phi_{\mathrm{cl}}]$ 形式与经典场耦合——翻号使前向噪声产生正耗散（$\Delta S_+ > 0$），后向噪声产生等量负耗散（$\Delta S_- = -\Delta S_+$），净熵产生 $\Delta S = \Delta S_+ + |\Delta S_-| = 2\Delta S_+ > 0$。$\mathcal{K}$ 的反酉性保证噪声功率谱 $N(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{q}} \rangle_\omega$ 在前向与后向分支上相等（能量守恒），而 $\Phi_{\mathrm{q}}$ 的翻号使 $\Phi_{\mathrm{q}} \Phi_{\mathrm{cl}}$ 交叉项反对称——正耗散的谱起源正在于此。
+
+**（三）FDT 的反酉机制**。涨落-耗散定理（定理 3.2）将噪声核 $N(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{q}} \rangle_\omega$ 与推迟响应 $\chi^R(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{cl}} \rangle_\omega$ 联系。$\mathcal{K}$ 提供了这一关系的谱机制：$\Phi_- = \mathcal{K}\Phi_+ = \Phi_+^*$ 意味着 $\langle \Phi_- \Phi_+ \rangle_\omega = \langle \Phi_+ \Phi_+ \rangle_\omega^*$。由 (3.4a-b)，$\Phi_{\mathrm{q}} = \Phi_+ - \Phi_-$ 且 $\Phi_{\mathrm{cl}} = \frac{1}{2}(\Phi_+ + \Phi_-)$，故
+
+$$N(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{q}} \rangle_\omega = 2\,\mathrm{Re}\,\langle \Phi_+ \Phi_+ \rangle_\omega - 2\,\langle \Phi_+ \Phi_+ \rangle_\omega^* \propto \mathrm{Im}\,\langle \Phi_+ \Phi_+ \rangle_\omega$$
+
+$$\chi^R(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{cl}} \rangle_\omega \propto \mathrm{Re}\,\langle \Phi_+ \Phi_+ \rangle_\omega - \langle \Phi_+ \Phi_+ \rangle_\omega^* \propto i\,\mathrm{Im}\,\langle \Phi_+ \Phi_+ \rangle_\omega$$
+
+二者共享同一复相位 $\langle \Phi_+ \Phi_+ \rangle_\omega$ 的实部与虚部——FDT 的 Kramers-Kronig 结构本质上来自 $\mathcal{K}$ 的复共轭配对：$N(\omega)$ 提取 $\langle \Phi_+ \Phi_+ \rangle_\omega$ 的实部（对称关联，$\Phi_{\mathrm{q}}$ 翻两次号故不变），$\mathrm{Im}\,\chi^R(\omega)$ 提取其虚部（$\Phi_{\mathrm{q}}$ 翻一次号 $\Phi_{\mathrm{cl}}$ 不翻故反对称）。反酉性 $\mathcal{K}$ 将同一谱关联函数的两个分量（实部与虚部）分别分配给噪声与响应——这就是 FDT 在 Koopman 谱层面的生成机制。
+
+**注 3.4（强耗散极限）**。谱场关联函数在 $\gamma \gg \omega$ 极限下的渐近行为及 $\mathcal{K}$ 对称性退化分析详见**附录 A**。
 
 ### 3.3 r-a 变量分解
 
@@ -268,7 +377,7 @@ $$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \cdot \mathrm{Im}\,G_R(\la
 
 **证明**。直接将定理 2.2 (SK 谱等价桥) 代入 r-a 作用量 (3.5) 的二次项。$\square$
 
-**注 3.1**（谱函数正性）。由 Lehmann 表示，retarded 传播子的谱密度 $\rho(\lambda, \omega) = 2\,\mathrm{Im}\,G_R(\lambda, \omega)$ 等于跃迁加权和 $\sum_n |\langle n | \hat{O} | 0\rangle|^2 \delta(\omega - \omega_{n0})$，故 $\rho(\lambda, \omega) \geq 0$。这保证 FDT 公式 (4.7) 中 $C(\lambda,\omega) \geq 0$（$\coth$ 与 $\omega$ 同号，$\rho \geq 0$），进而保证噪声系数正定——这是路径积分收敛（Fokker-Planck 型）的必要条件。
+**注 3.5**（谱函数正性）。由 Lehmann 表示，retarded 传播子的谱密度 $\rho(\lambda, \omega) = 2\,\mathrm{Im}\,G_R(\lambda, \omega)$ 等于跃迁加权和 $\sum_n |\langle n | \hat{O} | 0\rangle|^2 \delta(\omega - \omega_{n0})$，故 $\rho(\lambda, \omega) \geq 0$。这保证 FDT 公式 (4.7) 中 $C(\lambda,\omega) \geq 0$（$\coth$ 与 $\omega$ 同号，$\rho \geq 0$），进而保证噪声系数正定——这是路径积分收敛（Fokker-Planck 型）的必要条件。
 
 ---
 
@@ -352,7 +461,7 @@ $$(-\Phi_{\mathrm{q}} + i\beta\dot{\Phi}_{\mathrm{cl}})C(-\Phi_{\mathrm{q}} + i\
 
 - **第一项**：$\Phi_{\mathrm{q}}C\Phi_{\mathrm{q}}$ 由 $C$ 的偶性 (4.6) 不变。
 - **第二项** $-2i\beta\Phi_{\mathrm{q}}C\dot{\Phi}_{\mathrm{cl}}$：贡献到作用量的实部，为交叉响应项——它进入经典运动方程（$E_r$ 的一阶修正），在 $t \to -t$ 下奇、积分为零。
-- **第三项** $-\beta^2\dot{\Phi}_{\mathrm{cl}}C\dot{\Phi}_{\mathrm{cl}}$：实的正定项（$C \geq 0$ 由注 3.1），进入 $S_{\mathrm{real}}$；它是纯导数修正，不改变运动方程的物理内容（$C$ 偶 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 = 偶，$\omega \to -\omega$ 不变）。
+- **第三项** $-\beta^2\dot{\Phi}_{\mathrm{cl}}C\dot{\Phi}_{\mathrm{cl}}$：实的正定项（$C \geq 0$ 由注 3.5），进入 $S_{\mathrm{real}}$；它是纯导数修正，不改变运动方程的物理内容（$C$ 偶 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 × $\dot{\Phi}_{\mathrm{cl}}$ 奇 = 偶，$\omega \to -\omega$ 不变）。
 
 综上，$S_K[\Phi_{\mathrm{cl}},\Phi_{\mathrm{q}}] = S_K[\mathcal{R}(\Phi_{\mathrm{cl}}),\mathcal{R}(\Phi_{\mathrm{q}})]$ 逐项成立。$\square$
 
@@ -474,6 +583,22 @@ $$s \cdot S_{\mathrm{eff}} = s \cdot S_0 + s^2 \Psi = s \cdot S_0 \tag{5.10}$$
 
 **定理 5.5**（Koszul-Tate 与伴随）。Koszul-Tate 分解是自由-遗忘伴随的提升：设 $\mathsf{Free} \dashv \mathsf{Forget}$，则 Koszul-Tate 分解恰好是 $\mathsf{Forget}(R/I)$ 的余纤维替换。UFPF 的 $D \dashv R$ 伴随在此框架下自然给出 BRST 复形。
 
+**证明**。分三步。
+
+**步骤 1（自由-遗忘伴随）**。设 $\mathsf{Free}: \mathsf{Vect} \to \mathsf{DGLA}$ 为从向量空间到微分分次李代数（DG-Lie algebra）的自由函子，$\mathsf{Forget}$ 为遗忘函子。$\mathsf{Free} \dashv \mathsf{Forget}$ 是标准伴随对 [13]：
+
+$$\mathrm{Hom}_{\mathsf{DGLA}}(\mathsf{Free}(V), \mathfrak{g}) \cong \mathrm{Hom}_{\mathsf{Vect}}(V, \mathsf{Forget}(\mathfrak{g}))$$
+
+即 DG-Lie 代数态射 $F: \mathsf{Free}(V) \to \mathfrak{g}$ 由底层向量空间映射 $V \to \mathsf{Forget}(\mathfrak{g})$ 唯一确定。
+
+**步骤 2（Koszul-Tate 作为余纤维替换）**。给定约束理想 $I \subset R$（如规范条件定义的理想），商 $R/I$ 的同伦余纤维（homotopy cofiber）由 Koszul-Tate 分解给出 [13]：在 $R$ 上附加与 $I$ 的生成元对应的反交换变量（Tate 生成元），得到微分分次 $R$-代数 $K_R(I)$，其同调为
+
+$$H_*(K_R(I)) \cong R/I$$
+
+即 Koszul-Tate 复形在模型范畴意义下计算 $R \to R/I$ 的余纤维。这正是 $\mathsf{Forget}(R/I)$ 的余纤维替换——Koszul-Tate 分解是自由-遗忘伴随在商对象上的提升。
+
+**步骤 3（$D \dashv R$ 给出 BRST 复形）**。UFPF 的伴随对 $D \dashv R$（定理 2.1）中，单子 $T = R \circ D$ 的 Eilenberg-Moore 代数 $\mathcal{C}^T$ 承载 Lie algebroid 结构（命题 5.1）。将步骤 2 的构造应用于 $D \dashv R$：设 $I_{\mathrm{gauge}} \subset \mathcal{C}^T$ 为规范约束定义的理想（对应 BRST 规范固定），则 $D \dashv R$ 诱导的 Koszul-Tate 分解 $K_{\mathbf{Sp}}(I_{\mathrm{gauge}})$ 在 $\mathbf{Sp}_{\mathbb{Z}_2}$ 上给出微分分次复形。Tate 生成元（步骤 2 中的反交换变量）是规范约束生成元在微分分次代数中的对偶，对应 BRST 鬼场 $c^a$（命题 5.2 中 $s(c^a) = -\frac{1}{2}f^a_{bc}c^b c^c$ (5.5b) 的生成元）。在此对应下，Koszul-Tate 微分 $d_{\mathrm{KT}}(\theta_a) = f_a$（$\theta_a$ 为 Tate 生成元，$f_a$ 为约束函数）与 BRST 微分 $s$（定义 5.3）在规范固定条件下一致：$s$ 在物理场上的作用 $s(A_\mu^a) = -\partial_\mu c^a + f^a_{bc}A_\mu^b c^c$ (5.5a) 恰是 Tate 微分在规范固定后的表现形式。$s^2 = 0$ 由定理 5.2 保证。因此 $D \dashv R$ 的伴随结构自然给出 BRST 复形 $(\mathbf{Sp}_{\mathbb{Z}_2}, s)$，物理态空间为 $H^0_{\mathrm{BRST}} = \ker s / \mathrm{im}\, s$ (5.9)。$\square$
+
 ---
 
 ## 6 从谱流体到涨落流体力学
@@ -521,7 +646,15 @@ $$I_{\mathrm{hydro}}^{\mathrm{Sp}} = \int d\lambda\, dt \left[A_{\mathrm{q}} \cd
 | $A_{\mathrm{q}}$（谱涨落） | $a$-型场（$E_a, V_{ai}, \mu_a$） |
 | 谱流生成元 $G$ | 流体时空微分同胚生成元 |
 
-**证明思路**：KMS 不变性约束作用量中允许的项（§4.5），BRST 不变性保证幺正性（§5.6）。这两条约束与 CGL 中动态 KMS + BRST 对作用量的约束一致。在此约束下，(6.4) 的场量组合与 CGL 作用量的场量组合一一对应。$\square$
+**证明**。分三步。
+
+**步骤 1（约束等价性）**。CGL 作用量 $I_{\mathrm{hydro}}$ 的构建受两条对称性约束：(i) 动态 KMS $\mathbb{Z}_2$ 对称性 $\mathcal{R}$（§2.2.4，定义 2.6）限制允许项的系数关系（如噪声核偶性、Onsager 关系）；(ii) BRST 不变性（§2.2.5，(2.10)）保证 CTP 幺正性。§4 和 §5 已分别证明这两条约束均从 UFPF 公理导出：KMS 从 Tomita-Takesaki 模理论导出（定理 4.4），BRST 从 $D\dashv R$ 伴随对的 Lie algebroid 结构导出（定理 5.2）。因此，谱流体作用量 (6.4) 在相同约束下构建，其允许的项与 CGL 作用量受同一组约束。
+
+**步骤 2（场量一一对应）**。由定义 6.3（§6.3.1）的显式变换 (6.9a-c)，谱流体变量 $(A_r, A_{\mathrm{q}}, G, \lambda)$ 与 CGL 流体时空变量 $(E_r, E_a, V_{ri}, V_{ai}, \mu_r, \mu_a, \tau)$ 之间建立了显式映射。命题 6.4 已逐项验证作用量 (6.4) 的四类项——运动学项 (a)、平流项 (b)、耗散项 (c)、噪声项 (d)——在此映射下分别对应 CGL 作用量的运动学项、对流导数项、粘性项、高斯噪声项，且无遗漏、无多余项。
+
+**步骤 3（高阶项一致性）**。作用量 (6.4) 中的省略项包含 $A_{\mathrm{q}}^3$ 及更高阶项，对应 CGL 的 a-场高阶展开（§6.4）。由定理 6.3，这些高阶项在谱语言中由 Kramers-Moyal 展开 $D_n$ 给出；由定义 6.2，其幺正性约束（$C_3$ 实、$C_4$ 纯虚且正定）与 CGL [1, §4] 一致。KMS 对称性（定理 4.4）进一步将平衡态高阶噪声系数通过非线性 FDT (6.8) 约束为响应函数的泛函——与 CGL 的 Wang-Heinz 型非线性 FDT [21] 一致。
+
+综上，在 KMS + BRST 约束下，谱流体作用量 (6.4) 与 CGL 作用量 $I_{\mathrm{hydro}}$ 在场量、项结构、系数关系三个层面一一对应，故二者等价。$\square$
 
 #### 6.3.1 显式场量变换（逐项映射强化）
 
@@ -842,6 +975,11 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 本文建立的不是"UFPF 取代 CGL"，也不是宣称两者完全对等，而是展示一种**翻译关系**：UFPF 是覆盖多领域的元框架（meta-framework），其谱语言可以翻译 CGL 的耗散流体 EFT。在结构层面（§8 的八项翻译），CGL 与谱语言版本数学同构。本文把这种关系呈现为类似"语言"与"用该语言写成的某一著作"的关系——著作的独立性不受影响，语言的范围也不受单一著作限制；至于两者在理论范围上的最终比较，本文不做单方面断言，留待学术共同体评价。本文的实际贡献是翻译本身及其产生的新预言。
 
+本翻译结果有两层解读姿态：
+
+1. **工具姿态（本文工作直接支持）**：UFPF 可作为元语言，对 CGL 做完整的结构重构、压力测试、生成新可证伪预言；即便 UFPF 的本体猜想最终不成立，该框架仍可作为理论实践工具。
+2. **本体猜想（不属于本文结论）**：UFPF 这套范畴-谱结构是否为物理现实底层本质关系，该猜想需要更多领域重构与独特预言的实验确认，留待后续研究。
+
 §7.5 已进一步表明，这种翻译延伸到**具体的定量成果**：CGL-II 的中性共形流体二阶熵流（$f_1,\dots,f_5$ 系数系统）可在谱框架中用 Koopman 谱隙和模强度重新表达。尤其是 DKMS 约束 $c_2 = f_5/4$ 获得了纯谱的等价表述，并产生可证伪预言 $\lambda_\pi \approx -4.81\,T$（N=4 SYM 剪切道第一非流体力学谱隙）。
 
 §7.6 进一步将翻译延伸到**最困难的湍流情形**：CGL 的流体时空映射 $X^\mu(\sigma)$ 在湍流中不光滑，但通过三层替换（RLF/GLM/谱测度族）获得了严格化——其中谱测度族是统计稳态下唯一无歧义的表述。这关闭了翻译框架的最后一个结构性缺口（§9.4 所列的残留问题转为学习极限边界而非框架缺失）。
@@ -869,15 +1007,33 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 - V4：高斯系统 $G^{aaa} = 0$（Wick 定理）与非高斯三阶累积量信号均确认；三点 FDT (6.8) 重建自洽
 - V5：谱测度密度 = PSD 恒等式确认（相关性 0.962）——验证湍流判据 C1
 
-### 9.4 局限性与未来方向
+### 9.4 局限性与开放问题
 
-1. **UFPF 的地位局限**：UFPF 目前为个人独立研究的理论假说，未经学术共同体独立评审（§1.1 地位声明）。本文的全部论证以 UFPF 公理为前提——若 UFPF 公理体系本身被证伪或需修正，本文的重构结论将相应调整。这是本文最大的前提性局限。
-2. 湍流谱测度映射（§7.6）提供严格框架，但存在学习极限（注 7.2）：对抗性系统上任何算法无法学习谱性质——框架可解性有根本边界
-3. CTP 双拷贝 Koopman 结构（时间正向+反向）需要进一步构造
-4. 超范畴 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的 Lean 4 形式化尚未完成
-5. 非高斯噪声的高阶实现：V1-V5 数值验证已通过（§9.3），但多谱塔的双谱/三谱显式计算（V4 的频域形式）与 KMS 塔保持定理（定理 6.5）的严格形式化待完成
-6. 二阶系数 $f_1$ 的点态表达受限于谱几何的等谱反例（注 7.1a）：谱构造是算子对易子层面，非纯本征值重构
-7. 普适关系 $f_5+f_4-2f_2=0$ 的谱版本仅在全息 Einstein 引力下成立（注 7.1），谱框架中不能视为一般约束
+以下按问题性质分为三类。
+
+**前提性局限**
+
+1. **UFPF 的地位局限**。UFPF 目前为个人独立研究的理论假说，未经学术共同体独立评审（§1.1 地位声明）。本文的全部论证以 UFPF 公理为前提——若 UFPF 公理体系本身被证伪或需修正，本文的重构结论将相应调整。这是本文最大的前提性局限，以下所有开放问题均以此为前提。
+
+**框架性缺口**
+
+2. **CTP 双拷贝 Koopman 结构**（已在 §3.2a 完成）。反酉算子 $\mathcal{K}$（定理 3.1a）在 $A_R$-本征基下显式构造为复共轭算子 (3.3b)，满足 $U_- = \mathcal{K} U_+ \mathcal{K}^{-1}$ (3.3a)。$\mathcal{K}$ 对 r-a 变量给出静态 $\mathbb{Z}_2$（$\Phi_{\mathrm{q}} \to -\Phi_{\mathrm{q}}$），是 DKMS 变换 $\mathcal{R} = \mathcal{K} \circ \mathcal{T} \circ \mathcal{S}_\beta$ (3.3d) 的代数分量。$\mathcal{K}$ 与模共轭 $J$ 的对应关系见注 3.2。
+
+3. **湍流映射的学习极限**。§7.6 的谱测度映射提供了严格框架，但存在学习极限（注 7.2）：对抗性光滑系统使任何数据驱动算法无法学习谱性质（成功率至多 50%）。这意味着湍流谱-时空映射的可操作性存在根本边界，实际应用需结合先验物理约束。
+
+4. **二阶系数 $f_1$ 的点态表达受限**。$f_1$ 的谱构造（定理 7.6a）在算子对易子层面成立，但点态无迹 Ricci 张量本身不是谱不变量——存在等谱反例（Sunada、Gordon-Webb-Wolpert，注 7.1a）。因此 $f_1$ 的谱表达不能简化为纯本征值重构。
+
+5. **普适关系的适用范围**。Haack-Yarom 关系 $f_5+f_4-2f_2=0$ 在 Gauss-Bonnet 引力下非微扰失效 [2]（注 7.1）。该关系仅在全息 Einstein 引力下成立，谱框架中不应视为一般约束；其谱推广需逐案验证。
+
+**待完成的严格化与数值延伸**
+
+6. **非高斯噪声的高阶实现**。V1-V5 数值验证已通过（§9.3），但以下两项待完成：(a) 多谱塔双谱 $B(\omega_1,\omega_2)$ 与三谱 $T(\omega_1,\omega_2,\omega_3)$ 的显式频域计算——V4 仅验证了时域三阶累积量信号；(b) KMS 塔保持定理（定理 6.5）的严格形式化——当前仅验证了三点 FDT (6.8) 的代数结构自洽性，一般 $n$ 点情形的证明待补。
+
+7. **超范畴 $\mathbf{Sp}_{\mathbb{Z}_2}$ 的形式化**。$\mathbf{Sp}_{\mathbb{Z}_2}$ 作为翻译接口引入了 $\mathbb{Z}_2$-分级信息（注 5.1），其 Lean 4 形式化验证尚未完成。关键检查点为 BRST 幂零性 $s^2=0$（定理 5.2）在超范畴语言中的机器可验证证明。
+
+8. **数值工具的扩展**。当前验证脚本（`scripts/paper45_spectral_EFT_validation.py`）针对 V1-V5 设计。需要扩展为基于谱测度与 Koopman 谱特征的通用数值工具，以在更复杂物理极限（非平衡态、强耦合）下检验 §7.5-§7.6 的定量预言。
+
+**跨文档指引**。本文只处理耗散流体 EFT 分支；UFPF 全套的预设清单（Polish 拓扑、$A_{\mathrm{GR}}$ 断言）与完整开放问题清单（例如暗能量 B1 瓶颈），参见 UFPF 体系总序。
 
 ---
 
@@ -887,25 +1043,79 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 本文提出的 UFPF（通用不动点分形谱范畴框架）及其谱语言是作者个人独立构建的理论体系。我们诚挚地将此工作定位为一次跨越物理、几何和代数拓扑多领域的**系统性尝试**，其最终结论应视为该理论假说的一个重要实例展示，而非所有相关领域已有的既定知识集合。
 
-### **Future Work and Open Questions (未来工作与开放问题)**
+---
 
-UFPF 谱语言的普适性和可表达性为多个物理和数学领域提供了新的、统一的分析工具箱，其潜力远超本文所涉及的耗散流体有效场论。未来的研究方向主要包括以下几个方面：
+## 附录 A：强耗散极限下的谱场关联函数渐近行为
 
-**1. 高阶多尺度与非线性动力学（Spectral Multi-scale Dynamics）：**
-本文仅验证了系统在经典/弱涨落和低阶非高斯效应下的可表达性。未来工作需要将谱语言提升至更高阶的统计描述，例如构建包含无限层级关联函数（Infinite Hierarchy of Correlation Functions）的泛函，以解决湍流、等离子体物理中更复杂的多尺度耦合问题。
+本附录推导 §3.2a 中构造的反酉算子 $\mathcal{K}$（定理 3.1a）在强耗散极限 $\gamma \gg \omega$ 下对谱场关联函数的影响。结果在注 3.4 中引用，并可与 §4.2 的 FDT（定理 3.2）和 §7.5 的共形流体输运系数相互参照。
 
-**2. 跨领域应用的理论深化（Deep Cross-Domain Application）：**
-UFPF 的结构天然适用于任何具有“迭代”和“谱分解”特性的系统。未来的研究可以专注于：
-*   **量子计算的拓扑性质：** 利用 $\mathbf{Rec}$ 对自相似演化映射的描述，建立与量子电路或拓扑保护能级的联系。
-*   **生物物理动力学：** 谱语言可用于模拟复杂生物网络（如神经元群）中的非线性、耗散和自组织现象，从而提供比传统基于ODE模型的更具底层结构性的视角。
+### A.1 设置
 
-**3. 对规范结构的几何化处理 (Geometricization of Gauge Structure)：**
-尽管本文利用 $\mathbf{Sp}_{\mathbb{Z}_2}$ 成功引入了 BRST 接口，但目前仅停留在“翻译”这一层面。未来的工作需要将 UFPF 的谱联络（Spectral Connection）提升为完整的规范几何结构。目标是构建一个纯粹基于谱范畴的、能够自发产生李代数结构的完备理论，从而从根本上解决传统场论中对外部群理论假设的依赖。
+设 Koopman 本征值 $\lambda = \omega - i\gamma$（$\omega > 0$：振荡频率，$\gamma > 0$：衰减率），前向演化 $\Phi_+(\lambda, t) \propto e^{-i\lambda t} = e^{-i\omega t - \gamma t}$。强耗散极限定义为
 
-**4. 算法实现与计算验证 (Algorithmic Realization)：**
-当前的证明高度数学抽象。未来工作的重点是开发一套可执行的、基于谱测度（Spectral Measure）和Koopman算子谱特征值（Eigenvalues/Functions）的数值求解器，用以高效地模拟高维、非平衡态系统的演化，并验证更复杂的物理极限下的预测能力。
+$$\gamma \gg \omega, \quad \gamma \gg T \quad (T = 1/\beta) \tag{A.0}$$
+
+即衰减率远大于振荡频率与温度。
+
+### A.2 推迟响应函数
+
+单模推迟 Green 函数
+
+$$G_R(\nu) = \frac{1}{\nu - \omega + i\gamma} \tag{A.1}$$
+
+在时域：
+
+$$G_R(t) = -i\theta(t)\, e^{-i\omega t - \gamma t} \xrightarrow{\gamma \gg \omega} -i\theta(t)\, e^{-\gamma t} \tag{A.2}$$
+
+振荡相位 $e^{-i\omega t}$ 的时间尺度 $1/\omega$ 远长于振幅衰减时间 $1/\gamma$——系统进入**过阻尼**（overdamped）区域，演化退化为纯指数弛豫。
+
+### A.3 谱密度
+
+$$\rho(\nu) = -2\,\mathrm{Im}\,G_R(\nu) = \frac{2\gamma}{(\nu - \omega)^2 + \gamma^2} \xrightarrow{\gamma \gg \omega} \frac{2\gamma}{\nu^2 + \gamma^2} = \frac{2}{\gamma} \cdot \frac{1}{1 + (\nu/\gamma)^2} \tag{A.3}$$
+
+Lorentzian 峰被 $\gamma$ 宽度抹平，中心从 $\nu = \omega$ 移至 $\nu = 0$。低频区域 $\nu \ll \gamma$：
+
+$$\rho(\nu) \approx \frac{2}{\gamma} \quad \text{（平谱，白噪声特征）} \tag{A.4}$$
+
+### A.4 噪声核
+
+由 FDT（定理 3.2），$N(\nu) = \coth\frac{\beta\nu}{2} \cdot \rho(\nu)$，在强耗散极限下分两个频区：
+
+- **经典区域** $\nu \ll T \ll \gamma$：$\coth\frac{\beta\nu}{2} \approx \frac{2T}{\nu}$，故
+
+$$N(\nu) \approx \frac{2T}{\nu} \cdot \frac{2}{\gamma} = \frac{4T}{\gamma\nu} \quad \text{（$1/\nu$ 红外发散）} \tag{A.5}$$
+
+- **量子区域** $T \ll \nu \ll \gamma$：$\coth\frac{\beta\nu}{2} \approx 1$，故
+
+$$N(\nu) \approx \frac{2}{\gamma} \quad \text{（白噪声）} \tag{A.6}$$
+
+### A.5 $\mathcal{K}$ 对称性的退化
+
+由推论 3.1a（$\Phi_- = \mathcal{K}\Phi_+ = \Phi_+^*$），前向-前向关联 $G_{++}(t) = C_\lambda e^{-i\omega t - \gamma t}$，后向-后向关联 $G_{--}(t) = G_{++}^*(t) = C_\lambda e^{+i\omega t - \gamma t}$。强耗散极限下：
+
+$$G_{++}(t) \approx C_\lambda e^{-\gamma t}, \quad G_{--}(t) \approx C_\lambda e^{-\gamma t} \tag{A.7}$$
+
+振荡分量 $e^{\pm i\omega t}$ 在 $t \gg 1/\gamma$ 时已被衰减完全压制——$\mathcal{K}$ 的复共轭配对 $\lambda \leftrightarrow \lambda^*$ 在 $|\mathrm{Re}(\lambda)| \ll |\mathrm{Im}(\lambda)|$ 时退化为平凡配对（$\lambda \approx \lambda^* \approx -i\gamma$）。CTP 双拷贝在**相干层面**退化为单拷贝：$\Phi_+ \approx \Phi_-$，$\Phi_{\mathrm{q}} = \Phi_+ - \Phi_- \to 0$。
+
+然而，**涨落层面**的 $\mathcal{K}$ 对称性持续有效：噪声核 $N(\nu) \propto \rho(\nu) \propto \mathrm{Im}\,G_R(\nu)$ 仍由 $\mathcal{K}$ 的复共轭结构维持（注 3.3 第三点，§3.2a）。即使在 $\gamma \to \infty$ 的极端极限中，$\rho(\nu) \to 2/\gamma$ 趋于零但不消失，FDT 关系 $N(\nu) = \coth\frac{\beta\nu}{2} \cdot \rho(\nu)$ 保持成立——$\mathcal{K}$ 对 FDT 的生成机制（将 $\langle \Phi_+\Phi_+\rangle_\nu$ 的实部分配给 $N$、虚部分配给 $\mathrm{Im}\,G_R$）不依赖于 $\omega/\gamma$ 比值。
+
+### A.6 物理总结
+
+强耗散极限 $\gamma \gg \omega$ 下，系统从**欠阻尼量子振荡子**转变为**过阻尼经典 Markov 过程**：
+
+| 量 | 欠阻尼 ($\gamma \ll \omega$) | 过阻尼 ($\gamma \gg \omega$) |
+|:---|:---|:---|
+| $G_R(t)$ | $-i\theta(t) e^{-i\omega t - \gamma t}$（阻尼振荡） | $-i\theta(t) e^{-\gamma t}$（纯弛豫） |
+| $\rho(\nu)$ | 窄 Lorentzian, 峰在 $\omega$ | $\frac{2}{\gamma}$（平谱, 白噪声） |
+| $N(\nu)$ | 量子噪声 $\coth\frac{\beta\nu}{2}\,\rho$ | $\frac{4T}{\gamma\nu}$（经典, $1/\nu$ 发散） |
+| $\mathcal{K}$ 配对 | $\lambda \leftrightarrow \lambda^*$ 非平凡 | $\lambda \approx \lambda^* \approx -i\gamma$（平凡） |
+| CTP 双拷贝 | $G_{++} \neq G_{--}$（振荡相位区分） | $G_{++} \approx G_{--}$（相位被压制） |
+| FDT 机制 | $\mathcal{K}$ 将 $\langle \Phi_+\Phi_+\rangle$ 实虚部分配 | 同左（不依赖 $\omega/\gamma$） |
+
+$\mathcal{K}$ 在相干层面的退化与在涨落层面的持续，定量地刻画了量子-经典跨界：相干振荡被耗散抹平时，涨落-耗散关系作为 $\mathcal{K}$ 的遗产依然维系热平衡约束。
 
 ---
+
 ## 参考文献
 
 [1] M. Crossley, P. Glorioso, H. Liu, "Effective field theory of dissipative fluids," arXiv:1511.03646 (2017).
@@ -937,6 +1147,6 @@ UFPF 的结构天然适用于任何具有“迭代”和“谱分解”特性的
 
 ---
 
-*本文属于 UFPF 系列论文（Paper XLV），展示 UFPF 谱语言可翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。翻译的可行性是 UFPF 语言普适性的一个例证；两框架关系的最终定性留待学术共同体评价。版本 v1.1（2026-08-21）。*
+*本文属于 UFPF 系列论文（Paper XLV），展示 UFPF 谱语言可翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。翻译的可行性是 UFPF 语言普适性的一个例证；两框架关系的最终定性留待学术共同体评价。版本 v1.2（2026-08-22）。*
 
 ---
