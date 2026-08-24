@@ -1,0 +1,233 @@
+{
+  "parameters": {
+    "matrix_size": 6,
+    "C_crit": 5.0
+  },
+  "regimes": {
+    "A": {
+      "name": "自伴（零耦合）",
+      "measures": {
+        "matrix_size": 6,
+        "self_adjoint": true,
+        "normal": true,
+        "anti_norm": 0.0,
+        "non_normality": 0.0,
+        "commutator_norm": 0.0,
+        "C_estimate": 1.0000000000000004,
+        "C_upper_bound": 20.576088418070157,
+        "k_estimate": 0,
+        "has_dissipation": false,
+        "has_coupling": false
+      },
+      "eigenvalues": [
+        {
+          "real": -3.1307884446036907,
+          "imag": 0.0
+        },
+        {
+          "real": 1.8243129103884241,
+          "imag": 0.0
+        },
+        {
+          "real": 1.2113457902932296,
+          "imag": 0.0
+        },
+        {
+          "real": -0.8169473150798869,
+          "imag": 0.0
+        },
+        {
+          "real": 0.1521566383751632,
+          "imag": 0.0
+        },
+        {
+          "real": -1.7481071700984943,
+          "imag": 0.0
+        }
+      ],
+      "verification": {
+        "H3a_self_adjoint": true,
+        "C1a_spectrum_exists": true,
+        "C2a_faithful": true,
+        "C3a_adjunction": true,
+        "C4a_natural_iso": true,
+        "C5a_triangle_id": true
+      }
+    },
+    "B1": {
+      "name": "解耦耗散（零耦合带耗散）",
+      "measures": {
+        "matrix_size": 6,
+        "self_adjoint": false,
+        "normal": true,
+        "anti_norm": 1.9015137183869293,
+        "non_normality": 1.6731806807225325e-15,
+        "commutator_norm": 5.303436151585698e-16,
+        "C_estimate": 1.0000000000000009,
+        "C_upper_bound": 3.203036626723099,
+        "k_estimate": 0,
+        "has_dissipation": true,
+        "has_coupling": false
+      },
+      "eigenvalues": [
+        {
+          "real": 0.6117610060893666,
+          "imag": 0.29370566348846733
+        },
+        {
+          "real": 0.7583812771953854,
+          "imag": 0.9473988193824835
+        },
+        {
+          "real": 2.0423424395522343,
+          "imag": 0.7439491778752562
+        },
+        {
+          "real": 1.2790686732728762,
+          "imag": 0.9144740625699249
+        },
+        {
+          "real": 1.6082817368224613,
+          "imag": 0.7768357177294232
+        },
+        {
+          "real": 1.7252741526726565,
+          "imag": 0.7992058300378926
+        }
+      ],
+      "verification": {
+        "H3b_dissipative": true,
+        "H3c_decoupled": true,
+        "C1b1_spectrum_complex": true,
+        "C2b1_faithful": true,
+        "C3b1_adjunction": true,
+        "C4b1_braiding_degenerate": true,
+        "C5b1_triangle_id": true
+      }
+    },
+    "B2": {
+      "name": "耦合耗散（非零耦合，辫子有效）",
+      "measures": {
+        "matrix_size": 6,
+        "self_adjoint": false,
+        "normal": false,
+        "anti_norm": 4.731430239977188,
+        "non_normality": 41.755836953226876,
+        "commutator_norm": 20.877918476613438,
+        "C_estimate": 3.4535054253707673,
+        "C_upper_bound": 17.040132983247368,
+        "k_estimate": 0,
+        "has_dissipation": true,
+        "has_coupling": true
+      },
+      "eigenvalues": [
+        {
+          "real": 2.858507830053557,
+          "imag": -1.6497718363608898
+        },
+        {
+          "real": -4.0016855710480606,
+          "imag": -1.2341865083691281
+        },
+        {
+          "real": 1.3631107074732058,
+          "imag": 1.0292727154342227
+        },
+        {
+          "real": -0.7847892372602501,
+          "imag": 1.843728770560133
+        },
+        {
+          "real": -2.118643918262778,
+          "imag": 0.2628676893283359
+        },
+        {
+          "real": -0.49708701568479396,
+          "imag": -0.12039861242663677
+        }
+      ],
+      "verification": {
+        "H3b_dissipative": true,
+        "H3c_prime_coupled": true,
+        "H3d_braiding_valid": true,
+        "C1b2_spectrum_complex": true,
+        "C2b2_faithful": true,
+        "C3b2_strict_adjunction": true,
+        "C4b2_braided_iso": true,
+        "C5b2_strict_triangle": true
+      }
+    },
+    "C": {
+      "name": "退化（辫子瓦解）",
+      "measures": {
+        "matrix_size": 6,
+        "self_adjoint": false,
+        "normal": false,
+        "anti_norm": 23.76990214817567,
+        "non_normality": 411.2395586704307,
+        "commutator_norm": 205.61977933521536,
+        "C_estimate": 6.902537317710004,
+        "C_upper_bound": 12.914358651546875,
+        "k_estimate": 3,
+        "has_dissipation": true,
+        "has_coupling": true
+      },
+      "eigenvalues": [
+        {
+          "real": -1.0746399468572854,
+          "imag": 14.58960479519629
+        },
+        {
+          "real": 2.6705042162037844,
+          "imag": 7.799290341818716
+        },
+        {
+          "real": -7.421875018884863,
+          "imag": -8.388851804021847
+        },
+        {
+          "real": 6.36833145205798,
+          "imag": -1.2737257804209845
+        },
+        {
+          "real": 0.9311184984755692,
+          "imag": -7.149197837715052
+        },
+        {
+          "real": -2.868426498439706,
+          "imag": -2.9948127890413745
+        }
+      ],
+      "verification": {
+        "H3b_dissipative": true,
+        "H3e_degenerate": true,
+        "C1c_spectrum_exists": true,
+        "C2c_faithful": true,
+        "C3c_adjunction_no_braiding": true,
+        "C4c_branch_iso": true
+      }
+    }
+  },
+  "boundary_B1_B2": {
+    "measures": {
+      "matrix_size": 6,
+      "self_adjoint": false,
+      "normal": false,
+      "anti_norm": 1.20787277584203,
+      "non_normality": 1.3280106005137584e-07,
+      "commutator_norm": 6.640052975807559e-08,
+      "C_estimate": 1.000000435605475,
+      "C_upper_bound": 3.248647200953018,
+      "k_estimate": 0,
+      "has_dissipation": true,
+      "has_coupling": true
+    },
+    "regime": "B2"
+  },
+  "phase_transition": {
+    "B2_braiding_valid": true,
+    "C_braiding_broken": true,
+    "phase_transition": true
+  },
+  "all_pass": true
+}

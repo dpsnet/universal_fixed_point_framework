@@ -165,3 +165,8 @@
 | 155 | `notes/spec_infinity_prelim.md` | `notes/00_foundations/spec_infinity_prelim.md` | notes/00_foundations |
 | 156 | `notes/longitudinal_section_fiber.md` | `notes/00_foundations/longitudinal_section_fiber.md` | notes/00_foundations |
 | 157 | `notes/academic_terminology_revision.md` | `notes/00_foundations/academic_terminology_revision.md` | notes/00_foundations |
+| 158 | `research_notes/meta_theorem_completeness_discussion_2026-08-23.md` | `notes/00_foundations/meta_theorem_completeness_discussion_2026-08-23.md` | notes/00_foundations |
+| 159 | `research_notes/blind_spot_physical_system_mapping_2026-08-23.md` | `notes/00_foundations/blind_spot_physical_system_mapping_2026-08-23.md` | notes/00_foundations |
+| 160 | `research_notes/godel_operator_spectral_silence_2026-08-23.md` | `notes/00_foundations/godel_operator_spectral_silence_2026-08-23.md` | notes/00_foundations |
+| 161 | `research_notes/flattening_unification_conjecture_2026-08-23.md` | `notes/00_foundations/flattening_unification_conjecture_2026-08-23.md` | notes/00_foundations |
+| 162 | `research_notes/inter_regime_state_definition_2026-08-23.md` | `notes/00_foundations/inter_regime_state_definition_2026-08-23.md` | notes/00_foundations |

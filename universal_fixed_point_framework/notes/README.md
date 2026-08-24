@@ -62,6 +62,37 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 6. **Kerr m≠0 Leaver 求解器收敛**：角向求解已收敛，径向 Leaver 系数约定需调试
 7. **谱方案 → MS-bar 方案转换因子 Z_i**：S₂ 层 DS 减除对易子框架已建立，Z_i 的显式解析公式待推导
 8. **暗物质 α_DM 的第一原理推导**：谱静默粒子在 A_GR 谱结构中的精确范畴维数
+9. **Phase 63 元定理完备性**：四体制分类（A/B1/B2/C）的五盲区分析与体制间态理论推进（详见下方）
+
+## Phase 63：元定理完备性与体制间态（2026-08-23）
+
+**状态**：第一阶段（Lean 形式化闭合）已完成，第二阶段（体制间态理论深化）进行中
+
+**核心成果**：
+- 四体制元定理（A/B1/B2/C）的五盲区系统性分析
+- 体制间态（Inter-Regime State）形式化定义（Drinfeld 联结子形变）
+- Gödel-Koopman 算子构造（不可判定命题的算子实现）
+- 平展统一猜想（Flattening Unification Conjecture）
+- 谱静默不覆盖盲区 1 的 Lean 反例验证
+- **Lean 形式化全面闭合**（2026-08-24 审计：101 个 .lean 文件零 sorry）
+
+**关键文档**：
+| 文档 | 位置 | 内容 |
+|:----|:----|:----|
+| 元定理完备性讨论 | `00_foundations/meta_theorem_completeness_discussion_2026-08-23.md` | 五盲区分析、四体制一般形式 |
+| 五盲区物理对应表 | `00_foundations/blind_spot_physical_system_mapping_2026-08-23.md` | 盲区 1-5 的物理系统对应 |
+| 体制间态定义 | `00_foundations/inter_regime_state_definition_2026-08-23.md` | Drinfeld 联结子形变推导 |
+| Gödel 算子 | `00_foundations/godel_operator_spectral_silence_2026-08-23.md` | Gödel-Koopman 算子与谱静默截面 |
+| 平展统一猜想 | `00_foundations/flattening_unification_conjecture_2026-08-23.md` | N-平展、静默比、覆盖完备性 |
+| θ-C 独立性分析 | `00_foundations/spectral_theta_C_independence_analysis_2026-08-24.md` | 理论独立性与数值矛盾分析 |
+| 进展报告 | `12_phase_results/phase63_meta_theorem_progress_2026-08-24.md` | Lean 审计结果、推进重点 |
+| 推进路线图 | `roadmap/phase63_meta_theorem_open_problems.md` | 四阶段推进计划、开放问题清单 |
+
+**开放问题（Phase 63 路线图）**：
+- C1: ε_hex 在无穷维中的计算方法（有限维截断逼近）
+- D1: θ-C 独立性理论解释（数值 r=-0.53 矛盾）
+- C2-C4: 体制间态拓扑分类、谱静默关系、临界体制边界
+- B2-B5: 盲区 2-5 形式化推进（长期）
 
 ## 文件命名约定
 

@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v2.53（2026-08-16）
+**版本**：v2.56（2026-08-23）
 
 **摘要**：本文提出分形谱化理论，建立递归系统（迭代函数系统、Koopman 动态、重整化群流）的统一谱理论框架。核心贡献包括：(1) 定义递归系统范畴 $\mathbf{Rec}$ 与谱范畴 $\mathbf{Sp}$，构造谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$（其中 $\mathbf{Rec}_D\subset\mathbf{Rec}$ 为宽子范畴，定义 2.3.1），证明其忠实性并建立严格伴随关系 $D \dashv R$（定理 2.4.5）；(2) 将核心谱对应 $\lambda_i = e^{-\mu_i}$ 从数值等式升级为范畴自然同构 $M \cong_{\text{br}} L$（实正自伴情形为 $M_0 \cong L_0$，复耗散情形为 §3.4b 定理 3.7b 的辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$）；(3) 在连续谱框架下建立谱测度 Lebesgue 分解理论与 $\eta_R$ 测度空间同构；(4) 提出谱静默理论作为替代紧致化的高维不可见性机制，给出四个静默判据与等价性定理，增强版局部吸引子捕获指数（Local Attractor Capture Index, LACI）区分度达 3.93；(5) 建立 Clifford 值 Hilbert 空间范畴与纤维丛内蕴结构，整合非零曲率联络（Levi-Civita + 规范场）；(6) 给出三类分离条件下分形 RKHS 的显式收敛率上界（定理 NS-1~NS-3），证明非分离 IFS 收敛下界显式最优常数 $c_{\text{opt}}(\rho) = -\log(\max_i c_i) \cdot (1-\rho)$；(7) 建立理论转化与 EFT 等价性框架，将五种转化模式、弦图演算与理论等价不变量系统化为框架核心方法论；(8) 将谱化理论应用于 Kerr 黑洞 Teukolsky-Leaver 连分数求解，实现谱分解方法将连分数迭代计算转化为三对角矩阵特征值问题，三路径对照验证（迭代 vs 谱分解 vs qnm 包）给出一致的 QNM 频率（差值 $\sim 10^{-12}$），验证谱对应定理（误差 $\sim 10^{-15}$）；提出"双初始向量逆迭代法"逆迭代优化将单特征值求解从 $O(N^3)$ 降至 $O(N)$，证明多吸引子场景下谱方法的效率优势（平衡点 $K \approx 3$）；(9) 扩展 D 函子到耗散混沌系统、非正规算子（数值半径、非正规性指标、谱变分）与无界算子（定义域管理、图范数）；(10) 证明 IFS 热力学极限存在性（自由能凸性、次可加性、Fekete 引理）；(11) 建立跨领域函子相容性的**隔离约束条件**（isolation constraints, IC），在 IC 满足时严格证明 $D$ 函子对 IFS/Kerr/NTK/Clifford 四类对象的相容性（定理 C3.2），诚实标注条件性满足的对（命题 C3.3）；(12) 解决三项纯数学理论短板：Hausdorff 维数凹性定理（Hausdorff 维数 $d_H(\rho)$ 凹性）、Ledrappier-Young 维数分解定理（高维可逆系统 Ledrappier-Young 维数分解）、拓扑熵–谱间隙不等式定理（拓扑熵-谱间隙普适不等式）。理论框架在数学上自洽，静默体系（§5.7，五层：S0 表示层 + S1–S4 动力学/观测层）——S1–S4 的层次包含关系已在 Lean 4 中形式化验证（`SilenceHierarchy.lean`），S0 表示静默见 §5.7.9；自伴骨架的循环论证已通过显式余伴随构造（RAP-5a/定理 R11）清除。范畴层完备化的其余开放问题（耗散半边统一、连续谱 Lean 形式化）已登记为 RAP-5d–5f。**借助 $\mathbf{Rec}_{\text{id}}$ 恒等延拓与 $\Sigma$-$\mathbf{Rec}$ 随机嵌入，该框架可嵌入所有以集合为底层对象的数学系统；其作为物理预言理论的适用范围由桥梁假设与实验检验决定，不构成“覆盖所有数学系统”的元数学宣称（参见《RAP_勘误与立场声明.md》）。**
 
@@ -1500,6 +1500,145 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 ---
 
+### 附录 C4：元定理——Rec/Sp/D 伴随充分性（四体制版本）
+
+本附录从 §2.3–§2.4、§3.4、§3.4.3 和 §7.9.1 的证明链中提取一个此前隐含但未显式表述的一般性定理。该定理不引入新的数学内容——所有结论已在各自定理中证明——其价值在于将分散的充分条件与结论之间的逻辑依赖关系显式化，根据自伴-耗散**耦合度**将系统分为四个嵌套体制，并为跨领域应用提供统一入口。
+
+#### 算子分解与耦合度
+
+任意算子 $A$ 可分解为自伴部分与反自伴部分：
+
+$$A = \underbrace{\frac{A + A^*}{2}}_{A_{\text{sa}}} + \underbrace{\frac{A - A^*}{2}}_{A_{\text{anti}}}$$
+
+框架在定义 2.3.1 中取 $A_R = \frac{1}{2}(-\log U_R + (-\log U_R)^*)$，即自伴部分。$A_{\text{anti}}$ 是被"静默"的耗散部分。**耦合度**由交换子 $[A_{\text{sa}}, A_{\text{anti}}]$ 度量：
+
+- $[A_{\text{sa}}, A_{\text{anti}}] = 0$：两部分**解耦**，$A$ 是正规算子（$AA^* = A^*A$），伪谱等于谱（$C = 1$）；
+- $[A_{\text{sa}}, A_{\text{anti}}] \neq 0$：两部分**耦合**，$A$ 是非正规算子，伪谱膨胀（$C > 1$）。
+
+当 $C$ 达到 $C_{\text{crit}}$ 时，辫子六边形公理失效（定理 3.7c），辫子结构瓦解。
+
+#### 通用充分条件
+
+设 $\mathcal{S}$ 为一个系统，满足以下通用条件：
+
+- **(H1) 递归动力学**：$\mathcal{S}$ 具有自相似演化映射 $\Phi: \mathcal{S} \to \mathcal{S}$（即 $\mathcal{S}$ 是 $\mathbf{Rec}$ 的对象）；
+- **(H2) 谱可分解性**：Koopman 算子 $U_\mathcal{S} = e^{-A_\mathcal{S}}$ 具有良定义的谱分解；
+- **(H4) 万有核**：$\mathcal{S}$ 的再生核 Hilbert 空间 $\mathcal{H}_\mathcal{S}$ 的核 $K_\mathcal{S}$ 是万有核（至少点分离）；
+- **(H5) 特征值映射**：递归指数 $\mu$ 与谱特征值 $\lambda$ 之间的对应 $\lambda = e^{-\mu}$ 成立。
+
+#### 体制 A：自伴（$\mathbf{Rec}_D$，零耦合）
+
+**附加条件**：**(H3a) 自伴性**：$A_{\text{anti}} = 0$（等价于 $\sigma(A_\mathcal{S}) \subset \mathbb{R}_{\ge 0}$，定义 2.3.1）。
+
+**耦合度**：$C = 1$，$k = 0$，$[A_{\text{sa}}, A_{\text{anti}}] = 0$（平凡零耦合）。辫子对称。
+
+**定理 C4.1A（Rec/Sp/D 伴随充分性——自伴体制）**。在通用条件与 (H3a) 下，$\mathcal{S}$ 具有完整的 $\mathbf{Rec}_D/\mathbf{Sp}/D$ 伴随结构：
+
+- **(C1a)** $D(\mathcal{S}) \in \mathbf{Sp}$（定义 2.3.2）；
+- **(C2a)** $D$ 忠实（定理 2.3.4，`DFunctor_faithful`）；
+- **(C3a)** $D \dashv R$（定理 C2.3，`DImAdjRIm`）；
+- **(C4a)** 标准自然同构 $M_0 \cong L_0$（定理 3.7a，$\lambda = e^{-\mu}$）；
+- **(C5a)** 三角恒等式满足（推论 2.4.3）。
+
+**证明**。详见 `MetaTheorem.lean: meta_theorem_A_self_adjoint`。$\square$
+
+#### 体制 B1：解耦耗散（$\mathbf{Rec}_{\text{diss}}$ 正规，零耦合带耗散）
+
+**附加条件**：**(H3b) 耗散性**：$U_R$ 压缩（$\|U_R\| \le 1$），$A_{\text{anti}} \neq 0$；**(H3c) 解耦性**：$[A_{\text{sa}}, A_{\text{anti}}] = 0$（正规算子条件）。
+
+**耦合度**：$C = 1$，$k = 0$（有耗散但零耦合）。辫子对称退化。伪谱 = 谱。
+
+**定理 C4.1B1（Rec/Sp/D 伴随充分性——解耦耗散体制）**。在通用条件与 (H3b),(H3c) 下，$\mathcal{S}$ 具有 $\mathbf{Rec}_{\text{diss}}/\mathbf{Sp}_{\mathbb{C}}/D_{\text{diss}}$ 伴随结构：
+
+- **(C1b1)** $D_{\text{diss}}(\mathcal{S}) \in \mathbf{Sp}_{\mathbb{C}}$（定理 7.31）；
+- **(C2b1)** $D_{\text{diss}}$ 忠实（定理 7.31 步骤 3）；
+- **(C3b1)** $D_{\text{diss}} \dashv R_{\text{diss}}$（定理 7.31 步骤 4）；
+- **(C4b1)** 辫子自然同构退化为标准同构（$k = 0$，定理 3.7b 退化情形）；
+- **(C5b1)** 三角恒等式满足。
+
+**证明**。由定理 7.31 和 3.7b 给出。因 $[A_{\text{sa}}, A_{\text{anti}}] = 0$，算子正规，伪谱等于谱（$C = 1$），辫子对称退化（命题 2.5.2），$k = 0$。$\square$
+
+#### 体制 B2：耦合耗散（$\mathbf{Rec}_{\text{diss}}$ 非正规，非零耦合）
+
+**附加条件**：**(H3b) 耗散性**（同上）；**(H3c') 耦合性**：$[A_{\text{sa}}, A_{\text{anti}}] \neq 0$（非正规算子条件）；**(H3d) 辫子有效性**：$C < C_{\text{crit}}$（辫子六边形公理成立）。
+
+**耦合度**：$C > 1$，$k \neq 0$（非零耦合，辫子非平凡）。伪谱 $\supsetneq$ 谱。
+
+**定理 C4.1B2（Rec/Sp/D 伴随充分性——耦合耗散体制）**。在通用条件与 (H3b),(H3c'),(H3d) 下，$\mathcal{S}$ 具有完整的 $\mathbf{Rec}_{\text{diss}}/\mathbf{Sp}_{\mathbb{C}}/D_{\text{diss}}$ 伴随结构：
+
+- **(C1b2)** $D_{\text{diss}}(\mathcal{S}) \in \mathbf{Sp}_{\mathbb{C}}$（定理 7.31）；
+- **(C2b2)** $D_{\text{diss}}$ 忠实（定理 7.31 步骤 3，严格函子律）；
+- **(C3b2)** $D_{\text{diss}} \dashv R_{\text{diss}}$ 严格成立（定理 7.31 步骤 4，无 $O(\varepsilon)$ 误差）；
+- **(C4b2)** 辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$（定理 3.7b，$\lambda = e^{-\mu - 2\pi i k}$，$k \in \mathbb{Z}$，$k \neq 0$）；
+- **(C5b2)** 三角恒等式严格成立（定理 7.31 步骤 4）。
+
+**证明**。由定理 7.31 和 3.7b 给出。因 $[A_{\text{sa}}, A_{\text{anti}}] \neq 0$，算子非正规，伪谱膨胀（$C > 1$），辫子非平凡（$k \neq 0$）。辫子幺半结构由定义 2.5.1 给出（`Braided.lean: recBraided`）。$\square$
+
+#### 体制 C：退化（辫子瓦解）
+
+**附加条件**：**(H3b) 耗散性**（同上）；**(H3e) 退化性**：$C \geq C_{\text{crit}}$（辫子六边形公理失效）。
+
+**耦合度**：$C \geq C_{\text{crit}}$（超过临界值）。辫子结构不存在。
+
+**定理 C4.1C（Rec/Sp/D 伴随充分性——退化体制）**。在通用条件与 (H3b),(H3e) 下，辫子结构瓦解，退化为 1-范畴分支结构：
+
+- **(C1c)** $D_{\text{diss}}(\mathcal{S}) \in \mathbf{Sp}_{\mathbb{C}}$（形式上仍成立）；
+- **(C2c)** $D_{\text{diss}}$ 忠实（严格函子律仍成立）；
+- **(C3c)** $D_{\text{diss}} \dashv R_{\text{diss}}$ 伴随成立（但辫子结构瓦解）；
+- **(C4c)** 分支自然同构 $M^{\text{br}} \cong L^{\text{br}}$（定理 3.7c，在每个分支 $B_k$ 上为严格双射）。
+
+**证明**。由定理 3.7c 给出。辫子静默扁平化为分支静默（注 3.7d）。$\square$
+
+#### 包含链与相变
+
+**命题 C4.4（包含链）**。$\text{A} \subset \text{B1} \subset \text{B2}$。
+
+- $\text{A} \subset \text{B1}$：自伴算子（$A_{\text{anti}} = 0$）自动满足解耦条件（$[A_{\text{sa}}, A_{\text{anti}}] = 0$ 平凡成立）。
+- $\text{B1} \subset \text{B2}$：解耦耗散（$C = 1$）是耦合耗散（$C > 1$）的零耦合极限（$C \to 1^+$ 边界情形）。
+
+**命题 C4.5（退化关系）**。当耦合度为零时，高体制退化为低体制：
+
+- $\text{A} \to \text{B1}$：$A_{\text{anti}} = 0 \Rightarrow [A_{\text{sa}}, A_{\text{anti}}] = 0$（平凡退化）。
+- $\text{B1} \to \text{B2}$ 边界：$[A_{\text{sa}}, A_{\text{anti}}] \to 0 \Rightarrow C \to 1^+$，$k \to 0$（连续退化）。
+
+**命题 C4.6（相变 B2 → C）**。当 $C \to C_{\text{crit}}$ 时，辫子六边形公理失效，体制 B2 **相变**到体制 C。这是一个**拓扑相变**（辫子结构瓦解），不是连续退化：
+
+- B2：辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$（定理 3.7b，2-范畴层面）
+- C：分支自然同构 $M^{\text{br}} \cong L^{\text{br}}$（定理 3.7c，1-范畴层面）
+
+**命题 C4.7（耦合度量等价性）**。以下三者等价：(1) $[A_{\text{sa}}, A_{\text{anti}}] = 0$；(2) $A$ 是正规算子（$AA^* = A^*A$）；(3) $C = 1$（伪谱等于谱）。
+
+#### 跨领域推论
+
+**推论 C4.2A/B1（跨领域保持——零耦合体制）**。在定理 C4.1A 或 C4.1B1 条件下（$C = 1$），若附加 $\mathrm{IC}(R_1, R_2)$ 成立，则 $D$ 保持 $R_1 \to R_2$ 的跨领域态射与结构不变量（定理 C3.2）。体制 A 和 B1 共享此推论，因两者 $C = 1$。
+
+**推论 C4.2B2（跨领域保持——耦合耗散体制）**。在定理 C4.1B2 条件下（$C > 1$），若附加伪谱扰动界相容（$R_1, R_2$ 的 $C$ 值一致或在容差内），则 $D_{\text{diss}}$ 保持 $R_1 \to R_2$ 的跨领域态射与伪谱界（定理 7.31 步骤 3，传递性 $\sigma_\varepsilon(U_{R_3}) \to \sigma_{C\varepsilon}(U_{R_2}) \to \sigma_{C^2\varepsilon}(U_{R_1})$）。
+
+**推论 C4.3（谱等价——零耦合体制）**。在定理 C4.1A 或 C4.1B1 条件下，若附加 $\mathrm{IC}(R_1, R_2)$ 成立且 $D(R_1) = D(R_2)$，则 $R_1$ 与 $R_2$ 谱等价（定理 4.3，`thm43_IC_full_coverage_finite`）。
+
+#### 注记
+
+**注 C4.1a（有限维原型的自动适用性）**。在有限维原型中，体制 A 的 H1–H4 对任意 $\mathbf{Rec}$ 对象自动成立（`meta_theorem_A_auto`）；体制 B1/B2 的辫子幺半结构已形式化（`Braided.lean`），但 $D_{\text{diss}}/R_{\text{diss}}$/辫子自然同构的 Lean 形式化需要无穷维算子理论（Phase 16B），当前以占位符标记；体制 C 的分支自然同构形式化亦待 Phase 16B。
+
+**注 C4.1b（无穷维扩展的方向）**。体制 A：H2–H4 成为实质性条件。体制 B1：H3c（$[A_{\text{sa}}, A_{\text{anti}}] = 0$）成为实质性条件，需验证正规算子判据。体制 B2：H3c'–H3d 成为实质性条件（非正规性度量、伪谱扰动界精细分析、$C_{\text{crit}}$ 的确定）。体制 C：H3e（$C \geq C_{\text{crit}}$）需临界条件的精确化。
+
+**注 C4.1c（四体制统一的角色）**。本元定理的核心价值有五：(1) 将四个嵌套体制的充分条件与结论链**统一显式化**；(2) 明确**耦合度谱系** $C=1 \to C>1 \to C \geq C_{\text{crit}}$，以 $[A_{\text{sa}}, A_{\text{anti}}]$ 为根本度量；(3) 明确**包含链** $\text{A} \subset \text{B1} \subset \text{B2}$ 和**拓扑相变** $\text{B2} \to \text{C}$；(4) 明确**耦合度量等价性** $[A_{\text{sa}}, A_{\text{anti}}]=0 \iff \text{正规} \iff C=1$；(5) 为无穷维扩展提供**形式化骨架**。
+
+**Lean 4 形式化**。元定理及其推论在 `UFPFormalization/MetaTheorem.lean` 中实现（四体制版本 v3）：
+- `meta_theorem_A_self_adjoint`：体制 A 主定理（完整证明）
+- `meta_theorem_B1_decoupled_dissipative`：体制 B1 主定理（占位符，待 Phase 16B）
+- `meta_theorem_B2_coupled_dissipative`：体制 B2 主定理（占位符，待 Phase 16B）
+- `meta_theorem_C_degenerate`：体制 C 主定理（占位符，待 Phase 16B）
+- `regimeA_in_B1` / `regimeB1_in_B2`：包含链
+- `phase_transition_B2_to_C`：相变 B2 → C
+- `coupling_measure_equivalence`：耦合度量等价性
+- `degeneration_A_to_B1` / `degeneration_B1_to_B2_boundary` / `phase_transition_B2_C`：退化与相变
+- `meta_corollary_AB1_cross_domain` / `meta_corollary_B2_cross_domain`：跨领域推论
+- `meta_corollary_spectral_equivalence`：谱等价推论
+- `meta_theorem_A_auto` / `meta_theorem_B1_auto` / `meta_theorem_B2_auto` / `meta_theorem_C_auto`：自动适用性
+
+---
+
 ## 附录与参考文献
 
 本文的附录（代码实现清单 A.1–A.15、机器证明形式化进展、技术引理）、18 篇参考文献及版本变更记录已移至独立文件 `paper1_appendix.md`。原 §7（RKHS 收敛率、EFT 等价性、Kerr 应用、耗散扩展、纯数学定理 Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）已移至 `paper1_rkhs_and_applications.md`。原 §9（哲学与基础科学意义）已移至 `paper1_philosophy.md`。所有模块均通过单元测试验证，测试脚本位于 `src/test_*.py`。物理应用相关代码见配套论文 II 附录。
@@ -1512,12 +1651,15 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 I（增强版 v2.49），分形谱化理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.40 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。v2.44 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的完整定义与两个核心引理证明；(c) §5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用。v2.45 (a) §1.3 新增跨论文定位段落，阐明 Temp/RG 纤维范畴体系与 $\mathbf{Rec}/\mathbf{Sp}$ 的架构关系（非子范畴，而是上方纤维范畴扩展）；(b) 版本号 v2.44 → v2.45。v2.46 修复工程（RAP v0.1）：表述收敛（停用"全部解决/覆盖所有数学系统"）、显式余伴随构造替代 Freyd 循环（构造 C2.2 / 定理 C2.3）、$\mathrm{Cl}(1,7)\cong M_{16}(\mathbb R)$ 修正、三层伴随状态标注。v2.47 P1 论文层自包含 + 形式化引用：注 C2.3b/2.4.5a 追加形式化验证段（线性语义无限维闭合断言已在 Agda 中机器验证，`SpectralTheory.agda`）；移除对研究笔记的引用，必要内容内嵌（两种语义的分岔裁决、非线性反例、S0 表示静默定义与五层静默定位）。v2.48 S0 表示静默整合：§5.7 升级为五层静默体系（S0 表示层 + S1–S4 动力学/观测层），定义 5.11/注 5.12/定理 5.15 增补 S0，新增 §5.7.9（D-静默度 $S_D$、基数证据、sieve 判定为负、动力学演化刻画、规范语义收益、与 P1 语义分岔关联）。v2.49 P1 形式化引用补充（理论闭合审计）：注 C2.3b/2.4.5a 追加 2026-08-03 补充——谱匹配核心（theorem3/corollary4-∞/Rec-to-σ/intertwine-imp-spectral/corollary5/P1-linear-closure）独立于 `fc-integral` 桥接（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；`fc-integral` 公理（fc(f) = ∫f dE）完整降为可证明定理（唯一剩余登记项为文档化测度论核心逼近桥接，语义由目标模型谱定理保证）。
+《通用不动点范畴框架》系列论文 I（增强版 v2.56），分形谱化理论——建立递归系统（IFS、Koopman 动态、RG 流）的统一谱理论框架。完整变更记录已移至独立文件 `paper1_appendix.md` §版本信息与变更记录。v2.56 将附录 C4 元定理升级为四体制版本——新增算子分解与耦合度分析（$[A_{\text{sa}}, A_{\text{anti}}]$ 作为耦合度量），区分解耦耗散（体制 B1，正规算子，$C=1$）与耦合耗散（体制 B2，非正规算子，$C>1$），纳入退化体制（体制 C，$C \geq C_{\text{crit}}$，辫子瓦解，定理 3.7c）；新增命题 C4.6（拓扑相变 B2→C）和命题 C4.7（耦合度量等价性）；Lean 4 代码重构为四体制版本。v2.55 将 Paper XIX §15 的核心理论深化（M1–M4 态射静默判据、统一静默度、紧致化对应）整合回 §5.7，新增 §5.7.7 态射静默判据与统一静默度、§5.7.8 四层静默与紧致化的对应，使 §5.7 成为四层静默体系的完整理论核心。v2.41 新增 §5.8 范畴转化与闭环的五层结构（5.8.1–5.8.5）、框架普适性声明（摘要 + §1.2 + 推论 5.32），并将 Paper XIX 重新定位为范畴边界突破与双向转化理论。v2.42 推进 Phase 31.1 高阶 ∞-范畴完整形式化：在 Lean 4 中实现六个模块。v2.43 完成六个模块的 Lean 4 编译修复与形式化一致性调整，全部通过 `lake build`，开放问题 20 状态升级为"骨架已实现并通过 Lean 4 编译"。v2.44 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的完整定义与两个核心引理证明；(c) §5.7.6 第 3 项添加指向 Paper XIX §16 方向三的交叉引用。v2.45 (a) §1.3 新增跨论文定位段落，阐明 Temp/RG 纤维范畴体系与 $\mathbf{Rec}/\mathbf{Sp}$ 的架构关系（非子范畴，而是上方纤维范畴扩展）；(b) 版本号 v2.44 → v2.45。v2.46 修复工程（RAP v0.1）：表述收敛（停用"全部解决/覆盖所有数学系统"）、显式余伴随构造替代 Freyd 循环（构造 C2.2 / 定理 C2.3）、$\mathrm{Cl}(1,7)\cong M_{16}(\mathbb R)$ 修正、三层伴随状态标注。v2.47 P1 论文层自包含 + 形式化引用：注 C2.3b/2.4.5a 追加形式化验证段（线性语义无限维闭合断言已在 Agda 中机器验证，`SpectralTheory.agda`）；移除对研究笔记的引用，必要内容内嵌（两种语义的分岔裁决、非线性反例、S0 表示静默定义与五层静默定位）。v2.48 S0 表示静默整合：§5.7 升级为五层静默体系（S0 表示层 + S1–S4 动力学/观测层），定义 5.11/注 5.12/定理 5.15 增补 S0，新增 §5.7.9（D-静默度 $S_D$、基数证据、sieve 判定为负、动力学演化刻画、规范语义收益、与 P1 语义分岔关联）。v2.49 P1 形式化引用补充（理论闭合审计）：注 C2.3b/2.4.5a 追加 2026-08-03 补充——谱匹配核心（theorem3/corollary4-∞/Rec-to-σ/intertwine-imp-spectral/corollary5/P1-linear-closure）独立于 `fc-integral` 桥接（`X-comm-spec-int-general` 由 sup-comm + simple-comm 直接可证）；`fc-integral` 公理（fc(f) = ∫f dE）完整降为可证明定理（唯一剩余登记项为文档化测度论核心逼近桥接，语义由目标模型谱定理保证）。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v2.56 | 2026-08-23 | **元定理四体制扩展**：附录 C4 从双体制升级为四体制版本——新增算子分解与耦合度分析（$A = A_{\text{sa}} + A_{\text{anti}}$，交换子 $[A_{\text{sa}}, A_{\text{anti}}]$ 作为耦合度量），将体制 B 拆分为 B1（解耦耗散，正规算子，$C=1$，辫子对称退化，$k=0$）和 B2（耦合耗散，非正规算子，$C>1$，辫子非平凡，$k\neq 0$），新增体制 C（退化，$C \geq C_{\text{crit}}$，辫子六边形公理失效，退化为分支自然同构，定理 3.7c）；新增命题 C4.4（包含链 A ⊂ B1 ⊂ B2）、命题 C4.5（退化关系）、命题 C4.6（拓扑相变 B2→C，辫子结构瓦解）、命题 C4.7（耦合度量等价性：$[A_{\text{sa}},A_{\text{anti}}]=0 \iff \text{正规} \iff C=1$）；Lean 4 代码 `MetaTheorem.lean` 重构为四体制版本 v3：`meta_theorem_A_self_adjoint`（完整证明）、`meta_theorem_B1_decoupled_dissipative`/`meta_theorem_B2_coupled_dissipative`/`meta_theorem_C_degenerate`（占位符）、`regimeA_in_B1`/`regimeB1_in_B2`（包含链）、`phase_transition_B2_to_C`（相变）、`coupling_measure_equivalence`（耦合度量等价性）；版本号 v2.55 → v2.56 |
+| v2.55 | 2026-08-23 | **元定理双体制扩展**：附录 C4 从单体制（仅自伴 $\mathbf{Rec}_D$）升级为双体制版本——新增定理 C4.1B（耗散体制，引用定理 7.31 和 3.7b），覆盖 $\mathbf{Rec}_{\text{diss}}$：$D_{\text{diss}} \dashv R_{\text{diss}}$ 严格伴随 + 辫子自然同构 $M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$；新增命题 C4.4（$\mathbf{Rec}_D \subset \mathbf{Rec}_{\text{diss}}$ 包含关系）和命题 C4.5（退化关系：辫子→对称辫，$C=1$，$k=0$）；推论 C4.2 拆分为 C4.2A（体制 A，IC）和 C4.2B（体制 B，伪谱扰动界相容）；Lean 4 代码 `MetaTheorem.lean` 重构为双体制版本：`meta_theorem_A_self_adjoint`（体制 A，完整证明）、`meta_theorem_B_dissipative`（体制 B，占位符版本待 Phase 16B）、`recD_in_recDiss`（包含关系）、`meta_degeneration_B_to_A`（退化关系）；体制 B 的辫子幺半结构已在 `Braided.lean` 中形式化（`recBraided`，`braiding_symmetric`）；版本号 v2.54 → v2.55 |
+| v2.54 | 2026-08-23 | **元定理提取与形式化**：新增附录 C4（元定理——Rec/Sp/D 伴随充分性）——从 §2.3–§2.4 和 §3.7 的证明链中提取此前隐含但未显式表述的一般性定理 C4.1，将充分条件 (H1)–(H5) 与结论 (C1)–(C5) 的逻辑依赖关系显式化；推论 C4.2（跨领域保持，引用定理 C3.2）与推论 C4.3（谱等价，引用定理 4.3）；注 C4.1a–C4.1c 记录有限维原型自动适用性、无穷维扩展方向、元定理逻辑角色。Lean 4 形式化在 `MetaTheorem.lean` 中实现：`meta_theorem_rec_sp_d_sufficiency`（主定理）、`meta_corollary_cross_domain`（推论 C4.2）、`meta_corollary_spectral_equivalence`（推论 C4.3）、`meta_theorem_auto_application`（自动适用性），已加入 `UFPFormalization.lean` 统一导入。本元定理不引入新数学内容，价值在于充分性入口统一化与无穷维扩展骨架化；版本号 v2.53 → v2.54 |
 | v2.53 | 2026-08-16 | **LACI 函数族元定义（Paper I 漏项修补）**：§3.6 定义 3.12 后新增**定义 3.12a（LACI 函数族元定义）**——判据内核 = 谱间隙单调递减函数族 $\mathcal{L}_{\mathrm{LACI}}$（严格单调递减且 $g\to0^+$ 时 $F\to+\infty$），S3 判据对族内成员一致成立（$F(g)\ge\tau\iff g\le F^{-1}(\tau)$）；注册三成员：$F_{\text{mt}}=-\log g$（伴生文件 A4，公理定义）、$F_{\text{op}}=1/g$（Paper XXVII §8，操作定义）、$F_{\text{comp}}$（本文件定义 3.11 复合型，间隙项为族内成员）；精确恒等 $F_{\text{mt}}=\ln F_{\text{op}}$；方向辨析——伴生文件定义 7.19 的谱比型 $1-\lambda_2/\lambda_1$ 随间隙递增，**不属于族**（定位为等价判定不变量，非静默判据）；γ 符号复用登记（相对占比/绝对间隙/局部间隙三种量，后补全为四种含同名冲突：定义 7.22 γ≥10 谱间隙充分性指数）；定理 4.7 谱间隙估计 γ_N 加注（相对谱间隙数值估计，非判据族成员）；版本号 v2.52 → v2.53 |
 | v2.52 | 2026-08-07 | **$N_{\text{gen}}=3$ 表述修正（勘误 v0.20 口径统一）**：§1.4（从 Cl(1,7) 到谱唯象体系）中"三代结构 $N_{\text{gen}}=3$ 作为独立输入加入"修正为"由统一 3 定理机器证明（$N_{\text{gen}}=N_{\text{active}}=3$，Paper XXXIII）"；Cl(1,7) 提供单代旋量载体不变。修正痕迹仅保留于勘误文档 v0.20；版本号 v2.51 → v2.52 |
 | v2.51 | 2026-08-04 | **RAP5a RIm_map 闭合（阶段 1 线性语义，勘误 O12）**：注 2.4.5a 形式化状态更新——`RAP5a_explicit_adjunction.lean` 的 `SpImDMor` 限制为线性（Rec）态射层（Rec_lin 分层，谱匹配双射 = 恒等映射），`RIm_map` = 恒等提取（φ.hom），全范畴 sorry 从 4 处降至 3 处；并构造完整伴随 `DIm ⊣ RIm`（`DImAdjRIm`，单位/余单位/三角恒等式机器证明），定理 2.4.5 "概念闭合" 在受限态射层上落地为机器证明。D 不 full 的基数反例（§C2.3 注）保留为全范畴（集合语义）负结果；版本号 v2.50 → v2.51 |

@@ -76,3 +76,4 @@ import UFPFormalization.FiberOrthogonalSkeleton
 import UFPFormalization.MourreSkeleton
 import UFPFormalization.SilenceObservationAllocation
 import UFPFormalization.CliffordSpectralType
+import UFPFormalization.MetaTheorem

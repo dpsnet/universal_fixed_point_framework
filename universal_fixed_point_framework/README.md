@@ -1,6 +1,8 @@
 # 通用不动点范畴框架 / Universal Fixed Point Functorial Framework (UFPF)
 
 > **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.38](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+
+> **命名方案**（2026-08-23 引入）：本框架区分为两个层次——**狭义 UFPF**（UFPF₀）：有界算子 + H1-H5 假设下的四体制元定理（A/B1/B2/C）基础框架，已具备部分严格数学结果，非猜想；**广义 UFPF**（G-UFPF）：包含 N-平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、算子代数推广、Gödel-Koopman 算子对应等全部扩展的猜想体系。狭义 UFPF $\subset$ 广义 UFPF。狭义 UFPF 是广义 UFPF 在强假设下的特例；广义 UFPF 大部分内容尚为猜想，仅有限维具备数值证据。
 >
 > **项目状态**：44 篇论文（Paper I–XLIV，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向，XLIII–XLIV 为跨领域/新理论支线）+ **RAP-Errata v0.38**（勘误基线，与盲登记 1:1 同步，P1–P7 冻结预言数值不变）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
 
