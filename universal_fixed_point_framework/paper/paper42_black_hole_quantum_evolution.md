@@ -1,15 +1,15 @@
-# 通用不动点范畴框架 XLII：黑洞量子演化——霍金谱、Page 曲线与信息保持的谱公理推导
+# 元通用不动点函子范畴框架 XLII：黑洞量子演化——霍金谱、Page 曲线与信息保持的谱公理推导
 
 **版本**：v0.3（2026-08-08）
 **系列**：Phase 61（物理理论补缺推进计划）P1-3
-**形式化**：[`BlackHoleEvolution.lean`](../formal_proof/UFPFormalization/UFPFormalization/BlackHoleEvolution.lean)、[`HawkingSpectrum.lean`](../formal_proof/UFPFormalization/UFPFormalization/HawkingSpectrum.lean)、[`BlackHoleInformation.lean`](../formal_proof/UFPFormalization/UFPFormalization/BlackHoleInformation.lean)、[`BlackHoleDynamics.agda`](../agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda)
+**形式化**：[`BlackHoleEvolution.lean`](../formal_proof/MUFPFormalization/MUFPFormalization/BlackHoleEvolution.lean)、[`HawkingSpectrum.lean`](../formal_proof/MUFPFormalization/MUFPFormalization/HawkingSpectrum.lean)、[`BlackHoleInformation.lean`](../formal_proof/MUFPFormalization/MUFPFormalization/BlackHoleInformation.lean)、[`BlackHoleDynamics.agda`](../agda_formalization/BlackHoleDynamics/BlackHoleDynamics.agda)
 **数值验证**：[`scripts/paperX_hawking_spectrum.py`](../paperX_hawking_spectrum.py)（35/35 检查通过）
 
 ---
 
 ## 摘要
 
-本文从 UFPF 谱公理出发，完整推导黑洞量子演化的动力学链条：霍金辐射谱（§2）、蒸发动力学（§3）、Page 曲线（§4）、视界量子涨落与蒸发终点-反弹衔接（§5）、信息保持（§6）。全部定理在 Lean 4 中机器证明（零 sorry），关键算子代数核心在 Agda 中镜像登记，数值验证 35/35 通过。本方向对应终评缺口 ③"黑洞量子演化"。
+本文从 MUFPF 谱公理出发，完整推导黑洞量子演化的动力学链条：霍金辐射谱（§2）、蒸发动力学（§3）、Page 曲线（§4）、视界量子涨落与蒸发终点-反弹衔接（§5）、信息保持（§6）。全部定理在 Lean 4 中机器证明（零 sorry），关键算子代数核心在 Agda 中镜像登记，数值验证 35/35 通过。本方向对应终评缺口 ③"黑洞量子演化"。
 
 ---
 
@@ -219,10 +219,11 @@ $$dM/dt = -\alpha\, f(a^*)^4/M^2,\qquad dJ/dt = -r_J\,\alpha\, a^* f(a^*)/M.$$
 
 ---
 
-## 版本记录
+**变更记录**：
 
-| 版本 | 日期 | 变更 |
+| 版本 | 日期 | 更新内容 |
 |:--:|:--|:--|
-| v0.1 | 2026-08-04 | 初版。定理 2.1–2.7（霍金谱）、3.1–3.4（蒸发动力学）、4.1–4.7（Page 曲线，含精确熵平衡）、5.1–5.9（视界涨落 + 蒸发终点-反弹衔接）、6.1–6.5（信息保持）；Lean 四模块零 sorry + Agda 镜像；数值 `scripts/paperX_hawking_spectrum.py` 35/35。 |
-| v0.2 | 2026-08-05 | **Kerr 蒸发动力学推广（定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（Schwarzschild 归约 + 转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×、a* 单调递减）；`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；§8 开放项 3 更新（诚实边界：简化超辐射模型）。 |
+| v0.4 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|
 | v0.3 | 2026-08-08 | **Kerr 完整超辐射谱推进（§5.5 定理 5.10 诚实边界 + §8 开放项 3）**：数值求解 Kerr 无质量标量径向方程（Boyer-Lindquist）逐模计算 Z_slm(ω) = |R|²−1——窗口符号判据（Z > 0 ⟺ ω < mΩ_H，a*=0.9、l=m=1 逐点确认）、Schwarzschild 自检（恒吸收）、转动增强（Z_max 随 a* 单调 0.001→0.008）、边界连续、l=m=2 窗口拓宽峰值降低、发射谱超辐射区占 29%（负吸收 × Bose 因子）、角动量提取 dJ/dt > 0 且 dJ/dE = 4.5/M 与简化 R_J·a*/f³ = 8.04/M 同量级（比值 0.56）；`scripts/paperX_kerr_superradiance.py` 8/8 注册 `run_all_tests.py`；诚实边界：s=0 标量模（费米子/引力子需 Teukolsky 推广）登记后续。 |
+| v0.2 | 2026-08-05 | **Kerr 蒸发动力学推广（定理 5.10，§5.5）**：谱温度归约 f(a*) = 2√(1−a*²)/(1+√(1−a*²)) ∈ (0,1]（Schwarzschild 归约 + 转动降温 + 极端冷却）+ 蒸发动力学（超辐射优先辐射角动量，t_evap 延长 1.93×、a* 单调递减）；`scripts/paperX_hawking_kerr.py` 6/6 注册 `run_all_tests.py`；§8 开放项 3 更新（诚实边界：简化超辐射模型）。 |
+| v0.1 | 2026-08-04 | 初版。定理 2.1–2.7（霍金谱）、3.1–3.4（蒸发动力学）、4.1–4.7（Page 曲线，含精确熵平衡）、5.1–5.9（视界涨落 + 蒸发终点-反弹衔接）、6.1–6.5（信息保持）；Lean 四模块零 sorry + Agda 镜像；数值 `scripts/paperX_hawking_spectrum.py` 35/35。 |

@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXII：量子化学纤维精细分解——从 Grothendieck 纤维化到可计算协议
+# 元通用不动点函子范畴框架 XXII：量子化学纤维精细分解——从 Grothendieck 纤维化到可计算协议
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -10,7 +10,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper XV 和 Paper XXI。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper XV 和 Paper XXI。本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **HF**：哈特里-福克方法（Hartree-Fock）
@@ -24,7 +24,7 @@
 - **ML-QM**：机器学习量子化学（Machine Learning Quantum Mechanics）
 - **SOC**：自旋-轨道耦合（Spin-Orbit Coupling）
 - **FC**：弗兰克-康登因子（Franck-Condon Factor）
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Functorial Framework）
 
 自创术语与标准概念对照如下：
 - **纵向剖面纤维**（Longitudinal Section Fiber）：将Grothendieck纤维化从参数化谱族扩展到多方法谱族的新概念
@@ -859,17 +859,10 @@ $$\Delta A_i(T) \leq \|A_i(0)\| \cdot \left(e^{\|G_i\| T} - 1\right) \cdot \frac
 
 ---
 
-## 版本记录
-
-**版本**：v0.7
-
-**日期**：2026-07-26
-
-**状态**：成熟。7层纤维化链构建完成，3个核心定理形式化，7个独立数值实验验证通过，ℓ_corr不变量跨体系交叉验证完成。§10纵向剖面纤维框架完整构建。
-
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v0.8 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 | v0.7 | 2026-07-26 | 纵向剖面纤维扩展。细化§10.1定义10.1（加入观察窗口、谱截面），新增§10.2.1水二聚体实例，新增§10.3纤维等价性与三维纤维化扩展定理，重编号§10.4–§10.7，更新开放问题与摘要。 |
 | v0.6 | 2026-07-25 | 成熟版。全栈交叉验证（7/7）完成，ℓ_corr跨体系验证（H+H₂ 2.6%，水二聚体 2.9%）完成。 |

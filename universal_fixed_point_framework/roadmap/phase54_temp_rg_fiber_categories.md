@@ -115,7 +115,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 ### 4.3 输出产物
 
 - `notes/00_foundations/spectral_Grothendieck_fibration.md` v0.1：Grothendieck 纤维范畴严格形式化笔记
-- `formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean` v1.0：Lean 4 实现（7 节 ~465 行：TempCat/RGCat 范畴定义、𝒯 同构、谱丛总范畴、投影函子、Grothendieck 纤维化 Cartesian lifts、纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$、2-范畴结构）
+- `formal_proof/MUFPFormalization/MUFPFormalization/TempRGFiber.lean` v1.0：Lean 4 实现（7 节 ~465 行：TempCat/RGCat 范畴定义、𝒯 同构、谱丛总范畴、投影函子、Grothendieck 纤维化 Cartesian lifts、纤维保持函子 $\hat{\mathcal{T}}_{\text{Riem}}$、2-范畴结构）
 
 ---
 
@@ -170,7 +170,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 | §5 | 物理实例 I：QCD 禁闭-退禁闭 | 论文 VI/XVII |
 | §6 | 物理实例 II：BCS 超导 | Phase 54A 输出 |
 | §7 | 物理实例 III：Hawking-Page 或流变学 | Phase 54C 输出 |
-| §8 | 架构定位：UFPF 五层体系 | `spectral_architecture_temp_rg.md` |
+| §8 | 架构定位：MUFPF 五层体系 | `spectral_architecture_temp_rg.md` |
 | §9 | 开放问题 | 整合各 Phase 遗留问题 |
 | §A | Lean 4 形式化附录 | Phase 54B 输出 |
 
@@ -203,7 +203,7 @@ BCS 试点  │ A1 态密度计算      │  │ (完成)             │  │ (
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
 | **v0.6** | **2026-07-25** | **Phase 54D 完成**：发现 $paper21\_grothendieck\_fibration\_synthesis.md$ 已存在并覆盖 Temp/RG 框架（§3.1-3.2、§6.1、§8.1-8.3），Phase 54C 结果以 v0.4 增量集成至现有论文；M4 状态从 ❌ 待启动 → ✅ 完成；Phase 54D 状态从 ❌ 待启动 → ✅ 完成 |
-| v0.5 | 2026-07-22 | **Phase 54B B3 Lean 4 实现完成**：`TempRGFiber.lean`（7 节 ~465 行，已导入 `UFPFormalization.lean`）；Phase 54B 状态从 🟡 → ✅ **B1-B4 全部完成**；修正验收标准和输出产物 |
+| v0.5 | 2026-07-22 | **Phase 54B B3 Lean 4 实现完成**：`TempRGFiber.lean`（7 节 ~465 行，已导入 `MUFPFormalization.lean`）；Phase 54B 状态从 🟡 → ✅ **B1-B4 全部完成**；修正验收标准和输出产物 |
 | v0.4 | 2026-07-22 | **Grothendieck 纤维范畴形式化推进**：B1/B2/B4 完成（`spectral_Grothendieck_fibration.md` v0.1：$\pi_T$/$\pi_\mu$ 纤维化证明、$\hat{\mathcal{T}}_{\text{Riem}}$ 纤维保持性、2-函子 $2\hat{\mathcal{T}}_{\text{Riem}}$ 严格化）；Phase 54B 状态从 ❌ 待启动 → 🟡 B1/B2/B4 已完成 |
 | v0.3 | 2026-07-22 | **Q2 升级为 $Z(\omega)$ 统一框架**：旧 $Z_{\text{BCS}}$ 唯象公式替换为 $Z(\omega)=1+\lambda\cdot\omega_E^2/(\omega_E^2+\omega^2)$；Q2 状态从"Al/Sn/Pb/Nb 验证"升级为"5 材料自洽性检验全部通过（`Z_peak_unified.py` 运行验证）"；BCS 整体状态从"Q1-Q3 闭合，Q4 解析形式已建立"升级为"**Q1-Q4 全部闭合**"；同步更新验收标准和 M1 里程碑 |
 | v0.2 | 2026-07-22 | BCS 试点状态更新：Q1-Q3 闭合，Q4 解析形式已建立；Phase 54A 标记为已完成；增加 A5 子任务（Eliashberg 两步方案）；更新验收标准、风险条目、M1 里程碑 |

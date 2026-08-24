@@ -1,10 +1,10 @@
-# 通用不动点范畴框架 XXVII：Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入
+# 元通用不动点函子范畴框架 XXVII：Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.0（2026-07-25）
 
-**摘要**：本文在通用不动点范畴框架下系统建立 Leaver 谱覆盖理论。将 Kerr 黑洞准正态模的三参数空间 $(a,m,\omega)$ 上的三对角矩阵族构造为三参数谱覆盖 $\mathfrak{S}$，证明其纤维化为三重纤维积结构。建立三个方向单值群 $\mathcal{M}_a,\mathcal{M}_m,\mathcal{M}_\omega$ 的交换关系定理，揭示 $a$-$m$ 可交换而 $a$-$\omega$、$m$-$\omega$ 不可交换的根本原因，证明三重单值群具有非平凡群扩张结构并由 2-上循环分类。提出奇异纤维三分定理，将参数空间中的退化点严格分为分支交叉（I 型）、谱静默边界（II 型）和零谱间隙退化（III 型）三类，建立互斥全覆盖的完备分类体系，并建立每类与 QNM 物理现象的精确对应。进一步将理论扩展至电磁扰动（$s=\pm1$），建立电磁谱覆盖 $\mathfrak{S}^{(s=-1)}$ 的数学框架，证明 Teukolsky-Starobinsky 同谱性定理，给出跨自旋奇异纤维分类的推广和局部吸引子捕获指数（Local Attractor Capture Index, LACI）对比框架（§12）。
+**摘要**：本文在元通用不动点函子范畴框架下系统建立 Leaver 谱覆盖理论。将 Kerr 黑洞准正态模的三参数空间 $(a,m,\omega)$ 上的三对角矩阵族构造为三参数谱覆盖 $\mathfrak{S}$，证明其纤维化为三重纤维积结构。建立三个方向单值群 $\mathcal{M}_a,\mathcal{M}_m,\mathcal{M}_\omega$ 的交换关系定理，揭示 $a$-$m$ 可交换而 $a$-$\omega$、$m$-$\omega$ 不可交换的根本原因，证明三重单值群具有非平凡群扩张结构并由 2-上循环分类。提出奇异纤维三分定理，将参数空间中的退化点严格分为分支交叉（I 型）、谱静默边界（II 型）和零谱间隙退化（III 型）三类，建立互斥全覆盖的完备分类体系，并建立每类与 QNM 物理现象的精确对应。进一步将理论扩展至电磁扰动（$s=\pm1$），建立电磁谱覆盖 $\mathfrak{S}^{(s=-1)}$ 的数学框架，证明 Teukolsky-Starobinsky 同谱性定理，给出跨自旋奇异纤维分类的推广和局部吸引子捕获指数（Local Attractor Capture Index, LACI）对比框架（§12）。
 
 ---
 
@@ -85,7 +85,7 @@ $$\mathfrak{S} = \{(a,m,\omega,\lambda) \in \mathbb{C}^4 : \det(M_{a,m}(\omega) 
 
 $$\pi_a: \mathfrak{S} \to \mathbb{C}_a,\quad \pi_m: \mathfrak{S} \to \mathbb{C}_m,\quad \pi_\omega: \mathfrak{S} \to \mathbb{C}_\omega$$
 
-> **注 2.1a（与标准概念的关系）**：$\mathfrak{S}$ 到参数空间 $\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$ 的投影是**分支覆盖（branched covering）**——在分支点（$\partial\det M/\partial\omega = 0$）处纤维退化（特征值简并），不满足局部平凡性。因此 $\mathfrak{S}$ 不是标准意义上的"纤维丛"（fiber bundle）或"层"（sheaf），而是代数几何中标准的**谱覆盖（spectral cover）** 或**谱簇（spectral variety）**（参见 Donagi 1995 关于 Higgs 丛的谱覆盖构造）。UFPF 中的"覆盖"强调参数空间上的分支覆盖结构，"谱"强调特征值集。为简单计，文中仍沿用"谱覆盖"称呼，但在涉及分支点/奇异纤维时需注意其非丛性质。
+> **注 2.1a（与标准概念的关系）**：$\mathfrak{S}$ 到参数空间 $\mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$ 的投影是**分支覆盖（branched covering）**——在分支点（$\partial\det M/\partial\omega = 0$）处纤维退化（特征值简并），不满足局部平凡性。因此 $\mathfrak{S}$ 不是标准意义上的"纤维丛"（fiber bundle）或"层"（sheaf），而是代数几何中标准的**谱覆盖（spectral cover）** 或**谱簇（spectral variety）**（参见 Donagi 1995 关于 Higgs 丛的谱覆盖构造）。MUFPF 中的"覆盖"强调参数空间上的分支覆盖结构，"谱"强调特征值集。为简单计，文中仍沿用"谱覆盖"称呼，但在涉及分支点/奇异纤维时需注意其非丛性质。
 
 以及谱投影 $\pi_\lambda: \mathfrak{S} \to \mathbb{C}_\lambda$，$(a,m,\omega,\lambda) \mapsto \lambda$。底空间为乘积流形 $M = \mathbb{C}_a \times \mathbb{C}_m \times \mathbb{C}_\omega$。对固定参数点 $p = (a,m,\omega)$，纤维 $\pi_\lambda^{-1}(p) = \sigma(M_{a,m}(\omega))$ 为 $N$ 个特征值。物理根条件 $\det M_{a,m}(\omega) = 0$ 等价于 $0 \in \mathfrak{S}_p$。
 
@@ -1086,7 +1086,7 @@ $$\chi(\Sigma) = N\chi(\mathbb{CP}^1) - \sum_{i} (k_i - 1),$$
 
 ### 11.1 八大贡献
 
-**命题 11.1**（八大贡献总结）。本文在通用不动点范畴框架下，建立了 Leaver 谱覆盖理论的完整数学体系，作出以下八大贡献：
+**命题 11.1**（八大贡献总结）。本文在元通用不动点函子范畴框架下，建立了 Leaver 谱覆盖理论的完整数学体系，作出以下八大贡献：
 
 1. **三参数谱覆盖的严格定义**（定义 2.1–2.3）：将 Kerr 黑洞三参数空间 $(a,m,\omega)$ 上的三对角矩阵族构造为三参数谱覆盖 $\mathfrak{S}$，建立三重纤维积结构，给出子谱覆盖族分类和物理根截面 $\Sigma_{\mathrm{QNM}}$ 的几何刻画。
 
@@ -1235,7 +1235,7 @@ $$\varepsilon_N^{(-1)} \sim C \cdot e^{-c^{(-1)} N},\quad c^{(-1)} = \mathrm{Re}
 
 ### 致谢
 
-感谢通用不动点范畴框架项目组全体成员的持续讨论。感谢匿名审稿人对 Paper I §7.11 中谱覆盖定性描述的建议，促成了本文的严格数学展开。数值计算使用了 SciPy（`linear_sum_assignment`）、NumPy 和 SymPy 开源科学计算库。
+感谢元通用不动点函子范畴框架项目组全体成员的持续讨论。感谢匿名审稿人对 Paper I §7.11 中谱覆盖定性描述的建议，促成了本文的严格数学展开。数值计算使用了 SciPy（`linear_sum_assignment`）、NumPy 和 SymPy 开源科学计算库。
 
 ---
 
@@ -1257,12 +1257,20 @@ $$\varepsilon_N^{(-1)} \sim C \cdot e^{-c^{(-1)} N},\quad c^{(-1)} = \mathrm{Re}
 
 [8] L. N. Trefethen and M. Embree, *Spectra and Pseudospectra: The Behavior of Nonnormal Matrices and Operators* (Princeton University Press, Princeton, 2005).
 
-[9] Paper I (UFPF I, RKHS 收敛率与谱覆盖基础).
+[9] Paper I (MUFPF I, RKHS 收敛率与谱覆盖基础).
 
-[10] Paper VIII (UFPF VIII, 黑洞谱动力学).
+[10] Paper VIII (MUFPF VIII, 黑洞谱动力学).
 
-[11] Paper XXVI (UFPF XXVI, 动态谱数值方法).
+[11] Paper XXVI (MUFPF XXVI, 动态谱数值方法).
 
 ---
 
-*本文是通用不动点范畴框架（Universal Fixed Point Framework, UFPF）系列的第 XXVII 篇。数学公式使用 LaTeX 排版，定理编号与正文连续。全文自包含，不引用 notes/ 或 roadmap/ 等内部文档。电磁谱覆盖的数值实施见后续版本，Kerr-Newman 耦合谱覆盖和 Dirac 半整数自旋谱覆盖将分别作为 Paper XXVIII 和 Paper XXIX 独立发表。*
+*本文是元通用不动点函子范畴框架（Universal Fixed Point Framework, MUFPF）系列的第 XXVII 篇。数学公式使用 LaTeX 排版，定理编号与正文连续。全文自包含，不引用 notes/ 或 roadmap/ 等内部文档。电磁谱覆盖的数值实施见后续版本，Kerr-Newman 耦合谱覆盖和 Dirac 半整数自旋谱覆盖将分别作为 Paper XXVIII 和 Paper XXIX 独立发表。*
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

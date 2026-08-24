@@ -27,7 +27,7 @@
 3. **量子相变临界慢化**：量子相变附近的临界慢化与流变硬化同构
 4. **神经网络训练弛豫**（NTK 谱）：神经正切核谱在训练后期的压缩与谱间隙坍缩同构
 
-建立四个主定理（F1-F4），统一图景由主定理 F5（统一函子）给出。所有证明遵循 UFPF 公理层级非反馈原则。
+建立四个主定理（F1-F4），统一图景由主定理 F5（统一函子）给出。所有证明遵循 MUFPF 公理层级非反馈原则。
 
 ---
 
@@ -35,7 +35,7 @@
 
 ### 1.1 核心观察
 
-UFPF Phase 51F 主定理 E3（`notes/spectral_rheo_boundary.md` §6）建立了三类临界现象的统一：
+MUFPF Phase 51F 主定理 E3（`notes/spectral_rheo_boundary.md` §6）建立了三类临界现象的统一：
 
 | 临界现象 | 物理参数 | 谱边界 | 谱流生成元 |
 |:--------|:--------|:------|:---------|
@@ -194,9 +194,9 @@ $$\tau_{\text{QPT}} \propto |g - g_c|^{-1/2} \;\Leftrightarrow\; \eta_{\text{rhe
 
 **关键预测**：若 NTK 谱压缩由 $\mathfrak{so}(1,1)$ Lie 代数支配，则临界指数应为 $-1/2$。
 
-### 5.4 与 UFPF 现有 NTK 工作的衔接
+### 5.4 与 MUFPF 现有 NTK 工作的衔接
 
-UFPF 已有 NTK 谱的初步工作（`src/ntk_fractal_bidirectional.py`）。本节将 NTK 谱压缩纳入跨领域统一图景，为 NTK 工作提供 Lorentz 谱动力学视角。
+MUFPF 已有 NTK 谱的初步工作（`src/ntk_fractal_bidirectional.py`）。本节将 NTK 谱压缩纳入跨领域统一图景，为 NTK 工作提供 Lorentz 谱动力学视角。
 
 ---
 
@@ -369,7 +369,7 @@ PhysCrit 范畴                          ∂Rec_D 边界
 
 ## 12. 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱流方程
 - **Paper VI**：`paper/paper6_fluid_spectral_dynamics.md` — 流体谱动力学（§8 非牛顿流变）

@@ -1,8 +1,8 @@
 # Gödel 算子与谱静默截面：不可判定命题的算子实现
 
-**文档编号**: UFPF-RN-GOPE-001
+**文档编号**: MUFPF-RN-GOPE-001
 **日期**: 2026-08-23
-**框架**: Universal Fixed Point Framework (UFPF)
+**框架**: Meta-Universal Fixed-Point Functorial Framework (MUFPF)
 **状态**: 理论提出阶段
 
 ---
@@ -11,9 +11,9 @@
 
 | 缩写 | 全称 |
 |------|------|
-| UFPF | Universal Fixed Point Framework（全域不动点框架，总称） |
-| 狭义 UFPF | Original UFPF（UFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
-| 广义 UFPF | Generalized UFPF（G-UFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
+| MUFPF | Meta-Universal Fixed-Point Functorial Framework（全域不动点框架，总称） |
+| 狭义 MUFPF | Original MUFPF（MUFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
+| 广义 MUFPF | Generalized MUFPF（G-MUFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
 | PA | Peano Arithmetic（皮亚诺算术） |
 | ZFC | Zermelo-Fraenkel + Choice（策梅洛-弗兰克尔集合论 + 选择公理） |
 | QTM | Quantum Turing Machine（量子图灵机） |
@@ -23,7 +23,7 @@
 
 ## §1 动机
 
-推论 3.4 指出：自洽物理理论必被 UFPF 覆盖，其中 Gödel 不可判定命题对应于自指深度 $N_{\mathrm{self}}$ 处的**谱静默截面**。本文档给出这一对应的严格数学构造——**Gödel 算子**（Gödel Operator），一个具体的线性算子，其谱结构精确地实现了 Gödel 第一不完备性定理。
+推论 3.4 指出：自洽物理理论必被 MUFPF 覆盖，其中 Gödel 不可判定命题对应于自指深度 $N_{\mathrm{self}}$ 处的**谱静默截面**。本文档给出这一对应的严格数学构造——**Gödel 算子**（Gödel Operator），一个具体的线性算子，其谱结构精确地实现了 Gödel 第一不完备性定理。
 
 ---
 
@@ -115,7 +115,7 @@ $$N_{\mathrm{self}}(F) := \min \left\{ N \in \mathbb{N} : T_F^N \text{ 的轨道
 
 ### 3.2 谱静默判据
 
-**定理 3.1**（Gödel 谱静默定理）：在自指深度 $N_{\mathrm{self}}$ 处，Gödel-Koopman 算子 $T_F$ 的谱数据满足 UFPF 的谱静默判据（Definition 5.1, Paper I）：
+**定理 3.1**（Gödel 谱静默定理）：在自指深度 $N_{\mathrm{self}}$ 处，Gödel-Koopman 算子 $T_F$ 的谱数据满足 MUFPF 的谱静默判据（Definition 5.1, Paper I）：
 
 $$\text{在 } N_{\mathrm{self}} \text{ 处，谱间隙 } \Delta_F \text{ 对自身判定静默}$$
 
@@ -129,7 +129,7 @@ $$\text{在 } N_{\mathrm{self}} \text{ 处，谱间隙 } \Delta_F \text{ 对自�
 4. 在 $N = N_{\mathrm{self}}$ 时，轨道足以编码 $G_F$ 的自指结构
 5. 由 Gödel 第一不完备性定理：$F \nvdash G_F$ 且 $F \nvdash \neg G_F$
 6. 因此 $\Delta_F$ 在 $F$ 内不可判定 $\Leftrightarrow$ 谱间隙数据在 $N_{\mathrm{self}}$ 处静默
-7. 由 UFPF 谱静默判据：$D(S_F)$ 存在但谱间隙数据平凡/不可确定 $\Rightarrow$ 谱静默
+7. 由 MUFPF 谱静默判据：$D(S_F)$ 存在但谱间隙数据平凡/不可确定 $\Rightarrow$ 谱静默
 
 $\square$
 
@@ -152,9 +152,9 @@ $$T_{\mathrm{PA}} \delta_n = \begin{cases} \delta_n & \text{若 } n \in \{\ulcor
 
 ---
 
-## §4 与 UFPF 分类的对应
+## §4 与 MUFPF 分类的对应
 
-| Gödel 算子概念 | UFPF 概念 | 对应关系 |
+| Gödel 算子概念 | MUFPF 概念 | 对应关系 |
 |---------------|-----------|---------|
 | 证明搜索步函数 $f_F$ | Rec 对象的 step 映射 | $f_F$ = step |
 | Gödel-Koopman 算子 $T_F$ | Rec 对象的转移算子 | $T_F$ = $T_S$ |
@@ -213,14 +213,14 @@ Cubitt, Perez-Garcia & Wolf (2015) 证明：存在 2D 量子自旋系统，其�
 
 **对应关系**：
 
-| Cubitt 结果 | Gödel 算子 | UFPF |
+| Cubitt 结果 | Gödel 算子 | MUFPF |
 |------------|-----------|------|
 | 2D 自旋哈密顿量 $H$ | Gödel-Koopman 算子 $T_F$ | Rec 转移算子 |
 | 谱间隙 $\Delta E = E_1 - E_0$ | 谱间隙 $\Delta_F = \mathrm{dist}(1, \sigma \setminus \{1\})$ | 谱分类判据 |
 | 间隙不可判定 | $\Delta_F$ 不可判定 | 谱静默 |
 | 等价于停机问题 | Gödel 第一不完备性 | 自指深度 $N_{\mathrm{self}}$ |
 
-**统一结论**：Cubitt 的物理不可判定性和 Gödel 的逻辑不可完备性，在 UFPF 框架中统一为**同一种谱静默现象**——不同表象下的同一个数学结构。
+**统一结论**：Cubitt 的物理不可判定性和 Gödel 的逻辑不可完备性，在 MUFPF 框架中统一为**同一种谱静默现象**——不同表象下的同一个数学结构。
 
 ---
 
@@ -233,13 +233,13 @@ Cubitt, Perez-Garcia & Wolf (2015) 证明：存在 2D 量子自旋系统，其�
 1. $T_F \in \mathrm{Ob}(\mathrm{Rec})$（可递归化）
 2. $D(S_F)$ 存在（谱分解有定义）
 3. 谱间隙 $\Delta_F$ 在 $F$ 内不可判定（Gödel 第一不完备性定理）
-4. $\Rightarrow$ $S_F$ 在自指深度 $N_{\mathrm{self}}$ 处满足 UFPF 谱静默判据
+4. $\Rightarrow$ $S_F$ 在自指深度 $N_{\mathrm{self}}$ 处满足 MUFPF 谱静默判据
 
 ### 推论 G1（Gödel 边界 = 谱静默边界）
 
 $$\text{Gödel 不可判定性} \iff \text{谱静默（在自指深度处）}$$
 
-Gödel 不完备性定理不是 UFPF 框架的"外部限制"，而是框架**内部**谱静默分类的一个具体实例。
+Gödel 不完备性定理不是 MUFPF 框架的"外部限制"，而是框架**内部**谱静默分类的一个具体实例。
 
 ---
 
@@ -256,7 +256,7 @@ Gödel 不完备性定理不是 UFPF 框架的"外部限制"，而是框架**内
 
 ## 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 - Paper I: `paper1_fractal_spectral_derecursion.md`（谱静默 Definition 5.1）
 
 ### 标准文献
@@ -276,8 +276,8 @@ Gödel 不完备性定理不是 UFPF 框架的"外部限制"，而是框架**内
 | v0.1 | 2026-08-23 | 初版创建：Gödel 算子与谱静默截面的严格数学构造 |
 | v0.2 | 2026-08-23 | 引入命名方案（待验证） |
 
-> **命名说明（待验证）**：本文档所述 Gödel-Koopman 算子及其谱静默截面对应属于扩展猜想体系。谱静默判据（Definition 5.1, Paper I）的基础定义属于有界算子 + H1-H5 假设下的四体制基础框架。命名方案（狭义 UFPF / 广义 UFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
+> **命名说明（待验证）**：本文档所述 Gödel-Koopman 算子及其谱静默截面对应属于扩展猜想体系。谱静默判据（Definition 5.1, Paper I）的基础定义属于有界算子 + H1-H5 假设下的四体制基础框架。命名方案（狭义 MUFPF / 广义 MUFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
 
 ---
 
-*本文档为 UFPF 内部研究笔记，不可用于正式论文引用。*
+*本文档为 MUFPF 内部研究笔记，不可用于正式论文引用。*

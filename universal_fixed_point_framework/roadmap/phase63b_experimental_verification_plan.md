@@ -2,7 +2,7 @@
 
 **阶段编号**: Phase 63b-EVP
 **日期**: 2026-08-23
-**框架**: Universal Fixed Point Framework (UFPF)
+**框架**: Meta-Universal Fixed-Point Functorial Framework (MUFPF)
 **状态**: 实验验证规划阶段
 **前置阶段**: Phase 63b（平展统一猜想理论推导大纲）
 **关联文档**: `phase63b_flattening_unification.md`, `flattening_unification_conjecture_2026-08-23.md`
@@ -13,9 +13,9 @@
 
 | 缩写 | 全称 |
 |------|------|
-| UFPF | Universal Fixed Point Framework（全域不动点框架，总称） |
-| 狭义 UFPF | Original UFPF（UFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
-| 广义 UFPF | Generalized UFPF（G-UFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
+| MUFPF | Meta-Universal Fixed-Point Functorial Framework（全域不动点框架，总称） |
+| 狭义 MUFPF | Original MUFPF（MUFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
+| 广义 MUFPF | Generalized MUFPF（G-MUFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
 | Rec | Recursive Category（递归范畴） |
 | Sp | Spectral Category（谱范畴） |
 | D | Decursion Functor（去递归函子） |
@@ -25,7 +25,7 @@
 | GUT | Grand Unified Theory（大统一理论） |
 | SM | Standard Model（标准模型） |
 
-> **命名说明**：本验证计划中，狭义 UFPF（UFPF₀）指有界算子 + H1-H5 假设下的四体制基础框架（已具备严格数学结果）；广义 UFPF（G-UFPF）指包含平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、Gödel-Koopman 算子等全部扩展的猜想体系。本计划的模块 2-4（平展深度、Gödel 算子谱分解）属于广义 UFPF 的数值验证；模块 1 中对四体制元定理（A/B1/B2/C）的 Q 指标修正属于狭义 UFPF 的验证范围。狭义 UFPF 是广义 UFPF 的特例子集。
+> **命名说明**：本验证计划中，狭义 MUFPF（MUFPF₀）指有界算子 + H1-H5 假设下的四体制基础框架（已具备严格数学结果）；广义 MUFPF（G-MUFPF）指包含平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、Gödel-Koopman 算子等全部扩展的猜想体系。本计划的模块 2-4（平展深度、Gödel 算子谱分解）属于广义 MUFPF 的数值验证；模块 1 中对四体制元定理（A/B1/B2/C）的 Q 指标修正属于狭义 MUFPF 的验证范围。狭义 MUFPF 是广义 MUFPF 的特例子集。
 
 ---
 
@@ -46,7 +46,7 @@
 
 ### 1.2 关键发现与异常
 
-**发现 1（推论 3.4 验证通过）**：所有六个自洽理论均被 UFPF 覆盖，包括平庸理论（平凡覆盖）和 Gödel 不可判定系统（谱静默截面）。
+**发现 1（推论 3.4 验证通过）**：所有六个自洽理论均被 MUFPF 覆盖，包括平庸理论（平凡覆盖）和 Gödel 不可判定系统（谱静默截面）。
 
 **发现 2（猜想 3.5 部分验证）**：最优理论 T* 的 $N^*=9$ 落在中层体制，$\rho_{N^*}=0.475$ 接近最优值 0.5，五重性质满足。
 
@@ -392,8 +392,8 @@ theorem flattening_unification_conjecture (S : GeneralRecObj) :
 | 版本 | 日期 | 变更 |
 |------|------|------|
 | v0.1 | 2026-08-23 | 初版创建：基于 T* 最优理论的五模块实验验证计划 |
-| v0.2 | 2026-08-23 | 引入狭义 UFPF（UFPF₀）/ 广义 UFPF（G-UFPF）命名方案，更新缩写回顾表与命名说明 |
+| v0.2 | 2026-08-23 | 引入狭义 MUFPF（MUFPF₀）/ 广义 MUFPF（G-MUFPF）命名方案，更新缩写回顾表与命名说明 |
 
 ---
 
-*本文档为 UFPF 内部路线图文档。正式论文需自包含，仅引用已发表 UFPF 论文和标准学术文献。*
+*本文档为 MUFPF 内部路线图文档。正式论文需自包含，仅引用已发表 MUFPF 论文和标准学术文献。*

@@ -1,6 +1,6 @@
 # Part 8：形式化仓库中的高级范畴结构
 
-> 目标：理解 UFPF 形式化仓库 `UFPFormalization` 中超出论文主线的范畴论构造，包括幺半范畴、对偶、表示桥接与同伦方法。
+> 目标：理解 MUFPF 形式化仓库 `MUFPFormalization` 中超出论文主线的范畴论构造，包括幺半范畴、对偶、表示桥接与同伦方法。
 >
 > **形式化视角**：本章涉及的幺半范畴、对偶、表示范畴、同伦方法等，在 Lean 4 中仍然是类型类层面的“接口扩展”。它们继续验证同一个原则——范畴论只规定结构契约，具体实现由 `Braided.lean`、`SpectralEquivalence.lean` 等文件提供。
 
@@ -20,7 +20,7 @@ $$\beta_{X,Y}: X \otimes Y \to Y \otimes X$$
 
 满足六边形方程。
 
-### UFPF 实例：`Braided.lean`
+### MUFPF 实例：`Braided.lean`
 
 Paper I §2.5 定义 2.11a：$\mathbf{Rec}$ 上定义张量积为状态空间的 Cartesian 积，演化规则为分量乘积：
 
@@ -36,7 +36,7 @@ $$(R_1 \otimes R_2).\text{step}(x, y) = (R_1.\text{step}(x), R_2.\text{step}(y))
 - Pontryagin 对偶：局部紧 Abel 群 ↔ 其对偶群
 - Gelfand 对偶：交换 C*-代数 ↔ 紧致 Hausdorff 空间
 
-### UFPF 实例：`SpectralEquivalence.lean`
+### MUFPF 实例：`SpectralEquivalence.lean`
 
 Paper III §3：递归系统 $R_1, R_2$ 称为谱等价的，若 $D(R_1) \cong D(R_2)$ 在 $\mathbf{Sp}$ 中。形式化中定义：
 
@@ -47,13 +47,13 @@ def spectralEquivalence (R₁ R₂ : RecObj) : Prop :=
 
 并验证其反射性、对称性、传递性。这是**由范畴同构诱导的等价关系**的标准构造。
 
-### UFPF 实例：`GelfandDuality.lean`
+### MUFPF 实例：`GelfandDuality.lean`
 
 Paper XIX 开放问题 #2：$D^{\text{id}}(M) = (\mathcal{H}_M, \Delta_M, \sigma(\Delta_M))$ 与 Gelfand 对偶的对应。
 
 Gelfand 对偶：$C(M) \;\leftrightarrow\; M$（交换 C*-代数 ↔ 紧致 Hausdorff 空间）
 
-UFPF 的 $D^{\text{id}}$：$\mathcal{H}_M \;\leftrightarrow\; \sigma(\Delta_M)$（Hilbert 空间 ↔ Laplace 谱）
+MUFPF 的 $D^{\text{id}}$：$\mathcal{H}_M \;\leftrightarrow\; \sigma(\Delta_M)$（Hilbert 空间 ↔ Laplace 谱）
 
 `GelfandDuality.lean` 将 $D^{\text{id}}$ 定位为 Gelfand 对偶的"谱几何类比"：前者重建拓扑空间，后者重建 Laplace 谱。
 
@@ -63,18 +63,18 @@ UFPF 的 $D^{\text{id}}$：$\mathcal{H}_M \;\leftrightarrow\; \sigma(\Delta_M)$�
 
 **定义 8.6**（几何范畴）。几何对象（如流形、概形、谱三元组）及其保持结构的映射构成范畴。
 
-### UFPF 实例：`CategoryRepBridge.lean`
+### MUFPF 实例：`CategoryRepBridge.lean`
 
-UFPF 框架需要在范畴语言与表示论语言之间建立桥接：
+MUFPF 框架需要在范畴语言与表示论语言之间建立桥接：
 - 递归系统 $R$ 的 Koopman 算子 $U_R$ 是 $\mathcal{S}_R$ 上函数的"表示"
 - 谱化函子 $D$ 将该表示翻译为谱数据
 - 表示论的不可约分解 ↔ 谱范畴中的直和分解
 
-`CategoryRepBridge.lean` 形式化这一桥接，使 UFPF 能够利用表示论工具（特征标、不可约分解）分析递归系统。
+`CategoryRepBridge.lean` 形式化这一桥接，使 MUFPF 能够利用表示论工具（特征标、不可约分解）分析递归系统。
 
-### UFPF 实例：`CategoryGeometry.lean`
+### MUFPF 实例：`CategoryGeometry.lean`
 
-将 UFPF 中的几何对象（紧致流形、Clifford 丛、谱三元组）组织为范畴，建立：
+将 MUFPF 中的几何对象（紧致流形、Clifford 丛、谱三元组）组织为范畴，建立：
 - 几何对象 ↔ 谱对象 的字典
 - 几何态射 ↔ 谱交织条件的对应
 - 曲率、联络、规范场在范畴论中的表达
@@ -87,7 +87,7 @@ UFPF 框架需要在范畴语言与表示论语言之间建立桥接：
 
 **定义 8.8**（谱流）。一族自伴算子 $\{A_t\}_{t \in [0,1]}$ 的谱流是特征值穿过零点时符号变化的总数。
 
-### UFPF 实例：`SpectralFlowHomotopy.lean`
+### MUFPF 实例：`SpectralFlowHomotopy.lean`
 
 Paper V / Paper I §3：谱流方程
 
@@ -109,14 +109,14 @@ map_id : F.map (𝟙 X) = 𝟙 (F.obj X)
 map_comp : F.map (f ≫ g) = F.map f ≫ F.map g
 ```
 
-### UFPF 实例：`PhotonTopologyFunctor.lean` / `PhotonTopologyFunctorLaws.lean`
+### MUFPF 实例：`PhotonTopologyFunctor.lean` / `PhotonTopologyFunctorLaws.lean`
 
 Paper XLIV 将光子拓扑结构构造为函子。形式化中：
 - 定义 `PhotonTopologyFunctor` 的对象映射和态射映射
 - 在 `PhotonTopologyFunctorLaws.lean` 中验证 `map_id` 与 `map_comp`
 - 这是"把物理结构范畴化"的标准流程
 
-### UFPF 实例：`DecursionFunctor.lean`
+### MUFPF 实例：`DecursionFunctor.lean`
 
 "反递归"函子 $D_{\text{dec}}$ 将谱对象映射回递归系统。形式化验证其函子律，是 $D \dashv R$ 伴随构造的组件之一。
 
@@ -134,7 +134,7 @@ Paper XLIV 将光子拓扑结构构造为函子。形式化中：
 
 ### 总览
 
-Part 8 的定位是**形式化仓库的“导览图”**，而非逐行代码教程。它的核心使命是：告诉你 `UFPFormalization` 仓库中有哪些高级范畴文件、它们各自对应哪个数学概念、以及打开哪个文件能找到对应的形式化细节。它**不**负责把每个 Lean 证明逐 tactic 讲解清楚。
+Part 8 的定位是**形式化仓库的“导览图”**，而非逐行代码教程。它的核心使命是：告诉你 `MUFPFormalization` 仓库中有哪些高级范畴文件、它们各自对应哪个数学概念、以及打开哪个文件能找到对应的形式化细节。它**不**负责把每个 Lean 证明逐 tactic 讲解清楚。
 
 读完本讲后，你应当能：
 
@@ -150,11 +150,11 @@ Part 8 的定位是**形式化仓库的“导览图”**，而非逐行代码教
 
 | 文件/主题 | 本讲做到什么程度 | 不在本讲范围内的内容 | 下一步操作 |
 |----------|----------------|-------------------|-----------|
-| `Braided.lean` | 解释幺半/辫子范畴的定义与 UFPF 张量积规则 | 不给出 Lean 代码的完整证明；不验证五边形/六边形方程的所有细节 | 打开仓库中 `Braided.lean`，逐条查看 `map_id` / `map_comp` / 结合约束证明 |
+| `Braided.lean` | 解释幺半/辫子范畴的定义与 MUFPF 张量积规则 | 不给出 Lean 代码的完整证明；不验证五边形/六边形方程的所有细节 | 打开仓库中 `Braided.lean`，逐条查看 `map_id` / `map_comp` / 结合约束证明 |
 | `SpectralEquivalence.lean` | 解释为什么用 `Nonempty (D(R₁) ≅ D(R₂))` 定义谱等价 | 不展开等价关系的 Lean 证明；不比较具体系统的谱 | 在仓库中定位该定义，查看 `Equivalence` 实例 |
 | `GelfandDuality.lean` | 给出 Gelfand 对偶与 $D^{\text{id}}$ 的类比 | 不证明 Gelfand-Naimark 定理；不构造具体 $D^{\text{id}}$ 的伴随 | 阅读 Paper XIX 开放问题 #2 |
 | `CategoryRepBridge.lean` / `CategoryGeometry.lean` | 说明范畴语言与表示论/几何语言的桥接思想 | 不给出具体表示的具体分解；不证明 Koopman 算子的谱定理 | 结合 Part 3/Part 6 的算子理论学习 |
-| `SpectralFlowHomotopy.lean` | 解释谱流、同伦不变性、辫子交叉数的 UFPF 意义 | 不计算具体谱流数值；不证明解析指标定理 | 阅读 Paper V / Paper I §3 |
+| `SpectralFlowHomotopy.lean` | 解释谱流、同伦不变性、辫子交叉数的 MUFPF 意义 | 不计算具体谱流数值；不证明解析指标定理 | 阅读 Paper V / Paper I §3 |
 | `PhotonTopologyFunctor.lean` / `DecursionFunctor.lean` | 说明函子律验证的一般模式 | 不展开每个 Lean 证明的 tactic 细节 | 在仓库中打开对应 `*Laws.lean` 文件跟读 |
 | 表 8.6 中的其他文件 | 列表式速览 | 不保证每个文件都已完整实现；部分为规划/实验性代码 | 以仓库实际文件状态为准 |
 
@@ -166,7 +166,7 @@ Part 8 的定位是**形式化仓库的“导览图”**，而非逐行代码教
 
 ### 仓库成熟度提示
 
-`UFPFormalization` 是一个活跃演进的形式化项目。以下分类可帮助你设定合理预期：
+`MUFPFormalization` 是一个活跃演进的形式化项目。以下分类可帮助你设定合理预期：
 
 - **较成熟**：`Braided.lean`、`SpectralEquivalence.lean`、`PhotonTopologyFunctor.lean` / `*Laws.lean` 等，核心定义与函子律已有对应形式化。
 - **概念/桥接型**：`GelfandDuality.lean`、`CategoryRepBridge.lean`、`CategoryGeometry.lean`，通常给出定义、类型声明与关键引理的骨架，部分深层定理仍以注释/待证明状态存在。
@@ -180,14 +180,14 @@ Part 8 的定位是**形式化仓库的“导览图”**，而非逐行代码教
 
 1. 在 `Braided.lean` 的框架下，验证 $\mathbf{Rec}$ 中两个递归系统张量积的结合约束满足五边形方程。
 2. 解释 `SpectralEquivalence.lean` 中为什么用 `Nonempty (D(R₁) ≅ D(R₂))` 而不是直接定义 `D(R₁) = D(R₂)` 来刻画谱等价。
-3. 比较 Gelfand 对偶与 $D^{\text{id}}$：两者分别"重建"了什么对象？UFPF 的谱几何方法比 Gelfand 对偶少了什么信息？
+3. 比较 Gelfand 对偶与 $D^{\text{id}}$：两者分别"重建"了什么对象？MUFPF 的谱几何方法比 Gelfand 对偶少了什么信息？
 4. 在 `CategoryRepBridge.lean` 的视角下，Koopman 算子 $U_R$ 是哪种代数/群的表示？
 5. 写出验证一个函子律所需的两个等式，并说明 `PhotonTopologyFunctorLaws.lean` 中如何证明它们。
 
 ## 8.9 关键要点
 
-- **幺半范畴/辫子结构**使 UFPF 能够讨论递归系统的组合与交换对称性。
-- **范畴等价/对偶**是 UFPF 与经典数学（Gelfand 对偶、谱等价）建立联系的语言。
+- **幺半范畴/辫子结构**使 MUFPF 能够讨论递归系统的组合与交换对称性。
+- **范畴等价/对偶**是 MUFPF 与经典数学（Gelfand 对偶、谱等价）建立联系的语言。
 - **表示桥接**让 Koopman 算子、谱分解等工具在范畴论下统一。
 - **同伦方法**为谱流、辫子静默、耗散系统提供拓扑不变量。
 - **函子律验证**是形式化工作中最基础、最常见的任务。

@@ -2,7 +2,7 @@
 
 **版本**：v0.3（2026-07-23）
 
-**关联形式化**：温度-标度对偶 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 的 Grothendieck 纤维范畴形式化见 [`TempRGFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)（Phase 54B）。$\partial\mathbf{Rec}_D$ 边界上的谱粘合粘合形式化见 [`WeaveProductFiber.lean`](../../formal_proof/UFPFormalization/UFPFormalization/WeaveProductFiber.lean)（Phase 55C）。
+**关联形式化**：温度-标度对偶 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 的 Grothendieck 纤维范畴形式化见 [`TempRGFiber.lean`](../../formal_proof/MUFPFormalization/MUFPFormalization/TempRGFiber.lean)（Phase 54B）。$\partial\mathbf{Rec}_D$ 边界上的谱粘合粘合形式化见 [`WeaveProductFiber.lean`](../../formal_proof/MUFPFormalization/MUFPFormalization/WeaveProductFiber.lean)（Phase 55C）。
 
 **摘要**：本笔记从谱框架第一性原理出发，**独立于格点 QCD 数值拟合**，推导临界温度公式 $T_c = a \cdot \Lambda_{\text{QCD}}$ 中的比例因子 $a$。核心方法是将温度作为第二谱流参数纳入两参数谱流方程，结合 $\partial\mathbf{Rec}_D$ 边界穿越条件和 Banks-Casher 关系的有限温度推广，从谱生成元的 RG 跑动与热演化的竞争关系导出 $a$ 的解析形式。本笔记探索了 9 条推导路径（§4-§5），发现结果跨越 12 倍（0.247~3.03），无法唯一确定。元分析（§8）指出根因为有限温度谱流的范畴形式化缺失。该形式化已在 [`spectral_T_category.md`](../00_foundations/spectral_T_category.md) 中完成，构造了函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 并确定了 $\gamma = 2$，但发现函子本身不能确定 $a$。$\mathcal{T}$ 筛选后 9 条路径中仅谱织约束路径（D9）保留。推荐值 $a \approx 0.737$（谱织约束 + $m_s$ 修正），与格点 QCD 偏差 0.96%，标注为"经范畴形式化验证的校准值"。
 

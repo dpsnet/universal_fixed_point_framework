@@ -286,7 +286,7 @@ $$\|\Phi(x) - \Phi(y)\| \leq C \cdot \frac{1}{|\ln d_{K^*}(x,y)|}$$
 | 3f | 酉变换保持拟对称性 | ~1 天 | 🔶 理论完备（`frobNormSq_unitary_conj` 已机器证明） |
 
 **3a 进展说明**（2026-07-29；2026-08-04 更新）：
-- `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` 已创建，`lake build` 零错误
+- `formal_proof/MUFPFormalization/MUFPFormalization/ContinuumLimit.lean` 已创建，`lake build` 零错误
 - `S₄` 静默因子定义、`c1_lt_S₄`（c₁ < S₄）已机器证明（`Real.exp_lt_exp.mpr`，自包含）
 - `depthLayering` 定理证明框架已建立（理论论证在 §3 中完成，`LipschitzWith.diam_image_le` 已用）
 - **O9 闭合（2026-08-04）**：审计发现 hDiamLeOne 缺口根因是假命题——原 f₂ 平移固定 1.0 使吸引子直径 = 1/(1−c₃) > 1。修正 `physicalIFS` f₂ 平移为 1−c₃（ratios 不变），`ContinuumLimit.lean §3.5` 机器证明吸引子 ⊆ [0,1] 与 `attractor_diam_le_one`，`exists_attractorAxioms` 完整填充（零 `sorry`）

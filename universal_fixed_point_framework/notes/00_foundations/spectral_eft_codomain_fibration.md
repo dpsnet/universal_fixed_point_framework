@@ -4,7 +4,7 @@
 
 **摘要**：本笔记将有效场论（EFT）的能量标度层级提升为 Grothendieck 纤维范畴。核心结构为余域纤维化（codomain fibration）$\mathbf{cod}: \mathbf{EFT}/\Lambda \to \Lambda$，其中 $\Lambda$ 是能标范畴（对象为 RG 能标，态射为粗粒化流），$\mathbf{EFT}/\Lambda$ 是 $\Lambda$ 上的 slice 范畴（对象为"能标 $\Lambda$ 处的有效场论"）。该构造在教科书层面是标准的——任意带拉回的范畴上的 codomain 函子都是 Grothendieck 纤维化。关键应用是将谱静默四判据 S1-S4 翻译为 Cartesian 态射的存在性条件：哪些 RG 态射在 $\mathbf{EFT}$ 中具有 Cartesian 提升。
 
-**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 Grothendieck 纤维化模板）、[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)（UFPF 五层架构）。
+**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 Grothendieck 纤维化模板）、[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)（MUFPF 五层架构）。
 
 ---
 

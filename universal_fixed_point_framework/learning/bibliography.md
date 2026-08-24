@@ -1,6 +1,6 @@
 # 参考文献与资源
 
-> 本文件为 UFPF 范畴论学习提供经典教材、在线资源和 UFPF 内部论文索引。
+> 本文件为 MUFPF 范畴论学习提供经典教材、在线资源和 MUFPF 内部论文索引。
 
 ## 经典教材
 
@@ -76,7 +76,7 @@
 
 - **Theorem Proving in Lean 4**（https://leanprover.github.io/theorem_proving_in_lean4/）
 
-## UFPF 内部论文索引
+## MUFPF 内部论文索引
 
 ### 基础范畴论
 
@@ -114,38 +114,38 @@
 
 ### 如果想快速理解 $D \dashv R$
 1. Awodey *Category Theory* 第 1-5 章
-2. UFPF Paper I §2
-3. UFPF Paper I 附录引理 A.3
+2. MUFPF Paper I §2
+3. MUFPF Paper I 附录引理 A.3
 
 ### 如果想掌握 Grothendieck 纤维化
 1. Riehl *Category Theory in Context* 第 7 章
 2. Borceux 卷 2 第 8 章
-3. UFPF Paper XXI 全文
+3. MUFPF Paper XXI 全文
 
 ### 如果想学习层论
 1. Mac Lane *Categories for the Working Mathematician* 第 IX 章
 2. Stacks Project 第 6 章
-3. UFPF Paper XVI §10
+3. MUFPF Paper XVI §10
 
 ### 如果想学习 ∞-范畴
 1. Riehl *Elements of ∞-Category Theory* 第 1-3 章
 2. Kerodon 第 1 章
-3. UFPF Paper I 附录 Phase 30.4/31.1
+3. MUFPF Paper I 附录 Phase 30.4/31.1
 
 ### 如果想学习幺半范畴与辫子结构
 1. Kassel, *Quantum Groups*（辫子张量范畴标准参考）
 2. Etingof, Gelaki, Nikshych, Ostrik, *Tensor Categories*
-3. UFPF `Braided.lean`
+3. MUFPF `Braided.lean`
 
 ### 如果想学习 Gelfand 对偶与谱几何
 1. Connes, *Noncommutative Geometry* 第 1-2 章
 2. Gracia-Bondía, Várilly, Figueroa, *Elements of Noncommutative Geometry*
-3. UFPF `GelfandDuality.lean`
+3. MUFPF `GelfandDuality.lean`
 
 ### 如果想学习同伦与谱流
 1. Atiyah, Patodi, Singer, *Spectral Asymmetry and Riemannian Geometry*
 2. Riehl, *Categorical Homotopy Theory*
-3. UFPF `SpectralFlowHomotopy.lean`
+3. MUFPF `SpectralFlowHomotopy.lean`
 
 ## 版本
 

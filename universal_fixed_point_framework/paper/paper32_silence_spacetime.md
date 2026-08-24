@@ -1,20 +1,20 @@
-# 通用不动点范畴框架 XXXII：Cl(1,7) 的谱静默与四维时空涌现——严格机器证明
+# 元通用不动点函子范畴框架 XXXII：Cl(1,7) 的谱静默与四维时空涌现——严格机器证明
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.0（2026-07-29）
 
-**摘要**：本文在 UFPF 框架内，对 **四维时空从 Cl(1,7) Clifford 代数涌现** 的核心机制进行严格的机器证明与结构分析。主要结果包括：（1）**谱静默筛选机制**的量化实现：正交投影为零的谱条件 $P_{V_\Lambda}D(f)=0$ 将 Cl(1,7) 的 8 维空间【2026-08-07 勘误：原"8 维旋量空间"表述错误——Cl(1,7) 旋量标准维数为 16（M₁₆(ℝ)，paper20 权威）；此处"8 维"指底空间 8 个 Clifford 生成元（§6），非旋量维数】分裂为 1 时间维 + 3 可见空间维 + 4 静默内部维；（2）**严格谱静默定理组**（8 个定理，Lean 4 机器证明，`CoherenceToBranching.lean` §9，`lake build` 零错误）：$1+3+4=8$ 分解（`spacetime_dimension_split`）、涌现 Clifford 维数 $m=2n$（`dimension_counting_eq_two_mul`）、**时空维数 = 范畴阶数**（`spacetime_dim_eq_category_order`）、逆方向唯一性 $2n=8\Rightarrow n=4$（`category_order_unique`）、静默维度严格分离（`silence_separation`）及精确裕度 $e^3$（`silence_margin`）、四维鲁棒性（`visible_dimensions_eq_four`、`spacetime_emergence_4d`）；（3）**力程约束的谱解释**：色、弱、电磁三种规范相互作用的力程差异由静默维度的投影保留度唯一决定，两元比值 $c_1/c_2=e^{-3}$、$c_2/c_3\approx 0.067$ 无自由参数；（4）**$\text{Cl}(1,7)$ 几何空间的代数本质**澄清：8 维不是坐标空间，而是 8 个 Clifford 生成元的代数。本文同时附带修复两处预先存在的 Lean 假命题。
+**摘要**：本文在 MUFPF 框架内，对 **四维时空从 Cl(1,7) Clifford 代数涌现** 的核心机制进行严格的机器证明与结构分析。主要结果包括：（1）**谱静默筛选机制**的量化实现：正交投影为零的谱条件 $P_{V_\Lambda}D(f)=0$ 将 Cl(1,7) 的 8 维空间【2026-08-07 勘误：原"8 维旋量空间"表述错误——Cl(1,7) 旋量标准维数为 16（M₁₆(ℝ)，paper20 权威）；此处"8 维"指底空间 8 个 Clifford 生成元（§6），非旋量维数】分裂为 1 时间维 + 3 可见空间维 + 4 静默内部维；（2）**严格谱静默定理组**（8 个定理，Lean 4 机器证明，`CoherenceToBranching.lean` §9，`lake build` 零错误）：$1+3+4=8$ 分解（`spacetime_dimension_split`）、涌现 Clifford 维数 $m=2n$（`dimension_counting_eq_two_mul`）、**时空维数 = 范畴阶数**（`spacetime_dim_eq_category_order`）、逆方向唯一性 $2n=8\Rightarrow n=4$（`category_order_unique`）、静默维度严格分离（`silence_separation`）及精确裕度 $e^3$（`silence_margin`）、四维鲁棒性（`visible_dimensions_eq_four`、`spacetime_emergence_4d`）；（3）**力程约束的谱解释**：色、弱、电磁三种规范相互作用的力程差异由静默维度的投影保留度唯一决定，两元比值 $c_1/c_2=e^{-3}$、$c_2/c_3\approx 0.067$ 无自由参数；（4）**$\text{Cl}(1,7)$ 几何空间的代数本质**澄清：8 维不是坐标空间，而是 8 个 Clifford 生成元的代数。本文同时附带修复两处预先存在的 Lean 假命题。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper XVII（$d_H$、IFS 收缩比）、Paper XXX（$d_H$ 结构分析）。Lean 4 形式化代码位于 `UFPFormalization/CoherenceToBranching.lean`。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper XVII（$d_H$、IFS 收缩比）、Paper XXX（$d_H$ 结构分析）。Lean 4 形式化代码位于 `MUFPFormalization/CoherenceToBranching.lean`。
 
 ---
 
 ## 1. 引言
 
-Clifford 代数 $\text{Cl}(1,7)$ 在 UFPF 框架中扮演核心几何角色：它由 $\mathbf{Sp}$ 4-范畴通过 Bott 塔在 $k_{\max}=8$ 处的截断自然涌现（Paper XXX，§7），其 16 维不可约旋量表示 $S_{16}$【2026-08-07 勘误：原"8 维不可约旋量表示 8_s"错误——标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20 权威）；$8_s$ 为旧遗留说法，此处 8 是 SU(2) 基本表示重数 N(2₁)=8 而非旋量维数】承载单代标准模型费米子（Paper XVII，§3）。然而，"$\text{Cl}(1,7)$ 的 8 维空间如何变为四维物理时空"这一核心问题此前只有定性的谱静默图像（Paper XVII，§4），缺乏严格的机器证明。
+Clifford 代数 $\text{Cl}(1,7)$ 在 MUFPF 框架中扮演核心几何角色：它由 $\mathbf{Sp}$ 4-范畴通过 Bott 塔在 $k_{\max}=8$ 处的截断自然涌现（Paper XXX，§7），其 16 维不可约旋量表示 $S_{16}$【2026-08-07 勘误：原"8 维不可约旋量表示 8_s"错误——标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量 16 维（paper20 权威）；$8_s$ 为旧遗留说法，此处 8 是 SU(2) 基本表示重数 N(2₁)=8 而非旋量维数】承载单代标准模型费米子（Paper XVII，§3）。然而，"$\text{Cl}(1,7)$ 的 8 维空间如何变为四维物理时空"这一核心问题此前只有定性的谱静默图像（Paper XVII，§4），缺乏严格的机器证明。
 
 本文填补这一缺口。核心贡献是将四维时空涌现的直觉升级为 **8 个机器证明的定理**，全部通过 Lean 4 的 `lake build` 验证。这些定理证明：四维时空是 $\mathbf{Sp}$ 严格 4-范畴的层计数在谱权重筛选下的**唯一自洽结果**——不是微调、不是假设、不是近似，而是数学结构本身的推论。
 
@@ -173,10 +173,10 @@ $\text{Cl}(1,7)$ 的 8 维既不是 Euclidean 空间 $\mathbb{R}^8$、也不是�
 
 | 文件 | 路径 | 内容 |
 |:----|:-----|:-----|
-| `CoherenceToBranching.lean` | `UFPFormalization/` | §9 定理组（8 个定理，`lake build` 零错误）|
-| `IFSFractal.lean` | `UFPFormalization/` | §5 物理 3-map IFS（修复后零 `sorry`）|
-| `SpCategory.lean` | `UFPFormalization/` | $\mathbf{Sp}$ 范畴定义 |
-| `HigherSpCategory.lean` | `UFPFormalization/` | 2-态射、3-态射结构 |
+| `CoherenceToBranching.lean` | `MUFPFormalization/` | §9 定理组（8 个定理，`lake build` 零错误）|
+| `IFSFractal.lean` | `MUFPFormalization/` | §5 物理 3-map IFS（修复后零 `sorry`）|
+| `SpCategory.lean` | `MUFPFormalization/` | $\mathbf{Sp}$ 范畴定义 |
+| `HigherSpCategory.lean` | `MUFPFormalization/` | 2-态射、3-态射结构 |
 
 ## 附录 B：数值验证脚本
 
@@ -196,3 +196,11 @@ $\text{Cl}(1,7)$ 的 8 维既不是 Euclidean 空间 $\mathbb{R}^8$、也不是�
 5. `CoherenceToBranching.lean` §9: 严格谱静默定理组
 6. `IFSFractal.lean` §5: 物理 3-map IFS（修复后版本）
 7. Freedman & Van Proeyen 2012, Appendix A: $\text{Cl}(1,7)$ gamma 矩阵构造
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（4 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

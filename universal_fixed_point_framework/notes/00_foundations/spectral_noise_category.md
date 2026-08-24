@@ -632,7 +632,7 @@ $$\frac{d}{d\zeta} A_\zeta = -\zeta \cdot \mathcal{F}[A_\zeta], \quad \mathcal{F
 
 **状态**：
 
-《通用不动点范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v0.9 新增不可数直和推广分析、$\eta$ 谱流实验预言（谱间隙闭合奇异性）与色噪声 $\alpha \leftrightarrow \gamma$ 实验验证方案。
+《元通用不动点函子范畴框架》研究笔记——噪声/随机系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v0.9 新增不可数直和推广分析、$\eta$ 谱流实验预言（谱间隙闭合奇异性）与色噪声 $\alpha \leftrightarrow \gamma$ 实验验证方案。
 
 **变更记录**：
 

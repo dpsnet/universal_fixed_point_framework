@@ -1,7 +1,7 @@
 # ∞-范畴形式化证明发现总结
 
 > 日期：2026-07-21
-> 关联仓库：`UFPFormalization`（Lean 4）
+> 关联仓库：`MUFPFormalization`（Lean 4）
 > 关联论文：Paper I (fractal spectral derecursion), Paper XIX (category extension), Paper V (spectral dynamics)
 
 ---
@@ -410,7 +410,7 @@ Cl(1,7) ≅ M₈(ℝ)【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维
 
 - **Lean 版本**：4.31.0
 - **Mathlib 版本**：通过 lakefile 引入（存在版本兼容性问题）
-- **编译方式**：`lake build UFPFormalization.<Module>`
+- **编译方式**：`lake build MUFPFormalization.<Module>`
 
 ---
 

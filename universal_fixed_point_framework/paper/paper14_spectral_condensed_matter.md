@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XIV：凝聚态物理的谱表述——超导、量子 Hall 与超流
+# 元通用不动点函子范畴框架 XIV：凝聚态物理的谱表述——超导、量子 Hall 与超流
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -587,21 +587,21 @@ star 拓扑的谱间隙-涨落行为揭示谱丛分支点结构的**三重数学
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子。
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱间隙动力学。
-- [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。谱流体动力学公理、N-S 谱流方程。
-- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞谱动力学——视界、信息与对称性破缺》，v1.0。对称性破缺的谱表述。
-- [X ] Paper X：《通用不动点范畴框架 X：谱拓扑不变量——从陈数到谱 Callias 指标定理》，v1.0。谱拓扑不变量的一般理论。
-- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理、量子 Hall 系统的谱分类。
-- [XIII] Paper XIII：《通用不动点范畴框架 XIII：谱对应表——跨领域统一映射》，v2.0。跨领域谱对应表。
-- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。谱纠缠熵（§9.4.7）。
-- [XX] Paper XX：《通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙》，v0.5。SU(2) 范畴涌现（§3.5）、Cl(1,7) Bott 周期（§5-6）。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子。
+- [V] Paper V：《元通用不动点函子范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱间隙动力学。
+- [VI] Paper VI：《元通用不动点函子范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。谱流体动力学公理、N-S 谱流方程。
+- [VIII] Paper VIII：《元通用不动点函子范畴框架 VIII：黑洞谱动力学——视界、信息与对称性破缺》，v1.0。对称性破缺的谱表述。
+- [X ] Paper X：《元通用不动点函子范畴框架 X：谱拓扑不变量——从陈数到谱 Callias 指标定理》，v1.0。谱拓扑不变量的一般理论。
+- [XI] Paper XI：《元通用不动点函子范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理、量子 Hall 系统的谱分类。
+- [XIII] Paper XIII：《元通用不动点函子范畴框架 XIII：谱对应表——跨领域统一映射》，v2.0。跨领域谱对应表。
+- [XII] Paper XII：《元通用不动点函子范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。谱纠缠熵（§9.4.7）。
+- [XX] Paper XX：《元通用不动点函子范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙》，v0.5。SU(2) 范畴涌现（§3.5）、Cl(1,7) Bott 周期（§5-6）。
 - Bardeen, J., Cooper, L.N. & Schrieffer, J.R. (1957). "Theory of Superconductivity." *Phys. Rev.* 108, 1175.
 - Thouless, D.J., Kohmoto, M., Nightingale, M.P. & den Nijs, M. (1982). "Quantized Hall Conductance in a Two-Dimensional Periodic Potential." *Phys. Rev. Lett.* 49, 405. (TKNN)
 - Gross, E.P. (1961). "Structure of a quantized vortex in boson systems." *Nuovo Cim.* 20, 454.
 - Pitaevskii, L.P. (1961). "Vortex lines in an imperfect Bose gas." *Sov. Phys. JETP* 13, 451.
 - Hasan, M.Z. & Kane, C.L. (2010). "Colloquium: Topological insulators." *Rev. Mod. Phys.* 82, 3045.
-- 王斌. 《稳定岛数据的 UFPF 同域谱框架解释——基于 Paper XIV 凝聚态谱表述的独立计算与平行对照》（v2.1，2026-08-16；数据来源：李广好 EDRN 项目稳定岛数据集），`external_data_research/稳定岛数据的UFPF同域谱框架解释.md`。
+- 王斌. 《稳定岛数据的 MUFPF 同域谱框架解释——基于 Paper XIV 凝聚态谱表述的独立计算与平行对照》（v2.1，2026-08-16；数据来源：李广好 EDRN 项目稳定岛数据集），`external_data_research/稳定岛数据的MUFPF同域谱框架解释.md`。
 - [Mg1] Szabó, P., Samuely, P., Kačmarčík, J., Klein, T., Marcus, J., Fruchart, D., Miraglia, S., Marcenat, C. & Jansen, A.G.M. (2001). "Evidence for Two Superconducting Energy Gaps in MgB$_2$ by Point-Contact Spectroscopy." *Phys. Rev. Lett.* 87, 137005. [arXiv:cond-mat/0105598] — 点接触 Andreev 反射：Δ_S=2.8 meV, Δ_L=7.0 meV.
 - [Mg2] Chen, X.K., Konstantinovic, M.J., Irwin, J.C., Lawrie, D.D. & Franck, J.P. (2001). "Evidence for Two Superconducting Gaps in MgB$_2$." *Phys. Rev. Lett.* 87, 157002. [DOI:10.1103/PhysRevLett.87.157002] — Raman 散射：Δ_1=2.7 meV, Δ_2=6.2 meV.
 - [Mg3] Bugoslavsky, Y., Miyoshi, Y., Perkins, G.K., Berenov, A.V., Lockman, Z., MacManus-Driscoll, J.L., Cohen, L.F., Caplin, A.D., Zhai, H.Y., Paranthaman, M.P., Christen, H.M. & Blamire, M. (2002). "Structure of the superconducting gap in MgB$_2$ from point-contact spectroscopy." *Supercond. Sci. Technol.* 15, 526. [DOI:10.1088/0953-2048/15/4/308] — 点接触谱：Δ_1=2.3 meV, Δ_2=6.2 meV.
@@ -617,7 +617,7 @@ star 拓扑的谱间隙-涨落行为揭示谱丛分支点结构的**三重数学
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIV，凝聚态物理的谱表述——超导、量子 Hall 与超流。主要内容：
+《元通用不动点函子范畴框架》系列论文 XIV，凝聚态物理的谱表述——超导、量子 Hall 与超流。主要内容：
 - BCS 超导能隙 $\Delta$ 的谱表述：$\delta_{\text{SC}} = \Delta$，谱对称性破缺（§2）
 - TKNN 公式的谱版本：$\sigma_{xy} = (e^2/h) \cdot \text{Ch}(A_{\text{Hall}})$，陈数绝热不变性（§3.1-3.2）
 - IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$（定理 3.2），噪声范畴 $\mathbf{Noise}$ 第一性原理推导（§3.3-3.4）
@@ -640,3 +640,4 @@ star 拓扑的谱间隙-涨落行为揭示谱丛分支点结构的**三重数学
 | v1.2 | 2026-07-21 | **新增**：预言 5.1 MgB$_2$ 开放数据验证（6 组文献数据，体相直接测量与 √6 偏差仅 -2.9%）；新增参考文献 [Mg1]-[Mg6]；更新可检验性总结表 |
 | v1.1 | 2026-07-21 | **新增**：§5.6 谱框架独有的可检验量子预言（四项），源自 SU(2) Casimir 量化、$k_{\max}=8$ 截断与谱纠缠熵结构；新增参考文献 Paper XII、Paper XX |
 | v1.0 | 2026-07-18 | 初始版本 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

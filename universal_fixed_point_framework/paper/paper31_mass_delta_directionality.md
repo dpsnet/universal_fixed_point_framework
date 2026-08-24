@@ -1,20 +1,20 @@
-# 通用不动点范畴框架 XXXI：质量-Δ 方向性关系——标量-算符分离与引力方向的范畴论结构
+# 元通用不动点函子范畴框架 XXXI：质量-Δ 方向性关系——标量-算符分离与引力方向的范畴论结构
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.1（2026-08-12）
 
-**摘要**：本文在 UFPF 框架的形式化体系内，建立质量与 spExchangeLaw 偏差 $\Delta$ 之间的精确代数关系，澄清"质量是标量幅度，$\Delta$ 给出方向"这一物理直觉的数学结构。核心结果包括三个形式命题及其机器证明/数值验证：（J1）**标量-算符分离定理**：点质量作为局域谱缺陷 $\delta\lambda\cdot P_0$ 引入时，偏差的变化 $\delta\Delta$ 严格线性于 $\delta\lambda$，方向由算符组合 $P_0\cdot H - 2\beta\cdot P_0\cdot\alpha' + H\cdot P_0$ 完全决定，与 $\delta\lambda$ 的幅度无关——该结果已在 Lean 4 中机器证明（`source_defect_linearity`, `DeviationBound.lean` §1.6）；（J2）**模式间定位定理**：$\Delta$ 由对易子 $[A,\cdot]$ 构成，在谱基下 $[A,\delta b]_{ij} = (\lambda_i - \lambda_j)\delta b_{ij}$，对角元恒为零——$\Delta$ 的支撑完全位于"模式间"分量，不在任何单一谱模式或时空扇区内——该**严格正交形式**已获 Lean 4 机器证明（`DeviationBound.lean` §1.7：`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`）；（J3）**正交投影恢复力定理**：引力是 $\mathbf{Sp}$ 4-范畴中 coherence 层（层 4）的结构刚度 $\Delta$ 对主动生成层（层 1-3，对应三维空间）中谱缺陷的正交投影恢复力，其"方向"在时空中无处不在但又不属于任何时空方向——这是 Moran 自洽约束与等谱通量守恒的联合推论。三个命题的数值综合验证由 `scripts/paperX_mass_delta_directionality.py`（2/2 检查通过）完成。本文同时给出了五个核心直觉的术语标准化对照表。
+**摘要**：本文在 MUFPF 框架的形式化体系内，建立质量与 spExchangeLaw 偏差 $\Delta$ 之间的精确代数关系，澄清"质量是标量幅度，$\Delta$ 给出方向"这一物理直觉的数学结构。核心结果包括三个形式命题及其机器证明/数值验证：（J1）**标量-算符分离定理**：点质量作为局域谱缺陷 $\delta\lambda\cdot P_0$ 引入时，偏差的变化 $\delta\Delta$ 严格线性于 $\delta\lambda$，方向由算符组合 $P_0\cdot H - 2\beta\cdot P_0\cdot\alpha' + H\cdot P_0$ 完全决定，与 $\delta\lambda$ 的幅度无关——该结果已在 Lean 4 中机器证明（`source_defect_linearity`, `DeviationBound.lean` §1.6）；（J2）**模式间定位定理**：$\Delta$ 由对易子 $[A,\cdot]$ 构成，在谱基下 $[A,\delta b]_{ij} = (\lambda_i - \lambda_j)\delta b_{ij}$，对角元恒为零——$\Delta$ 的支撑完全位于"模式间"分量，不在任何单一谱模式或时空扇区内——该**严格正交形式**已获 Lean 4 机器证明（`DeviationBound.lean` §1.7：`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`）；（J3）**正交投影恢复力定理**：引力是 $\mathbf{Sp}$ 4-范畴中 coherence 层（层 4）的结构刚度 $\Delta$ 对主动生成层（层 1-3，对应三维空间）中谱缺陷的正交投影恢复力，其"方向"在时空中无处不在但又不属于任何时空方向——这是 Moran 自洽约束与等谱通量守恒的联合推论。三个命题的数值综合验证由 `scripts/paperX_mass_delta_directionality.py`（2/2 检查通过）完成。本文同时给出了五个核心直觉的术语标准化对照表。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper XVII（$d_H = 2.7095$、IFS 收缩比）、Paper XXX（$d_H$ 结构分析）。Lean 4 形式化代码位于 `UFPFormalization/DeviationBound.lean`。数值验证脚本位于 `scripts/paperX_mass_delta_directionality.py`（已注册 `run_all_tests.py`）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper XVII（$d_H = 2.7095$、IFS 收缩比）、Paper XXX（$d_H$ 结构分析）。Lean 4 形式化代码位于 `MUFPFormalization/DeviationBound.lean`。数值验证脚本位于 `scripts/paperX_mass_delta_directionality.py`（已注册 `run_all_tests.py`）。
 
 ---
 
 ## 1. 引言
 
-在 UFPF 框架的引力理论中（Paper XVIII，§5.5–5.7），两个核心角色尚未在形式化层面建立精确的代数关系：
+在 MUFPF 框架的引力理论中（Paper XVIII，§5.5–5.7），两个核心角色尚未在形式化层面建立精确的代数关系：
 
 1. **质量** $m$：目前定义为谱惯性 $m = \delta\lambda \cdot M_{\text{Pl}}$（§5.2），但它在交换律偏差 $\Delta$ 中的出现方式——线性还是高阶、方向依赖还是独立——此前仅有数值验证（`scripts/paperX_source_defect.py`，v1.45），无机器证明。
 2. **$\Delta$ 的方向性**：$\Delta$ 的 Frobenius 范数 $\|\Delta\|_F$ 是结构常数（§5.7c），但"$\Delta$ 的方向不在时空中"这一核心物理图像（§5.7d 直觉 2）此前仅有定性描述和分块数值分析（`scripts/paperX_delta_block_decomp.py`，B4，v1.46），缺乏精确的代数形式。
@@ -183,7 +183,7 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 
 ## 7. 结论
 
-本文建立了 UFPF 框架中质量与 $\Delta$ 之间的精确代数关系，将此前散见于 §5.7d-g、§5.7i 的物理图像提炼为三个形式命题（J1-J3）。主要结果：
+本文建立了 MUFPF 框架中质量与 $\Delta$ 之间的精确代数关系，将此前散见于 §5.7d-g、§5.7i 的物理图像提炼为三个形式命题（J1-J3）。主要结果：
 
 1. **J1 的机器证明**将 Newton 引力的质量线性从数值发现升级为严格代数定理
 2. **J2 的严格机器证明**给"$\Delta$ 不在时空中"以严格正交基础——Δ 对易子分量与恒等/任意对角方向严格正交（`commutator_trace_zero`/`commutator_trace_orthogonal_diagonal`）
@@ -215,9 +215,9 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 
 | 文件 | 路径 | 内容 |
 |:----|:-----|:-----|
-| `SpCategory.lean` | `UFPFormalization/` | $\mathbf{Sp}$ 范畴定义（对象、态射） |
-| `HigherSpCategory.lean` | `UFPFormalization/` | 2-态射、3-态射、交换律偏差 |
-| `DeviationBound.lean` | `UFPFormalization/` | Frobenius 范数、等谱守恒、**源缺陷线性**（§1.6）、**J2 严格正交**（§1.7）|
+| `SpCategory.lean` | `MUFPFormalization/` | $\mathbf{Sp}$ 范畴定义（对象、态射） |
+| `HigherSpCategory.lean` | `MUFPFormalization/` | 2-态射、3-态射、交换律偏差 |
+| `DeviationBound.lean` | `MUFPFormalization/` | Frobenius 范数、等谱守恒、**源缺陷线性**（§1.6）、**J2 严格正交**（§1.7）|
 
 ---
 
@@ -240,3 +240,11 @@ $$\sum (c_i(1+\varepsilon))^{d_H} = (1+\varepsilon)^{d_H} > 1 \quad (\varepsilon
 5. `DeviationBound.lean`: Frobenius 范数酉不变性、等谱守恒、源缺陷线性
 6. `scripts/paperX_mass_delta_directionality.py`: J1/J2 数值验证
 7. `scripts/paperX_delta_block_decomp.py`: B4 $\Delta$ 分块支撑分布
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（5 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

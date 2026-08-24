@@ -113,9 +113,9 @@ def DiagonalProductAdjunction : Diagonal ⊣ ProductFunctor :=
 
 **注意**：上述 `DiagonalProductAdjunction` 的类型签名和 `homEquiv` 的具体实现需要根据 Lean 4 的积范畴类型做调整。这里的代码是概念演示，可能需要根据 Mathlib 的实际接口微调。
 
-## 与 UFPF 的联系
+## 与 MUFPF 的联系
 
-UFPF 中最重要的伴随对是 $D \dashv R$（`Adjunction.lean`）。其构造思路与本案例相同：
+MUFPF 中最重要的伴随对是 $D \dashv R$（`Adjunction.lean`）。其构造思路与本案例相同：
 
 1. 定义两个范畴（$\mathbf{Rec}_D$ 和 $\mathbf{Sp}$）
 2. 定义谱化函子 $D$ 和递归化函子 $R$
@@ -127,4 +127,4 @@ UFPF 中最重要的伴随对是 $D \dashv R$（`Adjunction.lean`）。其构造
 
 1. 在 `Type` 范畴中构造余对角函子与余积函子之间的伴随。
 2. 证明如果 $L \dashv R$ 且 $R$ 是完全忠实的，则单位 $\eta$ 是同构。
-3. 阅读 UFPF `RAP5a_explicit_adjunction.lean`，找出其中 `DIm ⊣ RIm` 的 `homEquiv` 构造。
+3. 阅读 MUFPF `RAP5a_explicit_adjunction.lean`，找出其中 `DIm ⊣ RIm` 的 `homEquiv` 构造。

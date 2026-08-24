@@ -1,10 +1,10 @@
-# §3 从UFPF谱路径积分到Schwinger-Keldysh形式：严格推导
+# §3 从MUFPF谱路径积分到Schwinger-Keldysh形式：严格推导
 
 **推导链**：$Z_{\mathrm{Sp}}[J]\xrightarrow{\S3.2}Z_{\mathrm{CTP}}[J_+,J_-]\xrightarrow{\S3.3}Z_{\mathrm{K}}[J_{\mathrm{cl}},J_{\mathrm{q}}]\xrightarrow{\S3.4}\frac{d}{dt}A_t=[G,A_t]$
 
 ---
 
-## 3.1 UFPF谱框架核心结构
+## 3.1 MUFPF谱框架核心结构
 
 **定义3.1**（谱对象）。$D(R)=(\mathcal{H},A,\sigma(A))$，其中 $A=A^\dagger$ 自伴。
 
@@ -24,7 +24,7 @@ $S_{\mathrm{CTP}}=S[\phi_+]-S[\phi_-]+S_{\mathrm{bdy}}$。**幺正性**：$Z_{\m
 
 **命题3.1**（密度矩阵编码）。$\langle f|\rho(t)|i\rangle=\delta^n Z_{\mathrm{CTP}}/\delta J_+^n\delta J_-^m|_{J=0}$。
 
-**定理3.2**（UFPF-CTP对应）。谱参数$\lambda\leftrightarrow\omega$；谱测度$\mathcal{D}_{\mathrm{Sp}}\Phi\leftrightarrow\mathcal{D}\phi_+\mathcal{D}\phi_-$；谱作用量$S_{\mathrm{Sp}}\leftrightarrow S[\phi_+]-S[\phi_-]$；谱流方程$\leftrightarrow$前进/后退演化。
+**定理3.2**（MUFPF-CTP对应）。谱参数$\lambda\leftrightarrow\omega$；谱测度$\mathcal{D}_{\mathrm{Sp}}\Phi\leftrightarrow\mathcal{D}\phi_+\mathcal{D}\phi_-$；谱作用量$S_{\mathrm{Sp}}\leftrightarrow S[\phi_+]-S[\phi_-]$；谱流方程$\leftrightarrow$前进/后退演化。
 
 ---
 
@@ -58,9 +58,9 @@ $$G^{\mathrm{K}}(x,x')=\frac{1}{i}\langle\{\phi(x),\phi(x')\}\rangle\quad\text{�
 
 **定理3.6**（经典极限 $\hbar\to 0$）。$\coth(\beta\omega/2)\approx 2T/\omega$，路径积分驻相近似给出MSR作用量：$S_{\mathrm{MSR}}=\int[\tilde{\phi}(\hat{O}-\gamma\partial_t)\phi-\frac{i}{2}\gamma T\tilde{\phi}^2]$。
 
-### 核心定理3.7（UFPF-CTP等价性）
+### 核心定理3.7（MUFPF-CTP等价性）
 
-**定理**。SK经典运动方程在$\mathbf{Sp}$中等价于UFPF谱流方程。
+**定理**。SK经典运动方程在$\mathbf{Sp}$中等价于MUFPF谱流方程。
 
 **证明**。
 
@@ -76,13 +76,13 @@ $$G^{\mathrm{K}}(x,x')=\frac{1}{i}\langle\{\phi(x),\phi(x')\}\rangle\quad\text{�
 
 $$\frac{d}{dt}A_t = e^{A_t}\left(\sum_i g_iA_{F,i}\right)e^{-A_t} = \sum_i g_i[A_{F,i},A_t]+\mathcal{O}(\hbar^2) \xrightarrow{\hbar\to 0} \sum_i g_i[A_{F,i},A_t].$$
 
-此即UFPF谱流方程。$\square$
+此即MUFPF谱流方程。$\square$
 
 ---
 
-## 3.5 UFPF-SK完整字典
+## 3.5 MUFPF-SK完整字典
 
-| UFPF $\mathbf{Sp}$ | Schwinger-Keldysh |
+| MUFPF $\mathbf{Sp}$ | Schwinger-Keldysh |
 |:--|:--|
 | 谱对象$(\mathcal{H},A,\sigma(A))$ | CTP被积函数 |
 | 谱参数$\lambda$ | 频率$\omega$ |
@@ -106,7 +106,15 @@ $$\frac{d}{dt}A_t = e^{A_t}\left(\sum_i g_iA_{F,i}\right)e^{-A_t} = \sum_i g_i[A
 4. Glorioso, P. & Liu, H. (2018). arXiv:1805.09331.
 5. Haehl, F. M. et al. (2016). arXiv:1610.01940.
 6. Haehl, F. M. et al. (2017). arXiv:1610.01941.
-7. 王斌 (2026). UFPF Paper V: 谱动力学.
-8. 王斌 (2026). UFPF Paper XI: 谱QFT公理与验证.
+7. 王斌 (2026). MUFPF Paper V: 谱动力学.
+8. 王斌 (2026). MUFPF Paper XI: 谱QFT公理与验证.
 9. Sieberer, L. M. et al. (2016). Rep. Prog. Phys. 79, 096001.
 10. Crossley, M. et al. (2017). JHEP 09, 095.
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

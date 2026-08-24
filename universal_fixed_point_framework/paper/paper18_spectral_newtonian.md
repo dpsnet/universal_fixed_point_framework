@@ -1,17 +1,17 @@
-# 通用不动点范畴框架 XVIII：从谱第一原理推导牛顿力学
+# 元通用不动点函子范畴框架 XVIII：从谱第一原理推导牛顿力学
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.4（2026-08-15）
 
-**摘要**：本文在 UFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Sp}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Sp}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Sp}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Sp}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，基于登记参数基线。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、登记参数基线（Paper XVII 勘误）形成完整的跨领域统一框架。
+**摘要**：本文在 MUFPF 既有框架（Paper I-XVII）基础上，首次从 $\mathbf{Sp}$ 严格 4-范畴的第一原理**独立推导**牛顿力学的核心定律，而非将已知物理定律"翻译"为谱语言。核心贡献：(1) 从 Gaussian 波包截断严格证明惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$，在热力学极限下与经典质量精确一致；(2) 从 $\mathbf{Rec}_D$ 范畴的谱流方程出发，通过 Magnus 展开处理时变生成元，严格导出牛顿第二定律 $F = ma$，消除"恒定力近似"的逻辑跳跃；(3) 从 $\mathbf{Sp}$ 4-范畴的非对象态射层数严格确定空间维度 $d = N_{\text{IFS}} = 3$，时间独立为谱流参数，并从三维通量守恒第一性推导逆平方律；(4) 从谱交织条件 $\epsilon \approx 8.12\times 10^{-17}$ 解释引力弱性，建立 $G_N$ 的谱表达式；(5) 从谱对易子反对称性导出牛顿第三定律，从迹循环性导出能量/动量守恒；(6) 从谱交织非对易性通过 Magnus 展开推导谱惯性量子修正 $\delta m/m_0 = \epsilon^2 \approx 6.6\times 10^{-33}$，全框架最小可预言修正；(7) 从 $\mathbf{Sp}$ 4-范畴结构严格排除低能额外维度 $n = 0$，并推导 Planck 尺度涌现维度 $\Delta d = \epsilon/(2\pi) \cdot E^2/M_{\text{Pl}}^2$；(8) 从谱交织残差推导引力 Planck 尺度修正 $F_{\text{grav}} = G_N m_1 m_2/r^2 (1 + 4\pi\epsilon/3 \cdot (l_{\text{Pl}}/r)^2)$，系数由 $\epsilon$ 第一性确定；(9) 从谱交织条件直接证明弱等效原理 $m_{\text{inertial}} = m_{\text{gravitational}}$。全部推导基于 $\mathbf{Sp}$ 4-范畴的单一数学假设，涉及约 20 个定理/引理，基于登记参数基线。本文将 Newtonian 力学的全部基本定律还原为谱定理的推论，与力统一（Paper V）、黑洞物理（Paper VIII）、QFT 公理（Paper XI）、登记参数基线（Paper XVII 勘误）形成完整的跨领域统一框架。
 
 ---
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper III（谱分类完备性定理）、Paper V（谱流方程 $\frac{d}{dt}A_t = [G, A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）、Paper XVII（静默因子、IFS 收缩比、$d_H = 2.7095$）。本文使用自然单位制 $\hbar = c = 1$，但保留 $\hbar$ 在关键公式中以显示量纲。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Framework）
 - **IFS**：迭代函数系统（Iterated Function System）
 - **QFT**：量子场论（Quantum Field Theory）
 - **SM**：标准模型（Standard Model）
@@ -29,7 +29,7 @@
 
 ### 1.1 从翻译到推导
 
-UFPF 框架的 Paper V 完成了"翻译阶段"——将已知力定律改写成谱流方程的形式。具体地，力被重新诠释为 $\mathbf{Sp}$ 范畴中谱流的生成元，统一公式为：
+MUFPF 框架的 Paper V 完成了"翻译阶段"——将已知力定律改写成谱流方程的形式。具体地，力被重新诠释为 $\mathbf{Sp}$ 范畴中谱流的生成元，统一公式为：
 
 $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
@@ -619,9 +619,9 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 | 10 | $\beta = 4\pi\epsilon/3$ | 谱交织残差横向传播 | 谱交织 + 通量守恒 |
 | 11 | $m_{\text{inertial}} = m_{\text{grav}}$ | 谱交织条件 迹 | $A_{\text{GR}} \cdot T = T \cdot A_{\text{SM}}$ |
 
-### 12.2 与 UFPF 框架的统一
+### 12.2 与 MUFPF 框架的统一
 
-本文的推导链与 UFPF 系列论文形成完整闭环：
+本文的推导链与 MUFPF 系列论文形成完整闭环：
 
 - **Paper V**（力谱动力学）：翻译阶段 → 本文：推导阶段
 - **Paper VIII**（黑洞谱）：$\partial\mathbf{Rec}_D$ 视界 → 本文 §4：谱边界几何
@@ -658,14 +658,14 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 ## 参考文献
 
-[1] UFPF Paper I: 分形谱化函子与谱对应定理.
-[2] UFPF Paper II: 谱分类的物理应用.
-[3] UFPF Paper III: 谱分类完备性定理.
-[4] UFPF Paper V: 力的谱动力学——从谱分类到力的统一描述.
-[5] UFPF Paper VIII: 黑洞熵的谱动力学推导.
-[6] UFPF Paper XI: 谱量子场论公理系统.
-[7] UFPF Paper XVI: Lorentz 变换的谱动力学解读.
-[8] UFPF Paper XVII: 从严格 4-范畴登记参数基线（见 RAP_勘误与立场声明.md）. 原称"零参数预测"已修正.
+[1] MUFPF Paper I: 分形谱化函子与谱对应定理.
+[2] MUFPF Paper II: 谱分类的物理应用.
+[3] MUFPF Paper III: 谱分类完备性定理.
+[4] MUFPF Paper V: 力的谱动力学——从谱分类到力的统一描述.
+[5] MUFPF Paper VIII: 黑洞熵的谱动力学推导.
+[6] MUFPF Paper XI: 谱量子场论公理系统.
+[7] MUFPF Paper XVI: Lorentz 变换的谱动力学解读.
+[8] MUFPF Paper XVII: 从严格 4-范畴登记参数基线（见 RAP_勘误与立场声明.md）. 原称"零参数预测"已修正.
 [9] Magnus, W. (1954). On the exponential solution of differential equations for a linear operator. *Comm. Pure Appl. Math.*, 7:649–673.
 [10] Eöt-Wash Collaboration (2020). Constraints on Yukawa-type deviations from Newtonian gravity. *Phys. Rev. D*, 101:042001.
 [11] MICROSCOPE Collaboration (2022). MICROSCOPE mission: final results of the test of the equivalence principle. *Phys. Rev. Lett.*, 129:121102.
@@ -678,7 +678,7 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XVIII（初始版 v1.0），从谱第一原理推导牛顿力学。主要内容：
+《元通用不动点函子范畴框架》系列论文 XVIII（初始版 v1.0），从谱第一原理推导牛顿力学。主要内容：
 - 惯性质量的谱起源 $m = \hbar / \Delta\lambda_{\text{min}}$（主定理 1）
 - 牛顿第二定律 $F = ma$ 的第一性推导（主定理 2）
 - 三维空间 $d = N_{\text{IFS}} = 3$ 的范畴论证明（主定理 3）
@@ -701,3 +701,4 @@ $$\text{Tr}(A_{\text{GR}} \cdot T) = \text{Tr}(T \cdot A_{\text{SM}})$$
 | v1.2 | 2026-07-27 | RAP v0.1 修正：替换"零参数预测"为"登记参数基线"并标注 Paper XVII 勘误；删除 Moran 方程"自洽性"表述 |
 | v1.1 | 2026-07-19 | 开放问题 4（ε 更深层起源）标记为已解决，补充 Cl(1,7) 第一性原理推导；移除研究笔记引用，替换为自包含推导内容 |
 | v1.0 | 2026-07-19 | 初始版本：从谱动力学第一原理推导牛顿力学 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（3 处替换）|

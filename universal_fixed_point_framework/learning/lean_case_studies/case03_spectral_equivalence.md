@@ -1,6 +1,6 @@
 # Lean 4 实战案例 3：复现 SpectralEquivalence.lean 的核心定理
 
-> 本案例带领读者阅读并复现 UFPF 形式化仓库中 `SpectralEquivalence.lean` 的核心思想：由范畴同构诱导的等价关系。
+> 本案例带领读者阅读并复现 MUFPF 形式化仓库中 `SpectralEquivalence.lean` 的核心思想：由范畴同构诱导的等价关系。
 
 ## 学习目标
 
@@ -14,14 +14,14 @@
 在 `SpectralEquivalence.lean` 中，谱等价定义为：
 
 ```lean
-import UFPFormalization.RecCategory
-import UFPFormalization.SpCategory
-import UFPFormalization.DecursionFunctor
-import UFPFormalization.SpectralCorrespondence
-import UFPFormalization.IsolationConstraints
+import MUFPFormalization.RecCategory
+import MUFPFormalization.SpCategory
+import MUFPFormalization.DecursionFunctor
+import MUFPFormalization.SpectralCorrespondence
+import MUFPFormalization.IsolationConstraints
 import Mathlib.CategoryTheory.EqToHom
 
-namespace UFPFormalization
+namespace MUFPFormalization
 
 open CategoryTheory
 
@@ -98,7 +98,7 @@ theorem isoEquiv_trans {X Y Z : C}
   ⟨h₁.some.trans h₂.some⟩
 ```
 
-## 与 UFPF 的联系
+## 与 MUFPF 的联系
 
 `SpectralEquivalence.lean` 的核心思想是：
 
@@ -110,5 +110,5 @@ theorem isoEquiv_trans {X Y Z : C}
 
 1. 证明 `isoEquiv` 满足等价关系的完整定义（即构造 `Equivalence` 实例）。
 2. 在 `Type` 范畴中，证明 `isoEquiv` 等价于存在双射。
-3. 阅读 UFPF `Braided.lean`，找出其中由辫子结构诱导的等价关系，并与 `spectralEquivalence` 比较。
+3. 阅读 MUFPF `Braided.lean`，找出其中由辫子结构诱导的等价关系，并与 `spectralEquivalence` 比较。
 4. 思考：如果 $D$ 不是完全忠实的，`spectralEquivalence` 是否仍然是"好"的等价概念？

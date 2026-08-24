@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一
+# 元通用不动点函子范畴框架 IV：从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -8,7 +8,7 @@
 
 ---
 
-**术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `UFPFormalization`。记号与定义沿用 Paper I，谱分类定理引用 Paper III。
+**术语说明**：本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `MUFPFormalization`。记号与定义沿用 Paper I，谱分类定理引用 Paper III。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **BPS**：Bogomol'nyi-Prasad-Sommerfield（BPS）黑洞
@@ -137,7 +137,7 @@ $$C(g_s) = \frac{1}{\sqrt{2}\,\sqrt{1 - 1/(8g_s^2)}}\qquad (g_s > 1/(2\sqrt{2}) 
 
 ### 3.4 形式化验证（Lean 4）
 
-引理 3.1 的 IC 条件验证已在 Lean 4 中完成形式化，代码位于 `formal_proof/UFPFormalization/ICVerification.lean`。该模块提供了五组物理领域的 IC 验证定理：
+引理 3.1 的 IC 条件验证已在 Lean 4 中完成形式化，代码位于 `formal_proof/MUFPFormalization/ICVerification.lean`。该模块提供了五组物理领域的 IC 验证定理：
 
 | 领域对 | 验证定理 | 状态 |
 |--------|----------|------|
@@ -358,9 +358,9 @@ $$
 
 ## 参考文献
 
-- [1] Paper I：《通用不动点范畴框架 I：分形谱化理论》
-- [2] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》
-- [3] Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》
+- [1] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》
+- [2] Paper II：《元通用不动点函子范畴框架 II：物理应用与实验验证》
+- [3] Paper III：《元通用不动点函子范畴框架 III：谱化函子的谱分类完备性定理》
 - [4] Sen, A. (1995). "Black hole entropy and the string theory stretched horizon." *arXiv:9504147*.
 - [5] Strominger, A. & Vafa, C. (1996). "Microscopic origin of the Bekenstein-Hawking entropy." *arXiv:9601029*.
 ### 弦论黑洞熵
@@ -387,7 +387,7 @@ $$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 IV，从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一，含 15 篇参考文献。主要内容：
+《元通用不动点函子范畴框架》系列论文 IV，从 Stretched Horizon 到 D-brane——谱化函子对黑洞熵微观推导的统一，含 15 篇参考文献。主要内容：
 - 两套方案的 Rec → Sp 显式三步构造（离散化 → Koopman 矩阵 → 谱维数极限推导熵公式）
 - IC 验证与谱等价性（定理 3.1-3.3）
 - 熵的函子不变性约束 $C(g_s)$
@@ -400,3 +400,4 @@ $$
 |------|------|----------|
 | v1.0 | 2026-07-16 | 初始版本 |
 | v1.1 | 2026-07-16 | §2 重写：Rec → Sp 三步构造 + 消除循环论证；§3.3 新增熵的函子不变性 + 参数约束；§3.4 新增形式化验证；§4 扩展为 4 节 × 4 子节（~180 行新增）；定理编号标准化（去掉字母后缀） |
+| v1.2 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

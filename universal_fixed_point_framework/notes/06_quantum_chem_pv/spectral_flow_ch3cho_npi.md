@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXIII：CH₃CHO n→π* 跃迁的谱流第一性原理推导
+# 元通用不动点函子范畴框架 XXIII：CH₃CHO n→π* 跃迁的谱流第一性原理推导
 
 > **作者**: 王斌 | **版本**: v0.3 (2026-07-25)
 
@@ -16,7 +16,7 @@
 
 CH₃CHO（乙醛）的 n→π* 跃迁——氧孤对电子（n 轨道）到羰基反键轨道（π* 轨道）的激发——是光谱学中研究最充分的跃迁之一，气相实验值为 4.1 eV [1]。传统上，该跃迁需通过量子化学计算（TDDFT、EOM-CCSD、CASSCF 等）来预测，精度取决于基组和方法。
 
-谱框架（UFPF）声称量子化学是其纤维化结构的一种实例。然而，此前对 CH₃CHO 的处理——无论是 3-轨道 EHT 模型（6.4 eV，56% 偏差）还是 PySCF TDHF/6-31G* 调用（3.985 eV，2.8% 偏差）——都未能从谱框架内部出发进行推导。EHT 是半经验近似，TDHF 是外部多体微扰方法，两者都不是谱流方程的直接求解。
+谱框架（MUFPF）声称量子化学是其纤维化结构的一种实例。然而，此前对 CH₃CHO 的处理——无论是 3-轨道 EHT 模型（6.4 eV，56% 偏差）还是 PySCF TDHF/6-31G* 调用（3.985 eV，2.8% 偏差）——都未能从谱框架内部出发进行推导。EHT 是半经验近似，TDHF 是外部多体微扰方法，两者都不是谱流方程的直接求解。
 
 本文填补这一空白。
 
@@ -512,21 +512,21 @@ $$\mu^*_{\text{spec}} = \frac{\alpha \cdot L}{1 + \alpha \cdot L}, \quad \alpha 
 
 [2] Robin, M. B. *Higher Excited States of Polyatomic Molecules*, Vol. II, Academic Press, 1975. (C=O π→π* 跃迁范围 5.0-6.0 eV)
 
-[3] Paper V: Universal Fixed Point Framework V — 谱流方程与谱间隙动力学
+[3] Paper V: Meta-Universal Fixed-Point Functorial Framework V — 谱流方程与谱间隙动力学
 
-[4] Paper VI: Universal Fixed Point Framework VI — 谱间隙动力学与力的谱流
+[4] Paper VI: Meta-Universal Fixed-Point Functorial Framework VI — 谱间隙动力学与力的谱流
 
-[5] Paper VIII: Universal Fixed Point Framework VIII — 谱响应理论
+[5] Paper VIII: Meta-Universal Fixed-Point Functorial Framework VIII — 谱响应理论
 
-[6] Paper XV: Universal Fixed Point Framework XV — 量子化学的谱表述
+[6] Paper XV: Meta-Universal Fixed-Point Functorial Framework XV — 量子化学的谱表述
 
-[7] Paper XXI: Universal Fixed Point Framework XXI — Grothendieck 纤维化综合
+[7] Paper XXI: Meta-Universal Fixed-Point Functorial Framework XXI — Grothendieck 纤维化综合
 
-[8] Paper XXII: Universal Fixed Point Framework XXII — 量子化学精细纤维拆分
+[8] Paper XXII: Meta-Universal Fixed-Point Functorial Framework XXII — 量子化学精细纤维拆分
 
-[9] Paper XXIV-A: Universal Fixed Point Framework XXIV-A — Bun(Corr) 闭式定理在连续谱中的推广：强耦合超导 μ* 的谱框架第一性原理推导
+[9] Paper XXIV-A: Meta-Universal Fixed-Point Functorial Framework XXIV-A — Bun(Corr) 闭式定理在连续谱中的推广：强耦合超导 μ* 的谱框架第一性原理推导
 
-[10] Paper XXIV-B: Universal Fixed Point Framework XXIV-B — H+H₂ 谱键刚性第一性原理推导：3-中心 Hückel 模型的经验参数消除
+[10] Paper XXIV-B: Meta-Universal Fixed-Point Functorial Framework XXIV-B — H+H₂ 谱键刚性第一性原理推导：3-中心 Hückel 模型的经验参数消除
 
 ---
 

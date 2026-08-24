@@ -457,7 +457,7 @@ structure T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
     ext; simp
 ```
 
-**注**：Lean 4 的完整实现位于 `formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean`，已通过 `lake build`（无 sorry）。此处仅给出定义框架的签名，证明细节和辅助引理在正式实现文件中展开。
+**注**：Lean 4 的完整实现位于 `formal_proof/MUFPFormalization/MUFPFormalization/TempRGFiber.lean`，已通过 `lake build`（无 sorry）。此处仅给出定义框架的签名，证明细节和辅助引理在正式实现文件中展开。
 
 ---
 

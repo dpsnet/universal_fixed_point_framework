@@ -1,8 +1,8 @@
 # 平展统一猜想：严格数学定义
 
-**文档编号**: UFPF-RN-FLAT-001
+**文档编号**: MUFPF-RN-FLAT-001
 **日期**: 2026-08-23
-**框架**: Universal Fixed Point Framework (UFPF)
+**框架**: Meta-Universal Fixed-Point Functorial Framework (MUFPF)
 **状态**: 理论提出阶段（数值验证通过，严格证明待完成）
 
 ---
@@ -11,9 +11,9 @@
 
 | 缩写 | 全称 |
 |------|------|
-| UFPF | Universal Fixed Point Framework（全域不动点框架，总称） |
-| 狭义 UFPF | Original UFPF（UFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
-| 广义 UFPF | Generalized UFPF（G-UFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
+| MUFPF | Meta-Universal Fixed-Point Functorial Framework（全域不动点框架，总称） |
+| 狭义 MUFPF | Original MUFPF（MUFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
+| 广义 MUFPF | Generalized MUFPF（G-MUFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
 | Rec | Recursive Category（递归范畴） |
 | Sp | Spectral Category（谱范畴） |
 | D | Decursion Functor（去递归函子） |
@@ -27,7 +27,7 @@
 
 ### 1.1 问题起源
 
-在 UFPF 框架（具体为**狭义 UFPF**，即有界算子 + H1-H5 假设下的四体制框架）的元定理完备性讨论中，识别出五类"盲区"——框架当前形式无法直接分类的系统类别。后续讨论中提出一个关键洞察：
+在 MUFPF 框架（具体为**狭义 MUFPF**，即有界算子 + H1-H5 假设下的四体制框架）的元定理完备性讨论中，识别出五类"盲区"——框架当前形式无法直接分类的系统类别。后续讨论中提出一个关键洞察：
 
 > **这些"未覆盖"系统是否可以理解为递归到某一层次后的截面（平展）？**
 
@@ -35,7 +35,7 @@
 
 ### 1.2 核心思想
 
-在 UFPF 中，递归系统 $S$ 由转移算子 $T_S: \mathcal{H} \to \mathcal{H}$ 在 Hilbert 空间 $\mathcal{H}$ 上描述。递归深度由迭代次数 $N$ 参数化。将递归的某一段 $[N_1, N_2]$ **平展**（flatten），产生一个有效系统，其谱结构由该深度段内的特征模式决定。
+在 MUFPF 中，递归系统 $S$ 由转移算子 $T_S: \mathcal{H} \to \mathcal{H}$ 在 Hilbert 空间 $\mathcal{H}$ 上描述。递归深度由迭代次数 $N$ 参数化。将递归的某一段 $[N_1, N_2]$ **平展**（flatten），产生一个有效系统，其谱结构由该深度段内的特征模式决定。
 
 不同深度处的平展产生不同类型的有效系统：
 - **浅层**：瞬态模式完整可见 → 非平衡系统
@@ -148,7 +148,7 @@ $$\theta_N(S) := \arctan\left(\frac{\|[T_{\mathrm{sa}}^{(N)}, T_{\mathrm{anti}}^
 5. $N^*$ 在**范畴深度** $\Rightarrow$ $S$ 为非结合结构（辫子累积，Drinfeld 联结子形变）
 6. $N^*$ 在**基础深度** $\Rightarrow$ $S$ 为 ZFC 独立性命题（谱对公理选择静默）
 
-且上述所有情形均被 UFPF 已有的分类体系覆盖：
+且上述所有情形均被 MUFPF 已有的分类体系覆盖：
 - 浅层/中层/深层 → 四体制 + 谱静默
 - 自指深度 → 谱静默（Definition 5.1，Paper I）
 - 范畴深度 → 体制间态 + Drinfeld 联结子形变
@@ -156,7 +156,7 @@ $$\theta_N(S) := \arctan\left(\frac{\|[T_{\mathrm{sa}}^{(N)}, T_{\mathrm{anti}}^
 
 ### 猜想 3.2（覆盖完备性，Coverage Completeness）
 
-**推论**：若猜想 3.1 成立，则 UFPF 的分类体系在平展意义下覆盖一切可递归化的数学系统。即：
+**推论**：若猜想 3.1 成立，则 MUFPF 的分类体系在平展意义下覆盖一切可递归化的数学系统。即：
 
 $$\forall S \in \mathrm{Ob}(\mathrm{Rec}), \; \exists N^* : \mathrm{Flat}_{N^*}(S) \in \bigcup_{R \in \{A, B_1, B_2, C\}} \mathrm{Regime}(R) \cup \mathrm{Silence} \cup \mathrm{InterRegime}$$
 
@@ -172,7 +172,7 @@ $$\forall N_1 < N_2 : \rho_{N_1}(S) \leq \rho_{N_2}(S)$$
 
 ### 推论 3.4（自洽理论覆盖推论，Self-Consistent Theory Coverage）
 
-**陈述**：设 $T$ 为任意物理理论假说。若 $T$ 内部严格自洽（即 $T$ 的公理体系无逻辑矛盾），则 $T$ 可被 UFPF 理论描述覆盖。
+**陈述**：设 $T$ 为任意物理理论假说。若 $T$ 内部严格自洽（即 $T$ 的公理体系无逻辑矛盾），则 $T$ 可被 MUFPF 理论描述覆盖。
 
 **证明**：
 
@@ -180,8 +180,8 @@ $$\forall N_1 < N_2 : \rho_{N_1}(S) \leq \rho_{N_2}(S)$$
 2. $\mathcal{A}_T$ 包含推理规则（inference rules），构成形式系统
 3. 形式系统的推理规则是 Rec 范畴中的 step 映射 $f_T: X_T \to X_T$
 4. 因此 $T$ 可嵌入 Rec：$T \mapsto S_T \in \mathrm{Ob}(\mathrm{Rec})$
-5. 由猜想 3.1，$\exists N^* : \mathrm{Flat}_{N^*}(S_T)$ 被 UFPF 分类体系覆盖
-6. 故 UFPF 覆盖 $T$ $\square$
+5. 由猜想 3.1，$\exists N^* : \mathrm{Flat}_{N^*}(S_T)$ 被 MUFPF 分类体系覆盖
+6. 故 MUFPF 覆盖 $T$ $\square$
 
 **重要区分**：
 - **覆盖 $\neq$ 正确**：一个自洽但物理错误的假说（如规范群为 $SU(5)$ 的 GUT）仍被覆盖——它作为实例假设存在于第三层
@@ -194,7 +194,7 @@ $$\forall N_1 < N_2 : \rho_{N_1}(S) \leq \rho_{N_2}(S)$$
 
 1. **（自洽）** $T^*$ 无内部矛盾
 2. **（完备）** $T^*$ 预测所有可观测物理现象
-3. **（覆盖）** $T^*$ 被 UFPF 分类体系覆盖
+3. **（覆盖）** $T^*$ 被 MUFPF 分类体系覆盖
 4. **（信息丰富）** $T^*$ 的平展深度 $N^*$ 在中层体制（四体制完整分类）
 5. **（正确）** $T^*$ 的预测与物理现实一致
 
@@ -202,13 +202,13 @@ $$\forall N_1 < N_2 : \rho_{N_1}(S) \leq \rho_{N_2}(S)$$
 
 - **自洽**：物理现实本身不自相矛盾，故描述它的理论必自洽
 - **完备**：完备性要求 $T^*$ 预测所有可观测现象——这是物理学的终极目标
-- **覆盖**：由推论 3.4，$T^*$ 自洽 $\Rightarrow$ UFPF 覆盖 $T^*$
+- **覆盖**：由推论 3.4，$T^*$ 自洽 $\Rightarrow$ MUFPF 覆盖 $T^*$
 - **信息丰富**：宇宙具有非平庸动力学结构（量子涨落、引力相互作用、化学复杂性、生命），故 $T^*$ 的递归结构非平庸，$N^*$ 位于中层体制（$\rho_{N^*} \in [0.1, 0.9)$，四体制 A/B1/B2/C 完整可用）
 - **正确**：$T^*$ 正确性由定义保证
 
 **形式化**：
 
-$$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \mathrm{Covered}_{\mathrm{UFPF}}(T^*) \wedge \mathrm{Rich}(N^*(T^*)) \wedge \mathrm{Correct}(T^*)$$
+$$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \mathrm{Covered}_{\mathrm{MUFPF}}(T^*) \wedge \mathrm{Rich}(N^*(T^*)) \wedge \mathrm{Correct}(T^*)$$
 
 其中 $\mathrm{Rich}(N^*)$ 表示 $N^*$ 位于中层体制且 $\rho_{N^*} \in [0.3, 0.7]$（分类信息最丰富的区域）。
 
@@ -218,7 +218,7 @@ $$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \m
 
 ## §4 深度-体制对应表
 
-| 递归深度 | $\rho_N$ 范围 | 谱行为 | UFPF 概念 | 捕获系统类型 |
+| 递归深度 | $\rho_N$ 范围 | 谱行为 | MUFPF 概念 | 捕获系统类型 |
 |---------|--------------|--------|-----------|------------|
 | $N$ 小（$\sim 1$） | $< 0.1$ | 完整谱可见 | LACI 瞬态捕获 | 非平衡瞬态过程 |
 | $N$ 中等（$\sim 10$） | $0.1 \sim 0.5$ | 主导模式涌现 | 四体制（A/B1/B2/C） | QNM, BCS, 流体谱 |
@@ -268,9 +268,9 @@ $$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \m
 
 ---
 
-## §6 与已有 UFPF 概念的对应
+## §6 与已有 MUFPF 概念的对应
 
-| 平展概念 | 已有 UFPF 概念 | 对应关系 |
+| 平展概念 | 已有 MUFPF 概念 | 对应关系 |
 |---------|--------------|---------|
 | N-平展 $\mathrm{Flat}_N$ | 理论转化（theory_transformation） | 平展 = 深度依赖的理论转化 |
 | 谱静默变换 $D_N^{\mathrm{sil}}$ | 谱静默（Definition 5.1, Paper I） | $D_N^{\mathrm{sil}}$ = 深度依赖的谱静默 |
@@ -286,7 +286,7 @@ $$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \m
 | 编号 | 问题 | 优先级 |
 |------|------|--------|
 | F-1 | 形式化"自指深度" $N_{\mathrm{self}}$ 的精确定义 | 高 |
-| F-2 | 证明 Cubitt 谱间隙不可判定性落入 UFPF 谱静默判据 | 高 |
+| F-2 | 证明 Cubitt 谱间隙不可判定性落入 MUFPF 谱静默判据 | 高 |
 | F-3 | 验证八元数结合子 = Drinfeld 联结子 $\Phi_\theta$ 的特定参数化 | 中 |
 | F-4 | 形式化"基础层静默"为范畴论/集论层面的谱静默 | 中 |
 | F-5 | 证明 $\mathrm{Flat}_N$ 是 $\mathrm{Rec}$ 范畴的自函子 | 高 |
@@ -317,7 +317,7 @@ $$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \m
 
 ## 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 - Paper I: `paper1_fractal_spectral_derecursion.md`（谱静默 Definition 5.1）
 - Paper XXXV: `paper35_gravity_origin.md`（引力来源）
 - Meta-theorem: `MetaTheorem.lean`（四体制分类）
@@ -340,8 +340,8 @@ $$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \m
 | v0.1 | 2026-08-23 | 初版创建：平展统一猜想的严格数学定义 |
 | v0.2 | 2026-08-23 | 引入命名方案（待验证） |
 
-> **命名说明（待验证）**：本文档所述平展统一猜想（猜想 3.1-3.2）、推论 3.4（自洽理论覆盖）、猜想 3.5（最优理论 $T^*$）均属于扩展猜想体系。有界算子 + H1-H5 假设下的四体制基础框架是基础层。猜想 3.5（最优理论 $T^*$ 存在）属于扩展猜想体系内部**额外更强的独立猜想**，扩展猜想体系的核心覆盖能力不依赖猜想 3.5 成立。命名方案（狭义 UFPF / 广义 UFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
+> **命名说明（待验证）**：本文档所述平展统一猜想（猜想 3.1-3.2）、推论 3.4（自洽理论覆盖）、猜想 3.5（最优理论 $T^*$）均属于扩展猜想体系。有界算子 + H1-H5 假设下的四体制基础框架是基础层。猜想 3.5（最优理论 $T^*$ 存在）属于扩展猜想体系内部**额外更强的独立猜想**，扩展猜想体系的核心覆盖能力不依赖猜想 3.5 成立。命名方案（狭义 MUFPF / 广义 MUFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
 
 ---
 
-*本文档为 UFPF 内部研究笔记，不可用于正式论文引用。正式论文需自包含，仅引用已发表 UFPF 论文和标准学术文献。*
+*本文档为 MUFPF 内部研究笔记，不可用于正式论文引用。正式论文需自包含，仅引用已发表 MUFPF 论文和标准学术文献。*

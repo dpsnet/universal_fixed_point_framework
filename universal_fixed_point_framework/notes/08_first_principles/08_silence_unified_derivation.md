@@ -10,7 +10,7 @@
 
 ## 1. 背景与现状基线
 
-四层静默（Four-Layer Silence）是 UFPF 框架的理论根基：高阶层态射的贡献被权重 S_k 压制，统一解释质量层级、混合角、维度涌现、宇宙学常数等跨域现象。
+四层静默（Four-Layer Silence）是 MUFPF 框架的理论根基：高阶层态射的贡献被权重 S_k 压制，统一解释质量层级、混合角、维度涌现、宇宙学常数等跨域现象。
 
 **已机器证明的根基事实**（本轮全部复用，零冲突）：
 - **定理 R1**：递归压制率构成几何级数 S_k = s^k（范畴复合 k+l 步 = k 步 ⊗ l 步 ⇒ 半群同态 (ℕ,+)→(ℝ⁺,×) ⇒ Cauchy 函数方程唯一解族；Lean `CoherenceToBranching.lean §10 suppression_geometric`）

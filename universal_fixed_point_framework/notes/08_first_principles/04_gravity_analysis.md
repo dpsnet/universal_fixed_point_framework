@@ -60,7 +60,7 @@ $$G_N = \frac{c}{\hbar} (\Delta\lambda_{\min}^{(\text{GR})})^2$$
 | **标度比率** $M_{\text{Pl}}/M_{\text{SM}}$ | $O(1)$ | 自由参数（$M_{\text{Pl}}$ 和 $M_{\text{SM}}$ 无关联） | 若 $M_{\text{SM}} \notin (10^2, 10^4)$ GeV → 证伪（$M_{\text{SM}} \sim \epsilon \cdot M_{\text{Pl}}$ 给出 $10^3$ GeV）| ✅ 与 Higgs VEV 一致 |
 | **耦合比率** $\alpha_{\text{Gravity}}/\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ | $\approx 1$ | 两个无关的自由参数 | 若 $\alpha_{\text{SU(2)}}(M_{\text{Pl}})$ 被精确测定且 $\neq \alpha_{\text{Gravity}} \pm 20\%$ → 证伪 | ⏳ 需 Planck 标度实验 |
 
-**关键区别**：GR+SM 对这组比率不做任何预测——它们是"自由的"。而 UFPF 框架预测它们固定——任何一个被实验否定即证伪整个框架。`scripts/paperX_falsifiable_predictions.py` 已注册 `run_all_tests.py`。
+**关键区别**：GR+SM 对这组比率不做任何预测——它们是"自由的"。而 MUFPF 框架预测它们固定——任何一个被实验否定即证伪整个框架。`scripts/paperX_falsifiable_predictions.py` 已注册 `run_all_tests.py`。
 
 ### 5.5 引力作为范畴 coherence 条件（2026-07-28 新增，⚠️ 假说层级）
 
@@ -430,7 +430,7 @@ $\|\Delta\|_F$ 是常数弹性模量，但**空间（3 个主动层）可以在�
 └──────────────────────────────────────────────┘
 ```
 
-| 弹性力学 | 广义相对论 | UFPF |
+| 弹性力学 | 广义相对论 | MUFPF |
 |:---|---:|---:|
 | 杨氏模量 $E$ | 无对应 | $\|\Delta\|_F \approx 0.040$ |
 | 介质 | 度规 $g_{\mu\nu}$ | 3 个主动态的投影 |
@@ -477,12 +477,12 @@ LIGO 检测到的引力波信号 $\delta g_{\text{active}}(x,t)$ 是**空间介�
 
 ```
 固体物理: 原子离散结构 → 声子（集体激发）  无须量子化弹性模量
-UFPF:     范畴离散层 → 空间涌现 + 引力波   无须量子化 Δ（结构常数）
+MUFPF:     范畴离散层 → 空间涌现 + 引力波   无须量子化 Δ（结构常数）
 ```
 
 **区分预测**：
 
-| 问题 | GR + 量子引力 | UFPF |
+| 问题 | GR + 量子引力 | MUFPF |
 |:---|---:|---:|
 | 引力子是否作为**基本粒子**存在？ | 是（自旋-2 量子） | **否**（引力波是集体激发） |
 | 引力子是否作为**等效准粒子**存在？ | 不区分 | ✅ 是（低能极限，详见 §5.7f） |
@@ -508,7 +508,7 @@ UFPF:     范畴离散层 → 空间涌现 + 引力波   无须量子化 Δ（�
 
 "等效场"表述使 §5.7e 的声子类比严格化：
 
-| 层次 | 固体物理 | UFPF 框架 |
+| 层次 | 固体物理 | MUFPF 框架 |
 |:---|:---|:---|
 | 离散基础 | 原子格点（量子力学描述） | $\mathbf{Sp}$ 4-范畴 + $\Delta$（结构常数） |
 | 连续极限 | 弹性介质（连续场论） | 涌现时空度规 $g_{\mu\nu}(x,t)$ |
@@ -526,9 +526,9 @@ UFPF:     范畴离散层 → 空间涌现 + 引力波   无须量子化 Δ（�
 - **低能区**（$E \ll M_{\text{Pl}}$）：引力可微扰量子化为 EFT，有良好定义的量子修正
 - **高能区**（$E \sim M_{\text{Pl}}$）：EFT 失效，需要 UV 完备理论
 
-UFPF 的独特贡献在于**指明 UV 完备理论的性质**：
+MUFPF 的独特贡献在于**指明 UV 完备理论的性质**：
 
-| 问题 | 弦论 / 圈量子引力 | UFPF |
+| 问题 | 弦论 / 圈量子引力 | MUFPF |
 |:---|:---|:---|
 | UV 完备理论是什么？ | 另一个量子理论 | 离散范畴结构（非量子理论） |
 | 引力子的最终地位 | 基本粒子或弦激发 | **等效准粒子**（低能涌现） |
@@ -687,7 +687,7 @@ $$\Delta \approx [A_{\text{GR}}, \delta\beta]\cdot g(A_{\text{GR}}) + f(A_{\text
 | 理论 | 极化数 | 模式 |
 |:---|:---:|:---|
 | GR | 2 | +, × |
-| **UFPF（本论证）** | **2** | +, ×（无呼吸、无矢量） |
+| **MUFPF（本论证）** | **2** | +, ×（无呼吸、无矢量） |
 | 标量-张量 | 3 | +, ×, 呼吸 |
 | 有质量引力 | 5 | +, ×, 矢量×2, 呼吸 |
 
@@ -718,7 +718,7 @@ $$\Delta \approx [A_{\text{GR}}, \delta\beta]\cdot g(A_{\text{GR}}) + f(A_{\text
 
 本节将 §5.7d-g 及 §5.7i 中散布的关于质量与 Δ 方向性关系的直觉图像提炼为标准化术语和形式命题。
 
-**命题 J1（标量-算符分离）**。在 UFPF 框架中，质量 $m$ 与交换律偏差 $\Delta$ 的角色满足：
+**命题 J1（标量-算符分离）**。在 MUFPF 框架中，质量 $m$ 与交换律偏差 $\Delta$ 的角色满足：
 
 - **质量**是谱缺陷的**标量幅度**：$m = \delta\lambda \cdot M_{\text{Pl}}$，其中 $\delta\lambda$ 是谱间隙移动量（§5.2，§5.7i ① 环）
 - **$\Delta$** 是范畴结构刚度的**算符方向**：$\Delta = X\!\cdot\!A\!\cdot\!H - 2\beta\!\cdot\!h\!\cdot\!Y\!\cdot\!A\!\cdot\!\alpha'\!h + H\!\cdot\!Z\!\cdot\!A$，其 Frobenius 范数 $\|\Delta\|_F$ 是结构常数（§5.7c）
@@ -828,7 +828,7 @@ $$\vec{F}_{\text{real}} = (0, 0, 0, F_w)$$
 
 #### 5.7k.6 Lean 形式化状态
 
-"向外推"的核心代数命题已在 Lean 中形式化，详见 [CoherenceToBranching.lean §11](file:///d:\trae-work\hyper-resolution\universal_fixed_point_framework\formal_proof\UFPFormalization\UFPFormalization\CoherenceToBranching.lean#L675-L723)：
+"向外推"的核心代数命题已在 Lean 中形式化，详见 [CoherenceToBranching.lean §11](file:///d:\trae-work\hyper-resolution\universal_fixed_point_framework\formal_proof\MUFPFormalization\MUFPFormalization\CoherenceToBranching.lean#L675-L723)：
 
 - **维数间隙定理** (`dimension_gap`)：`Real.log (15 : ℝ) < (3 : ℝ)`——由 `DHStructural.inequality_chain_pure_math` 的纯数学链 `ln 15 < 65/24 < e < 3` 经传递性得证，不依赖唯象拟合
 - **向外推定理** (`outward_proof_maps_to_orthogonal_layer`)：合取维数间隙与静默分离裕度 `S₄/c₁ = e³`，将"向下推"（静默→四维时空涌现）与"向外推"（维数间隙→正交层结构）统一为同一范畴自洽性的两种视角

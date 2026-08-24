@@ -499,7 +499,7 @@ $$\|[A_F, A_t]\|_{\text{HS}} \propto \frac{1}{r^2}$$
 | 假设 2：dim(Hom(A,A)) = 4 | 引理 3.1 + 定理 3.1 | IFS 映射数 = 非对象态射层数 = 3 → 空间维度 3 | 严格 4-范畴定义 |
 | 假设 3：时间维度 = 1 | 命题 3.2 | 时间 = 谱流参数 ≠ 1-态射空间元素 | 谱流方程公理 |
 
-**零外部输入验证**：唯一的外部输入是 $\mathbf{Sp}$ 是严格 4-范畴这一基本设定，这与整个 UFPF 框架的单一假设一致。
+**零外部输入验证**：唯一的外部输入是 $\mathbf{Sp}$ 是严格 4-范畴这一基本设定，这与整个 MUFPF 框架的单一假设一致。
 
 **开放问题**（已升级）：
 1. **$d_H = \ln(3 \times 5)$ 的严格证明**：从 $\mathbf{Sp}$ 4-范畴的 coherence 定理出发，结合 Moran 方程，证明 $d_H = \ln(N_{\text{IFS}} \times (n+1))$ 其中 $n=4$。当前为数值精度 0.05% 的推测性关系（见 §3.8）。
@@ -545,7 +545,7 @@ $$d_H = \ln\left(N_{\text{IFS}} \cdot (n+1)\right) + \mathcal{O}(\epsilon)$$
 
 ### 3.9 Lean 4 形式化验证（2026-07-27，DHStructuralAnalysis.lean）
 
-$d_H$ 的不等式链与 Moran 条件定理已在 Lean 4 + Mathlib 中完成形式化，文件 `formal_proof/UFPFormalization/UFPFormalization/DHStructuralAnalysis.lean`，**全部证明通过 `lake build` 编译验证（零错误零警告，无 `sorry`）**。
+$d_H$ 的不等式链与 Moran 条件定理已在 Lean 4 + Mathlib 中完成形式化，文件 `formal_proof/MUFPFormalization/MUFPFormalization/DHStructuralAnalysis.lean`，**全部证明通过 `lake build` 编译验证（零错误零警告，无 `sorry`）**。
 
 **已机器验证的定理**（严格区分纯数学结果与唯象代入）：
 

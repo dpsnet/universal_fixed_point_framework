@@ -54,7 +54,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 | 候选 | 升级方向 | 来源 |
 |:----|:--------|:-----|
 | **时空谱对象丛 $\mathcal{E} \to M$** | 层/stack 化：基为 $\mathrm{Open}(M)$，切触条件 = descent/粘合公理；广义协变原理 = 层粘合公理；Schwarzschild 三区域表 = 基空间 stratification | `paper16_lorentz_spectral_dynamics.md` §10.1-10.4；`spectral_lorentz_curved_spacetime.md` §2-5 |
-| **$(G, \eta, T, \mu, \ldots)$ 总参数丛** | 所有已做与候选纤维化的公共基空间；UFPF 五层架构的统一收口 | `spectral_architecture_temp_rg.md` §5；`paper19_category_extension.md` §13、§17.4 |
+| **$(G, \eta, T, \mu, \ldots)$ 总参数丛** | 所有已做与候选纤维化的公共基空间；MUFPF 五层架构的统一收口 | `spectral_architecture_temp_rg.md` §5；`paper19_category_extension.md` §13、§17.4 |
 
 ### 2.5 独立新定理方向
 
@@ -129,7 +129,7 @@ $$\text{基空间上的谱族} = \text{Grothendieck 纤维化}, \qquad \text{物
 
 ## 4. 与已完成工作的工具复用
 
-[`TempRGFiber.lean`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean) 已验证的公共基础设施：
+[`TempRGFiber.lean`](file:///d:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/MUFPFormalization/TempRGFiber.lean) 已验证的公共基础设施：
 
 | Lean 组件 | 复用场景 |
 |:----------|:--------|

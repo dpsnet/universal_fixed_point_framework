@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXIV-A：Bun(Corr) 闭式定理在连续谱中的推广——强耦合超导 μ* 的谱框架第一性原理推导
+# 元通用不动点函子范畴框架 XXIV-A：Bun(Corr) 闭式定理在连续谱中的推广——强耦合超导 μ* 的谱框架第一性原理推导
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -12,7 +12,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXIII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXIII。本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **BCS**：巴丁-库珀-施里弗理论（Bardeen-Cooper-Schrieffer theory）
@@ -29,7 +29,7 @@
 - **Hg**：汞（Mercury）
 - **Nb**：铌（Niobium）
 - **MgB₂**：二硼化镁（Magnesium Diboride）
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Functorial Framework）
 
 自创术语与标准概念对照如下：
 - **Bun(Corr)闭式定理**（Bun(Corr) closed-form theorem）：谱框架中关联修正层的闭式关联定理
@@ -52,7 +52,7 @@ $$\mu^* = \frac{\mu}{1 + \mu \cdot \ln(\varepsilon_F/\omega_D)}$$
 
 其中 $\mu$ 为裸库仑相互作用。然而，$\mu$ 本身是材料依赖的未知参数，因此 $\mu^*$ 在实际使用中被当作经验拟合参数（典型值 0.10-0.15）。
 
-谱框架（UFPF）在 Paper XXIII 中建立了 Bun(Corr) 闭式定理——分子体系中电子关联修正由谱间隙压制因子的平方给出。本文将该定理从离散分子谱推广到连续超导谱。
+谱框架（MUFPF）在 Paper XXIII 中建立了 Bun(Corr) 闭式定理——分子体系中电子关联修正由谱间隙压制因子的平方给出。本文将该定理从离散分子谱推广到连续超导谱。
 
 ### 1.2 核心思想
 
@@ -439,16 +439,9 @@ $^\dagger$ MgB$_2$ 的 $a_{\text{exp}}$ 取 σ-带主导的隧道谱测量值。
 
 ---
 
-## 版本记录
-
-**版本**：v1.3
-
-**日期**：2026-07-25
-
-**状态**：成熟。所有定理已证明，六类材料数值验证通过（Al/Sn/Pb <1%，Nb/Hg <0.1%，MgB₂ 5.7%）。多带修正和相对论修正集成完成。
-
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v1.4 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 | v1.3 | 2026-07-25 | 成熟版。多带修正（Nb d-轨道，D₀⁽ᵈ⁾/D₀=1.600）和相对论修正（Hg Z_eff=7.62）集成完成，6材料全覆盖验证。 |

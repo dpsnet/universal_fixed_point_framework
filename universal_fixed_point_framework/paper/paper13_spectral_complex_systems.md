@@ -1,10 +1,10 @@
-# 通用不动点范畴框架 XIII：跨领域谱对应——复杂系统的谱表述
+# 元通用不动点函子范畴框架 XIII：跨领域谱对应——复杂系统的谱表述
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.0（2026-07-18）
 
-**摘要**：本文在通用不动点范畴框架下，将谱动力学方法系统推广到三类复杂系统——深度神经网络、生态网络和经济系统。对每一类系统，建立从经典动力学方程到 $\mathbf{Sp}$ 范畴中谱流方程的翻译法则，揭示其谱结构的内在统一性。核心结果包括：(1) 神经正切核 (NTK) 的谱分解表明，无限宽极限下神经网络训练动力学退化为谱流方程 $dA_t/dt = [A_{\text{NTK}}, A_t]$ 的特殊退化形式 $du_k/dt = -\lambda_k u_k$，有限宽修正对应特征学习的谱动力学；(2) Lotka-Volterra 竞争方程被翻译为生态谱流方程 $dA_{\text{eco}}/dt = [A_{\text{growth}} - A_{\text{comp}} \circ e^{-A_{\text{eco}}}, A_{\text{eco}}]$，May 稳定性-多样性悖论等价于竞争谱生成元谱半径的临界条件 $\rho(A_{\text{comp}}) > 1$；(3) 市场动力学被表述为含价格粘性和随机涨落的谱流方程 $dA_{\text{mkt}}/dt = [A_{\text{demand}} - A_{\text{supply}}, A_{\text{mkt}}] + \epsilon \Delta_{\text{spec}} A_{\text{mkt}} + \sigma dW_{\text{spec}}$，有效市场假说对应谱熵最大化，经济衰退对应谱间隙坍塌。本文建立的跨领域谱对应表为复杂系统的统一分析提供了范畴论基础。
+**摘要**：本文在元通用不动点函子范畴框架下，将谱动力学方法系统推广到三类复杂系统——深度神经网络、生态网络和经济系统。对每一类系统，建立从经典动力学方程到 $\mathbf{Sp}$ 范畴中谱流方程的翻译法则，揭示其谱结构的内在统一性。核心结果包括：(1) 神经正切核 (NTK) 的谱分解表明，无限宽极限下神经网络训练动力学退化为谱流方程 $dA_t/dt = [A_{\text{NTK}}, A_t]$ 的特殊退化形式 $du_k/dt = -\lambda_k u_k$，有限宽修正对应特征学习的谱动力学；(2) Lotka-Volterra 竞争方程被翻译为生态谱流方程 $dA_{\text{eco}}/dt = [A_{\text{growth}} - A_{\text{comp}} \circ e^{-A_{\text{eco}}}, A_{\text{eco}}]$，May 稳定性-多样性悖论等价于竞争谱生成元谱半径的临界条件 $\rho(A_{\text{comp}}) > 1$；(3) 市场动力学被表述为含价格粘性和随机涨落的谱流方程 $dA_{\text{mkt}}/dt = [A_{\text{demand}} - A_{\text{supply}}, A_{\text{mkt}}] + \epsilon \Delta_{\text{spec}} A_{\text{mkt}} + \sigma dW_{\text{spec}}$，有效市场假说对应谱熵最大化，经济衰退对应谱间隙坍塌。本文建立的跨领域谱对应表为复杂系统的统一分析提供了范畴论基础。
 
 ---
 
@@ -26,7 +26,7 @@
 
 复杂系统——深度神经网络、生态系统、经济市场——尽管在现象层面截然不同，却共享深刻的数学结构。深度学习中的训练动力学、生态群落中的竞争演化和经济系统中的供需平衡，均可视为某种"递归动力学"在谱空间的投影。
 
-通用不动点范畴框架（Paper I–XII）建立了一个统一的数学语言：将动力学系统表示为 $\mathbf{Rec}$ 范畴中的递归对象 $R$，通过谱像函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 提取谱生成元 $A$，其演化由谱流方程 $\frac{d}{dt}A_t = [G, A_t]$ 控制。这一框架已成功应用于力学（Paper V）、流体动力学（Paper VI）和热力学（Paper VII）。
+元通用不动点函子范畴框架（Paper I–XII）建立了一个统一的数学语言：将动力学系统表示为 $\mathbf{Rec}$ 范畴中的递归对象 $R$，通过谱像函子 $D: \mathbf{Rec} \to \mathbf{Sp}$ 提取谱生成元 $A$，其演化由谱流方程 $\frac{d}{dt}A_t = [G, A_t]$ 控制。这一框架已成功应用于力学（Paper V）、流体动力学（Paper VI）和热力学（Paper VII）。
 
 本文将谱动力学方法扩展到三类复杂系统：神经网络、生态网络和经济系统。每一类系统的核心动力学方程——NTK 方程、Lotka-Volterra 方程、市场供需方程——均可翻译为 $\mathbf{Sp}$ 范畴中的谱流方程，揭示其谱结构的统一性。
 
@@ -294,11 +294,11 @@ $$
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。C* 代数框架 $\mathbf{Rec}_{C*}/\mathbf{Sp}_{C*}$。
-- [III] Paper III：《通用不动点范畴框架 III：谱分类与谱存在性定理》，v1.0。谱分类（谱有限型、谱离散型、谱连续型）。
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、力的统一。
-- [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。Koopman 算子、N-S 谱流方程。
-- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v2.0。谱熵定理、Onsager 关系。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.32。C* 代数框架 $\mathbf{Rec}_{C*}/\mathbf{Sp}_{C*}$。
+- [III] Paper III：《元通用不动点函子范畴框架 III：谱分类与谱存在性定理》，v1.0。谱分类（谱有限型、谱离散型、谱连续型）。
+- [V] Paper V：《元通用不动点函子范畴框架 V：力的谱动力学》，v1.1。谱流方程、力的统一。
+- [VI] Paper VI：《元通用不动点函子范畴框架 VI：谱流体动力学——从湍流谱到谱流几何》，v2.0。Koopman 算子、N-S 谱流方程。
+- [VII] Paper VII：《元通用不动点函子范畴框架 VII：非平衡谱热力学》，v2.0。谱熵定理、Onsager 关系。
 - Jacot, A., Gabriel, F. & Hongler, C. (2018). "Neural Tangent Kernel: Convergence and Generalization in Neural Networks." *NeurIPS* 2018.
 - May, R.M. (1972). "Will a large complex system be stable?" *Nature* 238, 413–414.
 - Fama, E.F. (1970). "Efficient Capital Markets: A Review of Theory and Empirical Work." *Journal of Finance* 25(2), 383–417.
@@ -314,7 +314,7 @@ $$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIII，跨领域谱对应——复杂系统的谱表述。主要内容：
+《元通用不动点函子范畴框架》系列论文 XIII，跨领域谱对应——复杂系统的谱表述。主要内容：
 - NTK 谱分解与训练动力学的谱流退化（§2）
 - Lotka-Volterra 生态谱流方程（定理 3.1）与 May 悖论的谱表述（定理 3.2）
 - 市场谱流方程（定理 4.1）与有效市场假说的谱重述（定理 4.2）

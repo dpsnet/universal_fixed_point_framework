@@ -1,6 +1,6 @@
 # Agda 交叉验证笔记（路径 B 完整报告，第一手研究资料）
 
-> **定位**：UFPF 形式化验证体系（Lean 4 主实现 + Agda 独立重形式化）的 Agda 侧完整记录。
+> **定位**：MUFPF 形式化验证体系（Lean 4 主实现 + Agda 独立重形式化）的 Agda 侧完整记录。
 > **状态**：2026-08-05（T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径闭合，v1.41/v1.42/v1.43；log 级数下界侧机制收口 v1.44；**ln 级数高阶精化 v1.45**；**ln(16/15) 级数直接截断机制 v1.46**；**ln(16/15) 二阶精化 v1.47**；C 类数值项清零 v1.38）。对应论文：[`paper38_agda_cross_validation.md`](../../paper/paper38_agda_cross_validation.md)（Paper XXXVIII v0.8）。
 > **关联**：路线图 [`phase60_category_verification.md`](../../roadmap/phase60_category_verification.md) §路径 B；笔记 [`spectral_T3_analysis_foundation.md`](./spectral_T3_analysis_foundation.md)（技术债清单 §5.16.7 / 方案 A §5.16.8）；主日志 `docs/log.md`。
 
@@ -10,7 +10,7 @@
 
 ### 1.1 为什么需要 Agda 交叉验证
 
-Lean 4（`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 2454 jobs 零 `sorry` 零 `axiom`）是**单一实现**。交叉验证动机：
+Lean 4（`formal_proof/MUFPFormalization/`，81 模块，2026-08-05 全库 2454 jobs 零 `sorry` 零 `axiom`）是**单一实现**。交叉验证动机：
 
 1. **消除单一实现偏差**：证明助理 bug、Mathlib 假设、形式化风格的潜在偏差需要第二实现独立检验。
 2. **类型论体系正交**：Lean 依赖 CIC（归纳构造演算）；Agda 用 Martin-Löf 依赖类型论。同一定理在两套类型论下同时通过，可信度高于单实现。
@@ -26,11 +26,11 @@ Lean 4（`formal_proof/UFPFormalization/`，81 模块，2026-08-05 全库 2454 j
 
 ## 2. 架构与模块清单（20 模块）
 
-`agda_formalization/` 目录（UFPF.agda-lib 注册，name: UFPF）：
+`agda_formalization/` 目录（MUFPF.agda-lib 注册，name: MUFPF）：
 
 ```
 agda_formalization/
-├── UFPF.agda-lib                    # Agda 库注册
+├── MUFPF.agda-lib                    # Agda 库注册
 ├── Everything.agda                  # 主入口：全部模块导入，整体编译验证
 ├── Categories/                      # 基础库（Category/Functor/NaturalTransformation，3 模块）
 ├── Sp/

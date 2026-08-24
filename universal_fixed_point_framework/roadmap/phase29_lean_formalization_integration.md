@@ -29,7 +29,7 @@ Phase 27 完成谱动力学四深化方向，Phase 28 完成奇点谱消解数�
 | `HigherSpecCategory.lean` | Spec₂ 2-范畴：交织同伦 2-态射 | ✅ 107 行 |
 | `HigherDecursionFunctor.lean` | D₂ 2-函子：4 条 2-函子公理的形式化证明 | ✅ 120 行 |
 | `InfinityCategory.lean` | Spec_∞ 定义、切向量空间 T_A Spec_∞ | ✅ 98 行 |
-| `UFPFormalization.lean` | 新增 import 4 模块 | ✅ 34 模块 |
+| `MUFPFormalization.lean` | 新增 import 4 模块 | ✅ 34 模块 |
 
 **工作量**：4 Lean 模块 + 1 更新，总计 ~434 Lean 行
 

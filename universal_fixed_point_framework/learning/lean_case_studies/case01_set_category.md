@@ -87,6 +87,6 @@ lake build
 2. 证明 `SetCat` 中的同构就是双射函数。
 3. 尝试定义 `SetCat` 中的积与余积（提示：使用 `Prod` 和 `Sum` 类型）。
 
-## 与 UFPF 的联系
+## 与 MUFPF 的联系
 
-UFPF 中的 `RecCategory.lean` 和 `SpCategory.lean` 都遵循同样的模式：定义对象类型、定义态射、验证范畴公理。理解 Set 范畴是理解 UFPF 中更复杂范畴的第一步。
+MUFPF 中的 `RecCategory.lean` 和 `SpCategory.lean` 都遵循同样的模式：定义对象类型、定义态射、验证范畴公理。理解 Set 范畴是理解 MUFPF 中更复杂范畴的第一步。

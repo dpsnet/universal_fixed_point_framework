@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 X：谱动力学中的量子测量与量子基础
+# 元通用不动点函子范畴框架 X：谱动力学中的量子测量与量子基础
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -765,9 +765,9 @@ $$\boxed{\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa}}$$
 |------|---------|-----------|---------|
 | **标准量子力学 (von Neumann)** | $\tau = 0$（瞬时） | 无 | 无 |
 | **GRW 模型** | $\tau_{\text{GRW}} \sim 1/\lambda_{\text{GRW}} \approx 10^{-16}\,\text{s}$ | 固定常数 | 无 |
-| **UFPF 谱动力学** | $\tau = \ln(1/\varepsilon)/\kappa$ | $\tau \propto 1/\kappa$ | $\kappa$ 可实验调节 |
+| **MUFPF 谱动力学** | $\tau = \ln(1/\varepsilon)/\kappa$ | $\tau \propto 1/\kappa$ | $\kappa$ 可实验调节 |
 
-**核心区分**：GRW 对所有系统的坍缩时间固定为 $\sim 10^{-16}\,\text{s}$；UFPF 预测 $\tau$ 随 $\kappa$ 连续可调，在弱测量条件下可延长至宏观可测范围（$\mu\text{s}$ 量级）。
+**核心区分**：GRW 对所有系统的坍缩时间固定为 $\sim 10^{-16}\,\text{s}$；MUFPF 预测 $\tau$ 随 $\kappa$ 连续可调，在弱测量条件下可延长至宏观可测范围（$\mu\text{s}$ 量级）。
 
 #### 12.1.2 实验系统与硬件参数
 
@@ -838,14 +838,14 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 #### 12.1.5 与 GRW 的可区分性
 
-| 区分特征 | UFPF 谱动力学 | GRW 模型 |
+| 区分特征 | MUFPF 谱动力学 | GRW 模型 |
 |---------|--------------|----------|
 | $\tau$ 对 $\kappa$ 的依赖性 | $\tau \propto 1/\kappa$（连续可调） | $\tau$ 固定 $\sim 10^{-16}\,\text{s}$ |
 | 弱测量区域 | $\tau$ 可延长至 $\mu\text{s}$-$\,\text{ms}$ | 仍为 $10^{-16}\,\text{s}$ |
 | 与系统大小的关系 | 与量子比特数无关 | 与粒子数 $N$ 有关：$\tau_{\text{GRW}} \sim 1/(N\lambda_{\text{GRW}})$ |
 | 可实验调谐 | 是（通过 flux bias） | 否（普适常数） |
 
-**关键实验信号**：在弱耦合区域（$\kappa \sim 10^3\,\text{s}^{-1}$），UFPF 预测 $\tau \sim 7\,\mu\text{s}$，而 GRW 预测 $\tau \sim 10^{-16}\,\text{s}$——相差 $10^{10}$ 倍，完全可区分。
+**关键实验信号**：在弱耦合区域（$\kappa \sim 10^3\,\text{s}^{-1}$），MUFPF 预测 $\tau \sim 7\,\mu\text{s}$，而 GRW 预测 $\tau \sim 10^{-16}\,\text{s}$——相差 $10^{10}$ 倍，完全可区分。
 
 #### 12.1.6 实验挑战与缓解方案
 
@@ -1106,8 +1106,6 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 [16] Chitambar, E., Gour, G. "Quantum Resource Theories." *Reviews of Modern Physics* 91, 025001 (2019).
 [17] von Neumann, J. *Mathematical Foundations of Quantum Mechanics*. Princeton University Press (1932).
 
-
-
 ---
 
 **版本**：v1.4
@@ -1116,7 +1114,7 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 X（增强版 v1.4），谱动力学中的量子测量与量子基础——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。v1.4 新增 §12.4.0 $\eta_c$ 完整解析推导（从 $A_\eta = A_R + \eta\cdot\delta A_N$ 到 $\eta_c = 2(\sqrt{3}-1)/3$）、Peres-Mermin 方显式构造（9 个可观测量、行列乘积矛盾、$\mathbf{Sp}$ 翻译）。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。
+《元通用不动点函子范畴框架》系列论文 X（增强版 v1.4），谱动力学中的量子测量与量子基础——在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴框架下为量子测量建立严格的公理系统（M1–M4），统一解释波函数坍缩、量子纠缠、延迟选择、量子-经典边界、Kochen-Specker 语境性、PBR 态实在性、量子达尔文主义和量子资源理论八大基础问题。v1.4 新增 §12.4.0 $\eta_c$ 完整解析推导（从 $A_\eta = A_R + \eta\cdot\delta A_N$ 到 $\eta_c = 2(\sqrt{3}-1)/3$）、Peres-Mermin 方显式构造（9 个可观测量、行列乘积矛盾、$\mathbf{Sp}$ 翻译）。所有理论预测均通过数值扫描验证（7 脚本 40/40 通过），与 7 组经典 Bell 实验平均偏差 0.03%。
 
 **变更记录**：
 
@@ -1126,3 +1124,4 @@ $$\tau(\eta) = \frac{\ln(1/\varepsilon)}{\kappa_0} \cdot \left(1 - \frac{\eta}{\
 | v1.2 | 2026-07-18 | 新增 §12 实验提案与可检验预言：§12.1 坍缩时间实验提案（$\tau$公式、三模型对比、五步实验步骤、$\tau$数值估计、GRW可区分性、挑战与缓解）；§12.2 KS语境性实验匹配（$\mathbf{Sp}$翻译、机制分解、Yu-Oh/Kulikov实验匹配、$N_{\text{nc}}$预测、实验配置建议）；§12.3 多平台实验路线图（五提案对比总表、近期优先推荐）。共新增约250行。 |
 | v1.1 | 2026-07-18 | 新增 §1.4 数值脚本总览表、§1.5 相关工作段、§2.6 谱动力学根源追溯、附录 A 笔记代码索引。摘要扩展至八大基础问题并标注谱动力学来源。参考文献从 10 篇扩展至 17 篇。 |
 | v1.0 | 2026-07-18 | 初稿完成：11 章，~590 行。含 M1-M4 公理、坍缩时间推导、纠缠结构解释、延迟选择态射解释、实验对比（7 组 Bell 实验 0.03% 偏差）、六大诠释范畴论对比、四个拓展方向（K-S/PBR/达尔文/速度极限）、十维全景对比、量子资源理论 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

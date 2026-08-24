@@ -2,7 +2,7 @@
 
 **状态**：路线图（远期规划，未启动）
 
-**目标**：将 `LeaverUnifiedSolver` 从 UFPF 框架内的验证工具升级为面向引力波社区的独立可安装 Python 包，与现有 `qnm` 包形成互补。
+**目标**：将 `LeaverUnifiedSolver` 从 MUFPF 框架内的验证工具升级为面向引力波社区的独立可安装 Python 包，与现有 `qnm` 包形成互补。
 
 ---
 
@@ -34,8 +34,8 @@
 | 任务 | 描述 | 预期产出 |
 |:----|:----|:--------|
 | 1.1 包结构 | `pyproject.toml`, 模块分离, `__init__.py` | 可 `pip install -e .` |
-| 1.2 API 清理 | 统一求解器接口，移除 UFPF 内部依赖 | `qnm_solver.LeaverKerrSolver` |
-| 1.3 依赖简化 | 仅依赖 `numpy`, `scipy`，移除 UFPF 内部引用 | 轻量安装 |
+| 1.2 API 清理 | 统一求解器接口，移除 MUFPF 内部依赖 | `qnm_solver.LeaverKerrSolver` |
+| 1.3 依赖简化 | 仅依赖 `numpy`, `scipy`，移除 MUFPF 内部引用 | 轻量安装 |
 | 1.4 文档 | 英文 README + 标准 API 文档 | 社区可读 |
 | 1.5 示例 | Jupyter notebook（Schwarzschild + Kerr 快速入门） | 用户上手材料 |
 
@@ -64,14 +64,14 @@
 
 候选：`kerr-qnm-spectral`, `spectral-qnm`, `leaver-unified`
 
-### UFPF 内部依赖处理
+### MUFPF 内部依赖处理
 
-当前 `LeaverUnifiedSolver` 引用了 UFPF 框架的：
+当前 `LeaverUnifiedSolver` 引用了 MUFPF 框架的：
 - `DerecursionAnalyzer`（谱化理论核心）
 - `LACIEvaluator`（LACI 判据）
 - `TridiagonalSpectralSolver`（双初始向量逆迭代法）
 
-**方案 A**（推荐）：将这三个类提取为独立模块，剥离 UFPF 范畴论表述，保留数值算法核心。
+**方案 A**（推荐）：将这三个类提取为独立模块，剥离 MUFPF 范畴论表述，保留数值算法核心。
 
 **方案 B**：直接发布完整的 `leaver_unified_solver.py`，保留内部引用但允许 `pip install`。
 

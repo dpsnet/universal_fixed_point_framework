@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙
+# 元通用不动点函子范畴框架 XX：谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -10,10 +10,10 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"元通用不动点函子范畴框架"（Universal Fixed Point Framework, MUFPF），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Framework）
 - **SU(2)**：特殊酉群（Special Unitary Group of degree 2）
 - **GR**：广义相对论（General Relativity）
 - **EM**：电磁相互作用（Electromagnetic Interaction）
@@ -737,9 +737,9 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 ## 参考文献
 
-[1] Paper I: 通用不动点范畴框架 I：分形谱化理论 (v2.44).
-[2] Paper V: 通用不动点范畴框架 V：谱动力学 (Phase 21).
-[3] Paper XIX: 通用不动点范畴框架 XIX：范畴扩展 (v0.8).
+[1] Paper I: 元通用不动点函子范畴框架 I：分形谱化理论 (v2.44).
+[2] Paper V: 元通用不动点函子范畴框架 V：谱动力学 (Phase 21).
+[3] Paper XIX: 元通用不动点函子范畴框架 XIX：范畴扩展 (v0.8).
 [4] `CategoryRepBridge.lean`: SU(2) 结构、Casimir、agEigenvalue 桥接.
 [5] `SpectralGap.lean`: 谱间隙 Δλ_min 的 Cl(1,7) 第一性推导.
 [6] `Clifford.lean`: Clifford 代数基础与 Cl(1,7) 分类.
@@ -755,7 +755,7 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.6 全局修正 Cl(1,7) ≅ M₁₆(ℝ)（原误作 M₈(ℝ)），更新全文中所有相关引用，并相应修正 Bott 塔及各派生公式。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
+《元通用不动点函子范畴框架》系列论文 XX，谱间隙第一性推导——从 Rec/Sp 范畴框架经 SU(2) Casimir 谱与 Cl(1,7) 代数到引力谱间隙。v0.6 全局修正 Cl(1,7) ≅ M₁₆(ℝ)（原误作 M₈(ℝ)），更新全文中所有相关引用，并相应修正 Bott 塔及各派生公式。v0.5 新增 SU(2) 范畴涌现推导（§3.5），填补"为什么是 SU(2)"的逻辑缺口。v0.4 新增谱交织精度 $\epsilon$ 的第一性原理推导（§6.4）。v0.3 新增签名 $(1,7)$ 唯一性论证（$\mathbf{Sp}$ 公理排除 $(5,3)$）、$\mathrm{Cl}(1,7)$ 与弦论 $\mathrm{Cl}(9,1)$ 的完整对比。主要内容：
 - 谱流生成元 $G_{\text{GR}}$ 的范畴来源与三层对称性破缺（§3）
 - **SU(2) 范畴涌现：五个约束 C1-C5 唯一锁定 $\mathfrak{g}_{\text{GR}} \cong \mathfrak{su}(2)$（§3.5，新增）**
 - SU(2) Casimir 谱 $\sqrt{k(k+1)}$ 与谱间隙比 $1/\sqrt3:1:\sqrt{2}$（§4；2026-08-06 勘误：原 √(2/3) 更正）
@@ -775,3 +775,4 @@ $$\beta_s = N_{\text{EW}} \cdot \alpha \cdot \frac{f}{d_{\text{frac}}}$$
 | v0.3 | 2026-07-21 | 签名 $(1,7)$ 唯一性论证补全（添加 $\mathbf{Sp}$ 公理排除 $(5,3)$）；与弦论 Cl(9,1) 对比修正（代数包含、物理参数公用表、推导路径差异、IC 兼容共存、IC 投影机制）；修正 Cl(9,1) ≅ M₁₆(ℝ) 同构；删除错误的遗忘函子方向 |
 | v0.2 | 2026-07-21 | 补完 §1.3 完整生成树（三扇区统一框架）、§1.4 与现有工作关系表、§3 三层破缺与力生成元、§5 Cl(1,7) 范畴涌现论证、§9 展望；修正 §3.2/3.3 关键概念混淆 |
 | v0.1 | 2026-07-21 | 初始版本，基于 Phase 53 分析笔记 A-E 与 SpectralGap.lean 形式化证明 |
+| v0.7 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

@@ -4,7 +4,7 @@
 
 **摘要**：本笔记将味物理的 CKM/PMNS 混合矩阵提升为 Grothendieck 纤维范畴。核心结构为味丛 $\mathbf{Bun}(\mathbf{Flt}, \mathbb{C}^3_{\text{gen}})$，其中 $\mathbf{Flt}$ 是味扇区离散范畴（对象 $\{u, d, e, \nu\}$），纤维为代空间 $\mathbb{C}^3_{\text{gen}}$ 上的实结构投影 $J_f$。CKM 和 PMNS 矩阵作为转移函数 $V_{f_1 f_2} = J_{f_1}^{-1} J_{f_2}$ 出现，么正性等价于 cocycle 条件 $V_{12} V_{23} = V_{13}$，CP 破坏相位 $\delta_{CP}$ 解释为沿 $u \to d \to \nu \to e \to u$ 闭回路的和乐。
 
-**前置依赖**：[`spectral_ckm_angles.md`](spectral_ckm_angles.md)（混合角谱几何公式）、[`YukawaIFSWeights.lean`](../../formal_proof/UFPFormalization/UFPFormalization/YukawaIFSWeights.lean)（Yukawa IFS 权重）。
+**前置依赖**：[`spectral_ckm_angles.md`](spectral_ckm_angles.md)（混合角谱几何公式）、[`YukawaIFSWeights.lean`](../../formal_proof/MUFPFormalization/MUFPFormalization/YukawaIFSWeights.lean)（Yukawa IFS 权重）。
 
 ---
 

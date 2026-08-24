@@ -1,8 +1,8 @@
-# UFPF 学术术语修订明细
+# MUFPF 学术术语修订明细
 
 **版本**：v1.0（2026-07-26）
 
-**目的**：记录 UFPF 框架中所有学术术语的修订情况，包括修订前后的术语、修订原因、涉及文件，为学术写作和审稿提供参考。
+**目的**：记录 MUFPF 框架中所有学术术语的修订情况，包括修订前后的术语、修订原因、涉及文件，为学术写作和审稿提供参考。
 
 **修订原则**：
 1. 非必要不另创新术语，优先使用学术界标准术语
@@ -277,7 +277,7 @@
 | 范畴类型 | `SpecObj` | `SpObj` | 31 个 .lean 文件 |
 | 态射类型 | `SpecHom` | `SpHom` | 31 个 .lean 文件 |
 | 范畴实例 | `specCategory` | `spCategory` | 1 文件（自身） |
-| 顶层 import | `UFPFormalization.SpecCategory` | `UFPFormalization.SpCategory` | 1 文件（UFPFormalization.lean） |
+| 顶层 import | `MUFPFormalization.SpecCategory` | `MUFPFormalization.SpCategory` | 1 文件（MUFPFormalization.lean） |
 | README 引用 | `SpecCategory.lean` | `SpCategory.lean` | README.md (2处) |
 | 测试注释 | `SpecCategory Tests` | `SpCategory Tests` | TestCategoryTheory.lean (2处) |
 
@@ -454,11 +454,11 @@
 
 ### 9.18 Sync #18 明细（2026-07-26）— "谱丛"→"谱覆盖"术语修正
 
-**修订原因**：UFPF 中"谱丛"指代数结构 $\mathfrak{S} = \{(p,\lambda): \det(M(p)-\lambda I)=0\}$，其投影 $\pi: \mathfrak{S} \to \mathcal{B}$ 是**分支覆盖（branched covering）**，在分支点处不满足局部平凡性。标准术语应使用 **谱覆盖（spectral cover）** 或 **谱簇（spectral variety）**。
+**修订原因**：MUFPF 中"谱丛"指代数结构 $\mathfrak{S} = \{(p,\lambda): \det(M(p)-\lambda I)=0\}$，其投影 $\pi: \mathfrak{S} \to \mathcal{B}$ 是**分支覆盖（branched covering）**，在分支点处不满足局部平凡性。标准术语应使用 **谱覆盖（spectral cover）** 或 **谱簇（spectral variety）**。
 
 与标准术语的对照：
 
-| UFPF 原术语 | 标准术语 | 数学结构 | 区别 |
+| MUFPF 原术语 | 标准术语 | 数学结构 | 区别 |
 |:-----------|:---------|:--------|:-----|
 | 谱丛 $\mathfrak{S}$ | **谱覆盖**（spectral cover） | 分支覆盖 $\pi: \mathfrak{S} \to \mathcal{B}$ | "丛"（bundle）要求局部平凡，但 $\mathfrak{S}$ 在分支点处退化 |
 | — | **谱簇**（spectral variety） | 特征多项式 $\det(M(p)-\lambda I)=0$ 定义的代数簇 | 侧重代数簇而非覆盖结构 |
@@ -503,7 +503,7 @@
 | 3-态射垂直复合 | `specThreeVertComp` | `spThreeVertComp` | 2 个 .lean 文件 |
 | 3-态射水平复合 | `specThreeHorizComp` | `spThreeHorizComp` | 1 个 .lean 文件 |
 | 垂直复合结合律 | `specThreeVertComp_assoc` | `spThreeVertComp_assoc` | 1 个 .lean 文件 |
-| 顶层 import | `UFPFormalization.HigherSpecCategory` | `UFPFormalization.HigherSpCategory` | 6 个文件 |
+| 顶层 import | `MUFPFormalization.HigherSpecCategory` | `MUFPFormalization.HigherSpCategory` | 6 个文件 |
 
 **受影响文件统计**: 8 个 .lean 文件（含自身），约 90+ 处替换。`lake build` 零错误通过。
 
@@ -584,4 +584,4 @@
 
 **文档状态**：初稿完成，待后续修订补充。
 
-**维护责任**：UFPF 框架维护者应在每次术语修订后更新本文档。
+**维护责任**：MUFPF 框架维护者应在每次术语修订后更新本文档。

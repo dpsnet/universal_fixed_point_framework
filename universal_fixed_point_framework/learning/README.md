@@ -1,27 +1,27 @@
-# 范畴论入门与落地指南：基于不动点与谱理论的 UFPF 实践
+# 范畴论入门与落地指南：基于不动点与谱理论的 MUFPF 实践
 
-> 本学习资料面向通用不动点范畴框架（Universal Fixed Point Framework, UFPF）研究者及跨领域学习者，将标准范畴论概念与 UFPF 论文体系中的具体应用一一对应。
+> 本学习资料面向元通用不动点函子范畴框架（Meta-Universal Fixed-Point Functorial Framework, MUFPF）研究者及跨领域学习者，将标准范畴论概念与 MUFPF 论文体系中的具体应用一一对应。
 
 ## 本教程的定位、作用与使用方式
 
 ### 定位
 
-本教程不是一本完整的范畴论教材，而是一份**面向跨领域学习者的范畴论入门与落地指南**：它先给出范畴、函子、伴随、极限、层、高阶范畴等核心概念的直观印象与代码直觉，再以 UFPF（不动点与谱理论）中的具体构造（`Rec`、`Sp`、`D ⊣ R`、谱丛、Grothendieck 纤维化、Cartesian 提升等）作为**一个**完整落地的实例，把抽象的范畴论语汇锚定在可计算、可形式化的对象上。
+本教程不是一本完整的范畴论教材，而是一份**面向跨领域学习者的范畴论入门与落地指南**：它先给出范畴、函子、伴随、极限、层、高阶范畴等核心概念的直观印象与代码直觉，再以 MUFPF（不动点与谱理论）中的具体构造（`Rec`、`Sp`、`D ⊣ R`、谱丛、Grothendieck 纤维化、Cartesian 提升等）作为**一个**完整落地的实例，把抽象的范畴论语汇锚定在可计算、可形式化的对象上。
 
 ### 抽象来源
 
-UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉冲神经网络 及相关系统进行反复抽象的过程中，发现**递归、谱分解、参数化依赖、连续退化**等模式在多个领域中反复出现。这些跨领域的共同结构被进一步范畴化：
+MUFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉冲神经网络 及相关系统进行反复抽象的过程中，发现**递归、谱分解、参数化依赖、连续退化**等模式在多个领域中反复出现。这些跨领域的共同结构被进一步范畴化：
 
 - 递归与不动点结构 → 范畴 $\mathbf{Rec}$
 - 谱/响应分析 → 谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$
 - 温度、能标、噪声等参数变化 → Grothendieck 纤维化与谱丛
 - 连续变形、奇点与退化 → 2-范畴、∞-范畴与同伦方法
 
-因此，本教程中的例子虽然常以 UFPF 术语呈现，其背后指向的是一套可在不同学科之间迁移的范畴工具。
+因此，本教程中的例子虽然常以 MUFPF 术语呈现，其背后指向的是一套可在不同学科之间迁移的范畴工具。
 
 ### 作用
 
-1. **降低入门门槛**：用 UFPF 内部例子（递归结构、谱对象、伴随对）解释标准范畴论概念，避免“只见符号不见动机”。
+1. **降低入门门槛**：用 MUFPF 内部例子（递归结构、谱对象、伴随对）解释标准范畴论概念，避免“只见符号不见动机”。
 2. **补足严密性**：通过 [part09_standard_textbook_roadmap.md](part09_standard_textbook_roadmap.md) 与 Awodey、Leinster、Riehl、Mac Lane 等经典教材逐章对照，帮助读者在“直觉”与“证明”之间切换。
 3. **连接形式化**：提供 Lean 4 / Mathlib 的练习路径与案例，使读者能把纸面上的构造变成可机检的代码。
 
@@ -31,16 +31,16 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 
 具体可分为三步：
 
-1. **从 UFPF 的问题出发**：递归动力系统、谱数据、参数化族（温度/噪声/能标）、连续变形与奇点；
+1. **从 MUFPF 的问题出发**：递归动力系统、谱数据、参数化族（温度/噪声/能标）、连续变形与奇点；
 2. **自然抽象为范畴结构**：把递归动力学写成范畴 $\mathbf{Rec}$，把谱分析写成函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$，把参数化族写成 Grothendieck 纤维化，把连续变形写成 2-范畴 / ∞-范畴；
 3. **在 Lean 4 / Mathlib 中形式化**：用 `Category`、`Functor`、`Adjunction`、`Sheaf`、`IsGrothendieckFibration`、`Bicategory` 等把抽象构造变成可编译、可验证的代码。
 
-这条路径的目标不仅是读懂 UFPF 的论文与代码，更是培养一种可迁移的能力：**面对一个新的理论或系统时，能判断应该引入哪个范畴、哪个函子、哪个伴随对来组织它**。
+这条路径的目标不仅是读懂 MUFPF 的论文与代码，更是培养一种可迁移的能力：**面对一个新的理论或系统时，能判断应该引入哪个范畴、哪个函子、哪个伴随对来组织它**。
 
 ### 使用方式
 
 - **零基础读者**：按 `part00 → part01 → part02 → part03 → part04` 顺序阅读，遇到抽象概念时翻到 `part09` 查看标准教材对照。
-- **已有范畴论基础的读者**：直接跳到 `part06` 查看 UFPF 论文映射，或用 `part09` 把 UFPF 例子当作标准教材的习题来验证。
+- **已有范畴论基础的读者**：直接跳到 `part06` 查看 MUFPF 论文映射，或用 `part09` 把 MUFPF 例子当作标准教材的习题来验证。
 - **希望形式化的读者**：重点阅读 `part07` 与 `lean_case_studies/`，并参考 `part09` 中各阶段推荐的 Lean 任务。
 - **程序员 / 形式化实践者**：从 `part00` 的“程序员的直觉”入手，重点阅读 `part01` 的“从代码到范畴”对照表，以及 `part07` 与 `lean_case_studies/` 中的 Lean 4 案例。通过把范畴对象写成类型/结构体、把态射写成函数/映射、把自然性写成等式证明，来反向理解抽象概念。
 
@@ -48,9 +48,9 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 
 ## 认知状态声明
 
-> **本资料仅涉及 UFPF 框架的数学与范畴论结构。**
+> **本资料仅涉及 MUFPF 框架的数学与范畴论结构。**
 >
-> UFPF 本质上是一个以递归-谱翻译为核心的**数学/范畴论框架**。物理领域中的应用（如 QCD、引力、粒子谱、黑洞 QNM 等）只是该框架在特定领域的**理论实例**，其物理正确性仍需实验检验，且尚未获得学术界的广泛认可。
+> MUFPF 本质上是一个以递归-谱翻译为核心的**数学/范畴论框架**。物理领域中的应用（如 QCD、引力、粒子谱、黑洞 QNM 等）只是该框架在特定领域的**理论实例**，其物理正确性仍需实验检验，且尚未获得学术界的广泛认可。
 >
 > 形式化机证（Lean 4 / Mathlib）与范畴论推导保证的是**数学自洽性**——即在给定公理与定义的前提下，定理在形式系统内部无矛盾。数学自洽性**不自动蕴含**物理真理性、实验符合性或学术共同体认可。
 >
@@ -63,16 +63,16 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 
 > 本学习资料采用**标准范畴论术语**。例如，Grothendieck 纤维化中的 lifting 使用 **"Cartesian 提升"**（对应英文 Cartesian lifting）。
 >
-> UFPF 原论文中曾使用 **"Cartan 提升"** 表述同一概念，属非标准用法。学习资料和 UFPF 论文已同步修正为标准术语，但读者可能在旧版本或外部引用中遇到 "Cartan 提升"，可视为 "Cartesian 提升" 的同义旧称。
+> MUFPF 原论文中曾使用 **"Cartan 提升"** 表述同一概念，属非标准用法。学习资料和 MUFPF 论文已同步修正为标准术语，但读者可能在旧版本或外部引用中遇到 "Cartan 提升"，可视为 "Cartesian 提升" 的同义旧称。
 
 ## 已覆盖范畴概念速查
 
 | 概念 | 说明 | 所在文件 |
 |------|------|---------|
-| 范畴、对象、态射、同构 | 基础定义与 UFPF 中的 $\mathbf{Rec}$、$\mathbf{Sp}$ | [part00_warmup.md](part00_warmup.md)、[part01_basics.md](part01_basics.md) |
+| 范畴、对象、态射、同构 | 基础定义与 MUFPF 中的 $\mathbf{Rec}$、$\mathbf{Sp}$ | [part00_warmup.md](part00_warmup.md)、[part01_basics.md](part01_basics.md) |
 | 子范畴、宽子范畴、全子范畴 | 限制对象或态射的方式 | [part01_basics.md](part01_basics.md) |
 | 函子、自然变换、自然同构 | 范畴之间的结构保持映射及其比较 | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) |
-| 伴随对、单位、余单位 | UFPF 核心：$D \dashv R$、$\mathcal{L} \dashv \iota$、$\mathcal{S}el \dashv \mathcal{D}iss$ | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) |
+| 伴随对、单位、余单位 | MUFPF 核心：$D \dashv R$、$\mathcal{L} \dashv \iota$、$\mathcal{S}el \dashv \mathcal{D}iss$ | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) |
 | 极限、余极限 | 积、余积、拉回、推出等泛构造 | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
 | 单子、Kleisli 范畴、Eilenberg-Moore 范畴 | $T = R \circ D$、平凡单子 $T = \mathcal{L} \circ \iota$ | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) |
 | 预层、层、茎、层化 | 时空谱层、奇点的层论定义 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) |
@@ -90,15 +90,15 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 | 文件 | 主题 | 难度 | 目标 |
 |------|------|------|------|
 | [part00_warmup.md](part00_warmup.md) | 范畴论直觉热身 | 零基础 | 用 3 个熟悉例子建立"对象 + 保持结构的映射"直觉 |
-| [part01_basics.md](part01_basics.md) | 范畴、对象、态射、同构 | 入门 | 能读懂 UFPF 中 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的定义 |
+| [part01_basics.md](part01_basics.md) | 范畴、对象、态射、同构 | 入门 | 能读懂 MUFPF 中 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 的定义 |
 | [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md) | 函子、自然变换、伴随 | 入门→进阶 | 理解谱化函子 $D \dashv R$ 的核心结构 |
 | [part03_limits_colimits_monads.md](part03_limits_colimits_monads.md) | 极限/余极限、单子、Kleisli 范畴 | 进阶 | 理解 $\Sigma$-$\mathbf{Rec}$ 余完备化与 $T = \mathcal{L} \circ \iota$ 单子 |
 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) | 层、预层、Grothendieck 纤维化、栈 | 进阶→精通 | 掌握 Temp/RG/Noise 等谱丛构造 |
 | [part05_higher_category_theory.md](part05_higher_category_theory.md) | 2-范畴、∞-范畴、A∞/L∞ 代数 | 精通 | 理解 $D_2: \mathbf{Rec}_2 \to \mathbf{Sp}_2$ 与层论的 2-函子形式 |
-| [part06_ufpf_applications.md](part06_ufpf_applications.md) | UFPF 论文映射与定理索引 | 应用 | 将范畴工具直接对应到 Paper I~XLIV |
+| [part06_mufpf_applications.md](part06_mufpf_applications.md) | MUFPF 论文映射与定理索引 | 应用 | 将范畴工具直接对应到 Paper I~XLIV |
 | [part07_exercises_lean.md](part07_exercises_lean.md) | 习题与 Lean 4 形式化路径 | 实践 | 能独立形式化简单伴随对与纤维化 |
 | [part08_advanced_formalization.md](part08_advanced_formalization.md) | 形式化仓库中的高级范畴结构 | 精通→前沿 | 掌握幺半范畴、对偶、表示桥接、同伦方法 |
-| [part09_standard_textbook_roadmap.md](part09_standard_textbook_roadmap.md) | UFPF 教程与标准教材对照学习路线 | 全阶段 | 按阶段并行阅读标准教材，兼顾速度与严密性 |
+| [part09_standard_textbook_roadmap.md](part09_standard_textbook_roadmap.md) | MUFPF 教程与标准教材对照学习路线 | 全阶段 | 按阶段并行阅读标准教材，兼顾速度与严密性 |
 | [part07_solutions.md](part07_solutions.md) | Part 7 习题解答与提示 | 参考 | 对照检查分级习题 |
 | [lean_case_studies/](lean_case_studies/) | Lean 4 实战案例 | 实践 | 从 Set 范畴、伴随对到谱等价 |
 | [paper_reading_guides/](paper_reading_guides/) | 核心论文精读导引 | 应用 | Paper I / XIX / XXI 的范畴论路线 |
@@ -115,7 +115,7 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 
 ### 阶段一：入门（1~2 周）
 - 阅读 [part01_basics.md](part01_basics.md) 与 [part02_functors_natural_transformations_adjoints.md](part02_functors_natural_transformations_adjoints.md)
-- 同步对照 UFPF Paper I §2 中 $\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$ 的定义
+- 同步对照 MUFPF Paper I §2 中 $\mathbf{Rec}$、$\mathbf{Sp}$、$D \dashv R$ 的定义
 - 完成 [part07_exercises_lean.md](part07_exercises_lean.md) 中 Level 1 习题
 
 ### 阶段二：进阶（2~3 周）
@@ -124,29 +124,29 @@ UFPF 的范畴构造并非针对单一领域量身定制，而是在对 SNN脉�
 - 完成 Level 2 习题，尝试用 Lean 4 证明一个小伴随对
 
 ### 阶段三：精通（持续）
-- 阅读 [part05_higher_category_theory.md](part05_higher_category_theory.md)、[part06_ufpf_applications.md](part06_ufpf_applications.md) 与 [part08_advanced_formalization.md](part08_advanced_formalization.md)
-- 跟踪 UFPF 形式化仓库中的 `UFPFormalization` 模块
+- 阅读 [part05_higher_category_theory.md](part05_higher_category_theory.md)、[part06_mufpf_applications.md](part06_mufpf_applications.md) 与 [part08_advanced_formalization.md](part08_advanced_formalization.md)
+- 跟踪 MUFPF 形式化仓库中的 `MUFPFormalization` 模块
 - 尝试为 Paper XIX、Paper XXI 或形式化仓库中的高级构造补充 Lean 形式化
 
 ### 阶段四：前沿探索（按需）
-本教材未系统覆盖、但可能对 UFPF 深化有价值的高级范畴工具：
+本教材未系统覆盖、但可能对 MUFPF 深化有价值的高级范畴工具：
 
 | 工具 | 可能的应用场景 | 当前教材位置 |
 |------|--------------|-------------|
-| **Kan 延拓** | 统一不同参数空间上的谱丛构造 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
-| **充实范畴（Enriched Category）** | 内蕴处理谱间隙、LACI、度量结构 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
-| **逗号范畴（Comma Category）** | 构造谱对象之间的关系范畴 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **Kan 延拓** | 统一不同参数空间上的谱丛构造 | [part06_mufpf_applications.md](part06_mufpf_applications.md) §6.4 |
+| **充实范畴（Enriched Category）** | 内蕴处理谱间隙、LACI、度量结构 | [part06_mufpf_applications.md](part06_mufpf_applications.md) §6.4 |
+| **逗号范畴（Comma Category）** | 构造谱对象之间的关系范畴 | [part06_mufpf_applications.md](part06_mufpf_applications.md) §6.4 |
 | **Topos 理论** | 为时空谱层提供内蕴逻辑与几何态射 | [part04_sheaves_fibrations_stacks.md](part04_sheaves_fibrations_stacks.md) §4.5 |
 | **导出范畴 / 模型范畴** | 谱复形、同伦代数、耗散系统的弱等价 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.6 |
-| **Profunctor / Distributor** | 研究 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 之间的分布对应 | [part06_ufpf_applications.md](part06_ufpf_applications.md) §6.4 |
+| **Profunctor / Distributor** | 研究 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 之间的分布对应 | [part06_mufpf_applications.md](part06_mufpf_applications.md) §6.4 |
 | **Operad** | 系统组织 A∞/L∞ 代数中的高阶运算 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.4 |
 | **∞-Topos** | 高阶谱栈、同伦下降、辫子静默严格化 | [part05_higher_category_theory.md](part05_higher_category_theory.md) §5.3 |
 
 **说明**：这些工具属于博士阶段或研究前沿范畴，当前教材仅作方向性登记。建议在遇到具体数学瓶颈时再深入学习，避免过早抽象。
 
-## 与 UFPF 核心理念的衔接
+## 与 MUFPF 核心理念的衔接
 
-UFPF 的范畴论不是抽象游戏，而是为以下物理直觉提供严格语言：
+MUFPF 的范畴论不是抽象游戏，而是为以下物理直觉提供严格语言：
 
 1. **谱化 = 函子**：$D: \mathbf{Rec}_D \to \mathbf{Sp}$ 将递归动力学翻译为谱数据
 2. **还原↔涌现 = 伴随**：$D \dashv R$ 的左右伴随分别对应 UV 归约与 IR 提升
@@ -156,4 +156,4 @@ UFPF 的范畴论不是抽象游戏，而是为以下物理直觉提供严格语
 
 ## 版本
 
-- v0.1（2026-08-18）：初始版本，覆盖 UFPF Paper I~XLIV 中范畴论工具全景
+- v0.1（2026-08-18）：初始版本，覆盖 MUFPF Paper I~XLIV 中范畴论工具全景

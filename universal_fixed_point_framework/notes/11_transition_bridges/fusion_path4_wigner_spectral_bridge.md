@@ -115,5 +115,5 @@ $$\Delta m = 0 \quad \wedge \quad \Delta s = 0.$$
 - paper1（paper1_fractal_spectral_derecursion.md）§3.5.1（定义 3.10/3.10a/3.10c）；
 - paper5《谱动力学》（谱流方程 $dA_t/dt = [G, A_t]$）；
 - paper44《光子生成的拓扑转变机制》（$\Phi$ 拓扑转变，§7.5 开放问题）；
-- CNF 正式评价《对 UFPF《光子生成的拓扑转变机制与可证伪预言 v0.9+v30》的正式评价》§10.1 批评 3（P3 须代数形式）；
+- CNF 正式评价《对 MUFPF《光子生成的拓扑转变机制与可证伪预言 v0.9+v30》的正式评价》§10.1 批评 3（P3 须代数形式）；
 - E. Wigner, *On Unitary Representations of the Inhomogeneous Lorentz Group*, Ann. Math. 40 (1939) 149。

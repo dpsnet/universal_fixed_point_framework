@@ -42,7 +42,7 @@
 - `SpecInfinity.lean`：约 55 行，定义 Spec_∞ 对象与 ∞-态射、交织条件
 - `DInfinityFunctor.lean`：约 50 行，定义 D_∞ 对象/1-态射/∞-态射映射及函子性定理（以 `sorry` 占位）
 - `SpectralFlowHomotopy.lean`：约 70 行，定义谱流映射 F_t = exp(t·ad_G)、ODE、同伦等价（以 `sorry` 占位）
-- 已全部加入 `UFPFormalization.lean` 统一导入
+- 已全部加入 `MUFPFormalization.lean` 统一导入
 - **全部六个模块通过 `lake build` 编译**
 - 修复 `HigherSpecCategory.lean` 字段名 `.matrix` → `.P` 及 `specExchangeLaw` 参数错误
 

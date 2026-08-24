@@ -24,14 +24,14 @@
 - `phase52_dynamic_spectrum_library.md`：**Phase 52：动态过程谱数值库开发**——超高能双星并合（inspiral-merger-ringdown 全阶段谱计算）、普朗克能标多体散射（量子引力尺度散射振幅谱）、实验对接（LIGO/Virgo/KAGRA）。**&#9203; 路线图已制定，待启动开发**。
 - **`phase60_category_verification.md` 🆕**：**Phase 60：范畴理论绝对性验证路线图**——三路径策略：C（Python 可执行范畴语义，数天）→ B（Agda 独立重形式化，数周）→ A（Lean 零 sorry 持续闭合，长期）。**当前最高优先级**。
 - **`phase61_physics_advancement.md` 🆕**：**Phase 61：物理理论补缺推进计划（基于 v0.9 客观终评）**——针对 `docs/针对v0.9版系列论文的客观评价.md` 指出的五大物理缺口（色规范/强子谱、重整化链条、黑洞量子演化、暴涨动力学、统一嵌入）制定补缺规划，完成判据 = 完整动力学链条 + Lean/Agda 形式化模块。**✅ Phase 61A（P1-4 暴涨完整动力学）已完成（2026-08-03）**：论文 `paper39_inflation_dynamics.md`（定理 D3.1）+ 数值 15/15 + Lean/Agda 双语言，P1-4 升格"纳入"。**✅ Phase 61B（P0-1 色规范/强子谱）已完成（2026-08-03）**：论文 `paper40_qcd_color_dynamics.md` + 数值 15/15 + Lean `ColorDynamics.lean`/Agda，P0-1 升格"纳入"。**✅ Phase 61C（P0-2 量子重整化链条）已完成（2026-08-04）**：论文 `paper41_renormalization_chain.md`（谱 Feynman/正则化/谱流→β/EFT）+ 数值 12/12 + Lean `RenormalizationChain.lean`，P0-2 升格"纳入"。**✅ Phase 61D（P1-3 黑洞量子演化）已完成（2026-08-04）**：论文 `paper42_black_hole_quantum_evolution.md`（霍金谱/蒸发动力学/Page 曲线谱公理推导/视界涨落/蒸发终点-反弹衔接/信息保持）+ 数值 35/35 + Lean 四模块零 `sorry`（含 rpow 立方根引理攻克）+ Agda，P1-3 升格"纳入"。**遗留开放项任务池见路线图 §七**（δg_μν 全量子化、反弹后宇宙学、Kerr 推广等）。下一步：P2-5 统一嵌入。
-- **`phase62_photon_topology.md` 🆕**：**Phase 62：光子拓扑-范畴理论推进计划**——基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于光子的理论研究笔记.md) 的拓扑分岔光子生成图像，规划四方向：P1 基础理论严格化（拓扑空间定义、光速不变定理、$c=\lambda\nu$ 与 $E=h\nu$ 拓扑定理）、P2 红移统一拓扑解释（含 UFPF 独有 Δ 修正项）、P3 交叉衍生效应定量化（6 类颠覆性预言）、P4 Lean/Agda 形式化。**⏳ 62A 系统化研究笔记已完成，62B-F 待推进**。
+- **`phase62_photon_topology.md` 🆕**：**Phase 62：光子拓扑-范畴理论推进计划**——基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于光子的理论研究笔记.md) 的拓扑分岔光子生成图像，规划四方向：P1 基础理论严格化（拓扑空间定义、光速不变定理、$c=\lambda\nu$ 与 $E=h\nu$ 拓扑定理）、P2 红移统一拓扑解释（含 MUFPF 独有 Δ 修正项）、P3 交叉衍生效应定量化（6 类颠覆性预言）、P4 Lean/Agda 形式化。**⏳ 62A 系统化研究笔记已完成，62B-F 待推进**。
 - `phase55_grothendieck_fibration_extensions.md`：**Phase 55：Grothendieck 纤维范畴扩展（Phase 55A-G）**——将"基空间上的谱族 = Grothendieck 纤维化"范式推广至噪声、Kerr、EFT、味丛、语境性层等 8 个候选，已完成 Lean 4 形式化与总参数丛汇总。**&#9989; 全部完成**。
 - `phase56_fibration_domain_generalization.md`：**Phase 56：谱丛精细纤维拆分跨领域推广（56A-D）**——将 Paper XXII 的 7 层嵌套纤维化方法论推广至 QCD、引力/黑洞、凝聚态/流体、味物理、宇宙学五大领域，统一为 Paper XXV。**&#128679; 路线图已制定**。
 - `phase22_spectral_dynamics_deepening.md`：**Phase 22：谱动力学深化**——$\mathbf{Rec}/\mathbf{Sp}$ 高阶范畴拓展、非平衡谱热力学、黑洞视界谱动力学、奇点谱消解、谱流体动力学。**✅ 概念框架全部完成**。
 - `phase23_26_papers_VI_IX.md`：**Phase 23–26：新论文规划**——Paper VI 谱流体动力学（**✅ v0.1**）、Paper VII 非平衡谱热力学（**✅ v0.1**）、Paper VIII 黑洞视界谱动力学（**✅ v0.1**）、Paper IX 奇点谱消解与量子宇宙学（**✅ v0.1**）。**全部完成**。
 - `phase27_spectral_dynamics_completion.md`：**Phase 27：谱动力学完善四方向**——多圈重整化（双圈β+DS修正 ✅）、暗物质完整谱模型（3候选 WIMP奇迹 ✅）、非线性大尺度宇宙修正（F₂核+1-loop SPT ✅）、黑洞蒸发完整演化定量描述（Page曲线 0.647 ✅）。**✅ 4/4 全部完成**。
 - **`phase63_meta_theorem_open_problems.md` 🆕**：**Phase 63：元定理完备性与体制间态开放问题推进路线图**——基于 2026-08-23 的元定理完备性讨论，整理五盲区（H1-H5 失效/无界算子/临界层/C_crit 锐变性/Koopman 提升）、体制间态理论（ε_hex 可计算性/拓扑分类/谱静默关系）、Lean 形式化闭合（BlindSpot1T1bComplete/GeneralMetaTheoremFramework sorry 消除）等 15 项开放问题，制定四阶段推进路线（形式化闭合 → 体制间态深化 → 盲区 2-5 形式化 → 论文整合）。**⏳ 第一阶段进行中**。
-- `u2f_fusion_roadmap.md`：**融合路线规划（跨理论融合地图）**——从一梦/王斌"时间膨胀八条解释路径"出发（`docs/回复 @王斌：第四个解释路径.md`），规划 UFPF 融合各理论路径的四阶段路线（§4）+ 各层完善性视角（§7，融合=架构工程）+ CNF 评价治理接口（§8，融合=双功能+一约束）；与检测矩阵对接说明（`paper/UFPF_检测矩阵对接对齐说明.md` §七）挂钩（路径集 8↔7 对齐链）。**性质**：方法论/规划登记（非数值验证笔记），各融合点按"笔记先行→论文提炼"单独推进。2026-08-14 自 `notes/04_lorentz_gravity/` 移入（内容横跨全架构，非洛伦兹/引力专属）。
+- `u2f_fusion_roadmap.md`：**融合路线规划（跨理论融合地图）**——从一梦/王斌"时间膨胀八条解释路径"出发（`docs/回复 @王斌：第四个解释路径.md`），规划 MUFPF 融合各理论路径的四阶段路线（§4）+ 各层完善性视角（§7，融合=架构工程）+ CNF 评价治理接口（§8，融合=双功能+一约束）；与检测矩阵对接说明（`paper/MUFPF_检测矩阵对接对齐说明.md` §七）挂钩（路径集 8↔7 对齐链）。**性质**：方法论/规划登记（非数值验证笔记），各融合点按"笔记先行→论文提炼"单独推进。2026-08-14 自 `notes/04_lorentz_gravity/` 移入（内容横跨全架构，非洛伦兹/引力专属）。
 
 > **Phase 30–42 全谱系完成 (2026-07-17)**：
 > - **Phase 53**：范畴→表示论桥梁——Rec/Sp → SU(2) → Cl(1,7) → 谱间隙全链断裂点修复（**✅ 全部完成**）
@@ -62,11 +62,11 @@
 Phase 9 开放问题已全面推进：奇异连续谱系统刻画（谱维数谱系 + 物理意义 + 谱对应保持谱型）、连续谱 LACI 计算、LACI 阈值维数依赖均已完成。新增测度论收敛率证明（NS-1M~NS-3M）与高维 IFS 推广。
 
 - **论文拆分（2026-07-13）**：原论文拆分为两篇独立论文
-  - Paper I：《通用不动点范畴框架 I：分形谱化理论》v2.30 — 纯数学理论
-  - Paper II：《通用不动点范畴框架 II：物理应用与实验验证》v2.17 — 物理应用
+  - Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》v2.30 — 纯数学理论
+  - Paper II：《元通用不动点函子范畴框架 II：物理应用与实验验证》v2.17 — 物理应用
 - **论文 III-IV（2026-07-16 新增）**：
-  - Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》v1.0 — $D$ 函子对 $\mathbf{Rec}$ 全域的三层谱分类完备性
-  - Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》v1.0 — $D$ 函子统一黑洞熵的两条弦论推导路径
+  - Paper III：《元通用不动点函子范畴框架 III：谱化函子的谱分类完备性定理》v1.0 — $D$ 函子对 $\mathbf{Rec}$ 全域的三层谱分类完备性
+  - Paper IV：《元通用不动点函子范畴框架 IV：从 Stretched Horizon 到 D-brane》v1.0 — $D$ 函子统一黑洞熵的两条弦论推导路径
 
 > **2026-07-13 开放问题推进更新**：Paper I §8.2 原有 3 个开放问题已全面推进，新增配套代码模块：`math_open_problems_advanced.py`、`numerical_engineering_open_problems.py`、`physics_open_problems_advanced.py`。全仓库 47 个单元测试通过。
 >

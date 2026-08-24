@@ -1,8 +1,8 @@
 # 五盲区物理系统对应表
 
-**文档编号**: UFPF-RN-BS-PHYS-001
+**文档编号**: MUFPF-RN-BS-PHYS-001
 **日期**: 2026-08-23
-**框架**: 通用不动点框架（Universal Fixed Point Framework, UFPF）
+**框架**: 通用不动点框架（Meta-Universal Fixed-Point Functorial Framework, MUFPF）
 **状态**: 草案 v0.1
 **前置文档**: `meta_theorem_completeness_discussion_2026-08-23.md`（五盲区分析）
 
@@ -186,7 +186,7 @@ $C_\mathrm{crit}$ 作为尖锐相变阈值，其存在性依赖辫子六边形�
 
 ### 6.1 盲区描述
 
-UFPF 通过 Koopman 算子将非线性系统提升到线性框架。但提升后的算子可能不落入标准 Hilbert 空间结构：
+MUFPF 通过 Koopman 算子将非线性系统提升到线性框架。但提升后的算子可能不落入标准 Hilbert 空间结构：
 - **时变系统**：Koopman 算子时序依赖，不对应单一算子 → 需推广到"算子族"或"算子丛"
 - **混沌系统**：Koopman 算子可能具有连续谱且 $C_\mathrm{crit}$ 不存在 → 可能落入盲区 4
 - **随机系统**：Koopman 扩展在 Fock 空间上 → 超出标准 Hilbert 空间结构
@@ -253,13 +253,13 @@ UFPF 通过 Koopman 算子将非线性系统提升到线性框架。但提升后
 
 ## 9. 参考文献
 
-### UFPF 内部文献
+### MUFPF 内部文献
 - Paper I §5.2, Definition 5.1: 谱静默判据
 - Paper I §3.6, Definition 3.11: LACI 定义
 - `research_notes/meta_theorem_completeness_discussion_2026-08-23.md`: 五盲区分析
 - `research_notes/inter_regime_state_definition_2026-08-23.md`: 体制间态定义
-- `formal_proof/UFPFormalization/UFPFormalization/SpectralSilenceBlindSpot1.lean`: 盲区 1 反例
-- `formal_proof/UFPFormalization/UFPFormalization/BlindSpot1T1bComplete.lean`: T1b 完整证明链
+- `formal_proof/MUFPFormalization/MUFPFormalization/SpectralSilenceBlindSpot1.lean`: 盲区 1 反例
+- `formal_proof/MUFPFormalization/MUFPFormalization/BlindSpot1T1bComplete.lean`: T1b 完整证明链
 
 ### 标准文献
 - Reed, M., & Simon, B. (1980). *Methods of Modern Mathematical Physics I: Functional Analysis*. Academic Press. — 无界算子与谱定理
@@ -278,4 +278,4 @@ UFPF 通过 Koopman 算子将非线性系统提升到线性框架。但提升后
 | v0.1 | 2026-08-23 | 初稿：五盲区物理系统对应表、汇总对比表、路线图衔接 |
 | v0.2 | 2026-08-23 | 引入命名方案（待验证） |
 
-> **命名说明（待验证）**：本文档中四体制分类（A/B1/B2/C）及其五个盲区属于有界算子 + H1-H5 假设下的四体制基础框架的覆盖范围分析；盲区的解决方案（算子代数推广、体制间态、平展统一）属于扩展猜想体系。命名方案（狭义 UFPF / 广义 UFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
+> **命名说明（待验证）**：本文档中四体制分类（A/B1/B2/C）及其五个盲区属于有界算子 + H1-H5 假设下的四体制基础框架的覆盖范围分析；盲区的解决方案（算子代数推广、体制间态、平展统一）属于扩展猜想体系。命名方案（狭义 MUFPF / 广义 MUFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。

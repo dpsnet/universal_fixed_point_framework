@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 VII：非平衡谱热力学——谱熵、涨落与时间箭头
+# 元通用不动点函子范畴框架 VII：非平衡谱热力学——谱熵、涨落与时间箭头
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -225,11 +225,11 @@ $$\frac{dS}{dt} = \frac{1}{T} \sum_{i,j} L_{ij} X_i X_j$$
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱对易子。
-- [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学》，v1.0。湍流 Onsager 关系、C* 代数诠释。
-- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
-- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.32。无界算子与 Hille-Yosida 半群（§2.10）。
+- [V] Paper V：《元通用不动点函子范畴框架 V：力的谱动力学》，v1.1。谱流方程、谱对易子。
+- [VI] Paper VI：《元通用不动点函子范畴框架 VI：谱流体动力学》，v1.0。湍流 Onsager 关系、C* 代数诠释。
+- [XI] Paper XI：《元通用不动点函子范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
+- [XII] Paper XII：《元通用不动点函子范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
 - Evans, D.J., Cohen, E.G.D. & Morriss, G.P. (1993). "Probability of second law violations in shearing steady states." *Phys. Rev. Lett.* 71, 2401.
 - Crooks, G.E. (1999). "Entropy production fluctuation theorem and the nonequilibrium work relation for free energy differences." *Phys. Rev. E* 60, 2721.
 - Lindblad, G. (1975). "Completely positive maps and entropy inequalities." *Commun. Math. Phys.* 40, 147.
@@ -242,7 +242,7 @@ $$\frac{dS}{dt} = \frac{1}{T} \sum_{i,j} L_{ij} X_i X_j$$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VII，非平衡谱热力学——谱熵、涨落与时间箭头。v1.1 新增 §8 涨落-耗散定理的谱范畴诠释，将 FDT 重新诠释为 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的应用，统一热力学三大定律。主要内容：
+《元通用不动点函子范畴框架》系列论文 VII，非平衡谱热力学——谱熵、涨落与时间箭头。v1.1 新增 §8 涨落-耗散定理的谱范畴诠释，将 FDT 重新诠释为 $\mathcal{S}el \dashv \mathcal{D}iss$ 伴随对在统计物理中的应用，统一热力学三大定律。主要内容：
 - 固定基谱熵定义与基本性质（命题 2.1）
 - 热力学第二定律的谱推导（定理 3.1：$\Delta S \ge 0$）
 - Loschmidt 悖论的谱消解（时间箭头在观测基中）
@@ -259,3 +259,4 @@ $$\frac{dS}{dt} = \frac{1}{T} \sum_{i,j} L_{ij} X_i X_j$$
 | v1.0 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
 | v1.0 | 2026-07-17 | 新增 §2.3 连续谱熵、§4.2 Onsager-Casimir 对称性、注 5.1 Hille-Yosida 松弛 |
 | v0.1 | 2026-07-16 | 初始版本 |
+| v1.2 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

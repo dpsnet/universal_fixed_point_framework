@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXIII：CH₃CHO n→π* 跃迁的谱流第一性原理推导
+# 元通用不动点函子范畴框架 XXIII：CH₃CHO n→π* 跃迁的谱流第一性原理推导
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -10,7 +10,7 @@
 
 **前置依赖**：Paper V（谱流方程）、Paper VI（谱间隙动力学）、Paper XV（谱量子化学）、Paper XXI（Grothendieck 纤维化）、Paper XXII（精细纤维拆分方法论）。
 
-**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV、Paper XXI 及 Paper XXII。本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **EHT**：扩展休克尔理论（Extended Hückel Theory）
@@ -21,7 +21,7 @@
 - **FC**：弗兰克-康登因子（Franck-Condon Factor）
 - **SOC**：自旋-轨道耦合（Spin-Orbit Coupling）
 - **VSIE**：价态电离能（Valence State Ionization Energy）
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Functorial Framework）
 
 自创术语与标准概念对照如下：
 - **谱流严格解**（exact spectral flow solution）：谱流方程在两能级系统中的闭式解析解
@@ -35,7 +35,7 @@
 
 CH₃CHO（乙醛）的 n→π* 跃迁——氧孤对电子（n 轨道）到羰基反键轨道（π* 轨道）的激发——是光谱学中研究最充分的跃迁之一，气相实验值为 4.1 eV [1]。传统上，该跃迁需通过量子化学计算（TDDFT、EOM-CCSD、CASSCF 等）来预测，精度取决于基组和方法。
 
-谱框架（UFPF）声称量子化学是其纤维化结构的一种实例。然而，此前对 CH₃CHO 的处理——无论是 3-轨道 EHT 模型（6.4 eV，56% 偏差）还是 PySCF TDHF/6-31G* 调用（3.985 eV，2.8% 偏差）——都未能从谱框架内部出发进行推导。EHT 是半经验近似，TDHF 是外部多体微扰方法，两者都不是谱流方程的直接求解。
+谱框架（MUFPF）声称量子化学是其纤维化结构的一种实例。然而，此前对 CH₃CHO 的处理——无论是 3-轨道 EHT 模型（6.4 eV，56% 偏差）还是 PySCF TDHF/6-31G* 调用（3.985 eV，2.8% 偏差）——都未能从谱框架内部出发进行推导。EHT 是半经验近似，TDHF 是外部多体微扰方法，两者都不是谱流方程的直接求解。
 
 本文填补这一空白。
 
@@ -630,16 +630,9 @@ V_{n\pi^*} & V_{\pi\pi^*} & \epsilon_{\pi^*}
 
 ---
 
-## 版本记录
-
-**版本**：v0.3
-
-**日期**：2026-07-25
-
-**状态**：成熟。谱流全链推导完成（3.958 eV，3.5%偏差），Bun(Corr)闭式定理验证通过，7层纤维化传播完整。
-
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v0.4 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 | v0.3 | 2026-07-25 | 成熟版。全链推导完成，Bun(Corr)闭式定理精确化（ΔE_corr = −0.072 eV）。 |

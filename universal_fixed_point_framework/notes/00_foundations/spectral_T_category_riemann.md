@@ -1148,9 +1148,9 @@ a        ratio        Δ%         等距?
 
 ---
 
-## 附录 D：与 UFPF 整体架构的关系
+## 附录 D：与 MUFPF 整体架构的关系
 
-本笔记构造的谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是 Temp/RG 纤维范畴体系的核心构件，位于 UFPF 五层架构的顶层（层 V——纤维范畴层）。
+本笔记构造的谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 是 Temp/RG 纤维范畴体系的核心构件，位于 MUFPF 五层架构的顶层（层 V——纤维范畴层）。
 
 完整架构分析见：[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)
 

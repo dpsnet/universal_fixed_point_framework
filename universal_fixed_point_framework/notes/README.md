@@ -18,7 +18,7 @@
 | **全 29 参数验证 + ε_K 交叉检验** | ✅ **29/29 已验证** | `scripts/paperX_all_predictions.py` |
 | **d_H 结构分析与机器验证** | ✅ **Paper 30 v1.1** （11 项 Lean 证明 + 2 项数值验证） | `notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper30_dH_structural_analysis.md` |
 | **B2 连续极限（分形→光滑时空）** | ✅ **理论闭合（Paper XXXIV v1.2）** — 6/6 子步骤 | `notes/08_first_principles/b2_continuum_limit_analysis.md`、`paper/paper34_continuum_limit.md` |
-| **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 完整证明链；**hDiamLeOne 闭合（2026-08-04，O9）**——吸引子 ⊆ [0,1] 与 diam ≤ 1 机器证明 | `formal_proof/UFPFormalization/UFPFormalization/ContinuumLimit.lean` |
+| **ContinuumLimit.lean 形式化** | ✅ $c_1 < S_4$ 机器证明，`depthLayering` 完整证明链；**hDiamLeOne 闭合（2026-08-04，O9）**——吸引子 ⊆ [0,1] 与 diam ≤ 1 机器证明 | `formal_proof/MUFPFormalization/MUFPFormalization/ContinuumLimit.lean` |
 | **假设-演绎论证方法论** | ✅ **已确立（2026-08-04）** — 三层级论证强度（①预测检验 ②框架自洽 ③先验导出）+ A_GR 谱假设定位 + 非循环性判据；提炼于 Paper XXXVII §4.4 与勘误 §一·补充 | `notes/00_foundations/spectral_hypothesis_deductive_methodology.md`、`paper/paper37_open_problems.md` |
 | **引力范畴论起源** | ✅ **Paper XXXV v0.2** — 交换律偏差 = 引力 | `notes/08_first_principles/04_gravity_analysis.md`、`paper/paper35_gravity_origin.md` |
 | **开放问题系统综述** | ✅ **Paper XXXVII v0.1** — A/B/C 三组分类 + 层次距离 + Bott-Moran 桥 | `notes/08_first_principles/05_hierarchy_distance.md`、`notes/08_first_principles/spectral_hierarchy_evolution_analysis.md`、`paper/paper37_open_problems.md` |
@@ -96,9 +96,9 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 
 ## 重要公告：框架更名计划（2026-08-24）
 
-**UFPF → MUFPF 更名计划**
+**MUFPF → MUFPF 更名计划**
 
-由于当前框架名称 **UFPF**（Universal Fixed Point Framework）与 IEEE 生物图像识别框架（Universal Feature Perception Framework, UFPF）在国际英文检索上存在严重冲突，导致学术流量被彻底分流，现启动更名计划。
+由于当前框架名称 **MUFPF**（Meta-Universal Fixed-Point Functorial Framework）与 IEEE 生物图像识别框架（Universal Feature Perception Framework, MUFPF）在国际英文检索上存在严重冲突，导致学术流量被彻底分流，现启动更名计划。
 
 **新名称**：**MUFPF**（Meta-Universal Fixed-Point Functorial Framework）
 - 中文名称：元通用不动点函子范畴框架

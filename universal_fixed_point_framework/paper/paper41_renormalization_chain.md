@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XLI：量子重整化完整链条——谱 Feynman、谱正则化、谱流到 β 函数与 EFT 层级
+# 元通用不动点函子范畴框架 XLI：量子重整化完整链条——谱 Feynman、谱正则化、谱流到 β 函数与 EFT 层级
 
 **版本**：v0.4（2026-08-07）
 **系列定位**：Phase 61 物理理论补缺计划 P0-2（`roadmap/phase61_physics_advancement.md`）
@@ -247,11 +247,11 @@ v0.3 进一步闭合 61C 非微扰开放项：**非微扰重整化与 P0-1 禁�
 
 ---
 
-## 版本记录
-
-| 版本 | 日期 | 变更 |
-|:--:|:--|:--|
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|---|---|---|
 | v0.1 | 2026-08-03 | 初版。C1–C5 五项贡献；定理 2.1 谱单圈有限性、定理 3.1 谱流→β 函数统一、定理 3.2 圈数-对易子对应、定理 4.1 EFT 层级谱静默。 |
 | v0.2 | 2026-08-05 | **61C 深化**：定理 5.1 谱静默"单向转化"严格上界（Schur 补 + Weyl，$|\lambda_k(A_{\mathrm{UV}}) - \lambda_k(A_{\mathrm{IR}})| \le \varepsilon^2\|W_{lh}\|^2/d$，δ_silence ≥ 1 数值边界 0.992）+ 定理 5.2 β 圈图求和测度论严格化（1–3 圈系数 (3, −17/3, 145/8) 匹配 MS-bar、收敛半径 49.4）；`scripts/paperX_rg_chain_deepen.py` 8/8 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
 | v0.3 | 2026-08-05 | **非微扰重整化与 P0-1 禁闭谱判据衔接（定理 5.3，§5.3）**：跨味 RGE 微扰 Landau pole 圈阶漂移带 [122, 579] MeV（单圈 121.8 / 两圈 579.4，两圈 α_s(m_c) = 0.413 ≈ PDG 0.40 独立锚点）含谱框架非微扰禁闭标度 210 MeV（圈阶无关），微扰失效（α_s^pert(210) = 1.28 > 1）由非微扰有效耦合 α_s^eff = 0.39 接管；`scripts/paperX_rg_chain_nonpert.py` 6/6 注册 `run_all_tests.py`；§6 数值验证补充、§8 开放问题更新。 |
 | v0.4 | 2026-08-07 | **定理 3.1 严格性审计与修正（61C §八 开放项闭合）+ 结构补全**：① 发现两组数学张力（Hermiticity：无 i 形式谱流不保 Hermitian → 修正为 $dA_t/dt = i[G,A_t]$；等谱性：标准谱流特征值不变 → 原 β 公式为零）——**修正定理 3.1 落地**：$\beta(\lambda_k) = \sum_i \langle k|A_{F,i}|k\rangle\,\beta_i(g)$（Feynman-Hellmann 链式法则 + 耦合跑动，等谱/非等谱机制分离），完整四步证明 + 推论 3.1a；`scripts/paperX_spectral_flow_isospectral.py` 7/7 注册（审计过程入研究笔记 `spectral_renormalization_chain.md` §9.5）；② β Borel 求和评估（`paperX_beta_borel.py` 5/5：IR renormalon 障碍，方向受障碍）；③ §7 形式化 G 约定统一说明（反 Hermitian ↔ G Hermitian + i）；④ **新增摘要**；⑤ §8 结论补充主定理成果；⑥ **δ_silence 精确谱指数闭合**（定理 5.1 诚实边界：δ = 1，Schur 补 1/d 结构，`paperX_silence_exponent.py` 4/4）；⑦ **定理 5.3 非微扰求值推进瞬子路径**（`paperX_instanton_borel.py` 4/4：Fubini-Lipatov 作用量 8π²/λ = Borel 奇点位置，e^{−S} 强耦合区显著）；§6 v0.4 深化表、§5.3 诚实边界更新。版本 v0.3 → v0.4。 |
+| v0.5 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|

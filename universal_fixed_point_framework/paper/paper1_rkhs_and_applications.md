@@ -1,4 +1,4 @@
-# RKHS 收敛率、应用与扩展（通用不动点范畴框架 I 伴生文件）
+# RKHS 收敛率、应用与扩展（元通用不动点函子范畴框架 I 伴生文件）
 
 > 本文件为 `paper1_fractal_spectral_derecursion.md` 的伴生文件，包含原论文 §7 全部内容：RKHS 收敛率理论、理论转化/EFT 等价性框架、Kerr Teukolsky-Leaver 连分数应用、D 函子耗散扩展、纯数学理论短板解决（定理 Hausdorff 维数凹性/Ledrappier-Young 维数分解/拓扑熵–谱间隙不等式）。定理编号、章节编号与主文件保持一致，正文中的引用直接指向主文件对应章节。
 
@@ -928,3 +928,11 @@ $$\boxed{\mathcal{S}_{\text{Teuk}} \cong \mathcal{S}_{\text{Rheo}} \cong \mathca
 **日期**：2026-07-25
 
 **说明**：本文件为 `paper1_fractal_spectral_derecursion.md` v2.35 拆分出的伴生文件，包含原论文 §7 全部内容（RKHS 收敛率、EFT 等价性框架、Kerr 应用、耗散扩展、纯数学定理、谱丛理论与 Leaver 三对角矩阵细分纤维化）。定理编号、章节编号与主文件保持一致，便于交叉引用。
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

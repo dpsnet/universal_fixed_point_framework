@@ -4,13 +4,13 @@
 **前置文档**:
 - `research_notes/meta_theorem_completeness_discussion_2026-08-23.md`（五盲区分析）
 - `research_notes/inter_regime_state_definition_2026-08-23.md`（体制间态定义）
-- `formal_proof/UFPFormalization/UFPFormalization/GeneralMetaTheoremFramework.lean`（三层推广框架）
-- `formal_proof/UFPFormalization/UFPFormalization/BlindSpot1T1bComplete.lean`（T1b 完整证明链）
-- `formal_proof/UFPFormalization/UFPFormalization/MetaTheorem.lean`（四体制元定理）
+- `formal_proof/MUFPFormalization/MUFPFormalization/GeneralMetaTheoremFramework.lean`（三层推广框架）
+- `formal_proof/MUFPFormalization/MUFPFormalization/BlindSpot1T1bComplete.lean`（T1b 完整证明链）
+- `formal_proof/MUFPFormalization/MUFPFormalization/MetaTheorem.lean`（四体制元定理）
 
 **关联阶段**: Phase 16B（机器证明）、Phase 60（范畴理论绝对性验证）
 
-**重要公告**: 框架更名计划启动（UFPF → MUFPF），详见 `mu_renaming_plan.md`
+**重要公告**: 框架更名计划启动（MUFPF → MUFPF），详见 `mu_renaming_plan.md`
 
 ---
 
@@ -307,7 +307,7 @@ Phase 63 推进路线图依赖关系
 ### 工程约束
 
 - 研究笔记与路线图文档不可在正式论文中引用
-- 论文必须自洽，仅引用已发表的 UFPF 论文和标准学术文献
+- 论文必须自洽，仅引用已发表的 MUFPF 论文和标准学术文献
 - Python 图像脚本须包含中文字体设置和数学符号渲染配置
 
 ---
@@ -347,4 +347,4 @@ Phase 63 推进路线图依赖关系
 | v0.2 | 2026-08-23 | 引入命名方案（待验证） |
 | v0.3 | 2026-08-24 | **第一阶段全面闭合**：全量审计 101 个 .lean 文件确认零 sorry；A1–A5 标记为已完成；D1 状态更新为"谱分析笔记已完成"；优先级排序更新，短期焦点转为 C1/D1/C3；技术风险表更新；衔接表更新 |
 | v0.4 | 2026-08-24 | **命名方案移除**：命名方案在 notes 中尚未充分研究并自洽验证，从 paper 目录文档中移除，保留在 notes 和 roadmap 中作为研究记录 |
-| v0.5 | 2026-08-24 | **更名计划启动**：UFPF → MUFPF 更名计划（解决 IEEE 命名冲突），详见 `mu_renaming_plan.md` |
+| v0.5 | 2026-08-24 | **更名计划启动**：MUFPF → MUFPF 更名计划（解决 IEEE 命名冲突），详见 `mu_renaming_plan.md` |

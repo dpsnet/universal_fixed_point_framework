@@ -23,7 +23,7 @@
 - **主定理 E2**（流变 Lorentz 群同构）：$SO^+_{\text{rheo}}(1,1) \cong \mathrm{Aut}_{\partial\mathbf{Rec}_D^{\text{rheo}}}(\mathbf{Spec}_{\text{fl}}) \cong SO^+(1,1)$，由 $\mathfrak{so}(1,1)$ Lie 代数同构 + 指数映射唯一性得到。
 - **主定理 E3**（三类临界现象的统一范畴论刻画）：Lorentz 因子发散、黑洞 Hawking 发散、流变硬化发散是同一函子 $D: \mathbf{Rec} \to \mathbf{Spec}$ 在 $\partial\mathbf{Rec}_D$ 边界附近的三种物理实现。
 
-严格化遵循 UFPF 公理层级非反馈原则：所有证明仅使用元公理 1-2（递归存在、谱去递归）与结构定理（Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$），流变层不反馈到上层。
+严格化遵循 MUFPF 公理层级非反馈原则：所有证明仅使用元公理 1-2（递归存在、谱去递归）与结构定理（Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$），流变层不反馈到上层。
 
 ---
 
@@ -68,7 +68,7 @@ Hawking 情形：Paper VIII 定理 3.1 给出 $T_H = \Delta\lambda_{\min}/(2\pi)
 - **状态空间** $\mathcal{S}_{\text{fl}} = L^2(\Omega; \mathbf{v}, \sigma) \times \mathbb{R}_{>0}$，包含速度场 $\mathbf{v}: \Omega \to \mathbb{R}^3$、微观结构序参量 $\sigma: \Omega \to \mathbb{R}^N$（如分子取向张量、颗粒接触网络序参量）、剪切率 $\dot\gamma \in \mathbb{R}_{>0}$；
 - **演化算子** $\Phi_\phi: \mathcal{S}_{\text{fl}} \to \mathcal{S}_{\text{fl}}$，由非牛顿本构方程（Carreau、Herschel-Bulkley、相对论型硬化等）的解算子给出，参数 $\phi = \log(\dot\gamma/\dot\gamma_0)$ 为流变 rapidity。
 
-**命题 2.2**（流变递归 ∈ Rec）。$R_{\text{fl}}$ 满足 UFPF 元公理 1（递归存在性）：$\Phi_\phi$ 是 $\mathcal{S}_{\text{fl}}$ 上的自函子，且满足半群性质 $\Phi_{\phi_1 + \phi_2} = \Phi_{\phi_1} \circ \Phi_{\phi_2}$（流变 rapidity 可加性）。
+**命题 2.2**（流变递归 ∈ Rec）。$R_{\text{fl}}$ 满足 MUFPF 元公理 1（递归存在性）：$\Phi_\phi$ 是 $\mathcal{S}_{\text{fl}}$ 上的自函子，且满足半群性质 $\Phi_{\phi_1 + \phi_2} = \Phi_{\phi_1} \circ \Phi_{\phi_2}$（流变 rapidity 可加性）。
 
 **证明**。本构方程的适定性（在 Sobolev 空间 $H^s(\Omega)$ 中，$s > d/2 + 1$）保证解算子 $\Phi_\phi$ 的存在性。半群性质来自流变 rapidity 的可加性：$\phi_1 + \phi_2 = \log(\dot\gamma_1/\dot\gamma_0) + \log(\dot\gamma_2/\dot\gamma_0) = \log(\dot\gamma_1 \dot\gamma_2 / \dot\gamma_0^2)$，对应剪切率乘法叠加 $\dot\gamma_{\text{总}} = \dot\gamma_0 \cdot (\dot\gamma_1/\dot\gamma_0)(\dot\gamma_2/\dot\gamma_0)$。$\square$
 
@@ -261,9 +261,9 @@ $$SO^+_{\text{rheo}}(1,1) \hookrightarrow SO^+(1,3),$$
 
 ## 7. 公理层级非反馈原则的验证
 
-### 7.1 UFPF 公理层级
+### 7.1 MUFPF 公理层级
 
-UFPF 严格区分三层公理：
+MUFPF 严格区分三层公理：
 
 1. **元公理**（不可修改）：元公理 1（递归存在）、元公理 2（谱去递归函子 $D$）；
 2. **结构定理**（固定形式）：Paper V 谱流方程、Paper VIII $\partial\mathbf{Rec}_D$、Paper XVI Lorentz 谱流；
@@ -278,7 +278,7 @@ UFPF 严格区分三层公理：
 - 主定理 E2 的证明使用：(a) $\mathfrak{so}(1,1)$ Lie 代数（Paper XVI 结构定理）；(b) 指数映射唯一性（Lie 群理论）；(c) Paper XVI 主定理 9 的证明模式。不修改上层。
 - 主定理 E3 的证明使用：(a) 函子 $D: \mathbf{Rec} \to \mathbf{Spec}$（元公理 2）；(b) Paper VIII $\partial\mathbf{Rec}_D$（结构定理）；(c) Paper V 谱流方程（结构定理）。不修改上层。
 
-**推论 7.2**。流变层的实验检验（F3）若给出与预测不符的结果，仅影响流变层的实例假设（如相对论型硬化定律的适用范围），不影响元公理或结构定理。这是 UFPF 层级结构的稳健性保证。
+**推论 7.2**。流变层的实验检验（F3）若给出与预测不符的结果，仅影响流变层的实例假设（如相对论型硬化定律的适用范围），不影响元公理或结构定理。这是 MUFPF 层级结构的稳健性保证。
 
 ### 7.3 流变层假设的可替换性
 
@@ -358,7 +358,7 @@ UFPF 严格区分三层公理：
 
 ## 11. 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱流方程、谱间隙-弛豫时间对应
 - **Paper VI**：`paper/paper6_fluid_spectral_dynamics.md` — 流体谱动力学（B1-B3 公理、§8 非牛顿流变谱动力学）

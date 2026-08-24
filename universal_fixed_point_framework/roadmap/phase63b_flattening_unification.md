@@ -2,7 +2,7 @@
 
 **阶段编号**: Phase 63b
 **日期**: 2026-08-23
-**框架**: Universal Fixed Point Framework (UFPF)
+**框架**: Meta-Universal Fixed-Point Functorial Framework (MUFPF)
 **状态**: 理论推导规划阶段（命名方案尚未充分验证，保留在 roadmap 中作为研究记录）
 **前置阶段**: Phase 63（元定理开放问题）、Phase 62（光子拓扑）
 **关联阶段**: Phase 13（理论转化）、Phase 19（谱分类）、Phase 30（无穷维桥接）
@@ -13,9 +13,9 @@
 
 | 缩写 | 全称 |
 |------|------|
-| UFPF | Universal Fixed Point Framework（全域不动点框架，总称） |
-| 狭义 UFPF | Original UFPF（UFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架，已具备部分严格数学结果 |
-| 广义 UFPF | Generalized UFPF（G-UFPF）：包含平展统一猜想、体制间态、算子代数推广、Gödel-Koopman 算子等全部扩展的猜想体系 |
+| MUFPF | Meta-Universal Fixed-Point Functorial Framework（全域不动点框架，总称） |
+| 狭义 MUFPF | Original MUFPF（MUFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架，已具备部分严格数学结果 |
+| 广义 MUFPF | Generalized MUFPF（G-MUFPF）：包含平展统一猜想、体制间态、算子代数推广、Gödel-Koopman 算子等全部扩展的猜想体系 |
 | Rec | Recursive Category（递归范畴） |
 | Sp | Spectral Category（谱范畴） |
 | D | Decursion Functor（去递归函子） |
@@ -24,7 +24,7 @@
 | QNM | Quasi-Normal Mode（准正规模式） |
 | RKHS | Reproducing Kernel Hilbert Space（再生核 Hilbert 空间） |
 
-> **命名说明**：本文档将原始在有界算子、H1-H5 假设下的四体制框架称为**狭义 UFPF**（UFPF₀）；将包含 N-平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、算子代数推广（von Neumann 代数、Tomita-Takesaki）、Gödel-Koopman 算子对应等全部扩展猜想的完整体系命名为**广义 UFPF**（G-UFPF）。狭义 UFPF 是广义 UFPF 在强假设下的特例；广义 UFPF 大部分内容尚为猜想，仅有限维具备数值证据，无穷维严格证明待完成。本文档所述平展统一猜想、体制间态、Gödel-Koopman 算子等内容均属于**广义 UFPF**。
+> **命名说明**：本文档将原始在有界算子、H1-H5 假设下的四体制框架称为**狭义 MUFPF**（MUFPF₀）；将包含 N-平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、算子代数推广（von Neumann 代数、Tomita-Takesaki）、Gödel-Koopman 算子对应等全部扩展猜想的完整体系命名为**广义 MUFPF**（G-MUFPF）。狭义 MUFPF 是广义 MUFPF 在强假设下的特例；广义 MUFPF 大部分内容尚为猜想，仅有限维具备数值证据，无穷维严格证明待完成。本文档所述平展统一猜想、体制间态、Gödel-Koopman 算子等内容均属于**广义 MUFPF**。
 
 ---
 
@@ -32,7 +32,7 @@
 
 ### 1.1 背景
 
-在元定理完备性讨论（Phase 63）中，**狭义 UFPF**（UFPF₀，即有界算子 + H1-H5 假设下的四体制框架）识别出五类"盲区"——当前形式无法直接分类的系统。后续理论分析揭示了三个关键洞察：
+在元定理完备性讨论（Phase 63）中，**狭义 MUFPF**（MUFPF₀，即有界算子 + H1-H5 假设下的四体制框架）识别出五类"盲区"——当前形式无法直接分类的系统。后续理论分析揭示了三个关键洞察：
 
 1. **静态系统 = 递归无穷极限**：静态/代数结构可通过恒等递归 $f = \mathrm{id}$ 嵌入 Rec 范畴，对应 $\mu = 0$（不动点），$\lambda = 1$
 2. **引力已有谱推导**：Paper XXXV 确立引力来源，外部量子引力方案（弦理论、LQG 等）是实例假设而非未覆盖系统
@@ -153,7 +153,7 @@ $$B2 \xrightarrow{N \text{ 增大}} C \xrightarrow{N \to \infty} A$$
 
 #### C1. 自指深度与 Gödel 静默
 
-**目标**：证明 Cubitt 谱间隙不可判定性对应于 UFPF 的谱静默判据。
+**目标**：证明 Cubitt 谱间隙不可判定性对应于 MUFPF 的谱静默判据。
 
 **推导步骤**：
 1. 分析 Cubitt 系统的转移算子 $T_{\mathrm{Cubitt}}$
@@ -223,7 +223,7 @@ $$B2 \xrightarrow{N \text{ 增大}} C \xrightarrow{N \to \infty} A$$
 
 #### D4. 推论 3.4（自洽理论覆盖推论）
 
-**推论**：设 $T$ 为任意物理理论假说。若 $T$ 内部严格自洽，则 $T$ 被**广义 UFPF** 覆盖。
+**推论**：设 $T$ 为任意物理理论假说。若 $T$ 内部严格自洽，则 $T$ 被**广义 MUFPF** 覆盖。
 
 **证明**：$T$ 自洽 $\Rightarrow$ 具有形式公理体系 $\mathcal{A}_T$ $\Rightarrow$ 推理规则构成 Rec step 映射 $\Rightarrow$ $T \in \mathrm{Ob}(\mathrm{Rec})$ $\Rightarrow$ 由猜想 3.1，$\exists N^*$ 使得 $\mathrm{Flat}_{N^*}(T)$ 被分类。$\square$
 
@@ -233,13 +233,13 @@ $$B2 \xrightarrow{N \text{ 增大}} C \xrightarrow{N \to \infty} A$$
 
 #### D5. 猜想 3.5（最优理论存在猜想）
 
-> **归属说明**：猜想 3.5 属于**广义 UFPF**（G-UFPF）内部**额外更强的独立猜想**。广义 UFPF 的核心覆盖能力（推论 3.4）不依赖猜想 3.5 成立。
+> **归属说明**：猜想 3.5 属于**广义 MUFPF**（G-MUFPF）内部**额外更强的独立猜想**。广义 MUFPF 的核心覆盖能力（推论 3.4）不依赖猜想 3.5 成立。
 
 **陈述**：存在物理理论 $T^*$ 满足五重性质：自洽、完备、覆盖、信息丰富、正确。
 
-**论证**：设 $T^*$ 为描述宇宙的真实理论。由推论 3.4，$T^*$ 自洽 $\Rightarrow$ **广义 UFPF** 覆盖。宇宙具有非平庸动力学 $\Rightarrow$ $N^*$ 在中层体制 $\Rightarrow$ 信息丰富。
+**论证**：设 $T^*$ 为描述宇宙的真实理论。由推论 3.4，$T^*$ 自洽 $\Rightarrow$ **广义 MUFPF** 覆盖。宇宙具有非平庸动力学 $\Rightarrow$ $N^*$ 在中层体制 $\Rightarrow$ 信息丰富。
 
-**形式化**：$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \mathrm{Covered}_{\mathrm{UFPF}}(T^*) \wedge \mathrm{Rich}(N^*) \wedge \mathrm{Correct}(T^*)$
+**形式化**：$\exists T^* : \mathrm{Consistent}(T^*) \wedge \mathrm{Complete}(T^*) \wedge \mathrm{Covered}_{\mathrm{MUFPF}}(T^*) \wedge \mathrm{Rich}(N^*) \wedge \mathrm{Correct}(T^*)$
 
 **详细论证**：见 `research_notes/flattening_unification_conjecture_2026-08-23.md` §3 猜想 3.5。
 
@@ -393,8 +393,8 @@ theorem flattening_unification :
 |------|------|------|
 | v0.1 | 2026-08-23 | 初版创建：理论推导大纲、数值验证、数学定义 |
 | v0.2 | 2026-08-23 | 新增实验验证计划（EVP），更新开放问题 F-15~F-19，更新文件索引 |
-| v0.3 | 2026-08-23 | 引入狭义 UFPF（UFPF₀）/ 广义 UFPF（G-UFPF）命名方案，更新缩写回顾表与命名说明 |
+| v0.3 | 2026-08-23 | 引入狭义 MUFPF（MUFPF₀）/ 广义 MUFPF（G-MUFPF）命名方案，更新缩写回顾表与命名说明 |
 
 ---
 
-*本文档为 UFPF 内部路线图文档。正式论文需自包含，仅引用已发表 UFPF 论文和标准学术文献。*
+*本文档为 MUFPF 内部路线图文档。正式论文需自包含，仅引用已发表 MUFPF 论文和标准学术文献。*

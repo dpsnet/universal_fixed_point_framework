@@ -1,8 +1,8 @@
 # θ-C 独立性矛盾的谱分析
 
-**文档编号**: UFPF-RN-THETA-C-INDEP-001
+**文档编号**: MUFPF-RN-THETA-C-INDEP-001
 **日期**: 2026-08-24
-**框架**: 通用不动点框架（Universal Fixed Point Framework, UFPF）
+**框架**: 通用不动点框架（Meta-Universal Fixed-Point Functorial Framework, MUFPF）
 **状态**: 研究笔记 v1.0
 **前置文档**: `inter_regime_state_definition_2026-08-23.md`，`flattening_unification_conjecture_2026-08-23.md`
 **相关开放问题**: Phase 63-D1（数值验证），Phase 63-F-7（平展统一猜想）
@@ -13,7 +13,7 @@
 
 ### 1.1 参数定义回顾
 
-在 UFPF 体制间态理论（§4.5, `inter_regime_state_definition_2026-08-23.md`）中，六边形误差
+在 MUFPF 体制间态理论（§4.5, `inter_regime_state_definition_2026-08-23.md`）中，六边形误差
 
 $$\epsilon_\mathrm{hex} = \epsilon_\mathrm{hex}(C, \kappa, \theta)$$
 
@@ -93,7 +93,7 @@ $$P_\mu(\theta \in B \mid C = c) \neq P_\mu(\theta \in B)$$
 | 函数独立性 | $C$ 和 $\theta$ 不满足函数方程约束 | ✅ 成立 |
 | 采样独立性 | 在给定概率测度下 $C$ 和 $\theta$ 不相关 | ❌ 一般不成立 |
 
-UFPF 中的原始声明"独立参数"指的是函数独立性，这是正确的。数值实验观察到的相关性是采样非独立性的体现，不构成对理论的反驳。
+MUFPF 中的原始声明"独立参数"指的是函数独立性，这是正确的。数值实验观察到的相关性是采样非独立性的体现，不构成对理论的反驳。
 
 ### 2.2 机制 1：谱坍缩耦合（正相关机制）
 
@@ -729,7 +729,7 @@ Trefethen & Embree (2005) 的伪谱理论表明，$\Lambda_\varepsilon(A) = \{z 
 
 ## 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 - `inter_regime_state_definition_2026-08-23.md`（体制间态定义，§4.5 退化方向推导）
 - `flattening_unification_conjecture_2026-08-23.md`（平展统一猜想，§5 θ-C 相关性分析）
 - `phase63_meta_theorem_open_problems.md`（Phase 63 开放问题清单，D1/F-7）

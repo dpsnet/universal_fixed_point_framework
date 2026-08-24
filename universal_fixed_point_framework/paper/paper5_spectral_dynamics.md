@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 V：力的谱动力学——从谱分类到力的统一描述
+# 元通用不动点函子范畴框架 V：力的谱动力学——从谱分类到力的统一描述
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -12,7 +12,7 @@ $$\frac{d}{dt} D(R) = \sum_i g_i \cdot [A_{F,i}, D(R)]$$
 
 ---
 
-**术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。记号与定义沿用 Paper I，谱流方程引用 Paper V。Lean 4 形式化代码库 `SpectralDynamics.lean` 提供谱流方程、谱不变性、Nöther 守恒等定理的形式化框架。
+**术语说明**：本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。记号与定义沿用 Paper I，谱流方程引用 Paper V。Lean 4 形式化代码库 `SpectralDynamics.lean` 提供谱流方程、谱不变性、Nöther 守恒等定理的形式化框架。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **LQG**：圈量子引力（Loop Quantum Gravity）
@@ -569,13 +569,13 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.34（含 Phase 36 谱间隙 Δλ_min 与 Phase 37 IFS 重叠因子 ρ 第一性原理推导）
-- [II] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》，v2.21
-- [III] Paper III：《通用不动点范畴框架 III：谱化函子的谱分类完备性定理》，v1.1
-- [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
-- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、Onsager 关系、涨落定理。
-- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞视界的谱动力学——熵、辐射与信息》，v1.2。Hawking 温度谱公式、BH 熵谱公式、信息持守。
-- [IX] Paper IX：《通用不动点范畴框架 IX：奇点谱消解与量子宇宙学》，v0.5。量子反弹、有效 Friedmann 方程。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.34（含 Phase 36 谱间隙 Δλ_min 与 Phase 37 IFS 重叠因子 ρ 第一性原理推导）
+- [II] Paper II：《元通用不动点函子范畴框架 II：物理应用与实验验证》，v2.21
+- [III] Paper III：《元通用不动点函子范畴框架 III：谱化函子的谱分类完备性定理》，v1.1
+- [IV] Paper IV：《元通用不动点函子范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1
+- [VII] Paper VII：《元通用不动点函子范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、Onsager 关系、涨落定理。
+- [VIII] Paper VIII：《元通用不动点函子范畴框架 VIII：黑洞视界的谱动力学——熵、辐射与信息》，v1.2。Hawking 温度谱公式、BH 熵谱公式、信息持守。
+- [IX] Paper IX：《元通用不动点函子范畴框架 IX：奇点谱消解与量子宇宙学》，v0.5。量子反弹、有效 Friedmann 方程。
 
 ---
 
@@ -585,7 +585,7 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 V 完整版，力的谱动力学——从谱分类到力的统一描述，含 4 篇参考文献 + 4 篇子论文引用。全部内容：
+《元通用不动点函子范畴框架》系列论文 V 完整版，力的谱动力学——从谱分类到力的统一描述，含 4 篇参考文献 + 4 篇子论文引用。全部内容：
 
 **核心理论**：
 - 谱流方程的定义与 Koopman 推导（§2）
@@ -652,3 +652,4 @@ $$T_{\text{bounce}}(x) = \frac{1}{1 + (x/x_c)^2}\left[1 + A_b\, e^{-(x-1)^2/(2\s
 | v0.7 | 2026-07-16 | 新增 §4.6（类 GR 场方程自然涌现）；笔记 §9（从谱动力学倒退类广义相对论） |
 | v0.8 | 2026-07-16 | 宇宙学扩展：笔记 §10（FLRW谱方程 + 原初扰动 + 暗能量）；`scripts/paper5_cosmology.py` |
 | v1.0 | 2026-07-16 | **完整版**：整合 Phase 27 四成果——双圈 β 匹配（Dyson-Schwinger修正）、暗物质谱模型（WIMP奇迹$\Omega h^2=0.12$）、黑洞蒸发Page曲线（$t_{\text{Page}}/\tau=0.647$）、非线性LSS（SPT F₂核）；数值脚本 8→27；状态块全面升级 |
+| v1.6 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

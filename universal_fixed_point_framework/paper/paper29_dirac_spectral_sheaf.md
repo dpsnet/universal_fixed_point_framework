@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXIX：Dirac 谱覆盖与半整数自旋结构
+# 元通用不动点函子范畴框架 XXIX：Dirac 谱覆盖与半整数自旋结构
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -12,7 +12,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper XXI（Grothendieck 纤维化综合）与 Paper XXVII（Leaver 谱覆盖理论），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维分类）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的基础框架。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper XXI（Grothendieck 纤维化综合）与 Paper XXVII（Leaver 谱覆盖理论），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维分类）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的基础框架。"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **QNM**：准正态模（Quasi-Normal Mode）
@@ -769,27 +769,20 @@ $$k = \iota(\kappa_2) + k_0$$
 
 [8] L. Stein, "qnm: A Python package for calculating Kerr quasinormal modes," *J. Open Source Softw.* **4**(42), 1623 (2019).
 
-[9] Paper XXVII (UFPF XXVII, Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入).
+[9] Paper XXVII (MUFPF XXVII, Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入).
 
-[10] Paper XXVIII (UFPF XXVIII, Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维).
+[10] Paper XXVIII (MUFPF XXVIII, Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维).
 
-[11] Paper XXVI (UFPF XXVI, 动态过程谱数值方法).
+[11] Paper XXVI (MUFPF XXVI, 动态过程谱数值方法).
 
-[12] Paper XXI (UFPF XXI, Grothendieck 纤维化综合——从谱族到总参数丛).
+[12] Paper XXI (MUFPF XXI, Grothendieck 纤维化综合——从谱族到总参数丛).
 
 ---
-
-## 版本记录
-
-**版本**：v0.2
-
-**日期**：2026-07-26
-
-**状态**：草稿。理论框架已建立，纵向剖面纤维嵌入完成。
 
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v0.3 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 | v0.2 | 2026-07-26 | 新增 §7.6 纵向剖面纤维嵌入与纤维等价性（定理 7.8-7.11），连接 Paper XXI Grothendieck 纤维化综合框架；更新 §9 结论与开放问题 |
 | v0.1 | 2026-07-25 | 初始版本：Dirac 谱覆盖定义、$\mathbb{Z}_2$ 阻碍定理、Dirac-引力张量积谱覆盖、跨自旋 LACI 对比、三自旋联合谱覆盖 |

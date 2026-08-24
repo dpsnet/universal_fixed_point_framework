@@ -24,7 +24,7 @@
 4. **相对论型硬化**（提出）$\mathcal{H}_{\text{rel}} = 1/\sqrt{1 - (\dot\gamma/\dot\gamma_c)^2}$ 对应临界剪切率 $\dot\gamma_c$ 处的粘度发散，与 $v \to c$ 时 $\gamma \to \infty$ 共享 $\partial\mathbf{Rec}_D$ 谱边界临界机制。
 5. **统一图景**：钟慢、硬化、Hawking 蒸发都是 $\partial\mathbf{Rec}_D$ 谱边界附近谱间隙压缩的不同物理实现，由同一谱流方程 $\frac{d}{d\tau}A_\tau = [G, A_\tau]$ 支配。
 
-本工作把 Paper VI 的 Newton 流体谱动力学扩展到非牛顿流变学，并与 Paper XVI 的 Lorentz 谱动力学建立跨领域同构，是 UFPF 跨领域统一的新实例。
+本工作把 Paper VI 的 Newton 流体谱动力学扩展到非牛顿流变学，并与 Paper XVI 的 Lorentz 谱动力学建立跨领域同构，是 MUFPF 跨领域统一的新实例。
 
 ---
 
@@ -409,13 +409,13 @@ $$E(k) \propto k^{-5/3} \cdot \mathcal{H}(\phi(k))^{2/3}.$$
 
 ### 8.3 跨领域统一展望
 
-本笔记建立的"钟慢-硬化同构"是 UFPF 跨领域统一的又一实例。可能的进一步统一：
+本笔记建立的"钟慢-硬化同构"是 MUFPF 跨领域统一的又一实例。可能的进一步统一：
 - **声子硬化**（固体高应变率响应）与钟慢；
 - **电磁材料极化饱和**与 Lorentz 速度极限；
 - **量子相变临界慢化**与流变硬化；
 - **神经网络训练弛豫**（NTK 谱）与流变弛豫。
 
-这些方向可在 UFPF 框架下统一为"谱间隙压缩现象"的不同实现。
+这些方向可在 MUFPF 框架下统一为"谱间隙压缩现象"的不同实现。
 
 ---
 
@@ -460,7 +460,7 @@ $$E(k) \propto k^{-5/3} \cdot \mathcal{H}(\phi(k))^{2/3}.$$
 
 ## 11. 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱流方程基础
 - **Paper VI**：`paper/paper6_fluid_spectral_dynamics.md` — 流体谱动力学（B1-B3 公理）

@@ -1,12 +1,10 @@
-# 通用不动点范畴框架 VIII：黑洞视界的谱动力学——熵、辐射与信息
+# 元通用不动点函子范畴框架 VIII：黑洞视界的谱动力学——熵、辐射与信息
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.4（2026-07-23）
 
 **摘要**：本文将黑洞视为 $\mathbf{Rec}_D$ 边界上的特殊递归系统，从谱动力学第一原理推导黑洞热力学。Hawking 温度 $T_H = \Delta\lambda_{\min}/2\pi$ 和 Bekenstein-Hawking 熵 $S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$ 由 $A_{\text{GR}}$ 在视界上的谱间隙 $\Delta\lambda_{\min}$ 唯一确定。准正态模（QNM）频谱对应 $A_{\text{GR}}$ 的特征值。信息悖论由谱不变性 $\sigma(A_t)=\sigma(A_0)$ 自然解决——信息在 $A_t$ 的谱中完整保存，仅被谱流"重整"而非丢失。数值验证确认熵匹配精度 0.00%。
-
-
 
 **术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VII（固定基谱熵 $S_{\mathcal{B}}(t)$）。
 
@@ -350,17 +348,15 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 5. **Page 曲线自然涌现**：$S_{\mathcal{B}}(t)$ 先增后减
 6. **内部物质谱描述**（定理 7.2）：离散模 $E_n = E_0 S_4^n$，奇点=谱边界反射
 
-
-
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.34。无界算子与 Hille-Yosida 半群（§2.10）；**Phase 36：谱间隙 Δλ_min = 0.122 M_Pl 由 Cl(1,7) + SU(2) 第一性原理导出（§A.15.7）。**
-- [IV] Paper IV：《通用不动点范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1。
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。
-- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、信息持守。
-- [IX] Paper IX：《通用不动点范畴框架 IX：奇点谱消解与量子宇宙学》，v0.5。量子反弹。
-- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
-- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.34。无界算子与 Hille-Yosida 半群（§2.10）；**Phase 36：谱间隙 Δλ_min = 0.122 M_Pl 由 Cl(1,7) + SU(2) 第一性原理导出（§A.15.7）。**
+- [IV] Paper IV：《元通用不动点函子范畴框架 IV：从 Stretched Horizon 到 D-brane》，v1.1。
+- [V] Paper V：《元通用不动点函子范畴框架 V：力的谱动力学》，v1.1。
+- [VII] Paper VII：《元通用不动点函子范畴框架 VII：非平衡谱热力学》，v1.0。固定基谱熵、信息持守。
+- [IX] Paper IX：《元通用不动点函子范畴框架 IX：奇点谱消解与量子宇宙学》，v0.5。量子反弹。
+- [XI] Paper XI：《元通用不动点函子范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。
+- [XII] Paper XII：《元通用不动点函子范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
 - Hawking, S.W. (1975). "Particle creation by black holes." *Commun. Math. Phys.* 43, 199.
 - Bekenstein, J.D. (1973). "Black holes and entropy." *Phys. Rev. D* 7, 2333.
 
@@ -372,7 +368,7 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。v1.4 新增 §7.4 Kerr 参数范畴的纤维化形式化（$\mathbf{Kerr}$ 基范畴、$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 总范畴、Grothendieck 纤维化、温度-谱间隙丛态射、BH 熵谱求和形式、非乘积丛结构）。主要内容：
+《元通用不动点函子范畴框架》系列论文 VIII，黑洞视界的谱动力学——熵、辐射与信息。v1.4 新增 §7.4 Kerr 参数范畴的纤维化形式化（$\mathbf{Kerr}$ 基范畴、$\mathbf{Bun}(\mathbf{Kerr}, \mathbf{Sp})$ 总范畴、Grothendieck 纤维化、温度-谱间隙丛态射、BH 熵谱求和形式、非乘积丛结构）。主要内容：
 - Hawking 温度谱公式（定理 2.1）：$T_H = \Delta\lambda_{\min}/(2\pi)$
 - BH 熵谱公式（定理 3.1）：$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$，数值匹配 0.0000%
 - QNM 频谱（定理 4.1）：$\omega_n$ 由谱间隙决定
@@ -390,3 +386,4 @@ $$\lim_{a \to M} \omega_{lmn}(M, a) \approx \omega_{lmn}^{(0)}(M) + i \cdot (M -
 | v1.0 | 2026-07-17 | 新增 §2.4 Hille-Yosida 蒸发半群、§7.1 极端极限连续谱 |
 | v0.2 | 2026-07-17 | 新增 D28.2 交叉验证 |
 | v0.1 | 2026-07-16 | 初始版本 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

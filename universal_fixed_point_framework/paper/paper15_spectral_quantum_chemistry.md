@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XV：量子化学的谱表述——分子结构、反应动力学与光谱
+# 元通用不动点函子范畴框架 XV：量子化学的谱表述——分子结构、反应动力学与光谱
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -568,15 +568,15 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 
 ## 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$ 范畴、$D$ 函子、Hille-Yosida 半群。
-- [III] Paper III：《通用不动点范畴框架 III：谱分类与对应等价性》。谱对应等价性、遗忘-构造伴随 $D \dashv R$。
-- [V] Paper V：《通用不动点范畴框架 V：力的谱动力学》，v1.1。谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学。
-- [VI] Paper VI：《通用不动点范畴框架 VI：谱流体动力学》，v1.0。N-S 谱流方程、谱 Reynolds 数、湍流 RG。
-- [VII] Paper VII：《通用不动点范畴框架 VII：非平衡谱热力学》，v1.0。谱熵、谱 Onsager 关系、谱涨落定理。
-- [VIII] Paper VIII：《通用不动点范畴框架 VIII：黑洞视界谱动力学》。谱响应理论。
-- [IX] Paper IX：《通用不动点范畴框架 IX：谱响应与光谱》。谱跃迁选择定则。
-- [XI] Paper XI：《通用不动点范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理系统。
-- [XII] Paper XII：《通用不动点范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》，v2.32。$\mathbf{Rec}$、$\mathbf{Sp}$ 范畴、$D$ 函子、Hille-Yosida 半群。
+- [III] Paper III：《元通用不动点函子范畴框架 III：谱分类与对应等价性》。谱对应等价性、遗忘-构造伴随 $D \dashv R$。
+- [V] Paper V：《元通用不动点函子范畴框架 V：力的谱动力学》，v1.1。谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、谱间隙动力学。
+- [VI] Paper VI：《元通用不动点函子范畴框架 VI：谱流体动力学》，v1.0。N-S 谱流方程、谱 Reynolds 数、湍流 RG。
+- [VII] Paper VII：《元通用不动点函子范畴框架 VII：非平衡谱热力学》，v1.0。谱熵、谱 Onsager 关系、谱涨落定理。
+- [VIII] Paper VIII：《元通用不动点函子范畴框架 VIII：黑洞视界谱动力学》。谱响应理论。
+- [IX] Paper IX：《元通用不动点函子范畴框架 IX：谱响应与光谱》。谱跃迁选择定则。
+- [XI] Paper XI：《元通用不动点函子范畴框架 XI：谱量子场论的公理、翻译与数值验证》，v1.0。谱 QFT 公理系统。
+- [XII] Paper XII：《元通用不动点函子范畴框架 XII：谱量子引力——传播子、散射与黑洞》，v1.0。
 - Szabo, A. & Ostlund, N.S. (1996). *Modern Quantum Chemistry: Introduction to Advanced Electronic Structure Theory*. Dover.
 - Fukui, K. (1982). "Role of frontier orbitals in chemical reactions." *Science* 218, 747.
 - Eyring, H. (1935). "The activated complex in chemical reactions." *J. Chem. Phys.* 3, 107.
@@ -590,7 +590,7 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XV，量子化学的谱表述——分子结构、反应动力学与光谱。主要内容：
+《元通用不动点函子范畴框架》系列论文 XV，量子化学的谱表述——分子结构、反应动力学与光谱。主要内容：
 - Schrödinger 方程的谱表述 $D(H)$ 与有界算子优势（§2）
 - 分子轨道理论的谱版本：Fock 谱生成元 $A_{\text{mol}}$、谱 Hund 规则、化学键的谱重新解释（§3.1-3.4）
 - **电子关联的谱表述**（§3.5，新增）：CI 截断的谱间隙压制，MP2 谱微扰公式（定理 3.2），Coupled Cluster 的李氏变换诠释，多参考谱理论
@@ -615,3 +615,4 @@ Hückel 分子轨道理论是 π-共轭体系最简单且最成功的量子化�
 | v1.2 | 2026-07-21 | **深入扩展**：新增 §3.5 电子关联的谱表述（CI/MP2/CC/多参考）、§4.4 Kramers 理论/量子隧穿/锥形交叉、§5.5 拉曼与 CD 光谱、§5.6 非线性光谱与超快动力学、§6.4 谱框架超越经典 QChem 的新预测、§7.3 苯 Hückel 谱表述验证（6/6）；结论表扩展至 C1-C10；更新摘要、§1.3 目录结构 |
 | v1.1 | 2026-07-19 | 新增 §7 数值验证（氢原子 + H₂⁺） |
 | v1.0 | 2026-07-18 | 初始版本 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

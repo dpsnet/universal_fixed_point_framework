@@ -741,7 +741,7 @@ $$A(1) = \mathrm{Ad}_{\exp(\int_0^1 G'(s) ds)} A(0) = A_R$$
 
 **状态**：
 
-《通用不动点范畴框架》研究笔记——纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v1.0 新增 $\infty$-反射子范畴证明（$\mathcal{L}_\infty \dashv \iota_\infty$，`InfinityReflection.lean`）与 $D^{\text{id}}$–Gelfand 对偶对应（`GelfandDuality.lean`），封闭剩余理论开放问题。
+《元通用不动点函子范畴框架》研究笔记——纯静态拓扑结构在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的定位。v1.0 新增 $\infty$-反射子范畴证明（$\mathcal{L}_\infty \dashv \iota_\infty$，`InfinityReflection.lean`）与 $D^{\text{id}}$–Gelfand 对偶对应（`GelfandDuality.lean`），封闭剩余理论开放问题。
 
 **变更记录**：
 

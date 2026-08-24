@@ -68,8 +68,8 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 
 | 模块 | 内容 | 验证 |
 |:--|:--|:--|
-| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopology.lean` | 拓扑类；A4 阶跃（χ_Φ/σ_S3）；6 定理；**A3 并置结构 Φ₊（#1）**；零质量（#2）；门控（#8）；**Fock 空间算子（#6 机制层骨架）**；**光速锁定 λν=c 与能量量子 E=hν 骨架（P1 验收子项）**；**三恒等式闭环（Momentum/energy_momentum_consistency/p1_zero_mass_structure——E=hν∧λν=c∧p=h/λ⟹E=pc，P1 温和兼容闭环）**；**dagger 有限维骨架（dagger 对合 + JC 矩阵厄米性，#6 dagger-假设）**；**dagger 第一性原理骨架（stdInner + IsAdjoint + adjoint_unique 伴随唯一性 + conjTranspose_satisfies_adjoint + dagger_is_adjoint——dagger-假设被内积结构推导替代，#6）**；**dagger 范畴公理完整化（dagger_antimultiplicative/identity/additive/antilinear——反变/恒等/加性/反线性由内积推导，#6）**；**R 态射层验证（jcD g：jc_R_adjoint/jc_R_is_dagger_adjoint/jc_R_hermitian——R=D† 在 JC 机制层是定理，#6 收尾）** | 2966 jobs |
-| `formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyFunctor.lean` | 光子嵌入 Rec（#1）；谱化 = D∘嵌入；分岔改变谱；Φ 函子公理/幂等；**态射层忠实嵌入（#1）**；**范畴层方向正交（光子 1-态射层单点性）**；垂直-水平分解 + **内积层正交⟹交平凡 + 联络-度量相容选取 + 联络算子（幂等投影 ker=Vᗮ im=V，#7）**；**曲率层代数骨架（skew_antisymm/lie_bracket_antisymm/curvature_antisymm——李代数值曲率 2-形式反对称，#7）** | 3022 jobs |
+| `formal_proof/MUFPFormalization/MUFPFormalization/PhotonTopology.lean` | 拓扑类；A4 阶跃（χ_Φ/σ_S3）；6 定理；**A3 并置结构 Φ₊（#1）**；零质量（#2）；门控（#8）；**Fock 空间算子（#6 机制层骨架）**；**光速锁定 λν=c 与能量量子 E=hν 骨架（P1 验收子项）**；**三恒等式闭环（Momentum/energy_momentum_consistency/p1_zero_mass_structure——E=hν∧λν=c∧p=h/λ⟹E=pc，P1 温和兼容闭环）**；**dagger 有限维骨架（dagger 对合 + JC 矩阵厄米性，#6 dagger-假设）**；**dagger 第一性原理骨架（stdInner + IsAdjoint + adjoint_unique 伴随唯一性 + conjTranspose_satisfies_adjoint + dagger_is_adjoint——dagger-假设被内积结构推导替代，#6）**；**dagger 范畴公理完整化（dagger_antimultiplicative/identity/additive/antilinear——反变/恒等/加性/反线性由内积推导，#6）**；**R 态射层验证（jcD g：jc_R_adjoint/jc_R_is_dagger_adjoint/jc_R_hermitian——R=D† 在 JC 机制层是定理，#6 收尾）** | 2966 jobs |
+| `formal_proof/MUFPFormalization/MUFPFormalization/PhotonTopologyFunctor.lean` | 光子嵌入 Rec（#1）；谱化 = D∘嵌入；分岔改变谱；Φ 函子公理/幂等；**态射层忠实嵌入（#1）**；**范畴层方向正交（光子 1-态射层单点性）**；垂直-水平分解 + **内积层正交⟹交平凡 + 联络-度量相容选取 + 联络算子（幂等投影 ker=Vᗮ im=V，#7）**；**曲率层代数骨架（skew_antisymm/lie_bracket_antisymm/curvature_antisymm——李代数值曲率 2-形式反对称，#7）** | 3022 jobs |
 
 ### Agda 镜像
 
@@ -79,7 +79,7 @@ Phase 62 基于 [`docs/关于光子的理论研究笔记.md`](../../docs/关于�
 
 ### 文档与配置
 
-- **论文** `paper/paper44_photon_topology.md`：自包含（附录 A UFPF 定义）、§1–7 + 参考文献（已发表文献，无自媒体）；附录 B LaTeX 源码块已于 v0.3 移除（公式以渲染形式在正文 §2.3）
+- **论文** `paper/paper44_photon_topology.md`：自包含（附录 A MUFPF 定义）、§1–7 + 参考文献（已发表文献，无自媒体）；附录 B LaTeX 源码块已于 v0.3 移除（公式以渲染形式在正文 §2.3）
 - **LaTeX 公式文件** `notes/06_photon_topology/photon_topology_formulas.tex`：可拦截性公式集（定义 1.3/命题 1.4/定义 1.4）
 - **注册** `run_all_tests.py`：新增 4 个脚本注册；**UTF-8 BOM 每次 Edit 后验证修复**（项目已知问题）
 

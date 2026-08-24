@@ -398,9 +398,9 @@ $$\begin{CD}
 
 ---
 
-## 附录 B：与 UFPF 整体架构的关系
+## 附录 B：与 MUFPF 整体架构的关系
 
-本笔记的谱丛截面构造位于 UFPF 五层架构的顶层（层 V——纤维范畴层），为 $\hat{\mathcal{T}}_{\text{Riem}}$ 提供了显式截面的解析形式。
+本笔记的谱丛截面构造位于 MUFPF 五层架构的顶层（层 V——纤维范畴层），为 $\hat{\mathcal{T}}_{\text{Riem}}$ 提供了显式截面的解析形式。
 
 完整架构分析见：[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)
 

@@ -289,9 +289,9 @@ $$\hat{\mathcal{T}}_{\text{Riem}} \cong \eta_{\text{Riem}} \circ (\mathcal{T}_{\
 
 ---
 
-## 附录：与 UFPF 整体架构的关系
+## 附录：与 MUFPF 整体架构的关系
 
-本笔记的函子性证明位于 UFPF 五层架构的顶层（层 V——纤维范畴层），是 Temp/RG 纤维范畴体系的形式化基础。
+本笔记的函子性证明位于 MUFPF 五层架构的顶层（层 V——纤维范畴层），是 Temp/RG 纤维范畴体系的形式化基础。
 
 完整架构分析见：[`spectral_architecture_temp_rg.md`](spectral_architecture_temp_rg.md)
 

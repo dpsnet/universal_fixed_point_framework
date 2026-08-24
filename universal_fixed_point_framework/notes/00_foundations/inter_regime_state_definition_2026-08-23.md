@@ -1,8 +1,8 @@
 # 体制间态（Inter-Regime State）数学定义
 
-**文档编号**: UFPF-RN-INTER-REGIME-001
+**文档编号**: MUFPF-RN-INTER-REGIME-001
 **日期**: 2026-08-23
-**框架**: 通用不动点框架（Universal Fixed Point Framework, UFPF）
+**框架**: 通用不动点框架（Meta-Universal Fixed-Point Functorial Framework, MUFPF）
 **状态**: 草案 v0.1
 **前置文档**: `meta_theorem_completeness_discussion_2026-08-23.md`
 
@@ -179,7 +179,7 @@ $$\epsilon_\mathrm{hex}(C, \kappa, \theta) = \|\Delta_\theta\| = \theta \cdot \l
 
 #### 4.5.5 退化方向 $\theta$ 的物理来源
 
-在 UFPF 框架中，形变参数 $\theta$ 来自算子 $A = A_\mathrm{sa} + A_\mathrm{anti}$ 的非正规性。具体地：
+在 MUFPF 框架中，形变参数 $\theta$ 来自算子 $A = A_\mathrm{sa} + A_\mathrm{anti}$ 的非正规性。具体地：
 
 **命题**：设 $A = V \Lambda V^{-1}$ 为算子 $A$ 的特征分解，$\kappa(V) = \|V\| \|V^{-1}\|$ 为条件数。则退化方向 $\theta$ 由下式给出：
 
@@ -220,7 +220,7 @@ $$\Phi_\theta \cdot (\mathrm{id} \otimes b_{X,Y}) \cdot \Phi_\theta^{-1} = (\Del
 
 其中 $\mathcal{R}_\theta$ 是形变量子 $R$-矩阵。当 $\theta = 0$ 时，$\mathcal{R}_0 = 1$，(D8) 退化为标准辫子关系。
 
-**关键观察**：在 UFPF 框架中，(D8) 对应 Rec/Sp/D 三元组中 D 函子保持辫子结构的能力。当 $\theta > 0$ 但有限时，D 保持**弱辫子结构**（$\Phi_\theta$-形变意义下的辫子），这对应体制间态。当 $\theta \to \theta_\mathrm{max}$ 时，$\Phi_\theta$ 发散，D 无法保持任何辫子结构，对应体制 C（辫子瓦解）。
+**关键观察**：在 MUFPF 框架中，(D8) 对应 Rec/Sp/D 三元组中 D 函子保持辫子结构的能力。当 $\theta > 0$ 但有限时，D 保持**弱辫子结构**（$\Phi_\theta$-形变意义下的辫子），这对应体制间态。当 $\theta \to \theta_\mathrm{max}$ 时，$\Phi_\theta$ 发散，D 无法保持任何辫子结构，对应体制 C（辫子瓦解）。
 
 ---
 
@@ -312,7 +312,7 @@ def inInterRegimeState (cp : CouplingParameter) : Prop :=
 
 ## 9. 参考文献
 
-### UFPF 内部文献
+### MUFPF 内部文献
 - Paper I §5.2, Definition 5.1: 谱静默判据
 - Paper I §3.6, Definition 3.11: LACI 定义
 - MetaTheorem.lean: 四体制元定理形式化
@@ -334,4 +334,4 @@ def inInterRegimeState (cp : CouplingParameter) : Prop :=
 | v0.1 | 2026-08-23 | 初稿：定义、性质、物理实例、Lean 对应 |
 | v0.2 | 2026-08-23 | 引入命名方案（待验证） |
 
-> **命名说明（待验证）**：本文档所述体制间态 $\mathcal{R}_{\mathrm{inter}}$ 及 Drinfeld 联结子形变属于扩展猜想体系。四体制分类（A/B1/B2/C）及 H1-H5 假设属于有界算子 + H1-H5 假设下的四体制基础框架。命名方案（狭义 UFPF / 广义 UFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。
+> **命名说明（待验证）**：本文档所述体制间态 $\mathcal{R}_{\mathrm{inter}}$ 及 Drinfeld 联结子形变属于扩展猜想体系。四体制分类（A/B1/B2/C）及 H1-H5 假设属于有界算子 + H1-H5 假设下的四体制基础框架。命名方案（狭义 MUFPF / 广义 MUFPF）尚未充分研究并自洽验证，保留在 notes 中作为研究记录。

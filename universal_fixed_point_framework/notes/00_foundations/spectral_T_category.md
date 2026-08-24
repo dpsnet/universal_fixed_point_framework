@@ -646,7 +646,7 @@ $a$ 的数值确定最终需要**通过谱框架计算 Hamiltonian 的迹在临�
 
 ---
 
-## 附录 C：与 UFPF 整体架构的关系
+## 附录 C：与 MUFPF 整体架构的关系
 
 本笔记构建的 $\mathbf{Temp}$ 范畴和函子 $\mathcal{T}: \mathbf{Temp} \to \mathbf{RG}$ 隶属于 Temp/RG 纤维范畴体系——该体系是 $\mathbf{Rec}/\mathbf{Sp}$ 框架上方的纤维范畴扩展，**不是** $\mathbf{Rec}$ 的子范畴。
 

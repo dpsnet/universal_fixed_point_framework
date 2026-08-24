@@ -1,6 +1,6 @@
 # Lean 4 实战案例 2b：真正的 Free ⊣ Forget 伴随
 
-> 本案例在 Lean 4 中构造一个**真实且标准**的伴随对：自由幺半群函子 `Free : Set → Monoid` 与遗忘函子 `Forget : Monoid → Set`。它与 [案例 2](case02_adjunction.md) 中的演示性例子形成对照，也与 UFPF 核心伴随 `D ⊣ R` 共享同一条构造路线。
+> 本案例在 Lean 4 中构造一个**真实且标准**的伴随对：自由幺半群函子 `Free : Set → Monoid` 与遗忘函子 `Forget : Monoid → Set`。它与 [案例 2](case02_adjunction.md) 中的演示性例子形成对照，也与 MUFPF 核心伴随 `D ⊣ R` 共享同一条构造路线。
 
 ## 学习目标
 
@@ -230,7 +230,7 @@ example (X : Type u) (M : MonCat.{u}) :
 
 ---
 
-## 与 UFPF 的对比
+## 与 MUFPF 的对比
 
 | 伴随对 | 左伴随 `L` | 右伴随 `R` | 单位 `η` 的直观 | 余单位 `ε` 的直观 |
 | --- | --- | --- | --- | --- |
@@ -250,4 +250,4 @@ example (X : Type u) (M : MonCat.{u}) :
 1. 在 Lean 中证明：对任意类型 `X`，`FreeMonoid.adj.unit.app X` 等于 `fun x => [x]`。
 2. 在 Lean 中证明：对任意 `M : MonCat`，`FreeMonoid.adj.counit.app M` 把 `[m1, m2, m3]` 映射为 `m1 * m2 * m3`。
 3. 用 `Adjunction.mkOfHomEquiv` 从头构造 `FreeMonoid ⊣ forget MonCat`，不依赖 `FreeMonoid.adj`。
-4. 对比阅读 UFPF 的 `Adjunction.lean`：找出 `D` 与 `R` 的 `unit` / `counit` 对应到本案例中的哪些结构。
+4. 对比阅读 MUFPF 的 `Adjunction.lean`：找出 `D` 与 `R` 的 `unit` / `counit` 对应到本案例中的哪些结构。

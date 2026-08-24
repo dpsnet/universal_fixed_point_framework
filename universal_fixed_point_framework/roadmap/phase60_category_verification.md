@@ -1,6 +1,6 @@
 # Phase 60：范畴理论绝对性验证路线图
 
-> **目标**：实现 UFPF 范畴理论层面的完全独立验证，不依赖物理实例层的实验数据。
+> **目标**：实现 MUFPF 范畴理论层面的完全独立验证，不依赖物理实例层的实验数据。
 >
 > **原则**：验证对象是元公理层和结构定理层本身，而非其物理应用。实例层的"正确性"不构成对上层公理的验证。
 >
@@ -42,10 +42,10 @@ $ python -m verify.run_all
 
 ### 实现方案（参考）
 
-在 `ufpf/` 包中新增 `verify/` 子模块：
+在 `mufpf/` 包中新增 `verify/` 子模块：
 
 ```
-ufpf/
+mufpf/
 ├── core/              # 现有：范畴定义、函子
 │   ├── category.py
 │   ├── functor.py
@@ -78,7 +78,7 @@ ufpf/
 ### 成功标准
 
 ```bash
-$ ufpf-verify --all
+$ mufpf-verify --all
 ✓ V1: Sp is strict 4-category ......... PASS
 ✓ V2: D functor is faithful .......... PASS
 ✓ V3: D ⊣ R triangle identities ...... PASS
@@ -140,7 +140,7 @@ Agda 版本:  定理 T 的证明链 A₁ → A₂ → ... → Aₙ
 
 ```
 agda_formalization/
-├── UFPF.agda-lib                    # Agda 库注册（name: UFPF）
+├── MUFPF.agda-lib                    # Agda 库注册（name: MUFPF）
 ├── Everything.agda                  # 全部模块导入，整体编译验证
 ├── Sp/
 │   ├── SpCategory.agda              # B1: 𝐒𝐩 4-范畴（对象/1-态射/层结构/层对计数）

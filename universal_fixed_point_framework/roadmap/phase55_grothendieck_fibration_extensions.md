@@ -2,11 +2,11 @@
 
 ## 战略定位
 
-在 Phase 54B 完成 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的 Grothendieck 纤维化与 Lean 4 验证（[`TempRGFiber.lean`](../formal_proof/UFPFormalization/UFPFormalization/TempRGFiber.lean)，无 sorry）之后，将"基空间上的谱族 = Grothendieck 纤维化，物理可观测量 = 纤维截面"范式推广到框架内其余谱族结构。
+在 Phase 54B 完成 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ / $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$ 的 Grothendieck 纤维化与 Lean 4 验证（[`TempRGFiber.lean`](../formal_proof/MUFPFormalization/MUFPFormalization/TempRGFiber.lean)，无 sorry）之后，将"基空间上的谱族 = Grothendieck 纤维化，物理可观测量 = 纤维截面"范式推广到框架内其余谱族结构。
 
 候选分析详见笔记 [`notes/00_foundations/spectral_grothendieck_extension_candidates.md`](../notes/00_foundations/spectral_grothendieck_extension_candidates.md)（paper/ 23 篇 + notes/ 90 篇全扫描，12 个候选，五类模板关系）。
 
-**核心目标**：按 P0→P1→P2 顺序完成 8 个候选的纤维化提升，最终汇总为 $(G, \eta, T, \mu, \ldots)$ 总参数丛（UFPF 上层架构的统一收口）。
+**核心目标**：按 P0→P1→P2 顺序完成 8 个候选的纤维化提升，最终汇总为 $(G, \eta, T, \mu, \ldots)$ 总参数丛（MUFPF 上层架构的统一收口）。
 
 **最高优先级（2026-07-23 更新）**：**Phase 55C（谱粘合乘积基）** 和 **Phase 55B（Clifford 签名丛）** 已全部完成。新增 Phase 55D（BCS 谱粘合）和 Phase 55E（Cuprate 分布论）。详见各阶段状态更新。
 

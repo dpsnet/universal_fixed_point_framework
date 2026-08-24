@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XIX：$\mathbf{Rec}/\mathbf{Sp}$ 范畴扩展——静态拓扑与随机系统的范畴论嵌入
+# 元通用不动点函子范畴框架 XIX：$\mathbf{Rec}/\mathbf{Sp}$ 范畴扩展——静态拓扑与随机系统的范畴论嵌入
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -8,14 +8,12 @@
 
 **本文与 Paper I 的关系**：Paper I 的 $\mathbf{Rec}/\mathbf{Sp}$ 框架是有界的（仅覆盖确定性动力学系统），本文通过范畴构造突破了这一边界（嵌入静态拓扑 $\mathbf{Rec}_{\text{id}}$ 与随机系统 $\Sigma$-$\mathbf{Rec}$），并与 Paper I 共同形成完整的**范畴转化闭环**——三层伴随对嵌套结构 $D \dashv R \subset \mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 实现了动力学系统、静态拓扑、随机噪声之间的双向转化。
 
-**Temp/RG 纤维范畴集成**（§17）：在上述三层结构之上，Temp/RG 纤维范畴体系将温度参数空间 $\mathbf{Temp}$ 与 RG 标度参数空间 $\mathbf{RG}$ 构造为 $\mathbf{Sp}$ 上的纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$，通过谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 建立纤维保持对应。Temp/RG 不是 $\mathbf{Rec}$ 的子范畴（对象为实数参数而非递归系统），而是 **$\mathbf{Rec}/\mathbf{Sp}$ 上方的纤维范畴扩展**——参数化 $\mathbf{Rec}$ 对象如何接近 $\partial\mathbf{Rec}_D$ 边界，为 $(G, \eta)$ 二维相图增加第三个独立维度（温度-标度对偶）。这一架构定位使 UFPF 框架从"系统分类"提升至"系统在参数空间中的连续族"的完整处理。
+**Temp/RG 纤维范畴集成**（§17）：在上述三层结构之上，Temp/RG 纤维范畴体系将温度参数空间 $\mathbf{Temp}$ 与 RG 标度参数空间 $\mathbf{RG}$ 构造为 $\mathbf{Sp}$ 上的纤维范畴 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 和 $\mathbf{Bun}(\mathbf{RG}, \mathbf{Sp})$，通过谱纤维丛上的 Riemann 函子 $\hat{\mathcal{T}}_{\text{Riem}}$ 建立纤维保持对应。Temp/RG 不是 $\mathbf{Rec}$ 的子范畴（对象为实数参数而非递归系统），而是 **$\mathbf{Rec}/\mathbf{Sp}$ 上方的纤维范畴扩展**——参数化 $\mathbf{Rec}$ 对象如何接近 $\partial\mathbf{Rec}_D$ 边界，为 $(G, \eta)$ 二维相图增加第三个独立维度（温度-标度对偶）。这一架构定位使 MUFPF 框架从"系统分类"提升至"系统在参数空间中的连续族"的完整处理。
 
-
-
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱静默条件 S1–S4）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。本文首次使用记号 $\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）、$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）、$\mathcal{L}$（静态化函子）、$\mathcal{D}yn$（动态化函子）、$\mathcal{S}el$（选择函子）、$\mathcal{D}iss$（溶解函子）。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱静默条件 S1–S4）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）。本文所述"元通用不动点函子范畴框架"（Universal Fixed Point Framework, MUFPF），以下简称"本框架"。本文首次使用记号 $\mathbf{Rec}_{\text{id}}$（恒等延拓子范畴）、$\Sigma$-$\mathbf{Rec}$（可数直和余完备化）、$\mathcal{L}$（静态化函子）、$\mathcal{D}yn$（动态化函子）、$\mathcal{S}el$（选择函子）、$\mathcal{D}iss$（溶解函子）。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Framework）
 - **IFS**：迭代函数系统（Iterated Function System）
 - **QFT**：量子场论（Quantum Field Theory）
 - **SM**：标准模型（Standard Model）
@@ -634,7 +632,7 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 
 ## 14. 形式化验证
 
-本文所有核心定理已在 Lean 4 中形式化验证，代码位于 `UFPFormalization` 项目：
+本文所有核心定理已在 Lean 4 中形式化验证，代码位于 `MUFPFormalization` 项目：
 
 | 模块 | 形式化内容 | 对应定理 |
 |:----|:---------|:-------:|
@@ -649,7 +647,6 @@ Paper I 与 Paper XIX 不是两个独立框架，而是**同一谱范畴框架�
 | `SpectralGap.lean` | 谱间隙 $\Delta\lambda_{\min}$ 的 Cl(1,7) + SU(2) 第一性推导：SU(2) 特征值谱、解析公式、$k_{\max}=8$ 群论约束、导出常数（$c_1$, $\rho_c$, $T_H$）定理链 | Paper I §A.15.7 |
 
 ---
-
 
 ## 15. 静默体系深化（S1–S4 层，对应 Paper I §5.7）
 
@@ -1246,13 +1243,13 @@ Temp/RG 框架还覆盖以下已验证的跨领域系统：
 
 ### 17.11 与 Paper XIX 架构的兼容性
 
-Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 $\mathbf{Sp}$ 之上而非 $\mathbf{Rec}$ 之中（正交），静态流形可携带温度参数（组合），且与 $\mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 转化结构构成完整的 UFPF 架构。
+Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 $\mathbf{Sp}$ 之上而非 $\mathbf{Rec}$ 之中（正交），静态流形可携带温度参数（组合），且与 $\mathcal{L} \dashv \iota \subset \mathcal{S}el \dashv \mathcal{D}iss$ 转化结构构成完整的 MUFPF 架构。
 
 ---
 
 ## 参考文献
 
-[1] Paper I: 通用不动点范畴框架 I：分形谱化理论 (v2.35).
+[1] Paper I: 元通用不动点函子范畴框架 I：分形谱化理论 (v2.35).
 [2] Connes, A. (1994). *Noncommutative Geometry*. Academic Press.
 [3] Lawvere, F. W. (1963). Functorial Semantics of Algebraic Theories. *Ph.D. Thesis*, Columbia University.
 [4] Kubo, R. (1966). The fluctuation-dissipation theorem. *Reports on Progress in Physics*, 29(1), 255.
@@ -1306,7 +1303,7 @@ Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 XIX，$\mathbf{Rec}/\mathbf{Sp}$ 范畴扩展——纯静态拓扑与随机噪声系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的范畴论嵌入。v0.2 新增 §13 统一框架：Paper I ⊕ Paper XIX 相图与边界转化（二维相图、四个区域、六条边界、三层伴随对结构、定理 13.1 框架完备性），完成后 5 个开放问题推进，新增附录 A 跨论文新发现汇总。所有核心定理已在 Lean 4 中形式化验证。v0.3 新增 §15 四层静默体系深化：完成 Paper I §8.3.3 第 20 项的 5 个深化子项（M1–M4 判据、统一静默度、紧致化对比拓展、$C$ 与 $C_{\text{crit}}$、B1–B3 与 $K_{\text{crit}}$），新增 6 个定理、4 个命题、2 个推论、1 个算法、3 个定义；Kerr QNM 数值验证给出 $K_{\text{crit}} \approx 7$；Lean 形式化模块 `SilenceHierarchyDeepened.lean` 覆盖 8 项核心结果。v0.4 §15 数值验证扩展至 Kerr/BTZ/Tangherlini/Fibonacci 四类独立物理系统（新增定理 15.7 Fibonacci Wilson-辫子对应、定理 15.8 BTZ $C_{\text{crit}}$ 稳定性、定理 15.9 Tangherlini $K_{\text{crit}}^{(D)}$ 维度标定），5/5 数值验证全覆盖，`SilenceHierarchyDeepened.lean` 扩展至 11 项核心结果；Paper I §8.3.3 第 20 项从"部分解决"升级为"完全解决"。v0.5 交叉引用同步：因 Paper I v2.39 将第 20 项从 §8.3.3 移至新 §8.2.4（已解决章节），同步更新本文相关交叉引用，无理论内容变更。v0.6 核心理论整合：将 §15 的核心理论（M1–M4 判据、统一静默度、紧致化对应）整合回 Paper I §5.7.7–§5.7.8，更新 §15.2–§15.4 交叉引用指向 Paper I 新小节；§15 保留完整证明与数值验证内容。v0.7 角色重新定位与交叉引用修正：摘要与 §1.2 明确本文为"范畴边界突破与双向转化理论"——Paper I 的 $\mathbf{Rec}/\mathbf{Sp}$ 框架是有界的，本文通过嵌入静态拓扑 $\mathbf{Rec}_{\text{id}}$ 与随机系统 $\Sigma$-$\mathbf{Rec}$ 突破边界，二者共同形成完整范畴转化闭环；修正 §15/§15.8/§16 中过时的 Paper I §8.2.4/§5.8 交叉引用为正确的 §5.7。v0.8 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明（`Function.iterate_succ_apply` 方向问题），谱流静默模块全量通过编译；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的定义与两个核心引理证明；(c) 更新 §15.8 表格第 7 行与 §16 方向三形式化状态。v0.9 更新 §17.6 BCS 试点状态：Q2 从旧唯象三项叠加公式升级为 Eliashberg $Z(\omega)$ 统一框架（`Z_peak_unified.py` 实际运行验证），Q4 标记为解析形式已建立（待 Phase 54B 严格范畴形式化），BCS 试点整体状态从"Q1-Q3 闭合，Q4 开放中"更新为"Q1-Q4 全部闭合"。
+《元通用不动点函子范畴框架》系列论文 XIX，$\mathbf{Rec}/\mathbf{Sp}$ 范畴扩展——纯静态拓扑与随机噪声系统在 $\mathbf{Rec}/\mathbf{Sp}$ 范畴中的范畴论嵌入。v0.2 新增 §13 统一框架：Paper I ⊕ Paper XIX 相图与边界转化（二维相图、四个区域、六条边界、三层伴随对结构、定理 13.1 框架完备性），完成后 5 个开放问题推进，新增附录 A 跨论文新发现汇总。所有核心定理已在 Lean 4 中形式化验证。v0.3 新增 §15 四层静默体系深化：完成 Paper I §8.3.3 第 20 项的 5 个深化子项（M1–M4 判据、统一静默度、紧致化对比拓展、$C$ 与 $C_{\text{crit}}$、B1–B3 与 $K_{\text{crit}}$），新增 6 个定理、4 个命题、2 个推论、1 个算法、3 个定义；Kerr QNM 数值验证给出 $K_{\text{crit}} \approx 7$；Lean 形式化模块 `SilenceHierarchyDeepened.lean` 覆盖 8 项核心结果。v0.4 §15 数值验证扩展至 Kerr/BTZ/Tangherlini/Fibonacci 四类独立物理系统（新增定理 15.7 Fibonacci Wilson-辫子对应、定理 15.8 BTZ $C_{\text{crit}}$ 稳定性、定理 15.9 Tangherlini $K_{\text{crit}}^{(D)}$ 维度标定），5/5 数值验证全覆盖，`SilenceHierarchyDeepened.lean` 扩展至 11 项核心结果；Paper I §8.3.3 第 20 项从"部分解决"升级为"完全解决"。v0.5 交叉引用同步：因 Paper I v2.39 将第 20 项从 §8.3.3 移至新 §8.2.4（已解决章节），同步更新本文相关交叉引用，无理论内容变更。v0.6 核心理论整合：将 §15 的核心理论（M1–M4 判据、统一静默度、紧致化对应）整合回 Paper I §5.7.7–§5.7.8，更新 §15.2–§15.4 交叉引用指向 Paper I 新小节；§15 保留完整证明与数值验证内容。v0.7 角色重新定位与交叉引用修正：摘要与 §1.2 明确本文为"范畴边界突破与双向转化理论"——Paper I 的 $\mathbf{Rec}/\mathbf{Sp}$ 框架是有界的，本文通过嵌入静态拓扑 $\mathbf{Rec}_{\text{id}}$ 与随机系统 $\Sigma$-$\mathbf{Rec}$ 突破边界，二者共同形成完整范畴转化闭环；修正 §15/§15.8/§16 中过时的 Paper I §8.2.4/§5.8 交叉引用为正确的 §5.7。v0.8 (a) 修复 `SpectralFlowHomotopy.lean` 中 `h_iter_ge_one` 归纳法证明（`Function.iterate_succ_apply` 方向问题），谱流静默模块全量通过编译；(b) `Silence.lean` 新增连续静默度 $\delta_{\text{silence}}$ 的定义与两个核心引理证明；(c) 更新 §15.8 表格第 7 行与 §16 方向三形式化状态。v0.9 更新 §17.6 BCS 试点状态：Q2 从旧唯象三项叠加公式升级为 Eliashberg $Z(\omega)$ 统一框架（`Z_peak_unified.py` 实际运行验证），Q4 标记为解析形式已建立（待 Phase 54B 严格范畴形式化），BCS 试点整体状态从"Q1-Q3 闭合，Q4 开放中"更新为"Q1-Q4 全部闭合"。
 
 **变更记录**：
 
@@ -1323,3 +1320,4 @@ Temp/RG 纤维范畴体系与 Paper XIX 的现有架构完全兼容：操作在 
 | v0.2 | 2026-07-19 | **框架统一**：新增 §13 Paper I ⊕ Paper XIX 相图与边界转化（二维相图 $(G,\eta)$、六条边界转化过程、三层伴随对嵌套 $D\dashv R \subset \mathcal{L}\dashv \iota \subset \mathcal{S}el\dashv \mathcal{D}iss$、定理 13.1 框架完备性、推论 13.1 覆盖范围）；开放问题完成（$\infty$-反射子范畴 + $D^{\text{id}}$–Gelfand 对偶 + 不可数直和 + $\eta$ 谱流预言 + 色噪声 $\alpha\leftrightarrow\gamma$ 验证）；附录 A 跨论文新发现汇总 |
 | v0.3 | 2026-07-20 | **四层静默深化**：新增 §15 Paper I §8.3.3 第 20 项 5 个子项的严格化（M1–M4 态射静默判据 + 定义 15.1/定理 15.1、四层统一静默度 + 定义 15.2/定理 15.2/推论 15.1、紧致化对比拓展 + 定理 15.3–15.4/命题 15.3、伪谱扰动界 $C$ 与 $C_{\text{crit}} = \pi/K_{\text{crit}}$ + 定义 15.3/命题 15.4/定理 15.5/推论 15.2、B1–B3 数值验证 + 算法 15.1/定理 15.6 Kerr QNM 数值表）；§14 表新增 `SilenceHierarchyDeepened.lean` 行；§15 新增第 6 项已解决问题（5/5 子项理论严格化完成）；附录 A.1 新增 4 项纯数学新发现 |
 | v0.4 | 2026-07-20 | **§15 数值验证扩展至四类物理系统**：新增定理 15.7（Fibonacci 任意子 Wilson-辫子严格对应，§15.4.1，5 点数值验证 $n_\gamma = k$）、定理 15.8（BTZ 黑洞 $K_{\text{crit}}^{\text{BTZ}} = 1$、$C_{\text{crit}}^{\text{BTZ}} = \pi$ 稳定性，§15.5.1，6 点数值验证 BTZ 辫子永不退化）、定理 15.9（Tangherlini $D=4,5,6,7$ 维度标定，§15.6.1，4 点数值验证 $K_{\text{crit}}^{(D)} = 1$ 维度不变性）；§15.7 Lean 模块表扩展至 11 项（新增 `fibonacci_wilson_braid_correspondence`、`BTZ_Ccrit_stability`、`K_crit_tangherlini_dimension`）；§15.8 推进状态表 5/5 数值验证全覆盖（Kerr/BTZ/Tangherlini/Fibonacci 四类系统）；Paper I §8.3.3 第 20 项从"部分解决"升级为"完全解决" |
+| v1.4 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|

@@ -2,7 +2,7 @@
 
 ## 本路线要解决的问题
 
-本教程的定位是**范畴论入门与落地指南**，不是标准教材的替代物。标准教材（Awodey、Leinster、Riehl、Mac Lane 等）在定义、定理与证明上是完整的，但常见问题是：读者学完后仍不知道如何在具体理论中把范畴工具真正“用”起来。本教程则用 UFPF（不动点与谱理论）作为可触摸的着陆场，把抽象概念映射到 `Rec`、`Sp`、`D ⊣ R`、`T = R ∘ D`、谱丛等具体构造。
+本教程的定位是**范畴论入门与落地指南**，不是标准教材的替代物。标准教材（Awodey、Leinster、Riehl、Mac Lane 等）在定义、定理与证明上是完整的，但常见问题是：读者学完后仍不知道如何在具体理论中把范畴工具真正“用”起来。本教程则用 MUFPF（不动点与谱理论）作为可触摸的着陆场，把抽象概念映射到 `Rec`、`Sp`、`D ⊣ R`、`T = R ∘ D`、谱丛等具体构造。
 
 因此，学习者的最佳策略是**并行阅读、互相补缺**。本路线要解决的核心问题是：
 
@@ -14,18 +14,18 @@
 
 ## 目标读者
 
-- 已经读完或正在读 UFPF `learning/` 教程，希望用标准教材补严密性的学习者。
-- 有一定数学基础（至少熟悉线性代数与基本拓扑/分析），想从范畴论角度理解 UFPF 论文的读者。
+- 已经读完或正在读 MUFPF `learning/` 教程，希望用标准教材补严密性的学习者。
+- 有一定数学基础（至少熟悉线性代数与基本拓扑/分析），想从范畴论角度理解 MUFPF 论文的读者。
 - 希望最终能在 Lean 4 / Mathlib 中形式化简单范畴构造的研究者或工程师。
 
 ## 预期收益
 
 完成本路线后，你应该能够：
 
-- 独立阅读标准范畴论教材中的定义、定理与证明，并用 UFPF 中的例子验证理解。
-- 把 UFPF 论文中出现的构造（`Rec`、`Sp`、`D ⊣ R`、`T = R ∘ D`、谱丛、Grothendieck 纤维化、Cartesian 提升等）准确地映射到范畴论语汇。
+- 独立阅读标准范畴论教材中的定义、定理与证明，并用 MUFPF 中的例子验证理解。
+- 把 MUFPF 论文中出现的构造（`Rec`、`Sp`、`D ⊣ R`、`T = R ∘ D`、谱丛、Grothendieck 纤维化、Cartesian 提升等）准确地映射到范畴论语汇。
 - 在 Lean 4 中形式化简单范畴构造（如 `Set` 范畴、伴随对、极限、单子实例），并理解 Mathlib 范畴论模块的组织方式。
-- 具备进一步阅读 UFPF 高阶论文（层、栈、∞-范畴、谱流形）所需的范畴论基础。
+- 具备进一步阅读 MUFPF 高阶论文（层、栈、∞-范畴、谱流形）所需的范畴论基础。
 
 > 本路线把本教程（`learning/` 下的 Part 00~08）与经典范畴论教材按主题一一对应，便于读者在“快速建立直觉”和“补足数学严密性”之间切换。
 >
@@ -38,7 +38,7 @@
 | **Gap 1：从抽象到具体** | 完整定义、定理、证明、反例；覆盖所有标准构造。 | `Rec`、`Sp`、`D ⊣ R`、谱丛、Grothendieck 纤维化等可在 Lean 中直接形式化的具体例子。 |
 | **Gap 2：从例子到证明** | 以 `Set`、`Grp`、`Top` 为例说明定义，但例子和代码实现脱节。 | 每个概念都给出“代码直觉”和 `Mathlib` 对应，但许多证明细节被压缩为“可验证的直觉”。 |
 | **Gap 3：从纸笔到 Lean** | 通常是纯数学表述，不会告诉你 `Category`、`Functor`、`Adjunction` 等类型类如何组织。 | 直接指向 `Mathlib.CategoryTheory.*` 中的定义，鼓励用 Lean 复现小构造。 |
-| **Gap 4：从入门到落地** | 教会范畴论的“语言”，但很少教人如何把它嵌入一个原创理论。 | 以 UFPF 为案例，展示如何把伴随、极限、层、∞-范畴等工具用于不动点与谱理论的原创研究。 |
+| **Gap 4：从入门到落地** | 教会范畴论的“语言”，但很少教人如何把它嵌入一个原创理论。 | 以 MUFPF 为案例，展示如何把伴随、极限、层、∞-范畴等工具用于不动点与谱理论的原创研究。 |
 
 阅读建议：**标准教材负责回答“是什么 / 为什么”，本教程负责回答“怎么用 / 在代码里长什么样”。** 当本教程说“这是伴随对”时，如果想知道伴随对的完整等价定义，就去 Awodey 第 9 章或 Riehl 第 4 章；当教材读完“极限”却不知道怎么验证时，回到本教程的 `Σ-Rec` 余完备化例子或 Lean 的 `Limits.lean`。
 
@@ -62,8 +62,8 @@
 | **5. 单子与 Kleisli** | 理解单子作为“自函子上的代数结构”、Kleisli 范畴、Eilenberg-Mooe 范畴 | `part03_limits_colimits_monads.md`（后半） | Mac Lane XII<br>Awodey 第 10 章后半<br>Riehl 第 5 章相关习题 | Paper I 中 `T = R ∘ D`<br>`T = 𝓛 ∘ ι`<br>`Monad.lean` | 1 ~ 2 周 |
 | **6. 层与 Grothendieck 纤维化** | 掌握预层、层公理、Cartesian 提升、下降条件、谱栈 | `part04_sheaves_fibrations_stacks.md`<br>`paper_reading_guides/paper21_guide.md` | Riehl 第 7 章<br>Mac Lane 第 IX 章<br>Borceux 卷 2 第 8 章<br>Stacks Project 第 6 章 | Paper XVI、XIX、XXI、XXVII–XXIX<br>`FiberedCategory.lean`<br>`Sites.Sheaf.lean`<br>`case03_spectral_equivalence.md` | 3 ~ 4 周 |
 | **7. 高阶与无穷范畴** | 了解 2-范畴、∞-范畴、A∞/L∞ 代数、模型范畴 | `part05_higher_category_theory.md`<br>`part08_advanced_formalization.md` | Riehl *Elements of ∞-Category Theory* 1–3 章<br>Kerodon 第 1 章<br>Riehl *Categorical Homotopy Theory* | Paper V、IX、XXI<br>`Braided.lean`<br>`SpectralFlowHomotopy.lean` | 3 ~ 5 周 |
-| **8. UFPF 应用** | 把范畴工具映射到 UFPF 论文具体问题 | `part06_ufpf_applications.md` | Connes *Noncommutative Geometry* 1–2 章<br>Kassel *Quantum Groups*<br>Etingof et al. *Tensor Categories*<br>Atiyah–Patodi–Singer *Spectral Asymmetry* | Paper X–XV、XVII、XX、XXV | 按需 |
-| **9. Lean 4 形式化** | 能在 Lean 中形式化简单范畴构造 | `part07_exercises_lean.md`<br>`part07_solutions.md`<br>`lean_case_studies/` | *Theorem Proving in Lean 4*<br>Mathlib4 范畴论文档 | `UFPFormalization/`<br>`PresurveyFormalization/` | 贯穿全程 |
+| **8. MUFPF 应用** | 把范畴工具映射到 MUFPF 论文具体问题 | `part06_mufpf_applications.md` | Connes *Noncommutative Geometry* 1–2 章<br>Kassel *Quantum Groups*<br>Etingof et al. *Tensor Categories*<br>Atiyah–Patodi–Singer *Spectral Asymmetry* | Paper X–XV、XVII、XX、XXV | 按需 |
+| **9. Lean 4 形式化** | 能在 Lean 中形式化简单范畴构造 | `part07_exercises_lean.md`<br>`part07_solutions.md`<br>`lean_case_studies/` | *Theorem Proving in Lean 4*<br>Mathlib4 范畴论文档 | `MUFPFormalization/`<br>`PresurveyFormalization/` | 贯穿全程 |
 
 ---
 
@@ -115,7 +115,7 @@
 
 ---
 
-### 第 4~6 周：伴随对（UFPF 核心）
+### 第 4~6 周：伴随对（MUFPF 核心）
 
 **本教程**
 
@@ -133,10 +133,10 @@
 **练习**
 
 1. 用四种等价定义证明 `Free ⊣ Forget : Grp ⇆ Set`。
-2. 对 UFPF 中的 `D ⊣ R`，写出单位 `η : 1 → R ∘ D` 和余单位 `ε : D ∘ R → 1` 的物理含义（UV 归约 / IR 提升）。
+2. 对 MUFPF 中的 `D ⊣ R`，写出单位 `η : 1 → R ∘ D` 和余单位 `ε : D ∘ R → 1` 的物理含义（UV 归约 / IR 提升）。
 3. 在 Lean 中证明一个自己构造的小伴随对。
 
-**掌握标准**：看到 `F ⊣ G` 能立即画出三角等式，并能在 UFPF 论文中识别哪个函子是左伴随、哪个是右伴随。
+**掌握标准**：看到 `F ⊣ G` 能立即画出三角等式，并能在 MUFPF 论文中识别哪个函子是左伴随、哪个是右伴随。
 
 ---
 
@@ -159,7 +159,7 @@
 2. 构造一个拉回，并验证它满足泛性质。
 3. 用 Lean 的 `CategoryTheory.Limits` 定义一个简单图的极限（如 `2 → Set`）。
 
-**掌握标准**：能把 UFPF 中“把一族谱对象粘合成整体”的描述翻译成余极限语言。
+**掌握标准**：能把 MUFPF 中“把一族谱对象粘合成整体”的描述翻译成余极限语言。
 
 ---
 
@@ -179,10 +179,10 @@
 **练习**
 
 1. 验证 `Maybe : Set → Set`（`X ↦ X + {*}`）构成单子。
-2. 对 UFPF 的 `T = R ∘ D`，写出 `μ : T² → T` 与 `η : 1 → T`。
+2. 对 MUFPF 的 `T = R ∘ D`，写出 `μ : T² → T` 与 `η : 1 → T`。
 3. 比较 Kleisli 范畴与 Eilenberg-Moore 范畴在该单子下的区别。
 
-**掌握标准**：能把 UFPF 中的“谱化后再还原”操作识别为单子的乘法。
+**掌握标准**：能把 MUFPF 中的“谱化后再还原”操作识别为单子的乘法。
 
 ---
 
@@ -241,7 +241,7 @@
 
 **本教程**
 
-- 读 `part06_ufpf_applications.md`。
+- 读 `part06_mufpf_applications.md`。
 - 选择自己关心的应用领域论文（Paper X–XV、XVII、XX、XXV）。
 
 **标准教材**
@@ -252,10 +252,10 @@
 
 **练习**
 
-1. 选一个 UFPF 应用论文，用范畴论语汇重写它的核心结论。
+1. 选一个 MUFPF 应用论文，用范畴论语汇重写它的核心结论。
 2. 为该论文中的一个引理或定理补充 Lean 形式化（哪怕是非常小的引理）。
 
-**掌握标准**：能向他人用 3 句话说明某篇 UFPF 论文“用了什么范畴工具、为什么需要它、结论是什么”。
+**掌握标准**：能向他人用 3 句话说明某篇 MUFPF 论文“用了什么范畴工具、为什么需要它、结论是什么”。
 
 ---
 
@@ -266,7 +266,7 @@
 | “读完本教程就等于学会了范畴论。” | 本教程是**入门与落地指南**，不是完整教材。定理证明、深层例子和反例仍需标准教材补全。 |
 | “只看标准教材就够了。” | 没有具体例子（如 `Rec`、`Sp`、谱丛）和 Lean 代码，抽象的极限/伴随容易变成纯符号游戏。 |
 | “Lean 代码看懂就行。” | 形式化能暴露直觉中的漏洞。建议至少独立复现一个小引理。 |
-| “先学完所有范畴论再读 UFPF 论文。” | UFPF 论文本身就是很好的学习材料。可以在读论文时缺什么补什么。 |
+| “先学完所有范畴论再读 MUFPF 论文。” | MUFPF 论文本身就是很好的学习材料。可以在读论文时缺什么补什么。 |
 
 ---
 

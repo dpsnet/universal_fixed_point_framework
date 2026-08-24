@@ -1,6 +1,6 @@
 # Part 3：极限、余极限与单子
 
-> 目标：理解 UFPF 中 $\Sigma$-$\mathbf{Rec}$ 可数直和余完备化、单子 $T = \mathcal{L} \circ \iota$、以及 Freyd 伴随定理在 $D \dashv R$ 存在性证明中的作用。
+> 目标：理解 MUFPF 中 $\Sigma$-$\mathbf{Rec}$ 可数直和余完备化、单子 $T = \mathcal{L} \circ \iota$、以及 Freyd 伴随定理在 $D \dashv R$ 存在性证明中的作用。
 
 ## 问题动机
 
@@ -18,7 +18,7 @@
 
 **定义 3.4**（余锥与余极限）。对偶地，余锥由 $\{J(i) \to C\}$ 组成，余极限是初始余锥。
 
-### UFPF 实例：完备性
+### MUFPF 实例：完备性
 
 Paper I 命题 C2.1：$\mathbf{Rec}_D$ 具有显式构造的（余）极限。这是应用 Freyd 伴随定理证明 $D$ 有右伴随的前提之一。
 
@@ -31,7 +31,7 @@ Paper I 命题 C2.1：$\mathbf{Rec}_D$ 具有显式构造的（余）极限。�
 | 等化子图 | 等化子（equalizer） | 余等化子（coequalizer） |
 | 拉回图 | 拉回（pullback） | 推出（pushout） |
 
-### UFPF 实例：可数直和
+### MUFPF 实例：可数直和
 
 Paper XIX §7 中，随机噪声系统嵌入 $\Sigma$-$\mathbf{Rec}$，后者是 $\mathbf{Rec}$ 的**可数直和余完备化**（free countable coproduct completion）。对象形如：
 
@@ -45,7 +45,7 @@ $$\bigoplus_{i \in \mathbb{N}} R_i$$
 
 **定义 3.6**（余完备范畴）。若对所有小余极限存在，称余完备。
 
-### UFPF 实例
+### MUFPF 实例
 
 - $\mathbf{Set}$ 完备且余完备。
 - $\mathbf{Rec}_D$ 在 Paper I 中通过显式构造证明（余）极限存在。
@@ -60,7 +60,7 @@ $$\bigoplus_{i \in \mathbb{N}} R_i$$
 
 则 $G$ 有左伴随。
 
-### UFPF 实例：$D \dashv R$ 的存在性
+### MUFPF 实例：$D \dashv R$ 的存在性
 
 Paper I 命题 2.4.2：验证 Freyd 伴随定理的前提在 $\mathbf{Rec}_D$ 与 $\mathbf{Sp}$ 之间成立，从而证明右伴随 $R$ 存在（定理 2.4.5）。
 
@@ -78,11 +78,11 @@ Paper I 命题 2.4.2：验证 Freyd 伴随定理的前提在 $\mathbf{Rec}_D$ �
 $$\mu \circ T\mu = \mu \circ \mu T$$
 $$\mu \circ T\eta = \mathrm{id}_T = \mu \circ \eta T$$
 
-### UFPF 实例：$T = R \circ D$
+### MUFPF 实例：$T = R \circ D$
 
 Paper I 注 2.4.6：复合函子 $T = R \circ D$ 配备单位与乘法构成单子，编码从一般 Koopman 算子的自伴投影到生成元谱的全过程。其 Eilenberg-Moore 范畴 $\mathbf{Rec}^T$ 研究"可被谱化完整描述"的递归系统。
 
-### UFPF 实例：平凡单子
+### MUFPF 实例：平凡单子
 
 Paper XIX 定理 4.4：复合函子 $T = \mathcal{L} \circ \iota: \mathbf{Rec}_{\text{id}} \to \mathbf{Rec}_{\text{id}}$ 是恒等函子，定义了一个**平凡单子**。其 Eilenberg-Moore 范畴 $\mathbf{Rec}^T$ 同构于 $\mathbf{Rec}_{\text{id}}$。
 
@@ -92,7 +92,7 @@ Paper XIX 定理 4.4：复合函子 $T = \mathcal{L} \circ \iota: \mathbf{Rec}_{
 
 **定义 3.10**（Eilenberg-Moore 范畴）。对象为 $T$-代数 $(X, \alpha: T(X) \to X)$，满足代数公理。
 
-### UFPF 实例
+### MUFPF 实例
 
 Paper I 中单子 $T = R \circ D$ 的 Eilenberg-Moore 范畴 $\mathbf{Rec}^T$ 可用于分类那些"谱化信息足够"的递归系统。这在静默理论中有潜在应用：静默系统可能对应于 $T$-代数结构被破坏的层级。
 
@@ -103,9 +103,9 @@ Paper I 中单子 $T = R \circ D$ 的 Eilenberg-Moore 范畴 $\mathbf{Rec}^T$ �
 $$\delta \circ G\delta = \delta \circ \delta G$$
 $$\delta \circ G\varepsilon = \mathrm{id}_G = \delta \circ \varepsilon G$$
 
-### UFPF 实例
+### MUFPF 实例
 
-由伴随 $L \dashv R$ 产生的余单子 $G = L \circ R$ 在 UFPF 中可用于研究谱范畴到递归系统的"分解"操作。Paper I 附录中的 slice category 构造 $W \dashv S$（Wilson 流函子与谱静默函子）可产生相应的单子和余单子结构。
+由伴随 $L \dashv R$ 产生的余单子 $G = L \circ R$ 在 MUFPF 中可用于研究谱范畴到递归系统的"分解"操作。Paper I 附录中的 slice category 构造 $W \dashv S$（Wilson 流函子与谱静默函子）可产生相应的单子和余单子结构。
 
 ## 3.10 程序员与形式化视角（选读）
 
@@ -126,9 +126,9 @@ $$\delta \circ G\varepsilon = \mathrm{id}_G = \delta \circ \varepsilon G$$
 | 拉回 / 推出 | 两个有公共余域/公共域的态射的（余）极限 | `pullback f g` / `pushout f g` |
 | 完备 / 余完备 | 范畴对所有小图都有（余）极限 | `HasLimitsOfSize C` / `HasColimitsOfSize C` |
 
-### UFPF 中的（余）极限与余完备化
+### MUFPF 中的（余）极限与余完备化
 
-下表把 UFPF 中的（余）极限与余完备化构造与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些构造在代码里长什么样”的直觉：
+下表把 MUFPF 中的（余）极限与余完备化构造与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些构造在代码里长什么样”的直觉：
 
 | 范畴论概念 | 代码直觉 | 在 Lean 4 / Mathlib 中的对应 |
 |------------|----------|------------------------------|
@@ -148,9 +148,9 @@ $$\delta \circ G\varepsilon = \mathrm{id}_G = \delta \circ \varepsilon G$$
 | Eilenberg-Moore 范畴 | $T$-代数 $(X, \alpha: T(X) \to X)$ 构成的范畴 | `Monad.Algebra T` 与 `Monad.Algebra.Hom` |
 | 伴随生成单子 | $L \dashv R$ 给出 $T = R \circ L$ | `Adjunction.toMonad` |
 
-### UFPF 中的单子实例
+### MUFPF 中的单子实例
 
-下表把 UFPF 中的单子实例与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些单子在代码里长什么样”的直觉：
+下表把 MUFPF 中的单子实例与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些单子在代码里长什么样”的直觉：
 
 | 范畴论概念 | 代码直觉 | 在 Lean 4 / Mathlib 中的对应 |
 |------------|----------|------------------------------|
@@ -178,6 +178,6 @@ $$\delta \circ G\varepsilon = \mathrm{id}_G = \delta \circ \varepsilon G$$
 ## 3.9 关键要点
 
 - **（余）极限**统一了积、和、拉回、推出等构造，是范畴论中"泛性质"的核心体现。
-- **余完备化**允许将随机系统、无穷结构嵌入原范畴，是 UFPF 扩展框架的关键技术。
+- **余完备化**允许将随机系统、无穷结构嵌入原范畴，是 MUFPF 扩展框架的关键技术。
 - **Freyd 伴随定理**是证明 $D \dashv R$ 存在性的主要工具。
 - **单子**从伴随中提取出自函子结构，$T = R \circ D$ 编码谱化的"闭包操作"。

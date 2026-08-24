@@ -2,15 +2,15 @@
 
 **版本**：v0.1（2026-07-25）
 
-**摘要**：qnm 包（Stein 2019）是广泛使用的开源 Kerr QNM 计算工具，同样基于 Leaver 连续分数法。但 qnm 包与 UFPF LeaverUnifiedSolver 的实现存在差异，导致结果偏差。本笔记系统分析偏差来源，区分数值截断误差与谱丛分支偏差，并建立跨求解器的一致性理解。
+**摘要**：qnm 包（Stein 2019）是广泛使用的开源 Kerr QNM 计算工具，同样基于 Leaver 连续分数法。但 qnm 包与 MUFPF LeaverUnifiedSolver 的实现存在差异，导致结果偏差。本笔记系统分析偏差来源，区分数值截断误差与谱丛分支偏差，并建立跨求解器的一致性理解。
 
 ---
 
-## 1. qnm 包与 UFPF 求解器的差异
+## 1. qnm 包与 MUFPF 求解器的差异
 
 ### 1.1 实现对比
 
-| 方面 | qnm 包 (Stein 2019) | UFPF LeaverUnifiedSolver | 差异影响 |
+| 方面 | qnm 包 (Stein 2019) | MUFPF LeaverUnifiedSolver | 差异影响 |
 |:----|:-------------------|:------------------------|:--------|
 | 系数形式 | Leaver (1985) 乘积形式 | Cook-Zalutskiy (2014) 二次多项式 | $a > 0$ 时系数方程不同 |
 | 角向求解 | spheroidal 连分数 Newton-Raphson | 矩阵谱方法 (MatrixAngularSolver) | 角向特征值 $\lambda$ 精度 |
@@ -32,7 +32,7 @@ $$\varepsilon_{\text{coeff}} \sim 10^{-8} \cdot \frac{a}{1-a}$$
 
 **证明**。Leaver 乘积系数使用 $s_{n} = n + 1 - 2i\omega M$ 形式的因子乘积，多项式系数使用 $n$ 的二次多项式。两者在 $a=0$ 时数学等价（系数恒等式）但在 $a>0$ 时，乘积形式的 $\omega$ 依赖和 $a$ 依赖未完全分离到 $D_i(\omega)$ 中，导致与严格多项式形式存在偏差。偏差量级由 $a$ 与 $\omega$ 的耦合程度决定。□
 
-**命题 1.2**（角向特征值偏差）。qnm 包使用 spheroidal 连分数 + Newton-Raphson 求解角向特征值 $\lambda_{slm}(a\omega)$，UFPF 使用矩阵谱方法。偏差量级：
+**命题 1.2**（角向特征值偏差）。qnm 包使用 spheroidal 连分数 + Newton-Raphson 求解角向特征值 $\lambda_{slm}(a\omega)$，MUFPF 使用矩阵谱方法。偏差量级：
 
 $$\varepsilon_{\text{angular}} \sim 10^{-7} \cdot |m| \cdot a$$
 
@@ -52,7 +52,7 @@ $$|\varepsilon_{\text{qnm}}| \sim \varepsilon_{\text{trunc}} < 10^{-6}$$
 
 ### 2.2 数值验证表
 
-| $a$ | $l$ | $m$ | $\omega_{\text{UFPF}}$ | $\omega_{\text{qnm}}$ | 差值 | 主导来源 |
+| $a$ | $l$ | $m$ | $\omega_{\text{MUFPF}}$ | $\omega_{\text{qnm}}$ | 差值 | 主导来源 |
 |:---|:---:|:---:|:---------------------:|:--------------------:|:----:|:--------|
 | 0.0 | 2 | 0 | $0.373672 - 0.088962i$ | — | — | 截断误差 |
 | 0.1 | 2 | 0 | — | — | — | 截断误差 |
@@ -74,9 +74,9 @@ $$\varepsilon_{\text{qnm}} \sim \varepsilon_{\text{coeff}} + \varepsilon_{\text{
 
 ### 3.2 分支偏差分离
 
-qnm 包与 UFPF 的偏差中，分支偏差 $\varepsilon_{\text{branch}}$ 在两者中都存在，但表现不同：
+qnm 包与 MUFPF 的偏差中，分支偏差 $\varepsilon_{\text{branch}}$ 在两者中都存在，但表现不同：
 
-| 方面 | qnm 包 | UFPF |
+| 方面 | qnm 包 | MUFPF |
 |:----|:------|:-----|
 | 分支偏差检测 | 无显式检测（残差降低即接受） | LACI 显式检测 |
 | 物理根选择 | 手动初值依赖 | LACI 自动选择 |
@@ -113,7 +113,7 @@ qnm 包与 UFPF 的偏差中，分支偏差 $\varepsilon_{\text{branch}}$ 在两
 ## 5. 验证建议
 
 1. **低自旋一致性检查**：在 $a \in [0, 0.3]$ 上与 qnm 包（或 Berti 2006 拟合公式）交叉验证，目标偏差 $< 10^{-7}$。
-2. **高自旋偏差定量化**：在 $a=0.9$, $l=2$, $m=2$ 上比较 qnm 包与 UFPF 的偏差并归因到系数形式/角向/截断。
+2. **高自旋偏差定量化**：在 $a=0.9$, $l=2$, $m=2$ 上比较 qnm 包与 MUFPF 的偏差并归因到系数形式/角向/截断。
 3. **跨求解器 LACI 验证**：对 qnm 包已识别的物理根计算 LACI，验证 LACI $< 2.0$ 的普适性（不依赖具体实现）。
 
 ---

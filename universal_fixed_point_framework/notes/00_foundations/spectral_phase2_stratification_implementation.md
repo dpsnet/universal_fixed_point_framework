@@ -3,7 +3,7 @@
 > **来源**：`spectral_category_scope_stratification.md` 阶段 2 任务。
 > **日期**：2026-08-04
 > **状态**：已完成（`lake build` 通过，零 sorry）
-> **载体**：`formal_proof/UFPFormalization/UFPFormalization/NoiseCategory.lean` §18
+> **载体**：`formal_proof/MUFPFormalization/MUFPFormalization/NoiseCategory.lean` §18
 
 ---
 

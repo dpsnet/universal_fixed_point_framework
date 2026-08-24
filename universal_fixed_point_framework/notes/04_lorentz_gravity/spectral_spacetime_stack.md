@@ -70,7 +70,7 @@ $$\mathcal{E}(\{p\}) \cong \mathbf{Sp}_p = \{D(R_p) = (H_p, A_p, \sigma(A_p))\}$
 - **($\Rightarrow$)**：若广义协变成立，则谱数据与开集选择无关 → 层粘合条件自然满足
 - **($\Leftarrow$)**：若 $\mathcal{E}$ 是层，则谱数据在不同开集上粘合唯一 → 坐标变换不改变物理
 
-**物理意义**（`general_covariance_as_sheaf_gluing`）：广义协变不是独立的物理原理，而是谱预层 $\mathcal{E}$ 满足层公理的必然推论。这统一了广义相对论的几何图和 UFPF 的谱图景。
+**物理意义**（`general_covariance_as_sheaf_gluing`）：广义协变不是独立的物理原理，而是谱预层 $\mathcal{E}$ 满足层公理的必然推论。这统一了广义相对论的几何图和 MUFPF 的谱图景。
 
 ### 3.3 谱间隙退化时的异常
 

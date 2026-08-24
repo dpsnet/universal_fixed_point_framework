@@ -59,7 +59,7 @@
 
 **关键定义 2.1**：函子 $\pi: \mathcal{E} \to \mathcal{B}$ 是 Grothendieck 纤维化，若对任意 $e \in \mathcal{E}$ 和基态射 $f: b \to \pi(e)$，存在 **Cartesian 提升** $\tilde{f}: e' \to e$
 
-> **术语说明**：UFPF 此前使用 **"Cartan 提升"**，现已统一为标准术语 **"Cartesian 提升"**（对应标准范畴论文献中的 *Cartesian lifting*）。
+> **术语说明**：MUFPF 此前使用 **"Cartan 提升"**，现已统一为标准术语 **"Cartesian 提升"**（对应标准范畴论文献中的 *Cartesian lifting*）。
 
 **关键定义 2.2**：分裂纤维化：Cartesian 提升的选择可规范化为函子
 
@@ -67,7 +67,7 @@
 
 **思考问题**：
 - Cartesian 提升的"万有性质"是什么？
-- 为什么 UFPF 中的所有物理实例都是**分裂**纤维化？
+- 为什么 MUFPF 中的所有物理实例都是**分裂**纤维化？
 - 非分裂纤维化可能在什么场景出现？
 
 ### §3-5 六个纤维化实例
@@ -117,14 +117,14 @@
 **对照学习**：[part04_sheaves_fibrations_stacks.md](../part04_sheaves_fibrations_stacks.md) §4.3
 
 **思考问题**：
-- 为什么是 8 个参数方向？这与 UFPF 中的哪些物理量对应？
+- 为什么是 8 个参数方向？这与 MUFPF 中的哪些物理量对应？
 - 总参数丛与六个具体实例之间是什么关系？（拉回）
 
 ### §8 物理截面
 
 **关键思想**：物理可观测量是总参数丛上的截面
 
-**对照学习**：[part06_ufpf_applications.md](../part06_ufpf_applications.md) §6.5
+**对照学习**：[part06_mufpf_applications.md](../part06_mufpf_applications.md) §6.5
 
 **思考问题**：
 - QCD 的 $T_c$ 如何作为 Temp 纤维化的截面？
@@ -149,7 +149,7 @@
 
 ## 关键要点
 
-- Paper XXI 是 UFPF 上层建筑的"综合收口"：把 Paper XIX 的各种参数空间扩展统一为 Grothendieck 纤维化语言。
+- Paper XXI 是 MUFPF 上层建筑的"综合收口"：把 Paper XIX 的各种参数空间扩展统一为 Grothendieck 纤维化语言。
 - 六个物理实例共享同一模板：基空间 + 纤维 + 投影 + Cartesian 提升 + 截面。
 - 总参数丛是统一的数学图像，任何具体物理系统都是其截面的局部化。
 - 谱编织和谱栈把纤维化与层论结合，处理多参数和弯曲时空中的局域-整体关系。
@@ -158,4 +158,4 @@
 
 1. Paper XXI 中的总参数丛与 Paper XVI 中的谱预层/层如何统一？
 2. 如果未来增加新的参数方向（如宇宙学红移、化学势），总参数丛如何扩展？
-3. Kan 延拓是否可以作为统一六个纤维化实例的更高效工具？（参见 [part06_ufpf_applications.md](../part06_ufpf_applications.md) §6.4 未来方向）
+3. Kan 延拓是否可以作为统一六个纤维化实例的更高效工具？（参见 [part06_mufpf_applications.md](../part06_mufpf_applications.md) §6.4 未来方向）

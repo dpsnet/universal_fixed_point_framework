@@ -173,7 +173,7 @@ Rec_set（集合语义：连续映射）
 
 **产出**：
 - 实现笔记：`notes/00_foundations/spectral_phase2_stratification_implementation.md`
-- 形式化载体：`formal_proof/UFPFormalization/UFPFormalization/NoiseCategory.lean` §18
+- 形式化载体：`formal_proof/MUFPFormalization/MUFPFormalization/NoiseCategory.lean` §18
 - `lake build` 通过（2454 jobs，零 sorry）
 
 **关键结果**：

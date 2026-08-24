@@ -1,6 +1,6 @@
 # Phase 16：机器证明形式化计划
 
-基于 [关于《通用不动点范畴框架 I补充机器证明的讨论](../docs/关于《通用不动点范畴框架 I补充机器证明的讨论.md)，规划本框架的机器证明（形式化证明）实施路线。
+基于 [关于《元通用不动点函子范畴框架 I补充机器证明的讨论](../docs/关于《元通用不动点函子范畴框架 I补充机器证明的讨论.md)，规划本框架的机器证明（形式化证明）实施路线。
 
 ## 一、核心目标
 
@@ -76,7 +76,7 @@
 | 6 | 有限维轨道函子 | 群表示、权重等价类 | ✅ 已完成（`OrbitFunctor.lean`：`orbitWeight` + `orbitStabilizer` 已证） |
 | 7 | 有限维 Clifford 矩阵表示 | 低维旋量模、矩阵表示 | ✅ 已完成（`Clifford.lean`：$e_{01}^{2}=I$、$e_{10}^{2}=-I$、$\mathrm{Cl}(2,0)$ 反对易与平方已证） |
 
-**产出**：`formal_proof/UFPFormalization/` 目录，基于 Lean 4.31.0 + mathlib4 4.31.0，`lake build --no-cache` 全量通过，全部 9 个模块无 `sorry`。
+**产出**：`formal_proof/MUFPFormalization/` 目录，基于 Lean 4.31.0 + mathlib4 4.31.0，`lake build --no-cache` 全量通过，全部 9 个模块无 `sorry`。
 
 ### 阶段 16B：泛函分析形式化（中期 3–12 个月）
 
@@ -94,7 +94,7 @@
 | 4 | **S1–S4 静默判据** | 算子层面证明 | ✅ **已完成**（`Silence.lean`：`silenceS1`/`S2`/`S3`/`S4` + `laciIndex` + `spectralSilence` + `silenceEquivalence`） | **P1** |
 | 5 | **Leaver 双初始向量逆迭代法复杂度** | $O(N)$ 严格形式证明——Thomas 算法前向/后向扫描 + 逆迭代收敛常数步 + 总复杂度 $O(N)$；三对角矩阵数据结构 `TridiagonalData`、`thomasForwardSweep`/`thomasBackwardSweep` 定义、`twoStringComplexity` 定理陈述 | ✅ **已完成**（`LeaverComplexity.lean`：三对角矩阵形式化 + Thomas 算法 + 定理 7.27b 陈述 + $O(N)$ vs $O(N^3)$ 对比；`lake build` 通过） | **P2** |
 
-**产出**：`formal_proof/UFPFormalization/` 目录，共 12 个模块，`lake build --no-cache` 全量通过。
+**产出**：`formal_proof/MUFPFormalization/` 目录，共 12 个模块，`lake build --no-cache` 全量通过。
 
 ### 阶段 16C：分形/遍历理论形式化（分层推进，4–12 周）
 
@@ -128,7 +128,7 @@
 | 8 | Legendre 变换接口 | `LegendreTransform`：凸共轭 `f*(p) = sup(px - f(x))` | `Analysis.Convex.Legendre` | ✅ **已完成**（`ThermoFormalism.lean`：`legendreTransform` + `legendreTransform_convex` + `singularitySpectrum`） |
 | 9 | **Hausdorff 维数凹性定理 形式化** | $d_H(ρ)$ 凹性：压力零点 → 隐函数定理 → 凹性继承 → IFS 模型验证 | 压力函数 + `Analysis.ImplicitFunction` + `hausdorffDim` | ✅ **已完成**（`ThermoFormalism.lean`：`hausdorffDimensionOfMeasure` + `theorem_DC_concavity` 框架 + `singularity_spectrum_concave`） |
 
-**产出**：`formal_proof/UFPFormalization/` 目录，新增 4 个模块（`SpectralEquivalence.lean` + `ICVerification.lean` + `IFSFractal.lean` + `ThermoFormalism.lean`），共 **19 个模块**，`~3,700 行**，**15/19 零 `sorry`**。剩余 8 个 `sorry` 为深层分析定理（变分原理、Jensen 不等式、Ledrappier-Young、Perron-Frobenius），需数学分析基础设施完善后填充。
+**产出**：`formal_proof/MUFPFormalization/` 目录，新增 4 个模块（`SpectralEquivalence.lean` + `ICVerification.lean` + `IFSFractal.lean` + `ThermoFormalism.lean`），共 **19 个模块**，`~3,700 行**，**15/19 零 `sorry`**。剩余 8 个 `sorry` 为深层分析定理（变分原理、Jensen 不等式、Ledrappier-Young、Perron-Frobenius），需数学分析基础设施完善后填充。
 
 ## 四、机器证明对比 AI 推导的核心增益
 
@@ -157,7 +157,7 @@
 | 问题 | 状态 | 说明 |
 |------|------|------|
 | Lean/Isabelle/HOL 选择 | ✅ 已决策 | 选用 **Lean 4.31.0 + mathlib4 4.31.0**，本地 elan 环境配齐 |
-| 形式化库结构设计 | ✅ 已落地 | `UFPFormalization/` 下按模块拆分（Rec/Spec/DFunctor/Adjunction/Spectral/Orbit/Clifford） |
+| 形式化库结构设计 | ✅ 已落地 | `MUFPFormalization/` 下按模块拆分（Rec/Spec/DFunctor/Adjunction/Spectral/Orbit/Clifford） |
 | 本地 `RFunctor` 非平凡构造 | ✅ 已完成 | `Fin n` 状态空间 + 单位/余单位通过谱对应构造 |
 | `DAdjR` 三角恒等式 | ✅ 已完成 | `Adjunction.mkOfUnitCounit` 构造 + 左右三角恒等式 `simp` 通过 |
 | C1 辫子自然同构形式化 | ✅ 已完成 | `Braided.lean`：`MonoidalCategory`/`BraidedCategory` 实例 + 对称退化 + 幺半保持 |

@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XVII：从 $\mathbf{Sp}$ 谱唯象体系预测粒子物理可观测量
+# 元通用不动点函子范畴框架 XVII：从 $\mathbf{Sp}$ 谱唯象体系预测粒子物理可观测量
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -8,10 +8,10 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）。本文所述"通用不动点范畴框架"（Universal Fixed Point Framework, UFPF），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper V（谱流方程 $\frac{d}{dt}A_t=[G,A_t]$）、Paper VIII（$\partial\mathbf{Rec}_D$ 黑洞视界谱边界）、Paper XI（A1-A7 谱 QFT 公理系统）。本文所述"元通用不动点函子范畴框架"（Universal Fixed Point Framework, MUFPF），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Framework）
 - **IFS**：迭代函数系统（Iterated Function System）
 - **QCD**：量子色动力学（Quantum Chromodynamics）
 - **CKM**：卡比博-小林-益川矩阵（Cabibbo-Kobayashi-Maskawa matrix）
@@ -388,7 +388,6 @@ $\theta_{13}$、$\theta_{12}$ 的推导完全类似。$\square$
 
 链中 $d_H = \ln 15 + \delta$（结构确定量，$\ln 15$ 机器证明）与静默率 $s=e^{-1}$（定理 R1 选定）为框架登记输入；其余步骤由 $\mathbf{Sp}$ 范畴结构强制。此时 Phase 46 Q2 的全部子项——电荷量子化、谱交织子、$\eta_{\text{RG}}$ 谱推导、Formula B$^\beta$ 修正、$U_{Hf}$ 解析角——均已闭合。
 
-
 ---
 
 ## 6. 规范耦合与 RGE
@@ -761,3 +760,4 @@ $\mathbf{Sp}$ 谱唯象体系以 $(d_H, \lambda_{\text{静默}})$ 两个登记�
 | v1.2 | 2026-07-19 | 新增 Yukawa 特征值修正（§5）——引入 $y_i$ 后 $m_\mu/m_\tau$ 偏差从 ×2.34 降至 ×1.01；新增 $T_c$ 谱推导（§12.5）——预测值 153 MeV，偏差 1.1%；$F_\pi$ 偏差修正为 0.1%；更新摘要（预测数从 28 增至 29）、扩展结论 |
 | v1.1 | 2026-07-19 | 新增 §12 低能 QCD 谱表述：$\Lambda_{\text{QCD}}$ 谱推导、方案转换因子 $Z_s = Z_3 = 1.39$、⟨ψ̄ψ⟩ 定量预测（2% 精度）、四类 ∂Rec_D 临界现象统一表；更新摘要（预测数从 26 增至 28）、扩展结论 |
 | v1.0 | 2026-07-19 | 初始版本：26 个零参数预测，Fisher 组合检验，中微子排序预测 |
+| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

@@ -2,7 +2,7 @@
 
 **版本**：v0.2（2026-07-23）
 
-**摘要**：本笔记将 Phase 55A-55G 各自独立构造的 Grothendieck 纤维化统一为一个总参数丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$，其中 $\mathbf{Param}$ 是包含所有物理参数的公共基空间。核心结构包括：(1) 参数范畴 $\mathbf{Param}$——对象为 $(G, \eta, T, \mu, M, a, \Lambda, f, \ldots)$ 的元组，态射为逐分量膨胀；(2) 每个子纤维化作为总丛沿坐标嵌入的拉回出现；(3) 不同参数方向之间的丛态射（由物理对偶性诱导——如 $\mathcal{T}: T \leftrightarrow \mu$、$\mathcal{H}: (M,a) \to T$、$\Phi: \Lambda \to \mu$ 等）。本构造是 UFPF 五层架构的顶层收口。
+**摘要**：本笔记将 Phase 55A-55G 各自独立构造的 Grothendieck 纤维化统一为一个总参数丛 $\mathbf{Bun}(\mathbf{Param}, \mathbf{Sp})$，其中 $\mathbf{Param}$ 是包含所有物理参数的公共基空间。核心结构包括：(1) 参数范畴 $\mathbf{Param}$——对象为 $(G, \eta, T, \mu, M, a, \Lambda, f, \ldots)$ 的元组，态射为逐分量膨胀；(2) 每个子纤维化作为总丛沿坐标嵌入的拉回出现；(3) 不同参数方向之间的丛态射（由物理对偶性诱导——如 $\mathcal{T}: T \leftrightarrow \mu$、$\mathcal{H}: (M,a) \to T$、$\Phi: \Lambda \to \mu$ 等）。本构造是 MUFPF 五层架构的顶层收口。
 
 **前置依赖**：全部 Phase 55 输出——`TempRGFiber.lean`、`NoiseFiber.lean`、`SignatureFiber.lean`、`WeaveProductFiber.lean`、`WeaveBCS.lean`、`CuprateDistribution.lean`、`KerrFiber.lean`、`EFTCodomainFiber.lean`、`FlavorFiber.lean`、`ContextualitySheaf.lean`、`SpacetimeStack.lean`。
 

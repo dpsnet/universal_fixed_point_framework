@@ -448,8 +448,8 @@ $(\infty,1)$-谱丛定义
 在 `SpectraInfinity.lean` 中定义 $(\infty,1)$-谱丛：
 
 ```lean4
-import UFPFormalization.RecInfinity
-import UFPFormalization.SpecInfinity
+import MUFPFormalization.RecInfinity
+import MUFPFormalization.SpecInfinity
 import Mathlib.CategoryTheory.InfinityCategory.SimplicialSet
 
 open CategoryTheory

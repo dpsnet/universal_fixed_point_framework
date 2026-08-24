@@ -1,8 +1,8 @@
-# 专项研究笔记：从 UFPF 谱范畴推导 Hong Liu 耗散流体 EFT
+# 专项研究笔记：从 MUFPF 谱范畴推导 Hong Liu 耗散流体 EFT
 
 > **版本**：v0.1（2026-08-21，初始框架）
 > **状态**：研究进行中——数学结构梳理 + 推导路线图
-> **目标**：建立 UFPF（通用不动点范畴框架）与 Hong Liu 课题组耗散流体有效场论之间的严格数学对应，最终实现从 UFPF 的谱范畴公理出发，推导出 Hong Liu 框架的核心结构
+> **目标**：建立 MUFPF（元通用不动点函子范畴框架）与 Hong Liu 课题组耗散流体有效场论之间的严格数学对应，最终实现从 MUFPF 的谱范畴公理出发，推导出 Hong Liu 框架的核心结构
 > **关联论文**：Paper I, VI, VII, XI, XII, XLI, XXV
 
 ---
@@ -11,11 +11,11 @@
 
 ### 0.1 核心问题
 
-**能否从 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴公理出发，系统性地推导出 Hong Liu 课题组（Crossley-Glorioso-Liu）耗散流体有效场论的核心数学结构？**
+**能否从 MUFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴公理出发，系统性地推导出 Hong Liu 课题组（Crossley-Glorioso-Liu）耗散流体有效场论的核心数学结构？**
 
 ### 0.2 两个框架的简要对照
 
-| 维度 | UFPF（王斌） | Hong Liu EFT（Crossley-Glorioso-Liu） |
+| 维度 | MUFPF（王斌） | Hong Liu EFT（Crossley-Glorioso-Liu） |
 |:---|:---|:---|
 | **基础公理** | $\mathbf{Rec}$ 递归范畴 + $\mathbf{Sp}$ 谱范畴 + $D\dashv R$ 伴随 | CTP 路径积分 + 幺正性 + 统计力学 |
 | **核心方程** | 谱流方程 $\frac{d}{dt}A_t = [G, A_t]$ | 有效作用量 $I_{\text{hydro}}[\chi_1, \chi_2]$ |
@@ -26,7 +26,7 @@
 
 ### 0.3 已有对应关系（经三轮分析确认）
 
-| Hong Liu 结构 | UFPF 对应 | 状态 | 来源论文 |
+| Hong Liu 结构 | MUFPF 对应 | 状态 | 来源论文 |
 |:---|:---|:---:|:---|
 | CTP 路径积分 | 谱路径积分 A4 | ✅ | Paper XI A4 |
 | r-a 变量分解 | SK 谱等价桥（定理 9.2） | ✅ | Paper XI §9.8 |
@@ -47,9 +47,9 @@
 
 ### 环节 A：从谱路径积分到 CTP 形式
 
-**目标**：从 UFPF 的谱路径积分公理（A4）出发，推导出 Hong Liu 的 Schwinger-Keldysh/CTP 形式。
+**目标**：从 MUFPF 的谱路径积分公理（A4）出发，推导出 Hong Liu 的 Schwinger-Keldysh/CTP 形式。
 
-**UFPF 已有基础**：
+**MUFPF 已有基础**：
 - Paper XI A4：$Z_{\text{Sp}}[J] = \int \mathcal{D}_{\text{Sp}}\Phi\, \exp\left(i S_{\text{Sp}}[\Phi] + i\int d\lambda\, J(\lambda)\Phi(\lambda)\right)$
 - 谱测度 $\mathcal{D}_{\text{Sp}}\Phi = \prod_{\lambda \in \sigma(A_\phi)} d\Phi(\lambda)$ 定义在特征值集合上
 
@@ -81,15 +81,15 @@ $$\langle \Phi_+(t_0) | \rho_0 | \Phi_-(t_0) \rangle$$
 
 在热平衡态 $\rho_0 = e^{-\beta H}/Z$ 时，KMS 条件自动约束两条支路的关联。
 
-**待验证**：步骤 A2 中"两条支路独立定义谱场"是否可以从 UFPF 的范畴结构中自然导出，而非作为附加假设。
+**待验证**：步骤 A2 中"两条支路独立定义谱场"是否可以从 MUFPF 的范畴结构中自然导出，而非作为附加假设。
 
 ---
 
 ### 环节 B：从 SK 谱等价桥到 r-a 变量分解
 
-**目标**：从 UFPF 的 SK 谱等价桥（Paper XI 定理 9.2）推导出 Hong Liu 的 r-a 变量分解。
+**目标**：从 MUFPF 的 SK 谱等价桥（Paper XI 定理 9.2）推导出 Hong Liu 的 r-a 变量分解。
 
-**UFPF 已有基础**：
+**MUFPF 已有基础**：
 - Paper XI 定理 9.2：$\mathrm{Im}\,G_R(\omega) = \frac{1}{2}\tanh(\beta\omega/2) \cdot G_K(\omega)$
 - 噪声↔确定性谱等价桥：$N = \bigoplus_i R_{\text{local},i} \leftrightarrow R \in \mathbf{Rec}$
 
@@ -116,7 +116,7 @@ $$I[\Phi_r, \Phi_a] = \int d\lambda\, dt \left[\Phi_a \cdot E_r[\Phi_r] + \Phi_a
 - $\Phi_a$ 的二次项给出噪声统计（涨落-耗散关系）
 - 更高阶项给出非高斯噪声
 
-**步骤 B3：与 UFPF 谱流方程的对应**
+**步骤 B3：与 MUFPF 谱流方程的对应**
 
 经典运动方程（$\Phi_a$ 的线性项）应还原为谱流方程：
 
@@ -132,9 +132,9 @@ $$\langle \Phi_a(\lambda_1, \omega) \Phi_a(\lambda_2, \omega') \rangle = \delta(
 
 ### 环节 C：从谱对称性到动态 KMS $\mathbb{Z}_2$
 
-**目标**：从 UFPF 的谱对称性推导出 Hong Liu 的动态 KMS $\mathbb{Z}_2$ 对称性。
+**目标**：从 MUFPF 的谱对称性推导出 Hong Liu 的动态 KMS $\mathbb{Z}_2$ 对称性。
 
-**UFPF 已有基础**：
+**MUFPF 已有基础**：
 - Paper XII 定理 8.1：Wick 转动 = 谱等价桥（Lorentz ↔ Euclidean）
 - Paper XII §11.7：有限温 Matsubara 模式 + 谱直和分解
 - Paper XI 定理 9.2：$\tanh(\beta\omega/2)$ 因子
@@ -165,7 +165,7 @@ $$\Omega: \begin{cases} \Phi_r(\lambda, \omega) \to \Phi_r(\lambda, -\omega) \cd
 - **局域第二定律**：熵产生非负（由 $\Phi_a$ 的噪声系数正定性保证）
 - **非线性 Onsager 关系**：传输系数间的约束（由 $\Omega$ 的高阶变换性质保证）
 
-**核心困难**：步骤 C1 中 $\Omega$ 的具体形式需要从 UFPF 的谱结构中**自然导出**，而非作为人为定义。可能的路径：
+**核心困难**：步骤 C1 中 $\Omega$ 的具体形式需要从 MUFPF 的谱结构中**自然导出**，而非作为人为定义。可能的路径：
 - 利用 Paper XLI 的能标-时间对偶 $d\ln\mu = dt$，将 Matsubara 频率 $\omega_n = 2\pi n/\beta$ 与谱参数 $\lambda$ 关联
 - 利用 Paper XII 的 Wick 谱等价桥，将虚时间平移 $t \to t + i\beta$ 翻译为谱参数的解析延拓
 
@@ -173,9 +173,9 @@ $$\Omega: \begin{cases} \Phi_r(\lambda, \omega) \to \Phi_r(\lambda, -\omega) \cd
 
 ### 环节 D：从谱幺正性到 BRST 对称性
 
-**目标**：从 UFPF 的幺正性定理推导出 Hong Liu 的 BRST 对称性。
+**目标**：从 MUFPF 的幺正性定理推导出 Hong Liu 的 BRST 对称性。
 
-**UFPF 已有基础**：
+**MUFPF 已有基础**：
 - Paper XI 定理 9.1：谱 S 矩阵幺正性 $S_{\text{Sp}}^\dagger S_{\text{Sp}} = I$
 - Paper XII 定理 4.2：谱 Cutkosky 规则（光学定理）
 - Paper XI：YM 拉氏量包含鬼场项
@@ -203,15 +203,15 @@ $$Q: \mathbf{Sp}_{\text{noise}} \to \mathbf{Sp}_{\text{noise}}$$
 
 这一步在标准场论中是已知结果（Kugo-Ojima 闭合条件），需要在谱语言中重新证明。
 
-**核心困难**：步骤 D1 中 $Q$ 的具体构造是全新的——UFPF 中没有现成的 Grassmann 变量或上同调结构。可能需要引入 $\mathbf{Sp}$ 的**超范畴扩展** $\mathbf{Sp}_{\mathbb{Z}_2}$。
+**核心困难**：步骤 D1 中 $Q$ 的具体构造是全新的——MUFPF 中没有现成的 Grassmann 变量或上同调结构。可能需要引入 $\mathbf{Sp}$ 的**超范畴扩展** $\mathbf{Sp}_{\mathbb{Z}_2}$。
 
 ---
 
 ### 环节 E：从谱流体到涨落流体力学
 
-**目标**：从 UFPF 的谱流体动力学（Paper VI）出发，结合环节 A-D 的结果，推导出 Hong Liu 的涨落流体力学。
+**目标**：从 MUFPF 的谱流体动力学（Paper VI）出发，结合环节 A-D 的结果，推导出 Hong Liu 的涨落流体力学。
 
-**UFPF 已有基础**：
+**MUFPF 已有基础**：
 - Paper VI 定理 2.1：N-S 谱流方程 $\frac{d}{dt}A_t = [A_{\text{adv}}, A_t] - \nu\Delta_{\text{spec}}A_t + \mathcal{F}(t)$
 - Paper VI 定理 3.1：K41 谱 $E(k) = C\varepsilon^{2/3}k^{-5/3}$
 - Paper VII：谱熵增、Onsager 关系、涨落定理
@@ -260,7 +260,7 @@ $$I_{\text{hydro}}^{\text{Sp}} = \int d\lambda\, dt \left[A_a \cdot \left(\parti
 
 ### 2.1 缺失构造 K1：动态 KMS $\mathbb{Z}_2$ 的谱范畴实现
 
-**问题**：如何从 UFPF 的谱结构中自然导出 $\mathbb{Z}_2$ 对称性？
+**问题**：如何从 MUFPF 的谱结构中自然导出 $\mathbb{Z}_2$ 对称性？
 
 **方案**：
 
@@ -289,7 +289,7 @@ $$\Omega[\Phi](\lambda, \omega) = \Phi(\lambda, -\omega) \cdot e^{\beta\omega/2}
 
 ### 2.2 缺失构造 K2：BRST 算子的谱范畴构造
 
-**问题**：如何在 UFPF 中构造满足 $Q^2 = 0$ 的 BRST 算子？
+**问题**：如何在 MUFPF 中构造满足 $Q^2 = 0$ 的 BRST 算子？
 
 **方案**：
 
@@ -333,7 +333,7 @@ $$\mathcal{D}iss \circ \mathcal{S}el = \mathrm{id} - \text{(边界项)}$$
 
 **方案**：
 
-**核心洞见**：Hong Liu 的"流体时空"是一个辅助空间，其坐标 $\sigma^a$ 标记流体元及其内部时钟。在 UFPF 中，**谱参数 $\lambda$ 本身就扮演了"内部时钟"的角色**——它是 Koopman 算子的特征值，编码了系统的"固有频率"。
+**核心洞见**：Hong Liu 的"流体时空"是一个辅助空间，其坐标 $\sigma^a$ 标记流体元及其内部时钟。在 MUFPF 中，**谱参数 $\lambda$ 本身就扮演了"内部时钟"的角色**——它是 Koopman 算子的特征值，编码了系统的"固有频率"。
 
 **定义**（谱-流体时空映射）：
 
@@ -415,12 +415,12 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 
 - "从谱范畴到有效场论：耗散流体的统一推导"
 - "Spectral Category Foundation for Dissipative Fluid Effective Field Theory"
-- "UFPF → Hong Liu EFT: A Complete Derivation via Spectral Categories"
+- "MUFPF → Hong Liu EFT: A Complete Derivation via Spectral Categories"
 
 ### 5.2 论文结构
 
 1. **引言**：两个框架的背景、关系、本文目标
-2. **§2 回顾**：UFPF 核心结构（Rec/Sp/D-R）+ Hong Liu EFT 核心结构（CTP/r-a/KMS/BRST）
+2. **§2 回顾**：MUFPF 核心结构（Rec/Sp/D-R）+ Hong Liu EFT 核心结构（CTP/r-a/KMS/BRST）
 3. **§3 环节 A**：从谱路径积分到 CTP 形式
 4. **§4 环节 B**：从 SK 谱等价桥到 r-a 变量分解
 5. **§5 环节 C**：从谱对称性到动态 KMS $\mathbb{Z}_2$
@@ -432,7 +432,7 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 
 ### 5.3 预期核心定理
 
-**定理（UFPF-Hong Liu 等价性）**：设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 Paper I 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其超范畴扩展。则：
+**定理（MUFPF-Hong Liu 等价性）**：设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 Paper I 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其超范畴扩展。则：
 
 1. $\mathbf{Sp}_{\mathbb{Z}_2}$ 上的谱路径积分（A4 公理 + 超结构）等价于 Hong Liu 的 CTP 路径积分
 2. SK 谱等价桥（定理 9.2）等价于 r-a 变量分解
@@ -449,14 +449,14 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 | 风险 | 等级 | 缓解策略 |
 |:---|:---:|:---|
 | 环节 C 中 $\Omega$ 的具体形式可能不唯一 | 中 | 利用物理约束（热力学一致性、Onsager 关系）唯一化 |
-| 环节 D 中 $Q^2=0$ 的证明可能需要额外公理 | 高 | 将额外公理作为 UFPF 的新公理引入，而非 Hong Liu 的假设 |
+| 环节 D 中 $Q^2=0$ 的证明可能需要额外公理 | 高 | 将额外公理作为 MUFPF 的新公理引入，而非 Hong Liu 的假设 |
 | 环节 E 中谱空间 ↔ 流体时空的映射可能不存在全局定义 | 中 | 限制在局部平衡态邻域内（这正是 EFT 的适用范围） |
-| 超范畴扩展可能破坏 UFPF 的形式化验证 | 高 | 在 Lean 4 中独立验证超范畴结构 |
+| 超范畴扩展可能破坏 MUFPF 的形式化验证 | 高 | 在 Lean 4 中独立验证超范畴结构 |
 
 ### 6.2 概念风险
 
 - **"推导"的严格性**：最终结果可能是"两个框架在数学上等价"，而非"一个推导另一个"。这仍然是有价值的结论——它建立了两个独立发展框架之间的桥梁。
-- **新公理的必要性**：如果推导需要引入 UFPF 中不存在的新公理（如超范畴结构），则严格意义上不是"从 UFPF 推导"，而是"从 UFPF + 新公理推导"。需要诚实地评估新公理的合理性。
+- **新公理的必要性**：如果推导需要引入 MUFPF 中不存在的新公理（如超范畴结构），则严格意义上不是"从 MUFPF 推导"，而是"从 MUFPF + 新公理推导"。需要诚实地评估新公理的合理性。
 
 ### 6.3 下一步行动
 
@@ -486,7 +486,7 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 - 真正的数学内容是**算子编序的偏序关系**（contour ordering）和**代数的直和** $\mathcal{A} \oplus \mathcal{A}$
 - 谱流方程的指数解 $A_t = e^{iGt}A_0 e^{-iGt}$ **自动保证酉性**，这是与 CTP 对接的自然桥梁
 
-**可行性判定**：✅ **高可行性**。UFPF 的谱流方程 + 谱路径积分 A4 公理已具备推导 CTP 的大部分数学基础设施。
+**可行性判定**：✅ **高可行性**。MUFPF 的谱流方程 + 谱路径积分 A4 公理已具备推导 CTP 的大部分数学基础设施。
 
 **关键参考文献**：
 - Martins (2013, arXiv:1308.5247)：谱 C*-范畴与 Fell 丛的等价
@@ -512,12 +512,12 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 - 给定 von Neumann 代数 $\mathfrak{M}$ + 忠实正规态 $\phi$ → 模算子 $\Delta$ → 模自同构群 $\sigma_t(x) = \Delta^{it} x \Delta^{-it}$ → $\phi$ 关于 $\sigma_t$ 满足 KMS 条件
 - **KMS 是谱理论的推论**，但需要的不是初等谱论，而是 von Neumann 代数上的模理论
 
-**与 UFPF 的对接**：
-- UFPF 的谱映射 $\sigma(A)$ 天然与模算子 $\Delta$ 的谱分解对接
+**与 MUFPF 的对接**：
+- MUFPF 的谱映射 $\sigma(A)$ 天然与模算子 $\Delta$ 的谱分解对接
 - 谱流方程 $dA_t/dt = [G, A_t]$ 与模自同构群 $\sigma_t$ 结构同构
 - HHW 定理证明：KMS 条件 ⟺ 谱流方程中 $G = -\beta^{-1}\log\Delta$
 
-**可行性判定**：✅ **高可行性**。KMS 从谱理论的推导在数学上已有成熟的基础（Tomita-Takesaki），UFPF 需要的是将这一已知结果在其范畴语言中重新表述。
+**可行性判定**：✅ **高可行性**。KMS 从谱理论的推导在数学上已有成熟的基础（Tomita-Takesaki），MUFPF 需要的是将这一已知结果在其范畴语言中重新表述。
 
 **关键参考文献**：
 - Gallavotti (1976)：KMS 是 Tomita-Takesaki 的推论
@@ -549,12 +549,12 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 - **直接回答**：不能从三角恒等式本身直接推导
 - **但**：从伴随的**DG 推广**（微分分级范畴）中可以涌现——DG-伴随的三角恒等式变为同伦版本，其同伦算子 $h$ 满足 $d \circ h + h \circ d = \text{id}$，这个 $d$ 就是 BRST 微分
 
-**UFPF 的三个伴随与 BRST 的对应**：
+**MUFPF 的三个伴随与 BRST 的对应**：
 - $D \dashv R$：单子 $T = RD$ 的 Eilenberg-Moore 代数上自然携带微分 $d_T$，$d_T^2 = 0$
 - $\mathcal{S}el \dashv \mathcal{D}iss$：选择物理态（$\ker Q$）/ 商掉非物理态（$\mathrm{im}\, Q$）——BRST 上同调的物理诠释
 - 谱投影 $P_i^2 = P_i$：通过 Hodge 分解 $d = d_H + d_V$ 与 BRST 微分建立联系
 
-**可行性判定**：✅ **高可行性**。Lie algebroid 路径已经提供了从范畴结构到 BRST 的严格数学实现，UFPF 的三个伴随关系可以统一到这个框架中。
+**可行性判定**：✅ **高可行性**。Lie algebroid 路径已经提供了从范畴结构到 BRST 的严格数学实现，MUFPF 的三个伴随关系可以统一到这个框架中。
 
 **关键参考文献**：
 - Ciambelli & Leigh, arXiv:2101.03974（Lie algebroid 与 BRST 的几何）
@@ -613,7 +613,7 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 | **A** | 谱路径积分 → CTP | ✅ **高** | 谱流方程酉性 + A4 公理 | 闭合时间态射的范畴定义 |
 | **B** | SK 谱等价桥 → r-a | ✅ **高** | 定理 9.2 + 噪声直和 | r-a 分解的谱流方程还原 |
 | **C** | 谱对称性 → KMS $\mathbb{Z}_2$ | ✅ **高** | Tomita-Takesaki + HHW 定理 | 模算子与谱映射 $\sigma(A)$ 的精确对接 |
-| **D** | 谱幺正性 → BRST | ✅ **高** | Lie algebroid 路径 + 伴随上同调 | UFPF 三伴随的 Lie algebroid 实现 |
+| **D** | 谱幺正性 → BRST | ✅ **高** | Lie algebroid 路径 + 伴随上同调 | MUFPF 三伴随的 Lie algebroid 实现 |
 | **E** | 谱流体 → 涨落流体 | ⚠️ **中** | Koopman-流体联系 + DMD | 谱-流体时空对偶映射的严格化 |
 
 ### 8.2 关键修正
@@ -625,7 +625,7 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 **修正后**（v0.2）：
 - 5 个环节中 4 个 ✅ 高可行性 / 1 个 ⚠️ 中可行性
 - **K1（KMS）**：Tomita-Takesaki 已提供成熟的数学基础，不再是"缺失构造"，而是"已有定理的范畴语言重述"
-- **K2（BRST）**：Lie algebroid 路径已提供严格实现，不再是"缺失构造"，而是"已有框架的 UFPF 适配"
+- **K2（BRST）**：Lie algebroid 路径已提供严格实现，不再是"缺失构造"，而是"已有框架的 MUFPF 适配"
 - **K3（流体时空映射）**：仍为中等可行性，但 Koopman-流体的文献联系比预期更强
 
 ### 8.3 研究推进优先级（修正后）
@@ -659,7 +659,7 @@ $$\tau(\sigma) = \frac{1}{2}\ln\left(\frac{\lambda_{\max}}{\lambda}\right) \quad
 
 **完整推导链**：
 
-$$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{KMS} \to \text{HHW 谱流} \to \text{CTP 虚时周期性} \to \text{DKMS } \mathbb{Z}_2 \to \text{FDT} \to \text{熵产生非负}$$
+$$\text{MUFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{KMS} \to \text{HHW 谱流} \to \text{CTP 虚时周期性} \to \text{DKMS } \mathbb{Z}_2 \to \text{FDT} \to \text{熵产生非负}$$
 
 **七个推导节**：
 1. Tomita-Takesaki 模算子谱分解（$\Delta = \int_0^\infty \lambda\, dE(\lambda)$）
@@ -668,7 +668,7 @@ $$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{K
 4. **动力学 KMS $\mathbb{Z}_2$ 对称性的构造**：$\mathcal{R}: \phi_q(t) \mapsto -\phi_q(-t) + i\beta\dot{\phi}_{\mathrm{cl}}(-t)$，验证 $\mathcal{R}^2 = \mathrm{id}$
 5. KMS 对有效作用量的约束（归一化、幺正性、DKMS）
 6. 涨落-耗散定理的严格推导：$C(\omega) = \frac{1}{2}\coth(\beta\omega/2)\rho(\omega)$
-7. UFPF 统一视角下的推导链
+7. MUFPF 统一视角下的推导链
 
 ---
 
@@ -676,7 +676,7 @@ $$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{K
 
 **九节完整构造**：
 
-1. **UFPF 伴随对 → 李代数胚**：$D \dashv R$ 伴随中的单位/余单位诱导锚映射和李括号
+1. **MUFPF 伴随对 → 李代数胚**：$D \dashv R$ 伴随中的单位/余单位诱导锚映射和李括号
 2. **Atiyah 序列**：$0 \to \mathrm{ad}(P) \to \mathbb{A} \to TM \to 0$，Ehresmann 连接给出水平-垂直分裂
 3. **Chevalley-Eilenberg 微分**：$d_A$ 的显式公式，$d_A^2 = 0$ 由 Jacobi 恒等式保证
 4. **扩展外微分**：$\hat{d} = d + s$，$\hat{d}^2 = 0 \Rightarrow s^2 = 0$（BRST 幂零性）
@@ -727,7 +727,7 @@ $$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{K
 | 论文章节 | 内容 | 状态 |
 |:---|:---|:---:|
 | §1 引言 | 两框架背景、目标 | 待写 |
-| §2 回顾 | UFPF + Hong Liu 并列 | 待写 |
+| §2 回顾 | MUFPF + Hong Liu 并列 | 待写 |
 | §3 CTP 推导 | 环节 A + B | ✅ **数学构造完成** |
 | §4 KMS 推导 | 环节 C | ✅ **数学构造完成** |
 | §5 BRST 推导 | 环节 D | ✅ **数学构造完成** |
@@ -740,13 +740,13 @@ $$\text{UFPF 谱映射} \to \text{模算子}\Delta \to \text{模流} \to \text{K
 
 ## 10 "完全嵌入"缺口清单与推进路线（v0.4，2026-08-21）
 
-> 论文初稿完成（Paper XLV v0.2）后，用户追问"CGL 是否被完全嵌入 UFPF"——本节省略性记录"嵌入"的三个层次及剩余缺口。
+> 论文初稿完成（Paper XLV v0.2）后，用户追问"CGL 是否被完全嵌入 MUFPF"——本节省略性记录"嵌入"的三个层次及剩余缺口。
 
 ### 10.1 嵌入的三个层次
 
 | 层次 | 内容 | 状态 |
 |:---|:---|:---:|
-| **结构层** | CTP / r-a / KMS / BRST 框架性构件在 UFPF 中重新实现 | ✅ 论文 §3-§5 |
+| **结构层** | CTP / r-a / KMS / BRST 框架性构件在 MUFPF 中重新实现 | ✅ 论文 §3-§5 |
 | **物理内容层** | 流体时空映射、共形流体二阶输运、噪声非线性 | ⚠️ 部分 |
 | **预言层** | CGL 的可证伪物理预言全部还原 | ❌ 未开始 |
 
@@ -796,7 +796,7 @@ $$\boxed{S_2^\mu = \frac14(f_5\hat\sigma^2 - f_3\hat\omega^2)\frac{u^\mu}{T} + v
 
 **散度到三阶**：$\nabla_\mu S^\mu = \frac12 T^{-1}\eta\,\sigma^2 - \frac12 T^{d-3}f_2\,\sigma^3 + O(\partial^4)$。
 
-### 11.2 谱框架的对应构造（UFPF 侧）
+### 11.2 谱框架的对应构造（MUFPF 侧）
 
 **（P1）剪切张量的对易子构造**：
 
@@ -900,7 +900,7 @@ $$G^{aaa}(\omega_1,\omega_2,\omega_3) = \sum_i \coth\!\left(\frac{\beta\omega_i}
 ### 12.4 关键洞见
 
 1. **三次噪声的谱本质**：$C_3$（双谱）在 Koopman 语言中就是生成元的 Kramers-Moyal $D_3$ 项——两者是同一数学对象的"作用量语言"与"算子语言"表述。
-2. **谱静默 ≠ 高斯性**：这是对 UFPF 框架的重要澄清——静默（不可见性）与非高斯性（统计性）是独立的物理维度。
+2. **谱静默 ≠ 高斯性**：这是对 MUFPF 框架的重要澄清——静默（不可见性）与非高斯性（统计性）是独立的物理维度。
 3. **间歇性的谱表述**：Kolmogorov 4/5 律（精确三阶结果）是谱流三阶层级的惯性区吸引子；多分形指数 $\zeta_p$ 来自谱扩散与对流的竞争——可从谱流导出（新）。
 4. **非线性 FDT 的谱证明**：把谱流在平衡固定点保持 KMS 塔作为定理，可给出 Wang-Heinz 非线性 FDT 的谱版本证明。
 
@@ -1091,18 +1091,18 @@ $$E_r = \frac12\ln(\lambda_{\max}/\lambda_r), \quad \tau = \frac12\ln(-\lambda_0
 
 | 位置 | 校准前 | 校准后 |
 |:---|:---|:---|
-| **标题** | 从 UFPF 到 CGL 框架的完整推导 | 谱范畴重构：范畴论统一及可证伪预言 |
-| **摘要** | 均可从 UFPF 公理严格推导 | 范畴论统一 + 系统性重构 |
-| **定理 1.1** | UFPF-CGL 等价性 | UFPF-CGL 统一性 |
+| **标题** | 从 MUFPF 到 CGL 框架的完整推导 | 谱范畴重构：范畴论统一及可证伪预言 |
+| **摘要** | 均可从 MUFPF 公理严格推导 | 范畴论统一 + 系统性重构 |
+| **定理 1.1** | MUFPF-CGL 等价性 | MUFPF-CGL 统一性 |
 | **§1.2** | 无贡献分层 | 贡献分层声明（重构/新构造/新预言三层） |
 | **§7.5 引言** | "完全嵌入"目标 | 统一目标 |
 
 ### 16.2 "理论共鸣的同盟者"定位
 
-核心范式转变：**从"UFPF 推导并吞并 CGL"转为"两框架互为理论同盟"**：
+核心范式转变：**从"MUFPF 推导并吞并 CGL"转为"两框架互为理论同盟"**：
 
-- CGL 给 UFPF：主流验证的场论语言 + 独立验证通道（等价性即验证）
-- UFPF 给 CGL：更深层范畴论公理化 + 新预言（$\lambda_\pi$ 等）+ 跨领域统一
+- CGL 给 MUFPF：主流验证的场论语言 + 独立验证通道（等价性即验证）
+- MUFPF 给 CGL：更深层范畴论公理化 + 新预言（$\lambda_\pi$ 等）+ 跨领域统一
 
 这一定位的学术价值：把"推导出主流理论"（重述，价值低）转化为"为主流理论提供公理化 + 提取新预言"（原创，价值高）。
 
@@ -1120,23 +1120,23 @@ $$E_r = \frac12\ln(\lambda_{\max}/\lambda_r), \quad \tau = \frac12\ln(-\lambda_0
 
 ## 17 层级澄清：从"统一/等价"到"翻译/实例"（v1.1，2026-08-21）
 
-> 用户指出：UFPF 涵盖的理论范围及领域远超 CGL，"UFPF 与 CGL 等价"混淆了层级。UFPF 是元框架，CGL 是具体理论。
+> 用户指出：MUFPF 涵盖的理论范围及领域远超 CGL，"MUFPF 与 CGL 等价"混淆了层级。MUFPF 是元框架，CGL 是具体理论。
 
 ### 17.1 关系定性的修正
 
 | 表述 | 问题 | 修正后 |
 |:---|:---|:---|
-| "UFPF 与 CGL 等价" | 混淆层级（元框架 vs 具体理论） | "UFPF 的谱语言翻译 CGL" |
-| "范畴论统一" | 暗示理论范围对等 | "CGL 作为 UFPF 的实例" |
-| "两个框架同构" | 结构层成立但范围不对等 | 结构层同构 + 范围层 UFPF 远超 CGL |
+| "MUFPF 与 CGL 等价" | 混淆层级（元框架 vs 具体理论） | "MUFPF 的谱语言翻译 CGL" |
+| "范畴论统一" | 暗示理论范围对等 | "CGL 作为 MUFPF 的实例" |
+| "两个框架同构" | 结构层成立但范围不对等 | 结构层同构 + 范围层 MUFPF 远超 CGL |
 
-**正确关系**：UFPF 是覆盖引力/粒子/凝聚态/流体/神经网络的**元框架**，CGL 是 UFPF 谱语言在耗散流体领域的**实例**。翻译关系（expressibility）而非对等关系（equivalence）。
+**正确关系**：MUFPF 是覆盖引力/粒子/凝聚态/流体/神经网络的**元框架**，CGL 是 MUFPF 谱语言在耗散流体领域的**实例**。翻译关系（expressibility）而非对等关系（equivalence）。
 
 ### 17.2 论文修改点
 
-- **标题**：改为"谱语言翻译：CGL 作为 UFPF 元框架的实例及可证伪预言"
+- **标题**：改为"谱语言翻译：CGL 作为 MUFPF 元框架的实例及可证伪预言"
 - **摘要**：改为"元框架可表达性 + 翻译 + 不构成对等"
-- **定理 1.1**："UFPF-CGL 统一性"→"CGL 的谱语言翻译"
+- **定理 1.1**："MUFPF-CGL 统一性"→"CGL 的谱语言翻译"
 - **§8**：统一定理 → 翻译定理（八项翻译，翻译后结构层等价）
 - **§9.2**：元框架-实例关系（"语言与著作"类比）
 - **§1.2**：翻译关系非对等关系
@@ -1150,9 +1150,9 @@ $$E_r = \frac12\ln(\lambda_{\max}/\lambda_r), \quad \tau = \frac12\ln(-\lambda_0
 ### 17.4 论文状态
 
 - **版本**：v1.1（2026-08-21）
-- **定位**：UFPF 元框架 → 翻译 CGL → CGL 是实例
-- **学术含义**：论文价值从"统一两个理论"转为"展示 UFPF 语言可表达一个主流理论 + 提取新预言"
+- **定位**：MUFPF 元框架 → 翻译 CGL → CGL 是实例
+- **学术含义**：论文价值从"统一两个理论"转为"展示 MUFPF 语言可表达一个主流理论 + 提取新预言"
 
 ---
 
-*本研究笔记 v1.1（2026-08-21）。层级澄清完成：UFPF 元框架 vs CGL 实例，翻译关系而非对等关系。*
+*本研究笔记 v1.1（2026-08-21）。层级澄清完成：MUFPF 元框架 vs CGL 实例，翻译关系而非对等关系。*

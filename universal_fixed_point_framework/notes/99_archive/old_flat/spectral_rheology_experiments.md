@@ -17,7 +17,7 @@
 
 ## 0. 摘要
 
-本笔记设计 5 个实验来检验 UFPF Phase 51F 的 5 个可检验预测：
+本笔记设计 5 个实验来检验 MUFPF Phase 51F 的 5 个可检验预测：
 
 1. **临界硬化指数 $-1/2$**（DST 流体）：剪切率-粘度曲线在临界点附近的幂律拟合
 2. **流变 rapidity 可加性**：双 Couette 流变仪的剪切叠加实验
@@ -58,12 +58,12 @@ $$\eta(\dot\gamma) \propto (1 - \dot\gamma/\dot\gamma_c)^{-1/2}.$$
 ### 1.3 数据分析
 
 **拟合模型**（见 `src/rheology_lorentz_checker.py`）：
-- 模型 A（UFPF 预测）：$\eta = \eta_0/\sqrt{1 - (\dot\gamma/\dot\gamma_c)^2}$，$\alpha = 1/2$ 固定
+- 模型 A（MUFPF 预测）：$\eta = \eta_0/\sqrt{1 - (\dot\gamma/\dot\gamma_c)^2}$，$\alpha = 1/2$ 固定
 - 模型 B（幂律自由）：$\eta = \eta_0 (1 - \dot\gamma/\dot\gamma_c)^{-\alpha}$，$\alpha$ 自由
 - 模型 C（Wyart-Cates）：摩擦饱和型
 
 **判定标准**：
-- 若 $\alpha_{\text{fit}} \in [0.45, 0.55]$ 且 95% 置信区间包含 0.5 → 支持 UFPF 预测
+- 若 $\alpha_{\text{fit}} \in [0.45, 0.55]$ 且 95% 置信区间包含 0.5 → 支持 MUFPF 预测
 - 若 $\alpha_{\text{fit}} \notin [0.4, 0.6]$ → 排除相对论型硬化，需调整流变层假设（命题 7.3）
 
 ### 1.4 信号-噪声估计
@@ -114,21 +114,21 @@ $$\phi_{\text{总}} = \phi_1 + \phi_2 \;\Leftrightarrow\; \dot\gamma_{\text{总}
 1. **单剪切测量**：分别测量外筒转动（$\dot\gamma_1$）和内筒转动（$\dot\gamma_2$）的粘度 $\eta_1, \eta_2$
 2. **双剪切测量**：同时转动内外筒，测量组合粘度 $\eta_{12}$
 3. **可加性判据**：
-   - rapidity 可加性（UFPF 预测）：$\eta_{12} = \eta(\dot\gamma_1 \dot\gamma_2 / \dot\gamma_0)$
+   - rapidity 可加性（MUFPF 预测）：$\eta_{12} = \eta(\dot\gamma_1 \dot\gamma_2 / \dot\gamma_0)$
    - 线性叠加（经典预测）：$\eta_{12} = \eta(\dot\gamma_1 + \dot\gamma_2)$
 4. **扫描范围**：$\dot\gamma_1, \dot\gamma_2 \in [0.1, 10]$ s$^{-1}$，9×9 网格
 
 ### 2.3 数据分析
 
 对每个 $(\dot\gamma_1, \dot\gamma_2)$ 组合，计算两个预测值：
-- UFPF：$\eta_{\text{UFPF}} = \eta(\dot\gamma_1 \dot\gamma_2 / \dot\gamma_0)$
+- MUFPF：$\eta_{\text{MUFPF}} = \eta(\dot\gamma_1 \dot\gamma_2 / \dot\gamma_0)$
 - 经典：$\eta_{\text{class}} = \eta(\dot\gamma_1 + \dot\gamma_2)$
 
 比较 $\eta_{12}^{\text{meas}}$ 与两个预测的偏差。
 
 ### 2.4 信号-噪声估计
 
-- 在 $\dot\gamma_1 = \dot\gamma_2 = \dot\gamma$ 时，UFPF 预测 $\eta(10) \approx 0.27 \eta_0$，经典预测 $\eta(20) \approx 0.22 \eta_0$
+- 在 $\dot\gamma_1 = \dot\gamma_2 = \dot\gamma$ 时，MUFPF 预测 $\eta(10) \approx 0.27 \eta_0$，经典预测 $\eta(20) \approx 0.22 \eta_0$
 - 差异约 20%，远大于测量噪声（~1%）
 - **预期 SNR > 20**
 
@@ -338,11 +338,11 @@ $$W(T) = \frac{\lambda^2(T)}{1/\dot\gamma_c^2(T)}$$
 
 ---
 
-## 8. 与 UFPF 公理层级的关系
+## 8. 与 MUFPF 公理层级的关系
 
 ### 8.1 实验检验的层级定位
 
-本笔记的 5 个实验检验的是 **Paper XVI 主定理 11-14 + 本框架主定理 E1**（结构定理层），而非元公理。根据 UFPF 公理层级非反馈原则（`notes/spectral_rheo_boundary.md` §7）：
+本笔记的 5 个实验检验的是 **Paper XVI 主定理 11-14 + 本框架主定理 E1**（结构定理层），而非元公理。根据 MUFPF 公理层级非反馈原则（`notes/spectral_rheo_boundary.md` §7）：
 
 - 若实验结果支持预测 → 主定理 E1-E3、Paper XVI 主定理 11-14 得到验证
 - 若实验结果否定预测 → 仅影响**流变层实例假设**（如相对论型硬化定律的适用范围），不影响元公理或结构定理
@@ -356,7 +356,7 @@ $$W(T) = \frac{\lambda^2(T)}{1/\dot\gamma_c^2(T)}$$
 - 实验四：$W(T^*) = 0$
 - 实验五：$k_\nu^{\text{eff}} \propto H^{-3/4}$，斜率 $-3/4 \pm 0.1$
 
-这些预测可在 2 年内全部检验完毕，为 UFPF Phase 51F 提供决定性验证或证伪。
+这些预测可在 2 年内全部检验完毕，为 MUFPF Phase 51F 提供决定性验证或证伪。
 
 ---
 
@@ -368,7 +368,7 @@ $$W(T) = \frac{\lambda^2(T)}{1/\dot\gamma_c^2(T)}$$
 
 ## 10. 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 
 - **Paper VI**：`paper/paper6_fluid_spectral_dynamics.md` — 流体谱动力学（§8 非牛顿流变谱动力学）
 - **Paper XVI**：`paper/paper16_lorentz_spectral_dynamics.md` — Lorentz 谱动力学（§11.4 流变同构）

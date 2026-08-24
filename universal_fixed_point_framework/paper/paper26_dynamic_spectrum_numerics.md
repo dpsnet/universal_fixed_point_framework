@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXVI：动态过程谱数值计算方法
+# 元通用不动点函子范畴框架 XXVI：动态过程谱数值计算方法
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -31,7 +31,7 @@
 
 ## 1. 引言
 
-通用不动点范畴框架（UFPF）在**静态/稳态解**方面已完全成熟：Paper VIII 建立了静态黑洞谱（Schwarzschild/Kerr/RN），Paper IX 解决了奇点正则化，Paper XII 建立了量子引力谱传播子与重整化。然而，**动态过程**——双星并合的全时序演化、普朗克能标的多体散射——仍是谱框架应用的空白。
+元通用不动点函子范畴框架（MUFPF）在**静态/稳态解**方面已完全成熟：Paper VIII 建立了静态黑洞谱（Schwarzschild/Kerr/RN），Paper IX 解决了奇点正则化，Paper XII 建立了量子引力谱传播子与重整化。然而，**动态过程**——双星并合的全时序演化、普朗克能标的多体散射——仍是谱框架应用的空白。
 
 本文的贡献在于将谱框架系统拓展至动态过程，包含三个层面：
 
@@ -359,6 +359,7 @@ Phase 52 全部 12 个数值模块共 **72 项**单项测试全部通过：
 | **v1.2** | **2026-07-25** | **§3.3 补充谱化统一求解器**：新增基于分形谱化理论的 `LeaverUnifiedSolver` 描述，含谱化理论核心（DerecursionAnalyzer）、修正 Leaver 系数（LeaverResidual）、LACI 物理根选择判据（LACIEvaluator）、双重 Homotopy Continuation；废弃的探索性 Leaver 实现文件移至 `_archive/leaver_deprecated/` |
 | **v1.1** | **2026-07-25** | **修正 §3.3 Leaver 连续分数法**：递推关系改为对展开系数 $a_n$ 的形式 $\alpha_n a_{n+1} + \beta_n a_n + \gamma_n a_{n-1} = 0$，补充连续分数展开式 $R_0(\omega)$、反演递推（de-recursion） $S_n = 1/R_n$ 及 Newton 迭代公式 |
 | **v1.0** | **2026-07-25** | **初始版本**：Phase 52 动态过程谱数值库的全面综述，含双星并合（§3）、多体散射（§4）、计算工具（§5） |
+| v1.8 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 
 ---
 

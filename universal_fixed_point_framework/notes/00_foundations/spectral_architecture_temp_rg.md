@@ -2,7 +2,7 @@
 
 **版本**：v0.1（2026-07-22）
 
-**摘要**：本笔记系统分析 Temp/RG 纤维范畴体系在 UFPF 整体架构中的定位。核心结论：(1) Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Sp}$ 上的纤维范畴扩展——参数化递归系统如何接近 $\partial\mathbf{Rec}_D$ 边界；(2) Temp/RG 与 Paper I（$\mathbf{Rec}$ 底层）、Paper XIX（$\mathbf{Rec}_{\text{id}}$ + $\Sigma$-$\mathbf{Rec}$ 扩展层）共同构成五层 UFPF 架构：$\mathbf{Bun} \supset \mathbf{Sp} \supset \mathbf{Rec} \supset \mathbf{Rec}_{\text{id}} \supset \Sigma$-$\mathbf{Rec}$；(3) Temp/RG 为 $(G, \eta)$ 二维相图引入第三个独立维度（温度-标度对偶）；(4) 该框架可覆盖 QCD（完全验证）、BCS 超导（框架即用）、Hawking-Page 相变（有基础）、流变学（需扩展）等多类物理系统。
+**摘要**：本笔记系统分析 Temp/RG 纤维范畴体系在 MUFPF 整体架构中的定位。核心结论：(1) Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Sp}$ 上的纤维范畴扩展——参数化递归系统如何接近 $\partial\mathbf{Rec}_D$ 边界；(2) Temp/RG 与 Paper I（$\mathbf{Rec}$ 底层）、Paper XIX（$\mathbf{Rec}_{\text{id}}$ + $\Sigma$-$\mathbf{Rec}$ 扩展层）共同构成五层 MUFPF 架构：$\mathbf{Bun} \supset \mathbf{Sp} \supset \mathbf{Rec} \supset \mathbf{Rec}_{\text{id}} \supset \Sigma$-$\mathbf{Rec}$；(3) Temp/RG 为 $(G, \eta)$ 二维相图引入第三个独立维度（温度-标度对偶）；(4) 该框架可覆盖 QCD（完全验证）、BCS 超导（框架即用）、Hawking-Page 相变（有基础）、流变学（需扩展）等多类物理系统。
 
 ---
 
@@ -67,7 +67,7 @@
 
 **纤维范畴的自然类比**：向量丛 $E \to M$ 中，纤维 $E_x$ 是向量空间，基 $M$ 是流形。Temp/RG 中，纤维是 $\mathbf{Sp}$ 谱数据，基是参数空间 $\mathbf{Temp}$ 或 $\mathbf{RG}$。谱丛截面 $\sigma_\Delta$ 如同向量丛的截面——选择每个纤维中的一个特定元素。
 
-## 4. UFPF 完整五层架构
+## 4. MUFPF 完整五层架构
 
 ### 4.1 架构图
 
@@ -225,10 +225,10 @@ Paper I §1.3 已新增跨论文定位段落（v2.45）。Paper XIX §17 已完�
 ## 8. 结论
 
 1. **架构定位**：Temp/RG **不是** $\mathbf{Rec}$ 的子范畴，而是 $\mathbf{Sp}$ 上的纤维范畴扩展
-2. **架构层次**：UFPF 框架分为五层——$\mathbf{Bun}$（纤维范畴）$\supset$ $\mathbf{Sp}$（谱）$\supset$ $\mathbf{Rec}$（递归）$\supset$ $\mathbf{Rec}_{\text{id}}$（静态）$\supset$ $\Sigma$-$\mathbf{Rec}$（随机）
+2. **架构层次**：MUFPF 框架分为五层——$\mathbf{Bun}$（纤维范畴）$\supset$ $\mathbf{Sp}$（谱）$\supset$ $\mathbf{Rec}$（递归）$\supset$ $\mathbf{Rec}_{\text{id}}$（静态）$\supset$ $\Sigma$-$\mathbf{Rec}$（随机）
 3. **维度扩展**：Temp/RG 为 $(G, \eta)$ 二维相图引入第三个维度——温度-标度对偶 $(T, \mu)$
 4. **覆盖范围**：QCD 已完全验证，BCS 超导和 Hawking-Page 相变是最高优先级的扩展目标
-5. **正交兼容**：Temp/RG 与 Paper I 底层 + Paper XIX 扩展层正交——Paper XIX 处理"横切"转化（动态↔静态↔随机），Temp/RG 处理"纵贯"参数化（连续温度族），两者结合构成 UFPF 的完整架构
+5. **正交兼容**：Temp/RG 与 Paper I 底层 + Paper XIX 扩展层正交——Paper XIX 处理"横切"转化（动态↔静态↔随机），Temp/RG 处理"纵贯"参数化（连续温度族），两者结合构成 MUFPF 的完整架构
 
 ---
 
@@ -236,4 +236,4 @@ Paper I §1.3 已新增跨论文定位段落（v2.45）。Paper XIX §17 已完�
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
-| v0.1 | 2026-07-22 | 初版：架构定位分析、物理系统覆盖矩阵、UFPF 五层架构图 |
+| v0.1 | 2026-07-22 | 初版：架构定位分析、物理系统覆盖矩阵、MUFPF 五层架构图 |

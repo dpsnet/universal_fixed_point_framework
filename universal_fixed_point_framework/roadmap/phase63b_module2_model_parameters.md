@@ -1,8 +1,8 @@
 # Phase 63b 模块 2：扩展理论模型参数配置表
 
-**文档编号**: UFPF-RM-P63B-M2-001
+**文档编号**: MUFPF-RM-P63B-M2-001
 **日期**: 2026-08-23
-**框架**: Universal Fixed Point Framework (UFPF)
+**框架**: Meta-Universal Fixed-Point Functorial Framework (MUFPF)
 **关联文档**: `phase63b_experimental_verification_plan.md`（模块 2，实验 2.1）
 **状态**: 参数配置完成
 
@@ -12,9 +12,9 @@
 
 | 缩写 | 全称 |
 |------|------|
-| UFPF | Universal Fixed Point Framework（全域不动点框架，总称） |
-| 狭义 UFPF | Original UFPF（UFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
-| 广义 UFPF | Generalized UFPF（G-UFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
+| MUFPF | Meta-Universal Fixed-Point Functorial Framework（全域不动点框架，总称） |
+| 狭义 MUFPF | Original MUFPF（MUFPF₀）：有界算子 + H1-H5 假设下的四体制基础框架 |
+| 广义 MUFPF | Generalized MUFPF（G-MUFPF）：包含平展统一猜想、体制间态、Gödel-Koopman 算子等全部扩展的猜想体系 |
 | SM | Standard Model（标准模型） |
 | MSSM | Minimal Supersymmetric Standard Model（最小超对称标准模型） |
 | LQG | Loop Quantum Gravity（圈量子引力） |
@@ -424,10 +424,10 @@ for i in range(16, d):
 | 版本 | 日期 | 变更 |
 |------|------|------|
 | v0.1 | 2026-08-23 | 初版创建：6 个扩展理论模型的详细参数配置表 |
-| v0.2 | 2026-08-23 | 引入狭义 UFPF（UFPF₀）/ 广义 UFPF（G-UFPF）命名方案 |
+| v0.2 | 2026-08-23 | 引入狭义 MUFPF（MUFPF₀）/ 广义 MUFPF（G-MUFPF）命名方案 |
 
-> **命名说明**：本参数表所属的平展统一验证属于**广义 UFPF**（G-UFPF）猜想体系。其中四体制分类（A/B1/B2/C）的基础框架属于**狭义 UFPF**（UFPF₀）。狭义 UFPF 是广义 UFPF 的特例子集。
+> **命名说明**：本参数表所属的平展统一验证属于**广义 MUFPF**（G-MUFPF）猜想体系。其中四体制分类（A/B1/B2/C）的基础框架属于**狭义 MUFPF**（MUFPF₀）。狭义 MUFPF 是广义 MUFPF 的特例子集。
 
 ---
 
-*本文档为 UFPF 内部路线图文档。正式论文需自包含，仅引用已发表 UFPF 论文和标准学术文献。*
+*本文档为 MUFPF 内部路线图文档。正式论文需自包含，仅引用已发表 MUFPF 论文和标准学术文献。*

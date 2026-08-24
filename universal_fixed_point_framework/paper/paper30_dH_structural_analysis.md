@@ -1,17 +1,17 @@
-# 通用不动点范畴框架 XXX：Hausdorff 维数 d_H 的结构分析与机器验证
+# 元通用不动点函子范畴框架 XXX：Hausdorff 维数 d_H 的结构分析与机器验证
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
 **版本**：v1.1（2026-07-28）
 
-**摘要**：本文在 UFPF 框架内，对 **Hausdorff 维数** $d_H \approx 2.7095$ 的结构成分进行严格的机器验证与数值分析。核心贡献包括：(1) **Moran 方程解唯一性定理**的机器证明：对任意分支数 $B > 1$ 和收缩率 $0 < r < 1$，方程 $B \cdot r^x = 1$ 有且仅有唯一解 $x = \log B / \log(1/r)$（定理 1，`moran_solution_iff`）；(2) **递归不动点定理**的机器证明：两级粘合递归 Moran 方程 $(1-\rho)r^d + (B(B-1)+\rho B)r^{2d} = 1$ 的解对任意粘合比例 $\rho \in [0,1]$ 精确锁定 $d = \log B / \log(1/r)$，即 $\ln 15$ 是递归不动点，递归不产生 $\delta$（定理 2，`glued_recursion_fixed_point`）；(3) **扰动响应解析核心**的机器证明：$\delta = \ln(15)\cdot(\varepsilon_1 + 14\varepsilon_2)/29$ 的导数成分已在 Lean 中严格证明（定理 3a–3e，`deriv_moran_d_at_solution`、`deriv_moran_eps1_at_zero`、`deriv_moran_eps2_at_zero`、`response_ratio`）；(4) **核心不等式链**的机器证明：$\ln 15 < \frac{65}{24} < d_H < e < 3$ 全链已通过编译（定理 4，`inequality_chain_full`），其中 $\ln 15 < \frac{65}{24}$ 与 $e < 3$ 为纯数学证明，$\frac{65}{24} < d_H < e$ 为唯象代入验证；(5) **一阶响应公式的数值验证**：$\delta = \ln(15)\cdot\bar{\varepsilon}$ 在多种扰动模式下的 6/6 检查通过，$\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 反演自洽；(6) **两级粘合递归 IFS 的数值验证**：递归不变性（$\delta = 0$）与 29 的分母角色获得 6/6 检查通过。本文明确标注 $\varepsilon$ 假说（$\S 6$）为假说层级，诚实分级以区别于已验证定理。
+**摘要**：本文在 MUFPF 框架内，对 **Hausdorff 维数** $d_H \approx 2.7095$ 的结构成分进行严格的机器验证与数值分析。核心贡献包括：(1) **Moran 方程解唯一性定理**的机器证明：对任意分支数 $B > 1$ 和收缩率 $0 < r < 1$，方程 $B \cdot r^x = 1$ 有且仅有唯一解 $x = \log B / \log(1/r)$（定理 1，`moran_solution_iff`）；(2) **递归不动点定理**的机器证明：两级粘合递归 Moran 方程 $(1-\rho)r^d + (B(B-1)+\rho B)r^{2d} = 1$ 的解对任意粘合比例 $\rho \in [0,1]$ 精确锁定 $d = \log B / \log(1/r)$，即 $\ln 15$ 是递归不动点，递归不产生 $\delta$（定理 2，`glued_recursion_fixed_point`）；(3) **扰动响应解析核心**的机器证明：$\delta = \ln(15)\cdot(\varepsilon_1 + 14\varepsilon_2)/29$ 的导数成分已在 Lean 中严格证明（定理 3a–3e，`deriv_moran_d_at_solution`、`deriv_moran_eps1_at_zero`、`deriv_moran_eps2_at_zero`、`response_ratio`）；(4) **核心不等式链**的机器证明：$\ln 15 < \frac{65}{24} < d_H < e < 3$ 全链已通过编译（定理 4，`inequality_chain_full`），其中 $\ln 15 < \frac{65}{24}$ 与 $e < 3$ 为纯数学证明，$\frac{65}{24} < d_H < e$ 为唯象代入验证；(5) **一阶响应公式的数值验证**：$\delta = \ln(15)\cdot\bar{\varepsilon}$ 在多种扰动模式下的 6/6 检查通过，$\bar{\varepsilon} \approx 5.35\times 10^{-4}$ 反演自洽；(6) **两级粘合递归 IFS 的数值验证**：递归不变性（$\delta = 0$）与 29 的分母角色获得 6/6 检查通过。本文明确标注 $\varepsilon$ 假说（$\S 6$）为假说层级，诚实分级以区别于已验证定理。
 
 ---
 
-**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper XVII（$d_H = 2.7095$、IFS 收缩比）。Lean 4 形式化代码位于 `UFPFormalization/DHStructuralAnalysis.lean`。
+**术语说明**：记号与定义沿用 Paper I（$\mathbf{Rec}$、$\mathbf{Sp}$、$D$ 函子、谱对应 $\lambda = e^{-\mu}$）、Paper XVII（$d_H = 2.7095$、IFS 收缩比）。Lean 4 形式化代码位于 `MUFPFormalization/DHStructuralAnalysis.lean`。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Framework）
 - **IFS**：迭代函数系统（Iterated Function System）
 - **Lean**：Lean 4 定理证明器
 - **`lake build`**：Lean 项目的构建系统
@@ -22,7 +22,7 @@
 
 ### 1.1 问题的提出
 
-在 UFPF 框架中，Hausdorff 维数 $d_H \approx 2.7095$ 是一个核心唯象参数——它出现在静默因子 $S_4 = e^{-d_H}$ 的定义、层次距离（Paper I §6.3）、以及谱交织精度 $\epsilon$ 的相关关系中。Paper I 将 $d_H$ 登记为一个自由拟合参数（$\chi^2$ 确定），并指出其与 $\ln 15 \approx 2.70805$ 偏差仅 0.05%，暗示 $d_H = \ln 15$ 可能具有结构基础。
+在 MUFPF 框架中，Hausdorff 维数 $d_H \approx 2.7095$ 是一个核心唯象参数——它出现在静默因子 $S_4 = e^{-d_H}$ 的定义、层次距离（Paper I §6.3）、以及谱交织精度 $\epsilon$ 的相关关系中。Paper I 将 $d_H$ 登记为一个自由拟合参数（$\chi^2$ 确定），并指出其与 $\ln 15 \approx 2.70805$ 偏差仅 0.05%，暗示 $d_H = \ln 15$ 可能具有结构基础。
 
 然而，两个根本问题悬而未决：
 1. **$\ln 15$ 的来源**：$15 = 3 \times 5$ 的因数分解是否来自 $\mathbf{Sp}$ 4-范畴的结构？
@@ -378,11 +378,11 @@ $$d = \ln 15 + \ln 15 \cdot k \cdot \varepsilon_3(d)$$
 
 | 文件 | 路径 | 内容 |
 |:---|:---|---:|
-| `DHStructuralAnalysis.lean` | `UFPFormalization/DHStructuralAnalysis.lean` | 定理 1–4，§2–5 |
-| `IFSFractal.lean` | `UFPFormalization/IFSFractal.lean` | 均匀 IFS 桥梁定理；物理 3-map IFS 定义（§5：`c1_physical`/`c2_physical`/`c3_physical`/`physicalIFS`） |
-| `CoherenceToBranching.lean` | `UFPFormalization/CoherenceToBranching.lean` | 层互异性与分支计数桥梁论证；`BranchIndex` 类型级绑定（定理 5a–5c）；**层独立性定理**（§7）；**BranchIndex→IFS 显式构造**（§8：`branchIFS` + `branchIFS_dH_eq_ln15`） |
-| `BranchCounting.lean` | `UFPFormalization/BranchCounting.lean` | 分支计数与 d_H 关系 |
-| `BottTower.lean` | `UFPFormalization/BottTower.lean` | 统一 3 定理的 Bott 塔形式 |
+| `DHStructuralAnalysis.lean` | `MUFPFormalization/DHStructuralAnalysis.lean` | 定理 1–4，§2–5 |
+| `IFSFractal.lean` | `MUFPFormalization/IFSFractal.lean` | 均匀 IFS 桥梁定理；物理 3-map IFS 定义（§5：`c1_physical`/`c2_physical`/`c3_physical`/`physicalIFS`） |
+| `CoherenceToBranching.lean` | `MUFPFormalization/CoherenceToBranching.lean` | 层互异性与分支计数桥梁论证；`BranchIndex` 类型级绑定（定理 5a–5c）；**层独立性定理**（§7）；**BranchIndex→IFS 显式构造**（§8：`branchIFS` + `branchIFS_dH_eq_ln15`） |
+| `BranchCounting.lean` | `MUFPFormalization/BranchCounting.lean` | 分支计数与 d_H 关系 |
+| `BottTower.lean` | `MUFPFormalization/BottTower.lean` | 统一 3 定理的 Bott 塔形式 |
 
 此外，仅 `specExchangeLaw` 保留了一个声明性 `sorry`——交换律在谱框架中不完全成立，标记为"核心理论开放问题"。
 
@@ -420,3 +420,11 @@ $$d = \ln 15 + \ln 15 \cdot k \cdot \varepsilon_3(d)$$
 >   的解与拟合值偏差仅 8×10⁻⁷（与 2³×10⁻⁷ 吻合 4.2%，待高精度确认）。
 > - **v1.3（2026-07-28）**：补充 §6.4 一阶闭式解析表达式（d ≈ ln15 + √5·ln15·A₀/(ln15 − √5·ln15·A'₀)，精度 1.1×10⁻⁷）。
 > - **v2.0（2026-07-28）**：**全面更新**——§2.5 BranchIndex 缺口状态从"建模假设"升级为"已构造"（`branchIFS` + `branchIFS_dH_eq_ln15` 机器证明），新增层独立性定理（`layerIndex_independent`/`activeLayer_independent`）。§6.4 新增选择原理形式化（固定点方程）+ RMS 传播定理（$\bar{\varepsilon} = \sqrt{N_{\text{total}}}\varepsilon_3$），诚实标注 ρ 约束。§7 结果表从 13 项扩展至 21 项（新增 IFS 构造、层独立性、选择原理、RMS 定理、O2 三条路径），开放问题相应更新。附录 B 新增 5 个脚本。本文同步更新至笔记 `spectral_hierarchy_evolution_analysis.md` v1.28。
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（4 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

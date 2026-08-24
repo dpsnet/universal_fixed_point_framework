@@ -10,7 +10,7 @@
 
 **习题 1.2**：设 $\mathcal{C}$ 是范畴，$X, Y \in \mathrm{Ob}(\mathcal{C})$。证明若 $X$ 与 $Y$ 都初始，则 $X \cong Y$。
 
-**习题 1.3**：在 UFPF 的 $\mathbf{Rec}$ 中，恒等态射 $\mathrm{id}_R$ 是什么？验证它满足单位律。
+**习题 1.3**：在 MUFPF 的 $\mathbf{Rec}$ 中，恒等态射 $\mathrm{id}_R$ 是什么？验证它满足单位律。
 
 **习题 2.1**：设 $F, G: \mathcal{C} \to \mathcal{D}$ 是函子，$\alpha: F \Rightarrow G$ 是自然变换。证明若每个 $\alpha_X$ 是同构，则 $\alpha^{-1}: G \Rightarrow F$ 也是自然变换。
 
@@ -50,11 +50,11 @@
 
 **习题 6.2**：画出 Paper XIX 三层伴随对嵌套的示意图，并标出每个函子的方向。
 
-**习题 6.3**：选择 Part 6 中列出的一个"未来方向"（Kan 延拓、topos、导出范畴等），说明它可能如何应用于 UFPF 的某个开放问题。
+**习题 6.3**：选择 Part 6 中列出的一个"未来方向"（Kan 延拓、topos、导出范畴等），说明它可能如何应用于 MUFPF 的某个开放问题。
 
 ## 7.2 Lean 4 形式化路径
 
-UFPF 已有形式化仓库 `UFPFormalization`（Lean 4）。以下是从零开始的形式化学习路径。
+MUFPF 已有形式化仓库 `MUFPFormalization`（Lean 4）。以下是从零开始的形式化学习路径。
 
 ### 前置准备
 
@@ -102,7 +102,7 @@ structure SpecObj where
   A : H → H
 
 -- 谱化函子：从递归系统到谱对象
--- 此处仅为类型签名示意，实际 UFPF 中 A_R = -log U_R
+-- 此处仅为类型签名示意，实际 MUFPF 中 A_R = -log U_R
 ```
 
 ### 进阶项目
@@ -150,15 +150,15 @@ import Mathlib.CategoryTheory.FiberedCategory.HomLift
 4. 构造投影函子
 5. 证明 Cartesian 提升存在
 
-## 7.3 UFPF 现有形式化模块参考
+## 7.3 MUFPF 现有形式化模块参考
 
 | 模块 | 文件 | 对应内容 |
 |------|------|---------|
-| `SilenceHierarchy.lean` | UFPFormalization | S1-S4 静默层次包含关系 |
-| `StaticTopologyFormalization.lean` | UFPFormalization | Paper XIX 静态拓扑嵌入 |
-| `NoiseCategory.lean` | UFPFormalization | Paper XIX 随机噪声嵌入 |
-| `SilenceHierarchyDeepened.lean` | UFPFormalization | Paper XIX §15 静默深化 |
-| `ContextualitySheaf.lean` | UFPFormalization | Kochen-Specker 定理的层翻译 |
+| `SilenceHierarchy.lean` | MUFPFormalization | S1-S4 静默层次包含关系 |
+| `StaticTopologyFormalization.lean` | MUFPFormalization | Paper XIX 静态拓扑嵌入 |
+| `NoiseCategory.lean` | MUFPFormalization | Paper XIX 随机噪声嵌入 |
+| `SilenceHierarchyDeepened.lean` | MUFPFormalization | Paper XIX §15 静默深化 |
+| `ContextualitySheaf.lean` | MUFPFormalization | Kochen-Specker 定理的层翻译 |
 | `eft_slice_category.py` | Paper I 附录 | Slice category 数值原型 |
 
 ## 7.4 练习
@@ -166,11 +166,11 @@ import Mathlib.CategoryTheory.FiberedCategory.HomLift
 1. 完成项目 A：在 Lean 4 中证明 `SetCat` 是范畴。
 2. 完成项目 B 的类型签名部分，思考 `A_R = -log U_R` 在 Lean 中需要哪些 Mathlib 导入。
 3. 阅读 `Mathlib.CategoryTheory.Adjunction.Basic` 文档，用 `Adjunction.mkOfHomEquiv` 构造一个小伴随对。
-4. 在 UFPF 形式化仓库中找到一个已有定理，尝试理解其证明结构并写出 3 行总结。
+4. 在 MUFPF 形式化仓库中找到一个已有定理，尝试理解其证明结构并写出 3 行总结。
 
 ## 7.5 关键要点
 
 - 习题按难度分级，覆盖 Part 1-6 的核心概念。
 - Lean 4 形式化从 $\mathbf{Set}$ 范畴开始，逐步过渡到伴随、纤维化、层论。
-- UFPF 已有丰富的形式化模块，可作为学习和扩展的模板。
-- 形式化能力是验证 UFPF 理论严格性的核心技能。
+- MUFPF 已有丰富的形式化模块，可作为学习和扩展的模板。
+- 形式化能力是验证 MUFPF 理论严格性的核心技能。

@@ -310,7 +310,7 @@ Phase 54C 结束时
 | §6 | 物理实例 II：BCS 超导 | Phase 54A | ✅ |
 | §7 | 物理实例 III：Hawking-Page 相变 | **Phase 54C（本笔记）** | ✅ |
 | §8 | 物理实例 IV：流变学 DST（扩展） | **Phase 54C（本笔记）** | ⚠️ |
-| §9 | 架构定位：UFPF 五层体系 | `spectral_architecture_temp_rg.md` | ✅ |
+| §9 | 架构定位：MUFPF 五层体系 | `spectral_architecture_temp_rg.md` | ✅ |
 | §10 | Grothendieck 纤维范畴严格形式化 | `spectral_Grothendieck_fibration.md` | ✅ |
 | §A | Lean 4 形式化附录 | `TempRGFiber.lean` | ✅ |
 

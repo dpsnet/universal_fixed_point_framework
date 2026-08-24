@@ -56,7 +56,7 @@ $$k_{\max} = 2^{N_{\text{active}}} = 2^3 = 8, \qquad \log_2 k_{\max} = N_{\text{
 
 ### 2.4 形式化状态（Lean §5.6 新增 4 定理）
 
-[CoherenceToBranching.lean](../../formal_proof/UFPFormalization/UFPFormalization/CoherenceToBranching.lean) 新增对偶网络恒等式的类型系统验证：
+[CoherenceToBranching.lean](../../formal_proof/MUFPFormalization/MUFPFormalization/CoherenceToBranching.lean) 新增对偶网络恒等式的类型系统验证：
 
 | 定理 | 陈述 | 证明 |
 |:--|:--|:--|
@@ -73,8 +73,8 @@ $$k_{\max} = 2^{N_{\text{active}}} = 2^3 = 8, \qquad \log_2 k_{\max} = N_{\text{
 
 | 模块 | 内容 | 结果 |
 |:--|:--|:--|
-| `UFPFormalization.Clifford` | 注释层口径同步（k_max 结构确定、family space 统一 3 定理） | ✅ 1184 jobs |
-| `UFPFormalization.CoherenceToBranching` | 新增 §5.6 对偶网络 4 定理 + `Real.e`→`DHStructural.e` 修复 | ✅ 3139 jobs |
+| `MUFPFormalization.Clifford` | 注释层口径同步（k_max 结构确定、family space 统一 3 定理） | ✅ 1184 jobs |
+| `MUFPFormalization.CoherenceToBranching` | 新增 §5.6 对偶网络 4 定理 + `Real.e`→`DHStructural.e` 修复 | ✅ 3139 jobs |
 | **全库 `lake build`** | 默认目标（Main + 核心依赖） | ✅ **2454 jobs，无回归** |
 
 ### 3.2 数值测试套件（`run_all_tests.py`）

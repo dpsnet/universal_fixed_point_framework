@@ -2,7 +2,7 @@
 
 ## 1. 核心理论总结
 
-UFPF 谱动力学框架从谱流方程出发，严格推导出波函数坍缩时间：
+MUFPF 谱动力学框架从谱流方程出发，严格推导出波函数坍缩时间：
 
 $$\boxed{\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa}}$$
 
@@ -24,11 +24,11 @@ $$\boxed{\tau_{\text{collapse}} = \frac{\ln(1/\varepsilon)}{\kappa}}$$
 |------|---------|-----------|---------|
 | **标准量子力学 (von Neumann)** | $\tau = 0$（瞬时） | 无 | 无 |
 | **GRW 模型** | $\tau_{\text{GRW}} \sim 1/\lambda_{\text{GRW}} \approx 10^{-16}\,\text{s}$ | 固定常数 | 无 |
-| **UFPF 谱动力学** | $\tau = \ln(1/\varepsilon)/\kappa$ | $\tau \propto 1/\kappa$ | $\kappa$ 可实验调节 |
+| **MUFPF 谱动力学** | $\tau = \ln(1/\varepsilon)/\kappa$ | $\tau \propto 1/\kappa$ | $\kappa$ 可实验调节 |
 
 **可区分性的核心要点**：
 - GRW 预测对所有系统坍缩时间固定为 $\sim 10^{-16}\,\text{s}$（依赖于 $\lambda_{\text{GRW}} \approx 10^{-16}\,\text{s}^{-1}$ 这一普适常数）
-- UFPF 预测 $\tau$ 随 $\kappa$ 连续可调：在弱测量条件下（小 $\kappa$），坍缩时间可延长至宏观可测范围（$\mu\text{s}$ 量级）
+- MUFPF 预测 $\tau$ 随 $\kappa$ 连续可调：在弱测量条件下（小 $\kappa$），坍缩时间可延长至宏观可测范围（$\mu\text{s}$ 量级）
 - 通过改变超导量子比特与测量谐振器的耦合强度，可直接检验 $\tau \propto 1/\kappa$ 关系
 
 ---
@@ -141,14 +141,14 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 ## 5. 与 GRW 模型的可区分性
 
-| 区分特征 | UFPF 谱动力学 | GRW 模型 |
+| 区分特征 | MUFPF 谱动力学 | GRW 模型 |
 |---------|--------------|----------|
 | $\tau$ 对 $\kappa$ 的依赖性 | $\tau \propto 1/\kappa$（连续可调） | $\tau$ 固定 $\sim 10^{-16}\,\text{s}$ |
 | 弱测量区域 | $\tau$ 可延长至 $\mu\text{s}$-$\,\text{ms}$ | 仍为 $10^{-16}\,\text{s}$ |
 | 与系统大小的关系 | 与量子比特数无关 | 与粒子数 $N$ 有关：$\tau_{\text{GRW}} \sim 1/(N\lambda_{\text{GRW}})$ |
 | 可实验调谐 | 是（通过 flux bias） | 否（普适常数） |
 
-**关键实验信号**：在弱耦合区域（$\kappa \sim 10^3\,\text{s}^{-1}$），UFPF 预测 $\tau \sim 7\,\mu\text{s}$，而 GRW 预测 $\tau \sim 10^{-16}\,\text{s}$——相差 $10^{10}$ 倍，完全可区分。
+**关键实验信号**：在弱耦合区域（$\kappa \sim 10^3\,\text{s}^{-1}$），MUFPF 预测 $\tau \sim 7\,\mu\text{s}$，而 GRW 预测 $\tau \sim 10^{-16}\,\text{s}$——相差 $10^{10}$ 倍，完全可区分。
 
 ---
 
@@ -178,7 +178,7 @@ $$\mathcal{O}(t) = \mathcal{O}_0 \cdot e^{-\kappa_{\text{fit}} t} + \text{const}
 
 ## 参考文献
 
-1. UFPF Paper X: Spectral collapse time derivation (`scripts/paperX_collapse_time.py`)
+1. MUFPF Paper X: Spectral collapse time derivation (`scripts/paperX_collapse_time.py`)
 2. Ghirardi, Rimini, Weber (1986). Unified dynamics for microscopic and macroscopic systems. *Phys. Rev. D*, 34, 470.
 3. IBM Quantum Experience. https://quantum-computing.ibm.com/
 4. Google Quantum AI. https://quantumai.google/

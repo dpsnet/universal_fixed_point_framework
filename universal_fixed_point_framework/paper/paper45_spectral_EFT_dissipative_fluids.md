@@ -1,8 +1,8 @@
-# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 UFPF 表述及可证伪预言
+# 耗散流体有效场论的谱语言翻译：CGL 核心结构的 MUFPF 表述及可证伪预言
 
 > **论文编号**：Paper XLV（v1.2，2026-08-22）
 > **作者**：王斌
-> **摘要**：本文展示通用不动点分形谱范畴框架（UFPF）作为元框架的**可表达性**：UFPF 的谱语言可以忠实翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。CGL 的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均在谱语言中获得系统重构，重构链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。翻译同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射，并产生三类新构造（剪切道谱隙表达、共形流体二阶系数全谱化、非高斯噪声多谱塔）与可证伪预言（$\lambda_\pi \approx -4.81T$ 等），数值验证 11/11 通过。翻译的可行性表明 UFPF 语言的普适性；两框架关系的最终定性留待学术共同体评价。全部重构在 UFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）为翻译接口（注 5.1），仅引入分级信息。本论文仅完成**流体 EFT 子领域的结构重构案例**；UFPF 完整的全域统一、时空-引力涌现的宏大纲领见 UFPF 体系总序与 Paper XXXV，本文不处理本体层面命题。
+> **摘要**：本文展示通用不动点分形谱范畴框架（MUFPF）作为元框架的**可表达性**：MUFPF 的谱语言可以忠实翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。CGL 的核心数学结构——闭合时间路径（CTP）形式、r-a 变量分解、动态 KMS $\mathbb{Z}_2$ 对称性、BRST 对称性——均在谱语言中获得系统重构，重构链为：谱路径积分公理 → CTP 形式 → r-a 分解 → Tomita-Takesaki 模理论 → KMS 条件 → 动态 KMS $\mathbb{Z}_2$ → Lie algebroid → BRST 微分。翻译同时建立了 Koopman 谱理论与 CGL 流体时空公式之间的精确映射，并产生三类新构造（剪切道谱隙表达、共形流体二阶系数全谱化、非高斯噪声多谱塔）与可证伪预言（$\lambda_\pi \approx -4.81T$ 等），数值验证 11/11 通过。翻译的可行性表明 MUFPF 语言的普适性；两框架关系的最终定性留待学术共同体评价。全部重构在 MUFPF 的 $\mathbf{Rec}/\mathbf{Sp}$ 范畴语言中完成；所需超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（承载鬼场）为翻译接口（注 5.1），仅引入分级信息。本论文仅完成**流体 EFT 子领域的结构重构案例**；MUFPF 完整的全域统一、时空-引力涌现的宏大纲领见 MUFPF 体系总序与 Paper XXXV，本文不处理本体层面命题。
 
 ---
 
@@ -12,19 +12,19 @@
 
 耗散流体的有效场论（EFT）是当代理论物理的核心课题之一。在众多方案中，**Crossley-Glorioso-Liu（CGL）框架**[1-3] 基于 Schwinger-Keldysh 闭合时间路径（CTP）形式，建立了涨落流体力学的完整路径积分表述，其核心对称性——动态 KMS $\mathbb{Z}_2$ 对称性——统一推导出热力学第二定律、Onsager 关系和涨落-耗散定理。
 
-与此同时，**通用不动点分形谱范畴框架（UFPF）**[4-8] 从递归范畴 $\mathbf{Rec}$ 和谱范畴 $\mathbf{Sp}$ 出发，通过谱化函子 $D$ 与其右伴随 $R$ 的伴随对 $D \dashv R$，建立了跨领域的统一数学语言。UFPF 已在流体动力学（Kolmogorov $k^{-5/3}$ 谱的解析推导 [5]）、热力学（谱熵增定理、谱 Onsager 关系 [6]）和量子场论（谱路径积分、谱重整化 [7]）中取得定量成果。
+与此同时，**通用不动点分形谱范畴框架（MUFPF）**[4-8] 从递归范畴 $\mathbf{Rec}$ 和谱范畴 $\mathbf{Sp}$ 出发，通过谱化函子 $D$ 与其右伴随 $R$ 的伴随对 $D \dashv R$，建立了跨领域的统一数学语言。MUFPF 已在流体动力学（Kolmogorov $k^{-5/3}$ 谱的解析推导 [5]）、热力学（谱熵增定理、谱 Onsager 关系 [6]）和量子场论（谱路径积分、谱重整化 [7]）中取得定量成果。
 
-**地位声明**。需要明确的是，UFPF 目前是作者个人独立研究的理论假说，尚未经过学术共同体的独立评审与实验验证；其框架地位与 CGL 等主流理论不同。本文的论证以 UFPF 的公理体系为出发点，**不主张 UFPF 已被外部验证**，也不意味着 UFPF 的任何理论主张自动获得学术认可。本文的意义在于展示：若 UFPF 公理成立，则 CGL 的核心结构可在其中系统重构——这是一种"理论假说的压力测试"，而非两个已验证理论的合并。
+**地位声明**。需要明确的是，MUFPF 目前是作者个人独立研究的理论假说，尚未经过学术共同体的独立评审与实验验证；其框架地位与 CGL 等主流理论不同。本文的论证以 MUFPF 的公理体系为出发点，**不主张 MUFPF 已被外部验证**，也不意味着 MUFPF 的任何理论主张自动获得学术认可。本文的意义在于展示：若 MUFPF 公理成立，则 CGL 的核心结构可在其中系统重构——这是一种"理论假说的压力测试"，而非两个已验证理论的合并。
 
 ### 1.2 本文目标
 
-本文的工作以 Crossley、Glorioso 与 Liu 的开创性贡献 [1-3] 为基础——CGL 框架的严谨构建使其成为检验 UFPF 语言普适性的理想对象，我们在此对其原作者的工作致以敬意。
+本文的工作以 Crossley、Glorioso 与 Liu 的开创性贡献 [1-3] 为基础——CGL 框架的严谨构建使其成为检验 MUFPF 语言普适性的理想对象，我们在此对其原作者的工作致以敬意。
 
-本文聚焦于一种**结构约束关系**：UFPF 作为元框架（meta-framework），其谱语言能够为 CGL 的耗散流体 EFT 提供一个**完备的数学表述域 (Representational Domain)**。我们展示的是，CGL 核心结构必须在 UFPF 语言中寻找其可表达的形式，这种关系强调了UFPF作为底层“形式语言”的普适性，而非简单地证明两框架的等同或包含。本文旨在探究理论约束如何从一个更基础的数学公理体系（UFPF）出发，系统性地导出主流物理理论（CGL）必须满足的内在结构，从而确立 UFPF 的地位为一种普适性的**“形式化母语言”**。
+本文聚焦于一种**结构约束关系**：MUFPF 作为元框架（meta-framework），其谱语言能够为 CGL 的耗散流体 EFT 提供一个**完备的数学表述域 (Representational Domain)**。我们展示的是，CGL 核心结构必须在 MUFPF 语言中寻找其可表达的形式，这种关系强调了MUFPF作为底层“形式语言”的普适性，而非简单地证明两框架的等同或包含。本文旨在探究理论约束如何从一个更基础的数学公理体系（MUFPF）出发，系统性地导出主流物理理论（CGL）必须满足的内在结构，从而确立 MUFPF 的地位为一种普适性的**“形式化母语言”**。
 
 本文证明以下**核心定理**：
 
-**定理 1.1（CGL 的谱语言翻译）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 UFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其 $\mathbb{Z}_2$-分级（超）范畴扩展（定义 5.4）。则 CGL 耗散流体 EFT 的全部核心结构均可翻译为 UFPF 谱语言。翻译的八项内容如下（均从 UFPF 公理出发、辅以标准数学定理，§9.1 列明）：
+**定理 1.1（CGL 的谱语言翻译）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 MUFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其 $\mathbb{Z}_2$-分级（超）范畴扩展（定义 5.4）。则 CGL 耗散流体 EFT 的全部核心结构均可翻译为 MUFPF 谱语言。翻译的八项内容如下（均从 MUFPF 公理出发、辅以标准数学定理，§9.1 列明）：
 
 1. CTP 路径积分（§3）：从谱路径积分公理 A4 导出
 2. r-a 变量分解（§3）：从 Schwinger-Keldysh 谱等价桥导出
@@ -37,7 +37,7 @@
 
 **贡献分层声明**。本文的贡献按学术性质分三层：
 
-**(i) 重构层**（谱语言重述成熟结构）：CTP/r-a/KMS/BRST 的 UFPF 版本——这是语言翻译，价值在于统一表述而非新物理。
+**(i) 重构层**（谱语言重述成熟结构）：CTP/r-a/KMS/BRST 的 MUFPF 版本——这是语言翻译，价值在于统一表述而非新物理。
 
 **(ii) 新构造层**（连接两个领域的原创构造）：$\tau_\pi$ 的谱隙表达（定理 7.3）、$f_1/f_2$ 的谱曲率与三重模耦合表达（定理 7.6a/7.7a）、非高斯噪声多谱塔对应（定理 6.4）、谱静默≠高斯的独立性（命题 6.3）。
 
@@ -47,7 +47,7 @@
 
 ### 1.3 论文结构
 
-§2 自包含回顾 UFPF 和 CGL 两个框架。§3-§5 完成框架性翻译（CTP/r-a/KMS/BRST）。§6 构造谱流体与非高斯噪声。§7 建立 Koopman 谱-流体时空映射（含共形流体二阶输运与湍流谱测度）。§8 陈述翻译定理。§9 讨论物理意义、可验证性和局限性。
+§2 自包含回顾 MUFPF 和 CGL 两个框架。§3-§5 完成框架性翻译（CTP/r-a/KMS/BRST）。§6 构造谱流体与非高斯噪声。§7 建立 Koopman 谱-流体时空映射（含共形流体二阶输运与湍流谱测度）。§8 陈述翻译定理。§9 讨论物理意义、可验证性和局限性。
 
 ---
 
@@ -55,7 +55,7 @@
 
 > 本节为不熟悉任一框架的读者提供最小但完整的背景知识。
 
-### 2.1 UFPF 谱范畴框架
+### 2.1 MUFPF 谱范畴框架
 
 #### 2.1.1 递归范畴 $\mathbf{Rec}$
 
@@ -166,7 +166,7 @@ BRST 不变性等价于 CTP 路径积分的幺正性。
 
 ## 3 从谱路径积分到 CTP 形式与 r-a 分解
 
-> 本节完成重构链的第一步：从 UFPF 公理 A4 出发，在谱语言中重构出 CGL 的 CTP 形式和 r-a 变量分解。
+> 本节完成重构链的第一步：从 MUFPF 公理 A4 出发，在谱语言中重构出 CGL 的 CTP 形式和 r-a 变量分解。
 
 ### 3.1 谱场的时间演化
 
@@ -240,7 +240,7 @@ $$G_+(J) \cdot G_-(J) = \frac{2\pi}{|\alpha|}$$
 
 与 $J$ 无关——源的信息在前向积分中编码为相位 $e^{-iJ^2/(2\alpha)}$，在后向积分中编码为其复共轭，二者乘积消去。归一化后 $Z[J, J] = G_+(J)G_-(J) / [G_+(0)G_-(0)] = 1$。多模情形中，各模贡献以乘积 $\prod_k (2\pi/|\alpha_k|)$ 独立给出，不产生模间交叉项。
 
-**推论 3.1（UFPF-CTP 对应）**。CTP 生成泛函 (2.5) 在谱语言中为
+**推论 3.1（MUFPF-CTP 对应）**。CTP 生成泛函 (2.5) 在谱语言中为
 
 $$Z_{\mathrm{CTP}}^{\mathrm{Sp}}[J_+, J_-] = \int \mathcal{D}_{\mathrm{Sp}}\Phi_+ \mathcal{D}_{\mathrm{Sp}}\Phi_- \exp\!\left(i S_{\mathrm{Sp}}[\Phi_+] - i S_{\mathrm{Sp}}[\Phi_-] + i\int_{\mathcal{C}} J \cdot \Phi\right) \tag{3.3}$$
 
@@ -316,7 +316,7 @@ $$\chi^R(\omega) = \langle \Phi_{\mathrm{q}} \Phi_{\mathrm{cl}} \rangle_\omega \
 $$\Phi_{\mathrm{cl}}(\lambda, t) = \frac{1}{2}[\Phi_+(\lambda, t) + \Phi_-(\lambda, t)] \tag{3.4a}$$
 $$\Phi_{\mathrm{q}}(\lambda, t) = \Phi_+(\lambda, t) - \Phi_-(\lambda, t) \tag{3.4b}$$
 
-在 UFPF 语言中：
+在 MUFPF 语言中：
 - $\Phi_{\mathrm{cl}}$：**谱期望值**（对角元的平均），对应确定性系统 $R \in \mathbf{Rec}$
 - $\Phi_{\mathrm{q}}$：**谱涨落**（对角元的偏差），对应噪声直和 $N = \bigoplus_i R_{\mathrm{local},i}$
 
@@ -337,7 +337,7 @@ $$S_{\mathrm{K}}[\Phi_{\mathrm{cl}}, \Phi_{\mathrm{q}}] = \int d\lambda\, dt \le
 
 $$\frac{\delta S_{\mathrm{K}}}{\delta \Phi_{\mathrm{q}}} = 0 \tag{3.6}$$
 
-经时间傅里叶变换到谱空间后，精确还原 UFPF 谱流方程 (2.1)。
+经时间傅里叶变换到谱空间后，精确还原 MUFPF 谱流方程 (2.1)。
 
 **证明**。五步证明：
 
@@ -367,7 +367,7 @@ $$A_t = \sum_k \Phi_{\mathrm{cl}}(\lambda_k, t) P_k \tag{3.10}$$
 
 $$\frac{d}{dt} A_t = [G, A_t] - \nu \Delta_{\mathrm{spec}} A_t + \mathcal{F}(t) \tag{3.11}$$
 
-这正是 UFPF 的 N-S 谱流方程 [5, 定理 2.1]。$\square$
+这正是 MUFPF 的 N-S 谱流方程 [5, 定理 2.1]。$\square$
 
 ### 3.5 FDT 的谱推导
 
@@ -383,7 +383,7 @@ $$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \cdot \mathrm{Im}\,G_R(\la
 
 ## 4 从模理论到动态 KMS $\mathbb{Z}_2$ 对称性
 
-> 本节完成重构链的第二步：从 UFPF 的谱结构出发，通过 Tomita-Takesaki 模理论，在谱语言中重构出 CGL 的动态 KMS $\mathbb{Z}_2$ 对称性。
+> 本节完成重构链的第二步：从 MUFPF 的谱结构出发，通过 Tomita-Takesaki 模理论，在谱语言中重构出 CGL 的动态 KMS $\mathbb{Z}_2$ 对称性。
 
 ### 4.1 Tomita-Takesaki 模算子
 
@@ -395,7 +395,7 @@ $$S = J \Delta^{1/2} \tag{4.1}$$
 
 **定理 4.1（Tomita-Takesaki）**。$\Delta^{it} \mathfrak{M} \Delta^{-it} = \mathfrak{M}$ 对所有 $t \in \mathbb{R}$ 成立。因此 $\sigma_t(x) = \Delta^{it} x \Delta^{-it}$ 定义了 $\mathfrak{M}$ 上的**模自同构群**。
 
-**与 UFPF 的对接**：UFPF 的谱映射 $\sigma(A)$ 天然与模算子 $\Delta$ 的谱分解对接。模算子的谱积分
+**与 MUFPF 的对接**：MUFPF 的谱映射 $\sigma(A)$ 天然与模算子 $\Delta$ 的谱分解对接。模算子的谱积分
 
 $$\Delta = \int_0^\infty \lambda\, dE(\lambda) \tag{4.2}$$
 
@@ -417,7 +417,7 @@ $$F_{A,B}(z) = \langle \Omega, \sigma_z(A) B \Omega \rangle$$
 
 **定理 4.3（Haag-Hugenholtz-Winnink）**。$\omega$ 是关于 $\alpha_t$ 的 $\beta$-KMS 态当且仅当在 GNS 表示中存在自伴算子 $H_\omega$ 使得 $\alpha_t = e^{itH_\omega} \cdot e^{-itH_\omega}$，且 $\Delta = e^{-\beta H_\omega}$。
 
-**与 UFPF 的对接**：这正是谱流方程 (2.1) 的模理论版本，其中 $G = -\beta^{-1}\log\Delta$。
+**与 MUFPF 的对接**：这正是谱流方程 (2.1) 的模理论版本，其中 $G = -\beta^{-1}\log\Delta$。
 
 ### 4.4 动态 KMS $\mathbb{Z}_2$ 对称性的构造
 
@@ -483,13 +483,13 @@ $$C(\lambda, \omega) = \frac{2}{\tanh(\beta\omega/2)} \mathrm{Im}\,G_R(\lambda, 
 
 ## 5 从伴随对到 BRST 对称性
 
-> 本节完成重构链的第三步：从 UFPF 的 $D\dashv R$ 伴随对出发，通过 Lie algebroid 理论，在谱语言中重构出 BRST 微分 $Q$（$Q^2 = 0$）。
+> 本节完成重构链的第三步：从 MUFPF 的 $D\dashv R$ 伴随对出发，通过 Lie algebroid 理论，在谱语言中重构出 BRST 微分 $Q$（$Q^2 = 0$）。
 
 ### 5.1 从伴随到 Lie algebroid
 
 **定义 5.1**。一个**Lie algebroid** 是向量丛 $A \to M$ 配备：(i) 锚映射 $\rho: A \to TM$；(ii) 李括号 $[\cdot,\cdot]_A: \Gamma(A) \times \Gamma(A) \to \Gamma(A)$，满足 Leibniz 法则和 Jacobi 恒等式。
 
-**命题 5.1**。UFPF 的 $D \dashv R$ 伴随对诱导一个 Lie algebroid 结构。具体地：
+**命题 5.1**。MUFPF 的 $D \dashv R$ 伴随对诱导一个 Lie algebroid 结构。具体地：
 
 - 单子 $T = R \circ D$ 的 Eilenberg-Moore 代数 $\mathcal{C}^T$ 上的截面代数携带李括号
 - 伴随单位 $\eta: \mathrm{Id} \to RD$ 给出锚映射 $\rho$
@@ -565,11 +565,11 @@ $$\mathcal{H}_{\mathrm{phys}} = H^0_{\mathrm{BRST}} = \frac{\ker s}{\mathrm{im}\
 
 即 BRST 闭态（$s|\Psi\rangle = 0$）商掉 BRST 恰当态（$|\Psi\rangle \sim |\Psi\rangle + s|\chi\rangle$）——这正是 CGL 框架中幺正性的代数实现。
 
-**注 5.1**（超范畴扩展的定位）。$\mathbf{Sp}_{\mathbb{Z}_2}$ 不是 UFPF 本体的组成部分，而是与场论语言（CGL）互译的接口。两点澄清：
+**注 5.1**（超范畴扩展的定位）。$\mathbf{Sp}_{\mathbb{Z}_2}$ 不是 MUFPF 本体的组成部分，而是与场论语言（CGL）互译的接口。两点澄清：
 
-**(i) 物理自由度不增加**：鬼场经 BRST 上同调商掉（命题 5.3），物理态空间 $H^0_{\mathrm{BRST}}$ 不包含鬼场自由度。UFPF 与 CGL 的物理自由度数量完全相同——鬼场编码的是规范结构（技术性冗余），不是物理自由度。
+**(i) 物理自由度不增加**：鬼场经 BRST 上同调商掉（命题 5.3），物理态空间 $H^0_{\mathrm{BRST}}$ 不包含鬼场自由度。MUFPF 与 CGL 的物理自由度数量完全相同——鬼场编码的是规范结构（技术性冗余），不是物理自由度。
 
-**(ii) 规范冗余的静默处理**：UFPF 的谱静默机制（五层静默体系 S0-S4，Paper I §5.7）天然使规范方向在谱测度中不留下可激发痕迹——这是静默机制（与紧致化额外维同源：紧致化是谱静默的几何特例）在规范结构上的应用。UFPF 独立使用时**不需要**显式鬼场即可自洽工作；$\mathbf{Sp}_{\mathbb{Z}_2}$ 仅在将 UFPF 语言翻译为 CGL 的显式规范语言时成为必要（§9.2 详述）。
+**(ii) 规范冗余的静默处理**：MUFPF 的谱静默机制（五层静默体系 S0-S4，Paper I §5.7）天然使规范方向在谱测度中不留下可激发痕迹——这是静默机制（与紧致化额外维同源：紧致化是谱静默的几何特例）在规范结构上的应用。MUFPF 独立使用时**不需要**显式鬼场即可自洽工作；$\mathbf{Sp}_{\mathbb{Z}_2}$ 仅在将 MUFPF 语言翻译为 CGL 的显式规范语言时成为必要（§9.2 详述）。
 
 ### 5.7 有效作用量的 BRST 不变性
 
@@ -581,7 +581,7 @@ $$s \cdot S_{\mathrm{eff}} = s \cdot S_0 + s^2 \Psi = s \cdot S_0 \tag{5.10}$$
 
 而 $s \cdot S_0 = \frac{\partial S_0}{\partial \phi^i} R^i_a c^a = 0$ 由经典规范不变性 $\frac{\partial S_0}{\partial \phi^i} R^i_a = 0$ 保证。$\square$
 
-**定理 5.5**（Koszul-Tate 与伴随）。Koszul-Tate 分解是自由-遗忘伴随的提升：设 $\mathsf{Free} \dashv \mathsf{Forget}$，则 Koszul-Tate 分解恰好是 $\mathsf{Forget}(R/I)$ 的余纤维替换。UFPF 的 $D \dashv R$ 伴随在此框架下自然给出 BRST 复形。
+**定理 5.5**（Koszul-Tate 与伴随）。Koszul-Tate 分解是自由-遗忘伴随的提升：设 $\mathsf{Free} \dashv \mathsf{Forget}$，则 Koszul-Tate 分解恰好是 $\mathsf{Forget}(R/I)$ 的余纤维替换。MUFPF 的 $D \dashv R$ 伴随在此框架下自然给出 BRST 复形。
 
 **证明**。分三步。
 
@@ -597,17 +597,17 @@ $$H_*(K_R(I)) \cong R/I$$
 
 即 Koszul-Tate 复形在模型范畴意义下计算 $R \to R/I$ 的余纤维。这正是 $\mathsf{Forget}(R/I)$ 的余纤维替换——Koszul-Tate 分解是自由-遗忘伴随在商对象上的提升。
 
-**步骤 3（$D \dashv R$ 给出 BRST 复形）**。UFPF 的伴随对 $D \dashv R$（定理 2.1）中，单子 $T = R \circ D$ 的 Eilenberg-Moore 代数 $\mathcal{C}^T$ 承载 Lie algebroid 结构（命题 5.1）。将步骤 2 的构造应用于 $D \dashv R$：设 $I_{\mathrm{gauge}} \subset \mathcal{C}^T$ 为规范约束定义的理想（对应 BRST 规范固定），则 $D \dashv R$ 诱导的 Koszul-Tate 分解 $K_{\mathbf{Sp}}(I_{\mathrm{gauge}})$ 在 $\mathbf{Sp}_{\mathbb{Z}_2}$ 上给出微分分次复形。Tate 生成元（步骤 2 中的反交换变量）是规范约束生成元在微分分次代数中的对偶，对应 BRST 鬼场 $c^a$（命题 5.2 中 $s(c^a) = -\frac{1}{2}f^a_{bc}c^b c^c$ (5.5b) 的生成元）。在此对应下，Koszul-Tate 微分 $d_{\mathrm{KT}}(\theta_a) = f_a$（$\theta_a$ 为 Tate 生成元，$f_a$ 为约束函数）与 BRST 微分 $s$（定义 5.3）在规范固定条件下一致：$s$ 在物理场上的作用 $s(A_\mu^a) = -\partial_\mu c^a + f^a_{bc}A_\mu^b c^c$ (5.5a) 恰是 Tate 微分在规范固定后的表现形式。$s^2 = 0$ 由定理 5.2 保证。因此 $D \dashv R$ 的伴随结构自然给出 BRST 复形 $(\mathbf{Sp}_{\mathbb{Z}_2}, s)$，物理态空间为 $H^0_{\mathrm{BRST}} = \ker s / \mathrm{im}\, s$ (5.9)。$\square$
+**步骤 3（$D \dashv R$ 给出 BRST 复形）**。MUFPF 的伴随对 $D \dashv R$（定理 2.1）中，单子 $T = R \circ D$ 的 Eilenberg-Moore 代数 $\mathcal{C}^T$ 承载 Lie algebroid 结构（命题 5.1）。将步骤 2 的构造应用于 $D \dashv R$：设 $I_{\mathrm{gauge}} \subset \mathcal{C}^T$ 为规范约束定义的理想（对应 BRST 规范固定），则 $D \dashv R$ 诱导的 Koszul-Tate 分解 $K_{\mathbf{Sp}}(I_{\mathrm{gauge}})$ 在 $\mathbf{Sp}_{\mathbb{Z}_2}$ 上给出微分分次复形。Tate 生成元（步骤 2 中的反交换变量）是规范约束生成元在微分分次代数中的对偶，对应 BRST 鬼场 $c^a$（命题 5.2 中 $s(c^a) = -\frac{1}{2}f^a_{bc}c^b c^c$ (5.5b) 的生成元）。在此对应下，Koszul-Tate 微分 $d_{\mathrm{KT}}(\theta_a) = f_a$（$\theta_a$ 为 Tate 生成元，$f_a$ 为约束函数）与 BRST 微分 $s$（定义 5.3）在规范固定条件下一致：$s$ 在物理场上的作用 $s(A_\mu^a) = -\partial_\mu c^a + f^a_{bc}A_\mu^b c^c$ (5.5a) 恰是 Tate 微分在规范固定后的表现形式。$s^2 = 0$ 由定理 5.2 保证。因此 $D \dashv R$ 的伴随结构自然给出 BRST 复形 $(\mathbf{Sp}_{\mathbb{Z}_2}, s)$，物理态空间为 $H^0_{\mathrm{BRST}} = \ker s / \mathrm{im}\, s$ (5.9)。$\square$
 
 ---
 
 ## 6 从谱流体到涨落流体力学
 
-> 本节结合 §3-§5 的结果，从 UFPF 谱流体动力学出发，构造 CGL 涨落流体力学的作用量。
+> 本节结合 §3-§5 的结果，从 MUFPF 谱流体动力学出发，构造 CGL 涨落流体力学的作用量。
 
 ### 6.1 谱流体的 CTP 嵌入
 
-**定理 6.1**。UFPF 的 N-S 谱流方程 [5, 定理 2.1]
+**定理 6.1**。MUFPF 的 N-S 谱流方程 [5, 定理 2.1]
 
 $$\frac{d}{dt} A_t = [A_{\mathrm{adv}}, A_t] - \nu\Delta_{\mathrm{spec}} A_t + \mathcal{F}(t) \tag{6.1}$$
 
@@ -639,7 +639,7 @@ $$I_{\mathrm{hydro}}^{\mathrm{Sp}} = \int d\lambda\, dt \left[A_{\mathrm{q}} \cd
 
 **等价映射**：
 
-| 谱流体 (UFPF) | CGL 流体时空 |
+| 谱流体 (MUFPF) | CGL 流体时空 |
 |:---|:---|
 | 谱参数 $\lambda$ | 流体时空坐标 $\sigma^a$（经 §7 映射） |
 | $A_r$（谱期望值） | $r$-型场（$E_r, V_{ri}, \mu_r$） |
@@ -648,7 +648,7 @@ $$I_{\mathrm{hydro}}^{\mathrm{Sp}} = \int d\lambda\, dt \left[A_{\mathrm{q}} \cd
 
 **证明**。分三步。
 
-**步骤 1（约束等价性）**。CGL 作用量 $I_{\mathrm{hydro}}$ 的构建受两条对称性约束：(i) 动态 KMS $\mathbb{Z}_2$ 对称性 $\mathcal{R}$（§2.2.4，定义 2.6）限制允许项的系数关系（如噪声核偶性、Onsager 关系）；(ii) BRST 不变性（§2.2.5，(2.10)）保证 CTP 幺正性。§4 和 §5 已分别证明这两条约束均从 UFPF 公理导出：KMS 从 Tomita-Takesaki 模理论导出（定理 4.4），BRST 从 $D\dashv R$ 伴随对的 Lie algebroid 结构导出（定理 5.2）。因此，谱流体作用量 (6.4) 在相同约束下构建，其允许的项与 CGL 作用量受同一组约束。
+**步骤 1（约束等价性）**。CGL 作用量 $I_{\mathrm{hydro}}$ 的构建受两条对称性约束：(i) 动态 KMS $\mathbb{Z}_2$ 对称性 $\mathcal{R}$（§2.2.4，定义 2.6）限制允许项的系数关系（如噪声核偶性、Onsager 关系）；(ii) BRST 不变性（§2.2.5，(2.10)）保证 CTP 幺正性。§4 和 §5 已分别证明这两条约束均从 MUFPF 公理导出：KMS 从 Tomita-Takesaki 模理论导出（定理 4.4），BRST 从 $D\dashv R$ 伴随对的 Lie algebroid 结构导出（定理 5.2）。因此，谱流体作用量 (6.4) 在相同约束下构建，其允许的项与 CGL 作用量受同一组约束。
 
 **步骤 2（场量一一对应）**。由定义 6.3（§6.3.1）的显式变换 (6.9a-c)，谱流体变量 $(A_r, A_{\mathrm{q}}, G, \lambda)$ 与 CGL 流体时空变量 $(E_r, E_a, V_{ri}, V_{ai}, \mu_r, \mu_a, \tau)$ 之间建立了显式映射。命题 6.4 已逐项验证作用量 (6.4) 的四类项——运动学项 (a)、平流项 (b)、耗散项 (c)、噪声项 (d)——在此映射下分别对应 CGL 作用量的运动学项、对流导数项、粘性项、高斯噪声项，且无遗漏、无多余项。
 
@@ -729,7 +729,7 @@ $$I_{\mathrm{hydro}}^{\mathrm{Sp,NG}} = I_{\mathrm{hydro}}^{\mathrm{Sp}} + \frac
 
 $$\mathcal{O}_n[\rho] = \int_{\Sigma_{\mathrm{silent}}} \rho_n(\omega_1, \ldots, \omega_{n-1})\, d\mu \tag{6.7}$$
 
-其中 $\Sigma_{\mathrm{silent}}$ 为谱静默区域。当 $\mathcal{O}_2 = 0$ 但 $\mathcal{O}_3, \mathcal{O}_4 \neq 0$ 时，系统二阶统计"静默"而高阶统计"发声"——**谱静默与非高斯性是独立的物理维度**。这澄清了 UFPF 框架的一个重要边界：紧致化式静默极限下系统仍可非高斯。
+其中 $\Sigma_{\mathrm{silent}}$ 为谱静默区域。当 $\mathcal{O}_2 = 0$ 但 $\mathcal{O}_3, \mathcal{O}_4 \neq 0$ 时，系统二阶统计"静默"而高阶统计"发声"——**谱静默与非高斯性是独立的物理维度**。这澄清了 MUFPF 框架的一个重要边界：紧致化式静默极限下系统仍可非高斯。
 
 #### 6.4.5 非线性 FDT 的谱版本
 
@@ -747,7 +747,7 @@ $$G^{aaa}(\omega_1,\omega_2,\omega_3) = \sum_i \coth\!\left(\frac{\beta\omega_i}
 
 ### 7.1 核心洞见
 
-CGL 的"流体时空"坐标 $\sigma^a$ 标记流体元及其内部时钟。UFPF 中，**谱参数 $\lambda$ 扮演"内部时钟"的角色**——它是 Koopman 生成元的特征值，编码系统的固有频率。
+CGL 的"流体时空"坐标 $\sigma^a$ 标记流体元及其内部时钟。MUFPF 中，**谱参数 $\lambda$ 扮演"内部时钟"的角色**——它是 Koopman 生成元的特征值，编码系统的固有频率。
 
 ### 7.2 映射的四个分量
 
@@ -925,7 +925,7 @@ $$\left|\int_\mathbb{T} \phi\, d\mu_{g,\varepsilon} - \int_\mathbb{T}\phi\, d\mu
 
 ## 8 翻译定理
 
-**定理 8.1（CGL 的谱语言翻译主定理）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 UFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其超范畴扩展。则 CGL 的以下**八个核心结构**均可翻译为 UFPF 谱语言（翻译后结构层等价）：
+**定理 8.1（CGL 的谱语言翻译主定理）**。设 $(\mathbf{Rec}, \mathbf{Sp}, D\dashv R)$ 是满足 MUFPF 公理的谱范畴，$\mathbf{Sp}_{\mathbb{Z}_2}$ 是其超范畴扩展。则 CGL 的以下**八个核心结构**均可翻译为 MUFPF 谱语言（翻译后结构层等价）：
 
 **(1) 路径积分翻译**。$\mathbf{Sp}_{\mathbb{Z}_2}$ 上的谱路径积分（A4 + 超结构）对应 CGL 的 CTP 路径积分（§3.2，定理 3.1）。
 
@@ -945,7 +945,7 @@ $$\left|\int_\mathbb{T} \phi\, d\mu_{g,\varepsilon} - \int_\mathbb{T}\phi\, d\mu
 
 **证明**。由定理 3.1、3.2、4.4、5.2、6.2、6.5、7.5、7.6 直接合并。$\square$
 
-**推论 8.1**。CGL 的全部物理结论——涨落流体力学、第二定律从对称性涌现、Onsager 关系、FDT（含非线性）、共形流体二阶输运、非高斯噪声层级、湍流情形的谱测度描述——均可翻译为 UFPF 公理体系（含超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$）的谱语言表述。
+**推论 8.1**。CGL 的全部物理结论——涨落流体力学、第二定律从对称性涌现、Onsager 关系、FDT（含非线性）、共形流体二阶输运、非高斯噪声层级、湍流情形的谱测度描述——均可翻译为 MUFPF 公理体系（含超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$）的谱语言表述。
 
 ---
 
@@ -955,11 +955,11 @@ $$\left|\int_\mathbb{T} \phi\, d\mu_{g,\varepsilon} - \int_\mathbb{T}\phi\, d\mu
 
 本文的推导链为：
 
-$$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{KMS} \xrightarrow{\S5} \text{BRST} \xrightarrow{\S6} \text{涨落流体力学}$$
+$$\text{MUFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{KMS} \xrightarrow{\S5} \text{BRST} \xrightarrow{\S6} \text{涨落流体力学}$$
 
 严格性说明——推导使用的外部输入分三类：
 
-**（一）UFPF 公理**：谱路径积分（A4）、谱流方程、SK 谱等价桥、谱热力学定理。这是推导的物理基础。
+**（一）MUFPF 公理**：谱路径积分（A4）、谱流方程、SK 谱等价桥、谱热力学定理。这是推导的物理基础。
 
 **（二）标准数学定理**（无物理内容，仅作为工具）：
 - Tomita-Takesaki 模理论（§4.1-4.2）：von Neumann 代数的标准结果
@@ -967,30 +967,30 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 - Lie algebroid 上同调（§5）：Chevalley-Eilenberg 复形的标准理论
 - Koszul-Tate 分解（§5.7）：同调代数的标准工具
 
-**（三）超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$**（定义 5.4）：这是 UFPF 之上**唯一新增的结构**。它只引入 $\mathbb{Z}_2$-分级信息（奇偶性），使鬼场有处安放，不引入新的动力学自由度。其必要性源于 BRST 形式本身要求 Grassmann 奇性——这是 CGL 框架同样需要的结构。
+**（三）超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$**（定义 5.4）：这是 MUFPF 之上**唯一新增的结构**。它只引入 $\mathbb{Z}_2$-分级信息（奇偶性），使鬼场有处安放，不引入新的动力学自由度。其必要性源于 BRST 形式本身要求 Grassmann 奇性——这是 CGL 框架同样需要的结构。
 
 在此基础上：§3-§5 的推导基于上述定理的**直接应用**；§6 的等价性由**显式场量变换**（§6.3.1 定义 6.3 + 命题 6.4）支撑，将谱流体作用量逐项映射到 CGL 作用量；§7 的映射在理想流体情形严格（§7.2-7.3）、近平衡由正则拉格朗日流保证（§7.6 层 A）、湍流由谱测度框架严格化（§7.6 层 B/C）。
 
 ### 9.2 与 CGL 的关系定位
 
-本文建立的不是"UFPF 取代 CGL"，也不是宣称两者完全对等，而是展示一种**翻译关系**：UFPF 是覆盖多领域的元框架（meta-framework），其谱语言可以翻译 CGL 的耗散流体 EFT。在结构层面（§8 的八项翻译），CGL 与谱语言版本数学同构。本文把这种关系呈现为类似"语言"与"用该语言写成的某一著作"的关系——著作的独立性不受影响，语言的范围也不受单一著作限制；至于两者在理论范围上的最终比较，本文不做单方面断言，留待学术共同体评价。本文的实际贡献是翻译本身及其产生的新预言。
+本文建立的不是"MUFPF 取代 CGL"，也不是宣称两者完全对等，而是展示一种**翻译关系**：MUFPF 是覆盖多领域的元框架（meta-framework），其谱语言可以翻译 CGL 的耗散流体 EFT。在结构层面（§8 的八项翻译），CGL 与谱语言版本数学同构。本文把这种关系呈现为类似"语言"与"用该语言写成的某一著作"的关系——著作的独立性不受影响，语言的范围也不受单一著作限制；至于两者在理论范围上的最终比较，本文不做单方面断言，留待学术共同体评价。本文的实际贡献是翻译本身及其产生的新预言。
 
 本翻译结果有两层解读姿态：
 
-1. **工具姿态（本文工作直接支持）**：UFPF 可作为元语言，对 CGL 做完整的结构重构、压力测试、生成新可证伪预言；即便 UFPF 的本体猜想最终不成立，该框架仍可作为理论实践工具。
-2. **本体猜想（不属于本文结论）**：UFPF 这套范畴-谱结构是否为物理现实底层本质关系，该猜想需要更多领域重构与独特预言的实验确认，留待后续研究。
+1. **工具姿态（本文工作直接支持）**：MUFPF 可作为元语言，对 CGL 做完整的结构重构、压力测试、生成新可证伪预言；即便 MUFPF 的本体猜想最终不成立，该框架仍可作为理论实践工具。
+2. **本体猜想（不属于本文结论）**：MUFPF 这套范畴-谱结构是否为物理现实底层本质关系，该猜想需要更多领域重构与独特预言的实验确认，留待后续研究。
 
 §7.5 已进一步表明，这种翻译延伸到**具体的定量成果**：CGL-II 的中性共形流体二阶熵流（$f_1,\dots,f_5$ 系数系统）可在谱框架中用 Koopman 谱隙和模强度重新表达。尤其是 DKMS 约束 $c_2 = f_5/4$ 获得了纯谱的等价表述，并产生可证伪预言 $\lambda_\pi \approx -4.81\,T$（N=4 SYM 剪切道第一非流体力学谱隙）。
 
 §7.6 进一步将翻译延伸到**最困难的湍流情形**：CGL 的流体时空映射 $X^\mu(\sigma)$ 在湍流中不光滑，但通过三层替换（RLF/GLM/谱测度族）获得了严格化——其中谱测度族是统计稳态下唯一无歧义的表述。这关闭了翻译框架的最后一个结构性缺口（§9.4 所列的残留问题转为学习极限边界而非框架缺失）。
 
-**规范结构的两种处理**。UFPF 与 CGL 对规范冗余的处理方式不同：UFPF 的谱静默机制使规范方向在谱测度中自动不可见（无需鬼场即可自洽工作），CGL 的场论语言必须显式编码规范结构（鬼场 + BRST 上同调）。这两种处理是同一物理内容（规范冗余）的不同表示，物理自由度数量相同（注 5.1）。超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（定义 5.4）是两者互译的接口而非 UFPF 本体的组成部分。这一观察将 UFPF 的静默机制定位为对规范结构的"自动处理"——与其对紧致化额外维的处理（§2.1 谱静默）同源，即静默机制统一适用于"额外维"与"规范方向"两类不可观测结构。
+**规范结构的两种处理**。MUFPF 与 CGL 对规范冗余的处理方式不同：MUFPF 的谱静默机制使规范方向在谱测度中自动不可见（无需鬼场即可自洽工作），CGL 的场论语言必须显式编码规范结构（鬼场 + BRST 上同调）。这两种处理是同一物理内容（规范冗余）的不同表示，物理自由度数量相同（注 5.1）。超范畴扩展 $\mathbf{Sp}_{\mathbb{Z}_2}$（定义 5.4）是两者互译的接口而非 MUFPF 本体的组成部分。这一观察将 MUFPF 的静默机制定位为对规范结构的"自动处理"——与其对紧致化额外维的处理（§2.1 谱静默）同源，即静默机制统一适用于"额外维"与"规范方向"两类不可观测结构。
 
 ### 9.3 可验证性
 
 本文的推导链产生了**五个可直接数值验证的预言**（V1-V5）与**三个湍流判据**（C1-C3）：
 
-**（V1）噪声统计的 KMS 约束**：谱流体的噪声统计 (6.3) 应满足 CGL 的 KMS 约束（经典极限 Landau-Lifshitz 形式 6.3'）。可通过 UFPF 现有的湍流 DNS 代码直接检验。
+**（V1）噪声统计的 KMS 约束**：谱流体的噪声统计 (6.3) 应满足 CGL 的 KMS 约束（经典极限 Landau-Lifshitz 形式 6.3'）。可通过 MUFPF 现有的湍流 DNS 代码直接检验。
 
 **（V2）剪切道谱隙**：N=4 SYM 剪切道第一非流体力学 Koopman 特征值应位于 $\lambda_\pi \approx -4.81\,T$（定理 7.3）。可在 Bjorken 流上用 DMD/EDMD 从数值数据提取验证。
 
@@ -1013,7 +1013,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 **前提性局限**
 
-1. **UFPF 的地位局限**。UFPF 目前为个人独立研究的理论假说，未经学术共同体独立评审（§1.1 地位声明）。本文的全部论证以 UFPF 公理为前提——若 UFPF 公理体系本身被证伪或需修正，本文的重构结论将相应调整。这是本文最大的前提性局限，以下所有开放问题均以此为前提。
+1. **MUFPF 的地位局限**。MUFPF 目前为个人独立研究的理论假说，未经学术共同体独立评审（§1.1 地位声明）。本文的全部论证以 MUFPF 公理为前提——若 MUFPF 公理体系本身被证伪或需修正，本文的重构结论将相应调整。这是本文最大的前提性局限，以下所有开放问题均以此为前提。
 
 **已解决**
 
@@ -1035,7 +1035,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 8. **数值工具的扩展**。当前验证脚本（`scripts/paper45_spectral_EFT_validation.py`）针对 V1-V5 设计。需要扩展为基于谱测度与 Koopman 谱特征的通用数值工具，以在更复杂物理极限（非平衡态、强耦合）下检验 §7.5-§7.6 的定量预言。
 
-**跨文档指引**。本文只处理耗散流体 EFT 分支；UFPF 全套的预设清单（Polish 拓扑、$A_{\mathrm{GR}}$ 断言）与完整开放问题清单（例如暗能量 B1 瓶颈），参见 UFPF 体系总序。
+**跨文档指引**。本文只处理耗散流体 EFT 分支；MUFPF 全套的预设清单（Polish 拓扑、$A_{\mathrm{GR}}$ 断言）与完整开放问题清单（例如暗能量 B1 瓶颈），参见 MUFPF 体系总序。
 
 ---
 
@@ -1043,7 +1043,7 @@ $$\text{UFPF 公理} \xrightarrow{\S3} \text{CTP + r-a} \xrightarrow{\S4} \text{
 
 我们首先对构建本文理论基础的多个领域学派表示深深的敬意：从规范场论、KMS 态理论到现代非线性流体力学的诸多开创性工作，构成了本研究能够进行“谱语言翻译”的知识土壤。特别感谢 Crossley, Glorioso 和 Liu 在耗散流体有效场论方面提供的严谨框架，以及 Tomita-Takesaki 模理论和 Lie Algebroid 几何学所奠定的数学基础。
 
-本文提出的 UFPF（通用不动点分形谱范畴框架）及其谱语言是作者个人独立构建的理论体系。我们诚挚地将此工作定位为一次跨越物理、几何和代数拓扑多领域的**系统性尝试**，其最终结论应视为该理论假说的一个重要实例展示，而非所有相关领域已有的既定知识集合。
+本文提出的 MUFPF（通用不动点分形谱范畴框架）及其谱语言是作者个人独立构建的理论体系。我们诚挚地将此工作定位为一次跨越物理、几何和代数拓扑多领域的**系统性尝试**，其最终结论应视为该理论假说的一个重要实例展示，而非所有相关领域已有的既定知识集合。
 
 ---
 
@@ -1123,11 +1123,11 @@ $\mathcal{K}$ 在相干层面的退化与在涨落层面的持续，定量地刻
 [1] M. Crossley, P. Glorioso, H. Liu, "Effective field theory of dissipative fluids," arXiv:1511.03646 (2017).
 [2] P. Glorioso, M. Crossley, H. Liu, "Effective field theory for dissipative fluids (II): classical limit, dynamical KMS symmetry and entropy current," arXiv:1701.07817 (2017).
 [3] P. Glorioso, H. Liu, "Lectures on non-equilibrium effective field theories and fluctuating hydrodynamics," arXiv:1805.09331 (2018).
-[4] 王斌, "通用不动点分形谱范畴框架 I: 分形谱化理论" (Paper I), UFPF 系列.
-[5] 王斌, "通用不动点分形谱范畴框架 VI: 谱流体动力学" (Paper VI), UFPF 系列.
-[6] 王斌, "通用不动点分形谱范畴框架 VII: 非平衡谱热力学" (Paper VII), UFPF 系列.
-[7] 王斌, "通用不动点分形谱范畴框架 XI: 谱量子场论" (Paper XI), UFPF 系列.
-[8] 王斌, "通用不动点分形谱范畴框架 XXV: 跨领域纤维化方法论" (Paper XXV), UFPF 系列.
+[4] 王斌, "通用不动点分形谱范畴框架 I: 分形谱化理论" (Paper I), MUFPF 系列.
+[5] 王斌, "通用不动点分形谱范畴框架 VI: 谱流体动力学" (Paper VI), MUFPF 系列.
+[6] 王斌, "通用不动点分形谱范畴框架 VII: 非平衡谱热力学" (Paper VII), MUFPF 系列.
+[7] 王斌, "通用不动点分形谱范畴框架 XI: 谱量子场论" (Paper XI), MUFPF 系列.
+[8] 王斌, "通用不动点分形谱范畴框架 XXV: 跨领域纤维化方法论" (Paper XXV), MUFPF 系列.
 [9] M. Takesaki, *Theory of Operator Algebras II*, Springer (2003).
 [10] J. Cannière, "A spectral characterization of KMS states," *Commun. Math. Phys.* 84 (1982) 143-158.
 [11] L. Ciambelli, R. G. Leigh, "Lie algebroids and the geometry of off-shell BRST," *Nucl. Phys. B* 972 (2022) 115553, arXiv:2101.03974.
@@ -1149,6 +1149,14 @@ $\mathcal{K}$ 在相干层面的退化与在涨落层面的持续，定量地刻
 
 ---
 
-*本文属于 UFPF 系列论文（Paper XLV），展示 UFPF 谱语言可翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。翻译的可行性是 UFPF 语言普适性的一个例证；两框架关系的最终定性留待学术共同体评价。版本 v1.2（2026-08-22）。*
+*本文属于 MUFPF 系列论文（Paper XLV），展示 MUFPF 谱语言可翻译 Crossley-Glorioso-Liu（CGL）耗散流体有效场论的核心结构。翻译的可行性是 MUFPF 语言普适性的一个例证；两框架关系的最终定性留待学术共同体评价。版本 v1.2（2026-08-22）。*
 
 ---
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.3 | 2026-08-24 | 更名：UFPF → MUFPF（5 处替换）|
+| v1.2 | 2026-08-22 | 正式版发布 |

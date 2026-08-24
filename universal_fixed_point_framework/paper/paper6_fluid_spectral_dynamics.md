@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 VI：谱流体动力学——从湍流谱到谱流几何
+# 元通用不动点函子范畴框架 VI：谱流体动力学——从湍流谱到谱流几何
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -392,7 +392,7 @@ $$\mathrm{Re}_{\text{spec}}^{\text{rheo}} = \|G_{\text{rheo}}\|_{\text{HS}} / (\
 - **状态空间** $\mathcal{S}_{\text{fl}} = L^2(\Omega; \mathbf{v}, \sigma) \times \mathbb{R}_{>0}$，包含速度场 $\mathbf{v}$、微观结构序参量 $\sigma$、剪切率 $\dot\gamma$；
 - **演化算子** $\Phi_\phi: \mathcal{S}_{\text{fl}} \to \mathcal{S}_{\text{fl}}$，由非牛顿本构方程的解算子给出，参数 $\phi = \log(\dot\gamma/\dot\gamma_0)$ 为流变 rapidity。
 
-**命题 9.2**（流变递归 ∈ Rec）。$R_{\text{fl}}$ 满足 UFPF 元公理 1（递归存在性）：$\Phi_\phi$ 是 $\mathcal{S}_{\text{fl}}$ 上的自函子，且满足半群性质 $\Phi_{\phi_1 + \phi_2} = \Phi_{\phi_1} \circ \Phi_{\phi_2}$。
+**命题 9.2**（流变递归 ∈ Rec）。$R_{\text{fl}}$ 满足 MUFPF 元公理 1（递归存在性）：$\Phi_\phi$ 是 $\mathcal{S}_{\text{fl}}$ 上的自函子，且满足半群性质 $\Phi_{\phi_1 + \phi_2} = \Phi_{\phi_1} \circ \Phi_{\phi_2}$。
 
 **定义 9.3**（流变谱像）。$R_{\text{fl}}$ 的谱像为 $D(R_{\text{fl}}) = (\mathcal{H}_{\text{fl}}, A_{\text{fl}}, \sigma(A_{\text{fl}}))$，其中：
 - $\mathcal{H}_{\text{fl}} = L^2(\mathcal{S}_{\text{fl}})$ 为流变 Hilbert 空间；
@@ -671,7 +671,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 
 ## 参考文献
 
-### UFPF 内部
+### MUFPF 内部
 
 - **Paper I**：`paper/paper1_fractal_spectral_derecursion.md` — 分形谱化理论
 - **Paper V**：`paper/paper5_spectral_dynamics.md` — 谱动力学
@@ -729,7 +729,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 VI（增强版 v2.8），谱流体动力学——从湍流谱到谱流几何。主要内容：
+《元通用不动点函子范畴框架》系列论文 VI（增强版 v2.8），谱流体动力学——从湍流谱到谱流几何。主要内容：
 - 谱流体动力学公理 B1-B3（§2.2）
 - N-S 谱流方程（定理 2.1）
 - K41 $-5/3$ 谱的谱动力学涌现（定理 3.1）
@@ -752,7 +752,7 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 |------|------|----------|
 | **v2.8** | **2026-07-25** | **新增 §9.3.6 流变学谱丛工程化数值验证**：三对角矩阵结构正确性验证、弛豫谱反演精度（无噪声 $10^{-32}$、有噪声 0.06%）、谱丛反演 vs Tikhonov 正则化对比（误差比 0.3%）；更新摘要、结论 |
 | **v2.7** | **2026-07-25** | **新增 §9.3 非牛顿流变学的三对角谱丛形式**：建立复杂黏度连分数与 Leaver 三对角谱丛的严格同构，揭示弛豫谱 $H(\tau)$ 为谱丛 $\lambda=0$ 截面投影，统一流变非线性跃迁与分支点谱叶交换 |
-| **v2.6** | **2026-07-25** | **更新 UFPF 内部参考文献**：新增 Paper XXIV-A（超导 μ* 消除）和 Paper XXIV-B（谱键刚性） |
+| **v2.6** | **2026-07-25** | **更新 MUFPF 内部参考文献**：新增 Paper XXIV-A（超导 μ* 消除）和 Paper XXIV-B（谱键刚性） |
 | v2.5 | 2026-07-23 | 重构 E3 为五类（新增 IQHE 临界指数过渡）、F5 为九类临界现象统一表、临界指数的 Lie 代数分类；更新摘要、§1.3 目录结构；参考文献增加 IQHE 标准文献 |
 | v2.4 | 2026-07-19 | $T_c$ 临界温度谱推导（1.1% 精度）纳入主定理 E3 统一表；添加特征可观测量列；更新 §9.1.5 统一表描述 |
 | v2.3 | 2026-07-19 | 低能 QCD 谱翻译纳入统一图景：主定理 E3 扩展为四类临界现象（新增 QCD 禁闭发散）、$\Lambda_{\text{QCD}}$ 谱推导（方案转换因子 $Z_s = Z_3 = 1.39$）、⟨ψ̄ψ⟩ 定量预测（2% 精度）；更新 §9.1.5 统一表 |
@@ -762,3 +762,4 @@ $$\omega_c = \arg\max \rho_{\text{bp}}(\omega)$$
 | v1.0 | 2026-07-18 | 交叉引用 Papers XI-XII；版本元数据规范化 |
 | v1.0 | 2026-07-17 | 新增 §4 谱熵与热力学一致性（C* 代数 + Onsager 关系 + 熵增定理） |
 | v0.1 | 2026-07-16 | 初始版本 |
+| v2.9 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

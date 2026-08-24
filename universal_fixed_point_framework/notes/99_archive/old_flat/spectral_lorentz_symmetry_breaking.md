@@ -40,7 +40,7 @@
 
 ### 1.2 谱动力学的回答
 
-在 UFPF 框架中，Lorentz 群的起源问题是可回答的：
+在 MUFPF 框架中，Lorentz 群的起源问题是可回答的：
 
 **核心论题**：Lorentz 群 $SO^+(1,3)$ 是 $\partial\mathbf{Rec}_D$ 谱边界的保结构自同构群。
 
@@ -68,7 +68,7 @@ $$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3).$$
 
 **证明思路**（非严格）。$\partial\mathbf{Rec}_D$ 上的谱对象由"零模"刻划，即谱算子有零特征值。零模的几何结构在 4 维时空中由 Lorentz 度规 $\eta = \mathrm{diag}(+,-,-,-)$ 诱导——零向量 $v^\mu$ 满足 $\eta_{\mu\nu}v^\mu v^\nu = 0$。保持零模结构的线性变换恰好是 Lorentz 群 $O(1,3)$；要求 proper 与 orthochronous 限制到 $SO^+(1,3)$。□
 
-**注 2.4**（严格化需求）。上述证明思路依赖"4 维时空"作为前提。在 UFPF 框架内，4 维时空本身应从更深层的谱结构导出——这是本笔记 §5 探讨的开放问题。
+**注 2.4**（严格化需求）。上述证明思路依赖"4 维时空"作为前提。在 MUFPF 框架内，4 维时空本身应从更深层的谱结构导出——这是本笔记 §5 探讨的开放问题。
 
 ### 2.3 不变量与 Casimir 算子的对应
 
@@ -82,7 +82,7 @@ $$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3).$$
 
 ### 3.1 范畴链回顾
 
-**回顾 3.1**（三层结构）。UFPF 的递归系统范畴有三层结构：
+**回顾 3.1**（三层结构）。MUFPF 的递归系统范畴有三层结构：
 $$\mathbf{Rec}_D \subset \mathbf{Rec}_{\text{diss}} \subset \mathbf{Rec},$$
 
 其中：
@@ -166,7 +166,7 @@ $$\varepsilon_{\text{Lor}}(\mu \sim M_{\text{Pl}}) \sim \mathcal{O}(1).$$
 
 ### 5.1 4 维时空作为开放问题
 
-定理 2.3 的证明依赖"4 维时空"作为前提。在 UFPF 框架内，4 维时空的起源本身应是更深层的谱结果。
+定理 2.3 的证明依赖"4 维时空"作为前提。在 MUFPF 框架内，4 维时空的起源本身应是更深层的谱结果。
 
 **猜想 5.1**（4 维时空的谱推导）。4 维时空的维数 $d = 4$ 由 $\mathbf{Rec}_D$ 的某种谱约束决定。可能机制：
 - **谱密度最优**：$d = 4$ 是某种谱密度泛函的极值点；
@@ -180,7 +180,7 @@ $$\mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}_d) \cong SO^+(1, d-1).$$
 
 **证明思路**。零模结构在 $d$ 维时空中由 $SO^+(1, d-1)$ 度规诱导，与定理 2.3 的论证类似。□
 
-**预测 5.3**（额外维的谱静默）。若存在额外维（如弦论 10 维），则在 UFPF 中额外维对应谱静默（Paper I §5）——额外维的谱成分被 $\partial\mathbf{Rec}_D$ 边界条件静默。可观测的 4 维时空是"未被静默"的子结构。
+**预测 5.3**（额外维的谱静默）。若存在额外维（如弦论 10 维），则在 MUFPF 中额外维对应谱静默（Paper I §5）——额外维的谱成分被 $\partial\mathbf{Rec}_D$ 边界条件静默。可观测的 4 维时空是"未被静默"的子结构。
 
 ### 5.3 signature (1,3) 的起源
 
@@ -221,13 +221,13 @@ Rec_D (SO⁺(1,3), Lorentz 对称 - 时空运动学，无力)
 
 ### 6.3 与 Paper XI A7 公理的降级
 
-**命题 6.3**（A7 公理的降级）。Paper XI 的 A7 公理"Lorentz 协变"在 UFPF 框架内降级为定理：
+**命题 6.3**（A7 公理的降级）。Paper XI 的 A7 公理"Lorentz 协变"在 MUFPF 框架内降级为定理：
 
 **A7 定理**（Lorentz 协变 = $\partial\mathbf{Rec}_D$ 自同构）。QFT 场 $\Phi(\lambda)$ 的 Lorentz 协变变换法则 $\Phi'(\lambda') = U(\Lambda)\Phi(\lambda)U(\Lambda)^{-1}$ 由 $\Lambda \in \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec}) \cong SO^+(1,3)$ 的范畴自同构作用自然诱导。
 
 **证明思路**。由定理 2.3，$SO^+(1,3) = \mathrm{Aut}_{\partial\mathbf{Rec}_D}(\mathbf{Spec})$。范畴自同构作用在 $\mathbf{Spec}$ 对象上给出 $U(\Lambda)$，作用在场算子 $\Phi(\lambda)$ 上给出 Lorentz 协变变换。□
 
-> **降级的意义**：A7 从"独立公理"降级为"谱边界自同构定理"，与 Paper VII 中"熵增公理"降级为"谱流定理"、Paper VIII 中"Hawking 公式"降级为"$\partial\mathbf{Rec}_D$ 边界定理"的处理方式一致。这是 UFPF 的统一方法：**公理 → 谱定理**。
+> **降级的意义**：A7 从"独立公理"降级为"谱边界自同构定理"，与 Paper VII 中"熵增公理"降级为"谱流定理"、Paper VIII 中"Hawking 公式"降级为"$\partial\mathbf{Rec}_D$ 边界定理"的处理方式一致。这是 MUFPF 的统一方法：**公理 → 谱定理**。
 
 ---
 

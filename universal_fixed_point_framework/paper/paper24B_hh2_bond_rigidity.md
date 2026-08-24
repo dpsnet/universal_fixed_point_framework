@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXIV-B：H+H₂ 谱键刚性第一性原理推导——3-中心 Hückel 模型的经验参数消除
+# 元通用不动点函子范畴框架 XXIV-B：H+H₂ 谱键刚性第一性原理推导——3-中心 Hückel 模型的经验参数消除
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -10,7 +10,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV 及 Paper XXII。本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper V、Paper VI、Paper XV 及 Paper XXII。本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **Hückel**：休克尔分子轨道法（Hückel molecular orbital method）
@@ -22,7 +22,7 @@
 - **TS**：过渡态（Transition State）
 - **HOMO**：最高占据分子轨道（Highest Occupied Molecular Orbital）
 - **LUMO**：最低未占分子轨道（Lowest Unoccupied Molecular Orbital）
-- **UFPF**：通用不动点范畴框架（Universal Fixed Point Functorial Framework）
+- **MUFPF**：元通用不动点函子范畴框架（Universal Fixed Point Functorial Framework）
 
 自创术语与标准概念对照如下：
 - **谱键刚性**（spectral bond rigidity）：谱框架中化学键HOMO-LUMO谱间隙的定量量度
@@ -380,17 +380,10 @@ Paper XXII §8.3 中报告的"势垒 0.436 eV vs LSTH 0.425 eV（偏差 2.6%）"
 
 ---
 
-## 版本记录
-
-**版本**：v1.0
-
-**日期**：2026-07-25
-
-**状态**：成熟。谱键刚性定理验证完成（R_bond=6.925 eV），3-中心Hückel经验参数β₀、α₀完全消除，gap closure 18.2%（vs Hückel 7.9%），ℓ_corr敏感性分析完成。
-
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
+| v1.2 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
 | v1.1 | 2026-07-27 | RAP v0.1 修复：停用"零自由参数"表述（§6.2 表格） |
 | v1.0 | 2026-07-25 | 成熟版。H₂谱键刚性第一性原理推导完成，IRC路径扫描验证通过。 |

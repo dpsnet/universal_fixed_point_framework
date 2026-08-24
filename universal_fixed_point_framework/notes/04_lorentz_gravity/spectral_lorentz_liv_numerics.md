@@ -4,7 +4,7 @@
 
 **日期**：2026-07-19
 
-**状态**：研究笔记 v0.1（UFPF Phase 51D）
+**状态**：研究笔记 v0.1（MUFPF Phase 51D）
 
 **关联**：
 - 主笔记：`spectral_lorentz_dynamics.md` §9、`spectral_lorentz_predictions.md`
@@ -17,7 +17,7 @@
 
 ## 0. 摘要
 
-本笔记记录 UFPF Phase 51D 的 LIV（Lorentz Invariance Violation）系数数值验证工作。基于 `lorentz_liv_calculator.py` 在 31 GeV 能标（Fermi LAT GRB 090510）下的完整计算，对 Paper XVI §9 给出的五类可检验 LIV 预言进行数值化实现与实验约束对比。
+本笔记记录 MUFPF Phase 51D 的 LIV（Lorentz Invariance Violation）系数数值验证工作。基于 `lorentz_liv_calculator.py` 在 31 GeV 能标（Fermi LAT GRB 090510）下的完整计算，对 Paper XVI §9 给出的五类可检验 LIV 预言进行数值化实现与实验约束对比。
 
 **核心数值结果**（详见 §3、§4）：
 

@@ -439,7 +439,7 @@ $$\xi(E) \sim \left(\frac{E}{M_{\text{Pl}}}\right)^n\cdot\frac{M_{\text{Pl}}}{\d
 
 ## 12. 参考文献
 
-- [I] Paper I：《通用不动点范畴框架 I：分形谱去递归理论》。$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子。
+- [I] Paper I：《元通用不动点函子范畴框架 I：分形谱去递归理论》。$\mathbf{Rec}$、$\mathbf{Spec}$、$D$ 函子。
 - [V] Paper V：《力的谱动力学》。谱流方程 $\frac{d}{dt}A_t = [G, A_t]$、定理 2.2（谱流不变性）。
 - [VII] Paper VII：《非平衡谱热力学》。固定基谱熵 $S_\mathcal{B}(t)$。
 - [VIII] Paper VIII：《黑洞视界谱动力学》。$\partial\mathbf{Rec}_D$、$T_H = \Delta\lambda_{\min}/(2\pi)$、$S_{\text{BH}} = \pi/(4\Delta\lambda_{\min}^2)$。

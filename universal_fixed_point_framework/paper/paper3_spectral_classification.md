@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 III：谱化函子的谱分类完备性定理
+# 元通用不动点函子范畴框架 III：谱化函子的谱分类完备性定理
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -16,7 +16,7 @@
 
 ---
 
-**术语说明**：本系列论文所述"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `UFPFormalization`。记号与定义沿用 Paper I。
+**术语说明**：本系列论文所述"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。Lean 4 形式化代码库目录名为 `MUFPFormalization`。记号与定义沿用 Paper I。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **IFS**：迭代函数系统（Iterated Function System）
@@ -143,7 +143,7 @@ $$S_{\text{BH}} = \dim_{\text{spec}} D(R_{\text{BH}})$$
 ### 4.4 形式化验证（Lean 4 机器证明）
 
 核心定理 4.1-4.3 及跨领域 IC 验证已在 Lean 4 定理证明器中完成形式化，代码位于：
-`formal_proof/UFPFormalization/`。
+`formal_proof/MUFPFormalization/`。
 
 **形式化模块**（19 模块，~3,700 行）：
 
@@ -249,8 +249,8 @@ Cl ───→ D(Cl) ──┤     谱等价！
 ## 参考文献
 
 ### 核心框架论文
-- [1] Paper I：《通用不动点范畴框架 I：分形谱化理论》（范畴论基础、$D$ 函子、谱对应、IC 条件）
-- [2] Paper II：《通用不动点范畴框架 II：物理应用与实验验证》
+- [1] Paper I：《元通用不动点函子范畴框架 I：分形谱化理论》（范畴论基础、$D$ 函子、谱对应、IC 条件）
+- [2] Paper II：《元通用不动点函子范畴框架 II：物理应用与实验验证》
 - [3] Lawvere, F.W. (1963). "Functorial semantics of algebraic theories." *Proc. Natl. Acad. Sci.* 50, 869–872.
 - [4] Mac Lane, S. (1998). *Categories for the Working Mathematician*. 2nd ed. Springer.
 
@@ -288,7 +288,7 @@ Cl ───→ D(Cl) ──┤     谱等价！
 
 **状态**：
 
-《通用不动点范畴框架》系列论文 III，谱化函子的谱分类完备性定理，含 20 篇参考文献。主要内容：
+《元通用不动点函子范畴框架》系列论文 III，谱化函子的谱分类完备性定理，含 20 篇参考文献。主要内容：
 - 三层谱分类完备性定理（定理 4.1-4.3）
 - 跨领域 IC 全覆盖定理（定理 4.3）
 - 15/19 个 Lean 4 形式化模块零 `sorry` 完成机器核验
@@ -301,3 +301,4 @@ Cl ───→ D(Cl) ──┤     谱等价！
 |------|------|----------|
 | v1.0 | 2026-07-16 | 初始版本 |
 | v1.1 | 2026-07-16 | 新增 §4.4 形式化验证（Lean 4 模块状态）、§4.5 数值验证（BPS 黑洞谱匹配）、7.2 开放问题第 4-5 项；参考文献从 6 篇扩展至 20 篇；文件名从 `paper3_spectral_equivalence.md` 更名为 `paper3_spectral_classification.md` |
+| v1.2 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|

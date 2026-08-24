@@ -1,4 +1,4 @@
-# 通用不动点范畴框架 XXVIII：Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维
+# 元通用不动点函子范畴框架 XXVIII：Kerr-Newman 耦合谱覆盖与 IV 型奇异纤维
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
@@ -12,7 +12,7 @@
 
 ---
 
-**术语说明**：记号与定义沿用 Paper XXVII（Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维三分法）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的理论基础。"通用不动点范畴框架"（**Universal Fixed Point Functorial Framework, UFPF**），以下简称"本框架"。
+**术语说明**：记号与定义沿用 Paper XXVII（Leaver 谱覆盖理论——三参数纤维化、奇异纤维分类与耗散范畴嵌入），其 §2（三参数谱覆盖）、§3（三重单值群）、§4（奇异纤维三分法）、§5（$\mathbf{Rec}_{\mathrm{diss}}$ 范畴）为本论文的理论基础。"元通用不动点函子范畴框架"（**Universal Fixed Point Functorial Framework, MUFPF**），以下简称"本框架"。
 
 本文使用以下缩写，首次出现时均已给出完整中英文名称：
 - **QNM**：准正态模（Quasi-Normal Mode）
@@ -364,8 +364,16 @@ $$\mathrm{Br}(\mathcal{L}_{\text{total}}) \geq \max\{\mathrm{Br}(\mathcal{L}^{(+
 
 [9] S. A. Teukolsky, "Perturbations of a rotating black hole. I. Fundamental equations," *Astrophys. J.* **185**, 635 (1973).
 
-[10] Paper XXVII (UFPF XXVII, Leaver 谱覆盖理论).
+[10] Paper XXVII (MUFPF XXVII, Leaver 谱覆盖理论).
 
 [11] F. Finster and J. Smoller, "Decay of solutions of the Teukolsky equation for higher spin in the Schwarzschild geometry," arXiv:gr-qc/0607046 (2007).
 
 [12] J. Mei, "Fully separated metric perturbations over the Kerr background," arXiv:2311.18409 (2025).
+
+---
+
+**变更记录**：
+| 版本 | 日期 | 更新内容 |
+|------|------|----------|
+| v1.1 | 2026-08-24 | 更名：UFPF → MUFPF（2 处替换）|
+| v1.0 | 2026-08-22 | 初始版本 |

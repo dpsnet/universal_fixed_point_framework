@@ -1,0 +1,1520 @@
+# 光子拓扑转变第一性起源研究笔记（Photon Topological Transition: First-Principle Origin）
+
+**状态**：🟢 研究笔记 v0.106（2026-08-14，**B 类静默抑制预言 vs 标准 X 射线荧光产额对照（诚实张力登记，`paperX_p6_fluorescence_yield.py` 5/5 注册 run_all_tests.py）**——把 §6.6.1 通道 B 预言映射到 P6 候选体系（K/Kr/Xe/Rn K 壳层空穴 N=n_max−1）并对照标准 K 荧光产额 w_K（文献量级 Krause 1979 类）：**方向性冲突**——框架预言 Φ=R_supp/(R_supp+r) 随壳层数 N 单调降（K 2.96e-4 > Xe 1.97e-5 > Rn 1.3e-6），标准 w_K 随 Z 单调增（K 0.12 < Kr 0.64 < Xe 0.87 < Rn 0.96），**方向完全相反**；张力量化 Φ/w_K 全部低 2 个量级以上（K 低 400 倍至 Rn 低 7e5 倍）；**盲登记排除线**：以 K 荧光产额检验则 B 类被排除（负结果/登记项）；**适用域限定候选**：静默屏障抑制或限光学/价层跃迁（低能光子），不适用内壳层 X 射线（高能光子穿透外层电子云无阻碍）——R_supp 作用域待限定（§6.6"叠加假设为候选形式"的方向性检验）。此前 v0.105（2026-08-14，**辐射/无辐射跳变通道判据定量化（母笔记 §6.6.1 深化 + `paperX_channel_quantum_yield.py` 5/5 注册 run_all_tests.py）**——A4 方向性阶跃不蕴含必然向外辐射（跃迁存在辐射/无辐射双通道）；三通道统一为量子产率 Φ=A_eff/(A_eff+k_nr)：S1 基本框架（Φ(0)=1 全辐射、Φ(1)=0.5）+ S2 通道 A（取向门关闭：电偶极禁戒 A_elec=0→Φ=0、双光子 2s→1s Φ=5e-9≈0，paper44 定义 2.4）+ S3 通道 B（静默屏障 A_eff=A·R_supp(N)=A·(1/15)^N，Φ(N) 单调递减：N=3 达 2.95e-3（r=0.1）、N=6 达 8.8e-7——P6 R_supp 定量实现）+ S4 通道 C（竞争弛豫 r=k_nr/A 扫描：1e3→Φ<1e-3 碰撞淬灭占优）+ S5 与 P6 阈值对照（R_supp(3)=2.96e-4<θ=1e-3；静默抑制 N=3 时 Φ<1%（r=1））——**A/C 类标准物理温和兼容、B 类为框架候选（P6 叠加形式）**；可测性：Φ 为可观测量（荧光量子产率），B 类预言 = 特定原子内壳层跃迁量子产率异常偏低（R_supp 抑制，可证伪）；厘清要点：双通道与 A4 兼容，"存在无辐射跃迁"不构成对 A4 的否定（A4 为公理断言的依据是 t\* 未锚定+机制为涌现候选，与辐射必然性无关）。此前 v0.104（2026-08-14，**矩阵层完整字典空间级刻画闭合（`DeviationBound.lean` §1.9，`lake build` 2454 jobs 零警告零 sorry）**——登记开放项（CategoryGeometryDictionary §骨架状态 4"矩阵层完整字典 J2 迹正交 → 偏差矩阵全体方向"）推进：`hs_orthogonal_complement_diagonal`（**Hilbert–Schmidt 迹内积下对角矩阵空间的正交补 = 零对角元矩阵空间**：X 与任意对角方向迹正交 ⟺ X 对角元全零，iff 双向机器证明）+ `commutator_in_orthogonal_complement_diagonal`（谱基下偏差矩阵 [A,B] 对角元全零（J2 原表述）⟹ 属于对角方向空间正交补——与任意对角方向迹正交）——**J2 定位从逐条方向正交（§1.7/§1.8 既有）提升为全体方向的补空间表述**（矩阵层完整字典核心；非 KK 守卫：补空间为矩阵代数性质，不引入空间坐标）；剩余登记：层 2 方向类 ↔ 链复形态射逐项对应、各层态射方向 → V/H 子空间逐层实例化。此前 v0.103（2026-08-14，**Mourre 估计 Lean 代数骨架闭合（`MourreSkeleton.lean`，`lake build` 2454 jobs 零警告零 sorry）**——A4 锚点 2"自由带 [0,∞) 纯 a.c. 谱"前提的 Lean 代数核心：`mourreCommutatorI`（i[H,A]=i(H∘A−A∘H)）+ `spectralProjection_window_restrict`（谱投影与 H 交换 + 幂等 ⟹ E_I H E_I = H E_I）+ `commutator_conj`（U[H,A]U⁻¹=[UHU⁻¹,UAU⁻¹]，标度相似性骨架）+ **`mourre_estimate_of_lower_bound`（核心定理：i[H,A]=H + 谱投影像内能量下限 ⟹ Mourre 估计 a‖E_I x‖² ≤ ⟨E_I x,i[H,A]E_I x⟩，零 sorry）** + `mourreAc`（代数核心闭合版）——**Mourre 估计 ⟸ 能量下限的纯代数传递**，与 `paperX_mourre_ac_spectrum.py` 5/5（S2 精确对角 min eig=a）衔接；诚实边界：i[H₀,A]=H₀ 恒等式为解析精确（标度齐次性 U_sH₀U_s†=e^{-s}H₀/动量空间直接计算），无界完整定理（单参数酉群求导/谱投影 E_I/Borel 泛函演算）为谱测度库依赖开放项、耦合（WW/Friedrichs）a.c. 保持为 FGSS 线文献结果未独立证明——**A4 锚点 2 三前提（自伴 Kato–Rellich + a.c. Mourre + 位置表示）Lean 代数核心全部闭合**。此前 v0.102（2026-08-14，**WW 复极点 Lean 代数骨架闭合（`PoleDecay.lean`（原 PhotonTopologyResonance），`lake build` 2454 jobs 零警告零 sorry）**——"下半平面极点 ⟹ 指数衰减"的机器证明：`resonancePoleDecay`（‖e^{−i z t}‖² = e^{2·Im z·t}，代数核心）+ `resonancePoleDecay_coeff`（极点贡献 |R·e^{−i z t}|² = |R|²·e^{2·Im z·t}）+ `resonanceDecayRate_pos`（Im z < 0 ⟹ γ = −2·Im z > 0）+ `resonancePoleDecay_mono`（Im z < 0 ⟹ 模方随 t 严格递减，无回归）——锚点 1 ③"不可逆与因果性是同一数学对象（下半平面极点）"获 Lean 代数骨架；诚实边界：极点位置 z_res（第二叶 η_II(z)=0）含解析延拓为数值脚本给出（`paperX_friedrichs_resonance.py` 8/8），完整谱理论（自伴性/谱测度）仍为库依赖开放项）。此前 v0.101（2026-08-14，**Friedrichs 模型共振极点推导级验证（`paperX_friedrichs_resonance.py` 8/8 注册）**——可解模型定量实现"不可逆性 = 推迟格林函数下半平面极点"（锚点 1 ③）：S1 束缚态判据（η(E) 实零点：弱耦合 λ=0.05 有效无束缚态 E_b~Λe^{-ω₀/λ²}，强耦合 λ=1.0 显式 E_b=-0.712 阈值下孤立本征值 + 完备性 ∫ρ+|⟨e|b⟩|²=0.997）+ S2 共振极点（第二叶 η_II(z)=0：z_res=1.9965−i0.00787 下半平面，γ=0.01573≈2πλ² 差 0.16%；λ 扫描 γ/2πλ²=1.0003/1.0016/1.0063 收敛黄金规则）+ S3 衰变动力学（谱公式 P_e(t)/e^{-γt}=1.003 恒定，指数衰减匹配极点率；∫ρ=1.000）+ S4 谱结构（ρ 峰 FWHM=γ×0.996 可分辨洛伦兹非 δ 嵌入尖峰 + 强耦合阈值下束缚态 + 极点 Im≠0 不在谱）——**"不可逆 = 因果性 + 谱逃逸"的极点侧（锚点 1）获可解模型定量实现，与 WW 衰减率同率**；诚实边界：Friedrichs 平坦谱可解理想化（ω³ 偶极谱密度给能量依赖修正，黄金规则领头阶 16% 偏差已量化）、非 Lean 形式化（谱测度/复分析库依赖）、完整谱等式（耦合 a.c. 保持，FGSS 线）仍登记开放）。此前 v0.100（2026-08-14，**Mourre 估计（a.c. 谱确认）推导级验证（`paperX_mourre_ac_spectrum.py` 5/5 注册）**——S1 对易子恒等式 i[H₀,A]=H₀（解析精确：标度齐次性 U_sH₀U_s†=e^{-s}H₀ 或动量空间直接计算；**数值注记**：|k| 尖点使有限格点谱导数非求导（Leibniz 不成立），格点对易子有 O(1) 混叠差——恒等式为解析声称，数值内容以精确对角给出）+ S2 Mourre 估计 E_I i[H₀,A]E_I = E_I H₀ E_I = diag(|k_j|) ≥ a E_I（5 窗口精确对角 min eig ≥ a + 随机平滑态二次型 min ≥ a）+ S3 无嵌入 L² 本征值（窗口波包关联衰减 1→0 vs 单动量本征态对照=1）+ S4 RAGE 谱逃逸定量（P_K: 0.91→0，>100 倍，波包 v_g=1 外向）+ S5 RAGE 三前提清单闭合——**A4 锚点 2 数学前提齐备**（自伴 Kato–Rellich + 自由带纯 a.c. Mourre + 位置表示）；剩余：Lean 形式化（谱测度库依赖）、耦合情形 a.c. 保持（FGSS 线文献）、Friedrichs 模型严格化仍登记开放）。此前 v0.99（2026-08-14，**Kato–Rellich 自伴性推导级验证（`paperX_kato_rellich_selfadjoint.py` 5/5 注册 run_all_tests.py）**——S1 Hardy 不等式 3D 常数 4（高斯波包 ‖ψ/r‖²/‖∇ψ‖²=4/3 ≤ 4）+ S2 库仑势 V=-Z/r 相对 -Δ（原子单位 1s 态 ‖Vψ‖/‖Δψ‖=0.632 复现精确 √(2/5)，氢 1s 能量 -13.61 eV；Hardy+Young ⟹ 相对界 0，Kato–Rellich 适用）+ S3 WW 耦合 V 预解判据（‖V(H₀+i)^{-1}‖=g/√2 精确奇异值复现，g=0.5 ⟹ 0.354<1，相对界<1）+ S4 谱 ⊆ ℝ（自伴性直接推论）——A4 锚点 2 前提的**自伴性从方案登记推进为推导级+数值佐证**；诚实边界：不替代 Lean 形式化（谱理论库依赖）、Mourre 估计（a.c. 谱确认，RAGE 全条件）与 Friedrichs 模型严格化仍登记开放）。此前 v0.98（2026-08-13，**A4 涌现候选数值层闭合（`paperX_ww_decay.py` 8/8 注册）**——WW 非 Markov vs Markov（偏差 0.52% @γτ_c=0.01, 量级一致）+ 氢 2p→1s A 系数复现 6.260e8 s⁻¹ vs 文献 6.27e8（差 0.15%）+ 光子波包外向传播（r=c·t 无回归）+ Lindblad 可逆性破坏（混合度单调）——A4 获机制来源与失效条件数值支撑；自伴性 Kato–Rellich 仍为库依赖开放项）。此前 v0.97（2026-08-13，**交叉=项1 普适恒等式扩展 + 2.03 倍差定性**——交叉=项1 对所有 A 类型成立（对角谱/随机厄米/随机对角, 0.9994-0.9998）——恒等式与 A 无关（数值确立）；ε_Δ 与路径 A 的 2.03 倍差为 n=8 具体数值（n=4 比值 5.9、n=16 比值 0.13, 非普适）——ε_Δ≈2·S4³（差 1.5%）仅对 SU(2) k_max=8 成立；r_cat 完全解析闭式 = 0.040401（差 0.007%）、ε_Δ=6.0141e-4 保持）。此前 v0.96（2026-08-13，**r_cat 完全解析闭式（里程碑，`paperX_rcat_closed_form.py` 7/7 注册）**——r_cat = [r_LO_formula+δ贡献]·(E[1/Nb²])² + r_NLO·(E[1/Nb²])² = 0.040401 ≈ MC 0.040404（差 0.007%）；四项全解析（均匀化 92% + f,g 随机化 δ + 缩放修正 E[1/Nb²]=1/(1+Δλ²)+4Δλ²/(n²(1+Δλ²)³) + r_NLO 精确闭式）；ε_Δ=‖Δ‖_F²=r_cat·Δλ²=6.0141e-4 完全解析（非 MC）；与路径 A 差 2.03 倍为最后未闭合项）。此前 v0.95（2026-08-13，**f,g 归一化效应定量关联（`paperX_fg_normalization_analysis.py` 6/6 注册）**——δ（E_g[g²] vs 理论偏差）与谱参数强相关（Δλ r=0.94, 1/a r=0.97）；δ 经 Σδ·S_p 定量传递到 r_LO（偏差 0.003621 vs 0.003624, <0.03%）；r_cat 完整分解 = 0.040409 ≈ MC 0.040404（差 0.01%）——f,g 归一化效应定量闭合（除缩放修正 ~3%）；δ 来源 = 分式期望 Jensen 效应（delta 方法复现）；偏差模式由 SU(2) 谱结构决定非自由参数）。此前 v0.94（2026-08-13，**交叉=项1 普适恒等式确认 + f,g 归一化封闭**——交叉=项1 对 n=4..16 全部成立（数值确立, 与维度无关, 解析证明登记开放）；f,g 随机化效应确认无闭式（E_g[g²] 非有限多项式, 随机归一化非线性）——r_cat 完全闭式化最终障碍登记开放；r_NLO 精确闭式 = ((2−√3)/18)(5/16−S²/6144) ≈ 8.281e-4 保持）。此前 v0.93（2026-08-13，**P6-5 r_NLO 精确解析闭式（重大突破，`paperX_nlo_analytic.py` 9/9 注册）**——NLO 不含 f,g 只含随机扰动 ⟹ 精确解析：项1=2Δλ²[Tr(A²)/n−(TrA)²/n²]/n（差 0.006%）+ 交叉=项1 恒等式（3M 样本 0.99994）+ r_NLO=((2−√3)/18)·(5/16−S²/6144)≈8.281e-4（差 0.007%）——r_NLO 从 MC 升级为精确闭式；r_cat 解析分解 = r_LO（f,g 归一化无闭式, 开放）+ r_NLO（精确闭式）；r_cat 预测（理想归一化）=0.037916 vs MC 0.040404（差 6.2% 全来自 f,g 归一化效应）；ε_Δ=‖Δ‖_F² 解析结构获 NLO 部分精确闭合）。此前 v0.92（2026-08-13，**P6-5 ε_Δ 结构深化（r_cat 解析化路径 1 + Δ 代数强度路径 2，`paperX_rcat_analytic.py` 9/9 注册）**——r_LO 精确解析闭式 = 5/24 − S²/9216 = 0.037088（S=Σ√(k(k+1)) 代数数和, 占 r_cat 92%, 完全解析无 MC）；NLO Wigner 平均与采样模型系统性偏差 0.4 倍登记开放；r_cat 完全闭式化开放；Δ 代数强度无简单闭式（诚实）；数值巧合观察如实登记（r_cat/Δλ²≈e 差 0.15%、r_NLO≈e·S4³ 差 0.07%）；路径 3 远期偏振观测判别维持登记；开放问题 #5 维持"部分闭合"）。此前 v0.91（2026-08-13，**P6-5 ε_Δ 严格定义推进（4-范畴 Δ 结构路径，`paperX_epsilon_delta_derivation.py` 14/14 注册 run_all_tests.py）**——从 paper35 Δ 结构常数推导：‖Δ‖_F²=r_cat·Δλ_min²≈6.01e-4 ⟹ 第一性候选 C1=‖Δ‖_F²（§5.7 传播子修正权重 g_eff，A4 闭合）+ 独立验证 C2=r_NLO≈8.06e-4（§5.8 NLO，A1 闭合）同量级互证；量级判别支持路径 A（S4³=2.96e-4，差 2.03 倍）排除路径 B（S4²=4.44e-3，偏大 7.4 倍）；κ_Δ 盲登记主候选 S4³ 不受影响；开放问题 #5 从"需定义"推进为"部分闭合"）。此前 v0.90（2026-08-13，**完整范畴-几何字典（法向↔V、水平↔H 统一同构）Lean 形式化闭合**——`CategoryGeometryDictionary.lean` 新建，`lake build` 2454 jobs 零警告零 sorry：字典结构 `CategoryGeometryDictionary`（directionMap：法向↦V、水平↦H；inf_bot/sup_top 互补分解，**代数核心无内积**）+ 三构造（`categoryGeometryDictionary_of_splitting` 主构造无内积（复用 VerticalHorizontalSplitting #7）/ `categoryGeometryDictionary_orthogonalComplement` 可选构造（内积正交补 Vᗮ，谱纤维空间意义，非 KK 守卫）/ `categoryGeometryDictionary_of_innerOrthogonal`（H ≤ Vᗮ 内积正交充分条件））+ 一致性定理（directionMap_normal/horizontal、directionMap_opposite_* 方向互补保持、dictionary_orthogonal/complement、lifting_orthogonal_consistent）——**正交语义分层**：核心 = 互补分解（方向类填充性质 + 垂直-水平分解，非内积、非 KK）；内积正交补仅为可选构造且限定谱纤维空间 E 内（E 非物理三维空间）；引力 Δ ⊥ 空间/时间、光子法线 ⊥ 空间/时间均为结构意义正交，物理内容由 GR/电动力学承载，不引入额外空间坐标（paper44 §7.2 边界 1））。**复用修正（用户裁定 2026-08-13）**：`PhotonTopologyOrthogonality.lean`（1-层 lifting 正交 = mathlib `HasLiftingProperty` 的重复实例化包装）为后加重复建设，删除——1-层 lifting 正交直接复用 mathlib `HasLiftingProperty`（法向 unfold ⊥ 水平 transition 唯一对角填充），缺啥补啥不另建；本文 v0.87/v0.90 载体描述、paper44 §7.2、路线图 62G 中相关引用同步改为 mathlib 实例化表述。此前 v0.89（2026-08-13，**Δ 2-胞腔语义闭合 + 范畴-几何桥推进**——`HigherSpCategory.lean` 增补 `SpDelta2Cell`（**Δ 偏差胞腔的具体编码**：携带层 2 交换律偏差矩阵 `dev`，内容 = spExchangeLaw 偏差部分对易子形式）+ `spDelta2Cell_exists`（存在性由部分对易子直接构造）+ `spDelta2Cell_eq_homotopy_deviation`（偏差胞腔矩阵内容 = 交换律 LHS−RHS homotopy 差，`spExchangeLaw_deviation_partial_commutator` 衔接）——**登记开放项"Δ 2-胞腔物理语义"闭合**；`DeviationBound.lean` §1.8 新增**范畴-几何桥**：`delta2Cell_commutator_diag_zero`/`delta2Cell_commutator_trace_orthogonal_diagonal`（J2 模式间定位应用到 Δ 2-胞腔偏差矩阵——偏差胞腔与任何单一谱模式/任意对角方向正交，桥的矩阵层锚点；非 KK 守卫：模式间定位不引入空间坐标）；`lake build` 2454 jobs **零警告零 sorry**；登记开放：完整范畴-几何字典（法向↔V、水平↔H 统一同构）、纤维丛层完整流形微分几何（库依赖）、层次 B 完整谱等式（谱测度理论，库依赖））。此前 v0.88（2026-08-13，**横结合律完备（2/3/4-层）**——`HigherSpCategory.lean` 增补：2-层 `spHorizComp_assoc`（**完整版**：(α⋆α')⋆α'' = α⋆(α'⋆α'')，类型不对齐由 mathlib `Category.assoc`（1-态射复合结合律）运输 + homotopy 代数由矩阵乘法结合律闭合，`spTwoCast_homotopy` 运输工具）+ 3-层 `spThreeHorizComp_homotopy_assoc`/4-层 `spFourHorizComp_homotopy_assoc`（**homotopy 层机器证明**：secondHomotopy/thirdHomotopy 代数由矩阵乘法结合律闭合，类型对齐由 2-层 `spHorizComp_assoc` 编码层同构完成）——**严格 2/3/4-范畴横结合律闭合**（2-层完整版 + 3/4-层 homotopy 层；`lake env lean` 零警告零 sorry）；登记开放：3/4-层横结合律的完整类型运输版（陈述层 `▸` 无法穿透 SpTwoMorphism 项参数，编码层同构替代）、完整 mathlib Bicategory/Tricategory 实例）。此前 v0.87（2026-08-13，**4-范畴几何正交（范畴层线）闭合 + 3Category 废弃**——用户裁定：`PhotonTopology3Category.lean`（方向代数路线）废弃删除——3-态射层早已在原有范畴 `HigherSpCategory.lean` 中（`SpThreeMorphism` 竖/横复合 + `spThreeVertComp_assoc` 结合律 + v0.86 `spThreeExchangeLaw_strict` 交换律严格），方向代数 3Category 为冗余平行实现（同 4Category 逻辑）；**4-范畴几何正交（范畴层线）闭合载体修正**：lifting 正交逐层实例化 = 1-层 mathlib `HasLiftingProperty` 实例化（法向 unfold ⊥ 水平 transition 唯一对角填充）∧ 2-层 `twoLifting_orthogonal`（PhotonTopology2Lifting）∧ **3-层由 `SpThreeMorphism` 结构承载**（spThreeVertComp_assoc + spThreeExchangeLaw_strict，非方向代数 lifting）——**非 KK 守卫显式登记**：层 1-3 的"空间 x/y/z 方向"（paper31 J3 §4.1）为诠释语言，严格载体 = 方向类填充性质（1-2 层）/链复形结构严格性（3-层），不引入空间坐标 ⟹ 正交不产生额外空间维度（与 paper44 §7.2 诚实边界 1 一致）；**Δ 不可拦截对照**：Δ（层 4 coherence）无传播子/无 Compton 波长/无屏蔽（paper31 §4.3）+ J2 模式间定位（`commutator_diag_zero_of_diagonal`）⟹ 不可拦截，与光子法向自由度可拦截（paper44 命题 2.2，R 折叠）及 KK 额外维度（纯几何不可拦截，理由不同）三向区分；登记开放：lifting 正交与 J2 迹正交的完整范畴-几何桥同构、纤维丛层完整流形微分几何（库依赖））。此前 v0.86（2026-08-13，**4-态射层第 4 层（coherence 层）闭合**——按 paper31 J3 §4.1 层结构表（层 4 = coherence = Δ 所在层）定位，在**原有范畴 `HigherSpCategory.lean` 上继续展开**（非独立文件；`PhotonTopology4Category.lean` 半成品删除——定位为模板而非独立实现）：`SpFourMorphism`（4-态射：平行 3-态射间，thirdHomotopy 链复形模式）+ `spFourVertComp` 竖复合/`spIdFourMorphism` 恒等/`spFourHorizComp` 横复合（沿 3-横复合）+ `spFourVertComp_assoc` 竖结合律 + **层 3 交换律严格成立 `spThreeExchangeLaw_strict`（无假设）**——与层 2 对照：层 2 交换律有非零偏差 Δ（`spExchangeLaw_deviation_*`），更高态射层严格 ⟹ **coherence 偏差定位于层 2 交换律，Δ 是层 4 coherence 内容的唯一载体**（paper31 §4.1 Δ 在此层，机器证明衔接）；`lake env lean` 编译通过零警告零 sorry）。此前 v0.85（2026-08-13，§3.5 P5-2 延伸：**3-态射层骨架（4-范畴自建路线第 3 层，复用 Z₂ 方向代数）**——`PhotonTopology3Category.lean` 新建，`lake env lean` 编译通过零警告零 sorry：`Delta3Cell`（3-胞腔：平行 2-胞腔 α β 之间的 3-态射，携带方向类）+ `Delta3Cell.ext`（同方向相等——3-层 Hom 集方向类内单点性）+ `delta3VComp` 竖复合/`delta3Id` 恒等 3-胞腔/`delta3HComp` 横复合（沿 2-横复合拼接）+ **3-态射层律机器证明**（竖结合律、竖左/右恒等律、**交换律 interchange**——全部由 Z₂ 方向代数 `CellDirection.mul_*` 复用 2-层引理机器证明）；方向代数跨层一致复用 `CellDirection`（每层胞腔携带方向类，复合 = Z₂ 之积——自建路线第 3 层落地）；登记开放：**4-态射层（自建路线第 4 层）**、Δ 2-胞腔物理语义、完整 4-范畴几何（态射方向几何正交）、完整 mathlib Bicategory/Tricategory 实例（编码层）；严格化假设沿用（逐层严格结构）。此前 v0.84（2026-08-12，§3.5 P5-2 延伸：**横结合律闭合（multiComp 运输）**——`PhotonTopology2Category.lean` 增补，`lake build` 通过零警告零 sorry：`multiMor_subsingleton`（1-层同态集单点性——每同态集至多一个态射，横复合结合运输基础）+ `multiComp_assoc`（1-层结合律，由单点性直接得出）+ `deltaCast_dir`（Delta2Cell 沿 1-态射等式运输保持方向）+ **`deltaHComp_assoc`（横结合律）**——类型不对齐由 multiComp_assoc 运输（h₁▸h₂▸）、方向代数由 Z₂ 结合律闭合——**严格 2-范畴律完备**（竖结合/竖恒等/横结合/交换律 interchange）；登记开放：完整 mathlib Bicategory 实例、Δ 2-胞腔物理语义、3-4 态射层与完整 4-范畴几何）。此前 v0.83（2026-08-12，§3.11 **P4 参数锁定：分形红移震荡的框架量候选与盲登记**——回应 CNF 评价"P4 三参数"：参数结构分析（三参数 → 一参数 + 相位边际化：δz_osc = z_Friedman·[1+A_P4·sin(2π(z−z₀)/Δz_P4+φ)]）+ 候选族（A_P4：S4³=3.0e-4 主候选/S4⁴ 备选/S4² 上限——与 η_S3 同源同一静默机制；δ：S4 MDL 最简；Δz_P4：1/d_H≈0.369 候选盲登记）+ 可测性检查（巡天统计阈值 σ_z/√N~1e-6，A_P4≥S4³ 可测；**相干性假设为最脆弱点**，盲登记失效条件）+ 盲登记（主候选 + 排除线）；诚实边界（d_H 固定、候选族与 η_S3/κ_Δ 同源、新预言仅限残差振荡）；数值验证候选 paperX_p4_fractal_oscillation.py 待创建）。此前 v0.82（2026-08-12，§3.5 P5-2 延伸：**2-胞腔竖/横复合（严格 2-范畴结构）**——`PhotonTopology2Category.lean` 新建，`lake build` 通过零 sorry：`CellDirection.mul` Z₂ 方向代数（normal=单位元、horizontal 自逆 mul d d = normal——与框架 σ²=1 同构，`sigma_self_inverse` 2-层对应）+ `deltaVComp` 竖复合/`deltaId` 恒等/`deltaHComp` 横复合 + 严格 2-范畴律机器证明（竖结合律、竖恒等律、**交换律 interchange**——(β∘α)⋆(δ∘γ)=(β⋆δ)∘(α⋆γ)，由 Z₂ `mul_interchange` 代数核心）；登记开放：横结合律（需 1-层 multiComp 结合律等式运输，类型不对齐）、完整 mathlib Bicategory 实例、3-4 态射层与完整 4-范畴几何；严格化假设沿用）。此前 v0.81（2026-08-12，§3.5 P5-2 延伸：**Δ 2-态射接入 lifting 框架（2-范畴结构）**——`PhotonTopology2Lifting.lean` 新建，`lake env lean` 编译通过零 sorry：`CellDirection` 方向类（法向/水平互补）+ `Delta2Cell` 2-胞腔 + `TwoLiftingProperty`（2-态射层严格正交定义——lifting/填充性质，非内积，回应 CNF 评价 (b)"4-范畴无内积定义"）+ `horizontalCell_subsingleton`（2-层 Hom 集方向类内单点性，与 1-层 subsingleton_photon_to_atom 类比）+ `twoLifting_orthogonal`（Δ 实例 2-态射层 lifting 正交机器证明）；登记开放：2-胞腔横/竖复合（完整严格 2-范畴结构）、Δ 2-胞腔物理语义、3-4 态射层与完整 4-范畴几何（自建路线见 §3.10）；严格化假设显式登记）。此前 v0.80（2026-08-12，§3.10 **参数锁定分界规则与跨层实验设计**——整理 P6/P2 案例方法论：**分界规则**（能落层到递归层/机器证明的参数 → 纯推导锁定，如 P6 的 σ_silent=S4；不能落层（候选族/跨层）→ 推导收窄 + 数据裁决，如 P2 的 η_S3——纯推导会锁错，MDL 最简候选已被既有等电子序列数据证伪）+ P2 排除过程 5 步反证逻辑（r_pred≫精度 且数据与纯 Z² 一致 ⟹ 排除，条件于基线正确）+ 跨层实验设计（n₁=4.207 谱截断层可直接搜索：线型偏离 ~1.1e-5，前提 Δλ 物理实现开放；n₂=2π/α≈861 相互作用层只能"锁下限"：抑制因子 10^{-1013} 不可直接观测，精密耦合零结果=支持、意外偏差=机制失效；层内自洽跨体系一致性为最低验证标准；盲登记衔接 CNF 邀请）。此前 v0.79（2026-08-12，§3.9 **P2 残差预言与 η_S3 候选族**——回应 CNF 评价"P2 未扣 Z² 类氢标度"：P2 改写为扣除 Z² 标度后的残差预言 ν(Z)=ν_Z²(Z)·[1+η_S3·g(Z)]（ν_Z² 为类氢 Z² 标度，等电子序列精确至屏蔽修正）+ η_S3 框架量候选族（S4/S4²/S4-d_H/S4-N_Weyl-d_H/S4²-N_Weyl/2，仿 §6.1 κ_Δ 方法论）+ 选择原理（MDL 最简 → η_a=S4）+ 盲登记（主候选 η_a=S4=6.67e-2、备选 η_b=S4²=4.44e-3、排除线=残差<1e-4 则排除）+ g(Z) 候选衔接 §3.8 多层静默实例（同一静默机制两预言面）；诚实边界（Z² 基线需屏蔽修正、新预言仅限残差部分）；数值验证候选 paperX_p2_eta_s3.py 待创建）。此前 v0.78（2026-08-12，§3.8 **P6 原子实例验证：静默叠加定理的递归层实例化**——回应 CNF 评价"P6 跨尺度挪用"批评的重构（P6 非跨尺度移植，而是框架根基"静默叠加定理"的原子尺度实例）：落层声明（原子多层静默落在**递归层**，层次 A Rydberg 序列机器证明闭合，统一母公式 S_k=s^{n_k} 适用——不触碰相互作用层/谱截断层开放边界）+ 原子结构论证（多电子壳层 = 嵌套 Rec 拓扑对象 + 逐层谱隙由 Rydberg 结构确定，防循环独立论证）+ 定量判据（内壳层跃迁须穿越 N 个满壳层静默屏障 ⟹ R_supp(N)=σ^N，σ=S4=1/15，N_crit(θ=1e-3)=3 层、θ=1e-6=6 层，与 paperX_photon_cross_effects.py E6 一致）+ 盲登记（候选体系 + 排除线，响应 CNF 邀请格式）；诚实边界（实例验证=框架递归层定理的原子实例，非跨尺度机制等效的实验证明；σ 定量值为可证伪预言）；数值验证候选 paperX_p6_atomic_silence.py 待创建）。此前 v0.77（2026-08-12，§3.7 **A4 涌现不可逆推导候选**——方向 2 新增：三锚点链（推迟辐射条件 → RAGE 谱逃逸 → 向内≡吸收）把 A4 从公理降为开放系统涌现定理候选；补 Wigner–Weisskopf 定量衰减率（γ=A=ω₀³|d|²/3πε₀ħc³，氢 2p→1s A=6.27e8 s⁻¹、τ=1.6 ns）+ 非 Markov 修正估计（~O(γτ_c)~10⁻⁶）+ 自伴性三阶闭合方案（裸谱平凡/Kato–Rellich 或 Nelson/Friedrichs 共振 + Sommerfeld/Mourre 边界条件）；回应 CNF 评价 (a)"A4 断言无动力学"；含失效条件（闭合系统⟹可逆，腔 QED 判据）；数值验证候选 paperX_ww_decay.py 待创建）。此前 v0.76（2026-08-12，§10 诚实边界第 7 条——**P5/P6 阶段成果诚实边界**（P5-5 同步义务）：P5-3 严格等式 = 谱化路径意义（非抽象全体函子等式）/P5-4 电离阈 sSup = 氢原子模型严格化（非普适定理）/P6-1 光速 = 温和兼容代数骨架/P6-2 ⊗ 矩阵层结合律开放/P6-3 channel = 语义性候选/P6-5 ε_Δ 两路径并存——所有闭合项如实限定诚实边界）。此前 v0.75（2026-08-12，**P6-5 ε_Δ 候选框架内推导分析**——#5 剩余项"ε_Δ 与 Δ 关系"两条候选路径：**路径 A**（ε_Δ=Δ(15³)≈2.96e-4，§7.27 既有）+ **路径 B**（ε_Δ 为框架量 S4²≈4.4e-3，新增候选，与 κ_Δ 最简候选同源）——两路径差 ~15 倍、预言 δz_Δ 不一致；判别需 4-范畴 Δ 结构完整推导或远期偏振光谱观测，关系保持开放（两路径并存登记））。此前 v0.74（2026-08-12，**P6-2 完整 Kronecker ⊗ + σ 幺半群同态实例化**——`PhotonTopologyExterior.lean` 增补：`spTensor`（**SpObj 完整 Kronecker 张量积**，`finProdEquiv` Fin 维度管道 + `Matrix.reindex` + `Matrix.kroneckerMap`）+ `spTensor_n` + `spTensorDim_assoc`（维度结合律，Nat.mul_assoc）+ `spSigma`（SpObj 维度 Z₂ 值拓扑荷）+ `spSigma_tensor`（**σ(X⊗Y)=σ(X)·σ(Y)**——§6.17 候选 B 的 σ 幺半群同态在 SpObj 完整 ⊗ 上实例化，Nat.cast_mul）+ `spSigma_unit`（单位元保持）——`lake build` 2454 jobs 通过、零 sorry；矩阵层 Kronecker 结合律登记开放（不硬搭））。此前 v0.73（2026-08-12，**P6-3 channel 物理定义候选 + P6-4/5/6 登记**——§6.20.1 channel 定义候选（C_t 时间通道 = 质量-时间耦合窗口 ω=mc²/ħ/τ∝1/m⁵；C_f 力通道 = 自旋-外场耦合窗口 塞曼/Larmor/泡利；与外显函子 E(X)=(σ(X),channel(X)) 衔接，实例核对光子/电子）；§3.5.1 P6 综合推进登记（P6-1 光速 ✅ / P6-2 ⊗ 维度层 ✅ / P6-3 channel ✅ / P6-4 范畴层正交代数核心已闭合、完整 4-范畴几何登记开放 / P6-5 #4/#5 候选已收窄 / P6-6 库依赖评估））。此前 v0.72（2026-08-12，**P6-2 SpObj ⊗ 结构维度层落地**——`PhotonTopologyExterior.lean` 增补：`spTensorDim`（维度乘法 dim(X⊗Y)=dimX·dimY，§6.17 候选 B 维度分量）+ `spTensorDim_parity`（**σ 的 ⊗ 封闭性**：σ(X⊗Y)=σ(X)·σ(Y)，`Nat.mul_mod` 机器证明——乘法目标 ZMod 2 与 σ 一致）+ `spTensorDim_comm`（维度交换）——`lake build` 2454 jobs 通过、零 sorry；完整矩阵内容（Fin 维度重索引管道）与结合律登记开放（不硬搭））。此前 v0.71（2026-08-12，**P6-1 光速/λν/E=hν 完整形式化**（P1 验收补全）——`PhotonTopology.lean` 增补：`VacuumLightSpeed`（c=1/√(μ₀ε₀) 真空光速结构）+ `light_speed_invariant`（**光速拓扑不变量**，定理 2.1：同 μ₀ε₀ ⟹ 同 c）+ `speed_antiproportional`（λν 反比自洽，定理 3.1 推论：λ↑⟹ν↓）+ `light_speed_unify`（光速统一：λν=1/√(μ₀ε₀)，定理 2.1×3.1 衔接）——`lake build` 2454 jobs 通过、零 sorry；**P1 验收"光速/λν/E=hν 完整形式化"部分闭合**（三恒等式闭环既有 + 光速不变新增））。此前 v0.70（2026-08-12，§3.5 **P5-4 电离阈 sSup 序列证明闭合**——`PhotonTopologySpectral.lean` 增补 `hydrogen_ionizationGap_eq`：氢原子束缚带 {13.6/n² \| n≥1} 的 sSup = 13.6 eV（基态 \|E₁\| 最大，n=1 达到；`lake build` 2454 jobs 通过、零 sorry）——**电离阈从数值锚定（paperX_hydrogen_spectral_gap.py S3）升级为机器证明**；剩余：完整谱等式 spec(H)={E_n}∪[0,∞)（谱测度理论）与自伴性/谱⊆ℝ Hilbert 层为库依赖开放项；P5 五项全闭合（P5-1/2/3/4/5））。此前 v0.69（2026-08-12，§3.5 **P5-3 Φ=D|_Rec 严格等式闭合**——函子层形式化（`PhotonTopologyFunctor.lean` P5-3 段，`lake build` 2454 jobs 通过、零 sorry）：严格语义 = 谱化路径交换 + 转变效应一致（定义等式）——复合函子 DE=D∘E / PhiSpectral=DE∘Φ + 对象层（phi_spectral_commute 谱化路径交换 + DE_spectral_bifurcation 闭开谱差 1→2 维 + phi_spectral_constant Φ 后恒开放）+ 态射层（phi_spectral_map_identity Φ 态射谱化平凡）+ 函子律 + 总结定理 P53_strict_equality——**Φ 的谱效应完全由 D 函子在 Rec 嵌入上的作用给出**；P5 三分法五项全闭合（P5-1 清查 / P5-2 严格正交 / P5-3 严格等式 / P5-4 代数谱骨架 / P5-5 同步））。此前 v0.68（2026-08-12，§3.6 T1 对齐方案**已实施**——paper35 v0.5（§3.2.1 Step 3/Step 4 加"诠释辅助"注：$W$ 为谱纤维丛意义正交方向、非几何额外空间维度，见 Paper XXXI §3.3 J2 与 Paper XLIV §7.2；§3.2.3 收敛表下加诚实标注）+ paper44 v0.14（§7.2 诚实边界第 1 条补"与 Paper XXXV §3.2 的一致性"句）——**T1 从"张力"转"已对齐"**，验收三项达成（paper35 §3.2 无未限定 W 轴表述、paper35 §3.2 ↔ paper44 §7.2 双向交叉引用、§3.6 状态更新）；对齐方式 = paper35 侧表述限定 + paper44 侧交叉引用，**非改结论**）。此前 v0.67（2026-08-12，§3.6 T1 对齐方案草稿——**待审、未提交**：paper35 §3.2.1 向外推路径字面几何 W 轴语言（$\vec{F}=(0,0,0,F_w)$）与 paper44 §7.2.1"非 KK 式额外维度"声明的对齐方案——对齐原则 3 条（"正交"=谱模式正交 paper31 J2 机器证明 + 纤维丛层 V⊥H #7；W 轴为诠释辅助语言非几何额外维度；paper44 非 KK 声明保持并补交叉引用）+ paper35 侧修改清单 4 项（§3.2.1 Step 3/Step 4 加注、§3.2.3 收敛表诚实标注、勘误注记）+ paper44 侧修改清单 2 项（§7.2.1 交叉引用、可选 T1 登记索引）+ 不动项 + 验收标准（§3.6 T1 从"张力"转"已对齐"））。此前 v0.66（2026-08-12，方向 2 §3.6 体系一致性检查：**Δ-空间方向编码依赖**——探针（paperX_delta_spatial_probe.py）排除生成元编码后，盘查全体系"空间方向"多义性：paper31 J2 谱模式编码/paper44 双层正交（范畴层 J2 + 纤维丛层 V⊥H）/paper35 W 轴几何论证/paper40 朗道横向/paper33 建模指派——**无直接矛盾**（探针只排除生成元编码，框架操作定义均不采用）；登记两处体系级张力：**T1** paper35 §3.2 几何 W 轴论证与 paper44 §4.2"非 KK 式"表述张力（建议 paper35 侧对齐谱意义）、**T2** "空间方向"四义多义性需术语统一（P5 定义精确化任务））。此前 v0.65（2026-08-12，方向 2 §3.5 P5-2 二修：**Δ 结构严格正交**——用户裁定"修正为严格正交，这是原本就应该达到的标准，避免另起炉灶"，严格正交主体建立在**既有 Δ 结构**（`deltaOp`/`spExchangeLaw_deviation_partial_commutator`，paper31 J1-J3）上而非另建框架；**J2 模式间定位严格机器证明**（`DeviationBound.lean` §1.7，编译通过、零 sorry：`commutator_trace_zero` Tr([A,B])=0——Δ 对易子分量与恒等方向严格正交 + `commutator_trace_orthogonal_scalar` c·Tr=0——与任意标量方向迹正交 + `commutator_diag_zero_of_diagonal` 谱基对角元恒零——与任何单一谱模式正交）——paper31 §4.1"层 1-3 正交于 Δ"从类型级（`layerIndex_independent` 索引单射 + `silence_margin` e³）升级为**严格正交**；1-态射层 lifting 正交 = mathlib `HasLiftingProperty` 实例化，纤维丛层 V⊥H 已闭合（#7），Δ 2-态射接入 lifting 框架（2-范畴结构）登记开放）。此前 v0.64（2026-08-12，方向 2 §3.5 P5-2 严格正交范畴层闭合——用户裁定单点性编码**非严格正交**（弃用为代理，降级为唯一性引理），采用**唯一 lifting 性质**定义：∀ 方块 `CommSq f i p g`（i ∈ 法向类 N、p ∈ 水平类 H）存在唯一对角填充；mathlib `HasLiftingProperty` 提供存在性分量、Hom 集 subsingleton 提供唯一性分量；`PhotonTopologyOrthogonality.lean` 新建、`lake env lean` 编译通过零 sorry——**法向 unfold i ⊥ 水平 transition m k（唯一填充 = fold m）机器证明**（`normalOrthogonalTransition` lifting 实例 + `normalOrthogonalTransitionUnique` 唯一性定理 + `subsingleton_photon_to_atom` 唯一性来源）——双层统一：纤维丛层 V⊥H 度量正交已闭合（#7），范畴-几何桥（法向↔V、水平↔H 统一同构）与 Δ 2-态射严格定义登记开放）。此前 v0.63（2026-08-12，方向 2 §3.5 定义精确化阶段 P5 启动——路线图 §三 P5/§四 62G，核心任务=把模糊框架内声称降级为可证/可反证明确命题（瓶颈为定义精确化而非工具能力）；**P5-1 精确化清查三分法清单**（§七 8 项 + 方向 2 延伸：✅可证 #2 平方根补全/P5-4 代数谱骨架；🔶可反证 #5 白矮星判别/#6 γ→∞ 形式极限；⚠️需定义 4-范畴方向正交（P5-2）/Φ=D 严格等式（P5-3）/h-c-Δ 模型指定/ε_Δ 关系/纤维丛内积全局/流形微分几何/层次 B 完整谱等式）；**P5-4 代数谱骨架闭合**（`PhotonTopologySpectral.lean` 新建，`lake env lean` 编译通过、零 sorry：**束缚本征值 ∈ 谱**（`boundEnergy_mem_spectrum`，复用 mathlib `HasEigenvalue.mem_spectrum` 一般情形无需有限维）+ **束缚带 ⊆ 谱**（`boundBand_subset_spectrum`，定理 T3 束缚带侧集合表述）+ 束缚带/自由带/电离阈定义（`boundBand`/`freeBand`/`ionizationGap`，数值锚定 §4.4）——层次 B 代数层闭合，完整谱等式 spec(H)={E_n}∪[0,∞)（谱测度理论）与电离阈 sSup 序列证明登记开放）；P5-2/P5-3 待推进）。此前 v0.62（2026-08-12，方向 2 §3.4 无穷维子范畴推进：ι=ℕ 层次 A 数值+Lean 闭合——**`paperX_functor_extended.py` 扩展 S6/S7/S8（8/8 注册 run_all_tests.py）**：无穷维（ι=ℕ）Rydberg 组合原理大 n 验证（ν_ik=ν_im+ν_mk 残差 <1e-12，n 至 10⁵ 随机采样）+ 带边极限（ν→R_H/k² 单调收敛 i=10³→10⁶ 偏差 1e-6→1e-12，k=1 极限 h·R_H=13.6 eV=电离阈 §4.4 锚定）+ 束缚带离散 vs 自由带连续对照；**`PhotonTopologyFunctorLaws.lean` 增补 `rydbergFreq`/`rydberg_combination`（Rydberg–Ritz 组合原理 f(i,m)+f(m,k)=f(i,k) 机器证明，telescoping）+ `multiObjInfinite`（MultiObj ℕ 能级无穷性实例）+ `rydberg_band_edge`（带边极限 Tendsto ν→R/k² atTop 机器证明），`lake env lean` 编译通过、零 sorry**——**层次 A（可数无穷离散能级，Rydberg 序列）闭合**；层次 B（连续谱 [0,∞)，跨 Rec→Sp 谱间隙结构定理 T3）为库依赖开放项）。此前 v0.61（2026-08-12，方向 2 §3.3 多能级子范畴 Lean 形式化——`PhotonTopologyFunctorLaws.lean` 增补，`lake env lean` 编译通过、零 sorry：**Φ = D|_Rec 多能级函子律机器证明**——`MultiObj ι`/`MultiMor`（对象 {A_i}_{i:ι} ∪ {P} + 态射 unfold/fold/transition/idPhoton，§3.3 数值模型取 ι=Fin 4）+ `multiComp`/`multiCategory`（复合编码**能量守恒恒等式 unfold∘fold=id_{A_i}**（i=j 时 unfold∘fold=transition i i≡能级恒等，定义性成立）+ **跃迁频率可加性 transition∘transition=transition ⟺ ν_ik=ν_im+ν_mk**（§3.3 S3 核心）+ mathlib Category 实例恒等律/结合律机器证明）+ `multi_energy_conservation`/`multi_unfold_fold_transition`/`multi_fold_unfold_id`/`multi_transition_compose`/`multi_transition_chain`（§3.3 S2/S3/S4 机器证明）+ `phiMultiFunctor`（对象全映 P、态射全映 idP，**map_id/map_comp 函子律机器证明**——命题 2.4 Φ=D|_Rec 多能级特例）+ `phiMulti_preserves_id_atom`/`phiMulti_preserves_unfold_fold`/`phiMulti_preserves_transition`——§10 第 2 项"多能级子范畴 Lean 扩展"闭合，剩余无穷维 Rec 子范畴扩展）。此前 v0.60（2026-08-12，方向 2 命题 2.4 函子律 Lean 形式化——`PhotonTopologyFunctorLaws.lean` 新建，`lake env lean` 编译通过、零 sorry：**Φ = D|_Rec_photon 两对象小范畴函子机器证明**——`PhotonObj`/`PhotonMor`（{A,P} + idA/idP/unfold/fold）+ `photonComp`/`photonCategory`（复合编码**能量守恒恒等式 unfold∘fold=idA**（公理 A3/§3.1 第 3 项）+ mathlib Category 实例恒等律/结合律机器证明）+ `phiFunctor`（对象 A→P、P→P、态射全映 idP，**map_id/map_comp 函子律机器证明**——命题 2.4 的函子结构）+ `phi_preserves_id_atom`/`phi_preserves_composition`/`phi_obj_atom`——§3.2"完整 Lean 机器证明待后续"项代数骨架闭合）；Lean 剩余——4-范畴态射方向几何正交、多能级/无穷维 Rec 扩展、Φ 与抽象 D 函子严格等式）。此前 v0.59（2026-08-12，§6.10 S5 三层次区分 Lean 形式化——`PhotonTopologyExterior.lean` 增补，`lake env lean` 编译通过、零 sorry：**投影值/环绕模 2 类/统计类三层次防混淆机器证明**——`Particle`（光子/费米子）+ `statistics`（统计类：玻色子+1/费米子−1）+ `windingClass`（环绕类：均非平凡）+ `projectionValue`（投影值）+ `photon_statistics_independent_of_winding`（光子统计类+1≠环绕类非平凡——**统计类独立于环绕类**）+ `fermion_statistics_eq_winding`（费米子对照）+ `winding_same_for_opposite`（σ(n)=σ(−n)——投影值 ±1 同一环绕类，层级 1→2）——§6.10 S5 防混淆核心获机器证明）。此前 v0.58（2026-08-12，§6.17 ⊗ 结构候选 Lean 形式化——`PhotonTopologyExterior.lean` 增补，`lake env lean` 编译通过、零 sorry：**Z₂ 同态结构澄清**——`Z2ChargeMul`（乘法目标 Z₂ 值拓扑荷：σ(X⊗Y)=σ(X)·σ(Y)+σ(1)=1，对应维度/秩奇偶类在 Kronecker 型 ⊗ 下的结构）+ `dimParityCharge`（维度奇偶 σ(n)=n mod 2 为 ℕ 乘法同态，`Nat.cast_mul` 机器证明）+ `winding_not_multiplicative_target`（环绕数模型 σ(1+1)≠σ(1)·σ(1)——加法目标非乘法目标）——**结构澄清：框架 σ 非平凡性要求加法型 ⊗（复合可加，候选 A），维度相乘型 ⊗ 下 σ 为乘法目标（ZMod 2 乘法=布尔 AND）与 ±1 乘法不同构**；完整 SpObj ⊗（Kronecker 矩阵内容 + Fin 维度管道）仍开放）。此前 v0.57（2026-08-12，§6.20 Lean 形式化续二——`PhotonTopologyExterior.lean` 增补，`lake env lean` 编译通过、零 sorry：**channel 保持子范畴 + 外显函子正向构造**——`SpChan`/`spChanCategory`（对象=SpObj、态射=Sp 态射 + channel 保持条件两端通道相同，Category 实例机器证明）+ `exteriorFunctorChan : SpChan ⥤ Obs`（对象映射=channel、态射映射=PLift(channel 相等)，**map_id/map_comp 函子律机器证明**——§6.20 诚实边界第 2 项正向闭合，与完整范畴阻碍定理 `exterior_functor_obstructed` 互补）+ `obstruction_not_in_subcategory`（阻碍态射 (1,0)→(2,0) 不在子范畴，自洽）；剩余开放——SpObj 上 ⊗ 结构、channel 物理定义）。此前 v0.56（2026-08-12，§6.20 Lean 形式化续——`PhotonTopologyExterior.lean` 增补，`lake env lean` 编译通过、零 sorry：**Obs 离散范畴 mathlib `Category` 实例 `obsCategory`**（Hom := PLift (X = Y)，PLift 将 Prop 值 Hom 提升为 Type 0 解决宇宙参数——§6.20 诚实边界第 3 项闭合）+ **完整函子律通道阻碍定理 `exterior_functor_obstructed`**（维度奇偶 channel 具体实例：σ(X)=n mod 2、channel(X)=n 奇偶→力/时间通道，存在 Sp 态射 (1,0)→(2,0) 两端通道 force≠time ⟹ E 不能在完整 Sp 范畴上定义为函子，须限制于 channel 保持子范畴——§6.20 诚实边界第 2 项明确化）；剩余开放——SpObj 上 ⊗ 结构、channel 保持子范畴上函子构造、channel 物理定义）。此前 v0.55（2026-08-12，§6.20 外显结构 Lean 形式化——`formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyExterior.lean` 新建，`lake env lean` 编译通过、零 sorry：**σ Z₂ 值拓扑荷的代数骨架机器证明**——`Z2Charge α`（加法幺半群同态：保复合 σ(X⊗Y)=σ(X)+σ(Y) + 保单位元 σ(0)=0，ZMod 2 加法经同构 0↦+1、1↦−1 对应乘法 ±1 的 σ）+ `sigma_self_inverse`（σ²=1，ZMod 2 特征 2——§6.17 S3/§7.28 S4 自逆机器证明）+ `windingCharge`（环绕数模型 σ(n)=n mod 2，§6.10① 复合可加性机器证明）+ `ObsChannel`/`ExteriorData`/`exteriorObject`/`exteriorSigma`（外显函子 E: Sp→Obs 对象层数据）；剩余开放——SpObj 上 ⊗ 结构、完整函子律、Obs 范畴 Category 实例）。此前 v0.54（2026-08-12，方向 5 新增 §6.20 正式范畴构造定义候选——推进严格定义层面开放项（§6.19/§7.28/§7.29）：**Obs 范畴 + 外显函子 E: Sp→Obs 定义候选 + 实例层函子律验证**（Obs 范畴：对象=观测通道{C_t,C_f}、态射=投影/恒等/复合；外显函子：E(X)=(σ(X),channel(X))，保恒等 fold∘unfold=id + 保复合 σ(X⊗Y)=σ(X)σ(Y)；P_obs∘D 复合：GPS 45.7 μs/日时间通道 + 进动 28.66″空间通道外显值一致；g_rr Rec/Sp 表述候选 g₀₀·g_rr=1；⊗ 全体证明的函子性前提——σ 保 ⊗ 复合为 E 的 σ 分量定义）——严格证明（全体谱对象 + Lean 形式化）登记开放（paperX_exterior_functor_formal.py S1-S5，5/5 注册）。此前 v0.53（2026-08-12，方向 6 新增 §7.29 双法向偏转与双窗口外显衔接——推进 §7.27③ 开放项：**"外显窗口 = 偏转机制的观测面"从登记诠释推进为代数骨架闭合**——双通道×双层（机制/外显）矩阵 + 外显 = P_obs ∘ D：时间通道衔接（cosθ_esc≡√g₀₀=1/γ(v_esc)，偏差<1e-9）+ 双通道×双层矩阵（机制层 √g₀₀/g_rr ↔ 外显层 时间/力窗口一一对应）+ 共享乘积结构（机制层 σ_grav×通道因子、外显层 σ×通道强度同一代数形式）+ 观测面同一性（GPS 引力时间膨胀 45.7 μs/日——机制层与外显层同一可观测量，标准 +45.9）——正式函子构造（P_obs/D）仍开放（paperX_deflection_externalization.py S1-S5，5/5 注册）。此前 v0.52（2026-08-12，方向 6 新增 §7.28 g_rr 框架内范畴表述——推进 §7.27② 开放项（§6.17 ⊗ 清障后）：**g_rr 范畴表述候选的代数骨架闭合（双通道引力调制）**——g₀₀ 时间通道调制（√g₀₀=cosθ_esc）+ g_rr 空间通道调制（进动 2/3 空间响应、4:1 空间/时间强度比）+ 度规双通道互逆 g₀₀·g_rr=1（多 r 采样 <1e-12）+ 光偏折各半对照 + 命题 2.1 双法向对称衔接 + ⊗ 自逆结构类比（g₀₀·g_rr=1 ↔ σ²=1，§6.17）——外显 = σ × 通道强度（§6.19）的引力侧；正式 Rec/Sp 范畴表述（Δ 法向响应严格定义）仍开放（paperX_grr_categorical.py S1-S5，5/5 注册）。此前 v0.51（2026-08-12，方向 5 新增 §6.19 双窗口统一范畴表述——推进 §6.12 开放项（§6.17 ⊗ 清障后）：**时间/力窗口同源为 σ 外显的代数骨架闭合**——外显 = σ × 通道强度（离散标记 × 连续量级）：双窗口 σ 核同一性（拓扑内核二者皆含、σ²=1 跨通道自洽）+ 通道分离定量对照（时间通道 ω=mc²/ħ 单调、τ∝1/m⁵ 子量级符合；力通道塞曼/Larmor 标准值）+ 乘积结构统一（时间 σ_time×ω、力 σ×2μ_B B cosϑ）+ σ 幺半群同态兼容（⊗ 下 σ(X⊗Y)=σ(X)σ(Y)，双窗口乘积 σ² 消去）——外显函子候选 E: Sp→Obs（两通道纤维共用 σ 核）代数骨架闭合，正式范畴定义仍开放（paperX_dual_window_sigma.py S1-S5，6/6 注册）。此前 v0.50（2026-08-12，方向 5 新增 §6.18 w₂ 正式对偶论证实例判别矩阵收口——推进 §6.16 结尾开放项：三层骨架（流形 §6.13/分类空间 §6.15/Postnikov §6.16）整合为**实例判别矩阵**（7 实例 S¹/S²/S³/T²/RP²/RP³/CP²）：σ（π₁ 级）判别（σ=-1⟺π₁ 非平凡）+ w₂（H² 级）判别（自旋结构⟺w₂=0）+ **层级独立四象限全覆盖**（四象限均有实例）+ 双向反例（RP³：σ≠0 但 w₂=0；CP²：σ=0 但 w₂≠0）⟹ 无单调蕴含 + 三层骨架一致性（H² 非平凡≠w₂、拉回=流形 w₂、π₁ 层=σ）——**收口：普适对偶定理不成立（CP² 反例），条件性对偶登记开放**（paperX_duality_discriminant.py S1-S5，5/5 注册）。此前 v0.49（2026-08-12，方向 5 新增 §6.17 ⊗ 结构定义候选的代数骨架——推进 §6.10①/§6.11① 共同开放项：**A2 张量性从实例自洽升级为候选 ⊗ 结构上的代数骨架闭合**（Whitney 求和公式 w(ξ⊕η)=w(ξ)·w(η)：S² 霍普夫 η⊕η stably trivial、RP² (1+x)³、Lucas 定理核对；线丛张量积公式：w₁ 加法全 4 组合、CP² 霍普夫 H⊗H 张量平方 Z₂ 消失；σ 幺半群同态候选 (Sp,⊗)→(Z₂,·)：双覆盖⊗双覆盖=+1、结合/交换/单位元保持；复合可加性 n∈[-5,5] 全 121 组合；w₁⊕加性 ≅ σ⊗乘性 Z₂ 同构）——⊗ 定义候选 A/B 代数骨架闭合，正式范畴证明仍开放；同时为 §6.12 双窗口统一表述、§7.27② g_rr 范畴表述清障（paperX_tensor_whitney_z2.py S1-S5，8/8 注册）。此前 v0.48（2026-08-12，方向 1 新增 §2.4 顶点数调控静默的场论（单圈）定量化——推进 §10 第 1 项数值层：**β 函数自相互作用项 = 谱静默维持源**（U(1) b₀=-4n_f/3 无自相互作用项（N_vert=0）⟹ 红外自由 α→0 ⟹ 无谱间隙闭合 ⟹ 静默解除可传播；SU(3) b₀=11-2n_f/3 自相互作用项 11=三胶子 10+四胶子 1（N_vert>0 顶点谱封闭）⟹ 红外 Landau 极点 ⟹ 谱间隙闭合 Δλ_min→0（paper40 定理 4.2）=禁闭=静默驻留）——"顶点数调控静默"从机制论证获单圈场论定量支撑，完整非微扰推导仍开放（paperX_silence_vertex_beta.py S1-S5，6/6 注册）。此前 v0.47（2026-08-11，方向 4 新增 §5.5 环绕闭环数值验证——命题 2.6 行波环绕轴闭合定量内容：圆偏振环绕 Im(ε±*×ε±)·k̂=±1（螺旋度定量，拓扑表述 2.5.1）+ 相位环绕轨迹（法向平面圆，|E|² 恒定模守恒）+ 线偏振无净环绕（Im=0，非 s=0 本征态）+ 直线传播=环绕投影（螺旋线轴向投影为直线）+ 与拓扑表述 2.5.1 一致（螺旋度 s=±1=环绕定向）（paperX_closure_winding.py S1-S5，5/5 注册）。此前 v0.46（2026-08-11，方向 2 新增 §3.3 扩展子范畴函子律验证——推进 §10 第 2 项：Φ=D|_Rec 函子律从 {A,P} 扩展到多能级子范畴；核心物理内容：复合保持=跃迁频率可加性=能量守恒（ν_ik=ν_im+ν_mk，ΔE 可加）；对象映射良定义（hν=ΔE>0 全 6 跃迁）+ 保恒等（fold∘unfold=id）+ 保复合（直接 vs 分步频率一致）+ 全组合复合（4 能级 5 条路径）（paperX_functor_extended.py S1-S5，5/5 注册）；完整 Rec 无穷维子范畴仍待 Lean 扩展。此前 v0.45（2026-08-11，方向 3 新增 §4.4 谱带参数第一性标定：氢原子锚定——推进 §10 第 3 项开放子项：氢原子能级 E_n=-13.6/n² eV（Rydberg 锚定）+ Bohr 谱表示 hν=ΔE（Lyman α 121.6 nm、Balmer α 656.4 nm）+ 谱间隙=电离阈 13.6 eV（束缚带顶→自由带底离散跳变）+ Rydberg 公式重现 + 与定理 T3 衔接（束缚带={E_n}、自由带=[0,∞)）——谱带参数从原子物理第一性标定，非工程参数化（paperX_hydrogen_spectral_gap.py S1-S5，5/5 注册）。此前 v0.44（2026-08-11，§8 曲率层新增 §8.6 雅可比恒等式与 Bianchi 代数前提闭合——推进 §8.2 第 3 项剩余部分：su(2) 基雅可比（3³ 组合残差 0）+ 随机 su(2) 矩阵雅可比（100 组 7.6e-15）+ 常系数联络 Bianchi=雅可比（[ω,Ω] 3-形式分量≡雅可比组合）+ 变系数完整 Bianchi dΩ+[ω,Ω]=0（3 维网格差分残差 1e-13）——d²=0（§8.5）+ 雅可比 ⟹ Bianchi 代数部分闭合，§8 曲率层代数骨架补完整（paperX_jacobi_bianchi.py S1-S5，5/5 注册）；流形级形式化仍待微分几何库。此前 v0.43（2026-08-11，方向 5 新增 §6.16 Postnikov 塔 k-不变量骨架——w₂ 正式对偶论证第三层：K(Z₂,1)=RP^∞ 整上同调（H⁰=Z、H^{偶>0}=Z₂、H^{奇}=0）+ RP^∞ Z₂ 上同调（全 Z₂）+ RP³ Postnikov 塔三层（π₁=Z₂、π₂=0、π₃=Z）+ k-不变量载体 k⁴∈H⁴(K(Z₂,1);Z)=Z₂ 非平凡 + w₂（切丛阻碍=0）与 k-不变量（同伦阻碍）不同载体相互独立——paperX_postnikov_k_invariant.py S1-S5，5/5 注册；三层骨架备齐，正式对偶论证仍开放。此前 v0.42（2026-08-11，方向 5 新增 §6.15 w₂ 正式对偶论证分类空间层骨架——推进 §6.13 延伸：H*(BSO(3);Z₂)=Z₂[w₁,w₂,w₃] Poincaré 级数 1/((1-t)(1-t²)(1-t³))+ H*(BSU(2);Z₂)=Z₂[v₄]（Spin(3)=SU(2)）+ 诱导拉回 w₁↦0、w₂↦0（σ 双覆盖分类空间层消除）+ 提升判据 w₂=0⟺Spin 提升可存在 + 对偶关联（σ 结构群级 ↔ w₂ 主丛级经分类空间）——paperX_classifying_space.py S1-S5，5/5 注册；正式对偶论证仍开放。此前 v0.41（2026-08-11，方向 5 新增 §6.14 时间=质量外显窗口层次二数值验证——支撑 §6.12：物质波频率 ω=mc²/ħ（电子 7.76e20/μ 1.61e23/质子 1.43e24/τ 2.70e24 Hz，ω∝m 严格线性）+ 寿命标度 τ∝1/m⁵（μ vs τ 子量级差 0.8）+ 双尺度互补（m↑⟹ω↑且τ↓）+ 质量门参考（有质量耦合=1 vs 光子 0）——paperX_mass_time_window.py S1-S4，4/4 注册。此前 v0.40（2026-08-11，方向 5 新增 §6.13 Postnikov 塔/同调对偶代数骨架——推进 §6.9②/§6.11 正式对偶论证开放项：RP³ 胞腔同调（H₀=Z/H₁=Z₂/H₂=0/H₃=Z）+ Z₂ 上同调万有系数（H⁰=H¹=H²=H³=Z₂ 但 w₂=0——同调类非平凡≠特征类非零，w₂ 为切丛阻碍类非单纯同调）+ CP²（H²=Z₂、w₂=c₁ mod 2≠0）+ Postnikov 塔前两层 + 可定向性-自旋结构核对（paperX_postnikov_homology.py S1-S5，5/5 注册）；正式对偶论证仍开放。此前 v0.39（2026-08-11，§6.11 修正 RP³ 数据——早期误记 w₂(RP³)≠0（把 w(RP²) 值用于 RP³）；RP³≅SO(3) 为 Lie 群切丛平凡，w(RP³)=(1+x)⁴≡1 mod 2，w₂=0、有自旋结构；修正后强化为**双向判别**（RP³ π₁ 非平凡但 w₂=0、有自旋结构 vs CP² π₁ 平凡但 w₂≠0、无自旋结构）——σ（π₁ 级）与 w₂（H² 级）**相互独立、无单调蕴含**；脚本 paperX_z2_characteristic_class.py 5/5 与 run_all_tests.py 注册描述同步修正。此前 v0.38（2026-08-11，§8 曲率层新增 §8.5 外微分幂零性 d²=0 数值闭合——paperX_exterior_derivative_nilpotent.py S1-S5，5/5 注册：0-形式 d(df)=0 解析精确/1-形式 d(dω)=0/2-形式（4 维）d(dη)=0/su(2) 值逐分量 d²=0/无源衔接 F=dA⟹dF=0（无源 Maxwell；非阿贝尔 Bianchi 前提）——结构方程与 Bianchi 的代数前提闭合；剩余：流形级形式化待微分几何库（§8.4）。此前 v0.37（2026-08-11，方向 6 新增 §7.27 开放问题推进：θ_esc 量化统一——①等效速度角 θ_esc=arcsin(v_esc/c) 与运动学速度角同量化参数（数值层闭合，paperX_theta_esc_gravity.py S1-S5，5/5 注册：cosθ_esc≡√(1-2GM/rc²) 地球/GPS/太阳偏差<1e-15、逃逸速度对应统一、水星进动 42.99\"=1/6 g₀₀+2/3 g_rr+1/6 测地线、光偏折 1.750\" 各半、黑洞视界 θ_esc=90° 时间冻结与光子⊥时间极限呼应）；②g_rr 范畴表述登记未闭合（待 ⊗ 结构）；③双法向偏转与双窗口外显衔接登记（外显窗口=偏转机制的观测面）。此前 v0.36（2026-08-11，方向 6 新增 §7.26 结构性画像方法论注记：球面与支柱——UFPF 元理论定位画像（非数学结构）：画面元素表（球面=统一框架表层/球心=核心公理/支柱=主流理论/支柱夹角=理论结构差异/端点=统一连接点）；由外而内（球面视角）vs 内部解释（支柱内部）几何化；已连通端点实例（§7.25 钟慢↔引力时间膨胀、方向5 自旋↔时间耦合、命题2.1 双法向对称）；未完成状态声明五项（比喻非数学/球心长出全部支柱未完成/端点仅连通少数/六项预言未验证/不与主流理论竞争）。此前 v0.35（2026-08-11，方向 6 新增 §7.25 向法向自由度偏转的统一：引力侧补全——双法向对称表（运动学钟慢→向时间轴法向偏转/光子⊥时间；引力时间膨胀+近日点进动→向三维空间法向偏转/Δ⊥空间）；统一命题（时间耦合减弱的根源=向法向自由度偏转，两种实现——"质量改变时间流逝"与"运动改变时间流逝"同一机制）；与命题 2.1 衔接（双层正交→双法向偏转，光子⊥时间↔引力⊥空间对称）；数学对应（水星进动 43"=1/6 g₀₀ 等效速度角+2/3 g_rr 向Δ偏转响应+1/6 测地线；光偏折 4GM/rc² 各半）；诚实边界（诠释重述非新维度非新预言、GR 仍正确）；开放问题三项（θ_esc 与 Δ 偏转角统一、g_rr 范畴表述、与 §6.12 双窗口衔接）。此前 v0.34（2026-08-11，方向 5 新增 §6.12 研究结论整理：自旋-质量双窗口外显——二次修正 §6.7：三因子断言（自旋=内禀拓扑/表示结构×时间耦合模式×与力的耦合）；"作用角度"修正为自旋-外场取向角 cosϑ（静止电子反例：v=0 时间耦合满但塞曼 cosϑ 仍变化；§6.8①"与时间耦合同构"降级为数学形式类比）；对偶结构（质量→时间窗口：固有时/频率/寿命；自旋→力窗口：塞曼/泡利/进动；拓扑内核二者皆含）；"时间=质量外显窗口"两层次（质量有无→时间耦合模式、质量大小→时间尺度 ω=mc²/ħ/τ∝1/m⁵）；诚实边界（外显窗口≠等同声称、标准事实、与质量门/引力非场自洽）；开放项（双窗口统一范畴表述）。§6.7 加修正注记。此前 v0.33（2026-08-11，方向 5 新增 §6.11 开放问题推进：π₁ 级 vs w₂ 级层级澄清——②σ（π₁ 级环绕模 2/旋量变号）与 w₂（H² 级第二 Stiefel-Whitney 类）层级不同（反例 CP²：单连通但 w₂≠0 ⟹ 不可等同；自旋结构判据 w₂=0⟺存在；RP³ π₁=Z₂↔w₂≠0↔无自旋结构关联自洽）——诚实结论：σ 为一阶 Z₂ 值拓扑荷、w₂ 为二阶特征类，"严格落入特征类框架"须经 Postnikov 塔/同调对偶提升，正式对偶论证开放；①A2 范畴证明框架内定义候选登记（谱对象复合/Whitney 和，⊗ 结构未定义故开放）。脚本 paperX_z2_characteristic_class.py S1-S5，5/5 注册。此前 v0.32（2026-08-11，方向 5 新增 §6.10 开放问题推进：环绕模 2 统一——②光子环绕定向与旋量 Z₂ 结构统一为同一 Z₂ 值拓扑荷（闭合：π₁(SO(2))=Z→π₁(SO(3))=Z₂ 模 2 约化，U(2πn)=(-1)^n I，光子 s=±1 模 2 同值非平凡类）；①A2 张量性由环绕数可加性推出（候选论证闭合，代数骨架；范畴层仍开放）；③A4 量化嵌入外显=σ×cosϑ（乘积结构闭合）；三层次区分（投影值 s=±1 vs 环绕模 2 类 vs 统计类——光子玻色子+1 独立于非平凡环绕类）。脚本 paperX_z2_winding_unification.py S1-S5，5/5 注册。此前 v0.31（2026-08-11，方向 5 新增 §6.9 Z₂ 值拓扑荷公理化尝试——统一"自旋=拓扑荷"语言（§6.6②/§6.8③ 共同底层）：候选公理化 A1-A4（离散性/张量性/核结构/外显性）+ 实例对应（光子 s=±1、费米子 σ=-1、玻色子 σ=+1、自旋-统计交换相位）+ 代数结构验证（paperX_z2_topological_charge.py S1-S5，5/5 注册：Z₂ 群结构/符号同态 sign:S_N→Z₂/交换符号/Levi-Civita/张量性候选）+ 与色荷并列结构；开放问题三项（A2 全体证明、s=±1 vs w₂ 阻碍类、A4 量化嵌入）。此前 v0.30（2026-08-11，方向 5 新增 §6.8 开放问题推进——①作用角度量化候选闭合（paperX_spin_zeeman_coupling.py S1-S5，5/5 注册：塞曼 ΔE(ϑ)=2μ_B B|cosϑ| 90° 归零/与时间耦合 cosθ 结构同构/Larmor 1.759e11 rad/s——cos 投影候选成立）；②作用点数量计数规则登记（光子 2 螺旋度与费米子 Z₂ 双值统一为二元投影值 N_pts=2；关键观察：不满足 2s+1 因无质量禁 0 模）；③交换作用点登记（泡利 = 时空路径交叉点的 Z₂ 相位，结构约束实现点，严格定义未闭合）。此前 v0.29（2026-08-11，方向 5 新增 §6.7 自旋外显精化——"自旋 = 拓扑结构与时间关系的综合判断"（精化 §6.5）：外显自旋 = 作用角度 × 作用点数量；作用角度 ↔ 时间耦合 cosθ 几何（无质量解耦/有质量耦合、塞曼 ΔE=μ_B B cosϑ 对应候选）、作用点数量 ↔ 拓扑离散自由度（光子 2 定向 / 费米子 Z₂ 双值）；三依据（量纲 ħ/2、动力学含时、质量门 §6.6③）；开放问题三项（角度量化、点数量计数规则、交换作用点）。此前 v0.28（2026-08-11，方向 5 新增 §6.6 开放问题逐一推进——①旋量 2π 变号机证数值层闭合（paperX_spin_topology_z2.py S1-S7，7/7 注册：变号/覆盖提升/双覆盖群性质/任意轴/S³ 单连通/自转 68.5c/Berry 相位 -Ω/2）；②统一"自旋=拓扑荷"语言分析登记（二元离散拓扑标记共性、Z₂ 值拓扑荷公理化未闭合）；③质量门负结果关闭（电子有质量→自旋任意取向→不与时间解耦，接口仅无质量极限成立）。此前 v0.27（2026-08-11，方向 5 新增 §6.5 自旋拓扑化断言——"自旋不是运动，是拓扑结构"显式化登记：标准物理佐证（Uhlenbeck–Goudsmit 自转模型失败、SU(2) 双覆盖 π₁(SO(3))=Z₂、Berry 相位、自旋-统计拓扑表述）、框架内三层定位（光子环绕定向已拓扑化、费米子 Z₂ 旋量结构拓扑重述、自旋拓扑自由度⊥时间与推论 2.1 接口）、诚实边界与开放问题（旋量 2π 变号机证、统一"自旋=拓扑荷"语言、有质量费米子自旋-时间耦合）。此前 v0.26（2026-08-11，方向整合 §7.24：时间耦合线数值验证（S11-S15，6/6，脚本 paperX_photon_time_coupling.py 注册）——γ→∞ 极限收敛（1/γ 单调递减至 <1e-6）/cosθ≡1/γ/boost 三角参数化等价/牛顿斜线vs相对论渐近/光速锁定复核——paper44 开放问题 #1 数值层闭合）
+**理论归属**：Paper XLIV（`paper/paper44_photon_topology.md`）↔ Paper XL（`paper/paper40_qcd_color_dynamics.md`）跨论文对应
+**验证脚本**：`scripts/paperX_photon_first_principle.py`
+**母笔记**：[photon_topology_theory.md](photon_topology_theory.md)（§1 已有 Step 2 半程：S3 静默破缺 → D 谱化函子激活）
+
+---
+
+**摘要**：本笔记沿六个方向推进 paper44 光子拓扑转变的第一性起源（$D$ 函子特例、S3 谱静默互补、谱间隙闭合定量化、闭合结构方向转变、跨粒子推广、时间耦合拓扑类型决定）。方向 5 的最终确认结论（与 paper44 §2.5 完全对应）：(i) 光子"环绕方向"即二元取向 $s=\pm1$——圆偏振基矢 $\varepsilon_\pm(\mathbf{k})=(\varepsilon_1\pm i\varepsilon_2)/\sqrt2$，$\operatorname{Im}(\varepsilon_\pm^*\times\varepsilon_\pm)\cdot\hat{\mathbf{k}}=\pm1=s$，与螺旋度算符 $h=\mathbf{J}\cdot\hat{\mathbf{k}}$ 一致；无质量粒子螺旋度=手性为洛伦兹不变量（Weyl $\gamma^5$ 本征值 $\pm1$）；(ii) 可拦截性 = 共振 = 能量门（$h\nu=\Delta E$）∧ 取向门（$\Delta m=J_z^{\text{photon}}\in\{0,\pm1\}$，选择定则；$J_z$ 沿量子化轴、$s$ 沿传播轴，线偏振光子 $\Delta m=0$ 来自几何而非 $s=0$）；(iii) 跨粒子推广三处调整：质量门（电子有质量不排斥静止）、环绕结构→$\mathbb{Z}_2$ 自旋结构（$\pi_1(SO(3))=\mathbb{Z}_2$）、取向匹配→角动量守恒/泡利/塞曼——电子的"天然排斥"= 泡利排斥（反对称结构约束而非力）；(iv) 适用边界："闭合方向⊥运动方向"与"螺旋度=手性"仅对无质量横向自由度成立，有质量费米子须用 $\mathbb{Z}_2$ 自旋语言重构。方向 5 新增自旋拓扑化断言（§6.5）："自旋不是运动，是拓扑结构"——标准物理佐证（Uhlenbeck–Goudsmit 自转模型失败、SU(2) 双覆盖 π₁(SO(3))=Z₂、Berry 相位、自旋-统计拓扑表述）；框架内三层定位（光子环绕定向已拓扑化、费米子 Z₂ 旋量结构拓扑重述、自旋拓扑自由度⊥时间与推论 2.1 接口）；开放问题三项（旋量 2π 变号机证、统一"自旋=拓扑荷"语言、有质量费米子自旋-时间耦合）。三项开放问题已逐一推进（§6.6）：①旋量 2π 变号机证**数值层闭合**（paperX_spin_topology_z2.py S1-S7，7/7 注册——变号/覆盖提升/双覆盖群性质/任意轴/S³ 单连通/自转 68.5c/Berry 相位 -Ω/2）；②统一"自旋=拓扑荷"语言**分析登记未闭合**（二元离散拓扑标记共性、Z₂ 值拓扑荷公理化待建立）；③质量门**负结果关闭**（电子有质量→自旋任意取向→不与时间解耦，接口仅无质量极限成立）。§6.7 精化断言：自旋非单纯拓扑，而是**拓扑结构与时间关系的综合判断**——外显自旋 = 作用角度（时间耦合 $\cos\theta$ 几何）× 作用点数量（拓扑离散自由度）；三依据（量纲 $\hbar/2$、动力学含时、质量门），开放问题三项（作用角度量化、作用点计数规则、交换作用点）。§6.8 三项开放问题推进：①作用角度量化候选**闭合**（塞曼 ΔE(ϑ)=2μ_B B|cosϑ| 与时间耦合 cosθ 结构同构，paperX_spin_zeeman_coupling.py S1-S5 注册）；②作用点计数规则**登记**（二元投影值 N_pts=2，不满足 2s+1 因无质量禁 0 模）；③交换作用点**登记**（泡利 = 时空路径交叉点的 Z₂ 相位，严格定义未闭合）。§6.9 Z₂ 值拓扑荷**公理化尝试**（§6.6②/§6.8③ 共同底层）：候选公理化 A1-A4（离散性/张量性/核结构/外显性）+ 实例对应（光子 s=±1、费米子 σ=-1、玻色子 σ=+1、交换相位）+ 代数结构验证（paperX_z2_topological_charge.py S1-S5 注册）+ 与色荷并列结构；开放问题三项（A2 全体证明、s=±1 vs w₂ 阻碍类、A4 量化嵌入）。§6.10 三项推进：②光子环绕定向与旋量 Z₂ 结构**统一为同一 Z₂ 值拓扑荷**（π₁(SO(2))=Z→π₁(SO(3))=Z₂ 模 2 约化，U(2πn)=(-1)^n I，光子 s=±1 模 2 同值；paperX_z2_winding_unification.py S1-S5 注册）；①A2 张量性**由环绕数可加性推出**（候选论证闭合，范畴层仍开放）；③A4 量化嵌入**外显=σ×cosϑ**（乘积结构闭合）；三层次区分（投影值 vs 环绕模 2 类 vs 统计类）。§6.11 两项推进：②σ（π₁ 级）与 w₂（H² 级）**层级澄清**（双向判别：CP² 单连通但 w₂≠0 无自旋结构 vs RP³ π₁ 非平凡但 w₂=0（Lie 群切丛平凡）有自旋结构——σ 与 w₂ **相互独立无单调蕴含**，2026-08-11 修正 RP³ 数据）——σ 为一阶 Z₂ 值拓扑荷、w₂ 为二阶特征类，Postnikov 塔/同调对偶提升论证开放（paperX_z2_characteristic_class.py S1-S5 注册）；①A2 范畴证明**定义候选登记**（谱对象复合/Whitney 和，⊗ 未定义故开放）。§6.12 研究结论整理：**自旋-质量双窗口外显**（二次修正 §6.7）——三因子断言（自旋=内禀拓扑/表示结构×时间耦合模式×与力的耦合）；"作用角度"修正为自旋-外场取向角 cosϑ（静止电子反例）；对偶结构（质量→时间窗口、自旋→力窗口、拓扑内核二者皆含）；"时间=质量外显窗口"两层次（有无→耦合模式、大小→时间尺度 ω=mc²/ħ、τ∝1/m⁵）；诚实边界（外显窗口≠等同声称、标准事实、与质量门/引力非场自洽）；开放项（双窗口统一范畴表述）。§6.13 Postnikov 塔/同调对偶**代数骨架**（推进 §6.9②/§6.11 正式对偶论证开放项，paperX_postnikov_homology.py S1-S5 注册）：RP³ 胞腔同调 + Z₂ 上同调万有系数（H⁰=H¹=H²=H³=Z₂ 但 w₂=0——**同调类非平凡≠特征类非零**，w₂ 为切丛阻碍类非单纯同调）+ CP² + Postnikov 塔前两层 + 可定向性-自旋结构核对；正式对偶论证仍开放。§6.14 时间=质量外显窗口层次二**数值验证**（支撑 §6.12，paperX_mass_time_window.py S1-S4 注册）：物质波频率 ω=mc²/ħ（电子 7.76e20/μ 1.61e23/质子 1.43e24/τ 2.70e24 Hz，ω∝m 严格线性）+ 寿命标度 τ∝1/m⁵（μ vs τ 子量级差 0.8）+ 双尺度互补（m↑⟹ω↑且τ↓）+ 质量门参考（有质量耦合=1 vs 光子 0）。§6.15 w₂ 正式对偶论证**分类空间层骨架**（推进 §6.13 延伸，paperX_classifying_space.py S1-S5 注册）：H*(BSO(3);Z₂)=Z₂[w₁,w₂,w₃] Poincaré 级数 1/((1-t)(1-t²)(1-t³)) + H*(BSU(2);Z₂)=Z₂[v₄]（Spin(3)=SU(2)）+ 诱导拉回 w₁↦0、w₂↦0（σ 双覆盖分类空间层消除）+ 提升判据 w₂=0⟺Spin 提升可存在 + 对偶关联（σ 结构群级 ↔ w₂ 主丛级经分类空间）；正式对偶论证仍开放。§6.16 Postnikov 塔 k-不变量**骨架**（w₂ 正式对偶论证第三层，paperX_postnikov_k_invariant.py S1-S5 注册）：K(Z₂,1)=RP^∞ 整上同调（H⁰=Z、H^{偶>0}=Z₂、H^{奇}=0）+ RP³ Postnikov 塔三层（π₁=Z₂、π₂=0、π₃=Z）+ k-不变量载体 k⁴∈H⁴(K(Z₂,1);Z)=Z₂ 非平凡 + w₂（切丛阻碍=0）与 k-不变量（同伦阻碍）不同载体——三层骨架备齐，正式对偶论证仍开放。方向 6 的新增结论（推论 2.1 对称补全）：紧致驻波拓扑与时间**持续作用**（相位/形变循环层，定态 $|\psi(t)\rangle=e^{-iE_n t/\hbar}|\psi(0)\rangle$），与光子传播中零时间耦合构成拓扑类型决定的对称——**命题 P6：开放解耦、紧致持续**；Φ 拓扑转变（Rec→Sp）同时是时间耦合模式切换（发射 = 时间解绑、吸收 = 时间重绑），推论 2.1 的"转变与吸收瞬间时间耦合"获对称补全（§7）。方向 6 的理论兼容例证（§7.6）：从"光子⊥时间"几何路径推导钟慢（cosθ 图像）与 SR γ 因子路径为**两条独立计算路径、结果一致**（均给 $1/\gamma=\sqrt{1-v^2/c^2}$）——UFPF 与狭义相对论兼容例证。方向 6 的洛伦兹变换时间耦合诠释（§7.7 + 图 5）：boost 三角参数化 $ct'=ct\sec\theta-x\tan\theta$——boost = 时间耦合重标定（$\gamma=\sec\theta=1/\cos\theta$、同时性项 $\tan\theta$），与快度等价（$\eta=\operatorname{arctanh}(\sin\theta)$），数学等价、诠释增量。方向 6 的余角关系规范化结论（§7.8）："光子⊥时间"（90° 参照）与"光锥不变"（45° 结构）**互为余角**——时间耦合 $\cos\theta=\sin(90^\circ-\theta)$（余角正弦），平级互补、非主从验证。方向 6 的方向整合（§7.9）：时间耦合模式 = 拓扑类型（闭合结构）决定、与 S3 静默同步（静默开关 = 时间耦合开关）；**引力（Δ）为非场的背景几何调制**（√g₀₀ 因子）而非通道参与者——三层分离（拓扑定模式、静默同步状态、引力调制强度）。方向整合推进（§7.10）：胶子（禁闭封闭、静默永久驻留）⟹ **持续 + 无解绑的时间耦合**——深化命题"静默解除可能性 = 时间耦合解绑通道"（光子已解耦 / 驻波持续+可解绑 / 胶子持续+无解绑）。方向整合推进（§7.11）：胶球判别性对照——解绑通道分两层次（**规范发射 Φ 型 vs 强子化静默释放**），原子走电磁 Φ 发射、胶球走闭弦断裂+静默释放（paper40 §5.11），胶子（禁闭内部）无解绑；"无解绑"精确化为"无自由规范玻色子发射"。方向整合推进（§7.12）：静默释放强度定量化——解绑时间尺度 $\tau_{\text{ub}}=\hbar/\Gamma$（∞ 胶子禁闭 / 10⁻⁸ s 原子电磁 / 10⁻²⁴ s 胶球强子化 / 0 光子已解耦，~16 量级差）；解绑速率 = 观测层耦合 × 相空间 × 势垒因子。方向整合推进（§7.13）：Γ 量纲-标度锚定——$\Gamma\sim c_i\Lambda_{\text{QCD}}$（$\Lambda_{\text{QCD}}=210$ MeV 谱定；c_i：0⁺⁺~2.4/2⁺⁺~1.0/0⁻⁺~0.8 由势垒结构定）；量纲与宽度序机制已闭，c_i 精确数值未闭合（第一性最深目标，开放）。方向整合推进（§7.14）：宽度量级数值检验（`paperX_silence_release_width.py` 3/3 注册）——$\Gamma\sim\alpha_s(\mu)^2\Lambda_{\text{QCD}}$ 定量一致（胶球宽度锚点全覆盖、0⁺⁺ 由 Landau 极点前强耦合区 α_s~1 实现、量级序 136→1237 MeV），静默释放 = 强耦合释放。方向整合推进（§7.15）：胶球宽度系数 c_i 第一性尝试——谱定输入 + Blatt-Weisskopf 势垒 + 1 参数拟合（C=9.68 拟合 0⁺⁺）2 预测：0⁻⁺ 重现（T=1.24 ~O(1)）✓、2⁺⁺ 单 ππ D 波道 18 MeV 严重偏低 ⟹ **揭示多道效应**（ρρ 阈值 1.55 GeV，需多道求和）；c_i=2.38/0.95/0.81 序由势垒结构决定。方向整合推进（§7.16）：2⁺⁺ 多道扩展（ππ D/ρρ S+D/KK/ηη）——**ρρ S 波（L=0 无势垒）主导 156.7 MeV（75%）**；禁闭标度 μ=0.5 GeV（α_s~0.8）下 ΣΓ=209 MeV 重现锚点 200（μ=m_G/3 时 79 不足——μ 敏感性展示）；张量胶球宽度多道解释成立。方向整合推进（§7.17）：2⁺⁺ 宽度 μ 稳健性扫描（μ∈[0.4,0.8] GeV）——方案 A（C 普适固定）ΣΓ 379→88 MeV 敏感、200±25% 仅 μ∈[0.47,0.58]（μ 需锁定禁闭标度）；方案 B（C(μ) 吸收 α_s²）ΣΓ≡209 MeV 完全稳健（几何比 G2/G0=0.418 决定）；**稳健性依赖 C 诠释**（图：paperX_glueball_width_mu_scan.png）。方向整合推进（§7.18）：ρρ 完整组合（L=0,2,4 + 同位旋）——L=4（G 波）贡献 0.5%（S 波主导完全稳健）；同位旋约定为关键不确定度：N=1（I=0 归一化）ΣΓ=210 MeV 重现、N=3（3 电荷态求和）552 MeV 偏离。方向整合推进（§7.19）：耦合因子 C'=C/4π 扫描（[0.3,0.7]）——Γ∝C' 严格线性（120→281 MeV，拟合点 0.52→209 ✓），±25% 覆盖 C'∈[0.374,0.623]；**μ 非线性（α_s²）vs C' 线性（尺度）敏感性互补**（图：paperX_glueball_width_c_scan.png）。方向整合推进（§7.20）：同位旋因子 N 扫描（[1,3]）——Γ(N)=38.8+170.5·N 严格线性（209→550 MeV），200 反解 N*=0.95（<1），N=1（I=0 归一化）最接近锚点；**参数敏感性图谱补全：μ（非线性）+C'（线性尺度）+N（线性斜率）+L 波（S 波主导）**（图：paperX_glueball_width_n_scan.png）。方向整合收口（§7.21）：胶球宽度全局最优拟合——物理约束下 (μ*=0.43 GeV, C'*=0.350→C*=4.4, T*=0.54) χ²_min=0.07；**三态预测 0⁺⁺=492/2⁺⁺=206/0⁻⁺=170 MeV 偏差全部 <3.2%**——静默释放机制 + 标准强子结构三态自洽（图：paperX_glueball_global_fit.png）。方向整合收口（§7.22）：最终实验对比报告——三态预测 vs 锚点（500/200/170 MeV），**总偏差 MAD=1.60%、RMS=2.04%、最大 3.2%**，宽度序（0⁺⁺>2⁺⁺~0⁻⁺）由势垒结构决定——静默释放定量线完整收口。方向整合收口（§7.23）：三态 μ 稳健性扫描 v2（全局最优参数）——三态共同稳健区间 μ∈[0.41,0.48] GeV 覆盖全局最优点 μ*=0.43 ✓，2⁺⁺ 200 MeV 在禁闭标度 μ~0.4-0.5 稳健（图：paperX_glueball_width_mu_scan_v2.png）。方向 6 新增（§7.25）向法向自由度偏转的统一：引力侧补全——**双法向对称表**（运动学钟慢→向时间轴法向偏转/光子⊥时间；引力时间膨胀+近日点进动→向三维空间法向偏转/Δ⊥空间）；统一命题（时间耦合减弱根源=向法向自由度偏转，两种实现，与命题 2.1 双层正交衔接：光子⊥时间↔引力⊥空间）；数学对应（水星进动 43"=1/6 g₀₀+2/3 g_rr+1/6 测地线；光偏折各半）；诚实边界（诠释重述非新维度、GR 仍正确）；开放问题三项（θ_esc 与 Δ 偏转角统一、g_rr 范畴表述、与 §6.12 双窗口衔接）。方向 6 新增（§7.26）结构性画像方法论注记：**球面与支柱**——UFPF 元理论定位画像（非数学结构）：画面元素表（球面=统一框架表层/球心=核心公理/支柱=主流理论/支柱夹角=理论结构差异/端点=统一连接点）；由外而内（球面视角）vs 内部解释（支柱内部）几何化；已连通端点实例（§7.25、方向5、命题 2.1 双法向对称）；未完成状态声明五项（比喻非数学/球心长出全部支柱未完成/端点仅连通少数/六项预言未验证/不与主流理论竞争）。方向 6 新增（§7.27）θ_esc 量化统一推进——①等效速度角 θ_esc=arcsin(v_esc/c) 与运动学速度角同量化参数（**数值层闭合**，paperX_theta_esc_gravity.py S1-S5 注册：cosθ_esc≡√(1-2GM/rc²)、水星进动 42.99"=1/6+2/3+1/6、光偏折 1.750" 各半、**黑洞视界 θ_esc=90° 时间冻结与光子⊥时间极限呼应**）；②g_rr 范畴表述登记未闭合（待 ⊗ 结构）；③双法向偏转与双窗口外显衔接登记（外显窗口=偏转机制的观测面）。§8 曲率层新增（§8.5）外微分幂零性 d²=0 **数值闭合**（paperX_exterior_derivative_nilpotent.py S1-S5：0/1/2-形式 + su(2) 值逐分量 + 无源 Maxwell 衔接 F=dA⟹dF=0）——结构方程/Bianchi 代数前提闭合，流形级形式化仍待微分几何库。§8 曲率层新增（§8.6）雅可比恒等式与 Bianchi 代数前提**闭合**（推进 §8.2 第 3 项剩余部分，paperX_jacobi_bianchi.py S1-S5 注册）：su(2) 基雅可比（3³ 组合残差 0）+ 随机矩阵雅可比（100 组 7.6e-15）+ 常系数联络 Bianchi=雅可比（[ω,Ω]≡雅可比组合）+ 变系数完整 Bianchi dΩ+[ω,Ω]=0（3 维网格差分残差 1e-13）——d²=0（§8.5）+ 雅可比 ⟹ Bianchi 代数部分闭合，§8 曲率层代数骨架补完整。方向 3 新增（§4.4）谱带参数第一性标定：氢原子锚定（推进 §10 第 3 项开放子项，paperX_hydrogen_spectral_gap.py S1-S5 注册）：氢原子能级 E_n=-13.6/n² eV（Rydberg 锚定）+ Bohr 谱表示 hν=ΔE（Lyman α 121.6 nm、Balmer α 656.4 nm）+ **谱间隙=电离阈 13.6 eV**（束缚带顶→自由带底离散跳变）+ Rydberg 公式重现 + 与定理 T3 衔接（束缚带={E_n}、自由带=[0,∞)）——谱带参数从原子物理第一性标定，非工程参数化。方向 2 新增（§3.3）扩展子范畴函子律验证（推进 §10 第 2 项，paperX_functor_extended.py S1-S5 注册）：Φ=D|_Rec 函子律从 {A,P} 扩展到多能级子范畴——**复合保持 = 跃迁频率可加性 = 能量守恒**（ν_ik=ν_im+ν_mk，ΔE 可加）；对象映射良定义（hν=ΔE>0 全 6 跃迁）+ 保恒等（fold∘unfold=id）+ 保复合 + 全组合复合（4 能级 5 条路径）；2026-08-12 多能级有限子范畴 **Lean 形式化闭合**（`PhotonTopologyFunctorLaws.lean` 增补 MultiObj/MultiMor/multiCategory/phiMultiFunctor——能量守恒恒等式 unfold∘fold=id_{A_i}（i=j 定义性成立）+ 跃迁频率可加性复合 transition∘transition=transition ⟺ ν_ik=ν_im+ν_mk + 函子律 map_id/map_comp 机器证明，`lake env lean` 编译通过零 sorry，v0.61）；2026-08-12 无穷维（ι=ℕ 层次 A）**闭合**（§3.4：paperX_functor_extended.py 扩展 S6/S7/S8 8/8 注册——Rydberg 组合原理大 n 验证（ν_ik=ν_im+ν_mk 残差 <1e-12）+ 带边极限 ν→R_H/k² 单调收敛（k=1 极限 h·R_H=13.6 eV=电离阈 §4.4 锚定）；PhotonTopologyFunctorLaws.lean 增补 rydberg_combination（Rydberg–Ritz 组合原理机器证明）/multiObjInfinite（能级无穷性实例）/rydberg_band_edge（带边极限 Tendsto 机器证明），`lake env lean` 编译通过零 sorry，v0.62）；连续谱 [0,∞)（层次 B）为库依赖开放项（跨 Rec→Sp 谱间隙结构，定理 T3）；2026-08-12 定义精确化阶段 P5 启动（§3.5）——P5-1 清查三分法清单（✅可证/🔶可反证/⚠️需定义）+ **P5-4 代数谱骨架闭合**（PhotonTopologySpectral.lean：束缚本征值∈谱 + 束缚带⊆谱 + 束缚带/自由带/电离阈定义，编译零 sorry），P5-2（4-范畴方向正交）/P5-3（Φ=D 严格等式）待推进，层次 B 完整谱等式仍为库依赖开放项。2026-08-12 **P5-2 严格正交范畴层闭合**（用户裁定单点性编码非严格正交、弃用为唯一性引理；采用唯一 lifting 性质定义）——1-层 lifting 正交 = mathlib `HasLiftingProperty` 实例化：法向 unfold i ⊥ 水平 transition m k（唯一对角填充 = fold m），纤维丛层 V⊥H 度量正交已闭合（#7），范畴-几何桥登记开放。2026-08-12 **P5-2 二修：Δ 结构严格正交**（用户裁定"修正为严格正交，原本应达到的标准，避免另起炉灶"）——严格正交主体建立在既有 Δ 结构（deltaOp/spExchangeLaw_deviation_partial_commutator，paper31）上；**J2 模式间定位严格机器证明**（DeviationBound.lean §1.7：commutator_trace_zero Tr([A,B])=0 + commutator_trace_orthogonal_scalar c·Tr=0 + commutator_diag_zero_of_diagonal 谱基对角元零），paper31 §4.1"层正交于 Δ"从类型级（layerIndex_independent）升级为严格正交。方向 4 新增（§5.5）环绕闭环**数值验证**（命题 2.6 行波环绕轴闭合定量内容，paperX_closure_winding.py S1-S5 注册）：圆偏振环绕 Im(ε±*×ε±)·k̂=±1（螺旋度定量，拓扑表述 2.5.1）+ 相位环绕轨迹（法向平面圆，|E|² 恒定模守恒）+ 线偏振无净环绕（Im=0，非 s=0 本征态）+ 直线传播=环绕投影（螺旋线轴向投影为直线）+ 螺旋度 s=±1=环绕定向。方向 1 新增（§2.4）顶点数调控静默的场论（单圈）定量化（推进 §10 第 1 项数值层，paperX_silence_vertex_beta.py S1-S5，6/6 注册）：**β 函数自相互作用项 = 谱静默维持源**——U(1) b₀=-4n_f/3 无自相互作用项（N_vert=0）⟹ 红外自由 α→0 ⟹ 无谱间隙闭合 ⟹ 静默解除（光子可传播）；SU(3) b₀=11-2n_f/3 自相互作用项 11=三胶子 10+四胶子 1（N_vert>0 顶点谱封闭）⟹ 红外 Landau 极点 ⟹ 谱间隙闭合 Δλ_min→0（paper40 定理 4.2）=禁闭=静默驻留（胶子）——"顶点数调控静默"从机制论证获单圈场论定量支撑，完整非微扰推导仍开放。方向 5 新增（§6.17）⊗ 结构定义候选的代数骨架（推进 §6.10①/§6.11① 共同开放项，paperX_tensor_whitney_z2.py S1-S5，8/8 注册）：**A2 张量性从实例自洽升级为候选 ⊗ 结构上的代数骨架闭合**——Whitney 求和公式（S² 霍普夫 η⊕η stably trivial、RP² (1+x)³、Lucas 核对）+ 线丛张量积公式（w₁ 加法 4 组合、CP² 霍普夫 H⊗H 张量平方 Z₂ 消失）+ σ 幺半群同态候选 (Sp,⊗)→(Z₂,·)（双覆盖⊗双覆盖=+1、单位元保持）+ 复合可加性（n∈[-5,5] 全 121 组合）+ w₁⊕加性 ≅ σ⊗乘性（Z₂ 同构）——⊗ 定义候选 A/B 代数骨架闭合，正式范畴证明仍开放；同时为 §6.12 双窗口统一表述、§7.27② g_rr 范畴表述清障。方向 5 新增（§6.18）w₂ 正式对偶论证实例判别矩阵收口（推进 §6.16 结尾开放项，paperX_duality_discriminant.py S1-S5，5/5 注册）：三层骨架（流形 §6.13/分类空间 §6.15/Postnikov §6.16）整合为**实例判别矩阵**（7 实例）——σ（π₁ 级）判别 + w₂（H² 级）判别 + **层级独立四象限全覆盖** + 双向反例（RP³：σ≠0 但 w₂=0；CP²：σ=0 但 w₂≠0）⟹ 无单调蕴含 + 三层骨架一致性——**收口：普适对偶定理不成立（CP² 反例），条件性对偶登记开放**。方向 5 新增（§6.19）双窗口统一范畴表述（推进 §6.12 开放项，§6.17 ⊗ 清障后，paperX_dual_window_sigma.py S1-S5，6/6 注册）：**时间/力窗口同源为 σ 外显的代数骨架闭合**——外显 = σ × 通道强度（离散标记 × 连续量级）：双窗口 σ 核同一性（σ²=1 跨通道自洽）+ 通道分离定量对照（时间 ω=mc²/ħ 单调、τ∝1/m⁵ 子量级符合；力塞曼/Larmor）+ 乘积结构统一（时间 σ_time×ω、力 σ×2μ_B B cosϑ）+ σ 幺半群同态兼容（双窗口乘积 σ² 消去）——外显函子候选 E: Sp→Obs 代数骨架闭合，正式范畴定义仍开放。方向 6 新增（§7.28）g_rr 框架内范畴表述（推进 §7.27② 开放项，§6.17 ⊗ 清障后，paperX_grr_categorical.py S1-S5，5/5 注册）：**g_rr 范畴表述候选的代数骨架闭合（双通道引力调制）**——g₀₀ 时间通道调制（√g₀₀=cosθ_esc）+ g_rr 空间通道调制（进动 2/3 空间响应、4:1 空间/时间强度比）+ 度规双通道互逆 g₀₀·g_rr=1 + 光偏折各半对照 + 命题 2.1 双法向对称衔接 + ⊗ 自逆结构类比（g₀₀·g_rr=1 ↔ σ²=1）——外显 = σ × 通道强度（§6.19）的引力侧；正式 Rec/Sp 范畴表述（Δ 法向响应严格定义）仍开放。方向 6 新增（§7.29）双法向偏转与双窗口外显衔接（推进 §7.27③ 开放项，paperX_deflection_externalization.py S1-S5，5/5 注册）：**"外显窗口 = 偏转机制的观测面"从登记诠释推进为代数骨架闭合**——双通道×双层（机制/外显）矩阵 + 外显 = P_obs ∘ D：时间通道衔接（cosθ_esc≡√g₀₀=1/γ(v_esc)）+ 双通道×双层矩阵（机制层 √g₀₀/g_rr ↔ 外显层 时间/力窗口一一对应）+ 共享乘积结构（机制层 σ_grav×通道因子、外显层 σ×通道强度同一代数形式）+ 观测面同一性（GPS 引力时间膨胀 45.7 μs/日——机制层与外显层同一可观测量）——正式函子构造（P_obs/D）仍开放。方向 5 新增（§6.20）正式范畴构造定义候选（推进严格定义层面开放项，paperX_exterior_functor_formal.py S1-S5，5/5 注册）：**Obs 范畴 + 外显函子 E: Sp→Obs 定义候选 + 实例层函子律验证**——Obs 范畴（对象=观测通道{C_t,C_f}、态射=投影/恒等/复合）+ 外显函子（E(X)=(σ(X),channel(X))，保恒等 fold∘unfold=id + 保复合 σ(X⊗Y)=σ(X)σ(Y)）+ P_obs∘D 复合（GPS 45.7 μs/日时间通道 + 进动 28.66″空间通道外显值一致）+ g_rr Rec/Sp 表述候选（g₀₀·g_rr=1）+ ⊗ 全体证明的函子性前提（σ 保 ⊗ 复合为 E 的 σ 分量定义）——严格证明（全体谱对象 + Lean 形式化）登记开放。**§6.20 外显结构 Lean 形式化完成**（`formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyExterior.lean`，`lake env lean` 编译通过、零 sorry）：`Z2Charge α`（σ Z₂ 加法幺半群同态：保复合 + 保单位元）+ `sigma_self_inverse`（σ²=1）+ `windingCharge`（环绕数模型 σ(n)=n mod 2，§6.10① 机器证明）+ `ObsChannel`/`ExteriorData`/`exteriorObject`/`exteriorSigma` + **`obsCategory`（Obs 离散范畴 mathlib Category 实例，PLift 解决 Prop 值 Hom 宇宙参数）+ `exterior_functor_obstructed`（完整函子律通道阻碍定理：维度奇偶 channel 实例下存在 Sp 态射两端通道不同，E 不能在完整 Sp 范畴上定义为函子）+ `SpChan`/`spChanCategory`（channel 保持子范畴）+ `exteriorFunctorChan : SpChan ⥤ Obs`（**map_id/map_comp 函子律机器证明**——外显函子正向构造闭合，与阻碍定理互补）+ `obstruction_not_in_subcategory`（阻碍态射不在子范畴）+ **§6.17 ⊗ 结构候选 Z₂ 同态澄清（`Z2ChargeMul` 乘法目标 + `dimParityCharge` 维度奇偶 σ(n)=n mod 2 为 ℕ 乘法同态 + `winding_not_multiplicative_target`——框架 σ 非平凡性要求加法型 ⊗，维度相乘型 ⊗ 下 σ 为乘法目标（ZMod 2 乘法=布尔 AND）与 ±1 乘法不同构）+ §6.10 S5 三层次区分（`Particle`/`statistics`/`windingClass`/`projectionValue` + `photon_statistics_independent_of_winding` 统计类独立于环绕类 + `winding_same_for_opposite` 投影值 ±1 同一环绕类）**——σ 代数骨架 + Obs 范畴实例 + 子范畴外显函子 + ⊗ 结构方向澄清 + 三层次防混淆机器证明闭合。**方向 2 命题 2.4 函子律 Lean 形式化完成**（`PhotonTopologyFunctorLaws.lean`，编译通过、零 sorry）：`PhotonObj`/`PhotonMor`（{A,P} + idA/idP/unfold/fold）+ `photonComp`/`photonCategory`（复合编码**能量守恒恒等式 unfold∘fold=idA**（公理 A3/§3.1 第 3 项）+ Category 实例）+ `phiFunctor`（**map_id/map_comp 函子律机器证明**——命题 2.4 Φ=D|_Rec_photon 特例的函子结构）——§3.2"完整 Lean 机器证明待后续"项代数骨架闭合。完整 SpObj ⊗（Kronecker 矩阵内容 + Fin 维度管道）、channel 物理定义、4-范畴态射方向几何正交仍开放。
+
+## 1 问题陈述
+
+paper44 将"光子生成"建立在**公理** A1–A5（拓扑转变、离散性、能量守恒并置、方向性阶跃、……）之上。其第一性起源问题已登记于 §7.5 开放问题 1：**"转变映射 $\Phi$ 的严格范畴论定义（是否为 $D$ 函子的特例？）"**。
+
+本笔记沿五个互补方向推进，共同回答"为何能级跃迁必然是 Rec→Sp 拓扑转变"：
+
+- **方向 1（S3 互补对应）**：将 paper44 的光子（S3 静默解除→可传播）与 paper40 的胶子（禁闭驻留→不可自由传播）纳入统一图景——规范玻色子的传播性 = S3 谱静默层状态；
+- **方向 2（$\Phi\subseteq D$ 特例）**：证明光子拓扑转变 $\Phi$ 是谱化函子 $D:\mathbf{Rec}\to\mathbf{Sp}$ 在"束缚原子拓扑子范畴"上的限制——拓扑转变从**公理降为 $D$ 函子定理**；
+- **方向 3（转变定量化）**：类比 paper40 定理 4.2（Landau 极点 ↔ 谱间隙闭合），将拓扑转变升级为"驻波/行波谱带间谱间隙闭合的离散跳变"定量定理，Bohr 条件 $h\nu=\Delta E$ 从谱间隙闭合推导。
+- **方向 4（闭合结构方向转变）**：补全转变的完整几何内容——闭合方式从"边界空间闭合"（驻波，$\partial M\neq\emptyset$）转变为"环绕轴闭合"（行波，$\partial M=\emptyset$），三维空间观察到的直线传播是环绕闭环沿传播轴 $k$ 的宏观投影（命题 2.6）；并据此定名"闭合结构方向转变"。
+- **方向 5（跨粒子推广与边界）**：以电子自旋为对照，检验"闭合方向 ⊥ 运动方向 → 天然排斥"能否推广——给出三处逻辑调整（质量门：电子有质量不排斥静止；环绕结构 → $\mathbb{Z}_2$ 自旋结构：$\pi_1(SO(3))=\mathbb{Z}_2$；取向匹配 → 角动量守恒/泡利/塞曼），并界定适用边界（仅无质量横向自由度成立）。
+- **方向 6（时间耦合的拓扑类型决定）**：推论 2.1 时间解耦仅针对光子（开放拓扑）——补全对称：紧致驻波拓扑与时间**持续作用**（相位/形变循环层）。命题 P6：时间耦合模式 = 拓扑类型函数（开放解耦、紧致持续）；推论：Φ 拓扑转变（Rec→Sp）同时是时间耦合模式切换（发射 = 时间解绑、吸收 = 时间重绑），推论 2.1 的"转变与吸收瞬间时间耦合"获对称补全。
+
+## 2 方向 1：S3 谱静默互补对应（paper44 ↔ paper40）
+
+### 2.1 现有结构的对照
+
+| 结构 | paper44 光子（U(1)） | paper40 胶子（SU(3)） |
+|:--|:--|:--|
+| 传播子 | $D_{\mu\nu}=-i g_{\mu\nu}/\lambda$（无自相互作用） | $D_{\mu\nu}^{ab}=-i\delta^{ab}\lambda^{-1}(g_{\mu\nu}-(1-\xi)k_\mu k_\nu/\lambda)$ |
+| 自相互作用顶点 | **0**（阿贝尔） | **三/四胶子顶点**（$g_3 f^{abc}[\cdots]$，谱封闭定理 3.1） |
+| 谱静默状态 | **解除**（公理 A4：$\sigma_{\text{S3}}:1\to0$） | **驻留**（定理 4.2：$\Delta\lambda_{\min}(\mu)\to0$ 禁闭） |
+| 传播性 | 自由传播 | 禁闭（不可自由传播） |
+
+### 2.2 统一命题（本笔记提出）
+
+**命题 P1（规范玻色子传播性 = S3 谱静默层状态）**。规范玻色子的传播性由 S3 谱静默层的状态决定：
+- **静默解除**（$\sigma_{\text{S3}}=0$，开放拓扑类）⟹ 可传播（光子）；
+- **静默驻留**（$\sigma_{\text{S3}}=1$，封闭拓扑类）⟹ 禁闭（胶子）。
+
+**机制论证（阿贝尔-非阿贝尔判据）**：S3 谱静默屏障的维持需要**自相互作用顶点的谱封闭**——非阿贝尔规范场三/四顶点闭合（paper40 定理 3.1：雅可比恒等式 ⟺ 自相互作用自洽）为谱静默提供"自我维持"的反馈通道，使封闭拓扑类稳定（禁闭驻留）；阿贝尔 U(1) 无自相互作用顶点，谱静默屏障无维持源，$\sigma_{\text{S3}}$ 自发解除（$1\to0$），封闭拓扑类失稳、开放行波释放（光子生成）。
+
+即：**自相互作用顶点数 $N_{\text{vert}}$ 是 S3 静默状态的"调控量"**——$N_{\text{vert}}=0$（阿贝尔）⟹ 静默解除；$N_{\text{vert}}>0$（非阿贝尔）⟹ 静默驻留。
+
+### 2.3 推论
+
+**推论 P1a（两类规范玻色子的生成-禁闭对偶）**：光子生成（驻波→行波的静默解除）与胶子禁闭（谱间隙闭合）是同一 S3 谱静默机制在阿贝尔/非阿贝尔端点上的**互补表现**。此对偶将 paper44 的光子拓扑转变纳入与 paper40 色动力学统一的"规范玻色子谱静默图景"。
+
+### 2.4 顶点数调控静默的场论（单圈）定量化（2026-08-12 推进 §10 第 1 项数值层）
+
+§10 第 1 项"顶点数调控静默为机制论证 + 对照验证，非动力学推导"——本子节补充静默维持的场论（单圈 RGE）定量支撑：**β 函数自相互作用项 = 谱静默维持源**。脚本 `scripts/paperX_silence_vertex_beta.py`（S1-S5，6/6 注册 run_all_tests.py）：
+
+- **S1** 自相互作用项对照：U(1) $b_0=-4n_f/3$（纯费米子屏蔽，**无自相互作用项**，$N_{\text{vert}}=0$）vs SU(3) $b_0=11-2n_f/3$（**自相互作用项 11** $=(10/3)N+(1/3)N=10+1$，三胶子+四胶子顶点，$N_{\text{vert}}>0$——标准教科书分解）；
+- **S2** 耦合跑动方向对照：U(1) 红外自由（$\mu\downarrow \Rightarrow \alpha\downarrow\to 0$）vs SU(3) 红外 Landau 极点（$\mu\to\Lambda_{\text{QCD}}^+ \Rightarrow \alpha_s\to\infty$）；
+- **S3** 谱间隙闭合衔接（paper40 定义 4.2/定理 4.2）：$\Delta\lambda_{\min}(\mu)=\Delta\lambda_{\min}\cdot\alpha_3^{(0)}/\alpha_s(\mu)$，$\mu\to\Lambda_{\text{QCD}}$ 时比值单调递减至 2e-3（禁闭 = 谱间隙闭合 = 静默驻留）；U(1) 红外无极点、无谱间隙闭合；
+- **S4** $N_{\text{vert}}$ 判据 × β 自相互作用项二分链：$N_{\text{vert}}=0 \iff$ 自相互作用项=0 $\iff b_0<0 \iff$ 红外自由 $\iff$ 静默解除（光子）；$N_{\text{vert}}>0 \iff$ 自相互作用项=11 $\iff b_0>0$（$n_f<16.5$ 渐近自由区）$\iff$ 红外极点 $\iff$ 谱间隙闭合 $\iff$ 静默驻留（胶子）；
+- **S5** 总结——静默维持机制获单圈场论定量支撑；完整非微扰推导仍开放。
+
+**核心物理内容**：§2.2 的"自相互作用顶点提供静默维持反馈通道"在此获得场论定量对应——非阿贝尔自相互作用项（顶点谱封闭）正是 β 函数中使耦合在红外发散（禁闭）的 $11N/3$ 项（渐近自由反例：无此项则红外自由）；结合 paper40 定理 4.2（红外 Landau 极点 $\iff$ 谱间隙闭合 $\iff$ 禁闭），"顶点谱封闭 → 静默维持"的机制链条在单圈层面定量闭合。
+
+**诚实边界**：β 系数/跑动方向/10+1 分解为标准单圈事实（数据核对）；"自相互作用项 = 静默维持源"为命题 P1 的场论定量支撑（机制对应），非独立新推导；完整非微扰推导（非阿贝尔顶点谱封闭 → 静默维持的全程场论推导）仍开放（§10 第 1 项剩余）。
+
+## 3 方向 2：$\Phi\subseteq D$ 特例证明（拓扑转变从公理降为定理）
+
+### 3.1 论证链
+
+既有半程（母笔记 §1 Step 2）：封闭拓扑类下 $D$ 谱化函子像集中于 S3 静默层；S3 静默破缺后 $D$ 传播模态像解锁，Rec 对象谱组分映射为 Sp 传播对象。
+
+**本笔记补充的完整论证**：
+
+1. **对象映射**：$\Phi(M_{\text{atom}},\partial M_{\text{atom}})=(M_{\text{photon}},\emptyset)$（公理 A1）。$D$ 函子在"束缚原子拓扑子范畴"$\mathbf{Rec}_{\text{photon}}$ 上的作用 $D|_{A}$：紧致带边界对象（驻波，S3 静默）→ 开放无界对象（行波，静默解除）。**$\Phi$ 与 $D|_{\mathbf{Rec}_{\text{photon}}}$ 在对象层一致**（均把 S3 静默紧致对象映射为静默解除的开放对象）。
+2. **态射映射**：光子拓扑转变态射（unfold: $A\to P$）与 $R$ 折叠态射（fold: $P\to A$）构成伴随子（母笔记已建立：$R=D^\dagger$，`jc_R_adjoint` 等 Lean 验证）。$D$ 的态射映射保持此结构。
+3. **函子律**：$D|_{\mathbf{Rec}_{\text{photon}}}$ 须满足 $D(\mathrm{id}_A)=\mathrm{id}_{D(A)}$ 与 $D(g\circ f)=D(g)\circ D(f)$。光子子范畴上 $\mathrm{fold}\circ\mathrm{unfold}=\mathrm{id}_A$（拓扑转变 + 折叠 = 恒等，能量守恒重述），故复合保持可由伴随三角恒等式传递。
+
+**结论命题**：若 $D|_{\mathbf{Rec}_{\text{photon}}}$ 满足函子律（数值验证见脚本 S2），则 $\Phi = D|_{\mathbf{Rec}_{\text{photon}}}$ 为 **$D$ 函子的特例**，光子拓扑转变的第一性起源 = $D$ 函子定义本身（Paper I 地基）——公理 A1 降级为定理（A2/A4 的离散性/方向性由 S3 静默单向破缺机制承载，方向 3 定量化）。
+
+![图 1：方向性阶跃公理 A4 —— χ_Φ(t) 与 σ_S3(t) 阶跃曲线（paper44 图 1）](../../figs/photon_fig1_directionality_step.png)
+
+（图 1 对应公理 A4 的方向性承载：静默指标单向 $1\to0$ 自发、反向 $0\to1$ 须 $R$ 折叠驱动——不可逆性的可视化。）
+
+### 3.2 诚实边界
+
+- 对象/态射层构造已建（Φ₊ 并置结构、忠实嵌入），本笔记补函子律数值验证；**4-范畴态射方向几何正交的完整形式化**仍开放（§7.5 #1 剩余项）；
+- 完整 Lean 机器证明待后续（PhotonTopology.lean 已建代数骨架，可扩展函子律定理）。
+
+**Lean 形式化（命题 2.4 函子律，`PhotonTopologyFunctorLaws.lean`，`lake env lean` 编译通过、零 sorry）**：
+- **`PhotonObj`/`PhotonMor`**：两对象小范畴 {A, P} + 态射（idA/idP/unfold/fold）；
+- **`photonComp` + `photonCategory`**：复合编码**能量守恒恒等式 unfold∘fold = idA**（公理 A3/§3.1 第 3 项，发射+吸收=原子恒等）+ mathlib `Category` 实例（恒等律/结合律机器证明）；
+- **`phiFunctor`**：Φ 函子（对象 A→P、P→P，态射全映 idP）——**map_id/map_comp 函子律机器证明**（命题 2.4：Φ 为 D|_Rec_photon 特例的函子结构）；
+- **`phi_preserves_id_atom`/`phi_preserves_composition`/`phi_obj_atom`**：函子律保恒等/保复合/对象层实例化定理。
+
+**诚实边界（Lean 剩余）**：4-范畴态射方向几何正交（§7.5 #1）；无穷维 Rec 子范畴的 Lean 扩展（多能级有限子范畴已闭合，§3.3 v0.61）；Φ 与谱化函子 D（Paper I 抽象范畴）的严格函子等式（此处为两对象/多能级代数骨架）。
+
+### 3.3 扩展子范畴函子律验证（2026-08-11 推进 §10 第 2 项）
+
+§10 第 2 项"方向 2 函子律为有限子范畴验证（Rec_photon={A,P}）"——把 $\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$ 的函子律验证从两对象扩展到**多能级子范畴**。脚本 `scripts/paperX_functor_extended.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** 对象映射良定义：$h\nu=\Delta E=E_i-E_j>0$（氢原子能级，全 6 个发射跃迁）；
+- **S2** 保恒等：$\mathrm{fold}\circ\mathrm{unfold}=\mathrm{id}_{A_i}$（发射+吸收闭合，能量守恒重述）；
+- **S3** **保复合（核心）**：$\nu_{ik}=\nu_{im}+\nu_{mk}$——直接跃迁 vs 分步跃迁频率一致性（$\Delta E$ 可加 $\Longrightarrow$ 频率可加 = **能量守恒**）；
+- **S4** 全组合复合：4 能级所有多步路径（经 1/2 中间态）频率可加性（共 5 条路径）；
+- **S5** 扩展子范畴函子律成立——$\Phi=D|_{\mathbf{Rec}}$ 多能级特例。
+
+**核心物理内容**：函子律的**复合保持 = 跃迁频率的可加性（能量守恒）**——多步跃迁（$A_1\to A_2\to A_3$ 经中间态）的光子复合频率 = 直接跃迁频率（$\Delta E$ 可加），这是函子律在物理上的对应（方向 2 函子律从抽象范畴律获物理内容锚定）。
+
+**Lean 形式化（多能级子范畴，2026-08-12，`PhotonTopologyFunctorLaws.lean` 增补，`lake env lean` 编译通过、零 sorry）**：
+- **`MultiObj ι`/`MultiMor`**：多能级子范畴对象 {A_i}_{i:ι} ∪ {P} + 态射（unfold i 发射/fold i 吸收/transition i j 净跃迁/idPhoton；§3.3 数值模型取 ι = Fin 4）；
+- **`multiComp` + `multiCategory`**：复合编码**能量守恒恒等式 unfold∘fold = id_{A_i}**（i=j 时 unfold∘fold = transition i i ≡ 能级恒等，定义性成立）+ **跃迁频率可加性 transition∘transition = transition ⟺ ν_ik = ν_im + ν_mk**（§3.3 S3 核心）+ mathlib `Category` 实例（恒等律/结合律机器证明）；
+- **`multi_energy_conservation`/`multi_unfold_fold_transition`/`multi_fold_unfold_id`/`multi_transition_compose`/`multi_transition_chain`**：§3.3 S2（发射+吸收闭合=恒等）/S3（频率可加性=能量守恒）/S4（双中间态链式复合）机器证明；
+- **`phiMultiFunctor`**：Φ 多能级函子（对象全映 P、态射全映 idP）——**map_id/map_comp 函子律机器证明**（命题 2.4 Φ=D|_Rec 多能级特例）+ `phiMulti_preserves_id_atom`/`phiMulti_preserves_unfold_fold`/`phiMulti_preserves_transition`（S2/S3 保恒等/保复合实例化）。
+
+**诚实边界**：能级/跃迁频率为标准量子物理事实（数据核对）；"复合保持 = 频率可加性"为框架内机制对应的物理内容；多能级**有限子范畴** Lean 扩展已闭合（v0.61），**无穷维（ι=ℕ 层次 A）**已闭合（v0.62，§3.4），**连续谱（层次 B）**为库依赖开放项（§10 第 2 项剩余）。
+
+### 3.4 无穷维子范畴推进：ι=ℕ 可数无穷（2026-08-12 推进 §10 第 2 项剩余）
+
+**关键澄清（先登记，避免重复建设）**：v0.61 的范畴骨架已对**任意能级类型 ι** 通用（`MultiObj ι`/`multiCategory`/`phiMultiFunctor` 的恒等律/结合律/函子律与 ι 无关）——取 ι = ℕ 即得可数无穷能级，范畴结构零改动。因此"无穷维 Rec 子范畴扩展"的实际内容是**物理/谱层**（Rydberg 函数具体化 + 谱结构），而非新范畴结构。剩余开放项分两个层次：
+
+**层次 A：可数无穷离散能级（ι = ℕ，Rydberg 序列）**——物理锚定 §4.4（氢原子 E_n=-13.6/n²）。Rydberg–Ritz 组合原理正是无穷维情形下"复合保持 = 频率可加性"的显式表达：
+$$f(i,k)=R_H(1/k^2-1/i^2),\qquad f(i,m)+f(m,k)=f(i,k)\quad(\Delta E\ \text{telescoping 可加})$$
+——该恒等式对**任意**能函数 E: ι→ℝ 成立（telescoping），故范畴复合律 transition∘transition=transition 的物理内容在无穷维下自动保持，新增的是：①Rydberg 频率函数的 Lean 具体化与组合原理机器证明；②能级无穷性实例（¬ Finite）；③带边极限（固定 k、i→∞ 时 ν→R_H/k²）与电离阈 13.6 eV 衔接（§4.4）。
+
+**层次 B：连续谱 [0,∞)（电离阈以上）**——属于**跨 Rec→Sp 谱间隙结构**（定理 T3：束缚带 Λ_bound={E_n} 离散、自由带 Λ_free=[0,∞) 连续），非 Rec 内部无穷维；需 Hilbert 空间/谱测度形式化，**依赖 mathlib 分析库进展**（与 §8 曲率层"流形级待微分几何库"同类），登记为库依赖开放项。
+
+**数值验证（脚本 `scripts/paperX_functor_extended.py` 扩展 S6/S7/S8，8/8 注册 run_all_tests.py，2026-08-12）**：
+- **S6** Rydberg 组合原理大 n 验证：n 至 10⁵ 随机采样 i>m>k，ν_ik=ν_im+ν_mk 残差 <1e-12（R_H=3.289e15 Hz）——无穷维下复合保持仍成立；
+- **S7** 带边极限与电离阈：固定 k、i→∞ 时 ν→R_H/k² 单调收敛（i=10³→10⁶ 偏差 1e-6→1e-12）；k=1 极限 h·R_H=13.6 eV=电离阈（与 §4.4 锚定核对）；束缚带 {E_n} 离散（|E₁-E₂|=10.2 eV）vs 自由带 [0,∞) 连续对照；
+- **S8** 无穷维（ι=ℕ）函子律成立总结——Φ=D|_Rec 无穷维特例；连续谱（层次 B）为库依赖开放项。
+
+**Lean 形式化（`PhotonTopologyFunctorLaws.lean` 增补，`lake env lean` 编译通过、零 sorry）**：
+- **`rydbergFreq (R : ℝ) (i k : ℕ)`**：Rydberg 频率函数具体化；
+- **`rydberg_combination`**：**组合原理 f(i,m)+f(m,k)=f(i,k) 机器证明**（telescoping，ring）——无穷维情形"复合保持 = 频率可加性"的显式机器证明；
+- **`multiObjInfinite`**：**能级无穷性实例**（MultiObj ℕ 注入 ℕ ⟹ Infinite）；
+- **`rydberg_band_edge`**：带边极限 Tendsto ν(i,k) → R/k²（atTop）机器证明。
+
+**诚实边界**：层次 A（可数无穷离散能级，Rydberg 序列）已闭合（v0.62：数值 S6/S7/S8 8/8 注册 + Lean `rydberg_combination`/`multiObjInfinite`/`rydberg_band_edge` 机器证明）；范畴骨架已通用、新增为物理函数具体化与谱结构（数值/Lean 数据核对）；层次 B（连续谱 [0,∞)）为库依赖开放项，未闭合——其**代数谱骨架**部分已在本会话推进（§3.5 P5-4）；组合原理/带边极限为标准量子物理事实（telescoping/极限，数据核对），非新预言。
+
+### 3.5 定义精确化阶段（P5，2026-08-12 启动）：开放声称降级为可证命题
+
+路线图 §三 P5/§四 62G——剩余开放项瓶颈为**定义精确化**（把模糊框架内声称降级为可证/可反证的明确命题）而非工具能力（范畴论核心已 Lean+Agda 双覆盖；层次 B 连续谱为全行业泛函分析缺口，换工具无效）。
+
+**P5-1 精确化清查（三分法清单）**——§七 8 项 + 方向 2 延伸：
+
+| 状态 | 条目 | 说明 |
+|:--|:--|:--|
+| ✅可证 | #2 零质量实数平方根推导补全 | 定义已备（E=pc、v_g=c），直接补证 |
+| ✅可证 | **P5-4 束缚本征值 ∈ 谱（层次 B 代数骨架）** | **本会话已闭合**（`SpectralSkeleton.lean`（原 `PhotonTopologySpectrum`/`PhotonTopologySpectral`，2026-08-14 更名）） |
+| 🔶可反证 | #5 κ_Δ 双候选白矮星判别 | 双候选 δz_pol 差 2 倍，观测可判别 |
+| 🔶可反证 | #6 γ→∞ 形式极限 | 物理禁止 v=c 参考系，仅形式极限（已注明） |
+| ✅/🔶 | #1/#7 **4-范畴态射方向几何正交** | P5-2 二修：Δ 结构 J2 严格正交已机器证明（commutator_trace_zero/commutator_diag_zero_of_diagonal），Δ 2-态射接入 lifting 框架仍开放 |
+| ⚠️需定义 | #4 h-c-Δ 模型指定（k/n/λ_min） | 候选扫描非推导，待模型指定 |
+| ⚠️需定义 | #5 ε_Δ 与 Δ 关系 | 条件性排除依赖该关系，需框架推导 |
+| ⚠️需定义 | #6 纤维丛内积全局构造 | 无穷维内积，待数学库 |
+| ⚠️需定义 | #7 完整流形微分几何 | 库依赖（§8 曲率同类） |
+| ⚠️需定义 | **P5-3 Φ=D|_Rec 严格等式** | **✅ 本会话闭合（函子层，见下）**——严格语义 = 谱化路径交换 + 转变效应一致（定义等式），`PhotonTopologyFunctor.lean` P5-3 段机器证明 |
+| ⚠️需定义 | **P5-4 层次 B 完整谱等式** spec(H)={E_n}∪[0,∞) | 库依赖（谱测度理论） |
+
+**P5-2（✅ 严格正交，Δ 结构修正——2026-08-12 二修）**：用户裁定"修正为严格正交，这是原本就应该达到的标准，避免另起炉灶"——严格正交主体建立在**既有 Δ 结构**（`deltaOp`/`spExchangeLaw_deviation_partial_commutator`，paper31 J1-J3）上，不另建框架。**J2（模式间定位）严格机器证明**（`DeviationBound.lean` §1.7，编译零 sorry）：①`commutator_trace_zero` Tr([A,B])=0——Δ 的对易子分量与恒等（标量）方向**严格正交**；②`commutator_trace_orthogonal_scalar` c·Tr([A,B])=0——与任意标量方向 c·I 迹正交；③`commutator_diag_zero_of_diagonal` 谱基下 [A,B] 对角元恒零——与任何单一谱模式（基方向 E_ii）正交。**修正登记**：paper31 §4.1"层 1-3 正交于 Δ"原仅类型级支撑（`layerIndex_independent` 索引单射 + `silence_margin` e³ 数值裕度），非严格正交——现按 J2 严格版本补齐（原本应达到的标准），**paper31 已同步 v1.1**（§3.3/§4.1/§5.1/§7）；**"Δ 方向 ⊥ 三维空间"按框架操作定义（§6 模式间定位）已闭合**（J2 严格机器证明四定理：`commutator_trace_zero`/`commutator_trace_orthogonal_scalar`/`commutator_diag_zero_of_diagonal`/`commutator_trace_orthogonal_diagonal`（任意对角方向迹正交）+ 87% 扇区间数值，§3.2）；逐 Cl(1,7) 生成元矩阵正交（Tr(Δ·γ_i)=0）为框架外可选方向——**数值判定探针**（`paperX_delta_spatial_probe.py`，3/3 注册 run_all_tests.py，2026-08-12）：假设 H（[A,γ_i]=0）在 M1 谱基对角/M2 Cl 乘积/M3 线性组合下均不成立（[A,γ_i] 相对范数 min 0.98），Tr([A,δb]·γ_i) 显著非零（max 27-117，迹恒等式核对 <1e-14）——强版本在朴素模型下为假，需额外结构假设（谱结构-空间方向独立性）或改为定量耦合；1-态射层 lifting 正交 = mathlib `HasLiftingProperty` 实例化（unfold ⊥ transition 唯一对角填充），为范畴层严格正交的 1-层模板实例；纤维丛层 V⊥H 度量正交已闭合（#7）。
+
+**P5-3（✅ 本会话闭合，函子层形式化）**：Φ=D|_Rec 严格等式——自包含复述 Paper I 抽象 D 函子定义（Rec/Sp 范畴 + 谱化函子）；嵌入函子 E: Rec_photon ↣ Rec（忠实嵌入 `photonToRecFunctor` 已有）；明确"严格"语义（定义等式 vs 自然同构）；实例层验证已齐（两对象/多能级/无穷维）。**2026-08-12 函子层闭合**（`PhotonTopologyFunctor.lean` P5-3 段，`lake build` 2454 jobs 通过、零 sorry）：**严格语义 = 谱化路径交换 + 转变效应一致**——①复合函子 `DE = D∘E : PhotonTopology ⥤ SpObj`（`photonToRecFunctor.comp DFunctor`）与 `PhiSpectral = DE∘Φ`（`bifurcationFunctor.comp DE`）；②对象层：`phi_spectral_commute`（谱化路径交换，photonSpectrum(Φ X) = D(E(Φ X))，定义等式）+ `DE_spectral_bifurcation`（DE(closed) ≠ DE(open)，1 维 vs 2 维——D∘E 承载"闭→开"谱跃迁）+ `phi_spectral_constant`（Φ 后谱恒开放）；③态射层：`phi_spectral_map_identity`（Φ 态射谱化 = 开放谱恒等——态射层谱效应平凡）+ `phi_spectral_map_id/comp`（PhiSpectral 函子律）；④总结定理 `P53_strict_equality`——**Φ 的谱效应完全由 D 函子在 Rec 嵌入上的作用给出，无独立于 D 的谱结构**。
+
+**P5-4（✅ 本会话闭合，代数谱骨架 + 电离阈 sSup）**：`formal_proof/UFPFormalization/UFPFormalization/PhotonTopologySpectral.lean` 新建，`lake env lean` 编译通过、零 sorry——**束缚本征值 ∈ 谱**（`boundEnergy_mem_spectrum`，复用 mathlib `HasEigenvalue.mem_spectrum` 一般情形、无需有限维）+ **束缚带 ⊆ 谱**（`boundBand_subset_spectrum`，定理 T3 束缚带侧集合表述）+ 束缚带/自由带/电离阈定义（`boundBand`/`freeBand`/`ionizationGap`，数值锚定 §4.4）——层次 B 代数层闭合；**2026-08-12 电离阈 sSup 序列证明闭合**（`hydrogen_ionizationGap_eq`：氢原子束缚带 {13.6/n²} 的 sSup = 13.6 eV——基态 |E₁| 最大，n=1 达到；`lake build` 2454 jobs 通过、零 sorry；数值锚定 `paperX_hydrogen_spectral_gap.py` S3）——电离阈从数值锚定升级为机器证明；完整谱等式 spec(H)={E_n}∪[0,∞)（谱测度理论）与自伴性/谱⊆ℝ 的 Hilbert 层仍为库依赖开放项。
+
+**P5-5**：本 §3.5 + §十 诚实边界 + 路线图 62G 同步（本会话执行）。
+
+**P5-2 延伸：4-范畴自建路线（2026-08-13，层 4 闭合 + 几何正交 + 横结合律完备）**——按 paper31 J3 §4.1 层结构表（层 4 = coherence = Δ 所在层；层 1-3 = 空间 x/y/z 方向，正交于 Δ）定位，在**原有范畴 `HigherSpCategory.lean` 上继续展开**（不新建独立文件——`PhotonTopology3Category.lean`/`PhotonTopology4Category.lean` 方向代数路线废弃删除，为冗余平行实现）。三阶段闭合（`lake build` 2454 jobs 全部通过，**零警告零 sorry**，含修复历史遗留警告：`DInfinityFunctor.lean` `simpa`→`simp` + `SpectralFlowHomotopy.lean` 未用 simp 参数）：
+
+- **①层 4（coherence 层）骨架闭合**：`SpFourMorphism`（4-态射：平行 3-态射间，thirdHomotopy 链复形模式）+ `spFourVertComp` 竖复合/`spIdFourMorphism` 恒等/`spFourHorizComp` 横复合（沿 3-横复合）+ `spFourVertComp_assoc` 竖结合律；**层 3 交换律严格成立 `spThreeExchangeLaw_strict`（无假设）**——与层 2 对照：层 2 交换律有非零偏差 Δ（`spExchangeLaw_deviation_*`），更高态射层严格 ⟹ **coherence 偏差定位于层 2 交换律，Δ 是层 4 coherence 内容的唯一载体**（机器证明支撑"层 4 = Δ 所在层"）；
+- **②4-范畴几何正交（范畴层线）闭合**：lifting 正交逐层实例化（1-层 mathlib `HasLiftingProperty` 实例化/2-层 `twoLifting_orthogonal`）+ 3-层由原有范畴结构承载（`SpThreeMorphism` `spThreeVertComp_assoc` + `spThreeExchangeLaw_strict`）——**非 KK 守卫显式登记**（层 1-3 "空间 x/y/z 方向"为诠释语言，严格载体 = 方向类填充性质（非内积）+ 链复形结构严格性，正交不产生额外空间维度，与 paper44 §7.2 诚实边界 1 一致）；**Δ 不可拦截对照**（Δ 无传播子/无 Compton 波长/无屏蔽（paper31 §4.3）+ J2 模式间定位，与光子可拦截（paper44 命题 2.2，R 折叠）及 KK 三向区分）；
+- **③横结合律完备（2/3/4-层）**：2-层 `spHorizComp_assoc`（**完整版**：(α⋆α')⋆α'' = α⋆(α'⋆α'')，类型不对齐由 mathlib `Category.assoc`（1-态射复合结合律）运输 + homotopy 代数矩阵乘法结合律闭合，`spTwoCast_homotopy` 运输工具）+ 3-层 `spThreeHorizComp_homotopy_assoc`/4-层 `spFourHorizComp_homotopy_assoc`（**homotopy 层机器证明**：secondHomotopy/thirdHomotopy 代数矩阵乘法结合律闭合，类型对齐由 2-层 `spHorizComp_assoc` 编码层同构完成）——**严格 2/3/4-范畴横结合律闭合**；登记开放：3/4-层横结合律完整类型运输版（陈述层 `▸` 无法穿透 SpTwoMorphism 项参数，编码层同构替代）、完整 mathlib Bicategory/Tricategory 实例（编码层）。
+
+**登记开放（延续）**：lifting 正交与 J2 迹正交的完整范畴-几何桥同构、Δ 2-胞腔物理语义（偏差胞腔具体编码）、纤维丛层完整流形微分几何（库依赖）、层次 B 完整谱等式（谱测度理论，库依赖）。
+
+### 3.5.1 P6 综合推进登记（2026-08-12）
+
+- **P6-1 光速/λν/E=hν 完整形式化 ✅**（`PhotonTopology.lean`：`VacuumLightSpeed`/`light_speed_invariant`（光速拓扑不变量，定理 2.1）/`speed_antiproportional`（λν 反比自洽，定理 3.1 推论）/`light_speed_unify`，2454 jobs 零 sorry）——P1 验收"光速/λν/E=hν 完整形式化"**部分闭合**（三恒等式闭环既有 + 光速不变新增）；
+- **P6-2 SpObj ⊗ 结构维度层 ✅**（`ExteriorFunctor.lean`（原 `PhotonTopologyExterior`，2026-08-14 去光子前缀）：`spTensorDim`/`spTensorDim_parity`（σ 的 ⊗ 封闭性，`Nat.mul_mod`）/`spTensorDim_comm`）——§6.17 候选 B 维度层落地；完整矩阵内容（Fin 维度重索引管道）与结合律登记开放（不硬搭）；
+- **P6-3 channel 物理定义候选 ✅**（§6.20.1）——C_t 时间通道（质量-时间耦合窗口：ω=mc²/ħ/τ∝1/m⁵/固有时）+ C_f 力通道（自旋-外场耦合窗口：塞曼/Larmor/泡利）；Lean SpChan 支撑，物理定义语义性登记；
+- **P6-4 范畴层方向正交**：代数核心已闭合（P5-2：1-态射层单点性 + Δ 无投影 + 2-范畴 lifting 正交）——**完整 4-范畴几何（态射方向的几何正交）登记开放**（P1 验收剩余项，需完整 4-范畴形式化）；
+- **P6-5 开放问题 #4/#5**：#4 h-c-Δ 模型指定（量纲限定 Δ=F(λ_min/λ_P) + 近-Planck 候选族 15³ 已收窄，k/n/λ_min 精确确定待模型/实验）+ #5 ε_Δ 与 Δ 关系（κ_Δ≤ε_Δ 条件性排除依赖该关系）——候选已收窄，框架推导待 ε_Δ 关系确立（登记推进状态）；**P6-5 框架内推导尝试（2026-08-12，ε_Δ 候选分析）**：#5 剩余项"ε_Δ 与 Δ 关系"两条候选路径——**路径 A（ε_Δ=Δ 假设，§7.27/#5×#4 既有）**：ε_Δ=Δ(15³ 候选)≈2.96e-4，与 κ_Δ≤ε_Δ 联立条件性排除双候选收窄至 S4³=Δ（依赖 ε_Δ=Δ 假设未独立验证）；**路径 B（ε_Δ 为框架量，新增候选）**：ε_Δ 与 κ_Δ 同为"Δ 的代数强度系数"，自然候选 ε_Δ=S4²≈4.4e-3（与 κ_Δ 最简候选 K_a 同源）——与路径 A 相差 ~15 倍，两路径不一致；**判别（诚实结论）**：δz_Δ 预言差 ~15 倍，判别需 ①4-范畴 Δ 结构完整推导（ε_Δ 严格定义）②或远期偏振光谱观测（δz_pol 白矮星判别）——ε_Δ 与 Δ 关系保持开放（两路径并存登记）；**P6-5 ε_Δ 严格定义推进（2026-08-13，4-范畴 Δ 结构路径，`paperX_epsilon_delta_derivation.py` 14/14 注册 run_all_tests.py）**：从 paper35 Δ 结构常数推导 ε_Δ——**Δ 结构**：Δλ_min=(√3−1)/6（SU(2) 谱间隙精确闭式）、Δλ_min²=(2−√3)/18（精确闭式）、r_cat≈0.040404（Cl(1,7) MC N=50000）；**Δ 强度**：‖Δ‖_F²=r_cat·Δλ_min²≈6.01e-4；**第一性候选 C1**：ε_Δ=g_eff=‖Δ‖_F²≈6.01e-4（paper35 §5.7 引力传播子修正权重，A4 闭合——"Δ 修正 vs 主项"强度比，与红移修正系数物理对应）；**独立验证 C2**：ε_Δ≈r_NLO≈8.06e-4（paper35 §5.8 NLO 相对强度，A1 闭合）——C1/C2=0.75 同量级互证；**量级判别**：C1/路径A(S4³=2.96e-4)=2.03（同量级）、C1/路径B(S4²=4.44e-3)=0.135（B 偏大 7.4 倍）——**结构推导支持路径 A 量级、排除路径 B 量级**（两路径并存收窄为结构推导候选，开放问题 #5 从"需定义"推进为"部分闭合"）；**κ_Δ 连锁**：ε_Δ=C1 时 κ_Δ≤ε_Δ 仍排除 K_a/K_c，收窄带 [1e-4,6.01e-4]；盲登记冻结主候选 S4³=2.96e-4 仍在带内不受影响；**诚实边界**：①‖Δ‖_F² 依赖 MC r_cat（非解析闭式，解析推导登记开放）；②"红移修正系数=传播子修正权重"为建模类比（物理对应待机制论证）；③C1 与路径 A 差 2.03 倍未闭合（需解析 r_cat 或远期偏振光谱观测判别）；④数值巧合观察如实登记（r_NLO≈e·S4³ 差 0.07%、‖Δ‖_F²≈2·S4³ 差 1.5%——巧合不作为推导依据）；⑤本脚本为理论推导候选数值自洽验证，不构成实验验证；**P6-5 ε_Δ 结构深化（2026-08-13，r_cat 解析化路径 1 + Δ 代数强度路径 2，`paperX_rcat_analytic.py` 9/9 注册 run_all_tests.py）**：**路径 1（r_cat 解析化）部分闭合**——r_LO 精确解析闭式 = 5/24 − S²/9216 = 0.037088（S=Σ√(k(k+1)) k=1..8 为确定性代数数和，Tr(A²)=Σk(k+1)/72=10/3 解析精确），完全解析（无 MC）、占 r_cat 92%；NLO Wigner 平均解析近似（E‖[A,δb]‖²=2Δλ²[Tr(A²)/n−(TrA)²/n²]，项贡献 r≈3.1e-4）与采样模型系统性偏差 0.4 倍（固定范数归一化 vs 高斯采样），精确 NLO + 归一化重标度修正解析**登记开放**；r_cat 完全闭式化开放（含代数数和 S + 归一化效应）。**路径 2（Δ 代数强度结构）**——ε_Δ=‖Δ‖_F²=r_cat·Δλ² 的结构地位：Δλ²=(2−√3)/18 精确闭式、r_cat 由 Δ 的谱结构（LO 主导）确定、LO 项 Tr(A²)=10/3 解析精确 + TrA=S/√72（代数数和）——**代数强度无简单闭式（诚实）**；‖Δ‖_F² 与路径 A（S4³）：MC 全值/(2·S4³)=1.015（差 1.5%）、LO 值/(2·S4³)=0.932——2.03 倍差未闭合（需精确 NLO/归一化解析或远期观测判别）。**数值巧合观察（登记观察非推导）**：r_cat/Δλ²≈e（差 0.15%）、‖Δ‖_F²≈2·S4³（差 1.5%）、r_NLO≈e·S4³（差 0.07%）——巧合不作推导依据。**路径 3（远期偏振光谱观测判别）维持登记**：白矮星 δz_pol 判别（K_c/K_a=N_Weyl/2=2 倍差，实验可判别），为远期大科学装置项。开放问题 #5 维持"部分闭合"（ε_Δ 候选 C1=‖Δ‖_F² 确立，精确值解析待 NLO/归一化闭合）；**P6-5 r_NLO 精确解析闭式（2026-08-13，重大突破，`paperX_nlo_analytic.py` 9/9 注册 run_all_tests.py）**：**NLO=[A,δb]·δa+δb·[δa,A] 不含 f,g（只含随机扰动 δa,δb）⟹ 可精确解析**（固定范数球面均匀平均）——①**项1**=E‖[A,δb]·δa‖²/Δλ²=2Δλ²[Tr(A²)/n−(TrA)²/n²]/n（解析 vs 场景1 MC 差 0.006%）；②**交叉=项1 恒等式**（3M 样本 0.99994，解析证明登记开放）；③**r_NLO=3·项1**=6Δλ²[Tr(A²)/n−(TrA)²/n²]/n=**((2−√3)/18)·(5/16−S²/6144)≈8.281e-4**（场景1 MC 差 0.007%）——**r_NLO 从 MC 值（8.06e-4）升级为精确解析闭式**（Wigner 近似 0.4 倍偏差被修正为精确球面平均）；全模型含 Nb,Na 缩放因子 ~1.028（~3% 效应，登记）；**r_cat 解析分解** = r_LO（随机 f,g 归一化无闭式，E[f²/‖f‖²] 期望，登记开放）+ r_NLO（**精确闭式**）；r_cat 预测（理想归一化）=0.037916 vs MC 0.040404（差 6.2%，全部来自 f,g 归一化效应）——**ε_Δ=‖Δ‖_F² 的解析结构获 NLO 部分精确闭合**（Δ 代数强度的高阶修正项完全闭式化）；**交叉=项1 普适恒等式确认（2026-08-13，`paperX_nlo_analytic.py` S2b）**：n=4,6,8,10,12,16 全部成立（交叉/项1 ∈ [0.9996,1.0013]，40 万样本/维度）——恒等式与维度无关（数值确立，所有 SU(2) 谱对角 A），解析证明登记开放；f,g 随机化效应确认无闭式（E_g[g²] 非 A 的有限多项式，先降后升对角模式，随机归一化非线性）——r_cat 完全闭式化最终障碍登记开放；**f,g 归一化效应定量关联（2026-08-13，`paperX_fg_normalization_analysis.py` 6/6 注册 run_all_tests.py）**：δ（E_g[g²] vs 理论 (I+A²+A⁴)/Tr 的偏差，先降后升模式 [0.034,0.016,0.002,−0.009,−0.017,−0.020,−0.013,0.007]）与谱参数强相关——Δλ r=0.94（前7）、1/a r=0.97（前7）、S_p r=0.75；**δ 通过谱权重 Σδ·S_p 定量传递到 r_LO**（f,g 随机化效应完全分解：r_LO 偏差 0.003621 vs 实际 0.003624，差 <0.03%）；**r_cat 完整分解** = r_LO_formula(0.037088) + δ 贡献(+0.003621) − 缩放修正(0.001129) + r_NLO(0.000828) = 0.040409 ≈ MC 0.040404（差 0.01%）；δ 来源 = 随机归一化分式期望 E[p(a_i)/Σp] 的 Jensen 效应（delta 方法复现，差 0.0001）——**f,g 归一化效应定量闭合**（除缩放修正解析 ~3% 登记开放）——**回答关联问题**：δ 偏差模式（低端正、中心负、高端回正）由 SU(2) 谱结构决定（与 Δλ/1/a 强相关），非自由参数；**r_cat 完全解析闭式（2026-08-13，里程碑，`paperX_rcat_closed_form.py` 7/7 注册 run_all_tests.py）**：**r_cat = [r_LO_formula + δ贡献]·(E[1/Nb²])² + r_NLO·(E[1/Nb²])² = 0.040401 ≈ MC 0.040404（差 0.007%）**——四项全解析：①r_LO_formula=5/24−S²/9216（均匀化 92%）；②δ 贡献=Σδ·S（f,g 随机化）；③**E[1/Nb²]=1/(1+Δλ²)+4Δλ²/(n²(1+Δλ²)³)**（缩放修正微扰闭式：Nb=‖f+δb‖，1/Nb²=1/(1+Δλ²+2x)，x=ReTr(f†δb)，E[x²]=Δλ²/n²，实测差 0.001%）；④r_NLO=((2−√3)/18)(5/16−S²/6144)（精确闭式）——**ε_Δ=‖Δ‖_F²=r_cat·Δλ²=6.0141e-4 完全解析（非 MC，第一性候选 C1 的精确值）**；与路径 A（S4³=2.963e-4）差 2.03 倍未闭合、与 2·S4³=5.926e-4 差 1.5%（数值巧合登记观察）；缩放修正高阶项（O(Δλ⁶)，~0.02% 级）登记——**开放问题 #5 的 ε_Δ 从"MC 依赖"升级为"完全解析闭式"**（与路径 A 的 2.03 倍差为最后未闭合项）；**交叉=项1 普适恒等式扩展（2026-08-13，`paperX_nlo_analytic.py` S2c）**：对**所有 A 类型**（对角谱 SU(2)/随机厄米/随机对角）均成立（交叉/项1 ∈ [0.9994,0.9998]，20 万样本）——恒等式与 A 的具体形式无关（数值确立），解析证明登记开放；**2.03 倍差定性（2026-08-13）**：ε_Δ=‖Δ‖_F²（6.014e-4）与路径 A（S4³=2.963e-4）的 2.03 倍差为 **n=8 的具体数值**（n=4 比值 5.9、n=16 比值 0.13，非普适）——ε_Δ ≈ 2·S4³（差 1.5%）仅对 SU(2) k_max=8 成立，为框架量间数值关系非恒等式（2.03 倍差定性为"n=8 特定值"，非结构恒等）；
+- **P6-6 库依赖评估**：层次 B 完整谱等式（谱测度理论）/纤维丛内积全局（无穷维）/流形级微分几何（联络/曲率/挠率）——全行业缺口登记，不硬搭。
+
+### 3.6 体系一致性检查：Δ-空间方向编码依赖（2026-08-12）
+
+P5-2 的编码依赖结论（"与三维空间正交"的成立性取决于空间方向的编码：谱模式编码 ⟹ J2 成立、生成元编码 ⟹ 探针否定）须在整个理论体系盘查，确认是否产生矛盾。
+
+**体系盘查清单（"空间方向"在体系内的多种含义）**：
+
+| 声称 | 出处 | 所用"空间方向"编码 | 与编码分析关系 |
+|:--|:--|:--|:--|
+| "Δ 方向不在三维空间" = 模式间定位 | paper31 §6 术语表 | 谱模式方向（J2 对角元零） | 一致（机器证明，编码已定） |
+| 层 1-3 ⊥ Δ（层表） | paper31 §4.1 | 谱模式方向（v1.1 修正后） | 一致（严格版本由 J2 承载） |
+| "Δ 方向不在时空内"（W 轴正交论证） | paper35 §3.2 | 几何坐标轴（F_real=(0,0,0,F_w)） | **张力 T1**：几何新自由度语言 |
+| 双层正交：法向⊥Δ⊥物理三维空间 | paper44 命题 2.1 | 范畴层（Δ 方向）+ 纤维丛层（基空间方向 V⊥H） | 一致（范畴层=J2，纤维丛层=#7 已闭合） |
+| "⊥ 三维空间"为纤维-基空间几何正交、非 KK 额外维度 | paper44 §4.2 | 纤维丛层度量正交 | 一致（与 paper35 W 轴语言需对齐） |
+| ¾³ = 每空间方向横向投影 | paper40 | 观测层/朗道横向投影（q_i²/q²） | 无关（不同声称） |
+| 簇 ↔ 空间方向对应为建模指派 | paper33 | 未定（诚实标注） | 一致（桥未建立） |
+
+**一致性结论（无直接矛盾）**：①paper31 J2（谱模式编码，机器证明）与 paper44 双层正交（范畴层 J2 + 纤维丛层 V⊥H，#7 闭合）自洽——探针负结果（生成元编码）只排除该编码，而框架操作定义（paper31 §6）与 paper44 表述（非 KK、纤维丛层）均不采用生成元编码；②paper40 ¾³ 的"空间方向"（朗道横向投影）与 Δ 正交无关，不冲突；③paper33 诚实标注（簇↔空间方向为建模指派）与"桥未建立"一致。
+
+**登记的两处体系级张力（需后续对齐，非矛盾）**：
+- **T1**：paper35 §3.2 几何 W 轴论证（"引入与 X,Y,Z 全正交的新自由度 W"，F_real=(0,0,0,F_w)）与 paper44 §4.2（"⊥ 三维空间并非 KK 式额外维度"）表述张力——paper35 论证语言仍为几何新自由度式，易被误读为额外维度；建议 paper35 侧对齐为操作/谱意义（J2 模式间定位）或明确"W 轴"为诠释语言非额外维度。
+- **T2**："空间方向"在体系内至少四种含义（谱模式方向/纤维丛基空间方向/朗道横向投影方向/几何坐标轴），各声称须注明所用编码——体系级术语精确化任务（P5 定义精确化阶段）。
+
+**探针的角色（强化而非削弱）**：`paperX_delta_spatial_probe.py` 排除生成元编码 ⟹ "Δ ⊥ 三维空间"只能按谱模式编码（J2）解读 ⟹ 与 paper31 §6/paper44 表述一致，同时明确 paper35 W 轴论证需重新表述（T1）。
+
+#### T1 对齐方案（已实施，2026-08-12）
+
+**张力精确定位**：paper35 §3.2.1"向外推"路径（Step 1-4）以字面几何语言引入"与 X,Y,Z 全正交的新自由度 W"（$\vec{F}=(0,0,0,F_w)$、"W 轴引力线垂直穿透三维层时的几何投影"）；paper44 §7.2.1 声明"⊥ 物理三维空间**并非 KK 式的几何额外空间维度**——三维空间之外不存在紧致化的空间维度"。字面冲突：paper35 的 W 轴语言易被读为几何额外维度。
+
+**缓解事实**：paper35 §3.2.3 收敛表已把 W ↔ coherence 层（层 4）对应（"同一概念：来源在三维空间之外"），且"向下推"路径（§3.2.2）为代数/范畴路径（`dimension_gap` ln15<3 + `outward_proof_maps_to_orthogonal_layer`：IFS 吸引子不填充 3D ⟹ 范畴含正交第 4 层）——"正交第 4 层"是**层结构**非几何维度；故张力主要在 §3.2.1 的**推导语言**，非结论本身。
+
+**对齐原则**：
+1. "正交" = 操作/谱意义（paper31 J2 谱模式正交，已证）+ 纤维丛层 V⊥H（#7，paper44 表述）——**非几何额外维度**；
+2. paper35 的 W 轴为**诠释辅助语言**（几何直觉），其严格实现为上述谱/纤维丛正交；
+3. paper44 的非 KK 声明保持，补与 paper35 的交叉引用。
+
+**paper35 侧修改清单**：
+- §3.2.1 Step 3：在"引入与三维空间所有方向都正交的新自由度 W"后加注：**"W 为诠释语言中的正交方向（谱纤维丛意义），非几何额外空间维度——见 paper44 §7.2.1 与 paper31 §3.3（J2 谱模式正交）"**；
+- Step 4："W 轴引力线垂直穿透三维层时的几何投影" → "正交方向（谱纤维丛意义）的投影（诠释辅助，严格实现见 J2）"；
+- §3.2.3 收敛表下加诚实标注：**"几何路径的 W 轴语言为诠释辅助；'正交'的严格实现为谱模式正交（paper31 J2，机器证明）与纤维丛层 V⊥H（#7）；W ↔ coherence 层对应为诠释对应，非几何维度对应"**；
+- 版本注记：paper35 该节加勘误注记（对齐 paper44 非 KK 声明）。
+
+**paper44 侧修改清单**：
+- §7.2.1 末补一句：**"paper35 §3.2 的'W 轴'正交论证为诠释语言（几何直觉辅助），其严格实现为谱模式正交（paper31 J2）与纤维丛层 V⊥H，与本文'非 KK 式'声明一致"**；
+- （可选）在命题 2.1 或 §7.2 加 T1 登记索引。
+
+**不动项**：paper31 J2（谱模式正交，已证）、paper44 非 KK 声明本身、#7 V⊥H 度量正交。
+
+**版本与登记**：paper35、paper44 各自版本 bump + 本 §3.6/路线图 62G 的 T1 状态更新（草稿 → 实施后闭合）。
+
+**验收标准**：paper35 §3.2 不再出现可被读为"几何额外维度"的未限定 W 轴表述；paper44 §7.2.1 与 paper35 §3.2 交叉引用成立；§3.6 T1 从"张力"转"已对齐"。
+
+**实施记录（2026-08-12，用户批准实施）**：
+- **paper35 v0.4 → v0.5**：§3.2.1 Step 3 加注（"此处'正交'为诠释语言中的正交方向（谱纤维丛意义），$W$ 并非几何额外空间维度——见 Paper XXXI §3.3（J2 谱模式正交，机器证明）与 Paper XLIV §7.2（非 KK 式声明）"）；Step 4 修改为"$W$ 方向引力线垂直穿透三维层时的投影（**诠释辅助：$W$ 的严格实现为谱模式正交（Paper XXXI J2）与纤维丛层 $V\perp H$，见 Step 3 注**）"；§3.2.3 收敛表下加诚实标注（$W$ 轴语言为诠释辅助、"正交"严格实现为谱模式正交 + 纤维丛层 $V\perp H$、$W \leftrightarrow$ coherence 对应为诠释对应、与 Paper XLIV §7.2 非 KK 声明一致）。
+- **paper44 v0.13 → v0.14**：§7.2 诚实边界第 1 条补"与 Paper XXXV §3.2 的一致性（T1 对齐）"句（Paper XXXV 的"$W$ 轴"论证为诠释语言，严格实现为 Paper XXXI §3.3 J2 谱模式正交 + 纤维丛层 $V\perp H$，与"非 KK 式"声明一致）。（可选"命题 2.1 加 T1 索引"未执行——§7.2 第 1 条已承载索引功能，避免过度修改。）
+- **验收达成**：①paper35 §3.2 不再有未限定 W 轴表述（Step 3/Step 4/§3.2.3 三处限定）；②交叉引用成立（paper35 §3.2 ↔ paper44 §7.2 双向）；③**T1 状态：张力 → 已对齐**（对齐方式 = paper35 侧表述限定 + paper44 侧交叉引用，非改结论）。
+- **登记同步**：本 §3.6 T1 状态更新 + 路线图 62G + 版本头 v0.68。
+
+### 3.7 A4 涌现不可逆推导候选（2026-08-12，方向 2 新增）
+
+**动机**：paper44 A4"方向性阶跃"的不可逆性（$\sigma_{\text{S3}}$ 仅 $1\to0$ 自发）仍为公理级断言（paper44 §2.2 诚实边界：不预言 $t_*$ 数值）。CNF 评价（docs/光子行为_CNF解释_06）批评 (a)"A4 不可逆性是断言而非推导，且无观测能违反它"。本条目提出 **A4 涌现不可逆推导候选**——三锚点链把 A4 从公理降为开放系统涌现定理候选：**推迟辐射条件（因果性，有限时刻）→ RAGE 谱逃逸（渐近）→ 向内≡吸收（定义性）**，并补 Wigner–Weisskopf 定量衰减率与自伴性闭合方案。
+
+**候选陈述（A4-emergent）**：自发动力学下 $\sigma_{\text{S3}}:1\to0$ 不可逆，其机制 = 发射选择**推迟辐射条件**（前向光锥，无超前分量）+ 自由带 **a.c. 谱逃逸**（RAGE）+ **向内通道恒等于外部入射光子的吸收**（$R$ 折叠）。成立域：开放连续谱环境；**失效条件**：闭合系统（腔/镜反射 ⟹ 可逆，Rabi 振荡/量子回波）。
+
+**锚点 1：推迟辐射条件（因果性，有限时刻排除"主动回跳"）**。①双曲方程初值问题（初值 + Sommerfeld 辐射条件）适定唯一 ⟹ 场由前向光锥内的过去源决定，无未来（超前）分量——"主动回跳"= 超前分量 = 违反初值问题适定性；②频域等价：推迟响应 $\chi_{\mathrm{ret}}(\omega)$ 上半平面解析（无极点）⟺ Kramers–Kronig ⟺ 因果性（Paley–Wiener 型）；超前分量 = 上半平面极点 = 反因果；③耦合系统激发态传播子的 Fourier 变换极点在下半平面 $\omega=\omega_0-i\gamma/2$（$\gamma$ 即 WW 衰减率）——**"不可逆"与"因果性"是同一数学对象（下半平面极点）的两面**；时间反演把极点翻到上半平面（增长模式），对应需要入射初值 = 外部驱动（$R$ 折叠）。**一句话：不能主动跳回 ⟺ 推迟格林函数极点必在下半平面**。
+
+**锚点 2：RAGE 谱逃逸（渐近排除回归）**。条件：$H$ 自伴 + 自由带 $[0,\infty)$ 为 a.c. 谱 + 位置表示；结论：$\|\chi_K e^{-iHt}P_{ac}\psi\|\to0$（$|t|\to\infty$，离开任意紧致区域，强极限）。**注意**：①RAGE 对 $t\to\pm\infty$ 双向成立（本身时间对称）——只承担"回不来"，不承担"不能主动跳回"（锚点 1 负责）；②框架衔接亮点：RAGE 两方向恰好给出 A3 并存结构的严格陈述——束缚分量时间平均回归（原子保留）+ 散射分量逃逸（光子新生）；③**当前状态：条件性骨架**（$H$ 自伴/完整谱等式为库依赖开放项，见锚点 3 与 §3.5 P5-4）。
+
+**锚点 3：向内≡吸收（定义性同一）**。自发动力学不产生向内传播模（推迟辐射条件 ⟹ 前向光锥）；向内传播模 = 散射理论入射渐近态 = 外部入射光子；外部入射光子到达原子 = $R$ 折叠（paper44 定义 2.3）——**"向内跳变"与"吸收"是同一过程，不存在独立的"反向发射"通道**。A4"反向必须由外部 $R$ 折叠驱动"从断言升级为定义性事实。
+
+**定量衰减率（Wigner–Weisskopf，补 RAGE 定性骨架）**。模型（ħ=1，RWA，单激发子空间）：$H=\omega_0|e\rangle\langle e|+\sum_k\omega_k a_k^\dagger a_k+\sum_k g_k(\sigma_+a_k+\sigma_-a_k^\dagger)$；$|\psi\rangle=c_e e^{-i\omega_0t}|e,0\rangle+\sum_k c_k e^{-i\omega_k t}|g,1_k\rangle$；消去场振幅得记忆核方程 $\dot c_e=-\sum_k|g_k|^2\int_0^t c_e(t')e^{-i(\omega_k-\omega_0)(t-t')}dt'$；**Markov 近似**（$c_e(t')\approx c_e(t)$ + $\int_0^t\to\int_0^\infty$）用 $\int_0^\infty e^{-i\Delta s}ds=\pi\delta(\Delta)-i\mathrm{P}(1/\Delta)$ 得
+$$\boxed{\;\gamma=2\pi\rho(\omega_0)|g(\omega_0)|^2\quad\Rightarrow\quad c_e(t)=e^{-(\gamma/2+i\Delta\omega)t},\;P_e(t)=e^{-\gamma t}\;}\qquad(\Delta\omega=\text{Lamb 型能移})$$
+偶极 3D 真空即爱因斯坦 A 系数 $\gamma=A=\omega_0^3|d|^2/(3\pi\varepsilon_0\hbar c^3)$；**数值锚点：氢 2p→1s（Lyman-α）$A=6.27\times10^8\ \mathrm{s}^{-1}$、$\tau=1.6\ \mathrm{ns}$**。光子波包 $c_k(t)=-ig_k^*\int_0^t e^{i(\omega_k-\omega_0)t'}e^{-(\gamma/2+i\Delta\omega)t'}dt'$ 为洛伦兹（自然线宽 $\gamma/2$）分布，实空间以群速度 $c$ 向外传播扩散，原子处分量在 $t\gg1/\gamma$ 后趋零——RAGE 骨架的 WW 定量实现。**非 Markov 修正**：记忆核宽度 $\tau_c\sim1/\Delta\omega$（光学 $\sim10^{-15}\,\mathrm{s}$）vs $\tau_{\text{decay}}\sim10^{-9}\,\mathrm{s}$ ⟹ 修正 $\sim O(\gamma\tau_c)\sim10^{-6}$——"排除强度"定量估计。**Lindblad 形式**：$\dot\rho=-i[H,\rho]+\gamma(\sigma_-\rho\sigma_+-\tfrac12\{\sigma_+\sigma_-,\rho\})$——耗散子非幺正，不可逆性的标准开放系统表述。衔接：既有脚本 paperX_photon_jc_bridge.py（14/14，Fermi 黄金规则/Rabi）为其离散模极限。
+
+**自伴性闭合方案（锚点 2 前提，三阶结构）**：**(i) 裸谱**——$\mathcal{H}=\mathbb{C}^2\otimes\mathcal{F}(L^2(\mathbb{R}^3))$，$H_0$ = 有界原子项 + 数算符（域 $D(H_0)=\{\psi:\|H_0\psi\|<\infty\}$），$\mathrm{spec}(H_0)=\{E_n\}\cup[0,\infty)$ 平凡自伴（论文当前声称的严格对应）；**(ii) 耦合自伴性**——**Kato–Rellich**：$V=\sum g_k(\sigma_+a_k+\sigma_-a_k^\dagger)$ 满足 $\|a(f)\psi\|\le\|(N+1)^{1/2}\psi\|\|f\|$、$\|a^\dagger(f)\psi\|\le\|(N+1)^{1/2}\psi\|\|f\|$，小耦合（$\sum|g_k|^2/\omega_k<\infty$ 且强度足够小，相对界 $<1$）⟹ $H$ 自伴；或 **Nelson 解析向量**（有限粒子数态、系数快速衰减）⟹ 本质自伴。**谱⊆ℝ 是自伴性的直接推论，不必单列为库依赖项**；**(iii) 激发态→共振**——**Friedrichs 模型**（严格可解）：$H=\omega_0P+\int\omega|\omega\rangle\langle\omega|d\omega+\lambda\int v(\omega)(|\omega\rangle\langle e|+|e\rangle\langle\omega|)d\omega$，$\int|v|^2d\omega<\infty$ 时自伴；约化分母 $\eta(z)=z-\omega_0-\lambda^2\int\frac{|v(\omega)|^2}{z-\omega}d\omega$ 下半平面零点即共振 $\omega_0-i\gamma/2$；$\mathrm{spec}(H)=[0,\infty)_{ac}\cup\{\text{阈值下束缚态}\}$——**束缚带/自由带结构 = Friedrichs 谱结构的直接对应**，一个模型同时给出自伴性、谱结构、WW 衰减率。**边界条件**：散射侧 Sommerfeld 辐射条件（外向，衔接锚点 1）；a.c. 谱确认用 **Mourre 共轭算子方法**（膨胀生成元 $A=\tfrac12(x\cdot p+p\cdot x)$，证明 Mourre 估计 ⟹ $[0,\infty)$ a.c.、无奇异连续谱、无嵌入本征值——无质量光子场标准工具，Fröhlich–Griesemer–Sigal–Spohn 线）；氢束缚侧用库仑问题标准自伴域（径向波函数 $r\to0$ 正则性）。**状态（2026-08-14）：方案 (ii) 从方案级登记推进为推导级 + 数值佐证**（Kato–Rellich 自伴性 + Mourre 估计，见下节）；Lean 形式化（谱测度理论）仍为库依赖开放项（§3.5 P5-4 开放项的分阶闭合路线）。
+
+**诚实边界**：①本条目为**推导尝试候选**（机制链完整、数学锚点标准），非已证定理——三锚点均为标准散射理论/谱理论/量子光学事实的框架内重述（温和兼容，非新预言）；②RAGE 与 WW 均为开放系统/渐近表述——闭合系统（腔、宇宙整体）时间反演对称仍在，不可逆是解选择（推迟辐射条件）的结果；腔/镜 = 外部边界驱动，不违反"向内≡吸收"；③自伴性（锚点 2 前提）与完整谱等式仍为库依赖开放项——RAGE 引用标注"条件性骨架"；④**表述纪律**："光速向外指向性"写成"发射选择推迟辐射条件"而非"$c$ 向外指向"（Maxwell 方程时间对称，推迟/超前解都存在；指向性来自解选择 = 因果性）；⑤**直接收益**：回应 CNF 评价 (a)——A4 获得机制来源（因果性 + 谱逃逸）与失效条件（闭合系统 ⟹ 可逆）；**代价**：A4 锚定后与因果性同强，不再是可独立裁决的新预言（与 v2.0"过程公理 + 失效条件"方案同构）。
+
+**数值验证闭合（2026-08-13，`paperX_ww_decay.py` 8/8 注册 run_all_tests.py）**：(S1) **WW 非 Markov vs Markov**——洛伦兹谱密度 ODE 化（记忆核 K(τ)=(γΓ/4)e^{-(Γ/2)τ} ⟹ 2 维 ODE），Γ/γ=1e4/1e3/1e2 偏差 0.005%/0.05%/0.52%（~O(γτ_c)，量级一致，Markov 极限 Γ→∞ 恢复 e^{-γt/2}）；(S2) **氢 2p→1s A 系数复现 6.260e8 s⁻¹ vs 文献 6.27e8**（偶极矩阵元径向积分 ⟨2p|r|1s⟩=6.83e-11 m，角向 1/3 因子，差 0.15%）——WW 定量衰减率锚定；(S3) **光子波包外向传播**——原子处 P_e=e^{-γt}（τ=1.6 ns），波前 r=c·t（t=5τ 处 2.39 m）无回归（谱逃逸锚点 2 的定量实现）；(S4) **Lindblad 可逆性破坏**——混合度单调上升（耗散子非幺正），t=5/γ 纯度 0.987<1。**A4 涌现候选获机制链定量支撑**（推迟辐射条件锚点1 → 谱逃逸/外向传播锚点2/3 + WW 衰减）；诚实边界：WW 开放系统近似（Markov 偏差 ~γτ_c）、A 系数为已知原子物理（温和兼容非新预言）、自伴性严格证明（Kato–Rellich）仍为库依赖开放项。
+
+**自伴性数值闭合（2026-08-14，`paperX_kato_rellich_selfadjoint.py` 5/5 注册 run_all_tests.py）**：(S1) **Hardy 不等式 3D 常数 4**——高斯波包 σ∈{0.3,…,3.0} 全部 ‖ψ/r‖²/‖∇ψ‖²=4/3（≤4，最优常数复现）；(S2) **库仑势 V=-Z/r 相对 -Δ**——原子单位氢 1s 态 ‖Vψ‖/‖Δψ‖=0.632（复现精确值 √(2/5)），氢 1s 能量 -13.61 eV（vs -13.606）；Hardy（‖ψ/r‖≤2‖∇ψ‖）+ Young（2‖∇ψ‖≤ε‖Δψ‖+(1/ε)‖ψ‖，ε 任意小）⟹ V 相对 -Δ **无穷小（相对界 0）** ⟹ H 自伴（Kato–Rellich 适用）；(S3) **WW 耦合 V 预解判据**——Kato–Rellich 预解形式 ‖V(H₀+i)^{-1}‖<1：单激发子空间 {|e,0⟩,|g,1⟩}（共振 ω₀=ω=1）精确奇异值 g/√2 复现（g=0.5 ⟹ 0.354<1，相对界<1）；注：朴素比值 ‖Vψ‖/‖H₀ψ‖ 在 ker(H₀) 方向发散属预期，b‖ψ‖ 项吸收之，**预解范数为正确判据**（有限秩/有界耦合相对界 0 的标准论证）；(S4) **谱 ⊆ ℝ**——自伴性直接推论（不单列库依赖项）。**自伴性（锚点 2 前提 (ii)）从方案登记推进为推导级 + 数值佐证**；诚实边界：不替代 Lean 形式化（谱理论库依赖）、Mourre 估计（a.c. 谱确认，RAGE 全条件）与 Friedrichs 模型严格化（共振极点）仍登记开放。
+
+**Mourre 估计数值闭合（2026-08-14，`paperX_mourre_ac_spectrum.py` 5/5 注册 run_all_tests.py）**：(S1) **对易子恒等式 i[H₀,A] = H₀（解析精确）**——两种推导：标度齐次性（U_sψ(x)=e^{-s/2}ψ(e^{-s}x)，H₀=|p| 为 degree-1 齐次 ⟹ U_sH₀U_s†=e^{-s}H₀ ⟹ 一阶展开）+ 动量空间直接计算（A=i(k∂_k+½)，[H₀,A]=-iH₀）；**数值注记**：|k| 在 k=0 有尖点，有限周期格点上谱导数非求导（Leibniz 律不成立），格点对易子有 O(1) 混叠差（不随 N 缩小）——恒等式为解析声称，数值内容以精确对角给出；(S2) **Mourre 估计 E_I i[H₀,A]E_I = E_I H₀ E_I = diag(|k_j|) ≥ a E_I**——5 窗口（[0.5,1.0]…[2,5]）精确对角 min eig ≥ a（θ=a 成立）+ 窗口内随机平滑态二次型 min ⟨f,H₀f⟩ ≥ a（精确）；(S3) **无嵌入 L² 本征值**——窗口波包关联衰减 1→0（t=60 归零）vs 单动量本征态对照恒为 1（a.c. 判据）；(S4) **RAGE 谱逃逸定量**——P_K: 0.91→0（>100 倍），波包 v_g=1 外向传播。**A4 锚点 2 数学前提齐备**（推导级+数值佐证）：(1) H 自伴（Kato–Rellich，2026-08-14 闭合）+ (2) 自由带 [0,∞) 纯 a.c.（本脚本 Mourre 估计）+ (3) 位置表示（标准）⟹ χ_K e^{-iHt}P_ac ψ → 0；诚实边界：恒等式为解析精确（格点混叠不作数值声称）、不替代 Lean 形式化（谱测度库依赖）、耦合（WW/Friedrichs）情形 a.c. 保持为文献结果（FGSS 线）未独立证明、3D 各向同性 = 1D×角向分离同构。
+
+**Friedrichs 共振极点数值闭合（2026-08-14，`paperX_friedrichs_resonance.py` 8/8 注册 run_all_tests.py）**：(S1) **束缚态判据**——η(E) 在 (−∞,0) 实零点：弱耦合 λ=0.05 有效无束缚态（数学上 E_b~Λe^{−ω₀/λ²} 指数贴近阈值，数值不可分辨）；强耦合 λ=1.0 显式 E_b=−0.712（阈值下孤立本征值），权重 |⟨e|b⟩|²=0.433，完备性 ∫ρ+|⟨e|b⟩|²=0.997；(S2) **共振极点（第二叶）**——η_II(z)=z−ω₀−Σ(z)+2iπλ² 在下半平面零点 z_res=1.9965−i·0.00787（λ=0.05）；γ=−2·Im z_res=0.01573 vs 黄金规则 2πλ²=0.01571（差 0.16%）；λ∈{0.02,0.05,0.1} 扫描 γ/2πλ²=1.0003/1.0016/1.0063 收敛到黄金规则（弱耦合领头阶）；(S3) **衰变动力学**——谱公式 P_e(t)=|c_e(t)|² 与 e^{−γt} 比值恒 1.003（t=1..60），指数衰减精确匹配极点率（∫ρ=1.000）；(S4) **谱结构**——ρ(E) 峰为可分辨洛伦兹（FWHM=γ×0.996，非 δ 嵌入尖峰 ⟹ 无嵌入本征值），强耦合出现阈值下孤立束缚态，共振极点 Im≠0 不在实谱中。**"不可逆 = 因果性 + 谱逃逸"的极点侧（锚点 1 ③：推迟格林函数极点在下半平面）获可解模型定量实现**，且 γ 与 WW 衰减率（paperX_ww_decay.py S2 黄金规则）同率；诚实边界：Friedrichs 为平坦谱可解理想化（ω³ 偶极谱密度给能量依赖修正——黄金规则领头阶对 ω³ 谱有 16% 偏差、12.8% 高能背景，已量化登记）、不替代 Lean 形式化（谱测度/复分析库依赖）、完整谱等式（耦合 a.c. 保持，FGSS 线）仍登记开放。
+
+**WW 复极点 Lean 代数骨架闭合（2026-08-14，`PhotonTopologyResonance.lean`，`lake build` 2454 jobs 零警告零 sorry）**：机器证明"下半平面极点 ⟹ 指数衰减"（锚点 1 ③ 的代数核心）——`resonancePoleDecay`（‖e^{−i z t}‖² = e^{2·Im z·t}）+ `resonancePoleDecay_coeff`（极点贡献 |R·e^{−i z t}|² = |R|²·e^{2·Im z·t}）+ `resonanceDecayRate_pos`（Im z < 0 ⟹ γ = −2·Im z > 0）+ `resonancePoleDecay_mono`（Im z < 0 ⟹ 模方随 t 严格递减，无回归）。诚实边界：极点位置 z_res（第二叶 η_II(z)=0，含解析延拓/对数分支）由数值脚本 `paperX_friedrichs_resonance.py` 8/8 定量给出（推导级+数值佐证），不在 Lean 范围内；完整谱理论（无界自伴性/谱测度）仍为库依赖开放项（`KatoRellichSkeleton.lean` 已闭合有界原型代数核心）。
+
+**开放项**：自伴性/Mourre 估计的 **Lean 形式化**（无界算子/谱测度理论库依赖——推导级 + 数值佐证已闭合 2026-08-14，WW 复极点代数骨架已闭合 2026-08-14）；耦合情形 a.c. 谱保持的独立证明（FGSS 线文献引用）；非平坦谱（ω³ 偶极）严格化（能量依赖修正已量化）；成熟后提炼 paper44 §2.4/§7.5（§7.5 开放问题 7 已同步 v0.31）。
+
+### 3.8 P6 原子实例验证：静默叠加定理的递归层实例化（2026-08-12，方向 2 新增）
+
+**动机**：CNF 评价"P6 跨尺度挪用"批评。重构：P6 不是从胶球/页岩**挪用**静默叠加规则，而是框架根基主张（S3 谱静默 / 谱隙闭合为跨尺度统一机制——"四层静默统一推导链" $S_k=s^{n_k}$）的**原子尺度实例**。本条目完成实例验证：落层声明 + 原子结构论证 + 定量判据 + 盲登记（响应 CNF 邀请格式）。
+
+**落层声明（实例验证第一步）**：原子多层静默落在**递归层**——层次 A（可数无穷离散能级，Rydberg 序列，§3.4 v0.62 数值 + Lean 机器证明闭合：`rydbergFreq`/`rydberg_combination`/`multiObjInfinite`/`rydberg_band_edge`）。统一母公式 $S_k=s^{n_k}$ 对递归层严格成立（$n_3=N_{\text{active}}=3$、$n_4=d_H=\ln15$，机器证明）⟹ 静默叠加定理在原子尺度适用。**不涉及**相互作用层（$n_2=2\pi/\alpha$）与谱截断层（$n_1=\ln(1/\Delta\lambda^2)=4.207$）——不触碰统一母公式的开放边界（跨层机制独立仍登记开放）。
+
+**原子结构论证（防循环，独立于其他尺度）**：
+- 多电子原子壳层 = 嵌套 Rec 拓扑对象：主量子数 $n$ 壳层的束缚电子 = S3 静默紧致对象（paper44 定义 2.1：束缚态 = 静默紧致拓扑）；
+- 嵌套结构：$A_1\subset A_2\subset\cdots\subset A_N$（内壳层更紧束缚），满壳层（简并度 $2n^2$）构成稳定静默配置（闭合壳层不辐射——无跃迁通道的框架重述）；
+- 逐层谱隙：由 Rydberg 结构确定（§4.4：$E_n=-13.6/n^2$ eV；相邻壳层谱隙 $\Delta\lambda_{\text{gap}}(n)=E_{n+1}-E_n$）——定理 2.1 的逐层实例；
+- 静默叠加判据：内壳层跃迁的辐射须穿越外层 $N$ 个满壳层静默屏障：
+  $$R_{\text{supp}}(N)=\sigma_{\text{silent}}^N,\qquad \sigma_{\text{silent}}=S_4=\tfrac{1}{15},\qquad N_{\text{crit}}(\theta_{\text{crit}})=\left\lceil\frac{\ln\theta_{\text{crit}}}{\ln\sigma_{\text{silent}}}\right\rceil$$
+  （$N$ = 空穴壳层外的满壳层数；$N_{\text{crit}}(\theta=10^{-3})=3$ 层、$N_{\text{crit}}(\theta=10^{-6})=6$ 层——与 paperX_photon_cross_effects.py E6 一致）。
+
+**单层锚点（论文已有）**：$2s\to1s$ 电偶极禁戒（$B_{12}=0$，paper44 §2.3 定义 2.4）——静默抑制辐射的单层原子实例（亚稳态双光子衰变）。
+
+**定量判据（盲登记，响应 CNF 邀请格式）**：预登记——①叠加形式 $R_{\text{supp}}(N)=(1/15)^N$（$N$ = 空穴壳层外满壳层数）；②阈值 $N_{\text{crit}(10^{-3})}=3$、$N_{\text{crit}(10^{-6})}=6$；③候选体系：跨越满壳层的原子跃迁（如重原子内壳层空穴的辐射/无辐射分支比、闭合壳层稳定性）；④排除线：若某候选跃迁的辐射抑制显著偏离 $\sigma^N$（或 $N\ge N_{\text{crit}}$ 时无抑制），则 P6 定量形式被排除。**状态：登记候选**（远期可证伪，15–20 年观测门槛）。
+
+**诚实边界**：
+1. 本条目完成的是**框架递归层定理的原子实例验证**（落层 + 结构论证层面），证明"原子尺度满足静默叠加定理假设"——**不证明**原子物理机制与其他尺度相同（跨尺度机制等效的实验证明仍待锚定，远期）；
+2. $\sigma_{\text{silent}}=1/15$ 为框架量候选；原子尺度的定量值（辐射抑制的具体量级）为**可证伪预言**，非已知物理的拟合——标准原子物理的同类现象（禁戒跃迁、闭合壳层稳定性）为已知事实，框架贡献为统一解释（温和兼容重述 + 多层叠加的额外定量形式）；
+3. 落层声明依赖递归层机器证明；若原子实例需跨层（涉及跃迁速率 = 相互作用层 $n_2$），统一母公式不适用——登记为开放；
+4. 实例验证的独立结构论证（壳层 → Rydberg 谱隙）不依赖其他尺度结论——防循环论证。
+
+**数值验证候选**：`paperX_p6_atomic_silence.py`（待创建并注册 run_all_tests.py）——(S1) 壳层结构与逐层谱隙（Rydberg）；(S2) $R_{\text{supp}}(N)=\sigma^N$ 抑制曲线与阈值线；(S3) $N_{\text{crit}}$ 反解（对照 cross_effects E6）；(S4) 候选体系映射（各原子可达 $N$ 与满足 $N\ge N_{\text{crit}}$ 的跃迁）；(S5) 与 $2s\to1s$ 单层锚点衔接。
+
+**开放项**：原子结构论证的 Lean 形式化（壳层 = 嵌套 Rec 对象的范畴表述）；跨层实例（涉及相互作用层的跃迁速率）登记开放；实验锚定（远期）。
+
+### 3.9 P2 残差预言与 η_S3 候选族（2026-08-12，方向 2 新增）
+
+**动机**：CNF 评价"P2 未扣 Z² 类氢标度，当前形式与通常原子物理不可区分"。本条目把 P2 改写为**扣除 Z² 标度后的残差预言**，并构造 η_S3 框架量候选族（仿 §6.1 κ_Δ 候选族方法论：框架量组合 + MDL/结构匹配选择 + 盲登记）。
+
+**残差预言形式（Z² 扣除）**：
+$$\nu(Z)=\nu_{Z^2}(Z)\cdot\big[1+\eta_{S3}\,g(Z)\big],\qquad \nu_{Z^2}(Z)=R_H c Z^2\Big(\tfrac{1}{n_1^2}-\tfrac{1}{n_2^2}\Big)$$
+其中 $\nu_{Z^2}$ 为类氢 Z² 标度（等电子序列中精确成立至核电荷有效屏蔽修正）；$\eta_{S3}$ 为框架量候选；$g(Z)$ 为静默-电荷耦合函数——候选 $g(Z)=n_{\max}(Z)$（满壳层静默计数，**衔接 §3.8 P6 多层静默实例**——同一静默机制的两个预言面）或 $g(Z)=Z/Z_{\text{ref}}$。
+
+**η_S3 候选族（框架量 $\{S_4=1/15,\ N_{\text{Weyl}}=4,\ d_H=\ln15\approx2.708\}$）**：
+
+| 候选 | 数值 | 说明 |
+|:--|:--|:--|
+| $\eta_a=S_4$ | $6.67\times10^{-2}$ | 单层静默（最简，MDL） |
+| $\eta_b=S_4^2$ | $4.44\times10^{-3}$ | 双层静默 |
+| $\eta_c=S_4/d_H$ | $2.46\times10^{-2}$ | 静默/谱维 |
+| $\eta_d=S_4/(N_{\text{Weyl}}d_H)$ | $6.16\times10^{-3}$ | 静默/旋量·谱维 |
+| $\eta_e=S_4^2 N_{\text{Weyl}}/2$ | $8.89\times10^{-3}$ | 双层静默×旋量配对 |
+
+**选择原理（仿 §6.1 κ_Δ）**：MDL 最简 → $\eta_a=S_4$（单一框架量、1 次幂）；静默机制结构匹配（P2 的静默强度 = 单层静默）→ $\eta_a$；候选族收窄倾向 $\eta_a/\eta_b$ 双候选（差 $S_4^{-1}=15$ 倍，等电子序列实验可判别）。
+
+**盲登记（响应 CNF 邀请格式）**：预登记 $\eta_a=S_4=6.67\times10^{-2}$（主候选）+ $\eta_b=S_4^2=4.44\times10^{-3}$（备选）+ **排除线**：若等电子序列残差低于最小候选（$\eta_b$）一个量级以上（即残差 $<10^{-4}$ 量级），P2 的 S3 残差部分被排除。**状态：登记候选**（远期可证伪）。
+
+**诚实边界**：
+1. Z² 基线对多电子原子需**有效屏蔽修正**——等电子序列的严格 Z² 标度仅对氢样离子精确；残差检验须等电子序列 + 屏蔽计算（标准原子结构方法）；
+2. $\eta_{S3}$ 候选族为框架内构造（无外部参数），定量值待实验；
+3. $g(Z)$ 形式为候选——$g(Z)=n_{\max}(Z)$ 与 §3.8 多层静默实例衔接（同一静默机制的预言面，非循环：两者同为递归层静默定理的推论）；
+4. 标准 Z² 标度为已知物理；P2 贡献 = 残差部分（新预言仅限残差，非整条频率标度）。
+
+**数值验证候选**：`paperX_p2_eta_s3.py`（Z² 基线 + η_S3 候选族 + 选择原理 + 可测性检查，待创建并注册 run_all_tests.py）。
+
+**开放项**：$g(Z)$ 形式的框架内确定（$n_{\max}$ vs $Z$ 幂律判别）；等电子序列残差的实验精度评估（远期）；η_S3 与 κ_Δ/ε_Δ 的框架内关联（同一候选族方法论的一致性检查）。
+
+### 3.10 参数锁定分界规则与跨层实验设计（2026-08-12，方向 2 新增）
+
+**动机**：整理 P6/P2 案例的参数锁定方法论——明确"哪些必须实验数据、哪些可纯推导"，并设计跨层参数（n₁/n₂）的实验验证方案（回应 CNF 评价"系数未定不可操作"的方法论层面）。
+
+**参数锁定分界规则（P6/P2 对比的产出）**：
+> 能落层到机器证明层（递归层）的参数 → **纯推导锁定**（如 P6 的 $\sigma_{\text{silent}}=S_4$，形式 $R_{\text{supp}}=\sigma^N$ 由递归层定理实例化唯一识别，无需实验）；不能落层的参数（候选族/跨层）→ **推导收窄 + 数据裁决**（如 P2 的 $\eta_{S3}$）。
+
+对比要点：①P6——σ 识别纯推导（机器证明背书），实验仅验证预言成立性（远期）；②P2——纯推导（MDL 最简）会锁错（$\eta_a=S_4$ 已被既有等电子序列数据证伪），候选族收窄（$S_4^4/S_4^5$）+ 数据排除/判别/锁定，实验必需；③κ_Δ/ε_Δ 仍开放因关联 4-范畴 Δ 结构（落层未定），非推导能力不足。
+
+**P2 排除过程（5 步 + 反证逻辑）**：①基线 $\nu_{Z^2}=R_H c Z^2(1/n_1^2-1/n_2^2)$；②残差 $r_{\text{obs}}$ 与预测 $r_{\text{pred}}=\eta\,g(Z)$；③候选族生成（框架量组合）；④**排除判据（反证）**：$r_{\text{pred}}\gg\varepsilon_{\text{exp}}$ 且数据与纯 Z² 一致 ⟹ 候选为假（若为真则该残差必已被探测到）；⑤存活 + 盲登记（双向排除线）。关键：排除条件于**基线正确**（Z² + 屏蔽 + QED 修正与数据的符合程度）。
+
+**跨层参数实验设计（n₁/n₂，判别型 + 盲登记）**：
+- **通用结构**：可观测识别 → 定量预测（$s^{n_k}$ 在相关尺度）→ 判别判据 + 排除线 → 与标准物理区分；
+- **n₁=ln(1/Δλ²)=4.207（谱截断层）——可直接搜索**：谱线线型在分辨极限 $\Delta\lambda$ 处偏离标准洛伦兹/福格特形式，幅度 ~ $s^{n_1}=(1/15)^{4.207}\approx1.1\times10^{-5}$；前提：框架先确定 $\Delta\lambda$ 物理实现（开放项——n₁ 可观测载体未钉死）；
+- **n₂=2π/α≈861（相互作用层）——只能"锁下限"**：抑制因子 $s^{n_2}=(1/15)^{861}\approx10^{-1013}$ 不可直接观测——精密耦合常数测量（g-2、α 原子干涉）持续零结果 = 支持极端抑制（弱确认）；任何意外偏差 = 机制失效信号（该尺度本应被 $10^{-1013}$ 抑制）；
+- **层内自洽**：同一层 n 值跨体系（原子/分子/凝聚态）同类测量一致性——框架能声称的最低验证标准（防单体系巧合）；
+- **与 CNF 邀请衔接**：全部按盲登记格式冻结（候选 + 排除线 + 失效条件），进入登记-裁决层面。
+
+**诚实边界**：
+1. 分界规则依赖"递归层机器证明"前提——跨层落层本身开放；
+2. n₁ 实验设计的前提（$\Delta\lambda$ 物理实现）未钉死——设计为判别型搜索，非参数测定；
+3. n₂ 的 $10^{-1013}$ 抑制只允许一致性下限验证，不能直接"锁定"n₂ 值；
+4. P2 排除强度条件于基线正确（Z²+屏蔽+QED 与数据的符合程度）。
+
+**开放项**：$\Delta\lambda$（谱截断层可观测载体）的物理实现确定；n₁ 线型偏离与可达到谱学精度的可测性定量评估（远期）；n₂ 下限扫描的实验方案细化。
+
+### 3.11 P4 参数锁定：分形红移震荡的框架量候选与盲登记（2026-08-12，方向 2 新增）
+
+**动机**：CNF 评价"P4 三参数"——分形红移震荡的 d_H、δ、振幅/周期未定，不可操作。本条目完成 P4 参数结构分析 + 框架量候选锁定 + 盲登记（仿 §3.9 η_S3 / §6.1 κ_Δ 方法论）。
+
+**参数结构（三参数 → 一参数 + 相位边际化）**：
+$$\delta z_{\text{osc}}(z)=z_{\text{Friedman}}(z)\cdot\big[1+A_{P4}\sin\big(2\pi\tfrac{z-z_0}{\Delta z_{P4}}+\varphi\big)\big]$$
+- $d_H=\ln15\approx2.708$（框架固定，与 $S_4=1/15$ 相关）；
+- $\delta$（d_H 微扰，$d_H^{\text{eff}}=\ln15+\delta$）：候选框架量；
+- $A_{P4}$（振幅）：候选框架量（与 $\eta_{S3}$ 同源——同一静默机制）；
+- $\Delta z_{P4}$（振荡周期）：与 $d_H$ 关联候选，精确值盲登记（**单一待定参数**）；
+- $\varphi$（相位）：边际化/盲登记。
+
+**候选族（框架量 $\{S_4=1/15,\ d_H=\ln15\}$，仿 η_S3/κ_Δ）**：
+
+| 参数 | 候选 | 说明 |
+|:--|:--|:--|
+| $A_{P4}$ | $S_4^3\approx3.0\times10^{-4}$（主候选） | 三/多层静默抑制因子（衔接 P2 η_S3/P6 R_supp 同一机制） |
+| | $S_4^4\approx2.0\times10^{-5}$（备选） | 四层静默 |
+| | $S_4^2\approx4.4\times10^{-3}$（上限） | 双层静默 |
+| $\delta$ | $S_4=1/15\approx0.0667$（MDL 最简） | $d_H^{\text{eff}}=2.775$ |
+| | $S_4^2\approx4.4\times10^{-3}$ | $d_H^{\text{eff}}=2.712$ |
+| $\Delta z_{P4}$ | $1/d_H\approx0.369$（候选） | 分形尺度关联，盲登记 |
+
+**可测性检查（诚实）**：高红移巡天（$z\in[1,3]$，$N\sim10^6$，测光红移精度 $\sigma_z\sim10^{-3}$）的统计探测阈值 $\sigma_z/\sqrt N\sim10^{-6}$——$A_{P4}\ge S_4^3\approx3\times10^{-4}$ 原理可测（4 量级余量）；$S_4^4\approx2\times10^{-5}$ 可测（1 量级余量）；**相干性假设为 P4 最脆弱点**——振荡须跨星系相干（相位相干分数 $f$ 使有效振幅 $A\cdot f$），否则周期折叠平均消失。
+
+**盲登记**：主候选 $A_{P4}=S_4^3=3.0\times10^{-4}$、$\delta=S_4$、$\Delta z_{P4}=1/d_H\approx0.369$；**排除线**：若巡天数据无相干振荡（折叠振幅 < $S_4^3$ 一个量级），P4 排除。
+
+**诚实边界**：①$d_H=\ln15$ 为框架固定量；②$A_{P4}/\delta$ 候选族与 $\eta_{S3}$/κ_Δ 同源（静默机制一致性，非独立新参数）；③$\Delta z_{P4}$ 与 $\varphi$ 为待定——P4 从"三参数"降为"一参数 + 相位边际化"；④可测性依赖振荡相干性假设（最脆弱点，盲登记失效条件）；⑤标准宇宙学红移为基线，P4 贡献 = 残差振荡（新预言仅限残差）。
+
+**数值验证候选**：`paperX_p4_fractal_oscillation.py`（振荡参数化 + 候选族 + 可测性/相干性检查，待创建并注册 run_all_tests.py）。
+
+**开放项**：$\Delta z_{P4}$ 的框架内精确确定（$1/d_H$ 候选 vs 其他分形尺度关联）；振荡相干性的物理来源（跨星系相位相干机制）；远期巡天数据。
+
+## 4 方向 3：转变定量化（谱间隙闭合离散跳变）
+
+### 4.1 类比 paper40 定理 4.2
+
+paper40 定理 4.2：禁闭 = Landau 极点（谱跑动耦合发散）⟺ 色空间谱间隙闭合 $\Delta\lambda_{\min}(\mu)\to0$。
+
+**本笔记的拓扑转变对应**：
+
+**定理 T3（拓扑转变 = 谱间隙闭合的离散跳变）**。设束缚（驻波）谱带 $\Lambda_{\text{bound}}=\{\lambda_i^{\text{bound}}\}$ 与自由（行波）谱带 $\Lambda_{\text{free}}=\{\lambda_j^{\text{free}}\}$ 之间的谱间隙
+$$\Delta\lambda_{\text{gap}}= \min\Lambda_{\text{free}} - \max\Lambda_{\text{bound}} .$$
+光子拓扑转变发生在谱间隙闭合的临界时刻 $\Delta\lambda_{\text{gap}}\to0^{+}$，且转变释放能量满足
+$$h\nu = \Delta\lambda_{\text{gap}}|_{\text{闭}} = \Delta E_{\text{atom}} \qquad (\text{Bohr 条件谱表示})$$
+即 Bohr 条件 $h\nu=\Delta E$ 从谱间隙闭合推导（Bohr 条件由公理/经验输入降级为谱间隙闭合的结果）。
+
+### 4.2 推导思路
+
+- 束缚谱带位置由原子拓扑能级决定：$\max\Lambda_{\text{bound}}=E_i$（初态能级）；
+- 自由谱带最低模：$\min\Lambda_{\text{free}}=E_j$（末态能级，行波携带 $h\nu=E_j-E_i$）；
+- 能级差增大（激发）→ 谱间隙 $\Delta\lambda_{\text{gap}}$ 单调减小 → 达临界 $E_j-E_i=h\nu$ 时谱间隙闭合 → 拓扑转变（离散跳变，无连续中间拓扑，公理 A2 的定量实现）；
+- 谱间隙闭合后 $\sigma_{\text{S3}}:1\to0$（静默解除），行波释放（公理 A4 方向性的定量实现）。
+
+### 4.3 与 paper40 的对照
+
+| paper40 禁闭 | paper44 转变 |
+|:--|:--|
+| $\Delta\lambda_{\min}(\mu)\to0$（Landau 极点） | $\Delta\lambda_{\text{gap}}\to0^{+}$（能级差临界） |
+| 谱权重集中于色单态（无自由色态） | 谱权重从束缚带跳变到自由带（行波释放） |
+| 连续机制（跑动耦合） | **离散跳变**（拓扑转变，A2） |
+
+### 4.4 谱带参数第一性标定：氢原子锚定（2026-08-11 推进 §10 第 3 项开放子项）
+
+§10 诚实边界第 3 项"谱带参数（束缚/自由带形）未从原子物理第一性标定（工程参数化）"——用氢原子真实能级标定方向 3 谱带模型（定理 T3）。脚本 `scripts/paperX_hydrogen_spectral_gap.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** 氢原子能级 $E_n=-13.6/n^2$ eV（E₁=-13.6、E₂=-3.4，Rydberg 常数锚定）——束缚带离散谱；
+- **S2** Bohr 条件谱表示 $h\nu=\Delta E$：Lyman α 121.6 nm、Balmer α 656.4 nm（标准值）；
+- **S3** **谱间隙 = 电离阈**：自由带底（E=0）− 束缚带顶（E₁）= 13.6 eV——束缚带顶→自由带底的离散跳变（定理 T3 的 Δλ_gap）；
+- **S4** Rydberg 公式 $1/\lambda=R_H(1/n_1^2-1/n_2^2)$ 重现——束缚离散带参数第一性标定；
+- **S5** 与定理 T3 衔接：束缚带 $\Lambda_{\text{bound}}=\{E_n\}$（Rydberg 离散序列）、自由带 $\Lambda_{\text{free}}=[0,\infty)$、谱间隙 = 电离阈 13.6 eV。
+
+**结论**：谱带参数从原子物理第一性标定（非工程参数化）——§10 第 3 项开放子项闭合；定理 T3 的谱间隙闭合（$\Delta\lambda_{\text{gap}}\to0^+$）获氢原子真实标度锚点（谱间隙 = 电离阈、能级差 = Bohr 频率）。
+
+**诚实边界**：氢原子能级/Rydberg 公式为标准量子物理事实（数据核对，非新预言）；谱带模型（定理 T3）为框架内机制，谱带参数现获原子物理第一性锚定。
+
+## 5 方向 4：闭合结构方向转变（命题 2.6 的几何内容）
+
+### 5.1 陈述
+
+公理 A1 仅陈述"边界闭合解除"（$\partial M_{\text{atom}}\to\emptyset$），未刻画转变后的闭合方式。方向 4 补全其完整几何内容（paper44 命题 2.6）：
+
+**命题（闭合结构方向转变）**。光子生成是闭合结构的方向转变：
+- **转变前（驻波）——边界空间闭合**：电磁形变在库仑势垒内闭合成驻波（$\partial M\neq\emptyset$），闭合发生在空间的边界上；
+- **转变后（行波）——环绕轴闭合**：$\partial M=\emptyset$，电磁形变在法向平面内绕传播轴 $k$ 闭环，闭合发生在传播轴上；
+- **直线传播 = 环绕闭环的宏观投影**：三维空间观察到的类光直线运动是环绕闭环沿 $k$ 方向的宏观投影——螺旋线在轴线方向的投影为直线；螺旋度 $s=\pm1$ 即环绕闭环的两个缠绕定向（圆偏振手性）。
+
+"闭合方向"从空间边界转向传播轴，是量子跃迁拓扑本质的完整刻画。
+
+![图 3：闭合结构方向转变 —— 驻波边界空间闭合（左）与行波环绕轴闭合 + 轴向投影（右，paper44 图 3）](../../figs/photon_fig3_closure_direction_transition.png)
+
+### 5.2 与双层正交的自洽
+
+法向自由度 ⊥ 基空间传播轴（双层正交，paper44 命题 2.1）⟹ 电磁场被限制在法向平面 ⟹ 环绕闭环在法向平面内发生（环绕性）。**正交性（结构约束）与环绕性（动力学表现）互为前提**——正交性决定环绕发生的平面，环绕闭环的缠绕定向给出螺旋度。早期"环绕性不与双层正交自洽"的疑虑由此排除。
+
+### 5.3 术语定名的学术锚定
+
+该几何内容定名**闭合结构方向转变**（closure-direction transition），其标准物理锚点：(i) **横波性**——电磁场垂直于传播方向（$\mathbf{E}\perp\mathbf{k}$，标准电动力学），即"电磁形变被限制在法向平面"的既有表述；(ii) **螺旋度/圆偏振**——$s=\pm1$ 即标准圆偏振手性；(iii) 与动力系统"拓扑分岔"（拓扑度方法，Krasnosel'skii–Rabinowitz）无概念交集——本机制的"方向转变"是闭合方式（边界 → 轴向）的改变，非轨道分支。主术语"拓扑转变"（topological transition，paper44）与几何术语"闭合结构方向转变"构成上下位关系：前者是量子跃迁的离散拓扑跳变表述，后者是其完整几何内容。
+
+![图 4：环绕方向/螺旋度 s=±1 —— 圆偏振电场矢量绕 k 的相位环绕（paper44 图 4）](../../figs/photon_fig4_helicity_winding.png)
+
+### 5.4 诚实边界
+
+"直线传播 = 环绕闭环投影"为几何直观语言，严格等价表述为：行波电磁场为横波（法向平面内振荡）+ 螺旋度编码手性——此为已确立电动力学事实的拓扑重述；"环绕闭环"非三维空间中的实体螺旋运动（光子无质心轨迹），而是法向平面内场形变周期循环的投影语义。
+
+### 5.5 环绕闭环数值验证（2026-08-11 推进方向 4 定量内容）
+
+方向 4（命题 2.6 行波环绕轴闭合）的定量内容——环绕闭环的数值实现（图 4 定量版）。脚本 `scripts/paperX_closure_winding.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** 圆偏振环绕：$\operatorname{Im}(\varepsilon_\pm^*\times\varepsilon_\pm)\cdot\hat{\mathbf{k}}=\pm1$（螺旋度定量，拓扑表述 2.5.1）；
+- **S2** 相位环绕轨迹：$E(t)=\operatorname{Re}(\varepsilon_+e^{-i\omega t})$ 在法向平面圆轨迹（$|E|^2$ 恒定，模守恒）；
+- **S3** 线偏振 = $\varepsilon_\pm$ 等权叠加——无净环绕（$\operatorname{Im}=0$，非 $s=0$ 本征态）；
+- **S4** 直线传播 = 环绕投影——螺旋线在轴向投影为直线（宏观直线运动，线性偏差 0）；
+- **S5** 与拓扑表述 2.5.1 一致：螺旋度 $s=\pm1$ = 环绕定向（右旋/左旋两个手性）。
+
+**结论**：方向 4"行波环绕轴闭合"获定量数值实现——螺旋度 $s=\pm1$（环绕定向）、法向平面圆轨迹（横波性）、直线传播 = 轴向投影（宏观直线运动）全部数值自洽；与拓扑表述 2.5.1（§2.5 对应）一致。
+
+**诚实边界**：圆偏振/横波性为标准电动力学事实（数据核对，非新预言）；"环绕闭环"为法向平面内场形变周期循环的投影语义（非实体螺旋运动，§5.4）。
+
+## 6 方向 5：跨粒子推广与适用边界（电子自旋的对照）
+
+### 6.1 问题
+
+方向 4 的"闭合方向 ⊥ 运动方向 → 天然排斥"（光子）能否推广到其他粒子？本方向以电子自旋为对照，给出推广所需的三处逻辑调整与适用边界。**性质声明**：本方向为类比性论证（结构模式对照），非推导、无实验预言。
+
+### 6.2 推广的三处逻辑调整
+
+1. **质量门（最关键）**：光子 $m=0$ → 只有 $v=c$ 稳定等价类 → "天然排斥静止/纵向"成立（paper44 命题 3.1 正面）；电子 $m_e\neq0$ → 存在静止参考系（$v<c$ 等价类）→ **不排斥静止**——"排斥静止"整体失效（paper44 命题 3.1 反面）；
+2. **环绕结构 → $\mathbb{Z}_2$ 自旋结构**：光子二元取向 = 环绕方向 $\pm1$（法向平面内绕传播轴 $k$ 闭环，paper44 命题 2.6）；电子自旋 $1/2$ 无经典环绕几何，二元取向 = $2\pi$ 旋转相位 $\pm1$（$\pi_1(SO(3))=\mathbb{Z}_2$，自旋结构 $H^2(\mathcal{M},\mathbb{Z}_2)\neq0$）——框架内现成资源：Paper XXIX（Dirac 谱覆盖的 $\mathbb{Z}_2$ 阻碍）；附带：有质量电子螺旋度**非守恒**（质量项混合左/右手征），"环绕方向固定 ⊥ 运动方向"的锁定结构不存在；对应 paper44 §2.5——无质量粒子螺旋度 $h=\mathbf{J}\cdot\hat{\mathbf{k}}$ 为**洛伦兹不变**量（螺旋度=手性，Weyl $\gamma^5$ 本征值 $\pm1$），有质量电子须区分螺旋度与手性；
+3. **取向匹配 → 角动量守恒 + 泡利 + 塞曼**：光子吸收须能量 + 角动量匹配（选择定则，paper44 命题 2.3 双门：$\Delta m=J_z^{\text{photon}}\in\{0,\pm1\}$；$J_z$ 沿量子化轴、螺旋度 $s$ 沿传播轴，仅 $\mathbf{k}\parallel\hat{\mathbf{z}}$ 时重合——线偏振光子 $\Delta m=0$ 来自几何（$\boldsymbol{\varepsilon}\parallel\hat{\mathbf{z}}$）而非 $s=0$）；电子的"取向匹配"对应：总角动量守恒（$\Delta J$、宇称选择定则）、泡利不相容（同向自旋不共占）、塞曼效应（自旋取向与磁场取向匹配 → 能级分裂）。
+
+![图 2：可拦截性共振双门 —— 洛伦兹能量门曲线与选择定则取向门表（paper44 图 2）](../../figs/photon_fig2_resonance_dual_gate.png)
+
+（图 2 对应光子的"取向门"：能量门（$h\nu=\Delta E$，洛伦兹共振）+ 取向门（$\Delta m=J_z$，选择定则；禁戒跃迁 $B_{12}=0$ 即使能量匹配也不拦截）——跨粒子推广中电子侧的角动量守恒/泡利即此门的费米子对应。）
+
+### 6.3 电子的"天然排斥" = 泡利排斥
+
+同向自旋的费米子不能共占一态（反对称约束）→ 排斥（不共占）；反向自旋可结合（自旋单态配对，如库珀对）——与磁类比"同斥异吸"方向一致，且机制同样为**结构约束（反对称）而非力**，与光子侧"天然排斥 = 正交结构约束"结论同构。
+
+### 6.4 适用边界（诚实声明）
+
+- "闭合方向 ⊥ 运动方向"语言仅对**无质量横向自由度**成立（光子；无质量极限下的韦尔费米子手性锁定）；
+- **螺旋度=手性（洛伦兹不变）仅对无质量粒子成立**（光子、Weyl 费米子）；有质量费米子螺旋度非不变且非守恒——"环绕方向 $s=\pm1$"语言不可直接移植；
+- 有质量费米子须用 $\mathbb{Z}_2$ 自旋语言 + 泡利排斥重构，"天然排斥"从"排斥静止"变为"排斥同态共占"；
+- 若要进入论文，须按"非物理机制类比"标注（法拉第笼类比同款），本方向暂留笔记层。
+
+### 6.5 自旋拓扑化断言：自旋不是运动，是拓扑结构（2026-08-11 登记）
+
+**核心断言**：自旋（spin）不是旋转运动，而是一种**拓扑结构**（spin is not motion, but a topological structure）。该断言在 6.2-2（环绕结构 → $\mathbb{Z}_2$ 自旋结构）与拓扑表述 2.5.1（自旋 = 形变循环手性自由度）中已有数学内容，本节将其显式化为独立命题并推进。
+
+**标准物理佐证**（均为已确立事实，非新贡献）：
+
+1. **经典自转模型失败**（Uhlenbeck–Goudsmit, 1925）：电子"自转"所需表面速度 $v\sim\hbar/(2m_er_e)$ 远超 $c$——自旋角动量无"转动"载体，不能是运动学旋转；
+2. **旋量双值性 = 拓扑事实**：自旋-1/2 的 $2\pi$ 旋转变号（$4\pi$ 回自身）即 **SU(2) 双覆盖 SO(3)**（$\pi_1(SO(3))=\mathbb{Z}_2$）——自旋空间的基本群非平凡，与运动学无关；
+3. **Berry 相位**：自旋在磁场中绝热进动的相位积累为纯几何/拓扑量（磁单极通量 $\Omega/2$）——自旋演化的拓扑特征；
+4. **自旋-统计的拓扑表述**：自旋半整数 ⟺ 反对称，可由粒子交换路径缠绕的 $\mathbb{Z}_2$ 相位（$+1/-1$）表述——泡利排斥的拓扑对应（框架内呼应 6.3"结构约束而非力"）。
+
+**框架内三层定位**：
+
+- **光子（矢量场）**：自旋 $s=\pm1$ = 环绕轴闭合定向（拓扑表述 2.5.1、6.2-2）——**已拓扑化**（现有），载体为法向平面内绕 $\mathbf{k}$ 的环绕闭环；
+- **费米子（旋量场）**：自旋-1/2 = $\mathbb{Z}_2$ 自旋结构（$\pi_1(SO(3))$；框架资源 Paper XXIX Dirac 谱覆盖的 $\mathbb{Z}_2$ 阻碍）——**拓扑重述**（标准数学物理，非新贡献）；注意载体（SU(2) 表示/旋量纤维）与光子（环绕定向）**不同**，不可混用；
+- **与时间耦合线接口**（方向 6 推论 2.1 补全）：光子螺旋度沿传播轴 $\mathbf{k}$（**纵向**），时间耦合为**法向**（横向）自由度——若自旋为拓扑，则"自旋拓扑自由度 ⊥ 时间"（拓扑自由度本身与时间解耦，无需运动学参与）；有质量费米子（电子）的 $\mathbb{Z}_2$ 自旋结构与时间耦合的关系待推（诚实边界）。
+
+**诚实边界**：
+
+- 本断言为诠释/组织层面：自旋作为拓扑结构的数学内容（旋量双值性、$\mathbb{Z}_2$）是标准数学物理已确立事实，框架仅作拓扑语言重述，不构成新预言；
+- 光子螺旋度（横波性）与费米子自旋-1/2（旋量）的拓扑载体不同——统一"自旋 = 拓扑结构"语言须注意两类结构的数学载体差异；
+- "自旋拓扑自由度 ⊥ 时间"为方向 6 推演（类比推论 2.1），未机器证明、无实验判据。
+
+**开放问题**（深入推进项）：
+
+1. **旋量 $2\pi$ 变号机证**：$\pi_1(SO(3))=\mathbb{Z}_2$ 的形式化/机器证明（Lean 层，Paper XXIX 已有 Dirac 谱覆盖资源）；
+2. **统一"自旋 = 拓扑荷"语言**：光子环绕定向（$s=\pm1$）与旋量 $\mathbb{Z}_2$ 结构是否落入同一 Rec/Sp 谱范畴表述（共同范畴结构）？
+3. **有质量费米子自旋-时间耦合**：电子自旋拓扑自由度是否亦 ⊥ 时间？——质量门区分（方向 5 已有：电子有质量、有静止系，与光子不同）决定该接口是否成立。
+
+### 6.6 开放问题逐一推进（2026-08-11）
+
+**① 旋量 $2\pi$ 变号机证——数值层闭合**（脚本 `scripts/paperX_spin_topology_z2.py`，S1-S7，7/7 注册 run_all_tests.py）：S1 SU(2) 中 $U_z(2\pi)=-I$（旋量变号）vs SO(3) 中 $R_z(2\pi)=I$（无变号）；S2 覆盖提升——SO(3) 的 $2\pi$ 闭环提升为 SU(2) 开路径（$I\to-I$）、$4\pi$ 闭环提升为闭环（$I\to+I$）；S3 $\Phi:\mathrm{SU(2)\to SO(3)}$ 群同态 + 核 $\mathbb{Z}_2$（$\Phi(-U)=\Phi(U)$）+ 保向 $\det=1$（err 4.4e-16）；S4 任意轴 $2\pi$ 旋转旋量均变号（20 随机方向，max 1.2e-16）；S5 SU(2) $\cong S^3$ 参数化（$a^2+|\mathbf{b}|^2=1$，单连通载体）；S6 Uhlenbeck–Goudsmit 自转速度 $=68.5c$（自旋无转动载体）；S7 Berry 相位 $=-\Omega/2$（$\theta_0=60^\circ$，数值一致 9.7e-9）。**诚实边界**：数值层闭合 ≠ 形式化证明——$\pi_1(SO(3))=\mathbb{Z}_2$ 的严格证明属覆盖空间理论，Lean 层形式化仍开放（Paper XXIX Dirac 谱覆盖资源）。
+
+**② 统一"自旋 = 拓扑荷"语言——范畴结构分析（登记，未闭合）**：光子环绕定向 $s=\pm1$（拓扑表述 2.5.1：法向平面内绕 $\mathbf{k}$ 的环绕闭环定向）与旋量 $\mathbb{Z}_2$ 结构（$\pi_1(SO(3))=\mathbb{Z}_2$：$2\pi$ 旋转路径类）的共性为**二元离散拓扑标记**（$s=\pm1$ / $\mathbb{Z}_2$ 双值）；差异：光子 = 场形变循环的**环绕定向**（连续旋转对称性的离散定向类），旋量 = 旋转**路径类**的基本群标记（$\pi_1$ 阻碍类）。框架内尝试性统一语言：两者均为谱对象携带的 **$\mathbb{Z}_2$ 值拓扑荷**（离散不变量）。**未闭合**：Rec/Sp 谱范畴内 $\mathbb{Z}_2$ 值拓扑荷的公理化定义（与色荷 $C^3$ 色因子的并列结构）待建立——仅登记为框架内尝试性表述，非定理。
+
+**③ 有质量费米子自旋-时间耦合——质量门负结果（关闭）**：接口对电子**不成立**。分析：推论 2.1 的"⊥时间"逻辑链 = 方向解耦 + 光速锁定 + 固有时极限，其中"方向解耦（法向 ⊥ 基空间）"对光子成立因其无质量横向自由度（螺旋度锁定沿 $\mathbf{k}$，纵向）；电子有质量 → 存在静止系（时间耦合满）、自旋可任意取向（非锁定纵向）→ **电子自旋拓扑自由度不与时间解耦**。修正表述：自旋拓扑自由度的时间耦合由粒子质量态决定——无质量（光速）时自旋纵向锁定（⊥时间法向，解耦）；有质量时自旋任意取向、时间耦合不解除。该结论与 6.4 适用边界（"闭合方向⊥运动方向"仅对无质量横向自由度成立）及 6.2-1 质量门一致。
+
+### 6.7 自旋外显 = 拓扑结构与时间的作用角度 × 作用点数量（2026-08-11 精化 §6.5）
+
+**精化断言**："自旋不是运动，是拓扑结构"（§6.5）进一步精化——自旋不是**单纯**拓扑结构，而是**拓扑结构与时间关系的综合判断**；更具体地，**外显的自旋 = 拓扑结构与时间的作用角度 × 作用点数量**。
+
+**三个依据**（纯拓扑不足，需时间关系维度）：
+1. **量纲**：自旋角动量 $\hbar/2$，$\hbar$ 为作用量子（能量×时间）——时间维度内在于自旋定义；纯 $\mathbb{Z}_2$ 标记为无量纲离散类（±1），无法产出 $\hbar/2$ 量纲；
+2. **动力学**：进动（Larmor）、Berry 相位、塞曼分裂均为时间中的演化——纯拓扑为静态结构，自旋为含时行为；
+3. **质量门**（§6.6 ③）：同一 $\mathbb{Z}_2$ 拓扑结构，无质量（光速）纵向锁定（⊥时间、解耦 → 螺旋度=手性）vs 有质量任意取向（时间耦合满 → 角动量/塞曼/泡利）——可观测行为不同 ⟹ 自旋含"拓扑-时间关系"维度。
+
+**作用角度 ↔ 时间耦合几何**：外显自旋的"怎么作用"由拓扑结构与时间的作用角度决定——框架内即时间耦合强度 $\cos\theta$（速度角几何，方向 6 §7.6-7.8）：无质量（$\theta=90^\circ$）时间耦合 $=0$（自旋纵向锁定、与时间解耦）；有质量时作用角度任意（自旋取向角任意、时间耦合满）；塞曼分裂 = 自旋取向角与外场方向匹配的能量响应（作用角度决定外显能量，$\Delta E=\mu_B B\cos\vartheta$ 对应候选）。
+
+> **修正注记（2026-08-11，以 §6.12 为准）**：本节"作用角度 ↔ 时间耦合 cosθ"经严格评估**不成立**——静止电子反例（$v=0$，时间耦合满 $=1$，但塞曼 $\cos\vartheta$ 仍随自旋-磁场取向角变化）：$\cos\vartheta$ 为自旋-外场夹角，与运动学时间耦合无关。"作用角度"修正为**自旋-外场取向角 cosϑ**；§6.8① 的"与时间耦合 cosθ 结构同构"降级为**数学形式类比**（非物理等同）。二次修正断言与"时间=质量外显窗口"对偶见 §6.12。
+
+**作用点数量 ↔ 拓扑离散自由度**：外显自旋的"多少/值"由作用点数量决定——拓扑内核的离散标记：光子 $s=\pm1$（2 个环绕定向）、费米子 $\mathbb{Z}_2$ 双值（2 个旋量点）；自旋量子数（$1/2$）的离散性来自拓扑离散结构。
+
+**外显自旋 = 作用角度 × 作用点数量的综合**：可观测的自旋（$\hbar/2$ 角动量、磁矩、塞曼、泡利）由"时间耦合几何（角度）× 拓扑离散标记（点数量）"共同外显——"不是运动"否定运动学还原（§6.5 保留），"不是单纯拓扑"补上时间关系维度。
+
+**诚实边界**：
+- 本精化为框架内诠释（延续 §6.5）："作用角度/作用点数量"为概念性刻画，尚未给出独立于标准自旋理论的量化定义；
+- 与 §6.6 ③ 质量门负结果一致（电子自旋不与时间解耦）；
+- 未机器证明、无实验判据。
+
+**开放问题**（推进项）：
+1. **"作用角度"量化**：是否即时间耦合 $\cos\theta$ 在自旋自由度上的投影——与塞曼能量 $\Delta E=\mu_B B\cos\vartheta$ 的对应是否成立？
+2. **"作用点数量"计数规则**：光子 2 定向 / 费米子 $\mathbb{Z}_2$ 双值是否统一为同一离散计数（接 §6.6 ② Z₂ 值拓扑荷未闭合项）？
+3. **自旋-统计的"交换作用点"表述**：泡利排斥 = 交换路径的 $\mathbb{Z}_2$ 相位是否可归入"作用点"语言？
+
+### 6.8 开放问题推进（2026-08-11）
+
+**① "作用角度"量化——cos 投影候选成立（数值层闭合）**（脚本 `scripts/paperX_spin_zeeman_coupling.py`，S1-S5，5/5 注册 run_all_tests.py）：塞曼能量投影 $\Delta E(\vartheta)=2\mu_B B|\cos\vartheta|$（$90^\circ$ 归零——垂直取向无能量响应；$B=1$ T 分裂 $1.158\times10^{-4}$ eV 标准锚定）；与时间耦合 $\cos\theta$ 的**结构同构**——两者同为"单位矢量点积投影"（4-速度×时间轴 / 磁矩×磁场，100 随机对验证）；Larmor 进动 $\omega=2\mu_B B/\hbar=1.759\times10^{11}$ rad/s（自旋动力学为时间中过程，支撑 §6.7 动力学依据）。**结论**："作用角度 = $\cos$ 投影"量化候选在标准物理有直接对应，成立（框架诠释层，非新预言）。
+
+**② "作用点数量"计数规则——二元观测值（登记，推进）**：光子 2 螺旋度（$\pm1$，无 0 模）与费米子 $\mathbb{Z}_2$ 双值（$\pm1/2$）统一为"沿观测轴的**二元离散投影值**"（$N_{\text{pts}}=2$）。**关键观察**：光子不满足 $2s+1$（$s=1$ 应为 3，但横波性禁 0 螺旋度模）——计数规则不是 $2s+1$，而是 **$\mathbb{Z}_2$ 二元投影**（与质量门相关：无质量 → 无纵向 0 模）；与 §6.6 ② Z₂ 值拓扑荷一致。
+
+**③ 交换作用点——统计的拓扑交叉点（登记，推进）**：泡利排斥的 $\mathbb{Z}_2$ 相位（交换路径 $\pm1$）可归入"作用点"语言——交换 = 两粒子拓扑结构在时空路径上的**交叉作用点**，该点携带 $\mathbb{Z}_2$ 值（玻色子 $+1$ / 费米子 $-1$），决定自旋-统计；与 6.3（泡利 = 反对称结构约束而非力）一致——交换作用点 = 结构约束的实现点。**未闭合**：交叉作用点的严格拓扑定义（接 §6.6 ② Z₂ 值拓扑荷公理化）。
+
+### 6.9 Z₂ 值拓扑荷公理化尝试（2026-08-11 推进 §6.6② / §6.8③ 共同底层）
+
+**目标**：为统一"自旋 = 拓扑荷"语言（§6.6②）与"交换作用点"严格定义（§6.8③）的共同底层建立公理化框架。
+
+**候选公理化定义**（框架内尝试，非定理）：设 $X$ 为 Rec/Sp 谱对象，其 **$\mathbb{Z}_2$ 值拓扑荷**为映射 $\sigma:\mathrm{Obj}(\mathbf{Sp})\to\mathbb{Z}_2=\{+1,-1\}$，满足：
+- **(A1) 离散性**：$\sigma$ 为同伦不变量（连续形变/谱流下不变）——自旋的离散标记本质；
+- **(A2) 张量性**：$\sigma(X\otimes Y)=\sigma(X)\cdot\sigma(Y)$——谱对象复合时 $\mathbb{Z}_2$ 值相乘（模 2 加法）；
+- **(A3) 核结构**：$\sigma$ 的核对应双覆盖纤维（每取值恰 2 提升——覆盖空间结构，§6.6 S2/S3 数值支撑）；
+- **(A4) 外显性**：$\mathbb{Z}_2$ 值拓扑荷的"外显"（可观测自旋：$\hbar/2$ 量纲、塞曼、泡利）由与时间的关系决定（§6.7：作用角度 × 作用点数量）——拓扑荷本身为离散标记，物理显现经时间耦合（质量门）。
+
+**实例对应**：光子螺旋度 $s=\pm1$（环绕定向，$\sigma=\pm1$）；费米子旋量（$2\pi$ 变号，$\sigma=-1$）；玻色子（$\sigma=+1$）；自旋-统计（交换相位 $\sigma_1\sigma_2$，§6.8③ 交叉作用点携带 $\mathbb{Z}_2$ 值）。
+
+**代数结构验证**（脚本 `scripts/paperX_z2_topological_charge.py`，S1-S5，5/5 注册）：S1 $\mathbb{Z}_2$ 群结构（乘法 ≅ 模 2 加法，$(-1)^2=+1$：费米子×费米子=玻色子）；S2 符号同态 $\mathrm{sign}:S_N\to\mathbb{Z}_2$（$S_4$ 全体 $24^2$ 组合，A2 张量性的实例）；S3 $N$ 粒子交换符号 $(-1)^{N(N-1)/2}$；S4 Levi-Civita $\varepsilon$ 偶/奇置换 $\pm1$；S5 张量性候选（光子 $s_1s_2$ 封闭于 $\mathbb{Z}_2$、费米子$\otimes$费米子=玻色子型）。
+
+**与色荷的并列结构**：色荷 $C^3$（SU(3) 表示标记，连续规范对称性）与 $\mathbb{Z}_2$ 值拓扑荷（离散阻碍类）分属不同层次——色荷为规范对称性标记、$\mathbb{Z}_2$ 值拓扑荷为拓扑阻碍标记；二者并列于谱对象的"量子数谱"（框架内尝试性表述）。
+
+**诚实边界**：公理化定义（A1-A4）为框架内尝试，未证明（非定理）；数学内容（符号同态、模 2 结构）为标准代数事实；A2 张量性仅验证实例自洽，未证明对全体谱对象成立；A4 外显性依赖 §6.7 质量门诠释。
+
+**开放问题**（剩余未闭合）：
+1. A2 张量性对全体谱对象的证明（范畴层）；
+2. 光子环绕定向是否严格落入"特征类"框架（$s=\pm1$ 的拓扑来源：$S^1$ 环绕定向 vs $w_2$ 自旋结构阻碍类——两个 $\mathbb{Z}_2$ 值是否同一拓扑荷）；
+3. A4 的量化（作用角度 $\cos\theta$ 投影与塞曼对应的严格嵌入，§6.8① 的范畴表述）。
+
+### 6.10 开放问题推进：环绕模 2 统一（2026-08-11）
+
+**② 光子环绕定向与旋量 $\mathbb{Z}_2$ 结构——统一为同一 $\mathbb{Z}_2$ 值拓扑荷（闭合）**：核心数学事实 $\pi_1(SO(2))=\mathbb{Z}\to\pi_1(SO(3))=\mathbb{Z}_2$ 为**模 2 约化**——光子环绕数 $n\in\mathbb{Z}$（$\pi_1(SO(2))$，法向平面环绕）模 2 与旋量 $2\pi$ 变号（$\pi_1(SO(3))$ 非平凡类）给出**同一 $\mathbb{Z}_2$ 值拓扑荷**。脚本 `scripts/paperX_z2_winding_unification.py`（S1-S5，5/5 注册）：S1 $U(2\pi n)=(-1)^n I$（$n$ 奇 $\to-I$、偶 $\to+I$，$n\in[-3,3]$）；S2 光子两螺旋度（$s=\pm1$）模 2 **同值**（$n\equiv -n\pmod 2$，均非平凡类）——两环绕方向对应同一 $\mathbb{Z}_2$ 拓扑荷。**层级注意**：此统一在"环绕数模 2 类"层面；"投影值 $s=\pm1$"（观测 2 值）与"统计类"（光子玻色子 $+1$）为不同层级（S5 区分，见下）。
+
+**① A2 张量性——由环绕数可加性推出（候选论证闭合）**：$\sigma(X\otimes Y)=\sigma(X)\cdot\sigma(Y)$ 由环绕数可加性 + 模 2 约化自然成立：$\sigma(n_1+n_2)=(-1)^{n_1+n_2}=\sigma(n_1)\sigma(n_2)$（$\mathbb{Z}_2$ 加法 = $\mathbb{Z}_2$ 乘法，S3 全组合验证）。范畴层严格证明（对全体谱对象的 $\otimes$ 结构）仍开放，但代数骨架闭合。
+
+**③ A4 量化嵌入——外显 = σ × cosϑ（乘积结构闭合）**：A4 外显性的量化形式：**外显能量 = $\sigma\cdot(2\mu_B B\cos\vartheta)$**——$\mathbb{Z}_2$ 符号（$\sigma=\pm1$）与时间耦合投影强度（$\cos\vartheta$，§6.8①）的乘积分解（S4 验证）。即：拓扑荷 $\sigma$ 决定"符号/取向"，时间耦合投影 $\cos\vartheta$ 决定"强度"，外显 = 符号 × 强度。
+
+**三层次区分**（防混淆，S5）：**投影值** $s=\pm1$（观测 2 值）vs **环绕模 2 类**（非平凡单值）vs **统计类**（光子玻色子 $+1$ / 费米子 $-1$）——光子统计类（整数自旋，交换对称）独立于其环绕模 2 类（非平凡），三个 $\mathbb{Z}_2$ 相关量层级不同，不可混为一谈（§6.5"自旋=拓扑结构"在此意义上须限定于"环绕模 2 类/投影值"层面，统计类由自旋-统计定理另行决定）。
+
+**Lean 形式化（三层次区分，`PhotonTopologyExterior.lean`，`lake env lean` 编译通过、零 sorry）**：
+- **`Particle`**（光子/费米子）+ **`statistics`**（统计类：玻色子 +1/费米子 −1）+ **`windingClass`**（环绕模 2 类：光子/费米子均非平凡）+ **`projectionValue`**（投影值：二元投影）；
+- **`photon_statistics_independent_of_winding`**：光子统计类（+1）≠ 环绕模 2 类（非平凡）——**统计类独立于环绕类**的机器证明（§6.10 S5 防混淆核心）；
+- **`fermion_statistics_eq_winding`**：费米子统计类 = 环绕类（均 −1）——对照实例；
+- **`winding_same_for_opposite`**：σ(n)=σ(−n)（ZMod 2 特征 2）——投影值 s=±1 对应**同一**环绕模 2 类（层级 1 两值 → 层级 2 单值）的机器证明。
+
+### 6.11 开放问题推进：π₁ 级 vs w₂ 级层级澄清（2026-08-11）
+
+**② w₂ 特征类严格嵌入——层级澄清（闭合为诚实结论；2026-08-11 修正 RP³ 数据）**：脚本 `scripts/paperX_z2_characteristic_class.py`（S1-S5，5/5 注册）——$\sigma$（$\pi_1$ 级，结构群级：环绕数模 2 / 旋量变号，§6.10）与 $w_2$（$H^2$ 级，流形级第二 Stiefel-Whitney 类）**层级不同**：
+- $\pi_1$ 级：RP$^3$（非平凡）、$S^2/S^3/$CP$^2$（单连通平凡）；
+- $w_2$ 级：**仅 CP$^2$ 非零**；RP$^3$（Lie 群 SO(3)，切丛平凡，$w(\mathrm{RP}^3)=(1+x)^4\equiv1\pmod2$）$w_2=0$、$S^2/S^3$ 为零；
+- **判别反例 CP$^2$**：单连通（$\pi_1$ 平凡 → $\sigma$ 无阻碍）但 $w_2\neq0$（无自旋结构）——$\sigma\neq w_2$，不可等同；
+- 自旋结构判据：$w_2=0\iff$ 自旋结构存在（**RP$^3/$S$^2/$S$^3$ 有**、CP$^2$ 无）；
+- **双向判别（S5，修正后强化）**：RP$^3$（$\pi_1$ 非平凡、$w_2=0$、有自旋结构——$\pi_1$ 非平凡 $\not\Rightarrow w_2\neq0$）vs CP$^2$（$\pi_1$ 平凡、$w_2\neq0$、无自旋结构——$w_2\neq0\not\Rightarrow\pi_1$ 非平凡）——**$\sigma$ 与 $w_2$ 相互独立、无单调蕴含**（两个互补反例共同证明层级独立）。
+
+**诚实结论**：$\sigma$ 为**一阶 $\mathbb{Z}_2$ 值拓扑荷**（$\pi_1$ 级，结构群级）；$w_2$ 为**二阶特征类**（$H^2$ 级，流形级）——二者**相互独立**（双向反例：RP³ 与 CP²），不可等同亦无蕴含关系；"严格落入特征类框架"须经 Postnikov 塔/同调对偶的提升论证（$\sigma$ 诱导的阻碍与 $w_2$ 的关联），该正式对偶论证登记为开放项。**修正说明**：早期版本误记 $w_2(\mathrm{RP}^3)\neq0$（把 $w(\mathrm{RP}^2)$ 的值用于 RP³）——RP³ 为 Lie 群（切丛平凡），全部 SW 类为零、有自旋结构；双向判别反而强化了层级独立结论。
+
+**① A2 张量性范畴证明——框架内定义候选（登记，开放）**：A2 的范畴层证明依赖谱范畴 $\otimes$ 结构的精确定义——候选定义：
+- 候选 A：谱对象复合/并置（Rec/Sp 对象的胶合），$\sigma$ 对复合可加（环绕数模型已验证 $\sigma(n_1+n_2)=\sigma(n_1)\sigma(n_2)$）；
+- 候选 B：谱纤维丛的 Whitney 和/张量积（Paper XXI/XXII 资源），$\sigma$ = 纤维拓扑阻碍类的可加性。
+谱范畴 $\otimes$ 结构未在系列论文显式定义——正式证明待 $\otimes$ 结构确立后，登记为开放。
+
+### 6.12 研究结论整理：自旋-质量的双窗口外显（2026-08-11 二次修正 §6.7）
+
+**背景**：对 §6.7 断言（外显自旋 = 作用角度 × 作用点数量）的严格评估发现：①"作用角度 = 时间耦合 cosθ"**物理上不成立**（静止电子反例）；②"外显由与时间的关系决定"**过度**。经"扩大为时间+力"与"时间 = 质量外显窗口"两轮讨论，整理如下。
+
+**二次修正断言**（三因子）：
+
+$$\text{自旋}=\text{内禀拓扑/表示结构}\times\text{时间耦合模式}\times\text{与力的耦合}$$
+
+| 因子 | 内容 | 决定 |
+|:--|:--|:--|
+| 拓扑/表示结构 | $\mathbb{Z}_2$ 旋量 / 环绕定向（$\sigma=\pm1$，离散标记） | 量子数与离散性（作用点数量） |
+| 时间耦合模式 | 质量门：无质量解耦（螺旋度锁定）、有质量耦合（任意取向） | "接通方式"（§6.6③） |
+| 与力的耦合 | 外场（电磁/强/弱）+ 背景几何（引力非场，§7.9） | 可观测外显（塞曼 cosϑ、泡利、进动） |
+
+**"作用角度"修正**：从"时间耦合 cosθ"修正为**自旋-外场取向角 cosϑ**。判别反例：**静止电子**（$v=0$，$\theta=0^\circ$，时间耦合满 $=1$）的塞曼分裂仍随自旋取向角 $\vartheta$ 变化（$\Delta E=2\mu_B B\cos\vartheta$）——$\cos\vartheta$ 为自旋-磁场夹角，与运动学时间耦合无关。§6.8① 的"与时间耦合 cosθ 结构同构"降级为**数学形式类比**（同为单位矢量点积投影），**非物理等同**。
+
+**对偶结构：双窗口外显**：
+
+| 内禀属性 | 外显窗口 | 机制 |
+|:--|:--|:--|
+| **质量** | **时间**（固有时/频率/寿命） | 时间耦合模式（质量门） |
+| **自旋** | **力**（外场/相互作用） | 塞曼/泡利/进动 |
+| **拓扑内核** | 二者皆含（$\mathbb{Z}_2$ 结构） | 离散标记 + 公理化 A1-A4 |
+
+**"时间 = 质量外显窗口"的两个层次**：
+1. **质量有无 → 时间耦合模式**：有质量有固有时（$d\tau>0$，时间耦合满）；无质量（光子）固有时冻结（$d\tau=0$，时间耦合零）——**固有时存在性 = 质量有无的最直接可观测窗口**；
+2. **质量大小 → 时间尺度**：物质波频率 $\omega=mc^2/\hbar$（相位演化率）、寿命 $\tau\propto1/m^5$（弱衰变）、钟慢程度（$v<c$ 不可达）——质量大小经时间尺度外显。
+
+**诚实边界**：
+1. "外显窗口"为可观测通道，**非**"质量=时间"或"自旋=力"的等同声称；
+2. 可验证内容（固有时存在性、$\omega=mc^2/\hbar$、寿命标度、塞曼/泡利/进动）均为标准物理事实——框架增量在"时间耦合模式（质量门）+ $\mathbb{Z}_2$ 拓扑荷"的统一语言与结构组织，非新物理预言；
+3. 与 §6.6③ 质量门、§6.7、§7.9 引力非场（$\sqrt{g_{00}}$ 背景调制）完全自洽；
+4. §6.7"作用角度 ↔ 时间耦合 cosθ"及 §6.8① 的相应表述以本节修正为准（演进记录保留原文字）。
+
+**开放项**：时间窗口（固有时/频率/寿命）与力窗口（塞曼/泡利/进动）在框架内的统一范畴表述（是否同源为 $\mathbb{Z}_2$ 值拓扑荷的外显，接 §6.9-6.11 公理化）——登记开放。
+
+### 6.13 Postnikov 塔与同调对偶的代数骨架（2026-08-11 推进 §6.9②/§6.11 正式对偶论证开放项）
+
+**目标**：为 w₂ 正式对偶论证（$\sigma$ 诱导阻碍与 $w_2$ 的 Postnikov 塔关联）建立代数骨架。脚本 `scripts/paperX_postnikov_homology.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** RP³ 胞腔同调：$H_0=\mathbb{Z}$、$H_1=\mathbb{Z}_2$、$H_2=0$、$H_3=\mathbb{Z}$（边界 $d_3=0/d_2=2/d_1=0$）——$\pi_1=\mathbb{Z}_2$ 的 Abel 化对偶；
+- **S2** RP³ 的 $\mathbb{Z}_2$ 上同调（万有系数）：$H^0=H^1=H^2=H^3=\mathbb{Z}_2$——但 $w_2=0$（切丛平凡）：**同调类非平凡 ≠ 特征类非零**（$w_2$ 为切丛阻碍类，非单纯同调）——深化 §6.11 层级澄清；
+- **S3** CP² 同调：$H_0=H_2=H_4=\mathbb{Z}$（单连通）、$H^2(\mathrm{CP}^2;\mathbb{Z}_2)=\mathbb{Z}_2$、$w_2=c_1\bmod2\neq0$；
+- **S4** Postnikov 塔前两层：RP³（$\pi_1=\mathbb{Z}_2$、$\pi_2=0$）、CP²（$\pi_1=0$、$\pi_2=\mathbb{Z}$）；
+- **S5** 可定向性-自旋结构：RP³（可定向、$w_1=0$、$w_2=0$ → 有自旋结构）vs CP²（$w_2\neq0$ → 无）。
+
+**关键深化**：$H^2(\mathrm{RP}^3;\mathbb{Z}_2)=\mathbb{Z}_2$ 非平凡但 $w_2=0$——$w_2$ 是切丛（结构群 Spin(3) 提升）的阻碍类，与底空间同调的非平凡性无关；这进一步说明 $\sigma$（$\pi_1$ 级）与 $w_2$（$H^2$ 级）不仅相互独立（§6.11 双向判别），且 $w_2$ 的载体是**切丛结构**而非底空间同调——正式对偶论证（Postnikov 塔中 $\sigma$ 诱导阻碍与 $w_2$ 的关联）仍开放，但代数骨架（同调/上同调/同伦群/可定向性）已核对。
+
+**诚实边界**：胞腔同调/万有系数/Postnikov 塔前两层为标准代数拓扑已知结果核对（非新计算）；正式对偶论证（$\sigma$ 与 $w_2$ 经 Postnikov 塔的严格关联）登记为开放。
+
+### 6.14 "时间 = 质量外显窗口"层次二数值验证（2026-08-11 支撑 §6.12）
+
+支撑 §6.12"质量大小 → 时间尺度"层次——质量经时间窗口外显的两个互补表现。脚本 `scripts/paperX_mass_time_window.py`（S1-S4，4/4 注册 run_all_tests.py）：
+- **S1** 物质波频率 $\omega=mc^2/\hbar$：电子 $7.76\times10^{20}$、μ 子 $1.61\times10^{23}$、质子 $1.43\times10^{24}$、τ 子 $2.70\times10^{24}$ Hz——$\omega\propto m$ 严格线性（质量越大相位演化越快）；
+- **S2** 寿命标度 $\tau\propto1/m^5$：$(m_\tau/m_\mu)^5=1.34\times10^6$ vs 实测 $\tau_\mu/\tau_\tau=7.57\times10^6$（量级差 0.8，CKM/相空间修正内）；
+- **S3** 双尺度互补：$m\uparrow\Longrightarrow\omega\uparrow$（频率增）且 $\tau\downarrow$（寿命减）——质量经时间窗口的两个外显方向；
+- **S4** 质量门参考：有质量静止时间耦合 $=1$（固有时 $d\tau>0$）vs 光子零耦合（$d\tau=0$）。
+
+**结论**：§6.12 层次二（质量大小→时间尺度）获数值支撑——物质波频率（ω∝m）与弱衰变寿命（τ∝1/m⁵）是质量经时间窗口的互补外显；质量门（层次一：质量有无→时间耦合模式）由 S4 与 §7.24 S11 共同支撑。
+
+**诚实边界**：ω=mc²/ħ 与 τ∝1/m⁵ 均为标准物理事实核对（非新预言）；寿命标度含 CKM/相空间修正（量级验证非精确）；"时间窗口"为 §6.12 框架诠释。
+
+### 6.15 w₂ 正式对偶论证：分类空间层骨架（2026-08-11 推进 §6.13 延伸）
+
+将 σ 与 w₂ 的分层关联从流形层（§6.13）推进到**分类空间层**（结构群阻碍的自然载体）。脚本 `scripts/paperX_classifying_space.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** $H^*(\mathrm{BSO}(3);\mathbb{Z}_2)=\mathbb{Z}_2[w_1,w_2,w_3]$：SW 类为分类空间自由生成元（维度 1/2/3），Poincaré 级数 $1/((1-t)(1-t^2)(1-t^3))\to1,1,2,3,4,5,\dots$；
+- **S2** $H^*(\mathrm{BSU}(2);\mathbb{Z}_2)=\mathbb{Z}_2[v_4]$：Spin(3)=SU(2) 分类空间（单生成元 4 维）；
+- **S3** 诱导拉回 $\mathrm{BSU}(2)\to\mathrm{BSO}(3)$：$w_1\mapsto0$、$w_2\mapsto0$（BSU(2) 无 1/2 维类）——**σ 双覆盖在分类空间层消除**；
+- **S4** 提升判据：SO(3) 主丛 P 可提升为 Spin 主丛 ⟺ $w_2(P)=0$（RP³/S²/S³ 可、CP² 不可，§6.11/6.13 实例核对）；
+- **S5** 对偶关联：σ（$\pi_1(\mathrm{SO}(3))=\mathbb{Z}_2$ 双覆盖阻碍，结构群级）经分类空间 $\mathrm{BSpin}(3)\to\mathrm{BSO}(3)$ 拉回消除（$w_1\mapsto0$、$w_2\mapsto0$）——σ 与 w₂ 的分层关联骨架。
+
+**结论**：σ（结构群级 π₁ 双覆盖）与 w₂（主丛级 Spin 提升阻碍，H² 级）经分类空间的关联骨架已核对——BSpin(3)→BSO(3) 拉回消除 w₁/w₂ 是"提升成功"的分类空间表达；正式对偶论证（Postnikov 塔严格关联）仍开放，但流形层（§6.13）+ 分类空间层（本节）两层骨架已备。
+
+**诚实边界**：分类空间上同调/拉回/提升判据为标准代数拓扑已知结果核对（非新计算）；正式对偶论证（σ 与 w₂ 经 Postnikov 塔的严格关联）登记为开放。
+
+### 6.16 Postnikov 塔 k-不变量骨架（2026-08-11 推进 w₂ 正式对偶论证第三层）
+
+在流形层（§6.13）+ 分类空间层（§6.15）之后，补 Postnikov 塔层（σ 所在的同伦阻碍结构）。脚本 `scripts/paperX_postnikov_k_invariant.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** $K(\mathbb{Z}_2,1)=\mathrm{RP}^\infty$ 整系数上同调：$H^0=\mathbb{Z}$、$H^{k\text{ 偶}>0}=\mathbb{Z}_2$、$H^{k\text{ 奇}}=0$；
+- **S2** RP^∞ 的 $\mathbb{Z}_2$ 上同调：$H^k=\mathbb{Z}_2$（全 k）；
+- **S3** RP³ 的 Postnikov 塔三层：$\pi_1=\mathbb{Z}_2$（K(Z₂,1) 层）、$\pi_2=0$（无层）、$\pi_3=\mathbb{Z}$（K(Z,3) 层，S³ 覆盖）；
+- **S4** k-不变量载体：第一个 k-不变量 $k^4\in H^4(K(\mathbb{Z}_2,1);\mathbb{Z})=\mathbb{Z}_2$ 非平凡（$\pi_3$ 层扭合——RP³ 3 维使 4 维类被杀）；
+- **S5** **w₂ 与 k-不变量独立性**：w₂=0（切丛阻碍，§6.11 修正值）但 k-不变量载体 H⁴(K(Z₂,1);Z)=Z₂ 非平凡（同伦阻碍）——不同载体、相互独立。
+
+**结论**：w₂ 正式对偶论证的**三层骨架已备齐**——流形层（§6.13：同调/上同调/自旋结构判据）、分类空间层（§6.15：BSO(3)/BSU(2) 拉回）、Postnikov 塔层（本节：k-不变量载体）；且 S5 再次确认 w₂（切丛阻碍）与同伦阻碍（k-不变量）不同载体——正式对偶论证（σ 诱导阻碍与 w₂ 经 Postnikov 塔的严格定理）仍开放，但所需代数/同伦结构已全部核对。
+
+**诚实边界**：RP^∞ 上同调/Postnikov 塔/k-不变量均为标准代数拓扑已知结果核对（非新计算）；正式对偶论证登记为开放。
+
+### 6.17 ⊗ 结构定义候选的代数骨架：A2 张量性推进（2026-08-12 推进 §6.10①/§6.11① 共同开放项）
+
+§6.10①/§6.11①"A2 张量性 $\sigma(X\otimes Y)=\sigma(X)\cdot\sigma(Y)$ 对全体谱对象的范畴层证明依赖 $\otimes$ 结构精确定义（候选 A：复合/并置可加；候选 B：Whitney 和/张量积）"——本子节补 $\otimes$ 结构定义候选的代数骨架（实例层核对）。脚本 `scripts/paperX_tensor_whitney_z2.py`（S1-S5，8/8 注册 run_all_tests.py）：
+
+- **S1** **Whitney 求和公式** $w(\xi\oplus\eta)=w(\xi)\cdot w(\eta)$（候选 B 代数前提）：S² 霍普夫丛 $\eta$（$w_2=a\neq0$）$\eta\oplus\eta$：$(1+a)^2=1+2a+a^2\equiv1\pmod2$（stably trivial）；RP² $w(\mathrm{RP}^2)=(1+x)^3\to1+x+x^2$（$w_1=w_2=1$）；Lucas 定理（$C(n+1,k)$ 奇 ⟺ $k$ 的每位 $\le n+1$ 的每位）核对 $n=1..7$；
+- **S2** **线丛张量积公式**（$\mathbb{Z}_2$ 可加结构）：实线丛 $w_1(L\otimes M)=w_1(L)+w_1(M)\pmod2$（全 4 组合，$\mathbb{Z}_2$ 加法 = 异或）；CP² 霍普夫线丛 $H$：$w_2(H)=c_1\bmod2\neq0$ 但 $w_2(H\otimes H)=w_2(H)+w_2(H)=2x\equiv0$——**张量平方在 $\mathbb{Z}_2$ 消失**（$c_1(H\otimes H)=2x=0$）；
+- **S3** **σ 幺半群同态候选** $(Sp,\otimes)\to(\mathbb{Z}_2,\cdot)$：$\sigma(X\otimes Y)=\sigma(X)\cdot\sigma(Y)$——双覆盖$\otimes$双覆盖=$+1$（费米子⊗费米子=玻色子）、光子环绕⊗环绕=$+1$、平凡对象（$+1$）为单位元；结合/交换/单位元在 $\mathbb{Z}_2$ 像中保持；
+- **S4** **复合可加性**（候选 A）：$\sigma(n_1+n_2)=(-1)^{n_1+n_2}=\sigma(n_1)\sigma(n_2)$，$n\in[-5,5]$ 全 121 组合（§6.10① 代数骨架统一重述）；
+- **S5** **结构同构**：$w_1$ 的 $\oplus$ 加法（$\mathbb{Z}_2$ 加）与 $\sigma$ 的 $\otimes$ 乘法（$\mathbb{Z}_2$ 乘）经同构 $0\mapsto+1,1\mapsto-1$ 完全一致（$\mathbb{Z}_2$ 中加 = 乘）——$\otimes$ 定义候选 A/B 代数骨架闭合。
+
+**结论**：$\otimes$ 结构定义候选的代数骨架闭合——候选 A（复合可加）与候选 B（Whitney 和/张量积）在 $\mathbb{Z}_2$ 层给出同一结构（加 = 乘），且 σ 的幺半群同态性质在全部实例上成立；A2 张量性从"实例自洽（§6.9 S5）+ 环绕数模型（§6.10①）"升级为"候选 ⊗ 结构上的代数骨架闭合"。同时为三处开放项清障：§6.12 双窗口统一范畴表述、§7.27② g_rr 范畴表述（均待 ⊗ 结构）。
+
+**诚实边界**：Whitney 求和/张量积公式、Lucas 定理为标准代数拓扑事实（数据核对，非新计算）；σ 幺半群同态为框架内候选（非定理）；对**全体谱对象**的 ⊗ 精确定义与 σ 同态正式证明仍开放（§6.10①/§6.11① 剩余）。
+
+**Lean 形式化（⊗ 结构候选的 Z₂ 同态结构澄清，`PhotonTopologyExterior.lean`，`lake env lean` 编译通过、零 sorry）**：
+- **`Z2ChargeMul`**：乘法目标 Z₂ 值拓扑荷——σ(X⊗Y)=σ(X)·σ(Y) + σ(1)=1（ZMod 2 乘法目标，对应维度/秩奇偶类在维度相乘的 ⊗（Kronecker 型）下的结构）；
+- **`dimParityCharge`**：维度奇偶 σ(n)=n mod 2 为 ℕ 乘法幺半群上的乘法目标同态（σ(n·m)=σ(n)·σ(m)，`Nat.cast_mul` 机器证明）——§6.11① SpObj ⊗ 候选的维度分量；
+- **`winding_not_multiplicative_target`**：环绕数模型 σ(1+1)≠σ(1)·σ(1)——环绕数为**加法目标**同态（`Z2Charge`，±1 乘法同构下即框架 σ 的乘法形式），非乘法目标。
+
+**结构澄清结论（§6.11① 方向性）**：框架 σ 的非平凡性（环绕数模型 σ(n)=(-1)^n）要求**加法型 ⊗**（复合可加，候选 A）——维度相乘型 ⊗（Kronecker）下 σ 为乘法目标同态（ZMod 2 乘法 = 布尔 AND 结构），与 ±1 乘法形式的框架 σ 不同构；完整 SpObj ⊗（Kronecker 矩阵内容 + 幺半群结合律的 Fin 维度管道）仍登记开放。
+
+### 6.18 w₂ 正式对偶论证：实例判别矩阵收口（2026-08-12 推进 §6.16 结尾开放项）
+
+§6.16 结尾"w₂ 正式对偶论证（σ 诱导阻碍与 w₂ 经 Postnikov 塔的严格定理）仍开放，三层骨架已备齐"——本子节把三层骨架（流形 §6.13 / 分类空间 §6.15 / Postnikov §6.16）整合为**实例判别矩阵**，收口为诚实结论：**普适对偶定理不成立（CP² 反例），条件性对偶开放**。脚本 `scripts/paperX_duality_discriminant.py`（S1-S5，5/5 注册 run_all_tests.py）：
+
+- **S1** σ（π₁ 级）判别：7 实例（S¹/S²/S³/T²/RP²/RP³/CP²）——σ=-1 ⟺ π₁ 非平凡（S¹/T²/RP²/RP³ 非平凡、S²/S³/CP² 单连通），全一致；
+- **S2** w₂（H² 级）判别：同实例的 w₁/w₂/自旋结构——自旋结构 ⟺ w₂=0（RP²/CP² 无、其余有），全一致；
+- **S3** **层级独立四象限全覆盖**：(σ≠0,w₂≠0)={RP²}、(σ≠0,w₂=0)={S¹,T²,RP³}、(σ=0,w₂≠0)={CP²}、(σ=0,w₂=0)={S²,S³}——四象限均有实例 + **双向反例**（RP³：σ≠0 但 w₂=0；CP²：σ=0 但 w₂≠0）⟹ σ 与 w₂ **无单调蕴含**（§6.11 结论矩阵化）；
+- **S4** **三层骨架一致性**：层1 H² 非平凡与 w₂≠0 无强制关系（RP³：H² 非平凡但 w₂=0；CP²：H² 非平凡且 w₂≠0——§6.13 关键深化）；层2 分类空间拉回 = 流形 w₂（RP³=0、CP²=1）；层3 Postnikov π₁ 层存在 ⟺ σ≠0——三层对共享实例分类一致；
+- **S5** **收口**：σ 与 w₂ 的普适对偶定理不成立（CP² 反例否定一切蕴含方向）；三层骨架整合后一致支持层级独立——**条件性对偶**（π₁ 与 H² 在特定结构条件下的可能关联）登记为开放。
+
+**结论**：w₂ 正式对偶论证从"三层骨架备齐、严格定理仍开放"收口为**精确的诚实结论**——σ（π₁ 级一阶 Z₂ 值拓扑荷）与 w₂（H² 级二阶特征类）之间不存在普适的对偶/蕴含定理（四象限全覆盖 + CP² 反例），"正式对偶论证"的合理剩余形式为**条件性对偶**（特定结构条件下，如 §6.15 的 Spin 提升判据 w₂=0 ⟺ 可提升，为已有的条件性实例）；三层骨架（§6.13/6.15/6.16）的全部核对一致支持这一收口。
+
+**诚实边界**：π₁/特征类/自旋结构判据为标准代数拓扑事实（数据核对）；矩阵整合为三层骨架的系统化重述（非新计算）；"普适对偶不成立"由 CP² 反例 + 四象限全覆盖支撑（§6.11 双向判别的矩阵化）；条件性对偶仍为开放项。
+
+### 6.19 双窗口统一范畴表述：σ 外显乘积结构的代数骨架（2026-08-12 推进 §6.12 开放项）
+
+§6.12 开放项"时间窗口（固有时/频率/寿命）与力窗口（塞曼/泡利/进动）的统一范畴表述（是否同源为 $\mathbb{Z}_2$ 值拓扑荷的外显）"——§6.17 的 ⊗ 代数骨架清障后，补双窗口外显的统一代数骨架：**外显 = σ × 通道强度**（离散标记 × 连续量级）。脚本 `scripts/paperX_dual_window_sigma.py`（S1-S5，6/6 注册 run_all_tests.py）：
+
+- **S1** **双窗口 σ 核同一性**：时间窗口（质量门）与力窗口（自旋-场耦合）的拓扑内核均含同一 $\mathbb{Z}_2$ 值拓扑荷 σ（§6.12 表"拓扑内核二者皆含"）；σ²=1 使跨通道符号自洽；
+- **S2** **通道分离定量对照**：时间通道（ω=mc²/ħ 随质量单调、τ∝1/m⁵ 子量级符合——μ/τ 寿命比 7.6e6 vs (m_τ/m_μ)⁵=1.3e6，对数偏差 0.75 量级）+ 力通道（塞曼 ΔE=2μ_B B cosϑ 最大分裂 1.158e-4 eV、Larmor ω_L=1.759e11 rad/s 标准值）；
+- **S3** **乘积结构统一**：两窗口均为"离散标记 × 连续强度"分解——时间 = σ_time（质量门 0/1）× ω（无质量光子 σ_time=0 无固有时 vs 有质量 σ_time=1）；力 = σ × 2μ_B B cosϑ（§6.10③ A4 量化：σ=±1 编码取向符号、强度项编码量级）；
+- **S4** **σ 幺半群同态兼容**：σ 在 ⊗ 下（§6.17：σ(X⊗Y)=σ(X)σ(Y)）与双通道外显复合一致——双窗口同时外显乘积 = σ²·c₁c₂ = c₁c₂（σ 符号跨通道消去，与 σ 无关：σ=±1 时 E₁E₂ 相同），共享标记自洽；
+- **S5** **总结**：双窗口统一范畴表述的代数骨架闭合（外显函子候选 E: Sp→Obs，E(X)=σ(X)×channel(X)，两窗口为两通道纤维共用 σ 核）；正式范畴定义（Obs 范畴/外显函子严格定义）仍开放。
+
+**结论**：§6.12 开放项"是否同源为 σ 的外显"获**代数骨架闭合**——时间/力窗口共享同一 $\mathbb{Z}_2$ 值拓扑荷 σ 作为离散标记（拓扑内核），经不同通道强度（时间尺度 ω/τ⁻¹、力耦合 2μ_B B cosϑ）外显；"外显 = σ × 通道强度"为统一乘积结构，且与 σ 幺半群同态（§6.17）自洽。正式范畴定义（Obs 范畴、外显函子严格构造）登记开放。
+
+**诚实边界**：ω=mc²/ħ、τ∝1/m⁵、塞曼/Larmor 为标准物理事实（数据核对）；"外显 = σ × 通道强度"为框架内统一表述候选（非新预言）；正式范畴定义仍开放（§6.12 开放项剩余）。
+
+### 6.20 正式范畴构造定义候选：Obs 范畴 + 外显函子 E: Sp→Obs（2026-08-12 推进严格定义层面）
+
+§6.19/§7.28/§7.29 的正式范畴构造开放项（Obs 范畴/外显函子、P_obs∘D、Rec/Sp g_rr 表述、⊗ 全体证明）——本子节给出**定义候选**（框架内尝试，§6.9 公理化同类）并在实例上验证函子律/复合结构。脚本 `scripts/paperX_exterior_functor_formal.py`（S1-S5，5/5 注册 run_all_tests.py）：
+
+- **S1** **Obs 范畴定义候选**：对象 = 观测通道 $\{C_t 时间通道, C_f 力通道\}$；态射 = 通道投影 $\pi_t: X\to C_t$、$\pi_f: X\to C_f$ + 恒等 $id_C$；恒等律 $\pi_c\circ id_C=\pi_c$、投影幂等 $\pi_c\circ\pi_c=\pi_c$（通道内复合封闭）；
+- **S2** **外显函子 E: Sp→Obs**：$E(X)=(\sigma(X),\text{channel}(X))$（离散标记 σ∈Z₂ × 通道选择）——**保恒等**：$E(id_A)=id_{E(A)}$（fold∘unfold=id_A，能量守恒）；**保复合（⊗）**：$E(X\otimes Y)$ 的 σ 分量 $=\sigma(X)\sigma(Y)$（§6.17 全 4 组合）；
+- **S3** **P_obs∘D 复合**：$E=P_{obs}\circ D$——D（偏转调制：√g₀₀/g_rr）× P_obs（观测投影）；时间通道 $E_t=P_{obs,t}\circ D$ = GPS 45.7 μs/日、空间通道 $E_s=P_{obs,s}\circ D$ = 进动 28.66″（§7.29 数据）；
+- **S4** **g_rr Rec/Sp 表述候选 + ⊗ 全体证明范畴前提**：g_rr = 空间通道调制因子（Sp 对象标量作用），与 g₀₀ 双通道互逆 g₀₀·g_rr=1；⊗ 全体证明（σ 幺半群同态对全体谱对象）的**函子性前提**——σ 保 ⊗ 复合为 E 的 σ 分量定义（§6.17），全体证明依赖该定义的严格化；
+- **S5** **总结**：正式定义候选的代数骨架闭合（Obs 范畴 + 外显函子函子律 + P_obs∘D 复合 + g_rr 表述候选 + σ 函子性框架）；**严格证明（全体谱对象 + Lean 形式化）登记开放**。
+
+**结论**：四项正式范畴构造（①Obs 范畴/外显函子 ②P_obs∘D ③Rec/Sp g_rr 表述 ④⊗ 全体证明前提）从"开放项"推进为**定义候选 + 实例层函子律验证**——外显函子 E: Sp→Obs 的保恒等/保复合在实例上全部成立，P_obs∘D 复合给出与 §7.29 一致的外显值，g_rr 获 Rec/Sp 表述候选（双通道互逆），⊗ 全体证明的范畴前提（σ 函子性框架）明确化。**严格定义层面**（全体谱对象的证明、Obs 范畴/外显函子的完整 Lean 形式化）如实登记开放。
+
+**Lean 形式化（2026-08-12，`formal_proof/UFPFormalization/UFPFormalization/PhotonTopologyExterior.lean`，`lake env lean` 编译通过、零 sorry）**：
+- `Z2Charge α`：σ Z₂ 值拓扑荷 = 加法幺半群同态（保复合 $\sigma(X\otimes Y)=\sigma(X)+\sigma(Y)$ + 保单位元 $\sigma(0)=0$；ZMod 2 加法经同构 0↦+1、1↦−1 对应乘法 ±1 的 σ）；
+- `sigma_self_inverse`：σ²=1（ZMod 2 特征 2）——§6.17 S3/§7.28 S4 离散层自逆的机器证明；
+- `windingCharge`：环绕数模型实例 σ(n)=n mod 2、⊗=加法——§6.10① 复合可加性的机器证明；
+- `ObsChannel`（时间/力通道）+ `ExteriorData`（外显函子 E: Sp→Obs 对象层数据：σ + channel）+ `exteriorObject`/`exteriorSigma`；
+- **`obsCategory`：Obs 离散范畴 mathlib `Category` 实例**——Hom := PLift (X = Y)（PLift 将 Prop 值 Hom 提升为 Type 0，解决宇宙参数问题；§6.20 诚实边界第 3 项闭合）；
+- **`exterior_functor_obstructed`：完整函子律的通道阻碍定理**——维度奇偶 channel 具体实例（σ(X)=n mod 2、channel(X)=n 奇偶→力/时间通道）下存在 Sp 态射其两端通道不同（(1,0)→(2,0)，force≠time），故 E 不能在**完整** Sp 范畴上定义为函子（须限制于 channel 保持子范畴）；
+- **`SpChan` + `spChanCategory`：channel 保持子范畴**——对象 = SpObj、态射 = Sp 态射 + channel 保持条件（两端通道相同）；`Category` 实例机器证明；
+- **`exteriorFunctorChan`：channel 保持子范畴上的外显函子 E: SpChan → Obs 正向构造**——对象映射 = channel、态射映射 = PLift (channel 相等)；**map_id/map_comp 函子律机器证明**（§6.20 诚实边界第 2 项正向闭合；完整 Sp 范畴不可行由 `exterior_functor_obstructed` 阻碍定理证明，两定理互补）；
+- **`obstruction_not_in_subcategory`：阻碍态射不在子范畴**——SpChanHom (1,0) (2,0) 为空（chan 条件与阻碍定理矛盾），阻碍与正向构造自洽。
+
+**诚实边界**：定义候选为框架内尝试（非定理，§6.9 公理化同类）；函子律/复合在实例上验证（数据核对，非全体证明）；σ 幺半群同态的**代数骨架已 Lean 形式化**（`PhotonTopologyExterior.lean`），Obs 范畴实例 + 完整函子律通道阻碍 + channel 保持子范畴外显函子正向构造均已机器证明；以下仍登记开放——SpObj 上的 ⊗ 结构（§6.11①，Z2Charge 在谱对象上的实例待其定义）、channel 的物理定义。
+
+#### 6.20.1 channel 物理定义候选（P6-3，2026-08-12）
+
+§6.20 诚实边界开放项"channel 的物理定义"——补**定义候选**（框架内尝试，与外显函子 E(X)=(σ(X),channel(X)) 衔接）：
+
+- **通道 = 外显窗口的物理承载**（§6.19 双窗口外显的范畴层对应）：channel(X) 编码谱对象 X 的**观测通道选择**，由 X 的物理属性（质量/自旋）决定；
+- **C_t 时间通道**：物理定义候选 = **质量-时间耦合窗口**——物质波频率 ω=mc²/ħ（§6.14 数值验证 ω∝m 严格线性）+ 寿命 τ∝1/m⁵（弱衰变）+ 固有时 dτ=√g₀₀ dt（引力背景调制）；有质量 ⟹ 时间通道开启（σ_time=1），无质量（光子）⟹ 关闭（σ_time=0）；
+- **C_f 力通道**：物理定义候选 = **自旋-外场耦合窗口**——塞曼 ΔE=2μ_B B cosϑ（§6.8① 数值验证）+ Larmor 进动 ω_L=1.759e11 rad/s + 泡利排斥；有自旋 ⟹ 力通道开启（σ=±1 取向符号），无自旋 ⟹ 关闭；
+- **与外显函子衔接**：E(X) = (σ(X), channel(X))——σ 为 Z₂ 离散标记（时间门 0/1 或自旋取向 ±1），channel 为窗口选择（C_t/C_f）；§6.19"外显 = σ × 通道强度"即 E 的物理内容；
+- **实例核对**：光子（m=0 → C_t 关闭；s=±1 → C_f 取向）↔ 电子（m_e≠0 → C_t 开启；自旋 → C_f 取向）——与 §6.12 双窗口外显、质量门（§6.6③）自洽；
+- **诚实边界**：channel 物理定义为框架内诠释候选（非独立新物理）；Lean 层已有 SpChan（channel 保持条件）支撑，物理定义本身为语义性登记（§6.20 剩余项闭合为候选登记）。
+
+## 7 方向 6：时间耦合的拓扑类型决定（推论 2.1 的对称补全）
+
+### 7.1 问题
+
+推论 2.1（时间解耦）仅针对光子（开放行波拓扑）：传播途中零时间耦合。紧致驻波拓扑（定义 2.1，$M_{\text{atom}}$）的时间耦合状态未设独立命题——本方向补全对称。
+
+### 7.2 观察：紧致驻波拓扑与时间持续作用
+
+原子定态时间演化
+
+$$|\psi(t)\rangle=e^{-iE_n t/\hbar}|\psi(0)\rangle:$$
+
+- **相位级持续作用**：整体相位以 $E_n/\hbar$ 持续振荡——即定义 2.1 的"闭合拓扑形变循环"（周期 $T=1/\nu$），驻波本身就是持续周期循环，与时间持续"接触"；
+- **动力学级零耦合**：定态可观测物理量（概率密度、能级、角动量）与时间无关（stationary 态）。
+
+机制：紧致拓扑有静止系（束缚态）+ 驻波为 Rec 递归范畴对象、递归层持续演化（paper32：时间维度 = 谱流参数 t，递归步骤的连续极限）。
+
+### 7.3 对称命题（本方向提出）
+
+**命题 P6（时间耦合模式 = 拓扑类型函数）**：
+
+| 拓扑类型 | 闭合方式 | 时间耦合 | 机制 |
+|:--|:--|:--|:--|
+| 光子（开放行波，$\partial M=\emptyset$） | 环绕轴闭合 | 传播中**零时间耦合**（推论 2.1） | 正交性 + 光速锁定 + $\gamma\to\infty$ 无静止系 |
+| 驻波（紧致带边，$\partial M\neq\emptyset$） | 边界空间闭合 | **持续时间作用**（相位/形变循环） | 有静止系 + Rec 递归层持续演化 + 周期 $T=1/\nu$ |
+
+即：**开放解耦、紧致持续**——时间耦合模式由拓扑类型决定。
+
+### 7.4 推论：Φ 拓扑转变 = 时间耦合模式切换
+
+- 发射（驻波→光子，$D$ 谱化）：时间耦合从"持续"解绑为"零"（$t_*$ 瞬间，公理 A4）；
+- 吸收（光子→驻波，$R$ 右伴随折叠）：时间耦合从"零"重绑为"持续"。
+
+推论 2.1 的"转变与吸收瞬间发生时间耦合"由此获对称补全：**转变瞬间是两种时间耦合模式的交接点**——驻波侧持续、光子侧解耦。
+
+### 7.5 诚实边界
+
+1. 推论 2.1 在 paper44 中仅针对光子传播——驻波"持续时间作用"是标准量子力学定态相位演化的框架内定位，paper44 未设独立命题；
+2. "持续作用限于相位层"对定态成立；激发态（非定态，相干态/叠加态）有动力学时间演化（衰减→跃迁→Φ 转变场景）；
+3. 命题 P6 与推论 7.4 为本笔记推演，未登记于 paper44——待笔记成熟后提炼（可入 paper44 §7.5 开放问题或正文）。
+
+### 7.6 理论兼容例证：光子⊥时间几何 vs SR γ 因子（两条计算路径）
+
+**核心内容**：从"光子 ⊥ 时间"（正交性几何）推导钟慢，与 SR 标准计算（γ 因子）是**两种独立计算路径，结果完全一致**——作为 UFPF 与狭义相对论兼容的例证。
+
+| | 路径 A（光子⊥时间几何） | 路径 B（SR 标准） |
+|:--|:--|:--|
+| 出发点 | 光子 ⊥ 时间（推论 2.1 几何部分：传播途中零耦合，正交性直接后果） | 洛伦兹变换/闵可夫斯基度规 |
+| 参照 | 光速 = 时间轴法向（90°） | 惯性系变换 |
+| 参数化 | 速度角 θ（$\sin\theta=v/c$） | γ 因子（$\gamma=1/\sqrt{1-v^2/c^2}$） |
+| 中间量 | 时间耦合 = cosθ（时间轴投影） | 固有时 $d\tau=dt/\gamma$ |
+| 钟慢 | $1-\cos\theta=1-\sqrt{1-v^2/c^2}$ | $1-1/\gamma=1-\sqrt{1-v^2/c^2}$ |
+| 结果 | $1/\gamma$ ✓ | $1/\gamma$ ✓ |
+
+**兼容例证的意义**：UFPF 的几何路径（光子⊥时间 ⟹ 角度 ⟹ cosθ）与 SR 标准路径组织方式独立、数值一致——框架与狭义相对论在钟慢效应上兼容（不冲突、互相印证）。
+
+**诚实边界**：
+1. 路径 A 地基含 $\{h,c\}$（SI 测定值）+ 量子关系（经光速锁定链，命题 3.1）；
+2. "时间耦合 = cosθ"的数值形式与 γ 同构——两条路径在数值层面收敛到同一函数；
+3. 增量在组织方式/诠释（光子法向参照、时间耦合语言），不在数值；
+4. γ 从耦合过程蕴含（$E=pc$ ⟹ $v=c$ ⟹ 无静止系 ⟹ $\gamma\to\infty$ 极限）而非 SR 公设直接输入；但有质量粒子的 γ 因子公式仍是洛伦兹几何量；
+5. 兼容例证 = 重构/互证，非新物理预言。
+
+### 7.7 洛伦兹变换的时间耦合诠释（三角参数化 + 图 5）
+
+**核心内容**：从时间耦合角度重新表述洛伦兹变换——boost = 时间耦合强度的重新标定。设速度角 $\theta$（$\sin\theta=v/c$，$\cos\theta=1/\gamma$=时间耦合强度），则 $\gamma=\sec\theta$、$\gamma\beta=\tan\theta$，沿 x 方向的 boost：
+
+$$ct'=ct\,\sec\theta-x\,\tan\theta,\qquad x'=x\,\sec\theta-ct\,\tan\theta.$$
+
+**时间耦合诠释表**：
+
+| boost 成分 | 时间耦合语言 |
+|:--|:--|
+| $\gamma=\sec\theta=1/\cos\theta$ | 时间耦合强度倒数——时间轴倾斜 θ，耦合减弱 cosθ，坐标以 1/cosθ 重标定 |
+| 时间膨胀 $t'=\gamma t$ | 时间耦合减弱 secθ 倍 |
+| 长度收缩 $x'=x\cos\theta$ | 长度 = 时间耦合强度倍（cosθ） |
+| 同时性项 $\gamma vx/c^2=\tan\theta\cdot x/c$ | 同时性相对 = 时间轴倾斜角正切（tanθ） |
+
+**核心图像**：boost = 在光子法向（90°）参照下，惯性系时间轴倾斜 θ 时，时间耦合（cosθ）与坐标重标定（secθ）的几何。
+
+![图 5：洛伦兹变换的时间耦合诠释——(a)速度角分解（时间轴 vs 光子法向90°，时间耦合=cosθ）；(b)耦合 cosθ 与膨胀因子 secθ；(c)钟慢：牛顿斜线(穿过光速) vs 相对论渐近曲线(贴近光速)；(d)时空 boost：时间轴倾斜 arctanβ、光锥 45° 不变](../../figs/photon_fig5_time_coupling_lorentz.png)
+
+**图 5**（几何示意/数据图）：脚本 `scripts/paperX_time_coupling_lorentz_figs.py`。与标准快度图像等价（$\eta=\operatorname{arctanh}(\sin\theta)$，$\cosh\eta=\gamma=\sec\theta$）——同一 boost 的双曲/三角两种参数化。
+
+**诚实边界**：
+1. 数学等价：同一洛伦兹变换的重新参数化（θ vs η），不改变物理内容、非新变换；
+2. 双曲旋转更自然：洛伦兹群 SO(1,3) 的双曲几何使快度 η 更内禀；三角参数化（sec/tan）等价但不更简洁；
+3. 诠释增量：时间耦合语言（cosθ=耦合、secθ=重标定、tanθ=同时性倾斜）给 boost 以"耦合重新标定"图像——诠释新、数学同；
+4. 前提同前：θ 定义用 c（SI 测定值输入），时间耦合=cosθ 与 γ 同构；
+5. 图 5 为几何示意/数据图，不构成新物理预言（与 paper44 §7.2 诚实边界一致）。
+
+### 7.8 框架命题与 SR 结构的余角关系（规范化结论）
+
+**核心结论**：框架命题"光子 ⊥ 时间"（90° 法向参照）与 SR 结构"光锥不变"（45° 类光保持）**互为余角**——平级互补、共同构成完整洛伦兹几何，而非主从验证（不是"结果证明前提"，也不是"前提被结果支持"的从属关系）。
+
+**几何精确化**（数学恒等式）：在"时间轴 ↔ 光子法向"的 90° 直角内，速度矢量与时间轴夹角 θ：
+
+$$\text{时间耦合}=\cos\theta=\sin(90^\circ-\theta),\qquad \text{法向分量}=\sin\theta=\cos(90^\circ-\theta).$$
+
+时间耦合是**速度角余角的正弦**——时间分量（cosθ）与法向分量（sinθ=v/c）天然互为余角（一个的余弦是另一个的正弦），这是 90° 参照下矢量正交分解的必然。
+
+**结构层面**：
+
+| | 角色 | 类比 |
+|:--|:--|:--|
+| 光子 ⊥ 时间（框架命题） | 定义 90° 法向参照（定角度） | 一角 |
+| 光锥不变（SR 结构） | 保持 45° 类光结构（定变换） | 余角 |
+| 时间耦合几何 | 直角内分解速度（cosθ/sinθ） | 共同构成完整几何 |
+
+**表述修正**：此前"兼容性支持 vs 证明"为主从二分，**"互为余角"更准确**——互补结构（互不证明、互相定义、共同构成直角），循环风险与主从关系由余角互补替代。
+
+**诚实边界**：
+1. $\cos\theta=\sin(90^\circ-\theta)$ 是纯三角恒等式（数学必然，无物理新内容）；
+2. 余角关系是**关系刻画**（框架命题与 SR 的结构互补），不改变物理内容、不新增预言；
+3. 沿承 §7.6/§7.7 诚实边界：数学等价、前提含 $\{h,c\}$（SI 测定值）、诠释增量在"时间耦合/余角"语言；
+4. 余角类比为几何/结构层面的诠释工具，非新的动力学机制。
+
+### 7.9 方向整合：时间耦合 × 静默状态 × 闭合结构 × 引力非场
+
+**整合框架**：时间耦合模式与方向 1（S3 静默）、方向 4（闭合结构）关联，并考虑 UFPF 中**引力不是场**（[paper35 §2.3](paper35) 中 Δ 是 $\mathbf{Sp}$ 4-范畴结构常数，无动力学/传播子/Compton 波长，地位等同 π 或 e）。
+
+| 对象 | 拓扑类型 | S3 静默 | 闭合结构 | 时间耦合 |
+|:--|:--|:--|:--|:--|
+| 光子 | 开放（∂M=∅） | 解除（σ_S3=0） | 环绕轴闭合 | 解耦（传播中） |
+| 驻波（原子） | 紧致（∂M≠∅） | 驻留（σ_S3=1） | 边界空间闭合 | 持续（相位循环） |
+| 胶子 | 禁闭封闭 | 驻留 | （禁闭内） | 待推 |
+| 引力 Δ | 非场（结构常数） | — | 基空间曲率 | 背景调制，非通道 |
+
+**引力非场的整合含义**：
+1. Δ 不参与"时间耦合通道"开关——非可拦截场（无动力学、无传播子）；
+2. 引力时间效应 = 背景几何调制：$d\tau=\sqrt{g_{00}}\,dt/\gamma$（√g₀₀ 因子），非场耦合通道；
+3. 与推论 2.1 一致：光子 ⊥ 引力（范畴层方向正交）——引力调制背景不作为可拦截通道；
+4. 不可屏蔽（paper35 §3.1）：Δ 非场 ⟹ 背景调制普遍存在。
+
+**统一命题（整合候选）**：
+> 时间耦合模式 = 拓扑类型（闭合结构）决定、与 S3 静默状态同步——开放（环绕闭合）+ 静默解除 ⟹ 时间解耦（光子）；紧致（边界闭合）+ 静默驻留 ⟹ 时间持续耦合（驻波）；引力（Δ）作为非场的背景几何调制时间耦合强度（√g₀₀ 因子），但不参与通道开关。
+
+**三层分离**：拓扑决定模式（闭合结构）、静默同步状态（对象层面开关）、引力调制强度（结构常数层面背景）。
+
+**诚实边界**：
+1. 整合为关联结构推演（框架内统一），无新物理预言、无数值增量；
+2. 胶子的时间耦合状态（禁闭驻留）未推——待禁闭拓扑的时间耦合分析（开放）；
+3. 引力非场是 paper35 已确立（结构常数），整合沿用其定位；
+4. 背景调制（√g₀₀）是 GR 标准公式的框架内归属，非新推导。
+
+### 7.10 胶子的时间耦合状态（方向整合推进）
+
+**推演**：填补 §7.9 整合表中胶子行（原"待推"）。胶子 = 禁闭封闭拓扑（色单态约束）、S3 静默驻留（σ_S3=1，**永久**——非阿贝尔顶点谱封闭维持禁闭，无自由胶子，命题 2.5 生成-禁闭对偶）。
+
+按命题 P6（拓扑类型决定时间耦合）推演：
+
+| | 拓扑类型 | 静默 | 闭合 | 时间耦合 |
+|:--|:--|:--|:--|:--|
+| 光子 | 开放 | 解除 | 环绕轴 | 解耦 |
+| 驻波 | 紧致 | 驻留（可解除——跃迁 Φ） | 边界 | 持续 + 可解绑 |
+| 胶子 | 禁闭封闭 | 驻留（永久——无自由胶子） | 色单态 | **持续 + 无解绑**（推演） |
+
+**深化命题（静默解除的可能性 = 时间耦合解绑通道）**：
+- 光子（已解除）：已解耦（传播）；
+- 驻波（可解除）：持续耦合，但可经 Φ 跃迁解绑（发射光子）；
+- 胶子（永久驻留）：持续耦合，**无解绑通道**（禁闭永久，色单态无自由胶子发射）。
+
+§7.9"静默开关 = 时间耦合开关"由此深化：**不仅模式同步，解绑通道也同步**——胶子 = "无解绑的持续时间耦合"（永久束缚的时间）。
+
+**三层分离深化**：拓扑定模式（开放解耦 / 封闭持续）；静默同步状态（解除 / 驻留）；**静默持久性定解绑通道**（可解除 ⟹ 可解绑，永久 ⟹ 无解绑）；引力非场背景调制（§7.9 沿承）。
+
+**诚实边界**：
+1. 胶子时间耦合为**推演**（基于 P6 延伸）——paper40 无直接时间耦合命题；
+2. "无解绑"与色禁闭无自由胶子一致（框架内自洽），但无独立实验/数值验证；
+3. 深化命题不改变既有物理（胶子禁闭是 paper40 已确立），增量在时间耦合语言的统一描述；
+4. 可进一步检验的方向：胶球（纯胶子束缚态）的时间耦合——若胶球内部胶子持续耦合（无解绑），与原子（可跃迁）形成判别性对照（登记为开放）。
+
+### 7.11 胶球判别性对照：解绑通道的层次（整合推进）
+
+**胶球状态**（paper40 §5.10-5.11）：胶球 = 闭合胶子通量管（闭弦），胶子动力学谱封闭的自结合端点；衰变 = 闭弦断裂 + **静默释放**（断裂点产生 $\bar qq$ 对 → 可见介子对，如 $0^{++}\to\pi\pi$）。
+
+**解绑通道的层次（判别性对照）**：
+
+| 束缚态 | 规范玻色子发射解绑 | 强子化/静默释放解绑 | 时间耦合 |
+|:--|:--|:--|:--|
+| 原子驻波 | ✓（Φ 跃迁，Rec→Sp 发射自由光子） | —（无强衰变） | 持续 + **电磁解绑** |
+| 胶球 | ✗（禁闭——无自由胶子） | ✓（闭弦断裂 + 静默释放 → ππ） | 持续 + **强子化解绑** |
+| 胶子（禁闭内部） | ✗ | ✗（无分离通道） | 持续 + 无解绑 |
+
+**精确化 §7.10**：胶子"无解绑"指**无自由规范玻色子发射**（禁闭）；胶球作为束缚态经闭弦断裂（静默释放）强子化重组合——"解绑"分两层次：**规范发射（Φ 型拓扑转变）vs 强子化重组合（静默释放）**。
+
+**判别性意义（时间耦合语言统一）**：
+- 原子与胶球都是束缚态（时间耦合持续），解绑通道不同——原子走电磁 Φ 发射（静默解除），胶球走强子化静默释放；
+- 这为 paper40 §5.11 的宽度序（$0^{++}$ 最宽 = 静默释放无势垒，ππ S 波直接耦合）提供时间耦合语言表述：**解绑通道的势垒结构 = 静默释放强度**；
+- 胶球与原子形成判别性对照：无自由规范玻色子发射（禁闭）vs 有（电磁）。
+
+**诚实边界**：
+1. 判别性对照为推演（基于 paper40 §5.10-5.11 机制 + P6 延伸）——时间耦合语言描述 paper40 已有的胶球衰变机制，无新预言；
+2. 宽度序（Γ(0⁺⁺)>Γ(2⁺⁺)~Γ(0⁻⁺)）是 paper40 §5.11 已建立的框架内论证（分级标注）；
+3. 时间耦合语言的增量在统一描述（原子/胶球/胶子解绑通道层次），无独立数值验证；
+4. 开放：时间耦合解绑通道层次是否与静默释放强度存在定量关系（登记为开放，待谱静默释放定量化）。
+
+### 7.12 静默释放强度定量化：解绑时间尺度（整合推进）
+
+**操作定义**：解绑时间尺度 $\tau_{\text{ub}}=\hbar/\Gamma$（时间耦合解绑特征时间，寿命-宽度关系归属）——**静默释放强度 ∝ Γ**（衰变宽度 = 释放速率）。
+
+| 束缚态 | 解绑通道 | Γ 锚点 | $\tau_{\text{ub}}=\hbar/\Gamma$ |
+|:--|:--|:--|:--|
+| 原子（可见光跃迁） | 电磁 Φ 发射 | ~6.6×10⁻⁸ eV（寿命 ~10⁻⁸ s） | ~10⁻⁸ s |
+| 胶球 0⁺⁺ | 强子化静默释放 | ~500 MeV（ππ S 波） | ~1.3×10⁻²⁴ s |
+| 胶球 2⁺⁺ | 强子化 | ~100-300 MeV（D 波+ρρ） | ~2-6×10⁻²⁴ s |
+| 胶球 0⁻⁺ | 强子化（受抑） | ~170 MeV（X(2370)） | ~3.9×10⁻²⁴ s |
+| 胶子（禁闭内部） | 无 | 0 | ∞ |
+| 光子（传播） | 已解耦 | — | 0（无束缚） |
+
+**关键量级**：原子（$\sim10^{-8}$ s）vs 胶球（$\sim10^{-24}$ s）——**~16 个量级差**，量化"电磁解绑 vs 强子化解绑"的强度差异（α~1/137 vs α_s~1 耦合层级）。
+
+**时间耦合解绑层级（τ_ub 序列）**：
+$$\infty\ (\text{胶子禁闭}) \gg 10^{-8}\,\text{s}\ (\text{原子电磁}) \gg 10^{-24}\,\text{s}\ (\text{胶球强子化}) \to 0\ (\text{光子已解耦}).$$
+
+**静默释放强度与势垒结构**：宽度序（$0^{++}$ 最宽 = ππ S 波无势垒；$2^{++}$ D 波角动量势垒受抑；$0^{-+}$ 拓扑耦合 $G\tilde G$ 额外受抑）即静默释放强度的势垒调制——**解绑速率 = 观测层耦合 × 相空间 × 势垒因子**（paper40 §5.11 机制的时间耦合语言量化）。
+
+**诚实边界**：
+1. $\tau_{\text{ub}}=\hbar/\Gamma$ 是标准量子力学寿命-宽度关系（非新物理），增量在时间耦合语言的统一归属；
+2. 宽度锚点来自 paper40 §5.11（框架内论证 + 格点/实验锚定，分级标注）与原子自发辐射标准值；
+3. 定量化给出**时间耦合解绑的层级结构**（∞/10⁻⁸/10⁻²⁴/0），无独立新预言；
+4. 静默释放强度与解绑通道层次的**第一性定量关系**（从谱结构直接推出 Γ）仍未建立（开放——Γ 仍来自纸40/实验锚定）。
+
+### 7.13 Γ 的量纲-标度锚定与第一性边界（整合推进）
+
+**量纲-标度锚定**：强子宽度量纲 = 能量，框架内唯一标度 = 谱定 $\Lambda_{\text{QCD}}=210\,\text{MeV}$（paper40 定理 5.5：$\sigma=4\Lambda^2$ 弦张力谱定链）。检验 $\Gamma\sim c_i\,\Lambda_{\text{QCD}}$：
+
+| 束缚态 | Γ 锚点 | Λ_QCD=210 MeV | 系数 c_i |
+|:--|:--|:--|:--|
+| 胶球 0⁺⁺ | ~500 MeV | 210 MeV | ~2.4（S 波无势垒 + 相空间放大） |
+| 胶球 2⁺⁺ | ~200 MeV | 210 MeV | ~1.0（D 波离心势垒受抑） |
+| 胶球 0⁻⁺ | ~170 MeV | 210 MeV | ~0.8（拓扑耦合 G·G̃ 受抑） |
+
+**c_i 的势垒结构分解**（标准强子物理归属）：$\Gamma_i\propto|\text{耦合}|^2\times\text{相空间}\times|\text{离心势垒因子}(L)|^2$（Blatt-Weisskopf 型：S 波 L=0 无势垒、D 波 L=2 受抑）+ 拓扑耦合（0⁻⁺ 的 $G\tilde G$ 额外受抑）——宽度序（$0^{++}>2^{++}\sim0^{-+}$）即 c_i 序。
+
+**第一性边界（诚实定位）**：
+1. **量纲正确性**：$\Gamma\sim O(\Lambda_{\text{QCD}})$（数百 MeV）由唯一谱标度锚定 ✓；
+2. **宽度序机制**：静默释放（D=10→D=4 层释放）+ 势垒结构解释宽度序（paper40 §5.11 已建立）✓；
+3. **c_i 精确数值未闭合**：c_i 仍需相空间积分、α_s(Λ_QCD) 耦合、离心因子数值输入——**从谱结构无参数推出 c_i 未完成**（开放，为静默释放定量化的最深目标）；
+4. 时间耦合语言中：解绑速率 $\Gamma=c_i\Lambda_{\text{QCD}}$，c_i 是解绑通道的势垒结构系数——量纲锚定 + 序结构已定，数值系数待第一性。
+
+### 7.14 宽度量级数值检验：α_s 禁闭标度 → Γ~α_s²Λ（整合推进）
+
+**数值脚本**：`scripts/paperX_silence_release_width.py`（3/3 通过，已注册 run_all_tests.py）。单圈 α_s(μ)（N_f=3，b₀=9，Λ_QCD=210 MeV 谱定）代入 $\Gamma\sim\alpha_s(\mu)^2\,\Lambda_{\text{QCD}}$：
+
+| μ (GeV) | α_s(μ) | Γ~α_s²Λ (MeV) | 覆盖 |
+|:--|:--|:--|:--|
+| 1.00 | 0.447 | 42 | ✓ |
+| 0.50 | 0.805 | 136 | ✓（2⁺⁺~0⁻⁺ 区） |
+| 0.40 | 1.083 | 247 | ✓ |
+| 0.35 | 1.367 | 392 | ✓ |
+| 0.30 | 1.957 | 805 | ✓（0⁺⁺ 区，Landau 极点逼近） |
+| 0.25 | 4.004 | 3367 | α_s 发散区 |
+
+**检验结果（3/3）**：
+- **C1 锚点覆盖**：胶球宽度锚点（0⁺⁺ 500 / 2⁺⁺ 200 / 0⁻⁺ 170 MeV）全部落在 $\alpha_s^2\Lambda\in[136,3367]$ MeV（μ∈[0.25,0.5] GeV）；
+- **C2 0⁺⁺ 大宽度**：需求 α_s=√(500/210)=1.54，单圈 α_s(0.30 GeV)=1.96 ✓——强耦合区（α_s~1，Landau 极点逼近）实现最宽态；
+- **C3 量级序**：α_s(0.50)²Λ=136（中宽，对应 2⁺⁺~0⁻⁺）→ α_s(0.28)²Λ=1237（最宽区，对应 0⁺⁺）——宽度随强耦合增强的对应关系一致。
+
+**结论**：**宽度量级与 $\alpha_s^2\cdot\Lambda_{\text{QCD}}$ 定量一致**——静默释放（强耦合释放，α_s 禁闭标度值 ~O(1)）为胶球宽度提供量级正确来源；0⁺⁺ 最宽由 Landau 极点前的强耦合区实现（与 paper40 §5.11"静默释放无势垒"衔接）。
+
+**诚实边界**：
+1. 检验基于标准 QCD 单圈跑动 + 谱定 Λ_QCD（非 UFPF 独有新物理），增量在"静默释放 = 强耦合释放"的定量归属；
+2. c_i 精确数值（相空间积分、离心因子、ππ 混合）仍需输入——**从谱结构无参数推出 c_i 仍开放**（第一性最深目标）；
+3. α_s 单圈在 Landau 极点附近发散（μ≲0.25 GeV 非物理），检验在强耦合区（μ~0.3-0.5 GeV）取量级一致，非精确值。
+
+### 7.15 胶球宽度系数 c_i 的第一性尝试（数值输入方案）
+
+**方案**（`scripts/paperX_glueball_width_firstprinciples.py`，2/2 注册 run_all_tests.py）：**谱定输入 + 标准势垒结构 + 1 参数拟合 2 预测**。
+
+**公式**：$\Gamma_i=\dfrac{3\alpha_s(\mu_i)^2}{4\pi}\cdot\dfrac{p^*_i}{m_{Gi}^2}\cdot C\cdot F_L(z_i)^2\cdot T_i$
+
+**输入（全部谱定/标准）**：Λ_QCD=210 MeV（谱定）、α_s(μ) 单圈、m_G（0⁺⁺1.491/2⁺⁺2.582/0⁻⁺2.354 GeV，paper40 谱定）、m_π=0.140、Blatt-Weisskopf 半径 R=1 GeV⁻¹、μ_i=m_Gi/3（衰变标度）。**C**：共享色/非微扰因子（拟合 0⁺⁺）；**T**：拓扑因子（0⁻⁺ 的 G·G̃）。
+
+**结果**：
+
+| 态 | 预测 Γ | 锚点 Γ | 判定 |
+|:--|:--|:--|:--|
+| 0⁺⁺（拟合） | 500 MeV（C=9.68，~4π×0.77 量级合理） | 500 | ✓ |
+| 0⁻⁺（T=1） | 137 MeV（T=1.24 反解 ~O(1)） | 170 | ✓ 接近重现 |
+| 2⁺⁺（ππ D 波） | **18 MeV** | 200 | ✗ 严重偏低 |
+
+**关键发现（多道效应）**：2⁺⁺ 单 ππ D 波道 18 MeV 远低于 200 MeV 锚点——**张量胶球宽度不能由单 ππ 道解释，需补充 ρρ 等道**（2⁺⁺ 质量 2.582 GeV 远超 2ρ 阈值 1.55 GeV，ρρ 相空间大）。这是第一性尝试的**有价值输出**：暴露单道模型的局限，指示多道贡献。
+
+**c_i 汇总**：0⁺⁺=2.38、2⁺⁺=0.95、0⁻⁺=0.81——**序由势垒结构决定（S 波无势垒 > D 波/拓扑抑制），数值由 α_s²+相空间+C/T 决定**。
+
+**诚实边界**：
+1. C 为唯一拟合参数（色/非微扰因子，~4π 量级合理但非推导）；T 由 0⁻⁺ 反解（~O(1) 自洽但非独立）；
+2. 2⁺⁺ 单道不足——完整 c_i 需**多道（ρρ/KK/ηη 等）求和**（登记为推进方向）；
+3. α_s 单圈在强耦合区（μ~m_G/3~0.5-0.8 GeV）为近似；
+4. 第一性程度：谱定输入 + 标准势垒结构（非 UFPF 独有新物理），C/T 仍含非微扰输入——**c_i 的完全第一性（无 C/T 输入）未闭合**（开放）。
+
+### 7.16 2⁺⁺ 多道扩展：ρρ S 波主导（整合推进）
+
+**扩展**（`paperX_glueball_width_firstprinciples.py` v2，3/3 注册）：针对 §7.15 的 2⁺⁺ 单道不足，扩展多道（ππ D / **ρρ S+D** / KK D / ηη D）求和 $\Gamma(2^{++})=\sum_{\text{ch}}\frac{3\alpha_s^2}{4\pi}\frac{p^*_{\text{ch}}}{m^2}C F_L(z_{\text{ch}})^2 S_{\text{ch}}$。
+
+**关键物理**：2⁺⁺→ρρ 允许 **S 波（L=0，无离心势垒）**——主导道候选（v1 单 ππ D 波受势垒强抑）。
+
+**结果（μ 对比）**：
+
+| μ | α_s | ππ(D) | ρρ(S) | ρρ(D) | KK | ηη | ΣΓ | vs 200 |
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| m_G/3=0.86 | 0.495 | 6.0 | 59.3 | 5.1 | 4.5 | 4.2 | **79** | ✗ 不足 |
+| **0.5 GeV（禁闭标度）** | 0.805 | 15.9 | **156.7** | 13.4 | 11.9 | 11.1 | **209** | ✓ 重现 |
+
+**核心结论**：
+1. **ρρ S 波主导**：156.7 MeV（~75% 贡献）——L=0 无势垒，解决 v1 单道不足；
+2. **μ 敏感性**：禁闭标度（0.5 GeV，α_s~0.8）使多道总和重现 200 MeV——与 §7.14"静默释放 = 强耦合释放"一致（α_s 禁闭标度值 O(1)）；
+3. **2⁺⁺ 宽度的多道解释成立**：张量胶球衰变由 ρρ S 波主导 + 各 D 波道补充；
+4. **0⁻⁺**：T=0.53（μ=0.5 GeV 统一标度），仍 ~O(1) ✓。
+
+**诚实边界**：
+1. C 唯一拟合参数（6.55，~4π×0.52）；ρρ 电荷/自旋态组合简化（S=1 登记——实际 ρρ 有 L=0,2,4 多自旋-轨道组合，完整求和待扩展）；
+2. **μ 为方案自由度**：m_G/3 不足、禁闭标度重现——μ 敏感性已展示，禁闭标度取值的物理依据为 α_s~O(1)（Landau 极点前）；
+3. α_s 单圈近似；完全第一性（无 C/μ 输入）未闭合（开放）。
+
+### 7.17 μ 稳健性扫描：200 MeV 拟合的稳健性验证（整合推进）
+
+**扫描**（`scripts/paperX_glueball_width_mu_scan.py`，注册 run_all_tests.py）：μ∈[0.4,0.8] GeV 双方案对比。
+
+**双方案**：
+- **方案 A（C 普适常数）**：C=6.55 由 μ=0.5 拟合固定，2⁺⁺ 宽度 ∝ α_s(μ)²——ΣΓ 从 379（μ=0.4）降到 88 MeV（μ=0.8）；
+- **方案 B（C(μ) 吸收 α_s²）**：每 μ 重拟合 C(μ) 使 0⁺⁺=500——2⁺⁺/0⁺⁺ 比值由几何（相空间×势垒）决定，ΣΓ≡209 MeV 与 μ 无关。
+
+**结果**：
+
+| 方案 | μ=0.4 | μ=0.5 | μ=0.8 | 200±25% 覆盖 | 稳健性 |
+|:--|:--|:--|:--|:--|:--|
+| A（C 固定） | 379 | 209 | 88 | μ∈[0.47,0.58]（宽 0.12 GeV） | **敏感**（μ 需锁定 ~0.5） |
+| B（C 重拟合） | 209 | 209 | 209 | 全部 | **完全稳健** |
+
+**稳健性结论**：**200 MeV 拟合的稳健性依赖 C 的诠释**——
+- C 为普适常数：ΣΓ 对 μ 高度敏感（379→88），200 MeV 只在 μ∈[0.47,0.58] 窄区间——μ 必须锁定在禁闭标度 ~0.5 GeV；
+- C 吸收标度依赖：完全稳健（几何比 G2/G0=0.418 唯一决定 209 MeV）。
+
+![μ 稳健性扫描：方案 A（C 固定，α_s² 驱动，敏感）vs 方案 B（C 重拟合，几何比决定，恒稳）——灰色带 200±25%](../figs/paperX_glueball_width_mu_scan.png)
+
+**图**（数据图）：`figs/paperX_glueball_width_mu_scan.png`——方案 A 单调下降曲线（379→88）与方案 B 水平线（209）对比，灰色带标 200±25%、红色点为 §7.16 基准。
+
+**诚实边界**：
+1. μ 为方案自由度——稳健性分析揭示"μ 锁定 vs 几何比决定"两种诠释，不能自行消除该自由度（需物理机制定 μ 或定 C 标度依赖）；
+2. 方案 B 的"完全稳健"来自 C(μ) 吸收 α_s²（比值恒为几何比）——代价是 C 的标度依赖未解释；
+3. 方案 A 的敏感提示：若 C 普适，禁闭标度 μ~0.5 GeV 的取值需独立物理依据（α_s~O(1) Landau 极点前，§7.14）。
+
+### 7.18 ρρ 完整组合：L=0,2,4 + 同位旋因子（整合推进）
+
+**扩展**（`scripts/paperX_glueball_width_rho_full.py`，3/3 注册）：补全 §7.16 登记的"ρρ 电荷/自旋态组合简化待扩展"——加入 ρρ **L=4（G 波）** 与**同位旋因子敏感性**（I=0 胶球 → ρρ 3 电荷态，约定 N∈{1,3}）。
+
+**结果**：
+
+| ρρ 角动量 | F_L² | Γ（N=1） | 占 S 波 |
+|:--|:--|:--|:--|
+| L=0（S 波） | 1.000 | 156.8 MeV | 100% |
+| L=2（D 波） | 0.085 | 13.4 MeV | 8.5% |
+| L=4（G 波） | 0.0046 | 0.7 MeV | **0.5%** |
+
+**同位旋敏感性**：ΣΓ ∈ [210, 552] MeV——
+- N=1（I=0 归一化）：ΣΓ=210 MeV ✓ 重现 200；
+- N=3（3 电荷态求和）：ΣΓ=552 MeV ✗ 偏高——提示 ρρ 耦合需抑制或同位旋约定需明确。
+
+**结论**：
+1. **ρρ S 波主导完全稳健**：L=4（G 波）贡献仅 0.5%，D 波 8.5%——S 波（L=0 无势垒）占绝对主导；
+2. **同位旋约定为关键不确定度**：N=1 重现 200 MeV、N=3 偏离 2.8 倍——需要明确 ρρ 同位旋投影约定（I=0 初态对 3 电荷态的 CG 处理）才能锁定 ΣΓ。
+
+**诚实边界**：
+1. L=4 的 Blatt-Weisskopf G 波因子为标准形式（半径 R 影响，R=1 GeV⁻¹ 登记）；
+2. 同位旋 N 的两种约定均为标准强子物理用法，框架内未定——这是 2⁺⁺ 宽度定量化的主要残留不确定度（登记为开放）；
+3. 完全第一性（无 C/μ/N 输入）仍未闭合（最深目标，开放）。
+
+### 7.19 耦合因子 C 扫描：宽度线性趋势（整合推进）
+
+**扫描**（`scripts/paperX_glueball_width_c_scan.py`，注册 run_all_tests.py）：归一化耦合 $C'=C/4\pi\in[0.3,0.7]$（覆盖 §7.16 拟合值 C'=0.52），μ=0.5 GeV 固定、N=1。
+
+**结果**：$\Gamma(2^{++})\propto C'$ **严格线性**（无拐点）：
+
+| C' | 0.30 | 0.40 | 0.52（拟合） | 0.60 | 0.70 |
+|:--|:--|:--|:--|:--|:--|
+| ΣΓ | 120 | 160 | **209** | 241 | 281 MeV |
+
+- 拟合校验：C'=0.52 → 209 MeV ✓（与 §7.16 基准一致）；
+- 200±25%（150-250 MeV）覆盖 C'∈[0.374,0.623]（宽 0.249，C'∈[0.3,0.7] 内 62%）。
+
+![耦合因子 C' 扫描：ΣΓ(2⁺⁺) 严格线性（120→281 MeV），红色点为 §7.16 拟合 C'=0.52→209——灰色带 200±25%](../figs/paperX_glueball_width_c_scan.png)
+
+**对比 §7.17 μ 扫描**：
+
+| 参数 | 敏感性 | 特征 |
+|:--|:--|:--|
+| μ（衰变标度） | **非线性**（α_s² 驱动）：379→88 MeV | 方案 A 敏感、方案 B 恒稳（C 吸收） |
+| C'（耦合因子） | **线性**：120→281 MeV（每 0.1 变化 ~40 MeV） | 严格直线，无拐点 |
+
+**结论**：
+1. Γ ∝ C' 严格线性——宽度对耦合因子的依赖是平凡线性（公式结构决定），无非线性增强/抑制；
+2. 两个参数的敏感性互补：**μ 决定非线性形状（α_s²），C' 决定线性尺度**——200 MeV 重现需同时锁定 μ~0.5（禁闭标度）与 C'~0.52；
+3. C' 的物理约束：~4π×0.52 量级（色/非微扰因子）——线性趋势确认后，C' 的锁定即宽度的精确锚定。
+
+**诚实边界**：
+1. 线性是公式结构（Γ = 几何 × C'）的必然，非独立发现——扫描的价值在展示 C' 敏感性量级（每 0.1 → 40 MeV）与拟合点位置；
+2. C' 本身仍为拟合参数（~0.52 无独立物理来源）——与 μ 同为方案自由度；
+3. 完全第一性（无 C'/μ/N 输入）仍未闭合（最深目标，开放）。
+
+### 7.20 同位旋因子 N 扫描：线性依赖（整合推进）
+
+**扫描**（`scripts/paperX_glueball_width_n_scan.py`，注册 run_all_tests.py）：N∈[1,3] 连续扫描（N 为离散约定，连续扫描为插值展示）。
+
+**结构**：N 只乘在 ρρ 部分 ⟹ $\Gamma(N)=\Gamma_{\text{非ρρ}}+N\cdot\Gamma_{\rho\rho}$ **严格线性**：
+- 斜率 = $\Gamma_{\rho\rho}$(N=1) = 170.5 MeV（S+D+L4 求和）；
+- 截距 = $\Gamma_{\text{非ρρ}}$ = 38.8 MeV（ππ D + KK D + ηη D）。
+
+**结果**：
+
+| N | 1.0 | 1.5 | 2.0 | 2.5 | 3.0 |
+|:--|:--|:--|:--|:--|:--|
+| ΣΓ | 209 | 295 | 380 | 465 | 550 MeV |
+
+**关键观察**：
+1. **Γ 对 N 严格线性**（N 仅乘 ρρ 部分）——斜率 170.5 MeV/单位 N；
+2. **200 MeV 反解 N\*=0.95（<1）**——I=0 归一化（N=1）已给出 209 MeV（超锚点 5%）；200 MeV 需 N<1（超出物理约定区间）；
+3. **N=1（I=0 归一化）最接近锚点**；N>1 的电荷态求和（3 电荷态）线性抬高宽度（N=3 时 550）。
+
+![同位旋因子 N 扫描：ΣΓ(N)=38.8+170.5·N 严格线性（209→550 MeV），红点为 §7.18 离散点（N=1,3），虚线 N*=0.95（Γ=200）——灰色带 200±25%](../figs/paperX_glueball_width_n_scan.png)
+
+**结论**：
+- 参数敏感性图谱补全：**μ（非线性 α_s²）+ C'（线性尺度）+ N（线性斜率 170.5）+ L 波（S 波主导）**——2⁺⁺ 宽度全部自由度敏感性已系统刻画；
+- N=1（I=0 归一化）是唯一接近锚点的约定（5% 内），为 ρρ 同位旋处理的优选约定。
+
+**诚实边界**：
+1. N 为离散约定（1 vs 3），连续扫描为插值展示（非物理连续参数）；
+2. N=1 超锚点 5%（209 vs 200）——可由 μ/C' 微调吸收（自由度内），非独立约束；
+3. 完全第一性（N 无独立来源）未闭合（最深目标，开放）。
+
+### 7.21 胶球宽度全局最优拟合（整合收口）
+
+**拟合**（`scripts/paperX_glueball_global_fit.py`，注册 run_all_tests.py）：整合四自由度（μ/C'/N/L），物理约束下 χ² 最小化。
+
+**参数与物理约束**：
+- μ∈[0.4,0.8] GeV（Landau 极点前禁闭标度区）；C'∈[0.2,0.8]（~4π 色因子量级）；N=1 固定（I=0 归一化，§7.20 优选）；L 完整（S/D/G 波）；T∈[0.5,2.0]（0⁻⁺ 拓扑因子，态特定）。
+
+**最优解**（χ²_min=0.07，3 态 3 参数）：
+
+$$\mu^*=0.43\ \text{GeV},\quad C'^*=0.350\ (C^*=4\pi C'^*=4.4),\quad T^*=0.54$$
+
+**三态最终宽度预测**：
+
+| 态 | 预测 | 锚点 | 偏差 |
+|:--|:--|:--|:--|
+| 0⁺⁺ | 492 MeV | 500 | **-1.5%** |
+| 2⁺⁺ | 206 MeV | 200 | **+3.2%** |
+| 0⁻⁺ | 170 MeV | 170 | **+0.1%** |
+
+![全局最优拟合：χ² 等高线（μ-C' 平面，T 每点最优），红星为最优点 (μ*=0.43, C'*=0.350)](../figs/paperX_glueball_global_fit.png)
+
+**核心结论**：
+1. **三态宽度在物理约束下同时重现（偏差全部 <3.2%）**——0⁺⁺/2⁺⁺/0⁻⁺ 的统一解释成立；
+2. 最优参数物理自洽：μ*=0.43 GeV（禁闭标度区）、C*=4.4（~4π 量级色因子）、T*=0.54（拓扑抑制 ~O(1)）；
+3. χ²_min=0.07 极低——拟合质量优异（但 σ 为估计值，见诚实边界）。
+
+**诚实边界**：
+1. σ（锚点不确定度）为估计值（0⁺⁺50/2⁺⁺30/0⁻⁺25 MeV）——χ² 绝对值依赖 σ 设定；
+2. μ/C'/T 物理约束区间为方案设定；N=1 固定（§7.20）；
+3. **完全第一性（μ/C'/N/T 无独立谱结构来源）仍未闭合**——当前为"物理约束下的最优拟合"，非纯谱推导；
+4. 全局拟合成功表明：静默释放机制 + 标准强子结构（势垒/相空间/同位旋）在三态宽度上自洽，为"静默释放定量线"的收口成果。
+
+### 7.22 最终实验对比报告（整合收口）
+
+**范围**：方向整合静默释放定量线（§7.12–§7.21）的最终预测 vs 实验锚点对比。模型：静默释放（强耦合释放）+ 标准强子结构（Blatt-Weisskopf 势垒 / 相空间 / 同位旋），全局最优参数（§7.21）：$\mu^*=0.43$ GeV、$C'^*=0.350$（$C^*=4.4$）、$T^*=0.54$、N=1。
+
+**表 1：三态胶球宽度——预测 vs 实验锚点**
+
+| 胶球态 | 预测 Γ (MeV) | 实验锚点 (MeV) | 锚点来源 | 绝对偏差 |
+|:--|:--|:--|:--|:--|
+| 0⁺⁺ | 492 | 500（格点展宽 1.5–1.7 GeV 宽带，ππ 强混合） | paper40 §5.11 | 1.5% |
+| 2⁺⁺ | 206 | 200（ππ D 波 + ρρ 多道，Γ~100–300） | paper40 §5.11 | 3.2% |
+| 0⁻⁺ | 170 | 170（X(2370) 2026 BESIII 组合宽度 $170^{+44}_{-29}$ MeV） | paper40 §5.10/arXiv:2607.20366 | 0.1% |
+
+**表 2：总偏差指标**
+
+| 指标 | 数值 |
+|:--|:--|
+| 平均绝对偏差（MAD） | $\frac{1.5+3.2+0.1}{3}=1.60\%$ |
+| 均方根偏差（RMS） | $\sqrt{\frac{1.5^2+3.2^2+0.1^2}{3}}=\sqrt{\frac{12.50}{3}}=2.04\%$ |
+| 最大偏差 | 3.2%（2⁺⁺） |
+| χ²_min | 0.07（3 数据点，σ 估计见诚实边界） |
+
+**宽度序验证**：预测 492 > 206 ~ 170 MeV（0⁺⁺ > 2⁺⁺ ~ 0⁻⁺）——与实验/格点宽度序一致（paper40 §5.11：$0^{++}$ 最宽 = ππ S 波无势垒；$2^{++}$ D 波+ρρ 中宽；$0^{-+}$ 拓扑耦合受抑）。
+
+**核心结论**：
+1. **三态胶球宽度在物理约束下全部重现（最大偏差 3.2%）**——静默释放机制 + 标准强子结构的统一描述成立；
+2. 宽度序（0⁺⁺>2⁺⁺~0⁻⁺）由势垒结构决定（S 波无势垒 vs D 波/拓扑抑制）——机制性解释；
+3. 该结果衔接 paper40 §5.10-5.11（闭弦断裂 + 静默释放机制），为时间耦合语言（解绑通道层次，§7.11-7.12）的定量实现。
+
+**诚实边界**：
+1. σ（锚点不确定度）为估计值（0⁺⁺50/2⁺⁺30/0⁻⁺25 MeV）——χ²=0.07 极低提示 σ 偏大或拟合过好，偏差指标（MAD 1.60%/RMS 2.04%）为更稳健的度量；
+2. μ*/C'*/T* 为物理约束下最优拟合值（非独立谱结构推导）——**完全第一性未闭合**；
+3. 0⁻⁺ 锚点（X(2370) 170 MeV）为 2026 BESIII 组合宽度，含较大不确定度（+44/-29 MeV）；
+4. 0⁺⁺ 锚点（500 MeV）为格点宽带（1.5–1.7 GeV 展宽），单值化近似。
+
+### 7.23 三态 μ 稳健性扫描 v2（全局最优参数，整合收口）
+
+**扫描**（`scripts/paperX_glueball_width_mu_scan_v2.py`，注册 run_all_tests.py）：基于 §7.21 全局最优参数（C'*=0.350、T*=0.54、N=1、L 完整），扫描 μ∈[0.4,0.8] 验证**三态联合稳健性**（升级 §7.17 的单态 + 旧参数版）。
+
+**三态宽度对 μ 的变化（MeV）**：
+
+| 态 | μ=0.4 | μ=0.5 | μ=0.6 | μ=0.7 | μ=0.8 | 锚点 |
+|:--|:--|:--|:--|:--|:--|:--|
+| 0⁺⁺ | 609 | 336 | 229 | 174 | 141 | 500 |
+| 2⁺⁺ | 255 | 141 | 96 | 73 | 59 | 200 |
+| 0⁻⁺ | 211 | 116 | 79 | 60 | 49 | 170 |
+
+**稳健性结果**：
+- 2⁺⁺ 在 200±25%（150-250 MeV）内：μ∈[0.41,0.49] GeV；
+- **三态同时落在各自 ±25% 带内：μ∈[0.41,0.48] GeV（宽 0.07）——覆盖全局最优点 μ\*=0.43 ✓**。
+
+![三态宽度 μ 稳健性 v2：三条曲线（0⁺⁺蓝/2⁺⁺绿/0⁻⁺橙）+ 各自锚点虚线与 ±25% 带——三态共同稳健区间 μ∈[0.41,0.48] 覆盖全局最优点 0.43](../figs/paperX_glueball_width_mu_scan_v2.png)
+
+**结论**：
+1. **全局最优参数下三态 μ 稳健**——共同稳健区间 [0.41,0.48] 覆盖 μ\*=0.43（χ² 最优点位于稳健带内）；
+2. 2⁺⁺ 的 200 MeV 拟合在禁闭标度 μ~0.4-0.5 稳健（与 §7.21 μ*=0.43 一致）；
+3. 三态宽度随 μ 单调下降（α_s² 驱动），在禁闭标度区共同收敛到锚点带。
+
+**诚实边界**：
+1. C'/T/N 固定为全局最优（§7.21）——μ 独立变化展示联合稳健性；
+2. 共同稳健区间宽 0.07 GeV（相对窄），μ 仍需限定在禁闭标度区（~0.41-0.48）；
+3. 完全第一性（μ 无独立谱结构来源）未闭合（最深目标，开放）。
+
+### 7.24 时间耦合线数值验证（paper44 开放问题 #1 推进）
+
+**脚本**（`scripts/paperX_photon_time_coupling.py`，S11-S15，6/6，注册 run_all_tests.py）——把 paper44 §7.5 开放问题 #1（"时间解耦极限未数值验证"）推进为**数值层验证**：
+
+- **S11 γ→∞ 极限收敛**：v→c 时 dτ/dt=1/γ 单调递减至 <1e-6（v=(1-1e-13)c 时 1/γ=4.5e-7）——钟慢极限渐近零、不可达（推论 2.1 γ→∞ 数值层）；
+- **S12 cosθ 时间耦合一致性**：cosθ(θ=arcsin(v/c)) ≡ 1/γ（max err 1.8e-16）——时间耦合 = cosθ 的双路径数值等价；
+- **S13 boost 三角参数化等价**：secθ/tanθ 参数化 ≡ 标准 γ/γβ（5 个 β 值 <1e-12）——洛伦兹诠释数值等价；
+- **S14 牛顿斜线 vs 相对论渐近**：匀加速 a=g——牛顿 v/c=at 直线穿过光速（t≈0.97 yr，超光速不自洽）；相对论 v/c=at/√(1+a²t²) 渐近贴近 1（5yr 末 0.982、θ≈79°，永不到达）；
+- **S15 光速锁定复核**：E=pc（Planck+de Broglie+波速三恒等式）⟹ v_g=c 精确——光速锁定数值复核。
+
+**结论**：时间耦合线（推论 2.1 数值层 + 命题 2.7 + 洛伦兹诠释）全部数值自洽（6/6）——开放问题 #1 的"数值验证"部分闭合。
+
+**诚实边界**：γ→∞ 为渐近极限（v<c 不可达）；S12/S13 为数学等价重述；S15 为框架推导复核（非新预言）；验证仅针对标准相对论/量子关系的数值层，不构成对六项预言的验证。
+
+### 7.25 向法向自由度偏转的统一：引力侧补全（2026-08-11）
+
+**背景与动机**：讨论中提出直觉"质量是改变时间流逝速度的度量"（对应 GR 引力时间膨胀 $d\tau=\sqrt{g_{00}}\,dt$）。第一轮推进给出"等效速度角统一"：$d\tau/dt=\sqrt{1-2GM/rc^2}=\sqrt{1-v_{\rm esc}^2/c^2}=\cos\theta_{\rm esc}$（$v_{\rm esc}=\sqrt{2GM/r}$）——引力时间膨胀数值上等于逃逸速度对应的 SR 钟慢。但水星近日点进动（43"/世纪）暴露该统一的边界：时间膨胀（g₀₀，等效速度角）仅贡献 1/6，其余 2/3 来自 g_rr。经讨论修正：该第二贡献**不是"空间偏转"**（三维空间内的几何弯曲），而是**物体向引力正交自由度（Δ 方向）的偏转**——与框架双层正交结构（命题 2.1）一致。
+
+**双法向对称表**（核心结论）：
+
+| 时间耦合减弱根源 | 向哪个法向偏转 | 层面 | 框架依据 |
+|:--|:--|:--|:--|
+| 运动学钟慢 | 向**时间轴法向**（光速方向）偏转——速度角 $\theta=\arcsin(v/c)$ | SR | 推论 2.1（光子 ⊥ 时间） |
+| 引力时间膨胀 + 近日点进动 | 向**三维空间法向**（引力 Δ 方向）偏转 | GR | 命题 2.1（Δ ⊥ 三维空间） |
+
+**统一命题**：**时间耦合减弱的根源 = 物体向法向自由度的偏转**，有两种实现——向时间法向偏转（运动学钟慢，速度角 θ）与向空间法向偏转（引力时间膨胀与进动，Δ 方向）。"质量改变时间流逝"与"运动改变时间流逝"是**同一机制（向正交自由度偏转）的两种实现**，而非两个独立机制。
+
+**与命题 2.1 的衔接**（双层正交 → 双法向偏转）：
+- 命题 2.1：光子转变方向 ⊥ 引力 Δ ⊥ 物理三维空间（双层正交）；
+- 推论 2.1：光子 ⊥ 时间（**光子是时间法向**——时间轴 90° 参照）；
+- 本节补全：引力 Δ ⊥ 三维空间（**引力是空间法向**）；
+- 对称结构：**光子 ⊥ 时间 ↔ 引力 ⊥ 空间**——两个正交自由度，各自承载一种"向法向偏转"（钟慢/引力时间膨胀）。
+
+**数学对应**（GR 标准分解，诠释重述）：
+- 水星近日点进动 43"/世纪 = 1/6（时间膨胀 g₀₀，等效速度角 $\approx7.2''$）+ 2/3（g_rr，向 Δ 偏转的动力学响应 $\approx28.7''$）+ 1/6（测地线高阶项 $\approx7.2''$）；
+- 光偏折 $4GM/rc^2$ = 时间部分 $2GM/rc^2$（等效速度角）+ 空间部分 $2GM/rc^2$（向 Δ 偏转）——各半。
+
+**诚实边界**：
+1. 双法向偏转为**框架诠释重述**（GR 数学内容的框架语言组织），非新计算、非新预言；
+2. 引力 Δ 是范畴层结构（Sp 2-态射方向），**不是三维空间之外的几何空间维度**（paper44 诚实边界：法向自由度非几何额外维）——"向引力偏转"为框架语言，物理内容由 GR 数学承载；
+3. 等效速度角统一仅在**时间流逝速率**层面（√g₀₀）严格成立；完整引力（进动、光偏折 2 倍、引力波、宇宙学红移）需双法向（g₀₀+g_rr），GR 仍为正确理论。
+
+**开放问题**：
+1. 双法向偏转的量化统一——等效速度角 $\theta_{\rm esc}$ 与"向 Δ 偏转角"的关系（是否同一类角参数的不同投影？）；
+2. g_rr 的框架内范畴表述（Δ 法向响应如何落入 Rec/Sp 谱范畴结构）；
+3. 该统一与 §6.12"双窗口外显"（质量→时间窗口）的衔接：时间窗口（外显）与双法向偏转（机制）是否同一结构的两面。
+
+### 7.26 结构性画像方法论注记：球面与支柱（2026-08-11）
+
+**定位**：UFPF 框架及本笔记的元理论定位画像——"结构性画像"（组织/认知层面的图景，**非数学结构**）。
+
+**画面元素表**：
+
+| 画面元素 | 对应 | 含义 |
+|:--|:--|:--|
+| **球面** | UFPF 作为统一框架的表层（时间耦合、Z₂ 拓扑荷、双窗口外显、向法向偏转统一等语言） | 统一的整体图景 |
+| **球心** | UFPF 核心公理（Rec/Sp 范畴、D⊣R、拓扑转变公理 A1-A5） | 统一底层 |
+| **支柱** | 主流理论（SR、GR、QCD、QED…） | 从核心到表层的特定路径（内部解释） |
+| **支柱夹角** | 理论间的数学结构差异（γ / g₀₀ / SU(3) 表示…） | 各理论"看似独立" |
+| **支柱端点（球面上）** | 理论间的统一连接点 | 框架的实际工作——在球面上连通端点 |
+
+**由外而内 vs 内部解释的几何化**：站在球面（UFPF）看 = **由外而内解释**（关系性：向法向偏转、时间耦合）；站在支柱内部（SR 的 γ、GR 的 g₀₀）看 = **内部解释**（结构性：公式/度规）——两者数学等价、组织方向相反（§7.25）。
+
+**已连通端点实例**（框架现状）：
+- §7.25：运动学钟慢 ↔ 引力时间膨胀（向法向偏转统一，SR/GR 端点连通）；
+- 方向 5（§6.5-6.12）：自旋拓扑化 ↔ 时间耦合（双窗口外显，自旋/质量端点连通）；
+- 命题 2.1/推论 2.1：光子 ⊥ 时间 ↔ 引力 ⊥ 空间（双法向对称）。
+
+**未完成状态声明**（诚实边界）：
+1. **比喻而非数学**：UFPF 没有真实的"球面几何"——画面为组织/认知图景，不承载几何推导；
+2. **球心公理"长出"全部支柱远未完成**：每根支柱 = 核心公理向某领域的延伸，该延伸仅在少数领域成立——开放问题（A2 张量性、⊗ 结构、完整微分几何、w₂ 对偶论证等）表明球面为**局部铺设**；
+3. **支柱端点仅连通少数几处**：时间耦合、Z₂ 拓扑荷、双窗口外显为已连通点；完整标准模型、宇宙学等领域未连通；
+4. **六项预言未验证**：框架预言均为远期可证伪假说（paper44），不因画面而升级验证状态；
+5. **定位澄清**：UFPF 不与主流理论竞争（不替代支柱），而是作为统一表层的组织图景——主流理论在各自支柱上自洽（GR 在内部层面正确），球面提供端点连通。
+
+### 7.27 开放问题推进：θ_esc 量化统一（2026-08-11）
+
+**① θ_esc 与"向 Δ 偏转角"的量化统一——数值层闭合（等效速度角）**：脚本 `scripts/paperX_theta_esc_gravity.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** $\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$（地球表面 0.00214° / GPS 0.00105° / 太阳表面 0.11801°，偏差 <1e-15）——引力时间膨胀 = 等效速度角的时间耦合；
+- **S2** 统一形式 $\sqrt{1-v_{\rm esc}^2/c^2}=\sqrt{1-2GM/rc^2}$（逃逸速度对应 = 运动学钟慢同构）；
+- **S3** 水星进动 $42.99''$/世纪 = 1/6（g₀₀ ≈ 7.17''）+ 2/3（g_rr ≈ 28.66''）+ 1/6（测地线 ≈ 7.17''）；
+- **S4** 光偏折 $1.750''$ = 时间部分 0.875'' + 空间部分 0.875''（各半）；
+- **S5** **黑洞视界极限**：$\theta_{\rm esc}=90^\circ$、$\cos\theta_{\rm esc}\to0$（时间冻结）——与"光子 ⊥ 时间（θ=90° 零耦合）"极限呼应：等效速度角达到 90°（光速偏转）即时间耦合归零。
+
+**结论**：等效速度角 $\theta_{\rm esc}=\arcsin(v_{\rm esc}/c)$ 与运动学速度角 $\theta=\arcsin(v/c)$ 同为"向法向自由度偏转"的量化参数——统一命题（§7.25）的**数值层闭合**；黑洞视界为该统一的极限点（θ=90° 时间冻结）。
+
+**② g_rr 的框架内范畴表述——登记（未闭合）**：g_rr（进动 2/3 贡献）在框架内对应"向 Δ 法向偏转的空间响应"；其 Rec/Sp 谱范畴表述依赖 ⊗ 结构定义（§6.9 开放问题①），登记为待 ⊗ 结构确立后的深化项。
+
+**③ 双法向偏转与双窗口外显的衔接——登记（框架内诠释）**：双法向偏转（§7.25 机制层：向时间法向/空间法向偏转）与双窗口外显（§6.12 外显层：质量→时间窗口、自旋→力窗口）对应：
+- 时间窗口外显质量 ↔ 时间法向偏转（√g₀₀ / 等效速度角 θ_esc）；
+- 力窗口外显自旋 ↔ 外场耦合（塞曼 cosϑ）；
+- **外显窗口 = 偏转机制的观测面**——同一结构的两面（机制层偏转、外显层观测）。登记为框架内诠释，未闭合（统一范畴表述待 ⊗ 结构）。
+
+### 7.28 g_rr 框架内范畴表述：双通道引力调制的代数骨架（2026-08-12 推进 §7.27②，⊗ 清障后）
+
+§7.27②"g_rr 的框架内范畴表述登记未闭合（待 ⊗ 结构）"——§6.17 的 ⊗ 代数骨架清障后，补 g_rr 范畴表述候选的代数骨架：**双通道引力调制**（g₀₀ 时间通道调制、g_rr 空间通道调制，度规双通道互逆 g₀₀·g_rr=1）。脚本 `scripts/paperX_grr_categorical.py`（S1-S5，5/5 注册 run_all_tests.py）：
+
+- **S1** **g_rr 数值特征**：Schwarzschild 径向分量 $g_{rr}=1/g_{00}$（$g_{00}=1-2GM/rc^2$，框架符号约定与 paperX_theta_esc_gravity.py 一致）；恒等式 $g_{00}\cdot g_{rr}=1$（多 r 采样，偏差 <1e-12）——**度规双通道互逆**；
+- **S2** **双法向响应权重**：水星进动 42.99″ = 1/6（g₀₀ ≈ 7.17″）+ 2/3（g_rr ≈ 28.66″）+ 1/6（测地线 ≈ 7.17″）——**g_rr 空间响应占 2/3（4:1 空间/时间强度比）**；对照光偏折 1.750″ 各半（0.875″+0.875″）；
+- **S3** **双通道调制分离**：时间通道 √g₀₀（=cosθ_esc，θ_esc 时间耦合，§7.27①）vs 空间通道 g_rr（Δ 法向空间响应）——与命题 2.1 双法向对称衔接（光子⊥时间 ↔ 引力⊥空间）；外显 = σ × 通道强度（§6.19）的引力侧：引力调制经时间/空间双通道作用于谱对象；
+- **S4** **⊗ 自逆结构类比**：度规双通道互逆 $g_{00}\cdot g_{rr}=1$ 与 $\sigma^2=1$（Z₂ 自逆，§6.17 σ 幺半群同态）同为"对偶结构闭合"（互为逆元）——离散层（σ²=1）与连续层（g₀₀·g_rr=1）结构类比候选；
+- **S5** **总结**：g_rr 范畴表述候选的代数骨架闭合（双通道引力调制 + ⊗ 互逆类比）；正式 Rec/Sp 范畴表述（Δ 法向响应落入谱范畴结构的严格定义）仍开放。
+
+**结论**：§7.27② 的 g_rr 范畴表述从"登记未闭合"推进为"代数骨架闭合"——g_rr 在框架内对应**空间通道引力调制**（与 g₀₀ 时间通道构成双通道互逆 g₀₀·g_rr=1，进动 2/3 空间响应），与 §6.19 的外显结构（σ × 通道强度）及命题 2.1 双法向对称衔接；⊗ 结构（§6.17）为双通道互逆提供离散层类比（σ²=1）。正式 Rec/Sp 范畴表述（Δ 法向响应严格定义）登记开放。
+
+**诚实边界**：Schwarzschild 度规/进动分解/光偏折为标准 GR 事实（数据核对，非新计算）；"双通道引力调制"为框架内组织语言（§7.25 诠释重述的延伸）；"⊗ 自逆类比"为结构类比候选（非定理）；正式 Rec/Sp 范畴表述仍开放（§7.27② 剩余）。
+
+### 7.29 双法向偏转与双窗口外显衔接：观测面代数骨架（2026-08-12 推进 §7.27③）
+
+§7.27③"双法向偏转（机制层）与双窗口外显（外显层）的衔接——外显窗口 = 偏转机制的观测面（登记为框架内诠释，未闭合）"——把该诠释转化为代数骨架：**双通道 × 双层（机制/外显）矩阵 + 外显 = P_obs ∘ D**（偏转调制经观测投影外显）。脚本 `scripts/paperX_deflection_externalization.py`（S1-S5，5/5 注册 run_all_tests.py）：
+
+- **S1** **时间通道衔接**：机制层 $\cos\theta_{\rm esc}\equiv\sqrt{g_{00}}=1/\gamma(v_{\rm esc})$（地球/GPS/太阳，偏差 <1e-9）——时间法向偏转与运动学时间耦合（外显层）为同一参数（§7.27① 衔接）；
+- **S2** **双通道×双层矩阵**：机制层（√g₀₀ 时间通道、g_rr 空间通道）↔ 外显层（时间窗口 ω/固有时、力窗口塞曼/泡利）通道一一对应（§7.25 表 × §6.12 表）；
+- **S3** **共享乘积结构**：机制层偏转 = σ_grav × 通道因子（√g₀₀<1 时间变慢、g_rr>1 空间拉伸）与外显层外显 = σ × 通道强度（§6.19）**同一代数形式**（离散标记 × 连续量级）；
+- **S4** **观测面同一性**：GPS 引力时间膨胀 Δf/f = √g₀₀(R⊕)−√g₀₀(r_GPS) = 5.29e-10 → **45.7 μs/日**（标准 GPS GR 修正 ≈ +45.9 μs/日）——机制层（偏转）与外显层（时间窗口频率偏移）计算**同一可观测量**；
+- **S5** **总结**：外显窗口 = 偏转机制的观测面获代数骨架（外显 = P_obs ∘ D 组合结构）；正式函子构造（P_obs/D 严格范畴定义）仍开放。
+
+**结论**：§7.27③ 的衔接从"登记诠释"推进为"代数骨架闭合"——双法向偏转（机制层）与双窗口外显（外显层）共享**双通道结构**（时间/空间通道一一对应）与**乘积代数形式**（离散标记 × 连续强度），且"观测面同一性"（GPS 45.7 μs/日）为两层给出同一可观测量的定量实例——外显窗口 = 偏转机制的观测面获数值支撑。正式函子构造（P_obs/D）登记开放。
+
+**诚实边界**：√g₀₀/逃逸速度/GPS 修正为标准 GR 事实（数据核对，非新计算）；"外显窗口 = 偏转机制的观测面"为框架内组织语言（§7.25/§7.27③ 诠释的代数化）；正式函子构造（P_obs/D 严格范畴定义）仍开放（§7.27③ 剩余）。
+
+## 8 曲率层代数骨架（开放问题 #7 推进）
+
+### 8.1 问题
+
+paper44 §2.5/§3.1 的纤维丛几何（正交性、联络/曲率）依赖的微分几何结构——李代数值曲率的代数层是否闭合？完整流形微分几何仍开放（paper44 §7.5 开放问题 3）。
+
+### 8.2 代数骨架（对应 paper44 §7.3 完整数学表述）
+
+设 $\omega$ 为 $\mathfrak{su}(2)$ 值联络 1-形式（$A^\dagger=-A$ 反厄米），李代数值曲率 2-形式由结构方程给出
+
+$$\Omega=d\omega+\omega\wedge\omega,$$
+
+代数骨架闭合项（均机器证明）：
+
+1. **2-形式反对称**：$\Omega_{ij}=-\Omega_{ji}$（`skew_antisymm`：$A-A^\dagger$ 转置变号；`curvature_antisymm`：曲率反对称组合）；
+2. **李括号反对称**：$[\omega,\Omega]=-[\Omega,\omega]$（`lie_bracket_antisymm`）；
+3. **Bianchi 内核**：外微分项反对称（`dOmega_antisymm`）；完整 Bianchi $d\Omega+[\omega,\Omega]=0$ 需外微分幂零 $d^2=0$ 与雅可比恒等式——待微分几何库；
+4. **U(1) 阿贝尔特例**：$[\omega,\Omega]=0$ 时结构方程退化为 $F=dA$、$dF=0$（无源，光子场强）——`lie_bracket_zero_of_commute`/`curvature_abelian`；
+5. **挠率**：$T=d\theta+\omega\wedge\theta$ 反对称（`torsion_antisymm`）；
+6. **联络算子衔接**：垂直-水平分解 $TE\cong V\oplus H$（$V\perp H$）、幂等投影 $P(Pv)=Pv$、补投影 $(1-P)^2=1-P$——`proj_idem_apply`/`compl_projection_idem`。
+
+### 8.3 机器证明与验证
+
+- Lean：`PhotonTopologyCurvature.lean`（新增：`torsion_antisymm`/`dOmega_antisymm`/`proj_idem_apply`/`compl_projection_idem`）+ `PhotonTopologyFunctor.lean`（既有：`skew_antisymm`/`lie_bracket_antisymm`/`curvature_antisymm`）——零 sorry，`lake env lean` 编译通过；
+- 数值：`paperX_photon_curvature.py` 14/14（结构方程/Bianchi 残差 ~1e-14/U(1) 无源/挠率反对称）+ `paperX_photon_fiber_orthogonality.py` 5/5（垂直-水平分解/度量正交补/幂等投影）。
+
+### 8.4 诚实边界
+
+代数骨架闭合不替代完整流形微分几何——外微分形式理论（$d^2=0$）、流形级 Bianchi（雅可比恒等式）、联络/曲率/挠率的流形级形式化均待微分几何库（paper44 §7.5 开放问题 3）。
+
+### 8.5 外微分幂零性 d²=0 数值闭合（2026-08-11）
+
+推进 §8.4 开放子项"外微分形式理论（d²=0）"——数值/解析层闭合。脚本 `scripts/paperX_exterior_derivative_nilpotent.py`（S1-S5，5/5 注册 run_all_tests.py）：S1 0-形式 $d(df)=0$（混合偏导差 $f_{xy}-f_{yx}$ 等，多项式解析精确）；S2 1-形式 $d(d\omega)=0$；S3 2-形式（4 维）$d(d\eta)=0$；S4 su(2) 值形式逐分量 $d^2=0$（李代数分量独立作用）；S5 无源衔接 $F=dA\Rightarrow dF=d^2A=0$（无源 Maxwell；非阿贝尔 Bianchi $d\Omega+[\omega,\Omega]=0$ 的 $d^2=0$ 前提，Bianchi 残差 ~1e-14 见 `paperX_photon_curvature.py` 14/14）。
+
+**结论**：$d^2=0$ 幂零（结构方程 $\Omega=d\omega+\omega\wedge\omega$ 与 Bianchi 恒等式的代数前提）数值/解析层闭合——§8 曲率层：代数骨架（6 项机证）+ 外微分幂零性 + 数值 14/14+5/5 完整。**剩余**：流形级形式化（完整外微分理论、流形级 Bianchi、联络/曲率/挠率的流形级）仍待微分几何库（§8.4，paper44 §7.5 开放问题 3）。
+
+### 8.6 雅可比恒等式与 Bianchi 代数前提闭合（2026-08-11 推进 §8.2 第 3 项剩余部分）
+
+§8.2 第 3 项"完整 Bianchi $d\Omega+[\omega,\Omega]=0$ 需外微分幂零 $d^2=0$ 与雅可比恒等式——待微分几何库"：$d^2=0$ 已闭合（§8.5），本节验证雅可比恒等式并闭合 Bianchi 的代数前提。脚本 `scripts/paperX_jacobi_bianchi.py`（S1-S5，5/5 注册 run_all_tests.py）：
+- **S1** su(2) 基（泡利矩阵）雅可比恒等式 $[\sigma_i,[\sigma_j,\sigma_k]]+cyc=0$（3³ 组合，残差 0）；
+- **S2** 随机 su(2) 值矩阵雅可比（100 组，残差 7.6e-15）；
+- **S3** **常系数联络 Bianchi = 雅可比**：$\Omega=\omega\wedge\omega$（纯对易子），$[\omega,\Omega]$ 3-形式分量 ≡ 雅可比组合 = 0（残差 1.1e-16）；
+- **S4** 变系数 su(2) 值联络完整 Bianchi $d\Omega+[\omega,\Omega]=0$（3 维网格数值差分，残差 1.0e-13）；
+- **S5** 代数前提总结：$d^2=0$（§8.5）+ 雅可比恒等式（本节）⟹ Bianchi（§8.2 第 3 项**代数部分闭合**）。
+
+**结论**：Bianchi 恒等式的代数前提（$d^2=0$ + 雅可比）完整闭合——§8 曲率层代数骨架补完整（代数骨架 6 项机证 + $d^2=0$ + 雅可比 + 数值 14/14+5/5+5/5）。**剩余**：流形级形式化（完整外微分理论、流形级 Bianchi、联络/曲率/挠率流形级）仍待微分几何库（§8.4，paper44 §7.5 开放问题 3）。
+
+**诚实边界**：雅可比恒等式（矩阵结合律推论）与 Bianchi 为标准微分几何事实；数值验证为实例核对（非新定理）；流形级形式化仍开放。
+
+### 8.7 散度/旋度与光子拓扑的候选化学反应登记（2026-08-13，研究痕迹）
+
+**背景**：审查散度（$\nabla\cdot$）/旋度（$\nabla\times$）与光子拓扑（§5 环绕轴闭合、paper44 §2.5 螺旋度/横向性）的结构对应时提出的三个候选"化学反应"。经评估：均不产生新预言（数学内容为标准电动力学已知事实，物理内容已被 paper44 §2.5/§7.3 覆盖），**不引入论文正文**，仅登记为研究痕迹（未来若框架产生需微分结构的新预言再评估）。
+
+- **候选 1：旋度手性 ↔ 螺旋度/环绕定向**——圆偏振 $\varepsilon_\pm$ 环绕（$\operatorname{Im}(\varepsilon^*\times\varepsilon)\cdot\hat{\mathbf{k}}=\pm1$）为旋度的几何对象（矢量叉积即环绕）；对应表述："螺旋度 $s=\pm1$ = 电磁场旋度手性的拓扑编码"。评估：圆偏振手性为教科书内容，单列易被审稿人视为重述，不引入。
+- **候选 2：E↔B 互生 ↔ 行波自持循环**——Maxwell 旋度互生（$\nabla\times\mathbf{E}=-\partial\mathbf{B}/\partial t$、$\nabla\times\mathbf{B}=\mu_0\varepsilon_0\partial\mathbf{E}/\partial t$，真空自持传播）与光子"开放拓扑形变循环"（paper44 命题 2.6 环绕轴闭合）为同一物理的两种语言；对应表述："Maxwell 旋度互生 = 开放拓扑形变循环的微分实现"。评估：电磁波自持传播为标准内容，与 §2.5.2 横向性拓扑重述重叠，不引入。
+- **候选 3：旋度手性 ↔ P1 机制加固**——P1（引力 $\Delta$-偏振红移差）现有机制为"Δ 对两种偏振褶皱不等拉伸"；旋度语言补充："两种偏振 = 两种旋度手性，Δ 对旋度手性的不对称响应即偏振红移差"。评估：不新增可证伪内容；paper44 §6.1 已有更强的审稿防御（判别性锚定：与标准引力自旋霍尔效应量级差 10–12 个量级，证明 P1 非重述），候选 3 会稀释该论证，不引入。
+
+**登记状态**：三个候选均**维持笔记层登记、不进入 paper44 正文**；若未来框架产生与 $\Delta$ 相关的纵向模式可测效应或旋度结构的框架独有新预言，再评估提升至论文。
+
+## 9 数值验证（paperX_photon_first_principle.py）
+
+- **S1**：阿贝尔（光子 0 顶点）vs 非阿贝尔（胶子 3/4 顶点）顶点计数 + 静默状态/传播性对照——验证命题 P1（$N_{\text{vert}}=0\iff$ 静默解除可传播）；
+- **S2**：$\Phi\subseteq D$ 函子律数值/结构验证（对象/态射映射 + 保恒等/保复合）——验证 $\Phi=D|_{\mathbf{Rec}_{\text{photon}}}$；
+- **S3**：谱间隙闭合跳变模型（束缚/自由谱带，能级差扫描）——验证定理 T3 与 Bohr 条件谱表示 $h\nu=\Delta\lambda_{\text{gap}}=\Delta E$。
+
+## 10 诚实边界
+
+1. 方向 1 的"顶点数调控静默"原为机制论证 + 对照验证，非动力学推导；2026-08-12 已补充单圈场论定量支撑（§2.4：β 函数自相互作用项 = 静默维持源，paperX_silence_vertex_beta.py 6/6 注册）——非阿贝尔顶点谱封闭 → 静默维持的**完整非微扰场论推导**仍待后续；
+2. 方向 2 函子律已在**多能级有限子范畴**验证（§3.3：Φ=D|_Rec 从 {A,P} 扩展到 4 能级，复合保持=跃迁频率可加性=能量守恒，paperX_functor_extended.py 5/5 注册；2026-08-12 多能级子范畴 Lean 形式化闭合——PhotonTopologyFunctorLaws.lean 增补 MultiObj/MultiMor/multiCategory/phiMultiFunctor，能量守恒恒等式+频率可加性复合+函子律 map_id/map_comp 机器证明，`lake env lean` 编译通过零 sorry，v0.61）；2026-08-12 **无穷维（ι=ℕ 层次 A）推进闭合**（§3.4：paperX_functor_extended.py 扩展 S6/S7/S8 8/8 注册——Rydberg 组合原理大 n 验证 + 带边极限 ν→R_H/k² + 电离阈 13.6 eV 锚定；PhotonTopologyFunctorLaws.lean 增补 rydbergFreq/rydberg_combination（组合原理机器证明）/multiObjInfinite（无穷性实例）/rydberg_band_edge（带边极限），编译通过零 sorry，v0.62）——**连续谱 [0,∞)（层次 B）**为库依赖开放项（跨 Rec→Sp 谱间隙结构，定理 T3）；2026-08-12 层次 B **代数谱骨架**闭合（§3.5 P5-4：PhotonTopologySpectral.lean 束缚本征值 ∈ 谱（boundEnergy_mem_spectrum）/束缚带 ⊆ 谱（boundBand_subset_spectrum）+ 束缚带/自由带/电离阈定义，`lake env lean` 编译通过零 sorry），完整谱等式 spec(H)={E_n}∪[0,∞) 仍为库依赖开放项；
+3. 方向 3 谱带模型为框架内机制（定理 T3）；2026-08-11 谱带参数已获**原子物理第一性标定**（§4.4：氢原子锚定——束缚带 $\Lambda_{\text{bound}}=\{E_n\}$ Rydberg 离散序列、自由带 $\Lambda_{\text{free}}=[0,\infty)$、谱间隙=电离阈 13.6 eV，paperX_hydrogen_spectral_gap.py 5/5 注册）——原"工程参数化"缺口闭合；谱带模型本身仍为框架内机制（非新预言）；
+4. 六项预言（P1–P6）仍待实验验证（远期 15–20 年）；本笔记解决的是**机制层第一性起源**，不改变预言状态；
+5. S3 互补对应（方向 1）已纳入 paper44 正文（命题 2.5 规范玻色子传播性 = S3 谱静默状态 + 推论 2.5a 生成-禁闭对偶；2026-08-12 补充"场论定量支撑（单圈 RGE）"段——β 函数自相互作用项 = 谱静默维持源，paper44 v0.13）；paper40 侧为引用关系（定理 3.1 谱封闭/定理 4.2 谱间隙闭合），无需正文修改；本笔记 §2.4 为数值层记录（paperX_silence_vertex_beta.py 6/6 注册）；
+6. 方向 6（命题 P6：时间耦合模式 = 拓扑类型函数）为本笔记推演，未登记于 paper44——推论 2.1 仅针对光子传播，驻波"持续时间作用"是标准量子力学定态相位演化的框架内定位（§7.5）。
+7. **P5/P6 阶段成果的诚实边界（2026-08-12，P5-5 同步义务）**：①**P5-3 Φ=D|_Rec 严格等式**——函子层形式化的严格语义 = 谱化路径交换 + 转变效应一致（定义等式），在具体实例（PhotonTopology 两对象）上机器证明——"Φ 是 D 特例"在**谱化路径意义**下成立（非抽象范畴上全体函子等式，后者仍登记开放）；②**P5-4 电离阈 sSup**——氢原子束缚带 {13.6/n²} 上确界 = 13.6 eV 的机器证明（模型限定：13.6 为氢原子 Rydberg 锚定值，sSup 证明为该模型的严格化，非普适电离阈定理）；③**P6-1 光速/λν/E=hν**——光速不变量/λν 反比/光速统一均为标准物理恒等式的代数骨架（温和兼容，非新预言）；④**P6-2 SpObj ⊗（Kronecker）**——维度层 + σ 幺半群同态实例化机器证明，矩阵层 Kronecker 结合律登记开放（Fin ((m·n)·p) 维度管道高成本，不硬搭）；⑤**P6-3 channel 物理定义**——语义性登记候选（C_t/C_f 物理窗口），非独立新物理；⑥**P6-5 ε_Δ 候选**——两路径并存登记（路径 A ε_Δ=Δ(15³)≈2.96e-4 vs 路径 B ε_Δ=S4²≈4.4e-3），判别需 4-范畴 Δ 结构推导或远期偏振光谱观测，关系保持开放。
+8. **A4 涌现不可逆推导候选（2026-08-12，§3.7）**：①本候选为**推导尝试候选**（机制链完整、数学锚点标准），非已证定理——三锚点（推迟辐射条件/RAGE 谱逃逸/向内≡吸收）均为标准散射理论、谱理论与量子光学事实的框架内重述（温和兼容，非新预言）；②RAGE 与 WW 均为**开放系统/渐近表述**——闭合系统（腔、宇宙整体）时间反演对称仍在，不可逆是解选择（推迟辐射条件）的结果；腔/镜 = 外部边界驱动，不违反"向内≡吸收"（§3.7 成立域限定）；③自伴性（RAGE 前提）与完整谱等式仍为库依赖开放项（§3.5 P5-4）——RAGE 引用标注"条件性骨架"；④**表述纪律**："光速向外指向性"写成"发射选择推迟辐射条件"而非"$c$ 向外指向"（Maxwell 方程时间对称，推迟/超前解都存在；指向性来自解选择 = 因果性）；⑤**回应 CNF 评价 (a)"A4 断言无动力学"**——A4 获机制来源（因果性 + 谱逃逸）与失效条件（闭合系统 ⟹ 可逆，S4 数值演示 paperX_ww_decay.py 4/4 注册）；**代价**：A4 锚定后与因果性同强，不再是可独立裁决的新预言（与 v2.0"过程公理 + 失效条件"方案同构）。

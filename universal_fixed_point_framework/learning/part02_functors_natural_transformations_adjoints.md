@@ -1,6 +1,6 @@
 # Part 2：函子、自然变换与伴随
 
-> 目标：掌握 UFPF 的四大核心范畴论工具——函子、自然变换、伴随对、单位/余单位，能够复述 Paper I 中 $D \dashv R$ 的构造逻辑。
+> 目标：掌握 MUFPF 的四大核心范畴论工具——函子、自然变换、伴随对、单位/余单位，能够复述 Paper I 中 $D \dashv R$ 的构造逻辑。
 
 ## 问题动机
 
@@ -20,7 +20,7 @@
 
 **定义 2.2**（反变函子）。反变函子 $F: \mathcal{C}^{\mathrm{op}} \to \mathcal{D}$ 反转复合顺序：$F(g \circ f) = F(f) \circ F(g)$。
 
-### UFPF 实例：谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$
+### MUFPF 实例：谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$
 
 Paper I 定义 2.3.1：对 $R = (\mathcal{S}_R, \Phi_R, \mathcal{T}_R, \mathcal{M}_R) \in \mathbf{Rec}_D$，
 
@@ -30,7 +30,7 @@ $$D(R) = (\mathcal{H}_R, A_R, \sigma(A_R))$$
 
 对态射 $f: R_1 \to R_2$，$D(f)$ 是相应的谱空间映射。Paper I 命题 2.3.3 证明 $D$ 满足函子律。
 
-### UFPF 实例：静态化函子 $\mathcal{L}: \mathbf{Rec} \to \mathbf{Rec}_{\text{id}}$
+### MUFPF 实例：静态化函子 $\mathcal{L}: \mathbf{Rec} \to \mathbf{Rec}_{\text{id}}$
 
 Paper XIX 定义 4.1：$\mathcal{L}$ 遗忘动力学结构，将 $(\mathcal{S}_R, \Phi_R, \mathcal{T}_R, \mathcal{M}_R)$ 映为 $(M, \mathrm{id}_M, \mathbb{R}_{\ge 0}, \mu_M)$。
 
@@ -50,7 +50,7 @@ F(Y) --α_Y--> G(Y)
 
 **定义 2.4**（自然同构）。若每个 $\alpha_X$ 都是同构，则称 $\alpha$ 为自然同构，记 $F \cong G$。
 
-### UFPF 实例：谱对应自然同构
+### MUFPF 实例：谱对应自然同构
 
 Paper I 定理 3.7a：在实正自伴情形下，
 
@@ -64,7 +64,7 @@ $$M^{\text{br}} \cong_{\text{br}} L^{\text{br}}$$
 
 ## 2.2a Yoneda 引理完整证明
 
-Yoneda 引理是表示函子与自然变换之间的基本对应，也是理解 UFPF 中"谱对应"为何能被提升为自然同构的理论背景。下面给出完整证明，可直接用于自检。
+Yoneda 引理是表示函子与自然变换之间的基本对应，也是理解 MUFPF 中"谱对应"为何能被提升为自然同构的理论背景。下面给出完整证明，可直接用于自检。
 
 **引理 2.4**（Yoneda）。设 $\mathcal{C}$ 是局部小范畴，$F: \mathcal{C}^{\mathrm{op}} \to \mathbf{Set}$ 为反变函子。对任意 $A \in \mathcal{C}$，存在典范双射
 
@@ -110,7 +110,7 @@ $$\mathrm{Nat}(h_A, F) \;\cong\; F(A),$$
 
 因此 Yoneda 双射是自然同构。$\square$
 
-**与 UFPF 的关联**。Paper I 中的谱对应 $\lambda_i = e^{-\mu_i}$ 可视为"可表函子"思想的特例：将每个递归系统 $R$ 映到其谱集合的函子 $L_0, M_0$ 由 $R$ 本身（通过 $D$）表示，而自然同构 $M_0 \cong L_0$ 正是 Yoneda 意义下"同一对象的不同表示"给出的典范对应。
+**与 MUFPF 的关联**。Paper I 中的谱对应 $\lambda_i = e^{-\mu_i}$ 可视为"可表函子"思想的特例：将每个递归系统 $R$ 映到其谱集合的函子 $L_0, M_0$ 由 $R$ 本身（通过 $D$）表示，而自然同构 $M_0 \cong L_0$ 正是 Yoneda 意义下"同一对象的不同表示"给出的典范对应。
 
 ## 2.3 伴随对
 
@@ -129,7 +129,7 @@ $$\mathrm{Hom}_{\mathcal{D}}(L(X), Y) \cong \mathrm{Hom}_{\mathcal{C}}(X, R(Y))$
 $$(\varepsilon L) \circ (L \eta) = \mathrm{id}_L$$
 $$(R \varepsilon) \circ (\eta R) = \mathrm{id}_R$$
 
-### UFPF 实例：$D \dashv R$
+### MUFPF 实例：$D \dashv R$
 
 Paper I 定理 2.4.5：谱化函子 $D: \mathbf{Rec}_D \to \mathbf{Sp}$ 有右伴随 $R: \mathbf{Sp} \to \mathbf{Rec}_D$。
 
@@ -246,7 +246,7 @@ $$R(\varepsilon_E) \circ \eta_{R(E)} = \mathrm{id}_{R(E)} \circ \mathrm{id}_{R(E
 
 > **自检要点**。验证 $D \dashv R$ 时不必陷入无限递推：$R(E)$ 被显式构造为 $e^{-A_E}$ 在 $\mathcal D(A_E)$ 上的作用；三角恒等式随后只需检验 $D(R(D(S))) = D(S)$ 与 $D$ 的忠实性。Paper I 中把单位/余单位的名称与标准伴随记号相反，阅读时注意把“映射方向”与“标准定义”对应起来即可。
 
-### UFPF 实例：三层伴随对嵌套
+### MUFPF 实例：三层伴随对嵌套
 
 Paper XIX 建立：
 
@@ -264,13 +264,13 @@ $$D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}el \das
 - **满**（full）：上述映射是满射
 - **完全**（fully faithful）：上述映射是双射
 
-### UFPF 实例
+### MUFPF 实例
 
 Paper I 证明 $D$ 是忠实函子（命题 2.3.3）。这意味着不同的递归系统态射不会谱化为相同的谱态射——谱化不丢失态射层面的信息。
 
 ## 2.5 等价与伴随的关系
 
-若 $L \dashv R$ 且单位、余单位都是自然同构，则 $L$ 与 $R$ 构成范畴等价。在 UFPF 中，$D \dashv R$ 通常不是等价，因为：
+若 $L \dashv R$ 且单位、余单位都是自然同构，则 $L$ 与 $R$ 构成范畴等价。在 MUFPF 中，$D \dashv R$ 通常不是等价，因为：
 - 不同的递归系统可能有相同谱（非忠实？不，$D$ 是忠实的但非完全）
 - 谱范畴中的对象不一定都能由递归系统生成
 
@@ -292,9 +292,9 @@ Paper I 证明 $D$ 是忠实函子（命题 2.3.3）。这意味着不同的递�
 | 遗忘函子 | 把带结构的类型“遗忘”成底层类型 | `forget Group`、`forget Ring` 等具体范畴的遗忘函子 |
 | 表示函子 $h_A = \mathrm{Hom}(-, A)$ | Yoneda：把对象 $A$ 编码成它发出的所有态射集合 | `yoneda.obj A` |
 
-### UFPF 中的具体函子
+### MUFPF 中的具体函子
 
-下表把 UFPF 中的具体函子构造与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些 UFPF 函子在代码里长什么样”的直觉：
+下表把 MUFPF 中的具体函子构造与程序员熟悉的类型/结构对应起来。这不是严格定义，而是帮助你快速找到“这些 MUFPF 函子在代码里长什么样”的直觉：
 
 | 范畴论概念 | 代码直觉 | 在 Lean 4 / Mathlib 中的对应 |
 |------------|----------|------------------------------|
@@ -324,7 +324,7 @@ Paper I 证明 $D$ 是忠实函子（命题 2.3.3）。这意味着不同的递�
 - `Mathlib.CategoryTheory.Yoneda`：`yoneda`、`yonedaEquiv`（即 Yoneda 引理的 Lean 实现）
 - `Mathlib.CategoryTheory.ConcreteCategory`：遗忘函子与具体范畴的通用框架
 
-> **学习技巧**：把本节的表格与 Part 1 的“从代码到范畴”表格连起来看：范畴是纯接口 / 契约，对象是接口允许的类型，态射是接口承认的转换，函子是接口之间的兼容映射 / 类型转换器，自然变换是兼容映射之间的一致映射，伴随则是两套接口之间的最佳配对。UFPF 的谱化/静态化/选择/溶解都可以依次被实现为 `Functor` 加 `Adjunction`。
+> **学习技巧**：把本节的表格与 Part 1 的“从代码到范畴”表格连起来看：范畴是纯接口 / 契约，对象是接口允许的类型，态射是接口承认的转换，函子是接口之间的兼容映射 / 类型转换器，自然变换是兼容映射之间的一致映射，伴随则是两套接口之间的最佳配对。MUFPF 的谱化/静态化/选择/溶解都可以依次被实现为 `Functor` 加 `Adjunction`。
 
 ## 2.6 练习
 
@@ -336,7 +336,7 @@ Paper I 证明 $D$ 是忠实函子（命题 2.3.3）。这意味着不同的递�
 
 ## 2.7 关键要点
 
-- **函子**是范畴之间的结构保持映射，UFPF 的核心操作（谱化、静态化、选择）都是函子。
-- **自然变换**比较两个函子，UFPF 中的谱对应 $\lambda_i = e^{-\mu_i}$ 被提升为自然同构。
-- **伴随对**是 UFPF 的哲学与数学核心，$D \dashv R$ 编码还原论/涌现论的对偶。
+- **函子**是范畴之间的结构保持映射，MUFPF 的核心操作（谱化、静态化、选择）都是函子。
+- **自然变换**比较两个函子，MUFPF 中的谱对应 $\lambda_i = e^{-\mu_i}$ 被提升为自然同构。
+- **伴随对**是 MUFPF 的哲学与数学核心，$D \dashv R$ 编码还原论/涌现论的对偶。
 - 左伴随通常"构造/遗忘前结构"，右伴随通常"重建/添加结构"，但具体方向需由 Hom 集合定义验证。

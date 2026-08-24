@@ -4,7 +4,7 @@
 
 **摘要**：本笔记将噪声强度参数 $\eta \in [0,\infty)$ 提升为 Grothendieck 纤维范畴的基空间 $\mathbf{Noise}$，构造噪声谱丛 $\mathbf{Bun}(\mathbf{Noise}, \mathbf{Sp})$ 及其投影 $\pi_\eta$。核心成果包括：(1) 验证 $\pi_\eta$ 是分裂 Grothendieck 纤维化——Cartesian 提升由 Feynman-Hellmann 公式 $d\lambda/d\eta = \langle\psi_\lambda|\delta A_N|\psi_\lambda\rangle$ 给出；(2) 证明 $\tau(\eta) \propto 1/(\eta_c - \eta)$ 发散预言是截面在基边界 $\eta = \eta_c$ 处的奇异性定理；(3) 建立与 $\mathbf{Bun}(\mathbf{Temp}, \mathbf{Sp})$ 的丛态射（温度-噪声联合参数 $(\eta,T)$）。本形式化为 Paper XIX §11-13 和 Paper X §12.4 的预言提供了严格的纤维范畴基础。
 
-**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 $\pi_T$/$\pi_\mu$ 的严格形式化与 Lean 4 验证）、[`NoiseCategory.lean`](../../formal_proof/UFPFormalization/UFPFormalization/NoiseCategory.lean)（Σ-Rec 范畴、噪声谱流、$\eta_c$ 阈值）。
+**前置依赖**：[`spectral_Grothendieck_fibration.md`](spectral_Grothendieck_fibration.md)（已完成 $\pi_T$/$\pi_\mu$ 的严格形式化与 Lean 4 验证）、[`NoiseCategory.lean`](../../formal_proof/MUFPFormalization/MUFPFormalization/NoiseCategory.lean)（Σ-Rec 范畴、噪声谱流、$\eta_c$ 阈值）。
 
 ---
 

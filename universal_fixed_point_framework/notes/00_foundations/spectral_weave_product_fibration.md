@@ -418,7 +418,7 @@ BCS 谱流自洽方程
 ### 9.3 构建命令
 
 ```bash
-cd formal_proof/UFPFormalization
+cd formal_proof/MUFPFormalization
 lake build
 ```
 

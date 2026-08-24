@@ -1,9 +1,9 @@
-# 实验预注册文档：Necker 立方体临界慢化与 UFPF toy 模型检验
+# 实验预注册文档：Necker 立方体临界慢化与 MUFPF toy 模型检验
 
 **状态**：预注册草案 v0.1（2026-08-20）  
 **对应笔记**：[`sensory_integration_time_ruler.md`](./sensory_integration_time_ruler.md) §7.8.9  
 **目标**：在经典心理物理学框架内，通过 Necker 立方体双稳态知觉任务检验反应时（RT）在知觉边界附近的临界慢化是否服从幂律 $T(\delta)\sim|\delta|^{-\gamma}$，并与标准 Drift-Diffusion Model（DDM）进行模型选择比较。  
-**诚实边界**：本预注册文档为 UFPF 框架内的方法论规划，无数值预言；所有分析方案需在试点数据后修订。
+**诚实边界**：本预注册文档为 MUFPF 框架内的方法论规划，无数值预言；所有分析方案需在试点数据后修订。
 
 ---
 
@@ -15,7 +15,7 @@
 
 ### 1.2 假设
 
-- **H1（UFPF toy 模型）**：平均 RT 满足 $E[RT|\delta]=C|\delta|^{-\gamma}+t_0$，其中 $\gamma\neq1$，且 $\gamma$ 可由底层谱维度 $d_s$ 通过 $\gamma=2/d_s$ 解释。
+- **H1（MUFPF toy 模型）**：平均 RT 满足 $E[RT|\delta]=C|\delta|^{-\gamma}+t_0$，其中 $\gamma\neq1$，且 $\gamma$ 可由底层谱维度 $d_s$ 通过 $\gamma=2/d_s$ 解释。
 - **H0（标准 DDM）**：临界点附近 RT 发散指数为固定值 $\gamma=1$；若 DDM 扩展（非线性漂移、时变边界、有色噪声）可拟合数据，则 H1 的解释力被削弱。
 - **H2（中性/不可区分）**：数据噪声过大或 RT 截断严重，无法可靠区分幂律指数与 1。
 
@@ -158,7 +158,7 @@
 - **理由**：允许被试有足够时间完成极困难试次，同时控制总实验时长。
 - **处理方法**：
   1. 主分析报告截断比例；
-  2. 在 UFPF 似然中显式引入右截断校正（log-normal 右截断似然）：
+  2. 在 MUFPF 似然中显式引入右截断校正（log-normal 右截断似然）：
      $$\mathcal{L}_{\text{censored}} = \mathbb{1}_{RT<RT_{\max}}\log f(RT) + \mathbb{1}_{RT=RT_{\max}}\log(1-F(RT_{\max}))$$
   3. 若截断比例 > 10%（尤其在小 |δ| 等级），则考虑提高截断值或调整 δ 范围。
 
@@ -177,14 +177,14 @@
 
 ## 6. 统计模型与检验计划
 
-### 6.1 UFPF toy 模型
+### 6.1 MUFPF toy 模型
 
 假设 RT|δ 服从对数正态分布，其均值由幂律决定：
 
 $$E[RT|\delta] = C|\delta|^{-\gamma} + t_0,$$
 $$\log(RT|\delta) \sim \mathcal{N}\left(\log(C|\delta|^{-\gamma}+t_0) - \frac{\sigma^2}{2},\; \sigma^2\right).$$
 
-参数：$\theta_{\text{UFPF}}=(C,\gamma,t_0,\sigma)$，k=4。
+参数：$\theta_{\text{MUFPF}}=(C,\gamma,t_0,\sigma)$，k=4。
 
 拟合方法：最大似然估计（L-BFGS-B），多起点网格搜索避免局部最优。
 
@@ -215,7 +215,7 @@ $$f_{\text{ms}}(t_{\text{ms}}) = \frac{1}{1000} f_s\!\left(\frac{t_{\text{ms}}}{
 
 ### 6.4 替代模型（敏感性分析）
 
-若标准 DDM 与 UFPF toy 无法区分，则拟合以下扩展模型：
+若标准 DDM 与 MUFPF toy 无法区分，则拟合以下扩展模型：
 
 | 模型 | 额外自由度 | 用途 |
 |:--|:--|:--|
@@ -250,9 +250,9 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 
 ### 7.3 诚实边界
 
-- 上述关系均为**形式类比**，不是 UFPF 严格数学定理；
-- UFPF 的 $d_s$ 是针对 Rec/Sp 谱对象的抽象量，神经数据上的 $d_s$ 估计需要额外映射假设；
-- 若独立估计的 $d_s$ 与行为 γ 不一致，**不能**直接否定 UFPF toy 模型，只能说明当前映射假设不成立；
+- 上述关系均为**形式类比**，不是 MUFPF 严格数学定理；
+- MUFPF 的 $d_s$ 是针对 Rec/Sp 谱对象的抽象量，神经数据上的 $d_s$ 估计需要额外映射假设；
+- 若独立估计的 $d_s$ 与行为 γ 不一致，**不能**直接否定 MUFPF toy 模型，只能说明当前映射假设不成立；
 - 本部分为探索性分析，不纳入主要假设检验。
 
 ---
@@ -264,7 +264,7 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 1. 主要假设 H1/H0/H2；
 2. δ 等级、试次数分配、截断值；
 3. 纳入/排除标准；
-4. 主模型（UFPF toy）和竞争模型（DDM）；
+4. 主模型（MUFPF toy）和竞争模型（DDM）；
 5. 模型比较指标（AIC/BIC）和显著性标准；
 6. 计划样本量及其依据。
 
@@ -293,11 +293,11 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 
 ## 10. 局限性与诚实边界
 
-- 本预注册基于 UFPF toy 模型合成数据，真实数据可能不满足对数正态假设；
+- 本预注册基于 MUFPF toy 模型合成数据，真实数据可能不满足对数正态假设；
 - 功效分析假设无被试间随机效应，实际所需样本量可能更大；
 - 10000 ms 截断可能压缩 γ 估计；
-- DDM 扩展模型可能也能拟合 γ≠1 数据，UFPF 解释需通过 ΔAIC 和独立 $d_s$ 估计竞争；
-- 本研究不检验 UFPF 的量子/谱效应（生物尺度不可观测，见 [`sensory_integration_time_ruler.md`](./sensory_integration_time_ruler.md) §7.3）。
+- DDM 扩展模型可能也能拟合 γ≠1 数据，MUFPF 解释需通过 ΔAIC 和独立 $d_s$ 估计竞争；
+- 本研究不检验 MUFPF 的量子/谱效应（生物尺度不可观测，见 [`sensory_integration_time_ruler.md`](./sensory_integration_time_ruler.md) §7.3）。
 
 ---
 
@@ -360,7 +360,7 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 
 ### A.4 清洗后模型拟合结果
 
-#### A.4.1 UFPF toy 模型
+#### A.4.1 MUFPF toy 模型
 
 | 参数 | 估计值 | 真实值 | 偏差 |
 |:--|:--|:--|:--|
@@ -382,16 +382,16 @@ $$\gamma_i \sim \mathcal{N}(\mu_\gamma, \tau_\gamma^2),$$
 
 | 模型 | log L | AIC | BIC |
 |:--|:--|:--|:--|
-| UFPF toy | -80,535.10 | 161,078.21 | 161,107.05 |
+| MUFPF toy | -80,535.10 | 161,078.21 | 161,107.05 |
 | 标准 DDM | -101,188.23 | 202,384.45 | 202,413.29 |
-| ΔAIC（DDM − UFPF） | — | **+41,306.24** | **+41,306.24** |
+| ΔAIC（DDM − MUFPF） | — | **+41,306.24** | **+41,306.24** |
 
 ### A.5 附录结论
 
 - 在 12.22% 综合排除率下，关键参数 γ 估计稳健（偏差 < 5%）；
 - 校准后 gaze RMS 误差降至 0.767°，进入典型眼动仪精度范围；
 - 瞳孔缺失/伪迹率均落在真实实验常见范围内；
-- UFPF toy 在由其生成的数据上显著优于标准 DDM，符合预期；
+- MUFPF toy 在由其生成的数据上显著优于标准 DDM，符合预期；
 - 本附录为 toy 模拟验证，真实实验需根据试点数据重新校准噪声参数。
 
 ---

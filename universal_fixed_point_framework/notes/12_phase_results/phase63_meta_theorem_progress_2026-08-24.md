@@ -10,7 +10,7 @@
 
 ### 1.1 审计结果
 
-对 `formal_proof/UFPFormalization/UFPFormalization/` 目录下全部 **101 个 `.lean` 文件**执行全量搜索，结果如下：
+对 `formal_proof/MUFPFormalization/MUFPFormalization/` 目录下全部 **101 个 `.lean` 文件**执行全量搜索，结果如下：
 
 | 搜索模式 | 匹配数 | 说明 |
 |----------|--------|------|

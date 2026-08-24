@@ -1,10 +1,10 @@
 # Part 1：范畴论基础
 
-> 目标：理解 UFPF 中 $\mathbf{Rec}$、$\mathbf{Sp}$、$\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 等范畴的定义方式，能够判断一个构造是否构成范畴。
+> 目标：理解 MUFPF 中 $\mathbf{Rec}$、$\mathbf{Sp}$、$\mathbf{Rec}_{\text{id}}$、$\Sigma$-$\mathbf{Rec}$ 等范畴的定义方式，能够判断一个构造是否构成范畴。
 
 ## 问题动机
 
-在 UFPF 中，我们既要研究递归动力系统 $\mathbf{Rec}$，也要研究谱数据 $\mathbf{Sp}$。它们的具体定义完全不同：一个是状态空间加演化映射，一个是 Hilbert 空间加自伴算子。但如果我们只问“对象是什么”，这两个领域就毫无共同语言。范畴论的第一步，是把注意力从“对象内部有什么”转移到“对象之间如何连接”——也就是**态射**。一旦我们同意用“对象 + 保持结构的态射 + 复合”这三件套来描述 $\mathbf{Rec}$ 和 $\mathbf{Sp}$，就能在同一个抽象框架下比较它们。
+在 MUFPF 中，我们既要研究递归动力系统 $\mathbf{Rec}$，也要研究谱数据 $\mathbf{Sp}$。它们的具体定义完全不同：一个是状态空间加演化映射，一个是 Hilbert 空间加自伴算子。但如果我们只问“对象是什么”，这两个领域就毫无共同语言。范畴论的第一步，是把注意力从“对象内部有什么”转移到“对象之间如何连接”——也就是**态射**。一旦我们同意用“对象 + 保持结构的态射 + 复合”这三件套来描述 $\mathbf{Rec}$ 和 $\mathbf{Sp}$，就能在同一个抽象框架下比较它们。
 
 本章要解决的问题是：**什么是一个范畴？为什么 $\mathbf{Rec}$、$\mathbf{Sp}$、$\mathbf{Set}$、$\mathbf{Grp}$ 都可以用同一套语言描述？**
 
@@ -21,7 +21,7 @@
 - **结合律**：$h \circ (g \circ f) = (h \circ g) \circ f$
 - **单位律**：$f \circ \mathrm{id}_X = f = \mathrm{id}_Y \circ f$
 
-### UFPF 实例：递归系统范畴 $\mathbf{Rec}$
+### MUFPF 实例：递归系统范畴 $\mathbf{Rec}$
 
 在 Paper I §2.1 中，$\mathbf{Rec}$ 的对象是四元组：
 
@@ -35,7 +35,7 @@ $$R = (\mathcal{S}_R, \Phi_R, \mathcal{T}_R, \mathcal{M}_R)$$
 
 态射是保持递归结构的映射。这正是一个范畴：对象有明确定义，态射有复合，恒等态射是恒等映射。
 
-### UFPF 实例：谱范畴 $\mathbf{Sp}$
+### MUFPF 实例：谱范畴 $\mathbf{Sp}$
 
 $\mathbf{Sp}$ 的对象是三元组：
 
@@ -68,7 +68,7 @@ $$g \circ f = \mathrm{id}_X, \quad f \circ g = \mathrm{id}_Y$$
 
 **定义 1.3**（等价）。范畴 $\mathcal{C}$ 与 $\mathcal{D}$ 等价，若存在函子 $F: \mathcal{C} \to \mathcal{D}$ 与 $G: \mathcal{D} \to \mathcal{C}$ 使得 $G \circ F \cong \mathrm{id}_{\mathcal{C}}$ 且 $F \circ G \cong \mathrm{id}_{\mathcal{D}}$（自然同构）。
 
-### UFPF 实例
+### MUFPF 实例
 
 Paper XIX 定理 3.3：$\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$（紧致 Riemann 流形范畴的等价）。这意味着通过恒等延拓，静态拓扑对象与紧致 Riemann 流形范畴没有范畴论差异。
 
@@ -81,7 +81,7 @@ Paper XIX 定理 3.3：$\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$（紧�
 
 **定义 1.5**（宽子范畴）。若子范畴保持全部对象，仅减少态射，则称为宽子范畴（wide subcategory）。
 
-### UFPF 实例
+### MUFPF 实例
 
 - $\mathbf{Rec}_D \subset \mathbf{Rec}$：宽子范畴，对象为全部递归系统，但仅保留那些谱化像良定义的态射。
 - $\mathbf{Rec}_{\text{id}} \subset \mathbf{Rec}$：全子范畴（full subcategory），对象为恒等延拓的静态流形，态射与 $\mathbf{Rec}$ 中相同。
@@ -92,7 +92,7 @@ Paper XIX 定理 3.3：$\mathbf{Rec}_{\text{id}} \cong \mathbf{Riemann}$（紧�
 
 **定义 1.7**（积范畴）。$\mathcal{C} \times \mathcal{D}$ 的对象为 $(c, d)$，态射为 $(f, g)$。
 
-### UFPF 实例
+### MUFPF 实例
 
 层论中的预层定义为反变函子 $F: \mathcal{C}^{\mathrm{op}} \to \mathbf{Set}$。在 Paper XVI 中，谱预层是 2-函子：
 
@@ -120,5 +120,5 @@ $$\mathcal{E}: \mathrm{Open}(M)^{\mathrm{op}} \to \mathbf{Cat}$$
 ## 1.7 关键要点
 
 - 范畴论研究的是**结构及其保持映射**，而非具体对象的内部构成。
-- UFPF 的核心范畴 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 分别编码"递归动力学"与"谱数据"两种世界观。
-- 宽子范畴与全子范畴是限制定义域的两种基本方式，在 UFPF 中均有重要应用。
+- MUFPF 的核心范畴 $\mathbf{Rec}$ 与 $\mathbf{Sp}$ 分别编码"递归动力学"与"谱数据"两种世界观。
+- 宽子范畴与全子范畴是限制定义域的两种基本方式，在 MUFPF 中均有重要应用。
