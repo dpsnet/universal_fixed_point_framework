@@ -94,6 +94,28 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 - C2-C4: 体制间态拓扑分类、谱静默关系、临界体制边界
 - B2-B5: 盲区 2-5 形式化推进（长期）
 
+## 重要公告：框架更名计划（2026-08-24）
+
+**UFPF → MUFPF 更名计划**
+
+由于当前框架名称 **UFPF**（Universal Fixed Point Framework）与 IEEE 生物图像识别框架（Universal Feature Perception Framework, UFPF）在国际英文检索上存在严重冲突，导致学术流量被彻底分流，现启动更名计划。
+
+**新名称**：**MUFPF**（Meta-Universal Fixed-Point Functorial Framework）
+- 中文名称：元通用不动点函子范畴框架
+- 读音：Mee-U-F-P-F
+
+**更名原因**：
+1. 解决命名冲突，确保学术检索唯一性
+2. 理论内涵升级：Meta（元数学）、Functorial（函子范畴论）
+3. 匹配 Lean 4 形式化验证的学术高度
+
+**更名范围**：约 265 个文件，845+ 处引用
+**预计时间**：8 周（分四阶段实施）
+
+**详细计划**：`roadmap/mu_renaming_plan.md`
+
+---
+
 ## 文件命名约定
 
 - `YYYYMMDD_topic.md`：按日期记录的研究笔记。

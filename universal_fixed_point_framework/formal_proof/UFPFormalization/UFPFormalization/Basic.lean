@@ -2,6 +2,13 @@
 最小可构建原型：验证 Lean 4 工具链与 Lake 构建系统可用。
 
 ∞-Category 模块编译入口：此处 import 触发所有 ∞-范畴模块的编译。
+
+更名计划通知（2026-08-24）：
+框架名称将从 UFPF (Universal Fixed Point Framework) 更名为
+MUFPF (Meta-Universal Fixed-Point Functorial Framework)，
+以解决与 IEEE 生物图像识别框架的命名冲突。
+当前代码中的 UFPF 引用将在更名计划确认后统一修改。
+详见 roadmap/mu_renaming_plan.md
 -/
 
 import UFPFormalization.RecCategory

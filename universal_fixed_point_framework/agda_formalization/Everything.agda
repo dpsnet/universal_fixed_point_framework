@@ -1,5 +1,12 @@
 module Everything where
 
+-- 更名计划通知（2026-08-24）：
+-- 框架名称将从 UFPF (Universal Fixed Point Framework) 更名为
+-- MUFPF (Meta-Universal Fixed-Point Functorial Framework)，
+-- 以解决与 IEEE 生物图像识别框架的命名冲突。
+-- 当前代码中的 UFPF 引用将在更名计划确认后统一修改。
+-- 详见 roadmap/mu_renaming_plan.md
+
 -- UFPF Agda 重形式化：全部模块导入
 -- B1 ✅  Sp 4-范畴定义
 -- B2 ✅  高阶态射（2-态射、3-态射）
