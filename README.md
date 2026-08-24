@@ -1,4 +1,4 @@
-# 通用不动点范畴框架（UFPF）
+# 元通用不动点函子范畴框架（MUFPF）
 
 > **研究目标**：建立一套足够抽象的数学语言，使不同领域中的递归系统能够在统一的谱框架下被描述、比较和转化。
 >
@@ -19,7 +19,7 @@
 | 层次 | 位置 | 定位 |
 |------|------|------|
 | **原始数值层** | 根目录 `.` | 早期标准模型质量谱数值拟合与实验验证（历史代码） |
-| **通用不动点范畴框架** | `universal_fixed_point_framework/` | 范畴论与不动点公理建立的跨领域统一框架 |
+| **元通用不动点函子范畴框架** | `universal_fixed_point_framework/` | 范畴论与不动点公理建立的跨领域统一框架 |
 
 核心思想：将"递归迭代"视为对象层面的演化规则，其对应的"算子半群谱"为谱层面的静态结构，两者之间通过谱去递归化函子建立系统对应。
 
@@ -34,13 +34,13 @@
 - **谱静默机制**：替代传统紧致化的维度筛选
 - **交换律偏差** $\Delta$：引力的范畴论起源
 
-所有核心定理已通过 **Lean 4** 机器证明（`formal_proof/UFPFormalization/`）。
+所有核心定理已通过 **Lean 4** 机器证明（`formal_proof/MMUFPFormalization/`）。
 
 ---
 
 ## 三、论文系列（共 44 篇）
 
-> **系列总序（全局导论，推荐先读）**：[UFPF体系总序.md](universal_fixed_point_framework/paper/UFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
+> **系列总序（全局导论，推荐先读）**：[MUFPF体系总序.md](universal_fixed_point_framework/paper/MUFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
 
 | 范围 | 数量 | 状态 |
 |:-----|:----:|:----:|
@@ -149,7 +149,7 @@ universal_fixed_point_framework/
 │   ├── 01_origin_of_3.md … 07_e_less_than_3.md   # 各专题
 │   ├── b2_continuum_limit_analysis.md              # 🆕 B2 分析
 │   └── 04_gravity_analysis.md                      # 引力分析（含 §5.7j）
-├── formal_proof/UFPFormalization/   # Lean 4 形式化代码
+├── formal_proof/MMUFPFormalization/   # Lean 4 形式化代码
 ├── paperX_*.py                      # 数值验证脚本（注册于 run_all_tests.py）
 ├── run_all_tests.py                 # 全量回归测试
 ├── src/                             # Python 原型代码
@@ -160,10 +160,10 @@ universal_fixed_point_framework/
 
 ## 七、如何阅读
 
-**所有读者应先阅读**：[总序（全局导论）](universal_fixed_point_framework/paper/UFPF体系总序.md) → [RAP 勘误与立场声明](universal_fixed_point_framework/paper/RAP_勘误与立场声明.md)（基础性纠正与当前宣称边界）
+**所有读者应先阅读**：[总序（全局导论）](universal_fixed_point_framework/paper/MUFPF体系总序.md) → [RAP 勘误与立场声明](universal_fixed_point_framework/paper/RAP_勘误与立场声明.md)（基础性纠正与当前宣称边界）
 **数学研究者**：`paper30` → `paper32` → `paper34` → `formal_proof/`
 **物理研究者**：`paper17` → `paper18` → `paper31` → `paper32` → `paper33`
-**形式化方法研究者**：`formal_proof/UFPFormalization/` 下的 `.lean` 文件
+**形式化方法研究者**：`formal_proof/MMUFPFormalization/` 下的 `.lean` 文件
 
 ---
 

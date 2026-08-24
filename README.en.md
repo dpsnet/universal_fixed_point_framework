@@ -1,4 +1,4 @@
-# Fractal Spectral De-recursion Theory · Universal Fixed-Point Categorical Framework (UFPF)
+# Fractal Spectral De-recursion Theory · Universal Fixed-Point Categorical Framework (MUFPF)
 
 > **Research Goal**: To build a sufficiently abstract mathematical language that allows recursive systems from different domains—fractals, neural networks, renormalization groups, quantum gravity, the Standard Model, etc.—to be described, compared, and transformed within a unified spectral framework.
 
@@ -95,7 +95,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── ntk_fractal_bidirectional.py   # NTK-fractal bidirectional transformation
 │   │   └── ...                            # 40+ additional modules
 │   ├── notes/08_first_principles/         # Research notes (v1.48)
-│   ├── formal_proof/UFPFormalization/     # Lean 4 formalization: 9 core modules
+│   ├── formal_proof/MMUFPFormalization/     # Lean 4 formalization: 9 core modules
 │   ├── roadmap/                           # Phase roadmap documents
 │   ├── paperX_*.py                        # Numerical verification scripts
 │   └── run_all_tests.py                   # Full regression test suite
@@ -182,7 +182,7 @@ It should be emphasized that **core mathematical structures have been verified b
 
 ---
 
-## 6. Publication Plan (UFPF Series, 37 Papers)
+## 6. Publication Plan (MUFPF Series, 37 Papers)
 
 Core papers (I–IV) target journals; papers V–XXXVII are companion papers:
 
@@ -211,7 +211,7 @@ Core papers (I–IV) target journals; papers V–XXXVII are companion papers:
 1. `paper30_dH_structural_analysis.md` (structural analysis)
 2. `paper32_silence_spacetime.md` (spectral silence & spacetime)
 3. `paper34_continuum_limit.md` (B2 closure)
-4. `formal_proof/UFPFormalization/` (Lean 4 formalization code)
+4. `formal_proof/MMUFPFormalization/` (Lean 4 formalization code)
 
 ### For physicists
 1. `paper17_zero_parameter_predictions.md` (zero-parameter predictions)
@@ -223,7 +223,7 @@ Core papers (I–IV) target journals; papers V–XXXVII are companion papers:
 7. `paper37_open_problems.md` (open problems survey)
 
 ### For formal methods researchers
-- `formal_proof/UFPFormalization/` — `.lean` files (9 core modules)
+- `formal_proof/MMUFPFormalization/` — `.lean` files (9 core modules)
 
 ---
 
