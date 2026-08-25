@@ -234,11 +234,3 @@ $$z_{\text{grav}}^{\text{circular}} - z_{\text{grav}}^{\text{linear}} = \delta z
 
 *本笔记为 MUFPF 框架下光子拓扑理论的研究记录，基于 Paper XLIV 的数学结构。*
 *最后更新：2026-08-26（补充各向同性反向约束、联络唯一性、第一性推导论证）*
-
-1. Paper XLIV：光子生成的拓扑转变机制与可证伪预言
-2. Paper XXXV：引力的范畴论起源（交换律偏差定理）
-3. 讨论文档：`docs/discuss/2026-08-26-0020-关于光子双缝干涉等的讨论.md`
-
----
-
-*本笔记为 MUFPF 框架下光子拓扑理论的研究记录，基于 Paper XLIV 的数学结构。*
