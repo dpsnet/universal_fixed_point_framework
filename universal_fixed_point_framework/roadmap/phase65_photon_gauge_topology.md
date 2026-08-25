@@ -2,22 +2,75 @@
 
 **路线图编号**: MUFPF-RM-PHASE65
 **日期**: 2026-08-26
-**状态**: 规划阶段
+**状态**: 规划阶段（已纳入已有闭合方向审查）
 **关联论文**: Paper XXXV（引力范畴论）、Paper XLIV（光子拓扑）
 **关联笔记**:
 - `notes/06_photon_topology/photon_double_slit_topology.md`
 - `notes/10_gauge_RG/gauge_field_topological_interpretation.md`
+- `notes/01_qcd_higgs/spectral_color_dynamics.md`（色规范完整动力学）
+- `notes/01_qcd_higgs/spectral_Higgs_zero_parameter.md`（Higgs 零参数预测）
+- `notes/02_ckm_pmns_flavor/spectral_ckm_angles.md`（CKM/PMNS 完整推导）
+- `notes/10_gauge_RG/spectral_su2_emergence.md`（SU(2) 唯一锁定）
+- `notes/10_gauge_RG/spectral_alpha_derivation.md`（alpha 推导）
+- `notes/10_gauge_RG/spectral_delta_lambda_analytic.md`（Delta lambda 解析）
 
 ---
 
 ## 一、研究背景
 
+### 1.1 理论讨论进展（2026-08-26）
+
 基于 2026-08-26 的理论讨论，MUFPF 框架在光子拓扑和规范场拓扑诠释方面取得了重要进展：
 
 1. **光子拓扑理论**：成功解释了双缝干涉、延迟选择、电磁场正交性等量子现象
 2. **规范场拓扑诠释**：提出了规范对称性从"假设"到"涌现"的根本性重构
+3. **各向同性反向约束**：建立了联络唯一性的物理基础
+4. **第一性推导论证**：与爱因斯坦 GR 的反向约束范式高度同构
 
-本路线图规划了从当前研究笔记到严格理论论文的深化路径。
+### 1.2 已有闭合方向审查（2026-08-26 补充）
+
+经过对 `notes/01_qcd_higgs`、`notes/02_ckm_pmns_flavor`、`notes/10_gauge_RG` 三个目录的深度回顾，发现大量已有成果可直接复用于 Phase 65：
+
+#### 已完全闭合的方向（可直接进入论文）
+
+| 方向 | 核心成果 | 来源文件 | 复用价值 |
+|------|----------|----------|----------|
+| **色谱丛完整构造** | $\mathcal{E}_C = (C^3, A_{\text{gluon}})$、色荷守恒、Jacobi 恒等式 | `01_qcd_higgs/spectral_color_dynamics.md` | 可推广到 $SU(2)_L$ 和 $U(1)_Y$ |
+| **SU(2) 唯一锁定** | 五个范畴约束 C1-C5 唯一确定 $\mathfrak{su}(2)$ | `10_gauge_RG/spectral_su2_emergence.md` | 规范群拓扑分类的核心定理 |
+| **超荷 Y 推导** | 五个 SM 超荷值从 Cl(1,7) 唯一确定 | `10_gauge_RG/spectral_hypercharge_derivation.md` | 规范量子数的代数起源 |
+| **Higgs VEV 零参数预测** | $v = 246$ GeV，四层静默机制 | `01_qcd_higgs/spectral_Higgs_zero_parameter.md` | Higgs 机制的拓扑诠释 |
+| **Higgs 质量谱预测** | $m_H = 124.95$ GeV（偏差 0.12%） | `01_qcd_higgs/spectral_Higgs_zero_parameter.md` | 电弱对称性破缺 |
+| **$\Lambda_{\text{QCD}}$ 谱生成** | $\Lambda_{\text{QCD}} = M_{\text{Pl}} \exp(-2\pi/(b_0 \alpha_3^{(0)}))$ | `01_qcd_higgs/spectral_color_dynamics.md` | QCD 能标的第一性推导 |
+| **强子谱推导** | $\pi/K/\rho/N/\Delta$ 质量（偏差 1-8%） | `01_qcd_higgs/spectral_color_dynamics.md` | 禁闭的定量验证 |
+| **禁闭判据** | $\partial\mathbf{Rec}_D$ 边界穿越 | `01_qcd_higgs/spectral_low_energy_QCD.md` | 渐近自由/禁闭的拓扑证明 |
+| **CKM 四参数完全闭合** | $\theta_{12} = d_H/12$（偏差 0.09%）等 | `02_ckm_pmns_flavor/spectral_ckm_angles.md` | 味物理的拓扑起源 |
+| **PMNS 四参数完全闭合** | $\theta_{23} \approx 45^\circ$（第一性原理）等 | `02_ckm_pmns_flavor/spectral_ckm_angles.md` | 中微子混合的拓扑解释 |
+| **$\Delta\lambda_{\min}$ 解析公式** | $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \times M_{\text{Pl}}$ | `10_gauge_RG/spectral_delta_lambda_analytic.md` | 规范耦合常数的代数基础 |
+| **强 CP 谱解** | $\theta_{\text{QCD}} = 0$（自伴性）+ 轴子（辫子静默） | `01_qcd_higgs/spectral_strong_CP.md` | 规范理论的拓扑约束 |
+
+#### 部分闭合的方向（需 1-2 轮深化）
+
+| 方向 | 当前状态 | 缺口 | 建议路径 |
+|------|----------|------|----------|
+| **alpha = d_H/2 严格证明** | 经验公式（偏差 0.24%） | 缺严格证明 | Dirac 算符 Weyl 律、Kigami 分形谱三元组 |
+| **$Z_i$ 方案转换因子** | $4\pi$ 是态射归一化约定 | 需第一原理推导 | $\mathbf{Sp}$ 态射空间 Hilbert-Schmidt 内积 |
+| **Yukawa 权重 $y_i$** | O(1) 已知，精确值未知 | 超算子不动点无非平凡解 | 广义特征问题、非交换表示 |
+| **$\alpha_1/\alpha_2$ 统一推导** | $\alpha_s$ 已闭合 | 电磁/弱耦合待推导 | SU(2) 谱间隙 + $\epsilon$ 闭式 |
+| **KO-维数修正因子 5** | $k_{\text{EW}} = d_H/5$ | 因子 5 未理论推导 | Seeley-deWitt 展开 |
+
+#### 已建立的可复用数学结构
+
+| 结构 | 来源 | 复用场景 |
+|------|------|----------|
+| **Cl(1,7) 代数框架** | 多个文件 | 超荷推导、谱间隙推导的共同基础 |
+| **四层静默方法论** | `01_qcd_higgs/` | 光子/电磁扇区的静默分析 |
+| **IFS 有限谱三元组** | `10_gauge_RG/spectral_finite_IFS_triple.md` | 三代结构的数学基础 |
+| **$J$ 生成元旋转公式** | `02_ckm_pmns_flavor/spectral_ckm_angles.md` | 混合矩阵的统一来源 |
+| **Grothendieck 纤维化** | `02_ckm_pmns_flavor/spectral_flavor_fibration.md` | 味物理的拓扑结构 |
+| **$\partial\mathbf{Rec}_D$ 统一机制** | `01_qcd_higgs/spectral_low_energy_QCD.md` | 禁闭/Lorentz/黑洞/流变统一 |
+| **Banks-Casher 关系** | `01_qcd_higgs/spectral_low_energy_QCD.md` | 手征凝聚的谱翻译 |
+
+本路线图规划了从当前研究笔记到严格理论论文的深化路径，充分利用已有闭合方向。
 
 ---
 
