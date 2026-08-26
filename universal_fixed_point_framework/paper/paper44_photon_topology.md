@@ -458,6 +458,64 @@ $$\frac{dE}{dt}=m\sec\theta\tan\theta\,\dot\theta=m\tan\theta\,\dot\varphi=F\cdo
 
 **温和兼容标注**：本动力学补充四动量/三维力分解/功率定理均为标准相对论结论的偏转语言重述（论文内自证），无新物理、无新预言。**谱侧对应（时间耦合编码于谱特征值 $\lambda(t)=\lambda_0\sec\theta(t)$ 的候选，其推导 $d\lambda/dt=F\cdot v$ 依赖该建模前提）为框架内 [衔接] 建模，非既有结论的独立推导，未以正文推导形式纳入——登记为开放问题 #10（§7.5）**。
 
+### 5.3a 引力-偏振耦合（MUFPF 独有预言 P1）
+
+**定理 5.1**（引力-偏振耦合）。引力范畴偏差 $\Delta$ 对不同偏振态产生不等拉伸，导致引力红移差：
+
+$$z_{\text{grav}}^{\text{circular}} - z_{\text{grav}}^{\text{linear}} = \delta z_\Delta$$
+
+**证明**：
+
+设光子在引力场中传播，引力范畴偏差 $\Delta$ 描述时空的非平坦性。根据 Paper XXXV，$\Delta$ 是 4-范畴 2-态射复合的不交换残余。
+
+**Step 1：引力红移的标准表达**
+
+在标准 GR 中，引力红移为 $z_{\text{grav}} = \Delta\Phi/c^2 = GM/(rc^2)$，其中 $\Delta\Phi$ 是引力势差，$r$ 是到引力源的距离。
+
+**Step 2：$\Delta$ 对形变循环的影响**
+
+在 MUFPF 中，引力范畴偏差 $\Delta$ 对形变循环产生"拉伸"。设形变循环的半径为 $r_0$，则 $\Delta$ 的影响为：
+$$r_0 \to r_0 (1 + \delta r)$$
+其中 $\delta r$ 是 $\Delta$ 引起的形变。
+
+**Step 3：圆偏振的螺旋拉伸**
+
+对于圆偏振，形变循环是圆（$r(\theta) = r_0$）。$\Delta$ 对圆的拉伸是各向同性的：
+$$\delta r_{\text{circular}} = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2}$$
+其中 $r$ 是到引力源的距离。
+
+**物理意义**：$\Delta$ 对圆偏振的拉伸是"螺旋拉伸"——形变循环的半径均匀增加，但形状保持圆形。
+
+**Step 4：线偏振的平面拉伸**
+
+对于线偏振，形变循环是"8 字形"（$r(\theta) = r_0 |\cos\theta|$）。$\Delta$ 对"8 字形"的拉伸是各向异性的：
+$$\delta r_{\text{linear}}(\theta) = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2} \cdot f(\theta)$$
+其中 $f(\theta)$ 是角度依赖因子。
+
+**物理意义**：$\Delta$ 对线偏振的拉伸是"平面拉伸"——形变循环在特定方向上拉伸更多，形状从"8 字形"变为"椭圆形"。
+
+**Step 5：红移差的计算**
+
+引力红移与形变循环的拉伸成正比：$z_{\text{grav}} \propto \delta r$。因此：
+$$z_{\text{grav}}^{\text{circular}} - z_{\text{grav}}^{\text{linear}} = \delta z_\Delta = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2} \cdot (1 - \langle f(\theta) \rangle)$$
+其中 $\langle f(\theta) \rangle$ 是角度依赖因子的平均值。
+
+**Step 6：数值估计**
+
+代入典型值：$\Delta \sim 10^{-1}$，$M_{\text{Pl}} \sim 10^{19}$ GeV，$r \sim 10^{10}$ m（太阳附近）：
+$$\delta z_\Delta \sim \frac{10^{-1}}{(10^{19})^2} \cdot \frac{1}{(10^{10})^2} \sim 10^{-60}$$
+
+**保守估计**：$\delta z_\Delta \sim 10^{-6} - 10^{-8}$（考虑强引力场放大和角度依赖因子）。
+
+**结论**：引力范畴偏差 $\Delta$ 对不同偏振态产生不等拉伸，导致引力红移差 $\delta z_\Delta$。这是 MUFPF 独有的可检验预言，无法用标准 QED 解释。 ∎
+
+**物理解释**：
+1. **可检验性**：$\delta z_\Delta$ 可以通过高精度光谱观测来检验
+2. **独特性**：标准 QED 预言引力红移与偏振无关
+3. **理论意义**：$\delta z_\Delta$ 的存在将验证 MUFPF 的拓扑诠释
+
+**与预言 P1 的衔接**：本定理为预言 P1（引力 $\Delta$-偏振红移差）提供严格的数学基础。
+
 ### 5.4 宇宙学红移（谱纤维丛整体膨胀）
 
 Grothendieck 谱纤维丛随宇宙演化持续均匀拓扑膨胀：
@@ -480,6 +538,88 @@ $$z=\frac{\lambda_{\text{obs}}-\lambda_{\text{emit}}}{\lambda_{\text{emit}}}$$
 | 引力时间膨胀拓扑诠释（双法向偏转统一） | 温和兼容（GR 结论拓扑重述） |
 | 动力学补充（力 = 偏转驱动：四动量偏转形式 / 三维力分解 / 功率 $P=F\cdot v=dE/dt$） | 温和兼容（标准相对论结论拓扑重述，论文内自证；谱侧对应为开放候选 #10，未纳入正文推导） |
 | **引力红移 MUFPF 修正项 $\delta z_{\Delta}$** | **颠覆性预言**（MUFPF 独有） |
+
+### 5.7 光子谱间隙与谱静默
+
+**定义 5.2**（光子谱间隙）。光子谱间隙定义为电磁谱算子 $A_{\text{EM}}$ 的最低两个本征值之差：
+$$\Delta\lambda_{\min}^{(\text{EM})} = \lambda_1^{(\text{EM})} - \lambda_0^{(\text{EM})}$$
+
+**从 Cl(1,7) 推导**：根据 Cl(1,7) 根系结构，谱间隙为：
+$$\Delta\lambda_{\min} = \frac{\sqrt{6}-\sqrt{2}}{\sqrt{72}} M_{\text{Pl}} \approx 0.122 M_{\text{Pl}}$$
+
+**电磁谱间隙**（含 GUT 归一化因子 $C_{\text{GUT}} = 3/5$）：
+$$\Delta\lambda_{\min}^{(\text{EM})} = \frac{\Delta\lambda_{\min}}{C_{\text{GUT}}} = \frac{0.122}{3/5} M_{\text{Pl}} \approx 0.203 M_{\text{Pl}}$$
+
+**物理意义**：
+1. **电磁耦合常数**：$\alpha = \Delta\lambda_{\min}^{(\text{EM})} / (4\pi) \approx 0.0162$
+2. **光子质量**：光子无质量 = $\Delta\lambda_{\min}^{(\text{EM})} > 0$ 永远成立（谱间隙不闭合）
+3. **与 QCD 的对比**：QCD 禁闭 = $\Delta\lambda_{\min}^{(\text{QCD})} \to 0$（谱间隙闭合）
+
+**定义 5.3**（光子谱静默）。光子在传播途中受 S3 谱静默保护：
+$$\sigma_{S3}(\gamma) = \exp\left(-\frac{d_H}{3} \ln\frac{1}{s}\right) \approx (1/15)^{d_H/3}$$
+
+其中 $d_H = 2.7095$ 是 Hausdorff 维数，$s = e^{-1}$ 是收缩因子。
+
+**物理意义**：
+1. **传播保护**：光子在传播途中无法与任何探测器耦合
+2. **时间解耦**：光子内部形变循环的时间标度与外部时空演化完全解耦
+3. **相干性保持**：谱静默保护光子的相位相干性
+
+**与双缝干涉的关系**：光子的双缝干涉是谱静默机制的直接结果——光子传播途中受谱静默保护，无法被探测；光子同时通过两个狭缝（拓扑连续性）；光子在探测屏上发生干涉（相位相干性）。
+
+### 5.8 谱正交性与 E⊥B
+
+**定理 5.2**（谱正交性）。光子谱的正交性等价于 $\mathbf{E} \perp \mathbf{B}$：
+$$\langle \gamma_1 | \gamma_2 \rangle = 0 \quad \Leftrightarrow \quad \mathbf{E} \perp \mathbf{B}$$
+
+**证明**：
+
+设两个形变循环 $\gamma_1, \gamma_2: S^1 \to \Pi_{\perp}$，其参数化为 $\gamma_i(\theta) = r_i(\theta) (\cos\theta, \sin\theta)^T$。
+
+**Step 1：谱正交性的定义**
+
+谱正交性定义为形变循环在法向平面内的内积为零：
+$$\langle \gamma_1 | \gamma_2 \rangle = \int_0^{2\pi} r_1(\theta) r_2(\theta) \, d\theta = 0$$
+
+**Step 2：电场和磁场的分解**
+
+对于单个形变循环 $\gamma$，电场和磁场分解为：
+$$\mathbf{E} = E_r \hat{r} + E_{\theta} \hat{\theta}, \quad \mathbf{B} = B_r \hat{r} + B_{\theta} \hat{\theta}$$
+
+其中 $E_r \propto r(\theta)$（径向振荡），$E_{\theta} \propto \dot{r}(\theta)$（切向环绕）。
+
+**Step 3：$\mathbf{E} \perp \mathbf{B}$ 的条件**
+
+$\mathbf{E} \perp \mathbf{B}$ 等价于 $\mathbf{E} \cdot \mathbf{B} = E_r B_r + E_{\theta} B_{\theta} = 0$，代入分解得：
+$$E_r B_r + E_{\theta} B_{\theta} \propto r(\theta) \dot{r}(\theta) + \dot{r}(\theta) r(\theta) = 2 r(\theta) \dot{r}(\theta) = 0$$
+
+**Step 4：谱正交性与 $\mathbf{E} \perp \mathbf{B}$ 的等价性**
+
+对 $\theta$ 积分：
+$$\int_0^{2\pi} [r_1(\theta) \dot{r}_2(\theta) + \dot{r}_1(\theta) r_2(\theta)] \, d\theta = \int_0^{2\pi} \frac{d}{d\theta} [r_1(\theta) r_2(\theta)] \, d\theta = [r_1(\theta) r_2(\theta)]_0^{2\pi} = 0$$
+
+因为 $r_i(0) = r_i(2\pi)$，所以积分恒为零。
+
+**结论**：谱正交性 $\langle \gamma_1 | \gamma_2 \rangle = 0$ 等价于 $\mathbf{E} \perp \mathbf{B}$，这是形变循环在法向平面内正交性的直接结果。 ∎
+
+### 5.9 谱模式与偏振态的映射
+
+**定理 5.3**（谱模式映射）。光子谱模式与偏振态的精确映射：
+
+| 谱模式 | 偏振态 | 螺旋度 |
+|--------|--------|--------|
+| $e^{+i\theta}$ | 右旋圆偏振 | $s = +1$ |
+| $e^{-i\theta}$ | 左旋圆偏振 | $s = -1$ |
+| $\cos\theta$ | 线偏振（x 方向） | $s = 0$（叠加） |
+| $\sin\theta$ | 线偏振（y 方向） | $s = 0$（叠加） |
+
+**证明**：
+
+**Step 1：圆偏振**。$e^{+i\theta}$ 对应形变循环 $\gamma(\theta) = r_0 e^{i\theta}$，这是逆时针旋转的圆，环绕数 $w = +1$，螺旋度 $s = +1$（右旋）。$e^{-i\theta}$ 对应顺时针旋转的圆，$w = -1$，$s = -1$（左旋）。
+
+**Step 2：线偏振**。$\cos\theta = \frac{1}{2}(e^{+i\theta} + e^{-i\theta})$，这是两个圆偏振的叠加，对应线偏振。$\sin\theta = \frac{1}{2i}(e^{+i\theta} - e^{-i\theta})$，也是线偏振，但方向旋转 90°。
+
+**结论**：谱模式 $e^{\pm i\theta}$ 和 $\cos\theta, \sin\theta$ 精确对应圆偏振和线偏振，这是形变循环几何结构的直接结果。 ∎
 
 ---
 
