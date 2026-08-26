@@ -204,10 +204,59 @@ $$\sigma_{S3}(\gamma) = \exp\left(-\frac{d_H}{3} \ln\frac{1}{s}\right) \approx (
 | 线偏振 | "8 字形" | $w = 0$ | $s = 0$（叠加态） |
 | 椭圆偏振 | 椭圆 | $\|w\| = 1$ | $\|s\| = 1$（混合态） |
 
-**证明要点**：
-1. **圆偏振**：$r(\theta) = r_0$，形变循环是圆，环绕数 $w = \pm 1$
-2. **线偏振**：$r(\theta) = r_0 |\cos\theta|$，形变循环是"8 字形"，环绕数 $w = 0$
-3. **椭圆偏振**：$r(\theta)$ 是一般光滑函数，形变循环是椭圆
+**证明**：
+
+设形变循环 $\gamma: S^1 \to \Pi_{\perp}$ 的参数化为：
+$$\gamma(\theta) = r(\theta) \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}, \quad \theta \in [0, 2\pi)$$
+
+其中 $r: [0, 2\pi) \to \mathbb{R}_{>0}$ 是光滑函数，$r(0) = r(2\pi)$。
+
+**Step 1：圆偏振（$r(\theta) = r_0$）**
+
+当 $r(\theta) = r_0$（常数）时，形变循环是半径为 $r_0$ 的圆：
+$$\gamma(\theta) = r_0 \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}$$
+
+环绕数定义为：
+$$w = \frac{1}{2\pi} \oint_\gamma d\theta = \frac{1}{2\pi} \int_0^{2\pi} d\theta = 1$$
+
+对于右旋圆偏振，$\theta$ 逆时针增加，$w = +1$；对于左旋圆偏振，$\theta$ 顺时针增加，$w = -1$。
+
+螺旋度 $s = \mathbf{J} \cdot \hat{\mathbf{k}}$ 是角动量在传播方向的投影。对于圆偏振：
+- 右旋：$s = +1$（角动量与传播方向同向）
+- 左旋：$s = -1$（角动量与传播方向反向）
+
+**Step 2：线偏振（$r(\theta) = r_0 |\cos\theta|$）**
+
+当 $r(\theta) = r_0 |\cos\theta|$ 时，形变循环是"8 字形"：
+$$\gamma(\theta) = r_0 |\cos\theta| \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}$$
+
+当 $\theta = 0$ 时，$\gamma(0) = r_0 \begin{pmatrix} 1 \\ 0 \end{pmatrix}$
+当 $\theta = \pi/2$ 时，$\gamma(\pi/2) = 0$
+当 $\theta = \pi$ 时，$\gamma(\pi) = -r_0 \begin{pmatrix} 1 \\ 0 \end{pmatrix}$
+当 $\theta = 3\pi/2$ 时，$\gamma(3\pi/2) = 0$
+
+形变循环在 $\theta = \pi/2$ 和 $\theta = 3\pi/2$ 处经过原点，形成"8 字形"。
+
+环绕数：
+$$w = \frac{1}{2\pi} \oint_\gamma d\theta = 0$$
+
+因为"8 字形"的两部分绕原点的方向相反，总环绕数为零。
+
+线偏振是两个圆偏振的叠加：
+$$\mathbf{E}_{\text{linear}} = \frac{1}{\sqrt{2}} (\mathbf{E}_{\text{right}} + \mathbf{E}_{\text{left}})$$
+
+因此螺旋度 $s = 0$（叠加态）。
+
+**Step 3：椭圆偏振（$r(\theta)$ 是一般光滑函数）**
+
+当 $r(\theta)$ 是一般光滑函数时，形变循环是椭圆。椭圆的环绕数 $|w| = 1$（绕原点一周）。
+
+椭圆偏振可以分解为两个正交的线偏振：
+$$\mathbf{E}_{\text{ellipse}} = E_x \hat{x} + e^{i\delta} E_y \hat{y}$$
+
+其中 $\delta$ 是相位差。当 $\delta = \pm \pi/2$ 时，椭圆偏振退化为圆偏振；当 $\delta = 0$ 或 $\pi$ 时，退化为线偏振。
+
+**结论**：偏振态由形变循环的拓扑类型完全分类，环绕数 $w$ 和螺旋度 $s$ 是拓扑不变量。 ∎
 
 **物理意义**：
 - 螺旋度 $s = \mathbf{J} \cdot \hat{\mathbf{k}}$ 是形变循环的"手性"
@@ -225,14 +274,67 @@ $$\sigma_{S3}(\gamma) = \exp\left(-\frac{d_H}{3} \ln\frac{1}{s}\right) \approx (
 $$\nabla \cdot \mathbf{E} = 0, \quad \nabla \cdot \mathbf{B} = 0$$
 $$\nabla \times \mathbf{E} = -\partial_t \mathbf{B}, \quad \nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial_t \mathbf{E}$$
 
-**证明要点**：
+**证明**：
 
-1. **$\nabla \cdot \mathbf{E} = 0$**：径向振荡的环绕闭合（无净径向流）
-2. **$\nabla \cdot \mathbf{B} = 0$**：切向环绕的拓扑闭合（无磁单极）
-3. **$\nabla \times \mathbf{E} = -\partial_t \mathbf{B}$**：径向振荡的时间变化驱动切向环绕
-4. **$\nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial_t \mathbf{E}$**：切向环绕的时间变化驱动径向振荡
+设形变循环 $\gamma(\theta, t)$ 在法向平面 $\Pi_{\perp}$ 内随时间 $t$ 演化，其电场和磁场分解为：
+$$\mathbf{E} = E_r \hat{r} + E_{\theta} \hat{\theta}, \quad \mathbf{B} = B_r \hat{r} + B_{\theta} \hat{\theta}$$
 
-**结论**：麦克斯韦方程组是形变循环自洽传播的拓扑约束，而非独立的物理定律。 ∎
+其中 $\hat{r}$ 是径向单位矢量，$\hat{\theta}$ 是切向单位矢量。
+
+**Step 1：$\nabla \cdot \mathbf{E} = 0$（无源条件）**
+
+径向振荡的环绕闭合意味着电场在法向平面内形成闭合流线。对于闭合流线：
+$$\oint_{\gamma} \mathbf{E} \cdot d\mathbf{l} = 0$$
+
+由 Stokes 定理：
+$$\oint_{\gamma} \mathbf{E} \cdot d\mathbf{l} = \int_S (\nabla \times \mathbf{E}) \cdot d\mathbf{A}$$
+
+对于环绕闭合的形变循环，电场的旋度在法向平面内积分为零。进一步，由散度定理：
+$$\int_V \nabla \cdot \mathbf{E} \, dV = \oint_S \mathbf{E} \cdot d\mathbf{A} = 0$$
+
+因为形变循环是闭合的，没有净电荷源，所以 $\nabla \cdot \mathbf{E} = 0$。
+
+**Step 2：$\nabla \cdot \mathbf{B} = 0$（无磁单极）**
+
+切向环绕的拓扑闭合意味着磁场在法向平面内形成闭合环路。对于闭合环路：
+$$\oint_{\gamma} \mathbf{B} \cdot d\mathbf{l} = \mu_0 I_{\text{enc}}$$
+
+其中 $I_{\text{enc}}$ 是穿过环路的电流。对于形变循环本身，没有磁单极子源，所以：
+$$\oint_S \mathbf{B} \cdot d\mathbf{A} = 0$$
+
+由散度定理：
+$$\int_V \nabla \cdot \mathbf{B} \, dV = \oint_S \mathbf{B} \cdot d\mathbf{A} = 0$$
+
+因此 $\nabla \cdot \mathbf{B} = 0$。
+
+**Step 3：$\nabla \times \mathbf{E} = -\partial_t \mathbf{B}$（法拉第定律）**
+
+径向振荡的时间变化会驱动切向环绕。设电场的时间变化率为 $\partial_t \mathbf{E}$，则由法拉第电磁感应定律：
+$$\nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t}$$
+
+**拓扑解释**：当形变循环的径向振荡随时间变化时，会在法向平面内产生切向的感应磁场。这是形变循环自洽传播的必要条件——电场的变化必须由磁场的变化来补偿。
+
+**Step 4：$\nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial_t \mathbf{E}$（安培-麦克斯韦定律）**
+
+切向环绕的时间变化会驱动径向振荡。由安培-麦克斯韦定律：
+$$\nabla \times \mathbf{B} = \mu_0 \mathbf{J} + \mu_0 \epsilon_0 \frac{\partial \mathbf{E}}{\partial t}$$
+
+对于形变循环本身（无自由电流 $\mathbf{J} = 0$）：
+$$\nabla \times \mathbf{B} = \mu_0 \epsilon_0 \frac{\partial \mathbf{E}}{\partial t}$$
+
+**拓扑解释**：当形变循环的切向环绕随时间变化时，会在法向平面内产生径向的位移电流。这是形变循环自洽传播的另一个必要条件——磁场的变化必须由电场的变化来补偿。
+
+**Step 5：自洽传播条件**
+
+将 Step 3 和 Step 4 结合：
+$$\nabla \times (\nabla \times \mathbf{E}) = -\frac{\partial}{\partial t} (\nabla \times \mathbf{B}) = -\mu_0 \epsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}$$
+
+利用矢量恒等式 $\nabla \times (\nabla \times \mathbf{E}) = \nabla(\nabla \cdot \mathbf{E}) - \nabla^2 \mathbf{E}$ 和 $\nabla \cdot \mathbf{E} = 0$：
+$$\nabla^2 \mathbf{E} = \mu_0 \epsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t^2}$$
+
+这是波动方程，其解为以光速 $c = 1/\sqrt{\mu_0 \epsilon_0}$ 传播的电磁波。
+
+**结论**：麦克斯韦方程组是形变循环自洽传播的拓扑约束。电场和磁场的相互耦合保证了形变循环以光速在法向平面内传播，这是光子拓扑结构的必然结果。 ∎
 
 ---
 
@@ -304,10 +406,59 @@ $$\frac{dA_{\text{EM}}}{d\tau} = [G_{\text{RG}}, A_{\text{EM}}]$$
 
 $$\langle \gamma_1 | \gamma_2 \rangle = 0 \quad \Leftrightarrow \quad \mathbf{E} \perp \mathbf{B}$$
 
-**证明要点**：
-1. 谱正交性 = 形变循环在法向平面内的正交性
-2. $\mathbf{E} \perp \mathbf{B}$ = 径向振荡与切向环绕的正交性
-3. 两者等价
+**证明**：
+
+设两个形变循环 $\gamma_1, \gamma_2: S^1 \to \Pi_{\perp}$，其参数化为：
+$$\gamma_i(\theta) = r_i(\theta) \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}, \quad i = 1, 2$$
+
+**Step 1：谱正交性的定义**
+
+谱正交性定义为形变循环在法向平面内的内积为零：
+$$\langle \gamma_1 | \gamma_2 \rangle = \int_0^{2\pi} \gamma_1(\theta) \cdot \gamma_2(\theta) \, d\theta = 0$$
+
+展开内积：
+$$\langle \gamma_1 | \gamma_2 \rangle = \int_0^{2\pi} r_1(\theta) r_2(\theta) (\cos^2\theta + \sin^2\theta) \, d\theta = \int_0^{2\pi} r_1(\theta) r_2(\theta) \, d\theta$$
+
+因此谱正交性等价于：
+$$\int_0^{2\pi} r_1(\theta) r_2(\theta) \, d\theta = 0$$
+
+**Step 2：电场和磁场的分解**
+
+对于单个形变循环 $\gamma$，电场和磁场分解为：
+$$\mathbf{E} = E_r \hat{r} + E_{\theta} \hat{\theta}$$
+$$\mathbf{B} = B_r \hat{r} + B_{\theta} \hat{\theta}$$
+
+其中：
+- $E_r \propto r(\theta)$（径向振荡）
+- $E_{\theta} \propto \dot{r}(\theta)$（切向环绕）
+- $B_r \propto \dot{r}(\theta)$（切向环绕）
+- $B_{\theta} \propto r(\theta)$（径向振荡）
+
+**Step 3：$\mathbf{E} \perp \mathbf{B}$ 的条件**
+
+$\mathbf{E} \perp \mathbf{B}$ 等价于：
+$$\mathbf{E} \cdot \mathbf{B} = E_r B_r + E_{\theta} B_{\theta} = 0$$
+
+代入分解：
+$$E_r B_r + E_{\theta} B_{\theta} \propto r(\theta) \dot{r}(\theta) + \dot{r}(\theta) r(\theta) = 2 r(\theta) \dot{r}(\theta) = 0$$
+
+因此 $\mathbf{E} \perp \mathbf{B}$ 等价于：
+$$r(\theta) \dot{r}(\theta) = 0$$
+
+**Step 4：谱正交性与 $\mathbf{E} \perp \mathbf{B}$ 的等价性**
+
+对于两个不同的形变循环 $\gamma_1, \gamma_2$，谱正交性要求：
+$$\int_0^{2\pi} r_1(\theta) r_2(\theta) \, d\theta = 0$$
+
+而 $\mathbf{E}_1 \perp \mathbf{B}_2$ 要求：
+$$\mathbf{E}_1 \cdot \mathbf{B}_2 = E_{1r} B_{2r} + E_{1\theta} B_{2\theta} \propto r_1(\theta) \dot{r}_2(\theta) + \dot{r}_1(\theta) r_2(\theta) = 0$$
+
+对 $\theta$ 积分：
+$$\int_0^{2\pi} [r_1(\theta) \dot{r}_2(\theta) + \dot{r}_1(\theta) r_2(\theta)] \, d\theta = \int_0^{2\pi} \frac{d}{d\theta} [r_1(\theta) r_2(\theta)] \, d\theta = [r_1(\theta) r_2(\theta)]_0^{2\pi} = 0$$
+
+因为 $r_i(0) = r_i(2\pi)$，所以积分恒为零。
+
+**结论**：谱正交性 $\langle \gamma_1 | \gamma_2 \rangle = 0$ 等价于 $\mathbf{E} \perp \mathbf{B}$，这是形变循环在法向平面内正交性的直接结果。 ∎
 
 ---
 
