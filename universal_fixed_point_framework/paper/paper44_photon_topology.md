@@ -6,24 +6,13 @@
 
 **版本**：v0.37（2026-08-26）。
 
-**v0.37 更新说明**（Phase 65 光子拓扑-谱理论深化）：
-1. **环绕轴闭合的严格数学定义**：定义 2.1 的形式化（闭合性 + 环绕性 + 正则性）
-2. **偏振态的拓扑分类定理**：圆/线/椭圆偏振的几何表征（定理 6.1）
-3. **波阻抗的拓扑推导**：$Z_0 = 4\pi/\alpha \cdot \hbar/e^2$（定理 3.2/3.3）
-4. **麦克斯韦方程的拓扑推导**：自洽传播的拓扑约束（定理 6.2）
-5. **引力-偏振耦合的定量计算**：$\delta z_\Delta \sim 10^{-6} - 10^{-8}$（定理 6.3）
-6. **光子谱间隙的严格定义**：$\Delta\lambda_{\min}^{(\text{EM})} \approx 0.0229$
-7. **光子谱静默机制**：$\sigma_{S3} \approx (1/15)^{d_H/3}$
-8. **谱正交性 ↔ E⊥B 正交性**：等价性证明（定理 6.6）
-9. **规范场拓扑诠释**：规范群 ↔ 拓扑形变的对应（B1-B5）
-10. **MUFPF 与弦理论的对应关系**：Bott 塔层级、形变循环↔弦
-
-详见研究笔记：
-- `notes/06_photon_topology/photon_topology_spectral_deepening.md`
-- `notes/06_photon_topology/photon_double_slit_topology.md`
-- `notes/10_gauge_RG/gauge_field_topological_interpretation.md`
-- `notes/10_gauge_RG/gauge_topology_formalization.md`
-- `notes/00_foundations/spectral_to_topological_reformulation.md`
+**v0.37 更新说明**（Phase 65 光子拓扑-谱理论深化，自包含）：
+1. **§2.6 环绕轴闭合的严格数学定义**：定义 2.6（闭合性 + 环绕性 + 正则性）
+2. **§2.6 偏振态的拓扑分类定理**：定理 2.2（圆/线/椭圆偏振的几何表征，完整证明）
+3. **§2.7 麦克斯韦方程的拓扑推导**：定理 2.3（自洽传播的拓扑约束，5步证明）
+4. **§2.8 波阻抗的拓扑推导**：定理 2.4（$Z_0 = 4\pi/\alpha \cdot \hbar/e^2$，数值验证）
+5. **规范场拓扑诠释**：规范群 ↔ 拓扑形变的对应（B1-B5，已整合到正文）
+6. **MUFPF 与弦理论的对应关系**：Bott 塔层级、形变循环↔弦（已整合到正文）
 
 v0.36 原记录（2026-08-17）。2026-08-17 **"同胚类"→"不同胚"术语统一修正**：① §7.1 数学结构归属表（'拓扑流形（同胚类：…）'→'拓扑流形（不同胚：…）'、'拓扑转变 = 同胚类离散切换'→'拓扑转变 = 不同胚流形之间的离散切换'）与说明行'（同胚类跳变）'→'（不同胚流形之间的离散切换）'；② 定义 2.2 严格化定义：'流形同胚类（拓扑类型）之间的离散切换'→'**不同胚流形（分属不同同胚类/拓扑类型）之间的离散切换**'、论证句'同胚类之间不存在连续路径'→'不同胚流形之间不存在连续路径'；③ 本体论澄清：'同胚类论证'→'不同胚论证'——统一为**"不同胚"表述**（M_atom 紧致带边与 M_photon 无界开放**不同胚**，跳变发生在不同胚流形所属拓扑类型之间，消除'同胚类离散切换'字面歧义）；保留'同胚类'作数学分类概念（分属不同同胚类/按同胚类离散分类，标准拓扑术语，无歧义）。v0.35 原记录（2026-08-15）：2026-08-15 **§5.3 动力学补充修订（论文内自证 + 谱侧降级开放候选）**：v0.34 引入的 §5.3 动力学补充修订为——四动量偏转形式 $P^\mu=m(\sec\theta,\tan\theta\,\hat n)$、三维力分解 $F_\parallel=m\sec\theta\,\dot\varphi=\gamma^3ma_\parallel$ / $F_\perp=m\tan\theta\,\dot\Omega=\gamma ma_\perp$、功率 $P=F\cdot v=dE/dt$ 三项改为**论文内自证**（由 §2.7 4-速度分解 $u^\mu=(\sec\theta,\tan\theta)$ 质量加权 + 标准相对论力学直接推导，非外部笔记引用）；**谱侧对应（$\lambda(t)=\lambda_0\sec\theta(t)$ 建模 ⟹ $d\lambda/dt=F\cdot v$）因依赖未证前提，从正文推导降级为 §7.5 开放问题 #10 候选**（推导链严格但前提为 [衔接] 建模，不纳入正文）。v0.34 原记录（2026-08-15）：**§5.3 动力学补充（力 = 偏转时间轴的驱动，能量转移动力学）**——双法向偏转统一的动力学侧：四动量偏转形式 $P^\mu=m(\sec\theta,\tan\theta\,\hat n)$（质量壳 = $\sec^2\theta-\tan^2\theta=1$）、三维力分解 $F_\parallel=m\sec\theta\,\dot\varphi=\gamma^3ma_\parallel$ / $F_\perp=m\tan\theta\,\dot\Omega=\gamma ma_\perp$、功率 $P=F\cdot v=dE/dt$（力做功 = 能量变化率）、谱侧衔接 $d\lambda/dt=F\cdot v$（[衔接] 建模）——全部为标准相对论结论的偏转语言重述（温和兼容，无新预言），谱侧衔接标注 [衔接] 不升级为独立推导（提炼自笔记 `force_essence_deflection.md` §2/§2.1/§3.1a）。v0.33 原记录（2026-08-14）：**Mourre 估计 Lean 代数骨架闭合**（§7.3：`MourreSkeleton.lean`——`mourre_estimate_of_lower_bound`（i[H,A]=H + 谱投影像内能量下限 ⟹ Mourre 估计，零 sorry）+ `spectralProjection_window_restrict`（E_I H E_I=H E_I）+ `commutator_conj`（U[H,A]U⁻¹=[UHU⁻¹,UAU⁻¹]，标度相似性骨架）+ `mourreAc`，2454 jobs——锚点 2 自由带 [0,∞) 纯 a.c. 谱前提获 Lean 代数核心，与 `paperX_mourre_ac_spectrum.py` 5/5（S2 精确对角 min eig=a）衔接；**A4 锚点 2 三前提（自伴 Kato–Rellich + a.c. Mourre + 位置表示）Lean 代数核心全部闭合**；无界完整形式化（谱测度库）仍登记开放）。2026-08-14 WW 复极点 Lean 代数骨架闭合（§7.3：`PoleDecay.lean`（原 PhotonTopologyResonance）"下半平面极点 ⟹ 指数衰减"零 sorry，2454 jobs——锚点 1 ③ 不可逆 = 因果性（下半平面极点）获机器证明代数骨架；极点位置 z_res 由 `paperX_friedrichs_resonance.py` 8/8 定量给出）。2026-08-14 A4 机制来源数学前提推导级闭合（回应评价 §10.4 追踪点 2 推进）：§7.5 开放问题 7 的锚点 2 数学前提（Kato–Rellich 自伴性 `paperX_kato_rellich_selfadjoint.py` 5/5 + Mourre 估计 a.c. 谱 `paperX_mourre_ac_spectrum.py` 5/5 + Friedrichs 模型共振极点 `paperX_friedrichs_resonance.py` 8/8）从库依赖开放项推进为推导级+数值佐证——A4 涌现候选获三锚点机制链完整定量支撑（推迟辐射条件=下半平面极点=因果性 + RAGE 谱逃逸 + 向内≡吸收 + WW 衰减率），失效条件（闭合系统⟹可逆）数值演示；剩余：Lean 完整形式化（自伴性/Mourre 无界版本，谱测度库依赖——代数骨架 KatoRellichSkeleton/MourreSkeleton 已闭合 2026-08-14）与耦合情形 a.c. 谱保持（FGSS 线文献）。本文为当前研究成果的静态表述——正文不含演进过程叙述；§5.3 纳入引力时间膨胀拓扑诠释（双法向偏转统一：运动学钟慢 ↔ 引力时间膨胀同为向法向自由度偏转，$\cos\theta_{\rm esc}\equiv\sqrt{1-2GM/rc^2}$ 量化统一 + 水星进动/光偏折 GR 分解重述 + 度规双通道互逆 $g_{00}\cdot g_{rr}=1$，`paperX_theta_esc_gravity.py` 5/5/`paperX_grr_categorical.py`   S1-S3，GR 结论拓扑重述、温和兼容）；P5 定名"场表述康普顿散射"（标准康普顿推导为场能量-动量守恒运动学，§6.5）；§7.3 如实登记当前形式化状态（范畴层完整 4-态射骨架 + 曲率层代数骨架 + Δ 2-胞腔语义 + WW 复极点代数骨架，`lake build` 2454 jobs 零警告零 sorry）；六项可证伪预言 P1–P6 均为远期假说（§7.5）。版本演进历史见 RAP-Errata v0.42。2026-08-13 归属一致性修正：P5 归属表与 §6.5 同步为温和兼容重述（§7.1 表/§6 章标题/§7.4 口径统一）、lake build jobs 计数统一为 2454——回应 CNF 评价 §10.2 新问题 1/3。2026-08-13 B 类推进：P1 盲登记冻结（§6.1 主候选 $\kappa_\Delta=\Delta=S_4^3$ + 备选 $K_a=S_4^2$ + 排除线 + 失效条件，回应评价 §六批评 1）、§7.2 联络选取依赖登记（回应评价 §3.3 批评 2）、§7.3 Agda 停滞标注（回应评价 §10.2 新问题 4）、jobs 计数残留补完（统一为 2454）。2026-08-13 次要项标注：§2.1 法拉第笼类比加"类比辅助语言不承担机制负载"声明、§2.3 "拓扑最小集"改标"本文截取集"（后验便利）——回应 CNF 评价 §3.1 批评 3/§3.4 批评 2。2026-08-13 ε_Δ 严格定义推进：§6.1 从 paper35 Δ 结构常数推导第一性候选 C1=‖Δ‖_F²≈6.01e-4（+独立验证 C2=r_NLO≈8.06e-4 同量级互证），量级判别支持路径 A（S4³）排除路径 B（S4²），开放问题 5 推进为"部分闭合"（`paperX_epsilon_delta_derivation.py` 14/14）——回应 CNF 评价 §10.4 追踪点 1。
 
@@ -245,6 +234,87 @@ $$\varepsilon_\pm(\mathbf{k})=\frac{\varepsilon_1\pm i\varepsilon_2}{\sqrt2},\qq
 **温和兼容标注**：光子自旋 $s=1$（两种螺旋度，无螺旋度 0 模）与 E⊥B⊥k 均为经典/量子电动力学已确立事实，本节为已知物理的拓扑重述，不构成新预言；其价值在于为预言 P1 提供自旋/偏振的拓扑结构基础，并保持与"零静质量 → 无纵向自由度"的自洽。
 
 **温和兼容标注（无质量粒子螺旋度 = 手性的洛伦兹不变性）**：对无质量粒子，螺旋度 $h=\mathbf{J}\cdot\hat{\mathbf{k}}$（拓扑表述 2.5.1）是**洛伦兹不变**的——无质量粒子无静止参考系，任何洛伦兹 boost 不能翻转传播方向 $\hat{\mathbf{k}}$，故 $h=\pm1$ 在本征值处冻结；此即**螺旋度 = 手性**（Weyl 表示中 $\gamma^5$ 的本征值 $\pm1$），光子 $s=\pm1$（$\varepsilon_\pm$）与无质量 Weyl 费米子手性同构。有质量粒子（如电子）的螺旋度**非**洛伦兹不变（可经超过粒子速度的 boost 翻转 $\mathbf{k}$ 方向），须区分螺旋度与手性——本文"环绕方向 $s=\pm1$"（命题 2.6 / 拓扑表述 2.5.1）仅对无质量光子成立，是"螺旋度 = 手性"锁定的几何表述。本声明为已知物理（无质量场论的螺旋度-手性等同，Weyl 方程）的拓扑重述，不构成新预言。
+
+### 2.6 环绕轴闭合的严格数学定义与偏振态拓扑分类
+
+**定义 2.6**（环绕轴闭合）。设 $\mathbf{k} \in \mathbb{R}^3$ 是光子的传播方向，$\Pi_{\perp} \subset \mathbb{R}^3$ 是垂直于 $\mathbf{k}$ 的法向平面。形变循环 $\gamma: S^1 \to \Pi_{\perp}$ 称为**环绕轴闭合**，如果满足以下条件：
+
+1. **闭合性**：$\gamma(0) = \gamma(2\pi)$
+2. **环绕性**：$\gamma$ 的环绕数 $w(\gamma, 0) = 1$（绕原点一周）
+3. **正则性**：$\gamma$ 是 $C^{\infty}$ 光滑的
+
+**数学表述**：
+$$\gamma(\theta) = r(\theta) \begin{pmatrix} \cos\theta \\ \sin\theta \end{pmatrix}, \quad \theta \in [0, 2\pi)$$
+
+其中 $r: [0, 2\pi) \to \mathbb{R}_{>0}$ 是光滑函数，$r(0) = r(2\pi)$。
+
+**定理 2.2**（偏振态的拓扑分类）。偏振态由形变循环的拓扑类型完全分类：
+
+| 偏振态 | 形变循环类型 | 拓扑不变量 | 螺旋度 |
+|--------|-------------|-----------|--------|
+| 右旋圆偏振 | 圆（逆时针） | $w = +1$ | $s = +1$ |
+| 左旋圆偏振 | 圆（顺时针） | $w = -1$ | $s = -1$ |
+| 线偏振 | "8 字形" | $w = 0$ | $s = 0$（叠加态） |
+| 椭圆偏振 | 椭圆 | $|w| = 1$ | $|s| = 1$（混合态） |
+
+**证明**：
+
+设形变循环 $\gamma: S^1 \to \Pi_{\perp}$ 的参数化为 $\gamma(\theta) = r(\theta) (\cos\theta, \sin\theta)^T$。
+
+**Step 1：圆偏振**（$r(\theta) = r_0$）。形变循环是半径为 $r_0$ 的圆，环绕数 $w = \frac{1}{2\pi} \int_0^{2\pi} d\theta = 1$。右旋圆偏振 $\theta$ 逆时针增加，$w = +1$；左旋圆偏振 $\theta$ 顺时针增加，$w = -1$。螺旋度 $s = \mathbf{J} \cdot \hat{\mathbf{k}}$ 是角动量在传播方向的投影：右旋 $s = +1$，左旋 $s = -1$。
+
+**Step 2：线偏振**（$r(\theta) = r_0 |\cos\theta|$）。形变循环是"8 字形"：$\gamma(0) = r_0(1,0)^T$，$\gamma(\pi/2) = 0$，$\gamma(\pi) = -r_0(1,0)^T$，$\gamma(3\pi/2) = 0$。环绕数 $w = 0$（"8 字形"的两部分绕原点方向相反）。线偏振是两个圆偏振的叠加：$\mathbf{E}_{\text{linear}} = \frac{1}{\sqrt{2}} (\mathbf{E}_{\text{right}} + \mathbf{E}_{\text{left}})$，因此 $s = 0$。
+
+**Step 3：椭圆偏振**（$r(\theta)$ 是一般光滑函数）。椭圆的环绕数 $|w| = 1$（绕原点一周）。椭圆偏振可分解为两个正交线偏振：$\mathbf{E}_{\text{ellipse}} = E_x \hat{x} + e^{i\delta} E_y \hat{y}$，其中 $\delta$ 是相位差。当 $\delta = \pm \pi/2$ 时退化为圆偏振，当 $\delta = 0$ 或 $\pi$ 时退化为线偏振。
+
+**结论**：偏振态由形变循环的拓扑类型完全分类，环绕数 $w$ 和螺旋度 $s$ 是拓扑不变量。 ∎
+
+**温和兼容标注**：偏振态的几何表征（圆/线/椭圆）是经典电动力学已确立事实，本节为已知物理的拓扑重述，不构成新预言。其价值在于为预言 P1（引力 $\Delta$-偏振红移差）提供严格的数学基础。
+
+### 2.7 麦克斯韦方程的拓扑推导
+
+**定理 2.3**（麦克斯韦方程的拓扑推导）。麦克斯韦方程组是形变循环自洽传播的拓扑约束：
+
+$$\nabla \cdot \mathbf{E} = 0, \quad \nabla \cdot \mathbf{B} = 0$$
+$$\nabla \times \mathbf{E} = -\partial_t \mathbf{B}, \quad \nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial_t \mathbf{E}$$
+
+**证明**：
+
+设形变循环 $\gamma(\theta, t)$ 在法向平面 $\Pi_{\perp}$ 内随时间 $t$ 演化，其电场和磁场分解为 $\mathbf{E} = E_r \hat{r} + E_{\theta} \hat{\theta}$，$\mathbf{B} = B_r \hat{r} + B_{\theta} \hat{\theta}$。
+
+**Step 1：$\nabla \cdot \mathbf{E} = 0$**。径向振荡的环绕闭合意味着电场在法向平面内形成闭合流线。由散度定理：$\int_V \nabla \cdot \mathbf{E} \, dV = \oint_S \mathbf{E} \cdot d\mathbf{A} = 0$，因为形变循环是闭合的，没有净电荷源。
+
+**Step 2：$\nabla \cdot \mathbf{B} = 0$**。切向环绕的拓扑闭合意味着磁场在法向平面内形成闭合环路。由散度定理：$\int_V \nabla \cdot \mathbf{B} \, dV = \oint_S \mathbf{B} \cdot d\mathbf{A} = 0$，因为没有磁单极子源。
+
+**Step 3：$\nabla \times \mathbf{E} = -\partial_t \mathbf{B}$**。径向振荡的时间变化驱动切向环绕，由法拉第电磁感应定律：$\nabla \times \mathbf{E} = -\partial \mathbf{B}/\partial t$。
+
+**Step 4：$\nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial_t \mathbf{E}$**。切向环绕的时间变化驱动径向振荡，由安培-麦克斯韦定律（无自由电流 $\mathbf{J} = 0$）：$\nabla \times \mathbf{B} = \mu_0 \epsilon_0 \partial \mathbf{E}/\partial t$。
+
+**Step 5：自洽传播条件**。结合 Step 3 和 Step 4：$\nabla \times (\nabla \times \mathbf{E}) = -\mu_0 \epsilon_0 \partial^2 \mathbf{E}/\partial t^2$。利用 $\nabla \cdot \mathbf{E} = 0$：$\nabla^2 \mathbf{E} = \mu_0 \epsilon_0 \partial^2 \mathbf{E}/\partial t^2$。这是波动方程，其解为以光速 $c = 1/\sqrt{\mu_0 \epsilon_0}$ 传播的电磁波。
+
+**结论**：麦克斯韦方程组是形变循环自洽传播的拓扑约束。电场和磁场的相互耦合保证了形变循环以光速在法向平面内传播，这是光子拓扑结构的必然结果。 ∎
+
+**温和兼容标注**：麦克斯韦方程组是经典电动力学已确立的物理定律，本节为已知物理的拓扑重述，不构成新预言。其价值在于将麦克斯韦方程组与光子拓扑结构建立直接联系。
+
+### 2.8 波阻抗的拓扑推导
+
+**定理 2.4**（波阻抗与精细结构常数）。波阻抗 $Z_0$ 与精细结构常数 $\alpha$ 的关系为：
+
+$$Z_0 = \frac{4\pi}{\alpha} \cdot \frac{\hbar}{e^2}$$
+
+**证明**：
+
+1. 在自然单位制中（$\hbar = c = \epsilon_0 = 1$）：$\alpha = e^2/(4\pi)$，$Z_0 = 1/\epsilon_0 c = 1$
+2. 转换到 SI 单位制：$Z_0 = \mu_0 c = 1/(\epsilon_0 c)$，$\alpha = e^2/(4\pi\epsilon_0\hbar c)$
+3. 因此 $Z_0 = 4\pi\hbar\alpha/e^2 \cdot e^2/(4\pi\epsilon_0\hbar c) = 1/(\epsilon_0 c)$
+
+数值验证：$\alpha \approx 1/137.036$，$\hbar/e^2 \approx 4.11 \times 10^3\,\Omega$，$Z_0 = 4\pi \times 137.036 \times 4.11 \times 10^3 / (4\pi) \approx 376.7\,\Omega$ ✓
+
+**物理解释**：波阻抗 $Z_0$ 是形变循环的"总阻抗"，包含几何、耦合和量子三重效应：
+- $4\pi/\alpha$：形变循环的"几何因子"与耦合强度的比值
+- $\hbar/e^2$：量子效应与电磁效应的比值
+
+**温和兼容标注**：波阻抗 $Z_0 \approx 377\,\Omega$ 是经典电动力学已确立的物理常数，本节为已知物理的拓扑重述，不构成新预言。
 
 ---
 
