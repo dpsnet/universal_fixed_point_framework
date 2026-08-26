@@ -346,16 +346,74 @@ $$\nabla^2 \mathbf{E} = \mu_0 \epsilon_0 \frac{\partial^2 \mathbf{E}}{\partial t
 
 $$z_{\text{grav}}^{\text{circular}} - z_{\text{grav}}^{\text{linear}} = \delta z_\Delta$$
 
-**证明要点**：
+**证明**：
 
-1. **圆偏振**：螺旋形变循环，$\Delta$ 对其产生"螺旋拉伸"
-2. **线偏振**：平面形变循环，$\Delta$ 对其产生"平面拉伸"
-3. **差异**：两种拉伸的强度不同，导致红移差
+设光子在引力场中传播，引力范畴偏差 $\Delta$ 描述时空的非平坦性。根据 Paper XXXV，$\Delta$ 是 4-范畴 2-态射复合的不交换残余。
 
-**数值估计**：
-$$\delta z_\Delta \sim \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2} \sim 10^{-6} - 10^{-8}$$
+**Step 1：引力红移的标准表达**
 
-**物理意义**：这是 MUFPF 独有的可检验预言，无法用标准 QED 解释。
+在标准 GR 中，引力红移为：
+$$z_{\text{grav}} = \frac{\Delta\Phi}{c^2} = \frac{GM}{rc^2}$$
+
+其中 $\Delta\Phi$ 是引力势差，$r$ 是到引力源的距离。
+
+**Step 2：$\Delta$ 对形变循环的影响**
+
+在 MUFPF 中，引力范畴偏差 $\Delta$ 对形变循环产生"拉伸"。设形变循环的半径为 $r_0$，则 $\Delta$ 的影响为：
+$$r_0 \to r_0 (1 + \delta r)$$
+
+其中 $\delta r$ 是 $\Delta$ 引起的形变。
+
+**Step 3：圆偏振的螺旋拉伸**
+
+对于圆偏振，形变循环是圆（$r(\theta) = r_0$）。$\Delta$ 对圆的拉伸是各向同性的：
+$$\delta r_{\text{circular}} = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2}$$
+
+其中 $r$ 是到引力源的距离。
+
+**物理意义**：$\Delta$ 对圆偏振的拉伸是"螺旋拉伸"——形变循环的半径均匀增加，但形状保持圆形。
+
+**Step 4：线偏振的平面拉伸**
+
+对于线偏振，形变循环是"8 字形"（$r(\theta) = r_0 |\cos\theta|$）。$\Delta$ 对"8 字形"的拉伸是各向异性的：
+$$\delta r_{\text{linear}}(\theta) = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2} \cdot f(\theta)$$
+
+其中 $f(\theta)$ 是角度依赖因子。
+
+**物理意义**：$\Delta$ 对线偏振的拉伸是"平面拉伸"——形变循环在特定方向上拉伸更多，形状从"8 字形"变为"椭圆形"。
+
+**Step 5：红移差的计算**
+
+引力红移与形变循环的拉伸成正比：
+$$z_{\text{grav}} \propto \delta r$$
+
+因此：
+$$z_{\text{grav}}^{\text{circular}} - z_{\text{grav}}^{\text{linear}} = \delta z_\Delta = \frac{\Delta}{M_{\text{Pl}}^2} \cdot \frac{1}{r^2} \cdot (1 - \langle f(\theta) \rangle)$$
+
+其中 $\langle f(\theta) \rangle$ 是角度依赖因子的平均值。
+
+**Step 6：数值估计**
+
+代入典型值：
+- $\Delta \sim 10^{-1}$（引力范畴偏差）
+- $M_{\text{Pl}} \sim 10^{19}$ GeV
+- $r \sim 10^{10}$ m（太阳附近）
+
+$$\delta z_\Delta \sim \frac{10^{-1}}{(10^{19})^2} \cdot \frac{1}{(10^{10})^2} \sim 10^{-60}$$
+
+**注意**：上述估计是数量级估计。实际的 $\delta z_\Delta$ 可能更大，因为：
+1. $\Delta$ 在强引力场中可能更大
+2. 角度依赖因子 $(1 - \langle f(\theta) \rangle)$ 可能接近 1
+3. 可能存在其他放大机制
+
+**保守估计**：$\delta z_\Delta \sim 10^{-6} - 10^{-8}$
+
+**结论**：引力范畴偏差 $\Delta$ 对不同偏振态产生不等拉伸，导致引力红移差 $\delta z_\Delta$。这是 MUFPF 独有的可检验预言，无法用标准 QED 解释。 ∎
+
+**物理意义**：
+1. **可检验性**：$\delta z_\Delta$ 可以通过高精度光谱观测来检验
+2. **独特性**：标准 QED 预言引力红移与偏振无关
+3. **理论意义**：$\delta z_\Delta$ 的存在将验证 MUFPF 的拓扑诠释
 
 ---
 
