@@ -98,12 +98,14 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XXXV 🆕**：引力的范畴论起源 | v0.5 | 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 + **§3.2 向外推几何阐述** + T1 对齐（§3.2 W 轴为诠释语言非几何额外维度，见 Paper XXXI §3.3 J2 / Paper XLIV §7.2） | ✅ |
 | **Paper XXXVII 🆕**：开放问题、未来方向与层次距离 | v0.1 | A/B/C 三组开放问题 + 层次距离度量 + Bott-Moran 桥 | ✅ |
 | **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.8 | 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 | ✅ |
+| **Paper XLIV**：光子生成的拓扑转变机制与可证伪预言 | v0.39 | 拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6 | ✅ |
+| **Paper XLVI 🆕**：规范场的拓扑形变循环诠释 | v0.2 | 七项等价性定理（色谱丛↔三轴对称、SU(2)↔双轴耦合、超荷↔缠绕数、Λ_QCD↔形变锁定、禁闭↔边界穿越、耦合常数↔拓扑强度）+ 函子等价 $\mathbf{Sp}_{\text{gauge}} \simeq \mathbf{Def}_{\text{gauge}}$ | ✅ |
 
 ### Lean 4 形式化
 
 | 指标 | 数值 |
 |------|------|
-| 总 Lean 模块数 | 82（含新增 `WeierstrassGap.lean`；"15 个预存编译错误"为 2026-07 历史登记基数——`NoiseCategory.lean` 已于 **2026-08-05 修复移出**，`TestCategoryTheory` 亦已修复） |
+| 总 Lean 模块数 | 84（含新增 `GaugeTopology.lean`、`MolecularConfigBundle.lean`） |
 | 构建状态 | 默认目标 `lake build` ✅ 零错误（**2454 jobs**）；全库零 `sorry` 零 `axiom`；Phase 61A-D 7 模块零 `sorry` |
 | 核心模块完全证明（零 `sorry`） | 10 个（详见 RAP-Errata v0.21 §六）+ Phase 61A-D 7 模块 + NoiseCategory/IFSRecCoding/WeierstrassGap |
 | 活动 `sorry`（2026-08-05 审计） | **全库零 `sorry` 零 `axiom`**（里程碑）：`Adjunction.lean` 原 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——`RFunctor` 降为对象映射（`Fin S.n` 状态 + 恒等步进），原 `RFunctor.map`/`map_id`/`map_comp`（3 sorry）与 `DAdjR`（axiom）经判定**结构性不可构造**（`Fin S.n → Fin T.n` 在 `T.n = 0 ∧ S.n > 0` 不存在）后删除；`NoiseCategory.lean` Σ-D Functor 律（`map_id`/`map_comp`）**2026-08-05 闭合**并组装为正式函子 `sigmaDFunctor`。非 S0 全部清零：ThermoFormalism 4（O11）、DeviationBound 2（O8）、RAP5a 1（RIm_map，线性语义）、HigherRecCategory 3（O13——Rec₂ 2-态射按 D-拉回重定义）；`HigherSpCategory` spExchangeLaw 与 `Silence` 均已闭合 |
@@ -287,7 +289,7 @@ universal_fixed_point_framework/
 │   ├── causal_set/                 # 因果集离散时空实例
 │   ├── asymptotic_safety/          # 渐近安全 RG 不动点实例
 │   └── twistor/                    # 扭量理论散射运动学实例
-├── paper/                          # 论文手稿（44 篇）
+├── paper/                          # 论文手稿（46 篇）
 │   ├── paper1_*.md                  # 基础理论（Paper I–XVI）
 │   ├── paper17_zero_parameter_predictions.md   # 零参数预测（勘误合规）
 │   ├── paper18_spectral_newtonian.md           # 谱牛顿力学

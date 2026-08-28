@@ -2,7 +2,7 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v0.7a（2026-08-18）
+**版本**：v0.9（2026-08-28）
 
 **术语修正**：本版将 Grothendieck 纤维化中的 "Cartan 提升" 统一修正为标准术语 "Cartesian 提升"（对应标准范畴论文献中的 Cartesian lifting）。此前版本中所有 "Cartan 提升" 均为同一概念的非标准写法。
 
@@ -513,7 +513,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 
 ### 9.1 模块总览
 
-总参数丛的完整形式化由 10 个 Lean 4 模块实现，全部通过 `lake build` 编译（零错误）：
+总参数丛的完整形式化由 11 个 Lean 4 模块实现，全部通过 `lake build` 编译（零错误）：
 
 | 模块 | 覆盖内容 | 状态 |
 |:-----|:---------|:----:|
@@ -527,6 +527,7 @@ $$\frac{d}{d\ln\dot\gamma} A(\dot\gamma) = [G_{\text{rate}}(\dot\gamma), A(\dot\
 | `EFTCodomainFiber.lean` | $\mathbf{cod}$ 余域纤维化、S1-S4 Cartesian 翻译 | ✅ |
 | `ContextualitySheaf.lean` | K-S 定理的层翻译 | ✅ |
 | **`TotalParameterFiber.lean`** | **总参数丛 $\pi_{\mathbf{Param}}$、complete_chain** | ✅ |
+| `MolecularConfigBundle.lean` | §5.4 分子构型谱丛（定义 5.8/5.9、定理 5.8/5.9） | ✅ 0 sorry |
 
 ### 9.2 complete_chain 定理
 
@@ -711,23 +712,6 @@ $$\mathcal{F}: \mathbf{Bun}(\mathcal{S}, \{\mathcal{F}_s\}) \to \mathbf{Bun}(\ma
 
 ---
 
-## 11. 结论
-
-本文完成了 MUFPF 框架上层架构的方法论综合。核心成果如下：
-
-1. **范式确立**：Grothendieck 纤维化提供了"物理系统 = 基空间上的谱族"的统一数学语言
-2. **八实例构建**：Temp、RG、Noise、Sig、Kerr、Flt、PhysCrit、Reac 八个基空间上的纤维化均严格构造并验证
-3. **复合结构**：乘积基（Temp×RG）上的谱编织和开集范畴（$\mathrm{Open}(M)$）上的谱栈将框架提升到层论层面
-4. **总参数丛**：$\mathbf{Param} = 8$ 维乘积范畴统一收口全部子丛，坐标嵌入和拉回定理保证兼容性
-5. **物理截面**：QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层——每个物理理论是总丛上的一个截面
-6. **纵向剖面纤维**：提出纵向剖面纤维范畴，证明纤维等价性定理，将 Grothendieck 纤维化从"参数化谱族"扩展到"多数学工具谱族"
-7. **三维纤维化**：引入 $\mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$ 三维基空间，将双纤维化扩展至耦合层次维度
-8. **Lean 4 验证**：10 个模块、零错误编译、complete_chain 总成定理连接全部推导链
-
-**开放问题**：总参数丛目前仍有 23 处 `sorry` 分布在 10 个模块中（主要集中在 `ThermoFormalism.lean` 和 `WeaveBCS.lean$），需后续证明填补。分子构型丛的 Lean 4 形式化尚未完成。
-
----
-
 ## 11. 本体论展望：宇宙作为定向紧缩投影区
 
 上述纤维范畴形式化不仅是一种数学框架，还蕴含一个深刻的物理本体论图景：**物理全域是无限维定向 Clifford 代数谱系经过多层紧缩投影得到的子区域**。该图景并非额外假设，而是 Bott 塔 $\iota\dashv\pi$ 伴随对、谱间隙截断、四层静默筛选和 Grothendieck 纤维投影等已建立结构的必然推论。
@@ -817,15 +801,33 @@ MUFPF 紧缩投影图景对多重宇宙的回答是：
 
 ---
 
+## 12. 结论
+
+本文完成了 MUFPF 框架上层架构的方法论综合。核心成果如下：
+
+1. **范式确立**：Grothendieck 纤维化提供了"物理系统 = 基空间上的谱族"的统一数学语言
+2. **八实例构建**：Temp、RG、Noise、Sig、Kerr、Flt、PhysCrit、Reac 八个基空间上的纤维化均严格构造并验证
+3. **复合结构**：乘积基（Temp×RG）上的谱编织和开集范畴（$\mathrm{Open}(M)$）上的谱栈将框架提升到层论层面
+4. **总参数丛**：$\mathbf{Param} = 8$ 维乘积范畴统一收口全部子丛，坐标嵌入和拉回定理保证兼容性
+5. **物理截面**：QCD、BCS、Kerr、Cuprate、Hawking-Page、语境性层——每个物理理论是总丛上的一个截面
+6. **纵向剖面纤维**：提出纵向剖面纤维范畴，证明纤维等价性定理，将 Grothendieck 纤维化从"参数化谱族"扩展到"多数学工具谱族"
+7. **三维纤维化**：引入 $\mathcal{B}_{\text{sys}} \times \mathcal{B}_{\text{level}} \times \mathcal{P}$ 三维基空间，将双纤维化扩展至耦合层次维度
+8. **Lean 4 验证**：形式化库原有模块已全部零 `sorry`
+
+
+---
+
 **变更记录**：
 
 | 版本 | 日期 | 更新内容 |
 |:----|:----|:--------|
-| v0.8 | 2026-08-24 | 更名：UFPF → MUFPF（4 处替换）|
-| **v0.7** | **2026-08-07** | **表述修正（勘误 v0.20 + v0.21 口径统一）**：① §11.5"已修正"段落中"$d_H$、$k_{\max}=8$、$N_{\text{gen}}=3$ 均属登记输入层"旧口径修正——$N_{\text{gen}}=3$ 由统一 3 定理机器证明（Paper XXXIII，勘误 v0.20）；$d_H = \ln 15 + \delta$（$\ln 15$ 机器证明 + δ RMS 约束，结构确定量）；$k_{\max}=8$ 为结构确定（$2^{N_{\text{active}}} = 2^3$ 统一 3 定理机器证明 + 对偶网络：旋量 16 = 2·k_max、分支 B = 15 = 2·k_max−1、d_H = ln(2·k_max−1) = ln15），不再属模型输入层（勘误 v0.21）。修正痕迹仅保留于勘误文档；版本号 v0.6 → v0.7 |
-| **v0.6** | **2026-07-26** | **纵向剖面纤维扩展**：新增 §10.4 纤维等价性定理（定理 10.4）；新增 §10.6 量子化学应用（定理 10.6、10.7、水二聚体实例）；新增定义 10.8 三维纤维化；更新验证表与结论 |
-| **v0.5** | **2026-07-25** | **DST 第一性原理计算完成**：$r_{\text{DST}}=0.443$（从 3D 渗透谱维数 $d_s=4/3$ 封闭），$a_{\text{DST}}=0.435$；DST 状态从 ⚠️ 半经验 → ✅ 第一性原理推导；四系统统一表 DST 行填入确定值 |
-| **v0.4** | **2026-07-25** | Phase 54C 集成：§5.3 新增 HP/DST 精确数值验证（$d_{\text{HP}}=0.281$，$a_{\text{HP}}=0.159$）及四系统统一对比表；§6.1 新增 $\mathbf{Rate} \cong \mathbf{Temp} \cong \mathbf{RG}$ 三范畴同构扩展和完整编织参数表；§7.5 新增 DST 截面行及验证等级列；§8.3 扩展 HP 精确验证详情（$r_{\text{HP}}=0.0395$，$\Delta\lambda_{\text{HP}}=3.09$，经典值 $2.78\times10^{-17}$ 偏差）；新增 §8.4 流变学 $\mathbf{Rate}$ 范畴与 DST 截面 |
-| **v0.3** | **2026-07-23** | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac}, \mathbf{Sp})$，基于 Paper XV 量子化学谱表述 |
-| **v0.2** | **2026-07-23** | 新增 §5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit}, \partial\mathbf{Rec}_D)$，统合 Paper VI §9.2.2 F5 定理 |
-| **v0.1** | **2026-07-23** | 初始版本 |
+| v0.9 | 2026-08-28 | §5.4 分子构型谱丛 Lean 形式化完成（`MolecularConfigBundle.lean`，零 `sorry`）；§11/§12 章节重组（本体论展望→结论顺序修正）；§9.1 模块数更新为 11 |
+| v0.8 | 2026-08-24 | 更名：UFPF → MUFPF（4 处替换） |
+| v0.7 | 2026-08-07 | 勘误口径统一：$N_{\text{gen}}=3$、$d_H=\ln15+\delta$、$k_{\max}=8$ 归为结构确定量，不再属输入层（勘误 v0.20+v0.21） |
+| v0.6 | 2026-07-26 | 纵向剖面纤维扩展：新增 §10.4 纤维等价性定理、§10.6 量子化学应用（水二聚体）、定义 10.8 三维纤维化 |
+| v0.5 | 2026-07-25 | DST 第一性原理计算完成：$r_{\text{DST}}=0.443$，$a_{\text{DST}}=0.435$；状态 ⚠️半经验 → ✅第一性原理 |
+| v0.4 | 2026-07-25 | Phase 54C 集成：HP/DST 数值验证与四系统对比表、$\mathbf{Rate}\cong\mathbf{Temp}\cong\mathbf{RG}$ 同构扩展、新增 §8.4 流变学 |
+| v0.3 | 2026-07-23 | 新增 §5.4 分子构型谱丛 $\mathbf{Bun}(\mathbf{Reac},\mathbf{Sp})$ |
+| v0.2 | 2026-07-23 | 新增 §5.3 临界现象谱丛 $\mathbf{Bun}(\mathbf{PhysCrit},\partial\mathbf{Rec}_D)$ |
+| v0.1 | 2026-07-23 | 初始版本 |
+

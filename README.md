@@ -34,11 +34,11 @@
 - **谱静默机制**：替代传统紧致化的维度筛选
 - **交换律偏差** $\Delta$：引力的范畴论起源
 
-所有核心定理已通过 **Lean 4** 机器证明（`formal_proof/MMUFPFormalization/`）。
+所有核心定理已通过 **Lean 4** 机器证明（`formal_proof/MUFPFormalization/`）。
 
 ---
 
-## 三、论文系列（共 44 篇）
+## 三、论文系列（共 46 篇）
 
 > **系列总序（全局导论，推荐先读）**：[MUFPF体系总序.md](universal_fixed_point_framework/paper/MUFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
 
@@ -57,7 +57,8 @@
 | Paper XXXVIII（Agda 独立交叉验证） | 1 | 🆕 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 |
 | Paper XXXIX–XLII（Phase 61：暴涨/色规范/重整化链/黑洞演化） | 4 | ✅ 已纳入 |
 | Paper XLIII（页岩油气成藏的谱流机制与实证） | 1 | ✅ 跨领域应用支线（2026-08-08 发布，20 项检查 19/20；v0.29 P1 D→2 端方向勘误 + v0.30 开放问题三件套：符号差异诊断闭合/σ(D,c) 公式/P3 输运耦合检验） |
-| Paper XLIV（光子生成的拓扑转变机制与可证伪预言） | 1 | 🆕 Phase 62 理论论文（2026-08-11 纳入，v0.32）：拓扑转变 + 方向性阶跃 + 双层正交 + 可拦截性 + 六项远期可证伪预言（均尚未实验验证，数值自洽 40/40）；v0.14 T1 对齐（§7.2 补与 Paper XXXV §3.2 一致性：W 轴论证为诠释语言、非 KK 额外空间维度）；v0.29 正文静态化 + P5 更名"场表述"（标准康普顿推导为场能量-动量守恒运动学）；v0.30 §5.3 引力时间膨胀拓扑诠释（双法向偏转统一）；v0.31 A4 机制来源数学前提推导级闭合（回应评价 §10.4 追踪点 2：Kato–Rellich 自伴性/Mourre 估计 a.c. 谱/Friedrichs 共振极点从库依赖开放项推进为推导级+数值佐证——A4 涌现候选获三锚点机制链完整定量支撑）；v0.32 WW 复极点 Lean 代数骨架闭合（`PoleDecay.lean`（原 PhotonTopologyResonance）零 sorry：下半平面极点⟹指数衰减，锚点 1 ③ 机器证明）；2026-08-14 内容域命名重构（6 通用模块去光子前缀：SpectralSkeleton/CurvatureSkeleton/TwoCategoryLaws/LiftingOrthogonality/ExteriorFunctor/PoleDecay，曲率内容迁入 CurvatureSkeleton）；v0.35 §5.3 动力学补充（力 = 偏转时间轴的驱动：四动量偏转形式 / 三维力分解 / 功率 P=F·v=dE/dt，论文内自证；谱侧对应降级开放问题 #10 候选——标准相对论结论拓扑重述，温和兼容无新预言） |
+| Paper XLIV（光子生成的拓扑转变机制与可证伪预言） | 1 | v0.39：拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6（均尚未实验验证）；正交性三路径推导 + 摘要新增 + 笔记引用清除 |
+| Paper XLVI（规范场的拓扑形变循环诠释） | 1 | 🆕 v0.2（2026-08-28）：七项等价性定理（色谱丛↔三轴对称、SU(2)↔双轴耦合、超荷↔缠绕数、四层静默↔拓扑张力、Λ_QCD↔形变锁定、禁闭↔边界穿越、耦合常数↔拓扑强度）+ 函子等价 $\mathbf{Sp}_{\text{gauge}} \simeq \mathbf{Def}_{\text{gauge}}$；Lean 形式化 `GaugeTopology.lean` 零 sorry |
 
 关键开放线状态：
 - **O1/O6** ✅ 已闭合；**O2/O3/O5** 🔶 已大幅推进；**O4** ❌ 仍开放
@@ -149,7 +150,7 @@ universal_fixed_point_framework/
 │   ├── 01_origin_of_3.md … 07_e_less_than_3.md   # 各专题
 │   ├── b2_continuum_limit_analysis.md              # 🆕 B2 分析
 │   └── 04_gravity_analysis.md                      # 引力分析（含 §5.7j）
-├── formal_proof/MMUFPFormalization/   # Lean 4 形式化代码
+├── formal_proof/MUFPFormalization/   # Lean 4 形式化代码
 ├── paperX_*.py                      # 数值验证脚本（注册于 run_all_tests.py）
 ├── run_all_tests.py                 # 全量回归测试
 ├── src/                             # Python 原型代码
@@ -163,7 +164,7 @@ universal_fixed_point_framework/
 **所有读者应先阅读**：[总序（全局导论）](universal_fixed_point_framework/paper/MUFPF体系总序.md) → [RAP 勘误与立场声明](universal_fixed_point_framework/paper/RAP_勘误与立场声明.md)（基础性纠正与当前宣称边界）
 **数学研究者**：`paper30` → `paper32` → `paper34` → `formal_proof/`
 **物理研究者**：`paper17` → `paper18` → `paper31` → `paper32` → `paper33`
-**形式化方法研究者**：`formal_proof/MMUFPFormalization/` 下的 `.lean` 文件
+**形式化方法研究者**：`formal_proof/MUFPFormalization/` 下的 `.lean` 文件
 
 ---
 
