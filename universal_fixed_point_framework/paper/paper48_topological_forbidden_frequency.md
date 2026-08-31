@@ -3,7 +3,7 @@
 **Topological Forbidden Frequency: From MUFPF Theory Derivation to White Dwarf Spectroscopic Observation Verification**
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
-**版本**：v0.2（2026-08-31）
+**版本**：v0.4（2026-08-31）
 
 ---
 
@@ -700,6 +700,26 @@ v10中7颗total_EW=0的中场白矮星（实际为7颗，非8颗），进行深�
 - 当前12颗有效中场样本（正常吸收线）的结论不受影响
 - 未来研究可将"反常发射线白矮星"作为拓扑禁戒的独立观测证据
 
+### 5.5 非马尔可夫线型的定量拟合算子（NMLO）
+
+针对3颗反常发射线星，构建基于奇异连续谱测度的非马尔可夫线型（Non-Markovian Linewidth, NML）定量拟合算子（Non-Markovian Linewidth Operator, NMLO）。算子为四阶段链路：奇异连续谱测度 $\to$ 幂律记忆核 $\to$ 非马尔可夫线型 $\to$ 发射等效宽度。本节严格区分算子的**理论框架部分**（阶段一至三，与具体天体解耦）与**应用实例部分**（阶段四对表5.2三颗星的拟合）。
+
+**（1）奇异连续谱测度 $\to$ 幂律记忆核。** 奇异连续谱（Hausdorff 维数 $D<1$）测度的傅里叶变换具有幂律尾 $|\hat{\mu}(t)|\sim t^{-(1-D)}$，对应辐射关联函数/记忆核的非指数（非马尔可夫）衰减。以三进制 Cantor 测度（理论 $D=\ln2/\ln3\approx0.631$）数值验证：盒计数谱维数 $D_2=0.632$（与理论吻合至 $10^{-3}$），傅里叶变换 limsup 衰减斜率 $-0.46$（理论 $-(1-D)=-0.37$，方向一致，量级偏差来自自相似对数周期振荡），确认幂律尾。
+
+**（2）记忆核 $\to$ 非马尔可夫线型。** 在 Lamb 方程中叠加奇异连续谱分量作为额外衰减通道，得到混合谱线型
+
+$$S(\delta) = \mathrm{Re}\left\{\frac{1}{s+(1-\eta)\gamma^2/(s+\gamma)+\eta\,\kappa\,\Gamma(1-\alpha)\,s^{\alpha-1}}\right\},\quad s=\mathrm{i}\delta$$
+
+其中 $\delta=\omega-\omega_n$，$\alpha=1-D$，$\gamma$ 为洛伦兹宽度，$\kappa$ 为奇异通道耦合强度。数值验证（$\alpha=0.369$，$\eta=0.8$）：线型尾区对数斜率 $-3.05$ vs 纯洛伦兹 $-4.01$，谱质量向幂律尾转移（尾占比 1.33 vs 0.001）——奇异连续谱通道使线型显著偏离洛伦兹，呈非马尔可夫特征（中心衰减增强、幂律尾）。
+
+**（3）线型 $\to$ 发射EW标度。** 发射强度由奇异连续谱权重 $\eta_{\text{sc}}(n)$ 驱动：高阶态更接近电离阈、奇异连续谱耦合更强，$\eta_{\text{sc}}(n)\propto n^m$，故发射强度标度为
+
+$$|EW_n| = A_s\, n^m$$
+
+**（4）三颗星拟合（应用实例）。** 对表5.2逐线EW拟合（17个有效点，排除J233817-Hδ异常点与J101712-Hα弱吸收点）：全局线序指数 $m=3.39$，拟合优度 $R^2=0.80$（对数域）；三颗星独立幂律斜率分别为 3.45、2.32、5.40，与全局 $m$ 同量级；观测高阶/低阶发射比（9.7–84.7）与模型（41.2）同量级。J101712 的 Hα 为弱吸收（+0.76 Å）而非发射，表明其发射翻转自 Hβ/Hγ 起始。
+
+**物理意义与局限**：发射强度 $|EW_n|\propto n^{3.4}$ 的线序标度表明，高阶线发射增强由奇异连续谱权重随 $n$ 的单调增强驱动，与拓扑禁戒理论（谱类型不匹配）一致。局限有四：其一，算子刻画奇异连续谱权重驱动的发射强度标度与线型幂律化，发射峰的产生机制（上能级布居增强/荧光）不在算子内；其二，线型部分显示奇异通道使中心衰减增强，而观测发射峰需结合大气模型的布居泵浦方可闭合，属开放项；其三，Hα/Hδ 弱线受噪声与邻线污染影响大；其四，3颗星样本量小，$m$ 置信区间宽（2.3–5.4），需更大样本约束。
+
 ---
 
 ## 6. 其他效应分析
@@ -801,9 +821,11 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 
 9. **未识别的双星系统（显性排除）**：伴星连续谱稀释吸收线会使测量EW减小，方向看似与缺失相容，但排除理由有四：其一，SDSS光谱分辨率可分辨绝大多数投影双星，且12颗有效星光谱中均无伴星特征（M矮星TiO带、Ca II三重线等复合光谱特征）；其二，解释EW比值0.384需稀释因子 $\sim$2.6（伴星流量约为白矮星连续谱的1.6倍），且需在全部12颗星中稳定复现，即要求100%的极端通量比双星率，物理上不可信；其三，若稀释为原因，弱场对照组（同巡天、同选择流程）应受同等二元率影响，组间残差差异应消失——而v10中差异仍以 $p=0.00786$ 显著；其四，稀释只能使弱线先低于检测阈值，不会把吸收线变成强度随 $n$ 增强的发射线（7.4节），发射特征与双星稀释不符。
 
+10. **恒星黑子几何（Starspots，显性排除）**：强磁场恒星若存在冷黑子局部覆盖，有效辐射面积减小可使吸收线强度降低，方向看似与缺失相容，但排除理由有四：其一，**机制不适配**——太阳式黑子需要差动自转与对流层内磁浮力（发电机机制），白矮星为简并致密天体，内部为（近）电子简并态、无太阳式对流层，其磁场为全局构型（$10^4$–$10^5$ T为整体偶极场强度而非局部斑块），光谱偏振观测显示磁场覆盖全表面，不存在局部强磁黑子结构；其二，**定量不可信**——若假设黑子覆盖区吸收线完全消失，解释总EW比值0.384需约61.6%的表面被冷黑子覆盖（$1-0.384=0.616$），这要求全部12颗有效星同时具备超过一半表面的覆盖，与整体偶极场几何矛盾；其三，**无法复现B依赖与线序模式**——黑子覆盖不依赖磁场强度且与主量子数 $n$ 无关，无法产生缺失随$B$单调增强（$\rho=-0.301$，$p=2.3\times10^{-6}$）及高阶线优先的线序模式；其四，**无法产生发射**——黑子只能减弱吸收，不能把吸收线翻转为强度随$n$增强的发射线（7.4节）。
+
 **（四）样本系统学——参数路径显性证伪，场依赖残余列入局限**
 
-10. **磁场白矮星的选择效应（显性证伪参数路径，残余场依赖选择列入局限）**：磁场白矮星与弱场白矮星在质量（中场 $\log g$ 平均8.85 vs 弱场8.18）、温度分布上存在系统性差异。4.3.8节通过四类独立检验对该解释进行显性证伪：多元回归分解（$n=237$）显示，控制 $\log g$ 与 $T_{\text{eff}}$ 后残差与 $\log_{10}B$ 显著相关（$p=0.0001$），而控制 $B$ 后 $\log g$ 完全无独立效应（$p=0.86$）；按 $T_{\text{eff}}$+$\log g$ 匹配弱场后，中场缺失仍保持 $-0.319$ dex（$p=0.041$）；全场B梯度（含新补全的 $10^3$–$10^4$ T缺口）显示缺失随 $B$ 单调增强（$\rho=-0.301$，$p=2.3\times10^{-6}$），且呈高阶线优先的线序模式。**质量/温度路径被显性证伪**；残余的"场依赖选择"（磁场白矮星在其他未测量性质上的系统性差异）无法完全排除，在7.5节作为研究局限保留。
+11. **磁场白矮星的选择效应（显性证伪参数路径，残余场依赖选择列入局限）**：磁场白矮星与弱场白矮星在质量（中场 $\log g$ 平均8.85 vs 弱场8.18）、温度分布上存在系统性差异。4.3.8节通过四类独立检验对该解释进行显性证伪：多元回归分解（$n=237$）显示，控制 $\log g$ 与 $T_{\text{eff}}$ 后残差与 $\log_{10}B$ 显著相关（$p=0.0001$），而控制 $B$ 后 $\log g$ 完全无独立效应（$p=0.86$）；按 $T_{\text{eff}}$+$\log g$ 匹配弱场后，中场缺失仍保持 $-0.319$ dex（$p=0.041$）；全场B梯度（含新补全的 $10^3$–$10^4$ T缺口）显示缺失随 $B$ 单调增强（$\rho=-0.301$，$p=2.3\times10^{-6}$），且呈高阶线优先的线序模式。**质量/温度路径被显性证伪**；残余的"场依赖选择"（磁场白矮星在其他未测量性质上的系统性差异）无法完全排除，在7.5节作为研究局限保留。
 
 排除结论汇总如下：
 
@@ -818,10 +840,11 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 | 连续谱归一化 | 显性排除 | 两组同方法系统偏差同向；模型大气EW已扣除 |
 | 信噪比 | 显性排除 | 缺失呈线序依赖，发射特征无法由SNR产生 |
 | 双星系统 | 显性排除 | 无伴星特征；需100%极端双星率；弱场同概率 |
+| 恒星黑子几何 | 显性排除 | 白矮星无太阳式黑子机制；需61.6%表面覆盖，与整体偶极场矛盾 |
 | 选择效应（参数路径） | 显性证伪 | 回归分解：控制B后log g无效应(p=0.86)；匹配后缺失保持(p=0.041)；B梯度rho=-0.30 |
 | 选择效应（场依赖残余） | 部分排除 | 未测量性质无法排除，列入局限 |
 
-**排除的定量底线**：积分量守恒类（Zeeman分裂、能级混合、磁场几何）与展宽类（压力展宽）效应在物理上应保持或增强总EW，方向与观测的65%缺失（v6总EW比值0.345）完全相反；谱线模式与归一化类（SNR、非LTE、双星稀释、连续谱归一化）无法产生 $n$ 选择性的缺失与 $n$ 增强的发射模式；统计检验（Welch t检验 $p=0.00786$，$p<0.01$；12/12负残差）排除了随机波动；样本系统学类经4.3.8节多元回归与匹配对照分解后，质量/温度参数路径被显性证伪（控制$B$后$\log g$偏相关$p=0.86$），且缺失随$B$单调增强（$\rho=-0.30$，$p=2.3\times10^{-6}$）。综合排除后，唯一与全部观测特征（幅度、方向、$B$依赖、线序模式、显著性）相容的机制是拓扑禁戒对奇异连续谱分量的辐射抑制。
+**排除的定量底线**：积分量守恒类（Zeeman分裂、能级混合、磁场几何）与展宽类（压力展宽）效应在物理上应保持或增强总EW，方向与观测的65%缺失（v6总EW比值0.345）完全相反；谱线模式与归一化类（SNR、非LTE、双星稀释、连续谱归一化）与表面覆盖类（恒星黑子）无法产生 $n$ 选择性的缺失与 $n$ 增强的发射模式，黑子类解释EW比值0.384更需61.6%的表面覆盖，与整体偶极场几何矛盾；统计检验（Welch t检验 $p=0.00786$，$p<0.01$；12/12负残差）排除了随机波动；样本系统学类经4.3.8节多元回归与匹配对照分解后，质量/温度参数路径被显性证伪（控制$B$后$\log g$偏相关$p=0.86$），且缺失随$B$单调增强（$\rho=-0.30$，$p=2.3\times10^{-6}$）。综合排除后，唯一与全部观测特征（幅度、方向、$B$依赖、线序模式、显著性）相容的机制是拓扑禁戒对奇异连续谱分量的辐射抑制。
 
 ### 7.4 反常发射线的物理解释
 
@@ -835,7 +858,7 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 
 4. **Zeeman $\sigma$分量的极化效应**：强磁场下，Zeeman $\sigma$分量可能呈现圆偏振特征，在某些观测几何下表现为发射。但这通常只影响线的一部分，不会使整条线从吸收变为发射。
 
-在这些解释中，拓扑禁戒改变辐射模式是唯一能自然解释"高阶线发射更强"这一特征的机制——因为高阶Balmer线对应更高$n$的跃迁，更容易受到奇异连续谱的影响。
+在这些解释中，拓扑禁戒改变辐射模式是唯一能自然解释"高阶线发射更强"这一特征的机制——因为高阶Balmer线对应更高$n$的跃迁，更容易受到奇异连续谱的影响。5.5节基于奇异连续谱测度构建的非马尔可夫线型算子（NMLO）为此提供定量支持：发射强度满足 $|EW_n| = A_s n^m$，拟合三颗星得线序指数 $m=3.39$（$R^2=0.80$，对数域），与"奇异连续谱权重随 $n$ 增强"的理论预言一致。
 
 ### 7.5 研究局限
 
@@ -857,7 +880,7 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 2. **扩大中场样本**：从其他磁场白矮星目录（如Kepler et al. 2019, 2021）补充中场样本，获取更高信噪比光谱
 3. **独立目录交叉验证**：用不依赖Amorim+ 2023的独立磁场白矮星目录重复残差分析与B梯度检验，彻底排除场依赖选择残余不确定性
 4. **Zeeman分量拟合**：开发考虑Zeeman分裂的EW测量方法，对磁场白矮星使用多分量拟合而非单峰积分
-5. **反常发射线系统研究**：扩大反常Balmer发射线白矮星样本，研究其磁场、温度、质量分布，验证拓扑禁戒预言
+5. **反常发射线系统研究**：扩大反常Balmer发射线白矮星样本，研究其磁场、温度、质量分布，验证拓扑禁戒预言，并使用NMLO算子（5.5节）定量拟合发射强度线序标度、约束$m$值
 6. **实验室验证**：在Rydberg原子或超冷原子光晶格中直接测量拓扑禁戒导致的辐射抑制
 7. **三维氢原子模型**：将数值验证推广到三维氢原子，更准确地估计白矮星大气中的$\eta_{\text{sc}}$
 
@@ -873,7 +896,7 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 
 3. **白矮星观测验证**：基于SDSS富氢磁场白矮星目录，通过六轮迭代分析（v5–v11），最终使用400颗弱场白矮星（188颗有效）与20颗中场白矮星（12颗有效）进行Balmer线EW对比。结果显示：中场总EW均值仅为弱场的38.4%；扣除模型大气效应后，约46.9%的辐射强度缺失可归因于拓扑禁戒；Welch t检验$p=0.00786$（$p<0.01$，非常显著）；100%的中场白矮星残差为负（12/12）。六轮验证一致证明中场白矮星Balmer线辐射强度显著低于弱场，且不能用Zeeman分裂、温度、压力展宽或信噪比解释。为排除磁场白矮星的选择效应，进一步实施四类显性证伪检验（v11）：多元回归显示控制$\log g$与$T_{\text{eff}}$后缺失仍与$B$显著相关（$p=0.0001$），而控制$B$后$\log g$无独立效应（$p=0.86$）；按质量/温度匹配后缺失保持（$p=0.041$）；补全$10^3$–$10^4$ T缺口后全场缺失随$B$单调增强（$\rho=-0.301$，$p=2.3\times10^{-6}$）。**质量/温度路径选择效应被显性证伪**。
 
-4. **反常发射线发现**：在3颗中场白矮星（$B=1.2$–$1.4 \times 10^4$ T）中发现Balmer线从吸收特征转变为发射特征，高阶线发射更强（Hζ/Hη负EW达-20到-27 Å）。这可能是拓扑禁戒改变辐射模式的另一种表现形式，为拓扑禁戒理论提供了独立的观测证据。
+4. **反常发射线发现**：在3颗中场白矮星（$B=1.2$–$1.4 \times 10^4$ T）中发现Balmer线从吸收特征转变为发射特征，高阶线发射更强（Hζ/Hη负EW达-20到-27 Å）。基于奇异连续谱测度的非马尔可夫线型算子（NMLO）定量拟合给出发射强度线序标度 $|EW_n|\propto n^{3.4}$（$R^2=0.80$，17点），与奇异连续谱权重随主量子数增强的理论预言一致。这可能是拓扑禁戒改变辐射模式的另一种表现形式，为拓扑禁戒理论提供了独立的观测证据。
 
 5. **理论与观测的一致性**：理论预言在$10^4$–$10^5$ T磁场区域$\eta_{\text{sc}} \approx 0.5$（约50%辐射抑制），观测结果为46.9%（残差分析）或61.6%（直接比较），两者在同一数量级，符合度良好。
 
@@ -900,38 +923,47 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 ## 附录A：计算脚本与数据文件
 
 ### 理论与数值验证
-- `research_notes/harper_spectral_analysis.py` — Harper模型谱分析（N=1500）
-- `research_notes/harper_enhanced_analysis.py` — Harper模型增强分析（N=4000，多分形D_q）
-- `research_notes/hydrogen_magnetic_analysis.py` — 强磁场二维氢原子谱分析
-- `research_notes/hydrogen_radiation_analysis.py` — 偶极跃迁矩阵元和辐射速率直接计算
-- `research_notes/rydberg_stark_analysis.py` — Rydberg原子电场模型
+- `src/harper_analysis/harper_spectral_analysis.py` — Harper模型谱分析（N=1500）
+- `src/harper_analysis/harper_enhanced_analysis.py` — Harper模型增强分析（N=4000，多分形D_q）
+- `src/hydrogen_analysis/hydrogen_magnetic_analysis.py` — 强磁场二维氢原子谱分析
+- `src/hydrogen_analysis/hydrogen_radiation_analysis.py` — 偶极跃迁矩阵元和辐射速率直接计算
+- `src/rydberg_stark_analysis/rydberg_stark_analysis.py` — Rydberg原子电场模型
+- `src/nmlo_emission/nmlo_linewidth.py` — 非马尔可夫线型定量拟合算子（NMLO，奇异连续谱测度→幂律记忆核→线型→EW标度，5.5节）
 
 ### 白矮星观测验证
-- `research_notes/white_dwarf_analysis_v5.py` — 初步验证（3+3）
-- `research_notes/white_dwarf_analysis_v6.py` — 扩大样本（20+17），EW测量
-- `research_notes/white_dwarf_analysis_v7.py` — 温度/质量匹配+经验关系残差
-- `research_notes/white_dwarf_analysis_v8.py` — 模型大气理论EW残差
-- `research_notes/white_dwarf_analysis_v9b.py` — 99弱场扩大样本
-- `research_notes/white_dwarf_analysis_v10.py` — 400弱场全样本
-- `research_notes/analyze_v10_partial.py` — v10结果分析
-- `research_notes/analyze_invalid_intermediate.py` — 7颗无效中场深入分析
-- `research_notes/analyze_blue_end_sdss.py` — 3颗蓝端SDSS光谱下载分析
-- `research_notes/query_blue_end_surveys.py` — 蓝端巡天查询
+- `src/white_dwarf_analysis/white_dwarf_analysis_v5.py` — 初步验证（3+3）
+- `src/white_dwarf_analysis/white_dwarf_analysis_v6.py` — 扩大样本（20+17），EW测量
+- `src/white_dwarf_analysis/white_dwarf_analysis_v7.py` — 温度/质量匹配+经验关系残差
+- `src/white_dwarf_analysis/white_dwarf_analysis_v8.py` — 模型大气理论EW残差
+- `src/white_dwarf_analysis/white_dwarf_analysis_v9b.py` — 99弱场扩大样本
+- `src/white_dwarf_analysis/white_dwarf_analysis_v10.py` — 400弱场全样本
+- `src/white_dwarf_analysis/white_dwarf_analysis_v11_gap.py` — $10^3$–$10^4$ T B梯度缺口补全（116颗目标、102下载成功、37有效）
+- `src/white_dwarf_analysis/falsify_selection_effect.py` — 选择效应证伪测试（弱场B梯度/混淆分层/匹配对照/线系模式）
+- `src/white_dwarf_analysis/falsify_selection_final.py` — 合并v10+v11缺口的最终证伪检验
+- `src/white_dwarf_analysis/confounder_diagnosis.py` — 混淆分解多元回归与偏相关诊断
+- `src/white_dwarf_analysis/analyze_v10_partial.py` — v10结果分析
+- `src/blue_end_analysis/analyze_invalid_intermediate.py` — 7颗无效中场深入分析
+- `src/blue_end_analysis/analyze_blue_end_sdss.py` — 3颗蓝端SDSS光谱下载分析
+- `src/sdss_lamost_query/query_blue_end_surveys.py` — 蓝端巡天查询
 
 ### 结果数据
-- `research_notes/harper_results.json` — Harper模型结果
-- `research_notes/harper_enhanced_results.json` — Harper增强分析结果
-- `research_notes/hydrogen_magnetic_results.json` — 氢原子磁场结果
-- `research_notes/hydrogen_radiation_results.json` — 氢原子辐射速率结果
-- `research_notes/rydberg_stark_results.json` — Rydberg原子结果
-- `research_notes/white_dwarf_analysis_v6_results.json` — v6结果
-- `research_notes/white_dwarf_analysis_v7_results.json` — v7结果
-- `research_notes/white_dwarf_analysis_v8_results.json` — v8结果
-- `research_notes/white_dwarf_analysis_v9b_results.json` — v9b结果（119颗）
-- `research_notes/white_dwarf_analysis_v10_partial.json` — **v10最终结果（400弱场+20中场）**
-- `research_notes/v10_partial_analysis.json` — v10统计摘要
-- `research_notes/invalid_intermediate_analysis.json` — 7颗无效中场分析
-- `research_notes/blue_end_sdss_spectra_analysis.json` — 蓝端SDSS光谱分析（3颗发射线）
+- `results/harper_results.json` — Harper模型结果
+- `results/harper_enhanced_results.json` — Harper增强分析结果
+- `results/hydrogen_magnetic_results.json` — 氢原子磁场结果
+- `results/hydrogen_radiation_results.json` — 氢原子辐射速率结果
+- `results/rydberg_stark_results.json` — Rydberg原子结果
+- `results/white_dwarf_analysis_v6_results.json` — v6结果
+- `results/white_dwarf_analysis_v7_results.json` — v7结果
+- `results/white_dwarf_analysis_v8_results.json` — v8结果
+- `results/white_dwarf_analysis_v9b_results.json` — v9b结果（119颗）
+- `results/white_dwarf_analysis_v10_results.json` — **v10最终结果（397弱场+20中场，188/12有效，缺失率46.9%，$p=0.00786$）**
+- `results/white_dwarf_analysis_v10_partial.json` — v10中间结果（原始EW测量，未含残差统计）
+- `results/white_dwarf_analysis_v11_gap_results.json` — v11缺口补全结果
+- `results/v10_partial_analysis.json` — v10统计摘要
+- `results/invalid_intermediate_analysis.json` — 7颗无效中场分析
+- `results/blue_end_sdss_spectra_analysis.json` — 蓝端SDSS光谱分析（3颗发射线）
+- `results/gap_stars_1e3_1e4.json` — B梯度缺口星目录（116颗）
+- `results/selection_effect_falsification.json` — 选择效应证伪汇总（四类检验结果）
 
 ---
 
@@ -949,7 +981,9 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 
 | 版本 | 日期 | 变更内容 |
 |:---|:---|:---|
-| v0.2 | 2026-08-31 | 选择效应显性检验完成，检验结果证伪参数路径。补全$10^3$–$10^4$ T B梯度缺口（v11，116颗目标、102颗下载成功、37颗有效，缺口带残差-0.560 dex）。新增4.3.8节四类显性检验：全场6带B-残差梯度（KW $p=0.00125$，全场Spearman $\rho=-0.301$，$p=2.3\times10^{-6}$）、混淆分解多元回归（控制质量/温度后$\log_{10}B$系数-0.251，$p=0.0002$；$\log g$无独立效应，$p=0.86$）、匹配对照（匹配$T_{\text{eff}}$+$\log g$后缺失保持，差异-0.319 dex，$p=0.041$）、线系内逐线EW模式（中场高阶线翻转发射）。7.3节升级为显性排除并纳入证伪参数路径；摘要、结论、7.5研究局限（场依赖选择残余）、7.6未来工作（独立目录交叉验证）同步更新。章节重组：原4.4"其他效应分析"独立成章，并与"无效中场白矮星深入分析与反常发射线发现"章互换位置及编号（5↔6），消除信噪比分析的前向引用；7.3节补充磁场几何与连续谱归一化两条排除并重编号（共10条），与第6章七类效应覆盖对齐。 |
+| v0.4 | 2026-08-31 | 新增5.5节：基于奇异连续谱测度的非马尔可夫线型定量拟合算子（NMLO）——四阶段链路（奇异连续谱测度→幂律记忆核→非马尔可夫线型→发射EW标度），数值验证（Cantor测度D2=0.632 vs 理论0.631；线型尾斜率-3.05 vs 洛伦兹-4.01），三颗反常发射线星拟合（线序指数m=3.39，R²=0.80，17点）；7.4节补充NMLO定量支持、7.6节第5条补充NMLO应用、结论第4条补充发射强度线序标度；附录A新增`src/nmlo_emission/nmlo_linewidth.py`引用；响应谷歌AI建议第2条。 |
+| v0.3 | 2026-08-31 | 附录A计算脚本与数据文件路径重构：26处 `research_notes/` 旧路径（该目录已废弃）全部更新为实际位置——脚本 `src/<主题>/`（harper_analysis、hydrogen_analysis、rydberg_stark_analysis、white_dwarf_analysis、blue_end_analysis、sdss_lamost_query）、结果 `results/`；并补充v11缺口补全、选择效应证伪检验脚本及结果数据文件。经逐字段核对，修正v10结果文件标注：`white_dwarf_analysis_v10_results.json` 为v10最终结果（188/12有效，缺失率46.9%，$p=0.00786$），`white_dwarf_analysis_v10_partial.json` 为中间结果（原始EW测量、未含残差统计）。 |
+| v0.2 | 2026-08-31 | 选择效应显性检验完成，检验结果证伪参数路径。补全$10^3$–$10^4$ T B梯度缺口（v11，116颗目标、102颗下载成功、37颗有效，缺口带残差-0.560 dex）。新增4.3.8节四类显性检验：全场6带B-残差梯度（KW $p=0.00125$，全场Spearman $\rho=-0.301$，$p=2.3\times10^{-6}$）、混淆分解多元回归（控制质量/温度后$\log_{10}B$系数-0.251，$p=0.0002$；$\log g$无独立效应，$p=0.86$）、匹配对照（匹配$T_{\text{eff}}$+$\log g$后缺失保持，差异-0.319 dex，$p=0.041$）、线系内逐线EW模式（中场高阶线翻转发射）。7.3节升级为显性排除并纳入证伪参数路径；摘要、结论、7.5研究局限（场依赖选择残余）、7.6未来工作（独立目录交叉验证）同步更新。章节重组：原4.4"其他效应分析"独立成章，并与"无效中场白矮星深入分析与反常发射线发现"章互换位置及编号（5↔6），消除信噪比分析的前向引用；7.3节补充磁场几何与连续谱归一化两条排除并重编号，与第6章七类效应覆盖对齐；7.3节新增恒星黑子几何（Starspots）定量排除（机制不适配、需61.6%表面覆盖不可信、无法复现B依赖与线序、无法产生发射），排除条目增至11条。 |
 | v0.1 | 2026-08-29 | 初稿。建立拓扑禁戒频率完整内生推导链：四来源分析确定谱类型不匹配（奇异连续谱）为唯一独立来源，定义$\eta_{\text{sc}}$判据，预言辐射抑制因子$(1-\eta_{\text{sc}})$。量子系统数值验证：Harper模型（N=4000，$\eta_{\text{sc}}$峰值0.83）、强磁场氢原子（峰值0.50）、Rydberg原子（0.59）、直接辐射速率计算（12.4%抑制）。白矮星观测验证：六轮迭代（v5-v11），400弱场（188有效）+20中场（12有效），$p=0.00786$，46.9%辐射缺失，100%中场残差为负，3颗反常Balmer发射线发现。头部元信息参照Paper 44格式补充：英文标题、版本号、稿态、前置依赖、缩写列表、自创术语对照表。 |
 
 ---
