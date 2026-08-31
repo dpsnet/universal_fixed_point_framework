@@ -2,7 +2,7 @@
 
 ## ——全域谱翻译统一理论：底层逻辑、完整脉络与阅读指引
 
-> **版本对齐**：本总序对应全套论文最新基线——勘误与立场声明 [RAP_勘误与立场声明.md](RAP_勘误与立场声明.md) **v0.48**（2026-08-28，新增 Paper XLVI 规范场拓扑诠释 + Paper XLIV/XXI 修订 + Lean 形式化推进），盲登记协议 [RAP_盲登记协议.md](RAP_盲登记协议.md) **v0.48**（1:1 同步）。全套共 46 篇论文（Papers I–XLVI），全部 ✅ 稳定；主框架论文（Paper I）当前版本 **v2.52**。凡与早期版本冲突的表述，一律以本基线为准。
+> **版本对齐**：本总序对应全套论文最新基线——勘误与立场声明 [RAP_勘误与立场声明.md](RAP_勘误与立场声明.md) **v0.49**（2026-08-31，新增 Paper XLVII 仿形感应理论 + Paper XLVIII 拓扑禁戒频率 + 白矮星选择效应证伪 + NMLO 算子 + 总序电磁辐射支线补充），盲登记协议 [RAP_盲登记协议.md](RAP_盲登记协议.md) **v0.49**（1:1 同步）。全套共 48 篇论文（Papers I–XLVIII），全部 ✅ 稳定；主框架论文（Paper I）当前版本 **v2.53**。凡与早期版本冲突的表述，一律以本基线为准。
 
 ---
 
@@ -174,9 +174,17 @@ $$G_N = \frac{(\Delta\lambda_{\min})^2}{M_{\text{Pl}}^2}\times 18(2+\sqrt{3})$$
 - **NTK 神经网络**（Paper XIII、Paper I-RKHS）：分形 NTK 收敛判据、训练收敛谱判据、CIFAR 等实测谱分析——框架将训练动力学翻译为谱流收敛，给出"何时收敛/何时不收敛"的谱判据；
 - **谱分类**（Paper III）：$\eta_R$ 保持谱型，奇异连续谱天然承载于非分离 IFS 吸引子。
 
-### 4.5 统一可计算性总结
+### 4.5 电磁辐射的拓扑转变谱支线
 
-**一套内核（$D\dashv R$ + 谱流 + 静默）全领域复用**：从 QCD 色丛到 BCS 间隙、从 Kerr 谱丛到 Kolmogorov 谱、从质量谱链到训练收敛，所有定量输出共享同一谱翻译词典与同一数值工具族（§5.2）。这是"全域可计算"纲领的工程根基。
+- **光子拓扑转变机制**（Paper XLIV）：光子行波拓扑 = 绝对连续谱（定理 2.1）；光子生成 = 谱边界从离散谱到绝对连续谱的拓扑转变；推论系谱包含偏振双正交性与方向性阶跃性质；法拉第笼屏蔽 = 纯结构同构声明（非物理机制类比）；
+- **仿形感应理论**（Paper XLVII）：电磁感应 = 同一形变循环两个正交分量在运动模式上的相互仿形拟合（公理 M1–M4 + 五推论谱系），纯代数结构同构，工程术语纯占位符——将麦克斯韦方程的感应回路映射为范畴态射的闭合性约束；
+- **拓扑禁戒频率**（Paper XLVIII）：标准选择定则隐含假设束缚态 = 纯点谱、电离态 = 绝对连续谱，但量子混沌系统中奇异连续谱比例 $\eta_{\text{sc}}\neq0$，奇异连续谱分量无法映射为光子的绝对连续谱 → 谱类型不匹配 = 独立于能量/角动量选择定则的**第三约束维度**（判据 $\eta_{\text{sc}}$，抑制因子 $1-\eta_{\text{sc}}$）；四系统数值验证（Harper 模型 $\eta_{\text{sc}}\approx0.83$、强磁场氢原子 0.50、Rydberg 0.59、直接偶极矩阵元 12.4% 抑制）；SDSS 磁场白矮星观测验证（$p=0.00786$，46.9% 缺失归因拓扑禁戒）+ 四类显性证伪选择效应（$B$ 显著 $p=0.0002$、$\log g$ 无独立效应 $p=0.86$）；反常发射线星的非马尔可夫线型算子 NMLO（$|EW_n|\propto n^{3.4}$，$R^2=0.80$）+ 非局域相关时间标度方程 NLCT（$\tau_{\text{NL}}=D/(1+D)\cdot T$，$\beta=2+D$）。
+
+三篇论文（Papers XLIV → XLVII → XLVIII）构成从光子拓扑起源 → 感应代数同构 → 谱类型禁戒的完整理论链，**在白矮星观测中首次实现 MUFPF 电磁辐射预言的实证检验**。
+
+### 4.6 统一可计算性总结
+
+**一套内核（$D\dashv R$ + 谱流 + 静默）全领域复用**：从 QCD 色丛到 BCS 间隙、从 Kerr 谱丛到 Kolmogorov 谱、从质量谱链到训练收敛、从光子拓扑转变到白矮星辐射禁戒，所有定量输出共享同一谱翻译词典与同一数值工具族（§5.2）。这是"全域可计算"纲领的工程根基。
 
 ---
 
@@ -211,12 +219,13 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | **局部窗口兼容** | 弦论、LQG、AdS/CFT | 仅低能谱匹配；高能本体互斥（弦论注册为 Cl(9,1) 实例，与 Cl(1,7) 在 IC 投影层面交叉引用） |
 | **仅形式类比** | 渐近安全、扭量 | 无定量谱翻译等价，仅共享部分方法学外观 |
 
-**四大本体差异点**（与弦论/LQG 的根本分歧，一次看清）：
+**五大本体差异点**（与弦论/LQG 及标准辐射理论的根本分歧，一次看清）：
 
 1. **引力是否为场**：主流理论视引力为（量子化）动力学场；MUFPF 视引力为 4-范畴交换律偏差 Δ（结构常数，非场）；
 2. **高维隐藏机制**：弦论用紧致化隐藏额外维；MUFPF 用谱静默（S0–S4）隐藏不可观测方向——紧致化只是谱静默的几何特例；
 3. **真空唯一性**：弦景观存在巨大真空选择问题；MUFPF 的静默方向由谱结构决定，无景观难题；
-4. **量子化路径**：主流需对引力进行量子化；MUFPF 从根源上"无需二次量子化"。
+4. **量子化路径**：主流需对引力进行量子化；MUFPF 从根源上"无需二次量子化"；
+5. **辐射选择定则的谱类型假设**（Paper XLVIII）：标准选择定则隐含假设束缚态 = 纯点谱、电离态以上 = 绝对连续谱；MUFPF 证明量子混沌系统中奇异连续谱分量显著（$\eta_{\text{sc}}\approx0.5$–0.8），谱类型不匹配构成独立于能量/角动量守恒的**第三约束维度**，标准矩阵元 $\neq0$ 不保证辐射通道开放——已获 SDSS 白矮星观测统计验证（$p<0.01$）。
 
 ---
 
@@ -237,7 +246,7 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 
 ### 7.3 实验约束短板
 
-标志性预言（$L_4\approx1470$ GeV、$m_{\beta\beta}$、$\delta_{\text{CP}}$、$r=0.0042$）依赖 HL-LHC/FCC、DUNE/JUNO、LiteBIRD/CMB-S4 等远期大科学装置（裁决时间窗 2028–2045）。当前唯一低成本即时检验为 **IQHE 倾斜磁场跃迁 $\theta_c=75.6^\circ$（1–3 年）**。
+标志性预言（$L_4\approx1470$ GeV、$m_{\beta\beta}$、$\delta_{\text{CP}}$、$r=0.0042$）依赖 HL-LHC/FCC、DUNE/JUNO、LiteBIRD/CMB-S4 等远期大科学装置（裁决时间窗 2028–2045）。当前低成本即时检验有二：（1）**IQHE 倾斜磁场跃迁 $\theta_c=75.6^\circ$**（1–3 年）；（2）**磁场白矮星 Balmer 线辐射缺失的 SDSS 大样本统计检验**（Paper XLVIII，已完成首轮——400 弱场 vs 20 中场，$p=0.00786$，46.9% 缺失归因拓扑禁戒，无须大科学装置，可随 SDSS 数据更新持续扩大样本）。
 
 ### 7.4 工具局限
 
@@ -275,13 +284,13 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 
 ## 10 后记：整套论文写作逻辑说明
 
-四十余篇分册的分工源于研究推进的自然切分：**纯数学支线**（Papers I/III/XIX–XXV/XXX/XXXIII）建立并深化底层范畴构造；**引力支线**（Papers IV/VIII/IX/XII/XVI/XXVIII/XXXII/XXXIV/XXXV/XLII）沿"时空涌现 → 引力本体 → 黑洞"推进；**粒子支线**（Papers II/XI/XVII/XL/XLI）落实标准模型还原与 BSM 预言；**凝聚/流体/化学支线**（Papers VI/VII/XIV/XV/XXIII/XXIV）展示跨领域复用；**数值支线**（Papers V/XXVI/XXVII/XXIX）沉淀可计算内核；**形式化支线**（Paper I 附录、Paper XXXVIII、Lean/Agda 代码）提供机器核验；**哲学与勘误**（Paper I-Philosophy、RAP 系列）给出立场与版本管理。
+四十余篇分册的分工源于研究推进的自然切分：**纯数学支线**（Papers I/III/XIX–XXV/XXX/XXXIII）建立并深化底层范畴构造；**引力支线**（Papers IV/VIII/IX/XII/XVI/XXVIII/XXXII/XXXIV/XXXV/XLII）沿"时空涌现 → 引力本体 → 黑洞"推进；**粒子支线**（Papers II/XI/XVII/XL/XLI）落实标准模型还原与 BSM 预言；**凝聚/流体/化学支线**（Papers VI/VII/XIV/XV/XXIII/XXIV）展示跨领域复用；**电磁辐射/拓扑支线**（Papers XLIV/XLVII/XLVIII）从光子拓扑转变 → 感应代数同构 → 谱类型禁戒频率推进，首次在白矮星观测中实现框架电磁辐射预言的实证检验；**数值支线**（Papers V/XXVI/XXVII/XXIX）沉淀可计算内核；**形式化支线**（Paper I 附录、Paper XXXVIII、Lean/Agda 代码）提供机器核验；**哲学与勘误**（Paper I-Philosophy、RAP 系列）给出立场与版本管理。
 
 单篇论文只能展示局部定理与单一数值模块，总序承担**全局统合**功能：把每一篇放回「递归 → 谱 → 静默 → 引力 → 跨域统一 → 预言 → 边界」这条主线上。读完本总序后，可按 §8 的分层指引跳转任意专项原文深入细节。
 
 ---
 
-## 附录 A：全套论文清单（Papers I–XLVI，对应 v0.48 基线）
+## 附录 A：全套论文清单（Papers I–XLVIII，对应 v0.49 基线）
 
 | 编号 | 文件 | 主题 |
 |:---:|:---|:---|
@@ -327,11 +336,13 @@ IC 自动化校验（跨领域结构不变量保持判定）、谱截面误差�
 | XLI | [paper41_renormalization_chain.md](paper41_renormalization_chain.md) | 量子重整化完整链条 |
 | XLII | [paper42_black_hole_quantum_evolution.md](paper42_black_hole_quantum_evolution.md) | 黑洞量子演化（Page 曲线、超辐射） |
 | XLIII | [paper43_shale_accumulation.md](paper43_shale_accumulation.md) | 页岩油气成藏的谱流机制与实证（跨领域应用支线；v0.28 正向仿真验证 P1/P3/P2 机制层闭合；v0.29 P1 D→2 端方向勘误；v0.30 开放问题三件套：P1 仿真-实测符号差异诊断闭合 + σ(D,c) 定量公式 + P3 输运耦合零假设检验） |
-| XLIV | [paper44_photon_topology.md](paper44_photon_topology.md) | 光子生成的拓扑转变机制与可证伪预言（v0.39：拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6） |
+| XLIV | [paper44_photon_topology.md](paper44_photon_topology.md) | 光子生成的拓扑转变机制与可证伪预言（v0.40：拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6；法拉第笼类比升级为纯结构同构声明） |
 | XLV | [paper45_spectral_EFT_dissipative_fluids.md](paper45_spectral_EFT_dissipative_fluids.md) | 耗散流体有效场论的谱语言翻译（v1.3：CGL 核心结构 MUFPF 表述 + 三类新构造 + 可证伪预言，数值验证 11/11） |
 | XLVI | [paper46_gauge_topology.md](paper46_gauge_topology.md) | 规范场的拓扑形变循环诠释（v0.2：七项等价性定理 + 函子等价 $\mathbf{Sp}_{\text{gauge}} \simeq \mathbf{Def}_{\text{gauge}}$；Lean 形式化 `GaugeTopology.lean` 零 sorry） |
+| XLVII | [paper47_mimetic_induction_theory.md](paper47_mimetic_induction_theory.md) | 仿形感应理论（v0.3：公理 M1–M4 + 五推论谱系；工程术语纯代数结构占位符声明；Lean 形式化零 sorry） |
+| XLVIII | [paper48_topological_forbidden_frequency.md](paper48_topological_forbidden_frequency.md) | 拓扑禁戒频率（v0.5：谱类型不匹配 = 第三约束维度，白矮星观测验证 $p=0.00786$ + 四类显性证伪 + NMLO 算子 $m=3.39$ + NLCT 标度方程） |
 
-配套文档：[RAP 勘误与立场声明 v0.48](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.48](RAP_盲登记协议.md)。
+配套文档：[RAP 勘误与立场声明 v0.49](RAP_勘误与立场声明.md)、[RAP 盲登记协议 v0.49](RAP_盲登记协议.md)。
 
 ## 附录 B：冻结预言盲登记摘要（P1–P7，v0.25）
 

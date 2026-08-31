@@ -107,7 +107,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XLV**：耗散流体有效场论的谱语言翻译 | v1.3 | CGL 核心结构（CTP/r-a/KMS/BRST）谱语言重构 + 三类新构造 + 可证伪预言，数值 11/11 | ✅ |
 | **Paper XLVI 🆕**：规范场的拓扑形变循环诠释 | v0.2 | 七项等价性定理（色谱丛↔三轴对称、SU(2)↔双轴耦合、超荷↔缠绕数、Λ_QCD↔形变锁定、禁闭↔边界穿越、耦合常数↔拓扑强度）+ 函子等价 $\mathbf{Sp}_{\text{gauge}} \simeq \mathbf{Def}_{\text{gauge}}$ | ✅ |
 | **Paper XLVII**：仿形感应理论 | v0.3 | 电磁感应 = 正交分量运动模式的仿形拟合：公理 M1–M4 + 五推论谱系（拓扑禁戒频率等）+ Lean 零 `sorry` | ✅ |
-| **Paper XLVIII**：拓扑禁戒频率 | v0.4 | 谱类型不匹配导致的辐射抑制 = 第三约束维度：四系统数值验证 + 白矮星观测验证（$p=0.00786$）+ 四类显性证伪检验 + NMLO 算子（$m=3.39$，$R^2=0.80$） | ✅ |
+| **Paper XLVIII**：拓扑禁戒频率 | v0.5 | 谱类型不匹配导致的辐射抑制 = 第三约束维度：四系统数值验证 + 白矮星观测验证（$p=0.00786$）+ 四类显性证伪检验 + NMLO 算子（$m=3.39$，$R^2=0.80$）+ NLCT 标度方程（$\beta=2+D$，$\tau_{\text{NL}}=D/(1+D)\,T$） | ✅ |
 
 ### Lean 4 形式化
 
@@ -632,7 +632,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
-| **2026-08-31** | **RAP-Errata v0.49 发布 + Paper XLVII/XLVIII 新增**：① 新增 Paper XLVII（仿形感应理论 v0.3，公理 M1–M4 + 五推论谱系 + Lean 零 sorry）；② 新增 Paper XLVIII（拓扑禁戒频率 v0.4，谱类型不匹配 = 第三约束维度，Harper/强磁场氢原子/Rydberg 四系统数值验证 + SDSS 白矮星观测验证 p=0.00786 + 四类显性证伪检验 + 3 颗反常发射线星 + NMLO 算子 m=3.39）；③ Paper XLIV 修订 v0.39→v0.40（法拉第笼类比升级为结构同构声明）；④ 论文总数 44→48，各级 README/总序/勘误状态总表同步 | RAP-Errata v0.49 |
+| **2026-08-31** | **RAP-Errata v0.49 发布 + Paper XLVII/XLVIII 新增 + 总序电磁辐射支线理论覆盖**：① 新增 Paper XLVII（仿形感应理论 v0.3，公理 M1–M4 + 五推论谱系 + Lean 零 sorry）；② 新增 Paper XLVIII（拓扑禁戒频率 v0.5，谱类型不匹配 = 第三约束维度 + NLCT 标度方程 + NESS/NLTE 边界 + $T_{\text{eff}}$ 拓扑展宽代数桥梁验证）；③ Paper XLIV 修订 v0.39→v0.40（法拉第笼类比升级为结构同构声明）；④ 总序新增 §4.5 电磁辐射拓扑转变谱支线（Papers XLIV→XLVII→XLVIII）+ §6 第五本体差异点 + §7.3 两项低成本即时检验；⑤ 论文总数 44→48，各级 README/总序/勘误状态总表同步 | RAP-Errata v0.49 |
 | **2026-08-05** | **目录整理 + 全量脚本登记**：① 散落脚本归位——全部 `paperX_*.py`/`paper5/22/27/28-38_*.py`/`phase39-42_*.py` 数值脚本迁入 `scripts/`，DNS/GPU 运行与重分析脚本迁入 `scripts/dns/`，输出路径改为文件相对；图片归入 `figs/`，结果 JSON 归入 `results/`；② 早期论文脚本（paper5/22/27/28/29-35、phase36-42 共 39 个）批量登记进 `run_all_tests.py`（现共 130 项，全部存在性校验通过）；③ 修复两个脚本缺陷：`paper27_beta_twoloop_fix.py` 未定义 `C2_f`、`paper29_entropy_production_proof.py` scipy 导入错误 + 克劳修斯数组形状不匹配（改为 scipy.stats.entropy）；④ `scripts/paper3_bps_spectral_verification.py` 重建并登记（BPS 黑洞谱等价 19/19）；100 个 .md 文档 840 处引用同步更新 | 目录整理 |
 | **2026-08-04** | **Phase 61C（P0-2 量子重整化完整链条）完成并纳入**：T3 测度论层闭合 + 笔记/论文（paper41，定理 2.1/3.1/3.2/4.1）+ 数值 `scripts/paperX_rg_chain.py`（12/12）+ Lean `RenormalizationChain.lean` 形式化。执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3）、正本清源假定理 5 处（WeaveBCS）、hBound 文档纠正、DeviationBound/HigherRecCategory 开放项登记；`lake build` 全量通过 | Phase 61C |
 | **2026-07-29** | **RAP-Errata v0.3 发布**：全部宣称边界重新划定。参数总账归约为 0 自由参数 + 1 外部标度 $M_{\text{Pl}}$。新增 Paper XXXI–XXXIV（质量-$\Delta$ 方向性、谱静默与时空涌现、"3"的范畴论起源、B2 连续极限理论闭合）。B1①环机器证明完成。研究笔记 v1.48 全部内容已提炼完毕 |

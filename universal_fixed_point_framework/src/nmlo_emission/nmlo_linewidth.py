@@ -140,8 +140,8 @@ def lineshape_tail(alpha, kappa, gamma, eta=0.8, tail_range=(0.5, 2.0)):
     sl_lor, _ = np.polyfit(np.log(np.abs(d[m])), np.log(S_lor[m]), 1)
     S_center_mix = S_mix[len(d) // 2]
     S_center_lor = S_lor[len(d) // 2]
-    tail_frac_mix = np.trapezoid(S_mix[np.abs(d) > tail_range[0]], d[np.abs(d) > tail_range[0]]) / np.trapezoid(S_mix, d)
-    tail_frac_lor = np.trapezoid(S_lor[np.abs(d) > tail_range[0]], d[np.abs(d) > tail_range[0]]) / np.trapezoid(S_lor, d)
+    tail_frac_mix = np.trapz(S_mix[np.abs(d) > tail_range[0]], d[np.abs(d) > tail_range[0]]) / np.trapz(S_mix, d)
+    tail_frac_lor = np.trapz(S_lor[np.abs(d) > tail_range[0]], d[np.abs(d) > tail_range[0]]) / np.trapz(S_lor, d)
     return {
         'tail_slope_mix': sl_mix, 'tail_slope_lorentz': sl_lor,
         'center_mix': S_center_mix, 'center_lorentz': S_center_lor,

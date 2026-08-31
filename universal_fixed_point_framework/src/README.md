@@ -109,8 +109,8 @@
 
 | 目录/模块 | 功能 | 状态 |
 |---|---|---|
-| `white_dwarf_analysis/` | 白矮星光谱分析（v3–v11 迭代：v11 补全 $10^3$–$10^4$ T 缺口 + 选择效应四类显性证伪检验；SDSS/LAMOST 数据对接） | ✅ 已完成 |
-| `nmlo_emission/` | 非马尔可夫线型算子（NMLO，Paper XLVIII §5.5）：Cantor 奇异连续谱测度 → 幂律记忆核 → 混合谱线型 → 发射 EW 线序标度拟合（$m=3.39$，$R^2=0.80$） | ✅ 已完成 |
+| `white_dwarf_analysis/` | 白矮星光谱分析（v3–v11 迭代：v11 补全 $10^3$–$10^4$ T 缺口 + 选择效应四类显性证伪检验；$T_{\text{eff}}$ 正效应与量子混沌拓扑展宽代数桥梁验证（$c_{\text{theory}}/c_{\text{obs}}=0.79$）；SDSS/LAMOST 数据对接） | ✅ 已完成 |
+| `nmlo_emission/` | 非马尔可夫线型算子（NMLO，Paper XLVIII §5.5）：Cantor 奇异连续谱测度 → 幂律记忆核 → 混合谱线型 → 发射 EW 线序标度拟合（$m=3.39$，$R^2=0.80$）；非局域相关时间（NLCT）精确标度方程验证（尾区斜率 $\beta=2+D$、$\tau_{\text{NL}}=D/(1+D)\cdot T$） | ✅ 已完成 |
 | `harper_analysis/` | Harper 谱分析（光谱数据解析） | ✅ 已完成 |
 | `hydrogen_analysis/` | 氢原子磁/辐射分析（Stark 效应、B 场测量） | ✅ 已完成 |
 | `sdss_lamost_query/` | SDSS/LAMOST 公开数据查询与下载工具 | ✅ 已完成 |
