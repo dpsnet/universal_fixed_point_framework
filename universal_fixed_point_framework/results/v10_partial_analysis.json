@@ -1,0 +1,13 @@
+{
+  "n_weak_done": 400,
+  "n_int_valid": 12,
+  "n_weak_valid": 188,
+  "total_ew_ratio": 0.3840470836132618,
+  "residual_diff_dex": -0.27450620760397193,
+  "radiation_deficit_percent": 46.85115973964575,
+  "p_value": 0.007860057777695741,
+  "t_statistic": -2.994090746449005,
+  "int_residual_negative_fraction": 1.0,
+  "int_detection_rate": 0.3095238095238095,
+  "weak_detection_rate": 0.34878419452887544
+}

@@ -1,20 +1,20 @@
 # 元通用不动点函子范畴框架 / Universal Fixed Point Functorial Framework (MUFPF)
 
-> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.38](../paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
+> **⚠️ 重要声明**：本框架的所有宣称边界已在 [RAP-Errata v0.49](paper/RAP_勘误与立场声明.md) 中重新划定。以下旧版统计（如"29 项零参数预测"等）已被勘误 §二 中列出的降级表述替代。请以勘误文档为当前宣称基线。
 
 > **命名方案**（2026-08-23 引入）：本框架区分为两个层次——**狭义 MUFPF**（MUFPF₀）：有界算子 + H1-H5 假设下的四体制元定理（A/B1/B2/C）基础框架，已具备部分严格数学结果，非猜想；**广义 MUFPF**（G-MUFPF）：包含 N-平展统一猜想、体制间态 $\mathcal{R}_{\mathrm{inter}}$、算子代数推广、Gödel-Koopman 算子对应等全部扩展的猜想体系。狭义 MUFPF $\subset$ 广义 MUFPF。狭义 MUFPF 是广义 MUFPF 在强假设下的特例；广义 MUFPF 大部分内容尚为猜想，仅有限维具备数值证据。
 >
-> **项目状态**：44 篇论文（Paper I–XLIV，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向，XLIII–XLIV 为跨领域/新理论支线）+ **RAP-Errata v0.38**（勘误基线，与盲登记 1:1 同步，P1–P7 冻结预言数值不变）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
+> **项目状态**：48 篇论文（Paper I–XLVIII，其中 XXXIX–XLII 对应 Phase 61A–61D 四方向，XLIII–XLVIII 为跨领域/新理论支线）+ **RAP-Errata v0.49**（勘误基线，与盲登记 1:1 同步，P1–P7 冻结预言数值不变）✅ + Lean 4 形式化 81 模块（Phase 61 模块全部零 `sorry`）+ **Agda 交叉验证 20 模块推进（技术债清单 A 类全闭合 + T3 定义性公理降定理 exp-partial-< / exp-tail-bound / log2-series-ub + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47，Paper XXXVIII 专论）**
 
 | 指标 / Metric | 数值 / Value |
 |------|------|
-| 论文总数 / Papers | **44**（Paper I–XLIV，含本轮新增 XXXI–XXXV, XXXVII–XLIV） |
+| 论文总数 / Papers | **48**（Paper I–XLVIII，含本轮新增 XXXI–XXXV, XXXVII–XLVIII） |
 | 严格拟合 / Strict results | **15 项** |
 | 部分拟合 / Partial fits | **14 项** |
 | 冻结预言 / Frozen predictions | **7 项**（盲登记有效，数值未变） |
 | 覆盖范围 / Coverage | 费米子质量比(6)、CKM(5)、PMNS(4)、规范耦合(3)、$\Delta m^2$比、$\Omega h^2$、$\varepsilon_K$、$m_{\beta\beta}$、GUT/质子 + 量子化学谱流 + BCS μ*消除 + 谱键刚性 + **Phase 61 四大物理方向（暴涨/色规范/重整化链/黑洞演化）** |
 | 自由参数 / Free Parameters | **0**（+ 1 外部标度 $M_{\text{Pl}}$，$c=1$ 单位制） |
-| 最新论文 / Latest Papers | **XXXIX**（暴涨完整动力学）+ **XL**（色规范完整动力学）+ **XLI**（量子重整化链条）+ **XLII**（黑洞量子演化）+ Paper XXXVIII（Agda 交叉验证） |
+| 最新论文 / Latest Papers | **XLVII**（仿形感应理论）+ **XLVIII**（拓扑禁戒频率，白矮星观测验证 $p=0.00786$ + NMLO 算子）+ Paper XLVI（规范场拓扑形变循环）+ Paper XLV（谱 EFT 翻译）+ Paper XLIV（光子拓扑转变） |
 | Lean 4 核心模块 | 10（$\mathbf{Sp}$ 范畴、高阶态射、偏差界、$d_H$ 结构分析、静默定理→§11 向外推、IFS 分形、Hutchinson 吸引子、Bott 塔、统一 3 定理、**ContinuumLimit**）+ **Phase 61A-D 7 模块**（InflationDynamics/ColorDynamics/RenormalizationChain/BlackHoleEvolution/HawkingSpectrum/BlackHoleInformation/BlackHoleBounce，全部零 `sorry`） |
 | 遗留 `sorry` | **全库 Lean 零 `sorry` 零 `axiom`**（2026-08-05：`Adjunction.lean` 的 3 处 `sorry` + 1 处 `axiom DAdjR` 已闭合——原 `RFunctor.map`/`DAdjR` 全范畴结构性不可构造且无使用方，删除后 `RFunctor` 保留对象映射；全范畴右伴随正确构造由 RAP5a SpImD `DIm ⊣ RIm` 覆盖；此前已闭合：ThermoFormalism/DeviationBound（O8/O11）+ RAP5a RIm_map（线性语义）+ HigherRecCategory（D-拉回，O13）；详见下文"Lean 4 形式化"表） |
 | B2 连续极限状态 | **6/6 子步骤理论闭合**：3a `ContinuumLimit.lean` ✅、3c `IFSFractal.lean` ✅、3b/3d/3e/3f 🔶（待 mathlib 库） |
@@ -56,11 +56,11 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ---
 
-## 现状速览（2026-08-13，RAP-Errata v0.38）
+## 现状速览（2026-08-31，RAP-Errata v0.49）
 
 ### 论文
 
-> **系列总序（全局导论，推荐先读）**：[MUFPF体系总序.md](MUFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
+> **系列总序（全局导论，推荐先读）**：[MUFPF体系总序.md](paper/MUFPF体系总序.md) —— 底层逻辑、完整脉络、勘误汇总与分层阅读指引
 
 | 论文 | 版本 | 定位 | 状态 |
 |:-----|:----:|:-----|:----:|
@@ -98,8 +98,16 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 | **Paper XXXV 🆕**：引力的范畴论起源 | v0.5 | 交换律偏差 = 引力，Δ 结构常数，引力不可屏蔽，引力子等效性 + **§3.2 向外推几何阐述** + T1 对齐（§3.2 W 轴为诠释语言非几何额外维度，见 Paper XXXI §3.3 J2 / Paper XLIV §7.2） | ✅ |
 | **Paper XXXVII 🆕**：开放问题、未来方向与层次距离 | v0.1 | A/B/C 三组开放问题 + 层次距离度量 + Bott-Moran 桥 | ✅ |
 | **Paper XXXVIII 🆕**：Agda 独立交叉验证 | v0.8 | 双实现证明协议：20 模块清单、B1-B8 直接证明、技术债 A 类全闭合、T3 定义性公理降定理（exp-partial-< / exp-tail-bound / log2-series-ub 固定间隙路径 + log 级数下界侧 v1.44 + ln 级数高阶精化 v1.45 + ln(16/15) 级数直接截断 v1.46 + 二阶精化 v1.47）、S0 静默/待基础设施边界 | ✅ |
-| **Paper XLIV**：光子生成的拓扑转变机制与可证伪预言 | v0.39 | 拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6 | ✅ |
+| **Paper XXXIX**：暴涨完整动力学（Phase 61A） | v0.7 | C1–C5 五项贡献 + 定理 D3.1 动态连续极限 + N_{R⁴} 精确闭式 + γ_φ 谱第一性确定 + 预言闭环定理 6.1 | ✅ |
+| **Paper XL**：色规范完整动力学（Phase 61B） | v0.54 | 色丛 + 胶子顶点谱封闭 + 禁闭/渐近自由 + 4 强子谱 + §5.12 静默释放宽度多道定量化 | ✅ |
+| **Paper XLI**：量子重整化完整链条（Phase 61C） | v0.4 | 谱 Feynman + 谱正则化 + 谱流→β 函数（定理 3.1）+ EFT 层级 + 瞬子路径 | ✅ |
+| **Paper XLII**：黑洞量子演化（Phase 61D） | v0.3 | 霍金谱 + 蒸发动力学 + Page 曲线谱公理推导 + 视界涨落 + 信息保持 | ✅ |
+| **Paper XLIII**：页岩油气成藏的谱流机制与实证 | v3.0 | 跨领域应用支线：谱隙-门限压力双曲标度第一性推导（M11）+ 五项理论预测 + 正向数值仿真（P1 R²=0.942） | ✅ |
+| **Paper XLIV**：光子生成的拓扑转变机制与可证伪预言 | v0.40 | 拓扑转变公理体系 + 方向性阶跃 + 双层正交 + 六项远期可证伪预言 P1–P6 | ✅ |
+| **Paper XLV**：耗散流体有效场论的谱语言翻译 | v1.3 | CGL 核心结构（CTP/r-a/KMS/BRST）谱语言重构 + 三类新构造 + 可证伪预言，数值 11/11 | ✅ |
 | **Paper XLVI 🆕**：规范场的拓扑形变循环诠释 | v0.2 | 七项等价性定理（色谱丛↔三轴对称、SU(2)↔双轴耦合、超荷↔缠绕数、Λ_QCD↔形变锁定、禁闭↔边界穿越、耦合常数↔拓扑强度）+ 函子等价 $\mathbf{Sp}_{\text{gauge}} \simeq \mathbf{Def}_{\text{gauge}}$ | ✅ |
+| **Paper XLVII**：仿形感应理论 | v0.3 | 电磁感应 = 正交分量运动模式的仿形拟合：公理 M1–M4 + 五推论谱系（拓扑禁戒频率等）+ Lean 零 `sorry` | ✅ |
+| **Paper XLVIII**：拓扑禁戒频率 | v0.4 | 谱类型不匹配导致的辐射抑制 = 第三约束维度：四系统数值验证 + 白矮星观测验证（$p=0.00786$）+ 四类显性证伪检验 + NMLO 算子（$m=3.39$，$R^2=0.80$） | ✅ |
 
 ### Lean 4 形式化
 
@@ -230,7 +238,7 @@ See `paper/RAP_勘误与立场声明.md` for claim boundaries and the errata bas
 
 ### 作者
 - **作者**：王斌（独立研究人），wang.bin@foxmail.com
-- **声明基线**：RAP-Errata v0.38（详见 `paper/RAP_勘误与立场声明.md`）
+- **声明基线**：RAP-Errata v0.49（详见 `paper/RAP_勘误与立场声明.md`）
 
 ---
 
@@ -624,6 +632,7 @@ universal_fixed_point_framework/
 
 | 日期 | 更新内容 |
 |:----|:---------|
+| **2026-08-31** | **RAP-Errata v0.49 发布 + Paper XLVII/XLVIII 新增**：① 新增 Paper XLVII（仿形感应理论 v0.3，公理 M1–M4 + 五推论谱系 + Lean 零 sorry）；② 新增 Paper XLVIII（拓扑禁戒频率 v0.4，谱类型不匹配 = 第三约束维度，Harper/强磁场氢原子/Rydberg 四系统数值验证 + SDSS 白矮星观测验证 p=0.00786 + 四类显性证伪检验 + 3 颗反常发射线星 + NMLO 算子 m=3.39）；③ Paper XLIV 修订 v0.39→v0.40（法拉第笼类比升级为结构同构声明）；④ 论文总数 44→48，各级 README/总序/勘误状态总表同步 | RAP-Errata v0.49 |
 | **2026-08-05** | **目录整理 + 全量脚本登记**：① 散落脚本归位——全部 `paperX_*.py`/`paper5/22/27/28-38_*.py`/`phase39-42_*.py` 数值脚本迁入 `scripts/`，DNS/GPU 运行与重分析脚本迁入 `scripts/dns/`，输出路径改为文件相对；图片归入 `figs/`，结果 JSON 归入 `results/`；② 早期论文脚本（paper5/22/27/28/29-35、phase36-42 共 39 个）批量登记进 `run_all_tests.py`（现共 130 项，全部存在性校验通过）；③ 修复两个脚本缺陷：`paper27_beta_twoloop_fix.py` 未定义 `C2_f`、`paper29_entropy_production_proof.py` scipy 导入错误 + 克劳修斯数组形状不匹配（改为 scipy.stats.entropy）；④ `scripts/paper3_bps_spectral_verification.py` 重建并登记（BPS 黑洞谱等价 19/19）；100 个 .md 文档 840 处引用同步更新 | 目录整理 |
 | **2026-08-04** | **Phase 61C（P0-2 量子重整化完整链条）完成并纳入**：T3 测度论层闭合 + 笔记/论文（paper41，定理 2.1/3.1/3.2/4.1）+ 数值 `scripts/paperX_rg_chain.py`（12/12）+ Lean `RenormalizationChain.lean` 形式化。执行"延伸解决所有应填充的证明"：填充可证 sorry 5 处（Silence 2 + ThermoFormalism 3）、正本清源假定理 5 处（WeaveBCS）、hBound 文档纠正、DeviationBound/HigherRecCategory 开放项登记；`lake build` 全量通过 | Phase 61C |
 | **2026-07-29** | **RAP-Errata v0.3 发布**：全部宣称边界重新划定。参数总账归约为 0 自由参数 + 1 外部标度 $M_{\text{Pl}}$。新增 Paper XXXI–XXXIV（质量-$\Delta$ 方向性、谱静默与时空涌现、"3"的范畴论起源、B2 连续极限理论闭合）。B1①环机器证明完成。研究笔记 v1.48 全部内容已提炼完毕 |

@@ -157,3 +157,4 @@ MUFPF 的范畴论不是抽象游戏，而是为以下物理直觉提供严格�
 ## 版本
 
 - v0.1（2026-08-18）：初始版本，覆盖 MUFPF Paper I~XLIV 中范畴论工具全景
+- v0.2（2026-08-31）：覆盖范围扩展至 Paper I~XLVIII（新增 Paper XLV 谱 EFT 翻译、XLVI 规范场形变循环、XLVII 仿形感应、XLVIII 拓扑禁戒频率）
