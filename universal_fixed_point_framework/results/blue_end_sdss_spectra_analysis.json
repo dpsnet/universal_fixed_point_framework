@@ -1,0 +1,146 @@
+[
+  {
+    "name": "J233817.93+083732.6",
+    "plate": 6161,
+    "mjd": 56238,
+    "fiber": 622,
+    "B_tesla": 12000.0,
+    "Teff": 11534,
+    "Mstar": 0.72,
+    "log_g": 8.40913486513046,
+    "wavelength_min": 3604.95654296875,
+    "wavelength_max": 10384.8408203125,
+    "total_EW": 0.0,
+    "n_detected": 0,
+    "theo_EW": 45.50066745819019,
+    "obs_theo_ratio": 0.0,
+    "residual_dex": -3.0,
+    "line_results": {
+      "Hα": {
+        "EW": -0.07476731736190387,
+        "detected": false
+      },
+      "Hβ": {
+        "EW": -0.6262132492325951,
+        "detected": false
+      },
+      "Hγ": {
+        "EW": -2.557297704523327,
+        "detected": false
+      },
+      "Hδ": {
+        "EW": -0.43849828402367974,
+        "detected": false
+      },
+      "Hε": {
+        "EW": -1.4663225442168935,
+        "detected": false
+      },
+      "Hζ": {
+        "EW": -4.349191244126825,
+        "detected": false
+      },
+      "Hη": {
+        "EW": -5.933889988993462,
+        "detected": false
+      }
+    },
+    "status": "success"
+  },
+  {
+    "name": "J225828.48+280828.8",
+    "plate": 6293,
+    "mjd": 56561,
+    "fiber": 264,
+    "B_tesla": 14000.0,
+    "Teff": 10618,
+    "Mstar": 1.02,
+    "log_g": 8.875138588681365,
+    "wavelength_min": 3566.974365234375,
+    "wavelength_max": 10339.5146484375,
+    "total_EW": 0.0,
+    "n_detected": 0,
+    "theo_EW": 44.233498572714595,
+    "obs_theo_ratio": 0.0,
+    "residual_dex": -3.0,
+    "line_results": {
+      "Hα": {
+        "EW": -2.7678533923529387,
+        "detected": false
+      },
+      "Hβ": {
+        "EW": -2.2547579292480555,
+        "detected": false
+      },
+      "Hγ": {
+        "EW": -4.766577178973881,
+        "detected": false
+      },
+      "Hδ": {
+        "EW": -8.473028753086066,
+        "detected": false
+      },
+      "Hε": {
+        "EW": -10.40355166734356,
+        "detected": false
+      },
+      "Hζ": {
+        "EW": -21.275680469768304,
+        "detected": false
+      },
+      "Hη": {
+        "EW": -26.801990072498015,
+        "detected": false
+      }
+    },
+    "status": "success"
+  },
+  {
+    "name": "J101712.60+233646.6",
+    "plate": 6458,
+    "mjd": 56274,
+    "fiber": 968,
+    "B_tesla": 14000.0,
+    "Teff": 10843,
+    "Mstar": 1.04,
+    "log_g": 8.909159872106201,
+    "wavelength_min": 3608.27880859375,
+    "wavelength_max": 10387.236328125,
+    "total_EW": 0.0,
+    "n_detected": 0,
+    "theo_EW": 45.53314570800781,
+    "obs_theo_ratio": 0.0,
+    "residual_dex": -3.0,
+    "line_results": {
+      "Hα": {
+        "EW": 0.7612120323955626,
+        "detected": "False"
+      },
+      "Hβ": {
+        "EW": -0.15318784994485113,
+        "detected": false
+      },
+      "Hγ": {
+        "EW": -5.938887616230275,
+        "detected": false
+      },
+      "Hδ": {
+        "EW": -8.577662883406028,
+        "detected": false
+      },
+      "Hε": {
+        "EW": -10.344453598703904,
+        "detected": false
+      },
+      "Hζ": {
+        "EW": -20.948135159417802,
+        "detected": false
+      },
+      "Hη": {
+        "EW": -19.64113801895023,
+        "detected": false
+      }
+    },
+    "status": "success"
+  }
+]

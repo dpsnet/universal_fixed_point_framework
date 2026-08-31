@@ -1,0 +1,3834 @@
+{
+  "n_intermediate_analyzed": 20,
+  "n_weak_analyzed": 17,
+  "intermediate_results": [
+    {
+      "name": "J221828.58-000012.1",
+      "B_tesla": 22077.999877929688,
+      "Teff": 12806.0,
+      "Mstar": 1.059999942779541,
+      "n_detected": 5,
+      "n_total": 7,
+      "detected_fraction": 0.7142857142857143,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε"
+      ],
+      "total_EW": 25.95024368584581,
+      "n_pixels": 2344,
+      "wavelength_range": [
+        3963.95556640625,
+        6798.74365234375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 1.9705586579367387,
+          "EW_error": 0.5911675973810215,
+          "depth": 0.1656455269090048,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 3.135819133318403,
+          "EW_error": 0.784324116799684,
+          "depth": 0.13811681526578745,
+          "fwhm": 73.16332252024812,
+          "center_fit": 4811.300000000001,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0031114133526831253,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 10.452036738977762,
+          "EW_error": 0.9014027583321531,
+          "depth": 0.24001066837469787,
+          "fwhm": 7.350002682873439,
+          "center_fit": 4334.611238741225,
+          "center_input": 4340.5,
+          "chi2_dof": 0.005099304994658312,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 6.450944642480313,
+          "EW_error": 1.0751368486879074,
+          "depth": 0.2098405686529229,
+          "fwhm": 56.6861529553658,
+          "center_fit": 4151.699999999999,
+          "center_input": 4101.7,
+          "chi2_dof": 0.005602048023776902,
+          "fit_success": true,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 3.9408845131325916,
+          "EW_error": 1.0694347571632674,
+          "depth": 0.48168239149272085,
+          "fwhm": 17.77594516282541,
+          "center_fit": 3972.1877602952754,
+          "center_input": 3970.1,
+          "chi2_dof": 0.008856516432201766,
+          "fit_success": true,
+          "n_pixels": 94
+        },
+        "Hζ": {
+          "detected": false,
+          "EW": 0.2508433025009031,
+          "EW_error": 0.07525299075027092,
+          "depth": 0.24876737848549513,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 6
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J033320.37+000720.6",
+      "B_tesla": 77171.00219726562,
+      "Teff": 7498.0,
+      "Mstar": 0.7900000214576721,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 24.98671277988727,
+      "n_pixels": 2527,
+      "wavelength_range": [
+        3800.301025390625,
+        6798.57568359375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 2.8559591283632813,
+          "EW_error": 0.38341479098349623,
+          "depth": 0.20263811750472338,
+          "fwhm": 115.86704971911549,
+          "center_fit": 6612.7999999999765,
+          "center_input": 6562.8,
+          "chi2_dof": 0.001496846331753086,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.10889413864400987,
+          "EW_error": 0.03266824159320296,
+          "depth": 0.02142003867360809,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 1.9569687339553845,
+          "EW_error": 0.5870906201866153,
+          "depth": 0.049683208910884735,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 3.5936036219848275,
+          "EW_error": 1.0780810865954482,
+          "depth": 0.06358384786891913,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 7.2113766324528505,
+          "EW_error": 0.2149986012249516,
+          "depth": 0.10500659949142799,
+          "fwhm": 72.73083080059276,
+          "center_fit": 3943.1595649646115,
+          "center_input": 3970.1,
+          "chi2_dof": 0.00029130479867876824,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 6.21832631244324,
+          "EW_error": 0.3327815157080596,
+          "depth": 0.10500659949142799,
+          "fwhm": 87.0427799171377,
+          "center_fit": 3939.0999999999995,
+          "center_input": 3889.1,
+          "chi2_dof": 0.00030156149152407925,
+          "fit_success": true,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 3.150478350687683,
+          "EW_error": 0.9451435052063049,
+          "depth": 0.08438381108149484,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J101805.04+011123.4",
+      "B_tesla": 12269.000244140625,
+      "Teff": 10329.0,
+      "Mstar": 0.9100000262260437,
+      "n_detected": 2,
+      "n_total": 7,
+      "detected_fraction": 0.2857142857142857,
+      "detected_lines": [
+        "Hγ",
+        "Hδ"
+      ],
+      "total_EW": 8.135382417033794,
+      "n_pixels": 2527,
+      "wavelength_range": [
+        3800.830810546875,
+        6799.52734375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.011160650359495206,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.49276683788258085,
+          "EW_error": 0.14783005136477426,
+          "depth": 0.028290465438432055,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 7.14476409517866,
+          "EW_error": 0.5691643101935709,
+          "depth": 0.12641084088970655,
+          "fwhm": 81.5661486667904,
+          "center_fit": 4388.047364676831,
+          "center_input": 4340.5,
+          "chi2_dof": 0.0005424196761332753,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 0.9906183218551349,
+          "EW_error": 0.5240679806269675,
+          "depth": 0.06114739262762603,
+          "fwhm": 89.79184622664259,
+          "center_fit": 4136.581987957286,
+          "center_input": 4101.7,
+          "chi2_dof": 0.0003985453915226202,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": false,
+          "EW": 0.3375369675646276,
+          "EW_error": 0.576298855142211,
+          "depth": 0.07209642953421325,
+          "fwhm": 38.68666544012756,
+          "center_fit": 3944.307029843052,
+          "center_input": 3970.1,
+          "chi2_dof": 0.001283424522040976,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": false,
+          "EW": 0.3375369675646276,
+          "EW_error": 0.10126109026938827,
+          "depth": 0.07209642953421325,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.0037195734147146275,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 129
+        }
+      }
+    },
+    {
+      "name": "J135141.13+541947.2",
+      "B_tesla": 77851.0009765625,
+      "Teff": 10858.0,
+      "Mstar": 0.7200000286102295,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 45.87114124396369,
+      "n_pixels": 2527,
+      "wavelength_range": [
+        3800.51123046875,
+        6798.95166015625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 3.2922997183402245,
+          "EW_error": 0.4939200229889662,
+          "depth": 0.11353009986459284,
+          "fwhm": 68.27766227493872,
+          "center_fit": 6513.964142702311,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0013497303657541246,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 1.1809158712776444,
+          "EW_error": 0.35427476138329334,
+          "depth": 0.1705542608006766,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 142
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 2.8905825090684036,
+          "EW_error": 0.3195480820750421,
+          "depth": 0.06610144272309404,
+          "fwhm": 135.69723985070584,
+          "center_fit": 4384.151559535394,
+          "center_input": 4340.5,
+          "chi2_dof": 0.00024791066668954065,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 4.600992908850898,
+          "EW_error": 0.33744657618319024,
+          "depth": 0.08203508372506096,
+          "fwhm": 187.45185850896365,
+          "center_fit": 4073.347348334888,
+          "center_input": 4101.7,
+          "chi2_dof": 0.000331559511360785,
+          "fit_success": true,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 6.120519009929737,
+          "EW_error": 1.836155702978921,
+          "depth": 0.1352137252883231,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 14.47672495068243,
+          "EW_error": 4.3430174852047285,
+          "depth": 0.2002915158736095,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 13.309106275814347,
+          "EW_error": 0.3270742818909117,
+          "depth": 0.2002915158736095,
+          "fwhm": 82.57866521628125,
+          "center_fit": 3837.4040539774346,
+          "center_input": 3835.4,
+          "chi2_dof": 0.0004592271443915295,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J120609.81+081323.7",
+      "B_tesla": 44910.00061035156,
+      "Teff": 10057.0,
+      "Mstar": 0.8600000143051147,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 27.98179859721257,
+      "n_pixels": 2527,
+      "wavelength_range": [
+        3800.830810546875,
+        6799.52734375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 6.255683291749123,
+          "EW_error": 1.5361006542366193,
+          "depth": 0.2767295417372301,
+          "fwhm": 8.861622093903803,
+          "center_fit": 6552.881456628001,
+          "center_input": 6562.8,
+          "chi2_dof": 0.013225282259694328,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 6.907468349546532,
+          "EW_error": 1.2934072484396206,
+          "depth": 0.25573855292905856,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4812.570329161478,
+          "center_input": 4861.3,
+          "chi2_dof": 0.010295196219810324,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 7.231650008869518,
+          "EW_error": 2.169495002660855,
+          "depth": 0.31842288622117365,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 5.184804522294687,
+          "EW_error": 1.5554413566884062,
+          "depth": 0.2319226012690896,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 0.6026122514628259,
+          "EW_error": 1.6595081708985886,
+          "depth": 0.15474056180668072,
+          "fwhm": 2.892120596928644,
+          "center_fit": 3978.5749987438976,
+          "center_input": 3970.1,
+          "chi2_dof": 0.01747993744169634,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 0.9811241325996959,
+          "EW_error": 1.9274979604049056,
+          "depth": 0.23451030372707127,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3844.1584685212238,
+          "center_input": 3889.1,
+          "chi2_dof": 0.02241520658562492,
+          "fit_success": true,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 0.8184560406901854,
+          "EW_error": 1.7907365065741945,
+          "depth": 0.23451030372707127,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3844.1581836932683,
+          "center_input": 3835.4,
+          "chi2_dof": 0.024038512824325543,
+          "fit_success": true,
+          "n_pixels": 129
+        }
+      }
+    },
+    {
+      "name": "J021148.21+211548.2",
+      "B_tesla": 16711.000061035156,
+      "Teff": 11160.0,
+      "Mstar": 1.0,
+      "n_detected": 0,
+      "n_total": 7,
+      "detected_fraction": 0.0,
+      "detected_lines": [],
+      "total_EW": 0.0,
+      "n_pixels": 906,
+      "wavelength_range": [
+        5520.1513671875,
+        6799.0908203125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": false,
+          "EW": 0.20311358238917226,
+          "EW_error": 0.06093407471675168,
+          "depth": 0.01864483525945837,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J073237.67+364628.8",
+      "B_tesla": 10872.000122070312,
+      "Teff": 27417.0,
+      "Mstar": 1.340000033378601,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ"
+      ],
+      "total_EW": 23.75645059800317,
+      "n_pixels": 2374,
+      "wavelength_range": [
+        3936.662109375,
+        6798.73779296875
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 15.004535841201566,
+          "EW_error": 4.50136075236047,
+          "depth": 0.3009523498966722,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 1.6957291415979765,
+          "EW_error": 0.508718742479393,
+          "depth": 0.2531913979736138,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 3.526088942189677,
+          "EW_error": 1.0578266826569032,
+          "depth": 0.12598737113011926,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 1.5145658530197883,
+          "EW_error": 0.4543697559059365,
+          "depth": 0.14346556113425712,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 1.1328685028103855,
+          "EW_error": 0.9605708970929104,
+          "depth": 0.2499419949553746,
+          "fwhm": 15.038545808926353,
+          "center_fit": 3954.4676999136705,
+          "center_input": 3970.1,
+          "chi2_dof": 0.006998445819397872,
+          "fit_success": true,
+          "n_pixels": 124
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 0.8826623171837771,
+          "EW_error": 0.2647986951551331,
+          "depth": 0.2499419949553746,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 36
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J100356.31+053825.6",
+      "B_tesla": 16350.999450683594,
+      "Teff": null,
+      "Mstar": NaN,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 24.71181430386376,
+      "n_pixels": 2517,
+      "wavelength_range": [
+        3800.817626953125,
+        6799.5
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 3.6473535634940695,
+          "EW_error": 1.0942060690482207,
+          "depth": 0.15309200296694314,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.23626247932639502,
+          "EW_error": 0.3642574832512075,
+          "depth": 0.05283400570163366,
+          "fwhm": 8.528294573692833,
+          "center_fit": 4852.7134834336985,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0009126112313998513,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 3.3008235299565962,
+          "EW_error": 0.46547017069651236,
+          "depth": 0.11112257108989321,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4355.9389729791865,
+          "center_input": 4340.5,
+          "chi2_dof": 0.0009044449573593035,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 4.233540715754504,
+          "EW_error": 1.2700622147263512,
+          "depth": 0.10576052413519021,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 2.7820735590369634,
+          "EW_error": 0.834622067711089,
+          "depth": 0.09102866708876789,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 5.686395044878143,
+          "EW_error": 1.705918513463443,
+          "depth": 0.1570687264561904,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 5.061627890743486,
+          "EW_error": 0.46313393454861446,
+          "depth": 0.1570687264561904,
+          "fwhm": 63.02995029138708,
+          "center_fit": 3852.2272427143116,
+          "center_input": 3835.4,
+          "chi2_dof": 0.001614310802483248,
+          "fit_success": true,
+          "n_pixels": 129
+        }
+      }
+    },
+    {
+      "name": "J172432.14+323414.9",
+      "B_tesla": 25720.001220703125,
+      "Teff": 24779.0,
+      "Mstar": 1.2200000286102295,
+      "n_detected": 2,
+      "n_total": 7,
+      "detected_fraction": 0.2857142857142857,
+      "detected_lines": [
+        "Hα",
+        "Hβ"
+      ],
+      "total_EW": 7.164272519459178,
+      "n_pixels": 1803,
+      "wavelength_range": [
+        4489.6240234375,
+        6798.453125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 1.0866848591845826,
+          "EW_error": 0.5055613401253427,
+          "depth": 0.08625696870643684,
+          "fwhm": 2.3550000000148588,
+          "center_fit": 6580.583259404938,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0020741787545227614,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 6.077587660274596,
+          "EW_error": 0.9096166564483691,
+          "depth": 0.19710374019051102,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4854.504420959006,
+          "center_input": 4861.3,
+          "chi2_dof": 0.004152915581887907,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J224741.46+145638.7",
+      "B_tesla": 51509.002685546875,
+      "Teff": 16732.0,
+      "Mstar": 1.090000033378601,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 33.184927488928835,
+      "n_pixels": 2527,
+      "wavelength_range": [
+        3800.27197265625,
+        6798.5234375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 0.8597532768909554,
+          "EW_error": 0.7933654747095231,
+          "depth": 0.07337200683150691,
+          "fwhm": 25.207879463152167,
+          "center_fit": 6544.469340281168,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0031032942584735585,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 12.283563158816836,
+          "EW_error": 0.3154942560339664,
+          "depth": 0.29548056252058985,
+          "fwhm": 36.63862276826976,
+          "center_fit": 4850.4666225198125,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0011201685086776035,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": false,
+          "EW": 0.08587279326552619,
+          "EW_error": 0.025761837979657854,
+          "depth": 0.02894424524655459,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 6.4337146307182405,
+          "EW_error": 1.930114389215472,
+          "depth": 0.11239450619135571,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 1.706924626096879,
+          "EW_error": 0.5120773878290636,
+          "depth": 0.11239450619135571,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 5.502829264281909,
+          "EW_error": 1.6508487792845727,
+          "depth": 0.14041033693177718,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 6.398142532124014,
+          "EW_error": 0.42219124871601366,
+          "depth": 0.14041033693177718,
+          "fwhm": 134.4393913756938,
+          "center_fit": 3820.166218486431,
+          "center_input": 3835.4,
+          "chi2_dof": 0.0004967831559115403,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J093707.06+102149.1",
+      "B_tesla": 39467.00134277344,
+      "Teff": 19695.0,
+      "Mstar": 1.2100000381469727,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 110.76926808248767,
+      "n_pixels": 2514,
+      "wavelength_range": [
+        3800.70263671875,
+        6799.29443359375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 42.592400959890156,
+          "EW_error": 4.532211571370076,
+          "depth": 1.6831435659247447,
+          "fwhm": 2.3550000048534763,
+          "center_fit": 6549.80559437347,
+          "center_input": 6562.8,
+          "chi2_dof": 0.47413684686198754,
+          "fit_success": true,
+          "n_pixels": 99
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 9.573296410068089,
+          "EW_error": 2.8719889230204267,
+          "depth": 0.3401685252438805,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 4.582905413210886,
+          "EW_error": 1.374871623963266,
+          "depth": 0.31913166857532727,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 161
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 16.444333989281773,
+          "EW_error": 1.157691837163059,
+          "depth": 0.5213008519342212,
+          "fwhm": 26.057706740340922,
+          "center_fit": 4129.420367444045,
+          "center_input": 4101.7,
+          "chi2_dof": 0.00823855852133376,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 12.297525604836439,
+          "EW_error": 3.6892576814509317,
+          "depth": 0.5580088716170437,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 174
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 13.67762173908138,
+          "EW_error": 1.0425997246715877,
+          "depth": 0.5580088716170437,
+          "fwhm": 2.355001992916825,
+          "center_fit": 3898.521386412029,
+          "center_input": 3889.1,
+          "chi2_dof": 0.008922885610174751,
+          "fit_success": true,
+          "n_pixels": 177
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 11.601183966118954,
+          "EW_error": 3.480355189835686,
+          "depth": 0.5580088716170437,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 128
+        }
+      }
+    },
+    {
+      "name": "J112148.80+103934.2",
+      "B_tesla": 31179.000854492188,
+      "Teff": 11385.0,
+      "Mstar": 0.9800000190734863,
+      "n_detected": 4,
+      "n_total": 7,
+      "detected_fraction": 0.5714285714285714,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ"
+      ],
+      "total_EW": 20.671153344764832,
+      "n_pixels": 2205,
+      "wavelength_range": [
+        4089.0009765625,
+        6798.56689453125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 2.2657866865026075,
+          "EW_error": 0.6797360059507822,
+          "depth": 0.08500825145654489,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 10.722145798309558,
+          "EW_error": 3.2166437394928673,
+          "depth": 0.1838325440136842,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 1.90757850992589,
+          "EW_error": 0.5722735529777669,
+          "depth": 0.18391538314517308,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 5.775642350026773,
+          "EW_error": 0.8389275726703189,
+          "depth": 0.2998538202630495,
+          "fwhm": 2.3550000000004556,
+          "center_fit": 4086.9490459590243,
+          "center_input": 4101.7,
+          "chi2_dof": 0.011377199135142665,
+          "fit_success": true,
+          "n_pixels": 98
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J134845.98+110008.8",
+      "B_tesla": 20258.00018310547,
+      "Teff": 18493.0,
+      "Mstar": 1.2100000381469727,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 45.68065283749987,
+      "n_pixels": 2525,
+      "wavelength_range": [
+        3800.60791015625,
+        6799.125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 9.067423410484375,
+          "EW_error": 2.0669228563946302,
+          "depth": 0.7288395584948517,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 6602.162736024333,
+          "center_input": 6562.8,
+          "chi2_dof": 0.04180926730228579,
+          "fit_success": true,
+          "n_pixels": 105
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 12.167338034845312,
+          "EW_error": 0.9944120472621034,
+          "depth": 0.34531542444813046,
+          "fwhm": 37.434889965714234,
+          "center_fit": 4879.895709059587,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0052541872011784355,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 2.475447396655763,
+          "EW_error": 0.7095014813498385,
+          "depth": 0.13134427032391627,
+          "fwhm": 65.16891262341552,
+          "center_fit": 4382.352437604581,
+          "center_input": 4340.5,
+          "chi2_dof": 0.002784168773739384,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 1.2486229224412027,
+          "EW_error": 0.3745868767323608,
+          "depth": 0.10183295625982702,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 5.633025869794465,
+          "EW_error": 1.6899077609383395,
+          "depth": 0.17051392594760562,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 8.408396125947657,
+          "EW_error": 1.133833137363236,
+          "depth": 0.27779880573970817,
+          "fwhm": 42.203570214735706,
+          "center_fit": 3880.0519368958758,
+          "center_input": 3889.1,
+          "chi2_dof": 0.005175377940156434,
+          "fit_success": true,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 6.680399077331095,
+          "EW_error": 0.5333414967596107,
+          "depth": 0.27779880573970817,
+          "fwhm": 55.35344851071281,
+          "center_fit": 3880.4300939414097,
+          "center_input": 3835.4,
+          "chi2_dof": 0.0031895336390500694,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J134913.52+205646.9",
+      "B_tesla": 38504.998779296875,
+      "Teff": 9462.0,
+      "Mstar": 0.9300000071525574,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 29.527616083198655,
+      "n_pixels": 2422,
+      "wavelength_range": [
+        3890.5615234375,
+        6798.48583984375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 3.347115716133615,
+          "EW_error": 0.8221392055665119,
+          "depth": 0.11455637170364108,
+          "fwhm": 11.46235761770834,
+          "center_fit": 6558.391965871629,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0038393994284597636,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.39122506817443536,
+          "EW_error": 0.1173675204523306,
+          "depth": 0.06663580808529623,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 6.937757133732623,
+          "EW_error": 0.7337886751184157,
+          "depth": 0.22975118389705362,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4312.594450138479,
+          "center_input": 4340.5,
+          "chi2_dof": 0.003672916892571718,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 4.298471201447677,
+          "EW_error": 1.2895413604343031,
+          "depth": 0.24242871210242056,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 7.834426108381358,
+          "EW_error": 2.3503278325144072,
+          "depth": 0.533164169499991,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 4.906807569828185,
+          "EW_error": 2.5245248901479638,
+          "depth": 0.533164169499991,
+          "fwhm": 7.9575573744330885,
+          "center_fit": 3883.781396973046,
+          "center_input": 3889.1,
+          "chi2_dof": 0.07801436122749866,
+          "fit_success": true,
+          "n_pixels": 87
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 2.2030383536751983,
+          "EW_error": 0.6609115061025594,
+          "depth": 0.533164169499991,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 28
+        }
+      }
+    },
+    {
+      "name": "J104219.06+203008.7",
+      "B_tesla": 12897.999572753906,
+      "Teff": 24656.0,
+      "Mstar": 1.1200000047683716,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 64.02004690999962,
+      "n_pixels": 2524,
+      "wavelength_range": [
+        3800.69287109375,
+        6799.27734375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 2.6706783737869673,
+          "EW_error": 0.3406563721446527,
+          "depth": 0.08207865040195306,
+          "fwhm": 12.321148445238917,
+          "center_fit": 6540.115413750387,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0008554221806576324,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 5.382113689385001,
+          "EW_error": 0.32057857589331945,
+          "depth": 0.09659784345659239,
+          "fwhm": 100.98704261788154,
+          "center_fit": 4889.874136738524,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0004781229383882216,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 1.9792664427696365,
+          "EW_error": 0.35781623667859463,
+          "depth": 0.06298457628710974,
+          "fwhm": 19.93578782497567,
+          "center_fit": 4336.674310565951,
+          "center_input": 4340.5,
+          "chi2_dof": 0.0006378433890369529,
+          "fit_success": true,
+          "n_pixels": 161
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 5.4268207477413295,
+          "EW_error": 1.6280462243223988,
+          "depth": 0.10613662331297058,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 17.325178499586226,
+          "EW_error": 5.197553549875868,
+          "depth": 0.19594249457378476,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 176
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 18.84309760874293,
+          "EW_error": 0.38036110464400485,
+          "depth": 0.21445291651839216,
+          "fwhm": 113.48030226893158,
+          "center_fit": 3912.575750822117,
+          "center_input": 3889.1,
+          "chi2_dof": 0.0007668640738975479,
+          "fit_success": true,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 12.392891547987537,
+          "EW_error": 0.34895806933135776,
+          "depth": 0.21445291651839216,
+          "fwhm": 235.49999998104505,
+          "center_fit": 3885.3999999999996,
+          "center_input": 3835.4,
+          "chi2_dof": 0.0009505502278047574,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J233817.93+083732.6",
+      "B_tesla": 11833.000183105469,
+      "Teff": 11534.0,
+      "Mstar": 0.7200000286102295,
+      "n_detected": 1,
+      "n_total": 7,
+      "detected_fraction": 0.14285714285714285,
+      "detected_lines": [
+        "Hα"
+      ],
+      "total_EW": 1.3211217183586954,
+      "n_pixels": 681,
+      "wavelength_range": [
+        5814.44580078125,
+        6799.9921875
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 1.3211217183586954,
+          "EW_error": 0.38264329271770753,
+          "depth": 0.04918615146119232,
+          "fwhm": 7.129703985433177,
+          "center_fit": 6533.835775667345,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0011933635922873873,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J225828.48+280828.8",
+      "B_tesla": 13708.999633789062,
+      "Teff": 10618.0,
+      "Mstar": 1.0199999809265137,
+      "n_detected": 1,
+      "n_total": 7,
+      "detected_fraction": 0.14285714285714285,
+      "detected_lines": [
+        "Hα"
+      ],
+      "total_EW": 1.5679834512514468,
+      "n_pixels": 932,
+      "wavelength_range": [
+        5487.65283203125,
+        6799.65234375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 1.5679834512514468,
+          "EW_error": 0.5577345825358516,
+          "depth": 0.0854895043956917,
+          "fwhm": 25.896486775719286,
+          "center_fit": 6541.470280575475,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0019289900690244062,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J101712.60+233646.6",
+      "B_tesla": 14302.999877929688,
+      "Teff": 10843.0,
+      "Mstar": 1.0399999618530273,
+      "n_detected": 0,
+      "n_total": 7,
+      "detected_fraction": 0.0,
+      "detected_lines": [],
+      "total_EW": 0.0,
+      "n_pixels": 941,
+      "wavelength_range": [
+        5467.08935546875,
+        6799.17236328125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": false,
+          "EW": 0.22148971082388005,
+          "EW_error": 0.41718736190030115,
+          "depth": 0.0696698711425423,
+          "fwhm": 25.02760777523254,
+          "center_fit": 6534.87974348611,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0009217393340401576,
+          "fit_success": true,
+          "n_pixels": 98
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J025001.76-043703.1",
+      "B_tesla": 30941.000366210938,
+      "Teff": 12603.0,
+      "Mstar": 1.159999966621399,
+      "n_detected": 2,
+      "n_total": 7,
+      "detected_fraction": 0.2857142857142857,
+      "detected_lines": [
+        "Hα",
+        "Hβ"
+      ],
+      "total_EW": 3.0037625319550965,
+      "n_pixels": 2520,
+      "wavelength_range": [
+        3800.1630859375,
+        6799.89306640625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 1.186853672705321,
+          "EW_error": 0.35605610181159625,
+          "depth": 0.08446240935063598,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 1.8169088592497755,
+          "EW_error": 0.5450726577749326,
+          "depth": 0.07111537616586927,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 135
+        },
+        "Hγ": {
+          "detected": false,
+          "EW": 0.009311486614888235,
+          "EW_error": 0.0027934459844664705,
+          "depth": 0.009155028606476767,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": false,
+          "EW": 0.26851616390263555,
+          "EW_error": 0.8997929242248816,
+          "depth": 0.0399380468801771,
+          "fwhm": 137.27224901682067,
+          "center_fit": 4151.699999999999,
+          "center_input": 4101.7,
+          "chi2_dof": 0.0007981363003495514,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.061956871077114783,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.021654369733536294,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.021654369733536294,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J224459.60+331017.3",
+      "B_tesla": 42186.99951171875,
+      "Teff": 20263.0,
+      "Mstar": 1.2200000286102295,
+      "n_detected": 4,
+      "n_total": 7,
+      "detected_fraction": 0.5714285714285714,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ"
+      ],
+      "total_EW": 59.33402382869487,
+      "n_pixels": 2522,
+      "wavelength_range": [
+        3800.638916015625,
+        6799.1806640625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 43.21820533705905,
+          "EW_error": 12.965461601117713,
+          "depth": 0.9891029655841375,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 104
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 4.593220503932226,
+          "EW_error": 1.3046470776237598,
+          "depth": 0.38412560822149755,
+          "fwhm": 9.62518887274955,
+          "center_fit": 4859.894550204969,
+          "center_input": 4861.3,
+          "chi2_dof": 0.01394562734132712,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 2.2899158473047145,
+          "EW_error": 1.1974022937938544,
+          "depth": 0.31330597682791983,
+          "fwhm": 101.99138119329164,
+          "center_fit": 4290.500000000001,
+          "center_input": 4340.5,
+          "chi2_dof": 0.0052128031388587945,
+          "fit_success": true,
+          "n_pixels": 157
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 9.232682140398877,
+          "EW_error": 2.769804642119663,
+          "depth": 0.3059160879375502,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": false,
+          "EW": 0.4961083921704932,
+          "EW_error": 0.14883251765114794,
+          "depth": 0.11297407684438199,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.06391431308048712,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.14663425805140462,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 130
+        }
+      }
+    }
+  ],
+  "weak_results": [
+    {
+      "name": "J111608.80+092532.5",
+      "B_tesla": 139.9999976158142,
+      "Teff": 5212.0,
+      "Mstar": 0.550000011920929,
+      "n_detected": 2,
+      "n_total": 7,
+      "detected_fraction": 0.2857142857142857,
+      "detected_lines": [
+        "Hα",
+        "Hβ"
+      ],
+      "total_EW": 10.738631481409751,
+      "n_pixels": 1604,
+      "wavelength_range": [
+        4700.185546875,
+        6798.5302734375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 3.356913773168677,
+          "EW_error": 0.4796344063800838,
+          "depth": 0.22676540433287684,
+          "fwhm": 2.355000000703307,
+          "center_fit": 6584.32889436946,
+          "center_input": 6562.8,
+          "chi2_dof": 0.00177784514740445,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 7.381717708241074,
+          "EW_error": 1.5273645488453766,
+          "depth": 0.28877259991014426,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4862.960280201975,
+          "center_input": 4861.3,
+          "chi2_dof": 0.01737207925069573,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J120924.84+331716.3",
+      "B_tesla": 403.00002098083496,
+      "Teff": 6663.0,
+      "Mstar": 0.3799999952316284,
+      "n_detected": 1,
+      "n_total": 7,
+      "detected_fraction": 0.14285714285714285,
+      "detected_lines": [
+        "Hα"
+      ],
+      "total_EW": 5.8819904572486665,
+      "n_pixels": 1206,
+      "wavelength_range": [
+        5151.90869140625,
+        6799.36328125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 5.8819904572486665,
+          "EW_error": 1.1092862926769465,
+          "depth": 0.2743404747258037,
+          "fwhm": 23.172482612453056,
+          "center_fit": 6574.479753768654,
+          "center_input": 6562.8,
+          "chi2_dof": 0.007449022225051953,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J112022.01+635437.4",
+      "B_tesla": 324.0000009536743,
+      "Teff": 7248.0,
+      "Mstar": 0.6399999856948853,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 50.55586048119284,
+      "n_pixels": 2162,
+      "wavelength_range": [
+        3800.866943359375,
+        6251.4775390625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 6562.8
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 7.958630180734765,
+          "EW_error": 2.3875890542204297,
+          "depth": 0.3390054267829191,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 6.2769308263921495,
+          "EW_error": 1.8830792479176448,
+          "depth": 1.6952039674536932,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 9.207247684682168,
+          "EW_error": 2.7621743054046504,
+          "depth": 0.5133864472173293,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 9.858323856794836,
+          "EW_error": 2.9574971570384507,
+          "depth": 0.5133864472173293,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 10.620221707011677,
+          "EW_error": 3.186066512103503,
+          "depth": 0.4887302383235722,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 6.634506225577237,
+          "EW_error": 1.5810228397891855,
+          "depth": 0.365099365111587,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3882.8903832533565,
+          "center_input": 3835.4,
+          "chi2_dof": 0.023508485769117834,
+          "fit_success": true,
+          "n_pixels": 129
+        }
+      }
+    },
+    {
+      "name": "J151625.06+280320.9",
+      "B_tesla": 229.99999523162842,
+      "Teff": 7877.0,
+      "Mstar": 0.6399999856948853,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 44.74299582786651,
+      "n_pixels": 2171,
+      "wavelength_range": [
+        3822.962890625,
+        6799.8603515625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 9.919789889698464,
+          "EW_error": 0.2129811526285441,
+          "depth": 0.19578579865496748,
+          "fwhm": 71.79163965222122,
+          "center_fit": 6562.514883551466,
+          "center_input": 6562.8,
+          "chi2_dof": 0.0007485569297917212,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 8.70302877496263,
+          "EW_error": 0.3075850635866928,
+          "depth": 0.2408531405183807,
+          "fwhm": 44.21883277233109,
+          "center_fit": 4861.1354875436255,
+          "center_input": 4861.3,
+          "chi2_dof": 0.000901700675220565,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 3.695892106069442,
+          "EW_error": 0.4064596872489396,
+          "depth": 0.17344459559018455,
+          "fwhm": 37.77452610264406,
+          "center_fit": 4099.3737541718665,
+          "center_input": 4101.7,
+          "chi2_dof": 0.0008433308368344583,
+          "fit_success": true,
+          "n_pixels": 82
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 8.087236025185465,
+          "EW_error": 0.5457313251825083,
+          "depth": 0.1868890719125974,
+          "fwhm": 28.021580023960123,
+          "center_fit": 3965.008469762282,
+          "center_input": 3970.1,
+          "chi2_dof": 0.0012784769557232394,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 8.89956415234155,
+          "EW_error": 2.6698692457024653,
+          "depth": 0.1825020432979766,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 163
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 5.43748487960895,
+          "EW_error": 0.6612705651160111,
+          "depth": 0.1605154137870134,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3836.92172998053,
+          "center_input": 3835.4,
+          "chi2_dof": 0.0019006243534905303,
+          "fit_success": true,
+          "n_pixels": 104
+        }
+      }
+    },
+    {
+      "name": "J093447.89+503312.1",
+      "B_tesla": 661.0000133514404,
+      "Teff": 8536.0,
+      "Mstar": 0.7699999809265137,
+      "n_detected": 3,
+      "n_total": 7,
+      "detected_fraction": 0.42857142857142855,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ"
+      ],
+      "total_EW": 26.857031411827975,
+      "n_pixels": 2058,
+      "wavelength_range": [
+        4234.0654296875,
+        6799.19482421875
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 6.957633266626342,
+          "EW_error": 1.3223586078911023,
+          "depth": 0.46826682836389477,
+          "fwhm": 13.669703255218117,
+          "center_fit": 6534.497730585972,
+          "center_input": 6562.8,
+          "chi2_dof": 0.016422143101247164,
+          "fit_success": true,
+          "n_pixels": 105
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 11.960421078626592,
+          "EW_error": 3.5881263235879772,
+          "depth": 0.414887096416234,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 7.938977066575044,
+          "EW_error": 2.381693119972513,
+          "depth": 0.37606593581799286,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J173915.64+545059.1",
+      "B_tesla": 269.0000057220459,
+      "Teff": 9376.0,
+      "Mstar": 0.30000001192092896,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 104.19508995298735,
+      "n_pixels": 2465,
+      "wavelength_range": [
+        3800.83837890625,
+        6703.15869140625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 42.87195895200362,
+          "EW_error": 12.861587685601085,
+          "depth": 3.0409790645915034,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 24.673652990824074,
+          "EW_error": 7.4020958972472215,
+          "depth": 0.8086863692115928,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 12.548324695871287,
+          "EW_error": 2.5002953313476386,
+          "depth": 0.7148548447968499,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 4301.867317005576,
+          "center_input": 4340.5,
+          "chi2_dof": 0.044137481194002945,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 7.9455901288036275,
+          "EW_error": 2.635318534453673,
+          "depth": 0.8150932002317589,
+          "fwhm": 14.10632114113244,
+          "center_fit": 4056.13778763909,
+          "center_input": 4101.7,
+          "chi2_dof": 0.1260342526679632,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 6.757781736678901,
+          "EW_error": 2.025546224429388,
+          "depth": 0.4451480494265341,
+          "fwhm": 10.388098427343492,
+          "center_fit": 3936.4061042499475,
+          "center_input": 3970.1,
+          "chi2_dof": 0.0277808918508735,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 5.761276441349766,
+          "EW_error": 1.9863347782595442,
+          "depth": 0.4451480494265341,
+          "fwhm": 14.673693469270754,
+          "center_fit": 3936.0444196611897,
+          "center_input": 3889.1,
+          "chi2_dof": 0.02732148449531607,
+          "fit_success": true,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 3.6365050074560776,
+          "EW_error": 1.9808828645335887,
+          "depth": 0.3657276553274994,
+          "fwhm": 2.3550027922780985,
+          "center_fit": 3834.628858301921,
+          "center_input": 3835.4,
+          "chi2_dof": 0.027841777052059057,
+          "fit_success": true,
+          "n_pixels": 129
+        }
+      }
+    },
+    {
+      "name": "J082239.43+082436.7",
+      "B_tesla": 256.9999933242798,
+      "Teff": 10039.0,
+      "Mstar": 0.9100000262260437,
+      "n_detected": 1,
+      "n_total": 7,
+      "detected_fraction": 0.14285714285714285,
+      "detected_lines": [
+        "Hα"
+      ],
+      "total_EW": 0.5046671517130352,
+      "n_pixels": 640,
+      "wavelength_range": [
+        5869.30517578125,
+        6799.65234375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 0.5046671517130352,
+          "EW_error": 0.15140014551391057,
+          "depth": 0.08556020412439036,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J064532.74+280330.4",
+      "B_tesla": 229.99999523162842,
+      "Teff": 10522.0,
+      "Mstar": 0.46000000834465027,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 263.09758823122854,
+      "n_pixels": 2525,
+      "wavelength_range": [
+        3802.77001953125,
+        6799.8603515625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 31.574460910914933,
+          "EW_error": 1.1374629522358184,
+          "depth": 0.5835157755741827,
+          "fwhm": 26.71758336610793,
+          "center_fit": 6567.746759367932,
+          "center_input": 6562.8,
+          "chi2_dof": 0.009609622518851226,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 39.19058184949482,
+          "EW_error": 1.1582064638771086,
+          "depth": 0.7374064324420975,
+          "fwhm": 42.416927709339916,
+          "center_fit": 4861.02087148482,
+          "center_input": 4861.3,
+          "chi2_dof": 0.007218672381281846,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 32.7806175155196,
+          "EW_error": 1.1863657718735738,
+          "depth": 0.718979680230302,
+          "fwhm": 48.01882232404428,
+          "center_fit": 4340.811464607571,
+          "center_input": 4340.5,
+          "chi2_dof": 0.012091474727002505,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 32.89488830179032,
+          "EW_error": 1.5244868305779913,
+          "depth": 0.673538423059856,
+          "fwhm": 42.28093426094886,
+          "center_fit": 4105.758487940175,
+          "center_input": 4101.7,
+          "chi2_dof": 0.01413339139235706,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 39.003750200227714,
+          "EW_error": 11.701125060068314,
+          "depth": 0.837689092876542,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 49.86412960547809,
+          "EW_error": 2.375565653200274,
+          "depth": 1.0181158363984393,
+          "fwhm": 3.6411510850698314,
+          "center_fit": 3841.441867349059,
+          "center_input": 3889.1,
+          "chi2_dof": 0.03511858235352401,
+          "fit_success": true,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 37.78915984780308,
+          "EW_error": 2.197521300452793,
+          "depth": 1.0181158363984393,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3841.873325215291,
+          "center_input": 3835.4,
+          "chi2_dof": 0.039290709593149745,
+          "fit_success": true,
+          "n_pixels": 127
+        }
+      }
+    },
+    {
+      "name": "J161147.94+211136.6",
+      "B_tesla": 219.0000057220459,
+      "Teff": 11382.0,
+      "Mstar": 0.6600000262260437,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 119.03363990760481,
+      "n_pixels": 2528,
+      "wavelength_range": [
+        3800.097900390625,
+        6799.77978515625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 24.258791572549903,
+          "EW_error": 7.2776374717649706,
+          "depth": 1.391293718171282,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 14.03293098516259,
+          "EW_error": 4.2098792955487765,
+          "depth": 1.1605397625050995,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 6.59164565872276,
+          "EW_error": 1.8019579794478233,
+          "depth": 0.36756318598973414,
+          "fwhm": 14.61762944649773,
+          "center_fit": 4386.957613048428,
+          "center_input": 4340.5,
+          "chi2_dof": 0.01970206388954391,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 8.743010317427064,
+          "EW_error": 2.622903095228119,
+          "depth": 0.3506721962300773,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 33.02376337650259,
+          "EW_error": 1.6893377334418052,
+          "depth": 0.6919613124782226,
+          "fwhm": 40.74595608326268,
+          "center_fit": 3952.573348390239,
+          "center_input": 3970.1,
+          "chi2_dof": 0.01613824226174929,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 25.657335753155518,
+          "EW_error": 7.697200725946655,
+          "depth": 0.6919613124782226,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 6.726162244084373,
+          "EW_error": 2.017848673225312,
+          "depth": 0.3923201924351495,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J081748.55+154341.1",
+      "B_tesla": 179.99999523162842,
+      "Teff": 12054.0,
+      "Mstar": 0.5199999809265137,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 254.41326982312836,
+      "n_pixels": 2509,
+      "wavelength_range": [
+        3816.805908203125,
+        6799.8603515625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 30.687266371009994,
+          "EW_error": 2.5035624581796947,
+          "depth": 0.7753600924789987,
+          "fwhm": 54.863730213866944,
+          "center_fit": 6570.165915447851,
+          "center_input": 6562.8,
+          "chi2_dof": 0.03531729792306585,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 39.3093856898017,
+          "EW_error": 1.607309727154783,
+          "depth": 0.6830250022005517,
+          "fwhm": 49.771380857838814,
+          "center_fit": 4863.1274370409155,
+          "center_input": 4861.3,
+          "chi2_dof": 0.01428764855085077,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 37.09129190559298,
+          "EW_error": 1.5448523973950445,
+          "depth": 0.6540926551637792,
+          "fwhm": 63.41904499846447,
+          "center_fit": 4344.254415776251,
+          "center_input": 4340.5,
+          "chi2_dof": 0.013427305814229316,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 33.369086931534774,
+          "EW_error": 1.54487189459482,
+          "depth": 0.6970005771121072,
+          "fwhm": 61.927949380352935,
+          "center_fit": 4102.679692976138,
+          "center_input": 4101.7,
+          "chi2_dof": 0.01624484578057243,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 38.653551565930115,
+          "EW_error": 11.596065469779035,
+          "depth": 0.7185693100867303,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 43.74109263848726,
+          "EW_error": 2.2560927793698085,
+          "depth": 1.3026635614872166,
+          "fwhm": 13.047691729083565,
+          "center_fit": 3887.169024904053,
+          "center_input": 3889.1,
+          "chi2_dof": 0.039133078303186665,
+          "fit_success": true,
+          "n_pixels": 170
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 31.561594720771517,
+          "EW_error": 1.8628599259129535,
+          "depth": 1.3026635614872166,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3883.158554583095,
+          "center_input": 3835.4,
+          "chi2_dof": 0.03633439359809969,
+          "fit_success": true,
+          "n_pixels": 111
+        }
+      }
+    },
+    {
+      "name": "J133340.34+640627.3",
+      "B_tesla": 725.0,
+      "Teff": 12859.0,
+      "Mstar": 1.1200000047683716,
+      "n_detected": 4,
+      "n_total": 7,
+      "detected_fraction": 0.5714285714285714,
+      "detected_lines": [
+        "Hα",
+        "Hγ",
+        "Hδ",
+        "Hε"
+      ],
+      "total_EW": 11.087265801855565,
+      "n_pixels": 2300,
+      "wavelength_range": [
+        4004.760009765625,
+        6799.49072265625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 0.7876570828020918,
+          "EW_error": 0.6127604610749625,
+          "depth": 0.08146026791805516,
+          "fwhm": 3.5180651103476475,
+          "center_fit": 6516.413344740985,
+          "center_input": 6562.8,
+          "chi2_dof": 0.002076702533556387,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.0011806583690847704,
+          "EW_error": 0.0003541975107254311,
+          "depth": 0.0010379859797748914,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 3.6779812958158855,
+          "EW_error": 1.1033943887447657,
+          "depth": 0.2109396616283249,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 5.1635796184709815,
+          "EW_error": 1.2045599945436336,
+          "depth": 0.26617534159769096,
+          "fwhm": 11.163771051252215,
+          "center_fit": 4151.699999999999,
+          "center_input": 4101.7,
+          "chi2_dof": 0.008539890301442785,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 1.458047804766607,
+          "EW_error": 0.4374143414299821,
+          "depth": 0.20933233841657717,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 49
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J104356.63+650057.2",
+      "B_tesla": 409.99999046325684,
+      "Teff": 13856.0,
+      "Mstar": 1.0299999713897705,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 282.87827998713163,
+      "n_pixels": 2471,
+      "wavelength_range": [
+        3803.644775390625,
+        6799.8603515625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 38.086467466794005,
+          "EW_error": 2.680701169017345,
+          "depth": 0.864266441421399,
+          "fwhm": 51.29400459979,
+          "center_fit": 6571.9425140625435,
+          "center_input": 6562.8,
+          "chi2_dof": 0.04579646982525372,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 48.24247683943855,
+          "EW_error": 2.546371024297058,
+          "depth": 0.8725985333917209,
+          "fwhm": 81.27111172417099,
+          "center_fit": 4863.455943772457,
+          "center_input": 4861.3,
+          "chi2_dof": 0.034608146146170686,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 41.88178755417088,
+          "EW_error": 2.341111696674223,
+          "depth": 0.8393358667075684,
+          "fwhm": 51.033829321069106,
+          "center_fit": 4337.5222398616,
+          "center_input": 4340.5,
+          "chi2_dof": 0.03346854500418914,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 25.188414928966743,
+          "EW_error": 3.011050583352906,
+          "depth": 0.8524705133878909,
+          "fwhm": 58.11205984668466,
+          "center_fit": 4105.951883820813,
+          "center_input": 4101.7,
+          "chi2_dof": 0.05532116786467468,
+          "fit_success": true,
+          "n_pixels": 116
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 43.25953227939528,
+          "EW_error": 12.977859683818584,
+          "depth": 1.2688117965273307,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 48.841250967235524,
+          "EW_error": 4.302762537147263,
+          "depth": 1.2688117965273307,
+          "fwhm": 5.806568495340072,
+          "center_fit": 3893.8590531853542,
+          "center_input": 3889.1,
+          "chi2_dof": 0.1296294378167056,
+          "fit_success": true,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 37.378349951130666,
+          "EW_error": 5.098490063860042,
+          "depth": 1.3155934082666896,
+          "fwhm": 2.355000004961781,
+          "center_fit": 3808.1548985141703,
+          "center_input": 3835.4,
+          "chi2_dof": 0.15881559219529634,
+          "fit_success": true,
+          "n_pixels": 126
+        }
+      }
+    },
+    {
+      "name": "J160531.60+385210.0",
+      "B_tesla": 267.00000762939453,
+      "Teff": 15025.0,
+      "Mstar": 0.47999998927116394,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 34.31721544513023,
+      "n_pixels": 2522,
+      "wavelength_range": [
+        3800.327392578125,
+        6798.623046875
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 18.41596428428065,
+          "EW_error": 5.5247892852841956,
+          "depth": 1.3579668036684847,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 5.295110972851818,
+          "EW_error": 1.5885332918555453,
+          "depth": 0.20653996945306896,
+          "fwhm": 0.0,
+          "center_fit": 4861.3,
+          "center_input": 4861.3,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 2.4308018594640948,
+          "EW_error": 0.7292405578392284,
+          "depth": 0.1461867705166009,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 1.925018984941056,
+          "EW_error": 0.5775056954823168,
+          "depth": 0.17097450123292146,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 167
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 2.679837966178434,
+          "EW_error": 0.8039513898535302,
+          "depth": 0.17097450123292146,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 172
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 2.193638595050002,
+          "EW_error": 0.6580915785150007,
+          "depth": 0.13525095157335632,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 1.3768427823641751,
+          "EW_error": 0.5832853796266372,
+          "depth": 0.13525095157335632,
+          "fwhm": 33.949247383363556,
+          "center_fit": 3822.3868628584455,
+          "center_input": 3835.4,
+          "chi2_dof": 0.00202008730928274,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J150451.71+052141.0",
+      "B_tesla": 525.0,
+      "Teff": 16080.0,
+      "Mstar": 1.1299999952316284,
+      "n_detected": 0,
+      "n_total": 7,
+      "detected_fraction": 0.0,
+      "detected_lines": [],
+      "total_EW": 0.0,
+      "n_pixels": 1101,
+      "wavelength_range": [
+        5278.2646484375,
+        6799.7197265625
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": false,
+          "EW": 0.4918662607610924,
+          "EW_error": 0.7375960129915193,
+          "depth": 0.05524985297767826,
+          "fwhm": 52.742505047838684,
+          "center_fit": 6512.800000000001,
+          "center_input": 6562.8,
+          "chi2_dof": 0.00298565875475307,
+          "fit_success": true,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4861.3
+        },
+        "Hγ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4340.5
+        },
+        "Hδ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 4101.7
+        },
+        "Hε": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3970.1
+        },
+        "Hζ": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3889.1
+        },
+        "Hη": {
+          "detected": false,
+          "reason": "insufficient_points",
+          "EW": 0,
+          "EW_error": 0,
+          "depth": 0,
+          "fwhm": 0,
+          "center": 3835.4
+        }
+      }
+    },
+    {
+      "name": "J083656.62+103452.1",
+      "B_tesla": 206.99999332427979,
+      "Teff": 17638.0,
+      "Mstar": 0.5299999713897705,
+      "n_detected": 5,
+      "n_total": 7,
+      "detected_fraction": 0.7142857142857143,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hε",
+        "Hζ"
+      ],
+      "total_EW": 47.84799703167727,
+      "n_pixels": 2522,
+      "wavelength_range": [
+        3800.2080078125,
+        6799.9736328125
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 3.6392061163406053,
+          "EW_error": 1.0917618349021816,
+          "depth": 0.3029003563762961,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 1.163527521408327,
+          "EW_error": 0.5140461624504697,
+          "depth": 0.0589772061618552,
+          "fwhm": 19.154621904331496,
+          "center_fit": 4849.879792025467,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0015135263621971972,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 11.938798232462966,
+          "EW_error": 3.58163946973889,
+          "depth": 0.49094318179638674,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": false,
+          "EW": 0.0,
+          "EW_error": 0.0,
+          "depth": -0.007207548369469796,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 16.67874044364379,
+          "EW_error": 0.8797737559259673,
+          "depth": 0.5128787536069261,
+          "fwhm": 47.341499557418935,
+          "center_fit": 3948.504116013058,
+          "center_input": 3970.1,
+          "chi2_dof": 0.0019659201239324567,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 14.427724717821574,
+          "EW_error": 4.328317415346472,
+          "depth": 0.5128787536069261,
+          "fwhm": 0.0,
+          "center_fit": 3889.1,
+          "center_input": 3889.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 178
+        },
+        "Hη": {
+          "detected": false,
+          "EW": 0.20428498335531636,
+          "EW_error": 0.06128549500659491,
+          "depth": 0.052476053687970925,
+          "fwhm": 0.0,
+          "center_fit": 3835.4,
+          "center_input": 3835.4,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J140051.72+330754.3",
+      "B_tesla": 315.00000953674316,
+      "Teff": 23055.0,
+      "Mstar": 0.5600000023841858,
+      "n_detected": 7,
+      "n_total": 7,
+      "detected_fraction": 1.0,
+      "detected_lines": [
+        "Hα",
+        "Hβ",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 86.12025358369573,
+      "n_pixels": 2528,
+      "wavelength_range": [
+        3800.056640625,
+        6799.70263671875
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 36.91100571229851,
+          "EW_error": 11.073301713689553,
+          "depth": 2.0039894075128135,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": true,
+          "EW": 6.887726010159692,
+          "EW_error": 2.096077651988197,
+          "depth": 0.3046261737616812,
+          "fwhm": 55.035986947337626,
+          "center_fit": 4811.300000000001,
+          "center_input": 4861.3,
+          "chi2_dof": 0.023547179472504644,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 8.762420580776874,
+          "EW_error": 1.355863876476039,
+          "depth": 0.3384778975562893,
+          "fwhm": 5.814289483014441,
+          "center_fit": 4292.8474468089835,
+          "center_input": 4340.5,
+          "chi2_dof": 0.022901637650219128,
+          "fit_success": true,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 6.9905882251202405,
+          "EW_error": 1.3775273641886727,
+          "depth": 0.30991311751589534,
+          "fwhm": 12.474049150639223,
+          "center_fit": 4081.077534700598,
+          "center_input": 4101.7,
+          "chi2_dof": 0.012392222138438515,
+          "fit_success": true,
+          "n_pixels": 169
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 5.962415775239741,
+          "EW_error": 1.3801993553546932,
+          "depth": 0.3014030681146397,
+          "fwhm": 19.72451437536167,
+          "center_fit": 3934.6761583763755,
+          "center_input": 3970.1,
+          "chi2_dof": 0.013206472675826888,
+          "fit_success": true,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 9.66331502016879,
+          "EW_error": 1.546224260656076,
+          "depth": 0.3510546624125299,
+          "fwhm": 57.15384375728112,
+          "center_fit": 3839.1000000000004,
+          "center_input": 3889.1,
+          "chi2_dof": 0.013466685178293782,
+          "fit_success": true,
+          "n_pixels": 179
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 10.942782259931878,
+          "EW_error": 1.2809026958337442,
+          "depth": 0.5453278179084435,
+          "fwhm": 56.631445210030606,
+          "center_fit": 3785.4000000000005,
+          "center_input": 3835.4,
+          "chi2_dof": 0.010756821566960461,
+          "fit_success": true,
+          "n_pixels": 130
+        }
+      }
+    },
+    {
+      "name": "J134024.99+325028.7",
+      "B_tesla": 235.99998950958252,
+      "Teff": 27311.0,
+      "Mstar": 0.6899999976158142,
+      "n_detected": 6,
+      "n_total": 7,
+      "detected_fraction": 0.8571428571428571,
+      "detected_lines": [
+        "Hα",
+        "Hγ",
+        "Hδ",
+        "Hε",
+        "Hζ",
+        "Hη"
+      ],
+      "total_EW": 31.1685639794589,
+      "n_pixels": 2485,
+      "wavelength_range": [
+        3835.456298828125,
+        6798.5615234375
+      ],
+      "balmer_results": {
+        "Hα": {
+          "detected": true,
+          "EW": 2.485210809309776,
+          "EW_error": 0.7455632427929327,
+          "depth": 0.11466839652935668,
+          "fwhm": 0.0,
+          "center_fit": 6562.8,
+          "center_input": 6562.8,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 106
+        },
+        "Hβ": {
+          "detected": false,
+          "EW": 0.022758169311406888,
+          "EW_error": 0.508197939062794,
+          "depth": 0.0204693591347217,
+          "fwhm": 2.355000000209435,
+          "center_fit": 4821.465595689228,
+          "center_input": 4861.3,
+          "chi2_dof": 0.0017185693014735207,
+          "fit_success": true,
+          "n_pixels": 143
+        },
+        "Hγ": {
+          "detected": true,
+          "EW": 14.861756370250834,
+          "EW_error": 4.45852691107525,
+          "depth": 0.38349754776007017,
+          "fwhm": 0.0,
+          "center_fit": 4340.5,
+          "center_input": 4340.5,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 160
+        },
+        "Hδ": {
+          "detected": true,
+          "EW": 6.180028847731383,
+          "EW_error": 1.8540086543194148,
+          "depth": 0.23316971235604877,
+          "fwhm": 0.0,
+          "center_fit": 4101.7,
+          "center_input": 4101.7,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 170
+        },
+        "Hε": {
+          "detected": true,
+          "EW": 3.237180411260113,
+          "EW_error": 0.9711541233780339,
+          "depth": 0.17419152919302527,
+          "fwhm": 0.0,
+          "center_fit": 3970.1,
+          "center_input": 3970.1,
+          "chi2_dof": 999.0,
+          "fit_success": false,
+          "n_pixels": 175
+        },
+        "Hζ": {
+          "detected": true,
+          "EW": 2.5050801012057624,
+          "EW_error": 2.027270429566609,
+          "depth": 0.373696058730707,
+          "fwhm": 2.3550000000000004,
+          "center_fit": 3875.112638889112,
+          "center_input": 3889.1,
+          "chi2_dof": 0.028477865146950665,
+          "fit_success": true,
+          "n_pixels": 148
+        },
+        "Hη": {
+          "detected": true,
+          "EW": 1.8993074397010283,
+          "EW_error": 1.7438250942725022,
+          "depth": 0.373696058730707,
+          "fwhm": 62.427257560435486,
+          "center_fit": 3883.08284282678,
+          "center_input": 3835.4,
+          "chi2_dof": 0.03845588686153012,
+          "fit_success": true,
+          "n_pixels": 89
+        }
+      }
+    }
+  ],
+  "line_stats": {
+    "Hα": {
+      "int_rate": 0.85,
+      "weak_rate": 0.8823529411764706,
+      "int_n": 17,
+      "weak_n": 15
+    },
+    "Hβ": {
+      "int_rate": 0.6,
+      "weak_rate": 0.7058823529411765,
+      "int_n": 12,
+      "weak_n": 12
+    },
+    "Hγ": {
+      "int_rate": 0.65,
+      "weak_rate": 0.7058823529411765,
+      "int_n": 13,
+      "weak_n": 12
+    },
+    "Hδ": {
+      "int_rate": 0.7,
+      "weak_rate": 0.6470588235294118,
+      "int_n": 14,
+      "weak_n": 11
+    },
+    "Hε": {
+      "int_rate": 0.55,
+      "weak_rate": 0.7058823529411765,
+      "int_n": 11,
+      "weak_n": 12
+    },
+    "Hζ": {
+      "int_rate": 0.5,
+      "weak_rate": 0.6470588235294118,
+      "int_n": 10,
+      "weak_n": 11
+    },
+    "Hη": {
+      "int_rate": 0.45,
+      "weak_rate": 0.5882352941176471,
+      "int_n": 9,
+      "weak_n": 10
+    }
+  }
+}

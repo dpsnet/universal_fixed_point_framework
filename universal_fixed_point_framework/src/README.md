@@ -105,6 +105,22 @@
 | `dynamic_spectrum/leaver_unified_solver.py` | **最终版 Leaver QNM 统一求解器**：基于分形谱化理论，集成 DerecursionAnalyzer（Koopman 谱分析）+ LeaverResidual（修正系数）+ LACIEvaluator（物理根选择）+ LeaverUnifiedSolver（双重 Homotopy）。**替代已归档的早期实现**：`leaver_corrected_solver.py`（正确的二次多项式系数 + 角向谱方法 + 同伦延拓）、`leaver_spectral_derecursion.py`（连分数→三对角矩阵 + 双初始向量逆迭代法逆迭代）、`leaver_derecursion.py`（乘积形式系数早期版本）——以上已移入 `_archive/leaver_deprecated/` | ✅ 已完成 |
 | `error_budget.py` | 误差预算体系：Rec→Spec→预言→实验 全链路误差传播（ErrorSource/ErrorBudget + Rec/Spec/预言/RKHS/G_N 误差估计 + 误差链传播） | ✅ 已完成 |
 
+### 实验数据分析（2026-08-28 从 research_notes 整理）
+
+| 目录/模块 | 功能 | 状态 |
+|---|---|---|
+| `white_dwarf_analysis/` | 白矮星光谱分析（v3–v10 迭代，SDSS/LAMOST 数据对接） | ✅ 已完成 |
+| `harper_analysis/` | Harper 谱分析（光谱数据解析） | ✅ 已完成 |
+| `hydrogen_analysis/` | 氢原子磁/辐射分析（Stark 效应、B 场测量） | ✅ 已完成 |
+| `sdss_lamost_query/` | SDSS/LAMOST 公开数据查询与下载工具 | ✅ 已完成 |
+| `rydberg_stark_analysis/` | Rydberg 态 Stark 效应分析 | ✅ 已完成 |
+| `blue_end_analysis/` | 蓝端白矮星光谱 SDSS 分析 | ✅ 已完成 |
+
+**数据路径约定**：
+- 结果数据（JSON）→ `../results/`
+- 公开数据（FITS/DAT）→ `../data/`
+- 分析代码中的路径已统一为绝对路径或相对于项目根目录的路径
+
 ## 测试
 
 | 测试文件 | 覆盖内容 | 状态 |

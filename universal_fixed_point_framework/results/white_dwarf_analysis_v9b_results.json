@@ -1,0 +1,5005 @@
+{
+  "n_int": 20,
+  "n_weak": 99,
+  "int": [
+    {
+      "name": "J221828.58-000012.1",
+      "B_tesla": 22077.999877929688,
+      "Teff": 12806.0,
+      "Mstar": 1.059999942779541,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -7.704373985581189,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -3.0748663817203044,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 7.664211914373641,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 1.8025793164853463,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 0.9221977465067828,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.11996992392029811,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.944013554527022,
+      "theo_EW": 54.050941726789226,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J033320.37+000720.6",
+      "B_tesla": 77171.00219726562,
+      "Teff": 7498.0,
+      "Mstar": 0.7900000214576721,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.1683908644024545,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -3.639141216377906,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.40234321115432176,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 1.9497068371647794,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 5.689791700850442,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 4.543659387087814,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 1.8646655183252858,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.515652869602674,
+      "theo_EW": 24.604341581491678,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J101805.04+011123.4",
+      "B_tesla": 12269.000244140625,
+      "Teff": 10329.0,
+      "Mstar": 0.9100000262260437,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -10.618831383248402,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -2.4657628992426863,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 7.013283696446173,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -1.4203574305988649,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -4.171884419541595,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -12.286753652345627,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -21.543107153759717,
+          "detected": false
+        }
+      },
+      "log_g": 8.698492693890868,
+      "theo_EW": 41.77907834777497,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J135141.13+541947.2",
+      "B_tesla": 77851.0009765625,
+      "Teff": 10858.0,
+      "Mstar": 0.7200000286102295,
+      "total_EW": 23.98774423588421,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 2.434787977863196,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -1.0538227322677547,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 1.0345407298379392,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 1.8735301478063944,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 3.1525530398745873,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 11.328843264689983,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 12.658900971194228,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.409134909032211,
+      "theo_EW": 42.59529601884503,
+      "ratio": 0.5631547724253763,
+      "resid": -0.24937223112945012
+    },
+    {
+      "name": "J120609.81+081323.7",
+      "B_tesla": 44910.00061035156,
+      "Teff": 10057.0,
+      "Mstar": 0.8600000143051147,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.742175952588721,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.1897909493535228,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 3.0867791158020754,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -0.6721482200279087,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -21.146763127207354,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -20.538839432467316,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -18.25524399878552,
+          "detected": false
+        }
+      },
+      "log_g": 8.621759555142074,
+      "theo_EW": 39.977400037522756,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J021148.21+211548.2",
+      "B_tesla": 16711.000061035156,
+      "Teff": 11160.0,
+      "Mstar": 1.0,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.065792696107099,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.841838350870905,
+      "theo_EW": 46.61204469428909,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J073237.67+364628.8",
+      "B_tesla": 10872.000122070312,
+      "Teff": 27417.0,
+      "Mstar": 1.340000033378601,
+      "total_EW": 22.79251447988111,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 19.826531169651737,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -7.952175223962764,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 2.965983310229373,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -5.663445507915089,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -5.63744757217356,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -0.401166644672989,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.677741144459992,
+      "theo_EW": 44.61945049695334,
+      "ratio": 0.5108201518850485,
+      "resid": -0.2917319781278007
+    },
+    {
+      "name": "J100356.31+053825.6",
+      "B_tesla": 16350.999450683594,
+      "Teff": null,
+      "Mstar": NaN,
+      "total_EW": 2.6455868099959368,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -6.538291963482447,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -5.567369973672273,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 1.9747135499289084,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 3.2146485090856878,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 1.0610164985888908,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 4.2588781515063285,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 2.6455868099959368,
+          "detected": "True"
+        }
+      },
+      "log_g": NaN,
+      "theo_EW": null,
+      "resid": null
+    },
+    {
+      "name": "J172432.14+323414.9",
+      "B_tesla": 25720.001220703125,
+      "Teff": 24779.0,
+      "Mstar": 1.2200000286102295,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.718585213529152,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 2.8055178896130712,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.273887204789478,
+      "theo_EW": 55.20833882592343,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J224741.46+145638.7",
+      "B_tesla": 51509.002685546875,
+      "Teff": 16732.0,
+      "Mstar": 1.090000033378601,
+      "total_EW": 14.377359963832333,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": -10.244136604037658,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 11.728924968827979,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -7.55532245506911,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 4.2574392131484124,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": -7.066101534092703,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -0.7137380310407746,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 2.6484349950043544,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.998139034913999,
+      "theo_EW": 63.9398948612455,
+      "ratio": 0.22485742266283534,
+      "resid": -0.648092771568118
+    },
+    {
+      "name": "J093707.06+102149.1",
+      "B_tesla": 39467.00134277344,
+      "Teff": 19695.0,
+      "Mstar": 1.2100000381469727,
+      "total_EW": 14.842308240575237,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 7.395726005918712,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 5.440731486378958,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -8.07737705627758,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 9.683967050736417,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 3.1234060460816964,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 4.173926876550037,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 7.446582234656525,
+          "detected": "True"
+        }
+      },
+      "log_g": 9.24918106864937,
+      "theo_EW": 66.84980575095202,
+      "ratio": 0.22202470259779125,
+      "resid": -0.6535987030039817
+    },
+    {
+      "name": "J112148.80+103934.2",
+      "B_tesla": 31179.000854492188,
+      "Teff": 11385.0,
+      "Mstar": 0.9800000190734863,
+      "total_EW": 9.989198439893404,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.1861400235531847,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 9.989198439893404,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -8.445235301457535,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 3.4274111979245223,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.809160607011636,
+      "theo_EW": 47.42037914498,
+      "ratio": 0.21065201544156945,
+      "resid": -0.6764343813462246
+    },
+    {
+      "name": "J134845.98+110008.8",
+      "B_tesla": 20258.00018310547,
+      "Teff": 18493.0,
+      "Mstar": 1.2100000381469727,
+      "total_EW": 15.149634363740992,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.4023278892882827,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 9.304585216915283,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -2.6332560775080025,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -4.821743797850601,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 5.151316218253943,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 5.845049146825708,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 0.9121129371841912,
+          "detected": false
+        }
+      },
+      "log_g": 9.24918106864937,
+      "theo_EW": 67.2025250085005,
+      "ratio": 0.22543251703451175,
+      "resid": -0.6469834398865819
+    },
+    {
+      "name": "J134913.52+205646.9",
+      "B_tesla": 38504.998779296875,
+      "Teff": 9462.0,
+      "Mstar": 0.9300000071525574,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.845418035767684,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -9.977826019834065,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 5.166398333698787,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -3.045745582576689,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -9.635708214525504,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -7.514455373852092,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -3.656759314545096,
+          "detected": false
+        }
+      },
+      "log_g": 8.729632373914166,
+      "theo_EW": 37.38016078617706,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J104219.06+203008.7",
+      "B_tesla": 12897.999572753906,
+      "Teff": 24656.0,
+      "Mstar": 1.1200000047683716,
+      "total_EW": 34.18624772296768,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": 4.4732875200495785,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 5.61576156714229,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -1.4552257087929692,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 1.392752803872258,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 12.920354832976496,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 13.886129281204486,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 7.3797636087867,
+          "detected": "True"
+        }
+      },
+      "log_g": 9.054946124931291,
+      "theo_EW": 54.15713656922146,
+      "ratio": 0.6312417880378923,
+      "resid": -0.19980425866817642
+    },
+    {
+      "name": "J233817.93+083732.6",
+      "B_tesla": 11833.000183105469,
+      "Teff": 11534.0,
+      "Mstar": 0.7200000286102295,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.05297509039002,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.409134909032211,
+      "theo_EW": 45.50066774049872,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J225828.48+280828.8",
+      "B_tesla": 13708.999633789062,
+      "Teff": 10618.0,
+      "Mstar": 1.0199999809265137,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -5.756897157074575,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.875138556596571,
+      "theo_EW": 44.23349838453384,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J101712.60+233646.6",
+      "B_tesla": 14302.999877929688,
+      "Teff": 10843.0,
+      "Mstar": 1.0399999618530273,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -9.299078759482319,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.909159806459556,
+      "theo_EW": 45.533145313450426,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J025001.76-043703.1",
+      "B_tesla": 30941.000366210938,
+      "Teff": 12603.0,
+      "Mstar": 1.159999966621399,
+      "total_EW": 4.637912963013374,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 4.637912963013374,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -0.6710933758191446,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -10.405682111824177,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -5.359725611367935,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -17.44615921892869,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -14.788058393389761,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -8.627417507026617,
+          "detected": false
+        }
+      },
+      "log_g": 9.136028267021924,
+      "theo_EW": 54.64750161847856,
+      "ratio": 0.08486962488043746,
+      "resid": -1.0712477173793276
+    },
+    {
+      "name": "J224459.60+331017.3",
+      "B_tesla": 42186.99951171875,
+      "Teff": 20263.0,
+      "Mstar": 1.2200000286102295,
+      "total_EW": 32.608369936195636,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 26.87242461160993,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -3.7972216001505217,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -9.21968898052283,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 5.735945324585709,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": -24.105464302572116,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -52.75691904757643,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -70.54804487220466,
+          "detected": false
+        }
+      },
+      "log_g": 9.273887204789478,
+      "theo_EW": 66.56554324016805,
+      "ratio": 0.4898686069239283,
+      "resid": -0.30992039127761256
+    }
+  ],
+  "weak": [
+    {
+      "name": "J111608.80+092532.5",
+      "B_tesla": 139.9999976158142,
+      "Teff": 5212.0,
+      "Mstar": 0.550000011920929,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.9893093625196914,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.4162874560104166,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.135543780419887,
+      "theo_EW": 7.71453845394023,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J111539.09-111350.6",
+      "B_tesla": 463.99998664855957,
+      "Teff": 5543.0,
+      "Mstar": 0.46000000834465027,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.1235865484606435,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.9352002954980922,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.972267923100586,
+      "theo_EW": 9.90747568495346,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J091629.56+215011.4",
+      "B_tesla": 619.0000057220459,
+      "Teff": 5883.0,
+      "Mstar": 0.6899999976158142,
+      "total_EW": 3.5679803586107246,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.2074458027769746,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 3.5679803586107246,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.362844831666282,
+      "theo_EW": 13.011398651462367,
+      "ratio": 0.2742195865476549,
+      "resid": -0.5619015283000798
+    },
+    {
+      "name": "J123449.88+150348.8",
+      "B_tesla": 822.0000267028809,
+      "Teff": 6125.0,
+      "Mstar": 0.6899999976158142,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -0.8689465968907628,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -0.18061505278905549,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -1.350057110665424,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 4.080329206835229,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.362844831666282,
+      "theo_EW": 14.765401033354632,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J143632.86+563525.2",
+      "B_tesla": 110.00000238418579,
+      "Teff": 6478.0,
+      "Mstar": 0.5,
+      "total_EW": 12.959426498016784,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 9.79279848148347,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 3.166628016533315,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -4.773487307971432,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.3370392422476808,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 10.335950539075473,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 6.03252247337664,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 6.0155796365956355,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.0471287624033,
+      "theo_EW": 16.488323269400755,
+      "ratio": 0.7859760077646619,
+      "resid": -0.10459071077286557
+    },
+    {
+      "name": "J090139.03+064022.4",
+      "B_tesla": 80.0000011920929,
+      "Teff": 6621.0,
+      "Mstar": 0.8799999952316284,
+      "total_EW": 2.7201672884577683,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.9102929268766755,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 2.7201672884577683,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.652298168756538,
+      "theo_EW": 19.00709732307293,
+      "ratio": 0.1431132403976133,
+      "resid": -0.8443201847893741
+    },
+    {
+      "name": "J135048.10+084512.6",
+      "B_tesla": 215.00000953674316,
+      "Teff": 6715.0,
+      "Mstar": 0.5799999833106995,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 2.241094974738108,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 2.270115181400503,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 2.3689162898971525,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -6.599982424212891,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -5.130352596006549,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.186378071899172,
+      "theo_EW": 18.42641885880355,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J081656.46+030417.0",
+      "B_tesla": 419.0000057220459,
+      "Teff": 6879.0,
+      "Mstar": 0.6100000143051147,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 1.0505461359417234,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -1.4529760022452596,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.235862642973652,
+      "theo_EW": 19.653411890458273,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J112714.82+411737.6",
+      "B_tesla": 304.9999952316284,
+      "Teff": 7003.0,
+      "Mstar": 0.5799999833106995,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.186378071899172,
+      "theo_EW": 20.323725500662913,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J101529.62+090703.7",
+      "B_tesla": 250.99999904632568,
+      "Teff": 7102.0,
+      "Mstar": 0.7699999809265137,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 3.1132800957983733,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.485351776720941,
+      "theo_EW": 21.879849018381513,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J015748.19-010600.9",
+      "B_tesla": 273.00000190734863,
+      "Teff": 7228.0,
+      "Mstar": 0.7200000286102295,
+      "total_EW": 9.19668688936633,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 3.1762466134515677,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -5.5037700141037345,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 3.712774681814491,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 3.2698848417233934,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 5.926802047642935,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": -2.8463101763973238,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -4.796153445993371,
+          "detected": false
+        }
+      },
+      "log_g": 8.409134909032211,
+      "theo_EW": 22.481473471685423,
+      "ratio": 0.4090784752587153,
+      "resid": -0.3881933714483308
+    },
+    {
+      "name": "J034511.10+003444.2",
+      "B_tesla": 250.0,
+      "Teff": 7431.0,
+      "Mstar": 0.5699999928474426,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.077325975468374,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.169594951678437,
+      "theo_EW": 23.001181596297773,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J113756.50+574022.4",
+      "B_tesla": 500.0,
+      "Teff": 7507.0,
+      "Mstar": 0.6800000071525574,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.01171356703694438,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -0.6931762448538852,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.34728451233076,
+      "theo_EW": 24.084933415074445,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J032404.30-061756.5",
+      "B_tesla": 302.99999713897705,
+      "Teff": 7653.0,
+      "Mstar": 0.6499999761581421,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.30012239103929,
+      "theo_EW": 24.840935726011615,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J082302.39+334534.1",
+      "B_tesla": 246.00000381469727,
+      "Teff": 7752.0,
+      "Mstar": 0.8700000047683716,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.5052545408319378,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.637007774648902,
+      "theo_EW": 26.68745869283016,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J094416.62-001855.5",
+      "B_tesla": 376.99999809265137,
+      "Teff": 7926.0,
+      "Mstar": 0.550000011920929,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.526310642066439,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.135543780419887,
+      "theo_EW": 25.898258399577987,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J162727.70+492507.9",
+      "B_tesla": 110.00000238418579,
+      "Teff": 7999.0,
+      "Mstar": 0.6499999761581421,
+      "total_EW": 82.4860553409886,
+      "n_detected": 6,
+      "balmer_results": {
+        "Hα": {
+          "EW": 28.032369753366446,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 15.713015187193355,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 9.116065779384709,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": 3.9664574036614657,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 16.368156204027457,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 21.10201113135612,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 9.289991013355165,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.30012239103929,
+      "theo_EW": 26.96796502312103,
+      "ratio": 3.058668137186808,
+      "resid": 0.4855323589699621
+    },
+    {
+      "name": "J165249.08+333444.9",
+      "B_tesla": 457.99999237060547,
+      "Teff": 8118.0,
+      "Mstar": 0.5299999713897705,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.1439782545474553,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 4.37455204570027,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 0.1087068597357391,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.1007826933187,
+      "theo_EW": 26.89167479447593,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J105709.81+041130.3",
+      "B_tesla": 276.99999809265137,
+      "Teff": 8330.0,
+      "Mstar": 0.7099999785423279,
+      "total_EW": 9.779477556128427,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 9.779477556128427,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.39376370888501,
+      "theo_EW": 29.328059653828568,
+      "ratio": 0.33345122969469226,
+      "resid": -0.4769676766599794
+    },
+    {
+      "name": "J123204.19+522548.2",
+      "B_tesla": 815.9999847412109,
+      "Teff": 8391.0,
+      "Mstar": 0.44999998807907104,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -5.950652817642333,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -9.744358520157704,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.8000189969733041,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.952869001934951,
+      "theo_EW": 27.835337170588286,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J093447.89+503312.1",
+      "B_tesla": 661.0000133514404,
+      "Teff": 8536.0,
+      "Mstar": 0.7699999809265137,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -3.595833741750644,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 1.547668796255664,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -4.269800230634692,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.485351776720941,
+      "theo_EW": 30.935580333573444,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J234710.26+000633.4",
+      "B_tesla": 600.0,
+      "Teff": 8797.0,
+      "Mstar": 0.9700000286102295,
+      "total_EW": 5.146454019310139,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": -11.990353610197326,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.5033131095778542,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -7.694790658851818,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 1.2442646392608547,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": -1.3988680279473222,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 3.902189380049284,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 8.590439862449138,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.793027282079024,
+      "theo_EW": 33.85088917980912,
+      "ratio": 0.15203305272051226,
+      "resid": -0.8180619840707799
+    },
+    {
+      "name": "J030522.15+050213.3",
+      "B_tesla": 295.0000047683716,
+      "Teff": 8987.0,
+      "Mstar": 0.49000000953674316,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -6.090706457799183,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -7.362784188703207,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 3.5178600726958624,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": -0.8504642693393517,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -5.073020599774058,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -3.778706740482508,
+          "detected": false
+        }
+      },
+      "log_g": 8.028795154622994,
+      "theo_EW": 31.39480157056389,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J110203.75+400558.0",
+      "B_tesla": 210.99998950958252,
+      "Teff": 9067.0,
+      "Mstar": 0.9599999785423279,
+      "total_EW": 42.60791784582791,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.7372232924705884,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.7429948081086204,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 22.926244065114016,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -3.6352812821285836,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.737692836919717,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 18.19348310093129,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 19.681673780713894,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.777017167439498,
+      "theo_EW": 35.37029426776688,
+      "ratio": 1.2046243529462721,
+      "resid": 0.08085163871441925
+    },
+    {
+      "name": "J090150.74+091211.4",
+      "B_tesla": 267.00000762939453,
+      "Teff": 9219.0,
+      "Mstar": 0.6600000262260437,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -0.6005576898618541,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.315929958354225,
+      "theo_EW": 34.001814254423365,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J112328.48+095619.4",
+      "B_tesla": 225.0,
+      "Teff": 9356.0,
+      "Mstar": 0.75,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -12.601644667009449,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.454968607790418,
+      "theo_EW": 35.42343240220058,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J084039.36+125706.2",
+      "B_tesla": 222.00000286102295,
+      "Teff": 9487.0,
+      "Mstar": 0.4000000059604645,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.8061111710447184,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 3.0469623656151494,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -12.46359164493791,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 8.225071354274169,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": -32.58826929604339,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -36.31349463889552,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -32.717600778955834,
+          "detected": false
+        }
+      },
+      "log_g": 7.850951282093955,
+      "theo_EW": 33.06125384764641,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J213819.85+112311.3",
+      "B_tesla": 219.0000057220459,
+      "Teff": 9561.0,
+      "Mstar": 0.5899999737739563,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.943399396311796,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.203011433894584,
+      "theo_EW": 35.225249839507505,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J165029.90+341125.4",
+      "B_tesla": 304.9999952316284,
+      "Teff": 9842.0,
+      "Mstar": 0.8899999856948853,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.667637658373966,
+      "theo_EW": 39.110848673294626,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J003232.07+153126.6",
+      "B_tesla": 200.0,
+      "Teff": 9917.0,
+      "Mstar": 0.3499999940395355,
+      "total_EW": 23.983747550047067,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 6.229694990122927,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -7.6884469239798445,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 7.365495628283135,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -18.03457895767731,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 23.983747550047067,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 18.84601256426147,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": -0.6160864988593497,
+          "detected": false
+        }
+      },
+      "log_g": 7.738895087730983,
+      "theo_EW": 34.501661887707634,
+      "ratio": 0.695147602689599,
+      "resid": -0.15792297062206678
+    },
+    {
+      "name": "J150957.07+092349.3",
+      "B_tesla": 600.0,
+      "Teff": 10003.0,
+      "Mstar": 1.0700000524520874,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.5528817589719479,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 2.060261614910173,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -3.9262948062255862,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.961791892750522,
+      "theo_EW": 41.553088244709784,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J100828.97+183633.4",
+      "B_tesla": 238.0000114440918,
+      "Teff": 10047.0,
+      "Mstar": 0.7099999785423279,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 6.540431410237551,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 2.025513218284404,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -4.413422680618586,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 8.093615881270154,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": -9.403594079162888,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -6.097123869995387,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -5.57954221704661,
+          "detected": false
+        }
+      },
+      "log_g": 8.39376370888501,
+      "theo_EW": 38.67735441855224,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J125709.63+304317.2",
+      "B_tesla": 244.0000057220459,
+      "Teff": 10202.0,
+      "Mstar": 0.949999988079071,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -21.783773235100423,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.761120780381413,
+      "theo_EW": 41.489728055200146,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J160219.42+112606.4",
+      "B_tesla": 252.99999713897705,
+      "Teff": 10337.0,
+      "Mstar": 0.9900000095367432,
+      "total_EW": 3.6475231622464985,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.479610821577483,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -14.942600429975574,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -25.435075365254193,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 3.6475231622464985,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": -5.038273486184954,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -3.0381799886130487,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.825427397590968,
+      "theo_EW": 42.53974586720349,
+      "ratio": 0.08574388699060373,
+      "resid": -1.0667968326949113
+    },
+    {
+      "name": "J122238.86+005034.4",
+      "B_tesla": 219.0000057220459,
+      "Teff": 10410.0,
+      "Mstar": 0.23999999463558197,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -10.40320673323537,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -3.64369233103967,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -3.0483295890167503,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -23.856298376128294,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -37.025975574505054,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -32.23897734800596,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -6.257124006437127,
+          "detected": false
+        }
+      },
+      "log_g": 7.4361382442326605,
+      "theo_EW": 34.95193253391699,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J220435.05+001242.9",
+      "B_tesla": 215.00000953674316,
+      "Teff": 10502.0,
+      "Mstar": 1.1100000143051147,
+      "total_EW": 72.4118522838161,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": -9.771307459794745,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 1.7512100782686848,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 30.73987566563582,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -4.251630346694236,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -3.24285365031277,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 19.520232718249186,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 22.1517438999311,
+          "detected": "True"
+        }
+      },
+      "log_g": 9.035675232552705,
+      "theo_EW": 44.58599380730899,
+      "ratio": 1.6240941627714849,
+      "resid": 0.21061120543873632
+    },
+    {
+      "name": "J025837.19+000019.2",
+      "B_tesla": 232.99999237060547,
+      "Teff": 10561.0,
+      "Mstar": 0.75,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -30.95539793756104,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 2.0237258865749386,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -13.027965963228725,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -15.773378936292355,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -37.85572263537213,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -38.47276731841244,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -26.995473356106004,
+          "detected": false
+        }
+      },
+      "log_g": 8.454968607790418,
+      "theo_EW": 41.5025002390943,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J090205.29+454915.5",
+      "B_tesla": 282.99999237060547,
+      "Teff": 10928.0,
+      "Mstar": 0.6299999952316284,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.625795171363963,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.268212815837327,
+      "theo_EW": 42.053828278975416,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J173235.19+590533.3",
+      "B_tesla": 255.9999942779541,
+      "Teff": 11028.0,
+      "Mstar": 0.5699999928474426,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -36.27332618425568,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.169594951678437,
+      "theo_EW": 41.883199119726804,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J024903.01+332737.0",
+      "B_tesla": 266.00000858306885,
+      "Teff": 11136.0,
+      "Mstar": 0.25999999046325684,
+      "total_EW": 42.61806859025998,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 42.61806859025998,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.499042743283942,
+      "theo_EW": 38.185642697529595,
+      "ratio": 1.1160757179822756,
+      "resid": 0.04769365946391279
+    },
+    {
+      "name": "J154424.84+132650.8",
+      "B_tesla": 205.9999942779541,
+      "Teff": 11289.0,
+      "Mstar": 0.6800000071525574,
+      "total_EW": 31.837252051927262,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.23360656475714223,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -2.7487911470410524,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -4.521825978161093,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 2.8054426693621624,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 31.837252051927262,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 4.057609689465128,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": -7.478171008298936,
+          "detected": false
+        }
+      },
+      "log_g": 8.34728451233076,
+      "theo_EW": 44.08938108498234,
+      "ratio": 0.7221070305015377,
+      "resid": -0.14139842665305838
+    },
+    {
+      "name": "J161425.46+493244.9",
+      "B_tesla": 300.0,
+      "Teff": 11384.0,
+      "Mstar": 0.3199999928474426,
+      "total_EW": 6.076010587549098,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -7.2068288199462165,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -2.0578877149805166,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -5.557368237437742,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -0.2644886614781613,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.7995024102921746,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 6.076010587549098,
+          "detected": "True"
+        }
+      },
+      "log_g": 7.665373000858371,
+      "theo_EW": 40.16140100443669,
+      "ratio": 0.15128980652039187,
+      "resid": -0.8201903325259229
+    },
+    {
+      "name": "J155857.29+480047.3",
+      "B_tesla": 242.00000762939453,
+      "Teff": 11406.0,
+      "Mstar": 1.0700000524520874,
+      "total_EW": 103.91034945276415,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": -24.666669161371168,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.12008643822537945,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -3.9805720580595287,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -0.19074589149476062,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 26.449802815280826,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 43.27003382462747,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 34.19051281285586,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.961791892750522,
+      "theo_EW": 48.48324120448332,
+      "ratio": 2.1432220056103715,
+      "resid": 0.33106715975753026
+    },
+    {
+      "name": "J130807.48-010117.0",
+      "B_tesla": 220.00000476837158,
+      "Teff": 11757.0,
+      "Mstar": 0.4699999988079071,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -17.82687582427326,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -7.638656769168657,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.991378601036403,
+      "theo_EW": 43.6616858360548,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J131702.34+281848.6",
+      "B_tesla": 226.99999809265137,
+      "Teff": 11819.0,
+      "Mstar": 0.4000000059604645,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -13.403751121223756,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 2.596980022629198,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.850951282093955,
+      "theo_EW": 42.966728605066685,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J091132.79+223200.6",
+      "B_tesla": 306.9999933242798,
+      "Teff": 11884.0,
+      "Mstar": 0.7599999904632568,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1416.6721058198916,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -14.807317873394183,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -4.687477998635627,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -10.873830311052723,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -6.883077121967331,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -7.65340965037581,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -5.272351677727678,
+          "detected": false
+        }
+      },
+      "log_g": 8.470173455230773,
+      "theo_EW": 47.305846730776416,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J081748.55+154341.1",
+      "B_tesla": 179.99999523162842,
+      "Teff": 12054.0,
+      "Mstar": 0.5199999809265137,
+      "total_EW": 213.7719655197817,
+      "n_detected": 7,
+      "balmer_results": {
+        "Hα": {
+          "EW": 25.241480719580224,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 37.766418167976255,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 31.777870135653558,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": 26.176270240469933,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 30.179934829425438,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 35.895846803468416,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 26.7341446232079,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.083110699142988,
+      "theo_EW": 45.36483672295943,
+      "ratio": 4.712283366636485,
+      "resid": 0.6732313982617167
+    },
+    {
+      "name": "J112014.62+400422.6",
+      "B_tesla": 253.99999618530273,
+      "Teff": 12155.0,
+      "Mstar": 1.100000023841858,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -35.80183612405414,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.016747593123005,
+      "theo_EW": 52.05358555345766,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J103648.66+171045.1",
+      "B_tesla": 219.0000057220459,
+      "Teff": 12309.0,
+      "Mstar": 0.41999998688697815,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -1.8924454049631523,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -35.342444398863826,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 4.033896407172345,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.892777296995833,
+      "theo_EW": 44.967091165966984,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J140821.99+443008.0",
+      "B_tesla": 320.0000047683716,
+      "Teff": 12368.0,
+      "Mstar": 0.30000001192092896,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -12.744979395175413,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -4.2205507308371235,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -6.873602975714897,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -2.541312637206086,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -3.1468576749599624,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -3.142776604350321,
+          "detected": false
+        }
+      },
+      "log_g": 7.613124321897194,
+      "theo_EW": 43.24048741194461,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J010311.32+151110.0",
+      "B_tesla": 280.9999942779541,
+      "Teff": 12457.0,
+      "Mstar": 0.3499999940395355,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 1.0646143945455657,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.738895087730983,
+      "theo_EW": 44.396189850120365,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J224912.31+220910.4",
+      "B_tesla": 214.00001049041748,
+      "Teff": 12735.0,
+      "Mstar": 0.46000000834465027,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -3.2859254352010265,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.972267923100586,
+      "theo_EW": 46.923868984644095,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J161710.49+383306.9",
+      "B_tesla": 245.00000476837158,
+      "Teff": 12988.0,
+      "Mstar": 0.5799999833106995,
+      "total_EW": 35.98524349022868,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 13.932680950754161,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -2.2731504267809917,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.511532884637696,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -0.7173852528784007,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -1.0323079602055734,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 7.629443129699228,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 22.052562539474525,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.186378071899172,
+      "theo_EW": 49.25469467828367,
+      "ratio": 0.730595199610374,
+      "resid": -0.13632318565486398
+    },
+    {
+      "name": "J123527.08+145318.6",
+      "B_tesla": 205.9999942779541,
+      "Teff": 13281.0,
+      "Mstar": 0.25,
+      "total_EW": 78.11387637015972,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": -11.065898646643808,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -5.1425696307800095,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 28.915293522996308,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -9.517813492747221,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 22.83004057340969,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 26.36854227375371,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 10.405844335410567,
+          "detected": "False"
+        }
+      },
+      "log_g": 7.468146375427169,
+      "theo_EW": 44.9000499918038,
+      "ratio": 1.7397280489535953,
+      "resid": 0.24048136548407048
+    },
+    {
+      "name": "J131955.04+015259.5",
+      "B_tesla": 324.0000009536743,
+      "Teff": 13501.0,
+      "Mstar": 0.3100000023841858,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -7.822882940588049,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -3.8700952797729262,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.8535697511943718,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -7.068542980470309,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -8.84253191458313,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -10.36464483643637,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -12.255875288020837,
+          "detected": false
+        }
+      },
+      "log_g": 7.639601762643111,
+      "theo_EW": 46.7491205776281,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J171556.26+600643.7",
+      "B_tesla": 206.99999332427979,
+      "Teff": 13567.0,
+      "Mstar": 0.550000011920929,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -8.75732021512327,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -6.033158279357153,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -8.225369762056413,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 12.656418245277369,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": -19.314747237211403,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -17.933260258703285,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -14.683494696829362,
+          "detected": false
+        }
+      },
+      "log_g": 8.135543780419887,
+      "theo_EW": 50.61264030123351,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J152401.59+185659.2",
+      "B_tesla": 648.9999771118164,
+      "Teff": 13793.0,
+      "Mstar": 1.059999942779541,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.10220781864645326,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 9.379501350136401,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": -2.912897559434032,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.944013554527022,
+      "theo_EW": 57.32426415919825,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J083623.85+163859.6",
+      "B_tesla": 257.99999237060547,
+      "Teff": 13998.0,
+      "Mstar": 1.100000023841858,
+      "total_EW": 14.59711805026536,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 14.59711805026536,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.016747593123005,
+      "theo_EW": 58.481866893160216,
+      "ratio": 0.24960075363073908,
+      "resid": -0.6027541077028458
+    },
+    {
+      "name": "J155238.20+003910.4",
+      "B_tesla": 216.00000858306885,
+      "Teff": 14285.0,
+      "Mstar": 1.2599999904632568,
+      "total_EW": 125.51577908102327,
+      "n_detected": 4,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.121923983720794,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -8.31829973779254,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 41.30950828612474,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -6.423008233201267,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 13.372920300286365,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 37.27578760102561,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 33.55756289358655,
+          "detected": "True"
+        }
+      },
+      "log_g": 9.382189118116028,
+      "theo_EW": 62.111305845863,
+      "ratio": 2.0208201610268253,
+      "resid": 0.3055276660393546
+    },
+    {
+      "name": "J113431.97-031529.0",
+      "B_tesla": 300.0,
+      "Teff": 14539.0,
+      "Mstar": 1.2400000095367432,
+      "total_EW": 35.41307856121008,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 72.76104549645156,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 32.077447560442465,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -3.5841890157105736,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -2.831947136876831,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 3.1519945798003675,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 3.3356310007676138,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 4.985321355971809,
+          "detected": "False"
+        }
+      },
+      "log_g": 9.325944706315683,
+      "theo_EW": 62.377633255181884,
+      "ratio": 0.5677207792789768,
+      "resid": -0.24586520977133752
+    },
+    {
+      "name": "J114529.26+300824.3",
+      "B_tesla": 332.99999237060547,
+      "Teff": 14836.0,
+      "Mstar": 0.5400000214576721,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.3235280958229536,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 6.10747589985625,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -2.0185977979315592,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 2.229322398983191,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 7.8020524993874005,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 4.936719505733304,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.118256965545436,
+      "theo_EW": 53.60221733372314,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J071632.91+393553.8",
+      "B_tesla": 244.0000057220459,
+      "Teff": 14947.0,
+      "Mstar": 0.6499999761581421,
+      "total_EW": 25.612413906987314,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -0.6904937030568451,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -2.155515565965791,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -2.2252508292033046,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.01742851967577641,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 25.612413906987314,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": -0.9511814020210974,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -12.38363366745287,
+          "detected": false
+        }
+      },
+      "log_g": 8.30012239103929,
+      "theo_EW": 55.27551033801811,
+      "ratio": 0.46335915761543456,
+      "resid": -0.3340822493633827
+    },
+    {
+      "name": "J133420.95+041751.3",
+      "B_tesla": 243.00000667572021,
+      "Teff": 15097.0,
+      "Mstar": 1.1699999570846558,
+      "total_EW": 20.05615401197767,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 20.05615401197767,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -2.5208502990707937,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.157465421372818,
+      "theo_EW": 62.424251937078516,
+      "ratio": 0.3212878551142844,
+      "resid": -0.49310569074645044
+    },
+    {
+      "name": "J103403.98+305034.4",
+      "B_tesla": 276.99999809265137,
+      "Teff": 15302.0,
+      "Mstar": 0.7400000095367432,
+      "total_EW": 70.93391494322351,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": -33.47326883656522,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -0.07065902366594079,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 4.524709562059389,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 2.4526220885278436,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 5.84756670134955,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 31.778984428673102,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 39.154930514550415,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.439731245778892,
+      "theo_EW": 57.10682087616067,
+      "ratio": 1.2421268397526046,
+      "resid": 0.09416594607566896
+    },
+    {
+      "name": "J154141.84+173026.2",
+      "B_tesla": 219.0000057220459,
+      "Teff": 15425.0,
+      "Mstar": 1.0099999904632568,
+      "total_EW": 14.530448181899558,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -23.839268067080397,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 14.530448181899558,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": -2.7623644509181364,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -24.278069348350122,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -36.123429949835554,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -29.343418669626974,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -3.943084329208631,
+          "detected": false
+        }
+      },
+      "log_g": 8.858404756140391,
+      "theo_EW": 60.71871393780956,
+      "ratio": 0.23930757487357524,
+      "resid": -0.6210435543170727
+    },
+    {
+      "name": "J145330.84+390245.2",
+      "B_tesla": 228.99999618530273,
+      "Teff": 15751.0,
+      "Mstar": 0.5199999809265137,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 5.931821884906793,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -3.4256922548232778,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.2881712714147457,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.9677077429452231,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -0.061260769257191594,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 1.2157144830378106,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 3.892396990441132,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.083110699142988,
+      "theo_EW": 55.01092689798747,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J114720.40-002405.7",
+      "B_tesla": 200.0,
+      "Teff": 15919.0,
+      "Mstar": 0.6800000071525574,
+      "total_EW": 199.7170968690615,
+      "n_detected": 7,
+      "balmer_results": {
+        "Hα": {
+          "EW": 29.013846882115573,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 38.4449452882683,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 29.681695006898565,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": 26.709087339171685,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 24.81827112466611,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 29.839560140409006,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 21.20969108753225,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.34728451233076,
+      "theo_EW": 57.43363339711387,
+      "ratio": 3.4773543837659693,
+      "resid": 0.5412489527112416
+    },
+    {
+      "name": "J135204.28+112055.2",
+      "B_tesla": 234.99999046325684,
+      "Teff": 16139.0,
+      "Mstar": 0.6100000143051147,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -7.795809992005907,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.5417714970591014,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -13.50527763581383,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -14.022918133704863,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -39.27597842243969,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -42.60678564113776,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -34.24545577710957,
+          "detected": false
+        }
+      },
+      "log_g": 8.235862642973652,
+      "theo_EW": 56.8447606480519,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J141309.30+191831.9",
+      "B_tesla": 252.99999713897705,
+      "Teff": 16400.0,
+      "Mstar": 1.190000057220459,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -21.67213173230972,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.20202589906633,
+      "theo_EW": 65.19866465931257,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J122748.85+385546.3",
+      "B_tesla": 843.9999580383301,
+      "Teff": 16615.0,
+      "Mstar": 1.1399999856948853,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.094625525876081,
+      "theo_EW": 64.59909312711004,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J110735.31+085924.5",
+      "B_tesla": 264.0000104904175,
+      "Teff": 17097.0,
+      "Mstar": 1.1799999475479126,
+      "total_EW": 49.4814774106293,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 49.4814774106293,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.179448662756897,
+      "theo_EW": 65.85554292200277,
+      "ratio": 0.7513638976332426,
+      "resid": -0.12414967623476188
+    },
+    {
+      "name": "J094012.88-000009.9",
+      "B_tesla": 257.99999237060547,
+      "Teff": 17240.0,
+      "Mstar": 0.4300000071525574,
+      "total_EW": 20.02721258703561,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -13.81537687800748,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -7.531413803335612,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -2.486527461883796,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 20.02721258703561,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 2.1223908693431337,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 0.2633537767285361,
+          "detected": false
+        }
+      },
+      "log_g": 7.9131414067312775,
+      "theo_EW": 55.33988322302931,
+      "ratio": 0.3618947388508659,
+      "resid": -0.4414177305271859
+    },
+    {
+      "name": "J083656.62+103452.1",
+      "B_tesla": 206.99999332427979,
+      "Teff": 17638.0,
+      "Mstar": 0.5299999713897705,
+      "total_EW": 14.850405643774923,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 3.0748032282140825,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -5.324379688474433,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 9.649539578050577,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -11.529421957005273,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 14.850405643774923,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 6.049933653136971,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": -11.724845106164274,
+          "detected": false
+        }
+      },
+      "log_g": 8.1007826933187,
+      "theo_EW": 57.181949144293625,
+      "ratio": 0.2597044323603106,
+      "resid": -0.5855206382290026
+    },
+    {
+      "name": "J125101.98+351913.6",
+      "B_tesla": 225.0,
+      "Teff": 17874.0,
+      "Mstar": 0.8700000047683716,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -8.866000547595567,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -2.781240616344336,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.21846604387572843,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.637007774648902,
+      "theo_EW": 61.83710786535889,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J163458.64+415820.0",
+      "B_tesla": 205.9999942779541,
+      "Teff": 18154.0,
+      "Mstar": 0.6100000143051147,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 4.569710881564466,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -31.875306919183927,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 2.616473213834303,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -3.5451924326032622,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.235862642973652,
+      "theo_EW": 58.539461940932085,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J091015.08+520310.7",
+      "B_tesla": 241.00000858306885,
+      "Teff": 18471.0,
+      "Mstar": 0.5600000023841858,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.021754768482925,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.152653249572467,
+      "theo_EW": 57.89149183577064,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J083041.77+204233.7",
+      "B_tesla": 219.0000057220459,
+      "Teff": 18687.0,
+      "Mstar": 1.0,
+      "total_EW": 10.27304066002808,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.661426035485919,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 10.27304066002808,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.841838350870905,
+      "theo_EW": 63.750249029977205,
+      "ratio": 0.1611451063539752,
+      "resid": -0.7927828785831383
+    },
+    {
+      "name": "J095211.45+563020.7",
+      "B_tesla": 200.99999904632568,
+      "Teff": 19045.0,
+      "Mstar": 0.5699999928474426,
+      "total_EW": 7.52720575759149,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": -7.198849819347177,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -2.1731415344663576,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -15.91880959345463,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 7.52720575759149,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": -14.450385770202523,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -8.370629348208862,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -6.791409308904315,
+          "detected": false
+        }
+      },
+      "log_g": 8.169594951678437,
+      "theo_EW": 57.99743789792589,
+      "ratio": 0.12978514276508546,
+      "resid": -0.8867750208210714
+    },
+    {
+      "name": "J155657.69+231358.5",
+      "B_tesla": 326.99999809265137,
+      "Teff": 19183.0,
+      "Mstar": 0.4699999988079071,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -4.416133578922518,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.41522631132432464,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -2.0164498435945735,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -1.1601547569895645,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -2.151334577773084,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -1.0894131653164798,
+          "detected": false
+        }
+      },
+      "log_g": 7.991378601036403,
+      "theo_EW": 56.44992686222361,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J074907.48+154534.1",
+      "B_tesla": 208.99999141693115,
+      "Teff": 19493.0,
+      "Mstar": 0.5400000214576721,
+      "total_EW": 19.920754067730986,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 19.920754067730986,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -8.509891597317594,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.118256965545436,
+      "theo_EW": 57.40580995265759,
+      "ratio": 0.3470163400561646,
+      "resid": -0.45965007498103216
+    },
+    {
+      "name": "J225338.68+301803.4",
+      "B_tesla": 200.99999904632568,
+      "Teff": 19805.0,
+      "Mstar": 1.100000023841858,
+      "total_EW": 65.34481588261315,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": -9.52125566339291,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -5.670356585142586,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 23.626984234941535,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -6.486921938105443,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -8.624480513784262,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 11.236655069021033,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 30.481176578650576,
+          "detected": "True"
+        }
+      },
+      "log_g": 9.016747593123005,
+      "theo_EW": 64.8103182952323,
+      "ratio": 1.0082471063472644,
+      "resid": 0.0035669842633716444
+    },
+    {
+      "name": "J161929.62+131833.4",
+      "B_tesla": 290.00000953674316,
+      "Teff": 20084.0,
+      "Mstar": 0.6299999952316284,
+      "total_EW": 222.9303430310602,
+      "n_detected": 7,
+      "balmer_results": {
+        "Hα": {
+          "EW": 18.408054506134395,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 33.29720634555041,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 28.13125380353398,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": 34.294633131950874,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 42.252577259373965,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 41.434634501264654,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 25.11198348325196,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.268212815837327,
+      "theo_EW": 58.29035358258338,
+      "ratio": 3.824480884563887,
+      "resid": 0.582572494582623
+    },
+    {
+      "name": "J123159.51+670918.9",
+      "B_tesla": 345.0000047683716,
+      "Teff": 20220.0,
+      "Mstar": 0.23000000417232513,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 4.679126923002119,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 1.336534309297889,
+          "detected": "False"
+        },
+        "Hγ": {
+          "EW": 1.4942456588609996,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -2.6030763090925957,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -7.0910705111919725,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -9.960962388151469,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -12.144693408123086,
+          "detected": false
+        }
+      },
+      "log_g": 7.402919944881582,
+      "theo_EW": 50.915366297050944,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J130805.95+035424.3",
+      "B_tesla": 219.0000057220459,
+      "Teff": 20585.0,
+      "Mstar": 0.6000000238418579,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 4.012816569660808,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -2.233833728236574,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -0.7326644162866119,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 1.4115492852392248,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 2.116042803031453,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 3.431859232254724,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 11.370914941688914,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.21950362732749,
+      "theo_EW": 57.40381947506275,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J075916.53+433518.9",
+      "B_tesla": 228.99999618530273,
+      "Teff": 20912.0,
+      "Mstar": 1.3700000047683716,
+      "total_EW": 19.766813178839413,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 19.766813178839413,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": -2.2301995351192896,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.847104578924897,
+      "theo_EW": 70.49260279236285,
+      "ratio": 0.28040975075161995,
+      "resid": -0.5522068886226577
+    },
+    {
+      "name": "J083020.35+185814.5",
+      "B_tesla": 226.99999809265137,
+      "Teff": 21250.0,
+      "Mstar": 1.1299999952316284,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -22.761078717652595,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.074586618040687,
+      "theo_EW": 63.575042600659145,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J083446.91+304959.2",
+      "B_tesla": 255.9999942779541,
+      "Teff": 21780.0,
+      "Mstar": 0.4699999988079071,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -34.62554691986193,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 7.991378601036403,
+      "theo_EW": 53.85126403817999,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J074047.65+180907.3",
+      "B_tesla": 170.00000476837158,
+      "Teff": 22775.0,
+      "Mstar": 0.7699999809265137,
+      "total_EW": 213.01009366256878,
+      "n_detected": 7,
+      "balmer_results": {
+        "Hα": {
+          "EW": 26.68082834335397,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 34.686170372468524,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 32.64471494803402,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": 25.673414126956935,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 33.05106908458964,
+          "detected": "True"
+        },
+        "Hζ": {
+          "EW": 35.08805858465277,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 25.185838202512905,
+          "detected": "True"
+        }
+      },
+      "log_g": 8.485351776720941,
+      "theo_EW": 55.73417422943729,
+      "ratio": 3.8218937771587647,
+      "resid": 0.5822786124325279
+    },
+    {
+      "name": "J171102.58+360959.6",
+      "B_tesla": 229.99999523162842,
+      "Teff": 23378.0,
+      "Mstar": 0.6600000262260437,
+      "total_EW": 49.51738099900683,
+      "n_detected": 2,
+      "balmer_results": {
+        "Hα": {
+          "EW": 10.98681234911506,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": -2.2626480572266123,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 27.07951448031096,
+          "detected": "True"
+        },
+        "Hδ": {
+          "EW": -5.882048346340811,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 18.85017579182458,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 22.437866518695877,
+          "detected": "True"
+        },
+        "Hη": {
+          "EW": 9.01839273530838,
+          "detected": "False"
+        }
+      },
+      "log_g": 8.315929958354225,
+      "theo_EW": 52.88952404986451,
+      "ratio": 0.9362417584306789,
+      "resid": -0.02861199229256486
+    },
+    {
+      "name": "J143218.25+430126.7",
+      "B_tesla": 265.00000953674316,
+      "Teff": 23596.0,
+      "Mstar": 0.5899999737739563,
+      "total_EW": 43.12928765122526,
+      "n_detected": 3,
+      "balmer_results": {
+        "Hα": {
+          "EW": 8.361997493342933,
+          "detected": "True"
+        },
+        "Hβ": {
+          "EW": 22.758207850894696,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 6.387070850075942,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 12.009082306987635,
+          "detected": "True"
+        },
+        "Hε": {
+          "EW": 12.14117178941379,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": 4.431633631835394,
+          "detected": "False"
+        },
+        "Hη": {
+          "EW": 1.327469702801437,
+          "detected": false
+        }
+      },
+      "log_g": 8.203011433894584,
+      "theo_EW": 51.44186969646715,
+      "ratio": 0.8384082442125395,
+      "resid": -0.07654445984697782
+    },
+    {
+      "name": "J155835.80+122139.4",
+      "B_tesla": 213.0000114440918,
+      "Teff": 25321.0,
+      "Mstar": 0.5799999833106995,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -2.3680537529550185,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.186378071899172,
+      "theo_EW": 45.70430491240742,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J010225.13-005458.6",
+      "B_tesla": 270.0000047683716,
+      "Teff": 25533.0,
+      "Mstar": 1.3300000429153442,
+      "total_EW": 27.990586439820387,
+      "n_detected": 1,
+      "balmer_results": {
+        "Hα": {
+          "EW": 19.667891554616684,
+          "detected": "False"
+        },
+        "Hβ": {
+          "EW": 27.990586439820387,
+          "detected": "True"
+        },
+        "Hγ": {
+          "EW": 13.151507158019886,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": 9.35495492206357,
+          "detected": "False"
+        },
+        "Hε": {
+          "EW": 7.219380613209816,
+          "detected": "False"
+        },
+        "Hζ": {
+          "EW": -1.4838026354685372,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -3.211622132473803,
+          "detected": false
+        }
+      },
+      "log_g": 9.631452791212908,
+      "theo_EW": 54.367471098707725,
+      "ratio": 0.5148406919461388,
+      "resid": -0.2883271346711921
+    },
+    {
+      "name": "J000555.90-100213.5",
+      "B_tesla": 830.0000190734863,
+      "Teff": 26711.0,
+      "Mstar": 1.2000000476837158,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.225249936179615,
+      "theo_EW": 46.029983528220335,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J134024.99+325028.7",
+      "B_tesla": 235.99998950958252,
+      "Teff": 27311.0,
+      "Mstar": 0.6899999976158142,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -4.584047732358586,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -12.358474729812006,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 7.469620672593544,
+          "detected": "False"
+        },
+        "Hδ": {
+          "EW": -1.239996624777068,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -13.845712174009199,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -19.234018123111625,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -12.192042477206508,
+          "detected": false
+        }
+      },
+      "log_g": 8.362844831666282,
+      "theo_EW": 38.1188587769947,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J132926.04+254936.4",
+      "B_tesla": 260.9999895095825,
+      "Teff": 28492.0,
+      "Mstar": 1.3700000047683716,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -7.4411822597080235,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.847104578924897,
+      "theo_EW": 38.568526195276704,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J154305.66+343223.6",
+      "B_tesla": 498.00000190734863,
+      "Teff": 29802.0,
+      "Mstar": 1.159999966621399,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -6.973888573704032,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -6.4706608362599285,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -4.209132969553611,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -4.316904576321183,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -8.564447820989919,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -9.502600654630802,
+          "detected": false
+        }
+      },
+      "log_g": 9.136028267021924,
+      "theo_EW": 26.58336401387556,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J111010.50+600141.3",
+      "B_tesla": 811.9999885559082,
+      "Teff": 32216.0,
+      "Mstar": 1.2300000190734863,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 9.2994456037678,
+      "theo_EW": 8.004447656628003,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J154626.16+143754.8",
+      "B_tesla": 299.0000009536743,
+      "Teff": 36702.0,
+      "Mstar": 0.6200000047683716,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": -3.6843051681473042,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": -1.4085465980458278,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": -1.2598727746451588,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": -1.5410313726422022,
+          "detected": false
+        },
+        "Hε": {
+          "EW": -5.226971661068384,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": -7.6695632809441285,
+          "detected": false
+        },
+        "Hη": {
+          "EW": -8.996076786386094,
+          "detected": false
+        }
+      },
+      "log_g": 8.252096488002913,
+      "theo_EW": 0.7,
+      "ratio": 0.0,
+      "resid": -3.0
+    },
+    {
+      "name": "J151606.34+274647.0",
+      "B_tesla": 302.99999713897705,
+      "Teff": 67365.0,
+      "Mstar": 0.8700000047683716,
+      "total_EW": 0.0,
+      "n_detected": 0,
+      "balmer_results": {
+        "Hα": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hβ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hγ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hδ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hε": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hζ": {
+          "EW": 0.0,
+          "detected": false
+        },
+        "Hη": {
+          "EW": 0.0,
+          "detected": false
+        }
+      },
+      "log_g": 8.637007774648902,
+      "theo_EW": 0.7,
+      "ratio": 0.0,
+      "resid": -3.0
+    }
+  ]
+}

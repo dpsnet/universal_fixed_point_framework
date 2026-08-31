@@ -1,0 +1,86 @@
+[
+  {
+    "name": "J120609.81+081323.7",
+    "B_tesla": 44910.00061035156,
+    "Teff": 10057.0,
+    "Mstar": 0.8600000143051147,
+    "snr_per_pixel": 8.70245284200325,
+    "snr_total": 396.79749632085236,
+    "he_lines_detected": 6,
+    "sensitive_total_ew": 3.445521348225574,
+    "sensitive_n_detected": 2,
+    "status": "analyzed"
+  },
+  {
+    "name": "J021148.21+211548.2",
+    "B_tesla": 16711.000061035156,
+    "Teff": 11160.0,
+    "Mstar": 1.0,
+    "snr_per_pixel": 34.727764192882304,
+    "snr_total": 1069.2542683258007,
+    "he_lines_detected": 0,
+    "sensitive_total_ew": 0.0,
+    "sensitive_n_detected": 0,
+    "status": "analyzed"
+  },
+  {
+    "name": "J172432.14+323414.9",
+    "B_tesla": 25720.001220703125,
+    "Teff": 24779.0,
+    "Mstar": 1.2200000286102295,
+    "snr_per_pixel": 16.922634036815303,
+    "snr_total": 705.696159003137,
+    "he_lines_detected": 1,
+    "sensitive_total_ew": 3.426769569943747,
+    "sensitive_n_detected": 1,
+    "status": "analyzed"
+  },
+  {
+    "name": "J134913.52+205646.9",
+    "B_tesla": 38504.998779296875,
+    "Teff": 9462.0,
+    "Mstar": 0.9300000071525574,
+    "snr_per_pixel": 16.62515037257087,
+    "snr_total": 757.3116410629651,
+    "he_lines_detected": 2,
+    "sensitive_total_ew": 5.761211664057992,
+    "sensitive_n_detected": 1,
+    "status": "analyzed"
+  },
+  {
+    "name": "J233817.93+083732.6",
+    "B_tesla": 11833.000183105469,
+    "Teff": 11534.0,
+    "Mstar": 0.7200000286102295,
+    "snr_per_pixel": 25.31451083946891,
+    "snr_total": 679.7311490354003,
+    "he_lines_detected": 1,
+    "sensitive_total_ew": 0.0,
+    "sensitive_n_detected": 0,
+    "status": "analyzed"
+  },
+  {
+    "name": "J225828.48+280828.8",
+    "B_tesla": 13708.999633789062,
+    "Teff": 10618.0,
+    "Mstar": 1.0199999809265137,
+    "snr_per_pixel": 19.546178306872587,
+    "snr_total": 610.3292220137874,
+    "he_lines_detected": 0,
+    "sensitive_total_ew": 0.0,
+    "sensitive_n_detected": 0,
+    "status": "analyzed"
+  },
+  {
+    "name": "J101712.60+233646.6",
+    "B_tesla": 14302.999877929688,
+    "Teff": 10843.0,
+    "Mstar": 1.0399999618530273,
+    "snr_per_pixel": 25.480692118331874,
+    "snr_total": 801.7312605361774,
+    "he_lines_detected": 1,
+    "sensitive_total_ew": 0.0,
+    "sensitive_n_detected": 0,
+    "status": "analyzed"
+  }
+]
