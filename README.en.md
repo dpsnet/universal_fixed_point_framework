@@ -15,7 +15,7 @@ This project consists of two interrelated research layers:
 | Layer | Location | Role |
 |-------|----------|------|
 | **Original numerical implementation layer** | Root directory `.` | Early-stage concrete numerical fits and experimental validations for the Standard Model mass spectrum, NTK spectral optimization, etc. |
-| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.6 — 37 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
+| **Universal fixed-point categorical framework** | `universal_fixed_point_framework/` | Category-theoretic interdisciplinary unification framework via fixed-point axioms. **Latest: RAP-Errata v0.49 — 48 papers, 0 free parameters + 1 external scale $M_{\text{Pl}}$**. |
 
 Core idea: treat "recursive iteration" as an **object-level evolution rule**, and its corresponding "operator semigroup spectrum" as a **spectral-level static structure**. The two are related systematically through a spectral de-recursion functor.
 
@@ -75,8 +75,8 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 │   │   ├── paper34_continuum_limit.md                 # 🆕 Continuum limit (B2 closure)
 │   │   ├── paper35_gravity_origin.md                  # 🆕 Category-theoretic origin of gravity
 │   │   ├── paper37_open_problems.md                   # 🆕 Open problems survey
-│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.7
-│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.7（与勘误 1:1 同步）
+│   │   ├── RAP_勘误与立场声明.md                       # RAP-Errata v0.49
+│   │   └── RAP_盲登记协议.md                            # RAP-Registry v0.49（与勘误 1:1 同步）
 │   ├── src/                               # Core code implementations
 │   │   ├── rec_category.py                # Rec category
 │   │   ├── spec_category.py               # Spec category
@@ -126,7 +126,7 @@ Core rule: **a poor fit at the instance layer does not refute the upper layers.*
 - [x] Kerr non-equatorial chaos and NR ringdown comparison
 - [x] Holographic entanglement entropy, complex CFT phase transitions, N=4 SYM TBA
 
-**37 papers**
+**48 papers**
 - [x] Paper I v2.35: Fractal spectral de-recursion theory (categories/IFS/spectral measures/Clifford/RKHS)
 - [x] Paper II v2.22: Physics applications (SM/BSM/Kerr/holographic entropy/dark matter)
 - [x] Paper III v1.1: Spectral classification completeness (three-layer + BPS numerical verification + Lean)
@@ -182,7 +182,7 @@ It should be emphasized that **core mathematical structures have been verified b
 
 ---
 
-## 6. Publication Plan (MUFPF Series, 37 Papers)
+## 6. Publication Plan (MUFPF Series, 48 Papers)
 
 Core papers (I–IV) target journals; papers V–XXXVII are companion papers:
 
