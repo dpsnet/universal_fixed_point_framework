@@ -1,0 +1,133 @@
+{
+  "gradient": {
+    "bands": [
+      {
+        "label": "10^2-3x10^2 T",
+        "n": 143,
+        "mean_resid": -0.208,
+        "median_resid": -0.192,
+        "neg_frac": 0.671
+      },
+      {
+        "label": "3x10^2-10^3 T",
+        "n": 44,
+        "mean_resid": -0.355,
+        "median_resid": -0.412,
+        "neg_frac": 0.682
+      },
+      {
+        "label": "10^3-3x10^3 T",
+        "n": 19,
+        "mean_resid": -0.369,
+        "median_resid": -0.465,
+        "neg_frac": 0.632
+      },
+      {
+        "label": "3x10^3-10^4 T",
+        "n": 18,
+        "mean_resid": -0.761,
+        "median_resid": -0.765,
+        "neg_frac": 0.944
+      },
+      {
+        "label": "10^4-3x10^4 T",
+        "n": 5,
+        "mean_resid": -0.495,
+        "median_resid": -0.52,
+        "neg_frac": 1.0
+      },
+      {
+        "label": "3x10^4-10^5 T",
+        "n": 7,
+        "mean_resid": -0.539,
+        "median_resid": -0.435,
+        "neg_frac": 1.0
+      }
+    ],
+    "kruskal_p": 0.0012451863382968136,
+    "spearman_full": {
+      "rho": -0.301,
+      "p": 2.2857887761712135e-06
+    },
+    "spearman_sub1e4": {
+      "rho": -0.289,
+      "p": 1.0761562238543207e-05
+    }
+  },
+  "confounder": {
+    "quadrants": {
+      "lgL-teL": {
+        "n": 64,
+        "mean_resid": -0.238
+      },
+      "lgL-teH": {
+        "n": 46,
+        "mean_resid": -0.179
+      },
+      "lgH-teL": {
+        "n": 48,
+        "mean_resid": -0.513
+      },
+      "lgH-teH": {
+        "n": 67,
+        "mean_resid": -0.282
+      }
+    },
+    "overlap_n": 108,
+    "overlap_mean_resid": -0.372,
+    "mid_mean_resid": -0.52,
+    "overlap_vs_mid_p": 0.1441421373793018
+  },
+  "matched": {
+    "mean_diff": -0.229,
+    "ew_ratio": 0.59,
+    "neg_frac": 0.667,
+    "ttest_p": 0.2422405186048911,
+    "sign_p": 0.3876953125
+  },
+  "perline": {
+    "Hα": {
+      "mid_mean": 2.61,
+      "weak_mean": 6.31,
+      "ratio": 0.41
+    },
+    "Hβ": {
+      "mid_mean": 1.62,
+      "weak_mean": 3.88,
+      "ratio": 0.42
+    },
+    "Hγ": {
+      "mid_mean": -2.39,
+      "weak_mean": 5.7,
+      "ratio": -0.42
+    },
+    "Hδ": {
+      "mid_mean": 1.07,
+      "weak_mean": 2.81,
+      "ratio": 0.38
+    },
+    "Hε": {
+      "mid_mean": -2.29,
+      "weak_mean": 5.05,
+      "ratio": -0.45
+    },
+    "Hζ": {
+      "mid_mean": -3.42,
+      "weak_mean": 7.49,
+      "ratio": -0.46
+    },
+    "Hη": {
+      "mid_mean": -5.65,
+      "weak_mean": 6.89,
+      "ratio": -0.82
+    }
+  },
+  "emission": {
+    "mid_strong_any": 5,
+    "weak_strong_any": 138,
+    "mid_high_order": 4,
+    "weak_high_order": 49,
+    "n_mid": 20,
+    "n_weak": 499
+  }
+}
