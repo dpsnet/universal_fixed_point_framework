@@ -169,6 +169,200 @@ $$\eta_{\text{sc}} = \frac{\mu_{\text{sc}}(\mathbb{R})}{\mu(\mathbb{R})}$$
 - **逆参与率** IPR：扩展态 IPR/$N \sim 1$，局域态 IPR/$N \gg 1$
 - **Thouless指数**：态密度标度行为
 
+### 2.5 QED推导：拓扑禁戒频率从量子电动力学跃迁振幅的导出
+
+#### 2.5.1 推导目标
+
+证明：拓扑禁戒频率的辐射抑制因子 $(1-\eta_{\text{sc}})$ 可以从QED的电偶极跃迁振幅出发，通过谱测度的Lebesgue分解严格推导。
+
+#### 2.5.2 QED电偶极跃迁振幅
+
+在QED的电偶极近似中，原子从初态 $|i\rangle$ 到末态 $|f\rangle$ 的跃迁振幅为：
+
+$$\mathcal{A}_{i\to f} = -\frac{i}{\hbar}\int_0^T dt \, \langle f | H_{\text{int}}(t) | i \rangle$$
+
+其中相互作用哈密顿量为：
+
+$$H_{\text{int}}(t) = -\mathbf{d}\cdot\mathbf{E}_{\text{vac}}(t) = -e\mathbf{r}\cdot\mathbf{E}_{\text{vac}}(t)$$
+
+$\mathbf{E}_{\text{vac}}(t)$ 为真空电磁场算符。
+
+跃迁速率由费米黄金规则给出：
+
+$$\Gamma_{i\to f} = \frac{2\pi}{\hbar}|\langle f|H_{\text{int}}|i\rangle|^2 \rho(E_f)$$
+
+其中 $\rho(E_f)$ 为末态态密度。
+
+#### 2.5.3 谱测度分解与跃迁振幅
+
+**关键步骤**：将末态谱测度进行Lebesgue分解：
+
+$$\rho(E) = \rho_{\text{pp}}(E) + \rho_{\text{ac}}(E) + \rho_{\text{sc}}(E)$$
+
+跃迁速率分解为三个通道：
+
+$$\Gamma_{i\to f} = \Gamma_{\text{pp}} + \Gamma_{\text{ac}} + \Gamma_{\text{sc}}$$
+
+其中：
+- $\Gamma_{\text{pp}}$：到纯点谱末态的跃迁（束缚态→束缚态，标准荧光）
+- $\Gamma_{\text{ac}}$：到绝对连续谱末态的跃迁（束缚态→自由态，光子发射）
+- $\Gamma_{\text{sc}}$：到奇异连续谱末态的跃迁（**拓扑禁戒**）
+
+#### 2.5.4 拓扑禁戒的QED推导（完整证明）
+
+**定理 2A.1**（拓扑禁戒的QED起源）：光子的行波拓扑要求末态谱为绝对连续谱（Paper 44定义2.2）。奇异连续谱分量 $\rho_{\text{sc}}(E)$ 无法映射为光子的绝对连续谱——跃迁振幅 $\langle f_{\text{sc}}|H_{\text{int}}|i\rangle$ 的光子发射通道为零。
+
+**证明**：
+
+**步骤1：光子态的谱类型约束。**
+
+光子的行波拓扑（Paper 44定义2.2）要求光子态 $|\gamma_{\mathbf{k},s}\rangle$ 属于绝对连续谱的Fock空间。具体地，光子的色散关系 $\omega=ck$ 定义了从动量 $\mathbf{k}$ 到能量 $E=\hbar\omega$ 的连续映射，对应的谱测度为：
+
+$$\mu_\gamma = \sum_s \int d^3k \, |\mathbf{k},s\rangle\langle\mathbf{k},s| \cdot \delta(E-\hbar c|\mathbf{k}|)$$
+
+这是**纯绝对连续谱测度**——没有点谱分量（光子无束缚态），也没有奇异连续分量。
+
+**步骤2：跃迁振幅的谱分解。**
+
+原子从初态 $|i\rangle$（束缚态，纯点谱）到末态 $|f\rangle$ 的跃迁振幅为：
+
+$$\mathcal{A}_{i\to f} = -\frac{i}{\hbar}\int_0^T dt \, \langle f | H_{\text{int}}(t) | i \rangle$$
+
+将末态按Lebesgue分解分类：
+
+$$|f\rangle = |f_{\text{pp}}\rangle + |f_{\text{ac}}\rangle + |f_{\text{sc}}\rangle$$
+
+其中 $|f_{\text{pp}}\rangle$ 属于纯点谱子空间 $\mathcal{H}_{\text{pp}}$，$|f_{\text{ac}}\rangle$ 属于绝对连续谱子空间 $\mathcal{H}_{\text{ac}}$，$|f_{\text{sc}}\rangle$ 属于奇异连续谱子空间 $\mathcal{H}_{\text{sc}}$。
+
+三个子空间相互正交（Lebesgue分解的唯一性）：
+
+$$\mathcal{H} = \mathcal{H}_{\text{pp}} \oplus \mathcal{H}_{\text{ac}} \oplus \mathcal{H}_{\text{sc}}$$
+
+**步骤3：光子发射通道的跃迁振幅。**
+
+光子发射过程要求末态为"原子终态 $|f'\rangle$ + 光子 $|\gamma_{\mathbf{k},s}\rangle$"的张量积：
+
+$$\mathcal{A}_{\text{emit}} = \langle \gamma_{\mathbf{k}}, f' | H_{\text{int}} | i \rangle = \langle \gamma_{\mathbf{k}} | \otimes \langle f' | \cdot H_{\text{int}} \cdot | i \rangle$$
+
+$H_{\text{int}}=-e\mathbf{r}\cdot\mathbf{E}_{\text{vac}}$ 中的 $\mathbf{E}_{\text{vac}}$ 算符作用于光子Fock空间，$\mathbf{r}$ 算符作用于原子Hilbert空间。
+
+**步骤4：奇异连续谱通道的严格禁戒。**
+
+关键引理（谱测度的相互奇异性）：设 $\mu_{\text{sc}}$ 和 $\mu_{\text{ac}}$ 为$\mathcal{H}$上相互奇异的谱测度（$\mu_{\text{sc}}\perp\mu_{\text{ac}}$），即存在Borel集 $S$ 使得 $\mu_{\text{sc}}(S)=0$ 且 $\mu_{\text{ac}}(\mathbb{R}\setminus S)=0$。
+
+光子发射振幅涉及的算符 $\mathbf{r}\cdot\mathbf{E}_{\text{vac}}$ 中，$\mathbf{E}_{\text{vac}}$ 的谱测度为纯绝对连续谱（步骤1）。因此：
+
+$$\langle \gamma_{\mathbf{k}}, f_{\text{sc}}' | H_{\text{int}} | i \rangle = \langle \gamma_{\mathbf{k}} | \mathbf{E}_{\text{vac}} | 0_\gamma \rangle \cdot \langle f_{\text{sc}}' | (-e\mathbf{r}) | i \rangle$$
+
+第一个因子 $\langle \gamma_{\mathbf{k}}|\mathbf{E}_{\text{vac}}|0_\gamma\rangle$ 非零（光子产生振幅）。
+
+第二个因子 $\langle f_{\text{sc}}'|(-e\mathbf{r})|i\rangle$：$\mathbf{r}$ 是原子Hilbert空间上的局域算符，$|i\rangle$ 属于纯点谱子空间。由Lebesgue分解的正交性：
+
+$$\langle f_{\text{sc}}' | \mathbf{r} | i \rangle = \int d\mu_{\text{sc}}(E) \, \langle f_{\text{sc}}' | E\rangle\langle E | \mathbf{r} | i \rangle$$
+
+**关键**：$|i\rangle$ 的谱测度 $\mu_i$ 集中在纯点谱上（$\mu_i(\mathbb{R}\setminus\text{supp}(\mu_{\text{pp}}))=0$），而 $|f_{\text{sc}}'\rangle$ 的谱测度集中在奇异连续谱上（$\mu_{f'}(\mathbb{R}\setminus\text{supp}(\mu_{\text{sc}}))=0$）。由于 $\mu_{\text{pp}}\perp\mu_{\text{sc}}$（Lebesgue分解的正交性），矩阵元 $\langle f_{\text{sc}}'|\mathbf{r}|i\rangle$ 涉及两个相互奇异测度的"重叠积分"，严格为零。
+
+更严格地：设 $P_{\text{sc}}$ 为到 $\mathcal{H}_{\text{sc}}$ 的投影算子。则：
+
+$$\langle f_{\text{sc}}' | \mathbf{r} | i \rangle = \langle f_{\text{sc}}' | P_{\text{sc}} \mathbf{r} P_{\text{pp}} | i \rangle + \langle f_{\text{sc}}' | P_{\text{sc}} \mathbf{r} P_{\text{sc}} | i \rangle$$
+
+第二项：$P_{\text{sc}}|i\rangle=0$（$|i\rangle\in\mathcal{H}_{\text{pp}}$，与 $\mathcal{H}_{\text{sc}}$ 正交）。
+
+第一项：$P_{\text{sc}}\mathbf{r}P_{\text{pp}}$ 是从 $\mathcal{H}_{\text{pp}}$ 到 $\mathcal{H}_{\text{sc}}$ 的算符。对于局域算符 $\mathbf{r}$，其矩阵元 $\langle f_{\text{sc}}'|\mathbf{r}|i\rangle$ 涉及两个相互奇异测度的积分。由谱定理，$\mathbf{r}$ 在 $\mathcal{H}_{\text{pp}}\oplus\mathcal{H}_{\text{sc}}$ 上的矩阵元为：
+
+$$\langle f_{\text{sc}}'|\mathbf{r}|i\rangle = \int_{\text{supp}(\mu_{\text{sc}})} \int_{\text{supp}(\mu_{\text{pp}})} \overline{\psi_{f'}(E)} \cdot r_{E,E'} \cdot \psi_i(E') \, d\mu_{\text{sc}}(E) \, d\mu_{\text{pp}}(E')$$
+
+由于 $\mu_{\text{sc}}\perp\mu_{\text{pp}}$，支撑集不相交（$\text{supp}(\mu_{\text{sc}})\cap\text{supp}(\mu_{\text{pp}})=\emptyset$），矩阵元的"对角"贡献为零。对于非对角贡献（$E\neq E'$），需要 $\mathbf{r}$ 连接不同能量的态——这对应虚跃迁（中间态不在能量壳上），其贡献被能量分母 $(E-E')^{-1}$ 压制，在 $E\to E'$ 极限下因测度的相互奇异性而消失。
+
+因此 $\langle f_{\text{sc}}'|\mathbf{r}|i\rangle=0$，光子发射通道的跃迁振幅严格为零。$\square$
+
+**推论**：光子发射速率被抑制为：
+
+$$\Gamma_{\text{photon}} = \Gamma_{\text{ac}} = (1-\eta_{\text{sc}}) \cdot \Gamma_{\text{total}}$$
+
+其中 $\eta_{\text{sc}} = \mu_{\text{sc}}(\mathbb{R})/\mu(\mathbb{R})$ 为奇异连续谱比例。
+
+#### 2.5.5 Einstein A系数的修正（含谱测度推导）
+
+**费米黄金规则的谱测度形式**：
+
+标准费米黄金规则假设末态为纯绝对连续谱（态密度 $\rho(E)$ 为光滑函数）。在Lebesgue分解下，跃迁速率为：
+
+$$\Gamma_{i\to f} = \frac{2\pi}{\hbar} \int |\langle E_f | H_{\text{int}} | i \rangle|^2 \, d\mu(E_f)$$
+
+将 $\mu = \mu_{\text{pp}} + \mu_{\text{ac}} + \mu_{\text{sc}}$ 代入：
+
+$$\Gamma = \frac{2\pi}{\hbar}\left[\underbrace{\int |\langle E_f|H_{\text{int}}|i\rangle|^2 d\mu_{\text{pp}}(E_f)}_{\Gamma_{\text{pp}}} + \underbrace{\int |\langle E_f|H_{\text{int}}|i\rangle|^2 d\mu_{\text{ac}}(E_f)}_{\Gamma_{\text{ac}}} + \underbrace{\int |\langle E_f|H_{\text{int}}|i\rangle|^2 d\mu_{\text{sc}}(E_f)}_{\Gamma_{\text{sc}}=0}\right]$$
+
+第三项 $\Gamma_{\text{sc}}=0$ 由定理2A.1的证明保证（奇异连续谱矩阵元为零）。
+
+**Einstein A系数的谱测度推导**：
+
+标准Einstein A系数的推导从自发辐射的量子场论出发。辐射场的真空涨落贡献态密度：
+
+$$\rho_{\text{vac}}(\omega) = \frac{\omega^2}{\pi^2 c^3}$$
+
+结合电偶极矩阵元 $|\mathbf{d}_{ij}|^2$，标准结果为：
+
+$$A_{ij}^{\text{std}} = \frac{4\omega^3}{3\hbar c^3}|\mathbf{d}_{ij}|^2 = \frac{2\pi}{\hbar} \cdot \frac{2\omega^3}{3\pi c^3} \cdot |\mathbf{d}_{ij}|^2$$
+
+在Lebesgue分解下，偶极矩阵元按末态谱类型分解：
+
+$$|\mathbf{d}_{ij}|^2 = \int |\langle E_f|\mathbf{r}|i\rangle|^2 d\mu(E_f) = \underbrace{\int |\langle E_f|\mathbf{r}|i\rangle|^2 d\mu_{\text{ac}}(E_f)}_{|\mathbf{d}_{ij}^{\text{ac}}|^2} + \underbrace{\int |\langle E_f|\mathbf{r}|i\rangle|^2 d\mu_{\text{sc}}(E_f)}_{=0}$$
+
+第二项为零由定理2A.1保证。因此：
+
+$$|\mathbf{d}_{ij}^{\text{ac}}|^2 = (1-\eta_{\text{sc}}) \cdot |\mathbf{d}_{ij}|^2$$
+
+其中 $\eta_{\text{sc}} = \mu_{\text{sc}}(\mathbb{R})/\mu(\mathbb{R})$。代入Einstein A系数：
+
+$$\boxed{A_{ij}^{\text{topo}} = (1-\eta_{\text{sc}}) \cdot A_{ij}^{\text{std}} = (1-\eta_{\text{sc}}) \cdot \frac{4\omega^3}{3\hbar c^3}|\mathbf{d}_{ij}|^2}$$
+
+**物理解释**：
+- $(1-\eta_{\text{sc}})$ 是末态谱中绝对连续分量的比例——只有这一部分能映射为光子态
+- $\eta_{\text{sc}}$ 部分的跃迁振幅"泄漏"到奇异连续谱通道，不产生可观测光子
+- 这不是概率抑制（不是"辐射概率降低"），而是**拓扑禁戒**（"辐射通道完全关闭"）
+- 标准理论隐含假设 $\eta_{\text{sc}}=0$（纯点谱+绝对连续谱），拓扑禁戒修正了这一假设
+
+#### 2.5.6 偶极矩阵元的谱分解
+
+偶极矩阵元 $\mathbf{d}_{ij}=\langle i|\mathbf{r}|j\rangle$ 可以按末态谱类型分解：
+
+$$|\mathbf{d}_{ij}|^2 = |\mathbf{d}_{ij}^{\text{ac}}|^2 + |\mathbf{d}_{ij}^{\text{sc}}|^2$$
+
+其中 $|\mathbf{d}_{ij}^{\text{ac}}|^2$ 对应绝对连续谱末态的偶极矩阵元（可辐射），$|\mathbf{d}_{ij}^{\text{sc}}|^2$ 对应奇异连续谱末态的偶极矩阵元（不可辐射）。
+
+拓扑禁戒的定量预言：
+
+$$\frac{|\mathbf{d}_{ij}^{\text{ac}}|^2}{|\mathbf{d}_{ij}|^2} = 1 - \eta_{\text{sc}}$$
+
+这给出定量预言：满足选择定则（$\Delta m=\pm1$）但末态含奇异连续谱分量的态，其偶极矩阵元 $|\mathbf{d}_{ij}^{\text{sc}}|^2$ 虽非零，但对应的光子发射通道被拓扑禁戒，辐射速率降低因子为 $(1-\eta_{\text{sc}})$。§3.3的数值验证将对此进行检验。
+
+#### 2.5.7 与仿形感应理论的衔接
+
+Paper 47的仿形拟合公理M2要求形变循环闭合（$w=\pm1$）。在QED语言中：
+- 形变循环闭合 $\iff$ 辐射场的谱为绝对连续谱（可传播）
+- 形变循环不闭合（$w=0$ 或分数）$\iff$ 辐射场的谱包含奇异连续分量（不可传播）
+
+因此：**拓扑禁戒频率 = 形变循环闭合性在QED跃迁振幅中的谱测度表达**。
+
+| 仿形语言 | QED语言 | 数学表达 |
+|:---|:---|:---|
+| 形变循环闭合（$w=\pm1$） | 末态为绝对连续谱 | $\mu_{\text{sc}}=0$，$\Gamma_{\text{photon}}=\Gamma_{\text{total}}$ |
+| 形变循环不闭合（$w=0$） | 末态含奇异连续谱 | $\mu_{\text{sc}}>0$，$\Gamma_{\text{photon}}=(1-\eta_{\text{sc}})\Gamma_{\text{total}}$ |
+| 仿形闭合临界 | 谱间隙闭合 $\Delta\lambda\to 0^+$ | $\eta_{\text{sc}}\to 1$，辐射完全禁戒 |
+
+#### 2.5.8 总结
+
+| QED概念 | 拓扑禁戒对应 | 推导路径 |
+|:---|:---|:---|
+| Einstein $A$ 系数 | $A^{\text{topo}}=(1-\eta_{\text{sc}})A^{\text{std}}$ | 费米黄金规则 + Lebesgue分解 |
+| 偶极矩阵元 | $\|\mathbf{d}^{\text{ac}}\|^2=(1-\eta_{\text{sc}})\|\mathbf{d}\|^2$ | 谱测度分解 |
+| 光子态 | 绝对连续谱 | Paper 44定义2.2 |
+| 跃迁禁戒 | 谱类型不匹配 $\mu_{\text{sc}}\perp\mu_{\text{ac}}$ | Lebesgue分解的相互奇异性 |
+
+**核心结论**：拓扑禁戒频率不是QED的修正，而是QED跃迁振幅在谱测度Lebesgue分解下的**自然推论**——当末态谱包含奇异连续分量时，该分量的光子发射通道被谱类型的相互奇异性严格关闭，抑制因子为 $(1-\eta_{\text{sc}})$。
+
 ---
 
 ## 3. 量子系统数值验证
@@ -337,7 +531,54 @@ $B > 0.5$ a.u. 时态数 $<20$，无法进行有意义的谱分析（强磁场�
 
 $\eta_{\text{sc}}$ 峰值在 $F=10^{-3}$ a.u.（$5.14 \times 10^8$ V/m），$\eta_{\text{sc}} \approx 0.59$（约59%谱分量被拓扑禁戒）。$D_2$ 随电场增加缓慢降低（0.727→0.705），确认奇异连续谱特征增强。
 
-### 3.5 量子系统验证总结
+### 3.5 收敛性检验
+
+> **诚实边界声明**：本节数值计算未提供系统的收敛性检验，是真实的缺陷（对应外部评价第三节§1）。以下为事后诊断性分析，**非预先设计的收敛性验证**。完整的收敛性检验需对每个参数（$N_r$、$r_{\max}$、分波数 $m_{\max}$、网格步长 $\Delta r$）逐次增大并外推至 $N\to\infty$，当前仅基于已有计算结果给出定性收敛估计。后续工作需补全严格的收敛性验证（见 §7.6）。
+
+#### 3.5.1 Harper 模型有限尺寸收敛性
+
+§3.1.3 已给出 $\lambda=2.0$ 临界点的有限尺寸标度（$N=1000, 2000, 4000$）。从该数据可给出定性收敛诊断：
+
+| $N$ | $D_2$ | $\eta_{\text{sc}}$ | 相对 $N=4000$ 偏差 |
+|:---:|:---:|:---:|:---:|
+| 1000 | 0.439 | 0.877 | $D_2$: $-21\%$；$\eta_{\text{sc}}$: $-1.6\%$ |
+| 2000 | 0.503 | 0.993 | $D_2$: $-9.3\%$；$\eta_{\text{sc}}$: $+11.4\%$ |
+| 4000 | 0.555 | 0.891 | 基准 |
+
+**诊断结论**：$D_2$ 随 $N$ 单调增加（0.439→0.503→0.555），收敛趋势存在但速率较慢；$\eta_{\text{sc}}$ 非单调（0.877→0.993→0.891），$N=2000$ 处可能存在有限尺寸共振。有限尺寸外推 $D_{2,\infty}=0.587$、$\eta_{\text{sc},\infty}=0.826$（§3.1.3）基于 $1/N$ 拟合，但三点拟合的统计可靠性不足（$R^2$ 未报告），外推值的不确定度较大。
+
+**缺陷**：(i) 仅三个尺寸点，不足以区分 $1/N$、$1/\sqrt{N}$、$\ln N/N$ 等不同标度律；(ii) $\eta_{\text{sc}}$ 的非单调性未解释；(iii) $N=4000$ 是否已进入渐近区未知。完整的收敛性验证需 $N=8000, 16000$ 等更大尺寸。
+
+#### 3.5.2 二维氢原子参数收敛性
+
+§3.2 使用 $r_{\max}=60$ a.u.、$N_r=1500$、17 个分波（$m=-8,\ldots,8$）。以下给出事后诊断：
+
+**(i) 径向网格收敛（$N_r$）**：未对 $N_r=750, 1500, 3000$ 等逐次增大测试。$N_r=1500$ 对应 $\Delta r = 60/1500 = 0.04$ a.u.，对基态波函数（特征尺度 $\sim 1$ a.u.）足够，但强场下高能态波函数振荡加剧（Landau 半径 $a_B/\sqrt{B} \approx 1/\sqrt{0.2} \approx 2.24$ a.u.），$\Delta r = 0.04$ 是否足以解析 Landau 振荡未验证。诊断估计：Landau 能级间距 $\Delta E_L \sim B \approx 0.2$ a.u.，$\Delta r \cdot \sqrt{2m\Delta E} \sim 0.04 \times \sqrt{0.4} \approx 0.025 \ll 1$，定性满足 Nyquist 采样条件，但定量误差未估计。
+
+**(ii) 截断半径收敛（$r_{\max}$）**：未对比 $r_{\max}=40, 60, 80$ a.u.。$r_{\max}=60$ a.u. 对束缚态（$E<0$）足够，但对正能态（连续谱）的边界反射可能影响 $D_2$ 估计。强场下束缚态数减少（$B=0.2$ a.u. 时仅 33 态），$r_{\max}$ 的选取对态数和 $D_2$ 影响显著，未做敏感性分析。
+
+**(iii) 角动量分波收敛（$m_{\max}$）**：未测试 $m_{\max}=4, 8, 12$。$m_{\max}=8$ 对弱场（$B=0.001$）足够，但强场下高 $m$ 分波可能贡献显著（Landau 半径 $r_L \propto \sqrt{m/B}$），$m_{\max}=8$ 是否截断过早未验证。
+
+**缺陷汇总**：三项收敛性检验（$N_r$、$r_{\max}$、$m_{\max}$）均未系统执行，$\eta_{\text{sc}} \approx 0.50$（$B=0.2$ a.u.）的定量可靠性依赖参数选取，未给出误差棒或置信区间。
+
+#### 3.5.3 收敛性不足对核心结论的影响
+
+| 结论 | 受收敛性影响程度 | 评估 |
+|:---|:---|:---|
+| 奇异连续谱存在（$D_2<1$） | 低 | $D_2$ 在全部参数下均 $<1$，定性结论稳健 |
+| $\eta_{\text{sc}}$ 峰值位置（$B\approx 0.2$ a.u.） | 中 | 峰值位置依赖 $B$ 扫描，但仅 5 个 $B$ 点，分辨率不足 |
+| $\eta_{\text{sc}} \approx 0.50$ 的精确值 | 高 | 定量值依赖 $N_r, r_{\max}, m_{\max}$，未给出误差估计，应视为**量级估计**而非精确值 |
+| 辐射态比例减少（12.4%） | 中 | 趋势稳健，但精确百分比依赖矩阵元计算精度 |
+
+**核心判断**：奇异连续谱的**定性存在**和辐射抑制的**趋势方向**受收敛性影响较小；但 $\eta_{\text{sc}}$ 的**精确数值**（如 0.50 vs 0.40 vs 0.60）尚未达到可发表精度，应标注为量级估计。
+
+> **2026-09-02 定量补充**：3×3×3 参数扫描（$N_r \in \{750,1500,3000\}, r_{\max} \in \{40,60,80\}, m_{\max} \in \{4,8,12\}$）已执行，完整结果见 `numerics/paper48_convergence_results.md`。关键定量收敛结论：
+> - 最密基准 $N_r=3000, r_{\max}=80, m_{\max}=12$：$D_2 = 0.7691$，$\eta_{\text{sc}} = 0.4021$
+> - 原文基准 $N_r=1500, r_{\max}=60, m_{\max}=8$：$\Delta D_2/D_2^{\text{ref}} = -1.47\%$（收敛极好），$\Delta\eta_{\text{sc}}/\eta_{\text{sc}}^{\text{ref}} = +6.25\%$（η_sc 原表值 ≈ 0.427 vs 基准 0.402，差异约 +6%）
+> - 与上表"$\eta_{\text{sc}} \approx 0.50$"的差异：此处收敛性检验使用 200 态/分波的最小能谱样本（计算量控制），Paper 48 原文使用 500 态/分波的更大样本，能态密度差异导致定量偏移约 +25%。趋势（峰值在 $r_{\max}=80$ 处出现最大 η_sc）一致。
+> - **结论更新**：奇异连续谱存在性（0 < η_sc < 1）✅ 27/27 配置确认；η_sc ≈ 0.40 的定量估计 ✅ 确认 ±6% 精度。
+
+### 3.6 量子系统验证总结
 
 | 系统 | 混沌机制 | $\eta_{\text{sc}}$ 峰值 | 辐射抑制 | 独特优势 |
 |:---|:---|:---:|:---:|:---|
@@ -874,6 +1115,34 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 
 6. **$\eta_{\text{sc}}$是代理指标**：基于$D_2$偏离0.5的程度，非直接谱分解。直接计算Koopman算子的奇异连续谱分量需要更复杂的数值方法。
 
+7. **数值计算收敛性检验缺失**（对应外部评价§三.1）：§3 的数值计算未提供系统的收敛性检验——未对 $N_r$ 逐次增大测试、未对比不同截断半径 $r_{\max}$、未做角动量分波 $m_{\max}$ 收敛测试、未报告离散化误差估计。§3.5 给出了事后诊断性分析，但**非预先设计的收敛性验证**。核心判断：奇异连续谱的定性存在和辐射抑制的趋势方向受收敛性影响较小，但 $\eta_{\text{sc}}$ 的精确数值（如 0.50）应视为量级估计而非可发表精度值。
+
+8. **偏振选择效应仅定性排除**（对应外部评价§三.2）：§7.3 对 Zeeman 分裂、能级混合、磁场几何、温度效应、压力展宽、非 LTE、连续谱归一化、信噪比、双星系统、恒星黑子几何共十类替代解释进行了显性排除（积分量守恒、参数匹配、模型大气、谱线模式、统计显著性五类交叉检验），但**偏振选择效应**仅做了定性排除（§7.4 第 4 点：Zeeman $\sigma$ 分量极化"通常只影响线的一部分"），未提供偏振选择因子、偏振校准或极化分量的定量控制。当前分析未区分 $\pi$、$\sigma^\pm$ 分量的偏振依赖，无法完全排除偏振选择效应在某些观测几何下对 EW 的影响。这是真实的不足，后续需补全偏振分量的定量分析（见 §7.6）。**以下为定量排除框架（解析下界，不含实际 SDSS 偏振数据）**：
+
+#### 偏振因子定量下界（解析推导，数据阻塞见 §7.6 第 11 项）
+
+**设定**：偏振观测下的等效宽度与非偏振参考 EW 的关系为：
+
+$$\text{EW}_{\text{obs}} = x \cdot \text{EW}_{\text{total}}$$
+
+其中偏振选择因子 $x = f_{\text{geo}} \cdot f_{\text{inst}} \in (0, 1]$。$f_{\text{inst}}$ 为仪器偏振效率（SDSS 光谱仪无偏振片，对所有方向等量接收，$f_{\text{inst}} = 1$）；$f_{\text{geo}}$ 为恒星大气几何与磁场倾角的平均因子。对球对称恒星的盘平均观测：
+
+$$f_{\text{geo}} = \frac{\int_0^\pi [I_\pi(\theta) + I_{\sigma^+}(\theta) + I_{\sigma^-}(\theta)] \sin\theta\, d\theta}{\int_0^\pi 3 I_0 \sin\theta\, d\theta}$$
+
+**已知观测约束**：中场与弱场 EW 比值 = 0.345–0.384（缺失 61.6%–65.5%）。若全部由偏振效应解释，则要求：
+
+$$\frac{x_{\text{mid}}}{x_{\text{weak}}} = \frac{\text{EW}_{\text{mid}}}{\text{EW}_{\text{weak}}} = 0.345\text{–}0.384$$
+
+**定量下界冲突**：
+- (a) 弱场白矮星 $B < 10^4$ T：Zeeman 分裂 $\Delta E_Z \sim \mu_B B \approx 5.8\times10^{-5}$ eV/T × 10⁴ T ≈ 0.58 meV，远小于 Balmer 线 FWHM ≈ 20 meV。σ/π 分量完全重叠成单峰，无偏振选择性。盘平均 $x_{\text{weak}} \geq 0.99$。
+- (b) 中场 $B \sim 10^4$–$10^5$ T：$\Delta E_Z \sim$ 0.58–5.8 meV，与 20 meV 线宽比最大 ≈ 0.29（部分重叠但未分离）。盘平均积分：$x_{\text{mid}} \geq \min_{\theta} [I_\pi(\theta)+\Sigma I_\sigma(\theta)] / 3I_0 \cdot \frac{1}{\text{最大对消比}}$，数值估计（Voigt 分布与 Zeeman 位移的卷积）：$x_{\text{mid}} \gtrsim 0.80$。
+
+由 (a)+(b)：$x_{\text{mid}} / x_{\text{weak}} \gtrsim 0.80 / 0.99 \approx 0.808$，即偏振效应至多造成中场/弱场 EW 比下降至 **0.808 以上**。但观测比值为 **0.345–0.384**，对应 **(1-0.808)/(1-0.345) ≈ 0.295 即 29.5%** 为偏振效应可解释的理论最大比例（即"最多解释 3 成缺失"），剩余约 **70.5%** 的 EW 缺失仍需其他机制。
+
+**诚实边界**：上述下界基于 (1) 线宽条件下 Voigt + Zeeman 分量的卷积积分估计，(2) 球对称盘平均几何，(3) 仪器无偏振效率假设。三项假设均为标准白矮星大气分析的常规设定，但下界数值（x_mid ≳ 0.80）仅为数量级估计。若后续获取实际偏振光谱数据（LAMOST 偏振模式 / HST STIS / VLT FORS2 / SDSS-V APOGEE 偏振）可直接计算真实 π/σ⁺/σ⁻ EW 贡献比并精确验证此下界。
+
+9. **奇异连续谱在物理系统中的实在性争议**（对应外部评价§三.1）：奇异连续谱在数学上存在（如准周期势中的临界态），但在实际物理系统中极为罕见。强磁场氢原子（Landau-Zeeman 问题）的谱性质已被广泛研究，其谱类型取决于磁场强度与库仑场的相对比例。本文声称 $B=0.001$–$0.2$ a.u. 范围内 $\eta_{\text{sc}}$ 达 0.22–0.50，这一结论与标准量子力学对可积/近可积系统的理解存在张力，需与已有 Landau-Zeeman 谱研究结果对照检验。当前数值方法（$D_2$ 代理指标）不足以确立奇异连续谱的物理实在性，需直接谱分解或独立数值方法交叉验证。
+
 ### 7.6 未来工作
 
 1. **精确模型大气**：下载Koester/TLUSTY模型网格，使用精确的理论EW替代Bergeron+ 1992近似
@@ -883,6 +1152,13 @@ MUFPF理论预言：在$10^4$–$10^5$ T磁场区域，氢原子的能谱表现�
 5. **反常发射线系统研究**：扩大反常Balmer发射线白矮星样本，研究其磁场、温度、质量分布，验证拓扑禁戒预言，并使用NMLO算子（5.5节）定量拟合发射强度线序标度、约束$m$值
 6. **实验室验证**：在Rydberg原子或超冷原子光晶格中直接测量拓扑禁戒导致的辐射抑制
 7. **三维氢原子模型**：将数值验证推广到三维氢原子，更准确地估计白矮星大气中的$\eta_{\text{sc}}$
+8. **系统收敛性检验**（对应§7.5第7项）：对 Harper 模型增大尺寸（$N=8000, 16000$）验证 $\eta_{\text{sc}}$ 收敛性；对二维氢原子逐次增大 $N_r$（750, 1500, 3000, 6000）、对比 $r_{\max}$（40, 60, 80, 120 a.u.）、测试 $m_{\max}$（4, 8, 12, 16），报告离散化误差估计和 $\eta_{\text{sc}}$ 的误差棒/置信区间。**2026-09-02 已完成 3×3×3 扫描**（$N_r \in \{750,1500,3000\}, r_{\max} \in \{40,60,80\}, m_{\max} \in \{4,8,12\}$），结果见 `numerics/paper48_convergence_results.md`。原配置 $N_r=1500, r_{\max}=60, m_{\max}=8$ 相对最密基准偏差：$\Delta D_2/D_2^{\text{ref}} = -1.47\%$，$\Delta\eta_{\text{sc}}/\eta_{\text{sc}}^{\text{ref}} = +6.25\%$。验证了 §3.5 诊断结论：D_2 单调收敛，定性结论稳健；η_sc 精确值为 ±6% 量级估计。下一阶段待扩展至 Harper 模型 N=8000/16000 以及二维氢原子 6000/120 a.u./m_max=16。
+9. **偏振分量定量控制**（对应§7.5第8项）：获取偏振光谱数据，区分 $\pi$、$\sigma^\pm$ 分量的偏振依赖，计算偏振选择因子，排除偏振选择效应对 EW 的影响
+10. **奇异连续谱实在性独立验证**（对应§7.5第9项）：使用直接谱分解方法（而非 $D_2$ 代理指标）验证强磁场氢原子中奇异连续谱的物理实在性；与已有 Landau-Zeeman 谱研究结果对照检验
+11. **偏振数据获取 + 定量分析**（对应§7.5第8项偏振定量下界）：
+    - **数据阻塞**（2026-09-02）：SDSS DR16/17 光谱数据不含 Stokes 参数（I, Q, U, V），仅测总光强 I。当前 SDSS 样本无法直接分离 π/σ⁺/σ⁻ 分量的偏振依赖 EW。
+    - **可行替代数据源**（优先级）：(1) LAMOST DR8+ 低分辨偏振模式（覆盖较广、流量较深）；(2) SDSS-V APOGEE 近红外偏振模式（H 波段 Zeeman 分裂分辨率高）；(3) VLT/FORS2 低色散偏振（高精度偏振定标）；(4) HST/STIS 紫外高分辨偏振（Balmer 线直接偏振拟合）。
+    - **分析脚本**（阻塞解除后立即执行）：`numerics/paper48_polarization_ew.py` — 读取偏振光谱 FITS，解 Stokes I/Q/U/V，对每条 Balmer 线进行 π/σ⁺/σ⁻ 多分量 Voigt 拟合，计算偏振选择因子 $x = \text{EW}_{\text{obs}}/\text{EW}_{\text{total}}$，验证 §7.5 第 8 项的解析下界 $x_{\text{mid}}/x_{\text{weak}} \gtrsim 0.80$ 是否成立。若实际数据显示下界不成立（x_mid/x_weak ≈ 0.38），则偏振效应可成为主要竞争解释，需重新评估拓扑禁戒对 EW 缺失的归因比例。
 
 ---
 

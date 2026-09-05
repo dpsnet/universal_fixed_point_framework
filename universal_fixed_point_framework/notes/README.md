@@ -161,6 +161,8 @@ See `notes/00_foundations/spectral_comprehensive_review.md` for a self-contained
 | LACI 高泛音验证 | 🟢 验证 | `04_lorentz_gravity/laci_high_overtone_validation.md` |
 | LACI 谱丛解释（谱叶追踪） | 🟢 谱丛几何 | `04_lorentz_gravity/spectral_sheaf_leaver.md` |
 | 融合路径 4（Wigner 谱桥接） | 🟢 桥接 | `11_transition_bridges/fusion_path4_wigner_spectral_bridge.md` |
+| 维度 = 自由度扩张的饱和点（分形填充极限 × 经典物理稳定性窗口，夹逼唯一性 d=3，v0.2，2026-09-02） | 🟢 直觉 + 论证 + 推进 | `08_first_principles/09_dimension_freedom_saturation.md` |
+| 坍缩-静默充要定理（d≥4 坍缩不稳定 ⟺ 四类空维静默；内层 T1 已证 + 桥接公设 B1 显式标注，v0.1，2026-09-02） | 🟡 内层已证 + 公设 | `08_first_principles/10_silence_collapse_theorem.md` |
 
 **谱丛/Leaver/LACI 笔记群**（2026-08-16 自根目录归入 `04_lorentz_gravity/`）：`leaver_*`/`laci_*`/`spectral_sheaf_*`/`dynamic_*`/`dual_homotopy_convergence` 共 34 篇——Kerr 谱丛、Leaver 连分数、动态双星波形、LACI 系列研究线，与 paper27/26 配套；∞-范畴预研/谱纤维化/术语治理 3 篇归入 `00_foundations/`。根目录现仅存索引文件（README、STRUCTURE_MAPPING）。
 
