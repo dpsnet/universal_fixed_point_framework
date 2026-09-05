@@ -204,6 +204,13 @@ def hilbertSchmidtInnerProduct {n : ℕ} (A B : Matrix (Fin n) (Fin n) ℂ) : �
 def frobSq {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
   ∑ i, ∑ j, Complex.normSq (A i j)
 
+/-- frobSq 在标量乘法下的缩放律：frobSq(c • M) = |c|² · frobSq(M)。 -/
+lemma frobSq_smul (c : ℂ) {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
+    frobSq (c • M) = Complex.normSq c * frobSq M := by
+  simp only [frobSq]
+  have h1 : ∀ i j : Fin n, (c • M) i j = c * M i j := fun i j => rfl
+  simp only [h1, Complex.normSq_mul, Finset.mul_sum]
+
 /-- `.re` distributes over `Finset.sum`. -/
 @[simp] lemma Complex.re_sum {ι : Type*} [DecidableEq ι] (s : Finset ι) (f : ι → ℂ) :
     (s.sum f).re = s.sum (fun i => (f i).re) := by
@@ -310,9 +317,65 @@ def sigmaZ {n : ℕ} (hn : n = 2) : Matrix (Fin n) (Fin n) ℂ :=
 /-- 2×2 矩阵对易子计算：[σ_x, σ_y] = 2i σ_z（通用 Fin n + hn:n=2 版本）。 -/
 lemma commutator_sigmaX_sigmaY {n : ℕ} (hn : n = 2) :
     sigmaX hn * sigmaY hn - sigmaY hn * sigmaX hn = (2 * Complex.I) • sigmaZ hn := by
-  -- concrete 2×2 Complex matrix arithmetic; blocked by noncomputable Complex.instDecidableEq
-  -- ring fails (non-commutative), native_decide fails (noncomputable), norm_num can't reduce mulAux
-  subst hn; sorry
+  subst hn
+  dsimp only [sigmaX, sigmaY, sigmaZ]
+  set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
+  set sy : Matrix (Fin 2) (Fin 2) ℂ := ![![0, -Complex.I], ![Complex.I, 0]] with hsy
+  set sz : Matrix (Fin 2) (Fin 2) ℂ := ![![1, 0], ![0, -1]] with hsz
+  have h_sx00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sx01 : sx 0 1 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sx10 : sx 1 0 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sx11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sy00 : sy 0 0 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h_sy01 : sy 0 1 = -Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h_sy10 : sy 1 0 = Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h_sy11 : sy 1 1 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h_sz00 : sz 0 0 = 1 := by simp [hsz, Matrix.of_apply] <;> rfl
+  have h_sz01 : sz 0 1 = 0 := by simp [hsz, Matrix.of_apply] <;> rfl
+  have h_sz10 : sz 1 0 = 0 := by simp [hsz, Matrix.of_apply] <;> rfl
+  have h_sz11 : sz 1 1 = -1 := by simp [hsz, Matrix.of_apply] <;> rfl
+  have h_mul_xy00 : (sx * sy) 0 0 = Complex.I := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx00, h_sy00, h_sx01, h_sy10]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_xy01 : (sx * sy) 0 1 = 0 := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx00, h_sy01, h_sx01, h_sy11]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_xy10 : (sx * sy) 1 0 = 0 := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx10, h_sy00, h_sx11, h_sy10]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_xy11 : (sx * sy) 1 1 = -Complex.I := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx10, h_sy01, h_sx11, h_sy11]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_yx00 : (sy * sx) 0 0 = -Complex.I := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy00, h_sx00, h_sy01, h_sx10]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_yx01 : (sy * sx) 0 1 = 0 := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy00, h_sx01, h_sy01, h_sx11]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_yx10 : (sy * sx) 1 0 = 0 := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy10, h_sx00, h_sy11, h_sx10]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  have h_mul_yx11 : (sy * sx) 1 1 = Complex.I := by
+    rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy10, h_sx01, h_sy11, h_sx11]
+    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+  ext i j
+  fin_cases i <;> fin_cases j
+  · -- (0,0)
+    apply Complex.ext
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00] <;> ring_nf <;> norm_num
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00] <;> ring_nf <;> norm_num
+  · -- (0,1)
+    apply Complex.ext
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01] <;> ring_nf <;> norm_num
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01] <;> ring_nf <;> norm_num
+  · -- (1,0)
+    apply Complex.ext
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10] <;> ring_nf <;> norm_num
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10] <;> ring_nf <;> norm_num
+  · -- (1,1)
+    apply Complex.ext
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11] <;> ring_nf <;> norm_num
+    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11] <;> ring_nf <;> norm_num
 
 /-! ### C2：ℏ/2 = 最小非平凡谱交织实现
     代数内容：有限维标准化下，最小非零对易子 ‖[P, A]‖_F ≥ ℏ/2 · ‖P‖·‖A‖
@@ -330,10 +393,123 @@ theorem c2_pauli_instance_lower_bound {n : ℕ} (hn : n = 2) :
     let sy := (1 / (↑(Real.sqrt 2) : ℂ)) • sigmaY hn
     let C  := sx * sy - sy * sx
     frobSq C = 2 := by
-  /- [σ_x/√2, σ_y/√2] = (1/2)·[σ_x, σ_y] = (1/2)·(2i σ_z) = i σ_z
-     ||i σ_z||_F² = |i|²+|-i|² = 2。 -/
-  -- same blocker as commutator_sigmaX_sigmaY + Real.sqrt noncomputability
-  subst hn; sorry
+  subst hn
+  dsimp only [sigmaX, sigmaY, sigmaZ]
+  set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
+  set sy : Matrix (Fin 2) (Fin 2) ℂ := ![![0, -Complex.I], ![Complex.I, 0]] with hsy
+  set sz : Matrix (Fin 2) (Fin 2) ℂ := ![![1, 0], ![0, -1]] with hsz
+  set c : ℂ := 1 / (↑(Real.sqrt 2) : ℂ) with hc_def
+  have h_sqrt2_pos : 0 < Real.sqrt 2 := Real.sqrt_pos.mpr (by norm_num)
+  have h_coeff : c * c = (1 / 2 : ℂ) := by
+    simp only [hc_def]
+    have h1 : (1 : ℂ) / (↑(Real.sqrt 2)) * (1 / (↑(Real.sqrt 2))) =
+        (1 : ℂ) / ((↑(Real.sqrt 2)) * (↑(Real.sqrt 2))) := by
+      rw [div_mul_div_comm, one_mul]
+    rw [h1]
+    have h2 : (↑(Real.sqrt 2) : ℂ) * (↑(Real.sqrt 2)) = (2 : ℂ) := by
+      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+      <;> norm_num
+    rw [h2] <;> norm_num
+  have h1 : c • sx * c • sy = (c * c) • (sx * sy) := by
+    rw [smul_mul_smul]
+    <;> ring
+  have h2 : c • sy * c • sx = (c * c) • (sy * sx) := by
+    rw [smul_mul_smul]
+    <;> ring
+  have h_comm : c • sx * c • sy - c • sy * c • sx = Complex.I • sz := by
+    rw [h1, h2, h_coeff]
+    rw [← smul_sub]
+    have h3 : sx * sy - sy * sx = (2 * Complex.I) • sz :=
+      commutator_sigmaX_sigmaY rfl
+    rw [h3]
+    rw [smul_smul]
+    <;> ext i j <;> fin_cases i <;> fin_cases j <;>
+      simp [hsz, Matrix.smul_apply, Matrix.of_apply] <;>
+      (try { apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num })
+  have h_frob_sz : frobSq sz = 2 := by
+    simp [frobSq, hsz, Matrix.of_apply, Fin.sum_univ_two, Complex.normSq]
+    <;> norm_num
+  have h_main : frobSq (c • sx * c • sy - c • sy * c • sx) = 2 := by
+    rw [h_comm]
+    have h4 : frobSq (Complex.I • sz) = Complex.normSq (Complex.I) * frobSq sz := by
+      exact frobSq_smul Complex.I sz
+    rw [h4, h_frob_sz, Complex.normSq_I]
+    <;> norm_num
+  exact h_main
+
+/-- 2×2 无迹矩阵的反对易子恒等式（Cayley-Hamilton 推论）：
+    tr(P)=tr(A)=0 ⟹ PA + AP = tr(PA)·I。
+    证明：直接展开2×2矩阵乘法 + P₁₁=-P₀₀, A₁₁=-A₀₀（无迹）+ ring。 -/
+private lemma anticomm_traceless_2x2 (P A : Matrix (Fin 2) (Fin 2) ℂ)
+    (hTrP : P.trace = 0) (hTrA : A.trace = 0) :
+    P * A + A * P = (P * A).trace • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  have hP11 : P 1 1 = -P 0 0 := by
+    simp only [Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] at hTrP
+    calc P 1 1 = P 0 0 + P 1 1 - P 0 0 := by ring
+      _ = 0 - P 0 0 := by rw [hTrP]
+      _ = -P 0 0 := by ring
+  have hA11 : A 1 1 = -A 0 0 := by
+    simp only [Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] at hTrA
+    calc A 1 1 = A 0 0 + A 1 1 - A 0 0 := by ring
+      _ = 0 - A 0 0 := by rw [hTrA]
+      _ = -A 0 0 := by ring
+  have hTrPA : (P * A).trace = P 0 0 * A 0 0 + P 0 1 * A 1 0 + P 1 0 * A 0 1 + P 1 1 * A 1 1 := by
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two]
+    <;> ring
+  ext i j
+  fin_cases i <;> fin_cases j
+  · -- (0,0)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+  · -- (0,1)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+  · -- (1,0)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+  · -- (1,1)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+
+/-- 2×2 无迹矩阵的平方恒等式（Cayley-Hamilton）：
+    tr(M)=0 ⟹ M² = (tr(M²)/2)·I。
+    证明：直接展开2×2矩阵乘法 + M₁₁=-M₀₀（无迹）+ ring。 -/
+private lemma sq_traceless_2x2 (M : Matrix (Fin 2) (Fin 2) ℂ)
+    (hTr : M.trace = 0) :
+    M * M = ((M * M).trace / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  have h11 : M 1 1 = -M 0 0 := by
+    simp only [Matrix.trace, Matrix.diag_apply, Fin.sum_univ_two] at hTr
+    calc M 1 1 = M 0 0 + M 1 1 - M 0 0 := by ring
+      _ = 0 - M 0 0 := by rw [hTr]
+      _ = -M 0 0 := by ring
+  have hTrM2 : (M * M).trace = 2 * (M 0 0 * M 0 0) + M 0 1 * M 1 0 + M 1 0 * M 0 1 := by
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two, h11] <;> ring
+  ext i j
+  fin_cases i <;> fin_cases j
+  · -- (0,0)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+  · -- (0,1)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+  · -- (1,0)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+  · -- (1,1)
+    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+
+/-- 辅助引理：Hermitian 矩阵 P 满足 tr(P * A).re = ⟨P, A⟩_HS.re。 -/
+private lemma trace_mul_re_of_hermitian {n : ℕ}
+    (P A : Matrix (Fin n) (Fin n) ℂ) (hHermP : P = P.conjTranspose) :
+    (Matrix.trace (P * A)).re = (hilbertSchmidtInnerProduct P A).re := by
+  unfold hilbertSchmidtInnerProduct
+  rw [← hHermP]
+
+/-- 辅助引理：Hermitian P, A ⟹ tr(PA) 的虚部 = 0（tr(PA) 为实数）。
+    证明：star(tr(PA)) = tr((PA)†) = tr(A†P†) = tr(AP) = tr(PA)。 -/
+private lemma trace_mul_im_zero_of_hermitian {n : ℕ}
+    (P A : Matrix (Fin n) (Fin n) ℂ) (hHermP : P = P.conjTranspose)
+    (hHermA : A = A.conjTranspose) :
+    (Matrix.trace (P * A)).im = 0 := by
+  have h : star (Matrix.trace (P * A)) = Matrix.trace (P * A) := by
+    rw [← Matrix.trace_conjTranspose, Matrix.conjTranspose_mul, ← hHermP, ← hHermA]
+    exact Matrix.trace_mul_comm A P
+  have h2 := congr_arg Complex.im h
+  rw [Complex.star_def, Complex.conj_im] at h2
+  linarith
 
 /-- C2 定理（正交归一无迹 Pauli 对）：
     若 P, A 是 2×2 无迹（tr=0）、单位 Frobenius 范数（‖·‖_F²=1）、
@@ -350,13 +526,88 @@ theorem c2_commutator_orthonormal_traceless {n : ℕ} (hn : n = 2)
     (hOrth : (hilbertSchmidtInnerProduct P A).re = 0)
     (hTrP : Matrix.trace P = 0)
     (hTrA : Matrix.trace A = 0)
+    (hHermP : P = P.conjTranspose)
+    (hHermA : A = A.conjTranspose)
     (h_nc : P * A ≠ A * P) :
     frobSq (P * A - A * P) = 2 := by
-  -- 推导：无迹 ⟹ P=p⃗·σ⃗/√2, A=a⃗·σ⃗/√2
-  -- ‖P‖²=1 ⟹ |p⃗|=1; ‖A‖²=1 ⟹ |a⃗|=1; ⟨P,A⟩=0 ⟹ p⃗·a⃗=0
-  -- [P,A]=i(p⃗×a⃗)·σ⃗ ⟹ ‖[P,A]‖²=2|p⃗×a⃗|²=2(|p⃗|²|a⃗|²-(p⃗·a⃗)²)=2
-  -- 阻塞：Pauli 基展开正交完备性 + Mathlib 缺少 2×2 Pauli 基完备库
-  subst hn; sorry
+  subst hn
+  -- ===== 步骤1: 反对易子恒等式 =====
+  have h_anticomm : P * A + A * P = (P * A).trace • (1 : Matrix (Fin 2) (Fin 2) ℂ) :=
+    anticomm_traceless_2x2 P A hTrP hTrA
+  -- ===== 步骤2: tr(PA) = 0 =====
+  have h_trPA : (P * A).trace = 0 := by
+    apply Complex.ext
+    · -- 实部：tr(PA).re = hilbertSchmidtInnerProduct P A 的实部 = 0
+      have hre := trace_mul_re_of_hermitian P A hHermP
+      rw [hre]; exact hOrth
+    · -- 虚部：Hermitian P ⟹ tr(PA) 为实数
+      exact trace_mul_im_zero_of_hermitian P A hHermP hHermA
+  -- ===== 步骤3: A*P = -(P*A) =====
+  have h_AP : A * P = -(P * A) := by
+    have h := h_anticomm
+    rw [h_trPA, zero_smul] at h
+    exact (add_eq_zero_iff_neg_eq.mp h).symm
+  -- ===== 步骤4: P² = (1/2)·I =====
+  have hP2 : P * P = (1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    have h := sq_traceless_2x2 P hTrP
+    have h_trP2 : (P * P).trace = (1 : ℂ) := by
+      have hre : ((P * P).trace).re = 1 := by
+        have h1 := trace_mul_re_of_hermitian P P hHermP
+        rw [h1]; exact hP
+      have him : ((P * P).trace).im = 0 :=
+        trace_mul_im_zero_of_hermitian P P hHermP hHermP
+      exact Complex.ext hre him
+    rw [h_trP2] at h; exact h
+  -- ===== 步骤5: A² = (1/2)·I =====
+  have hA2 : A * A = (1/2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    have h := sq_traceless_2x2 A hTrA
+    have h_trA2 : (A * A).trace = (1 : ℂ) := by
+      have hre : ((A * A).trace).re = 1 := by
+        have h1 := trace_mul_re_of_hermitian A A hHermA
+        rw [h1]; exact hA
+      have him : ((A * A).trace).im = 0 :=
+        trace_mul_im_zero_of_hermitian A A hHermA hHermA
+      exact Complex.ext hre him
+    rw [h_trA2] at h; exact h
+  -- ===== 步骤6: frobSq(PA) = 1/2 =====
+  -- 推导：frobSq(PA) = tr((PA)†(PA)) = tr(A†P†PA) = tr(A·P²·A) [hHermP]
+  -- = tr(P²·A²) [trace cyclicity] = tr(½I·A²) [hP2] = ½·tr(A²)
+  -- = ½·tr(A†A) [hHermA] = ½·⟨A,A⟩ = ½
+  have h_frobSqPA : frobSq (P * A) = (1 / 2 : ℝ) := by
+    -- frobSq(PA) = ⟨PA, PA⟩_HS.re = Re(tr((PA)†·PA))
+    -- (PA)† = A†P† = AP [hHermP, hHermA], so = Re(tr(AP·PA))
+    -- trace cycle: tr(AP·PA) = tr(PA·AP) = tr(P·A²·P) [mul_assoc]
+    -- trace cycle': tr(P·A²·P) = tr(P²·A²)
+    -- P² = ½·I [hP2], A² = ½·I [hA2] → tr(¼·I) = ¼·2 = ½
+    rw [← hilbertSchmidt_real_self]
+    unfold hilbertSchmidtInnerProduct
+    have h_ct : (P * A).conjTranspose = A * P := by
+      rw [Matrix.conjTranspose_mul, ← hHermA, ← hHermP]
+    rw [h_ct]
+    rw [Matrix.trace_mul_comm (A * P) (P * A)]
+    -- tr((P*A)*(A*P)) = tr(P*(A*A)*P) = tr((P*P)*(A*A))
+    rw [show (P * A) * (A * P) = (P * (A * A)) * P by simp only [mul_assoc]]
+    rw [Matrix.trace_mul_comm (P * (A * A)) P]
+    rw [← Matrix.mul_assoc P P (A * A)]
+    -- tr((P*P)*(A*A)) → use hA2, hP2
+    rw [hA2]
+    rw [show (P * P) * ((1 / 2 : ℂ) • 1) = (1 / 2 : ℂ) • (P * P) by
+      rw [mul_smul_comm, mul_one]]
+    rw [hP2]
+    rw [show (1 / 2 : ℂ) • ((1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) =
+      ((1 / 4 : ℂ)) • 1 by rw [smul_smul]; norm_num]
+    rw [Matrix.trace_smul, Matrix.trace_one]
+    simp
+    norm_num
+  -- ===== 最终计算 =====
+  -- 对易子 = P*A - A*P = P*A + P*A = (2:ℂ) • (P*A)
+  have h_comm : P * A - A * P = (2 : ℂ) • (P * A) := by
+    rw [h_AP, sub_neg_eq_add, two_smul (R := ℂ)]
+  -- frobSq(2 • PA) = |2|² · frobSq(PA) = 4 · (1/2) = 2
+  rw [h_comm, frobSq_smul]
+  simp
+  rw [h_frobSqPA]
+  norm_num
 
 /-! ### C3：Δt·ΔE ≥ ℏ/2 = 纤维-基空间仿形精度下界
     谱侧形式：能谱间隙 Δλ 与过渡时间 Δt 的 Fourier 不确定性 Δλ·Δt ≥ 1/2
