@@ -97,7 +97,10 @@ noncomputable def multiForceSpectralFlow {n : ℕ} (A₀ : Matrix (Fin n) (Fin n
   (NormedSpace.exp ((-t) • G : Matrix (Fin n) (Fin n) ℂ))
 
 /-- Nöther conservation law for force unification:
-    If [A_{F,i}, A_S] = 0 for all i, then Tr(A_S · A(t)) is conserved. -/
+    If [A_{F,i}, A_S] = 0 for all i, then Tr(A_S · A(t)) is conserved.
+    数学内容：A(t) = exp(tG)·A₀·exp(-tG)，Tr(A_S·A(t)) = Tr(A_S·A₀)。
+    阻塞：需要 A_S 与 exp(tG) 交换的证明（由 hComm 对所有生成元成立推导）。
+    当前以 True 登记，等待矩阵指数交换性基础设施。 -/
 theorem noether_conservation_unified {n : ℕ} (A₀ : Matrix (Fin n) (Fin n) ℂ)
     (A_S : Matrix (Fin n) (Fin n) ℂ) (generators : List (ℝ × Matrix (Fin n) (Fin n) ℂ))
     (hComm : ∀ (g_A : ℝ × Matrix (Fin n) (Fin n) ℂ), g_A.2 * A_S = A_S * g_A.2) (t : ℝ) : True :=

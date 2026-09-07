@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T-03 引力波时序震荡深层缺口详细修复方案</title>
+<style>
+:root {
+  --bg: #0d1117; --card-bg: #161b22; --border: #30363d;
+  --text: #c9d1d9; --text-dim: #8b949e; --accent: #58a6ff;
+  --accent-dim: #1f6feb; --green: #3fb950; --yellow: #d29922;
+  --red: #f85149; --purple: #bc8cff; --orange: #db6d28;
+  --code-bg: #1c2128;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.8;
+  padding: 2rem 1rem; max-width: 960px; margin: 0 auto;
+}
+h1 { font-size: 1.5rem; color: var(--accent); border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+h2 { font-size: 1.2rem; color: var(--text); margin-top: 2.5rem; margin-bottom: 0.75rem; padding-left: 0.75rem; border-left: 3px solid var(--accent); }
+h3 { font-size: 1.02rem; color: var(--text-dim); margin-top: 1.5rem; margin-bottom: 0.5rem; }
+h4 { font-size: 0.92rem; color: var(--accent); margin-top: 1rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 0.6rem; }
+.meta { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1.25rem; margin-bottom: 2rem; font-size: 0.82rem; color: var(--text-dim); }
+.meta strong { color: var(--text); }
+.badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 10px; font-size: 0.72rem; font-weight: 600; }
+.b-red { background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+.b-yellow { background: rgba(210,153,34,0.15); color: var(--yellow); border: 1px solid rgba(210,153,34,0.3); }
+.b-green { background: rgba(63,185,80,0.15); color: var(--green); border: 1px solid rgba(63,185,80,0.3); }
+.b-purple { background: rgba(188,140,255,0.15); color: var(--purple); border: 1px solid rgba(188,140,255,0.3); }
+.b-orange { background: rgba(219,109,40,0.15); color: var(--orange); border: 1px solid rgba(219,109,40,0.3); }
+code { background: var(--code-bg); color: var(--purple); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.82rem; font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace; }
+.code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.6rem 0.9rem; overflow-x: auto; margin: 0.5rem 0; font-family: "JetBrains Mono", "Fira Code", "Consolas", monospace; font-size: 0.78rem; line-height: 1.55; }
+.code-block .c { color: #6a9955; }
+.code-block .k { color: #ff7b72; }
+.code-block .n { color: #d2a8ff; }
+.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; margin: 0.75rem 0; }
+.card-title { font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; font-size: 0.9rem; }
+table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; font-size: 0.82rem; }
+th, td { border: 1px solid var(--border); padding: 0.4rem 0.6rem; text-align: left; }
+th { background: var(--card-bg); color: var(--accent); font-weight: 600; }
+tr:nth-child(even) { background: rgba(22,27,34,0.5); }
+ul, ol { margin-left: 1.3rem; margin-bottom: 0.6rem; }
+li { margin-bottom: 0.25rem; }
+.gap-section { border-left: 3px solid var(--red); padding-left: 1rem; margin: 1.5rem 0; }
+.gap-section-2 { border-left: 3px solid var(--yellow); padding-left: 1rem; margin: 1.5rem 0; }
+.gap-section-3 { border-left: 3px solid var(--orange); padding-left: 1rem; margin: 1.5rem 0; }
+.approach { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; margin: 0.5rem 0; }
+.approach-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.approach-header strong { color: var(--text); }
+.roadmap-step { display: flex; gap: 0.75rem; margin: 0.75rem 0; align-items: flex-start; }
+.roadmap-num { background: var(--accent-dim); color: white; min-width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; flex-shrink: 0; }
+.roadmap-content { flex: 1; font-size: 0.85rem; }
+.roadmap-content strong { color: var(--text); }
+.roadmap-content span { color: var(--text-dim); }
+.footer { border-top: 1px solid var(--border); margin-top: 2.5rem; padding-top: 0.75rem; font-size: 0.78rem; color: var(--text-dim); }
+.diagram { background: var(--code-bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem; margin: 0.75rem 0; font-family: monospace; font-size: 0.75rem; line-height: 1.5; white-space: pre; overflow-x: auto; }
+.formula { background: var(--code-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.4rem 0.6rem; margin: 0.4rem 0; font-family: "JetBrains Mono", monospace; font-size: 0.8rem; overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<h1>T-03 引力波时序震荡深层缺口详细修复方案</h1>
+
+<div class="meta">
+  <strong>文档编号：</strong>MUFPF-RP-GWDEEP-001 &nbsp;|&nbsp;
+  <strong>日期：</strong>2026-09-06 &nbsp;|&nbsp;
+  <strong>关联笔记：</strong>MUFPF-RN-COMPACT-001 v1.1 §3.3 &nbsp;|&nbsp;
+  <strong>关联代码：</strong>GravitationalWave.lean, SpCategory.lean, DecursionFunctor.lean
+</div>
+
+<h2>一、缺口总览</h2>
+
+<p>T-03 引力波时序震荡定理已完成形式化（<code>T03_gravitational_wave_timing_oscillation</code> 零 sorry 闭合），但其物理预言力受限于三个深层缺口。这些缺口的共同根源是：当前 Rec/Sp 范畴仅有抽象的递归动力学和谱数据，尚缺从抽象振荡到物理时空张量波的投影机制。</p>
+
+<table>
+  <tr><th>缺口</th><th>描述</th><th>优先级</th><th>性质</th></tr>
+  <tr>
+    <td>G1</td>
+    <td>张量横波极化 +, ×：标量相位震荡如何投影为横向张量极化</td>
+    <td><span class="badge b-red">最高</span></td>
+    <td>公理性——若无法内生导出则需增补独立公理</td>
+  </tr>
+  <tr>
+    <td>G2</td>
+    <td>传播速度：函子耦合传递不强制等于 c</td>
+    <td><span class="badge b-yellow">中</span></td>
+    <td>定量性——需定义耦合延迟与涌现度规的对应</td>
+  </tr>
+  <tr>
+    <td>G3</td>
+    <td>四极辐射约束：无单极、无偶极的范畴证明</td>
+    <td><span class="badge b-orange">中</span></td>
+    <td>结构性——需多极分解机制</td>
+  </tr>
+</table>
+
+<h2>二、缺口 G1：张量横波极化 +, ×</h2>
+
+<div class="gap-section">
+
+<h3>G1.1 问题诊断</h3>
+
+<p>当前 T-03 形式化中，引力波信号是 RecObj Y 中的<strong>周期态</strong>——某个状态 <code>y ∈ Y.T</code> 满足 <code>Y.step^n y = y</code>。这是一个标量/离散概念：状态在 n 步后回到自身，但不包含任何空间方向信息或张量结构。</p>
+
+<p>物理上，引力波有两个独立的横向张量极化模式：</p>
+<div class="formula">
+e₊ = (ê_x ⊗ ê_x − ê_y ⊗ ê_y) / √2 &nbsp;&nbsp;（plus 极化）<br>
+e× = (ê_x ⊗ ê_y + ê_y ⊗ ê_x) / √2 &nbsp;&nbsp;（cross 极化）
+</div>
+
+<p>两者均为横向无迹（transverse traceless, TT）的二阶对称张量。问题的核心是：Rec 范畴中的标量振荡通过什么机制产生这些张量模式？</p>
+
+<h3>G1.2 现有基础设施分析</h3>
+
+<div class="card">
+  <div class="card-title">已有构件（可直接复用）</div>
+  <ul>
+    <li><code>DFunctor : RecObj ⥤ SpObj</code>（DecursionFunctor.lean）——将 RecObj 映射为其转移矩阵（Koopman 算子），周期态映射为单位圆上的特征值</li>
+    <li><code>hilbertSchmidtInnerProduct</code>（SpCategory.lean）——Sp 范畴上的内积，可用于投影到子空间</li>
+    <li><code>spectralFlowTransform</code>（SpCategory.lean）——谱流变换 U·A·V，无穷小版本 <code>dA/dτ = [H, A]</code> 已由 C7 定理建立</li>
+    <li><code>Pauli 矩阵</code> σ_x, σ_y, σ_z（SpCategory.lean）——2×2 无迹 Hermitian 基，是 TT 张量的最小实现</li>
+    <li><code>Clifford.lean</code>——Clifford 代数生成元 e_01, e_10, e1_20, e2_20，提供方向性结构</li>
+    <li><code>spectral_lorentz_dynamics.md</code>——已建立 Lorentz 群 = 谱流生成元理论：dA/dτ = [G_Lor, A_τ]</li>
+  </ul>
+</div>
+
+<h3>G1.3 三种候选方案</h3>
+
+<div class="approach">
+  <div class="approach-header">
+    <span class="badge b-green">方案 A</span>
+    <strong>耦合形状张量分解（推荐）</strong>
+  </div>
+  <p><strong>核心思路</strong>：从 BinaryCoupling 的双通道结构直接构造 2×2 耦合形状矩阵，分解为单极/偶极/四极分量。四极分量天然给出 + 和 × 两个独立自由度。</p>
+  <p><strong>具体构造</strong>：</p>
+  <ol>
+    <li>对 BinaryCoupling (X₁, X₂, Y)，经 D 函子得谱耦合 <code>D(ch₁) : D(X₁) ⟶ D(Y)</code> 和 <code>D(ch₂) : D(X₂) ⟶ D(Y)</code>，各有转移矩阵 P₁, P₂</li>
+    <li>构造 2×2 耦合形状矩阵：
+      <div class="formula">
+        S = (1/√2) · [[⟨P₁,P₁⟩_HS, ⟨P₁,P₂⟩_HS], [⟨P₂,P₁⟩_HS, ⟨P₂,P₂⟩_HS]]
+      </div>
+      其中 ⟨·,·⟩_HS 为 Hilbert-Schmidt 内积
+    </li>
+    <li>S 是 Hermitian 矩阵（因 HS 内积的共轭对称性），可分解为：
+      <ul>
+        <li><strong>迹</strong> tr(S)/2 · I = 单极分量（总耦合强度，守恒，不辐射）</li>
+        <li><strong>无迹部分</strong> S - tr(S)/2 · I = 四极分量（含 + 和 × 两个自由度）</li>
+      </ul>
+    </li>
+    <li>无迹 Hermitian 2×2 矩阵 = Pauli 展开：<code>S - (tr S/2)·I = a·σ_x + b·σ_y + c·σ_z</code>，其中 a, b, c 为实系数</li>
+    <li>取横向截面（z 方向传播）：a → h₊, b → h×, c → 纵向分量（TT 规范下设为 0）</li>
+  </ol>
+  <p><strong>优点</strong>：完全使用已有 Sp 范畴基础设施；耦合形状矩阵自然从 BinaryCoupling 涌现；Pauli 分解已由 <code>anticomm_traceless_2x2</code> 和 <code>sq_traceless_2x2</code> 支撑。</p>
+  <p><strong>风险</strong>：耦合形状矩阵的 Hermitian 性需验证；"横向截面"的选取需额外假设（什么定义传播方向？）。</p>
+  <p><strong>可行性</strong>：<span class="badge b-green">高</span> 可在现有框架内实现</p>
+</div>
+
+<div class="approach">
+  <div class="approach-header">
+    <span class="badge b-yellow">方案 B</span>
+    <strong>谱算子不可约分解（内生性更强但技术难度大）</strong>
+  </div>
+  <p><strong>核心思路</strong>：直接对观测者的谱算子 D(Y).A 做 SO(3) 不可约表示分解。利用 spectral_lorentz_dynamics.md 中已建立的 Lorentz 谱流方程 <code>dA/dτ = [G_Lor, A_τ]</code>，将 D(Y).A 分解为标量 (l=0)、矢量 (l=1)、张量 (l=2) 分量。</p>
+  <p><strong>具体步骤</strong>：</p>
+  <ol>
+    <li>定义 Lorentz 谱生成元嵌入 <code>ι_Lor : so(1,3) → Sp</code> 的 Lean4 形式（6 个反 Hermitian 生成元 J_i, K_i）</li>
+    <li>对 D(Y).A 做不可约分解：A = A_scalar + A_vector + A_tensor</li>
+    <li>A_scalar = tr(A)/n · I（l=0，不动点，不辐射）</li>
+    <li>A_vector = (A - A^T)/2（l=1，反对称，对应偶极）</li>
+    <li>A_tensor = (A + A^T)/2 - A_scalar（l=2，对称无迹，对应四极）</li>
+    <li>A_tensor 在横向截面投影给出 + 和 ×</li>
+  </ol>
+  <p><strong>优点</strong>：内生性最强——直接从 Lorentz 群表示论导出极化模式；与 spectral_lorentz 理论无缝衔接。</p>
+  <p><strong>风险</strong>：Lean4 Mathlib 中缺乏 SO(3) 不可约表示的完整基础设施；4 维分解需要大量矩阵展开计算。</p>
+  <p><strong>可行性</strong>：<span class="badge b-yellow">中</span> 需约 2-3 倍方案 A 的工作量</p>
+</div>
+
+<div class="approach">
+  <div class="approach-header">
+    <span class="badge b-red">方案 C</span>
+    <strong>增补极化公理（保底方案）</strong>
+  </div>
+  <p><strong>核心思路</strong>：若方案 A 和 B 均遇阻，则承认张量极化无法从狭义 MUFPF 公理内生导出，增补独立公理：</p>
+  <div class="formula">
+    Axiom GW-Pol：涌现截面中，谱振荡投影为 TT 规范下的 +, × 双极化模式
+  </div>
+  <p>这将使假说从"狭义 MUFPF 内生推论"降级为"狭义 MUFPF + 一条额外公理"。</p>
+  <p><strong>优点</strong>：最小工作量。</p>
+  <p><strong>风险</strong>：破坏内生性原则；研究笔记 §3.3 明确将此列为"假说不再是狭义MUFPF内生推论"的风险。</p>
+  <p><strong>可行性</strong>：<span class="badge b-red">最低工作量但最不理想</span></p>
+</div>
+
+<h3>G1.4 推荐路径</h3>
+
+<p><strong>优先执行方案 A</strong>（耦合形状张量分解），理由：</p>
+<ol>
+  <li>所有计算工具已存在于 SpCategory.lean（HS 内积、Pauli 矩阵、无迹分解）</li>
+  <li>BinaryCoupling → 耦合矩阵 → Pauli 分解的路径自然且物理直观</li>
+  <li>若方案 A 成功，可作为方案 B 的基础（Pauli 展开等价于 l=1 不可约表示）</li>
+  <li>方案 C 仅作为兜底，不作为首选</li>
+</ol>
+
+<h3>G1.5 方案 A 详细形式化计划</h3>
+
+<h4>新建文件：<code>GWPolarization.lean</code></h4>
+
+<div class="code-block">
+<span class="c">-- 耦合形状矩阵：从 BinaryCoupling 的双通道构造 2×2 Hermitian 矩阵</span>
+<span class="k">def</span> <span class="n">couplingShapeMatrix</span> {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X₁ X₂ Y) :
+    Matrix (Fin 2) (Fin 2) ℂ :=
+  ⟨ ⟨ hilbertSchmidtInnerProduct P₁ P₁, hilbertSchmidtInnerProduct P₁ P₂ ⟩,
+    ⟨ hilbertSchmidtInnerProduct P₂ P₁, hilbertSchmidtInnerProduct P₂ P₂ ⟩ ⟩
+  <span class="c">-- P₁ = D(bc.ch₁).P, P₂ = D(bc.ch₂).P（经 D 函子映射后的转移矩阵）</span>
+
+<span class="c">-- 耦合形状矩阵的 Hermitian 性（HS 内积的共轭对称性保证）</span>
+<span class="k">lemma</span> <span class="n">couplingShape_hermitian</span> ... : couplingShapeMatrix bc = 
+    (couplingShapeMatrix bc).conjTranspose := by ...
+
+<span class="c">-- 四极分量 = 无迹部分</span>
+<span class="k">def</span> <span class="n">quadrupoleComponent</span> ... : Matrix (Fin 2) (Fin 2) ℂ :=
+  couplingShapeMatrix bc - (Matrix.trace (couplingShapeMatrix bc) / 2) • 1
+
+<span class="c">-- Pauli 展开：无迹 Hermitian 2×2 矩阵 = a·σ_x + b·σ_y + c·σ_z</span>
+<span class="k">def</span> <span class="n">plusAmplitude</span> ... : ℝ := (hilbertSchmidtInnerProduct quadrupole sigmaX / √2).re
+<span class="k">def</span> <span class="n">crossAmplitude</span> ... : ℝ := (hilbertSchmidtInnerProduct quadrupole sigmaY / √2).re
+
+<span class="c">-- 核心定理：周期源 → 四极分量周期振荡</span>
+<span class="k">theorem</span> <span class="n">gw_polarization_periodic</span> ... :
+    <span class="c">-- 若 X₁, X₂ 中各有周期态 x₁, x₂，</span>
+    <span class="c">-- 则 plusAmplitude 和 crossAmplitude 周期振荡</span>
+    ...
+</div>
+
+<h4>关键引理依赖链</h4>
+
+<table>
+  <tr><th>引理</th><th>依赖</th><th>状态</th></tr>
+  <tr><td>HS 内积共轭对称性</td><td>SpCategory.lean</td><td><span class="badge b-green">已有</span></td></tr>
+  <tr><td>2×2 无迹 Hermitian 矩阵的 Pauli 展开</td><td><code>anticomm_traceless_2x2</code></td><td><span class="badge b-green">已有</span></td></tr>
+  <tr><td>DFunctor 保持 RecHom（谱交织）</td><td>DecursionFunctor.lean</td><td><span class="badge b-green">已有</span></td></tr>
+  <tr><td>耦合形状矩阵 Hermitian 性</td><td>HS 共轭对称 + D 保持</td><td><span class="badge b-yellow">待证</span></td></tr>
+  <tr><td>周期源 → 耦合矩阵周期变化</td><td>DFunctor + iterate_comm</td><td><span class="badge b-yellow">待证</span></td></tr>
+  <tr><td>四极分量周期振荡</td><td>以上全部</td><td><span class="badge b-yellow">待证</span></td></tr>
+</table>
+
+</div>
+
+<h2>三、缺口 G2：传播速度</h2>
+
+<div class="gap-section-2">
+
+<h3>G2.1 问题诊断</h3>
+
+<p>当前 T-03 的链式传导定理 <code>chain_propagates_periodic</code> 证明信号经 RecHom 链 X → Y → Z 保持周期性，但完全没有"速度"概念——Rec 范畴中只有迭代步数，没有空间距离。</p>
+
+<p>物理上，GW170817 约束引力波速度 |v_gw - c| / c < 10^-15。框架需要解释为何函子耦合传递速度近似等于 c，以及更高/更低递归层级是否允许偏移。</p>
+
+<h3>G2.2 候选方案</h3>
+
+<div class="approach">
+  <div class="approach-header">
+    <span class="badge b-green">方案（推荐）</span>
+    <strong>耦合延迟 + 伴随余留 → 速度对应</strong>
+  </div>
+  <p><strong>核心思路</strong>：在 Rec 范畴定义"耦合延迟"为 RecHom 的信息传递步数；在 Sp 范畴通过伴随余留（C5 定理）将其与谱间隙关联；在涌现截面中映射为物理速度。</p>
+
+  <p><strong>具体定义</strong>：</p>
+  <ol>
+    <li><strong>零阶耦合（严格伴随 δ=0）</strong>：RecHom φ 满足 <code>φ.toFun (X.step x) = Y.step (φ.toFun x)</code>，即 <code>iterate_comm</code> 给出 φ(step^n x) = step^n(φ(x))——信息传递零延迟。在涌现截面中，零延迟 = 极限速度 c。</li>
+    <li><strong>弱耦合（δ≠0）</strong>：引入"伴随偏差" δ 后，谱交织条件变为 <code>P * Y.A = X.A * P + δ</code>（有余项）。此时 <code>iterate_comm</code> 不再精确成立，每步迭代产生残差累积——对应有限延迟。</li>
+    <li><strong>速度公式</strong>：v = d_emergence / delay_rec，其中 d_emergence 是涌现截面中的空间距离，delay_rec 是 Rec 范畴中的耦合延迟步数。严格伴随 → delay=0 → v=c；弱伴随 → delay>0 → v<c。</li>
+    <li><strong>C5 连接</strong>：伴随余留 E_residual = tr((A_X - A_Z)·δ·η^h)（SpCategory.lean 已定义）。δ=0 时 E_residual=0（v=c），δ≠0 时 E_residual≠0（v≠c），且 |v-c|/c ∝ |E_residual|。</li>
+  </ol>
+
+  <p><strong>形式化计划</strong>：</p>
+  <div class="code-block">
+<span class="c">-- 耦合延迟：RecHom 的信息传递步数</span>
+<span class="c">-- 严格 RecHom（δ=0）: delay = 0（iterate_comm 精确成立）</span>
+<span class="c">-- 弱耦合 RecHom（δ≠0）: delay > 0（iterate_comm 有残差）</span>
+
+<span class="c">-- 谱交织偏差与伴随余留的关联（已有）</span>
+<span class="c">-- adjunctionResidual (SpCategory.lean) = tr((A_X - A_Z)·δ·η^h)</span>
+<span class="c">-- c5_zero_defect_zero_residual: δ=0 → E_residual=0（已有）</span>
+
+<span class="c">-- 新增定理：严格伴随 → 零延迟 → 极限速度</span>
+<span class="k">theorem</span> <span class="n">strict_adjunction_implies_light_speed</span> ... :=
+  <span class="c">-- δ=0 → iterate_comm 精确 → delay=0 → v=c</span>
+  ...
+
+<span class="c">-- 新增定理：弱伴随 → 正延迟 → 亚光速</span>
+<span class="k">theorem</span> <span class="n">weak_adjunction_implies_sublight</span> ... :=
+  <span class="c">-- δ≠0 → iterate_comm 有残差 → delay>0 → v<c</span>
+  ...
+  </div>
+
+  <p><strong>优点</strong>：直接复用 C5 伴随余留机制；不需要额外公理；自然解释 GW170817 约束（当前层级的 δ 极小）。</p>
+  <p><strong>风险</strong>：从 Rec 延迟到涌现速度的映射需要额外定义"涌现度规"；定量预测 |v-c|/c 的具体值需要物理常数对接。</p>
+  <p><strong>可行性</strong>：<span class="badge b-green">高</span> 核心结构已有，主要是定义和连接工作</p>
+</div>
+
+</div>
+
+<h2>四、缺口 G3：四极辐射约束</h2>
+
+<div class="gap-section-3">
+
+<h3>G3.1 问题诊断</h3>
+
+<p>广义相对论中引力辐射无单极（质量守恒）、无偶极（动量守恒），最低阶为四极辐射。当前 T-03 形式化没有任何多极分解机制——所有周期信号被平等对待，无法区分单极/偶极/四极。</p>
+
+<h3>G3.2 关键洞察：G3 与 G1 的统一</h3>
+
+<p>仔细分析后发现，<strong>G3（四极约束）与 G1（极化模式）有共同的数学根源</strong>：</p>
+<ul>
+  <li>G1 的方案 A（耦合形状矩阵分解）中，迹 = 单极，无迹部分 = 四极</li>
+  <li>单极对应不动点（step x = x），不是周期态（n ≥ 1），因此不辐射</li>
+  <li>偶极对应刚体平移（所有 RecHom 共有的全局平移），也不辐射</li>
+  <li>只有四极（内部形变）才能产生周期振荡（step^n x = x, n ≥ 2）</li>
+</ul>
+
+<p>因此 G3 的修复可以<strong>复用 G1 方案 A 的分解结果</strong>。</p>
+
+<h3>G3.3 形式化计划</h3>
+
+<div class="card">
+  <div class="card-title">多极约束定理</div>
+
+  <p><strong>定理链</strong>：</p>
+  <ol>
+    <li><strong>单极 = 不动点</strong>：耦合形状矩阵的迹 tr(S)/2 对应耦合的总强度。若两个源都是不动点（step x = x），则 S 不随时间变化 → 迹为常数 → 单极不辐射。</li>
+    <li><strong>偶极 = 质心运动</strong>：耦合矩阵的反对称部分（S - S†）/2（对于 Hermitian 矩阵为零）。物理上，偶极对应两源的相对平移，在动量守恒下为零。</li>
+    <li><strong>四极 = 内部形变</strong>：无迹对称部分 S - (tr S/2)·I。只有当源有内部周期动力学（偏心子集群），此部分才随时间振荡 → 四极辐射。</li>
+  </ol>
+
+  <div class="code-block">
+<span class="c">-- 单极不辐射：不动点源的耦合矩阵迹为常数</span>
+<span class="k">theorem</span> <span class="n">monopole_no_radiation</span> {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X₁ X₂ Y)
+    (x₁ : X₁.T) (x₂ : X₂.T)
+    (h₁ : X₁.step x₁ = x₁) (h₂ : X₂.step x₂ = x₂) :
+    <span class="c">-- 耦合矩阵的迹不随迭代变化</span>
+    ... := by ...
+
+<span class="c">-- 四极辐射：偏心源的耦合矩阵无迹部分周期振荡</span>
+<span class="k">theorem</span> <span class="n">quadrupole_radiates</span> {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X₁ X₂ Y)
+    (x₁ : X₁.T) (x₂ : X₂.T)
+    (h₁ : X₁.isPeriodic x₁) (h₂ : X₂.isPeriodic x₂) :
+    <span class="c">-- 耦合矩阵无迹部分存在周期振荡</span>
+    ... := by ...
+  </div>
+
+  <p><strong>优点</strong>：与 G1 方案 A 共享基础设施；单极/偶极/四极的区分自然从矩阵分解涌现；不需要额外公理。</p>
+  <p><strong>风险</strong>：需要证明"Hermitian 矩阵的反对称部分为零"→ 偶极不辐射，这在 2×2 情形可由 <code>anticomm_traceless_2x2</code> 支撑，但一般维度需要推广。</p>
+  <p><strong>可行性</strong>：<span class="badge b-green">高</span>（与 G1 共享约 70% 工作量）</p>
+</div>
+
+</div>
+
+<h2>五、实施路线图</h2>
+
+<div class="roadmap-step">
+  <div class="roadmap-num">1</div>
+  <div class="roadmap-content">
+    <strong>阶段 1：耦合形状矩阵基础</strong> <span>（G1 + G3 共享基础）</span><br>
+    <span>新建 <code>GWPolarization.lean</code>，定义 couplingShapeMatrix、证明 Hermitian 性、Pauli 展开。<br>依赖：SpCategory.lean (HS 内积, Pauli), DecursionFunctor.lean (D 函子)<br>预计工作量：~300 行 Lean4</span>
+  </div>
+</div>
+
+<div class="roadmap-step">
+  <div class="roadmap-num">2</div>
+  <div class="roadmap-content">
+    <strong>阶段 2：多极分解与四极约束</strong> <span>（G3）</span><br>
+    <span>证明 monopole_no_radiation（不动点 → 迹常数）和 quadrupole_radiates（周期源 → 无迹部分振荡）。<br>依赖：阶段 1 + PulsarRadiation.lean (isPeriodic, eventually_periodic)<br>预计工作量：~200 行</span>
+  </div>
+</div>
+
+<div class="roadmap-step">
+  <div class="roadmap-num">3</div>
+  <div class="roadmap-content">
+    <strong>阶段 3：极化振幅提取</strong> <span>（G1）</span><br>
+    <span>定义 plusAmplitude / crossAmplitude（通过 HS 投影到 Pauli 基），证明极化振幅的周期性。<br>依赖：阶段 1-2 + GravitationalWave.lean (BinaryCoupling, T03 主定理)<br>预计工作量：~250 行</span>
+  </div>
+</div>
+
+<div class="roadmap-step">
+  <div class="roadmap-num">4</div>
+  <div class="roadmap-content">
+    <strong>阶段 4：传播速度对应</strong> <span>（G2）</span><br>
+    <span>定义耦合延迟，连接 C5 伴随余留，证明严格伴随→光速、弱伴随→亚光速。<br>依赖：SpCategory.lean (adjunctionResidual, c5) + DecursionFunctor.lean<br>预计工作量：~200 行</span>
+  </div>
+</div>
+
+<div class="roadmap-step">
+  <div class="roadmap-num">5</div>
+  <div class="roadmap-content">
+    <strong>阶段 5：集成与验证</strong><br>
+    <span>更新 GravitationalWave.lean 引入极化结构；更新研究笔记标记缺口状态；<code>lake build</code> 全量验证零 sorry。<br>预计工作量：~100 行 + 文档更新</span>
+  </div>
+</div>
+
+<h2>六、风险评估</h2>
+
+<table>
+  <tr><th>风险</th><th>影响</th><th>缓解</th></tr>
+  <tr>
+    <td>耦合形状矩阵的 Hermitian 性证明遇阻</td>
+    <td>G1 方案 A 失败，需回退方案 B 或 C</td>
+    <td>HS 内积的共轭对称性在 Mathlib 中有标准证明；可先验证 2×2 具体实例</td>
+  </tr>
+  <tr>
+    <td>"横向截面"的选取缺乏内生依据</td>
+    <td>+ 和 × 的具体定义依赖外部选取的传播方向</td>
+    <td>利用 spectral_lorentz_dynamics.md 的 Lorentz 谱流确定传播方向；或接受 SO(2) 旋转对称下的等价类</td>
+  </tr>
+  <tr>
+    <td>DFunctor 对 BinaryCoupling 的函子作用需显式构造</td>
+    <td>阶段 1 阻塞</td>
+    <td>DFunctor_map 已证明保 RecHom；BinaryCoupling 通道是 RecHom，直接适用</td>
+  </tr>
+  <tr>
+    <td>从 Rec 延迟到涌现速度的映射需"涌现度规"</td>
+    <td>G2 无法给出定量预言</td>
+    <td>定性结论（严格伴随→光速）可先闭合；定量预言标记为后续缺口</td>
+  </tr>
+  <tr>
+    <td>方案 A 的 2×2 情形不足以覆盖一般维度</td>
+    <td>仅适用于双源系统，不适用于多源</td>
+    <td>先闭合 2×2 双源情形；一般维度推广标记为后续工作</td>
+  </tr>
+</table>
+
+<h2>七、与现有形式化的兼容性</h2>
+
+<div class="card">
+  <div class="card-title">不破坏现有代码的保证</div>
+  <ul>
+    <li><strong>新建文件</strong>：GWPolarization.lean 为新文件，不修改现有 4 个文件</li>
+    <li><strong>import 链</strong>：GWPolarization.lean → GravitationalWave.lean + SpCategory.lean + DecursionFunctor.lean，不引入循环依赖</li>
+    <li><strong>命名空间</strong>：保持在 <code>MUFPF</code> 命名空间内</li>
+    <li><strong>公理不变</strong>：不新增 <code>axiom</code>（方案 A 路径下）；方案 C 才需新增公理</li>
+    <li><strong>狭义/广义区分</strong>：方案 A 在狭义 MUFPF 内闭合；若被迫走方案 C，则在笔记中明确标注"需增补极化公理，超出狭义 MUFPF"</li>
+  </ul>
+</div>
+
+<h2>八、成功标准</h2>
+
+<ol>
+  <li><code>lake build</code> 通过，新增代码零 sorry / 零 admit / 零 axiom（方案 A 路径）</li>
+  <li>以下定理闭合：
+    <ul>
+      <li><code>gw_polarization_periodic</code>：周期源 → + 和 × 极化振幅周期振荡（G1）</li>
+      <li><code>monopole_no_radiation</code>：不动点源 → 单极不辐射（G3）</li>
+      <li><code>quadrupole_radiates</code>：偏心源 → 四极分量振荡（G3）</li>
+      <li><code>strict_adjunction_implies_light_speed</code>：严格伴随 → 零延迟（G2）</li>
+    </ul>
+  </li>
+  <li>研究笔记 MUFPF-RN-COMPACT-001 更新至 v1.2，标记 §3.3 缺口状态</li>
+</ol>
+
+<div class="footer">
+  本方案基于狭义 MUFPF（Rec/Sp 范畴）。方案 A 为推荐路径，在现有框架基础设施内可望闭合 G1 和 G3；G2 的定性结论亦可闭合，定量预言留为后续缺口。若方案 A 遇阻，方案 B（谱算子不可约分解）为备选，方案 C（增补公理）为兜底。
+</div>
+
+</body>
+</html>

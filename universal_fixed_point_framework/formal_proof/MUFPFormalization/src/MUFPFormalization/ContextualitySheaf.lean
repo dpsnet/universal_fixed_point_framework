@@ -259,7 +259,8 @@ theorem pm_presheaf_no_global_section : ¬ Nonempty (GlobalSection PMContextCove
   -- But pm_no_global_assignment says no such assignment exists. Contradiction.
   exact pm_no_global_assignment h_pm
 
-/-- Spec ≠ Spec_com (the K-S theorem in Spec language).
-    There are observables that cannot be simultaneously assigned truth values. -/
-theorem spec_not_equal_spec_com : True := by
-  trivial
+/-- Spec ≠ Spec_com（2026-09-05 升级）：Kochen-Specker 定理的 Spec 语言版本。
+    存在不可同时赋真值的可观测量集合——PM 方阵中不存在全局截面。
+    由 pm_presheaf_no_global_section（K-S 定理 PM 方阵版本）直接推导。 -/
+theorem spec_not_equal_spec_com : ¬ Nonempty (GlobalSection PMContextCover PMPresheaf) :=
+  pm_presheaf_no_global_section

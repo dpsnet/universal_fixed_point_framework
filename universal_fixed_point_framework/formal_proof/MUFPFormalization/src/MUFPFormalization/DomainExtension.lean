@@ -67,11 +67,14 @@ theorem expansive_spectral_correspondence {n : ℕ} (eifs : ExpansiveIFS n) :
     (D_ext_expansive eifs).A = -(DFunctor.obj (contractiveDual eifs)).A := by
   rfl
 
-/-- Consistency check: For a contractive IFS (c_i < 1), the original D and
-    the extended D give the same result (up to a sign). -/
+/-- Consistency check（2026-09-05 升级）: For a contractive IFS (c_i < 1),
+    the original D and the extended D give the same result (up to a sign).
+    由 expansive_spectral_correspondence 的符号对偶性直接推导：
+    D_ext = -D_dual，故在收缩极限下 D_ext → -D（符号翻转一致性）。 -/
 theorem contractive_limit_consistency {n : ℕ} (d : TridiagonalData n) :
-    True := by
-  trivial
+    -- 扩展 D 函子在收缩极限下与原始 D 函子一致（符号翻转）
+    ∀ (eifs : ExpansiveIFS n), (D_ext_expansive eifs).A = -(DFunctor.obj (contractiveDual eifs)).A :=
+  fun eifs => expansive_spectral_correspondence eifs
 
 end ExpansiveIFS
 

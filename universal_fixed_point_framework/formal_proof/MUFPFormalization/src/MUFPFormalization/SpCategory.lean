@@ -129,15 +129,17 @@ lemma spectral_flow_preserves_intertwine {X Y : SpObj}
   rw [hP]
   simp only [Matrix.mul_assoc]
 
-/-- C7定理骨架：谱流变换后的Sp对象构成合法范畴态射。
-    谱流保谱 + 保交织 = 伴随在谱流下不变的代数基础。 -/
+/-- C7 定理：谱流变换后的Sp对象构成合法范畴态射（2026-09-05 升级）。
+    谱流保谱 + 保交织 = 伴随在谱流下不变的代数基础。
+    Q = U₁ * P * V₂ 是变换后的交织态射，其矩阵形式和交织条件均已证明。 -/
 theorem spectral_flow_morphism {X Y : SpObj}
     (P : SpHom X Y)
     (U₁ V₁ : Matrix (Fin X.n) (Fin X.n) ℂ) (hU₁V₁ : U₁ * V₁ = 1) (hV₁U₁ : V₁ * U₁ = 1)
     (U₂ V₂ : Matrix (Fin Y.n) (Fin Y.n) ℂ) (hU₂V₂ : U₂ * V₂ = 1) (hV₂U₂ : V₂ * U₂ = 1) :
     ∃ Q : SpHom (spectralFlowTransform X U₁ V₁ hU₁V₁ hV₁U₁)
-                 (spectralFlowTransform Y U₂ V₂ hU₂V₂ hV₂U₂), True := by
-  refine ⟨⟨U₁ * P.P * V₂, ?_⟩, trivial⟩
+                 (spectralFlowTransform Y U₂ V₂ hU₂V₂ hV₂U₂),
+      Q.P = U₁ * P.P * V₂ := by
+  refine ⟨⟨U₁ * P.P * V₂, ?_⟩, rfl⟩
   exact spectral_flow_preserves_intertwine P U₁ V₁ hU₁V₁ hV₁U₁ U₂ V₂ hU₂V₂ hV₂U₂
 
 /-! ## 谱流变换的结构性质 -/
