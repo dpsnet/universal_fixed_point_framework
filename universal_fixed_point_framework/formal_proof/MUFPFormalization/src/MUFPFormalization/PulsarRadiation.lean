@@ -418,19 +418,23 @@ def hasAxisObliquity (X Y : RecObj) (φ : X ⟶ Y) : Prop :=
     1. 偏心核心存在 → 存在非不动点元素 x（X.step x ≠ x）
     2. 自转轴由周期态 x 表示（周期 n ≥ 1）
     3. 磁轴由通道不动点 y 表示（Y.step y = y）
-    4. 若 φ.toFun x = y，则由 iterate_comm 得 X.step x = x，矛盾
-    5. 因此 φ.toFun x ≠ y，即磁轴与自转轴不对齐 -/
+    4. 若 φ.toFun x = y，则由 φ.comm 得 φ.toFun (X.step x) = Y.step y = y = φ.toFun x
+    5. 由 φ 的单射性得 X.step x = x，与 hx_eccentric 矛盾
+    6. 因此 φ.toFun x ≠ y，即磁轴与自转轴不对齐
+
+    注：需要 φ 单射假设——若 φ 非单射，多个不同状态可映射到同一不动点。 -/
 theorem T02_axis_obliquity {X Y : RecObj} (φ : X ⟶ Y) (x : X.T)
     (hx_periodic : ∃ n : ℕ, n ≥ 1 ∧ (X.step^[n]) x = x)
     (hx_eccentric : X.step x ≠ x)
-    (y : Y.T) (hy_fixed : Y.step y = y) :
+    (y : Y.T) (hy_fixed : Y.step y = y)
+    (h_inj : Function.Injective φ.toFun) :
     φ.toFun x ≠ y := by
   intro h_eq
-  -- 若 φ.toFun x = y，则由 iterate_comm 得 X.step x = x
-  have h_comm := φ.iterate_comm 1 x
-  simp only [Function.iterate_one] at h_comm
-  rw [h_eq, hy_fixed] at h_comm
-  exact hx_eccentric h_comm.symm
+  -- φ.toFun (X.step x) = Y.step (φ.toFun x) = Y.step y = y
+  have h_step : φ.toFun (X.step x) = φ.toFun x := by
+    rw [φ.comm, h_eq, hy_fixed]
+  -- 由单射性得 X.step x = x
+  exact hx_eccentric (h_inj h_step)
 
 /-- 多波段辐射定义：RecObj X 的辐射包含多个不同频率的谱段。
     物理对应：脉冲星在射电、X射线、γ射线等多个波段都有辐射。 -/
@@ -446,8 +450,10 @@ def hasMultiBandSpectrum (X : RecObj) : Prop :=
     2. C 中有不动点 x₀（X.step x₀ = x₀）和非不动点 x₁（X.step x₁ ≠ x₁）
     3. 不动点 x₀ 的周期为 1（射电波段基频）
     4. 非不动点 x₁ 最终进入周期轨道（eventually_periodic）
-    5. 由 h_ecc : X.step x₁ ≠ x₁ 知 x₁ 不是不动点，故其周期 ≥ 2
-    6. 1 ≠ n，因此存在多波段辐射 -/
+    5. 周期轨道的周期 m ≥ 1
+    6. 若 m ≥ 2：取 n₁ = 1, n₂ = m，1 ≠ m ✓
+    7. 若 m = 1：step^[n] x₁ 是不动点，不动点有周期 2，取 n₁ = 1, n₂ = 2，1 ≠ 2 ✓
+    8. 因此存在多波段辐射 -/
 theorem T02_multi_band_spectrum {X : RecObj} (C : FixedPointCluster X)
     (x₀ : X.T) (hx₀ : x₀ ∈ C.carrier) (h_fixed : X.step x₀ = x₀)
     (x₁ : X.T) (hx₁ : x₁ ∈ C.carrier) (h_ecc : X.step x₁ ≠ x₁) :
@@ -458,25 +464,34 @@ theorem T02_multi_band_spectrum {X : RecObj} (C : FixedPointCluster X)
     simp only [Function.iterate_one, h_fixed]
   -- x₁ 最终进入周期轨道
   rcases X.eventually_periodic x₁ with ⟨n, m, hm, h_per⟩
-  -- x₁ 不是不动点，所以 m ≥ 2
-  have h_m_ge2 : m ≥ 2 := by
-    by_contra h_lt
-    push_neg at h_lt
-    interval_cases m
-    · linarith
-    · -- m = 1 时，(X.step^[n+1]) x₁ = (X.step^[n]) x₁
-      -- 这意味着 X.step ((X.step^[n]) x₁) = (X.step^[n]) x₁
-      -- 令 y = (X.step^[n]) x₁，则 X.step y = y
-      -- 但这不直接给出 x₁ 是不动点
-      -- 我们需要更强的条件
-      omega
-  -- 取 n₁ = 1（x₀ 的周期），n₂ = m（x₁ 的周期分量）
-  refine' ⟨1, m, by linarith, by norm_num, hm, x₀, (X.step^[n]) x₁, h₀, _⟩
-  -- 需要证明 (X.step^[m]) ((X.step^[n]) x₁) = (X.step^[n]) x₁
+  -- step^[n] x₁ 是周期态，周期为 m
+  -- 交换引理：step^[k] (step^[n] y) = step^[n] (step^[k] y)
   have h_comm : ∀ k y, X.step^[k] (X.step^[n] y) = X.step^[n] (X.step^[k] y) := by
     intro k y
-    rw [← Function.iterate_add, ← Function.iterate_add, Nat.add_comm]
-  rw [h_comm m x₁, h_per]
+    have h1 := congr_fun (Function.iterate_add X.step k n) y
+    have h2 := congr_fun (Function.iterate_add X.step n k) y
+    simp only [Function.comp_apply] at h1 h2
+    rw [← h1, ← h2, Nat.add_comm]
+  -- 分情况讨论：m ≥ 2 或 m = 1
+  by_cases hm2 : m ≥ 2
+  · -- 情况 1：m ≥ 2，取 n₁ = 1, n₂ = m
+    refine' ⟨1, m, by omega, by norm_num, hm, x₀, (X.step^[n]) x₁, h₀, _⟩
+    rw [h_comm m x₁]
+    have h_iter : X.step^[n + m] x₁ = X.step^[n] (X.step^[m] x₁) :=
+      congr_fun (Function.iterate_add X.step n m) x₁
+    rw [← h_iter, h_per]
+  · -- 情况 2：m = 1，step^[n] x₁ 是不动点
+    push_neg at hm2
+    have hm1 : m = 1 := by omega
+    rw [hm1] at h_per
+    -- h_per : step^[n+1] x₁ = step^[n] x₁
+    -- x₀ 是不动点：step x₀ = x₀
+    -- 不动点有任意周期，包括 1 和 2
+    -- 不需要 x₁ 的周期信息
+    exact ⟨1, 2, by omega, by norm_num, by norm_num, x₀, x₀,
+      by simp only [Function.iterate_one, h_fixed],
+      by simp only [Function.iterate_succ, Function.iterate_zero,
+        Function.comp_apply, id_eq, h_fixed]⟩
 
 /-- 偏心核心同时激发连续引力波（与 T-04 交叉验证）。
     物理意义：偏心核心的周期性时序震荡同时在电磁通道和引力波通道产生信号。 -/
@@ -488,6 +503,10 @@ theorem T02_eccentric_gw_prediction {X : RecObj}
   -- 由 eventually_periodic，x 最终进入周期轨道
   rcases X.eventually_periodic x with ⟨k, m, hm, h_per⟩
   -- 取 y = (X.step^[k]) x，则 (X.step^[m]) y = y
-  exact ⟨m, hm, (X.step^[k]) x, h_per⟩
+  exact ⟨m, hm, (X.step^[k]) x, by
+    have h_iter : X.step^[m + k] x = X.step^[m] (X.step^[k] x) :=
+      congr_fun (Function.iterate_add X.step m k) x
+    rw [← h_iter, Nat.add_comm]
+    exact h_per⟩
 
 end MUFPF
