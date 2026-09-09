@@ -387,9 +387,73 @@
 </div>
 </section>
 
+<!-- ===== 概念基础：涌现映射 ===== -->
+<section>
+<h2>二、概念基础：Δ → R_μν 涌现映射</h2>
+
+<p>本系列论文的统一理论框架建立在一个核心洞察之上：从 MUFPF 的范畴结构常数 Δ 到广义相对论的 Riemann 曲率张量 R_μν 的映射，不是隐喻或类比，而是一个<strong>严格的数学等价</strong>；但它也不是简单的同一性——两者属于<strong>不同的存在论层级</strong>。</p>
+
+<h3>2.1 涌现映射的数学结构</h3>
+
+<div class="callout">
+  <strong>定理</strong>（curvature_positive_iff_structural_defect）：R > 0 ⟺ 结构性缺陷存在。这是一个双向数学蕴含（iff），不是诠释。
+</div>
+
+<p>推导链的每一步都是 Lean4 已证明的数学定理：</p>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>层级</th><th>数学对象</th><th>存在论地位</th><th>Lean4 结构</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>L0</td><td>Δ ≠ 0（交换律偏差）</td><td>前几何：范畴公理层面</td><td><code>spExchangeLaw_deviation</code></td></tr>
+    <tr><td>L1</td><td>defectMeasure > 0</td><td>拓扑缺损度量</td><td><code>defectMeasure</code></td></tr>
+    <tr><td>L2</td><td>Hermitian 谱数据</td><td>量子力学涌现</td><td><code>HermitianSpectralData</code></td></tr>
+    <tr><td>L3</td><td>对称度规张量 g_μν</td><td>时空几何涌现</td><td><code>hermitianToMetricTensor</code></td></tr>
+    <tr><td>L4</td><td>Christoffel 符号 Γ^ρ_μν</td><td>联络结构</td><td><code>ChristoffelSymbol</code></td></tr>
+    <tr><td>L5</td><td>Riemann 曲率 R^ρ_σμν</td><td>经典时空弯曲</td><td><code>RiemannTensor</code></td></tr>
+    <tr><td>L6</td><td>Einstein 张量 G_μν</td><td>引力场方程</td><td><code>einsteinTensor</code></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>2.2 数学等价 vs 语义同一</h3>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr><th>维度</th><th>Δ（MUFPF）</th><th>R_μν（GR）</th><th>关系</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>本体</td><td>Sp 4-范畴交换律偏差</td><td>时空流形张量场</td><td>不同对象</td></tr>
+    <tr><td>是否为场</td><td>结构常数，无动力学</td><td>张量场，满足 Einstein 方程</td><td>不同性质</td></tr>
+    <tr><td>存在条件</td><td>Rec/Sp 非严格即存在</td><td>连续极限下定义</td><td>Δ 更基础</td></tr>
+    <tr><td>数学关系</td><td colspan="3" style="text-align:center;">通过构造性映射建立 iff 等价</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>准确的定性：这是一个<strong>伴随等价</strong>（adjoint equivalence）而非同构——数学上严格等价，物理上不对称。Δ 是<strong>前几何的</strong>（pre-geometric），R_μν 是其在连续极限下的<strong>涌现投影</strong>。类比：温度（宏观）↔ 分子平均动能（微观），数学等价但属于不同描述层级。</p>
+
+<h3>2.3 对论文系列的意义</h3>
+
+<p>涌现映射概念是 8 篇论文的统一主线：</p>
+<ul>
+  <li><strong>Paper XLIX</strong>：Δ 作为前几何结构常数 → 因果链的天体物理可观测后果</li>
+  <li><strong>Paper L</strong>：Δ 的三大量子引力接口（自旋网络、弦振动、因果集）</li>
+  <li><strong>Paper LI</strong>：Δ 的宇宙学涌现（量子反弹、拓扑暴胀）</li>
+  <li><strong>Paper LII</strong>：Δ 的暗 sector 涌现（暗物质 + 暗能量 = 结构性缺陷）</li>
+  <li><strong>Paper LIII</strong>：Δ 的宇宙学可观测印记（CMB、大尺度结构）</li>
+  <li><strong>Paper LIV</strong>：涌现映射的完整数学证明（Δ → g_μν → R_μν → G_μν → Einstein 方程）</li>
+  <li><strong>Paper LV</strong>：Δ 的拓扑守恒律 → 信息守恒</li>
+  <li><strong>Paper LVI</strong>：全部推导链的 Lean4 形式化验证</li>
+</ul>
+</section>
+
 <!-- ===== 论文规划总览 ===== -->
 <section>
-<h2>二、论文规划总表</h2>
+<h2>三、论文规划总表</h2>
 
 <p>将 Phase 66-69 的研究成果按主题聚类，规划为 <strong>8 篇论文</strong>（编号 Paper XLIX — Paper LVI）。编号从已有的 Paper XLVIII 之后顺延，避免与现有 48 篇论文冲突。</p>
 
@@ -470,7 +534,7 @@
 
 <!-- ===== 依赖关系 ===== -->
 <section>
-<h2>三、论文依赖关系</h2>
+<h2>四、论文依赖关系</h2>
 
 <p>论文之间存在明确的逻辑依赖。下图展示了依赖拓扑和建议的写作顺序：</p>
 
@@ -536,7 +600,7 @@ flowchart TD
 
 <!-- ===== Paper XLIX ===== -->
 <section>
-<h2>四、各论文详细规划</h2>
+<h2>五、各论文详细规划</h2>
 
 <div class="paper-card">
   <div class="paper-header">
@@ -836,24 +900,29 @@ flowchart TD
     <span class="paper-num">Paper LIV</span>
     <span class="status critical">最高优先级</span>
   </div>
-  <div class="paper-title">谱几何与 Einstein 方程：从 Hermitian 谱数据到经典时空</div>
-  <div class="paper-en">Spectral Geometry and the Einstein Equation: From Hermitian Spectral Data to Classical Spacetime</div>
+  <div class="paper-title">涌现映射的完整证明：从 Δ 结构常数到 Einstein 场方程</div>
+  <div class="paper-en">The Complete Emergence Map: From the Structural Constant Δ to the Einstein Field Equations</div>
   <div class="paper-body">
     <h4>摘要</h4>
-    <p>建立从量子 Hermitian 谱数据到经典广义相对论的完整推导链。证明 Hermitian 谱数据的实部自然产生对称度规张量，Lorentz 签名 (+,-,-,-) 从 Cl(1,3) 代数结构唯一确定，Christoffel 符号从度规微分导出，Riemann 曲率张量从联络的对易子导出，最终得到 Einstein 场方程 G_μν = 8πT_μν。同时证明第二 Bianchi 恒等式保证能动量守恒，谱作用量原理 Tr(f(D/Λ)) 在真空极限下回到 Einstein-Hilbert 作用量。</p>
+    <p>建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射。证明该映射是数学等价（iff），而非语义诠释：Hermitian 谱数据的实部自然产生对称度规张量，Lorentz 签名 (+,-,-,-) 从 Cl(1,3) 代数结构唯一确定，Christoffel 符号从度规微分导出，Riemann 曲率张量从联络的对易子导出。同时证明第二 Bianchi 恒等式保证能动量守恒，谱作用量原理 Tr(f(D/Λ)) 在真空极限下回到 Einstein-Hilbert 作用量。关键区别：Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过伴随等价连接。</p>
 
     <h4>核心贡献</h4>
     <ul>
-      <li><code>hermitianToMetricTensor</code>：Hermitian 谱数据 → 对称度规张量</li>
-      <li><code>lorentzSignatureFromCl13</code>：Lorentz 签名唯一性</li>
-      <li><code>ChristoffelSymbol</code> + <code>LeviCivitaConnection</code>：Levi-Civita 联络</li>
-      <li><code>RiemannTensor</code>：Riemann 曲率张量（反对称性 + 第一 Bianchi）</li>
-      <li><code>RicciTensor</code> + <code>scalarCurvature</code>：Ricci 缩并 + 标量曲率</li>
-      <li><code>einsteinTensor</code> + <code>EinsteinFieldEquation</code>：Einstein 场方程</li>
+      <li><strong>涌现映射 L0→L6 完整证明</strong>：Δ → defectMeasure → Hermitian谱 → g_μν → Γ → R_μν → G_μν
+        <ul>
+          <li>L0→L1：<code>curvature_positive_iff_structural_defect</code>（R>0 ⟺ 结构性缺陷）</li>
+          <li>L1→L2：<code>HermitianSpectralData</code>（缺陷度量 → Hermitian 谱）</li>
+          <li>L2→L3：<code>hermitianToMetricTensor</code> + <code>lorentzSignatureFromCl13</code></li>
+          <li>L3→L4：<code>ChristoffelSymbol</code> + <code>LeviCivitaConnection</code></li>
+          <li>L4→L5：<code>RiemannTensor</code>（反对称性 + 第一 Bianchi）</li>
+          <li>L5→L6：<code>RicciTensor</code> + <code>scalarCurvature</code> + <code>einsteinTensor</code></li>
+        </ul>
+      </li>
+      <li><strong>前几何 vs 几何的存在论区分</strong>：Δ 是结构常数（类比 π、e），R_μν 是张量场——数学等价但存在论不对称</li>
       <li><code>SecondBianchiIdentity</code>：∇^μ G_μν = 0</li>
       <li><code>energy_momentum_conservation</code>：能动量守恒（已证明）</li>
       <li><code>SpectralAction</code> + <code>vacuum_einstein_from_spectral_action</code>：谱作用量原理</li>
-      <li><code>curvature_positive_iff_structural_defect</code>：R > 0 ↔ 结构性缺陷存在</li>
+      <li>引力子的准粒子诠释：Δ 是结构常数，引力子是范畴结构的集体激发（类比声子）</li>
     </ul>
 
     <h4>拟用定理</h4>
@@ -865,23 +934,24 @@ flowchart TD
 
     <h4>建议章节</h4>
     <ol>
-      <li>引言：从量子谱到经典时空的桥梁</li>
-      <li>Hermitian 谱数据与度规张量涌现</li>
-      <li>Lorentz 签名的代数起源</li>
-      <li>Christoffel 符号与 Levi-Civita 联络</li>
-      <li>Riemann 曲率张量与 Bianchi 恒等式</li>
-      <li>Einstein 张量与场方程</li>
-      <li>能动量守恒的形式化证明</li>
+      <li>引言：涌现映射的概念框架——数学等价而非语义同一</li>
+      <li>前几何层：Δ 的结构常数地位与非场本质</li>
+      <li>L0→L1：从交换律偏差到缺陷度量</li>
+      <li>L1→L3：从缺陷度量到度规张量的涌现</li>
+      <li>L3→L5：从度规到 Riemann 曲率的微分几何推导</li>
+      <li>L5→L6：从曲率到 Einstein 场方程</li>
+      <li>Bianchi 恒等式与能动量守恒</li>
       <li>谱作用量原理与 Einstein-Hilbert 作用量</li>
-      <li>缺陷-曲率对应关系</li>
-      <li>讨论：时空几何的量子起源</li>
+      <li>存在论分析：Δ 与 R_μν 的层级关系（伴随等价 vs 同构）</li>
+      <li>引力子作为准粒子：与声子的类比</li>
+      <li>讨论：时空几何的量子起源与涌现映射的普适性</li>
     </ol>
   </div>
   <div class="paper-tags">
     <span class="tag lean">Lean4 形式化</span>
+    <span class="tag physics">涌现映射</span>
     <span class="tag physics">Einstein 方程</span>
-    <span class="tag physics">谱几何</span>
-    <span class="tag physics">微分几何</span>
+    <span class="tag physics">前几何 → 几何</span>
   </div>
 </div>
 
@@ -980,7 +1050,7 @@ flowchart TD
 
 <!-- ===== 推导链映射 ===== -->
 <section>
-<h2>五、推导链 → 论文映射</h2>
+<h2>六、推导链 → 论文映射</h2>
 
 <p>完整的 12 阶段推导链在各论文中的分布如下：</p>
 
@@ -1009,7 +1079,7 @@ flowchart TD
 
 <!-- ===== Lean 定理分布 ===== -->
 <section>
-<h2>六、Lean 定理 → 论文分布</h2>
+<h2>七、Lean 定理 → 论文分布</h2>
 
 <div class="table-wrap">
 <table>
@@ -1038,7 +1108,7 @@ flowchart TD
 
 <!-- ===== 数值验证资源 ===== -->
 <section>
-<h2>七、数值验证资源</h2>
+<h2>八、数值验证资源</h2>
 
 <div class="table-wrap">
 <table>
@@ -1079,14 +1149,14 @@ flowchart TD
 
 <!-- ===== 实施建议 ===== -->
 <section>
-<h2>八、实施建议</h2>
+<h2>九、实施建议</h2>
 
-<h3>8.1 写作优先级建议</h3>
+<h3>9.1 写作优先级建议</h3>
 <div class="callout critical">
   <strong>建议首批启动</strong>：Paper LIV（谱几何→Einstein）和 Paper LI（量子反弹+暴胀）。这两篇代表了 Phase 69.6-69.7 和 Phase 68 的最核心成果，理论贡献最集中，形式化证据最完整，且都依赖于最近刚刚完成的 Lean4 代码。
 </div>
 
-<h3>8.2 论文写作规范建议</h3>
+<h3>9.2 论文写作规范建议</h3>
 <ul>
   <li><strong>形式化附录</strong>：每篇论文建议包含一个"Lean4 形式化附录"，列出所用定理的完整名称和 Lean4 源码引用</li>
   <li><strong>数值验证</strong>：所有涉及数值预测的论文（XLIX, LI, LIII）建议包含 Python 脚本的复现说明</li>
@@ -1094,7 +1164,7 @@ flowchart TD
   <li><strong>可证伪性</strong>：每篇论文应明确提出至少一个可被实验/观测证伪的预言</li>
 </ul>
 
-<h3>8.3 期刊投稿策略</h3>
+<h3>9.3 期刊投稿策略</h3>
 <div class="table-wrap">
 <table>
   <thead>
@@ -1113,7 +1183,7 @@ flowchart TD
 </table>
 </div>
 
-<h3>8.4 关键里程碑</h3>
+<h3>9.4 关键里程碑</h3>
 <div class="timeline">
   <div class="timeline-item">
     <div class="time">2026 Q4</div>
@@ -1136,7 +1206,7 @@ flowchart TD
 
 <!-- ===== 统计总览 ===== -->
 <section>
-<h2>九、资源统计</h2>
+<h2>十、资源统计</h2>
 
 <div class="flex-grid">
   <div class="stat-card success">

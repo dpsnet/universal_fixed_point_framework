@@ -475,16 +475,27 @@ noncomputable def scalarCurvature (g : MetricTensor) (Ric : RicciTensor) : ℝ :
 -- §25.15 Einstein 张量与场方程
 -- ============================================================
 
+-- Auxiliary: component-wise symmetry of Ricci tensor
+private lemma ricci_symm (Ric : RicciTensor) (m n : Fin 4) :
+    Ric.R m n = Ric.R n m := by
+  have h := congr_fun (congr_fun Ric.symmetric m) n
+  simpa [Matrix.transpose_apply] using h
+
+-- Auxiliary: component-wise symmetry of metric tensor
+private lemma metric_symm (g : MetricTensor) (m n : Fin 4) :
+    g.components m n = g.components n m := by
+  have h := congr_fun (congr_fun g.symmetric m) n
+  simpa [Matrix.transpose_apply] using h
+
 noncomputable def einsteinTensor (g : MetricTensor) (Ric : RicciTensor) (R : ℝ) :
     EinsteinTensor where
   G := fun m n => Ric.R m n - (1 / 2 : ℝ) * R * g.components m n
   symmetric := by
     ext m n
-    -- TECHNICAL LIMITATION: Requires extracting component-wise equality from
-    -- Ric.symmetric and g.symmetric via Matrix.ext_iff. Lean 4's simp tactics
-    -- have issues with nested Matrix.transpose_apply rewriting.
-    -- The identity holds trivially by linearity and component symmetries.
-    sorry -- pure technical algebraic verification, does not affect derivation chain
+    simp only [Matrix.transpose_apply]
+    show Ric.R m n - (1/2 : ℝ) * R * g.components m n =
+         Ric.R n m - (1/2 : ℝ) * R * g.components n m
+    rw [ricci_symm Ric m n, metric_symm g m n]
 
 structure EinsteinFieldEquation where
   g : MetricTensor
@@ -661,11 +672,13 @@ def vacuumBianchiEinstein (g : MetricTensor) :
     second_bianchi := {
       einstein_divergence_free := by
         intro n
-        -- TECHNICAL LIMITATION: In vacuum case, R=0 and Ric=0, so G=0.
-        -- The sum ∑ m, 0 = 0 is trivially true but Lean 4's simp/ring
-        -- cannot automatically close this after einsteinTensor expansion.
-        simp [einsteinTensor]
-        sorry -- pure technical algebraic verification, does not affect derivation chain
+        -- Vacuum: R=0, Ric=0, so G_mn = 0 - 0 = 0 for all m,n
+        have hG_zero : ∀ m, (einsteinTensor g zero_Ric 0).G m n = 0 := by
+          intro m
+          simp [einsteinTensor]
+        calc ∑ m : Fin 4, (einsteinTensor g zero_Ric 0).G m n
+            = ∑ m : Fin 4, 0 := Finset.sum_congr rfl (fun m _ => hG_zero m)
+          _ = 0 := Finset.sum_const_zero
     }
     field_eq := {
       g := g

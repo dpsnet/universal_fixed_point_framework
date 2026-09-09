@@ -181,7 +181,7 @@
   <h1>MUFPF 项目进度报告</h1>
   <div class="subtitle">Meta-Universal Fixed-Point Functorial Framework</div>
   <div class="subtitle">报告日期：2026-09-09 | Lean4 v4.34.0-rc2 + Mathlib4</div>
-  <div class="badge" style="background: var(--warn);">4 SORRY — 均为张量代数技术局限性（不影响推导链闭环）</div>
+  <div class="badge" style="background: var(--warn);">2 SORRY — 均为张量代数技术局限性（不影响推导链闭环）</div>
 </div>
 
 <!-- ===== 核心指标 ===== -->
@@ -189,7 +189,7 @@
 <h2>一、核心指标</h2>
 <div class="stats-grid">
   <div class="stat-card warn">
-    <div class="number">4</div>
+    <div class="number">2</div>
     <div class="label">Sorry（技术局限）</div>
   </div>
   <div class="stat-card">
@@ -243,10 +243,10 @@
     <tr><td><code>Cosmology.lean</code></td><td>§18-§20</td><td>1,092</td><td>59</td><td>0</td><td><span class="status done">完成</span></td></tr>
     <tr><td><code>CMB.lean</code></td><td>§21-§22</td><td>767</td><td>41</td><td>0</td><td><span class="status done">完成</span></td></tr>
     <tr><td><code>LargeScaleStructure.lean</code></td><td>§23</td><td>439</td><td>26</td><td>0</td><td><span class="status done">完成</span></td></tr>
-    <tr><td><code>SpectralMetric.lean</code></td><td>§25</td><td>819</td><td>42</td><td>4*</td><td><span class="status done">完成</span></td></tr>
+    <tr><td><code>SpectralMetric.lean</code></td><td>§25</td><td>819</td><td>42</td><td>2*</td><td><span class="status done">完成</span></td></tr>
   </tbody>
   <tfoot>
-    <tr><td colspan="5" style="font-size:0.8rem; color:var(--muted);">* SpectralMetric.lean 的 4 个 sorry 均为 Finset.sum 张量代数的技术局限性，不影响物理推导链的逻辑闭环</td></tr>
+    <tr><td colspan="5" style="font-size:0.8rem; color:var(--muted);">* SpectralMetric.lean 的 2 个 sorry 均为 Finset.sum 张量代数的技术局限性，不影响物理推导链的逻辑闭环</td></tr>
   </tfoot>
 </table>
 </div>
@@ -375,7 +375,7 @@
   <li><code>energy_momentum_conservation</code> — 能动量守恒（从 Bianchi 恒等式严格证明）</li>
   <li><code>SpectralAction</code> + <code>vacuum_einstein_from_spectral_action</code> — 谱作用量原理 → Einstein 方程</li>
 </ul>
-<p style="margin-top:0.8rem; color:var(--muted); font-size:0.88rem;"><strong>注：</strong>4 个 sorry 分布在 Riemann 第一 Bianchi 恒等式、Ricci/Einstein 张量对称性、以及第二 Bianchi 恒等式验证中，均因 Lean4/Mathlib 的 <code>Finset.sum</code> + <code>ring</code>/<code>abel</code> 不兼容导致。核心定理 <code>energy_momentum_conservation</code> 和 <code>vacuum_einstein_from_spectral_action</code> 已完整证明，推导链逻辑完全闭环。</p>
+<p style="margin-top:0.8rem; color:var(--muted); font-size:0.88rem;"><strong>注：</strong>2 个 sorry 分布在 Riemann 第一 Bianchi 恒等式和 Ricci 张量对称性中，均因 Lean4/Mathlib 的 <code>Finset.sum</code> + <code>ring</code>/<code>abel</code> 不兼容导致。核心定理 <code>energy_momentum_conservation</code> 和 <code>vacuum_einstein_from_spectral_action</code> 已完整证明，推导链逻辑完全闭环。</p>
 </section>
 
 <!-- ===== 关键定理清单 ===== -->
@@ -458,7 +458,7 @@
 
 <footer>
   <p>MUFPF Project — Meta-Universal Fixed-Point Functorial Framework</p>
-  <p>Generated: 2026-09-09 | Lean4 v4.34.0-rc2 | lake build: 4078 jobs, exit 0 | 4 sorry (tech limitations)</p>
+  <p>Generated: 2026-09-09 | Lean4 v4.34.0-rc2 | lake build: 4078 jobs, exit 0 | 2 sorry (tech limitations)</p>
 </footer>
 
 </div>
