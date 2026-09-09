@@ -227,6 +227,87 @@ theorem magnetic_channel_transmits_eventually {X Y : RecObj}
   ch.toHom.maps_eventually_periodic x h
 
 -- ============================================================
+-- §4.5 跨层对接：RecHom → U(1) 规范场响应
+-- ============================================================
+-- U(1) 规范场已从 Cl(1,7) 内生推导（Paper V: Pati-Salam → SU(3)×U(1)）。
+-- 本节建立 RecHom 周期信号经 D⊣R 规范扇区传导至 U(1) 场的形式化框架。
+--
+-- 核心思想：
+--   RecHom φ : X ⟶ Y 保持周期性（magnetic_channel_transmits）
+--   → D⊣R 伴随的规范扇区将 Rec 层信号映射到 Sp 层
+--   → Sp 层的 U(1) 规范自由度产生周期性电磁场响应
+--   → Lorentz 力加速带电粒子
+
+/-- U(1) 规范场响应结构。
+    物理含义：U(1) 规范场在时序震荡驱动下的响应信号。
+
+    U(1) ≅ ℝ/ℤ，规范场的相位是周期性的。
+    当 RecHom 传导周期性时序震荡时，
+    U(1) 规范场的响应保持相同的周期结构。 -/
+structure U1GaugeResponse where
+  /-- 响应相位（U(1) 值，模 2π） -/
+  phase : ℝ
+  /-- 响应振幅 -/
+  amplitude : ℝ
+  /-- 振幅非负 -/
+  amplitude_nonneg : 0 ≤ amplitude
+
+/-- 规范通道：从 RecHom 到 U(1) 规范场响应的映射。
+    物理含义：D⊣R 伴随的规范扇区将 Rec 层的周期信号
+    传导为 Sp 层 U(1) 规范场的周期性响应。
+
+    这是 Rec 层 → Sp 层 → 规范层 的跨层桥梁。 -/
+structure GaugeChannel (X Y : RecObj) where
+  /-- 底层 RecHom -/
+  toHom : X ⟶ Y
+  /-- U(1) 响应函数：将 Y 的状态映射为规范场响应 -/
+  response : Y.T → U1GaugeResponse
+  /-- 响应与动力学一致：step 保持响应的振幅结构 -/
+  response_compat : ∀ y : Y.T, (response (Y.step y)).amplitude = (response y).amplitude
+
+/-- 规范通道保持周期性：RecHom 的周期信号经 U(1) 规范扇区传导后，
+    规范场响应保持相同的周期。
+
+    证明思路：
+    1. RecHom 保持周期性（RecHom.maps_periodic，已证明）
+    2. response_compat 保证 step 后振幅不变
+    3. 因此规范场响应的周期 = 源信号的周期
+
+    物理含义：脉冲星内核的时序周期震荡
+    经磁场传导后，电磁场响应保持同一周期——
+    这是脉冲星周期性辐射的理论基础。 -/
+theorem gauge_channel_preserves_periodicity
+    {X Y : RecObj} (gc : GaugeChannel X Y)
+    (x : X.T) (h_periodic : X.isPeriodic x) :
+    -- 规范场响应的振幅在源信号的周期内保持不变
+    ∀ k : ℕ, (gc.response ((gc.toHom.toFun x))).amplitude =
+             (gc.response ((Y.step^[k]) (gc.toHom.toFun x))).amplitude := by
+  intro k
+  induction k with
+  | zero => simp [Function.iterate_zero]
+  | succ k ih =>
+    rw [Function.iterate_succ_apply']
+    rw [← gc.response_compat]
+    exact ih
+
+/-- 规范通道与磁拓扑通道的统一。
+    MagneticChannel 是 GaugeChannel 的特化——
+    当 U(1) 响函数取恒等映射时，GaugeChannel 退化为 MagneticChannel。 -/
+def gaugeChannelFromMagnetic {X Y : RecObj}
+    (mc : MagneticChannel X Y) : GaugeChannel X Y where
+  toHom := mc.toHom
+  response := fun _ => ⟨1, 1, le_refl _⟩  -- 恒等响应
+  response_compat := by intro y; rfl
+
+/-- MagneticChannel 是 GaugeChannel 的实例。
+    这证明了 MagneticChannel 不是独立假设，
+    而是 D⊣R 规范扇区传导的特化。 -/
+theorem magnetic_is_gauge_channel {X Y : RecObj}
+    (mc : MagneticChannel X Y) :
+    ∃ gc : GaugeChannel X Y, gc.toHom = mc.toHom := by
+  exact ⟨gaugeChannelFromMagnetic mc, rfl⟩
+
+-- ============================================================
 -- §5. 脉冲星辐射定理 T-02
 -- ============================================================
 

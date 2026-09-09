@@ -380,7 +380,7 @@
     <tr><td><code>Cosmology.lean</code></td><td>§18-§20</td><td>1,092</td><td>59</td><td>0</td><td>68</td></tr>
     <tr><td><code>CMB.lean</code></td><td>§21-§22</td><td>767</td><td>41</td><td>0</td><td>69</td></tr>
     <tr><td><code>LargeScaleStructure.lean</code></td><td>§23</td><td>439</td><td>26</td><td>0</td><td>69</td></tr>
-    <tr><td><code>SpectralMetric.lean</code></td><td>§25</td><td>819</td><td>42</td><td>4*</td><td>69</td></tr>
+    <tr><td><code>SpectralMetric.lean</code></td><td>§25</td><td>~900</td><td>~50</td><td>1*</td><td>69</td></tr>
     <tr><td><code>CosmologyFormalization.lean</code></td><td>§24</td><td>634</td><td>26</td><td>0</td><td>69</td></tr>
   </tbody>
 </table>
@@ -434,7 +434,7 @@
 </table>
 </div>
 
-<p>准确的定性：这是一个<strong>伴随等价</strong>（adjoint equivalence）而非同构——数学上严格等价，物理上不对称。Δ 是<strong>前几何的</strong>（pre-geometric），R_μν 是其在连续极限下的<strong>涌现投影</strong>。类比：温度（宏观）↔ 分子平均动能（微观），数学等价但属于不同描述层级。</p>
+<p>准确的定性：这是一种<strong>涌现等价</strong>（emergent equivalence）——比伴随等价更弱，数学上双向映射成立（iff），但两个端点的存在论地位不对称。Δ 是<strong>前几何的</strong>（pre-geometric），R_μν 是其在连续极限下的<strong>涌现投影</strong>。类比：温度（宏观）↔ 分子平均动能（微观），数学等价但属于不同描述层级。</p>
 
 <h3>2.3 对论文系列的意义</h3>
 
@@ -904,7 +904,7 @@ flowchart TD
   <div class="paper-en">The Complete Emergence Map: From the Structural Constant Δ to the Einstein Field Equations</div>
   <div class="paper-body">
     <h4>摘要</h4>
-    <p>建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射。证明该映射是数学等价（iff），而非语义诠释：Hermitian 谱数据的实部自然产生对称度规张量，Lorentz 签名 (+,-,-,-) 从 Cl(1,3) 代数结构唯一确定，Christoffel 符号从度规微分导出，Riemann 曲率张量从联络的对易子导出。同时证明第二 Bianchi 恒等式保证能动量守恒，谱作用量原理 Tr(f(D/Λ)) 在真空极限下回到 Einstein-Hilbert 作用量。关键区别：Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过伴随等价连接。</p>
+    <p>建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射。证明该映射是数学等价（iff），而非语义诠释：Hermitian 谱数据的实部自然产生对称度规张量，Lorentz 签名 (+,-,-,-) 从 Cl(1,3) 代数结构唯一确定，Christoffel 符号从度规微分导出，Riemann 曲率张量从联络的对易子导出。同时证明第二 Bianchi 恒等式（通过离散协变代数的联络作用 + sum4 桥接技术）保证能动量守恒，谱作用量原理 Tr(f(D/Λ)) 在真空极限下回到 Einstein-Hilbert 作用量。关键区别：Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过涌现等价（比伴随等价更弱，存在论不对称）连接。</p>
 
     <h4>核心贡献</h4>
     <ul>
@@ -918,18 +918,23 @@ flowchart TD
           <li>L5→L6：<code>RicciTensor</code> + <code>scalarCurvature</code> + <code>einsteinTensor</code></li>
         </ul>
       </li>
-      <li><strong>前几何 vs 几何的存在论区分</strong>：Δ 是结构常数（类比 π、e），R_μν 是张量场——数学等价但存在论不对称</li>
-      <li><code>SecondBianchiIdentity</code>：∇^μ G_μν = 0</li>
+      <li><strong>前几何 vs 几何的存在论区分</strong>：Δ 是结构常数（类比 π、e），R_μν 是张量场——数学等价但存在论不对称（涌现等价，非伴随等价）</li>
+      <li><strong>离散协变代数</strong>：<code>connectionAction</code>（联络作用替代协变导数）+ <code>sum4</code>（Fin 4 显式求和桥接 Finset.sum）</li>
+      <li><code>firstBianchiExplicit</code>：第一 Bianchi 恒等式（sum4 + torsion_free + ring，已证明）</li>
+      <li><code>ricciExplicit_symm</code>：Ricci 张量对称性（sum4 + torsion_free + ring，已证明）</li>
+      <li><code>second_bianchi_discrete</code>：离散第二 Bianchi 恒等式（联络作用循环求和 = 0，已证明）</li>
+      <li><code>SecondBianchiIdentity</code>：∇^μ G_μν = 0（通过 sum4 桥接推导）</li>
       <li><code>energy_momentum_conservation</code>：能动量守恒（已证明）</li>
       <li><code>SpectralAction</code> + <code>vacuum_einstein_from_spectral_action</code>：谱作用量原理</li>
-      <li>引力子的准粒子诠释：Δ 是结构常数，引力子是范畴结构的集体激发（类比声子）</li>
+      <li>引力子的准粒子诠释：Δ 是结构常数，引力子是范畴结构的集体激发（类比声子），引力天然量子化</li>
     </ul>
 
     <h4>拟用定理</h4>
     <ul>
-      <li><code>SpectralMetric.lean</code> §25：819 行，42 个定义/定理</li>
+      <li><code>SpectralMetric.lean</code> §25：~900 行，~50 个定义/定理</li>
       <li>核心定理 <code>energy_momentum_conservation</code> 和 <code>vacuum_einstein_from_spectral_action</code> 已完整证明</li>
-      <li>4 个技术性 sorry（Finset.sum + ring 兼容性）不影响逻辑闭环</li>
+      <li>1 个计算量瓶颈 sorry（scalarCurvature 展开 256 项），不影响逻辑闭环</li>
+      <li>sum4 桥接技术：闭合第一 Bianchi、Ricci 对称性、离散第二 Bianchi</li>
     </ul>
 
     <h4>建议章节</h4>
@@ -940,11 +945,11 @@ flowchart TD
       <li>L1→L3：从缺陷度量到度规张量的涌现</li>
       <li>L3→L5：从度规到 Riemann 曲率的微分几何推导</li>
       <li>L5→L6：从曲率到 Einstein 场方程</li>
-      <li>Bianchi 恒等式与能动量守恒</li>
+      <li>Bianchi 恒等式与能动量守恒（含离散协变代数 + sum4 桥接）</li>
       <li>谱作用量原理与 Einstein-Hilbert 作用量</li>
-      <li>存在论分析：Δ 与 R_μν 的层级关系（伴随等价 vs 同构）</li>
-      <li>引力子作为准粒子：与声子的类比</li>
-      <li>讨论：时空几何的量子起源与涌现映射的普适性</li>
+      <li>存在论分析：Δ 与 R_μν 的层级关系（涌现等价 vs 同构 vs 伴随等价）</li>
+      <li>引力子作为准粒子：与声子的类比（引力天然量子化、紫外完备性）</li>
+      <li>讨论、结论与开放问题（时空几何的量子起源、涌现映射的普适性、形式化状态、技术局限性）</li>
     </ol>
   </div>
   <div class="paper-tags">
@@ -1098,7 +1103,7 @@ flowchart TD
     <tr><td><code>Cosmology.lean</code></td><td>量子反弹、捏点级联、暗 sector</td><td>59</td><td>Paper LI + LII</td></tr>
     <tr><td><code>CMB.lean</code></td><td>功率谱、偏振、BAO、非高斯性</td><td>41</td><td>Paper LIII</td></tr>
     <tr><td><code>LargeScaleStructure.lean</code></td><td>粗粒化、宇宙网、质量函数</td><td>26</td><td>Paper LIII</td></tr>
-    <tr><td><code>SpectralMetric.lean</code></td><td>度规、曲率、Einstein、Bianchi</td><td>42</td><td>Paper LIV</td></tr>
+    <tr><td><code>SpectralMetric.lean</code></td><td>度规、曲率、Einstein、Bianchi、sum4桥接</td><td>~50</td><td>Paper LIV</td></tr>
     <tr><td><code>CosmologyFormalization.lean</code></td><td>信息拓扑、Page 曲线</td><td>26</td><td>Paper LV</td></tr>
     <tr><td><code>BlackHole*.lean</code>（3 个文件）</td><td>蒸发、信息、弹跳</td><td>58</td><td>Paper LV</td></tr>
   </tbody>
