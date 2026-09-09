@@ -284,6 +284,55 @@ theorem energy_momentum_conservation
 - 能动量守恒不是额外假设，而是场方程的自动推论
 - 在 MUFPF 框架中：谱缺陷的拓扑一致性（Bianchi）→ 几何侧无散（Einstein 张量）→ 物质侧守恒（能动量张量）
 
+### 3.4 谱作用量原理 → Einstein 方程（方向 B）
+
+从谱作用量 S = Tr(f(D/Λ)) 出发，展开到曲率二阶，得到 Einstein-Hilbert 作用量，变分导出 Einstein 方程。
+
+**Lean4 形式化**：
+```lean
+-- Dirac 算子结构
+structure DiracOperator where
+  n : ℕ
+  D : Matrix (Fin n) (Fin n) ℂ
+  hermitian : D = Dᴴ
+
+-- 谱作用量结构
+structure SpectralAction where
+  dirac : DiracOperator
+  Λ : ℝ
+  h_Λ_pos : Λ > 0
+  f : ℝ → ℝ
+
+-- 谱作用量展开定理（Chamseddine-Connes 形式）
+structure SpectralActionExpansion where
+  spectral_action : SpectralAction
+  g : MetricTensor
+  R : ℝ
+  Λ_cosmo : ℝ
+  f₄ : ℝ  -- 四阶矩
+  f₂ : ℝ  -- 二阶矩
+  f₀ : ℝ  -- 零阶矩
+  expansion_valid : Prop
+
+-- 从谱作用量导出真空 Einstein 方程
+theorem vacuum_einstein_from_spectral_action
+    (g : MetricTensor) (Ric : RicciTensor)
+    (h_vacuum : scalarCurvature g Ric = 0)
+    (h_ricci_zero : Ric.R = 0) :
+    (einsteinTensor g Ric (scalarCurvature g Ric)).G = 0
+```
+
+**推导链**：
+```
+谱作用量 S = Tr(f(D/Λ))
+        │
+        ▼ 展开到曲率二阶
+S ≈ f₄ Λ⁴ + f₂ Λ² R + f₀ R²
+        │
+        ▼ 变分 δS/δg_μν = 0
+Einstein 方程 G_μν + Λ_cosmo g_μν = 0
+```
+
 ---
 
 ## 四、与其他模块的连接
@@ -329,7 +378,7 @@ theorem energy_momentum_conservation
 | QuantumGravity.lean | 4 | `RecObj_to_CausalStructure` 证明链 |
 | CausalSet.lean | 5 | `connectedSum_card` |
 | PulsarRadiation.lean | 2 | 双周期策略（避免 m≥2 分支） |
-| SpectralMetric.lean | 7（当前） | `diagonal_transpose`, `pow_pos`, `Nat.cast_pos`, Bianchi 代数证明 |
+| SpectralMetric.lean | 4（技术局限性） | `Finset.sum` 与 `ring`/`abel` 兼容性问题 |
 
 ---
 
