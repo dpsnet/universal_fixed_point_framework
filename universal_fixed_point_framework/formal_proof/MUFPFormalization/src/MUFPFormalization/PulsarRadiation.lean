@@ -287,7 +287,7 @@ theorem gauge_channel_preserves_periodicity
   | zero => simp [Function.iterate_zero]
   | succ k ih =>
     rw [Function.iterate_succ_apply']
-    rw [← gc.response_compat]
+    rw [gc.response_compat]
     exact ih
 
 /-- 规范通道与磁拓扑通道的统一。
@@ -296,7 +296,7 @@ theorem gauge_channel_preserves_periodicity
 def gaugeChannelFromMagnetic {X Y : RecObj}
     (mc : MagneticChannel X Y) : GaugeChannel X Y where
   toHom := mc.toHom
-  response := fun _ => ⟨1, 1, le_refl _⟩  -- 恒等响应
+  response := fun _ => ⟨1, 1, by norm_num⟩  -- 恒等响应
   response_compat := by intro y; rfl
 
 /-- MagneticChannel 是 GaugeChannel 的实例。

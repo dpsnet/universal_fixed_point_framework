@@ -149,7 +149,10 @@ theorem connectedSum_defectMeasure (n : ℕ) (hn : n > 0) :
     defectMeasure (connectedSumRecObj n) > 0 := by
   -- 取 x = (0, s0)，step(0, s0) = (0, s1) ≠ (0, s0)
   have h_step : connectedSumStep n (⟨0, by omega⟩, KleinState.s0) ≠ (⟨0, by omega⟩, KleinState.s0) := by
-    simp [connectedSumStep, kleinStep]
+    simp only [connectedSumStep, kleinStep]
+    intro h
+    injection h with _h1 h2
+    exact absurd h2 (by decide)
   exact defectMeasure_pos_of_eccentric (connectedSumRecObj n)
     (⟨0, by omega⟩, KleinState.s0) h_step
 
@@ -244,7 +247,8 @@ theorem defectMeasure_increases_with_n (n : ℕ) (hn : n > 0) :
   -- defectMeasure = card({x // step x ≠ x}) = card(ConnectedSumState n) = 4n
   have h_all : ∀ x : ConnectedSumState n, (connectedSumRecObj n).step x ≠ x := by
     intro ⟨i, s⟩
-    cases s <;> simp [connectedSumRecObj, connectedSumStep, kleinStep]
+    cases s <;> simp [connectedSumRecObj, connectedSumStep, kleinStep] <;>
+      intro h <;> injection h with _h1 h2 <;> exact absurd h2 (by decide)
   have h_eq : defectMeasure (connectedSumRecObj n) = Fintype.card (ConnectedSumState n) := by
     unfold defectMeasure
     have : {x : ConnectedSumState n // (connectedSumRecObj n).step x ≠ x} ≃ ConnectedSumState n :=
@@ -345,7 +349,9 @@ theorem connectedSum_blackHole_threshold (n : ℕ) (hn : n ≥ 2) :
     hasStructuralDefect (connectedSumRecObj n) := by
   -- K^{#n} 的 defectMeasure = 4n ≥ 8 ≥ Fintype.card - 1 = 4n - 1
   have h_card : 2 ≤ Fintype.card (connectedSumRecObj n).T := by
-    simp [connectedSumRecObj, connectedSum_card]
+    -- (connectedSumRecObj n).T 与 ConnectedSumState n 定义相等，用 show 换型避免 rw motive 错误
+    show 2 ≤ Fintype.card (ConnectedSumState n)
+    rw [connectedSum_card]
     omega
   have h_defect : defectMeasure (connectedSumRecObj n) ≥ 4 * n :=
     defectMeasure_increases_with_n n (by omega)
@@ -363,14 +369,19 @@ theorem connectedSum_criticalOrder_iff (n : ℕ) :
   · intro h
     by_contra hn
     push_neg at hn
-    -- n = 0 时，Fin 0 × KleinState 为空
-    subst hn
-    unfold hasStructuralDefect at h
-    unfold defectMeasure at h
-    simp [connectedSumRecObj, connectedSumStep, ConnectedSumState] at h
+    -- n = 0 时，ConnectedSumState 0 = Fin 0 × KleinState 为空，故 defectMeasure = 0
+    have hn0 : n = 0 := by omega
+    subst hn0
+    unfold hasStructuralDefect defectMeasure at h
+    haveI hempty : IsEmpty (ConnectedSumState 0) := ⟨fun x => x.1.elim0⟩
+    have h0 : Fintype.card (ConnectedSumState 0) = 0 := Fintype.card_eq_zero
+    have h_le : Fintype.card {x : (connectedSumRecObj 0).T // (connectedSumRecObj 0).step x ≠ x} ≤
+        Fintype.card (ConnectedSumState 0) :=
+      Fintype.card_le_of_injective Subtype.val Subtype.val_injective
+    rw [h0] at h_le
     omega
   · intro hn
-    exact connectedSum_blackHole_threshold n (by omega)
+    exact connectedSum_defectMeasure n hn
 
 -- ============================================================
 -- §12. 反向定理与待解决问题推进
@@ -433,7 +444,7 @@ theorem connectedSum_step_injective (n : ℕ) :
     - defectMeasure > 0 → hasRankDegeneration ❌（反例：4-循环）
     - defectMeasure > 0 ∧ ¬Injective step → hasRankDegeneration ✅（已证明） -/
 theorem defectMeasure_pos_but_no_rankDegeneration :
-    ∃ X : RecObj, defectMeasure X > 0 ∧ ¬ hasRankDegeneration X := by
+    ∃ X : RecObj.{0}, defectMeasure X > 0 ∧ ¬ hasRankDegeneration X := by
   -- 反例：K^{#1} = 克莱因瓶，step 是单射（4-循环），无秩退化
   refine ⟨connectedSumRecObj 1, ?_, ?_⟩
   · exact connectedSum_defectMeasure 1 (by norm_num)
@@ -461,9 +472,16 @@ theorem connectedSum_structuralDefect_implies_positive (n : ℕ) :
   intro h
   by_contra hn
   push_neg at hn
-  subst hn
+  have hn0 : n = 0 := by omega
+  subst hn0
+  -- ConnectedSumState 0 为空，defectMeasure = 0，与 hasStructuralDefect 矛盾
   unfold hasStructuralDefect defectMeasure at h
-  simp [connectedSumRecObj, connectedSumStep, ConnectedSumState] at h
+  haveI hempty : IsEmpty (ConnectedSumState 0) := ⟨fun x => x.1.elim0⟩
+  have h0 : Fintype.card (ConnectedSumState 0) = 0 := Fintype.card_eq_zero
+  have h_le : Fintype.card {x : (connectedSumRecObj 0).T // (connectedSumRecObj 0).step x ≠ x} ≤
+      Fintype.card (ConnectedSumState 0) :=
+    Fintype.card_le_of_injective Subtype.val Subtype.val_injective
+  rw [h0] at h_le
   omega
 
 /-- 克莱因瓶的三维嵌入性质：在三维时空中，克莱因瓶必有自交。
@@ -486,7 +504,8 @@ theorem connectedSum_euler_characteristic_approx (n : ℕ) :
 theorem connectedSum_non_orientable (n : ℕ) (hn : n > 0) :
     ∀ x : ConnectedSumState n, (connectedSumRecObj n).step x ≠ x := by
   intro ⟨i, s⟩
-  cases s <;> simp [connectedSumRecObj, connectedSumStep, kleinStep]
+  cases s <;> simp [connectedSumRecObj, connectedSumStep, kleinStep] <;>
+    intro h <;> injection h with _h1 h2 <;> exact absurd h2 (by decide)
 
 /-- 临界阶次 n_* 的离散框架估计：
     当 n ≥ 2 时，K^{#n} 已处于"黑洞"状态（结构性缺陷）。

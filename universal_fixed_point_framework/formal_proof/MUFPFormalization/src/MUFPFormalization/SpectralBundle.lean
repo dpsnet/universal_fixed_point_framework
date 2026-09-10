@@ -13,6 +13,7 @@
 --   SpectralBundle/Cosmology.lean            §18-§20 量子反弹、暴胀、暗能量
 --   SpectralBundle/CMB.lean                  §21-§22 CMB各向异性、功率谱深化
 --   SpectralBundle/LargeScaleStructure.lean  §23     大尺度结构形式化框架
+--   SpectralBundle/DefectDensity.lean        §26     缺陷体密度桥（Ω 分配，Phase 69.8）
 -- ============================================================
 
 import MUFPFormalization.SpectralBundle.Core
@@ -23,3 +24,4 @@ import MUFPFormalization.SpectralBundle.CausalSet
 import MUFPFormalization.SpectralBundle.Cosmology
 import MUFPFormalization.SpectralBundle.CMB
 import MUFPFormalization.SpectralBundle.LargeScaleStructure
+import MUFPFormalization.SpectralBundle.DefectDensity

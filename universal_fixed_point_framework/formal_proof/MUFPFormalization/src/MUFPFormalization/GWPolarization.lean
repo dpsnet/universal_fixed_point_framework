@@ -904,13 +904,13 @@ theorem binaryCoupling_2state_diag_positive {X₁ X₂ Y : RecObj}
   · simp [h_card₁, h_card₂]
 
 -- ============================================================
--- §19. SO(2) 极化基旋转不变性（部分闭合缺口 7）
+-- §19. SO(2) 极化基旋转不变性（G4 部分闭合：传播方向内生确定）
 -- ============================================================
 
-/-! 缺口 7（横向截面选取的内生依据）的部分闭合：
+/-! G4（传播方向内生确定，原缺口 7）的部分闭合：
     + 和 × 的具体值依赖传播方向选取（即 Pauli 基的选取），
     但极化功率 h₊² + h×² 在 SO(2) 旋转下不变——即不依赖方向选取。
-    这将缺口 7 从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。 -/
+    这将 G4 从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。 -/
 
 /-- SO(2) 元素：(a, b) ∈ ℝ² 满足 a² + b² = 1。
     对应旋转矩阵 [[a, -b], [b, a]]。
@@ -980,10 +980,10 @@ theorem binaryCouplingShapeMatrix_amplitudes_real {X₁ X₂ Y : RecObj}
   refine ⟨plusAmplitude_real (binaryCouplingShapeMatrix_hermitian bc h_same),
           crossAmplitude_real (binaryCouplingShapeMatrix_hermitian bc h_same)⟩
 
-/-- **缺口 7 部分闭合**：耦合形状矩阵的极化功率在 SO(2) 旋转下不变。
+/-- **G4 部分闭合**：耦合形状矩阵的极化功率在 SO(2) 旋转下不变。
     虽然单个 h₊, h× 的值依赖传播方向选取（Pauli 基的选取），
     但极化功率 h₊² + h×² 是 SO(2) 不变量——物理可观测量不依赖方向选取。
-    这将缺口 7 从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。 -/
+    这将 G4 从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。 -/
 theorem couplingShapeMatrix_polarization_power_SO2_invariant {n : ℕ}
     (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) (r : SO2Elem) :
     (rotatedAmplitudes r (plusAmplitude (couplingShapeMatrix A₁ A₂)).re
@@ -1414,10 +1414,10 @@ theorem T_G2_unified_velocity_theorem {n : ℕ}
     continuousVelocity_pos _⟩
 
 -- ============================================================
--- §22. 缺口 7 完全闭合：内生传播方向
+-- §22. G4 完全闭合：内生传播方向
 -- ============================================================
 
-/-! 本节实现缺口 7（横向截面选取的内生依据）的完全闭合。
+/-! 本节实现 G4（传播方向内生确定，原缺口 7）的完全闭合。
 
     §19 已证明极化功率 hp²+hc² 在 SO(2) 旋转下不变（部分闭合）。
     本节进一步证明：当极化非零时（ρ>0），存在唯一的正规化旋转
@@ -1530,7 +1530,7 @@ noncomputable def binaryCouplingPolarizationRadius {X₁ X₂ Y : RecObj}
     (h_same.symm ▸ stepMatrix
       (Fintype.equivFin X₂.T ∘ X₂.step ∘ (Fintype.equivFin X₂.T).symm))
 
-/-- **缺口 7 完全闭合定理**：对耦合形状矩阵，若极化非零，
+/-- **G4 完全闭合定理**：对耦合形状矩阵，若极化非零，
     则存在由耦合结构唯一确定的正规化传播方向，
     使 cross 极化为零、plus 极化等于谱半径。
 
@@ -1540,9 +1540,9 @@ noncomputable def binaryCouplingPolarizationRadius {X₁ X₂ Y : RecObj}
     3. plus 振幅等于谱半径 ρ——唯一确定的物理可观测量
     4. ρ 是 SO(2) 不变量，不依赖任何外部选取
 
-    这将缺口 7 从"部分闭合"（功率不变）提升至"完全闭合"
+    这将 G4（传播方向内生确定）从"部分闭合"（功率不变）提升至"完全闭合"
     （传播方向内生确定）。 -/
-theorem T_gap7_full_closure {n : ℕ}
+theorem T_G4_propagation_direction {n : ℕ}
     (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ)
     (hρ : couplingPolarizationRadius A₁ A₂ > 0) :
     -- 存在正规化旋转使 cross=0
@@ -1562,19 +1562,19 @@ theorem T_gap7_full_closure {n : ℕ}
     couplingPolarizationRadius A₁ A₂ := by
   refine ⟨canonical_cross_zero _ _ hρ, canonical_plus_eq_radius _ _ hρ⟩
 
-/-- 缺口 7 完全闭合推论：极化功率 = 谱半径²。
+/-- G4 推论：极化功率 = 谱半径²。
     hp²+hc² = ρ²，结合 §19 的 SO(2) 不变性，
     这给出了物理可观测量的完整刻画。 -/
-theorem T_gap7_power_eq_radius_sq {n : ℕ}
+theorem T_G4_power_eq_radius_sq {n : ℕ}
     (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) :
     (plusAmplitude (couplingShapeMatrix A₁ A₂)).re ^ 2 +
     (crossAmplitude (couplingShapeMatrix A₁ A₂)).re ^ 2 =
     couplingPolarizationRadius A₁ A₂ ^ 2 :=
   polarizationRadius_sq _ _
 
-/-- 缺口 7 BinaryCoupling 版本：若 BinaryCoupling 耦合矩阵极化非零，
+/-- G4 BinaryCoupling 版本：若 BinaryCoupling 耦合矩阵极化非零，
     则存在内生传播方向使 cross=0, plus=ρ。 -/
-theorem T_gap7_binary_coupling_closure {X₁ X₂ Y : RecObj}
+theorem T_G4_binary_coupling_closure {X₁ X₂ Y : RecObj}
     (bc : BinaryCoupling X₁ X₂ Y)
     (h_same : Fintype.card X₁.T = Fintype.card X₂.T)
     (hρ : binaryCouplingPolarizationRadius bc h_same > 0) :

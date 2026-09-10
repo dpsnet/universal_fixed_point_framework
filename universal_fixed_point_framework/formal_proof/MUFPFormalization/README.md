@@ -1,114 +1,127 @@
-# UFPFormalization — 通用不动点范畴框架机器证明库
+# MUFPFormalization — 元通用不动点函子范畴框架机器证明库
 
-本目录包含论文 **《通用不动点范畴框架 I：分形谱化理论》** 的机器证明（形式化证明）代码，基于 **Lean 4.31.0 + mathlib4**。
+本目录包含 **《元通用不动点函子范畴框架》（MUFPF）** 的机器证明（形式化证明）代码，基于 **Lean 4.34.0-rc2 + Mathlib4**。
+
+## 项目概览
+
+| 指标 | 数值 |
+|:-----|:-----|
+| Lean 版本 | 4.34.0-rc2 |
+| Lake 版本 | 5.0.0 |
+| 源码模块数 | 107+ |
+| 总定理数 | 231 |
+| 总引理数 | 23 |
+| sorry 数量 | 1 |
+| `lake build` jobs | 4078 |
 
 ## 项目结构
 
 ```
-UFPFormalization/
-├── lakefile.lean                 # Lake 项目配置（mathlib4 本地路径依赖）
-├── lean-toolchain                # Lean 4.31.0
-├── UFPFormalization.lean         # 库入口
+MUFPFormalization/
+├── lakefile.lean                 # Lake 项目配置
+├── lean-toolchain                # Lean 4.34.0-rc2
 ├── Main.lean                     # 可执行入口
 ├── README.md                     # 本文件
-├── OFFLINE_INSTALL.md            # 离线/网络受限环境安装说明
-├── run-lake-update.ps1           # 本地 elan 环境一键更新/构建脚本
-└── UFPFormalization/
-    ├── Basic.lean                # 最小可构建原型
-    ├── RecCategory.lean          # Rec 范畴（mathlib 版本）
-    ├── SpCategory.lean           # Sp 范畴（mathlib 版本）
-    ├── DecursionFunctor.lean     # D : Rec → Spec 函子（完整 Functor 律证明）
-    ├── Adjunction.lean           # D ⊣ R 伴随（RFunctor 对象映射，零 sorry 零 axiom）
-    ├── SpectralCorrespondence.lean # 谱对应 η(μ)=e^{-μ} 双向逆证明
-    ├── OrbitFunctor.lean         # 有限维轨道函子与 orbit-stabilizer 定理
-    ├── Clifford.lean             # 低维 Clifford 矩阵表示与验证
-    ├── NoiseCategory.lean        # Σ-Rec/Σ-Spec 范畴、Σ-D 正式函子（Functor 律闭合）
-    ├── IFSRecCoding.lean         # IFS → Σ-Rec 符号编码 + 谱 coproduct 分解（阶段 3）
-    ├── WeierstrassGap.lean       # Weierstrass 图 IFS 谱隙结构支撑（阶段 3）
-    └── ...（其余阶段 44/60/61 模块）
+├── ENV_GUIDE.md                  # 环境使用说明
+├── OFFLINE_INSTALL.md            # 离线安装说明
+└── src/MUFPFormalization/
+    ├── Basic.lean                # 库入口（import 核心模块）
+    ├── RecCategory.lean          # Rec 递归范畴
+    ├── SpCategory.lean           # Sp 谱范畴
+    ├── DecursionFunctor.lean     # D 函子（Functor 律 + intertwine）
+    ├── Adjunction.lean           # D ⊣ R 伴随（零 sorry 零 axiom）
+    ├── SpectralCorrespondence.lean # 谱对应 η(μ)=e^{-μ}
+    ├── CriticalCardinality.lean  # T-01 拓扑临界基数（20+6）
+    ├── PulsarRadiation.lean      # T-02 脉冲星辐射（14+6）
+    ├── GravitationalWave.lean    # T-03 引力波（13+1）
+    ├── DualChannel.lean          # T-04 双通道交叉验证（25+1）
+    ├── GWPolarization.lean       # G1/G2/G3/G4 缺口闭合（97+9）
+    ├── SpectralMetric.lean       # 涌现度规 + Einstein 方程
+    ├── SpectralBundle/           # 宇宙学形式化子目录
+    │   ├── Core.lean             # 谱丛基础
+    │   ├── Cosmology.lean        # 量子反弹 + 暴胀
+    │   ├── CMB.lean              # CMB 各向异性
+    │   ├── CausalSet.lean        # 因果集对接
+    │   ├── QuantumGravity.lean   # 量子引力接口
+    │   ├── DeltaSector.lean      # 暗 sector 统一
+    │   └── LargeScaleStructure.lean # 大尺度结构
+    └── ...（共 107+ 模块）
 ```
 
-## 当前阶段
+## 快速开始
 
-**Phase 16A：范畴基础形式化（核心已完成）**
+```powershell
+cd E:\workspace\hyper-resolution\universal_fixed_point_framework\formal_proof\MUFPFormalization
 
-| 模块 | 文件 | 状态 |
-|------|------|------|
-| 最小可构建原型 | `Basic.lean` | ✅ 完成 |
-| Rec 范畴 | `RecCategory.lean` | ✅ 完成 |
-| Sp 范畴 | `SpCategory.lean` | ✅ 完成 |
-| D 函子 | `DecursionFunctor.lean` | ✅ Functor 律 + intertwine 已证 |
-| D ⊣ R 伴随 | `Adjunction.lean` | ✅ 零 `sorry` 零 `axiom`（RFunctor 降为对象映射，原 3 sorry + 1 axiom 结构性不可构造后删除） |
-| 谱对应 M ≅ L | `SpectralCorrespondence.lean` | ✅ 双向逆已证 |
-| 轨道函子 | `OrbitFunctor.lean` | ✅ orbitWeight + orbit-stabilizer 已证 |
-| Clifford 表示 | `Clifford.lean` | ✅ 矩阵表示与平方/反对易验证 |
-| Σ-Rec/Σ-Spec + Σ-D 函子 | `NoiseCategory.lean` | ✅ Category 律 + `sigmaDFunctor` 正式函子（Functor 律闭合，2026-08-05） |
-| IFS → Σ-Rec 符号编码 | `IFSRecCoding.lean` | ✅ 符号编码 + 谱 coproduct 分解三定理（2026-08-05） |
-| Weierstrass 图 IFS 谱隙 | `WeierstrassGap.lean` | ✅ 收缩/维数/迹公式结构支撑（2026-08-05） |
+# 完整构建
+lake build
 
-**构建状态**：`lake build` **2454 jobs 全量通过，全库零 `sorry` 零 `axiom`**。
+# 运行可执行文件
+.lake\build\bin\mufpfformalization.exe
+
+# 统计 sorry 数量
+(Get-ChildItem -Path src -Filter *.lean -Recurse | Select-String '\bsorry\b').Count
+```
+
+详细使用说明见 [ENV_GUIDE.md](ENV_GUIDE.md)。
+
+## 形式化覆盖范围
+
+### 因果链 T-01 至 T-04
+
+| 定理 | 文件 | 主定理名 | 定理 | 引理 | sorry |
+|:-----|:-----|:---------|:----:|:----:|:-----:|
+| T-01 | `CriticalCardinality.lean` | `T01_no_symmetric_above_Kc` | 20 | 6 | 0 |
+| T-02 | `PulsarRadiation.lean` | `T02_pulsar_radiation` | 14 | 6 | 0 |
+| T-03 | `GravitationalWave.lean` | `T03_gravitational_wave_timing_oscillation` | 13 | 1 | 0 |
+| T-04 | `DualChannel.lean` | `T04_cross_validation` | 25 | 1 | 0 |
+
+### 引力波深层缺口闭合
+
+| 缺口 | 文件 | 核心定理 | 定理 | 引理 | sorry |
+|:-----|:-----|:---------|:----:|:----:|:-----:|
+| G1 张量横波极化 | `GWPolarization.lean` | `T_G1_dual_source_polarization` | 97 | 9 | 0 |
+| G2 传播速度 | `GWPolarization.lean` | `T_G2_continuous_velocity_residual_correspondence` | ↑ | ↑ | 0 |
+| G3 四极辐射 | `GWPolarization.lean` | `monopole_no_radiation` | ↑ | ↑ | 0 |
+| G4 传播方向 | `GWPolarization.lean` | `T_G4_propagation_direction` | ↑ | ↑ | 0 |
+
+### 范畴基础与宇宙学
+
+| 模块 | 内容 | sorry |
+|:-----|:-----|:-----:|
+| `SpectralMetric.lean` | 涌现度规 + Einstein 方程 | 1 |
+| `SpectralBundle.lean` | Δ↔缺陷 + 克莱因瓶 + 暗物质 | 0 |
+| `Cosmology.lean` | 量子反弹 + 暴胀 | 0 |
+| `CMB.lean` | CMB 各向异性 | 0 |
+| `CausalSet.lean` | 因果集对接 | 0 |
+| `QuantumGravity.lean` | 量子引力接口 | 0 |
+
+## 已知技术瓶颈
+
+**`einstein_divergence_free_from_bianchi`**（`SpectralMetric.lean`）：
+- 目标：从 Bianchi 恒等式推导 Einstein 张量散度为零
+- 瓶颈：展开后 256 个单项式超出 `ring` 策略处理能力
+- 已闭合：`first_bianchi`、`ricciFromChristoffel.symmetric` 通过 `sum4` 桥接 + `ring` 闭合
 
 ## 环境要求
 
-本项目使用 **本地 elan** 模式，所有 Lean 工具链与 mathlib4 依赖存放在 `.elan/` 与 `.lake/packages/` 子目录内。
+- Lean 4.34.0-rc2（elan 管理）
+- Mathlib4（本地 `.lake/packages/mathlib/`）
+- Python 3.10+（数值验证脚本）
 
-### 当前已安装
+## 参考文档
 
-- Lean 4.31.0 工具链（本地 `.elan/`）
-- mathlib4 v4.31.0 及其 8 个依赖（本地 `.lake/packages/`，从 GitHub release zip 手动解压）
-- Lake 构建系统可用
-- 已验证 `lake build --no-cache` 与 `.lake/build/bin/ufpformalization.exe` 可执行
-
-### 网络限制说明
-
-由于当前环境无法直连 GitHub，`lakefile.lean` 已将 mathlib4 依赖声明为本地 `path` source：
-
-```lean
-require mathlib from path "..\\..\\..\\.lake\\packages\\mathlib"
-```
-
-mathlib4 及其依赖通过浏览器从 GitHub release 页面下载 zip 并解压到 `.lake/packages/`。
-
-## 一键构建
-
-在 PowerShell 中执行：
-
-```powershell
-cd formal_proof/UFPFormalization
-.\run-lake-update.ps1
-```
-
-或手动：
-
-```powershell
-$env:ELAN_HOME = "D:\trae-work\hyper-resolution\universal_fixed_point_framework\formal_proof\UFPFormalization\.elan"
-$env:ELAN_NO_SELF_UPDATE = "1"
-$env:PATH = "$env:ELAN_HOME\bin;$env:PATH"
-cd formal_proof/UFPFormalization
-lake build --no-cache
-.\.lake\build\bin\ufpformalization.exe
-```
-
-## 后续工作
-
-### Phase 16A 收尾
-
-- 构造非平凡的 `RFunctor` 并完成 `D ⊣ R` 伴随的 unit/counit 与三角恒等式。
-
-### Phase 16B：泛函分析形式化
-
-- Koopman 压缩半群、$A_R$ 的 m-增生生成元、谱测度 Lebesgue 分解、S1–S4 静默判据、Leaver 双初始向量逆迭代法复杂度等。
-
-### Phase 16C：分形/遍历理论形式化
-
-- IFS 自相似测度、压力函数、定理 Hausdorff 维数凹性 / Ledrappier-Young 维数分解 / 拓扑熵–谱间隙不等式 等（需外部合作）。
+- [环境使用说明](ENV_GUIDE.md) — 构建、开发、统计命令
+- [离线安装说明](OFFLINE_INSTALL.md) — 网络受限环境配置
+- [Phase 65 形式化报告](phase65_formalization_report.md) — 早期形式化进展
 
 ## 变更记录
 
 | 日期 | 更新内容 |
-|------|---------|
-| 2026-07-15 | 创建 Lean 4 项目骨架，完成 Phase 16A 七个模块的核心代码（依赖 mathlib4） |
-| 2026-07-15 | 配置本地 elan 环境（`.elan/`），添加 `run-lake-update.ps1` 一键脚本 |
-| 2026-07-15 | 因国内无 mathlib4 镜像，切换为纯 Lean 4 标准库版本；`lake build` 成功 |
-| 2026-07-16 | 通过 GitHub release zip 手动配置 mathlib4 4.31.0 本地依赖 |
-| 2026-07-16 | 将等级 A 模块迁移到 mathlib4；填充 DFunctor、谱对应、轨道权重等 sorry；完整构建通过 |
+|:-----|:---------|
+| 2026-09-10 | 更新 README 至当前状态（Lean 4.34.0-rc2，231 thm，1 sorry） |
+| 2026-09-10 | 新增 ENV_GUIDE.md 环境使用说明 |
+| 2026-09-09 | SpectralMetric.lean sorry 4→1，新增跨层对接形式化 |
+| 2026-09-06 | GWPolarization.lean 完成 G1/G2/G3/G4 全部闭合 |
+| 2026-08-26 | Phase 65 形式化报告 |
+| 2026-07-16 | 迁移至 mathlib4，Phase 16A 核心完成 |
