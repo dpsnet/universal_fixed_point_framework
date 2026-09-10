@@ -389,12 +389,12 @@ X₁.isPeriodic x₁ → ∃ n₁, X₁.step^[n₁] x₁ = x₁
   <p>§16-§18 共新增 9 个定理（含 1 个 def），将原"耦合形状矩阵与 BinaryCoupling 的直接连接"缺口从"部分闭合"提升至"已闭合"。GWPolarization.lean 定理数从 38 增至 47，项目累计定理数从 83 增至 92。</p>
 </div>
 
-<h2>十、§19 SO(2) 极化基旋转不变性（缺口 7 部分闭合）</h2>
+<h2>十、§19 SO(2) 极化基旋转不变性（G4 部分闭合，原缺口 7）</h2>
 
 <div class="gap-section-2">
 
 <h3>§19.1 问题回顾</h3>
-<p>缺口 7（横向截面选取的内生依据）：+ 和 × 极化的具体值依赖传播方向（Pauli 基）的选取。物理上极化功率 h₊² + h×² 是 SO(2) 不变量——不依赖方向选取。需在范畴层面证明此不变性。</p>
+<p>G4（横向截面选取的内生依据，原缺口 7）：+ 和 × 极化的具体值依赖传播方向（Pauli 基）的选取。物理上极化功率 h₊² + h×² 是 SO(2) 不变量——不依赖方向选取。需在范畴层面证明此不变性。</p>
 
 <h3>§19.2 关键定义与定理</h3>
 
@@ -406,12 +406,12 @@ X₁.isPeriodic x₁ → ∃ n₁, X₁.step^[n₁] x₁ = x₁
   <tr><td><code>plusAmplitude_real</code></td><td>theorem</td><td>Hermitian 矩阵的 + 极化振幅为实数</td></tr>
   <tr><td><code>crossAmplitude_real</code></td><td>theorem</td><td>Hermitian 矩阵的 × 极化振幅为实数</td></tr>
   <tr><td><code>couplingShapeMatrix_amplitudes_real</code></td><td>theorem</td><td>耦合形状矩阵极化振幅为实数</td></tr>
-  <tr><td><code>couplingShapeMatrix_polarization_power_SO2_invariant</code></td><td>theorem</td><td><strong>缺口 7 部分闭合</strong>：耦合形状矩阵极化功率 SO(2) 不变</td></tr>
+  <tr><td><code>couplingShapeMatrix_polarization_power_SO2_invariant</code></td><td>theorem</td><td><strong>G4 部分闭合</strong>：耦合形状矩阵极化功率 SO(2) 不变</td></tr>
   <tr><td><code>binaryCouplingShapeMatrix_polarization_power_SO2_invariant</code></td><td>theorem</td><td>BinaryCoupling 耦合矩阵极化功率 SO(2) 不变</td></tr>
 </table>
 
 <h3>§19.3 物理意义</h3>
-<p>虽然单个 h₊, h× 的值依赖传播方向选取（Pauli 基的选取），但极化功率 h₊² + h×² 是 SO(2) 不变量——物理可观测量不依赖方向选取。这将缺口 7 从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。</p>
+<p>虽然单个 h₊, h× 的值依赖传播方向选取（Pauli 基的选取），但极化功率 h₊² + h×² 是 SO(2) 不变量——物理可观测量不依赖方向选取。这将 G4（原缺口 7）从"需内生推导传播方向"降级为"物理观测量不依赖方向选取"。</p>
 
 </div>
 
@@ -516,7 +516,7 @@ E_residual≠0 → 1 - velocityFromDelay positive = 1-1/2 = 1/2 > 0 → |v-c|/c>
 
 <div class="card">
   <div class="card-title">§19-§22 缺口闭合总结</div>
-  <p>§19-§22 共新增 50 个定理（含 11 个 def/structure），将 G2 从"非平凡计算框架"提升至"完整连续定量模型"，将缺口 7 从"未闭合"提升至"完全闭合"（内生传播方向）。GWPolarization.lean 定理数从 47 增至 97，项目累计定理数从 92 增至 142。</p>
+  <p>§19-§22 共新增 50 个定理（含 11 个 def/structure），将 G2 从"非平凡计算框架"提升至"完整连续定量模型"，将 G4（原缺口 7）从"未闭合"提升至"完全闭合"（内生传播方向）。GWPolarization.lean 定理数从 47 增至 97，项目累计定理数从 92 增至 142。</p>
 </div>
 
 <h2>十二b、§21 G2 连续延迟定量模型</h2>
@@ -570,7 +570,7 @@ GW170817: τ < ε → deficit(τ) < ε
 
 </div>
 
-<h2>十二、§22 缺口 7 完全闭合：内生传播方向</h2>
+<h2>十二、§22 G4 完全闭合：内生传播方向（原缺口 7）</h2>
 
 <div class="gap-section">
 
@@ -595,13 +595,13 @@ GW170817: τ < ε → deficit(τ) < ε
   <tr><td><code>polarizationRadius_SO2_invariant</code></td><td>ρ SO(2) 不变</td><td><span class="badge b-green">已证</span></td></tr>
   <tr><td><code>canonical_cross_zero</code></td><td><strong>正规化旋转后 cross=0</strong>：-(hc/ρ)·hp+(hp/ρ)·hc=0</td><td><span class="badge b-green">已证</span></td></tr>
   <tr><td><code>canonical_plus_eq_radius</code></td><td><strong>正规化旋转后 plus=ρ</strong>：(hp/ρ)·hp+(hc/ρ)·hc=ρ</td><td><span class="badge b-green">已证</span></td></tr>
-  <tr><td><code>T_gap7_full_closure</code></td><td><strong>缺口 7 完全闭合主定理</strong>：cross=0 ∧ plus=ρ</td><td><span class="badge b-green">已证</span></td></tr>
-  <tr><td><code>T_gap7_power_eq_radius_sq</code></td><td>极化功率 = 谱半径²</td><td><span class="badge b-green">已证</span></td></tr>
-  <tr><td><code>T_gap7_binary_coupling_closure</code></td><td>BinaryCoupling 版本缺口 7 闭合</td><td><span class="badge b-green">已证</span></td></tr>
+  <tr><td><code>T_G4_propagation_direction</code></td><td><strong>G4 完全闭合主定理</strong>：cross=0 ∧ plus=ρ（原 T_gap7_full_closure）</td><td><span class="badge b-green">已证</span></td></tr>
+  <tr><td><code>T_G4_power_eq_radius_sq</code></td><td>极化功率 = 谱半径²（原 T_gap7_power_eq_radius_sq）</td><td><span class="badge b-green">已证</span></td></tr>
+  <tr><td><code>T_G4_binary_coupling_closure</code></td><td>BinaryCoupling 版本 G4 闭合（原 T_gap7_binary_coupling_closure）</td><td><span class="badge b-green">已证</span></td></tr>
 </table>
 
 <h3>§22.4 物理意义</h3>
-<p>§22 实现了缺口 7 的完全闭合：传播方向不是外部假设，而是由双源耦合结构的各向异性内生确定。在正规化方向上，cross 分量自然消失（TT 规范的内生实现），plus 振幅达到最大值 ρ（唯一确定的物理可观测量）。谱半径 ρ 是 SO(2) 不变量，不依赖任何外部选取。</p>
+<p>§22 实现了 G4 的完全闭合：传播方向不是外部假设，而是由双源耦合结构的各向异性内生确定。在正规化方向上，cross 分量自然消失（TT 规范的内生实现），plus 振幅达到最大值 ρ（唯一确定的物理可观测量）。谱半径 ρ 是 SO(2) 不变量，不依赖任何外部选取。</p>
 
 </div>
 
@@ -635,16 +635,16 @@ GW170817: τ < ε → deficit(τ) < ε
 
 <p><strong>已闭合缺口更新</strong>：原缺口"耦合形状矩阵与 BinaryCoupling 的直接连接"已在 §16-§18 中闭合——<code>binaryCouplingShapeMatrix</code> 经 D 函子直接构造 2×2 Hermitian 矩阵，并证明极化周期性与 2-state 实例 <span class="badge b-green">已闭合</span></p>
 
-<p><strong>缺口 7 更新</strong>：§19 证明极化功率 h₊² + h×² 在 SO(2) 旋转下不变，将缺口 7（横向截面选取的内生依据）从"未闭合"提升至 <span class="badge b-yellow">部分闭合（SO(2) 极化功率不变性）</span></p>
+<p><strong>G4 更新</strong>：§19 证明极化功率 h₊² + h×² 在 SO(2) 旋转下不变，将 G4（横向截面选取的内生依据，原缺口 7）从"未闭合"提升至 <span class="badge b-yellow">部分闭合（SO(2) 极化功率不变性）</span></p>
 
 <ol>
   <li><strong>G2 连续延迟定量模型（缺口 8）</strong>：当前 <code>velocityFromDelay</code> 为离散二值模型（zero/positive），精确定量关系 |v-c|/c = f(|E_residual|) 需连续延迟模型</li>
-  <li><strong>横向截面选取</strong>（缺口 7）：§19 已部分闭合（极化功率 SO(2) 不变），完整闭合需内生推导传播方向</li>
+  <li><strong>横向截面选取</strong>（G4，原缺口 7）：§19 已部分闭合（极化功率 SO(2) 不变），完整闭合需内生推导传播方向</li>
   <li><strong>一般维度推广</strong>：当前 2×2 双源情形，多源推广为后续工作</li>
 </ol>
 
 <div class="footer">
-  本报告基于狭义 MUFPF（Rec/Sp 范畴）。方案 A 为已实施路径，G1 和 G3 在现有框架基础设施内闭合；G2 已实现定量框架（涌现度规 + 速度对应 + 速度亏损定理）。耦合形状矩阵（§13-§14）已实现 Hermitian 性证明和极化振幅连接。§16-§18 新增 BinaryCoupling → D 函子 → 耦合形状矩阵的直接连接、极化周期性证明及 2-state 系统实例，闭合原缺口"耦合形状矩阵与 BinaryCoupling 的直接连接"。§19 证明极化功率 SO(2) 不变性，部分闭合缺口 7。§20 引入 EmergenceMetric 和 velocityFromDelay，实现 G2 从非平凡计算框架到定量框架的升级。所有代码通过 lake build 验证（4078 jobs），零 sorry/admit/axiom。
+  本报告基于狭义 MUFPF（Rec/Sp 范畴）。方案 A 为已实施路径，G1 和 G3 在现有框架基础设施内闭合；G2 已实现定量框架（涌现度规 + 速度对应 + 速度亏损定理）。耦合形状矩阵（§13-§14）已实现 Hermitian 性证明和极化振幅连接。§16-§18 新增 BinaryCoupling → D 函子 → 耦合形状矩阵的直接连接、极化周期性证明及 2-state 系统实例，闭合原缺口"耦合形状矩阵与 BinaryCoupling 的直接连接"。§19 证明极化功率 SO(2) 不变性，部分闭合 G4（原缺口 7）。§20 引入 EmergenceMetric 和 velocityFromDelay，实现 G2 从非平凡计算框架到定量框架的升级。所有代码通过 lake build 验证（4078 jobs），零 sorry/admit/axiom。
 </div>
 
 </body>

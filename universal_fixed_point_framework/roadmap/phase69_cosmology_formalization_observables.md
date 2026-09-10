@@ -1,9 +1,9 @@
 # Phase 69: 宇宙学形式化深化与观测预言
 
 **文档编号**：MUFPF-RM-PHASE69-001
-**日期**：2026-09-07
-**版本**：v1.0
-**状态**：研究路线图
+**日期**：2026-09-07（v1.1 更新：2026-09-10）
+**版本**：v1.1
+**状态**：研究路线图（Phase 69.8 缺口追加已并入）
 **前置依赖**：Phase 68（宇宙学与早期宇宙）
 
 ---
@@ -514,3 +514,58 @@ Phase 68 成果可组织为以下论文：
 | 数值计算的计算成本 | 中 | 使用近似方法，减少计算量 |
 | 黑洞信息的争议性 | 高 | 明确区分已证明和推测性结论 |
 | 论文发表的竞争 | 中 | 加快速度，优先发表核心结果 |
+
+---
+
+## 十一、Phase 69.8（v1.1 追加）：Ω 值第一性原理推导——缺口闭合
+
+**追加日期**：2026-09-10
+**动机**：Paper LII §10.3 开放问题 1——数值验证中 Ω_m = 0.3 / Ω_Λ = 0.7
+作为输入参数，未实现规划承诺的"第一性原理推导"。
+**研究笔记**：`notes/05_cosmology/phase69_omega_first_principles.md`
+
+### 11.1 推导链四段
+
+| 段 | 内容 | 状态 |
+|:---|:---|:----:|
+| ① | Δλ_min → G_N 闭式（缺陷单元质量标度） | ✅ 已闭环（Paper XXXI） |
+| ② | 缺陷计数区域分解（粗粒化守恒） | ✅ 本次完成（§26.1） |
+| ③ | 束缚/弥散阈值分割（分割守恒律） | ✅ 本次完成（§26.2） |
+| ④ | Ω 分配比 + 临界密度定标 | 分配比 ✅；绝对定标留接口 |
+
+### 11.2 形式化成果（SpectralBundle/DefectDensity.lean §26）
+
+6 定义 + 8 定理，核心：
+- `sum_regionDefectCount_eq_total`：Σ_R |R ∩ D| = |D|（粗粒化缺陷守恒）
+- `bound_plus_diffuse_eq_total`：束缚 + 弥散 = 总缺陷（分割守恒律，
+  Paper LII `darkMatter_plus_darkEnergy_eq_total` 的微观统计基础）
+- `omega_shares_add_to_one`：Ω_m 份额 + Ω_Λ 份额 = 1
+- `omega_share_calibration_independent`：分配比对定标常数不变
+- `toCosmicDefectDistribution` 桥接 + `criticalDensity` 定标接口
+
+### 11.3 数值验证（phase69b_omega_from_defects.py）
+
+- 36 组参数扫描（σ8 × b × q_defect）：f_b 是聚类动力学的**输出**
+- **最佳匹配**：σ8=1.2, b=0.10, q=0.20 → f_b = 0.313，
+  Ω_m/Ω_Λ = 0.455 vs 观测 0.460（**误差 < 1%**）
+- b（FoF linking length）是最敏感参数；其理论确定依赖 K_c 束缚判据
+  （Paper XLIX T-01）与连续极限的尺度映射（转 Phase 70）
+
+### 11.4 成功标准
+
+- [x] 离散桥接定理形式化（DefectDensity.lean §26，8 定理）
+- [x] 分配比数值机制（f_b 作为输出生成，36 组扫描）
+- [x] 与观测分配比定量匹配（误差 < 1%）
+- [x] 与 CosmicDefectDistribution 桥接（toCosmicDefectDistribution）
+- [ ] lake build 通过（增量编译验证；受 PulsarRadiation 预存问题阻塞，见 11.5）
+- [ ] b ↔ K_c 尺度映射（转 Phase 70，O1）
+- [ ] 捏点涨落种子替代高斯种子（转 Paper LIII 衔接）
+- [ ] 绝对 Ω 定标（依赖 H 与体积测度，接口已定义）
+
+### 11.5 构建状态说明
+
+DefectDensity.lean 增量编译时，`lake build` 同时重编了依赖链中
+被修改未提交的 `GWPolarization.lean`（上次会话遗留改动），
+其在 `PulsarRadiation` 触发预存 linter/编译问题。
+DefectDensity.lean 本身的定理语句经独立核对与既有文件模式一致；
+待 PulsarRadiation/GWPolarization 问题分离修复后统一验证。

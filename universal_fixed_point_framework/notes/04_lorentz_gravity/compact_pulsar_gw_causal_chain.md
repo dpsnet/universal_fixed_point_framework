@@ -149,7 +149,7 @@ $$
 
 > 双致密天体：两套大集群靠近→时序互相拉扯震荡→并合归并→瞬变引力波。
 
-> **形式化状态（v1.7更新）**：因果链 T-01 至 T-04 全部形式化闭合；T-03 深层缺口 G1/G2/G3 已闭合，缺口 7 已完全闭合（§22：极化谱半径 + 正规化旋转 + 内生传播方向）；BinaryCoupling → DFunctor → couplingShapeMatrix Rec-Sp 跨层连接已闭合。
+> **形式化状态（v1.7更新）**：因果链 T-01 至 T-04 全部形式化闭合；T-03 深层缺口 G1/G2/G3/G4 已闭合，G4（传播方向内生确定，原缺口 7）已完全闭合（§22：极化谱半径 + 正规化旋转 + 内生传播方向）；BinaryCoupling → DFunctor → couplingShapeMatrix Rec-Sp 跨层连接已闭合。
 >
 > | 定理 | Lean4 文件 | 主定理名 | 状态 |
 > |:---|:---|:---|:---|
@@ -157,9 +157,9 @@ $$
 > | T-02 | `PulsarRadiation.lean` | `T02_pulsar_radiation` | ✅ 零 sorry |
 > | T-03 | `GravitationalWave.lean` | `T03_gravitational_wave_timing_oscillation` | ✅ 零 sorry |
 > | T-04 | `DualChannel.lean` | `T04_cross_validation` | ✅ 零 sorry |
-> | G1/G2/G3 | `GWPolarization.lean` | `T_G1_dual_source_polarization` 等 | ✅ 零 sorry |
->
-> **T-03 深层缺口修复**（v2.0更新）：`GWPolarization.lean` 实现方案 A + §21 连续延迟 + §22 缺口 7 完全闭合，97 theorems + 9 lemmas。`CriticalCardinality.lean` 新增 §8 占位重叠度，20 theorems + 6 lemmas。`PulsarRadiation.lean` 新增 §7 磁轴夹角 + 多波段能谱，14 theorems + 6 lemmas。`DualChannel.lean` 新增 §9 定量分支比，21 theorems + 1 lemma。全部零 sorry。所有形式化数学缺口和天体物理缺口已闭合。
+> | G1/G2/G3/G4 | `GWPolarization.lean` | `T_G1_dual_source_polarization` 等 | ✅ 零 sorry |
+
+> **T-03 深层缺口修复**（v2.0更新）：`GWPolarization.lean` 实现方案 A + §21 连续延迟 + §22 G4 完全闭合，97 theorems + 9 lemmas。`CriticalCardinality.lean` 新增 §8 占位重叠度，20 theorems + 6 lemmas。`PulsarRadiation.lean` 新增 §7 磁轴夹角 + 多波段能谱，14 theorems + 6 lemmas。`DualChannel.lean` 新增 §9 定量分支比，21 theorems + 1 lemma。全部零 sorry。所有形式化数学缺口和天体物理缺口已闭合。
 > - **G1（张量横波极化）**：通过 Pauli 矩阵 σ_x/σ_y 的 HS 投影定义 +/× 极化振幅，`T_G1_dual_source_polarization` 证明双源周期信号经 BinaryCoupling 耦合后极化投影保持周期性。`couplingShapeMatrix` 从双源谱算子构造 2×2 Hermitian 矩阵，`couplingShapeMatrix_hermitian` 证明其 Hermitian 性（基于 HS 内积共轭对称性 `hs_conj_symm`）。
 > - **G3（四极辐射约束）**：多极分解 `monopolePart`/`quadrupolePart`，`quadrupole_traceless` 证明四极无迹，`monopole_no_radiation` 证明不动点不辐射，`G3_monopole_vs_quadrupole_instance` 提供 Sp 层对照实例。`couplingShapeMatrix_quadrupole_traceless` 证明耦合矩阵四极分量无迹。
 > - **G2（传播速度）**（v1.6 更新）：§15 余留显式公式 `T_G2_residual_explicit`。§20 离散速度框架 `EmergenceMetric` + `velocityFromDelay`。§21 连续延迟模型 `ContinuousDelay`（τ∈[0,∞)）+ `continuousVelocity`（v(τ)=1/(1+τ)）+ `velocityDeficit`（|v-c|/c=τ/(1+τ)）。`residualToDelay` 建立余留→延迟映射 τ=|E_residual|。`T_G2_continuous_velocity_residual_correspondence` 精确对应：E_residual=0→|v-c|/c=0，E_residual≠0→0<|v-c|/c<1。`T_G2_unified_velocity_theorem` 统一离散与连续。`T_G2_gw170817_constraint_framework` 提供 GW170817 约束框架。G2 从定量框架提升至完整连续定量模型。
@@ -197,7 +197,7 @@ $$
 4. ~~从时序相位震荡内生推导涌现截面的**引力波张量横波极化模式**（最高优先级）~~；——**已闭合（方案 A，2026-09-06）**：`GWPolarization.lean` 中 `T_G1_dual_source_polarization` 零 sorry 证明。通过 Pauli 矩阵 σ_x/σ_y 的 HS 投影定义 +/× 极化振幅，双源周期信号经 BinaryCoupling 耦合后极化投影保持周期性。方案 A 在狭义 MUFPF 内闭合，无需增补极化公理。
 5. ~~范畴层面严格证明引力波四极辐射约束（无单极、偶极）。~~——**已闭合（方案 A，2026-09-06）**：`GWPolarization.lean` 中 `monopole_no_radiation`、`quadrupole_radiates_conditional`、`quadrupole_traceless`、`G3_monopole_vs_quadrupole_instance` 零 sorry 证明。多极分解将谱算子分为单极（迹/2·I，不辐射）和四极（无迹，辐射）分量。
 6. ~~**耦合形状矩阵与 BinaryCoupling 的直接连接**~~：`couplingShapeMatrix` 已在 Sp 层定义并证明 Hermitian 性和极化振幅连接，`binaryCouplingShapeMatrix` 从 BinaryCoupling 经 D 函子直接提取谱算子构造 2×2 Hermitian 矩阵；——**已闭合（v1.4更新）**：Rec-Sp 跨层直接连接已实现（§16-§18），`binaryCouplingShapeMatrix_polarization_periodic` 证明极化周期性，`binaryCouplingShapeMatrix_shared_period` 证明共享周期极化，`binaryCoupling_2state_diag_positive` 提供 2 态实例。
-7. ~~**横向截面选取的内生依据**~~：+ 和 × 的具体定义依赖传播方向选取；——**已完全闭合（v1.7更新）**：§19 证明极化功率 hp²+hc² SO(2) 不变（部分闭合）。§22 进一步证明：当极化非零时（ρ>0），存在由耦合结构唯一确定的正规化旋转 `canonicalRotation`（a=hp/ρ, b=hc/ρ），使 cross 振幅为零、plus 振幅等于谱半径 ρ。`T_gap7_full_closure` 主定理证明传播方向内生确定、cross 自然消失、plus=ρ。`polarizationRadius` 定义总极化强度（SO(2) 不变量），`binaryCouplingPolarizationRadius` 应用于 BinaryCoupling。传播方向从"外部假设"变为"由双源耦合各向异性内生确定"。
+7. ~~**横向截面选取的内生依据**~~：+ 和 × 的具体定义依赖传播方向选取；——**已完全闭合（v1.7更新）**：§19 证明极化功率 hp²+hc² SO(2) 不变（部分闭合）。§22 进一步证明：当极化非零时（ρ>0），存在由耦合结构唯一确定的正规化旋转 `canonicalRotation`（a=hp/ρ, b=hc/ρ），使 cross 振幅为零、plus 振幅等于谱半径 ρ。`T_G4_propagation_direction` 主定理证明传播方向内生确定、cross 自然消失、plus=ρ。`polarizationRadius` 定义总极化强度（SO(2) 不变量），`binaryCouplingPolarizationRadius` 应用于 BinaryCoupling。传播方向从"外部假设"变为"由双源耦合各向异性内生确定"。
 8. ~~**G2 连续延迟定量模型**~~：原§20使用离散延迟（0或1步），§21实现连续延迟模型 `ContinuousDelay`（τ∈[0,∞)）+ `continuousVelocity`（v(τ)=1/(1+τ)）+ `velocityDeficit`（|v-c|/c=τ/(1+τ)）+ `residualToDelay`（τ=|E_residual|）。`T_G2_continuous_velocity_residual_correspondence` 精确对应，`T_G2_unified_velocity_theorem` 统一离散与连续，`T_G2_gw170817_constraint_framework` 提供 GW170817 约束框架。——**已闭合（v1.6更新）**
 
 ### 天体物理与观测缺口
@@ -215,7 +215,7 @@ $$
 | `PulsarRadiation.lean` | T-02 `T02_pulsar_radiation` + 磁轴夹角 + 多波段 | 14 | 6 | 0 |
 | `GravitationalWave.lean` | T-03 `T03_gravitational_wave_timing_oscillation` | 13 | 1 | 0 |
 | `DualChannel.lean` | T-04 `T04_cross_validation` + 定量分支比 + 三通道 | 25 | 1 | 0 |
-| `GWPolarization.lean` | G1/G2/G3 + 缺口7 + 连续延迟 + 内生传播方向 | 97 | 9 | 0 |
+| `GWPolarization.lean` | G1/G2/G3/G4 + 连续延迟 + 内生传播方向 | 97 | 9 | 0 |
 | `SpectralBundle.lean` | Δ↔结构性缺陷 + 克莱因瓶 + 连通和 + 捏点 + Δ二阶修正 + 暗物质 + 量子引力 | 62 | 0 | 0 |
 | **合计** | | **231** | **23** | **0** |
 
@@ -1144,7 +1144,7 @@ $$\text{信息} = \text{因果结构拓扑} \implies \text{拓扑不变量守恒
 
 ### 方法论声明
 
-> 本笔记属于**自洽的条件性假说体系**：在狭义MUFPF公理成立的前提下推导得到；因果链 T-01 至 T-04 已完成 Lean4 形式化验证（零 sorry/admit/axiom）；所有形式化数学缺口已闭合（G1/G2/G3、缺口7、占位重叠度、Δ↔结构性缺陷）；天体物理缺口已闭合（磁轴夹角§7、多波段能谱§7、耗散通道分支比§9、远期观测§21）；Phase 66 数值预测已完成（G_N 闭式验证、临界阶次估计、极化比例预言）；Phase 66.4 Δ 二阶修正框架已实现；Phase 66.5 三通道耦合系统已实现（EM+GW+Neutrino）；Phase 66.6 暗物质候选者理论已实现（结构性缺陷）；Phase 67.1 量子引力接口已实现（RecObj ↔ 自旋网络）；Phase 67.2 弦论对接已实现（Sp 范畴 ↔ 弦振动模式、Bott 塔层级、D⊣R ↔ 弦-膜耦合）；Phase 67.3 因果集对接已实现（因果结构 ↔ 因果集理论、不动点↔极大元、引力↔因果非平凡）；Phase 68.1 宇宙学量子反弹已实现（奇点消解、最小体积不变量、反弹熵不减）；Phase 68.2 捏点级联暴胀已实现（拓扑相变驱动暴胀、优雅退出、标度不变谱、e-folds可加性）；Phase 68.3 暗能量统一已实现（暗物质+暗能量=结构性缺陷两种相、相变守恒律、巧合问题解答、宇宙学常数消解）；Phase 68.4 CMB各向异性已实现（功率谱标度不变 n_s=1-ε、B模偏振、张标比、与Planck 2018一致）；Phase 68.5 大尺度结构因果集起源已建立（因果集粗粒化、宇宙网骨架、星系质量函数拓扑起源）；Phase 69.1 CMB功率谱形式化深化已实现（转移函数、角功率谱、非高斯性参数、偏振多极矩、BAO尺度）；Phase 69.2 大尺度结构形式化框架已实现（因果集粗粒化、宇宙网骨架、星系质量函数、暗物质晕）；Phase 69.4 黑洞信息悖论MUFPF解已实现（信息拓扑编码、蒸发拓扑相变、Page曲线、信息守恒）；BinaryCoupling → DFunctor → couplingShapeMatrix Rec-Sp 跨层连接已闭合（§16-§18）；部分关键命题存在观测与理论张力；尚未获得决定性观测证实；不构成已确立物理结论。
+> 本笔记属于**自洽的条件性假说体系**：在狭义MUFPF公理成立的前提下推导得到；因果链 T-01 至 T-04 已完成 Lean4 形式化验证（零 sorry/admit/axiom）；所有形式化数学缺口已闭合（G1/G2/G3/G4、占位重叠度、Δ↔结构性缺陷）；天体物理缺口已闭合（磁轴夹角§7、多波段能谱§7、耗散通道分支比§9、远期观测§21）；Phase 66 数值预测已完成（G_N 闭式验证、临界阶次估计、极化比例预言）；Phase 66.4 Δ 二阶修正框架已实现；Phase 66.5 三通道耦合系统已实现（EM+GW+Neutrino）；Phase 66.6 暗物质候选者理论已实现（结构性缺陷）；Phase 67.1 量子引力接口已实现（RecObj ↔ 自旋网络）；Phase 67.2 弦论对接已实现（Sp 范畴 ↔ 弦振动模式、Bott 塔层级、D⊣R ↔ 弦-膜耦合）；Phase 67.3 因果集对接已实现（因果结构 ↔ 因果集理论、不动点↔极大元、引力↔因果非平凡）；Phase 68.1 宇宙学量子反弹已实现（奇点消解、最小体积不变量、反弹熵不减）；Phase 68.2 捏点级联暴胀已实现（拓扑相变驱动暴胀、优雅退出、标度不变谱、e-folds可加性）；Phase 68.3 暗能量统一已实现（暗物质+暗能量=结构性缺陷两种相、相变守恒律、巧合问题解答、宇宙学常数消解）；Phase 68.4 CMB各向异性已实现（功率谱标度不变 n_s=1-ε、B模偏振、张标比、与Planck 2018一致）；Phase 68.5 大尺度结构因果集起源已建立（因果集粗粒化、宇宙网骨架、星系质量函数拓扑起源）；Phase 69.1 CMB功率谱形式化深化已实现（转移函数、角功率谱、非高斯性参数、偏振多极矩、BAO尺度）；Phase 69.2 大尺度结构形式化框架已实现（因果集粗粒化、宇宙网骨架、星系质量函数、暗物质晕）；Phase 69.4 黑洞信息悖论MUFPF解已实现（信息拓扑编码、蒸发拓扑相变、Page曲线、信息守恒）；BinaryCoupling → DFunctor → couplingShapeMatrix Rec-Sp 跨层连接已闭合（§16-§18）；部分关键命题存在观测与理论张力；尚未获得决定性观测证实；不构成已确立物理结论。
 
 ---
 

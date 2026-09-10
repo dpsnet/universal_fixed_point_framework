@@ -626,7 +626,7 @@ flowchart TD
       <li><strong>G1 深层缺口闭合</strong>：Pauli 矩阵 HS 投影定义 +/× 极化振幅，<code>T_G1_dual_source_polarization</code> 已证明</li>
       <li><strong>G2 连续延迟模型</strong>：v(τ) = 1/(1+τ)，精确速度亏损 |v-c|/c = τ/(1+τ)，GW170817 约束框架</li>
       <li><strong>G3 四极辐射约束</strong>：<code>monopole_no_radiation</code> + <code>quadrupole_traceless</code>，无单极/偶极辐射</li>
-      <li><strong>缺口 7 完全闭合</strong>：传播方向由双源耦合各向异性内生确定，cross 振幅自然消失</li>
+      <li><strong>G4 传播方向内生确定</strong>：传播方向由双源耦合各向异性内生确定，cross 振幅自然消失（原缺口 7）</li>
       <li><strong>G_N 闭式推导</strong>：G_N = 18(2+√3)·Δλ_min² = 1（代数恒等式，CODATA 误差 3.14×10⁻⁷）</li>
       <li><strong>临界阶次 n_*</strong>：白矮星(n=1)/中子星(n=2)/夸克星(n=3)/黑洞(n≈4-5)</li>
       <li><strong>Δ 二阶修正</strong>：Δ₂ = δ·(A_Y·δ - δ·A_Y)·δ，||Δ₂||/||Δ₁|| ~ 10⁻¹²</li>
@@ -641,7 +641,7 @@ flowchart TD
       <li><code>PulsarRadiation.lean</code>：14 theorems + 6 lemmas（T-02 + 磁轴夹角 + 多波段）</li>
       <li><code>GravitationalWave.lean</code>：13 theorems + 1 lemma（T-03）</li>
       <li><code>DualChannel.lean</code>：25 theorems + 1 lemma（T-04 + 分支比 + 三通道）</li>
-      <li><code>GWPolarization.lean</code>：97 theorems + 9 lemmas（G1/G2/G3 + 缺口7 + 连续延迟）</li>
+      <li><code>GWPolarization.lean</code>：97 theorems + 9 lemmas（G1/G2/G3/G4 + 连续延迟）</li>
       <li><code>SpectralBundle.lean</code>：62 theorems（Δ↔缺陷 + 克莱因瓶 + 暗物质）</li>
       <li><code>phase66_gN_closed_form_verification.py</code>：5 项数值验证全部通过</li>
       <li>GW170817 观测对比：|v_gw - c|/c < 10⁻¹⁵</li>
@@ -658,7 +658,7 @@ flowchart TD
           <li>§5.1 G1：张量横波极化（Pauli 矩阵分解）</li>
           <li>§5.2 G2：传播速度连续延迟模型</li>
           <li>§5.3 G3：四极辐射约束</li>
-          <li>§5.4 缺口 7：传播方向内生确定</li>
+          <li>§5.4 G4：传播方向内生确定</li>
         </ul>
       </li>
       <li>T-04：双通道/三通道交叉验证与多信使天文学</li>
@@ -1096,7 +1096,7 @@ flowchart TD
     <tr><td><code>PulsarRadiation.lean</code></td><td>T-02 脉冲星 + 磁轴夹角 + 多波段</td><td>14+6</td><td>Paper XLIX</td></tr>
     <tr><td><code>GravitationalWave.lean</code></td><td>T-03 引力波时序震荡</td><td>13+1</td><td>Paper XLIX</td></tr>
     <tr><td><code>DualChannel.lean</code></td><td>T-04 交叉验证 + 分支比 + 三通道</td><td>25+1</td><td>Paper XLIX</td></tr>
-    <tr><td><code>GWPolarization.lean</code></td><td>G1/G2/G3 + 缺口7 + 连续延迟</td><td>97+9</td><td>Paper XLIX</td></tr>
+    <tr><td><code>GWPolarization.lean</code></td><td>G1/G2/G3/G4 + 连续延迟</td><td>97+9</td><td>Paper XLIX</td></tr>
     <tr><td><code>SpectralBundle.lean</code></td><td>Δ↔缺陷 + 克莱因瓶 + 暗物质 + 量子引力</td><td>62</td><td>Paper XLIX + LII</td></tr>
     <tr><td><code>QuantumGravity.lean</code></td><td>自旋网络、弦振动</td><td>31</td><td>Paper L</td></tr>
     <tr><td><code>CausalSet.lean</code></td><td>因果结构、引力↔非平凡结构</td><td>22</td><td>Paper L</td></tr>
