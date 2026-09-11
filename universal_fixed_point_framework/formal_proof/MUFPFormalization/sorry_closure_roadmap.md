@@ -173,9 +173,36 @@ Bianchi 不成立**（残差 ~2–3 × |∂̃Γ·Γ|，离散 Leibniz 修正 ∂
 `skeletonCurvature` 的逐点乘法）+ `skeleton_second_bianchi`
 （骨架层第二 Bianchi 自包含证明，无挠 + ring，与 SpectralMetric
 `second_bianchi_discrete` 同构）——算子主定理与点值骨架连接为同一结构的
-两个层级。剩余 (b) 度规缩并：度量插入算子 + 离散度量相容假设下的缩并
-Bianchi → 离散 Einstein 散度（预期为"主项 + O(a) 修正"形态，
-连续极限回到 ∇^μ G_μν = 0，开放命题 `EinsteinDivergenceFree` 的离散真值载体）。
+两个层级。
+
+**(b) 度规缩并——骨架层代数核心已闭合（2026-09-11 深夜，§26.7，零 sorry，
+全库 4078 jobs `lake build` 通过）**。数值预实验
+（`numerical/phase16b_metric_contraction.py`，新增）三个结论：
+① 离散 Christoffel 公式下度量相容残差 A ≡ 0 **逐点精确**（~1e-16，
+纯代数恒等式 ginv·g = δ 不经过 ∂̃）；② **负面结果**：场层级 Einstein 协变
+散度 E ≠ α·缩并(Bianchi)，E = O(a)（n 倍增 |E|/|G| 减半），是比缩并残差
+O(a²) 高一阶的离散化 artifact——场层级不存在恒等式，开放命题
+`EinsteinDivergenceFree` 维持开放；③ 常值 + 无挠 + 相容 ⟹ 骨架 Einstein
+散度恒零（ω-联络等随机对照全部验证）。据此在 `DiscreteCovariantBianchi.lean`
+§26.7 建成骨架层代数核心（局部无标架形态 `skCurv` + `SkeletonMetricCompat`）：
+
+- `skeleton_g_gamma_exchange`：相容的 (gΓ)-交换改写形态（逐点恒等式）；
+- `skeleton_curvature_skew`：相容 + g 对称 ⟹ Σ_a g_{ra} R̂^a_{sμν} 对
+  (r↔s) 斜称——证明为四碎片 (gΓ)-交换 + 哑元对合配对（G₂=G₃、G₄=G₁），
+  全显式 `Finset.mul_sum`/`sum_mul` 实例化（rw 模式变量不可依赖外层
+  绑定变量）；
+- `skeleton_first_bianchi`：无挠 ⟹ 第一 Bianchi（ring）；
+- `skeleton_ricci_symmetric`：相容 + g/ginv 对称 + 逆对 ⟹ Riĉ_{σν} =
+  Riĉ_{νσ}——两步：(i) 第一 Bianchi + 末两位反对称 ⟹ 差 = −δ-迹；
+  (ii) δ-迹经逆对插入 + 斜称 + ginv 对称对合归零（`Finset.sum_eq_single`
+  需显式 `f :=` 实例，且 `if r = r` 对自由变量不可定义归约，须保留
+  if-形式经 calc 闭合）。
+
+剩余 (b) 主定理：`skeleton_einstein_divergence_free`（常值 + 无挠 + 相容
+⟹ 骨架 Einstein 散度恒零；分解设计：E = −K − J + R-项，R-项经相容抵消，
+Ricci 项经骨架第二 Bianchi 缩并）+ `discrete_christoffel_metric_compatible`
+（离散 Christoffel 公式的逐点相容，纯代数环恒等式）——开放命题
+`EinsteinDivergenceFree` 的离散真值载体。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
@@ -190,7 +217,7 @@ Bianchi → 离散 Einstein 散度（预期为"主项 + O(a) 修正"形态，
 
 ### 3.7 验证标准（已达成）
 
-- [x] `lake build MUFPFormalization` 全库 0 error（3687 jobs，含 2026-09-11 新增 DiscreteCovariantBianchi 模块）
+- [x] `lake build MUFPFormalization` 全库 0 error（4078 jobs，含 2026-09-11 新增/扩展 DiscreteCovariantBianchi §26.6–26.7）
 - [x] 剥离注释后全库 sorry 计数 = 0
 - [x] 假定理证伪记录保留（本文件 + Lean 源 docstring 双登记）
 
