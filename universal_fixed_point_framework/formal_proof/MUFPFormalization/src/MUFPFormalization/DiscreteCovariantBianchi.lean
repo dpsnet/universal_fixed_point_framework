@@ -831,4 +831,33 @@ theorem single_zero_family_spatial_div_zero (C D : Fin 4 → Fin 4 → ℝ) (k :
       mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
       mul_one, one_mul, one_div]
 
+set_option maxHeartbeats 1000000 in
+/-- **ω 联络零点定理（时间分量）**：恰单零指标族内，C 与 D 均反对称
+    （即 D = A 为纯 ω 部分、S = 0；挠率 T^0_{ij} = −2A_{ji} 的 ω-联络）时，
+    Einstein 散度的时间分量 D₀ = Σ_{μ,a} η^{μa} ∇̃_μ G_{a0} 恒为零。
+    与空间分量恒等式（`single_zero_family_spatial_div_zero`）合取即得
+    **ω-联络是全散度 D_ν = 0 的零点**——"E_skel 的零点恰是挠率联络"
+    的 (α) 方向形式化（族内）。
+    前提不可减：数值上 C 保留对称部分时 D₀ ≠ 0（6 项残差，
+    phase16b 符号实验 2026-09-12），故 C 反对称是本质条件。
+    数值对应：phase16b_eskel_sdecomp.py E_0|_{S=0} ≡ 0。 -/
+theorem single_zero_family_time_div_zero_omega (C D : Fin 4 → Fin 4 → ℝ)
+    (hC : ∀ i j, C i j = -C j i) (hD : ∀ i j, D i j = -D j i) :
+    skDiv (singleZeroConn C D) mink4 mink4 0 = 0 := by
+  have c11 : C 1 1 = 0 := by linarith [hC 1 1]
+  have c22 : C 2 2 = 0 := by linarith [hC 2 2]
+  have c33 : C 3 3 = 0 := by linarith [hC 3 3]
+  have d11 : D 1 1 = 0 := by linarith [hD 1 1]
+  have d22 : D 2 2 = 0 := by linarith [hD 2 2]
+  have d33 : D 3 3 = 0 := by linarith [hD 3 3]
+  simp only [skDiv, skConnG, skEin, skScalar, skRic, skCurv, sum4,
+    mink4, singleZeroConn, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.cons_val_three,
+    Matrix.head_cons, Matrix.tail_cons,
+    hC 1 2, hC 1 3, hC 2 3, hD 1 2, hD 1 3, hD 2 3,
+    c11, c22, c33, d11, d22, d33,
+    mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
+    mul_one, one_mul, one_div, mul_neg, neg_mul, neg_neg]
+  ring
+
 end MUFPF

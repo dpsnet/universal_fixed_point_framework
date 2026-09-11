@@ -77,8 +77,10 @@ $D = A + S$，A 反对称（ω 部分）、S 对称（挠率对称部分）。
 
 - $\mathrm{Cub}(S)$（16 项三次型）的几何含义不明：不是 det/tr 多项式，
   可能对应某类"挠率三次纽结"不变量，待查。
-- **~~族内 $D_1=D_2=D_3\equiv0$ 的 Lean 形式化~~ 已闭合（2026-09-11 晚）**：
+- **族内散度恒等式的 Lean 形式化已闭合两步（2026-09-11 晚 / 2026-09-12 凌晨）**：
   `DiscreteCovariantBianchi.lean` §26.8 主定理
-  `single_zero_family_spatial_div_zero`（对任意 C D 无对称性假设，
-  全库 4078 jobs 构建通过）。$D_0$ 分解的 37 项多项式恒等式形式化仍为开放，
-  成本高，暂不建议。
+  `single_zero_family_spatial_div_zero`（空间分量，任意 C D 无对称性假设）与
+  `single_zero_family_time_div_zero_omega`（时间分量，C、D 均反对称的 ω 联络；
+  前提不可减——C 有对称部分时 D₀ 有 6 项残差），合取得 **ω-联络是族内
+  D_ν = 0 的零点**。全库 4078 jobs 构建通过，模块 20 定理零 sorry。
+  $D_0$ 分解的显式形式化（$L(C,A)\cdot S + \mathrm{Cub}(S)$，37 项）仍为开放。
