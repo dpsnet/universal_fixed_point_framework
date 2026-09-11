@@ -257,7 +257,13 @@ D₀ 37 项多项式恒等式成本高，暂不建议。
 任何对称性假设），D_k = Σ_{μ,a} η^{μa}∇̃_μG_{ak}（k=1,2,3）恒为零。
 证明：fin_cases + show 数值化（Fin.succ 原始构造型不触发 vecCons 字面量引理，
 先 show 为数字字面量）+ sum4 展开 + 矩阵字面量归约（cons_val_zero/one/two/
-three + head/tail_cons）——simp 即闭合，ring_nf 不必需。模块现 19 定理零 sorry。
+three + head/tail_cons）——simp 即闭合，ring_nf 不必需。
+
+**查表勘误（2026-09-12 凌晨，分解定理证伪发现）**：`singleZeroConn` 初版
+Γ^i_{j0} 块写成 D_{ji}（转置），正确族为 Γ^i_{j0} = D_{ij}。
+(α)-1/(α)-2 的陈述不受影响（前者 D 全称量化、后者 D 反对称，均对转置不变），
+但定义已勘误为正确族——由 (α)-3 分解定理的 ring 失败暴露（LHS 多出
+2·tr(S)·Σ C_k·A_k 型残差），修正后三个定理全部 kernel 重验通过。
 
 **(α)-2 已闭合（2026-09-12 凌晨，§26.8，全库 4078 jobs `lake build` 通过）**：
 ω 联络零点定理 `single_zero_family_time_div_zero_omega`：C、D 均反对称
@@ -266,8 +272,15 @@ three + head/tail_cons）——simp 即闭合，ring_nf 不必需。模块现 19
 展开后 ring 闭合。与 (α)-1 合取：**ω-联络是全散度 D_ν = 0 的零点**（族内）。
 前提不可减（符号验证：C 留对称部分时 D₀ 有 6 项残差 ≠ 0），
 故 C 反对称是本质条件——族内 ω 零点刻画"无对称部分的恰单零指标联络"。
-模块现 20 定理零 sorry。剩余 (α)：D₀ = L(C,A)·S + Cub(S) 的
-显式分解形式化（37 项恒等式，建议先 sympy 整理中间引理链）。
+模块现 20 定理零 sorry。
+
+**(α)-3 已闭合（2026-09-12 凌晨，§26.8，全库 4078 jobs `lake build` 通过）**：
+时间分量挠率泛函分解定理 `single_zero_family_time_div_decomp`：C、A 反对称、
+S 对称、D = A + S 下，D₀ = L(C,A)·S + Cub(S) 显式成立——L 为 21 项
+（系数 (C,A) 二次型，含 A·C 混合），Cub 为 16 项纯 S 三次型，无 S⁰/S² 项。
+RHS 由生成器 numerical/phase16b_d0_lean_gen.py 在 12 个标准原子上生成
+（sympy 校验 D₀ = lin + cub），Lean 端 hC/hA/hS 实例化重写 + ring 闭合。
+此定理同时暴露 singleZeroConn 查表转置勘误（见上）。方向 (α) 至此全部闭合。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 

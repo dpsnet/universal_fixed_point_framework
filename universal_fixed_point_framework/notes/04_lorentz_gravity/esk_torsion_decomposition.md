@@ -83,4 +83,9 @@ $D = A + S$，A 反对称（ω 部分）、S 对称（挠率对称部分）。
   `single_zero_family_time_div_zero_omega`（时间分量，C、D 均反对称的 ω 联络；
   前提不可减——C 有对称部分时 D₀ 有 6 项残差），合取得 **ω-联络是族内
   D_ν = 0 的零点**。全库 4078 jobs 构建通过，模块 20 定理零 sorry。
-  $D_0$ 分解的显式形式化（$L(C,A)\cdot S + \mathrm{Cub}(S)$，37 项）仍为开放。
+  **$D_0$ 分解的显式形式化已闭合（2026-09-12 凌晨）**：主定理
+  `single_zero_family_time_div_decomp`（L 21 项 + Cub 16 项，RHS 由
+  `numerical/phase16b_d0_lean_gen.py` 生成、sympy 校验、Lean ring 闭合）。
+  **勘误**：`singleZeroConn` 查表 Γ^i_{j0} 块初版转置（D_{ji}→应为 D_{ij}），
+  由本定理的 ring 失败暴露；(α)-1/(α)-2 陈述因 D 量化方式/反对称性而不受影响。
+  方向 (α) 全部闭合：空间分量恒等式 + ω 零点 + 时间分量显式分解。

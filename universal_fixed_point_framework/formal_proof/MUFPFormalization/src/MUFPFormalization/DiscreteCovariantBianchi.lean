@@ -224,7 +224,7 @@ theorem curvature_op_apply (F : FrameRecObj) (Γf : GammaField F) (μ ν : Fin 4
   simp only [curvatureOp, covDiffOp, Module.End.mul_apply, LinearMap.sub_apply,
     LinearMap.add_apply, Module.End.one_apply, shiftOp_apply, gaugeOp_apply,
     Pi.add_apply, Pi.sub_apply, ← sum4_eq_finset_sum, sum4]
-  ring
+  ring_nf
 
 /-- 曲率分量展开（step 对易假设下）：双移位修正项消失。
     物理含义：格点平直（方向 step 对易）时，
@@ -293,7 +293,7 @@ theorem curvature_op_constant_field (F : FrameRecObj) (Γf : GammaField F)
   have hc : ∀ ρ (x : F.X.T) r m n, Γf.γ (F.stepD ρ x) r m n = Γf.γ x r m n := h_const
   rw [curvature_op_apply_comm F Γf h μ ν V x r]
   simp only [hc, sub_self, zero_mul, sum4, skeletonCurvature]
-  ring
+  ring_nf
 
 /-- **骨架层第二 Bianchi 恒等式**（无挠 + 乘法交换律）。
     物理含义：点值骨架曲率的联络作用循环和为零
@@ -702,7 +702,7 @@ lemma discrete_christoffel_metric_compatible
   show (1/2) * (d ρ ν μ + d ν ρ μ - d μ ρ ν)
       + (1/2) * (d ρ μ ν + d μ ρ ν - d ν ρ μ) = d ρ μ ν
   rw [dsym ρ ν μ]
-  ring
+  ring_nf
 
 /-- 降指标联络 Γ_{abc} := Σ_d g_{ad} Γ^d_{bc}（相容的 (0,2)-型表述载体）。 -/
 def skGamma (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ)
@@ -775,15 +775,15 @@ def singleZeroConn (C D : Fin 4 → Fin 4 → ℝ) : Fin 4 → Fin 4 → Fin 4 �
       ![0, D 1 3, D 2 3, D 3 3]],
     ![![0, C 1 1, C 1 2, C 1 3],
       ![D 1 1, 0, 0, 0],
-      ![D 2 1, 0, 0, 0],
-      ![D 3 1, 0, 0, 0]],
-    ![![0, C 2 1, C 2 2, C 2 3],
       ![D 1 2, 0, 0, 0],
+      ![D 1 3, 0, 0, 0]],
+    ![![0, C 2 1, C 2 2, C 2 3],
+      ![D 2 1, 0, 0, 0],
       ![D 2 2, 0, 0, 0],
-      ![D 3 2, 0, 0, 0]],
+      ![D 2 3, 0, 0, 0]],
     ![![0, C 3 1, C 3 2, C 3 3],
-      ![D 1 3, 0, 0, 0],
-      ![D 2 3, 0, 0, 0],
+      ![D 3 1, 0, 0, 0],
+      ![D 3 2, 0, 0, 0],
       ![D 3 3, 0, 0, 0]]]
 
 /-- 骨架 Ricci：Riĉ_{sν} = Σ_r R̂^r_{ s r ν}（skCurv 的 (r,ν) 缩并）。 -/
@@ -856,6 +856,56 @@ theorem single_zero_family_time_div_zero_omega (C D : Fin 4 → Fin 4 → ℝ)
     Matrix.head_cons, Matrix.tail_cons,
     hC 1 2, hC 1 3, hC 2 3, hD 1 2, hD 1 3, hD 2 3,
     c11, c22, c33, d11, d22, d33,
+    mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
+    mul_one, one_mul, one_div, mul_neg, neg_mul, neg_neg]
+  ring
+
+set_option maxHeartbeats 1000000 in
+/-- **时间分量挠率泛函分解定理**（方向 (α) 的显式形式化）：恰单零指标族内，
+    联络的 (i,j,0)-块写成 D = A + S（A 反对称 = ω 部分，S 对称 = 挠率对称部分），
+    C 反对称，则 Einstein 散度的时间分量满足 D₀ = L(C,A)·S + Cub(S)：
+    L 对 S 线性、系数为 (C,A) 的二次型（21 项，含 A·C 混合系数）；
+    Cub 为只含 S 的 16 项三次型（在 det/tr 标准不变量多项式组合下不分解，
+    几何含义待定）；无 S⁰ 项（ω 零点，即 (α)-2）、无 S² 交叉项。
+    生成器 numerical/phase16b_d0_lean_gen.py（sympy 校验 D₀ = lin + cub，
+    标准原子基底 12 个：C/A 的 i>j 三元组 + S 的 i≤j 六元组）。
+    数值对应：phase16b_eskel_sdecomp.py（E_0 对 S 的次数分解）。 -/
+theorem single_zero_family_time_div_decomp
+    (C A S : Fin 4 → Fin 4 → ℝ)
+    (hC : ∀ i j, C i j = -C j i)
+    (hA : ∀ i j, A i j = -A j i)
+    (hS : ∀ i j, S i j = S j i) :
+    skDiv (singleZeroConn C fun i j => A i j + S i j) mink4 mink4 0
+      = 2 * (C 2 1) * (A 3 1) * S 2 3 + 2 * (C 3 1) * (A 2 1) * S 2 3
+        + 2 * (C 3 1) * (A 3 2) * S 1 2 + 2 * (C 3 2) * (A 3 1) * S 1 2
+        + 2 * (A 2 1)^2 * S 3 3 + 6 * (A 2 1) * (A 3 2) * S 1 3
+        + 2 * (A 3 1)^2 * S 2 2 + 2 * (A 3 2)^2 * S 1 1
+        - 2 * (C 2 1) * (A 2 1) * S 3 3 - 2 * (C 2 1) * (A 3 2) * S 1 3
+        - 2 * (C 3 1) * (A 3 1) * S 2 2 - 2 * (C 3 2) * (A 2 1) * S 1 3
+        - 2 * (C 3 2) * (A 3 2) * S 1 1 - (A 2 1)^2 * S 1 1
+        - (A 2 1)^2 * S 2 2 - 6 * (A 2 1) * (A 3 1) * S 2 3
+        - (A 3 1)^2 * S 1 1 - (A 3 1)^2 * S 3 3
+        - 6 * (A 3 1) * (A 3 2) * S 1 2 - (A 3 2)^2 * S 2 2
+        - (A 3 2)^2 * S 3 3
+      + S 1 1 * S 1 2^2 + S 1 1 * S 1 3^2 + S 2 2 * S 1 2^2
+        + S 2 2 * S 2 3^2 + S 3 3 * S 1 3^2 + S 3 3 * S 2 3^2
+        + 6 * S 1 2 * S 1 3 * S 2 3 - S 1 1^2 * S 2 2 - S 1 1^2 * S 3 3
+        - S 1 1 * S 2 2^2 - S 1 1 * S 3 3^2 - 2 * S 1 1 * S 2 3^2
+        - S 2 2^2 * S 3 3 - S 2 2 * S 3 3^2 - 2 * S 2 2 * S 1 3^2
+        - 2 * S 3 3 * S 1 2^2 := by
+  have c11 : C 1 1 = 0 := by linarith [hC 1 1]
+  have c22 : C 2 2 = 0 := by linarith [hC 2 2]
+  have c33 : C 3 3 = 0 := by linarith [hC 3 3]
+  have a11 : A 1 1 = 0 := by linarith [hA 1 1]
+  have a22 : A 2 2 = 0 := by linarith [hA 2 2]
+  have a33 : A 3 3 = 0 := by linarith [hA 3 3]
+  simp only [skDiv, skConnG, skEin, skScalar, skRic, skCurv, sum4,
+    mink4, singleZeroConn, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.cons_val_three,
+    Matrix.head_cons, Matrix.tail_cons,
+    hC 1 2, hC 1 3, hC 2 3, hA 1 2, hA 1 3, hA 2 3,
+    hS 2 1, hS 3 1, hS 3 2,
+    c11, c22, c33, a11, a22, a33,
     mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
     mul_one, one_mul, one_div, mul_neg, neg_mul, neg_neg]
   ring
