@@ -324,15 +324,15 @@ lemma firstBianchiExplicit : ...
 ### 6.4 Sorry 政策
 
 - **目标**：全项目零 sorry
-- **当前状态（2026-09-11 实测，已剥离注释）**：**1 处 sorry** —
-  `SpectralMetric.lean` 的 `einstein_divergence_free_from_bianchi`
-  （Einstein 散度自由，256 单项式计算瓶颈，闭合路径见
-  [sorry_closure_roadmap.md](sorry_closure_roadmap.md) §3）；
+- **当前状态（2026-09-11 实测，已剥离注释）**：**0 处 sorry —— 全库已清零**。
+  最后一处（`einstein_divergence_free_from_bianchi`）经数值检验**证伪**
+  （恒假命题，非计算瓶颈），已按勘误流程处置：假定理删除、开放命题
+  `EinsteinDivergenceFree` 登记（SpectralMetric.lean，不断言）、真空真定理
+  `einstein_divergence_free_vacuum` 替补。详见
+  [sorry_closure_roadmap.md](sorry_closure_roadmap.md) §3.6。
   另有 4 个显式 axiom（`EDRNCrossFramework` ×2、`GeneralMetaTheoremFramework` ×2，
   标注为 open 问题占位）。其余 ~38 处 "sorry" 字样均为注释/docstring 中的
   缺口登记或历史记录，非实际使用。
-  同日已清零 `PinchTopology.lean` ×2（其一为**恒假命题勘误重建**，
-  详见路线图 §2）
 - **新增 sorry 必须**：
   1. 在 sorry 旁添加注释说明原因
   2. 在对应的论文/笔记中记录为待闭合缺口
@@ -435,7 +435,7 @@ pip install numpy scipy mpmath
 | Lean 源码模块数 | 126 |
 | 总定理数 | 1273 |
 | 总引理数 | 100 |
-| sorry 数量（剥离注释后实测） | 1（SpectralMetric：einstein_divergence_free_from_bianchi） |
+| sorry 数量（剥离注释后实测） | **0**（2026-09-11 全库清零；末处为恒假命题勘误，开放命题 `EinsteinDivergenceFree` 已登记） |
 | 显式 axiom 数 | 4（均为 open 问题占位） |
 | `lake build` jobs | 3686 |
 | 构建状态 | 通过（0 error，2026-09-11，commit ec5b4c9） |
@@ -444,13 +444,13 @@ pip install numpy scipy mpmath
 
 | 文件 | sorry 数 | 说明 |
 |:-----|:--------:|:-----|
-| `SpectralMetric.lean` | 1 | Einstein 散度自由（256 项式计算瓶颈，闭合路径见路线图 §3） |
+| 全库 126 个模块 | **0** | 2026-09-11 清零；末处（SpectralMetric）为恒假命题勘误，开放命题已登记 |
 | `SpectralBundle/PinchTopology.lean` | 0 | 原 2 处已于 2026-09-11 清零（含 1 处恒假命题勘误） |
-| 其余 124 个模块 | 0 | 含 Rec/Sp 范畴、D 函子、伴随、谱对应、四体制元定理、T-01~T-04、G1-G4 |
 
 **注**：grep 直查会得到 ~41 处 "sorry" 字样，其中 **38 处为注释/docstring 中的
 缺口登记**（Mourre 框架、Kato-Rellich、连续极限等未来阶段的计划记录），
-实际 sorry tactic 仅 3 处。统计时应剥离 `/- -/` 与 `--` 注释后再计数。
+实际 sorry tactic 为 0（2026-09-11 全库清零，末处系恒假命题勘误）。
+统计时应剥离 `/- -/` 与 `--` 注释后再计数。
 构建期 "declaration uses sorry" 警告可能来自对含 sorry 模块的**下游依赖**，
 并非该文件直接使用。
 

@@ -719,40 +719,33 @@ lemma einsteinDivergence_eq (g : MetricTensor) (Ric : RicciTensor) (R : ℝ)
     einsteinDivergenceSum4 g Ric R n = ∑ m : Fin 4, (einsteinTensor g Ric R).G m n := by
   simp [einsteinDivergenceSum4, sum4_eq_finset_sum]
 
-/-- 从离散第二 Bianchi 恒等式推导 Einstein 张量散度为零。
-    证明策略：
-    1. 展开 einsteinDivergenceSum4 为 sum4
-    2. 展开 einsteinTensor 为 Ric - ½ R g
-    3. 展开 Ricci 张量为 Riemann 缩并（用 sum4）
-    4. 应用 second_bianchi_discrete 的缩并形式
-    5. ring_nf 闭合
+/-- 一般 Christoffel 符号的 Einstein 散度为零命题（**开放问题登记**，2026-09-11）。
 
-    当前状态：缩并步骤需要将 discreteSecondBianchi 的指标 (r,s,ρ,m,n)
-    收缩为 Einstein 散度的形式。这是纯代数操作，但涉及多层 sum4 嵌套。 -/
-theorem einstein_divergence_free_from_bianchi (Γ : ChristoffelSymbol)
-    (g : MetricTensor) (n : Fin 4) :
-    einsteinDivergenceSum4 g (ricciFromChristoffel Γ)
-      (scalarCurvature g (ricciFromChristoffel Γ)) n = 0 := by
-  -- 展开 Einstein 张量散度为 sum4 形式
-  simp only [einsteinDivergenceSum4, einsteinTensor]
-  -- scalarCurvature 展开后涉及 g_mn × Ric_mn = 256 个单项式
-  -- 当前 ring 无法在合理时间内处理此规模的多项式
-  -- 桥接基础设施（sum4 ↔ Finset.sum）已完备，见 einsteinDivergence_eq
-  sorry -- 纯计算量瓶颈，非逻辑缺口
+    ※ 勘误证伪记录（2026-09-11，数值检验，见 sorry_closure_roadmap.md §3）：
+    原 `einstein_divergence_free_from_bianchi` 声称对任意无挠 Γ 有
+    `Σ_m G_mn = 0`，该陈述**恒假**——
+    1. 随机无挠 Γ + 对称 g 数值残差达 10⁰–10² 量级（10 组独立样本）；
+    2. 改协变散度版本（∇̃ 含联络项）后残差同量级——偏导数项 ∂ 不可丢弃；
+    3. 第二 Bianchi 的纯 Γ 循环和逐点为零（`second_bianchi_discrete`），
+       其任意缩并恒零，而 Einstein 散度非零——骨架层面的缩并恒等式不存在。
 
-/-- 从离散第二 Bianchi 恒等式构造 SecondBianchiIdentity 结构。
-    通过 sum4 桥接：先用 sum4 证明散度为零，再转换为 Finset.sum 形式。 -/
-noncomputable def secondBianchiFromDiscrete (Γ : ChristoffelSymbol) :
-    SecondBianchiIdentity
-      { components := diagonal (fun _ => (1 : ℝ)), symmetric := by rw [diagonal_transpose] }
-      (ricciFromChristoffel Γ)
-      (scalarCurvature
-        { components := diagonal (fun _ => (1 : ℝ)), symmetric := by rw [diagonal_transpose] }
-        (ricciFromChristoffel Γ)) where
-  einstein_divergence_free := by
-    intro n
-    rw [← einsteinDivergence_eq]
-    exact einstein_divergence_free_from_bianchi Γ _ n
+    根源：连续理论中 ∇^μ G_μν = 0 的证明必须同时使用 ∂ 项与 Γ 项
+    （经由度量相容性提升指标）；点值代数骨架丢弃全部 ∂ 项后，
+    守恒律的载体消失。正确离散化需要沿 RecObj step 的**有限差分导数**
+    （张量场在递归系统上的逐点差分），属 Phase 16B+ 框架扩展。
+
+    本定义仅登记该命题（不断言、不 axiomatize——普遍量化版本与
+    可判定反例实例并存将导致不一致）。真空情形见
+    `einstein_divergence_free_vacuum`。 -/
+def EinsteinDivergenceFree (Γ : ChristoffelSymbol) (g : MetricTensor) : Prop :=
+  ∀ n : Fin 4, einsteinDivergenceSum4 g (ricciFromChristoffel Γ)
+    (scalarCurvature g (ricciFromChristoffel Γ)) n = 0
+
+/-- 真空情形的 Einstein 散度为零（平凡但真实）：
+    Ric ≡ 0 且 R = 0 ⟹ G ≡ 0 ⟹ Σ_m G_mn = 0。 -/
+theorem einstein_divergence_free_vacuum (g : MetricTensor) (n : Fin 4) :
+    einsteinDivergenceSum4 g { R := 0, symmetric := by simp } 0 n = 0 := by
+  simp [einsteinDivergenceSum4, einsteinTensor, sum4_zero]
 
 /-- 从 Einstein 场方程推导能动量守恒。
     物理含义：G_μν = 8πG T_μν 且 ∇^μ G_μν = 0

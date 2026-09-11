@@ -13,7 +13,14 @@
 |:-----|:----------------------:|:----------:|:-----|
 | 2026-09-10（修复前统计口径修正前） | 误报 ~41 | 4 | 口径错误，含注释提及 |
 | 2026-09-11 上午 | 3 | 4 | 全库 0 error（ec5b4c9） |
-| **2026-09-11（本路线图提交时）** | **1** | 4 | PinchTopology ×2 已清零 |
+| 2026-09-11 中午 | 1 | 4 | PinchTopology ×2 已清零 |
+| **2026-09-11（当前）** | **0** | 4 | **全库 sorry 归零**（51f2302 后本轮修复） |
+
+**2026-09-11 下午重大勘误（本轮）**：最后一个 sorry
+（`einstein_divergence_free_from_bianchi`）经数值检验**证伪**——
+它不是计算瓶颈，而是**恒假命题**（详见 §3.6）。已按勘误流程处置：
+假定理删除、登记开放命题 `EinsteinDivergenceFree`（不断言）、
+真空真定理 `einstein_divergence_free_vacuum` 替补。
 
 **统计口径（重要）**：匹配 `\bsorry\b` 前必须先剥离 Lean 注释
 （`/- -/` 可嵌套 + `--` 行注释）。原始 grep 的 ~41 处中 38 处为注释里的
@@ -110,11 +117,43 @@ theorem einstein_divergence_free_from_bianchi (Γ : ChristoffelSymbol)
 引入 `polyrith`（Sage 后端，需网络）或把骨架迁移到 `MvPolynomial` 商环
 做可判定等式检查。工程量大，仅当 A–C 均失败时考虑。
 
-### 3.5 验证标准
+### 3.6 最终处置（2026-09-11 下午）：证伪与勘误
 
-闭合后 `lake build MUFPFormalization.SpectralMetric` 无 sorry 警告，
-且 ENV_GUIDE §9.1 的 sorry 计数更新为 0。同时应回查 `energy_momentum_conservation`
-（SpectralMetric.lean:767）等下游声明是否从 sorry 占位升级为可证。
+**路径 A–C 全部失效——目标陈述被数值证伪，非计算瓶颈。**
+
+数值检验（每类 ≥6 组独立随机样本）：
+
+| 候选恒等式 | 残差 | 结论 |
+|:-----------|:-----|:-----|
+| 原式 `Σ_m G_mn = 0`（随机无挠 Γ + 对称 g） | 10⁰–10² | **恒假** |
+| 协变散度版 `Σ_m ∇̃_m G_mn = 0`（联络项保留） | 同量级 | **恒假** |
+| `Σ_m ∇̃_m Ric_mn = 0`（收缩 Bianchi 骨架版） | 同量级 | **恒假** |
+| Einstein 散度 = 第二 Bianchi 缩并 | 不成立 | Bianchi 逐点为零 ⟹ 缩并恒零，而散度非零 |
+
+**根源**（数学诊断）：连续理论中 ∇^μ G_μν = 0 的证明必须**同时使用**
+∂ 项与 Γ 项（经度量相容性提升指标后联合抵消）；点值代数骨架丢弃全部
+∂ 项后，守恒律的载体不复存在。且原式的普通指标求和**不是协变表述**
+（坐标依赖），即使补上度量相容性也无法挽救。
+
+**已实施处置**（SpectralMetric.lean）：
+1. 删除假定理 `einstein_divergence_free_from_bianchi` 与依赖它的
+   `secondBianchiFromDiscrete`（全库仅自引用，无下游破坏）；
+2. 新增 `EinsteinDivergenceFree (Γ g) : Prop` 开放命题登记
+   （不断言、不 axiomatize——普遍量化假命题与可判定反例并存将导致不一致）；
+3. 新增真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）；
+4. 下游 `energy_momentum_conservation` / `BianchiEinsteinConservation` /
+   `vacuumBianchiEinstein` 均为条件式或真空构造，**不受证伪影响**，保持有效。
+
+**真值路径（未来工作，Phase 16B+）**：沿 RecObj step 的有限差分导数
+（张量场在递归系统上的逐点差分 ∂̃_ρ T(x) := T(step_ρ x) − T(x)），
+重建带 ∂ 项的离散第二 Bianchi，其缩并给出真正的协变守恒律。
+这是框架级扩展，非本文件内可完成。
+
+### 3.7 验证标准（已达成）
+
+- [x] `lake build MUFPFormalization` 全库 0 error（3686 jobs）
+- [x] 剥离注释后全库 sorry 计数 = 0
+- [x] 假定理证伪记录保留（本文件 + Lean 源 docstring 双登记）
 
 ---
 
