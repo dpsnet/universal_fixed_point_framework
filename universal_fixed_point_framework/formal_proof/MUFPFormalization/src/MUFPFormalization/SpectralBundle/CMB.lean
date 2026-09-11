@@ -182,8 +182,9 @@ noncomputable def pinchCascade_to_powerSpectrum (pc : PinchCascade)
         have h_len : 0 < pc.events.length := by
           by_contra h_len
           push_neg at h_len
-          rw [List.length_eq_zero] at h_len
-          subst h_len
+          have h_len0 : pc.events.length = 0 := Nat.eq_zero_of_le_zero h_len
+          rw [List.length_eq_zero_iff] at h_len0
+          rw [h_len0] at h_empty
           simp [List.isEmpty] at h_empty
         exact div_nonneg h_total (Nat.cast_nonneg _)
   }

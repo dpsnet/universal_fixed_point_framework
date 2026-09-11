@@ -98,7 +98,8 @@ def recVertComp {X Y : RecObj} {f g h : X ⟶ Y}
           (transferMatrix h.toFun - transferMatrix g.toFun) +
           (transferMatrix g.toFun - transferMatrix f.toFun) by
         ext i j
-        simp [Matrix.sub_apply, Matrix.add_apply, sub_eq_add_neg, add_comm, add_assoc]]
+        simp only [Matrix.sub_apply, Matrix.add_apply]
+        abel]
       rw [β.condition, α.condition] }
 
 /-- 横复合（whiskering）：homotopy := α.h · T_f' + T_g · β.h（良定义）。 -/
@@ -339,40 +340,40 @@ theorem recExchangeLaw_strict_limit {X Y Z : RecObj}
 /-! ## 阶段2-C6：三角恒等式缺陷与交换律偏差的精确对应
 
    数学内容（notes §8.2，C6 猜想已升级为有完整推导的命题）：
-   - 三角缺陷 δ = εʰ + D(ηʰ)（伴随三角恒等式 T1 的偏差）
+   - 三角缺陷 δ = εh + D(ηh)（伴随三角恒等式 T1 的偏差）
    - 交换律偏差 Δ = A_X·(δ·η'ʰ) - 2·(δ·(A_Y·η'ʰ)) + (δ·η'ʰ)·A_Z
    - 严格伴随 (δ=0) ⟹ Δ=0（无引力）
    - 弱伴随 (δ≠0) ⟹ Δ≠0（引力出现）
 
    前置依赖：RAP5a_explicit_adjunction.lean 的 DIm ⊣ RIm 伴随
    （单位 adjUnit = id、余单位 adjCounit = id、三角恒等式 rfl 闭合）。
-   在 SpImD 线性语义下 D(ηʰ) = ηʰ（恒等提取），故 δ = εʰ + ηʰ。
-   严格伴随中 η=ε=id ⟹ ηʰ=εʰ=0 ⟹ δ=0。
+   在 SpImD 线性语义下 D(ηh) = ηh（恒等提取），故 δ = εh + ηh。
+   严格伴随中 η=ε=id ⟹ ηh=εh=0 ⟹ δ=0。
 -/
 
-/-- 三角恒等式缺陷 δ = εʰ + D(ηʰ)。
-    εʰ: 余单位的同伦分量；D(ηʰ): 单位同伦经 D 函子的像。
-    在 SpImD 线性语义下 D(ηʰ) = ηʰ（恒等提取，RAP5a_explicit_adjunction.lean §3-4）。
-    严格伴随（η=ε=id）中 ηʰ=εʰ=0 ⟹ δ=0。 -/
-def triangleDefect {X Y : RecObj} (ηʰ εʰ : Matrix X.T Y.T ℂ) : Matrix X.T Y.T ℂ :=
-  εʰ + ηʰ
+/-- 三角恒等式缺陷 δ = εh + D(ηh)。
+    εh: 余单位的同伦分量；D(ηh): 单位同伦经 D 函子的像。
+    在 SpImD 线性语义下 D(ηh) = ηh（恒等提取，RAP5a_explicit_adjunction.lean §3-4）。
+    严格伴随（η=ε=id）中 ηh=εh=0 ⟹ δ=0。 -/
+def triangleDefect {X Y : RecObj} (ηh εh : Matrix X.T Y.T ℂ) : Matrix X.T Y.T ℂ :=
+  εh + ηh
 
 /-- C6 核心定理：交换律偏差 = 三角缺陷的精确代入。
-    将 β.homotopy := δ = εʰ + D(ηʰ) 代入 recExchangeLaw_partial_commutator。
-    数学推导见 notes §8.2.5：εʰ = -D(ηʰ) + δ 代入偏差公式后，
+    将 β.homotopy := δ = εh + D(ηh) 代入 recExchangeLaw_partial_commutator。
+    数学推导见 notes §8.2.5：εh = -D(ηh) + δ 代入偏差公式后，
     严格伴随部分（δ=0 贡献）由严格极限定理消去，
     缺陷部分（δ 贡献）恰好为 δ 在 βʰ 位置的代入。 -/
 theorem c6_delta_substitution {X Y Z : RecObj}
     {f g h : X ⟶ Y} {f' g' h' : Y ⟶ Z}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h)
     (α' : RecTwoMorphism f' g') (β' : RecTwoMorphism g' h')
-    (ηʰ εʰ : Matrix Y.T Z.T ℂ)
-    (hδ : β.homotopy = triangleDefect ηʰ εʰ) :
+    (ηh εh : Matrix X.T Y.T ℂ)
+    (hδ : β.homotopy = triangleDefect ηh εh) :
     (recHorizComp (recVertComp α β) (recVertComp α' β')).homotopy -
     (recVertComp (recHorizComp α α') (recHorizComp β β')).homotopy =
-    stepMatrix X.step * (triangleDefect ηʰ εʰ * α'.homotopy)
-      - 2 • (triangleDefect ηʰ εʰ * (stepMatrix Y.step * α'.homotopy))
-      + (triangleDefect ηʰ εʰ * α'.homotopy) * stepMatrix Z.step := by
+    stepMatrix X.step * (triangleDefect ηh εh * α'.homotopy)
+      - 2 • (triangleDefect ηh εh * (stepMatrix Y.step * α'.homotopy))
+      + (triangleDefect ηh εh * α'.homotopy) * stepMatrix Z.step := by
   rw [recExchangeLaw_partial_commutator α β α' β']
   rw [hδ, triangleDefect]
 
@@ -384,7 +385,7 @@ theorem c6_zero_defect_implies_zero_deviation {X Y Z : RecObj}
     {f g h : X ⟶ Y} {f' g' h' : Y ⟶ Z}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h)
     (α' : RecTwoMorphism f' g') (β' : RecTwoMorphism g' h')
-    (hδ : β.homotopy = 0)  -- δ=0 (strict adjunction: ηʰ=εʰ=0)
+    (hδ : β.homotopy = 0)  -- δ=0 (strict adjunction: ηh=εh=0)
     (hα' : stepMatrix Y.step * α'.homotopy = α'.homotopy * stepMatrix Z.step) :
     (recHorizComp (recVertComp α β) (recVertComp α' β')).homotopy -
     (recVertComp (recHorizComp α α') (recHorizComp β β')).homotopy = 0 := by
@@ -400,8 +401,9 @@ theorem c6_norm_bound {X Y Z : RecObj}
     {f g h : X ⟶ Y} {f' g' h' : Y ⟶ Z}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h)
     (α' : RecTwoMorphism f' g') (β' : RecTwoMorphism g' h')
-    (ηʰ εʰ : Matrix Y.T Z.T ℂ)
-    (hδ : β.homotopy = triangleDefect ηʰ εʰ)
+    (ηh εh : Matrix X.T Y.T ℂ)
+    (hδ : β.homotopy = triangleDefect ηh εh)
+    (hα' : stepMatrix Y.step * α'.homotopy = α'.homotopy * stepMatrix Z.step)
     {nX nY nZ : ℕ} {hX : Fintype.card X.T = nX} {hY : Fintype.card Y.T = nY}
     {hZ : Fintype.card Z.T = nZ} :
     -- 实例见证（严格伴随 δ=0 情形）：β.homotopy = 0 ⇒ Δ = 0
@@ -410,8 +412,6 @@ theorem c6_norm_bound {X Y Z : RecObj}
       (recHorizComp (recVertComp α β) (recVertComp α' β')).homotopy -
       (recVertComp (recHorizComp α α') (recHorizComp β β')).homotopy = 0 := by
   intro hβ0
-  -- 阻塞解除：给 hα'（α'.homotopy 交织）前提并直接调用 c6_zero_defect_implies_zero_deviation。
-  -- 当前实例通过 hδ 连接 triangleDefect 与 β.homotopy 来建立实例关系。
-  exact c6_delta_substitution α β α' β' ηʰ εʰ hδ ▸ rfl
+  exact c6_zero_defect_implies_zero_deviation α β α' β' hβ0 hα'
 
 end MUFPF

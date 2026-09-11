@@ -71,6 +71,7 @@ noncomputable abbrev photonSpectrum (X : PhotonTopology) : SpObj :=
 /-- 原子拓扑（封闭驻波）谱对象维度 = 1（单点驻留，单位谱）。 -/
 theorem spectrum_atomic_n : (photonSpectrum atomicTopology).n = 1 := by
   simp [photonToRec, atomicTopology]
+  exact Fintype.card_unit
 
 /-- 光子拓扑（开放行波）谱对象维度 = 2（两点往返，双值谱）。 -/
 theorem spectrum_photon_n : (photonSpectrum photonTopology).n = 2 := by
@@ -293,12 +294,10 @@ theorem phi_spectral_map_identity {X Y : PhotonTopology} (f : PhotonHom X Y) :
 theorem phi_spectral_map_id (X : PhotonTopology) :
     PhiSpectral.map (𝟙 X) = 𝟙 (PhiSpectral.obj X) := by
   simp [PhiSpectral, DE]
-  rfl
 
 theorem phi_spectral_map_comp {X Y Z : PhotonTopology} (f : X ⟶ Y) (g : Y ⟶ Z) :
     PhiSpectral.map (f ≫ g) = PhiSpectral.map f ≫ PhiSpectral.map g := by
   simp [PhiSpectral, DE]
-  rfl
 
 /-- **P5-3 总结定理（Φ = D|_Rec_photon 严格等式的函子层形式）**：
     ① 对象层：谱化路径交换（phi_spectral_commute，定义等式）+ 转变效应由 D 刻画

@@ -188,17 +188,16 @@ theorem structuralDefect_no_em_coupling (X : RecObj)
     证明策略：构造一个 2 元素系统，其中 step 交换两个元素，
     因此存在非不动点（defectMeasure > 0）。 -/
 theorem darkMatter_candidate_exists :
-    ∃ X : RecObj, defectMeasure X > 0 := by
+    ∃ X : RecObj.{0}, defectMeasure X > 0 := by
   let X : RecObj := {
     T := Fin 2
     fin := Fin.fintype 2
-    dec := Fin.decidableEq 2
+    dec := inferInstance
     step := fun x => if x = 0 then 1 else 0
   }
   refine ⟨X, ?_⟩
   apply defectMeasure_pos_of_eccentric X 0
   simp [X]
-  decide
 
 /-- 暗物质密度与缺陷度量的关系：
     暗物质密度 ρ_DM ∝ defectMeasure / Volume

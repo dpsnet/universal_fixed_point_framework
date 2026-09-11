@@ -67,14 +67,17 @@ lemma transferMatrix_reindex {α β : Type} [Fintype α] [DecidableEq α]
   ext i j
   rw [Matrix.reindex_apply]
   unfold transferMatrix
+  change (if eβ (f (eα.symm i)) = j then (1 : ℂ) else 0) =
+    (if f (eα.symm i) = eβ.symm j then (1 : ℂ) else 0)
   by_cases h : eβ (f (eα.symm i)) = j
   · have hf : f (eα.symm i) = eβ.symm j := by
       simpa using congrArg eβ.symm h
     simp [h, hf]
-  · simp [h]
-    intro hf
-    apply h
-    simpa using congrArg eβ hf
+  · have hf : ¬ f (eα.symm i) = eβ.symm j := by
+      intro hf
+      apply h
+      simpa using congrArg eβ hf
+    simp [h, hf]
 
 /-- reindex 保持减法（条目级）。 -/
 lemma reindex_sub_eq {α β γ δ : Type} (e₁ : α ≃ β) (e₂ : γ ≃ δ)

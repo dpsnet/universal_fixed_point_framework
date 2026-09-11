@@ -104,7 +104,6 @@ def recCommonHypotheses (S : RecObj) : Prop :=
 
 /-- 有限维原型中，通用条件对任意 RecObj 自动成立。 -/
 theorem recCommonHypotheses_auto (S : RecObj) : recCommonHypotheses S := by
-  logInfo "[MetaTheorem]   entering recCommonHypotheses_auto proof"
   simp [recCommonHypotheses, spectralDecomposable, universalKernel]
 
 #eval IO.println "[MetaTheorem] ✅ 3/8: recCommonHypotheses_auto compiled"
@@ -125,7 +124,6 @@ abbrev recDHypotheses (S : RecObj) : Prop := regimeA_hypotheses S
 
 /-- 有限维原型中，体制 A 条件对任意 RecObj 自动成立。 -/
 theorem regimeA_hypotheses_auto (S : RecObj) : regimeA_hypotheses S := by
-  logInfo "[MetaTheorem]   entering regimeA_hypotheses_auto proof"
   simp [regimeA_hypotheses, recCommonHypotheses, selfAdjoint,
         spectralDecomposable, universalKernel]
 
@@ -146,7 +144,6 @@ def regimeB1_hypotheses (S : RecObj) : Prop :=
 
 /-- 有限维原型中，体制 B1 条件对任意 RecObj 自动成立。 -/
 theorem regimeB1_hypotheses_auto (S : RecObj) : regimeB1_hypotheses S := by
-  logInfo "[MetaTheorem]   entering regimeB1_hypotheses_auto proof"
   simp [regimeB1_hypotheses, recCommonHypotheses, dissipative, decoupled,
         spectralDecomposable, universalKernel]
 
@@ -167,7 +164,6 @@ def regimeB2_hypotheses (S : RecObj) : Prop :=
 
 /-- 有限维原型中，体制 B2 条件对任意 RecObj 自动成立。 -/
 theorem regimeB2_hypotheses_auto (S : RecObj) : regimeB2_hypotheses S := by
-  logInfo "[MetaTheorem]   entering regimeB2_hypotheses_auto proof"
   simp [regimeB2_hypotheses, recCommonHypotheses, dissipative, coupled,
         braidingValid, spectralDecomposable, universalKernel]
 
@@ -183,7 +179,6 @@ def regimeC_hypotheses (S : RecObj) : Prop :=
 
 /-- 有限维原型中，体制 C 条件对任意 RecObj 自动成立。 -/
 theorem regimeC_hypotheses_auto (S : RecObj) : regimeC_hypotheses S := by
-  logInfo "[MetaTheorem]   entering regimeC_hypotheses_auto proof"
   simp [regimeC_hypotheses, recCommonHypotheses, dissipative, degenerate,
         spectralDecomposable, universalKernel]
 
@@ -204,13 +199,6 @@ theorem regimeA_in_B1 (S : RecObj) (hA : regimeA_hypotheses S) :
   -- regimeB1_hypotheses = recCommonHypotheses ∧ dissipative ∧ decoupled
   -- hA.1 : recCommonHypotheses S; dissipative/decoupled 均为 True
   ⟨hA.1, trivial, trivial⟩
-
--- 验证包含链定理的签名
-#check regimeA_in_B1       -- (S : RecObj) → regimeA_hypotheses S → regimeB1_hypotheses S
-#check regimeB1_in_B2     -- (S : RecObj) → regimeB1_hypotheses S → regimeB2_hypotheses S
-#check phase_transition_B2_to_C -- (S : RecObj) → regimeB2_hypotheses S → degenerate S → regimeC_hypotheses S
-
-#eval IO.println "[MetaTheorem] ✅ 4/8: inclusion chain A⊂B1 compiled"
 
 /-- **包含关系 B1 ⊂ B2**：解耦耗散是耦合耗散的零耦合极限。
     当 [A_sa, A_anti]=0 时，C=1 < C_crit（假设 C_crit > 1），故辫子仍有效。
@@ -235,6 +223,11 @@ theorem phase_transition_B2_to_C (S : RecObj)
   -- regimeC_hypotheses = recCommonHypotheses ∧ dissipative ∧ degenerate
   -- hB2.1 : recCommonHypotheses; hB2.2.1 : dissipative; hCritical : degenerate
   ⟨hB2.1, hB2.2.1, hCritical⟩
+
+-- 验证包含链定理的签名
+#check regimeA_in_B1       -- (S : RecObj) → regimeA_hypotheses S → regimeB1_hypotheses S
+#check regimeB1_in_B2     -- (S : RecObj) → regimeB1_hypotheses S → regimeB2_hypotheses S
+#check phase_transition_B2_to_C -- (S : RecObj) → regimeB2_hypotheses S → degenerate S → regimeC_hypotheses S
 
 #eval IO.println "[MetaTheorem] ✅ 4c/8: phase transition B2→C compiled"
 
@@ -281,18 +274,13 @@ theorem meta_theorem_A_self_adjoint (S : RecObj)
     (∀ (μ : ℂ), μ.im ∈ Set.Ico (-Real.pi) Real.pi →
       spectralInv (spectralMap μ) = μ) ∧
     -- C4a-right: 谱对应右逆：e^{-(-log λ)} = λ（λ ≠ 0）
-    (∀ (λ : ℂ), λ ≠ 0 → spectralMap (spectralInv λ) = λ)
+    (∀ (lam : ℂ), lam ≠ 0 → spectralMap (spectralInv lam) = lam)
     := by
-  logInfo "[MetaTheorem]   entering meta_theorem_A_self_adjoint proof"
   refine ⟨trivial, ?_, ?_, ?_, ?_⟩
-  · logInfo "[MetaTheorem]     A.1: proving DFunctor faithfulness"
-    exact fun f g hfg => DFunctor_faithful f g hfg
-  · logInfo "[MetaTheorem]     A.2: proving DIm ⊣ RIm adjunction"
-    exact ⟨DImAdjRIm⟩
-  · logInfo "[MetaTheorem]     A.3: proving spectralInv_leftInv"
-    exact spectralInv_leftInv
-  · logInfo "[MetaTheorem]     A.4: proving spectralMap_rightInv"
-    exact spectralMap_rightInv
+  · exact fun f g hfg => DFunctor_faithful f g hfg
+  · exact ⟨DImAdjRIm⟩
+  · exact fun μ hμ => spectralInv_leftInv hμ
+  · exact fun lam hlam => spectralMap_rightInv hlam
 
 -- 验证元定理 A 的签名
 #check meta_theorem_A_self_adjoint -- (S : RecObj) → regimeA_hypotheses S → ...
@@ -333,7 +321,6 @@ theorem meta_theorem_B1_decoupled_dissipative (S : RecObj)
     -- C6b1: IC → 跨领域保持（与体制 A 共享，因 C=1）
     True
     := by
-  logInfo "[MetaTheorem]   entering meta_theorem_B1_decoupled_dissipative proof (placeholder)"
   refine ⟨trivial, trivial, trivial, trivial, trivial⟩
 
 #eval IO.println "[MetaTheorem] ✅ 6/8: meta_theorem_B1 compiled"
@@ -371,7 +358,6 @@ theorem meta_theorem_B2_coupled_dissipative (S : RecObj)
     -- （定理 7.31 步骤 3，伪谱扰动界传递性）
     True
     := by
-  logInfo "[MetaTheorem]   entering meta_theorem_B2_coupled_dissipative proof (placeholder)"
   refine ⟨trivial, trivial, trivial, trivial, trivial⟩
 
 #eval IO.println "[MetaTheorem] ✅ 6b/8: meta_theorem_B2 compiled"
@@ -402,7 +388,6 @@ theorem meta_theorem_C_degenerate (S : RecObj)
     -- 在每个分支 B_k 上为严格双射
     True
     := by
-  logInfo "[MetaTheorem]   entering meta_theorem_C_degenerate proof (placeholder)"
   refine ⟨trivial, trivial, trivial, trivial⟩
 
 #eval IO.println "[MetaTheorem] ✅ 6c/8: meta_theorem_C compiled"
@@ -420,7 +405,6 @@ theorem meta_corollary_AB1_cross_domain
     (h₂ : regimeA_hypotheses R₂)
     (hIC : isolationConstraint R₁ R₂) :
     ∀ (f : R₁ ⟶ R₂), DFunctor.map f = DFunctor.map f := by
-  logInfo "[MetaTheorem]   entering meta_corollary_AB1_cross_domain proof"
   intro f
   exact ic_implies_spectral_preservation R₁ R₂ hIC f
 
@@ -450,7 +434,6 @@ theorem meta_corollary_spectral_equivalence
     (hIC : isolationConstraint R₁ R₂)
     (hSame : completeSpectralInvariant R₁ = completeSpectralInvariant R₂) :
     spectralEquivalence R₁ R₂ := by
-  logInfo "[MetaTheorem]   entering meta_corollary_spectral_equivalence proof"
   exact thm43_IC_full_coverage_finite R₁ R₂ hIC hSame
 
 -- 验证外部引用的签名（跨领域推论 & 谱等价）
@@ -469,7 +452,6 @@ theorem meta_corollary_spectral_equivalence
 theorem degeneration_A_to_B1 (S : RecObj)
     (hA : regimeA_hypotheses S) :
     regimeB1_hypotheses S := by
-  logInfo "[MetaTheorem]   degeneration_A_to_B1: calling regimeA_in_B1"
   exact regimeA_in_B1 S hA
 
 /-- **退化关系 B1 → B2 边界**（2026-09-05 升级）：解耦耗散是耦合耗散的零耦合极限
@@ -478,7 +460,6 @@ theorem degeneration_A_to_B1 (S : RecObj)
 theorem degeneration_B1_to_B2_boundary (S : RecObj)
     (hB1 : regimeB1_hypotheses S) :
     regimeB2_hypotheses S := by
-  logInfo "[MetaTheorem]   degeneration_B1_to_B2: calling regimeB1_in_B2"
   exact regimeB1_in_B2 S hB1
 
 /-- **相变 B2 → C**（2026-09-05 升级）：当 C 达到 C_crit 时，
@@ -491,7 +472,6 @@ theorem phase_transition_B2_C (S : RecObj)
     (hB2 : regimeB2_hypotheses S)
     (hCritical : degenerate S) :
     regimeC_hypotheses S := by
-  logInfo "[MetaTheorem]   phase_transition_B2_C: calling phase_transition_B2_to_C"
   exact phase_transition_B2_to_C S hB2 hCritical
 
 /-! ## 有限维原型的自动适用性 -/
@@ -502,8 +482,7 @@ theorem meta_theorem_A_auto (S : RecObj) :
     Nonempty (DIm ⊣ RIm) ∧
     (∀ (μ : ℂ), μ.im ∈ Set.Ico (-Real.pi) Real.pi →
       spectralInv (spectralMap μ) = μ) ∧
-    (∀ (λ : ℂ), λ ≠ 0 → spectralMap (spectralInv λ) = λ) := by
-  logInfo "[MetaTheorem]   meta_theorem_A_auto: extracting projection chain h.2.1, h.2.2.1, ..."
+    (∀ (lam : ℂ), lam ≠ 0 → spectralMap (spectralInv lam) = lam) := by
   have h := meta_theorem_A_self_adjoint S (regimeA_hypotheses_auto S)
   exact ⟨h.2.1, h.2.2.1, h.2.2.2.1, h.2.2.2.2⟩
 
@@ -513,9 +492,8 @@ theorem meta_theorem_A_auto (S : RecObj) :
 theorem meta_theorem_B1_auto (S : RecObj) :
     (∀ (f g : RecHom S S), DFunctor.map f = DFunctor.map g → f = g) ∧
     Nonempty (DIm ⊣ RIm) := by
-  logInfo "[MetaTheorem]   meta_theorem_B1_auto: extracting B1 results"
   have h := meta_theorem_B1_decoupled_dissipative S (regimeB1_hypotheses_auto S)
-  exact ⟨h.2.1, h.2.2.1⟩
+  exact ⟨fun f g hfg => DFunctor_faithful f g hfg, ⟨DImAdjRIm⟩⟩
 
 /-- 有限维原型中，元定理 B2 对任意 RecObj 自动适用（2026-09-05 升级）。
     B2 体制：耦合耗散，辫子对称 k≠0，C≠1。
@@ -523,9 +501,8 @@ theorem meta_theorem_B1_auto (S : RecObj) :
 theorem meta_theorem_B2_auto (S : RecObj) :
     (∀ (f g : RecHom S S), DFunctor.map f = DFunctor.map g → f = g) ∧
     Nonempty (DIm ⊣ RIm) := by
-  logInfo "[MetaTheorem]   meta_theorem_B2_auto: extracting B2 results"
   have h := meta_theorem_B2_coupled_dissipative S (regimeB2_hypotheses_auto S)
-  exact ⟨h.2.1, h.2.2.1⟩
+  exact ⟨fun f g hfg => DFunctor_faithful f g hfg, ⟨DImAdjRIm⟩⟩
 
 /-- 有限维原型中，元定理 C 对任意 RecObj 自动适用（2026-09-05 升级）。
     C 体制：退化极限，辫子结构瓦解为分支结构。
@@ -533,9 +510,8 @@ theorem meta_theorem_B2_auto (S : RecObj) :
 theorem meta_theorem_C_auto (S : RecObj) :
     (∀ (f g : RecHom S S), DFunctor.map f = DFunctor.map g → f = g) ∧
     Nonempty (DIm ⊣ RIm) := by
-  logInfo "[MetaTheorem]   meta_theorem_C_auto: extracting C results"
   have h := meta_theorem_C_degenerate S (regimeC_hypotheses_auto S)
-  exact ⟨h.2.1, h.2.2.1⟩
+  exact ⟨fun f g hfg => DFunctor_faithful f g hfg, ⟨DImAdjRIm⟩⟩
 
 #eval IO.println "[MetaTheorem] ✅ 8/8: all auto theorems compiled — MetaTheorem.lean complete"
 

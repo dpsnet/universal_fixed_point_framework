@@ -193,7 +193,11 @@ theorem general_covariance_implies_sheaf (E : SpectralPresheaf)
     rcases h_nonempty with ⟨V, hV⟩
     refine ⟨sections V hV, λ V' hV' => ?_⟩
     -- compatible 经 hId（restrict = id）给出 sections V hV = sections V' hV'
-    simpa [hId] using compatible V V' hV hV'
+    have hc := compatible V V' hV hV'
+    rw [hId (U := V) (V := V.meet V') (fun x hx => hx.1),
+        hId (U := V') (V := V.meet V') (fun x hx => hx.2)] at hc
+    rw [hId (cover.subset V' hV')]
+    exact hc
   · intro U hU_nempty cover s t h
     have h_nonempty : cover.family.Nonempty := cover_nonempty_if_U_nonempty cover hU_nempty
     rcases h_nonempty with ⟨V, hV⟩

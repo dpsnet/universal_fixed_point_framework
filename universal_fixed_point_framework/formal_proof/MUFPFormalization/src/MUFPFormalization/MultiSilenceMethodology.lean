@@ -141,8 +141,6 @@ The general combining operation ⊗ applies all four silence layers.
 For each physical quantity, the interpretation of each layer differs.
 -/
 
-/-- A single silence layer's contribution to a physical quantity.
-    Each layer has a numerical factor and a physical interpretation. -/
 /-- 静默层数据记录（S1-S4）。
     注（2026-08-13 登记册⑧）：与 RAP4 `SilenceLevel`（strict/asymptotic/epsilon
     严格性分级）**不同义**——本处为静默层数据表，SilenceLevel 为严格性分级，

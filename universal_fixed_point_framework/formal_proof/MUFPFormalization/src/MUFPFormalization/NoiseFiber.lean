@@ -117,17 +117,17 @@ noncomputable def NInvFunctor : TempObj ⥤ NoiseObj where
 noncomputable def NoiseIsoTemp : NoiseObj ≌ TempObj :=
   { functor := NFunctor
     inverse := NInvFunctor
-    unitIso := NatIso.ofComponents (fun X => Iso.refl X) (by
+    unitIso := NatIso.ofComponents (fun X => Iso.refl ((NFunctor ⋙ NInvFunctor).obj X)) (by
       intro X Y f
       apply NoiseHom.ext
       all_goals simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id, Category.id_comp])
-    counitIso := NatIso.ofComponents (fun T => Iso.refl T) (by
+    counitIso := NatIso.ofComponents (fun T => Iso.refl ((NInvFunctor ⋙ NFunctor).obj T)) (by
       intro X Y f
       apply TempHom.ext
       all_goals simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id, Category.id_comp])
     functor_unitIso_comp := by
       intro X
-      simp [NFunctor, NInvFunctor, Functor.comp, Category.comp_id] }
+      simp [NFunctor, NInvFunctor, Functor.comp, NatIso.ofComponents_hom_app] }
 
 /-! =========================================================
     Section 3: Spectral Bundle Total Category Bun(Noise, Spec)

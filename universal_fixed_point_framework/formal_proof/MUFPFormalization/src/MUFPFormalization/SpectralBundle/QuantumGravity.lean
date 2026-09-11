@@ -284,12 +284,18 @@ noncomputable def SpObj_to_StringVibration (X : SpObj) (hn : 2 ≤ X.n) : String
       have h2 : (2 : ℕ) ≥ 1 ∧ 2 ≤ X.n := ⟨by norm_num, hn⟩
       have h1 : (1 : ℕ) ≥ 1 ∧ 1 ≤ X.n := ⟨by norm_num, Nat.le_trans (by norm_num : (1:ℕ) ≤ 2) hn⟩
       simp [h2, h1]
-      have h_pos_kmax : 0 < (X.n : ℝ) * ((X.n : ℝ) + 1) := by positivity
-      have h_sqrt_pos : 0 < Real.sqrt ((X.n : ℝ) * ((X.n : ℝ) + 1)) := Real.sqrt_pos.mpr h_pos_kmax
-      have h6 : Real.sqrt 6 = Real.sqrt ((2 : ℝ) * ((2 : ℝ) + 1)) := by norm_num
-      have h2 : Real.sqrt 2 = Real.sqrt ((1 : ℝ) * ((1 : ℝ) + 1)) := by norm_num
-      rw [h6, h2]
-      exact div_pos (by gcon; exact Real.sqrt_pos.mpr (by norm_num : (0:ℝ) < 6)) h_sqrt_pos
+      have h_pos_n : (0:ℝ) < (X.n : ℝ) := by
+        exact_mod_cast (show (0:ℕ) < X.n from by omega)
+      have hdenom : (0:ℝ) < Real.sqrt (X.n : ℝ) * Real.sqrt ((X.n : ℝ) + 1) :=
+        mul_pos (Real.sqrt_pos.mpr h_pos_n) (Real.sqrt_pos.mpr (by linarith))
+      apply div_lt_div_of_pos_right _ hdenom
+      have h11 : Real.sqrt ((1:ℝ) + 1) = Real.sqrt 2 := by norm_num
+      rw [h11]
+      have h3 : (1:ℝ) < Real.sqrt (2 + 1) := by
+        rw [Real.lt_sqrt (by norm_num)]; norm_num
+      have h2pos : (0:ℝ) < Real.sqrt (2:ℝ) := Real.sqrt_pos.mpr (by norm_num)
+      nth_rw 1 [← mul_one (Real.sqrt 2)]
+      exact mul_lt_mul_of_pos_left h3 h2pos
   }
 
 /-- 从弦振动模式构造 SpObj（方向）。
@@ -343,16 +349,16 @@ theorem string_spobj_roundtrip_fundamentalFreq (sv : StringVibration)
     - 弦的基频是最低振动模式的频率
     - 谱间隙是最小特征值差
     - 两者描述的都是离散系统的"基本激发"能量 -/
-theorem spectralGap_eq_vibrationFrequency (X : SpObj) :
-    spectralGap X.n = (SpObj_to_StringVibration X).fundamental_freq := by
+theorem spectralGap_eq_vibrationFrequency (X : SpObj) (hn : 2 ≤ X.n) :
+    spectralGap X.n = (SpObj_to_StringVibration X hn).fundamental_freq := by
   unfold SpObj_to_StringVibration
   simp
 
 /-- 第 k 个特征值差 = 第 k 个泛音频率。
     完整的谱序列对应完整的泛音序列。 -/
-theorem kth_spectralGap_eq_kth_harmonic (X : SpObj) (k : ℕ) :
+theorem kth_spectralGap_eq_kth_harmonic (X : SpObj) (k : ℕ) (hn : 2 ≤ X.n) :
     (k : ℝ) * spectralGap X.n =
-    (SpObj_to_StringVibration X).harmonic_series k := by
+    (SpObj_to_StringVibration X hn).harmonic_series k := by
   unfold SpObj_to_StringVibration
   simp
 
@@ -491,7 +497,8 @@ noncomputable def bottUpgrade (A : Matrix (Fin 16) (Fin 16) ℝ) :
   -- (A ⊗ I₂)_{i,j} = A_{i÷2, j÷2} * (I₂)_{i%2, j%2}
   -- 当 i%2 = j%2 时为 A_{i÷2, j÷2}，否则为 0
   -- 等价地：将 A 复制为两个 16×16 对角块
-  exact Matrix.fromBlocks A 0 0 A
+  -- 通过 finSumFinEquiv（Fin 16 ⊕ Fin 16 ≃ Fin 32）重索引
+  exact Matrix.reindex finSumFinEquiv finSumFinEquiv (Matrix.fromBlocks A 0 0 A)
 
 /-- Bott 塔降级算子 π：Level 1 → Level 0。
     数学定义：π(A) = id ⊗ Tr₂

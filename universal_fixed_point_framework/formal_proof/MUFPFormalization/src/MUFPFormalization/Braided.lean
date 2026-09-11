@@ -85,7 +85,7 @@ noncomputable def recPairCone (X Y : RecObj.{u}) : BinaryFan X Y where
         intro j k f
         rcases j with ⟨j⟩
         rcases k with ⟨k⟩
-        rcases f with ⟨⟨h⟩⟩
+        rcases f with ⟨h⟩
         cases h; simp }
 
 /-- `recPairCone` is a limit cone. -/
@@ -104,9 +104,11 @@ noncomputable def recBinaryLimitCone (X Y : RecObj.{u}) : LimitCone (pair X Y) w
         funext x
         apply Prod.ext
         · have h1 := congrFun (congrArg RecHom.toFun hf) x
-          simpa [RecHom.comp_toFun, recFst, recLift] using h1
+          simp only [RecHom.comp_toFun, recFst, Function.comp_apply] at h1
+          exact h1
         · have h2 := congrFun (congrArg RecHom.toFun hg) x
-          simpa [RecHom.comp_toFun, recSnd, recLift] using h2)
+          simp only [RecHom.comp_toFun, recSnd, Function.comp_apply] at h2
+          exact h2)
 
 instance recHasLimit_pair (X Y : RecObj.{u}) : HasLimit (pair X Y) :=
   HasLimit.mk (recBinaryLimitCone X Y)
@@ -172,6 +174,6 @@ theorem braiding_symmetric (X : RecObj.{u}) :
   apply RecHom.ext
   funext x
   cases x with
-  | mk a b => simp [recBraiding]
+  | mk a b => rfl
 
 end MUFPF

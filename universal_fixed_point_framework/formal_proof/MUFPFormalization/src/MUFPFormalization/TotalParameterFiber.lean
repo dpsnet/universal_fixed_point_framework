@@ -258,12 +258,12 @@ noncomputable def π_Param_cartesianLift : CartesianLiftData π_Param where
   lift {e} {b'} _f := { base := b', fiberData := { n := e.fiberData.n, A := e.fiberData.A } }
   lift_base _f := by simp [π_Param]
   cartesian_morphism {e} {b'} f := by exact f
-  cartesian_base _f := by simp [π_Param, eqToHom, Category.id_comp]
+  cartesian_base _f := by exact (Category.id_comp _f).symm
   cartesian_universal {e} {b'} f Z h w h_comp := by exact w
   cartesian_universal_prop {e} {b'} f Z h w h_comp := by
     change h = w ≫ f
     simpa [π_Param] using h_comp
-  cartesian_universal_base {e} {b'} f Z h w h_comp := by simp [π_Param, eqToHom, Category.comp_id]
+  cartesian_universal_base {e} {b'} f Z h w h_comp := by exact (Category.comp_id w).symm
 
 noncomputable instance π_Param_fibration : GrothendieckFibration π_Param :=
   { cartesianLiftData := π_Param_cartesianLift }

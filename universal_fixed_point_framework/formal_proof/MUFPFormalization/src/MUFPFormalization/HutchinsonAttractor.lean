@@ -99,9 +99,9 @@ theorem hutchinsonK_contracting (ifs : IFS X) (hn : 0 < ifs.n)
         ≤ (ifs.ratios i : ℝ≥0∞) * edist z w := (ifs.hContracting i).2 z w
       _ = (ifs.ratios i : ℝ≥0∞) * infEDist z (Q : Set X) := by rw [hzw']
       _ ≤ (ifs.ratios i : ℝ≥0∞) * hausdorffEDist (P : Set X) Q :=
-          mul_le_mul_left' h1 _
+          mul_le_mul_right h1 _
       _ ≤ (maxRatio ifs hn : ℝ≥0∞) * hausdorffEDist (P : Set X) Q :=
-          mul_le_mul_right'
+          mul_le_mul_left
             (ENNReal.coe_le_coe.mpr (ratio_le_maxRatio ifs hn i)) _
   -- edist on NonemptyCompacts = hausdorffEDist（实例定义）
   show hausdorffEDist (⋃ i : Fin ifs.n, (ifs.maps i) '' (A : Set X))

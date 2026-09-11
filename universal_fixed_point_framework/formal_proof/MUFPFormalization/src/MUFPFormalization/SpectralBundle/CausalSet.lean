@@ -166,7 +166,7 @@ noncomputable def RecObj_to_CausalStructure (X : RecObj) : CausalStructure where
   refl := fun x => ⟨0, rfl⟩
   trans := by
     intro x y z ⟨n, hn⟩ ⟨m, hm⟩
-    exact ⟨m + n, by rw [Function.iterate_add, hn, hm]⟩
+    exact ⟨m + n, by rw [Function.iterate_add_apply, hn, hm]⟩
   locally_finite := fun x => Set.toFinite _
 
 /-- RecObj → CausalStructure 保持事件数（测度）。
@@ -306,8 +306,8 @@ theorem zero_gravity_iff_trivial_causalStructure (X : RecObj) :
       by_contra hy
       have : defectMeasure X > 0 := defectMeasure_pos_of_eccentric X y hy
       rw [h_zero] at this
-      exact Nat.lt_asymm this
-    exact fixed_point_is_maximal X y (h_all_fixed x)
+      exact (Nat.lt_irrefl 0) this
+    exact fixed_point_is_maximal X x (h_all_fixed x)
   · intro h_all_max
     -- 所有元素是极大元 → 所有元素是不动点 → defectMeasure = 0
     have h_all_fixed : ∀ y, X.step y = y := fun y => maximal_is_fixed_point X y (h_all_max y)
@@ -332,7 +332,8 @@ theorem gravity_iff_nontrivial_causalStructure (X : RecObj) :
   · intro ⟨x, hx_not_max⟩
     -- x 不是极大元 → x 不是不动点 → defectMeasure > 0
     by_contra h_fixed
-    have h_max := fixed_point_is_maximal X x h_fixed
+    push_neg at h_fixed
+    have h_max := fixed_point_is_maximal X x (h_fixed x)
     exact hx_not_max h_max
 
 /-- 因果集商：将因果结构商化为标准因果集（偏序）。

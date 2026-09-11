@@ -341,7 +341,7 @@ theorem homSp_infinite :
 /-- Hom_Rec(X,X) ≃ (Fin 2 → Fin 2)：comm 平凡（step = id）。 -/
 noncomputable def recHomTrivialEquiv : RecHom trivial2 trivial2 ≃ (Fin 2 → Fin 2) where
   toFun f := f.toFun
-  invFun g := ⟨g, by intro x; simp [trivial2]⟩
+  invFun g := ⟨g, by intro x; show g x = g x; rfl⟩
   left_inv := by intro f; cases f; rfl
   right_inv := by intro g; rfl
 

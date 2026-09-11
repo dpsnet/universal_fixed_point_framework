@@ -442,8 +442,8 @@ theorem dagger_involution {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
     ——"R 折叠 = 相互作用哈密顿量"中哈密顿量厄米性的代数骨架
     （R = D† 假设下，厄米性对应 R 是 D 的 dagger-伴随）。 -/
 theorem jc_hermitian (g : ℝ) :
-    dagger (![![0, (g : ℂ)], ![(g : ℂ), 0]] : Matrix (Fin 2) (Fin 2) ℂ) =
-    (![![0, (g : ℂ)], ![(g : ℂ), 0]] : Matrix (Fin 2) (Fin 2) ℂ) := by
+    dagger (!![0, (g : ℂ); (g : ℂ), 0] : Matrix (Fin 2) (Fin 2) ℂ) =
+    (!![0, (g : ℂ); (g : ℂ), 0] : Matrix (Fin 2) (Fin 2) ℂ) := by
   ext i j
   fin_cases i <;> fin_cases j <;> simp [dagger]
 

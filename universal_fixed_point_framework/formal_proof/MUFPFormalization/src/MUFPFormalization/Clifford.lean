@@ -13,6 +13,8 @@
 -- ============================================================
 
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Mul
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Data.Complex.Basic
 
 namespace MUFPF
@@ -36,26 +38,25 @@ namespace MUFPF
 /-- Cl(0,1) 生成元（通用 Fin n 维度统一：`{n : ℕ} + hn : n = 2`）。
     当 n=2 时退化为标准 2×2 实反对称矩阵，平方 = −1（数学标准 q=1 负号）。 -/
 def e_01 {n : ℕ} (hn : n = 2) : Matrix (Fin n) (Fin n) ℝ := by
-  subst hn; exact ![![0, -1], ![1, 0]]
+  subst hn; exact !![0, -1; 1, 0]
 
 /-- Cl(1,0) 生成元（通用 Fin n 维度统一）。
     当 n=2 时退化为 2×2 实对角矩阵，平方 = +1（数学标准 p=1 正号）。 -/
 def e_10 {n : ℕ} (hn : n = 2) : Matrix (Fin n) (Fin n) ℝ := by
-  subst hn; exact ![![1, 0], ![0, -1]]
+  subst hn; exact !![1, 0; 0, -1]
 
 /-- First generator of Cl(2,0)（通用 Fin n 维度统一，2×2 复矩阵）。 -/
 def e1_20 {n : ℕ} (hn : n = 2) : Matrix (Fin n) (Fin n) ℂ := by
-  subst hn; exact ![![0, 1], ![1, 0]]
+  subst hn; exact !![0, 1; 1, 0]
 
 /-- Second generator of Cl(2,0)（通用 Fin n 维度统一，2×2 复矩阵）。 -/
 def e2_20 {n : ℕ} (hn : n = 2) : Matrix (Fin n) (Fin n) ℂ := by
-  subst hn; exact ![![0, -Complex.I], ![Complex.I, 0]]
+  subst hn; exact !![0, -Complex.I; Complex.I, 0]
 
-/-- 通用 Fin n 求和引理（阶段 4 Fin 类型统一）。
-    当 n=2 时：∑_{x : Fin n} f x = f 0 + f 1，衔接 Mathlib Finset.sum_fin_eq_sum_range。 -/
-lemma sum_fin_two {α : Type} [AddCommMonoid α] {n : ℕ} (hn : n = 2) (f : Fin n → α) :
-    ∑ x : Fin n, f x = f 0 + f 1 := by
-  subst hn
+/-- 通用 Fin 求和引理（阶段 4 Fin 类型统一）。
+    ∑_{x : Fin 2} f x = f 0 + f 1，衔接 Mathlib Finset.sum_fin_eq_sum_range。 -/
+lemma sum_fin_two {α : Type} [AddCommMonoid α] (f : Fin 2 → α) :
+    ∑ x : Fin 2, f x = f 0 + f 1 := by
   rw [Finset.sum_fin_eq_sum_range, Finset.sum_range_succ, Finset.sum_range_one]
   simp
 
@@ -63,32 +64,37 @@ lemma sum_fin_two {α : Type} [AddCommMonoid α] {n : ℕ} (hn : n = 2) (f : Fin
 theorem e_01_sq {n : ℕ} (hn : n = 2) : e_01 hn * e_01 hn = -1 := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e_01, Matrix.mul_apply, sum_fin_two rfl]
+  fin_cases i <;> fin_cases j <;>
+    simp [e_01, Matrix.mul_fin_two, Matrix.neg_apply, Matrix.one_apply]
 
 /-- Verification that e_10 (Cl(1,0)) squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e_10_sq {n : ℕ} (hn : n = 2) : e_10 hn * e_10 hn = 1 := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e_10, Matrix.mul_apply, sum_fin_two rfl]
+  fin_cases i <;> fin_cases j <;>
+    simp [e_10, Matrix.mul_fin_two, Matrix.neg_apply, Matrix.one_apply]
 
 /-- The two Cl(2,0) generators anticommute（通用 Fin n + hn:n=2 版本）。 -/
 theorem e_20_anticomm {n : ℕ} (hn : n = 2) :
     e1_20 hn * e2_20 hn = - (e2_20 hn * e1_20 hn) := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e1_20, e2_20, Matrix.mul_apply, sum_fin_two rfl]
+  fin_cases i <;> fin_cases j <;>
+    simp [e1_20, e2_20, Matrix.mul_fin_two, Matrix.neg_apply]
 
 /-- Verification that e1_20 squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e1_20_sq {n : ℕ} (hn : n = 2) : e1_20 hn * e1_20 hn = 1 := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e1_20, Matrix.mul_apply, sum_fin_two rfl]
+  fin_cases i <;> fin_cases j <;>
+    simp [e1_20, Matrix.mul_fin_two, Matrix.one_apply]
 
 /-- Verification that e2_20 squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e2_20_sq {n : ℕ} (hn : n = 2) : e2_20 hn * e2_20 hn = 1 := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [e2_20, Matrix.mul_apply, sum_fin_two rfl]
+  fin_cases i <;> fin_cases j <;>
+    simp [e2_20, Matrix.mul_fin_two, Matrix.one_apply]
 
 /-!
 ### Cl(1,7) Classification

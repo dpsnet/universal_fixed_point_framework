@@ -43,7 +43,7 @@ theorem orbitStabilizer {G X : Type} [Group G] [Fintype G] [DecidableEq G] [MulA
     [Fintype X] [DecidableEq X] (x : X) :
     Fintype.card (MulAction.orbit G x) * Fintype.card (MulAction.stabilizer G x) = Fintype.card G := by
   haveI := orbitFintype (G := G) (X := X) x
-  convert MulAction.card_orbit_mul_card_stabilizer_eq_card_group (α := G) (β := X) x
+  convert MulAction.card_orbit_mul_card_stabilizer_eq_card_group G x
 
 /-- A trivial symmetry of the orbit weight definition (commutativity). -/
 theorem orbitWeight_eq {G X : Type} [Group G] [Fintype G] [MulAction G X] [Fintype X]

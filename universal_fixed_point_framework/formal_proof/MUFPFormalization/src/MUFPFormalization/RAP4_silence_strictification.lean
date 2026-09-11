@@ -47,6 +47,7 @@ RAP 修复方案 §10–11 的形式化实现。
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.LinearAlgebra.Determinant
+import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Analysis.Matrix.Normed
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
@@ -156,16 +157,14 @@ theorem strict_implies_asymptotic {n : ℕ} (Df : Matrix (Fin n) (Fin n) ℝ)
 theorem asymptotic_not_implies_strict :
     ∃ (Df P : Matrix (Fin 2) (Fin 2) ℝ),
       NonzeroProjection P ∧ asymptoticSilence Df ∧ ¬strictSilence Df P := by
-  let Df : Matrix (Fin 2) (Fin 2) ℝ :=
-    fun i j => match i, j with | 0, 0 => 0 | 0, 1 => 1 | 1, 0 => 0 | 1, 1 => 0
-  let P : Matrix (Fin 2) (Fin 2) ℝ :=
-    fun i j => match i, j with | 0, 0 => 1 | 0, 1 => 0 | 1, 0 => 0 | 1, 1 => 0
+  let Df : Matrix (Fin 2) (Fin 2) ℝ := !![0, 1; 0, 0]
+  let P : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, 0]
   refine ⟨Df, P, ?_, ?_, ?_⟩
   · -- 证明 P 是非零投影
     refine {
       is_proj := {
         idempotent := by
-          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_apply]
+          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_fin_two]
         symmetric := by
           funext i j; fin_cases i <;> fin_cases j <;> simp [P]
       }
@@ -176,12 +175,12 @@ theorem asymptotic_not_implies_strict :
     }
   · -- Df 奇异：det = 0
     unfold asymptoticSilence isSingular
-    simp [Df, Matrix.det_fin_two]
+    norm_num [Df, Matrix.det_fin_two]
   · -- P·Df ≠ 0（非严格静默）
     unfold strictSilence
     intro hzero
     have h01 : (P * Df) 0 1 = 0 := by rw [hzero]; rfl
-    have hcalc : (P * Df) 0 1 = 1 := by norm_num [P, Df, Matrix.mul_apply]
+    have hcalc : (P * Df) 0 1 = 1 := by simp [P, Df, Matrix.mul_fin_two]
     rw [hcalc] at h01
     norm_num at h01
 
@@ -233,18 +232,15 @@ theorem silence_not_right_ideal :
   -- P = [[1,0],[0,0]], Df = [[0,0],[1,0]], Dg = [[0,1],[0,0]]
   -- P·Df = 0 ✓
   -- P·(Dg·Df) = P·([[0,1],[0,0]]·[[0,0],[1,0]]) = P·[[1,0],[0,0]] = [[1,0],[0,0]] ≠ 0
-  let Df : Matrix (Fin 2) (Fin 2) ℝ :=
-    fun i j => match i, j with | 0, 0 => 0 | 0, 1 => 0 | 1, 0 => 1 | 1, 1 => 0
-  let Dg : Matrix (Fin 2) (Fin 2) ℝ :=
-    fun i j => match i, j with | 0, 0 => 0 | 0, 1 => 1 | 1, 0 => 0 | 1, 1 => 0
-  let P : Matrix (Fin 2) (Fin 2) ℝ :=
-    fun i j => match i, j with | 0, 0 => 1 | 0, 1 => 0 | 1, 0 => 0 | 1, 1 => 0
+  let Df : Matrix (Fin 2) (Fin 2) ℝ := !![0, 0; 1, 0]
+  let Dg : Matrix (Fin 2) (Fin 2) ℝ := !![0, 1; 0, 0]
+  let P : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, 0]
   refine ⟨Df, Dg, P, ?_, ?_, ?_⟩
   · -- NonzeroProjection P
     refine {
       is_proj := {
         idempotent := by
-          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_apply]
+          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_fin_two]
         symmetric := by
           funext i j; fin_cases i <;> fin_cases j <;> simp [P]
       }
@@ -255,7 +251,7 @@ theorem silence_not_right_ideal :
     }
   · -- strictSilence Df P
     unfold strictSilence
-    funext i j; fin_cases i <;> fin_cases j <;> simp [P, Df, Matrix.mul_apply]
+    funext i j; fin_cases i <;> fin_cases j <;> simp [P, Df, Matrix.mul_fin_two]
   · -- ¬strictSilence (Dg * Df) P
     unfold strictSilence
     intro hzero
@@ -265,7 +261,7 @@ theorem silence_not_right_ideal :
     -- P·([[1,0],[0,0]]) = [[1,0],[0,0]]·[[1,0],[0,0]] = [[1,0],[0,0]]
     -- 所以 (P·(Dg·Df))[0,0] = 1
     have hcalc : (P * (Dg * Df)) 0 0 = 1 := by
-      norm_num [P, Dg, Df, Matrix.mul_apply]
+      simp [P, Dg, Df, Matrix.mul_fin_two]
     rw [hcalc] at h00
     norm_num at h00
 
@@ -288,8 +284,7 @@ noncomputable def visibility {m n : ℕ} (Df : Matrix (Fin m) (Fin n) ℝ)
   if h : Df = 0 then 0
   else (Matrix.frobeniusNorm (P * Df)) / (Matrix.frobeniusNorm Df)
 
-/-- 三级分层的类型定义。 -/
-/-- 静默严格性分级（strict/asymptotic/epsilon）。
+/-- 三级分层的类型定义：静默严格性分级（strict/asymptotic/epsilon）。
     注（2026-08-13 登记册⑧）：与 MultiSilenceMethodology `SilenceLayer`（S1-S4 数据表）
     及 BranchCounting `LayerIndex`（5 层层索引）**不同义**——本处为严格性分级，
     SilenceLayer 为静默层数据记录，LayerIndex 为 4-范畴态射层索引。近名不同义，
