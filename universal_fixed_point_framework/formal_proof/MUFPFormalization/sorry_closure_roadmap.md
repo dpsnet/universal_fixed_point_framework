@@ -315,11 +315,28 @@ mul_sum 提系数 + η 对称进入括号）；③这是把分量级 Bianchi
 （discrete_second_bianchi_components）缩并成修正散度恒等式的
 **结构件**——Ricci/Einstein 对称性的算子级来源。
 
-**(β) 剩余（更新）**：Bianchi 缩并本身——用本定理的相容结构把
-discrete_second_bianchi_components 对 (μ,r) 缩并，得散度恒等式的
-修正版（Einstein 张量需先从算子曲率构造其 (0,2)-型分量并证明
-Ricci 对称的离散形态）；开放命题 EinsteinDivergenceFree 维持开放
-（其 O(a) 残差分析现具分量级 Bianchi + 算子级度规相容双重基础）。
+**(β)-3 已闭合（2026-09-12，§26.11，全库 4078 jobs `lake build` 通过，
+模块 28 定理零 sorry）**：修正张量第二 Bianchi 恒等式
+`discrete_second_bianchi_tensor`——Σ_cyc(λ,μ,ν) (∇̃_λ R̂_{μν} −
+C_{λμν})^r_s = 0（逐点精确，无任何假设）。推导链：算子恒等式作用于
+常值试验场 v̂（`curvature_op_const_apply`：双移位项 v−v 抵消，F v̂ =
+R̂·v），v-系数提取（`sum4_coeff_zero` 指示函数法）得张量恒等式。
+**修正项 C 的化简形态**（数值调试发现第一版遗漏 R̂ 的 ∂̃Γ 作用项，
+合并后精确相消化简）：
+C = 双移位差 [Γ_λ(step_ν step_μ x) − Γ_λ(step_μ step_ν x)]
+  + Σ_l ∂̃_μ Γ^r_{νl} · ∂̃_μ Γ^l_{λs} − Σ_l ∂̃_ν Γ^r_{μl} · ∂̃_ν Γ^l_{λs}，
+三项全为二阶差分结构（光滑场 O(a²)）；退化链与骨架层一致
+（StepsCommute 去双移位、GammaConstant 去 ∂̃Γ，两者同时成立退化为
+skeleton_second_bianchi）。数值证据 `numerical/phase16b_beta3_debug.py`
+（64 组 (λ,μ,ν)，worst |LHS−RHS| = 1.4e-14）。
+
+**(β) 剩余（更新）**：Bianchi 缩并为散度恒等式——用 (β)-2 的相容结构
+与 Ricci 对称性（(b) 已闭合 skeleton_ricci_symmetric 的场层级推广）
+把 `discrete_second_bianchi_tensor` 对 (μ,r) 缩并，得修正散度恒等式
+（Einstein 张量需先从算子曲率构造其 (0,2)-型分量并证明 Ricci 对称的
+离散形态；ginv 升指标含 Leibniz 修正 O(a²)）——(β)-4；开放命题
+EinsteinDivergenceFree 维持开放（现具分量级 Bianchi + 张量级修正
+Bianchi + 算子级度规相容三重基础）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 

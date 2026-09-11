@@ -1143,4 +1143,130 @@ theorem covDiffOp_metric_compatible (F : FrameRecObj) (Γf : GammaField F)
           + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s))
       from by simp only [sum4_eq_finset_sum], hmain]
 
+-- ============================================================
+-- §26.11 方向 (β)-3：修正张量 Bianchi 恒等式（常值试验场限制）
+-- ============================================================
+-- (β)-1 的算子 Jacobi 恒等式作用于**常值试验场** v̂ = fun _ => v 时，
+-- 曲率算子退化为朴素曲率 R̂（含 ∂̃Γ 项，双移位项 v−v 逐点抵消），
+-- 按 v 线性提取系数给出 (1,1)-张量形态的**精确**第二 Bianchi：
+--   Σ_cyc(λ,μ,ν) (∇̃_lam R̂_{μν} − C_{λμν}) = 0，
+-- 其中 ∇̃_lam R̂_{μν} = ∂̃_lam R̂_{μν} + [Γ_λ, R̂_{μν}]（(1,1)-联络项），
+-- C_{λμν} = F_{μν} 作用于非常值场 Γ_λ·v 相对逐点矩阵作用的偏差：
+--   双移位 Γ_lam 差 + 移位点 ∂̃Γ·Γ_λ。
+-- 恒等式分解：D_lam(F_μν v̂) = (∂̃R̂)v + Γ_lam R̂ v（朴素展开），
+-- F_μν(D_lam v̂) = R̂_{μν}(Γ_lam v) + C·v，相减后 R̂Γ_λv 项精确抵消。
+-- 修正项全部携带 ∂̃Γ 或双移位因子——朴素张量 Bianchi（C ≡ 0 形态）
+-- 不精确成立，其残差的代数结构即 C。
+-- 数值对应：phase16b_discrete_bianchi.py 算子-分量差 ~2–3×|∂̃Γ·Γ|。
+
+/-- 朴素曲率（数值 riemann_full 的逐点形态）：
+    R̂^r_{sμν}(x) = ∂̃_μ Γ^r_{νs}(x) − ∂̃_ν Γ^r_{μs}(x)
+      + Σ_l (Γ^r_{μl} Γ^l_{νs} − Γ^r_{νl} Γ^l_{μs})(x)。
+    常值试验场上曲率算子的逐点矩阵（curvature_op_const_apply）。 -/
+def naiveCurv (F : FrameRecObj) (Γf : GammaField F) (x : F.X.T)
+    (r s μ ν : Fin 4) : ℝ :=
+  (Γf.γ (F.stepD μ x) r ν s - Γf.γ x r ν s)
+    - (Γf.γ (F.stepD ν x) r μ s - Γf.γ x r μ s)
+    + sum4 (fun l => Γf.γ x r μ l * Γf.γ x l ν s - Γf.γ x r ν l * Γf.γ x l μ s)
+
+/-- 朴素曲率的协变导数（(1,1)-型联络项）：
+    (∇̃_lam R̂_{μν})^r_s = ∂̃_lam R̂^r_{sμν} + Σ_a Γ^r_{λa} R̂^a_{sμν}
+      − Σ_a R̂^r_{aμν} Γ^a_{λs}。 -/
+def naiveNablaCurv (F : FrameRecObj) (Γf : GammaField F) (lam μ ν : Fin 4)
+    (x : F.X.T) (r s : Fin 4) : ℝ :=
+  (naiveCurv F Γf (F.stepD lam x) r s μ ν - naiveCurv F Γf x r s μ ν)
+    + sum4 (fun a => Γf.γ x r lam a * naiveCurv F Γf x a s μ ν)
+    - sum4 (fun a => naiveCurv F Γf x r a μ ν * Γf.γ x a lam s)
+
+/-- 修正项：F_{μν} 作用于非常值场 U = Γ_λ·v 相对逐点矩阵作用 R̂_μν·U 的
+    偏差（curvature_op_apply 前三项，U 的 v-系数），经 R̂Γ_λv 项精确抵消后
+    化简为纯二阶差分结构：
+    C_{λμν}^r_s = [Γ_lam(step_ν step_μ x) − Γ_lam(step_μ step_ν x)]^r_s   （双移位差）
+      + Σ_l ∂̃_μ Γ^r_{νl}(x) · ∂̃_μ Γ^l_{λs}(x)
+      − Σ_l ∂̃_ν Γ^r_{μl}(x) · ∂̃_ν Γ^l_{λs}(x)，
+    其中 ∂̃_μ Γ^r_{νl}(x) = Γ^r_{νl}(step_μ x) − Γ^r_{νl}(x)。
+    三项均为二阶差分结构（光滑场上 O(a²)）；step 对易假设下双移位差消失、
+    Γ 常值（GammaConstant）下 ∂̃Γ 项消失。 -/
+def bianchiCorr (F : FrameRecObj) (Γf : GammaField F) (lam μ ν : Fin 4)
+    (x : F.X.T) (r s : Fin 4) : ℝ :=
+  (Γf.γ (F.stepD ν (F.stepD μ x)) r lam s - Γf.γ (F.stepD μ (F.stepD ν x)) r lam s)
+    + sum4 (fun l =>
+        (Γf.γ (F.stepD μ x) r ν l - Γf.γ x r ν l) * (Γf.γ (F.stepD μ x) l lam s - Γf.γ x l lam s))
+    - sum4 (fun l =>
+        (Γf.γ (F.stepD ν x) r μ l - Γf.γ x r μ l) * (Γf.γ (F.stepD ν x) l lam s - Γf.γ x l lam s))
+
+/-- 常值试验场上的曲率算子 = 朴素曲率的逐点矩阵作用：
+    (F_{μν} v̂)(x) = Σ_s R̂^r_{sμν}(x) v^s（v̂ ≡ v 常值）。
+    证明：curvature_op_apply 代入常值场——双移位项 v−v 逐点抵消，
+    移位点取值 v̂(step) = v，余下恰为 R̂ 的三项（ring 配对）。 -/
+lemma curvature_op_const_apply (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (v : Fin 4 → ℝ) (x : F.X.T) (r : Fin 4) :
+    (curvatureOp F Γf μ ν) (fun _ => v) x r
+      = sum4 (fun s => naiveCurv F Γf x r s μ ν * v s) := by
+  rw [curvature_op_apply]
+  simp only [naiveCurv, sum4]
+  ring
+
+/-- 线性提取：∀ v, Σ_s B s * v s = 0 ⟹ B s₀ = 0
+    （取 v 为 s₀ 处 1 的指示函数，mul_ite 归约 + sum_ite_eq' 求值）。 -/
+lemma sum4_coeff_zero {B : Fin 4 → ℝ} (h : ∀ v : Fin 4 → ℝ, sum4 (fun s => B s * v s) = 0)
+    (s₀ : Fin 4) : B s₀ = 0 := by
+  have h' := h (fun i => if i = s₀ then (1:ℝ) else 0)
+  have e : sum4 (fun s => B s * (if s = s₀ then (1:ℝ) else 0)) = B s₀ := by
+    rw [sum4_eq_finset_sum]
+    have step : (∑ s : Fin 4, B s * (if s = s₀ then (1:ℝ) else 0))
+        = ∑ s : Fin 4, (if s = s₀ then B s else 0) :=
+      Finset.sum_congr rfl (fun s _ => by simp only [mul_ite, mul_one, mul_zero])
+    rw [step, Finset.sum_ite_eq', if_pos (Finset.mem_univ s₀)]
+  rw [e] at h'
+  exact h'
+
+set_option maxHeartbeats 1000000 in
+set_option maxRecDepth 32768 in
+/-- **修正张量第二 Bianchi 恒等式**（常值试验场限制的系数形态）：
+    算子 Jacobi 恒等式（discrete_second_bianchi_components）作用于常值场
+    v̂ = fun _ => v 给出 v-线性恒等式 Σ_s [Σ_cyc(∇̃R̂ − C)]^r_s v^s = 0；
+    按系数提取（sum4_coeff_zero）得 (1,1)-张量恒等式
+      Σ_cyc(λ,μ,ν) (∇̃_lam R̂_{μν} − C_{λμν})^r_s = 0（精确，无任何假设）。
+    物理含义：朴素张量 Bianchi（∇̃_lam R̂ 循环和 ≡ 0）在差分代数中不精确
+    成立——修正项 C（双移位 Γ_lam 差 + 移位点 ∂̃Γ·Γ_λ）是其残差的精确
+    代数结构；C 的各项携带 ∂̃Γ 或双移位因子，step 对易假设
+    （StepsCommute）下双移位项消失、Γ 常值（GammaConstant）下 ∂̃Γ 项
+    消失，此时恒等式退化为骨架层 skeleton_second_bianchi
+    （与 §26.6 的退化链一致）。
+    证明：两侧经 covDiffOp_apply / curvature_op_apply /
+    curvature_op_const_apply / hU（常值场的 D_lam v̂ = Γ_λ·v）展开为
+    v-多项式，ring 验证恒等（R̂Γ_λv 项在两侧精确抵消）。 -/
+theorem discrete_second_bianchi_tensor (F : FrameRecObj) (Γf : GammaField F)
+    (lam μ ν : Fin 4) (x : F.X.T) (r s₀ : Fin 4) :
+    ((naiveNablaCurv F Γf lam μ ν x r s₀ - bianchiCorr F Γf lam μ ν x r s₀)
+      + (naiveNablaCurv F Γf μ ν lam x r s₀ - bianchiCorr F Γf μ ν lam x r s₀)
+      + (naiveNablaCurv F Γf ν lam μ x r s₀ - bianchiCorr F Γf ν lam μ x r s₀)) = 0 := by
+  apply sum4_coeff_zero _ s₀
+  intro v
+  have hcomp := discrete_second_bianchi_components F Γf lam μ ν (fun _ => v) x r
+  -- 常值场上的协变差分：D_lam v̂ = Γ_λ·v（逐点）
+  have hU : ∀ (y : F.X.T) (rr : Fin 4),
+      (covDiffOp F Γf lam) (fun _ => v) y rr
+        = sum4 (fun l => Γf.γ y rr lam l * v l) := by
+    intro y rr
+    rw [covDiffOp_apply]
+    simp only [sum4]
+    ring
+  -- v-线性归约：两侧展开为同一 v-多项式
+  have e : sum4 (fun s =>
+        ((naiveNablaCurv F Γf lam μ ν x r s - bianchiCorr F Γf lam μ ν x r s)
+          + (naiveNablaCurv F Γf μ ν lam x r s - bianchiCorr F Γf μ ν lam x r s)
+          + (naiveNablaCurv F Γf ν lam μ x r s - bianchiCorr F Γf ν lam μ x r s)) * v s)
+      = ((covDiffOp F Γf lam) ((curvatureOp F Γf μ ν) (fun _ => v)) x r
+        - (curvatureOp F Γf μ ν) ((covDiffOp F Γf lam) (fun _ => v)) x r)
+        + ((covDiffOp F Γf μ) ((curvatureOp F Γf ν lam) (fun _ => v)) x r
+          - (curvatureOp F Γf ν lam) ((covDiffOp F Γf μ) (fun _ => v)) x r)
+        + ((covDiffOp F Γf ν) ((curvatureOp F Γf lam μ) (fun _ => v)) x r
+          - (curvatureOp F Γf lam μ) ((covDiffOp F Γf ν) (fun _ => v)) x r) := by
+    simp only [naiveNablaCurv, bianchiCorr, naiveCurv, sum4,
+      covDiffOp_apply, curvature_op_apply, curvature_op_const_apply, hU]
+    ring
+  rw [e, hcomp]
+
 end MUFPF
