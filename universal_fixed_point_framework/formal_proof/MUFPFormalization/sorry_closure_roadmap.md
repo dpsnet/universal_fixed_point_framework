@@ -167,9 +167,13 @@ Bianchi 不成立**（残差 ~2–3 × |∂̃Γ·Γ|，离散 Leibniz 修正 ∂
   + [Γ_μ,Γ_ν]·V(x)——与连续曲率逐项对应；修正项 O(a)，连续极限 a→0 消失
   （数值：分量式 |B|/|R| ∝ 1/n²，O(a²) 收敛）。
 
-**剩余里程碑**：(a) 算子 F_{μν} 与点值骨架 `riemannExplicit` 的桥接
-（常 Γ 场 + 对易 step 下 F 退化为乘以骨架曲率，可导出 second_bianchi_discrete
-的算子证明）；(b) 度规缩并：度量插入算子 + 离散度量相容假设下的缩并
+**剩余里程碑**：~~(a) 算子 F_{μν} 与点值骨架 `riemannExplicit` 的桥接~~
+**（a）已闭合（2026-09-11，§26.6）**：`curvature_op_constant_field`
+（常 Γ 场 `GammaConstant` + step 对易 ⟹ 曲率算子退化为骨架曲率
+`skeletonCurvature` 的逐点乘法）+ `skeleton_second_bianchi`
+（骨架层第二 Bianchi 自包含证明，无挠 + ring，与 SpectralMetric
+`second_bianchi_discrete` 同构）——算子主定理与点值骨架连接为同一结构的
+两个层级。剩余 (b) 度规缩并：度量插入算子 + 离散度量相容假设下的缩并
 Bianchi → 离散 Einstein 散度（预期为"主项 + O(a) 修正"形态，
 连续极限回到 ∇^μ G_μν = 0，开放命题 `EinsteinDivergenceFree` 的离散真值载体）。
 

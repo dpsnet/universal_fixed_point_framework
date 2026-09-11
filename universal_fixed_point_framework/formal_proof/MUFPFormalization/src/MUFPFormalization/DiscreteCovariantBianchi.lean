@@ -237,4 +237,74 @@ theorem curvature_op_apply_comm (F : FrameRecObj) (Γf : GammaField F)
             Γf.γ x r μ m * Γf.γ x m ν l - Γf.γ x r ν m * Γf.γ x m μ l) * V x l) := by
   rw [curvature_op_apply, h ν μ x, sub_self, zero_add]
 
+-- ============================================================
+-- §26.6 常 Γ 场桥接：算子曲率 ⟹ 点值骨架曲率
+-- ============================================================
+-- 里程碑 (a)（sorry_closure_roadmap.md §3.6 剩余里程碑）：
+-- 常 Γ 场（沿方向 step 不变）+ step 对易时，曲率算子退化为
+-- 骨架曲率的逐点乘法算子；骨架层第二 Bianchi 成立（无挠 + ring）。
+-- 这把 §26.4 的算子级主定理与 SpectralMetric.lean 的点值骨架
+-- second_bianchi_discrete 连接为同一结构的两个层级。
+
+/-- 逐点常值性：Γ 沿任意方向 step 不变。
+    物理含义：均匀联络（平移对称）——∂̃_ρ Γ = 0 的离散对应。 -/
+def GammaConstant (F : FrameRecObj) (Γf : GammaField F) : Prop :=
+  ∀ ρ (x : F.X.T) r m n, Γf.γ (F.stepD ρ x) r m n = Γf.γ x r m n
+
+/-- 骨架曲率（点值，riemannExplicit 的逐点形态）：
+    R̂^r_{sμν}(x) = Σ_l Γ^r_{μl}(x) Γ^l_{νs}(x) − Σ_l Γ^r_{νl}(x) Γ^l_{μs}(x)。
+    物理含义：丢弃 ∂̃ 项后的纯代数曲率核心——
+    常 Γ 场时与算子曲率重合（curvature_op_constant_field）。 -/
+def skeletonCurvature (F : FrameRecObj)
+    (γ : F.X.T → Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (x : F.X.T) (r s μ ν : Fin 4) : ℝ :=
+  sum4 (fun l => γ x r μ l * γ x l ν s) - sum4 (fun l => γ x r ν l * γ x l μ s)
+
+/-- 骨架联络作用（点值 connectionAction 的逐点形态）：
+    (connA_ρ T)^r_s = Σ_l Γ^r_{ρl} T^l_s − Σ_l Γ^l_{ρs} T^r_l。 -/
+def skeletonConnA (F : FrameRecObj)
+    (γ : F.X.T → Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (x : F.X.T) (ρ r s : Fin 4) (T : Fin 4 → Fin 4 → ℝ) : ℝ :=
+  sum4 (fun l => γ x r ρ l * T l s) - sum4 (fun l => γ x l ρ s * T r l)
+
+/-- 骨架第二 Bianchi 被积式：联络作用对 (ρ, μ, ν) 的循环和。 -/
+def skeletonSecondBianchi (F : FrameRecObj)
+    (γ : F.X.T → Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (x : F.X.T) (r s ρ μ ν : Fin 4) : ℝ :=
+  skeletonConnA F γ x ρ r s (fun a b => skeletonCurvature F γ x a b μ ν)
+    + skeletonConnA F γ x μ r s (fun a b => skeletonCurvature F γ x a b ν ρ)
+    + skeletonConnA F γ x ν r s (fun a b => skeletonCurvature F γ x a b ρ μ)
+
+/-- **桥接引理**：常 Γ 场 + step 对易 ⟹ 曲率算子 = 骨架曲率的逐点乘法：
+    (F_{μν} V)(x) = Σ_s R̂^r_{sμν}(x) V^s(x)。
+    物理含义：均匀联络下联络的曲率全部来自交换子项
+    （差分项 ∂̃Γ 与双移位修正均消失）——
+    算子层级（§26.4）退化为点值骨架层级。
+    证明：分量展开 + 常值性重写 + ring。 -/
+theorem curvature_op_constant_field (F : FrameRecObj) (Γf : GammaField F)
+    (h : StepsCommute F) (h_const : GammaConstant F Γf)
+    (μ ν : Fin 4) (V : VecField F) (x : F.X.T) (r : Fin 4) :
+    (curvatureOp F Γf μ ν) V x r =
+      sum4 (fun s => skeletonCurvature F Γf.γ x r s μ ν * V x s) := by
+  have hc : ∀ ρ (x : F.X.T) r m n, Γf.γ (F.stepD ρ x) r m n = Γf.γ x r m n := h_const
+  rw [curvature_op_apply_comm F Γf h μ ν V x r]
+  simp only [hc, sub_self, zero_mul, sum4, skeletonCurvature]
+  ring
+
+/-- **骨架层第二 Bianchi 恒等式**（无挠 + 乘法交换律）。
+    物理含义：点值骨架曲率的联络作用循环和为零
+      Σ_cyc(ρ,μ,ν) connA_ρ R̂_{μν} = 0
+    ——与 SpectralMetric.lean 的 second_bianchi_discrete 同构
+    （自包含证明，不依赖 SpectralMetric 导入）。
+    这是主定理 discrete_second_bianchi_operator 在
+    常 Γ 场 + 对易 step 下的点值投影：
+    算子 Jacobi 恒等式退化为骨架的代数自洽性。
+    证明：sum4 展开 + 无挠性 + ring_nf（~48 个三次单项式两两抵消）。 -/
+theorem skeleton_second_bianchi (F : FrameRecObj) (Γf : GammaField F)
+    (x : F.X.T) (r s ρ μ ν : Fin 4) :
+    skeletonSecondBianchi F Γf.γ x r s ρ μ ν = 0 := by
+  simp only [skeletonSecondBianchi, skeletonConnA, skeletonCurvature, sum4,
+    Γf.torsion_free]
+  ring_nf
+
 end MUFPF
