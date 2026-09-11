@@ -147,11 +147,46 @@ theorem einstein_divergence_free_from_bianchi (Γ : ChristoffelSymbol)
 **真值路径（未来工作，Phase 16B+）**：沿 RecObj step 的有限差分导数
 （张量场在递归系统上的逐点差分 ∂̃_ρ T(x) := T(step_ρ x) − T(x)），
 重建带 ∂ 项的离散第二 Bianchi，其缩并给出真正的协变守恒律。
-这是框架级扩展，非本文件内可完成。
+
+**真值路径第一步已闭合（2026-09-11 晚，算子形式）**：
+`DiscreteCovariantBianchi.lean`（§26，新模块，5 定理零 sorry，全库 3687 jobs
+`lake build` 通过）。关键转折：数值预实验
+（`numerical/phase16b_discrete_bianchi.py`）表明**朴素分量式含 ∂̃ 的离散第二
+Bianchi 不成立**（残差 ~2–3 × |∂̃Γ·Γ|，离散 Leibniz 修正 ∂̃(AB)=∂̃A·B+A·∂̃B+
+∂̃A·∂̃B 不可忽略），但**算子形式无条件精确成立**（与格点规范论同构）：
+
+- `FrameRecObj`（RecObj + 四方向 stepD）+ `GammaField`（逐点无挠 Christoffel 场）；
+- 协变差分算子 `covDiffOp D_ρ = S_ρ + A_ρ − 1`（场空间 `VecField F` 自同态，
+  `Module.End` 环，乘法 = 复合）；
+- **主定理 `discrete_second_bianchi_operator`**：
+  Σ_cyc(ρ,μ,ν) [D_ρ, F_{μν}] = 0，其中 F_{μν} = [D_μ, D_ν]——
+  Jacobi 恒等式（`end_jacobi_cyclic`），**无任何假设**（无挠/对易/度量相容均不必需）；
+- `shiftOp_commute`（step 对易 ⟹ 移位算子交换）；
+- `curvature_op_apply` / `curvature_op_apply_comm`：曲率算子分量展开
+  = 双移位修正项（对易假设下消失）+ ∂̃_μΓ_ν·V(stepD μ x) − ∂̃_νΓ_μ·V(stepD ν x)
+  + [Γ_μ,Γ_ν]·V(x)——与连续曲率逐项对应；修正项 O(a)，连续极限 a→0 消失
+  （数值：分量式 |B|/|R| ∝ 1/n²，O(a²) 收敛）。
+
+**剩余里程碑**：(a) 算子 F_{μν} 与点值骨架 `riemannExplicit` 的桥接
+（常 Γ 场 + 对易 step 下 F 退化为乘以骨架曲率，可导出 second_bianchi_discrete
+的算子证明）；(b) 度规缩并：度量插入算子 + 离散度量相容假设下的缩并
+Bianchi → 离散 Einstein 散度（预期为"主项 + O(a) 修正"形态，
+连续极限回到 ∇^μ G_μν = 0，开放命题 `EinsteinDivergenceFree` 的离散真值载体）。
+
+**既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
+
+| 层级 | 文档 | 与本路径的关系 |
+|:-----|:-----|:---------------|
+| 骨架（已机器证明） | paper54 §7（`connectionAction` / `second_bianchi_discrete` / `SecondBianchiIdentity` / `energy_momentum_conservation`）+ notes/04 `phase69_spectral_metric_origin` §3.3 | 不带 ∂ 项的离散第二 Bianchi 骨架已建成；paper54 §7.1"缩并得到 ∇^μ G_μν = 0"的断言即本 §3.6 证伪对象，paper54 已同步修订 |
+| 离散微分技术先例（已机器证明） | paper44 曲率层（结构方程 Ω=dω+ω∧ω、Bianchi dΩ+[ω,Ω]=0、挠率反对称，Lean 零 sorry + 14/14 数值） | 库里唯一"离散外微分 + Bianchi"机器证明先例；sum4 显式求和技术可直接迁移 |
+| 谱侧目标陈述（表述层） | paper16 主定理 22；notes/04 `spectral_lorentz_curved_spacetime` 命题 3.3 / 定理 C | 谱形式 Bianchi ⟺ 能动量守恒的目标陈述 |
+| 离散导数算子概念近邻 | notes/00 `spec_infinity_prelim` §离散 Laplace/Toeplitz | 离散导数算子的最近邻概念，非 RecObj step 语义 |
+| 连续极限（无微分算子） | paper34 + `ContinuumLimit.lean` | 嵌入层连续极限（Hölder/拟弧/谱流保持），不含导数重建 |
+| 空白确认（已填补） | 方向化 step 曾全库仅命中本文件（2026-09-11 查证）；paper37 开放问题清单未登记本缺口 | ∂̃_ρ 方向化差分导数已在 `DiscreteCovariantBianchi.lean` 首次实现；paper37 待补登记 |
 
 ### 3.7 验证标准（已达成）
 
-- [x] `lake build MUFPFormalization` 全库 0 error（3686 jobs）
+- [x] `lake build MUFPFormalization` 全库 0 error（3687 jobs，含 2026-09-11 新增 DiscreteCovariantBianchi 模块）
 - [x] 剥离注释后全库 sorry 计数 = 0
 - [x] 假定理证伪记录保留（本文件 + Lean 源 docstring 双登记）
 

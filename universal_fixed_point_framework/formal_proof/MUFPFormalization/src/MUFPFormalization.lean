@@ -37,6 +37,7 @@ import MUFPFormalization.Silence
 import MUFPFormalization.LeaverComplexity
 import MUFPFormalization.ErgodicTheory
 import MUFPFormalization.DomainExtension
+import MUFPFormalization.DiscreteCovariantBianchi
 import MUFPFormalization.IFSFractal
 import MUFPFormalization.ThermoFormalism
 import MUFPFormalization.DynSys

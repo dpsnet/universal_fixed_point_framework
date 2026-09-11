@@ -6,17 +6,17 @@
 
 **编号**：MUFPF-LIV
 
-**版本**：v1.1（2026-09-10）
+**版本**：v1.2（2026-09-11；v1.1 为 2026-09-10）
 
 **Phase**：Phase 69.6–69.7（谱→度规严格映射 + 黎曼曲率 + Einstein 方程）
 
-**状态**：自包含论文（定义/定理/证明完整；1 个计算量瓶颈 sorry（`einstein_divergence_free_from_bianchi`，256 个单项式超出 `ring` 处理能力），不影响核心物理推导链逻辑闭环）
+**状态**：自包含论文草稿（定义/定理/证明完整；v1.2 修订：原 v1.1 声明的"计算量瓶颈 sorry"（`einstein_divergence_free_from_bianchi`）经数值检验**证伪**——该恒等式本身为假，非计算瓶颈——已从 Lean 库删除并登记为开放命题 `EinsteinDivergenceFree`；本文 §7.1/§11.4/§11.5 已同步修订，证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6）
 
 **形式化**：[`SpectralMetric.lean`](../formal_proof/MUFPFormalization/src/MUFPFormalization/SpectralMetric.lean)（§25.0–§25.18，819 行，42 个定义/定理，`lake build` 通过）
 
 **依赖论文**：Paper XXXV（Δ 的结构常数地位与引力的范畴论起源）、Paper XXXI（偏差代数与 G_N 闭式）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXII（Cl(1,3) 谱静默与四维时空涌现）
 
-**摘要**：本文建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射，分七个层级（L0→L6）逐步构造。核心结论：该映射是数学等价（iff），而非语义诠释——`curvature_positive_iff_structural_defect` 证明 R > 0 ⟺ 结构性缺陷存在；但 Δ 与 R_μν 属于不同的存在论层级——Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过涌现等价连接。本文同时证明：第一 Bianchi 恒等式（`first_bianchi`，sum4 桥接 + ring 闭合）、Ricci 张量对称性（`ricciFromChristoffel.symmetric`，sum4 桥接 + ring 闭合）、离散第二 Bianchi 恒等式（`second_bianchi_discrete`，完整证明）、能动量守恒（`energy_momentum_conservation`，完整证明）、谱作用量原理在真空极限下回到 Einstein-Hilbert 作用量（`vacuum_einstein_from_spectral_action`，完整证明）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi → 能动量守恒 → 真空 Einstein）零 sorry 闭环，仅 `einstein_divergence_free_from_bianchi` 的 256 单项式缩并步骤因 `ring` 计算能力限制暂留计算量瓶颈。
+**摘要**：本文建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射，分七个层级（L0→L6）逐步构造。核心结论：该映射是数学等价（iff），而非语义诠释——`curvature_positive_iff_structural_defect` 证明 R > 0 ⟺ 结构性缺陷存在；但 Δ 与 R_μν 属于不同的存在论层级——Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过涌现等价连接。本文同时证明：第一 Bianchi 恒等式（`first_bianchi`，sum4 桥接 + ring 闭合）、Ricci 张量对称性（`ricciFromChristoffel.symmetric`，sum4 桥接 + ring 闭合）、离散第二 Bianchi 恒等式（`second_bianchi_discrete`，完整证明）、能动量守恒（`energy_momentum_conservation`，条件式完整证明）、谱作用量原理在真空极限下回到 Einstein-Hilbert 作用量（`vacuum_einstein_from_spectral_action`，完整证明）。**v1.2 重要修订**：v1.1 曾声明"对离散 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"（`einstein_divergence_free_from_bianchi`）仅为计算量瓶颈；2026-09-11 的数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）**证伪了该恒等式本身**——点值代数骨架丢弃全部偏导数 ∂ 项后，守恒律的载体不复存在，且原式的普通指标求和不是协变表述。该假定理已从 Lean 库删除，`EinsteinDivergenceFree` 登记为开放命题（不 axiomatize），真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。带 ∂ 项的离散第二 Bianchi 重建（沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)）列为未来工作（Phase 16B+，§11.5）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。
 
 ---
 
@@ -358,9 +358,9 @@ $$\forall r\, s\, \rho\, m\, n, \quad \text{discreteSecondBianchi}\;\Gamma\;r\;s
 
 **物理含义**：离散第二 Bianchi 恒等式是连续 Bianchi 恒等式在丢弃偏导数项后的纯代数核心。它不依赖于流形结构或协变导数的连续定义，仅依赖于 Christoffel 符号的无挠性和乘法交换律——这是范畴层面（Rec/Sp 结构）的代数自洽性在几何层面的投影。
 
-**技术注记：sum4 桥接方法**。上述所有代数恒等式的 Lean4 证明均依赖于一种统一的技术方案：用 `sum4 f = f 0 + f 1 + f 2 + f 3`（Fin 4 显式求和）替代 `∑ i : Fin 4, f i`（Finset.sum），使 `ring` 策略能直接处理多项式恒等式。桥接引理 `sum4_eq_finset_sum` 将 sum4 结果转换回 Finset.sum 形式。这一方法已成功闭合三个关键定理：Riemann 反对称性（`antisym_munu`，abel 策略）、第一 Bianchi 恒等式（`firstBianchiExplicit`，ring 策略）和 Ricci 张量对称性（`ricciExplicit_symm`，ring 策略），将 SpectralMetric.lean 的 sorry 计数从 4 降至 1。剩余唯一瓶颈 `einstein_divergence_free_from_bianchi` 涉及 256 个单项式的 `scalarCurvature` 展开，超出当前 `ring` 策略的处理能力——这是纯计算量瓶颈，非逻辑缺口。
+**技术注记：sum4 桥接方法**。上述所有代数恒等式的 Lean4 证明均依赖于一种统一的技术方案：用 `sum4 f = f 0 + f 1 + f 2 + f 3`（Fin 4 显式求和）替代 `∑ i : Fin 4, f i`（Finset.sum），使 `ring` 策略能直接处理多项式恒等式。桥接引理 `sum4_eq_finset_sum` 将 sum4 结果转换回 Finset.sum 形式。这一方法已成功闭合三个关键定理：Riemann 反对称性（`antisym_munu`，abel 策略）、第一 Bianchi 恒等式（`firstBianchiExplicit`，ring 策略）和 Ricci 张量对称性（`ricciExplicit_symm`，ring 策略），将 SpectralMetric.lean 的 sorry 计数从 4 降至 1。剩余唯一瓶颈 `einstein_divergence_free_from_bianchi` 曾涉及 256 个单项式的 `scalarCurvature` 展开，超出 `ring` 策略的处理能力。**v1.2 修订**：该"瓶颈"经数值检验证伪为**逻辑缺口**（恒等式本身为假，§7.1 缩并形式段与 §11.5），非计算量问题——sum4 桥接技术本身仍然有效，并将是 Phase 16B+ 差分导数重建的证明工具。
 
-缩并形式（`SecondBianchiIdentity`）：对离散 Bianchi 的指标求和得到 Einstein 张量散度为零 ∇^μ G_μν = 0。
+缩并形式（`SecondBianchiIdentity`）登记为**开放命题**（v1.2 修订）：连续理论中"对第二 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"的标准推导，在点值代数骨架中**不成立**——2026-09-11 数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）证伪了下述三类候选恒等式：原式 `Σ_m G_mn = 0`、联络项保留的协变散度版 `Σ_m ∇̃_m G_mn = 0`、收缩 Bianchi 骨架版 `Σ_m ∇̃_m Ric_mn = 0`。根源诊断：连续证明必须**同时使用** ∂ 项与 Γ 项（经度量相容性提升指标后联合抵消）；骨架丢弃全部 ∂ 项后守恒律的载体不复存在，且普通指标求和本身不是协变表述。处置：v1.1 的假定理 `einstein_divergence_free_from_bianchi` 已从 Lean 库删除，`EinsteinDivergenceFree (Γ g)` 登记为开放命题（不断言、不 axiomatize）；真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。**真值路径**（Phase 16B+，§11.5）：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi，其缩并方可给出真正的协变守恒律。证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
 ### 7.2 能动量守恒定理
 
@@ -375,7 +375,7 @@ $$\forall n, \sum_m T_{mn} = 0$$
 3. 代入：∑_m 8π T_mn = 0
 4. 8π ≠ 0（由 Real.pi_pos），故 ∑_m T_mn = 0 □
 
-**物理含义**：能动量守恒不是额外假设，而是 Einstein 场方程 + Bianchi 恒等式的自动推论。在 MUFPF 框架中：结构性缺陷的几何分布（Einstein 张量）↔ 能量分布（T_μν），由 Bianchi 恒等式自动保证守恒。
+**物理含义**：本定理是**条件式**推导：若能动量守恒的载体（带 ∂ 项的第二 Bianchi 缩并，即开放命题 `EinsteinDivergenceFree`，见 §7.1 v1.2 修订）成立，则 `∑_m T_mn = 0` 是 Einstein 场方程的自动推论而非额外假设。在 MUFPF 框架中：结构性缺陷的几何分布（Einstein 张量）↔ 能量分布（T_μν），由 Bianchi 恒等式自动保证守恒。
 
 ### 7.3 BianchiEinsteinConservation 结构
 
@@ -552,7 +552,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 2. **存在论不对称**：Δ 是前几何的结构常数，R_μν 是后几何的张量场。两者通过涌现映射连接，但不属于同一存在论层级。
 
-3. **能动量守恒**：`energy_momentum_conservation` 从 Bianchi 恒等式 + Einstein 场方程推导能动量守恒（已完整证明）。
+3. **条件式能动量守恒**：`energy_momentum_conservation` 证明：以第二 Bianchi 缩并（开放命题 `EinsteinDivergenceFree`）为前提，Einstein 场方程自动给出 `∑_m T_mn = 0`（条件式完整证明，v1.2 修订标注）；该前提自身的真值路径为 §11.5 的 Phase 16B+ 差分导数重建。
 
 4. **谱作用量**：`vacuum_einstein_from_spectral_action` 证明真空 Einstein 方程从谱作用量导出（已完整证明）。
 
@@ -574,15 +574,18 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 | 真空 Bianchi 散度 | `vacuumBianchiEinstein.einstein_divergence_free` | ✅ |
 | 能动量守恒 | `energy_momentum_conservation` | ✅ |
 | 真空 Einstein | `vacuum_einstein_from_spectral_action` | ✅ |
-| Einstein 散度为零 | `einstein_divergence_free_from_bianchi` | 🔶 sorry |
+| Einstein 散度为零 | `EinsteinDivergenceFree`（开放命题，登记） | 🔶 证伪处置 |
+| 真空 Einstein 散度 | `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0） | ✅ |
 
-**统计**：13 个定理中 12 个已完整证明（✅），1 个计算量瓶颈 sorry（🔶）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi → 能动量守恒 → 真空 Einstein）零 sorry 闭环。
+**统计**（v1.2）：14 个定理/命题中 12 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`，真值路径见 §11.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪并从 Lean 库删除（v1.1 曾误判为计算量瓶颈 sorry，全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效；真协变守恒律（非真空、非条件式）依赖 §11.5 的 Phase 16B+ 差分导数重建。
 
 ### 11.5 技术局限性与开放问题
 
-剩余 1 个 sorry 在 `einstein_divergence_free_from_bianchi` 中：从第二 Bianchi 恒等式缩并到 Einstein 张量散度为零的证明，涉及 `scalarCurvature` 展开后 g_mn × Ric_mn = 256 个单项式的代数恒等式验证，当前 `ring` 策略无法在合理时间内处理此规模的多项式。这是纯计算量瓶颈，非逻辑缺口——桥接基础设施（`sum4 ↔ Finset.sum`）已完备，离散第二 Bianchi 恒等式（`second_bianchi_discrete`）已完整证明，核心物理推导链（第一 Bianchi → 离散第二 Bianchi → 能动量守恒 → 真空 Einstein）零 sorry 闭环。
+**v1.1 → v1.2 修订：从"计算量瓶颈"到"证伪与真值路径"。** v1.1 声明唯一剩余 sorry `einstein_divergence_free_from_bianchi`（256 单项式 `ring` 计算瓶颈）。2026-09-11 的数值检验（每类 ≥6 组独立随机样本）表明该恒等式**本身为假**（残差 10⁰–10²），非计算瓶颈：连续理论中 ∇^μ G_μν = 0 的证明必须同时使用 ∂ 项与 Γ 项联合抵消，而点值代数骨架丢弃全部 ∂ 项后，守恒律的载体不复存在；且原式的普通指标求和不是协变表述。已实施处置（SpectralMetric.lean）：删除假定理与依赖它的 `secondBianchiFromDiscrete`；`EinsteinDivergenceFree (Γ g)` 登记为开放命题（不 axiomatize——普遍量化假命题与可判定反例并存将导致不一致）；新增真定理 `einstein_divergence_free_vacuum`。下游 `energy_momentum_conservation` / `BianchiEinsteinConservation` / `vacuumBianchiEinstein` 均为条件式或真空构造，不受证伪影响。证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
-其余开放问题：
+开放问题：
+
+0. **带 ∂ 项的离散第二 Bianchi 重建（Phase 16B+，真值路径）**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)（张量场在递归系统上的逐点差分），重建含 ∂ 项的离散第二 Bianchi，其缩并给出真正的协变守恒律。既有基础（2026-09-11 全库查证，索引见 `sorry_closure_roadmap.md` §3.6）：不带 ∂ 项的骨架 `second_bianchi_discrete`（本文 §7.1）已机器证明；库里唯一"离散外微分 + Bianchi"机器证明先例为 Paper XLIV 曲率层（结构方程 Ω=dω+ω∧ω、Bianchi dΩ+[ω,Ω]=0，零 sorry + 14/14 数值），其 sum4 显式求和技术可直接迁移；谱侧目标陈述为 Paper XVI 主定理 22（Bianchi 的谱形式 ⟺ 能动量守恒）。**第一步已闭合（2026-09-11 晚，`DiscreteCovariantBianchi.lean`，5 定理零 sorry）**：数值预实验表明朴素分量式不成立（离散 Leibniz 修正不可忽略），但算子形式无条件精确——协变差分 D_ρ = 移位 + 规范作用 − 1 视为场空间自同态，曲率 F_{μν} = [D_μ, D_ν]，第二 Bianchi = 算子 Jacobi 恒等式 Σ_cyc [D_ρ, F_{μν}] = 0（主定理 `discrete_second_bianchi_operator`，无需无挠/对易/度量相容任何假设）；分量展开显示与连续曲率逐项对应，修正项 O(a) 连续极限消失（|B|/|R| ∝ 1/n² 数值验证）。**剩余**：(a) 算子曲率与本文骨架 `riemannExplicit` 的常 Γ 场桥接；(b) 度规缩并（离散度量相容假设下导出 Einstein 散度的"主项 + O(a) 修正"形态，开放命题 `EinsteinDivergenceFree` 的离散真值载体）。
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。
