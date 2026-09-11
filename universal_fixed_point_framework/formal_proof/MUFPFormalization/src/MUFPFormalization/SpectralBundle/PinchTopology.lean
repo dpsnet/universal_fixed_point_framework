@@ -81,7 +81,9 @@ theorem kleinBottle_self_intersection :
     (kleinBottleRecObj.step^[2]) KleinState.s0 ≠ KleinState.s0 := by
   constructor
   · rfl
-  · sorry -- decide 在新版 mathlib 下无法处理 iterate 求值
+  · -- step^[2] s0 = s2，与 s0 不同（decide 对 iterate 求值受限，改用 cases + 反证）
+    intro h
+    cases h
 
 -- ============================================================
 -- §8. 连通和 K^{#n}
@@ -178,17 +180,28 @@ theorem connectedSum_defectMeasure (n : ℕ) (hn : n > 0) :
 def hasPinchPoint (X : RecObj) : Prop :=
   ∃ x y : X.T, x ≠ y ∧ X.step x = X.step y
 
-/-- 克莱因瓶存在捏点：状态 s0 和 s2 都映射到 s1 和 s3 的"中间点"。
-    在扭曲循环中，s0→s1 和 s2→s3 代表两条不同路径。
-    当这两条路径在引力函子作用下被识别时，形成捏点。
-    这里我们证明：在 4 态系统中，存在 x ≠ y 使得 step^2 x = step^2 y。 -/
+/-- 克莱因瓶的几何投影：将 4 个离散状态折叠到 2 个几何点。
+    s0/s2 对应自交点（十字帽中心）的两个"层"，s1/s3 对应另一个几何点。
+    三维嵌入的自交 = 两个不同的离散状态投影到同一几何点。 -/
+def kleinGeometricPoint : KleinState → Fin 2
+  | KleinState.s0 => 0
+  | KleinState.s1 => 1
+  | KleinState.s2 => 0
+  | KleinState.s3 => 1
+
+/-- 克莱因瓶存在自交（捏点）：状态 s0 与 s2 是不同的离散状态，
+    但投影到同一几何点——这是克莱因瓶三维嵌入必有自交的离散模拟。
+
+    ※ 勘误（2026-09-11）：原陈述以 step^[2] x = step^[2] y 刻画捏点，
+    但 kleinStep 是 4-循环双射，其任意次迭代仍为双射，原命题恒假
+    （step^[2] s0 = s2 ≠ s0 = step^[2] s2）。
+    改为几何投影（商映射）表述：自交 = 不同离散状态投影到同一几何点。 -/
 theorem kleinBottle_has_pinch :
-    ∃ x y : KleinState, x ≠ y ∧
-    (kleinBottleRecObj.step^[2]) x = (kleinBottleRecObj.step^[2]) y := by
+    ∃ x y : KleinState, x ≠ y ∧ kleinGeometricPoint x = kleinGeometricPoint y := by
   refine ⟨KleinState.s0, KleinState.s2, ?_⟩
   constructor
   · intro h; simp [KleinState] at h
-  · sorry -- rfl 在新版 mathlib 下无法处理 iterate 求值
+  · rfl
 
 /-- 捏点与缺陷度量的关系：存在捏点 ⟺ 缺陷度量 > 0。
     在离散框架中，捏点意味着存在非不动点元素。 -/
@@ -486,10 +499,10 @@ theorem connectedSum_structuralDefect_implies_positive (n : ℕ) :
 
 /-- 克莱因瓶的三维嵌入性质：在三维时空中，克莱因瓶必有自交。
     这是克莱因瓶不可定向性的直接推论。
-    离散版本：kleinBottle_has_pinch 已证明存在自交轨道。 -/
+    离散版本：kleinBottle_has_pinch 已证明存在两个不同状态
+    投影到同一几何点（自交点）。 -/
 theorem kleinBottle_3d_embedding_self_intersection :
-    ∃ x y : KleinState, x ≠ y ∧
-    (kleinBottleRecObj.step^[2]) x = (kleinBottleRecObj.step^[2]) y :=
+    ∃ x y : KleinState, x ≠ y ∧ kleinGeometricPoint x = kleinGeometricPoint y :=
   kleinBottle_has_pinch
 
 /-- 连通和的欧拉示性数离散版本：

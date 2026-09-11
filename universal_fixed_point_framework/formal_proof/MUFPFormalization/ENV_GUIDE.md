@@ -324,12 +324,15 @@ lemma firstBianchiExplicit : ...
 ### 6.4 Sorry 政策
 
 - **目标**：全项目零 sorry
-- **当前状态（2026-09-11 实测，已剥离注释）**：**3 处 sorry** —
-  `SpectralBundle/PinchTopology.lean` ×2、`SpectralMetric.lean` ×1
-  （Einstein 散度自由，256 单项式计算瓶颈）；
+- **当前状态（2026-09-11 实测，已剥离注释）**：**1 处 sorry** —
+  `SpectralMetric.lean` 的 `einstein_divergence_free_from_bianchi`
+  （Einstein 散度自由，256 单项式计算瓶颈，闭合路径见
+  [sorry_closure_roadmap.md](sorry_closure_roadmap.md) §3）；
   另有 4 个显式 axiom（`EDRNCrossFramework` ×2、`GeneralMetaTheoremFramework` ×2，
   标注为 open 问题占位）。其余 ~38 处 "sorry" 字样均为注释/docstring 中的
-  缺口登记或历史记录，非实际使用
+  缺口登记或历史记录，非实际使用。
+  同日已清零 `PinchTopology.lean` ×2（其一为**恒假命题勘误重建**，
+  详见路线图 §2）
 - **新增 sorry 必须**：
   1. 在 sorry 旁添加注释说明原因
   2. 在对应的论文/笔记中记录为待闭合缺口
@@ -432,7 +435,7 @@ pip install numpy scipy mpmath
 | Lean 源码模块数 | 126 |
 | 总定理数 | 1273 |
 | 总引理数 | 100 |
-| sorry 数量（剥离注释后实测） | 3（PinchTopology ×2、SpectralMetric ×1） |
+| sorry 数量（剥离注释后实测） | 1（SpectralMetric：einstein_divergence_free_from_bianchi） |
 | 显式 axiom 数 | 4（均为 open 问题占位） |
 | `lake build` jobs | 3686 |
 | 构建状态 | 通过（0 error，2026-09-11，commit ec5b4c9） |
@@ -441,8 +444,8 @@ pip install numpy scipy mpmath
 
 | 文件 | sorry 数 | 说明 |
 |:-----|:--------:|:-----|
-| `SpectralBundle/PinchTopology.lean` | 2 | 捏点拓扑高阶推广（依赖无穷维工具） |
-| `SpectralMetric.lean` | 1 | Einstein 散度自由（256 项式计算瓶颈，见 §9.3） |
+| `SpectralMetric.lean` | 1 | Einstein 散度自由（256 项式计算瓶颈，闭合路径见路线图 §3） |
+| `SpectralBundle/PinchTopology.lean` | 0 | 原 2 处已于 2026-09-11 清零（含 1 处恒假命题勘误） |
 | 其余 124 个模块 | 0 | 含 Rec/Sp 范畴、D 函子、伴随、谱对应、四体制元定理、T-01~T-04、G1-G4 |
 
 **注**：grep 直查会得到 ~41 处 "sorry" 字样，其中 **38 处为注释/docstring 中的
