@@ -198,11 +198,37 @@ O(a²) 高一阶的离散化 artifact——场层级不存在恒等式，开放�
   需显式 `f :=` 实例，且 `if r = r` 对自由变量不可定义归约，须保留
   if-形式经 calc 闭合）。
 
-剩余 (b) 主定理：`skeleton_einstein_divergence_free`（常值 + 无挠 + 相容
-⟹ 骨架 Einstein 散度恒零；分解设计：E = −K − J + R-项，R-项经相容抵消，
-Ricci 项经骨架第二 Bianchi 缩并）+ `discrete_christoffel_metric_compatible`
-（离散 Christoffel 公式的逐点相容，纯代数环恒等式）——开放命题
-`EinsteinDivergenceFree` 的离散真值载体。
+**(b)+ 续（2026-09-11 下午）——两个新闭合 + 主定理陈述被证伪（真空化）**：
+
+- `sum4_ite_eq'` / `contraction_g_ginv`：δ-求值与 g–ginv 交换序缩并
+  （`Finset.sum_eq_single` 显式 f 实例 + calc 闭合 if 形式）；
+- **`discrete_christoffel_metric_compatible`（已闭合，一次通过）**：
+  ∂̃_ρ g_{μν} = Σ_a(g_{μa}Γ^a_{ρν} + g_{νa}Γ^a_{ρμ}) 纯代数恒等式
+  （`christoffelDisc` 定义；g 因子与 ½ 移入 σ-和 → 双和交换 → 缩并 δ →
+  δ 求值 → dsym + ring 配对抵消）——数值 Q1 的 Lean 形式化；
+- **`skGamma_zero_of_torsionfree_compatible`（澄清性引理，机器证明）**：
+  常值骨架层上 **无挠 + 度规相容 ⟹ 联络恒为零**
+  （轮换论证 Γ_{abc} = Γ_{acb}[无挠] = −Γ_{bca}[反对称] = −Γ_{bac}[无挠]
+  = Γ_{cab}[反对称] = Γ_{cba}[无挠] = −Γ_{abc}[反对称] ⟹ 2Γ = 0，
+  `skGamma`/`skGamma_antisymm`/`skGamma_symm23` 三引理 + linarith）。
+  **这把"定理 B：无挠 + 相容 ⟹ E_skel = 0"的朴素陈述逼入真空**——前提
+  只在零联络成立，恒等式空洞。
+
+**主定理陈述证伪后的数值再刻画（phase16b_metric_contraction.py 补充实验，
+2026-09-11）**：① 随机仅相容联络（不含无挠）|E| 非零（4/4 组 1.6e+1–4.4e+1）
+——E_skel = 0 不是相容的推论；② ω-联络（数值上 |E|=0 的相容族）**并非全指标
+无挠**——T^0_{ij} = Γ^0_{ij} − Γ^0_{ji} = −2ω_ij ≠ 0，它是挠率联络；
+③ 在"非零分量恰含一个 0 指标"的 12 维相容子空间内采样：E = 0 ⟺
+Gam[i,j,0] 对 (i,j) 反对称（即 D 反对称；C 任意反对称），ω-联络是其特例。
+
+**剩余 (b) 主定理的重新表述（开放，比预想深刻）**：常值骨架层 E_skel = 0
+的成立条件不是"无挠 + 相容"（真空），而是允许挠率下的结构性条件（数值显示
+为 D-反对称型）。候选方向：(α) 把 E_skel 分解为"无挠部分贡献 + 挠率泛函"
+的恒等式（Lean 可证的恒等式定理，ω-联络是其零点——挠率项精确抵消）；
+(β) 在 RecObj step 语义下对 ∂̃ 重建协变散度的恒等式版本（真值路径，与
+开放命题 EinsteinDivergenceFree 的 O(a) 残差分析衔接）。无论哪个方向，
+开放命题 `EinsteinDivergenceFree` 维持开放，`skeleton_einstein_divergence_free`
+不再以原陈述追逐（已证真空）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 

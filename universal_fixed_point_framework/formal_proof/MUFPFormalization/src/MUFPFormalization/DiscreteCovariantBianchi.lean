@@ -581,4 +581,168 @@ lemma skeleton_ricci_symmetric (γ : Fin 4 → Fin 4 → Fin 4 → ℝ)
   rw [sum4_eq_finset_sum, sum4_eq_finset_sum]
   linarith [hAB, htrace]
 
+/-- δ-型求和求值：Σ_σ (if σ = μ then 1 else 0) · X σ = X μ。
+    数值对应：phase16b_metric_contraction.py 中 ginv·g = δ 的逐点求值。
+    证明：sum_eq_single 显式 f 实例 + if_pos（保留 if 形式，calc 闭合——
+    if μ = μ 对自由变量不可定义归约）。 -/
+lemma sum4_ite_eq' (μ : Fin 4) (X : Fin 4 → ℝ) :
+    sum4 (fun σ => (if σ = μ then (1:ℝ) else 0) * X σ) = X μ := by
+  rw [sum4_eq_finset_sum]
+  have h1 : (∑ σ : Fin 4, (if σ = μ then (1:ℝ) else 0) * X σ)
+      = (if μ = μ then (1:ℝ) else 0) * X μ :=
+    Finset.sum_eq_single (s := Finset.univ)
+      (f := fun σ => (if σ = μ then (1:ℝ) else 0) * X σ) μ
+      (fun b _ hb => by rw [if_neg hb, zero_mul])
+      (fun h => absurd (Finset.mem_univ μ) h)
+  calc (∑ σ : Fin 4, (if σ = μ then (1:ℝ) else 0) * X σ)
+      = (if μ = μ then (1:ℝ) else 0) * X μ := h1
+    _ = X μ := by rw [if_pos rfl, one_mul]
+
+/-- g–ginv 缩并（交换序）：Σ_a g_{μa} ginv^{aσ} = δ_{σμ}。
+    由逆对 hinv（ginv·g 序）经 g/ginv 对称逐项换位。 -/
+lemma contraction_g_ginv (g ginv : Fin 4 → Fin 4 → ℝ)
+    (gsym : ∀ μ ν, g μ ν = g ν μ) (hginv : ∀ μ ν, ginv μ ν = ginv ν μ)
+    (hinv : ∀ μ ν, sum4 (fun σ => ginv μ σ * g σ ν) = if μ = ν then 1 else 0)
+    (μ σ : Fin 4) :
+    sum4 (fun a => g μ a * ginv a σ) = if σ = μ then 1 else 0 := by
+  have h := hinv σ μ
+  rw [sum4_eq_finset_sum] at h
+  calc sum4 (fun a => g μ a * ginv a σ)
+      = ∑ a : Fin 4, ginv σ a * g a μ := by
+        rw [sum4_eq_finset_sum]
+        apply Finset.sum_congr rfl
+        intro a _
+        rw [gsym μ a, hginv a σ, mul_comm]
+    _ = if σ = μ then 1 else 0 := h
+
+/-- 离散 Christoffel 公式（∂̃ 的抽象骨架形态）：
+    Γ^ρ_{μν} = ½ Σ_σ ginv^{ρσ} (∂̃_μ g_{νσ} + ∂̃_ν g_{μσ} − ∂̃_σ g_{μν})，
+    其中 d ρ μ ν 表示 ∂̃_ρ g_{μν}（g 对称 ⟹ d 对后两指标对称）。 -/
+noncomputable def christoffelDisc (ginv : Fin 4 → Fin 4 → ℝ)
+    (d : Fin 4 → Fin 4 → Fin 4 → ℝ) (ρ μ ν : Fin 4) : ℝ :=
+  (1/2) * sum4 (fun σ => ginv ρ σ * (d μ ν σ + d ν μ σ - d σ μ ν))
+
+/-- **离散 Christoffel 公式的逐点度量相容**（纯代数恒等式）：
+    ∂̃_ρ g_{μν} = Σ_a (g_{μa} Γ^a_{ρν} + g_{νa} Γ^a_{ρμ})。
+    数值对应：phase16b_metric_contraction.py Q1（A ≡ 0 逐点精确 ~1e-16，
+    ginv·g = δ 不经过 ∂̃）。
+    证明骨架：g 因子与 ½ 移入 σ-和（mul_sum）→ 双和交换（sum_comm）→
+    缩并 δ（contraction_g_ginv）→ δ 求值（sum4_ite_eq'）→
+    d 对称（dsym）+ ring 配对抵消。 -/
+lemma discrete_christoffel_metric_compatible
+    (g ginv : Fin 4 → Fin 4 → ℝ) (d : Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (gsym : ∀ μ ν, g μ ν = g ν μ) (hginv : ∀ μ ν, ginv μ ν = ginv ν μ)
+    (hinv : ∀ μ ν, sum4 (fun σ => ginv μ σ * g σ ν) = if μ = ν then 1 else 0)
+    (dsym : ∀ ρ μ ν, d ρ μ ν = d ρ ν μ) (ρ μ ν : Fin 4) :
+    sum4 (fun a => g μ a * christoffelDisc ginv d a ρ ν
+        + g ν a * christoffelDisc ginv d a ρ μ) = d ρ μ ν := by
+  have hctr : ∀ m s : Fin 4, (∑ a : Fin 4, g m a * ginv a s)
+      = if s = m then 1 else 0 := by
+    intro m s
+    have h := contraction_g_ginv g ginv gsym hginv hinv m s
+    rw [sum4_eq_finset_sum] at h
+    exact h
+  have hd : ∀ m : Fin 4, ∀ X : Fin 4 → ℝ,
+      (∑ σ : Fin 4, (if σ = m then (1:ℝ) else 0) * X σ) = X m := by
+    intro m X
+    have h := sum4_ite_eq' m X
+    rw [sum4_eq_finset_sum] at h
+    exact h
+  have key1 : ∀ a : Fin 4, g μ a * ((1/2) * ∑ σ : Fin 4,
+        ginv a σ * (d ρ ν σ + d ν ρ σ - d σ ρ ν))
+      = ∑ σ : Fin 4, (1/2 * (g μ a * ginv a σ))
+        * (d ρ ν σ + d ν ρ σ - d σ ρ ν) := fun a => by
+    rw [Finset.mul_sum Finset.univ (fun σ => ginv a σ * (d ρ ν σ + d ν ρ σ - d σ ρ ν)) (1/2 : ℝ),
+      Finset.mul_sum Finset.univ
+        (fun σ => (1/2 : ℝ) * (ginv a σ * (d ρ ν σ + d ν ρ σ - d σ ρ ν))) (g μ a)]
+    apply Finset.sum_congr rfl
+    intro σ _
+    ring
+  have key2 : ∀ a : Fin 4, g ν a * ((1/2) * ∑ σ : Fin 4,
+        ginv a σ * (d ρ μ σ + d μ ρ σ - d σ ρ μ))
+      = ∑ σ : Fin 4, (1/2 * (g ν a * ginv a σ))
+        * (d ρ μ σ + d μ ρ σ - d σ ρ μ) := fun a => by
+    rw [Finset.mul_sum Finset.univ (fun σ => ginv a σ * (d ρ μ σ + d μ ρ σ - d σ ρ μ)) (1/2 : ℝ),
+      Finset.mul_sum Finset.univ
+        (fun σ => (1/2 : ℝ) * (ginv a σ * (d ρ μ σ + d μ ρ σ - d σ ρ μ))) (g ν a)]
+    apply Finset.sum_congr rfl
+    intro σ _
+    ring
+  have swap1 : (∑ a : Fin 4, ∑ σ : Fin 4, (1/2 * (g μ a * ginv a σ))
+        * (d ρ ν σ + d ν ρ σ - d σ ρ ν))
+      = ∑ σ : Fin 4, ∑ a : Fin 4, (1/2 * (g μ a * ginv a σ))
+        * (d ρ ν σ + d ν ρ σ - d σ ρ ν) := Finset.sum_comm
+  have swap2 : (∑ a : Fin 4, ∑ σ : Fin 4, (1/2 * (g ν a * ginv a σ))
+        * (d ρ μ σ + d μ ρ σ - d σ ρ μ))
+      = ∑ σ : Fin 4, ∑ a : Fin 4, (1/2 * (g ν a * ginv a σ))
+        * (d ρ μ σ + d μ ρ σ - d σ ρ μ) := Finset.sum_comm
+  have ctr1 : ∀ s : Fin 4, (∑ a : Fin 4, (1/2 * (g μ a * ginv a s))
+        * (d ρ ν s + d ν ρ s - d s ρ ν))
+      = (if s = μ then (1:ℝ) else 0)
+        * ((1/2) * (d ρ ν s + d ν ρ s - d s ρ ν)) := fun s => by
+    rw [← Finset.sum_mul Finset.univ (fun a => 1/2 * (g μ a * ginv a s))
+        (d ρ ν s + d ν ρ s - d s ρ ν),
+      ← Finset.mul_sum Finset.univ (fun a => g μ a * ginv a s) (1/2 : ℝ), hctr μ s]
+    ring
+  have ctr2 : ∀ s : Fin 4, (∑ a : Fin 4, (1/2 * (g ν a * ginv a s))
+        * (d ρ μ s + d μ ρ s - d s ρ μ))
+      = (if s = ν then (1:ℝ) else 0)
+        * ((1/2) * (d ρ μ s + d μ ρ s - d s ρ μ)) := fun s => by
+    rw [← Finset.sum_mul Finset.univ (fun a => 1/2 * (g ν a * ginv a s))
+        (d ρ μ s + d μ ρ s - d s ρ μ),
+      ← Finset.mul_sum Finset.univ (fun a => g ν a * ginv a s) (1/2 : ℝ), hctr ν s]
+    ring
+  simp only [christoffelDisc, sum4_eq_finset_sum, Finset.sum_add_distrib]
+  rw [Finset.sum_congr rfl (fun a _ => key1 a),
+    Finset.sum_congr rfl (fun a _ => key2 a), swap1, swap2,
+    Finset.sum_congr rfl (fun s _ => ctr1 s),
+    Finset.sum_congr rfl (fun s _ => ctr2 s), hd μ, hd ν]
+  show (1/2) * (d ρ ν μ + d ν ρ μ - d μ ρ ν)
+      + (1/2) * (d ρ μ ν + d μ ρ ν - d ν ρ μ) = d ρ μ ν
+  rw [dsym ρ ν μ]
+  ring
+
+/-- 降指标联络 Γ_{abc} := Σ_d g_{ad} Γ^d_{bc}（相容的 (0,2)-型表述载体）。 -/
+def skGamma (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ)
+    (a b c : Fin 4) : ℝ :=
+  sum4 (fun d => g a d * γ d b c)
+
+/-- Γ_{abc} 对 (a,c) 反对称（相容的直接改写）。 -/
+lemma skGamma_antisymm (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ)
+    (hc : SkeletonMetricCompat γ g) :
+    ∀ a b c, skGamma γ g a b c = -skGamma γ g c b a := by
+  intro a b c
+  have h := hc b a c
+  simp only [skGamma]
+  linarith
+
+/-- Γ_{abc} 对 (b,c) 对称（无挠的直接改写）。 -/
+lemma skGamma_symm23 (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ)
+    (tf : ∀ r m n, γ r m n = γ r n m) :
+    ∀ a b c, skGamma γ g a b c = skGamma γ g a c b := by
+  intro a b c
+  simp only [skGamma, sum4_eq_finset_sum]
+  apply Finset.sum_congr rfl
+  intro d _
+  rw [tf d b c]
+
+/-- **澄清性引理（负面结果）**：常值骨架层上，无挠 + 度规相容 ⟹ 联络恒为零。
+    轮换论证：Γ_{abc} = Γ_{acb} [无挠] = −Γ_{bca} [反对称] = −Γ_{bac} [无挠]
+    = Γ_{cab} [反对称] = Γ_{cba} [无挠] = −Γ_{abc} [反对称]，故 2Γ = 0。
+    物理含义：骨架层（∂̃ 缺席）的守恒律研究**必须允许挠率联络**——
+    无挠 + 相容的骨架只有零联络，"定理 B"的朴素陈述是空洞的；
+    数值上 E_skel = 0 的 ω-联络恰是挠率联络（T^0_{ij} = −2ω_ij）。
+    数值对应：phase16b_metric_contraction.py skeleton_layer 对照组。 -/
+lemma skGamma_zero_of_torsionfree_compatible (γ : Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (g : Fin 4 → Fin 4 → ℝ)
+    (tf : ∀ r m n, γ r m n = γ r n m)
+    (hc : SkeletonMetricCompat γ g) :
+    ∀ a b c, skGamma γ g a b c = 0 := by
+  intro a b c
+  have anti : ∀ x y z, skGamma γ g x y z = -skGamma γ g z y x :=
+    skGamma_antisymm γ g hc
+  have sy : ∀ x y z, skGamma γ g x y z = skGamma γ g x z y :=
+    skGamma_symm23 γ g tf
+  linarith [sy a b c, anti a c b, sy b c a, anti b a c, sy c a b, anti c b a]
+
 end MUFPF
