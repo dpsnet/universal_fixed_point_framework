@@ -249,6 +249,16 @@ Gam[i,j,0] 对 (i,j) 反对称（即 D 反对称；C 任意反对称），ω-联
 Lean 形式化候选：D₁=D₂=D₃≡0 的结构证明（中等工作量）；
 D₀ 37 项多项式恒等式成本高，暂不建议。
 
+**(α)-1 已闭合（2026-09-11 晚，§26.8，全库 4078 jobs `lake build` 通过）**：
+`DiscreteCovariantBianchi.lean` §26.8 建成骨架 Einstein 散度算子链
+（`skRic`/`skScalar`/`skEin`/`skConnG`/`skDiv` + Minkowski 度规 `mink4` +
+恰单零指标族显式查表 `singleZeroConn`），主定理
+`single_zero_family_spatial_div_zero`：对任意 C D : Fin 4 → Fin 4 → ℝ（无需
+任何对称性假设），D_k = Σ_{μ,a} η^{μa}∇̃_μG_{ak}（k=1,2,3）恒为零。
+证明：fin_cases + show 数值化（Fin.succ 原始构造型不触发 vecCons 字面量引理，
+先 show 为数字字面量）+ sum4 展开 + 矩阵字面量归约（cons_val_zero/one/two/
+three + head/tail_cons）——simp 即闭合，ring_nf 不必需。模块现 19 定理零 sorry。
+
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
 | 层级 | 文档 | 与本路径的关系 |

@@ -18,6 +18,8 @@
 -- ============================================================
 
 import Mathlib.Data.Real.Basic
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Tactic.FinCases
 import Mathlib.Algebra.Module.Pi
 import Mathlib.Algebra.Module.LinearMap.End
 import Mathlib.Tactic.Ring
@@ -744,5 +746,89 @@ lemma skGamma_zero_of_torsionfree_compatible (γ : Fin 4 → Fin 4 → Fin 4 →
   have sy : ∀ x y z, skGamma γ g x y z = skGamma γ g x z y :=
     skGamma_symm23 γ g tf
   linarith [sy a b c, anti a c b, sy b c a, anti b a c, sy c a b, anti c b a]
+
+-- ============================================================
+-- §26.8 恰单零指标族的 Einstein 散度恒等式（方向 (α) 形式化）
+-- ============================================================
+-- 数值/符号对应（2026-09-11，notes/04 esk_torsion_decomposition.md）：
+--   恰单零指标 12 维族 Γ^0_{ij}=D_{ji}, Γ^i_{0j}=C_{ij}, Γ^i_{j0}=D_{ij}
+--   （其余分量零，C/D 不需任何对称性——sympy 精确验证），
+--   Einstein 散度的空间分量 D_k = Σ_{μ,a} η^{μa} ∇̃_μ G_{ak} (k=1,2,3)
+--   多元多项式恒零；时间分量 D₀ = L(C,A)·S + Cub(S) 不恒零。
+--   本节形式化空间分量恒等式（sum4 展开 + 矩阵字面量归约 + ring_nf）。
+
+/-- Minkowski 度规 η = diag(−1,1,1,1)（自反逆，升/降指标同一矩阵）。 -/
+def mink4 : Fin 4 → Fin 4 → ℝ :=
+  ![![-1, 0, 0, 0],
+    ![0, 1, 0, 0],
+    ![0, 0, 1, 0],
+    ![0, 0, 0, 1]]
+
+/-- 恰单零指标联络族（显式 4×4×4 查表形态）：
+    Γ^0_{ij}=D_{ji}（0 号块行/列空间部分），Γ^i_{0j}=C_{ij}（i 号块第 0 行），
+    Γ^i_{j0}=D_{ij}（i 号块第 0 列），其余为零。
+    C D : Fin 4 → Fin 4 → ℝ 任意（仅空间-空间指标出现，无需对称性假设）。 -/
+def singleZeroConn (C D : Fin 4 → Fin 4 → ℝ) : Fin 4 → Fin 4 → Fin 4 → ℝ :=
+  ![![![0, 0, 0, 0],
+      ![0, D 1 1, D 2 1, D 3 1],
+      ![0, D 1 2, D 2 2, D 3 2],
+      ![0, D 1 3, D 2 3, D 3 3]],
+    ![![0, C 1 1, C 1 2, C 1 3],
+      ![D 1 1, 0, 0, 0],
+      ![D 2 1, 0, 0, 0],
+      ![D 3 1, 0, 0, 0]],
+    ![![0, C 2 1, C 2 2, C 2 3],
+      ![D 1 2, 0, 0, 0],
+      ![D 2 2, 0, 0, 0],
+      ![D 3 2, 0, 0, 0]],
+    ![![0, C 3 1, C 3 2, C 3 3],
+      ![D 1 3, 0, 0, 0],
+      ![D 2 3, 0, 0, 0],
+      ![D 3 3, 0, 0, 0]]]
+
+/-- 骨架 Ricci：Riĉ_{sν} = Σ_r R̂^r_{ s r ν}（skCurv 的 (r,ν) 缩并）。 -/
+def skRic (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (s ν : Fin 4) : ℝ :=
+  sum4 (fun r => skCurv γ r s r ν)
+
+/-- 骨架标量曲率：R̂ = Σ_{sν} g^{sν} Riĉ_{sν}。 -/
+def skScalar (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ) : ℝ :=
+  sum4 (fun s => sum4 (fun ν => g s ν * skRic γ s ν))
+
+/-- 骨架 Einstein 张量：Ĝ_{μν} = Riĉ_{μν} − (1/2) g_{μν} R̂。 -/
+noncomputable def skEin (γ : Fin 4 → Fin 4 → Fin 4 → ℝ)
+    (g : Fin 4 → Fin 4 → ℝ) (μ ν : Fin 4) : ℝ :=
+  skRic γ μ ν - (1/2) * g μ ν * skScalar γ g
+
+/-- 骨架协变联络作用（无 ∂ 项）：∇̃_μ G_{aν} = Σ_l(−Γ^l_{μa}G_{lν} − Γ^l_{μν}G_{al})。 -/
+noncomputable def skConnG (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g : Fin 4 → Fin 4 → ℝ)
+    (μ a ν : Fin 4) : ℝ :=
+  sum4 (fun l => -(γ l μ a * skEin γ g l ν) - γ l μ ν * skEin γ g a l)
+
+/-- 骨架 Einstein 散度（第 ν 分量）：D_ν = Σ_{μ,a} g^{μa} ∇̃_μ G_{aν}。 -/
+noncomputable def skDiv (γ : Fin 4 → Fin 4 → Fin 4 → ℝ) (g ginv : Fin 4 → Fin 4 → ℝ)
+    (ν : Fin 4) : ℝ :=
+  sum4 (fun μ => sum4 (fun a => ginv μ a * skConnG γ g μ a ν))
+
+set_option maxHeartbeats 1000000 in
+/-- **恰单零指标族空间散度恒等式**（方向 (α) 的 Lean 形式化核心定理）：
+    对 singleZeroConn 族，Einstein 散度的空间分量
+    D_k = Σ_{μ,a} η^{μa} ∇̃_μ G_{ak}（k = 1, 2, 3）对任意
+    C D : Fin 4 → Fin 4 → ℝ 恒为零。
+    结构性原因：族内无三空间指标联络分量，散度空间分量的全部单项式
+    经 sum4 展开后逐项抵消（~10³ 个三次单项式，ring_nf 闭合）。
+    数值对应：phase16b_div4_family.py（sympy 精确，D₁=D₂=D₃≡0）。 -/
+theorem single_zero_family_spatial_div_zero (C D : Fin 4 → Fin 4 → ℝ) (k : Fin 3) :
+    skDiv (singleZeroConn C D) mink4 mink4 k.succ = 0 := by
+  fin_cases k <;>
+    (first
+      | show skDiv (singleZeroConn C D) mink4 mink4 (1 : Fin 4) = 0
+      | show skDiv (singleZeroConn C D) mink4 mink4 (2 : Fin 4) = 0
+      | show skDiv (singleZeroConn C D) mink4 mink4 (3 : Fin 4) = 0) <;>
+    simp only [skDiv, skConnG, skEin, skScalar, skRic, skCurv, sum4,
+      mink4, singleZeroConn, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons,
+      mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
+      mul_one, one_mul, one_div]
 
 end MUFPF
