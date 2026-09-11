@@ -282,6 +282,27 @@ RHS 由生成器 numerical/phase16b_d0_lean_gen.py 在 12 个标准原子上生�
 （sympy 校验 D₀ = lin + cub），Lean 端 hC/hA/hS 实例化重写 + ring 闭合。
 此定理同时暴露 singleZeroConn 查表转置勘误（见上）。方向 (α) 至此全部闭合。
 
+**(β)-1 已闭合（2026-09-12，§26.9，全库 4078 jobs `lake build` 通过，模块 24 定理零 sorry）**：
+RecObj step 语义下 ∂̃ 协变散度恒等式版本的第一个构件组，含四件：
+① `stepDiff F ρ A := fun x => A (F.stepD ρ x) - A x`——∂̃ 沿 RecObj step 的
+方向化差分的算子定义（首次在库里落地，补 2026-09-11 查证的空白）；
+② Leibniz 修正恒等式 `stepDiff_mul`：∂̃(AB) = ∂̃A·B + A·∂̃B + ∂̃A·∂̃B
+（`simp only [stepDiff]; ring` 闭合）——第三项即数值残差 ~2–3×|∂̃Γ·Γ|
+量级的**代数源头**：离散差分不满足连续 Leibniz 律，协变导数算子的
+"修正结构"由此而生；
+③ 分量公式 `covDiffOp_apply`：(D_ρ W) x r 的显式四分量展开
+（移位 + 规范作用，sum4 显式求和）；
+④ 分量级循环恒等式 `discrete_second_bianchi_components`：
+Σ_cyc(ρ,μ,ν) [(D_ρ(F_μν V)) − (F_μν(D_ρ V))] x r = 0，
+由算子 Jacobi 恒等式（discrete_second_bianchi_operator）经
+LinearMap.ext 逐点实例化，证明用 defeq（算子积/逐点作用/零映射均为
+rfl 族），修正项（双移位、∂̃Γ、[Γ_μ,Γ_ν]、Leibniz 修正）在恒等式内
+精确抵消。本定理是 skeleton_second_bianchi（∂̃≡0 骨架层）含 ∂̃ 项的
+真值载体，连续极限 a → 0 逐型消失。
+**(β) 剩余**：修正版**散度**恒等式（Bianchi 的度规缩并给出 ∇̃^μ G_μν 的
+精确离散形态）需算子级度规相容，属下一里程碑；开放命题
+EinsteinDivergenceFree 维持开放（O(a) 残差分析现具分量级 Bianchi 基础）。
+
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
 | 层级 | 文档 | 与本路径的关系 |

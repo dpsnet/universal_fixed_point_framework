@@ -910,4 +910,78 @@ theorem single_zero_family_time_div_decomp
     mul_one, one_mul, one_div, mul_neg, neg_mul, neg_neg]
   ring
 
+-- ============================================================
+-- §26.9 方向 (β)：∂̃ 的 Leibniz 修正与分量级修正 Bianchi
+-- ============================================================
+-- 真值路径第一环（sorry_closure_roadmap.md §3.6 方向 (β)）：
+-- 守恒律的载体是含 ∂̃ 项的恒等式，其代数源头是 step 差分的
+-- Leibniz 修正——数值实验（phase16b_discrete_bianchi.py）发现
+-- 朴素分量式离散 Bianchi 残差 ~2–3×|∂̃Γ·Γ|，全部出自修正项
+-- ∂̃A·∂̃B。本节形式化：∂̃ 定义 + Leibniz 修正恒等式 +
+-- 协变差分的分量公式 + 分量级循环恒等式（修正结构显式保留）。
+
+/-- 沿方向 step 的有限差分导数 ∂̃：场在递归系统上的逐点差分
+    (∂̃_ρ T)(x) := T(stepD ρ x) − T(x)。
+    物理含义：连续偏导数 ∂_ρ 的离散对应
+    （格距归一 T(step ρ x)−T x = a·∂̃，a → 0 时收敛）。 -/
+def stepDiff (F : FrameRecObj) (ρ : Fin 4)
+    (A : F.X.T → ℝ) : F.X.T → ℝ :=
+  fun x => A (F.stepD ρ x) - A x
+
+/-- **离散 Leibniz 修正恒等式**：step 差分作用于乘积场时普通 Leibniz
+    规则失效，修正项 ∂̃A·∂̃B 不可忽略：
+    ∂̃_ρ(A·B) = ∂̃_ρA·B + A·∂̃_ρB + ∂̃_ρA·∂̃_ρB。
+    物理含义：差分算子 ∂̃ = S_ρ − 1 满足 (S−1)(AB) = (S−1)A·B + A·(S−1)B
+    + (S−1)A·(S−1)B——移位同态性在差分上的精确失效模式；
+    O(a²) 格距下修正项为高阶小量（数值 |B|/|R| ∝ 1/n²），
+    但恒等式本身逐点精确（纯移位代数，ring 闭合）。 -/
+theorem stepDiff_mul (F : FrameRecObj) (ρ : Fin 4)
+    (A B : F.X.T → ℝ) (x : F.X.T) :
+    stepDiff F ρ (fun y => A y * B y) x
+      = stepDiff F ρ A x * B x + A x * stepDiff F ρ B x
+        + stepDiff F ρ A x * stepDiff F ρ B x := by
+  simp only [stepDiff]
+  ring
+
+/-- 协变差分算子的分量公式：
+    (D_ρ W)(x) = W(stepD ρ x) − W(x) + Σ_l Γ^r_{ρl}(x) W^l(x)
+    ——移位差分 ∂̃_ρ W + 规范作用，连续 ∇_ρ W = ∂_ρ W + Γ_ρ W
+    的离散对应（∂̃ 项与联络项同点取值）。 -/
+lemma covDiffOp_apply (F : FrameRecObj) (Γf : GammaField F) (ρ : Fin 4)
+    (W : VecField F) (x : F.X.T) (r : Fin 4) :
+    (covDiffOp F Γf ρ) W x r
+      = W (F.stepD ρ x) r - W x r
+        + sum4 (fun l => Γf.γ x r ρ l * W x l) := by
+  simp only [covDiffOp, LinearMap.add_apply, LinearMap.sub_apply,
+    shiftOp_apply, gaugeOp_apply, Module.End.one_apply,
+    ← sum4_eq_finset_sum, sum4, Pi.sub_apply, Pi.add_apply]
+  ring
+
+/-- **分量级离散第二 Bianchi 恒等式**（step 语义，修正结构显式保留）：
+    对任意向量场 V 与任意点 x、指标 r，
+      Σ_cyc(ρ,μ,ν) [ (D_ρ (F_{μν} V))(x) − (F_{μν} (D_ρ V))(x) ]^r = 0，
+    其中 D_ρ = ∂̃_ρ + 规范作用（covDiffOp_apply），
+    F_{μν} = [D_μ, D_ν]（curvature_op_apply 的分量展开含
+    双移位修正、∂̃Γ·V 与 [Γ_μ,Γ_ν]·V 三项）。
+    与 skeleton_second_bianchi（∂̃ ≡ 0 的骨架层）的关系：
+    本定理是其含 ∂̃ 项的真值载体——修正项（双移位、∂̃Γ、
+    Leibniz 修正）在恒等式内精确抵消，连续极限 a → 0 逐型消失。
+    证明：算子 Jacobi 恒等式（discrete_second_bianchi_operator）
+    经 LinearMap.ext 逐点实例化。 -/
+theorem discrete_second_bianchi_components (F : FrameRecObj)
+    (Γf : GammaField F) (ρ μ ν : Fin 4)
+    (V : VecField F) (x : F.X.T) (r : Fin 4) :
+    ((covDiffOp F Γf ρ) ((curvatureOp F Γf μ ν) V) x r
+      - (curvatureOp F Γf μ ν) ((covDiffOp F Γf ρ) V) x r)
+    + ((covDiffOp F Γf μ) ((curvatureOp F Γf ν ρ) V) x r
+      - (curvatureOp F Γf ν ρ) ((covDiffOp F Γf μ) V) x r)
+    + ((covDiffOp F Γf ν) ((curvatureOp F Γf ρ μ) V) x r
+      - (curvatureOp F Γf ρ μ) ((covDiffOp F Γf ν) V) x r) = 0 := by
+  -- h : ((A*B - B*A + ...) V) x r = (0 V) x r；
+  -- 算子积 (f*g) V = f (g V)、减法/加法逐点应用与零映射逐点作用均为定义相等（rfl 族），
+  -- 目标左端即 h 左端的定义展开，右端 (0 V) x r 与字面 0 亦定义相等。
+  have h := congrFun (congrFun
+    (LinearMap.ext_iff.1 (discrete_second_bianchi_operator F Γf ρ μ ν) V) x) r
+  exact h
+
 end MUFPF
