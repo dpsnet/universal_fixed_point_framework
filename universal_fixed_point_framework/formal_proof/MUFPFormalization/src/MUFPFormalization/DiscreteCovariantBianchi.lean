@@ -984,4 +984,163 @@ theorem discrete_second_bianchi_components (F : FrameRecObj)
     (LinearMap.ext_iff.1 (discrete_second_bianchi_operator F Γf ρ μ ν) V) x) r
   exact h
 
+-- ============================================================
+-- §26.10 方向 (β)-2：算子级 η-度规相容（Leibniz 修正版）
+-- ============================================================
+-- 数值基础（§26.7 注释，phase16b_metric_contraction.py Q1）：
+-- 离散 Christoffel 公式使逐点相容残差 A_{ρμν} = ∂̃_ρ g_{μν}
+-- − Γ^l_{ρμ}g_{lν} − Γ^l_{ρν}g_{μl} 精确为零——即联络 1-形式逐点
+-- 取值于 𝔰𝔬(g)。本节点把这一逐点代数条件提升为**算子恒等式**：
+-- 协变差分 D_ρ 对标量配对 ⟨V,W⟩ 的作用满足 Leibniz 修正律。
+-- 修正项 ⟨∂̃V,∂̃W⟩ 是场层级朴素相容偏离的精确代数形态
+-- （光滑场上 O(a²)，与 |B|/|R| ∝ 1/n² 的数值观测同阶）——
+-- 这是把分量级 Bianchi 缩并成修正散度恒等式所需的结构件。
+
+/-- η-配对：两向量场按 Minkowski 度规逐点缩并的标量场
+    ⟨V, W⟩_η(x) := Σ_{r,s} η_{rs} V^r(x) W^s(x)。 -/
+def etaPair (F : FrameRecObj) (V W : VecField F) : F.X.T → ℝ :=
+  fun x => sum4 (fun r => sum4 (fun s => mink4 r s * (V x r * W x s)))
+
+/-- **算子级 η-度规相容（Leibniz 修正版）**：
+    联络逐点取值于 𝔰𝔬(η)（相容假设 hη，即 SkeletonMetricCompat 的
+    Minkowski 逐点形态——离散 Christoffel 场满足之，见
+    discrete_christoffel_metric_compatible）时，任意向量场 V W 满足
+      ∂̃_ρ⟨V, W⟩_η = ⟨D_ρ V, W⟩_η + ⟨V, D_ρ W⟩_η + ⟨∂̃_ρ V, ∂̃_ρ W⟩_η，
+    其中 D_ρ = covDiffOp（移位差分 + 规范作用），∂̃_ρ 为纯移位差分。
+    物理含义：连续恒等式 ∂_ρ⟨V,W⟩ = ⟨∇V,W⟩ + ⟨V,∇W⟩ 的离散精确形态
+    ——离散 Leibniz 修正（stepDiff_mul）贡献第三项 ⟨∂̃V,∂̃W⟩，
+    光滑场上为 O(a²) 高阶小量，故朴素相容在差分代数中逐点精确到
+    修正项为止；联络项的消去即 hη（𝔰𝔬(η) 条件）。
+    证明：配对展开 + 逐分量 Leibniz + Γ 双和经 hη 归零
+    （Finset sum_add_distrib/mul_sum/sum_mul 分配 + sum_comm 重排）。 -/
+theorem covDiffOp_metric_compatible (F : FrameRecObj) (Γf : GammaField F)
+    (hη : ∀ x ρ μ ν, sum4 (fun a => mink4 μ a * Γf.γ x a ρ ν)
+        + sum4 (fun a => mink4 ν a * Γf.γ x a ρ μ) = 0)
+    (ρ : Fin 4) (V W : VecField F) (x : F.X.T) :
+    stepDiff F ρ (etaPair F V W) x
+      = sum4 (fun r => sum4 (fun s => mink4 r s *
+          ((covDiffOp F Γf ρ) V x r * W x s
+            + V x r * ((covDiffOp F Γf ρ) W x s)
+            + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s)))) := by
+  -- η 对称性（字面矩阵，对角/非对角逐项 rfl）
+  have hsym : ∀ i j : Fin 4, mink4 i j = mink4 j i := by
+    intro i j; fin_cases i <;> fin_cases j <;> rfl
+  -- 逐点 𝔰𝔬(η) 条件的 Finset 形态（bridge sum4）
+  have hcomp : ∀ μ ν : Fin 4,
+      (∑ a : Fin 4, mink4 μ a * Γf.γ x a ρ ν)
+        + (∑ a : Fin 4, mink4 ν a * Γf.γ x a ρ μ) = 0 := by
+    intro μ ν
+    have h := hη x ρ μ ν
+    rwa [sum4_eq_finset_sum, sum4_eq_finset_sum] at h
+  -- Γ 双和归零：Σ_r Σ_s η_{rs}((ΓV)^r W^s + V^r (ΓW)^s) = 0
+  have hgamma : (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+        ((∑ a : Fin 4, Γf.γ x r ρ a * V x a) * W x s
+          + V x r * (∑ a : Fin 4, Γf.γ x s ρ a * W x a))) = 0 := by
+    -- ① 内层乘积展开为三重和（simp 分配引理归约到同一正规形）
+    have key : (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+          ((∑ a : Fin 4, Γf.γ x r ρ a * V x a) * W x s
+            + V x r * (∑ a : Fin 4, Γf.γ x s ρ a * W x a)))
+        = (∑ r : Fin 4, ∑ s : Fin 4, ∑ a : Fin 4,
+            mink4 r s * (Γf.γ x r ρ a * V x a * W x s))
+          + (∑ r : Fin 4, ∑ s : Fin 4, ∑ a : Fin 4,
+            mink4 r s * (V x r * (Γf.γ x s ρ a * W x a))) := by
+      simp only [Finset.sum_add_distrib, Finset.mul_sum, Finset.sum_mul, mul_add]
+    -- ② 两个三重和分别重排为 (V,W)-系数形态
+    have reg1 : (∑ r : Fin 4, ∑ s : Fin 4, ∑ a : Fin 4,
+          mink4 r s * (Γf.γ x r ρ a * V x a * W x s))
+        = ∑ a : Fin 4, ∑ s : Fin 4,
+          (V x a * W x s) * (∑ r : Fin 4, mink4 r s * Γf.γ x r ρ a) := by
+      -- ∑ r ∑ s ∑ a → ∑ r ∑ a ∑ s（内层交换）→ ∑ a ∑ r ∑ s（外层交换）→ ∑ a ∑ s ∑ r
+      rw [Finset.sum_congr rfl (fun r _ => Finset.sum_comm
+        (f := fun s a => mink4 r s * (Γf.γ x r ρ a * V x a * W x s)))]
+      rw [Finset.sum_comm (f := fun r a => ∑ s : Fin 4,
+          mink4 r s * (Γf.γ x r ρ a * V x a * W x s))]
+      apply Finset.sum_congr rfl; intro a _
+      rw [Finset.sum_comm (f := fun r s => mink4 r s * (Γf.γ x r ρ a * V x a * W x s))]
+      apply Finset.sum_congr rfl; intro s _
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl; intro r _
+      ring
+    have reg2 : (∑ r : Fin 4, ∑ s : Fin 4, ∑ a : Fin 4,
+          mink4 r s * (V x r * (Γf.γ x s ρ a * W x a)))
+        = ∑ r : Fin 4, ∑ a : Fin 4,
+          (V x r * W x a) * (∑ s : Fin 4, mink4 r s * Γf.γ x s ρ a) := by
+      apply Finset.sum_congr rfl; intro r _
+      rw [Finset.sum_comm (f := fun s a => mink4 r s * (V x r * (Γf.γ x s ρ a * W x a)))]
+      apply Finset.sum_congr rfl; intro a _
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl; intro s _
+      ring
+    -- ③ 哑元 α-改名使两项同形（defeq）
+    have hB : (∑ r : Fin 4, ∑ a : Fin 4, (V x r * W x a) *
+          (∑ s : Fin 4, mink4 r s * Γf.γ x s ρ a))
+        = ∑ a : Fin 4, ∑ s : Fin 4, (V x a * W x s) *
+          (∑ r : Fin 4, mink4 a r * Γf.γ x r ρ s) := rfl
+    -- ④ η 对称进入系数括号，逐点归零（hcomp）
+    have h1 : ∀ a s : Fin 4, (∑ r : Fin 4, mink4 r s * Γf.γ x r ρ a)
+        = ∑ r : Fin 4, mink4 s r * Γf.γ x r ρ a :=
+      fun a s => Finset.sum_congr rfl (fun r _ => by rw [hsym r s])
+    have hzero : ∀ a s : Fin 4, (V x a * W x s) * (∑ r : Fin 4, mink4 r s * Γf.γ x r ρ a)
+          + (V x a * W x s) * (∑ r : Fin 4, mink4 a r * Γf.γ x r ρ s) = 0 := by
+      intro a s
+      rw [h1 a s, show (V x a * W x s) * (∑ r : Fin 4, mink4 s r * Γf.γ x r ρ a)
+            + (V x a * W x s) * (∑ r : Fin 4, mink4 a r * Γf.γ x r ρ s)
+          = (V x a * W x s) * ((∑ r : Fin 4, mink4 a r * Γf.γ x r ρ s)
+            + (∑ r : Fin 4, mink4 s r * Γf.γ x r ρ a)) from by ring,
+        hcomp a s, mul_zero]
+    have hzero' : ∀ a : Fin 4,
+        (∑ s : Fin 4, (V x a * W x s) * (∑ r : Fin 4, mink4 r s * Γf.γ x r ρ a))
+          + (∑ s : Fin 4, (V x a * W x s) * (∑ r : Fin 4, mink4 a r * Γf.γ x r ρ s)) = 0 := by
+      intro a
+      rw [Finset.sum_add_distrib.symm]
+      exact Finset.sum_eq_zero (fun s _ => hzero a s)
+    rw [key, reg1, reg2, hB, ← Finset.sum_add_distrib]
+    exact Finset.sum_eq_zero (fun a _ => hzero' a)
+  -- 主恒等式：D 展开后 Γ 部分恰为 hgamma
+  have hmain : (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+        (V (F.stepD ρ x) r * W (F.stepD ρ x) s - V x r * W x s))
+      = ∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+          ((covDiffOp F Γf ρ) V x r * W x s
+            + V x r * ((covDiffOp F Γf ρ) W x s)
+            + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s)) := by
+    have hexp : (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+          ((covDiffOp F Γf ρ) V x r * W x s
+            + V x r * ((covDiffOp F Γf ρ) W x s)
+            + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s)))
+        = (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+            (V (F.stepD ρ x) r * W (F.stepD ρ x) s - V x r * W x s))
+          + (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+            ((∑ a : Fin 4, Γf.γ x r ρ a * V x a) * W x s
+              + V x r * (∑ a : Fin 4, Γf.γ x s ρ a * W x a))) := by
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl; intro r _
+      rw [← Finset.sum_add_distrib]
+      apply Finset.sum_congr rfl; intro s _
+      rw [covDiffOp_apply, covDiffOp_apply, sum4_eq_finset_sum, sum4_eq_finset_sum]
+      ring
+    rw [hexp, hgamma, add_zero]
+  -- 组装：LHS 为配对差分，RHS 经 sum4→Finset 桥接
+  have hL : stepDiff F ρ (etaPair F V W) x
+      = ∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+        (V (F.stepD ρ x) r * W (F.stepD ρ x) s - V x r * W x s) := by
+    rw [show stepDiff F ρ (etaPair F V W) x
+        = (∑ r : Fin 4, ∑ s : Fin 4,
+            mink4 r s * (V (F.stepD ρ x) r * W (F.stepD ρ x) s))
+          - (∑ r : Fin 4, ∑ s : Fin 4, mink4 r s * (V x r * W x s)) from by
+      simp only [stepDiff, etaPair, sum4_eq_finset_sum]]
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl; intro r _
+    rw [← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl; intro s _
+    ring
+  rw [hL, show sum4 (fun r => sum4 (fun s => mink4 r s *
+        ((covDiffOp F Γf ρ) V x r * W x s
+          + V x r * ((covDiffOp F Γf ρ) W x s)
+          + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s))))
+      = ∑ r : Fin 4, ∑ s : Fin 4, mink4 r s *
+        ((covDiffOp F Γf ρ) V x r * W x s
+          + V x r * ((covDiffOp F Γf ρ) W x s)
+          + (V (F.stepD ρ x) r - V x r) * (W (F.stepD ρ x) s - W x s))
+      from by simp only [sum4_eq_finset_sum], hmain]
+
 end MUFPF

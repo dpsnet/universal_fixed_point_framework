@@ -299,9 +299,27 @@ LinearMap.ext 逐点实例化，证明用 defeq（算子积/逐点作用/零映�
 rfl 族），修正项（双移位、∂̃Γ、[Γ_μ,Γ_ν]、Leibniz 修正）在恒等式内
 精确抵消。本定理是 skeleton_second_bianchi（∂̃≡0 骨架层）含 ∂̃ 项的
 真值载体，连续极限 a → 0 逐型消失。
-**(β) 剩余**：修正版**散度**恒等式（Bianchi 的度规缩并给出 ∇̃^μ G_μν 的
-精确离散形态）需算子级度规相容，属下一里程碑；开放命题
-EinsteinDivergenceFree 维持开放（O(a) 残差分析现具分量级 Bianchi 基础）。
+**(β)-2 已闭合（2026-09-12，§26.10，全库 4078 jobs `lake build` 通过，模块 25 定理零 sorry）**：
+算子级 η-度规相容（Leibniz 修正版）`covDiffOp_metric_compatible`：
+联络逐点取值于 𝔰𝔬(η)（相容假设 hη——即 §26.7 离散 Christoffel
+逐点相容残差恒零条件的算子化，`discrete_christoffel_metric_compatible`
+的结论形态）时，任意向量场 V、W 满足
+  ∂̃_ρ⟨V, W⟩_η = ⟨D_ρ V, W⟩_η + ⟨V, D_ρ W⟩_η + ⟨∂̃_ρ V, ∂̃_ρ W⟩_η，
+其中 ⟨·,·⟩_η 为 η-逐点配对（`etaPair`），D_ρ = covDiffOp，
+∂̃_ρ 为纯移位差分。要点：①连续恒等式 ∂⟨V,W⟩ = ⟨∇V,W⟩+⟨V,∇W⟩
+的离散精确形态含**第三修正项** ⟨∂̃V,∂̃W⟩——离散 Leibniz 修正
+（stepDiff_mul）在场层级配对上的直接投影，光滑场上 O(a²)，即朴素
+相容偏离的精确代数形态；②联络项双和 Σ_r Σ_s η_{rs}((ΓV)^r W^s +
+V^r (ΓW)^s) 经 hcomp 逐点归零（Finset sum_comm 三重交换 +
+mul_sum 提系数 + η 对称进入括号）；③这是把分量级 Bianchi
+（discrete_second_bianchi_components）缩并成修正散度恒等式的
+**结构件**——Ricci/Einstein 对称性的算子级来源。
+
+**(β) 剩余（更新）**：Bianchi 缩并本身——用本定理的相容结构把
+discrete_second_bianchi_components 对 (μ,r) 缩并，得散度恒等式的
+修正版（Einstein 张量需先从算子曲率构造其 (0,2)-型分量并证明
+Ricci 对称的离散形态）；开放命题 EinsteinDivergenceFree 维持开放
+（其 O(a) 残差分析现具分量级 Bianchi + 算子级度规相容双重基础）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
