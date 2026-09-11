@@ -560,6 +560,29 @@ Lean 4 定义性证明无关使 `Eq.mpr` 跨任意等式证明 defeq。
 `#check` 引用其后才定义的定理报 unknown identifier：把验证块移到定义之后
 （见 MetaTheorem 包含链）。
 
+**模式 8：先证伪再证明——数值真值检验（2026-09-11 新增，血泪条款）**
+sorry/难证定理**先过数值真值检验再投入证明**。2026-09-11 三次 sorry 清理中
+**两次是恒假命题**（非证明太难）：
+- `kleinBottle_has_pinch`：kleinStep 是双射，"step 迭代相等"版恒假；
+- `einstein_divergence_free_from_bianchi`：守恒律需 ∂ 项，纯 Γ 骨架恒假
+  （10 组随机样本残差 10⁰–10²）。
+
+检验模板（Python，对声明中的定义做字面翻译，≥6 组随机样本）：
+
+```python
+import numpy as np
+rng = np.random.default_rng(0)
+# 1. 按 Lean 定义逐字实现各组件（riemannExplicit/ricciExplicit/...）
+# 2. 随机生成满足前提的结构（如无挠 Γ：后两指标对称化）
+# 3. 计算目标等式两端残差，全部样本应为 0（容差 1e-8）
+# 4. 残差非零 → 陈述恒假，走勘误流程（保留证伪记录，改述为真命题），
+#    禁止改为 axiom（普遍量化假命题 + 可判定反例实例 = 理论不一致）
+```
+
+触发条件（任一即检）：闭 sorry 前；陈述含"对任意 X 成立"的全称结构；
+物理上依赖被骨架丢弃的结构（导数/极限/无穷维）；证明卡壳超过 ~30 分钟
+且 simp/ring 完全无进展。
+
 ### 12.3 全库修复工作流（已验证）
 
 ```bash
