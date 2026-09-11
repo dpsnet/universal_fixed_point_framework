@@ -330,13 +330,29 @@ C = 双移位差 [Γ_λ(step_ν step_μ x) − Γ_λ(step_μ step_ν x)]
 skeleton_second_bianchi）。数值证据 `numerical/phase16b_beta3_debug.py`
 （64 组 (λ,μ,ν)，worst |LHS−RHS| = 1.4e-14）。
 
-**(β) 剩余（更新）**：Bianchi 缩并为散度恒等式——用 (β)-2 的相容结构
-与 Ricci 对称性（(b) 已闭合 skeleton_ricci_symmetric 的场层级推广）
-把 `discrete_second_bianchi_tensor` 对 (μ,r) 缩并，得修正散度恒等式
-（Einstein 张量需先从算子曲率构造其 (0,2)-型分量并证明 Ricci 对称的
-离散形态；ginv 升指标含 Leibniz 修正 O(a²)）——(β)-4；开放命题
-EinsteinDivergenceFree 维持开放（现具分量级 Bianchi + 张量级修正
-Bianchi + 算子级度规相容三重基础）。
+**(β)-4 第一阶段已闭合（2026-09-12，§26.12，全库 4078 jobs `lake build`
+通过，模块 31 定理零 sorry）**：离散 Riemann 散度恒等式
+`discrete_riemann_divergence`——对 (β)-3 取 λ = r 裸迹缩并（无度量）：
+Σ_r (∇̃_r R̂_{μν})^r_s − ∂̃_μ Riĉ_{sν} + ∂̃_ν Riĉ_{sμ}
+= Cc3 − K2 − K3（逐点精确，无任何假设）。连续对应
+∇^ρ R_{ρsμν} = ∇_μ Ric_{sν} − ∇_ν Ric_{sμ}；K2/K3 为联络一阶修正
+（`contractConn2/3`），Cc3 为 C 的三循环位置裸迹（O(a²)）。
+新定义 `ricciTensor`（裸迹 Ricci）。证明要点：循环位置二需逐点反对称
+`naiveCurv(x,r,s,ν,r) = −naiveCurv(x,r,s,r,ν)` 归约耦合指标联络项——
+ring 不交换求和指标、不提出 (∑)·c 因子，必须手工 `Finset.sum_comm` /
+`(Finset.sum_mul _ _ _).symm` 逐步归约（详见
+notes/04_lorentz_gravity/riemann_divergence_contraction.md）。数值证据
+`numerical/phase16b_beta4_explore.py`（散度恒等式 worst 2.1e-14；
+ginv 缩并循环和 −C 修正后 1.8e-15；附带发现场层级 Ricci 不对称
+≈0.29·|Ric|——下阶段前置缺口）。
+
+**(β) 剩余（更新）**：(β)-4 第二阶段——度量缩并出修正散度恒等式
+∇̃^μ Riĉ_{μν} = ½ ∂̃_ν R̂ + 修正：需 ①场层级 Ricci 对称性的修正形态
+（预实验显示朴素对称性在场层级不成立，须先闭合修正版）；②ginv 升指标
+Leibniz 修正（∂̃ginv = −ginv·∂̃g·ginv + 离散相容条件）；③Einstein 张量
+G = Ric − ½Rg 的构造与其散度。开放命题 EinsteinDivergenceFree 维持开放
+（现具分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容
+四重基础）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 

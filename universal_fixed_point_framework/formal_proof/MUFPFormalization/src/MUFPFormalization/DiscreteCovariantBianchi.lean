@@ -1269,4 +1269,190 @@ theorem discrete_second_bianchi_tensor (F : FrameRecObj) (Γf : GammaField F)
     ring
   rw [e, hcomp]
 
+/-- Ricci 张量（裸迹，无度量）：
+    Riĉ_{sν}(x) = Σ_r R̂^r{}_{s r ν}(x)。连续极限退化为 Ricci 张量。 -/
+def ricciTensor (F : FrameRecObj) (Γf : GammaField F)
+    (s ν : Fin 4) (x : F.X.T) : ℝ :=
+  sum4 (fun r => naiveCurv F Γf x r s r ν)
+
+/-- 缩并修正项（联络部分之一，来自 ∇̃ 与裸迹的不交换性）：
+    K2_{μνs} = Σ_{r,a} Γ^r_{μa} R̂^a{}_{sνr} + Σ_a Riĉ_{aν} Γ^a_{μs}。 -/
+def contractConn2 (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) : ℝ :=
+  sum4 (fun r => sum4 (fun a => Γf.γ x r μ a * naiveCurv F Γf x a s ν r))
+    + sum4 (fun a => ricciTensor F Γf a ν x * Γf.γ x a μ s)
+
+/-- 缩并修正项（联络部分之二）：
+    K3_{μνs} = Σ_{r,a} Γ^r_{νa} R̂^a{}_{srμ} − Σ_a Riĉ_{aμ} Γ^a_{νs}。 -/
+def contractConn3 (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) : ℝ :=
+  sum4 (fun r => sum4 (fun a => Γf.γ x r ν a * naiveCurv F Γf x a s r μ))
+    - sum4 (fun a => ricciTensor F Γf a μ x * Γf.γ x a ν s)
+
+/-- 修正项缩并：C 在缩并恒等式三个循环位置上的裸迹之和。 -/
+def contractCorr (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) : ℝ :=
+  sum4 (fun r => bianchiCorr F Γf r μ ν x r s
+    + bianchiCorr F Γf μ ν r x r s
+    + bianchiCorr F Γf ν r μ x r s)
+
+set_option maxHeartbeats 1000000 in
+set_option maxRecDepth 32768 in
+/-- 循环位置二求和引理：Σ_r ∇̃_μ R̂_{νr}(x)^r_s = −∂̃_μ Riĉ_{sν} + K2。
+    证明结构：∂̃ 部分经逐点反对称 naiveCurv(x,r,s,ν,r) = −naiveCurv(x,r,s,r,ν)
+    归约为 ricciTensor 差；联络第二部分经 Finset.sum_comm 交换求和顺序、
+    Finset.sum_mul 因子化后由同一反对称恒等式归约（ring 不自动交换
+    求和指标、也不自动提出 (∑)·c 因子——故逐步手工归约）。 -/
+lemma sum_nabla_right2 (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) :
+    sum4 (fun r => naiveNablaCurv F Γf μ ν r x r s)
+    = (-(ricciTensor F Γf s ν (F.stepD μ x) - ricciTensor F Γf s ν x)
+        + contractConn2 F Γf μ ν x s) := by
+  have h1 : ∀ (r s' : Fin 4), naiveCurv F Γf (F.stepD μ x) r s' ν r
+      = - naiveCurv F Γf (F.stepD μ x) r s' r ν := by
+    intro r s'; simp only [naiveCurv, sum4]; ring
+  have h2 : ∀ (r s' : Fin 4), naiveCurv F Γf x r s' ν r
+      = - naiveCurv F Γf x r s' r ν := by
+    intro r s'; simp only [naiveCurv, sum4]; ring
+  have eA : (∑ r, naiveCurv F Γf (F.stepD μ x) r s ν r) = - ricciTensor F Γf s ν (F.stepD μ x) := by
+    simp only [ricciTensor, sum4_eq_finset_sum]
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro r _
+    exact h1 r s
+  have eB : (∑ r, naiveCurv F Γf x r s ν r) = - ricciTensor F Γf s ν x := by
+    simp only [ricciTensor, sum4_eq_finset_sum]
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro r _
+    exact h2 r s
+  have eD : (∑ r, ∑ a, naiveCurv F Γf x r a ν r * Γf.γ x a μ s)
+      = - ∑ a, ricciTensor F Γf a ν x * Γf.γ x a μ s := by
+    rw [Finset.sum_comm (f := fun r a => naiveCurv F Γf x r a ν r * Γf.γ x a μ s)]
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro a _
+    have hric : (∑ r, naiveCurv F Γf x r a ν r) = - ricciTensor F Γf a ν x := by
+      simp only [ricciTensor, sum4_eq_finset_sum]
+      rw [← Finset.sum_neg_distrib]
+      apply Finset.sum_congr rfl
+      intro r _
+      exact h2 r a
+    have key : (∑ r, naiveCurv F Γf x r a ν r * Γf.γ x a μ s)
+        = (∑ r, naiveCurv F Γf x r a ν r) * Γf.γ x a μ s :=
+      (Finset.sum_mul _ _ _).symm
+    rw [key, hric]
+    ring
+  have unfold : sum4 (fun r => naiveNablaCurv F Γf μ ν r x r s)
+      = (∑ r, (naiveCurv F Γf (F.stepD μ x) r s ν r - naiveCurv F Γf x r s ν r
+          + ∑ a, Γf.γ x r μ a * naiveCurv F Γf x a s ν r
+          - ∑ a, naiveCurv F Γf x r a ν r * Γf.γ x a μ s)) := by
+    simp only [sum4_eq_finset_sum, naiveNablaCurv]
+  rw [unfold]
+  have split : (∑ r, (naiveCurv F Γf (F.stepD μ x) r s ν r - naiveCurv F Γf x r s ν r
+        + ∑ a, Γf.γ x r μ a * naiveCurv F Γf x a s ν r
+        - ∑ a, naiveCurv F Γf x r a ν r * Γf.γ x a μ s))
+      = (∑ r, naiveCurv F Γf (F.stepD μ x) r s ν r) - (∑ r, naiveCurv F Γf x r s ν r)
+        + (∑ r, ∑ a, Γf.γ x r μ a * naiveCurv F Γf x a s ν r)
+        - (∑ r, ∑ a, naiveCurv F Γf x r a ν r * Γf.γ x a μ s) := by
+    simp only [sub_eq_add_neg, Finset.sum_neg_distrib, Finset.sum_add_distrib]
+  rw [split, eA, eB, eD]
+  simp only [contractConn2, sum4_eq_finset_sum]
+  ring
+
+set_option maxHeartbeats 1000000 in
+set_option maxRecDepth 32768 in
+/-- 循环位置三求和引理：Σ_r ∇̃_ν R̂_{rμ}(x)^r_s = ∂̃_ν Riĉ_{sμ} + K3。
+    比 sum_nabla_right2 简单：此处裸迹与 ricciTensor 定义同向
+    （Σ_r naiveCurv(x,r,a,r,μ) = Riĉ_{aμ}），无需反对称归约。 -/
+lemma sum_nabla_right3 (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) :
+    sum4 (fun r => naiveNablaCurv F Γf ν r μ x r s)
+    = ((ricciTensor F Γf s μ (F.stepD ν x) - ricciTensor F Γf s μ x)
+        + contractConn3 F Γf μ ν x s) := by
+  have hric : ∀ (a : Fin 4), (∑ r, naiveCurv F Γf x r a r μ) = ricciTensor F Γf a μ x := by
+    intro a
+    simp only [ricciTensor, sum4_eq_finset_sum]
+  -- 联络第二部分：交换求和 + 因子化 + 裸迹 = ricci（无需反对称）
+  have eD : (∑ r, ∑ a, naiveCurv F Γf x r a r μ * Γf.γ x a ν s)
+      = ∑ a, ricciTensor F Γf a μ x * Γf.γ x a ν s := by
+    rw [Finset.sum_comm (f := fun r a => naiveCurv F Γf x r a r μ * Γf.γ x a ν s)]
+    apply Finset.sum_congr rfl
+    intro a _
+    have key : (∑ r, naiveCurv F Γf x r a r μ * Γf.γ x a ν s)
+        = (∑ r, naiveCurv F Γf x r a r μ) * Γf.γ x a ν s :=
+      (Finset.sum_mul _ _ _).symm
+    rw [key, hric a]
+  have unfold : sum4 (fun r => naiveNablaCurv F Γf ν r μ x r s)
+      = (∑ r, (naiveCurv F Γf (F.stepD ν x) r s r μ - naiveCurv F Γf x r s r μ
+          + ∑ a, Γf.γ x r ν a * naiveCurv F Γf x a s r μ
+          - ∑ a, naiveCurv F Γf x r a r μ * Γf.γ x a ν s)) := by
+    simp only [sum4_eq_finset_sum, naiveNablaCurv]
+  rw [unfold]
+  have split : (∑ r, (naiveCurv F Γf (F.stepD ν x) r s r μ - naiveCurv F Γf x r s r μ
+        + ∑ a, Γf.γ x r ν a * naiveCurv F Γf x a s r μ
+        - ∑ a, naiveCurv F Γf x r a r μ * Γf.γ x a ν s))
+      = (∑ r, naiveCurv F Γf (F.stepD ν x) r s r μ) - (∑ r, naiveCurv F Γf x r s r μ)
+        + (∑ r, ∑ a, Γf.γ x r ν a * naiveCurv F Γf x a s r μ)
+        - (∑ r, ∑ a, naiveCurv F Γf x r a r μ * Γf.γ x a ν s) := by
+    simp only [sub_eq_add_neg, Finset.sum_neg_distrib, Finset.sum_add_distrib]
+  rw [split]
+  have eA : (∑ r, naiveCurv F Γf (F.stepD ν x) r s r μ) = ricciTensor F Γf s μ (F.stepD ν x) := by
+    simp only [ricciTensor, sum4_eq_finset_sum]
+  have eB : (∑ r, naiveCurv F Γf x r s r μ) = ricciTensor F Γf s μ x := by
+    simp only [ricciTensor, sum4_eq_finset_sum]
+  rw [eA, eB, eD]
+  simp only [contractConn3, sum4_eq_finset_sum]
+  ring
+
+/-- **离散 Riemann 散度恒等式**（裸迹缩并 (β)-3 的第一阶段）：
+    Σ_r naiveNablaCurv(r,μ,ν,x,r,s)
+      − ∂̃_μ Riĉ_{sν} + ∂̃_ν Riĉ_{sμ}
+    = (C 的三位置缩并) − K2 − K3（逐点精确，无任何假设）。
+    连续对应：∇^ρ R_{ρsμν} = ∇_μ Ric_{sν} − ∇_ν Ric_{sμ} 的离散修正形态
+    ——左侧为 Riemann 张量对 (ρ, s) 的散度，右侧为 Ricci 张量的协变差分
+    差；修正项 K2/K3 为联络一阶项（Γ·R̂ 与 Ric·Γ），修正项缩并为
+    C 的裸迹（O(a²) 结构）。骨架层（Γ 常值 + step 对易）下 K2/K3 退化为
+    骨架恒等式、C 缩并消失，与 §26.6/§26.7 退化链一致。
+    证明：对 (β)-3 张量恒等式取 λ = r 并对 r 求和（Finset.sum_eq_zero），
+    得 Σ_r Σ_cyc(∇̃R̂ − C) = 0；三个循环位置的和分别用
+    sum_nabla_right2 / sum_nabla_right3 归约为 ∂̃Ric ± 修正
+    （∂̃ 与求和交换无修正，修正全部来自联络项的指标耦合），
+    linarith 组装（ring 不能一次归约：它不交换求和指标顺序、
+    也不提出 (∑)·c 因子）。数值验证 numerical/phase16b_beta4_explore.py
+    （worst |LHS−RHS| = 2.1e-14）。 -/
+theorem discrete_riemann_divergence (F : FrameRecObj) (Γf : GammaField F)
+    (μ ν : Fin 4) (x : F.X.T) (s : Fin 4) :
+    (sum4 (fun r => naiveNablaCurv F Γf r μ ν x r s)
+      - (ricciTensor F Γf s ν (F.stepD μ x) - ricciTensor F Γf s ν x)
+      + (ricciTensor F Γf s μ (F.stepD ν x) - ricciTensor F Γf s μ x))
+    = contractCorr F Γf μ ν x s
+      - contractConn2 F Γf μ ν x s
+      - contractConn3 F Γf μ ν x s := by
+  have h0 : ∑ r : Fin 4,
+      ((naiveNablaCurv F Γf r μ ν x r s - bianchiCorr F Γf r μ ν x r s)
+        + (naiveNablaCurv F Γf μ ν r x r s - bianchiCorr F Γf μ ν r x r s)
+        + (naiveNablaCurv F Γf ν r μ x r s - bianchiCorr F Γf ν r μ x r s)) = 0 := by
+    rw [Finset.sum_eq_zero]
+    intro r _
+    exact discrete_second_bianchi_tensor F Γf r μ ν x r s
+  simp only [Finset.sum_add_distrib, Finset.sum_sub_distrib] at h0
+  have eP2 : (∑ r, naiveNablaCurv F Γf μ ν r x r s)
+      = (-(ricciTensor F Γf s ν (F.stepD μ x) - ricciTensor F Γf s ν x)
+          + contractConn2 F Γf μ ν x s) := by
+    rw [← sum4_eq_finset_sum]
+    exact sum_nabla_right2 F Γf μ ν x s
+  have eP3 : (∑ r, naiveNablaCurv F Γf ν r μ x r s)
+      = ((ricciTensor F Γf s μ (F.stepD ν x) - ricciTensor F Γf s μ x)
+          + contractConn3 F Γf μ ν x s) := by
+    rw [← sum4_eq_finset_sum]
+    exact sum_nabla_right3 F Γf μ ν x s
+  have ecc : contractCorr F Γf μ ν x s
+      = (∑ r, bianchiCorr F Γf r μ ν x r s)
+        + ((∑ r, bianchiCorr F Γf μ ν r x r s)
+          + (∑ r, bianchiCorr F Γf ν r μ x r s)) := by
+    simp only [contractCorr, sum4_eq_finset_sum, Finset.sum_add_distrib, add_assoc]
+  rw [sum4_eq_finset_sum]
+  linarith [h0, eP2, eP3, ecc]
+
 end MUFPF
