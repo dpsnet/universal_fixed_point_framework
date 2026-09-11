@@ -1,8 +1,8 @@
 # MUFPF 形式化环境使用说明
 
 **文档编号**：MUFPF-ENV-GUIDE-001
-**日期**：2026-09-10
-**版本**：v1.1
+**日期**：2026-09-11
+**版本**：v1.2
 
 ---
 
@@ -484,3 +484,84 @@ python phase66_gN_closed_form_verification.py
 - Lean 4 社区 Zulip：https://leanprover.zulipchat.com/
 - Lake 构建系统：https://github.com/leanprover/lake
 - elan 工具链管理：https://github.com/leanprover/elan
+
+---
+
+## 十二、Mathlib API 漂移修复模式（v1.2 新增，2026-09-11）
+
+> 背景：2026-09-10/11 完成全库 19 文件批量修复（commit ec5b4c9），
+> `lake build MUFPFormalization` 全库通过（3686 jobs，0 error）。
+> 本节记录修复过程中验证有效的模式，供下次 Mathlib/Lean 升级时照查。
+
+### 12.1 已移除/更名的常用引理对照表
+
+| 旧名（已失效） | 现用替代 | 涉及文件 |
+|:--------------|:---------|:---------|
+| `mul_le_mul_left'` / `mul_le_mul_right'` | 左右互换：`mul_le_mul_right h _`（左因子相同）、`mul_le_mul_left h _`（右因子相同） | HutchinsonAttractor |
+| `List.length_eq_zero` | `List.length_eq_zero_iff`（配合 `Nat.eq_zero_of_le_zero`） | CMB |
+| `Fin.decidableEq` | `inferInstance` | DeltaSector |
+| `Function.iterate_add`（rw 复合形式） | `Function.iterate_add_apply`（应用点形式） | CausalSet |
+| `Nat.lt_asymm`（生成 ¬a<b） | 目标 False 时直接用 `Nat.lt_irrefl n this` | CausalSet |
+| `Matrix.mul_apply`（simp 匹配不到） | `!![a, b; c, d]` 字面量 + `Matrix.mul_fin_two` | Clifford, RAP4 |
+| `logInfo`（tactic 形式） | 已失效，直接删除（或 `#eval IO.println` 替代） | MetaTheorem |
+
+### 12.2 关键修复模式
+
+**模式 1：矩阵证明一律用 `!!` 字面量 + `Matrix.mul_fin_two`**
+新版 `Matrix.mul_apply` 是 rfl（LHS/RHS 经不同实例归约），simp 报 unused 且匹配失败。
+被证矩阵改 `!![a, b; c, d]` 记号（`= Matrix.of ![...]`，区别于裸 `![...]` vecCons），
+simp 集加 `Matrix.mul_fin_two`、`Matrix.neg_apply`、`Matrix.one_apply`。
+需 `import Mathlib.LinearAlgebra.Matrix.Notation`。
+
+**模式 2：defeq 不等于能 simp——用 `change` 显式陈述目标**
+`Matrix.submatrix`、`Function.comp` 等在目标里是未应用的形式时，
+simp/rw 按语法匹配不到子项。对策：`change` 显式写出 beta 归约后的目标，
+再 `by_cases` + `simp [h, hf]`（见 HigherDecursionFunctor.transferMatrix_reindex）。
+
+**模式 3：`eqToHom h` 对任意 `h : X = Y` 都定义等于 `𝟙`**
+Lean 4 定义性证明无关使 `Eq.mpr` 跨任意等式证明 defeq。
+目标形如 `f = eqToHom h ≫ f` 时不要和 simp 搏斗，直接
+`exact (Category.id_comp f).symm`（右侧同理 `Category.comp_id`）。
+若坚持 simp：加 `eqToHom_refl` 引理，**不要**把 `eqToHom` 本身放进 simp 集
+（会被展开成 `Eq.mpr` 形式导致引理匹配失败）（见 TotalParameterFiber）。
+
+**模式 4：universe 刚性——陈述中显式钉宇宙**
+定理陈述里 `∃ X : RecObj, ...` 的宇宙在体中是刚性变量，与 `Fin 2` 强制出的
+`RecObj.{0}` 不 unify。对策：陈述写 `∃ X : RecObj.{0}, ...`（见 DeltaSector）。
+
+**模式 5：`NatIso.ofComponents` 组件要显式类型化**
+`Iso.refl X` 作为组件时，若函子复合的目标类型仅 defeq 于 `X`，
+新版 simp 在 implicit 透明度下无法归约。对策：组件写
+`Iso.refl ((F ⋙ G).obj X)`，simp 集加 `NatIso.ofComponents_hom_app`
+（见 NoiseFiber.NoiseIsoTemp）。
+
+**模式 6：非法 token 与失效语法**
+- 修饰字母 `ʰ`（U+02B0）在新词法中非法：全部改名（如 `ηh εh`）。
+- `λ` 不能作绑定名：改 `lam` 等普通标识符。
+- 连续两个 docstring 前置同一声明会报语法错：删其一。
+- `simp` 已闭合目标后多余 tactic（`rfl`/`decide`）报 "No goals"：删除。
+
+**模式 7：#check/#eval 前向引用**
+`#check` 引用其后才定义的定理报 unknown identifier：把验证块移到定义之后
+（见 MetaTheorem 包含链）。
+
+### 12.3 全库修复工作流（已验证）
+
+```bash
+# Git Bash 环境（等价 PowerShell 见 §2）
+export ELAN_HOME=/d/tools/lean/.elan ELAN_NO_SELF_UPDATE=1 PATH=/d/tools/lean/.elan/bin:$PATH
+cd E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization
+
+# 1. 单模块迭代（7-50s/个）
+lake build MUFPFormalization.<Module> 2>&1 | grep -E "^error" -A 12
+
+# 2. 全库验证（增量，断点续跑不丢进度）
+lake build MUFPFormalization 2>&1 | grep -E "^error:" | sort -u
+
+# 3. scratch 快速实验：LEAN_PATH 必须完整（10 个包路径），Windows 反斜杠 + 单引号
+export LEAN_PATH='E:\workspace\...\MUFPFormalization\.lake\build\lib\lean;D:\tools\lean\.lake\packages\mathlib\.lake\build\lib\lean;<其余 9 包同格式>'
+lean scratch_test.lean
+```
+
+**注意**：`lake build` 在错误未清完时只报"叶子"失败模块，
+被依赖模块的错误修完后会逐层暴露新错误——需反复跑到 `Build completed successfully` 为止。
