@@ -211,9 +211,14 @@ Lean 会检查该文件及其所有依赖的语法和类型正确性。若有 `s
 ### 4.4 统计 sorry 数量
 
 ```powershell
-# 统计整个项目中的 sorry 数量
+# 统计整个项目中的 sorry 数量（含注释提及，供粗略参考）
 Get-ChildItem -Path src\MUFPFormalization -Filter *.lean -Recurse | Select-String -Pattern '\bsorry\b' | Measure-Object
 ```
+
+**注意**：此命令会同时命中注释/docstring 中的 "sorry" 字样（2026-09-11 实测：
+原始 grep ~41 处，剥离注释后实际 sorry tactic 仅 3 处）。
+精确计数需先剥离 `/- -/`（可嵌套）与 `--` 注释再匹配 `\bsorry\b`
+（Python 脚本见 ENV_GUIDE v1.2 §9.2 注记）。
 
 ### 4.5 统计定理/引理数量
 
@@ -319,7 +324,12 @@ lemma firstBianchiExplicit : ...
 ### 6.4 Sorry 政策
 
 - **目标**：全项目零 sorry
-- **当前状态**：1 个 sorry（`SpectralMetric.lean` 中 `einstein_divergence_free_from_bianchi`，256 单项式计算瓶颈）
+- **当前状态（2026-09-11 实测，已剥离注释）**：**3 处 sorry** —
+  `SpectralBundle/PinchTopology.lean` ×2、`SpectralMetric.lean` ×1
+  （Einstein 散度自由，256 单项式计算瓶颈）；
+  另有 4 个显式 axiom（`EDRNCrossFramework` ×2、`GeneralMetaTheoremFramework` ×2，
+  标注为 open 问题占位）。其余 ~38 处 "sorry" 字样均为注释/docstring 中的
+  缺口登记或历史记录，非实际使用
 - **新增 sorry 必须**：
   1. 在 sorry 旁添加注释说明原因
   2. 在对应的论文/笔记中记录为待闭合缺口
@@ -415,29 +425,31 @@ pip install numpy scipy mpmath
 
 ## 九、当前项目状态
 
-### 9.1 形式化统计（2026-09-10）
+### 9.1 形式化统计（2026-09-11 实测）
 
 | 指标 | 数值 |
 |:-----|:-----|
-| Lean 源码模块数 | 107+ |
-| 总定理数 | 231 |
-| 总引理数 | 23 |
-| sorry 数量 | 1（`SpectralMetric.lean`） |
-| `lake build` jobs | 4078 |
-| 构建状态 | 通过 |
+| Lean 源码模块数 | 126 |
+| 总定理数 | 1273 |
+| 总引理数 | 100 |
+| sorry 数量（剥离注释后实测） | 3（PinchTopology ×2、SpectralMetric ×1） |
+| 显式 axiom 数 | 4（均为 open 问题占位） |
+| `lake build` jobs | 3686 |
+| 构建状态 | 通过（0 error，2026-09-11，commit ec5b4c9） |
 
 ### 9.2 关键文件 sorry 分布
 
 | 文件 | sorry 数 | 说明 |
 |:-----|:--------:|:-----|
-| `CriticalCardinality.lean` | 0 | T-01 + 占位重叠度 |
-| `PulsarRadiation.lean` | 0 | T-02 + 磁轴夹角 + 跨层对接 |
-| `GravitationalWave.lean` | 0 | T-03 |
-| `DualChannel.lean` | 0 | T-04 + 分支比 |
-| `GWPolarization.lean` | 0 | G1/G2/G3/G4 |
-| `SpectralMetric.lean` | 1 | Einstein 散度自由（256 项式计算瓶颈） |
-| `SpectralBundle.lean` | 0 | Δ↔缺陷 + 克莱因瓶 + 暗物质 |
-| 其余 100+ 模块 | 0 | 范畴基础、量子引力、宇宙学等 |
+| `SpectralBundle/PinchTopology.lean` | 2 | 捏点拓扑高阶推广（依赖无穷维工具） |
+| `SpectralMetric.lean` | 1 | Einstein 散度自由（256 项式计算瓶颈，见 §9.3） |
+| 其余 124 个模块 | 0 | 含 Rec/Sp 范畴、D 函子、伴随、谱对应、四体制元定理、T-01~T-04、G1-G4 |
+
+**注**：grep 直查会得到 ~41 处 "sorry" 字样，其中 **38 处为注释/docstring 中的
+缺口登记**（Mourre 框架、Kato-Rellich、连续极限等未来阶段的计划记录），
+实际 sorry tactic 仅 3 处。统计时应剥离 `/- -/` 与 `--` 注释后再计数。
+构建期 "declaration uses sorry" 警告可能来自对含 sorry 模块的**下游依赖**，
+并非该文件直接使用。
 
 ### 9.3 已知技术瓶颈
 
