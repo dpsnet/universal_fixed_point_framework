@@ -608,9 +608,14 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
   'δ 展开 2.8e-14；相容代换 5.7e-14（∂̃g 用离散度规相容律代换后 B_ν 成纯 Γ·g·R̂ 七项修正族）；'
   'ConnRic 曲率迹展开 2.1e-14（ConnRic_ν = Σ_{μabr} ginv·Γ·naiveCurv 四重 K 型和，'
   '纯 Ricci 定义展开，无 ∇̃/∂̃——ConnRic 可 Lean 化的形态）。'
-  '**剩余（通往 EinsteinDivergenceFree 显式陈述）**：① ConnRic 的 K 型 Lean 化（目标 §26.18，'
-  '只含 Christoffel 与朴素曲率原语）；② 全链代入后的 EinsteinDivergenceFree 最终显式陈述'
-  '（纯曲率原语：ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂；数值装配已 2.8e-14 闭合，形式化陈述为最后一步）。'
+  '**§26.18 已闭合（2026-09-12，模块 44 定理零 sorry，全库 4078 jobs `lake build` 通过）**：'
+  'ConnRic 的 K 型 Lean 化——`conn02`（(0,2)-张量协变差分的联络部分，covDiff02 = ∂̃ + conn02）'
+  '+`connric_curvature_expand`：Σ_{μa} ginv^{μa}(conn_μRiĉ)_{aν} = Σ_{μabr} ginv^{μa}'
+  '[Γ^b_{μa}(x)R̂_{rbrν}(step) + Γ^b_{μν}(x)R̂_{rar b}(step) − Γ^b_{μa}(step)R̂_{rbrν}(x)'
+  '− Γ^b_{μν}(step)R̂_{rar b}(x)]（纯 Ricci 定义展开 + 因子入和，一次通过，无 ∇̃/∂̃）。'
+  '**剩余仅一步**：EinsteinDivergenceFree 最终显式陈述——把 Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B'
+  '全链代入 §26.14–26.18 的显式形态，得到纯曲率原语（ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的'
+  '完整修正公式；数值装配已 2.8e-14 闭合，形式化陈述为最后一步。'
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。

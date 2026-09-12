@@ -93,13 +93,20 @@ ConnRic_ν = Σ_{μa} ginv^{μa}(conn_μRiĉ)_{aν}
 
 ## 4. 剩余缺口（通往 EinsteinDivergenceFree）
 
-1. **ConnRic 的 K 型 Lean 化**：把 §2.3 的四重和
-   `Σ_{μabr} ginv·Γ·naiveCurv` 形式化为 Lean 定理
-   （目标 §26.18）。只含 γ 与 naiveCurv 原语，无 ∇̃/∂̃，预计可直接 ring 闭合。
+1. ~~ConnRic 的 K 型 Lean 化~~ **已闭合（2026-09-12，§26.18）**：
+   `conn02`（(0,2)-张量协变差分的联络部分，covDiff02 = ∂̃ + conn02）+
+   `connric_curvature_expand` 四重 K 型和定理（44 定理零 sorry，一次通过）。
+   证明要点：ricciTensor 的 x 参数在 curry 末尾（`s ν x`），需包
+   lambda `fun y c d => ricciTensor F Γf c d y` 适配 conn02 的
+   `T : X.T → Fin 4 → Fin 4 → ℝ`；逐 b 因子入和用
+   `unfold sum4; ring` 一次闭合。
 2. **EinsteinDivergenceFree 最终显式陈述**：把 beta7 的
-   `Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B` 全链代入本轮与 §26.14–26.16 的
+   `Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B` 全链代入本轮与 §26.14–26.18 的
    显式形态，得到纯曲率原语（ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的
    完整修正公式。数值装配已闭合（2.8e-14），形式化陈述是最后一步。
+   所需构件已全部就位：`contracted_riemann_divergence`（§26.16）、
+   `scalar_curvature_leibniz`（§26.16）、`metric_term_divergence`（§26.17）、
+   `connric_curvature_expand`（§26.18）。
 
 ## 5. 数值记录
 

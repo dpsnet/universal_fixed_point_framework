@@ -397,6 +397,19 @@ discrete_metric_compatible 代换后 B_ν 成纯 Γ·g·R̂ 七项）、ConnRic 
 EinsteinDivergenceFree 最终显式陈述（纯曲率原语：ginv·Γ·g·R̂、
 ginv·Γ·naiveCurv、∂̃R̂；数值装配已 2.8e-14 闭合）。
 
+**新阶段第二轮已闭合（2026-09-12，§26.18，模块 44 定理零 sorry）**：
+ConnRic 的 K 型 Lean 化——`conn02`（(0,2)-张量协变差分的联络部分，
+covDiff02 = ∂̃ + conn02）+ `connric_curvature_expand`：纯 ricciTensor
+定义展开 + 因子入和（unfold sum4; ring 逐 b 闭合），
+`Σ_{μa} ginv^{μa}(conn_μRiĉ)_{aν} = Σ_{μabr} ginv^{μa}[Γ^b_{μa}(x)R̂_{rbrν}(step)
++ Γ^b_{μν}(x)R̂_{rar b}(step) − Γ^b_{μa}(step)R̂_{rbrν}(x) − Γ^b_{μν}(step)R̂_{rar b}(x)]`
+（四重 K 型和，无 ∇̃/∂̃）。
+**剩余仅一步**：EinsteinDivergenceFree 最终显式陈述——把 beta7 的
+Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B 全链代入 §26.14–26.18 的
+显式形态（contracted_riemann_divergence + scalar_curvature_leibniz +
+metric_term_divergence + connric_curvature_expand），得到纯曲率原语
+（ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的完整修正公式；数值装配已 2.8e-14 闭合。
+
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
 | 层级 | 文档 | 与本路径的关系 |
