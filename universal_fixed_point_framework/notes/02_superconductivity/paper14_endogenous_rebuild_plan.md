@@ -327,3 +327,39 @@ paper14 按三级标注诚实分层，名实差距显式标注。残余开放（
 纯标注增补，无内容改动。版本块 v1.6 条目追加"重建第二轮"摘要。
 
 **完成度**：paper14 全部定理/命题/预言/诠释/实验节/结论均带起点标注，三级体系全文无盲区。
+
+### 2026-09-12：G1 切入点闭合（GP 生成元涌现，新建 GPEmergence.lean，零 sorry）
+
+**任务转向**：用户指出 v1.6 重建"在原版上做妥协"（只标注未推导）。要求不做妥协、
+直接攻 G1 本体。本条目记录 GP 切入点的真证闭合。
+
+**新建模块 `GPEmergence.lean`**（根文件已 import，全库 3698 jobs 构建通过）：
+
+| 内容 | 定理 | 数学内容 |
+|------|------|----------|
+| §1 | `PosSpectrum` | 正谱锥约束（Rec_D 的 Sp 侧对应，凝聚态密度算子 ρ 的谱全正） |
+| §2 | `specGenerator` | A_GP := cfc(−log)——谱生成元的连续函数演算构造 |
+| §3 | `specGenerator_exp` | **谱对应求逆**：exp(−A_GP) = ρ（Paper I λ=e^{−μ} 精确求逆） |
+| §4 | `specGenerator_charpoly` | **谱映射**：σ(A_GP) = −log σ(ρ)（无质量生成元，谱为实） |
+| §5 | `specGenerator_flow` | **谱流闭合**：ρ(t)=e^{−A_GP(t)} 与 dA/dt=[G,A] 精确相容 |
+| §6 | `specGenerator_trace_pow_commutator_eq_zero` | 守恒律实例化（GPFlow 核心直接适用） |
+
+**技术要点**（备查）：
+- 用 `Matrix.IsHermitian.cfc`（mathlib Analysis/Matrix/HermitianFunctionalCalculus），
+  谱有限故任意函数（含 log）无需连续性条件；谱映射用同文件 `charpoly_cfc_eq`。
+- 酉对角化三件套：`Matrix.mem_unitaryGroup_iff/iff'` + `Matrix.inv_eq_left_inv`
+  （star U = U⁻¹）+ `Units.mk ... .isUnit`；共轭指数化用 `Matrix.exp_conj/exp_neg`。
+- 坑：项目 mathlib 处于 module 过渡期，`open Matrix/...` 批量 open 失效（裸名
+  变 autoImplicit），一律用全限定名；`NormedSpace.exp` 在 Pi 上逐点用 `Pi.coe_exp`；
+  `Complex.exp_eq_exp_ℂ` 需显式 import `Mathlib.Analysis.SpecialFunctions.Exponential`。
+- `noncomm_ring` 处理 −(U·D·U⁻¹) = U·(−D)·U⁻¹ 的符号搬移。
+
+**paper14 同步升级（v1.6 第三轮）**：§4 标注 →【内生-范畴】+【谱公理】混合
+（生成元构造链内生；GP-PDE 翻译仍谱公理层）；结论 C3 同步升级；总注从
+"本文无一结论属【内生-范畴】"改为"首次出现内生-范畴成分（C3 生成元构造链）"；
+图例形式化支撑清单补 GPEmergence 四定理；版本记录 v1.6 追加第三轮摘要。
+
+**G1 残余开放**（已登记于模块 §7 注释）：ρ 的 PF 不动点存在性（ErgodicTheory 已登记）、
+正谱锥边界破缺生成元（类比 paper5 定理 5.1，待微分基础设施）、A_SC/A_Hall 同类
+涌现构造、specGenerator 的 Hermitian 性包装。BCS 侧下一切入点：WeaveBCS 的
+r ≈ 0.874 锚点 + 谱对数构造模板推广。
