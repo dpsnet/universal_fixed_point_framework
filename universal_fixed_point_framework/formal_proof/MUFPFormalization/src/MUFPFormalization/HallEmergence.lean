@@ -23,11 +23,18 @@ Hall 侧：Landau 规范磁平移代数（clock/shift Weyl 对）的有限维模
   hallGenerator_*        Hall 链 Fermi 求逆 + GP-BCS-Hall 三链会师
                          （BCSFermiEmergence 模板在 Harper Hamiltonian 上的实例）
   occupiedProjection_*   占据带谱投影（Hermitian + 幂等 + Berry 曲率实值接入）
+  weyl_trace_orth        Weyl 迹正交性 Tr(U^a V^b) = n·δ_{a≡0}δ_{b≡0}
+                         （Weyl 基 Hilbert-Schmidt 正交；私有链 clock_pow /
+                           shift_pow / fin_add_nat_succ / omega_primitive /
+                           omega_geom_sum）
 
 数学说明：Weyl 关系 + 幺正性是磁平移代数的代数核心（Hall 侧"子范畴约束"）；
 生成元构造 H → γ_F → A_Hall 复用 BCSFermiEmergence 模板（同一谱对应求逆）。
-完整陈数理论（整性、TKNN 场论形式）、Weyl 迹正交性（Mₙ(ℂ) 结构定理）、
-谱投影对参数的导数（Berry 切向量的构造层）登记为开放（见 §末注释）。
+Weyl 迹正交性给出磁平移代数 ≅ Mₙ(ℂ) 的迹形式（Weyl 基 {U^a V^b}
+Hilbert-Schmidt 正交，范数平方 = n），是 Landau 能级单不可约表示的
+结构定理的迹层面。完整陈数理论（整性、TKNN 场论形式）、"唯一不可约
+表示 = Landau 能级载体"的表示论结构定理、谱投影对参数的导数
+（Berry 切向量的构造层）登记为开放（见 §末注释）。
 -/
 
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
@@ -352,20 +359,162 @@ theorem occupied_berry_im_eq_zero (H : Matrix (Fin n) (Fin n) ℂ)
     (berryCurvature (occupiedProjection H hH) A B).im = 0 :=
   berryCurvature_im_eq_zero _ _ _ (occupiedProjection_conjTranspose H hH).symm hA hB
 
+/-- clock 的幂：U^a = diag(ω^{a·i})（对角元的幂次结构）。 -/
+private theorem clock_pow (n : ℕ) (a : ℕ) :
+    clock n ^ a = Matrix.diagonal (fun i : Fin n => omega n ^ (a * (i : ℕ))) := by
+  induction a with
+  | zero =>
+    ext i j
+    simp only [pow_zero, Matrix.one_apply, Matrix.diagonal_apply, zero_mul]
+  | succ b ih =>
+    rw [pow_succ, ih]
+    simp only [clock, Matrix.diagonal_mul_diagonal, Pi.mul_apply, Nat.succ_mul, pow_add]
+
+/-- Fin 加法交换引理：j + 1 + ofNat b = j + ofNat (b+1)（val 层的模同余搬移，
+    Nat.ModEq 按定义即 % 相等，故可直接搬运 % 等式）。 -/
+private theorem fin_add_nat_succ {n : ℕ} [NeZero n] (j : Fin n) (b : ℕ) :
+    j + 1 + Fin.ofNat n b = j + Fin.ofNat n (b + 1) := by
+  apply Fin.ext
+  have e1 : ((j.val + 1 % n) + b % n) % n = (j.val + 1 + b) % n :=
+    (((Nat.ModEq.refl j.val).add (Nat.mod_modEq 1 n)).add (Nat.mod_modEq b n))
+  have e2 : (j.val + (b + 1) % n) % n = (j.val + (b + 1)) % n :=
+    (Nat.ModEq.refl j.val).add (Nat.mod_modEq (b + 1) n)
+  have hmid : j.val + 1 + b = j.val + (b + 1) := by rw [Nat.add_assoc, Nat.add_comm 1 b]
+  have hmid' : (j.val + 1 + b) % n = (j.val + (b + 1)) % n :=
+    congrArg (fun x => x % n) hmid
+  rw [Fin.val_add, Fin.val_add, Fin.val_add,
+    (show (Fin.ofNat n b).val = b % n from rfl),
+    (show (Fin.ofNat n (b + 1)).val = (b + 1) % n from rfl), Fin.val_one']
+  rw [Nat.mod_add_mod]
+  exact (e1.trans hmid').trans e2.symm
+
+/-- shift 的幂：(V^b)_{ij} = δ_{i, j+ofNat b}——循环移位幂次的置换性刻画。 -/
+private theorem shift_pow {n : ℕ} [NeZero n] (b : ℕ) :
+    ∀ i j : Fin n, (shift n ^ b) i j = if i = j + Fin.ofNat n b then (1 : ℂ) else 0 := by
+  induction b with
+  | zero =>
+    intro i j
+    simp only [pow_zero, Matrix.one_apply]
+    rw [show j + Fin.ofNat n 0 = j from by
+      apply Fin.ext
+      rw [Fin.val_add, (show (Fin.ofNat n 0).val = 0 from rfl), Nat.add_zero,
+        Nat.mod_eq_of_lt j.2]]
+  | succ b ih =>
+    intro i j
+    rw [pow_succ, Matrix.mul_apply]
+    have hshift : ∀ k : Fin n, shift n k j = if k = j + 1 then (1 : ℂ) else 0 := fun k => rfl
+    rw [show (∑ k : Fin n, (shift n ^ b) i k * shift n k j)
+        = ∑ k : Fin n, (shift n ^ b) i k * (if k = j + 1 then (1 : ℂ) else 0)
+      from Finset.sum_congr rfl fun k _ => by rw [hshift k]]
+    have hs : (∑ k : Fin n, (shift n ^ b) i k * (if k = j + 1 then (1 : ℂ) else 0))
+        = (shift n ^ b) i (j + 1) * (if j + 1 = j + 1 then (1 : ℂ) else 0) :=
+      Finset.sum_eq_single (s := Finset.univ)
+        (f := fun k : Fin n => (shift n ^ b) i k * (if k = j + 1 then (1 : ℂ) else 0))
+        (a := j + 1) (fun k _ hkj => by rw [if_neg hkj, mul_zero])
+        (fun hcontra => absurd (Finset.mem_univ _) hcontra)
+    rw [hs, ih, if_pos rfl, mul_one, fin_add_nat_succ j b]
+
+/-- ωₙ 是 n 次本原单位根（磁通量子的代数地位：生成全体 n 次单位根）。 -/
+private theorem omega_primitive {n : ℕ} [NeZero n] : IsPrimitiveRoot (omega n) n := by
+  rw [omega, show omegaArg n = 2 * (↑Real.pi : ℂ) * Complex.I * (1 / ↑n) from by
+    rw [omegaArg, div_eq_mul_inv, one_div]]
+  simpa only [Nat.cast_one] using
+    Complex.isPrimitiveRoot_exp_of_coprime 1 n (NeZero.ne n) (Nat.coprime_one_left n)
+
+/-- 本原根几何和：∑_{i<n} (ω^a)^i = n·δ_{a≡0}——迹正交性的谱权重核心。 -/
+private theorem omega_geom_sum {n : ℕ} [NeZero n] (a : ℕ) :
+    ∑ i : Fin n, (omega n ^ a) ^ (i : ℕ) = if a % n = 0 then (n : ℂ) else 0 := by
+  rw [Fin.sum_univ_eq_sum_range]
+  have hprim := omega_primitive (n := n)
+  by_cases ha : a % n = 0
+  · rw [if_pos ha]
+    have h1 : omega n ^ a = 1 := by
+      obtain ⟨m, hm⟩ := (Nat.dvd_iff_mod_eq_zero).2 ha
+      rw [hm, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)), one_pow]
+    simp [h1]
+  · rw [if_neg ha]
+    have hne : omega n ^ a ≠ 1 := by
+      have hiff := hprim.pow_eq_one_iff_dvd a
+      rw [Nat.dvd_iff_mod_eq_zero] at hiff
+      exact fun h => ha (hiff.1 h)
+    rw [geom_sum_eq hne]
+    have hpow : (omega n ^ a) ^ n = 1 := by
+      rw [← pow_mul, Nat.mul_comm, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)),
+        one_pow]
+    rw [hpow, sub_self, zero_div]
+
+/-- **Weyl 迹正交性**：Tr(U^a V^b) = n·δ_{a≡0(mod n)}·δ_{b≡0(mod n)}——磁平移代数
+    ≅ Mₙ(ℂ) 的结构定理（Weyl 基 {U^a V^b} 的 Hilbert-Schmidt 正交性；中心平凡 ⟹
+    唯一不可约表示 = Landau 能级载体的代数根源）。 -/
+theorem weyl_trace_orth {n : ℕ} [NeZero n] (a b : ℕ) :
+    (clock n ^ a * shift n ^ b).trace
+      = if a % n = 0 ∧ b % n = 0 then (n : ℂ) else 0 := by
+  classical
+  rw [Matrix.trace]
+  simp only [Matrix.diag_apply]
+  have hmul : ∀ i : Fin n, (clock n ^ a * shift n ^ b) i i
+      = omega n ^ (a * (i : ℕ)) * ((shift n ^ b) i i) := by
+    intro i
+    rw [Matrix.mul_apply]
+    have hs : (∑ k : Fin n, (clock n ^ a) i k * (shift n ^ b) k i)
+        = (clock n ^ a) i i * (shift n ^ b) i i :=
+      Finset.sum_eq_single (s := Finset.univ)
+        (f := fun k : Fin n => (clock n ^ a) i k * (shift n ^ b) k i)
+        (a := i)
+        (fun k _ hki => by
+          rw [clock_pow, Matrix.diagonal_apply, if_neg (fun h => hki h.symm), zero_mul])
+        (fun hcontra => absurd (Finset.mem_univ _) hcontra)
+    rw [hs, clock_pow, Matrix.diagonal_apply, if_pos rfl]
+  rw [Finset.sum_congr rfl fun i _ => hmul i]
+  have hdiag : ∀ i : Fin n, (shift n ^ b) i i = if b % n = 0 then (1 : ℂ) else 0 := by
+    intro i
+    rw [shift_pow b i i]
+    by_cases hb : b % n = 0
+    · rw [if_pos hb, if_pos]
+      apply Fin.ext
+      rw [Fin.val_add, (show (Fin.ofNat n b).val = b % n from rfl), hb, Nat.add_zero,
+        Nat.mod_eq_of_lt i.2]
+    · rw [if_neg hb, if_neg]
+      rintro he
+      have hval := congrArg Fin.val he
+      rw [Fin.val_add, (show (Fin.ofNat n b).val = b % n from rfl)] at hval
+      have hlt : b % n < n := Nat.mod_lt b (NeZero.pos n)
+      have h1 := Nat.div_add_mod (i.val + b % n) n
+      rw [← hval] at h1
+      have hc : b % n = n * ((i.val + b % n) / n) := by omega
+      have hq0 : (i.val + b % n) / n = 0 := by
+        by_contra hq0
+        have hq1 : (1 : ℕ) ≤ (i.val + b % n) / n := Nat.one_le_iff_ne_zero.2 hq0
+        nlinarith [NeZero.pos n, hlt, hc]
+      rw [hq0, Nat.mul_zero] at hc
+      exact hb hc
+  rw [Finset.sum_congr rfl fun i _ => by rw [hdiag i]]
+  by_cases hb : b % n = 0
+  · rw [Finset.sum_congr rfl fun i _ => by rw [if_pos hb, mul_one],
+      Finset.sum_congr rfl fun i _ => by rw [pow_mul], omega_geom_sum a]
+    by_cases ha : a % n = 0
+    · rw [if_pos (show a % n = 0 ∧ b % n = 0 from ⟨ha, hb⟩), if_pos ha]
+    · rw [if_neg (show ¬(a % n = 0 ∧ b % n = 0) from fun h => ha h.1), if_neg ha]
+  · rw [Finset.sum_congr rfl fun i _ => by rw [if_neg hb, mul_zero],
+      if_neg (show ¬(a % n = 0 ∧ b % n = 0) from fun h => hb h.2)]
+    simp
+
 /- §末开放登记（不占用 sorry，真证路径）：
 
-  1. **Weyl 迹正交性**：Tr(U^a V^b) = n·δ_{a≡0}δ_{b≡0}——磁平移代数 ≅ Mₙ(ℂ)
-     的结构定理（中心平凡 ⟹ 唯一不可约表示 = Landau 能级载体）。需复单位根
-     几何和 ∑ω^{ia}，包装工作。
-  2. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
+  1. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
      拓扑度/Kubo 线性响应基础设施（BerryChern 已登记）。
-  3. **谱投影切向量**：A = ∂ₓP、B = ∂ᵧP 的构造（投影族参数导数）属微积分
+  2. **谱投影切向量**：A = ∂ₓP、B = ∂ᵧP 的构造（投影族参数导数）属微积分
      基础设施；当前 occupied_berry_im_eq_zero 以任意厄米切向量为假设接入。
-  4. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
+  3. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
      需具体谱计算，数值层已有载体。
+  4. **唯一不可约表示**：磁平移代数 ≅ Mₙ(ℂ) 的表示论结构定理
+     （唯一 n 维不可约表示 = Landau 能级载体）——迹层面已由
+     weyl_trace_orth 闭合，表示层需 Schur/矩阵代数表示论基础设施。
 
   已闭合（本模块，零 sorry）：Weyl 关系 + clock/shift 幺正性 + Harper Hermitian
   + Hall 生成元链（Fermi 求逆 + 三链会师）+ 占据投影（Hermitian/幂等）
-  + Hall-Berry 曲率实值接入。G1 的三个切入点（GP/BCS/Hall）至此全部闭合。 -/
+  + Hall-Berry 曲率实值接入 + Weyl 迹正交性（weyl_trace_orth：Weyl 基
+  Hilbert-Schmidt 正交，磁平移代数 ≅ Mₙ(ℂ) 结构定理的迹形式）。
+  G1 的三个切入点（GP/BCS/Hall）至此全部闭合。 -/
 
 end MUFPF

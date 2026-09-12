@@ -487,3 +487,44 @@ Weyl 迹正交性 Tr(U^a V^b) = n·δ_{a≡0}δ_{b≡0}（磁平移代数 ≅ M�
 积分/拓扑度/Kubo 基础设施）；谱投影参数导数（Berry 切向量构造层，当前以任意
 厄米切向量为假设接入）；Harper 谱隙/Hofstadter Butterfly（需具体谱计算，数值层
 有载体）；ρ 的 PF 不动点存在性；T→0 算子收敛（泛函分析，远期）。
+
+### 2026-09-13：Weyl 迹正交性闭合（HallEmergence §8，零 sorry）
+
+**交付定理**（`HallEmergence.lean` 新增，全库 3700 jobs 编译通过）：
+
+| 名称 | 可见性 | 内容 |
+|------|--------|------|
+| `weyl_trace_orth` | public | Tr(U^a V^b) = if a%n=0 ∧ b%n=0 then n else 0——Weyl 基 {U^a V^b} Hilbert-Schmidt 正交（范数平方 = n），磁平移代数 ≅ Mₙ(ℂ) 结构定理的迹形式 |
+| `clock_pow` | private | clock n ^ a = Matrix.diagonal (fun i => ω^(a·i))——clock 幂的对角化显式形 |
+| `shift_pow` | private | (shift n ^ b) i j = if i = j + Fin.ofNat n b then 1 else 0——shift 幂的置换形 |
+| `fin_add_nat_succ` | private | j + 1 + Fin.ofNat n b = j + Fin.ofNat n (b+1)（Fin 加法 + 模数吸收） |
+| `omega_primitive` | private | IsPrimitiveRoot (ω n) n（本原性，经 Complex.isPrimitiveRoot_exp_of_coprime） |
+| `omega_geom_sum` | private | ∑_{i< n} (ω^a)^i = if a%n=0 then n else 0（几何和判别，分母零情形的根级处理） |
+
+证明主线：trace = ∑ᵢ (clock^a)ᵢᵢ · (shift^b)ᵢᵢ（sum_eq_single 逐行对角化）→ 对角元
+对 b%n=0 分支判别（b%n≠0 时 Fin.ext 导出矛盾，q=0 用 div_add_mod + nlinarith）→
+幂化 (ω^a)^i 的几何和 → ω 本原性判 (a, n) 关系。Weyl 迹正交性从"开放登记第 1 条"
+移出；§末开放登记同步增补第 4 条"唯一不可约表示"（表示论结构定理，迹层面已闭合）。
+
+**技术要点（本版 mathlib 新踩实）**：
+
+- **`NatCast (Fin n)` 实例已移除**（新版 mathlib/Lean core）：`(b : Fin n)`、
+  `Nat.cast b`、`Fin.ofNat'` 全部不可用；替代 `Fin.ofNat n a`（core，val = a%n 是 rfl）。
+- **omega 对含变量除法原子的目标不可靠**（把 n·q 当独立原子）：b%n = n·q 推出
+  q=0 须 `Nat.div_add_mod` + `rw [← hval] at h1`（方向！）+ `nlinarith`，不要用 omega。
+- **`rw [if_pos ⟨ha, hb⟩]` 匿名构造器对 metaviable 条件会 elaboration 失败**：
+  必须 `rw [if_pos (show a%n=0 ∧ b%n=0 from ⟨ha, hb⟩)]` 显式标注。
+- `Finset.sum_eq_single` 隐参 s/f/a 必须显式，否则 f 退化为 metaviable 导致 h₀ 内无法 rw；
+  `rw [Finset.sum_congr rfl fun i _ => by rw […]]` 可用（f 从目标合一确定）。
+- `geom_sum_eq`（root 级，open Finset）、`IsPrimitiveRoot.pow_eq_one_iff_dvd`、
+  `Nat.mod_modEq`/`Nat.ModEq.refl/.add`、`Nat.mod_add_mod`、`NeZero.pos/.ne` 均可用。
+
+**paper14 同步（v1.6 第六轮）**：文首形式化支撑清单 Hall 条目追加 weyl_trace_orth
+并把 Weyl 迹正交性移出开放清单（"唯一不可约表示"表示论结构定理登记开放）；§3
+层级标注段改述（Weyl 迹正交性已机器证明）；结论 C2 残余开放列举同步；版本记录
+v1.6 追加第六轮摘要。
+
+**残余开放（均已登记，Weyl 迹正交性已移出）**：陈数整性 C = (1/2π)∫F ∈ ℤ 与
+TKNN 场论形式（需环面积分/拓扑度/Kubo 基础设施）；唯一不可约表示 = Landau 能级
+载体的表示论结构定理（Schur/矩阵代数表示论）；谱投影参数导数（Berry 切向量构造
+层）；Harper 谱隙/Hofstadter Butterfly；ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
