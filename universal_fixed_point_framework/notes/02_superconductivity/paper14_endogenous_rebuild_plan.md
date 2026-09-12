@@ -418,3 +418,72 @@ PosSpectrum γ_F 与 cfc 特征多项式的 eigenvalues 索引对齐（谱重排
 当前由无正性条件的 inverse/flow 覆盖同一数学内容）；specGenerator 的
 Hermitian 性包装（GP 侧已登记）；ρ 的 PF 不动点存在性；T→0 奇异极限的
 算子收敛（泛函分析，远期）。
+
+### 2026-09-12：G1 第三切入点闭合（Hall 生成元涌现，新建 HallEmergence.lean，零 sorry）——G1 三切入点全闭合
+
+承接 GP、BCS 切入点（见上两条），按同一 paper5 §5 模板完成 G1 的最后一个
+切入点。Hall 侧从**磁平移代数**出发——Landau 规范磁通量子 ωₙ = e^{2πi/n} 上的
+Weyl 对（clock 对角磁平移 / shift 循环移位），与 GP 侧（需正谱锥约束）、BCS 侧
+（无谱条件）三足并立：磁平移代数的 Weyl 关系 + 幺正性即 Hall 侧"子范畴约束"
+的代数核心。
+
+**新建模块 `HallEmergence.lean`**（namespace MUFPF，根文件已 import，
+全库 3700 jobs 构建通过，零 sorry）：
+
+| 内容 | 定理/定义 | 数学内容 |
+|------|-----------|----------|
+| — | `omegaArg`/`omega`、`omega_pow`/`omega_pow_mod` | 磁通量子 ωₙ = e^{2πi/n}，ωₙ^n = 1 与降幂 ω^a = ω^(a % n) |
+| — | `clock`/`shift` | Weyl 对：U = diag(ω^i)，V = 循环移位（Fin n 模加法） |
+| §1 | `clock_shift_weyl` | **Weyl 关系**：UV = ωₙ·VU（n ≥ 2）——磁平移代数对合关系 |
+| §2 | `clock_star_mul_self`/`shift_star_mul_self`/`shift_mul_star_self` | clock/shift 幺正性 U†U = V†V = VV† = 1 |
+| §3 | `harper`/`harper_isHermitian` | Harper Hamiltonian H = U+U†+V+V† 的 Hermitian 性 |
+| §4 | `hallGenerator_fermi_inverse` | Hall 链 Fermi 求逆：exp(−A_Hall) = γ_F(H_Harper)（BCS 模板实例） |
+| §5 | `hallGenerator_spec_meeting` | **GP-BCS-Hall 三链会师**：specGenerator γ_F(H_Harper) = A_Hall |
+| §6 | `occFn`/`occupiedProjection` + `_isHermitian`/`_idempotent` | T=0 占据带谱投影：Hermitian + 幂等 |
+| §7 | `occupied_berry_im_eq_zero` | **Hall-Berry 接入**：占据带 Berry 曲率实值（σ_xy ∈ ℝ 的代数根源） |
+
+另补 `GPEmergence.specGenerator_isHermitian`（specGenerator 的 Hermitian 性包装，
+GP 侧登记项闭合）。
+
+**关键技术要点**（在 GP/BCS 条坑清单之上新增）：
+- `Fin n` 的 `+` 需要 `NeZero n` 实例：`haveI : NeZero n := ⟨Nat.ne_of_gt (by omega)⟩`
+  从 `hn : 1 ≤ n` 现场构造；`Fin.val_one' (n) [NeZero n] : ((1:Fin n):ℕ) = 1 % n`
+  （无 val_one，1 < n 时自己接 `Nat.mod_eq_of_lt`）。
+- `Finset.sum_eq_single (s/f/a := ...)` 的三个隐参必须显式给 `f`——否则 h₀ 里
+  的目标退化为 `?m.137 k = 0`（f 为 metaviable），tactic 块无法 rw；给了 `f :=` 后
+  `a` 仍需 `(a := j)`，否则结论 `∑ = f ?a` 与 ascribed 类型合一失败。
+- 求和核用 `Finset.sum_eq_single` 取唯一非零点（而非 `Finset.sum_ite_eq'`——
+  该引理在本版 mathlib 化出 `if a ∈ univ` 形态，且 univ 版行为不稳定）；
+  两种条件方向（`a = k+1` 与 `k = a+1`，后者为 star 在左的形态）各证一版
+  （`shift_sum_ite`/`shift_sum_ite'`）。
+- 唯一性论证走 `fin_add_one_injective`（+1 在 Fin n 单射；n = 1 用
+  `Subsingleton.elim`）+ 原像引理 `fin_add_pred_add_one`（(a+(n−1))+1 = a，
+  模数 % 先用手工 `Nat.mod_*` 消掉再 omega——**omega 不处理变量模数**）。
+- `Complex.conj` 在本版 mathlib **不存在**：`conj` 是 `ComplexConjugate` scope 内
+  记号（`starRingEnd ℂ`）。绕法：全程用 `star` 表述
+  （`rw [Complex.star_def, ← Complex.exp_conj, ← Complex.exp_neg]`），
+  re/im 分量用 `Complex.ext_iff` + `simp [omegaArg, div_neg, neg_div]` 关闭。
+- `Matrix.IsHermitian A` 定义为 `Aᴴ = A`（`LinearAlgebra/Matrix/Hermitian.lean:44`），
+  但 `ᴴ` 记号在本文件 `open Matrix` 下仍不解析（原因未查明，BerryChern 同 setup
+  可用）——稳妥写法：一律用 `Matrix.conjTranspose` 全称。
+- `rw` 语法匹配不透 def（`omega`/`shift`/`occFn`），需 `simp only [omega]` 或
+  have+默认透明度；`congr 1` 常把 defeq 叶子 rfl 全闭，多写报 "No goals"。
+- 幂等定理的矩阵结合：中间步骤显式写成 `U * (D * D) * star U`（noncomm_ring
+  可证任意真实结合等式），给 `Matrix.diagonal_mul_diagonal` 留出
+  `diagonal ?d₁ * diagonal ?d₂` 的语法子项——左结合形 `(U*D)*D` 中 D、D 不构成
+  乘积子项，rw 匹配失败。
+
+**paper14 同步升级（v1.6 第五轮）**：§3 新增层级标注段 →【内生-范畴】+
+【谱公理】混合（磁平移代数 Weyl 关系/幺正性、Harper 生成元链、占据投影、
+Berry 曲率实值已机器证明属内生-范畴层；陈数积分定义/整性/TKNN 场论仍谱公理层）；
+结论 C2 同步升级；总注更新（C1/C2/C3 内生-范畴成分，**G1 状态：GP、BCS、Hall
+三切入点全部闭合，经 GP-BCS 会师与 GP-BCS-Hall 三链会师统一，G1 本体完成**）；
+文首形式化支撑清单补 HallEmergence 七定理；§2 末"Hall 侧开放"改为已闭合；
+版本记录 v1.6 追加第五轮摘要。
+
+**G1 至此三切入点全闭合（GP/BCS/Hall）**。残余开放（均已登记）：
+Weyl 迹正交性 Tr(U^a V^b) = n·δ_{a≡0}δ_{b≡0}（磁平移代数 ≅ Mₙ(ℂ) 结构定理，
+需复单位根几何和包装）；陈数整性 C = (1/2π)∫F ∈ ℤ 与 TKNN 场论形式（需环面
+积分/拓扑度/Kubo 基础设施）；谱投影参数导数（Berry 切向量构造层，当前以任意
+厄米切向量为假设接入）；Harper 谱隙/Hofstadter Butterfly（需具体谱计算，数值层
+有载体）；ρ 的 PF 不动点存在性；T→0 算子收敛（泛函分析，远期）。

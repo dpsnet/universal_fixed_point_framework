@@ -185,6 +185,15 @@ theorem specGenerator_trace_pow_commutator_eq_zero {P : Matrix (Fin n) (Fin n) �
       * (G * specGenerator P hP - specGenerator P hP * G)).trace = 0 :=
   trace_pow_mul_commutator_eq_zero G (specGenerator P hP) k
 
+/-- §7a：生成元 Hermitian——specGenerator P hP 本身是 Hermitian（cfc 保自伴的
+    直接实例；Hall 切入点的 Hall-Berry 接入依赖此包装）。 -/
+theorem specGenerator_isHermitian {P : Matrix (Fin n) (Fin n) ℂ}
+    (hP : P.IsHermitian) : (specGenerator P hP).IsHermitian :=
+  Matrix.isHermitian_iff_isSelfAdjoint.2 (by
+    unfold specGenerator
+    rw [← Matrix.IsHermitian.cfc_eq]
+    exact IsSelfAdjoint.cfc)
+
 /- §7 开放登记（不占用 sorry，真证路径）：
 
   本模块闭合了 G1 的 GP 切入点：给定密度算子 ρ，其谱生成元的构造、谱对应
@@ -199,8 +208,8 @@ theorem specGenerator_trace_pow_commutator_eq_zero {P : Matrix (Fin n) (Fin n) �
   3. **BCS/Hall 生成元**：A_SC（配对不动点）、A_Hall（磁平移代数）的同类
      涌现构造。BCS 侧已有 WeaveBCS 数值锚点（r ≈ 0.874）；Hall 侧需磁平移
      投影的有限维代数模型。
-  4. **生成元的 Hermitian 性**：specGenerator P hP 本身 Hermitian（本征值
-     已为实，矩阵 Hermitian 性是 cfc 保自伴的直接推论，属包装工作）。
+  4. **生成元的 Hermitian 性**：（已闭合，specGenerator_isHermitian）
+     specGenerator P hP 本身 Hermitian，cfc 保自伴的直接实例。
 
   已闭合（本模块，零 sorry）：PosSpectrum 约束 + specGenerator 构造 +
   specGenerator_exp（谱对应求逆）+ specGenerator_charpoly（谱映射）+

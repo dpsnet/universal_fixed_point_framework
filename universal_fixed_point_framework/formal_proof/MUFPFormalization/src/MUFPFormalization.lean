@@ -105,4 +105,5 @@ import MUFPFormalization.BerryChern
 import MUFPFormalization.GPFlow
 import MUFPFormalization.GPEmergence
 import MUFPFormalization.BCSFermiEmergence
+import MUFPFormalization.HallEmergence
 import MUFPFormalization.SpectralInvariant
