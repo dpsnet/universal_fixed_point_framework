@@ -118,7 +118,7 @@ MUFPF 框架有一个贯穿始终的核心宣称：引力不是四种基本力�
   ├── 12.2 涌现映射的普适性
   ├── 12.3 核心结论
   ├── 12.4 形式化状态
-  └── 12.5 技术局限性与已解决问题
+  └── 12.5 技术局限性
 ```
 
 ---
@@ -631,9 +631,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 **统计**：15 个定理/命题中 14 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`——恒等式形态证伪、修正公式形态闭合（§8/§12.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪、不进入形式系统（全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。真值路径已完整闭合——`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry（算子主定理 `discrete_second_bianchi_operator` → 骨架层 → 度规缩并 → Einstein 构造层 → 收缩 Bianchi `contracted_riemann_divergence` → δ 缩并 `metric_term_divergence` → ConnRic K 型 `connric_curvature_expand` → 收官 `einstein_divergence_explicit`），开放命题 `EinsteinDivergenceFree` 以修正公式形态解决；真协变守恒律以显式修正公式（而非恒等式）形式在离散层成立，连续极限退化到经典 ∇^μG_{μν} = 0。
 
-### 12.5 技术局限性与已解决问题
-
-**最重要的已解决问题。** 本文技术层面最重要的已解决问题是 Einstein 散度守恒律的离散形态（技术细节见 §7.1，闭合结果见 §8）：恒等式形态 ∇^μ G_μν = 0 在点值骨架中为假，其真值以显式修正公式（定理 8.1）闭合——守恒律在离散层以修正公式而非恒等式的形式成立，连续极限回到经典形式。该负结果与修正公式的组合超出本文框架：任何丢弃 ∂ 项的点值离散化都会丢失 ∂ 与 Γ 的联合抵消结构，守恒律都须以移位差分修正的形式重新表述。证伪与全链闭合记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
+### 12.5 技术局限性
 
 **开放问题**：
 
