@@ -1455,4 +1455,107 @@ theorem discrete_riemann_divergence (F : FrameRecObj) (Γf : GammaField F)
   rw [sum4_eq_finset_sum]
   linarith [h0, eP2, eP3, ecc]
 
+/-- 度量降指标 (0,4) 曲率：R4_{abcd}(p) = Σ_r g_{ar}(p) R̂^r{}_{bcd}(p)。
+    连续对应 g_{rr'} R̂^{r'}{}_{bcd}（Riemann (0,4) 张量）。 -/
+def lower4 (F : FrameRecObj) (Γf : GammaField F)
+    (g : F.X.T → Fin 4 → Fin 4 → ℝ) (a b c d : Fin 4) (p : F.X.T) : ℝ :=
+  sum4 (fun r => g p a r * naiveCurv F Γf p r b c d)
+
+/-- 对偶交换残差（pair-swap residual）：PS_{abcd} = R4_{abcd} − R4_{cdab}。
+    连续理论中 R_{abcd} = R_{cdab}（对偶交换），PS ≡ 0；差分代数中
+    PS = O(∂̃Γ)（一阶差分结构），是场层级 Ricci 不对称的精确载体。 -/
+def pairSwapRes (F : FrameRecObj) (Γf : GammaField F)
+    (g : F.X.T → Fin 4 → Fin 4 → ℝ) (a b c d : Fin 4) (p : F.X.T) : ℝ :=
+  lower4 F Γf g a b c d p - lower4 F Γf g c d a b p
+
+/-- 度量 Ricci = 裸迹 Ricci（纯 δ-代数，无场方程/对称性假设）：
+    Σ_{a,b} ginv^{ab} R4_{bσaν} = Riĉ_{σν}。证明：ginv 因子移入 r-和
+    （mul_sum）→ b/r 双和交换（sum_comm）→ 因子化（sum_mul）→
+    δ 缩并（hctr）→ δ 求值（sum4_ite_eq'）→ ricciTensor 定义。 -/
+lemma metric_ricci_eq (F : FrameRecObj) (Γf : GammaField F)
+    (g ginv : F.X.T → Fin 4 → Fin 4 → ℝ)
+    (hctr : ∀ p m s, sum4 (fun i => ginv p m i * g p i s) = if s = m then 1 else 0)
+    (σ ν : Fin 4) (p : F.X.T) :
+    sum4 (fun a => sum4 (fun b => ginv p a b * lower4 F Γf g b σ a ν p))
+    = ricciTensor F Γf σ ν p := by
+  simp only [lower4, sum4_eq_finset_sum, Finset.mul_sum]
+  have e1 : (∑ a, ∑ b, ∑ r, ginv p a b * (g p b r * naiveCurv F Γf p r σ a ν))
+      = ∑ a, ∑ r, (∑ b, ginv p a b * g p b r) * naiveCurv F Γf p r σ a ν := by
+    apply Finset.sum_congr rfl; intro a _
+    rw [Finset.sum_comm (f := fun b r => ginv p a b * (g p b r * naiveCurv F Γf p r σ a ν))]
+    apply Finset.sum_congr rfl; intro r _
+    calc (∑ b, ginv p a b * (g p b r * naiveCurv F Γf p r σ a ν))
+        = ∑ b, (ginv p a b * g p b r) * naiveCurv F Γf p r σ a ν := by
+          apply Finset.sum_congr rfl; intro b _; ring
+      _ = (∑ b, ginv p a b * g p b r) * naiveCurv F Γf p r σ a ν :=
+          (Finset.sum_mul _ _ _).symm
+  rw [e1]
+  have e2 : (∑ a, ∑ r, (∑ b, ginv p a b * g p b r) * naiveCurv F Γf p r σ a ν)
+      = ∑ a, ∑ r, (if r = a then (1:ℝ) else 0) * naiveCurv F Γf p r σ a ν := by
+    apply Finset.sum_congr rfl; intro a _
+    apply Finset.sum_congr rfl; intro r _
+    have h := hctr p a r
+    rw [sum4_eq_finset_sum] at h
+    rw [h]
+  rw [e2]
+  have e3 : (∑ a, ∑ r, (if r = a then (1:ℝ) else 0) * naiveCurv F Γf p r σ a ν)
+      = ∑ a, naiveCurv F Γf p a σ a ν := by
+    apply Finset.sum_congr rfl; intro a _
+    rw [← sum4_eq_finset_sum]
+    exact sum4_ite_eq' a (fun r => naiveCurv F Γf p r σ a ν)
+  rw [e3]
+  simp only [ricciTensor, sum4_eq_finset_sum]
+
+set_option maxHeartbeats 1000000 in
+set_option maxRecDepth 32768 in
+/-- **修正 Ricci 对称性**（场层级，(β)-4 前置缺口闭合）：
+    Riĉ_{σν} − Riĉ_{νσ} = ½ ginv^{ab} (PS_{bσaν} − PS_{bνaσ})，
+    其中 PS 为 (0,4) 曲率的对偶交换残差。纯代数恒等式（pair swap 分解 +
+    ginv·g = δ + ginv 对称），无场方程、无联络假设。
+    物理含义：场层级 Ricci 不对称（预实验 ≈0.29·|Ric|）的精确载体是
+    PS——连续理论中恒零的对偶交换对称性在差分代数中的残差（O(∂̃Γ)）；
+    骨架层（∂̃≡0）下 PS ≡ 0，退化为骨架 Ricci 对称 skeleton_ricci_symmetric。
+    证明：metric_ricci_eq 两侧化度量 Ricci = 裸迹 Ricci；pair swap 分解
+    A = −A + S（hX/hY 为 ginv 对称下的双和换名，dist 为乘积分配）。 -/
+theorem modified_ricci_symmetry (F : FrameRecObj) (Γf : GammaField F)
+    (g ginv : F.X.T → Fin 4 → Fin 4 → ℝ)
+    (hginv : ∀ p μ ν, ginv p μ ν = ginv p ν μ)
+    (hctr : ∀ p m s, sum4 (fun i => ginv p m i * g p i s) = if s = m then 1 else 0)
+    (σ ν : Fin 4) (p : F.X.T) :
+    ricciTensor F Γf σ ν p - ricciTensor F Γf ν σ p
+    = (1/2) * sum4 (fun a => sum4 (fun b => ginv p a b *
+        (pairSwapRes F Γf g b σ a ν p - pairSwapRes F Γf g b ν a σ p))) := by
+  have e1 := metric_ricci_eq F Γf g ginv hctr σ ν p
+  have e2 := metric_ricci_eq F Γf g ginv hctr ν σ p
+  rw [← e1, ← e2]
+  have hX : (∑ a, ∑ b, ginv p a b * lower4 F Γf g a ν b σ p)
+      = ∑ a, ∑ b, ginv p a b * lower4 F Γf g b ν a σ p := by
+    rw [Finset.sum_comm (f := fun a b => ginv p a b * lower4 F Γf g a ν b σ p)]
+    apply Finset.sum_congr rfl; intro q _
+    apply Finset.sum_congr rfl; intro a _
+    rw [hginv p a q]
+  have hY : (∑ a, ∑ b, ginv p a b * lower4 F Γf g a σ b ν p)
+      = ∑ a, ∑ b, ginv p a b * lower4 F Γf g b σ a ν p := by
+    rw [Finset.sum_comm (f := fun a b => ginv p a b * lower4 F Γf g a σ b ν p)]
+    apply Finset.sum_congr rfl; intro q _
+    apply Finset.sum_congr rfl; intro a _
+    rw [hginv p a q]
+  have dist : (∑ a, ∑ b, ginv p a b *
+        (pairSwapRes F Γf g b σ a ν p - pairSwapRes F Γf g b ν a σ p))
+      = (∑ a, ∑ b, ginv p a b * lower4 F Γf g b σ a ν p)
+        - (∑ a, ∑ b, ginv p a b * lower4 F Γf g a ν b σ p)
+        - (∑ a, ∑ b, ginv p a b * lower4 F Γf g b ν a σ p)
+        + (∑ a, ∑ b, ginv p a b * lower4 F Γf g a σ b ν p) := by
+    rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib,
+      ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl; intro a _
+    rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib,
+      ← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl; intro b _
+    simp only [pairSwapRes, sub_eq_add_neg]
+    ring
+  simp only [sum4_eq_finset_sum]
+  rw [dist, hX, hY]
+  ring
+
 end MUFPF

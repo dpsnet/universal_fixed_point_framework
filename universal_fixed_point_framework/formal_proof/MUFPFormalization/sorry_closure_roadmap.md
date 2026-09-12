@@ -346,13 +346,20 @@ notes/04_lorentz_gravity/riemann_divergence_contraction.md）。数值证据
 ginv 缩并循环和 −C 修正后 1.8e-15；附带发现场层级 Ricci 不对称
 ≈0.29·|Ric|——下阶段前置缺口）。
 
+**(β)-4 前置缺口①已闭合（2026-09-12，§26.13，模块 33 定理零 sorry）**：
+修正 Ricci 对称性 `modified_ricci_symmetry`——场层级
+Riĉ_{σν} − Riĉ_{νσ} = ½ ginv^{ab}(PS_{bσaν} − PS_{bνaσ})，
+PS 为 (0,4) 曲率对偶交换残差（lower4/pairSwapRes）。纯 δ-代数
+（ginv 对称 + ginv·g=δ，无场方程/联络假设）；骨架层 ∂̃≡0 时
+PS≡0 退化为 skeleton_ricci_symmetric。数值 max|A−rhs|=3.3e-15。
+详见 notes/04_lorentz_gravity/modified_ricci_symmetry.md。
+
 **(β) 剩余（更新）**：(β)-4 第二阶段——度量缩并出修正散度恒等式
-∇̃^μ Riĉ_{μν} = ½ ∂̃_ν R̂ + 修正：需 ①场层级 Ricci 对称性的修正形态
-（预实验显示朴素对称性在场层级不成立，须先闭合修正版）；②ginv 升指标
+∇̃^μ Riĉ_{μν} = ½ ∂̃_ν R̂ + 修正：①已闭合（§26.13）；剩 ②ginv 升指标
 Leibniz 修正（∂̃ginv = −ginv·∂̃g·ginv + 离散相容条件）；③Einstein 张量
 G = Ric − ½Rg 的构造与其散度。开放命题 EinsteinDivergenceFree 维持开放
 （现具分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容
-四重基础）。
++ 修正 Ricci 对称五重基础）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 

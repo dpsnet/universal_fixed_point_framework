@@ -203,3 +203,31 @@ for mu in range(4):
             w3 = max(w3, abs(P3 - ((Ricci(s, mu, step[nu, x]) - Ricci(s, mu, x)) + connCorr3(mu, nu, s))))
 print("P2 分解残差 max =", w2)
 print("P3 分解残差 max =", w3)
+
+# ---- 7. Ricci 对称性修正形态：pair-swap 残差恒等式 ----
+# 经典推导（仅用 pair swap 与 ginv·g=δ，无场方程）：
+#   A_{σν} := Ric_{σν} − Ric_{νσ} = g^{ab}(R_{bσaν} − R_{bνaσ})
+#   pair swap: R_{bσaν} = R_{aνbσ} + PS_{bσaν}（PS := R4 − swap）
+#   ⟹ 2A = g^{ab}(PS_{bσaν} − PS_{bνaσ})
+R4 = np.zeros((4, 4, 4, 4))
+for a in range(4):
+    for b in range(4):
+        for c in range(4):
+            for d in range(4):
+                R4[a, b, c, d] = sum(g[x, a, r] * naiveCurv(x, r, b, c, d) for r in range(4))
+
+def PS(a, b, c, d):
+    return R4[a, b, c, d] - R4[c, d, a, b]
+
+worst_id = 0.0
+ps_scale = 0.0
+for sig in range(4):
+    for nu in range(4):
+        A = Ric[sig, nu] - Ric[nu, sig]
+        rhs = 0.5 * sum(ginv[x, a, b] * (PS(b, sig, a, nu) - PS(b, nu, a, sig))
+                        for a in range(4) for b in range(4))
+        worst_id = max(worst_id, abs(A - rhs))
+        ps_scale = max(ps_scale, max(abs(PS(sig, a, nu, b))
+                       for a in range(4) for b in range(4)))
+print("pair-swap 残差恒等式 max|A − rhs| =", worst_id)
+print("PS 量级 max|PS| =", ps_scale, " A 量级 max|A| =", np.abs(Ric - Ric.T).max())
