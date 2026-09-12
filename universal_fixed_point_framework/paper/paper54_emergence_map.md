@@ -633,7 +633,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 ### 12.5 技术局限性与已解决问题
 
-**恒等式形态的负结果。** 连续理论中"对第二 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"的标准推导，在点值代数骨架中**不成立**：数值检验（每类 ≥6 组独立随机样本，残差 10⁰–10²）证伪了三类候选恒等式——原式 `Σ_m G_mn = 0`、联络项保留的协变散度版、收缩 Bianchi 骨架版。根源：连续证明必须同时使用 ∂ 项与 Γ 项（经度量相容性提升指标后联合抵消），骨架丢弃全部 ∂ 项后守恒律的载体不复存在，且普通指标求和本身不是协变表述。因此恒等式 `einstein_divergence_free_from_bianchi` 为假、`EinsteinDivergenceFree` 不作公理化（普遍量化假命题与可判定反例并存将导致不一致）；真空情形的真定理为 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）。下游 `energy_momentum_conservation` / `BianchiEinsteinConservation` / `vacuumBianchiEinstein` 均为条件式或真空构造，不受该负结果影响。**该问题的真值以修正公式形态解决**（§8，定理 8.1）：E 不恒零，但其显式形态的全部修正项为连续极限消失的移位差分 artifact，守恒律以修正公式形式在离散层成立。证伪与全链闭合记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
+**最重要的已解决问题。** 本文技术层面最重要的已解决问题是 Einstein 散度守恒律的离散形态（技术细节见 §7.1，闭合结果见 §8）：恒等式形态 ∇^μ G_μν = 0 在点值骨架中为假，其真值以显式修正公式（定理 8.1）闭合——守恒律在离散层以修正公式而非恒等式的形式成立，连续极限回到经典形式。该负结果与修正公式的组合超出本文框架：任何丢弃 ∂ 项的点值离散化都会丢失 ∂ 与 Γ 的联合抵消结构，守恒律都须以移位差分修正的形式重新表述。证伪与全链闭合记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
 **开放问题**：
 
