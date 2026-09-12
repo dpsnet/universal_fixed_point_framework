@@ -6,7 +6,7 @@
 
 **编号**：MUFPF-LIV
 
-**版本**：v1.2（2026-09-11；v1.1 为 2026-09-10）
+**版本**：v1.3（2026-09-12；v1.2 为 2026-09-11，v1.1 为 2026-09-10）
 
 **Phase**：Phase 69.6–69.7（谱→度规严格映射 + 黎曼曲率 + Einstein 方程）
 
@@ -382,7 +382,7 @@ $$\forall n, \sum_m T_{mn} = 0$$
 3. 代入：∑_m 8π T_mn = 0
 4. 8π ≠ 0（由 Real.pi_pos），故 ∑_m T_mn = 0 □
 
-**物理含义**：本定理是**条件式**推导：若能动量守恒的载体（带 ∂ 项的第二 Bianchi 缩并，即开放命题 `EinsteinDivergenceFree`，见 §7.1 v1.2 修订）成立，则 `∑_m T_mn = 0` 是 Einstein 场方程的自动推论而非额外假设。在 MUFPF 框架中：结构性缺陷的几何分布（Einstein 张量）↔ 能量分布（T_μν），由 Bianchi 恒等式自动保证守恒。
+**物理含义**：本定理是**条件式**推导：若能动量守恒的载体（带 ∂ 项的第二 Bianchi 缩并，即开放命题 `EinsteinDivergenceFree`，见 §7.1）成立，则 `∑_m T_mn = 0` 是 Einstein 场方程的自动推论而非额外假设。在 MUFPF 框架中：结构性缺陷的几何分布（Einstein 张量）↔ 能量分布（T_μν），由 Bianchi 恒等式自动保证守恒。
 
 ### 7.3 BianchiEinsteinConservation 结构
 
@@ -432,7 +432,7 @@ $$E_\nu = \underbrace{\sum_{\mu a} \mathrm{ginv}^{\mu a}\,\tilde{\partial}_\mu \
 
 **证明结构**。定理 8.1 的 Lean 证明三步：① 逐点线性 covDiff02(G) = covDiff02(Riĉ) − ½·covDiff02(gR̂)（`einsteinTensor` 定义展开 + sum4 显式求和 + ring）+ 求和分配；② covDiff02 = ∂̃ + conn02 逐点成立（definitional），求和分配；③ 重写代入 §26.17 与 §26.18 两个已证定理自动收尾。技术方案沿用 §7.1 的 sum4 桥接方法。
 
-**地位**。定理 8.1 是开放命题 `EinsteinDivergenceFree` 的真值：它不声称 E = 0（场层级 E = O(a) 不恒零，§26.7(b) 负面结果），而是给出 E 的**精确显式形态**——修正项全部是连续极限消失的移位差分 artifact，守恒律以"修正公式"而非"恒等式"的形式在离散层成立。至此 §7.1 登记的证伪处置、真值路径与开放命题三层闭环，真值路径形式化侧无未闭合缺口。
+**地位**。定理 8.1 是开放命题 `EinsteinDivergenceFree` 的真值：它不声称 E = 0（场层级 E = O(a) 不恒零，§26.7(b) 负面结果），而是给出 E 的**精确显式形态**——修正项全部是连续极限消失的移位差分 artifact，守恒律以"修正公式"而非"恒等式"的形式在离散层成立。至此 §7.1 的证伪处置与开放问题以修正公式形态完全闭合。
 
 ---
 
@@ -595,7 +595,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 2. **存在论不对称**：Δ 是前几何的结构常数，R_μν 是后几何的张量场。两者通过涌现映射连接，但不属于同一存在论层级。
 
-3. **条件式能动量守恒**：`energy_momentum_conservation` 证明：以第二 Bianchi 缩并（开放命题 `EinsteinDivergenceFree`）为前提，Einstein 场方程自动给出 `∑_m T_mn = 0`（条件式完整证明，v1.2 修订标注）；v1.3：该前提的真值已在 §8 以显式修正公式形态闭合（恒等式形态经数值检验证伪，维持 §7.1/§12.5 处置）。
+3. **条件式能动量守恒**：`energy_momentum_conservation` 证明：以第二 Bianchi 缩并（开放命题 `EinsteinDivergenceFree`）为前提，Einstein 场方程自动给出 `∑_m T_mn = 0`（条件式完整证明）；该前提的真值已在 §8 以显式修正公式形态闭合（恒等式形态经数值检验证伪，见 §7.1/§12.5）。
 
 4. **谱作用量**：`vacuum_einstein_from_spectral_action` 证明真空 Einstein 方程从谱作用量导出（已完整证明）。
 
@@ -629,9 +629,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 **开放问题**（v1.3 更新：问题 0 已解决——真值路径以修正公式形态闭合，显式公式见 §8（定理 8.1）；问题 1–3 维持开放）：
 
-0. ~~**带 ∂ 项的离散第二 Bianchi 重建（真值路径）**~~ **【✅ 已解决，修正公式形态】**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi 的全链已闭合——算子级主定理 `discrete_second_bianchi_operator`（协变差分视为场空间自同态，第二 Bianchi = 算子 Jacobi 恒等式，无需无挠/对易/度量相容假设）经骨架层、度规缩并层、Einstein 构造层、修正的收缩 Bianchi 恒等式、度规项 δ 缩并、ConnRic K 型展开，收官于 `einstein_divergence_explicit`（定理 8.1，§8：`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry，全库 `lake build` 4078 jobs 通过；随机对照数值残差 2.8×10⁻¹⁴–3.2×10⁻¹⁴ 机器精度；连续极限退化到经典 ∇^μG_{μν} = 0）。全链研究轨迹见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。 逐点 rfl + rw 代入 §26.17/§26.18，一次通过。
-
-**形式化侧无未闭合缺口**；真值路径剩余工作为论文层面的表述整合。
+0. ~~**带 ∂ 项的离散第二 Bianchi 重建（真值路径）**~~ **【✅ 已解决，修正公式形态】**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi 的全链已闭合——算子级主定理 `discrete_second_bianchi_operator`（协变差分视为场空间自同态，第二 Bianchi = 算子 Jacobi 恒等式，无需无挠/对易/度量相容假设）经骨架层、度规缩并层、Einstein 构造层、修正的收缩 Bianchi 恒等式、度规项 δ 缩并、ConnRic K 型展开，收官于 `einstein_divergence_explicit`（定理 8.1，§8：`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry，全库 `lake build` 4078 jobs 通过；随机对照数值残差 2.8×10⁻¹⁴–3.2×10⁻¹⁴ 机器精度；连续极限退化到经典 ∇^μG_{μν} = 0）。全链研究轨迹见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。
