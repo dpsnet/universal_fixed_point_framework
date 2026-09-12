@@ -354,12 +354,19 @@ PS 为 (0,4) 曲率对偶交换残差（lower4/pairSwapRes）。纯 δ-代数
 PS≡0 退化为 skeleton_ricci_symmetric。数值 max|A−rhs|=3.3e-15。
 详见 notes/04_lorentz_gravity/modified_ricci_symmetry.md。
 
-**(β) 剩余（更新）**：(β)-4 第二阶段——度量缩并出修正散度恒等式
-∇̃^μ Riĉ_{μν} = ½ ∂̃_ν R̂ + 修正：①已闭合（§26.13）；剩 ②ginv 升指标
-Leibniz 修正（∂̃ginv = −ginv·∂̃g·ginv + 离散相容条件）；③Einstein 张量
-G = Ric − ½Rg 的构造与其散度。开放命题 EinsteinDivergenceFree 维持开放
+**(β)-4 第二阶段缺口②已闭合（2026-09-12，§26.14，模块 38 定理零 sorry）**：
+ginv 升指标的 Leibniz 修正——①ginv 差分双移位变体
+（∂̃ginv = −ginv(step)·∂̃g·ginv(x) 与 −ginv(x)·∂̃g·ginv(step)，逐点精确），
+②离散度规相容（∂̃_ρ g_{μν} = g_{μλ}Γ^λ_{ρν} + g_{νλ}Γ^λ_{ρμ}，对离散
+Christoffel 公式逐点精确，移位配置唯一），核心工具 `solve_right`
+（A·g = B 在互逆对称下的显式解）。数值 max 残差 ≤ 2.1e-14。详见
+notes/04_lorentz_gravity/ginv_leibniz_correction.md。
+
+**(β) 剩余（更新）**：(β)-4 第二阶段收尾——Einstein 张量
+G = Ric − ½Rg 的构造与其散度（唯一剩余；升指标 Leibniz 修正与
+Ricci 对称修正形态均已闭合）。开放命题 EinsteinDivergenceFree 维持开放
 （现具分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容
-+ 修正 Ricci 对称五重基础）。
++ 修正 Ricci 对称 + ginv Leibniz 修正六重基础）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
