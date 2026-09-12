@@ -613,9 +613,19 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
   '+`connric_curvature_expand`：Σ_{μa} ginv^{μa}(conn_μRiĉ)_{aν} = Σ_{μabr} ginv^{μa}'
   '[Γ^b_{μa}(x)R̂_{rbrν}(step) + Γ^b_{μν}(x)R̂_{rar b}(step) − Γ^b_{μa}(step)R̂_{rbrν}(x)'
   '− Γ^b_{μν}(step)R̂_{rar b}(x)]（纯 Ricci 定义展开 + 因子入和，一次通过，无 ∇̃/∂̃）。'
-  '**剩余仅一步**：EinsteinDivergenceFree 最终显式陈述——把 Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B'
-  '全链代入 §26.14–26.18 的显式形态，得到纯曲率原语（ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的'
-  '完整修正公式；数值装配已 2.8e-14 闭合，形式化陈述为最后一步。'
+  '**§26.19 已闭合（2026-09-12，模块 45 定理零 sorry，全库 4078 jobs `lake build` 通过）——EinsteinDivergenceFree 最终显式陈述，(β) 真值路径全链闭合**：'
+  '`einsteinDiv`（E_ν := Σ ginv^{μa}(∇̃_μG)_{aν}）+`einstein_divergence_explicit`：'
+  '**E_ν = T1_ν + K_ν − ½(∂̃_νR̂ + 修正_ν)**——T1 = Σ ginv^{μa}∂̃_μRiĉ_{aν}（∂̃ 载体），'
+  'K = Σ_{μabr} ginv^{μa}[Γ^b_{μa}(x)R̂_{rbrν}(step) + Γ^b_{μν}(x)R̂_{rar b}(step)'
+  '− Γ^b_{μa}(step)R̂_{rbrν}(x) − Γ^b_{μν}(step)R̂_{rar b}(x)]（ConnRic K 型四重和），'
+  '修正 = Σ ginv^{μa}(∂̃g_{aν}·R̂(step) + 4 项 Γ·g·R̂ 移位修正)（度规项 δ 缩并）。'
+  '纯曲率原语陈述，数值（`numerical/phase16b_beta9_final_assembly.py`，seed 43）：'
+  '抵消形态 2.8e-14、全显式形态 3.2e-14、方向分裂 2.8e-14。'
+  '结构性发现：代入收缩 Bianchi 恒等式后 **Q 与 T2 完全抵消**——第二 Bianchi 缩并修正对'
+  'Einstein 散度无净贡献，E 完全由 Ricci 散度载体与度规项修正承载；连续极限 O(a) 退化到经典'
+  '∇^μG_{μν} = 0。证明：逐点线性（covDiff02(G) = covDiff02(Riĉ) − ½covDiff02(gR̂)）'
+  '+ covDiff02 = ∂̃ + conn02 逐点 rfl + rw 代入 §26.17/§26.18，一次通过。'
+  '**形式化侧无未闭合缺口**；真值路径剩余工作为论文层面的表述整合。'
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。

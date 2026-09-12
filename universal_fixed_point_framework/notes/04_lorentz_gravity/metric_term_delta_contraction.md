@@ -100,13 +100,30 @@ ConnRic_ν = Σ_{μa} ginv^{μa}(conn_μRiĉ)_{aν}
    lambda `fun y c d => ricciTensor F Γf c d y` 适配 conn02 的
    `T : X.T → Fin 4 → Fin 4 → ℝ`；逐 b 因子入和用
    `unfold sum4; ring` 一次闭合。
-2. **EinsteinDivergenceFree 最终显式陈述**：把 beta7 的
-   `Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B` 全链代入本轮与 §26.14–26.18 的
-   显式形态，得到纯曲率原语（ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的
-   完整修正公式。数值装配已闭合（2.8e-14），形式化陈述是最后一步。
-   所需构件已全部就位：`contracted_riemann_divergence`（§26.16）、
-   `scalar_curvature_leibniz`（§26.16）、`metric_term_divergence`（§26.17）、
-   `connric_curvature_expand`（§26.18）。
+2. ~~EinsteinDivergenceFree 最终显式陈述~~ **已闭合（2026-09-12，§26.19，
+   `einsteinDiv` + `einstein_divergence_explicit`，45 定理零 sorry）**：
+
+   **E_ν = T1_ν + K_ν − ½(∂̃_νR̂ + 修正_ν)**（Q/T2 抵消形态 + 全曲率原语）
+
+   beta9（`phase16b_beta9_final_assembly.py`，seed 43）四个验证全部机器精度：
+   定义层 2.8e-14、抵消形态 2.8e-14、全显式形态 3.2e-14、方向分裂 2.8e-14。
+
+   关键推导：beta7 装配 `E = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B`
+   代入 §26.16 收缩 Bianchi `ginv·(Cc3−K2−K3) = Q − T1 + T2` 后
+   **Q、T2 完全抵消**——收缩 Bianchi 修正对 Einstein 散度无净贡献，
+   最终公式只剩 Ricci 散度载体（T1 + K）与度规项修正（½B 展开）。
+
+   Lean 证明三步：`e1` 逐点线性 covDiff02(G) = covDiff02(Riĉ) − ½covDiff02(gR̂)
+   + 求和分配（simp only [covDiff02, einsteinTensor] + unfold sum4; ring）；
+   `e2` covDiff02 = ∂̃ + conn02 逐点 rfl + 分配；然后 rw 代入
+   §26.18 与 §26.17 两个定理自动收尾。
+
+   适配要点：einsteinTensor 与 ricciTensor 的 x 参数均在 curry 末尾，
+   需包 `fun y c d => ... c d y` lambda。
+
+   **至此 (β) 真值路径全链闭合**：∇̃^μG_{μν} 的显式修正公式以纯曲率原语
+   （ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂、∂̃Riĉ）形式机器证明，
+   连续极限 O(a) 退化到经典 ∇^μG_{μν} = 0。
 
 ## 5. 数值记录
 

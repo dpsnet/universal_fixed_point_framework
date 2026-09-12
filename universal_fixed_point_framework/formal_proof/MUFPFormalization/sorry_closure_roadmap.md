@@ -410,6 +410,18 @@ Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B 全链代入 §26.14–26.18 
 metric_term_divergence + connric_curvature_expand），得到纯曲率原语
 （ginv·Γ·g·R̂、ginv·Γ·naiveCurv、∂̃R̂）的完整修正公式；数值装配已 2.8e-14 闭合。
 
+**新阶段收官已闭合（2026-09-12，§26.19，模块 45 定理零 sorry）——(β) 真值路径全链闭合**：
+EinsteinDivergenceFree 的最终显式陈述——`einsteinDiv`（E_ν 定义）+
+`einstein_divergence_explicit`：**E_ν = T1_ν + K_ν − ½(∂̃_νR̂ + 修正_ν)**
+（纯曲率原语：∂̃Riĉ、ginv·Γ·naiveCurv、∂̃R̂、ginv·∂̃g·R̂、ginv·Γ·g·R̂）。
+数值（phase16b_beta9，seed 43）：抵消形态 2.8e-14、全显式形态 3.2e-14。
+结构性发现：代入收缩 Bianchi 后 **Q 与 T2 完全抵消**——第二 Bianchi 缩并修正
+对 Einstein 散度无净贡献，E 完全由 Ricci 散度载体（T1+K）与度规项修正（½B）承载；
+连续极限 O(a) 退化到经典 ∇^μG_{μν} = 0。证明：逐点线性 + covDiff02=∂̃+conn02
+逐点 rfl + rw 代入 §26.17/§26.18，一次通过。
+**§3.6 (β) 全链闭合。** 真值路径剩余工作仅为论文层面的表述整合（paper54 已同步），
+形式化侧无未闭合缺口。
+
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
 | 层级 | 文档 | 与本路径的关系 |
