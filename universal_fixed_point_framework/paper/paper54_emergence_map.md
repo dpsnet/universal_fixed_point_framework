@@ -10,13 +10,13 @@
 
 **Phase**：Phase 69.6–69.7（谱→度规严格映射 + 黎曼曲率 + Einstein 方程）
 
-**状态**：自包含论文草稿（定义/定理/证明完整；v1.2 修订：原 v1.1 声明的"计算量瓶颈 sorry"（`einstein_divergence_free_from_bianchi`）经数值检验**证伪**——该恒等式本身为假，非计算瓶颈——已从 Lean 库删除并登记为开放命题 `EinsteinDivergenceFree`；本文 §7.1/§11.4/§11.5 已同步修订，证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6）
+**状态**：自包含论文草稿（定义/定理/证明完整；v1.2 修订：原 v1.1 声明的"计算量瓶颈 sorry"（`einstein_divergence_free_from_bianchi`）经数值检验**证伪**——该恒等式本身为假，非计算瓶颈——已从 Lean 库删除并登记为开放命题 `EinsteinDivergenceFree`；本文 §7.1/§12.4/§12.5 已同步修订，证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6；**v1.3 修订**：真值路径完整闭合——`einstein_divergence_explicit`（`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry）给出 Einstein 协变散度的显式修正公式 E_ν = T1 + K − ½(∂̃R̂ + 修正)（§8），`EinsteinDivergenceFree` 以修正公式形态解决，恒等式形态维持证伪）
 
 **形式化**：[`SpectralMetric.lean`](../formal_proof/MUFPFormalization/src/MUFPFormalization/SpectralMetric.lean)（§25.0–§25.18，819 行，42 个定义/定理，`lake build` 通过）
 
 **依赖论文**：Paper XXXV（Δ 的结构常数地位与引力的范畴论起源）、Paper XXXI（偏差代数与 G_N 闭式）、Paper XXXIV（连续极限——B2 理论闭合）、Paper XXXII（Cl(1,3) 谱静默与四维时空涌现）
 
-**摘要**：本文建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射，分七个层级（L0→L6）逐步构造。核心结论：该映射是数学等价（iff），而非语义诠释——`curvature_positive_iff_structural_defect` 证明 R > 0 ⟺ 结构性缺陷存在；但 Δ 与 R_μν 属于不同的存在论层级——Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过涌现等价连接。本文同时证明：第一 Bianchi 恒等式（`first_bianchi`，sum4 桥接 + ring 闭合）、Ricci 张量对称性（`ricciFromChristoffel.symmetric`，sum4 桥接 + ring 闭合）、离散第二 Bianchi 恒等式（`second_bianchi_discrete`，完整证明）、能动量守恒（`energy_momentum_conservation`，条件式完整证明）、谱作用量原理在真空极限下回到 Einstein-Hilbert 作用量（`vacuum_einstein_from_spectral_action`，完整证明）。**v1.2 重要修订**：v1.1 曾声明"对离散 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"（`einstein_divergence_free_from_bianchi`）仅为计算量瓶颈；2026-09-11 的数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）**证伪了该恒等式本身**——点值代数骨架丢弃全部偏导数 ∂ 项后，守恒律的载体不复存在，且原式的普通指标求和不是协变表述。该假定理已从 Lean 库删除，`EinsteinDivergenceFree` 登记为开放命题（不 axiomatize），真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。带 ∂ 项的离散第二 Bianchi 重建（沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)）列为未来工作（Phase 16B+，§11.5）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。
+**摘要**：本文建立从 MUFPF 范畴结构常数 Δ 到广义相对论 Einstein 场方程的完整涌现映射，分七个层级（L0→L6）逐步构造。核心结论：该映射是数学等价（iff），而非语义诠释——`curvature_positive_iff_structural_defect` 证明 R > 0 ⟺ 结构性缺陷存在；但 Δ 与 R_μν 属于不同的存在论层级——Δ 是前几何的结构常数（无动力学、非场），R_μν 是其在连续极限下的涌现投影（有动力学、是场），两者通过涌现等价连接。本文同时证明：第一 Bianchi 恒等式（`first_bianchi`，sum4 桥接 + ring 闭合）、Ricci 张量对称性（`ricciFromChristoffel.symmetric`，sum4 桥接 + ring 闭合）、离散第二 Bianchi 恒等式（`second_bianchi_discrete`，完整证明）、能动量守恒（`energy_momentum_conservation`，条件式完整证明）、谱作用量原理在真空极限下回到 Einstein-Hilbert 作用量（`vacuum_einstein_from_spectral_action`，完整证明）。**v1.2 重要修订**：v1.1 曾声明"对离散 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"（`einstein_divergence_free_from_bianchi`）仅为计算量瓶颈；2026-09-11 的数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）**证伪了该恒等式本身**——点值代数骨架丢弃全部偏导数 ∂ 项后，守恒律的载体不复存在，且原式的普通指标求和不是协变表述。该假定理已从 Lean 库删除，`EinsteinDivergenceFree` 登记为开放命题（不 axiomatize），真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。带 ∂ 项的离散第二 Bianchi 重建（沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)）列为未来工作（Phase 16B+，§12.5）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。**v1.3 重要修订**：带 ∂ 项的离散第二 Bianchi 真值路径已完整闭合（Phase 16B (β)，2026-09-12，45 定理零 sorry）——定理 8.1（`einstein_divergence_explicit`）给出 Einstein 协变散度的显式修正公式 E_ν = T1 + K − ½(∂̃R̂ + 修正)（§8，数值机器精度 3.2×10⁻¹⁴，结构性发现：第二 Bianchi 缩并修正 Q/T2 完全抵消）；`EinsteinDivergenceFree` 登记命题以修正公式形态解决，恒等式形态（E = 0）维持 v1.2 证伪结论。
 
 ---
 
@@ -55,7 +55,7 @@ MUFPF 框架有一个贯穿始终的核心宣称：引力不是四种基本力�
 | 存在条件 | Rec/Sp 非严格即存在 | 连续极限下定义 | Δ 更基础 |
 | 数学关系 | | 通过构造性映射建立 iff 等价 | |
 
-准确的定性：这是一种**涌现等价**（emergent equivalence）——数学上双向映射成立（iff），但两个端点的存在论地位不对称。Δ 是前几何的（pre-geometric），R_μν 是其在连续极限下的涌现投影。详见 §9.1。
+准确的定性：这是一种**涌现等价**（emergent equivalence）——数学上双向映射成立（iff），但两个端点的存在论地位不对称。Δ 是前几何的（pre-geometric），R_μν 是其在连续极限下的涌现投影。详见 §10.1。
 
 ### 1.4 本文的叙事结构
 
@@ -90,28 +90,35 @@ MUFPF 框架有一个贯穿始终的核心宣称：引力不是四种基本力�
   ├── 7.2 energy_momentum_conservation
   └── 7.3 BianchiEinsteinConservation 结构
 
-§8. 谱作用量原理
-  ├── 8.1 Dirac 算子与 SpectralAction
-  ├── 8.2 谱作用量展开
-  └── 8.3 vacuum_einstein_from_spectral_action
+§8. Einstein 散度的显式修正公式
+  ├── 8.1 框架设定与显式修正公式（定理 8.1）
+  ├── 8.2 结构性发现：第二 Bianchi 修正的无净贡献
+  ├── 8.3 连续极限
+  ├── 8.4 数值闭合
+  └── 8.5 证明结构与地位
 
-§9. 存在论分析
-  ├── 9.1 涌现等价：比伴随等价更弱的关系
-  ├── 9.2 温度-动能类比
-  └── 9.3 前几何的不可屏蔽性
+§9. 谱作用量原理
+  ├── 9.1 Dirac 算子与 SpectralAction
+  ├── 9.2 谱作用量展开
+  └── 9.3 vacuum_einstein_from_spectral_action
 
-§10. 引力子作为准粒子：与声子的类比
-  ├── 10.1 准粒子的定义与物理图像
-  ├── 10.2 声子类比：从晶格到范畴
-  ├── 10.3 引力子的离散性与传播机制
-  └── 10.4 引力天然量子化的推论
+§10. 存在论分析
+  ├── 10.1 涌现等价：比伴随等价更弱的关系
+  ├── 10.2 温度-动能类比
+  └── 10.3 前几何的不可屏蔽性
 
-§11. 讨论、结论与开放问题
-  ├── 11.1 时空几何的量子起源
-  ├── 11.2 涌现映射的普适性
-  ├── 11.3 核心结论
-  ├── 11.4 形式化状态
-  └── 11.5 开放问题
+§11. 引力子作为准粒子：与声子的类比
+  ├── 11.1 准粒子的定义与物理图像
+  ├── 11.2 声子类比：从晶格到范畴
+  ├── 11.3 引力子的离散性与传播机制
+  └── 11.4 引力天然量子化的推论
+
+§12. 讨论、结论与已解决问题
+  ├── 12.1 时空几何的量子起源
+  ├── 12.2 涌现映射的普适性
+  ├── 12.3 核心结论
+  ├── 12.4 形式化状态
+  └── 12.5 技术局限性与已解决问题
 ```
 
 ---
@@ -149,7 +156,7 @@ $$G_N = 18(2+\sqrt{3}) \cdot (\Delta\lambda_{\min})^2 / M_{\text{Pl}}^2$$
 
 ### 2.3 引力子的准粒子性质
 
-Δ 本身不是场（§2.1），但 Δ 的微扰可以产生集体激发模式——这些集体激发在低能有效理论中表现为引力子。这一关键观察将在 §10 中展开讨论，包括与声子类比的详细分析。
+Δ 本身不是场（§2.1），但 Δ 的微扰可以产生集体激发模式——这些集体激发在低能有效理论中表现为引力子。这一关键观察将在 §11 中展开讨论，包括与声子类比的详细分析。
 
 ---
 
@@ -358,9 +365,9 @@ $$\forall r\, s\, \rho\, m\, n, \quad \text{discreteSecondBianchi}\;\Gamma\;r\;s
 
 **物理含义**：离散第二 Bianchi 恒等式是连续 Bianchi 恒等式在丢弃偏导数项后的纯代数核心。它不依赖于流形结构或协变导数的连续定义，仅依赖于 Christoffel 符号的无挠性和乘法交换律——这是范畴层面（Rec/Sp 结构）的代数自洽性在几何层面的投影。
 
-**技术注记：sum4 桥接方法**。上述所有代数恒等式的 Lean4 证明均依赖于一种统一的技术方案：用 `sum4 f = f 0 + f 1 + f 2 + f 3`（Fin 4 显式求和）替代 `∑ i : Fin 4, f i`（Finset.sum），使 `ring` 策略能直接处理多项式恒等式。桥接引理 `sum4_eq_finset_sum` 将 sum4 结果转换回 Finset.sum 形式。这一方法已成功闭合三个关键定理：Riemann 反对称性（`antisym_munu`，abel 策略）、第一 Bianchi 恒等式（`firstBianchiExplicit`，ring 策略）和 Ricci 张量对称性（`ricciExplicit_symm`，ring 策略），将 SpectralMetric.lean 的 sorry 计数从 4 降至 1。剩余唯一瓶颈 `einstein_divergence_free_from_bianchi` 曾涉及 256 个单项式的 `scalarCurvature` 展开，超出 `ring` 策略的处理能力。**v1.2 修订**：该"瓶颈"经数值检验证伪为**逻辑缺口**（恒等式本身为假，§7.1 缩并形式段与 §11.5），非计算量问题——sum4 桥接技术本身仍然有效，并将是 Phase 16B+ 差分导数重建的证明工具。
+**技术注记：sum4 桥接方法**。上述所有代数恒等式的 Lean4 证明均依赖于一种统一的技术方案：用 `sum4 f = f 0 + f 1 + f 2 + f 3`（Fin 4 显式求和）替代 `∑ i : Fin 4, f i`（Finset.sum），使 `ring` 策略能直接处理多项式恒等式。桥接引理 `sum4_eq_finset_sum` 将 sum4 结果转换回 Finset.sum 形式。这一方法已成功闭合三个关键定理：Riemann 反对称性（`antisym_munu`，abel 策略）、第一 Bianchi 恒等式（`firstBianchiExplicit`，ring 策略）和 Ricci 张量对称性（`ricciExplicit_symm`，ring 策略），将 SpectralMetric.lean 的 sorry 计数从 4 降至 1。剩余唯一瓶颈 `einstein_divergence_free_from_bianchi` 曾涉及 256 个单项式的 `scalarCurvature` 展开，超出 `ring` 策略的处理能力。**v1.2 修订**：该"瓶颈"经数值检验证伪为**逻辑缺口**（恒等式本身为假，§7.1 缩并形式段与 §12.5），非计算量问题——sum4 桥接技术本身仍然有效，并将是 Phase 16B+ 差分导数重建的证明工具。
 
-缩并形式（`SecondBianchiIdentity`）登记为**开放命题**（v1.2 修订）：连续理论中"对第二 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"的标准推导，在点值代数骨架中**不成立**——2026-09-11 数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）证伪了下述三类候选恒等式：原式 `Σ_m G_mn = 0`、联络项保留的协变散度版 `Σ_m ∇̃_m G_mn = 0`、收缩 Bianchi 骨架版 `Σ_m ∇̃_m Ric_mn = 0`。根源诊断：连续证明必须**同时使用** ∂ 项与 Γ 项（经度量相容性提升指标后联合抵消）；骨架丢弃全部 ∂ 项后守恒律的载体不复存在，且普通指标求和本身不是协变表述。处置：v1.1 的假定理 `einstein_divergence_free_from_bianchi` 已从 Lean 库删除，`EinsteinDivergenceFree (Γ g)` 登记为开放命题（不断言、不 axiomatize）；真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。**真值路径**（Phase 16B+，§11.5）：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi，其缩并方可给出真正的协变守恒律（**该路径已于 2026-09-12 完整闭合，显式修正公式见 §7.4**）。证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
+缩并形式（`SecondBianchiIdentity`）登记为**开放命题**（v1.2 修订）：连续理论中"对第二 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"的标准推导，在点值代数骨架中**不成立**——2026-09-11 数值检验（每类 ≥6 组随机样本，残差 10⁰–10²）证伪了下述三类候选恒等式：原式 `Σ_m G_mn = 0`、联络项保留的协变散度版 `Σ_m ∇̃_m G_mn = 0`、收缩 Bianchi 骨架版 `Σ_m ∇̃_m Ric_mn = 0`。根源诊断：连续证明必须**同时使用** ∂ 项与 Γ 项（经度量相容性提升指标后联合抵消）；骨架丢弃全部 ∂ 项后守恒律的载体不复存在，且普通指标求和本身不是协变表述。处置：v1.1 的假定理 `einstein_divergence_free_from_bianchi` 已从 Lean 库删除，`EinsteinDivergenceFree (Γ g)` 登记为开放命题（不断言、不 axiomatize）；真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。**真值路径**（Phase 16B+，§12.5）：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi，其缩并方可给出真正的协变守恒律（**该路径已于 2026-09-12 完整闭合，显式修正公式见 §8**）。证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
 ### 7.2 能动量守恒定理
 
@@ -391,9 +398,11 @@ structure BianchiEinsteinConservation where
 
 真空情形（`vacuumBianchiEinstein`）：R_μν = 0、R = 0、T_μν = 0，Bianchi 恒等式平凡成立，能动量守恒平凡满足。
 
-### 7.4 Einstein 散度的显式修正公式（真值路径闭合，v1.3 新增）
+## 8. Einstein 散度的显式修正公式（真值路径闭合，v1.3 新增）
 
-§7.1 v1.2 修订将 `EinsteinDivergenceFree` 登记为开放命题，并指出真值路径：沿递归系统 step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi。**本节报告该路径的完整闭合**（Phase 16B (β)，2026-09-12，模块 45 定理零 sorry，全库 `lake build` 4078 jobs 通过）。
+§7.1 v1.2 修订将 `EinsteinDivergenceFree` 登记为开放命题，并指出真值路径：沿递归系统 step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi。**本章报告该路径的完整闭合**（Phase 16B (β)，2026-09-12，模块 45 定理零 sorry，全库 `lake build` 4078 jobs 通过）。
+
+### 8.1 框架设定与显式修正公式（定理 8.1）
 
 **框架设定**。在场层级上，张量场是递归系统状态空间上的逐点函数，协变差分采用移位混合约定：
 
@@ -401,27 +410,35 @@ $$(\tilde{\nabla}_\rho T)_{\sigma\nu}(x) = \tilde{\partial}_\rho T_{\sigma\nu} +
 
 记联络部分为 conn_ρ（`conn02`，即 `covDiff02` 去掉 ∂̃ 项），Einstein 协变散度定义为 E_ν(x) := Σ_{μa} ginv^{μa}(∇̃_μG)_{aν}(x)（`einsteinDiv`）。
 
-**定理 7.2**（`einstein_divergence_explicit`，唯一假设为逆缩并 Σ_a ginv^{μa}g_{aν} = δ^μ_ν，无需度规对称）。Einstein 协变散度的显式修正公式：
+**定理 8.1**（`einstein_divergence_explicit`，唯一假设为逆缩并 Σ_a ginv^{μa}g_{aν} = δ^μ_ν，无需度规对称）。Einstein 协变散度的显式修正公式：
 
 $$E_\nu = \underbrace{\sum_{\mu a} \mathrm{ginv}^{\mu a}\,\tilde{\partial}_\mu \hat{R}_{a\nu}}_{T1_\nu\;(\partial\tilde{\;}\text{载体})} + \underbrace{\sum_{\mu a b r} \mathrm{ginv}^{\mu a}\big[\Gamma^b{}_{\mu a}(x)\,\hat{R}_{rbr\nu}(\mathrm{step}) + \Gamma^b{}_{\mu\nu}(x)\,\hat{R}_{rar b}(\mathrm{step}) - \Gamma^b{}_{\mu a}(\mathrm{step})\,\hat{R}_{rbr\nu}(x) - \Gamma^b{}_{\mu\nu}(\mathrm{step})\,\hat{R}_{rar b}(x)\big]}_{K_\nu\;(\text{ConnRic 的 K 型四重和})} - \frac{1}{2}\Big(\tilde{\partial}_\nu \hat{R} + \underbrace{\sum_{\mu a} \mathrm{ginv}^{\mu a}\big[\tilde{\partial}_\mu g_{a\nu}\,\hat{R}(\mathrm{step}) + \sum_b(\Gamma\cdot g\cdot\hat{R}\ \text{移位四项})\big]}_{\text{度规项 }\delta\text{ 缩并修正}}\Big)$$
 
 其中 R̂ 为标量曲率，`metric_term_divergence`（§26.17）提供度规项的 δ 缩并、`connric_curvature_expand`（§26.18）提供 ConnRic 的曲率迹展开。
 
-**结构性发现：第二 Bianchi 修正的无净贡献**。端到端装配（修正的收缩 Bianchi 恒等式 `contracted_riemann_divergence` + 标量曲率移位 Leibniz `scalar_curvature_leibniz`，§26.16）给出 E = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B；代入收缩恒等式 ginv·(Cc3−K2−K3) = Q − T1 + T2 后，**Q 与 T2 完全抵消**——带 ∂ 项的第二 Bianchi 缩并修正对 Einstein 散度无净贡献。E 完全由 Ricci 散度载体（T1 + K）与度规项修正（½B 的 δ 展开）承载。这解释了 §7.1 证伪根源的另一面：骨架层（无 ∂ 项）丢失的不是某个修正项，而是 ∂̃ 与联络项的联合抵消结构；差分重建后该结构以 T1/∂̃R̂/∂̃g 项的形式显式回归。
+### 8.2 结构性发现：第二 Bianchi 修正的无净贡献
 
-**连续极限**。全部修正项为移位差分型（含 step 与 x 两点的 Γ、g、R̂ 混合），量级 O(a)（a 为 step 的连续极限格距）：Γ 的两点差退化为单点 Γ，∂̃ 退化为偏导数，度规相容修正族按离散度规相容律（`discrete_metric_compatible`：∂̃_μg_{aν} = g_{aλ}Γ^λ_{μν} + g_{νλ}Γ^λ_{μa}）代换后成为标准 ∇_λg = 0 的离散祖先。公式退化到经典 ∇^μG_{μν} = 0。
+端到端装配（修正的收缩 Bianchi 恒等式 `contracted_riemann_divergence` + 标量曲率移位 Leibniz `scalar_curvature_leibniz`，§26.16）给出 E = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B；代入收缩恒等式 ginv·(Cc3−K2−K3) = Q − T1 + T2 后，**Q 与 T2 完全抵消**——带 ∂ 项的第二 Bianchi 缩并修正对 Einstein 散度无净贡献。E 完全由 Ricci 散度载体（T1 + K）与度规项修正（½B 的 δ 展开）承载。这解释了 §7.1 证伪根源的另一面：骨架层（无 ∂ 项）丢失的不是某个修正项，而是 ∂̃ 与联络项的联合抵消结构；差分重建后该结构以 T1/∂̃R̂/∂̃g 项的形式显式回归。
 
-**数值闭合**。随机对照（8 点状态空间、随机 SPD 度规与其精确逆、seed 43）：定义层 ‖∇̃G − (∇̃Riĉ − ½B)‖_∞ = 2.8×10⁻¹⁴，抵消形态 2.8×10⁻¹⁴，全显式形态 3.2×10⁻¹⁴，方向分裂 ‖∇̃Riĉ − (T1 + ConnRic)‖_∞ = 2.8×10⁻¹⁴——全部机器精度。规模对照：|E| ~ 1.5×10²，|T1| ~ 1.0×10¹，|K| ~ 5.6×10¹，|修正| ~ 2.7×10²，|½∂̃R̂| ~ 9.0×10⁰；E 为主项量级 10² 背景下的 10⁻¹⁴ 残差，修正族存在强烈的分布式抵消（无单一主载体，|E^sym|/|E| = 0.91），与 §7.1 的结构性诊断一致。
+### 8.3 连续极限
 
-**证明结构**。定理 7.2 的 Lean 证明三步：① 逐点线性 covDiff02(G) = covDiff02(Riĉ) − ½·covDiff02(gR̂)（`einsteinTensor` 定义展开 + sum4 显式求和 + ring）+ 求和分配；② covDiff02 = ∂̃ + conn02 逐点成立（definitional），求和分配；③ 重写代入 §26.17 与 §26.18 两个已证定理自动收尾。技术方案沿用 §7.1 的 sum4 桥接方法。
+全部修正项为移位差分型（含 step 与 x 两点的 Γ、g、R̂ 混合），量级 O(a)（a 为 step 的连续极限格距）：Γ 的两点差退化为单点 Γ，∂̃ 退化为偏导数，度规相容修正族按离散度规相容律（`discrete_metric_compatible`：∂̃_μg_{aν} = g_{aλ}Γ^λ_{μν} + g_{νλ}Γ^λ_{μa}）代换后成为标准 ∇_λg = 0 的离散祖先。公式退化到经典 ∇^μG_{μν} = 0。
+
+### 8.4 数值闭合
+
+随机对照（8 点状态空间、随机 SPD 度规与其精确逆、seed 43）：定义层 ‖∇̃G − (∇̃Riĉ − ½B)‖_∞ = 2.8×10⁻¹⁴，抵消形态 2.8×10⁻¹⁴，全显式形态 3.2×10⁻¹⁴，方向分裂 ‖∇̃Riĉ − (T1 + ConnRic)‖_∞ = 2.8×10⁻¹⁴——全部机器精度。规模对照：|E| ~ 1.5×10²，|T1| ~ 1.0×10¹，|K| ~ 5.6×10¹，|修正| ~ 2.7×10²，|½∂̃R̂| ~ 9.0×10⁰；E 为主项量级 10² 背景下的 10⁻¹⁴ 残差，修正族存在强烈的分布式抵消（无单一主载体，|E^sym|/|E| = 0.91），与 §7.1 的结构性诊断一致。
+
+### 8.5 证明结构与地位
+
+**证明结构**。定理 8.1 的 Lean 证明三步：① 逐点线性 covDiff02(G) = covDiff02(Riĉ) − ½·covDiff02(gR̂)（`einsteinTensor` 定义展开 + sum4 显式求和 + ring）+ 求和分配；② covDiff02 = ∂̃ + conn02 逐点成立（definitional），求和分配；③ 重写代入 §26.17 与 §26.18 两个已证定理自动收尾。技术方案沿用 §7.1 的 sum4 桥接方法。
 
 **地位**。定理 7.2 是开放命题 `EinsteinDivergenceFree` 的真值：它不声称 E = 0（场层级 E = O(a) 不恒零，§26.7(b) 负面结果），而是给出 E 的**精确显式形态**——修正项全部是连续极限消失的移位差分 artifact，守恒律以"修正公式"而非"恒等式"的形式在离散层成立。至此 §7.1 登记的证伪处置、真值路径与开放命题三层闭环，真值路径形式化侧无未闭合缺口。
 
 ---
 
-## 8. 谱作用量原理
+## 9. 谱作用量原理
 
-### 8.1 Dirac 算子与 SpectralAction
+### 9.1 Dirac 算子与 SpectralAction
 
 ```lean
 structure DiracOperator where
@@ -438,7 +455,7 @@ structure SpectralAction where
 
 谱作用量 S = Tr(f(D/Λ)) + ⟨ψ, Dψ⟩，其中 D 是 Dirac 算子，Λ 是截断尺度，f 是截断函数。
 
-### 8.2 谱作用量展开
+### 9.2 谱作用量展开
 
 Chamseddine-Connes 谱作用量展开（1996）：
 
@@ -446,7 +463,7 @@ $$\text{Tr}(f(D/\Lambda)) \approx f_4 \Lambda^4 \int d^4x \sqrt{g} + f_2 \Lambda
 
 其中 f₄, f₂, f₀ 是 f 的矩（moments）。展开到曲率二阶，得到 Einstein-Hilbert 作用量加宇宙学常数项。
 
-### 8.3 vacuum_einstein_from_spectral_action
+### 9.3 vacuum_einstein_from_spectral_action
 
 **定理 8.1**（`vacuum_einstein_from_spectral_action`）。设 g 为 MetricTensor，Ric 为 RicciTensor，h_vacuum: scalarCurvature(g, Ric) = 0，h_ricci_zero: Ric.R = 0。则：
 
@@ -462,9 +479,9 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 ---
 
-## 9. 存在论分析
+## 10. 存在论分析
 
-### 9.1 涌现等价：比伴随等价更弱的关系
+### 10.1 涌现等价：比伴随等价更弱的关系
 
 涌现映射 Δ → R_μν 的数学性质需要精确刻画。它既不是同构（isomorphism），也不是严格的伴随等价（adjoint equivalence）——它比两者都更弱，我们称之为**涌现等价**（emergent equivalence）：
 
@@ -476,7 +493,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 涌现等价比伴随等价更弱——它不仅不保持所有结构，而且两个端点的存在论地位不对称。Δ 是前几何的（在时空涌现之前就存在），R_μν 是后几何的（需要连续流形已经涌现）。这种不对称性是涌现等价区别于伴随等价的关键特征。
 
-### 9.2 温度-动能类比
+### 10.2 温度-动能类比
 
 最准确的类比是热力学与统计力学的关系：
 
@@ -488,7 +505,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 温度是涌现的，分子动能是基础的。同理：R_μν 是涌现的，Δ 是基础的。
 
-### 9.3 前几何的不可屏蔽性
+### 10.3 前几何的不可屏蔽性
 
 Δ 的前几何地位带来一个深刻后果：引力的不可屏蔽性不是经验事实，而是范畴论推论。
 
@@ -498,9 +515,9 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 ---
 
-## 10. 引力子作为准粒子：与声子的类比
+## 11. 引力子作为准粒子：与声子的类比
 
-### 10.1 准粒子的定义与物理图像
+### 11.1 准粒子的定义与物理图像
 
 在凝聚态物理中，准粒子是多体系统集体激发模式的有效描述——它不是基本粒子，而是集体行为的量子化。声子（晶格振动的量子化）、磁振子（自旋波的量子化）、等离激元（电子密度振荡的量子化）都是准粒子。
 
@@ -513,7 +530,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 | 色散关系 | 由场方程决定 | 由集体模式决定 |
 | 基本性 | 不可约 | 可还原为微观自由度 |
 
-### 10.2 声子类比：从晶格到范畴
+### 11.2 声子类比：从晶格到范畴
 
 引力子与声子的类比在涌现映射框架中具有精确的对应关系：
 
@@ -530,7 +547,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 这一类比有深刻的存在论后果：正如声子不能脱离晶格而独立存在，引力子不能脱离 Δ（范畴结构的交换律偏差）而独立存在。引力子的"基本性"是涌现的、有效性的——在 Planck 尺度以下的低能理论中表现为基本粒子，但在更深层次上它是范畴结构的集体行为。
 
-### 10.3 引力子的离散性与传播机制
+### 11.3 引力子的离散性与传播机制
 
 在 MUFPF 框架中，引力子的传播有独特机制：
 
@@ -540,7 +557,7 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 3. **无质量性**：引力子的无质量性从 Δ 的结构常数地位推出——Δ 无动力学方程（§2.1），因此 Δ 的集体激发模式无 Compton 波长，即无静止质量。
 
-### 10.4 引力天然量子化的推论
+### 11.4 引力天然量子化的推论
 
 声子类比给出一个关键推论：**引力天然量子化**。
 
@@ -554,23 +571,23 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 ---
 
-## 11. 讨论、结论与开放问题
+## 12. 讨论、结论与已解决问题
 
-### 11.1 时空几何的量子起源
+### 12.1 时空几何的量子起源
 
 本文的核心发现可以浓缩为一句话：**时空几何不是基本的，而是从范畴结构的交换律偏差中涌现的**。
 
 这一发现对物理学的基础有深远含义。在广义相对论中，时空流形是动力学变量——它可以弯曲、膨胀、收缩，但流形本身是基本的。在 MUFPF 框架中，流形本身也是涌现的——它从更基本的范畴结构中产生，正如热力学温度从分子运动中涌现。
 
-涌现映射的存在论不对称性（§9.1）意味着：描述物理世界的最基础语言不是微分几何（流形上的张量场），而是范畴论（Rec/Sp 范畴的结构关系）。微分几何是范畴论在连续极限下的有效投影。
+涌现映射的存在论不对称性（§10.1）意味着：描述物理世界的最基础语言不是微分几何（流形上的张量场），而是范畴论（Rec/Sp 范畴的结构关系）。微分几何是范畴论在连续极限下的有效投影。
 
-### 11.2 涌现映射的普适性
+### 12.2 涌现映射的普适性
 
 涌现映射 Δ → R_μν 的结构不仅适用于 MUFPF 框架——它的数学形式是普适的。任何具有"结构缺陷 → Hermitian 谱 → 度规 → 曲率"这一推导链的理论，都可以在 MUFPF 的范畴语言中重新表述。
 
 这意味着 MUFPF 不是与广义相对论竞争的替代理论，而是广义相对论的范畴论基础——GR 的所有物理预言在 MUFPF 中保持不变，但 GR 的基本假设（时空是流形、度规是对称张量、Einstein 方程成立）在 MUFPF 中都成为定理而非假设。
 
-### 11.3 核心结论
+### 12.3 核心结论
 
 本文建立了从 Δ 到 R_μν 的完整涌现映射，分七个层级（L0→L6），每一步都是 Lean4 已证明的数学定理。核心结论：
 
@@ -578,13 +595,13 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 
 2. **存在论不对称**：Δ 是前几何的结构常数，R_μν 是后几何的张量场。两者通过涌现映射连接，但不属于同一存在论层级。
 
-3. **条件式能动量守恒**：`energy_momentum_conservation` 证明：以第二 Bianchi 缩并（开放命题 `EinsteinDivergenceFree`）为前提，Einstein 场方程自动给出 `∑_m T_mn = 0`（条件式完整证明，v1.2 修订标注）；该前提自身的真值路径为 §11.5 的 Phase 16B+ 差分导数重建。
+3. **条件式能动量守恒**：`energy_momentum_conservation` 证明：以第二 Bianchi 缩并（开放命题 `EinsteinDivergenceFree`）为前提，Einstein 场方程自动给出 `∑_m T_mn = 0`（条件式完整证明，v1.2 修订标注）；v1.3：该前提的真值已在 §8 以显式修正公式形态闭合（恒等式形态经数值检验证伪，维持 §7.1/§12.5 处置）。
 
 4. **谱作用量**：`vacuum_einstein_from_spectral_action` 证明真空 Einstein 方程从谱作用量导出（已完整证明）。
 
-5. **引力子准粒子**：Δ 不是场，但 Δ 的微扰产生集体激发模式，在低能有效理论中表现为引力子（§10）。引力天然量子化，无需额外假设。
+5. **引力子准粒子**：Δ 不是场，但 Δ 的微扰产生集体激发模式，在低能有效理论中表现为引力子（§11）。引力天然量子化，无需额外假设。
 
-### 11.4 形式化状态
+### 12.4 形式化状态
 
 | 定理 | Lean4 结构 | 状态 |
 |:-----|:-----------|:----:|
@@ -600,18 +617,19 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 | 真空 Bianchi 散度 | `vacuumBianchiEinstein.einstein_divergence_free` | ✅ |
 | 能动量守恒 | `energy_momentum_conservation` | ✅ |
 | 真空 Einstein | `vacuum_einstein_from_spectral_action` | ✅ |
-| Einstein 散度为零 | `EinsteinDivergenceFree`（开放命题，登记） | 🔶 证伪处置 |
+| **Einstein 散度显式修正公式** | **`einstein_divergence_explicit`（定理 8.1，§8，v1.3）** | **✅** |
+| Einstein 散度为零（恒等式形态） | `EinsteinDivergenceFree` | 🔶 证伪处置（v1.2）；修正公式形态已闭合（v1.3，§8） |
 | 真空 Einstein 散度 | `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0） | ✅ |
 
-**统计**（v1.2）：14 个定理/命题中 12 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`，真值路径见 §11.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪并从 Lean 库删除（v1.1 曾误判为计算量瓶颈 sorry，全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效；真协变守恒律（非真空、非条件式）依赖 §11.5 的 Phase 16B+ 差分导数重建。
+**统计**（v1.2）：14 个定理/命题中 12 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`，真值路径见 §12.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪并从 Lean 库删除（v1.1 曾误判为计算量瓶颈 sorry，全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。**v1.3 更新**：真值路径（§12.5 问题 0）已完整闭合——`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry（算子主定理 `discrete_second_bianchi_operator` → 骨架层 → 度规缩并 → Einstein 构造层 → 收缩 Bianchi `contracted_riemann_divergence` → δ 缩并 `metric_term_divergence` → ConnRic K 型 `connric_curvature_expand` → 收官 `einstein_divergence_explicit`），开放命题 `EinsteinDivergenceFree` 以修正公式形态解决；真协变守恒律以显式修正公式（而非恒等式）形式在离散层成立，连续极限退化到经典 ∇^μG_{μν} = 0。
 
-### 11.5 技术局限性与开放问题
+### 12.5 技术局限性与已解决问题
 
 **v1.1 → v1.2 修订：从"计算量瓶颈"到"证伪与真值路径"。** v1.1 声明唯一剩余 sorry `einstein_divergence_free_from_bianchi`（256 单项式 `ring` 计算瓶颈）。2026-09-11 的数值检验（每类 ≥6 组独立随机样本）表明该恒等式**本身为假**（残差 10⁰–10²），非计算瓶颈：连续理论中 ∇^μ G_μν = 0 的证明必须同时使用 ∂ 项与 Γ 项联合抵消，而点值代数骨架丢弃全部 ∂ 项后，守恒律的载体不复存在；且原式的普通指标求和不是协变表述。已实施处置（SpectralMetric.lean）：删除假定理与依赖它的 `secondBianchiFromDiscrete`；`EinsteinDivergenceFree (Γ g)` 登记为开放命题（不 axiomatize——普遍量化假命题与可判定反例并存将导致不一致）；新增真定理 `einstein_divergence_free_vacuum`。下游 `energy_momentum_conservation` / `BianchiEinsteinConservation` / `vacuumBianchiEinstein` 均为条件式或真空构造，不受证伪影响。证伪与处置全记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
 开放问题：
 
-0. **带 ∂ 项的离散第二 Bianchi 重建（Phase 16B+，真值路径）**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)（张量场在递归系统上的逐点差分），重建含 ∂ 项的离散第二 Bianchi，其缩并给出真正的协变守恒律。既有基础（2026-09-11 全库查证，索引见 `sorry_closure_roadmap.md` §3.6）：不带 ∂ 项的骨架 `second_bianchi_discrete`（本文 §7.1）已机器证明；库里唯一"离散外微分 + Bianchi"机器证明先例为 Paper XLIV 曲率层（结构方程 Ω=dω+ω∧ω、Bianchi dΩ+[ω,Ω]=0，零 sorry + 14/14 数值），其 sum4 显式求和技术可直接迁移；谱侧目标陈述为 Paper XVI 主定理 22（Bianchi 的谱形式 ⟺ 能动量守恒）。**第一步已闭合（2026-09-11 晚，`DiscreteCovariantBianchi.lean`，5 定理零 sorry）**：数值预实验表明朴素分量式不成立（离散 Leibniz 修正不可忽略），但算子形式无条件精确——协变差分 D_ρ = 移位 + 规范作用 − 1 视为场空间自同态，曲率 F_{μν} = [D_μ, D_ν]，第二 Bianchi = 算子 Jacobi 恒等式 Σ_cyc [D_ρ, F_{μν}] = 0（主定理 `discrete_second_bianchi_operator`，无需无挠/对易/度量相容任何假设）；分量展开显示与连续曲率逐项对应，修正项 O(a) 连续极限消失（|B|/|R| ∝ 1/n² 数值验证）。**(a) 已闭合（2026-09-11 晚，§26.6，模块现 10 定理零 sorry）**：`curvature_op_constant_field`（常 Γ 场 + step 对易 ⟹ 曲率算子 F_{μν} 退化为骨架曲率 `skeletonCurvature` 的逐点乘法，与本文骨架 `riemannExplicit` 同构）+ `skeleton_second_bianchi`（骨架层第二 Bianchi 自包含证明，无挠 + ring_nf，与 `second_bianchi_discrete` 同构）——算子主定理与点值骨架连接为同一结构的两个层级。**(b) 度规缩并——骨架层代数核心已闭合（2026-09-11 深夜，§26.7，模块现 18 定理零 sorry，全库 4078 jobs `lake build` 通过）**：数值预实验（`numerical/phase16b_metric_contraction.py`）三个结论：① 离散 Christoffel 公式下度量相容残差 A ≡ 0 逐点精确（纯代数恒等式 ginv·g = δ 不经过 ∂̃），即离散 Christoffel 公式的逐点相容是纯环恒等式；② 负面结果：场层级 Einstein 协变散度 E ≠ α·缩并(Bianchi)——E = O(a)，是比缩并残差 O(a²) 高一阶的离散化 artifact，场层级不存在恒等式，开放命题 `EinsteinDivergenceFree` 维持开放；③ 常值 + 无挠 + 相容 ⟹ 骨架 Einstein 散度恒零（随机对照验证）。据此在 `DiscreteCovariantBianchi.lean` §26.7 建成骨架层代数核心（局部无标架形态 `skCurv` + g-斜称相容假设 `SkeletonMetricCompat`）：`(gΓ)`-交换 `skeleton_g_gamma_exchange`、曲率 g-斜称 `skeleton_curvature_skew`（四碎片交换 + 哑元对合配对）、第一 Bianchi `skeleton_first_bianchi`、**Ricci 对称性 `skeleton_ricci_symmetric`**（相容 + g/ginv 对称 + 逆对 ⟹ Riĉ_{σν} = Riĉ_{νσ}——Einstein 张量对称性的直接来源；δ-迹经逆对插入 + 斜称 + ginv 对合归零）。**剩余 (b) 主定理——陈述被证伪（真空化）+ 重表述为开放问题（2026-09-11 下午）**：两个目标中 `discrete_christoffel_metric_compatible`（① 的 Lean 形式化）已闭合（纯代数恒等式，一次通过）；而 `skeleton_einstein_divergence_free`（常值 + 无挠 + 相容 ⟹ 骨架 Einstein 散度恒零）的陈述被**机器证明为真空**——澄清性引理 `skGamma_zero_of_torsionfree_compatible` 证明常值骨架层上无挠 + 度规相容迫使联络恒为零（轮换论证 Γ_{abc} = Γ_{acb} = −Γ_{bca} = −Γ_{bac} = Γ_{cab} = Γ_{cba} = −Γ_{abc}），故该恒等式只在零联络上成立，空洞。数值再刻画（补充实验）：随机仅相容联络 E ≠ 0（E_skel = 0 不是相容的推论）；ω-联络（数值 E = 0 的相容族）实为挠率联络（T^0_{ij} = −2ω_ij ≠ 0）；在"非零分量恰含一个 0 指标"的 12 维相容子空间内 E = 0 ⟺ 联络的 (i,j,0)-块反对称。**重表述（开放）**：骨架层 E_skel = 0 的成立条件是允许挠率下的结构性条件，候选方向为 (α) E_skel 的"无挠部分 + 挠率泛函"恒等式分解（ω-联络是挠率项精确抵消的零点），(β) RecObj step 语义下 ∂̃ 协变散度的恒等式版本（真值路径）。开放命题 `EinsteinDivergenceFree` 维持开放；场层级（含 ∂̃ 的协变守恒律）仍待未来工作的差分导数重建。**方向 (α) 符号结构结论（2026-09-11，sympy 精确 + 数值复核，脚本 `numerical/phase16b_eskel_sdecomp.py` / `phase16b_eskel_fullspace.py` / `phase16b_div4_family.py`）**：在恰单零指标 12 维族内把联络的 (i,j,0)-块 D 分解为反对称 A（ω 部分）+ 对称 S（挠率对称部分），Einstein 散度 4 分量满足——(i) 空间分量恒等式 D₁ ≡ D₂ ≡ D₃ ≡ 0（整族多项式恒零，结构性：族内无三空间指标联络分量，散度空间分量失去全部支撑项）；(ii) 时间分量分解 D₀ = L(C,A)·S + Cub(S)：对 S 线性部分 6 项（系数为 (C,A) 的二次型）、三次部分 16 项且只含 S、二次部分恒零（无 (C,A)×S² 交叉项），Cub(S) 在 det/tr 标准不变量多项式组合下不分解（几何含义待定）；(iii) ω 联络（S = 0）是族内 D_ν = 0 的**全部**零点（3000 随机样本无反例；ω 样本 2000 个 max|D| = 2.7e-15）；ω 点沿 S 扰动 D(t) = tL + t³Cub，无常数、无二次项。**限制声明**：全 48 维相容空间内 D 的 4 分量一般全非零、对联络纯三次、无恒等式零点结构——上述刻画限于恰单零指标族，本文引用时须写明该限制。**空间分量恒等式的 Lean 形式化已闭合（2026-09-11 晚，`DiscreteCovariantBianchi.lean` §26.8，全库 4078 jobs `lake build` 通过）**：主定理 `single_zero_family_spatial_div_zero`——对恰单零指标族（`singleZeroConn` 显式查表）与 Minkowski 度规，任意 C D（无需对称性假设）下 D_k = Σ_{μ,a} η^{μa} ∇̃_μ G_{ak}（k=1,2,3）恒为零（fin_cases + 数字字面量归约 + sum4 展开 + vecCons 字面量引理，simp 即闭合）。**(α)-2 已闭合（2026-09-12 凌晨）**：ω 联络零点定理 `single_zero_family_time_div_zero_omega`——C、D 均反对称（纯 ω 联络，挠率 T^0_{ij} = −2A_{ji}）⟹ 时间分量 D₀ ≡ 0（反对称性实例化地面重写 + ring 闭合）；与 (α)-1 合取得 **ω-联络是族内全散度 D_ν = 0 的零点**。前提不可减：C 保留对称部分时 D₀ ≠ 0（符号验证 6 项残差），C 反对称是本质条件。**(α)-3 已闭合（2026-09-12 凌晨）**：时间分量挠率泛函分解定理 `single_zero_family_time_div_decomp`——C、A 反对称、S 对称、D = A + S 下 D₀ = L(C,A)·S + Cub(S) 显式成立（L 为 21 项 (C,A) 二次系数线性型，Cub 为 16 项纯 S 三次型，无 S⁰/S² 项；RHS 由 `numerical/phase16b_d0_lean_gen.py` 在 12 个标准原子上生成并经 sympy 校验，Lean 端 ring 闭合）。此定理同时暴露 `singleZeroConn` 查表 Γ^i_{j0} 块的转置勘误（已修正，(α)-1/(α)-2 陈述不受影响）。**方向 (α) 至此全部闭合**（空间分量恒等式 + ω 零点定理 + 时间分量显式分解）。**方向 (β) 第一构件组已闭合（2026-09-12，§26.9，模块 24 定理零 sorry）**：RecObj step 语义下 ∂̃ 真值路径落地四件——① ∂̃ 算子定义 `stepDiff`（沿 step 的方向化差分，库里首次实现）；② Leibniz 修正恒等式 `stepDiff_mul`：∂̃(AB) = ∂̃A·B + A·∂̃B + ∂̃A·∂̃B，第三项即离散差分偏离连续 Leibniz 律的代数源头（协变导数修正结构的成因）；③ 分量公式 `covDiffOp_apply`（D_ρ W 的显式四分量展开）；④ 分量级循环恒等式 `discrete_second_bianchi_components`：Σ_cyc[(D_ρ F_μν V) − (F_μν D_ρ V)] x r = 0，由算子 Jacobi 恒等式逐点实例化，修正项（双移位、∂̃Γ、[Γ_μ,Γ_ν]、Leibniz 修正）在恒等式内精确抵消，是骨架层第二 Bianchi 含 ∂̃ 项的真值载体（连续极限 a → 0 逐型消失）。(β) 剩余：修正版散度恒等式（Bianchi 的度规缩并）需算子级度规相容，开放命题 `EinsteinDivergenceFree` 维持开放，O(a) 残差分析现具分量级 Bianchi 基础。**(β)-2 已闭合（2026-09-12，§26.10，模块 25 定理零 sorry）**：算子级 η-度规相容（Leibniz 修正版）`covDiffOp_metric_compatible`——联络逐点取值于 𝔰𝔬(η)（离散 Christoffel 逐点相容条件的算子化）时，∂̃_ρ⟨V,W⟩_η = ⟨D_ρV,W⟩_η + ⟨V,D_ρW⟩_η + **⟨∂̃_ρV,∂̃_ρW⟩_η**，第三项即离散 Leibniz 修正投影到配对上的 O(a²) 修正（朴素相容偏离的精确代数形态）；联络项双和经相容条件逐点归零。这是把分量级 Bianchi 缩并成修正散度恒等式的结构件（Ricci/Einstein 对称性的算子级来源）。**(β)-3 已闭合（2026-09-12，§26.11，模块 28 定理零 sorry）**：修正张量第二 Bianchi 恒等式 `discrete_second_bianchi_tensor`——Σ_cyc(λ,μ,ν)(∇̃_λ R̂_{μν} − C_{λμν})^r_s = 0（逐点精确，无任何假设）。推导：算子恒等式作用于常值试验场（双移位项 v−v 抵消，F v̂ = R̂·v）后按 v-系数提取（指示函数法）。修正项 C = 双移位差 Γ_λ 项 + Σ_l ∂̃_μΓ^r_{νl}·∂̃_μΓ^l_{λs} − Σ_l ∂̃_νΓ^r_{μl}·∂̃_νΓ^l_{λs}（R̂Γ_λv 项在两侧精确抵消后的化简形态），三项全为二阶差分结构（光滑场 O(a²)）；退化链与骨架层一致（step 对易去双移位、Γ 常值去 ∂̃Γ，同时成立退化为骨架层第二 Bianchi）。数值验证 64 组 (λ,μ,ν) worst |LHS−RHS| = 1.4e-14。(β) 剩余：Bianchi 的度规缩并为修正散度恒等式（Einstein 张量的 (0,2)-构造 + Ricci 对称场层级形态 + ginv 升指标 Leibniz 修正 O(a²)）——(β)-4；开放命题 `EinsteinDivergenceFree` 维持开放（现具分量级 + 张量级 + 算子级三重基础）。**(β)-4 第一阶段已闭合（2026-09-12，§26.12，模块 31 定理零 sorry）**：离散 Riemann 散度恒等式 `discrete_riemann_divergence`——(β)-3 取 λ=r 裸迹缩并（无度量）：Σ_r(∇̃_r R̂_{μν})^r_s − ∂̃_μ Riĉ_{sν} + ∂̃_ν Riĉ_{sμ} = Cc3 − K2 − K3（逐点精确，无任何假设），连续对应 ∇^ρR_{ρsμν} = ∇_μRic_{sν} − ∇_νRic_{sμ}；K2/K3 为联络一阶修正，Cc3 为 C 的三循环位置裸迹（O(a²)）。新定义 `ricciTensor`（裸迹 Ricci）。证明关键：循环位置二的耦合指标联络项经逐点反对称 + Finset.sum_comm 交换求和 + sum_mul 因子化归约（ring 不自动交换求和指标/提出(∑)·c 因子）。数值验证 worst 2.1e-14；附带发现场层级 Ricci 不对称（≈0.29·|Ric|）——第二阶段（度量缩并出 ∇̃^μRiĉ_{μν} = ½∂̃R + 修正）需先闭合 Ricci 对称的修正形态。(β) 剩余：第二阶段度量缩并（Ricci 对称修正形态 + ginv 升指标 Leibniz 修正 + Einstein 张量构造）；开放命题 `EinsteinDivergenceFree` 维持开放。**(β)-4 前置缺口①已闭合（2026-09-12 凌晨，§26.13，模块 33 定理零 sorry，全库 4078 jobs `lake build` 通过）**：修正 Ricci 对称性 `modified_ricci_symmetry`——场层级 Riĉ_{σν} − Riĉ_{νσ} = ½ ginv^{ab}(PS_{bσaν} − PS_{bνaσ})，PS 为度量降指标 (0,4) 曲率的对偶交换残差（连续恒零、差分 O(∂̃Γ)）。纯 δ-代数（ginv 对称 + ginv·g=δ，无场方程/联络假设），关键引理 `metric_ricci_eq`（度量 Ricci = 裸迹 Ricci）；骨架层 ∂̃≡0 时 PS≡0 退化回 `skeleton_ricci_symmetric`。数值 max|A−rhs|=3.3e-15（`numerical/phase16b_beta4_explore.py` 第 7 节）。至此开放命题具五重基础：分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容 + 修正 Ricci 对称。**(β)-4 第二阶段缺口②已闭合（2026-09-12 上午，§26.14，模块 38 定理零 sorry，全库 4078 jobs `lake build` 通过）**：ginv 升指标的 Leibniz 修正——`dginv_left`/`dginv_right`（∂̃ginv 双移位变体，连续对应 ∂(g⁻¹)=−g⁻¹∂g g⁻¹ 的逐点精确差分形态，数值 ≤1.3e-15）+ `discrete_metric_compatible`（∂̃_ρ g_{μν} = g_{μλ}Γ^λ_{ρν}+g_{νλ}Γ^λ_{ρμ}，对离散 Christoffel 公式逐点精确，数值 2.1e-14；移位配置唯一），核心工具 `solve_right`（A·g=B 在互逆对称下的显式解）。数值 `numerical/phase16b_beta5_ginv_leibniz.py`。)
+0. ~~**带 ∂ 项的离散第二 Bianchi 重建（Phase 16B+，真值路径）**~~ **【✅ 已解决，2026-09-12，修正公式形态——显式修正公式见 §8（定理 8.1），全链记录见下】**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x)（张量场在递归系统上的逐点差分），重建含 ∂ 项的离散第二 Bianchi，其缩并给出真正的协变守恒律。既有基础（2026-09-11 全库查证，索引见 `sorry_closure_roadmap.md` §3.6）：不带 ∂ 项的骨架 `second_bianchi_discrete`（本文 §7.1）已机器证明；库里唯一"离散外微分 + Bianchi"机器证明先例为 Paper XLIV 曲率层（结构方程 Ω=dω+ω∧ω、Bianchi dΩ+[ω,Ω]=0，零 sorry + 14/14 数值），其 sum4 显式求和技术可直接迁移；谱侧目标陈述为 Paper XVI 主定理 22（Bianchi 的谱形式 ⟺ 能动量守恒）。**第一步已闭合（2026-09-11 晚，`DiscreteCovariantBianchi.lean`，5 定理零 sorry）**：数值预实验表明朴素分量式不成立（离散 Leibniz 修正不可忽略），但算子形式无条件精确——协变差分 D_ρ = 移位 + 规范作用 − 1 视为场空间自同态，曲率 F_{μν} = [D_μ, D_ν]，第二 Bianchi = 算子 Jacobi 恒等式 Σ_cyc [D_ρ, F_{μν}] = 0（主定理 `discrete_second_bianchi_operator`，无需无挠/对易/度量相容任何假设）；分量展开显示与连续曲率逐项对应，修正项 O(a) 连续极限消失（|B|/|R| ∝ 1/n² 数值验证）。**(a) 已闭合（2026-09-11 晚，§26.6，模块现 10 定理零 sorry）**：`curvature_op_constant_field`（常 Γ 场 + step 对易 ⟹ 曲率算子 F_{μν} 退化为骨架曲率 `skeletonCurvature` 的逐点乘法，与本文骨架 `riemannExplicit` 同构）+ `skeleton_second_bianchi`（骨架层第二 Bianchi 自包含证明，无挠 + ring_nf，与 `second_bianchi_discrete` 同构）——算子主定理与点值骨架连接为同一结构的两个层级。**(b) 度规缩并——骨架层代数核心已闭合（2026-09-11 深夜，§26.7，模块现 18 定理零 sorry，全库 4078 jobs `lake build` 通过）**：数值预实验（`numerical/phase16b_metric_contraction.py`）三个结论：① 离散 Christoffel 公式下度量相容残差 A ≡ 0 逐点精确（纯代数恒等式 ginv·g = δ 不经过 ∂̃），即离散 Christoffel 公式的逐点相容是纯环恒等式；② 负面结果：场层级 Einstein 协变散度 E ≠ α·缩并(Bianchi)——E = O(a)，是比缩并残差 O(a²) 高一阶的离散化 artifact，场层级不存在恒等式，开放命题 `EinsteinDivergenceFree` 维持开放；③ 常值 + 无挠 + 相容 ⟹ 骨架 Einstein 散度恒零（随机对照验证）。据此在 `DiscreteCovariantBianchi.lean` §26.7 建成骨架层代数核心（局部无标架形态 `skCurv` + g-斜称相容假设 `SkeletonMetricCompat`）：`(gΓ)`-交换 `skeleton_g_gamma_exchange`、曲率 g-斜称 `skeleton_curvature_skew`（四碎片交换 + 哑元对合配对）、第一 Bianchi `skeleton_first_bianchi`、**Ricci 对称性 `skeleton_ricci_symmetric`**（相容 + g/ginv 对称 + 逆对 ⟹ Riĉ_{σν} = Riĉ_{νσ}——Einstein 张量对称性的直接来源；δ-迹经逆对插入 + 斜称 + ginv 对合归零）。**剩余 (b) 主定理——陈述被证伪（真空化）+ 重表述为开放问题（2026-09-11 下午）**：两个目标中 `discrete_christoffel_metric_compatible`（① 的 Lean 形式化）已闭合（纯代数恒等式，一次通过）；而 `skeleton_einstein_divergence_free`（常值 + 无挠 + 相容 ⟹ 骨架 Einstein 散度恒零）的陈述被**机器证明为真空**——澄清性引理 `skGamma_zero_of_torsionfree_compatible` 证明常值骨架层上无挠 + 度规相容迫使联络恒为零（轮换论证 Γ_{abc} = Γ_{acb} = −Γ_{bca} = −Γ_{bac} = Γ_{cab} = Γ_{cba} = −Γ_{abc}），故该恒等式只在零联络上成立，空洞。数值再刻画（补充实验）：随机仅相容联络 E ≠ 0（E_skel = 0 不是相容的推论）；ω-联络（数值 E = 0 的相容族）实为挠率联络（T^0_{ij} = −2ω_ij ≠ 0）；在"非零分量恰含一个 0 指标"的 12 维相容子空间内 E = 0 ⟺ 联络的 (i,j,0)-块反对称。**重表述（开放）**：骨架层 E_skel = 0 的成立条件是允许挠率下的结构性条件，候选方向为 (α) E_skel 的"无挠部分 + 挠率泛函"恒等式分解（ω-联络是挠率项精确抵消的零点），(β) RecObj step 语义下 ∂̃ 协变散度的恒等式版本（真值路径）。开放命题 `EinsteinDivergenceFree` 维持开放；场层级（含 ∂̃ 的协变守恒律）仍待未来工作的差分导数重建。**方向 (α) 符号结构结论（2026-09-11，sympy 精确 + 数值复核，脚本 `numerical/phase16b_eskel_sdecomp.py` / `phase16b_eskel_fullspace.py` / `phase16b_div4_family.py`）**：在恰单零指标 12 维族内把联络的 (i,j,0)-块 D 分解为反对称 A（ω 部分）+ 对称 S（挠率对称部分），Einstein 散度 4 分量满足——(i) 空间分量恒等式 D₁ ≡ D₂ ≡ D₃ ≡ 0（整族多项式恒零，结构性：族内无三空间指标联络分量，散度空间分量失去全部支撑项）；(ii) 时间分量分解 D₀ = L(C,A)·S + Cub(S)：对 S 线性部分 6 项（系数为 (C,A) 的二次型）、三次部分 16 项且只含 S、二次部分恒零（无 (C,A)×S² 交叉项），Cub(S) 在 det/tr 标准不变量多项式组合下不分解（几何含义待定）；(iii) ω 联络（S = 0）是族内 D_ν = 0 的**全部**零点（3000 随机样本无反例；ω 样本 2000 个 max|D| = 2.7e-15）；ω 点沿 S 扰动 D(t) = tL + t³Cub，无常数、无二次项。**限制声明**：全 48 维相容空间内 D 的 4 分量一般全非零、对联络纯三次、无恒等式零点结构——上述刻画限于恰单零指标族，本文引用时须写明该限制。**空间分量恒等式的 Lean 形式化已闭合（2026-09-11 晚，`DiscreteCovariantBianchi.lean` §26.8，全库 4078 jobs `lake build` 通过）**：主定理 `single_zero_family_spatial_div_zero`——对恰单零指标族（`singleZeroConn` 显式查表）与 Minkowski 度规，任意 C D（无需对称性假设）下 D_k = Σ_{μ,a} η^{μa} ∇̃_μ G_{ak}（k=1,2,3）恒为零（fin_cases + 数字字面量归约 + sum4 展开 + vecCons 字面量引理，simp 即闭合）。**(α)-2 已闭合（2026-09-12 凌晨）**：ω 联络零点定理 `single_zero_family_time_div_zero_omega`——C、D 均反对称（纯 ω 联络，挠率 T^0_{ij} = −2A_{ji}）⟹ 时间分量 D₀ ≡ 0（反对称性实例化地面重写 + ring 闭合）；与 (α)-1 合取得 **ω-联络是族内全散度 D_ν = 0 的零点**。前提不可减：C 保留对称部分时 D₀ ≠ 0（符号验证 6 项残差），C 反对称是本质条件。**(α)-3 已闭合（2026-09-12 凌晨）**：时间分量挠率泛函分解定理 `single_zero_family_time_div_decomp`——C、A 反对称、S 对称、D = A + S 下 D₀ = L(C,A)·S + Cub(S) 显式成立（L 为 21 项 (C,A) 二次系数线性型，Cub 为 16 项纯 S 三次型，无 S⁰/S² 项；RHS 由 `numerical/phase16b_d0_lean_gen.py` 在 12 个标准原子上生成并经 sympy 校验，Lean 端 ring 闭合）。此定理同时暴露 `singleZeroConn` 查表 Γ^i_{j0} 块的转置勘误（已修正，(α)-1/(α)-2 陈述不受影响）。**方向 (α) 至此全部闭合**（空间分量恒等式 + ω 零点定理 + 时间分量显式分解）。**方向 (β) 第一构件组已闭合（2026-09-12，§26.9，模块 24 定理零 sorry）**：RecObj step 语义下 ∂̃ 真值路径落地四件——① ∂̃ 算子定义 `stepDiff`（沿 step 的方向化差分，库里首次实现）；② Leibniz 修正恒等式 `stepDiff_mul`：∂̃(AB) = ∂̃A·B + A·∂̃B + ∂̃A·∂̃B，第三项即离散差分偏离连续 Leibniz 律的代数源头（协变导数修正结构的成因）；③ 分量公式 `covDiffOp_apply`（D_ρ W 的显式四分量展开）；④ 分量级循环恒等式 `discrete_second_bianchi_components`：Σ_cyc[(D_ρ F_μν V) − (F_μν D_ρ V)] x r = 0，由算子 Jacobi 恒等式逐点实例化，修正项（双移位、∂̃Γ、[Γ_μ,Γ_ν]、Leibniz 修正）在恒等式内精确抵消，是骨架层第二 Bianchi 含 ∂̃ 项的真值载体（连续极限 a → 0 逐型消失）。(β) 剩余：修正版散度恒等式（Bianchi 的度规缩并）需算子级度规相容，开放命题 `EinsteinDivergenceFree` 维持开放，O(a) 残差分析现具分量级 Bianchi 基础。**(β)-2 已闭合（2026-09-12，§26.10，模块 25 定理零 sorry）**：算子级 η-度规相容（Leibniz 修正版）`covDiffOp_metric_compatible`——联络逐点取值于 𝔰𝔬(η)（离散 Christoffel 逐点相容条件的算子化）时，∂̃_ρ⟨V,W⟩_η = ⟨D_ρV,W⟩_η + ⟨V,D_ρW⟩_η + **⟨∂̃_ρV,∂̃_ρW⟩_η**，第三项即离散 Leibniz 修正投影到配对上的 O(a²) 修正（朴素相容偏离的精确代数形态）；联络项双和经相容条件逐点归零。这是把分量级 Bianchi 缩并成修正散度恒等式的结构件（Ricci/Einstein 对称性的算子级来源）。**(β)-3 已闭合（2026-09-12，§26.11，模块 28 定理零 sorry）**：修正张量第二 Bianchi 恒等式 `discrete_second_bianchi_tensor`——Σ_cyc(λ,μ,ν)(∇̃_λ R̂_{μν} − C_{λμν})^r_s = 0（逐点精确，无任何假设）。推导：算子恒等式作用于常值试验场（双移位项 v−v 抵消，F v̂ = R̂·v）后按 v-系数提取（指示函数法）。修正项 C = 双移位差 Γ_λ 项 + Σ_l ∂̃_μΓ^r_{νl}·∂̃_μΓ^l_{λs} − Σ_l ∂̃_νΓ^r_{μl}·∂̃_νΓ^l_{λs}（R̂Γ_λv 项在两侧精确抵消后的化简形态），三项全为二阶差分结构（光滑场 O(a²)）；退化链与骨架层一致（step 对易去双移位、Γ 常值去 ∂̃Γ，同时成立退化为骨架层第二 Bianchi）。数值验证 64 组 (λ,μ,ν) worst |LHS−RHS| = 1.4e-14。(β) 剩余：Bianchi 的度规缩并为修正散度恒等式（Einstein 张量的 (0,2)-构造 + Ricci 对称场层级形态 + ginv 升指标 Leibniz 修正 O(a²)）——(β)-4；开放命题 `EinsteinDivergenceFree` 维持开放（现具分量级 + 张量级 + 算子级三重基础）。**(β)-4 第一阶段已闭合（2026-09-12，§26.12，模块 31 定理零 sorry）**：离散 Riemann 散度恒等式 `discrete_riemann_divergence`——(β)-3 取 λ=r 裸迹缩并（无度量）：Σ_r(∇̃_r R̂_{μν})^r_s − ∂̃_μ Riĉ_{sν} + ∂̃_ν Riĉ_{sμ} = Cc3 − K2 − K3（逐点精确，无任何假设），连续对应 ∇^ρR_{ρsμν} = ∇_μRic_{sν} − ∇_νRic_{sμ}；K2/K3 为联络一阶修正，Cc3 为 C 的三循环位置裸迹（O(a²)）。新定义 `ricciTensor`（裸迹 Ricci）。证明关键：循环位置二的耦合指标联络项经逐点反对称 + Finset.sum_comm 交换求和 + sum_mul 因子化归约（ring 不自动交换求和指标/提出(∑)·c 因子）。数值验证 worst 2.1e-14；附带发现场层级 Ricci 不对称（≈0.29·|Ric|）——第二阶段（度量缩并出 ∇̃^μRiĉ_{μν} = ½∂̃R + 修正）需先闭合 Ricci 对称的修正形态。(β) 剩余：第二阶段度量缩并（Ricci 对称修正形态 + ginv 升指标 Leibniz 修正 + Einstein 张量构造）；开放命题 `EinsteinDivergenceFree` 维持开放。**(β)-4 前置缺口①已闭合（2026-09-12 凌晨，§26.13，模块 33 定理零 sorry，全库 4078 jobs `lake build` 通过）**：修正 Ricci 对称性 `modified_ricci_symmetry`——场层级 Riĉ_{σν} − Riĉ_{νσ} = ½ ginv^{ab}(PS_{bσaν} − PS_{bνaσ})，PS 为度量降指标 (0,4) 曲率的对偶交换残差（连续恒零、差分 O(∂̃Γ)）。纯 δ-代数（ginv 对称 + ginv·g=δ，无场方程/联络假设），关键引理 `metric_ricci_eq`（度量 Ricci = 裸迹 Ricci）；骨架层 ∂̃≡0 时 PS≡0 退化回 `skeleton_ricci_symmetric`。数值 max|A−rhs|=3.3e-15（`numerical/phase16b_beta4_explore.py` 第 7 节）。至此开放命题具五重基础：分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容 + 修正 Ricci 对称。**(β)-4 第二阶段缺口②已闭合（2026-09-12 上午，§26.14，模块 38 定理零 sorry，全库 4078 jobs `lake build` 通过）**：ginv 升指标的 Leibniz 修正——`dginv_left`/`dginv_right`（∂̃ginv 双移位变体，连续对应 ∂(g⁻¹)=−g⁻¹∂g g⁻¹ 的逐点精确差分形态，数值 ≤1.3e-15）+ `discrete_metric_compatible`（∂̃_ρ g_{μν} = g_{μλ}Γ^λ_{ρν}+g_{νλ}Γ^λ_{ρμ}，对离散 Christoffel 公式逐点精确，数值 2.1e-14；移位配置唯一），核心工具 `solve_right`（A·g=B 在互逆对称下的显式解）。数值 `numerical/phase16b_beta5_ginv_leibniz.py`。)
 **(β)-4 缺口③第一阶段已闭合（2026-09-12，§26.15，模块 40 定理零 sorry，全库 4078 jobs `lake build` 通过）**：'
   'Einstein 构造层——`scalarCurvature`/`einsteinTensor`/`einstein_trace`（ginv·G = −R̂，数值 1.1e-16）/'
   '`einstein_asymmetry`（G 不对称 = Riĉ 不对称，PS 承载）。散度预实验三个结构结论：'
