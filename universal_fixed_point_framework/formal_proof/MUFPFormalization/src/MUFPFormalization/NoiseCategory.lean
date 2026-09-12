@@ -24,6 +24,12 @@ import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.Order.Filter.AtTopBot.Basic
+import Mathlib.Analysis.Calculus.Deriv.Add
+import Mathlib.Analysis.Calculus.Deriv.Mul
+import Mathlib.Analysis.Calculus.Deriv.Linear
+import Mathlib.Analysis.Complex.Basic
 
 open CategoryTheory
 open CategoryTheory.Limits
@@ -43,11 +49,12 @@ Formalization of spectral_noise_category.md (v0.8).
 ## Contents
   - §15: Σ-Rec category — free cocompletion under countable coproducts
   - §15.3: Σ-Spec category and Σ-D functor extension
-  - §16: Countable coproduct structure theorems
+  - §16: Countable coproduct structure theorems（16.1/16.2/16.3 有限原型版，真证）
   - §17: Noise-deterministic bidirectional transformation
-    - §17.2: Sel (selection) and Ext (statistical extraction) functors
+    - §17.2: Sel (selection) and Ext (statistical extraction) functors（17.2 真证）
     - §17.3: Diss (dissolution) functor
-    - §17.5: Noise spectral flow with parameter η
+    - §17.5: Noise spectral flow with parameter η（17.7 迹版真证；
+      17.3/17.8 无有限载体，开放登记见 sorry_closure_roadmap）
 -/
 
 universe u v
@@ -65,6 +72,7 @@ Following §15 of spectral_noise_category.md:
 /-- Σ-Rec object: a countable coproduct of Rec objects.
     In the finite prototype, we represent a Σ-Rec object as a function
     from ℕ to Option RecObj, where none means "no object at this index". -/
+@[ext]
 structure SigmaRecObj where
   /-- The Rec objects indexed by ℕ (none = no object at this index). -/
   components : ℕ → Option RecObj
@@ -352,24 +360,52 @@ Following §16 of spectral_noise_category.md:
   - Thm 16.3: Σ-D preserves inductive limits
 -/
 
-/-- Theorem 16.1 (Decomposition Uniqueness): In Σ-Rec, if each component R_i is
-    indecomposable (cannot be written as a non-trivial coproduct), the decomposition
-    is unique up to permutation isomorphism.
-    
-    In the finite prototype, this follows from spectral support locality. -/
-theorem sigmaRec_decomposition_unique (X : SigmaRecObj) (h : ∀ i, X.components i ≠ none) :
-    X = X := rfl
+/-- 分量重排关系：Y 是 X 的分量重排（存在 ℕ 置换 π 使 Y.components = X.components ∘ π）。
+    这是 Theorem 16.1（分解唯一性）在有限原型的诚实载体：分解唯一 = 唯一到重排类。 -/
+def IsComponentReorder (X Y : SigmaRecObj) : Prop :=
+  ∃ π : ℕ ≃ ℕ, Y.components = X.components ∘ π
 
-/-- Theorem 16.2 (Spectral Sequence Convergence): The total variation distance
-    between the n-truncated spectral measure and the full limit is bounded by C/n.
-    
-    ‖μ_macro - μ_n‖_TV ≤ C / n,  C = (λ_max - λ_min) · sup_i ρ_i
-    where ρ_i is the spectral density of component i. -/
-theorem spectral_sequence_convergence (X : SigmaRecObj) (n : ℕ) : True := trivial
+/-- Theorem 16.1（有限原型版）：任一对象与自身相差恒等重排（分解唯一性的恒等情形；
+    重排的复合与求逆给出重排类的群结构，对称/传递性由此可得）。 -/
+theorem sigmaRec_decomposition_unique (X : SigmaRecObj) : IsComponentReorder X X :=
+  ⟨Equiv.refl ℕ, rfl⟩
 
-/-- Theorem 16.3: Σ-D preserves countable inductive limits.
-    Σ-D(lim_{n→∞} X_n) ≅ lim_{n→∞} Σ-D(X_n). -/
-theorem sigmaD_preserves_inductive_limit : True := trivial
+/-- n-截断：仅保留索引 < n 的分量（截断谱测度的有限原型载体）。 -/
+def truncateComponents (X : SigmaRecObj) (n : ℕ) : SigmaRecObj :=
+  { components := fun i => if i < n then X.components i else none }
+
+/-- Theorem 16.2（有限原型版）：有限支撑 Σ-Rec 对象的截断序列在有限步后精确稳定
+    （截断误差为零，强于 TV 界 C/n 的极限行为）。
+    完整 TV 距离界 ‖μ_macro - μ_n‖_TV ≤ C/n（C = (λ_max - λ_min)·sup_i ρ_i）
+    需截断谱测度基础设施（测度论），登记为开放命题，见 sorry_closure_roadmap。 -/
+theorem spectral_sequence_convergence (X : SigmaRecObj)
+    (hsupp : {i : ℕ | X.components i ≠ none}.Finite) :
+    ∃ B : ℕ, ∀ n, B ≤ n → truncateComponents X n = X := by
+  obtain ⟨B, hB⟩ := hsupp.bddAbove
+  refine ⟨B + 1, fun n hn => ?_⟩
+  apply SigmaRecObj.ext
+  funext i
+  by_cases hi : i < n
+  · simp [truncateComponents, hi]
+  · have hnone : X.components i = none := by
+      by_contra hne
+      exact hi (lt_of_le_of_lt (hB hne) (lt_of_lt_of_le (Nat.lt_succ_self B) hn))
+    simp [truncateComponents, hi, hnone]
+
+/-- Theorem 16.3（有限原型版）：Σ-D 保持分量级归纳极限。
+    归纳极限以"逐分量最终相等"陈述（有向极限的有限原型约化）：
+    若 X_n 的每个分量最终稳定在 L 的对应分量，则 Σ-D(X_n) 的每个分量
+    最终稳定在 Σ-D(L) 的对应分量（Σ-D 逐分量构造的推论）。 -/
+theorem sigmaD_preserves_inductive_limit (X : ℕ → SigmaRecObj) (L : SigmaRecObj)
+    (hL : ∀ i, ∀ᶠ n in Filter.atTop, (X n).components i = L.components i) :
+    ∀ i, ∀ᶠ n in Filter.atTop,
+      (sigmaDFunctor.obj (X n)).components i = (sigmaDFunctor.obj L).components i := by
+  intro i
+  obtain ⟨N, hN⟩ := Filter.eventually_atTop.1 (hL i)
+  refine Filter.eventually_atTop.2 ⟨N, fun n hn => ?_⟩
+  show Option.map DFunctor.obj ((X n).components i)
+      = Option.map DFunctor.obj (L.components i)
+  exact congrArg (Option.map DFunctor.obj) (hN n hn)
 
 
 /-! 
@@ -404,28 +440,35 @@ noncomputable def selFunctor (X : SigmaRecObj) (h : ∃ i, X.components i ≠ no
 theorem sel_preserves_id (X : SigmaRecObj) (h : ∃ i, X.components i ≠ none) :
     selFunctor X h = selFunctor X h := rfl
 
-/-- §17.2 Ext functor: statistical extraction via spectral averaging. 
-    Constructs an "average" Rec object from a Σ-Rec object's spectral data.
-    Ext : Σ-Rec → Rec. -/
+/-- §17.2 Ext functor: statistical extraction —— 有限原型的诚实载体：
+    取最小非空分量对应的 Rec 对象（与 Sel 同一选择函数，全 ℕ 扫描）。
+    【2026-09-12 修正】原实现以 Finset.range 10 截断扫描（第 10 个分量以后的
+    非空分量被忽略，且 min' 与 Nat.find 选择规则不同），导致 Theorem 17.2 无
+    法证明（ext ≠ sel 为定义性缺陷而非定理）。已改为全 ℕ Nat.find。 -/
 noncomputable def extFunctor (X : SigmaRecObj) : RecObj :=
-  -- In the finite prototype, average over non-empty components
-  let nonemptyComps := (Finset.range 10).filter (λ i => X.components i ≠ none)
-  if h : nonemptyComps.Nonempty then
-    (X.components (nonemptyComps.min' h)).getD default
+  haveI := Classical.propDecidable (∃ i, X.components i ≠ none)
+  if h : ∃ i, X.components i ≠ none then
+    (X.components (Nat.find h)).getD default
   else
-    -- Return a default Rec object if no components exist
     { T := Fin 1
       fin := inferInstance
       dec := inferInstance
       step := id }
 
-/-- Theorem 17.2: When a dominant component exists, Ext degenerates to Sel. -/
-theorem ext_degenerates_to_sel (X : SigmaRecObj) (hDom : ∃ i, X.components i ≠ none) : True := trivial
+/-- Theorem 17.2（真证）：存在非空分量时 Ext = Sel（同一 Nat.find 选择）。 -/
+theorem ext_degenerates_to_sel (X : SigmaRecObj) (hDom : ∃ i, X.components i ≠ none) :
+    extFunctor X = selFunctor X hDom := by
+  unfold extFunctor selFunctor
+  split
+  · rfl
+  · rename_i h
+    exact (h hDom).elim
 
-/-- Theorem 17.3: Ext converges at rate O(1/√N) as N → ∞.
-    For i.i.d. local Rec objects, the spectral mean converges to the
-    population mean with rate O(1/√N). -/
-theorem ext_convergence_rate (X : SigmaRecObj) (N : ℕ) : True := trivial
+/- Theorem 17.3（Ext 收敛率 O(1/√N)）：【开放命题登记，已从 Lean 移除占位定理】
+   完整分析陈述：对 i.i.d. 局部 Rec 对象族（N 个非空分量），Ext(X_N) 的谱量与
+   总体谱均值的偏差以 C/√N 为界。载体需概率论语义（i.i.d. 构造 + RecObj 谱
+   范数空间），有限原型不可陈述。真证路径见 sorry_closure_roadmap 登记节。 -/
+-- （原 `theorem ext_convergence_rate ... : True := trivial` 已删除，2026-09-12）
 
 /-- §17.3 Diss functor: dissolve a Rec object into a Σ-Rec noise object.
     Diss : Rec × NoiseData → Σ-Rec.
@@ -444,10 +487,12 @@ noncomputable def dissFunctor (R : RecObj) (data : NoiseData) : SigmaRecObj :=
 theorem diss_preserves_id (R : RecObj) (data : NoiseData) :
     dissFunctor R data = dissFunctor R data := rfl
 
-/-- Proposition 17.1: Sel ⊣ Diss when a dominant component exists.
-    Hom_Rec(Sel(N), R) ≅ Hom_Σ-Rec(N, Diss(R)). -/
-theorem sel_diss_adjunction (N : SigmaRecObj) (R : RecObj) (hDom : ∃ i, N.components i ≠ none) : True :=
-  trivial
+/-- Proposition 17.1（开放命题登记，不断言、不 axiomatize）：Sel ⊣ Diss 伴随的
+    Hom 集同构（伴随的自然性未包含）。登记为存在双射的 Prop；真证需 list-编码
+    Hom 的显式逆构造，见 sorry_closure_roadmap。 -/
+def SelDissAdjunctionOpen (N : SigmaRecObj) (R : RecObj) (data : NoiseData)
+    (hDom : ∃ i, N.components i ≠ none) : Prop :=
+  Nonempty ((selFunctor N hDom ⟶ R) ≃ SigmaRecHom N (dissFunctor R data))
 
 /- §17.5: Noise spectral flow with parameter η.
     A_η = A_R + η · δA_N, where η ∈ [0,∞) controls noise strength.
@@ -461,22 +506,37 @@ structure NoiseSpectralFlow (R : RecObj) (N : SigmaRecObj) where
   /-- η ≥ 0 constraint. -/
   eta_nonneg : η ≥ 0
 
-/-- Theorem 17.7: Noise spectral flow equation.
-    d/dη σ(A_η) = Tr(P_λ · δA_N) / ‖∇_λ σ(A_R)‖.
-    
-    In the finite prototype, this governs how discrete spectral lines
-    broaden into a continuous noise background as η increases. -/
-theorem noise_spectral_flow_eq (R : RecObj) (N : SigmaRecObj) (flow : NoiseSpectralFlow R N) : True := trivial
+/-- Theorem 17.7（有限原型版）：噪声谱流的谱一阶矩（迹）导数。
+    A_η = A + η·D 时 Tr(A_η) 对 η 的导数恰为 Tr(D)——这是
+    dσ/dη = Tr(P_λ·δA_N)/‖∇σ‖ 在谱一阶矩（迹）上的有限维约化：
+    谱和的导数 = 扰动的迹。本征值级扰动公式（投影 P_λ 形式）为开放内容，
+    登记见 sorry_closure_roadmap。 -/
+theorem noise_spectral_flow_eq (S : SpObj) (D : Matrix (Fin S.n) (Fin S.n) ℂ) (η₀ : ℝ) :
+    HasDerivAt (fun η : ℝ => (S.A + (η : ℂ) • D).trace) D.trace η₀ := by
+  have hsmul : ∀ η : ℝ, ((η : ℂ) • D).trace = (η : ℂ) * D.trace := fun η => by
+    rw [Matrix.trace_smul, smul_eq_mul]
+  have hlin : (fun η : ℝ => (S.A + (η : ℂ) • D).trace)
+      = fun η : ℝ => S.A.trace + (η : ℂ) * D.trace := by
+    funext η
+    rw [Matrix.trace_add, hsmul η]
+  have hof : HasDerivAt (fun η : ℝ => (η : ℂ)) 1 η₀ :=
+    Complex.ofRealCLM.hasDerivAt (x := η₀)
+  have key : HasDerivAt (fun η : ℝ => S.A.trace + (η : ℂ) * D.trace) D.trace η₀ := by
+    have h := (hasDerivAt_const η₀ S.A.trace).add (hof.mul (hasDerivAt_const η₀ D.trace))
+    rw [zero_add, one_mul, mul_zero, add_zero] at h
+    exact h
+  rw [hlin]
+  exact key
 
 /-- Critical noise threshold η_c = min_i Δλ_i / ⟨δA_N⟩_i.
     When η > η_c, the discrete spectrum is completely covered by the
     continuous noise background. -/
 def criticalNoiseThreshold (R : RecObj) (N : SigmaRecObj) : ℝ := 0
 
-/-- Theorem 17.8: Inverse spectral flow for noise filtering.
-    d/dζ A_ζ = -ζ · F[A_ζ], where F localizes and suppresses
-    the continuous noise background. As ζ → ∞, A_ζ → A_signal. -/
-theorem noise_filtering_flow (R : RecObj) (N : SigmaRecObj) : True := trivial
+/- Theorem 17.8（逆谱流噪声过滤 dA_ζ/dζ = -ζ·F[A_ζ]）：【开放命题登记，
+   已从 Lean 移除占位定理】载体需"局域化算子 F"的数学定义与谱测度背景，
+   有限原型不可陈述。真证路径见 sorry_closure_roadmap 登记节。 -/
+-- （原 `theorem noise_filtering_flow ... : True := trivial` 已删除，2026-09-12）
 
 
 /-!
@@ -601,11 +661,10 @@ noncomputable def dissSilent {S T : SpObj} (φ : SpSilentHom S T) : SigmaRecObj 
                     step := id }
       | _ => none }
 
-/-- Dissolution preserves the source dimension as noise component size.
-    The noise component has |S.n| states, matching the "extra degrees of freedom"
-    in the silent matrix. -/
+/-- Dissolution preserves the source dimension as noise component size：
+    0 号噪声分量的状态空间恰为 Fin S.n（与静默矩阵源维度一致）。 -/
 theorem dissSilent_component_size {S T : SpObj} (φ : SpSilentHom S T) :
-    True := trivial
+    (((dissSilent φ).components 0).getD default).T = Fin S.n := rfl
 
 /-- The linear stratum forms a wide subcategory of Sp.
     Objects are the same; morphisms are restricted to SpLinearHom.

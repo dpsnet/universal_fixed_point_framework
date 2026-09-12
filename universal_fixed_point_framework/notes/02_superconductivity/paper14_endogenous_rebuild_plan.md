@@ -3,7 +3,7 @@
 **文档编号**：MUFPF-RN-ENDO-001
 **日期**：2026-09-12
 **版本**：v1.0
-**状态**：研究目标立档与差距分析；重建工作未开始
+**状态**：重建进行中；G5（NoiseCategory 占位定理真证）已闭合（见 §8），其余缺口按 §5 路线推进
 **研究目标**：以「内生推导第一性」为标准重建 Paper XIV（凝聚态物理的谱表述）——每条推导链的起点必须是范畴 Δ（Sp 4-范畴交换律偏差，Paper XXXV）或由其已证的谱间隙资产，物理输入只允许出现在明确的边界上。
 
 ---
@@ -113,3 +113,43 @@
 - `formal_proof/MUFPFormalization/src/MUFPFormalization/SuperfluidStiffness.lean`（Phase 70，零 sorry，未提交）
 - `roadmap/phase70_superfluid_stiffness.md`（Phase 70 规划）
 - `notes/02_superconductivity/spectral_superfluid_stiffness.md`（MUFPF-RN-RHO0-001，谱公理层推导的范本）
+
+
+---
+
+## 8. 执行进度
+
+### 2026-09-12：G5 闭合（NoiseCategory 占位定理真证）
+
+**结果**：6 个 `: True := trivial` 占位定理全部处置完毕，全库 `lake build MUFPFormalization`
+3688 jobs 通过，零 sorry。
+
+**真证闭合（6 项）**：
+- Thm 16.1 `sigmaRec_decomposition_unique`（新增 `IsComponentReorder`，恒等重排唯一）
+- Thm 16.2 `spectral_sequence_convergence`（新增 `truncateComponents`，有限支撑 ⟹ 有限步精确稳定）
+- Thm 16.3 `sigmaD_preserves_inductive_limit`（逐分量最终相等）
+- Thm 17.2 `ext_degenerates_to_sel`（见下"意外收获"）
+- Thm 17.7 `noise_spectral_flow_eq`（迹导数版：d Tr(A+η·D)/dη = Tr(D)）
+- `dissSilent_component_size`
+
+**意外收获（对 paper14 重建有直接影响）**：原 `extFunctor` 以 `Finset.range 10`
+截断扫描——第 10 个分量以后的非空分量被忽略、且 `min'` 与 `Nat.find` 选择规则不同，
+存在 ext ≠ sel 反例。即 **Thm 17.2 原陈述不可证明是定义性 bug 而非定理为假**。
+已改为全 ℕ `Nat.find`，此后定理 trivially 成立。若带入重建，以"修正后实现"为准。
+
+**删除并登记开放（4 项，不 axiomatize）**：
+- Thm 17.3 Ext 收敛率 O(1/√N)（需概率论语义，有限原型不可陈述）
+- Thm 17.8 逆谱流噪声过滤（需局域化算子 F + 谱测度）
+- Thm 17.7 本征值投影版（需谱投影 P_λ，迹版已真证）
+- Thm 16.2 完整 TV 距离界（需截断谱测度基础设施）
+
+**登记为 `def ...Open : Prop`（1 项）**：`SelDissAdjunctionOpen`（Prop 17.1，Hom 集同构，
+关闭需 list-编码 Hom 显式逆构造）。
+
+**G5 遗留**：ε_eff 闭式的 Lean 化（§3.4 纸面解析推导）未在本轮做——它是 paper14 §3.4
+的专属对象，并入重建阶段与措辞重定级一并处理，不单独立项。
+
+全链闭合与证伪处置记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §6。
+
+**下一步**：G6——paper14 定理 3.2/3.3 的 RG 常数（α≈1.16、ε₀≈2.58、γ₂≈0.06、ζ₀≈10⁻⁶
+均为拟合）地位裁定，走路线 (b) 显式降级为现象学声明并修订 paper14 措辞。

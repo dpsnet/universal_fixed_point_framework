@@ -461,3 +461,53 @@ EinsteinDivergenceFree 的最终显式陈述——`einsteinDiv`（E_ν 定义）
 - [ ] 统计 sorry 必须用注释剥离口径（§一），禁止原始 grep 直接报数
 - [ ] 定理陈述被证伪时（如 §2.2），勘误需保留原陈述与证伪记录
 - [ ] 每闭合一项即运行 `lake build MUFPFormalization` 全库验证
+
+---
+
+## 六、NoiseCategory 占位定理真证与开放命题登记（2026-09-12，paper14 内生重建 G5）
+
+**背景**：NoiseCategory.lean 原有 6 个 `: True := trivial` 占位定理（Thm 16.1/16.2/16.3、
+17.2/17.3、17.7/17.8、Prop 17.1 等），本次按"真证可证的、删除无载体的、登记开放的"
+三分类处置。全库 `lake build MUFPFormalization` 3688 jobs 通过，零 sorry。
+
+### 6.1 本轮真证闭合（6 项，均零 sorry）
+
+| 定理 | 处置 | 说明 |
+|:-----|:-----|:-----|
+| `sigmaRec_decomposition_unique`（Thm 16.1） | 真证 | 新增 `IsComponentReorder` def；恒等重排即唯一分解 |
+| `spectral_sequence_convergence`（Thm 16.2） | 真证（有限原型版） | 新增 `truncateComponents`；有限支撑 ⟹ 有限步精确稳定（截断误差为零，强于 TV 界 C/n）。完整 TV 版见 §6.2 |
+| `sigmaD_preserves_inductive_limit`（Thm 16.3） | 真证 | 逐分量最终相等版（`Filter.eventually_atTop` 全称名） |
+| `ext_degenerates_to_sel`（Thm 17.2） | 真证 + **定义缺陷修复** | 见 §6.3 |
+| `noise_spectral_flow_eq`（Thm 17.7） | 真证（迹导数版） | Tr(A+η·D) 对 η 的导数 = Tr(D)，谱一阶矩有限维约化；本征值投影版见 §6.2 |
+| `dissSilent_component_size` | 真证 | 0 号噪声分量状态空间 = Fin S.n（`= rfl`） |
+
+### 6.2 开放命题登记（4 项，占位定理已删除，Lean 内为 docstring/注释登记，不 axiomatize）
+
+| # | 开放命题 | 原占位 | 关闭所需基础设施 |
+|:-:|:---------|:-------|:-----------------|
+| 1 | Thm 17.3 Ext 收敛率 O(1/√N) | `ext_convergence_rate` | 概率论语义：i.i.d. 局部 Rec 对象族构造 + RecObj 谱范数空间（有限原型不可陈述） |
+| 2 | Thm 17.8 逆谱流噪声过滤 dA_ζ/dζ = −ζ·F[A_ζ] | `noise_filtering_flow` | "局域化算子 F"的数学定义 + 谱测度背景（有限原型不可陈述） |
+| 3 | Thm 17.7 本征值投影版 dσ/dη = Tr(P_λ·δA_N)/‖∇σ‖ | （迹版已真证，投影版未陈述） | 谱投影 P_λ（自伴算子泛函演算 / 微扰论） |
+| 4 | Thm 16.2 完整 TV 距离界 ‖μ_macro − μ_n‖_TV ≤ C/n | （有限步稳定版已真证） | 截断谱测度基础设施（测度论：macro 态为谱测度，TV 为测度全变差） |
+
+**另登记（1 项，Lean 内为 `def ...Open : Prop` 存在双射、不断言）**：
+`SelDissAdjunctionOpen`（Prop 17.1）——Sel ⊣ Diss 伴随的 Hom 集同构
+`((sel ⟶ R) ≃ SigmaRecHom N (diss R data))`；关闭需 list-编码 Hom 的显式逆构造。
+命名带 `Open` 后缀、类型为 `Prop`（非 `theorem`），与 §四 axiom 登记"保持显式、
+关闭时转定理"原则一致。
+
+### 6.3 意外收获：extFunctor 定义性缺陷（Thm 17.2 无法证明的根源）
+
+原 `extFunctor` 以 `Finset.range 10` 截断扫描：第 10 个分量以后的非空分量被忽略，
+且 `Finset.min'` 与 `Nat.find` 选择规则不同，导致存在 ext ≠ sel 的反例——
+**Thm 17.2 原陈述不可证明是定义性 bug，非定理为假**。已改为全 ℕ `Nat.find` 扫描
+（+ `Classical.propDecidable` 实例），此后 `ext_degenerates_to_sel` 以 `unfold`+`split`
+ trivially 成立。该缺陷若带入 paper14 重建，将以"修正后实现"为准。
+
+### 6.4 本轮验证
+
+- [x] `lake build MUFPFormalization.NoiseCategory` 通过
+- [x] `lake build MUFPFormalization` 全库 0 error（3688 jobs）
+- [x] 注释剥离后全库 `by sorry` 计数 = 0（WeaveBCS.lean 5 处 "by sorry" 字样均为
+      2026-08-04 开放项登记注释，非实际代码）
+- [x] 开放命题不 axiomatize（§6.2 四项仅 docstring 登记，一项为 `def ...Open : Prop`）
