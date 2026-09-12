@@ -54,8 +54,8 @@ noncomputable def specGenerator (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.IsHermitian) : Matrix (Fin n) (Fin n) ℂ :=
   hP.cfc (fun x => -Real.log x)
 
-/-- 负对角阵 = 对角的负。 -/
-private theorem diagonal_neg' (f : Fin n → ℂ) :
+/-- 负对角阵 = 对角的负（GPEmergence / BCSFermiEmergence 共用）。 -/
+theorem diagonal_neg' (f : Fin n → ℂ) :
     -Matrix.diagonal f = Matrix.diagonal (fun i => -f i) := by
   apply Matrix.ext
   intro i j

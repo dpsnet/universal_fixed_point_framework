@@ -363,3 +363,58 @@ paper14 按三级标注诚实分层，名实差距显式标注。残余开放（
 正谱锥边界破缺生成元（类比 paper5 定理 5.1，待微分基础设施）、A_SC/A_Hall 同类
 涌现构造、specGenerator 的 Hermitian 性包装。BCS 侧下一切入点：WeaveBCS 的
 r ≈ 0.874 锚点 + 谱对数构造模板推广。
+
+### 2026-09-12：G1 第二切入点闭合（BCS 生成元涌现，新建 BCSFermiEmergence.lean，零 sorry）
+
+承接 GP 切入点（见上条），按同一 paper5 §5 模板"子范畴约束 → 生成元涌现"的 BCS 实例
+完成 G1 的第二个切入点。GP 链从**密度算子 ρ** 出发（需正谱锥约束）；BCS 链从
+**Hamiltonian H** 出发——exp(−log(1+e^{βx})) = (1+e^{βx})⁻¹ 处处成立（1+e^{βx} > 0），
+故**对 H 的谱无任何限制**，且 T=0 奇异极限（γ 成为投影、谱触 0）由 β 有限性自动规避。
+
+**新建模块 `BCSFermiEmergence.lean`**（namespace MUFPF，根文件已 import，
+全库 3699 jobs 构建通过，零 sorry）：
+
+| 内容 | 定理/定义 | 数学内容 |
+|------|-----------|----------|
+| — | `fermi β x := (1+e^{βx})⁻¹`、`fermiDensity` | γ_F = hH.cfc(Fermi)——Fermi 密度算子 |
+| — | `bcsGenerator` | A_BCS = hH.cfc(log(1+e^{β·}))——BCS 谱生成元 |
+| §1 | `fermiDensity_isHermitian` | γ_F Hermitian（cfc 保自伴） |
+| §2 | `bcsGenerator_fermi_inverse` | **Fermi 求逆**：exp(−A_BCS) = γ_F（核心，对 σ(H) 无正性条件） |
+| §3 | `bcsGenerator_charpoly` | 谱映射：σ(A_BCS) = log(1+e^{β·})(σ(H)) |
+| §4 | `bcsGenerator_flow` | 谱流闭合：exp(−spectralFlow A_BCS G t) = spectralFlow γ_F G t |
+| §5 | `specGenerator_fermiDensity` | **G1 会师**：specGenerator γ_F = A_BCS——GP 模板（ρ→−logρ）与 Fermi 构造（H→γ_F→−logγ_F）在 γ_F 上统一 |
+
+**关键技术要点**（在 GP 条坑清单之上新增）：
+- `GPEmergence.diagonal_neg'` 原声明为 `private`，跨模块不可见——已去 private
+  供两模块共享（负对角阵 = 对角的负，负指数化收束用）。
+- 符号结构（重要）：A_BCS 本征值为 **+**log(1+e^{βλᵢ})，exp(−A_BCS) 的对角化
+  对角元必须取 **−**log（e^{−log y} = y⁻¹ = Fermi 权重）。写成 +log 则 e1 步
+  证出的是 1+e^{βH} ≠ γ_F——编译器残差目标 `↑y = ↑(fermi β λ)`（y ≠ y⁻¹）暴露。
+  GP 侧无此问题因为 specGenerator = cfc(−log ρ) 本征值本就是 −log λ。
+- 复数化链处理参数内负号：`NormedSpace.exp (−↑(log y))` → `← Complex.exp_eq_exp_ℂ`
+  → `← Complex.ofReal_neg`（−↑x → ↑(−x)）→ `← Complex.ofReal_exp` → `Real.exp_neg`
+  → `Real.exp_log` → 得 `↑(y⁻¹)`，与 `(↑y)⁻¹` 差一个 `Complex.ofReal_inv`。
+- `Real.log_inv` **无 ≠0 侧条件**（mathlib 约定 log 0 = 0），单参数 `(x : ℝ)`；
+  误传假设会报 "expected ℝ"。rw 的显式参数需与目标语法匹配（`fermi β x ≠ 0` 与
+  `(1+e^{βx})⁻¹ ≠ 0` 仅 defeq 不相通）。
+- `cfc_comp`（generic cfc 复合）需 `IsSelfAdjoint` + 两侧 `ContinuousOn`；
+  Fermi 函数的连续性用手工 `h1.inv₀` 组装（continuity tactic 对 def 的 ≠0 侧
+  条件搞不定）；矩阵 cfc 与 generic cfc 互换：`Matrix.IsHermitian.cfc_eq` 方向
+  注意（forward : cfc f A = hA.cfc f）。
+- 矩阵 cfc 展开的 simp 归一形：`simp only [def名, Matrix.IsHermitian.cfc,
+  Unitary.conjStarAlgAut_apply]` 后目标两侧通常已 defeq，单个 `congr 1` 即全闭
+  （comp/beta 叶子由 congr 的 rfl 自动关闭）——多写的第二个 `congr 1` 报
+  "No goals to be solved"，Matrix.ext 下探是过度结构。
+
+**paper14 同步升级（v1.6 第四轮）**：§2 层级标注 →【谱公理】+【内生-范畴】混合
+（A_SC 翻译仍谱公理层；"状态密度 → 谱生成元"构造 H→γ_F→A_BCS 已机器证明，
+属内生-范畴层，H 本身及 ξ/Δ 仍是物理输入——结构性边界）；结论 C1 同步升级；
+总注更新（C1/C3 内生-范畴成分，G1 状态：GP、BCS 两切入点闭合且经会师定理统一，
+Hall 侧开放）；文首形式化支撑清单补 BCSFermiEmergence 四定理；版本记录 v1.6
+追加第四轮摘要。
+
+**G1 残余开放**：Hall 侧 A_Hall 磁平移投影有限维模型（第三切入点，未动工）；
+PosSpectrum γ_F 与 cfc 特征多项式的 eigenvalues 索引对齐（谱重排包装工作，
+当前由无正性条件的 inverse/flow 覆盖同一数学内容）；specGenerator 的
+Hermitian 性包装（GP 侧已登记）；ρ 的 PF 不动点存在性；T→0 奇异极限的
+算子收敛（泛函分析，远期）。
