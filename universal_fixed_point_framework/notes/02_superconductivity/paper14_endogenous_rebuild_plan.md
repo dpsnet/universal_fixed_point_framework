@@ -199,3 +199,32 @@ hunk），git 无法按行拆分提交；按 §6 第 2 条"重建前需先合并
 Python 层解出 ≈0.874"。
 
 全库 `lake build MUFPFormalization` 3688 jobs 通过，零 sorry。
+
+### 2026-09-12：G3 部分闭合（Berry 曲率代数核心，新建 BerryChern.lean）
+
+**背景**：paper14 定理 3.1（TKNN）与命题 3.1（陈数绝热不变性）此前零 Lean 载体
+（库内 grep Chern/陈数零命中），是 §3 缺口里工作量最大的一项。
+
+**已建**（`BerryChern.lean`，零 sorry，全库 3689 jobs 通过）：
+- `berryCurvature P A B := -i · Tr(P [A, B])`——Berry 曲率投影公式（P 孤立能带
+  谱投影，A=∂ₓP、B=∂ᵧP 厄米切向量），第一陈数密度的被积函数；
+- `trace_proj_commutator_skewAdjoint`：对厄米 P、A、B，`Tr(P[A,B])` 斜伴随
+  （star T = −T，纯虚）。证明只用迹循环性 + 厄米性 + 共轭转置反自同构，
+  **不依赖幂等性**；
+- **主定理 `berryCurvature_im_eq_zero`**：Berry 曲率实值（im = 0）——陈数良定义
+  （被积函数实值、积分为实数量子数）与 Hall 电导可观测的代数根源。
+
+**技术说明**：厄米性取显式等式假设 `hP : P = Pᴴ`（等价 Matrix.IsHermitian，但避其
+结构包装使 rw 直接可用）；mathlib 无现成 Chern/Berry 基础设施，模块自包含
+（Mathlib.Data.Complex + LinearAlgebra.Matrix.Trace）。
+
+**未闭合（§3 开放登记，不占用 sorry）**：第一陈数积分定义 C=(1/2π)∫_{T²}F、
+整性 C∈ℤ、TKNN 公式 σ_xy=(e²/h)C、陈数绝热不变性、规范不变性细节——需环面积分、
+拓扑度/同伦、Kubo 线性响应等基础设施，属积分/场论形式化（远期）。
+
+**根文件接线**：`import MUFPFormalization.BerryChern` 已加入根文件并完成全库验证；
+因根文件同时含未提交的超流刚度 import（SuperfluidStiffness），提交时**只提交
+BerryChern.lean**，根文件随重建阶段与该线统一提交。
+
+**下一步**：G4——GP 方程/涡旋模块（定理 4.1 启发式 sketch + 命题 4.2 涡旋=规范分支
+无载体），形式化 GP-谱流等同的条件与涡旋拓扑荷守恒。
