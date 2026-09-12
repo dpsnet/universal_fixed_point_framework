@@ -508,7 +508,7 @@
     </tr>
     <tr>
       <td><strong>Paper LIV</strong></td>
-      <td>谱几何与 Einstein 方程：从 Hermitian 谱到经典时空</td>
+      <td>谱几何与 Einstein 方程：从 Hermitian 谱到经典时空<br><small>（初稿 v1.3 已成型：45 定理零 sorry + 定理 8.1 显式修正公式）</small></td>
       <td>69.6-69.7</td>
       <td><span class="status critical">最高</span></td>
       <td>25-30</td>
@@ -527,8 +527,19 @@
       <td><span class="status pending">中</span></td>
       <td>20-25</td>
     </tr>
+    <tr style="border-top: 2px dashed var(--accent);">
+      <td><strong>Paper LVII</strong></td>
+      <td>超流相刚度与 T_c ∝ √ρ₀ 标度律的谱框架推导——兼与复时间相对论的互补比较</td>
+      <td>70</td>
+      <td><span class="status progress">高</span></td>
+      <td>15-20</td>
+    </tr>
   </tbody>
 </table>
+</div>
+
+<div class="callout" style="border-color: var(--accent3);">
+  <strong>🆕 Phase 70 追加（2026-09-11）</strong>：Phase 70 是凝聚态方向的独立 Phase，不属于 Phase 66-69 宇宙学主线。核心成果是超流相刚度 ρ₀ 的谱框架定义 ρ₀ = k_BΔ²/(2E_F) 与 T_c ∝ √ρ₀ 标度律的内生推导，Lean4 形式化（SuperfluidStiffness.lean）已零 sorry 闭合。与 Tao (2026, Physica B) 的复时间相对论路径殊途同归，形成互补验证。详细路线图见 <code>roadmap/phase70_superfluid_stiffness.md</code>。
 </div>
 </section>
 
@@ -923,7 +934,8 @@ flowchart TD
       <li><code>firstBianchiExplicit</code>：第一 Bianchi 恒等式（sum4 + torsion_free + ring，已证明）</li>
       <li><code>ricciExplicit_symm</code>：Ricci 张量对称性（sum4 + torsion_free + ring，已证明）</li>
       <li><code>second_bianchi_discrete</code>：离散第二 Bianchi 恒等式（联络作用循环求和 = 0，已证明）</li>
-      <li><code>SecondBianchiIdentity</code>：∇^μ G_μν = 0（通过 sum4 桥接推导）</li>
+      <li><code>EinsteinDivergenceFree</code>：∇^μ G_μν = 0 的恒等式形态经数值检验<strong>证伪</strong>（骨架层丢失 ∂ 项与 Γ 项的联合抵消结构），已从 Lean 库删除不作公理化；真空情形真定理 <code>einstein_divergence_free_vacuum</code>（Ric ≡ 0 ⟹ G ≡ 0）已补</li>
+      <li><code>einstein_divergence_explicit</code>（定理 8.1，v1.3）：Einstein 协变散度的<strong>显式修正公式</strong> E_ν = T1 + K − ½(∂̃R̂ + 修正)——沿 RecObj step 的有限差分导数重建带 ∂ 项的第二 Bianchi 链（算子主定理 → 骨架层 → 度规缩并 → 收缩 Bianchi → 度规项 δ 缩并 → ConnRic K 型 → 收官定理），<code>DiscreteCovariantBianchi.lean</code> 模块 45 定理零 sorry，全库 4078 jobs 通过，随机对照数值机器精度（2.8×10⁻¹⁴–3.2×10⁻¹⁴）；结构性发现：第二 Bianchi 缩并修正 Q/T2 完全抵消；连续极限 O(a) 退化到经典 ∇^μG_{μν} = 0</li>
       <li><code>energy_momentum_conservation</code>：能动量守恒（已证明）</li>
       <li><code>SpectralAction</code> + <code>vacuum_einstein_from_spectral_action</code>：谱作用量原理</li>
       <li>引力子的准粒子诠释：Δ 是结构常数，引力子是范畴结构的集体激发（类比声子），引力天然量子化</li>
@@ -933,7 +945,9 @@ flowchart TD
     <ul>
       <li><code>SpectralMetric.lean</code> §25：~900 行，~50 个定义/定理</li>
       <li>核心定理 <code>energy_momentum_conservation</code> 和 <code>vacuum_einstein_from_spectral_action</code> 已完整证明</li>
-      <li>1 个计算量瓶颈 sorry（scalarCurvature 展开 256 项），不影响逻辑闭环</li>
+      <li><code>SpectralMetric.lean</code> §25：819 行，42 个定义/定理，零 sorry（v1.2 修订：原"计算量瓶颈"经数值检验证伪为逻辑缺口，假定理已删除）</li>
+      <li><code>DiscreteCovariantBianchi.lean</code> §26.6–26.19：45 定理零 sorry（真值路径全链），全库 <code>lake build</code> 4078 jobs 通过</li>
+      <li>论文初稿状态：<code>paper54_emergence_map.md</code> v1.3——12 章结构，定理 8.1 入册，研究轨迹已归档 notes（正文只留最终成果）</li>
       <li>sum4 桥接技术：闭合第一 Bianchi、Ricci 对称性、离散第二 Bianchi</li>
     </ul>
 
