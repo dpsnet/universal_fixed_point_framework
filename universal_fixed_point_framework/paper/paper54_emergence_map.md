@@ -621,15 +621,13 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
 | Einstein 散度为零（恒等式形态） | `EinsteinDivergenceFree` | 🔶 恒等式形态证伪；修正公式形态已闭合（§8） |
 | 真空 Einstein 散度 | `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0） | ✅ |
 
-**统计**：15 个定理/命题中 14 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`——恒等式形态证伪处置、修正公式形态已闭合（§8/§12.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪并从 Lean 库删除（全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。真值路径（§12.5 问题 0）已完整闭合——`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry（算子主定理 `discrete_second_bianchi_operator` → 骨架层 → 度规缩并 → Einstein 构造层 → 收缩 Bianchi `contracted_riemann_divergence` → δ 缩并 `metric_term_divergence` → ConnRic K 型 `connric_curvature_expand` → 收官 `einstein_divergence_explicit`），开放命题 `EinsteinDivergenceFree` 以修正公式形态解决；真协变守恒律以显式修正公式（而非恒等式）形式在离散层成立，连续极限退化到经典 ∇^μG_{μν} = 0。
+**统计**：15 个定理/命题中 14 个已完整证明（✅），1 个开放命题（🔶，`EinsteinDivergenceFree`——恒等式形态证伪处置、修正公式形态已闭合（§8/§12.5），1 个候选恒等式（`einstein_divergence_free_from_bianchi`）经数值检验证伪并从 Lean 库删除（全记录见 `sorry_closure_roadmap.md` §3.6）。核心物理推导链（第一 Bianchi → 离散第二 Bianchi 骨架 → 条件式能动量守恒 → 真空 Einstein）保持有效。真值路径已完整闭合——`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry（算子主定理 `discrete_second_bianchi_operator` → 骨架层 → 度规缩并 → Einstein 构造层 → 收缩 Bianchi `contracted_riemann_divergence` → δ 缩并 `metric_term_divergence` → ConnRic K 型 `connric_curvature_expand` → 收官 `einstein_divergence_explicit`），开放命题 `EinsteinDivergenceFree` 以修正公式形态解决；真协变守恒律以显式修正公式（而非恒等式）形式在离散层成立，连续极限退化到经典 ∇^μG_{μν} = 0。
 
 ### 12.5 技术局限性与已解决问题
 
 **恒等式形态的证伪与处置。** 连续理论中"对第二 Bianchi 缩并得到 Einstein 张量散度为零 ∇^μ G_μν = 0"的标准推导，在点值代数骨架中**不成立**：数值检验（每类 ≥6 组独立随机样本，残差 10⁰–10²）证伪了三类候选恒等式——原式 `Σ_m G_mn = 0`、联络项保留的协变散度版、收缩 Bianchi 骨架版。根源：连续证明必须同时使用 ∂ 项与 Γ 项（经度量相容性提升指标后联合抵消），骨架丢弃全部 ∂ 项后守恒律的载体不复存在，且普通指标求和本身不是协变表述。处置：假定理 `einstein_divergence_free_from_bianchi` 已从 Lean 库删除，`EinsteinDivergenceFree` 不作公理化（普遍量化假命题与可判定反例并存将导致不一致）；真空情形真定理 `einstein_divergence_free_vacuum`（Ric ≡ 0 ⟹ G ≡ 0）已补。下游 `energy_momentum_conservation` / `BianchiEinsteinConservation` / `vacuumBianchiEinstein` 均为条件式或真空构造，不受证伪影响。**该问题的真值以修正公式形态解决**（§8，定理 8.1）：E 不恒零，但其显式形态的全部修正项为连续极限消失的移位差分 artifact，守恒律以修正公式形式在离散层成立。证伪、处置与全链闭合记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
 
-**开放问题**（问题 0 已解决——真值路径以修正公式形态闭合，显式公式见 §8（定理 8.1）；问题 1–3 维持开放）：
-
-0. ~~**带 ∂ 项的离散第二 Bianchi 重建（真值路径）**~~ **【✅ 已解决，修正公式形态】**：沿 RecObj step 的有限差分导数 ∂̃_ρ T(x) := T(step_ρ x) − T(x) 重建带 ∂ 项的离散第二 Bianchi 的全链已闭合——算子级主定理 `discrete_second_bianchi_operator`（协变差分视为场空间自同态，第二 Bianchi = 算子 Jacobi 恒等式，无需无挠/对易/度量相容假设）经骨架层、度规缩并层、Einstein 构造层、修正的收缩 Bianchi 恒等式、度规项 δ 缩并、ConnRic K 型展开，收官于 `einstein_divergence_explicit`（定理 8.1，§8：`DiscreteCovariantBianchi.lean` 模块 45 定理零 sorry，全库 `lake build` 4078 jobs 通过；随机对照数值残差 2.8×10⁻¹⁴–3.2×10⁻¹⁴ 机器精度；连续极限退化到经典 ∇^μG_{μν} = 0）。全链闭合记录见 `formal_proof/MUFPFormalization/sorry_closure_roadmap.md` §3.6。
+**开放问题**：
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。
