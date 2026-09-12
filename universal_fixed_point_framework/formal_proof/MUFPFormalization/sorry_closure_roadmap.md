@@ -380,8 +380,22 @@ Einstein 构造层——`scalarCurvature`（R̂ = ginv·Riĉ）、`einsteinTens
 数值端到端装配（`numerical/phase16b_beta7_contracted_bianchi.py`，
 2.8e-14）：∇̃^μG_{μν} = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B——
 Einstein 散度修正的显式形态确立（无单一主载体，分布式抵消）。
-**(β) 全部闭合。** 下一步（新阶段）：ConnRic → K 型修正与
-½B → 度规相容型修正的曲率化简（EinsteinDivergenceFree 的显式陈述）。
+**(β) 全部闭合。**
+
+**新阶段第一轮已闭合（2026-09-12，§26.17，模块 43 定理零 sorry）**：
+度规项散度的 δ 缩并——`covDiff02`（(0,2)-张量协变差分，移位混合约定，
+与数值链 nabla02 一致）+ `metric_term_divergence`：在
+`hctr : Σ_a ginv^{μa}g_{aν} = δ^μ_ν`（**直接走 hctr，无需 g 对称**）下，
+`Σ_{μa} ginv^{μa}∇̃_μ(g_{aν}R̂) = ∂̃_νR̂ + Σ_{μa} ginv^{μa}(∂̃g·R̂(step) + 4 项
+Γ·g·R̂ 移位修正)`（连续极限 O(a) artifact）。数值（`phase16b_beta8_metric_term.py`，
+seed 43）：δ 展开 2.8e-14、相容代换 5.7e-14（∂̃g 用 §26.14
+discrete_metric_compatible 代换后 B_ν 成纯 Γ·g·R̂ 七项）、ConnRic 曲率迹
+展开 2.1e-14（ConnRic_ν = Σ_{μabr} ginv·Γ·naiveCurv 四重 K 型和，
+纯 ricciTensor 定义展开，无 ∇̃/∂̃）。
+**剩余（通往 EinsteinDivergenceFree 显式陈述）**：① ConnRic 的 K 型 Lean 化
+（目标 §26.18，只含 γ 与 naiveCurv 原语）；② 全链代入后的
+EinsteinDivergenceFree 最终显式陈述（纯曲率原语：ginv·Γ·g·R̂、
+ginv·Γ·naiveCurv、∂̃R̂；数值装配已 2.8e-14 闭合）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
@@ -396,7 +410,7 @@ Einstein 散度修正的显式形态确立（无单一主载体，分布式抵�
 
 ### 3.7 验证标准（已达成）
 
-- [x] `lake build MUFPFormalization` 全库 0 error（4078 jobs，含 2026-09-11 新增/扩展 DiscreteCovariantBianchi §26.6–26.7）
+- [x] `lake build MUFPFormalization` 全库 0 error（4078 jobs，含 2026-09-11 新增/扩展 DiscreteCovariantBianchi §26.6–26.7 与 2026-09-12 §26.17）
 - [x] 剥离注释后全库 sorry 计数 = 0
 - [x] 假定理证伪记录保留（本文件 + Lean 源 docstring 双登记）
 
