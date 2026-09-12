@@ -119,6 +119,94 @@ noncomputable def a_SC_weak (dl_BCS : ℝ) : ℝ := a_SC dl_BCS 1
     spectral_BCS_v2_comprehensive.py Q1。此处不再以假定理形式保留。
 -/
 
+/-- 谱流自洽函数 f(r) = (1 + √3·√r)·r（G2 定理化载体）。
+    谱流自洽方程 a_BCS³·4π = f(r) 的正实根即谱间隙比 r = dl_min/dl_BCS。 -/
+noncomputable def selfConsFunc (r : ℝ) : ℝ := (1 + Real.sqrt 3 * Real.sqrt r) * r
+
+/-- 自洽函数在 r > 0 处严格为正。 -/
+theorem selfConsFunc_pos {r : ℝ} (hr : 0 < r) : 0 < selfConsFunc r := by
+  have h1 : 0 < 1 + Real.sqrt 3 * Real.sqrt r :=
+    lt_of_lt_of_le zero_lt_one
+      (le_add_of_nonneg_right (mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)))
+  exact mul_pos h1 hr
+
+/-- 自洽函数在 [0,∞) 连续。 -/
+theorem selfConsFunc_continuous : Continuous selfConsFunc := by
+  have harg : Continuous fun r : ℝ => (1 : ℝ) + Real.sqrt 3 * Real.sqrt r :=
+    continuous_const.add (continuous_const.mul Real.continuous_sqrt)
+  exact harg.mul continuous_id'
+
+/-- 辅助：g(r) = √r·r 在 [0,∞) 严格递增。 -/
+theorem sqrt_mul_self_strictMonoOn_Ici :
+    StrictMonoOn (fun r : ℝ => Real.sqrt r * r) (Set.Ici 0) := by
+  intro a ha b hb hab
+  have hsqrt_le : Real.sqrt a ≤ Real.sqrt b := Real.sqrt_le_sqrt hab.le
+  have hbpos : 0 < b := lt_of_le_of_lt ha hab
+  have hsqrt_b_pos : 0 < Real.sqrt b := Real.sqrt_pos_of_pos hbpos
+  have h1 : Real.sqrt a * a ≤ Real.sqrt b * a := mul_le_mul_of_nonneg_right hsqrt_le ha
+  have h2 : Real.sqrt b * a < Real.sqrt b * b := mul_lt_mul_of_pos_left hab hsqrt_b_pos
+  exact lt_of_le_of_lt h1 h2
+
+/-- 自洽函数在 [0,∞) 严格递增。 -/
+theorem selfConsFunc_strictMonoOn_Ici : StrictMonoOn selfConsFunc (Set.Ici 0) := by
+  intro a ha b hb hab
+  have hg := sqrt_mul_self_strictMonoOn_Ici ha hb hab
+  have h3pos : 0 < Real.sqrt 3 := Real.sqrt_pos_of_pos (by norm_num : (0:ℝ) < 3)
+  have hterm : 0 < Real.sqrt 3 * (Real.sqrt b * b - Real.sqrt a * a) :=
+    mul_pos h3pos (sub_pos.mpr hg)
+  have key : selfConsFunc b - selfConsFunc a
+      = (b - a) + Real.sqrt 3 * (Real.sqrt b * b - Real.sqrt a * a) := by
+    simp only [selfConsFunc]; ring
+  have hdiff : 0 < selfConsFunc b - selfConsFunc a := by
+    rw [key]; linarith [sub_pos.mpr hab, hterm]
+  exact sub_pos.mp hdiff
+
+/-- 自洽函数的下界：x ≥ 0 时 f(x) ≥ x（因 1 + √3·√x ≥ 1）。 -/
+theorem selfConsFunc_ge_of_nonneg {x : ℝ} (hx : 0 ≤ x) : x ≤ selfConsFunc x := by
+  have h1 : (1:ℝ) ≤ 1 + Real.sqrt 3 * Real.sqrt x :=
+    le_add_of_nonneg_right (mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))
+  calc x = 1 * x := (one_mul x).symm
+    _ ≤ (1 + Real.sqrt 3 * Real.sqrt x) * x := mul_le_mul_of_nonneg_right h1 hx
+
+/-- **G2 定理（谱流自洽方程正实根的存在唯一性）**：对任意 c > 0，方程
+    f(r) = c 在 [0,∞) 上存在唯一解 r*。取 c = a_BCS³·4π（BCS 弱耦合普适比值，
+    物理输入）时，r* 即谱间隙比——r 由此从"数值解出的自由参数"提升为
+    "由普适输入经显式方程唯一确定的普适比值"。精确数值等式 r* = 0.8740
+    在 Lean 实数层不可证（见上方 2026-08-04 开放项登记），此处确立其
+    方程确定性与唯一性，数值值由 Python 层独立给出。 -/
+theorem selfConsFunc_existsUnique (c : ℝ) (hc : 0 < c) :
+    ∃! r : ℝ, 0 ≤ r ∧ selfConsFunc r = c := by
+  have hcont := selfConsFunc_continuous
+  -- 无界性：每个 c > 0 都有 R > 0 使 c ≤ f R
+  have hunbounded : ∃ R : ℝ, 0 < R ∧ c ≤ selfConsFunc R := by
+    refine ⟨max c 1, lt_max_of_lt_left hc, ?_⟩
+    have hR0 : (0:ℝ) ≤ max c 1 := le_max_of_le_left hc.le
+    calc c ≤ max c 1 := le_max_left _ _
+      _ ≤ selfConsFunc (max c 1) := selfConsFunc_ge_of_nonneg hR0
+  obtain ⟨R, _hRpos, hRc⟩ := hunbounded
+  -- IVT on [0, R]
+  have h0 : selfConsFunc 0 = 0 := by simp [selfConsFunc]
+  have h0c : selfConsFunc 0 ≤ c := by rw [h0]; exact hc.le
+  have hivt := intermediate_value_Icc (by linarith : (0:ℝ) ≤ R) hcont.continuousOn
+  obtain ⟨r, hricc, hfeq⟩ := hivt ⟨h0c, hRc⟩
+  -- r > 0：f 0 = 0 ≠ c
+  have hrpos : 0 < r := by
+    rcases (lt_or_eq_of_le hricc.1) with h | h
+    · exact h
+    · exfalso
+      rw [← h] at hfeq
+      rw [h0] at hfeq
+      linarith
+  refine ⟨r, ⟨hricc.1, hfeq⟩, ?_⟩
+  rintro r' ⟨hr'0, hr'eq⟩
+  by_contra hne
+  rcases lt_trichotomy r r' with h | h | h
+  · have hs := selfConsFunc_strictMonoOn_Ici hricc.1 hr'0 h
+    rw [hfeq, hr'eq] at hs; exact lt_irrefl _ hs
+  · exact hne h.symm
+  · have hs := selfConsFunc_strictMonoOn_Ici hr'0 hricc.1 h
+    rw [hr'eq, hfeq] at hs; exact lt_irrefl _ hs
+
 /-- The BCS self-consistent spectral gap dl_BCS = dl_min / r_self_consistent.
     r_self_consistent = 0.8740 from spectral flow closure.
     dl_BCS = 0.122 / 0.8740 ≈ 0.1396. -/
