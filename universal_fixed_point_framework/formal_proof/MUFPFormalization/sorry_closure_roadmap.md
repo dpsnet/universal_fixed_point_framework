@@ -362,11 +362,20 @@ Christoffel 公式逐点精确，移位配置唯一），核心工具 `solve_rig
 （A·g = B 在互逆对称下的显式解）。数值 max 残差 ≤ 2.1e-14。详见
 notes/04_lorentz_gravity/ginv_leibniz_correction.md。
 
-**(β) 剩余（更新）**：(β)-4 第二阶段收尾——Einstein 张量
-G = Ric − ½Rg 的构造与其散度（唯一剩余；升指标 Leibniz 修正与
-Ricci 对称修正形态均已闭合）。开放命题 EinsteinDivergenceFree 维持开放
-（现具分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容
-+ 修正 Ricci 对称 + ginv Leibniz 修正六重基础）。
+**(β)-4 缺口③第一阶段已闭合（2026-09-12，§26.15，模块 40 定理零 sorry）**：
+Einstein 构造层——`scalarCurvature`（R̂ = ginv·Riĉ）、`einsteinTensor`
+（G = Riĉ − ½gR̂）、`einstein_trace`（ginv·G = −R̂，4 维 δ-代数，
+数值 1.1e-16）、`einstein_asymmetry`（G 不对称 = Riĉ 不对称，PS 承载）。
+散度预实验（`numerical/phase16b_beta6_einstein_div.py`）三个结构结论：
+①E = ∇̃^μG_{μν} 场层级不恒零且 PS 非主载体（对称化后 |E| 仅降 9%）；
+②方向指标化精确分解 E = Σ∂̃H^{(μ)} − Σ∂̃ginv·G(step) + Σginv·connG
+（3.6e-15；H^{(μ)} 的 μ 与求导方向绑定）；③E = O(ε) 一阶 artifact。
+散度修正的显式闭合（类比 §26.12 的 Cc3−K2−K3 分解）留待下一阶段。
+详见 notes/04_lorentz_gravity/einstein_tensor_construction.md。
+
+**(β) 剩余（更新）**：Einstein 散度修正的显式形态（唯一剩余；构造层、
+升指标 Leibniz、Ricci 对称修正形态均已闭合）。开放命题 EinsteinDivergenceFree
+维持开放（六重基础 + Einstein 构造层迹/不对称恒等式）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
