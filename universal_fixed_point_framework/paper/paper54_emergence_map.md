@@ -592,7 +592,15 @@ $$(\text{einsteinTensor}(g, Ric, R)).G = 0$$
   'E = ∇̃^μG_{μν} 场层级不恒零且 PS 非主载体（|E^sym|/|E| = 0.91）；'
   '方向指标化精确分解 E = Σ∂̃H^{(μ)} − Σ∂̃ginv·G(step) + Σginv·connG（3.6e-15）；'
   'E = O(ε) 一阶 artifact（与 §26.7(b) 一致）。数值 `numerical/phase16b_beta6_einstein_div.py`。'
-  '**(β) 剩余（更新）**：Einstein 散度修正的显式形态（唯一剩余）；开放命题具六重基础（分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容 + 修正 Ricci 对称 + ginv Leibniz 修正）。
+  ')
+**(β)-4 最后一步已闭合（2026-09-12，§26.16，模块 42 定理零 sorry，全库 4078 jobs `lake build` 通过）**：'
+  '修正的收缩 Bianchi 恒等式 `contracted_riemann_divergence`（Q − T1 + T2 = Σ ginv·(Cc3−K2−K3)）'
+  '+ `scalar_curvature_leibniz`（T2 = ∂̃_νR̂ − Σ∂̃ginv·Riĉ(step)）。'
+  '数值端到端装配（`numerical/phase16b_beta7_contracted_bianchi.py`，2.8e-14）：'
+  '∇̃^μG_{μν} = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½·ginv^{μa}∇̃_μ(g_{aν}R̂)'
+  '——Einstein 散度修正的显式形态确立（无单一主载体，连续极限分布式抵消）。'
+  '**(β) 全部闭合**（42 定理零 sorry）。下一步（新阶段）：ConnRic → K 型修正与'
+  '½B → 度规相容型修正的曲率化简，给出 EinsteinDivergenceFree 的显式陈述。（分量级 + 张量级修正 Bianchi + Riemann 散度 + 算子级度规相容 + 修正 Ricci 对称 + ginv Leibniz 修正）。
 
 1. **非真空 Einstein 方程**：本文仅处理了真空情形（T_μν = 0）。非真空情形的理论基础已在现有论文系列中建立：Paper XI（谱 QFT 公理 A1-A7，完整 SM 谱翻译，费米子质量预测）、Paper V（力的谱统一公式，Einstein 方程 = D 函子谱交织条件，Nöther 谱版本能动量守恒）、Paper XVI（主定理 21：Einstein 方程 = 谱曲率-物质谱流对偶 Tr(F_μν F^μν) = 8π G · Tr(A_T A_GR)）、Paper XLVI（规范场与拓扑形变循环等价，SM 规范群根系谱编码）。具体形式化路径：(a) 将 Paper XI 的谱 QFT 数据接入本文的 `EinsteinFieldEquation.T : StressEnergyTensor`；(b) 从谱作用量 Tr(f(D/Λ)) + ⟨ψ, Dψ⟩ 变分得到完整的 G_μν = 8π T_μν；(c) 验证 SM 费米子和标量场的谱表示与现有物理一致。此扩展适合在 Paper L（量子引力接口）中独立处理，本文的涌现映射框架为其提供了从 Δ 到 G_μν 的完整几何侧推导链。
 2. **连续极限的严格化**：涌现映射目前在离散框架中建立。从离散到连续的严格极限（Paper XXXIV B2 理论）需要进一步形式化。

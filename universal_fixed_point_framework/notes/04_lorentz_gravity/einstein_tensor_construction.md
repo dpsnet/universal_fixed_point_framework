@@ -29,3 +29,21 @@ E_ν = ∇̃^μ G_{μν}（(β)-链 ∇̃ 约定）在场层级 **不恒零**（
 ## 4. Lean 证明要点（§26.15）
 
 - `einstein_trace`：e1 展开为显式 16 项后 `ring`；e2 逐 μ 用 `sum4_congr` + `hg` 改写 + `hctr` + `simp` 得 1，再 `unfold sum4; ring` 得 4。新教训：含 ℝ 除法的 def 需 `noncomputable`；`show` 折叠定义时括号结构必须与目标语法一致（`1/2 * (4 * R)` 左结合）。
+
+---
+
+## 5. 散度修正显式形态（2026-09-12 补，§26.16，端到端闭合）
+
+**数值装配（`numerical/phase16b_beta7_contracted_bianchi.py`，max 残差 2.8e-14）**：
+
+$$\nablã^μ G_{μν} = Q_ν + T2_ν + ConnRic_ν - ginv\!\cdot\!(Cc3{-}K2{-}K3)_ν - \tfrac12\, ginv^{μa}\nablã_μ(g_{aν}\hat R)$$
+
+其中 Q_ν = Σ_{sμr} ginv^{sμ}(∇̃_r R̂_{μν})^r_s，T2_ν = Σ_{sμ} ginv^{sμ}∂̃_νRiĉ_{sμ}，ConnRic 为 Ricci 的联络散度，Cc3−K2−K3 为 §26.12 的修正项。链条：ginv 缩并 §26.12（3.6e-15）+ ∇̃^μRiĉ = T1 + ConnRic（7.1e-15）+ ∇̃^μG = ∇̃^μRiĉ − ½ginv∇̃(gR̂)。
+
+**结构性发现**：Q − ½∂̃_νR̂ 缺陷达 7.4（∂̃R̂ 幅值 4.0）——Q 本身是一阶量，与 T2/ConnRic/gC/½B 的各项在连续极限下分布式抵消，无单一主载体（与 beta6 的 |E^sym|/|E| = 0.91 一致：不对称与散度是两个独立 artifact 通道）。
+
+**Lean（§26.16，模块 42 定理零 sorry）**：
+- `contracted_riemann_divergence`：Q − T1 + T2 = Σ ginv·(Cc3−K2−K3)——§26.12 点值恒等式的 ginv 加权求和（sum4_congr 逐项 + rw，一次通过）；
+- `scalar_curvature_leibniz`：T2 = ∂̃_νR̂ − Σ∂̃ginv·Riĉ(step)——标量移位积规则（unfold + ring）。
+
+至此 (β)-4 全链闭合：分量级/张量级修正 Bianchi（§26.6）→ Riemann 散度（§26.12）→ 修正 Ricci 对称（§26.13）→ ginv Leibniz（§26.14）→ Einstein 构造层（§26.15）→ 收缩 Bianchi 恒等式（§26.16）。`EinsteinDivergenceFree` 的场层级显式修正形态已由数值端到端确立，Lean 端收缩恒等式与 Leibniz 已闭合；conn 项与 ∇̃(gR̂) 项的进一步曲率化简（ConnRic → K 型修正、½B → 度规相容型修正）为下一阶段。

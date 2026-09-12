@@ -373,9 +373,15 @@ Einstein 构造层——`scalarCurvature`（R̂ = ginv·Riĉ）、`einsteinTens
 散度修正的显式闭合（类比 §26.12 的 Cc3−K2−K3 分解）留待下一阶段。
 详见 notes/04_lorentz_gravity/einstein_tensor_construction.md。
 
-**(β) 剩余（更新）**：Einstein 散度修正的显式形态（唯一剩余；构造层、
-升指标 Leibniz、Ricci 对称修正形态均已闭合）。开放命题 EinsteinDivergenceFree
-维持开放（六重基础 + Einstein 构造层迹/不对称恒等式）。
+**(β)-4 最后一步已闭合（2026-09-12，§26.16，模块 42 定理零 sorry）**：
+修正的收缩 Bianchi 恒等式——`contracted_riemann_divergence`
+（Q − T1 + T2 = Σ ginv·(Cc3−K2−K3)，§26.12 的 ginv 加权求和，无假设）
++ `scalar_curvature_leibniz`（T2 = ∂̃_νR̂ − Σ∂̃ginv·Riĉ(step)，移位积规则）。
+数值端到端装配（`numerical/phase16b_beta7_contracted_bianchi.py`，
+2.8e-14）：∇̃^μG_{μν} = Q + T2 + ConnRic − ginv·(Cc3−K2−K3) − ½B——
+Einstein 散度修正的显式形态确立（无单一主载体，分布式抵消）。
+**(β) 全部闭合。** 下一步（新阶段）：ConnRic → K 型修正与
+½B → 度规相容型修正的曲率化简（EinsteinDivergenceFree 的显式陈述）。
 
 **既有基础索引（2026-09-11 全库查证，接手人不必重查 90+ 篇）**：
 
