@@ -2,9 +2,9 @@
 
 **作者**：王斌（独立研究人），wang.bin@foxmail.com
 
-**版本**：v1.5（2026-08-16）
+**版本**：v1.6（2026-09-12，内生推导标注体系重建版）
 
-**摘要**：本文在谱动力学框架（Paper V）的基础上，将凝聚态物理三大核心理论——BCS 超导、量子 Hall 效应、超流 Gross-Pitaevskii 方程——翻译为 $\mathbf{Sp}$ 范畴中的谱语言。核心结果包括：(1) BCS 超导能隙 $\Delta$ 对应谱间隙 $\delta_{\text{SC}}$，超导相变被重新解释为谱生成元的对称性破缺；(2) TKNN 公式的 Hall 电导 $\sigma_{xy}$ 被翻译为谱流的陈数 $\text{Ch}(A_{\text{Hall}})$，平台跃迁对应陈数的绝热跳变；(3) 建立 IQHE 临界指数 $\nu$ 从清洁极限 $\nu=1$ 到高无序极限 $\nu\approx 2.35$ 的连续插值公式，提出双参数重整化群 $\beta(A;\epsilon,\zeta)$ 框架，解析刻画无序驱动下 $\nu$ 的全谱过渡——三个不动点（清洁、标准标度、高无序）与 16 组开放渠道实验数据系统对比验证；（4）建立噪声范畴 $\mathbf{Noise}$ 的第一性原理推导，通过带噪声谱流方程严格导出远程施主样品的有效无序参量 $\epsilon_{\text{eff}}$；（5）引入谱化函子 $D:\mathbf{Rec}\to\mathbf{Sp}$ 将 $\beta$ 函数不动点迭代转化为闭式代数表达式，加速比 $>10^4\times$；（6）扩展谱框架至倾斜磁场——建立包含有限厚度轨道耦合与 Zeeman 能隙变窄的三参数 $\beta$ 函数，预言 $\nu(\theta)$ 的 Lifshitz 型转变，识别超洁净样品在 $\theta_c\approx 75.6^\circ$ 处的急剧跃迁；（7）Gross-Pitaevskii 方程被翻译为谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$，涡旋解对应规范变换分支。在此基础上提出五项凝聚态现象的谱流解释（§5.1-5.4）和五项谱框架独有的可检验量子预言（§5.6）。统一论点是：**所有凝聚态序参量均可翻译为谱生成元的谱间隙或拓扑不变量，且其动力学由谱流方程统一描述**。v1.4 引入谱丛理论 §5.7，建立 NRG Wilson 链三对角谱丛结构与记忆函数连分数的谱丛翻译。v1.5 新增 §5.8 稳定岛数据的独立数值验证：谱间隙锁定窗口被诠释为量子相变临界慢化的逆过程（稳定岛），star 拓扑的谱丛分支点三重数学签名（能隙关闭 → 谱叶汇合 → 发散度 $D\sim10^{10}$）在 $N=14/16$ 获直接验证，P-CM 系列 6 项可证伪预测完成实证裁决（1 成立/4 证伪/1 部分），并对 §5.7 分支点条件作出精确化修正。
+**摘要**：本文在谱动力学框架（Paper V）的基础上，将凝聚态物理三大核心理论——BCS 超导、量子 Hall 效应、超流 Gross-Pitaevskii 方程——翻译为 $\mathbf{Sp}$ 范畴中的谱语言。核心结果包括：(1) BCS 超导能隙 $\Delta$ 对应谱间隙 $\delta_{\text{SC}}$，超导相变被重新解释为谱生成元的对称性破缺；(2) TKNN 公式的 Hall 电导 $\sigma_{xy}$ 被翻译为谱流的陈数 $\text{Ch}(A_{\text{Hall}})$，平台跃迁对应陈数的绝热跳变；(3) 建立 IQHE 临界指数 $\nu$ 从清洁极限 $\nu=1$ 到高无序极限 $\nu\approx 2.35$ 的连续插值公式，提出双参数重整化群 $\beta(A;\epsilon,\zeta)$ 框架，解析刻画无序驱动下 $\nu$ 的全谱过渡——三个不动点（清洁、标准标度、高无序）与 16 组开放渠道实验数据系统对比验证；（4）在谱公理层（带噪声谱流方程 + 明确物理输入）推导噪声范畴 $\mathbf{Noise}$ 的有效无序参量修正 $\epsilon_{\text{eff}}$（v1.6 重定级：原"第一性原理推导"为谱公理层纸面解析推导，非从范畴 $\Delta$ 内生，见 §3.4 标注）；（5）引入谱化函子 $D:\mathbf{Rec}\to\mathbf{Sp}$ 将 $\beta$ 函数不动点迭代转化为闭式代数表达式，加速比 $>10^4\times$；（6）扩展谱框架至倾斜磁场——建立包含有限厚度轨道耦合与 Zeeman 能隙变窄的三参数 $\beta$ 函数，预言 $\nu(\theta)$ 的 Lifshitz 型转变，识别超洁净样品在 $\theta_c\approx 75.6^\circ$ 处的急剧跃迁；（7）Gross-Pitaevskii 方程被翻译为谱流方程 $\frac{d}{dt}A_{\text{GP}} = [A_{\text{kin}}+A_{\text{ext}}+A_{\text{int}}, A_{\text{GP}}]$，涡旋解对应规范变换分支。在此基础上提出五项凝聚态现象的谱流解释（§5.1-5.4）和五项谱框架独有的可检验量子预言（§5.6）。统一论点是：**所有凝聚态序参量均可翻译为谱生成元的谱间隙或拓扑不变量，且其动力学由谱流方程统一描述**。v1.4 引入谱丛理论 §5.7，建立 NRG Wilson 链三对角谱丛结构与记忆函数连分数的谱丛翻译。v1.5 新增 §5.8 稳定岛数据的独立数值验证：谱间隙锁定窗口被诠释为量子相变临界慢化的逆过程（稳定岛），star 拓扑的谱丛分支点三重数学签名（能隙关闭 → 谱叶汇合 → 发散度 $D\sim10^{10}$）在 $N=14/16$ 获直接验证，P-CM 系列 6 项可证伪预测完成实证裁决（1 成立/4 证伪/1 部分），并对 §5.7 分支点条件作出精确化修正。
 
 ---
 
@@ -19,6 +19,20 @@
 - **NRG**：数值重整化群（Numerical Renormalization Group）
 - **RGE**：重整化群方程（Renormalization Group Equation）
 - **CDGM**：Caroli-de Gennes-Matricon（卡洛利-德热纳-马特里孔涡旋束缚态）
+
+---
+
+## 内生推导标注体系（v1.6 重建引入）
+
+按「内生推导第一性」标准重建（v1.6），全文每条核心推导/定理均带起点类型标注，明确区分**推导的起点**是内生范畴结构还是物理输入：
+
+- **【内生-范畴】**：从范畴 $\Delta$（$\mathbf{Sp}$ 4-范畴交换律偏差，Paper XXXV）或已证的谱间隙资产（SU(2) Casimir 谱、Cl(1,7) 谱间隙，见 `SpectralGap`/`BottTower`）出发。此类结果对一切从同一 $\Delta$ 构造的谱生成元普适。
+- **【谱公理】**：从谱流方程 $\frac{d}{dt}A_t=[G,A_t]$（Paper V）+ 明确的物理输入（Hamiltonian、序参量、连续性方程）出发的**翻译/推导**。这是本文大部分内容的标准层级——"第一性"的准确含义是「从谱公理出发」，而非「从范畴 $\Delta$ 出发」。
+- **【输入-现象学】**：拟合/经验参数进入（须显式声明），无量纲常数来自对实验数据的最小二乘拟合而非推导。
+
+**诚实边界（不可逾越）**：范畴 $\Delta$ 内生推导只能产出**普适量**（谱间隙比、Casimir 量化序列、无量纲标度指数、普适比值、拓扑不变量）；**材料特定参数永远是输入侧**（$E_F$、$n_{\text{imp}}$、配对势强度、$T_c$ 数值）。因此「完全内生」的可达范围是普适结构层面，不是具体材料的数值预测。本文凡自称"第一性原理推导"处，均按此三级标注重定级；名实差距已在各节标明，研究轨迹归入研究笔记（正文不引用笔记，仅陈述最终成果）。
+
+**v1.6 重建的形式化支撑**（`MUFPFormalization`，全库零 sorry）：BCS 谱间隙比 $r$ 由普适自洽方程唯一确定（`WeaveBCS.selfConsFunc_existsUnique`）；Berry 曲率实值性（`BerryChern.berryCurvature_im_eq_zero`）；谱流守恒律 $\mathrm{tr}(A^k[G,A])=0$（`GPFlow.trace_pow_mul_commutator_eq_zero`）；谱不变量相似不变性（`SpectralInvariant.trace_pow_similar`）；噪声范畴截断谱序列收敛等 6 定理（`NoiseCategory`）。完整陈数理论（积分定义、整性、TKNN 场论形式）与 GP-谱流等同（PDE）为已登记的开放问题，见各节标注。
 
 ---
 
@@ -52,17 +66,17 @@
 
 ### 2.1 BCS Hamiltonian 的谱像
 
-BCS 超导理论的核心——能隙 $\Delta$——在谱框架中被自然地翻译为谱间隙。令 $H_{\text{BCS}}$ 为 BCS 平均场 Hamiltonian，其谱像 $D(H_{\text{BCS}}) = (\mathcal{H}_{\text{SC}}, A_{\text{SC}}, \sigma(A_{\text{SC}}))$ 满足：
+BCS 超导理论的核心——能隙 $\Delta_{\text{BCS}}$——在谱框架中被自然地翻译为谱间隙。令 $H_{\text{BCS}}$ 为 BCS 平均场 Hamiltonian，其谱像 $D(H_{\text{BCS}}) = (\mathcal{H}_{\text{SC}}, A_{\text{SC}}, \sigma(A_{\text{SC}}))$ 满足：
 
-$$\sigma(A_{\text{SC}}) = \left\{-\sqrt{\xi_k^2 + \Delta^2},\; 0,\; +\sqrt{\xi_k^2 + \Delta^2}\right\}$$
+$$\sigma(A_{\text{SC}}) = \left\{-\sqrt{\xi_k^2 + \Delta_{\text{BCS}}^2},\; 0,\; +\sqrt{\xi_k^2 + \Delta_{\text{BCS}}^2}\right\}$$
 
-其中 $\xi_k = \varepsilon_k - \mu$ 是相对于 Fermi 面的动能。谱间隙定义为：
+其中 $\xi_k = \varepsilon_k - \mu$ 是相对于 Fermi 面的动能，$\Delta_{\text{BCS}}$ 是 BCS 配对势（能隙参数）。**符号约定**：本文使用 $\Delta_{\text{BCS}}$ 表示 BCS 超导能隙，以区别于 MUFPF 结构常数 $\Delta$（Paper XXXV，Sp 4-范畴交换律偏差，引力本身）。谱间隙定义为：
 
-$$\delta_{\text{SC}} = \min \sigma_+(A_{\text{SC}}) = \Delta$$
+$$\delta_{\text{SC}} = \min \sigma_+(A_{\text{SC}}) = \Delta_{\text{BCS}}$$
 
-**命题 2.1**（能隙-谱间隙等同）。BCS 超导能隙 $\Delta$ 精确对应谱像 $D(H_{\text{BCS}})$ 的谱间隙 $\delta_{\text{SC}}$。零温自洽方程：
+**命题 2.1**（能隙-谱间隙等同）。BCS 超导能隙 $\Delta_{\text{BCS}}$ 精确对应谱像 $D(H_{\text{BCS}})$ 的谱间隙 $\delta_{\text{SC}}$。零温自洽方程：
 
-$$\frac{\Delta}{V} = \sum_k \frac{\Delta}{2\sqrt{\xi_k^2 + \Delta^2}}$$
+$$\frac{\Delta_{\text{BCS}}}{V} = \sum_k \frac{\Delta_{\text{BCS}}}{2\sqrt{\xi_k^2 + \Delta_{\text{BCS}}^2}}$$
 
 在谱表述中等价于谱流不动点条件：
 
@@ -70,11 +84,13 @@ $$\frac{d}{dt} A_{\text{SC}} = [A_{\text{pair}}, A_{\text{SC}}] = 0$$
 
 其中 $A_{\text{pair}}$ 是配对相互作用对应的谱生成元。
 
+**层级标注【谱公理】**。本节 $A_{\text{SC}} = \xi_k \sigma_z + \Delta_{\text{BCS}} \sigma_x$ 是给定物理 Hamiltonian 的谱像（$\Delta_{\text{BCS}}$、$\xi_k$、配对势 $V$ 均为物理输入），$\delta_{\text{SC}} = \Delta_{\text{BCS}}$ 是**翻译而非推导**；"第一性"在此的准确含义是「从谱公理（谱流不动点条件）出发」，而非「从范畴 $\Delta$ 内生」。**谱间隙比的普适层面**：标准 BCS 普适比值 $a_{\text{BCS}} = T_c/\Delta_0$ 经谱流自洽方程 $a_{\text{BCS}}^3 \cdot 4\pi = (1+\sqrt{3}\sqrt{r})\cdot r$ **唯一确定**谱间隙比 $r$（形式化定理 `selfConsFunc_existsUnique`，`WeaveBCS.lean`，零 sorry）——$r$ 是由普适方程唯一确定的普适比值，其数值 $r \approx 0.874$ 由谱流自洽方程解出（Python 层验证），**不是材料特定参数，也尚非范畴 $\Delta$ 内生**（范畴桥 $dl_{\min} \equiv \Delta_{\text{BCS}}$ 是已登记的开放问题，见文首诚实边界）。这与 §3.4 的噪声修正同属「谱公理形式假设 + 明确物理输入」的诚实分层。
+
 ### 2.2 超导相变作为谱对称性破缺
 
 **定义 2.1**（谱对称性破缺）。设 $\mathcal{G}$ 是谱生成元 $A$ 的对称群，$U(g)$ 是 $\mathcal{G}$ 在 $\mathcal{H}$ 上的酉表示。若 $[U(g), A] = 0$ 对所有 $g \in \mathcal{G}$ 成立，则称 $A$ 具有 $\mathcal{G}$ 对称性；若 $[U(g), A_{\text{eq}}] \ne 0$ 对某些 $g \in \mathcal{G}$ 成立，则称对称性被谱破缺。
 
-**命题 2.2**（超导相变的谱诠释）。正常态谱生成元 $A_{\text{normal}}$ 在 Fermi 面处谱隙为零——$\delta_{\text{normal}} = 0$——对应 $U(1)$ 规范对称性未破缺。超导态 $A_{\text{SC}}$ 打开有限间隙 $\delta_{\text{SC}} = \Delta > 0$，对应 $U(1)$ 规范对称性的谱破缺。超导相变温度 $T_c$ 由谱间隙消失条件 $\delta_{\text{SC}}(T_c) = 0$ 定义。
+**命题 2.2**（超导相变的谱诠释）。正常态谱生成元 $A_{\text{normal}}$ 在 Fermi 面处谱隙为零——$\delta_{\text{normal}} = 0$——对应 $U(1)$ 规范对称性未破缺。超导态 $A_{\text{SC}}$ 打开有限间隙 $\delta_{\text{SC}} = \Delta_{\text{BCS}} > 0$，对应 $U(1)$ 规范对称性的谱破缺。超导相变温度 $T_c$ 由谱间隙消失条件 $\delta_{\text{SC}}(T_c) = 0$ 定义。
 
 该表述将超导相变重新解释为**谱生成元的对称性破缺**——与 Paper VIII 中对称性破缺的谱表述一致，且与 Paper V（谱间隙动力学）的间隙打开机制同构。
 
@@ -114,7 +130,7 @@ $$\frac{d}{dt} \text{Ch}(A_{\text{Hall}}(t)) = 0, \quad \text{Ch}(A_{\text{Hall}
 
 ### 3.3 IQHE 临界指数的连续插值
 
-IQHE 平台跃迁的临界指数 $\nu$（关联长度发散 $\xi \propto |B-B_c|^{-\nu}$）随无序强度变化，从清洁极限 $\nu=1$ 到高无序极限 $\nu \approx 2.35$。谱框架通过谱投影尺子 $\mathcal{P}_\xi$ 推导出连续插值公式。
+IQHE 平台跃迁的临界指数 $\nu$（关联长度发散 $\xi \propto |B-B_c|^{-\nu}$）随无序强度变化，从清洁极限 $\nu=1$ 到高无序极限 $\nu \approx 2.35$。谱框架以谱投影尺子 $\mathcal{P}_\xi$ 对无序的面密度响应为物理动机，提出如下的连续插值公式。需要明确本节公式中无量纲常数的地位（见定理 3.2 后的标注）：函数形式与两个端点是谱公理层的模型假设，$\alpha$、$\epsilon_0$ 的数值是对开放渠道实验数据的现象学拟合——本节不含从范畴 $\Delta$ 或谱流方程到这些常数的第一性推导。
 
 **定理 3.2**（临界指数连续插值公式）。IQHE 临界指数 $\nu$ 关于有效无序参量 $\epsilon = n_{\text{imp}} \ell_B^2$ 的连续过渡由以下公式描述：
 
@@ -122,11 +138,13 @@ $$\boxed{\nu_{\text{spec}}(\epsilon) = 1 + 1.35 \cdot \frac{\sigma(\alpha(\epsil
 
 其中 $\sigma(x) = 1/(1+e^{-x})$ 是 Sigmoid 函数，$\alpha \approx 1.16$ 控制过渡陡度，$\epsilon_0 \approx 2.58$ 是临界无序阈值。当 $\epsilon \ll \epsilon_0$ 时 $\nu_{\text{spec}} \to 1$（清洁极限），当 $\epsilon \gg \epsilon_0$ 时 $\nu_{\text{spec}} \to 2.35$（高无序极限）。
 
+**常数地位【输入-现象学】**。$\alpha$ 与 $\epsilon_0$ 不是从谱公理推导的量，而是对开放渠道 IQHE 实验数据（§3.7 的 16 组样品）最小二乘拟合得到的无量纲参数；端点值 $\nu=1$（清洁）与 $\nu \approx 2.35$（高无序，复现 Pruisken 标度）是物理输入而非拟合自由度。本节公式属于"谱公理形式假设 + 现象学常数"的混合层级，重建时应按此诚实分层引用，不得称 $\alpha$、$\epsilon_0$ 为推导结果。
+
 **物理意义**。该公式将 $\nu$ 的连续过渡归因于谱投影尺子 $\mathcal{P}_\xi$ 对短程势无序的面密度响应。清洁极限 $\nu=1$ 对应所有朗道能级完全分离、无态混合的理想情形——这是谱框架独有的预言，在标准标度理论中不存在。高无序极限 $\nu \approx 2.35$ 完全复现标准 Pruisken 标度理论的结果（$\nu \approx 2.38 \pm 0.06$）。
 
 ### 3.4 噪声范畴 $\mathbf{Noise}$：远程施主样品的 $\epsilon_{\text{eff}}$ 修正
 
-实验观测发现，远程施主掺杂样品的 IQHE 临界指数系统高于短程势样品的预测值。谱框架通过引入噪声范畴 $\mathbf{Noise}$ 第一性原理推导解决此偏差。
+实验观测发现，远程施主掺杂样品的 IQHE 临界指数系统高于短程势样品的预测值。谱框架通过引入噪声范畴 $\mathbf{Noise}$ 的谱公理层推导解决此偏差。**层级标注【谱公理】**：本节推导从带噪声谱流方程 + 远程 Coulomb 散射关联的 Fourier 卷积（明确物理输入）出发，$\epsilon_{\text{eff}}$ 修正公式是该层的纸面解析结果——它是诚实的谱公理层推导，但**不是从范畴 $\Delta$ 内生的第一性推导**（v1.6 重定级，原名实差距）。
 
 **定义 3.2**（噪声范畴 $\mathbf{Noise}$）。噪声范畴 $\mathbf{Noise}$ 的对象是噪声谱生成元对 $(\eta, \mathcal{N})$：
 - $\eta$ 是噪声场（随机势涨落），满足 $\mathbb{E}[\eta(x)\eta(y)] = W_\eta(|x-y|)$
@@ -170,6 +188,8 @@ $$\boxed{\beta(A; \epsilon, \zeta) = \frac{A}{2\pi}\left[\mathcal{C}(\zeta)\cdot
 | $\mathcal{W}(\epsilon,\zeta)$ | $(\epsilon/\epsilon_c)^{1/2} \cdot \zeta/(\zeta+\zeta_0)$ | 无序失稳耦合项 |
 | $\mathcal{K}(A)$ | $1/(1+\gamma_2 A^2)$ | 谱曲率高圈修正，$\gamma_2 \approx 0.06$ |
 | $\nu_{\text{std}}$ | $2.35$ | 标准标度不动点的临界指数 |
+
+**常数地位【输入-现象学】**。与定理 3.2 相同，$\zeta_0 \approx 10^{-6}$、$\gamma_2 \approx 0.06$、$\epsilon_c$ 与 $\epsilon_c^{(0)} \approx 10.0$（§3.4）是对开放渠道实验数据拟合的无量纲参数，不是从谱流方程或范畴结构推导的结果；$\nu_{\text{std}} = 2.35$ 是输入的物理端点（Pruisken 标度）。$\beta$ 函数的函数形式与三不动点结构是谱公理层的模型假设。本节不含这些常数的第一性推导。
 
 **三个不动点结构**。
 
@@ -284,6 +304,8 @@ $$\frac{d}{dt} A_{\text{GP}} = [A_{\text{kin}} + A_{\text{ext}} + A_{\text{int}}
 **命题 4.2**（涡旋 = 谱规范分支）。GP 谱流方程的涡旋解对应 $A_{\text{GP}}$ 的规范变换 $A_{\text{GP}} \to U_n^\dagger A_{\text{GP}} U_n$，其中 $U_n = e^{in\phi}$（$\phi$ 为方位角）。涡旋的拓扑荷 $n \in \mathbb{Z}$ 是谱流方程的拓扑不变量，由绕核一周的谱生成元相位变化 $\Delta\phi_{A_{\text{GP}}} = 2\pi n$ 决定。
 
 **推论 4.2**（涡旋稳定性）。涡旋拓扑荷 $n$ 在谱流方程演化下不变——$dn/dt = 0$——这从谱拓扑角度解释了超流涡旋的拓扑稳定性。涡旋-反涡旋对的湮灭对应 $n_+ + n_- = 0$ 的拓扑荷相消。
+
+**层级标注【谱公理】**。定理 4.1 是 GP 方程（PDE）到谱流方程的**翻译**：$A_{\text{GP}} = -\log\rho$ 与连续性方程 $\partial_t\rho + \nabla\cdot(\rho\mathbf{v}) = 0$ 是明确物理输入，"等价"是谱公理层的形式改写——非从范畴 $\Delta$ 内生。涡旋荷 $n \in \mathbb{Z}$ 的严格 winding-number 定义（$\frac{1}{2\pi}\oint\nabla\theta\cdot d\mathbf{l}$ 的度数形式）与同伦不变性需连续场论，为已登记开放问题。**谱代数根源已闭合（零 sorry）**：谱流方程 $dA/dt=[G,A]$ 保持全部迹幂 $\mathrm{tr}(A^k)$——$\mathrm{tr}(A^k[G,A])=0$（形式化定理 `GPFlow.trace_pow_mul_commutator_eq_zero`）——即任何由谱决定的拓扑不变量在谱流下守恒，这是推论 4.2「$dn/dt=0$」的谱版本。
 
 该表述将 GP 方程统一到谱流体动力学框架中，与 Paper VI（谱流体动力学）的精神一致——流体和超流的谱描述共享相同的数学结构，区别仅在于谱生成元的具体形式和量子统计。
 
@@ -620,7 +642,7 @@ star 拓扑的谱间隙-涨落行为揭示谱丛分支点结构的**三重数学
 《元通用不动点函子范畴框架》系列论文 XIV，凝聚态物理的谱表述——超导、量子 Hall 与超流。主要内容：
 - BCS 超导能隙 $\Delta$ 的谱表述：$\delta_{\text{SC}} = \Delta$，谱对称性破缺（§2）
 - TKNN 公式的谱版本：$\sigma_{xy} = (e^2/h) \cdot \text{Ch}(A_{\text{Hall}})$，陈数绝热不变性（§3.1-3.2）
-- IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$（定理 3.2），噪声范畴 $\mathbf{Noise}$ 第一性原理推导（§3.3-3.4）
+- IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$（定理 3.2），噪声范畴 $\mathbf{Noise}$ 的谱公理层推导与 $\epsilon_{\text{eff}}$ 修正（§3.3-3.4）
 - 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$：三个不动点、物理交叉公式、$\nu(\epsilon,\zeta)$ 二维相图（§3.5）
 - 谱化谱闭式解：$D: \mathbf{Rec} \to \mathbf{Sp}$ 加速比 $>10^4\times$（§3.6）
 - 16 组开放渠道样品映射验证（§3.7）
@@ -635,9 +657,10 @@ star 拓扑的谱间隙-涨落行为揭示谱丛分支点结构的**三重数学
 **变更记录**：
 | 版本 | 日期 | 更新内容 |
 |------|------|----------|
+| v1.6 | 2026-09-12 | **重建**：引入内生推导标注体系（【内生-范畴】/【谱公理】/【输入-现象学】三级标注 + 诚实边界声明，见文首图例）；重定级 §3.4"第一性原理推导"为谱公理层（摘要、§3.4、结论清单同步）；定理 3.2/3.3 的 RG 常数显式标注为现象学拟合（α、ε₀、γ₂、ζ₀、ε_c）；§2 r 参数改写为"由普适自洽方程唯一确定的普适比值"（Lean 定理 `selfConsFunc_existsUnique`）；接入形式化支撑（`BerryChern`/`GPFlow`/`SpectralInvariant`/`NoiseCategory`，全库零 sorry）；勘正 v1.5 日期不一致（文首 08-16 vs 文尾 08-24）。正文只留成果，研究轨迹归研究笔记 |
+| v1.5 | 2026-08-24 | **新增**：§5.8 稳定岛数据的独立数值验证（谱间隙锁定窗口 = 量子相变临界慢化逆过程；star 拓扑谱丛分支点三重签名 N=14/16 验证；P-CM 系列 6 项预测实证裁决 1 成立/4 证伪/1 部分；§5.7 分支点条件精确化）；**更名**：UFPF → MUFPF。注：原变更记录漏记 §5.8、文首日期误作 2026-08-16，v1.6 一并勘正 |
 | v1.4 | 2026-07-25 | **新增**：§5.7 谱丛理论在凝聚态物理中的应用——NRG Wilson 链的三对角谱丛翻译、光导率记忆函数连分数的谱丛等同、谱丛分支点与凝聚态相变对应关系、与已有 §2-§5 的衔接（IQHE ↔ Kerr 双重同伦、BCS 能隙 ↔ 谱丛分支点）；结论 C5（谱丛统一结构）；更新摘要、核心结论、版本记录 |
 | v1.3 | 2026-07-23 | **新增**：§3.3 IQHE 临界指数连续插值公式 $\nu_{\text{spec}}(\epsilon)$；§3.4 噪声范畴 $\mathbf{Noise}$ 第一性原理推导与 $\epsilon_{\text{eff}}$ 修正；§3.5 双参数 RGE 框架 $\beta(A;\epsilon,\zeta)$ 三不动点结构；§3.6 谱化谱闭式解加速比 $>10^4\times$；§3.7 16 组开放渠道样品映射对比；§3.8 倾斜磁场谱框架预测（有限厚度轨道耦合、Zeeman 能隙变窄、Lifshitz 转变、四项预言 T1-T4）；§1.2 核心论题新增 3 条目；§5.6 新增预言 6.5（IQHE 临界指数清洁极限 $\nu\to1$）；更新摘要、结论 C2、版本记录。共新增 6 条定理/命题/定义，扩展后量子 Hall 章节从约 30 行增至约 250 行 |
 | v1.2 | 2026-07-21 | **新增**：预言 5.1 MgB$_2$ 开放数据验证（6 组文献数据，体相直接测量与 √6 偏差仅 -2.9%）；新增参考文献 [Mg1]-[Mg6]；更新可检验性总结表 |
 | v1.1 | 2026-07-21 | **新增**：§5.6 谱框架独有的可检验量子预言（四项），源自 SU(2) Casimir 量化、$k_{\max}=8$ 截断与谱纠缠熵结构；新增参考文献 Paper XII、Paper XX |
 | v1.0 | 2026-07-18 | 初始版本 |
-| v1.5 | 2026-08-24 | 更名：UFPF → MUFPF（1 处替换）|
