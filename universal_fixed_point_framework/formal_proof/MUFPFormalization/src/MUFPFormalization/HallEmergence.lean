@@ -27,14 +27,25 @@ Hall 侧：Landau 规范磁平移代数（clock/shift Weyl 对）的有限维模
                          （Weyl 基 Hilbert-Schmidt 正交；私有链 clock_pow /
                            shift_pow / fin_add_nat_succ / omega_primitive /
                            omega_geom_sum）
+  weyl_basis_linearIndep Weyl 基线性无关 {U^a V^b}_{a,b<n}（对偶配对
+                         Tr(W_p D_q) = n·δ_{pq}；私有链 clock_shift_weyl_gen /
+                           clock_pow_shift_weyl / clock_shift_pow_weyl /
+                           shift_pow_clock_weyl / weyl_scalar / weyl_mul_dual /
+                           weyl_pairing / nat_add_sub_mod_eq_zero /
+                           trace_sum_smul_fin）
+  weyl_span_top          Weyl 基定理：{U^a V^b}_{a,b<n} 张成 Mₙ(ℂ)
+                         （磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式，维数
+                           n² = finrank；线性无关 + 基数 = finrank 论证）
 
 数学说明：Weyl 关系 + 幺正性是磁平移代数的代数核心（Hall 侧"子范畴约束"）；
 生成元构造 H → γ_F → A_Hall 复用 BCSFermiEmergence 模板（同一谱对应求逆）。
 Weyl 迹正交性给出磁平移代数 ≅ Mₙ(ℂ) 的迹形式（Weyl 基 {U^a V^b}
-Hilbert-Schmidt 正交，范数平方 = n），是 Landau 能级单不可约表示的
-结构定理的迹层面。完整陈数理论（整性、TKNN 场论形式）、"唯一不可约
-表示 = Landau 能级载体"的表示论结构定理、谱投影对参数的导数
-（Berry 切向量的构造层）登记为开放（见 §末注释）。
+Hilbert-Schmidt 正交，范数平方 = n）；Weyl 基定理（线性无关 + 张成）
+给出结构定理的向量空间形式——n² 个 Weyl 元构成 Mₙ(ℂ) 的基，即
+"唯一不可约表示 = Landau 能级载体"的代数根源（中心平凡 + 迹配对非退化）。
+完整陈数理论（整性、TKNN 场论形式）、结构定理的表示论层（商代数
+ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) → Mₙ(ℂ) 的代数同构，需商代数基础设施）、
+谱投影对参数的导数（Berry 切向量的构造层）登记为开放（见 §末注释）。
 -/
 
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
@@ -499,6 +510,221 @@ theorem weyl_trace_orth {n : ℕ} [NeZero n] (a b : ℕ) :
       if_neg (show ¬(a % n = 0 ∧ b % n = 0) from fun h => hb h.2)]
     simp
 
+/-- Weyl 关系（n ≥ 1 全情形）：n = 1 时 U = V = 1、ω₁ = 1 退化情形并入。 -/
+private theorem clock_shift_weyl_gen {n : ℕ} [NeZero n] :
+    clock n * shift n = (omega n) • (shift n * clock n) := by
+  by_cases hn : 2 ≤ n
+  · exact clock_shift_weyl hn
+  · push_neg at hn
+    have hn0 : n ≠ 0 := NeZero.ne n
+    have hn1 : n = 1 := by omega
+    subst hn1
+    have hc : clock 1 = 1 := by
+      ext i j
+      rw [clock, Matrix.diagonal_apply, Matrix.one_apply]
+      split_ifs with hij
+      · have hi : (i : ℕ) = 0 := Nat.lt_one_iff.1 i.2
+        rw [hi, pow_zero]
+      · rfl
+    have hs : shift 1 = 1 := by
+      ext i j
+      rw [shift, Matrix.one_apply]
+      have hjj : (j + 1 : Fin 1) = j := by
+        apply Fin.ext
+        rw [Fin.val_add, Fin.val_one', Nat.mod_self, Nat.add_zero, Nat.mod_eq_of_lt j.2]
+      by_cases hij : i = j + 1
+      · rw [if_pos hij, if_pos (hjj ▸ hij)]
+      · rw [if_neg hij, if_neg (fun h => hij (hjj.symm ▸ h))]
+    rw [hc, hs]
+    have hw : omega 1 = 1 := by
+      simpa [omega, omegaArg] using (Complex.exp_nat_mul_two_pi_mul_I 1)
+    rw [hw]
+    simp
+
+/-- 幂次 Weyl 换位（一）：U^a V = ω^a · V U^a（归纳提升 clock_shift_weyl_gen）。 -/
+private theorem clock_pow_shift_weyl {n : ℕ} [NeZero n] (a : ℕ) :
+    clock n ^ a * shift n = (omega n ^ a : ℂ) • shift n * clock n ^ a := by
+  induction a with
+  | zero => simp
+  | succ b ih =>
+    rw [pow_succ, Matrix.mul_assoc, clock_shift_weyl_gen, mul_smul_comm,
+      ← Matrix.mul_assoc (clock n ^ b) (shift n) (clock n), ih,
+      smul_mul_assoc (omega n ^ b) (shift n) (clock n ^ b),
+      smul_mul_assoc (omega n ^ b) (shift n * clock n ^ b) (clock n),
+      Matrix.mul_assoc (shift n) (clock n ^ b) (clock n),
+      smul_smul, ← pow_succ',
+      ← smul_mul_assoc (omega n ^ (b + 1)) (shift n) (clock n ^ b * clock n)]
+
+/-- 幂次 Weyl 换位（二）：U^a V^c = ω^{ac} · V^c U^a（对 shift 幂归纳）。 -/
+private theorem clock_shift_pow_weyl {n : ℕ} [NeZero n] (a c : ℕ) :
+    clock n ^ a * shift n ^ c
+      = (omega n ^ (a * c) : ℂ) • shift n ^ c * clock n ^ a := by
+  induction c with
+  | zero => simp
+  | succ b ih =>
+    rw [Nat.mul_succ, pow_succ, ← Matrix.mul_assoc (clock n ^ a) (shift n ^ b) (shift n), ih,
+      smul_mul_assoc (omega n ^ (a * b)) (shift n ^ b) (clock n ^ a),
+      smul_mul_assoc (omega n ^ (a * b)) (shift n ^ b * clock n ^ a) (shift n),
+      Matrix.mul_assoc (shift n ^ b) (clock n ^ a) (shift n),
+      clock_pow_shift_weyl a,
+      ← Matrix.mul_assoc (shift n ^ b) ((omega n ^ a) • shift n) (clock n ^ a),
+      mul_smul_comm (omega n ^ a) (shift n ^ b) (shift n),
+      smul_mul_assoc (omega n ^ a) (shift n ^ b * shift n) (clock n ^ a),
+      smul_smul,
+      pow_add (omega n),
+      smul_mul_assoc (omega n ^ (a * b) * omega n ^ a) (shift n ^ b * shift n) (clock n ^ a)]
+
+/-- 幂次 Weyl 换位（三）：V^c U^d = ω^{cd}⁻¹ · U^d V^c（由（二）取逆）。 -/
+private theorem shift_pow_clock_weyl {n : ℕ} [NeZero n] (c d : ℕ) :
+    shift n ^ c * clock n ^ d
+      = ((omega n ^ (c * d) : ℂ))⁻¹ • clock n ^ d * shift n ^ c := by
+  have h := clock_shift_pow_weyl (n := n) d c
+  rw [Nat.mul_comm] at h
+  have hne : (omega n ^ (c * d) : ℂ) ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
+  rw [smul_mul_assoc, h, ← smul_mul_assoc, smul_smul, inv_mul_cancel₀ hne, one_smul]
+
+/-- 配对标量化简：ω^{ac}·(ω^{c(a+n−a')})⁻¹ = ω^{ca'}——指数差 c·n 经 ω^n = 1 吸收。 -/
+private theorem weyl_scalar {n : ℕ} [NeZero n] {a a' c : ℕ} (ha' : a' ≤ n) :
+    (omega n ^ (a * c)) * (omega n ^ (c * (a + (n - a'))))⁻¹
+      = omega n ^ (c * a') := by
+  have hA : a' + (a + (n - a')) = a + n := by omega
+  have hn1 : 1 ≤ n := Nat.one_le_iff_ne_zero.2 (NeZero.ne n)
+  have hne : (omega n ^ (c * (a + (n - a'))) : ℂ) ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
+  have hcn : (omega n ^ (c * n)) = 1 := by
+    rw [show c * n = n * c from Nat.mul_comm c n, pow_mul, omega_pow hn1, one_pow]
+  have h1 : (omega n ^ (c * a))
+      = (omega n ^ (c * a')) * (omega n ^ (c * (a + (n - a')))) := by
+    calc (omega n ^ (c * a)) = (omega n ^ (c * a)) * 1 := (mul_one _).symm
+      _ = (omega n ^ (c * a)) * omega n ^ (c * n) := by rw [hcn]
+      _ = omega n ^ (c * a + c * n) := by rw [pow_add]
+      _ = omega n ^ (c * a' + c * (a + (n - a'))) := by
+          rw [show c * a + c * n = c * a' + c * (a + (n - a')) from by
+            rw [← Nat.mul_add, ← Nat.mul_add, hA]]
+      _ = _ := by rw [pow_add]
+  rw [show a * c = c * a from Nat.mul_comm a c, h1, mul_assoc, mul_inv_cancel₀ hne, mul_one]
+
+/-- Weyl 元 × 对偶元 = 标量 × U^{a+n−a'} V^{b+n−b'}（磁平移对合的配对重排）。 -/
+private theorem weyl_mul_dual {n : ℕ} [NeZero n] (a b a' b' : Fin n) :
+    (clock n ^ (a : ℕ) * shift n ^ (b : ℕ))
+      * (shift n ^ (n - (b' : ℕ)) * clock n ^ (n - (a' : ℕ)))
+    = (omega n ^ (((b : ℕ) + (n - (b' : ℕ))) * (a' : ℕ))) •
+        (clock n ^ ((a : ℕ) + (n - (a' : ℕ)))
+          * shift n ^ ((b : ℕ) + (n - (b' : ℕ)))) := by
+  rw [Matrix.mul_assoc,
+    ← Matrix.mul_assoc (shift n ^ (b : ℕ)) (shift n ^ (n - (b' : ℕ)))
+      (clock n ^ (n - (a' : ℕ))),
+    ← pow_add (shift n) (b : ℕ) (n - (b' : ℕ)),
+    ← Matrix.mul_assoc (clock n ^ (a : ℕ)) (shift n ^ ((b : ℕ) + (n - (b' : ℕ))))
+      (clock n ^ (n - (a' : ℕ))),
+    clock_shift_pow_weyl (a : ℕ) ((b : ℕ) + (n - (b' : ℕ))),
+    smul_mul_assoc (omega n ^ ((a : ℕ) * ((b : ℕ) + (n - (b' : ℕ)))))
+      (shift n ^ ((b : ℕ) + (n - (b' : ℕ)))) (clock n ^ (a : ℕ)),
+    smul_mul_assoc (omega n ^ ((a : ℕ) * ((b : ℕ) + (n - (b' : ℕ)))))
+      (shift n ^ ((b : ℕ) + (n - (b' : ℕ))) * clock n ^ (a : ℕ))
+      (clock n ^ (n - (a' : ℕ))),
+    Matrix.mul_assoc (shift n ^ ((b : ℕ) + (n - (b' : ℕ)))) (clock n ^ (a : ℕ))
+      (clock n ^ (n - (a' : ℕ))),
+    ← pow_add (clock n) (a : ℕ) (n - (a' : ℕ)),
+    shift_pow_clock_weyl ((b : ℕ) + (n - (b' : ℕ))) ((a : ℕ) + (n - (a' : ℕ))),
+    smul_mul_assoc ((omega n ^ (((b : ℕ) + (n - (b' : ℕ))) * ((a : ℕ) + (n - (a' : ℕ)))))⁻¹)
+      (clock n ^ ((a : ℕ) + (n - (a' : ℕ))))
+      (shift n ^ ((b : ℕ) + (n - (b' : ℕ)))),
+    smul_smul, weyl_scalar (le_of_lt (a'.2))]
+
+/-- 加性模吸收：a, a' < n 时 (a + (n − a')) % n = 0 ⟹ a = a'——配对离对角判别。 -/
+private theorem nat_add_sub_mod_eq_zero {n a a' : ℕ} (hn : 0 < n) (ha : a < n) (ha' : a' < n)
+    (h : (a + (n - a')) % n = 0) : a = a' := by
+  have h2 : a + n - a' = a + (n - a') := by omega
+  rw [← h2] at h
+  obtain ⟨k, hk⟩ := (Nat.dvd_iff_mod_eq_zero).2 h
+  have hpos : 0 < a + n - a' := by omega
+  have hlt : a + n - a' < 2 * n := by omega
+  have h2n : n * k < n * 2 := by rw [← hk, Nat.mul_comm]; exact hlt
+  have hk2 : k < 2 := (Nat.mul_lt_mul_left hn).1 h2n
+  have hk0 : k ≠ 0 := by
+    rintro rfl
+    rw [Nat.mul_zero] at hk
+    omega
+  have hk1 : k = 1 := by omega
+  rw [hk1, Nat.mul_one] at hk
+  omega
+
+/-- **Weyl 对偶配对**：Tr(W_p · D_q) = n·δ_{pq}——迹形式下的对偶基配对
+    （D_q = V^{n−b'} U^{n−a'}；对角 n、离对角 0）。 -/
+private theorem weyl_pairing {n : ℕ} [NeZero n] (p q : Fin n × Fin n) :
+    ((clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ))
+      * (shift n ^ (n - (q.2 : ℕ)) * clock n ^ (n - (q.1 : ℕ)))).trace
+      = if p = q then (n : ℂ) else 0 := by
+  obtain ⟨a, b⟩ := p
+  obtain ⟨a', b'⟩ := q
+  dsimp only
+  by_cases heq : a = a' ∧ b = b'
+  · obtain ⟨rfl, rfl⟩ := heq
+    rw [if_pos rfl, weyl_mul_dual, Matrix.trace_smul, weyl_trace_orth]
+    have han : (a : ℕ) + (n - (a : ℕ)) = n := Nat.add_sub_cancel' (Nat.le_of_lt a.2)
+    have hbn : (b : ℕ) + (n - (b : ℕ)) = n := Nat.add_sub_cancel' (Nat.le_of_lt b.2)
+    rw [han, hbn, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)), one_pow,
+      one_smul, Nat.mod_self, if_pos (show (0 : ℕ) = 0 ∧ (0 : ℕ) = 0 from ⟨rfl, rfl⟩)]
+  · rw [if_neg (show ¬(⟨a, b⟩ : Fin n × Fin n) = ⟨a', b'⟩ from fun h => by
+        rw [Prod.mk.injEq] at h; exact heq h)]
+    rw [weyl_mul_dual, Matrix.trace_smul, weyl_trace_orth]
+    have hcond : ¬(((a : ℕ) + (n - (a' : ℕ))) % n = 0 ∧ ((b : ℕ) + (n - (b' : ℕ))) % n = 0) :=
+      fun h => heq ⟨Fin.ext (nat_add_sub_mod_eq_zero (NeZero.pos n) a.2 a'.2 h.1),
+        Fin.ext (nat_add_sub_mod_eq_zero (NeZero.pos n) b.2 b'.2 h.2)⟩
+    rw [if_neg hcond, smul_zero]
+
+/-- trace 的有限和-标量引理：Tr(∑ g p • M p) = ∑ g p · Tr(M p)。 -/
+private theorem trace_sum_smul_fin {n : ℕ} {ι : Type*} [Fintype ι]
+    (g : ι → ℂ) (M : ι → Matrix (Fin n) (Fin n) ℂ) :
+    (∑ p, g p • M p).trace = ∑ p, g p * (M p).trace :=
+  calc (∑ p, g p • M p).trace
+      = Matrix.traceLinearMap (Fin n) ℂ ℂ (∑ p, g p • M p) :=
+        (Matrix.traceLinearMap_apply (Fin n) ℂ ℂ _).symm
+    _ = ∑ p, Matrix.traceLinearMap (Fin n) ℂ ℂ (g p • M p) :=
+        map_sum (Matrix.traceLinearMap (Fin n) ℂ ℂ) (fun p => g p • M p) Finset.univ
+    _ = ∑ p, g p * (M p).trace := by
+        refine Finset.sum_congr rfl fun p _ => ?_
+        rw [map_smul, smul_eq_mul, Matrix.traceLinearMap_apply]
+
+/-- **Weyl 基线性无关**：{U^a V^b}_{a,b<n} 在 ℂ 上线性无关——Hilbert-Schmidt
+    迹配对 ⟨W_p, D_q⟩ = n·δ_{pq} 的直接推论。 -/
+theorem weyl_basis_linearIndependent {n : ℕ} [NeZero n] :
+    LinearIndependent ℂ fun p : Fin n × Fin n =>
+      clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ) := by
+  classical
+  rw [Fintype.linearIndependent_iff]
+  intro g hg q
+  have htr := congrArg Matrix.trace
+    (congrArg (fun X : Matrix (Fin n) (Fin n) ℂ =>
+      X * (shift n ^ (n - (q.2 : ℕ)) * clock n ^ (n - (q.1 : ℕ)))) hg)
+  rw [Matrix.zero_mul, Matrix.trace_zero, Finset.sum_mul,
+    Finset.sum_congr rfl fun i _ =>
+      smul_mul_assoc (g i) (clock n ^ (i.1 : ℕ) * shift n ^ (i.2 : ℕ))
+        (shift n ^ (n - (q.2 : ℕ)) * clock n ^ (n - (q.1 : ℕ))),
+    trace_sum_smul_fin,
+    Finset.sum_congr rfl fun p _ => by rw [weyl_pairing p q]] at htr
+  have h2 := Finset.sum_eq_single (s := Finset.univ)
+    (f := fun p : Fin n × Fin n => g p * (if p = q then (n : ℂ) else 0))
+    (a := q)
+    (fun p _ hpq => by rw [if_neg hpq, mul_zero])
+    (fun hcontra => absurd (Finset.mem_univ _) hcontra)
+  rw [h2, if_pos rfl] at htr
+  have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne n
+  rcases mul_eq_zero.1 htr with h | h
+  · exact h
+  · exact absurd h hn0
+
+/-- **Weyl 基定理**：{U^a V^b}_{a,b<n} 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的
+    向量空间形式：n² 个 Weyl 元构成 Mₙ(ℂ) 的基（中心平凡 + 迹配对非退化 ⟹ 忠实作用
+    于唯一的 n 维不可约表示 = Landau 能级载体的代数根源）。 -/
+theorem weyl_span_top {n : ℕ} [NeZero n] :
+    Submodule.span ℂ (Set.range fun p : Fin n × Fin n =>
+      clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ)) = ⊤ :=
+  weyl_basis_linearIndependent.span_eq_top_of_card_eq_finrank (by
+    rw [Fintype.card_prod, Fintype.card_fin,
+      show Module.finrank ℂ (Matrix (Fin n) (Fin n) ℂ) = n * n from by
+        rw [Module.finrank_matrix, Fintype.card_fin, Module.finrank_self, Nat.mul_one]])
+
 /- §末开放登记（不占用 sorry，真证路径）：
 
   1. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
@@ -507,14 +733,18 @@ theorem weyl_trace_orth {n : ℕ} [NeZero n] (a b : ℕ) :
      基础设施；当前 occupied_berry_im_eq_zero 以任意厄米切向量为假设接入。
   3. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
      需具体谱计算，数值层已有载体。
-  4. **唯一不可约表示**：磁平移代数 ≅ Mₙ(ℂ) 的表示论结构定理
-     （唯一 n 维不可约表示 = Landau 能级载体）——迹层面已由
-     weyl_trace_orth 闭合，表示层需 Schur/矩阵代数表示论基础设施。
+  4. **结构定理表示论层**：磁平移代数 → Mₙ(ℂ) 的代数同构（商代数
+     ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) 的泛性质）与唯一不可约表示的 Schur
+     唯一性——迹/向量空间层已由 weyl_trace_orth + weyl_basis_linearIndependent
+     + weyl_span_top 闭合（Weyl 基 = Mₙ(ℂ) 的基，维数 n²），表示层需商代数/
+     Schur 引理基础设施。
 
   已闭合（本模块，零 sorry）：Weyl 关系 + clock/shift 幺正性 + Harper Hermitian
   + Hall 生成元链（Fermi 求逆 + 三链会师）+ 占据投影（Hermitian/幂等）
   + Hall-Berry 曲率实值接入 + Weyl 迹正交性（weyl_trace_orth：Weyl 基
-  Hilbert-Schmidt 正交，磁平移代数 ≅ Mₙ(ℂ) 结构定理的迹形式）。
+  Hilbert-Schmidt 正交）+ Weyl 基定理（weyl_basis_linearIndependent 线性无关
+  + weyl_span_top 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式，
+  "唯一不可约表示 = Landau 能级载体"的代数根源）。
   G1 的三个切入点（GP/BCS/Hall）至此全部闭合。 -/
 
 end MUFPF

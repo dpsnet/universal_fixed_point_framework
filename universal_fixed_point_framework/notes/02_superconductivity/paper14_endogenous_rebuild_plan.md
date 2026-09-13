@@ -528,3 +528,55 @@ v1.6 追加第六轮摘要。
 TKNN 场论形式（需环面积分/拓扑度/Kubo 基础设施）；唯一不可约表示 = Landau 能级
 载体的表示论结构定理（Schur/矩阵代数表示论）；谱投影参数导数（Berry 切向量构造
 层）；Harper 谱隙/Hofstadter Butterfly；ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
+
+### 2026-09-13：Weyl 基定理闭合（HallEmergence，线性无关 + 张成 Mₙ(ℂ)，零 sorry）
+
+**交付定理**（`HallEmergence.lean` 新增，全库 3700 jobs 编译通过）：
+
+| 名称 | 可见性 | 内容 |
+|------|--------|------|
+| `weyl_basis_linearIndependent` | public | {U^a V^b}_{a,b<n} 在 ℂ 上线性无关（LinearIndependent，索引 Fin n × Fin n） |
+| `weyl_span_top` | public | span ℂ {U^a V^b} = ⊤——n² 个 Weyl 元张成 Mₙ(ℂ)（线性无关 + Fintype.card = finrank 论证，经 LinearIndependent.span_eq_top_of_card_eq_finrank） |
+| `weyl_pairing` | private | 对偶配对 Tr(W_p · D_q) = n·δ_{pq}，D_q = V^{n−b'}U^{n−a'}——线性无关的核心 |
+| `weyl_mul_dual` | private | W_p · D_q = ω^{c·a'} • (U^{a+n−a'} V^{b+n−b'})，c = b+(n−b')（配对重排） |
+| `clock_shift_weyl_gen` | private | Weyl 关系全 n ≥ 1 情形（n=1 退化 U=V=1、ω₁=1 并入，by_cases + Fin 1 平凡性） |
+| `clock_pow_shift_weyl`/`clock_shift_pow_weyl`/`shift_pow_clock_weyl` | private | 幂次 Weyl 换位：U^aV = ω^a·VU^a；U^aV^c = ω^{ac}·V^cU^a；V^cU^d = ω^{cd}⁻¹·U^dV^c（归纳 + 取逆） |
+| `weyl_scalar` | private | ω^{ac}·(ω^{c(a+n−a')})⁻¹ = ω^{ca'}——指数差 c·n 经 ω^n = 1 吸收（calc + pow_add/pow_mul） |
+| `nat_add_sub_mod_eq_zero` | private | a,a'<n 时 (a+(n−a'))%n = 0 ⟹ a = a'（dvd 分解 n·k，0<a+n−a'<2n ⟹ k=1） |
+| `trace_sum_smul_fin` | private | Tr(∑ g p • M p) = ∑ g p · Tr(M p)（经 Matrix.traceLinearMap 的 map_sum/map_smul） |
+
+**证明主线**：迹配对 ⟨W_p, D_q⟩ = Tr(W_p D_q)——W_p D_q 经两次幂次换位化为
+ω^{c·a'} • U^{a+n−a'} V^{b+n−b'}（c = b+(n−b')；标量化简靠 ω^{c·n} = (ω^n)^c = 1），
+再用 weyl_trace_orth 判 (a+n−a')%n、(b+n−b')%n：对角 n、离对角 0。线性无关取
+g 使 ∑ g p • W p = 0，右乘 D_q 取 trace 得 g q · n = 0 ⟹ g q = 0。
+张成由 LinearIndependent.span_eq_top_of_card_eq_finrank：card(Fin n × Fin n) = n² =
+finrank Mₙ(ℂ)（Module.finrank_matrix + finrank_self）。
+
+**技术要点（本轮新踩实）**：
+
+- **`•` 优先级高于 `*`**：`r • x * y` = (r • x) * y；rw 链中凡涉及 smul 与 mul
+  混合重排，**一律用显式参数的 smul_mul_assoc/mul_smul_comm/← smul_mul_assoc**，
+  无参 rw 会在求和体/• 混合型上 "pattern not found"。
+- **rw 的显式实例参数**：`rw [Finset.sum_mul]` 等在求和体内失配时，改
+  `rw [Finset.sum_congr rfl fun i _ => smul_mul_assoc (g i) (W i) Dq]` 形式。
+- **omega 不从 `NeZero n` 实例提取 n ≠ 0**：`1 ≤ n` 须显式
+  `Nat.one_le_iff_ne_zero.2 (NeZero.ne n)`。
+- **Nat 截断减法**：`(a + (n − a'))` 与 `(a + n − a')` 语法不同但 a' ≤ n 时相等，
+  引理间传递需显式 `have h2 : a + n - a' = a + (n - a') := by omega` 桥接。
+- **Fin 投影规约**：`rcases p with ⟨a, b⟩` 后目标里残留 `(⟨a,b⟩ : _).1`，
+  需 `dsimp only` 规约，否则后续 rw/have 模式失配。
+- **traceLinearMap 显式参数**：`Matrix.traceLinearMap` 的 (n α R) 为显式参数，
+  应用须写全称 `Matrix.traceLinearMap (Fin n) ℂ ℂ`（@[simps] 生成 _apply 引理）。
+- `Nat.dvd_iff_mod_eq_zero`（本版无 Nat.mod_eq_zero_iff_dvd）；
+  `Nat.add_sub_cancel'`（(a:ℕ)+(n−(a:ℕ)) = n，免 omega 直接给）；
+  `Nat.mul_lt_mul_left (h : 0 < m)` 为 iff（.1 得 k < 2）。
+- `map_sum` 方向：f (∑) = ∑ f（不要 .symm，按 calc 步骤方向取用）。
+
+**paper14 同步（v1.6 第七轮）**：文首形式化支撑清单 Hall 条目追加 Weyl 基定理
+（weyl_basis_linearIndependent + weyl_span_top）；§3 层级标注段改述（结构定理
+向量空间形式闭合）；结论 C2 同步；版本记录 v1.6 追加第七轮摘要。
+
+**残余开放（均已登记）**：陈数整性 C = (1/2π)∫F ∈ ℤ 与 TKNN 场论形式；
+结构定理表示论层（商代数 ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) → Mₙ(ℂ) 代数同构 +
+Schur 唯一性，需商代数基础设施）；谱投影参数导数（Berry 切向量构造层）；
+Harper 谱隙/Hofstadter Butterfly；ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
