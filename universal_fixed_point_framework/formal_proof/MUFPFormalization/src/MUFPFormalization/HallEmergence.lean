@@ -22,7 +22,8 @@ Hall 侧：Landau 规范磁平移代数（clock/shift Weyl 对）的有限维模
   harper_isHermitian     H_Harper Hermitian（四项各自 Hermitian 之和）
   hallGenerator_*        Hall 链 Fermi 求逆 + GP-BCS-Hall 三链会师
                          （BCSFermiEmergence 模板在 Harper Hamiltonian 上的实例）
-  occupiedProjection_*   占据带谱投影（Hermitian + 幂等 + Berry 曲率实值接入）
+  occupiedProjection_*   占据带谱投影（Hermitian + 幂等 + Berry 曲率实值接入
+                         + [H,P]=0 交换性；后者为 Sylvester 方程前提）
   weyl_trace_orth        Weyl 迹正交性 Tr(U^a V^b) = n·δ_{a≡0}δ_{b≡0}
                          （Weyl 基 Hilbert-Schmidt 正交；私有链 clock_pow /
                            shift_pow / fin_add_nat_succ / omega_primitive /
@@ -50,12 +51,16 @@ Weyl 迹正交性给出磁平移代数 ≅ Mₙ(ℂ) 的迹形式（Weyl 基 {U^
 Hilbert-Schmidt 正交，范数平方 = n）；Weyl 基定理（线性无关 + 张成）
 给出结构定理的向量空间形式——n² 个 Weyl 元构成 Mₙ(ℂ) 的基，即
 "唯一不可约表示 = Landau 能级载体"的代数根源（中心平凡 + 迹配对非退化）。
-完整陈数理论（整性、TKNN 场论形式）、谱投影对参数的导数（Berry 切向量的
-构造层）登记为开放（见 §末注释）。结构定理表示论层已由 magAlgEquiv 闭合。
+完整陈数理论（整性、TKNN 场论形式）登记为开放；谱投影切向量的
+**约束代数层**已由 BerryChern §2.5 四定理 + 本模块 occupiedProjection_commute
+闭合（[H,P]=0 + 带内消没 + 带间化简 + 双交换子形式），切向量的**分析构造**
+（cfc 对参数的可微性，Kato 微扰论）仍开放（见 §末注释）。结构定理表示论层
+已由 magAlgEquiv 闭合。
 -/
 
 import Mathlib.Algebra.FreeAlgebra
 import Mathlib.Algebra.RingQuot
+import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Exponential
@@ -378,6 +383,18 @@ theorem occupied_berry_im_eq_zero (H : Matrix (Fin n) (Fin n) ℂ)
     (hA : A = Matrix.conjTranspose A) (hB : B = Matrix.conjTranspose B) :
     (berryCurvature (occupiedProjection H hH) A B).im = 0 :=
   berryCurvature_im_eq_zero _ _ _ (occupiedProjection_conjTranspose H hH).symm hA hB
+
+/-- **谱投影交换性**：H·P = P·H——占据带是 H 的约化谱子空间（谱投影定义性质
+    的矩阵层闭合），绝热微扰 Sylvester 方程 [H, Ṗ] = [P, Ḣ] 左端交换性的
+    前提。证明：泛函演算交换性——与 H 交换的元与 cfc f H 交换（selfadjoint
+    commute_cfc），取 f = occFn。 -/
+theorem occupiedProjection_commute (H : Matrix (Fin n) (Fin n) ℂ)
+    (hH : H.IsHermitian) :
+    H * occupiedProjection H hH = occupiedProjection H hH * H := by
+  have h1 : Commute (cfc occFn H) H :=
+    IsSelfAdjoint.commute_cfc hH.isSelfAdjoint (Commute.refl H) occFn
+  rw [Matrix.IsHermitian.cfc_eq hH occFn] at h1
+  exact h1.eq.symm
 
 /-- clock 的幂：U^a = diag(ω^{a·i})（对角元的幂次结构）。 -/
 private theorem clock_pow (n : ℕ) (a : ℕ) :
@@ -1137,8 +1154,14 @@ noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
 
   1. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
      拓扑度/Kubo 线性响应基础设施（BerryChern 已登记）。
-  2. **谱投影切向量**：A = ∂ₓP、B = ∂ᵧP 的构造（投影族参数导数）属微积分
-     基础设施；当前 occupied_berry_im_eq_zero 以任意厄米切向量为假设接入。
+  2. **谱投影切向量——约束代数层已闭合，分析构造开放**：约束方程解的代数
+     后件已由 BerryChern §2.5 四定理闭合（projTangent_intraBand_zero 带内
+     消没 / trace_proj_commutator_interband 带间化简 / berryCurvature_interband
+     / trace_proj_commutator_twoCommutator 双交换子形式），本模块
+     occupiedProjection_commute 给出 [H,P]=0（Sylvester 方程左端交换性前提）。
+     残余开放：A = ∂ₓP、B = ∂ᵧP 的**构造**（投影族参数导数，cfc 对参数可微性/
+     Kato 微扰论）属微积分基础设施；当前 occupied_berry_im_eq_zero 以任意
+     厄米切向量为假设接入。
   3. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
      需具体谱计算，数值层已有载体。
   4. **结构定理表示论层——已闭合**：磁平移商代数 → Mₙ(ℂ) 的 ℂ-代数同构由
@@ -1149,8 +1172,8 @@ noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
      （即 Landau 能级载体）"的代数同构形态，Schur 唯一性是其推论级强化。
 
   已闭合（本模块，零 sorry）：Weyl 关系 + clock/shift 幺正性 + Harper Hermitian
-  + Hall 生成元链（Fermi 求逆 + 三链会师）+ 占据投影（Hermitian/幂等）
-  + Hall-Berry 曲率实值接入 + Weyl 迹正交性（weyl_trace_orth：Weyl 基
+  + Hall 生成元链（Fermi 求逆 + 三链会师）+ 占据投影（Hermitian/幂等/[H,P]=0
+  交换性）+ Hall-Berry 曲率实值接入 + Weyl 迹正交性（weyl_trace_orth：Weyl 基
   Hilbert-Schmidt 正交）+ Weyl 基定理（weyl_basis_linearIndependent 线性无关
   + weyl_span_top 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式）
   + 结构定理表示论层（magAlgEquiv：磁平移商代数 ≃ₐ Mₙ(ℂ)，泛性质下降满射

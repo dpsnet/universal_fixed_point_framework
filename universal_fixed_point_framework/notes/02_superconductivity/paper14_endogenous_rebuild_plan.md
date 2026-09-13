@@ -650,3 +650,50 @@ Schur 唯一性（任意 n 维不可约表示等价于标准表示，需 Burnsid
 基础设施——magAlgEquiv 已给"存在唯一 n 维不可约表示"的代数同构形态）；
 谱投影参数导数（Berry 切向量构造层）；Harper 谱隙/Hofstadter Butterfly；
 ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
+
+### 2026-09-13：谱投影切向量代数层闭合
+
+**定理（BerryChern.lean 新增 §2.5"投影切向量的代数层"，全部零 sorry）**：
+
+| 定理 | 陈述 | 角色 |
+|---|---|---|
+| `projTangent_intraBand_zero` | P²=P ∧ A = P·A + A·P ⟹ P·A·P = 0 ∧ (1−P)·A·(1−P) = 0 | 约束方程解的带内消没（Berry 联络的规范结构） |
+| `trace_proj_commutator_interband` | Tr(P[A,B]) = Tr(PA(1−P)B) − Tr(PB(1−P)A) | 曲率只依赖带间矩阵元 |
+| `berryCurvature_interband` | 曲率的带间形式封装 | 曲率层接入 |
+| `trace_proj_commutator_twoCommutator` | Tr(P[[P,A],[P,B]]) = −Tr(P[A,B]) | 双交换子形式（标准 Berry 曲率写法） |
+
+**HallEmergence 新增**：`occupiedProjection_commute`：H·P = P·H（[H,P]=0）。
+证法一行核心：`IsSelfAdjoint.commute_cfc hH.isSelfAdjoint (Commute.refl H) occFn`
+（泛函演算交换性：与 H 交换的元与 cfc f H 交换），再经
+`Matrix.IsHermitian.cfc_eq hH occFn` 把 cfc occFn H 换回占据投影。
+角色：绝热微扰 Sylvester 方程 [H, Ṗ] = [P, Ḣ] 左端交换性前提。
+
+**技术要点（本轮确立，勿忘）**：
+- `rw` 每步只重写首个实例化匹配项的全部出现；b、c 不同的乘法分配须
+  `simp only [mul_sub]` 迭代到不动点，再逐 kill 显式 `rw` 链。
+- `noncomm_ring` 的右结合正规形会隐藏 P·P 相邻模式——关系 kill 必须显式
+  `rw`，不能指望 simp 集。
+- kill 模式范例：`rw [(mul_assoc P (P*A*P) B).symm, hPAP, mul_zero, zero_mul]`
+  （association 修复 + 关系 kill + 零元清理）。
+- `conv_lhs => rw [hA]` 防止 hA 改写 RHS（x = x+x ⟹ x = 0 的消去步）。
+- 曲率封装用 `calc ... := rfl` 起步展开定义，再 `rw [h]`（h 为显式参数的
+  have）——直接 `rw [trace_proj_commutator_interband hPAP hPBP]` 会因
+  metavars 未实例化失败（已踩过）。
+- dot 投影坑：`hH.isSelfAdjoint.commute_cfc ...` 报 "Invalid field"——
+  `IsSelfAdjoint` 是 `star a = a` 的 def，结构投影不可用；改显式常量调用
+  `IsSelfAdjoint.commute_cfc hH.isSelfAdjoint ...`。
+- 需 `import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Commute`
+  （该常量所在模块不被 `HermitianFunctionalCalculus` 传递引入）。
+- 之前的谱定理证法（`rw [hH.spectral_theorem]`）撞 motive 问题（H 出现在
+  hH 类型里，structure projection 使 motive 不 type correct）——确认无解，
+  勿回头。
+
+**paper14 同步（v1.6 第九轮）**：文首形式化支撑清单 Hall 条目追加
+occupiedProjection_commute + BerryChern §2.5 四定理；§3 层级标注段升级
+（"第六、七、八轮升级"→"第六、七、八、九轮升级"，残余句改写：切向量约束
+代数层闭合、分析构造开放）；结论 C2 补记第九轮；版本记录 v1.6 行末追加
+第九轮摘要。全库零 sorry，3705 jobs 编译通过。
+
+**残余开放（更新）**：陈数整性场论；Schur 唯一性；**切向量分析构造**
+（∂ₓP 存在性，cfc 参数可微性/Kato 微扰论——接替原"谱投影参数导数"条目，
+约束层已闭合）；Harper 谱隙；ρ 的 PF 不动点；T→0 算子收敛（远期）。
