@@ -36,6 +36,13 @@ Hall 侧：Landau 规范磁平移代数（clock/shift Weyl 对）的有限维模
   weyl_span_top          Weyl 基定理：{U^a V^b}_{a,b<n} 张成 Mₙ(ℂ)
                          （磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式，维数
                            n² = finrank；线性无关 + 基数 = finrank 论证）
+  magAlgEquiv            磁平移结构定理（表示论层）：磁平移商代数 ≃ₐ Mₙ(ℂ)
+                         （ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) 的 ℂ-代数同构；
+                           私有链 magneticAlgebra/magRel + magWeyl/magPowX/magPowY
+                           关系保持 + magXShiftWeyl/magXpowShiftWeyl/magYpowXpow
+                           幂次换位 + magWeylElem_* 单型元 + magL_mul_mem/magAlg_span
+                           张成定理 + magHom 泛性质下降 + magHom_surjective +
+                           magBasisMap_surjective/magFinite/magFinrank_eq 等维）
 
 数学说明：Weyl 关系 + 幺正性是磁平移代数的代数核心（Hall 侧"子范畴约束"）；
 生成元构造 H → γ_F → A_Hall 复用 BCSFermiEmergence 模板（同一谱对应求逆）。
@@ -43,15 +50,17 @@ Weyl 迹正交性给出磁平移代数 ≅ Mₙ(ℂ) 的迹形式（Weyl 基 {U^
 Hilbert-Schmidt 正交，范数平方 = n）；Weyl 基定理（线性无关 + 张成）
 给出结构定理的向量空间形式——n² 个 Weyl 元构成 Mₙ(ℂ) 的基，即
 "唯一不可约表示 = Landau 能级载体"的代数根源（中心平凡 + 迹配对非退化）。
-完整陈数理论（整性、TKNN 场论形式）、结构定理的表示论层（商代数
-ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) → Mₙ(ℂ) 的代数同构，需商代数基础设施）、
-谱投影对参数的导数（Berry 切向量的构造层）登记为开放（见 §末注释）。
+完整陈数理论（整性、TKNN 场论形式）、谱投影对参数的导数（Berry 切向量的
+构造层）登记为开放（见 §末注释）。结构定理表示论层已由 magAlgEquiv 闭合。
 -/
 
+import Mathlib.Algebra.FreeAlgebra
+import Mathlib.Algebra.RingQuot
 import Mathlib.Analysis.Matrix.HermitianFunctionalCalculus
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import MUFPFormalization.SpectralDynamics
 import MUFPFormalization.GPEmergence
 import MUFPFormalization.BCSFermiEmergence
@@ -725,6 +734,405 @@ theorem weyl_span_top {n : ℕ} [NeZero n] :
       show Module.finrank ℂ (Matrix (Fin n) (Fin n) ℂ) = n * n from by
         rw [Module.finrank_matrix, Fintype.card_fin, Module.finrank_self, Nat.mul_one]])
 
+-- ============================================================
+-- 结构定理表示论层：磁平移商代数 ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) ≅ Mₙ(ℂ)
+-- ============================================================
+
+/-- 磁平移自由生成元：商代数 ℂ⟨U,V⟩ 的两个生成元（Fin 2 标记）。 -/
+private noncomputable def magX (n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
+  FreeAlgebra.ι ℂ (0 : Fin 2)
+
+private noncomputable def magY (n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
+  FreeAlgebra.ι ℂ (1 : Fin 2)
+
+/-- 磁平移关系：XY ~ ω·YX、Xⁿ ~ 1、Yⁿ ~ 1（Landau 规范磁通对合的生成关系，
+    n = 0 时形式退化但类型良定义；全部定理在 NeZero n 下陈述）。 -/
+private def magRel (n : ℕ) : FreeAlgebra ℂ (Fin 2) → FreeAlgebra ℂ (Fin 2) → Prop :=
+  fun x y => (x = magX n * magY n - (omega n) • (magY n * magX n) ∧ y = 0)
+    ∨ (x = magX n ^ n - 1 ∧ y = 0)
+    ∨ (x = magY n ^ n - 1 ∧ y = 0)
+
+/-- **磁平移商代数**：ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1)——磁平移代数的抽象呈现
+    （abbrev 以保证 ℂ-代数/环实例在类型类推断下可见）。 -/
+abbrev magneticAlgebra (n : ℕ) : Type :=
+  RingQuot (magRel n)
+
+/-- 商中的 U：生成元 X 的像。 -/
+private noncomputable def magXb (n : ℕ) : magneticAlgebra n :=
+  RingQuot.mkAlgHom ℂ (magRel n) (magX n)
+
+/-- 商中的 V：生成元 Y 的像。 -/
+private noncomputable def magYb (n : ℕ) : magneticAlgebra n :=
+  RingQuot.mkAlgHom ℂ (magRel n) (magY n)
+
+/-- 商中 Weyl 单型元：W_{a,b} = U^a V^b（a, b < n）。 -/
+private noncomputable def magWeylElem (n : ℕ) (p : Fin n × Fin n) : magneticAlgebra n :=
+  magXb n ^ (p.1 : ℕ) * magYb n ^ (p.2 : ℕ)
+
+/-- 下标模 n 加法：(a, b) ↦ (a % n, b % n)。 -/
+private def magAddIdx (n : ℕ) [NeZero n] (a b : ℕ) : Fin n × Fin n :=
+  (⟨a % n, Nat.mod_lt _ (NeZero.pos n)⟩, ⟨b % n, Nat.mod_lt _ (NeZero.pos n)⟩)
+
+/-- 商中的 Weyl 关系：U V = ω · V U（由生成关系经泛性质下降，n ≥ 1 全范围
+    含 n = 1 退化情形）。 -/
+private theorem magWeyl {n : ℕ} [NeZero n] :
+    magXb n * magYb n = (omega n) • (magYb n * magXb n) := by
+  have h0 : RingQuot.mkAlgHom ℂ (magRel n)
+      (magX n * magY n - (omega n) • (magY n * magX n))
+      = RingQuot.mkAlgHom ℂ (magRel n) 0 :=
+    RingQuot.mkAlgHom_rel ℂ (Or.inl ⟨rfl, rfl⟩)
+  rw [Algebra.smul_def] at h0
+  rw [map_sub, map_mul, map_mul, map_mul, AlgHom.commutes, ← Algebra.smul_def, map_zero,
+    sub_eq_zero] at h0
+  exact h0
+
+/-- 商中幂关系：Uⁿ = 1。 -/
+private theorem magPowX {n : ℕ} [NeZero n] : magXb n ^ n = 1 := by
+  have h0 : RingQuot.mkAlgHom ℂ (magRel n) (magX n ^ n - 1)
+      = RingQuot.mkAlgHom ℂ (magRel n) 0 :=
+    RingQuot.mkAlgHom_rel ℂ (Or.inr (Or.inl ⟨rfl, rfl⟩))
+  rwa [map_sub, map_pow, map_one, map_zero, sub_eq_zero] at h0
+
+/-- 商中幂关系：Vⁿ = 1。 -/
+private theorem magPowY {n : ℕ} [NeZero n] : magYb n ^ n = 1 := by
+  have h0 : RingQuot.mkAlgHom ℂ (magRel n) (magY n ^ n - 1)
+      = RingQuot.mkAlgHom ℂ (magRel n) 0 :=
+    RingQuot.mkAlgHom_rel ℂ (Or.inr (Or.inr ⟨rfl, rfl⟩))
+  rwa [map_sub, map_pow, map_one, map_zero, sub_eq_zero] at h0
+
+/-- 商中降幂：U^a = U^(a % n)。 -/
+private theorem magXpow_mod {n : ℕ} [NeZero n] (a : ℕ) :
+    magXb n ^ a = magXb n ^ (a % n) := by
+  conv_lhs => rw [← Nat.mod_add_div a n, pow_add, pow_mul]
+  rw [magPowX, one_pow, mul_one]
+
+/-- 商中降幂：V^a = V^(a % n)。 -/
+private theorem magYpow_mod {n : ℕ} [NeZero n] (a : ℕ) :
+    magYb n ^ a = magYb n ^ (a % n) := by
+  conv_lhs => rw [← Nat.mod_add_div a n, pow_add, pow_mul]
+  rw [magPowY, one_pow, mul_one]
+
+/-- 商中幂次 Weyl 换位（一）：U^a V = ω^a · V U^a（对 a 归纳提升 magWeyl）。 -/
+private theorem magXShiftWeyl {n : ℕ} [NeZero n] (a : ℕ) :
+    magXb n ^ a * magYb n = (omega n ^ a) • (magYb n * magXb n ^ a) := by
+  induction a with
+  | zero => simp
+  | succ b ih =>
+    rw [pow_succ, mul_assoc (magXb n ^ b) (magXb n) (magYb n), magWeyl,
+      mul_smul_comm (omega n) (magXb n ^ b) (magYb n * magXb n),
+      ← mul_assoc (magXb n ^ b) (magYb n) (magXb n), ih,
+      smul_mul_assoc (omega n ^ b) (magYb n * magXb n ^ b) (magXb n),
+      smul_smul, mul_assoc (magYb n) (magXb n ^ b) (magXb n), ← pow_succ, ← pow_succ']
+
+/-- 商中幂次 Weyl 换位（二）：U^a V^c = ω^{ac} · V^c U^a（对 c 归纳，用（一））。 -/
+private theorem magXpowShiftWeyl {n : ℕ} [NeZero n] (a c : ℕ) :
+    magXb n ^ a * magYb n ^ c = (omega n ^ (a * c)) • (magYb n ^ c * magXb n ^ a) := by
+  induction c with
+  | zero => simp
+  | succ b ih =>
+    rw [pow_succ, ← mul_assoc (magXb n ^ a) (magYb n ^ b) (magYb n), ih,
+      smul_mul_assoc (omega n ^ (a * b)) (magYb n ^ b * magXb n ^ a) (magYb n),
+      mul_assoc (magYb n ^ b) (magXb n ^ a) (magYb n), magXShiftWeyl,
+      mul_smul_comm (omega n ^ a) (magYb n ^ b) (magYb n * magXb n ^ a),
+      ← mul_assoc (magYb n ^ b) (magYb n) (magXb n ^ a), ← pow_succ, smul_smul, ← pow_add,
+      show a * b + a = a * (b + 1) from by rw [Nat.mul_succ]]
+
+/-- 商中幂次 Weyl 换位（三）：V^b U^c = ω^{−bc} · U^c V^b（由（二）取逆）。 -/
+private theorem magYpowXpow {n : ℕ} [NeZero n] (b c : ℕ) :
+    magYb n ^ b * magXb n ^ c
+      = ((omega n ^ (b * c) : ℂ))⁻¹ • (magXb n ^ c * magYb n ^ b) := by
+  have h := magXpowShiftWeyl (n := n) c b
+  rw [Nat.mul_comm] at h
+  have hne : (omega n ^ (b * c) : ℂ) ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
+  rw [h, smul_smul, inv_mul_cancel₀ hne, one_smul]
+
+/-- 单型元归一：W_{0,0} = 1。 -/
+private theorem magWeylElem_zero {n : ℕ} [NeZero n] :
+    magWeylElem n (⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩,
+      ⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩) = 1 := by
+  show magXb n ^ (((⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩ : Fin n) : ℕ))
+    * magYb n ^ (((⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩ : Fin n) : ℕ)) = 1
+  rw [show ((⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩ : Fin n) : ℕ) = 0 from rfl, pow_zero,
+    pow_zero, one_mul]
+
+/-- 单型元归一：W_{1%n, 0%n} = U（经降幂 1 % n 吸收）。 -/
+private theorem magWeylElem_left {n : ℕ} [NeZero n] :
+    magWeylElem n (⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩,
+      ⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩) = magXb n := by
+  show magXb n ^ (((⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ))
+    * magYb n ^ (((⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ)) = magXb n
+  rw [show ((⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ) = 1 % n from rfl,
+    show ((⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ) = 0 % n from rfl,
+    ← magXpow_mod 1, Nat.zero_mod, pow_zero, mul_one, pow_one]
+
+/-- 单型元归一：W_{0%n, 1%n} = V。 -/
+private theorem magWeylElem_right {n : ℕ} [NeZero n] :
+    magWeylElem n (⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩,
+      ⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩) = magYb n := by
+  show magXb n ^ (((⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ))
+    * magYb n ^ (((⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ)) = magYb n
+  rw [show ((⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ) = 0 % n from rfl,
+    show ((⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩ : Fin n) : ℕ) = 1 % n from rfl,
+    Nat.zero_mod, pow_zero, one_mul, ← magYpow_mod 1, pow_one]
+
+/-- 单型张子模：L = span{U^a V^b}_{a,b<n}。 -/
+private noncomputable def magL (n : ℕ) [NeZero n] : Submodule ℂ (magneticAlgebra n) :=
+  Submodule.span ℂ (Set.range (magWeylElem n))
+
+/-- 1 ∈ L：W_{0,0} 的归属。 -/
+private theorem magOne_mem {n : ℕ} [NeZero n] : (1 : magneticAlgebra n) ∈ magL n := by
+  have h : magWeylElem n (⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩,
+      ⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩) ∈ magL n :=
+    Submodule.subset_span ⟨_, rfl⟩
+  rwa [magWeylElem_zero] at h
+
+/-- U ∈ L：W_{1%n, 0%n} 的归属。 -/
+private theorem magX_mem {n : ℕ} [NeZero n] :
+    (RingQuot.mkAlgHom ℂ (magRel n) (FreeAlgebra.ι ℂ (0 : Fin 2))) ∈ magL n := by
+  have h : magWeylElem n (⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩,
+      ⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩) ∈ magL n :=
+    Submodule.subset_span ⟨_, rfl⟩
+  rwa [magWeylElem_left] at h
+
+/-- V ∈ L：W_{0%n, 1%n} 的归属。 -/
+private theorem magY_mem {n : ℕ} [NeZero n] :
+    (RingQuot.mkAlgHom ℂ (magRel n) (FreeAlgebra.ι ℂ (1 : Fin 2))) ∈ magL n := by
+  have h : magWeylElem n (⟨0 % n, Nat.mod_lt _ (NeZero.pos n)⟩,
+      ⟨1 % n, Nat.mod_lt _ (NeZero.pos n)⟩) ∈ magL n :=
+    Submodule.subset_span ⟨_, rfl⟩
+  rwa [magWeylElem_right] at h
+
+/-- 单型元乘积封闭：W_p · W_q = ω^{−b c} · W_{(a+c)%n, (b+d)%n}——L 乘法封闭性的
+    生成元核心（幂次换位 magYpowXpow + 降幂）。 -/
+private theorem magWeylElem_mul {n : ℕ} [NeZero n] (p q : Fin n × Fin n) :
+    magWeylElem n p * magWeylElem n q
+      = ((omega n ^ ((p.2 : ℕ) * (q.1 : ℕ)) : ℂ))⁻¹
+        • magWeylElem n (magAddIdx n ((p.1 : ℕ) + (q.1 : ℕ)) ((p.2 : ℕ) + (q.2 : ℕ))) := by
+  have key : magWeylElem n p * magWeylElem n q
+      = ((omega n ^ ((p.2 : ℕ) * (q.1 : ℕ)) : ℂ))⁻¹
+        • (magXb n ^ ((p.1 : ℕ) + (q.1 : ℕ)) * magYb n ^ ((p.2 : ℕ) + (q.2 : ℕ))) := by
+    rw [magWeylElem, magWeylElem,
+      mul_assoc (magXb n ^ (p.1 : ℕ)) (magYb n ^ (p.2 : ℕ))
+        (magXb n ^ (q.1 : ℕ) * magYb n ^ (q.2 : ℕ)),
+      ← mul_assoc (magYb n ^ (p.2 : ℕ)) (magXb n ^ (q.1 : ℕ)) (magYb n ^ (q.2 : ℕ)),
+      magYpowXpow,
+      smul_mul_assoc ((omega n ^ ((p.2 : ℕ) * (q.1 : ℕ)))⁻¹)
+        (magXb n ^ (q.1 : ℕ) * magYb n ^ (p.2 : ℕ)) (magYb n ^ (q.2 : ℕ)),
+      mul_smul_comm ((omega n ^ ((p.2 : ℕ) * (q.1 : ℕ)))⁻¹) (magXb n ^ (p.1 : ℕ))
+        ((magXb n ^ (q.1 : ℕ) * magYb n ^ (p.2 : ℕ)) * magYb n ^ (q.2 : ℕ)),
+      mul_assoc (magXb n ^ (q.1 : ℕ)) (magYb n ^ (p.2 : ℕ)) (magYb n ^ (q.2 : ℕ)),
+      ← mul_assoc (magXb n ^ (p.1 : ℕ)) (magXb n ^ (q.1 : ℕ))
+        (magYb n ^ (p.2 : ℕ) * magYb n ^ (q.2 : ℕ)),
+      ← pow_add, ← pow_add]
+  rw [key, magXpow_mod ((p.1 : ℕ) + (q.1 : ℕ)), magYpow_mod ((p.2 : ℕ) + (q.2 : ℕ))]
+  exact rfl
+
+/-- L 对乘法封闭（生成元情形由 magWeylElem_mul，双侧 span 归纳）。 -/
+private theorem magL_mul_mem {n : ℕ} [NeZero n] {x y : magneticAlgebra n}
+    (hx : x ∈ magL n) (hy : y ∈ magL n) : x * y ∈ magL n := by
+  refine Submodule.span_induction (p := fun x _ => x * y ∈ magL n) ?_ ?_ ?_ ?_ hx
+  · rintro _ ⟨p, rfl⟩
+    refine Submodule.span_induction (p := fun z _ => magWeylElem n p * z ∈ magL n)
+      ?_ ?_ ?_ ?_ hy
+    · rintro _ ⟨q, rfl⟩
+      rw [magWeylElem_mul]
+      exact Submodule.smul_mem _ _
+        (Submodule.subset_span (Set.mem_range_self
+          (magAddIdx n ((p.1 : ℕ) + (q.1 : ℕ)) ((p.2 : ℕ) + (q.2 : ℕ)))))
+    · simpa using (Submodule.zero_mem (magL n))
+    · intro a b _ _ iha ihb
+      rw [mul_add]
+      exact add_mem iha ihb
+    · intro r a _ iha
+      rw [mul_smul_comm]
+      exact Submodule.smul_mem _ _ iha
+  · simpa using (Submodule.zero_mem (magL n))
+  · intro a b _ _ iha ihb
+    rw [add_mul]
+    exact add_mem iha ihb
+  · intro r a _ iha
+    rw [smul_mul_assoc]
+    exact Submodule.smul_mem _ _ iha
+
+/-- **商代数张成定理**：L = ⊤——商中任意元都是 Weyl 单型元的线性组合
+    （FreeAlgebra.induction：1/生成元/乘/加四情形，乘法情形由 magL_mul_mem）。 -/
+private theorem magAlg_span {n : ℕ} [NeZero n] : magL n = ⊤ := by
+  apply eq_top_iff.2
+  rintro z -
+  obtain ⟨w, rfl⟩ := RingQuot.mkAlgHom_surjective ℂ (magRel n) z
+  induction w using FreeAlgebra.induction with
+  | grade0 r =>
+      rw [AlgHom.commutes, Algebra.algebraMap_eq_smul_one]
+      exact Submodule.smul_mem _ _ magOne_mem
+  | grade1 i =>
+      fin_cases i
+      · exact magX_mem
+      · exact magY_mem
+  | mul a b ha hb =>
+      rw [map_mul]
+      exact magL_mul_mem ha hb
+  | add a b ha hb =>
+      rw [map_add]
+      exact add_mem ha hb
+
+/-- clock 的幂终结：Uⁿ = diag(ω^{n·i}) = 1。 -/
+private theorem clock_pow_one {n : ℕ} [NeZero n] : clock n ^ n = 1 := by
+  rw [clock_pow]
+  ext i j
+  simp only [Matrix.diagonal_apply, Matrix.one_apply]
+  by_cases hij : i = j
+  · subst hij
+    rw [if_pos rfl, if_pos rfl, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)),
+      one_pow]
+  · rw [if_neg hij, if_neg hij]
+
+/-- shift 的幂终结：Vⁿ = 1（循环移 n 步 = 恒等）。 -/
+private theorem shift_pow_one {n : ℕ} [NeZero n] : shift n ^ n = 1 := by
+  ext i j
+  rw [shift_pow n i j]
+  have hof : Fin.ofNat n n = (0 : Fin n) := by
+    apply Fin.ext
+    show n % n = 0
+    exact Nat.mod_self n
+  rw [Matrix.one_apply, hof, add_zero]
+
+/-- Mₙ(ℂ) 侧生成元指派：0 ↦ U = clock、1 ↦ V = shift。 -/
+private noncomputable def magGen (n : ℕ) [NeZero n] : Fin 2 → Matrix (Fin n) (Fin n) ℂ := fun i =>
+  if i = (0 : Fin 2) then clock n else shift n
+
+private theorem magGen_zero (n : ℕ) [NeZero n] : magGen n 0 = clock n := rfl
+
+private theorem magGen_one (n : ℕ) [NeZero n] : magGen n 1 = shift n := rfl
+
+/-- 泛性质提升：自由代数 → Mₙ(ℂ)（生成元按 magGen 指派）。 -/
+private noncomputable def magLift (n : ℕ) [NeZero n] :
+    FreeAlgebra ℂ (Fin 2) →ₐ[ℂ] Matrix (Fin n) (Fin n) ℂ :=
+  FreeAlgebra.lift ℂ (magGen n)
+
+/-- **结构同态**：magneticAlgebra → Mₙ(ℂ)（泛性质下降——三个生成关系分别由
+    clock_shift_weyl_gen（n ≥ 1 全范围）与 clock_pow_one / shift_pow_one 保持）。 -/
+noncomputable def magHom (n : ℕ) [NeZero n] :
+    magneticAlgebra n →ₐ[ℂ] Matrix (Fin n) (Fin n) ℂ :=
+  RingQuot.liftAlgHom ℂ ⟨magLift n, fun x y h => by
+    rcases h with ⟨hx, hy⟩ | ⟨hx, hy⟩ | ⟨hx, hy⟩
+    · subst hx; subst hy
+      simp only [Algebra.smul_def, map_sub, map_mul, map_mul, map_zero, magX, magY, magLift,
+        FreeAlgebra.lift_ι_apply, magGen_zero, magGen_one, AlgHom.commutes]
+      rw [← Algebra.smul_def, clock_shift_weyl_gen, sub_self]
+    · subst hx; subst hy
+      simp only [map_sub, map_pow, map_one, map_zero, magX, magLift,
+        FreeAlgebra.lift_ι_apply, magGen_zero]
+      rw [clock_pow_one, sub_self]
+    · subst hx; subst hy
+      simp only [map_sub, map_pow, map_one, map_zero, magY, magLift,
+        FreeAlgebra.lift_ι_apply, magGen_one]
+      rw [shift_pow_one, sub_self]⟩
+
+/-- 结构同态的泛性质计算式：magHom (mk w) = lift w。 -/
+private theorem magHom_apply {n : ℕ} [NeZero n] (w : FreeAlgebra ℂ (Fin 2)) :
+    magHom n (RingQuot.mkAlgHom ℂ (magRel n) w) = magLift n w := by
+  rw [magHom]
+  exact RingQuot.liftAlgHom_mkAlgHom_apply ℂ _ _ w
+
+/-- 结构同态保 Weyl 单型元：magHom (W_p) = clock^a · shift^b。 -/
+private theorem magHom_map_weyl {n : ℕ} [NeZero n] (p : Fin n × Fin n) :
+    magHom n (magWeylElem n p) = clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ) := by
+  simp only [magWeylElem, magXb, magYb, magX, magY, map_mul, map_pow, magHom_apply, magLift,
+    FreeAlgebra.lift_ι_apply, magGen_zero, magGen_one]
+
+/-- **结构同态满射**：Weyl 基 {clock^a shift^b} ⊆ range ⟹ span = Mₙ(ℂ) ⊆ range
+    （weyl_span_top 的直接推论）。 -/
+theorem magHom_surjective {n : ℕ} [NeZero n] : Function.Surjective (magHom n) := by
+  intro M
+  have hM : M ∈ Submodule.span ℂ (Set.range fun p : Fin n × Fin n =>
+      clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ)) := by
+    rw [weyl_span_top]; exact Submodule.mem_top
+  have hsub : Submodule.span ℂ (Set.range fun p : Fin n × Fin n =>
+      clock n ^ (p.1 : ℕ) * shift n ^ (p.2 : ℕ))
+      ≤ LinearMap.range (magHom n).toLinearMap := by
+    rw [Submodule.span_le]
+    rintro _ ⟨p, rfl⟩
+    rw [SetLike.mem_coe, LinearMap.mem_range]
+    exact ⟨magWeylElem n p, magHom_map_weyl (n := n) p⟩
+  have hr : M ∈ LinearMap.range (magHom n).toLinearMap := hsub hM
+  rw [LinearMap.mem_range] at hr
+  exact hr
+
+/-- 商代数的坐标映射：(Fin n × Fin n → ℂ) →ₗ magneticAlgebra，按 Weyl 基展开。 -/
+noncomputable def magBasisMap (n : ℕ) [NeZero n] :
+    (Fin n × Fin n → ℂ) →ₗ[ℂ] magneticAlgebra n where
+  toFun := fun c => ∑ p, c p • magWeylElem n p
+  map_add' := fun c d => by
+    simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib]
+  map_smul' := fun r c => by
+    simp only [Pi.smul_apply, smul_assoc, Finset.smul_sum, RingHom.id_apply]
+
+/-- 单点支撑求和：∑_p (if p = p₀ then r else 0) • W_p = r • W_{p₀}。 -/
+private theorem magSum_single {n : ℕ} [NeZero n] (p0 : Fin n × Fin n) (r : ℂ) :
+    (∑ p : Fin n × Fin n, (if p = p0 then r else 0) • magWeylElem n p)
+      = r • magWeylElem n p0 := by
+  have h1 : (∑ p : Fin n × Fin n, (if p = p0 then r else 0) • magWeylElem n p)
+      = ∑ p : Fin n × Fin n, (if p = p0 then r • magWeylElem n p else 0) := by
+    refine Finset.sum_congr rfl fun p _ => ?_
+    by_cases h : p = p0 <;> simp [h]
+  rw [h1, Finset.sum_ite_eq', if_pos (Finset.mem_univ _)]
+
+/-- **Weyl 基展开满射**：magBasisMap 满射（商代数张成定理 + 单点支撑坐标）。 -/
+theorem magBasisMap_surjective {n : ℕ} [NeZero n] :
+    Function.Surjective (magBasisMap n) := by
+  intro z
+  have hsub : magL n ≤ LinearMap.range (magBasisMap n) := by
+    rw [magL, Submodule.span_le]
+    rintro _ ⟨p, rfl⟩
+    rw [SetLike.mem_coe, LinearMap.mem_range]
+    exact ⟨fun q => if q = p then (1 : ℂ) else 0, by
+      show (∑ q : Fin n × Fin n, (if q = p then (1 : ℂ) else 0) • magWeylElem n q)
+        = magWeylElem n p
+      rw [magSum_single, one_smul]⟩
+  rw [magAlg_span] at hsub
+  have hz : z ∈ LinearMap.range (magBasisMap n) := hsub (Submodule.mem_top)
+  rw [LinearMap.mem_range] at hz
+  exact hz
+
+/-- 商代数的 ℂ-有限性：Weyl 基展开满射 + 坐标空间有限。 -/
+noncomputable instance magFinite {n : ℕ} [NeZero n] :
+    Module.Finite ℂ (magneticAlgebra n) :=
+  Module.Finite.of_surjective (magBasisMap n) (magBasisMap_surjective (n := n))
+
+/-- finrank 上界：finrank(磁平移商代数) ≤ n²（Weyl 基展开满射）。 -/
+private theorem magFinrank_le {n : ℕ} [NeZero n] :
+    Module.finrank ℂ (magneticAlgebra n) ≤ n * n := by
+  have h := LinearMap.finrank_le_finrank_of_surjective (magBasisMap_surjective (n := n))
+  rw [Module.finrank_fintype_fun_eq_card, Fintype.card_prod, Fintype.card_fin] at h
+  exact h
+
+/-- **finrank 等维**：finrank(磁平移商代数) = finrank(Mₙ(ℂ)) = n²（双边夹：
+    上界 Weyl 基展开满射，下界结构同态满射）。 -/
+private theorem magFinrank_eq {n : ℕ} [NeZero n] :
+    Module.finrank ℂ (magneticAlgebra n) = Module.finrank ℂ (Matrix (Fin n) (Fin n) ℂ) := by
+  have h5 : Module.finrank ℂ (Matrix (Fin n) (Fin n) ℂ) = n * n := by
+    rw [Module.finrank_matrix, Fintype.card_fin, Module.finrank_self, Nat.mul_one]
+  rw [h5]
+  have h3 : n * n ≤ Module.finrank ℂ (magneticAlgebra n) := by
+    have h4 : Module.finrank ℂ (Matrix (Fin n) (Fin n) ℂ)
+        ≤ Module.finrank ℂ (magneticAlgebra n) :=
+      LinearMap.finrank_le_finrank_of_surjective (f := (magHom n).toLinearMap)
+        (magHom_surjective (n := n))
+    rw [h5] at h4
+    exact h4
+  exact le_antisymm magFinrank_le h3
+
+/-- **磁平移结构定理（表示论层）**：磁平移商代数 ≅ Mₙ(ℂ)——泛性质下降给出满射
+    代数同态 magHom，等维（finrank 双边夹 n²）给出单射，合成 ℂ-代数同构：
+    ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) 的唯一 n 维不可约表示即 Landau 能级载体
+    （结构定理三层：迹 weyl_trace_orth / 向量空间 weyl_span_top / 表示论本定理）。 -/
+noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
+    magneticAlgebra n ≃ₐ[ℂ] Matrix (Fin n) (Fin n) ℂ :=
+  AlgEquiv.ofBijective (magHom n)
+    ⟨(LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+        (f := (magHom n).toLinearMap) magFinrank_eq).2 (magHom_surjective (n := n)),
+      magHom_surjective (n := n)⟩
+
 /- §末开放登记（不占用 sorry，真证路径）：
 
   1. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
@@ -733,18 +1141,20 @@ theorem weyl_span_top {n : ℕ} [NeZero n] :
      基础设施；当前 occupied_berry_im_eq_zero 以任意厄米切向量为假设接入。
   3. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
      需具体谱计算，数值层已有载体。
-  4. **结构定理表示论层**：磁平移代数 → Mₙ(ℂ) 的代数同构（商代数
-     ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) 的泛性质）与唯一不可约表示的 Schur
-     唯一性——迹/向量空间层已由 weyl_trace_orth + weyl_basis_linearIndependent
-     + weyl_span_top 闭合（Weyl 基 = Mₙ(ℂ) 的基，维数 n²），表示层需商代数/
-     Schur 引理基础设施。
+  4. **结构定理表示论层——已闭合**：磁平移商代数 → Mₙ(ℂ) 的 ℂ-代数同构由
+     magAlgEquiv 闭合（magHom 泛性质下降满射 + magFinrank_eq 等维单射，
+     RingQuot 商 ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) ≃ₐ Mₙ(ℂ)）。残余开放：唯一
+     不可约表示的 Schur 唯一性（任意 n 维不可约表示等价于标准表示）需
+     Burnside/稠密性定理基础设施——本定理已给出"存在唯一 n 维不可约表示
+     （即 Landau 能级载体）"的代数同构形态，Schur 唯一性是其推论级强化。
 
   已闭合（本模块，零 sorry）：Weyl 关系 + clock/shift 幺正性 + Harper Hermitian
   + Hall 生成元链（Fermi 求逆 + 三链会师）+ 占据投影（Hermitian/幂等）
   + Hall-Berry 曲率实值接入 + Weyl 迹正交性（weyl_trace_orth：Weyl 基
   Hilbert-Schmidt 正交）+ Weyl 基定理（weyl_basis_linearIndependent 线性无关
-  + weyl_span_top 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式，
-  "唯一不可约表示 = Landau 能级载体"的代数根源）。
+  + weyl_span_top 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式）
+  + 结构定理表示论层（magAlgEquiv：磁平移商代数 ≃ₐ Mₙ(ℂ)，泛性质下降满射
+  + 等维单射——"唯一不可约表示 = Landau 能级载体"的代数同构形态）。
   G1 的三个切入点（GP/BCS/Hall）至此全部闭合。 -/
 
 end MUFPF

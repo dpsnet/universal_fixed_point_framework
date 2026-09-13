@@ -580,3 +580,73 @@ finrank Mₙ(ℂ)（Module.finrank_matrix + finrank_self）。
 结构定理表示论层（商代数 ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) → Mₙ(ℂ) 代数同构 +
 Schur 唯一性，需商代数基础设施）；谱投影参数导数（Berry 切向量构造层）；
 Harper 谱隙/Hofstadter Butterfly；ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
+
+### 2026-09-13：商代数同构闭合——结构定理表示论层（magAlgEquiv）
+
+**定理（零 sorry，`HallEmergence.lean`，全库 3701 jobs 编译通过）**：
+
+- `magneticAlgebra n : Type`（abbrev）：磁平移商代数 `RingQuot (magRel n)`，即
+  `ℂ⟨U,V⟩/(UV − ωₙVU, Uⁿ − 1, Vⁿ − 1)`。取 abbrev 而非 def——否则 ℂ-代数实例
+  在类型类推断下不可见（`magL` 的 span 与 smul_mem 全部失实例）。
+- `magHom n : magneticAlgebra n →ₐ[ℂ] Mₙ(ℂ)`：泛性质下降。`RingQuot.liftAlgHom`
+  需对三条生成关系逐条验证像满足同一关系：① Weyl 关系由
+  `clock_shift_weyl_gen`（n ≥ 1 全范围）承担；②③ 幺幂关系由新证
+  `clock_pow_one`（`(ωⁿ)^i = 1` 直接 pow_mul + omega_pow，**勿用 Nat.mul_comm**）
+  与 `shift_pow_one`（循环移 n 步 = 恒等，`shift_pow n i j` + Fin.ofNat n n = 0）。
+- `magHom_surjective`：Weyl 基像族 ⊆ range 且 span = Mₙ(ℂ)（weyl_span_top）
+  ⟹ range = ⊤。
+- `magBasisMap n : (Fin n × Fin n → ℂ) →ₗ[ℂ] magneticAlgebra n`（按 Weyl 基展开）
+  满射：`magAlg_span`（商代数张成定理：L = ⊤）+ 单点支撑坐标 `magSum_single`。
+- `magFinite`（Module.Finite ℂ）→ `magFinrank_le`（≤ n²）+ 结构同态满射下界
+  → `magFinrank_eq`（finrank 商代数 = finrank Mₙ(ℂ) = n²，双边夹）。
+- `magAlgEquiv n : magneticAlgebra n ≃ₐ[ℂ] Matrix (Fin n) (Fin n) ℂ`：
+  `AlgEquiv.ofBijective`，单射由 `LinearMap.injective_iff_surjective_of_finrank_eq_finrank`
+  （命名参数 `f := (magHom n).toLinearMap`——隐参 f 不显式给出会因 AlgHom/LinearMap
+  两层 coe 无法合一报错）+ 满射合成。
+
+**private 引理链**：`magWeyl`（UV=ωVU，商关系，mkAlgHom_rel + Or.inl 析取 +
+`rw [map_sub, map_mul×3, AlgHom.commutes, ← Algebra.smul_def, map_zero, sub_eq_zero]
+at h0`）→ `magPowX`/`magPowY`（Uⁿ=Vⁿ=1，Or.inr 两支）→ `magXpow_mod`/
+`magYpow_mod`（降幂：conv_lhs `rw [← Nat.mod_add_div, pow_add, pow_mul]` +
+幺幂引理 + one_pow/mul_one）→ `magXShiftWeyl`（单变量归纳）→ `magXpowShiftWeyl`
+（双变量归纳）→ `magYpowXpow`（取逆）→ `magWeylElem_zero/left/right`（单型元
+归一：`show` 归一 + `← magXpow_mod 1` 等吸收模幂）→ `magWeylElem_mul`
+（W_p·W_q = ω^{−bc}·W_{(a+c)%n,(b+d)%n}：magYpowXpow 换位 + smul_mul_assoc/
+mul_smul_comm 显参重排 + 降幂）→ `magL_mul_mem`（L 乘法封闭，双侧
+span_induction）→ `magAlg_span`（FreeAlgebra.induction 四情形）。
+
+**技术要点（本轮新踩实）**：
+
+- **本版 Mathlib `smul_smul` 方向为 `a • b • x = (a*b) • x`（合并方向）**：
+  `rw [smul_smul]` 把 `a⁻¹ • (a • x)` 压成 `(a⁻¹*a) • x`——与旧版记忆相反，
+  本轮 magYpowXpow 最初按 `← smul_smul` 写，报 pattern `(?a₁*?a₂)•?b` not found；
+  587 行既有成功用例（clock_shift_weyl_gen 链）即为正向前例。
+- **`Submodule.smul_mem` 三显参** `(p)(r)(h)`：`Submodule.smul_mem _ _ iha`。
+- **新版 `Submodule.span_induction` 是依赖 motive**：
+  `refine Submodule.span_induction (p := fun x _ => ...) ?_ ?_ ?_ ?_ hx` 后按
+  mem/zero/add/smul 顺序 `·` bullets。
+- **`eq_top_iff.2` 给出 `∀ x ∈ ⊤, x ∈ p`（⊤ ≤ p 形态）**：`intro z _` 留下的
+  `_ : z ∈ ⊤` 会进上下文并被 `induction` 泛化进 motive（ha 变成
+  `mk a ∈ ⊤ → mk a ∈ L` 的箭头类型、mul/add 情形全部失配）——必须
+  `rintro z -` 立即清除，motive 才干净。
+- **RingQuot 的 add/mul 非 defeq**：凡 `mk (a*b)` 与 `mk a * mk b` 转换一律
+  `rw [map_mul]`/`rw [map_add]`（magAlg_span 的 mul/add 情形；add 情形本轮
+  补 map_add）。
+- **`Submodule.span_le` 后的 range 目标是 SetLike coe**：goal `x ∈ ↑(range f)`
+  须 `rw [SetLike.mem_coe, LinearMap.mem_range]` 再 exact ⟨...⟩。
+- **`shift_pow` 的第一个显参是幂次 b : ℕ**：`rw [shift_pow i j]` 会把 Fin 的 i
+  经 coercion 当成 b = ↑i 而失配——必须 `rw [shift_pow n i j]`。
+- 隐参定理调用一律命名参数：`(magHom_surjective (n := n))` 等——直接跟 `n` 会被
+  解析成 Surjective 的 ∀-参数 b。
+- `Set.mem_range_self`（比 `⟨_, rfl⟩` 好用：后者类型无法确定）。
+- magGen/magBasisMap/magFinite 均需 `noncomputable`（依赖 exp/clock）。
+
+**paper14 同步（v1.6 第八轮）**：文首形式化支撑清单 Hall 条目追加 magAlgEquiv；
+§3 层级标注段（第五轮建立，第六、七、八轮升级）追加表示论层闭合段；结论 C2
+同步；版本记录 v1.6 追加第八轮摘要。
+
+**残余开放（均已登记）**：陈数整性 C = (1/2π)∫F ∈ ℤ 与 TKNN 场论形式；
+Schur 唯一性（任意 n 维不可约表示等价于标准表示，需 Burnside/稠密性定理
+基础设施——magAlgEquiv 已给"存在唯一 n 维不可约表示"的代数同构形态）；
+谱投影参数导数（Berry 切向量构造层）；Harper 谱隙/Hofstadter Butterfly；
+ρ 的 PF 不动点存在性；T→0 算子收敛（远期）。
