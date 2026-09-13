@@ -44,6 +44,15 @@ Hall 侧：Landau 规范磁平移代数（clock/shift Weyl 对）的有限维模
                            幂次换位 + magWeylElem_* 单型元 + magL_mul_mem/magAlg_span
                            张成定理 + magHom 泛性质下降 + magHom_surjective +
                            magBasisMap_surjective/magFinite/magFinrank_eq 等维）
+  harper_conjugate_neg   Harper 谱对称（核心）：n 偶时 W H W† = −H
+                         （W = U^{n/2}V^{n/2} 酉元；谱 σ(H) = −σ(H) 的显式载体，
+                           Hofstadter Butterfly 中心对称的代数根源；私有链
+                           omega_pow_half_eq_neg_one + clock/shift_commute_star +
+                           clock/shift_pow_mul/star_self 幂次幺正性 +
+                           shift/clock_pow_conj 共轭作用 + harper_conj_unit 酉性）
+  harper_trace_odd_pow_zero Harper 谱对称的迹推论：Tr(H^{2k+1}) = 0
+                         （奇次谱矩消失；经 SpectralInvariant.trace_pow_similar
+                           相似不变性，k = 0 给出 Tr H = 0）
 
 数学说明：Weyl 关系 + 幺正性是磁平移代数的代数核心（Hall 侧"子范畴约束"）；
 生成元构造 H → γ_F → A_Hall 复用 BCSFermiEmergence 模板（同一谱对应求逆）。
@@ -51,7 +60,10 @@ Weyl 迹正交性给出磁平移代数 ≅ Mₙ(ℂ) 的迹形式（Weyl 基 {U^
 Hilbert-Schmidt 正交，范数平方 = n）；Weyl 基定理（线性无关 + 张成）
 给出结构定理的向量空间形式——n² 个 Weyl 元构成 Mₙ(ℂ) 的基，即
 "唯一不可约表示 = Landau 能级载体"的代数根源（中心平凡 + 迹配对非退化）。
-完整陈数理论（整性、TKNN 场论形式）登记为开放；谱投影切向量的
+Harper 谱结构第一定理已闭合：n 偶时酉元 W = U^{n/2}V^{n/2} 共轭翻转 Harper
+Hamiltonian 符号（W H W† = −H），谱关于 0 对称，全部奇次谱矩 Tr(H^{2k+1})
+消失——Hofstadter Butterfly 中心对称的代数层。完整陈数理论（整性、TKNN
+场论形式）登记为开放；谱投影切向量的
 **约束代数层**已由 BerryChern §2.5 四定理 + 本模块 occupiedProjection_commute
 闭合（[H,P]=0 + 带内消没 + 带间化简 + 双交换子形式），切向量的**分析构造**
 （cfc 对参数的可微性，Kato 微扰论）仍开放（见 §末注释）。结构定理表示论层
@@ -67,6 +79,7 @@ import Mathlib.Analysis.SpecialFunctions.Exponential
 import Mathlib.Data.Complex.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import MUFPFormalization.SpectralDynamics
+import MUFPFormalization.SpectralInvariant
 import MUFPFormalization.GPEmergence
 import MUFPFormalization.BCSFermiEmergence
 import MUFPFormalization.BerryChern
@@ -1150,6 +1163,184 @@ noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
         (f := (magHom n).toLinearMap) magFinrank_eq).2 (magHom_surjective (n := n)),
       magHom_surjective (n := n)⟩
 
+/-- ω^{n/2} = −1（n ≥ 2 偶数）——谱对称共轭的相位核心：ω^{n/2} 是 1 的平方根
+    且本原性排除 +1。 -/
+private theorem omega_pow_half_eq_neg_one {n : ℕ} (hn : 2 ≤ n) (he : Even n) :
+    omega n ^ (n / 2) = -1 := by
+  haveI : NeZero n := ⟨by omega⟩
+  have hsq : (omega n ^ (n / 2)) ^ 2 = 1 := by
+    rw [← pow_mul, Nat.div_two_mul_two_of_even he, omega_pow (by omega : 1 ≤ n)]
+  have hne1 : omega n ^ (n / 2) ≠ 1 := by
+    intro h1
+    have hdvd := (omega_primitive.pow_eq_one_iff_dvd (n / 2)).1 h1
+    exact Nat.not_dvd_of_pos_of_lt (Nat.div_pos (by omega) (by omega))
+      (Nat.div_lt_self (by omega) (by omega)) hdvd
+  have hfac : (omega n ^ (n / 2) - 1) * (omega n ^ (n / 2) + 1) = 0 := by
+    have h1 : (omega n ^ (n / 2) - 1) * (omega n ^ (n / 2) + 1)
+        = (omega n ^ (n / 2)) ^ 2 - 1 := by noncomm_ring
+    rw [h1, hsq, sub_self]
+  have hz : omega n ^ (n / 2) - 1 ≠ 0 := sub_ne_zero.mpr hne1
+  have h2 : omega n ^ (n / 2) + 1 = 0 := (mul_eq_zero.mp hfac).resolve_left hz
+  calc omega n ^ (n / 2) = (omega n ^ (n / 2) + 1) - 1 := by noncomm_ring
+    _ = 0 - 1 := by rw [h2]
+    _ = -1 := by rw [zero_sub]
+
+/-- clock 与 star clock 交换（两侧幺正性互推：U U† = U†U = 1）。 -/
+private theorem clock_commute_star (n : ℕ) : Commute (clock n) (star (clock n)) :=
+  (mul_eq_one_comm.1 (clock_star_mul_self n)).trans (clock_star_mul_self n).symm
+
+/-- shift 与 star shift 交换。 -/
+private theorem shift_commute_star {n : ℕ} [NeZero n] : Commute (shift n) (star (shift n)) :=
+  shift_mul_star_self.trans shift_star_mul_self.symm
+
+/-- 幂次幺正性（clock，一）：U^c (U^c)† = 1（star = 共轭转置，非逆元）。 -/
+private theorem clock_pow_mul_star_self (n : ℕ) (c : ℕ) :
+    clock n ^ c * star (clock n ^ c) = 1 := by
+  rw [star_pow, ← (clock_commute_star n).mul_pow c,
+    mul_eq_one_comm.1 (clock_star_mul_self n), one_pow]
+
+/-- 幂次幺正性（clock，二）：(U^c)† U^c = 1。 -/
+private theorem clock_pow_star_mul_self (n : ℕ) (c : ℕ) :
+    star (clock n ^ c) * clock n ^ c = 1 := by
+  rw [star_pow, ← (clock_commute_star n).symm.mul_pow c, clock_star_mul_self n, one_pow]
+
+/-- 幂次幺正性（shift，一）：V^c (V^c)† = 1。 -/
+private theorem shift_pow_mul_star_self {n : ℕ} [NeZero n] (c : ℕ) :
+    shift n ^ c * star (shift n ^ c) = 1 := by
+  rw [star_pow, ← shift_commute_star.mul_pow c, shift_mul_star_self, one_pow]
+
+/-- 幂次幺正性（shift，二）：(V^c)† V^c = 1。 -/
+private theorem shift_pow_star_mul_self {n : ℕ} [NeZero n] (c : ℕ) :
+    star (shift n ^ c) * shift n ^ c = 1 := by
+  rw [star_pow, ← shift_commute_star.symm.mul_pow c, shift_star_mul_self, one_pow]
+
+/-- **共轭作用（一）**：V^c U (V^c)† = ω^{−c} • U——shift 幂对 clock 的伴随作用。 -/
+private theorem shift_pow_conj_clock {n : ℕ} [NeZero n] (c : ℕ) :
+    shift n ^ c * clock n * star (shift n ^ c) = ((omega n ^ c : ℂ))⁻¹ • clock n := by
+  have h := shift_pow_clock_weyl (n := n) c 1
+  simp only [Nat.mul_one, pow_one] at h
+  calc shift n ^ c * clock n * star (shift n ^ c)
+      = (((omega n ^ c : ℂ))⁻¹ • clock n * shift n ^ c) * star (shift n ^ c) := by rw [h]
+    _ = ((omega n ^ c : ℂ))⁻¹ • (clock n * (shift n ^ c * star (shift n ^ c))) := by
+        rw [smul_mul_assoc, smul_mul_assoc, Matrix.mul_assoc]
+    _ = ((omega n ^ c : ℂ))⁻¹ • clock n := by rw [shift_pow_mul_star_self, mul_one]
+
+/-- **共轭作用（二）**：U^a V (U^a)† = ω^a • V——clock 幂对 shift 的伴随作用。 -/
+private theorem clock_pow_conj_shift {n : ℕ} [NeZero n] (a : ℕ) :
+    clock n ^ a * shift n * star (clock n ^ a) = (omega n ^ a : ℂ) • shift n := by
+  have h := clock_pow_shift_weyl (n := n) a
+  calc clock n ^ a * shift n * star (clock n ^ a)
+      = ((omega n ^ a : ℂ) • shift n * clock n ^ a) * star (clock n ^ a) := by rw [h]
+    _ = (omega n ^ a : ℂ) • (shift n * (clock n ^ a * star (clock n ^ a))) := by
+        rw [smul_mul_assoc, smul_mul_assoc, Matrix.mul_assoc]
+    _ = (omega n ^ a : ℂ) • shift n := by rw [clock_pow_mul_star_self, mul_one]
+
+/-- **谱对称酉元**：W = U^{n/2} V^{n/2} 是酉元（W W† = W† W = 1）——n 偶时
+    ω^{n/2} = −1 的载体。 -/
+private theorem harper_conj_unit {n : ℕ} [NeZero n] :
+    (clock n ^ (n / 2) * shift n ^ (n / 2)) * (star (clock n ^ (n / 2) * shift n ^ (n / 2))) = 1
+    ∧ (star (clock n ^ (n / 2) * shift n ^ (n / 2)))
+        * (clock n ^ (n / 2) * shift n ^ (n / 2)) = 1 := by
+  set a := n / 2 with ha
+  constructor
+  · rw [star_mul]
+    calc (clock n ^ a * shift n ^ a) * (star (shift n ^ a) * star (clock n ^ a))
+        = clock n ^ a * (shift n ^ a * star (shift n ^ a)) * star (clock n ^ a) := by
+          noncomm_ring
+    _ = clock n ^ a * 1 * star (clock n ^ a) := by rw [shift_pow_mul_star_self]
+    _ = clock n ^ a * star (clock n ^ a) := by rw [mul_one]
+    _ = 1 := clock_pow_mul_star_self n a
+  · rw [star_mul]
+    calc (star (shift n ^ a) * star (clock n ^ a)) * (clock n ^ a * shift n ^ a)
+        = star (shift n ^ a) * (star (clock n ^ a) * clock n ^ a) * shift n ^ a := by
+          noncomm_ring
+    _ = star (shift n ^ a) * 1 * shift n ^ a := by rw [clock_pow_star_mul_self]
+    _ = star (shift n ^ a) * shift n ^ a := by rw [mul_one]
+    _ = 1 := shift_pow_star_mul_self a
+
+/-- **Harper 谱对称（核心）**：n 偶时 W H W† = −H——酉共轭翻转 Harper Hamiltonian
+    的符号，谱关于 0 对称 σ(H) = −σ(H) 的显式载体（Hofstadter Butterfly 中心对称
+    的代数根源）。 -/
+theorem harper_conjugate_neg {n : ℕ} [NeZero n] (hn : 2 ≤ n) (he : Even n) :
+    (clock n ^ (n / 2) * shift n ^ (n / 2)) * harper n
+      * (star (clock n ^ (n / 2) * shift n ^ (n / 2))) = - harper n := by
+  set a := n / 2 with ha
+  have hneg : (omega n ^ a : ℂ) = -1 := omega_pow_half_eq_neg_one hn he
+  have hneg' : ((omega n ^ a : ℂ))⁻¹ = -1 := by rw [hneg]; simp
+  have hsW : star (clock n ^ a * shift n ^ a)
+      = star (shift n ^ a) * star (clock n ^ a) := by rw [star_mul]
+  have hcomU : Commute (clock n ^ a) (clock n) := (Commute.refl _).pow_left _
+  have hcomV : Commute (shift n ^ a) (shift n) := (Commute.refl _).pow_left _
+  have keyU : clock n ^ a * clock n * star (clock n ^ a) = clock n := by
+    rw [hcomU.eq, Matrix.mul_assoc, clock_pow_mul_star_self, mul_one]
+  have keyV : shift n ^ a * shift n * star (shift n ^ a) = shift n := by
+    rw [hcomV.eq, Matrix.mul_assoc, shift_pow_mul_star_self, mul_one]
+  have gU : clock n ^ a * shift n ^ a * clock n * star (clock n ^ a * shift n ^ a)
+      = -clock n := by
+    rw [hsW]
+    calc clock n ^ a * shift n ^ a * clock n * (star (shift n ^ a) * star (clock n ^ a))
+        = clock n ^ a * (shift n ^ a * clock n * star (shift n ^ a)) * star (clock n ^ a) := by
+          noncomm_ring
+      _ = clock n ^ a * (((omega n ^ a : ℂ))⁻¹ • clock n) * star (clock n ^ a) := by
+          rw [shift_pow_conj_clock a]
+      _ = ((omega n ^ a : ℂ))⁻¹ • clock n := by
+          rw [Matrix.mul_assoc (clock n ^ a) (((omega n ^ a : ℂ))⁻¹ • clock n) (star (clock n ^ a)),
+            smul_mul_assoc, mul_smul_comm, ← Matrix.mul_assoc, keyU]
+      _ = -clock n := by rw [hneg']; exact neg_one_smul _ _
+  have gU' : clock n ^ a * shift n ^ a * star (clock n) * star (clock n ^ a * shift n ^ a)
+      = -star (clock n) := by
+    have e : star (clock n ^ a * shift n ^ a * clock n * star (clock n ^ a * shift n ^ a))
+        = clock n ^ a * shift n ^ a * star (clock n) * star (clock n ^ a * shift n ^ a) := by
+      rw [star_mul (clock n ^ a * shift n ^ a * clock n) (star (clock n ^ a * shift n ^ a)),
+        star_mul (clock n ^ a * shift n ^ a) (clock n),
+        star_star (clock n ^ a * shift n ^ a), ← Matrix.mul_assoc]
+    rw [← e, gU, star_neg]
+  have gV : clock n ^ a * shift n ^ a * shift n * star (clock n ^ a * shift n ^ a)
+      = -shift n := by
+    rw [hsW]
+    calc clock n ^ a * shift n ^ a * shift n * (star (shift n ^ a) * star (clock n ^ a))
+        = clock n ^ a * (shift n ^ a * shift n * star (shift n ^ a)) * star (clock n ^ a) := by
+          noncomm_ring
+      _ = clock n ^ a * shift n * star (clock n ^ a) := by rw [keyV]
+      _ = (omega n ^ a : ℂ) • shift n := clock_pow_conj_shift a
+      _ = -shift n := by rw [hneg]; exact neg_one_smul _ _
+  have gV' : clock n ^ a * shift n ^ a * star (shift n) * star (clock n ^ a * shift n ^ a)
+      = -star (shift n) := by
+    have e : star (clock n ^ a * shift n ^ a * shift n * star (clock n ^ a * shift n ^ a))
+        = clock n ^ a * shift n ^ a * star (shift n) * star (clock n ^ a * shift n ^ a) := by
+      rw [star_mul (clock n ^ a * shift n ^ a * shift n) (star (clock n ^ a * shift n ^ a)),
+        star_mul (clock n ^ a * shift n ^ a) (shift n),
+        star_star (clock n ^ a * shift n ^ a), ← Matrix.mul_assoc]
+    rw [← e, gV, star_neg]
+  rw [harper]
+  simp only [mul_add, add_mul]
+  rw [gU, gU', gV, gV']
+  abel
+
+/-- **Harper 谱对称的迹推论**：n 偶时 Tr(H^{2k+1}) = 0——谱关于 0 对称
+    （W H W† = −H）经相似不变性推出全部奇次矩消失；偶次矩（Tr H² = 带宽
+    度量等）不受约束。k = 0 给出 Tr H = 0。 -/
+theorem harper_trace_odd_pow_zero {n : ℕ} [NeZero n] (hn : 2 ≤ n) (he : Even n)
+    (k : ℕ) : (harper n ^ (2 * k + 1)).trace = 0 := by
+  have hunit := harper_conj_unit (n := n)
+  have hconj := harper_conjugate_neg hn he
+  have honeg : (-harper n) ^ (2 * k + 1) = - harper n ^ (2 * k + 1) := by
+    calc (-harper n) ^ (2 * k + 1) = ((-harper n) ^ 2) ^ k * (-harper n) := by
+          rw [pow_succ, ← pow_mul]
+      _ = (harper n ^ 2) ^ k * (-harper n) := by rw [neg_sq]
+      _ = -(harper n ^ (2 * k) * harper n) := by rw [pow_mul, mul_neg]
+      _ = -harper n ^ (2 * k + 1) := by rw [← pow_succ]
+  have hp := trace_pow_similar (harper n) (star (clock n ^ (n / 2) * shift n ^ (n / 2)))
+      (clock n ^ (n / 2) * shift n ^ (n / 2)) hunit.2 hunit.1 (2 * k + 1)
+  rw [hconj, honeg] at hp
+  rw [show (-(harper n ^ (2 * k + 1)))
+      = ((-1 : ℂ) • harper n ^ (2 * k + 1)) from (neg_one_smul _ _).symm,
+    Matrix.trace_smul, neg_one_smul] at hp
+  have h2x := congrArg (fun z : ℂ => z + (harper n ^ (2 * k + 1)).trace) hp
+  rw [neg_add_cancel] at h2x
+  have h2 : (2 : ℂ) * (harper n ^ (2 * k + 1)).trace = 0 := by rw [two_mul, ← h2x]
+  exact (mul_eq_zero.mp h2).resolve_left two_ne_zero
+
 /- §末开放登记（不占用 sorry，真证路径）：
 
   1. **陈数整性与 TKNN**：C = (1/2π)∫F ∈ ℤ 与 σ_xy = (e²/h)C 需环面积分/
@@ -1162,8 +1353,11 @@ noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
      残余开放：A = ∂ₓP、B = ∂ᵧP 的**构造**（投影族参数导数，cfc 对参数可微性/
      Kato 微扰论）属微积分基础设施；当前 occupied_berry_im_eq_zero 以任意
      厄米切向量为假设接入。
-  3. **Harper 谱隙**：Hofstadter Butterfly 的谱隙结构（通量 p/q 时 q 能带）
-     需具体谱计算，数值层已有载体。
+  3. **Harper 谱隙——谱对称层已闭合，谱带细分开放**：Hofstadter Butterfly 的
+     谱隙结构（通量 p/q 时 q 能带）首层已由 harper_conjugate_neg（n 偶时
+     W H W† = −H，σ(H) = −σ(H)）与 harper_trace_odd_pow_zero（Tr H^{2k+1} = 0）
+     闭合——谱关于 0 对称 + 奇次谱矩消失。残余开放：具体谱带定位/谱隙宽度
+     （特征值计算、Chern 标记带隙）需具体谱计算，数值层已有载体。
   4. **结构定理表示论层——已闭合**：磁平移商代数 → Mₙ(ℂ) 的 ℂ-代数同构由
      magAlgEquiv 闭合（magHom 泛性质下降满射 + magFinrank_eq 等维单射，
      RingQuot 商 ℂ⟨U,V⟩/(UV−ωVU, Uⁿ−1, Vⁿ−1) ≃ₐ Mₙ(ℂ)）。残余开放：唯一
@@ -1177,7 +1371,10 @@ noncomputable def magAlgEquiv (n : ℕ) [NeZero n] :
   Hilbert-Schmidt 正交）+ Weyl 基定理（weyl_basis_linearIndependent 线性无关
   + weyl_span_top 张成 Mₙ(ℂ)——磁平移代数 ≅ Mₙ(ℂ) 结构定理的向量空间形式）
   + 结构定理表示论层（magAlgEquiv：磁平移商代数 ≃ₐ Mₙ(ℂ)，泛性质下降满射
-  + 等维单射——"唯一不可约表示 = Landau 能级载体"的代数同构形态）。
+  + 等维单射——"唯一不可约表示 = Landau 能级载体"的代数同构形态）
+  + Harper 谱对称（harper_conjugate_neg：n 偶时 W H W† = −H，σ(H) = −σ(H)；
+  harper_trace_odd_pow_zero：Tr H^{2k+1} = 0 奇次谱矩消失——Hofstadter
+  Butterfly 中心对称的代数层）。
   G1 的三个切入点（GP/BCS/Hall）至此全部闭合。 -/
 
 end MUFPF

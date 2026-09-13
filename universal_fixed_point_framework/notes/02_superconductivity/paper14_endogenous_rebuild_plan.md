@@ -697,3 +697,55 @@ occupiedProjection_commute + BerryChern §2.5 四定理；§3 层级标注段升
 **残余开放（更新）**：陈数整性场论；Schur 唯一性；**切向量分析构造**
 （∂ₓP 存在性，cfc 参数可微性/Kato 微扰论——接替原"谱投影参数导数"条目，
 约束层已闭合）；Harper 谱隙；ρ 的 PF 不动点；T→0 算子收敛（远期）。
+
+### 2026-09-13：Harper 谱对称层闭合（谱隙首层）
+
+**定理（HallEmergence.lean 新增，全部零 sorry）**：
+
+| 定理 | 陈述 | 角色 |
+|---|---|---|
+| `omega_pow_half_eq_neg_one` | n ≥ 2 偶 ⟹ ω_n^{n/2} = −1 | 谱对称相位核心（本原性排除 +1） |
+| `clock/shift_commute_star` | Commute U U† / V V† | 幂次幺正性的交换性前提 |
+| `clock/shift_pow_mul/star_self`（4 条） | U^c(U^c)† = (U^c)†U^c = 1 等 | 幂次幺正性（W 酉性的构件） |
+| `shift_pow_conj_clock` | V^c U (V^c)† = ω^{−c} • U | 共轭作用（一） |
+| `clock_pow_conj_shift` | U^a V (U^a)† = ω^a • V | 共轭作用（二） |
+| `harper_conj_unit` | W = U^{n/2}V^{n/2} 酉（W W† = W†W = 1） | 谱对称酉元 |
+| `harper_conjugate_neg` | n 偶 ⟹ W H W† = −H | **谱对称核心**：σ(H) = −σ(H) |
+| `harper_trace_odd_pow_zero` | n 偶 ⟹ Tr(H^{2k+1}) = 0 | 迹推论：奇次谱矩消失（k=0 给出 Tr H = 0） |
+
+**证明路径**：ω^{n/2} 是 1 的平方根（ω^n = 1）且本原性
+（`IsPrimitiveRoot.pow_eq_one_iff_dvd` + `Nat.not_dvd_of_pos_of_lt`）排除 +1；
+z² = 1 ∧ z ≠ 1 在 ℂ 中 ⟹ z = −1（`sq_sub_sq`/`mul_eq_zero`）。共轭作用由
+Weyl 幂次换位（`shift_pow_clock_weyl`/`clock_pow_shift_weyl`）右乘 (V^c)† 得。
+迹推论：`trace_pow_similar`（SpectralInvariant）给出
+Tr((W H W†)^m) = Tr(H^m)，代入 W H W† = −H 与奇幂负性
+（`(−H)^{2k+1} = −H^{2k+1}`：`pow_succ`/`pow_mul`/`neg_sq`/`mul_neg`）得
+Tr = −Tr，2 无零因子（`two_ne_zero`）⟹ Tr = 0。
+
+**技术要点（本轮确立，勿忘）**：
+- **矩阵不是 `GroupWithZero`**：`mul_inv_cancel₀`/`inv_mul_cancel₀` 不可用——
+  一切 `X * X⁻¹` 必须改写为 `X * star X`（幺正性 + `Matrix.mul_eq_one_comm`
+  互推两侧）。
+- **`smul_mul_assoc` 的模式是 `?r • ?x * ?y`（左结合）**：`A * (r • X) * B`
+  形（ smul 在第二个因子）不是其子项——先 `mul_smul_comm`（x * r•y = r•(x*y)）
+  或先用显式参数 `mul_assoc` 重组使 `r • X * B` 成为真子项。
+- **star 展开的顺序敏感**：`rw [star_mul]` 裸跑会先命中内层 `star (clock^a *
+  shift^a)` 而非外层——多 star 嵌套时一律显式参数
+  `star_mul (W * clock) (star W)` 等逐层指定。
+- `mul_eq_one_comm` 在**根命名空间**（非 Matrix.），需 `IsDedekindFiniteMonoid`
+  （Mₙ(ℂ) 满足）。
+- `Commute.mul_pow` 的幂次是显参：`(h).mul_pow c`；`Commute` 结构可用
+  `h₁.trans h₂.symm` 构造（defeq 到等式）。
+- `SpectralInvariant` 此前**无任何模块导入**——HallEmergence 已补
+  `import MUFPFormalization.SpectralInvariant`。
+- 最终纯加法恒等式（分配后求和 = 负和）`noncomm_ring` 报"try abel"——
+  用 `abel`。
+- 隐参定理裸调用遇 typeclass stuck：`harper_conj_unit (n := n)`。
+
+**paper14 同步（v1.6 第十轮）**：文首形式化支撑清单 Hall 条目追加谱对称层；
+§3 层级标注段升"十轮"并追加 Harper 谱结构第一定理段；结论 C2 补记第十轮；
+版本记录 v1.6 行末追加第十轮摘要。全库零 sorry，3705 jobs 编译通过。
+
+**残余开放（更新）**：Harper 谱隙收窄为**谱带定位/谱隙宽度**（中心对称 +
+奇次谱矩消失已闭合）；陈数整性场论；Schur 唯一性；切向量分析构造；
+ρ 的 PF 不动点；T→0 算子收敛（远期）。
