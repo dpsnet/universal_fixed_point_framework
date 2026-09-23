@@ -35,6 +35,7 @@ import MUFPFormalization.SpecInfinity
 import MUFPFormalization.InfinityCategory
 import MUFPFormalization.SpectralFlowHomotopy
 import MUFPFormalization.DInfinityFunctor
+import MUFPFormalization.QuaternionSpinOrigin
 
 namespace MUFPF.Basic
 

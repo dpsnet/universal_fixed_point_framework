@@ -31,6 +31,8 @@
 - `phase23_26_papers_VI_IX.md`：**Phase 23–26：新论文规划**——Paper VI 谱流体动力学（**✅ v0.1**）、Paper VII 非平衡谱热力学（**✅ v0.1**）、Paper VIII 黑洞视界谱动力学（**✅ v0.1**）、Paper IX 奇点谱消解与量子宇宙学（**✅ v0.1**）。**全部完成**。
 - `phase27_spectral_dynamics_completion.md`：**Phase 27：谱动力学完善四方向**——多圈重整化（双圈β+DS修正 ✅）、暗物质完整谱模型（3候选 WIMP奇迹 ✅）、非线性大尺度宇宙修正（F₂核+1-loop SPT ✅）、黑洞蒸发完整演化定量描述（Page曲线 0.647 ✅）。**✅ 4/4 全部完成**。
 - **`phase63_meta_theorem_open_problems.md` 🆕**：**Phase 63：元定理完备性与体制间态开放问题推进路线图**——基于 2026-08-23 的元定理完备性讨论，整理五盲区（H1-H5 失效/无界算子/临界层/C_crit 锐变性/Koopman 提升）、体制间态理论（ε_hex 可计算性/拓扑分类/谱静默关系）、Lean 形式化闭合（BlindSpot1T1bComplete/GeneralMetaTheoremFramework sorry 消除）等 15 项开放问题，制定四阶段推进路线（形式化闭合 → 体制间态深化 → 盲区 2-5 形式化 → 论文整合）。**⏳ 第一阶段进行中**。
+- **`phase70_superfluid_stiffness.md` 🆕**：**Phase 70：超流相刚度与 T_c ∝ √ρ₀ 标度律的谱框架推导**——从 BCS 谱生成元的 Nambu 对易子结构 [σ_z, A_SC] = 2iΔσ_y 内生推导 ρ₀ = k_BΔ²/(2E_F)，联合 BCS 关系 T_c ∝ Δ 导出 T_c ∝ √ρ₀ 标度律（线性×平方=平方根）。与 Tao (2026, Physica B) 的复时间相对论路径殊途同归。Lean4 形式化 SuperfluidStiffness.lean 零 sorry 闭合。**✅ 推导与形式化已完成（2026-09-11），论文 Paper LVII 撰写进行中**。产出论文编号接续 Phase 66-69 系列（Paper XLIX–LVI 之后）。
+
 - `u2f_fusion_roadmap.md`：**融合路线规划（跨理论融合地图）**——从一梦/王斌"时间膨胀八条解释路径"出发（`docs/回复 @王斌：第四个解释路径.md`），规划 MUFPF 融合各理论路径的四阶段路线（§4）+ 各层完善性视角（§7，融合=架构工程）+ CNF 评价治理接口（§8，融合=双功能+一约束）；与检测矩阵对接说明（`paper/MUFPF_检测矩阵对接对齐说明.md` §七）挂钩（路径集 8↔7 对齐链）。**性质**：方法论/规划登记（非数值验证笔记），各融合点按"笔记先行→论文提炼"单独推进。2026-08-14 自 `notes/04_lorentz_gravity/` 移入（内容横跨全架构，非洛伦兹/引力专属）。
 
 > **Phase 30–42 全谱系完成 (2026-07-17)**：

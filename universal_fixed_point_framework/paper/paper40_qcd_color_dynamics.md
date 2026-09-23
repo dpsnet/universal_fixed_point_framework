@@ -93,7 +93,7 @@ $$[A_{\text{QCD}}, Q^a] = 0 \;\Longleftrightarrow\; \partial_\mu J^{a\mu} = 0.$$
 
 ### 4.2 $\Lambda_{\mathrm{QCD}}$ 谱生成定理
 
-**定义 4.1**（谱跑动耦合）。谱框架中 QCD 耦合的跑动由谱间隙比给出：$\alpha_s(\mu) = 2\pi/(b_0 \ln(\mu/\Lambda_{\mathrm{QCD}}))$，且在 $M_{\mathrm{Pl}}$ 处满足 $\alpha_s(M_{\mathrm{Pl}}) = \alpha_3^{(0)} = \Delta\lambda_3/4\pi$，其中 $\Delta\lambda_3 = \sqrt{2}\,\Delta\lambda_{\min} = 0.1725\,M_{\mathrm{Pl}}$ 为 Cl(1,7) 根系 SU(3) 谱间隙（闭合体系 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{2/3}:1:\sqrt{2}$，Paper XX §1.2 + Lean `WeaveBCS.lean`，非外部输入），$\Delta\lambda_{\min} = 0.122\,M_{\mathrm{Pl}}$ 为 GR 谱间隙（SU(2) 分量，归一化基准）。
+**定义 4.1**（谱跑动耦合）。谱框架中 QCD 耦合的跑动由谱间隙比给出：$\alpha_s(\mu) = 2\pi/(b_0 \ln(\mu/\Lambda_{\mathrm{QCD}}))$，且在 $M_{\mathrm{Pl}}$ 处满足 $\alpha_s(M_{\mathrm{Pl}}) = \alpha_3^{(0)} = \Delta\lambda_3/4\pi$，其中 $\Delta\lambda_3 = \sqrt{2}\,\Delta\lambda_{\min} = 0.1725\,M_{\mathrm{Pl}}$ 为 Cl(1,7) 根系 SU(3) 谱间隙（闭合体系 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{1/3}:1:\sqrt{2} = 1/\sqrt3:1:\sqrt2$，SU(2)/U(1) 特征值归一化，v0.29 修正；原 $\sqrt{2/3}:1:\sqrt{2}$ 已废弃——Paper XX §1.2 + Lean `WeaveBCS.lean`，非外部输入）。则 $\Delta\lambda_1 = \Delta\lambda_{\min}/\sqrt3 = 0.0704\,M_{\mathrm{Pl}}$、$\Delta\lambda_2 = \Delta\lambda_{\min} = 0.122\,M_{\mathrm{Pl}}$、$\Delta\lambda_3 = \sqrt2\,\Delta\lambda_{\min} = 0.1725\,M_{\mathrm{Pl}}$；$\Delta\lambda_{\min}$ 即 GR 谱间隙（SU(2) 分量，归一化基准）。
 
 **定理 4.1**（$\Lambda_{\mathrm{QCD}}$ 谱生成）。由 $M_{\mathrm{Pl}}$ 处裸耦合 $\alpha_3^{(0)} = \Delta\lambda_3/4\pi$，单圈 RGE 的 Landau 极点为：
 

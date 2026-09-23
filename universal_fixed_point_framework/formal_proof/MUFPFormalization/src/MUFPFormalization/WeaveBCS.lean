@@ -34,6 +34,8 @@ Based on:
 
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Sqrt
+import Mathlib.Analysis.SpecialFunctions.Exp
+import Mathlib.NumberTheory.Harmonic.EulerMascheroni
 import Mathlib.CategoryTheory.Category.Basic
 import Mathlib.CategoryTheory.Functor.Basic
 import Mathlib.Tactic
@@ -50,9 +52,12 @@ namespace MUFPF
     Section 1: BCS Universal Constants — Parameter Structure
    ========================================================= -/
 
-/-- Standard BCS universal ratio: a_BCS = T_c / Δ_0 = 1/1.764.
-    This is the universal BCS prediction, independent of material parameters. -/
-noncomputable def a_BCS : ℝ := 1 / 1.764
+/-- **内部普适锁（2026-09-17）**：标准 BCS 普适比值 a_BCS = T_c/Δ_0，
+    由拟合值 1/1.764 切换为谱 ζ 正则化普适常数组合 e^{γ_E}/π。
+    （分析层弱耦合结果 1/1.764 ≈ π·e^{−γ_E}，严格内部锁锚定 a_BCS^{int} = e^{γ_E}/π，
+    偏差 0.016%。）锚定完全由全域普适常数 π 与欧拉-马歇罗尼常数 γ_E 构成，
+    **不再依赖任何物理测量/拟合值**，使普适比值内生闭锁。 -/
+noncomputable def a_BCS : ℝ := Real.exp Real.eulerMascheroniConstant / Real.pi
 
 /-- The Cl(1,7) fundamental spectral gap: dl_min = spectralGap 8.
     This is the basic spectral gap used in both QCD and BCS spectral frameworks. -/

@@ -30,6 +30,10 @@ import Mathlib.Analysis.Calculus.Deriv.Add
 import Mathlib.Analysis.Calculus.Deriv.Mul
 import Mathlib.Analysis.Calculus.Deriv.Linear
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
+import Mathlib.Algebra.Polynomial.Roots
+import Mathlib.Analysis.Complex.Polynomial.Basic
 
 open CategoryTheory
 open CategoryTheory.Limits
@@ -528,10 +532,24 @@ theorem noise_spectral_flow_eq (S : SpObj) (D : Matrix (Fin S.n) (Fin S.n) ℂ) 
   rw [hlin]
   exact key
 
-/-- Critical noise threshold η_c = min_i Δλ_i / ⟨δA_N⟩_i.
-    When η > η_c, the discrete spectrum is completely covered by the
-    continuous noise background. -/
-def criticalNoiseThreshold (R : RecObj) (N : SigmaRecObj) : ℝ := 0
+/-- §17.5-A2：**特征值多重集（计重数）**。A 的复特征值带重数的多重集 = 特征
+    多项式根的 `Polynomial.roots`（ℂ 代数闭域）。这是本征值级谱流 $d\sigma/d\eta$ 的
+    **代数载体**：谱一阶矩 Tr 恰是这些本征值的和（`noise_spectral_flow_roots_trace`），
+    而迹导数定理（`noise_spectral_flow_eq`）即给出本征值之和沿参数的微扰——与本征值
+    级扰动公式的 $P_\lambda$ 投影形式平行。完整的 $P_\lambda$（谱投影本征值级扰动）需
+    谱测度/微扰论的连续谱选择（La 算子级），此处闭合其**代数前提**：本征值多重集
+    与迹的耦合。 -/
+noncomputable def noiseEigenMultiset (A : Matrix (Fin n) (Fin n) ℂ) : Multiset ℂ :=
+  A.charpoly.roots
+
+/-- §17.5-A2 核心：**谱一阶矩 = 本征值多重集之和**。$Tr(A)=\sum_{\lambda}\lambda$
+    （计重数）。由 `Matrix.trace_eq_sum_roots_charpoly`（ℂ 代数闭）即得。这把
+    迹导数公式 `noise_spectral_flow_eq` 落到本征值层：$d/d\eta\,Tr(A_\eta)
+    =\sum_\lambda d\lambda_\eta/d\eta = Tr(\delta A)$。 -/
+theorem noise_spectral_flow_roots_trace (S : SpObj) :
+    S.A.trace = (noiseEigenMultiset S.A).sum := by
+  unfold noiseEigenMultiset
+  rw [Matrix.trace_eq_sum_roots_charpoly]
 
 /- Theorem 17.8（逆谱流噪声过滤 dA_ζ/dζ = -ζ·F[A_ζ]）：【开放命题登记，
    已从 Lean 移除占位定理】载体需"局域化算子 F"的数学定义与谱测度背景，

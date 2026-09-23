@@ -452,6 +452,111 @@ theorem deviation_spectral_bound (S : SpObj)
         mul_le_mul_of_nonneg_right hNorm h_prod
       simpa [mul_assoc] using h1
 
+/-- **收窄上界（能量系数重新锚定，2026-09-18）**：
+    `deviation_spectral_bound` 的 hNorm 假设 `24·‖S.A‖² ≤ (4·spectralGap 8)²`
+    系由 h_ineq 的粗放放大（`‖X.A‖²+2‖Y.A‖²+‖Z.A‖² ≤ 2(Σ‖·A‖²)`）所致 → `(2/3)Gap8²`。
+    但在本定理中 X=Y=Z=S（`P Q R, P' Q' R' : S ⟶ S` 自动推出），
+    `h_intermediate` 的括号 `‖S.A‖²+2‖S.A‖²+‖S.A‖² = 4‖S.A‖²` 精确成立，
+    故跳过大放大：`‖Δ‖² ≤ 4·4‖S.A‖²·‖βᵏ‖²·‖α'ᵏ‖² = 16‖S.A‖²·‖βᵏ‖²·‖α'ᵏ‖²`。
+    只需 hNorm' : `16·‖S.A‖² ≤ (4·spectralGap 8)²`（即 `‖S.A‖² ≤ Gap8²`，纯谱静默），
+    无需 2/3·Gap8²。`2/3 = 16/24` 是 h_ineq 放大（4‖SA‖² ≤ 6‖SA‖²）的产物，非真机制。 -/
+theorem deviation_spectral_bound_tightened {S : SpObj}
+    {P Q R : S ⟶ S} {P' Q' R' : S ⟶ S}
+    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R')
+    (hNorm : 16 * frobNormSq (S.A) ≤ (4 * spectralGap 8) ^ 2) :
+    deviationNormSq α β α' β' ≤
+    (4 * spectralGap 8) ^ 2 * frobNormSq β.homotopy * frobNormSq α'.homotopy := by
+  have h_dev := spExchangeLaw_homotopy_deviation α β α' β'
+  unfold deviationNormSq
+  rw [h_dev]
+  set Δ₁ := (R.P - Q.P) * α'.homotopy
+  set Δ₂ := β.homotopy * (P'.P - Q'.P)
+  have h_tri : frobNormSq (Δ₁ + Δ₂) ≤ 2 * (frobNormSq Δ₁ + frobNormSq Δ₂) :=
+    frobNormSq_triangle_sq _ _
+  have h_mul₁ : frobNormSq Δ₁ ≤ frobNormSq (R.P - Q.P) * frobNormSq α'.homotopy :=
+    frobNormSq_mul_le_rect (R.P - Q.P) α'.homotopy
+  have h_mul₂ : frobNormSq Δ₂ ≤ frobNormSq β.homotopy * frobNormSq (P'.P - Q'.P) :=
+    frobNormSq_mul_le_rect β.homotopy (P'.P - Q'.P)
+  have h_bound_RP : frobNormSq (R.P - Q.P) ≤
+      2 * frobNormSq β.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+    calc
+      frobNormSq (R.P - Q.P) = frobNormSq (S.A * β.homotopy - β.homotopy * S.A) := by simp [β.condition]
+      _ ≤ 2 * frobNormSq β.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+        have h_tri' : frobNormSq (S.A * β.homotopy - β.homotopy * S.A) ≤
+            2 * (frobNormSq (S.A * β.homotopy) + frobNormSq (β.homotopy * S.A)) := by
+          calc
+            frobNormSq (S.A * β.homotopy - β.homotopy * S.A)
+                = frobNormSq (S.A * β.homotopy + (-(β.homotopy * S.A))) := by simp [sub_eq_add_neg]
+            _ ≤ 2 * (frobNormSq (S.A * β.homotopy) + frobNormSq (-(β.homotopy * S.A))) :=
+              frobNormSq_triangle_sq _ _
+            _ = 2 * (frobNormSq (S.A * β.homotopy) + frobNormSq (β.homotopy * S.A)) := by
+              simp [frobNormSq_neg]
+        have h_m1 : frobNormSq (S.A * β.homotopy) ≤ frobNormSq (S.A) * frobNormSq β.homotopy :=
+          frobNormSq_mul_le_rect _ _
+        have h_m2 : frobNormSq (β.homotopy * S.A) ≤ frobNormSq β.homotopy * frobNormSq (S.A) :=
+          frobNormSq_mul_le_rect _ _
+        nlinarith
+  have h_mul₁_bound : frobNormSq Δ₁ ≤
+      2 * frobNormSq β.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) * frobNormSq α'.homotopy := by
+    calc
+      frobNormSq Δ₁ ≤ frobNormSq (R.P - Q.P) * frobNormSq α'.homotopy := h_mul₁
+      _ ≤ (2 * frobNormSq β.homotopy * (frobNormSq (S.A) + frobNormSq (S.A))) * frobNormSq α'.homotopy := by
+        have h_nonneg : 0 ≤ frobNormSq α'.homotopy := frobNormSq_nonneg _
+        nlinarith
+      _ = 2 * frobNormSq β.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) * frobNormSq α'.homotopy := by
+        ring
+  have h_cond_α' : P'.P - Q'.P = -(S.A * α'.homotopy - α'.homotopy * S.A) := by
+    calc
+      P'.P - Q'.P = -(Q'.P - P'.P) := by simp
+      _ = -(S.A * α'.homotopy - α'.homotopy * S.A) := by rw [α'.condition]
+  have h_bound_PP : frobNormSq (S.A * α'.homotopy - α'.homotopy * S.A) ≤
+      2 * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+    have h_tri' : frobNormSq (S.A * α'.homotopy - α'.homotopy * S.A) ≤
+        2 * (frobNormSq (S.A * α'.homotopy) + frobNormSq (α'.homotopy * S.A)) := by
+      calc
+        frobNormSq (S.A * α'.homotopy - α'.homotopy * S.A)
+            = frobNormSq (S.A * α'.homotopy + (-(α'.homotopy * S.A))) := by simp [sub_eq_add_neg]
+        _ ≤ 2 * (frobNormSq (S.A * α'.homotopy) + frobNormSq (-(α'.homotopy * S.A))) :=
+          frobNormSq_triangle_sq _ _
+        _ = 2 * (frobNormSq (S.A * α'.homotopy) + frobNormSq (α'.homotopy * S.A)) := by
+          simp [frobNormSq_neg]
+    have h_m1 : frobNormSq (S.A * α'.homotopy) ≤ frobNormSq (S.A) * frobNormSq α'.homotopy :=
+      frobNormSq_mul_le_rect _ _
+    have h_m2 : frobNormSq (α'.homotopy * S.A) ≤ frobNormSq α'.homotopy * frobNormSq (S.A) :=
+      frobNormSq_mul_le_rect _ _
+    nlinarith
+  have h_mul₂_bound : frobNormSq Δ₂ ≤
+      2 * frobNormSq β.homotopy * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+    have h_bound_PP' : frobNormSq (P'.P - Q'.P) ≤ 2 * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+      calc
+        frobNormSq (P'.P - Q'.P) = frobNormSq (-(S.A * α'.homotopy - α'.homotopy * S.A)) := by
+          rw [h_cond_α']
+        _ = frobNormSq (S.A * α'.homotopy - α'.homotopy * S.A) := by rw [frobNormSq_neg]
+        _ ≤ 2 * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := h_bound_PP
+    calc
+      frobNormSq Δ₂ ≤ frobNormSq β.homotopy * frobNormSq (P'.P - Q'.P) := h_mul₂
+      _ ≤ frobNormSq β.homotopy * (2 * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A))) := by
+        have h_nonneg : 0 ≤ frobNormSq β.homotopy := frobNormSq_nonneg _
+        nlinarith
+      _ = 2 * frobNormSq β.homotopy * frobNormSq α'.homotopy * (frobNormSq (S.A) + frobNormSq (S.A)) := by
+        ring
+  have h_inter : frobNormSq (Δ₁ + Δ₂) ≤
+      4 * (frobNormSq (S.A) + 2 * frobNormSq (S.A) + frobNormSq (S.A)) * frobNormSq β.homotopy * frobNormSq α'.homotopy := by
+    nlinarith
+  have hβ : 0 ≤ frobNormSq β.homotopy := frobNormSq_nonneg _
+  have hα' : 0 ≤ frobNormSq α'.homotopy := frobNormSq_nonneg _
+  have h_prod : 0 ≤ frobNormSq β.homotopy * frobNormSq α'.homotopy := mul_nonneg hβ hα'
+  calc
+    frobNormSq (Δ₁ + Δ₂)
+        ≤ 4 * (frobNormSq (S.A) + 2 * frobNormSq (S.A) + frobNormSq (S.A)) * frobNormSq β.homotopy * frobNormSq α'.homotopy := h_inter
+    _ = 16 * frobNormSq (S.A) * frobNormSq β.homotopy * frobNormSq α'.homotopy := by ring
+    _ ≤ (4 * spectralGap 8) ^ 2 * frobNormSq β.homotopy * frobNormSq α'.homotopy := by
+      have h1 : (16 * frobNormSq (S.A)) * (frobNormSq β.homotopy * frobNormSq α'.homotopy) ≤
+          (4 * spectralGap 8) ^ 2 * (frobNormSq β.homotopy * frobNormSq α'.homotopy) :=
+        mul_le_mul_of_nonneg_right hNorm h_prod
+      simpa [mul_assoc] using h1
+
 /-! ### §1.6 源缺陷线性（B1 ① 环，2026-07-29 新增）
 
     source_defect_linearity：向谱算子 A 添加局域缺陷 δλ·P₀ 后，

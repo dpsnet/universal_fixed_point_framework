@@ -57,8 +57,15 @@ theorem trace_pow_mul_commutator_eq_zero {n : ℕ} (G A : Matrix (Fin n) (Fin n)
   1. **时间依赖守恒律**：d/dt tr(A(t)^k) = 0（A 满足谱流方程 dA/dt = [G, A]）。
      需矩阵幂导数规则 (A^k)' = Σ_i A^i A' A^{k-1-i}（非交换 Leibniz，mathlib
      有 HasDerivAt.mul 可归纳构造），代入 §2 即得。属微积分包装，代数核心已闭合。
+     **→ 已闭合（2026-09-19，GPFlowTimeDep.lean）**：借助谱流解
+     A(t) = exp(t·A_F)·A_0·exp(−t·A_F) 证得更强的点式恒等
+     tr(A(t)^k) = tr(A_0^k)（对所有 t），故 t ↦ tr(A(t)^k) 为常值、
+     其 HasDerivAt 处处为 0——`trace_pow_invariant_flow` + `trace_pow_flow_conservation`，
+     零 sorry。避开了矩阵幂导数规则，改用 exp 双侧逆 + 迹幂相似不变性
+     （`SpectralInvariant.trace_pow_similar`）。见 sorry_closure_roadmap §九。
   2. **谱不变性**：tr(A^k) 守恒 ⟺ 特征值（计重数）守恒（Newton 恒等式），
-     即 A(t) 与 A(0) 同谱。需 Newton 恒等式形式化（中等）。
+     即 A(t) 与 A(0) 同谱。需 Newton 恒等式形式化（中等）。第 1 项已给全部
+     Newton 基础量，翻译到特征值谱仍登记开放。
   3. **涡旋 winding 拓扑荷**（命题 4.2）：n = (1/2π) ∮ ∇θ·dl 的离散度数定义与
      同伦不变性。需连续场/同伦提升（相位 θ 场的缠绕数在零点不穿越下不变），
      有限维代数原型内不可达。
