@@ -100,10 +100,10 @@ theorem spectral_invariance {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t
       U * Uinv = NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) * NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
       _ = NormedSpace.exp ((t • A_F) + (-t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
         have hc : Commute (t • A_F : Matrix (Fin n) (Fin n) ℂ) ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) := by
-          simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_right
+          simp [Commute, SemiconjBy, smul_neg]
         rw [Matrix.exp_add_of_commute (t • A_F : Matrix (Fin n) (Fin n) ℂ) ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) hc]
       _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by
-        simp [smul_neg]
+        simp
       _ = 1 := by simp
   have h_similar : spectralFlow A₀ A_F t = U * A₀ * Uinv := rfl
   have h_ident : U * (A₀ - a • (1 : Matrix (Fin n) (Fin n) ℂ)) * Uinv =
@@ -130,7 +130,7 @@ theorem spectral_invariance {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t
       _ = (1 : Matrix (Fin n) (Fin n) ℂ).det * (A₀ - a • 1).det := by rw [h_inv]
       _ = (A₀ - a • 1).det := by simp
   -- a ∈ eigenvalues(A_t) ⇔ det(A_t - aI) = 0 ⇔ det(A₀ - aI) = 0 ⇔ a ∈ eigenvalues(A₀)
-  rw [Matrix.eigenvalues, Set.mem_setOf_eq, h_det_eq]
+  rw [Matrix.eigenvalues, Set.mem_ofPred_eq, h_det_eq]
   exact h
 
 /--
@@ -148,18 +148,18 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
   have h_comm_U : A_S * U = U * A_S := by
     have h_comm_tA : A_S * (t • A_F) = (t • A_F) * A_S := by
       calc
-        A_S * (t • A_F) = t • (A_S * A_F) := by simp [mul_smul_comm]
+        A_S * (t • A_F) = t • (A_S * A_F) := by simp
         _ = t • (A_F * A_S) := by rw [h_commutes]
-        _ = (t • A_F) * A_S := by simp [smul_mul_assoc]
+        _ = (t • A_F) * A_S := by simp
     have h_comm_tA' : Commute A_S (t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
       simpa [Commute, SemiconjBy] using h_comm_tA
     exact h_comm_tA'.exp_right
   have h_comm_Uinv : A_S * Uinv = Uinv * A_S := by
     have h_comm_neg_tA : A_S * (-t • A_F) = (-t • A_F) * A_S := by
       calc
-        A_S * (-t • A_F) = -(t • (A_S * A_F)) := by simp [mul_smul_comm]
+        A_S * (-t • A_F) = -(t • (A_S * A_F)) := by simp
         _ = -(t • (A_F * A_S)) := by rw [h_commutes]
-        _ = (-t • A_F) * A_S := by simp [smul_mul_assoc]
+        _ = (-t • A_F) * A_S := by simp
     have h_comm_neg_tA' : Commute A_S (-t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
       simpa [Commute, SemiconjBy] using h_comm_neg_tA
     exact h_comm_neg_tA'.exp_right
@@ -169,10 +169,10 @@ theorem noether_conservation {n : ℕ} (A_S A₀ A_F : Matrix (Fin n) (Fin n) �
       Uinv * U = NormedSpace.exp (-t • A_F : Matrix (Fin n) (Fin n) ℂ) * NormedSpace.exp (t • A_F : Matrix (Fin n) (Fin n) ℂ) := rfl
       _ = NormedSpace.exp ((-t • A_F) + (t • A_F) : Matrix (Fin n) (Fin n) ℂ) := by
         have hc : Commute ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) := by
-          simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • A_F : Matrix (Fin n) (Fin n) ℂ)).neg_left
+          simp [Commute, SemiconjBy, smul_neg]
         rw [Matrix.exp_add_of_commute ((-t) • A_F : Matrix (Fin n) (Fin n) ℂ) (t • A_F : Matrix (Fin n) (Fin n) ℂ) hc]
       _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by
-        simp [smul_neg]
+        simp
       _ = 1 := by simp
   calc
     Matrix.trace (A_S * spectralFlow A₀ A_F t)
@@ -205,7 +205,7 @@ noncomputable def forceInteractionStrength {n : ℕ} (A_F₁ A_F₂ : Matrix (Fi
 The unified force generator (Paper V §3.4): G = Σ g_i·A_{F,i}.
 In the finite prototype, we represent this as a weighted sum of force generators.
 -/
-noncomputable def unifiedForceGenerator {n : ℕ} (gs : ℂ → Matrix (Fin n) (Fin n) ℂ → Matrix (Fin n) (Fin n) ℂ)
+noncomputable def unifiedForceGenerator {n : ℕ} (_gs : ℂ → Matrix (Fin n) (Fin n) ℂ → Matrix (Fin n) (Fin n) ℂ)
     (g₁ g₂ g₃ g₄ : ℂ) (A_GR A_EM A_strong A_weak : Matrix (Fin n) (Fin n) ℂ) :
     Matrix (Fin n) (Fin n) ℂ :=
   g₁ • A_GR + g₂ • A_EM + g₃ • A_strong + g₄ • A_weak

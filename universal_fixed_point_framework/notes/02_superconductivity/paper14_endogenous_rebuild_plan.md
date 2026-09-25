@@ -2062,3 +2062,392 @@ $S^1\to\mathbb R$、度的同伦不变性、$T^2$ 上双参数版本）；② �
 （⇐ 投影族 $P(k)$ 光滑，属 Kato 微扰论层）。
 
 **同步**：BerryChern §3 开放登记 #4（并注明 #2）标注 §2.31；paper14 升 **v1.39**（变更日志行）。
+
+### 2026-09-24（续）：连续积分层收口 + Kato 微扰论三层（BerryChern.lean §2.32–§2.37）
+
+**桥接（§2.32–§2.34）**：§2.31 之后的连续积分层由三节闭合，均记录于 paper14 变更日志
+v1.40–v1.42 与 BerryChern §3 开放登记 #4：
+- §2.32 **一般度理论第一层**：`Complex.isCoveringMap_exp` + `IsCoveringMap.liftPath` ⟹ 环路提升
+  `exists_exp_lift`、环绕数整性 `winding_integrality`、环路度 `loopDegree`/`loopDegree_eq_int`
+  （任意闭路的度 ∈ ℤ）。
+- §2.33 **度的同伦不变性**：`IsCoveringMap.liftPath_apply_one_eq_of_homotopicRel` ⟹
+  `loopDegree_homotopy_invariant`（§3 #4 拓扑内核）。
+- §2.34 **度的绝热不变性**：`slice` + `loopDegree_adiabatic_invariant`（§3 #4 完整陈述层）；
+  含**重要纠正**——$\pi_2(S^1)=0$ 故 $T^2$ 版**不是**二维度，而是「基点为 $1$ 的环路族」的度不变。
+
+**本轮（§2.35–§2.37）：Kato 微扰论三层——预解式恒等式 → 算子变量可微性**
+
+**背景**：§3 #4 剩余部分（**数值陈数** = 曲率积分）需要曲率被积 $F$ 的可积性/光滑性，
+其源头是**投影族 $P(k)$ 关于参数的光滑性** —— Kato 解析微扰论。
+
+**交付**（`BerryChern.lean` §2.35–§2.37，零 sorry、全库 build 通过）：
+- §2.35 `resolvent_sub_resolvent`：**第一预解式恒等式**（Hilbert 恒等式，谱参数依赖）。
+- §2.36 `resolvent_sub_resolvent_ops`：**第二预解式恒等式** $R(a)-R(b)=R(a)(a-b)R(b)$
+  （算子依赖；纯代数，绕开实例菱形）。
+- §2.37 `resolvent_diff_reduction`：**归约恒等式**
+  `R(a')-R(a)-R(a)(a'-a)R(a) = R(a)·(a'-a)·(R(a')-R(a))`
+  ——把 `HasFDerivAt` 的 little-o 估计**完全归约**为预解式连续性。
+- §2.37 `resolvent_hasFDerivAt`：**预解式对算子变量的 Fréchet 可微性**（#3 闭合）——
+  **关键发现** mathlib 已备 `spectrum.hasFDerivAt_resolvent`
+  （`Analysis/Normed/Algebra/GelfandFormula.lean`，需 `CompleteSpace`），内核 `hasFDerivAt_ringInverse`
+  正是归约所得的高阶项形式。
+- §2.37 `matrix_l2_norm_witness` / `matrix_resolvent_hasFDerivAt`：`Matrix n n ℂ` **固定 L2 算子范数
+  实例**见证与特化。
+
+**实例菱形障碍的最终解法（重要修正）**：§2.35/§2.36 所记 `Matrix n n ℂ` 实例菱形，经本轮实测
+**由 `open scoped Matrix.Norms.L2Operator` 一举化解，无需 `letI`**——该 scoped 实例集同时提供
+L2 算子范数的 `NormedRing`/`NormedAlgebra`/`NormedSpace`/`MetricSpace`
+（`Matrix.instL2OpNormedRing`/`instL2OpNormedAlgebra`/`instL2OpNormedSpace`/`instL2OpMetricSpace`/
+`instCStarAlgebra`），且 mathlib 在 `instL2OpNormedAddCommGroup` 定义处已 `open scoped`，
+使 `where` 填充选中 L2 结构而非乘积拓扑。**修正**：§2.36 判「特化本身不足、须 `letI` 显式固定实例」，
+本轮实测证明 scoped 实例已足够。
+
+**诚实边界（随登）**：闭合的是**预解式对算子变量的可微性**（Kato 第三层，#3）。**仍开放**：
+① 谱参数导数 $dR/dz=-R^2$（mathlib `spectrum.hasDerivAt_resolvent_const_left` 接口已备，下一层可闭合）；
+② Riesz 积分 $\oint R$ 下投影族 $P(k)$ 的显式光滑性；③ $F$ 的可积性与完整数值陈数。
+
+**同步**：BerryChern §3 开放登记 #6（切向量分析构造）标注 §2.35–§2.37；BerryChern §2.35/§2.36
+诚实边界标注 #3 闭合；paper14 升 **v1.45**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §三十七。
+
+### 2026-09-24（续）：Kato 微扰论第四层——谱参数导数 `dR/dz = -R²`（BerryChern.lean §2.38）
+
+**背景**：§2.37 闭合**算子变量**方向的 Fréchet 可微性 `D_a R = δ ↦ R·δ·R`。本轮补齐 Kato 微扰论的
+另一半——**谱参数**方向导数，使**双层可微性基建**齐备（投影族 $P(k)$ 光滑性与谱流方程都同时用到两者）。
+
+**勘查结论**：mathlib 已备 `spectrum.hasDerivAt_resolvent_const_left`
+（`Analysis/Normed/Algebra/GelfandFormula.lean`，需 `CompleteSpace`）：
+`HasDerivAt (resolvent a) (-(resolvent a k ^ 2)) k`，即 `dR/dz = -R²`；故本层为**包装 + 桥接**。
+
+**交付**（`BerryChern.lean` §2.38，零 sorry、全库 build 通过、BerryChern 零 warning）：
+- `resolvent_hasDerivAt`：**谱参数导数** `dR/dz = -R(a,z)²`（一般 Banach 代数，mathlib 包装）。
+- `resolvent_deriv_layers_agree`：**两层导数相容性**（§2.37 ↔ §2.38 桥接）——
+  `-R² = -(R·1·R)`，即谱参数导数恰为算子变量导数 `h ↦ R·h·R` 在**中心单位方向** `h = 1` 处取值之负；
+  印证 $z\cdot1-a$ 中 $z$ 与 $a$ 的**反向中心耦合**（抬升 $a$ 中心分量 ⟺ 降低 $z$，符号相反）。纯代数。
+- `matrix_resolvent_hasDerivAt`：`Matrix n n ℂ` 固定 L2 算子范数实例特化。
+
+**诚实边界（随登）**：闭合的是**预解式对谱参数的可微性**（Kato 第四层）。至此 Kato 微扰论的
+**双层可微性基建**（算子变量 + 谱参数）齐备。**仍开放**：① Riesz 积分 $\oint R$ 下投影族 $P(k)$
+的显式光滑性；② $F$ 的可积性与完整数值陈数（⇐ $P(k)$ 光滑）。
+
+**同步**：BerryChern §2.37 诚实边界标注 ① 已由 §2.38 闭合；BerryChern §3 开放登记 #6 标注 §2.38；
+paper14 升 **v1.46**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §三十八。
+
+### 2026-09-24（续）：Kato 微扰论第五层——Riesz 积分与投影族 `P(k)` 的定量光滑性（BerryChern.lean §2.39）
+
+**背景**：§2.37/§2.38 备好预解式的**双层可微性**（算子变量 `D_aR = δ ↦ R·δ·R`、谱参数 `dR/dz = −R²`）。
+本轮把它**积分**成谱投影——**Riesz 积分**（围道形式谱投影）`P(a) = (2πi)⁻¹ ∮_{|z−c|=r} R(a,z) dz`，
+这是数值陈数被积 `F` 良定义（⇐ `P(k)` 光滑）的最后一环。
+
+**交付**（`BerryChern.lean` §2.39，零 sorry、全库 build 通过、BerryChern 零 warning）：
+- `rieszIntegral`：**Riesz 积分定义**（`(2πi)⁻¹ • ∮ R dz`，`circleIntegral` 承载）。
+- `resolvent_differentiableOn_sphere` + `circleIntegrable_resolvent`：**良定义性**（围道避开谱 ⟹
+  `z ↦ R(a,z)` 圆周上可微 ⟹ 圆周可积）。
+- `resolventCircleIntegrand`/`resolventCircleDeriv`：围道被积函数与其**对参数的导数**
+  （后者即 §2.37 算子变量导数 `R·(·)·R` 的围道版本）。
+- `norm_resolventCircleDeriv_le`：点态导数界 `‖deriv γ • R·(·)·R‖ ≤ |r|·M²`。
+- `norm_resolvent_sub_le`/`norm_resolvent_sub_le_of_bound`：**§2.36 第二预解式恒等式的定量版**
+  `‖R(a)−R(b)‖ ≤ ‖R(a)‖‖R(b)‖‖a−b‖ ≤ M²‖a−b‖`（因 `NormedRing` 仅**次可乘**（`norm_mul_le`）故为 `≤`）。
+- **`norm_rieszIntegral_sub_le`**：**投影族参数 Lipschitz 估计** `‖P(a)−P(b)‖ ≤ r·M²·‖a−b‖`，
+  关键工具是 mathlib 圆周积分范数估计 `circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const`
+  ——恰为 Riesz 积分的 `(2πi)⁻¹` 归一化量身定制；参数差经 `circleIntegral.integral_sub` 化为差函数围道积分。
+- `lipschitzOnWith_rieszIntegral` + `continuousAt_rieszIntegral`：**Lipschitz / 参数连续性**。
+
+**诚实边界（随登）**：闭合 Riesz 积分**良定义性**与投影族**定量光滑性（Lipschitz/连续）**。
+**仍开放**：① Riesz 积分的**微分** `HasFDerivAt (fun x => P(x)) (∮ R·(·)·R)`——**障碍已精确定位**：
+参数积分求导（`hasFDerivAt_integral_of_dominated_of_fderiv_le`）接口处再现 §2.35/§2.36 所记
+**`HasFDerivAt` 实例菱形**（mathlib 侧 `NonUnitalNormedRing.toNormedAddCommGroup` vs 本文上下文侧
+`NonUnitalSeminormedRing.toSeminormedAddCommGroup` 两条 `AddCommGroup` 路径），须 `letI` **显式固定实例**；
+② Riesz 投影**幂等性** `P² = P`（需双重围道积分 + Cauchy 定理）；③ `F` 的可积性与完整数值陈数。
+
+**同步**：BerryChern §2.38 诚实边界标注 ① 已由 §2.39 闭合；BerryChern §3 开放登记 #6 标注 §2.39；
+paper14 升 **v1.47**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §三十九。
+
+### 2026-09-24（续）：Kato 微扰论第六层——投影族 `P(k)` 的 Fréchet 可微性 / 正面攻克 `HasFDerivAt` 实例菱形（BerryChern.lean §2.40）
+
+**背景**：§2.39 的 Riesz 积分**微分**受阻于参数积分求导接口处的 **`HasFDerivAt` 实例菱形**。
+本轮**正面攻克**该菱形（这是 §2.35 起一路登记的障碍）。
+
+**菱形精确诊断（随登，修正 §2.35–§2.39 初判）**：本版本 mathlib 中 `HasFDerivAt` 的上下文为
+`[AddCommGroup E] [Module 𝕜 E] [TopologicalSpace E]`（**不含范数**），故菱形**不在 `AddCommGroup A`**，
+而在 **`Module ℂ A` 内部的 `SeminormedAddCommGroup A` 参数**上：`NormedRing A` 经
+`NonUnitalSeminormedRing.toSeminormedAddCommGroup` 一条，`NormedAlgebra.toNormedSpace` 内部的
+`NormedSpace` 又自带一条（`set_option pp.explicit true` 展开即可见）。
+
+**解法（两条）**：
+1. **结论与引理逐字对齐**：围道参数化定理结论改取**集合积分形式**
+   `∫ θ, ... ∂(volume.restrict (Ι 0 2π))`，与 `hasFDerivAt_integral_of_dominated_of_fderiv_le`
+   的结论**完全相同**；注意 `intervalIntegral f a b μ := ∫ x in Ioc a b, f x ∂μ - ∫ x in Ioc b a, f x ∂μ`
+   是**独立定义**，与集合积分仅**命题相等**（`intervalIntegral.integral_of_le` + `Set.uIoc_of_le`）。
+2. **弃用 `simpa ... using`**：其语义为**脱离期望类型**独立精化 `e`，致实例参数按默认合成而错位；
+   改用 `exact`/`refine`（期望类型传入精化）。**判别实验**（本轮探针专此验证）：同一目标下
+   `simpa only using` 失败、`exact` 成功。
+
+**交付**（`BerryChern.lean` §2.40，零 sorry、全库 build 通过、BerryChern 零 warning）：
+- `rieszIntegral_eq_integral`：`intervalIntegral` ↔ 集合积分形式桥接。
+- `hasFDerivAt_circleIntegral_resolvent`：围道参数化形式的参数可微性（集合积分形式）。
+- **`rieszIntegral_hasFDerivAt`**：**Riesz 积分的微分** `D_a P = (2πi)⁻¹ ∮ R(a,z)·(·)·R(a,z) dz`。
+
+**诚实边界（随登）**：闭合 Riesz 积分的**微分**（Kato 第六层）；至此投影族 `P(k)` 的 **C¹ 光滑性**
+在形式上就位。**仍开放**：① Riesz 投影**幂等性** `P² = P`（需双重围道积分 + Cauchy 定理）；
+② `F` 的可积性与完整数值陈数。
+
+**同步**：BerryChern §2.39 诚实边界标注 ① 已由 §2.40 闭合（并修正菱形位置初判）；BerryChern §3 开放登记
+#6 标注 §2.40；paper14 升 **v1.48**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §四十。
+
+### 2026-09-24（续）：Kato 微扰论第七层——Riesz 投影的幂等性 `P² = P`（BerryChern.lean §2.41）
+
+**背景**：§2.39 的 Riesz 积分 `P(a) = (2πi)⁻¹ ∮_{C(c,r)} R(a,z) dz` 的**良定义性**与**定量光滑性**、
+§2.40 的**参数可微性**齐备后，本轮闭合其**幂等性** `P² = P`——即该 Riesz 积分确为**投影算子**
+（谱投影），从而 Berry 曲率 `F = −i·Tr(P [A,B])` 中的 `P` 具备「投影」这一代数身份。这是
+`F` 良定义的最后一环。
+
+**交付**（`BerryChern.lean` §2.41，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+- **双重围道归约 `circleIntegral_resolvent_mul_eq`**：外圈 `K₁ = ∮_{C(c,r₁)} R(z) dz`、
+  内圈 `K₂ = ∮_{C(c,r₂)} R(w) dw`（`r₂ < r₁`，环形区域避开谱）满足 `K₁ K₂ = 2πi · K₂`。
+  - 算子值圆周积分**右/左线性** `circleIntegral_mul_const`/`circleIntegral_const_mul`
+    （`ContinuousLinearMap.intervalIntegral_comp_comm` + `mul` 及其 `flip`）把 `K₁K₂` 改写为
+    二重围道积分 `∮_{C(c,r₁)}∮_{C(c,r₂)} R(z)R(w)`；
+  - 逐点用**预解式乘法恒等式** `resolvent_mul_resolvent_spectral`
+    （`R(z)R(w) = (w−z)⁻¹ • (R(z)−R(w))`，由 §2.35 `resolvent_sub_resolvent` 提取中心标量
+    `(w−z)·1` 得 `resolvent_sub_resolvent_smul`，再 `inv_smul_smul₀`）；
+  - 内层线性拆出后，`z` 落在内圈 `C(c,r₂)` **之外**，故 `∮_{C(c,r₂)} (w−z)⁻¹ dw = 0`
+    （`circleIntegral_inv_sub_eq_zero`，用 mathlib
+    `circleIntegral_eq_zero_of_differentiable_on_off_countable`）；
+  - 剩一项 `−∮_{C(c,r₁)}∮_{C(c,r₂)} (w−z)⁻¹ • R(w)`，用**算子值双围道 Fubini 交换**
+    `circleIntegral_circleIntegral_swap` 交换次序（显式参数化 `circlePairIntegrand`，
+    `θ` 对应外圈、`φ` 对应内圈，再用 `intervalIntegral_intervalIntegral_swap`；可积性来自
+    被积函数在参数化乘积 `[0,2π]×[0,2π]` 上连续 ⟹ `integrableOn_compact` + `mono_set`）；
+  - 内层化为**标量留数** `∮_{C(c,r₁)} (w−z)⁻¹ dz = 2πi`（`w ∈ D(c,r₁)`，
+    mathlib `circleIntegral.integral_sub_inv_of_mem_ball`），得 `K₁K₂ = 2πi·K₂`。
+- **标量归一化 `rieszIntegral_mul_eq`**：`P₁ P₂ = P₂`（因 `(2πi)⁻¹·(2πi)⁻¹·(2πi) = (2πi)⁻¹`）。
+- **围道独立性 `rieszIntegral_eq_of_lt`**：环形区域避开谱 ⟹ `P_{r₁} = P_{r₂}`
+  （mathlib annulus 版 Cauchy–Goursat `circleIntegral_eq_of_differentiable_on_annulus_off_countable`）。
+- **收口 `rieszIntegral_idempotent`**：`P_{r₁}² = P_{r₁}P_{r₂} = P_{r₂} = P_{r₁}`。
+
+**诚实边界（随登）**：本定理假设「存在 `0 < r₂ < r₁` 使**闭环形区域** `D(c,r₁) \ D(c,r₂)` 避开谱」——
+即 `C(c,r₁)` 恰为**谱岛边界**（岛含于 `D(c,r₂)`，或谱全在 `D(c,r₁)` 之外）。这是 Riesz 投影
+幂等性的**标准 Kato 前提**：单一围道本身不足以支撑 `P² = P` 的双重积分论证，须有辅助内圈作
+Fubini 载体。**仍开放**：① `F` 的可积性与完整数值陈数。
+
+**同步**：BerryChern §2.39/§2.40 诚实边界标注 ① 已由 §2.41 闭合；BerryChern §3 开放登记 #6
+标注 §2.41；paper14 升 **v1.49**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §四十一。
+
+### 2026-09-24（续）：Kato 微扰论第八层（收口）——Berry 曲率被积函数的连续性与环面可积性（BerryChern.lean §2.42）
+
+**背景**：§2.39–§2.41 已建立 Riesz 投影族 `P(k) = (2πi)⁻¹ ∮_{C(c,r)} R(k,z) dz` 的**良定义性**、
+**定量光滑性**、**参数可微性**与**幂等性** `P² = P`。本轮闭合 §3 #1 登记中「环面上 `F` 的
+**可积性**（⇐ `P` 光滑）」这一开放项——即把「`P` 光滑」经**多项式复合 + 紧致域**传化为被积
+函数的环面可积性，从而 `chernIntegralTorus F` 的**分析前提**（被积可积）成立。
+
+**交付**（`BerryChern.lean` §2.42，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+- **被积函数对三元组的连续性 `continuous_berryCurvature`**：`F = −i·Tr(P[A,B])` 是矩阵乘法、
+  迹与标量乘的**多项式**复合，故 `(P,A,B) ↦ F(P,A,B)` 连续（`unfold berryCurvature` + `fun_prop`）。
+- **连续族复合 `continuous_berryCurvature_comp`**：投影族 `x ↦ P(x)` 与切向量族 `x ↦ A(x), B(x)`
+  连续 ⟹ `x ↦ F(P(x),A(x),B(x))` 连续（§2.39 已证 Riesz 积分族的参数连续性，此处为其复合层）。
+- **环面参数化连续性 `continuous_torusMap`**：`θ ↦ (cᵢ + Rᵢ·e^{θᵢ i})ᵢ` 连续。
+- **连续 ⟹ 环面可积 `torusIntegrable_of_continuous`**：`f` 连续 ⟹ `f ∘ torusMap c R` 在紧致参数域
+  `Icc 0 (2π)ⁿ` 上连续 ⟹ 可积（`Continuous.integrableOn_Icc`）。
+- **主定理 `torusIntegrable_berryCurvature`**：连续投影/切向量族 ⟹ `F(k)` 在 `T² = {|z₀|=|z₁|=1}`
+  上可积——即 `chernIntegralTorus F` 的**分析前提**成立。
+- **先验有界性 `norm_chernIntegralTorus_le`**：`‖F‖ ≤ C` 在环面上 ⟹ `‖∯ F‖ ≤ (2π)²·C`
+  （mathlib `norm_torusIntegral_le_of_norm_le_const`，半径 1 时 `∏ᵢ|Rᵢ| = 1`）。
+
+**诚实边界（随登）**：本节闭合被积函数的**连续性**与**环面可积性**（§3 #1 的「`F` 可积性」）。
+**仍开放**：① 完整**数值**陈数（须将 `F` 具体化为 `P(k)` 的显式谱数据并在 `T²` 上求积分值）；
+② 陈数**整性** `C ∈ ℤ`（度理论/同伦提升论证，§3 #2/#4）。
+
+**同步**：BerryChern §2.41 诚实边界标注「`F` 可积性」已由 §2.42 闭合；BerryChern §3 开放登记
+#1/#6 标注 §2.42；paper14 升 **v1.50**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §四十二。
+
+### 2026-09-24（续）：环面留数定理（Laurent 单项式层）（BerryChern.lean §2.43）
+
+**背景**：§2.42 闭合了 Berry 曲率被积函数 `F` 在环面 `T²` 上的**连续性**与**可积性**——即
+`chernIntegralTorus F` 的**分析前提**。本轮把「`∯ F` 的**数值**」在 **Laurent 单项式层**上真正
+算出来：显式两带模型的曲率密度 `F` 在**全局标架**（`zᵢ = e^{iθᵢ}` 取作环面复坐标）下常可展为
+`z₀^m z₁^n` 的**有限线性组合**，故其环面积分由留数定理给出**闭式**。
+
+**交付**（`BerryChern.lean` §2.43，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+- **一维留数分类** `circleIntegral_zpow_of_ne`/`circleIntegral_zpow_neg_one`：`∮_{C(0,1)} z^m = 2πi·δ_{m,-1}`
+  （mathlib `circleIntegral.integral_sub_zpow_of_ne` 与 `circleIntegral.integral_sub_inv_of_mem_ball`）。
+- **环面单项式可积性** `torusIntegrable_monomial`：`z₀^m z₁^n` 在 `T²` 上可积（`Continuous.zpow₀` + `integrableOn_Icc`）。
+- **环面单项式因子化** `torusIntegral_dim2_monomial_factor`：`∯ z₀^m z₁^n = (∮ z^m)(∮ z^n)`
+  （`torusIntegral_succ` 降维 + `torusIntegral_dim1` 识别单位圆 + `integral_smul_const`）。
+- **环面留数定理（主定理）** `torusIntegral_dim2_monomial`：`∯_{T²} z₀^m z₁^n = (2πi)²` 当且仅当
+  `m = n = -1`，否则 `0`——§2.13 `torusIntegral_dim2_double_inv` 为其特例。
+- **Laurent 多项式线性化** `torusIntegrable_monomial_const_mul`/`torusIntegrable_monomial_sum`/
+  `torusIntegral_dim2_monomial_linear`/`torusIntegral_dim2_monomial_sum`/`torusIntegral_dim2_laurentPoly`：
+  有限 Laurent 组合的环面积分 `= (2πi)²·c_{-1,-1}`——即 `∯` 是 **`z₀⁻¹z₁⁻¹` 系数提取器**。
+
+**诚实边界（随登）**：本节闭合 **Laurent 单项式层**的完整留数分类（**标架类**被积的闭式求值）。
+**仍开放**：一般两带模型的曲率密度 `F` 通常含**非 Laurent** 结构（如 `(1 + 2u)^{-3/2}` 型根式
+分母），其陈数**非零**显式值与整性仍需完整度理论/数值积分基建（§3 #1）。
+
+**同步**：BerryChern §3 开放登记 #1 标注 §2.43（Laurent 层闭式陈数）；paper14 升 **v1.51**（版本行 +
+变更日志行）；`sorry_closure_roadmap.md` 追加 §四十三。
+
+### 2026-09-24（续）：显式两带模型的结构性定理（BerryChern.lean §2.44）
+
+**背景**：§2.43 把 `∯` 化为 **`z₀⁻¹z₁⁻¹` 系数提取器**。本轮把该闭式求值与**两带模型**的代数结构
+对接，闭合三条**结构性定理**（paper14 G3 的模型层）。
+
+**交付**（`BerryChern.lean` §2.44，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+- **切向量双双反号不变** `berryCurvature_neg_neg`：`F(P,−A,−B) = F(P,A,B)`（`[−A,−B] = [A,B]`，`noncomm_ring`）。
+- **互补带求和规则（主定理）** `berryCurvature_add_complement`：`F_P + F_Q = 0`（`Q = 1 − P`）——纯
+  迹论恒等式（`Tr([A,B]) = 0`），**无需**幂等/厄米；积分层 `chernIntegralTorus_berryCurvature_add_complement`
+  给出 `C_occ + C_empty = 0`（两带陈数荷守恒）。
+- **平带类** `berryCurvature_eq_zero_of_flat`/`chernIntegralTorus_flat_eq_zero`：`A = B = 0 ⟹ F = 0`，
+  故平带/平凡标架类 `C = 0`。
+- **标架类的闭式陈数** `chernIntegralTorus_laurentPoly`/`chernIntegralTorus_laurentPoly_eq_zero`：
+  Laurent 多项式层 `∯F = (2πi)²·c_{-1,-1}`；**无 `z₀⁻¹z₁⁻¹` 项 ⟹ C = 0**。
+
+**诚实边界（随登）**：本节闭合**互补带求和规则**、**平带类 C = 0** 与**标架类（Laurent 多项式层）
+的闭式陈数**。**仍开放**：① 物理陈数 `C = (1/2π)∫ F d²k` 用 **BZ 测度 `d²k`**（非本文的复围道测度
+`d²z`）——「全局标架 ⟹ C = 0」的 **Stokes 论证**需 BZ 测度积分基建；② 一般两带模型（含根式分母的
+`F`）的非零陈数显式值与整性（§3 #1）。
+
+**同步**：BerryChern §3 开放登记 #1 标注 §2.44（两带模型结构性定理 + BZ 测度开放项）；paper14 升
+**v1.51**（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §四十四。
+
+### 2026-09-24（续）：布里渊区测度层——Fourier 系数提取、Stokes 论证与 Jacobi 字典（BerryChern.lean §2.45）
+
+**背景**：§2.44 登记的开放项 ①——物理陈数 `C = (1/2π)∫_{BZ} F d²k` 用**布里渊区测度 `d²k = dk₀dk₁`**
+（非 §2.43 的复围道测度 `d²z`），「全局标架 ⟹ C = 0」的 **Stokes 论证**需 BZ 测度积分基建。本轮
+闭合该基建并交付四条测度层定理。
+
+**交付**（`BerryChern.lean` §2.45，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+- **BZ 测度积分与物理陈数** `bzIntegral`（迭代区间积分 `∫₀^{2π}∫₀^{2π}`）+ `physicalChernNumber`
+  （`(2π)⁻¹·bzIntegral`）+ 线性/常值 `bzIntegral_zero`/`bzIntegral_neg`/`bzIntegral_const`
+  （`∫_{BZ} c d²k = (2π)²c`，`push_cast` + `ring` 化解实→复强转）。
+- **一维 BZ 留数** `intervalIntegral_exp_int_mul_I`：`∫₀^{2π} e^{ink} dk = 2π·δ_{n,0}`——原始函数
+  `e^{ink}/(in)` 经 FTC `intervalIntegral.integral_deriv_eq_sub'` 得端差，两端点经
+  `Complex.exp_int_mul_two_pi_mul_I`（`e^{2πin} = 1`）相消。
+- **BZ 留数定理（主定理）** `bzIntegral_bzFourier`：`∫_{BZ} e^{i(mk₀+nk₁)} d²k = (2π)²·δ_{m,0}δ_{n,0}`
+  （经 Fubini 分解 `bzIntegral_separable`）+ 推论 `bzIntegral_bzFourier_eq_zero`/
+  `bzIntegral_bzFourier_zero_zero`——与 §2.43 复围道留数定理 `torusIntegral_dim2_monomial` 互为两套
+  测度下的平行结果。
+- **Stokes 论证** `bzIntegral_stokes_eq_zero`：单值联络 `F = ∂₀A₁ − ∂₁A₀` + `A₀,A₁` 关于对应变量
+  `2π`-周期、可微、导数可积（+ Fubini 交换可积性）⟹ `bzIntegral F = 0`（内层 FTC 消 `∂₁A₀`，外层
+  `intervalIntegral_intervalIntegral_swap` 后 FTC 消 `∂₀A₁`）+ 推论 `physicalChernNumber_eq_zero_of_stokes`
+  （**全局标架 ⟹ C = 0**）。
+- **Jacobi 字典** `torusIntegral_dim2_eq_bzIntegral`：`∯_{T²} F(z) d²z = ∫_{BZ} (∂z₀/∂k₀)(∂z₁/∂k₁)·F(z(k)) d²k`
+  （`zᵢ = e^{ikᵢ}`，Jacobi 因子 `∂zᵢ/∂kᵢ = i·zᵢ`；经 `torusIntegral_succ` 降维 + `torusIntegral_dim1`
+  识别 `C(0,1)` + `circleIntegral` 展开 + Fubini）+ 单项式层一致性 `torusIntegral_dim2_monomial_eq_bzIntegral`
+  （`∯ z₀^m z₁^n = −∫_{BZ} z₀^{m+1} z₁^{n+1} d²k`，Jacobi 因子 `(iz₀)(iz₁) = −z₀z₁` 平移指数，§2.43 极点
+  `(-1,-1)` 对应 BZ 零频 `(0,0)`，两套留数定理一致）。
+
+**诚实边界（随登）**：本节闭合开放项 ①（BZ 测度基建 + Stokes 论证 + 两测度 Jacobi 字典）。
+**仍开放**：② 一般两带模型（含根式分母的 `F`，如 `(1+2u)^{-3/2}` 型）的非零陈数显式值与整性；
+③ 具体模型的**数值**陈数（需本节字典 + 数值留数求值）。
+
+**同步**：BerryChern §3 开放登记 #1 标注 §2.45；paper14 升 **v1.52**（版本行 + 变更日志行）；
+`sorry_closure_roadmap.md` 追加 §四十五。
+
+### 2026-09-25：显式两带模型——Pauli 代数核、根式分母层与可分离模型的零陈数（BerryChern.lean §2.46）
+
+**背景**：§2.45 登记的开放项 ②（一般两带模型含**根式分母**的 `F` 的非零陈数显式值与整性）
+与 ③（具体模型的**数值**陈数）需把 §2.44 的**结构性**结果落到**显式模型**层，闭合
+「模型 → 曲率 → BZ 积分 → 陈数」的完整链条。
+
+**交付**（`BerryChern.lean` §2.46，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **两带 Pauli 代数核**：复 Pauli 矩阵 `pauliSigmaX`/`pauliSigmaY`/`pauliSigmaZ`、Pauli 组合
+   `pauliVec d = d₀σₓ + d₁σᵧ + d₂σ_z`、复三维内积 `dot3`/叉积 `cross3`，及乘法恒等式
+   `pauliVec_mul`（`(d·σ)(e·σ) = (d·e)·1 + i·(d×e)·σ`）、平方 `pauliVec_sq`、迹
+   `pauliVec_mul_trace`（`Tr((d·σ)(e·σ)) = 2 d·e`）、交换子 `pauliVec_commutator`
+   （`[(d·σ),(e·σ)] = 2i·(d×e)·σ`），及 `dot3_comm`/`cross3_self`/`cross3_anticomm`/
+   `pauliVec_neg`/`pauliVec_trace`。
+2. **两带投影与曲率闭式**：`bandProj n = ½(1 − n·σ)`（幂等 `bandProj_idempotent`（`n·n = 1
+   ⟹ P² = P`）/迹 1 `bandProj_trace`/补带 `bandProj_complement`）+ **曲率闭式**
+   `berryCurvature_bandProj`：切向量 `A = −½ a·σ`、`B = −½ b·σ` 时
+   `F = −i·Tr(P[A,B]) = −½ · n·(a × b)`——**两带 Berry 曲率化为纯量三重积**。
+3. **根式分母层（开放项 ② 的代数核）**：`dot3_smul_cross3_smul`
+   （`(c·d)·((c·a + q·d) × (c·b + t·d)) = c³ · d·(a × b)`，两个含 `d` 的 Leibniz 修正项由
+   三重积**反对称性** `dot3_self_cross_right`/`dot3_self_cross_left` 消零）+
+   `berryCurvature_normalized_d`（`F = −½·(1/s³)·d·(a × b)`，`s² = d·d`——**根式分母
+   `(d·d)^{−3/2}` 显式出现且与修正项无关**）。
+4. **可分离模型零陈数完整实例（开放项 ③ 的一个完整实例）**：`sepDr = (sin k₀ sin k₁,
+   sin k₀ cos k₁, cos k₀)`（**单位向量** `sepDr_unit`）+ 切向量 `sepAr`/`sepBr` + 三重积
+   `sepDr_triple`（`d·(∂₀d × ∂₁d) = −sin k₀`）⟹ 显式曲率 `berryCurvature_sepD`（`F = ½ sin k₀`）
+   + 一维 BZ 留数 `intervalIntegral_sin_eq_zero`（`∫₀^{2π} sin = 0`）+ 分离性
+   `bzIntegral_separable` ⟹ `bzIntegral_separable_sin` ⟹ `bzIntegral_berryCurvature_sepD`/
+   `physicalChernNumber_sepD_eq_zero`（**物理陈数 `C = 0`**，全链条零 sorry）。
+
+**诚实边界（随登）**：本节闭合开放项 ② 的**代数核**与 ③ 的**一个完整实例**。**仍开放**：
+②′ 一般两带模型的**非零**陈数显式值与整性——数值勘查（`_model_explore6.py`/`_model_explore8.py`）
+表明 (i) QWZ 型 `d = (sin k₀, sin k₁, m + cos k₀ + cos k₁)` 的曲率分母非 Laurent 且非初等，
+闭式求值需椭圆型积分或 `T²→S²` 度理论，数值确认 `−2 < m < 0` 取 `C = −1`、`0 < m < 2` 取
+`C = +1`、`|m| > 2` 取 `C = 0`；(ii) Laurent 多项式向量生成的 rank-1 投影族数值度均为 0，
+与非 Laurent 结构性判据一致。
+
+**同步**：BerryChern §3 开放登记 #1 标注 §2.46（②→②′、③ 部分闭合）；paper14 升 **v1.53**
+（版本行 + 变更日志行）；`sorry_closure_roadmap.md` 追加 §四十六。
+
+### 2026-09-25：耦合两带模型的显式曲率——QWZ 型（BerryChern.lean §2.47）
+
+**背景**：§2.46 把根式分母层 `F = −½·s⁻³·d·(a × b)`（`s² = d·d`）在**抽象**层闭合，
+并给出一个**单位向量**的可分离实例（`s = 1`，无根式分母）。开放项 ②′ 需把该层
+**实例化**到**耦合**（非可分离、非单位）的模型上，闭合「模型 → 曲率」一环。
+
+**交付**（`BerryChern.lean` §2.47，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **QWZ 型 `d` 向量**：`qwzDr m k₀ k₁ = (sin k₀, sin k₁, m + cos k₀ + cos k₁)` + 切向量
+   `qwzAr = ∂₀d = (cos k₀, 0, −sin k₀)`、`qwzBr = ∂₁d = (0, cos k₁, −sin k₁)`。
+2. **归一化恒等式**：`qwzDr_sq`（`d·d = (m + cos k₀ + cos k₁)² + sin²k₀ + sin²k₁`）+
+   等价展开 `qwzDr_sq_alt`（`d·d = 2 + m² + 2m(cos k₀ + cos k₁) + 2cos k₀cos k₁`——§2.46
+   登记的**根式分母** `(2 + m² + 2m(cos k₀ + cos k₁) + 2cos k₀cos k₁)^{3/2}` 的底数）。
+3. **耦合三重积**：`qwzDr_triple`（`d·(∂₀d × ∂₁d) = cos k₀ + cos k₁ + m·cos k₀cos k₁`，
+   需三角恒等式 `sin² + cos² = 1`，**非纯代数**）。
+4. **显式曲率（根式分母显式）**：`berryCurvature_normalized_d_zero`（§2.46 根式分母层的
+   `q = t = 0` 特例）+ `berryCurvature_qwz`（`F = −½·s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`）+
+   `berryCurvature_qwz_unit`（物理归一化 `s = √(d·d)`，**根式分母 `(d·d)^{−3/2}` 显式**）。
+5. **平凡相与临界点结构事实**：`qwzDr_sq_pos_of_abs_gt_two`（`|m| > 2` ⟹ `d·d > 0`，
+   `n = d/|d|` 光滑且 `n_z` 恒同号）+ `qwzDr_zero_pi_zero`/`qwzDr_zero_zero_pi`
+   （`m = 0` 时 `d` 在 `(π,0)`、`(0,π)` 处消零——狄拉克点/能隙闭合）。
+
+**诚实边界（随登）**：本节交付开放项 ②′ 的**显式被积函数**与平凡相/临界点结构事实。
+**仍开放**：QWZ 型**非零**陈数显式值——积分分母**非 Laurent 且非初等**（内层即完全椭圆
+积分），闭式求值需 `T²→S²` 度理论。**可形式化路径**：`|m| > 2` 时 `n` 落在半球（可缩），
+可经 §2.45 的 Stokes 论证 + 立体角 1-形式落地。
+
+**同步**：BerryChern §3 开放登记 #1 追加 §2.47；paper14 升 **v1.54**（版本行 + 变更日志行）；
+`sorry_closure_roadmap.md` 追加 §四十七。
+
+### 2026-09-25：平凡相的 Stokes 论证——立体角原函数与 QWZ 零陈数（BerryChern.lean §2.48）
+
+**背景**：§2.47 指出 QWZ 型模型平凡相 `|m| > 2` 的陈数应为零，其可形式化路径是 §2.45 的
+**Stokes 论证** `bzIntegral_stokes_eq_zero` 配合「立体角 1-形式」
+`αᵢ = (n₀∂ᵢn₁ − n₁∂ᵢn₀)/(1+n₂)`（`dα = ω` 当 `n₂ ≠ −1`）。本节把该路径的**代数核**落地。
+
+**交付**（`BerryChern.lean` §2.48，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **ℝ³ 向量代数**：`dot3r_comm` + 叉积三重恒等式 `cross3r_cross_eq` + Lagrange 恒等式
+   `dot3r_cross3r_self` + 正定性 `dot3r_self_eq_zero` + **平行引理**
+   `eq_smul_of_cross3r_eq_zero`（`w × n = 0`、`n·n = 1` ⟹ `w = (n·w)·n`）+
+   推论 `cross3r_cross_eq_zero`（`n ⊥ a₀, a₁` ⟹ `(a₀ × a₁) × n = 0`）。
+2. **立体角原函数的系数级精确性（`dα = ω`）**：`solidAngle_primitive_core` /
+   `solidAngle_primitive_exact`（`∂₀α₁ − ∂₁α₀ = n·(a₀ × a₁)`，`n` 单位、`aᵢ ⊥ n`、
+   `1 + n_z ≠ 0`）。
+3. **Stokes 归约**：`berryCurvatureScalar` / `berryCurvatureScalar_eq_primitive_curl`
+   （`F = −½·n·(a₀ × a₁) = −½·(∂₀α₁ − ∂₁α₀)`，即 `F = ∂₀A₁ − ∂₁A₀` 在 `Aᵢ = −½·αᵢ` 处成立）
+   + ℝ→ℂ 桥 `berryCurvature_bandProj_ofReal`。
+4. **QWZ 平凡相的单位向量与切向量**：`qwzNr`（`n = d/|d|`，`qwzNr_unit`）+ `qwzAnr`/`qwzBnr`
+   （真切向量，正交性 `dot3r_qwzNr_qwzAnr`/`dot3r_qwzNr_qwzBnr`）+ 正则性 `qwzNz_pos`
+   （`2 < m` ⟹ `n_z > 0` ⟹ `1 + n_z ≠ 0`，无 Dirac 弦）+ 归一化三重积
+   `qwz_triple_normalized`。
+5. **QWZ 曲率的立体角归约**：`qwz_curvature_eq_primitive_curl`（`F = −½·(∂₀α₁ − ∂₁α₀)`）。
+6. **条件 Stokes 闭合**：`physicalChernNumber_qwz_eq_zero_of_stokes`（单值联络
+   `F = ∂₀A₁ − ∂₁A₀` + 周期性/可微性/可积性前提 ⟹ 物理陈数 `C = 0`）。
+
+**诚实边界（随登）**：本节交付立体角原函数层的**代数核**与 QWZ 平凡相的**条件闭合**。
+**仍开放**：从 `αᵢ` **构造**全局标架 `Aᵢ = −½·αᵢ` 并验证其 `2π`-周期性/可微性/可积性
+（把 `physicalChernNumber_qwz_eq_zero_of_stokes` 的解析前提**无条件化**），从而给出
+`2 < m` 时 `physicalChernNumber (qwzCurvature m) = 0` 的**无条件**证明（登记为下一层）；
+以及 `|m| < 2` 分支的非零陈数（椭圆积分 / `T²→S²` 度理论）。
+
+**同步**：BerryChern §3 开放登记 #1 追加 §2.48；paper14 升 **v1.55**（版本行 + 变更日志行）；
+`sorry_closure_roadmap.md` 追加 §四十八。

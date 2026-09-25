@@ -28,6 +28,12 @@ import Mathlib.LinearAlgebra.Projection
 import MUFPFormalization.SpectralInvariant
 import Mathlib.MeasureTheory.Integral.CircleIntegral
 import Mathlib.MeasureTheory.Integral.TorusIntegral
+import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
+import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.MeasureTheory.Integral.Bochner.Set
 import Mathlib.Analysis.InnerProductSpace.Basic
 import Mathlib.Analysis.InnerProductSpace.Adjoint
@@ -41,6 +47,8 @@ import Mathlib.Analysis.CStarAlgebra.Unitary.Connected
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Eigs
 import Mathlib.Analysis.Complex.CoveringMap
 import Mathlib.Topology.Homotopy.Lifting
+import Mathlib.Algebra.Algebra.Spectrum.Basic
+import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 import Mathlib.Analysis.InnerProductSpace.ProdL2
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Prod
@@ -3523,6 +3531,1039 @@ theorem loopDegree_homotopy_invariant
 
 end K0DegreeHomotopy
 
+/-!
+## §2.34 度的绝热不变性：闭合 §3 #4 的完整陈述
+
+§3 #4（陈数**绝热不变性**）的**完整陈述层**。一个重要勘查结论（避免错误目标）：**不能**把
+$T^2$ 版理解为「某个 $T^2\to S^1$（或 $S^2\to S^1$）映射的二维度」——因 $\pi_2(S^1)=0$，
+**二维度不存在**。正确表述是**「基点为 $1$ 的环路族」的度沿绝热参数不变**。
+
+本层把该表述落成定理：设 `γ : C(I × I, ℂ)` 处处非零、且每条 `l`-切片都是基点 `1` 的闭路
+（`γ (0, l) = 1`、`γ (1, l) = 1`），则**两端切片的度相同**——即 C 在绝热形变下不变。
+证明**归约到 §2.33**：同伦即 `γ` 自身（坐标交换 $\gamma(l,t)\mapsto\gamma(t,l)$），
+作为 `slice γ 0` 与 `slice γ 1` 之间相对 `{0,1}` 的同伦（`HomotopyRel` 即 `HomotopyWith`
+的子类型 `{F // ∀ t x ∈ S, F (t,x) = f₀ x}`，其 `prop` 恰由 `h0`/`h1` 供给）。
+
+交付：`slice`（`l`-切片）+ **`loopDegree_adiabatic_invariant`**（**度的绝热不变性**）。
+
+诚实边界（随登）：本层闭合的是**度（环路族层）的绝热不变性**——§3 #4 在「族 + 同伦」层面的
+完整陈述。**数值陈数**本身（二维不变量）来自**曲率积分**（Chern–Weil / 线丛过渡函数路线），
+与度理论正交，需 $F$ 的可积性/光滑性（Kato 微扰论层），仍登记开放。
+-/
+
+section K0DegreeAdiabatic
+
+/-- `l`-切片：`γ(·, l)`（沿绝热参数取值）。 -/
+noncomputable def slice (γ : C(unitInterval × unitInterval, ℂ)) (l : unitInterval) :
+    C(unitInterval, ℂ) :=
+  ⟨fun t => γ (t, l), γ.continuous.comp (continuous_id.prodMk continuous_const)⟩
+
+/-- **度的绝热不变性**（§3 #4 完整陈述层）：设 `γ : C(I × I, ℂ)` 处处非零、且每条 `l`-切片
+    都是基点 `1` 的闭路（`γ (0, l) = 1`、`γ (1, l) = 1`），则两端切片的**度相同**——
+    即度沿绝热参数 `l` 不变。同伦由 `γ` 自身（坐标交换）给出（`HomotopyRel` 的 `prop` 由
+    `h0`/`h1` 供给）。 -/
+theorem loopDegree_adiabatic_invariant
+    (γ : C(unitInterval × unitInterval, ℂ)) (hnz : ∀ p, γ p ≠ 0)
+    (h0 : ∀ l, γ (0, l) = 1) (h1 : ∀ l, γ (1, l) = 1) :
+    loopDegree (loopLift (slice γ 0) (by simpa [slice] using h0 0)
+        (fun t => by simpa [slice] using hnz (t, 0)))
+      = loopDegree (loopLift (slice γ 1) (by simpa [slice] using h0 1)
+        (fun t => by simpa [slice] using hnz (t, 1))) := by
+  refine loopDegree_homotopy_invariant (γ₀ := slice γ 0) (γ₁ := slice γ 1)
+    (by simpa [slice] using h0 0) (fun t => by simpa [slice] using hnz (t, 0))
+    (by simpa [slice] using h0 1) (fun t => by simpa [slice] using hnz (t, 1)) ?_
+  refine ⟨⟨⟨⟨fun p : unitInterval × unitInterval =>
+      (⟨γ (p.2, p.1), hnz _⟩ : {z : ℂ // z ≠ 0}), ?_⟩, ?_, ?_⟩, ?_⟩⟩
+  · exact Continuous.subtype_mk (γ.continuous.comp (continuous_snd.prodMk continuous_fst)) _
+  · intro t
+    exact Subtype.ext rfl
+  · intro t
+    exact Subtype.ext rfl
+  · intro t x hx
+    have hx' : x = 0 ∨ x = 1 := by simpa using hx
+    rcases hx' with h | h
+    · subst h
+      exact Subtype.ext (by simpa [slice, loopInSubtype] using (h0 t).trans (h0 0).symm)
+    · subst h
+      exact Subtype.ext (by simpa [slice, loopInSubtype] using (h1 t).trans (h1 0).symm)
+
+end K0DegreeAdiabatic
+
+/-!
+## §2.35 Kato 微扰论第一层：预解式的第一预解式恒等式
+
+§3 #4 剩余部分（**数值陈数** = 曲率积分）所需的分析层基建之第一层。数值陈数的良定义需要
+**曲率被积 $F$ 的可积性/光滑性**，其源头是**投影族 $P(k)$ 关于参数 $k$ 的光滑性**——
+这正是 **Kato 解析微扰论**的内容。其**代数内核**是预解式的**第一预解式恒等式**（Hilbert 恒等式）：
+
+$$R(z)-R(w)=R(z)\big((w\cdot1-a)-(z\cdot1-a)\big)R(w)$$
+
+（中间因子是**中心**标量 $(w-z)\cdot1$；等价于交换形式 $R(z)-R(w)=(w-z)R(z)R(w)$）。
+Kato 理论由它推出预解式对参数（及谱参数）的**解析性**，进而经 Riesz 积分
+$P=-\frac1{2\pi i}\oint R(z)\,dz$ 得投影族的光滑性。
+
+交付：**`resolvent_sub_resolvent`**（第一预解式恒等式，纯代数，经
+`IsUnit.mul_val_inv`/`IsUnit.val_inv_mul` 消约）。
+
+诚实边界（随登）：本层闭合的是**预解式代数恒等式**（Kato 层的代数内核）。
+① 预解式的**可微性**（双重预解式公式 `δ ↦ R δ R`）已由 **§2.37 闭合**：mathlib 的
+`spectrum.hasFDerivAt_resolvent`（`Analysis/Normed/Algebra/GelfandFormula.lean`）直接给出
+`HasFDerivAt (resolvent · k) (mulLeftRight 𝕜 A (R) (R)) a`，其余项内核 `hasFDerivAt_ringInverse`
+（`Analysis/Calculus/FDeriv/Mul.lean`）正是本节 `resolvent_diff_reduction` 所得的高阶项形式；
+`Matrix n n ℂ` 的**实例菱形**亦经 `open scoped Matrix.Norms.L2Operator`（给出 L2 算子范数的
+`NormedRing`/`NormedAlgebra`）化解——无需 `letI`。仍开放：② 谱参数的导数（Kato 的
+$dR/dz=-R^2$）；③ Riesz 积分 $\oint R$ 与投影族光滑性；④ $F$ 的可积性。
+-/
+
+section KatoResolvent
+
+variable {𝕜 : Type*} [RCLike 𝕜] {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra 𝕜 𝔸]
+
+/-- **第一预解式恒等式**（Hilbert 恒等式；Kato 微扰论第一层的代数内核）：
+    对 `z, w ∈ resolventSet 𝕜 a`，
+    `R(z) - R(w) = R(z)·((w·1-a)-(z·1-a))·R(w)`（中间因子是**中心**标量 `(w-z)·1`）。
+    纯代数：两侧同乘逆元消约（`IsUnit.mul_val_inv` / `IsUnit.val_inv_mul`）。 -/
+theorem resolvent_sub_resolvent (a : 𝔸) {z w : 𝕜}
+    (hz : z ∈ resolventSet 𝕜 a) (hw : w ∈ resolventSet 𝕜 a) :
+    resolvent a z - resolvent a w =
+      resolvent a z * ((algebraMap 𝕜 𝔸 w - a) - (algebraMap 𝕜 𝔸 z - a)) * resolvent a w := by
+  have hz1 : (algebraMap 𝕜 𝔸 z - a) * resolvent a z = 1 := by
+    rw [spectrum.resolvent_eq (R := 𝕜) hz]
+    exact IsUnit.mul_val_inv _
+  have hz2 : resolvent a z * (algebraMap 𝕜 𝔸 z - a) = 1 := by
+    rw [spectrum.resolvent_eq (R := 𝕜) hz]
+    exact IsUnit.val_inv_mul _
+  have hw2 : (algebraMap 𝕜 𝔸 w - a) * resolvent a w = 1 := by
+    rw [spectrum.resolvent_eq (R := 𝕜) hw]
+    exact IsUnit.mul_val_inv _
+  have key : resolvent a z * ((algebraMap 𝕜 𝔸 w - a) - (algebraMap 𝕜 𝔸 z - a)) * resolvent a w =
+      resolvent a z - resolvent a w := by
+    rw [mul_sub, sub_mul, hz2, one_mul, mul_assoc, hw2, mul_one]
+  exact key.symm
+
+end KatoResolvent
+
+/-!
+## §2.36 Kato 微扰论第二层：第二预解式恒等式（算子依赖形式）
+
+§2.35 给出**谱参数依赖**的第一预解式恒等式（同 `a`、不同 `z`）；本层给出**算子依赖**的
+**第二预解式恒等式**（同 `z`、不同 `a, b`）：
+
+$$R(a)-R(b)=R(a)\,(a-b)\,R(b)$$
+
+它是预解式**可微性**（双重预解式 `δ ↦ R δ R`）的**代数引擎**：取 `b ← a+δ` 得
+$R(a)-R(a+\delta)=R(a)\,\delta\,R(a+\delta)\approx R(a)\,\delta\,R(a)$，
+即 `DR(δ) = -R δ R`（符号随方向约定）。**关键**：本层为**纯代数**，从而**绕开** §2.35 诚实边界①
+中所记的 `HasFDerivAt` **实例菱形障碍**——后者经本轮特化勘查已精确定位：`Matrix n n ℂ` 同时携带
+**普通（乘积）拓扑/模结构**与 **scoped L2 算子范数结构**（`Matrix.instL2OpNormedAddCommGroup`、
+`CStarAlgebra.toNonUnitalCStarAlgebra.toModule`、`PseudoMetricSpace.toUniformSpace.toTopologicalSpace`），
+`HasFDerivAt` 目标侧推导选中前者、而 `hasFDerivAt_id`/`.sub` 产生后者，故须在**显式固定实例**
+（`letI`）下方可陈述。本层的代数恒等式不含实例搜索，故不受影响。
+
+交付：**`resolvent_sub_resolvent_ops`**（第二预解式恒等式，纯代数）。
+
+诚实边界（随登）：闭合的是**第二预解式恒等式**（可微性的代数引擎）。① 由此恒等式
+**推出** `HasFDerivAt` 已由 **§2.37 闭合**（归约恒等式 `resolvent_diff_reduction`：
+误差项 = `R·δ·(R'-R)`；mathlib `spectrum.hasFDerivAt_resolvent` 给出可微性，其
+L2 实例菱形经 `open scoped Matrix.Norms.L2Operator` 化解）。仍开放：② 谱参数导数
+$dR/dz=-R^2$；③ Riesz 积分 $\oint R$ 与投影族 $P(k)$ 光滑性；④ $F$ 的可积性 / 数值陈数。
+-/
+
+section KatoResolventOps
+
+variable {𝕜 : Type*} [RCLike 𝕜] {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra 𝕜 𝔸]
+
+/-- **第二预解式恒等式**（Kato 微扰论第二层，**算子依赖**形式）：对 `a, b` 与共同的
+    `z ∈ resolventSet 𝕜 a ∩ resolventSet 𝕜 b`，`R(a) - R(b) = R(a)·(a-b)·R(b)`。
+    这是预解式**可微性**（双重预解式 `δ ↦ R δ R`）的代数引擎，且为纯代数、**绕开**实例菱形。 -/
+theorem resolvent_sub_resolvent_ops (a b : 𝔸) {z : 𝕜}
+    (ha : z ∈ resolventSet 𝕜 a) (hb : z ∈ resolventSet 𝕜 b) :
+    resolvent a z - resolvent b z = resolvent a z * (a - b) * resolvent b z := by
+  have ha2 : resolvent a z * (algebraMap 𝕜 𝔸 z - a) = 1 := by
+    rw [spectrum.resolvent_eq (R := 𝕜) ha]
+    exact IsUnit.val_inv_mul _
+  have hb1 : (algebraMap 𝕜 𝔸 z - b) * resolvent b z = 1 := by
+    rw [spectrum.resolvent_eq (R := 𝕜) hb]
+    exact IsUnit.mul_val_inv _
+  have hX : a - b = (algebraMap 𝕜 𝔸 z - b) - (algebraMap 𝕜 𝔸 z - a) := by abel
+  have key : resolvent a z * (a - b) * resolvent b z = resolvent a z - resolvent b z := by
+    rw [hX, mul_sub, sub_mul, mul_assoc, hb1, mul_one, ha2, one_mul]
+  exact key.symm
+
+end KatoResolventOps
+
+/-!
+## §2.37 Kato 微扰论第三层：预解式在算子变量上的可微性（闭合 §2.36 边界①）
+
+§2.36 的第二预解式恒等式给出预解式可微性的**代数引擎**；本层**闭合**其边界①——预解式对
+**算子变量**的 Fréchet 可微性：
+
+$$\mathrm D_a\,R(a,z):\ \delta\mapsto R(a,z)\,\delta\,R(a,z)$$
+
+**关键发现（随登）**：mathlib 已备该结论——`spectrum.hasFDerivAt_resolvent`
+（`Analysis/Normed/Algebra/GelfandFormula.lean`，**要求 `CompleteSpace`**），其内核正是
+`hasFDerivAt_ringInverse`（`Analysis/Calculus/FDeriv/Mul.lean`）：
+`HasFDerivAt Ring.inverse (-mulLeftRight 𝕜 R x⁻¹ x⁻¹) x`。§2.36 的**归约恒等式**
+恰给出其二阶余项的形式 `R·δ·(R'-R)`，与 mathlib 内部所用 `inverse_add_norm_diff_second_order`
+的 little-o 估计同构；故 **#3 由既有基建直接闭合**，无需重建。
+
+**实例菱形障碍的最终解法（随登）**：§2.35/§2.36 记录的 `Matrix n n ℂ` 实例菱形，
+经本轮实测**由 `open scoped Matrix.Norms.L2Operator` 一举化解**——该 scoped 实例集
+同时提供 `NormedRing`/`NormedAlgebra`/`NormedSpace`/`MetricSpace`（取 L2 算子范数，
+见 `Matrix.instL2OpNormedRing`/`instL2OpNormedAlgebra`/`instL2OpNormedSpace`/`instL2OpMetricSpace`
+与 `Matrix.instCStarAlgebra`），且其底层 `AddCommGroup`/`TopologicalSpace` 与
+`Matrix.instL2OpNormedAddCommGroup`/`Matrix.instL2OpMetricSpace` 一致（mathlib 在
+`instL2OpNormedAddCommGroup` 定义处已 `open scoped Matrix.Norms.L2Operator`，使 `where`
+填充选中 L2 结构而非乘积拓扑），故**不再需要 `letI` 显式固定**。
+
+交付：**`resolvent_diff_reduction`**（归约恒等式：误差项 = `R·δ·(R'-R)`）+
+**`resolvent_hasFDerivAt`**（一般 Banach 代数上的 Fréchet 可微性）+ **`matrix_l2_norm_witness`**
+（L2 实例见证：范数 = 算子范数）+ **`matrix_resolvent_hasFDerivAt`**
+（`Matrix n n ℂ` 固定 L2 实例特化）。
+
+诚实边界（随登）：本层闭合**预解式对算子变量的可微性**（Kato 第三层，#3）。
+① 谱参数导数 $dR/dz=-R^2$ 已由 **§2.38 闭合**（mathlib `spectrum.hasDerivAt_resolvent_const_left`）。
+仍开放：② Riesz 积分 $\oint R$ 与投影族 $P(k)$ 光滑性；
+③ $F$ 的可积性 / 数值陈数。
+-/
+
+section KatoResolventFDeriv
+
+variable {𝕜 : Type*} [RCLike 𝕜] {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra 𝕜 𝔸]
+
+/-- **可微性归约恒等式**（Kato 第三层的关键一步）：由 §2.36 第二预解式恒等式得
+    `R(a') - R(a) = R(a)·(a'-a)·R(a')`，故**误差项**恰为
+    `R(a') - R(a) - R(a)(a'-a)R(a) = R(a)·(a'-a)·(R(a') - R(a))`。
+    于是 `HasFDerivAt` 的 little-o 估计**完全归约**为**预解式的连续性**
+    `R(a') - R(a) → 0`（`a' → a`）。 -/
+theorem resolvent_diff_reduction (a a' : 𝔸) {z : 𝕜}
+    (ha : z ∈ resolventSet 𝕜 a) (ha' : z ∈ resolventSet 𝕜 a') :
+    resolvent a' z - resolvent a z - resolvent a z * (a' - a) * resolvent a z =
+      resolvent a z * (a' - a) * (resolvent a' z - resolvent a z) := by
+  have h2 : resolvent a' z - resolvent a z = resolvent a z * (a' - a) * resolvent a' z := by
+    have h := resolvent_sub_resolvent_ops a a' ha ha'
+    have hh : resolvent a z - resolvent a' z
+        = -(resolvent a z * (a' - a) * resolvent a' z) := by
+      rw [show a - a' = -(a' - a) by abel, mul_neg, neg_mul] at h
+      exact h
+    simpa using congrArg Neg.neg hh
+  calc resolvent a' z - resolvent a z - resolvent a z * (a' - a) * resolvent a z
+      = resolvent a z * (a' - a) * resolvent a' z
+          - resolvent a z * (a' - a) * resolvent a z := by rw [h2]
+    _ = resolvent a z * (a' - a) * (resolvent a' z - resolvent a z) := by rw [← mul_sub]
+
+end KatoResolventFDeriv
+
+/-! ### §2.37 一般 Banach 代数：`d/da R(a,z) = R·(·)·R` -/
+
+section KatoResolventHasFDerivAt
+
+variable {𝕜 A : Type*} [NontriviallyNormedField 𝕜] [NormedRing A] [NormedAlgebra 𝕜 A]
+  [CompleteSpace A]
+
+/-- **预解式在算子变量上的 Fréchet 可微性**（#3 闭合）：在复 Banach 代数中，
+    对 `z ∈ resolventSet 𝕜 a`，映射 `x ↦ (z - x)⁻¹` 在 `a` 处可微，
+    其 Fréchet 导数即 `h ↦ R(a,z)·h·R(a,z)`（由 mathlib 的
+    `spectrum.hasFDerivAt_resolvent` 提供；其内核 `hasFDerivAt_ringInverse`
+    正是 §2.36 归约所得的高阶项估计）。 -/
+theorem resolvent_hasFDerivAt (a : A) {z : 𝕜} (hz : z ∈ resolventSet 𝕜 a) :
+    HasFDerivAt (fun x => resolvent x z)
+      (((ContinuousLinearMap.mulLeftRight 𝕜 A) (resolvent a z)) (resolvent a z)) a :=
+  spectrum.hasFDerivAt_resolvent hz
+
+end KatoResolventHasFDerivAt
+
+/-! ### §2.37 `Matrix n n ℂ` 上的 L2 算子范数实例特化 -/
+
+section KatoResolventMatrixL2
+
+open scoped Matrix.Norms.L2Operator
+
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- **L2 算子范数实例见证**：`Matrix n n ℂ` 上的 `NormedRing`/`NormedAlgebra`/`NormedSpace`
+    实例取 L2 算子范数，即与欧氏空间连续线性算子的算子范数一致。 -/
+theorem matrix_l2_norm_witness (A : Matrix n n ℂ) :
+    ‖A‖ = ‖Matrix.toEuclideanCLM (n := n) (𝕜 := ℂ) A‖ :=
+  (Matrix.l2_opNorm_toEuclideanCLM A).symm
+
+/-- **矩阵版预解式可微性**（固定 L2 算子范数实例）：
+    在 `Matrix n n ℂ`（配 L2 算子范数）上，`x ↦ (z - x)⁻¹` 在 `a` 处可微，
+    导数为 `h ↦ R(a,z)·h·R(a,z)`。 -/
+theorem matrix_resolvent_hasFDerivAt (a : Matrix n n ℂ) {z : ℂ}
+    (hz : z ∈ resolventSet ℂ a) :
+    HasFDerivAt (fun x : Matrix n n ℂ => resolvent x z)
+      (((ContinuousLinearMap.mulLeftRight ℂ (Matrix n n ℂ)) (resolvent a z))
+        (resolvent a z)) a :=
+  spectrum.hasFDerivAt_resolvent hz
+
+end KatoResolventMatrixL2
+
+/-!
+## §2.38 Kato 微扰论第四层：谱参数导数 `dR/dz = -R²`
+
+§2.37 闭合**算子变量**方向的 Fréchet 可微性 `D_a R = δ ↦ R·δ·R`；本层闭合**谱参数**方向的
+导数（Kato 谱参数导数）：
+
+$$\frac{d}{dz}\,R(a,z)=-R(a,z)^2$$
+
+mathlib 已备该结论——`spectrum.hasDerivAt_resolvent_const_left`
+（`Analysis/Normed/Algebra/GelfandFormula.lean`，需 `CompleteSpace`）：
+`HasDerivAt (resolvent a) (-(resolvent a k ^ 2)) k`；故本层净增量为
+（一）一般 Banach 代数与 `Matrix n n ℂ` 两层的命名包装，
+（二）**两层导数相容性**（§2.37 ↔ §2.38 的桥接）：谱参数导数 `-R²` 恰为算子变量导数
+`h ↦ R·h·R` 在**中心单位方向** `h = 1` 处取值之负——即
+`-R² = -(R·1·R)`。这印证了 `z·1 - a` 中 `z` 与 `a` 的**反向中心耦合**：抬升 `a` 的中心分量
+与降低 `z` 等价，符号相反。
+
+交付：**`resolvent_hasDerivAt`**（一般 Banach 代数谱参数导数）+ **`resolvent_deriv_layers_agree`**
+（两层导数相容性，纯代数）+ **`matrix_resolvent_hasDerivAt`**（`Matrix n n ℂ` L2 特化）。
+
+诚实边界（随登）：本层闭合**预解式对谱参数的可微性**（Kato 第四层）。至此 Kato 微扰论的
+**双层可微性基建**（算子变量 + 谱参数）齐备。① Riesz 积分与投影族 $P(k)$ 的**定量光滑性**
+已由 **§2.39 闭合**（Riesz 积分定义 + 良定义性 + 参数 Lipschitz / 连续）；
+仍开放：② $F$ 的可积性与完整数值陈数（⇐ $P(k)$ 光滑），以及 Riesz 积分的**微分**
+（受阻于 `HasFDerivAt` 实例菱形，详见 §2.39 诚实边界）。
+-/
+
+section KatoResolventSpectralDeriv
+
+variable {𝕜 A : Type*} [NontriviallyNormedField 𝕜] [NormedRing A] [NormedAlgebra 𝕜 A]
+  [CompleteSpace A]
+
+/-- **谱参数导数**（Kato 第四层）：对 `z ∈ resolventSet 𝕜 a`，
+    `z ↦ R(a,z) = (z·1 - a)⁻¹` 在 `z` 处可微，且 `dR/dz = -R(a,z)²`。
+    由 mathlib `spectrum.hasDerivAt_resolvent_const_left` 提供（需 `CompleteSpace`）。 -/
+theorem resolvent_hasDerivAt (a : A) {z : 𝕜} (hz : z ∈ resolventSet 𝕜 a) :
+    HasDerivAt (fun w => resolvent a w) (-(resolvent a z ^ 2)) z :=
+  spectrum.hasDerivAt_resolvent_const_left hz
+
+end KatoResolventSpectralDeriv
+
+/-! ### §2.38 两层导数相容性（§2.37 ↔ §2.38，纯代数） -/
+
+section KatoResolventDerivConsistency
+
+variable {𝕜 A : Type*} [NontriviallyNormedField 𝕜] [NormedRing A] [NormedAlgebra 𝕜 A]
+
+/-- **两层导数相容性**（§2.37 ↔ §2.38 的桥接）：谱参数导数 `dR/dz = -R²` 恰为
+    算子变量导数 `h ↦ R·h·R` 在**中心单位方向** `h = 1` 处取值之负：
+    `-R² = -(R·1·R)`。这印证了 `z·1 - a` 中 `z` 与 `a` 的**反向中心耦合**。纯代数。 -/
+theorem resolvent_deriv_layers_agree (a : A) (z : 𝕜) :
+    -(resolvent a z ^ 2)
+      = -((ContinuousLinearMap.mulLeftRight 𝕜 A (resolvent a z)) (resolvent a z)) 1 := by
+  simp [ContinuousLinearMap.mulLeftRight_apply, pow_two]
+
+end KatoResolventDerivConsistency
+
+/-! ### §2.38 `Matrix n n ℂ` 上的 L2 算子范数实例特化 -/
+
+section KatoResolventSpectralDerivMatrixL2
+
+open scoped Matrix.Norms.L2Operator
+
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- **矩阵版谱参数导数**（固定 L2 算子范数实例）：在 `Matrix n n ℂ` 上，
+    `z ↦ (z·1 - a)⁻¹` 可微且 `dR/dz = -R(a,z)²`。 -/
+theorem matrix_resolvent_hasDerivAt (a : Matrix n n ℂ) {z : ℂ}
+    (hz : z ∈ resolventSet ℂ a) :
+    HasDerivAt (fun w => resolvent a w) (-(resolvent a z ^ 2)) z :=
+  spectrum.hasDerivAt_resolvent_const_left hz
+
+end KatoResolventSpectralDerivMatrixL2
+
+/-!
+## §2.39 Kato 微扰论第五层：Riesz 积分与投影族 `P(k)` 的定量光滑性
+
+§2.37/§2.38 备好预解式的**双层可微性**（算子变量 + 谱参数）后，本层把它**积分**成谱投影——
+**Riesz 积分**（围道形式的谱投影）
+
+$$P(a)=\frac{1}{2\pi i}\oint_{|z-c|=r}R(a,z)\,dz .$$
+
+交付：
+- **Riesz 积分的定义与良定义性**：`rieszIntegral`（`(2πi)⁻¹ • ∮ R dz`）+
+  `resolvent_differentiableOn_sphere`（围道避开谱 ⟹ `z ↦ R(a,z)` 在圆周上可微）+
+  `circleIntegrable_resolvent`（⟹ 圆周可积，Riesz 积分良定义）。
+- **围道微积分定量核心**：`resolventCircleIntegrand`/`resolventCircleDeriv`（被积函数及其对参数的导数）
+  + `norm_resolventCircleDeriv_le`（`‖deriv γ • R·(·)·R‖ ≤ |r|·M²`）+ `norm_resolvent_sub_le` /
+  `norm_resolvent_sub_le_of_bound`（§2.36 第二预解式恒等式的范数估计 `≤ ‖R(a)‖‖R(b)‖‖a-b‖`）。
+- **投影族 `P(k)` 的定量光滑性**：`norm_rieszIntegral_sub_le`（**参数 Lipschitz 估计**
+  `‖P(a)-P(b)‖ ≤ r·M²·‖a-b‖`）+ `lipschitzOnWith_rieszIntegral`（`P` 在 `ball a 1` 上 Lipschitz）
+  + `continuousAt_rieszIntegral`（**参数连续性**）。
+
+**关键实现**：圆周积分范数估计 `circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const`
+（`‖(2πi)⁻¹ ∮ f‖ ≤ r·C`，当 `‖f‖ ≤ C` 于圆周上）恰为 Riesz 积分的归一化量身定制；
+参数估计来自 §2.36 第二预解式恒等式的**定量版**（注意 `NormedRing` 仅**次可乘** `norm_mul_le`，故为 `≤`）。
+
+诚实边界（随登）：本层闭合 Riesz 积分的**良定义性**与投影族的**定量光滑性（Lipschitz / 连续）**。
+① Riesz 积分的**微分** `HasFDerivAt (fun x => P(x)) (∮ R·(·)·R)` 已由 **§2.40 闭合**
+（实例菱形经「结论取集合积分形式与引理逐字对齐」+「弃用 `simpa ... using`」双管齐下攻克；
+§2.40 同时**修正**了此处对菱形位置的初判——菱形实落在 `Module ℂ A` 内部的 `SeminormedAddCommGroup`
+参数上，而非 `AddCommGroup` 本身）。
+此外仍开放：$F$ 的可积性与完整数值陈数。
+（**更新（2026-09-24，§2.41）**：Riesz 投影的**幂等性** `P² = P` 已闭合——
+见 `rieszIntegral_idempotent`：双重围道归约 `K₁K₂ = 2πi·K₂` + 围道独立性 + 标量归一化。）
+-/
+
+section KatoRieszNorm
+
+variable {𝕜 : Type*} [RCLike 𝕜] {𝔸 : Type*} [NormedRing 𝔸] [NormedAlgebra 𝕜 𝔸]
+
+/-- **第二预解式恒等式的范数估计**（参数 Lipschitz 的定量核心）：
+    `‖R(a,z) - R(b,z)‖ ≤ ‖R(a,z)‖ * ‖R(b,z)‖ * ‖a - b‖`。
+    注意 `NormedRing` 仅**次可乘**（`norm_mul_le`），故此处为 `≤`。 -/
+theorem norm_resolvent_sub_le (a b : 𝔸) {z : 𝕜}
+    (ha : z ∈ resolventSet 𝕜 a) (hb : z ∈ resolventSet 𝕜 b) :
+    ‖resolvent a z - resolvent b z‖ ≤ ‖resolvent a z‖ * ‖resolvent b z‖ * ‖a - b‖ := by
+  rw [resolvent_sub_resolvent_ops a b ha hb]
+  calc ‖resolvent a z * (a - b) * resolvent b z‖
+      ≤ ‖resolvent a z * (a - b)‖ * ‖resolvent b z‖ := norm_mul_le _ _
+    _ ≤ (‖resolvent a z‖ * ‖a - b‖) * ‖resolvent b z‖ := by
+        gcongr
+        exact norm_mul_le _ _
+    _ = ‖resolvent a z‖ * ‖resolvent b z‖ * ‖a - b‖ := by ring
+
+/-- **带统一界的范数估计**：若两端预解式在圆周上被同一 `M` 控制，则
+    `‖R(a,z) - R(b,z)‖ ≤ M * M * ‖a - b‖`——即参数方向的一致 Lipschitz 估计。 -/
+theorem norm_resolvent_sub_le_of_bound (a b : 𝔸) {z : 𝕜}
+    (ha : z ∈ resolventSet 𝕜 a) (hb : z ∈ resolventSet 𝕜 b) {M : ℝ}
+    (haM : ‖resolvent a z‖ ≤ M) (hbM : ‖resolvent b z‖ ≤ M) :
+    ‖resolvent a z - resolvent b z‖ ≤ M * M * ‖a - b‖ := by
+  have hM : 0 ≤ M := (norm_nonneg (resolvent a z)).trans haM
+  have h1 : ‖resolvent a z‖ * ‖resolvent b z‖ ≤ M * M :=
+    mul_le_mul haM hbM (norm_nonneg _) hM
+  exact (norm_resolvent_sub_le a b ha hb).trans
+    (mul_le_mul_of_nonneg_right h1 (norm_nonneg _))
+
+end KatoRieszNorm
+
+/-! ### §2.39 围道被积函数与导数 -/
+
+section KatoRieszAux
+
+variable {A : Type*} [NormedRing A] [NormedAlgebra ℂ A]
+
+/-- 围道参数化下的被积函数：`θ ↦ (deriv γ) θ • R(x, γ θ)`（`γ = circleMap c r`）。 -/
+noncomputable def resolventCircleIntegrand (c : ℂ) (r : ℝ) (x : A) (θ : ℝ) : A :=
+  deriv (circleMap c r) θ • resolvent x (circleMap c r θ)
+
+/-- 围道参数化下被积函数的**导数**（对 `x` 求导）：
+    `θ ↦ (deriv γ) θ • (R(x,γ θ)·(·)·R(x,γ θ))`（§2.37 算子变量导数）。 -/
+noncomputable def resolventCircleDeriv (c : ℂ) (r : ℝ) (x : A) (θ : ℝ) : A →L[ℂ] A :=
+  deriv (circleMap c r) θ • ContinuousLinearMap.mulLeftRight ℂ A
+    (resolvent x (circleMap c r θ)) (resolvent x (circleMap c r θ))
+
+/-- **围道被积函数的点态导数界**：`‖deriv γ θ • R·(·)·R‖ ≤ |r| * M * M`。 -/
+theorem norm_resolventCircleDeriv_le (c : ℂ) (r : ℝ) (x : A) (θ : ℝ) {M : ℝ}
+    (hMx : ‖resolvent x (circleMap c r θ)‖ ≤ M) (hMnn : 0 ≤ M) :
+    ‖resolventCircleDeriv c r x θ‖ ≤ |r| * M * M := by
+  have hd : ‖deriv (circleMap c r) θ‖ = |r| := by
+    rw [deriv_circleMap, norm_mul, norm_circleMap_zero]
+    simp
+  have hL : ‖ContinuousLinearMap.mulLeftRight ℂ A
+      (resolvent x (circleMap c r θ)) (resolvent x (circleMap c r θ))‖ ≤ M * M :=
+    (ContinuousLinearMap.opNorm_mulLeftRight_apply_apply_le (𝕜 := ℂ) (R := A) _ _).trans
+      (mul_le_mul hMx hMx (norm_nonneg _) hMnn)
+  rw [resolventCircleDeriv, norm_smul, hd, mul_assoc]
+  exact mul_le_mul_of_nonneg_left hL (abs_nonneg r)
+
+end KatoRieszAux
+
+/-! ### §2.39 Riesz 积分与投影族 `P(k)` 的定量光滑性 -/
+
+section KatoRieszIntegral
+
+open scoped Interval Topology
+
+open MeasureTheory
+
+variable {A : Type*} [NormedRing A] [NormedAlgebra ℂ A] [CompleteSpace A]
+
+/-- **Riesz 积分（谱投影候选）**：`P = (2πi)⁻¹ ∮_{|z-c|=r} R(a,z) dz`。 -/
+noncomputable def rieszIntegral (a : A) (c : ℂ) (r : ℝ) : A :=
+  ((2 * (Real.pi : ℂ) * Complex.I)⁻¹) • circleIntegral (fun z => resolvent a z) c r
+
+/-- **围道上的可微性**：围道避开谱 ⟹ `z ↦ R(a,z)` 在圆周上可微（从而连续）。
+    由 §2.38 谱参数导数 `spectrum.hasDerivAt_resolvent_const_left` 逐点给出。 -/
+theorem resolvent_differentiableOn_sphere (a : A) (c : ℂ) (r : ℝ)
+    (hspec : ∀ z ∈ Metric.sphere c |r|, z ∈ resolventSet ℂ a) :
+    DifferentiableOn ℂ (fun z => resolvent a z) (Metric.sphere c |r|) := by
+  intro z hz
+  exact (spectrum.hasDerivAt_resolvent_const_left (hspec z hz)).differentiableAt
+    |>.differentiableWithinAt
+
+/-- **Riesz 积分的良定义性**：围道避开谱 ⟹ 预解式在圆周上可积。 -/
+theorem circleIntegrable_resolvent (a : A) (c : ℂ) (r : ℝ)
+    (hspec : ∀ z ∈ Metric.sphere c |r|, z ∈ resolventSet ℂ a) :
+    CircleIntegrable (fun z => resolvent a z) c r :=
+  ContinuousOn.circleIntegrable' (resolvent_differentiableOn_sphere a c r hspec).continuousOn
+
+/-- **Riesz 积分的参数 Lipschitz 估计（投影族 `P(k)` 的定量光滑性）**：
+    若预解式在圆周上一致可解且被同一 `M` 控制，则
+    `‖P(a) - P(b)‖ ≤ r * M * M * ‖a - b‖`。证明用圆周积分范数估计
+    `circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const` + 参数范数估计。 -/
+theorem norm_rieszIntegral_sub_le (a b : A) (c : ℂ) (r : ℝ) {M : ℝ} (hr : 0 ≤ r)
+    (ha : ∀ z ∈ Metric.sphere c r, z ∈ resolventSet ℂ a)
+    (hb : ∀ z ∈ Metric.sphere c r, z ∈ resolventSet ℂ b)
+    (haM : ∀ z ∈ Metric.sphere c r, ‖resolvent a z‖ ≤ M)
+    (hbM : ∀ z ∈ Metric.sphere c r, ‖resolvent b z‖ ≤ M) :
+    ‖rieszIntegral a c r - rieszIntegral b c r‖ ≤ r * (M * M * ‖a - b‖) := by
+  have ha' : ∀ z ∈ Metric.sphere c |r|, z ∈ resolventSet ℂ a := by
+    intro z hz
+    exact ha z (by rwa [abs_of_nonneg hr] at hz)
+  have hb' : ∀ z ∈ Metric.sphere c |r|, z ∈ resolventSet ℂ b := by
+    intro z hz
+    exact hb z (by rwa [abs_of_nonneg hr] at hz)
+  have hsub : rieszIntegral a c r - rieszIntegral b c r
+      = ((2 * (Real.pi : ℂ) * Complex.I)⁻¹) •
+          circleIntegral (fun z => resolvent a z - resolvent b z) c r := by
+    simp only [rieszIntegral]
+    rw [← smul_sub, ← circleIntegral.integral_sub
+      (circleIntegrable_resolvent a c r ha') (circleIntegrable_resolvent b c r hb')]
+  rw [hsub]
+  refine circleIntegral.norm_two_pi_i_inv_smul_integral_le_of_norm_le_const hr fun z hz => ?_
+  exact norm_resolvent_sub_le_of_bound a b (ha z hz) (hb z hz) (haM z hz) (hbM z hz)
+
+/-- **投影族 `P(k)` 的 Lipschitz 连续性**：由参数 Lipschitz 估计直接得到 `x ↦ P(x)` 在 `ball a 1`
+    上 Lipschitz（常数 `r * M * M`），这是 `P(k)` 光滑性的**定量第一层**（蕴含连续性）。 -/
+theorem lipschitzOnWith_rieszIntegral (a : A) (c : ℂ) (r : ℝ) {M : ℝ} (hr : 0 ≤ r)
+    (hM : ∀ x ∈ Metric.ball a 1, ∀ z ∈ Metric.sphere c r,
+      z ∈ resolventSet ℂ x ∧ ‖resolvent x z‖ ≤ M) :
+    LipschitzOnWith (Real.toNNReal (r * (M * M))) (fun x => rieszIntegral x c r)
+      (Metric.ball a 1) := by
+  have ha1 : a ∈ Metric.ball a 1 := Metric.mem_ball_self zero_lt_one
+  have hMnn : 0 ≤ M :=
+    (norm_nonneg (resolvent a (circleMap c r 0))).trans
+      (hM a ha1 (circleMap c r 0)
+        (by simpa only [abs_of_nonneg hr] using circleMap_mem_sphere' c r 0)).2
+  have hC : 0 ≤ r * (M * M) := mul_nonneg hr (mul_nonneg hMnn hMnn)
+  refine LipschitzOnWith.of_dist_le_mul fun x hx y hy => ?_
+  rw [dist_eq_norm, dist_eq_norm, Real.coe_toNNReal _ hC]
+  calc ‖rieszIntegral x c r - rieszIntegral y c r‖
+      ≤ r * (M * M * ‖x - y‖) := norm_rieszIntegral_sub_le x y c r hr
+        (fun z hz => (hM x hx z hz).1) (fun z hz => (hM y hy z hz).1)
+        (fun z hz => (hM x hx z hz).2) (fun z hz => (hM y hy z hz).2)
+    _ = r * (M * M) * ‖x - y‖ := by ring
+
+/-- **投影族 `P(k)` 的参数连续性**：上述 Lipschitz 连续性的直接推论。 -/
+theorem continuousAt_rieszIntegral (a : A) (c : ℂ) (r : ℝ) {M : ℝ} (hr : 0 ≤ r)
+    (hM : ∀ x ∈ Metric.ball a 1, ∀ z ∈ Metric.sphere c r,
+      z ∈ resolventSet ℂ x ∧ ‖resolvent x z‖ ≤ M) :
+    ContinuousAt (fun x => rieszIntegral x c r) a :=
+  (lipschitzOnWith_rieszIntegral a c r hr hM).continuousOn.continuousAt
+    (Metric.ball_mem_nhds a zero_lt_one)
+
+end KatoRieszIntegral
+
+/-!
+## §2.40 Kato 微扰论第六层：投影族 `P(k)` 的 Fréchet 可微性（Riesz 积分的微分）
+
+§2.39 给出 Riesz 积分 `P = (2πi)⁻¹ ∮ R dz` 的**良定义性**与**定量光滑性（Lipschitz / 连续）**，
+但**微分**受阻于参数积分求导接口处的 **`HasFDerivAt` 实例菱形**。本层**正面攻克**该菱形并闭合微分。
+
+**菱形的精确诊断（随登）**：本版本 mathlib 中 `HasFDerivAt` 的类型上下文为
+
+```
+variable {E : Type*} [AddCommGroup E] [Module 𝕜 E] [TopologicalSpace E]
+```
+
+即它**只要求** `AddCommGroup` / `Module` / `TopologicalSpace`（**不含范数**）；
+故菱形实际落在 `Module ℂ A` 内部的 `SeminormedAddCommGroup A` 参数上——
+`NormedRing A` 经 `NonUnitalSeminormedRing.toSeminormedAddCommGroup` 给出一条路径，
+而 `NormedAlgebra.toNormedSpace` 内部的 `NormedSpace` 又自带一条。
+
+**解法（两条，均随登）**：
+
+1. **让结论与引理逐字对齐**：把围道参数化定理的结论写成**集合积分形式**
+   `∫ θ, ... ∂(volume.restrict (Ι 0 (2π)))`，与 `hasFDerivAt_integral_of_dominated_of_fderiv_le`
+   的结论（`∫ a, F x a ∂μ`）**完全相同**（注意 `intervalIntegral` 是独立定义
+   `∫ x in Ioc a b, f x ∂μ - ∫ x in Ioc b a, f x ∂μ`，与集合积分仅**命题相等**而非 defeq）。
+2. **避免 `simpa ... using`**：`simpa only using e` 会**脱离期望类型**独立精化 `e`（这正是其语义），
+   使 `e` 的实例参数由默认合成确定、与 goal 侧不一致；改用 `exact e` / `refine e` 会把**期望类型传入**
+   精化，实例参数即按 goal 侧确定。**判别实验**：同一目标下 `simpa only using` 失败而 `exact` 成功。
+
+交付：**`rieszIntegral_eq_integral`**（`intervalIntegral` ↔ 集合积分形式桥接，用
+`intervalIntegral.integral_of_le` + `Set.uIoc_of_le`）+ **`hasFDerivAt_circleIntegral_resolvent`**
+（围道参数化形式的参数可微性，集合积分形式）+ **`rieszIntegral_hasFDerivAt`**
+（**Riesz 积分的微分**：`D_a P = (2πi)⁻¹ ∮ R(a,z)·(·)·R(a,z) dz`）。
+
+诚实边界（随登）：本层**闭合** Riesz 积分的微分（Kato 第六层）；至此投影族 `P(k)` 的
+**C¹ 光滑性**在形式上就位（`P` 可微，且导数 `∮ R·(·)·R` 由被积函数的连续性与 §2.39 的定量估计亦连续）。
+仍开放：① Riesz 投影的**幂等性** `P² = P`——**已闭合（2026-09-24，§2.41）**，见
+`rieszIntegral_idempotent`（双重围道归约 + 围道独立性 + 标量归一化）；② $F$ 的可积性与完整数值陈数。
+-/
+
+section KatoRieszBridge
+
+open scoped Interval Topology
+
+open MeasureTheory
+
+variable {A : Type*} [NormedRing A] [NormedAlgebra ℂ A]
+
+/-- **Riesz 积分与集合积分形式的桥接**：`intervalIntegral`（记号 `∫ θ in a..b, ...`）与集合积分
+    `∫ θ, ... ∂(volume.restrict (Ι a b))` 在 `a ≤ b` 时一致（`intervalIntegral.integral_of_le` +
+    `Set.uIoc_of_le`）。即 `P(a) = (2πi)⁻¹ • ∫ θ, (deriv γ) θ • R(a, γ θ) ∂(volume.restrict (Ι 0 2π))`。 -/
+theorem rieszIntegral_eq_integral (a : A) (c : ℂ) (r : ℝ) :
+    rieszIntegral a c r
+      = ((2 * (Real.pi : ℂ) * Complex.I)⁻¹) •
+        (∫ θ, resolventCircleIntegrand c r a θ ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi)))) := by
+  simp only [rieszIntegral, circleIntegral, resolventCircleIntegrand]
+  rw [intervalIntegral.integral_of_le Real.two_pi_pos.le, Set.uIoc_of_le Real.two_pi_pos.le]
+
+end KatoRieszBridge
+
+/-! ### §2.40 投影族 `P(k)` 的 Fréchet 可微性 -/
+
+section KatoRieszFDeriv
+
+open scoped Interval Topology
+
+open MeasureTheory
+
+variable {A : Type*} [NormedRing A] [NormedAlgebra ℂ A] [CompleteSpace A]
+
+/-- **围道参数化形式的参数可微性**（结论采用**集合积分形式**，以便与
+    `hasFDerivAt_integral_of_dominated_of_fderiv_le` 的结论逐字对齐——这是实例菱形的真正解法）：
+    若预解式在 `ball a 1` 与围道上一致可解且一致有界，则围道积分在 `a` 处 Fréchet 可微，
+    导数为 `∫ θ, (deriv γ) θ • R(a,γ θ)·(·)·R(a,γ θ)`。 -/
+theorem hasFDerivAt_circleIntegral_resolvent (a : A) (c : ℂ) (r : ℝ) {M : ℝ}
+    (hM : ∀ x ∈ Metric.ball a 1, ∀ z ∈ Metric.sphere c |r|,
+      z ∈ resolventSet ℂ x ∧ ‖resolvent x z‖ ≤ M) :
+    HasFDerivAt
+      (fun x => ∫ θ, resolventCircleIntegrand c r x θ
+        ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi))))
+      (∫ θ, resolventCircleDeriv c r a θ ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi)))) a := by
+  have ha1 : a ∈ Metric.ball a 1 := Metric.mem_ball_self zero_lt_one
+  have hMnn : 0 ≤ M :=
+    (norm_nonneg (resolvent a (circleMap c r 0))).trans
+      (hM a ha1 (circleMap c r 0) (circleMap_mem_sphere' c r 0)).2
+  have hF_meas : ∀ᶠ x in 𝓝 a, AEStronglyMeasurable (fun θ => resolventCircleIntegrand c r x θ)
+      (volume.restrict (Ι (0 : ℝ) (2 * Real.pi))) := by
+    filter_upwards [Metric.ball_mem_nhds a zero_lt_one] with x hx
+    have hint : IntervalIntegrable (fun θ => resolventCircleIntegrand c r x θ) volume 0
+        (2 * Real.pi) :=
+      CircleIntegrable.out (circleIntegrable_resolvent x c r (fun z hz => (hM x hx z hz).1))
+    exact (intervalIntegrable_iff.mp hint).aestronglyMeasurable
+  have hF_int : Integrable (fun θ => resolventCircleIntegrand c r a θ)
+      (volume.restrict (Ι (0 : ℝ) (2 * Real.pi))) := by
+    have hint : IntervalIntegrable (fun θ => resolventCircleIntegrand c r a θ) volume 0
+        (2 * Real.pi) :=
+      CircleIntegrable.out (circleIntegrable_resolvent a c r (fun z hz => (hM a ha1 z hz).1))
+    exact intervalIntegrable_iff.mp hint
+  have hF'_meas : AEStronglyMeasurable (fun θ => resolventCircleDeriv c r a θ)
+      (volume.restrict (Ι (0 : ℝ) (2 * Real.pi))) := by
+    have hcont : Continuous fun θ : ℝ => resolventCircleDeriv c r a θ := by
+      have hres : ContinuousOn (fun z => resolvent a z) (Metric.sphere c |r|) :=
+        (resolvent_differentiableOn_sphere a c r (fun z hz => (hM a ha1 z hz).1)).continuousOn
+      have h1 : Continuous fun θ : ℝ => resolvent a (circleMap c r θ) :=
+        hres.comp_continuous (continuous_circleMap c r) fun θ => circleMap_mem_sphere' c r θ
+      have h2 : Continuous fun θ : ℝ => deriv (circleMap c r) θ := by
+        have hfun : (fun θ : ℝ => deriv (circleMap c r) θ)
+            = fun θ : ℝ => circleMap 0 r θ * Complex.I := funext fun θ => deriv_circleMap c r θ
+        rw [hfun]
+        exact (continuous_circleMap (0 : ℂ) r).mul continuous_const
+      have h3 : Continuous fun θ : ℝ => ContinuousLinearMap.mulLeftRight ℂ A
+          (resolvent a (circleMap c r θ)) (resolvent a (circleMap c r θ)) :=
+        ((ContinuousLinearMap.mulLeftRight ℂ A).continuous.comp h1).clm_apply h1
+      have hsmul : (fun θ : ℝ => deriv (circleMap c r) θ) •
+          (fun θ : ℝ => ContinuousLinearMap.mulLeftRight ℂ A
+            (resolvent a (circleMap c r θ)) (resolvent a (circleMap c r θ)))
+          = fun θ : ℝ => resolventCircleDeriv c r a θ := by
+        funext θ
+        rfl
+      rw [← hsmul]
+      exact h2.smul h3
+    exact hcont.aestronglyMeasurable
+  have h_bound : ∀ᵐ θ ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi))),
+      ∀ x ∈ Metric.ball a 1, ‖resolventCircleDeriv c r x θ‖ ≤ |r| * M * M := by
+    refine Filter.Eventually.of_forall fun θ x hx => ?_
+    exact norm_resolventCircleDeriv_le c r x θ (hM x hx _ (circleMap_mem_sphere' c r θ)).2 hMnn
+  have hbound_int : Integrable (fun _ : ℝ => |r| * M * M)
+      (volume.restrict (Ι (0 : ℝ) (2 * Real.pi))) :=
+    intervalIntegrable_iff.mp intervalIntegrable_const
+  have h_diff : ∀ᵐ θ ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi))),
+      ∀ x ∈ Metric.ball a 1, HasFDerivAt (fun y => resolventCircleIntegrand c r y θ)
+        (resolventCircleDeriv c r x θ) x := by
+    refine Filter.Eventually.of_forall fun θ x hx => ?_
+    exact (spectrum.hasFDerivAt_resolvent (hM x hx _ (circleMap_mem_sphere' c r θ)).1).const_smul
+      (deriv (circleMap c r) θ)
+  exact hasFDerivAt_integral_of_dominated_of_fderiv_le (μ := volume.restrict (Ι (0 : ℝ) (2 * Real.pi)))
+    (F := fun x θ => resolventCircleIntegrand c r x θ)
+    (F' := fun x θ => resolventCircleDeriv c r x θ)
+    (x₀ := a) (s := Metric.ball a 1) (bound := fun _ => |r| * M * M)
+    (Metric.ball_mem_nhds a zero_lt_one) hF_meas hF_int hF'_meas h_bound hbound_int h_diff
+
+/-- **Riesz 积分的参数可微性**（投影族 `P(k)` 光滑性的微分层）：`x ↦ rieszIntegral x c r`
+    在 `a` 处 Fréchet 可微，导数为 `(2πi)⁻¹ ∮ R(a,z)·(·)·R(a,z) dz`（§2.37 算子变量导数的围道积分）。 -/
+theorem rieszIntegral_hasFDerivAt (a : A) (c : ℂ) (r : ℝ) {M : ℝ}
+    (hM : ∀ x ∈ Metric.ball a 1, ∀ z ∈ Metric.sphere c |r|,
+      z ∈ resolventSet ℂ x ∧ ‖resolvent x z‖ ≤ M) :
+    HasFDerivAt (fun x => rieszIntegral x c r)
+      (((2 * (Real.pi : ℂ) * Complex.I)⁻¹) •
+        (∫ θ, resolventCircleDeriv c r a θ
+          ∂(volume.restrict (Ι (0 : ℝ) (2 * Real.pi))))) a := by
+  have h := (hasFDerivAt_circleIntegral_resolvent a c r hM).const_smul
+    ((2 * (Real.pi : ℂ) * Complex.I)⁻¹)
+  refine (Filter.EventuallyEq.hasFDerivAt_iff ?_).mp h
+  filter_upwards with x
+  exact (rieszIntegral_eq_integral x c r).symm
+
+end KatoRieszFDeriv
+
+/-!
+### §2.41 Riesz 投影的幂等性 `P² = P`
+
+§2.39 建立 Riesz 积分 `P = (2πi)⁻¹ ∮_{C(c,r)} R(a,z) dz` 的良定义性与定量光滑性，
+§2.40 闭合其参数可微性。本层闭合**幂等性** `P² = P`——即该 Riesz 积分确实是
+**投影算子**（谱投影）——从而 Berry 曲率 `F = -i·Tr(P [A,B])` 中的 `P` 具备
+「投影」这一代数身份。
+
+**证明路线**（Kato 双重围道论证的 Lean 化）：
+
+1. **双重围道归约** `circleIntegral_resolvent_mul_eq`：外圈 `K₁ = ∮_{C(c,r₁)} R(z) dz`、
+   内圈 `K₂ = ∮_{C(c,r₂)} R(w) dw`（`r₂ < r₁`，环形区域 `D(c,r₁) \ D(c,r₂)` 避开谱）
+   满足 `K₁ K₂ = 2πi · K₂`。步骤：算子值圆周积分的左/右线性
+   （`circleIntegral_mul_const` / `circleIntegral_const_mul`）→ 预解式乘法恒等式
+   `R(z)R(w) = (w-z)⁻¹(R(z)-R(w))`（`resolvent_mul_resolvent_spectral`）→ 内圈上
+   `∮ (w-z)⁻¹ dw = 0`（`circleIntegral_inv_sub_eq_zero`，`z` 在内圈之外）→
+   **Fubini 交换**（`circleIntegral_circleIntegral_swap`，算子值双围道积分）→
+   内层 Cauchy 留数 `∮ (z-w)⁻¹ dz = 2πi`（mathlib `integral_sub_inv_of_mem_ball`）。
+2. **标量归一化** `rieszIntegral_mul_eq`：`P₁ P₂ = P₂`（因 `(2πi)⁻¹·(2πi)⁻¹·(2πi) = (2πi)⁻¹`）。
+3. **围道独立性** `rieszIntegral_eq_of_lt`：环形区域避开谱 ⟹ `P_{r₁} = P_{r₂}`
+   （mathlib annulus 版 Cauchy–Goursat `circleIntegral_eq_of_differentiable_on_annulus_off_countable`）。
+4. **收口** `rieszIntegral_idempotent`：`P_{r₁}² = P_{r₁}P_{r₂} = P_{r₂} = P_{r₁}`。
+
+**诚实边界（随登）**：本定理的假设为「存在 `0 < r₂ < r₁` 使**闭环形区域**
+`D(c,r₁) \ D(c,r₂)` 避开谱」——即 `C(c,r₁)` 恰为**谱岛边界**（岛含于 `D(c,r₂)`，
+或谱全在 `D(c,r₁)` 之外）。这是 Riesz 投影幂等性的标准 Kato 前提：单一围道本身
+不足以支撑 `P² = P` 的双重积分论证，须有辅助内圈作 Fubini 载体。此外仍开放：
+`F` 的可积性与完整数值陈数（§3 登记）。
+-/
+
+section KatoRieszIdempotent
+
+open scoped Interval Topology
+
+open MeasureTheory Metric
+
+variable {A : Type*} [NormedRing A] [NormedAlgebra ℂ A] [CompleteSpace A]
+
+/-! #### §2.41.1 代数层：混合标量乘法与预解式乘法恒等式 -/
+
+omit [CompleteSpace A] in
+/-- **标量-算子混合乘法结合律**：`(c • x) * (d • y) = (c * d) • (x * y)`。 -/
+lemma smul_mul_smul' (c d : ℂ) (x y : A) : (c • x) * (d • y) = (c * d) • (x * y) := by
+  rw [smul_mul_assoc, mul_smul_comm, smul_smul]
+
+omit [CompleteSpace A] in
+/-- **第一预解式恒等式（标量显式版）**：`R(z) - R(w) = (w - z) • (R(z) * R(w))`。
+    由 §2.35 `resolvent_sub_resolvent` 的中心因子 `(w-z)·1` 提取标量得到。 -/
+theorem resolvent_sub_resolvent_smul (a : A) {z w : ℂ}
+    (hz : z ∈ resolventSet ℂ a) (hw : w ∈ resolventSet ℂ a) :
+    resolvent a z - resolvent a w = (w - z) • (resolvent a z * resolvent a w) := by
+  rw [resolvent_sub_resolvent a hz hw]
+  have hsub : (algebraMap ℂ A w - a) - (algebraMap ℂ A z - a) = algebraMap ℂ A (w - z) := by
+    rw [map_sub]; abel
+  rw [hsub, Algebra.smul_def, ← Algebra.commutes (w - z) (resolvent a z), mul_assoc]
+
+omit [CompleteSpace A] in
+/-- **预解式乘法恒等式（显式形式）**：`R(z) * R(w) = (w - z)⁻¹ • (R(z) - R(w))`（`z ≠ w`）。 -/
+theorem resolvent_mul_resolvent_spectral (a : A) {z w : ℂ} (hzw : z ≠ w)
+    (hz : z ∈ resolventSet ℂ a) (hw : w ∈ resolventSet ℂ a) :
+    resolvent a z * resolvent a w = (w - z)⁻¹ • (resolvent a z - resolvent a w) := by
+  have h := resolvent_sub_resolvent_smul a hz hw
+  have hne : w - z ≠ 0 := sub_ne_zero.mpr hzw.symm
+  rw [h, inv_smul_smul₀ hne]
+
+/-! #### §2.41.2 围道积分层：算子值线性、Fubini 交换、围道留数 -/
+
+/-- **(A) 围道外留数（标量）**：`z` 在闭圆盘 `D(c,r)` 之外 ⟹ `∮ (w-z)⁻¹ dw = 0`。 -/
+theorem circleIntegral_inv_sub_eq_zero {c z : ℂ} {r : ℝ} (hr : 0 ≤ r)
+    (hz : r < ‖z - c‖) :
+    (∮ w in C(c, r), (w - z)⁻¹) = 0 := by
+  refine Complex.circleIntegral_eq_zero_of_differentiable_on_off_countable hr
+    Set.countable_empty ?_ ?_
+  · refine (continuousOn_id.sub continuousOn_const).inv₀ fun w hw => ?_
+    have h1 : ‖w - c‖ ≤ r := by
+      simpa [dist_eq_norm] using (mem_closedBall.mp hw)
+    intro hwz
+    have hwz' : w = z := sub_eq_zero.mp hwz
+    exact absurd (by rw [← hwz']; exact h1) (not_le.mpr hz)
+  · intro w hw
+    have h1 : ‖w - c‖ < r := by
+      simpa [dist_eq_norm] using (mem_ball.mp hw.1)
+    exact DifferentiableAt.inv (differentiableAt_id.sub_const z)
+      (sub_ne_zero.mpr fun hwz => absurd (by rw [← hwz]; exact h1.le) (not_le.mpr hz))
+
+/-- **算子值圆周积分：右乘常算子可移出积分号**。 -/
+theorem circleIntegral_mul_const (f : ℂ → A) (b : A) (c : ℂ) (R : ℝ)
+    (hf : CircleIntegrable f c R) :
+    (∮ z in C(c, R), f z * b) = (∮ z in C(c, R), f z) * b := by
+  rw [circleIntegral, circleIntegral]
+  simp only [← smul_mul_assoc]
+  have h := ContinuousLinearMap.intervalIntegral_comp_comm
+    ((ContinuousLinearMap.mul ℂ A).flip b) hf.out
+  simpa only [ContinuousLinearMap.flip_apply, ContinuousLinearMap.mul_apply'] using h
+
+/-- **算子值圆周积分：左乘常算子可移出积分号**。 -/
+theorem circleIntegral_const_mul (b : A) (f : ℂ → A) (c : ℂ) (R : ℝ)
+    (hf : CircleIntegrable f c R) :
+    (∮ z in C(c, R), b * f z) = b * ∮ z in C(c, R), f z := by
+  rw [circleIntegral, circleIntegral]
+  simp only [← mul_smul_comm]
+  have h := ContinuousLinearMap.intervalIntegral_comp_comm
+    (ContinuousLinearMap.mul ℂ A b) hf.out
+  simpa only [ContinuousLinearMap.mul_apply'] using h
+
+/-- 双围道被积函数的参数化（`θ` 对应外圈 `r₁`，`φ` 对应内圈 `r`）。 -/
+noncomputable def circlePairIntegrand (f : ℂ → ℂ → A) (c : ℂ) (r₁ r : ℝ) (θ φ : ℝ) : A :=
+  deriv (circleMap c r₁) θ • (deriv (circleMap c r) φ • f (circleMap c r₁ θ) (circleMap c r φ))
+
+omit [CompleteSpace A] in
+/-- **双围道积分的 Fubini 交换**：`∮_{Γ₁}∮_{Γ₂} f = ∮_{Γ₂}∮_{Γ₁} f`
+    （`Γ₁ = C(c,r₁)`, `Γ₂ = C(c,r)`），只需 `f` 在参数化乘积上连续。 -/
+theorem circleIntegral_circleIntegral_swap (f : ℂ → ℂ → A) (c : ℂ) (r₁ r : ℝ)
+    (hcont : ContinuousOn (fun p : ℝ × ℝ => f (circleMap c r₁ p.1) (circleMap c r p.2))
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi))) :
+    (∮ z in C(c, r₁), ∮ w in C(c, r), f z w)
+      = ∮ w in C(c, r), ∮ z in C(c, r₁), f z w := by
+  have hL : (∮ z in C(c, r₁), ∮ w in C(c, r), f z w)
+      = ∫ θ in (0 : ℝ)..2 * Real.pi, ∫ φ in (0 : ℝ)..2 * Real.pi,
+          circlePairIntegrand f c r₁ r θ φ := by
+    simp only [circleIntegral]
+    refine intervalIntegral.integral_congr fun θ _ => ?_
+    rw [← intervalIntegral.integral_smul]
+    simp only [circlePairIntegrand]
+  have hR : (∮ w in C(c, r), ∮ z in C(c, r₁), f z w)
+      = ∫ φ in (0 : ℝ)..2 * Real.pi, ∫ θ in (0 : ℝ)..2 * Real.pi,
+          circlePairIntegrand f c r₁ r θ φ := by
+    simp only [circleIntegral]
+    refine intervalIntegral.integral_congr fun φ _ => ?_
+    rw [← intervalIntegral.integral_smul]
+    refine intervalIntegral.integral_congr fun θ _ => ?_
+    simp only [circlePairIntegrand, smul_smul, mul_comm]
+  rw [hL, hR]
+  refine intervalIntegral_intervalIntegral_swap ?_
+  have hD1 : ContinuousOn (fun p : ℝ × ℝ => deriv (circleMap c r₁) p.1)
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi)) := by
+    rw [show (fun p : ℝ × ℝ => deriv (circleMap c r₁) p.1)
+        = fun p : ℝ × ℝ => circleMap 0 r₁ p.1 * Complex.I from
+      funext fun p => deriv_circleMap c r₁ p.1]
+    exact (((continuous_circleMap (0 : ℂ) r₁).comp continuous_fst).mul
+      continuous_const).continuousOn
+  have hD2 : ContinuousOn (fun p : ℝ × ℝ => deriv (circleMap c r) p.2)
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi)) := by
+    rw [show (fun p : ℝ × ℝ => deriv (circleMap c r) p.2)
+        = fun p : ℝ × ℝ => circleMap 0 r p.2 * Complex.I from
+      funext fun p => deriv_circleMap c r p.2]
+    exact (((continuous_circleMap (0 : ℂ) r).comp continuous_snd).mul
+      continuous_const).continuousOn
+  have hFc : ContinuousOn (Function.uncurry (circlePairIntegrand f c r₁ r))
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi)) :=
+    (hD1.smul (hD2.smul hcont)).congr fun _ _ => rfl
+  have hsub : (Ι (0 : ℝ) (2 * Real.pi)) ⊆ Set.Icc (0 : ℝ) (2 * Real.pi) := by
+    rw [Set.uIoc_of_le Real.two_pi_pos.le]
+    exact Set.Ioc_subset_Icc_self
+  exact (hFc.integrableOn_compact (isCompact_Icc.prod isCompact_Icc)).mono_set
+    (Set.prod_mono hsub hsub)
+
+/-- **围道独立性（算子值预解式）**：谱空环形区域 ⟹ 两个同心圆周上的预解式积分相等。 -/
+theorem circleIntegral_resolvent_eq_of_lt (a : A) (c : ℂ) {r₁ r₂ : ℝ}
+    (h0 : 0 < r₂) (hle : r₂ ≤ r₁)
+    (hres : ∀ z ∈ closedBall c r₁ \ ball c r₂, z ∈ resolventSet ℂ a) :
+    (∮ z in C(c, r₁), resolvent a z) = ∮ z in C(c, r₂), resolvent a z := by
+  have hd : DifferentiableOn ℂ (fun z => resolvent a z) (closedBall c r₁ \ ball c r₂) :=
+    fun z hz => (spectrum.hasDerivAt_resolvent_const_left (hres z hz)).differentiableAt
+      |>.differentiableWithinAt
+  refine Complex.circleIntegral_eq_of_differentiable_on_annulus_off_countable h0 hle
+    Set.countable_empty hd.continuousOn ?_
+  · intro z hz
+    have hz' : z ∈ closedBall c r₁ \ ball c r₂ :=
+      ⟨ball_subset_closedBall hz.1.1, fun h => hz.1.2 (ball_subset_closedBall h)⟩
+    exact (spectrum.hasDerivAt_resolvent_const_left (hres z hz')).differentiableAt
+
+/-! #### §2.41.3 预解式在围道上的连续性与可积性 -/
+
+/-- 预解式在避开谱的集合上连续（§2.38 谱参数导数的连续化）。 -/
+theorem continuousOn_resolvent (a : A) {s : Set ℂ}
+    (hres : ∀ z ∈ s, z ∈ resolventSet ℂ a) : ContinuousOn (resolvent a) s :=
+  fun z hz =>
+    (spectrum.hasDerivAt_resolvent_const_left (hres z hz)).continuousAt.continuousWithinAt
+
+/-- 圆周上的预解式可积（非负半径版，复用 §2.39 `circleIntegrable_resolvent`）。 -/
+theorem circleIntegrable_resolvent_of_nonneg (a : A) (c : ℂ) {r : ℝ} (hr : 0 ≤ r)
+    (hres : ∀ z ∈ Metric.sphere c r, z ∈ resolventSet ℂ a) :
+    CircleIntegrable (resolvent a) c r :=
+  circleIntegrable_resolvent a c r fun z hz => hres z (by simpa [abs_of_nonneg hr] using hz)
+
+/-- 内圈半径非负、外圈更大时，两个同心圆周上的点不相交。 -/
+theorem circleMap_ne_circleMap {c : ℂ} {r₁ r₂ : ℝ} (h0 : 0 ≤ r₂) (hlt : r₂ < r₁) (θ φ : ℝ) :
+    circleMap c r₁ θ ≠ circleMap c r₂ φ := by
+  have hr1 : 0 ≤ r₁ := le_of_lt (lt_of_le_of_lt h0 hlt)
+  intro heq
+  have h1 : ‖circleMap c r₁ θ - c‖ = r₁ := by
+    rw [circleMap_sub_center, norm_circleMap_zero, abs_of_nonneg hr1]
+  have h2 : ‖circleMap c r₂ φ - c‖ = r₂ := by
+    rw [circleMap_sub_center, norm_circleMap_zero, abs_of_nonneg h0]
+  have hzero : ‖(circleMap c r₁ θ - c) - (circleMap c r₂ φ - c)‖ = 0 := by
+    rw [show (circleMap c r₁ θ - c) - (circleMap c r₂ φ - c) = 0 by rw [heq]; abel, norm_zero]
+  have hle : ‖r₁ - r₂‖ ≤ 0 := by
+    calc ‖r₁ - r₂‖ = ‖‖circleMap c r₁ θ - c‖ - ‖circleMap c r₂ φ - c‖‖ := by rw [h1, h2]
+      _ ≤ ‖(circleMap c r₁ θ - c) - (circleMap c r₂ φ - c)‖ := abs_norm_sub_norm_le _ _
+      _ = 0 := hzero
+  have : r₁ = r₂ := by
+    have h := abs_eq_zero.mp (le_antisymm hle (abs_nonneg _))
+    linarith
+  linarith
+
+/-! #### §2.41.4 双重围道核心计算与幂等性收口 -/
+
+/-- **核心计算**：外圈 `K₁ = ∮_{C(c,r₁)} R(z) dz`、内圈 `K₂ = ∮_{C(c,r₂)} R(w) dw`
+    （`r₂ < r₁`，环形区域避开谱）满足 `K₁ K₂ = 2πi · K₂`。
+
+    证明路线：双重积分 → 预解式恒等式 `R(z)R(w) = (w-z)⁻¹(R(z)-R(w))` → 内圈留数为零
+    （`z` 在 `C(c,r₂)` 之外）→ Fubini 交换 → 内层 Cauchy 留数 `∮(w-z)⁻¹ dz = -2πi`。 -/
+theorem circleIntegral_resolvent_mul_eq (a : A) (c : ℂ) {r₁ r₂ : ℝ}
+    (h0 : 0 ≤ r₂) (hlt : r₂ < r₁)
+    (hres : ∀ z ∈ closedBall c r₁ \ ball c r₂, z ∈ resolventSet ℂ a) :
+    (∮ z in C(c, r₁), resolvent a z) * (∮ w in C(c, r₂), resolvent a w)
+      = (2 * (Real.pi : ℂ) * Complex.I) • (∮ w in C(c, r₂), resolvent a w) := by
+  have hr1 : 0 ≤ r₁ := le_of_lt (lt_of_le_of_lt h0 hlt)
+  have hmem1 : ∀ z ∈ sphere c r₁, z ∈ resolventSet ℂ a := by
+    intro z hz
+    refine hres z ⟨?_, ?_⟩
+    · rw [mem_closedBall]; exact (mem_sphere.mp hz).le
+    · intro hb; rw [mem_ball] at hb; have := mem_sphere.mp hz; linarith
+  have hmem2 : ∀ w ∈ sphere c r₂, w ∈ resolventSet ℂ a := by
+    intro w hw
+    refine hres w ⟨?_, ?_⟩
+    · rw [mem_closedBall]; have := mem_sphere.mp hw; linarith
+    · intro hb; rw [mem_ball] at hb; have := mem_sphere.mp hw; linarith
+  have hInt1 : CircleIntegrable (resolvent a) c r₁ :=
+    circleIntegrable_resolvent_of_nonneg a c hr1 hmem1
+  have hInt2 : CircleIntegrable (resolvent a) c r₂ :=
+    circleIntegrable_resolvent_of_nonneg a c h0 hmem2
+  have hcont : ContinuousOn
+      (fun p : ℝ × ℝ =>
+        (circleMap c r₂ p.2 - circleMap c r₁ p.1)⁻¹ • resolvent a (circleMap c r₂ p.2))
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi)) := by
+    refine ContinuousOn.smul ?_ ?_
+    · refine ContinuousOn.inv₀ ?_ ?_
+      · exact ((continuous_circleMap c r₂).comp continuous_snd).continuousOn.sub
+          ((continuous_circleMap c r₁).comp continuous_fst).continuousOn
+      · intro p _
+        rw [sub_ne_zero]
+        exact (circleMap_ne_circleMap h0 hlt p.1 p.2).symm
+    · refine ContinuousOn.comp' (continuousOn_resolvent a hmem2) ?_ ?_
+      · exact ((continuous_circleMap c r₂).comp continuous_snd).continuousOn
+      · intro p _
+        exact circleMap_mem_sphere c h0 p.2
+  calc (∮ z in C(c, r₁), resolvent a z) * (∮ w in C(c, r₂), resolvent a w)
+      = ∮ z in C(c, r₁), ∮ w in C(c, r₂), resolvent a z * resolvent a w := by
+        rw [← circleIntegral_mul_const (resolvent a) (∮ w in C(c, r₂), resolvent a w) c r₁ hInt1]
+        refine circleIntegral.integral_congr hr1 fun z _ => ?_
+        exact (circleIntegral_const_mul (resolvent a z) (resolvent a) c r₂ hInt2).symm
+    _ = ∮ z in C(c, r₁), ∮ w in C(c, r₂), (w - z)⁻¹ • (resolvent a z - resolvent a w) := by
+        refine circleIntegral.integral_congr hr1 fun z hz => ?_
+        refine circleIntegral.integral_congr h0 fun w hw => ?_
+        have hzw : z ≠ w := by
+          intro h
+          have h1 : ‖z - c‖ = r₁ := by simpa [dist_eq_norm] using (mem_sphere.mp hz)
+          have h2 : ‖w - c‖ = r₂ := by simpa [dist_eq_norm] using (mem_sphere.mp hw)
+          rw [h] at h1; linarith
+        exact resolvent_mul_resolvent_spectral a hzw (hmem1 z hz) (hmem2 w hw)
+    _ = ∮ z in C(c, r₁), -(∮ w in C(c, r₂), (w - z)⁻¹ • resolvent a w) := by
+        refine circleIntegral.integral_congr hr1 fun z hz => ?_
+        have hzout : r₂ < ‖z - c‖ := by
+          have h1 : ‖z - c‖ = r₁ := by simpa [dist_eq_norm] using (mem_sphere.mp hz)
+          rw [h1]; exact hlt
+        have hIa : CircleIntegrable (fun w => (w - z)⁻¹ • resolvent a z) c r₂ := by
+          refine ContinuousOn.circleIntegrable h0 ?_
+          refine ContinuousOn.smul ?_ continuousOn_const
+          refine ContinuousOn.inv₀ (continuousOn_id.sub continuousOn_const) fun w hw => ?_
+          rw [sub_ne_zero]
+          intro hwz
+          have h2 : ‖w - c‖ = r₂ := by simpa [dist_eq_norm] using (mem_sphere.mp hw)
+          have h1 : ‖z - c‖ = r₁ := by simpa [dist_eq_norm] using (mem_sphere.mp hz)
+          rw [hwz] at h2; linarith
+        have hIb : CircleIntegrable (fun w => (w - z)⁻¹ • resolvent a w) c r₂ := by
+          refine ContinuousOn.circleIntegrable h0 ?_
+          refine ContinuousOn.smul ?_ (continuousOn_resolvent a hmem2)
+          refine ContinuousOn.inv₀ (continuousOn_id.sub continuousOn_const) fun w hw => ?_
+          rw [sub_ne_zero]
+          intro hwz
+          have h2 : ‖w - c‖ = r₂ := by simpa [dist_eq_norm] using (mem_sphere.mp hw)
+          have h1 : ‖z - c‖ = r₁ := by simpa [dist_eq_norm] using (mem_sphere.mp hz)
+          rw [hwz] at h2; linarith
+        rw [show (fun w => (w - z)⁻¹ • (resolvent a z - resolvent a w))
+            = fun w => (w - z)⁻¹ • resolvent a z - (w - z)⁻¹ • resolvent a w from
+          funext fun w => smul_sub _ _ _]
+        rw [circleIntegral.integral_sub hIa hIb]
+        rw [circleIntegral.integral_smul_const (fun w => (w - z)⁻¹) (resolvent a z) c r₂]
+        rw [circleIntegral_inv_sub_eq_zero h0 hzout, zero_smul, zero_sub]
+    _ = -(∮ z in C(c, r₁), ∮ w in C(c, r₂), (w - z)⁻¹ • resolvent a w) := by
+        have h := circleIntegral.integral_smul (-1 : ℂ)
+          (fun z => ∮ w in C(c, r₂), (w - z)⁻¹ • resolvent a w) c r₁
+        simpa [neg_one_smul] using h
+    _ = -(∮ w in C(c, r₂), ∮ z in C(c, r₁), (w - z)⁻¹ • resolvent a w) := by
+        refine congrArg Neg.neg ?_
+        exact circleIntegral_circleIntegral_swap
+          (fun z w => (w - z)⁻¹ • resolvent a w) c r₁ r₂ hcont
+    _ = -(∮ w in C(c, r₂), (-(2 * (Real.pi : ℂ) * Complex.I)) • resolvent a w) := by
+        refine congrArg Neg.neg ?_
+        refine circleIntegral.integral_congr h0 fun w hw => ?_
+        rw [circleIntegral.integral_smul_const (fun z => (w - z)⁻¹) (resolvent a w) c r₁]
+        congr 1
+        have hwball : w ∈ ball c r₁ := by
+          rw [mem_ball]; have := mem_sphere.mp hw; linarith
+        have h1 : (∮ z in C(c, r₁), (w - z)⁻¹) = ∮ z in C(c, r₁), -(z - w)⁻¹ := by
+          refine circleIntegral.integral_congr hr1 fun z _ => ?_
+          rw [← neg_sub z w, inv_neg]
+        rw [h1,
+          show (fun z => -(z - w)⁻¹) = fun z => (-1 : ℂ) • (z - w)⁻¹ from
+            funext fun z => (neg_one_smul ℂ ((z - w)⁻¹)).symm]
+        rw [circleIntegral.integral_smul, circleIntegral.integral_sub_inv_of_mem_ball hwball,
+          neg_one_smul]
+    _ = -( (-(2 * (Real.pi : ℂ) * Complex.I)) • (∮ w in C(c, r₂), resolvent a w) ) := by
+        rw [circleIntegral.integral_smul]
+    _ = (2 * (Real.pi : ℂ) * Complex.I) • (∮ w in C(c, r₂), resolvent a w) := by
+        rw [neg_smul, neg_neg]
+
+/-- **Riesz 积分乘积归约**：`P₁ P₂ = P₂`（`r₂ < r₁`，环形区域避开谱）。 -/
+theorem rieszIntegral_mul_eq (a : A) (c : ℂ) {r₁ r₂ : ℝ}
+    (h0 : 0 < r₂) (hlt : r₂ < r₁)
+    (hres : ∀ z ∈ closedBall c r₁ \ ball c r₂, z ∈ resolventSet ℂ a) :
+    rieszIntegral a c r₁ * rieszIntegral a c r₂ = rieszIntegral a c r₂ := by
+  have hK := circleIntegral_resolvent_mul_eq a c h0.le hlt hres
+  have hne : (2 * (Real.pi : ℂ) * Complex.I) ≠ 0 := by
+    simp [Complex.I_ne_zero, Real.pi_ne_zero]
+  rw [rieszIntegral, rieszIntegral, smul_mul_smul', hK, smul_smul, mul_assoc,
+    inv_mul_cancel₀ hne, mul_one]
+
+/-- **Riesz 积分的围道独立性**：谱空环形区域 ⟹ 两个同心圆周上的 Riesz 积分相等。 -/
+theorem rieszIntegral_eq_of_lt (a : A) (c : ℂ) {r₁ r₂ : ℝ}
+    (h0 : 0 < r₂) (hle : r₂ ≤ r₁)
+    (hres : ∀ z ∈ closedBall c r₁ \ ball c r₂, z ∈ resolventSet ℂ a) :
+    rieszIntegral a c r₁ = rieszIntegral a c r₂ := by
+  rw [rieszIntegral, rieszIntegral, circleIntegral_resolvent_eq_of_lt a c h0 hle hres]
+
+/-- **Riesz 投影幂等性** `P² = P`（`r₂ < r₁`，环形区域避开谱）：
+    两个半径上的 Riesz 积分是同一投影，故 `P_{r₁}² = P_{r₁}P_{r₂} = P_{r₂} = P_{r₁}`。 -/
+theorem rieszIntegral_idempotent (a : A) (c : ℂ) {r₁ r₂ : ℝ}
+    (h0 : 0 < r₂) (hlt : r₂ < r₁)
+    (hres : ∀ z ∈ closedBall c r₁ \ ball c r₂, z ∈ resolventSet ℂ a) :
+    rieszIntegral a c r₁ * rieszIntegral a c r₁ = rieszIntegral a c r₁ := by
+  have h : rieszIntegral a c r₁ = rieszIntegral a c r₂ :=
+    rieszIntegral_eq_of_lt a c h0 hlt.le hres
+  calc rieszIntegral a c r₁ * rieszIntegral a c r₁
+      = rieszIntegral a c r₁ * rieszIntegral a c r₂ := by rw [h]
+    _ = rieszIntegral a c r₂ := rieszIntegral_mul_eq a c h0 hlt hres
+    _ = rieszIntegral a c r₁ := h.symm
+
+end KatoRieszIdempotent
+
 /- §3 开放登记（paper14 G3 完整陈数理论，不占用 sorry，真证路径见下）：
 
   本模块建立了陈数理论的代数核心（Berry 曲率投影公式 + 实值性）。以下完整
@@ -3603,9 +4644,10 @@ end K0DegreeHomotopy
      绝热参数不变**：设 `γ : C(I × I, ℂ)` 处处非零且每条 `l`-切片都是基点 `1` 的闭路
      （`γ (0, l) = 1`、`γ (1, l) = 1`），则 `loopDegree (slice γ 0) = loopDegree (slice γ 1)`
      ——其证明**归约到 §2.33**（同伦即 `γ` 自身，作为 `slice γ 0` 与 `slice γ 1` 之间相对
-     `{0,1}` 的同伦）。**待办的唯一技术障碍**：构造实例 `HomotopicRel := Nonempty (HomotopyRel _ _ _)`
-     时其 `HomotopyRel.prop'` 字段的绑定形态尚未确定（`Mathlib/Topology/Homotopy/Basic.lean`
-     中 `HomotopyRel` 的定义处需核对）；数学内容与归约路径均已明确。
+     `{0,1}` 的同伦）。**该定理已闭合（2026-09-24，§2.34）**：`slice` + **`loopDegree_adiabatic_invariant`**
+     （技术要点：`HomotopyRel f₀ f₁ S := HomotopyWith f₀ f₁ (fun f => ∀ x ∈ S, f x = f₀ x)`
+     是 `Homotopy` 的**子类型**，构造 `Nonempty` 需 `⟨⟨⟨⟨toFun, cont⟩, m0, m1⟩, prop⟩⟩`，
+     其 `prop : ∀ t x hx, toFun (t,x) = f₀ x` 恰由 `h0`/`h1` 供给）。
      而**数值陈数**（二维不变量）本身来自**曲率积分**（Chern–Weil / 线丛过渡函数路线），
      与度理论正交，需 $F$ 的可积性/光滑性（Kato 层），仍登记开放。
   5. **规范不变性细节**：用本征矢量表示的 Berry 联络 A = i⟨u|∇u⟩ 在
@@ -3618,6 +4660,137 @@ end K0DegreeHomotopy
   6. **切向量的分析构造**：投影族 P(k) = cfc occFn(H(k)) 对参数的可微性
      （Kato 微扰论层）——其纯代数后件（约束方程、带间化简、双交换子形式）
      已由 §2.5 闭合，分析构造本身仍需微积分基础设施。
+     **→ Kato 微扰论层三层已闭合（2026-09-24，§2.35–§2.37）**：
+     §2.35 `resolvent_sub_resolvent`（第一预解式恒等式，谱参数依赖）+
+     §2.36 `resolvent_sub_resolvent_ops`（第二预解式恒等式，算子依赖；纯代数，
+     绕开实例菱形）+ §2.37 `resolvent_diff_reduction`（归约恒等式：误差项 =
+     `R·δ·(R'-R)`）与 **`resolvent_hasFDerivAt`**（**预解式对算子变量的 Fréchet
+     可微性**——由 mathlib `spectrum.hasFDerivAt_resolvent` 提供，§2.35/§2.36 所记
+     `Matrix n n ℂ` **实例菱形**经 `open scoped Matrix.Norms.L2Operator` 一举化解，
+     无需 `letI`）+ `matrix_l2_norm_witness`/`matrix_resolvent_hasFDerivAt`
+     （`Matrix n n ℂ` 固定 L2 算子范数实例见证与特化）。至此投影族 $P(k)$ 光滑性的
+     **分析引擎**（预解式可微性）就位。**→ 谱参数导数已闭合（2026-09-24，§2.38）**：
+     `resolvent_hasDerivAt`（**谱参数导数 $dR/dz=-R^2$**，mathlib
+     `spectrum.hasDerivAt_resolvent_const_left`）+ `resolvent_deriv_layers_agree`
+     （**两层导数相容性**：`-R² = -(R·1·R)`，即谱参数导数 = 算子变量导数在中心单位方向
+     取值之负——印证 $z\cdot1-a$ 中 $z$ 与 $a$ 的反向中心耦合）+ `matrix_resolvent_hasDerivAt`
+     （`Matrix n n ℂ` L2 特化）。至此 Kato 微扰论的**双层可微性基建**（算子变量 + 谱参数）齐备。
+      **→ Riesz 积分与投影族 $P(k)$ 的定量光滑性已闭合（2026-09-24，§2.39）**：
+      **Riesz 积分**（围道形式谱投影）`rieszIntegral`（`(2πi)⁻¹ ∮ R dz`）+ 良定义性
+      `resolvent_differentiableOn_sphere`/`circleIntegrable_resolvent` + 围道被积函数与导数
+      `resolventCircleIntegrand`/`resolventCircleDeriv` + 点态导数界 `norm_resolventCircleDeriv_le`
+      + 参数范数估计 `norm_resolvent_sub_le`/`norm_resolvent_sub_le_of_bound`
+      + **参数 Lipschitz 估计 `norm_rieszIntegral_sub_le`**（`‖P(a)-P(b)‖ ≤ r·M²·‖a-b‖`）
+      + `lipschitzOnWith_rieszIntegral`/`continuousAt_rieszIntegral`（**Lipschitz / 连续**）。
+      **→ Riesz 积分的微分（投影族 C¹ 光滑性）已闭合（2026-09-24，§2.40）**：
+      `rieszIntegral_eq_integral`（`intervalIntegral` ↔ 集合积分形式桥接）+ `hasFDerivAt_circleIntegral_resolvent`
+      （围道参数化形式的参数可微性）+ **`rieszIntegral_hasFDerivAt`**（`D_a P = (2πi)⁻¹ ∮ R·(·)·R dz`）。
+      **`HasFDerivAt` 实例菱形正面攻克（随登）**：菱形实落在 `Module ℂ A` 内部的
+      `SeminormedAddCommGroup` 参数上（`HasFDerivAt` 本版本只要求 `[AddCommGroup] [Module] [TopologicalSpace]`），
+      解法为「定理结论取**集合积分形式**与参数积分引理逐字对齐」+「**弃用 `simpa ... using`**（其脱离期望类型
+      独立精化致实例按默认合成），改用 `exact`（期望类型传入精化）」。
+      **→ Riesz 投影幂等性 $P^2=P$ 已闭合（2026-09-24，§2.41）**：**双重围道归约**
+      `circleIntegral_resolvent_mul_eq`（外圈 $K_1=\oint_{C(c,r_1)}R\,dz$、内圈
+      $K_2=\oint_{C(c,r_2)}R\,dw$ 满足 $K_1K_2=2\pi i\,K_2$；经算子值圆周积分线性
+      `circleIntegral_mul_const`/`circleIntegral_const_mul` + 预解式乘法恒等式
+      `resolvent_mul_resolvent_spectral` + 围道外留数 `circleIntegral_inv_sub_eq_zero`
+      + 算子值双围道 **Fubini 交换** `circleIntegral_circleIntegral_swap` + 内层 Cauchy 留数
+      `circleIntegral.integral_sub_inv_of_mem_ball`）+ **标量归一化** `rieszIntegral_mul_eq`
+      （$P_1P_2=P_2$）+ **围道独立性** `rieszIntegral_eq_of_lt`（mathlib annulus 版
+      Cauchy–Goursat `circleIntegral_eq_of_differentiable_on_annulus_off_countable`）⟹
+      **`rieszIntegral_idempotent`：`rieszIntegral a c r₁ * rieszIntegral a c r₁ = rieszIntegral a c r₁`**
+      ——Riesz 积分确为**投影算子**，Berry 曲率公式中的 $P$ 具备「投影」代数身份。
+      **诚实边界（随登）**：假设为「存在 $0<r_2<r_1$ 使闭环形区域
+      $D(c,r_1)\setminus D(c,r_2)$ 避开谱」（即 $C(c,r_1)$ 为谱岛边界；单一围道本身
+      不足以支撑双重积分论证，须有辅助内圈作 Fubini 载体）。
+      **→ Berry 曲率被积函数的连续性与环面可积性已闭合（2026-09-24，§2.42）**：
+      `continuous_berryCurvature`（$F=-i\,\mathrm{Tr}(P[A,B])$ 关于 $(P,A,B)$ 的多项式
+      连续性）+ `continuous_berryCurvature_comp`（连续投影/切向量族 ⟹ 复合连续）+
+      `continuous_torusMap`（环面参数化 $\theta\mapsto(c_i+R_ie^{\theta_i i})_i$ 连续）+
+      `torusIntegrable_of_continuous`（连续 ⟹ 紧致参数域上可积，
+      `Continuous.integrableOn_Icc`）+ **`torusIntegrable_berryCurvature`**（连续投影/切向量
+      族 ⟹ $F(k)$ 在 $T^2$ 上可积，即 `chernIntegralTorus F` 的**分析前提**成立）+
+      `norm_chernIntegralTorus_le`（先验界 $\|F\|\le C\Rightarrow\|\oiint F\|\le(2\pi)^2C$）。
+      **仍登记开放**：完整**数值**陈数（须将 $F$ 具体化为 $P(k)$ 的显式谱数据并在 $T^2$ 上
+      求积分值），以及陈数**整性**（$C\in\mathbb{Z}$ 的度理论/同伦提升论证，§3 #2/#4）。
+      **→ 环面留数定理（Laurent 单项式层）已闭合（2026-09-24，§2.43）**：一维留数分类
+      `circleIntegral_zpow_of_ne`/`circleIntegral_zpow_neg_one`（$\oint_{C(0,1)}z^m=2\pi i\,\delta_{m,-1}$）
+      + `torusIntegrable_monomial`（$z_0^mz_1^n$ 环面可积）+ `torusIntegral_dim2_monomial_factor`
+      （因子化 $\oiint z_0^mz_1^n=(\oint z^m)(\oint z^n)$）+ **`torusIntegral_dim2_monomial`**
+      （**环面留数定理**：$\oiint_{T^2}z_0^mz_1^n=(2\pi i)^2$ 当且仅当 $m=n=-1$，否则 $0$；
+      §2.13 `torusIntegral_dim2_double_inv` 为其 $(m,n)=(-1,-1)$ 特例）+
+      `torusIntegral_dim2_laurentPoly`（**`∯` 为 $z_0^{-1}z_1^{-1}$ 系数提取器**：有限 Laurent
+      组合的环面积分 $=(2\pi i)^2c_{-1,-1}$）。**仍登记开放**：一般两带模型的曲率密度 $F$
+      通常含**非 Laurent** 结构（如 $(1+2u)^{-3/2}$ 型根式分母），其陈数非零显式值仍开放。
+      **→ 两带模型结构性定理已闭合（2026-09-24，§2.44）**：`berryCurvature_add_complement`
+      （**互补带求和规则** $F_P+F_Q=0$，$Q=1-P$，纯迹论恒等式，无需幂等/厄米）+
+      `chernIntegralTorus_berryCurvature_add_complement`（积分层 $C_{\mathrm{occ}}+C_{\mathrm{empty}}=0$）+
+      `berryCurvature_eq_zero_of_flat`/`chernIntegralTorus_flat_eq_zero`（**平带类 $C=0$**）+
+      `chernIntegralTorus_laurentPoly`/`chernIntegralTorus_laurentPoly_eq_zero`
+      （**标架类闭式陈数**：Laurent 多项式层 $\oiint F=(2\pi i)^2c_{-1,-1}$；无 $z_0^{-1}z_1^{-1}$
+      项 ⟹ $C=0$）。
+      **→ BZ 测度层已闭合（2026-09-24，§2.45）**：BZ 测度积分 `bzIntegral`
+      （$\int_0^{2\pi}\!\!\int_0^{2\pi}F\,dk_0dk_1$）与物理陈数 `physicalChernNumber`
+      （$(2\pi)^{-1}\,\text{bzIntegral}$）+ **BZ 留数定理（Fourier 单项式层，主定理）**
+      `bzIntegral_bzFourier`（$\int_{\mathrm{BZ}}e^{i(mk_0+nk_1)}d^2k=(2\pi)^2\delta_{m,0}\delta_{n,0}$，
+      经一维 `intervalIntegral_exp_int_mul_I`（$\int_0^{2\pi}e^{ink}dk=2\pi\delta_{n,0}$，
+      `intervalIntegral.integral_deriv_eq_sub'` + `Complex.exp_int_mul_two_pi_mul_I`）
+      + Fubini 分解 `bzIntegral_separable`）+ **Stokes 论证** `bzIntegral_stokes_eq_zero`
+      （单值联络 $F=\partial_0A_1-\partial_1A_0$ + $A_0,A_1$ 关于对应变量 $2\pi$-周期 ⟹
+      `bzIntegral F = 0`；内层 FTC 消 $\partial_1A_0$、外层 `intervalIntegral_intervalIntegral_swap`
+      后 FTC 消 $\partial_0A_1$）与推论 `physicalChernNumber_eq_zero_of_stokes`
+      （**全局标架（单值联络）⟹ $C=0$**）+ **Jacobi 字典** `torusIntegral_dim2_eq_bzIntegral`
+      （$\oiint_{T^2}F(z)\,d^2z=\int_{\mathrm{BZ}}(\partial z_0/\partial k_0)(\partial z_1/\partial k_1)
+      F(z(k))\,d^2k$，$z_i=e^{ik_i}$，Jacobi 因子 $\partial z_i/\partial k_i=i\,z_i$）
+      + 单项式层一致性 `torusIntegral_dim2_monomial_eq_bzIntegral`
+      （$\oiint_{T^2}z_0^mz_1^n=-\int_{\mathrm{BZ}}z_0^{m+1}z_1^{n+1}d^2k$；Jacobi 因子
+      $(iz_0)(iz_1)=-z_0z_1$ 把指数平移 $+1$，§2.43 极点 $(-1,-1)$ 对应 BZ 零频 $(0,0)$，
+      两套留数定理一致）。
+      **→ 显式两带模型层已闭合（2026-09-25，§2.46）**：**两带 Pauli 代数核**
+      `pauliSigmaX`/`pauliSigmaY`/`pauliSigmaZ`/`pauliVec`（$d\cdot\sigma=d_0\sigma_x+d_1\sigma_y+d_2\sigma_z$）
+      /`dot3`/`cross3` + 乘法恒等式 `pauliVec_mul`（$(d\cdot\sigma)(e\cdot\sigma)=(d\cdot e)\mathbf 1+i\,(d\times e)\cdot\sigma$）
+      /平方 `pauliVec_sq`（$(d\cdot\sigma)^2=(d\cdot d)\mathbf 1$）/迹 `pauliVec_mul_trace`
+      （$\mathrm{Tr}((d\cdot\sigma)(e\cdot\sigma))=2\,d\cdot e$）/交换子 `pauliVec_commutator`
+      （$[(d\cdot\sigma),(e\cdot\sigma)]=2i\,(d\times e)\cdot\sigma$）；**两带投影** `bandProj`
+      （$P=\tfrac12(\mathbf 1-n\cdot\sigma)$，幂等 `bandProj_idempotent`/迹 1 `bandProj_trace`/
+      补带 `bandProj_complement`）+ **曲率闭式** `berryCurvature_bandProj`
+      （$F=-i\,\mathrm{Tr}(P[A,B])=-\tfrac12\,n\cdot(a\times b)$——两带 Berry 曲率化为**纯量三重积**）；
+      **根式分母代数核** `dot3_smul_cross3_smul`/`berryCurvature_normalized_d`
+      （$F=-\tfrac12\,s^{-3}\,d\cdot(a\times b)$，$s^2=d\cdot d$，Leibniz 修正项由三重积
+      **反对称性** `dot3_self_cross_right`/`dot3_self_cross_left` 消零 ⟹ 仅留根式分母 $(d\cdot d)^{-3/2}$）；
+      **可分离模型零陈数完整实例** `sepDr`（单位向量 `sepDr_unit`）+ `sepDr_triple`
+      （$d\cdot(\partial_0d\times\partial_1d)=-\sin k_0$）⟹ 曲率 `berryCurvature_sepD`（$F=\tfrac12\sin k_0$）
+      ⟹ `bzIntegral_berryCurvature_sepD`/`physicalChernNumber_sepD_eq_zero`（$C=0$，全链条零 sorry）。
+      **仍登记开放**：②′ 一般两带模型（含根式分母的 $F$）的**非零**陈数显式值与整性
+      ——QWZ 型 $d=(\sin k_0,\sin k_1,m+\cos k_0+\cos k_1)$ 的曲率分母
+      $(2+m^2+2m(\cos k_0+\cos k_1)+2\cos k_0\cos k_1)^{3/2}$ **非 Laurent 且非初等**，
+      闭式求值需椭圆型积分或 $T^2\to S^2$ 度理论（数值已确认 $-2<m<0$ 取 $C=-1$、
+      $0<m<2$ 取 $C=+1$、$|m|>2$ 取 $C=0$）；③ 具体模型的**数值**陈数（§2.46 已交付
+      可分离模型 $C=0$ 的完整实例；QWZ 型数值陈数仍待形式化）。
+      **→ 耦合模型显式曲率层已闭合（2026-09-25，§2.47）**：把 §2.46 的根式分母层
+      **实例化**到**耦合**（非可分离、非单位）的 QWZ 型模型——`qwzDr m k₀ k₁ =
+      (\sin k_0,\sin k_1,m+\cos k_0+\cos k_1)` + 切向量 `qwzAr`/`qwzBr` +
+      归一化恒等式 `qwzDr_sq`/`qwzDr_sq_alt`（$d\cdot d=2+m^2+2m(\cos k_0+\cos k_1)+2\cos k_0\cos k_1$
+      ——§2.46 登记的根式分母底数）+ **耦合三重积** `qwzDr_triple`
+      （$d\cdot(\partial_0d\times\partial_1d)=\cos k_0+\cos k_1+m\cos k_0\cos k_1$，
+      需三角恒等式，**非纯代数**）+ **显式曲率（根式分母显式）** `berryCurvature_qwz`/
+      `berryCurvature_qwz_unit`（$F=-\tfrac12\,s^{-3}(\cos k_0+\cos k_1+m\cos k_0\cos k_1)$，
+      $s=\sqrt{d\cdot d}$，$(d\cdot d)^{-3/2}$ **在耦合模型上显式**）+ 平凡相/临界点结构事实
+      `qwzDr_sq_pos_of_abs_gt_two`（$|m|>2\Rightarrow d\cdot d>0$）/
+      `qwzDr_zero_pi_zero`/`qwzDr_zero_zero_pi`（$m=0$ 狄拉克点）。
+      **仍登记开放**：QWZ 型**非零**陈数显式值（分母非 Laurent 且非初等，闭式需椭圆型积分
+      或 $T^2\to S^2$ 度理论）。
+      **→ 平凡相 Stokes 论证的代数核已闭合（2026-09-25，§2.48）**：为开放项 ②′ 的
+      $|m|>2$ 分支（$C=0$）铺设——立体角 1-形式
+      $\alpha_i=(n_0\partial_i n_1-n_1\partial_i n_0)/(1+n_2)$ 的**系数级精确性**
+      `solidAngle_primitive_exact`（$\partial_0\alpha_1-\partial_1\alpha_0=n\cdot(a_0\times a_1)$，
+      $n$ 单位、$a_i\perp n$）+ **Stokes 归约** `berryCurvatureScalar_eq_primitive_curl`
+      （$F=-\tfrac12(\partial_0\alpha_1-\partial_1\alpha_0)$）+ QWZ 平凡相正则性
+      `qwzNz_pos`/`one_add_qwzNz_ne_zero`（$2<m$ ⟹ $n_z>0$，无 Dirac 弦）+
+      **条件 Stokes 闭合** `physicalChernNumber_qwz_eq_zero_of_stokes`（单值联络 ⟹ $C=0$）。
+      **仍登记开放**：把该条件闭合的**解析前提**（全局标架 $A_i=-\tfrac12\alpha_i$ 的
+      $2\pi$-周期性/可微性/可积性）**无条件化**，从而给出 $2<m$ 时 $C=0$ 的**无条件**证明；
+      以及 $|m|<2$ 分支的非零陈数（椭圆积分 / $T^2\to S^2$ 度理论）。
   7. **同秩投影酉等价（K₀ = ℤ 度理论整性核心）**：任意两个同秩（同维）幂等
      谱投影 P、Q（rank P = rank Q）在有限维中酉等价（∃ 酉 U，Q = U·P·U†）。
      这是度理论/同伦层整性（§3 #2 的"同秩谱投影 → 陈指数 → K₀(ℂ) = ℤ → C ∈ ℤ"）
@@ -3871,5 +5044,1499 @@ end K0DegreeHomotopy
   有界区间 {r∈ℤ | -dim E≤r≤dim E}（满射 + §2.21 单射 ⟹ 到有界区间双射）/
   projToInt_range_not_submonoid 像非 ℤ 加法子幺半群（dim E≥1 时 a=b=α、a+b=2α∉[−α,α]，
   闭会展碍），§2.22）。 -/
+
+/-!
+## §2.42 Berry 曲率被积函数的连续性与环面可积性（闭合 §3 #1 的「F 可积性」）
+
+§2.39–§2.41 已建立 Riesz 投影族 `P(k) = (2πi)⁻¹ ∮_{C(c,r)} R(k,z) dz` 的**良定义性**、
+**定量光滑性**（Lipschitz/连续）、**参数可微性**（C¹）与**幂等性**（`P² = P`）；
+§2.2/§2.7 已建立 Berry 曲率被积函数 `F = −i·Tr(P[A,B])` 的**代数刻画**（实值、反对称、
+双线性）。本节闭合 §3 #1 登记中「环面上 `F` 的**可积性**（⇐ `P` 光滑）」这一开放项——
+即把「`P` 光滑」经**多项式复合 + 紧致域**传化为被积函数的环面可积性。
+
+**证明路线**：
+
+1. **被积函数对三元组的连续性** `continuous_berryCurvature`：`F = −i·Tr(P[A,B])` 是
+   矩阵乘法 + 迹 + 标量乘的**多项式**复合，故 `(P,A,B) ↦ F(P,A,B)` 连续。
+2. **连续族复合** `continuous_berryCurvature_comp`：若投影族 `k ↦ P(k)` 与切向量族
+   `k ↦ A(k), B(k)` 连续（§2.39 已证 Riesz 积分族的参数连续性），则 `k ↦ F(k)` 连续。
+3. **环面参数化连续性** `continuous_torusMap`：`θ ↦ (cᵢ + Rᵢ·e^{iθᵢ})ᵢ` 连续。
+4. **连续 ⟹ 环面可积** `torusIntegrable_of_continuous`：`f` 连续 ⟹ `f ∘ torusMap c R`
+   在紧致参数域 `Icc 0 (2π)ⁿ` 上连续 ⟹ 可积（`Continuous.integrableOn_Icc`）。
+5. **主定理** `torusIntegrable_berryCurvature`：连续投影/切向量族 ⟹ `F(k)` 在 `T²` 上
+   可积——即 `chernIntegralTorus F` 的**分析前提**（被积可积）成立。
+6. **先验有界性** `norm_chernIntegralTorus_le`：`‖F‖ ≤ C` 在环面上 ⟹ `‖∯ F‖ ≤ (2π)²·C`
+   （mathlib `norm_torusIntegral_le_of_norm_le_const`，半径 1 时 `∏ᵢ|Rᵢ| = 1`）。
+
+**诚实边界（随登）**：本节闭合**被积函数的连续性**与**环面可积性**（§3 #1 的「`F` 可积性」）。
+**仍开放**：完整归一化陈数的**数值**（需将 `F` 具体化为 `P(k)` 的显式谱数据并在 `T²` 上求积分值）。
+-/
+
+section BerryCurvatureIntegrability
+
+/-- **Berry 曲率对三元组 `(P,A,B)` 的连续性**：`F = −i·Tr(P[A,B])` 是矩阵乘法、迹与
+    标量乘的复合（关于 `(P,A,B)` 的多项式），故连续。 -/
+theorem continuous_berryCurvature {n : ℕ} :
+    Continuous fun p : Matrix (Fin n) (Fin n) ℂ × Matrix (Fin n) (Fin n) ℂ ×
+      Matrix (Fin n) (Fin n) ℂ => berryCurvature p.1 p.2.1 p.2.2 := by
+  unfold berryCurvature
+  fun_prop
+
+/-- **连续族的 Berry 曲率连续性**：若投影族 `P` 与切向量族 `A`、`B` 连续，则
+    `x ↦ F(P(x),A(x),B(x))` 连续——这是「`P(k)` 光滑 ⟹ `F` 光滑」的复合层。 -/
+theorem continuous_berryCurvature_comp {n : ℕ} {X : Type*} [TopologicalSpace X]
+    (P A B : X → Matrix (Fin n) (Fin n) ℂ)
+    (hP : Continuous P) (hA : Continuous A) (hB : Continuous B) :
+    Continuous fun x => berryCurvature (P x) (A x) (B x) := by
+  unfold berryCurvature
+  fun_prop
+
+/-- **环面参数化 `torusMap c R` 的连续性**：`θ ↦ (cᵢ + Rᵢ·e^{iθᵢ})ᵢ` 连续。 -/
+theorem continuous_torusMap {n : ℕ} (c : Fin n → ℂ) (R : Fin n → ℝ) :
+    Continuous (torusMap c R) := by
+  unfold torusMap
+  fun_prop
+
+/-- **连续 ⟹ 环面可积**：`f` 连续 ⟹ `f ∘ torusMap c R` 在紧致参数域 `Icc 0 (2π)ⁿ` 上
+    连续 ⟹ 可积（`Continuous.integrableOn_Icc`）。 -/
+theorem torusIntegrable_of_continuous {n : ℕ} (f : (Fin n → ℂ) → ℂ)
+    (c : Fin n → ℂ) (R : Fin n → ℝ) (hf : Continuous f) : TorusIntegrable f c R := by
+  rw [TorusIntegrable]
+  exact (hf.comp (continuous_torusMap c R)).integrableOn_Icc
+
+/-- **主定理：Berry 曲率被积函数在环面 `T²` 上的可积性**（闭合 §3 #1 的「`F` 可积性」）。
+    若投影族 `k ↦ P(k)` 与切向量族 `k ↦ A(k), B(k)` 在环面参数域上连续，则
+    `F(k) = berryCurvature (P k) (A k) (B k)` 在 `T² = {|z₀|=|z₁|=1}` 上可积——
+    即 `chernIntegralTorus F` 的**分析前提**（被积可积）成立。 -/
+theorem torusIntegrable_berryCurvature {n : ℕ}
+    (P A B : (Fin 2 → ℂ) → Matrix (Fin n) (Fin n) ℂ)
+    (hP : Continuous P) (hA : Continuous A) (hB : Continuous B) :
+    TorusIntegrable (fun k => berryCurvature (P k) (A k) (B k))
+      (0 : Fin 2 → ℂ) (fun _ => (1 : ℝ)) :=
+  torusIntegrable_of_continuous _ _ _
+    (continuous_berryCurvature_comp P A B hP hA hB)
+
+/-- **陈数的先验有界性**：若 Berry 曲率被积函数在环面上被常数 `C` 控制
+    （`‖F(torusMap 0 1 θ)‖ ≤ C`），则未归一化陈数 `∯ F` 的范数 ≤ `(2π)²·C`
+    （mathlib `norm_torusIntegral_le_of_norm_le_const`，半径 1 时 `∏ᵢ|Rᵢ| = 1`）。 -/
+theorem norm_chernIntegralTorus_le (F : (Fin 2 → ℂ) → ℂ) {C : ℝ}
+    (hF : ∀ θ, ‖F (torusMap (0 : Fin 2 → ℂ) (fun _ => (1 : ℝ)) θ)‖ ≤ C) :
+    ‖chernIntegralTorus F‖ ≤ (2 * Real.pi) ^ (2 : ℕ) * C := by
+  rw [chernIntegralTorus]
+  have h := norm_torusIntegral_le_of_norm_le_const (f := F) (c := (0 : Fin 2 → ℂ))
+    (R := fun _ => (1 : ℝ)) hF
+  simpa using h
+
+end BerryCurvatureIntegrability
+
+/-!
+## §2.43 环面留数定理（Laurent 单项式层）：`∮ z^m` 与 `∯ z₀^m z₁^n` 的完整分类
+
+§2.42 闭合了 Berry 曲率被积函数 `F` 在环面 `T²` 上的**连续性**与**可积性**——
+即 `chernIntegralTorus F` 的**分析前提**。本节把「`∯ F` 的**数值**」在
+**Laurent 单项式层**上真正算出来：显式两带模型的曲率密度 `F` 在**全局标架**
+（`zᵢ = e^{iθᵢ}` 取作环面复坐标）下常可展为 `z₀^m z₁^n` 的**有限线性组合**，
+故其环面积分由本节分类定理给出**闭式**。
+
+**证明路线**（全部落在复分析的留数定理上）：
+
+1. **一维留数分类**（`circleIntegral_zpow_of_ne` / `circleIntegral_zpow_neg_one`）：
+   单位圆 `C(0,1)` 上 `∮ z^m dz = 2πi·δ_{m,-1}`——仅 `m = -1` 有留数 `2πi`
+   （mathlib `circleIntegral.integral_sub_zpow_of_ne` 与
+   `circleIntegral.integral_sub_inv_of_mem_ball`）。
+2. **环面单项式可积性**（`torusIntegrable_monomial`）：`z₀^m z₁^n`（任意整数指数）
+   在 `T²` 上可积——`torusMap` 分量 `e^{iθ}` 非零，故 `Continuous.zpow₀` + 紧致域
+   上 `Continuous.integrableOn_Icc`。
+3. **环面单项式因子化**（`torusIntegral_dim2_monomial_factor`）：
+   `∯_{T²} z₀^m z₁^n = (∮_{C(0,1)} z^m)·(∮_{C(0,1)} z^n)`——`torusIntegral_succ`
+   将二维环面沿第一坐标降维为一维圆周积分，`torusIntegral_dim1` 再把内层退化环面
+   识别为单位圆 `C(0,1)`。
+4. **环面留数定理（主定理）**（`torusIntegral_dim2_monomial`）：
+   `∯_{T²} z₀^m z₁^n = (2πi)²` 当且仅当 `m = n = -1`，否则为 `0`——
+   二维环面上**仅**双极点被积 `z₀^{-1}z₁^{-1}` 有留数 `(2πi)²`，
+   与 §2.13 `torusIntegral_dim2_double_inv` 完全一致（后者是该主定理的特例）。
+5. **Laurent 多项式线性化**（`torusIntegral_dim2_laurentPoly`，§2.43.2）：由积分的线性性，
+   有限 Laurent 组合 `∑_{(m,n)∈s} c_{mn} z₀^m z₁^n` 的环面积分 `= (2πi)²·c_{-1,-1}`——
+   即 `∯` 是 **`z₀^{-1}z₁^{-1}` 系数提取器**，给出**标架类**被积的闭式求值。
+
+**诚实边界（随登）**：本节闭合 **Laurent 单项式层**的完整留数分类——即
+**标架类**被积（全局 Laurent 多项式）的环面积分可**闭式**求值。
+**仍开放**：一般两带模型的曲率密度 `F` 通常含**非 Laurent** 结构（如
+`(1 + 2u)^{-3/2}` 型根式分母），其陈数**非零**的显式值与整性仍需完整
+度理论/数值积分基建（§3 #1）；而**标架存在 ⟹ C = 0** 的结构性定理见 §2.44。
+-/
+
+section TorusResidueTheorem
+
+/-- **单位圆上 `z^m`（`m ≠ -1`）的积分为零**：`∮_{C(0,1)} z^m dz = 0`。
+    证明：mathlib `circleIntegral.integral_sub_zpow_of_ne`（中心 `c = 0`、`w = 0`）。 -/
+theorem circleIntegral_zpow_of_ne (m : ℤ) (hm : m ≠ -1) :
+    (∮ z in C(0, 1), z ^ m) = 0 := by
+  have h := circleIntegral.integral_sub_zpow_of_ne hm (0 : ℂ) (0 : ℂ) 1
+  simpa using h
+
+/-- **单位圆留数 `∮_{C(0,1)} z⁻¹ dz = 2πi`**（唯一非零的一维留数）。
+    证明：mathlib `circleIntegral.integral_sub_inv_of_mem_ball`（`0 ∈ ball 0 1`）。 -/
+theorem circleIntegral_zpow_neg_one :
+    (∮ z in C(0, 1), z ^ (-1 : ℤ)) = 2 * Real.pi * Complex.I := by
+  have h := circleIntegral.integral_sub_inv_of_mem_ball (c := (0 : ℂ)) (w := (0 : ℂ))
+    (R := (1 : ℝ)) (by simp)
+  simpa [zpow_neg_one, sub_zero] using h
+
+/-- **环面单项式的可积性**：`z₀^m z₁^n` 在标准环面 `T²` 上可积（指数任意整数）。
+    证明：`torusMap` 两分量 `e^{iθᵢ}` 恒非零 ⟹ `Continuous.zpow₀` 给出
+    `θ ↦ torusMap … θ i ^ m` 连续 ⟹ 乘积在紧致参数域 `Icc 0 (2π)²` 上可积。 -/
+theorem torusIntegrable_monomial (m n : ℤ) :
+    TorusIntegrable (fun z : Fin 2 → ℂ => z 0 ^ m * z 1 ^ n)
+      (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) := by
+  rw [TorusIntegrable]
+  have hne : ∀ (θ : Fin 2 → ℝ) (i : Fin 2),
+      torusMap (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) θ i ≠ 0 := by
+    intro θ i; simp [torusMap]
+  have h0 : Continuous fun θ : Fin 2 → ℝ =>
+      torusMap (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) θ 0 := by
+    unfold torusMap; fun_prop
+  have h1 : Continuous fun θ : Fin 2 → ℝ =>
+      torusMap (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) θ 1 := by
+    unfold torusMap; fun_prop
+  exact ((h0.zpow₀ m (fun θ => Or.inl (hne θ 0))).mul
+    (h1.zpow₀ n (fun θ => Or.inl (hne θ 1)))).integrableOn_Icc
+
+/-- **环面单项式积分 = 两圆周积分之积**：`∯_{T²} z₀^m z₁^n = (∮ z^m)·(∮ z^n)`。
+    证明：`torusIntegral_succ` 沿第一坐标降维（外层圆周 `C(0,1)`、内层退化环面
+    `T¹`），内层经 `torusIntegral_const_mul` 提出 `x^m` 后由 `torusIntegral_dim1`
+    识别为 `C(0,1)` 上的圆周积分；最后 `circleIntegral.integral_smul_const`
+    把常数因子提出。 -/
+theorem torusIntegral_dim2_monomial_factor (m n : ℤ) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ m * z 1 ^ n)
+      = (∮ z in C(0, 1), z ^ m) * (∮ z in C(0, 1), z ^ n) := by
+  have hc : ((0 : Fin 2 → ℂ) ∘ Fin.succ) = (0 : Fin 1 → ℂ) := by funext i; simp
+  have hR : ((fun _ : Fin 2 => (1 : ℝ)) ∘ Fin.succ) = (fun _ : Fin 1 => (1 : ℝ)) := by
+    funext i; simp
+  have hinner : ∀ x : ℂ,
+      (∯ y in T((0 : Fin 1 → ℂ), fun _ : Fin 1 => (1 : ℝ)),
+          (Fin.cons x y : Fin 2 → ℂ) 0 ^ m * (Fin.cons x y : Fin 2 → ℂ) 1 ^ n)
+        = x ^ m * (∮ z in C(0, 1), z ^ n) := by
+    intro x
+    have hfun : (fun y : Fin 1 → ℂ =>
+          (Fin.cons x y : Fin 2 → ℂ) 0 ^ m * (Fin.cons x y : Fin 2 → ℂ) 1 ^ n)
+        = (fun y : Fin 1 → ℂ => x ^ m * y 0 ^ n) := by
+      funext y; simp
+    rw [hfun, torusIntegral_const_mul, torusIntegral_dim1]
+    simp
+  rw [torusIntegral_succ (torusIntegrable_monomial m n), hc, hR]
+  simp only [Pi.zero_apply]
+  simp only [hinner]
+  simp only [← smul_eq_mul]
+  rw [circleIntegral.integral_smul_const]
+
+/-- **环面留数定理（Laurent 单项式层，主定理）**：
+    `∯_{T²} z₀^m z₁^n = (2πi)²` 当且仅当 `m = n = -1`，否则为 `0`。
+    即二维环面上**仅**双极点被积 `z₀^{-1}z₁^{-1}` 有留数 `(2πi)²`——
+    §2.13 `torusIntegral_dim2_double_inv` 是该分类在 `(m,n) = (-1,-1)` 处的特例。
+    证明：`torusIntegral_dim2_monomial_factor` 因子化后对 `m`、`n` 是否为 `-1`
+    分类，用 `circleIntegral_zpow_neg_one`（留数 `2πi`）与
+    `circleIntegral_zpow_of_ne`（其余为零）。 -/
+theorem torusIntegral_dim2_monomial (m n : ℤ) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ m * z 1 ^ n)
+      = if m = -1 ∧ n = -1 then (2 * Real.pi * Complex.I) ^ 2 else 0 := by
+  rw [torusIntegral_dim2_monomial_factor]
+  by_cases hm : m = -1
+  · by_cases hn : n = -1
+    · rw [hm, hn, circleIntegral_zpow_neg_one]
+      simp [pow_two]
+    · rw [hm, circleIntegral_zpow_neg_one, circleIntegral_zpow_of_ne n hn, mul_zero]
+      simp [hn]
+  · rw [circleIntegral_zpow_of_ne m hm, zero_mul]
+    simp [hm]
+
+/-! ### §2.43.2 Laurent 多项式线性化：`∯` 作为 `z₀⁻¹z₁⁻¹` 系数提取器
+
+把 §2.43.1 的**单项式**分类沿积分的**线性性**推广到有限线性组合——这正是
+「全局标架类」两带模型曲率密度的真实形状（`zᵢ = e^{iθᵢ}` 下的 Laurent 多项式）。
+结论：`∯` 是**系数提取器**，只读出 `z₀^{-1}z₁^{-1}` 的系数（标架类被积的闭式求值）。 -/
+
+/-- **单项式标量倍的可积性**：`a·(z₀^m z₁^n)` 在 `T²` 上可积
+    （`IntegrableOn.const_mul`，即 `torusIntegral_const_mul` 的分析前提）。 -/
+theorem torusIntegrable_monomial_const_mul (a : ℂ) (m n : ℤ) :
+    TorusIntegrable (fun z : Fin 2 → ℂ => a * (z 0 ^ m * z 1 ^ n))
+      (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) := by
+  rw [TorusIntegrable]
+  have h : TorusIntegrable (fun z : Fin 2 → ℂ => z 0 ^ m * z 1 ^ n)
+      (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) := torusIntegrable_monomial m n
+  rw [TorusIntegrable] at h
+  exact h.const_mul a
+
+/-- **Laurent 单项式有限和的环面可积性**：`∑_{(m,n)∈s} c_{mn}·z₀^m z₁^n` 在 `T²` 上可积。
+    证明：对 `Finset` 归纳——空和用 `torusIntegrable_const`，插入步用
+    `torusIntegrable_monomial_const_mul` 与 `TorusIntegrable.add`。 -/
+theorem torusIntegrable_monomial_sum (s : Finset (ℤ × ℤ)) (coeff : ℤ × ℤ → ℂ) :
+    TorusIntegrable
+      (fun z : Fin 2 → ℂ => ∑ p ∈ s, coeff p * (z 0 ^ p.1 * z 1 ^ p.2))
+      (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ)) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty =>
+      simpa using TorusIntegrable.torusIntegrable_const (0 : ℂ) (0 : Fin 2 → ℂ)
+        (fun _ : Fin 2 => (1 : ℝ))
+  | insert a s ha ih =>
+      simp only [Finset.sum_insert ha]
+      exact (torusIntegrable_monomial_const_mul (coeff a) a.1 a.2).add ih
+
+/-- **环面单项式积分的两项线性化**：
+    `∯ (a·z₀^m z₁^n + b·z₀^p z₁^q) = a·∯z₀^m z₁^n + b·∯z₀^p z₁^q`
+    （`torusIntegral_add` + `torusIntegral_const_mul`）。 -/
+theorem torusIntegral_dim2_monomial_linear (a b : ℂ) (m n p q : ℤ) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)),
+        a * (z 0 ^ m * z 1 ^ n) + b * (z 0 ^ p * z 1 ^ q))
+      = a * (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ m * z 1 ^ n)
+        + b * (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ p * z 1 ^ q) := by
+  rw [torusIntegral_add (torusIntegrable_monomial_const_mul a m n)
+        (torusIntegrable_monomial_const_mul b p q)]
+  rw [torusIntegral_const_mul, torusIntegral_const_mul]
+
+/-- **环面单项式积分的有限和线性化**：`∯` 与有限和交换。证明：对 `Finset` 归纳，
+    插入步用 `torusIntegral_add`（可积性由 `torusIntegrable_monomial_sum` 提供）。 -/
+theorem torusIntegral_dim2_monomial_sum (s : Finset (ℤ × ℤ)) (coeff : ℤ × ℤ → ℂ) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)),
+        ∑ p ∈ s, coeff p * (z 0 ^ p.1 * z 1 ^ p.2))
+      = ∑ p ∈ s, coeff p *
+          (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ p.1 * z 1 ^ p.2) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp [torusIntegral]
+  | insert a s ha ih =>
+      simp only [Finset.sum_insert ha]
+      rw [torusIntegral_add (torusIntegrable_monomial_const_mul (coeff a) a.1 a.2)
+            (torusIntegrable_monomial_sum s coeff)]
+      rw [torusIntegral_const_mul, ih]
+
+/-- **主推论（`∯` 为 `z₀⁻¹z₁⁻¹` 系数提取器）**：若 Laurent 多项式的支撑 `s` 含 `(-1,-1)`，
+    则 `∯_{T²} (∑_{(m,n)∈s} c_{mn} z₀^m z₁^n) = (2πi)²·c_{-1,-1}`——环面积分只读出
+    双极点单项式的系数。这是**标架类**曲率密度陈数的**闭式求值**：全局 Laurent
+    多项式（无根式分母）的未归一化陈数 = `(2πi)²` 乘 `z₀⁻¹z₁⁻¹` 系数。
+    证明：`torusIntegral_dim2_monomial_sum` + `torusIntegral_dim2_monomial` 分类
+    + `Finset.sum_eq_single`（仅 `(-1,-1)` 项非零）。 -/
+theorem torusIntegral_dim2_laurentPoly (s : Finset (ℤ × ℤ)) (coeff : ℤ × ℤ → ℂ)
+    (hs : (-1, -1) ∈ s) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)),
+        ∑ p ∈ s, coeff p * (z 0 ^ p.1 * z 1 ^ p.2))
+      = (2 * Real.pi * Complex.I) ^ 2 * coeff (-1, -1) := by
+  classical
+  rw [torusIntegral_dim2_monomial_sum]
+  rw [Finset.sum_eq_single (-1, -1)]
+  · rw [torusIntegral_dim2_monomial]
+    simp [mul_comm]
+  · intro b _ hb
+    rw [torusIntegral_dim2_monomial]
+    have hb' : ¬ (b.1 = -1 ∧ b.2 = -1) := fun h => hb (Prod.ext h.1 h.2)
+    simp [hb']
+  · intro h; exact absurd hs h
+
+end TorusResidueTheorem
+
+/-!
+## §2.44 显式两带模型的结构性定理：互补带求和规则与标架类的闭式陈数
+
+§2.43 把 `∯` 化为 **`z₀⁻¹z₁⁻¹` 系数提取器**。本节把该闭式求值与**两带模型**的
+代数结构对接，闭合三条**结构性定理**（paper14 G3 的模型层）：
+
+1. **互补带求和规则（主定理）** `berryCurvature_add_complement`：
+   对任意投影 `P` 与其补 `Q = 1 − P`（空带/导带投影），取互补切向量 `−A, −B`，
+   则 `F_P + F_Q = 0`——两带 Berry 曲率**逐点相消**。证明只用
+   `Tr([A,B]) = 0`（迹循环性）与 `[−A,−B] = [A,B]`，**无需**幂等性或厄米性。
+   积分层推论 `chernIntegralTorus_berryCurvature_add_complement`：
+   `C_occ + C_empty = 0`——两带模型的总陈数荷守恒（连续层对偶 §2.9 的秩守恒）。
+2. **平带类（常值投影/零切向量）** `berryCurvature_eq_zero_of_flat`：
+   `A = B = 0 ⟹ F = 0`（⇒ `∯F = 0`）——切向量恒零的平带/平凡标架类陈数为零。
+3. **标架类的闭式陈数（§2.43 应用）** `chernIntegralTorus_laurentPoly`：
+   若曲率密度 `F` 在环面复坐标下为 Laurent 多项式 `∑_{(m,n)∈s} c_{mn} z₀^m z₁^n`，
+   则 `∯F = (2πi)²·c_{-1,-1}`；特别地，**无 `z₀⁻¹z₁⁻¹` 项**（`(-1,-1) ∉ s`）时
+   `∯F = 0`（`chernIntegralTorus_laurentPoly_eq_zero`）——即**标架类（无该极点项）
+   ⟹ C = 0**。
+
+**诚实边界（随登）**：本节闭合**互补带求和规则**、**平带类 C = 0** 与**标架类
+（Laurent 多项式层）的闭式陈数**。**仍开放**：① 物理陈数 `C = (1/2π)∫ F d²k`
+用 **BZ 测度 `d²k`**（非本文的复围道测度 `d²z`）——"全局标架 ⟹ C = 0" 的
+**Stokes 论证**（`∫∫(∂₀A₁ − ∂₁A₀) d²k = 0`）需 BZ 测度积分基建，登记开放；
+② 一般两带模型（含根式分母的 `F`）的非零陈数显式值与整性（§3 #1）。
+-/
+
+section ExplicitTwoBandModel
+
+/-- **切向量双双反号不改变 Berry 曲率**：`F(P, −A, −B) = F(P, A, B)`——
+    因交换子 `[−A,−B] = [A,B]`（`noncomm_ring`）。这是互补带求和规则的代数前提。 -/
+theorem berryCurvature_neg_neg {n : ℕ} (P A B : Matrix (Fin n) (Fin n) ℂ) :
+    berryCurvature P (-A) (-B) = berryCurvature P A B := by
+  have h : (-A) * (-B) - (-B) * (-A) = A * B - B * A := by noncomm_ring
+  rw [berryCurvature, berryCurvature, h]
+
+/-- **互补带 Berry 曲率求和规则（主定理，两带模型的陈数荷守恒）**：
+    对任意矩阵 `P, A, B`，占据带曲率与其补带 `Q = 1 − P` 在互补切向量 `−A, −B`
+    下的曲率**逐点相消**：`F(P,A,B) + F(1−P,−A,−B) = 0`。
+    证明：`berryCurvature_neg_neg` 归约后，`Tr(P[A,B]) + Tr((1−P)[A,B])`
+    `= Tr((P+(1−P))[A,B]) = Tr([A,B]) = Tr(AB) − Tr(BA) = 0`（迹循环性）。
+    **无需** `P` 幂等或厄米——纯迹论恒等式。积分后即 `C_occ + C_empty = 0`。 -/
+theorem berryCurvature_add_complement {n : ℕ} (P A B : Matrix (Fin n) (Fin n) ℂ) :
+    berryCurvature P A B + berryCurvature (1 - P) (-A) (-B) = 0 := by
+  rw [berryCurvature_neg_neg (1 - P) A B]
+  have htr : (P * (A * B - B * A)).trace + ((1 - P) * (A * B - B * A)).trace = 0 := by
+    rw [← Matrix.trace_add, ← add_mul, add_sub_cancel, one_mul, Matrix.trace_sub,
+      Matrix.trace_mul_comm A B, sub_self]
+  simp only [berryCurvature]
+  rw [← mul_add, htr, mul_zero]
+
+/-- **积分层互补带求和规则（两带模型陈数荷守恒）**：若投影族 `k ↦ P(k)` 与切向量族
+    `k ↦ A(k), B(k)` 连续，则占据带未归一化陈数与空带（补投影，互补切向量）未归一化
+    陈数之和为零：`C_occ + C_empty = 0`（`chernIntegralTorus` 的双参积分层）。
+    证明：`torusIntegral_add` 合并两积分（可积性由 §2.42 `torusIntegrable_berryCurvature`
+    提供）+ 被积函数逐点由 `berryCurvature_add_complement` 消零。 -/
+theorem chernIntegralTorus_berryCurvature_add_complement {n : ℕ}
+    (P A B : (Fin 2 → ℂ) → Matrix (Fin n) (Fin n) ℂ)
+    (hP : Continuous P) (hA : Continuous A) (hB : Continuous B) :
+    chernIntegralTorus (fun k => berryCurvature (P k) (A k) (B k))
+      + chernIntegralTorus
+          (fun k => berryCurvature ((1 : Matrix (Fin n) (Fin n) ℂ) - P k)
+            (-(A k)) (-(B k))) = 0 := by
+  unfold chernIntegralTorus
+  rw [← torusIntegral_add
+        (torusIntegrable_berryCurvature P A B hP hA hB)
+        (torusIntegrable_berryCurvature (fun k => 1 - P k) (fun k => -(A k))
+          (fun k => -(B k)) (continuous_const.sub hP) hA.neg hB.neg)]
+  simp only [berryCurvature_add_complement]
+  simp [torusIntegral]
+
+/-- **平带（零切向量）的 Berry 曲率为零**：`A = B = 0 ⟹ F(P,0,0) = 0`——
+    切向量恒零的平带/平凡标架类曲率密度处处为零（⇒ 未归一化陈数 `∯F = 0`）。 -/
+theorem berryCurvature_eq_zero_of_flat {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ) :
+    berryCurvature P 0 0 = 0 := by
+  simp [berryCurvature]
+
+/-- **平带类的未归一化陈数为零**：零切向量的平带族 `k ↦ F(P(k),0,0) ≡ 0`
+    在 `T²` 上的积分为零——平带/平凡标架类 `C = 0`（连续积分层）。 -/
+theorem chernIntegralTorus_flat_eq_zero {n : ℕ}
+    (P : (Fin 2 → ℂ) → Matrix (Fin n) (Fin n) ℂ) :
+    chernIntegralTorus (fun k => berryCurvature (P k) 0 0) = 0 := by
+  simp only [berryCurvature_eq_zero_of_flat]
+  simp [chernIntegralTorus, torusIntegral]
+
+/-- **标架类的闭式陈数（§2.43 系数提取器的 `chernIntegralTorus` 封装）**：
+    若曲率密度 `F` 在环面复坐标下为 Laurent 多项式 `∑_{(m,n)∈s} c_{mn} z₀^m z₁^n`
+    且支撑含 `(-1,-1)`，则未归一化陈数 `∯F = (2πi)²·c_{-1,-1}`。
+    证明：`chernIntegralTorus` 展开 + §2.43 `torusIntegral_dim2_laurentPoly`。 -/
+theorem chernIntegralTorus_laurentPoly (s : Finset (ℤ × ℤ)) (coeff : ℤ × ℤ → ℂ)
+    (hs : (-1, -1) ∈ s) :
+    chernIntegralTorus (fun z : Fin 2 → ℂ => ∑ p ∈ s, coeff p * (z 0 ^ p.1 * z 1 ^ p.2))
+      = (2 * Real.pi * Complex.I) ^ 2 * coeff (-1, -1) := by
+  rw [chernIntegralTorus]
+  exact torusIntegral_dim2_laurentPoly s coeff hs
+
+/-- **标架类（无 `z₀⁻¹z₁⁻¹` 极点项）⟹ C = 0**：若 Laurent 多项式的支撑不含 `(-1,-1)`
+    （`(-1,-1) ∉ s`），则未归一化陈数 `∯F = 0`——环面复坐标下**无该极点项**的
+    标架类被积陈数为零（§2.43 分类中唯一非零留数项缺席）。
+    证明：`chernIntegralTorus` 展开 + §2.43 有限和线性化 + 逐项 `torusIntegral_dim2_monomial`
+    分类（仅 `(-1,-1)` 项非零，而它不在支撑内）。 -/
+theorem chernIntegralTorus_laurentPoly_eq_zero (s : Finset (ℤ × ℤ)) (coeff : ℤ × ℤ → ℂ)
+    (hs : (-1, -1) ∉ s) :
+    chernIntegralTorus (fun z : Fin 2 → ℂ => ∑ p ∈ s, coeff p * (z 0 ^ p.1 * z 1 ^ p.2))
+      = 0 := by
+  rw [chernIntegralTorus, torusIntegral_dim2_monomial_sum]
+  refine Finset.sum_eq_zero fun p hp => ?_
+  rw [torusIntegral_dim2_monomial]
+  have hnot : ¬ (p.1 = -1 ∧ p.2 = -1) := by
+    rintro ⟨h1, h2⟩
+    refine hs ?_
+    have he : p = (-1, -1) := Prod.ext_iff.mpr ⟨h1, h2⟩
+    rwa [he] at hp
+  simp [hnot]
+
+end ExplicitTwoBandModel
+
+/-!
+## §2.45 布里渊区测度层：Fourier 系数提取、Stokes 论证与 Jacobi 字典
+
+§2.44 的诚实边界登记了开放项 ①：物理陈数 `C = (1/2π)∫_{BZ} F d²k` 用的是
+**布里渊区测度 `d²k = dk₀dk₁`**（而非 §2.43 的**复围道测度 `d²z`**），
+"全局标架 ⟹ C = 0" 的 **Stokes 论证**需要 BZ 测度积分基建。本节闭合该基建并给出
+四条测度层定理：
+
+1. **BZ 测度积分与物理陈数**：`bzIntegral F = ∫₀^{2π}∫₀^{2π} F dk₀dk₁`、
+   `physicalChernNumber F = (2π)⁻¹·bzIntegral F`。
+2. **BZ 层留数定理（Fourier 单项式，主定理）** `bzIntegral_bzFourier`：
+   `∫_{BZ} e^{i(mk₀+nk₁)} d²k = (2π)²·δ_{m,0}δ_{n,0}`——一维情形由
+   `intervalIntegral_exp_int_mul_I`（`∫₀^{2π} e^{ink} dk = 2π·δ_{n,0}`，经
+   `intervalIntegral.integral_deriv_eq_sub'` 与 `Complex.exp_int_mul_two_pi_mul_I`
+   证明）+ Fubini 分解 `bzIntegral_separable` 得到。这与 §2.43 的**复围道留数定理**
+   `torusIntegral_dim2_monomial`（唯一非零留数 `z₀⁻¹z₁⁻¹ ↦ (2πi)²`）互为**两套测度**
+   下的平行结果。
+3. **Stokes 论证（BZ 测度层）** `bzIntegral_stokes_eq_zero`：
+   若曲率密度在 BZ 上为**单值联络的旋度** `F = ∂₀A₁ − ∂₁A₀`，且 `A₀, A₁` 关于对应
+   变量 `2π`-周期、可微且导数可积，则 `bzIntegral F = 0`——**全局标架（单值联络）
+   ⟹ 未归一化陈数为零**；推论 `physicalChernNumber_eq_zero_of_stokes` 给出 `C = 0`。
+   证明：内层对 `∂₁A₀` 用 FTC（周期 ⟹ 端差为零）消去，外层经
+   `intervalIntegral_intervalIntegral_swap`（Fubini）后用 FTC 消去 `∂₀A₁`。
+4. **Jacobi 字典（复围道测度 `d²z` ↔ BZ 测度 `d²k`）** `torusIntegral_dim2_eq_bzIntegral`：
+   `∯_{T²} F(z) d²z = ∫_{BZ} (∂z₀/∂k₀)(∂z₁/∂k₁)·F(z(k)) d²k`，其中 `zᵢ = e^{ikᵢ}`，
+   Jacobi 因子 `∂zᵢ/∂kᵢ = i·zᵢ`——把 §2.43 的复围道积分与本节 BZ 积分**显式对接**。
+   单项式层的推论 `torusIntegral_dim2_monomial_eq_bzIntegral`：
+   `∯_{T²} z₀^m z₁^n = −∫_{BZ} z₀^{m+1} z₁^{n+1} d²k`——Jacobi 因子 `(iz₀)(iz₁) = −z₀z₁`
+   把 `z` 指数整体平移 `+1`，故 §2.43 的留数极点 `(-1,-1)` 对应 BZ 层的零频
+   `(0,0)`，两套留数定理**完全一致**。
+
+**诚实边界（随登）**：本节闭合开放项 ①（BZ 测度基建 + Stokes 论证 + 两测度字典）。
+**仍开放**：② 一般两带模型（含根式分母的 `F`）的非零陈数显式值与整性（§3 #1）；
+③ 具体模型的**数值**陈数（需本节字典 + 数值留数求值）。
+-/
+
+section BZMeasureLayer
+
+open scoped Interval
+open MeasureTheory
+
+/-- 布里渊区测度积分（`d²k = dk₀dk₁`，迭代区间积分形式）。 -/
+noncomputable def bzIntegral (F : ℝ → ℝ → ℂ) : ℂ :=
+  ∫ x in 0..(2 * Real.pi), ∫ y in 0..(2 * Real.pi), F x y
+
+/-- 物理陈数 `C = (1/2π)∫_{BZ}F d²k`。 -/
+noncomputable def physicalChernNumber (F : ℝ → ℝ → ℂ) : ℂ :=
+  (2 * Real.pi)⁻¹ * bzIntegral F
+
+@[simp] theorem bzIntegral_zero : bzIntegral (fun _ _ => 0) = 0 := by
+  simp [bzIntegral]
+
+theorem bzIntegral_neg (F : ℝ → ℝ → ℂ) :
+    bzIntegral (fun x y => -F x y) = -bzIntegral F := by
+  simp [bzIntegral]
+
+theorem bzIntegral_const (c : ℂ) :
+    bzIntegral (fun _ _ => c) = (2 * Real.pi) ^ 2 * c := by
+  simp only [bzIntegral, intervalIntegral.integral_const, sub_zero, Complex.real_smul]
+  push_cast
+  ring
+
+/-- `i² = -1`（供单项式字典使用）。 -/
+theorem complex_I_sq : Complex.I ^ 2 = (-1 : ℂ) := by rw [sq, Complex.I_mul_I]
+
+/-- **一维 BZ 留数（整数频率）**：`∫₀^{2π} e^{i n k} dk = 2π·δ_{n,0}`。
+    证明：`n ≠ 0` 时被积函数 `e^{ink}` 的原始函数为 `e^{ink}/(in)`，
+    由 FTC `intervalIntegral.integral_deriv_eq_sub'` 得端差；两端点值经
+    `Complex.exp_int_mul_two_pi_mul_I`（`e^{2πin} = 1`）相消为零。 -/
+theorem intervalIntegral_exp_int_mul_I (n : ℤ) :
+    (∫ k in (0 : ℝ)..(2 * Real.pi), Complex.exp (Complex.I * (n : ℂ) * k))
+      = if n = 0 then 2 * Real.pi else 0 := by
+  by_cases hn : n = 0
+  · subst hn; simp
+  · have hzero : (∫ k in (0 : ℝ)..(2 * Real.pi), Complex.exp (Complex.I * (n : ℂ) * k))
+        = 0 := by
+      set c : ℂ := Complex.I * (n : ℂ) with hcdef
+      have hc : c ≠ 0 := mul_ne_zero Complex.I_ne_zero (by exact_mod_cast hn)
+      have hD : ∀ x : ℝ, HasDerivAt (fun y : ℝ => Complex.exp (c * y) / c)
+          (Complex.exp (c * x)) x := by
+        intro x
+        conv => congr
+        rw [← mul_div_cancel_right₀ (Complex.exp (c * x)) hc]
+        apply ((Complex.hasDerivAt_exp _).comp x _).div_const c
+        simpa only [mul_one] using! ((hasDerivAt_id (x : ℂ)).const_mul _).comp_ofReal
+      rw [intervalIntegral.integral_deriv_eq_sub' (fun y : ℝ => Complex.exp (c * y) / c)
+        (funext fun x => (hD x).deriv) (fun x _ => (hD x).differentiableAt) (by fun_prop)]
+      have h1 : Complex.exp (c * (↑(2 * Real.pi) : ℂ)) = 1 := by
+        rw [hcdef]
+        have hc2 : Complex.I * (n : ℂ) * (↑(2 * Real.pi) : ℂ)
+            = (n : ℂ) * (2 * Real.pi * Complex.I) := by
+          push_cast
+          ring
+        rw [hc2]
+        exact Complex.exp_int_mul_two_pi_mul_I n
+      have h0 : Complex.exp (c * (↑(0 : ℝ) : ℂ)) = 1 := by simp
+      rw [h1, h0, sub_self]
+    rw [hzero]
+    simp [hn]
+
+/-- BZ 层 Fourier 单项式 `z₀^m z₁^n`（`zᵢ = e^{ikᵢ}`）。 -/
+noncomputable def bzFourier (m n : ℤ) : ℝ → ℝ → ℂ :=
+  fun k0 k1 => Complex.exp (Complex.I * (m : ℂ) * k0) * Complex.exp (Complex.I * (n : ℂ) * k1)
+
+/-- BZ 测度积分的**分离性**（Fubini 对乘积被积函数）：
+    `bzIntegral (f⊗g) = (∫f)(∫g)`。 -/
+theorem bzIntegral_separable (f g : ℝ → ℂ) :
+    bzIntegral (fun k0 k1 => f k0 * g k1)
+      = (∫ k in 0..(2 * Real.pi), f k) * (∫ k in 0..(2 * Real.pi), g k) := by
+  unfold bzIntegral
+  rw [show (∫ k0 in 0..(2 * Real.pi), ∫ k1 in 0..(2 * Real.pi), f k0 * g k1)
+        = ∫ k0 in 0..(2 * Real.pi), f k0 * (∫ k1 in 0..(2 * Real.pi), g k1) from
+      intervalIntegral.integral_congr fun k0 _ => intervalIntegral.integral_const_mul (f k0) g]
+  rw [show (∫ k0 in 0..(2 * Real.pi), f k0 * (∫ k1 in 0..(2 * Real.pi), g k1))
+        = (∫ k0 in 0..(2 * Real.pi), f k0) * (∫ k1 in 0..(2 * Real.pi), g k1) from
+      intervalIntegral.integral_mul_const _ f]
+
+/-- **BZ 留数定理（Fourier 单项式层，主定理）**：
+    `∫_{BZ} e^{i(mk₀+nk₁)} d²k = (2π)²·δ_{m,0}δ_{n,0}`。 -/
+theorem bzIntegral_bzFourier (m n : ℤ) :
+    bzIntegral (bzFourier m n)
+      = (if m = 0 then 2 * Real.pi else 0) * (if n = 0 then 2 * Real.pi else 0) := by
+  unfold bzFourier
+  rw [bzIntegral_separable]
+  rw [intervalIntegral_exp_int_mul_I m, intervalIntegral_exp_int_mul_I n]
+
+/-- **BZ 留数（非零频率 ⟹ 零）**：`(m,n) ≠ (0,0) ⟹ ∫_{BZ} z₀^m z₁^n d²k = 0`。 -/
+theorem bzIntegral_bzFourier_eq_zero (m n : ℤ) (h : m ≠ 0 ∨ n ≠ 0) :
+    bzIntegral (bzFourier m n) = 0 := by
+  rw [bzIntegral_bzFourier]
+  rcases h with hm | hn
+  · simp [hm]
+  · simp [hn]
+
+/-- **BZ 留数（零频率 ⟹ (2π)²）**：`∫_{BZ} 1 d²k = (2π)²`。 -/
+theorem bzIntegral_bzFourier_zero_zero :
+    bzIntegral (bzFourier 0 0) = (2 * Real.pi) ^ 2 := by
+  have h : bzFourier 0 0 = fun _ _ => (1 : ℂ) := by funext k0 k1; simp [bzFourier]
+  rw [h, bzIntegral_const, mul_one]
+
+/-- **Stokes 论证（BZ 测度层，全局标架 ⟹ 未归一化陈数 = 0）**：
+    若 `F = ∂₀A₁ − ∂₁A₀`，且 `A₀, A₁` 关于对应变量 `2π`-周期、可微、导数可积
+    （并满足 Fubini 交换的可积性），则 `bzIntegral F = 0`。
+    证明：内层积分 `∫dk₁ (∂₁A₀) = A₀(2π) − A₀(0) = 0`（周期）；外层经 Fubini
+    交换后用同样的周期论证消去 `∫dk₀ (∂₀A₁)`。 -/
+theorem bzIntegral_stokes_eq_zero
+    (A₀ A₁ : ℝ → ℝ → ℂ) (F : ℝ → ℝ → ℂ)
+    (hF : ∀ x y, F x y = deriv (fun x' => A₁ x' y) x - deriv (fun y' => A₀ x y') y)
+    (hA₁_diff : ∀ y, Differentiable ℝ (fun x' => A₁ x' y))
+    (hA₀_diff : ∀ x, Differentiable ℝ (fun y' => A₀ x y'))
+    (hA₁_int : ∀ y, IntervalIntegrable (deriv (fun x' => A₁ x' y)) volume 0 (2 * Real.pi))
+    (hA₀_int : ∀ x, IntervalIntegrable (deriv (fun y' => A₀ x y')) volume 0 (2 * Real.pi))
+    (hA₁_int_y : ∀ x,
+      IntervalIntegrable (fun y => deriv (fun x' => A₁ x' y) x) volume 0 (2 * Real.pi))
+    (hA₁_per : ∀ x y, A₁ (x + 2 * Real.pi) y = A₁ x y)
+    (hA₀_per : ∀ x y, A₀ x (y + 2 * Real.pi) = A₀ x y)
+    (hswap : IntegrableOn (Function.uncurry fun x y => deriv (fun x' => A₁ x' y) x)
+      (Set.uIoc 0 (2 * Real.pi) ×ˢ Set.uIoc 0 (2 * Real.pi))) :
+    bzIntegral F = 0 := by
+  have hinner : ∀ x, ∫ y in 0..(2 * Real.pi), F x y
+      = ∫ y in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x := by
+    intro x
+    have hper : A₀ x (2 * Real.pi) = A₀ x 0 := by simpa using hA₀_per x 0
+    have h2 : ∫ y in 0..(2 * Real.pi), deriv (fun y' => A₀ x y') y = 0 := by
+      rw [intervalIntegral.integral_deriv_eq_sub
+        (fun y _ => (hA₀_diff x).differentiableAt) (hA₀_int x), hper, sub_self]
+    calc ∫ y in 0..(2 * Real.pi), F x y
+        = ∫ y in 0..(2 * Real.pi),
+            (deriv (fun x' => A₁ x' y) x - deriv (fun y' => A₀ x y') y) := by
+          refine intervalIntegral.integral_congr fun y _ => ?_
+          exact hF x y
+      _ = (∫ y in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x)
+            - ∫ y in 0..(2 * Real.pi), deriv (fun y' => A₀ x y') y :=
+          intervalIntegral.integral_sub (hA₁_int_y x) (hA₀_int x)
+      _ = ∫ y in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x := by rw [h2, sub_zero]
+  rw [bzIntegral]
+  calc ∫ x in 0..(2 * Real.pi), ∫ y in 0..(2 * Real.pi), F x y
+      = ∫ x in 0..(2 * Real.pi),
+          ∫ y in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x := by
+        refine intervalIntegral.integral_congr fun x _ => hinner x
+    _ = ∫ y in 0..(2 * Real.pi),
+          ∫ x in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x := by
+        rw [intervalIntegral_intervalIntegral_swap hswap]
+    _ = 0 := by
+        have h3 : ∀ y, ∫ x in 0..(2 * Real.pi), deriv (fun x' => A₁ x' y) x = 0 := by
+          intro y
+          have hper : A₁ (2 * Real.pi) y = A₁ 0 y := by simpa using hA₁_per 0 y
+          rw [intervalIntegral.integral_deriv_eq_sub
+            (fun x _ => (hA₁_diff y).differentiableAt) (hA₁_int y), hper, sub_self]
+        simp_rw [h3]
+        simp
+
+/-- **全局标架（单值联络）⟹ 物理陈数为零**：`physicalChernNumber F = 0`。 -/
+theorem physicalChernNumber_eq_zero_of_stokes
+    (A₀ A₁ : ℝ → ℝ → ℂ) (F : ℝ → ℝ → ℂ)
+    (hF : ∀ x y, F x y = deriv (fun x' => A₁ x' y) x - deriv (fun y' => A₀ x y') y)
+    (hA₁_diff : ∀ y, Differentiable ℝ (fun x' => A₁ x' y))
+    (hA₀_diff : ∀ x, Differentiable ℝ (fun y' => A₀ x y'))
+    (hA₁_int : ∀ y, IntervalIntegrable (deriv (fun x' => A₁ x' y)) volume 0 (2 * Real.pi))
+    (hA₀_int : ∀ x, IntervalIntegrable (deriv (fun y' => A₀ x y')) volume 0 (2 * Real.pi))
+    (hA₁_int_y : ∀ x,
+      IntervalIntegrable (fun y => deriv (fun x' => A₁ x' y) x) volume 0 (2 * Real.pi))
+    (hA₁_per : ∀ x y, A₁ (x + 2 * Real.pi) y = A₁ x y)
+    (hA₀_per : ∀ x y, A₀ x (y + 2 * Real.pi) = A₀ x y)
+    (hswap : IntegrableOn (Function.uncurry fun x y => deriv (fun x' => A₁ x' y) x)
+      (Set.uIoc 0 (2 * Real.pi) ×ˢ Set.uIoc 0 (2 * Real.pi))) :
+    physicalChernNumber F = 0 := by
+  rw [physicalChernNumber,
+    bzIntegral_stokes_eq_zero A₀ A₁ F hF hA₁_diff hA₀_diff hA₁_int hA₀_int hA₁_int_y
+      hA₁_per hA₀_per hswap, mul_zero]
+
+/-- `circleMap 0 1 θ = e^{iθ}`。 -/
+theorem circleMap_zero_one (θ : ℝ) :
+    circleMap (0 : ℂ) (1 : ℝ) θ = Complex.exp (θ * Complex.I) := by
+  simp [circleMap]
+
+/-- `deriv (circleMap 0 1) θ = e^{iθ}·i`（Jacobi 因子 `∂z/∂k`）。 -/
+theorem deriv_circleMap_zero_one (θ : ℝ) :
+    deriv (circleMap (0 : ℂ) (1 : ℝ)) θ
+      = Complex.exp (Complex.I * (1 : ℂ) * θ) * Complex.I := by
+  have h : θ * Complex.I = Complex.I * (1 : ℂ) * θ := by ring
+  rw [deriv_circleMap, circleMap_zero_one, h]
+
+/-- **Jacobi 字典（复围道测度 `d²z` ↔ BZ 测度 `d²k`）**：
+    `∯_{T²} F(z) d²z = ∫_{BZ} (∂z₀/∂k₀)(∂z₁/∂k₁)·F(z(k)) d²k`，其中 `zᵢ = e^{ikᵢ}`。
+    证明：`torusIntegral_succ` 沿第一坐标降维，内层 `T¹` 经 `torusIntegral_dim1`
+    识别为 `C(0,1)` 上的圆周积分，再展开 `circleIntegral` 为 `[0,2π]` 上的区间积分，
+    最后用 Fubini 把内层常数因子提出——Jacobi 因子即 `deriv (circleMap 0 1)`。 -/
+theorem torusIntegral_dim2_eq_bzIntegral (F : (Fin 2 → ℂ) → ℂ)
+    (hF : TorusIntegrable F (0 : Fin 2 → ℂ) (fun _ : Fin 2 => (1 : ℝ))) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), F z)
+      = bzIntegral (fun θ₀ θ₁ =>
+          deriv (circleMap 0 1) θ₀ *
+            (deriv (circleMap 0 1) θ₁ *
+              F (Fin.cons (circleMap 0 1 θ₀) fun _ : Fin 1 => circleMap 0 1 θ₁))) := by
+  have hc : ((0 : Fin 2 → ℂ) ∘ Fin.succ) = (0 : Fin 1 → ℂ) := by funext i; simp
+  have hR : ((fun _ : Fin 2 => (1 : ℝ)) ∘ Fin.succ) = (fun _ : Fin 1 => (1 : ℝ)) := by
+    funext i; simp
+  have hinner : ∀ x : ℂ,
+      (∯ y in T((0 : Fin 1 → ℂ), fun _ : Fin 1 => (1 : ℝ)), F (Fin.cons x y))
+        = ∮ z in C(0, 1), F (Fin.cons x fun _ : Fin 1 => z) := by
+    intro x
+    rw [torusIntegral_dim1]
+    simp
+  rw [torusIntegral_succ hF, hc, hR]
+  simp only [Pi.zero_apply]
+  simp_rw [hinner]
+  simp only [circleIntegral]
+  have hswap2 : (∫ θ₀ in (0 : ℝ)..(2 * Real.pi), deriv (circleMap 0 1) θ₀ •
+        (∫ θ₁ in (0 : ℝ)..(2 * Real.pi), deriv (circleMap 0 1) θ₁ •
+          F (Fin.cons (circleMap 0 1 θ₀) fun _ : Fin 1 => circleMap 0 1 θ₁)))
+      = ∫ θ₀ in (0 : ℝ)..(2 * Real.pi), ∫ θ₁ in (0 : ℝ)..(2 * Real.pi),
+          deriv (circleMap 0 1) θ₀ •
+            (deriv (circleMap 0 1) θ₁ •
+              F (Fin.cons (circleMap 0 1 θ₀) fun _ : Fin 1 => circleMap 0 1 θ₁)) := by
+    refine intervalIntegral.integral_congr fun θ₀ _ => ?_
+    simp only [smul_eq_mul]
+    rw [intervalIntegral.integral_const_mul]
+  rw [hswap2]
+  unfold bzIntegral
+  simp only [smul_eq_mul]
+
+/-- `(circleMap 0 1 θ)^m = e^{i m θ}`（复围道单项式的 Fourier 形式）。 -/
+theorem circleMap_zero_one_zpow (m : ℤ) (θ : ℝ) :
+    (circleMap (0 : ℂ) (1 : ℝ) θ) ^ m = Complex.exp (Complex.I * (m : ℂ) * θ) := by
+  rw [circleMap_zero_one, ← Complex.exp_int_mul (θ * Complex.I) m]
+  congr 1
+  ring
+
+/-- **单项式层的两测度一致性**：`∯_{T²} z₀^m z₁^n = −∫_{BZ} z₀^{m+1} z₁^{n+1} d²k`。
+    Jacobi 因子 `(iz₀)(iz₁) = −z₀z₁` 把 `z` 指数整体平移 `+1`：§2.43 的复围道极点
+    `(-1,-1)`（留数 `(2πi)²`）对应 BZ 层的零频 `(0,0)`（值 `(2π)²`），且 `(2πi)² = −(2π)²`。
+    证明：`torusIntegral_dim2_monomial` 与 `bzIntegral_bzFourier` 各自分类求值，
+    按 `m = -1 ↔ m+1 = 0` 等四分情形相消（`omega` + `i² = -1`）。 -/
+theorem torusIntegral_dim2_monomial_eq_bzIntegral (m n : ℤ) :
+    (∯ z in T((0 : Fin 2 → ℂ), fun _ : Fin 2 => (1 : ℝ)), z 0 ^ m * z 1 ^ n)
+      = - bzIntegral (bzFourier (m + 1) (n + 1)) := by
+  rw [torusIntegral_dim2_monomial, bzIntegral_bzFourier]
+  by_cases hm : m + 1 = 0 <;> by_cases hn : n + 1 = 0
+  · have hm' : m = -1 := by omega
+    have hn' : n = -1 := by omega
+    rw [ite_eq_left (show m = -1 ∧ n = -1 from ⟨hm', hn'⟩), ite_eq_left hm, ite_eq_left hn]
+    push_cast
+    rw [mul_pow, complex_I_sq]
+    ring
+  · have hm' : m = -1 := by omega
+    have hn' : ¬ (n = -1) := by omega
+    rw [ite_eq_right (show ¬ (m = -1 ∧ n = -1) by rintro ⟨-, h⟩; exact hn' h),
+        ite_eq_left hm, ite_eq_right hn]
+    push_cast
+    ring
+  · have hm' : ¬ (m = -1) := by omega
+    rw [ite_eq_right (show ¬ (m = -1 ∧ n = -1) by rintro ⟨h, -⟩; exact hm' h),
+        ite_eq_right hm, ite_eq_left hn]
+    push_cast
+    ring
+  · have hm' : ¬ (m = -1) := by omega
+    rw [ite_eq_right (show ¬ (m = -1 ∧ n = -1) by rintro ⟨h, -⟩; exact hm' h),
+        ite_eq_right hm, ite_eq_right hn]
+    push_cast
+    ring
+
+end BZMeasureLayer
+
+/-!
+## §2.46 显式两带模型：Pauli 代数核、根式分母层与可分离模型的零陈数
+
+§2.45 的诚实边界登记了开放项 ②（一般两带模型含**根式分母**的 `F` 的非零陈数
+显式值与整性）与 ③（具体模型的**数值**陈数）。本节把 §2.44 的**结构性**结果
+落到**显式模型**层，闭合"模型 → 曲率 → BZ 积分 → 陈数"的完整链条：
+
+1. **两带 Pauli 代数核**：复 Pauli 矩阵 `σₓ, σᵧ, σ_z`、Pauli 组合 `pauliVec d = d·σ`、
+   内积 `dot3`、叉积 `cross3`，以及乘法恒等式 `pauliVec_mul`（`(d·σ)(e·σ) = (d·e)1 + i(d×e)·σ`）、
+   迹恒等式 `pauliVec_mul_trace`（`Tr((d·σ)(e·σ)) = 2 d·e`）、交换子 `pauliVec_commutator`
+   （`[(d·σ),(e·σ)] = 2i (d×e)·σ`）。
+2. **两带投影与曲率**：`bandProj n = ½(1 − n·σ)`（`n` 单位向量时是下能带谱投影，
+   `bandProj_idempotent`/`bandProj_trace`/`bandProj_complement` 给出幂等、迹 1、补带
+   `1 − P = bandProj(−n)`）。**曲率闭式** `berryCurvature_bandProj`：
+   对 `A = −½ a·σ`、`B = −½ b·σ`，
+   `F = −i·Tr(P[A,B]) = −½ · n·(a × b)`——**两带模型的 Berry 曲率化为纯量三重积**。
+3. **根式分母层（开放项 ② 的代数核）**：归一化 `n = d/s`（`s² = d·d`）时，Leibniz 展开
+   给出切向量 `∂ᵢn = (1/s)∂ᵢd + (∂ᵢ-修正)·d`。**关键引理** `dot3_smul_cross3_smul`：
+   `(c·d)·((c·a + q·d) × (c·b + t·d)) = c³ · d·(a × b)`——两个含 `d` 的修正项由
+   **纯量三重积反对称性**（`dot3_self_cross_right`/`dot3_self_cross_left`：
+   `d·(d×e) = d·(e×d) = 0`）**消零**。故 **曲率闭式（根式分母显式）**
+   `berryCurvature_normalized_d`：`F = −½ · (1/s³) · d·(a × b)`，
+   即 `F ∝ (d·d)^{−3/2}`——**根式分母 `s⁻³` 显式出现，且与 Leibniz 修正项无关**。
+4. **可分离模型与零陈数（开放项 ③ 的一个完整实例）**：显式模型
+   `d(k₀,k₁) = (sin k₀ sin k₁, sin k₀ cos k₁, cos k₀)`（**单位向量**，`sepDr_unit`：
+   `d·d = 1`），切向量 `a = ∂₀d`、`b = ∂₁d`（`sepAr`/`sepBr`）。三重积
+   `sepDr_triple`：`d·(a × b) = −sin k₀`。代入 §3 的曲率闭式得**显式曲率**
+   `berryCurvature_sepD`：`F = ½ sin k₀`。BZ 层一维留数 `intervalIntegral_sin_eq_zero`
+   （`∫₀^{2π} sin = 0`，经 `intervalIntegral.integral_deriv_eq_sub'` 与 `Real.cos` 原函数）
+   + 分离性 `bzIntegral_separable` 给出 `bzIntegral_separable_sin`：
+   `∫_{BZ} c·sin k₀ d²k = 0`，故 **`bzIntegral_berryCurvature_sepD`：未归一化陈数 = 0**，
+   推论 `physicalChernNumber_sepD_eq_zero`：**物理陈数 `C = 0`**——
+   该可分离模型在 BZ 上**拓扑平凡**。
+
+**诚实边界（随登）**：本节闭合开放项 ② 的**代数核**（根式分母闭式 + Leibniz 修正消零）
+与开放项 ③ 的**一个完整实例**（可分离模型 `C = 0`，全链条无 `sorry`）。
+**仍开放**：②′ 一般两带模型的**非零**陈数显式值与整性——本轮数值勘查（见
+`_model_explore6.py`/`_model_explore8.py`）表明：(i) QWZ 型模型
+`d = (sin k₀, sin k₁, m + cos k₀ + cos k₁)` 的曲率分母 `(2 + m² + 2m(cos k₀+cos k₁) + 2cos k₀cos k₁)^{3/2}`
+**非 Laurent 且非初等**，其陈数 `C = ±1`（`−2 < m < 0` 取 `−1`，`0 < m < 2` 取 `+1`，
+`|m| > 2` 取 `0`）经数值积分确认但**闭式求值需椭圆型积分或 T²→S² 度理论**；
+(ii) 所有由 **Laurent 多项式向量** `u ∈ (ℂ[z^{±1}, w^{±1}])²` 生成的 rank-1 投影族
+（`u=(2+z,1+w)`、`(z+w,z−w)`、`(1,zw)` 等）数值度均为 `0`——与 §2.44 的
+「全局标架（Laurent 层）⟹ `C = 0`」一致，说明**非零陈数必须依赖非 Laurent 的
+本质奇异性/根式结构**，这为开放项 ②′ 提供了结构性判据。
+-/
+
+section ExplicitTwoBandChern
+
+open scoped Interval
+
+/-- 复 Pauli 矩阵 σₓ。 -/
+def pauliSigmaX : Matrix (Fin 2) (Fin 2) ℂ := !![0, 1; 1, 0]
+
+/-- 复 Pauli 矩阵 σᵧ。 -/
+def pauliSigmaY : Matrix (Fin 2) (Fin 2) ℂ := !![0, -Complex.I; Complex.I, 0]
+
+/-- 复 Pauli 矩阵 σ_z。 -/
+def pauliSigmaZ : Matrix (Fin 2) (Fin 2) ℂ := !![1, 0; 0, -1]
+
+/-- 两带 Pauli 组合 `d·σ = d₀σₓ + d₁σᵧ + d₂σ_z`。 -/
+def pauliVec (d : Fin 3 → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  d 0 • pauliSigmaX + d 1 • pauliSigmaY + d 2 • pauliSigmaZ
+
+/-- 三维复向量内积 `d·e`（双线性，非厄米）。 -/
+def dot3 (d e : Fin 3 → ℂ) : ℂ := d 0 * e 0 + d 1 * e 1 + d 2 * e 2
+
+/-- 三维复向量叉积 `d × e`。 -/
+def cross3 (d e : Fin 3 → ℂ) : Fin 3 → ℂ :=
+  ![d 1 * e 2 - d 2 * e 1, d 2 * e 0 - d 0 * e 2, d 0 * e 1 - d 1 * e 0]
+
+/-- 内积对称性。 -/
+theorem dot3_comm (d e : Fin 3 → ℂ) : dot3 d e = dot3 e d := by
+  simp only [dot3]; ring
+
+/-- 叉积自消 `d × d = 0`。 -/
+theorem cross3_self (d : Fin 3 → ℂ) : cross3 d d = 0 := by
+  ext i; fin_cases i <;> simp [cross3] <;> ring
+
+/-- 叉积反交换 `e × d = −(d × e)`。 -/
+theorem cross3_anticomm (d e : Fin 3 → ℂ) : cross3 e d = -cross3 d e := by
+  ext i; fin_cases i <;> simp [cross3] <;> ring
+
+/-- `pauliVec` 保反号。 -/
+theorem pauliVec_neg (d : Fin 3 → ℂ) : pauliVec (-d) = -pauliVec d := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [pauliVec, pauliSigmaX, pauliSigmaY, pauliSigmaZ] <;> ring
+
+/-- Pauli 组合无迹 `Tr(d·σ) = 0`。 -/
+theorem pauliVec_trace (d : Fin 3 → ℂ) : (pauliVec d).trace = 0 := by
+  simp [pauliVec, pauliSigmaX, pauliSigmaY, pauliSigmaZ, Matrix.trace, Matrix.diag]
+
+/-- **Pauli 乘法恒等式**：`(d·σ)(e·σ) = (d·e)·1 + i·(d×e)·σ`。 -/
+theorem pauliVec_mul (d e : Fin 3 → ℂ) :
+    pauliVec d * pauliVec e = dot3 d e • (1 : Matrix (Fin 2) (Fin 2) ℂ)
+      + Complex.I • pauliVec (cross3 d e) := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [pauliVec, pauliSigmaX, pauliSigmaY, pauliSigmaZ, dot3, cross3,
+      Matrix.mul_apply] <;>
+    ring_nf <;> simp <;> ring
+
+/-- Pauli 平方 `(d·σ)² = (d·d)·1`。 -/
+theorem pauliVec_sq (d : Fin 3 → ℂ) :
+    pauliVec d * pauliVec d = dot3 d d • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+  rw [pauliVec_mul, cross3_self]
+  simp [pauliVec]
+
+/-- **Pauli 迹恒等式**：`Tr((d·σ)(e·σ)) = 2·(d·e)`。 -/
+theorem pauliVec_mul_trace (d e : Fin 3 → ℂ) :
+    (pauliVec d * pauliVec e).trace = 2 * dot3 d e := by
+  rw [pauliVec_mul]
+  simp only [Matrix.trace_add, Matrix.trace_smul, Matrix.trace_one, pauliVec_trace,
+    Fintype.card_fin, Nat.cast_ofNat]
+  ring
+
+/-- **Pauli 交换子**：`[(d·σ),(e·σ)] = 2i·(d×e)·σ`。 -/
+theorem pauliVec_commutator (d e : Fin 3 → ℂ) :
+    pauliVec d * pauliVec e - pauliVec e * pauliVec d
+      = (2 * Complex.I) • pauliVec (cross3 d e) := by
+  rw [pauliVec_mul d e, pauliVec_mul e d, dot3_comm, cross3_anticomm, pauliVec_neg]
+  simp only [smul_neg]
+  module
+
+/-- 两带投影 `P(n) = ½(1 − n·σ)`（`n` 为单位向量时是下能带谱投影）。 -/
+noncomputable def bandProj (n : Fin 3 → ℂ) : Matrix (Fin 2) (Fin 2) ℂ :=
+  (1 / 2 : ℂ) • (1 - pauliVec n)
+
+/-- 单位向量时 `bandProj` 幂等。 -/
+theorem bandProj_idempotent (n : Fin 3 → ℂ) (hn : dot3 n n = 1) :
+    bandProj n * bandProj n = bandProj n := by
+  have hsq : pauliVec n * pauliVec n = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    rw [pauliVec_sq, hn, one_smul]
+  simp only [bandProj]
+  rw [smul_mul_smul, sub_mul, one_mul, mul_sub, mul_one, sub_sub, hsq]
+  module
+
+/-- `bandProj` 迹为 1（占据数为 1）。 -/
+theorem bandProj_trace (n : Fin 3 → ℂ) : (bandProj n).trace = 1 := by
+  simp [bandProj, Matrix.trace_sub, Matrix.trace_smul, Matrix.trace_one, pauliVec_trace]
+
+/-- 补带投影 `1 − P(n) = P(−n)`。 -/
+theorem bandProj_complement (n : Fin 3 → ℂ) :
+    (1 : Matrix (Fin 2) (Fin 2) ℂ) - bandProj n = bandProj (-n) := by
+  simp only [bandProj, pauliVec_neg]
+  module
+
+/-- **两带 Berry 曲率闭式（纯量三重积层）**：切向量 `A = −½ a·σ`、`B = −½ b·σ` 时
+    `F = −i·Tr(P[A,B]) = −½ · n·(a × b)`——两带模型的 Berry 曲率化为纯量三重积。 -/
+theorem berryCurvature_bandProj (n a b : Fin 3 → ℂ) :
+    berryCurvature (bandProj n) (-(1 / 2 : ℂ) • pauliVec a)
+      (-(1 / 2 : ℂ) • pauliVec b)
+      = -(1 / 2 : ℂ) * dot3 n (cross3 a b) := by
+  have hAB : (-(1 / 2 : ℂ) • pauliVec a) * (-(1 / 2 : ℂ) • pauliVec b)
+      - (-(1 / 2 : ℂ) • pauliVec b) * (-(1 / 2 : ℂ) • pauliVec a)
+      = (Complex.I / 2) • pauliVec (cross3 a b) := by
+    rw [smul_mul_smul, smul_mul_smul, ← smul_sub, pauliVec_commutator, smul_smul]
+    module
+  have htrace : (bandProj n * ((Complex.I / 2) • pauliVec (cross3 a b))).trace
+      = -(Complex.I / 2) * dot3 n (cross3 a b) := by
+    simp only [bandProj, smul_mul_smul, sub_mul, one_mul]
+    rw [Matrix.trace_smul, Matrix.trace_sub, pauliVec_trace, pauliVec_mul_trace]
+    ring
+  simp only [berryCurvature, hAB, htrace]
+  have hre : -Complex.I * (-(Complex.I / 2) * dot3 n (cross3 a b))
+      = (Complex.I * Complex.I / 2) * dot3 n (cross3 a b) := by ring
+  rw [hre, Complex.I_mul_I]
+  ring
+
+/-- 纯量三重积反对称性（右槽）：`d·(d × e) = 0`。 -/
+theorem dot3_self_cross_right (d e : Fin 3 → ℂ) : dot3 d (cross3 d e) = 0 := by
+  simp [dot3, cross3]; ring
+
+/-- 纯量三重积反对称性（左槽）：`d·(e × d) = 0`。 -/
+theorem dot3_self_cross_left (d e : Fin 3 → ℂ) : dot3 d (cross3 e d) = 0 := by
+  simp [dot3, cross3]; ring
+
+/-- **根式分母的代数核（归一化三重积）**：`(c·d)·((c·a + q·d) × (c·b + t·d)) = c³ · d·(a × b)`。
+    两个含 `d` 的修正项由纯量三重积**反对称性**消零，故归一化 `n = d/s` 时
+    修正项不影响曲率，仅留下 `1/s³` 的根式分母。 -/
+theorem dot3_smul_cross3_smul (c q t : ℂ) (d a b : Fin 3 → ℂ) :
+    dot3 (c • d) (cross3 (c • a + q • d) (c • b + t • d))
+      = c ^ 3 * dot3 d (cross3 a b) := by
+  simp [dot3, cross3]; ring
+
+/-- **归一化两带模型的曲率闭式（根式分母层）**：设 `P = ½(1 − n·σ)`，`n = d/s`
+    （`s² = d·d`），切向量 `∂ᵢn` 的 Leibniz 展开为 `(1/s)∂ᵢd + (修正)·d`。则
+    `F = −½ · (1/s³) · d·(a × b)`——**根式分母 `s⁻³`（即 `(d·d)^{−3/2}`）显式出现**，
+    且两个 Leibniz 修正项由反对称性消零。 -/
+theorem berryCurvature_normalized_d (s q t : ℂ) (d a b : Fin 3 → ℂ) :
+    berryCurvature (bandProj ((1 / s) • d))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • a + q • d))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • b + t • d))
+      = -(1 / 2 : ℂ) * ((1 / s) ^ 3 * dot3 d (cross3 a b)) := by
+  rw [berryCurvature_bandProj, dot3_smul_cross3_smul]
+
+/-- ℝ 版三维内积。 -/
+def dot3r (d e : Fin 3 → ℝ) : ℝ := d 0 * e 0 + d 1 * e 1 + d 2 * e 2
+
+/-- ℝ 版三维叉积。 -/
+def cross3r (d e : Fin 3 → ℝ) : Fin 3 → ℝ :=
+  ![d 1 * e 2 - d 2 * e 1, d 2 * e 0 - d 0 * e 2, d 0 * e 1 - d 1 * e 0]
+
+/-- ℝ → ℂ 内积桥。 -/
+theorem dot3_ofReal (f g : Fin 3 → ℝ) :
+    dot3 (fun i => ((f i : ℝ) : ℂ)) (fun i => ((g i : ℝ) : ℂ))
+      = ((dot3r f g : ℝ) : ℂ) := by
+  simp [dot3, dot3r]
+
+/-- ℝ → ℂ 叉积桥。 -/
+theorem cross3_ofReal (f g : Fin 3 → ℝ) :
+    cross3 (fun i => ((f i : ℝ) : ℂ)) (fun i => ((g i : ℝ) : ℂ))
+      = fun i => ((cross3r f g i : ℝ) : ℂ) := by
+  funext i
+  fin_cases i <;> simp [cross3, cross3r]
+
+/-- 可分离"极角"模型：`d = (sin k₀ sin k₁, sin k₀ cos k₁, cos k₀)`（单位向量）。 -/
+noncomputable def sepDr (k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  ![Real.sin k₀ * Real.sin k₁, Real.sin k₀ * Real.cos k₁, Real.cos k₀]
+
+/-- 模型切向量 `∂₀d`。 -/
+noncomputable def sepAr (k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  ![Real.cos k₀ * Real.sin k₁, Real.cos k₀ * Real.cos k₁, -Real.sin k₀]
+
+/-- 模型切向量 `∂₁d`。 -/
+noncomputable def sepBr (k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  ![Real.sin k₀ * Real.cos k₁, -Real.sin k₀ * Real.sin k₁, 0]
+
+/-- 可分离模型是单位向量：`d·d = 1`。 -/
+theorem sepDr_unit (k₀ k₁ : ℝ) : dot3r (sepDr k₀ k₁) (sepDr k₀ k₁) = 1 := by
+  have h0 := Real.sin_sq_add_cos_sq k₀
+  have h1 := Real.sin_sq_add_cos_sq k₁
+  simp only [dot3r, sepDr, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  linear_combination (Real.sin k₀ ^ 2) * h1 + h0
+
+/-- 可分离模型的三重积：`d·(∂₀d × ∂₁d) = −sin k₀`。 -/
+theorem sepDr_triple (k₀ k₁ : ℝ) :
+    dot3r (sepDr k₀ k₁) (cross3r (sepAr k₀ k₁) (sepBr k₀ k₁)) = -Real.sin k₀ := by
+  have hc0 : Real.cos k₀ ^ 2 = 1 - Real.sin k₀ ^ 2 := by
+    have := Real.sin_sq_add_cos_sq k₀; linarith
+  have hc1 : Real.cos k₁ ^ 2 = 1 - Real.sin k₁ ^ 2 := by
+    have := Real.sin_sq_add_cos_sq k₁; linarith
+  simp only [dot3r, cross3r, sepDr, sepAr, sepBr, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  ring_nf
+  rw [hc0, hc1]
+  ring
+
+/-- **一维 BZ 正弦积分为零**：`∫₀^{2π} sin = 0`（原函数 `cos`，端点值相消）。 -/
+theorem intervalIntegral_sin_eq_zero :
+    (∫ k in (0 : ℝ)..(2 * Real.pi), Real.sin k) = 0 := by
+  have hneg : (∫ k in (0 : ℝ)..(2 * Real.pi), -Real.sin k) = 0 := by
+    rw [intervalIntegral.integral_deriv_eq_sub' Real.cos
+      (funext fun x => (Real.hasDerivAt_cos x).deriv)
+      (fun x _ => (Real.hasDerivAt_cos x).differentiableAt) (by fun_prop)]
+    simp [Real.cos_two_pi, Real.cos_zero]
+  simpa only [intervalIntegral.integral_neg, neg_eq_zero] using hneg
+
+/-- **可分离模型 BZ 积分为零**：`∫_{BZ} c·sin k₀ d²k = 0`（Fubini 分离 + 一维正弦留数）。 -/
+theorem bzIntegral_separable_sin (c : ℂ) :
+    bzIntegral (fun k₀ _ => c * ((Real.sin k₀ : ℝ) : ℂ)) = 0 := by
+  have h : (fun k₀ (_ : ℝ) => c * ((Real.sin k₀ : ℝ) : ℂ))
+      = fun k₀ k₁ => (fun k => c * ((Real.sin k : ℝ) : ℂ)) k₀ * (fun _ : ℝ => (1 : ℂ)) k₁ := by
+    funext k₀ k₁; simp
+  rw [h, bzIntegral_separable, intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_ofReal, intervalIntegral_sin_eq_zero]
+  rw [show (((0 : ℝ) : ℂ)) = 0 from by norm_num, mul_zero, zero_mul]
+
+/-- 可分离模型的 ℂ³ 提升 `d`。 -/
+noncomputable def sepDc (k₀ k₁ : ℝ) : Fin 3 → ℂ := fun i => ((sepDr k₀ k₁ i : ℝ) : ℂ)
+
+/-- 可分离模型的 ℂ³ 提升 `∂₀d`。 -/
+noncomputable def sepAc (k₀ k₁ : ℝ) : Fin 3 → ℂ := fun i => ((sepAr k₀ k₁ i : ℝ) : ℂ)
+
+/-- 可分离模型的 ℂ³ 提升 `∂₁d`。 -/
+noncomputable def sepBc (k₀ k₁ : ℝ) : Fin 3 → ℂ := fun i => ((sepBr k₀ k₁ i : ℝ) : ℂ)
+
+/-- **可分离模型的显式 Berry 曲率**：`F(k₀,k₁) = ½ sin k₀`
+    （单位向量 `s = 1` + 三重积 `−sin k₀` 代入曲率闭式）。 -/
+theorem berryCurvature_sepD (k₀ k₁ : ℝ) :
+    berryCurvature (bandProj (sepDc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepAc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepBc k₀ k₁))
+      = (1 / 2 : ℂ) * ((Real.sin k₀ : ℝ) : ℂ) := by
+  rw [berryCurvature_bandProj]
+  have hd : dot3 (sepDc k₀ k₁) (cross3 (sepAc k₀ k₁) (sepBc k₀ k₁))
+      = ((-Real.sin k₀ : ℝ) : ℂ) := by
+    unfold sepDc sepAc sepBc
+    rw [cross3_ofReal, dot3_ofReal, sepDr_triple]
+  rw [hd]
+  push_cast
+  ring
+
+/-- **可分离模型的未归一化陈数为零**：`∫_{BZ} F d²k = 0`。 -/
+theorem bzIntegral_berryCurvature_sepD :
+    bzIntegral (fun k₀ k₁ => berryCurvature (bandProj (sepDc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepAc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepBc k₀ k₁))) = 0 := by
+  simp only [berryCurvature_sepD]
+  exact bzIntegral_separable_sin (1 / 2 : ℂ)
+
+/-- **可分离模型的物理陈数 `C = 0`**：该两带模型在布里渊区上拓扑平凡。 -/
+theorem physicalChernNumber_sepD_eq_zero :
+    physicalChernNumber (fun k₀ k₁ => berryCurvature (bandProj (sepDc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepAc k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec (sepBc k₀ k₁))) = 0 := by
+  rw [physicalChernNumber, bzIntegral_berryCurvature_sepD, mul_zero]
+
+end ExplicitTwoBandChern
+
+/-!
+## §2.47 耦合两带模型的显式曲率：QWZ 型 `d = (sin k₀, sin k₁, m + cos k₀ + cos k₁)`
+
+§2.46 把根式分母层 `F = −½·s⁻³·d·(a × b)`（`s² = d·d`）在**抽象**层闭合，并给出
+一个**单位向量**的可分离实例（`s = 1`，故无根式分母）。本节把该层**实例化**到
+**耦合**（非可分离、非单位）的 QWZ 型模型上——这是「模型 → 曲率 → 显式积分」
+链条中「模型 → 曲率」一环在**非平凡模型**上的落地，也是开放项 ②′ 的显式被积函数。
+
+1. **QWZ 型 `d` 向量**：`qwzDr m k₀ k₁ = (sin k₀, sin k₁, m + cos k₀ + cos k₁)`，
+   切向量 `qwzAr = ∂₀d = (cos k₀, 0, −sin k₀)`、`qwzBr = ∂₁d = (0, cos k₁, −sin k₁)`。
+2. **归一化恒等式** `qwzDr_sq`：`d·d = (m + cos k₀ + cos k₁)² + sin²k₀ + sin²k₁`；
+   等价展开 `qwzDr_sq_alt`：`d·d = 2 + m² + 2m(cos k₀ + cos k₁) + 2cos k₀cos k₁`
+   ——即 §2.46 登记的**根式分母** `(2 + m² + 2m(cos k₀ + cos k₁) + 2cos k₀cos k₁)^{3/2}` 的底数。
+3. **三重积** `qwzDr_triple`：`d·(∂₀d × ∂₁d) = cos k₀ + cos k₁ + m·cos k₀cos k₁`
+   （由 `sin² + cos² = 1` 化简；注意此式**非纯代数**，需三角恒等式，与可分离模型的
+   `−sin k₀` 不同）。
+4. **显式曲率（根式分母显式）** `berryCurvature_qwz`：设 `s` 为归一化因子，则
+   `F = −½·s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`；物理归一化 `qwzS m k₀ k₁ = √(d·d)`
+   给出 `berryCurvature_qwz_unit`——**根式分母 `(d·d)^{−3/2}` 在耦合模型上显式出现**，
+   且由 §2.46 的 `berryCurvature_normalized_d_zero`（Leibniz 修正项消零）与
+   切向量取 `(1/s)·∂ᵢd` 的**纯代数**计算给出，无需 `√` 的求导。
+5. **平凡相与临界点的结构事实**：`qwzDr_sq_pos_of_abs_gt_two`（`|m| > 2` ⟹ `d` 处处非零，
+   故 `n = d/|d|` 光滑且 `n_z` 恒同号——**平凡相**的代数前提）+ `qwzDr_zero_pi_zero`/
+   `qwzDr_zero_zero_pi`（`m = 0` 时 `d` 在 `(π,0)`、`(0,π)` 处**消零**——狄拉克点/能隙闭合）。
+
+**诚实边界（随登）**：本节交付开放项 ②′ 的**显式被积函数**（耦合模型的根式分母曲率）
+与平凡相/临界点的结构事实。**仍开放**：QWZ 型**非零**陈数的**显式值**——该积分为
+`∯ (cos k₀ + cos k₁ + m cos k₀cos k₁)/(2 + m² + 2m(cos k₀+cos k₁) + 2cos k₀cos k₁)^{3/2} d²k`，
+其分母**非 Laurent 且非初等**（内层 `∫ dk₁/(a + b cos k₁)^{3/2}` 即完全椭圆积分），
+闭式求值需 `T² → S²` 度理论（数值已确认 `−2 < m < 0` 取 `C = −1`、`0 < m < 2` 取 `C = +1`、
+`|m| > 2` 取 `C = 0`；闭式 `C(m) = sgn(m) − ½(sgn(m+2) + sgn(m−2))`）。**可形式化路径**：
+`|m| > 2` 时 `d_z` 恒同号 ⟹ `n` 落在一个半球（可缩）⟹ 陈数为零——可经 §2.45 的
+**Stokes 论证** `bzIntegral_stokes_eq_zero` 与「立体角 1-形式」`αᵢ = (n₀∂ᵢn₁ − n₁∂ᵢn₀)/(1+n₂)`
+（`dα = ω` 当 `n₂ ≠ −1`）落地（登记为下一层）。
+-/
+
+section QWZCoupledModel
+
+open scoped Interval
+
+/-- QWZ 型耦合两带模型的 `d` 向量：`d = (sin k₀, sin k₁, m + cos k₀ + cos k₁)`。 -/
+noncomputable def qwzDr (m k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  ![Real.sin k₀, Real.sin k₁, m + Real.cos k₀ + Real.cos k₁]
+
+/-- QWZ 模型切向量 `∂₀d = (cos k₀, 0, −sin k₀)`。 -/
+noncomputable def qwzAr (k₀ : ℝ) : Fin 3 → ℝ :=
+  ![Real.cos k₀, 0, -Real.sin k₀]
+
+/-- QWZ 模型切向量 `∂₁d = (0, cos k₁, −sin k₁)`。 -/
+noncomputable def qwzBr (k₁ : ℝ) : Fin 3 → ℝ :=
+  ![0, Real.cos k₁, -Real.sin k₁]
+
+/-- **QWZ 归一化恒等式**：`d·d = (m + cos k₀ + cos k₁)² + sin²k₀ + sin²k₁`。 -/
+theorem qwzDr_sq (m k₀ k₁ : ℝ) :
+    dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)
+      = (m + Real.cos k₀ + Real.cos k₁) ^ 2 + Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2 := by
+  simp only [dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  ring
+
+/-- **QWZ 归一化展开式**：`d·d = 2 + m² + 2m(cos k₀ + cos k₁) + 2cos k₀cos k₁`
+    ——§2.46 登记的根式分母底数（非 Laurent 结构）。 -/
+theorem qwzDr_sq_alt (m k₀ k₁ : ℝ) :
+    dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)
+      = 2 + m ^ 2 + 2 * m * (Real.cos k₀ + Real.cos k₁)
+        + 2 * Real.cos k₀ * Real.cos k₁ := by
+  rw [qwzDr_sq]
+  have h0 := Real.sin_sq_add_cos_sq k₀
+  have h1 := Real.sin_sq_add_cos_sq k₁
+  linear_combination h0 + h1
+
+/-- **QWZ 三重积**：`d·(∂₀d × ∂₁d) = cos k₀ + cos k₁ + m·cos k₀cos k₁`
+    （需三角恒等式 `sin² + cos² = 1`，非纯代数）。 -/
+theorem qwzDr_triple (m k₀ k₁ : ℝ) :
+    dot3r (qwzDr m k₀ k₁) (cross3r (qwzAr k₀) (qwzBr k₁))
+      = Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ := by
+  have h0 := Real.sin_sq_add_cos_sq k₀
+  have h1 := Real.sin_sq_add_cos_sq k₁
+  simp only [dot3r, cross3r, qwzDr, qwzAr, qwzBr, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  linear_combination Real.cos k₁ * h0 + Real.cos k₀ * h1
+
+/-- **平凡相的非消零性**：`|m| > 2` 时 `d·d > 0`（`d_z = m + cos k₀ + cos k₁` 恒同号），
+    故 `n = d/|d|` 光滑且 `n_z` 不变号（落在半球内）。 -/
+theorem qwzDr_sq_pos_of_abs_gt_two (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    0 < dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) := by
+  rw [qwzDr_sq]
+  have hc : |Real.cos k₀ + Real.cos k₁| ≤ 2 := by
+    rw [abs_le]
+    constructor <;> linarith [Real.neg_one_le_cos k₀, Real.cos_le_one k₀,
+      Real.neg_one_le_cos k₁, Real.cos_le_one k₁]
+  have hne : m + Real.cos k₀ + Real.cos k₁ ≠ 0 := by
+    intro hzero
+    have hm_eq : m = -(Real.cos k₀ + Real.cos k₁) := by linarith
+    have : |m| = |Real.cos k₀ + Real.cos k₁| := by rw [hm_eq, abs_neg]
+    linarith
+  nlinarith [sq_nonneg (Real.sin k₀), sq_nonneg (Real.sin k₁), sq_pos_of_ne_zero hne]
+
+/-- **临界点（`m = 0`）**：QWZ 模型在 `(π, 0)` 处 `d = 0`（狄拉克点/能隙闭合）。 -/
+theorem qwzDr_zero_pi_zero : qwzDr 0 Real.pi 0 = 0 := by
+  funext i; fin_cases i <;> simp [qwzDr]
+
+/-- **临界点（`m = 0`）**：QWZ 模型在 `(0, π)` 处 `d = 0`（狄拉克点/能隙闭合）。 -/
+theorem qwzDr_zero_zero_pi : qwzDr 0 0 Real.pi = 0 := by
+  funext i; fin_cases i <;> simp [qwzDr]
+
+/-- QWZ 模型的 ℂ³ 提升 `d`。 -/
+noncomputable def qwzDc (m k₀ k₁ : ℝ) : Fin 3 → ℂ := fun i => ((qwzDr m k₀ k₁ i : ℝ) : ℂ)
+
+/-- QWZ 模型的 ℂ³ 提升 `∂₀d`。 -/
+noncomputable def qwzAc (k₀ : ℝ) : Fin 3 → ℂ := fun i => ((qwzAr k₀ i : ℝ) : ℂ)
+
+/-- QWZ 模型的 ℂ³ 提升 `∂₁d`。 -/
+noncomputable def qwzBc (k₁ : ℝ) : Fin 3 → ℂ := fun i => ((qwzBr k₁ i : ℝ) : ℂ)
+
+/-- QWZ 模型的归一化因子 `s = |d| = √(d·d)`（复数化）。 -/
+noncomputable def qwzS (m k₀ k₁ : ℝ) : ℂ :=
+  ((Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) : ℝ) : ℂ)
+
+/-- **根式分母层的 `q = t = 0` 特例**：切向量取 `(1/s)·a`、`(1/s)·b`（Leibniz 修正项为零）
+    时 `F = −½·(1/s)³·d·(a × b)`。由 §2.46 `berryCurvature_normalized_d` 取 `q = t = 0` 得到。 -/
+theorem berryCurvature_normalized_d_zero (s : ℂ) (d a b : Fin 3 → ℂ) :
+    berryCurvature (bandProj ((1 / s) • d))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • a))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • b))
+      = -(1 / 2 : ℂ) * ((1 / s) ^ 3 * dot3 d (cross3 a b)) := by
+  simpa using berryCurvature_normalized_d s 0 0 d a b
+
+/-- **QWZ 型耦合两带模型的显式 Berry 曲率**：设 `s` 为归一化因子，则
+    `F = −½·s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`——**根式分母 `s⁻³` 显式出现**。 -/
+theorem berryCurvature_qwz (m k₀ k₁ : ℝ) (s : ℂ) :
+    berryCurvature (bandProj ((1 / s) • qwzDc m k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • qwzAc k₀))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / s) • qwzBc k₁))
+      = -(1 / 2 : ℂ) * ((1 / s) ^ 3 *
+          ((Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ : ℝ) : ℂ)) := by
+  rw [berryCurvature_normalized_d_zero]
+  congr 1
+  unfold qwzDc qwzAc qwzBc
+  rw [cross3_ofReal, dot3_ofReal, qwzDr_triple]
+
+/-- **QWZ 模型曲率的物理归一化特化**：取 `s = √(d·d) = |d|`（即 `n = d/|d|` 为单位向量），
+    则 `F = −½·(d·d)^{−3/2}·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`——**根式分母
+    `(d·d)^{−3/2}` 显式**（非 Laurent、非初等）。 -/
+theorem berryCurvature_qwz_unit (m k₀ k₁ : ℝ) :
+    berryCurvature (bandProj ((1 / qwzS m k₀ k₁) • qwzDc m k₀ k₁))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / qwzS m k₀ k₁) • qwzAc k₀))
+      (-(1 / 2 : ℂ) • pauliVec ((1 / qwzS m k₀ k₁) • qwzBc k₁))
+      = -(1 / 2 : ℂ) * ((1 / qwzS m k₀ k₁) ^ 3 *
+          ((Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ : ℝ) : ℂ)) :=
+  berryCurvature_qwz m k₀ k₁ (qwzS m k₀ k₁)
+
+end QWZCoupledModel
+
+/-!
+## §2.48 平凡相的 Stokes 论证：立体角原函数与 QWZ 零陈数
+
+§2.47 把 QWZ 型耦合模型的曲率在**根式分母层**闭合（`F = −½·s⁻³·d·(∂₀d × ∂₁d)`），
+并指出平凡相 `|m| > 2` 的陈数应为零，其可形式化路径是 §2.45 的 **Stokes 论证**
+`bzIntegral_stokes_eq_zero` 配合「立体角 1-形式」`αᵢ = (n₀∂ᵢn₁ − n₁∂ᵢn₀)/(1+n₂)`
+（`dα = ω` 当 `n₂ ≠ −1`）。本节把该路径的**代数核**落地。
+
+1. **ℝ³ 向量代数**：内积对称性 `dot3r_comm`、叉积三重恒等式 `cross3r_cross_eq`、
+   Lagrange 恒等式 `dot3r_cross3r_self`、正定性 `dot3r_self_eq_zero`、
+   **平行引理** `eq_smul_of_cross3r_eq_zero`（`w × n = 0` 且 `n·n = 1` ⟹ `w = (n·w)·n`）
+   与推论 `cross3r_cross_eq_zero`（`n ⊥ a₀, a₁` ⟹ `(a₀ × a₁) × n = 0`）。
+2. **立体角原函数的系数级精确性（`dα = ω`）**：`solidAngle_primitive_core` /
+   `solidAngle_primitive_exact`：`∂₀α₁ − ∂₁α₀ = n·(a₀ × a₁)`
+   （`n` 单位、`aᵢ ⊥ n`、`1 + n_z ≠ 0`）。
+3. **Stokes 归约**：`berryCurvatureScalar` / `berryCurvatureScalar_eq_primitive_curl`：
+   两带 Berry 曲率标量 `F = −½·n·(a₀ × a₁) = −½·(∂₀α₁ − ∂₁α₀)`——即 §2.45 Stokes 论证所需的
+   `F = ∂₀A₁ − ∂₁A₀` 在 `Aᵢ = −½·αᵢ` 处成立；ℝ→ℂ 桥 `berryCurvature_bandProj_ofReal`。
+4. **QWZ 平凡相的单位向量与切向量**：`qwzNr`（`n = d/|d|`，单位性 `qwzNr_unit`）、
+   `qwzAnr`/`qwzBnr`（真切向量 `∂ᵢn = (1/|d|)∂ᵢd − (d·∂ᵢd)/|d|³·d`，正交性
+   `dot3r_qwzNr_qwzAnr`/`dot3r_qwzNr_qwzBnr`）、正则性 `qwzNz_pos`（`2 < m` ⟹ `n_z > 0`，
+   故 `1 + n_z ≠ 0`——立体角原函数在 BZ 上**无 Dirac 弦**）。
+   归一化三重积 `qwz_triple_normalized`：`n·(∂₀n × ∂₁n) = s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`
+   （与 §2.47 `berryCurvature_qwz_unit` 一致）。
+5. **QWZ 曲率的立体角归约** `qwz_curvature_eq_primitive_curl`：
+   `F = −½·(∂₀α₁ − ∂₁α₀)`（QWZ 数据代入）。
+6. **条件 Stokes 闭合** `physicalChernNumber_qwz_eq_zero_of_stokes`：
+   若 QWZ 曲率由**单值联络** `(A₀, A₁)` 表出 `F = ∂₀A₁ − ∂₁A₀` 且满足 §2.45 的
+   周期性/可微性/可积性前提，则物理陈数 `C = 0`。
+
+**诚实边界（随登）**：本节交付立体角原函数层的**代数核**与 QWZ 平凡相的**条件闭合**。
+**仍开放**：从立体角原函数 `αᵢ` 出发**构造**全局标架 `Aᵢ = −½·αᵢ` 并验证其
+`2π`-周期性、可微性与可积性（即把 `physicalChernNumber_qwz_eq_zero_of_stokes` 的解析
+前提**无条件化**），从而给出 `2 < m` 时 `physicalChernNumber (qwzCurvature m) = 0` 的
+**无条件**证明（登记为下一层）。
+-/
+
+section StokesTrivialPhase
+
+open scoped Interval
+
+open MeasureTheory
+
+/-- ℝ 版内积对称性。 -/
+theorem dot3r_comm (d e : Fin 3 → ℝ) : dot3r d e = dot3r e d := by
+  simp only [dot3r]; ring
+
+/-- 叉积三重恒等式：`(a × b) × c = (a·c)·b − (b·c)·a`。 -/
+theorem cross3r_cross_eq (a b c : Fin 3 → ℝ) :
+    cross3r (cross3r a b) c = (dot3r a c) • b - (dot3r b c) • a := by
+  ext i
+  fin_cases i <;> simp [cross3r, dot3r, Pi.sub_apply, Pi.smul_apply, smul_eq_mul] <;> ring
+
+/-- Lagrange 恒等式：`(w × n)·(w × n) = (w·w)(n·n) − (w·n)²`。 -/
+theorem dot3r_cross3r_self (w n : Fin 3 → ℝ) :
+    dot3r (cross3r w n) (cross3r w n) = dot3r w w * dot3r n n - (dot3r w n) ^ 2 := by
+  simp only [cross3r, dot3r, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  ring
+
+/-- `u·u = 0 ⟹ u = 0`（ℝ³ 上内积正定）。 -/
+theorem dot3r_self_eq_zero (u : Fin 3 → ℝ) (h : dot3r u u = 0) : u = 0 := by
+  have h' : u 0 * u 0 + u 1 * u 1 + u 2 * u 2 = 0 := by simpa [dot3r] using h
+  have h0 : u 0 = 0 := by nlinarith [sq_nonneg (u 0), sq_nonneg (u 1), sq_nonneg (u 2)]
+  have h1 : u 1 = 0 := by nlinarith [sq_nonneg (u 0), sq_nonneg (u 1), sq_nonneg (u 2)]
+  have h2 : u 2 = 0 := by nlinarith [sq_nonneg (u 0), sq_nonneg (u 1), sq_nonneg (u 2)]
+  funext i
+  fin_cases i <;> assumption
+
+/-- **平行引理**：`w × n = 0` 且 `n·n = 1` ⟹ `w = (n·w)·n`。 -/
+theorem eq_smul_of_cross3r_eq_zero (n w : Fin 3 → ℝ) (hn : dot3r n n = 1)
+    (h : cross3r w n = 0) : w = (dot3r n w) • n := by
+  have hww : dot3r w w = (dot3r w n) ^ 2 := by
+    have hlag := dot3r_cross3r_self w n
+    rw [h] at hlag
+    have h0 : dot3r (0 : Fin 3 → ℝ) (0 : Fin 3 → ℝ) = 0 := by simp [dot3r]
+    rw [h0, hn] at hlag
+    linarith
+  have hexp : dot3r (w - (dot3r n w) • n) (w - (dot3r n w) • n)
+      = dot3r w w - 2 * (dot3r n w) * (dot3r w n) + (dot3r n w) ^ 2 * (dot3r n n) := by
+    simp only [dot3r, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+    ring
+  have hzero : dot3r (w - (dot3r n w) • n) (w - (dot3r n w) • n) = 0 := by
+    rw [hexp, hn, dot3r_comm n w, hww]
+    ring
+  exact sub_eq_zero.mp (dot3r_self_eq_zero _ hzero)
+
+/-- `n ⊥ a₀`、`n ⊥ a₁` ⟹ `(a₀ × a₁) × n = 0`。 -/
+theorem cross3r_cross_eq_zero (n a0 a1 : Fin 3 → ℝ) (h0 : dot3r n a0 = 0)
+    (h1 : dot3r n a1 = 0) : cross3r (cross3r a0 a1) n = 0 := by
+  rw [cross3r_cross_eq, dot3r_comm a0 n, dot3r_comm a1 n, h0, h1]
+  simp
+
+/-- **立体角 1-形式代数核**：设 `n` 为单位向量（`n·n = 1`）、`a₀, a₁ ⊥ n`，则
+    `2·(a₀×a₁)_z/(1+n_z) + (n_x(a₀×a₁)_x + n_y(a₀×a₁)_y)/(1+n_z)² = n·(a₀×a₁)`
+    ——这是「`dα = ω`（`α = (n_x dn_y − n_y dn_x)/(1+n_z)`）」在系数层的精确表述。 -/
+theorem solidAngle_primitive_core (n a0 a1 : Fin 3 → ℝ) (hn : dot3r n n = 1)
+    (h0 : dot3r n a0 = 0) (h1 : dot3r n a1 = 0) (hreg : 1 + n 2 ≠ 0) :
+    2 * (cross3r a0 a1) 2 / (1 + n 2)
+      + (n 0 * (cross3r a0 a1) 0 + n 1 * (cross3r a0 a1) 1) / (1 + n 2) ^ 2
+      = dot3r n (cross3r a0 a1) := by
+  set w := cross3r a0 a1 with hw
+  have hw_cross : cross3r w n = 0 := by
+    rw [hw]
+    exact cross3r_cross_eq_zero n a0 a1 h0 h1
+  have hpar : w = (dot3r n w) • n := eq_smul_of_cross3r_eq_zero n w hn hw_cross
+  set c := dot3r n w with hc
+  have hw0 : w 0 = c * n 0 := by rw [hpar]; simp [Pi.smul_apply, smul_eq_mul]
+  have hw1 : w 1 = c * n 1 := by rw [hpar]; simp [Pi.smul_apply, smul_eq_mul]
+  have hw2 : w 2 = c * n 2 := by rw [hpar]; simp [Pi.smul_apply, smul_eq_mul]
+  have hn2 : n 0 ^ 2 + n 1 ^ 2 = 1 - n 2 ^ 2 := by
+    have h : n 0 * n 0 + n 1 * n 1 + n 2 * n 2 = 1 := by simpa [dot3r] using hn
+    nlinarith
+  rw [hw0, hw1, hw2]
+  field_simp
+  linear_combination c * hn2
+
+/-- 立体角 1-形式系数 `α(n,a) = (n₀a₁ − n₁a₀)/(1+n₂)`（`a` 为切向量）。 -/
+noncomputable def solidAnglePrim (n a : Fin 3 → ℝ) : ℝ := (n 0 * a 1 - n 1 * a 0) / (1 + n 2)
+
+/-- 系数级外微分的 `∂₀α₁` 分量（Clairaut 混合项 `∂₀∂₁n` 在差中相消，故略去）。 -/
+noncomputable def solidAnglePrimD0 (n a0 a1 : Fin 3 → ℝ) : ℝ :=
+  (a0 0 * a1 1 - a0 1 * a1 0) / (1 + n 2)
+    - (n 0 * a1 1 - n 1 * a1 0) * a0 2 / (1 + n 2) ^ 2
+
+/-- 系数级外微分的 `∂₁α₀` 分量。 -/
+noncomputable def solidAnglePrimD1 (n a0 a1 : Fin 3 → ℝ) : ℝ :=
+  (a1 0 * a0 1 - a1 1 * a0 0) / (1 + n 2)
+    - (n 0 * a0 1 - n 1 * a0 0) * a1 2 / (1 + n 2) ^ 2
+
+/-- `solidAnglePrimD0 − solidAnglePrimD1` 的显式化简。 -/
+theorem solidAnglePrimD0_sub_D1 (n a0 a1 : Fin 3 → ℝ) :
+    solidAnglePrimD0 n a0 a1 - solidAnglePrimD1 n a0 a1
+      = 2 * (cross3r a0 a1) 2 / (1 + n 2)
+        + (n 0 * (cross3r a0 a1) 0 + n 1 * (cross3r a0 a1) 1) / (1 + n 2) ^ 2 := by
+  simp only [solidAnglePrimD0, solidAnglePrimD1, cross3r, Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  ring
+
+/-- **立体角原函数的系数级精确性（`dα = ω`）**：
+    `solidAnglePrimD0 − solidAnglePrimD1 = n·(a₀ × a₁)`。 -/
+theorem solidAngle_primitive_exact (n a0 a1 : Fin 3 → ℝ) (hn : dot3r n n = 1)
+    (h0 : dot3r n a0 = 0) (h1 : dot3r n a1 = 0) (hreg : 1 + n 2 ≠ 0) :
+    solidAnglePrimD0 n a0 a1 - solidAnglePrimD1 n a0 a1 = dot3r n (cross3r a0 a1) := by
+  rw [solidAnglePrimD0_sub_D1]
+  exact solidAngle_primitive_core n a0 a1 hn h0 h1 hreg
+
+/-- 两带模型 Berry 曲率的实标量 `F = −½·n·(a×b)`（§2.46 `berryCurvature_bandProj` 的实形式）。 -/
+noncomputable def berryCurvatureScalar (n a b : Fin 3 → ℝ) : ℝ :=
+  -(1 / 2) * dot3r n (cross3r a b)
+
+/-- **Stokes 归约（代数核）**：两带模型的 Berry 曲率标量等于立体角原函数的系数级旋度
+    `F = −½·(∂₀α₁ − ∂₁α₀)`——把 §2.45 的 Stokes 论证所需「`F = ∂₀A₁ − ∂₁A₀`」
+    归约到立体角原函数层。 -/
+theorem berryCurvatureScalar_eq_primitive_curl (n a0 a1 : Fin 3 → ℝ) (hn : dot3r n n = 1)
+    (h0 : dot3r n a0 = 0) (h1 : dot3r n a1 = 0) (hreg : 1 + n 2 ≠ 0) :
+    berryCurvatureScalar n a0 a1
+      = -(1 / 2) * (solidAnglePrimD0 n a0 a1 - solidAnglePrimD1 n a0 a1) := by
+  rw [berryCurvatureScalar, solidAngle_primitive_exact n a0 a1 hn h0 h1 hreg]
+
+/-- ℝ → ℂ 桥：实标量曲率即 §2.46 的复曲率。 -/
+theorem berryCurvature_bandProj_ofReal (n a b : Fin 3 → ℝ) :
+    berryCurvature (bandProj (fun i => ((n i : ℝ) : ℂ)))
+      (-(1 / 2 : ℂ) • pauliVec (fun i => ((a i : ℝ) : ℂ)))
+      (-(1 / 2 : ℂ) • pauliVec (fun i => ((b i : ℝ) : ℂ)))
+      = ((berryCurvatureScalar n a b : ℝ) : ℂ) := by
+  rw [berryCurvature_bandProj, cross3_ofReal, dot3_ofReal, berryCurvatureScalar]
+  push_cast
+  ring
+
+/-- QWZ 归一化因子 `s = √(d·d) = |d|`（实）。 -/
+noncomputable def qwzSqrt (m k₀ k₁ : ℝ) : ℝ :=
+  Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁))
+
+theorem qwzSqrt_pos (m k₀ k₁ : ℝ) (hm : 2 < |m|) : 0 < qwzSqrt m k₀ k₁ :=
+  Real.sqrt_pos.mpr (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm)
+
+theorem qwzSqrt_sq (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    qwzSqrt m k₀ k₁ ^ 2 = dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) :=
+  Real.sq_sqrt (le_of_lt (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm))
+
+theorem qwzSqrt_ne_zero (m k₀ k₁ : ℝ) (hm : 2 < |m|) : qwzSqrt m k₀ k₁ ≠ 0 :=
+  ne_of_gt (qwzSqrt_pos m k₀ k₁ hm)
+
+/-- QWZ 单位向量 `n = d/|d|`（实）。 -/
+noncomputable def qwzNr (m k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  (1 / qwzSqrt m k₀ k₁) • qwzDr m k₀ k₁
+
+/-- QWZ 切向量 `∂₀n = (1/|d|)∂₀d − (d·∂₀d)/|d|³·d`（含 Leibniz 修正项）。 -/
+noncomputable def qwzAnr (m k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  (1 / qwzSqrt m k₀ k₁) • qwzAr k₀
+    - (dot3r (qwzDr m k₀ k₁) (qwzAr k₀) / qwzSqrt m k₀ k₁ ^ 3) • qwzDr m k₀ k₁
+
+/-- QWZ 切向量 `∂₁n = (1/|d|)∂₁d − (d·∂₁d)/|d|³·d`。 -/
+noncomputable def qwzBnr (m k₀ k₁ : ℝ) : Fin 3 → ℝ :=
+  (1 / qwzSqrt m k₀ k₁) • qwzBr k₁
+    - (dot3r (qwzDr m k₀ k₁) (qwzBr k₁) / qwzSqrt m k₀ k₁ ^ 3) • qwzDr m k₀ k₁
+
+/-- **单位性**：`|n| = 1`（`n = d/|d|`）。 -/
+theorem qwzNr_unit (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    dot3r (qwzNr m k₀ k₁) (qwzNr m k₀ k₁) = 1 := by
+  have hs := qwzSqrt_sq m k₀ k₁ hm
+  have hsne := qwzSqrt_ne_zero m k₀ k₁ hm
+  simp only [qwzNr, dot3r, Pi.smul_apply, smul_eq_mul]
+  field_simp
+  rw [dot3r] at hs
+  linarith [hs]
+
+/-- **正交性**：`n·∂₀n = 0`（Leibniz 修正项与 `|d|² = d·d` 消约）。 -/
+theorem dot3r_qwzNr_qwzAnr (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    dot3r (qwzNr m k₀ k₁) (qwzAnr m k₀ k₁) = 0 := by
+  have hs := qwzSqrt_sq m k₀ k₁ hm
+  have hsne := qwzSqrt_ne_zero m k₀ k₁ hm
+  simp only [qwzNr, qwzAnr, dot3r, Pi.smul_apply, Pi.sub_apply, smul_eq_mul]
+  field_simp
+  rw [hs]
+  simp only [dot3r]
+  ring
+
+/-- **正交性**：`n·∂₁n = 0`。 -/
+theorem dot3r_qwzNr_qwzBnr (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    dot3r (qwzNr m k₀ k₁) (qwzBnr m k₀ k₁) = 0 := by
+  have hs := qwzSqrt_sq m k₀ k₁ hm
+  have hsne := qwzSqrt_ne_zero m k₀ k₁ hm
+  simp only [qwzNr, qwzBnr, dot3r, Pi.smul_apply, Pi.sub_apply, smul_eq_mul]
+  field_simp
+  rw [hs]
+  simp only [dot3r]
+  ring
+
+/-- QWZ 单位向量第三分量 `n_z = d_z/|d|`。 -/
+noncomputable def qwzNz (m k₀ k₁ : ℝ) : ℝ := qwzNr m k₀ k₁ 2
+
+/-- **平凡相正则性**：`2 < m` 时 `n_z > 0`（故 `1 + n_z ≠ 0`，立体角原函数无 Dirac 弦）。 -/
+theorem qwzNz_pos (m k₀ k₁ : ℝ) (hm : 2 < m) : 0 < qwzNz m k₀ k₁ := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hz : 0 < m + Real.cos k₀ + Real.cos k₁ := by
+    linarith [Real.neg_one_le_cos k₀, Real.neg_one_le_cos k₁]
+  have hspos := qwzSqrt_pos m k₀ k₁ hm'
+  simp only [qwzNz, qwzNr, qwzDr, Pi.smul_apply, smul_eq_mul, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  simpa [div_eq_mul_inv, mul_comm] using div_pos hz hspos
+
+/-- 平凡相 `2 < m` 时 `1 + n_z ≠ 0`（Stokes 论证的 `hreg`）。 -/
+theorem one_add_qwzNz_ne_zero (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    1 + qwzNz m k₀ k₁ ≠ 0 := by
+  have h := qwzNz_pos m k₀ k₁ hm
+  linarith
+
+/-- **ℝ 版归一化三重积**：`(c·d)·((c·a − q·d) × (c·b − t·d)) = c³·d·(a × b)`
+    （修正项由纯量三重积反对称性消零）。 -/
+theorem dot3r_smul_cross3r_correction (c q t : ℝ) (d a b : Fin 3 → ℝ) :
+    dot3r (c • d) (cross3r (c • a - q • d) (c • b - t • d))
+      = c ^ 3 * dot3r d (cross3r a b) := by
+  simp only [dot3r, cross3r, Pi.smul_apply, Pi.sub_apply, smul_eq_mul,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.head_cons, Matrix.tail_cons]
+  ring
+
+/-- **QWZ 归一化三重积（实形式）**：`n·(∂₀n × ∂₁n) = s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`。 -/
+theorem qwz_triple_normalized (m k₀ k₁ : ℝ) :
+    dot3r (qwzNr m k₀ k₁) (cross3r (qwzAnr m k₀ k₁) (qwzBnr m k₀ k₁))
+      = (1 / qwzSqrt m k₀ k₁) ^ 3
+          * (Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁) := by
+  have hgen := dot3r_smul_cross3r_correction (1 / qwzSqrt m k₀ k₁)
+    (dot3r (qwzDr m k₀ k₁) (qwzAr k₀) / qwzSqrt m k₀ k₁ ^ 3)
+    (dot3r (qwzDr m k₀ k₁) (qwzBr k₁) / qwzSqrt m k₀ k₁ ^ 3)
+    (qwzDr m k₀ k₁) (qwzAr k₀) (qwzBr k₁)
+  simp only [qwzNr, qwzAnr, qwzBnr]
+  rw [hgen, qwzDr_triple]
+
+/-- **QWZ 曲率标量的立体角归约**：`F = −½·(∂₀α₁ − ∂₁α₀)`（QWZ 数据代入）。 -/
+theorem qwz_curvature_eq_primitive_curl (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    berryCurvatureScalar (qwzNr m k₀ k₁) (qwzAnr m k₀ k₁) (qwzBnr m k₀ k₁)
+      = -(1 / 2) * (solidAnglePrimD0 (qwzNr m k₀ k₁) (qwzAnr m k₀ k₁) (qwzBnr m k₀ k₁)
+          - solidAnglePrimD1 (qwzNr m k₀ k₁) (qwzAnr m k₀ k₁) (qwzBnr m k₀ k₁)) := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  exact berryCurvatureScalar_eq_primitive_curl (qwzNr m k₀ k₁) (qwzAnr m k₀ k₁)
+    (qwzBnr m k₀ k₁) (qwzNr_unit m k₀ k₁ hm')
+    (dot3r_qwzNr_qwzAnr m k₀ k₁ hm') (dot3r_qwzNr_qwzBnr m k₀ k₁ hm')
+    (by simpa [qwzNz] using one_add_qwzNz_ne_zero m k₀ k₁ hm)
+
+/-- QWZ 模型的单位向量 Berry 曲率被积函数（复，`s = |d|`）。 -/
+noncomputable def qwzCurvature (m : ℝ) (k₀ k₁ : ℝ) : ℂ :=
+  berryCurvature (bandProj ((1 / qwzS m k₀ k₁) • qwzDc m k₀ k₁))
+    (-(1 / 2 : ℂ) • pauliVec ((1 / qwzS m k₀ k₁) • qwzAc k₀))
+    (-(1 / 2 : ℂ) • pauliVec ((1 / qwzS m k₀ k₁) • qwzBc k₁))
+
+/-- **QWZ 曲率闭式（复，§2.47 重述）**：`F = −½·s⁻³·(cos k₀ + cos k₁ + m·cos k₀cos k₁)`。 -/
+theorem qwzCurvature_eq (m k₀ k₁ : ℝ) :
+    qwzCurvature m k₀ k₁ = -(1 / 2 : ℂ) * ((1 / qwzS m k₀ k₁) ^ 3 *
+        ((Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ : ℝ) : ℂ)) :=
+  berryCurvature_qwz_unit m k₀ k₁
+
+/-- **QWZ 平凡相的条件 Stokes 闭合**：若 QWZ 曲率可由单值联络 `A = (A₀, A₁)` 表示为
+    `F = ∂₀A₁ − ∂₁A₀`（即立体角原函数层 `Aᵢ = −½·αᵢ`，`αᵢ = (n_x∂ᵢn_y − n_y∂ᵢn_x)/(1+n_z)`
+    在整个 BZ 上正则——由 `one_add_qwzNz_ne_zero` 保证），则物理陈数 `C = 0`。 -/
+theorem physicalChernNumber_qwz_eq_zero_of_stokes (m : ℝ) (A₀ A₁ : ℝ → ℝ → ℂ)
+    (hF : ∀ k₀ k₁, qwzCurvature m k₀ k₁
+      = deriv (fun k₀' => A₁ k₀' k₁) k₀ - deriv (fun k₁' => A₀ k₀ k₁') k₁)
+    (hA₁_diff : ∀ k₁, Differentiable ℝ (fun k₀' => A₁ k₀' k₁))
+    (hA₀_diff : ∀ k₀, Differentiable ℝ (fun k₁' => A₀ k₀ k₁'))
+    (hA₁_int : ∀ k₁, IntervalIntegrable (deriv (fun k₀' => A₁ k₀' k₁)) volume 0 (2 * Real.pi))
+    (hA₀_int : ∀ k₀, IntervalIntegrable (deriv (fun k₁' => A₀ k₀ k₁')) volume 0 (2 * Real.pi))
+    (hA₁_int_y : ∀ k₀,
+      IntervalIntegrable (fun k₁ => deriv (fun k₀' => A₁ k₀' k₁) k₀) volume 0 (2 * Real.pi))
+    (hA₁_per : ∀ k₀ k₁, A₁ (k₀ + 2 * Real.pi) k₁ = A₁ k₀ k₁)
+    (hA₀_per : ∀ k₀ k₁, A₀ k₀ (k₁ + 2 * Real.pi) = A₀ k₀ k₁)
+    (hswap : MeasureTheory.IntegrableOn
+      (Function.uncurry fun k₀ k₁ => deriv (fun k₀' => A₁ k₀' k₁) k₀)
+      (Set.uIoc 0 (2 * Real.pi) ×ˢ Set.uIoc 0 (2 * Real.pi))) :
+    physicalChernNumber (qwzCurvature m) = 0 :=
+  physicalChernNumber_eq_zero_of_stokes A₀ A₁ (qwzCurvature m) hF hA₁_diff hA₀_diff
+    hA₁_int hA₀_int hA₁_int_y hA₁_per hA₀_per hswap
+
+end StokesTrivialPhase
 
 end MUFPF
