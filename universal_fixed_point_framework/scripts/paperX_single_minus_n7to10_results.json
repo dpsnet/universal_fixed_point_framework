@@ -1,0 +1,62 @@
+{
+  "B1_ext": {
+    "7": {
+      "n_samples": 500,
+      "pass": 500,
+      "fail": 0,
+      "max_dev": 0.0,
+      "zero_both": 467,
+      "first_fail": null,
+      "elapsed_s": 1.5
+    },
+    "8": {
+      "n_samples": 300,
+      "pass": 300,
+      "fail": 0,
+      "max_dev": 0.0,
+      "zero_both": 292,
+      "first_fail": null,
+      "elapsed_s": 3.3
+    },
+    "9": {
+      "n_samples": 200,
+      "pass": 200,
+      "fail": 0,
+      "max_dev": 0.0,
+      "zero_both": 198,
+      "first_fail": null,
+      "elapsed_s": 3.8
+    },
+    "10": {
+      "n_samples": 100,
+      "pass": 100,
+      "fail": 0,
+      "max_dev": 0.0,
+      "zero_both": 98,
+      "first_fail": null,
+      "elapsed_s": 6.2
+    }
+  },
+  "nonzero_rate_ext": {
+    "7": {
+      "rate": 0.0585,
+      "nonzero": 117,
+      "samples": 2000,
+      "value_histogram": {
+        "-0.0": 1883,
+        "1.0": 62,
+        "-1.0": 55
+      }
+    },
+    "8": {
+      "rate": 0.026,
+      "nonzero": 26,
+      "samples": 1000,
+      "value_histogram": {
+        "-0.0": 974,
+        "1.0": 12,
+        "-1.0": 14
+      }
+    }
+  }
+}

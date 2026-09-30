@@ -1,0 +1,251 @@
+{
+  "S1": {
+    "k_pairs=0": {
+      "samples": 300,
+      "nonzero": 92,
+      "nonzero_rate": 0.3067,
+      "all_integer": true,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    },
+    "k_pairs=1": {
+      "samples": 300,
+      "nonzero": 99,
+      "nonzero_rate": 0.33,
+      "all_integer": true,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    },
+    "k_pairs=2": {
+      "samples": 300,
+      "nonzero": 91,
+      "nonzero_rate": 0.3033,
+      "all_integer": true,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    }
+  },
+  "S2": {
+    "n_runs": 50,
+    "n_steps": 200,
+    "total_jumps": 92,
+    "jumps_by_region": {
+      "omega1<0 (R1)": 41,
+      "omega1>0": 51
+    }
+  },
+  "S3": {
+    "runs": [
+      {
+        "jumps": [],
+        "a0": -1.0,
+        "a1": -1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -1.0,
+        "a1": -1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -1.0,
+        "a1": -1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": 1.0,
+        "a1": 1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": 1.0,
+        "a1": 1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": 1.0,
+        "a1": 1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": 1.0,
+        "a1": 1.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      },
+      {
+        "jumps": [],
+        "a0": -0.0,
+        "a1": -0.0,
+        "first_jump_t": null
+      }
+    ],
+    "jump_t_values": [],
+    "amplitudes_at_t0": "{-0.0, 1.0, -1.0}"
+  },
+  "S4": {
+    "n_runs": 20,
+    "samples": 820,
+    "lhs_changes_along_path": 392
+  },
+  "S5": {
+    "cyclicity(24)": {
+      "fail": 0,
+      "pass": true
+    },
+    "KK(27)": {
+      "fail": 0,
+      "pass": true
+    },
+    "soft_theorem(28)": {
+      "fail": 0,
+      "pass": true
+    }
+  }
+}

@@ -2,8 +2,8 @@
 
 **文档编号**：MUFPF-RN-ENDO-001
 **日期**：2026-09-12
-**版本**：v1.3
-**状态**：G1–G6 全部建立有限维可证核心并登记开放项；**§4 新增"起点分层"（2026-09-18 记档）：凝聚态侧工作起点=规范/表示层（对易子→SU(2)→Casimir→spectralGap，不经 Δ，Lean 全证独立），范畴 Δ 支降级为远期"运输函子 𝒯"统一目标（结构同一未成立，仅共享对易子原语 + spectralGap 标记，互不推导）；§3 G1 起点标注据此改判；RN-ENDO-010 §8.19 判定 `16=dim_ℝℍ²` 为维数恒等/模分解巧合、非代数内源，作为本判定的数值实例支撑**；G2 定量桥在"代数谱系"层面闭合（SuperfluidBridge.lean，2026-09-17），在"多级因子分解"层面闭合（SpectralFlowRG.lean，§8.7#5 代数因子分解层，Paper LVII v1.6），并进一步在"三级/多带谱隙谱系"层面闭合（MultibandSpectralBridge.lean，§8.6e 多带隙比保持 + Casimir 三级塔，Paper LVII v1.7），再在"尺度动力学诊断"层面落地（SpectralFlowDynamicsRG.lean，§8.6f 运行反常维度 + 非标度不变 + EM 残差流闭合，Paper LVII v1.8）；paper14 v1.6 内生标注体系重建（第一轮）完成，逐节全面标注为持续工作；**2026-09-19：G5（NoiseEffectiveEpsilon，paper14 v1.7）与 G4 代数核心（GPVortex，paper14 v1.8）双闭合**，详见 §8 尾部进度条目
+**版本**：v1.4
+**状态**：G1–G6 全部建立有限维可证核心并登记开放项；**§4 新增"起点分层"（2026-09-18 记档）：凝聚态侧工作起点=规范/表示层（对易子→SU(2)→Casimir→spectralGap，不经 Δ，Lean 全证独立），范畴 Δ 支降级为远期"运输函子 𝒯"统一目标（结构同一未成立，仅共享对易子原语 + spectralGap 标记，互不推导）；§3 G1 起点标注据此改判；RN-ENDO-010 §8.19 判定 `16=dim_ℝℍ²` 为维数恒等/模分解巧合、非代数内源，作为本判定的数值实例支撑**；G2 定量桥在"代数谱系"层面闭合（SuperfluidBridge.lean，2026-09-17），在"多级因子分解"层面闭合（SpectralFlowRG.lean，§8.7#5 代数因子分解层，Paper LVII v1.6），并进一步在"三级/多带谱隙谱系"层面闭合（MultibandSpectralBridge.lean，§8.6e 多带隙比保持 + Casimir 三级塔，Paper LVII v1.7），再在"尺度动力学诊断"层面落地（SpectralFlowDynamicsRG.lean，§8.6f 运行反常维度 + 非标度不变 + EM 残差流闭合，Paper LVII v1.8）；paper14 v1.6 内生标注体系重建（第一轮）完成，逐节全面标注为持续工作；**2026-09-19：G5（NoiseEffectiveEpsilon，paper14 v1.7）与 G4 代数核心（GPVortex，paper14 v1.8）双闭合**；**2026-09-30：G3 陈数理论主线收口——BerryChern §2.6–§2.54 把 QWZ 完整相图形式化闭合（平凡相 `|m|>2` ⟹ `C=0` 无条件，非平凡相 `|m|<2`（`m≠0`）⟹ `C=sgn m`，跳跃引理 + Fubini/FTC 组装，零 sorry），paper14 升 v1.56，正文记至 §五十四**；G4/G5/G6 与 G3 各层进度详见 §8 及 §四十九–§五十四
 **研究目标**：以「内生推导第一性」为标准重建 Paper XIV（凝聚态物理的谱表述）——每条推导链的起点必须是范畴 Δ（Sp 4-范畴交换律偏差，Paper XXXV）或由其已证的谱间隙资产，物理输入只允许出现在明确的边界上。
 
 ---
@@ -2451,3 +2451,122 @@ Fubini 载体。**仍开放**：① `F` 的可积性与完整数值陈数。
 
 **同步**：BerryChern §3 开放登记 #1 追加 §2.48；paper14 升 **v1.55**（版本行 + 变更日志行）；
 `sorry_closure_roadmap.md` 追加 §四十八。
+
+## 四十九、BerryChern §2.49：平凡相 Stokes 论证的无条件闭合（`2 < m`）
+
+**背景**：§2.48 交付了 QWZ 平凡相零陈数的**条件** Stokes 闭合
+`physicalChernNumber_qwz_eq_zero_of_stokes`。本节把该条件定理的解析前提**全部无条件化**：
+从立体角原函数 `αᵢ = (n₀∂ᵢn₁ − n₁∂ᵢn₀)/(1+n₂)` 构造**全局标架** `Aᵢ = −½·αᵢ` 并验证其
+`2π`-周期性/可微性/可积性，给出 `2 < m` 时 `C = 0` 的**无条件**证明。
+
+**交付**（`BerryChern.lean` §2.49，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **闭式与正则性**：`qwzC`/`qwzV`/`qwzAlpha0`/`qwzAlpha1` 联络闭式 + `qwzC_pos`/`qwzV_pos`
+   （`2 < m` ⟹ `c > 0`、`V > 0`，全 BZ 无奇点）。
+2. **可微性链**：`qwzSqrt_hasDerivAt0/1` → `qwzV_hasDerivAt0/1` → `qwzAlpha1_hasDerivAt0`/
+   `qwzAlpha0_hasDerivAt1`（乘积/商法则提升）。
+3. **核心旋度恒等式**：`qwzAlpha_curl`（`∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`，
+   经 `qwz_curl_poly` 多项式恒等式 + `field_simp` + `linear_combination`）。
+4. **连续性与周期性**：`qwzSqrt_cont` … `qwzAlpha0d1_cont`（10 条联合连续）+
+   `qwzA1_periodic0`/`qwzA0_periodic1`（`2π`-周期性）。
+5. **核心恒等式**：`qwzCurvature_eq_derivA`（`F = deriv A₁ − deriv A₀`）+ 可积性
+   （`qwzA1_deriv_intervalIntegrable` 系列）。
+6. **无条件定理**：`physicalChernNumber_qwz_eq_zero`（**`2 < m` ⟹ `C = 0`**）。
+
+**诚实边界（随登）**：本节构造依赖 `n_z > 0`（`2 < m`），对 `m < −2`（`n_z < 0`，`k = 0` 处
+`1 + n_z = 0` Dirac 弦）直接失效，登记为 §2.50；`|m| < 2` 非平凡相与 `m = ±2` 仍开放。
+
+## 五十、BerryChern §2.50：平凡相另一分支 `m < −2` 的反射归约（整个 `|m| > 2` 无条件零陈数）
+
+**背景**：§2.49 的构造对 `m < −2` 失效（Dirac 弦奇点）。本节用**反射归约**绕过奇点，
+把 `m < −2` 归约到已闭合的 `−m > 2` 分支。
+
+**交付**（`BerryChern.lean` §2.50，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **反射恒等式**：`qwzDr_reflect`（`d(−m)(k+π) = −d(m)(k)`）+ `qwzSqrt_reflect`/
+   `qwzS_reflect`（归一化因子不变）。
+2. **曲率反射**：`qwzCurvature_reflect`（`F(m)(k) = −F(−m)(k+π)`）+ 周期性
+   `qwzS_periodic0/1`、`qwzCurvature_periodic0/1`。
+3. **BZ 平移不变性**：`bzIntegral_shift`（`2π`-周期被积的双重积分平移不变）。
+4. **反号归约**：`bzIntegral_qwzCurvature_reflect`（`∫∫F(m) = −∫∫F(−m)`）。
+5. **无条件定理**：`physicalChernNumber_qwz_eq_zero_of_neg`（**`m < −2` ⟹ `C = 0`**）+
+   合并 `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`（**`|m| > 2` ⟹ `C = 0`**）。
+
+**诚实边界（随登）**：`|m| > 2` 整个平凡相至此**无条件**闭合。反射归约**不覆盖** `|m| < 2`
+（`n` 同时取到 `n_z = ±1`，两侧半球立体角原函数均不全局正则）；`|m| < 2` 非零陈数
+与 `m = ±2` 仍开放（后者为能隙闭合）。
+
+## 五十一、BerryChern §2.51：非平凡相探针——`σ` 恒等式、`s` 正性与 `V` 的零点刻画（`0 < m < 2`）
+
+**背景**：§2.48/§2.49/§2.50 已闭合 QWZ 平凡相 `|m| > 2` 的无条件零陈数
+（`physicalChernNumber_qwz_eq_zero_of_abs_gt_two`）。§2.51 开启非平凡相 `0 < m < 2`
+的基础代数层，为 §2.52 归约、§2.53 跳跃引理与 §2.54 陈数组装备料。
+
+**交付**（`BerryChern.lean` §2.51，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **σ 恒等式**：`qwzSigma`（`cos k₀ cos k₁` 重写为 `σ` 形式）。
+2. **正性**：`qwz_s_pos`（`s > 0`）。
+3. **零点刻画**：`qwzV_zero_iff`/`qwzV_zero_cos_eq_neg_one`/`qwzV_zero_of_pi`
+   （`V = s² − sin²k₀` 的零点 ⟺ `cos k₀ = cos k₁ = −1`）。
+4. **D 因子化**：`qwzD_mul`。
+
+**诚实边界（随登）**：本节仅建立非平凡相的基础代数（`σ`、`s > 0`、`V` 的零点刻画）。
+非平凡相的归约（§2.52）、跳跃引理（§2.53）与陈数组装（§2.54）在其上展开；
+`m = ±2`（能隙闭合）不在覆盖范围。
+
+## 五十二、BerryChern §2.52：非平凡相归约（`0 < m < 2`）
+
+**背景**：§2.51 的代数层之上，§2.52 把曲率线积分归约为 `½∫P`，为跳跃引理（§2.53）提供
+被积函数 `P` 与辅助函数 `L`。
+
+**交付**（`BerryChern.lean` §2.52，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **归约定理**：`qwz_curvature_lineIntegral_eq` / `qwz_curvature_integral_reduce`
+   （曲率线积分化为 `½∫P`，`P = 2·Re L`、`L = ∫∂₁α₀`）。
+
+**诚实边界（随登）**：本节归约适用于 `0 < m < 2` 且 `k₁ ≠ π`（`V ≠ 0`）；`k₁ = π` 处
+`V` 在 `k₀ = π` 消失（`cos k₀ = cos k₁ = −1`），`α₀` 有奇点，§2.52 的归约失效，
+需由 §2.53 的跳跃引理单独处理。
+
+## 五十三、BerryChern §2.53：跳跃引理——`G` 在 `k₁ = π` 两侧的单侧极限
+
+**背景**：§2.52 的归约在 `k₁ = π` 失效（`V` 在 `k₀ = π` 消失）。§2.53 证明 `G(k₁)` 在
+`k₁ = π` 两侧的单侧极限存在且为 `∓2π`，为 §2.54 的跳跃 FTC 提供端点值。
+
+**交付**（`BerryChern.lean` §2.53，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **模型极限**：`qwz_model_tendsto`（`sin d·(2·arctan(π/d)/d) → π`，`d → 0⁺`）。
+2. **积分接近**：`qwz_integral_D_close`（`|1/D − 1/K|` 全局界 `C(m)`）+
+   `qwz_B_bdd`（有界误差项）。
+3. **合成极限**：`qwz_sin_mul_H_tendsto`（`sin d·H(d) → 2π`）。
+4. **右极限**：`qwz_jump_right`（`G(π+d) → −2π`）。
+5. **对称性**：`qwzV_neg1`（`V` 偶）+ `qwzAlpha0_two_pi_sub`（`α₀` 反对称）⟹
+   `qwzG_pi_sub`（`G(π−d) = −G(π+d)`）。
+6. **左极限**：`qwz_jump_left`（`G(π−d) → +2π`）。
+
+**诚实边界（随登）**：本节证明的是 `G` 在 `k₁ = π` 两侧的**单侧极限存在且为 `∓2π`**
+（`d → 0⁺`）。这为 §2.54 的跳跃 FTC 提供端点值。非平凡相陈数本身的组装在 §2.54。
+
+## 五十四、BerryChern §2.54：非平凡相陈数 `C = 1` 与反射 `C = sgn m`（`|m| < 2`）
+
+**背景**：§2.52 的归约与 §2.53 的单侧跳跃极限组装为非平凡相的第一陈数。
+
+**交付**（`BerryChern.lean` §2.54，零 sorry、全库 build 通过、BerryChern 零 warning）：
+
+1. **可积性与零测集**：`qwzP_ae_eq`/`qwzP_intervalIntegrable`（`P =ᵐ 2·Re L`，可积性由
+   `qwzCurvature_line_continuous`（连续参数积分）+ `ae_cos_ne_neg_one`（`{k₁ | cos k₁ = −1}`
+   可数故零测）支撑）。
+2. **Fubini 交换**：`intervalIntegral_intervalIntegral_swap`。
+3. **跳跃 FTC**：`qwzG_tendsto_*`（四条）⟹ `∫₀^π P = 2π`、`∫_π^{2π} P = 2π`。
+4. **陈数组装**：`bzIntegral = 2π` ⟹ `physicalChernNumber_qwz_eq_one`（`0 < m < 2` ⟹ **`C = 1`**）。
+5. **反射归约**：`qwzCurvature_reflect`/`bzIntegral_qwzCurvature_reflect`
+   （`F(m)(k) = −F(−m)(k+π)` ⟹ `C(−m) = −C(m)`）⟹ `physicalChernNumber_qwz_eq_neg_one`
+   （`−2 < m < 0` ⟹ **`C = −1`**）。
+6. **合并**：`physicalChernNumber_qwz_eq_sign`（`|m| < 2`、`m ≠ 0` ⟹ **`C = sgn m`**）。
+
+**诚实边界（随登）**：`m = ±2`（能隙闭合）不在覆盖范围；`m = 0` 处陈数未定义（Dirac 点，
+已登记）。结合 §2.49/§2.50 的平凡相 `|m| > 2` 零陈数，QWZ 模型完整相图
+（`C = 0` / `C = sgn m`）已在 `BerryChern.lean` 形式化闭合。
+
+**同步**：BerryChern §3 开放登记 #1 追加 §2.51–§2.54；paper14 升 **v1.56**（版本行 +
+变更日志行）；`sorry_closure_roadmap.md` 追加 §五十一–§五十四。

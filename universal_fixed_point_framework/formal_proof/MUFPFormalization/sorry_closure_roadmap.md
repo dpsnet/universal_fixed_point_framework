@@ -2,7 +2,7 @@
 
 **文档编号**：MUFPF-SORRY-ROADMAP-001
 **日期**：2026-09-11
-**版本**：v1.0
+**版本**：v1.1（2026-09-30：记至 §五十四 / BerryChern §2.54——QWZ 完整相图闭合；全库 sorry 保持归零，显式 axiom 登记 4 项；文档编号与日期保持初版）
 **配套**：ENV_GUIDE.md v1.2 §9（统计口径）、§12（API 修复模式）
 
 ---
@@ -2597,3 +2597,331 @@ variable {F : Type*} [AddCommGroup F] [Module 𝕜 F] [TopologicalSpace F]
 - [x] 新增 34 声明：10 定义（`solidAnglePrim`/`solidAnglePrimD0`/`solidAnglePrimD1`/
   `berryCurvatureScalar`/`qwzSqrt`/`qwzNr`/`qwzAnr`/`qwzBnr`/`qwzNz`/`qwzCurvature`）
   + 24 定理（`dot3r_comm`…`physicalChernNumber_qwz_eq_zero_of_stokes`）
+
+---
+
+## 四十九、BerryChern §2.49：平凡相 Stokes 论证的无条件闭合（`2 < m`）
+
+承接 §四十八（§2.48）的诚实边界：§2.48 交付了 QWZ 平凡相零陈数的**条件** Stokes 闭合
+`physicalChernNumber_qwz_eq_zero_of_stokes`。本节把该条件定理的解析前提**全部无条件化**：
+从立体角原函数 `αᵢ = (n₀∂ᵢn₁ − n₁∂ᵢn₀)/(1+n₂)` 出发构造**全局标架** `Aᵢ = −½·αᵢ`，
+并在 BZ 上验证其正则性、`2π`-周期性、可微性与导数可积性，从而给出 `2 < m` 时
+`physicalChernNumber (qwzCurvature m) = 0` 的**无条件**证明。
+
+### 49.1 证明路线
+
+1. **立体角原函数与全局标架的闭式**：以 `c = m + cos k₀ + cos k₁`、`s = |d|`、`V = s(s+c)`
+   表出 `α₀ = −sin k₁ cos k₀ / V`、`α₁ = sin k₀ cos k₁ / V`
+   （`qwzC`/`qwzV`/`qwzAlpha0`/`qwzAlpha1`），联络取 `Aᵢ = −½·αᵢ`（`qwzA0`/`qwzA1`）。
+2. **正则性**：`2 < m ⟹ c > 0`（`qwzC_pos`）与 `V > 0`（`qwzV_pos`）——闭式在整个 BZ 上无奇点
+   （`n_z > 0` 故 `1 + n_z ≠ 0`，无 Dirac 弦）。
+3. **归一化因子与分母的导数**：`∂₀s = −sin k₀(m + cos k₁)/s`、`∂₁s = −sin k₁(m + cos k₀)/s`
+   （`qwzSqrt_hasDerivAt0`/`qwzSqrt_hasDerivAt1`），经乘积/商法则提升到 `V`、`αᵢ`
+   （`qwzV_hasDerivAt0`/`qwzV_hasDerivAt1`、`qwzAlpha1_hasDerivAt0`/`qwzAlpha0_hasDerivAt1`）。
+4. **核心旋度恒等式** `qwzAlpha_curl`：`∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`
+   ——立体角原函数层 `dα = ω` 的 QWZ 显式形式，经一般多项式恒等式 `qwz_curl_poly` 收口
+   （`field_simp` + `linear_combination` 一次性消去 `hs2`/`hp`/`hr` 三个三角约束）。
+5. **联合连续性**：`qwzSqrt_cont` … `qwzAlpha0d1_cont`（`ℝ²` 上联合连续，`fun_prop` + `Continuous.div`）。
+6. **`2π`-周期性**：由 `sin/cos` 的 `2π`-周期性沿 `qwzDr` 逐层下传至 `Aᵢ`
+   （`qwzA1_periodic0`/`qwzA0_periodic1`）。
+7. **全局标架的可微性**：`Aᵢ` 关于自身方向可微，且 `deriv A₁ = −½·α₁^{∂₀}`、
+   `deriv A₀ = −½·α₀^{∂₁}`（`qwzA1_hasDerivAt0`/`qwzA0_hasDerivAt1` 与
+   `qwzA1_deriv_eq`/`qwzA0_deriv_eq`）。
+8. **核心恒等式** `qwzCurvature_eq_derivA`：`qwzCurvature = deriv A₁ − deriv A₀`（§2.48 的 `hF`）。
+9. **导数可积性与 Fubini 交换前提**：由联合连续性经 `Continuous.intervalIntegrable` 与紧集可积性
+   （`integrableOn_compact`）得到（`qwzA1_deriv_intervalIntegrable` 系列与 `qwzA1_deriv_integrableOn`）。
+10. **无条件定理** `physicalChernNumber_qwz_eq_zero`：`2 < m ⟹ C = 0`。
+
+### 49.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzC_pos` / `qwzV_pos` / `qwzV_ne_zero` | 正则性 `2<m ⟹ c>0`、`V>0`、`V≠0` | 余弦界 + `mul_pos` |
+| `qwzSqrt_sq_trig` | `s² = sin²k₀ + sin²k₁ + (m+cos k₀+cos k₁)²` | `Real.sq_sqrt` + `qwzDr_sq` |
+| `qwzDot_hasDerivAt0` / `qwzDot_hasDerivAt1` | `d·d` 的方向导数 | `HasDerivAt.mul` + `ring` |
+| `qwzSqrt_hasDerivAt0` / `qwzSqrt_hasDerivAt1` | `∂ᵢs = −sin kᵢ(m+cos k_{1−i})/s` | `HasDerivAt.sqrt` |
+| `qwzV_hasDerivAt0` / `qwzV_hasDerivAt1` | `∂ᵢV`（乘积法则） | `HasDerivAt.mul` |
+| `qwzAlpha1_hasDerivAt0` / `qwzAlpha0_hasDerivAt1` | `∂₀α₁` / `∂₁α₀`（商法则） | `HasDerivAt.div` |
+| `qwz_curl_poly` | 一般多项式旋度恒等式 | `linear_combination` |
+| `qwzAlpha_curl` | **核心旋度恒等式** `∂₀α₁−∂₁α₀ = (cos k₀+cos k₁+m·cos k₀cos k₁)/s³` | `field_simp` + `linear_combination` |
+| `qwzSqrt_cont` … `qwzAlpha0d1_cont`（10 条） | 闭式的联合连续性 | `fun_prop` / `Continuous.div` |
+| `qwzA1_periodic0` / `qwzA0_periodic1` | **`2π`-周期性** | 逐层下传 |
+| `qwzA1_hasDerivAt0` / `qwzA0_hasDerivAt1` | 全局标架可微性 | `HasDerivAt.ofReal_comp` |
+| `qwzA1_deriv_eq` / `qwzA0_deriv_eq` | `deriv Aᵢ` 闭式 | `HasDerivAt.deriv` |
+| `qwzCurvature_eq_derivA` | **核心恒等式** `F = deriv A₁ − deriv A₀` | `qwzAlpha_curl` + `qwzCurvature_eq` |
+| `qwzA1_deriv_intervalIntegrable` 系列 / `qwzA1_deriv_integrableOn` | 导数可积性与 Fubini 前提 | `Continuous.intervalIntegrable` + `integrableOn_compact` |
+| `physicalChernNumber_qwz_eq_zero` | **无条件零陈数** `2<m ⟹ C=0` | §2.48 `…_of_stokes` + 上述前提 |
+
+### 49.3 诚实边界
+
+本节把 §2.48 条件定理的解析前提在 `2 < m`（严格平凡相）下**全部无条件满足**，故 `2 < m` 时
+零陈数已**无条件**闭合。**仍开放**：`m < −2` 分支（`n_z < 0`，`k = 0` 处 `1 + n_z = 0`，
+立体角原函数出现 Dirac 弦奇点——本节构造直接失效，登记为 §2.50）；`|m| < 2`（非平凡相）的
+非零陈数 `C = sgn m`（椭圆积分 / `T²→S²` 度理论）；`m = ±2`（能隙闭合）。
+
+### 49.4 本轮验证
+
+- [x] `lake build MUFPFormalization.BerryChern` 编译通过（零 error、零 warning）
+- [x] 全库 `lake build` 通过（6376 jobs），本模块无新增 warning
+- [x] 全库零 `sorry`/`admit`（仅注释中出现 "sorry" 字样）
+- [x] 新增 64 声明：12 定义（`qwzC`/`qwzV`/`qwzDs0`/`qwzDs1`/`qwzVd0`/`qwzVd1`/`qwzAlpha0`/
+  `qwzAlpha1`/`qwzAlpha1d0`/`qwzAlpha0d1`/`qwzA0`/`qwzA1`）+ 52 定理
+  （`qwzC_pos`…`physicalChernNumber_qwz_eq_zero`）
+
+---
+
+## 五十、BerryChern §2.50：平凡相另一分支 `m < −2` 的反射归约（整个 `|m| > 2` 的无条件零陈数）
+
+承接 §四十九（§2.49）的诚实边界：§2.49 的无条件证明依赖 `n_z > 0`（`qwzNz_pos`），故只覆盖
+`2 < m`。对 `m < −2` 有 `n_z < 0`，且 `k = 0` 处 `n = (0, 0, −1)`（`1 + n_z = 0`），
+立体角原函数出现 Dirac 弦奇点，§2.49 的构造直接失效。本节改用**反射归约**绕过奇点，
+把 `m < −2` 归约到已闭合的 `−m > 2` 分支。
+
+### 50.1 证明路线
+
+1. **反射恒等式**：`d(−m)(k + π) = (sin(k₀+π), sin(k₁+π), −m + cos(k₀+π) + cos(k₁+π)) = −d(m)(k)`
+   （`qwzDr_reflect`）；归一化因子不变 `|d(−m)(k+π)| = |d(m)(k)|`
+   （`qwzSqrt_reflect`/`qwzS_reflect`）。
+2. **曲率反射** `qwzCurvature_reflect`：`F(m)(k) = −F(−m)(k + π)`——曲率在 `n ↦ −n` 下反号，
+   而 `n(−m)(k+π) = −n(m)(k)`。
+3. **周期性**：`qwzS_periodic0`/`qwzS_periodic1`、`qwzCurvature_periodic0`/`qwzCurvature_periodic1`
+   ——由 §2.49 的 `qwzSqrt_periodic0`/`qwzSqrt_periodic1` 下传。
+4. **BZ 双重积分的平移不变性** `bzIntegral_shift`：对两个变量均 `2π`-周期的被积函数，同时平移
+   `π` 不改变 `bzIntegral`（`intervalIntegral.integral_comp_add_right` 把平移吸收进积分限，
+   `Function.Periodic.intervalIntegral_add_eq` 再把积分区间搬回 `[0, 2π]`，逐层应用于内外两层积分）。
+5. **反号归约** `bzIntegral_qwzCurvature_reflect`：`∫∫F(m) = −∫∫F(−m)`。
+6. **无条件定理** `physicalChernNumber_qwz_eq_zero_of_neg`：`m < −2 ⟹ C = 0`。
+7. **合并** `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`：`|m| > 2 ⟹ C = 0`（按 `0 ≤ m` 分支）。
+
+### 50.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzS_eq_sqrt` | `qwzS = ↑qwzSqrt` | `rfl` |
+| `qwzDr_reflect` | **`d` 的反射** `d(−m)(k+π) = −d(m)(k)` | `fin_cases` + `sin_add_pi`/`cos_add_pi` |
+| `qwzSqrt_reflect` / `qwzS_reflect` | 归一化因子的反射不变性 | `qwzDr_sq` + `congr 1` |
+| `qwzS_periodic0` / `qwzS_periodic1` | `qwzS` 的 `2π`-周期性 | §2.49 `qwzSqrt_periodic*` |
+| `qwzCurvature_periodic0` / `qwzCurvature_periodic1` | 曲率的 `2π`-周期性 | `qwzCurvature_eq` + `cos_add_two_pi` |
+| `qwzCurvature_reflect` | **曲率反射** `F(m)(k) = −F(−m)(k+π)` | `qwzCurvature_eq` + `cos_add_pi` + `ring` |
+| `bzIntegral_shift` | **BZ 双重积分平移不变性**（`2π`-周期被积函数） | `integral_comp_add_right` + `Periodic.intervalIntegral_add_eq` |
+| `bzIntegral_qwzCurvature_reflect` | `∫∫F(m) = −∫∫F(−m)` | `qwzCurvature_reflect` + `bzIntegral_neg` + `bzIntegral_shift` |
+| `physicalChernNumber_qwz_eq_zero_of_neg` | **`m < −2` 无条件零陈数** | 反射归约到 `−m > 2` |
+| `physicalChernNumber_qwz_eq_zero_of_abs_gt_two` | **整个平凡相无条件零陈数** `\|m\|>2 ⟹ C=0` | 按 `0 ≤ m` 合并两分支 |
+
+### 50.3 诚实边界
+
+`|m| > 2`（**整个平凡相**）的零陈数至此**无条件**闭合：`2 < m` 走 §2.49 的立体角原函数层，
+`m < −2` 经本节反射归约。**仍开放**：`|m| < 2`（非平凡相）的非零陈数 `C = sgn m`
+（椭圆积分 / `T²→S²` 度理论）；`m = ±2`（能隙闭合）。反射归约**不覆盖** `|m| < 2`：该区间
+`n` 同时取到 `n_z = +1`（`k = (0,0)`）与 `n_z = −1`（`k = (π,π)`），故两侧半球的立体角原函数
+均不全局正则；且 `T² → S²` 的度为 `±1`，陈数非零。
+
+### 50.4 本轮验证
+
+- [x] `lake build MUFPFormalization.BerryChern` 编译通过（零 error、零 warning）
+- [x] 全库 `lake build` 通过（6376 jobs），本模块无新增 warning
+- [x] 全库零 `sorry`/`admit`（仅注释中出现 "sorry" 字样）
+- [x] 新增 13 定理：`qwzS_eq_sqrt` … `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`
+
+---
+
+## 五十一、BerryChern §2.51：非平凡相探针——`σ` 恒等式、`s` 正性与 `V` 的零点刻画（`0 < m < 2`）
+
+承接 §五十的诚实边界：`|m| > 2`（平凡相）的零陈数已无条件闭合，**仍开放** `|m| < 2`（非平凡相）
+的非零陈数 `C = sgn m`。§2.51 开启非平凡相 `0 < m < 2` 的基础代数层。
+
+### 51.1 证明路线
+
+1. **径向量 `σ`**：定义 `σ = sin²k₀ + sin²k₁`（`qwzSigma`），并证其与归一化因子的恒等式
+   `σ = s² − c²`（`qwzSigma_eq`，`s = √(d·d)`、`c = m + cos k₀ + cos k₁`）。
+2. **`s` 的正性**（`qwzSqrt_pos_of_mem`）：`0 < m < 2` 时 `d·d > 0`，经 `Real.sqrt_pos` 得 `s > 0`
+   （关键：`d·d = (1−cos²k₀) + (1−cos²k₁) + (m+cos k₀+cos k₁)²`，三项非负且不同时为零）。
+3. **`V` 的分解**（`qwzV_eq_sigma`）：`V = s(s+c) = σ/2 + σ²/(2(s−c)²)`。
+4. **`V` 的零点刻画**（`qwzV_eq_zero_iff`）：`V = 0 ⟺ cos k₀ = −1 ∧ cos k₁ = −1`；
+   推论 `qwzV_ne_zero_of_cos_ne`：`cos k₁ ≠ −1 ⟹ V ≠ 0`（沿固定 `k₁` 线无奇点）。
+
+### 51.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzSigma` | **定义** `σ = sin²k₀ + sin²k₁` | `noncomputable def` |
+| `qwzSigma_eq` | `σ = s² − c²` | `qwzSqrt_sq_trig` + `ring` |
+| `qwzSqrt_pos_of_mem` | **`0<m<2 ⟹ s>0`** | `Real.sqrt_pos` + 余弦界 + 反证 |
+| `qwzV_eq_sigma` | `V = σ/2 + σ²/(2(s−c)²)` | `qwzSigma_eq` + `field_simp` + `ring` |
+| `qwzV_eq_zero_iff` | **`V=0 ⟺ cos k₀=−1 ∧ cos k₁=−1`** | 正向 `σ=0`→`sin=0`→`sq_eq_one_iff`；反向直接代入 |
+| `qwzV_ne_zero_of_cos_ne` | `cos k₁ ≠ −1 ⟹ V ≠ 0` | `qwzV_eq_zero_iff` |
+
+### 51.3 诚实边界
+
+本节仅建立非平凡相的基础代数（`σ`、`s > 0`、`V` 的零点刻画）。非平凡相的归约（§2.52）、
+跳跃引理（§2.53）与陈数组装（§2.54）在其上展开；`m = ±2`（能隙闭合）不在覆盖范围。
+
+### 51.4 本轮验证
+
+- [x] 全库 `lake build` 通过（6376 jobs），BerryChern 零 error、零 warning、零 `sorry`
+- [x] 新增 6 声明：1 定义（`qwzSigma`）+ 5 定理（`qwzSigma_eq` … `qwzV_ne_zero_of_cos_ne`）
+
+---
+
+## 五十二、BerryChern §2.52：非平凡相归约（`0 < m < 2`）
+
+对固定的 `k₁` 满足 `cos k₁ ≠ −1`，`V(·, k₁)` 在 `[0, 2π]` 上无零点，故立体角原函数
+`α₀, α₁` 沿该线光滑。本节把 BZ 双重积分沿 `k₀` 方向归约为单重积分 `½∫∂₁α₀ dk₀`。
+
+### 52.1 证明路线
+
+1. **逐点旋度恒等式**（`qwzCurvature_eq_curl_of_V_ne_zero`）：`V ≠ 0` 时
+   `F = −½·(∂₀α₁ − ∂₁α₀)`，其中旋度闭式
+   `∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`（`qwzAlpha_curl_of_V_ne_zero`）。
+2. **非平凡相的导数**：`s`、`V`、`αᵢ` 的方向导数（`qwzSqrt_hasDerivAt0_of_mem` 等，
+   `_of_mem` 版本在 `0 < m < 2` 下 `s > 0` 无除零）。
+3. **固定 `k₁` 的连续性**（`qwzCurvature_continuous_right` 等）：`cos k₁ ≠ −1` 时沿 `k₀`
+   连续，导出区间可积性（`qwzCurvature_intervalIntegrable_right` 等）。
+4. **FTC + 周期性**：`∫₀^{2π} ∂₀α₁ dk₀ = 0`（`α₁` 关于 `k₀` 的 `2π`-周期性）。
+5. **核心归约**（`qwz_curvature_lineIntegral_eq`）：`∫₀^{2π} F dk₀ = ½·∫₀^{2π} ∂₁α₀ dk₀`。
+
+### 52.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzDot_sq_pos_of_mem` | `0<m<2 ⟹ d·d>0` | 余弦界 |
+| `qwzSqrt_hasDerivAt0_of_mem` / `…1_of_mem` | `∂ᵢs = −sin kᵢ(m+cos k_{1−i})/s` | `HasDerivAt.sqrt` |
+| `qwzV_hasDerivAt0_of_mem` / `…1_of_mem` | `∂ᵢV` | `HasDerivAt.mul` |
+| `qwzAlpha1_hasDerivAt0_of_V_ne_zero` / `qwzAlpha0_hasDerivAt1_of_V_ne_zero` | `∂₀α₁` / `∂₁α₀` | `HasDerivAt.div` |
+| `qwzAlpha_curl_of_V_ne_zero` | **旋度恒等式**（`V≠0` 版） | `field_simp` + `linear_combination` |
+| `qwzCurvature_eq_curl_of_V_ne_zero` | **逐点** `F = −½(∂₀α₁−∂₁α₀)` | 上式 + `qwzCurvature_eq` |
+| `qwzSqrt_continuous_right` … `qwzCurvature_continuous_right`（9 条） | 固定 `k₁` 的连续性 | `fun_prop` / `Continuous.div` |
+| `qwzAlpha1d0_intervalIntegrable_right` 等（3 条） | 区间可积性 | `Continuous.intervalIntegrable` |
+| `qwz_curvature_lineIntegral_eq` | **核心归约** `∫₀^{2π}F dk₀ = ½∫₀^{2π}∂₁α₀ dk₀` | 逐点恒等式 + `∫∂₀α₁=0` |
+
+### 52.3 诚实边界
+
+本节只做**沿 `k₀` 方向的归约**（固定 `k₁`）。对 `k₁ = π`（`cos k₁ = −1`，`V` 的奇点所在线）
+归约不适用，需由 §2.53 的跳跃引理单独处理。
+
+### 52.4 本轮验证
+
+- [x] 全库 `lake build` 通过（6376 jobs），BerryChern 零 error、零 warning、零 `sorry`
+- [x] 新增 23 定理：`qwzDot_sq_pos_of_mem` … `qwz_curvature_lineIntegral_eq`
+
+---
+
+## 五十三、BerryChern §2.53：跳跃引理——`G` 在 `k₁ = π` 两侧的单侧极限
+
+`k₁ = π` 处 `V` 在 `k₀ = π` 消失（`cos k₀ = cos k₁ = −1`），`α₀` 有奇点，§2.52 的归约失效。
+本节用**移位坐标** `k₀ = p + π, k₁ = d + π`（奇点移至原点）与**分母分解** `1/V = 2/σ − 2/D`
+证明跳跃引理：`G(k₁) = ∫₀^{2π} α₀ dk₀` 在 `k₁ = π` 两侧有确定的单侧极限。
+
+### 53.1 证明路线
+
+1. **移位代数**：`c(p+π,d+π) = m − cos p − cos d`、`σ(p+π,d+π) = sin²p + sin²d`、
+   `α₀(p+π,d+π) = −sin d·cos p/V`（`qwzC_shift`/`qwzSigma_shift`/`qwzAlpha0_shift`）。
+2. **分解引理**（`qwz_one_div_V_eq`）：`1/V = 2/σ − 2/D`，其中 `D = (s−c)² + σ`
+   （`qwzD`），`d ∈ (0,π)` 时恒成立。
+3. **`I₁ = 0`**（`qwz_I1_eq_zero`）：`∫_{−π}^{π} 2cos p/σ dp = 0`（arctan 原函数端点同值）。
+4. **`G` 的移位与 `H` 分解**（`qwzG_shift`/`qwzH_eq`）：`G(d+π) = −sin d·H(d)`，
+   `H(d) = 2∫dp/D − B(d)`，`B(d) = ∫2(1+cos p)/D dp`。
+5. **全局界**（`qwz_kernel_compare_bdd`）：存在 `C(m) > 0` 使 `|1/D − 1/K| ≤ C`
+   （`K = (π−|p|)² + |d|²`）；经紧性正性（`qwzD_shift_lower_on_half`）与
+   `sq_sub_sin_sq_le`/`qwz_sub_sq_le` 的初等界。
+6. **核积分精确值**（`qwz_kernel_integral`）：`∫_{−π}^{π} dp/((π−|p|)²+|d|²) = (2/|d|)arctan(π/|d|)`。
+7. **模型极限**（`qwz_model_tendsto`）：`sin d·(2·arctan(π/d)/d) → π`（`d → 0⁺`）；
+   配合 `qwz_integral_D_close`（积分接近）与 `qwz_B_bdd`（`B` 一致有界）得
+   `qwz_sin_mul_H_tendsto`：`sin d·H(d) → 2π`，即**右侧跳跃** `qwz_jump_right`：`G(d+π) → −2π`。
+8. **对称性**：`V` 关于 `k₁` 偶（`qwzV_neg1`）、`α₀(k₀,2π−k₁) = −α₀(k₀,k₁)`
+   （`qwzAlpha0_two_pi_sub`），故 `G(π−d) = −G(d+π)`（`qwzG_pi_sub`）；
+   取极限得**左侧跳跃** `qwz_jump_left`：`G(π−d) → +2π`。
+
+### 53.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzC_shift` / `qwzSigma_shift` / `qwzSqrt_shift_sq` / `qwzAlpha0_shift` | 移位代数 | `sin_add_pi`/`cos_add_pi` + `ring` |
+| `qwzD` | **定义** `D = (s−c)² + σ` | `noncomputable def` |
+| `qwzV_eq_sigma_mul` / `qwz_one_div_V_eq` | **分解引理** `1/V = 2/σ − 2/D` | `field_simp` + `ring` |
+| `qwzSigma_shift_pos` / `qwzD_shift_pos` | 移位正性 | `sin_pos_of_pos_of_lt_pi` + `nlinarith` |
+| `qwzSqrt_shift_continuous` 等（5 条） | 移位连续性 | `fun_prop` |
+| `qwzSqrt_shift_ne_C_shift` | `s(p+π,d+π) ≠ c(p+π,d+π)` | 正性 |
+| `qwz_I1_eq_zero` | **`∫2cos p/σ dp = 0`** | arctan 原函数 |
+| `qwzG` | **定义** `G(k₁) = ∫₀^{2π} α₀ dk₀` | `noncomputable def` |
+| `qwzG_shift` / `qwzH_eq` | `G(d+π) = −sin d·H(d)`、`H = 2∫1/D − B` | `qwz_one_div_V_eq` + `qwz_I1_eq_zero` |
+| `sq_sub_sin_sq_le` / `sin_sq_eq_sin_sq_pi_sub_abs` / `qwz_sub_sq_le` | 初等三角界 | 幂级数/导数界 |
+| `qwzD_shift_pos_of` / `qwzD_shift_lower_on_half` | **紧性正性/下界 `κ(m)`** | 紧集连续 + 极值 |
+| `qwz_kernel_compare_le` / `qwz_kernel_compare_bdd` | **全局界 `|1/D−1/K| ≤ C(m)`** | 分部估计 |
+| `qwz_kernel_integral` | **核积分精确值** `(2/|d|)arctan(π/|d|)` | arctan 原函数 |
+| `qwz_integral_D_close` / `two_mul_one_add_cos_le_sq` / `qwz_B_bdd` | 积分接近 + `B` 一致有界 | 全局界 |
+| `tendsto_mul_bdd_of_tendsto_zero` / `qwz_model_tendsto` | 模型极限 `sin d·(2arctan(π/d)/d) → π` | `arctan` 渐近 |
+| `qwz_sin_mul_H_tendsto` | `sin d·H(d) → 2π` | 组合 |
+| `qwz_jump_right` | **右侧跳跃** `G(d+π) → −2π` | `qwzG_shift` + 上式 |
+| `qwzSqrt_neg1` / `qwzC_neg1` / `qwzV_neg1` / `qwzAlpha0_two_pi_sub` | 对称性 | 偶性 + 反号 |
+| `qwzG_pi_sub` | `G(π−d) = −G(d+π)` | 对称性 + 积分换元 |
+| `qwz_jump_left` | **左侧跳跃** `G(π−d) → +2π` | `qwzG_pi_sub` + `qwz_jump_right` |
+
+### 53.3 诚实边界
+
+本节证明的是 `G` 在 `k₁ = π` 两侧的**单侧极限存在且为 `∓2π`**（`d → 0⁺`）。这为 §2.54 的
+跳跃 FTC 提供端点值。非平凡相陈数本身的组装在 §2.54。
+
+### 53.4 本轮验证
+
+- [x] 全库 `lake build` 通过（6376 jobs），BerryChern 零 error、零 warning、零 `sorry`
+- [x] 新增 39 声明：2 定义（`qwzD`/`qwzG`）+ 37 定理（`qwzC_shift` … `qwz_jump_left`）
+
+---
+
+## 五十四、BerryChern §2.54：非平凡相陈数 `C = 1` 与反射 `C = sgn m`（`|m| < 2`）
+
+本节把 §2.52 的归约与 §2.53 的单侧跳跃极限组装为非平凡相的第一陈数。
+
+### 54.1 证明路线
+
+1. **参数可微性与连续性**：`P(k₁) = ∫₀^{2π} ∂₁α₀ dk₀ = G'(k₁)`（`qwzP`、`qwzG_hasDerivAt`，
+   由 `intervalIntegral.hasDerivAt_integral_of_dominated_loc_of_deriv_le` 控制收敛）；
+   曲率线积分 `L(k₁) = ∫₀^{2π} F dk₀` 连续（`qwzLineF`、`qwzCurvature_line_continuous`，
+   用曲率交换对称 `qwzCurvature_comm` 避开组合超时）。
+2. **例外集零测**：`{cos = −1}` 可数（`ae_cos_ne_neg_one`），故 `qwzP =ᵐ 2·Re L`
+   （`qwzP_ae_eq`，由 §2.52 归约 `qwz_curvature_lineIntegral_eq`），`qwzP` 区间可积
+   （`qwzP_intervalIntegrable`）。
+3. **跳跃 FTC**：`G(0) = G(2π) = 0`（`qwzG_zero`/`qwzG_two_pi`），端点单侧极限
+   `qwzG_tendsto_zero_right`（`0⁺`）、`qwzG_tendsto_two_pi_left`（`π⁻`）、
+   `qwzG_tendsto_neg_two_pi_right`（`π⁺`）、`qwzG_tendsto_zero_left_two_pi`（`2π⁻`），
+   由 `integral_eq_sub_of_hasDerivAt_of_tendsto` 得
+   `∫₀^{π} P = 2π`（`qwzP_integral_zero_pi`）、`∫_π^{2π} P = 2π`（`qwzP_integral_pi_two_pi`），
+   合并 `∫₀^{2π} P = 4π`（`qwzP_integral_two_pi`）。
+4. **陈数组装**（`bzIntegral_qwzCurvature`）：曲率交换对称把 BZ 双重积分化为线积分，
+   再用 §2.52 归约 `L = ½P` 得 `∫∫F = ½·4π = 2π`。
+5. **`C = 1`**（`physicalChernNumber_qwz_eq_one`）：`C = (1/2π)·2π = 1`（`0 < m < 2`）。
+6. **反射归约**（`physicalChernNumber_qwz_eq_neg_one`）：曲率反射 `F(m)(k) = −F(−m)(k+π)`
+   与 BZ 双重积分平移不变性给出 `C(−m) = −C(m)`，故 `−2 < m < 0` 时 `C = −1`。
+7. **合并**（`physicalChernNumber_qwz_eq_sign`）：`|m| < 2`（`m ≠ 0`）时 `C = sgn m`。
+
+### 54.2 交付定理
+
+| 定理 | 内容 | 实现 |
+| --- | --- | --- |
+| `qwzP` / `qwzLineF` | **定义** `P = ∫∂₁α₀`、`L = ∫F` | `noncomputable def` |
+| `qwzG_hasDerivAt` | **`G'(k₁) = P(k₁)`**（`cos k₁ ≠ −1`） | 控制收敛 |
+| `qwzCurvature_continuous_of_mem` / `qwzCurvature_comm` / `qwzCurvature_line_continuous` | 曲率联合连续 + 交换对称 + 线积分连续 | `fun_prop` / `ring_nf` |
+| `qwzG_zero` / `qwzG_periodic1` / `qwzG_two_pi` | `G(0)=0`、`G` 周期、`G(2π)=0` | 定义 + 周期性 |
+| `ae_cos_ne_neg_one` / `cos_ne_neg_one_of_Ioo` | **例外集零测** | 可数集测度零 |
+| `qwzP_ae_eq` / `qwzP_intervalIntegrable` | `P =ᵐ 2Re L`、`P` 可积 | §2.52 归约 |
+| `qwzG_tendsto_*`（4 条） | 端点单侧极限 | §2.53 跳跃引理转写 |
+| `qwzP_integral_zero_pi` / `qwzP_integral_pi_two_pi` / `qwzP_integral_two_pi` | **`∫₀^π P = 2π`、`∫_π^{2π} P = 2π`、`∫₀^{2π} P = 4π`** | 跳跃 FTC + 相邻区间相加 |
+| `bzIntegral_qwzCurvature` | **`∫∫F = 2π`** | 交换对称 + 归约 + `∫P` |
+| `physicalChernNumber_qwz_eq_one` | **非平凡相 `C = 1`**（`0<m<2`） | 定义 + `inv_mul_cancel₀` |
+| `physicalChernNumber_qwz_eq_neg_one` | **`−2<m<0 ⟹ C = −1`** | 反射归约 |
+| `physicalChernNumber_qwz_eq_sign` | **`|m|<2 ⟹ C = sgn m`**（`m≠0`） | 合并两分支 |
+
+### 54.3 诚实边界
+
+非平凡相 `|m| < 2` 的非零陈数至此**无条件**闭合：`0 < m < 2` 得 `C = 1`，`−2 < m < 0`
+经反射得 `C = −1`，合并为 `C = sgn m`（`m ≠ 0`）。结合 §2.49/§2.50 的平凡相 `|m| > 2` 零陈数，
+QWZ 模型在**所有有能隙点** `m ∉ {0, ±2}` 上的陈数无条件闭合：`C = sgn m`（`0 < |m| < 2`）、
+`C = 0`（`|m| > 2`）。**仍开放**：`m ∈ {0, ±2}`（能隙闭合，`d` 在 BZ 上取零）。
+
+### 54.4 本轮验证
+
+- [x] `lake build MUFPFormalization.BerryChern` 编译通过（零 error、零 warning）
+- [x] 全库 `lake build` 通过（6376 jobs），本模块无新增 warning
+- [x] 全库零 `sorry`/`admit`（仅注释中出现 "sorry" 字样）
+- [x] 新增 29 声明：2 定义（`qwzP`/`qwzLineF`）+ 27 定理（`qwzDs1_cont_of_mem` … `physicalChernNumber_qwz_eq_sign`）

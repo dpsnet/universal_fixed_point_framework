@@ -1,0 +1,238 @@
+{
+  "T1": {
+    "n=3": {
+      "samples": 2000,
+      "fail": 0,
+      "max_dev": 0.0,
+      "pass": true
+    },
+    "n=4": {
+      "samples": 2000,
+      "fail": 0,
+      "max_dev": 0.0,
+      "pass": true
+    },
+    "n=5": {
+      "samples": 2000,
+      "fail": 13,
+      "max_dev": 1.0,
+      "pass": false
+    },
+    "n=6": {
+      "samples": 2000,
+      "fail": 0,
+      "max_dev": 0.0,
+      "pass": true
+    }
+  },
+  "T2": {
+    "n=4,eps=0.1": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=4,eps=0.01": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=4,eps=0.001": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=5,eps=0.1": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=5,eps=0.01": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=5,eps=0.001": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=6,eps=0.1": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=6,eps=0.01": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=6,eps=0.001": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=7,eps=0.1": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=7,eps=0.01": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=7,eps=0.001": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=8,eps=0.1": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=8,eps=0.01": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    },
+    "n=8,eps=0.001": {
+      "fail_E1(sg_n,n1=sg([n,n1]))": 0,
+      "fail_E2(sg_n,n1=sg([n,1]))": 0,
+      "worst_E1": 0.0,
+      "worst_E2": 0.0,
+      "pass_E1": true,
+      "pass_E2": true
+    }
+  },
+  "T3": {
+    "note": "已废弃：剥离振幅定义含动量守恒 δ²(Σλ)，一般半共线(无动量守恒)配置下循环性/反射/U1/KK 无定义；正确验证见 B3（动量守恒配置）",
+    "superseded_by": "B3"
+  },
+  "T4": {
+    "n=3": {
+      "samples": 2000,
+      "fail": 0,
+      "pass": true
+    },
+    "n=4": {
+      "samples": 2000,
+      "fail": 0,
+      "pass": true
+    },
+    "n=5": {
+      "samples": 2000,
+      "fail": 0,
+      "pass": true
+    },
+    "n=6": {
+      "samples": 2000,
+      "fail": 0,
+      "pass": true
+    }
+  },
+  "config": "z_i=0 (half-collinear); R1: omega1<0, omega_a>0; momentum: tilde_lambda_n=-sum_{i<n}",
+  "seed": 20260930,
+  "B1_BG_recursion_vs_formula39": {
+    "note": "BG递归(18)-(21)独立实现 vs 通式(39)，R1+动量守恒，800样本/点",
+    "n=3": {
+      "fail": 0,
+      "pass": true
+    },
+    "n=4": {
+      "fail": 0,
+      "pass": true
+    },
+    "n=5": {
+      "fail": 0,
+      "pass": true
+    },
+    "n=6": {
+      "fail": 0,
+      "pass": true
+    },
+    "conclusion": "通式(39)被独立递归实现完全确认（max_dev=0）——论文核心公式成立"
+  },
+  "B2_BG_recursion_vs_explicit": {
+    "note": "BG递归(21) vs 显式公式(29)-(32)，R1+动量守恒，800样本/点；n=5 残余 2/800 失败均为剥离振幅=0 的退化配置（预振幅Θ消失，公式(31)为generic位置公式）",
+    "n=3": {
+      "fail": 0,
+      "pass": true
+    },
+    "n=4": {
+      "fail": 0,
+      "pass": true
+    },
+    "n=5": {
+      "fail": 2,
+      "pass": false,
+      "note": "2例均为A_BG=0的退化配置"
+    },
+    "n=6": {
+      "fail": 0,
+      "pass": true
+    }
+  },
+  "B3_consistency_mom_cons": {
+    "note": "BG递归(21)在动量守恒配置下满足全部一致性（500样本）",
+    "cyclicity(24)": {
+      "fail": 0,
+      "pass": true
+    },
+    "reflection(25)": {
+      "fail": 0,
+      "pass": true
+    },
+    "U1_decoupling(26)": {
+      "fail": 0,
+      "pass": true
+    },
+    "KK(27)": {
+      "fail": 0,
+      "pass": true
+    }
+  },
+  "T1_note": "n=5 残余 13/2000 失败均为退化配置（A_R1=0 而 A5=±1，同 B2 机理）"
+}

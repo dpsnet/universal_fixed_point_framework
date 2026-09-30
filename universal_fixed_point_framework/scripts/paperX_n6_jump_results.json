@@ -1,0 +1,48 @@
+{
+  "S2_n6": {
+    "n_runs": 30,
+    "n_steps": 200,
+    "total_jumps": 61,
+    "jumps_by_region": {
+      "omega1<0 (R1)": 27,
+      "omega1>0": 34
+    }
+  },
+  "S4_n6": {
+    "n_runs": 10,
+    "samples": 410,
+    "lhs_changes_along_path": 91
+  },
+  "S1_n6": {
+    "k_pairs=0": {
+      "samples": 200,
+      "nonzero": 28,
+      "nonzero_rate": 0.14,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    },
+    "k_pairs=1": {
+      "samples": 200,
+      "nonzero": 39,
+      "nonzero_rate": 0.195,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    },
+    "k_pairs=2": {
+      "samples": 200,
+      "nonzero": 38,
+      "nonzero_rate": 0.19,
+      "distinct_values": [
+        -1.0,
+        -0.0,
+        1.0
+      ]
+    }
+  }
+}

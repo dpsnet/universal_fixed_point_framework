@@ -32,6 +32,7 @@ import Mathlib.MeasureTheory.Integral.Prod
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
 import Mathlib.MeasureTheory.Integral.Bochner.Set
@@ -55,6 +56,10 @@ import Mathlib.LinearAlgebra.Prod
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.GroupTheory.FreeAbelianGroup
 import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+import Mathlib.Analysis.Real.Pi.Bounds
+import Mathlib.Data.Real.Sign
 
 namespace MUFPF
 
@@ -4649,7 +4654,10 @@ end KatoRieszIdempotent
      是 `Homotopy` 的**子类型**，构造 `Nonempty` 需 `⟨⟨⟨⟨toFun, cont⟩, m0, m1⟩, prop⟩⟩`，
      其 `prop : ∀ t x hx, toFun (t,x) = f₀ x` 恰由 `h0`/`h1` 供给）。
      而**数值陈数**（二维不变量）本身来自**曲率积分**（Chern–Weil / 线丛过渡函数路线），
-     与度理论正交，需 $F$ 的可积性/光滑性（Kato 层），仍登记开放。
+     与度理论正交，需 $F$ 的可积性/光滑性（Kato 层）——**QWZ 模型的数值陈数已闭合
+     （2026-09-30，§2.51–§2.54）**：`physicalChernNumber_qwz_eq_sign`（`|m| < 2`、`m ≠ 0`
+     ⟹ $C=\mathrm{sgn}\,m$，平凡相 `|m|>2` 的 $C=0$ 已由 §2.49/§2.50 闭合），QWZ 完整相图
+     零 sorry；一般模型的数值陈数仍登记开放。
   5. **规范不变性细节**：用本征矢量表示的 Berry 联络 A = i⟨u|∇u⟩ 在
      u ↦ e^{iθ}·u 下不变，且 F = dA 与投影公式一致（需微分形式恒等式）。
      **→ 代数核心已闭合（2026-09-19，§2.6）**：曲率对酉稳定化 $P\mapsto UPU^\dagger$
@@ -4712,7 +4720,9 @@ end KatoRieszIdempotent
       族 ⟹ $F(k)$ 在 $T^2$ 上可积，即 `chernIntegralTorus F` 的**分析前提**成立）+
       `norm_chernIntegralTorus_le`（先验界 $\|F\|\le C\Rightarrow\|\oiint F\|\le(2\pi)^2C$）。
       **仍登记开放**：完整**数值**陈数（须将 $F$ 具体化为 $P(k)$ 的显式谱数据并在 $T^2$ 上
-      求积分值），以及陈数**整性**（$C\in\mathbb{Z}$ 的度理论/同伦提升论证，§3 #2/#4）。
+      求积分值）——**QWZ 模型已闭合（2026-09-30，§2.51–§2.54）**，见 #1 链尾；陈数**整性**
+      （$C\in\mathbb{Z}$ 的度理论/同伦提升论证，§3 #2/#4）仍登记开放（QWZ 模型给出
+      $C\in\{0,\pm1\}$ 的显式实例，一般论证仍开放）。
       **→ 环面留数定理（Laurent 单项式层）已闭合（2026-09-24，§2.43）**：一维留数分类
       `circleIntegral_zpow_of_ne`/`circleIntegral_zpow_neg_one`（$\oint_{C(0,1)}z^m=2\pi i\,\delta_{m,-1}$）
       + `torusIntegrable_monomial`（$z_0^mz_1^n$ 环面可积）+ `torusIntegral_dim2_monomial_factor`
@@ -4766,7 +4776,8 @@ end KatoRieszIdempotent
       $(2+m^2+2m(\cos k_0+\cos k_1)+2\cos k_0\cos k_1)^{3/2}$ **非 Laurent 且非初等**，
       闭式求值需椭圆型积分或 $T^2\to S^2$ 度理论（数值已确认 $-2<m<0$ 取 $C=-1$、
       $0<m<2$ 取 $C=+1$、$|m|>2$ 取 $C=0$）；③ 具体模型的**数值**陈数（§2.46 已交付
-      可分离模型 $C=0$ 的完整实例；QWZ 型数值陈数仍待形式化）。
+      可分离模型 $C=0$ 的完整实例；QWZ 型数值陈数**已闭合（2026-09-30，§2.51–§2.54）**：
+      `physicalChernNumber_qwz_eq_one`/`_neg_one`/`_sign`，见 #1 链尾）。
       **→ 耦合模型显式曲率层已闭合（2026-09-25，§2.47）**：把 §2.46 的根式分母层
       **实例化**到**耦合**（非可分离、非单位）的 QWZ 型模型——`qwzDr m k₀ k₁ =
       (\sin k_0,\sin k_1,m+\cos k_0+\cos k_1)` + 切向量 `qwzAr`/`qwzBr` +
@@ -4778,8 +4789,11 @@ end KatoRieszIdempotent
       $s=\sqrt{d\cdot d}$，$(d\cdot d)^{-3/2}$ **在耦合模型上显式**）+ 平凡相/临界点结构事实
       `qwzDr_sq_pos_of_abs_gt_two`（$|m|>2\Rightarrow d\cdot d>0$）/
       `qwzDr_zero_pi_zero`/`qwzDr_zero_zero_pi`（$m=0$ 狄拉克点）。
-      **仍登记开放**：QWZ 型**非零**陈数显式值（分母非 Laurent 且非初等，闭式需椭圆型积分
-      或 $T^2\to S^2$ 度理论）。
+      **QWZ 型非零陈数显式值已闭合（2026-09-30，§2.51–§2.54）**——无需椭圆积分或
+      $T^2\to S^2$ 度理论：奇性仅在孤立点 `k₁ = π`（`V` 于 `cos k₀ = cos k₁ = −1` 消失），
+      由 §2.53 跳跃引理的单侧极限 `qwz_jump_left`/`qwz_jump_right`（`G → ±2π`）+ §2.54
+      Fubini/跳跃 FTC 组装得 `physicalChernNumber_qwz_eq_sign`；其余一般两带模型的非零陈数
+      仍登记开放。
       **→ 平凡相 Stokes 论证的代数核已闭合（2026-09-25，§2.48）**：为开放项 ②′ 的
       $|m|>2$ 分支（$C=0$）铺设——立体角 1-形式
       $\alpha_i=(n_0\partial_i n_1-n_1\partial_i n_0)/(1+n_2)$ 的**系数级精确性**
@@ -4788,9 +4802,13 @@ end KatoRieszIdempotent
       （$F=-\tfrac12(\partial_0\alpha_1-\partial_1\alpha_0)$）+ QWZ 平凡相正则性
       `qwzNz_pos`/`one_add_qwzNz_ne_zero`（$2<m$ ⟹ $n_z>0$，无 Dirac 弦）+
       **条件 Stokes 闭合** `physicalChernNumber_qwz_eq_zero_of_stokes`（单值联络 ⟹ $C=0$）。
-      **仍登记开放**：把该条件闭合的**解析前提**（全局标架 $A_i=-\tfrac12\alpha_i$ 的
-      $2\pi$-周期性/可微性/可积性）**无条件化**，从而给出 $2<m$ 时 $C=0$ 的**无条件**证明；
-      以及 $|m|<2$ 分支的非零陈数（椭圆积分 / $T^2\to S^2$ 度理论）。
+      **解析前提无条件化已闭合（2026-09-25，§2.49）**：`physicalChernNumber_qwz_eq_zero`
+      （`2<m` ⟹ `C=0` 无条件，经全局标架 `Aᵢ = −½·αᵢ` 的 `2π`-周期性/可微性/可积性验证）；
+      **`m < −2` 分支已闭合（2026-09-25，§2.50）**：`physicalChernNumber_qwz_eq_zero_of_neg`
+      经曲率反射 `qwzCurvature_reflect` + BZ 平移不变性 `bzIntegral_shift` 归约到 `−m > 2`，
+      合并 `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`（**|m| > 2 无条件零陈数**）；
+      **`|m| < 2` 分支的非零陈数已闭合（2026-09-30，§2.51–§2.54）**：
+      `physicalChernNumber_qwz_eq_sign`（`C = sgn m`）。QWZ 完整相图零 sorry。
   7. **同秩投影酉等价（K₀ = ℤ 度理论整性核心）**：任意两个同秩（同维）幂等
      谱投影 P、Q（rank P = rank Q）在有限维中酉等价（∃ 酉 U，Q = U·P·U†）。
      这是度理论/同伦层整性（§3 #2 的"同秩谱投影 → 陈指数 → K₀(ℂ) = ℤ → C ∈ ℤ"）
@@ -6538,5 +6556,2809 @@ theorem physicalChernNumber_qwz_eq_zero_of_stokes (m : ℝ) (A₀ A₁ : ℝ →
     hA₁_int hA₀_int hA₁_int_y hA₁_per hA₀_per hswap
 
 end StokesTrivialPhase
+
+/-!
+## §2.49 平凡相 Stokes 论证的无条件闭合：QWZ 零陈数的无条件证明
+
+§2.48 把 QWZ 平凡相（`|m| > 2`）的零陈数归约到**条件** Stokes 闭合
+`physicalChernNumber_qwz_eq_zero_of_stokes`：只要 QWZ 曲率能由**单值联络** `(A₀, A₁)`
+表出 `F = ∂₀A₁ − ∂₁A₀` 且满足 §2.45 的周期性/可微性/可积性前提，则 `C = 0`。
+本节把该条件定理的解析前提**全部无条件化**：从立体角原函数
+`αᵢ = (n_x∂ᵢn_y − n_y∂ᵢn_x)/(1+n_z)` 出发构造**全局标架** `Aᵢ = −½·αᵢ`，
+并在 BZ 上验证其正则性、`2π`-周期性、可微性与导数可积性。
+
+1. **立体角原函数与全局标架的闭式**（`qwzC`/`qwzV`/`qwzAlpha0`/`qwzAlpha1`/`qwzA0`/`qwzA1`）：
+   以 `c = m + cos k₀ + cos k₁`、`s = |d|`、`V = s(s+c)` 表出
+   `α₀ = −sin k₁ cos k₀ / V`、`α₁ = sin k₀ cos k₁ / V`；非零性 `qwzV_pos`
+   （`2 < m` ⟹ `V > 0`）保证闭式在整个 BZ 上无奇点。
+2. **归一化因子与分母的导数**（`qwzSqrt_hasDerivAt0`/`qwzSqrt_hasDerivAt1`、
+   `qwzV_hasDerivAt0`/`qwzV_hasDerivAt1`、`qwzAlpha1_hasDerivAt0`/`qwzAlpha0_hasDerivAt1`）：
+   `∂₀s = −sin k₀(m + cos k₁)/s`、`∂₁s = −sin k₁(m + cos k₀)/s`，经乘积/商法则提升到 `αᵢ`。
+3. **核心旋度恒等式** `qwzAlpha_curl`：`∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`
+   ——即立体角原函数层 `dα = ω` 的 QWZ 显式形式，经一般多项式恒等式 `qwz_curl_poly` 收口。
+4. **联合连续性**（`qwzSqrt_cont` … `qwzAlpha0d1_cont`）：闭式在 `ℝ²` 上联合连续。
+5. **`2π`-周期性**（`qwzA1_periodic0`/`qwzA0_periodic1`）：由 `sin/cos` 的 `2π`-周期性沿
+   `qwzDr` 逐层下传至 `Aᵢ`。
+6. **全局标架的可微性**（`qwzA1_hasDerivAt0`/`qwzA0_hasDerivAt1` 与 `qwzA1_deriv_eq`/`qwzA0_deriv_eq`）：
+   `Aᵢ` 关于自身方向可微，且 `deriv A₁ = −½·α₁^{∂₀}`、`deriv A₀ = −½·α₀^{∂₁}`。
+7. **核心恒等式** `qwzCurvature_eq_derivA`：`qwzCurvature = deriv A₁ − deriv A₀`（§2.48 `hF`）。
+8. **导数可积性与 Fubini 交换前提**（`qwzA1_deriv_intervalIntegrable` 系列与
+   `qwzA1_deriv_integrableOn`）：由联合连续性经 `Continuous.intervalIntegrable` 与紧集可积性得到。
+9. **无条件定理** `physicalChernNumber_qwz_eq_zero`：`2 < m ⟹ C = 0`，无条件。
+10. **另一分支 `m < −2`（反射归约）**：`d(−m)(k + π) = −d(m)(k)` 给出曲率反射
+    `F(m)(k) = −F(−m)(k + π)`（`qwzCurvature_reflect`）；BZ 双重积分对两个变量均
+    `2π`-周期的被积函数具有平移不变性（`bzIntegral_shift`），故 `∫∫F(m) = −∫∫F(−m)`
+    （`bzIntegral_qwzCurvature_reflect`），把 `m < −2` 归约到 `−m > 2` 分支
+    （`physicalChernNumber_qwz_eq_zero_of_neg`）。
+11. **整个平凡相的无条件定理** `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`：
+    `|m| > 2 ⟹ C = 0`，无条件（合并 `2 < m` 与 `m < −2` 两分支）。
+
+**诚实边界**：本节把 §2.48 条件定理的解析前提在**整个平凡相** `|m| > 2` 下**全部无条件满足**
+（`2 < m` 走立体角原函数层，`m < −2` 经反射归约），故 `|m| > 2` 时零陈数已**无条件**闭合。
+**仍开放**：`|m| < 2`（非平凡相）的非零陈数 `C = sgn m` 尚未形式化（椭圆积分 / `T² → S²`
+度理论）；`m = ±2`（能隙闭合）不在本节覆盖范围内。
+-/
+
+section StokesUnconditional
+
+open scoped Interval
+
+open MeasureTheory
+
+/-! #### §2.49.1 立体角原函数与全局标架的闭式（含非零性） -/
+
+/-- QWZ 模型的 `c = m + cos k₀ + cos k₁`。 -/
+noncomputable def qwzC (m k₀ k₁ : ℝ) : ℝ := m + Real.cos k₀ + Real.cos k₁
+
+/-- 立体角原函数的分母 `V = s(s+c)`。 -/
+noncomputable def qwzV (m k₀ k₁ : ℝ) : ℝ :=
+  qwzSqrt m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+
+/-- `∂₀s = −sin k₀ (m + cos k₁)/s`。 -/
+noncomputable def qwzDs0 (m k₀ k₁ : ℝ) : ℝ :=
+  -(Real.sin k₀) * (m + Real.cos k₁) / qwzSqrt m k₀ k₁
+
+/-- `∂₁s = −sin k₁ (m + cos k₀)/s`。 -/
+noncomputable def qwzDs1 (m k₀ k₁ : ℝ) : ℝ :=
+  -(Real.sin k₁) * (m + Real.cos k₀) / qwzSqrt m k₀ k₁
+
+/-- `∂₀V`。 -/
+noncomputable def qwzVd0 (m k₀ k₁ : ℝ) : ℝ :=
+  qwzDs0 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+    + qwzSqrt m k₀ k₁ * (qwzDs0 m k₀ k₁ - Real.sin k₀)
+
+/-- `∂₁V`。 -/
+noncomputable def qwzVd1 (m k₀ k₁ : ℝ) : ℝ :=
+  qwzDs1 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+    + qwzSqrt m k₀ k₁ * (qwzDs1 m k₀ k₁ - Real.sin k₁)
+
+/-- 立体角原函数 `α₀ = −sin k₁ cos k₀ / V`。 -/
+noncomputable def qwzAlpha0 (m k₀ k₁ : ℝ) : ℝ :=
+  -(Real.sin k₁ * Real.cos k₀) / qwzV m k₀ k₁
+
+/-- 立体角原函数 `α₁ = sin k₀ cos k₁ / V`。 -/
+noncomputable def qwzAlpha1 (m k₀ k₁ : ℝ) : ℝ :=
+  (Real.sin k₀ * Real.cos k₁) / qwzV m k₀ k₁
+
+/-- `∂₀α₁`。 -/
+noncomputable def qwzAlpha1d0 (m k₀ k₁ : ℝ) : ℝ :=
+  (Real.cos k₀ * Real.cos k₁ * qwzV m k₀ k₁
+      - (Real.sin k₀ * Real.cos k₁) * qwzVd0 m k₀ k₁) / qwzV m k₀ k₁ ^ 2
+
+/-- `∂₁α₀`。 -/
+noncomputable def qwzAlpha0d1 (m k₀ k₁ : ℝ) : ℝ :=
+  (-(Real.cos k₁ * Real.cos k₀) * qwzV m k₀ k₁
+      + (Real.sin k₁ * Real.cos k₀) * qwzVd1 m k₀ k₁) / qwzV m k₀ k₁ ^ 2
+
+/-- 单值联络（全局标架）`A₀ = −½·α₀`。 -/
+noncomputable def qwzA0 (m k₀ k₁ : ℝ) : ℂ := ((-(1 / 2)) * qwzAlpha0 m k₀ k₁ : ℝ)
+
+/-- 单值联络（全局标架）`A₁ = −½·α₁`。 -/
+noncomputable def qwzA1 (m k₀ k₁ : ℝ) : ℂ := ((-(1 / 2)) * qwzAlpha1 m k₀ k₁ : ℝ)
+
+theorem qwzC_pos (m k₀ k₁ : ℝ) (hm : 2 < m) : 0 < qwzC m k₀ k₁ := by
+  unfold qwzC
+  linarith [Real.neg_one_le_cos k₀, Real.neg_one_le_cos k₁]
+
+theorem qwzV_pos (m k₀ k₁ : ℝ) (hm : 2 < m) : 0 < qwzV m k₀ k₁ := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hs : 0 < qwzSqrt m k₀ k₁ := qwzSqrt_pos m k₀ k₁ hm'
+  have hc : 0 < qwzC m k₀ k₁ := qwzC_pos m k₀ k₁ hm
+  unfold qwzV
+  exact mul_pos hs (by linarith)
+
+theorem qwzV_ne_zero (m k₀ k₁ : ℝ) (hm : 2 < m) : qwzV m k₀ k₁ ≠ 0 :=
+  ne_of_gt (qwzV_pos m k₀ k₁ hm)
+
+theorem qwzDot_nonneg (m k₀ k₁ : ℝ) :
+    0 ≤ dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) := by
+  rw [qwzDr_sq]; positivity
+
+/-- `s² = sin²k₀ + sin²k₁ + (m + cos k₀ + cos k₁)²`（三角展开形式）。 -/
+theorem qwzSqrt_sq_trig (m k₀ k₁ : ℝ) :
+    qwzSqrt m k₀ k₁ ^ 2
+      = Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2 + (m + Real.cos k₀ + Real.cos k₁) ^ 2 := by
+  rw [show qwzSqrt m k₀ k₁ ^ 2 = dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) from
+    Real.sq_sqrt (qwzDot_nonneg m k₀ k₁), qwzDr_sq]
+  ring
+
+/-! #### §2.49.2 归一化因子与分母的导数（`d·d`、`s`、`c`、`V`） -/
+
+/-- `d·d` 关于 `k₀` 的 HasDerivAt。 -/
+theorem qwzDot_hasDerivAt0 (m k₀ k₁ : ℝ) :
+    HasDerivAt (fun k₀' => dot3r (qwzDr m k₀' k₁) (qwzDr m k₀' k₁))
+      (-2 * Real.sin k₀ * (m + Real.cos k₁)) k₀ := by
+  have hfun : (fun k₀' => dot3r (qwzDr m k₀' k₁) (qwzDr m k₀' k₁))
+      = fun k₀' => (m + Real.cos k₀' + Real.cos k₁) * (m + Real.cos k₀' + Real.cos k₁)
+          + Real.sin k₀' * Real.sin k₀' + Real.sin k₁ * Real.sin k₁ := by
+    funext t; rw [qwzDr_sq]; ring
+  rw [hfun]
+  have h1 : HasDerivAt (fun t : ℝ => Real.sin t * Real.sin t)
+      (2 * Real.sin k₀ * Real.cos k₀) k₀ := by
+    have h := (Real.hasDerivAt_sin k₀).mul (Real.hasDerivAt_sin k₀)
+    have hv : Real.cos k₀ * Real.sin k₀ + Real.sin k₀ * Real.cos k₀
+        = 2 * Real.sin k₀ * Real.cos k₀ := by ring
+    rw [hv] at h; exact h
+  have hc : HasDerivAt (fun t : ℝ => m + Real.cos t + Real.cos k₁) (-Real.sin k₀) k₀ := by
+    simpa using ((Real.hasDerivAt_cos k₀).const_add m).add_const (Real.cos k₁)
+  have h2 : HasDerivAt
+      (fun t : ℝ => (m + Real.cos t + Real.cos k₁) * (m + Real.cos t + Real.cos k₁))
+      (-2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₀) k₀ := by
+    have h := hc.mul hc
+    have hv : -Real.sin k₀ * (m + Real.cos k₀ + Real.cos k₁)
+        + (m + Real.cos k₀ + Real.cos k₁) * -Real.sin k₀
+        = -2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₀ := by ring
+    rw [hv] at h; exact h
+  have hsum := (h2.add h1).add_const (Real.sin k₁ * Real.sin k₁)
+  have hv : -2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₀
+      + 2 * Real.sin k₀ * Real.cos k₀
+      = -2 * Real.sin k₀ * (m + Real.cos k₁) := by ring
+  rw [hv] at hsum
+  exact hsum
+
+/-- `d·d` 关于 `k₁` 的 HasDerivAt。 -/
+theorem qwzDot_hasDerivAt1 (m k₀ k₁ : ℝ) :
+    HasDerivAt (fun k₁' => dot3r (qwzDr m k₀ k₁') (qwzDr m k₀ k₁'))
+      (-2 * Real.sin k₁ * (m + Real.cos k₀)) k₁ := by
+  have hfun : (fun k₁' => dot3r (qwzDr m k₀ k₁') (qwzDr m k₀ k₁'))
+      = fun k₁' => (m + Real.cos k₀ + Real.cos k₁') * (m + Real.cos k₀ + Real.cos k₁')
+          + Real.sin k₁' * Real.sin k₁' + Real.sin k₀ * Real.sin k₀ := by
+    funext t; rw [qwzDr_sq]; ring
+  rw [hfun]
+  have h1 : HasDerivAt (fun t : ℝ => Real.sin t * Real.sin t)
+      (2 * Real.sin k₁ * Real.cos k₁) k₁ := by
+    have h := (Real.hasDerivAt_sin k₁).mul (Real.hasDerivAt_sin k₁)
+    have hv : Real.cos k₁ * Real.sin k₁ + Real.sin k₁ * Real.cos k₁
+        = 2 * Real.sin k₁ * Real.cos k₁ := by ring
+    rw [hv] at h; exact h
+  have hc : HasDerivAt (fun t : ℝ => m + Real.cos k₀ + Real.cos t) (-Real.sin k₁) k₁ := by
+    simpa [add_comm, add_left_comm, add_assoc] using
+      ((Real.hasDerivAt_cos k₁).const_add m).add_const (Real.cos k₀)
+  have h2 : HasDerivAt
+      (fun t : ℝ => (m + Real.cos k₀ + Real.cos t) * (m + Real.cos k₀ + Real.cos t))
+      (-2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₁) k₁ := by
+    have h := hc.mul hc
+    have hv : -Real.sin k₁ * (m + Real.cos k₀ + Real.cos k₁)
+        + (m + Real.cos k₀ + Real.cos k₁) * -Real.sin k₁
+        = -2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₁ := by ring
+    rw [hv] at h; exact h
+  have hsum := (h2.add h1).add_const (Real.sin k₀ * Real.sin k₀)
+  have hv : -2 * (m + Real.cos k₀ + Real.cos k₁) * Real.sin k₁
+      + 2 * Real.sin k₁ * Real.cos k₁
+      = -2 * Real.sin k₁ * (m + Real.cos k₀) := by ring
+  rw [hv] at hsum
+  exact hsum
+
+/-- `s = √(d·d)` 关于 `k₀` 的 HasDerivAt：`∂₀s = −sin k₀ (m + cos k₁)/s`。 -/
+theorem qwzSqrt_hasDerivAt0 (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    HasDerivAt (fun k₀' => qwzSqrt m k₀' k₁) (qwzDs0 m k₀ k₁) k₀ := by
+  have hne : dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) ≠ 0 :=
+    ne_of_gt (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm)
+  have hs := (qwzDot_hasDerivAt0 m k₀ k₁).sqrt hne
+  have hfun : (fun k₀' => qwzSqrt m k₀' k₁)
+      = fun y => Real.sqrt (dot3r (qwzDr m y k₁) (qwzDr m y k₁)) := by
+    funext t; rfl
+  have hv : (-2 * Real.sin k₀ * (m + Real.cos k₁))
+      / (2 * Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁))) = qwzDs0 m k₀ k₁ := by
+    unfold qwzDs0
+    rw [show qwzSqrt m k₀ k₁
+        = Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) from rfl]
+    have hne' : Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) ≠ 0 :=
+      ne_of_gt (Real.sqrt_pos.mpr (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm))
+    field_simp
+  rw [hfun]
+  rw [hv] at hs
+  exact hs
+
+/-- `s` 关于 `k₁` 的 HasDerivAt：`∂₁s = −sin k₁ (m + cos k₀)/s`。 -/
+theorem qwzSqrt_hasDerivAt1 (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    HasDerivAt (fun k₁' => qwzSqrt m k₀ k₁') (qwzDs1 m k₀ k₁) k₁ := by
+  have hne : dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) ≠ 0 :=
+    ne_of_gt (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm)
+  have hs := (qwzDot_hasDerivAt1 m k₀ k₁).sqrt hne
+  have hfun : (fun k₁' => qwzSqrt m k₀ k₁')
+      = fun y => Real.sqrt (dot3r (qwzDr m k₀ y) (qwzDr m k₀ y)) := by
+    funext t; rfl
+  have hv : (-2 * Real.sin k₁ * (m + Real.cos k₀))
+      / (2 * Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁))) = qwzDs1 m k₀ k₁ := by
+    unfold qwzDs1
+    rw [show qwzSqrt m k₀ k₁
+        = Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) from rfl]
+    have hne' : Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) ≠ 0 :=
+      ne_of_gt (Real.sqrt_pos.mpr (qwzDr_sq_pos_of_abs_gt_two m k₀ k₁ hm))
+    field_simp
+  rw [hfun]
+  rw [hv] at hs
+  exact hs
+
+theorem qwzC_hasDerivAt0 (m k₀ k₁ : ℝ) :
+    HasDerivAt (fun k₀' => qwzC m k₀' k₁) (-(Real.sin k₀)) k₀ := by
+  unfold qwzC
+  simpa using ((Real.hasDerivAt_cos k₀).const_add m).add_const (Real.cos k₁)
+
+theorem qwzC_hasDerivAt1 (m k₀ k₁ : ℝ) :
+    HasDerivAt (fun k₁' => qwzC m k₀ k₁') (-(Real.sin k₁)) k₁ := by
+  unfold qwzC
+  simpa [add_comm, add_left_comm, add_assoc] using
+    ((Real.hasDerivAt_cos k₁).const_add m).add_const (Real.cos k₀)
+
+theorem qwzV_hasDerivAt0 (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    HasDerivAt (fun k₀' => qwzV m k₀' k₁) (qwzVd0 m k₀ k₁) k₀ := by
+  have hs := qwzSqrt_hasDerivAt0 m k₀ k₁ hm
+  have hc := qwzC_hasDerivAt0 m k₀ k₁
+  have hsc : HasDerivAt (fun k₀' => qwzSqrt m k₀' k₁ + qwzC m k₀' k₁)
+      (qwzDs0 m k₀ k₁ + (-(Real.sin k₀))) k₀ := hs.add hc
+  have hprod := hs.mul hsc
+  have hv : qwzDs0 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+      + qwzSqrt m k₀ k₁ * (qwzDs0 m k₀ k₁ + -(Real.sin k₀)) = qwzVd0 m k₀ k₁ := by
+    unfold qwzVd0; ring
+  rw [hv] at hprod
+  exact hprod
+
+theorem qwzV_hasDerivAt1 (m k₀ k₁ : ℝ) (hm : 2 < |m|) :
+    HasDerivAt (fun k₁' => qwzV m k₀ k₁') (qwzVd1 m k₀ k₁) k₁ := by
+  have hs := qwzSqrt_hasDerivAt1 m k₀ k₁ hm
+  have hc := qwzC_hasDerivAt1 m k₀ k₁
+  have hsc : HasDerivAt (fun k₁' => qwzSqrt m k₀ k₁' + qwzC m k₀ k₁')
+      (qwzDs1 m k₀ k₁ + (-(Real.sin k₁))) k₁ := hs.add hc
+  have hprod := hs.mul hsc
+  have hv : qwzDs1 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+      + qwzSqrt m k₀ k₁ * (qwzDs1 m k₀ k₁ + -(Real.sin k₁)) = qwzVd1 m k₀ k₁ := by
+    unfold qwzVd1; ring
+  rw [hv] at hprod
+  exact hprod
+
+/-! #### §2.49.3 立体角原函数的导数（商法则） -/
+
+/-- `α₁` 关于 `k₀` 的 HasDerivAt（商法则）。 -/
+theorem qwzAlpha1_hasDerivAt0 (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    HasDerivAt (fun k₀' => qwzAlpha1 m k₀' k₁) (qwzAlpha1d0 m k₀ k₁) k₀ := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hnum : HasDerivAt (fun k₀' => Real.sin k₀' * Real.cos k₁)
+      (Real.cos k₀ * Real.cos k₁) k₀ :=
+    (Real.hasDerivAt_sin k₀).mul_const (Real.cos k₁)
+  have hden := qwzV_hasDerivAt0 m k₀ k₁ hm'
+  have hVne := qwzV_ne_zero m k₀ k₁ hm
+  have h := hnum.div hden hVne
+  exact h
+
+/-- `α₀` 关于 `k₁` 的 HasDerivAt（商法则）。 -/
+theorem qwzAlpha0_hasDerivAt1 (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    HasDerivAt (fun k₁' => qwzAlpha0 m k₀ k₁') (qwzAlpha0d1 m k₀ k₁) k₁ := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hnum : HasDerivAt (fun k₁' => -(Real.sin k₁' * Real.cos k₀))
+      (-(Real.cos k₁ * Real.cos k₀)) k₁ :=
+    ((Real.hasDerivAt_sin k₁).mul_const (Real.cos k₀)).neg
+  have hden := qwzV_hasDerivAt1 m k₀ k₁ hm'
+  have hVne := qwzV_ne_zero m k₀ k₁ hm
+  have h := hnum.div hden hVne
+  have hv : (-(Real.cos k₁ * Real.cos k₀) * qwzV m k₀ k₁
+      - -(Real.sin k₁ * Real.cos k₀) * qwzVd1 m k₀ k₁) / qwzV m k₀ k₁ ^ 2
+      = qwzAlpha0d1 m k₀ k₁ := by
+    unfold qwzAlpha0d1; ring
+  rw [hv] at h
+  exact h
+
+/-! #### §2.49.4 核心旋度恒等式 `∂₀α₁ − ∂₁α₀ = ω` -/
+
+/-- **核心代数恒等式（一般多项式形式）**：在 `s² = p²+r²+(M+q+t)²`、`p²+q²=1`、`r²+t²=1`
+    之下，立体角原函数的旋度恒等式成立。 -/
+theorem qwz_curl_poly (M p q r t s : ℝ)
+    (hs2 : s ^ 2 = p ^ 2 + r ^ 2 + (M + q + t) ^ 2)
+    (hp : p ^ 2 + q ^ 2 = 1) (hr : r ^ 2 + t ^ 2 = 1) :
+    2 * t * q * s ^ 2 * (s + (M + q + t))
+      + p ^ 2 * t * (M + t) * (2 * s + (M + q + t)) + p ^ 2 * t * s ^ 2
+      + q * r ^ 2 * (M + q) * (2 * s + (M + q + t)) + q * r ^ 2 * s ^ 2
+      - (q + t + M * q * t) * (s + (M + q + t)) ^ 2 = 0 := by
+  linear_combination
+    (2 * t * q * s + (2 * t * q * (M + q + t) + p ^ 2 * t + q * r ^ 2 - (q + t + M * q * t))) * hs2
+    + ((2 * M * t + 2 * q * t + 2 * t ^ 2) * s
+        + (2 * M ^ 2 * t + 4 * M * q * t + 4 * M * t ^ 2 + p ^ 2 * t + 2 * q ^ 2 * t
+            + q * r ^ 2 + 5 * q * t ^ 2 - q + r ^ 2 * t + 2 * t ^ 3)) * hp
+    + ((2 * M * q + 2 * q ^ 2 + 2 * q * t) * s
+        + (2 * M ^ 2 * q + 4 * M * q ^ 2 + 4 * M * q * t + q ^ 3 + 4 * q ^ 2 * t
+            + q * r ^ 2 + 2 * q * t ^ 2 + q)) * hr
+
+/-- **核心导数恒等式**：`∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`。 -/
+theorem qwzAlpha_curl (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁
+      = (Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁) / qwzSqrt m k₀ k₁ ^ 3 := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hs := qwzSqrt_pos m k₀ k₁ hm'
+  have hsne : qwzSqrt m k₀ k₁ ≠ 0 := ne_of_gt hs
+  have hVne : qwzV m k₀ k₁ ≠ 0 := qwzV_ne_zero m k₀ k₁ hm
+  have hsc' : qwzSqrt m k₀ k₁ + (m + Real.cos k₀ + Real.cos k₁) ≠ 0 := by
+    have h := qwzC_pos m k₀ k₁ hm
+    unfold qwzC at h
+    linarith
+  have hs2 : qwzSqrt m k₀ k₁ ^ 2
+      = Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2 + (m + Real.cos k₀ + Real.cos k₁) ^ 2 :=
+    qwzSqrt_sq_trig m k₀ k₁
+  have hp : Real.sin k₀ ^ 2 + Real.cos k₀ ^ 2 = 1 := Real.sin_sq_add_cos_sq k₀
+  have hr : Real.sin k₁ ^ 2 + Real.cos k₁ ^ 2 = 1 := Real.sin_sq_add_cos_sq k₁
+  unfold qwzAlpha1d0 qwzAlpha0d1 qwzV qwzVd0 qwzVd1 qwzDs0 qwzDs1 qwzC
+  field_simp [hsc']
+  linear_combination
+    (2 * Real.cos k₁ * Real.cos k₀ * qwzSqrt m k₀ k₁
+        + (2 * Real.cos k₁ * Real.cos k₀ * (m + Real.cos k₀ + Real.cos k₁)
+            + Real.sin k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            - (Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁))) * hs2
+    + ((2 * m * Real.cos k₁ + 2 * Real.cos k₀ * Real.cos k₁ + 2 * Real.cos k₁ ^ 2)
+          * qwzSqrt m k₀ k₁
+        + (2 * m ^ 2 * Real.cos k₁ + 4 * m * Real.cos k₀ * Real.cos k₁
+            + 4 * m * Real.cos k₁ ^ 2 + Real.sin k₀ ^ 2 * Real.cos k₁
+            + 2 * Real.cos k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            + 5 * Real.cos k₀ * Real.cos k₁ ^ 2 - Real.cos k₀
+            + Real.sin k₁ ^ 2 * Real.cos k₁ + 2 * Real.cos k₁ ^ 3)) * hp
+    + ((2 * m * Real.cos k₀ + 2 * Real.cos k₀ ^ 2 + 2 * Real.cos k₀ * Real.cos k₁)
+          * qwzSqrt m k₀ k₁
+        + (2 * m ^ 2 * Real.cos k₀ + 4 * m * Real.cos k₀ ^ 2
+            + 4 * m * Real.cos k₀ * Real.cos k₁ + Real.cos k₀ ^ 3
+            + 4 * Real.cos k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            + 2 * Real.cos k₀ * Real.cos k₁ ^ 2 + Real.cos k₀)) * hr
+
+/-! #### §2.49.5 联合连续性 -/
+
+theorem qwzSqrt_cont (m : ℝ) : Continuous (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2) := by
+  simp only [qwzSqrt, dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  fun_prop
+
+theorem qwzC_cont (m : ℝ) : Continuous (fun p : ℝ × ℝ => qwzC m p.1 p.2) := by
+  simp only [qwzC]; fun_prop
+
+theorem qwzSc_cont (m : ℝ) :
+    Continuous (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2 + qwzC m p.1 p.2) :=
+  (qwzSqrt_cont m).add (qwzC_cont m)
+
+theorem qwzV_cont (m : ℝ) : Continuous (fun p : ℝ × ℝ => qwzV m p.1 p.2) := by
+  rw [show (fun p : ℝ × ℝ => qwzV m p.1 p.2)
+      = (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2)
+        * (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2 + qwzC m p.1 p.2) from funext fun p => rfl]
+  exact (qwzSqrt_cont m).mul (qwzSc_cont m)
+
+theorem qwzDs0_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzDs0 m p.1 p.2) := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hne : ∀ p : ℝ × ℝ, qwzSqrt m p.1 p.2 ≠ 0 :=
+    fun p => ne_of_gt (qwzSqrt_pos m p.1 p.2 hm')
+  have hnum : Continuous (fun p : ℝ × ℝ => -(Real.sin p.1) * (m + Real.cos p.2)) := by fun_prop
+  rw [show (fun p : ℝ × ℝ => qwzDs0 m p.1 p.2)
+      = (fun p : ℝ × ℝ => -(Real.sin p.1) * (m + Real.cos p.2))
+        / (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2) from funext fun p => rfl]
+  exact Continuous.div hnum (qwzSqrt_cont m) hne
+
+theorem qwzDs1_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2) := by
+  have hm' : 2 < |m| := by rw [abs_of_pos (by linarith)]; exact hm
+  have hne : ∀ p : ℝ × ℝ, qwzSqrt m p.1 p.2 ≠ 0 :=
+    fun p => ne_of_gt (qwzSqrt_pos m p.1 p.2 hm')
+  have hnum : Continuous (fun p : ℝ × ℝ => -(Real.sin p.2) * (m + Real.cos p.1)) := by fun_prop
+  rw [show (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2)
+      = (fun p : ℝ × ℝ => -(Real.sin p.2) * (m + Real.cos p.1))
+        / (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2) from funext fun p => rfl]
+  exact Continuous.div hnum (qwzSqrt_cont m) hne
+
+theorem qwzVd0_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzVd0 m p.1 p.2) := by
+  have hDs := qwzDs0_cont m hm
+  have hS := qwzSqrt_cont m
+  have hsin : Continuous (fun p : ℝ × ℝ => Real.sin p.1) := Real.continuous_sin.comp continuous_fst
+  rw [show (fun p : ℝ × ℝ => qwzVd0 m p.1 p.2)
+      = (fun p : ℝ × ℝ => qwzDs0 m p.1 p.2)
+          * (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2 + qwzC m p.1 p.2)
+        + (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2)
+          * ((fun p : ℝ × ℝ => qwzDs0 m p.1 p.2) - (fun p : ℝ × ℝ => Real.sin p.1))
+      from funext fun p => rfl]
+  exact (hDs.mul (qwzSc_cont m)).add (hS.mul (hDs.sub hsin))
+
+theorem qwzVd1_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2) := by
+  have hDs := qwzDs1_cont m hm
+  have hS := qwzSqrt_cont m
+  have hsin : Continuous (fun p : ℝ × ℝ => Real.sin p.2) := Real.continuous_sin.comp continuous_snd
+  rw [show (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2)
+      = (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2)
+          * (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2 + qwzC m p.1 p.2)
+        + (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2)
+          * ((fun p : ℝ × ℝ => qwzDs1 m p.1 p.2) - (fun p : ℝ × ℝ => Real.sin p.2))
+      from funext fun p => rfl]
+  exact (hDs.mul (qwzSc_cont m)).add (hS.mul (hDs.sub hsin))
+
+theorem qwzAlpha1d0_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzAlpha1d0 m p.1 p.2) := by
+  have hV := qwzV_cont m
+  have hVd := qwzVd0_cont m hm
+  have hVne : ∀ p : ℝ × ℝ, qwzV m p.1 p.2 ≠ 0 := fun p => qwzV_ne_zero m p.1 p.2 hm
+  have hc0 : Continuous (fun p : ℝ × ℝ => Real.cos p.1) := Real.continuous_cos.comp continuous_fst
+  have hc1 : Continuous (fun p : ℝ × ℝ => Real.cos p.2) := Real.continuous_cos.comp continuous_snd
+  have hs0 : Continuous (fun p : ℝ × ℝ => Real.sin p.1) := Real.continuous_sin.comp continuous_fst
+  rw [show (fun p : ℝ × ℝ => qwzAlpha1d0 m p.1 p.2)
+      = ((fun p : ℝ × ℝ => Real.cos p.1 * Real.cos p.2 * qwzV m p.1 p.2)
+          - (fun p : ℝ × ℝ => Real.sin p.1 * Real.cos p.2)
+            * (fun p : ℝ × ℝ => qwzVd0 m p.1 p.2))
+        / (fun p : ℝ × ℝ => qwzV m p.1 p.2 ^ 2) from funext fun p => rfl]
+  refine Continuous.div ?_ ?_ ?_
+  · exact ((hc0.mul hc1).mul hV).sub ((hs0.mul hc1).mul hVd)
+  · exact hV.pow 2
+  · intro p; exact pow_ne_zero 2 (hVne p)
+
+theorem qwzAlpha0d1_cont (m : ℝ) (hm : 2 < m) :
+    Continuous (fun p : ℝ × ℝ => qwzAlpha0d1 m p.1 p.2) := by
+  have hV := qwzV_cont m
+  have hVd := qwzVd1_cont m hm
+  have hVne : ∀ p : ℝ × ℝ, qwzV m p.1 p.2 ≠ 0 := fun p => qwzV_ne_zero m p.1 p.2 hm
+  have hc0 : Continuous (fun p : ℝ × ℝ => Real.cos p.1) := Real.continuous_cos.comp continuous_fst
+  have hc1 : Continuous (fun p : ℝ × ℝ => Real.cos p.2) := Real.continuous_cos.comp continuous_snd
+  have hs1 : Continuous (fun p : ℝ × ℝ => Real.sin p.2) := Real.continuous_sin.comp continuous_snd
+  rw [show (fun p : ℝ × ℝ => qwzAlpha0d1 m p.1 p.2)
+      = ((fun p : ℝ × ℝ => -(Real.cos p.2 * Real.cos p.1) * qwzV m p.1 p.2)
+          + (fun p : ℝ × ℝ => Real.sin p.2 * Real.cos p.1)
+            * (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2))
+        / (fun p : ℝ × ℝ => qwzV m p.1 p.2 ^ 2) from funext fun p => rfl]
+  refine Continuous.div ?_ ?_ ?_
+  · exact (((hc1.mul hc0).neg).mul hV).add ((hs1.mul hc0).mul hVd)
+  · exact hV.pow 2
+  · intro p; exact pow_ne_zero 2 (hVne p)
+
+/-! #### §2.49.6 `2π`-周期性 -/
+
+theorem qwzDr_periodic0 (m k₀ k₁ : ℝ) :
+    qwzDr m (k₀ + 2 * Real.pi) k₁ = qwzDr m k₀ k₁ := by
+  funext i
+  fin_cases i <;> simp [qwzDr, Real.sin_add_two_pi, Real.cos_add_two_pi]
+
+theorem qwzDr_periodic1 (m k₀ k₁ : ℝ) :
+    qwzDr m k₀ (k₁ + 2 * Real.pi) = qwzDr m k₀ k₁ := by
+  funext i
+  fin_cases i <;> simp [qwzDr, Real.sin_add_two_pi, Real.cos_add_two_pi]
+
+theorem qwzSqrt_periodic0 (m k₀ k₁ : ℝ) :
+    qwzSqrt m (k₀ + 2 * Real.pi) k₁ = qwzSqrt m k₀ k₁ := by
+  unfold qwzSqrt
+  rw [qwzDr_periodic0]
+
+theorem qwzSqrt_periodic1 (m k₀ k₁ : ℝ) :
+    qwzSqrt m k₀ (k₁ + 2 * Real.pi) = qwzSqrt m k₀ k₁ := by
+  unfold qwzSqrt
+  rw [qwzDr_periodic1]
+
+theorem qwzC_periodic0 (m k₀ k₁ : ℝ) :
+    qwzC m (k₀ + 2 * Real.pi) k₁ = qwzC m k₀ k₁ := by
+  unfold qwzC; rw [Real.cos_add_two_pi]
+
+theorem qwzC_periodic1 (m k₀ k₁ : ℝ) :
+    qwzC m k₀ (k₁ + 2 * Real.pi) = qwzC m k₀ k₁ := by
+  unfold qwzC; rw [Real.cos_add_two_pi]
+
+theorem qwzV_periodic0 (m k₀ k₁ : ℝ) :
+    qwzV m (k₀ + 2 * Real.pi) k₁ = qwzV m k₀ k₁ := by
+  unfold qwzV; rw [qwzSqrt_periodic0, qwzC_periodic0]
+
+theorem qwzV_periodic1 (m k₀ k₁ : ℝ) :
+    qwzV m k₀ (k₁ + 2 * Real.pi) = qwzV m k₀ k₁ := by
+  unfold qwzV; rw [qwzSqrt_periodic1, qwzC_periodic1]
+
+theorem qwzAlpha1_periodic0 (m k₀ k₁ : ℝ) :
+    qwzAlpha1 m (k₀ + 2 * Real.pi) k₁ = qwzAlpha1 m k₀ k₁ := by
+  unfold qwzAlpha1; rw [Real.sin_add_two_pi, qwzV_periodic0]
+
+theorem qwzAlpha0_periodic1 (m k₀ k₁ : ℝ) :
+    qwzAlpha0 m k₀ (k₁ + 2 * Real.pi) = qwzAlpha0 m k₀ k₁ := by
+  unfold qwzAlpha0; rw [Real.sin_add_two_pi, qwzV_periodic1]
+
+theorem qwzA1_periodic0 (m k₀ k₁ : ℝ) :
+    qwzA1 m (k₀ + 2 * Real.pi) k₁ = qwzA1 m k₀ k₁ := by
+  unfold qwzA1; rw [qwzAlpha1_periodic0]
+
+theorem qwzA0_periodic1 (m k₀ k₁ : ℝ) :
+    qwzA0 m k₀ (k₁ + 2 * Real.pi) = qwzA0 m k₀ k₁ := by
+  unfold qwzA0; rw [qwzAlpha0_periodic1]
+
+/-! #### §2.49.7 全局标架的可微性 -/
+
+theorem qwzA1_hasDerivAt0 (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    HasDerivAt (fun k₀' => qwzA1 m k₀' k₁)
+      (((-(1 / 2)) * qwzAlpha1d0 m k₀ k₁ : ℝ) : ℂ) k₀ := by
+  have h := ((qwzAlpha1_hasDerivAt0 m k₀ k₁ hm).const_mul (-(1 / 2))).ofReal_comp
+  have hfun : (fun k₀' => qwzA1 m k₀' k₁)
+      = fun k₀' => ((↑(-(1 / 2) * qwzAlpha1 m k₀' k₁)) : ℂ) := by
+    funext t; unfold qwzA1; rfl
+  rw [hfun]
+  exact h
+
+theorem qwzA0_hasDerivAt1 (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    HasDerivAt (fun k₁' => qwzA0 m k₀ k₁')
+      (((-(1 / 2)) * qwzAlpha0d1 m k₀ k₁ : ℝ) : ℂ) k₁ := by
+  have h := ((qwzAlpha0_hasDerivAt1 m k₀ k₁ hm).const_mul (-(1 / 2))).ofReal_comp
+  have hfun : (fun k₁' => qwzA0 m k₀ k₁')
+      = fun k₁' => ((↑(-(1 / 2) * qwzAlpha0 m k₀ k₁')) : ℂ) := by
+    funext t; unfold qwzA0; rfl
+  rw [hfun]
+  exact h
+
+theorem qwzA1_deriv_eq (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    deriv (fun k₀' => qwzA1 m k₀' k₁) k₀
+      = (((-(1 / 2)) * qwzAlpha1d0 m k₀ k₁ : ℝ) : ℂ) :=
+  (qwzA1_hasDerivAt0 m k₀ k₁ hm).deriv
+
+theorem qwzA0_deriv_eq (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    deriv (fun k₁' => qwzA0 m k₀ k₁') k₁
+      = (((-(1 / 2)) * qwzAlpha0d1 m k₀ k₁ : ℝ) : ℂ) :=
+  (qwzA0_hasDerivAt1 m k₀ k₁ hm).deriv
+
+/-! #### §2.49.8 核心恒等式 `deriv A₁ − deriv A₀ = qwzCurvature` -/
+
+theorem qwzCurvature_eq_derivA (m k₀ k₁ : ℝ) (hm : 2 < m) :
+    qwzCurvature m k₀ k₁
+      = deriv (fun k₀' => qwzA1 m k₀' k₁) k₀ - deriv (fun k₁' => qwzA0 m k₀ k₁') k₁ := by
+  rw [qwzA1_deriv_eq m k₀ k₁ hm, qwzA0_deriv_eq m k₀ k₁ hm]
+  rw [show ((↑((-(1 / 2)) * qwzAlpha1d0 m k₀ k₁) : ℂ) - ↑((-(1 / 2)) * qwzAlpha0d1 m k₀ k₁))
+      = ((↑((-(1 / 2)) * (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁)) : ℂ)) from by
+    push_cast; ring]
+  rw [qwzAlpha_curl m k₀ k₁ hm, qwzCurvature_eq, qwzS]
+  simp only [qwzSqrt]
+  push_cast
+  ring
+
+/-! #### §2.49.9 导数可积性与 Fubini 交换前提 -/
+
+/-- 联合连续沿第二变量固定后仍连续：`k₀ ↦ f (k₀, k₁)`（重指标映射的显式类型
+    避免 `isDefEq` 在大表达式上延迟合一）。 -/
+theorem continuous_comp_prod_mk_right {γ : Type*} [TopologicalSpace γ] {f : ℝ × ℝ → γ}
+    (hf : Continuous f) (k₁ : ℝ) : Continuous (fun k₀ : ℝ => f (k₀, k₁)) :=
+  hf.comp (show Continuous (fun k₀ : ℝ => (k₀, k₁)) from
+    continuous_id.prodMk continuous_const)
+
+/-- 联合连续沿第一变量固定后仍连续：`k₁ ↦ f (k₀, k₁)`。 -/
+theorem continuous_comp_prod_mk_left {γ : Type*} [TopologicalSpace γ] {f : ℝ × ℝ → γ}
+    (hf : Continuous f) (k₀ : ℝ) : Continuous (fun k₁ : ℝ => f (k₀, k₁)) :=
+  hf.comp (show Continuous (fun k₁ : ℝ => (k₀, k₁)) from
+    continuous_const.prodMk continuous_id)
+
+theorem qwzA1_deriv_continuous (m : ℝ) (hm : 2 < m) :
+    Continuous (Function.uncurry fun k₀ k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀) := by
+  have h1 := qwzAlpha1d0_cont m hm
+  have hfun : (Function.uncurry fun k₀ k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀)
+      = fun p : ℝ × ℝ => (((-(1 / 2)) * qwzAlpha1d0 m p.1 p.2 : ℝ) : ℂ) := by
+    funext p
+    exact qwzA1_deriv_eq m p.1 p.2 hm
+  rw [hfun]
+  exact Complex.continuous_ofReal.comp (h1.const_mul (-(1 / 2)))
+
+theorem qwzA1_deriv_intervalIntegrable (m k₁ : ℝ) (hm : 2 < m) :
+    IntervalIntegrable (deriv (fun k₀' => qwzA1 m k₀' k₁)) volume 0 (2 * Real.pi) := by
+  have hc : Continuous (fun k₀ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀) := by
+    have hfun : (fun k₀ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀)
+        = fun k₀ => (((-(1 / 2)) * qwzAlpha1d0 m k₀ k₁ : ℝ) : ℂ) := by
+      funext k₀; exact qwzA1_deriv_eq m k₀ k₁ hm
+    rw [hfun]
+    exact Complex.continuous_ofReal.comp
+      ((continuous_comp_prod_mk_right (qwzAlpha1d0_cont m hm) k₁).const_mul (-(1 / 2)))
+  exact hc.intervalIntegrable 0 (2 * Real.pi)
+
+theorem qwzA1_deriv_intervalIntegrable_y (m k₀ : ℝ) (hm : 2 < m) :
+    IntervalIntegrable (fun k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀) volume 0 (2 * Real.pi) := by
+  have hc : Continuous (fun k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀) := by
+    have hfun : (fun k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀)
+        = fun k₁ => (((-(1 / 2)) * qwzAlpha1d0 m k₀ k₁ : ℝ) : ℂ) := by
+      funext k₁; exact qwzA1_deriv_eq m k₀ k₁ hm
+    rw [hfun]
+    exact Complex.continuous_ofReal.comp
+      ((continuous_comp_prod_mk_left (qwzAlpha1d0_cont m hm) k₀).const_mul (-(1 / 2)))
+  exact hc.intervalIntegrable 0 (2 * Real.pi)
+
+theorem qwzA0_deriv_intervalIntegrable (m k₀ : ℝ) (hm : 2 < m) :
+    IntervalIntegrable (deriv (fun k₁' => qwzA0 m k₀ k₁')) volume 0 (2 * Real.pi) := by
+  have hc : Continuous (fun k₁ => deriv (fun k₁' => qwzA0 m k₀ k₁') k₁) := by
+    have hfun : (fun k₁ => deriv (fun k₁' => qwzA0 m k₀ k₁') k₁)
+        = fun k₁ => (((-(1 / 2)) * qwzAlpha0d1 m k₀ k₁ : ℝ) : ℂ) := by
+      funext k₁; exact qwzA0_deriv_eq m k₀ k₁ hm
+    rw [hfun]
+    exact Complex.continuous_ofReal.comp
+      ((continuous_comp_prod_mk_left (qwzAlpha0d1_cont m hm) k₀).const_mul (-(1 / 2)))
+  exact hc.intervalIntegrable 0 (2 * Real.pi)
+
+theorem qwzA1_deriv_integrableOn (m : ℝ) (hm : 2 < m) :
+    IntegrableOn (Function.uncurry fun k₀ k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀)
+      (Set.uIoc 0 (2 * Real.pi) ×ˢ Set.uIoc 0 (2 * Real.pi)) := by
+  have hle : (0 : ℝ) ≤ 2 * Real.pi := by positivity
+  have hbig : IntegrableOn (Function.uncurry fun k₀ k₁ => deriv (fun k₀' => qwzA1 m k₀' k₁) k₀)
+      (Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc 0 (2 * Real.pi)) :=
+    (qwzA1_deriv_continuous m hm).continuousOn.integrableOn_compact
+      (isCompact_Icc.prod isCompact_Icc)
+  refine hbig.mono_set (Set.prod_mono ?_ ?_)
+  · rw [← Set.uIcc_of_le hle]
+    exact Set.uIoc_subset_uIcc
+  · rw [← Set.uIcc_of_le hle]
+    exact Set.uIoc_subset_uIcc
+
+/-! #### §2.49.10 无条件定理 -/
+
+/-- **QWZ 平凡相陈数的无条件零性**（`2 < m`）：立体角原函数层给出的全局标架
+    `Aᵢ = −½·αᵢ` 在整个 BZ 上正则、`2π`-周期、可微且导数连续，
+    故 §2.45 的 Stokes 论证无条件适用。 -/
+theorem physicalChernNumber_qwz_eq_zero (m : ℝ) (hm : 2 < m) :
+    physicalChernNumber (qwzCurvature m) = 0 :=
+  physicalChernNumber_qwz_eq_zero_of_stokes m (qwzA0 m) (qwzA1 m)
+    (fun k₀ k₁ => qwzCurvature_eq_derivA m k₀ k₁ hm)
+    (fun k₁ => fun k₀' => (qwzA1_hasDerivAt0 m k₀' k₁ hm).differentiableAt)
+    (fun k₀ => fun k₁' => (qwzA0_hasDerivAt1 m k₀ k₁' hm).differentiableAt)
+    (fun k₁ => qwzA1_deriv_intervalIntegrable m k₁ hm)
+    (fun k₀ => qwzA0_deriv_intervalIntegrable m k₀ hm)
+    (fun k₀ => qwzA1_deriv_intervalIntegrable_y m k₀ hm)
+    (fun k₀ k₁ => qwzA1_periodic0 m k₀ k₁)
+    (fun k₀ k₁ => qwzA0_periodic1 m k₀ k₁)
+    (qwzA1_deriv_integrableOn m hm)
+
+end StokesUnconditional
+
+/-!
+## §2.50 平凡相另一分支 `m < −2`：反射归约与整个平凡相的无条件零陈数
+
+§2.49 的无条件证明依赖 `n_z > 0`（`qwzNz_pos`），故只覆盖 `2 < m`。对 `m < −2`
+有 `n_z < 0`，且 `k = 0` 处 `n = (0, 0, −1)`（`1 + n_z = 0`），立体角原函数
+`αᵢ = (n_x∂ᵢn_y − n_y∂ᵢn_x)/(1+n_z)` 出现 Dirac 弦奇点——§2.49 的构造直接失效。
+本节改用**反射归约**绕过奇点：注意
+
+  `d(−m)(k + π) = (sin(k₀+π), sin(k₁+π), −m + cos(k₀+π) + cos(k₁+π)) = −d(m)(k)`，
+
+故 `F(m)(k) = −F(−m)(k + π)`（曲率在 `n ↦ −n` 下反号，而 `n(−m)(k+π) = −n(m)(k)`）。
+再由 BZ 双重积分对 `2π`-周期被积函数的平移不变性，得 `∫∫F(m) = −∫∫F(−m)`，
+于是 `m < −2` 的零陈数归约到已闭合的 `−m > 2` 分支。
+
+1. **反射恒等式**：`qwzDr_reflect`（`d(−m)(k+π) = −d(m)(k)`）、`qwzSqrt_reflect` /
+   `qwzS_reflect`（归一化因子不变）、`qwzCurvature_reflect`（`F(m)(k) = −F(−m)(k+π)`）。
+2. **周期性**：`qwzS_periodic0`/`qwzS_periodic1`、`qwzCurvature_periodic0`/`qwzCurvature_periodic1`
+   ——由 §2.49 的 `qwzSqrt_periodic0`/`qwzSqrt_periodic1` 下传。
+3. **BZ 双重积分的平移不变性** `bzIntegral_shift`：对两个变量均 `2π`-周期的被积函数，
+   同时平移 `π` 不改变 `bzIntegral`（`Function.Periodic.intervalIntegral_add_eq` 逐层应用）。
+4. **反号归约** `bzIntegral_qwzCurvature_reflect`：`∫∫F(m) = −∫∫F(−m)`。
+5. **无条件定理** `physicalChernNumber_qwz_eq_zero_of_neg`：`m < −2 ⟹ C = 0`，无条件。
+6. **合并** `physicalChernNumber_qwz_eq_zero_of_abs_gt_two`：`|m| > 2 ⟹ C = 0`，无条件。
+
+**诚实边界**：`|m| > 2`（整个平凡相）的零陈数至此**无条件**闭合。**仍开放**：
+`|m| < 2`（非平凡相）的非零陈数 `C = sgn m`（椭圆积分 / `T² → S²` 度理论）；
+`m = ±2`（能隙闭合）。
+-/
+
+section QWZTrivialPhaseReflect
+
+/-- `qwzS = ↑qwzSqrt`（定义展开）。 -/
+theorem qwzS_eq_sqrt (m k₀ k₁ : ℝ) : qwzS m k₀ k₁ = (qwzSqrt m k₀ k₁ : ℂ) := rfl
+
+/-- **`d` 的反射**：`d(−m)(k + π) = −d(m)(k)`。 -/
+theorem qwzDr_reflect (m k₀ k₁ : ℝ) :
+    qwzDr (-m) (k₀ + Real.pi) (k₁ + Real.pi) = -qwzDr m k₀ k₁ := by
+  funext i
+  fin_cases i
+  · simp [qwzDr, Real.sin_add_pi]
+  · simp [qwzDr, Real.sin_add_pi]
+  · simp [qwzDr, Real.cos_add_pi]
+    ring
+
+/-- **归一化因子的反射不变性**：`|d(−m)(k + π)| = |d(m)(k)|`。 -/
+theorem qwzSqrt_reflect (m k₀ k₁ : ℝ) :
+    qwzSqrt (-m) (k₀ + Real.pi) (k₁ + Real.pi) = qwzSqrt m k₀ k₁ := by
+  unfold qwzSqrt
+  rw [qwzDr_sq, qwzDr_sq]
+  congr 1
+  simp only [Real.sin_add_pi, Real.cos_add_pi]
+  ring
+
+theorem qwzS_reflect (m k₀ k₁ : ℝ) :
+    qwzS (-m) (k₀ + Real.pi) (k₁ + Real.pi) = qwzS m k₀ k₁ := by
+  rw [qwzS_eq_sqrt, qwzS_eq_sqrt, qwzSqrt_reflect]
+
+theorem qwzS_periodic0 (m k₀ k₁ : ℝ) :
+    qwzS m (k₀ + 2 * Real.pi) k₁ = qwzS m k₀ k₁ := by
+  rw [qwzS_eq_sqrt, qwzS_eq_sqrt, qwzSqrt_periodic0]
+
+theorem qwzS_periodic1 (m k₀ k₁ : ℝ) :
+    qwzS m k₀ (k₁ + 2 * Real.pi) = qwzS m k₀ k₁ := by
+  rw [qwzS_eq_sqrt, qwzS_eq_sqrt, qwzSqrt_periodic1]
+
+theorem qwzCurvature_periodic0 (m k₀ k₁ : ℝ) :
+    qwzCurvature m (k₀ + 2 * Real.pi) k₁ = qwzCurvature m k₀ k₁ := by
+  rw [qwzCurvature_eq, qwzCurvature_eq, qwzS_periodic0]
+  simp only [Real.cos_add_two_pi]
+
+theorem qwzCurvature_periodic1 (m k₀ k₁ : ℝ) :
+    qwzCurvature m k₀ (k₁ + 2 * Real.pi) = qwzCurvature m k₀ k₁ := by
+  rw [qwzCurvature_eq, qwzCurvature_eq, qwzS_periodic1]
+  simp only [Real.cos_add_two_pi]
+
+/-- **曲率的反射**：`F(m)(k) = −F(−m)(k + π)`。 -/
+theorem qwzCurvature_reflect (m k₀ k₁ : ℝ) :
+    qwzCurvature m k₀ k₁ = -qwzCurvature (-m) (k₀ + Real.pi) (k₁ + Real.pi) := by
+  have h1 := qwzCurvature_eq m k₀ k₁
+  have h2 := qwzCurvature_eq (-m) (k₀ + Real.pi) (k₁ + Real.pi)
+  rw [h1, h2, qwzS_reflect]
+  simp only [Real.cos_add_pi]
+  push_cast
+  ring
+
+/-- **BZ 双重积分的平移不变性**：对两个变量均 `2π`-周期的被积函数，
+    同时平移 `π` 不改变 `bzIntegral`。 -/
+theorem bzIntegral_shift (F : ℝ → ℝ → ℂ)
+    (h0 : ∀ x y, F (x + 2 * Real.pi) y = F x y)
+    (h1 : ∀ x y, F x (y + 2 * Real.pi) = F x y) :
+    bzIntegral (fun x y => F (x + Real.pi) (y + Real.pi)) = bzIntegral F := by
+  unfold bzIntegral
+  have hinner : ∀ x : ℝ,
+      (∫ y in (0 : ℝ)..(2 * Real.pi), F (x + Real.pi) (y + Real.pi))
+        = ∫ y in (0 : ℝ)..(2 * Real.pi), F (x + Real.pi) y := by
+    intro x
+    rw [intervalIntegral.integral_comp_add_right (fun y : ℝ => F (x + Real.pi) y) (Real.pi)]
+    simp only [zero_add]
+    rw [add_comm (2 * Real.pi) Real.pi]
+    have hper : Function.Periodic (fun y : ℝ => F (x + Real.pi) y) (2 * Real.pi) :=
+      fun y => h1 (x + Real.pi) y
+    rw [hper.intervalIntegral_add_eq Real.pi 0]
+    simp only [zero_add]
+  simp_rw [hinner]
+  have houter : (∫ x in (0 : ℝ)..(2 * Real.pi),
+        ∫ y in (0 : ℝ)..(2 * Real.pi), F (x + Real.pi) y)
+      = ∫ x in (0 : ℝ)..(2 * Real.pi), ∫ y in (0 : ℝ)..(2 * Real.pi), F x y := by
+    rw [intervalIntegral.integral_comp_add_right
+      (fun x : ℝ => ∫ y in (0 : ℝ)..(2 * Real.pi), F x y) (Real.pi)]
+    simp only [zero_add]
+    rw [add_comm (2 * Real.pi) Real.pi]
+    have hper : Function.Periodic
+        (fun x : ℝ => ∫ y in (0 : ℝ)..(2 * Real.pi), F x y) (2 * Real.pi) := by
+      intro x
+      simp_rw [h0 x]
+    rw [hper.intervalIntegral_add_eq Real.pi 0]
+    simp only [zero_add]
+  exact houter
+
+/-- **`bzIntegral` 的反射反号**：`∫∫ F(m) = −∫∫ F(−m)`。 -/
+theorem bzIntegral_qwzCurvature_reflect (m : ℝ) :
+    bzIntegral (qwzCurvature m) = -bzIntegral (qwzCurvature (-m)) := by
+  have hshift := bzIntegral_shift (qwzCurvature (-m))
+    (fun x y => qwzCurvature_periodic0 (-m) x y)
+    (fun x y => qwzCurvature_periodic1 (-m) x y)
+  have h1 : qwzCurvature m
+      = fun x y => -qwzCurvature (-m) (x + Real.pi) (y + Real.pi) := by
+    funext x y; exact qwzCurvature_reflect m x y
+  rw [h1, bzIntegral_neg (fun x y => qwzCurvature (-m) (x + Real.pi) (y + Real.pi)), hshift]
+
+/-- **`m < −2` 时的无条件零陈数**（经反射归约到 `−m > 2` 分支）。 -/
+theorem physicalChernNumber_qwz_eq_zero_of_neg (m : ℝ) (hm : m < -2) :
+    physicalChernNumber (qwzCurvature m) = 0 := by
+  have hpos : 2 < -m := by linarith
+  have hreflect : physicalChernNumber (qwzCurvature m)
+      = -physicalChernNumber (qwzCurvature (-m)) := by
+    unfold physicalChernNumber
+    rw [bzIntegral_qwzCurvature_reflect]
+    ring
+  rw [hreflect, physicalChernNumber_qwz_eq_zero (-m) hpos, neg_zero]
+
+/-- **整个平凡相 `|m| > 2` 的无条件零陈数**：合并 `2 < m` 与 `m < −2` 两分支。 -/
+theorem physicalChernNumber_qwz_eq_zero_of_abs_gt_two (m : ℝ) (hm : 2 < |m|) :
+    physicalChernNumber (qwzCurvature m) = 0 := by
+  by_cases hm0 : 0 ≤ m
+  · exact physicalChernNumber_qwz_eq_zero m (by rwa [abs_of_nonneg hm0] at hm)
+  · exact physicalChernNumber_qwz_eq_zero_of_neg m (by
+      have hlt : m < 0 := not_le.mp hm0
+      rw [abs_of_neg hlt] at hm; linarith)
+
+end QWZTrivialPhaseReflect
+
+
+section QWZNonTrivialPhaseProbe
+
+/-- `σ = sin²k₀ + sin²k₁`（平方根分母的"径向"部分）。 -/
+noncomputable def qwzSigma (k₀ k₁ : ℝ) : ℝ := Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2
+
+theorem qwzSigma_eq (m k₀ k₁ : ℝ) :
+    qwzSigma k₀ k₁ = qwzSqrt m k₀ k₁ ^ 2 - qwzC m k₀ k₁ ^ 2 := by
+  rw [qwzSqrt_sq_trig]
+  unfold qwzSigma qwzC
+  ring
+
+theorem qwzSqrt_pos_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    0 < qwzSqrt m k₀ k₁ := by
+  rw [qwzSqrt]
+  refine Real.sqrt_pos.mpr ?_
+  rw [qwzDr_sq]
+  have hu : Real.cos k₀ ^ 2 ≤ 1 := by nlinarith [Real.neg_one_le_cos k₀, Real.cos_le_one k₀]
+  have hv : Real.cos k₁ ^ 2 ≤ 1 := by nlinarith [Real.neg_one_le_cos k₁, Real.cos_le_one k₁]
+  have key : (m + Real.cos k₀ + Real.cos k₁) ^ 2 + Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2
+      = (1 - Real.cos k₀ ^ 2) + (1 - Real.cos k₁ ^ 2)
+        + (m + Real.cos k₀ + Real.cos k₁) ^ 2 := by
+    have h0 := Real.sin_sq_add_cos_sq k₀
+    have h1 := Real.sin_sq_add_cos_sq k₁
+    linarith
+  rw [key]
+  have hE : 0 ≤ (1 - Real.cos k₀ ^ 2) + (1 - Real.cos k₁ ^ 2)
+      + (m + Real.cos k₀ + Real.cos k₁) ^ 2 := by
+    nlinarith [hu, hv, sq_nonneg (m + Real.cos k₀ + Real.cos k₁)]
+  refine lt_of_le_of_ne hE ?_
+  intro h0E
+  have hu1 : Real.cos k₀ ^ 2 = 1 := by
+    nlinarith [hu, hv, sq_nonneg (m + Real.cos k₀ + Real.cos k₁)]
+  have hv1 : Real.cos k₁ ^ 2 = 1 := by
+    nlinarith [hu, hv, sq_nonneg (m + Real.cos k₀ + Real.cos k₁)]
+  have hmv : m + Real.cos k₀ + Real.cos k₁ = 0 := by
+    nlinarith [hu, hv, sq_nonneg (m + Real.cos k₀ + Real.cos k₁)]
+  rcases sq_eq_one_iff.mp hu1 with h | h <;> rcases sq_eq_one_iff.mp hv1 with h' | h' <;> linarith
+
+theorem qwzV_eq_sigma (m k₀ k₁ : ℝ) (h : qwzSqrt m k₀ k₁ ≠ qwzC m k₀ k₁) :
+    qwzV m k₀ k₁ = qwzSigma k₀ k₁ / 2
+      + qwzSigma k₀ k₁ ^ 2 / (2 * (qwzSqrt m k₀ k₁ - qwzC m k₀ k₁) ^ 2) := by
+  have hσ : qwzSigma k₀ k₁
+      = (qwzSqrt m k₀ k₁ - qwzC m k₀ k₁) * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁) := by
+    rw [qwzSigma_eq]; ring
+  have hd : qwzSqrt m k₀ k₁ - qwzC m k₀ k₁ ≠ 0 := sub_ne_zero.mpr h
+  unfold qwzV
+  rw [hσ]
+  field_simp
+  ring
+
+theorem qwzV_eq_zero_iff (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    qwzV m k₀ k₁ = 0 ↔ Real.cos k₀ = -1 ∧ Real.cos k₁ = -1 := by
+  constructor
+  · intro hV
+    have hs : qwzSqrt m k₀ k₁ ≠ 0 := ne_of_gt (qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2)
+    have hsc : qwzSqrt m k₀ k₁ + qwzC m k₀ k₁ = 0 := by
+      unfold qwzV at hV
+      rcases mul_eq_zero.mp hV with h | h
+      · exact absurd h hs
+      · exact h
+    have hcle : qwzC m k₀ k₁ ≤ 0 := by
+      have hpos := qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2
+      linarith
+    have hσ0 : qwzSigma k₀ k₁ = 0 := by
+      rw [qwzSigma_eq]
+      have hs_eq : qwzSqrt m k₀ k₁ = -qwzC m k₀ k₁ := by linarith
+      rw [hs_eq]; ring
+    unfold qwzSigma at hσ0
+    have hs0 : Real.sin k₀ = 0 := by
+      have h2 : Real.sin k₀ ^ 2 = 0 := by
+        nlinarith [sq_nonneg (Real.sin k₀), sq_nonneg (Real.sin k₁)]
+      exact sq_eq_zero_iff.mp h2
+    have hs1 : Real.sin k₁ = 0 := by
+      have h2 : Real.sin k₁ ^ 2 = 0 := by
+        nlinarith [sq_nonneg (Real.sin k₀), sq_nonneg (Real.sin k₁)]
+      exact sq_eq_zero_iff.mp h2
+    have hc0 : Real.cos k₀ = 1 ∨ Real.cos k₀ = -1 := by
+      refine sq_eq_one_iff.mp ?_
+      nlinarith [Real.sin_sq_add_cos_sq k₀]
+    have hc1 : Real.cos k₁ = 1 ∨ Real.cos k₁ = -1 := by
+      refine sq_eq_one_iff.mp ?_
+      nlinarith [Real.sin_sq_add_cos_sq k₁]
+    unfold qwzC at hcle
+    rcases hc0 with h | h
+    · rcases hc1 with h' | h'
+      · exfalso; rw [h, h'] at hcle; linarith
+      · exfalso; rw [h, h'] at hcle; linarith
+    · rcases hc1 with h' | h'
+      · exfalso; rw [h, h'] at hcle; linarith
+      · exact ⟨h, h'⟩
+  · rintro ⟨h0, h1⟩
+    have hs0 : Real.sin k₀ = 0 := by
+      have h2 : Real.cos k₀ ^ 2 = 1 := by rw [h0]; norm_num
+      nlinarith [Real.sin_sq_add_cos_sq k₀]
+    have hs1 : Real.sin k₁ = 0 := by
+      have h2 : Real.cos k₁ ^ 2 = 1 := by rw [h1]; norm_num
+      nlinarith [Real.sin_sq_add_cos_sq k₁]
+    have hc : qwzC m k₀ k₁ = m - 2 := by unfold qwzC; rw [h0, h1]; ring
+    have hssq : qwzSqrt m k₀ k₁ ^ 2 = (2 - m) ^ 2 := by
+      rw [qwzSqrt_sq_trig, hs0, hs1, h0, h1]
+      ring
+    have hsval : qwzSqrt m k₀ k₁ = 2 - m := by
+      have hpos := qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2
+      have hfac : (qwzSqrt m k₀ k₁ - (2 - m)) * (qwzSqrt m k₀ k₁ + (2 - m)) = 0 := by
+        nlinarith [hssq]
+      rcases mul_eq_zero.mp hfac with hf | hf
+      · linarith
+      · linarith
+    unfold qwzV
+    rw [hsval, hc]
+    ring
+
+theorem qwzV_ne_zero_of_cos_ne (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (h : Real.cos k₁ ≠ -1) : qwzV m k₀ k₁ ≠ 0 := by
+  intro hV
+  exact h ((qwzV_eq_zero_iff m k₀ k₁ hm0 hm2).mp hV).2
+
+end QWZNonTrivialPhaseProbe
+
+section QWZNonTrivialPhaseReduction
+open MeasureTheory
+
+/-! #### §2.52 非平凡相归约（`0 < m < 2`）
+
+对固定的 `k₁` 满足 `cos k₁ ≠ −1`，`V(·, k₁)` 在 `[0, 2π]` 上无零点，
+故立体角原函数 `α₀, α₁` 沿该线光滑。本节建立：
+
+1. `V ≠ 0` 处的逐点旋度恒等式 `F = −½·(∂₀α₁ − ∂₁α₀)`；
+2. 沿 `k₀` 的 FTC + 周期性：`∫₀^{2π} ∂₀α₁ dk₀ = 0`；
+3. 核心归约：`∫₀^{2π} F dk₀ = ½·∫₀^{2π} ∂₁α₀ dk₀`。 -/
+
+/-- `0 < m < 2` 时 `d·d > 0`（`s = √(d·d)` 的 radicand 正性）。 -/
+theorem qwzDot_sq_pos_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    0 < dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) := by
+  have h := qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2
+  rw [qwzSqrt, Real.sqrt_pos] at h
+  exact h
+
+/-- `s` 关于 `k₀` 的 HasDerivAt（`0 < m < 2` 版）。 -/
+theorem qwzSqrt_hasDerivAt0_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    HasDerivAt (fun k₀' => qwzSqrt m k₀' k₁) (qwzDs0 m k₀ k₁) k₀ := by
+  have hne : dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) ≠ 0 :=
+    ne_of_gt (qwzDot_sq_pos_of_mem m k₀ k₁ hm0 hm2)
+  have hs := (qwzDot_hasDerivAt0 m k₀ k₁).sqrt hne
+  have hfun : (fun k₀' => qwzSqrt m k₀' k₁)
+      = fun y => Real.sqrt (dot3r (qwzDr m y k₁) (qwzDr m y k₁)) := by
+    funext t; rfl
+  have hv : (-2 * Real.sin k₀ * (m + Real.cos k₁))
+      / (2 * Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁))) = qwzDs0 m k₀ k₁ := by
+    unfold qwzDs0
+    rw [show qwzSqrt m k₀ k₁
+        = Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) from rfl]
+    have hne' : Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) ≠ 0 :=
+      ne_of_gt (Real.sqrt_pos.mpr (qwzDot_sq_pos_of_mem m k₀ k₁ hm0 hm2))
+    field_simp
+  rw [hfun]
+  rw [hv] at hs
+  exact hs
+
+/-- `s` 关于 `k₁` 的 HasDerivAt（`0 < m < 2` 版）。 -/
+theorem qwzSqrt_hasDerivAt1_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    HasDerivAt (fun k₁' => qwzSqrt m k₀ k₁') (qwzDs1 m k₀ k₁) k₁ := by
+  have hne : dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁) ≠ 0 :=
+    ne_of_gt (qwzDot_sq_pos_of_mem m k₀ k₁ hm0 hm2)
+  have hs := (qwzDot_hasDerivAt1 m k₀ k₁).sqrt hne
+  have hfun : (fun k₁' => qwzSqrt m k₀ k₁')
+      = fun y => Real.sqrt (dot3r (qwzDr m k₀ y) (qwzDr m k₀ y)) := by
+    funext t; rfl
+  have hv : (-2 * Real.sin k₁ * (m + Real.cos k₀))
+      / (2 * Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁))) = qwzDs1 m k₀ k₁ := by
+    unfold qwzDs1
+    rw [show qwzSqrt m k₀ k₁
+        = Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) from rfl]
+    have hne' : Real.sqrt (dot3r (qwzDr m k₀ k₁) (qwzDr m k₀ k₁)) ≠ 0 :=
+      ne_of_gt (Real.sqrt_pos.mpr (qwzDot_sq_pos_of_mem m k₀ k₁ hm0 hm2))
+    field_simp
+  rw [hfun]
+  rw [hv] at hs
+  exact hs
+
+/-- `V` 关于 `k₀` 的 HasDerivAt（`0 < m < 2` 版；`V` 处处可微，无需非零条件）。 -/
+theorem qwzV_hasDerivAt0_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    HasDerivAt (fun k₀' => qwzV m k₀' k₁) (qwzVd0 m k₀ k₁) k₀ := by
+  have hs := qwzSqrt_hasDerivAt0_of_mem m k₀ k₁ hm0 hm2
+  have hc := qwzC_hasDerivAt0 m k₀ k₁
+  have hsc : HasDerivAt (fun k₀' => qwzSqrt m k₀' k₁ + qwzC m k₀' k₁)
+      (qwzDs0 m k₀ k₁ + (-(Real.sin k₀))) k₀ := hs.add hc
+  have hprod := hs.mul hsc
+  have hv : qwzDs0 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+      + qwzSqrt m k₀ k₁ * (qwzDs0 m k₀ k₁ + -(Real.sin k₀)) = qwzVd0 m k₀ k₁ := by
+    unfold qwzVd0; ring
+  rw [hv] at hprod
+  exact hprod
+
+/-- `V` 关于 `k₁` 的 HasDerivAt（`0 < m < 2` 版）。 -/
+theorem qwzV_hasDerivAt1_of_mem (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    HasDerivAt (fun k₁' => qwzV m k₀ k₁') (qwzVd1 m k₀ k₁) k₁ := by
+  have hs := qwzSqrt_hasDerivAt1_of_mem m k₀ k₁ hm0 hm2
+  have hc := qwzC_hasDerivAt1 m k₀ k₁
+  have hsc : HasDerivAt (fun k₁' => qwzSqrt m k₀ k₁' + qwzC m k₀ k₁')
+      (qwzDs1 m k₀ k₁ + (-(Real.sin k₁))) k₁ := hs.add hc
+  have hprod := hs.mul hsc
+  have hv : qwzDs1 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁)
+      + qwzSqrt m k₀ k₁ * (qwzDs1 m k₀ k₁ + -(Real.sin k₁)) = qwzVd1 m k₀ k₁ := by
+    unfold qwzVd1; ring
+  rw [hv] at hprod
+  exact hprod
+
+/-- `α₁` 关于 `k₀` 的 HasDerivAt（商法则，`V ≠ 0` 版）。 -/
+theorem qwzAlpha1_hasDerivAt0_of_V_ne_zero (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hV : qwzV m k₀ k₁ ≠ 0) :
+    HasDerivAt (fun k₀' => qwzAlpha1 m k₀' k₁) (qwzAlpha1d0 m k₀ k₁) k₀ := by
+  have hnum : HasDerivAt (fun k₀' => Real.sin k₀' * Real.cos k₁)
+      (Real.cos k₀ * Real.cos k₁) k₀ :=
+    (Real.hasDerivAt_sin k₀).mul_const (Real.cos k₁)
+  have hden := qwzV_hasDerivAt0_of_mem m k₀ k₁ hm0 hm2
+  exact hnum.div hden hV
+
+/-- `α₀` 关于 `k₁` 的 HasDerivAt（商法则，`V ≠ 0` 版）。 -/
+theorem qwzAlpha0_hasDerivAt1_of_V_ne_zero (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hV : qwzV m k₀ k₁ ≠ 0) :
+    HasDerivAt (fun k₁' => qwzAlpha0 m k₀ k₁') (qwzAlpha0d1 m k₀ k₁) k₁ := by
+  have hnum : HasDerivAt (fun k₁' => -(Real.sin k₁' * Real.cos k₀))
+      (-(Real.cos k₁ * Real.cos k₀)) k₁ :=
+    ((Real.hasDerivAt_sin k₁).mul_const (Real.cos k₀)).neg
+  have hden := qwzV_hasDerivAt1_of_mem m k₀ k₁ hm0 hm2
+  have h := hnum.div hden hV
+  have hv : (-(Real.cos k₁ * Real.cos k₀) * qwzV m k₀ k₁
+      - -(Real.sin k₁ * Real.cos k₀) * qwzVd1 m k₀ k₁) / qwzV m k₀ k₁ ^ 2
+      = qwzAlpha0d1 m k₀ k₁ := by
+    unfold qwzAlpha0d1; ring
+  rw [hv] at h
+  exact h
+
+/-- **旋度恒等式（`V ≠ 0` 版）**：`∂₀α₁ − ∂₁α₀ = (cos k₀ + cos k₁ + m·cos k₀cos k₁)/s³`。
+    与 `qwzAlpha_curl` 同一多项式证书，仅正性来源不同（`s > 0` 由 `0 < m < 2` 给、
+    `s + c ≠ 0` 由 `V ≠ 0` 与 `s ≠ 0` 给）。 -/
+theorem qwzAlpha_curl_of_V_ne_zero (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hV : qwzV m k₀ k₁ ≠ 0) :
+    qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁
+      = (Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁) / qwzSqrt m k₀ k₁ ^ 3 := by
+  have hs := qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2
+  have hsne : qwzSqrt m k₀ k₁ ≠ 0 := ne_of_gt hs
+  have hVne : qwzV m k₀ k₁ ≠ 0 := hV
+  have hsc' : qwzSqrt m k₀ k₁ + (m + Real.cos k₀ + Real.cos k₁) ≠ 0 := by
+    intro hsc
+    apply hV
+    unfold qwzV qwzC
+    rw [hsc]
+    ring
+  have hs2 : qwzSqrt m k₀ k₁ ^ 2
+      = Real.sin k₀ ^ 2 + Real.sin k₁ ^ 2 + (m + Real.cos k₀ + Real.cos k₁) ^ 2 :=
+    qwzSqrt_sq_trig m k₀ k₁
+  have hp : Real.sin k₀ ^ 2 + Real.cos k₀ ^ 2 = 1 := Real.sin_sq_add_cos_sq k₀
+  have hr : Real.sin k₁ ^ 2 + Real.cos k₁ ^ 2 = 1 := Real.sin_sq_add_cos_sq k₁
+  unfold qwzAlpha1d0 qwzAlpha0d1 qwzV qwzVd0 qwzVd1 qwzDs0 qwzDs1 qwzC
+  field_simp [hsc']
+  linear_combination
+    (2 * Real.cos k₁ * Real.cos k₀ * qwzSqrt m k₀ k₁
+        + (2 * Real.cos k₁ * Real.cos k₀ * (m + Real.cos k₀ + Real.cos k₁)
+            + Real.sin k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            - (Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁))) * hs2
+    + ((2 * m * Real.cos k₁ + 2 * Real.cos k₀ * Real.cos k₁ + 2 * Real.cos k₁ ^ 2)
+          * qwzSqrt m k₀ k₁
+        + (2 * m ^ 2 * Real.cos k₁ + 4 * m * Real.cos k₀ * Real.cos k₁
+            + 4 * m * Real.cos k₁ ^ 2 + Real.sin k₀ ^ 2 * Real.cos k₁
+            + 2 * Real.cos k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            + 5 * Real.cos k₀ * Real.cos k₁ ^ 2 - Real.cos k₀
+            + Real.sin k₁ ^ 2 * Real.cos k₁ + 2 * Real.cos k₁ ^ 3)) * hp
+    + ((2 * m * Real.cos k₀ + 2 * Real.cos k₀ ^ 2 + 2 * Real.cos k₀ * Real.cos k₁)
+          * qwzSqrt m k₀ k₁
+        + (2 * m ^ 2 * Real.cos k₀ + 4 * m * Real.cos k₀ ^ 2
+            + 4 * m * Real.cos k₀ * Real.cos k₁ + Real.cos k₀ ^ 3
+            + 4 * Real.cos k₀ ^ 2 * Real.cos k₁ + Real.cos k₀ * Real.sin k₁ ^ 2
+            + 2 * Real.cos k₀ * Real.cos k₁ ^ 2 + Real.cos k₀)) * hr
+
+/-- **逐点曲率-旋度恒等式（`V ≠ 0` 版）**：
+    `F = −½·(∂₀α₁ − ∂₁α₀)`（复提升）。 -/
+theorem qwzCurvature_eq_curl_of_V_ne_zero (m k₀ k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hV : qwzV m k₀ k₁ ≠ 0) :
+    qwzCurvature m k₀ k₁
+      = ((↑(-(1 / 2) * (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁)) : ℂ)) := by
+  rw [qwzAlpha_curl_of_V_ne_zero m k₀ k₁ hm0 hm2 hV, qwzCurvature_eq, qwzS]
+  simp only [qwzSqrt]
+  push_cast
+  ring
+
+/-! ##### 固定 `k₁` 的连续性（`cos k₁ ≠ −1` 时 `V(·, k₁)` 不消失） -/
+
+/-- `s(·, k₁)` 连续（任意 `m`）。 -/
+theorem qwzSqrt_continuous_right (m k₁ : ℝ) :
+    Continuous fun k₀ => qwzSqrt m k₀ k₁ := by
+  simp only [qwzSqrt, dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one,
+    Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+  fun_prop
+
+/-- `c(·, k₁)` 连续。 -/
+theorem qwzC_continuous_right (m k₁ : ℝ) :
+    Continuous fun k₀ => qwzC m k₀ k₁ := by
+  unfold qwzC
+  fun_prop
+
+/-- `Ds0(·, k₁)` 连续（`0 < m < 2`，`s > 0`）。 -/
+theorem qwzDs0_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₀ => qwzDs0 m k₀ k₁ := by
+  have hs : Continuous fun k₀ => qwzSqrt m k₀ k₁ := qwzSqrt_continuous_right m k₁
+  have hne : ∀ k₀, qwzSqrt m k₀ k₁ ≠ 0 :=
+    fun k₀ => ne_of_gt (qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2)
+  unfold qwzDs0
+  refine Continuous.div ?_ hs hne
+  fun_prop
+
+/-- `Ds1(·, k₁)` 连续（`0 < m < 2`）。 -/
+theorem qwzDs1_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₀ => qwzDs1 m k₀ k₁ := by
+  have hs : Continuous fun k₀ => qwzSqrt m k₀ k₁ := qwzSqrt_continuous_right m k₁
+  have hne : ∀ k₀, qwzSqrt m k₀ k₁ ≠ 0 :=
+    fun k₀ => ne_of_gt (qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2)
+  unfold qwzDs1
+  refine Continuous.div ?_ hs hne
+  fun_prop
+
+/-- `V(·, k₁)` 连续。 -/
+theorem qwzV_continuous_right (m k₁ : ℝ) :
+    Continuous fun k₀ => qwzV m k₀ k₁ := by
+  have hs := qwzSqrt_continuous_right m k₁
+  have hc := qwzC_continuous_right m k₁
+  unfold qwzV
+  exact hs.mul (hs.add hc)
+
+/-- `Vd0(·, k₁)` 连续（`0 < m < 2`）。 -/
+theorem qwzVd0_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₀ => qwzVd0 m k₀ k₁ := by
+  have hs : Continuous fun k₀ => qwzSqrt m k₀ k₁ := qwzSqrt_continuous_right m k₁
+  have hc : Continuous fun k₀ => qwzC m k₀ k₁ := qwzC_continuous_right m k₁
+  have hd : Continuous fun k₀ => qwzDs0 m k₀ k₁ := qwzDs0_continuous_right m k₁ hm0 hm2
+  have h1 : Continuous fun k₀ =>
+      qwzDs0 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁) :=
+    hd.mul (hs.add hc)
+  have h2 : Continuous fun k₀ =>
+      qwzSqrt m k₀ k₁ * (qwzDs0 m k₀ k₁ - Real.sin k₀) :=
+    hs.mul (hd.sub Real.continuous_sin)
+  unfold qwzVd0
+  exact h1.add h2
+
+/-- `Vd1(·, k₁)` 连续（`0 < m < 2`）。 -/
+theorem qwzVd1_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₀ => qwzVd1 m k₀ k₁ := by
+  have hs : Continuous fun k₀ => qwzSqrt m k₀ k₁ := qwzSqrt_continuous_right m k₁
+  have hc : Continuous fun k₀ => qwzC m k₀ k₁ := qwzC_continuous_right m k₁
+  have hd : Continuous fun k₀ => qwzDs1 m k₀ k₁ := qwzDs1_continuous_right m k₁ hm0 hm2
+  have h1 : Continuous fun k₀ =>
+      qwzDs1 m k₀ k₁ * (qwzSqrt m k₀ k₁ + qwzC m k₀ k₁) :=
+    hd.mul (hs.add hc)
+  have h2 : Continuous fun k₀ =>
+      qwzSqrt m k₀ k₁ * (qwzDs1 m k₀ k₁ - Real.sin k₁) :=
+    hs.mul (hd.sub continuous_const)
+  unfold qwzVd1
+  exact h1.add h2
+
+/-- `α1d0(·, k₁)` 连续（`cos k₁ ≠ −1` 时分母 `V²` 不消失）。 -/
+theorem qwzAlpha1d0_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    Continuous fun k₀ => qwzAlpha1d0 m k₀ k₁ := by
+  have hVne : ∀ k₀, qwzV m k₀ k₁ ≠ 0 :=
+    fun k₀ => qwzV_ne_zero_of_cos_ne m k₀ k₁ hm0 hm2 hk
+  have hV2ne : ∀ k₀, qwzV m k₀ k₁ ^ 2 ≠ 0 := fun k₀ => pow_ne_zero 2 (hVne k₀)
+  have hV : Continuous fun k₀ => qwzV m k₀ k₁ := qwzV_continuous_right m k₁
+  have hVd : Continuous fun k₀ => qwzVd0 m k₀ k₁ := qwzVd0_continuous_right m k₁ hm0 hm2
+  have hnum : Continuous fun k₀ =>
+      Real.cos k₀ * Real.cos k₁ * qwzV m k₀ k₁
+        - (Real.sin k₀ * Real.cos k₁) * qwzVd0 m k₀ k₁ :=
+    ((Real.continuous_cos.mul_const (Real.cos k₁)).mul hV).sub
+      ((Real.continuous_sin.mul_const (Real.cos k₁)).mul hVd)
+  unfold qwzAlpha1d0
+  exact hnum.div (hV.pow 2) hV2ne
+
+/-- `α0d1(·, k₁)` 连续（`cos k₁ ≠ −1`）。 -/
+theorem qwzAlpha0d1_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    Continuous fun k₀ => qwzAlpha0d1 m k₀ k₁ := by
+  have hVne : ∀ k₀, qwzV m k₀ k₁ ≠ 0 :=
+    fun k₀ => qwzV_ne_zero_of_cos_ne m k₀ k₁ hm0 hm2 hk
+  have hV2ne : ∀ k₀, qwzV m k₀ k₁ ^ 2 ≠ 0 := fun k₀ => pow_ne_zero 2 (hVne k₀)
+  have hV : Continuous fun k₀ => qwzV m k₀ k₁ := qwzV_continuous_right m k₁
+  have hVd : Continuous fun k₀ => qwzVd1 m k₀ k₁ := qwzVd1_continuous_right m k₁ hm0 hm2
+  have hc : Continuous fun k₀ => Real.cos k₀ := Real.continuous_cos
+  have hnum : Continuous fun k₀ =>
+      -(Real.cos k₁ * Real.cos k₀) * qwzV m k₀ k₁
+        + (Real.sin k₁ * Real.cos k₀) * qwzVd1 m k₀ k₁ :=
+    ((continuous_const.mul hc).neg.mul hV).add
+      ((continuous_const.mul hc).mul hVd)
+  unfold qwzAlpha0d1
+  exact hnum.div (hV.pow 2) hV2ne
+
+/-- `qwzCurvature(·, k₁)` 连续（`0 < m < 2`，复值）。 -/
+theorem qwzCurvature_continuous_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₀ => qwzCurvature m k₀ k₁ := by
+  have hne : ∀ k₀, qwzSqrt m k₀ k₁ ≠ 0 :=
+    fun k₀ => ne_of_gt (qwzSqrt_pos_of_mem m k₀ k₁ hm0 hm2)
+  have hs : Continuous fun k₀ => qwzSqrt m k₀ k₁ := qwzSqrt_continuous_right m k₁
+  have hsc : Continuous fun k₀ => ((qwzSqrt m k₀ k₁ : ℝ) : ℂ) :=
+    Complex.continuous_ofReal.comp hs
+  have hinv : Continuous fun k₀ => ((qwzSqrt m k₀ k₁ : ℝ) : ℂ)⁻¹ :=
+    hsc.inv₀ fun k₀ => Complex.ofReal_ne_zero.mpr (hne k₀)
+  have hpoly : Continuous fun k₀ =>
+      ((Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ : ℝ) : ℂ) := by
+    refine Complex.continuous_ofReal.comp ?_
+    have hc : Continuous fun k₀ => Real.cos k₀ := Real.continuous_cos
+    exact (hc.add continuous_const).add
+      ((continuous_const.mul hc).mul continuous_const)
+  have hfun : (fun k₀ => qwzCurvature m k₀ k₁)
+      = fun k₀ => -(1 / 2 : ℂ) * ((1 / (qwzSqrt m k₀ k₁ : ℂ)) ^ 3
+        * ((Real.cos k₀ + Real.cos k₁ + m * Real.cos k₀ * Real.cos k₁ : ℝ) : ℂ)) := by
+    funext k₀
+    rw [qwzCurvature_eq, qwzS]
+    simp only [qwzSqrt]
+  rw [hfun]
+  simp only [one_div]
+  exact (continuous_const.mul ((hinv.pow 3).mul hpoly))
+
+/-! ##### 区间可积性推论 -/
+
+theorem qwzAlpha1d0_intervalIntegrable_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    IntervalIntegrable (fun k₀ => qwzAlpha1d0 m k₀ k₁) volume 0 (2 * Real.pi) := by
+  exact (qwzAlpha1d0_continuous_right m k₁ hm0 hm2 hk).intervalIntegrable 0 _
+
+theorem qwzAlpha0d1_intervalIntegrable_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    IntervalIntegrable (fun k₀ => qwzAlpha0d1 m k₀ k₁) volume 0 (2 * Real.pi) := by
+  exact (qwzAlpha0d1_continuous_right m k₁ hm0 hm2 hk).intervalIntegrable 0 _
+
+theorem qwzCurvature_intervalIntegrable_right (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    IntervalIntegrable (fun k₀ => qwzCurvature m k₀ k₁) volume 0 (2 * Real.pi) := by
+  exact (qwzCurvature_continuous_right m k₁ hm0 hm2).intervalIntegrable 0 _
+
+/-! ##### §2.52 核心归约 -/
+
+/-- **§2.52 核心归约**：`cos k₁ ≠ −1` 时 `∫₀^{2π} F dk₀ = ½·∫₀^{2π} ∂₁α₀ dk₀`。
+    证明：`V ≠ 0` 处逐点 `F = −½·(∂₀α₁ − ∂₁α₀)`；`∫∂₀α₁ = α₁(2π) − α₁(0) = 0`
+    （FTC + `2π`-周期性）。 -/
+theorem qwz_curvature_lineIntegral_eq (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    (∫ k₀ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁)
+      = (↑((1 / 2 : ℝ) * ∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0d1 m k₀ k₁) : ℂ) := by
+  have hV : ∀ k₀, qwzV m k₀ k₁ ≠ 0 :=
+    fun k₀ => qwzV_ne_zero_of_cos_ne m k₀ k₁ hm0 hm2 hk
+  have hpt : ∀ k₀, qwzCurvature m k₀ k₁
+      = ((↑(-(1 / 2) * (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁)) : ℂ)) :=
+    fun k₀ => qwzCurvature_eq_curl_of_V_ne_zero m k₀ k₁ hm0 hm2 (hV k₀)
+  have hdiff : ∀ k₀, HasDerivAt (fun k₀' => qwzAlpha1 m k₀' k₁) (qwzAlpha1d0 m k₀ k₁) k₀ :=
+    fun k₀ => qwzAlpha1_hasDerivAt0_of_V_ne_zero m k₀ k₁ hm0 hm2 (hV k₀)
+  have h1d_int := qwzAlpha1d0_intervalIntegrable_right m k₁ hm0 hm2 hk
+  have h0d_int := qwzAlpha0d1_intervalIntegrable_right m k₁ hm0 hm2 hk
+  have hder : deriv (fun k₀' => qwzAlpha1 m k₀' k₁) = fun k₀ => qwzAlpha1d0 m k₀ k₁ := by
+    funext k₀
+    exact (hdiff k₀).deriv
+  have h1cont : ContinuousOn (fun k₀ => qwzAlpha1d0 m k₀ k₁) (Set.uIcc 0 (2 * Real.pi)) :=
+    (qwzAlpha1d0_continuous_right m k₁ hm0 hm2 hk).continuousOn
+  have h1d : (∫ k₀ in (0)..(2 * Real.pi), qwzAlpha1d0 m k₀ k₁) = 0 := by
+    rw [intervalIntegral.integral_deriv_eq_sub' _ hder
+      (fun k₀ _ => (hdiff k₀).differentiableAt) h1cont]
+    have hper : qwzAlpha1 m (2 * Real.pi) k₁ = qwzAlpha1 m 0 k₁ := by
+      simpa using qwzAlpha1_periodic0 m 0 k₁
+    rw [hper, sub_self]
+  calc (∫ k₀ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁)
+      = (∫ k₀ in (0)..(2 * Real.pi),
+          ((↑(-(1 / 2) * (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁)) : ℂ))) := by
+        refine intervalIntegral.integral_congr fun k₀ _ => hpt k₀
+    _ = ↑(∫ k₀ in (0)..(2 * Real.pi),
+          -(1 / 2) * (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁)) := by
+        rw [intervalIntegral.integral_ofReal]
+    _ = ↑(-(1 / 2) * (∫ k₀ in (0)..(2 * Real.pi),
+          (qwzAlpha1d0 m k₀ k₁ - qwzAlpha0d1 m k₀ k₁))) := by
+        rw [intervalIntegral.integral_const_mul]
+    _ = ↑(-(1 / 2) * ((∫ k₀ in (0)..(2 * Real.pi), qwzAlpha1d0 m k₀ k₁)
+          - ∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0d1 m k₀ k₁)) := by
+        rw [intervalIntegral.integral_sub h1d_int h0d_int]
+    _ = (↑((1 / 2 : ℝ) * ∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0d1 m k₀ k₁) : ℂ) := by
+        rw [h1d]
+        congr 1
+        ring
+
+end QWZNonTrivialPhaseReduction
+
+section QWZJumpLemma
+open MeasureTheory Filter
+open scoped Topology
+
+/-! #### §2.53 跳跃引理：移位坐标代数与 H 分解
+
+取移位坐标 `k₀ = p + π, k₁ = d + π`（奇点 (π,π) 移至原点）。记
+`σ(p,d) = sin²p + sin²d`、`D = (s − c)² + σ`。核心分解：
+
+1. `1/V = 2/σ − 2/D`（`d ∈ (0,π)` 时对所有 `p` 成立）；
+2. `∫ 2cos p/σ dp = 0`（arctan 原函数端点同值）；
+3. `H(d) = ∫cos p/V dp = 2∫dp/D − B(d)`，`B(d) = ∫2(1+cos p)/D dp` 有界。 -/
+
+/-- 移位后的 `c`：`(p+π, d+π)` 处 `c = m − cos p − cos d`。 -/
+theorem qwzC_shift (m p d : ℝ) :
+    qwzC m (p + Real.pi) (d + Real.pi) = m - Real.cos p - Real.cos d := by
+  unfold qwzC
+  rw [Real.cos_add_pi, Real.cos_add_pi]
+  ring
+
+/-- 移位后的 `σ`：`σ(p+π, d+π) = sin²p + sin²d`。 -/
+theorem qwzSigma_shift (p d : ℝ) :
+    qwzSigma (p + Real.pi) (d + Real.pi) = Real.sin p ^ 2 + Real.sin d ^ 2 := by
+  unfold qwzSigma
+  rw [Real.sin_add_pi, Real.sin_add_pi]
+  ring
+
+/-- 移位后的 `s²`：`s² = σ + c² = (sin²p + sin²d) + (m − cos p − cos d)²`。 -/
+theorem qwzSqrt_shift_sq (m p d : ℝ) :
+    qwzSqrt m (p + Real.pi) (d + Real.pi) ^ 2
+      = (Real.sin p ^ 2 + Real.sin d ^ 2) + (m - Real.cos p - Real.cos d) ^ 2 := by
+  rw [qwzSqrt_sq_trig, Real.cos_add_pi, Real.cos_add_pi, Real.sin_add_pi, Real.sin_add_pi]
+  ring
+
+/-- 移位后的 `α₀`：`α₀(p+π, d+π) = −sin d·cos p / V(p+π, d+π)`。 -/
+theorem qwzAlpha0_shift (m p d : ℝ) :
+    qwzAlpha0 m (p + Real.pi) (d + Real.pi)
+      = -(Real.sin d * Real.cos p) / qwzV m (p + Real.pi) (d + Real.pi) := by
+  unfold qwzAlpha0
+  rw [Real.sin_add_pi, Real.cos_add_pi]
+  ring
+
+/-- 第二分母 `D = (s − c)² + σ`（分解 `1/V = 2/σ − 2/D` 的分母）。 -/
+noncomputable def qwzD (m k₀ k₁ : ℝ) : ℝ :=
+  (qwzSqrt m k₀ k₁ - qwzC m k₀ k₁) ^ 2 + qwzSigma k₀ k₁
+
+/-- `V = σ·D / (2(s−c)²)`（`s ≠ c` 时）。 -/
+theorem qwzV_eq_sigma_mul (m k₀ k₁ : ℝ) (h : qwzSqrt m k₀ k₁ ≠ qwzC m k₀ k₁) :
+    qwzV m k₀ k₁
+      = qwzSigma k₀ k₁ * qwzD m k₀ k₁ / (2 * (qwzSqrt m k₀ k₁ - qwzC m k₀ k₁) ^ 2) := by
+  have hd : qwzSqrt m k₀ k₁ - qwzC m k₀ k₁ ≠ 0 := sub_ne_zero.mpr h
+  rw [qwzV_eq_sigma m k₀ k₁ h]
+  unfold qwzD
+  field_simp
+
+/-- **分解引理**：`1/V = 2/σ − 2/D`（`σ ≠ 0` 且 `s ≠ c`；`d ∈ (0,π)` 时恒成立）。 -/
+theorem qwz_one_div_V_eq (m k₀ k₁ : ℝ) (hσ : qwzSigma k₀ k₁ ≠ 0)
+    (hsc : qwzSqrt m k₀ k₁ ≠ qwzC m k₀ k₁) :
+    1 / qwzV m k₀ k₁ = 2 / qwzSigma k₀ k₁ - 2 / qwzD m k₀ k₁ := by
+  have hσpos : 0 < qwzSigma k₀ k₁ :=
+    lt_of_le_of_ne (by unfold qwzSigma; positivity) (Ne.symm hσ)
+  have hDpos : 0 < qwzD m k₀ k₁ := by
+    have h1 : 0 ≤ (qwzSqrt m k₀ k₁ - qwzC m k₀ k₁) ^ 2 := sq_nonneg _
+    unfold qwzD
+    nlinarith [hσpos]
+  have hd : qwzSqrt m k₀ k₁ - qwzC m k₀ k₁ ≠ 0 := sub_ne_zero.mpr hsc
+  rw [qwzV_eq_sigma_mul m k₀ k₁ hsc]
+  unfold qwzD
+  field_simp
+  ring
+
+/-! ##### 移位坐标的正性与连续性（`d ∈ (0,π)`） -/
+
+theorem qwzSigma_shift_pos (d : ℝ) (hd : 0 < d) (hdpi : d < Real.pi) (p : ℝ) :
+    0 < qwzSigma (p + Real.pi) (d + Real.pi) := by
+  have hsd : 0 < Real.sin d := Real.sin_pos_of_pos_of_lt_pi hd hdpi
+  rw [qwzSigma_shift]
+  nlinarith [sq_nonneg (Real.sin p), pow_pos hsd 2]
+
+theorem qwzD_shift_pos (m d : ℝ) (hd : 0 < d) (hdpi : d < Real.pi) (p : ℝ) :
+    0 < qwzD m (p + Real.pi) (d + Real.pi) := by
+  have hσ : 0 < qwzSigma (p + Real.pi) (d + Real.pi) :=
+    qwzSigma_shift_pos d hd hdpi p
+  have h1 : 0 ≤ (qwzSqrt m (p + Real.pi) (d + Real.pi)
+      - qwzC m (p + Real.pi) (d + Real.pi)) ^ 2 := sq_nonneg _
+  unfold qwzD
+  nlinarith [hσ]
+
+theorem qwzSqrt_shift_continuous (m d : ℝ) :
+    Continuous fun p => qwzSqrt m (p + Real.pi) (d + Real.pi) := by
+  have h1 : Continuous fun p : ℝ => ((p + Real.pi), (d + Real.pi)) :=
+    (continuous_id.add continuous_const).prodMk continuous_const
+  have h2 : (fun p : ℝ => qwzSqrt m (p + Real.pi) (d + Real.pi))
+      = fun p : ℝ => qwzSqrt m ((fun p : ℝ => ((p + Real.pi), (d + Real.pi))) p).1
+        ((fun p : ℝ => ((p + Real.pi), (d + Real.pi))) p).2 := by
+    funext p
+    rfl
+  rw [h2]
+  exact (qwzSqrt_cont m).comp h1
+
+theorem qwzC_shift_continuous (m d : ℝ) :
+    Continuous fun p => qwzC m (p + Real.pi) (d + Real.pi) := by
+  unfold qwzC
+  fun_prop
+
+theorem qwzSigma_shift_continuous (d : ℝ) :
+    Continuous fun p => qwzSigma (p + Real.pi) (d + Real.pi) := by
+  unfold qwzSigma
+  fun_prop
+
+theorem qwzD_shift_continuous (m d : ℝ) :
+    Continuous fun p => qwzD m (p + Real.pi) (d + Real.pi) := by
+  have hs := qwzSqrt_shift_continuous m d
+  have hc := qwzC_shift_continuous m d
+  have hσ := qwzSigma_shift_continuous d
+  unfold qwzD
+  exact ((hs.sub hc).pow 2).add hσ
+
+theorem qwzSqrt_shift_ne_C_shift (m d : ℝ) (hd : 0 < d) (hdpi : d < Real.pi) (p : ℝ) :
+    qwzSqrt m (p + Real.pi) (d + Real.pi) ≠ qwzC m (p + Real.pi) (d + Real.pi) := by
+  have hσ : qwzSigma (p + Real.pi) (d + Real.pi) ≠ 0 :=
+    ne_of_gt (qwzSigma_shift_pos d hd hdpi p)
+  intro h
+  have hs2 := qwzSigma_eq m (p + Real.pi) (d + Real.pi)
+  rw [h] at hs2
+  simp at hs2
+  exact hσ hs2
+
+/-! ##### I₁ = 0：arctan 原函数 -/
+
+/-- **I₁ 消失**：`∫_{−π}^{π} 2cos p/(sin²p + sin²d) dp = 0`（`d ∈ (0,π)`）。
+    原函数 `F(p) = (2/sin d)·arctan(sin p / sin d)` 在 `±π` 处同值 `0`。 -/
+theorem qwz_I1_eq_zero (d : ℝ) (hd : 0 < d) (hdpi : d < Real.pi) :
+    (∫ p in (-Real.pi)..Real.pi,
+        2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2)) = 0 := by
+  have hsd : 0 < Real.sin d := Real.sin_pos_of_pos_of_lt_pi hd hdpi
+  have hsdn : Real.sin d ≠ 0 := ne_of_gt hsd
+  have hder' : ∀ p, HasDerivAt
+      (fun p => 2 / Real.sin d * Real.arctan (Real.sin p / Real.sin d))
+      (2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2)) p := by
+    intro p
+    have h1 : HasDerivAt (fun p => Real.sin p / Real.sin d) (Real.cos p / Real.sin d) p :=
+      (Real.hasDerivAt_sin p).div_const _
+    have h2 := (Real.hasDerivAt_arctan (Real.sin p / Real.sin d)).comp p h1
+    have h3 := h2.const_mul (2 / Real.sin d)
+    have heq : 2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2)
+        = 2 / Real.sin d * (1 / (1 + (Real.sin p / Real.sin d) ^ 2) * (Real.cos p / Real.sin d)) := by
+      field_simp
+      ring
+    rw [heq]
+    exact h3
+  have hderiv : deriv (fun p => 2 / Real.sin d * Real.arctan (Real.sin p / Real.sin d))
+      = fun p => 2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2) :=
+    funext fun p => (hder' p).deriv
+  have hcont : ContinuousOn
+      (fun p => 2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2))
+      (Set.uIcc (-Real.pi) Real.pi) := by
+    have hne : ∀ p : ℝ, Real.sin p ^ 2 + Real.sin d ^ 2 ≠ 0 := fun p =>
+      ne_of_gt (by nlinarith [sq_nonneg (Real.sin p), pow_pos hsd 2])
+    refine ((Continuous.div ?_ ?_ hne).continuousOn)
+    · exact (continuous_const.mul Real.continuous_cos)
+    · exact (Real.continuous_sin.pow 2).add ((continuous_const : Continuous fun _ => Real.sin d).pow 2)
+  rw [intervalIntegral.integral_deriv_eq_sub' _ hderiv
+    (fun p _ => (hder' p).differentiableAt) hcont]
+  simp [Real.sin_pi, Real.sin_neg, Real.arctan_zero]
+
+/-! ##### G 的移位与 H 分解 -/
+
+/-- 跳跃函数 `G(k₁) = ∫₀^{2π} α₀ dk₀`。 -/
+noncomputable def qwzG (m k₁ : ℝ) : ℝ :=
+  ∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0 m k₀ k₁
+
+/-- **G 的移位**：`G(d+π) = −sin d · H(d)`，`H(d) = ∫_{−π}^{π} cos p/V dp`。 -/
+theorem qwzG_shift (m d : ℝ) :
+    qwzG m (d + Real.pi)
+      = -Real.sin d * ∫ p in (-Real.pi)..Real.pi,
+          Real.cos p / qwzV m (p + Real.pi) (d + Real.pi) := by
+  unfold qwzG
+  rw [show (0:ℝ) = -Real.pi + Real.pi from by ring,
+    show (2 * Real.pi : ℝ) = Real.pi + Real.pi from by ring]
+  rw [← intervalIntegral.integral_comp_add_right
+    (f := fun k₀ => qwzAlpha0 m k₀ (d + Real.pi)) (d := Real.pi)]
+  rw [← intervalIntegral.integral_const_mul]
+  refine intervalIntegral.integral_congr fun p _ => ?_
+  rw [qwzAlpha0_shift]
+  ring
+
+/-- **H 分解**：`H(d) = 2∫dp/D − B(d)`（`B(d) = ∫2(1+cos p)/D dp`）。 -/
+theorem qwzH_eq (m : ℝ) (d : ℝ)
+    (hd : 0 < d) (hdpi : d < Real.pi) :
+    (∫ p in (-Real.pi)..Real.pi, Real.cos p / qwzV m (p + Real.pi) (d + Real.pi))
+      = 2 * (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+        - (∫ p in (-Real.pi)..Real.pi,
+            2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)) := by
+  have hσ : ∀ p, qwzSigma (p + Real.pi) (d + Real.pi) ≠ 0 :=
+    fun p => ne_of_gt (qwzSigma_shift_pos d hd hdpi p)
+  have hsc : ∀ p, qwzSqrt m (p + Real.pi) (d + Real.pi) ≠ qwzC m (p + Real.pi) (d + Real.pi) :=
+    qwzSqrt_shift_ne_C_shift m d hd hdpi
+  -- 被积函数分解：cos p/V = 2cos p/σ − 2cos p/D = 2cos p/σ + 2(1/D) − 2(1+cos p)/D
+  have hpt : ∀ p, Real.cos p / qwzV m (p + Real.pi) (d + Real.pi)
+      = 2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi)
+        + (2 * (1 / qwzD m (p + Real.pi) (d + Real.pi))
+          - 2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)) := by
+    intro p
+    rw [div_eq_mul_one_div (Real.cos p) (qwzV m (p + Real.pi) (d + Real.pi)),
+      qwz_one_div_V_eq m (p + Real.pi) (d + Real.pi) (hσ p) (hsc p)]
+    ring
+  -- 各件连续性
+  have hDne : ∀ p, qwzD m (p + Real.pi) (d + Real.pi) ≠ 0 :=
+    fun p => ne_of_gt (qwzD_shift_pos m d hd hdpi p)
+  have hσne : ∀ p, qwzSigma (p + Real.pi) (d + Real.pi) ≠ 0 := hσ
+  have hDct := qwzD_shift_continuous m d
+  have hσct := qwzSigma_shift_continuous d
+  have h1d_int : IntervalIntegrable (fun p => 2 * (1 / qwzD m (p + Real.pi) (d + Real.pi)))
+      volume (-Real.pi) Real.pi := by
+    have h1 : Continuous fun p => (1 : ℝ) / qwzD m (p + Real.pi) (d + Real.pi) :=
+      (continuous_const : Continuous fun _ : ℝ => (1:ℝ)).div hDct hDne
+    exact ((continuous_const : Continuous fun _ : ℝ => (2:ℝ)).mul h1).intervalIntegrable _ _
+  have h2d_int : IntervalIntegrable
+      (fun p => 2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi))
+      volume (-Real.pi) Real.pi :=
+    (((continuous_const.mul (continuous_const.add Real.continuous_cos)).div hDct hDne)).intervalIntegrable _ _
+  have hi1_int : IntervalIntegrable
+      (fun p => 2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi))
+      volume (-Real.pi) Real.pi :=
+    ((continuous_const.mul Real.continuous_cos).div hσct hσne).intervalIntegrable _ _
+  have hi1 : (∫ p in (-Real.pi)..Real.pi,
+      2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi)) = 0 := by
+    calc (∫ p in (-Real.pi)..Real.pi,
+            2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi))
+        = (∫ p in (-Real.pi)..Real.pi, 2 * Real.cos p / (Real.sin p ^ 2 + Real.sin d ^ 2)) := by
+          refine intervalIntegral.integral_congr fun p _ => by rw [qwzSigma_shift]
+      _ = 0 := qwz_I1_eq_zero d hd hdpi
+  calc (∫ p in (-Real.pi)..Real.pi, Real.cos p / qwzV m (p + Real.pi) (d + Real.pi))
+      = (∫ p in (-Real.pi)..Real.pi,
+          (2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi)
+            + (2 * (1 / qwzD m (p + Real.pi) (d + Real.pi))
+              - 2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)))) := by
+        refine intervalIntegral.integral_congr fun p _ => hpt p
+    _ = (∫ p in (-Real.pi)..Real.pi,
+            2 * Real.cos p / qwzSigma (p + Real.pi) (d + Real.pi))
+          + (∫ p in (-Real.pi)..Real.pi,
+              2 * (1 / qwzD m (p + Real.pi) (d + Real.pi))
+              - 2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)) :=
+          intervalIntegral.integral_add hi1_int (h1d_int.sub h2d_int)
+    _ = 0 + (2 * (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+          - (∫ p in (-Real.pi)..Real.pi,
+              2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi))) := by
+        rw [hi1]
+        congr 1
+        rw [intervalIntegral.integral_sub h1d_int h2d_int,
+          intervalIntegral.integral_const_mul]
+    _ = 2 * (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+        - (∫ p in (-Real.pi)..Real.pi,
+            2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)) := by
+        ring
+
+/-! ##### 全局界 |1/D − 1/K| ≤ C(m)
+
+记 `u = π − |p|`、`K = u² + d²`。在峰值区（`|p| ≥ π/2`，即 `u ≤ π/2`）
+`σ ≥ (4/π²)K`（Jordan）；在远离区（`|p| < π/2`）`D ≥ κ(m) > 0`（紧性）。 -/
+
+/-- `x² − sin²x ≤ x⁴/3`（`x ≥ 0`；经 `|x − sin x| ≤ x³/6`）。 -/
+theorem sq_sub_sin_sq_le (x : ℝ) (hx : 0 ≤ x) : x ^ 2 - Real.sin x ^ 2 ≤ x ^ 4 / 3 := by
+  have h1 : |x - Real.sin x| ≤ x ^ 3 / 6 := by
+    have h := Real.abs_sub_sin_le x
+    rwa [abs_of_nonneg hx] at h
+  have h2 : 0 ≤ x - Real.sin x := sub_nonneg.2 (Real.sin_le hx)
+  have h3 : 0 ≤ x + Real.sin x := by
+    rcases le_total 1 x with h | h
+    · linarith [Real.neg_one_le_sin x]
+    · have hs : 0 ≤ Real.sin x :=
+        Real.sin_nonneg_of_nonneg_of_le_pi hx (by linarith [Real.pi_gt_three])
+      linarith
+  have h3' : x + Real.sin x ≤ 2 * x := by linarith [Real.sin_le hx]
+  have h4 : x - Real.sin x ≤ x ^ 3 / 6 := by
+    have h5 : x - Real.sin x = |x - Real.sin x| := (abs_of_nonneg h2).symm
+    rw [h5]
+    exact h1
+  have h6 : (x - Real.sin x) * (x + Real.sin x) ≤ (x ^ 3 / 6) * (2 * x) :=
+    mul_le_mul h4 h3' h3 (by positivity)
+  have h7 : x ^ 2 - Real.sin x ^ 2 = (x - Real.sin x) * (x + Real.sin x) := by ring
+  rw [h7]
+  nlinarith [h6]
+
+/-- `sin²p = sin²(π − |p|)`（任意实数 `p`）。 -/
+theorem sin_sq_eq_sin_sq_pi_sub_abs (p : ℝ) :
+    Real.sin p ^ 2 = Real.sin (Real.pi - |p|) ^ 2 := by
+  rcases le_total 0 p with h | h
+  · rw [abs_of_nonneg h, Real.sin_pi_sub]
+  · rw [abs_of_nonpos h, show Real.pi - -p = p + Real.pi from by ring, Real.sin_add_pi, neg_sq]
+
+/-- `(s − c)² ≤ 4(m+4)²`（`0 < m`）：`s ≤ m+4`、`|c| ≤ s`。 -/
+theorem qwz_sub_sq_le (m p d : ℝ) (hm0 : 0 < m) :
+    (qwzSqrt m (p + Real.pi) (d + Real.pi) - qwzC m (p + Real.pi) (d + Real.pi)) ^ 2
+      ≤ 4 * (m + 4) ^ 2 := by
+  set s : ℝ := qwzSqrt m (p + Real.pi) (d + Real.pi) with hs
+  set c : ℝ := qwzC m (p + Real.pi) (d + Real.pi) with hc
+  have hσ : 0 ≤ qwzSigma (p + Real.pi) (d + Real.pi) := by
+    rw [qwzSigma_shift]; positivity
+  have habs_c : |c| ≤ m + 2 := by
+    rw [hc]; unfold qwzC
+    have h1 : -(m + 2) ≤ m + Real.cos (p + Real.pi) + Real.cos (d + Real.pi) := by
+      have h2 : -2 ≤ Real.cos (p + Real.pi) + Real.cos (d + Real.pi) := by
+        linarith [Real.neg_one_le_cos (p + Real.pi), Real.neg_one_le_cos (d + Real.pi)]
+      linarith
+    have h3 : m + Real.cos (p + Real.pi) + Real.cos (d + Real.pi) ≤ m + 2 := by
+      have h4 : Real.cos (p + Real.pi) + Real.cos (d + Real.pi) ≤ 2 := by
+        linarith [Real.cos_le_one (p + Real.pi), Real.cos_le_one (d + Real.pi)]
+      linarith
+    exact abs_le.2 ⟨h1, h3⟩
+  have hs_nn : 0 ≤ s := Real.sqrt_nonneg _
+  have hc2 : c ^ 2 ≤ (m + 2) ^ 2 := by
+    have h1 : |c| ^ 2 ≤ (m + 2) ^ 2 := pow_le_pow_left₀ (abs_nonneg c) habs_c 2
+    rwa [sq_abs] at h1
+  have hs2 : s ^ 2 = qwzSigma (p + Real.pi) (d + Real.pi) + c ^ 2 := by
+    have h := qwzSigma_eq m (p + Real.pi) (d + Real.pi)
+    linarith [h]
+  have hsp : Real.sin p ^ 2 ≤ 1 := by
+    have h := abs_le.1 (Real.abs_sin_le_one p)
+    nlinarith
+  have hsd : Real.sin d ^ 2 ≤ 1 := by
+    have h := abs_le.1 (Real.abs_sin_le_one d)
+    nlinarith
+  have hσ2 : qwzSigma (p + Real.pi) (d + Real.pi)
+      = Real.sin p ^ 2 + Real.sin d ^ 2 := qwzSigma_shift p d
+  have hs2ub : s ^ 2 ≤ (m + 4) ^ 2 := by
+    nlinarith [hs2, hσ, hc2, hsp, hsd, hσ2]
+  have hs_ub : s ≤ m + 4 := by
+    have hm4 : (0:ℝ) < m + 4 := by linarith
+    nlinarith [hs2ub, hs_nn]
+  have hcs : c ^ 2 ≤ s ^ 2 := by nlinarith [hs2, hσ]
+  have habs_c_le_s : |c| ≤ s := by
+    have h1 := sq_le_sq.1 hcs
+    rwa [abs_of_nonneg hs_nn] at h1
+  have hsc : s - c ≤ 2 * s := by linarith [abs_le.1 habs_c_le_s]
+  have h1 : s - c ≤ 2 * (m + 4) := by linarith
+  have h2 : 0 ≤ s - c := by linarith [abs_le.1 habs_c_le_s]
+  nlinarith [pow_le_pow_left₀ h2 h1 2]
+
+/-- **紧性正性**：`D > 0` 于 `|p| ≤ π/2`、`0 ≤ d ≤ π/2`（含 `d = 0` 边界；
+    边界上 `D = 0` 蕴含 `p = d = 0`，但此处 `c = m−2 < 0 < 2−m = s`）。 -/
+theorem qwzD_shift_pos_of (m : ℝ) (_hm0 : 0 < m) (hm2 : m < 2) (p d : ℝ)
+    (hp : |p| ≤ Real.pi / 2) (hd : 0 ≤ d) (hd2 : d ≤ Real.pi / 2) :
+    0 < qwzD m (p + Real.pi) (d + Real.pi) := by
+  have hDnn : 0 ≤ qwzD m (p + Real.pi) (d + Real.pi) := by
+    have h1 : 0 ≤ (qwzSqrt m (p + Real.pi) (d + Real.pi)
+        - qwzC m (p + Real.pi) (d + Real.pi)) ^ 2 := sq_nonneg _
+    have h2 : 0 ≤ qwzSigma (p + Real.pi) (d + Real.pi) := by
+      rw [qwzSigma_shift]; positivity
+    unfold qwzD
+    nlinarith
+  refine lt_of_le_of_ne hDnn ?_
+  intro h0
+  -- D = 0 ⟹ (s−c)² = 0 且 σ = 0 ⟹ sin p = sin d = 0 ⟹ p = 0, d = 0
+  have hsq : (qwzSqrt m (p + Real.pi) (d + Real.pi)
+      - qwzC m (p + Real.pi) (d + Real.pi)) ^ 2 = 0 := by
+    have hσ : 0 ≤ qwzSigma (p + Real.pi) (d + Real.pi) := by
+      rw [qwzSigma_shift]; positivity
+    unfold qwzD at h0
+    nlinarith [sq_nonneg (qwzSqrt m (p + Real.pi) (d + Real.pi)
+      - qwzC m (p + Real.pi) (d + Real.pi))]
+  have hσ0 : qwzSigma (p + Real.pi) (d + Real.pi) = 0 := by
+    unfold qwzD at h0
+    nlinarith [sq_nonneg (qwzSqrt m (p + Real.pi) (d + Real.pi)
+      - qwzC m (p + Real.pi) (d + Real.pi))]
+  have hsp : Real.sin p ^ 2 = 0 := by
+    rw [qwzSigma_shift] at hσ0
+    have h1 : 0 ≤ Real.sin p ^ 2 := sq_nonneg _
+    have h2 : 0 ≤ Real.sin d ^ 2 := sq_nonneg _
+    nlinarith
+  have hsd2 : Real.sin d ^ 2 = 0 := by
+    rw [qwzSigma_shift] at hσ0
+    have h1 : 0 ≤ Real.sin p ^ 2 := sq_nonneg _
+    have h2 : 0 ≤ Real.sin d ^ 2 := sq_nonneg _
+    nlinarith
+  have hp0 : p = 0 := by
+    have h1 : Real.sin p = 0 := sq_eq_zero_iff.1 hsp
+    obtain ⟨k, hk⟩ := Real.sin_eq_zero_iff.1 h1
+    have kb1 : -(1/2 : ℝ) ≤ (k : ℝ) := by
+      have h2 := abs_le.1 hp
+      nlinarith [Real.pi_pos]
+    have kb2 : (k : ℝ) ≤ 1 / 2 := by
+      have h2 := abs_le.1 hp
+      nlinarith [Real.pi_pos]
+    have hk0 : k = 0 := by
+      have h1 : k ≤ 0 := by
+        by_contra h'
+        push Not at h'
+        have h3 : (1:ℝ) ≤ (k:ℝ) := by exact_mod_cast (Int.add_one_le_of_lt h')
+        linarith
+      have h2 : 0 ≤ k := by
+        by_contra h'
+        push Not at h'
+        have h3 : ((k:ℝ)) ≤ -1 := by exact_mod_cast (Int.le_sub_one_of_lt h')
+        linarith
+      exact Int.le_antisymm h1 h2
+    rw [← hk, hk0]
+    simp
+  have hd0 : d = 0 := by
+    have h1 : Real.sin d = 0 := sq_eq_zero_iff.1 hsd2
+    obtain ⟨k, hk⟩ := Real.sin_eq_zero_iff.1 h1
+    have hknn : 0 ≤ k := by
+      by_contra h'
+      push Not at h'
+      have h3 : ((k:ℝ)) < 0 := by exact_mod_cast h'
+      nlinarith [Real.pi_pos]
+    have hkub : k ≤ 0 := by
+      by_contra h'
+      push Not at h'
+      have h3 : (1:ℝ) ≤ (k:ℝ) := by exact_mod_cast (Int.add_one_le_of_lt h')
+      nlinarith [Real.pi_pos]
+    have hkz : k = 0 := Int.le_antisymm hkub hknn
+    rw [← hk, hkz]
+    simp
+  -- 边界点：c = m−2 < 0，s = 2−m > 0，与 (s−c)² = 0 矛盾
+  have hsc0 : qwzSqrt m (p + Real.pi) (d + Real.pi)
+      = qwzC m (p + Real.pi) (d + Real.pi) := sub_eq_zero.1 (sq_eq_zero_iff.1 hsq)
+  rw [hp0, hd0] at hsc0
+  have hc : qwzC m (0 + Real.pi) (0 + Real.pi) = m - 2 := by
+    rw [qwzC_shift]
+    simp [Real.cos_zero]
+    ring
+  have hs2 : qwzSqrt m (0 + Real.pi) (0 + Real.pi) ^ 2 = (2 - m) ^ 2 := by
+    rw [qwzSqrt_shift_sq]
+    simp [Real.sin_zero, Real.cos_zero]
+    ring
+  have hs : qwzSqrt m (0 + Real.pi) (0 + Real.pi) = 2 - m := by
+    have hnn : 0 ≤ qwzSqrt m (0 + Real.pi) (0 + Real.pi) := Real.sqrt_nonneg _
+    have h3 : (qwzSqrt m (0 + Real.pi) (0 + Real.pi) - (2 - m))
+        * (qwzSqrt m (0 + Real.pi) (0 + Real.pi) + (2 - m)) = 0 := by nlinarith [hs2]
+    rcases mul_eq_zero.1 h3 with h4 | h5
+    · linarith
+    · nlinarith
+  rw [hs, hc] at hsc0
+  nlinarith
+
+/-- **紧性下界**：存在 `κ(m) > 0` 使 `D ≥ κ` 于 `|p| ≤ π/2`、`0 ≤ d ≤ π/2`。 -/
+theorem qwzD_shift_lower_on_half (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∃ κ : ℝ, 0 < κ ∧ ∀ p : ℝ, |p| ≤ Real.pi / 2 → ∀ d : ℝ,
+      0 ≤ d → d ≤ Real.pi / 2 → κ ≤ qwzD m (p + Real.pi) (d + Real.pi) := by
+  set S : Set (ℝ × ℝ) := Set.Icc (-(Real.pi / 2)) (Real.pi / 2) ×ˢ Set.Icc 0 (Real.pi / 2) with hS
+  have hcompact : IsCompact S := (isCompact_Icc.prod isCompact_Icc)
+  have hne : S.Nonempty := ⟨(0, 0), ⟨⟨by linarith [Real.pi_pos], by linarith [Real.pi_pos]⟩,
+    ⟨le_rfl, by linarith [Real.pi_pos]⟩⟩⟩
+  have hcont : ContinuousOn (fun q : ℝ × ℝ => qwzD m (q.1 + Real.pi) (q.2 + Real.pi)) S := by
+    have h1 : Continuous fun q : ℝ × ℝ => qwzSqrt m (q.1 + Real.pi) (q.2 + Real.pi) := by
+      simp only [qwzSqrt, dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one,
+        Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+      fun_prop
+    have h2 : Continuous fun q : ℝ × ℝ => qwzC m (q.1 + Real.pi) (q.2 + Real.pi) := by
+      unfold qwzC; fun_prop
+    have h3 : Continuous fun q : ℝ × ℝ => qwzSigma (q.1 + Real.pi) (q.2 + Real.pi) := by
+      unfold qwzSigma; fun_prop
+    unfold qwzD
+    exact ((h1.sub h2).pow 2).add h3 |>.continuousOn
+  obtain ⟨x₀, hx₀, hmin⟩ := hcompact.exists_isMinOn hne hcont
+  rw [isMinOn_iff] at hmin
+  have hp0 : |x₀.1| ≤ Real.pi / 2 := abs_le.2 hx₀.1
+  refine ⟨qwzD m (x₀.1 + Real.pi) (x₀.2 + Real.pi),
+    qwzD_shift_pos_of m hm0 hm2 x₀.1 x₀.2 hp0 hx₀.2.1 hx₀.2.2, ?_⟩
+  intro p hp d hd hd2
+  exact hmin (p, d) ⟨⟨(abs_le.1 hp).1, (abs_le.1 hp).2⟩, hd, hd2⟩
+
+set_option maxHeartbeats 1000000 in
+/-- **逐点全局界**：`|1/D − 1/K| ≤ C(m, κ)`（`p ∈ [−π,π]`、`d ∈ (0,π/2]`，
+    `κ` 为紧性下界）。峰值区用 Jordan 控制 `σ ≥ (4/π²)K`，远离区用 `D ≥ κ`。 -/
+theorem qwz_kernel_compare_le (m κ : ℝ) (hm0 : 0 < m) (_hm2 : m < 2) (hκ : 0 < κ)
+    (hκlb : ∀ q : ℝ, |q| ≤ Real.pi / 2 → ∀ e : ℝ, 0 ≤ e → e ≤ Real.pi / 2 →
+      κ ≤ qwzD m (q + Real.pi) (e + Real.pi))
+    (p d : ℝ) (hp1 : -Real.pi ≤ p) (hp2 : p ≤ Real.pi)
+    (hd : 0 < d) (hd2 : d ≤ Real.pi / 2) :
+    |1 / qwzD m (p + Real.pi) (d + Real.pi) - 1 / ((Real.pi - |p|) ^ 2 + d ^ 2)|
+    ≤ Real.pi ^ 2 / 12 + 4 / m ^ 2 + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2
+      + 1 / κ + 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) := by
+  -- 局部缩写：避免巨型项（qwzD/qwzSigma 的展开式）反复出现，性能关键
+  set s : ℝ := qwzSqrt m (p + Real.pi) (d + Real.pi) with hs
+  set c : ℝ := qwzC m (p + Real.pi) (d + Real.pi) with hc
+  set σ : ℝ := qwzSigma (p + Real.pi) (d + Real.pi) with hσdef
+  set D : ℝ := qwzD m (p + Real.pi) (d + Real.pi) with hDdef
+  -- 关键：把缩写变为不透明局部常量，避免 tactic 预处理展开巨型项
+  clear_value s c σ D
+  set u : ℝ := Real.pi - |p| with hu
+  set K : ℝ := u ^ 2 + d ^ 2 with hK
+  have hu0 : 0 ≤ u := by
+    rw [hu]; linarith only [abs_le.2 ⟨hp1, hp2⟩, Real.pi_pos]
+  have hσ2raw : σ = Real.sin u ^ 2 + Real.sin d ^ 2 := by
+    rw [hσdef, qwzSigma_shift p d, sin_sq_eq_sin_sq_pi_sub_abs p, ← hu]
+  have hKpos : 0 < K := by rw [hK]; nlinarith only [sq_nonneg u, hd]
+  have hσub : σ ≤ K := by
+    rw [hσ2raw, hK]
+    have h1 : Real.sin u ^ 2 ≤ u ^ 2 := Real.sin_sq_le_sq
+    have h2 : Real.sin d ^ 2 ≤ d ^ 2 := Real.sin_sq_le_sq
+    nlinarith only [h1, h2]
+  have hDpos : 0 < D := by
+    rw [hDdef]
+    exact qwzD_shift_pos m d hd (by linarith [hd2, Real.pi_pos] : d < Real.pi) p
+  have hDeq : D = (s - c) ^ 2 + σ := by
+    rw [hDdef]; unfold qwzD; rw [← hs, ← hc, ← hσdef]
+  have hσleD : σ ≤ D := by
+    rw [hDeq]; exact le_add_of_nonneg_left (sq_nonneg _)
+  have hDKpos : 0 < D * K := mul_pos hDpos hKpos
+  -- 拆分 |1/D − 1/K| = |K − D|/(D·K)
+  have hsplit : |1 / D - 1 / K| = |K - D| / (D * K) := by
+    have h1 : 1 / D - 1 / K = (K - D) / (D * K) := by field_simp
+    rw [h1, abs_div, abs_mul, abs_of_pos hDpos, abs_of_pos hKpos]
+  -- |K − D| ≤ |K − σ| + (s−c)²
+  have hnum : |K - D| ≤ |K - σ| + (s - c) ^ 2 := by
+    have h1 : K - D = (K - σ) - (s - c) ^ 2 := by rw [hDeq]; ring
+    rw [h1]
+    have h2 : |(s - c) ^ 2| = (s - c) ^ 2 := abs_of_nonneg (sq_nonneg _)
+    calc |(K - σ) - (s - c) ^ 2| ≤ |K - σ| + |(s - c) ^ 2| := abs_sub _ _
+      _ = |K - σ| + (s - c) ^ 2 := by rw [h2]
+  have hsc2 : (s - c) ^ 2 ≤ 4 * (m + 4) ^ 2 := by
+    rw [hs, hc]
+    exact qwz_sub_sq_le m p d hm0
+  rw [hsplit]
+  rcases le_total (Real.pi / 2) |p| with hAl | hBl
+  · -- **峰值区**：π/2 ≤ |p|，u ≤ π/2，Jordan 给出 σ ≥ (4/π²)K
+    have huπ2 : u ≤ Real.pi / 2 := by linarith only [hu, hAl, Real.pi_pos]
+    have hJordan : 4 / Real.pi ^ 2 * K ≤ σ := by
+      have h1 : 2 / Real.pi * u ≤ Real.sin u := Real.mul_le_sin hu0 huπ2
+      have h2 : 2 / Real.pi * d ≤ Real.sin d := Real.mul_le_sin hd.le hd2
+      have h1' : (2 / Real.pi * u) ^ 2 ≤ Real.sin u ^ 2 :=
+        pow_le_pow_left₀ (by positivity) h1 2
+      have h2' : (2 / Real.pi * d) ^ 2 ≤ Real.sin d ^ 2 :=
+        pow_le_pow_left₀ (by positivity) h2 2
+      have hpu : (2 / Real.pi * u) ^ 2 = 4 / Real.pi ^ 2 * u ^ 2 := by ring
+      have hpd : (2 / Real.pi * d) ^ 2 = 4 / Real.pi ^ 2 * d ^ 2 := by ring
+      rw [hpu] at h1'
+      rw [hpd] at h2'
+      rw [hσ2raw, hK]
+      nlinarith only [h1', h2']
+    have hσKpos : 0 < σ * K :=
+      mul_pos (lt_of_lt_of_le
+        (mul_pos (by positivity : (0:ℝ) < 4 / Real.pi ^ 2) hKpos) hJordan) hKpos
+    -- |K − σ| ≤ K²/3
+    have hksig : |K - σ| ≤ K ^ 2 / 3 := by
+      have h1 : 0 ≤ u ^ 2 - Real.sin u ^ 2 := by
+        have h := Real.sin_sq_le_sq (x := u)
+        nlinarith only [h]
+      have h2 : 0 ≤ d ^ 2 - Real.sin d ^ 2 := by
+        have h := Real.sin_sq_le_sq (x := d)
+        nlinarith only [h]
+      have h3 : u ^ 2 - Real.sin u ^ 2 + (d ^ 2 - Real.sin d ^ 2) ≤ K ^ 2 / 3 := by
+        have h4 := sq_sub_sin_sq_le u hu0
+        have h5 := sq_sub_sin_sq_le d hd.le
+        have h7 : 0 ≤ 2 * u ^ 2 * d ^ 2 := by positivity
+        have h8 : u ^ 4 / 3 + d ^ 4 / 3 ≤ K ^ 2 / 3 := by
+          rw [hK]
+          nlinarith only [h7]
+        linarith only [h4, h5, h8]
+      have h6 : K - σ = u ^ 2 - Real.sin u ^ 2 + (d ^ 2 - Real.sin d ^ 2) := by
+        rw [hσ2raw, hK]
+        ring
+      rw [h6, abs_of_nonneg (add_nonneg h1 h2)]
+      exact h3
+    -- (s−c)²/(σK) ≤ 4/m² + π²(m+4)²/m²
+    have hprod : (s - c) * (s + c) = σ := by
+      rw [hσdef, qwzSigma_eq m (p + Real.pi) (d + Real.pi), ← hs, ← hc]
+      ring
+    have hsc2quot : (s - c) ^ 2 / (σ * K)
+        ≤ 4 / m ^ 2 + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 := by
+      rcases le_total (u ^ 2) m with hA1 | hA1
+      · -- u² ≤ m：c ≥ m/2，(s−c)²/(σK) ≤ 4/m²
+        have hcp : Real.cos p = -Real.cos u := by
+          rcases le_total 0 p with h | h
+          · rw [abs_of_nonneg h] at hu
+            have hpu : Real.pi - u = p := by rw [hu]; ring
+            rw [← hpu, Real.cos_pi_sub]
+          · rw [abs_of_nonpos h] at hu
+            have hup : u - Real.pi = p := by rw [hu]; ring
+            rw [← hup, Real.cos_sub_pi]
+        have hc_eq : c = m + Real.cos u - Real.cos d := by
+          rw [hc, qwzC_shift, hcp]
+          ring
+        have hcl : Real.cos u ≥ 1 - u ^ 2 / 2 := Real.one_sub_sq_div_two_le_cos
+        have hc2' : m / 2 ≤ c := by
+          have h3 : Real.cos d ≤ 1 := Real.cos_le_one d
+          rw [hc_eq]
+          nlinarith only [hcl, h3, hA1]
+        have hs0 : 0 ≤ s := by rw [hs]; exact Real.sqrt_nonneg _
+        have hscsum : (m / 2) ^ 2 ≤ (s + c) ^ 2 :=
+          pow_le_pow_left₀ (by positivity) (by linarith only [hc2', hs0]) 2
+        have hsc2' : (s - c) ^ 2 * (m ^ 2 / 4) ≤ σ ^ 2 := by
+          have h1 : (s - c) ^ 2 * (s + c) ^ 2 = σ ^ 2 := by
+            calc (s - c) ^ 2 * (s + c) ^ 2 = ((s - c) * (s + c)) ^ 2 := by ring
+              _ = σ ^ 2 := by rw [hprod]
+          nlinarith only [h1, hscsum, sq_nonneg (s - c)]
+        have hσnn : 0 ≤ σ := by rw [hσ2raw]; positivity
+        have hstep : (s - c) ^ 2 / (σ * K) ≤ 4 / m ^ 2 := by
+          have hm2pos : (0:ℝ) < m ^ 2 := pow_pos hm0 2
+          rw [div_le_iff₀ hσKpos]
+          rw [show (4 / m ^ 2) * (σ * K) = 4 * (σ * K) / m ^ 2 from by ring]
+          rw [le_div_iff₀ hm2pos]
+          nlinarith only [hsc2', hσub, hσnn, hKpos, sq_nonneg (s - c)]
+        have hpos2 : 0 ≤ Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 := by positivity
+        linarith only [hstep, hpos2]
+      · -- m < u² ≤ K：粗界 (s−c)² ≤ 4(m+4)²
+        have hKgt : m < K := by nlinarith only [hA1, hd, hK]
+        have hstep : (s - c) ^ 2 / (σ * K)
+            ≤ Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 := by
+          have hm2pos : (0:ℝ) < m ^ 2 := pow_pos hm0 2
+          have hπ2 : (0:ℝ) < Real.pi ^ 2 := by positivity
+          have hσK2 : 4 / Real.pi ^ 2 * K * K ≤ σ * K :=
+            mul_le_mul_of_nonneg_right hJordan hKpos.le
+          have hA : 4 * m ^ 2 ≤ Real.pi ^ 2 * (σ * K) := by
+            have hmul : Real.pi ^ 2 * (4 / Real.pi ^ 2 * K * K)
+                ≤ Real.pi ^ 2 * (σ * K) :=
+              mul_le_mul_of_nonneg_left hσK2 hπ2.le
+            have h1 : Real.pi ^ 2 * (4 / Real.pi ^ 2 * K * K) = 4 * K ^ 2 := by
+              field_simp
+            rw [h1] at hmul
+            have hK2 : m ^ 2 < K ^ 2 := by nlinarith only [hKgt, hm0]
+            nlinarith only [hmul, hK2]
+          rw [div_le_iff₀ hσKpos]
+          rw [show (Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2) * (σ * K)
+              = Real.pi ^ 2 * (m + 4) ^ 2 * (σ * K) / m ^ 2 from by ring]
+          rw [le_div_iff₀ hm2pos]
+          have hB : (s - c) ^ 2 * m ^ 2 ≤ 4 * (m + 4) ^ 2 * m ^ 2 :=
+            mul_le_mul_of_nonneg_right hsc2 hm2pos.le
+          have hC : 4 * m ^ 2 * (m + 4) ^ 2
+              ≤ Real.pi ^ 2 * (σ * K) * (m + 4) ^ 2 :=
+            mul_le_mul_of_nonneg_right hA (sq_nonneg (m + 4))
+          nlinarith only [hB, hC]
+        have hpos1 : 0 ≤ 4 / m ^ 2 := by positivity
+        linarith only [hstep, hpos1]
+    -- 汇总（峰值区）
+    have hterm1 : (K ^ 2 / 3) / (D * K) ≤ Real.pi ^ 2 / 12 := by
+      have hσK : 4 / Real.pi ^ 2 * K * K ≤ D * K :=
+        mul_le_mul_of_nonneg_right (le_trans hJordan hσleD) hKpos.le
+      have h1 := div_le_div_of_nonneg_left
+        (show (0:ℝ) ≤ K ^ 2 / 3 from by positivity)
+        (show (0:ℝ) < 4 / Real.pi ^ 2 * K * K from
+          mul_pos (mul_pos (by positivity) hKpos) hKpos) hσK
+      have h2 : (K ^ 2 / 3) / (4 / Real.pi ^ 2 * K * K) = Real.pi ^ 2 / 12 := by
+        field_simp; ring
+      rw [h2] at h1
+      exact h1
+    have hterm2 : (s - c) ^ 2 / (D * K) ≤ (s - c) ^ 2 / (σ * K) := by
+      have hσKle : σ * K ≤ D * K := mul_le_mul_of_nonneg_right hσleD hKpos.le
+      exact div_le_div_of_nonneg_left (sq_nonneg (s - c)) hσKpos hσKle
+    have hmain : |K - D| / (D * K)
+        ≤ Real.pi ^ 2 / 12 + 4 / m ^ 2 + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 := by
+      calc |K - D| / (D * K)
+          ≤ (|K - σ| + (s - c) ^ 2) / (D * K) :=
+            div_le_div_of_nonneg_right hnum hDKpos.le
+        _ = |K - σ| / (D * K) + (s - c) ^ 2 / (D * K) := by rw [add_div]
+        _ ≤ (K ^ 2 / 3) / (D * K) + (s - c) ^ 2 / (D * K) := by
+            have h4 := div_le_div_of_nonneg_right hksig hDKpos.le
+            linarith only [h4]
+        _ ≤ Real.pi ^ 2 / 12 + (s - c) ^ 2 / (σ * K) := by
+            linarith only [hterm1, hterm2]
+        _ ≤ Real.pi ^ 2 / 12 + 4 / m ^ 2
+            + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 := by linarith only [hsc2quot]
+    have h1κ : 0 < 1 / κ := one_div_pos.mpr hκ
+    have h2κ : 0 < 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) :=
+      div_pos (by positivity) (by positivity)
+    linarith only [hmain, h1κ, h2κ]
+  · -- **远离区**：|p| ≤ π/2，K > π²/4，D ≥ κ
+    have hκD : κ ≤ D := by
+      rw [hDdef]
+      exact hκlb p hBl d hd.le hd2
+    have hKgt : Real.pi ^ 2 / 4 < K := by nlinarith only [hK, hu, hBl, hd, Real.pi_pos]
+    have hκKpos : 0 < κ * K := mul_pos hκ hKpos
+    have hκKleDK : κ * K ≤ D * K := mul_le_mul_of_nonneg_right hκD hKpos.le
+    have hksig : |K - σ| ≤ K := by
+      have h1 : 0 ≤ u ^ 2 - Real.sin u ^ 2 := by
+        have h := Real.sin_sq_le_sq (x := u)
+        nlinarith only [h]
+      have h2 : 0 ≤ d ^ 2 - Real.sin d ^ 2 := by
+        have h := Real.sin_sq_le_sq (x := d)
+        nlinarith only [h]
+      have h3 : u ^ 2 - Real.sin u ^ 2 + (d ^ 2 - Real.sin d ^ 2) ≤ K := by
+        rw [hK]
+        nlinarith only [sq_nonneg (Real.sin u), sq_nonneg (Real.sin d)]
+      have h6 : K - σ = u ^ 2 - Real.sin u ^ 2 + (d ^ 2 - Real.sin d ^ 2) := by
+        rw [hσ2raw, hK]
+        ring
+      rw [h6, abs_of_nonneg (add_nonneg h1 h2)]
+      exact h3
+    have hnum2 : |K - D| ≤ K + 4 * (m + 4) ^ 2 := by
+      linarith only [hnum, hksig, hsc2]
+    have hstep1 : |K - D| / (D * K) ≤ (K + 4 * (m + 4) ^ 2) / (κ * K) := by
+      refine le_trans (div_le_div_of_nonneg_right hnum2 hDKpos.le) ?_
+      exact div_le_div_of_nonneg_left (by positivity) hκKpos hκKleDK
+    have hstep2 : (K + 4 * (m + 4) ^ 2) / (κ * K)
+        = K / (κ * K) + 4 * (m + 4) ^ 2 / (κ * K) := by rw [add_div]
+    have hstep3 : K / (κ * K) = 1 / κ := by
+      field_simp
+    have hstep4 : 4 * (m + 4) ^ 2 / (κ * K) ≤ 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) := by
+      have h1 : κ * (Real.pi ^ 2 / 4) ≤ κ * K :=
+        mul_le_mul_of_nonneg_left hKgt.le hκ.le
+      have h2 := div_le_div_of_nonneg_left
+        (show (0:ℝ) ≤ 4 * (m + 4) ^ 2 from by positivity)
+        (show (0:ℝ) < κ * (Real.pi ^ 2 / 4) from mul_pos hκ (by positivity)) h1
+      have h3 : 4 * (m + 4) ^ 2 / (κ * (Real.pi ^ 2 / 4))
+          = 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) := by
+        field_simp; ring
+      rw [h3] at h2
+      exact h2
+    calc |K - D| / (D * K)
+        ≤ (K + 4 * (m + 4) ^ 2) / (κ * K) := hstep1
+      _ = K / (κ * K) + 4 * (m + 4) ^ 2 / (κ * K) := hstep2
+      _ = 1 / κ + 4 * (m + 4) ^ 2 / (κ * K) := by rw [hstep3]
+      _ ≤ 1 / κ + 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) := by
+          linarith only [hstep4]
+      _ ≤ Real.pi ^ 2 / 12 + 4 / m ^ 2 + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2
+          + 1 / κ + 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) := by
+          have hm4 : (0:ℝ) < m + 4 := by linarith only [hm0]
+          have hm2pos : (0:ℝ) < m ^ 2 := pow_pos hm0 2
+          have h5 : 0 < Real.pi ^ 2 / 12 := by positivity
+          have h6 : 0 < 4 / m ^ 2 := div_pos (by norm_num) hm2pos
+          have h7 : 0 < Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 :=
+            div_pos (mul_pos (by positivity) (pow_pos hm4 2)) hm2pos
+          linarith only [h5, h6, h7]
+
+/-- **全局界（打包版）**：存在 `C(m) > 0` 使 `|1/D − 1/K| ≤ C` 于 `p ∈ [−π,π]`、
+    `d ∈ (0,π/2]`。 -/
+theorem qwz_kernel_compare_bdd (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∃ C : ℝ, 0 < C ∧ ∀ p : ℝ, p ∈ Set.Icc (-Real.pi) Real.pi →
+      ∀ d : ℝ, d ∈ Set.Ioc 0 (Real.pi / 2) →
+        |1 / qwzD m (p + Real.pi) (d + Real.pi)
+          - 1 / ((Real.pi - |p|) ^ 2 + d ^ 2)| ≤ C := by
+  obtain ⟨κ, hκpos, hκlb⟩ := qwzD_shift_lower_on_half m hm0 hm2
+  refine ⟨Real.pi ^ 2 / 12 + 4 / m ^ 2 + Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2
+      + 1 / κ + 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2), ?_, ?_⟩
+  · have hm4 : (0:ℝ) < m + 4 := by linarith
+    have hm2pos : (0:ℝ) < m ^ 2 := pow_pos hm0 2
+    have h1 : 0 < Real.pi ^ 2 / 12 := by positivity
+    have h2 : 0 < 4 / m ^ 2 := div_pos (by norm_num) hm2pos
+    have h3 : 0 < Real.pi ^ 2 * (m + 4) ^ 2 / m ^ 2 :=
+      div_pos (mul_pos (by positivity) (pow_pos hm4 2)) hm2pos
+    have h4 : 0 < 1 / κ := one_div_pos.mpr hκpos
+    have h5 : 0 < 16 * (m + 4) ^ 2 / (κ * Real.pi ^ 2) :=
+      div_pos (mul_pos (by norm_num) (pow_pos hm4 2)) (mul_pos hκpos (by positivity))
+    linarith only [h1, h2, h3, h4, h5]
+  · intro p hp d hd
+    exact qwz_kernel_compare_le m κ hm0 hm2 hκpos hκlb p d hp.1 hp.2 hd.1 hd.2
+
+/-! ##### 核积分精确值与单侧极限 -/
+
+/-- **核积分精确值**：`d ≠ 0` 时 `∫_{−π}^{π} 1/((π − |p|)² + |d|²) dp = (2/|d|)·arctan(π/|d|)`。
+    原函数 `v ↦ (1/|d|)·arctan(v/|d|)`。 -/
+theorem qwz_kernel_integral (d : ℝ) (hd : d ≠ 0) :
+    (∫ p in (-Real.pi)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2))
+      = 2 / |d| * Real.arctan (Real.pi / |d|) := by
+  have hdpos : 0 < |d| := abs_pos.mpr hd
+  have hne : ∀ p : ℝ, (Real.pi - |p|) ^ 2 + |d| ^ 2 ≠ 0 := fun p =>
+    ne_of_gt (by nlinarith only [sq_nonneg (Real.pi - |p|), pow_pos hdpos 2])
+  have hct : Continuous fun p : ℝ => 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2) :=
+    continuous_const.div (((continuous_const : Continuous fun _ : ℝ => Real.pi).sub
+      continuous_abs).pow 2 |>.add continuous_const) hne
+  have hhalf : (∫ p in (-Real.pi)..(0:ℝ), 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2))
+      = (∫ p in (0:ℝ)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2)) := by
+    have h := intervalIntegral.integral_comp_neg
+      (f := fun p : ℝ => 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2)) (a := (0:ℝ)) (b := Real.pi)
+    simp only [neg_zero] at h
+    rw [← h]
+    exact intervalIntegral.integral_congr fun p _ => by simp only [abs_neg]
+  have hsplit : (∫ p in (-Real.pi)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2))
+      = 2 * (∫ p in (0:ℝ)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2)) := by
+    have h := intervalIntegral.integral_add_adjacent_intervals
+      (a := (-Real.pi)) (b := (0:ℝ)) (c := Real.pi)
+      (hct.intervalIntegrable (μ := volume) (-Real.pi) 0)
+      (hct.intervalIntegrable (μ := volume) 0 Real.pi)
+    rw [← h, hhalf]
+    ring
+  have hF0 : (∫ p in (0:ℝ)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2))
+      = (∫ p in (0:ℝ)..Real.pi, 1 / ((Real.pi - p) ^ 2 + |d| ^ 2)) := by
+    refine intervalIntegral.integral_congr fun p hp => ?_
+    have hp0 : 0 ≤ p := by
+      have h2 := hp
+      rw [Set.uIcc_of_le (le_of_lt Real.pi_pos)] at h2
+      exact h2.1
+    rw [abs_of_nonneg hp0]
+  have hsub : (∫ p in (0:ℝ)..Real.pi, 1 / ((Real.pi - p) ^ 2 + |d| ^ 2))
+      = (∫ v in (0:ℝ)..Real.pi, 1 / (v ^ 2 + |d| ^ 2)) := by
+    have h := intervalIntegral.integral_comp_sub_left
+      (f := fun v : ℝ => 1 / (v ^ 2 + |d| ^ 2)) (a := (0:ℝ)) (b := Real.pi) Real.pi
+    simpa using h
+  have hder' : ∀ v : ℝ, HasDerivAt (fun v : ℝ => 1 / |d| * Real.arctan (v / |d|))
+      (1 / (v ^ 2 + |d| ^ 2)) v := by
+    intro v
+    have h1 : HasDerivAt (fun v : ℝ => v / |d|) (1 / |d|) v := by
+      simpa using (hasDerivAt_id v).div_const (|d|)
+    have h2 := (Real.hasDerivAt_arctan (v / |d|)).comp v h1
+    have h3 := h2.const_mul (1 / |d|)
+    have heq : 1 / (v ^ 2 + |d| ^ 2)
+        = 1 / |d| * (1 / (1 + (v / |d|) ^ 2) * (1 / |d|)) := by
+      field_simp
+      ring
+    rw [heq]
+    exact h3
+  have hftc : (∫ v in (0:ℝ)..Real.pi, 1 / (v ^ 2 + |d| ^ 2))
+      = 1 / |d| * Real.arctan (Real.pi / |d|) := by
+    have hderiv : deriv (fun v : ℝ => 1 / |d| * Real.arctan (v / |d|))
+        = fun v : ℝ => 1 / (v ^ 2 + |d| ^ 2) :=
+      funext fun v => (hder' v).deriv
+    have hcont : ContinuousOn (fun v : ℝ => 1 / (v ^ 2 + |d| ^ 2)) (Set.uIcc 0 Real.pi) := by
+      have hne' : ∀ v : ℝ, v ^ 2 + |d| ^ 2 ≠ 0 := fun v =>
+        ne_of_gt (by nlinarith only [sq_nonneg v, pow_pos hdpos 2])
+      exact (continuous_const.div (continuous_id.pow 2 |>.add continuous_const) hne').continuousOn
+    rw [intervalIntegral.integral_deriv_eq_sub' _ hderiv
+      (fun v _ => (hder' v).differentiableAt) hcont]
+    simp [Real.arctan_zero]
+  rw [hsplit, hF0, hsub, hftc]
+  ring
+
+/-- **积分接近**：`d ∈ (0, π/2]` 时 `|∫ 1/D − (2/|d|)·arctan(π/|d|)| ≤ C·2π` 一致有界。 -/
+theorem qwz_integral_D_close (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∃ C : ℝ, 0 < C ∧ ∀ d : ℝ, 0 < d → d ≤ Real.pi / 2 →
+      |(∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+        - 2 / |d| * Real.arctan (Real.pi / |d|)| ≤ C := by
+  obtain ⟨C, hCpos, hC⟩ := qwz_kernel_compare_bdd m hm0 hm2
+  refine ⟨C * (2 * Real.pi), mul_pos hCpos (by positivity), ?_⟩
+  intro d hd hd2
+  have hdpi : d < Real.pi := by linarith only [hd2, Real.pi_pos]
+  have hKeq : (∫ p in (-Real.pi)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + d ^ 2))
+      = 2 / |d| * Real.arctan (Real.pi / |d|) := by
+    rw [show (∫ p in (-Real.pi)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + d ^ 2))
+        = (∫ p in (-Real.pi)..Real.pi, 1 / ((Real.pi - |p|) ^ 2 + |d| ^ 2)) from
+        intervalIntegral.integral_congr fun p _ => by rw [sq_abs]]
+    exact qwz_kernel_integral d (ne_of_gt hd)
+  have hDne : ∀ p : ℝ, qwzD m (p + Real.pi) (d + Real.pi) ≠ 0 :=
+    fun p => ne_of_gt (qwzD_shift_pos m d hd hdpi p)
+  have hDct := qwzD_shift_continuous m d
+  have hDint : IntervalIntegrable (fun p : ℝ => 1 / qwzD m (p + Real.pi) (d + Real.pi))
+      volume (-Real.pi) Real.pi :=
+    ((continuous_const : Continuous fun _ : ℝ => (1:ℝ)).div hDct hDne).intervalIntegrable _ _
+  have hKne : ∀ p : ℝ, (Real.pi - |p|) ^ 2 + d ^ 2 ≠ 0 := fun p =>
+    ne_of_gt (by nlinarith only [sq_nonneg (Real.pi - |p|), pow_pos hd 2])
+  have hKct : Continuous fun p : ℝ => 1 / ((Real.pi - |p|) ^ 2 + d ^ 2) :=
+    continuous_const.div (((continuous_const : Continuous fun _ : ℝ => Real.pi).sub
+      continuous_abs).pow 2 |>.add continuous_const) hKne
+  have hKint : IntervalIntegrable (fun p : ℝ => 1 / ((Real.pi - |p|) ^ 2 + d ^ 2))
+      volume (-Real.pi) Real.pi := hKct.intervalIntegrable _ _
+  have h1 : (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+      - 2 / |d| * Real.arctan (Real.pi / |d|)
+      = ∫ p in (-Real.pi)..Real.pi,
+          (1 / qwzD m (p + Real.pi) (d + Real.pi) - 1 / ((Real.pi - |p|) ^ 2 + d ^ 2)) := by
+    rw [← hKeq, intervalIntegral.integral_sub hDint hKint]
+  have hfin : ‖∫ p in (-Real.pi)..Real.pi,
+        (1 / qwzD m (p + Real.pi) (d + Real.pi) - 1 / ((Real.pi - |p|) ^ 2 + d ^ 2))‖
+      ≤ C * |Real.pi - (-Real.pi)| := by
+    refine intervalIntegral.norm_integral_le_of_norm_le_const fun p hp => ?_
+    have hp' : p ∈ Set.Icc (-Real.pi) Real.pi := by
+      have h2 := hp
+      rw [Set.uIoc_of_le (by linarith only [Real.pi_pos] : -Real.pi ≤ Real.pi)] at h2
+      exact ⟨h2.1.le, h2.2⟩
+    simpa only [Real.norm_eq_abs] using hC p hp' d ⟨hd, hd2⟩
+  have hfin' : |∫ p in (-Real.pi)..Real.pi,
+        (1 / qwzD m (p + Real.pi) (d + Real.pi) - 1 / ((Real.pi - |p|) ^ 2 + d ^ 2))|
+      ≤ C * |Real.pi - (-Real.pi)| := by
+    simpa only [Real.norm_eq_abs] using hfin
+  rw [h1]
+  refine le_trans hfin' (le_of_eq ?_)
+  rw [show Real.pi - (-Real.pi) = 2 * Real.pi from by ring, abs_of_pos (by positivity)]
+
+/-! ##### B(d) 的一致有界 -/
+
+/-- 点态分子界：`2(1 + cos p) ≤ (π − |p|)²`（`p ∈ [−π, π]`）。
+    经半角恒等式 `2(1 + cos p) = 4 sin²((π−|p|)/2)` 与 `sin t ≤ t`。 -/
+theorem two_mul_one_add_cos_le_sq (p : ℝ) (hp1 : -Real.pi ≤ p) (hp2 : p ≤ Real.pi) :
+    2 * (1 + Real.cos p) ≤ (Real.pi - |p|) ^ 2 := by
+  have hu0 : 0 ≤ Real.pi - |p| := by
+    rw [sub_nonneg, abs_le]; exact ⟨hp1, hp2⟩
+  have hcos : Real.cos (p / 2) = Real.sin ((Real.pi - |p|) / 2) := by
+    have h1 : |p / 2| = |p| / 2 := by rw [abs_div]; norm_num
+    rw [← Real.cos_abs (p / 2), h1,
+      show |p| / 2 = Real.pi / 2 - (Real.pi - |p|) / 2 from by ring,
+      Real.cos_pi_div_two_sub]
+  have h2 : 2 * (1 + Real.cos p) = 4 * Real.sin ((Real.pi - |p|) / 2) ^ 2 := by
+    have h3 : Real.cos p = 2 * Real.cos (p / 2) ^ 2 - 1 := by
+      have h := Real.cos_two_mul (p / 2)
+      rwa [show 2 * (p / 2) = p from by ring] at h
+    rw [h3, hcos]; ring
+  rw [h2]
+  have ht0 : 0 ≤ (Real.pi - |p|) / 2 := by linarith only [hu0]
+  have htpi : (Real.pi - |p|) / 2 ≤ Real.pi := by
+    linarith only [hu0, abs_nonneg p, Real.pi_pos]
+  have hst : Real.sin ((Real.pi - |p|) / 2) ≤ (Real.pi - |p|) / 2 := Real.sin_le ht0
+  have hsn : 0 ≤ Real.sin ((Real.pi - |p|) / 2) :=
+    Real.sin_nonneg_of_nonneg_of_le_pi ht0 (by linarith only [htpi, Real.pi_pos])
+  have h1 : Real.sin ((Real.pi - |p|) / 2) ^ 2 ≤ ((Real.pi - |p|) / 2) ^ 2 :=
+    pow_le_pow_left₀ hsn hst 2
+  nlinarith only [h1]
+
+/-- **B(d) 一致有界**：`B(d) = ∫_{−π}^{π} 2(1+cos p)/D dp` 于 `d ∈ (0,π/2]` 一致有界。
+    逐点 `2(1+cos p)/D ≤ 2(1+cos p)/K + 4|1/D − 1/K| ≤ 1 + 4C`。 -/
+theorem qwz_B_bdd (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∃ C : ℝ, 0 < C ∧ ∀ d : ℝ, 0 < d → d ≤ Real.pi / 2 →
+      |∫ p in (-Real.pi)..Real.pi,
+          2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)| ≤ C := by
+  obtain ⟨C₀, hC₀pos, hC₀⟩ := qwz_kernel_compare_bdd m hm0 hm2
+  refine ⟨(1 + 4 * C₀) * (2 * Real.pi), by positivity, ?_⟩
+  intro d hd hd2
+  have hdpi : d < Real.pi := by linarith only [hd2, Real.pi_pos]
+  have hbd : ∀ p ∈ Set.uIoc (-Real.pi) Real.pi,
+      ‖2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)‖ ≤ 1 + 4 * C₀ := by
+    intro p hp
+    have hp' : p ∈ Set.Icc (-Real.pi) Real.pi := by
+      have h2 := hp
+      rw [Set.uIoc_of_le (by linarith only [Real.pi_pos] : -Real.pi ≤ Real.pi)] at h2
+      exact ⟨h2.1.le, h2.2⟩
+    set D : ℝ := qwzD m (p + Real.pi) (d + Real.pi) with hD
+    set K : ℝ := (Real.pi - |p|) ^ 2 + d ^ 2 with hK
+    clear_value D K
+    have hcmp := hC₀ p hp' d ⟨hd, hd2⟩
+    rw [← hD, ← hK] at hcmp
+    have hDpos : 0 < D := by rw [hD]; exact qwzD_shift_pos m d hd hdpi p
+    have hDne' : D ≠ 0 := ne_of_gt hDpos
+    have hKpos : 0 < K := by
+      rw [hK]; nlinarith only [sq_nonneg (Real.pi - |p|), pow_pos hd 2]
+    have hKne' : K ≠ 0 := ne_of_gt hKpos
+    have hnum_nn : 0 ≤ 2 * (1 + Real.cos p) := by
+      have h := Real.neg_one_le_cos p; linarith only [h]
+    have hnum_le : 2 * (1 + Real.cos p) ≤ K := by
+      have h := two_mul_one_add_cos_le_sq p hp'.1 hp'.2
+      rw [hK]; linarith only [h, sq_nonneg d]
+    have hkey : 2 * (1 + Real.cos p) / D
+        = 2 * (1 + Real.cos p) / K
+          + 2 * (1 + Real.cos p) * (1 / D - 1 / K) := by
+      field_simp
+      ring
+    have h1 : 2 * (1 + Real.cos p) / K ≤ 1 := by
+      rw [div_le_one hKpos]; exact hnum_le
+    have h2 : 2 * (1 + Real.cos p) * (1 / D - 1 / K) ≤ 4 * C₀ := by
+      have h3 : 1 / D - 1 / K ≤ |1 / D - 1 / K| := le_abs_self _
+      have h4 : 2 * (1 + Real.cos p) * (1 / D - 1 / K)
+          ≤ 2 * (1 + Real.cos p) * |1 / D - 1 / K| :=
+        mul_le_mul_of_nonneg_left h3 hnum_nn
+      have h5 : 2 * (1 + Real.cos p) ≤ 4 := by
+        have h := Real.cos_le_one p; linarith only [h]
+      have h6 : 2 * (1 + Real.cos p) * |1 / D - 1 / K| ≤ 4 * |1 / D - 1 / K| :=
+        mul_le_mul_of_nonneg_right h5 (abs_nonneg _)
+      linarith only [h4, h6, hcmp]
+    have hub : 2 * (1 + Real.cos p) / D ≤ 1 + 4 * C₀ := by
+      rw [hkey]; linarith only [h1, h2]
+    have hnn : 0 ≤ 2 * (1 + Real.cos p) / D := div_nonneg hnum_nn hDpos.le
+    rw [Real.norm_eq_abs, abs_of_nonneg hnn]
+    exact hub
+  have hfin := intervalIntegral.norm_integral_le_of_norm_le_const hbd
+  rw [show Real.pi - (-Real.pi) = 2 * Real.pi from by ring,
+    abs_of_pos (by positivity : (0:ℝ) < 2 * Real.pi)] at hfin
+  simpa only [Real.norm_eq_abs] using hfin
+
+/-! ##### 跳跃极限（`d → 0⁺`）
+
+组装：`qwzG m (d+π) = −sin d·H(d)`，`H(d) = 2∫dp/D − B(d)`。
+由核积分精确值 `∫dp/D ≈ (2/d)·arctan(π/d)` 得
+`sin d·2∫dp/D = 2·(sin d·(2·arctan(π/d)/d)) + 2·sin d·E(d) → 2π`；
+由 `B(d)` 有界得 `sin d·B(d) → 0`。故 `qwzG m (d+π) → −2π`。 -/
+
+/-- 有界函数与趋零函数之积趋零：`f → 0`、`|g|` 最终有界 ⟹ `f·g → 0`。 -/
+theorem tendsto_mul_bdd_of_tendsto_zero {f g : ℝ → ℝ} {C : ℝ}
+    (hf : Tendsto f (𝓝[>] (0:ℝ)) (𝓝 0))
+    (hg : ∀ᶠ d in 𝓝[>] (0:ℝ), |g d| ≤ C) :
+    Tendsto (fun d : ℝ => f d * g d) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+  refine squeeze_zero_norm' (a := fun d : ℝ => C * |f d|) ?_ ?_
+  · filter_upwards [hg] with d hd
+    rw [Real.norm_eq_abs, abs_mul]
+    exact le_trans (mul_le_mul_of_nonneg_left hd (abs_nonneg (f d)))
+      (le_of_eq (mul_comm (|f d|) C))
+  · have h1 : Tendsto (fun d : ℝ => |f d|) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      simpa only [Real.norm_eq_abs, abs_zero] using hf.abs
+    simpa using h1.const_mul C
+
+/-- 模型极限：`sin d · (2·arctan(π/d)/d) → π`（`d → 0⁺`）。 -/
+theorem qwz_model_tendsto :
+    Tendsto (fun d : ℝ => Real.sin d * (2 * Real.arctan (Real.pi / d) / d))
+      (𝓝[>] (0:ℝ)) (𝓝 Real.pi) := by
+  have hsin : Tendsto (fun d : ℝ => Real.sin d / d) (𝓝[>] (0:ℝ)) (𝓝 1) := by
+    have h := (Real.hasDerivAt_sin 0).tendsto_slope_zero_right
+    simpa only [zero_add, Real.sin_zero, sub_zero, smul_eq_mul, div_eq_mul_inv,
+      Real.cos_zero, mul_comm] using h
+  have harc : Tendsto (fun d : ℝ => Real.arctan (Real.pi / d)) (𝓝[>] (0:ℝ))
+      (𝓝 (Real.pi / 2)) := by
+    have hinv : Tendsto (fun d : ℝ => Real.pi / d) (𝓝[>] (0:ℝ)) atTop := by
+      have h1 : Tendsto (fun d : ℝ => d⁻¹) (𝓝[>] (0:ℝ)) atTop := tendsto_inv_nhdsGT_zero
+      have h2 : Tendsto (fun d : ℝ => Real.pi * d⁻¹) (𝓝[>] (0:ℝ)) atTop :=
+        h1.const_mul_atTop Real.pi_pos
+      simpa only [div_eq_mul_inv] using h2
+    have h3 : Tendsto Real.arctan atTop (𝓝 (Real.pi / 2)) :=
+      Real.tendsto_arctan_atTop.mono_right nhdsWithin_le_nhds
+    exact h3.comp hinv
+  have h2 : Tendsto (fun d : ℝ => 2 * Real.arctan (Real.pi / d)) (𝓝[>] (0:ℝ))
+      (𝓝 (2 * (Real.pi / 2))) := harc.const_mul 2
+  have h3 : Tendsto (fun d : ℝ => Real.sin d / d * (2 * Real.arctan (Real.pi / d)))
+      (𝓝[>] (0:ℝ)) (𝓝 (1 * (2 * (Real.pi / 2)))) := hsin.mul h2
+  have h4 : (1 : ℝ) * (2 * (Real.pi / 2)) = Real.pi := by ring
+  rw [h4] at h3
+  refine Tendsto.congr' ?_ h3
+  filter_upwards with d
+  ring
+
+/-- **跳跃极限（右侧）**：`sin d · H(d) → 2π`（`d → 0⁺`）。 -/
+theorem qwz_sin_mul_H_tendsto (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (fun d : ℝ => Real.sin d
+        * (2 * (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+          - (∫ p in (-Real.pi)..Real.pi,
+              2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi))))
+      (𝓝[>] (0:ℝ)) (𝓝 (2 * Real.pi)) := by
+  obtain ⟨Ci, _, hCi⟩ := qwz_integral_D_close m hm0 hm2
+  obtain ⟨Cb, _, hCb⟩ := qwz_B_bdd m hm0 hm2
+  have hd0 : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ), 0 < d := self_mem_nhdsWithin
+  have hd2 : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ), d ≤ Real.pi / 2 :=
+    (nhdsWithin_le_nhds (s := Set.Ioi (0:ℝ)) (a := (0:ℝ)))
+      (Iic_mem_nhds (by linarith only [Real.pi_pos] : (0:ℝ) < Real.pi / 2))
+  have hsin : Tendsto (fun d : ℝ => Real.sin d) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have h : Tendsto Real.sin (𝓝 (0:ℝ)) (𝓝 (Real.sin 0)) := Real.continuous_sin.continuousAt
+    rw [Real.sin_zero] at h
+    exact h.mono_left nhdsWithin_le_nhds
+  have hE : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ),
+      |(∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+        - 2 / d * Real.arctan (Real.pi / d)| ≤ Ci := by
+    filter_upwards [hd0, hd2] with d hd hdd
+    have h := hCi d hd hdd
+    rw [abs_of_pos hd] at h
+    exact h
+  have hB : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ),
+      |(∫ p in (-Real.pi)..Real.pi,
+          2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi))| ≤ Cb := by
+    filter_upwards [hd0, hd2] with d hd hdd
+    exact hCb d hd hdd
+  have hmodel : Tendsto
+      (fun d : ℝ => 2 * (Real.sin d * (2 * Real.arctan (Real.pi / d) / d)))
+      (𝓝[>] (0:ℝ)) (𝓝 (2 * Real.pi)) := by
+    simpa using qwz_model_tendsto.const_mul (2 : ℝ)
+  have herr : Tendsto
+      (fun d : ℝ => 2 * Real.sin d
+        * ((∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))
+            - 2 / d * Real.arctan (Real.pi / d)))
+      (𝓝[>] (0:ℝ)) (𝓝 0) := by
+    have h2s : Tendsto (fun d : ℝ => 2 * Real.sin d) (𝓝[>] (0:ℝ)) (𝓝 0) := by
+      simpa using hsin.const_mul (2 : ℝ)
+    exact tendsto_mul_bdd_of_tendsto_zero h2s hE
+  have hmain : Tendsto
+      (fun d : ℝ => Real.sin d
+        * (2 * (∫ p in (-Real.pi)..Real.pi, 1 / qwzD m (p + Real.pi) (d + Real.pi))))
+      (𝓝[>] (0:ℝ)) (𝓝 (2 * Real.pi)) := by
+    have hsum := hmodel.add herr
+    rw [show (2 * Real.pi + 0 : ℝ) = 2 * Real.pi from by ring] at hsum
+    refine Tendsto.congr' ?_ hsum
+    filter_upwards with d
+    ring
+  have hBterm : Tendsto
+      (fun d : ℝ => Real.sin d
+        * (∫ p in (-Real.pi)..Real.pi,
+            2 * (1 + Real.cos p) / qwzD m (p + Real.pi) (d + Real.pi)))
+      (𝓝[>] (0:ℝ)) (𝓝 0) :=
+    tendsto_mul_bdd_of_tendsto_zero hsin hB
+  have hsub := hmain.sub hBterm
+  rw [show (2 * Real.pi - 0 : ℝ) = 2 * Real.pi from by ring] at hsub
+  refine Tendsto.congr' ?_ hsub
+  filter_upwards with d
+  ring
+
+/-- **跳跃引理（右侧）**：`G(d + π) → −2π`（`d → 0⁺`）。 -/
+theorem qwz_jump_right (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (fun d : ℝ => qwzG m (d + Real.pi)) (𝓝[>] (0:ℝ)) (𝓝 (-2 * Real.pi)) := by
+  have hd0 : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ), 0 < d := self_mem_nhdsWithin
+  have hd2 : ∀ᶠ d : ℝ in 𝓝[>] (0:ℝ), d ≤ Real.pi / 2 :=
+    (nhdsWithin_le_nhds (s := Set.Ioi (0:ℝ)) (a := (0:ℝ)))
+      (Iic_mem_nhds (by linarith only [Real.pi_pos] : (0:ℝ) < Real.pi / 2))
+  have hneg := (qwz_sin_mul_H_tendsto m hm0 hm2).neg
+  rw [show (-(2 * Real.pi) : ℝ) = -2 * Real.pi from by ring] at hneg
+  refine Tendsto.congr' ?_ hneg
+  filter_upwards [hd0, hd2] with d hd hdd
+  have hdpi : d < Real.pi := by linarith only [hdd, Real.pi_pos]
+  rw [qwzG_shift m d, qwzH_eq m d hd hdpi]
+  ring
+
+/-! ##### 跳跃极限（`d → 0⁻`）
+
+由 `α₀` 关于 `k₁ = π` 的反对称性 `α₀(k₀, 2π−k₁) = −α₀(k₀, k₁)` 得
+`G(π − d) = −G(π + d)`（精确恒等式），故左侧极限由右侧极限取负即得。 -/
+
+/-- `qwzSqrt` 关于 `k₁ → −k₁` 不变（`cos`、`sin²` 皆为偶函数）。 -/
+theorem qwzSqrt_neg1 (m k₀ k₁ : ℝ) : qwzSqrt m k₀ (-k₁) = qwzSqrt m k₀ k₁ := by
+  unfold qwzSqrt
+  rw [qwzDr_sq, qwzDr_sq]
+  congr 1
+  simp only [Real.sin_neg, Real.cos_neg]
+  ring
+
+/-- `qwzC` 关于 `k₁ → −k₁` 不变。 -/
+theorem qwzC_neg1 (m k₀ k₁ : ℝ) : qwzC m k₀ (-k₁) = qwzC m k₀ k₁ := by
+  unfold qwzC
+  rw [Real.cos_neg]
+
+/-- `qwzV` 关于 `k₁ → −k₁` 不变。 -/
+theorem qwzV_neg1 (m k₀ k₁ : ℝ) : qwzV m k₀ (-k₁) = qwzV m k₀ k₁ := by
+  unfold qwzV
+  rw [qwzSqrt_neg1, qwzC_neg1]
+
+/-- **`α₀` 关于 `k₁ = π` 的反对称性**：`α₀(k₀, 2π−k₁) = −α₀(k₀, k₁)`。 -/
+theorem qwzAlpha0_two_pi_sub (m k₀ k₁ : ℝ) :
+    qwzAlpha0 m k₀ (2 * Real.pi - k₁) = -qwzAlpha0 m k₀ k₁ := by
+  have hv : qwzV m k₀ (2 * Real.pi - k₁) = qwzV m k₀ k₁ := by
+    rw [show 2 * Real.pi - k₁ = -k₁ + 2 * Real.pi from by ring, qwzV_periodic1, qwzV_neg1]
+  have hs : Real.sin (2 * Real.pi - k₁) = -Real.sin k₁ := by
+    rw [show 2 * Real.pi - k₁ = -k₁ + 2 * Real.pi from by ring, Real.sin_add_two_pi,
+      Real.sin_neg]
+  unfold qwzAlpha0
+  rw [hv, hs]
+  ring
+
+/-- **`G` 关于 `k₁ = π` 的反对称性**：`G(π − d) = −G(d + π)`。 -/
+theorem qwzG_pi_sub (m d : ℝ) :
+    qwzG m (Real.pi - d) = -qwzG m (d + Real.pi) := by
+  unfold qwzG
+  have h : Real.pi - d = 2 * Real.pi - (d + Real.pi) := by ring
+  rw [h]
+  calc (∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0 m k₀ (2 * Real.pi - (d + Real.pi)))
+      = (∫ k₀ in (0)..(2 * Real.pi), -qwzAlpha0 m k₀ (d + Real.pi)) :=
+        intervalIntegral.integral_congr fun k₀ _ => by rw [qwzAlpha0_two_pi_sub]
+    _ = -(∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0 m k₀ (d + Real.pi)) :=
+        intervalIntegral.integral_neg
+
+/-- **跳跃引理（左侧）**：`G(π − d) → 2π`（`d → 0⁺`）。 -/
+theorem qwz_jump_left (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (fun d : ℝ => qwzG m (Real.pi - d)) (𝓝[>] (0:ℝ)) (𝓝 (2 * Real.pi)) := by
+  have h := (qwz_jump_right m hm0 hm2).neg
+  rw [show -(-2 * Real.pi) = 2 * Real.pi from by ring] at h
+  refine Tendsto.congr' ?_ h
+  filter_upwards with d
+  exact (qwzG_pi_sub m d).symm
+
+end QWZJumpLemma
+
+section QWZNonTrivialPhaseChernAssembly
+open MeasureTheory Filter
+open scoped Topology Interval
+
+/-! #### §2.54 非平凡相陈数 `C = 1`（`0 < m < 2`）与反射 `C = sgn m`（`|m| < 2`）
+
+本段把 §2.53 的单侧跳跃极限组装为非平凡相的第一陈数：
+
+1. **线积分与跳跃**（阶段 A）：`P(k₁) = ∫₀^{2π} ∂₁α₀ dk₀ = G'(k₁)`，且
+   `∫₀^{π} P = 2π`、`∫_π^{2π} P = 2π`（由 `qwz_jump_left`/`qwz_jump_right` 与跳跃 FTC），
+   故 `∫₀^{2π} P = 4π`。
+2. **陈数组装**（阶段 B）：曲率交换对称 `F(k₀,k₁) = F(k₁,k₀)` 将 BZ 双重积分化为
+   线积分，再用 §2.52 的归约 `L(k₁) = ½ P(k₁)` 得 `∫∫ F = 2π`，从而 `C = 1`。
+3. **反射归约**（阶段 C）：由 `qwzCurvature_reflect` 与 `bzIntegral_shift` 得
+   `C(−m) = −C(m)`，故 `−2 < m < 0` 时 `C = −1`，合并为 `|m| < 2` 时 `C = sgn m`。 -/
+
+/-- 线积分函数 `P(k₁) = ∫₀^{2π} ∂₁α₀ dk₀ = G'(k₁)`（`cos k₁ ≠ −1`）。 -/
+noncomputable def qwzP (m : ℝ) (k₁ : ℝ) : ℝ :=
+  ∫ k₀ in (0)..(2 * Real.pi), qwzAlpha0d1 m k₀ k₁
+
+/-- 曲率线积分 `L(k₁) = ∫₀^{2π} F(k₀,k₁) dk₀`（复值）。 -/
+noncomputable def qwzLineF (m k₁ : ℝ) : ℂ :=
+  ∫ k₀ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁
+
+/-! ##### 联合连续性（`0 < m < 2`） -/
+
+theorem qwzDs1_cont_of_mem (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2) := by
+  have hne : ∀ p : ℝ × ℝ, qwzSqrt m p.1 p.2 ≠ 0 :=
+    fun p => ne_of_gt (qwzSqrt_pos_of_mem m p.1 p.2 hm0 hm2)
+  have hnum : Continuous (fun p : ℝ × ℝ => -(Real.sin p.2) * (m + Real.cos p.1)) := by fun_prop
+  rw [show (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2)
+      = (fun p : ℝ × ℝ => -(Real.sin p.2) * (m + Real.cos p.1))
+        / (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2) from funext fun p => rfl]
+  exact Continuous.div hnum (qwzSqrt_cont m) hne
+
+theorem qwzVd1_cont_of_mem (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2) := by
+  have hDs := qwzDs1_cont_of_mem m hm0 hm2
+  have hS := qwzSqrt_cont m
+  have hsin : Continuous (fun p : ℝ × ℝ => Real.sin p.2) := Real.continuous_sin.comp continuous_snd
+  rw [show (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2)
+      = (fun p : ℝ × ℝ => qwzDs1 m p.1 p.2)
+          * (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2 + qwzC m p.1 p.2)
+        + (fun p : ℝ × ℝ => qwzSqrt m p.1 p.2)
+          * ((fun p : ℝ × ℝ => qwzDs1 m p.1 p.2) - (fun p : ℝ × ℝ => Real.sin p.2))
+      from funext fun p => rfl]
+  exact (hDs.mul (qwzSc_cont m)).add (hS.mul (hDs.sub hsin))
+
+theorem qwzAlpha0d1_contOn (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) {S : Set (ℝ × ℝ)}
+    (hV : ∀ p ∈ S, qwzV m p.1 p.2 ≠ 0) :
+    ContinuousOn (fun p : ℝ × ℝ => qwzAlpha0d1 m p.1 p.2) S := by
+  have hVc := qwzV_cont m
+  have hVdc := qwzVd1_cont_of_mem m hm0 hm2
+  have hc0 : Continuous (fun p : ℝ × ℝ => Real.cos p.1) := Real.continuous_cos.comp continuous_fst
+  have hc1 : Continuous (fun p : ℝ × ℝ => Real.cos p.2) := Real.continuous_cos.comp continuous_snd
+  have hs1 : Continuous (fun p : ℝ × ℝ => Real.sin p.2) := Real.continuous_sin.comp continuous_snd
+  have hfun : (fun p : ℝ × ℝ => qwzAlpha0d1 m p.1 p.2)
+      = ((fun p : ℝ × ℝ => -(Real.cos p.2 * Real.cos p.1) * qwzV m p.1 p.2)
+          + (fun p : ℝ × ℝ => Real.sin p.2 * Real.cos p.1)
+            * (fun p : ℝ × ℝ => qwzVd1 m p.1 p.2))
+        / (fun p : ℝ × ℝ => qwzV m p.1 p.2 ^ 2) := funext fun p => rfl
+  rw [hfun]
+  refine ContinuousOn.div ?_ ?_ ?_
+  · exact ((((hc1.mul hc0).neg).mul hVc).add ((hs1.mul hc0).mul hVdc)).continuousOn
+  · exact (hVc.pow 2).continuousOn
+  · intro p hp; exact pow_ne_zero 2 (hV p hp)
+
+theorem qwzAlpha0_continuous_right_of_cos_ne (m k₁ : ℝ) (hm0 : 0 < m) (hm2 : m < 2)
+    (hk : Real.cos k₁ ≠ -1) :
+    Continuous fun k₀ => qwzAlpha0 m k₀ k₁ := by
+  have hV : Continuous fun k₀ => qwzV m k₀ k₁ := qwzV_continuous_right m k₁
+  have hVne : ∀ k₀, qwzV m k₀ k₁ ≠ 0 := fun k₀ => qwzV_ne_zero_of_cos_ne m k₀ k₁ hm0 hm2 hk
+  unfold qwzAlpha0
+  exact Continuous.div (continuous_const.mul Real.continuous_cos).neg hV hVne
+
+/-! ##### `qwzG` 的参数可微性 -/
+
+theorem qwzG_hasDerivAt (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) {k₁ : ℝ}
+    (hk : Real.cos k₁ ≠ -1) :
+    HasDerivAt (qwzG m) (qwzP m k₁) k₁ := by
+  have hnb : {y : ℝ | y ≠ -1} ∈ 𝓝 (Real.cos k₁) := isOpen_ne.mem_nhds hk
+  have hpre : Real.cos ⁻¹' {y : ℝ | y ≠ -1} ∈ 𝓝 k₁ :=
+    Real.continuous_cos.continuousAt hnb
+  rw [Metric.mem_nhds_iff] at hpre
+  obtain ⟨ε, hεpos, hε⟩ := hpre
+  set δ : ℝ := ε / 2 with hδdef
+  have hδpos : 0 < δ := by positivity
+  have hδ : ∀ x, x ∈ Set.Icc (k₁ - δ) (k₁ + δ) → Real.cos x ≠ -1 := by
+    intro x hx
+    have hdist : dist x k₁ < ε := by
+      rw [Real.dist_eq, abs_lt]
+      constructor
+      · linarith [hx.1, hδdef]
+      · linarith [hx.2, hδdef]
+    exact hε hdist
+  obtain ⟨C, hC⟩ : ∃ C, ∀ p ∈ Set.Icc 0 (2 * Real.pi) ×ˢ Set.Icc (k₁ - δ) (k₁ + δ),
+      ‖qwzAlpha0d1 m p.1 p.2‖ ≤ C :=
+    (isCompact_Icc.prod isCompact_Icc).exists_bound_of_continuousOn
+      (qwzAlpha0d1_contOn m hm0 hm2
+        (fun p hp => qwzV_ne_zero_of_cos_ne m p.1 p.2 hm0 hm2 (hδ p.2 hp.2)))
+  have hmeas : ∀ᶠ x in 𝓝 k₁, AEStronglyMeasurable (fun t => qwzAlpha0 m t x)
+      (volume.restrict (Ι (0:ℝ) (2 * Real.pi))) := by
+    filter_upwards [Icc_mem_nhds (show k₁ - δ < k₁ by linarith)
+      (show k₁ < k₁ + δ by linarith)] with x hx
+    exact (qwzAlpha0_continuous_right_of_cos_ne m x hm0 hm2 (hδ x hx)).aestronglyMeasurable
+  have hint : IntervalIntegrable (fun t => qwzAlpha0 m t k₁) volume 0 (2 * Real.pi) :=
+    (qwzAlpha0_continuous_right_of_cos_ne m k₁ hm0 hm2 hk).intervalIntegrable _ _
+  have hmeas' : AEStronglyMeasurable (fun t => qwzAlpha0d1 m t k₁)
+      (volume.restrict (Ι (0:ℝ) (2 * Real.pi))) :=
+    (qwzAlpha0d1_continuous_right m k₁ hm0 hm2 hk).aestronglyMeasurable
+  have hbound : ∀ᵐ t ∂volume, t ∈ Ι (0:ℝ) (2 * Real.pi) →
+      ∀ x ∈ Set.Icc (k₁ - δ) (k₁ + δ), ‖qwzAlpha0d1 m t x‖ ≤ C := by
+    refine Filter.Eventually.of_forall fun t ht x hx => hC (t, x) ⟨?_, hx⟩
+    show t ∈ Set.Icc (0:ℝ) (2 * Real.pi)
+    rw [← Set.uIcc_of_le (by positivity : (0:ℝ) ≤ 2 * Real.pi)]
+    exact Set.uIoc_subset_uIcc ht
+  have hbint : IntervalIntegrable (fun _ : ℝ => C) volume 0 (2 * Real.pi) :=
+    intervalIntegrable_const
+  have hderiv : ∀ᵐ t ∂volume, t ∈ Ι (0:ℝ) (2 * Real.pi) →
+      ∀ x ∈ Set.Icc (k₁ - δ) (k₁ + δ),
+        HasDerivAt (fun x => qwzAlpha0 m t x) (qwzAlpha0d1 m t x) x :=
+    Filter.Eventually.of_forall fun t ht x hx =>
+      qwzAlpha0_hasDerivAt1_of_V_ne_zero m t x hm0 hm2
+        (qwzV_ne_zero_of_cos_ne m t x hm0 hm2 (hδ x hx))
+  have hmain := intervalIntegral.hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (μ := volume) (a := 0) (b := 2 * Real.pi)
+    (F := fun x t => qwzAlpha0 m t x) (F' := fun x t => qwzAlpha0d1 m t x)
+    (x₀ := k₁) (s := Set.Icc (k₁ - δ) (k₁ + δ)) (bound := fun _ => C)
+    (Icc_mem_nhds (by linarith) (by linarith)) hmeas hint hmeas' hbound hbint hderiv
+  exact hmain.2
+
+/-! ##### 曲率联合连续性 + 线积分连续性 -/
+
+theorem qwzCurvature_continuous_of_mem (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun p : ℝ × ℝ => qwzCurvature m p.1 p.2 := by
+  have hS : Continuous fun p : ℝ × ℝ => qwzS m p.1 p.2 := by
+    simp only [qwzS, dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+    fun_prop
+  have hne : ∀ p : ℝ × ℝ, qwzS m p.1 p.2 ≠ 0 := by
+    intro p
+    rw [qwzS_eq_sqrt]
+    exact_mod_cast ne_of_gt (qwzSqrt_pos_of_mem m p.1 p.2 hm0 hm2)
+  have hfun : (fun p : ℝ × ℝ => qwzCurvature m p.1 p.2)
+      = fun p : ℝ × ℝ => -(1 / 2 : ℂ) * ((1 / qwzS m p.1 p.2) ^ 3 *
+          ((Real.cos p.1 + Real.cos p.2 + m * Real.cos p.1 * Real.cos p.2 : ℝ) : ℂ)) := by
+    funext p; exact qwzCurvature_eq m p.1 p.2
+  rw [hfun]
+  refine Continuous.const_mul ?_ _
+  refine Continuous.mul ?_ ?_
+  · exact ((continuous_const : Continuous fun _ : ℝ × ℝ => (1 : ℂ)).div hS hne).pow 3
+  · fun_prop
+
+theorem qwzCurvature_comm (m k₀ k₁ : ℝ) : qwzCurvature m k₀ k₁ = qwzCurvature m k₁ k₀ := by
+  rw [qwzCurvature_eq, qwzCurvature_eq]
+  have hs : qwzS m k₀ k₁ = qwzS m k₁ k₀ := by
+    simp only [qwzS, dot3r, qwzDr, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons]
+    ring_nf
+  rw [hs]
+  congr 2
+  ring_nf
+
+theorem qwzCurvature_line_continuous (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous fun k₁ => ∫ k₀ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁ := by
+  have hjoint : Continuous fun p : ℝ × ℝ => qwzCurvature m p.2 p.1 :=
+    (qwzCurvature_continuous_of_mem m hm0 hm2).congr
+      (fun p => qwzCurvature_comm m p.1 p.2)
+  exact intervalIntegral.continuous_parametric_intervalIntegral_of_continuous'
+    (μ := volume) (f := fun k₁ k₀ => qwzCurvature m k₀ k₁) hjoint 0 (2 * Real.pi)
+
+theorem qwzLineF_continuous (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Continuous (qwzLineF m) :=
+  qwzCurvature_line_continuous m hm0 hm2
+
+/-! ##### `G` 的初值与周期性 -/
+
+theorem qwzG_zero (m : ℝ) : qwzG m 0 = 0 := by
+  unfold qwzG
+  simp [qwzAlpha0, Real.sin_zero]
+
+theorem qwzG_periodic1 (m k₁ : ℝ) : qwzG m (k₁ + 2 * Real.pi) = qwzG m k₁ := by
+  unfold qwzG
+  exact intervalIntegral.integral_congr fun k₀ _ => qwzAlpha0_periodic1 m k₀ k₁
+
+theorem qwzG_two_pi (m : ℝ) : qwzG m (2 * Real.pi) = 0 := by
+  rw [show 2 * Real.pi = 0 + 2 * Real.pi from by ring, qwzG_periodic1, qwzG_zero]
+
+/-! ##### `cos = −1` 的例外集为零测 -/
+
+theorem ae_cos_ne_neg_one : ∀ᵐ x : ℝ ∂volume, Real.cos x ≠ -1 := by
+  rw [ae_iff]
+  have hset : {x : ℝ | Real.cos x = -1}
+      = Set.range (fun k : ℤ => Real.pi + (k : ℝ) * (2 * Real.pi)) := by
+    ext x
+    change Real.cos x = -1 ↔ x ∈ Set.range (fun k : ℤ => Real.pi + (k : ℝ) * (2 * Real.pi))
+    rw [Real.cos_eq_neg_one_iff]
+    simp only [Set.mem_range]
+  have hcount : {x : ℝ | Real.cos x = -1}.Countable := by
+    rw [hset]
+    exact Set.countable_range _
+  simpa only [not_not] using hcount.measure_zero volume
+
+theorem cos_ne_neg_one_of_Ioo (x : ℝ) (hx : x ∈ Set.Ioo 0 (2 * Real.pi))
+    (hne : x ≠ Real.pi) : Real.cos x ≠ -1 := by
+  intro h
+  obtain ⟨k, hk⟩ := Real.cos_eq_neg_one_iff.mp h
+  have hx_eq : x = Real.pi + (k : ℝ) * (2 * Real.pi) := hk.symm
+  have hk2 : (k : ℝ) * (2 * Real.pi) = x - Real.pi := by linarith
+  have hk_gt : (-Real.pi) < (k : ℝ) * (2 * Real.pi) := by linarith [hx.1, Real.pi_pos]
+  have hk_lt : (k : ℝ) * (2 * Real.pi) < Real.pi := by linarith [hx.2, Real.pi_pos]
+  have hk_low : (-1 : ℝ) < (k : ℝ) := by nlinarith [Real.pi_pos]
+  have hk_high : (k : ℝ) < 1 := by nlinarith [Real.pi_pos]
+  have hk0 : k = 0 := by
+    have a : (-1 : ℤ) < k := by exact_mod_cast hk_low
+    have b : k < 1 := by exact_mod_cast hk_high
+    omega
+  rw [hk0] at hx_eq
+  push_cast at hx_eq
+  simp only [zero_mul, add_zero] at hx_eq
+  exact hne hx_eq
+
+/-! ##### §2.54 阶段 A：`qwzP` 的可积性与两端跳跃积分 -/
+
+/-- `qwzP m = 2·Re L` 几乎处处（例外集 `{cos = −1}` 零测）。 -/
+theorem qwzP_ae_eq (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    qwzP m =ᵐ[volume] fun k => 2 * (qwzLineF m k).re := by
+  filter_upwards [ae_cos_ne_neg_one] with k hk
+  have hL : qwzLineF m k = (((1 / 2 : ℝ) * qwzP m k : ℝ) : ℂ) := by
+    simpa only [qwzLineF, qwzP] using qwz_curvature_lineIntegral_eq m k hm0 hm2 hk
+  rw [hL, Complex.ofReal_re]
+  ring
+
+/-- `qwzP` 在任意区间上可积。 -/
+theorem qwzP_intervalIntegrable (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) (a b : ℝ) :
+    IntervalIntegrable (qwzP m) volume a b := by
+  have hcont : Continuous fun k => 2 * (qwzLineF m k).re :=
+    continuous_const.mul (Complex.continuous_re.comp (qwzLineF_continuous m hm0 hm2))
+  refine (hcont.intervalIntegrable a b).congr_ae ?_
+  exact ((qwzP_ae_eq m hm0 hm2).restrict).symm
+
+/-! ##### `qwzG` 在 `0`、`2π` 处的连续性 -/
+
+theorem qwzG_tendsto_zero_right (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (qwzG m) (𝓝[>] (0 : ℝ)) (𝓝 0) := by
+  have hc : ContinuousAt (qwzG m) 0 :=
+    (qwzG_hasDerivAt m hm0 hm2 (by norm_num : Real.cos 0 ≠ -1)).continuousAt
+  simpa [qwzG_zero] using hc.mono_left nhdsWithin_le_nhds
+
+theorem qwzG_tendsto_zero_left_two_pi (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (qwzG m) (𝓝[<] (2 * Real.pi)) (𝓝 0) := by
+  have hc : ContinuousAt (qwzG m) (2 * Real.pi) :=
+    (qwzG_hasDerivAt m hm0 hm2 (by rw [Real.cos_two_pi]; norm_num :
+      Real.cos (2 * Real.pi) ≠ -1)).continuousAt
+  simpa [qwzG_two_pi] using hc.mono_left nhdsWithin_le_nhds
+
+/-! ##### `qwzG` 在 `π` 两侧的单侧极限（由跳跃引理转写） -/
+
+theorem qwzG_tendsto_two_pi_left (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (qwzG m) (𝓝[<] Real.pi) (𝓝 (2 * Real.pi)) := by
+  have hχ : Tendsto (fun k : ℝ => Real.pi - k) (𝓝[<] Real.pi) (𝓝[>] (0 : ℝ)) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨?_, ?_⟩
+    · have hcont : Continuous fun k : ℝ => Real.pi - k := continuous_const.sub continuous_id
+      simpa using (hcont.continuousAt (x := Real.pi)).tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with k hk
+      rw [Set.mem_Iio] at hk
+      exact sub_pos.mpr hk
+  have hcomp : Tendsto (fun k : ℝ => qwzG m (Real.pi - (Real.pi - k)))
+      (𝓝[<] Real.pi) (𝓝 (2 * Real.pi)) := (qwz_jump_left m hm0 hm2).comp hχ
+  simpa only [sub_sub_cancel] using hcomp
+
+theorem qwzG_tendsto_neg_two_pi_right (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    Tendsto (qwzG m) (𝓝[>] Real.pi) (𝓝 (-2 * Real.pi)) := by
+  have hψ : Tendsto (fun k : ℝ => k - Real.pi) (𝓝[>] Real.pi) (𝓝[>] (0 : ℝ)) := by
+    rw [tendsto_nhdsWithin_iff]
+    refine ⟨?_, ?_⟩
+    · have hcont : Continuous fun k : ℝ => k - Real.pi := continuous_id.sub continuous_const
+      simpa using (hcont.continuousAt (x := Real.pi)).tendsto.mono_left nhdsWithin_le_nhds
+    · filter_upwards [self_mem_nhdsWithin] with k hk
+      rw [Set.mem_Ioi] at hk
+      exact sub_pos.mpr hk
+  have hcomp : Tendsto (fun k : ℝ => qwzG m ((k - Real.pi) + Real.pi))
+      (𝓝[>] Real.pi) (𝓝 (-2 * Real.pi)) := (qwz_jump_right m hm0 hm2).comp hψ
+  simpa only [sub_add_cancel] using hcomp
+
+/-! ##### §2.54 阶段 A：`∫₀^{2π} qwzP = 4π`（跳跃 FTC） -/
+
+theorem qwzP_integral_zero_pi (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∫ k in (0)..Real.pi, qwzP m k = 2 * Real.pi := by
+  have h := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := qwzG m) (f' := qwzP m) (a := 0) (b := Real.pi)
+    Real.pi_pos
+    (fun x hx => qwzG_hasDerivAt m hm0 hm2
+      (cos_ne_neg_one_of_Ioo x ⟨hx.1, by linarith [hx.2, Real.pi_pos]⟩ (ne_of_lt hx.2)))
+    (qwzP_intervalIntegrable m hm0 hm2 0 Real.pi)
+    (qwzG_tendsto_zero_right m hm0 hm2)
+    (qwzG_tendsto_two_pi_left m hm0 hm2)
+  simpa using h
+
+theorem qwzP_integral_pi_two_pi (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∫ k in Real.pi..(2 * Real.pi), qwzP m k = 2 * Real.pi := by
+  have h := intervalIntegral.integral_eq_sub_of_hasDerivAt_of_tendsto
+    (f := qwzG m) (f' := qwzP m) (a := Real.pi) (b := 2 * Real.pi)
+    (by linarith [Real.pi_pos])
+    (fun x hx => qwzG_hasDerivAt m hm0 hm2
+      (cos_ne_neg_one_of_Ioo x ⟨by linarith [hx.1, Real.pi_pos], hx.2⟩ (ne_of_gt hx.1)))
+    (qwzP_intervalIntegrable m hm0 hm2 Real.pi (2 * Real.pi))
+    (qwzG_tendsto_neg_two_pi_right m hm0 hm2)
+    (qwzG_tendsto_zero_left_two_pi m hm0 hm2)
+  simpa using h
+
+theorem qwzP_integral_two_pi (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    ∫ k in (0)..(2 * Real.pi), qwzP m k = 4 * Real.pi := by
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    (qwzP_intervalIntegrable m hm0 hm2 0 Real.pi)
+    (qwzP_intervalIntegrable m hm0 hm2 Real.pi (2 * Real.pi)),
+    qwzP_integral_zero_pi m hm0 hm2, qwzP_integral_pi_two_pi m hm0 hm2]
+  ring
+
+/-! ##### §2.54 阶段 B：`bzIntegral = 2π`，`physicalChernNumber = 1` -/
+
+theorem bzIntegral_qwzCurvature (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    bzIntegral (qwzCurvature m) = ((2 * Real.pi : ℝ) : ℂ) := by
+  have h1 : (∫ k₀ in (0)..(2 * Real.pi), ∫ k₁ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁)
+      = ∫ k₀ in (0)..(2 * Real.pi), qwzLineF m k₀ := by
+    refine intervalIntegral.integral_congr fun k₀ _ => ?_
+    show (∫ k₁ in (0)..(2 * Real.pi), qwzCurvature m k₀ k₁)
+        = ∫ k₁ in (0)..(2 * Real.pi), qwzCurvature m k₁ k₀
+    exact intervalIntegral.integral_congr fun k₁ _ => qwzCurvature_comm m k₀ k₁
+  have h2 : (∫ k₀ in (0)..(2 * Real.pi), qwzLineF m k₀)
+      = ∫ k₀ in (0)..(2 * Real.pi), Complex.ofReal ((1 / 2 : ℝ) * qwzP m k₀) := by
+    refine intervalIntegral.integral_congr_ae ?_
+    filter_upwards [ae_cos_ne_neg_one] with k₀ hk₀ _
+    simpa only [qwzLineF, qwzP] using qwz_curvature_lineIntegral_eq m k₀ hm0 hm2 hk₀
+  have h3 : (∫ k₀ in (0)..(2 * Real.pi), Complex.ofReal ((1 / 2 : ℝ) * qwzP m k₀))
+      = Complex.ofReal ((1 / 2 : ℝ) * ∫ k₀ in (0)..(2 * Real.pi), qwzP m k₀) := by
+    rw [intervalIntegral.integral_ofReal, intervalIntegral.integral_const_mul]
+  unfold bzIntegral
+  rw [h1, h2, h3, qwzP_integral_two_pi m hm0 hm2,
+    show (1 / 2 : ℝ) * (4 * Real.pi) = 2 * Real.pi from by ring]
+
+theorem physicalChernNumber_qwz_eq_one (m : ℝ) (hm0 : 0 < m) (hm2 : m < 2) :
+    physicalChernNumber (qwzCurvature m) = 1 := by
+  have hne : (2 * Real.pi : ℝ) ≠ 0 := mul_ne_zero two_ne_zero Real.pi_ne_zero
+  rw [physicalChernNumber, bzIntegral_qwzCurvature m hm0 hm2,
+    ← Complex.ofReal_mul, Complex.ofReal_eq_one]
+  exact inv_mul_cancel₀ hne
+
+/-! ##### §2.54 阶段 C：反射归约与 `|m| < 2` 的 `C = sgn m` -/
+
+/-- **`−2 < m < 0` 时陈数 `C = −1`**：由曲率反射 `F(m)(k) = −F(−m)(k + π)`
+与 BZ 双重积分平移不变性归约到 `0 < −m < 2` 分支。 -/
+theorem physicalChernNumber_qwz_eq_neg_one (m : ℝ) (hm2' : -2 < m) (hm0' : m < 0) :
+    physicalChernNumber (qwzCurvature m) = -1 := by
+  have hreflect : physicalChernNumber (qwzCurvature m)
+      = -physicalChernNumber (qwzCurvature (-m)) := by
+    unfold physicalChernNumber
+    rw [bzIntegral_qwzCurvature_reflect]
+    ring
+  rw [hreflect, physicalChernNumber_qwz_eq_one (-m) (by linarith) (by linarith)]
+
+/-- **`|m| < 2`（`m ≠ 0`）时陈数 `C = sgn m`**：合并非平凡相 `0 < m < 2`（`C = 1`）
+与 `−2 < m < 0`（`C = −1`）。 -/
+theorem physicalChernNumber_qwz_eq_sign (m : ℝ) (hm2 : |m| < 2) (hne : m ≠ 0) :
+    physicalChernNumber (qwzCurvature m) = ((Real.sign m : ℝ) : ℂ) := by
+  rcases lt_or_gt_of_ne hne with hlt | hgt
+  · have hneg := physicalChernNumber_qwz_eq_neg_one m
+      (by rw [abs_of_neg hlt] at hm2; linarith) hlt
+    rw [hneg, Real.sign_of_neg hlt]
+    simp
+  · have hpos := physicalChernNumber_qwz_eq_one m hgt (by rwa [abs_of_pos hgt] at hm2)
+    rw [hpos, Real.sign_of_pos hgt]
+    simp
+
+end QWZNonTrivialPhaseChernAssembly
 
 end MUFPF
