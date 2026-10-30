@@ -142,13 +142,12 @@ theorem dual_channel_shared_period {X EM GW : RecObj} (dc : DualChannel X EM GW)
 lemma step_iterate_in_carrier {X : RecObj} (C : FixedPointCluster X)
     (x : X.T) (hx : x ∈ C.carrier) (n : ℕ) :
     (X.step^[n]) x ∈ C.carrier := by
-  induction n with
+  induction n generalizing x with
   | zero => simpa using hx
   | succ k hk =>
-    have h_step : X.step^[k + 1] x = X.step (X.step^[k] x) := by
-      simp only [Function.iterate_succ, Function.comp_apply]
-    rw [h_step]
-    exact C.step_invariant (X.step^[k] x) hk
+    rw [Function.iterate_succ]
+    apply hk
+    exact C.step_invariant x hx
 
 -- ============================================================
 -- §5. T-04 交叉验证主定理
@@ -387,14 +386,14 @@ def BranchingRatio.one : BranchingRatio :=
   { value := 1, h_nonneg := by norm_num, h_le_one := le_refl 1 }
 
 /-- 均衡分支比（两通道均衡）。 -/
-def BranchingRatio.half : BranchingRatio :=
+noncomputable def BranchingRatio.half : BranchingRatio :=
   { value := 1/2, h_nonneg := by norm_num, h_le_one := by norm_num }
 
 /-- 分支比到定性类型的映射。
     em_dominant：r < 1/3
     balanced：1/3 ≤ r ≤ 2/3
     gw_dominant：r > 2/3 -/
-def BranchingRatio.toType (br : BranchingRatio) : BranchingType :=
+noncomputable def BranchingRatio.toType (br : BranchingRatio) : BranchingType :=
   if br.value < 1/3 then BranchingType.em_dominant
   else if br.value > 2/3 then BranchingType.gw_dominant
   else BranchingType.balanced
@@ -402,23 +401,17 @@ def BranchingRatio.toType (br : BranchingRatio) : BranchingType :=
 /-- 零分支比 → em_dominant。 -/
 theorem BranchingRatio.zero_toType :
     BranchingRatio.zero.toType = BranchingType.em_dominant := by
-  unfold BranchingRatio.toType BranchingRatio.zero
-  simp
-  norm_num
+  norm_num [BranchingRatio.toType, BranchingRatio.zero]
 
 /-- 单位分支比 → gw_dominant。 -/
 theorem BranchingRatio.one_toType :
     BranchingRatio.one.toType = BranchingType.gw_dominant := by
-  unfold BranchingRatio.toType BranchingRatio.one
-  simp
-  norm_num
+  norm_num [BranchingRatio.toType, BranchingRatio.one]
 
 /-- 均衡分支比 → balanced。 -/
 theorem BranchingRatio.half_toType :
     BranchingRatio.half.toType = BranchingType.balanced := by
-  unfold BranchingRatio.toType BranchingRatio.half
-  simp
-  norm_num
+  norm_num [BranchingRatio.toType, BranchingRatio.half]
 
 /-- 通道耦合强度：描述通道传导效率的非负实数。
     物理含义：通道将源振荡能量转化为辐射的效率。
@@ -436,48 +429,47 @@ structure ChannelCoupling where
     分支比 = gw_strength / (em_strength + gw_strength)。
     当两通道耦合强度都为零时，定义分支比为 1/2（均衡）。 -/
 noncomputable def ChannelCoupling.branchingRatio (cc : ChannelCoupling) : BranchingRatio :=
-  if cc.em_strength + cc.gw_strength = 0 then
+  if h : cc.em_strength + cc.gw_strength = 0 then
     BranchingRatio.half
   else
     { value := cc.gw_strength / (cc.em_strength + cc.gw_strength)
       h_nonneg := div_nonneg cc.h_gw_nonneg
-        (le_of_lt (lt_of_le_of_ne (add_nonneg cc.h_em_nonneg cc.h_gw_nonneg)
-          (Ne.symm (by assumption))))
+        (le_of_lt (lt_of_le_of_ne (add_nonneg cc.h_em_nonneg cc.h_gw_nonneg) (Ne.symm h)))
       h_le_one := by
-        rw [div_le_iff (lt_of_le_of_ne (add_nonneg cc.h_em_nonneg cc.h_gw_nonneg)
-          (Ne.symm (by assumption)))]
-        linarith }
+        have hsum_pos : 0 < cc.em_strength + cc.gw_strength :=
+          lt_of_le_of_ne (add_nonneg cc.h_em_nonneg cc.h_gw_nonneg) (Ne.symm h)
+        rw [div_le_iff₀ hsum_pos]
+        ring_nf
+        linarith [cc.h_em_nonneg] }
 
 /-- 分支比与耦合强度的关系：当 EM 耦合强度为零时，分支比为 1（纯 GW）。 -/
 theorem ChannelCoupling.branchingRatio_zero_em (cc : ChannelCoupling)
     (h : cc.em_strength = 0) (h_gw : cc.gw_strength > 0) :
     (cc.branchingRatio).value = 1 := by
   unfold ChannelCoupling.branchingRatio
-  simp [h]
-  have h_sum : 0 + cc.gw_strength ≠ 0 := by linarith
-  rw [if_neg h_sum]
-  simp
-  exact div_self (ne_of_gt h_gw)
+  have h_ne : cc.gw_strength ≠ 0 := ne_of_gt h_gw
+  simp [h, h_ne]
 
 /-- 分支比与耦合强度的关系：当 GW 耦合强度为零时，分支比为 0（纯 EM）。 -/
 theorem ChannelCoupling.branchingRatio_zero_gw (cc : ChannelCoupling)
     (h : cc.gw_strength = 0) (h_em : cc.em_strength > 0) :
     (cc.branchingRatio).value = 0 := by
   unfold ChannelCoupling.branchingRatio
-  simp [h]
-  have h_sum : cc.em_strength + 0 ≠ 0 := by linarith
-  rw [if_neg h_sum]
-  simp
+  have h_ne : cc.em_strength ≠ 0 := ne_of_gt h_em
+  simp [h, h_ne]
 
 /-- 分支比与耦合强度的关系：当两通道耦合强度相等时，分支比为 1/2（均衡）。 -/
 theorem ChannelCoupling.branchingRatio_equal (cc : ChannelCoupling)
     (h : cc.em_strength = cc.gw_strength) (h_pos : cc.em_strength > 0) :
     (cc.branchingRatio).value = 1/2 := by
   unfold ChannelCoupling.branchingRatio
-  have h_sum : cc.em_strength + cc.gw_strength ≠ 0 := by linarith
-  rw [if_neg h_sum]
-  simp [h]
-  rw [div_eq_iff (by linarith : cc.gw_strength + cc.gw_strength ≠ 0)]
+  have h_ne : cc.em_strength + cc.gw_strength ≠ 0 := by
+    rw [h]
+    linarith
+  simp [h_ne]
+  rw [h]
+  have hgw : cc.gw_strength > 0 := by rw [← h]; exact h_pos
+  field_simp [ne_of_gt hgw]
   ring
 
 /-- **分支比定量约束定理**：分支比由通道耦合强度唯一确定。
@@ -495,32 +487,36 @@ theorem T04_branching_ratio_quantitative
     (br.value < 1/3 → br.toType = BranchingType.em_dominant) ∧
     (br.value > 2/3 → br.toType = BranchingType.gw_dominant) ∧
     (1/3 ≤ br.value ∧ br.value ≤ 2/3 → br.toType = BranchingType.balanced) := by
+  intro br
   constructor
-  · exact BranchingRatio.h_nonneg
+  · exact br.h_nonneg
   constructor
-  · exact BranchingRatio.h_le_one
+  · exact br.h_le_one
   constructor
   · intro h
+    change (cc.branchingRatio).value = cc.gw_strength / (cc.em_strength + cc.gw_strength)
     unfold ChannelCoupling.branchingRatio
-    rw [if_neg (ne_of_gt h)]
-    rfl
+    simp [ne_of_gt h]
   constructor
   · intro h
+    change (cc.branchingRatio).toType = BranchingType.em_dominant
     unfold BranchingRatio.toType
     rw [if_pos h]
   constructor
   · intro h
+    change (cc.branchingRatio).toType = BranchingType.gw_dominant
     unfold BranchingRatio.toType
-    rw [if_neg (by linarith : ¬ br.value < 1/3)]
+    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
     rw [if_pos h]
   · intro ⟨h1, h2⟩
+    change (cc.branchingRatio).toType = BranchingType.balanced
     unfold BranchingRatio.toType
-    rw [if_neg (by linarith : ¬ br.value < 1/3)]
-    rw [if_neg (by linarith : ¬ br.value > 2/3)]
+    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
+    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value > 2/3)]
 
 /-- GW170817 约束：在双中子星并合事件中，分支比接近 1/2（balanced）。
     这对应于 EM 和 GW 通道同时可观测的情形。 -/
-def gw170817_branching_ratio : BranchingRatio := BranchingRatio.half
+noncomputable def gw170817_branching_ratio : BranchingRatio := BranchingRatio.half
 
 /-- GW170817 分支比定性类型：balanced。 -/
 theorem gw170817_branching_type :
@@ -534,7 +530,9 @@ theorem branching_ratio_continuous {cc₁ cc₂ : ChannelCoupling}
     (h_gw : cc₁.gw_strength = cc₂.gw_strength) :
     cc₁.branchingRatio.value = cc₂.branchingRatio.value := by
   unfold ChannelCoupling.branchingRatio
-  rw [h_em, h_gw]
+  by_cases hc : cc₁.em_strength + cc₁.gw_strength = 0
+  · simp [hc, h_em, h_gw]
+  · simp [hc, h_em, h_gw]
 
 -- ============================================================
 -- §10. 三通道耦合系统（EM + GW + Neutrino）

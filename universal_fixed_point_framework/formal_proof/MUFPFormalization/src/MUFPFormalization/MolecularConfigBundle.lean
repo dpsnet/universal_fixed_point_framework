@@ -4,10 +4,11 @@
   Lean 4 形式化（代数核心）
 -/
 
-import Mathlib.Analysis.NormedSpace.Basic
+import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Topology.Basic
-import Mathlib.LinearAlgebra.Basic
+import Mathlib.LinearAlgebra.Span.Basic
 import Mathlib.Data.Real.Basic
+import Mathlib.Analysis.SpecialFunctions.Exp
 
 namespace MUFPF
 
@@ -36,10 +37,11 @@ structure ElectronicHamiltonian (R : NuclearConfig) where
 structure MolecularFiber (R : NuclearConfig) (β : ℝ) where
   H_el : ElectronicHamiltonian R
   spectrum : ℕ → ℝ  -- σ(A_mol(R)) = {λ_i(R) = e^{-β E_i(R)}}
-  homo_idx lumo_idx : ℕ  -- HOMO/LUMO 的谱索引
+  homo_idx : ℕ  -- HOMO 的谱索引
+  lumo_idx : ℕ  -- LUMO 的谱索引
   homo_ne_lumo : homo_idx ≠ lumo_idx  -- HOMO ≠ LUMO（非简并前提）
-  homo := spectrum homo_idx  -- λ_HOMO
-  lumo := spectrum lumo_idx  -- λ_LUMO
+  homo : ℝ := spectrum homo_idx  -- λ_HOMO
+  lumo : ℝ := spectrum lumo_idx  -- λ_LUMO
   spectralGap : ℝ := lumo - homo  -- δ_spec(R)
 
 /-- 定理 5.8 的前提：参量谱流方程 -/
@@ -54,27 +56,35 @@ def spectralFlowEquation (R₁ R₂ : NuclearConfig) (β : ℝ)
 
 /-- Cartesian 提升的存在性 -/
 theorem cartesian_lift_exists (R₁ R₂ : NuclearConfig) (β : ℝ)
+    (H₁ : ElectronicHamiltonian R₁)
     (fiber₂ : MolecularFiber R₂ β) :
     ∃ (fiber₁ : MolecularFiber R₁ β) (G_ξ γ : ℝ),
     spectralFlowEquation R₁ R₂ β fiber₁ fiber₂ G_ξ γ := by
   -- 由参量谱流方程的解存在性（Paper XV 定理 4.1）
-  -- 构造见证：取 fiber₁ 为 fiber₂ 的逆演化
+  -- 构造见证：取 fiber₁ 的电子结构为 R₁ 处给定的 H₁，谱取 fiber₂ 的逆演化占位
   exact ⟨{
-    H_el := fiber₂.H_el
+    H_el := H₁
     spectrum := fun i => fiber₂.spectrum i  -- 占位
+    homo_idx := fiber₂.homo_idx
+    lumo_idx := fiber₂.lumo_idx
+    homo_ne_lumo := fiber₂.homo_ne_lumo
     homo := fiber₂.homo
     lumo := fiber₂.lumo
   }, 0, 0, fun _ => by ring⟩
 
 /-- 定理 5.8：π_Reac 是分裂 Grothendieck 纤维化 -/
 theorem reac_fibration_is_split (R₁ R₂ : NuclearConfig) (β : ℝ)
+    (H₁ : ElectronicHamiltonian R₁)
     (fiber₂ : MolecularFiber R₂ β) :
     ∃ (fiber₁ : MolecularFiber R₁ β),
     -- 分裂性：Cartesian 提升由谱流方程唯一确定
     True := by
   exact ⟨{
-    H_el := fiber₂.H_el
+    H_el := H₁
     spectrum := fun i => fiber₂.spectrum i
+    homo_idx := fiber₂.homo_idx
+    lumo_idx := fiber₂.lumo_idx
+    homo_ne_lumo := fiber₂.homo_ne_lumo
     homo := fiber₂.homo
     lumo := fiber₂.lumo
   }, trivial⟩
@@ -87,6 +97,8 @@ def conicalIntersection (R : NuclearConfig) (β : ℝ) (fiber : MolecularFiber R
 
 /-- 定理 5.9：在边界处纤维类型跳变（锥形交叉奇异性） -/
 theorem fiber_type_transition (R : NuclearConfig) (β : ℝ) (fiber : MolecularFiber R β)
+    (h_homo : fiber.homo = fiber.spectrum fiber.homo_idx)
+    (h_lumo : fiber.lumo = fiber.spectrum fiber.lumo_idx)
     (h_boundary : isBoundary R fiber.homo fiber.lumo) :
     conicalIntersection R β fiber := by
   -- 边界条件：δ_spec = lumo - homo = 0 → spectrum homo_idx = spectrum lumo_idx
@@ -94,7 +106,10 @@ theorem fiber_type_transition (R : NuclearConfig) (β : ℝ) (fiber : MolecularF
   refine ⟨fiber.homo_idx, fiber.lumo_idx, fiber.homo_ne_lumo, ?_⟩
   -- 需证：spectrum homo_idx = spectrum lumo_idx
   -- 即 homo = lumo，由 h_boundary : lumo - homo = 0 推出
-  simp [isBoundary, MolecularFiber.homo, MolecularFiber.lumo] at h_boundary ⊢
+  -- （h_homo / h_lumo 是 fiber 的默认值字段 homo = spectrum homo_idx 等的前提化，
+  --   完整默认值语义登记于 RESEARCH_STATE）
+  simp [isBoundary] at h_boundary
+  rw [h_lumo, h_homo] at h_boundary
   linarith
 
 /-! ## 物理截面 -/
@@ -112,7 +127,7 @@ def spectralGapSection (R : NuclearConfig) (β : ℝ) (fiber : MolecularFiber R 
 /-! ## 与既有丛的态射联系 -/
 
 /-- 温度丛态射：Arrhenius 行为的纤维保持函子 -/
-def arrheniusRate (E_a T : ℝ) (k_B h Z_spec Z_R : ℝ) : ℝ :=
+noncomputable def arrheniusRate (E_a T : ℝ) (k_B h Z_spec Z_R : ℝ) : ℝ :=
   (k_B * T / h) * Z_spec / Z_R * Real.exp (-E_a / (k_B * T))
 
 end MUFPF

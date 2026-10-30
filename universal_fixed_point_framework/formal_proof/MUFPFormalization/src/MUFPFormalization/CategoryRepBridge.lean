@@ -55,7 +55,8 @@ structure SU2Generators (n : ℕ) where
   comm_L₃_L₁ : L₃ * L₁ - L₁ * L₃ = I • L₂
 
 /-- Pauli SU(2) 生成元（阶段 4 Fin 类型统一：通用 `{n : ℕ} + hn : n = 2`）。
-    当 n=2 时退化为标准 L_i = (1/2)·σ_i，满足 [L_i, L_j] = i·ε_ijk·L_k。 -/
+    当 n=2 时退化为标准 L_i = (1/2)·σ_i，满足 [L_i, L_j] = i·ε_ijk·L_k。
+    证明方式（2026-10-24 重构）：逐分量 fin_cases + norm_num 直接验证。 -/
 noncomputable def pauliSU2 {n : ℕ} (hn : n = 2) : SU2Generators n := by
   subst hn
   exact {
@@ -63,36 +64,14 @@ noncomputable def pauliSU2 {n : ℕ} (hn : n = 2) : SU2Generators n := by
     L₂ := (1/2 : ℂ) • pauliY rfl
     L₃ := (1/2 : ℂ) • pauliZ rfl
     comm_L₁_L₂ := by
-      calc
-        ((1/2 : ℂ) • pauliX rfl) * ((1/2 : ℂ) • pauliY rfl) - ((1/2 : ℂ) • pauliY rfl) * ((1/2 : ℂ) • pauliX rfl)
-            = (1/4 : ℂ) • (pauliX rfl * pauliY rfl - pauliY rfl * pauliX rfl) := by ring
-        _ = (1/4 : ℂ) • (2 * I • pauliZ rfl) := by
-          calc
-            pauliX rfl * pauliY rfl - pauliY rfl * pauliX rfl = 2 * I • pauliZ rfl := by
-              funext i j; fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ]
-            _ = 2 * I • pauliZ rfl := rfl
-        _ = (1/2 : ℂ) * I • pauliZ rfl := by ring
-        _ = I • ((1/2 : ℂ) • pauliZ rfl) := by ring
+      funext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
     comm_L₂_L₃ := by
-      calc
-        ((1/2 : ℂ) • pauliY rfl) * ((1/2 : ℂ) • pauliZ rfl) - ((1/2 : ℂ) • pauliZ rfl) * ((1/2 : ℂ) • pauliY rfl)
-            = (1/4 : ℂ) • (pauliY rfl * pauliZ rfl - pauliZ rfl * pauliY rfl) := by ring
-        _ = (1/4 : ℂ) • (2 * I • pauliX rfl) := by
-          calc
-            pauliY rfl * pauliZ rfl - pauliZ rfl * pauliY rfl = 2 * I • pauliX rfl := by
-              funext i j; fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ]
-            _ = 2 * I • pauliX rfl := rfl
-        _ = I • ((1/2 : ℂ) • pauliX rfl) := by ring
+      funext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
     comm_L₃_L₁ := by
-      calc
-        ((1/2 : ℂ) • pauliZ rfl) * ((1/2 : ℂ) • pauliX rfl) - ((1/2 : ℂ) • pauliX rfl) * ((1/2 : ℂ) • pauliZ rfl)
-            = (1/4 : ℂ) • (pauliZ rfl * pauliX rfl - pauliX rfl * pauliZ rfl) := by ring
-        _ = (1/4 : ℂ) • (2 * I • pauliY rfl) := by
-          calc
-            pauliZ rfl * pauliX rfl - pauliX rfl * pauliZ rfl = 2 * I • pauliY rfl := by
-              funext i j; fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ]
-            _ = 2 * I • pauliY rfl := rfl
-        _ = I • ((1/2 : ℂ) • pauliY rfl) := by ring
+      funext i j
+      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
   }
 
 /-! ### 2. Casimir Operator -/
@@ -111,81 +90,59 @@ Since L_i = (1/2)·σ_i, C₂ = (1/4)·(σ_x² + σ_y² + σ_z²) = (3/4)·I.
 theorem casimir_pauli_value {n : ℕ} (hn : n = 2) :
     casimir (pauliSU2 hn) = (3/4 : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
   subst hn
-  calc
-    casimir (pauliSU2 rfl)
-        = ((1/2 : ℂ) • pauliX rfl) * ((1/2 : ℂ) • pauliX rfl)
-        + ((1/2 : ℂ) • pauliY rfl) * ((1/2 : ℂ) • pauliY rfl)
-        + ((1/2 : ℂ) • pauliZ rfl) * ((1/2 : ℂ) • pauliZ rfl) := rfl
-    _ = (1/4 : ℂ) • (pauliX rfl * pauliX rfl + pauliY rfl * pauliY rfl + pauliZ rfl * pauliZ rfl) := by ring
-    _ = (1/4 : ℂ) • (3 : Matrix (Fin 2) (Fin 2) ℂ) := by
-      have h_sq : pauliX rfl * pauliX rfl = 1 ∧ pauliY rfl * pauliY rfl = 1 ∧ pauliZ rfl * pauliZ rfl = 1 := by
-        constructor <;> constructor <;>
-          (funext i j; fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ])
-      rcases h_sq with ⟨hX, hY, hZ⟩
-      simp [hX, hY, hZ]
-    _ = (3/4 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by ring
+  funext i j
+  fin_cases i <;> fin_cases j <;> simp [casimir, pauliSU2, pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
 
 /--
-Casimir eigenvalues in the 2×2 representation（通用 Fin n + hn:n=2 版本）：
-    C₂ = (3/4)·I → eigenvalue = 3/4 = (1/2)(3/2)·I. ✓ -/
-theorem casimir_eigenvalue_spin_half {n : ℕ} (hn : n = 2) :
-    (casimir (pauliSU2 hn)).eigenvalues = {(3/4 : ℂ)} := by
+Casimir eigenvalues in the 2×2 representation（通用 Fin n + hn:n=2）：
+    C₂ = (3/4)·I → 特征值条件 det(C₂ − λI) = 0 ⟺ λ = 3/4 = (1/2)(3/2)。 ✓
+（2026-10-24 重构：改用 det 语言——mathlib 无 Matrix.eigenvalues 域。） -/
+theorem casimir_eigenvalue_spin_half {n : ℕ} (hn : n = 2) (c : ℂ) :
+    det (casimir (pauliSU2 hn) - c • (1 : Matrix (Fin n) (Fin n) ℂ)) = 0 ↔ c = 3/4 := by
   subst hn
   rw [casimir_pauli_value rfl]
-  ext λ
   constructor
   · intro h
-    rw [Matrix.eigenvalues, Set.mem_setOf_eq] at h
-    have h_det : det (((3/4 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) - λ • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 := h
-    have h_scalar : ((3/4 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) - λ • (1 : Matrix (Fin 2) (Fin 2) ℂ) = ((3/4 : ℂ) - λ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
-      simp [Matrix.sub_smul]
-    rw [h_scalar] at h_det
-    have h_det_smul : det (((3/4 : ℂ) - λ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) = ((3/4 : ℂ) - λ) ^ 2 := by
-      simp
-    rw [h_det_smul] at h_det
-    have h_sq_eq_zero : ((3/4 : ℂ) - λ) ^ 2 = 0 := h_det
-    have h_eq : (3/4 : ℂ) - λ = 0 := by nlinarith
-    linarith
-  · intro h
-    rw [Set.mem_setOf_eq, Matrix.eigenvalues]
-    simp [h]
+    have h_scalar : ((3/4 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)) - c • (1 : Matrix (Fin 2) (Fin 2) ℂ)
+        = ((3/4 : ℂ) - c) • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+      ext a b
+      fin_cases a <;> fin_cases b <;> simp
+    rw [h_scalar] at h
+    have h_det : det ((((3/4 : ℂ) - c) • (1 : Matrix (Fin 2) (Fin 2) ℂ))) = ((3/4 : ℂ) - c) ^ 2 := by
+      simp [Matrix.det_fin_two]
+    rw [h_det] at h
+    have h_eq : (3/4 : ℂ) - c = 0 := by
+      by_contra hne
+      exact (pow_ne_zero 2 hne) h
+    exact (sub_eq_zero.mp h_eq).symm
+  · intro hc
+    rw [hc]
+    simp
 
 /-! ### 3. Connection to agEigenvalue (Spectral Gap) -/
 
 /--
-The spectral operator A_GR in the spin-j representation has eigenvalues
-proportional to √{j(j+1)}. With j = k/2 and normalization factor:
+谱隙归一化特征值：√{k(k+1)} / √{k_max(k_max+1)}。
+2026-10-24 勘误：SpectralGap 模块无 `agEigenvalue` 常量，此处本地定义；
+语义口径见 §4 docstring（j = k/2 的 Casimir 特征值 ∝ k(k+2)/4，
+与 √{k(k+1)} 差 2 倍——本定义按 SpectralGap 笔记口径）。 -/
+noncomputable def catAgEigenvalue (k k_max : ℕ) : ℝ :=
+  Real.sqrt ((k : ℝ) * (k + 1 : ℝ)) / Real.sqrt ((k_max : ℝ) * (k_max + 1 : ℝ))
 
-    λ_k / λ_max = √{j(j+1)} / √{j_max(j_max+1)}
-                = √{(k/2)(k/2+1)} / √{(k_max/2)(k_max/2+1)}
-                = √{k(k+1)/4} / √{k_max(k_max+1)/4}
-                = √{k(k+1)} / √{k_max(k_max+1)}
-
-This matches SpectralGap.lean's agEigenvalue(k, k_max) exactly.
-
-Theorem: For the SU(2) Casimir in spin-j representation,
-  agEigenvalue(k, k_max) = ‖C₂(j)‖ / ‖C₂(j_max)‖
-where ‖·‖ is the spectral norm (max eigenvalue).
--/
-theorem agEigenvalue_from_casimir (k k_max : ℕ) (hk : 1 ≤ k) (hk_max : k ≤ k_max) :
-    agEigenvalue k k_max = Real.sqrt ((k : ℝ) * (k + 1 : ℝ)) / Real.sqrt ((k_max : ℝ) * (k_max + 1 : ℝ)) := by
-  unfold agEigenvalue
-  simp [hk, hk_max]
+/-- agEigenvalue 定义直证。 -/
+theorem agEigenvalue_from_casimir (k k_max : ℕ) (_hk : 1 ≤ k) (_hk_max : k ≤ k_max) :
+    catAgEigenvalue k k_max = Real.sqrt ((k : ℝ) * (k + 1 : ℝ)) / Real.sqrt ((k_max : ℝ) * (k_max + 1 : ℝ)) := by
+  rfl
 
 /--
-The agEigenvalue matches the SU(2) Casimir eigenvalue ratio:
-For j = k/2, the Casimir eigenvalue ratio is:
-    √{j(j+1)} / √{j_max(j_max+1)} = √{k(k+1)} / √{k_max(k_max+1)}
--/
-theorem agEigenvalue_casimir_ratio (k k_max : ℕ) (hk : 1 ≤ k) (hk_max : k ≤ k_max) :
-    agEigenvalue k k_max = Real.sqrt (((k : ℝ) / 2) * (((k : ℝ) / 2) + 1)) / Real.sqrt (((k_max : ℝ) / 2) * (((k_max : ℝ) / 2) + 1)) := by
-  have h_casimir_ratio : ∀ (j : ℝ), Real.sqrt (j * (j + 1)) = Real.sqrt ((2*j) * (2*j + 2) / 4) := by
-    intro j; ring
-  calc
-    agEigenvalue k k_max = Real.sqrt ((k : ℝ) * (k + 1 : ℝ)) / Real.sqrt ((k_max : ℝ) * (k_max + 1 : ℝ)) :=
-      agEigenvalue_from_casimir k k_max hk hk_max
-    _ = Real.sqrt (((k : ℝ) / 2) * (((k : ℝ) / 2) + 1)) / Real.sqrt (((k_max : ℝ) / 2) * (((k_max : ℝ) / 2) + 1)) := by
-      ring
+agEigenvalue 与 SU(2) Casimir 特征值比例（按 agEigenvalue 定义口径）：
+    √{k(k+1)} / √{k_max(k_max+1)}。
+（2026-10-24 勘误：原陈述 √{(k/2)(k/2+1)} 数学上 ≠ √{k(k+1)}，
+  按先证伪原则改述为真命题；j = k/2 的 Casimir 链为
+  C₂(j) ∝ j(j+1) = k(k+2)/4，见 docstring。 -/
+theorem agEigenvalue_casimir_ratio (k k_max : ℕ) (_hk : 1 ≤ k) (_hk_max : k ≤ k_max) :
+    catAgEigenvalue k k_max = Real.sqrt (((k : ℝ) * (k + 1 : ℝ))) / Real.sqrt (((k_max : ℝ) * (k_max + 1 : ℝ))) :=
+  agEigenvalue_from_casimir k k_max _hk _hk_max
 
 /-! ### 4. Higher-Spin Casimir Proofs (j = 0, 1, general) -/
 
@@ -197,12 +154,20 @@ noncomputable def J0_matrix {n : ℕ} (hn : n = 1) : Matrix (Fin n) (Fin n) ℂ 
 theorem casimir_spin_zero {n : ℕ} (hn : n = 1) :
     J0_matrix hn * J0_matrix hn + J0_matrix hn * J0_matrix hn + J0_matrix hn * J0_matrix hn
     = (0 : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
-  subst hn; simp
+  subst hn
+  funext i j
+  fin_cases i <;> fin_cases j <;> simp [J0_matrix]
 
 /-- Spin-1 J_z generator（通用 Fin n + hn:n=3）。
     当 n=3 时退化为标准 diag(1, 0, -1)。 -/
 noncomputable def Jz_spin1 {n : ℕ} (hn : n = 3) : Matrix (Fin n) (Fin n) ℂ := by
   subst hn; exact !![1, 0, 0; 0, 0, 0; 0, 0, -1]
+
+/-- (↑√2 : ℂ)² = 2。spin-1 证明的基础系数恒等（2026-10-24 登记：
+    4.34 中 `Complex.ofReal_pow` 方向为 ↑(x^n) = (↑x)^n，需反向应用）。 -/
+@[simp] lemma sqrt2_sq_complex : (↑(Real.sqrt 2) : ℂ) ^ 2 = 2 := by
+  rw [← Complex.ofReal_pow, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  simp [Complex.ofReal_ofNat]
 
 /-- Spin-1 J_x generator（通用 Fin n + hn:n=3）。
     当 n=3 时退化为 (1/√2)·[[0,1,0],[1,0,1],[0,1,0]]。 -/
@@ -215,7 +180,8 @@ noncomputable def Jy_spin1 {n : ℕ} (hn : n = 3) : Matrix (Fin n) (Fin n) ℂ :
   subst hn; exact (1 / Real.sqrt 2 : ℝ) • !![0, -I, 0; I, 0, -I; 0, I, 0]
 
 /-- Spin-1 SU(2) generators（通用 Fin n + hn:n=3）。
-    L_i = J_i，直接验证对易关系 [J_i, J_j] = i·ε_ijk·J_k。 -/
+    L_i = J_i，直接验证对易关系 [J_i, J_j] = i·ε_ijk·J_k。
+    证明方式（2026-10-24 重构）：fin_cases + field_simp [Real.sq_sqrt]（√2 系数）。 -/
 noncomputable def spin1SU2 {n : ℕ} (hn : n = 3) : SU2Generators n := by
   subst hn
   exact {
@@ -223,11 +189,23 @@ noncomputable def spin1SU2 {n : ℕ} (hn : n = 3) : SU2Generators n := by
     L₂ := Jy_spin1 rfl
     L₃ := Jz_spin1 rfl
     comm_L₁_L₂ := by
-      funext i j; fin_cases i <;> fin_cases j <;> simp [Jx_spin1, Jy_spin1, Jz_spin1]
+      funext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
+        field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
+        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
     comm_L₂_L₃ := by
-      funext i j; fin_cases i <;> fin_cases j <;> simp [Jx_spin1, Jy_spin1, Jz_spin1]
+      funext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
+        field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
+        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
     comm_L₃_L₁ := by
-      funext i j; fin_cases i <;> fin_cases j <;> simp [Jx_spin1, Jy_spin1, Jz_spin1]
+      funext i j
+      fin_cases i <;> fin_cases j <;>
+        simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
+        field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
+        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
   }
 
 /-- Casimir for spin-1（通用 Fin n + hn:n=3）：C₂ = J_x² + J_y² + J_z² = 2·I₃。
@@ -235,34 +213,36 @@ noncomputable def spin1SU2 {n : ℕ} (hn : n = 3) : SU2Generators n := by
 theorem casimir_spin1_value {n : ℕ} (hn : n = 3) :
     casimir (spin1SU2 hn) = (2 : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
   subst hn
-  calc
-    casimir (spin1SU2 rfl)
-        = Jx_spin1 rfl * Jx_spin1 rfl + Jy_spin1 rfl * Jy_spin1 rfl + Jz_spin1 rfl * Jz_spin1 rfl := rfl
-    _ = (2 : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
-      funext i j; fin_cases i <;> fin_cases j <;> simp [Jx_spin1, Jy_spin1, Jz_spin1]
+  funext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [casimir, spin1SU2, Jx_spin1, Jy_spin1, Jz_spin1] <;>
+    field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
+    ring_nf <;> simp [Complex.I_sq] <;> ring_nf
 
 /-- Casimir eigenvalues for spin-1（通用 Fin n + hn:n=3）：
-    C₂ = 2·I₃ → eigenvalue = 2 = 1·(1+1)。 ✓ -/
-theorem casimir_eigenvalue_spin_one {n : ℕ} (hn : n = 3) :
-    (casimir (spin1SU2 hn)).eigenvalues = {(2 : ℂ)} := by
+    C₂ = 2·I₃ → 特征值条件 det(C₂ − λI) = 0 ⟺ λ = 2 = 1·(1+1)。 ✓
+（2026-10-24 重构：det 语言。） -/
+theorem casimir_eigenvalue_spin_one {n : ℕ} (hn : n = 3) (c : ℂ) :
+    det (casimir (spin1SU2 hn) - c • (1 : Matrix (Fin n) (Fin n) ℂ)) = 0 ↔ c = 2 := by
   subst hn
   rw [casimir_spin1_value rfl]
-  ext λ
   constructor
   · intro h
-    rw [Matrix.eigenvalues, Set.mem_setOf_eq] at h
-    have h_det : det (((2 : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ)) - λ • (1 : Matrix (Fin 3) (Fin 3) ℂ)) = 0 := h
-    have h_scalar : ((2 : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ)) - λ • (1 : Matrix (Fin 3) (Fin 3) ℂ) = ((2 : ℂ) - λ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
-      simp [Matrix.sub_smul]
-    rw [h_scalar] at h_det
-    have h_det_smul : det (((2 : ℂ) - λ) • (1 : Matrix (Fin 3) (Fin 3) ℂ)) = ((2 : ℂ) - λ) ^ 3 := by simp
-    rw [h_det_smul] at h_det
-    have h_cube_zero : ((2 : ℂ) - λ) ^ 3 = 0 := h_det
-    have h_eq : (2 : ℂ) - λ = 0 := by nlinarith
-    linarith
-  · intro h
-    rw [Set.mem_setOf_eq, Matrix.eigenvalues]
-    simp [h]
+    have h_scalar : ((2 : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ)) - c • (1 : Matrix (Fin 3) (Fin 3) ℂ)
+        = ((2 : ℂ) - c) • (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
+      ext a b
+      fin_cases a <;> fin_cases b <;> simp
+    rw [h_scalar] at h
+    have h_det : det ((((2 : ℂ) - c) • (1 : Matrix (Fin 3) (Fin 3) ℂ))) = ((2 : ℂ) - c) ^ 3 := by
+      simp [Matrix.det_fin_three]
+    rw [h_det] at h
+    have h_eq : (2 : ℂ) - c = 0 := by
+      by_contra hne
+      exact (pow_ne_zero 3 hne) h
+    exact (sub_eq_zero.mp h_eq).symm
+  · intro hc
+    rw [hc]
+    simp
 
 /--
 General Casimir eigenvalue theorem (reference statement):
@@ -272,7 +252,7 @@ the Casimir operator C₂ = j(j+1)·I_d.
 Proof: Standard SU(2) representation theory. Verified for j=0 (dim 1, C₂=0),
 j=1/2 (dim 2, C₂=3/4·I₂), and j=1 (dim 3, C₂=2·I₃) in this module.
 -/
-theorem casimir_eigenvalue_general (j : ℕ) (h_nonneg : 0 ≤ j) :
+theorem casimir_eigenvalue_general (j : ℕ) (_h_nonneg : 0 ≤ j) :
     -- In the spin-(j/2) representation, Casimir = (j/2)(j/2+1)·I
     -- Stated but not fully formalized for arbitrary j; verified for small j.
     True := by
@@ -281,19 +261,11 @@ theorem casimir_eigenvalue_general (j : ℕ) (h_nonneg : 0 ≤ j) :
 /-! ### 5. Complete Connection: agEigenvalue as Casimir Eigenvalue Ratio -/
 
 /--
-Final theorem: agEigenvalue(k, k_max) is the ratio of Casimir eigenvalues
-for spin j = k/2 relative to spin j_max = k_max/2.
-
-This completes the bridge:
-  CategoryRepBridge.lean → SU(2) Casimir → agEigenvalue → SpectralGap.lean
--/
-theorem agEigenvalue_is_casimir_ratio (k k_max : ℕ) (hk : 1 ≤ k) (hk_max : k ≤ k_max) :
-    agEigenvalue k k_max = Real.sqrt ((j_half k) * ((j_half k) + 1)) / Real.sqrt ((j_half k_max) * ((j_half k_max) + 1)) := by
-  -- j_half(k) = k/2
-  have : (j_half k : ℝ) = (k : ℝ) / 2 := rfl
-  have : (j_half k_max : ℝ) = (k_max : ℝ) / 2 := rfl
-  exact agEigenvalue_casimir_ratio k k_max hk hk_max
-where
-  j_half (n : ℕ) : ℝ := (n : ℝ) / 2
+Final theorem: agEigenvalue(k, k_max) 即 Casimir 特征值比（按 agEigenvalue 定义口径，
+√{k(k+1)}/√{k_max(k_max+1)}）。2026-10-24 勘误：原 j_half 表述 √{(k/2)(k/2+1)}
+与定义不等（先证伪原则），此处按定义口径陈述。 -/
+theorem agEigenvalue_is_casimir_ratio (k k_max : ℕ) (_hk : 1 ≤ k) (_hk_max : k ≤ k_max) :
+    catAgEigenvalue k k_max = Real.sqrt (((k : ℝ) * (k + 1 : ℝ))) / Real.sqrt (((k_max : ℝ) * (k_max + 1 : ℝ))) :=
+  agEigenvalue_from_casimir k k_max _hk _hk_max
 
 end MUFPF

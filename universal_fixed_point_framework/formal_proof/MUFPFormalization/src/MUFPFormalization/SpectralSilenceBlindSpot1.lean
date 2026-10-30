@@ -78,8 +78,9 @@ def inBlindSpot1 (S : GeneralRecObj) : Prop :=
     - 若 spectralDecomposable = false → D 无法构造（谱定理不适用）
     - 若 universalKernel = false → D 的像空间退化
     - 若 spectralCorrespondence = false → λ = e^{-μ} 映射不成立 -/
-noncomputable def DPartial (S : GeneralRecObj) : Option SpObj :=
-  if S.spectralDecomposable ∧ S.universalKernel ∧ S.spectralCorrespondence then
+noncomputable def DPartial (S : GeneralRecObj) : Option SpObj := by
+  classical
+  exact if S.spectralDecomposable ∧ S.universalKernel ∧ S.spectralCorrespondence then
     -- D 有定义：构造谱对象（1×1 单位矩阵作为占位）
     some ⟨1, fun _ _ => (1 : ℂ)⟩
   else
@@ -120,14 +121,14 @@ theorem spectralSilence_implies_DDefined (S : GeneralRecObj) :
   obtain ⟨sp, h_eq, _⟩ := h
   intro h_none
   rw [h_none] at h_eq
-  exact Option.noConfusion h_eq
+  cases h_eq
 
 /-- **定理 B（核心反例）：存在系统在盲区1 中且谱静默不适用**
     构造一个具体反例：一个 spectralDecomposable = false 的系统，
     使得 D 无定义（盲区1），且谱静默不成立（因 D 无输出可静默）。 -/
 
-/-- 反例系统：谱不可分解的"混沌"系统。
-    step 是恒等映射，但谱可分解性 = false（模拟无穷维中谱定理失效）。 -/
+-- 反例系统：谱不可分解的"混沌"系统。
+-- step 是恒等映射，但谱可分解性 = false（模拟无穷维中谱定理失效）。
 def counterexampleSystem : GeneralRecObj where
   carrier := Unit
   step := fun _ => ()
@@ -165,8 +166,6 @@ theorem spectralSilence_does_NOT_cover_blindSpot1 :
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial counterexampleSystem at h_eq
   simp [false_and] at h_eq
-  -- h_eq : some sp = none，矛盾
-  exact Option.noConfusion h_eq
 
 -- ============================================================
 -- 第五部分：逻辑独立性

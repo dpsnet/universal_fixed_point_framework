@@ -757,9 +757,9 @@ theorem moran_closed_s_eq_exp_neg_one (s : ℝ) (hs0 : 0 < s)
     exact hmoran
   -- ln(s^{ln15}) = ln(1/15)
   have hln_pow : Real.log (s ^ Real.log 15) = Real.log 15 * Real.log s := by
-    exact Real.log_pow hs0 (Real.log 15)
+    exact Real.log_rpow hs0 (Real.log 15)
   have hln_r : Real.log (1 / (15 : ℝ)) = -Real.log 15 := by
-    rw [Real.log_div Real.one_ne_zero h15nz, Real.log_one, zero_sub]
+    rw [Real.log_div (one_ne_zero : (1 : ℝ) ≠ 0) h15nz, Real.log_one, zero_sub]
   have heq : Real.log 15 * Real.log s = -Real.log 15 := by
     rw [← hln_pow, hpow, hln_r]
   -- ln 15 ≠ 0（e^{ln 15} = 15 ≠ 1）
@@ -779,7 +779,7 @@ theorem moran_closed_s_eq_exp_neg_one (s : ℝ) (hs0 : 0 < s)
       _ = -1 := by field_simp [hln15ne0]
   -- s = e^{ln s} = e⁻¹
   calc
-    s = Real.exp (Real.log s) := by rw [← Real.exp_log hs0]
+    s = Real.exp (Real.log s) := (Real.exp_log hs0).symm
     _ = Real.exp (-1) := by rw [hlns]
 
 /-- 路线 D 推论：κ ≠ 1（s ≠ e⁻¹）与 Moran 方程 + d_H = ln 15 矛盾
@@ -803,9 +803,10 @@ theorem moran_closed_unique {s : ℝ} (hs0 : 0 < s)
    对任意 d > 0 成立（d = ln 15 为机器证明实例）。 -/
 
 /-- 收缩因子比（静默分层）：c₁₀ = S₃·S₄（双重静默）、c₂₀ = S₄（单重静默）、
-    c₃₀ = 1（无静默——时间分支，谱流参数 t 沿此演化永不静默）。 -/
-def silent_factor_c1 (d : ℝ) : ℝ := Real.exp (-3) * Real.exp (-d)
-def silent_factor_c2 (d : ℝ) : ℝ := Real.exp (-d)
+    c₃₀ = 1（无静默——时间分支，谱流参数 t 沿此演化永不静默）。
+    2026-10-24：依赖 Real.exp → noncomputable。 -/
+noncomputable def silent_factor_c1 (d : ℝ) : ℝ := Real.exp (-3) * Real.exp (-d)
+noncomputable def silent_factor_c2 (d : ℝ) : ℝ := Real.exp (-d)
 def silent_factor_c3 (d : ℝ) : ℝ := 1
 
 /-- T1：c₃ 是唯一静默因子 = 1 的分支——

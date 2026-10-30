@@ -101,9 +101,8 @@ universe u v
     层 0 对象 + 层 1-4 态射）：层 1（1-态射，空间 x 方向）、层 2（2-态射，空间 y 方向 + Δ）、
     层 3（3-态射，空间 z 方向）、层 4（4-态射，coherence 层 = Δ 所在层）。
     对齐 paper31 J3 §4.1 层结构表（层 1-3 正交于 Δ、层 4 = coherence = Δ 所在层）；
-    层 0 对象不生成方向自由度，`directionMap` 对其一致成立（任意层映射，字典核心不依赖层）。 -/
-
-/-- 层索引的"正交于 Δ / 位于 Δ"区分：层 1-3 = 正交于 Δ 的空间方向层；
+    层 0 对象不生成方向自由度，`directionMap` 对其一致成立（任意层映射，字典核心不依赖层）。
+    层索引的"正交于 Δ / 位于 Δ"区分：层 1-3 = 正交于 Δ 的空间方向层；
     层 4 = coherence 层（Δ 所在层）。 -/
 def LayerIndex.isCoherenceLayer : LayerIndex → Prop
   | .four => True
@@ -199,7 +198,7 @@ theorem dictionary_orthogonal {E : Type u} [AddCommGroup E] [Module ℝ E]
     (D : CategoryGeometryDictionary E) (ℓ : LayerIndex) :
     D.directionMap ℓ CellDirection.normal ⊓
       D.directionMap ℓ CellDirection.horizontal = ⊥ := by
-  simp
+  simp [D.inf_bot]
 
 /-- **字典互补性（逐层）**：对任意层 ℓ，法向与水平方向张成全空间
     （V ⊔ H = ⊤）——方向类互补（normal/horizontal 穷尽方向）在几何层的实现。 -/
@@ -207,7 +206,7 @@ theorem dictionary_complement {E : Type u} [AddCommGroup E] [Module ℝ E]
     (D : CategoryGeometryDictionary E) (ℓ : LayerIndex) :
     D.directionMap ℓ CellDirection.normal ⊔
       D.directionMap ℓ CellDirection.horizontal = ⊤ := by
-  simp
+  simp [D.sup_top]
 
 /-- **范畴层 lifting 正交与字典正交的衔接（逐层）**：lifting 正交（2-态射层方向互补，
     `twoLifting_orthogonal` 自动成立）与字典正交（V ⊓ H = ⊥，`inf_bot`）
@@ -219,6 +218,6 @@ theorem lifting_orthogonal_consistent {E : Type u} [AddCommGroup E] [Module ℝ 
         D.directionMap ℓ CellDirection.horizontal = ⊥ ∧
       D.directionMap ℓ CellDirection.normal ⊔
         D.directionMap ℓ CellDirection.horizontal = ⊤ := by
-  constructor <;> simp
+  constructor <;> simp [D.inf_bot, D.sup_top]
 
 end MUFPF

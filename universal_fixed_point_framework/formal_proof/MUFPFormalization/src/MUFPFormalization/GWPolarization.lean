@@ -602,11 +602,8 @@ theorem quadrupole_cross_equals_original (M : Matrix (Fin 2) (Fin 2) ℂ) :
 private lemma conj_trace_eq_trace_conjTranspose {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
     star (Matrix.trace M) = Matrix.trace M.conjTranspose := by
   simp only [Matrix.trace, Matrix.conjTranspose_apply]
-  -- star distributes over Finset.sum by induction on the finset
-  exact @Finset.induction_on (Fin n) inferInstance Finset.univ
-    (fun s => star (Finset.sum s fun i => M i i) = Finset.sum s fun i => star (M i i))
-    (by simp [Finset.sum_empty])
-    (by intro a s ha ih; rw [Finset.sum_insert ha, Finset.sum_insert ha, star_add, ih])
+  rw [star_sum]
+  rfl
 
 /-- HS 内积的共轭对称性：star(⟨A, B⟩_HS) = ⟨B, A⟩_HS。
     证明链：
@@ -1056,7 +1053,7 @@ instance : Inhabited EmergenceMetric :=
     速度公式：v = d/((delay+1)·Δt)，利用 d/Δt=1：
     - zero: v = 1（极限速度 c）
     - positive: v = 1/2（亚光速） -/
-def velocityFromDelay : CouplingDelay → ℝ
+noncomputable def velocityFromDelay : CouplingDelay → ℝ
   | CouplingDelay.zero => 1
   | CouplingDelay.positive => 1/2
 
@@ -1205,8 +1202,10 @@ noncomputable def continuousVelocity (d : ContinuousDelay) : ℝ :=
 
 /-- 分母正性：1 + τ > 0（对所有 τ ≥ 0）。 -/
 theorem continuousVelocity_denom_pos (d : ContinuousDelay) :
-    1 + d.τ > 0 :=
-  lt_of_lt_of_le zero_lt_one (add_le_add_left d.h_nonneg 1)
+    1 + d.τ > 0 := by
+  have h1 : (1 : ℝ) ≤ 1 + d.τ := by
+    simpa using (add_le_add_left d.h_nonneg (1 : ℝ))
+  exact lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) h1
 
 /-- 连续速度正性：v(τ) > 0。 -/
 theorem continuousVelocity_pos (d : ContinuousDelay) :
@@ -1218,7 +1217,7 @@ theorem continuousVelocity_pos (d : ContinuousDelay) :
 theorem continuousVelocity_le_one (d : ContinuousDelay) :
     continuousVelocity d ≤ 1 := by
   unfold continuousVelocity
-  rw [div_le_iff (continuousVelocity_denom_pos d)]
+  rw [div_le_iff₀ (continuousVelocity_denom_pos d)]
   ring_nf
   linarith [d.h_nonneg]
 
@@ -1249,15 +1248,14 @@ theorem velocityDeficit_eq_one_sub (d : ContinuousDelay) :
     velocityDeficit d = 1 - continuousVelocity d := by
   unfold velocityDeficit continuousVelocity
   have hpos := continuousVelocity_denom_pos d
-  rw [div_eq_iff hpos, sub_mul, one_mul, div_mul_cancel₀]
-  · ring
-  · exact ne_of_gt hpos
+  field_simp [ne_of_gt hpos]
+  ring
 
 /-- 速度亏损上界：deficit(τ) < 1（对所有有限 τ）。 -/
 theorem velocityDeficit_lt_one (d : ContinuousDelay) :
     velocityDeficit d < 1 := by
   unfold velocityDeficit
-  rw [div_lt_iff (continuousVelocity_denom_pos d)]
+  rw [div_lt_iff₀ (continuousVelocity_denom_pos d)]
   linarith
 
 /-- 速度亏损非负：deficit(τ) ≥ 0。 -/
@@ -1272,8 +1270,11 @@ theorem continuousVelocity_strict_anti {d₁ d₂ : ContinuousDelay}
     (h : d₁.τ < d₂.τ) :
     continuousVelocity d₁ > continuousVelocity d₂ := by
   unfold continuousVelocity
-  rw [div_lt_div_iff₀ (continuousVelocity_denom_pos d₁) (continuousVelocity_denom_pos d₂)]
-  exact ⟨le_refl _, by linarith⟩
+  have h_main : 1 / (1 + d₂.τ) < 1 / (1 + d₁.τ) := by
+    rw [div_lt_div_iff₀ (continuousVelocity_denom_pos d₂) (continuousVelocity_denom_pos d₁)]
+    simp
+    linarith
+  exact h_main
 
 /-- 速度亏损单调性：τ₁ < τ₂ → deficit(τ₁) < deficit(τ₂)。
     证明：τ₁/(1+τ₁) < τ₂/(1+τ₂) ⟺ τ₁(1+τ₂) < τ₂(1+τ₁) ⟺ τ₁ < τ₂。 -/
@@ -1282,16 +1283,15 @@ theorem velocityDeficit_strict_mono {d₁ d₂ : ContinuousDelay}
     velocityDeficit d₁ < velocityDeficit d₂ := by
   unfold velocityDeficit
   rw [div_lt_div_iff₀ (continuousVelocity_denom_pos d₁) (continuousVelocity_denom_pos d₂)]
-  constructor
-  · nlinarith
-  · nlinarith
+  ring_nf
+  linarith
 
 /-- 连续速度严格亚光速：τ > 0 → v(τ) < 1 = c。
     物理意义：非零延迟 → 引力波严格亚光速。 -/
 theorem continuousVelocity_sublight (d : ContinuousDelay) (h : d.τ > 0) :
     continuousVelocity d < 1 := by
   unfold continuousVelocity
-  rw [div_lt_iff (continuousVelocity_denom_pos d)]
+  rw [div_lt_iff₀ (continuousVelocity_denom_pos d)]
   linarith
 
 /-- 速度亏损严格正：τ > 0 → deficit(τ) > 0。
@@ -1309,14 +1309,18 @@ theorem continuous_discrete_compat_zero :
     velocityFromDelay CouplingDelay.zero := by
   rw [continuousVelocity_zero]; rfl
 
-/-- 余留→延迟映射：给定非零余留 E_residual，定义对应延迟 τ = |E_residual|。
+/-- 余留→延迟映射：给定非零余留 E_residual，定义对应延迟 τ = |E_residual|²（复数模平方 normSq）。
     这建立了 Sp 层伴随余留到 Rec 层延迟参数的定量映射。
-    物理含义：伴随偏差越大，信息传递延迟越大，速度越低。 -/
+    物理含义：伴随偏差越大，信息传递延迟越大，速度越低。
+    2026-10-24 勘误：实际定义为 Complex.normSq（模平方 |E|²）而非 |E|（一范）——
+    定性等价（|E|²=0 ⟺ E=0，|E|²>0 ⟺ E≠0），零/非零判别与光速/亚光速定理不受影响；
+    选用 normSq 是为非负性证明自动（Complex.normSq_nonneg）。文档口径（§21 笔记/报告）
+    原记 τ=|E_residual|，已同步勘误。 -/
 noncomputable def residualToDelay {n : ℕ}
     (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ) : ContinuousDelay :=
   ContinuousDelay.mk'
-    (Complex.abs (adjunctionResidual A_X A_Z δ ηH))
-    (Complex.abs_nonneg _)
+    (Complex.normSq (adjunctionResidual A_X A_Z δ ηH))
+    (Complex.normSq_nonneg _)
 
 /-- 零余留→零延迟：E_residual=0 → τ=0。 -/
 theorem residualToDelay_zero {n : ℕ}
@@ -1325,6 +1329,16 @@ theorem residualToDelay_zero {n : ℕ}
   unfold residualToDelay ContinuousDelay.mk'
   simp [c5_zero_defect_zero_residual]
 
+/-- τ=0 ⟹ 延迟对象等于零延迟（h_nonneg 是 Prop，自动）。 -/
+lemma residualToDelay_eq_zero_of_tau {n : ℕ}
+    (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ)
+    (hτ : (residualToDelay A_X A_Z δ ηH).τ = 0) :
+    residualToDelay A_X A_Z δ ηH = (0 : ContinuousDelay) := by
+  unfold residualToDelay at hτ ⊢
+  change ContinuousDelay.mk' (Complex.normSq (adjunctionResidual A_X A_Z δ ηH)) (Complex.normSq_nonneg _) =
+    ContinuousDelay.mk' 0 (le_refl 0)
+  congr 1
+
 /-- 零余留→光速：E_residual=0 → v=c=1。
     完整链条：δ=0 → E_residual=0 (C5) → τ=0 → v=1=c。 -/
 theorem residualVelocity_light_speed {n : ℕ}
@@ -1332,7 +1346,7 @@ theorem residualVelocity_light_speed {n : ℕ}
     continuousVelocity
       (residualToDelay A_X A_Z (0 : Matrix (Fin n) (Fin n) ℂ) ηH) = 1 := by
   rw [show residualToDelay A_X A_Z (0 : Matrix (Fin n) (Fin n) ℂ) ηH = (0 : ContinuousDelay) from
-      by ext; exact residualToDelay_zero A_X A_Z ηH]
+      by exact residualToDelay_eq_zero_of_tau _ _ _ _ (residualToDelay_zero A_X A_Z ηH)]
   exact continuousVelocity_zero
 
 /-- 非零余留→正延迟：E_residual≠0 → τ>0。 -/
@@ -1341,8 +1355,7 @@ theorem residualToDelay_pos {n : ℕ}
     (h_nonzero : adjunctionResidual A_X A_Z δ ηH ≠ 0) :
     (residualToDelay A_X A_Z δ ηH).τ > 0 := by
   unfold residualToDelay ContinuousDelay.mk'
-  simp only []
-  exact Complex.abs_pos.mpr h_nonzero
+  exact Complex.normSq_pos.mpr h_nonzero
 
 /-- 非零余留→亚光速：E_residual≠0 → v < 1 = c。
     完整链条：δ≠0 → E_residual≠0 → τ>0 → v<1=c。 -/
@@ -1373,8 +1386,10 @@ theorem T_G2_continuous_velocity_residual_correspondence {n : ℕ}
      0 < velocityDeficit (residualToDelay A_X A_Z δ ηH) ∧
      velocityDeficit (residualToDelay A_X A_Z δ ηH) < 1) := by
   refine ⟨fun h => by
-      rw [show residualToDelay A_X A_Z δ ηH = (0 : ContinuousDelay) from
-          by ext; unfold residualToDelay ContinuousDelay.mk'; simp [h]]
+      have hz : residualToDelay A_X A_Z δ ηH = (0 : ContinuousDelay) :=
+        residualToDelay_eq_zero_of_tau A_X A_Z δ ηH
+          (by unfold residualToDelay ContinuousDelay.mk'; simp [h])
+      rw [hz]
       exact velocityDeficit_zero,
     fun h => ⟨velocityDeficit_pos _ (residualToDelay_pos _ _ _ _ h),
               velocityDeficit_lt_one _⟩⟩
@@ -1388,8 +1403,9 @@ theorem T_G2_gw170817_constraint_framework (ε : ℝ) (hε : ε > 0)
     velocityDeficit d < ε := by
   unfold velocityDeficit
   have hpos := continuousVelocity_denom_pos d
-  rw [div_lt_iff hpos]
-  nlinarith
+  rw [div_lt_iff₀ hpos]
+  have hετ : 0 ≤ ε * d.τ := mul_nonneg (le_of_lt hε) d.h_nonneg
+  linarith
 
 /-- 连续模型总定理：严格伴随→光速，弱伴随→亚光速（连续版）。
     统一 §20 的离散结果和 §21 的连续结果。 -/
@@ -1406,8 +1422,10 @@ theorem T_G2_unified_velocity_theorem {n : ℕ}
     -- 速度正性：v > 0
     (continuousVelocity (residualToDelay A_X A_Z δ ηH) > 0) := by
   refine ⟨fun hδ => by
-      rw [show residualToDelay A_X A_Z δ ηH = (0 : ContinuousDelay) from
-          by ext; unfold residualToDelay ContinuousDelay.mk'; simp [hδ, c5_zero_defect_zero_residual]]
+      have hz : residualToDelay A_X A_Z δ ηH = (0 : ContinuousDelay) :=
+        residualToDelay_eq_zero_of_tau A_X A_Z δ ηH
+          (by unfold residualToDelay ContinuousDelay.mk'; simp [hδ, c5_zero_defect_zero_residual])
+      rw [hz]
       exact continuousVelocity_zero,
     fun h => residualVelocity_sublight _ _ _ _ h,
     continuousVelocity_le_one _,
@@ -1468,7 +1486,7 @@ noncomputable def canonicalRotation (hp hc : ℝ) (hρ : polarizationRadius hp h
     h_unit := by
       have hρ_sq_ne : polarizationRadius hp hc ^ 2 ≠ 0 :=
         ne_of_gt (sq_pos_of_pos hρ)
-      rw [div_pow, div_pow, div_add_div_same, ← polarizationRadius_sq, div_self hρ_sq_ne] }
+      rw [div_pow, div_pow, ← add_div, ← polarizationRadius_sq, div_self hρ_sq_ne] }
 
 /-- 正规化旋转的 cross 振幅为零：-(hc/ρ)·hp + (hp/ρ)·hc = 0。
     证明：-hc·hp/ρ + hp·hc/ρ = 0（代数恒等式）。
@@ -1570,7 +1588,10 @@ theorem T_G4_power_eq_radius_sq {n : ℕ}
     (plusAmplitude (couplingShapeMatrix A₁ A₂)).re ^ 2 +
     (crossAmplitude (couplingShapeMatrix A₁ A₂)).re ^ 2 =
     couplingPolarizationRadius A₁ A₂ ^ 2 :=
-  polarizationRadius_sq _ _
+  by
+    simpa [couplingPolarizationRadius] using
+      (polarizationRadius_sq (plusAmplitude (couplingShapeMatrix A₁ A₂)).re
+        (crossAmplitude (couplingShapeMatrix A₁ A₂)).re).symm
 
 /-- G4 BinaryCoupling 版本：若 BinaryCoupling 耦合矩阵极化非零，
     则存在内生传播方向使 cross=0, plus=ρ。 -/

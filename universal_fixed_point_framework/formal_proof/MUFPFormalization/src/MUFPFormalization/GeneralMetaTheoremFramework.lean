@@ -46,7 +46,7 @@ namespace MUFPF.GeneralFramework
 open CategoryTheory
 
 -- ============================================================
-# 第一层：存在性元公理（Meta-Axiom Level）
+-- # 第一层：存在性元公理（Meta-Axiom Level）
 -- ============================================================
 
 /-!
@@ -100,7 +100,7 @@ axiom D_partial_spec {R : Type} [GeneralRecursiveSystem R] (r : R) :
 -/
 
 -- ============================================================
-# 第二层：一般结构定理（连续参数空间）
+-- # 第二层：一般结构定理（连续参数空间）
 -- ============================================================
 
 /-!
@@ -161,8 +161,8 @@ inductive RegimeTag
   | regimeC    : RegimeTag  -- 退化（辫子瓦解）
   | interRegime : RegimeTag  -- 体制间态（C_crit 不存在时的连续过渡）
 
-/-- 连续参数到体制的映射 -/
-def classifyRegime (cp : CouplingParameter) : RegimeTag :=
+/-- 连续参数到体制的映射（2026-10-24：依赖 Real 比较 → noncomputable）。 -/
+noncomputable def classifyRegime (cp : CouplingParameter) : RegimeTag :=
   match C_crit with
   | none =>
     -- C_crit 不存在：体制间态
@@ -187,7 +187,7 @@ def classifyRegime (cp : CouplingParameter) : RegimeTag :=
 -/
 
 -- ============================================================
-# 第二层补充：体制间态（Inter-Regime State）
+-- # 第二层补充：体制间态（Inter-Regime State）
 -- ============================================================
 
 /-!
@@ -244,7 +244,7 @@ theorem interRegime_not_discrete (cp : CouplingParameter)
 -/
 
 -- ============================================================
-# 第三层：实例假设层（当前四体制，作为特例）
+-- # 第三层：实例假设层（当前四体制，作为特例）
 -- ============================================================
 
 /-!
@@ -287,8 +287,8 @@ theorem classification_degradation (bos : BoundedOperatorSetting)
     bos.bounded ∧ bos.decomposition_exists ∧ bos.commutator_defined ∧
     bos.C_crit_exists ∧ bos.kappa_discrete →
     classifyRegime cp ∈
-      {RegimeTag.regimeA, RegimeTag.regimeB1,
-       RegimeTag.regimeB2, RegimeTag.regimeCstar, RegimeTag.regimeC} := by
+      ({RegimeTag.regimeA, RegimeTag.regimeB1,
+        RegimeTag.regimeB2, RegimeTag.regimeCstar, RegimeTag.regimeC} : Set RegimeTag) := by
   intro _
   unfold classifyRegime C_crit
   simp only []
@@ -310,7 +310,7 @@ theorem classification_degradation (bos : BoundedOperatorSetting)
           exact Or.inr (Or.inr (Or.inr (Or.inr rfl)))
 
 -- =================================================-----------
-# 层间关系总结
+-- # 层间关系总结
 -- ============================================================
 
 /-!

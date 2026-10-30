@@ -293,11 +293,11 @@ theorem IC_preserves_sections (σ : SigObj ⥤ SignatureBundle)
     此处给出结构确定常数 k_max。 -/
 def kmax_from_cl17 : ℕ := 8
 
-/-- cl17_rep_dim = 8 与 k_max = 8 的形式相等（遗留定义一致性，见勘误 v0.21）。 -/
-theorem cl17_rep_dim_equals_kmax : cl17_rep_dim = kmax_from_cl17 := by
-  unfold cl17_rep_dim kmax_from_cl17
-  rfl
-
+/- 【2026-10-24 勘误】原 `theorem cl17_rep_dim_equals_kmax : cl17_rep_dim = kmax_from_cl17`
+    为假命题已删除：Clifford.lean:150 定义 `cl17_rep_dim = 16`（Cl(1,7) ≅ M₁₆(ℝ) 旋量，
+    `cl17_spinor_dim_arith : cl17_rep_dim = 2 * 2 ^ 3` 机检闭合），而 `kmax_from_cl17 = 8`
+    （结构确定量，v0.21 勘误）；16 ≠ 8，等式不可证。两量分属两层：rep_dim 是表示维数、
+    k_max 是结构常数，无"形式相等"。 -/
 /-- 【2026-08-07 v0.21 勘误（注释层）】原 docstring "Cl(1,7) ≅ M₈(ℝ) → rep_dim = 8 → k_max = 8"
     为旧错误归因；k_max = 8 由统一 3 定理 + 对偶网络确定（勘误 v0.21）。
     此处仅陈述形式相等（rfl）。 -/
@@ -601,15 +601,14 @@ theorem rg_dimension_halving (n : ℕ) (X : SignatureBundle)
     which determines the spectral gap Δλ_min and the noise threshold η_c.
 
     ※ 勘误（2026-08-09）：移除 π_Sig Level4 分量（不满足，见
-    π_Sig_is_not_level4）；π_η 与 η_c 分量随 NoiseFiber 修复登记。 -/
+    π_Sig_is_not_level4）；π_η 与 η_c 分量随 NoiseFiber 修复登记。
+    ※ 勘误（2026-10-24）：移除假合取项 `cl17_rep_dim = kmax_from_cl17` 与
+    `cl17_rep_dim = 8`（cl17_rep_dim = 16，见本文件 §7 勘误；链条语义不依赖该等式）。 -/
 theorem complete_chain :
     Nonempty (Level4Extension (π_T : SpectralBundleTemp ⥤ TempObj)) ∧
     Nonempty (Level4Extension (π_μ : SpectralBundleRG ⥤ RGObj)) ∧
-    (cl17_rep_dim = kmax_from_cl17) ∧
-    (cl17_rep_dim = 8) ∧
     (spectralGap 8 = (Real.sqrt 6 - Real.sqrt 2) / Real.sqrt (72 : ℝ)) := by
-  refine ⟨⟨inferInstance⟩, ⟨inferInstance⟩, ?_, rfl, spectralGap_at_kmax8⟩
-  · unfold cl17_rep_dim kmax_from_cl17; rfl
+  refine ⟨⟨inferInstance⟩, ⟨inferInstance⟩, spectralGap_at_kmax8⟩
 
 /-- The spectral gap is determined by the Bott tower base level.
     This is the physical output of the complete theoretical chain.

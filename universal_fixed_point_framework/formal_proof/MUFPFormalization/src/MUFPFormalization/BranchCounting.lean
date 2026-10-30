@@ -64,13 +64,21 @@ inductive LayerIndex : Type
   | two    : LayerIndex    -- 层 2：2-态射
   | three  : LayerIndex    -- 层 3：3-态射
   | four   : LayerIndex    -- 层 4：coherence
-  deriving DecidableEq, Fintype
+  deriving DecidableEq
+
+/-- LayerIndex 的有限性实例（手动枚举 5 层，绕开 deriving Fintype 的 mathlib 漂移）。 -/
+instance : Fintype LayerIndex where
+  elems := {LayerIndex.obj, LayerIndex.one, LayerIndex.two, LayerIndex.three, LayerIndex.four}
+  complete := by
+    intro x
+    rcases x <;> simp
 
 /-- 总层数 = 5。 -/
 def N_total : ℕ := 5
 
 /-- 总层数等于 5 的验证。 -/
 theorem total_layers_count : Fintype.card LayerIndex = 5 := by
+  change ({LayerIndex.obj, LayerIndex.one, LayerIndex.two, LayerIndex.three, LayerIndex.four} : Finset LayerIndex).card = 5
   native_decide
 
 /-- 层是否为主动生成层（即非平凡的态射层）。 -/
@@ -115,9 +123,7 @@ def B : ℕ := (ActiveLayers : Finset LayerIndex).card * N_total
 
 /-- B = 15 的计算验证。 -/
 theorem B_eq_15 : B = 15 := by
-  unfold B N_total
-  have h_active : (ActiveLayers : Finset LayerIndex).card = 3 := active_layers_count
-  rw [h_active]
+  native_decide
 
 /-! =========================================================
    第三章 Moran 方程与 d_H = ln 15

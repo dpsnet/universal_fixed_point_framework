@@ -171,7 +171,7 @@ MUFPF 解释：
     - scale > 0：物理尺度为正
     - sound_horizon > 0：声波视界为正
     观测对应：r_d ≈ 150 Mpc（Planck 2018 + BOSS）。 -/
-structure BAOScale where
+structure CosmoBAOScale where
   /-- BAO 特征尺度（Mpc） -/
   scale : ℝ
   /-- BAO 尺度为正 -/
@@ -185,7 +185,7 @@ structure BAOScale where
     物理含义：BAO 特征尺度是真实存在的物理量。
     构造性证明：取 r_s ≈ 150 Mpc（Planck/BOSS 观测值）。 -/
 theorem bao_scale_exists :
-    ∃ b : BAOScale, True := by
+    ∃ b : CosmoBAOScale, True := by
   refine ⟨{
     scale := 150
     scale_pos := by norm_num
@@ -198,8 +198,8 @@ theorem bao_scale_exists :
     物理含义：BAO 特征尺度等于声波视界——
     声波在再复合前传播的最大距离决定了密度涨落的特征尺度。
     构造性证明：scale = sound_horizon = 150 Mpc。 -/
-theorem bao_from_causal_scale :
-    ∃ b : BAOScale, b.scale = b.sound_horizon := by
+theorem cosmo_bao_from_causal_scale :
+    ∃ b : CosmoBAOScale, b.scale = b.sound_horizon := by
   refine ⟨{
     scale := 150
     scale_pos := by norm_num
@@ -293,7 +293,7 @@ theorem coarse_graining_preserves_density
     - density(x)：位置 x 处的物质密度
     - total_mass：总物质质量
     - 约束：密度非负，总质量为正 -/
-structure MatterDensityField where
+structure CosmoMatterDensityField where
   /-- 物质密度函数 ρ(x) -/
   density : ℝ → ℝ
   /-- 密度非负：ρ(x) ≥ 0 -/
@@ -307,7 +307,7 @@ structure MatterDensityField where
     物理含义：非平凡的密度场（均匀且质量为 1）在 MUFPF 中可构造。
     构造性证明：ρ(x) ≡ 1，M = 1。 -/
 theorem matter_density_field_exists :
-    ∃ mf : MatterDensityField, mf.total_mass > 0 := by
+    ∃ mf : CosmoMatterDensityField, mf.total_mass > 0 := by
   refine ⟨{
     density := fun _ => 1
     density_nonneg := fun _ => by norm_num
@@ -336,7 +336,7 @@ theorem matter_density_field_exists :
     - node_count：节点数量（星系团）
     - void_count：空洞数量（低密度区域）
     约束：纤维和节点数量非负。 -/
-structure CosmicWebSkeleton where
+structure CosmoCosmicWebSkeleton where
   /-- 纤维数量 -/
   filament_count : ℕ
   /-- 节点/星系团数量 -/
@@ -351,8 +351,8 @@ structure CosmicWebSkeleton where
 /-- 宇宙网从因果骨架涌现。
     物理含义：因果集的拓扑骨架自然产生宇宙网结构；
     即使是最简单的骨架（全零计数）也满足宇宙网的基本定义。 -/
-theorem cosmic_web_from_causal_skeleton :
-    ∃ cw : CosmicWebSkeleton, cw.node_count ≥ 0 := by
+theorem cosmo_cosmic_web_from_causal_skeleton :
+    ∃ cw : CosmoCosmicWebSkeleton, cw.node_count ≥ 0 := by
   refine ⟨{
     filament_count := 0
     node_count := 0
@@ -381,7 +381,7 @@ theorem cosmic_web_from_causal_skeleton :
     - mass_bins：质量分箱数
     - counts(i)：第 i 个质量箱中的星系数
     - 约束：counts(i) ≥ 0（计数非负） -/
-structure GalaxyMassFunction where
+structure CosmoGalaxyMassFunction where
   /-- 质量分箱数 -/
   mass_bins : ℕ
   /-- 各箱星系计数 -/
@@ -392,8 +392,8 @@ structure GalaxyMassFunction where
 /-- 质量函数从缺陷分布产生。
     物理含义：拓扑缺陷的质量分布自然产生星系质量函数。
     构造性证明：单分箱、单位计数的非空质量函数。 -/
-theorem mass_function_from_defect_distribution :
-    ∃ mf : GalaxyMassFunction, mf.mass_bins > 0 := by
+theorem cosmo_mass_function_from_defect_distribution :
+    ∃ mf : CosmoGalaxyMassFunction, mf.mass_bins > 0 := by
   refine ⟨{
     mass_bins := 1
     counts := fun _ => 1
@@ -423,7 +423,7 @@ theorem mass_function_from_defect_distribution :
     - mass：晕的总质量（太阳质量单位 M_☉）
     - concentration：浓缩参数（密度集中程度）
     - 约束：质量为正，浓缩参数为正 -/
-structure DarkMatterHalo where
+structure CosmoDarkMatterHalo where
   /-- 晕质量（M_☉） -/
   mass : ℝ
   /-- 质量为正 -/
@@ -437,7 +437,7 @@ structure DarkMatterHalo where
     物理含义：拓扑缺陷的引力束缚态在 MUFPF 框架中自然存在。
     构造性证明：取 M = 1 M_☉，c = 1。 -/
 theorem dark_matter_halo_exists :
-    ∃ h : DarkMatterHalo, h.mass > 0 := by
+    ∃ h : CosmoDarkMatterHalo, h.mass > 0 := by
   refine ⟨{
     mass := 1
     mass_pos := by norm_num

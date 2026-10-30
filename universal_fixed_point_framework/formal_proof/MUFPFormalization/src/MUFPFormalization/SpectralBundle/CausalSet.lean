@@ -395,5 +395,68 @@ theorem causalStructure_dimension_estimate (X : RecObj) :
     -- 这是因果集 ↔ MUFPF 的定量对应
     True := by trivial
 
+-- ============================================================
+-- §17.5 冻结态语义（S138——"时间极值 ⟹ 冻结不动点" Lean 接线）
+-- ============================================================
+
+/-! ### 冻结态语义（2026-10-27——S138 开放点 P2 的形式化）
+
+    用户确认语义（S138 论证链 P2/P3）：
+    - "时间的开闭对应着递归的持续和冻结"——时间开 = 递归持续
+      （step 变化——有后继——推进）；时间闭 = 冻结（step 不变）
+    - "不是丢弃，是闭合冻结，零测度"——冻结 = 不动点（闭合——零测度）
+    - "递归产生时间，每一次递归都是时间递进一层"
+
+    形式化：
+    - 冻结态 Frozen = step x = x（不动点——闭合冻结）
+    - 冻结 ⟺ 极大元（时间极值——无因果后继——"时间闭"）
+    - 递归持续（非冻结）⟺ 非极大元（有后继——"时间开"——推进）
+    - 完全冻结 ⟺ 全不动点 ⟺ 零缺陷（无引力——因果平凡）
+      （复用 §17.4 zero_gravity_iff_trivial_causalStructure）
+
+    物理语义（S138 P5-P7）：τ = 谱流最远端点 = 时间极值 = 冻结
+    不动点 = 完全冻结端点——简并度 15^16（S123-S127）。 -/
+
+/-- 冻结态：step 不变的状态（闭合冻结——零测度）。
+    物理含义："闭合冻结"——状态不再变化（递归闭合），
+    在因果结构中无后继（时间极值——"时间闭"）。 -/
+def Frozen (X : RecObj) (x : X.T) : Prop :=
+  X.step x = x
+
+/-- 冻结 ⟺ 不动点（定义即等价）。 -/
+theorem frozen_iff_fixed_point (X : RecObj) (x : X.T) :
+    Frozen X x ↔ X.step x = x := by
+  rfl
+
+/-- 冻结 ⟺ 极大元（时间极值——无因果后继）。
+    语义（S138 P2）："时间闭 = 冻结"——时间极值（无后继）
+    = 不动点 = 冻结态。 -/
+theorem frozen_iff_maximal (X : RecObj) (x : X.T) :
+    Frozen X x ↔ maximalElement (RecObj_to_CausalStructure X) x := by
+  rw [frozen_iff_fixed_point, fixed_point_iff_maximal]
+
+/-- 递归持续（非冻结）⟺ 非极大元（时间推进——有后继）。
+    语义（S138 P2）："时间开 = 递归持续"——step 变化（非冻结）
+    = 有因果后继（非极大元）= 时间在推进。 -/
+theorem recursing_iff_nonmaximal (X : RecObj) (x : X.T) :
+    ¬ Frozen X x ↔ ¬ maximalElement (RecObj_to_CausalStructure X) x := by
+  rw [frozen_iff_fixed_point]
+  exact not_fixed_iff_not_maximal X x
+
+/-- 完全冻结 ⟺ 全不动点 ⟺ 零缺陷（无引力——因果平凡）。
+    语义（S138 P6/P7）：完全冻结端点 = 全态冻结——零引力
+    （defectMeasure = 0——§17.4 zero_gravity 定理的 Frozen 版本）。
+    注：这是"冻结-引力"对偶的因果结构版本（Δ=0 ⟺ 无引力）。 -/
+theorem all_frozen_iff_zero_defect (X : RecObj.{0}) :
+    (∀ x : X.T, Frozen X x) ↔ defectMeasure X = 0 := by
+  constructor
+  · intro h_all
+    exact (zero_gravity_iff_trivial_causalStructure X).mpr
+      (fun x => (frozen_iff_maximal X x).mp (h_all x))
+  · intro h_zero
+    intro x
+    exact (frozen_iff_maximal X x).mpr
+      ((zero_gravity_iff_trivial_causalStructure X).mp h_zero x)
+
 
 end MUFPF

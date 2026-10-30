@@ -147,6 +147,22 @@ theorem 2^{N_active} = 2³ machine-proved + duality network: spinor 16 = 2·k_ma
 branch B = 15 = 2·k_max − 1, d_H = ln(2·k_max − 1) = ln 15; errata v0.21),
 not a model choice, and not derived from the representation dimension.
 -/
-noncomputable def cl17_rep_dim : ℕ := 8
+noncomputable def cl17_rep_dim : ℕ := 16
+
+/--
+结构量算术锚（勘误 v0.21：旋量 16 = 2·k_max，k_max = 2³ = 2^N_active，N_active = 3
+由统一 3 定理机器证明；2 因子 = 递归开闭（时间持续/冻结），见偏心-周期轨道-简并度
+论证骨架 §5b C4）。此定理把注释级声称的算术部分定理化（Bott 分类本身未形式化）。
+-/
+theorem cl17_spinor_dim_arith : cl17_rep_dim = 2 * 2 ^ 3 := by
+  norm_num [cl17_rep_dim]
+
+/-- 分支 B = 2·k_max − 1 = 15（Moran 分支计数 d_H = ln B = ln 15 的算术锚）。 -/
+theorem branch_B_arith : 2 * 2 ^ 3 - 1 = 15 := by
+  norm_num
+
+/-- 15 = 2⁴ − 1（非平凡组合计数：4 维方向 = 递归开闭(2) × 三层组合(2³)，排除全冻结/恒等态）。 -/
+theorem fifteen_arith : 2 ^ 4 - 1 = 15 := by
+  norm_num
 
 end MUFPF

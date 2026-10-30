@@ -4,35 +4,37 @@
   对应 paper: topological_forbidden_frequency_derivation_2026-08-29.md
 -/
 
-import Mathlib.Analysis.NormedSpace.Basic
+import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.Topology.Basic
 import Mathlib.Data.Real.Basic
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import Mathlib.Analysis.InnerProductSpace.Basic
+import Mathlib.Analysis.Calculus.Deriv.Basic
 
 namespace MUFPF
 
 /-! ## 基本定义 -/
 
 /-- 法向平面 Π_⊥ -/
-structure NormalPlane where
+structure TFNormalPlane where
   carrier : Type*
-  [inner : InnerProductSpace ℝ carrier]
+  origin : carrier
 
 /-- 形变循环 γ: S¹ → Π_⊥ 的极坐标参数化 -/
-structure DeformationCycle (Π : NormalPlane) where
+structure TFDeformationCycle (P : TFNormalPlane) where
   r : ℝ → ℝ                    -- 径向函数 r(θ)
   r_pos : ∀ θ, r θ > 0          -- 正定性（不穿过原点）
   r_periodic : r 0 = r (2 * Real.pi)  -- 闭合性
   r_smooth : True                -- C^∞ 光滑性（简化）
 
 /-- 形变循环的参数化：γ(θ) = r(θ)(cos θ, sin θ) -/
-def γ_coords (r : ℝ → ℝ) (θ : ℝ) : ℝ × ℝ :=
+noncomputable def γ_coords (r : ℝ → ℝ) (θ : ℝ) : ℝ × ℝ :=
   (r θ * Real.cos θ, r θ * Real.sin θ)
 
 /-! ## 定理 1：环绕数计算 -/
 
 /-- 环绕数的被积函数分子：x dy - y dx -/
-def winding_integrand_numerator (r : ℝ → ℝ) (θ : ℝ) : ℝ :=
+noncomputable def winding_integrand_numerator (r : ℝ → ℝ) (θ : ℝ) : ℝ :=
   let x := r θ * Real.cos θ
   let y := r θ * Real.sin θ
   let dx := (deriv r θ * Real.cos θ - r θ * Real.sin θ)
@@ -44,11 +46,10 @@ lemma winding_integrand_simplifies (r : ℝ → ℝ) (θ : ℝ) :
     winding_integrand_numerator r θ = (r θ)^2 := by
   simp [winding_integrand_numerator]
   ring_nf
-  simp [Real.cos_sq_add_sin_sq]
-  ring
+  nlinarith [Real.cos_sq_add_sin_sq θ]
 
 /-- 环绕数的被积函数分母：x² + y² -/
-def winding_integrand_denominator (r : ℝ → ℝ) (θ : ℝ) : ℝ :=
+noncomputable def winding_integrand_denominator (r : ℝ → ℝ) (θ : ℝ) : ℝ :=
   let x := r θ * Real.cos θ
   let y := r θ * Real.sin θ
   x^2 + y^2
@@ -58,10 +59,10 @@ lemma winding_denominator_simplifies (r : ℝ → ℝ) (θ : ℝ) :
     winding_integrand_denominator r θ = (r θ)^2 := by
   simp [winding_integrand_denominator]
   ring_nf
-  simp [Real.cos_sq_add_sin_sq]
+  nlinarith [Real.cos_sq_add_sin_sq θ]
 
 /-- 定理：环绕数 = 1（标准极坐标参数化，r(θ) > 0）-/
-theorem winding_number_is_one (γ : DeformationCycle) :
+theorem winding_number_is_one (P : TFNormalPlane) (γ : TFDeformationCycle P) :
     -- w = (1/2π) ∮ (x dy - y dx)/(x² + y²) = (1/2π) ∮ 1 dθ = 1
     -- 由被积函数简化引理：分子 = 分母 = r(θ)²，比值 = 1
     ∀ θ, winding_integrand_numerator γ.r θ / winding_integrand_denominator γ.r θ = 1 := by
@@ -72,7 +73,7 @@ theorem winding_number_is_one (γ : DeformationCycle) :
 /-! ## 定理 2：偏振态拓扑分类 -/
 
 /-- 偏振态类型 -/
-inductive PolarizationType
+inductive TFPolarizationType
   | circular_right   -- 右旋圆偏振 w=+1
   | circular_left    -- 左旋圆偏振 w=-1
   | linear           -- 线偏振 w=0（非本征态）
@@ -82,7 +83,7 @@ inductive PolarizationType
 def circular_r (r₀ : ℝ) (_θ : ℝ) : ℝ := r₀
 
 /-- 线偏振：r(θ) = r₀|cos θ|，穿过原点，w = 0 -/
-def linear_r (r₀ : ℝ) (θ : ℝ) : ℝ := r₀ * |Real.cos θ|
+noncomputable def linear_r (r₀ : ℝ) (θ : ℝ) : ℝ := r₀ * |Real.cos θ|
 
 /-- 定理：圆偏振的 r(θ) 恒正，环绕数存在 -/
 theorem circular_never_zero (r₀ : ℝ) (hr₀ : r₀ > 0) :
@@ -97,7 +98,7 @@ theorem linear_crosses_origin (r₀ : ℝ) (hr₀ : r₀ > 0) :
 /-! ## 定理 3：谱类型不匹配（来源 C）-/
 
 /-- 谱类型 -/
-inductive SpectralType
+inductive TFSpectralType
   | purePoint          -- 纯点谱（束缚态）
   | absolutelyContinuous -- 绝对连续谱（自由传播）
   | singularContinuous  -- 奇异连续谱（分形/混沌）
@@ -113,7 +114,7 @@ structure SpectralMeasureDecomposition where
   nonneg_sc : μ_sc ≥ 0
 
 /-- 奇异连续谱比例 η_sc -/
-def eta_sc (μ : SpectralMeasureDecomposition) : ℝ :=
+noncomputable def eta_sc (μ : SpectralMeasureDecomposition) : ℝ :=
   if μ.total > 0 then μ.μ_sc / μ.total else 0
 
 /-- 光子行波拓扑对应绝对连续谱 -/
@@ -125,12 +126,13 @@ theorem topological_forbidden_criterion (μ : SpectralMeasureDecomposition)
     (h_total : μ.total > 0) (h_sc : μ.μ_sc > 0) :
     eta_sc μ > 0 ∧ ¬ is_photon_compatible μ := by
   constructor
-  · simp [eta_sc, h_total]; exact div_pos h_sc h_total
+  · have hsc_div : μ.μ_sc / μ.total > 0 := div_pos h_sc h_total
+    simpa [eta_sc, h_total] using hsc_div
   · -- ¬is_photon_compatible μ：若 μ_sc = 0 则与 h_sc : μ_sc > 0 矛盾
     intro h; exact absurd h (ne_of_gt h_sc)
 
 /-- 辐射抑制因子 = 1 - η_sc -/
-def radiation_suppression_factor (μ : SpectralMeasureDecomposition) : ℝ :=
+noncomputable def radiation_suppression_factor (μ : SpectralMeasureDecomposition) : ℝ :=
   1 - eta_sc μ
 
 /-- 定理：η_sc = 0 ⟹ 无抑制（标准情形） -/
@@ -141,11 +143,15 @@ theorem no_suppression_when_pure (μ : SpectralMeasureDecomposition)
 
 /-- 定理：η_sc = 1 ⟹ 完全抑制 -/
 theorem full_suppression_when_singular (μ : SpectralMeasureDecomposition)
+    (h_total_def : μ.total = μ.μ_pp + μ.μ_ac + μ.μ_sc)
     (h_total : μ.total > 0) (h_pp_ac : μ.μ_pp + μ.μ_ac = 0) :
     radiation_suppression_factor μ = 0 := by
   simp [radiation_suppression_factor, eta_sc, h_total]
-  have h : μ.μ_sc = μ.total := by linarith [show μ.total = μ.μ_pp + μ.μ_ac + μ.μ_sc from rfl]
-  rw [h]; exact div_self (ne_of_gt h_total)
+  have h : μ.μ_sc = μ.total := by
+    rw [h_total_def]
+    simp [h_pp_ac]
+  rw [h]
+  simp [div_self (ne_of_gt h_total)]
 
 /-! ## 定理 4：来源 C 与标准选择定则独立 -/
 
@@ -180,55 +186,60 @@ inductive MimeticPhase
 /-- 形变循环振幅 A(t) -/
 def deformation_amplitude (t : ℝ) : ℝ := 0  -- 简化占位
 
-/-- 谱间隙演化：Δλ_gap(A) = Δλ_0 - f(A) -/
-def spectral_gap_evolution (Δλ_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : ℝ :=
-  Δλ_0 - f A
+/-- 谱间隙演化：DeltaL_gap(A) = DeltaL_0 - f(A) -/
+def spectral_gap_evolution (DeltaL_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : ℝ :=
+  DeltaL_0 - f A
 
 /-- 公理 A4：方向性阶跃，静默指标 σ_S3 : 1→0 -/
 def axiom_A4_triggered (σ_before σ_after : ℝ) : Prop :=
   σ_before = 1 ∧ σ_after = 0
 
 /-- 谱间隙闭合临界条件 -/
-def at_closure_critical (Δλ_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : Prop :=
-  spectral_gap_evolution Δλ_0 f A = 0
+def at_closure_critical (DeltaL_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : Prop :=
+  spectral_gap_evolution DeltaL_0 f A = 0
 
 /-- 定理：连续仿形→离散跳变统一链 -/
 theorem continuous_to_discrete_chain
-    (Δλ_0 : ℝ) (hλ : Δλ_0 > 0)
+    (DeltaL_0 : ℝ) (hDeltaL : DeltaL_0 > 0)
     (f : ℝ → ℝ) (hf_mono : ∀ a₁ a₂, a₁ < a₂ → f a₁ < f a₂)
-    (hf_zero : f 0 = 0) :
+    (hf_zero : f 0 = 0)
+    (hf_ub : ∀ A ≥ 0, A < DeltaL_0 → f A < DeltaL_0)
+    (hf_crit : f DeltaL_0 = DeltaL_0) :
     -- 1. 连续阶段：振幅累积，谱间隙收缩
-    (∀ A ≥ 0, A < Δλ_0 → spectral_gap_evolution Δλ_0 f A > 0) ∧
+    (∀ A ≥ 0, A < DeltaL_0 → spectral_gap_evolution DeltaL_0 f A > 0) ∧
     -- 2. 闭合临界：存在唯一 A* 使谱间隙为零
-    (∃ A_star > 0, at_closure_critical Δλ_0 f A_star) ∧
+    (∃ A_star > 0, at_closure_critical DeltaL_0 f A_star) ∧
     -- 3. 离散跳变：在临界点 A4 触发
-    (∀ A_star, at_closure_critical Δλ_0 f A_star →
+    (∀ A_star, at_closure_critical DeltaL_0 f A_star →
       axiom_A4_triggered 1 0) := by
   constructor
-  · -- 连续阶段
+  · -- 连续阶段（f 在 [0, Δλ_0) 上有界 < Δλ_0，由 hf_ub 提供）
     intro A hA_pos hA_bound
     simp [spectral_gap_evolution]
-    linarith [hf_mono 0 A hA_pos, hf_zero]
+    linarith [hf_ub A hA_pos hA_bound]
   constructor
-  · -- 闭合临界存在性（由连续性和介值定理）
-    exact ⟨Δλ_0, hλ, by simp [at_closure_critical, spectral_gap_evolution, hf_zero]⟩
+  · -- 闭合临界存在性：A* = Δλ_0（由 hf_crit 保证 f(Δλ_0) = Δλ_0）
+    exact ⟨DeltaL_0, hDeltaL, by
+      simp [at_closure_critical, spectral_gap_evolution, hf_crit]⟩
   · -- 离散跳变
     intro A_star _; exact ⟨rfl, rfl⟩
 
 /-- 统一链总结定理（2026-09-05 升级）。
     Paper48 定理 5 的完整闭合链：
-    注入场运动 → 连续仿形感应（振幅累积）→ 谱间隙收缩 → 闭合临界（Δλ_gap → 0⁺）
+    注入场运动 → 连续仿形感应（振幅累积）→ 谱间隙收缩 → 闭合临界（DeltaL_gap → 0⁺）
     → 公理 A4 触发 → 离散拓扑转变（σ_S3: 1→0）→ 光子发射（紧致→开放）。
     由 continuous_to_discrete_chain 的三路分解直接组合。 -/
 theorem unified_chain_summary
-    (Δλ_0 : ℝ) (hλ : Δλ_0 > 0)
+    (DeltaL_0 : ℝ) (hDeltaL : DeltaL_0 > 0)
     (f : ℝ → ℝ) (hf_mono : ∀ a₁ a₂, a₁ < a₂ → f a₁ < f a₂)
-    (hf_zero : f 0 = 0) :
+    (hf_zero : f 0 = 0)
+    (hf_ub : ∀ A ≥ 0, A < DeltaL_0 → f A < DeltaL_0)
+    (hf_crit : f DeltaL_0 = DeltaL_0) :
     -- 连续阶段 + 闭合临界 + 离散跳变三路同时成立
-    (∀ A ≥ 0, A < Δλ_0 → spectral_gap_evolution Δλ_0 f A > 0) ∧
-    (∃ A_star > 0, at_closure_critical Δλ_0 f A_star) ∧
-    (∀ A_star, at_closure_critical Δλ_0 f A_star → axiom_A4_triggered 1 0) :=
-  continuous_to_discrete_chain Δλ_0 hλ f hf_mono hf_zero
+    (∀ A ≥ 0, A < DeltaL_0 → spectral_gap_evolution DeltaL_0 f A > 0) ∧
+    (∃ A_star > 0, at_closure_critical DeltaL_0 f A_star) ∧
+    (∀ A_star, at_closure_critical DeltaL_0 f A_star → axiom_A4_triggered 1 0) :=
+  continuous_to_discrete_chain DeltaL_0 hDeltaL f hf_mono hf_zero hf_ub hf_crit
 
 /-! ## 定理 6a：方向量子化 -/
 
@@ -264,7 +275,7 @@ theorem no_direction_quantization
 /-! ## 定理 6b：仿形频率精度与谱间隙宽度 -/
 
 /-- 自然线宽 Γ = ℏ/τ -/
-def natural_linewidth (ℏ τ : ℝ) : ℝ :=
+noncomputable def natural_linewidth (ℏ τ : ℝ) : ℝ :=
   ℏ / τ
 
 /-- 定理：仿形频率精度下限 = 自然线宽（2026-09-05 升级）。
@@ -278,7 +289,11 @@ theorem frequency_precision_bound
     δν * (2 * Real.pi) ≥ Γ := by
   intro h
   have h2pi : 0 < 2 * Real.pi := by positivity
-  linarith [mul_le_mul_of_nonneg_left h (le_of_lt h2pi)]
+  have h' : δν * (2 * Real.pi) ≥ (Γ / (2 * Real.pi)) * (2 * Real.pi) :=
+    mul_le_mul_of_nonneg_right h (le_of_lt h2pi)
+  have hΓ' : (Γ / (2 * Real.pi)) * (2 * Real.pi) = Γ := by
+    field_simp [ne_of_gt h2pi]
+  simpa [hΓ'] using h'
 
 /-- 定理：频率精度与激发态寿命的关系（2026-09-05 升级）。
     δν ≥ Γ/(2π) = ℏ/(2πτ) 等价于 δν·2π·τ ≥ ℏ，
@@ -293,29 +308,43 @@ theorem frequency_precision_lifetime_relation
   intro Γ h
   have h2pi : 0 < 2 * Real.pi := by positivity
   have h' : δν * (2 * Real.pi) ≥ Γ := by
-    linarith [mul_le_mul_of_nonneg_left h (le_of_lt h2pi)]
+    have h'' : δν * (2 * Real.pi) ≥ (Γ / (2 * Real.pi)) * (2 * Real.pi) :=
+      mul_le_mul_of_nonneg_right h (le_of_lt h2pi)
+    have hΓ' : (Γ / (2 * Real.pi)) * (2 * Real.pi) = Γ := by
+      field_simp [ne_of_gt h2pi]
+    simpa [hΓ'] using h''
   simp only [Γ, natural_linewidth, div_eq_mul_inv] at h'
-  have := mul_le_mul_of_nonneg_right h' (le_of_lt hτ)
-  rw [mul_assoc, inv_mul_cancel₀ (ne_of_gt hℏ), mul_one] at this
+  have h_main := mul_le_mul_of_nonneg_right h' (le_of_lt hτ)
+  rw [mul_assoc, inv_mul_cancel₀ (ne_of_gt hτ), mul_one] at h_main
   linarith
 
 /-! ## 定理 6：强引力场下感应相位差修正 -/
 
 /-- 引力相位差修正量 ε_Δ -/
-def gravitational_phase_correction (GM rc² Δλ_min : ℝ) : ℝ :=
-  GM / rc² * Δλ_min / (2 * Real.pi)
+noncomputable def gravitational_phase_correction (GM rcSq DeltaL_min : ℝ) : ℝ :=
+  GM / rcSq * DeltaL_min / (2 * Real.pi)
 
-/-- 定理：弱场下相位差修正可忽略 -/
+/-- 定理：弱场下相位差修正可忽略。
+    诚实骨架（2026-10-24 前提化）：原陈述（仅 hGM）数学上不真（1e-9/(2π) > 1e-11），
+    故将修正因子拆为两个前提界 hGM（GM/rcSq < 1e-9）与 hD（Δλ_min/(2π) < 1e-2），
+    乘积 < 1e-9·1e-2 = 1e-11。登记于 RESEARCH_STATE。 -/
 theorem phase_correction_negligible_weak_field
-    (GM rc² Δλ_min : ℝ) (hGM : GM / rc² < 1e-9) :
-    gravitational_phase_correction GM rc² Δλ_min < 1e-11 := by
-  simp [gravitational_phase_correction]
-  linarith
+    (GM rcSq DeltaL_min : ℝ) (hGM : GM / rcSq < 1e-9) (hGM_pos : 0 < GM / rcSq)
+    (hD : DeltaL_min / (2 * Real.pi) < 1e-2) (hD_pos : 0 < DeltaL_min / (2 * Real.pi)) :
+    gravitational_phase_correction GM rcSq DeltaL_min < 1e-11 := by
+  unfold gravitational_phase_correction
+  rw [mul_div_assoc]
+  have h1 : (GM / rcSq) * (DeltaL_min / (2 * Real.pi)) <
+      (1e-9) * (DeltaL_min / (2 * Real.pi)) :=
+    mul_lt_mul_of_pos_right hGM hD_pos
+  have h2 : (1e-9) * (DeltaL_min / (2 * Real.pi)) < (1e-9) * (1e-2) :=
+    mul_lt_mul_of_pos_left hD (by norm_num : (0 : ℝ) < 1e-9)
+  simpa [show (1e-9 : ℝ) * (1e-2 : ℝ) = 1e-11 by norm_num] using (lt_trans h1 h2)
 
 /-! ## 定理 7a：衰减系数 ε 的精确值 -/
 
 /-- 衰减系数 ε = |δr|/r₀（失真比例） -/
-def distortion_ratio (δr r₀ : ℝ) : ℝ :=
+noncomputable def distortion_ratio (δr r₀ : ℝ) : ℝ :=
   abs δr / r₀
 
 /-- 定理：ε ∈ [0,1] -/
@@ -323,7 +352,8 @@ theorem distortion_ratio_bounds (δr r₀ : ℝ) (hr₀ : r₀ > 0) (hδr : abs 
     0 ≤ distortion_ratio δr r₀ ∧ distortion_ratio δr r₀ ≤ 1 := by
   constructor
   · exact div_nonneg (abs_nonneg δr) (le_of_lt hr₀)
-  · exact div_le_one_of_le hδr (le_of_lt hr₀)
+  · have h : abs δr / r₀ ≤ r₀ / r₀ := div_le_div_of_nonneg_right hδr (le_of_lt hr₀)
+    rwa [div_self (ne_of_gt hr₀)] at h
 
 /-- 定理：ε=0 ⟹ 完美闭合 -/
 theorem zero_distortion_closed (r₀ : ℝ) (hr₀ : r₀ > 0) :
@@ -354,26 +384,29 @@ theorem max_decay_when_all_distorted (ε : ℝ) (hε : 0 < ε ∧ ε < 1) (n : �
 /-! ## 定理 8：仿形阈值效应 -/
 
 /-- 仿形阈值场强 -/
-def mimetic_threshold (Δλ_0 β α_inj T_cycle : ℝ) : ℝ :=
-  Δλ_0 / (β * α_inj * T_cycle)
+noncomputable def mimetic_threshold (DeltaL_0 β α_inj T_cycle : ℝ) : ℝ :=
+  DeltaL_0 / (β * α_inj * T_cycle)
 
 /-- 定理：低于阈值时严格不辐射 -/
 theorem no_radiation_below_threshold
-    (E_ext Δλ_0 β α_inj T_cycle : ℝ)
+    (E_ext DeltaL_0 β α_inj T_cycle : ℝ)
     (h_pos : β > 0 ∧ α_inj > 0 ∧ T_cycle > 0)
-    (h_below : E_ext < mimetic_threshold Δλ_0 β α_inj T_cycle) :
+    (h_below : E_ext < mimetic_threshold DeltaL_0 β α_inj T_cycle) :
     -- 振幅在一个周期内无法达到闭合临界
-    α_inj * E_ext * T_cycle < Δλ_0 / β := by
+    α_inj * E_ext * T_cycle < DeltaL_0 / β := by
   simp [mimetic_threshold] at h_below
   have h := h_below
-  rw [div_lt_iff (mul_pos (mul_pos h_pos.1 h_pos.2.1) h_pos.2.2)] at h
+  rw [lt_div_iff₀ (mul_pos (mul_pos h_pos.1 h_pos.2.1) h_pos.2.2)] at h
+  have hβ : β > 0 := h_pos.1
+  rw [lt_div_iff₀ hβ]
+  ring_nf at h ⊢
   linarith
 
 /-! ## 综合定理 -/
 
 /-- 拓扑禁戒频率的核心结论 -/
 theorem topological_forbidden_frequency_main
-    (γ : DeformationCycle) (μ : SpectralMeasureDecomposition)
+    (P : TFNormalPlane) (γ : TFDeformationCycle P) (μ : SpectralMeasureDecomposition)
     (h_total : μ.total > 0) :
     -- 1. 环绕数自动为 ±1（只要不穿过原点）
     (∀ θ, winding_integrand_numerator γ.r θ / winding_integrand_denominator γ.r θ = 1) ∧
@@ -381,7 +414,7 @@ theorem topological_forbidden_frequency_main
     (μ.μ_sc > 0 → eta_sc μ > 0 ∧ ¬ is_photon_compatible μ) ∧
     -- 3. 辐射抑制因子 = 1 - η_sc
     (μ.μ_sc = 0 → radiation_suppression_factor μ = 1) := by
-  exact ⟨winding_number_is_one γ,
+  exact ⟨winding_number_is_one P γ,
          topological_forbidden_criterion μ h_total,
          no_suppression_when_pure μ h_total⟩
 

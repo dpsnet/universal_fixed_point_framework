@@ -232,27 +232,38 @@ theorem symbolicSliceInjection_spectral_component0 (n L : ℕ) (hn : 1 ≤ n) (h
     `symbolicStep_fixedPoint_iff` 机器证明（唯一不动点 = 全零序列）。 -/
 theorem symbolicTransferMatrix_trace_eq_one (n L : ℕ) (hn : 1 ≤ n) (hL : 1 ≤ L) :
     Matrix.trace (stepMatrix (symbolicRecObj n L hn hL).step) = 1 := by
+  -- 注意：不使用 classical——让 if 的 decider 与目标一致
+  -- （均使用 recObjDecidableEq 实例，2026-10-24 修复）
   let z : Fin L → Fin n := fun _ => (⟨0, Nat.lt_of_lt_of_le (Nat.succ_pos 0) hn⟩ : Fin n)
   have hz_fix : (symbolicRecObj n L hn hL).step z = z := by
     dsimp [z]
     exact symbolicStep_zero_fixed n L hn hL
+  let X : RecObj := symbolicRecObj n L hn hL
+  -- 显式 decider（与目标一致，2026-10-24）：不使用 classical，
+  -- 让 if 的 decider 与 Matrix.trace 展开后的目标完全同构
+  let F : (Fin L → Fin n) → ℂ := fun (i : Fin L → Fin n) =>
+    @ite ℂ (X.step i = i) (recObjDecidableEq X (X.step i) i) 1 0
   rw [Matrix.trace]
   simp only [stepMatrix, transferMatrix, Matrix.diag]
-  change (∑ x : Fin L → Fin n,
-    (if (symbolicRecObj n L hn hL).step x = x then (1 : ℂ) else 0)) = 1
-  rw [Finset.sum_eq_single z]
-  · -- f z = 1：z 是不动点
-    simp [hz_fix]
-  · intro s _ hs
-    have hnot : (symbolicRecObj n L hn hL).step s ≠ s := by
+  change Finset.sum (Finset.univ : Finset (Fin L → Fin n)) F = 1
+  have h₀ : ∀ b ∈ (Finset.univ : Finset (Fin L → Fin n)), b ≠ z → F b = 0 := by
+    intro b _ hbz
+    have hnot : X.step b ≠ b := by
       intro hstep
-      have hsz : s = z := by
-        dsimp [z]
-        exact (symbolicStep_fixedPoint_iff n L hn hL s).1 hstep
-      exact hs hsz
-    simp [hnot]
-  · intro hz_not
-    exact (hz_not (Finset.mem_univ z)).elim
+      have hsz : b = z := by
+        dsimp [z, X]
+        exact (symbolicStep_fixedPoint_iff n L hn hL b).1 hstep
+      exact hbz hsz
+    simp [F, hnot]
+  have h₁ : z ∉ (Finset.univ : Finset (Fin L → Fin n)) → F z = 0 := by
+    intro hmem
+    exact (hmem (Finset.mem_univ z)).elim
+  have hsingle : Finset.sum (Finset.univ : Finset (Fin L → Fin n)) F = 1 := by
+    calc
+      Finset.sum (Finset.univ : Finset (Fin L → Fin n)) F = F z :=
+        Finset.sum_eq_single z h₀ h₁
+      _ = 1 := if_pos hz_fix
+  exact hsingle
 
 end
 

@@ -39,7 +39,7 @@ namespace MUFPF
 open CategoryTheory
 
 -- ============================================================
-# 测试辅助：构造不同盲区1子类的系统
+-- # 测试辅助：构造不同盲区1子类的系统
 -- ============================================================
 
 /-- **T1 系统**：谱不可分解（H2 失败）。
@@ -86,7 +86,7 @@ def systemT5_multiFail : GeneralRecObj where
   spectralCorrespondence := True
 
 -- ============================================================
-# 测试用例
+-- # 测试用例
 -- ============================================================
 
 #eval IO.println "[DExistenceTests] === 开始 D 存在性元公理测试 ==="
@@ -97,25 +97,21 @@ def systemT5_multiFail : GeneralRecObj where
 
 /-- **T1a**: T1 系统在盲区1 中 -/
 theorem T1a_in_blindSpot1 : inBlindSpot1 systemT1_spectralFail := by
-  logInfo "[DExistenceTests] T1a: 验证谱不可分解系统在盲区1 中"
   unfold inBlindSpot1 generalHypotheses systemT1_spectralFail
   simp [false_and]
 
 /-- **T1b**: D 对 T1 系统无定义 -/
-theorem T1b_D_undefined : DUndefined systemT1_spectralFail := by
-  logInfo "[DExistenceTests] T1b: 验证 D 对谱不可分解系统无定义"
+theorem DET_T1b_D_undefined : DUndefined systemT1_spectralFail := by
   unfold DUndefined DPartial systemT1_spectralFail
   simp [false_and]
 
 /-- **T1c**: 谱静默对 T1 系统不成立 -/
 theorem T1c_silence_not_applicable :
     ¬ spectralSilenceGeneral systemT1_spectralFail := by
-  logInfo "[DExistenceTests] T1c: 验证谱静默对谱不可分解系统不成立"
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial systemT1_spectralFail at h_eq
   simp [false_and] at h_eq
-  exact Option.noConfusion h_eq
 
 #eval IO.println "[DExistenceTests] ✅ T1: 谱不可分解 → D 无定义 + 静默不适用"
 
@@ -125,13 +121,11 @@ theorem T1c_silence_not_applicable :
 
 /-- **T2a**: T2 系统在盲区1 中 -/
 theorem T2a_in_blindSpot1 : inBlindSpot1 systemT2_kernelFail := by
-  logInfo "[DExistenceTests] T2a: 验证无万有核系统在盲区1 中"
   unfold inBlindSpot1 generalHypotheses systemT2_kernelFail
   simp [and_false]
 
 /-- **T2b**: D 对 T2 系统无定义 -/
 theorem T2b_D_undefined : DUndefined systemT2_kernelFail := by
-  logInfo "[DExistenceTests] T2b: 验证 D 对无万有核系统无定义"
   unfold DUndefined DPartial systemT2_kernelFail
   -- 条件: True ∧ False ∧ True = False
   simp [and_false]
@@ -139,12 +133,10 @@ theorem T2b_D_undefined : DUndefined systemT2_kernelFail := by
 /-- **T2c**: 谱静默对 T2 系统不成立 -/
 theorem T2c_silence_not_applicable :
     ¬ spectralSilenceGeneral systemT2_kernelFail := by
-  logInfo "[DExistenceTests] T2c: 验证谱静默对无万有核系统不成立"
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial systemT2_kernelFail at h_eq
   simp [and_false] at h_eq
-  exact Option.noConfusion h_eq
 
 #eval IO.println "[DExistenceTests] ✅ T2: 无万有核 → D 无定义 + 静默不适用"
 
@@ -154,7 +146,6 @@ theorem T2c_silence_not_applicable :
 
 /-- **T3a**: T3 系统在盲区1 中 -/
 theorem T3a_in_blindSpot1 : inBlindSpot1 systemT3_correspondenceFail := by
-  logInfo "[DExistenceTests] T3a: 验证无谱对应系统在盲区1 中"
   unfold inBlindSpot1 generalHypotheses systemT3_correspondenceFail
   -- generalHypotheses = True ∧ True ∧ False = False
   -- ¬False = True
@@ -162,7 +153,6 @@ theorem T3a_in_blindSpot1 : inBlindSpot1 systemT3_correspondenceFail := by
 
 /-- **T3b**: D 对 T3 系统无定义 -/
 theorem T3b_D_undefined : DUndefined systemT3_correspondenceFail := by
-  logInfo "[DExistenceTests] T3b: 验证 D 对无谱对应系统无定义"
   unfold DUndefined DPartial systemT3_correspondenceFail
   -- 条件: True ∧ True ∧ False = False
   simp [true_and, and_false]
@@ -170,12 +160,10 @@ theorem T3b_D_undefined : DUndefined systemT3_correspondenceFail := by
 /-- **T3c**: 谱静默对 T3 系统不成立 -/
 theorem T3c_silence_not_applicable :
     ¬ spectralSilenceGeneral systemT3_correspondenceFail := by
-  logInfo "[DExistenceTests] T3c: 验证谱静默对无谱对应系统不成立"
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial systemT3_correspondenceFail at h_eq
   simp [true_and, and_false] at h_eq
-  exact Option.noConfusion h_eq
 
 #eval IO.println "[DExistenceTests] ✅ T3: 无谱对应 → D 无定义 + 静默不适用"
 
@@ -185,13 +173,11 @@ theorem T3c_silence_not_applicable :
 
 /-- **T4a**: T4 系统不在盲区1 中 -/
 theorem T4a_not_in_blindSpot1 : ¬ inBlindSpot1 systemT4_allPass := by
-  logInfo "[DExistenceTests] T4a: 验证全满足系统不在盲区1 中"
   unfold inBlindSpot1 generalHypotheses systemT4_allPass
   simp [true_and]
 
 /-- **T4b**: D 对 T4 系统有定义 -/
 theorem T4b_D_defined : DDefined systemT4_allPass := by
-  logInfo "[DExistenceTests] T4b: 验证 D 对全满足系统有定义"
   unfold DDefined DPartial systemT4_allPass
   -- 条件: True ∧ True ∧ True = True → some ... ≠ none
   simp [true_and]
@@ -200,7 +186,6 @@ theorem T4b_D_defined : DDefined systemT4_allPass := by
 theorem T4c_silence_decidable :
     spectralSilenceGeneral systemT4_allPass ∨
     ¬ spectralSilenceGeneral systemT4_allPass := by
-  logInfo "[DExistenceTests] T4c: D 有定义时谱静默可判定（排中律）"
   -- D 有定义 → spectralSilenceGeneral 是良定义的 Prop → 排中律
   exact Classical.em (spectralSilenceGeneral systemT4_allPass)
 
@@ -212,14 +197,12 @@ theorem T4c_silence_decidable :
 
 /-- **T5a**: T5 系统在盲区1 中 -/
 theorem T5a_in_blindSpot1 : inBlindSpot1 systemT5_multiFail := by
-  logInfo "[DExistenceTests] T5a: 验证多重失败系统在盲区1 中"
   unfold inBlindSpot1 generalHypotheses systemT5_multiFail
   -- generalHypotheses = False ∧ False ∧ True = False
   simp [false_and, and_false]
 
 /-- **T5b**: D 对 T5 系统无定义 -/
 theorem T5b_D_undefined : DUndefined systemT5_multiFail := by
-  logInfo "[DExistenceTests] T5b: 验证 D 对多重失败系统无定义"
   unfold DUndefined DPartial systemT5_multiFail
   simp [false_and, and_false]
 
@@ -242,7 +225,6 @@ theorem T6a_silence_implies_defined (S : GeneralRecObj) :
 theorem T6b_defined_not_implies_silence :
     ∃ S : GeneralRecObj, DDefined S ∧
     (spectralSilenceGeneral S ∨ ¬ spectralSilenceGeneral S) := by
-  logInfo "[DExistenceTests] T6b: D 有定义不蕴含静默（静默取决于谱数据）"
   -- T4 系统: D 有定义，静默可假（取决于占位谱对象是否静默）
   refine ⟨systemT4_allPass, ?_, ?_⟩
   · exact T4b_D_defined
@@ -271,8 +253,7 @@ theorem T7_axiom_necessity :
      ¬ spectralSilenceGeneral systemT2_kernelFail) ∧
     (DUndefined systemT3_correspondenceFail ∧
      ¬ spectralSilenceGeneral systemT3_correspondenceFail) := by
-  logInfo "[DExistenceTests] T7: 验证 D 存在性元公理对盲区1 的必要性"
-  refine ⟨⟨T1b_D_undefined, T1c_silence_not_applicable⟩, ?_, ?_⟩
+  refine ⟨⟨DET_T1b_D_undefined, T1c_silence_not_applicable⟩, ?_, ?_⟩
   · exact ⟨T2b_D_undefined, T2c_silence_not_applicable⟩
   · exact ⟨T3b_D_undefined, T3c_silence_not_applicable⟩
 

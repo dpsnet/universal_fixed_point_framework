@@ -70,7 +70,16 @@ inductive ActiveMorphismLayer : Type
   | first    : ActiveMorphismLayer   -- 层 1：SpHom（1-态射）
   | second   : ActiveMorphismLayer   -- 层 2：SpTwoMorphism（2-态射）
   | third    : ActiveMorphismLayer   -- 层 3：SpThreeMorphism（3-态射）
-  deriving DecidableEq, Fintype
+  deriving DecidableEq
+
+/-- 手动 Fintype 实例（2026-10-18 mathlib API 漂移修复：deriving Fintype 生成的
+    enumList 经 List→Multiset coe 后 nodup 类型失配，改为显式构造）。 -/
+instance : Fintype ActiveMorphismLayer where
+  elems := ⟨↑([ActiveMorphismLayer.first, ActiveMorphismLayer.second, ActiveMorphismLayer.third]
+              : List ActiveMorphismLayer), by decide⟩
+  complete := by
+    intro x
+    cases x <;> simp
 
 /-- 主动生成层的基数。 -/
 def numActiveLayers : ℕ := 3

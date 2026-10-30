@@ -70,20 +70,20 @@ theorem threshold_value : EDRNstabilityThreshold = 0.1 := rfl
 /-- S₄：Paper44 §6.6 四层静默单层层抑制因子 = 1/15。
     含义：穿越一个满壳层的辐射抑制比。
     数值：S₄ ≈ 0.0667 -/
-def S4 : ℝ := 1 / 15
+noncomputable def S4 : ℝ := 1 / 15
 
 /-- S₄ 的数值验证：S₄ = 1/15 -/
 theorem S4_value : S4 = 1 / 15 := rfl
 
 /-- S₄ 为正 -/
-theorem S4_pos : 0 < S4 := by simp [S4]; norm_num
+theorem S4_pos : 0 < S4 := by norm_num [S4]
 
 /-- S₄ < 1（抑制因子小于 1，指数衰减） -/
-theorem S4_lt_one : S4 < 1 := by simp [S4]; norm_num
+theorem S4_lt_one : S4 < 1 := by norm_num [S4]
 
 /-- R_supp(N)：穿越 N 个满壳层的辐射抑制比（Paper44 P6 多层静默叠加定理）。
     R_supp(N) = S₄^N = (1/15)^N -/
-def Rsupp (N : ℕ) : ℝ := S4 ^ N
+noncomputable def Rsupp (N : ℕ) : ℝ := S4 ^ N
 
 /-- R_supp(0) = 1（无壳层穿越，无抑制） -/
 theorem Rsupp_zero : Rsupp 0 = 1 := by
@@ -99,8 +99,12 @@ theorem Rsupp_two : Rsupp 2 = S4 ^ 2 := by
 
 /-- R_supp 的指数衰减：N 增大 → R_supp 减小（抑制增强） -/
 theorem Rsupp_decreasing {N : ℕ} (hN : 0 < N) : Rsupp (N + 1) < Rsupp N := by
-  simp [Rsupp]
-  exact pow_lt_pow_of_lt_left S4_pos S4_lt_one (Nat.le_succ_iff.mpr hN)
+  unfold Rsupp
+  rw [pow_succ]
+  calc
+    S4 ^ N * S4 < S4 ^ N * 1 := by
+      exact mul_lt_mul_of_pos_left (by norm_num [S4]) (pow_pos S4_pos N)
+    _ = S4 ^ N := by ring
 
 /-! ## N_crit(θ) 临界层数（映射 3 的 UFPF 侧） -/
 

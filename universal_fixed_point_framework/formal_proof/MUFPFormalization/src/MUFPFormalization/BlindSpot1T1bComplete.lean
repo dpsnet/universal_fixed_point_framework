@@ -167,7 +167,7 @@ theorem T1b_silence_not_applicable :
   -- 但 T1b_DPartial_eq_none : DPartial systemT1b = none
   rw [T1b_DPartial_eq_none] at h_eq
   -- h_eq : none = some sp → 矛盾
-  exact Option.noConfusion h_eq
+  cases h_eq
 
 /-- **T1b-S-2**: 谱静默排斥盲区 1（通用定理的具体应用）。
 
@@ -175,7 +175,7 @@ theorem T1b_silence_not_applicable :
     谱静默蕴含 ¬ inBlindSpot1。
     但 T1b 在盲区 1 中（T1b-D-2），故谱静默不成立。 -/
 theorem T1b_silence_excluded :
-    spectralSilence_excludes_blindSpot1 systemT1b := by
+    spectralSilenceGeneral systemT1b → ¬ inBlindSpot1 systemT1b := by
   intro hSilence
   -- 谱静默蕴含 ¬ inBlindSpot1
   -- 但 T1b 在盲区 1 中
@@ -213,7 +213,7 @@ theorem T1b_no_spectral_object :
   -- DPartial T1b = none（T1b_DPartial_eq_none）
   rw [T1b_DPartial_eq_none] at h_eq
   -- none = some sp → 矛盾
-  exact Option.noConfusion h_eq
+  cases h_eq
 
 /-- **T1b-R-2**: T1b 系统无法通过 D 函子映射到谱范畴。
 
@@ -226,7 +226,7 @@ theorem T1b_no_spectral_image :
   refine ⟨T1b_DPartial_eq_none, ?_⟩
   intro sp h
   rw [T1b_DPartial_eq_none] at h
-  exact Option.noConfusion h
+  cases h
 
 /-- **T1b-R-3**: T1b 系统不被谱静默覆盖（与 T1b-S-1 等价，从体制角度表述）。
 
@@ -309,7 +309,7 @@ theorem T1b_only_layer1_covers :
   intro _ h
   obtain ⟨sp, h_eq⟩ := h
   rw [T1b_DPartial_eq_none] at h_eq
-  exact Option.noConfusion h_eq
+  cases h_eq
 
 -- ============================================================
 -- §6 完整逻辑链
@@ -388,7 +388,7 @@ theorem T1b_complete_chain :
 theorem T1b_contributes_to_T7 :
     (DUndefined systemT1b ∧ ¬ spectralSilenceGeneral systemT1b) ∧
     -- T1b 的证明可直接用于 T7
-    (T1b_D_undefined ∧ T1b_silence_not_applicable →
+    (DUndefined systemT1b ∧ ¬ spectralSilenceGeneral systemT1b →
      DUndefined systemT1b ∧ ¬ spectralSilenceGeneral systemT1b) := by
   refine ⟨⟨T1b_D_undefined, T1b_silence_not_applicable⟩, ?_⟩
   intro ⟨h1, h2⟩

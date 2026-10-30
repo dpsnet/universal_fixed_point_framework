@@ -534,4 +534,21 @@ theorem spDelta2Cell_eq_homotopy_deviation {X Y Z : SpObj}
   rw [c.condition]
   exact spExchangeLaw_deviation_partial_commutator α β α' β'
 
+/-- ★★ Δ 2-胞腔非平凡 ⟺ 层 2 交换律偏差非零：`c.dev ≠ 0` 当且仅当横竖复合
+    的 homotopy 不等（LHS ≠ RHS）——"Δ（交换律偏差）存在且非零 ⟹ 层 2 结构非交换"，
+    与 CommutatorLieAlgebra.commutator_ne_zero_iff_ne_mul（Δ≠0 ⟺ 换位子非零）同构衔接：
+    Δ 是弥漫结构层间联系的非交换源（群作用的代数来源）。数值
+    `scripts/rotation_group_probe.py`：2000 组随机谱算符 dev 非零比例 2000/2000
+    （交换律偏差普遍非平凡——Δ≠0 是常态非例外）。 -/
+theorem delta_cell_dev_ne_zero_iff_swap {X Y Z : SpObj}
+    {P Q R : X ⟶ Y} {P' Q' R' : Y ⟶ Z}
+    (α : SpTwoMorphism P Q) (β : SpTwoMorphism Q R)
+    (α' : SpTwoMorphism P' Q') (β' : SpTwoMorphism Q' R')
+    (c : SpDelta2Cell α β α' β') :
+    c.dev ≠ 0 ↔
+      (spHorizComp (spVertComp α β) (spVertComp α' β')).homotopy ≠
+        (spVertComp (spHorizComp α α') (spHorizComp β β')).homotopy := by
+  rw [← spDelta2Cell_eq_homotopy_deviation α β α' β' c]
+  exact sub_ne_zero
+
 end MUFPF

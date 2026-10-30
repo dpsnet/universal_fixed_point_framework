@@ -89,7 +89,7 @@
 | PhysicalSilenceAnalysis | paper17 §3.1/§5.1/§9 + 笔记 | higgsVEV_silence_prediction/kerr_QNM_frequency/dm_relic_density | 唯象 |
 | SpectralCorrespondence | Paper I §3.4（定理 3.7a/3.7b，公式逐字对应） | spectralMap(μ↦e⁻μ)/spectralInv | 工具 |
 | SpectralFlowHomotopy | Paper I §5.7.6a（paper1 点名） | spectralFlowMap/h_silence/spectralFlowInfEndo | 推导结论 |
-| SpectralGap | paper20 §4.3/§5.4/§6 | agEigenvalue/spectralGap/Δλ_min | 推导结论 |
+| SpectralGap | paper20 §4.3/§5.4/§6 | agEigenvalue/spectralGap/Δλ_min | 推导结论【2026-10-24 勘误：paper20 正文无 `agEigenvalue` 常量名（谱间隙比 §4 用 λ_k ∝ √{k(k+1)} 设定）；`agEigenvalue` 实为 CategoryRepBridge 本地定义（现名 `catAgEigenvalue`，SpectralGap 模块无此常量），且 √{k(k+1)} 与 j=k/2 Casimir 特征值相差因子 √{(k+2)/(k+1)}——口径见 paper1_appendix/53B/53C 勘误注】 |
 | ErgodicTheory | Paper I §7.10（Ledrappier-Young + 拓扑熵-谱间隙） | lyapunovExponent/OseledetsSplitting/HD-D/TE-G-M | 推导前提 |
 | IFSFractal | Paper I 附录 Phase 16C-II + paper17 §3.1/§3.2 | IFS/hutchinsonOperator/HausdorffDimension/c1_physical | 工具 |
 | WeierstrassGap | 笔记 spectral_phase3_fractal_expansion §2.3（S5） | weierstrassGraphMap/weierstrassGraphDimension | 工具+唯象 |
