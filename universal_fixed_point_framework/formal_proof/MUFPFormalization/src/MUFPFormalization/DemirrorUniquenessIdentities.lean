@@ -197,4 +197,42 @@ theorem mol_linear_judgement :
   · norm_num
   · norm_num
 
+/-! =========================================================
+    §6 分母形态溯源（286d：D/E 分母 = 2·n_max³ 代数必然 + 负结果）
+   ========================================================= -/
+
+/-- 286d M1：D/E 分子差恒为 2（无条件恒等）——D−E = 2/[16(k−3)³] 的分子侧来源。 -/
+theorem mol_diff_two : ∀ k : ℤ, (k * (k - 3) + 1) - (k * (k - 3) - 1) = 2 := by
+  intro k
+  ring
+
+/-- 286d M1：D/E 分母呈现 2·n_max³ 形态（16(k−3)³ = 2(k+2)³）的唯一正整数解 k=8。
+    引用 de_diff_unique（8(k−3)³=(k+2)³ → k=8）。 -/
+theorem de_den_nmax_unique : ∀ k : ℤ, k ≥ 1 → 16 * (k - 3) ^ 3 = 2 * (k + 2) ^ 3 → k = 8 := by
+  intro k hk h
+  have h8 : 8 * (k - 3) ^ 3 = (k + 2) ^ 3 := by
+    nlinarith [h]
+  exact de_diff_unique k hk h8
+
+/-- 286d M3 负结果：窗口左端 k(k−1) 与窗口和 2k² 无正整数交点（k(k+1)=0，根 {0,−1}）。
+    δ∞（窗口左端）与 C（窗口和）作为窗口量永不相交——不同源。 -/
+theorem window_left_ne_sum : ∀ k : ℤ, k ≥ 1 → k * (k - 1) ≠ 2 * k * k := by
+  intro k hk h
+  have hfac : k * (k + 1) = 0 := by
+    nlinarith [h]
+  rcases mul_eq_zero.mp hfac with hk0 | hkm1
+  · nlinarith [hk, hk0]
+  · nlinarith [hk, hkm1]
+
+/-- 286d 联合主定理：分子差恒 2 + 分母 2·n_max³ 唯一性 + 窗口左端/和负结果。 -/
+theorem denominator_origin_judgement :
+    (∀ k : ℤ, (k * (k - 3) + 1) - (k * (k - 3) - 1) = 2) ∧
+    (∀ k : ℤ, k ≥ 1 → 16 * (k - 3) ^ 3 = 2 * (k + 2) ^ 3 → k = 8) ∧
+    (∀ k : ℤ, k ≥ 1 → k * (k - 1) ≠ 2 * k * k) := by
+  constructor
+  · exact mol_diff_two
+  constructor
+  · exact de_den_nmax_unique
+  · exact window_left_ne_sum
+
 end MUFPF.Demirror

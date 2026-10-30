@@ -1,0 +1,90 @@
+{
+ "title": "P7-5e-286d 分母三机制形态溯源判别",
+ "M1_DE_den_2nmax": {
+  "mol_diff": {
+   "formula": "(k(k-3)+1) - (k(k-3)-1)",
+   "value": "2",
+   "always_two": true
+  },
+  "requirement": "D-E = 2/[16(k-3)³] = 1/[8(k-3)³]；要求 = n_max⁻³ = 1/(k+2)³",
+  "den_equation": "16(k-3)³ = 2(k+2)³  <=>  8(k-3)³ = (k+2)³",
+  "den_solutions_k1_20": [
+   8
+  ],
+  "k8_check": {
+   "16*5³": 2000,
+   "2*10³": 2000,
+   "hit": true
+  },
+  "interpretation": "D/E 分母 16(k-3)³ 形态 = 分子差恒 2 ∧ D−E=n_max⁻³ 要求的代数推论（k=8 处 2000=2·10³）；非独立观察。286b 诚实边界三项 → 仅剩 δ∞/C 分母形态与 E1/E2 家族资格为观察级。"
+ },
+ "M2_denominator_window_arithmetic": {
+  "k=8_window": {
+   "left": 56,
+   "m1": 63,
+   "center": 64,
+   "plus1": 65
+  },
+  "n_max": 10,
+  "delta_den": {
+   "k(k-1)": 56,
+   "window_left": 56,
+   "hit": true
+  },
+  "C_den": {
+   "2^(k-1)": 128,
+   "window_sum_2center": 128,
+   "hit": true,
+   "identity": "2^(k-1) = 2k²  <=>  2^(k-2) = k²（唯一重合点 k=8，M3 复核）"
+  },
+  "DE_den": {
+   "16(k-3)³": 2000,
+   "2*n_max³": 2000,
+   "hit": true
+  },
+  "summary": {
+   "delta": "δ∞ 分母 = 窗口左端 k²−k",
+   "C": "C 分母 = 窗口和 2k²（=2·窗口中心；与 2 幂 2^(k−1) 唯一重合 k=8）",
+   "DE": "D/E 分母 = 2·n_max³（n_max=k+2）"
+  }
+ },
+ "M3_uniqueness_and_negative": {
+  "C_pow_square_solutions_k2_20": [
+   8
+  ],
+  "DE_den_nmax_solutions_k1_20": [
+   8
+  ],
+  "window_left_eq_sum": {
+   "equation": "k(k-1) = 2k²  <=>  k(k+1) = 0",
+   "roots": [
+    -1,
+    0
+   ],
+   "no_positive_solution": true,
+   "interpretation": "δ∞（窗口左端）与 C（窗口和）作为窗口量永不相交——不同源；仅 C 的 2 幂形态在 k=8 落入窗口和"
+  }
+ },
+ "PYCHECK": {
+  "mol_diff_two": {
+   "claim": "∀k：(k(k-3)+1)−(k(k-3)−1)=2",
+   "pass": true
+  },
+  "de_den_nmax_unique": {
+   "claim": "∀k≥1：16(k-3)³=2(k+2)³ → k=8",
+   "enum_pass": true,
+   "solutions": [
+    8
+   ]
+  },
+  "window_left_ne_sum": {
+   "claim": "∀k≥1：k(k-1) ≠ 2k²",
+   "enum_pass": true
+  }
+ },
+ "M1_PASS": true,
+ "M2_PASS": true,
+ "M3_PASS": true,
+ "PYCHECK_PASS": true,
+ "ALL_PASS": true
+}
