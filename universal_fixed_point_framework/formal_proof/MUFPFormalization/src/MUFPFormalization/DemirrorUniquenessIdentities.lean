@@ -33,6 +33,7 @@
 
 import Mathlib.Tactic
 import MUFPFormalization.MirrorPairIdentities
+import MUFPFormalization.KMaxAlgebra
 
 namespace MUFPF.Demirror
 
@@ -291,5 +292,52 @@ theorem window_structure_judgement :
   constructor
   · exact nmax_window_identity
   · exact nmax_cube_unique
+
+/-! =========================================================
+    §9 窗口单参数生成 + C 分母窗口算术唯一性（286g）
+   ========================================================= -/
+
+/-- 286g M1a：窗口左端 = 对称轴 k(k−3) 按步长 k 前进两步（S+2k，全 k 恒等）。
+    δ∞ 分母 k(k−1) 由此获得对称轴步进生成规则（公设侧连接；k=8 时 56 = 40+16）。 -/
+theorem window_left_axis_identity : ∀ k : ℤ, k * (k - 1) = k * (k - 3) + 2 * k := by
+  intro k
+  ring
+
+/-- 286g M1b：窗口中心 = 对称轴前进三步（S+3k，全 k 恒等；k=8 时 64 = 40+24）。 -/
+theorem window_center_axis_identity : ∀ k : ℤ, k * k = k * (k - 3) + 3 * k := by
+  intro k
+  ring
+
+/-- 286g M2：C 分母 2^(k−1) = 2k²（窗口中间两项和）唯一正整数解 k=8。
+    等价约化 2^(k−1)=2k² ⟺ 2^(k−2)=k²（k≥2），k≤8 枚举排除、k≥9 由
+    KMaxAlgebra.two_pow_subtwo_gt_sq（266）矛盾——C 分母唯一性与 k_max=8 代数必然性同根。 -/
+theorem c_pow_window_sum_unique : ∀ k : ℕ, 2 ≤ k → 2 ^ (k - 1) = 2 * k ^ 2 → k = 8 := by
+  intro k hk h
+  by_cases hle : k ≤ 8
+  · interval_cases k <;> norm_num at h <;> try omega
+  · have hge : 9 ≤ k := by omega
+    have hgt : 2 ^ (k - 2) > k ^ 2 := MUFPF.KMaxAlgebra.two_pow_subtwo_gt_sq k hge
+    have hsub : k - 2 + 1 = k - 1 := by omega
+    have hpow : 2 ^ (k - 1) = 2 * (2 ^ (k - 2)) := by
+      rw [← hsub, pow_succ]
+      rw [Nat.mul_comm]
+    rw [hpow] at h
+    have hpos : (0 : ℕ) < 2 := by norm_num
+    have hgt' : 2 * k ^ 2 < 2 * (2 ^ (k - 2)) := Nat.mul_lt_mul_of_pos_left hgt hpos
+    exact False.elim (ne_of_lt hgt' h.symm)
+
+/-- 286g 联合主定理：窗口单参数生成两恒等 + C 分母唯一性 + k=8 交点实例。 -/
+theorem window_axis_pow_judgement :
+    (∀ k : ℤ, k * (k - 1) = k * (k - 3) + 2 * k) ∧
+    (∀ k : ℤ, k * k = k * (k - 3) + 3 * k) ∧
+    (∀ k : ℕ, 2 ≤ k → 2 ^ (k - 1) = 2 * k ^ 2 → k = 8) ∧
+    ((2 : ℕ) ^ (8 - 1) = 2 * 8 ^ 2) := by
+  constructor
+  · exact window_left_axis_identity
+  constructor
+  · exact window_center_axis_identity
+  constructor
+  · exact c_pow_window_sum_unique
+  · norm_num
 
 end MUFPF.Demirror
