@@ -1,0 +1,42 @@
+{
+ "results": {
+  "T1_axis_unique": {
+   "all_roots": [
+    -5,
+    8
+   ],
+   "pos_unique_8": true
+  },
+  "T2_mol41_reduce": {
+   "expanded_eq": "k**2 - 3*k - 40",
+   "equals_quad": true
+  },
+  "T3_mol39_reduce": {
+   "expanded_eq": "k**2 - 3*k - 40",
+   "equals_quad": true
+  },
+  "T1_T2_T3_enum_no_counterexample": true,
+  "T4_de_diff": {
+   "expanded": "7*k**3 - 78*k**2 + 204*k - 224",
+   "factor": "(k - 8)*(7*k**2 - 22*k + 28)",
+   "all_roots": [
+    8
+   ],
+   "pos_unique_8": true
+  },
+  "T4_enum_no_counterexample": true,
+  "T5_enhanced": {
+   "E1_only": [
+    4,
+    5,
+    8
+   ],
+   "E1_and_E2": [
+    8
+   ],
+   "unique_8": true
+  },
+  "ALL_PASS": true
+ },
+ "ALL_PASS": true
+}
