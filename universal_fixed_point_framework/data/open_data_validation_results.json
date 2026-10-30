@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "SF_prediction_A": 0.5,
+    "traditional_range_A": [
+      0.35,
+      1.0
+    ],
+    "all_results_count": 4,
+    "weighted_mean_A": 0.514,
+    "weighted_err_A": 0.008,
+    "SF_support": "requires_further_testing"
+  },
+  "results": {
+    "STO-CI \u6c34\u4e8c\u805a\u4f53": {
+      "l_corr_A": 0.776,
+      "error_A": 0.039,
+      "source": "\u7b2c\u4e00\u6027\u539f\u7406"
+    },
+    "\u788e\u7247\u8f68\u9053 \u6c34\u4e8c\u805a\u4f53": {
+      "l_corr_A": 0.441,
+      "error_A": 0.02,
+      "source": "\u89e3\u6790\u6a21\u578b"
+    },
+    "\u6587\u732e\u6570\u636e \u6c34\u4e8c\u805a\u4f53": {
+      "l_corr_A": 0.514,
+      "error_A": 0.009,
+      "source": "\u7ecf\u9a8c\u62df\u5408"
+    },
+    "ZnPc \u4e8c\u805a\u4f53 ET": {
+      "l_corr_A": 3.56,
+      "error_A": 0.789,
+      "source": "\u5f00\u653e\u5b9e\u9a8c\u6570\u636e"
+    }
+  },
+  "znpc_analysis": {
+    "k1_s": 500000000000.0,
+    "k2_s": 70000000000.0,
+    "delta_R_A": 3.5,
+    "l_corr_A": 3.56,
+    "error_A": 0.789,
+    "supports_SF": false
+  },
+  "cambridge_analysis": {
+    "CB5": {
+      "peak_pos_cm": 3494.0192421951997,
+      "fwhm_cm": 44.68160020224195,
+      "dimer_dist_est_A": 2.85,
+      "cavity_diam_A": 4.4
+    },
+    "CB6": {
+      "peak_pos_cm": 3478.2492656532318,
+      "fwhm_cm": 240.49214226500908,
+      "dimer_dist_est_A": 2.91,
+      "cavity_diam_A": 5.8
+    },
+    "CB7": {
+      "peak_pos_cm": 3478.2492656532318,
+      "fwhm_cm": 290.4304013145738,
+      "dimer_dist_est_A": 2.95,
+      "cavity_diam_A": 7.3
+    },
+    "CB8": {
+      "peak_pos_cm": 3496.6475716188606,
+      "fwhm_cm": 237.86381284134768,
+      "dimer_dist_est_A": 2.98,
+      "cavity_diam_A": 8.8
+    }
+  },
+  "datasets_used": [
+    "Cambridge CB5-8 water dimer Raman (CC BY 4.0, DOI: 10.17863/CAM.86770)",
+    "ZnPc dimer SB-CS in JACS 147, 46766 (2025)"
+  ]
+}

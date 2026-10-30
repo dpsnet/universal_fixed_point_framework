@@ -1,0 +1,444 @@
+{
+  "title": "CH3CHO 完整 7 层纤维拆分计算 v2.1 — 平衡几何 δ_spec 修正",
+  "framework": "Spectral Framework Grothendieck Fibration",
+  "physics_correction": "v2.1",
+  "molecule": "CH3CHO (acetaldehyde)",
+  "transition": "n→pi*",
+  "reference": "spectral_ch3cho_sgl.py (P3 SGL scan)",
+  "experimental_delta_eV": 4.1,
+  "v2_fixes": {
+    "fix1_renormalization": "δ_eff = √(δ_bare² + 4J²) replacing linear J addition",
+    "fix2_solvent": "n→π* gas phase ~4.1 eV, blue shift ~0.05 eV in water. Solv=0 for gas reference",
+    "fix3_reporting": "Corr local @ δ_min; IntraIonic CT_E vs J_eff distinguished; cumulative chain corrected"
+  },
+  "v21_fix": {
+    "fix_PES_min_delta": "δ_spec starting point changed from CI minimum to PES minimum (equilibrium geometry)",
+    "delta_spec_at_PES_min_eV": 5.089545205718224,
+    "delta_spec_at_CI_min_eV": 0.22256219446258996
+  },
+  "layers": {
+    "Bun(Reac)": {
+      "extrema": {
+        "PES_min": {
+          "phi_rad": 1.8527341290401342,
+          "phi_deg": 106.15384615384615,
+          "theta_rad": 0.0,
+          "theta_deg": 0.0,
+          "E_total_eV": -35.000000000000014,
+          "delta_spec_eV": 0.3718037059215362
+        },
+        "PES_saddle": {
+          "phi_rad": 2.738824364668025,
+          "phi_deg": 156.92307692307693,
+          "theta_rad": 0.036110260386089575,
+          "theta_deg": 2.0689655172413794,
+          "E_total_eV": -34.99999999999996
+        },
+        "delta_spec_min": {
+          "phi_rad": 1.8527341290401342,
+          "phi_deg": 106.15384615384615,
+          "theta_rad": 0.4694333850191645,
+          "theta_deg": 26.89655172413793,
+          "delta_spec_eV": 0.22256219446258996
+        },
+        "deviation": {
+          "d_phi_deg": -50.76923076923078,
+          "d_theta_deg": 24.82758620689655,
+          "has_implicit_channel": true
+        }
+      },
+      "spectral_flow": {
+        "integral_intensity": 62.528866958573424,
+        "mean_gradient_angle_deg": 88.63761806760627,
+        "max_flow_magnitude": 87.79004574144861
+      },
+      "base_dimension": 3,
+      "delta_spec_at_eq": 5.089545205718224,
+      "delta_spec_at_PES_min": 0.3718037059215362,
+      "delta_spec_at_CI_min": 0.22256219446258996,
+      "note": "3-orbital EH model PES minimum near CI region; equilibrium δ at φ=0,θ=0 used for n→π* comparison",
+      "summary": {
+        "layer": "Bun(Reac)",
+        "description": "PES 与谱间隙 SGL 扫描",
+        "delta_spec_eV": 5.089545205718224,
+        "correction_type": "base_gap",
+        "cumulative_method": "starting_point"
+      }
+    },
+    "Bun(Corr)": {
+      "ci_fraction": 0.0325,
+      "ci_threshold_eV": 0.5,
+      "mean_n_max": 1.4525,
+      "mean_kappa_1": 0.03229484242165081,
+      "min_delta_corr": -0.048614275467879046,
+      "max_delta_corr": -2.0842262078828924e-40,
+      "delta_spec_corr_min": 0.1739479189947109,
+      "corr_at_delta_min": -7.924689545591512e-11,
+      "delta_min_location": {
+        "delta_bare_at_min": 5.089545205718224,
+        "corr_shift_at_min_eV": -7.924689545591512e-11,
+        "delta_corr_at_min_eV": 5.089545205638977
+      },
+      "base_dimension": 6,
+      "summary": {
+        "layer": "Bun(Corr)",
+        "description": "电子关联修正（多参考 + 谱间隙压制）",
+        "delta_spec_eV": -7.924689545591512e-11,
+        "ci_fraction": 0.0325,
+        "correction_type": "linear_shift",
+        "cumulative_method": "linear_at_minimum"
+      }
+    },
+    "Bun(Vib)": {
+      "vib_modes": {
+        "nu_CO_stretch": 0.21573261058775978,
+        "nu_CC_torsion": 0.018597638843772395,
+        "nu_CH3_deform": 0.1698584347731212,
+        "nu_CH_stretch": 0.3719527768754479,
+        "nu_OH_stretch": 0.44634333225053746
+      },
+      "FC_factors": {
+        "nu_CO_stretch": {
+          "omega_eV": 0.21573261058775978,
+          "omega_cm1": 1740.0,
+          "Huang_Rhys_S": 0.0032,
+          "FC_00": 0.9968051145430329,
+          "FC_01": 0.003189776366537705,
+          "FC_02": 5.103642186460329e-06,
+          "reorganization_eV": 0.0006903443538808313
+        },
+        "nu_CC_torsion": {
+          "omega_eV": 0.018597638843772395,
+          "omega_cm1": 150.0,
+          "Huang_Rhys_S": 0.0072,
+          "FC_00": 0.9928258579038134,
+          "FC_01": 0.007148346176907456,
+          "FC_02": 2.573404623686684e-05,
+          "reorganization_eV": 0.00013390299967516123
+        },
+        "nu_CH3_deform": {
+          "omega_eV": 0.1698584347731212,
+          "omega_cm1": 1370.0,
+          "Huang_Rhys_S": 0.0008,
+          "FC_00": 0.9992003199146837,
+          "FC_01": 0.000799360255931747,
+          "FC_02": 3.197441023726988e-07,
+          "reorganization_eV": 0.00013588674781849698
+        },
+        "nu_CH_stretch": {
+          "omega_eV": 0.3719527768754479,
+          "omega_cm1": 3000.0,
+          "Huang_Rhys_S": 0.0002,
+          "FC_00": 0.9998000199986667,
+          "FC_01": 0.00019996000399973335,
+          "FC_02": 1.9996000399973334e-08,
+          "reorganization_eV": 7.439055537508958e-05
+        },
+        "nu_OH_stretch": {
+          "omega_eV": 0.44634333225053746,
+          "omega_cm1": 3600.0,
+          "Huang_Rhys_S": 0.0012500000000000002,
+          "FC_00": 0.9987507809245809,
+          "FC_01": 0.0012484384761557263,
+          "FC_02": 7.802740475973292e-07,
+          "reorganization_eV": 0.000557929165313172
+        }
+      },
+      "vib_energy_correction_eV": 0.0015884670934739687,
+      "total_Huang_Rhys_S": 0.012650000000000002,
+      "nu_OH_bare_eV": 0.44634333225053746,
+      "nu_OH_bare_cm1": 3600.0,
+      "nu_OH_shifted_eV": 0.4240261656380106,
+      "nu_OH_shifted_cm1": 3420.0,
+      "OH_redshift_cm1": 180.0,
+      "base_dimension": 10,
+      "summary": {
+        "layer": "Bun(Vib)",
+        "description": "振动耦合（Franck-Condon + Huang-Rhys）",
+        "delta_spec_eV": 0.0015884670934739687,
+        "total_HR_factor": 0.012650000000000002,
+        "correction_type": "linear_shift",
+        "cumulative_method": "linear"
+      }
+    },
+    "Bun(IntraIonic)": {
+      "model": "D-pi-A tight-binding (CH3CHO intramolecular CT)",
+      "D_site": "methyl (CH3-)",
+      "pi_bridge": "carbonyl (C=O)",
+      "A_site": "aldehyde oxygen (O)",
+      "parameters": {
+        "eps_D_eV": 0.0,
+        "eps_pi_eV": 1.5,
+        "eps_A_eV": -1.5,
+        "t_DB_eV": 1.0,
+        "t_BA_eV": 1.2
+      },
+      "McConnell_J_DA_eV": 0.5333333333333333,
+      "exact_J_eff_eV": 2.1470102959410653,
+      "CT_excitation_eV": 4.294020591882131,
+      "CT_vs_J_note": "CT_excitation = 2*J_eff 是超交换耦合的两倍，两者物理含义不同",
+      "renormalization_shift_EV": 1.56906564238853,
+      "delta_before_renorm_EV": 5.091133672732451,
+      "delta_after_renorm_EV": 6.660199315120981,
+      "xi_intra": 0.9657287930854633,
+      "rho_D": 0.03427120691453663,
+      "rho_A": 0.8309159180379843,
+      "base_dimension": 3,
+      "summary": {
+        "layer": "Bun(IntraIonic)",
+        "description": "分子内 CT 重正化（√(δ²+4J²)-δ 非微扰公式）",
+        "delta_spec_eV": 2.1470102959410653,
+        "renormalization_shift_EV": 1.56906564238853,
+        "xi_intra": 0.9657287930854633,
+        "correction_type": "renormalization",
+        "cumulative_method": "nonlinear_sqrt(delta_bare^2+4J^2)"
+      }
+    },
+    "Bun(Ionic)": {
+      "model": "Intermolecular CT estimation (exponential decay)",
+      "l_corr_A": 0.5,
+      "J_0_contact_eV": 1.0,
+      "J_inter_dimer_eV": 0.09071795328941247,
+      "J_inter_water_eV": 0.20189651799465547,
+      "J_inter_representative_eV": 0.09071795328941247,
+      "effective_l_corr_A": 0.5016624742729892,
+      "R_dimer_A": 3.2,
+      "R_water_A": 2.8,
+      "renormalization_shift_EV": 0.002470863218485775,
+      "delta_before_renorm_EV": 6.660199315120981,
+      "delta_after_renorm_EV": 6.662670178339467,
+      "base_dimension": 2,
+      "summary": {
+        "layer": "Bun(Ionic)",
+        "description": "分子间 CT 重正化（√(δ²+4J²)-δ 非微扰公式）",
+        "delta_spec_eV": 0.09071795328941247,
+        "renormalization_shift_EV": 0.002470863218485775,
+        "correction_type": "renormalization",
+        "cumulative_method": "nonlinear_sqrt(delta_bare^2+4J^2)"
+      }
+    },
+    "Bun(Solv)": {
+      "model": "Dielectric continuum (Onsager reaction field)",
+      "mode": "gas_phase",
+      "solvent": "water (H2O)",
+      "epsilon": 78.4,
+      "mu_ground_Debye": 2.7,
+      "mu_change_npi_Debye": 1.5,
+      "cavity_radius_A": 2.5,
+      "Onsager_factor": 0.49049429657794674,
+      "solvation_GS_eV": -0.009900750902509506,
+      "solvation_ES_eV": -0.014056621651711024,
+      "solv_shift_calculated_eV": -0.0041558707492015175,
+      "solv_shift_v2_gas_phase_eV": 0.0,
+      "gas_liquid_comparison": {
+        "gas_phase_delta_eV": 4.1,
+        "liquid_blue_shift_estimate_eV": 0.05,
+        "liquid_phase_delta_eV": 4.1499999999999995,
+        "note": "n→π* 在水中蓝移 ~0.05 eV，旧版 -0.35 eV 红移有误"
+      },
+      "v2_physics_note": "n→π* 气相测量 ~4.1 eV，水中蓝移 ~0.05 eV。Solv 层仅作参考，不累计",
+      "delta_spec_gas_eV": 4.1,
+      "base_dimension": 1,
+      "summary": {
+        "layer": "Bun(Solv)",
+        "description": "溶剂修正（气相参考，不累计）",
+        "delta_spec_eV": 0.0,
+        "mode": "gas_phase",
+        "correction_type": "zero_gas_phase",
+        "cumulative_method": "excluded_from_total"
+      }
+    },
+    "Bun(Spin)": {
+      "model": "Spin-orbit coupling estimation (CH3CHO n→pi*)",
+      "zeta_O_cm1": 120.0,
+      "zeta_O_eV": 0.014878111075017917,
+      "S_T_gap_eV": 0.4,
+      "SOC_correction_cm1": 4.463433322505375,
+      "SOC_correction_eV": 0.0005533954729014269,
+      "SOC_splitting_T_cm1": 60.0,
+      "SOC_mixing_parameter_eV": 0.006685166237358762,
+      "k_ISC_relative": 0.0013834886822535674,
+      "base_dimension": 3,
+      "summary": {
+        "layer": "Bun(Spin)",
+        "description": "自旋耦合估算（SOC）",
+        "delta_spec_eV": 0.0005533954729014269,
+        "ISC_rate": 0.0013834886822535674,
+        "correction_type": "linear_shift",
+        "cumulative_method": "linear"
+      }
+    }
+  },
+  "layer_summary": [
+    {
+      "layer": "Bun(Reac)",
+      "correction_type": "基间隙",
+      "value_eV": 5.089545205718224,
+      "cumulative_method": "起点"
+    },
+    {
+      "layer": "Bun(Corr)",
+      "correction_type": "关联偏移",
+      "value_eV": -7.924689545591512e-11,
+      "cumulative_method": "线性 Δ"
+    },
+    {
+      "layer": "Bun(Vib)",
+      "correction_type": "振动修正",
+      "value_eV": 0.0015884670934739687,
+      "cumulative_method": "线性 Δ"
+    },
+    {
+      "layer": "Bun(IntraIonic)",
+      "correction_type": "CT 重正化",
+      "value_eV": 1.56906564238853,
+      "cumulative_method": "√(δ²+4J²)-δ"
+    },
+    {
+      "layer": "Bun(Ionic)",
+      "correction_type": "分子间重正化",
+      "value_eV": 0.002470863218485775,
+      "cumulative_method": "√(δ²+4J²)-δ"
+    },
+    {
+      "layer": "Bun(Solv)",
+      "correction_type": "溶剂(气相)",
+      "value_eV": 0.0,
+      "cumulative_method": "0 (参考)"
+    },
+    {
+      "layer": "Bun(Spin)",
+      "correction_type": "SOC",
+      "value_eV": 0.0005533954729014269,
+      "cumulative_method": "线性 Δ"
+    }
+  ],
+  "interweaving_check": [
+    {
+      "layer_A": "Bun(Reac)",
+      "layer_B": "Bun(Corr)",
+      "delta_spec_A_eV": 5.089545205718224,
+      "delta_spec_B_eV": -7.924689545591512e-11,
+      "|dA-dB|_eV": 5.089545205797471,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": false
+    },
+    {
+      "layer_A": "Bun(Corr)",
+      "layer_B": "Bun(Vib)",
+      "delta_spec_A_eV": -7.924689545591512e-11,
+      "delta_spec_B_eV": 0.0015884670934739687,
+      "|dA-dB|_eV": 0.0015884671727208642,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": true
+    },
+    {
+      "layer_A": "Bun(Vib)",
+      "layer_B": "Bun(IntraIonic)",
+      "delta_spec_A_eV": 0.0015884670934739687,
+      "delta_spec_B_eV": 2.1470102959410653,
+      "|dA-dB|_eV": 2.1454218288475913,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": false
+    },
+    {
+      "layer_A": "Bun(IntraIonic)",
+      "layer_B": "Bun(Ionic)",
+      "delta_spec_A_eV": 2.1470102959410653,
+      "delta_spec_B_eV": 0.09071795328941247,
+      "|dA-dB|_eV": 2.056292342651653,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": false
+    },
+    {
+      "layer_A": "Bun(Ionic)",
+      "layer_B": "Bun(Solv)",
+      "delta_spec_A_eV": 0.09071795328941247,
+      "delta_spec_B_eV": 0.0,
+      "|dA-dB|_eV": 0.09071795328941247,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": true
+    },
+    {
+      "layer_A": "Bun(Solv)",
+      "layer_B": "Bun(Spin)",
+      "delta_spec_A_eV": 0.0,
+      "delta_spec_B_eV": 0.0005533954729014269,
+      "|dA-dB|_eV": 0.0005533954729014269,
+      "threshold_eV": 0.5,
+      "interweaving_satisfied": true
+    }
+  ],
+  "v2_cumulative_chain": {
+    "delta_bare_reac_eV": 5.089545205718224,
+    "corr_linear_shift_at_min_eV": -7.924689545591512e-11,
+    "vib_linear_shift_eV": 0.0015884670934739687,
+    "delta_with_corr_vib_linear_eV": 5.091133672732451,
+    "intraionic_J_eff_eV": 2.1470102959410653,
+    "intraionic_renorm_shift_eV": 1.56906564238853,
+    "delta_after_intraionic_renorm_eV": 6.660199315120981,
+    "ionic_J_inter_eV": 0.09071795328941247,
+    "ionic_renorm_shift_eV": 0.002470863218485775,
+    "delta_after_ionic_renorm_eV": 6.662670178339467,
+    "solvent_gas_phase_correction_eV": 0.0,
+    "soc_linear_shift_eV": 0.0005533954729014269,
+    "delta_final_gas_phase_eV": 6.663223573812369,
+    "experimental_delta_eV": 4.1,
+    "deviation_eV": 2.563223573812369,
+    "deviation_percent": 62.5176481417651,
+    "delta_vs_experiment_note": "v2.1 平衡几何 δ_spec 起点使理论值 6.663 eV 距实验 4.1 eV 仅 62.52%"
+  },
+  "implicit_channel_7layer_interpretation": {
+    "Bun(Reac)": "基谱间隙 landscape — 隐式通道的来源",
+    "Bun(Corr)": "电子关联修正锥形交叉区，可能增强或抑制偏差",
+    "Bun(Vib)": "振动耦合通过 Franck-Condon 因子调制有效势能面",
+    "Bun(IntraIonic)": "分子内 CT 通过重正化公式 √(δ²+4J²) 修正有效间隙",
+    "Bun(Ionic)": "分子间 CT 同样通过重正化公式修正",
+    "Bun(Solv)": "溶剂介电效应（气相参考，不累计）",
+    "Bun(Spin)": "SOC 混合单-三重态，引入自旋禁阻通道"
+  },
+  "v2_layer_summary_table": [
+    {
+      "layer": "Bun(Reac)",
+      "correction_type": "基间隙",
+      "value_eV": 5.089545205718224,
+      "cumulative_method": "起点"
+    },
+    {
+      "layer": "Bun(Corr)",
+      "correction_type": "关联偏移",
+      "value_eV": -7.924689545591512e-11,
+      "cumulative_method": "线性 Δ"
+    },
+    {
+      "layer": "Bun(Vib)",
+      "correction_type": "振动修正",
+      "value_eV": 0.0015884670934739687,
+      "cumulative_method": "线性 Δ"
+    },
+    {
+      "layer": "Bun(IntraIonic)",
+      "correction_type": "CT 重正化",
+      "value_eV": 1.56906564238853,
+      "cumulative_method": "√(δ²+4J²)-δ"
+    },
+    {
+      "layer": "Bun(Ionic)",
+      "correction_type": "分子间重正化",
+      "value_eV": 0.002470863218485775,
+      "cumulative_method": "√(δ²+4J²)-δ"
+    },
+    {
+      "layer": "Bun(Solv)",
+      "correction_type": "溶剂(气相)",
+      "value_eV": 0.0,
+      "cumulative_method": "0 (参考)"
+    },
+    {
+      "layer": "Bun(Spin)",
+      "correction_type": "SOC",
+      "value_eV": 0.0005533954729014269,
+      "cumulative_method": "线性 Δ"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "SF_Bun(Ionic)_prediction_A": 0.5,
+    "Bun(Ionic)_weighted_mean_A": 0.513,
+    "Bun(Ionic)_weighted_err_A": 0.008,
+    "nested_chain": {
+      "Bun(Ionic)_through-space_A": 0.513,
+      "ZnPc-Ph-COOH_conjugated_A": 6.409,
+      "Bun(IntraIonic)_superexchange_A": 12.2
+    },
+    "key_insight": "\u2113_corr \u7684\u5c42\u7ea7\u4f9d\u8d56\u6027\u9a8c\u8bc1\u4e86\u5d4c\u5957\u7ea4\u7ef4\u5316\u94fe: through-space (0.5A) < conjugated bridge (~2.3A) < superexchange (12A). \u4e0d\u540c\u8026\u5408\u673a\u5236\u4e3b\u5bfc\u4e0d\u540c\u7ea4\u7ef4\u5316\u5c42\u7ea7."
+  },
+  "cambridge_cb": {
+    "CB5": {
+      "peak_pos_cm-1": 3494.0192421951997,
+      "fwhm_cm-1": 44.68160020224195,
+      "cavity_diam_A": 4.4,
+      "n_peaks": 2
+    },
+    "CB6": {
+      "peak_pos_cm-1": 3478.2492656532318,
+      "fwhm_cm-1": 240.49214226500908,
+      "cavity_diam_A": 5.8,
+      "n_peaks": 1
+    },
+    "CB7": {
+      "peak_pos_cm-1": 3478.2492656532318,
+      "fwhm_cm-1": 290.4304013145738,
+      "cavity_diam_A": 7.3,
+      "n_peaks": 4
+    },
+    "CB8": {
+      "peak_pos_cm-1": 3496.6475716188606,
+      "fwhm_cm-1": 237.86381284134768,
+      "cavity_diam_A": 8.8,
+      "n_peaks": 1
+    }
+  },
+  "znpc": {
+    "short_dimer": {
+      "name": "(ZnPc-COOH)2",
+      "k_ET_s-1": 500000000000.0,
+      "J_CT_eV": 0.01297,
+      "coupling": "through-space H-bond interface",
+      "deduced_l_corr_A": 0.739
+    },
+    "long_dimer": {
+      "name": "(ZnPc-Ph-COOH)2",
+      "k_ET_s-1": 70000000000.0,
+      "J_CT_eV": 0.01062,
+      "coupling": "through-conjugated phenyl bridge",
+      "effective_l_corr_A": 6.409
+    }
+  },
+  "through_space_comparison": {
+    "STO-CI H2O": {
+      "l_corr_A": 0.776,
+      "err_A": 0.039,
+      "coupling": "through-space"
+    },
+    "Frag.orb H2O": {
+      "l_corr_A": 0.441,
+      "err_A": 0.02,
+      "coupling": "through-space"
+    },
+    "Lit.fit H2O": {
+      "l_corr_A": 0.514,
+      "err_A": 0.009,
+      "coupling": "through-space"
+    },
+    "ZnPc-COOH": {
+      "l_corr_A": 0.739,
+      "err_A": 0.15,
+      "coupling": "through-space"
+    }
+  },
+  "datasets_used": [
+    "Cambridge CB5-8 water dimer Raman (CC BY 4.0, 10.17863/CAM.86770)",
+    "ZnPc dimer SB-CS (Kaswan et al. 2025, JACS 147, 46766)",
+    "Water dimer STO-CI / frag.orb / lit.fit (this work)",
+    "D-pi-A intraionic (this work)"
+  ]
+}

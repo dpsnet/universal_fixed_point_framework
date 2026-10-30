@@ -1,0 +1,24 @@
+{
+  "script": "spectral_ch3cho_flow_verify.py v1.0",
+  "framework": "Universal Fixed Point Framework (UFPF)",
+  "derivation": "Spectral flow first-principles, no external QC",
+  "molecule": "CH3CHO",
+  "transition": "n→pi*",
+  "l_corr_A": 0.5,
+  "chain": {
+    "Delta_0_eV": 4.002900640806338,
+    "V_eV": 0.2287717110536749,
+    "delta_Reac_eV": 4.028965068510956,
+    "corr_shift_eV": -0.07168630653769271,
+    "vib_shift_eV": 0.00019996853447911344,
+    "delta_linear_eV": 3.957478730507743,
+    "J_eff_eV": 0.00404276819945128,
+    "delta_renorm_eV": 3.957486990290686,
+    "soc_shift_eV": 0.00013834886822535673,
+    "E_final_eV": 3.9576253391589113,
+    "E_experiment_eV": 4.1,
+    "deviation_eV": -0.1423746608410883,
+    "deviation_pct": 3.4725527034411785
+  },
+  "interweaving_all_satisfied": false
+}

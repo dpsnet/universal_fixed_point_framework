@@ -1,0 +1,108 @@
+{
+  "spectral_bond_rigidity": {
+    "E_scale_eV": 30.479857365344508,
+    "R_bond_H2_eV": 6.924501411851539,
+    "V_eq_eV": -3.4622507059257694
+  },
+  "IRC_comparison": {
+    "δ_spec_reactant_eV": 3.4622507055277976,
+    "δ_huck_reactant_eV": 6.300000001366072,
+    "δ_spec_TS_eV": 2.8311352022489236,
+    "δ_huck_TS_eV": 5.799910031584634,
+    "closure_spec_pct": 18.22847497066694,
+    "closure_huck_pct": 7.937936026555558
+  },
+  "temperature_scan": {
+    "T_threshold_spec_K": 4999.999999999999,
+    "T_threshold_huck_K": 4999.999999999999
+  },
+  "CVT_SCT_comparison": [
+    {
+      "T_K": 200.0,
+      "kappa_SCT_lit": 15.0,
+      "Gamma_CVT_lit": 0.85,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 300.0,
+      "kappa_SCT_lit": 4.5,
+      "Gamma_CVT_lit": 0.88,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 400.0,
+      "kappa_SCT_lit": 2.5,
+      "Gamma_CVT_lit": 0.9,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 500.0,
+      "kappa_SCT_lit": 1.8,
+      "Gamma_CVT_lit": 0.92,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 600.0,
+      "kappa_SCT_lit": 1.5,
+      "Gamma_CVT_lit": 0.93,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 800.0,
+      "kappa_SCT_lit": 1.2,
+      "Gamma_CVT_lit": 0.95,
+      "F_spec_spectral": 1.0,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 1000.0,
+      "kappa_SCT_lit": 1.1,
+      "Gamma_CVT_lit": 0.96,
+      "F_spec_spectral": 1.000000000000007,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 1500.0,
+      "kappa_SCT_lit": 1.05,
+      "Gamma_CVT_lit": 0.97,
+      "F_spec_spectral": 1.0000000003728096,
+      "F_spec_Huckel": 1.0
+    },
+    {
+      "T_K": 2000.0,
+      "kappa_SCT_lit": 1.02,
+      "Gamma_CVT_lit": 0.98,
+      "F_spec_spectral": 1.0000000848428665,
+      "F_spec_Huckel": 1.0000000000000024
+    }
+  ],
+  "l_corr_sensitivity": {
+    "l_corr_A": [
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "δ_TS_eV": [
+      2.568483705715344,
+      2.9533763857482627,
+      2.8062285311145025,
+      2.470499408371231,
+      2.1069830823151197,
+      1.7755037643261182,
+      1.2568255867473892,
+      0.5762884340779943,
+      0.3030160187256604
+    ]
+  }
+}
