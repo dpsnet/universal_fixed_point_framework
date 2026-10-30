@@ -1,0 +1,90 @@
+{
+  "series": "P7-5e-286i",
+  "topic": "E1/E2 家族资格构造侧判别：k_max 邻域结构 + 对称轴取值连接（E1/E2 轴值和关于窗口左端对称差 ±2）",
+  "M1_kmax_neighborhood": {
+    "E1_as_kmax_neighborhood": true,
+    "E2_as_kmax_neighborhood": true,
+    "E2_is_initial_segment_of_E1": true,
+    "E1_offsets": [
+      -5,
+      -3,
+      -1,
+      5
+    ],
+    "offset_notes": {
+      "5_abs": "k_max−3 = 5 = D/E 分母因子 (k−3)|k=8",
+      "3_abs": "k_max−5 = 3 = 分母因子镜像（{3,5} 关于 k_max/2=4 对称）",
+      "1": "k_max−1 = 7 = 塔顶（286e S604：塔顶 = k_max−1）",
+      "plus5": "k_max+5 = 13 = 窗口右端 65 / 分母因子 5"
+    }
+  },
+  "M2_E2_k_set_266_connection": {
+    "E2_k_set_as_neighborhood": true,
+    "k_max_minus_2": 6,
+    "kmax_minus2_is_266_exponent_param": true,
+    "note": "k_max−2 = 6 恰为 266 KMaxAlgebra 方程 2^(k−2)=k² 的指数参数底（k−2 出现于指数）——E1 跳过 6、E2 持有 6",
+    "E1_skips_kmax_minus_2": true,
+    "E2_holds_kmax_minus_2": true
+  },
+  "M3_cross_uniqueness": {
+    "E1_k_set": [
+      3,
+      4,
+      5,
+      8
+    ],
+    "E2_k_set": [
+      6,
+      8
+    ],
+    "intersection": [
+      8
+    ],
+    "cross_unique_k8": true,
+    "structure": "E1 覆盖 {k_max−5,−4,−3,k_max}、E2 覆盖 {k_max−2,k_max}：唯一公共元 k_max（E1 跳过 k_max−2）——交叉唯一性 = 判别设计的结构实现"
+  },
+  "M4_axis_sum_window_left_connection": {
+    "axis_values_E1": {
+      "8": 40,
+      "3": 0,
+      "4": 4,
+      "5": 10
+    },
+    "axis_values_E2": {
+      "8": 40,
+      "6": 18
+    },
+    "E1_axis_sum": 54,
+    "E2_axis_sum": 58,
+    "window_left_k8": 56,
+    "E1_sum_eq_window_left_minus_2": true,
+    "E2_sum_eq_window_left_plus_2": true,
+    "symmetric_about_window_left": true,
+    "pair_2_is_DE_numerator_diff": true,
+    "note": "±2 = D/E 分子差恒 2（286d mol_diff_two：D 分子 k(k−3)+1=41、E 分子 k(k−3)−1=39）——E1/E2 轴值和关于窗口左端（δ∞ 分母）对称差 2，连接 E1/E2 与 δ∞ 分母 + D/E 分子差"
+  },
+  "M5_anti_coincidence": {
+    "alt_E1_consecutive_suffix": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "alt_intersection": [
+      6,
+      8
+    ],
+    "consecutive_suffix_not_unique": true,
+    "current_E1_skips_kmax_minus_2_unique": true,
+    "conclusion": "交叉唯一性仅要求 E1 跳过 k_max−2（判别设计约束）；E1 偏移集合 {−5,−3,−1,+5} 的选择本身自由——机制级未闭合，观察升级为结构判别"
+  },
+  "M6_lean_pycheck": {
+    "P1_e1_k_membership": true,
+    "P2_e2_k_membership": true,
+    "P3_e1e2_cross_unique_k8": true,
+    "P4_axis_sum_window_left_pair": true,
+    "PYCHECK_4_4": true
+  },
+  "ALL_PASS": true
+}

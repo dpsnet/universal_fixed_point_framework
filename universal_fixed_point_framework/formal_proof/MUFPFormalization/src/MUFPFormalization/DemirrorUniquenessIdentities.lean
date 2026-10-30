@@ -388,4 +388,108 @@ theorem e_closed_judgement :
   · exact e_denominator_cube_unique
   · exact e_closed_form_value
 
+/-! =========================================================
+    §11 E1/E2 家族资格构造侧：k_max 邻域结构 + 对称轴取值连接（286i）
+   ========================================================= -/
+
+/-- 286i M1a：E1 家族 k 集 {3,4,5,8} → C 分子 2k−3 ∈ {3,5,7,13}
+    = {k_max−5, k_max−3, k_max−1, k_max+5}（k_max=8 邻域结构；实例枚举）。 -/
+theorem e1_k_membership : ∀ k : ℤ,
+    (k = 3 ∨ k = 4 ∨ k = 5 ∨ k = 8) →
+    (2 * k - 3 = 3 ∨ 2 * k - 3 = 5 ∨ 2 * k - 3 = 7 ∨ 2 * k - 3 = 13) := by
+  intro k hk
+  rcases hk with rfl | rfl | rfl | rfl <;> norm_num
+
+/-- 286i M1b：E2 家族 k 集 {6,8} → k−3 ∈ {3,5} = E1 集合初始段
+    （k_max−2=6 恰为 266 方程 2^(k−2)=k² 的指数参数底；E1 跳过、E2 持有）。 -/
+theorem e2_k_membership : ∀ k : ℤ,
+    (k = 6 ∨ k = 8) → (k - 3 = 3 ∨ k - 3 = 5) := by
+  intro k hk
+  rcases hk with rfl | rfl <;> norm_num
+
+/-- 286i M3：E1 k 集 {3,4,5,8} ∩ E2 k 集 {6,8} 唯一公共元 k=8
+    （E1 覆盖 {k_max−5,−4,−3,k_max}、E2 覆盖 {k_max−2,k_max}，E1 跳过 k_max−2
+     → 交叉唯一性 = 判别设计的结构实现）。 -/
+theorem e1e2_cross_unique_k8 : ∀ k : ℤ,
+    (k = 3 ∨ k = 4 ∨ k = 5 ∨ k = 8) → (k = 6 ∨ k = 8) → k = 8 := by
+  intro k h1 h2
+  rcases h1 with hk3 | hk4 | hk5 | hk8
+  · subst hk3
+    omega
+  · subst hk4
+    omega
+  · subst hk5
+    omega
+  · subst hk8
+    omega
+
+/-- 286i M4：E1/E2 对称轴取值和关于窗口左端（δ∞ 分母）对称差 ±2
+    E1 轴值和 = S(3)+S(4)+S(5)+S(8) = 54 = 8·(8−1) − 2
+    E2 轴值和 = S(6)+S(8) = 58 = 8·(8−1) + 2
+    ±2 = D/E 分子差恒 2（286d mol_diff_two）——E1/E2 与 δ∞ 分母 + D/E 分子差连接。 -/
+theorem axis_sum_window_left_pair :
+    ((3 * (3 - 3) + 4 * (4 - 3) + 5 * (5 - 3) + 8 * (8 - 3) : ℤ) = 8 * (8 - 1) - 2) ∧
+    ((6 * (6 - 3) + 8 * (8 - 3) : ℤ) = 8 * (8 - 1) + 2) := by
+  constructor <;> norm_num
+
+/-- 286i 联合主定理：E1/E2 家族 k 集成员资格 + 交叉唯一性 + 轴值和窗口左端对称对。 -/
+theorem e1e2_neighborhood_judgement :
+    (∀ k : ℤ, (k = 3 ∨ k = 4 ∨ k = 5 ∨ k = 8) →
+      (2 * k - 3 = 3 ∨ 2 * k - 3 = 5 ∨ 2 * k - 3 = 7 ∨ 2 * k - 3 = 13)) ∧
+    (∀ k : ℤ, (k = 6 ∨ k = 8) → (k - 3 = 3 ∨ k - 3 = 5)) ∧
+    (∀ k : ℤ, (k = 3 ∨ k = 4 ∨ k = 5 ∨ k = 8) → (k = 6 ∨ k = 8) → k = 8) ∧
+    ((3 * (3 - 3) + 4 * (4 - 3) + 5 * (5 - 3) + 8 * (8 - 3) : ℤ) = 8 * (8 - 1) - 2) ∧
+    ((6 * (6 - 3) + 8 * (8 - 3) : ℤ) = 8 * (8 - 1) + 2) := by
+  constructor
+  · exact e1_k_membership
+  constructor
+  · exact e2_k_membership
+  constructor
+  · exact e1e2_cross_unique_k8
+  constructor
+  · exact axis_sum_window_left_pair.1
+  · exact axis_sum_window_left_pair.2
+
+/-! =========================================================
+    §12 E1/E2 家族资格构造侧（第二方向）：两层筛唯一性 + E 项分子素因子连接（286i）
+   ========================================================= -/
+
+/-- 286i（第二方向）M1：E1/E2 两层筛交叉唯一性（全 ℕ 域，析取成员 + omega）。
+    E1 判据 2k−3 ∈ {3,5,7,13}（k 集 {3,4,5,8}）、E2 判据 k−3 ∈ {3,5}（k 集 {6,8}）；
+    E2 分支 k=6 时 2k−3=9 落 E1 判据外（矛盾），k=8 直接命中。与 §11 e1e2_cross_unique_k8
+    及 297 T5 enhanced_unique 同源，此处以全 ℕ 域证明（非区间枚举）。 -/
+theorem e1_e2_cross_unique :
+    ∀ k : ℕ, 2 ≤ k →
+    (2 * k - 3 = 3 ∨ 2 * k - 3 = 5 ∨ 2 * k - 3 = 7 ∨ 2 * k - 3 = 13) →
+    (k - 3 = 3 ∨ k - 3 = 5) → k = 8 := by
+  intro k hk h1 h2
+  rcases h2 with hk6 | hk8
+  · have hk6' : k = 6 := by omega
+    subst k
+    omega
+  · omega
+
+/-- 286i（第二方向）M3：E 项分子 39 素因子连接——39 = 3·13（E1 值集首项 3 × 末项 13）。 -/
+theorem e_39_factor_pair : (39 : ℕ) = 3 * 13 := by
+  norm_num
+
+/-- 286i（第二方向）M2：E2 值集 {3,5} ⊆ E1 值集 {3,5,7,13}（初始段，§11 M1 观察的机检化）。 -/
+theorem e2_values_in_e1 :
+    (3 = 3 ∨ 3 = 5 ∨ 3 = 7 ∨ 3 = 13) ∧
+    (5 = 3 ∨ 5 = 5 ∨ 5 = 7 ∨ 5 = 13) := by
+  norm_num
+
+/-- 286i（第二方向）联合主定理：两层筛交叉唯一性 ∧ 39=3·13 素因子对 ∧ E2 值集初始段。 -/
+theorem e1e2_construction_judgement :
+    (∀ k : ℕ, 2 ≤ k →
+      (2 * k - 3 = 3 ∨ 2 * k - 3 = 5 ∨ 2 * k - 3 = 7 ∨ 2 * k - 3 = 13) →
+      (k - 3 = 3 ∨ k - 3 = 5) → k = 8) ∧
+    ((39 : ℕ) = 3 * 13) ∧
+    ((3 = 3 ∨ 3 = 5 ∨ 3 = 7 ∨ 3 = 13) ∧ (5 = 3 ∨ 5 = 5 ∨ 5 = 7 ∨ 5 = 13)) := by
+  constructor
+  · exact e1_e2_cross_unique
+  constructor
+  · exact e_39_factor_pair
+  · exact e2_values_in_e1
+
 end MUFPF.Demirror

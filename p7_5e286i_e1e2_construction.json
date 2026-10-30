@@ -1,0 +1,85 @@
+{
+  "series": "P7-5e-286i",
+  "topic": "E1/E2 家族资格构造侧判别：两层筛唯一性 + E 项分子素因子连接 39=3·13 + 偏移结构平凡性限定",
+  "M1_two_layer_sieve": {
+    "E1_layer_k_set": [
+      3,
+      4,
+      5,
+      8
+    ],
+    "E1_layer_unique": true,
+    "E2_layer_k_set": [
+      6,
+      8
+    ],
+    "E2_layer_unique": true,
+    "cross_unique_k8": true,
+    "exhaustive_note": "2k−3、k−3 均严格递增：2k−3>13 ⟺ k>8、k−3>5 ⟺ k>8，枚举 2..40 完备"
+  },
+  "M2_value_structure": {
+    "E1_value_set": [
+      3,
+      5,
+      7,
+      13
+    ],
+    "E2_value_set": [
+      3,
+      5
+    ],
+    "E2_is_initial_segment_of_E1": true,
+    "E1_odd_prime_band_3_5_7_plus_13": true,
+    "all_E1_values_prime": true
+  },
+  "M3_e39_prime_factor_link": {
+    "E_numerator_39": 39,
+    "39_eq_first_times_last_E1": [
+      3,
+      13,
+      39
+    ],
+    "39_equals_3_times_13": true,
+    "E1_first_last": [
+      3,
+      13
+    ],
+    "prime_factors_39": [
+      3,
+      13
+    ],
+    "prime_factors_39_subset_E1": true,
+    "D_numerator_41": 41,
+    "prime_factors_41": [
+      41
+    ],
+    "41_not_E1_product": true,
+    "note": "E 项分子 39 由 E1 值集首项×末项生成（3·13）；D 项分子 41 = S+1 素数非 E1 积——39 的素因子通道与 E1 值集闭合（构造侧候选）"
+  },
+  "M4_offset_triviality": {
+    "offset_structure": "E1 k 集 {a−5,a−4,a−3,a}、E2 k 集 {a−2,a}",
+    "cross_unique_for_all_anchors_5_12": true,
+    "cross_uniqueness_trivial": true,
+    "triviality_note": "任意锚 a：a∈E1 且 a∈E2，且 a−2∉E1 集、a−5/a−4/a−3∉E2 集 → 交叉唯一 {a} 恒成立——偏移结构不能作为唯一性来源（诚实限定）",
+    "E1_value_band_prime_by_anchor": {
+      "5": false,
+      "6": false,
+      "7": false,
+      "8": true,
+      "9": false,
+      "10": false,
+      "11": false,
+      "12": false
+    },
+    "only_a8_full_prime_band": true,
+    "a8_anchor": "a=8 是窗口根 k_max：E1 值集 {3,5,7,13} 全素且含连续奇素数带 {3,5,7}；E2 值集 {3,5} = 初始段"
+  },
+  "M5_lean_pycheck": {
+    "P1_e1_e2_cross_unique": true,
+    "P2_e_39_factor_pair": true,
+    "P3_e2_values_in_e1": true,
+    "P4_k8_instance": true,
+    "PYCHECK_4_4": true
+  },
+  "ALL_PASS": true
+}
