@@ -1,0 +1,49 @@
+{
+ "total_checks": 21,
+ "fails": [],
+ "all_pass": true,
+ "res": {
+  "rr1_vals": [
+   3,
+   17,
+   129,
+   1025,
+   8193,
+   65537
+  ],
+  "rr1_vals_ok": true,
+  "rr1_members": {
+   "seed_3_m1": true,
+   "F2_17_m4": true,
+   "const_129_m7": true,
+   "F4_65537_m16": true
+  },
+  "rr1_sub_mod3": true,
+  "rr2_vals": [
+   2,
+   0,
+   2,
+   0,
+   2,
+   0,
+   2,
+   0
+  ],
+  "rr2_alternate": true,
+  "rr2_dominant": true,
+  "rr3_no_intersect": true,
+  "rr3_remainder_mod3": true,
+  "rr3_decouple": true,
+  "ss1_order3": true,
+  "ss1_order5": true,
+  "ss1_span": true,
+  "ss1_sol_count_cc2": 35,
+  "ss1_sols_ok": true,
+  "ss1_sol_count_full": 75,
+  "ss1_fixed_6_2a": true,
+  "ss1_2_not_in_fixed": true,
+  "ss2_100": true,
+  "ss3_pure23": true,
+  "ss3_fix5": true
+ }
+}

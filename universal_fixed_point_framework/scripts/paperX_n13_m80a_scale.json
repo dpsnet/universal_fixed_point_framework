@@ -1,0 +1,20 @@
+{
+ "n": 13,
+ "samples": 6000,
+ "factors": 364,
+ "r1_size": 22,
+ "growth": [
+  [
+   "s1234_5678",
+   0
+  ]
+ ],
+ "grow_size": 23,
+ "grow_conflict": 0,
+ "min_sizes": [
+  16,
+  16,
+  16
+ ],
+ "min": 16
+}

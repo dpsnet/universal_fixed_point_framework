@@ -1,0 +1,10 @@
+{
+ "complement_identity_residual": 1.1102230246251565e-16,
+ "coef_match": {
+  "sqrt_cancel": true,
+  "linear": "c=(1/2)/8=1/16"
+ },
+ "zero_cross_dx1": -0.5,
+ "fprime2_g2_check": 0.0,
+ "verdict": "x/16 = complement identity forced coeff; identity source open"
+}

@@ -1,0 +1,18 @@
+{
+ "base": "P7-5e-227 json",
+ "windows": {
+  "128_512": [
+   128,
+   512
+  ],
+  "128_1024": [
+   128,
+   1024
+  ],
+  "512_1024": [
+   512,
+   1024
+  ]
+ },
+ "note": "F-layer recheck on clean data; eps window consistency"
+}

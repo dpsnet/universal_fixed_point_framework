@@ -1,0 +1,19 @@
+{
+  "family": {
+    "41": "kmax*(kmax-Ngen)+kmax*alpha0^3",
+    "49": "Ngen!*kmax+kmax*alpha0^3",
+    "193": "kmax^2*Ngen+kmax*alpha0^3"
+  },
+  "m_tau_fac": 192.925,
+  "m_tau_fac_pdg_form": 192.925,
+  "silent_unit": "kmax*alpha0^3=1",
+  "family_combos": [
+    5,
+    6,
+    24
+  ],
+  "49_dual_identity": [
+    "(kmax-1)^2",
+    "Ngen!*kmax+1"
+  ]
+}

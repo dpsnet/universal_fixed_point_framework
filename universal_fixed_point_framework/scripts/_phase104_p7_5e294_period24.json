@@ -1,0 +1,163 @@
+{
+ "phase": "P7-5e-294",
+ "title": "217 LL/MM 周期 24 联结与单位位交集 数值先证伪",
+ "total": 20,
+ "fails": 0,
+ "all_pass": true,
+ "checks": [
+  {
+   "id": "ll1_coprime",
+   "gcd": 1,
+   "ok": true
+  },
+  {
+   "id": "ll1_lcm",
+   "lcm": 24,
+   "ok": true
+  },
+  {
+   "id": "ll1_traverse",
+   "vals": [
+    1,
+    4,
+    7,
+    2,
+    5,
+    0,
+    3,
+    6
+   ],
+   "expect": [
+    1,
+    4,
+    7,
+    2,
+    5,
+    0,
+    3,
+    6
+   ],
+   "ok": true
+  },
+  {
+   "id": "ll2_exp_mod8",
+   "vals": [
+    6,
+    4,
+    2,
+    0
+   ],
+   "expect": [
+    6,
+    4,
+    2,
+    0
+   ],
+   "ok": true
+  },
+  {
+   "id": "ll2_n9",
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_n585",
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_n37449",
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e6_n9",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e9_n73",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e12_n585",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e15_n4681",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e18_n37449",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e21_n299593",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "ll2_gen_e24_n2396745",
+   "eq": true,
+   "n_mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "mm1_gg_lt129",
+   "gg": [
+    5,
+    24
+   ],
+   "ok": true
+  },
+  {
+   "id": "mm1_intersect",
+   "intersect": [
+    5
+   ],
+   "ok": true
+  },
+  {
+   "id": "mm2_skip",
+   "ok": true
+  },
+  {
+   "id": "kk3_unit_vals",
+   "vals": [
+    9,
+    17,
+    33,
+    65,
+    129,
+    257
+   ],
+   "expect": [
+    9,
+    17,
+    33,
+    65,
+    129,
+    257
+   ],
+   "ok": true
+  },
+  {
+   "id": "kk3_65_129",
+   "ok": true
+  },
+  {
+   "id": "kk3_contains",
+   "ok": true
+  }
+ ]
+}

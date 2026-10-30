@@ -1,0 +1,232 @@
+[
+  {
+    "pat": "11-1-11-1-1-1-1-11-1111-1-1-1-1-1-11-1",
+    "main_bg": null,
+    "seeds_bg": [
+      -0.0,
+      1.0
+    ],
+    "n_records": 5,
+    "n_projs": 5,
+    "nondet_with_full_extra": 0,
+    "necessity": [
+      {
+        "factor": "s1_23456",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1_2345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12_345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s123_45678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12345_678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234567_8",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s23456_78",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234_56",
+        "nondet_without": 0
+      }
+    ],
+    "determining_subset": []
+  },
+  {
+    "pat": "-1-1-1-1-11-1-11-1-11-1-111-1111-1-11",
+    "main_bg": null,
+    "seeds_bg": [
+      -1.0,
+      -0.0
+    ],
+    "n_records": 2,
+    "n_projs": 2,
+    "nondet_with_full_extra": 0,
+    "necessity": [
+      {
+        "factor": "s1_23456",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1_2345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12_345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s123_45678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12345_678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234567_8",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s23456_78",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234_56",
+        "nondet_without": 0
+      }
+    ],
+    "determining_subset": []
+  },
+  {
+    "pat": "-1-1-1111-1111111111-1-111111",
+    "main_bg": null,
+    "seeds_bg": [
+      -1.0,
+      -0.0
+    ],
+    "n_records": 2,
+    "n_projs": 2,
+    "nondet_with_full_extra": 0,
+    "necessity": [
+      {
+        "factor": "s1_23456",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1_2345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12_345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s123_45678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12345_678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234567_8",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s23456_78",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234_56",
+        "nondet_without": 0
+      }
+    ],
+    "determining_subset": []
+  },
+  {
+    "pat": "1111-1-111-11-1-1-1-1-1-111-1-1-1-1-1",
+    "main_bg": null,
+    "seeds_bg": [
+      -0.0,
+      1.0
+    ],
+    "n_records": 2,
+    "n_projs": 2,
+    "nondet_with_full_extra": 0,
+    "necessity": [
+      {
+        "factor": "s1_23456",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1_2345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12_345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s123_45678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12345_678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234567_8",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s23456_78",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234_56",
+        "nondet_without": 0
+      }
+    ],
+    "determining_subset": []
+  },
+  {
+    "pat": "111-11111-1-1-111111-1-111-111",
+    "main_bg": null,
+    "seeds_bg": [
+      -0.0,
+      1.0
+    ],
+    "n_records": 2,
+    "n_projs": 2,
+    "nondet_with_full_extra": 0,
+    "necessity": [
+      {
+        "factor": "s1_23456",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1_2345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12_345678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s123_45678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s12345_678",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234567_8",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s23456_78",
+        "nondet_without": 0
+      },
+      {
+        "factor": "s1234_56",
+        "nondet_without": 0
+      }
+    ],
+    "determining_subset": []
+  }
+]

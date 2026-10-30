@@ -1,0 +1,13 @@
+{
+  "samples": 50000,
+  "base12_patterns": 574,
+  "removed_determined": 203,
+  "removed_nondetermined": 371,
+  "ABG_determined": 574,
+  "ABG_nondetermined": 0,
+  "value_shapes": {
+    "(-0.0,)": 470,
+    "(-1.0,)": 49,
+    "(1.0,)": 55
+  }
+}

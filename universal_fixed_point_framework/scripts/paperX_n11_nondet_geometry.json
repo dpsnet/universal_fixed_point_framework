@@ -1,0 +1,161 @@
+{
+ "77": {
+  "nd_pats_46": 11,
+  "nd_50": 0,
+  "geo_samples": [
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 1,
+    "zero_blocks_sample": [
+     "s1_234567891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": 1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 0,
+    "zero_blocks_sample": [],
+    "extra50_values": {
+     "s12345_67891011": -1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 1,
+    "zero_blocks_sample": [
+     "s1_234567891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": 1
+    }
+   }
+  ],
+  "extra50": [
+   "s1_234567891011",
+   "s123_4567891011",
+   "s1234567_8910",
+   "s12345_67891011"
+  ]
+ },
+ "331": {
+  "nd_pats_46": 13,
+  "nd_50": 0,
+  "geo_samples": [
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -0.0,
+     1.0
+    ],
+    "n_zero_blocks": 2,
+    "zero_blocks_sample": [
+     "s1_234567891011",
+     "s123_4567891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": 1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 0,
+    "zero_blocks_sample": [],
+    "extra50_values": {
+     "s12345_67891011": -1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 0,
+    "zero_blocks_sample": [],
+    "extra50_values": {
+     "s12345_67891011": -1
+    }
+   }
+  ],
+  "extra50": [
+   "s1_234567891011",
+   "s123_4567891011",
+   "s1234567_8910",
+   "s12345_67891011"
+  ]
+ },
+ "777": {
+  "nd_pats_46": 7,
+  "nd_50": 0,
+  "geo_samples": [
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -0.0,
+     1.0
+    ],
+    "n_zero_blocks": 1,
+    "zero_blocks_sample": [
+     "s1_234567891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": -1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -1.0,
+     -0.0
+    ],
+    "n_zero_blocks": 1,
+    "zero_blocks_sample": [
+     "s1_234567891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": 1
+    }
+   },
+   {
+    "pat_len": 46,
+    "A_vals": [
+     -0.0,
+     1.0
+    ],
+    "n_zero_blocks": 3,
+    "zero_blocks_sample": [
+     "s1_234567891011",
+     "s123_4567891011",
+     "s12345_67891011"
+    ],
+    "extra50_values": {
+     "s12345_67891011": 0
+    }
+   }
+  ],
+  "extra50": [
+   "s1_234567891011",
+   "s123_4567891011",
+   "s1234567_8910",
+   "s12345_67891011"
+  ]
+ }
+}

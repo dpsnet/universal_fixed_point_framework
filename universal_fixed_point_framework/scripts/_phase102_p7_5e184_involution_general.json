@@ -1,0 +1,211 @@
+{
+  "structure_block": {
+    "4": {
+      "p": 2,
+      "involution": "m ↦ 5-m（中心 2.5）",
+      "D_m_set": [
+        1,
+        9
+      ],
+      "D_m_min_pair_D=1": [
+        2,
+        3
+      ],
+      "mirror_ratio_2^sqrtD": true,
+      "net_twist": 0,
+      "delta_inf_1/(K-1)-1/K": 0.08333333333333331,
+      "telescope_1/(K(K-1))": 0.08333333333333333,
+      "delta_inf_exact": true,
+      "tail_form": "1/3 + 1/(3·2^m)",
+      "domain_edge": 5,
+      "self_ref_2^p+1": true
+    },
+    "8": {
+      "p": 3,
+      "involution": "m ↦ 9-m（中心 4.5）",
+      "D_m_set": [
+        1,
+        9,
+        25,
+        49
+      ],
+      "D_m_min_pair_D=1": [
+        4,
+        5
+      ],
+      "mirror_ratio_2^sqrtD": true,
+      "net_twist": 0,
+      "delta_inf_1/(K-1)-1/K": 0.01785714285714285,
+      "telescope_1/(K(K-1))": 0.017857142857142856,
+      "delta_inf_exact": true,
+      "tail_form": "1/7 + 1/(7·2^m)",
+      "domain_edge": 9,
+      "self_ref_2^p+1": true
+    },
+    "16": {
+      "p": 4,
+      "involution": "m ↦ 17-m（中心 8.5）",
+      "D_m_set": [
+        1,
+        9,
+        25,
+        49,
+        81,
+        121,
+        169,
+        225
+      ],
+      "D_m_min_pair_D=1": [
+        8,
+        9
+      ],
+      "mirror_ratio_2^sqrtD": true,
+      "net_twist": 0,
+      "delta_inf_1/(K-1)-1/K": 0.004166666666666666,
+      "telescope_1/(K(K-1))": 0.004166666666666667,
+      "delta_inf_exact": true,
+      "tail_form": "1/15 + 1/(15·2^m)",
+      "domain_edge": 17,
+      "self_ref_2^p+1": true
+    },
+    "32": {
+      "p": 5,
+      "involution": "m ↦ 33-m（中心 16.5）",
+      "D_m_set": [
+        1,
+        9,
+        25,
+        49,
+        81,
+        121,
+        169,
+        225,
+        289,
+        361,
+        441,
+        529,
+        625,
+        729,
+        841,
+        961
+      ],
+      "D_m_min_pair_D=1": [
+        16,
+        17
+      ],
+      "mirror_ratio_2^sqrtD": true,
+      "net_twist": 0,
+      "delta_inf_1/(K-1)-1/K": 0.0010080645161290314,
+      "telescope_1/(K(K-1))": 0.0010080645161290322,
+      "delta_inf_exact": true,
+      "tail_form": "1/31 + 1/(31·2^m)",
+      "domain_edge": 33,
+      "self_ref_2^p+1": true
+    }
+  },
+  "silence_block": {
+    "4": {
+      "tip_indices": [
+        2,
+        3
+      ],
+      "family_values": [
+        5,
+        9
+      ],
+      "domain_edge": 5,
+      "both_outside_domain": false
+    },
+    "8": {
+      "tip_indices": [
+        4,
+        5
+      ],
+      "family_values": [
+        17,
+        33
+      ],
+      "domain_edge": 9,
+      "both_outside_domain": true
+    },
+    "16": {
+      "tip_indices": [
+        8,
+        9
+      ],
+      "family_values": [
+        257,
+        513
+      ],
+      "domain_edge": 17,
+      "both_outside_domain": true
+    },
+    "32": {
+      "tip_indices": [
+        16,
+        17
+      ],
+      "family_values": [
+        65537,
+        131073
+      ],
+      "domain_edge": 33,
+      "both_outside_domain": true
+    }
+  },
+  "identity_block": {
+    "4": {
+      "N_prime_K-3": 1,
+      "C_K=(4+p^2)/2^(K-1)": 1.0,
+      "h_K=(K-1)/2^(K-2)": 0.75,
+      "h'_K=(4+p^2)/(3·K·(K-3)^2)": 0.6666666666666666,
+      "D_K=(K(K-3)+1)/(2^(K/2)·(K-3)^3)": 1.25,
+      "E_K=-D_K": -1.25
+    },
+    "8": {
+      "N_prime_K-3": 5,
+      "C_K=(4+p^2)/2^(K-1)": 0.1015625,
+      "h_K=(K-1)/2^(K-2)": 0.109375,
+      "h'_K=(4+p^2)/(3·K·(K-3)^2)": 0.021666666666666667,
+      "D_K=(K(K-3)+1)/(2^(K/2)·(K-3)^3)": 0.0205,
+      "E_K=-D_K": -0.0205
+    },
+    "16": {
+      "N_prime_K-3": 13,
+      "C_K=(4+p^2)/2^(K-1)": 0.0006103515625,
+      "h_K=(K-1)/2^(K-2)": 0.00091552734375,
+      "h'_K=(4+p^2)/(3·K·(K-3)^2)": 0.002465483234714004,
+      "D_K=(K(K-3)+1)/(2^(K/2)·(K-3)^3)": 0.0003716004779244424,
+      "E_K=-D_K": -0.0003716004779244424
+    },
+    "32": {
+      "N_prime_K-3": 29,
+      "C_K=(4+p^2)/2^(K-1)": 1.3504177331924438e-08,
+      "h_K=(K-1)/2^(K-2)": 2.8870999813079834e-08,
+      "h'_K=(4+p^2)/(3·K·(K-3)^2)": 0.00035919540229885057,
+      "D_K=(K(K-3)+1)/(2^(K/2)·(K-3)^3)": 5.812216589061667e-07,
+      "E_K=-D_K": -5.812216589061667e-07
+    }
+  },
+  "conclusion": {
+    "structure_layer_universal": true,
+    "structure_note": "对合/D_m 奇数平方/镜像比 2^√D_m/域界自指/望远镜差分/闭式尾形式/净扭转=0/尖端——全部 K=2^p 通用",
+    "silence_pattern": {
+      "universal_p_ge_3": true,
+      "K4_special": true,
+      "note": "p≥3 时尖端指数 2^(p-1)、2^(p-1)+1 的 2^m+1 成员全部域外（沉默）；K=8 为第一个 2^(p-1)>p 实例；K=4 时尖端指数 2 的成员 5=域界本身（非沉默）——沉默位点模式 p≥3 通用"
+    },
+    "identity_layer": {
+      "K8_reproduce": {
+        "C_8==13/128": true,
+        "h_8==7/64": true,
+        "h'_8==13/600": true,
+        "D_8==41/2000": true
+      },
+      "all_K8_exact": true,
+      "note": "C_K/h_K/h'_K/D_K/E_K=-D_K 后验 K 参数化——K=8 候选常数全部精确复现；K=4 退化（C_4=1、N'=1）；K=16/32 无物理实例数值验证（诚实边界）"
+    },
+    "verdict": "发夹折叠 = K=2^p 参数化通用结构族（结构层成立）；框架量身份族同时参数化（候选层）；最小非平凡实例 K=8；数值验证限于 K=8（无 K≠8 物理系统）",
+    "degraded_K4": "C_4=1（整数退化）、N'_4=1——身份候选族最小非平凡 K = 8"
+  }
+}

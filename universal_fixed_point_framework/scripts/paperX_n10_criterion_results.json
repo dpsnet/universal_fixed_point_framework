@@ -1,0 +1,10 @@
+{
+  "n": 10,
+  "factors": 165,
+  "samples": 15000,
+  "total": 15000,
+  "det": 15000,
+  "nondet": 0,
+  "valcount_dist": {},
+  "nonzero_sets": {}
+}

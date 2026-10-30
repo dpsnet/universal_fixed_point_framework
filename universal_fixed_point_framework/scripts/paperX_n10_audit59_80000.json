@@ -1,0 +1,27 @@
+{
+  "n": 10,
+  "basis_size": 59,
+  "samples_per_seed": 80000,
+  "seeds": [
+    "77",
+    "331",
+    "777"
+  ],
+  "per_seed": {
+    "77": {
+      "nondet_80000": 0,
+      "unique_rate": 0.9664
+    },
+    "331": {
+      "nondet_80000": 0,
+      "unique_rate": 0.9665
+    },
+    "777": {
+      "nondet_80000": 0,
+      "unique_rate": 0.9663
+    }
+  },
+  "all_zero_80000": true,
+  "inversion_confirmed": true,
+  "elapsed_s": 3415.9
+}

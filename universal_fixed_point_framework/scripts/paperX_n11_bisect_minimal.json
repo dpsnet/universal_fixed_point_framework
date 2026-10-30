@@ -1,0 +1,67 @@
+{
+  "n": 11,
+  "cache_chain": 20000,
+  "verify": 80000,
+  "seed": 131,
+  "start_size": 140,
+  "cache_min": 34,
+  "curve": [
+    {
+      "size": 140,
+      "nondet": 0,
+      "unique": 80000,
+      "rate": 1.0
+    },
+    {
+      "size": 120,
+      "nondet": 0,
+      "unique": 80000,
+      "rate": 1.0
+    },
+    {
+      "size": 105,
+      "nondet": 0,
+      "unique": 79996,
+      "rate": 1.0
+    },
+    {
+      "size": 90,
+      "nondet": 0,
+      "unique": 79987,
+      "rate": 0.9998
+    },
+    {
+      "size": 75,
+      "nondet": 5,
+      "unique": 79440,
+      "rate": 0.993
+    },
+    {
+      "size": 60,
+      "nondet": 20,
+      "unique": 76390,
+      "rate": 0.9549
+    },
+    {
+      "size": 50,
+      "nondet": 32,
+      "unique": 74094,
+      "rate": 0.9262
+    },
+    {
+      "size": 40,
+      "nondet": 66,
+      "unique": 69808,
+      "rate": 0.8726
+    },
+    {
+      "size": 34,
+      "nondet": 98,
+      "unique": 65399,
+      "rate": 0.8175
+    }
+  ],
+  "min_strong_closed_chain": 90,
+  "fail_upper": 75,
+  "elapsed_s": 4308.6
+}

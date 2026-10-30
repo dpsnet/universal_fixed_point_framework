@@ -1,0 +1,11 @@
+{
+  "m_tau_fac_identity": "kmax^2*Ngen+1-Ngen/((kmax-Ngen)*kmax)",
+  "m_tau_fac": 192.925,
+  "m_b_fac_identity": "kmax^2*(kmax-1)+Ngen*ln(kmax-1)",
+  "m_b_fac": 453.83773044716594,
+  "silent_unit_plus1": {
+    "paper48_41": "8*(5+1/8)=40+1",
+    "p7_mtau": "8^2*3+1=192+1"
+  },
+  "third_gen_km2": true
+}

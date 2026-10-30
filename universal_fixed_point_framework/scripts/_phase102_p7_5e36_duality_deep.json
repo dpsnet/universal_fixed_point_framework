@@ -1,0 +1,15 @@
+{
+  "dir1": {
+    "C2_full_identity": "(kmax/2)*ln(kmax+Ngen-1)",
+    "status": "complete"
+  },
+  "dir2": {
+    "ratio_C2_cancel": true,
+    "ratio_value": 41.31650114066775,
+    "candidate": null
+  },
+  "dir3": {
+    "m_c_channel": "unique member",
+    "status": "candidate"
+  }
+}

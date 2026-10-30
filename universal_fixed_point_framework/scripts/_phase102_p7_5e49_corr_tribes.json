@@ -1,0 +1,15 @@
+{
+  "corr_tribes": {
+    "light": "external-mult",
+    "mc": "denominator-coef",
+    "heavy": "silent-unit"
+  },
+  "mc_ms_jump": 13.599786841402812,
+  "delta_e": {
+    "fit": 0.001342,
+    "readings": [
+      "independent-correction",
+      "residual-deviation"
+    ]
+  }
+}

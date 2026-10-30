@@ -1,0 +1,199 @@
+{
+ "phase": "P7-5e-295",
+ "title": "216 JJ/KK 增长递推步进联结与单位位交集 数值先证伪",
+ "total": 32,
+ "fails": 0,
+ "all_pass": true,
+ "checks": [
+  {
+   "id": "jj1_mol_j0",
+   "lhs": 1023,
+   "rhs": 1023,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j1",
+   "lhs": 4095,
+   "rhs": 4095,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j2",
+   "lhs": 16383,
+   "rhs": 16383,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j3",
+   "lhs": 65535,
+   "rhs": 65535,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j4",
+   "lhs": 262143,
+   "rhs": 262143,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j5",
+   "lhs": 1048575,
+   "rhs": 1048575,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j6",
+   "lhs": 4194303,
+   "rhs": 4194303,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j7",
+   "lhs": 16777215,
+   "rhs": 16777215,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j8",
+   "lhs": 67108863,
+   "rhs": 67108863,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j9",
+   "lhs": 268435455,
+   "rhs": 268435455,
+   "ok": true
+  },
+  {
+   "id": "jj1_mol_j10",
+   "lhs": 1073741823,
+   "rhs": 1073741823,
+   "ok": true
+  },
+  {
+   "id": "jj1_pow64",
+   "ok": true
+  },
+  {
+   "id": "jj2_dvd6_j1",
+   "mod6": 0,
+   "ok": true
+  },
+  {
+   "id": "jj2_dvd6_j4",
+   "mod6": 0,
+   "ok": true
+  },
+  {
+   "id": "jj2_dvd6_j7",
+   "mod6": 0,
+   "ok": true
+  },
+  {
+   "id": "jj2_dvd6_j10",
+   "mod6": 0,
+   "ok": true
+  },
+  {
+   "id": "jj2_dvd6_j13",
+   "mod6": 0,
+   "ok": true
+  },
+  {
+   "id": "jj2_mod8",
+   "vals": [
+    6,
+    4,
+    2,
+    0
+   ],
+   "expect": [
+    6,
+    4,
+    2,
+    0
+   ],
+   "ok": true
+  },
+  {
+   "id": "jj3_consts",
+   "ok": true
+  },
+  {
+   "id": "kk1_gg_vals",
+   "vals": [
+    5,
+    24,
+    155
+   ],
+   "ok": true
+  },
+  {
+   "id": "kk1_membership",
+   "unit": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "ok": true
+  },
+  {
+   "id": "kk1_beyond8",
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m3",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m4",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m5",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m6",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m7",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m8",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m9",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m12",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m15",
+   "mod8": 1,
+   "ok": true
+  },
+  {
+   "id": "kk2_val_mod8_m20",
+   "mod8": 1,
+   "ok": true
+  }
+ ]
+}

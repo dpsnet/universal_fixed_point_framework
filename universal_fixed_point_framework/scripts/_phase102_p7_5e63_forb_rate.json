@@ -1,0 +1,6 @@
+{
+  "forb_rate": 0.5,
+  "alpha0": 0.5,
+  "dim_red": "3->2",
+  "absorb": "config3->longitudinal_closed"
+}

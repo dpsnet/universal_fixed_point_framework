@@ -1,0 +1,132 @@
+{
+  "title": "P7-5e-197 full-spectrum seed algebra & window anchoring",
+  "date": "2026-10-15",
+  "V1_rows": [
+    {
+      "m": 2,
+      "B": "28/33",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    },
+    {
+      "m": 3,
+      "B": "56/93",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    },
+    {
+      "m": 4,
+      "B": "112/241",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    },
+    {
+      "m": 5,
+      "B": "224/593",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    },
+    {
+      "m": 6,
+      "B": "448/1409",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    },
+    {
+      "m": 7,
+      "B": "896/3265",
+      "factors": "only {2,3,m}",
+      "num_7x2m": true,
+      "den_formula_ok": true
+    }
+  ],
+  "V3": {
+    "naive_num": 14,
+    "naive_den": 10,
+    "naive_B": "14/10",
+    "naive_reduced": "7/5",
+    "is_7over5": true,
+    "check": "m=1 naive B*(1) = 14/10 = 7/5 = 域宽/隔位种子"
+  },
+  "V4": {
+    "actual_B1": "455/332",
+    "diff": "49/1660",
+    "diff_float": 0.029518072289156625,
+    "is_49_1660": true,
+    "check": "7/5 - 455/332 = 49/1660 = 7^2/(5·332)"
+  },
+  "W1": {
+    "65_eq_a5": true,
+    "65_eq_b1sq_plus_1": true,
+    "check": "65 = a_5 = b_1²+1 统一"
+  },
+  "W2": {
+    "455_eq_7x65": true,
+    "check": "B*(1) 分子 455 = 7·65 = 域宽 × a_5"
+  },
+  "W3": {
+    "33_eq_a4": true,
+    "check": "m=2 分母 33 = a_4（窗口 4 起边界 = 家族 m=5）"
+  },
+  "W4_rows": [
+    {
+      "m": 1,
+      "m_prime_7minus_m": 6,
+      "family_member": 65,
+      "window_anchor": "a_5",
+      "in_B": true
+    },
+    {
+      "m": 2,
+      "m_prime_7minus_m": 5,
+      "family_member": 33,
+      "window_anchor": "a_4",
+      "in_B": true
+    },
+    {
+      "m": 3,
+      "m_prime_7minus_m": 4,
+      "family_member": 17,
+      "window_anchor": "a_3",
+      "in_B": false
+    },
+    {
+      "m": 4,
+      "m_prime_7minus_m": 3,
+      "family_member": 9,
+      "window_anchor": "a_2",
+      "in_B": false
+    }
+  ],
+  "conclusion": {
+    "verdict": "m>=2 全谱 B*(m) = {2,3,m} 表达（5 隔位种子不出现，是 m=1 特权标记）；m=1 naive 值 = 7/5 = 域宽/隔位种子（V3 决定性新观察），修正差 49/1660 = 7²/(5·332)；W：65 = a_5 = b_1²+1 统一、B*(1) 分子 455 = 7·a_5、m=2 分母 33 = a_4 对照——窗口锚定 m'=7-m 仅 m=1,2（数值模式）",
+    "V": {
+      "V1": "B*(m) = (2·3+1)·2^m / (m·(2·3+1)·2^(m-1)+2^m+1)（m=2..7 验证）——{2,3,m} 无自由参数",
+      "V2": "m>=2 不含隔位种子 5；5 是 m=1 特权标记",
+      "V3": "m=1 naive B*(1) = 14/10 = 7/5 = 域宽/隔位种子（决定性新观察）",
+      "V4": "7/5 - 455/332 = 49/1660 = 7²/(5·332)"
+    },
+    "W": {
+      "W1": "65 = a_5 = b_1²+1 统一",
+      "W2": "B*(1) 分子 455 = 7·65 = 域宽 × a_5",
+      "W3": "m=2 分母 33 = a_4（窗口 4 起边界 = 家族 m=5）",
+      "W4": "窗口锚定 m'=7-m（1->a_5、2->a_4）仅 m=1,2 成立，m>=3 失效——数值模式非机制"
+    },
+    "honest_limits": [
+      "V3 的 7/5 是通用公式代入的直接结果（代数恒等，非独立约束）",
+      "V4 修正差 49/1660 的 49=7² 为因式观察",
+      "W4 窗口锚定 m'=7-m 仅 m=1,2（同 L5 m'=m²+1 模式，判数值模式）",
+      "继承 187-196 候选层"
+    ],
+    "next_candidates": [
+      "检验 X：7/5（m=1 naive）与 65 修正的互补结构（1.4 vs 1.3705，差 7²/(5·332)——'naive 域宽/种子比'框架下的修正意义）",
+      "检验 Y：m 通道权重的窗口位置假说系统检验（m=1->a_5、m=2->a_4 之外是否还有其他窗口锚定：m=3->? 若 a_3=17 则 93 无 17 因子，假说已部分失效）",
+      "窗口 2 家族段判据（若框架层扩展）"
+    ]
+  }
+}

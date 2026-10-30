@@ -1,0 +1,42 @@
+{
+  "n": 11,
+  "basis_size": 45,
+  "seeds": [
+    77,
+    211,
+    331,
+    777,
+    555
+  ],
+  "samples_per_seed": 20000,
+  "per_seed": {
+    "77": {
+      "nondet": 0,
+      "unique": 19848,
+      "rate": 0.9924
+    },
+    "211": {
+      "nondet": 0,
+      "unique": 19875,
+      "rate": 0.9938
+    },
+    "331": {
+      "nondet": 1,
+      "unique": 19859,
+      "rate": 0.9929
+    },
+    "777": {
+      "nondet": 0,
+      "unique": 19844,
+      "rate": 0.9922
+    },
+    "555": {
+      "nondet": 0,
+      "unique": 19863,
+      "rate": 0.9931
+    }
+  },
+  "crossset_pass": false,
+  "order_reversal_confirmed": false,
+  "elapsed_s": 3951.7
+}

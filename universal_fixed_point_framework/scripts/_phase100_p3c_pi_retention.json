@@ -1,0 +1,124 @@
+{
+  "model": "P3c v2：π 保留率反演（密度加权口径）",
+  "B_MG": 45.0,
+  "C": 3.03,
+  "T_K": 12000.0,
+  "pi_sigma_decomp": {
+    "Hα": {
+      "p_pi": 0.3333056380171276,
+      "eta_pi": 0.01336642821534554,
+      "p_sigma": 0.6666943619828725,
+      "eta_sigma": 0.013366428232106818,
+      "eta_comp_global": 0.013366428226520188
+    },
+    "Hβ": {
+      "p_pi": 0.33330563795385465,
+      "eta_pi": 0.5158267316931113,
+      "p_sigma": 0.6666943620461454,
+      "eta_sigma": 0.515826731849206,
+      "eta_comp_global": 0.5158267317971789
+    },
+    "Hγ": {
+      "p_pi": 0.33330563792720436,
+      "eta_pi": 0.804872079242606,
+      "p_sigma": 0.6666943620727956,
+      "eta_sigma": 0.8048720792628961,
+      "eta_comp_global": 0.8048720792561334
+    },
+    "Hδ": {
+      "p_pi": 0.3333056379133514,
+      "eta_pi": 0.9046885507934537,
+      "p_sigma": 0.6666943620866486,
+      "eta_sigma": 0.9046885507940715,
+      "eta_comp_global": 0.9046885507938655
+    },
+    "Hε": {
+      "p_pi": 0.3333056379051994,
+      "eta_pi": 0.9452007659910626,
+      "p_sigma": 0.6666943620948006,
+      "eta_sigma": 0.9452007659899239,
+      "eta_comp_global": 0.9452007659903034
+    }
+  },
+  "alpha_required": {
+    "Hβ": {
+      "alpha_req": 0.058265121039458814,
+      "ec_target": 0.3539161771925361
+    },
+    "Hγ": {
+      "alpha_req": 1.026750311073331,
+      "ec_target": 0.8120483424560104
+    },
+    "Hδ": {
+      "alpha_req": 1.2381707809591735,
+      "ec_target": 0.9765060428070013
+    }
+  },
+  "alpha_fit": {
+    "exp_saturation": {
+      "Hα": {
+        "alpha_pi": 0.0,
+        "eta_comp_eff": 0.008911322342194309,
+        "eta_line": 0.15630332556053605
+      },
+      "Hβ": {
+        "alpha_pi": 0.0582651210394588,
+        "eta_comp_eff": 0.3539161771925361,
+        "eta_line": 0.44999999999999996
+      },
+      "Hγ": {
+        "alpha_pi": 0.999999999,
+        "eta_comp_eff": 0.804872078987865,
+        "eta_line": 0.8338909708490623
+      },
+      "Hδ": {
+        "alpha_pi": 1.0,
+        "eta_comp_eff": 0.9046885507938656,
+        "eta_line": 0.9188630093915914
+      },
+      "Hε": {
+        "alpha_pi": 1.0,
+        "eta_comp_eff": 0.9452007659903034,
+        "eta_line": 0.9533503585117393
+      }
+    }
+  },
+  "verdict": {
+    "line_order_reproduced": true,
+    "max_abs_err_3lines": 0.0611369906084086,
+    "Hbeta_closed_within_0.05": true,
+    "Hgamma_closed_within_0.05": true,
+    "Hdelta_gap_remains": 0.0611369906084086,
+    "alpha_req_sequence_monotone": true,
+    "alpha_beta": 0.058265121039458814,
+    "tau": 0.06027212922522318,
+    "conclusion": "Hβ 过禁戒闭合（候选）：π 保留随 n 递减（α_req 单调递增：Hβ 0.058→Hδ 1.238）——低 n 态 π 通道（z-偶极）纵向保留、高 n 态整体 Landau 管化 π 亦被压缩；Hβ/Hγ 同时闭合，Hδ 欠禁戒缺口保留（0.061）"
+  },
+  "prediction": {
+    "Hα": {
+      "alpha_pi": 0.0,
+      "pi_retained_frac": 0.3333056380171276,
+      "sigma_compressed_frac": 0.008911322342194309
+    },
+    "Hβ": {
+      "alpha_pi": 0.0582651210394588,
+      "pi_retained_frac": 0.3138855446153393,
+      "sigma_compressed_frac": 0.34389877391655455
+    },
+    "Hγ": {
+      "alpha_pi": 0.999999999,
+      "pi_retained_frac": 3.3330562850067717e-10,
+      "sigma_compressed_frac": 0.5366036774343811
+    },
+    "Hδ": {
+      "alpha_pi": 1.0,
+      "pi_retained_frac": 0.0,
+      "sigma_compressed_frac": 0.603150756258748
+    },
+    "Hε": {
+      "alpha_pi": 1.0,
+      "pi_retained_frac": 0.0,
+      "sigma_compressed_frac": 0.6301600217331692
+    }
+  }
+}

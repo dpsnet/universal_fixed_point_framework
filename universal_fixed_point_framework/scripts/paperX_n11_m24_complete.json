@@ -1,0 +1,14 @@
+{
+ "overlap_modes": 153,
+ "with_both": 153,
+ "tot0": 122167,
+ "tot1": 2292,
+ "basis_hist": {
+  "0": 152,
+  "1": 1
+ },
+ "fail_modes": 152,
+ "empty0": 324,
+ "empty1": 167,
+ "empty_basis": 0
+}

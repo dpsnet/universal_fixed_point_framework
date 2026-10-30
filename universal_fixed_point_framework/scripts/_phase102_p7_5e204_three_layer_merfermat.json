@@ -1,0 +1,139 @@
+{
+  "title": "P7-5e-204 three-layer semantics & Mersenne-Fermat duality",
+  "date": "2026-10-15",
+  "KK": {
+    "KK1": "family a=2^(j+1)+1 <-> Rec additive face",
+    "KK2": "tower b=2^(j+2) <-> Sp multiplicative face",
+    "KK3": "silent c=a+b <-> dual projection",
+    "KK4": "window width = Mersenne_{j+1} = 2^(j+1)-1 (7/15/31/63/127/255)",
+    "KK4_ok": true,
+    "KK5": "window = Fermat start + Mersenne width -> 2-power tower",
+    "KK5_ok": true,
+    "KK6": "three-layer semantics holds: Rec(family) x Sp(tower) x dual(silent)",
+    "rows": [
+      {
+        "j": 2,
+        "a": 9,
+        "b": 16,
+        "w": 7,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      },
+      {
+        "j": 3,
+        "a": 17,
+        "b": 32,
+        "w": 15,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      },
+      {
+        "j": 4,
+        "a": 33,
+        "b": 64,
+        "w": 31,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      },
+      {
+        "j": 5,
+        "a": 65,
+        "b": 128,
+        "w": 63,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      },
+      {
+        "j": 6,
+        "a": 129,
+        "b": 256,
+        "w": 127,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      },
+      {
+        "j": 7,
+        "a": 257,
+        "b": 512,
+        "w": 255,
+        "w_is_mersenne": true,
+        "a_plus_w_is_b": true
+      }
+    ]
+  },
+  "LL": {
+    "LL1": "Fermat-type + Mersenne-type = 2-power tower (2^(n+1))",
+    "LL1_rows": [
+      {
+        "n": 1,
+        "Ftype": 3,
+        "Mtype": 1,
+        "sum": 4,
+        "target": 4,
+        "ok": true
+      },
+      {
+        "n": 2,
+        "Ftype": 5,
+        "Mtype": 3,
+        "sum": 8,
+        "target": 8,
+        "ok": true
+      },
+      {
+        "n": 3,
+        "Ftype": 9,
+        "Mtype": 7,
+        "sum": 16,
+        "target": 16,
+        "ok": true
+      },
+      {
+        "n": 4,
+        "Ftype": 17,
+        "Mtype": 15,
+        "sum": 32,
+        "target": 32,
+        "ok": true
+      },
+      {
+        "n": 5,
+        "Ftype": 33,
+        "Mtype": 31,
+        "sum": 64,
+        "target": 64,
+        "ok": true
+      },
+      {
+        "n": 6,
+        "Ftype": 65,
+        "Mtype": 63,
+        "sum": 128,
+        "target": 128,
+        "ok": true
+      },
+      {
+        "n": 7,
+        "Ftype": 129,
+        "Mtype": 127,
+        "sum": 256,
+        "target": 256,
+        "ok": true
+      }
+    ],
+    "LL2": "difference = 2",
+    "LL2_ok": true,
+    "LL3": "product = M_{2n} = 2^(2n)-1 (Mersenne square-difference)",
+    "LL3_ok": true,
+    "LL4": "window roles: a=Fermat-type start, w=Mersenne-type width, b=2-power tower (their sum)",
+    "LL5": "65/63 +-1 pair in window 5 (a5=65=2^6+1 anchor 1/65; w5=63=2^6-1 width)",
+    "LL5_ok": true,
+    "LL6": "Mersenne dual role: window width (2^(j+1)-1) + boundary silencing (k=2^5*(2^(j+2)-1))",
+    "LL7": "prime-skeleton contrast: Fermat primes F0..F4 (m=16 cutoff, 202) vs Mersenne primes M3/M5/M7 (odd-prime exponents, 203)",
+    "LL8": "duality: 2^n+1 (add-1, Fermat, boundary, family, anchor 65) <-> 2^n-1 (sub-1, Mersenne, width, silencing, 63)"
+  },
+  "conclusion": {
+    "verdict": "KK: three-layer semantics holds - window 2+ = Rec(family a=2^(j+1)+1, additive) x Sp(tower b=2^(j+2), multiplicative) x dual(silent c=a+b); window width = Mersenne_{j+1} = 2^(j+1)-1 (7/15/31/63/127/255) - window = Fermat start + Mersenne width -> 2-power tower. LL: Mersenne/Fermat +-1 duality - 2^n+1 (add-1, boundary, family, anchor 65) <-> 2^n-1 (sub-1, width, silencing, 63), sum = 2-power tower, diff = 2, product = M_{2n}; prime-skeleton contrast: Fermat cutoff m=16 vs Mersenne odd-prime exponents.",
+    "next": "window-2 criterion into paper section 7.5 (MM)"
+  }
+}

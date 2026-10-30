@@ -1,0 +1,249 @@
+{
+  "title": "P7-5e-191 · 截距分子=静默单元家族两段判别",
+  "date": "2026-10-15",
+  "intercept_rows": [
+    {
+      "m": 1,
+      "numerator_2mp1": 3,
+      "denominator": 14,
+      "value": 0.21428571428571427,
+      "form": "(2^1+1)/(7·2^1)"
+    },
+    {
+      "m": 2,
+      "numerator_2mp1": 5,
+      "denominator": 28,
+      "value": 0.17857142857142858,
+      "form": "(2^2+1)/(7·2^2)"
+    },
+    {
+      "m": 3,
+      "numerator_2mp1": 9,
+      "denominator": 56,
+      "value": 0.16071428571428573,
+      "form": "(2^3+1)/(7·2^3)"
+    },
+    {
+      "m": 4,
+      "numerator_2mp1": 17,
+      "denominator": 112,
+      "value": 0.15178571428571427,
+      "form": "(2^4+1)/(7·2^4)"
+    },
+    {
+      "m": 5,
+      "numerator_2mp1": 33,
+      "denominator": 224,
+      "value": 0.14732142857142858,
+      "form": "(2^5+1)/(7·2^5)"
+    },
+    {
+      "m": 6,
+      "numerator_2mp1": 65,
+      "denominator": 448,
+      "value": 0.14508928571428573,
+      "form": "(2^6+1)/(7·2^6)"
+    },
+    {
+      "m": 7,
+      "numerator_2mp1": 129,
+      "denominator": 896,
+      "value": 0.14397321428571427,
+      "form": "(2^7+1)/(7·2^7)"
+    },
+    {
+      "m": 8,
+      "numerator_2mp1": 257,
+      "denominator": 1792,
+      "value": 0.14341517857142858,
+      "form": "(2^8+1)/(7·2^8)"
+    }
+  ],
+  "A_ok": true,
+  "k_rows": [
+    {
+      "m": 1,
+      "family_member": 3,
+      "k_silent": 0.25,
+      "k_type": "fractional",
+      "segment": "分数 k 段（截距分子）"
+    },
+    {
+      "m": 2,
+      "family_member": 5,
+      "k_silent": 0.5,
+      "k_type": "fractional",
+      "segment": "分数 k 段（截距分子）"
+    },
+    {
+      "m": 3,
+      "family_member": 9,
+      "k_silent": 1,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    },
+    {
+      "m": 4,
+      "family_member": 17,
+      "k_silent": 2,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    },
+    {
+      "m": 5,
+      "family_member": 33,
+      "k_silent": 4,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    },
+    {
+      "m": 6,
+      "family_member": 65,
+      "k_silent": 8,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    },
+    {
+      "m": 7,
+      "family_member": 129,
+      "k_silent": 16,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    },
+    {
+      "m": 8,
+      "family_member": 257,
+      "k_silent": 32,
+      "k_type": "integer(unit_bit)",
+      "segment": "整数 k 段（静默单元）"
+    }
+  ],
+  "boundary": {
+    "rule": "位型->身份族分派仅对整数 k 静默单元（8k+1, k∈Z+）成立",
+    "fractional_k": [
+      3,
+      5
+    ],
+    "fractional_k_bittypes": {
+      "3": "11₂ 相邻双位（巧合同型，非分派）",
+      "5": "101₂ 隔位双位（巧合同型，非分派）"
+    },
+    "why": "3=2¹+1、5=2²+1 是 2^m+1 家族 m=1,2 成员（截距分子）；其位型与窗口常数/对合域同型是小数值的二进制自然现象"
+  },
+  "window1_closure": {
+    "window1": "[1,8]",
+    "fractional_segment": {
+      "members": [
+        3,
+        5
+      ],
+      "m": [
+        1,
+        2
+      ],
+      "role": "截距分子（家族分数 k 段）"
+    },
+    "integer_segment": {
+      "members": [
+        9,
+        17,
+        33,
+        65,
+        129,
+        257
+      ],
+      "m": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "role": "静默单元（家族整数 k 段）"
+    },
+    "closure": "窗口 1 = 2^m+1 家族 m=1..8 全段（分数截距段 + 整数静默段）——根窗口解释闭环"
+  },
+  "seq_rows": [
+    {
+      "p": 0,
+      "adjacent_k": 3,
+      "adjacent_unit": 25,
+      "adjacent_status": "窗口常数（框架内）",
+      "gap_k": 5,
+      "gap_unit": 41,
+      "gap_status": "对合域（框架内 41/81）"
+    },
+    {
+      "p": 1,
+      "adjacent_k": 6,
+      "adjacent_unit": 49,
+      "adjacent_status": "窗口常数（框架内）",
+      "gap_k": 10,
+      "gap_unit": 81,
+      "gap_status": "对合域（框架内 41/81）"
+    },
+    {
+      "p": 2,
+      "adjacent_k": 12,
+      "adjacent_unit": 97,
+      "adjacent_status": "窗口常数（框架内）",
+      "gap_k": 20,
+      "gap_unit": 161,
+      "gap_status": "预言（框架外）"
+    },
+    {
+      "p": 3,
+      "adjacent_k": 24,
+      "adjacent_unit": 193,
+      "adjacent_status": "窗口常数（框架内）",
+      "gap_k": 40,
+      "gap_unit": 321,
+      "gap_status": "预言（框架外）"
+    },
+    {
+      "p": 4,
+      "adjacent_k": 48,
+      "adjacent_unit": 385,
+      "adjacent_status": "窗口常数（框架内）",
+      "gap_k": 80,
+      "gap_unit": 641,
+      "gap_status": "预言（框架外）"
+    },
+    {
+      "p": 5,
+      "adjacent_k": 96,
+      "adjacent_unit": 769,
+      "adjacent_status": "预言（框架外）",
+      "gap_k": 160,
+      "gap_unit": 1281,
+      "gap_status": "预言（框架外）"
+    }
+  ],
+  "conclusion": {
+    "verdict": "截距分子 = 2^m+1 家族 m=1,2 分数 k 段（截距与静默是同一家族两段）；位型分派边界 = 仅整数 k；位型翻倍序列平行（相邻 3·2^p / 隔位 5·2^p）",
+    "J": {
+      "A_intercept_numerator_is_family": true,
+      "B_fractional_k_segment": "m=1,2: k=2^{m-3}=1/4,1/2（分数，截距分子）；m>=3: k 整数单位位（静默单元）",
+      "C_boundary": "位型->身份族分派仅对整数 k 静默单元（8k+1, k∈Z+）成立",
+      "D_window1_closure": "窗口 1 = 2^m+1 家族 m=1..8 全段（分数截距段 + 整数静默段）——根窗口解释闭环",
+      "family_unified": "2^m+1 家族 m=1..8 全体 = 截距分子（m≤2, 3/5）+ 静默单元（m≥3, 9..257）——截距结构直接是家族投影"
+    },
+    "K": {
+      "adjacent_k_seq": "3·2^p = [3, 6, 12, 24, 48, 96] -> 窗口常数 [25, 49, 97, 193, 385] + 预言 769",
+      "gap_k_seq": "5·2^p = [5, 10, 20, 40, 80, 160] -> 对合域 41/81 + 预言 161/321/641/1281",
+      "parallel_growth": "两序列 ×2 每层平行——位型家族的生长律（候选）"
+    },
+    "honest_limits": [
+      "检验 J 结论为'家族连续段'的再确认（186 双家族重合的 m=1,2 延伸）——非新机制",
+      "位型巧合（3=11₂/5=101₂）判定为数值现象，但'分数 k 段'概念是新的命名（候选语义）",
+      "检验 K 预言 161/321/641/1281 为纯代数外推，无框架内证据",
+      "继承 187/188/189/190 候选层（纯 2 进幂集组织）"
+    ],
+    "next_candidates": [
+      "检验 L：1/65 修正项（|m|=1 的 +1/65）在家族/位型框架中的身份——65=2^6+1 是 m=6 家族成员，为何只在 |m|=1 出现（m=1 特权的家族镜像）",
+      "检验 M：截距分母 7·2^m 的 7（域宽）与分子家族组合成 (2^m+1)/(7·2^m) 的结构——是否即'域宽×满格'对偶的又一投影",
+      "若框架层扩展：窗口 2 的家族段（m=9..16: 513,1025...）为分数/整数段重复的判据"
+    ]
+  }
+}

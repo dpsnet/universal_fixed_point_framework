@@ -1,0 +1,6 @@
+{
+  "octant": 8,
+  "vol": 0.125,
+  "identity": "8*(1/8)=1",
+  "geom": "unit_cube_octants"
+}

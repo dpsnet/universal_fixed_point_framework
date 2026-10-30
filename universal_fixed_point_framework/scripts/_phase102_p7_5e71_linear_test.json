@@ -1,0 +1,29 @@
+{
+ "0.5": {
+  "n_total": 4,
+  "n_chan": 4,
+  "m_min": -3,
+  "m_max": 0,
+  "neg_range": 3,
+  "pos_range": 0,
+  "lin_pred": 2.0
+ },
+ "0.6": {
+  "n_total": 4,
+  "n_chan": 4,
+  "m_min": -3,
+  "m_max": 0,
+  "neg_range": 3,
+  "pos_range": 0,
+  "lin_pred": 0
+ },
+ "0.7": {
+  "n_total": 3,
+  "n_chan": 3,
+  "m_min": -2,
+  "m_max": 0,
+  "neg_range": 2,
+  "pos_range": 0,
+  "lin_pred": 0
+ }
+}

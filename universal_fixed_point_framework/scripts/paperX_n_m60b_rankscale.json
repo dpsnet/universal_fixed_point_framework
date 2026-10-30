@@ -1,0 +1,32 @@
+{
+ "8": {
+  "rank_min": 7,
+  "rank_max": 7,
+  "n_minus_1": 7,
+  "n_minus_2": 6
+ },
+ "9": {
+  "rank_min": 8,
+  "rank_max": 8,
+  "n_minus_1": 8,
+  "n_minus_2": 7
+ },
+ "10": {
+  "rank_min": 9,
+  "rank_max": 9,
+  "n_minus_1": 9,
+  "n_minus_2": 8
+ },
+ "11": {
+  "rank_min": 10,
+  "rank_max": 10,
+  "n_minus_1": 10,
+  "n_minus_2": 9
+ },
+ "12": {
+  "rank_min": 11,
+  "rank_max": 11,
+  "n_minus_1": 11,
+  "n_minus_2": 10
+ }
+}

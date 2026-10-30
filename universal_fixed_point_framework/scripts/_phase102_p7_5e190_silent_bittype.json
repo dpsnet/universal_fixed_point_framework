@@ -1,0 +1,326 @@
+{
+  "title": "P7-5e-190 · 静默 k 位型分类 + 窗口异类 + 下窗口预言",
+  "date": "2026-10-15",
+  "classified": [
+    {
+      "k": 1,
+      "roles": [
+        "域界/对合常数 K+1",
+        "2^3+1",
+        "静默 k=1"
+      ],
+      "window_const": true,
+      "bittype": "unit_bit(2^p)",
+      "binary": "1",
+      "value": 9
+    },
+    {
+      "k": 2,
+      "roles": [
+        "尖端沉默位点",
+        "2^4+1",
+        "静默 k=2"
+      ],
+      "window_const": false,
+      "bittype": "unit_bit(2^p)",
+      "binary": "10",
+      "value": 17
+    },
+    {
+      "k": 3,
+      "roles": [
+        "静默 k=3"
+      ],
+      "window_const": true,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "binary": "11",
+      "value": 25
+    },
+    {
+      "k": 4,
+      "roles": [
+        "尖端沉默位点",
+        "2^5+1",
+        "静默 k=4"
+      ],
+      "window_const": false,
+      "bittype": "unit_bit(2^p)",
+      "binary": "100",
+      "value": 33
+    },
+    {
+      "k": 5,
+      "roles": [
+        "D 分子 8·5+1",
+        "静默 k=5"
+      ],
+      "window_const": false,
+      "bittype": "gap_bit(2^p+2^{p+2})",
+      "binary": "101",
+      "value": 41
+    },
+    {
+      "k": 6,
+      "roles": [
+        "静默 k=6",
+        "(k_max-1)^2"
+      ],
+      "window_const": true,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "binary": "110",
+      "value": 49
+    },
+    {
+      "k": 8,
+      "roles": [
+        "修正 1/65",
+        "2^6+1",
+        "静默 k=8"
+      ],
+      "window_const": false,
+      "bittype": "unit_bit(2^p)",
+      "binary": "1000",
+      "value": 65
+    },
+    {
+      "k": 10,
+      "roles": [
+        "D_9 超对合域（m=-9，P7-5e-110）",
+        "9^2",
+        "静默 k=10"
+      ],
+      "window_const": false,
+      "bittype": "gap_bit(2^p+2^{p+2})",
+      "binary": "1010",
+      "value": 81
+    },
+    {
+      "k": 12,
+      "roles": [
+        "窗口 4 对合常数（189，框架外预言）"
+      ],
+      "window_const": true,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "binary": "1100",
+      "value": 97
+    },
+    {
+      "k": 16,
+      "roles": [
+        "2^7+1 闭式编号",
+        "静默 k=16"
+      ],
+      "window_const": false,
+      "bittype": "unit_bit(2^p)",
+      "binary": "10000",
+      "value": 129
+    },
+    {
+      "k": 24,
+      "roles": [
+        "静默 k=24"
+      ],
+      "window_const": true,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "binary": "11000",
+      "value": 193
+    },
+    {
+      "k": 32,
+      "roles": [
+        "2^8+1",
+        "静默 k=32"
+      ],
+      "window_const": false,
+      "bittype": "unit_bit(2^p)",
+      "binary": "100000",
+      "value": 257
+    },
+    {
+      "k": 48,
+      "roles": [
+        "窗口 6 对合常数（189，框架外预言）"
+      ],
+      "window_const": true,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "binary": "110000",
+      "value": 385
+    }
+  ],
+  "family_assign": {
+    "unit_bit(2^p)": [
+      "2^m+1 家族（186 重合面）",
+      "窗口对合常数（189）"
+    ],
+    "adjacent_bits(2^p+2^{p+1})": [
+      "窗口对合常数（189）"
+    ],
+    "gap_bit(2^p+2^{p+2})": [
+      "对合域常数（41 D 分子 / 81 D_9 超对合域）"
+    ]
+  },
+  "G_results": {
+    "G1": true,
+    "G2": true,
+    "G3": true,
+    "G4": true
+  },
+  "H": {
+    "actual_a1": 1,
+    "actual_c1": 9,
+    "actual_c1_roles": [
+      "域界/对合常数 K+1",
+      "静默 k=1"
+    ],
+    "formula_a1": 5,
+    "formula_c1": 13,
+    "formula_c1_roles": [
+      "C 分子 2^2+3^2",
+      "13/128"
+    ],
+    "question": "窗口 1 起边界为何取恒等 1（→域界 9）而非公式值 5（→C 分子 13）？",
+    "candidates": [
+      "窗口 1 需覆盖 m=1,2（截距分子 3,5，非静默家族），从恒等 1 开始才能包含非静默段——窗口 1 是'根窗口'，含 m<=2 的非家族成员",
+      "9=域界（K+1）为 183 对合 K=8 的直接 +1，优先级高于 C 分子（系数分子层）",
+      "a1=1 与 α0^3=1/8 静默修正底/δ∞ 恒等式 1/7−1/8 的 1 呼应（恒等起点语义）",
+      "若取 5：窗口 1 变为 [5,8] 仅 4 层，丢失 m=1..4 通道——与 k_max=8 通道数锁定冲突"
+    ],
+    "tentative": "根窗口解释（窗口 1 含非静默段 m<=2，需恒等起点）——候选层"
+  },
+  "predictions": [
+    {
+      "value": 97,
+      "k": 12,
+      "window": 4,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "status": "框架外预言（静默 k=12 相邻双位，窗口常数）"
+    },
+    {
+      "value": 385,
+      "k": 48,
+      "window": 6,
+      "bittype": "adjacent_bits(2^p+2^{p+1})",
+      "status": "框架外预言（静默 k=48 相邻双位，窗口常数）"
+    },
+    {
+      "value": 161,
+      "k": 20,
+      "window": "-",
+      "bittype": "gap_bit(2^p+2^{p+2})",
+      "status": "新预言（静默 k=20 隔位双位 10100₂——若更高对合域出现应获身份）"
+    },
+    {
+      "value": 321,
+      "k": 40,
+      "window": "-",
+      "bittype": "gap_bit(2^p+2^{p+2})",
+      "status": "新预言（静默 k=40 隔位双位 101000₂——若更高对合域出现应获身份）"
+    }
+  ],
+  "conclusion": {
+    "verdict": "静默 k 位型→身份族分派规则成立（候选机制，3 位型 3 身份族）：单位位 k→2^m+1 家族（m=p+3，186 重合面，9 兼窗口 1 常数）、相邻双位 k→窗口对合常数（c_2..c_6，189）、隔位双位 k→对合域常数（41 D 分子 + 81 D_9 超对合域——新发现双例）",
+    "G": {
+      "classification": {
+        "unit_bit(2^p)": [
+          9,
+          17,
+          33,
+          65,
+          129,
+          257
+        ],
+        "adjacent_bits(2^p+2^{p+1})": [
+          25,
+          49,
+          97,
+          193,
+          385
+        ],
+        "gap_bit(2^p+2^{p+2})": [
+          41,
+          81
+        ]
+      },
+      "family_assign": {
+        "unit_bit(2^p)": [
+          "2^m+1 家族（186 重合面）",
+          "窗口对合常数（189）"
+        ],
+        "adjacent_bits(2^p+2^{p+1})": [
+          "窗口对合常数（189）"
+        ],
+        "gap_bit(2^p+2^{p+2})": [
+          "对合域常数（41 D 分子 / 81 D_9 超对合域）"
+        ]
+      },
+      "G1_window_const_k": "c_1=9 单位位（根窗口异类）；c_{j>=2} 全部相邻双位 ✓",
+      "G2_adjacent_all_window_const": true,
+      "G3_unit_all_2mp1_family": true,
+      "G4_gap_all_fold_domain": true,
+      "note": "位型→身份是'分派规则'而非判别：相邻双位静默单元与窗口常数是同一对象（25/49/193 双投影重合）；隔位双位 2 例（41/81）均带对合域语义——新规律（候选）"
+    },
+    "H": {
+      "actual_a1": 1,
+      "actual_c1": 9,
+      "actual_c1_roles": [
+        "域界/对合常数 K+1",
+        "静默 k=1"
+      ],
+      "formula_a1": 5,
+      "formula_c1": 13,
+      "formula_c1_roles": [
+        "C 分子 2^2+3^2",
+        "13/128"
+      ],
+      "question": "窗口 1 起边界为何取恒等 1（→域界 9）而非公式值 5（→C 分子 13）？",
+      "candidates": [
+        "窗口 1 需覆盖 m=1,2（截距分子 3,5，非静默家族），从恒等 1 开始才能包含非静默段——窗口 1 是'根窗口'，含 m<=2 的非家族成员",
+        "9=域界（K+1）为 183 对合 K=8 的直接 +1，优先级高于 C 分子（系数分子层）",
+        "a1=1 与 α0^3=1/8 静默修正底/δ∞ 恒等式 1/7−1/8 的 1 呼应（恒等起点语义）",
+        "若取 5：窗口 1 变为 [5,8] 仅 4 层，丢失 m=1..4 通道——与 k_max=8 通道数锁定冲突"
+      ],
+      "tentative": "根窗口解释（窗口 1 含非静默段 m<=2，需恒等起点）——候选层"
+    },
+    "predictions": [
+      {
+        "value": 97,
+        "k": 12,
+        "window": 4,
+        "bittype": "adjacent_bits(2^p+2^{p+1})",
+        "status": "框架外预言（静默 k=12 相邻双位，窗口常数）"
+      },
+      {
+        "value": 385,
+        "k": 48,
+        "window": 6,
+        "bittype": "adjacent_bits(2^p+2^{p+1})",
+        "status": "框架外预言（静默 k=48 相邻双位，窗口常数）"
+      },
+      {
+        "value": 161,
+        "k": 20,
+        "window": "-",
+        "bittype": "gap_bit(2^p+2^{p+2})",
+        "status": "新预言（静默 k=20 隔位双位 10100₂——若更高对合域出现应获身份）"
+      },
+      {
+        "value": 321,
+        "k": 40,
+        "window": "-",
+        "bittype": "gap_bit(2^p+2^{p+2})",
+        "status": "新预言（静默 k=40 隔位双位 101000₂——若更高对合域出现应获身份）"
+      }
+    ],
+    "honest_limits": [
+      "位型分类 n=13 小样本；隔位型仅 2 例（41/81），'隔位→对合域'为候选规律",
+      "单位位静默单元=2^m+1 家族是 186 已证重合的再表述（m>=3）；m=1,2（3,5）非静默（分数 k）",
+      "窗口 1 根窗口解释为候选，无独立证据区分四个候选解释",
+      "继承 187/188/189 候选层（纯 2 进幂集组织，无 Clifford 特异性）"
+    ],
+    "next_candidates": [
+      "检验 J：分数 k 静默（m=1,2 的 3,5）的位型语义——3=2^0+2^1（相邻双位！）、5=2^0+2^2（隔位！）——截距分子 3/5 是否即'窗口外'的相邻/隔位位型（与窗口常数/D 分子同型但分数化）",
+      "检验 K：隔位位型预言 161/321（k=20/40）与 D 族高阶结构（D_9=81 之后）的关联",
+      "若框架层扩展：97/385 成为静默 k=12/48 的身份判据"
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+ "precedents": 4,
+ "decomps": 6,
+ "best": "N_gen + (k_max-1) = 3+7",
+ "mechanism": "open"
+}

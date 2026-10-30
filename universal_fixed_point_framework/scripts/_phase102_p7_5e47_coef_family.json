@@ -1,0 +1,17 @@
+{
+  "coef_family": {
+    "e": "1/((Ngen-1)(kmax+1))",
+    "ud": "Ngen/kmax",
+    "s": "(kmax+1)^2/kmax"
+  },
+  "ms_mud": {
+    "frame": 27.077508179436794,
+    "pdg": 27.07246376811594,
+    "dev_pct": 0.018632996848966243
+  },
+  "corr_dist": {
+    "gen12": "spectral-external",
+    "gen3": "coef-embedded",
+    "mc": "none"
+  }
+}

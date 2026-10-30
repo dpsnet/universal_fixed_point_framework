@@ -1,0 +1,12 @@
+{
+  "patterns": 605,
+  "nonzero": 109,
+  "found4": [],
+  "min_mixed4": 8,
+  "min_combo4": [
+    "s56",
+    "s1_234",
+    "s45",
+    "s61"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+ "Fpi_over_Lambda": 0.43857945069394283,
+ "exp_ratio": 0.43794579172610554,
+ "large_Nc_flag": "F_pi ∝ N_c^5/2 if C_QCD=(N_c/2)² vs standard √N_c — identity ambiguous at N_c=3",
+ "spectral_gap_identity": {
+  "dl2_over_dl1": 1.7320508075688772,
+  "sqrt_Nc": 1.7320508075688772,
+  "note": "√N_c = Δλ₂/Δλ₁ — F_π color factor has spectral-gap origin"
+ },
+ "closed_form": "F_π/Λ = (Δλ₃/Δλ₁)·C_QCD/(4π) = √6·C_QCD/(4π)",
+ "conclusion": "(N_c/2)² not theorem (large-N_c flag); √N_c=Δλ₂/Δλ₁ spectral origin; C_QCD O(1) constant 2.25 registered"
+}

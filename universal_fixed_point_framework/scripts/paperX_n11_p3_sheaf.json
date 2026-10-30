@@ -1,0 +1,9 @@
+{
+ "n_samples": 60000,
+ "n_factors": 26,
+ "n_patterns": 20958,
+ "zero_cells": 20474,
+ "nonzero_cells": 484,
+ "singular": 0,
+ "singular_density": 0.0
+}

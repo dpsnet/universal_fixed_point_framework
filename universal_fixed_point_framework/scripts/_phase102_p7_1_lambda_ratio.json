@@ -1,0 +1,19 @@
+{
+ "alpha3_bare": 0.013727113841675973,
+ "lambda_target_over_mpl": 1.7224997952330248e-20,
+ "one_loop_over_mpl": {
+  "3": 8.179183018400578e-23,
+  "4": 1.3987069093398674e-24,
+  "5": 1.1788053200520372e-26,
+  "6": 3.999959732382789e-29
+ },
+ "z_chain_product": 11.203776,
+ "two_loop_factor": 4.737274220032841,
+ "gap_after_z_and_2loop": 3.9678597292795583,
+ "candidate_closures": [
+  "3-loop beta (theoretical)",
+  "sqrt(N_c) bridging (frame-internal)",
+  "N_f threshold decoupling"
+ ],
+ "note": "诊断性探索；对照值不进推导链"
+}

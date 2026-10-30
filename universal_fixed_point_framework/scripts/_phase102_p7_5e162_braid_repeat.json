@@ -1,0 +1,23 @@
+{
+ "A_second_window": {
+  "verdict": "negated",
+  "reason": "delta_cl monotone, m<->17-m ratio <10%"
+ },
+ "B_cycle_repeat": {
+  "verdict": "negated",
+  "reason": "no second 65/56 bridge; single cycle"
+ },
+ "C_family_roles": {
+  "3": "intercept numerator",
+  "5": "intercept numerator",
+  "9": "domain bound/involution",
+  "17": "SILENT",
+  "33": "SILENT",
+  "65": "bridge/correction"
+ },
+ "D_ring_product": {
+  "product": 524160,
+  "factors": "2^7*3^2*5*7*13",
+  "note": "single-point observation, same family as C=13/128 & 1/56"
+ }
+}

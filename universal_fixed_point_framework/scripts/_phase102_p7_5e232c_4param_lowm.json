@@ -1,0 +1,4 @@
+{
+ "base": "4-param C/D/E recheck low-m (shoot+spec)",
+ "note": "C/D stability under E free"
+}

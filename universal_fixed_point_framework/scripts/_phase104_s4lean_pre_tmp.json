@@ -1,0 +1,95 @@
+{
+  "checks": [
+    {
+      "name": "S4 = s^d_H = 1/15",
+      "value": 0.06666666666666668,
+      "residual": 1.3877787807814457e-17
+    },
+    {
+      "name": "three_forms",
+      "v_a": 0.8,
+      "v_b": 0.8,
+      "v_c": 0.8,
+      "max_residual": 0.0
+    },
+    {
+      "name": "uniqueness k = ln15",
+      "k_solved": 2.70805020110221,
+      "d_H": 2.70805020110221,
+      "residual": 0.0
+    },
+    {
+      "name": "random_samples",
+      "samples": [
+        {
+          "k_max": 8,
+          "N_active": 3,
+          "B": 15,
+          "N_total": 5,
+          "thr": 0.8,
+          "thr2": 0.8,
+          "eq": true
+        },
+        {
+          "k_max": 8,
+          "N_active": 3,
+          "B": 15,
+          "N_total": 5,
+          "thr": 0.8,
+          "thr2": 0.8,
+          "eq": true
+        },
+        {
+          "k_max": 8,
+          "N_active": 3,
+          "B": 15,
+          "N_total": 5,
+          "thr": 0.8,
+          "thr2": 0.8,
+          "eq": true
+        },
+        {
+          "k_max": 8,
+          "N_active": 4,
+          "B": 15,
+          "N_total": null,
+          "thr": null
+        },
+        {
+          "k_max": 8,
+          "N_active": 4,
+          "B": 15,
+          "N_total": null,
+          "thr": null
+        },
+        {
+          "k_max": 4,
+          "N_active": 3,
+          "B": 7,
+          "N_total": null,
+          "thr": null
+        },
+        {
+          "k_max": 8,
+          "N_active": 3,
+          "B": 15,
+          "N_total": 5,
+          "thr": 0.8,
+          "thr2": 0.8,
+          "eq": true
+        },
+        {
+          "k_max": 8,
+          "N_active": 3,
+          "B": 15,
+          "N_total": 5,
+          "thr": 0.8,
+          "thr2": 0.8,
+          "eq": true
+        }
+      ],
+      "note": "主域 (k_max=8,N_active=3): thr=0.8 精确; 其他组合破坏 0.8 (身份链依赖具体框架量)"
+    }
+  ],
+  "verdict": "解析恒等式残差全部 <1e-8 (S4 1.39e-17, 唯一性 0.00e+00) -- 可投入 Lean 固化"
+}

@@ -1,0 +1,17 @@
+﻿dlP20 = 0.1220084679281462
+dlEM_A (identity A, Lambda=210.3) = 0.022931635480790823
+check kL*dlEM_A = 9.210340371976184 vs 4ln10 = 9.210340371976184
+kL*dlP20 = 49.00389764275168 (49.0021 expected, +0.0043%)
+ratio canonical = 5.320530584499706
+49/4ln10 = 5.320107403314834
+49.0021/4ln10 = 5.320335407917834
+dlEM decomposition (dH=ln15+1/675) = 0.022926520278163984
+ratio via decomposition new dH = 5.321717663554521
+dlEM decomposition (dH=2.7095) = 0.022926647499706576
+ratio via decomposition old dH = 5.321688132977475
+d_H required for decomposition==identityA = 2.7082580965158662
+framework dH = 2.7095316825836915  diff = -0.04700391864806974 %
+--- deviations ---
+decomp(new)/idA - 1 = -0.022306314048659015 %
+ratio_dec_new/ratio_canon - 1 = 0.0223112908752654 %
+ratio_dec_old/ratio_canon - 1 = 0.021756260195959776 %

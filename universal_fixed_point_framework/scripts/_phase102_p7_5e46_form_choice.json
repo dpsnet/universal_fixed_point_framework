@@ -1,0 +1,11 @@
+{
+  "form_choice": {
+    "add": "counting/Rec",
+    "mul": "ratio/Sp"
+  },
+  "main_ratio": {
+    "3/7": 0.42857142857142855,
+    "frame": 0.4250968728622699
+  },
+  "v_def_dev": 99857.61431797389
+}

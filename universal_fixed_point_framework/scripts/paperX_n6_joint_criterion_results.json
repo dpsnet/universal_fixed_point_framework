@@ -1,0 +1,78 @@
+{
+  "patterns": 589,
+  "nonzero": 108,
+  "found2": [],
+  "found3": [],
+  "best2_mixed": [
+    {
+      "pair": [
+        "s1_23",
+        "s12_3"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s123_4"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s56"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s23"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s1_234"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s34"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s12"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s345_6"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s45_6"
+      ],
+      "mixed_groups": 4
+    },
+    {
+      "pair": [
+        "s1_23",
+        "s45"
+      ],
+      "mixed_groups": 4
+    }
+  ]
+}

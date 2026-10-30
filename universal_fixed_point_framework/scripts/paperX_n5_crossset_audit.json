@@ -1,0 +1,9 @@
+{
+  "n": 5,
+  "type": "pattern_conditional",
+  "nondet": 16,
+  "main_samples": 40000,
+  "main_nondet": 0,
+  "total_violations": 0,
+  "pass": true
+}

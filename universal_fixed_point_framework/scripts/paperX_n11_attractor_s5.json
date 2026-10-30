@@ -1,0 +1,27 @@
+{
+  "n": 11,
+  "start_size": 140,
+  "b90_size": 90,
+  "b95_size": 95,
+  "chains": {
+    "555": {
+      "cache_min": 40,
+      "nd90_80000": 0,
+      "nd95_80000": 0
+    },
+    "777": {
+      "cache_min": 36,
+      "nd90_20000": 0,
+      "nd95_20000": 0
+    },
+    "999": {
+      "cache_min": 36,
+      "nd90_20000": 0,
+      "nd95_20000": 0
+    }
+  },
+  "converged_95": false,
+  "s5_needed_80000": false,
+  "s5_needed_20000_any": false,
+  "elapsed_s": 5307.9
+}

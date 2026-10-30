@@ -1,0 +1,21 @@
+﻿b0 (N_f=N_gen=3) = 9.0
+N_gen^2 = 9
+b0 == N_gen^2: True
+N_gen+k_max-1 = 10
+(b0/10)^3 = 0.7290000000000001
+(N_gen^2/(N_gen+k_max-1))^3 = 0.7290000000000001
+equal: True
+3^6 = 729 = 729 check
+Delta_lambda_min = 0.1220084679281462
+Delta_lambda_3 = 0.17254603006834715
+delta = 0.0014814814814814814 = sigma^2/N_c check: True
+F_np = 4.218700364834032
+rel dev vs 4.220 = -0.030797041847563378 %
+D11 gap 9/25 = 0.36
+N_gen^2/(k_max-N_gen)^2 = 0.36
+Lambda gap numerator N_gen^6 = 729 check 729
+m_N gap numerator N_gen^2 = 9 check 9
+F_np pure framework form = 4.218700364834032
+consistent: True
+Lambda via F_np = 4270.674701294871 MeV (target ~210.3)
+ratio to 210.3 = 20.307535431739755

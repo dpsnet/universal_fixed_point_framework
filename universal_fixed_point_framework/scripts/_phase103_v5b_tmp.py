@@ -1,0 +1,98 @@
+# -*- coding: utf-8 -*-
+"""Phase 103p: v5b 线序修正——补 Lyman 通道（n→1 未被 Balmer 禁戒）
+Balmer 禁戒只禁 n→2；n→1（Lyman，UV）开放 → n=3 向下走 Lyman 逃逸（其他系，不计缺失）
+重测线序：Hα(n=3)/Hβ(n=4)/Hγ(n=5) 出发的转移/缺失比
+"""
+import math, random
+
+RY = 13.6
+C = 3.03
+B_CRIT1_MG = 2350.0
+
+def E(n): return -RY / (n * n)
+def delta_up(n): return E(n+1) - E(n)
+
+def laguerre(n, k, x):
+    if n == 0: return 1.0
+    if n == 1: return 1.0 + k - x
+    l0, l1 = 1.0, 1.0 + k - x
+    for i in range(2, n + 1):
+        l2 = ((2 * i - 1 + k - x) * l1 - (i - 1 + k) * l0) / i
+        l0, l1 = l1, l2
+    return l1
+
+def radial_tail(n, l, R_L):
+    norm2 = (2.0 / n) ** 3 * math.factorial(n - l - 1) / (2.0 * n * math.factorial(n + l))
+    def prob_density(r):
+        z = 2.0 * r / n
+        L = laguerre(n - l - 1, 2 * l + 1, z)
+        log_R2 = math.log(norm2) + (-2.0 * r / n) + 2.0 * l * math.log(z) + 2.0 * math.log(abs(L)) if L != 0 else -1e6
+        return math.exp(log_R2) * r * r
+    N = 2000
+    total = 0.0
+    for i in range(N):
+        t = (i + 0.5) / N
+        r = R_L + t / (1.0 - t)
+        total += prob_density(r) / ((1.0 - t) ** 2)
+    return total / N
+
+_cache = {}
+def eta_comp(B_mg, n):
+    key = (round(B_mg, 2), n)
+    if key in _cache: return _cache[key]
+    lB = math.sqrt(B_CRIT1_MG / B_mg)
+    R_L = C * lB
+    tot = 0.0
+    for l in range(0, n):
+        w = (2.0 * l + 1) / (n * n)
+        tot += w * radial_tail(n, l, R_L)
+    _cache[key] = tot
+    return tot
+
+def simulate(B_mg, T, K, n0, n_trials=200000, seed=7):
+    kT = 8.617e-5 * T
+    random.seed(seed)
+    trans = missing = other = 0
+    for _ in range(n_trials):
+        n = n0
+        fail_run = 0
+        for t in range(1, 501):
+            e = eta_comp(B_mg, n)
+            if random.random() < e:
+                if random.random() < 1.0 / n:
+                    trans += 1
+                else:
+                    missing += 1
+                break
+            p_up = math.exp(-delta_up(n) / kT) * (1.0 / n)
+            if random.random() < p_up:
+                n += 1
+                fail_run = 0
+            else:
+                fail_run += 1
+                if fail_run >= K:
+                    missing += 1
+                    break
+                # 向下：n=3 → n=1 Lyman（开放，其他系逃逸）；n>3 → n-1（Paschen 滞留）
+                if n == 3:
+                    other += 1
+                    break
+                elif n > 3:
+                    n -= 1
+        else:
+            missing += 1
+    return (trans/n_trials, missing/n_trials, other/n_trials)
+
+print('=== v5b 线序（补 Lyman 通道）：B=45MG, T=12000K, K=10 ===')
+print('%-6s | %-8s | %-8s | %-8s | %s' % ('出发', '转移', '缺失', 'Lyman逃逸', '比'))
+for n0, line in ((3, 'Hα'), (4, 'Hβ'), (5, 'Hγ')):
+    tr, mi, ot = simulate(45.0, 12000, 10, n0)
+    r = tr/mi if mi else 999
+    print('%-4s(%s) | %.3f   | %.3f   | %.3f    | %.3f' % (n0, line, tr, mi, ot, r))
+
+print()
+print('=== B 依赖（出发 n=4, T=12000K, K=10）===')
+for B in (5.0, 10.0, 20.0, 45.0, 100.0):
+    tr, mi, ot = simulate(B, 12000, 10, 4)
+    r = tr/mi if mi else 999
+    print('B=%5.0f MG | 转移=%.3f 缺失=%.3f 逃逸=%.3f | 比=%.3f' % (B, tr, mi, ot, r))

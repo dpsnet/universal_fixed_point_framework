@@ -1,0 +1,11 @@
+{
+  "fp10": {
+    "add": 10,
+    "mul": 10
+  },
+  "k_formula": 8.0,
+  "k_dual": {
+    "weyl": 8,
+    "formula": 8.0
+  }
+}

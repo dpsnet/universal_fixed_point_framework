@@ -1,0 +1,14 @@
+{
+  "16_three": {
+    "half_tower": 16,
+    "pow_family": 16,
+    "chxdual": 16
+  },
+  "recsp": {
+    "base": 2,
+    "dims": 3,
+    "configs": 8,
+    "half": 4,
+    "chxdual": 16
+  }
+}

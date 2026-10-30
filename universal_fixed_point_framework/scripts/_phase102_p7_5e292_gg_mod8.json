@@ -1,0 +1,573 @@
+{
+  "layer": "P7-5e-292",
+  "total": 62,
+  "fails": 0,
+  "all_pass": true,
+  "results": [
+    {
+      "thm": "cc3_n_mod8",
+      "n": 2,
+      "k": 1,
+      "7n+2": 16,
+      "n_mod8": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "cc3_n_mod8",
+      "n": 18,
+      "k": 2,
+      "7n+2": 128,
+      "n_mod8": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "cc3_n_mod8",
+      "n": 146,
+      "k": 3,
+      "7n+2": 1024,
+      "n_mod8": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "cc3_n_mod8",
+      "n": 1170,
+      "k": 4,
+      "7n+2": 8192,
+      "n_mod8": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 1,
+      "n": 2,
+      "m": 5,
+      "lhs": 5,
+      "rhs": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 2,
+      "n": 18,
+      "m": 24,
+      "lhs": 0,
+      "rhs": 0,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 3,
+      "n": 146,
+      "m": 155,
+      "lhs": 3,
+      "rhs": 3,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 4,
+      "n": 1170,
+      "m": 1182,
+      "lhs": 6,
+      "rhs": 6,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 5,
+      "n": 9362,
+      "m": 9377,
+      "lhs": 1,
+      "rhs": 1,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 6,
+      "n": 74898,
+      "m": 74916,
+      "lhs": 4,
+      "rhs": 4,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 7,
+      "n": 599186,
+      "m": 599207,
+      "lhs": 7,
+      "rhs": 7,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 8,
+      "n": 4793490,
+      "m": 4793514,
+      "lhs": 2,
+      "rhs": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 9,
+      "n": 38347922,
+      "m": 38347949,
+      "lhs": 5,
+      "rhs": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 10,
+      "n": 306783378,
+      "m": 306783408,
+      "lhs": 0,
+      "rhs": 0,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 11,
+      "n": 2454267026,
+      "m": 2454267059,
+      "lhs": 3,
+      "rhs": 3,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 12,
+      "n": 19634136210,
+      "m": 19634136246,
+      "lhs": 6,
+      "rhs": 6,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 13,
+      "n": 157073089682,
+      "m": 157073089721,
+      "lhs": 1,
+      "rhs": 1,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 14,
+      "n": 1256584717458,
+      "m": 1256584717500,
+      "lhs": 4,
+      "rhs": 4,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 15,
+      "n": 10052677739666,
+      "m": 10052677739711,
+      "lhs": 7,
+      "rhs": 7,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 16,
+      "n": 80421421917330,
+      "m": 80421421917378,
+      "lhs": 2,
+      "rhs": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 17,
+      "n": 643371375338642,
+      "m": 643371375338693,
+      "lhs": 5,
+      "rhs": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 18,
+      "n": 5146971002709138,
+      "m": 5146971002709192,
+      "lhs": 0,
+      "rhs": 0,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 19,
+      "n": 41175768021673106,
+      "m": 41175768021673163,
+      "lhs": 3,
+      "rhs": 3,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 20,
+      "n": 329406144173384850,
+      "m": 329406144173384910,
+      "lhs": 6,
+      "rhs": 6,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 21,
+      "n": 2635249153387078802,
+      "m": 2635249153387078865,
+      "lhs": 1,
+      "rhs": 1,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 22,
+      "n": 21081993227096630418,
+      "m": 21081993227096630484,
+      "lhs": 4,
+      "rhs": 4,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 23,
+      "n": 168655945816773043346,
+      "m": 168655945816773043415,
+      "lhs": 7,
+      "rhs": 7,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 24,
+      "n": 1349247566534184346770,
+      "m": 1349247566534184346842,
+      "lhs": 2,
+      "rhs": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 25,
+      "n": 10793980532273474774162,
+      "m": 10793980532273474774237,
+      "lhs": 5,
+      "rhs": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 26,
+      "n": 86351844258187798193298,
+      "m": 86351844258187798193376,
+      "lhs": 0,
+      "rhs": 0,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 27,
+      "n": 690814754065502385546386,
+      "m": 690814754065502385546467,
+      "lhs": 3,
+      "rhs": 3,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 28,
+      "n": 5526518032524019084371090,
+      "m": 5526518032524019084371174,
+      "lhs": 6,
+      "rhs": 6,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 29,
+      "n": 44212144260192152674968722,
+      "m": 44212144260192152674968809,
+      "lhs": 1,
+      "rhs": 1,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_mod8",
+      "k": 30,
+      "n": 353697154081537221399749778,
+      "m": 353697154081537221399749868,
+      "lhs": 4,
+      "rhs": 4,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 1,
+      "Gm": 5,
+      "mod8": 5,
+      "expect": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 2,
+      "Gm": 24,
+      "mod8": 0,
+      "expect": 0,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 3,
+      "Gm": 155,
+      "mod8": 3,
+      "expect": 3,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 4,
+      "Gm": 1182,
+      "mod8": 6,
+      "expect": 6,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 5,
+      "Gm": 9377,
+      "mod8": 1,
+      "expect": 1,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 6,
+      "Gm": 74916,
+      "mod8": 4,
+      "expect": 4,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 7,
+      "Gm": 599207,
+      "mod8": 7,
+      "expect": 7,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_traverse",
+      "k": 8,
+      "Gm": 4793514,
+      "mod8": 2,
+      "expect": 2,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 1,
+      "Gm": 5,
+      "expect": 5,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 2,
+      "Gm": 24,
+      "expect": 24,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 3,
+      "Gm": 155,
+      "expect": 155,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 4,
+      "Gm": 1182,
+      "expect": 1182,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 5,
+      "Gm": 9377,
+      "expect": 9377,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 6,
+      "Gm": 74916,
+      "expect": 74916,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_instances",
+      "k": 7,
+      "Gm": 599207,
+      "expect": 599207,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 1,
+      "lhs": 19,
+      "rhs": 19,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 2,
+      "lhs": 131,
+      "rhs": 131,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 3,
+      "lhs": 1027,
+      "rhs": 1027,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 4,
+      "lhs": 8195,
+      "rhs": 8195,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 5,
+      "lhs": 65539,
+      "rhs": 65539,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 6,
+      "lhs": 524291,
+      "rhs": 524291,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 7,
+      "lhs": 4194307,
+      "rhs": 4194307,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 8,
+      "lhs": 33554435,
+      "rhs": 33554435,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 9,
+      "lhs": 268435459,
+      "rhs": 268435459,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 10,
+      "lhs": 2147483651,
+      "rhs": 2147483651,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 11,
+      "lhs": 17179869187,
+      "rhs": 17179869187,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "gm_diff_exact",
+      "k": 12,
+      "lhs": 137438953475,
+      "rhs": 137438953475,
+      "ok": true,
+      "residual": 0
+    },
+    {
+      "thm": "ii_judgement",
+      "ok": true,
+      "residual": 0
+    }
+  ]
+}

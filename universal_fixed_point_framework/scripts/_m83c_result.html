@@ -1,0 +1,881 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Theoretical Spectra</title>
+<meta name="Description" content="" />
+<meta name="Keywords" content="VO, LAEFF, SVO, " />
+<meta name="Author" content="Carlos Rodrigo" />
+<meta name="Copyright" content="Copyright (c) 2005 by crb" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="Robots" content="index,follow" />
+<meta name="Resource-Type" content="document" />
+<meta http-equiv="Expires" content="0" />
+<meta name="Revisit-After" content="1 days" />
+<meta name="Distribution" content="Global" />
+<meta name="Rating" content="General" /><link rel="shortcut icon" href="../layout2/img/favicon.ico" /><link rel="icon" href="../layout2/img/icon.png" type="image/png" /><link rel="stylesheet" href="../layout2/style.css" type="text/css" />
+<link rel="stylesheet" href="../layout2/style2.css" type="text/css" />
+<link rel="stylesheet" href="../layout2/local/style.css" type="text/css" />
+<link rel="stylesheet" href="../layout2/lac/menu-lac.css" type="text/css" />
+<link rel="stylesheet" href="../newov2/newov.css" type="text/css" /></head>
+<body><script language="JavaScript" src="../common2/javascript/wz_tooltip.js"></script><div class=logo>
+<table border=0><tr><td valign=bottom>
+<a href="https://svo.cab.inta-csic.es/" target="_blank"><img src="../layout2/img/logo-svo.png" border=0></a>
+</td><td valign=bottom>
+<a href="https://cab.inta-csic.es/" target="_blank"><img src="../layout2/img/logo_cab.png" border=1></a>
+</td><td valign=bottom class=micin>
+Grant PID2023-146210NB-I00 funded by<br><a href="https://cab.inta-csic.es/" target="_blank"><img src="../layout2/img/micin-aei-2p.png" height=70></a><br>&nbsp;
+</td></tr></table>  
+</div>
+<div class=fondo2>&nbsp;</div>
+<div class=vosa1000top><table cellpadding=0 cellspacing=0 border=0 width="100%">
+<tr>
+<td height=30 class=tabletop>    <table cellpadding=0 cellspacing=0 border=0 width="100%">
+    <tr>
+     <td class=menutop><a href="../">SVO theoretical services</a> </td>     <td class=menutop align=left><table cellpadding=0 cellspacing=0 border=0><td align=left nowrap>
+
+<ul class="menu2" nowrap>
+  <li class="top"><a href="../vosa/" class="top_link">VOSA</a></li> 
+  <li class="top"><a href="../fps/" class="top_link" target="_blank">Filters</a></li> 
+  <li class="top"><a href="../newov2" target="_blank" class="top_link"><span class="down">Models</span> 
+<!--[if gte IE 7]><!--></a><!--<![endif]-->
+      
+<!--[if lte IE 6]><table><tr><td><![endif]-->
+<ul class="sub">
+            <li nowrap><a href="../newov2" target="_blank">Theoretical Spectra</a></li>
+            <li nowrap><a href="../newov2/index.php?#startpl" target="_blank">Observational Templates</a></li>
+            <li nowrap><a href="../newov2/index.php?#ssp" target="_blank">Evol. Synthesis Models</a></li>
+            <li nowrap><a href="../newov2/index.php?#planet" target="_blank">Planetary Models</a></li>
+            <li nowrap><a href="../newov2/syph.php" target="_blank">Synthetic Photometry</a></li>
+            <li nowrap><a href="../iso3/" target="_blank">Isochrones and evolutionary tracks</a></li>
+            <li nowrap><a href="http://svo.cab.inta-csic.es/theory/https://toucan.cab.inta-csic.es/svo2/theory/sisms3/" target="_blank">Asteroseismology</a></li>
+      </ul>
+<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+  </li>
+  <li class="top"><a href="../docs2/index.php?pname=Services&pagecateg=services" target="_blank" class="top_link"><span class="down">Other Services</span> 
+<!--[if gte IE 7]><!--></a><!--<![endif]-->
+      
+<!--[if lte IE 6]><table><tr><td><![endif]-->
+<ul class="sub">
+            <li nowrap><a href="../catalogs/" target="_blank">Stellar Libraries</a></li>
+            <li nowrap><a href="../catalogs/?what=cat" target="_blank">Catalogues</a></li>
+            <li nowrap><a href="../iue" target="_blank">IUE HPDP spectra</a></li>
+            <li nowrap><a href="../kainu" target="_blank">Kainulainen extinction map</a></li>
+            <li nowrap><a href="../aexmap" target="_blank">ChaI extinction map</a></li>
+            <li nowrap><a href="../specphot" target="_blank">SpecPhot</a></li>
+      </ul>
+<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+  </li>
+</ul></td></table>     </td>     <td class=menutop align=right>
+<table cellpadding=0 cellspacing=0><tr><form action="/theory/newov2/index.php?" method=post>      <td class=logintop>Email:<input size=12 name=uname></td>
+      <td class=logintop>Pass:<input type=password size=8 name=pass></td>
+      <td class=logintop><input type=submit name=boton value=Login class=logintopbut></td>
+      <td class=logintop><a href="../user2/remember.php">(?)</a></td>
+      <td class=logintop><a href="../user2/register.php">Register</a></td>
+</form>
+</tr></table>     </td>    </tr>
+    </table>
+</td>
+</tr>
+<tr>
+<td height=60 class=pagetit>Theoretical Spectra</td></tr>
+</table>
+</div><div class=vosa1000tab><table cellpadding=0 cellspacing=0 width="100%"><tr>
+<td class=main valign=top>
+<div class="pagetext"><form name=myform action="/theory/newov2/index.php" method=post><input type=hidden name=models value=",koester2"><input type=hidden name=oby value=""><input type=hidden name=odesc value=""><input type=hidden name=sbut value=""><table cellpadding=0 cellspacing=0><tr><td align=left valign=top class=main_left width="25%"><table cellpadding=0 cellspacing=0><tr><td align=left valign=top class=listit>Koester WD models <span class=frmhlp><a href="javascript:Tip('&lt;table cellpadding=15&gt;&lt;td&gt;&lt;h3&gt;Koester WD models&lt;/h3&gt;&lt;p&gt;These models are for white dwarfs of spectral type DA with pure hydrogen atmospheres. They use LTE (local thermodynamic equilibrium), hydrostatic equilibrium and plane-parallel, one-dimensional structure. Basic methods and data are described in Koester (2010, Mem.S.A.It. Vol. 81, 921). Since then many improvements were implemented, most notably the hydrogen Stark profiles by Tremblay &amp; Bergeron (2009, ApJ 696,1755), and Tremblay (2015, priv. comm).&lt;p&gt;Original models have been transformed to air wavelengths and rescaled to 4&amp;#960;*Eddington flux in erg/cm2/s/A. Models published with the author\'s permission.&lt;p&gt;&lt;b&gt;References:&lt;/b&gt;&lt;ul&gt;&lt;p&gt;&lt;li&gt;&lt;i&gt;White dwarf spectra and atmosphere models&lt;/i&gt;&lt;br&gt;&lt;a href=\&quot;https://ui.adsabs.harvard.edu/abs/2010MmSAI..81..921K\&quot; target=\&quot;_blank\&quot;&gt;Koester, D. 2010; MSAI 81, 921&lt;/a&gt;&lt;p&gt;&lt;li&gt;&lt;i&gt;Spectroscopic Analysis of DA White Dwarfs: Stark Broadening of Hydrogen Lines Including Nonideal Effects&lt;/i&gt;&lt;br&gt;&lt;a href=\&quot;https://ui.adsabs.harvard.edu/abs/2009ApJ...696.1755T\&quot; target=\&quot;_blank\&quot;&gt;Trembley &amp; Bergeron 2010, ApJ696, 1755&lt;/a&gt;')" onmouseover="Tip('&lt;table cellpadding=15&gt;&lt;td&gt;&lt;h3&gt;Koester WD models&lt;/h3&gt;&lt;p&gt;These models are for white dwarfs of spectral type DA with pure hydrogen atmospheres. They use LTE (local thermodynamic equilibrium), hydrostatic equilibrium and plane-parallel, one-dimensional structure. Basic methods and data are described in Koester (2010, Mem.S.A.It. Vol. 81, 921). Since then many improvements were implemented, most notably the hydrogen Stark profiles by Tremblay &amp; Bergeron (2009, ApJ 696,1755), and Tremblay (2015, priv. comm).&lt;p&gt;Original models have been transformed to air wavelengths and rescaled to 4&amp;#960;*Eddington flux in erg/cm2/s/A. Models published with the author\'s permission.&lt;p&gt;&lt;b&gt;References:&lt;/b&gt;&lt;ul&gt;&lt;p&gt;&lt;li&gt;&lt;i&gt;White dwarf spectra and atmosphere models&lt;/i&gt;&lt;br&gt;&lt;a href=\&quot;https://ui.adsabs.harvard.edu/abs/2010MmSAI..81..921K\&quot; target=\&quot;_blank\&quot;&gt;Koester, D. 2010; MSAI 81, 921&lt;/a&gt;&lt;p&gt;&lt;li&gt;&lt;i&gt;Spectroscopic Analysis of DA White Dwarfs: Stark Broadening of Hydrogen Lines Including Nonideal Effects&lt;/i&gt;&lt;br&gt;&lt;a href=\&quot;https://ui.adsabs.harvard.edu/abs/2009ApJ...696.1755T\&quot; target=\&quot;_blank\&quot;&gt;Trembley &amp; Bergeron 2010, ApJ696, 1755&lt;/a&gt;')" onmouseout="UnTip()">(?)</a></span></td></tr><tr><td align=left valign=top><table><tr><td class=frmfld nowrap>T<sub>eff</sub>:</td><td class=frmfld nowrap><select name="params[koester2][teff][min]">
+<option value="5000" >5000</option>
+<option value="5250" >5250</option>
+<option value="5500" >5500</option>
+<option value="5750" >5750</option>
+<option value="6000" >6000</option>
+<option value="6250" >6250</option>
+<option value="6500" >6500</option>
+<option value="6750" >6750</option>
+<option value="7000" >7000</option>
+<option value="7250" >7250</option>
+<option value="7500" >7500</option>
+<option value="7750" >7750</option>
+<option value="8000" >8000</option>
+<option value="8250" >8250</option>
+<option value="8500" >8500</option>
+<option value="8750" >8750</option>
+<option value="9000" >9000</option>
+<option value="9250" >9250</option>
+<option value="9500" >9500</option>
+<option value="9750" >9750</option>
+<option value="10000" selected>10000</option>
+<option value="10250" >10250</option>
+<option value="10500" >10500</option>
+<option value="10750" >10750</option>
+<option value="11000" >11000</option>
+<option value="11250" >11250</option>
+<option value="11500" >11500</option>
+<option value="11750" >11750</option>
+<option value="12000" >12000</option>
+<option value="12250" >12250</option>
+<option value="12500" >12500</option>
+<option value="12750" >12750</option>
+<option value="13000" >13000</option>
+<option value="13250" >13250</option>
+<option value="13500" >13500</option>
+<option value="13750" >13750</option>
+<option value="14000" >14000</option>
+<option value="14250" >14250</option>
+<option value="14500" >14500</option>
+<option value="14750" >14750</option>
+<option value="15000" >15000</option>
+<option value="15250" >15250</option>
+<option value="15500" >15500</option>
+<option value="15750" >15750</option>
+<option value="16000" >16000</option>
+<option value="16250" >16250</option>
+<option value="16500" >16500</option>
+<option value="16750" >16750</option>
+<option value="17000" >17000</option>
+<option value="17250" >17250</option>
+<option value="17500" >17500</option>
+<option value="17750" >17750</option>
+<option value="18000" >18000</option>
+<option value="18250" >18250</option>
+<option value="18500" >18500</option>
+<option value="18750" >18750</option>
+<option value="19000" >19000</option>
+<option value="19250" >19250</option>
+<option value="19500" >19500</option>
+<option value="19750" >19750</option>
+<option value="20000" >20000</option>
+<option value="21000" >21000</option>
+<option value="22000" >22000</option>
+<option value="23000" >23000</option>
+<option value="24000" >24000</option>
+<option value="25000" >25000</option>
+<option value="26000" >26000</option>
+<option value="27000" >27000</option>
+<option value="28000" >28000</option>
+<option value="29000" >29000</option>
+<option value="30000" >30000</option>
+<option value="32000" >32000</option>
+<option value="34000" >34000</option>
+<option value="35000" >35000</option>
+<option value="36000" >36000</option>
+<option value="38000" >38000</option>
+<option value="40000" >40000</option>
+<option value="45000" >45000</option>
+<option value="50000" >50000</option>
+<option value="60000" >60000</option>
+<option value="70000" >70000</option>
+<option value="80000" >80000</option>
+</select> - <select name="params[koester2][teff][max]">
+<option value="5000" >5000</option>
+<option value="5250" >5250</option>
+<option value="5500" >5500</option>
+<option value="5750" >5750</option>
+<option value="6000" >6000</option>
+<option value="6250" >6250</option>
+<option value="6500" >6500</option>
+<option value="6750" >6750</option>
+<option value="7000" >7000</option>
+<option value="7250" >7250</option>
+<option value="7500" >7500</option>
+<option value="7750" >7750</option>
+<option value="8000" >8000</option>
+<option value="8250" >8250</option>
+<option value="8500" >8500</option>
+<option value="8750" >8750</option>
+<option value="9000" >9000</option>
+<option value="9250" >9250</option>
+<option value="9500" >9500</option>
+<option value="9750" >9750</option>
+<option value="10000" >10000</option>
+<option value="10250" >10250</option>
+<option value="10500" >10500</option>
+<option value="10750" >10750</option>
+<option value="11000" >11000</option>
+<option value="11250" >11250</option>
+<option value="11500" >11500</option>
+<option value="11750" >11750</option>
+<option value="12000" >12000</option>
+<option value="12250" >12250</option>
+<option value="12500" >12500</option>
+<option value="12750" >12750</option>
+<option value="13000" >13000</option>
+<option value="13250" >13250</option>
+<option value="13500" >13500</option>
+<option value="13750" >13750</option>
+<option value="14000" >14000</option>
+<option value="14250" >14250</option>
+<option value="14500" >14500</option>
+<option value="14750" >14750</option>
+<option value="15000" >15000</option>
+<option value="15250" >15250</option>
+<option value="15500" >15500</option>
+<option value="15750" >15750</option>
+<option value="16000" >16000</option>
+<option value="16250" >16250</option>
+<option value="16500" >16500</option>
+<option value="16750" >16750</option>
+<option value="17000" >17000</option>
+<option value="17250" >17250</option>
+<option value="17500" >17500</option>
+<option value="17750" >17750</option>
+<option value="18000" >18000</option>
+<option value="18250" >18250</option>
+<option value="18500" >18500</option>
+<option value="18750" >18750</option>
+<option value="19000" >19000</option>
+<option value="19250" >19250</option>
+<option value="19500" >19500</option>
+<option value="19750" >19750</option>
+<option value="20000" selected>20000</option>
+<option value="21000" >21000</option>
+<option value="22000" >22000</option>
+<option value="23000" >23000</option>
+<option value="24000" >24000</option>
+<option value="25000" >25000</option>
+<option value="26000" >26000</option>
+<option value="27000" >27000</option>
+<option value="28000" >28000</option>
+<option value="29000" >29000</option>
+<option value="30000" >30000</option>
+<option value="32000" >32000</option>
+<option value="34000" >34000</option>
+<option value="35000" >35000</option>
+<option value="36000" >36000</option>
+<option value="38000" >38000</option>
+<option value="40000" >40000</option>
+<option value="45000" >45000</option>
+<option value="50000" >50000</option>
+<option value="60000" >60000</option>
+<option value="70000" >70000</option>
+<option value="80000" >80000</option>
+</select></td><td class=frmhlp valign=top><a href="" onmouseover="Tip('&lt;b&gt;T&lt;sub&gt;eff&lt;/sub&gt;&lt;/b&gt;&lt;p&gt;value for the effective temperature for the model. Temperatures are given in K')" onmouseout="UnTip()">(?)</a></td></tr><tr><td class=frmfld nowrap>Logg:</td><td class=frmfld nowrap><select name="params[koester2][logg][min]">
+<option value="6.5" >6.5</option>
+<option value="6.75" >6.75</option>
+<option value="7" selected>7</option>
+<option value="7.25" >7.25</option>
+<option value="7.5" >7.5</option>
+<option value="7.75" >7.75</option>
+<option value="8" >8</option>
+<option value="8.25" >8.25</option>
+<option value="8.5" >8.5</option>
+<option value="8.75" >8.75</option>
+<option value="9" >9</option>
+<option value="9.25" >9.25</option>
+<option value="9.5" >9.5</option>
+</select> - <select name="params[koester2][logg][max]">
+<option value="6.5" >6.5</option>
+<option value="6.75" >6.75</option>
+<option value="7" >7</option>
+<option value="7.25" >7.25</option>
+<option value="7.5" >7.5</option>
+<option value="7.75" >7.75</option>
+<option value="8" >8</option>
+<option value="8.25" >8.25</option>
+<option value="8.5" >8.5</option>
+<option value="8.75" >8.75</option>
+<option value="9" selected>9</option>
+<option value="9.25" >9.25</option>
+<option value="9.5" >9.5</option>
+</select></td><td class=frmhlp valign=top><a href="" onmouseover="Tip('&lt;b&gt;Logg&lt;/b&gt;&lt;p&gt;value for Log(G) for the model.')" onmouseout="UnTip()">(?)</a></td></tr></table><p></td></tr><tr><td align=left valign=top class=listit>&nbsp;</td></tr><tr><td  align=left valign=top><table><tr><td class=frmfld nowrap>Show:</td><td class=frmfld nowrap><select name=nres><option value="10" >10 results</option>
+<option value="25" >25 results</option>
+<option value="50" selected>50 results</option>
+<option value="100" >100 results</option>
+<option value="all" >all results</option>
+</select></td></tr></table></td></tr><tr><td align=left valign=top><br><input type=submit class=chulo name=boton value=Search></td></tr><tr><td align=left valign=top class=listit>&nbsp;</td></tr><tr><td  align=left valign=top><p>Select/change what collections you want to compare<table><tr><td><select class=selmod name="reqmodels[]" multiple size=15><option value="cond00" >AMES-Cond 2000</option>
+<option value="dusty00" >AMES-Dusty 2000</option>
+<option value="atmo2020_ceq" >ATMO 2020, CEQ</option>
+<option value="atmo2020_neq_strong" >ATMO 2020, NEQ strong</option>
+<option value="atmo2020_neq_weak" >ATMO 2020, NEQ weak</option>
+<option value="bt-cond" >BT-COND</option>
+<option value="bt-dusty" >BT-DUSTY</option>
+<option value="bt-nextgen-agss2009" >BT-NextGen (AGSS2009)</option>
+<option value="bt-nextgen-gns93" >BT-NextGen (GNS93)</option>
+<option value="bt-settl" >BT-Settl</option>
+<option value="bt-settl-agss" >BT-Settl (AGSS2009)</option>
+<option value="bt-settl-cifist" >BT-Settl (CIFIST)</option>
+<option value="bt-settl-gns93" >BT-Settl (GNS93)</option>
+<option value="bt-settl-2014" >BT-Settl 2014</option>
+<option value="tpl_bayo" >Bayo et al, M types from Collinder 69</option>
+<option value="bbody" >Black Body</option>
+<option value="coelho_highres" >Coelho Synthetic stellar library (High Resolution)</option>
+<option value="coelho_sed" >Coelho Synthetic stellar library (SEDs)</option>
+<option value="drift" >DRIFT-PHOENIX</option>
+<option value="exogan" >Exogan</option>
+<option value="grams_cgrid" >GRAMS, C-rich  grid</option>
+<option value="grams_ogrid" >GRAMS, O-rich original grid</option>
+<option value="goyal_local" >Goyal local</option>
+<option value="goyal_rainout" >Goyal rainout</option>
+<option value="hres" >Granada HRES Library</option>
+<option value="3D_DBA" >Grid of 3D helium-rich LTE synthetic spectra</option>
+<option value="Husfeld" >Husfeld et al models for non-LTE Helium-rich stars</option>
+<option value="tpl_keck" >Keck LRIS spectra of late-M, L and T dwarfs</option>
+<option value="tpl_kesseli" >Kesseli et al.</option>
+<option value="koester2" selected>Koester WD models</option>
+<option value="Kurucz2003all" >Kurucz ODFNEW /NOVER (2003)</option>
+<option value="Kurucz" >Kurucz ODFNEW /NOVER models</option>
+<option value="Kurucz2003" >Kurucz ODFNEW /NOVER, alpha: 0.0 (2003)</option>
+<option value="Kurucz2003alp" >Kurucz ODFNEW /NOVER, alpha: 0.4 (2003)</option>
+<option value="tpl_chiu06" >L and T dwarf data archive</option>
+<option value="levenhagen17" >Levenhagen 2017</option>
+<option value="tpl_miles" >MILES</option>
+<option value="tpl_muse" >MUSE 1d Spectral Library</option>
+<option value="morley12" >Morley 2012</option>
+<option value="morley14" >Morley 2014</option>
+<option value="morley15_emi_cfree" >Morley2015 Cloud free</option>
+<option value="morley15_trn_cfree" >Morley2015 Cloud free (Transm.)</option>
+<option value="morley15_emi_clouds" >Morley2015 Cloudy</option>
+<option value="morley15_trn_clouds" >Morley2015 Cloudy (Transm.)</option>
+<option value="morley15_emi_hzsoot" >Morley2015 Haze (Soot)</option>
+<option value="morley15_trn_hzsoot" >Morley2015 Haze (Soot) (Transm.)</option>
+<option value="morley15_emi_hzthol" >Morley2015 Haze (Tholin)</option>
+<option value="morley15_trn_hzthol" >Morley2015 Haze (Tholin) (Transm.)</option>
+<option value="NextGen2" >NextGen</option>
+<option value="NextGen" >NextGen (solar)</option>
+<option value="pop_chabrier" >POPSTAR with Chabrier IMF</option>
+<option value="pop_ferrini" >POPSTAR with Ferrini IMF</option>
+<option value="pop_kroupa" >POPSTAR with Kroupa IMF</option>
+<option value="pop_salpeter1" >POPSTAR with Salpeter IMF (1)</option>
+<option value="pop_salpeter2" >POPSTAR with Salpeter IMF (2)</option>
+<option value="pacheco" >Pacheco et al 2021</option>
+<option value="sedssp" >SED@</option>
+<option value="lib_stelib" >STELIB</option>
+<option value="saumon12" >Saumon 2012</option>
+<option value="tlusty_bstarbin" >TLUSTY BSTAR2006</option>
+<option value="tlusty_ostarbin" >TLUSTY OSTAR2002</option>
+<option value="tlusty_mergedbin" >TLUSTY OSTAR2002+BSTAR2006</option>
+<option value="tmap" >TMAP</option>
+<option value="tmap1" >TMAP (Grid 1)</option>
+<option value="tmap2" >TMAP (Grid 2)</option>
+<option value="tmap3" >TMAP (Grid 3)</option>
+<option value="tmap4" >TMAP (Grid 4)</option>
+<option value="tubingen" >TMAP - Tubingen</option>
+<option value="tpl_mclean" >The NIRSPEC Brown Dwarf Spectroscopic Survey</option>
+<option value="tpl_spex" >The SpeX Prism Spectral Libraries</option>
+<option value="tpl_uves" >UVES/VLT</option>
+</select></td></tr><tr><td><input type=submit class=chulo name=boton value=Change></td></tr></table><p><a href="/theory/newov2/index.php">Go back to list</a></td></tr></table></td><td align=left valign=top class=main_right>369 files found. First 50 are displayed<table cellpadding=0 cellspacing=0>
+<tr>
+<td class=botones><input type=submit name=boton class=chulo value="Mark All: Ascii"></td><td class=botones><input type=submit name=boton class=chulo value="Mark All: VOT"></td><td class=botones><input type=submit name=boton class=chulo value="Mark All: Plot"></td><td class=botones><input type=submit name=boton class=chulo value="Unmark All"></td><td class=botones><input type=submit name=boton class=chulo value="Retrieve"></td><td class=botones><input type=submit name=boton class=chulo value="Plot"></td></tr></table><table cellpadding=0 cellspacing=2>
+<tr>
+<td class=tabcab>Model</td>
+<td class=tabcab nowrap><a href="javascript:document.myform.oby.value='teff';document.myform.odesc.value='desc';document.myform.sbut.value='Search';document.myform.submit();" onmouseover="Tip('&lt;b&gt;T&lt;sub&gt;eff&lt;/sub&gt;&lt;/b&gt;&lt;p&gt;value for the effective temperature for the model. Temperatures are given in K&lt;p&gt;Unit: K&lt;p&gt;You can click the column header to order the list using this parameter')" onmouseout="UnTip()"><img src="../layout2/img/down.png"> T<sub>eff</sub></a></td>
+<td class=tabcab nowrap><a href="javascript:document.myform.oby.value='logg';document.myform.sbut.value='Search';document.myform.submit();" onmouseover="Tip('&lt;b&gt;Logg&lt;/b&gt;&lt;p&gt;value for Log(G) for the model.&lt;p&gt;Unit: log(cm/s2)&lt;p&gt;You can click the column header to order the list using this parameter')" onmouseout="UnTip()">Logg</a></td>
+<td class=tabcab>Fetch</td>
+<td class=tabcab>Mark</td>
+<td class=tabcab>Fetch</td>
+<td class=tabcab>Mark</td>
+<td class=tabcab>Plot</td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>7</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=263&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[0]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=263&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[0]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[0]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=271&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[1]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=271&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[1]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[1]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=270&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[2]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=270&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[2]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[2]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=269&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[3]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=269&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[3]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[3]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=268&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[4]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=268&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[4]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[4]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=267&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[5]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=267&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[5]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[5]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>7.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=266&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[6]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=266&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[6]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[6]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>7.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=265&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[7]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=265&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[7]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[7]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10000</td>
+<td class=tabfld nowrap>7.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=264&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[8]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=264&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[8]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[8]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=284&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[9]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=284&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[9]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[9]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=283&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[10]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=283&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[10]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[10]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=282&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[11]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=282&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[11]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[11]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=281&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[12]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=281&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[12]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[12]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=280&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[13]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=280&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[13]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[13]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>7.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=279&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[14]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=279&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[14]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[14]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>7.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=278&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[15]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=278&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[15]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[15]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>7.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=277&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[16]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=277&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[16]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[16]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10250</td>
+<td class=tabfld nowrap>7</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=276&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[17]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=276&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[17]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[17]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=297&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[18]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=297&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[18]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[18]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=296&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[19]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=296&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[19]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[19]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=295&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[20]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=295&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[20]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[20]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=294&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[21]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=294&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[21]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[21]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=293&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[22]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=293&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[22]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[22]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>7.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=292&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[23]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=292&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[23]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[23]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>7.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=291&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[24]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=291&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[24]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[24]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>7.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=290&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[25]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=290&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[25]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[25]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10500</td>
+<td class=tabfld nowrap>7</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=289&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[26]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=289&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[26]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[26]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=310&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[27]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=310&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[27]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[27]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=309&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[28]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=309&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[28]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[28]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=308&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[29]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=308&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[29]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[29]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=307&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[30]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=307&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[30]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[30]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=306&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[31]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=306&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[31]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[31]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>7.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=305&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[32]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=305&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[32]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[32]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>7.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=304&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[33]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=304&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[33]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[33]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>7.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=303&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[34]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=303&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[34]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[34]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>10750</td>
+<td class=tabfld nowrap>7</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=302&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[35]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=302&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[35]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[35]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=323&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[36]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=323&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[36]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[36]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=322&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[37]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=322&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[37]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[37]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=321&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[38]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=321&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[38]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[38]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=320&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[39]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=320&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[39]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[39]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=319&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[40]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=319&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[40]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[40]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>7.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=318&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[41]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=318&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[41]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[41]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>7.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=317&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[42]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=317&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[42]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[42]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>7.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=316&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[43]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=316&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[43]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[43]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11000</td>
+<td class=tabfld nowrap>7</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=315&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[44]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=315&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[44]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[44]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11250</td>
+<td class=tabfld nowrap>9</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=336&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[45]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=336&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[45]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[45]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11250</td>
+<td class=tabfld nowrap>8.75</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=335&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[46]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=335&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[46]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[46]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11250</td>
+<td class=tabfld nowrap>8.5</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=334&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[47]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=334&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[47]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[47]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11250</td>
+<td class=tabfld nowrap>8.25</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=333&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[48]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=333&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[48]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[48]" ></td>
+</tr>
+<tr>
+<td class=tabfld nowrap>Koester WD models</td>
+<td class=tabfld nowrap>11250</td>
+<td class=tabfld nowrap>8</td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=332&format=votable" target=_blank>VOtable</a></td>
+<td class=tabfld nowrap><input type=checkbox name="vot[49]" ></td>
+<td class=tabfld nowrap><a href="ssap.php?model=koester2&fid=332&format=ascii" target=_blank>ASCII</a></td>
+<td class=tabfld nowrap><input type=checkbox name="txt[49]" ></td>
+<td class=tabfld nowrap><input type=checkbox name="plot[49]" ></td>
+</tr>
+</table>
+</td></tr><tr><td class=main_left>&nbsp;</td><td class=main_right>&nbsp;</td></tr><tr><td align=left valign=top class=main_bottom colspan=2>&nbsp;</td></tr></table></form>
+<p><table cellpadding=0 cellspacing=0 border=0>
+  <td align=left class=referaa>
+    <p><b>References:</b><ul><li>Koester WD models  (published with the author's permission)
+    <ul><p><li><i>White dwarf spectra and atmosphere models</i><br><a href="https://ui.adsabs.harvard.edu/abs/2010MmSAI..81..921K" target="_blank">Koester, D. 2010; MSAI 81, 921</a><p><li><i>Spectroscopic Analysis of DA White Dwarfs: Stark Broadening of Hydrogen Lines Including Nonideal Effects</i><br><a href="https://ui.adsabs.harvard.edu/abs/2009ApJ...696.1755T" target="_blank">Trembley & Bergeron 2010, ApJ696, 1755</a></ul></ul></td></table>
+</td></tr></table>
+</div>
+&nbsp;</div><div class=bottom valign=top>&copy CAB 2019 &nbsp; (<a href="https://svo.cab.inta-csic.es/?page_id=76" target="_blank">SVO Privacy Policy</a>)</div><div class=vosa1000tab><center><table><tr><td valign=bottom>
+<a href="https://cab.inta-csic.es/" target="_blank"><img src="../layout2/img/logo-compl-cab.png"></a>
+</td><td valign=bottom>
+<a href="https://www.ciencia.gob.es/" target="_blank"><img src="../layout2/img/micin-aei-2p.png" height=50></a>
+</td></table>  
+</div>
+&nbsp;

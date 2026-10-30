@@ -1,0 +1,36 @@
+﻿python.exe : D:\pyenv\pyenv-win\versions\3.11.8\Lib\site-packages\requests\__init__.py:109: RequestsDependencyWarning: 
+urllib3 (1.26.13) or chardet (7.4.1)/charset_normalizer (2.1.1) doesn't match a supported version!
+At line:1 char:1
++ & 'D:\pyenv\pyenv-win\versions\3.11.8\python.exe' 'E:\workspace\hyper ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\pyenv\pyenv-...ported version!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  warnings.warn(
+预计算径向积分...
+总态数: 35  初态 n=2: 2
+=== v10 自检：B=0 合成还原 ===
+  Hα: ew_syn 33.74 ew_ref 33.70 缺失 -0.11%
+  Hβ: ew_syn 43.18 ew_ref 43.19 缺失 0.02%
+  Hγ: ew_syn 34.58 ew_ref 34.59 缺失 0.02%
+  Hδ: ew_syn 26.95 ew_ref 26.95 缺失 0.01%
+  Hε: ew_syn 20.80 ew_ref 20.81 缺失 0.04%
+
+=== v10 主循环：逐星合成 → 管线 → 缺失 ===
+合成星数: 36
+
+B 10-41 (n=29):
+  Hα 缺失: 中位 31.9% (P25 30.3 P75 37.5, n=29)
+  Hβ 缺失: 中位 24.2% (P25 18.8 P75 54.6, n=29)
+  Hγ 缺失: 中位 37.6% (P25 32.7 P75 69.4, n=29)
+  Hδ 缺失: 中位 70.4% (P25 68.2 P75 100.0, n=29)
+  Hε 缺失: 中位 100.0% (P25 100.0 P75 100.0, n=29)
+
+B 41-100 (n=7):
+  Hα 缺失: 中位 61.0% (P25 55.4 P75 87.1, n=7)
+  Hβ 缺失: 中位 84.4% (P25 61.8 P75 88.1, n=7)
+  Hγ 缺失: 中位 84.7% (P25 72.4 P75 86.1, n=7)
+  Hδ 缺失: 中位 100.0% (P25 100.0 P75 100.0, n=7)
+  Hε 缺失: 中位 100.0% (P25 100.0 P75 100.0, n=7)
+
+done

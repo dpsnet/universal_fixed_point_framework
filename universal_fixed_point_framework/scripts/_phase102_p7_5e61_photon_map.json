@@ -1,0 +1,22 @@
+{
+  "dims": [
+    "\u6a2a",
+    "\u7ed5\u8f74",
+    "\u7eb5"
+  ],
+  "configs": [
+    "\u5f00\u5f00\u5f00",
+    "\u5f00\u5f00\u95ed",
+    "\u5f00\u95ed\u5f00",
+    "\u5f00\u95ed\u95ed",
+    "\u95ed\u5f00\u5f00",
+    "\u95ed\u5f00\u95ed",
+    "\u95ed\u95ed\u5f00",
+    "\u95ed\u95ed\u95ed"
+  ],
+  "traveling": [
+    "\u5f00",
+    "\u95ed",
+    "\u5f00"
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "version": "v0.2",
+  "date": "2026-10-21",
+  "method": "扩展框架素域分数族 a/b：a <= ceil(T*14400*1.02)、b <= 14400、分子分母素因子均 ⊆ {2,3,5,7,11,13,29}；相对容差 0.01%；框架 dev 对照 = 框架分数对观测/定义值的相对偏差",
+  "results": {
+    "kappa_lambda": {
+      "target": "kappa_lambda",
+      "label": "κΛ 定义值 4ln10/Δλ_EM",
+      "T": 401.73304855,
+      "tol": 0.01,
+      "frame": "92800/231",
+      "frame_value": 401.73160173160176,
+      "frame_dev": 3.601442309622735e-06,
+      "frame_in_extended_domain": true,
+      "frame_num_factor": "2^7*5^2*29^1",
+      "frame_den_factor": "3^1*7^1*11^1",
+      "family_size_num": 10243,
+      "family_size_den": 1037,
+      "hits_tol001pct": 2074,
+      "hits_reaching_frame_dev": 62,
+      "best_hit": {
+        "a": 292864,
+        "b": 729,
+        "dev": 2.074711506474102e-06,
+        "a_factor": "2^11*11^1*13^1",
+        "b_factor": "3^6",
+        "value": 401.73388203017834
+      },
+      "frame_rank": {
+        "dev_less_in_family": 17,
+        "dev_leq_in_family": 62,
+        "hit_total_tol001pct": 2074
+      }
+    },
+    "g_p_over_2": {
+      "target": "g_p_over_2",
+      "label": "μ_p/μ_N CODATA 2018",
+      "T": 2.79284734463,
+      "tol": 0.01,
+      "frame": "40217/14400",
+      "frame_value": 2.792847222222222,
+      "frame_dev": 4.382902573291088e-08,
+      "frame_in_extended_domain": false,
+      "frame_num_factor": "1 * 40217(余素)",
+      "frame_den_factor": "2^6*3^2*5^2",
+      "family_size_num": 1644,
+      "family_size_den": 1037,
+      "hits_tol001pct": 1967,
+      "hits_reaching_frame_dev": 0,
+      "best_hit": {
+        "a": 9800,
+        "b": 3509,
+        "dev": 1.0339924377763253e-05,
+        "a_factor": "2^3*5^2*7^2",
+        "b_factor": "11^2*29^1",
+        "value": 2.792818466799658
+      },
+      "frame_rank": null
+    },
+    "m_t_over_m_b": {
+      "target": "m_t_over_m_b",
+      "label": "PDG 中心口径 41.284±0.237（D 闭式 42-7^3/500-2/3375）",
+      "T": 41.284,
+      "tol": 0.01,
+      "frame": "557731/13500",
+      "frame_value": 41.31340740740741,
+      "frame_dev": 0.0007123197221057012,
+      "frame_in_extended_domain": false,
+      "frame_num_factor": "1 * 557731(余素)",
+      "frame_den_factor": "2^2*3^3*5^3",
+      "family_size_num": 4711,
+      "family_size_den": 1037,
+      "hits_tol001pct": 2057,
+      "hits_reaching_frame_dev": 891,
+      "best_hit": {
+        "a": 495616,
+        "b": 12005,
+        "dev": 3.187962125957764e-06,
+        "a_factor": "2^12*11^2",
+        "b_factor": "5^1*7^4",
+        "value": 41.28413161182841
+      },
+      "frame_rank": null
+    },
+    "alpha_inv": {
+      "target": "alpha_inv",
+      "label": "α^-1 CODATA 2018（路径A 16259/6000 -> 24(d_H+3)）",
+      "T": 137.035999084,
+      "tol": 0.01,
+      "frame": "34259/250",
+      "frame_value": 137.036,
+      "frame_dev": 6.68437498802354e-09,
+      "frame_in_extended_domain": false,
+      "frame_num_factor": "1 * 34259(余素)",
+      "frame_den_factor": "2^1*5^3",
+      "family_size_num": 7173,
+      "family_size_den": 1037,
+      "hits_tol001pct": 2068,
+      "hits_reaching_frame_dev": 0,
+      "best_hit": {
+        "a": 115248,
+        "b": 841,
+        "dev": 6.28882856068893e-06,
+        "a_factor": "2^4*3^1*7^4",
+        "b_factor": "29^2",
+        "value": 137.03686087990488
+      },
+      "frame_rank": null
+    },
+    "twenty_one_hundred": {
+      "target": "twenty_one_hundred",
+      "label": "Hγ n=5 相对频率（R∞ 精度 1.9e-12）",
+      "T": 0.21,
+      "tol": 0.01,
+      "frame": "21/100",
+      "frame_value": 0.21,
+      "frame_dev": 0.0,
+      "frame_in_extended_domain": true,
+      "frame_num_factor": "3^1*7^1",
+      "frame_den_factor": "2^2*5^2",
+      "family_size_num": 494,
+      "family_size_den": 1037,
+      "hits_tol001pct": 1467,
+      "hits_reaching_frame_dev": 1467,
+      "best_hit": {
+        "a": 21,
+        "b": 100,
+        "dev": 0.0,
+        "a_factor": "3^1*7^1",
+        "b_factor": "2^2*5^2",
+        "value": 0.21
+      },
+      "frame_rank": {
+        "dev_less_in_family": 0,
+        "dev_leq_in_family": 83,
+        "hit_total_tol001pct": 1467
+      }
+    }
+  }
+}

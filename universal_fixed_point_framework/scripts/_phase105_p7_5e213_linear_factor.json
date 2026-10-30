@@ -1,0 +1,68 @@
+﻿{
+ "name": "p7_5e213_linear_factor",
+ "total": 12,
+ "fails": 0,
+ "all_pass": true,
+ "tests": [
+  {
+   "name": "dd1_interlock",
+   "ok": true,
+   "detail": "B1=8 b1sq=64"
+  },
+  {
+   "name": "dd2_general",
+   "ok": true,
+   "detail": "bad=[]"
+  },
+  {
+   "name": "dd2_instances",
+   "ok": true,
+   "detail": "b4sq+1=4097 b7sq+1=262145"
+  },
+  {
+   "name": "dd2_f2d4",
+   "ok": true,
+   "detail": "D4=241"
+  },
+  {
+   "name": "dd3_general",
+   "ok": true,
+   "detail": "bad=[]"
+  },
+  {
+   "name": "dd3_n146",
+   "ok": true,
+   "detail": "B3=32 b3sq=1024"
+  },
+  {
+   "name": "ee1_n4",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ee1_n10",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ee1_n14",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ee1_kn_cor",
+   "ok": true,
+   "detail": "kn10=4608 kn14=102400"
+  },
+  {
+   "name": "ee2_frames",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "ee3_diffs",
+   "ok": true,
+   "detail": ""
+  }
+ ]
+}

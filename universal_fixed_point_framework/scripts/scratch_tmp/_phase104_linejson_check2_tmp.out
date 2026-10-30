@@ -1,0 +1,24 @@
+﻿== paperX_wd_linelevel_v10int.json : dict keys(1) ==
+   keys: ['strong']
+   first val type: list
+   first val: [{"name": "J221828.58-000012.1", "gid": "J221828.58-000012.1", "B_MG": 220.77999877929688, "Teff": 12806.0, "logg": null, "Sp-ID": "0374-51791-0583", "lines": {"Hgamma": {"d_obs": 0.015387595543078442, "sig_obs": 0.17816590821344158, "d_meas": 0.0417
+== paperX_wd_linelevel_mid_full_snr.json : dict keys(1) ==
+   keys: ['mid_full']
+   first val type: list
+   first val: [{"name": "J121635.36-002656.3", "gid": "J121635.36-002656.3", "B_MG": 64.23999786376953, "Teff": null, "logg": null, "Sp-ID": "0288-52000-0276", "lines": {"Hbeta": {"d_obs": 0.3792383124975329, "sig_obs": 1.2221518198707526, "d_meas": 0.077002249514
+== paperX_wd_linelevel_weak_sdss_snr.json : dict keys(1) ==
+   keys: ['weak_sdss']
+   first val type: list
+   first val: [{"name": "J114720.40-002405.7", "gid": "J114720.40-002405.7", "B_MG": 2.0, "Teff": 15919.0, "logg": null, "Sp-ID": "0283-51584-0120", "lines": {"Hbeta": {"d_obs": 0.26582824610544886, "sig_obs": 2.9999999999999996, "d_meas": 0.5367283902420596, "d_p
+== paperX_wd_kepler_linelevel.json : dict keys(2) ==
+   keys: ['weak', 'mid']
+   first val type: list
+   first val: [{"gid": "021148.22+211548.19", "B_MG": 105.0, "Teff": 12986.0, "logg": 9.99, "Sp-ID": "2046-53327-48", "src": "kepler2013", "lines": {"Hepsilon": {"d_obs": 0.04653036441757125, "sig_obs": 3.9999999999999996, "d_meas": 0.011486600069366637, "d_pure":
+== paperX_wd_linelevel_strong.json : dict keys(1) ==
+   keys: ['strong']
+   first val type: list
+   first val: [{"gid": "1769524911044920064", "B_MG": 100.95, "Teff": 21558.0, "logg": 8.0, "eta_sc": 0.4522760607438546, "lines": {}}, {"gid": "1418237478616604160", "B_MG": 155.79, "Teff": 22197.0, "logg": 8.0, "eta_sc": 0.6098223616532865, "lines": {"Hbeta": {"
+== paperX_wd_linelevel.json : dict keys(2) ==
+   keys: ['weak', 'mid']
+   first val type: list
+   first val: [{"gid": "1101423953375120896", "B_MG": 2.05, "Teff": 9725.0, "logg": 8.0, "lines": {"Hbeta": {"d_obs": 0.25116032350306344, "sig_obs": 2.9999999999999996, "d_meas": 0.4873629418365155, "d_pure": 0.18727011587838405, "fwhm": 8.039595197005838, "chi2_

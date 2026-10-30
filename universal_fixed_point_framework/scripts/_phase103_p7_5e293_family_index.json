@@ -1,0 +1,403 @@
+{
+ "phase": "P7-5e-293",
+ "title": "211 YY/AA k 族同族判别与种子交集 数值先证伪",
+ "total": 66,
+ "fails": 0,
+ "all_pass": true,
+ "checks": [
+  {
+   "id": "yy1_j1",
+   "lhs": 24,
+   "rhs": 24,
+   "ok": true
+  },
+  {
+   "id": "yy1_j2",
+   "lhs": 96,
+   "rhs": 96,
+   "ok": true
+  },
+  {
+   "id": "yy1_j3",
+   "lhs": 384,
+   "rhs": 384,
+   "ok": true
+  },
+  {
+   "id": "yy1_j4",
+   "lhs": 1536,
+   "rhs": 1536,
+   "ok": true
+  },
+  {
+   "id": "yy1_j5",
+   "lhs": 6144,
+   "rhs": 6144,
+   "ok": true
+  },
+  {
+   "id": "yy1_j6",
+   "lhs": 24576,
+   "rhs": 24576,
+   "ok": true
+  },
+  {
+   "id": "yy1_j7",
+   "lhs": 98304,
+   "rhs": 98304,
+   "ok": true
+  },
+  {
+   "id": "yy1_j8",
+   "lhs": 393216,
+   "rhs": 393216,
+   "ok": true
+  },
+  {
+   "id": "yy1_j9",
+   "lhs": 1572864,
+   "rhs": 1572864,
+   "ok": true
+  },
+  {
+   "id": "yy1_j10",
+   "lhs": 6291456,
+   "rhs": 6291456,
+   "ok": true
+  },
+  {
+   "id": "yy2_j1",
+   "lhs": 24,
+   "rhs": 24,
+   "ok": true
+  },
+  {
+   "id": "yy2_j2",
+   "lhs": 96,
+   "rhs": 96,
+   "ok": true
+  },
+  {
+   "id": "yy2_j3",
+   "lhs": 384,
+   "rhs": 384,
+   "ok": true
+  },
+  {
+   "id": "yy2_j4",
+   "lhs": 1536,
+   "rhs": 1536,
+   "ok": true
+  },
+  {
+   "id": "yy2_j5",
+   "lhs": 6144,
+   "rhs": 6144,
+   "ok": true
+  },
+  {
+   "id": "yy2_j6",
+   "lhs": 24576,
+   "rhs": 24576,
+   "ok": true
+  },
+  {
+   "id": "yy2_j7",
+   "lhs": 98304,
+   "rhs": 98304,
+   "ok": true
+  },
+  {
+   "id": "yy2_j8",
+   "lhs": 393216,
+   "rhs": 393216,
+   "ok": true
+  },
+  {
+   "id": "yy2_j9",
+   "lhs": 1572864,
+   "rhs": 1572864,
+   "ok": true
+  },
+  {
+   "id": "yy2_j10",
+   "lhs": 6291456,
+   "rhs": 6291456,
+   "ok": true
+  },
+  {
+   "id": "yy3_j1",
+   "lhs": 24,
+   "rhs": 24,
+   "ok": true
+  },
+  {
+   "id": "yy3_j2",
+   "lhs": 96,
+   "rhs": 96,
+   "ok": true
+  },
+  {
+   "id": "yy3_j3",
+   "lhs": 384,
+   "rhs": 384,
+   "ok": true
+  },
+  {
+   "id": "yy3_j4",
+   "lhs": 1536,
+   "rhs": 1536,
+   "ok": true
+  },
+  {
+   "id": "yy3_j5",
+   "lhs": 6144,
+   "rhs": 6144,
+   "ok": true
+  },
+  {
+   "id": "yy3_j6",
+   "lhs": 24576,
+   "rhs": 24576,
+   "ok": true
+  },
+  {
+   "id": "yy3_j7",
+   "lhs": 98304,
+   "rhs": 98304,
+   "ok": true
+  },
+  {
+   "id": "yy3_j8",
+   "lhs": 393216,
+   "rhs": 393216,
+   "ok": true
+  },
+  {
+   "id": "yy3_j9",
+   "lhs": 1572864,
+   "rhs": 1572864,
+   "ok": true
+  },
+  {
+   "id": "yy3_j10",
+   "lhs": 6291456,
+   "rhs": 6291456,
+   "ok": true
+  },
+  {
+   "id": "kj_j2",
+   "val": 3,
+   "expect": 3,
+   "ok": true
+  },
+  {
+   "id": "kj_j3",
+   "val": 6,
+   "expect": 6,
+   "ok": true
+  },
+  {
+   "id": "kj_j4",
+   "val": 12,
+   "expect": 12,
+   "ok": true
+  },
+  {
+   "id": "kj_j5",
+   "val": 24,
+   "expect": 24,
+   "ok": true
+  },
+  {
+   "id": "kj_j6",
+   "val": 48,
+   "expect": 48,
+   "ok": true
+  },
+  {
+   "id": "kj_j7",
+   "val": 96,
+   "expect": 96,
+   "ok": true
+  },
+  {
+   "id": "kj_j8",
+   "val": 192,
+   "expect": 192,
+   "ok": true
+  },
+  {
+   "id": "kj_j9",
+   "val": 384,
+   "expect": 384,
+   "ok": true
+  },
+  {
+   "id": "kj_j10",
+   "val": 768,
+   "expect": 768,
+   "ok": true
+  },
+  {
+   "id": "kj_j11",
+   "val": 1536,
+   "expect": 1536,
+   "ok": true
+  },
+  {
+   "id": "kj_j12",
+   "val": 3072,
+   "expect": 3072,
+   "ok": true
+  },
+  {
+   "id": "kj_j13",
+   "val": 6144,
+   "expect": 6144,
+   "ok": true
+  },
+  {
+   "id": "kj_j14",
+   "val": 12288,
+   "expect": 12288,
+   "ok": true
+  },
+  {
+   "id": "kj_j15",
+   "val": 24576,
+   "expect": 24576,
+   "ok": true
+  },
+  {
+   "id": "kj_j16",
+   "val": 49152,
+   "expect": 49152,
+   "ok": true
+  },
+  {
+   "id": "win_w5",
+   "val": 24,
+   "expect": 24,
+   "ok": true
+  },
+  {
+   "id": "win_w7",
+   "val": 96,
+   "expect": 96,
+   "ok": true
+  },
+  {
+   "id": "win_w9",
+   "val": 384,
+   "expect": 384,
+   "ok": true
+  },
+  {
+   "id": "win_w11",
+   "val": 1536,
+   "expect": 1536,
+   "ok": true
+  },
+  {
+   "id": "win_w13",
+   "val": 6144,
+   "expect": 6144,
+   "ok": true
+  },
+  {
+   "id": "win_w15",
+   "val": 24576,
+   "expect": 24576,
+   "ok": true
+  },
+  {
+   "id": "aa1_seed4",
+   "val": 30,
+   "ok": true
+  },
+  {
+   "id": "aa2_k9",
+   "val": 2080,
+   "ok": true
+  },
+  {
+   "id": "aa3_n4",
+   "lhs": 240,
+   "rhs": 240,
+   "ok": true
+  },
+  {
+   "id": "aa3_n5",
+   "lhs": 592,
+   "rhs": 592,
+   "ok": true
+  },
+  {
+   "id": "aa3_n6",
+   "lhs": 1408,
+   "rhs": 1408,
+   "ok": true
+  },
+  {
+   "id": "aa3_n7",
+   "lhs": 3264,
+   "rhs": 3264,
+   "ok": true
+  },
+  {
+   "id": "aa3_n8",
+   "lhs": 7424,
+   "rhs": 7424,
+   "ok": true
+  },
+  {
+   "id": "aa3_n9",
+   "lhs": 16640,
+   "rhs": 16640,
+   "ok": true
+  },
+  {
+   "id": "aa3_n10",
+   "lhs": 36864,
+   "rhs": 36864,
+   "ok": true
+  },
+  {
+   "id": "aa3_n11",
+   "lhs": 80896,
+   "rhs": 80896,
+   "ok": true
+  },
+  {
+   "id": "aa3_n12",
+   "lhs": 176128,
+   "rhs": 176128,
+   "ok": true
+  },
+  {
+   "id": "aa3_n13",
+   "lhs": 380928,
+   "rhs": 380928,
+   "ok": true
+  },
+  {
+   "id": "aa3_n14",
+   "lhs": 819200,
+   "rhs": 819200,
+   "ok": true
+  },
+  {
+   "id": "aa3_n15",
+   "lhs": 1753088,
+   "rhs": 1753088,
+   "ok": true
+  },
+  {
+   "id": "aa3_n16",
+   "lhs": 3735552,
+   "rhs": 3735552,
+   "ok": true
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "n": 11,
+ "total_samples": 240000,
+ "extra4_patterns": 54,
+ "extra4_multi_sign": 54,
+ "b46_patterns": 227781,
+ "b46_multi_sign": 90,
+ "b50_patterns": 237147,
+ "b50_multi_sign": 8,
+ "adj_flip_total": 4550,
+ "adj_flip_with_extra": 4373,
+ "extra50": [
+  "s1_234567891011",
+  "s123_4567891011",
+  "s1234567_8910",
+  "s12345_67891011"
+ ]
+}

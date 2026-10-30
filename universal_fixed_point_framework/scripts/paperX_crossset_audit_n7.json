@@ -1,0 +1,65 @@
+{
+  "n": 7,
+  "basis": [
+    "s2_3",
+    "s2_34567",
+    "s23_4567",
+    "s234_567",
+    "s2345_67",
+    "s23456_7",
+    "s3_4",
+    "s3_4567",
+    "s3456_7",
+    "s4_5",
+    "s4_567",
+    "s456_7",
+    "s5_6",
+    "s5_67",
+    "s56_7",
+    "s6_7"
+  ],
+  "basis_size": 16,
+  "main_samples": 40000,
+  "main_nondet": 0,
+  "seeds": [
+    77,
+    211,
+    331,
+    777,
+    555
+  ],
+  "per_seed": [
+    {
+      "seed": 77,
+      "patterns": 1457,
+      "bad": 0,
+      "secs": 15
+    },
+    {
+      "seed": 211,
+      "patterns": 1473,
+      "bad": 0,
+      "secs": 14
+    },
+    {
+      "seed": 331,
+      "patterns": 1454,
+      "bad": 0,
+      "secs": 23
+    },
+    {
+      "seed": 777,
+      "patterns": 1464,
+      "bad": 0,
+      "secs": 17
+    },
+    {
+      "seed": 555,
+      "patterns": 1478,
+      "bad": 0,
+      "secs": 13
+    }
+  ],
+  "total_violations": 0,
+  "pass": true
+}

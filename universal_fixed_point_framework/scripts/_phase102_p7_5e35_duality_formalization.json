@@ -1,0 +1,14 @@
+{
+  "attack1": {
+    "C2_identity": "4*ln(kmax+Ngen-1)",
+    "interlock_full_framework": true
+  },
+  "attack2": {
+    "m_c_channel": "kappaLambda*sqrt10",
+    "status": "candidate"
+  },
+  "attack3": {
+    "dual": "m_t Sp/v-chain vs m_b EM/C2-chain",
+    "status": "registered"
+  }
+}

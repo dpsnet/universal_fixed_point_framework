@@ -1,0 +1,68 @@
+{
+  "total": 12,
+  "fails": 1,
+  "all_pass": false,
+  "results": [
+    {
+      "name": "pp1_dd2_subset",
+      "pass": true,
+      "note": "j%3=1 ⇒ n=(2^{2j+4}-1)/7 整数 ∧ 7n+2=B_j²+1，j=0..20"
+    },
+    {
+      "name": "pp1_window_kj",
+      "pass": true,
+      "note": "kj(2j+3)=3·2^{2j+1}=6·4^j，j=0..12"
+    },
+    {
+      "name": "pp2_mod7",
+      "pass": true,
+      "note": "2^a mod7={1,2,4} ∧ 6·2^a mod7={6,5,3}≠2，a=0..30"
+    },
+    {
+      "name": "pp2_core",
+      "pass": true,
+      "note": "7n+2≠6·2^a，n=0..50, a=0..30"
+    },
+    {
+      "name": "pp2_no_meet",
+      "pass": true,
+      "note": "kj(2j+3)∩kn(n)=∅ 枚举：j=0..12 × n=4..30"
+    },
+    {
+      "name": "qq1_reg_claim",
+      "pass": false,
+      "note": "21k-2=7(3k-2)？ 预期 FAIL（勘误）"
+    },
+    {
+      "name": "qq1_corrected",
+      "pass": true,
+      "note": "21k-2=7(3k-2)+12（恒等修正），k=1..20"
+    },
+    {
+      "name": "qq1_mod3",
+      "pass": true,
+      "note": "(3k-2)%3=1（3 周期同源 ⑫ BB2），k=1..20"
+    },
+    {
+      "name": "qq1_mod7",
+      "pass": true,
+      "note": "(21k-2)%7=5 ≠ 0，k=1..20"
+    },
+    {
+      "name": "qq2_frames",
+      "pass": true,
+      "note": "21=7·3（主模数×种子）"
+    },
+    {
+      "name": "qq3_decomp",
+      "pass": true,
+      "note": "m_k=n_k+3k（分母 n + 种子×族下标），k=1..10"
+    },
+    {
+      "name": "qq3_cc3_n",
+      "pass": true,
+      "note": "7·n_k+2=2^{3k+1}（CC3 分母构造性），k=1..10"
+    }
+  ],
+  "note": "qq1_reg_claim 预期 FAIL=登记勘误（21k-2≠7(3k-2)，真实恒等+12）"
+}

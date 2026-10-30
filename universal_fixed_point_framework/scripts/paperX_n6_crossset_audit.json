@@ -1,0 +1,22 @@
+{
+  "n": 6,
+  "basis": [
+    "s1_23",
+    "s12_3",
+    "s123_4",
+    "s56",
+    "s23",
+    "s1_234",
+    "s34",
+    "s12",
+    "s345_6",
+    "s45_6",
+    "s45",
+    "s61"
+  ],
+  "basis_size": 12,
+  "main_samples": 40000,
+  "main_nondet": 0,
+  "total_violations": 0,
+  "pass": true
+}

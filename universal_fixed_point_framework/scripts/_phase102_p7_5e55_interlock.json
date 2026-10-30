@@ -1,0 +1,11 @@
+{
+  "k_weyl_pow": 8.0,
+  "k_formula": 8.0,
+  "nw_reverse": 3.9999999999999996,
+  "system": {
+    "Nweyl": 4,
+    "Ngen": 3,
+    "kmax": 8,
+    "ten": 10
+  }
+}

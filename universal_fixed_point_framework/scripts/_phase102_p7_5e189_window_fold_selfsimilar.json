@@ -1,0 +1,151 @@
+{
+  "title": "P7-5e-189 · 窗口对合自相似检验",
+  "date": "2026-10-15",
+  "windows": [
+    {
+      "j": 1,
+      "a": 1,
+      "b": 8,
+      "c": 9,
+      "k_silent": 1,
+      "k_binary": "1",
+      "a_is_2mp1_family": false,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": true,
+      "fw_roles": [
+        "域界/对合常数 K+1",
+        "静默单元 k=1"
+      ]
+    },
+    {
+      "j": 2,
+      "a": 9,
+      "b": 16,
+      "c": 25,
+      "k_silent": 3,
+      "k_binary": "11",
+      "a_is_2mp1_family": true,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": true,
+      "fw_roles": [
+        "静默单元 k=3"
+      ]
+    },
+    {
+      "j": 3,
+      "a": 17,
+      "b": 32,
+      "c": 49,
+      "k_silent": 6,
+      "k_binary": "110",
+      "a_is_2mp1_family": true,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": true,
+      "fw_roles": [
+        "静默单元 k=6",
+        "(k_max-1)^2"
+      ]
+    },
+    {
+      "j": 4,
+      "a": 33,
+      "b": 64,
+      "c": 97,
+      "k_silent": 12,
+      "k_binary": "1100",
+      "a_is_2mp1_family": true,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": false,
+      "fw_roles": []
+    },
+    {
+      "j": 5,
+      "a": 65,
+      "b": 128,
+      "c": 193,
+      "k_silent": 24,
+      "k_binary": "11000",
+      "a_is_2mp1_family": true,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": true,
+      "fw_roles": [
+        "静默单元 k=24"
+      ]
+    },
+    {
+      "j": 6,
+      "a": 129,
+      "b": 256,
+      "c": 385,
+      "k_silent": 48,
+      "k_binary": "110000",
+      "a_is_2mp1_family": true,
+      "b_is_dim_tower": true,
+      "c_is_silent_8k1": true,
+      "k_is_twin_bits": true,
+      "in_framework": false,
+      "fw_roles": []
+    }
+  ],
+  "stats": {
+    "windows_total": 6,
+    "c_all_silent_form": true,
+    "a_all_family": false,
+    "b_all_dim": true,
+    "k_all_twin_bits": true,
+    "triple_identity_all": false,
+    "in_framework_hits": [
+      9,
+      25,
+      49,
+      193
+    ],
+    "in_framework_misses": [
+      97,
+      385
+    ]
+  },
+  "conclusion": {
+    "verdict": "窗口三重身份自相似成立（候选层）：窗口三量各来自一个 2 进家族——起边界 a_j=2^{j+1}+1（2^m+1 家族）、终边界 b_j=2^{j+2}（维度塔 2^m）、对合常数 c_j=8k_j+1（静默单元家族，k_j=2^{j-2}+2^{j-1} 相邻双位）",
+    "windows_summary": [
+      "窗口1: m∈[1,8]  a=2^2+1(家族)✗ b=2^3(维度)✓ c=9=8·1+1(静默)✓ k₂=1(双位)✓  [身份: 域界/对合常数 K+1, 静默单元 k=1]",
+      "窗口2: m∈[9,16]  a=2^3+1(家族)✓ b=2^4(维度)✓ c=25=8·3+1(静默)✓ k₂=11(双位)✓  [身份: 静默单元 k=3]",
+      "窗口3: m∈[17,32]  a=2^4+1(家族)✓ b=2^5(维度)✓ c=49=8·6+1(静默)✓ k₂=110(双位)✓  [身份: 静默单元 k=6, (k_max-1)^2]",
+      "窗口4: m∈[33,64]  a=2^5+1(家族)✓ b=2^6(维度)✓ c=97=8·12+1(静默)✓ k₂=1100(双位)✓  [框架外]",
+      "窗口5: m∈[65,128]  a=2^6+1(家族)✓ b=2^7(维度)✓ c=193=8·24+1(静默)✓ k₂=11000(双位)✓  [身份: 静默单元 k=24]",
+      "窗口6: m∈[129,256]  a=2^7+1(家族)✓ b=2^8(维度)✓ c=385=8·48+1(静默)✓ k₂=110000(双位)✓  [框架外]"
+    ],
+    "structure": {
+      "a_start": "a_j = 2^{j+1}+1（j≥2）= 2^m+1 家族成员（m=j+1）——家族塔投影",
+      "b_end": "b_j = 2^{j+2} = 维度塔成员（满格 2^m，m=j+2）——维度塔投影",
+      "c_fold": "c_j = a_j+b_j = 8k_j+1（静默单元家族）——静默塔投影",
+      "k_twin_bits": "k_j = 2^{j-2}+2^{j-1}（相邻双位 2 进子集）——与静默家族 2 进子集组织一致",
+      "note_193": "c_5=193 即已登记的静默单元 k=24；窗口 1 起点异类（a_1=1，非家族成员）"
+    },
+    "framing": {
+      "triple_family_surface": "窗口结构 = 三 2 进家族（2^m+1 / 2^m / 8k+1）的重合面——186'双家族代数重合'扩展为三家族窗口结构",
+      "in_window_only": "框架内（m≤8）只有窗口 1（c_1=9 域界）；25/49/193 身份来自静默家族投影（k=3/6/24）——同家族多窗口投影",
+      "beyond_window": "97/385 无身份是预期的（窗口 4/6 在框架截断外）——与 188'窗口外零身份'一致"
+    },
+    "honest_limits": [
+      "继承 187/188 候选层（无 Clifford 特异性；纯 2 进幂集组织）",
+      "三重身份是同一 2 进幂集组织的多投影，非独立新机制（判别力中等）",
+      "窗口 1 起点异类（a_1=1）未解释——起点窗口的特殊性"
+    ],
+    "next_candidates": [
+      "检验 G：静默 k 全集 {1,2,3,4,5,6,8,16,24,32} 与 3·2^p/相邻双位模式的交叉——检验'窗口常数 k 必为相邻双位 2 进子集'是否区别于其他静默 k（如 41 的 k=5=2^0+2^2 隔位）",
+      "检验 H：窗口 1 起点异类 a_1=1 的系统性（为何起点窗口的起边界是恒等 1 而非家族成员）",
+      "若框架层扩展：c_4=97、c_6=385 成为下窗口预言（静默 k=12/48 应在扩展后出现身份）"
+    ]
+  }
+}

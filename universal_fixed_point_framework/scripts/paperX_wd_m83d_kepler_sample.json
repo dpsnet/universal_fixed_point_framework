@@ -1,0 +1,1812 @@
+[
+ {
+  "name": "SDSS J115917.39+613914.32",
+  "B_tesla": 1000.0,
+  "Teff": 35770.0,
+  "logg": 9.99,
+  "Sp-ID": "777-52320-69",
+  "src": "kepler2013",
+  "B_MG": 10.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J121209.31+013627.72",
+  "B_tesla": 1000.0,
+  "Teff": 24706.0,
+  "logg": 10.0,
+  "Sp-ID": "518-52282-285",
+  "src": "kepler2013",
+  "B_MG": 10.0,
+  "status": "ok",
+  "obs_EW": 118.04747921105806,
+  "n_detected": 6,
+  "balmer": {
+   "Hα": {
+    "EW": 4.8851829949543,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": 34.468703078098464,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 23.72158822187468,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 14.501967623962964,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 17.391202356337825,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 17.768450581737056,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 10.19556734904707,
+    "detected": true
+   }
+  },
+  "koester_EW": 132.88341034243527,
+  "koester_n_det": 7,
+  "resid": -0.05141404781568671
+ },
+ {
+  "name": "SDSS J001034.95+245131.20",
+  "B_tesla": 1100.0,
+  "Teff": 19355.0,
+  "logg": 10.0,
+  "Sp-ID": "2822-54389-25",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "ok",
+  "obs_EW": 134.00421287365228,
+  "n_detected": 7,
+  "balmer": {
+   "Hα": {
+    "EW": 20.067934795760536,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 38.2421070096221,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 28.032207165834333,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 9.105001784171986,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 14.048889258021921,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 14.372816670405442,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 10.135256189835946,
+    "detected": true
+   }
+  },
+  "koester_EW": 170.82864719916734,
+  "koester_n_det": 7,
+  "resid": -0.10544224961125474
+ },
+ {
+  "name": "SDSS J075234.95+172524.86",
+  "B_tesla": 1100.0,
+  "Teff": 39779.0,
+  "logg": 10.0,
+  "Sp-ID": "2729-54419-171",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "ok",
+  "obs_EW": 48.61193141971874,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 10.852299191251076,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 21.94287349744188,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 12.472359199116022,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 4.073082886414568,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 3.977653697436348,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 3.3443995319097617,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 2.9266490284086997,
+    "detected": false
+   }
+  },
+  "koester_EW": 51.751413324211995,
+  "koester_n_det": 4,
+  "resid": -0.02717933827364795
+ },
+ {
+  "name": "SDSS J202501.11+131025.62",
+  "B_tesla": 1100.0,
+  "Teff": 28932.0,
+  "logg": 10.0,
+  "Sp-ID": "2257-53612-167",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J120547.48+340811.48",
+  "B_tesla": 1100.0,
+  "Teff": 23237.0,
+  "logg": 10.0,
+  "Sp-ID": "2089-53498-431",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "ok",
+  "obs_EW": 118.568420252374,
+  "n_detected": 6,
+  "balmer": {
+   "Hα": {
+    "EW": 18.887652957523176,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 37.06411444759516,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 24.327498939940444,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 14.961864158593174,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 12.268045531574167,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 11.05924421714788,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 7.845920171887248,
+    "detected": false
+   }
+  },
+  "koester_EW": 144.99056037884063,
+  "koester_n_det": 7,
+  "resid": -0.08737069480298686
+ },
+ {
+  "name": "SDSS J033145.69+004517.04",
+  "B_tesla": 1100.0,
+  "Teff": 28299.0,
+  "logg": 10.0,
+  "Sp-ID": "810-52672-391",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J081648.71+041223.53",
+  "B_tesla": 1100.0,
+  "Teff": 12880.0,
+  "logg": 9.95,
+  "Sp-ID": "1184-52641-329",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J030407.40-002541.74",
+  "B_tesla": 1100.0,
+  "Teff": 21828.0,
+  "logg": 10.0,
+  "Sp-ID": "709-52205-120",
+  "src": "kepler2013",
+  "B_MG": 11.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J152401.60+185659.21",
+  "B_tesla": 1200.0,
+  "Teff": 22067.0,
+  "logg": 10.0,
+  "Sp-ID": "2794-54537-410",
+  "src": "kepler2013",
+  "B_MG": 12.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J085550.68+824905.20",
+  "B_tesla": 1200.0,
+  "Teff": 32081.0,
+  "logg": 10.0,
+  "Sp-ID": "2549-54523-66",
+  "src": "kepler2013",
+  "B_MG": 12.0,
+  "status": "ok",
+  "obs_EW": 66.30910759983158,
+  "n_detected": 3,
+  "balmer": {
+   "Hα": {
+    "EW": 16.137115927649855,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 30.540843029361472,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 19.63114864282025,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 1.3944664335923687,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -1.4283648263883997,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -4.836443553807108,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -3.4986008909602875,
+    "detected": false
+   }
+  },
+  "koester_EW": 80.40835980645974,
+  "koester_n_det": 5,
+  "resid": -0.0837280202026497
+ },
+ {
+  "name": "SDSS J103350.88+204729.40",
+  "B_tesla": 1200.0,
+  "Teff": 34544.0,
+  "logg": 9.98,
+  "Sp-ID": "2376-53770-463",
+  "src": "kepler2013",
+  "B_MG": 12.0,
+  "status": "ok",
+  "obs_EW": 57.90285569155662,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 25.450257956618227,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 20.220242060194053,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 10.20322605825414,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 2.029129616490192,
+    "detected": true
+   },
+   "Hε": {
+    "EW": -2.0792054821013317,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -3.622967383977123,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -3.2199813230207903,
+    "detected": false
+   }
+  },
+  "koester_EW": 67.60489610748247,
+  "koester_n_det": 5,
+  "resid": -0.06727816664087341
+ },
+ {
+  "name": "SDSS J090748.82+353821.5",
+  "B_tesla": 1200.0,
+  "Teff": 12485.0,
+  "logg": 9.85,
+  "Sp-ID": "1212-52703-187",
+  "src": "kepler2013",
+  "B_MG": 12.0,
+  "status": "ok",
+  "obs_EW": 44.421551164860624,
+  "n_detected": 3,
+  "balmer": {
+   "Hα": {
+    "EW": 17.23192064248482,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 22.557513414426538,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 5.977823968943135,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": 1.8030598478970388,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 4.632117107949261,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 4.317719159589387,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 1.809451006108775,
+    "detected": false
+   }
+  },
+  "koester_EW": 174.55853050564224,
+  "koester_n_det": 7,
+  "resid": -0.5943473575263553
+ },
+ {
+  "name": "SDSS J115345.97+133106.61",
+  "B_tesla": 1300.0,
+  "Teff": 12844.0,
+  "logg": 9.19,
+  "Sp-ID": "1762-53415-42",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "ok",
+  "obs_EW": 29.118315692808494,
+  "n_detected": 6,
+  "balmer": {
+   "Hα": {
+    "EW": 4.900334389184982,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": -1.0813949903153182,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": 6.1872336026329045,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 2.5576209425010776,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 1.1539977082463255,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 6.842700861684582,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 7.4764281885586215,
+    "detected": true
+   }
+  },
+  "koester_EW": 189.83931876245322,
+  "koester_n_det": 7,
+  "resid": -0.8142199165219204
+ },
+ {
+  "name": "SDSS J143235.46+454852.52",
+  "B_tesla": 1300.0,
+  "Teff": 21053.0,
+  "logg": 9.99,
+  "Sp-ID": "2932-54595-542",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "ok",
+  "obs_EW": 120.67926910552464,
+  "n_detected": 5,
+  "balmer": {
+   "Hα": {
+    "EW": 23.493644409046272,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 41.4611201285376,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 26.03934182752115,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 19.922931996924582,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 15.684458883995894,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 17.599419024590745,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 9.762230743495051,
+    "detected": true
+   }
+  },
+  "koester_EW": 158.56985749611698,
+  "koester_n_det": 7,
+  "resid": -0.11858796469474905
+ },
+ {
+  "name": "SDSS J101428.10+365724.40",
+  "B_tesla": 1300.0,
+  "Teff": 19580.0,
+  "logg": 10.0,
+  "Sp-ID": "1954-53357-393",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J140716.67+495613.70",
+  "B_tesla": 1300.0,
+  "Teff": 27376.0,
+  "logg": 10.0,
+  "Sp-ID": "1671-53446-453",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J101428.10+365724.40",
+  "B_tesla": 1300.0,
+  "Teff": 19580.0,
+  "logg": 10.0,
+  "Sp-ID": "1954-53357-393",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J205233.52-001610.69",
+  "B_tesla": 1300.0,
+  "Teff": 36761.0,
+  "logg": 9.99,
+  "Sp-ID": "982-52466-19",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "ok",
+  "obs_EW": 59.91465908096238,
+  "n_detected": 5,
+  "balmer": {
+   "Hα": {
+    "EW": 16.041921116702415,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 23.909241278761563,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 14.167238854172169,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": -0.47993329832234943,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 3.9383018489942847,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 1.8579559823319478,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 0.46142949165413993,
+    "detected": false
+   }
+  },
+  "koester_EW": 64.34814474052948,
+  "koester_n_det": 5,
+  "resid": -0.031002937528471573
+ },
+ {
+  "name": "SDSS J074947.00+354055.51",
+  "B_tesla": 1300.0,
+  "Teff": 39100.0,
+  "logg": 9.98,
+  "Sp-ID": "542-51993-639",
+  "src": "kepler2013",
+  "B_MG": 13.0,
+  "status": "ok",
+  "obs_EW": 51.87101581134543,
+  "n_detected": 3,
+  "balmer": {
+   "Hα": {
+    "EW": 19.805289287730048,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 23.095618925421885,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 8.97010759819349,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 0.4096341073555654,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -6.599232124129239,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -11.374314270585678,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -9.818568480251457,
+    "detected": false
+   }
+  },
+  "koester_EW": 51.751413324211995,
+  "koester_n_det": 4,
+  "resid": 0.0010025382281326435
+ },
+ {
+  "name": "SDSS J074924.91+171355.45",
+  "B_tesla": 1400.0,
+  "Teff": 35795.0,
+  "logg": 10.0,
+  "Sp-ID": "2729-54419-282",
+  "src": "kepler2013",
+  "B_MG": 14.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J072540.82+321402.12",
+  "B_tesla": 1400.0,
+  "Teff": 34711.0,
+  "logg": 9.99,
+  "Sp-ID": "2695-54409-564",
+  "src": "kepler2013",
+  "B_MG": 14.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J100759.81+162349.64",
+  "B_tesla": 1400.0,
+  "Teff": 32642.0,
+  "logg": 10.0,
+  "Sp-ID": "2585-54097-30",
+  "src": "kepler2013",
+  "B_MG": 14.0,
+  "status": "ok",
+  "obs_EW": 60.63278743408934,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 15.204767708770994,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 31.56887115154503,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 12.451883472650106,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 0.8361118876809073,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 1.8374044271896848,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 2.7487130460517815,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 1.4072651011232011,
+    "detected": true
+   }
+  },
+  "koester_EW": 80.40835980645974,
+  "koester_n_det": 5,
+  "resid": -0.1225936690901875
+ },
+ {
+  "name": "SDSS J133340.34+640627.38",
+  "B_tesla": 1400.0,
+  "Teff": 20048.0,
+  "logg": 10.0,
+  "Sp-ID": "603-52056-112",
+  "src": "kepler2013",
+  "B_MG": 14.0,
+  "status": "ok",
+  "obs_EW": 106.36889796562436,
+  "n_detected": 5,
+  "balmer": {
+   "Hα": {
+    "EW": 19.653286322882945,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 43.72214695594275,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 27.91700760426846,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 7.279164757923656,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 10.027761137072826,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 8.722472931537274,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 5.0486959454573705,
+    "detected": true
+   }
+  },
+  "koester_EW": 165.75443177216198,
+  "koester_n_det": 7,
+  "resid": -0.19265048919394512
+ },
+ {
+  "name": "SDSS J122209.43+001534.06",
+  "B_tesla": 1600.0,
+  "Teff": 21070.0,
+  "logg": 10.0,
+  "Sp-ID": "2568-54153-471",
+  "src": "kepler2013",
+  "B_MG": 16.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J153829.29+530604.65",
+  "B_tesla": 1600.0,
+  "Teff": 18116.0,
+  "logg": 10.0,
+  "Sp-ID": "795-52378-637",
+  "src": "kepler2013",
+  "B_MG": 16.0,
+  "status": "ok",
+  "obs_EW": 89.33404186825912,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 17.372714985914648,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 40.05423418270564,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 24.350437901822445,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 8.689646325592967,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 7.556654797816392,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 2.428516086466714,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 0.23487041440815798,
+    "detected": false
+   }
+  },
+  "koester_EW": 173.91032160457445,
+  "koester_n_det": 7,
+  "resid": -0.289308374370695
+ },
+ {
+  "name": "SDSS J084201.42+153941.89",
+  "B_tesla": 1700.0,
+  "Teff": 22510.0,
+  "logg": 10.0,
+  "Sp-ID": "2429-53799-363",
+  "src": "kepler2013",
+  "B_MG": 17.0,
+  "status": "ok",
+  "obs_EW": 67.18168325647659,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 15.677992505399786,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 34.158212891273166,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 16.47681873991462,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 0.8920999302809576,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 3.312067544531156,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 0.8686591198890115,
+    "detected": true
+   },
+   "Hη": {
+    "EW": -1.283941080813525,
+    "detected": false
+   }
+  },
+  "koester_EW": 144.99056037884063,
+  "koester_n_det": 7,
+  "resid": -0.33408884736534117
+ },
+ {
+  "name": "SDSS J094458.92+453901.15",
+  "B_tesla": 1700.0,
+  "Teff": 18919.0,
+  "logg": 10.0,
+  "Sp-ID": "1202-52672-577",
+  "src": "kepler2013",
+  "B_MG": 17.0,
+  "status": "ok",
+  "obs_EW": 76.8626520225434,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 23.687613092009975,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 33.62090060706821,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 17.79742051474291,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 4.5613364277255215,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 10.791874752009013,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 1.7567178087223199,
+    "detected": true
+   },
+   "Hη": {
+    "EW": -2.0042391336741106,
+    "detected": false
+   }
+  },
+  "koester_EW": 172.96494901974563,
+  "koester_n_det": 7,
+  "resid": -0.352242738167422
+ },
+ {
+  "name": "SDSS J105404.38+593333.34",
+  "B_tesla": 1800.0,
+  "Teff": 9313.0,
+  "logg": 9.93,
+  "Sp-ID": "561-52295-8",
+  "src": "kepler2013",
+  "B_MG": 18.0,
+  "status": "ok",
+  "obs_EW": 65.0140699765212,
+  "n_detected": 3,
+  "balmer": {
+   "Hα": {
+    "EW": 8.449083101504055,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 35.2539660258161,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 21.311020849201036,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 0.8148166258468921,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -6.7724161495401525,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -12.925812921915643,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -11.673872110789645,
+    "detected": false
+   }
+  },
+  "koester_EW": 106.98836049053997,
+  "koester_n_det": 7,
+  "resid": -0.21632917799636842
+ },
+ {
+  "name": "SDSS J125715.54+341439.38",
+  "B_tesla": 1900.0,
+  "Teff": 38124.0,
+  "logg": 10.0,
+  "Sp-ID": "2006-53476-332",
+  "src": "kepler2013",
+  "B_MG": 19.0,
+  "status": "ok",
+  "obs_EW": 61.71425547370833,
+  "n_detected": 6,
+  "balmer": {
+   "Hα": {
+    "EW": 10.968678320353186,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 23.22312207890902,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 11.662788436754024,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 5.119909137016927,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 6.433606733329699,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 5.9218035862142155,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 4.306150767345473,
+    "detected": true
+   }
+  },
+  "koester_EW": 58.90798040632442,
+  "koester_n_det": 5,
+  "resid": 0.020211360297567506
+ },
+ {
+  "name": "SDSS J091124.68+420255.85",
+  "B_tesla": 1900.0,
+  "Teff": 10108.0,
+  "logg": 9.51,
+  "Sp-ID": "1200-52668-538",
+  "src": "kepler2013",
+  "B_MG": 19.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J120150.13+614256.93",
+  "B_tesla": 1900.0,
+  "Teff": 8122.0,
+  "logg": 10.0,
+  "Sp-ID": "778-54525-280",
+  "src": "kepler2013",
+  "B_MG": 19.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J125553.39+152555.08",
+  "B_tesla": 2000.0,
+  "Teff": 15263.0,
+  "logg": 7.68,
+  "Sp-ID": "1771-53498-343",
+  "src": "kepler2013",
+  "B_MG": 20.0,
+  "status": "ok",
+  "obs_EW": 243.20997480769228,
+  "n_detected": 7,
+  "balmer": {
+   "Hα": {
+    "EW": 24.82758705179496,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 44.93448497427129,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 37.94206432592131,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 31.302602734824575,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 33.81980109352473,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 41.436568032720345,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 28.946866594635075,
+    "detected": true
+   }
+  },
+  "koester_EW": 254.49838301931615,
+  "koester_n_det": 7,
+  "resid": -0.019703644596922608
+ },
+ {
+  "name": "SDSS J125044.43+154957.36",
+  "B_tesla": 2000.0,
+  "Teff": 10082.0,
+  "logg": 9.66,
+  "Sp-ID": "1770-53171-530",
+  "src": "kepler2013",
+  "B_MG": 20.0,
+  "status": "ok",
+  "obs_EW": 5.11861516096684,
+  "n_detected": 1,
+  "balmer": {
+   "Hα": {
+    "EW": 4.008761208946705,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": 15.651493438791796,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": 7.4432108364966165,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": 3.745710264311671,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 5.11861516096684,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 5.053137395750272,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 2.642028410997108,
+    "detected": false
+   }
+  },
+  "koester_EW": 139.7561179986427,
+  "koester_n_det": 7,
+  "resid": -1.436218350067597
+ },
+ {
+  "name": "SDSS J232248.22+003900.88",
+  "B_tesla": 2200.0,
+  "Teff": 13458.0,
+  "logg": 9.97,
+  "Sp-ID": "383-51818-421",
+  "src": "kepler2013",
+  "B_MG": 22.0,
+  "status": "ok",
+  "obs_EW": 41.49190728018435,
+  "n_detected": 5,
+  "balmer": {
+   "Hα": {
+    "EW": 13.36382236708737,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 15.777385106481903,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 7.536717561730657,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 0.14041586754184548,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 1.7949674994111395,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 1.9322927227205198,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 2.881689522163905,
+    "detected": true
+   }
+  },
+  "koester_EW": 180.76028560614196,
+  "koester_n_det": 7,
+  "resid": -0.6391396201275173
+ },
+ {
+  "name": "SDSS J113839.51-014903.00",
+  "B_tesla": 2400.0,
+  "Teff": 10198.0,
+  "logg": 9.47,
+  "Sp-ID": "327-52294-583",
+  "src": "kepler2013",
+  "B_MG": 24.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J122401.48+415551.91",
+  "B_tesla": 2500.0,
+  "Teff": 10100.0,
+  "logg": 9.35,
+  "Sp-ID": "1452-53112-181",
+  "src": "kepler2013",
+  "B_MG": 25.0,
+  "status": "ok",
+  "obs_EW": 61.32900252027356,
+  "n_detected": 6,
+  "balmer": {
+   "Hα": {
+    "EW": 11.994660533367345,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 19.29692345810624,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 7.715584457802809,
+    "detected": true
+   },
+   "Hδ": {
+    "EW": 4.520070974361184,
+    "detected": true
+   },
+   "Hε": {
+    "EW": 6.310239041054235,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 11.491524055581753,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 7.340007394796491,
+    "detected": false
+   }
+  },
+  "koester_EW": 150.75991169805806,
+  "koester_n_det": 7,
+  "resid": -0.39061997320234704
+ },
+ {
+  "name": "SDSS J080359.94+122944.02",
+  "B_tesla": 2700.0,
+  "Teff": 12347.0,
+  "logg": 9.99,
+  "Sp-ID": "2265-53674-33",
+  "src": "kepler2013",
+  "B_MG": 27.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J172932.48+563204.09",
+  "B_tesla": 2700.0,
+  "Teff": 10277.0,
+  "logg": 9.18,
+  "Sp-ID": "358-51818-239",
+  "src": "kepler2013",
+  "B_MG": 27.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J085153.79+152724.94",
+  "B_tesla": 2900.0,
+  "Teff": 11300.0,
+  "logg": 9.58,
+  "Sp-ID": "2431-53818-238",
+  "src": "kepler2013",
+  "B_MG": 29.0,
+  "status": "ok",
+  "obs_EW": 49.48060208709178,
+  "n_detected": 2,
+  "balmer": {
+   "Hα": {
+    "EW": 21.028974881463085,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 28.451627205628697,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 1.2453506848942393,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": 7.215368287611484,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -1.5541834138287167,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 2.1264853645462267,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 4.6893682331742985,
+    "detected": false
+   }
+  },
+  "koester_EW": 171.11657781755613,
+  "koester_n_det": 7,
+  "resid": -0.5388571105920993
+ },
+ {
+  "name": "SDSS J080440.35+182731.03",
+  "B_tesla": 2900.0,
+  "Teff": 10135.0,
+  "logg": 8.46,
+  "Sp-ID": "2081-53357-442",
+  "src": "kepler2013",
+  "B_MG": 29.0,
+  "status": "ok",
+  "obs_EW": 17.217165873891688,
+  "n_detected": 3,
+  "balmer": {
+   "Hα": {
+    "EW": 4.261049725852927,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": -2.6113290483648246,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -2.3391589608137364,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -1.5221150570573172,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 3.0577746004179835,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 8.194599887957148,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 5.9647913855165555,
+    "detected": true
+   }
+  },
+  "koester_EW": 193.65433840519546,
+  "koester_n_det": 7,
+  "resid": -1.0510655672829345
+ },
+ {
+  "name": "SDSS J172329.14+540755.82",
+  "B_tesla": 3000.0,
+  "Teff": 10157.0,
+  "logg": 9.15,
+  "Sp-ID": "359-51821-415",
+  "src": "kepler2013",
+  "B_MG": 30.0,
+  "status": "ok",
+  "obs_EW": 36.51507339168524,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 8.831758673214543,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 16.760330565689756,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": -10.009348352994328,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -5.257340383864413,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 3.3848853591632664,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 4.279609989763289,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 6.643374163017653,
+    "detected": true
+   }
+  },
+  "koester_EW": 157.60602539757934,
+  "koester_n_det": 7,
+  "resid": -0.6351006390102185
+ },
+ {
+  "name": "SDSS J080938.10+373053.81",
+  "B_tesla": 3100.0,
+  "Teff": 11398.0,
+  "logg": 9.56,
+  "Sp-ID": "758-52253-44",
+  "src": "kepler2013",
+  "B_MG": 31.0,
+  "status": "ok",
+  "obs_EW": 18.781616644881705,
+  "n_detected": 2,
+  "balmer": {
+   "Hα": {
+    "EW": 8.859300932265166,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 9.92231571261654,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": -2.164450626766897,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -7.402087408906266,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -1.042777398128242,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 0.8259636071513472,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 0.3117613574208505,
+    "detected": false
+   }
+  },
+  "koester_EW": 176.61743047152697,
+  "koester_n_det": 7,
+  "resid": -0.9733005902834097
+ },
+ {
+  "name": "SDSS J075819.57+354443.70",
+  "B_tesla": 3200.0,
+  "Teff": 12930.0,
+  "logg": 10.0,
+  "Sp-ID": "757-52238-144",
+  "src": "kepler2013",
+  "B_MG": 32.0,
+  "status": "ok",
+  "obs_EW": 12.43333989475804,
+  "n_detected": 1,
+  "balmer": {
+   "Hα": {
+    "EW": 12.43333989475804,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 9.432423497268644,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -5.58166224331414,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -5.417766713627136,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -12.284191627522654,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -16.070145166622606,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -11.204462244497687,
+    "detected": false
+   }
+  },
+  "koester_EW": 174.43323156594937,
+  "koester_n_det": 7,
+  "resid": -1.1470414203665629
+ },
+ {
+  "name": "SDSS J082835.82+293448.69",
+  "B_tesla": 3500.0,
+  "Teff": 13176.0,
+  "logg": 9.88,
+  "Sp-ID": "1207-52672-635",
+  "src": "kepler2013",
+  "B_MG": 35.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J151415.66+074446.50",
+  "B_tesla": 3600.0,
+  "Teff": 10090.0,
+  "logg": 9.55,
+  "Sp-ID": "1817-53851-534",
+  "src": "kepler2013",
+  "B_MG": 36.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J125416.01+561204.67",
+  "B_tesla": 3700.0,
+  "Teff": 10338.0,
+  "logg": 8.62,
+  "Sp-ID": "1318-52781-299",
+  "src": "kepler2013",
+  "B_MG": 37.0,
+  "status": "ok",
+  "obs_EW": 29.576969304476233,
+  "n_detected": 4,
+  "balmer": {
+   "Hα": {
+    "EW": 9.0564400471165,
+    "detected": true
+   },
+   "Hβ": {
+    "EW": 6.400659249825832,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": 0.35575850340487936,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -11.521397655229302,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 4.696472293449683,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 9.423397714084217,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 2.874484275667601,
+    "detected": false
+   }
+  },
+  "koester_EW": 193.65433840519546,
+  "koester_n_det": 7,
+  "resid": -0.8160735602414086
+ },
+ {
+  "name": "SDSS J094235.02+205208.32",
+  "B_tesla": 3800.0,
+  "Teff": 13277.0,
+  "logg": 9.99,
+  "Sp-ID": "2292-53713-19",
+  "src": "kepler2013",
+  "B_MG": 38.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J160437.36+490809.18",
+  "B_tesla": 3800.0,
+  "Teff": 10084.0,
+  "logg": 9.25,
+  "Sp-ID": "622-52054-330",
+  "src": "kepler2013",
+  "B_MG": 38.0,
+  "status": "ok",
+  "obs_EW": 1.5650036291208975,
+  "n_detected": 1,
+  "balmer": {
+   "Hα": {
+    "EW": 2.8038143017553656,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": -1.8278712629604932,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -0.636121627892271,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": 0.9989183951272513,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -2.1221099339709584,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 0.7435628571468276,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 1.5650036291208975,
+    "detected": true
+   }
+  },
+  "koester_EW": 150.75991169805806,
+  "koester_n_det": 7,
+  "resid": -1.9837705254274618
+ },
+ {
+  "name": "SDSS J101805.04+011123.52",
+  "B_tesla": 4000.0,
+  "Teff": 10108.0,
+  "logg": 9.87,
+  "Sp-ID": "503-51999-244",
+  "src": "kepler2013",
+  "B_MG": 40.0,
+  "status": "ok",
+  "obs_EW": 0.0,
+  "n_detected": 0,
+  "balmer": {
+   "Hα": {
+    "EW": -9.391915050752138,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": 0.058213789319901954,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -1.4948284800143654,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -8.38139232124868,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -13.954430910875047,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -29.595153647936115,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -23.789779345383252,
+    "detected": false
+   }
+  }
+ },
+ {
+  "name": "SDSS J160357.93+140929.97",
+  "B_tesla": 4300.0,
+  "Teff": 10123.0,
+  "logg": 9.26,
+  "Sp-ID": "2524-54568-247",
+  "src": "kepler2013",
+  "B_MG": 43.0,
+  "status": "ok",
+  "obs_EW": 8.089178595922045,
+  "n_detected": 1,
+  "balmer": {
+   "Hα": {
+    "EW": 2.991297897706078,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": 8.089178595922045,
+    "detected": true
+   },
+   "Hγ": {
+    "EW": -2.551763604698466,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -0.10094378582828822,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -0.40421840426085565,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -2.1808335660795457,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 0.5202919823265602,
+    "detected": false
+   }
+  },
+  "koester_EW": 150.75991169805806,
+  "koester_n_det": 7,
+  "resid": -1.270381450367244
+ },
+ {
+  "name": "SDSS J121635.36-002656.22",
+  "B_tesla": 4500.0,
+  "Teff": 11150.0,
+  "logg": 9.7,
+  "Sp-ID": "288-52000-276",
+  "src": "kepler2013",
+  "B_MG": 45.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J224741.46+145638.76",
+  "B_tesla": 4700.0,
+  "Teff": 14771.0,
+  "logg": 10.0,
+  "Sp-ID": "740-52263-444",
+  "src": "kepler2013",
+  "B_MG": 47.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J114006.37+611008.21",
+  "B_tesla": 5300.0,
+  "Teff": 10540.0,
+  "logg": 9.45,
+  "Sp-ID": "776-52319-42",
+  "src": "kepler2013",
+  "B_MG": 53.0,
+  "status": "ok",
+  "obs_EW": 43.54160572812579,
+  "n_detected": 2,
+  "balmer": {
+   "Hα": {
+    "EW": 2.670310899920577,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": -2.1513357511507865,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -2.4573547138320935,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": 2.6140808818726775,
+    "detected": false
+   },
+   "Hε": {
+    "EW": 17.737374206168315,
+    "detected": true
+   },
+   "Hζ": {
+    "EW": 25.80423152195747,
+    "detected": true
+   },
+   "Hη": {
+    "EW": 16.228377972943107,
+    "detected": false
+   }
+  },
+  "koester_EW": 151.4446649512661,
+  "koester_n_det": 7,
+  "resid": -0.5413495378181133
+ },
+ {
+  "name": "SDSS J023609.38-080823.91",
+  "B_tesla": 5400.0,
+  "Teff": 8733.0,
+  "logg": 9.93,
+  "Sp-ID": "455-51909-474",
+  "src": "kepler2013",
+  "B_MG": 54.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J170400.01+321328.66",
+  "B_tesla": 5600.0,
+  "Teff": 25597.0,
+  "logg": 9.39,
+  "Sp-ID": "976-52413-319",
+  "src": "kepler2013",
+  "B_MG": 56.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J080743.33+393829.18",
+  "B_tesla": 6500.0,
+  "Teff": 10783.0,
+  "logg": 8.93,
+  "Sp-ID": "545-52202-9",
+  "src": "kepler2013",
+  "B_MG": 65.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J085649.68+253441.07",
+  "B_tesla": 9000.0,
+  "Teff": 10815.0,
+  "logg": 9.91,
+  "Sp-ID": "1933-53381-151",
+  "src": "kepler2013",
+  "B_MG": 90.0,
+  "status": "err",
+  "note": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:100"
+ },
+ {
+  "name": "SDSS J021148.22+211548.19",
+  "B_tesla": 10500.0,
+  "Teff": 12986.0,
+  "logg": 9.99,
+  "Sp-ID": "2046-53327-48",
+  "src": "kepler2013",
+  "B_MG": 105.0,
+  "status": "ok",
+  "obs_EW": 1.5205825447011598,
+  "n_detected": 1,
+  "balmer": {
+   "Hα": {
+    "EW": -6.184041744245819,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": -2.4937790768701156,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -1.3124250656312508,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -5.340559589000791,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -1.5906397399867584,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": 1.9937066492024433,
+    "detected": false
+   },
+   "Hη": {
+    "EW": 1.5205825447011598,
+    "detected": true
+   }
+  },
+  "koester_EW": 174.43323156594937,
+  "koester_n_det": 7,
+  "resid": -2.0596192258840147
+ },
+ {
+  "name": "SDSS J221828.59-000012.21",
+  "B_tesla": 21200.0,
+  "Teff": 12239.0,
+  "logg": 9.73,
+  "Sp-ID": "374-51791-583",
+  "src": "kepler2013",
+  "B_MG": 212.0,
+  "status": "ok",
+  "obs_EW": 0.0,
+  "n_detected": 0,
+  "balmer": {
+   "Hα": {
+    "EW": -11.120014077992174,
+    "detected": false
+   },
+   "Hβ": {
+    "EW": -0.19940049083507394,
+    "detected": false
+   },
+   "Hγ": {
+    "EW": -1.8469497525466871,
+    "detected": false
+   },
+   "Hδ": {
+    "EW": -2.7846384800886197,
+    "detected": false
+   },
+   "Hε": {
+    "EW": -1.125393090246133,
+    "detected": false
+   },
+   "Hζ": {
+    "EW": -3.478820188248948,
+    "detected": false
+   },
+   "Hη": {
+    "EW": -2.300765424059783,
+    "detected": false
+   }
+  }
+ }
+]

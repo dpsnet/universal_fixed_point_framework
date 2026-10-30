@@ -1,0 +1,29 @@
+{
+  "n_samples": 40000,
+  "identities": {
+    "s1_2 = s2_34567": {
+      "violations": 0,
+      "total": 40000
+    },
+    "s1_23 = s23_4567": {
+      "violations": 0,
+      "total": 40000
+    },
+    "s1_234 = s234_567": {
+      "violations": 0,
+      "total": 40000
+    },
+    "s1_2345 = s2345_67": {
+      "violations": 0,
+      "total": 40000
+    },
+    "s1_23456 = s23456_7": {
+      "violations": 0,
+      "total": 40000
+    },
+    "s1_234567 = 0": {
+      "violations": 0,
+      "total": 40000
+    }
+  }
+}

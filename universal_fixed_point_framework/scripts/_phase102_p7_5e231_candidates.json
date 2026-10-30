@@ -1,0 +1,8 @@
+{
+ "note": "eps/D/E analytic candidate search (shoot full-chain 230c)",
+ "targets": {
+  "eps_lowm": 2.15e-07,
+  "D": 0.019848,
+  "E": 0.012134
+ }
+}

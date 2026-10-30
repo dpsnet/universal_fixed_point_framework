@@ -1,0 +1,13 @@
+﻿Delta_lambda_min form A = 0.1220084679281462
+Delta_lambda_min form B = 0.1220084679281462
+A == B exact: True
+Delta_lambda_P20 = 0.1220084679281462
+Delta_lambda_P20 == Delta_lambda_min: True
+Delta_lambda_3 = 0.17254603006834715
+sqrt(2)*dlP20 == dl3: True
+F_np = 4.218700364834032
+rel dev vs 4.220 = -0.030797041847563378 %
+Delta_lambda_EM = 0.022926520278163984
+dlP20/dlEM = 5.321717663554521
+7^2/C^2 = 5.320107403314834
+interlock match: False

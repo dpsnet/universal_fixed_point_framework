@@ -1,0 +1,48 @@
+{
+ "targets": {
+  "alpha_v_1.883": {
+   "two_param_count": 0,
+   "three_param_count": 13,
+   "best_2": null,
+   "best_3": [
+    -0.03615413576609772,
+    -1,
+    "ln16",
+    -2,
+    "dl3",
+    1,
+    "5",
+    1.8823192176235244
+   ]
+  },
+  "Delta_alpha_t-alpha_v_0.06197": {
+   "two_param_count": 0,
+   "three_param_count": 0,
+   "best_2": null,
+   "best_3": null
+  },
+  "ln100_4.6052": {
+   "two_param_count": 3,
+   "three_param_count": 22,
+   "best_2": [
+    0.01180474407964649,
+    3,
+    "alpha_u_ln7",
+    -1,
+    "alpha_d",
+    4.60571381454298
+   ],
+   "best_3": [
+    -0.0469838950140411,
+    1,
+    "ln2",
+    1,
+    "kappa",
+    1,
+    "2",
+    4.603006497662689
+   ]
+  }
+ },
+ "y_tau_judgment": "y_τ = 0.01 无 paper11 出处 = 实验反推近似（0.010217），m_τ 谱定平凡循环"
+}

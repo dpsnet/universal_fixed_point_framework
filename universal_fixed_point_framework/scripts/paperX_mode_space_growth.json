@@ -1,0 +1,72 @@
+{
+  "samples": 20000,
+  "seed": 131,
+  "rows": [
+    {
+      "n": 6,
+      "base_size": 12,
+      "samples": 20000,
+      "unique_pats": 511,
+      "unique_rate": 0.0255,
+      "nondet": 0,
+      "secs": 5.7,
+      "ms_per_sample": 0.29,
+      "factors_total": 20
+    },
+    {
+      "n": 7,
+      "base_size": 16,
+      "samples": 20000,
+      "unique_pats": 1664,
+      "unique_rate": 0.0832,
+      "nondet": 0,
+      "secs": 20.1,
+      "ms_per_sample": 1.01,
+      "factors_total": 56
+    },
+    {
+      "n": 8,
+      "base_size": 20,
+      "samples": 20000,
+      "unique_pats": 3682,
+      "unique_rate": 0.1841,
+      "nondet": 0,
+      "secs": 50.2,
+      "ms_per_sample": 2.51,
+      "factors_total": 84
+    },
+    {
+      "n": 9,
+      "base_size": 25,
+      "samples": 20000,
+      "unique_pats": 6802,
+      "unique_rate": 0.3401,
+      "nondet": 2,
+      "secs": 165.6,
+      "ms_per_sample": 8.28,
+      "factors_total": 120
+    },
+    {
+      "n": 10,
+      "base_size": 46,
+      "samples": 20000,
+      "unique_pats": 18267,
+      "unique_rate": 0.9133,
+      "nondet": 7,
+      "secs": 358.2,
+      "ms_per_sample": 17.91,
+      "factors_total": 165
+    },
+    {
+      "n": 11,
+      "base_size": 38,
+      "samples": 20000,
+      "unique_pats": 15941,
+      "unique_rate": 0.7971,
+      "nondet": 20,
+      "secs": 827.7,
+      "ms_per_sample": 41.38,
+      "factors_total": 220
+    }
+  ]
+}

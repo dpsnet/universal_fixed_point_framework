@@ -1,0 +1,44 @@
+{
+ "sigma": 0.06666666666666667,
+ "sigma_source": "P44 §6.6 S_4 (Bott tower / Cl(1,7) branch number 15)",
+ "note": "观测仅诊断对照，非参数来源；N_eff 诊断标度需 P6-3 框架推导",
+ "per_line": [
+  {
+   "line": "Hα",
+   "n": 3,
+   "obs_survival": null,
+   "N_eff": null,
+   "gap_eV": 1.8896805555555558
+  },
+  {
+   "line": "Hβ",
+   "n": 4,
+   "obs_survival": 0.55,
+   "N_eff": 0.22076289446639258,
+   "gap_eV": 2.55106875
+  },
+  {
+   "line": "Hγ",
+   "n": 5,
+   "obs_survival": 0.16,
+   "N_eff": 0.6767162082159432,
+   "gap_eV": 2.857197
+  },
+  {
+   "line": "Hδ",
+   "n": 6,
+   "obs_survival": 0.02,
+   "N_eff": 1.4445902826453896,
+   "gap_eV": 3.0234888888888887
+  },
+  {
+   "line": "Hε",
+   "n": 7,
+   "obs_survival": null,
+   "N_eff": null,
+   "gap_eV": 3.1237576530612245
+  }
+ ],
+ "gap_order": "Hε(7)<Hδ(6)<Hγ(5)<Hβ(4)<Hα(3) 谱隙递增 → 高阶线先转变先禁戒",
+ "magnetic_dependence": "open problem (P6-2), no external Landau objects"
+}

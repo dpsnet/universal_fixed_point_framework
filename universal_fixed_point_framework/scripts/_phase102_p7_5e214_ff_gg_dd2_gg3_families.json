@@ -1,0 +1,316 @@
+{
+  "title": "P7-5e-214 FF: DD2-family n structure; GG: CC3-family silent index m=n+3k",
+  "date": "2026-10-16",
+  "FF": {
+    "rows": [
+      {
+        "j": 1,
+        "n": 9,
+        "linear": 65,
+        "b_j^2+1": 65,
+        "n_mod8": 1,
+        "silent_class": true
+      },
+      {
+        "j": 4,
+        "n": 585,
+        "linear": 4097,
+        "b_j^2+1": 4097,
+        "n_mod8": 1,
+        "silent_class": true
+      },
+      {
+        "j": 7,
+        "n": 37449,
+        "linear": 262145,
+        "b_j^2+1": 262145,
+        "n_mod8": 1,
+        "silent_class": true
+      }
+    ],
+    "FF1": {
+      "check": "★ FF1: DD2 族 n 全 ≡ 1 mod 8（静默类）——7n ≡ 7 mod 8 ⇔ n ≡ 1 mod 8（2^{2j+4}−1 ≡ 7 mod 8，2^{≥3}≡0）",
+      "all_silent": true,
+      "rows": [
+        {
+          "j": 1,
+          "n": 9,
+          "linear": 65,
+          "b_j^2+1": 65,
+          "n_mod8": 1,
+          "silent_class": true
+        },
+        {
+          "j": 4,
+          "n": 585,
+          "linear": 4097,
+          "b_j^2+1": 4097,
+          "n_mod8": 1,
+          "silent_class": true
+        },
+        {
+          "j": 7,
+          "n": 37449,
+          "linear": 262145,
+          "b_j^2+1": 262145,
+          "n_mod8": 1,
+          "silent_class": true
+        }
+      ]
+    },
+    "FF2": {
+      "check": "★ FF2: n=585 = 9·65（静默单元 × 修正锚点）——585=9·65=3²·5·13；n=9=8+1 静默类；n=37449=27·19·73（73=8·9+1 静默类）",
+      "n585": 585,
+      "factor": "9·65",
+      "ok": true,
+      "n37449_check": true,
+      "n37449_factors": "27·19·73"
+    },
+    "FF3": {
+      "check": "FF3: 4097 = b_4²+1 = 2^12+1 = F_2·D(4)（207 已登记，n=585 线性因子再现）",
+      "ok": true
+    }
+  },
+  "GG": {
+    "rows": [
+      {
+        "k": 1,
+        "a": 4,
+        "2^a": 16,
+        "n": 2,
+        "m": 5,
+        "n_even": true,
+        "m_parity_k": true,
+        "D_silent": "2^5+1"
+      },
+      {
+        "k": 2,
+        "a": 7,
+        "2^a": 128,
+        "n": 18,
+        "m": 24,
+        "n_even": true,
+        "m_parity_k": true,
+        "D_silent": "2^24+1"
+      },
+      {
+        "k": 3,
+        "a": 10,
+        "2^a": 1024,
+        "n": 146,
+        "m": 155,
+        "n_even": true,
+        "m_parity_k": true,
+        "D_silent": "2^155+1"
+      },
+      {
+        "k": 4,
+        "a": 13,
+        "2^a": 8192,
+        "n": 1170,
+        "m": 1182,
+        "n_even": true,
+        "m_parity_k": true,
+        "D_silent": "2^1182+1"
+      },
+      {
+        "k": 5,
+        "a": 16,
+        "2^a": 65536,
+        "n": 9362,
+        "m": 9377,
+        "n_even": true,
+        "m_parity_k": true,
+        "D_silent": "2^9377+1"
+      }
+    ],
+    "GG1": {
+      "check": "GG1: 静默家族下标 m = n+3k（k=1: m=5、k=2: m=24、k=3: m=155、k=4: m=1182、k=5: m=9377）——D(n) = 2^m+1",
+      "rows": [
+        {
+          "k": 1,
+          "a": 4,
+          "2^a": 16,
+          "n": 2,
+          "m": 5,
+          "n_even": true,
+          "m_parity_k": true,
+          "D_silent": "2^5+1"
+        },
+        {
+          "k": 2,
+          "a": 7,
+          "2^a": 128,
+          "n": 18,
+          "m": 24,
+          "n_even": true,
+          "m_parity_k": true,
+          "D_silent": "2^24+1"
+        },
+        {
+          "k": 3,
+          "a": 10,
+          "2^a": 1024,
+          "n": 146,
+          "m": 155,
+          "n_even": true,
+          "m_parity_k": true,
+          "D_silent": "2^155+1"
+        },
+        {
+          "k": 4,
+          "a": 13,
+          "2^a": 8192,
+          "n": 1170,
+          "m": 1182,
+          "n_even": true,
+          "m_parity_k": true,
+          "D_silent": "2^1182+1"
+        },
+        {
+          "k": 5,
+          "a": 16,
+          "2^a": 65536,
+          "n": 9362,
+          "m": 9377,
+          "n_even": true,
+          "m_parity_k": true,
+          "D_silent": "2^9377+1"
+        }
+      ]
+    },
+    "GG2": {
+      "check": "★ GG2: CC3 族 n 恒偶（2^a−2 ≡ 0 mod 14 ⇔ 2^a ≡ 2 mod 14，a ≡ 1 mod 3）；m = n+3k ⇒ m ≡ k mod 2（k 奇 → m 奇、k 偶 → m 偶）",
+      "all_n_even": true,
+      "all_m_parity": true
+    },
+    "GG3": {
+      "check": "GG3: D(n) = 2^m+1 静默家族成员 = 186 '2 进幂集组织' 的直接体现——特定 n（7n+2=2 的幂）的 B*(n) 分母恰为 2^m+1 家族成员（m 随 k 增长 ~2^{3k}/7）"
+    }
+  },
+  "conclusion": {
+    "verdict": "FF（DD2 族结构）：DD2 族 n 全 ≡ 1 mod 8（静默类，7n≡7 mod 8 ⇔ n≡1 mod 8——2^{2j+4}−1≡7 mod 8）；★ n=585 = 9·65（静默单元 × 修正锚点，585=3²·5·13）；n=37449 ≡ 1 mod 8（3³·19·73，73=8·9+1 静默类）；4097=b_4²+1=F_2·D(4) 为 207 已知再现。GG（CC3 族下标）：静默家族下标 m=n+3k（k=1..5: m=5/24/155/1182/9377——D(n)=2^m+1）；★ n 恒偶（2^a≡2 mod 14，a≡1 mod 3）；m ≡ k mod 2；D(n)=2^m+1 是 186 '2 进幂集组织' 的直接体现（特定 n 的分母恰为静默家族成员）。",
+    "FF": {
+      "FF1": {
+        "check": "★ FF1: DD2 族 n 全 ≡ 1 mod 8（静默类）——7n ≡ 7 mod 8 ⇔ n ≡ 1 mod 8（2^{2j+4}−1 ≡ 7 mod 8，2^{≥3}≡0）",
+        "all_silent": true,
+        "rows": [
+          {
+            "j": 1,
+            "n": 9,
+            "linear": 65,
+            "b_j^2+1": 65,
+            "n_mod8": 1,
+            "silent_class": true
+          },
+          {
+            "j": 4,
+            "n": 585,
+            "linear": 4097,
+            "b_j^2+1": 4097,
+            "n_mod8": 1,
+            "silent_class": true
+          },
+          {
+            "j": 7,
+            "n": 37449,
+            "linear": 262145,
+            "b_j^2+1": 262145,
+            "n_mod8": 1,
+            "silent_class": true
+          }
+        ]
+      },
+      "FF2": {
+        "check": "★ FF2: n=585 = 9·65（静默单元 × 修正锚点）——585=9·65=3²·5·13；n=9=8+1 静默类；n=37449=27·19·73（73=8·9+1 静默类）",
+        "n585": 585,
+        "factor": "9·65",
+        "ok": true,
+        "n37449_check": true,
+        "n37449_factors": "27·19·73"
+      },
+      "FF3": {
+        "check": "FF3: 4097 = b_4²+1 = 2^12+1 = F_2·D(4)（207 已登记，n=585 线性因子再现）",
+        "ok": true
+      }
+    },
+    "GG": {
+      "GG1": {
+        "check": "GG1: 静默家族下标 m = n+3k（k=1: m=5、k=2: m=24、k=3: m=155、k=4: m=1182、k=5: m=9377）——D(n) = 2^m+1",
+        "rows": [
+          {
+            "k": 1,
+            "a": 4,
+            "2^a": 16,
+            "n": 2,
+            "m": 5,
+            "n_even": true,
+            "m_parity_k": true,
+            "D_silent": "2^5+1"
+          },
+          {
+            "k": 2,
+            "a": 7,
+            "2^a": 128,
+            "n": 18,
+            "m": 24,
+            "n_even": true,
+            "m_parity_k": true,
+            "D_silent": "2^24+1"
+          },
+          {
+            "k": 3,
+            "a": 10,
+            "2^a": 1024,
+            "n": 146,
+            "m": 155,
+            "n_even": true,
+            "m_parity_k": true,
+            "D_silent": "2^155+1"
+          },
+          {
+            "k": 4,
+            "a": 13,
+            "2^a": 8192,
+            "n": 1170,
+            "m": 1182,
+            "n_even": true,
+            "m_parity_k": true,
+            "D_silent": "2^1182+1"
+          },
+          {
+            "k": 5,
+            "a": 16,
+            "2^a": 65536,
+            "n": 9362,
+            "m": 9377,
+            "n_even": true,
+            "m_parity_k": true,
+            "D_silent": "2^9377+1"
+          }
+        ]
+      },
+      "GG2": {
+        "check": "★ GG2: CC3 族 n 恒偶（2^a−2 ≡ 0 mod 14 ⇔ 2^a ≡ 2 mod 14，a ≡ 1 mod 3）；m = n+3k ⇒ m ≡ k mod 2（k 奇 → m 奇、k 偶 → m 偶）",
+        "all_n_even": true,
+        "all_m_parity": true
+      },
+      "GG3": {
+        "check": "GG3: D(n) = 2^m+1 静默家族成员 = 186 '2 进幂集组织' 的直接体现——特定 n（7n+2=2 的幂）的 B*(n) 分母恰为 2^m+1 家族成员（m 随 k 增长 ~2^{3k}/7）"
+      }
+    },
+    "honest_limits": [
+      "FF1 是模算术（2^{2j+4}≡0 mod 8）",
+      "FF2 的 585=9·65 是分解核对；n=37449 分解不漂亮（3³·19·73）",
+      "FF3 是 207 已知再现",
+      "GG1/GG2 是代数恒等（下标定义 + 奇偶判别）",
+      "GG3 是语义连接（186 体现）",
+      "继承 187-213 候选层"
+    ],
+    "next_candidates": [
+      "检验 HH：DD2 族 n 序列 9,585,37449 的增长律（n ≈ 2^{2j}/7——j 每 +3 时 n 乘 2^6=64？n_{j+3}/n_j 检查）",
+      "检验 II：GG 族 m 序列 5,24,155,1182,9377 的 mod 8 类（静默家族下标自身的类归属）",
+      "回主线：P7-5e 候选层系列暂止或转 P7-5e-215"
+    ]
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "title": "P7-5e-201 period-map unification & bit-pattern continuity",
+  "date": "2026-10-15",
+  "DD1_rows": [
+    {
+      "k": 0,
+      "F_k": 3,
+      "scale": 2,
+      "shift": 1,
+      "shift_eq_Fk_minus_2": true,
+      "scale_eq_b": true,
+      "b_index": -1,
+      "b_value": 2,
+      "formula": "2^(m+1)+1 = 2·(2^m+1) - 1",
+      "ok_all_m": true
+    },
+    {
+      "k": 1,
+      "F_k": 5,
+      "scale": 4,
+      "shift": 3,
+      "shift_eq_Fk_minus_2": true,
+      "scale_eq_b": true,
+      "b_index": 0,
+      "b_value": 4,
+      "formula": "2^(m+2)+1 = 4·(2^m+1) - 3",
+      "ok_all_m": true
+    },
+    {
+      "k": 2,
+      "F_k": 17,
+      "scale": 16,
+      "shift": 15,
+      "shift_eq_Fk_minus_2": true,
+      "scale_eq_b": true,
+      "b_index": 2,
+      "b_value": 16,
+      "formula": "2^(m+4)+1 = 16·(2^m+1) - 15",
+      "ok_all_m": true
+    },
+    {
+      "k": 3,
+      "F_k": 257,
+      "scale": 256,
+      "shift": 255,
+      "shift_eq_Fk_minus_2": true,
+      "scale_eq_b": true,
+      "b_index": 6,
+      "b_value": 256,
+      "formula": "2^(m+8)+1 = 256·(2^m+1) - 255",
+      "ok_all_m": true
+    }
+  ],
+  "EE1_rows": [
+    {
+      "m": 3,
+      "family": 9,
+      "k_silent": 1,
+      "k_is_2pow": true,
+      "m_is_2pow": false
+    },
+    {
+      "m": 4,
+      "family": 17,
+      "k_silent": 2,
+      "k_is_2pow": true,
+      "m_is_2pow": true
+    },
+    {
+      "m": 5,
+      "family": 33,
+      "k_silent": 4,
+      "k_is_2pow": true,
+      "m_is_2pow": false
+    },
+    {
+      "m": 6,
+      "family": 65,
+      "k_silent": 8,
+      "k_is_2pow": true,
+      "m_is_2pow": false
+    },
+    {
+      "m": 7,
+      "family": 129,
+      "k_silent": 16,
+      "k_is_2pow": true,
+      "m_is_2pow": false
+    },
+    {
+      "m": 8,
+      "family": 257,
+      "k_silent": 32,
+      "k_is_2pow": true,
+      "m_is_2pow": true
+    }
+  ],
+  "EE2": {
+    "unit_k_sequence": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "check": "单位位全序列 k = {1,2,4,8,16,32} = 2^{m-3}（m=3..8）——2 进幂连续 2^0..2^5"
+  },
+  "EE3": {
+    "fermat_positions": [
+      {
+        "m": 4,
+        "k": 2
+      },
+      {
+        "m": 8,
+        "k": 32
+      }
+    ],
+    "check": "Fermat 素数位置（m=2 的幂 4,8）k = 2, 32"
+  },
+  "EE4": {
+    "65_k": 8,
+    "D7_3265_k": 408,
+    "check": "65 静默 k=8（单位位）；D(7)=3265 分母静默 k=408（非单位位，D(m) k 来自 196 U3: k(m)=m·7·2^(m-4)+2^(m-3)）"
+  },
+  "conclusion": {
+    "verdict": "DD：★ 周期映射统一——2^{m+2^k}+1 = 2^{2^k}·(2^m+1) − (2^{2^k}−1) = b_{2^k−2}·x − (F_k−2)（k=0..3 全验证）——188 的 k=3 映射（256·x−255）是 Fermat 窗口宽度族的特例：缩放 = 窗口终边界 b_{2^k−2}、平移 = Fermat 窗口宽度 F_k−2。EE：合数起边界静默 k = {1,4,8,16} = 2^{m−3}；单位位全序列 k = {1,2,4,8,16,32} = 2^{m−3}（m=3..8）2 进幂连续；Fermat 素数位置 k = 2,32；65（k=8）与 D(7) 分母（k=408）静默 k 对照",
+    "DD": {
+      "DD1": "周期映射族统一 k=0..3 全验证（平移 = F_k−2 = Fermat 窗口宽度）",
+      "DD2": "缩放 2^{2^k} = b_{2^k−2}（k=3: b_6=256、k=2: b_2=16、k=1: b_0=4）",
+      "DD3": "188 映射（k=3）是 Fermat 窗口宽度族特例"
+    },
+    "EE": {
+      "EE1": "合数起边界 k = {1,4,8,16} = 2^{m−3}",
+      "EE2": "单位位 k 序列 = 2^{m−3}（m=3..8）2 进幂连续 2^0..2^5",
+      "EE3": "Fermat 位置 k = 2, 32（2 的幂位）",
+      "EE4": "65 静默 k=8 vs D(7) 分母 k=408"
+    },
+    "honest_limits": [
+      "DD1 的族统一是代数恒等（2^{2^k}·(2^m+1)−(2^{2^k}−1) = 2^{m+2^k}+1），但其'缩放=窗口终边界、平移=Fermat 窗口宽度'的语义指认是候选观察",
+      "EE2 的 k 序列 2^{m−3} 是定义恒等（k = (2^m+1−1)/8 = 2^{m−3}）",
+      "继承 187-200 候选层"
+    ],
+    "next_candidates": [
+      "检验 FF：周期映射族的'窗口语义'——k=3 映射把窗口 j 送到 j+8（家族 m→m+8），检查 a_j/b_j/c_j 在映射下的行为是否保持位型（窗口平移的框架结构）",
+      "检验 GG：F_4 = 65537（m=16）窗口外预言——周期映射 k=4 的平移 65535 = 2^16−1 的框架角色",
+      "窗口 2 家族段判据（若框架层扩展）"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "Hβ": {
+    "lam": 4861.3,
+    "dist_center": 706.0,
+    "in_gap_win": false,
+    "d_obs": 0.45,
+    "forb_th": 0.6,
+    "Bth": 147.0
+  },
+  "Hγ": {
+    "lam": 4340.5,
+    "dist_center": 185.2,
+    "in_gap_win": true,
+    "d_obs": 0.84,
+    "forb_th": 0.835,
+    "Bth": 94.0
+  },
+  "Hδ": {
+    "lam": 4101.7,
+    "dist_center": 53.6,
+    "in_gap_win": true,
+    "d_obs": 0.98,
+    "forb_th": 0.919,
+    "Bth": 65.0
+  },
+  "Hε": {
+    "lam": 3970.1,
+    "dist_center": 185.2,
+    "in_gap_win": true,
+    "d_obs": null,
+    "forb_th": null,
+    "Bth": 48.0
+  },
+  "order_checks": {
+    "d_obs_monotone": true,
+    "dist_anti_monotone": true,
+    "Bth_anti_monotone": true,
+    "forb_th_monotone": true
+  },
+  "forb_vs_obs_ratio": {
+    "Hβ": 1.333,
+    "Hγ": 0.994,
+    "Hδ": 0.938
+  },
+  "Hε_predict": {
+    "Bth_lowest": true,
+    "dist_center": 185.2,
+    "in_gap_win": true,
+    "note": "Hε B_th=48 MG 最低 + 距窗口中心 185A(Hγ 同级) -> 预测缺失 >= 84% (待观测数据)"
+  },
+  "verdict": "双链闭合: 缺失率排序 Hβ<Hγ<Hδ 与 距离窗口中心(706>185>54A) 反单调 且 与 B_th(147>94>65MG) 反单调 -- 缺口窗口位置链 + B_th 梯度链一致; 理论禁戒率(0.600/0.835/0.919) 与观测(0.45/0.84/0.98) Hγ/Hδ 量级吻合(1.0x/0.94x), Hβ 理论高估(1.33x -- 窗口外线缺失含其他机制/Zeeman 混叠)"
+}

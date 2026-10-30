@@ -1,0 +1,9 @@
+{
+  "m_tau_pdg": 1776.86,
+  "C2": 9.210340371976184,
+  "target_coeff": 192.920123278653,
+  "coeff": 192.925,
+  "m_tau_refined": 1776.9049162635054,
+  "dev_pct": 0.0025278448220644734,
+  "correction_identity": "N_gen/((k_max-N_gen)*k_max)"
+}

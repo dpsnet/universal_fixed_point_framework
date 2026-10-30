@@ -1,0 +1,15 @@
+{
+ "base": "Newton refinement on N=1200 eigenvalues (pure-root channel)",
+ "ms": [
+  33,
+  129,
+  256,
+  512,
+  513,
+  640,
+  768,
+  896,
+  1024
+ ],
+ "runtime_s": 475.11715626716614
+}

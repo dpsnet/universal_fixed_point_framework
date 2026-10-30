@@ -1,0 +1,21 @@
+{
+  "hard_two_factor": {
+    "167": {
+      "counts": {
+        "(-1, -1, 1, 1, -1, 1, 1, -1)": 2000,
+        "(1, 1, -1, -1, 1, -1, -1, 1)": 2054
+      },
+      "violations": {}
+    },
+    "211": {
+      "counts": {
+        "(-1, -1, 1, 1, -1, 1, 1, -1)": 2000,
+        "(1, 1, -1, -1, 1, -1, -1, 1)": 2008
+      },
+      "violations": {}
+    }
+  },
+  "global_recheck_samples": 60000,
+  "global_recheck_nondet_keys": 0,
+  "global_recheck_violations": {}
+}

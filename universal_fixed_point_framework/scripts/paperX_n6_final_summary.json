@@ -1,0 +1,10 @@
+{
+  "patterns": 609,
+  "values": {
+    "-0.0": 501,
+    "-1.0": 53,
+    "1.0": 55
+  },
+  "verify_violations": 5,
+  "verify_new_modes": 5
+}

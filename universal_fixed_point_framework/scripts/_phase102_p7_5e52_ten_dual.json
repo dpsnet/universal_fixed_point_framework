@@ -1,0 +1,17 @@
+{
+  "10_dual": {
+    "add": 10,
+    "mul": 10,
+    "equal": true
+  },
+  "C2_dual": {
+    "add": "4ln(kmax+Ngen-1)",
+    "mul": "4ln((Ngen-1)(kmax-Ngen))"
+  },
+  "sqrt_family": [
+    "sqrt10",
+    "sqrt2",
+    "sqrt5",
+    "sqrt(2/3)"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "basis_size": 50,
+  "per_seed": {
+    "77": {
+      "nondet_20000": 0,
+      "unique_rate": 0.9989
+    },
+    "211": {
+      "nondet_20000": 0,
+      "unique_rate": 0.9991
+    },
+    "331": {
+      "nondet_20000": 0,
+      "unique_rate": 0.999
+    },
+    "777": {
+      "nondet_20000": 0,
+      "unique_rate": 0.9984
+    },
+    "555": {
+      "nondet_20000": 0,
+      "unique_rate": 0.9986
+    }
+  },
+  "all_zero_20000": true
+}

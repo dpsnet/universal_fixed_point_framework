@@ -1,0 +1,55 @@
+# -*- coding: utf-8 -*-
+# Phase 104az-91: σ⁻¹ 双分解交汇 + 单位分解 + (1−1/320) 窗口坐标重述
+# 核心新发现:
+#   ① 1 = N_gen·σ·静默单元 (3×(1/15)×5 = 1) — 单位 1 的框架分解
+#   ② σ⁻¹ = N_gen×静默单元 = M_4 (5×3 = 15 = 2⁴−1) — σ 身份双候选交汇
+#   ③ 319 = 静默单元×(k_max²−N_gen·σ) = 5×63.8
+#   ④ (1−1/320) = 1 − N_gen·σ/k_max² = (k_max²−N_gen·σ)/k_max²
+N_c = N_f = N_gen = 3.0
+k_max = 8.0
+sigma = 1.0/15.0
+silent = k_max - 3.0   # 静默单元 = 5
+
+def M(n): return 2**n - 1
+
+print("=== ① 单位分解: 1 = N_gen·σ·静默单元 ===")
+print(f"N_gen×σ×静默单元 = {N_gen}×{sigma}×{silent} = {N_gen*sigma*silent}")
+print(f"→ 1 = 3×(1/15)×5 ✓  (单位 1 的框架精确分解)")
+
+print("\n=== ② σ⁻¹ 双分解交汇: N_gen×静默单元 = M_4 ===")
+print(f"代数侧: σ⁻¹ = N_gen×(k_max−3) = {N_gen}×{silent} = {N_gen*silent}")
+print(f"Mersenne 侧: σ⁻¹ = 2^(k_max/2)−1 = 2^{k_max/2}−1 = {2**(int(k_max/2))-1} = M_4")
+print(f"→ {int(N_gen*silent)} = {int(M(4))} ✓ — 同一数 15 的两个因子分解!")
+print(f"→ σ = 1/(N_gen×静默单元) = 1/(3×5) = 1/15 ✓")
+print(f"→ σ 身份双候选在 σ⁻¹ = 15 处交汇: 3×5 与 2⁴−1 是同一数的两个分解")
+
+print("\n=== ③ 319 = 静默单元×(k_max²−N_gen·σ) ===")
+print(f"静默单元×(k_max²−N_gen·σ) = {silent}×({k_max**2}−{N_gen*sigma}) = {silent}×{k_max**2 - N_gen*sigma} = {silent*(k_max**2 - N_gen*sigma)}")
+print(f"→ 319 = 5×63.8 = 5×(64−0.2) ✓ (分子)")
+print(f"   (k_max²−N_gen·σ = 64−3/15 = 64−1/5 = 319/5 = 63.8)")
+
+print("\n=== ④ (1−1/320) = 1 − N_gen·σ/k_max² ===")
+print(f"1/320 = N_gen·σ/k_max² = {N_gen}×{sigma}/{k_max**2} = {N_gen*sigma/k_max**2} = 1/320 ✓ (104az-81)")
+print(f"1 − N_gen·σ/k_max² = 1 − {N_gen*sigma/k_max**2} = {1 - N_gen*sigma/k_max**2} = 319/320 ✓")
+print(f"320 = 静默单元×k_max² = {silent}×{k_max**2} = {silent*k_max**2} ✓ (104az-90)")
+print(f"(1−1/320) = (320−1)/320 = [静默单元×k_max²−1]/[静默单元×k_max²]")
+print(f"          = [静默单元×(k_max²−N_gen·σ)]/[静默单元×k_max²]  (因 1 = 静默单元×N_gen·σ)")
+
+print("\n=== ⑤ 修正项窗口坐标重述 ===")
+print(f"319/648000 = σ²/9×(1−1/320) = (σ/N_gen)²×(1−1/320)")
+print(f"(σ/N_gen)² = ({sigma}/{N_gen})² = (1/45)² = 1/2025 ✓ (45 = N_gen×σ⁻¹ = 3×15)")
+print(f"→ 修正项 = (σ/N_gen)² × [1 − 1/(静默单元×2⁶)]")
+print(f"  = (σ/N_gen)² × [1 − N_gen·σ/k_max²]")
+print(f"  = 谱密度平方(σ 按 N_gen 归一) × 窗口 −1 修正(静默单元×锚点)")
+
+print("\n=== ⑥ 公理化链候选: 为何 (1−1/320) ===")
+print("锚点公设: 2^{n+2} 是框架数轴锚点 (104az-90), n=4 → 2⁶ = k_max² = 64")
+print("窗口坐标: 静默单元×锚点 = 5×64 = 320 (静默单元的锚点坐标)")
+print("单位分解: 1 = N_gen·σ·静默单元 → 1 = 静默单元×N_gen·σ")
+print("Mersenne 修正: 坐标−1 修正 (M_n = 2ⁿ−1 同构) → (320−1)/320 = (1−1/320)")
+print("→ (1−1/320) = 静默单元×锚点 的 Mersenne 型 −1 修正 = 1 − N_gen·σ/k_max²")
+
+print("\n=== 诚实边界 ===")
+print("①② 是精确恒等 (代数), ③④⑤ 是恒等重述")
+print("公理化链⑥ 仍是诠释层 (锚点公设/窗口坐标/Mersenne 修正的动机待公理化)")
+print("σ 身份双候选: 3×5 = 2⁴−1 交汇说明两者是同一数的因子分解, 非竞争 — 但\"为何取此分解\"仍开放")

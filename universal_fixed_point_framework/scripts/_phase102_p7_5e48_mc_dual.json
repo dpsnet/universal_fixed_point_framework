@@ -1,0 +1,12 @@
+{
+  "mc_dual": {
+    "kL": 1270.0617391901278,
+    "C2": 1270.0617391901278,
+    "identical": true
+  },
+  "mc_coef_vs_alpha": 0.6584242089740622,
+  "corr_half": {
+    "light": "external",
+    "heavy": "embedded"
+  }
+}

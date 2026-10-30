@@ -1,0 +1,30 @@
+{
+ "nz_vals_n11": {
+  "count": 2292,
+  "min": -1.0,
+  "max": 1.0,
+  "median_abs": 1.0,
+  "neg": 1154,
+  "pos": 1138
+ },
+ "n10": {
+  "77": {
+   "n_total": 80000,
+   "n_A_zero": 78738,
+   "nondet_59_all": 0,
+   "nondet_59_excl_zero": 0
+  },
+  "331": {
+   "n_total": 80000,
+   "n_A_zero": 78756,
+   "nondet_59_all": 0,
+   "nondet_59_excl_zero": 0
+  },
+  "777": {
+   "n_total": 80000,
+   "n_A_zero": 78700,
+   "nondet_59_all": 0,
+   "nondet_59_excl_zero": 0
+  }
+ }
+}

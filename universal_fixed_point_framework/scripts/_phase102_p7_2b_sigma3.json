@@ -1,0 +1,13 @@
+{
+ "A_2_over_Nc": 0.6666666666666666,
+ "B_CF_over_2": 0.6666666666666666,
+ "equal_at_Nc3": true,
+ "large_Nc": {
+  "2_over_Nc_100": 0.02,
+  "CF2_100": 24.9975
+ },
+ "candidate1": "σ×P_1（色单态投影 1/N_c）",
+ "candidate2": "σ×C_F/2（色磁 Casimir 半）",
+ "unification": "Δ_dress σ¹×色因子 vs m_ud/Δ_hf σ²×4——不统一，登记开放",
+ "conclusion": "σ/3 双身份候选（2/N_c 与 C_F/2，N_c=3 数值等同，大 N_c 判别）；均为 SU(3) 群论标准量；静默修正体系开放"
+}

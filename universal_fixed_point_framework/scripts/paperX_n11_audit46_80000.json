@@ -1,0 +1,30 @@
+{
+  "n": 11,
+  "basis_size": 46,
+  "extend_seeds": [
+    "77",
+    "331",
+    "777"
+  ],
+  "samples_extended": 60000,
+  "cache_prefix": 20000,
+  "per_seed": {
+    "77": {
+      "nondet_extra60000": 6,
+      "unique_extra60000": 58931,
+      "rate_extra60000": 0.9822
+    },
+    "331": {
+      "nondet_extra60000": 7,
+      "unique_extra60000": 58984,
+      "rate_extra60000": 0.9831
+    },
+    "777": {
+      "nondet_extra60000": 5,
+      "unique_extra60000": 58987,
+      "rate_extra60000": 0.9831
+    }
+  },
+  "all_zero": false,
+  "elapsed_s": 7953.1
+}

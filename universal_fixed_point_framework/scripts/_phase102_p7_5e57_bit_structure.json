@@ -1,0 +1,7 @@
+{
+  "k_bit": 8,
+  "nw_bit": 4,
+  "alpha0": 0.5,
+  "identity": "2^N*2^-N=1",
+  "duality": "uniform_weight vs layer_contraction"
+}

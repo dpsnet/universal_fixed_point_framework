@@ -1,0 +1,8 @@
+{
+ "rho_prime": {
+  "κ²Λ/10": 775.2659881483361,
+  "κΛ(1−2σ/3)/5": 775.2664902059306
+ },
+ "factor_verified": true,
+ "verdict": "kappaL5_preferred_strengthened"
+}

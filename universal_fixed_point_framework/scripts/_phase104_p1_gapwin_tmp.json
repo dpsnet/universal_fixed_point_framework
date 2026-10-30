@@ -1,0 +1,23 @@
+{
+  "balmer_band_A": 2916.8,
+  "segment_width_1of8_A": 364.6,
+  "hi_order_line_band_A": 370.4,
+  "ratio_hiline_seg": 1.0159,
+  "segment_edges": [
+    3646.0,
+    4010.6,
+    4375.2,
+    4739.8,
+    5104.4,
+    5469.0,
+    5833.6,
+    6198.2,
+    6562.8
+  ],
+  "hi_line_band_in_segment": 1,
+  "segment_center": 4192.9,
+  "hi_band_center": 4155.3,
+  "center_ratio": 0.991,
+  "obs_win_1of8": 312.5,
+  "verdict": "高阶线带 370 A vs Balmer 带 1/8 364.6 A: 比值 1.016 (命中(1%内)) -- 落在第 1 段"
+}

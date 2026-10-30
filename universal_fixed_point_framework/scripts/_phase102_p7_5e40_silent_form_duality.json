@@ -1,0 +1,17 @@
+{
+  "form_duality": {
+    "m_tau": "additive +1 = kmax*alpha0^3",
+    "m_b": "multiplicative x7 = x(kmax-1) = x(kmax-kmax*alpha0^3)"
+  },
+  "channel": "additive Rec / multiplicative Sp (P7-5e-6)",
+  "49_dual": [
+    "48+1 additive",
+    "(8-1)^2 multiplicative"
+  ],
+  "family": {
+    "41": "additive",
+    "193": "additive",
+    "mb": "multiplicative",
+    "49": "both"
+  }
+}

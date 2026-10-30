@@ -1,0 +1,12 @@
+{
+  "sign_gen": {
+    "gen1": "minus",
+    "gen2": "plus"
+  },
+  "factor_unified": {
+    "ud": "1-(Ngen-1)/(kmax+1)",
+    "s": "1+1/(Ngen*kmax/2)"
+  },
+  "Lambda_16_identity": "(kmax/2)^2=4^2",
+  "delta_e": "open"
+}

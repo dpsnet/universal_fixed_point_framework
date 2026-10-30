@@ -1,0 +1,29 @@
+{
+  "models": {
+    "model_A": {
+      "V_I_total_pct": 12.5,
+      "V_I_residual_pct": 14.3,
+      "channel": "纯圆偏振(P4) -- Q=U=0"
+    },
+    "model_B_coherent_break": {
+      "Q_I_total_pct": 0.0,
+      "U_I_total_pct": 25.0,
+      "V_I_total_pct": -12.5,
+      "channel": "线偏振 U 失衡 1/4 级 + 圆偏振 V 1/8 级 -- 非 1/8 线偏振"
+    },
+    "model_C_P1_prediction": {
+      "P1_pred_pct": 0.73,
+      "enhance_frac": 0.0586,
+      "second_18_coeff": 0.1246,
+      "note": "P1 = 增强带(5.86%) x 0.125 (若=1/8=0.125 则 P1=0.73% 命中 -- 二级 1/8 无独立推导)",
+      "second_is_18": true
+    }
+  },
+  "conclusions": [
+    "模型A(基态失衡) V/I=12.5% -- P4 适用, PG 1031+234 命中",
+    "模型B(相干破坏) 线偏振 1/4 级 -- 不命中 P1 0.6%",
+    "P1 预言 0.73% = 增强带 x 1/8 二级 -- 无独立推导 -- 后验定标嫌疑",
+    "机制分叉候选: P4=基态失衡 vs P1=相干破坏 -- 量级差 20 倍由层面差异解释",
+    "P1 量级第一性推导=开放项; P1 仅保留方向性(1/8 不对称)"
+  ]
+}

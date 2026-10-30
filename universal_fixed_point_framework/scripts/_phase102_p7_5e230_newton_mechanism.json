@@ -1,0 +1,4 @@
+{
+ "base": "Bstar_true N=600 config scan; ref N=1200 (229/227)",
+ "note": "Newton refinement mechanism verification"
+}

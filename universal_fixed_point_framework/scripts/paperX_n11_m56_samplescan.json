@@ -1,0 +1,55 @@
+{
+ "n": 11,
+ "results": {
+  "10000": {
+   "grow": 24,
+   "grow_conflict": 0,
+   "min_sizes": [
+    21,
+    21,
+    20
+   ],
+   "min": 20
+  },
+  "20000": {
+   "grow": 27,
+   "grow_conflict": 0,
+   "min_sizes": [
+    23,
+    23,
+    23
+   ],
+   "min": 23
+  },
+  "30000": {
+   "grow": 27,
+   "grow_conflict": 0,
+   "min_sizes": [
+    24,
+    24,
+    24
+   ],
+   "min": 24
+  },
+  "45000": {
+   "grow": 28,
+   "grow_conflict": 0,
+   "min_sizes": [
+    26,
+    26,
+    26
+   ],
+   "min": 26
+  },
+  "60000": {
+   "grow": 28,
+   "grow_conflict": 0,
+   "min_sizes": [
+    26,
+    26,
+    26
+   ],
+   "min": 26
+  }
+ }
+}

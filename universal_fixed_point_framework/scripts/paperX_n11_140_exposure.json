@@ -1,0 +1,25 @@
+{
+  "n": 11,
+  "base_type": "approx_140",
+  "base_size": 140,
+  "seed": 131,
+  "curve": [
+    {
+      "samples": 20000,
+      "unique_pats": 20000,
+      "nondet": 0
+    },
+    {
+      "samples": 40000,
+      "unique_pats": 40000,
+      "nondet": 0
+    },
+    {
+      "samples": 80000,
+      "unique_pats": 80000,
+      "nondet": 0
+    }
+  ],
+  "saturated": true,
+  "elapsed_s": 3460.9
+}

@@ -1,0 +1,9 @@
+{
+  "hard_counts": {
+    "(1, 1, -1, -1, 1, -1, -1, 1)": 644,
+    "(-1, -1, 1, 1, -1, 1, 1, -1)": 600
+  },
+  "hard_violations": {},
+  "global_samples": 120000,
+  "global_violations": {}
+}

@@ -1,0 +1,15 @@
+{
+  "dual_axis": {
+    "lepton": "all-Rec",
+    "quark": "mass-gradient"
+  },
+  "gen3_gradient": {
+    "tau": "Rec",
+    "b": "mixed",
+    "t": "Sp"
+  },
+  "b_dual": {
+    "tau_b": "Sp-correction",
+    "t_b": "EM-base"
+  }
+}

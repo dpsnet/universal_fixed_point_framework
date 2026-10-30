@@ -1,0 +1,8 @@
+{
+  "silent_general": "k_max*alpha0^Ngen=1",
+  "k_formula": 8.0,
+  "interlock_general": {
+    "k": "Nweyl^(Ngen/(Ngen-1))",
+    "dual": "(Ngen^2-1)/(Ngen-2)"
+  }
+}

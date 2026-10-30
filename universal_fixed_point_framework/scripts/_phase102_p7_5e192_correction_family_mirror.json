@@ -1,0 +1,177 @@
+{
+  "title": "P7-5e-192 · 1/65 修正项家族镜像判别",
+  "date": "2026-10-15",
+  "L1": {
+    "B1_inv": "332/455",
+    "B1_inv_float": 0.7296703296703296,
+    "main_part": "5/7",
+    "main_part_float": 0.7142857142857143,
+    "main_part_value": "5/7",
+    "B1_inv_minus_1over65": "5/7",
+    "is_exact_5over7": true,
+    "check": "1/B*(1) = 5/7 + 1/65（精确）"
+  },
+  "L2": {
+    "65_as_2p6_plus_1": true,
+    "65_as_window5_start": true,
+    "65_as_silent_k8": true,
+    "identity_notes": {
+      "family_member_m6": "65 = 2^6+1 = 2^m+1 家族 m=6 成员",
+      "window5_start": "65 = a_5 = 2^{5+1}+1（窗口 5 起边界 [65,128]）",
+      "silent_unit_k8": "65 = 8·8+1（静默单元 k=8 单位位）"
+    }
+  },
+  "L3": {
+    "5_as_family_m2": true,
+    "5_as_gap_seed": "5 = 2^2+1 = 隔位种子（191 种子观察）",
+    "7_as_domain_width": "7 = 域宽（闭式 129 主截距 1/7）",
+    "5over7_as_4x_intercept_m2": "5/7 = 4·(5/28) = 4×截距(m=2)"
+  },
+  "L4": {
+    "B2_inv": "33/28",
+    "numerator_33": 33,
+    "33_as_family_m5": true,
+    "check": "m=2 主值 1/B*(2) = 33/28，分子 33 = 2^5+1（家族 m=5 成员）"
+  },
+  "L5_rows": [
+    {
+      "m": 1,
+      "m_prime": 2,
+      "family_member": 5,
+      "main_value": "5/7",
+      "num_numerator": 5,
+      "matches": true
+    },
+    {
+      "m": 2,
+      "m_prime": 5,
+      "family_member": 33,
+      "main_value": "33/28",
+      "num_numerator": 33,
+      "matches": true
+    },
+    {
+      "m": 3,
+      "m_prime": 10,
+      "family_member": 1025,
+      "main_value": "93/56",
+      "num_numerator": 93,
+      "matches": false
+    },
+    {
+      "m": 4,
+      "m_prime": 17,
+      "family_member": 131073,
+      "main_value": "241/112",
+      "num_numerator": 241,
+      "matches": false
+    },
+    {
+      "m": 5,
+      "m_prime": 26,
+      "family_member": 67108865,
+      "main_value": "593/224",
+      "num_numerator": 593,
+      "matches": false
+    }
+  ],
+  "M_rows": [
+    {
+      "m": 1,
+      "den": 14,
+      "domain_width": 7,
+      "full_lattice": 2,
+      "numerator_family": 3,
+      "intercept": "3/14",
+      "identity_check": true
+    },
+    {
+      "m": 2,
+      "den": 28,
+      "domain_width": 7,
+      "full_lattice": 4,
+      "numerator_family": 5,
+      "intercept": "5/28",
+      "identity_check": true
+    },
+    {
+      "m": 3,
+      "den": 56,
+      "domain_width": 7,
+      "full_lattice": 8,
+      "numerator_family": 9,
+      "intercept": "9/56",
+      "identity_check": true
+    },
+    {
+      "m": 4,
+      "den": 112,
+      "domain_width": 7,
+      "full_lattice": 16,
+      "numerator_family": 17,
+      "intercept": "17/112",
+      "identity_check": true
+    },
+    {
+      "m": 5,
+      "den": 224,
+      "domain_width": 7,
+      "full_lattice": 32,
+      "numerator_family": 33,
+      "intercept": "33/224",
+      "identity_check": true
+    },
+    {
+      "m": 6,
+      "den": 448,
+      "domain_width": 7,
+      "full_lattice": 64,
+      "numerator_family": 65,
+      "intercept": "65/448",
+      "identity_check": true
+    },
+    {
+      "m": 7,
+      "den": 896,
+      "domain_width": 7,
+      "full_lattice": 128,
+      "numerator_family": 129,
+      "intercept": "129/896",
+      "identity_check": true
+    },
+    {
+      "m": 8,
+      "den": 1792,
+      "domain_width": 7,
+      "full_lattice": 256,
+      "numerator_family": 257,
+      "intercept": "257/1792",
+      "identity_check": true
+    }
+  ],
+  "M_ok": true,
+  "conclusion": {
+    "verdict": "1/65 修正 = 家族 m=6 成员（65=2^6+1）的精确补足项：1/B*(1)=5/7+1/65 精确分解；m=1 特权 = 唯一纯 7 分数主值通道（候选解释）；截距分母 7·2^m = 域宽×满格对偶投影（M 验证通过）",
+    "L": {
+      "exact_decomposition": "1/B*(1) = 5/7 + 1/65（精确，非近似）",
+      "65_triple_identity": "家族 m=6 成员 / 窗口 5 起边界 a_5 / 静默 k=8 单位位",
+      "m1_privilege_candidate": "m=1 是唯一使主值（无修正）为纯 7 分数 5/7 的通道；m>=2 主值含 2^m 分母 → 1/65 补足仅 m=1 需要",
+      "m2_contrast": "m=2 主值 33/28 分子 33=家族 m=5 —— m=1,2 主值分子均为家族成员（m'=m^2+1: 1->2, 2->5 成立；m=3 失效 93!=1025 → 数值模式非机制）"
+    },
+    "M": {
+      "intercept_dual": "截距 = (2^m+1)/(7·2^m) = 家族分子/(域宽·满格)",
+      "verified": true
+    },
+    "honest_limits": [
+      "m=1 特权解释为候选（纯 7 分数主值 + 窗口 1 根窗口异类同源候选），未定案",
+      "65 的三重身份（家族/窗口边界/静默）是身份重合而非因果机制",
+      "m'=m^2+1 分子模式仅 m=1,2 成立，判定为数值模式",
+      "继承 187-191 候选层"
+    ],
+    "next_candidates": [
+      "检验 N：m=1 的 5/7 主值与 1/65 修正的'7 分数互补'（5/7+2/7=1；65≡2 mod 7）",
+      "检验 O：窗口 5 起边界 a_5=65 在闭式中的角色——是否 m=1 修正锚定窗口 5（对称窗口？）",
+      "窗口 2 家族段（m=9..16）为分数/整数段重复判据（若框架层扩展）"
+    ]
+  }
+}

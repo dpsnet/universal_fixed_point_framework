@@ -1,0 +1,385 @@
+{
+  "title": "P7-5e-187 · Clifford(3,1) 结构候选检验",
+  "date": "2026-10-15",
+  "framework_id_count": 24,
+  "clifford_struct_count": 26,
+  "hit_count": 17,
+  "unique_hits": [],
+  "candidate_hits": [
+    {
+      "value": 1,
+      "clifford_sources": [
+        "Cliff(3,1) 分次 C(4,0) = 1",
+        "Cliff(3,1) 分次部分和 1..C(4,0) = 1",
+        "Cliff(3,1) 分次 C(4,4) = 1",
+        "Cliff(3) 分次 C(3,0) = 1",
+        "Cliff(3) 分次部分和 = 1",
+        "Cliff(3) 分次 C(3,3) = 1",
+        "Cliff(1) 非平凡元素数 2^1-1"
+      ],
+      "framework_roles": [
+        "恒等元素",
+        "α0^3=1/8 静默修正底",
+        "δ∞ 恒等式 1/7-1/8 的 1"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 2,
+      "clifford_sources": [
+        "dim_Cliff(1) = 2^1",
+        "标量层 1 + 矢量层组合底"
+      ],
+      "framework_roles": [
+        "N_gen-1",
+        "主斜率 α0=1/2 的 2",
+        "2^1"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 3,
+      "clifford_sources": [
+        "2^1+1 = dim_Cliff(1)+1",
+        "Cliff(3) 分次 C(3,1) = 3",
+        "Cliff(3) 分次 C(3,2) = 3",
+        "Cliff(2) 非平凡元素数 2^2-1",
+        "空间 bivector 数 C(3,2)"
+      ],
+      "framework_roles": [
+        "2^1+1=3 截距分子 m=1",
+        "N_gen=3",
+        "空间 bivector C(3,2)=3 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 4,
+      "clifford_sources": [
+        "dim_Cliff(2) = 2^2",
+        "Cliff(3,1) 分次 C(4,1) = 4",
+        "Cliff(3,1) 分次 C(4,3) = 4",
+        "Cliff(3) 分次部分和 = 4",
+        "时空矢量数 C(4,1)"
+      ],
+      "framework_roles": [
+        "2^2=4 通道中心",
+        "N_gen+1",
+        "时空矢量数 C(4,1)=4 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 5,
+      "clifford_sources": [
+        "2^2+1 = dim_Cliff(2)+1",
+        "Cliff(3,1) 分次部分和 1..C(4,1) = 5"
+      ],
+      "framework_roles": [
+        "2^2+1=5 截距分子 m=2",
+        "N'=k_max-3=5",
+        "k_max-N_gen",
+        "Cliff(3,1) 分次部分和 1+4=5 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 6,
+      "clifford_sources": [
+        "Cliff(3,1) 分次 C(4,2) = 6",
+        "bivector 数 C(4,2) = Spin(3,1) 李代数维数"
+      ],
+      "framework_roles": [
+        "闭合环节点 6",
+        "3·2",
+        "bivector 数 C(4,2)=6 ?",
+        "谱截止 m=6"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 7,
+      "clifford_sources": [
+        "Cliff(3) 分次部分和 = 7",
+        "Cliff(3) 非平凡元素数 2^3-1"
+      ],
+      "framework_roles": [
+        "域宽 k_max-1=7",
+        "2^3-1",
+        "1/7 截距",
+        "Cliff(3) 非平凡元素数 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 8,
+      "clifford_sources": [
+        "dim_Cliff(3) = 2^3",
+        "Cliff(3) 分次部分和 = 8",
+        "dim Cliff+(3,1) 偶子代数 = dim Cliff(3)",
+        "Bott 周期 8"
+      ],
+      "framework_roles": [
+        "k_max=8 通道数",
+        "2^3",
+        "dim Cliff(3) ?",
+        "dim Cliff+(3,1) ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 9,
+      "clifford_sources": [
+        "2^3+1 = dim_Cliff(3)+1"
+      ],
+      "framework_roles": [
+        "域界/对合常数 K+1=9",
+        "2^3+1",
+        "静默单元 k=1",
+        "dim Cliff(3)+1 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 10,
+      "clifford_sources": [
+        "矢量+bivector 4+6"
+      ],
+      "framework_roles": [
+        "n_max=k_max+2=10",
+        "矢量+bivector 4+6 ?",
+        "N_gen+k_max-1"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 15,
+      "clifford_sources": [
+        "Cliff(3,1) 分次部分和 1..C(4,3) = 15",
+        "Cliff(4) 非平凡元素数 2^4-1"
+      ],
+      "framework_roles": [
+        "N'·N_gen=5·3=15",
+        "2^4-1",
+        "(2^2)^2-1",
+        "Cliff(3,1) 全非平凡元素数 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 17,
+      "clifford_sources": [
+        "2^4+1 = dim_Cliff(4)+1"
+      ],
+      "framework_roles": [
+        "2^4+1=17 尖端沉默位点",
+        "静默单元 k=2",
+        "dim Cliff(4)+1 ?",
+        "dim Cliff(3,1)+1 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 33,
+      "clifford_sources": [
+        "2^5+1 = dim_Cliff(5)+1"
+      ],
+      "framework_roles": [
+        "2^5+1=33 尖端沉默位点",
+        "静默单元 k=4",
+        "dim Cliff(5)+1 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 64,
+      "clifford_sources": [
+        "dim_Cliff(6) = 2^6",
+        "bivector 幂集 2^6"
+      ],
+      "framework_roles": [
+        "满格 2^6=64",
+        "8^2",
+        "bivector 幂集 2^6 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 65,
+      "clifford_sources": [
+        "2^6+1 = dim_Cliff(6)+1",
+        "bivector 幂集 + 1 = 2^6+1"
+      ],
+      "framework_roles": [
+        "修正 1/65",
+        "2^6+1",
+        "k_max^2+1",
+        "静默单元 k=8",
+        "bivector 幂集+1 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 129,
+      "clifford_sources": [
+        "2^7+1 = dim_Cliff(7)+1"
+      ],
+      "framework_roles": [
+        "2^7+1=129 闭式编号",
+        "静默单元 k=16",
+        "dim Cliff(7)+1 ?"
+      ],
+      "multi_interpretation": true
+    },
+    {
+      "value": 257,
+      "clifford_sources": [
+        "2^8+1 = dim_Cliff(8)+1"
+      ],
+      "framework_roles": [
+        "2^8+1=257",
+        "静默单元 k=32",
+        "dim Cliff(8)+1 ?"
+      ],
+      "multi_interpretation": true
+    }
+  ],
+  "misses_count": 9,
+  "misses": [
+    {
+      "value": 11,
+      "clifford_sources": [
+        "Cliff(3,1) 分次部分和 1..C(4,2) = 11"
+      ]
+    },
+    {
+      "value": 16,
+      "clifford_sources": [
+        "dim_Cliff(4) = 2^4",
+        "Cliff(3,1) 分次部分和 1..C(4,4) = 16",
+        "dim Cliff(3,1) = M4(R) 维数"
+      ]
+    },
+    {
+      "value": 31,
+      "clifford_sources": [
+        "Cliff(5) 非平凡元素数 2^5-1"
+      ]
+    },
+    {
+      "value": 32,
+      "clifford_sources": [
+        "dim_Cliff(5) = 2^5"
+      ]
+    },
+    {
+      "value": 63,
+      "clifford_sources": [
+        "Cliff(6) 非平凡元素数 2^6-1"
+      ]
+    },
+    {
+      "value": 127,
+      "clifford_sources": [
+        "Cliff(7) 非平凡元素数 2^7-1"
+      ]
+    },
+    {
+      "value": 128,
+      "clifford_sources": [
+        "dim_Cliff(7) = 2^7",
+        "Cliff(7) 维数 2^7（=闭式 129 的满格）"
+      ]
+    },
+    {
+      "value": 255,
+      "clifford_sources": [
+        "Cliff(8) 非平凡元素数 2^8-1"
+      ]
+    },
+    {
+      "value": 256,
+      "clifford_sources": [
+        "dim_Cliff(8) = 2^8",
+        "Cliff(8) 维数 2^8（Bott 周期末）"
+      ]
+    }
+  ],
+  "neg_evidence_highlights": [
+    {
+      "value": 11,
+      "clifford_sources": [
+        "Cliff(3,1) 分次部分和 1..C(4,2) = 11"
+      ]
+    },
+    {
+      "value": 16,
+      "clifford_sources": [
+        "dim_Cliff(4) = 2^4",
+        "Cliff(3,1) 分次部分和 1..C(4,4) = 16",
+        "dim Cliff(3,1) = M4(R) 维数"
+      ]
+    },
+    {
+      "value": 31,
+      "clifford_sources": [
+        "Cliff(5) 非平凡元素数 2^5-1"
+      ]
+    },
+    {
+      "value": 63,
+      "clifford_sources": [
+        "Cliff(6) 非平凡元素数 2^6-1"
+      ]
+    },
+    {
+      "value": 127,
+      "clifford_sources": [
+        "Cliff(7) 非平凡元素数 2^7-1"
+      ]
+    },
+    {
+      "value": 255,
+      "clifford_sources": [
+        "Cliff(8) 非平凡元素数 2^8-1"
+      ]
+    }
+  ],
+  "two_pow_theme_hits": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    9,
+    15,
+    17,
+    33,
+    64,
+    65,
+    129,
+    257
+  ],
+  "conclusion": {
+    "verdict": "候选层（Clifford 维数族对应），非定案；无 Clifford(3,1) 特异性整体结构",
+    "reasoning": [
+      "强结构候选：k_max=8=dim Cliff(3)=dim Cliff+(3,1)；域宽 7=2^3-1 非平凡元素数；谱截止 m=6=bivector 数 C(4,2)；65=2^6+1=bivector 幂集+1；双家族重合恒等式的 Clifford 翻译 = dim Cliff(m)=dim Cliff(3)·2^{m-3}（维数乘性）",
+      "负证据：Clifford(3,1) 特异性量（全维数 16、分级部分和 11、非平凡 63/127/255、Cliff(6) 维数 64 单独等）在框架身份库无角色 -> 非完整代数结构映射",
+      "共同主题：命中全部落在 2 进幂集/维数乘性主题上（dim Cliff(m)=2^m、幂集 2^6、2^m+1）——Clifford 代数只是 2 进幂集组织的一个实例，非新机制",
+      "186 对偶投影的 Clifford 实例：Cliff(m) 维数 2^m 增长（加法面/Rec）vs 尾巴 2^-m 衰减（乘法面/Sp）——倒数对偶",
+      "群层：183 已定案闭合环无群运算（C6 循环图+发夹折叠）；Clifford(3,1) 相关群（Spin/SL(2,C)）是连续 Lie 群，与离散 m 轴代数无运算级对应"
+    ],
+    "next_candidates": [
+      "检验 E：bivector 计数通道——框架量库中 '6 与 3' 的独立出现（闭合环节点 6/3）是否与 C(4,2)/C(3,2) 形成独立计数",
+      "检验 F：空缺系统性——16/63/11 等 Clifford 量无角色是否构成'只出现幂集/维数顶部量'的系统模式（支持 2 进组织为底层）",
+      "若接受候选：将 2^m+1=dim Cliff(m)+1 登记为 159E'为何状态数=2^m'的候选机制（2 进组织的 Clifford 实例）"
+    ],
+    "honest_limits": [
+      "全部为数值/维数巧合级对应（后验映射 m↔生成元数），无推导链",
+      "多重命中（5/10/15 等已有其他框架身份）判别力弱",
+      "'群体演化'若指 Lie 群/离散群运算则无证据（183）；若指 Clifford 代数族的维数演化 2^m 则成立（候选层）"
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "points": [
+    {
+      "name": "G 227-35",
+      "B_MG": 120,
+      "B_type": "<|B|>",
+      "V_pct": 4.0,
+      "V_err_pct": 0.5,
+      "V_type": "cont",
+      "Kemp_pred_pct": 2.667,
+      "suppression": null,
+      "cyclotron_A": 8925.0,
+      "source": "Kawka 2020 连续谱峰 @4500A"
+    },
+    {
+      "name": "G 111-49",
+      "B_MG": 250,
+      "B_type": "<|B|>",
+      "V_pct": 8.0,
+      "V_err_pct": 1.0,
+      "V_type": "cont",
+      "Kemp_pred_pct": 5.556,
+      "suppression": null,
+      "cyclotron_A": 4284.0,
+      "source": "Kawka 2020 连续谱峰 @5500A"
+    },
+    {
+      "name": "PG 1031+234",
+      "B_MG": 500,
+      "B_type": "Bp~偶极+斑",
+      "V_pct": 12.0,
+      "V_err_pct": 3.0,
+      "V_type": "cont",
+      "Kemp_pred_pct": 11.111,
+      "suppression": null,
+      "cyclotron_A": 2142.0,
+      "source": "Schmidt 1986/Piirola-Reiz 1990 U带峰(峰值相位)"
+    },
+    {
+      "name": "SDSS J0021",
+      "B_MG": 550,
+      "B_type": "Bp",
+      "V_pct": 0.91,
+      "V_err_pct": 0.3,
+      "V_type": "avg",
+      "Kemp_pred_pct": 12.222,
+      "suppression": 13.4,
+      "cyclotron_A": 1947.0,
+      "source": "Schmidt 2005 表1 波长平均含线"
+    },
+    {
+      "name": "SDSS J1206",
+      "B_MG": 830,
+      "B_type": "Bp",
+      "V_pct": 0.41,
+      "V_err_pct": 0.3,
+      "V_type": "avg",
+      "Kemp_pred_pct": 18.444,
+      "suppression": 45.0,
+      "cyclotron_A": 1290.0,
+      "source": "Schmidt 2005 表1 波长平均含线"
+    },
+    {
+      "name": "SDSS J2346",
+      "B_MG": 1000,
+      "B_type": "Bp",
+      "V_pct": -1.51,
+      "V_err_pct": 0.5,
+      "V_type": "avg",
+      "Kemp_pred_pct": 22.222,
+      "suppression": 14.7,
+      "cyclotron_A": 1071.0,
+      "source": "Schmidt 2005 表1 波长平均含线"
+    }
+  ],
+  "gamma_MG_per_pct": 15.0,
+  "b_th_seq": {
+    "7": 48.01,
+    "6": 65.35,
+    "5": 94.11,
+    "4": 147.05,
+    "3": 261.41
+  },
+  "conclusions": [
+    "V(B) 幅度先升后降, 峰值 ~500 MG (4->8->12-17->0.91->0.41->-1.51)",
+    "中场 (<=500 MG) Kemp 线性区延续 (观测 4/8/12-17 vs 预言 2.7/5.3/4.4-11)",
+    "高场 (>550 MG) 波长平均 V 抑制 8-55 倍 vs Kemp 偶极外推",
+    "Rohrmann 远回旋区 V~0 预言 vs 高场观测非零 -> 偏离光电离模型",
+    "口径差异 (cont vs avg) 为主障碍; 统一口径 V(B) 数据待观测闭合"
+  ]
+}

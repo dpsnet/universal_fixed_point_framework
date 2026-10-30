@@ -1,0 +1,8 @@
+{
+ "n": 11,
+ "pat26_count": 20958,
+ "patfull_count": 60000,
+ "log3_pat26": 9.06,
+ "log3_patfull": 10.01,
+ "spectral_dim": 26
+}

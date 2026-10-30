@@ -1,0 +1,11 @@
+{
+ "n": 11,
+ "n_samples": 200,
+ "ranks_dist": {
+  "10": 200
+ },
+ "min_rank": 10,
+ "max_rank": 10,
+ "spectral_dim": 26,
+ "h1_rejected": true
+}

@@ -1,0 +1,15 @@
+{
+  "form_consistency": {
+    "tau": "add+algebra",
+    "b": "mul+log"
+  },
+  "sil_share": {
+    "tau_pct": 0.48,
+    "b_pct": 1.3
+  },
+  "gen3": {
+    "tau": "Rec/counting",
+    "b": "EM-face/ratio",
+    "t": "Sp-face"
+  }
+}
