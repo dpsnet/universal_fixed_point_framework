@@ -261,4 +261,35 @@ theorem window_spectrum_judgement :
   · exact de_mol_window_plus_minus.1
   · exact de_mol_window_plus_minus.2
 
+/-! =========================================================
+    §8 窗口结构 + n_max³ 窗口连接（286f）
+   ========================================================= -/
+
+/-- 286f M3：n_max³ 窗口连接恒等 (k+2)³ − k(2k²−3) = (8−k)(k+1)²。 -/
+theorem nmax_window_identity : ∀ k : ℤ, (k + 2) ^ 3 - k * (2 * k * k - 3) = (8 - k) * (k + 1) ^ 2 := by
+  intro k
+  ring
+
+/-- 286f M3：n_max³ = k·(窗口和−3) 的唯一正整数解 k=8
+    （因式分解 (8−k)(k+1)²，(k+1)²=0 → k=−1 被 k≥2 排除）。 -/
+theorem nmax_cube_unique : ∀ k : ℤ, k ≥ 2 → (k + 2) ^ 3 = k * (2 * k * k - 3) → k = 8 := by
+  intro k hk h
+  have hident : (k + 2) ^ 3 - k * (2 * k * k - 3) = (8 - k) * (k + 1) ^ 2 := by
+    exact nmax_window_identity k
+  have hzero : (8 - k) * (k + 1) ^ 2 = 0 := by
+    nlinarith [hident, h]
+  rcases mul_eq_zero.mp hzero with h8 | hsq
+  · nlinarith [h8]
+  · have hkp1 : k + 1 = 0 := by
+      exact sq_eq_zero_iff.mp hsq
+    nlinarith [hk, hkp1]
+
+/-- 286f 联合主定理：n_max³ 窗口连接恒等 + 唯一性。 -/
+theorem window_structure_judgement :
+    (∀ k : ℤ, (k + 2) ^ 3 - k * (2 * k * k - 3) = (8 - k) * (k + 1) ^ 2) ∧
+    (∀ k : ℤ, k ≥ 2 → (k + 2) ^ 3 = k * (2 * k * k - 3) → k = 8) := by
+  constructor
+  · exact nmax_window_identity
+  · exact nmax_cube_unique
+
 end MUFPF.Demirror

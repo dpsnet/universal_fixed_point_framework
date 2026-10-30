@@ -1,0 +1,223 @@
+{
+ "title": "P7-5e-286f 窗口结构判别 + δ∞ 左端落位 + n_max³ 窗口连接升格",
+ "M1_window_structure": {
+  "window_family": "W(k) = [k(k−1), k²−1, k², k²+1]",
+  "structural_claims": {
+   "left": "k(k−1) = (k−1)·k 连续整数乘积",
+   "m1": "(k−1)(k+1) = k²−1 因子差 2，非连续乘积",
+   "center": "k·k 自乘，非相邻整数乘积",
+   "plus1": "k²+1 一般非乘积形态"
+  },
+  "k4_12_rows": [
+   {
+    "k": 4,
+    "window": {
+     "left": 12,
+     "m1": 15,
+     "center": 16,
+     "plus1": 17
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 5,
+    "window": {
+     "left": 20,
+     "m1": 24,
+     "center": 25,
+     "plus1": 26
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 6,
+    "window": {
+     "left": 30,
+     "m1": 35,
+     "center": 36,
+     "plus1": 37
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 7,
+    "window": {
+     "left": 42,
+     "m1": 48,
+     "center": 49,
+     "plus1": 50
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 8,
+    "window": {
+     "left": 56,
+     "m1": 63,
+     "center": 64,
+     "plus1": 65
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 9,
+    "window": {
+     "left": 72,
+     "m1": 80,
+     "center": 81,
+     "plus1": 82
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 10,
+    "window": {
+     "left": 90,
+     "m1": 99,
+     "center": 100,
+     "plus1": 101
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 11,
+    "window": {
+     "left": 110,
+     "m1": 120,
+     "center": 121,
+     "plus1": 122
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   },
+   {
+    "k": 12,
+    "window": {
+     "left": 132,
+     "m1": 143,
+     "center": 144,
+     "plus1": 145
+    },
+    "consecutive_product": {
+     "left": true,
+     "m1": false,
+     "center": false,
+     "plus1": false
+    },
+    "unique_consecutive_product_is_left": true
+   }
+  ],
+  "ALL_unique_left": true,
+  "interpretation": "窗口四元组中唯一连续整数乘积 = 左端 k(k−1)；δ∞ 是五系数中唯一分母=乘积形态的系数（1/[k(k−1)]，其余为 2 幂/立方）→ δ∞ 唯一落位窗口左端 = 形态-位置唯一性判别。"
+ },
+ "M2_form_source_coef_spectrum": {
+  "spectrum": [
+   {
+    "form": "连续乘积 k(k−1)",
+    "source": "窗口左端",
+    "coef": "δ∞=1/56",
+    "growth": "二次乘积"
+   },
+   {
+    "form": "2 幂 2^(k−1)",
+    "source": "窗口和 2k²（唯一重合点 k=8）",
+    "coef": "C=13/128",
+    "growth": "指数"
+   },
+   {
+    "form": "2·立方 2(k+2)³",
+    "source": "n_max³（16(k−3)³ 唯一重合）",
+    "coef": "D/E=41,39/2000",
+    "growth": "立方"
+   }
+  ],
+  "one_to_one": "三种初等代数增长形态（乘积/指数/立方）各对应一个系数，来源窗口左端/窗口和/n_max³——一一对应"
+ },
+ "M3_nmax_window_algebra": {
+  "identity": "(k+2)³ − k(2k²−3) = (8−k)(k+1)²",
+  "identity_check": true,
+  "factored": "-(k - 8)*(k + 1)**2",
+  "solutions_k2_20": [
+   8
+  ],
+  "k8_check": {
+   "nmax_cube": 1000,
+   "k*(window_sum−3)": 1000,
+   "hit": true
+  },
+  "interpretation": "n_max³ = k·(窗口和−3) 的唯一正整数解 k=8（因式分解 (8−k)(k+1)²，(k+1)²>0 ∀k≥2）；k=8 处 1000=8·125=8·(2·64−3)——n_max³ 与窗口的代数连接升格（原 263 条件 5³=128−3 的乘积化表述）"
+ },
+ "M4_E1E2_reference": {
+  "reference": "286e M5：E1 集合 {3,5,7,13} ≠ 『2k−3 为奇素数』判据（反例 k=10/16/20：17、7 均奇素但 17∉E1）",
+  "status": "E1/E2 家族资格 = 判别设计（唯一性所需），维持观察级登记"
+ },
+ "PYCHECK": {
+  "nmax_window_identity": {
+   "claim": "∀k：(k+2)³ − k(2k²−3) = (8−k)(k+1)²",
+   "sympy_pass": true,
+   "range_pass": true
+  },
+  "nmax_cube_unique": {
+   "claim": "∀k≥2：(k+2)³ = k(2k²−3) → k=8",
+   "enum_pass": true,
+   "solutions": [
+    8
+   ]
+  },
+  "window_adjacent_uniqueness": {
+   "claim": "窗口四元组唯一连续乘积 = 左端（k=4..12 全验证）",
+   "enum_pass": true
+  }
+ },
+ "M1_PASS": true,
+ "M3_PASS": true,
+ "PYCHECK_PASS": true,
+ "ALL_PASS": true
+}
