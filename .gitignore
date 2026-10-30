@@ -58,3 +58,11 @@ external_data_research/稳定岛：神秘的新世界/寻找稳定岛超密集�
 external_data_research/稳定岛：神秘的新世界/追踪光因子1/
 # 第三方原始脚本运行产物（pycache）
 external_data_research/**/__pycache__/
+
+# ===== 大文件保护（>50MB，GitHub 100MB 硬限；2026-10-30 历史重写移除后防复发）=====
+# 数值脚本运行缓存（可再生成，勿提交）
+universal_fixed_point_framework/scripts/cache*.pkl
+# USGS Energy GeoChem DataBase 公开原始数据大 CSV（可重新下载，勿提交）
+universal_fixed_point_framework/scripts/data/rockeval_usgs_egdb/csv/EnergyGeoChemDB_csv/Analysis_*.csv
+universal_fixed_point_framework/scripts/data/rockeval_usgs_egdb/*.zip
+universal_fixed_point_framework/scripts/data/drp443_ifn/IFN.raw
