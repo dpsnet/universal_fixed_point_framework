@@ -258,8 +258,8 @@ $$\delta_{\text{silence}} \leq \|A\| \cdot \|G\| + \|G\| \cdot \|A\| = 2\|A\|\cd
 
 | 定理 | 内容 | 状态 |
 |------|------|:----:|
-| `agEigenvalue` 定义 | A_GR 特征值谱 λ_k ∝ √{k(k+1)}（SU(2) 表示） | ✅ |
-| `agEigenvalue_range` | 归一化特征值 λ_k ∈ (0, 1]，λ_{k_max}=1 | ✅ |
+| `agEigenvalue` 定义 | A_GR 特征值谱 λ_k ∝ √{k(k+1)}（SU(2) 表示） | ✅【2026-10-24 勘误：SpectralGap 模块无此常量——定义实为 CategoryRepBridge 本地定义，已更名 `catAgEigenvalue`（√{k(k+1)}/√{k_max(k_max+1)}）；"（SU(2) 表示）"括号口径限定为谱框架设定，非 j=k/2 Casimir 特征值（=k(k+2)/4，相差因子 √{(k+2)/(k+1)}）】 |
+| `agEigenvalue_range` | 归一化特征值 λ_k ∈ (0, 1]，λ_{k_max}=1 | ✅【同上勘误：该范围性质对 catAgEigenvalue 成立（k≤k_max ⟹ 分子≤分母），Lean 侧如需机器证明属待补项】 |
 | `spectralGap` 定义 | Δλ_min = λ₂ - λ₁ | ✅ |
 | `spectralGap_formula` | 解析公式 Δλ_min = (√6-√2)/√{k_max(k_max+1)} | ✅ |
 | `kmax_from_cl17` | Cl(1,7) ≅ M₈(ℝ) → k_max = 8【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维数 16），此处 8 指 k_max=8（Bott 截断/谱模数），非 Cl(1,7) 表示维数】 | ✅ |
@@ -386,11 +386,11 @@ Cl(1,7) ≅ M₈(ℝ)【2026-08-07 勘误：Cl(1,7) ≅ M₁₆(ℝ)（旋量维
 |:----:|:---------|:---------|:----:|
 | **53A** | A_GR 定义统一：废弃 `stepMatrix` 路径，`G_GR_fromBoundary = ad(G)(A)`；A_weak 从标量矩阵（对易）重写为非标量非对易形式 | `CategoryGeometry.lean`, `SpectralDynamics.lean` | ✅ |
 | **53B** | SU(2) Lie 代数结构 `SU2Generators` + Casimir 算子定义 + 2×2 与 3×3 表示特征值验证 + 概念澄清（G_GR ≠ A_GR） | `CategoryRepBridge.lean`（新建） | ✅ |
-| **53C** | `agEigenvalue = Casimir 比值` 定理 + j=0,1/2,1 显式 Casimir 特征值计算（0, 3/4, 2） | `CategoryRepBridge.lean` | ✅ |
+| **53C** | `agEigenvalue = Casimir 比值` 定理 + j=0,1/2,1 显式 Casimir 特征值计算（0, 3/4, 2） | `CategoryRepBridge.lean` | ✅【2026-10-24 勘误：目标"agEigenvalue = Casimir 归一化特征值"按先证伪原则登记证伪（√{k(k+1)} 与 j=k/2 Casimir 比相差因子 √{(k+2)/(k+1)}）；现 Lean 状态 = `catAgEigenvalue` 独立定义（rfl 直证）+ j=1/2→3/4、j=1→2 用 det 语言机器证明】 |
 | **53D** | Cl(1,7) Bott 周期分类 → `cl17_rep_dim = 8`；`kmax_from_cl17` 从常量改为真正定理；`cl17_iso_M8` 从 `True` 占位符改为有意义定理【2026-08-07 勘误：`cl17_rep_dim`/`cl17_iso_M8` 中的 8（M₈）系旧遗留——Cl(1,7) ≅ M₁₆(ℝ)，旋量维数 16；k_max=8 指 Bott 截断/谱模数】 | `Clifford.lean`, `SpectralGap.lean` | ✅ |
 | **53E** | `spectralGap_numerical_approx` sorry 填充：区间不等式证明 `0.121 < Δλ_min < 0.123` | `SpectralGap.lean` | ✅ |
 
-**全链当前状态**：Rec/Sp → G_GR=ad(G)(A) → SU(2) 结构 → Casimir → agEigenvalue → Cl(1,7)→k_max=8 → Δλ_min=(√6-√2)/√72 ≈ 0.122 M_Pl。**所有环节均已形式化，零 sorry**。
+**全链当前状态**：Rec/Sp → G_GR=ad(G)(A) → SU(2) 结构 → Casimir → agEigenvalue → Cl(1,7)→k_max=8 → Δλ_min=(√6-√2)/√72 ≈ 0.122 M_Pl。**所有环节均已形式化，零 sorry**。【2026-10-24 勘误："Casimir → agEigenvalue"环节口径限定——`catAgEigenvalue`（√{k(k+1)} 归一化）为谱框架设定口径（本地定义），非 j=k/2 Casimir 特征值之比（相差因子 √{(k+2)/(k+1)}）；Δλ_min 公式（paper1 附录/paper20）在此口径下成立，见 §2.6/§4.4 勘误注。】
 
 ### 4.5 当前 sorry 分布（总 14 处，较此前减少 1 处）
 

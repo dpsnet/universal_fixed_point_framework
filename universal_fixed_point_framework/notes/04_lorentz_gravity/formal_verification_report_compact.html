@@ -208,6 +208,10 @@
 </head>
 <body>
 
+<div style="background:rgba(210,153,34,0.12);border:1px solid rgba(210,153,34,0.4);border-radius:8px;padding:0.6rem 1rem;margin-bottom:1.25rem;font-size:0.82rem;color:#d29922;">
+  ⚠️ <strong>勘误（2026-10-24）</strong>：下表 <code>residualToDelay</code> 注释 "τ=|E_residual|（§21）" 不准确——Lean 实际定义为 <code>τ = Complex.normSq(adjunctionResidual) = |E_residual|²</code>（模平方）。零/非零判别与光速/亚光速定性等价，定理结论不受影响；定量名义以 |E|² 为准。详见 GWPolarization.lean docstring 与 compact_pulsar_gw_causal_chain.md 勘误注。
+</div>
+
 <h1>狭义MUFPF致密天体-引力波-脉冲星因果链条<br>Lean4 形式化验证总结报告</h1>
 
 <div class="meta">
