@@ -66,3 +66,16 @@ universal_fixed_point_framework/scripts/cache*.pkl
 universal_fixed_point_framework/scripts/data/rockeval_usgs_egdb/csv/EnergyGeoChemDB_csv/Analysis_*.csv
 universal_fixed_point_framework/scripts/data/rockeval_usgs_egdb/*.zip
 universal_fixed_point_framework/scripts/data/drp443_ifn/IFN.raw
+
+# ===== 参考物/备份/数据资产排除（2026-10-30：本地保留、不入库）=====
+# 外部观察数据与引用材料（obs_data 为第三方下载参考）
+obs_data/
+# 数据资产目录（含 begusic_raw 约 3GB 原始数据、52MB 模拟 CSV 等；结果 json 权威版在 paper/scripts 记录中）
+universal_fixed_point_framework/data/
+# 历史快照备份（git 历史已可追溯）
+universal_fixed_point_framework/backups/
+# 临时探针脚本
+/probe_*.py
+universal_fixed_point_framework/formal_proof/MUFPFormalization/_probe_*.lean
+# scripts 下 _ 前缀参考/下载物（pdf/tsv/tar/png/光谱目录等）
+universal_fixed_point_framework/scripts/_*
