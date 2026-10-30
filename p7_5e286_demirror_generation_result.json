@@ -1,0 +1,145 @@
+{
+ "title": "P7-5e-286 D/E 分子代数必然性",
+ "checks": {},
+ "axis_40": {
+  "solutions": [
+   8
+  ],
+  "unique_pos_k8": true
+ },
+ "molecules": {
+  "41_solutions": [
+   8
+  ],
+  "39_solutions": [
+   8
+  ]
+ },
+ "nearby": {
+  "6": {
+   "k(k-3)": 18,
+   "k(k-3)+1": 19,
+   "k(k-3)-1": 17
+  },
+  "7": {
+   "k(k-3)": 28,
+   "k(k-3)+1": 29,
+   "k(k-3)-1": 27
+  },
+  "8": {
+   "k(k-3)": 40,
+   "k(k-3)+1": 41,
+   "k(k-3)-1": 39
+  },
+  "9": {
+   "k(k-3)": 54,
+   "k(k-3)+1": 55,
+   "k(k-3)-1": 53
+  },
+  "10": {
+   "k(k-3)": 70,
+   "k(k-3)+1": 71,
+   "k(k-3)-1": 69
+  }
+ },
+ "DE_diff": {
+  "solutions": [
+   8
+  ],
+  "formula": "D-E = 1/(8(k-3)^3) = 1/(k+2)^3 <=> k=8"
+ },
+ "coefficient_matrix": [
+  {
+   "k": 4,
+   "delta_inf_den": 12,
+   "C": "5/8",
+   "D": "5/16",
+   "E": "3/16",
+   "all_framework_clean": true
+  },
+  {
+   "k": 5,
+   "delta_inf_den": 20,
+   "C": "7/16",
+   "D": "11/128",
+   "E": "9/128",
+   "all_framework_clean": true
+  },
+  {
+   "k": 6,
+   "delta_inf_den": 30,
+   "C": "9/32",
+   "D": "19/432",
+   "E": "17/432",
+   "all_framework_clean": true
+  },
+  {
+   "k": 7,
+   "delta_inf_den": 42,
+   "C": "11/64",
+   "D": "29/1024",
+   "E": "27/1024",
+   "all_framework_clean": true
+  },
+  {
+   "k": 8,
+   "delta_inf_den": 56,
+   "C": "13/128",
+   "D": "41/2000",
+   "E": "39/2000",
+   "all_framework_clean": true
+  },
+  {
+   "k": 9,
+   "delta_inf_den": 72,
+   "C": "15/256",
+   "D": "55/3456",
+   "E": "53/3456",
+   "all_framework_clean": true
+  },
+  {
+   "k": 10,
+   "delta_inf_den": 90,
+   "C": "17/512",
+   "D": "71/5488",
+   "E": "69/5488",
+   "all_framework_clean": true
+  },
+  {
+   "k": 11,
+   "delta_inf_den": 110,
+   "C": "19/1024",
+   "D": "89/8192",
+   "E": "87/8192",
+   "all_framework_clean": true
+  },
+  {
+   "k": 12,
+   "delta_inf_den": 132,
+   "C": "21/2048",
+   "D": "109/11664",
+   "E": "107/11664",
+   "all_framework_clean": false
+  }
+ ],
+ "all_framework_clean_solutions": [
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "strong_k": [
+  8
+ ],
+ "k8_exact": {
+  "delta_inf": 0.017857142857142856,
+  "C": 0.1015625,
+  "D": 0.0205,
+  "E": 0.0195,
+  "D_minus_E": 0.001
+ }
+}
