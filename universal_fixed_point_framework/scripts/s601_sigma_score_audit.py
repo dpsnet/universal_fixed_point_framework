@@ -89,8 +89,12 @@ percent_pattern = re.compile(
 residuals = []
 for m in percent_pattern.finditer(text):
     frag = m.group(0)
-    # ① 已勘误：明确标记否决/撤销/替代/旧/禁用——非当前判定
-    if any(k in frag for k in ["否决", "撤销", "替代", "旧", "禁用", "勘误", "废弃", "不再"]):
+    # 判定词后 20 字符上下文：识别删除线闭合 ~~ 与勘误清理登记备注
+    # （s601 清理落地 2026-10-30 原位标注格式：~~片段~~（勘误清理登记…））
+    after = text[m.end():m.end() + 20]
+    ctx = frag + after
+    # ① 已勘误：明确标记否决/撤销/替代/旧/禁用/删除线——非当前判定
+    if "~~" in ctx or any(k in frag for k in ["否决", "撤销", "替代", "旧", "禁用", "勘误", "废弃", "不再"]):
         residuals.append(("已勘误", frag))
     # ② 描述性：描述偏差本身（差/偏差/偏离/误差/容差/相对）
     elif any(k in frag for k in ["差", "偏差", "偏离", "误差", "容差", "相对"]):
