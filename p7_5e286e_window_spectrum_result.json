@@ -1,0 +1,205 @@
+{
+ "title": "P7-5e-286e 五系数分子-分母统一窗口算术谱判别",
+ "M1_molecule_window_arithmetic": {
+  "DE_mol": {
+   "identity": "k(k−3) = k(k−1) − 2k  （D/E 分子 = 窗口左端 − 2k）",
+   "k=8": {
+    "win_left_minus_2k": 40,
+    "plus1": 41,
+    "minus1": 39,
+    "D_mol": 41,
+    "E_mol": 39,
+    "hit": true
+   },
+   "pass": true
+  },
+  "C_mol": {
+   "identity": "2k−3 = 窗口和/k − 3 = 2k²/k − 3",
+   "k=8": {
+    "window_sum_over_k_minus_3": 13.0,
+    "C_mol": 13,
+    "hit": true
+   },
+   "pass": true
+  },
+  "delta_mol": {
+   "identity": "1 = 窗口左端/窗口左端（平凡）",
+   "pass": true
+  }
+ },
+ "M2_full_window_spectrum": {
+  "k=8_window": {
+   "left": 56,
+   "center": 64,
+   "sum": 128
+  },
+  "n_max": 10,
+  "spectrum": [
+   {
+    "coef": "δ∞",
+    "num": "1",
+    "num_window": "左端/左端（平凡）",
+    "den": "56",
+    "den_window": "窗口左端 k²−k",
+    "k8_value": "1/56"
+   },
+   {
+    "coef": "C",
+    "num": "13",
+    "num_window": "窗口和/k − 3 = 128/8−3",
+    "den": "128",
+    "den_window": "窗口和 2k²（2 幂 2^(k−1) 唯一重合）",
+    "k8_value": "13/128"
+   },
+   {
+    "coef": "D",
+    "num": "41",
+    "num_window": "窗口左端 − 2k + 1 = 56−16+1",
+    "den": "2000",
+    "den_window": "2·n_max³（16(k−3)³ 唯一重合）",
+    "k8_value": "41/2000"
+   },
+   {
+    "coef": "E",
+    "num": "39",
+    "num_window": "窗口左端 − 2k − 1 = 56−16−1",
+    "den": "2000",
+    "den_window": "2·n_max³",
+    "k8_value": "39/2000"
+   },
+   {
+    "coef": "D−E",
+    "num": "2",
+    "num_window": "分子差恒 2（286d M1）",
+    "den": "2000",
+    "den_window": "2·n_max³ → n_max⁻³=1/1000",
+    "k8_value": "1/1000"
+   }
+  ],
+  "closure": "五系数分子+分母全部落进 {窗口左端, 窗口中心, 窗口和, n_max} 语言 —— 窗口算术谱闭合"
+ },
+ "M3_uniqueness_recheck": {
+  "C_den_unique": {
+   "solutions_k2_20": [
+    8
+   ],
+   "pass": true
+  },
+  "DE_den_unique": {
+   "solutions_k1_20": [
+    8
+   ],
+   "pass": true
+  },
+  "DE_mol_identity_all_k": true,
+  "C_mol_window_sum_over_k": {
+   "formula": "2k²/k − 3 = 2k − 3",
+   "pass": true
+  }
+ },
+ "M4_family_consistency": {
+  "M4a_param_recheck": {
+   "k=8_authority_check": {
+    "delta": true,
+    "C": true,
+    "D": true,
+    "E": true,
+    "D_minus_E": true,
+    "all": true
+   }
+  },
+  "M4b_k8_coincidence": {
+   "k=8_C_den_coincidence": {
+    "2^(k−1)": 128,
+    "窗口和": 128,
+    "hit": true
+   },
+   "k=8_DE_den_coincidence": {
+    "16(k−3)³": 2000,
+    "2·n_max³": 2000,
+    "hit": true
+   },
+   "k=8_mol_coincidence": {
+    "D_mol": 41,
+    "win_left−2k+1": 41,
+    "hit": true,
+    "E_mol": 39,
+    "win_left−2k−1": 39,
+    "C_mol": 13,
+    "win_sum/k−3": 13.0
+   }
+  },
+  "M4c_distinction_negative": {
+   "C_diff_nonzero_for_k_ne_8": {
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true
+   },
+   "DE_diff_nonzero_for_k_ne_8": {
+    "4": true,
+    "5": true,
+    "6": true,
+    "7": true,
+    "9": true,
+    "10": true,
+    "11": true,
+    "12": true
+   },
+   "all_nonzero": true,
+   "interpretation": "窗口算术公式是 k=8 专属重合表述（分母 2k²、2(k+2)³ 仅 k=8 与 2^(k−1)、16(k−3)³ 重合）；286b 参数化（k(k−1)、2^(k−1)、16(k−3)³）才是统一族全 k 公式——两者关系 = 重合点结构，非等价"
+  },
+  "M4_PASS": true
+ },
+ "M5_E1_primality_falsification": {
+  "primality_judgement_candidates_k2_20": [
+   5,
+   8,
+   10,
+   16,
+   20
+  ],
+  "E1_set_k2_20": [
+   3,
+   4,
+   5,
+   8
+  ],
+  "E1E2_set_k2_20": [
+   8
+  ],
+  "counterexamples_not_in_E1": [
+   10,
+   16,
+   20
+  ],
+  "falsified": true,
+  "interpretation": "E1 集合 {3,5,7,13} 非『2k−3 为奇素数』导出（k=10：17、7 均奇素但 17∉E1 集合）；E1/E2 家族资格 = 判别设计（唯一性所需），素数性重述证伪并登记，维持观察级。"
+ },
+ "PYCHECK": {
+  "de_mol_window_identity": {
+   "claim": "∀k：k(k−3) = k(k−1) − 2k",
+   "sample_pass": true,
+   "range_pass": true,
+   "pass": true
+  },
+  "c_mol_window_identity": {
+   "claim": "∀k≠0：2k−3 = 2k²/k − 3",
+   "pass": true
+  },
+  "DE_mol_window_plus_minus": {
+   "claim": "k(k−3)+1 = 窗口左端−2k+1 且 k(k−3)−1 = 窗口左端−2k−1",
+   "pass": true
+  }
+ },
+ "M1_PASS": true,
+ "M3_PASS": true,
+ "M4_PASS": true,
+ "M5_FALSIFIED_PASS": true,
+ "PYCHECK_PASS": true,
+ "ALL_PASS": true
+}

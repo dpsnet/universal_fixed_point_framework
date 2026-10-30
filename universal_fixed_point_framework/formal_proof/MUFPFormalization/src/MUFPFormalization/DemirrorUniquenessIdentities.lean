@@ -235,4 +235,30 @@ theorem denominator_origin_judgement :
   · exact de_den_nmax_unique
   · exact window_left_ne_sum
 
+/-! =========================================================
+    §7 分子窗口算术化（286e：D/E 分子 = 窗口左端 − 2k ± 1）
+   ========================================================= -/
+
+/-- 286e M1：D/E 分子基底 = 窗口左端 k(k−1) 减去 2k（全 k 恒等）。 -/
+theorem de_mol_window_identity : ∀ k : ℤ, k * (k - 3) = k * (k - 1) - 2 * k := by
+  intro k
+  ring
+
+/-- 286e M1：D/E 分子 ±1 双侧 = 窗口左端 − 2k ± 1（全 k 恒等）。 -/
+theorem de_mol_window_plus_minus :
+    (∀ k : ℤ, k * (k - 3) + 1 = k * (k - 1) - 2 * k + 1) ∧
+    (∀ k : ℤ, k * (k - 3) - 1 = k * (k - 1) - 2 * k - 1) := by
+  constructor <;> intro k <;> ring
+
+/-- 286e 联合主定理：D/E 分子窗口算术化三恒等。 -/
+theorem window_spectrum_judgement :
+    (∀ k : ℤ, k * (k - 3) = k * (k - 1) - 2 * k) ∧
+    (∀ k : ℤ, k * (k - 3) + 1 = k * (k - 1) - 2 * k + 1) ∧
+    (∀ k : ℤ, k * (k - 3) - 1 = k * (k - 1) - 2 * k - 1) := by
+  constructor
+  · exact de_mol_window_identity
+  constructor
+  · exact de_mol_window_plus_minus.1
+  · exact de_mol_window_plus_minus.2
+
 end MUFPF.Demirror
