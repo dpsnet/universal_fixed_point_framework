@@ -581,11 +581,11 @@ $$\Delta\lambda_1 : \Delta\lambda_2 : \Delta\lambda_3 = \frac{1}{\sqrt{3}} : 1 :
 **物理意义**。跨尺度统一意味着：
 - 凝聚态超导和量子引力**不是无关的现象**——它们共享同一数学结构（谱间隙）
 - 谱框架是**真正的统一理论**——从 Planck 尺度到凝聚态尺度
-- 但需明确：从 Planck 尺度到凝聚态尺度的**定量谱间隙谱系**已在 §8.6b 建立（代数骨架，Lean4 零 sorry），§8.6d 又把其中单一自洽倍率 $1/r^*$ 分解为两级多级常演化（代数因子分解层）；而"谱流 RG 从 Planck 尺度逐级常演化到凝聚态尺度"的**动力学**渐进链仍是开放方向（§8.7#5）
+- 但需明确：从 Planck 尺度到凝聚态尺度的**定量谱间隙谱系**已在 §8.6b 建立（代数骨架，Lean4 零 sorry），§8.6d 又把其中单一自洽倍率 $1/r^*$ 分解为两级多级常演化（代数因子分解层）；"谱流 RG 从 Planck 尺度逐级常演化到凝聚态尺度"的**动力学**渐进链——其 $k_2$ 独立涌现已在代数+谱来源层闭合（Phase 102b 2c-P，§8.6f 归级），连续化被非标度不变判据排除（§8.6f）
 
 **推测性展望**。§8.6b 给出的是凝聚态谱间隙对 Planck 谱间隙的**代数谱系**（经谱流自洽方程的倍率唯一化）；§8.6d 已把自洽倍率显式分解为两级多级链（$\Delta\lambda_{\min}\to\Delta\lambda_{\min}^{(\text{EM})}\to\delta_{\text{SC}}$，代数因子分解层，零 `sorry`）：
 $$\Delta\lambda_{\min} \xrightarrow{\text{谱流 RG}} \Delta\lambda_{\min}^{(\text{EM})} \xrightarrow{\text{谱流 RG}} \delta_{\text{SC}}$$
-更完整的谱系——把逐级倍率由谱流方程分步**重新求解**内生涌现的动力学 RG 常演化——需要发展跨尺度的谱流方程重整化群方法，是未来的重要方向（§8.7#5）。此处的定位是：**代数层（含多级因子分解）已闭合，动力学常演化层的开放不影响 §8.6b 已建立的方程唯一性**。
+更完整的谱系——把逐级倍率由谱流方程分步**重新求解**内生涌现的动力学 RG 常演化——其 $k_2$ 环节已在**代数+谱来源层闭合**（$k_2 := f_{\text{EM}}(u)=c$ 唯一正根、$c=4e^{3\gamma_E}/\pi^2$ 内生谱来源，Phase 102b 2c-P；连续化被非标度不变判据排除，§8.6f）。此处的定位是：**代数层（含多级因子分解）已闭合，$k_2$ 独立涌现已闭合，动力学常演化层的其余部分（材料截线/连续化）不影响 §8.6b 已建立的方程唯一性**。
 
 **与 Paper LVII 主题的关联**。本文的 $\rho_0 = k_B\Delta_{\text{BCS}}^2/(2E_F)$ 是凝聚态谱间隙的特定组合。§8.6b 表明该组合中的谱间隙因子本身可挂到 Planck 谱间隙上（$\delta_{\text{SC}} = \Delta\lambda_{\min}/r^*$），从而 $\rho_0 \propto \Delta\lambda_{\min}^2$ 给出谱刚度与普朗克谱间隙平方的跨尺度关联——这一步已是定理，非推测（推论见 §8.6b 式 8.14）。
 
@@ -625,7 +625,7 @@ $$\boxed{\Delta\lambda_{\min} \longrightarrow \delta_{\text{SC}} = \Delta\lambda
 - $E_F$ 是材料特定输入
 - 范畴 $\Delta$ 内生贡献的是：$\Delta\lambda_{\min}$ 本身（Cl(1,7) 谱间隙，定理）、无量纲倍率 $r^*$ 的方程确定性与唯一性、以及"$\Delta\lambda_{\min}\to\delta_{\text{SC}}\to\rho_0\to T_c$"的代数谱系结构
 
-因此"跨尺度统一"从 v1.2 的**结构关联**推进为 v1.3 的**方程级定量谱系**，并在 v1.6 进一步推进为**多级因子分解**：单一自洽倍率 $r^*$ 的分解已由 §8.6d 落地（$\Delta\lambda_{\min}\to\Delta\lambda_{\min}^{(\text{EM})}\to\delta_{\text{SC}}$，代数因子分解层，零 `sorry`）。仍诚实地止步的仅剩**动力学 RG 层**：把逐级倍率 $k_1,k_2$ 由谱流方程分步重新求解内生涌现，是未来方向（§8.7#5），不是本文断言的计算内容。
+因此"跨尺度统一"从 v1.2 的**结构关联**推进为 v1.3 的**方程级定量谱系**，并在 v1.6 进一步推进为**多级因子分解**：单一自洽倍率 $r^*$ 的分解已由 §8.6d 落地（$\Delta\lambda_{\min}\to\Delta\lambda_{\min}^{(\text{EM})}\to\delta_{\text{SC}}$，代数因子分解层，零 `sorry`）。动力学 RG 层的 $k_2$ 独立涌现环节已在 v1.10/Phase 102b 2c-P 闭合（$k_2 := f_{\text{EM}}(u)=c$ 唯一正根 + $c=4e^{3\gamma_E}/\pi^2$ 内生谱来源，§8.6f 归级）；剩余的是材料截线选定与连续化（后者被非标度不变判据排除）。
 
 **无量纲普适折叠（比值级收口）**。式 (8.12)–(8.15) 的代数谱系把谱间隙因子挂到 Planck 侧。现在把它折叠回来：把谱刚度 $\rho_0 = \Delta_{\text{BCS}}^2/(2E_F)$（式 8.13）与标度律的系数 $\gamma = \sqrt{2E_F}\cdot a_{\text{BCS}}$（式 4.3、式 8.14）联合，Fermi 能 $E_F$ 与玻尔兹曼常数 $k_B$ 被完全消去——谱刚度链本身在无量纲层面折叠回凝聚态的普适临界温度比：
 
@@ -702,7 +702,7 @@ $$\boxed{f_1\cdot f_2 = \frac{1}{\sqrt{3}}\cdot\frac{\sqrt{3}}{r^*} = \frac{1}{r
 **归级（诚实边界）**。本节把单级黑箱 $1/r^*$ 显式化为"纯规范表示因子 $1/\sqrt{3}$（SU(2) Casimir，定理）× BCS 谱流动力学因子 $\sqrt{3}/r^*$（经 $r^*$）"，并以两个不可变式（式 8.20、8.21）保证多级路径与单级自洽代数一致（推导笔记 MUFPF-RN-ENDO-004，数值核验 mpmath 50 位全过、相对偏差 < 10⁻⁴⁵）：
 
 - ✅ **代数因子分解**——式 (8.18)–(8.21)，Lean4 零 `sorry`
-- ⚠️ **动力学 RG 常演化**——把 $k_2$ 由谱流方程在中间级处**逐级重新求解**内生涌现，而非后验地写成 $r^*/\sqrt{3}$，仍待发展（§8.7#5）；且 $\Delta\lambda_{\min}^{(\text{EM})} < \Delta\lambda_{\min} < \delta_{\text{SC}}$ 不按能标单调排列，故"常演化"指固定倍率的两级因子分解，非单调重整化流
+- ⚠️ **动力学 RG 常演化（v1.10 更新）**——"把 $k_2$ 由谱流方程在中间级处**逐级重新求解**内生涌现"已在**代数+谱来源层闭合**（$k_2 := f_{\text{EM}}(u)=c$ 唯一正根、$c=4e^{3\gamma_E}/\pi^2$ 内生谱来源——Phase 102b 2c-P，非后验 $r^*/\sqrt3$；折叠 $k_2=r^*/\sqrt3$ 降为同根推论）；且 $\Delta\lambda_{\min}^{(\text{EM})} < \Delta\lambda_{\min} < \delta_{\text{SC}}$ 不按能标单调排列，故"常演化"指固定倍率的两级因子分解，非单调重整化流
 - $a_{\text{BCS}} = 1/1.764$（已部分内化为 $\pi e^{-\gamma_E}$，§8.6c）与 $E_F$ 仍为物理输入
 
 ### 8.6e 三级/多带谱系：SU(2) Casimir 谱间隙比的三分支推广
@@ -733,7 +733,7 @@ k_{12}k_{23} = \frac{\Delta\lambda_3}{\Delta\lambda_1} = \sqrt6 \qquad (8.24)$$
 
 - ✅ **多带隙比保持**（定理）：三分支经统一 ÷$r^*$ 后隙比 = Casimir 分量比 = $\tfrac{1}{\sqrt3}:1:\sqrt2$
 - ✅ **三级塔**（定理）：$\Delta\lambda_1\to\Delta\lambda_2\to\Delta\lambda_3$ 升序链 $k_{12}=\sqrt3$、$k_{23}=\sqrt2$
-- ⚠️ **动力学 RG 逐级重解**仍开放（§8.7#5）：$k_{23}=\sqrt2$ 是后验代数倍率，非由谱流方程在 $\Delta\lambda_3$ 处逐步重新求解内生涌现
+- ⚠️ **动力学 RG 逐级重解**（v1.10 更新）：$k_2$ 的独立涌现已在代数+谱来源层闭合（Phase 102b 2c-P，§8.6f 归级）；$k_{23}=\sqrt2$ 三级塔分支的后验代数倍率性质同理适用但未逐项展开（同一机制——谱流方程根定义 + 内生常数，非独立新论证）
 - ⚠️ **带谱的凝聚态观测量对应**仍需物理层建立（§8.7#8）：如 MgB$_2$ 两带隙、铁基多带材料的具体带辨认
 - $a_{\text{BCS}} = 1/1.764$、$E_F$ 仍为物理输入；范畴 Δ 内生的是 $\Delta\lambda_1/\Delta\lambda_{\min}/\Delta\lambda_3$（定理）与 $r^*$ 唯一性
 
@@ -764,8 +764,8 @@ $$f_{\text{EM}}(k_2) = f(r^*) = c,$$
 - ✅ **运行反常维度**（定理）：$1<\zeta(r)<\tfrac32$，$\zeta$ 单调，端点 $1$ / $\tfrac32$
 - ✅ **非标度不变**（反例判据）：$f$ 无单指数齐次性 → 无连续重整化流
 - ✅ **EM 残差流闭合**（定理）：$f_{\text{EM}}(k_2)=c=f(r^*)$，$k_2$ **唯一正根**（`em_residual_root_unique`）
-- ⚠️ **仍开放**（§8.7#5）：让 $k_2$ 不由单一 $c$ 的反向重标度、而由 **EM 尺度自身的独立谱流方程**自洽涌现——即真正发展跨尺度谱流方程重整化群方法，本节不伪称
-- $a_{\text{BCS}}=1/1.764$、$E_F$ 仍为物理输入
+- ⚠️ **原开放项已闭合**（§8.7#5，v1.10/Phase 102b 2c-P）："让 $k_2$ 不由单一 $c$ 的反向重标度、而由 **EM 尺度自身的独立谱流方程**自洽涌现"——**代数+谱来源层已落地**：$k_2$ 由 $f_{\text{EM}}(u)=c$ 的**唯一正根**独立定义（`em_residual_root_unique`，不引用 $r^*$ 的反向重标度），且闭合常数 $c=a_{\text{BCS}}^3\cdot 4\pi = 4e^{3\gamma_E}/\pi^2$ 已**内生谱来源化**（$a_{\text{BCS}}=\pi e^{-\gamma_E}$ 普适分解，`universal_ratio_cancellation`；$\pi$=费米谱权重、$e^{\gamma_E}$=谱 $\zeta$ 正则化常数，§8.6c）——即 $k_2$ 由 (EM 谱流函数 × 内生闭合常数 × 普适锚因子 $\sqrt3$) 唯一确定，折叠 $k_2=r^*/\sqrt3$ 降为同根推论（数值差 0.00e+00）。**剩余诚实边界**：① $e^{\gamma_E}$ 数值不可约化（$\gamma_E$ 无理未决，§8.6c 不伪称）② 连续跨尺度重整化流被非标度不变判据排除（$\zeta\in(1,\tfrac32)$）——两级常演化是最大动力学内容 ③ "EM 尺度为何由 $\sqrt3$ 锚"仍为诠释层（普适锚点定理成立、选择动机未派生）
+- $E_F$ 仍为物理输入；$a_{\text{BCS}}=1/1.764$ 的表列值仅为 $\pi e^{-\gamma_E}$ 的舍入（普适量本身，§8.6c）
 
 ### 8.6g 谱流 RG 流单参数族：从单物理点折叠到整条谱流族（第二注入）
 
@@ -798,7 +798,7 @@ $$\beta(r) := \frac{1}{\zeta(r)} = \frac{1+\sqrt3\sqrt r}{1+\tfrac32\sqrt3\sqrt 
 - 故沿流 $c\uparrow \Rightarrow \rho\uparrow \Rightarrow \zeta(\rho(c))$ **严格上升**（`flow_anom_dim_lt`，从 $1$ 跑向 $\tfrac32$），β 通量严格按照 $1\to\tfrac23$ 递减（`flow_rg_beta_gt`）；
 - 全程保持 $1<\zeta<\tfrac32$、$\tfrac23<\beta<1$（`flow_anom_dim_interior`/`flow_rg_beta_interior`），流族处处良定义、非标度不变的有界通量。
 
-**归级（诚实边界）**。本节闭合的是**谱流方程的流族结构**：$\rho(c)$ 的唯一性、沿 $c$ 的单调性、折叠不变性沿流保持（`flow_telescoping`）、β 通量的 $(\tfrac23,1)$ 有界性与运行指数沿流单调；β-形式 ODE 以**逆流代数形式**（水平簇即轨迹）闭合，未展开 $\mathrm{d}/\mathrm{d}c$ 的柯西–Lipschitz 存在性细节。**仍开放**（§8.7#5）：EM 中间级由*自身独立*谱流方程涌现（而非经同一 $c$ 的逆向重标度）；材料特定 $\delta_{\text{SC}}$ 需要用一个**独立能量锚选定 $c$ 截线**把材料能量尺度落入流族。$a_{\text{BCS}}=1/1.764$、$E_F$ 仍为物理输入；范畴 $\Delta$ 内生的是 $\Delta\lambda_{\min}$、$\Delta\lambda_{\min}^{(\text{EM})}$ 与 $\rho(c)$ 的方程唯一性。
+**归级（诚实边界）**。本节闭合的是**谱流方程的流族结构**：$\rho(c)$ 的唯一性、沿 $c$ 的单调性、折叠不变性沿流保持（`flow_telescoping`）、β 通量的 $(\tfrac23,1)$ 有界性与运行指数沿流单调；β-形式 ODE 以**逆流代数形式**（水平簇即轨迹）闭合，未展开 $\mathrm{d}/\mathrm{d}c$ 的柯西–Lipschitz 存在性细节。**仍开放**（§8.7#5，v1.10 更新）：EM 中间级由*自身独立*谱流方程涌现已在**代数+谱来源层闭合**（$k_2 := f_{\text{EM}}(u)=c$ 唯一正根，$c=4e^{3\gamma_E}/\pi^2$ 内生谱来源——Phase 102b 2c-P）；材料特定 $\delta_{\text{SC}}$ 需要用一个**独立能量锚选定 $c$ 截线**把材料能量尺度落入流族（材料层，仍开放）。$a_{\text{BCS}}=1/1.764$ 为 $\pi e^{-\gamma_E}$ 舍入（普适量本身，§8.6c）、$E_F$ 仍为物理输入；范畴 $\Delta$ 内生的是 $\Delta\lambda_{\min}$、$\Delta\lambda_{\min}^{(\text{EM})}$ 与 $\rho(c)$ 的方程唯一性。
 
 ### 8.7 未来研究方向
 
@@ -812,7 +812,7 @@ $$\beta(r) := \frac{1}{\zeta(r)} = \frac{1+\sqrt3\sqrt r}{1+\tfrac32\sqrt3\sqrt 
 
 **4. 谱刚度的实验测量**：本文预言 $\delta E_n \propto \rho_0 \cdot n^2$（式 8.8）连接涡旋束缚态与超流刚度。通过 STM 测量涡旋束缚态能量与 $\mu$SR 测量 $\rho_0$ 的联合实验，可以检验这一预言。
 
-**5. 与量子引力的联系（跨尺度统一）**：§8.6b 已建立凝聚态谱间隙对 Planck 谱间隙的**代数定量谱系**（$\delta_{\text{SC}} = \Delta\lambda_{\min}/r^*$，$\rho_0 \propto \Delta\lambda_{\min}^2$，T_c 标度全链，Lean4 零 sorry）。§8.6d 又把它推进：单一自洽倍率 $1/r^*$ 已分解为谱流 RG 的**多级常演化**（$\Delta\lambda_{\min}\to\Delta\lambda_{\min}^{(\text{EM})}\to\delta_{\text{SC}}$），其中**代数因子分解层**已是定理（$k_1k_2 = r^*$、$\delta_{\text{SC}}/\Delta\lambda_{\min} = f_1f_2 = 1/r^*$，`SpectralFlowRG.lean` 零 `sorry`）。§8.6f 又对动力学层给出**第一注入**（`SpectralFlowDynamicsRG.lean` 零 `sorry`）：运行反常维度 $\zeta(r)\in(1,\tfrac32)$ 单调从 $1$ 跑到 $\tfrac32$、非标度不变反例判据、EM 残差流闭合 $f_{\text{EM}}(k_2)=f(r^*)=c$（$k_2$ 唯一正根）——把"为何多级常演化只能是有限两级代数骨架（无连续重整化流）"钉为定量判据。§8.6g 再给出**第二注入**（`SpectralFlowRGFlow.lean` 零 `sorry`）：把该折叠推广为整条谱流族——$\rho(c)=f^{-1}(c)$ 单参数族，流不变折叠 $k_1k_2(c)=\rho(c)$ 沿线保持、EM 锚不随 $c$ 演化、β 通量 $\in(\tfrac23,1)$ 及其 β-形式 ODE 逆流解、运行指数沿流单调。**剩余**的核心方向仍是：让 $k_2$ 不由单一闭合常数 $c$ 的反向重标度、而由 **EM 尺度自身的独立谱流方程**自洽涌现；以及用**独立能量锚选定 $c$ 截线**把材料能量尺度落入谱流族（真正发展跨尺度的谱流方程重整化群方法），将代数骨架推进为渐进计算性统一。
+**5. 与量子引力的联系（跨尺度统一）**：§8.6b 已建立凝聚态谱间隙对 Planck 谱间隙的**代数定量谱系**（$\delta_{\text{SC}} = \Delta\lambda_{\min}/r^*$，$\rho_0 \propto \Delta\lambda_{\min}^2$，T_c 标度全链，Lean4 零 sorry）。§8.6d 又把它推进：单一自洽倍率 $1/r^*$ 已分解为谱流 RG 的**多级常演化**（$\Delta\lambda_{\min}\to\Delta\lambda_{\min}^{(\text{EM})}\to\delta_{\text{SC}}$），其中**代数因子分解层**已是定理（$k_1k_2 = r^*$、$\delta_{\text{SC}}/\Delta\lambda_{\min} = f_1f_2 = 1/r^*$，`SpectralFlowRG.lean` 零 `sorry`）。§8.6f 又对动力学层给出**第一注入**（`SpectralFlowDynamicsRG.lean` 零 `sorry`）：运行反常维度 $\zeta(r)\in(1,\tfrac32)$ 单调从 $1$ 跑到 $\tfrac32$、非标度不变反例判据、EM 残差流闭合 $f_{\text{EM}}(k_2)=f(r^*)=c$（$k_2$ 唯一正根）——把"为何多级常演化只能是有限两级代数骨架（无连续重整化流）"钉为定量判据。§8.6g 再给出**第二注入**（`SpectralFlowRGFlow.lean` 零 `sorry`）：把该折叠推广为整条谱流族——$\rho(c)=f^{-1}(c)$ 单参数族，流不变折叠 $k_1k_2(c)=\rho(c)$ 沿线保持、EM 锚不随 $c$ 演化、β 通量 $\in(\tfrac23,1)$ 及其 β-形式 ODE 逆流解、运行指数沿流单调。**剩余**的核心方向：**$k_2$ 由 EM 尺度自身的独立谱流方程自洽涌现**已在 v1.10/Phase 102b 2c-P 于**代数+谱来源层闭合**——$k_2$ 为 $f_{\text{EM}}(u)=c$ 唯一正根（独立于 $r^*$ 反向重标度），$c=4e^{3\gamma_E}/\pi^2$ 内生谱来源（$a_{\text{BCS}}=\pi e^{-\gamma_E}$ 普适分解）；剩余的是以**独立能量锚选定 $c$ 截线**把材料能量尺度落入谱流族（材料层，§8.7#8 关联），以及"跨尺度谱流方程重整化群方法"的连续化——后者已被非标度不变判据（$\zeta\in(1,\tfrac32)$）排除为连续流，两级常演化即最大动力学内容。
 
 **6. 普适常数的范畴闭合（§8.6c/§8.6b 的下一步）**：§8.6c 把 1.764 内化为 πe^{−γ_E}（普适性已 Theoremized），§8.6b 的无量纲普适折叠进一步闭合了 $T_c/\Delta_{\text{BCS}} = a_{\text{BCS}}$ 的比值级普适性。把 $\pi$ 与 $e^{\gamma_E}$ 的**数值**从范畴结构内生导出，需要从 Cl(1,7) 谱类型内生地推出费米谱权重（BdG 线性能态密度）与奇数频率求和常数——若成功，1.764 才在分类意义上"完全内生"。当前**不伪称**此级可证。
 
@@ -846,9 +846,9 @@ $$\beta(r) := \frac{1}{\zeta(r)} = \frac{1+\sqrt3\sqrt r}{1+\tfrac32\sqrt3\sqrt 
 
 **4d. 三级/多带谱系（v1.7，§8.6e）**：沿 SU(2) Casimir 谱间隙比 $\Delta\lambda_1:\Delta\lambda_2:\Delta\lambda_3 = \sqrt{1/3}:1:\sqrt2$ 的三分支推广：三个谱间隙各经共享唯一根 ÷$r^*$ 化为带隙 $\delta_{\text{SC}}^{(i)} = \Delta\lambda_i/r^*$，且隙比保持 Casimir 量化 $\delta_{\text{SC}}^{(1)}:\delta_{\text{SC}}^{(2)}:\delta_{\text{SC}}^{(3)} = 1/\sqrt3:1:\sqrt2$（Paper XIV §6.1 预言定理化）；并给 Casimir 升序三级塔 $\Delta\lambda_1\to\Delta\lambda_2\to\Delta\lambda_3$（$k_{12}=\sqrt3$、$k_{23}=\sqrt2$、乘积闭合 $\sqrt6$）（`MultibandSpectralBridge.lean` 22 定义/定理零 `sorry`，mpmath 50 位数值核验全过）。**诚实边界**：闭合的是**代数多带因子分解**；动力学逐级重解（§8.7#5）与具体带辨认对应（§8.7#8）仍开放。
 
-**4e. 谱流方程的尺度动力学（v1.8，§8.6f）**：对 §8.7#5 动力学层给出第一注入——谱流自洽函数 $f$ 的**运行反常维度** $\zeta(r) = r f'(r)/f(r) = (1+\tfrac32\sqrt3\sqrt r)/(1+\sqrt3\sqrt r)$ 对任意 $r>0$ **严格落入 $(1,\tfrac32)$** 且单调从 $1$ 跑到 $\tfrac32$（`anom_dim_gt_one`/`anom_dim_lt_threehalf`/`anom_dim_interior`），诊断出 $f$ **非标度不变**（无单指数齐次性，反例 $\lambda=4$ 矛盾）——故"多级常演化"只能是有限两级固定倍率因子分解而非连续重整化流；EM 残差流 $f_{\text{EM}}(u)=f(\sqrt3 u)$ 在 $k_2$ 处**闭合到同一谱流常数** $f_{\text{EM}}(k_2) = f(r^*) = c$ 且 $k_2$ 唯一正根（`em_residual_closure`/`em_residual_root_unique`，`SpectralFlowDynamicsRG.lean` 15 定义/定理零 `sorry`，mpmath 60 位数值核验全过）。**诚实边界**：闭合的是**尺度诊断 + 规范缩放坐标下的残差流重构**；让 $k_2$ 由 EM 尺度自身独立谱流方程自洽涌现仍开放（§8.7#5）。
+**4e. 谱流方程的尺度动力学（v1.8，§8.6f）**：对 §8.7#5 动力学层给出第一注入——谱流自洽函数 $f$ 的**运行反常维度** $\zeta(r) = r f'(r)/f(r) = (1+\tfrac32\sqrt3\sqrt r)/(1+\sqrt3\sqrt r)$ 对任意 $r>0$ **严格落入 $(1,\tfrac32)$** 且单调从 $1$ 跑到 $\tfrac32$（`anom_dim_gt_one`/`anom_dim_lt_threehalf`/`anom_dim_interior`），诊断出 $f$ **非标度不变**（无单指数齐次性，反例 $\lambda=4$ 矛盾）——故"多级常演化"只能是有限两级固定倍率因子分解而非连续重整化流；EM 残差流 $f_{\text{EM}}(u)=f(\sqrt3 u)$ 在 $k_2$ 处**闭合到同一谱流常数** $f_{\text{EM}}(k_2) = f(r^*) = c$ 且 $k_2$ 唯一正根（`em_residual_closure`/`em_residual_root_unique`，`SpectralFlowDynamicsRG.lean` 15 定义/定理零 `sorry`，mpmath 60 位数值核验全过）。**诚实边界**：闭合的是**尺度诊断 + 规范缩放坐标下的残差流重构**；让 $k_2$ 由 EM 尺度自身独立谱流方程自洽涌现——**v1.10/Phase 102b 2c-P 已在代数+谱来源层闭合**（$k_2$ 为 $f_{\text{EM}}(u)=c$ 唯一正根、$c=4e^{3\gamma_E}/\pi^2$ 内生谱来源——§8.6f 归级），连续化仍被非标度不变判据排除。
 
-**4f. 谱流 RG 流单参数族（v1.9，§8.6g）**：把 §8.6d 的折叠 $k_1k_2=r^*$ 推广为整条谱流族——以闭合常数 $c$ 为参数唯一确定 $\rho(c)=f^{-1}(c)$（`r_star_flow_closure`：$f(\rho(c))=c$；`flow_inverse_point`：$\rho(f(r))=r$），**流不变折叠** $k_1k_2(c)=\rho(c)$ 沿线保持（`flow_telescoping`），EM 锚 $\Delta\lambda_{\min}^{(\text{EM})}=\Delta\lambda_{\min}/\sqrt3$ 不随 $c$ 演化（`flow_em_anchor_constant`）、所有 $c$ 依赖唯一装入动力学因子 $k_2(c)=\rho(c)/\sqrt3$（`flow_anchor_orthogonal`），物理点锚定 $\rho(c_0)=r^*$ 且 $k_2(c_0)=k_2$（§8.6b 结果都是流族在 $c=c_0$ 的截线）；流族沿 $c$ 严格单调（`r_star_flow_lt`/`flow_k2_lt`）；β 通量 $\beta(r)=1/\zeta(r)\in(\tfrac23,1)$（`rg_beta_interior`）给出 β-形式 ODE $d\ln r/d\ln c=1/\zeta(r)$ 的**逆流积分解**（水平簇 $c=f(r)$ 即轨迹，中心差分数值核验 $10^{-6}$ 精度）；运行指数沿流严格上升（`anom_dim_strictMono`/`flow_anom_dim_lt`，从 $1$ 跑向 $\tfrac32$）、β 严格递减（`flow_rg_beta_gt`）（`SpectralFlowRGFlow.lean` 23 定义/定理零 `sorry`，mpmath 50 位数值核验 50/50 全过）。**诚实边界**：闭合的是**谱流方程的流族结构**（唯一性/单调性/流不变折叠/β 有界与沿流单调）；β-ODE 以逆流代数形式闭合，未展开柯西–Lipschitz 存在性细节；EM 中间级由自身独立谱流方程涌现、以及用独立能量锚选定 $c$ 截线以落入材料特定 $\delta_{\text{SC}}$，仍开放（§8.7#5）。
+**4f. 谱流 RG 流单参数族（v1.9，§8.6g）**：把 §8.6d 的折叠 $k_1k_2=r^*$ 推广为整条谱流族——以闭合常数 $c$ 为参数唯一确定 $\rho(c)=f^{-1}(c)$（`r_star_flow_closure`：$f(\rho(c))=c$；`flow_inverse_point`：$\rho(f(r))=r$），**流不变折叠** $k_1k_2(c)=\rho(c)$ 沿线保持（`flow_telescoping`），EM 锚 $\Delta\lambda_{\min}^{(\text{EM})}=\Delta\lambda_{\min}/\sqrt3$ 不随 $c$ 演化（`flow_em_anchor_constant`）、所有 $c$ 依赖唯一装入动力学因子 $k_2(c)=\rho(c)/\sqrt3$（`flow_anchor_orthogonal`），物理点锚定 $\rho(c_0)=r^*$ 且 $k_2(c_0)=k_2$（§8.6b 结果都是流族在 $c=c_0$ 的截线）；流族沿 $c$ 严格单调（`r_star_flow_lt`/`flow_k2_lt`）；β 通量 $\beta(r)=1/\zeta(r)\in(\tfrac23,1)$（`rg_beta_interior`）给出 β-形式 ODE $d\ln r/d\ln c=1/\zeta(r)$ 的**逆流积分解**（水平簇 $c=f(r)$ 即轨迹，中心差分数值核验 $10^{-6}$ 精度）；运行指数沿流严格上升（`anom_dim_strictMono`/`flow_anom_dim_lt`，从 $1$ 跑向 $\tfrac32$）、β 严格递减（`flow_rg_beta_gt`）（`SpectralFlowRGFlow.lean` 23 定义/定理零 `sorry`，mpmath 50 位数值核验 50/50 全过）。**诚实边界**：闭合的是**谱流方程的流族结构**（唯一性/单调性/流不变折叠/β 有界与沿流单调）；β-ODE 以逆流代数形式闭合，未展开柯西–Lipschitz 存在性细节；EM 中间级由自身独立谱流方程涌现——**v1.10/Phase 102b 2c-P 已在代数+谱来源层闭合**（§8.6f 归级）；用独立能量锚选定 $c$ 截线以落入材料特定 $\delta_{\text{SC}}$（材料层）仍开放。
 
 **5. 中心开放问题（猜想 8.1）**：谱 $\rho_0^{\text{spec}} = k_B\Delta_{\text{BCS}}^2/(2E_F)$ 与 BdG 微观理论定义的实验超流刚度 $\rho_s^{\text{BdG}}$ 之间的等价性映射**未被证明**。标准 BCS 零温 $n_s(0) \approx n$ 与 $\Delta_{\text{BCS}}$ 无关，这与 $\rho_0^{\text{spec}} \propto \Delta_{\text{BCS}}^2$ 冲突。谱 $\rho_0$ 应被视为框架内定义对象，其物理诠释依赖于猜想 8.1 的证明（§8.2a）。这是谱框架与主流凝聚态物理对接的关键障碍。
 
@@ -878,7 +878,7 @@ $$\beta(r) := \frac{1}{\zeta(r)} = \frac{1+\sqrt3\sqrt r}{1+\tfrac32\sqrt3\sqrt 
 
 本文推导在弱耦合极限下成立，强耦合修正、非 s 波配对、维度依赖等开放问题留作后续工作（§8.5）。**最关键的中心开放问题是猜想 8.1**——谱 $\rho_0$ 与实验超流刚度的等价性映射未被证明，这是谱框架与主流凝聚态物理对接的障碍（§8.2a）。此外，$\beta_{\text{spec}} = E_F/k_B$ 是有根据的假设而非严格定理（§8.1），$\gamma$ 的定量匹配是事后单位修正而非内生输出（§8.2）。
 
-未来研究方向包括：证明猜想 8.1（从 BdG 严格导出谱 $\rho_0$ 与 $\rho_s^{\text{BdG}}$ 的等价性）、谱流方程严格求解、维度依赖谱几何、非 s 波配对谱表述、谱刚度实验测量、把 §8.6d 的两级因子分解推进为动力学 RG 常演化（逐级倍率由谱流方程分步重新求解，§8.7#5）、把 §8.6e 的三级/多带谱系与具体材料的带辨认对应（如 MgB$_2$ 两带、铁基多带，§8.7#8），并通过系统测量多带隙比检验 SU(2) Casimir 量化预言。
+未来研究方向包括：证明猜想 8.1（从 BdG 严格导出谱 $\rho_0$ 与 $\rho_s^{\text{BdG}}$ 的等价性）、谱流方程严格求解、维度依赖谱几何、非 s 波配对谱表述、谱刚度实验测量、把 §8.6d 的两级因子分解推进为动力学 RG 常演化（逐级倍率由谱流方程分步重新求解——其 $k_2$ 独立涌现环节已闭合于 Phase 102b 2c-P，剩余材料截线与连续化，连续化被非标度不变判据排除，§8.6f）、把 §8.6e 的三级/多带谱系与具体材料的带辨认对应（如 MgB$_2$ 两带、铁基多带，§8.7#8），并通过系统测量多带隙比检验 SU(2) Casimir 量化预言。
 
 尽管存在这些局限，$T_c \propto \sqrt{\rho_0}$ 标度律的指数关系是谱框架的稳健结构性预言，可能指向凝聚态物理中更深层谱结构的统一。谱框架是一个自洽的候选理论模型，其物理正确性依赖于猜想 8.1 的证明和实验验证。
 

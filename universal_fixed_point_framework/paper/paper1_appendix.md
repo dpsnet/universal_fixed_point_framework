@@ -200,6 +200,8 @@ $$
 
 该公式是纯解析的——直接来自 $\operatorname{Cl}(1,7) \to \operatorname{SO}(8) \to \operatorname{SU}(2)_4$ 子代数的 Casimir 本征值结构，无需任何数值拟合。
 
+> ⚠️ **勘误（2026-10-24，同步 CategoryRepBridge.lean 重构）**：上式 $\lambda_k = M_{\mathrm{Pl}}\times \sqrt{k(k+1)}/\sqrt{k_{\max}(k_{\max}+1)}$ 的 Lean 身份已定为**本地定义 `catAgEigenvalue`**（原以为来自 `SpectralGap.agEigenvalue`，实际 SpectralGap 模块无此常量；CategoryRepBridge 定义名已由 `agEigenvalue` 改 `catAgEigenvalue` 避免冲突）。数学口径限定：该 $\lambda_k \propto \sqrt{k(k+1)}$ 是**谱框架设定的归一化谱口径**（与 paper11 §1.5 / paper17 §6.1 / paper20 v1.1 的谱间隙比 $\frac1{\sqrt3}:1:\sqrt2$ 一致），**不是**"自旋 $j=k/2$ 的 Casimir 特征值"——后者的真实特征值为 $j(j+1)=k(k+2)/4$，其归一化比为 $\sqrt{k(k+2)}/\sqrt{k_{\max}(k_{\max}+2)}$，与 $\sqrt{k(k+1)}/\sqrt{k_{\max}(k_{\max}+1)}$ 相差因子 $\sqrt{(k+2)/(k+1)}$。Lean 侧已按先证伪原则把可证命题改为定义直证（`agEigenvalue_from_casimir`，rfl），并把 $j=k/2$ 的 Casimir 链（$C_2(j)\propto k(k+2)/4$）写入 docstring；本文公式作为谱框架设定保留。
+
 | 导出常数 | 公式 | 值 | 期望值 | 匹配 |
 |---------|------|------|--------|------|
 | $c_1$ (R² 系数) | $(3/2)/(4\Delta\lambda_{\min}^2)$ | $25.19$ | — | ✅ |

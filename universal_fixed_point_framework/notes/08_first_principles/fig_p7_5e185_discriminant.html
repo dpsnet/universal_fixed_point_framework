@@ -1,0 +1,63 @@
+<html style="margin:0;padding:0;">
+<title>P7-5e-185 尾巴离散量子化判别总览</title>
+<div style="width:100%;box-sizing:border-box;font-family:'Microsoft YaHei',sans-serif;padding:16px;background:#f7f8fa;color:#1f2329;">
+  <div style="font-size:18px;font-weight:700;margin-bottom:4px;">P7-5e-185 判别 · 2^m 尾巴机制（离散量子化假说检验）</div>
+  <div style="font-size:13px;color:#646a73;margin-bottom:14px;">闭式 129 直接计算 · 本机复算与云 VM 完全一致 · 2026-10-15</div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:12px;">
+
+    <!-- 检验 A -->
+    <div style="flex:1 1 320px;min-width:300px;background:#fff;border:1px solid #e5e6eb;border-radius:8px;padding:12px;">
+      <div style="font-weight:700;color:#3370ff;margin-bottom:8px;">检验 A — Landau 计数排除</div>
+      <svg width="100%" viewBox="0 0 320 150" style="display:block;">
+        <rect x="20" y="18" width="280" height="90" rx="6" fill="#f2f3f5"/>
+        <line x1="48" y1="100" x2="272" y2="100" stroke="#8f959e" stroke-width="1"/>
+        <line x1="48" y1="100" x2="48" y2="24" stroke="#8f959e" stroke-width="1"/>
+        <!-- 幂律 N_L：ln-ln 斜率 -0.9921（略缓） -->
+        <line x1="56" y1="92" x2="240" y2="34" stroke="#d54941" stroke-width="3"/>
+        <text x="120" y="16" font-size="12" fill="#d54941">N_L(B*) ln-ln 斜率 −0.9921（幂律 ∝1/m）</text>
+        <!-- 指数 tail：半log 斜率 -0.6931=-ln2（更陡） -->
+        <line x1="56" y1="96" x2="240" y2="12" stroke="#3370ff" stroke-width="3" stroke-dasharray="5,4"/>
+        <text x="120" y="126" font-size="12" fill="#3370ff">尾巴半log 斜率 −0.6931 = −ln2（指数 ∝2^−m）</text>
+        <text x="48" y="142" font-size="11" fill="#646a73">对数坐标（示意）</text>
+      </svg>
+      <div style="font-size:12.5px;line-height:1.6;margin-top:4px;">
+        <div><b>−0.9921 vs −0.6931：不同型</b> → “尾巴 = Landau 简并度计数”数值排除</div>
+        <div style="color:#646a73;font-size:12px;">相邻比：Landau 1.615→1.137（趋 1）· 尾巴恒定 2.0×7</div>
+      </div>
+    </div>
+
+    <!-- 检验 B -->
+    <div style="flex:1 1 320px;min-width:300px;background:#fff;border:1px solid #e5e6eb;border-radius:8px;padding:12px;">
+      <div style="font-weight:700;color:#00b42a;margin-bottom:8px;">检验 B — 离散区→连续极限指纹</div>
+      <div style="font-size:13px;line-height:1.7;background:#f2f3f5;border-radius:6px;padding:8px 10px;font-family:Consolas,monospace;">
+        δ_cl(m) = (m/2 + 1/7) − 1/B* = <b>−1/(7·2^m)</b>
+      </div>
+      <div style="font-size:13px;margin:8px 0;">
+        <b>δ_cl · 2^m = −1/7 精确常数</b>（m = 1..8，m=1 因 65 例外为 −0.173626）
+      </div>
+      <svg width="100%" viewBox="0 0 320 60" style="display:block;">
+        <rect x="20" y="6" width="280" height="14" rx="7" fill="#e8ffea"/>
+        <rect x="20" y="6" width="140" height="14" rx="7" fill="#00b42a"/>
+        <text x="170" y="18" font-size="11" fill="#1f2329">恒定减半率 2（每 +1 通道尾巴精确减半）</text>
+        <text x="20" y="42" font-size="11" fill="#646a73">m ≥ 13：2^−m 指数级消失，幂律渐近接管（174e）</text>
+        <text x="20" y="56" font-size="11" fill="#646a73">连续系统 → 幂律 1/m 展开 · 有限离散系统 → 指数 2^−m 边界效应</text>
+      </svg>
+    </div>
+
+    <!-- 终判 -->
+    <div style="flex:1 1 320px;min-width:300px;background:#fff;border:1px solid #e5e6eb;border-radius:8px;padding:12px;">
+      <div style="font-weight:700;color:#7c3aed;margin-bottom:8px;">终判 — 离散量子化部分成立</div>
+      <div style="font-size:13px;line-height:1.7;">
+        <div><b>离散性为真</b>：8 = 2³ 通道 · 指数衰减 · 减半率 2（二进制计数特征）</div>
+        <div><b>机制</b> = 2 进代数组织（非 Landau 能级物理）：对合折叠 · 域界自指 K+1 = 2^p+1 · 家族 2^m+1 · 183 C₆ · 184 K=2^p 族通用</div>
+        <div style="background:#f7f0ff;border-radius:6px;padding:6px 8px;margin-top:6px;">
+          <b>159 E 新解读候选</b>：尾巴 1/(7·2^m) = 1/(域宽·2^m) = 第 m 通道“2 进状态空间”的倒数（总状态 7·2^m；184 一般化 1/((K−1)·2^m) 支撑）
+        </div>
+        <div style="color:#646a73;font-size:12px;margin-top:6px;">诚实边界：排除的是“Landau 简并度计数 ∝1/m”具体版本；“为何状态数 = 2^m”仍为 159 E 机制开放项</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</html>
