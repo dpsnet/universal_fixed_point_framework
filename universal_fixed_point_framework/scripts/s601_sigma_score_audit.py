@@ -86,6 +86,11 @@ with io.open(path, "r", encoding="utf-8") as f:
 percent_pattern = re.compile(
     r"[^。\n]{0,60}?\d+\.?\d*\s*%[^。\n]{0,60}?(达标|判定|命中|通过|验证)[^。\n]{0,30}?"
 )
+# σ_score 判定识别（统一口径 2026-10-30 用户拍板：判定词为 σ_score 判定的片段合规——
+# 旁附百分比仅为数值/精度记录）：σ_score = 数值 / σ_score 数值 / σ_score 达标|提示|不达标
+sigma_judge = re.compile(
+    r"σ_score\s*(=\s*\d+(\.\d+)?|[0-9０-９]+\.?[0-9０-９]*\s*σ?|达标|提示|不达标)"
+)
 residuals = []
 for m in percent_pattern.finditer(text):
     frag = m.group(0)
@@ -93,13 +98,16 @@ for m in percent_pattern.finditer(text):
     # （s601 清理落地 2026-10-30 原位标注格式：~~片段~~（勘误清理登记…））
     after = text[m.end():m.end() + 20]
     ctx = frag + after
-    # ① 已勘误：明确标记否决/撤销/替代/旧/禁用/删除线——非当前判定
-    if "~~" in ctx or any(k in frag for k in ["否决", "撤销", "替代", "旧", "禁用", "勘误", "废弃", "不再"]):
+    # ① σ_score 判定（统一口径合规）：判定已 σ_score 口径——百分比仅为数值/精度记录
+    if sigma_judge.search(ctx):
+        residuals.append(("σ_score合规", frag))
+    # ② 已勘误：明确标记否决/撤销/替代/旧/禁用/删除线——非当前判定
+    elif "~~" in ctx or any(k in frag for k in ["否决", "撤销", "替代", "旧", "禁用", "勘误", "废弃", "不再"]):
         residuals.append(("已勘误", frag))
-    # ② 描述性：描述偏差本身（差/偏差/偏离/误差/容差/相对）
+    # ③ 描述性：描述偏差本身（差/偏差/偏离/误差/容差/相对）
     elif any(k in frag for k in ["差", "偏差", "偏离", "误差", "容差", "相对"]):
         residuals.append(("描述性", frag))
-    # ③ 未分类：潜在当前百分比判定残留（待清理）
+    # ④ 未分类：潜在当前百分比判定残留（待清理）
     else:
         residuals.append(("待清理?", frag))
 
