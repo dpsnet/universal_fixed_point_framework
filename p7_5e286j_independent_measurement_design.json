@@ -1,0 +1,149 @@
+{
+  "series": "P7-5e-286j",
+  "topic": "判别④ E 项（39/2000）独立测量通道设计 + 文献数据源就绪化",
+  "CH1_object_and_bridge": {
+    "measurement_object": "强磁场氢负离子束缚态临界场强（脱附边界）",
+    "closed_form": "1/B*(m) = m/2 + 1/8 + 13/128/m + 41/2000/m² − 39/2000/m³ + O(1/m⁴)",
+    "bridge": "B*(m) ↔ γ = B/B₀（B₀ = 2.35e5 T）；m = 磁量子数通道",
+    "critical_gamma_prediction_spectrum": {
+      "1": {
+        "inv_Bstar": "11641/16000",
+        "inv_Bstar_decimal": 0.7275625,
+        "gamma_star": 1.374452366635169,
+        "B_star_T": 322996.3061592647
+      },
+      "2": {
+        "inv_Bstar": "37711/32000",
+        "inv_Bstar_decimal": 1.17846875,
+        "gamma_star": 0.8485587759539657,
+        "B_star_T": 199411.31234918194
+      },
+      "3": {
+        "inv_Bstar": "239099/144000",
+        "inv_Bstar_decimal": 1.6604097222222223,
+        "gamma_star": 0.6022609881262573,
+        "B_star_T": 141531.33220967045
+      },
+      "4": {
+        "inv_Bstar": "2203/1024",
+        "inv_Bstar_decimal": 2.1513671875,
+        "gamma_star": 0.46482069904675444,
+        "B_star_T": 109232.86427598729
+      },
+      "5": {
+        "inv_Bstar": "5291953/2000000",
+        "inv_Bstar_decimal": 2.6459765,
+        "gamma_star": 0.3779323058991642,
+        "B_star_T": 88814.09188630359
+      },
+      "6": {
+        "inv_Bstar": "100557/32000",
+        "inv_Bstar_decimal": 3.14240625,
+        "gamma_star": 0.31822747297552634,
+        "B_star_T": 74783.45614924868
+      },
+      "7": {
+        "inv_Bstar": "19975609/5488000",
+        "inv_Bstar_decimal": 3.639870444606414,
+        "gamma_star": 0.2747350531340496,
+        "B_star_T": 64562.73748650166
+      },
+      "8": {
+        "inv_Bstar": "4237289/1024000",
+        "inv_Bstar_decimal": 4.1379775390625,
+        "gamma_star": 0.24166395070055408,
+        "B_star_T": 56791.02841463021
+      },
+      "9": {
+        "inv_Bstar": "3605351/777600",
+        "inv_Bstar_decimal": 4.636511059670782,
+        "gamma_star": 0.21567941651173492,
+        "B_star_T": 50684.6628802577
+      },
+      "10": {
+        "inv_Bstar": "20541367/4000000",
+        "inv_Bstar_decimal": 5.13534175,
+        "gamma_star": 0.1947290070811743,
+        "B_star_T": 45761.31666407596
+      },
+      "11": {
+        "inv_Bstar": "119989921/21296000",
+        "inv_Bstar_decimal": 5.63438772539444,
+        "gamma_star": 0.17748157363983932,
+        "B_star_T": 41708.16980536224
+      },
+      "12": {
+        "inv_Bstar": "7065901/1152000",
+        "inv_Bstar_decimal": 6.133594618055556,
+        "gamma_star": 0.16303653277904687,
+        "B_star_T": 38313.585203076014
+      }
+    }
+  },
+  "CH2_source_assessment": {
+    "S1": {
+      "source": "arXiv physics/0003043 (FCI + anisotropic Gaussian, 3D strong-field H⁻)",
+      "independent_of_shooting": true,
+      "reason": "不同模型维数（3D vs P7-5e 2D）+ 不同基组（各向异性高斯基 vs 打靶数值求根）——无共享数值步骤",
+      "gamma_range": [
+        0.0008,
+        4000.0
+      ],
+      "covers_closed_form_critical_domain": true,
+      "status": "独立理论数据源（非实验）——可直接提取"
+    },
+    "S2": {
+      "source": "arXiv physics/0006016 (magnetically induced bound states, Avron)",
+      "field_point": "B~30T (γ≈1.3e-4), E_bind≈2.8e-3 meV",
+      "role": "存在性旁证（弱场域磁感应束缚态）——不在临界提取域",
+      "extractable": false
+    },
+    "S3": {
+      "source": "D⁻ Lorentz stripping experiment (20-MeV, escholarship)",
+      "physical_domain": "洛伦兹等效电场剥离（相对论 H⁻ 过磁）——与束缚态临界磁场不同域",
+      "role": "旁证（H⁻ 磁场脱附机制存在性）",
+      "extractable_for_m3_coefficient": false
+    },
+    "selected_source": "S1（唯一可提取源）"
+  },
+  "CH3_extraction_protocol": {
+    "P1": "解析 0003043 脱附能表 E_detach(γ) per m 通道",
+    "P2": "E_detach→0 外推临界 γ*(m)（外推模型 + 不确定度 σ_γ）",
+    "P3": "1/γ*(m) 展开拟合：固定 1/2、1/8 解析值，C/D/E 三参最小二乘",
+    "P4": "σ_score = |E_meas − 39/2000|/σ_E 判别（≤1σ 达标/1-3σ 提示/>3σ 不达标）",
+    "independence": "模型维数（3D vs 2D）+ 方法（FCI 变分 vs brentq 求根）+ 基组全异——无共享误差源"
+  },
+  "CH4_measurability": {
+    "critical_gamma_range": [
+      0.16303653277904687,
+      1.374452366635169
+    ],
+    "S1_covers": true,
+    "verdict": "S1 覆盖临界域 → 提取执行可行（下一轮：数据获取 + 外推 + 拟合）"
+  },
+  "CH5_criteria": {
+    "prediction": "E = 39/2000 = 0.0195（双唯一性组装代数预言，286h）",
+    "sigma_score_formula": "σ_score = |E_meas − 0.0195| / σ_E（合成不确定度）",
+    "grade": "≤1σ 达标 / 1-3σ 提示 / >3σ 不达标",
+    "mirror_contrast": "镜像假设 41/2000=0.0205 判别窗 Δ=1e-3（254：5.2 倍判别力）",
+    "resolution_required": "σ_E ≤ 5e-4（半判别窗）——S1 FCI 表精度需 ≥ 1e-4 级"
+  },
+  "CH6_honest_boundary": {
+    "bridge_assumption": "3D H⁻ 强场 Landau 化极限 ↔ P7-5e 二维 m 通道——模型桥为登记假设（γ≫1 收敛），非已证恒等",
+    "S1_is_theory_not_experiment": "0003043 为独立理论方法（FCI），非实验室测量——升级为'独立理论通道'而非'实验通道'",
+    "S3_domain_mismatch": "洛伦兹剥离实验物理域不同——仅存在性旁证",
+    "execution_next_round": "数据获取（下载/解析 0003043 表）+ 外推 + 拟合 = 下一轮执行（本轮为通道设计 + 数据源就绪化）",
+    "no_new_claim": "本轮不声称 E 已获独立测量——登记通道就绪与数据源评估结论"
+  },
+  "design_readiness_checks": {
+    "C1_bridge_mapping_defined": true,
+    "C2_independent_source_identified": true,
+    "C3_coverage_critical_domain": true,
+    "C4_extraction_protocol_defined": true,
+    "C5_independence_from_shooting": true,
+    "C6_sigma_score_criteria_ready": true,
+    "C7_honest_boundary_registered": true,
+    "ALL_PASS": true
+  },
+  "ALL_PASS": true
+}
