@@ -340,4 +340,52 @@ theorem window_axis_pow_judgement :
   · exact c_pow_window_sum_unique
   · norm_num
 
+/-! =========================================================
+    §10 E 项闭式升格：双唯一性组装 39/2000（286h）
+   ========================================================= -/
+
+/-- 286h M1a：E 项分子 k(k−3)−1 唯一正整数根 k=8。
+    39 = k(k−3)−1 → k(k−3)=40 → (k−8)(k+5)=0（286① 对称轴唯一性同根）。 -/
+theorem e_numerator_axis_unique : ∀ k : ℤ, k ≥ 2 → k * (k - 3) - 1 = 39 → k = 8 := by
+  intro k hk h
+  have hsq : k * (k - 3) = 40 := by
+    nlinarith
+  have hfac : (k - 8) * (k + 5) = k * (k - 3) - 40 := by
+    ring
+  have hq : (k - 8) * (k + 5) = 0 := by
+    rw [hfac]
+    nlinarith [hsq]
+  rcases mul_eq_zero.mp hq with h8 | hn5
+  · omega
+  · nlinarith [hk, hn5]
+
+/-- 286h M1b：E 项分母 16(k−3)³ 唯一正整数根 k=8。
+    16(k−3)³=2000 → (k−3)³=125=5³ → k−3=5（286d n_max 代数必然 + 286f nmax_cube_unique 同根）。
+    k≤9 枚举排除；k≥10 时 (k−3)≥7 → 16(k−3)³≥16·7³=5488>2000 矛盾。 -/
+theorem e_denominator_cube_unique : ∀ k : ℕ, 2 ≤ k → 16 * (k - 3) ^ 3 = 2000 → k = 8 := by
+  intro k hk h
+  by_cases hle : k ≤ 9
+  · interval_cases k <;> norm_num at h <;> omega
+  · have hge : 10 ≤ k := by omega
+    have hk3 : 7 ≤ k - 3 := by omega
+    have hpow : 7 ^ 3 ≤ (k - 3) ^ 3 := Nat.pow_le_pow_left hk3 3
+    have hlb : 5488 ≤ 16 * (k - 3) ^ 3 := by
+      nlinarith [Nat.mul_le_mul_left 16 hpow]
+    nlinarith [hlb, h]
+
+/-- 286h M2：E 项闭式值 E(8) = 39/2000（双唯一性同根组装，无自由参数）。 -/
+theorem e_closed_form_value : ((8 * (8 - 3) - 1 : ℚ) / (16 * (8 - 3) ^ 3)) = (39 : ℚ) / 2000 := by
+  norm_num
+
+/-- 286h 联合主定理：E 项分子唯一性 ∧ 分母唯一性 ∧ 闭式值 39/2000（判别④代数侧升格）。 -/
+theorem e_closed_judgement :
+    (∀ k : ℤ, k ≥ 2 → k * (k - 3) - 1 = 39 → k = 8) ∧
+    (∀ k : ℕ, 2 ≤ k → 16 * (k - 3) ^ 3 = 2000 → k = 8) ∧
+    ((8 * (8 - 3) - 1 : ℚ) / (16 * (8 - 3) ^ 3) = (39 : ℚ) / 2000) := by
+  constructor
+  · exact e_numerator_axis_unique
+  constructor
+  · exact e_denominator_cube_unique
+  · exact e_closed_form_value
+
 end MUFPF.Demirror

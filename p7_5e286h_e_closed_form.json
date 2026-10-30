@@ -1,0 +1,84 @@
+{
+  "series": "P7-5e-286h",
+  "topic": "判别④ E 项闭式升格：双唯一性组装 39/2000（分子 286 对称轴根 + 分母 286d n_max 根）+ E1/E2 构造侧并行探索",
+  "M1_dual_uniqueness": {
+    "numerator_k(k-3)-1=39_enum_hits_1_40": [
+      8
+    ],
+    "numerator_unique_k8": true,
+    "numerator_algebra": "k(k−3)−1=39 → k(k−3)=40=(k−8)(k+5)=0 → k=8（286① 对称轴唯一性同根）",
+    "denominator_16(k-3)^3=2000_enum_hits_1_40": [
+      8
+    ],
+    "denominator_unique_k8": true,
+    "denominator_algebra": "16(k−3)^3=2000 → (k−3)^3=125=5^3 → k−3=5 → k=8（286d n_max 代数必然 + 286f nmax_cube_unique 同根）",
+    "same_root_k8": true
+  },
+  "M2_closed_form_family": {
+    "closed_form_E(8)": "39/2000",
+    "closed_decimal": 0.0195,
+    "E(8)=39/2000": true,
+    "family_spectrum_k4_12": {
+      "4": "3/16",
+      "5": "9/128",
+      "6": "17/432",
+      "7": "27/1024",
+      "8": "39/2000",
+      "9": "53/3456",
+      "10": "69/5488",
+      "11": "87/8192",
+      "12": "107/11664"
+    },
+    "unique_in_family": true,
+    "neighbors": {
+      "k7": "27/1024",
+      "k9": "53/3456",
+      "k7_ne_39_2000": true,
+      "k9_ne_39_2000": true
+    },
+    "D_branch_k8_plus1": "41/2000",
+    "note": "D 项（+1 分子 41/2000）与 E 项（−1 分子 39/2000）为 286 双侧闭合两分支"
+  },
+  "M3_judgement4_upgrade": {
+    "component_a": "分子唯一性：k(k−3)=40 唯一根 k=8（286① 已形式化）",
+    "component_b": "分母唯一性：16(k−3)^3=2·n_max^3 唯一根 k=8（286d/286f 已形式化）",
+    "component_c": "双唯一性同根 → E(8)=39/2000 无自由参数（代数预言，非拟合）",
+    "component_d": "打靶通道对照：闭式值 0.0195 与打靶联合自洽 RMS 6e-18 一致（286g 判别④记录引用）",
+    "component_e": "竞争排除：家族谱 k=4..12 仅 k=8 达 39/2000（k7=27/1024、k9=53/3456 均排除）",
+    "upgrade": "强候选（打靶识别）→ 闭式预言（双唯一性组装）：判别④代数侧升格完成；实验独立测量仍为外部通道（非本轮）"
+  },
+  "M4_E1E2_constructional": {
+    "E1_k_set": [
+      3,
+      4,
+      5,
+      8
+    ],
+    "E2_k_set": [
+      6,
+      8
+    ],
+    "E1_set": [
+      3,
+      5,
+      7,
+      13
+    ],
+    "E2_set": [
+      3,
+      5
+    ],
+    "E2_is_initial_segment_of_E1": true,
+    "cross_unique_k8": true,
+    "observation": "E2 集合 = E1 集合初始段（观察）；E1 k 集 {3,4,5,8} 结构（3,4,5 连续 + 8 窗口根）与 E2 k 集 {6,8} 的构造机制未闭合——观察级维持（286e 已证伪素数性重述）",
+    "status": "observation_level"
+  },
+  "M5_lean_pycheck": {
+    "P1_e_numerator_axis_unique": true,
+    "P2_e_denominator_cube_unique": true,
+    "P3_e_closed_form_value": true,
+    "P4_k8_instance_39_2000": true,
+    "PYCHECK_4_4": true
+  },
+  "ALL_PASS": true
+}
