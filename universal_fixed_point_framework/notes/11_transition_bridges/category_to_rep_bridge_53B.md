@@ -9,6 +9,8 @@
 
 从 Phase 53A 中我们确定了 `A_GR_fromBoundary = ad(G)(A) = [G, A]`。现在需要证明：当 A 是 SU(2) 表示中的 Casimir 算子时，`ad(G)(A)` 的特征值谱为 `√{k(k+1)}`。
 
+> ⚠️ **勘误（2026-10-24，同步 CategoryRepBridge.lean 重构）**：本目标的谱值表述 `√{k(k+1)}` 不是"自旋 j 的 Casimir 特征值"——Casimir 特征值为 `j(j+1)`，令 `j=k/2` 得 `k(k+2)/4`，其平方根为 `√{k(k+2)}/2`，与 `√{k(k+1)}` 相差因子 `√{(k+2)/(k+1)}`。`√{k(k+1)}` 是谱框架设定的归一化谱口径（`catAgEigenvalue`，本地定义；SpectralGap 模块无 `agEigenvalue` 常量）。且 `ad(G)(C₂)=[G,C₂]=0`（L38），本目标的"作用对象"表述本身也已被 L55 澄清。
+
 ### 1.1 推导链
 
 ```
@@ -16,9 +18,9 @@ Rec/Sp 范畴框架
     ↓  A_GR = ad(G)(A) = [G, A]               [53A ✅]
     ↓  选定 G, A 为 SU(2) Lie 代数生成元
     ↓  Casimir 算子 C₂ = Σ L_i²
-SU(2) 特征值谱 √{j(j+1)}                      [53B ⬅️ 本阶段]
+SU(2) 特征值谱 √{j(j+1)}                      [53B ⬅️ 本阶段；2026-10-24 勘误：Casimir 特征值为 j(j+1)（无平方根），√{j(j+1)} 是平方根变形口径；j=k/2 时 = √{k(k+2)}/2 ≠ √{k(k+1)}]
     ↓  归一化 j = k/2, j_max = k_max/2
-agEigenvalue(k, k_max) = √{k(k+1)}/√{k_max(k_max+1)}  [53C ⬅️]
+agEigenvalue(k, k_max) = √{k(k+1)}/√{k_max(k_max+1)}  [53C ⬅️；2026-10-24 勘误：此式与 j=k/2 Casimir 归一化相差因子 √{(k+2)/(k+1)}，为谱框架设定口径]
 ```
 
 ### 1.2 关键定理陈述
@@ -27,6 +29,8 @@ agEigenvalue(k, k_max) = √{k(k+1)}/√{k_max(k_max+1)}  [53C ⬅️]
 `ad(L_i)(C₂) = [L_i, C₂] = 0`
 
 **定理 2（Casimir 谱）**。在自旋 j 表示中，Casimir 算子 C₂ 的特征值为 `j(j+1)`。令 `k = 2j`，则 `C₂` 的特征值正比于 `√{k(k+1)}`。
+
+> ⚠️ **勘误（2026-10-24）**：末句不成立——令 `k=2j` 时 `C₂` 特征值 = `j(j+1) = (k/2)(k/2+1) = k(k+2)/4`，正比于 `√{k(k+2)}/2`，**不是** `√{k(k+1)}`。`√{k(k+1)}` 作为谱口径对应"k 直接作为 SU(2) 量子数"（j=k）的平方根变形，或谱框架的设定口径（`catAgEigenvalue`）；两口径相差因子 `√{(k+2)/(k+1)}`。Lean 侧已按先证伪原则改述（CategoryRepBridge.lean 2026-10-24：`casimir_eigenvalue_spin_half`/`spin_one` 用 det 语言证 `3/4`、`2`；`catAgEigenvalue` 为独立定义，rfl 直证）。
 
 **定理 3（A_GR 谱）**。设 `A = C₂`（Casimir）, `G = L₃`（一个生成元）。则 `A_GR = ad(G)(A) = [L₃, C₂] = 0`。但这过于平凡。实际需要的 A_GR 是**谱流生成元在切空间的作用**，而非 Casimir 本身。
 
@@ -47,9 +51,9 @@ A_GR_fromBoundary = ad(G)(A)     [53A: 这是方向导数/生成元]
     ↓
 需要证明：在 Rec_D 边界处，SpecObj.A ∝ C₂ (Casimir)
     ↓
-C₂ 的特征值 = j(j+1) = (k/2)(k/2+1) = k(k+1)/4
+C₂ 的特征值 = j(j+1) = (k/2)(k/2+1) = k(k+2)/4   [2026-10-24 勘误：原写 k(k+1)/4 系笔误，(k/2)(k/2+1) = (k/2)((k+2)/2) = k(k+2)/4]
     ↓
-归一化后得到 agEigenvalue(k, k_max) = √{k(k+1)}/√{k_max(k_max+1)}
+归一化后得到 agEigenvalue(k, k_max) = √{k(k+1)}/√{k_max(k_max+1)}   [2026-10-24 勘误：此过渡不成立——Casimir 归一化比值应为 √{k(k+2)}/√{k_max(k_max+2)}；agEigenvalue 定义为谱框架设定口径]
 ```
 
 所以 Phase 53A 中 `A_GR_fromBoundary = ad(G)(A)` 的定义是对的，但它是**谱流的生成元**，而 `agEigenvalue` 描述的是被作用的那个 **A 矩阵**（SpecObj 的谱算子）的特征值。两者是不同的对象。

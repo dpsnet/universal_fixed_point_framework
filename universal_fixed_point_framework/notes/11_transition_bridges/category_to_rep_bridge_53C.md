@@ -9,6 +9,8 @@
 
 **目标**：证明 `agEigenvalue(k, k_max)`（`SpectralGap.lean`）给出的 `√{k(k+1)}/√{k_max(k_max+1)}` 是 SU(2) 自旋 j 表示中 Casimir 算子的归一化特征值，其中 `j = k/2`，`j_max = k_max/2`。
 
+> ⚠️ **勘误（2026-10-24，按先证伪原则登记证伪）**：本目标**不成立**——（i）`SpectralGap.lean` 无 `agEigenvalue` 常量，该定义在 2026-10-24 重构中确定为 CategoryRepBridge 本地定义（现名 `catAgEigenvalue`）；（ii）`√{k(k+1)}/√{k_max(k_max+1)}` **不是**自旋 `j=k/2` 的 Casimir 归一化特征值：Casimir 特征值为 `j(j+1)`，代入 `j=k/2` 得 `k(k+2)/4`，其归一化比为 `√{k(k+2)}/√{k_max(k_max+2)}`，两者相差因子 `√{(k+2)/(k+1)}`。Lean 侧已按真命题改述：`catAgEigenvalue` 为独立谱框架定义（rfl 直证），`j=k/2` Casimir 链 `C₂ ∝ k(k+2)/4` 写入 docstring（CategoryRepBridge.lean，2026-10-24）。
+
 **当前状态**：
 - 53B 已证明 2×2 情况（j=1/2）：C₂ = (3/4)·I，特征值 = {3/4} ✅
 - 需要推广到任意 j（即任意 k_max）的 (2j+1)×(2j+1) 表示
@@ -21,9 +23,9 @@ $$C_2 = j(j+1) \cdot I_{2j+1}$$
 
 其中 $I_{2j+1}$ 是 (2j+1)×(2j+1) 单位矩阵。令 $j = k/2$, $j_{\max} = k_{\max}/2$：
 
-$$\frac{\|C_2(j)\|}{\|C_2(j_{\max})\|} = \frac{\sqrt{j(j+1)}}{\sqrt{j_{\max}(j_{\max}+1)}} = \frac{\sqrt{k(k+1)/4}}{\sqrt{k_{\max}(k_{\max}+1)/4}} = \frac{\sqrt{k(k+1)}}{\sqrt{k_{\max}(k_{\max}+1)}}$$
+$$\frac{\|C_2(j)\|}{\|C_2(j_{\max})\|} = \frac{\sqrt{j(j+1)}}{\sqrt{j_{\max}(j_{\max}+1)}} = \frac{\sqrt{k(k+2)/4}}{\sqrt{k_{\max}(k_{\max}+2)/4}} = \frac{\sqrt{k(k+2)}}{\sqrt{k_{\max}(k_{\max}+2)}}$$
 
-这正是 `agEigenvalue(k, k_max)`。
+这才是 `j=k/2` 的 Casimir 归一化比值。原式右端的 `√{k(k+1)}/√{k_max(k_max+1)}` 系笔误（`(k/2)(k/2+1) = k(k+2)/4 ≠ k(k+1)/4`），与 `agEigenvalue` 定义相差因子 `√{(k+2)/(k+1)}`——**不等于** `agEigenvalue(k, k_max)`。
 
 ### 1.2 证明策略
 
@@ -45,9 +47,11 @@ $$C_2 = J_x^2 + J_y^2 + J_z^2 = J_z^2 + \frac{1}{2}(J_+J_- + J_-J_+) = j(j+1) \c
 
 | j | k | 维数 | C₂ 值 | 状态 |
 |:-:|:-:|:----:|:-----:|:----:|
-| 0 | 0 | 1 | 0 | 待添加 |
-| 1/2 | 1 | 2 | 3/4 | ✅ 53B 已证明 |
-| 1 | 2 | 3 | 2 | 待添加 |
+| 0 | 0 | 1 | 0 | 公式陈述 |
+| 1/2 | 1 | 2 | 3/4 | ✅ 机器证明（det 语言，CategoryRepBridge 2026-10-24） |
+| 1 | 2 | 3 | 2 | ✅ 机器证明（det 语言，CategoryRepBridge 2026-10-24） |
 | 3/2 | 3 | 4 | 15/4 | 公式陈述 |
 | 2 | 4 | 5 | 6 | 公式陈述 |
 | 一般 j | — | 2j+1 | j(j+1) | 公式引用 |
+
+> 注（2026-10-24）：本表为真实 Casimir 特征值 `j(j+1)`（Lean 侧 `casimir_eigenvalue_spin_half/spin_one` 已用 det 语言证 3/4、2）；与 `catAgEigenvalue`（√{k(k+1)} 归一化谱口径）不是同一对象，见 §1 勘误注。
