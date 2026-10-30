@@ -151,4 +151,50 @@ theorem demirror_judgement :
   · norm_num
   · norm_num
 
+/-! =========================================================
+    §5 分子线性化代数升格（286c：5k±1 不是独立观察）
+   ========================================================= -/
+
+/-- M1a：D 分子 k(k−3)+1 呈现线性形式 5k+1 的唯一正整数解 k=8
+    （k(k−3)+1 − (5k+1) = k(k−8) = 0，由 E2 立方底 k−3=5 驱动）。
+    286b 诚实边界『分子线性形式 5k±1 未从公设导出』→ 降级为未导出的仅是二次形式本身。 -/
+theorem mol_linear_plus : ∀ k : ℤ, k ≥ 1 → k * (k - 3) + 1 = 5 * k + 1 → k = 8 := by
+  intro k hk h
+  have hfac : k * (k - 8) = 0 := by
+    nlinarith [h]
+  rcases mul_eq_zero.mp hfac with hk0 | hk8
+  · nlinarith [hk, hk0]
+  · omega
+
+/-- M1b：E 分子 k(k−3)−1 呈现线性形式 5k−1 的唯一正整数解 k=8（同上）。 -/
+theorem mol_linear_minus : ∀ k : ℤ, k ≥ 1 → k * (k - 3) - 1 = 5 * k - 1 → k = 8 := by
+  intro k hk h
+  have hfac : k * (k - 8) = 0 := by
+    nlinarith [h]
+  rcases mul_eq_zero.mp hfac with hk0 | hk8
+  · nlinarith [hk, hk0]
+  · omega
+
+/-- M2b 实例：C 分母 2^(8−1) = 2·8²（2^(k−2)=k² 枚举唯一解 k=8；289 vv_sumB 窗口和）。 -/
+theorem k8_C_pow_square : (2 : ℕ) ^ (8 - 1) = 2 * 8 ^ 2 := by
+  norm_num
+
+/-- M2b 实例：静默窗口和 63+65 = 2·8²（289 vv_sumB：b²−1+b²+1 = 2b²，b=8）。 -/
+theorem k8_window_sum_square : (63 + 65 : ℕ) = 2 * 8 ^ 2 := by
+  norm_num
+
+/-- 286c 联合主定理：分子线性化唯一性（± 两版）+ C 分母窗口和重合点恒等。 -/
+theorem mol_linear_judgement :
+    (∀ k : ℤ, k ≥ 1 → k * (k - 3) + 1 = 5 * k + 1 → k = 8) ∧
+    (∀ k : ℤ, k ≥ 1 → k * (k - 3) - 1 = 5 * k - 1 → k = 8) ∧
+    ((2 : ℕ) ^ (8 - 1) = 2 * 8 ^ 2) ∧
+    ((63 + 65 : ℕ) = 2 * 8 ^ 2) := by
+  constructor
+  · exact mol_linear_plus
+  constructor
+  · exact mol_linear_minus
+  constructor
+  · norm_num
+  · norm_num
+
 end MUFPF.Demirror

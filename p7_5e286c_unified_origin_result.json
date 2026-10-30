@@ -1,0 +1,75 @@
+{
+ "title": "P7-5e-286c 统一族生成链连接判别",
+ "M1_molecular_linearization": {
+  "plus_equation": "k(k-3)+1 = 5k+1  <=>  k^2-8k = k(k-8) = 0",
+  "plus_all_roots": [
+   0,
+   8
+  ],
+  "plus_unique_pos": [
+   8
+  ],
+  "minus_equation": "k(k-3)-1 = 5k-1  <=>  k^2-8k = k(k-8) = 0",
+  "minus_all_roots": [
+   0,
+   8
+  ],
+  "minus_unique_pos": [
+   8
+  ],
+  "interpretation": "5k±1 线性化不是独立观察：D/E 定义 k(k-3)±1 与 k=8 的代数推论（k(k-3)±1-(5k±1)=k(k-8)，k≥1 唯一根 8；由 E2 立方底 k-3=5 驱动）。286b 诚实边界『分子线性形式 5k±1 未从公设导出』降级为：未导出的仅是 D/E 二次形式本身。"
+ },
+ "M2_denominator_links": {
+  "delta_den_window": {
+   "k=8_window": {
+    "left": 56,
+    "m1": 63,
+    "center": 64,
+    "plus1": 65
+   },
+   "delta_den": 56,
+   "window_left_hit": true,
+   "identity": "k(k-1) = k^2 - k（一般化：δ∞ 分母 = 静默核心窗口左端）"
+  },
+  "C_pow_square": {
+   "equation": "2^(k-1) = 2k^2  <=>  2^(k-2) = k^2",
+   "solutions_k2_20": [
+    8
+   ],
+   "k8_check": true,
+   "window_sum_289": {
+    "b5": "63+65 = 128 = b_5（289 vv_sumB：b²-1 + b²+1 = 2b²，b=8）",
+    "window_sum": 128,
+    "C_den": 128,
+    "hit": true
+   },
+   "note": "C 分母 2^(k-1) 与窗口和 2k² 的唯一重合点 k=8（枚举判别，观察级登记）"
+  },
+  "DE_den_279": {
+   "DE_den_k8": 2000,
+   "factor_2000": "16·5³ = 2⁴·5³ = 2000",
+   "hit_2000": true,
+   "c263_equation": "(k-3)^3 = 2k^2 - 3",
+   "c263_solutions_k1_20": [
+    8
+   ],
+   "c263_k8_check": true,
+   "note": "5³=125=128-3=2·8²-3（263 条件 (k-3)³=2k²-3 的唯一整数解 k=8，枚举判别）"
+  },
+  "DE_nmax": {
+   "D_minus_E_exact": "1/1000",
+   "nmax_cube": "1/1000",
+   "hit": true,
+   "n_max": 10,
+   "note": "286③ 代数已证（8(k-3)³=(k+2)³ ⟺ k=8）；此处复核统一族恒等 D-E=1/[8(k-3)³]=1/(k+2)³ 于 k=8"
+  }
+ },
+ "M3_consistency": {
+  "ALL_HIT": true,
+  "mismatches": []
+ },
+ "M1_PASS": true,
+ "M2_PASS": true,
+ "M3_PASS": true,
+ "ALL_PASS": true
+}
