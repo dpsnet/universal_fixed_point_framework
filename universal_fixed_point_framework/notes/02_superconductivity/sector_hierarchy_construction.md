@@ -145,9 +145,12 @@ $$\frac1{\sqrt3}=\frac{\Delta\lambda_1}{\Delta\lambda_2}=\sqrt{\frac{d_1(d_1-1)}
 C₂=ΣLᵢ² → 特征值 √{j(j+1)} → agEigenvalue = √{k(k+1)}/√{k_max(k_max+1)}`。核心定理
 `agEigenvalue_is_casimir_ratio`、`agEigenvalue_casimir_ratio`、`casimir_eigenvalue_spin_half/spin_one` 均闭环。
 
+> ⚠️ **勘误（2026-10-24，同步 CategoryRepBridge.lean 重构）**：上链中"特征值 √{j(j+1)} → agEigenvalue = √{k(k+1)}/√{k_max(k_max+1)}"的过渡**不成立**——Casimir 特征值为 `j(j+1)`，`j=k/2` 时代入得 `k(k+2)/4`，归一化比应为 `√{k(k+2)}/√{k_max(k_max+2)}`；`agEigenvalue` 的 `√{k(k+1)}/√{k_max(k_max+1)}` 为**谱框架设定口径**（本地定义，现名 `catAgEigenvalue`，SpectralGap 模块无此常量），两口径相差因子 `√{(k+2)/(k+1)}`。Lean 侧已按先证伪原则把可证命题改为定义直证（`agEigenvalue_from_casimir`，rfl）并把 `C₂ ∝ k(k+2)/4` 写入 docstring；`casimir_eigenvalue_spin_half/spin_one`（3/4、2）用 det 语言证明（2026-10-24），`agEigenvalue_is_casimir_ratio`/`agEigenvalue_casimir_ratio` 现为定义直证（非"Casimir 特征值之比"推导）。
+
 **(2) 我的 §8.3"Λ²/维数梯子"与已证 Casimir 梯子数字相同、机制不同。** `√{k(k+1)}` k=1,2,3
 = `√2,√6,√12`（k=d-1 ⟺ d=2,3,4）；我 §8.3 用 `λ=√{2·dimΛ²}=√{d(d-1)}` 给出同一 `√2:√6:√12`
-（归一 `1/√3:1:√2`）。**数值逐项相等**，但框架实际用的是 **SU(2) Casimir 特征值**（平方和），
+（归一 `1/√3:1:√2`）。**数值逐项相等**，但框架实际用的是 **谱框架设定的归一化谱**（`λ_k ∝ √{k(k+1)}`，
+[2026-10-24 勘误：非"SU(2) Casimir 特征值（平方和）"——Casimir 特征值为 j(j+1)，k=2j 时 = k(k+2)/4，见 §8.10 链勘误]），
 不是我假设的表示翻转 τ 的反称部。
 
 **(3) `ExteriorFunctor.lean` 与 Λ² 无关。** 它是外显函子 E:Sp→Obs 跟踪 **Z₂ 拓扑荷/环绕数奇偶**
@@ -204,6 +207,8 @@ C₂=ΣLᵢ² → 特征值 √{j(j+1)} → agEigenvalue = √{k(k+1)}/√{k_max
 - **header import 仅 `AInfinityAlgebra`、`SpectralDynamics`；无 `DeviationBound`/spExchangeLaw/Δ。**
 - **L288 自陈完整链**：`CategoryRepBridge → SU(2) Casimir → agEigenvalue → SpectralGap`；
   `agEigenvalue` L170-186 定义即 Casimir 特征值之比（`√(k(k+1))/√(k_max(k_max+1))`）。
+
+> ⚠️ **勘误（2026-10-24）**：上条"agEigenvalue 定义即 Casimir 特征值之比"**不准确**——该定义为**本地谱框架设定**（现名 `catAgEigenvalue`，SpectralGap 模块无此常量；2026-10-24 重构为独立定义 + rfl 直证）；`√{k(k+1)}/√{k_max(k_max+1)}` 与 `j=k/2` Casimir 归一化比 `√{k(k+2)}/√{k_max(k_max+2)}` 相差因子 `√{(k+2)/(k+1)}`，见 §8.10 上文勘误注。
 - **L218**：SU(2) 由 `ad(G)(A)=对易子 [J_i,J_j]=i·ε_ijk·J_k` 直接涌现，**完全不经 Δ**。
 
 故实际存在**两条结构上分离的链**，仅共用 `spectralGap` 概念（SpectralGap.lean）：
