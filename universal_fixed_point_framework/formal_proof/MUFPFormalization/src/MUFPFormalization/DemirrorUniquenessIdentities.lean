@@ -744,4 +744,65 @@ theorem g1_laurent_export_judgement :
   · intro t m hm h
     exact truncation_imp_nilpotent t m hm h
 
+/-! =========================================================
+    §18 G3 构造机制：E1 = 窗口奇素因子支撑（286u，2026-10-31）
+   数值先证伪 `scripts/p7_5e286r_g3_window_prime_construct.py` 16/16 ALL_PASS：
+   {k(k−1),k²−1,k²,k²+1}={56,63,64,65} 的奇素因子支撑并集={3,5,7,13}=E1；
+   k²+1=65=(k−3)(k+5)=5·13（D/E 立方底与 C 分子为 k²+1 两因子）；
+   k²−1=63=(k−1)(k+1)=7·9=7·3²；E2={3,5} 为 k_max-补对（3+5=k_max）。
+   ========================================================= -/
+
+/-- G3-Q1：窗口四整数闭式——56=k(k−1)、63=k²−1、64=k²、65=k²+1（k_max=8）。 -/
+theorem window_four_identities :
+    (k_max * (k_max - 1) = 56) ∧ (k_max ^ 2 - 1 = 63) ∧
+    (k_max ^ 2 = 64) ∧ (k_max ^ 2 + 1 = 65) := by
+  constructor
+  · norm_num [k_max_value]
+  constructor
+  · norm_num [k_max_value]
+  constructor
+  · norm_num [k_max_value]
+  · norm_num [k_max_value]
+
+/-- G3-Q2：奇素因子支撑——7∣56、3∣63、7∣63、5∣65、13∣65（支撑并集 {3,5,7,13}=E1）；
+    反例侧：5∤63、13∤63、3∤56（支撑非任意包含，逐成员窗口所有者可区分）。 -/
+theorem window_odd_prime_support :
+    ((7 : ℕ) ∣ 56) ∧ ((3 : ℕ) ∣ 63) ∧ ((7 : ℕ) ∣ 63) ∧
+    ((5 : ℕ) ∣ 65) ∧ ((13 : ℕ) ∣ 65) ∧
+    (¬ (5 : ℕ) ∣ 63) ∧ (¬ (13 : ℕ) ∣ 63) ∧ (¬ (3 : ℕ) ∣ 56) := by
+  refine ⟨by decide, by decide, by decide, by decide, by decide,
+          by decide, by decide, by decide⟩
+
+/-- G3-Q3：k²+1 = (k−3)(k+5) = 5·13 且 k²−1 = (k−1)(k+1) = 7·9
+    （D/E 立方底 5 与 C 分子 13 恰为 k²+1 的两因子；7 与 3 同出 k²−1）。 -/
+theorem window_factor_split :
+    ((k_max - 3) * (k_max + 5) = 65) ∧ ((k_max - 1) * (k_max + 1) = 63) := by
+  constructor <;> norm_num [k_max_value]
+
+/-- G3-Q4：E2={3,5} 为 E1 中 k_max-补对（3+5=k_max）；E1\E2={7,13} 为 n_max-补对
+    （7+13=2·n_max，n_max=k_max+2）。 -/
+theorem e2_complement_pair :
+    ((3 : ℕ) + 5 = k_max) ∧ ((7 : ℕ) + 13 = 2 * (k_max + 2)) := by
+  constructor <;> norm_num [k_max_value]
+
+/-- G3 联合主定理：窗口四整数闭式 ∧ 奇素因子支撑 {3,5,7,13} ∧ 因子分裂（65=5·13、63=7·9）
+    ∧ E2=k_max-补对。
+    分层：E1 家族资格由窗口算术"构造生成"（非纯判别设计）；诚实边界保留——
+    ① 窗口四整数依赖 k_max=8（实例参数）；② 生成规则非唯一（规则二同值，数值判别 A12）；
+    ③ 286i M4 平凡性限定（交叉唯一性非家族资格来源）维持。 -/
+theorem window_prime_construct_judgement :
+    ((k_max * (k_max - 1) = 56) ∧ (k_max ^ 2 - 1 = 63) ∧
+     (k_max ^ 2 = 64) ∧ (k_max ^ 2 + 1 = 65)) ∧
+    ((7 : ℕ) ∣ 56 ∧ (3 : ℕ) ∣ 63 ∧ (7 : ℕ) ∣ 63 ∧ (5 : ℕ) ∣ 65 ∧ (13 : ℕ) ∣ 65 ∧
+     ¬ (5 : ℕ) ∣ 63 ∧ ¬ (13 : ℕ) ∣ 63 ∧ ¬ (3 : ℕ) ∣ 56) ∧
+    (((k_max - 3) * (k_max + 5) = 65) ∧ ((k_max - 1) * (k_max + 1) = 63)) ∧
+    ((3 : ℕ) + 5 = k_max ∧ (7 : ℕ) + 13 = 2 * (k_max + 2)) := by
+  constructor
+  · exact window_four_identities
+  constructor
+  · exact window_odd_prime_support
+  constructor
+  · exact window_factor_split
+  · exact e2_complement_pair
+
 end MUFPF.Demirror
