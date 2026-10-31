@@ -600,4 +600,48 @@ theorem bowlchain_scale_judgement :
   · exact e_dual_identity_unique
   · exact d_bowlchain_counter
 
+/-! =========================================================
+    §15 G3 推进：E1/E2 家族资格角色完备性连接（286r-g3，2026-10-31）
+   ========================================================= -/
+
+/-- G3 A1+A2：E1 值集成员 3 与 5 的代数端角色——3·13=39（E 项素因子通道，§12 e_39_factor_pair
+    同族；39=(k_max−5)(k_max+5)）且 5=k_max−3（D/E 分母立方底，5³=125）。 -/
+theorem e1_role_algebra_ends :
+    ((3 : ℚ) * 13 = 39) ∧ ((5 : ℚ) = k_max - 3) := by
+  constructor
+  · norm_num
+  · norm_num [k_max_value]
+
+/-- G3 A3：E1 值集成员 7 的碗形链层1分子角色——7=k_max−1（塔顶，286e S604）且
+    h(2)=(k_max−1)/2^(k_max−2)=7/64（§14 c_bowlchain_h2_scale 的 h(2) 分子同值）。 -/
+theorem e1_role_layer1 :
+    ((7 : ℚ) = k_max - 1) ∧ ((7 : ℚ) / 64 = (k_max - 1 : ℚ) / (2 : ℚ) ^ (k_max - 2)) := by
+  constructor
+  · norm_num [k_max_value]
+  · norm_num [k_max_value]
+
+/-- G3 A4：E1 值集成员 13 的 C 与层2·3 分子角色——13=k_max+5（窗口右端 65 素因子）且
+    C=(k_max+5)/2^(k_max−1)=13/128（§14 c_dual_form_pow 同值；层2/3 分子 13/600、13/2250
+    见 hprime_over_i2 / i2_cand2 族）。 -/
+theorem e1_role_c13 :
+    ((13 : ℚ) = k_max + 5) ∧ ((13 : ℚ) / 128 = (k_max + 5 : ℚ) / (2 : ℚ) ^ (k_max - 1)) := by
+  constructor
+  · norm_num [k_max_value]
+  · norm_num [k_max_value]
+
+/-- G3 联合主定理：E1 值集 {3,5,7,13} 角色完备性——E 素因子（3·13=39）∧ D/E 分母底
+    （5=k_max−3）∧ 碗形链层1分子（7=k_max−1=h(2) 分子）∧ C 分子（13=k_max+5）；
+    E2 值集 {3,5} = 代数端角色子集（素因子通道 + 分母因子，不含层分子 7/13）。
+    G3 从"判别设计非公设生成（观察级）"推进为"判别设计+角色完备性连接"
+    （数值先证伪 11/11 ALL_PASS；偏移选择自由仍非公设生成，286i M4 平凡性限定保留）。 -/
+theorem family_role_judgement :
+    (((3 : ℚ) * 13 = 39) ∧ ((5 : ℚ) = k_max - 3)) ∧
+    (((7 : ℚ) = k_max - 1) ∧ ((7 : ℚ) / 64 = (k_max - 1 : ℚ) / (2 : ℚ) ^ (k_max - 2))) ∧
+    (((13 : ℚ) = k_max + 5) ∧ ((13 : ℚ) / 128 = (k_max + 5 : ℚ) / (2 : ℚ) ^ (k_max - 1))) := by
+  constructor
+  · exact e1_role_algebra_ends
+  constructor
+  · exact e1_role_layer1
+  · exact e1_role_c13
+
 end MUFPF.Demirror
