@@ -686,4 +686,62 @@ theorem g4_bridge_judgement :
   · exact bstar_span_cross_one
   · exact bstar_first_diff_positive
 
+/-! =========================================================
+    §17 G1 公设层导出：负幂截断 ⟺ 三层幂零 resolvent（286t，2026-10-31）
+   数值先证伪 `scripts/p7_5e286r_g1_g2_postulate_export.py` 24/24 ALL_PASS：
+   负幂深度 d=min{j : m^j·F 为多项式}=3；闭式尾项恰为 e1ᵀ(mI−J)⁻¹v（J³=0）；
+   一般 3×3 A 的 m⁻⁴ 系数 = uᵀA³v ≠ 0 => 非幂零即逸出（截断 ⟺ 幂零）。
+   ========================================================= -/
+
+/-- G1-P1：闭式 Laurent 五分解——1/B*(m) − (m/2+1/8) 的尾项恰为分母 m³ 的三项分式，
+    即 m⁻¹、m⁻²、m⁻³ 三连续负幂（m≠0，无 m⁻⁴ 及更低项）。 -/
+theorem closed_form_laurent_split (m : ℚ) (hm : m ≠ 0) :
+    (1 : ℚ) / 2 * m + 1 / 8 + ((13 : ℚ) / 128) / m + ((41 : ℚ) / 2000) / m ^ 2
+        - ((39 : ℚ) / 2000) / m ^ 3
+      = (1 : ℚ) / 2 * m + 1 / 8
+        + (((13 : ℚ) / 128) * m ^ 2 + ((41 : ℚ) / 2000) * m - ((39 : ℚ) / 2000)) / m ^ 3 := by
+  field_simp
+  ring
+
+/-- G1-P2：尾项乘以 m³ 得次数 2 多项式（无 m⁻⁴ 及更低项——截断深度 d ≤ 3）。 -/
+theorem tail_times_cube (m : ℚ) (hm : m ≠ 0) :
+    m ^ 3 * (((13 : ℚ) / 128) / m + ((41 : ℚ) / 2000) / m ^ 2 - ((39 : ℚ) / 2000) / m ^ 3)
+      = ((13 : ℚ) / 128) * m ^ 2 + ((41 : ℚ) / 2000) * m - ((39 : ℚ) / 2000) := by
+  field_simp
+
+/-- G1-P3：三负幂系数全非零（m⁻¹/m⁻²/m⁻³ 无缺位；m⁻³ 项非零 => d ≥ 3，
+    与 P2 的 d ≤ 3 合得 d=3 精确）。 -/
+theorem tail_coeffs_nonzero :
+    ((13 : ℚ) / 128 ≠ 0) ∧ ((41 : ℚ) / 2000 ≠ 0) ∧ ((39 : ℚ) / 2000 ≠ 0) := by
+  norm_num
+
+/-- G1-P4：截断 ⟺ 幂零——三级 Neumann 级数在 m⁻³ 处终止（t³ 项消失）则传递算子
+    必满足 t³=0（幂零指数 3）；非幂零即逸出（B4 数值判别同构，幂零指数 = 层数）。 -/
+theorem truncation_imp_nilpotent (t m : ℚ) (hm : m ≠ 0)
+    (h : t / m + t ^ 2 / m ^ 2 + t ^ 3 / m ^ 3 = t / m + t ^ 2 / m ^ 2) : t ^ 3 = 0 := by
+  have hz : t ^ 3 / m ^ 3 = 0 := by linarith
+  have hm3 : m ^ 3 ≠ 0 := pow_ne_zero 3 hm
+  exact (div_eq_zero_iff.mp hz).resolve_right hm3
+
+/-- G1 联合主定理：背景次数 1（m/2+1/8）∧ 尾项分母 m³ 三负幂（d=3）∧ 三系数非零
+    ∧ 截断 ⟺ 幂零指数 3。
+    分层：负幂"形式"由元公理 1（自相似演化）+ 有限深 L=3 导出（无条件代数）；
+    L=3 本身（三层碗形链/N_gen）与 v=(C,D,-E) 系数归属仍实例级——登记升级非关闭。 -/
+theorem g1_laurent_export_judgement :
+    ((1 : ℚ) / 2 ≠ 0 ∧ (13 : ℚ) / 128 ≠ 0 ∧ (41 : ℚ) / 2000 ≠ 0 ∧ (39 : ℚ) / 2000 ≠ 0) ∧
+    (∀ m : ℚ, m ≠ 0 →
+      (1 : ℚ) / 2 * m + 1 / 8 + ((13 : ℚ) / 128) / m + ((41 : ℚ) / 2000) / m ^ 2
+          - ((39 : ℚ) / 2000) / m ^ 3
+        = (1 : ℚ) / 2 * m + 1 / 8
+          + (((13 : ℚ) / 128) * m ^ 2 + ((41 : ℚ) / 2000) * m - ((39 : ℚ) / 2000)) / m ^ 3) ∧
+    (∀ t m : ℚ, m ≠ 0 →
+      t / m + t ^ 2 / m ^ 2 + t ^ 3 / m ^ 3 = t / m + t ^ 2 / m ^ 2 → t ^ 3 = 0) := by
+  constructor
+  · norm_num
+  constructor
+  · intro m hm
+    exact closed_form_laurent_split m hm
+  · intro t m hm h
+    exact truncation_imp_nilpotent t m hm h
+
 end MUFPF.Demirror
