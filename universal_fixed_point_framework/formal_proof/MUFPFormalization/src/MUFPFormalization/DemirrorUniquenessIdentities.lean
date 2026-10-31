@@ -37,6 +37,8 @@ import MUFPFormalization.KMaxAlgebra
 
 namespace MUFPF.Demirror
 
+open MUFPF.BottTower  -- k_max/k_max_value（BottTower 结构常数；KMaxAlgebra 同源）
+
 /-! =========================================================
     §1 对称轴与分子唯一性（T1-T3：共同方程 k²−3k−40=0）
    ========================================================= -/
@@ -522,5 +524,80 @@ theorem closed_form_assembly_judgement :
   constructor
   · exact thirteen_sum_identity
   · exact closed_form_kmax_assembly
+
+/-! =========================================================
+    §14 G1/G2 推进：碗形链-窗口恒等（286r，2026-10-31）
+   ========================================================= -/
+
+/-- G2：线性项系数 1/2 = k_max²/2^(k_max−1)（窗口中心 k_max² / 2 幂分母，
+    与 C 项共享分母 2^(k_max−1)=128；m/2 = m·k_max²/2^(k_max−1)）。 -/
+theorem linear_coeff_window_pow : (k_max : ℚ) ^ 2 / (2 : ℚ) ^ (k_max - 1) = 1 / 2 := by
+  norm_num [k_max_value]
+
+/-- G2：常数项 1/8 = k_max²/2^(k_max+1)（窗口中心 / 2^(k_max+1)=512，
+    与碗形候选 3/512 共享分母 512=2^(k_max+1)，BowlLayer bowl_den_512 同谱）。 -/
+theorem constant_coeff_window_pow : (k_max : ℚ) ^ 2 / (2 : ℚ) ^ (k_max + 1) = 1 / 8 := by
+  norm_num [k_max_value]
+
+/-- G1：C 项碗形链恒等——13/128 = h(2)·(k_max+5)/(2·(k_max−1))（h(2)=(k_max−1)/2^(k_max−2)
+    消去 (k_max−1) 后 = (k_max+5)/2^(k_max−1)——C 与碗形链第一层 h(2) 同 2 幂分母谱）。 -/
+theorem c_bowlchain_h2_scale : ((7 : ℚ) / 64) * (k_max + 5 : ℚ) / (2 * (k_max - 1) : ℚ) = 13 / 128 := by
+  norm_num [k_max_value]
+
+/-- G1：C 项框架形式 (k_max+5)/2^(k_max−1) = 13/128（与 k8_C 的 2k−3 表达同值——
+    13 双表达判别 06b1578：2k−3=k+(k−3) 通式恒等，k_max=8 时 = k_max+5）。 -/
+theorem c_dual_form_pow : (k_max + 5 : ℚ) / (2 : ℚ) ^ (k_max - 1) = 13 / 128 := by
+  norm_num [k_max_value]
+
+/-- G1：E 项碗形链放大恒等——39/2000 = i(2)·(N_gen/2)³（i(2)=13/2250 候选，
+    (3/2)³=27/8；框架形式 (k_max+5)·N_gen/(2⁴·(k_max−3)³)，i2_cand2_kmax 同族）。 -/
+theorem e_bowlchain_i2_scale : ((13 : ℚ) / 2250) * (3 / 2 : ℚ) ^ 3 = 39 / 2000 := by
+  norm_num
+
+/-- G1：E 项双形式同值（碗形链 × 窗口）——(k_max−5)(k_max+5)/(2⁴·(k_max−3)³) = 39/2000
+    （分子 39=(k_max−5)(k_max+5)，BowlLayer e39_factor；分母与 k8_E 同）。 -/
+theorem e_dual_form_same : ((k_max - 5) * (k_max + 5) : ℚ) / ((2 : ℚ) ^ 4 * (k_max - 3 : ℚ) ^ 3) = 39 / 2000 := by
+  norm_num [k_max_value]
+
+/-- G1：39 双身份交叉唯一性——∀k≥1，(k−5)(k+5)=k(k−3)−1 ⟹ k=8
+    （左−右 = 3(k−8)：BowlLayer 平方差身份（39=k_max²−5²）与 286h 窗口身份（39=k_max(k_max−3)−1）
+    同值的唯一根 k_max=8，E 项分子双生成链的唯一性判别）。 -/
+theorem e_dual_identity_unique : ∀ k : ℤ, k ≥ 1 → (k - 5) * (k + 5) = k * (k - 3) - 1 → k = 8 := by
+  intro k hk h
+  have hid : (k - 5) * (k + 5) - (k * (k - 3) - 1) = 3 * (k - 8) := by ring
+  have hz : (k - 5) * (k + 5) - (k * (k - 3) - 1) = 0 := by
+    rw [h]
+    ring
+  have hd : 3 * (k - 8) = 0 := by linarith
+  have hk8 : k - 8 = 0 := by
+    exact (mul_eq_zero.mp hd).resolve_left (by norm_num : (3 : ℤ) ≠ 0)
+  omega
+
+/-- G1：D 项碗形链层序-幂次对应反例登记——D/h′(2) = 123/130（含 41 素因子，非框架量）。
+    层序-幂次强对应假说（h↔1/m、h′↔1/m²、i↔1/m³ 三负幂全部由碗形链三层导出）
+    被 D 反例部分证伪——D 保持窗口表达（对称轴 40+1）。 -/
+theorem d_bowlchain_counter : ((41 : ℚ) / 2000) / ((13 : ℚ) / 600) = 123 / 130 := by
+  norm_num
+
+/-- 286r 联合主定理：线性/常数项窗口中心 2 幂谱 ∧ C↔h(2) ∧ E↔i(2)·(N_gen/2)³ ∧
+    39 双身份唯一性 ∧ D 反例登记（G1/G2 碗形链-闭式恒等判别，数值先证伪 23/23 ALL_PASS）。 -/
+theorem bowlchain_scale_judgement :
+    ((k_max : ℚ) ^ 2 / (2 : ℚ) ^ (k_max - 1) = 1 / 2) ∧
+    ((k_max : ℚ) ^ 2 / (2 : ℚ) ^ (k_max + 1) = 1 / 8) ∧
+    (((7 : ℚ) / 64) * (k_max + 5 : ℚ) / (2 * (k_max - 1) : ℚ) = 13 / 128) ∧
+    (((13 : ℚ) / 2250) * (3 / 2 : ℚ) ^ 3 = 39 / 2000) ∧
+    (∀ k : ℤ, k ≥ 1 → (k - 5) * (k + 5) = k * (k - 3) - 1 → k = 8) ∧
+    (((41 : ℚ) / 2000) / ((13 : ℚ) / 600) = 123 / 130) := by
+  constructor
+  · exact linear_coeff_window_pow
+  constructor
+  · exact constant_coeff_window_pow
+  constructor
+  · exact c_bowlchain_h2_scale
+  constructor
+  · exact e_bowlchain_i2_scale
+  constructor
+  · exact e_dual_identity_unique
+  · exact d_bowlchain_counter
 
 end MUFPF.Demirror
