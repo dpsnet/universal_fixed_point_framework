@@ -805,4 +805,82 @@ theorem window_prime_construct_judgement :
   · exact window_factor_split
   · exact e2_complement_pair
 
+/-! =========================================================
+    §19 G5/226 内生唯一性 + 双链独立性审计（286w，2026-10-31）
+   数值判别 `scripts/p7_5e286r_g5_endogenous_uniqueness.py` 20/20 ALL_PASS：
+   闭式链 E_win(k)=(k(k−3)−1)/(2⁴(k−3)³) 与碗形链 E_fw(k)=(k+5)·N_gen/(2⁴(k−3)³)
+   两式非同一函数（k=5 处 9/128≠15/64），唯一交于 k=8（另一根 k=−2 出窗口域）；
+   E 由 k_max=8 单参数唯一确定（窗口和 128=2k²、中心 64=k² 锁定 k）。
+   分层：数值来源内生唯一（升级）；双链共享 k_max（Jaccard=1/3，结构交叉一致非独立确证）；
+   226 的独立测量缺位由外部锚定义，内生推导不可关闭。
+   ========================================================= -/
+
+/-- G5-Q1：k_max=8 时两形式同值 39/2000（闭式链与碗形链在唯一交点命中 E）。 -/
+theorem e_dual_value_at_kmax :
+    (((k_max : ℚ) * ((k_max : ℚ) - 3) - 1) / (16 * ((k_max : ℚ) - 3) ^ 3)
+        = ((39 : ℚ) / 2000)) ∧
+    ((((k_max : ℚ) + 5) * 3) / (16 * ((k_max : ℚ) - 3) ^ 3)
+        = ((39 : ℚ) / 2000)) := by
+  constructor <;> norm_num [k_max_value]
+
+/-- G5-Q2：两形式相交判别——k≠3 时等式成立 ⟹ k=8 ∨ k=−2（k²−6k−16=(k−8)(k+2)=0）。 -/
+theorem e_dual_intersection (k : ℚ) (hk : k ≠ 3)
+    (h : (k * (k - 3) - 1) / (16 * (k - 3) ^ 3)
+        = ((k + 5) * 3) / (16 * (k - 3) ^ 3)) :
+    k = 8 ∨ k = -2 := by
+  have hk3 : k - 3 ≠ 0 := sub_ne_zero.mpr hk
+  have hden : (16 : ℚ) * (k - 3) ^ 3 ≠ 0 :=
+    mul_ne_zero (by norm_num) (pow_ne_zero 3 hk3)
+  have h' : k * (k - 3) - 1 = (k + 5) * 3 := by
+    have hh := h
+    field_simp [hden] at hh
+    linarith
+  have hq : k ^ 2 - 6 * k - 16 = 0 := by nlinarith [h']
+  have hf : (k - 8) * (k + 2) = 0 := by
+    have hexp : (k - 8) * (k + 2) = k ^ 2 - 6 * k - 16 := by ring
+    rw [hexp, hq]
+  rcases mul_eq_zero.mp hf with h8 | hm
+  · exact Or.inl (by linarith)
+  · exact Or.inr (by linarith)
+
+/-- G5-Q3：窗口域 k>3 内交点唯一——等式成立 ⟹ k=8（k=−2 被排除）。 -/
+theorem e_dual_unique_window (k : ℚ) (hk : 3 < k)
+    (h : (k * (k - 3) - 1) / (16 * (k - 3) ^ 3)
+        = ((k + 5) * 3) / (16 * (k - 3) ^ 3)) :
+    k = 8 := by
+  have hk3 : k ≠ 3 := by linarith
+  rcases e_dual_intersection k hk3 h with h8 | hm
+  · exact h8
+  · linarith
+
+/-- G5-Q4：两形式非同一函数（k=5 处闭式链 9/128 ≠ 碗形链 15/64，见证非恒等改写）。 -/
+theorem e_dual_forms_distinct :
+    (((5 : ℚ) * (5 - 3) - 1) / (16 * (5 - 3) ^ 3)
+      ≠ ((5 + 5) * 3) / (16 * (5 - 3) ^ 3)) := by
+  norm_num
+
+/-- G5 联合主定理：双形式同值于 k_max ∧ 交点判别（k=8∨k=−2）∧ 窗口域唯一 k=8
+    ∧ 两形式非恒等。
+    分层：E 数值来源由 k_max 单参数内生唯一（无自由度，升级登记）；
+    双链共享 k_max 属部分同源（结构交叉一致，非独立确证）；
+    226 独立测量缺位不可由内生推导关闭（外部锚不在公设体系内）。 -/
+theorem g5_endogenous_uniqueness_judgement :
+    ((((k_max : ℚ) * ((k_max : ℚ) - 3) - 1) / (16 * ((k_max : ℚ) - 3) ^ 3)
+        = ((39 : ℚ) / 2000)) ∧
+     ((((k_max : ℚ) + 5) * 3) / (16 * ((k_max : ℚ) - 3) ^ 3)
+        = ((39 : ℚ) / 2000))) ∧
+    (∀ k : ℚ, k ≠ 3 →
+      (k * (k - 3) - 1) / (16 * (k - 3) ^ 3)
+        = ((k + 5) * 3) / (16 * (k - 3) ^ 3) → k = 8 ∨ k = -2) ∧
+    (∀ k : ℚ, 3 < k →
+      (k * (k - 3) - 1) / (16 * (k - 3) ^ 3)
+        = ((k + 5) * 3) / (16 * (k - 3) ^ 3) → k = 8) ∧
+    ((((5 : ℚ) * (5 - 3) - 1) / (16 * (5 - 3) ^ 3)
+      ≠ ((5 + 5) * 3) / (16 * (5 - 3) ^ 3))) := by
+  refine ⟨e_dual_value_at_kmax, ?_, ?_, e_dual_forms_distinct⟩
+  · intro k hk h
+    exact e_dual_intersection k hk h
+  · intro k hk h
+    exact e_dual_unique_window k hk h
+
 end MUFPF.Demirror
