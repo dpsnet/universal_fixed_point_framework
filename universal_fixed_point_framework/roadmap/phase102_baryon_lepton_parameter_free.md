@@ -379,6 +379,7 @@ P7-5e-350（执行序变更「先立骨」，2026-11-01）**：接 349。用户�
 P7-5e-351（G3-P3 相位层桥 B-5，2026-11-01）**：接 350。候选 s_n=2π·n/5（N_closure=冻结区整点数=5，S151）；深度无周期（p1a_no_cycle）⇔ 相位周期 5 步=2π（TwoPiPeriodicity），闭合点 n=5=时间闭，开放点 n<5 未闭合，与 4cosh(ln2)=5 一致；N∈{3,4,5,8} 唯 N=5 匹配。边界=相位层，P1(vN代数)/P2(模算子) 缺口保留。不关闭任何项。
 P7-5e-352（G3-P1 入轨判据 OC1–OC6，2026-11-01）**：接 351。P1=σ_s 外 ⟺ 递归单向；P1a（单向性 recStep/StrictLayer/p1a_no_cycle）已机检，P1b（外性）需 RecObj 上 vN 代数。本轮定义入轨判据 OC1–OC6（类比 MA1–MA6）8/8 ALL_PASS：OC1 单向性资产在册；OC2 外性可分离于模算子/KMS；OC3 单向⟹外性同型（不留在同层↔不留在代数内）；OC4 外性⟹单向推断（U∉𝔄⟹无周期）；OC5 P3 不越界；OC6 缺口=vN 代数+Rec→Aut 函子。判定：入轨条件具备，可启动定义层工程；入轨≠成立（需 vN 构造+双向定理）。不关闭任何项。
 P7-5e-353（G3-P1b 定义层骨架，2026-11-01）**：接 352。新增 RecursionModularityOuter.lean（零 sorry）：InnerRealization / IsOuterAut（外 = 无内部单位共轭，不依赖 Δ_mod/KMS）；layer_eq_of_inner（内实现 ⟹ 层不变）、isOuter_of_layer_shift（层移动 ⟹ 外）、isOuter_of_strictLayer（严格升层 ⟹ 外，与 P1a StrictLayer 同形）；交换判别 inner_eq_refl_of_commutative；非空实例 swap_outer_witness（ℚ×ℚ 交换，层0↔层1）。判据 D1–D10 10/10 ALL_PASS；P1a 实例回归修复。缺口：P1b-2 非交换实例、P1b-3 逆向（外⟹单向，需模算子/KMS，属 P2）、vN 完成性。P1 未成立，不关闭任何项。
+P7-5e-354（G3-P1b-2 非交换块模型，2026-11-01）**：接 353。两层块对角代数 M₂(ℚ) × M₂(ℚ)；InnerBlockRealization（逐块单位共轭）；conj_eq_zero_iff（只用逆元⟹非交换环适用）；innerBlock_preserves_layer（内实现 ⟹ 层保持）；swapBlock_shifts_layer + swapBlock_not_inner（块交换 ⟹ 外）。判据 D1–D13 13/13 ALL_PASS。缺口：Subalgebra 载体 / vN 完成性；P1b-3 逆向（需模算子/KMS，属 P2）。P1 未成立，不关闭任何项。
 承接 318 续推。
 承接 317 续推。
 （205 ③）或论文 §7.5 结构层整合**。

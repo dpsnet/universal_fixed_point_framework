@@ -54,7 +54,7 @@ def main():
     chk("D7", "不越界：不定义 vN 代数 / 模算子（仅边界声明提及）", no_vn)
 
     gaps = ("P1b-2" in outer and "P1b-3" in outer and "vN 完成性" in outer)
-    chk("D8", "缺口登记：P1b-2（非交换实例）/ P1b-3（逆向）/ vN 完成性", gaps)
+    chk("D8", "缺口登记：P1b-3（逆向）/ vN 完成性（P1b-2 已完成）", gaps)
 
     chk("D9", "诚实边界：不声称 P1 成立", "不声称 P1 成立" in outer)
 
@@ -63,10 +63,21 @@ def main():
     chk("D10", "P1a 回归：桥编译通过 + 四定理在册",
         ok_bridge and all(t in bridge for t in p1a), msg_bridge)
 
+    chk("D11", "非交换块模型在册（BlockMat / TwoBlockAlg / InnerBlockRealization / swapBlockAlgEquiv）",
+        all(t in outer for t in ("BlockMat", "TwoBlockAlg", "InnerBlockRealization",
+                                 "swapBlockAlgEquiv")))
+
+    chk("D12", "块模型两定理：innerBlock_preserves_layer / swapBlock_not_inner",
+        "theorem innerBlock_preserves_layer" in outer
+        and "theorem swapBlock_not_inner" in outer)
+
+    chk("D13", "非交换性可核：块 = M₂(ℚ)（非交换）+ 关键引理 conj_eq_zero_iff（只用逆元）",
+        "Matrix (Fin 2) (Fin 2) ℚ" in outer and "theorem conj_eq_zero_iff" in outer)
+
     print()
     passed = sum(1 for r in results if r[2])
     print(f"{passed}/{len(results)} " + ("ALL_PASS" if passed == len(results) else "HAS_FAILURE"))
-    print("判定：P1b-1 定义层骨架机检完成；P1b-2（非交换实例）/P1b-3（逆向）仍是缺口，"
+    print("判定：P1b-1 定义层骨架 + P1b-2 非交换块模型机检完成；P1b-3（逆向）与 vN 完成性仍是缺口，"
           "P1 未成立（入轨/判别 ≠ 成立/闭合）。")
 
 
