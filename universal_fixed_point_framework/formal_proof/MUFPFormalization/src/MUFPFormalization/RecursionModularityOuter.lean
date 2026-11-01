@@ -34,7 +34,16 @@ import Mathlib.Tactic.NormNum
   ——「内共轭不移动中心」的一般判据；
 - `swapBlock_not_inner`（P1b-2 块模型）：两层非交换块代数上块交换是外；
 - `swapSubAlg_not_inner`（P1b-2 完成性收口）：同一模型改以 **`Subalgebra` 载体**
-  （M₄ 内块对角子代数）与**代数内部单位** `u : 𝔄ˣ` 表述内实现，块交换仍是外。
+  （M₄ 内块对角子代数）与**代数内部单位** `u : 𝔄ˣ` 表述内实现，块交换仍是外；
+- `layer_iterate`（P1b-3）：严格升层 `L (σ a) = L a + 1` ⟹ 每次迭代都恰好升 n 层
+  （`L ((σ ^ n) a₀) = L a₀ + n`）；
+- `iterate_not_inner`（P1b-3）：严格升层 ⟹ 全迭代 `σ ^ n`（`n ≠ 0`）都是外
+  ——「外」沿迭代不可回退（无内回退）；
+- `strictLayer_infinite_order`（P1b-3）：严格升层 ⟹ `σ` 无限阶（无周期，
+  与 P1a `p1a_no_cycle` 同形状）；
+- `swapBlock_sq` / `swapBlock_no_strictLayer`（P1b-3）：两层块塔（有限维）的块交换
+  是二阶，故**有限块塔不可能承载严格升层**——「外 ⟹ 单向」必须落在
+  无限维/模流层（P2）。
 
 ## 诚实边界（登记缺口，不在本文件证明）
 
@@ -47,7 +56,8 @@ import Mathlib.Tactic.NormNum
   判别用 `inner_fixes_central`（中心元不动）。**完成性边界**：此处「外」是相对
   `𝔄ˣ` 而言（实现酉不在代数内），不含 vN 完成性（σ-弱闭、因子性）。
 - **P1b-3（逆向）**：外 ⟹ 单向／无回退 ⟹ 无周期——需 RecObj 上的模算子
-  Δ_mod 与 KMS（β = 1）层，属 P2。
+  Δ_mod 与 KMS（β = 1）层，属 P2。本文件只做**纯代数影子**（已完成）：严格升层 ⟹
+  全迭代非内 ⟹ 无限阶 ⟹ 有限块塔不可能承载。真逆向（外 ⟹ 单向）不在本文件证明。
 - **vN 完成性**：σ-弱闭、因子性在 Lean/Mathlib 无现成形式化；本文件
   只给代数骨架，**不声称 P1 成立**（入轨/判别 ≠ 成立/闭合）。
 -/
@@ -370,5 +380,98 @@ theorem swapSubAlg_not_inner : ¬ InnerRealization swapSubAlgEquiv := by
 theorem swapSubAlg_outer : IsOuterAut swapSubAlgEquiv := swapSubAlg_not_inner
 
 end SubalgebraModel
+
+/-! ### P1b-3：逆向的纯代数影子（严格升层 ⟹ 全迭代非内 ⟹ 无限阶）
+
+真逆向「外 ⟹ 单向／无回退／无周期」需要 RecObj 上的模算子 `Δ_mod` 与 KMS（β = 1），
+属 P2，本段不越界。纯代数侧能机检的影子是：
+
+1. 严格升层沿迭代累积：`L ((σ ^ n) a₀) = L a₀ + n`（`layer_iterate`）；
+2. 因此**每一步迭代都是外**：`n ≠ 0 ⟹ IsOuterAut (σ ^ n)`（`iterate_not_inner`）；
+3. 因此 `σ` **无限阶**（无周期）：`n ≠ 0 ⟹ σ ^ n ≠ AlgEquiv.refl`
+   （`strictLayer_infinite_order`，与 P1a `p1a_no_cycle` 同形状）；
+4. 反例对照：两层块塔的块交换是**二阶**（`swapBlock_sq`），故有限块塔
+   **不可能**承载严格升层（`swapBlock_no_strictLayer`）——严格升层只能落在
+   无限维/模流层，即 P2 的必要性证据。
+-/
+
+section ConverseShadow
+
+variable {R A : Type*} [CommSemiring R] [Ring A] [Algebra R A]
+
+/-- ★★ 严格升层沿迭代累积：`L ((σ ^ n) a₀) = L a₀ + n`。
+    仅用「每步升 1 层」，不涉及内实现的层不变性。 -/
+theorem layer_iterate (L : A → ℕ) (σ : A ≃ₐ[R] A)
+    (hσ : ∀ a : A, L (σ a) = L a + 1) (a₀ : A) :
+    ∀ n : ℕ, L ((σ ^ n) a₀) = L a₀ + n := by
+  intro n
+  induction n generalizing a₀ with
+  | zero =>
+      show L ((σ ^ 0) a₀) = L a₀ + 0
+      simp
+  | succ n ih =>
+      have hstep : L ((σ ^ (n + 1)) a₀) = L ((σ ^ n) (σ a₀)) := by
+        rw [pow_succ, AlgEquiv.mul_apply]
+      rw [hstep, ih (σ a₀), hσ a₀, Nat.add_assoc, Nat.add_comm 1 n]
+
+/-- ★★★ P1b-3 影子主定理（无内回退）：严格升层的自同构，其**每一次**迭代
+    （`n ≠ 0`）都是外——沿迭代不可能落回内自同构。 -/
+theorem iterate_not_inner (L : A → ℕ)
+    (hL : ∀ (u : Aˣ) (a : A), L ((u : A) * a * ((u⁻¹ : Aˣ) : A)) = L a)
+    (σ : A ≃ₐ[R] A) (hσ : ∀ a : A, L (σ a) = L a + 1) (a₀ : A)
+    {n : ℕ} (hn : n ≠ 0) : IsOuterAut (σ ^ n) := by
+  refine isOuter_of_layer_shift L hL (σ ^ n) a₀ ?_
+  rw [layer_iterate L σ hσ a₀ n]
+  intro hcon
+  have h0 : L a₀ + n = L a₀ + 0 := by simpa using hcon
+  exact hn (Nat.add_left_cancel h0)
+
+/-- ★★★ P1b-3 影子主定理（无周期）：严格升层 ⟹ `σ` 无限阶
+    （与 P1a 的 `p1a_no_cycle` 同形状——「时间递进」不可循环）。 -/
+theorem strictLayer_infinite_order (L : A → ℕ) (σ : A ≃ₐ[R] A)
+    (hσ : ∀ a : A, L (σ a) = L a + 1) (a₀ : A) :
+    ∀ n : ℕ, n ≠ 0 → σ ^ n ≠ AlgEquiv.refl := by
+  intro n hn hcon
+  have hiter : L ((σ ^ n) a₀) = L a₀ + n := layer_iterate L σ hσ a₀ n
+  have hrefl : L ((σ ^ n) a₀) = L a₀ := by
+    rw [hcon]
+    simp
+  have hcontra : L a₀ + n = L a₀ := hiter.symm.trans hrefl
+  have h0 : L a₀ + n = L a₀ + 0 := by simpa using hcontra
+  exact hn (Nat.add_left_cancel h0)
+
+end ConverseShadow
+
+/-! ### P1b-3 反例对照：有限块塔不能承载严格升层
+
+两层块塔（有限维）的块交换是对合（二阶），因此不存在「严格升层」的层函数
+——若存在，`strictLayer_infinite_order` 会给出 `σ ^ 2 ≠ refl`，与 `swapBlock_sq` 矛盾。
+这解释了为什么「外 ⟹ 单向」必须落在无限维/模流层（P2）。 -/
+
+section ConverseBlock
+
+/-- 块交换是对合：`swapBlockAlgEquiv ^ 2 = AlgEquiv.refl`（有限块塔的周期性）。 -/
+theorem swapBlock_sq : swapBlockAlgEquiv ^ 2 = AlgEquiv.refl := by
+  apply AlgEquiv.ext
+  intro p
+  rcases p with ⟨a, b⟩
+  show swapBlockAlgEquiv (swapBlockAlgEquiv (a, b)) = (a, b)
+  rfl
+
+/-- ★★★ 有限块塔不可能承载严格升层：若块交换严格升层，则它与二阶性矛盾
+    ——「外 ⟹ 单向」在有限维模型上是空条件，必须上到模流层（P2）。 -/
+theorem swapBlock_no_strictLayer (L : TwoBlockAlg → ℕ)
+    (_hL : ∀ (u : TwoBlockAlgˣ) (a : TwoBlockAlg),
+      L ((u : TwoBlockAlg) * a * ((u⁻¹ : TwoBlockAlgˣ) : TwoBlockAlg)) = L a)
+    (a₀ : TwoBlockAlg) :
+    ¬ ∀ a : TwoBlockAlg, L (swapBlockAlgEquiv a) = L a + 1 := by
+  intro hstrict
+  have hinf : ∀ n : ℕ, n ≠ 0 → swapBlockAlgEquiv ^ n ≠ AlgEquiv.refl :=
+    strictLayer_infinite_order (R := ℚ) L swapBlockAlgEquiv hstrict a₀
+  have h2 : swapBlockAlgEquiv ^ 2 ≠ AlgEquiv.refl := hinf 2 (by norm_num)
+  rw [swapBlock_sq] at h2
+  exact h2 rfl
+
+end ConverseBlock
 
 end MUFPF.RecursionModularityOuter

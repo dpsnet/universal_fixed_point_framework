@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""P7-5e-355 判据：G3-P1b 定义层（外自同构的代数定义 + 层移动 ⟹ 外 + Subalgebra 载体收口）
+"""P7-5e-355 判据：G3-P1b 定义层（外自同构定义 + 层移动 ⟹ 外 + Subalgebra 载体收口 + P1b-3 逆向影子）
 
-只做判别，不改文档。判据 D1–D18 全部通过 = P1b-1（定义层骨架）、P1b-2（非交换块模型）
-与 P1b-2 完成性收口（Subalgebra 载体 + 代数内部单位）机检完成。
+只做判别，不改文档。判据 D1–D23 全部通过 = P1b-1（定义层骨架）、P1b-2（非交换块模型）、
+P1b-2 完成性收口（Subalgebra 载体 + 代数内部单位）与 P1b-3 逆向影子
+（严格升层 ⟹ 全迭代非内 ⟹ 无限阶 ⟹ 有限块塔不可能）机检完成。
 """
 import pathlib
 import subprocess
@@ -94,11 +95,32 @@ def main():
     chk("D18", "完成性收口主定理：swapSubAlg_not_inner + swapSubAlg_outer（IsOuterAut 口径）",
         "theorem swapSubAlg_not_inner" in outer and "theorem swapSubAlg_outer" in outer)
 
+    chk("D19", "P1b-3 迭代升层：layer_iterate（L ((σ ^ n) a₀) = L a₀ + n）",
+        "theorem layer_iterate" in outer
+        and "∀ n : ℕ, L ((σ ^ n) a₀) = L a₀ + n" in outer)
+
+    chk("D20", "P1b-3 无内回退：iterate_not_inner（n ≠ 0 ⟹ IsOuterAut (σ ^ n)）",
+        "theorem iterate_not_inner" in outer
+        and "{n : ℕ} (hn : n ≠ 0) : IsOuterAut (σ ^ n)" in outer)
+
+    chk("D21", "P1b-3 无周期：strictLayer_infinite_order（n ≠ 0 ⟹ σ ^ n ≠ AlgEquiv.refl）",
+        "theorem strictLayer_infinite_order" in outer
+        and "∀ n : ℕ, n ≠ 0 → σ ^ n ≠ AlgEquiv.refl" in outer)
+
+    chk("D22", "P1b-3 反例对照：swapBlock_sq（二阶）+ swapBlock_no_strictLayer（有限块塔不可能承载严格升层）",
+        "theorem swapBlock_sq : swapBlockAlgEquiv ^ 2 = AlgEquiv.refl" in outer
+        and "theorem swapBlock_no_strictLayer" in outer)
+
+    chk("D23", "P1b-3 诚实边界：真逆向（外 ⟹ 单向）属 P2，本文件不证",
+        "真逆向（外 ⟹ 单向）不在本文件证明" in outer)
+
     print()
     passed = sum(1 for r in results if r[2])
     print(f"{passed}/{len(results)} " + ("ALL_PASS" if passed == len(results) else "HAS_FAILURE"))
-    print("判定：P1b-1 定义层骨架 + P1b-2 非交换块模型 + Subalgebra 载体完成性收口机检完成；"
-          "P1b-3（逆向）与 vN 完成性仍是缺口，P1 未成立（入轨/判别 ≠ 成立/闭合）。")
+    print("判定：P1b-1 定义层骨架 + P1b-2 非交换块模型 + Subalgebra 载体完成性收口 + "
+          "P1b-3 逆向影子（严格升层 ⟹ 全迭代非内 ⟹ 无限阶 ⟹ 有限块塔不可能）机检完成；"
+          "P1b-3 真逆向（外 ⟹ 单向，需 Δ_mod/KMS β=1，属 P2）与 vN 完成性仍是缺口，"
+          "P1 未成立（入轨/判别 ≠ 成立/闭合）。")
 
 
 if __name__ == "__main__":
