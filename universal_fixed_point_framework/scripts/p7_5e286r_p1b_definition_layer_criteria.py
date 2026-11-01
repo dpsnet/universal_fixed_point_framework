@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""P7-5e-353 判据：G3-P1b 定义层（外自同构的代数定义 + 层移动 ⟹ 外）
+"""P7-5e-355 判据：G3-P1b 定义层（外自同构的代数定义 + 层移动 ⟹ 外 + Subalgebra 载体收口）
 
-只做判别，不改文档。判据 D1–D10 全部通过 = P1b-1（定义层骨架）机检完成。
+只做判别，不改文档。判据 D1–D18 全部通过 = P1b-1（定义层骨架）、P1b-2（非交换块模型）
+与 P1b-2 完成性收口（Subalgebra 载体 + 代数内部单位）机检完成。
 """
 import pathlib
 import subprocess
@@ -74,11 +75,30 @@ def main():
     chk("D13", "非交换性可核：块 = M₂(ℚ)（非交换）+ 关键引理 conj_eq_zero_iff（只用逆元）",
         "Matrix (Fin 2) (Fin 2) ℚ" in outer and "theorem conj_eq_zero_iff" in outer)
 
+    chk("D14", "Subalgebra 载体在册：BlockMat4 / blockDiagAlgHom / blockDiagSubalgebra",
+        all(t in outer for t in ("abbrev BlockMat4", "def blockDiagAlgHom",
+                                 "def blockDiagSubalgebra : Subalgebra ℚ BlockMat4")))
+
+    chk("D15", "载体迁移通道：blockDiagEquiv（AlgEquiv.ofInjective）+ 块对角嵌入单射",
+        "noncomputable def blockDiagEquiv" in outer
+        and "AlgEquiv.ofInjective blockDiagAlgHom" in outer
+        and "theorem blockDiagAlgHom_injective" in outer)
+
+    chk("D16", "中心元判据通用化：inner_fixes_central（内实现固定中心元）",
+        "theorem inner_fixes_central" in outer)
+
+    chk("D17", "块投影中心性 + 层移动：blockDiagP₀_central / blockDiagP₀_ne_P₁ / swapSubAlg_shifts",
+        all(t in outer for t in ("theorem blockDiagP₀_central", "theorem blockDiagP₀_ne_P₁",
+                                 "theorem swapSubAlg_shifts")))
+
+    chk("D18", "完成性收口主定理：swapSubAlg_not_inner + swapSubAlg_outer（IsOuterAut 口径）",
+        "theorem swapSubAlg_not_inner" in outer and "theorem swapSubAlg_outer" in outer)
+
     print()
     passed = sum(1 for r in results if r[2])
     print(f"{passed}/{len(results)} " + ("ALL_PASS" if passed == len(results) else "HAS_FAILURE"))
-    print("判定：P1b-1 定义层骨架 + P1b-2 非交换块模型机检完成；P1b-3（逆向）与 vN 完成性仍是缺口，"
-          "P1 未成立（入轨/判别 ≠ 成立/闭合）。")
+    print("判定：P1b-1 定义层骨架 + P1b-2 非交换块模型 + Subalgebra 载体完成性收口机检完成；"
+          "P1b-3（逆向）与 vN 完成性仍是缺口，P1 未成立（入轨/判别 ≠ 成立/闭合）。")
 
 
 if __name__ == "__main__":

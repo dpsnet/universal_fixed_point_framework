@@ -1,6 +1,8 @@
 import Mathlib.Algebra.Algebra.Equiv
 import Mathlib.Algebra.Algebra.Prod
+import Mathlib.Algebra.Algebra.Subalgebra.Basic
 import Mathlib.Data.Matrix.Basic
+import Mathlib.Data.Matrix.Block
 import Mathlib.Data.Rat.Defs
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.NormNum
@@ -27,16 +29,23 @@ import Mathlib.Tactic.NormNum
 - `inner_eq_refl_of_commutative` / `isOuter_of_ne_refl`：交换代数中内自同构
   必为恒等——外性在该情形的退化判别；
 - `swap_outer_witness`：非空实例（ℚ × ℚ 上坐标交换 = 层 0 ↔ 层 1），
-  验证上述判据不空转。
+  验证上述判据不空转；
+- `inner_fixes_central`：内实现固定中心元（`c * b = b * c ∀ b ⟹ σ c = c`）
+  ——「内共轭不移动中心」的一般判据；
+- `swapBlock_not_inner`（P1b-2 块模型）：两层非交换块代数上块交换是外；
+- `swapSubAlg_not_inner`（P1b-2 完成性收口）：同一模型改以 **`Subalgebra` 载体**
+  （M₄ 内块对角子代数）与**代数内部单位** `u : 𝔄ˣ` 表述内实现，块交换仍是外。
 
 ## 诚实边界（登记缺口，不在本文件证明）
 
-- **P1b-2（已完成：非交换块模型）**：两层块对角代数 = M₂(ℚ) × M₂(ℚ)；
-  内实现 = 逐块由块内可逆矩阵共轭（`InnerBlockRealization`），
-  `innerBlock_preserves_layer` 证明「内实现 ⟹ 层保持」（关键 `conj_eq_zero_iff`
-  只用逆元、不用无零因子，故对非交换环成立）；`swapBlock_not_inner` 证明块交换
-  是外。**完成性边界**：内实现用「逐块单位对」显式形式（等价于块对角代数内部
-  单位对），尚未用 `Subalgebra` 载体或 vN 完成性（σ-弱闭、因子性）表述。
+- **P1b-2（已完成：非交换块模型 + Subalgebra 载体收口）**：两层块对角代数
+  = M₂(ℚ) × M₂(ℚ)。①块模型：内实现 = 逐块由块内可逆矩阵共轭
+  （`InnerBlockRealization`），`innerBlock_preserves_layer` 证明「内实现 ⟹ 层保持」
+  （关键 `conj_eq_zero_iff` 只用逆元、不用无零因子，故对非交换环成立）。②完成性
+  收口：`blockDiagAlgHom` 把该代数嵌入 M₄ 的块对角位置，`𝔄 := blockDiagAlgHom.range`
+  为 `Subalgebra` 载体，内实现 = 代数**自身**单位 `∃ u : 𝔄ˣ`（不再外显「逐块单位对」），
+  判别用 `inner_fixes_central`（中心元不动）。**完成性边界**：此处「外」是相对
+  `𝔄ˣ` 而言（实现酉不在代数内），不含 vN 完成性（σ-弱闭、因子性）。
 - **P1b-3（逆向）**：外 ⟹ 单向／无回退 ⟹ 无周期——需 RecObj 上的模算子
   Δ_mod 与 KMS（β = 1）层，属 P2。
 - **vN 完成性**：σ-弱闭、因子性在 Lean/Mathlib 无现成形式化；本文件
@@ -82,6 +91,13 @@ theorem isOuter_of_strictLayer (L : A → ℕ)
   intro hcon
   rw [hσ] at hcon
   exact Nat.succ_ne_self (L a₀) hcon
+
+/-- ★★ 内实现固定中心元：内共轭不移动中心（`c` 与全代数交换 ⟹ σ c = c）。
+    这是与层函数判据并列的第二判别：中心元在 σ 下被移动 ⟹ 外。 -/
+theorem inner_fixes_central {c : A} (hc : ∀ b : A, c * b = b * c)
+    {σ : A ≃ₐ[R] A} (h : InnerRealization σ) : σ c = c := by
+  obtain ⟨u, hu⟩ := h
+  rw [hu c, ← hc (u : A), mul_assoc, Units.mul_inv, mul_one]
 
 section Commutative
 
@@ -225,5 +241,134 @@ theorem swapBlock_not_inner : ¬ InnerBlockRealization swapBlockAlgEquiv := by
   exact swapBlock_shifts_layer (innerBlock_preserves_layer h (1, 0))
 
 end BlockModel
+
+/-! ### P1b-2 完成性收口：Subalgebra 载体
+
+上一段的内实现是「逐块单位对」的显式形式。本段把它升格为**代数内部单位**：
+把两层块对角代数实现为 M₄（索引 `Fin 2 ⊕ Fin 2`）的子代数
+`𝔄 := blockDiagAlgHom.range`，内实现改为 `∃ u : 𝔄ˣ`（`𝔄` 自身的单位），
+即 OC2 的口径「实现酉属于代数本身」。
+
+判别用中心元不动（`inner_fixes_central`）：块投影 `blockDiagP₀ = (1, 0)` 在 `𝔄`
+中是中心元，块交换把它送到 `blockDiagP₁ = (0, 1)`，故块交换不是 `𝔄ˣ` 内实现
+——在 Subalgebra 载体上仍得 `IsOuterAut`。
+-/
+
+section SubalgebraModel
+
+/-- 4×4 载体积：`Fin 2 ⊕ Fin 2` 索引的有理矩阵（含两层 2×2 块）。 -/
+abbrev BlockMat4 := Matrix (Fin 2 ⊕ Fin 2) (Fin 2 ⊕ Fin 2) ℚ
+
+/-- 块对角嵌入 `M₂ × M₂ →ₐ[ℚ] M₄`（非对角块置零）。 -/
+def blockDiagAlgHom : TwoBlockAlg →ₐ[ℚ] BlockMat4 where
+  toFun p := Matrix.fromBlocks p.1 0 0 p.2
+  map_one' := by
+    show Matrix.fromBlocks (1 : BlockMat) 0 0 (1 : BlockMat) = (1 : BlockMat4)
+    simp
+  map_mul' p q := by
+    show Matrix.fromBlocks (p.1 * q.1) 0 0 (p.2 * q.2)
+        = Matrix.fromBlocks p.1 0 0 p.2 * Matrix.fromBlocks q.1 0 0 q.2
+    rw [Matrix.fromBlocks_multiply]
+    simp
+  map_zero' := by
+    show Matrix.fromBlocks (0 : BlockMat) 0 0 (0 : BlockMat) = (0 : BlockMat4)
+    simp
+  map_add' p q := by
+    show Matrix.fromBlocks (p.1 + q.1) 0 0 (p.2 + q.2)
+        = Matrix.fromBlocks p.1 0 0 p.2 + Matrix.fromBlocks q.1 0 0 q.2
+    rw [Matrix.fromBlocks_add]
+    simp
+  commutes' x := by
+    ext i j
+    rcases i with i | i <;> rcases j with j | j <;> simp [Matrix.algebraMap_matrix_apply]
+
+/-- 两层块对角代数作为 M₄ 的子代数（**Subalgebra 载体** `𝔄`）。 -/
+def blockDiagSubalgebra : Subalgebra ℚ BlockMat4 := blockDiagAlgHom.range
+
+/-- 块对角嵌入是单射（整体块相等 ⟺ 四个块相等）。 -/
+theorem blockDiagAlgHom_injective : Function.Injective blockDiagAlgHom := by
+  intro p q h
+  have h' : Matrix.fromBlocks p.1 (0 : BlockMat) (0 : BlockMat) p.2
+      = Matrix.fromBlocks q.1 (0 : BlockMat) (0 : BlockMat) q.2 := h
+  rw [Matrix.fromBlocks_inj] at h'
+  exact Prod.ext h'.1 h'.2.2.2
+
+/-- `M₂ × M₂ ≃ₐ[ℚ] 𝔄`：块对角代数与子代数载体的等价（载体迁移通道）。 -/
+noncomputable def blockDiagEquiv : TwoBlockAlg ≃ₐ[ℚ] blockDiagSubalgebra :=
+  AlgEquiv.ofInjective blockDiagAlgHom blockDiagAlgHom_injective
+
+/-- 层 0 的块投影 `(1, 0)`，作为 `𝔄` 的元素。 -/
+def blockDiagP₀ : blockDiagSubalgebra :=
+  ⟨blockDiagAlgHom (1, 0), blockDiagAlgHom.mem_range_self (1, 0)⟩
+
+/-- 层 1 的块投影 `(0, 1)`，作为 `𝔄` 的元素。 -/
+def blockDiagP₁ : blockDiagSubalgebra :=
+  ⟨blockDiagAlgHom (0, 1), blockDiagAlgHom.mem_range_self (0, 1)⟩
+
+/-- ★ `blockDiagP₀` 是 `𝔄` 的中心元：与全部元素交换（块对角乘法的第一块单位）。 -/
+theorem blockDiagP₀_central (y : blockDiagSubalgebra) :
+    blockDiagP₀ * y = y * blockDiagP₀ := by
+  obtain ⟨q, hq⟩ := y.property
+  apply Subtype.ext
+  change (blockDiagP₀ : BlockMat4) * (y : BlockMat4) = (y : BlockMat4) * (blockDiagP₀ : BlockMat4)
+  rw [← hq]
+  show Matrix.fromBlocks (1 : BlockMat) (0 : BlockMat) (0 : BlockMat) (0 : BlockMat)
+      * Matrix.fromBlocks q.1 (0 : BlockMat) (0 : BlockMat) q.2
+      = Matrix.fromBlocks q.1 (0 : BlockMat) (0 : BlockMat) q.2
+      * Matrix.fromBlocks (1 : BlockMat) (0 : BlockMat) (0 : BlockMat) (0 : BlockMat)
+  rw [Matrix.fromBlocks_multiply, Matrix.fromBlocks_multiply]
+  simp
+
+/-- ★ 两个块投影不同：`blockDiagP₀ ≠ blockDiagP₁`。 -/
+theorem blockDiagP₀_ne_P₁ : blockDiagP₀ ≠ blockDiagP₁ := by
+  intro hcon
+  have hval : Matrix.fromBlocks (1 : BlockMat) (0 : BlockMat) (0 : BlockMat) (0 : BlockMat)
+      = Matrix.fromBlocks (0 : BlockMat) (0 : BlockMat) (0 : BlockMat) (1 : BlockMat) :=
+    congrArg Subtype.val hcon
+  rw [Matrix.fromBlocks_inj] at hval
+  exact one_ne_zero hval.1
+
+/-- 块交换提升到子代数载体：`𝔄 ≃ₐ[ℚ] 𝔄`（经 `M₂ × M₂` 的块交换）。 -/
+noncomputable def swapSubAlgEquiv : blockDiagSubalgebra ≃ₐ[ℚ] blockDiagSubalgebra :=
+  blockDiagEquiv.symm.trans (swapBlockAlgEquiv.trans blockDiagEquiv)
+
+/-- 载体一致性：`blockDiagP₀ = blockDiagEquiv (1, 0)`。 -/
+theorem blockDiagP₀_eq_blockDiagEquiv : blockDiagP₀ = blockDiagEquiv (1, 0) := by
+  apply Subtype.ext
+  show (blockDiagP₀ : BlockMat4) = (blockDiagEquiv (1, 0) : BlockMat4)
+  rw [show (blockDiagEquiv (1, 0) : BlockMat4) = blockDiagAlgHom (1, 0) from
+    AlgEquiv.ofInjective_apply blockDiagAlgHom blockDiagAlgHom_injective (1, 0)]
+  rfl
+
+/-- 载体一致性：`blockDiagP₁ = blockDiagEquiv (0, 1)`。 -/
+theorem blockDiagP₁_eq_blockDiagEquiv : blockDiagP₁ = blockDiagEquiv (0, 1) := by
+  apply Subtype.ext
+  show (blockDiagP₁ : BlockMat4) = (blockDiagEquiv (0, 1) : BlockMat4)
+  rw [show (blockDiagEquiv (0, 1) : BlockMat4) = blockDiagAlgHom (0, 1) from
+    AlgEquiv.ofInjective_apply blockDiagAlgHom blockDiagAlgHom_injective (0, 1)]
+  rfl
+
+/-- ★★ 块交换在 Subalgebra 载体上移动块投影：`σ P₀ = P₁`。 -/
+theorem swapSubAlg_moves : swapSubAlgEquiv blockDiagP₀ = blockDiagP₁ := by
+  change blockDiagEquiv (swapBlockAlgEquiv (blockDiagEquiv.symm blockDiagP₀)) = blockDiagP₁
+  rw [blockDiagP₀_eq_blockDiagEquiv, AlgEquiv.symm_apply_apply]
+  exact blockDiagP₁_eq_blockDiagEquiv.symm
+
+/-- ★★ 层被移动：`σ P₀ ≠ P₀`。 -/
+theorem swapSubAlg_shifts : swapSubAlgEquiv blockDiagP₀ ≠ blockDiagP₀ := by
+  rw [swapSubAlg_moves]
+  exact blockDiagP₀_ne_P₁.symm
+
+/-- ★★★ P1b-2 完成性收口主定理：块交换不是 `𝔄ˣ` 内实现
+    ——在 Subalgebra 载体与「代数内部单位」的表述下，「外」依旧成立。 -/
+theorem swapSubAlg_not_inner : ¬ InnerRealization swapSubAlgEquiv := by
+  intro h
+  exact swapSubAlg_shifts
+    (inner_fixes_central (c := blockDiagP₀) (fun y => blockDiagP₀_central y) h)
+
+/-- 同一结论的 `IsOuterAut` 形式（与 P1b-1 的 OC2 口径一致）。 -/
+theorem swapSubAlg_outer : IsOuterAut swapSubAlgEquiv := swapSubAlg_not_inner
+
+end SubalgebraModel
 
 end MUFPF.RecursionModularityOuter
