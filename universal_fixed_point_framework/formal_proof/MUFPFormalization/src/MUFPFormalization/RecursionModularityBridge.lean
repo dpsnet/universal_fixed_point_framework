@@ -126,6 +126,6 @@ theorem p4_layer_independence {R : Type} (ev : R → R) (layerOf : R → ℕ)
     无引力的时间结构可实例化）。 -/
 example : StrictLayer (fun n : ℕ => n + 1) (fun n : ℕ => n) := by
   intro r
-  rw [Nat.add_comm]
+  simp
 
 end MUFPF.RecursionModularityBridge
