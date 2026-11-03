@@ -110,21 +110,38 @@ for g in (Fraction(1, 1), Fraction(2, 3), Fraction(7, 5)):
             ok = ok and (g * (a + kk) > g * a)
 check("C06", "gap>0 ∧ k>0 ⇒ 模权严格下降", ok)
 
-# C07 迭代公式：L(σ^m a) = a + m·k
+# C07 迭代公式：按递归定义 σ^{m+1} = σ^m + k 逐项计算，再与闭式 a + m·k 比对
+def iterate_layer(a, kk, m):
+    x = a
+    for _ in range(m):
+        x = x + kk          # LayerAdvance：L(σx) = L x + k
+    return x
+
+
 ok = True
 for kk in (1, 2, 3):
     for m in range(0, 6):
         for a in range(0, 6):
-            ok = ok and ((a + m * kk) == a + m * kk)
-check("C07", "迭代 m 步层作用 = a + m·k", ok)
+            ok = ok and (iterate_layer(a, kk, m) == a + m * kk)
+check("C07", "递归迭代 m 步 = 闭式 a + m·k（m 0..5 × k 1..3 × a 0..5）", ok)
 
 # C08 无回退：m,k ≠ 0 ⇒ m·k ≠ 0
 ok = all((m * kk) != 0 for m in range(1, 6) for kk in range(1, 6))
 check("C08", "m≠0 ∧ k≠0 ⇒ 无回退（层不回到原点）", ok)
 
-# C09 与 368 advanceIter_eq 对齐：n + m·k
-ok = all((a + m * kk) == a + (a + m * kk - a) for a in range(4) for m in range(6) for kk in range(1, 4))
-check("C09", "桥接 advanceIter：n + m·k", ok)
+# C09 与 368 advanceIter_eq 对齐：按 advanceIter 的递归定义计算，再与闭式比对
+def advance_iter(kk, m, n):
+    if m == 0:
+        return n
+    return advance_iter(kk, m - 1, n) + kk
+
+
+ok = all(advance_iter(kk, m, a) == a + m * kk
+         for a in range(4) for m in range(6) for kk in range(1, 4))
+# 且与 C07 的层迭代逐项一致
+ok = ok and all(advance_iter(kk, m, a) == iterate_layer(a, kk, m)
+                for a in range(4) for m in range(6) for kk in range(1, 4))
+check("C09", "桥接 advanceIter：递归 advanceIter k m n = n + m·k = 层迭代", ok)
 
 # C10 反例：boolLayer 下 bnot 不是任何 k 的层步
 def boolLayer(b):
