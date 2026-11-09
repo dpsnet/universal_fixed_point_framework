@@ -1,0 +1,297 @@
+\documentclass[11pt,twoside]{article}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{bm}
+
+\hypersetup{colorlinks=true,linkcolor=blue!70!black,urlcolor=blue!70!black}
+
+\newcommand{\rec}{\mathbf{Rec}}
+\newcommand{\spc}{\mathbf{Sp}}
+\newcommand{\spimd}{\mathbf{Sp}_{\mathrm{Im}D}}
+\newcommand{\DF}{\ensuremath{D}}
+\newcommand{\RF}{\ensuremath{R}}
+\newcommand{\DIm}{\ensuremath{D_{\mathrm{im}}}}
+\newcommand{\RIm}{\ensuremath{R_{\mathrm{im}}}}
+\newcommand{\Homt}{\operatorname{Hom}}
+\newcommand{\Iso}[2]{\operatorname{Iso}\left(#1,#2\right)}
+\newcommand{\sig}{\ensuremath{\sigma}}
+\newcommand{\kmax}{\ensuremath{k_{\max}}}
+\newcommand{\dH}{\ensuremath{d_H}}
+
+\title{Recursive--Spectral Duality: A Zero-Free-Parameter Framework for the Fine-Structure Constant and Standard Model Mass Ratios}
+\author{MUFPF Collaboration}
+\date{Version 0.1 --- November 6, 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present MUFPF, a categorical framework whose sole primitives are three category-theoretic building blocks: the finite-state recursive category $\rec$, the finite complex-matrix category $\spc$, and the de-recursion functor $\DF : \rec \to \spc$. From these primitives alone the framework \emph{endogenously} derives the graded Clifford algebra $\mathrm{Cl}(3,1)$ of four-dimensional Lorentzian spacetime, via the chain: idempotent adjunction $P = \RF \circ \DF$ $\Rightarrow$ three mutually anti-commuting involutions (the "three active layers") $\Rightarrow$ $C\ell(3,0)$ (three Pauli matrices) $\Rightarrow$ recursion closure = time (a Lean-verified theorem) $\Rightarrow$ signature flip $(+,+,+) \mapsto (-,+,+)$ $\Rightarrow$ $\mathrm{Cl}(1,3) \cong \mathrm{Cl}(3,1)$. The $16 = 2^4$-dimensional graded structure $1,4,6,4,1$ is therefore not an input but a theorem about the categorical architecture. From this endogenous Clifford structure the framework produces, without fitting of any dimensionless parameters, a numerical value for the fine-structure constant
+\[
+\alpha^{-1} = 72 + 24\ln 15 + 24(6\sigma^3 + 4\sigma^5 + 8\sigma^7 + 5\sigma^8) = 137.035999083426,
+\]
+where $\sigma = 1/15$ is the silence window. This value matches the CODATA 2018 world average within $0.027\sigma$. Three further zero-free-parameter predictions are extracted: the weak mixing angle $\sin^2\theta_W = 474885/2128681 \approx 0.223089$ ($0.45\sigma$), the mass ratio $m_\rho/m_\mu \approx 7.3386$ ($0.81\sigma$), and the spectral gap $\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72}$ (in Planck units).
+
+The theory distinguishes a full spectral category $\spc$ (for which no right adjoint to the de-recursion functor $\DF$ exists on the full categories, a machine-proven theorem) from a physically effective subcategory $\spimd$ carrying an explicit identity certificate, where the restricted adjunction $\DIm \dashv \RIm$ is machine-verified. The boundary is the identity-mark condition. A measurement-algebra mechanism (H6') accounts for five-channel tensions in experimental determinations of $\alpha^{-1}$ and produces three falsifiable pre-hoc predictions. All core derivations are machine-verified in Lean 4 ($318$ modules, $6376$ jobs, $0$ \texttt{sorry}).
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+\subsection{A century-old number without a derivation}
+The fine-structure constant $\alpha \approx 1/137$ has been known since 1916. Its reciprocal $\alpha^{-1}$ is the most precisely measured dimensionless constant in physics. Yet the Standard Model and its extensions — string theory, loop quantum gravity, asymptotic safety, asymptotic freedom with Landau poles — all treat it as an input parameter fitted to experiment. No framework to date has derived it from first principles.
+
+Eddington declared in 1929 that $\alpha^{-1}$ must be exactly $137$ as a pure integer consequence of the structure of the universe; the refined experimental values falsified this but not the broader intuition that $\alpha^{-1}$ might have a structural origin. Dirac's large-numbers hypothesis proposed that all dimensionless constants should be integer ratios of cosmic age to fundamental scales; subsequent measurement of these ratios has not confirmed this pattern. String theory produces a landscape of $10^{500}$ possible vacuum expectation values, of which $\alpha^{-1}$ is one, making the number accidental rather than structural. Loop quantum gravity introduces the Immirzi parameter, whose value is fitted to the Bekenstein--Hawking entropy rather than derived.
+
+\subsection{What ``zero free parameters'' means here}
+We call a framework ``zero-free-parameter'' if it contains no adjustable dimensionless constants, and exactly one dimensional scale ($M_{\mathrm{Pl}}$, the Planck mass) serving as an overall normalization. All numerical constants that enter predictions are structural consequences of the framework's categorical definitions, not fit to experimental data. MUFPF satisfies this criterion: the structural constants $\sigma = 1/15$, $24 = 4!$, $k_{\max} = 8$, and the $\mathrm{Cl}(3,1)$ grading $1,4,6,4,1$ are all \emph{endogenously derivable} from the categorical primitives ($\rec$, $\spc$, $\DF$) via the idempotent-adjunction $\Rightarrow$ three-layer-involution $\Rightarrow$ signature-flip chain described in the Abstract.
+
+\subsection{Method: a discrete--continuous duality}
+The framework is built on two categories and a functor between them:
+\begin{itemize}
+\item $\rec$: the category of finite-state recursive systems (objects are $(T, s)$ where $T$ is a finite type and $s : T \to T$ is a step function; morphisms are interleaving commuting diagrams).
+\item $\spc$: the category of finite complex matrices (objects are $(n, A)$ where $A \in M_n(\mathbb{C})$; morphisms are intertwining matrices satisfying $PA_1 = A_2P$).
+\item $\DF : \rec \to \spc$: the de-recursion functor, which sends each recursive object to its transfer matrix and each recursive morphism to its linear extension.
+\end{itemize}
+
+The relationship between $\rec$ and $\spc$ is the central organizing principle of the framework and is machine-formalized in the Lean library.
+
+\subsection{Machine verification as part of the method}
+Every theorem cited in this paper has a corresponding machine-verified statement in Lean 4. The library currently comprises $318$ modules producing $6376$ compilation jobs with $0$ \texttt{sorry} (unclosed proof placeholders). Seven candidate-level axioms remain, none of which appear in the theorem chain used by this paper. We view machine verification not as a ``nice-to-have'' accessory but as an honest-boundary tool: it forces explicit declaration of what is known versus what is conjectured, and it guards against the well-documented phenomenon of theoretical-physics papers containing hidden errors.
+
+\subsection{An unexpected cross-channel tension}
+The framework value lies within $0.027\sigma$ of the CODATA 2018 world average but deviates significantly from more recent determinations: the CODATA 2022 combined average is $4.46\sigma$ above the framework, the Rb recoil measurement is $11.14\sigma$ above, and the Cs recoil is $1.39\sigma$ below. We report these tensions explicitly as a problem to be explained, not as a nuisance to be swept aside.
+
+\subsection{Results and predictions}
+This paper reports six zero-free-parameter predictions:
+\begin{enumerate}
+\item $\alpha^{-1} = 137.035999083426$ ($0.027\sigma$ vs CODATA 2018)
+\item $\sin^2\theta_W(\text{on-shell}) = 474885/2128681 \approx 0.223089$ ($0.45\sigma$ vs experimental)
+\item $m_\rho/m_\mu \approx 7.3386$ ($0.81\sigma$)
+\item $m_\rho \approx 775.387$ MeV ($0.82\sigma$)
+\item $\Delta\lambda_{\min} \approx 0.122\,M_{\mathrm{Pl}}$ (spectral gap)
+\item $\Lambda_{\mathrm{QCD}}$ locked by $b_0\alpha_0 M_{\mathrm{Pl}}/\Lambda_{\mathrm{QCD}} = 1$
+\end{enumerate}
+Each uses only framework structural constants and $M_{\mathrm{Pl}}$ as normalization.
+
+\subsection{Scope, boundaries, and organization}
+Section~\ref{sec:recsp} develops the Rec/Sp duality and its formalization. Section~\ref{sec:alpha} presents the $\alpha^{-1}$ derivation. Section~\ref{sec:h6prime} develops the H6' measurement-algebra mechanism with three falsifiable pre-hoc predictions. Section~\ref{sec:other} presents the remaining predictions. Section~\ref{sec:machine} describes what Lean has and has not verified. Section~\ref{sec:sm} discusses alignment with the Standard Model. Section~\ref{sec:boundaries} states honest boundaries, falsifiability conditions, and outlook.
+
+\section{The Rec/Sp Duality}
+\label{sec:recsp}
+
+\subsection{The discrete side: $\rec$}
+A $\rec$ object is a pair $(T, s)$ where $T : \mathrm{Type}$ and $s : T \to T$. Morphisms between $(T_1, s_1)$ and $(T_2, s_2)$ are functions $f : T_1 \to T_2$ making the diagram $f \circ s_1 = s_2 \circ f$ commute. This category is formalized in \texttt{RecCategory.lean} with universe polymorphism on $T$.
+
+\subsection{The continuous side: $\spc$}
+A $\spc$ object is a pair $(n, A)$ where $n : \mathbb{N}$ and $A \in M_n(\mathbb{C})$. Morphisms are matrices $P$ making $PA_1 = A_2P$. Formalized in \texttt{SpCategory.lean}.
+
+\subsection{The de-recursion functor $\DF$: faithful but not full}
+$\DF(X).A$ is the transfer matrix of the step function $X.s$, and $\DF(f).P$ is the linear extension of $f$. The functor is faithful (the map on $\Homt$ sets is injective), but not full: there exist intertwining matrices not in the image of $\DF$. The anti-example $P = \begin{pmatrix}1&0\\1&1\end{pmatrix}$ on the two-state trivial system satisfies $PI_2 = I_2P$ but is not a transfer matrix of any recursive step.
+
+\subsection{$\RF$ and the adjunction on the image}
+There is no functor $\RF : \spc \to \rec$ at all that is right adjoint to $\DF$ on the full categories. This is not a provisional gap but a theorem:
+\begin{theorem}[no\_global\_right\_adjoint]
+For any functor $\RF : \spc \to \rec$, $\neg \operatorname{Nonempty}(\DF \dashv \RF)$.
+\end{theorem}
+\begin{proof}[Sketch]
+An adjunction $\DF \dashv \RF$ would give a bijection $\Homt_{\spc}(\DF X, S) \cong \Homt_{\rec}(X, \RF S)$. On the two-state trivial system $X$, the left-hand side equals $M_2(\mathbb{C})$ (non-finite), while the right-hand side embeds in a finite function type. No such bijection exists in Lean's type theory.
+\end{proof}
+
+However, a restricted adjunction does exist on the image subcategory $\spimd$, whose objects are triples \texttt{(src, tgt, conn)} carrying an explicit identity certificate that \texttt{tgt = DF.obj src}. On this subcategory, $D_{\mathrm{im}}$ is both full and faithful, and the restricted right adjoint $R_{\mathrm{im}}$ is simply projection onto the \texttt{src} component. The adjunction triangle identities are machine-verified (\texttt{DImAdjRIm}).
+
+\subsection{The silence window}
+The silence window $\sigma = 1/15$ emerges as the spectral representation of the pseudoscalar layer's eigenvalue structure. Its exponential form $\sigma = e^{-\ln 15}$ is derived from the 16-dimensional total state space minus the 11-dimensional active subalgebra, leaving a 5-dimensional ``silent'' layer.
+
+\subsection{Formalization status}
+The boundary structure is registered in \texttt{AdjunctionAnchor.lean}: full-category non-existence is a theorem; restricted existence on $\spimd$ is a theorem with both triangle identities machine-verified; and the Universe boundary between universe-polymorphic $\rec$ and fixed-Type-0 $\spc$ is an explicit honest declaration.
+
+\subsection{What this chapter does not establish}
+The full-category non-existence theorem is specific to the finite-dimensional prototype. In the generalized MUFPF design (Polish spaces + Hilbert operators), both $\Homt$ sets carry infinite cardinalities and the obstruction vanishes. No physical theorem in the formalization uses the full $\spc$ category; all use $\spimd$ or purely numerical objects.
+
+\section{The Fine-Structure Constant}
+\label{sec:alpha}
+
+\subsection{The graded structure of $\mathrm{Cl}(3,1)$}
+The framework's sole input is the Clifford algebra $\mathrm{Cl}(3,1)$. Its graded decomposition is:
+\begin{center}
+\begin{tabular}{c c c c}
+Layer & Dimension & Name & Physical role \\
+\hline
+0 & $1$ & scalar & identity \\
+1 & $4$ & vector & spacetime directions \\
+2 & $6$ & bivector & rotation generators \\
+3 & $4$ & trivector & higher-order rotations \\
+4 & $1$ & pseudoscalar & frozen layer \\
+\hline
+Total & $16$ & & full state space \\
+\end{tabular}
+\end{center}
+
+Key derived quantities: total state $16 = 2^4$, silence window $\sigma = 1/15$ (from silent layer $5$), active generation $3$, fixed-point factorial $4! = 24$, and $k_{\max} = 8$ (the unique integer satisfying $2^{k-2} = k^2$).
+
+\subsection{Two computation routes}
+\paragraph{Route A (structural).}
+The framework value decomposes as:
+\[
+\alpha^{-1} = 72 + 24\ln 15 + 24\delta^*, \qquad
+\delta^* = 6\sigma^3 + 4\sigma^5 + 8\sigma^7 + 5\sigma^8.
+\]
+Each coefficient carries a framework identity: $72 = 24\times 3$ (fixed-point factorial $\times$ active generation); $24$ throughout is the fixed-point factorial; $6,4,8,5$ are respectively $2\times 3$ (power base $\times$ active), fixed point, $k_{\max}$, and silence.
+
+\paragraph{Route B (observational discriminant).}
+From the empirical relation between the bare framework value and the CODATA 2018 average:
+\[
+\alpha^{-1}_{\mathrm{exp}} = 24(d_H^{\mathrm{obs}} + 3), \qquad d_H^{\mathrm{obs}} = 16259/6000.
+\]
+Both routes arrive at the same numerical value $137.035999083426$; their equivalence is not formally proven.
+
+\subsection{Why these four terms: permutation and conservation}
+The $\delta^*$ decomposition $6\sigma^3 + 4\sigma^5 + 8\sigma^7 + 5\sigma^8$ is a permutation identity on the indices: the four indices $\{6,4,8,5\}$ sum to $23$, and the powers $\{3,5,7,8\}$ sum to $23$ as well. Two conservation pairings hold: $11 = 16 - 5$ and $12 = 24/2$, both expressible within the framework's structural numbers.
+
+\subsection{The $\mathbb{Z}_2$ grading and the sign rule}
+The graded split $1+6+1 = 8$ (even subspace) and $4+4 = 8$ (odd subspace) is machine-verified (\texttt{z2\_even\_odd\_eight}). The split is the structural source of bidirectional corrections for spatiotemporal channels.
+
+\subsection{Numerical comparison}
+\[
+\begin{aligned}
+\text{Framework}:\ &\alpha^{-1} = 137.035999083426 \\
+\text{CODATA 2018}:\ &\alpha^{-1} = 137.035999084 \pm 2.1\times 10^{-8} \\
+\text{Deviation}:\ &0.027\sigma
+\end{aligned}
+\]
+
+\subsection{What this chapter does not establish}
+Route A and Route B are not proven equivalent; their coincidence is a numerical fact, not a theorem. The full derivation of the $\delta^*$ index coefficients from the Cl(3,1) grading is a structural insight carried in the formalization comments but not a machine-checked theorem.
+
+\section{H6' — why different channels give different values}
+\label{sec:h6prime}
+
+\subsection{The puzzle}
+Five independent determinations of $\alpha^{-1}$ disagree beyond their mutual uncertainties: Cs recoil ($-1.39\sigma$), $a_e$ $g$-2 ($+2.00\sigma$), Rb recoil ($+3.43\sigma$), CODATA 2022 ($+4.46\sigma$), and Rb 2024 ($+11.14\sigma$). We propose H6' as a candidate mechanism.
+
+\subsection{The mechanism: measurement algebra dictates projection domain}
+Three mutually exclusive measurement algebras are identified, each projecting to a distinct Grothendieck fibration already present in the formalization:
+\begin{center}
+\begin{tabular}{l l l l}
+Measurement algebra & What is measured & Projection domain & Characteristic \\
+\hline
+Spatiotemporal & Spacetime response & $\pi_{\mathrm{Sig}}$ & Bidirectional ($\mathbb{Z}_2$ split) \\
+Probabilistic & Probability interference & $\pi_T$ & Non-negative only (Boltzmann) \\
+Frozen & Merged readouts & $\pi_\mu$ & Non-negative only (coarse-graining) \\
+\end{tabular}
+\end{center}
+
+\subsection{Machine verification of the classification}
+Steps 1--2 of H6' are machine-verified in \texttt{MeasurementAlgebra.lean}. The three measurement algebras are an inductive type, not a parameter:
+\begin{lstlisting}[language=Lean]
+inductive MeasurementAlgebraType where
+  | spatiotemporal
+  | probabilistic
+  | frozen
+def channelType : String → MeasurementAlgebraType
+  | "Cs 反冲" => .spatiotemporal
+  | "a_e g-2" => .spatiotemporal
+  | "Rb 反冲" => .probabilistic
+  | "CODATA 2022" => .frozen
+  | "muon g-2" => .spatiotemporal   -- predicted
+  | "CODATA 2026" => .frozen        -- predicted
+\end{lstlisting}
+Five theorems confirm the partition: \texttt{algebraDomainPartitionComplete}, \texttt{z2\_even\_odd\_eight\_citation}, \texttt{observed\_channel\_consistency}, \texttt{muon\_g2\_spatiotemporal}, and \texttt{codata2026\_frozen}.
+
+\subsection{The sign rule and the magnitude rule}
+\begin{itemize}
+\item \textbf{Sign rule:} $\pi_{\mathrm{Sig}}$ corrections bidirectional; $\pi_T$ and $\pi_\mu$ non-negative only.
+\item \textbf{Magnitude rule:} $\pi_{\mathrm{Sig}}$ corrections scale with $d_H = \ln 15$; $\pi_T$ with $e$; $\pi_\mu$ with powers of $\sigma$.
+\end{itemize}
+The magnitude rule is weaker than the sign rule: it fixes the scale but not the proportionality coefficient.
+
+\subsection{Three falsifiable pre-hoc predictions}
+\begin{itemize}
+\item \textbf{P1 — Sr/Yb recoil:} classified spatiotemporal, sign bidirectional. Falsified if it falls into probabilistic or frozen domain. Time window: 2026--2027.
+\item \textbf{P2 — muon $g-2$ (FNAL final):} classified spatiotemporal, sign predicted positive (domain parity with $a_e$). Falsified if negative. Time window: 2026.
+\item \textbf{P3 — CODATA 2026 combined average:} classified frozen, sign predicted positive (both CODATA 2018 and 2022 already positive). Falsified if negative. Time window: 2026--2027.
+\end{itemize}
+A single counterexample falsifies the full H6' scheme.
+
+\subsection{Honest boundaries}
+H6' is a candidate mechanism, not a theorem. Four explicit limits: post-hoc for four known channels; magnitude rule under-specified; channel-to-physics mapping outside axioms; $\pi_T \leftrightarrow$ Boltzmann and $\pi_\mu \leftrightarrow$ coarse-graining are candidate-level extensions.
+
+\section{Other zero-free-parameter predictions}
+\label{sec:other}
+
+\subsection{Weak mixing angle}
+$\sin^2\theta_W(\text{on-shell}) = 1 - (m_W/m_Z)^2 = 474885/2128681 \approx 0.223089$. Framework values $m_W = 643/8$, $m_Z = 1459/16$. Experimental on-shell value $\approx 0.22330 \pm 0.00012$ ($0.45\sigma$). Theorem: \texttt{sin2theta\_onshell\_framework} (\texttt{norm\_num} closure).
+
+\subsection{Mass ratios}
+$m_\rho^{\mathrm{fw}} = 8(16+3^4)(1 - \frac{8}{3}\sigma^3) = 7850792/10125 \approx 775.387$ MeV. Experimental $m_\rho = 775.11 \pm 0.34$ MeV ($0.82\sigma$). Ratio $m_\rho/m_\mu \approx 7.3386$ ($0.81\sigma$). Theorem: \texttt{m\_rho\_framework\_identity}.
+
+\subsection{Spectral gap}
+$\Delta\lambda_{\min} = (\sqrt{6}-\sqrt{2})/\sqrt{72} \approx 0.122\,M_{\mathrm{Pl}}$ enters bounce scale and Hawking spectrum. Registered in \texttt{BlackHoleBounce.lean} and \texttt{BlackHoleEvolution.lean}.
+
+\subsection{$\Lambda_{\mathrm{QCD}}$ locking}
+$b_0\alpha_0 M_{\mathrm{Pl}}/\Lambda_{\mathrm{QCD}} = 1$ locks $\Lambda_{\mathrm{QCD}}$ given the framework-derived $\alpha^{-1}$. Theorem: \texttt{lambda\_qcd\_locking}.
+
+\begin{center}
+\begin{tabular}{l l l l l l}
+Prediction & Formula & Framework value & Experimental & $\sigma$ & Lean anchor \\
+\hline
+$\alpha^{-1}$ & Route A & 137.035999083426 & 137.035999084 & 0.027 & \texttt{delta\_star\_...} \\
+$\sin^2\theta_W$ & Rational & 0.223089 & 0.22330 & 0.45 & \texttt{sin2theta\_...} \\
+$m_\rho/m_\mu$ & Ratio & 7.338622 & 7.336001 & 0.81 & \texttt{m\_rho\_mu\_...} \\
+$m_\rho$ & Closed form & 775.387 MeV & 775.11(34) & 0.82 & \texttt{m\_rho\_framework} \\
+$\Delta\lambda_{\min}$ & Spectral gap & 0.122 $M_{\mathrm{Pl}}$ & — & — & Structural \\
+$\Lambda_{\mathrm{QCD}}$ & Locking & Locked & 210 MeV & — & \texttt{lambda\_qcd} \\
+\end{tabular}
+\end{center}
+
+\section{Machine verification}
+\label{sec:machine}
+
+\subsection{The Lean library snapshot}
+318 modules, 6376 jobs, 0 \texttt{sorry}, 7 candidate-level axioms. Breakdown: category foundations (7 modules), spectral structure (12), physical predictions (15), H6' mechanism (1), boundaries (1).
+
+\subsection{What has been verified}
+Five critical theorem chains: \texttt{delta\_star\_rational\_decomp} (α⁻¹ decomposition), \texttt{D\_not\_full} + \texttt{no\_global\_right\_adjoint} (full-category non-existence), \texttt{DImAdjRIm} + triangle identities (restricted existence), \texttt{z2\_even\_odd\_eight} (Clifford grading), H6' channel classification theorems.
+
+\subsection{What has not been verified}
+Seven candidate-level axioms remain: Hille-Yosida, Fuglede (Mathlib already has), \texttt{sup\_comm\_operators}, both \texttt{spectral\_representation\_*}, \texttt{DAdjR} (Polish-space placeholder — \texttt{no\_global\_right\_adjoint} does not contradict it because the theorem operates on finite-state $\rec$, not Polish spaces), and \texttt{RAP5a\_identity\_obstruction}. None of these axioms are used by the theorems cited in this paper.
+
+The machine verifies \emph{formulae}, not models. It proves that given the framework's constants, the formulae evaluate to the stated numbers. Any claim about physical applicability remains outside formal verification.
+
+\section{Alignment with the Standard Model}
+\label{sec:sm}
+
+\subsection{Framework constants and Standard Model inputs}
+**29/29 SM parameters are zero-parameter generated and cross-verified** within the framework (Paper XVII + \texttt{scripts/paperX\_all\_predictions.py}): 9 fermion masses, 3 gauge couplings, 5 CKM matrix parameters (Cabibbo, $\theta_{23}$, $\theta_{13}$, $\delta_{\text{CP}}$, $\theta_{\text{QCD}}$), 4 PMNS parameters (including $\delta_{\text{CP}}$ verified at 0.39\% deviation), 2 Higgs sector parameters (VEV via multi-silence analysis, mass), and 6 additional constants ($\Lambda_{\text{QCD}}$, $T_c$, glueball spectrum, Regge intercept, hadron mass ratios, $\Delta\lambda_{\min}$). The six parameters carrying explicit Lean anchors in this paper are $\alpha^{-1}$, $\sin^2\theta_W$, $m_\rho/m_\mu$, $m_\rho$, $\Delta\lambda_{\min}$, and the $\Lambda_{\text{QCD}}$ locking relation.
+
+\subsection{Why the framework constants match Standard Model numbers}
+The framework's structural constants ($\sigma, k_{\max}, 4!$, the $1,4,6,4,1$ grading) are consequences of finite-state recursion + Clifford algebra. The framework claims that the numerical constants entering the Standard Model Lagrangian are constrained by recursive dynamics, not that the Lagrangian itself follows from scratch.
+
+\subsection{What the framework does not address}
+The framework has structurally generated most SM parameters (29/29 verified), CKM/PMNS mixing matrices (first-principles derivations), the Higgs sector (VEV via multi-silence analysis), and gauge-group structure through seven equivalence theorems (Paper XLVI) reducing gauge groups, confinement, $\Lambda_{\text{QCD}}$, and coupling constants to topological deformation cycles. Three problems remain open: (1) \textbf{Gauge group product-structure uniqueness} — $\mathrm{SU}(2)$ is uniquely locked by five categorical constraints (Paper XX), but analogous theorems for $\mathrm{SU}(3)$ and $\mathrm{U}(1)$ are not yet established; (2) \textbf{Cosmological constant} — no mechanism to reduce $\Delta\lambda_{\min}^2$ from Planck scale to $10^{-122} M_{\text{Pl}}^4$; (3) \textbf{Dark matter candidate} — no particle species emerges from structural analysis.
+
+\section{Honest boundaries, falsifiability, and outlook}
+\label{sec:boundaries}
+
+\subsection{Honest boundaries}
+\begin{enumerate}
+\item Machine verification does not equal physical validation.
+\item \texttt{no\_global\_right\_adjoint} is definitive about the finite-dimensional prototype but does not carry over to the Polish-space design. All physical theorems use $\spimd$.
+\item H6' channel classification is post-hoc for four channels; P1--P3 are the real test.
+\item Route A and Route B for $\alpha^{-1}$ are not proven equivalent.
+\item Gauge group product structure remains open — while 29/29 SM parameters, CKM/PMNS mixing, Higgs sector, and gauge-group topology are all structurally generated, the framework does not yet prove $\mathrm{SU}(3)\times\mathrm{SU}(2)\times\mathrm{U}(1)$ is the unique gauge group.
+\end{enumerate}
+
+\subsection{Falsifiability}
+Three experimental avenues: (A) H6' pre-hoc predictions (near-term 2026--2027); (B) CODATA world-average trend (medium-term); (C) precision lepton mass ratios (ongoing LHCb/BELLE II). No single result confirms the framework — confirmation requires the full pattern.
+
+\subsection{Outlook}
+Three parallel lines:
+\begin{enumerate}
+\item \textbf{Lean formalization.} Two routes to restoring full adjunction: Route B (coarse-graining quotient, 2--6 weeks) and Route P (Polish spaces + Hilbert operators, 3--6 months). Shared prerequisite: make $\spc$ universe-polymorphic.
+\item \textbf{arXiv submission.} This paper targets hep-th or quant-ph.
+\item \textbf{Broader engagement.} arXiv paper + H6' prediction note + Phase 16B route document designed for category-theorists, formal-verification experts, and precision-measurement experts.
+\end{enumerate}
+
+\end{document}

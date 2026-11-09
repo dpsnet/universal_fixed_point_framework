@@ -497,10 +497,17 @@ EinsteinDivergenceFree 的最终显式陈述——`einsteinDiv`（E_ν 定义）
 关闭时转定理"原则一致。**诚实边界（2026-09-20）**：在当前具体定义下，
 `selFunctor` 抽取单一分量（`Nat.find hDom`）而 `dissFunctor` 产出 `contractions i < 1`
 的多份 R 拷贝（Σ-余积族），`SigmaRecHom` 的 `List` 结构使两侧势一般不等——该伴随
-是**范畴层启发式声明**，非普遍双射；依"不作假断言"纪律不制造伪证明。可闭合的
-受限形式是 data 使 Diss 退化为单点拷贝的情形（届时同构退化），但该退化使声明失去
-伴随的本意，故暂保留开放登记，注明"非普遍双射、需在受限子类上重构"。完整 TV
-距离界、收敛率、逆滤波同理保持开放。
+是**范畴层启发式声明**，非普遍双射；依"不作假断言"纪律不制造伪证明。
+
+> **✅ 2026-11-09（S608）精确形式已闭合**：上述"两侧势一般不等"的分析被证实并精确化——
+> SelDissBridge.lean §2 机检完成：(i) 显式 to/from 映射（`selDissTo`/`selDissFrom`）；
+> (ii) **收缩** `selDissFrom_to : from ∘ to = id`（→ to 单射、from 满射）；
+> (iii) **canonical 支撑子类型上的真双射** `selDissHomEquiv : RecHom (Sel N) R ≃
+> { g // ∃ u', g.components = selDissCanonicalForm ... u' }`（仅 (i₀,j₀) 单条目、
+> 其余源空的 SigmaRecHom 子类）。完整 SigmaRecHom 上的字面双射结构性不成立
+> （list 编码允许同一 (i,j) 多条目与空源垃圾条目），与本段此前分析一致；
+> 伴随自然性不在有限原型范围（Sel/Diss 态射层未定义，§17 登记）。
+> 完整 TV 距离界、收敛率、逆滤波同理保持开放。
 
 ### 6.3 意外收获：extFunctor 定义性缺陷（Thm 17.2 无法证明的根源）
 
