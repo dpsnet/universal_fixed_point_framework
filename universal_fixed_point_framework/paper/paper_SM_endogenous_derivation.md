@@ -1067,11 +1067,13 @@ sin²θ_W = 1 − (1286/1459)² = 474885/2128681 ≈ 0.22309
 
 **双向判读**：(1) m_Z 单通道的条件命中率约 1/9×10³——91.1875 不是任意语法都能凑出的数，选择性真实存在；(2) 但 sin²θ_W 只到 2–3 位有效数字的吻合，其 1σ 窗基础率约 1/1.5×10⁴，与"3 位有效数字相除"的自然巧合率同量级——**sin²θ_W 数值本身判别力弱，不能作为独立证据**；(3) 真正可记账的判别力在 §9.2e 的 5 位精度前瞻判据（0.03% 阈值）。脚本 `scripts/p7_sm_sin2theta_family_census.py`（pyenv 3.11.8）可复现全部计数。
 
-#### Lean 机检定理（`AlphaChain.lean`）：
+#### Lean 机检定理（`AlphaChain.lean`，2026-11-09 20:58 首度真编译通过）：
 - `mW_from_framework_constants`：`Powers^FixedPoint × SilenceUnit + Ngen/Kmax = 643/8`
-- `mZ_from_framework_constants`：`Involution × (Kmax + SilenceUnit) + Ngen/FullState = 1459/16`
-- `sin2theta_onshell_framework_pure`：`let mW := ...; let mZ := ...; 1 - (mW/mZ)^2 = 474885/2128681`
-- 全部：`rw` + `norm_num` 闭合，零 sorry
+- `mZ_from_framework_constants`：`Involution × (Kmax + SilenceUnit) + Ngen/(Powers^FixedPoint) = 1459/16`
+- `sin2theta_onshell_framework_pure`：`let mW := …; let mZ := …; 1 − (mW/mZ)² = 474885/2128681`
+- 三条均以 `open MUFPF.ActiveSilentVieta in` 限定命名空间后由 `norm_num` 闭合，零 sorry；`lake build MUFPFormalization.AlphaChain` → Build completed successfully（3178 jobs，exit 0）。
+
+> **机检边界登记（v1.3，2026-11-09 追加）**：这三条定理在 v1.2 期间**从未实际编译通过**——`AlphaChain.lean` 处于 `namespace MUFPF.AlphaChain` 而未 `open MUFPF.ActiveSilentVieta`，于是 `Powers / FixedPoint / SilenceUnit / Ngen / Kmax / Involution` 全部被 Lean 的 autoImplicit 绑成自由变量（`FixedPoint` 甚至被推断为 ℕ），陈述退化为对任意实数的全称命题且为假，`norm_num […]` 直接报 “Variable … is not a proposition”。这与 V9 属同一类失败（看似机检、实为自由变量）。修复为局部 `open … in` 后首度真编译，故本文关于 sin²θ_W 的“零参数推导”现以**此修复后版本**为准；修复前任何引用这三条定理的说法均不应被采信。审计脚本 `scripts/p7_lean_olean_audit.py` 可复现模块级 olean 与源文件版本一致性的检查。
 
 ### 9.3 强耦合 α_s(M_Z)
 
@@ -1389,6 +1391,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | v1.3 追加 | §1.2 认知佐证段（日常物理自相似：水波 / 湍流 / 晶体生长 / RG 不动点，作为 Rec/Sp/D 普适性的独立旁证） | `a4a2405` | 2026-11-09 | 同上 |
 | v1.3 追加 | 笔记层 V9 勘误（`RESEARCH_STATE.md` 追加条目 + `notes/generative_chain_map.md` §11.85 重写为族内唯一性） | `51926d2` | 2026-11-09 | 同上 |
 | v1.3 追加 | 记号统一（§9.2d 附近韦达方程备注的 N → N_active） | `bf99ef9` | 2026-11-09 | 同上 |
+| v1.3 追加 | `AlphaChain.lean` 机检边界修复（sin²θ_W 三定理的 autoImplicit 自由变量 → 局部 `open` 限定，首度真编译通过） | `9c2c4e4` | 2026-11-09 | 本机可验（`lake build …AlphaChain` → 3178 jobs, exit 0） |
 
 本表的任何后续修订本身都会产生新提交，故“终稿哈希”只能指向某一版：读者应以 `git log` 中最新一条 v1.3 论文提交为准，表中 `1c1bdb6` 是包含本表首个完整版本的那次提交。清单只向后追加，不覆盖旧行。
 
