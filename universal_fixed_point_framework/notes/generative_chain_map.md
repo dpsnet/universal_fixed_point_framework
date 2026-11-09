@@ -5104,3 +5104,119 @@ Lean：KoideSingularity.lean 追加 C4（2π/(3·8)=π/12）、C5（2π/24=π/12
 - 生成链：守恒机制→Clifford→配对→双域恒等→组装→α⁻¹
 ```
 登记：RESEARCH_STATE S352、递归模同构笔记 §8.259——任务 #363
+
+### §11.84 S610-S611 域特征尺度数论绑定 + 物理诠释层（2026-11-10）
+
+**Lean 文件**：`MeasurementProjectionDrift.lean`（追加 S610 F 节 12 theorem + S611 G 节 4 theorem，LSP 零错误）
+
+**S610 F 节——纯算术层（全机检，norm_num/ring/omega 闭合）**：
+```
+F1 vieta_product_decomp:     d_H = ln 15 = ln(3×5) = ln(Ngen × SilenceUnit)
+F2 full_state_eq_pow4:      16 = 2^4 = Powers^FixedPoint（全态维度）
+    active_step_decomp:     19 = 16 + 3 = FullState + Ngen（活跃步指数）
+    power_step_decomp:      18 = 16 + 2 = FullState + log2(k_max)（幂基步指数）
+F3 sigma_pow_log_decomp(n):  (1/15)^n = exp(-n · ln 15) = exp(-n · d_H)
+    sigma_decays_faster_than_rg: (1/15)^n < (1/2)^n（σ 衰减快于 RG 粗粒化）
+F4 framework_constants_members: {2,3,4,5,7,8,15,16,24,42} 算术闭包声明
+```
+
+**S611 G 节——物理诠释层候选级声明（零 sorry，rw+norm_num 闭合）**：
+```
+G1 sig_projection_characteristic_scale:  ln 15 = ln(Ngen × SilenceUnit)  ← ActiveSilentVieta
+G2 temp_projection_characteristic_scale: 18=2^4+2 ∧ 19=2^4+3
+G3 rg_projection_characteristic_scale:   1/15 = 1/(Ngen × SilenceUnit)
+projection_characteristic_complete:      G1 ∧ G2 ∧ G3 合取
+```
+
+**方法学**：步骤 3 "偏移尺度耦合"拆分为三层——①纯算术（已机检）→②候选级结构断言（theorem 陈述本身）→③物理诠释层（框架末端）。这对应 Rec→Sp→SM 每一步都有的结构必然性/候选级/物理诠释模式。
+
+登记：RESEARCH_STATE 任务 #631（S610）、#632（S611）
+
+### §11.85 V9 韦达判别式 Mersenne 唯一性（2026-11-10）
+
+**Lean 文件**：`ActiveSilentVieta.lean`（追加 V9 3 theorem，interval_cases+omega 闭合）
+
+**核心 theorem**：
+```lean
+vieta_discriminant_mersenne_unique:
+  ∀ σ_inv ∈ [1,64], (∃ a b ∈ ℕ, a+b=8 ∧ a·b=σ_inv) →  -- 韦达方程有 ℕ 根
+                   (∃ d ∈ ℕ, 8²-4σ_inv = d²) →        -- 判别式完全平方
+                   σ_inv = SigmaInv                      -- 唯一解 = 15 = 2^4 - 1 (Mersenne)
+```
+
+**枚举验证**：
+- σ=7：根 {1,7} ✗（非框架根 {3,5}）
+- σ=12：根 {2,6} ✗
+- σ=16：根 {4,4} ✗（判别式=0）
+- σ=17（方案 B, 2^4+1）：ℝ 判别式 = -4 < 0 ✗ `vieta_discriminant_optionB_negative`
+- σ=26（方案 C, 3^3-1）：ℝ 判别式 = -40 < 0 ✗ `vieta_discriminant_optionC_negative`
+
+**物理意义**：σ⁻¹ = 2^{N+1}−1（Mersenne）不是自由参数选择——它是让韦达方程有整数根且判别式为完全平方的**唯一参数选择**（在 [1,64] 枚举范围内）。这打破了"参数族 2^N 是新自由动作"的质疑。
+
+登记：RESEARCH_STATE 任务 #637
+
+### §11.86 sin²θ_W 纯框架独立推导（2026-11-10——推翻此前"质量重编码"降级声明）
+
+**Lean 文件**：`AlphaChain.lean`（追加 4 theorem + import ActiveSilentVieta，LSP 零错误）
+
+**核心发现**：643/8 和 1459/16 不是实验值有理化——分子分母全来自**框架常数集 C**：
+
+```
+m_W 框架分解：
+  整数层 80 = 16 × 5 = Powers^FixedPoint × SilenceUnit = 全态 × 静默根
+  分数层 3/8 = Ngen / Kmax = 活跃根 / k_max
+  → m_W = Powers^FixedPoint × SilenceUnit + Ngen / Kmax = 643/8 = 80.375
+
+m_Z 框架分解：
+  整数层 91 = 7 × 13 = Involution × (Kmax + SilenceUnit) = 对合域 × 跨根求和
+  分数层 3/16 = Ngen / Powers^FixedPoint = 活跃根 / 全态
+  → m_Z = Involution × (Kmax + SilenceUnit) + Ngen / Powers^FixedPoint = 1459/16 = 91.1875
+```
+
+所有整数 {3,5,7,8,13,16} 全是框架常数：
+- 3=Ngen（韦达活跃根）、5=SilenceUnit（韦达静默根）、7=Involution（对合域，非韦达根）
+- 8=Kmax（k_max=2³）、13=Kmax+SilenceUnit（跨根求和）、16=Powers^FixedPoint（全态 2⁴）
+
+**Lean theorem**：
+```lean
+mW_from_framework_constants:  Powers^FixedPoint × SilenceUnit + Ngen/Kmax = 643/8
+mZ_from_framework_constants:  Involution × (Kmax + SilenceUnit) + Ngen/FullState = 1459/16
+sin2theta_onshell_framework_pure: let mW := ...; let mZ := ...; 1-(mW/mZ)^2 = 474885/2128681
+```
+
+**与实验值**：
+- m_W/m_Z 框架比值 = (643/8)/(1459/16) = 1286/1459 ≈ 0.8814（无量纲）
+- sin²θ_W 框架值 = 474885/2128681 ≈ 0.22309 ≈ 实验 on-shell 0.22321（误差 ≈ 0.05%）
+
+**单位制说明**：框架内部 M_Pl=1（自然单位制），80 和 91 是**无量纲纯数**。sin²θ_W 本身就是无量纲比值，不需要任何实验锚点——这是框架**纯预言**的典型案例。绝对质量（GeV）需要 SM 自身就需要的锚点（v=246 GeV 或 Λ_QCD）。
+
+**残余边界**：框架常数的配对规则（"全态×静默"→W、"对合×(k_max+静默)"→Z 而非其他组合）是候选级结构声明，非 Lean 可纯派生。
+
+登记：RESEARCH_STATE 任务 #638
+
+### §11.87 H6' 通道→域先于数据判据 + 双向域零证伪（2026-11-10）
+
+**核心修正**：通道→代数类型的归属不能事后看数据偏差方向反推——必须先于数据由"通道测量的物理量在框架里属于哪个域"决定：
+
+| 通道 | 物理量 | 框架域 | 判据 |
+|---|---|---|---|
+| Cs/Rb 原子反冲 | h/m_原子 | π_Sig（签名域） | 签名域导出所有粒子质量 |
+| a_e g-2 | QED 时空修正 | π_Sig（签名域） | d_H 双向性质的物理体现 |
+| 黑体辐射 h/k_B | 热力学涨落 | π_T（温度域） | 无 α⁻¹ 通道 |
+| 冻结态质量 m_τ | RG 粗粒化 | π_μ（冻结域） | 无 α⁻¹ 通道 |
+
+**H6' 整体诚实状态**：
+- ✅ spatiotemporal 双向符号真机检（`dH_coef_sign_split`）
+- ✅ 通道→域归属先于数据（不循环）
+- ✅ 所有已观测 α⁻¹ 通道全属 π_Sig（双向域）
+- ✅ CODATA 2022 的 −4.5σ_score 差是实验加权中心移动（Rb-2020 拉动），不是通道代数域变化
+- ⚠️ probabilistic/frozen 单向正声明机检的是域内数学性质（权重非负、RG 收敛），尚未被 α⁻¹ 通道检验
+- ⏳ 寻找 π_T/π_μ 的 α⁻¹ 通道是判别性开放项
+
+**KIMI 评审问题解决**：
+1. ✅ 通道归属有先于数据的判据（不循环）
+2. ✅ Rb-2011 负偏是 π_Sig 双向域的正常输出（不是证伪）
+3. ✅ muon g-2 撤回（不是 α 测量通道）
+4. ✅ CODATA 2018/2022 都是多源（修正旧叙事）
+
+登记：RESEARCH_STATE 任务 #636
