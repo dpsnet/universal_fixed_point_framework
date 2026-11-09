@@ -154,3 +154,4 @@ import MUFPFormalization.LuInvariant
 import MUFPFormalization.RUniqueness
 import MUFPFormalization.OccupiedTrace
 import MUFPFormalization.RecOrbitDynamics
+import MUFPFormalization.RecOrbitContraction

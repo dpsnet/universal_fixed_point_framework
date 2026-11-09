@@ -12857,3 +12857,64 @@ MISSING_OLEAN=0   STALE_OLEAN=0   SORRY_LINES=0
   - 论文落地四处（1516→1518 行）：① L82 引言佐证（三）末句改口径——“可分辨的新状态终会停止产出”由观测分辨率有限给出（`exists_visible_repetition`，已机检），周期塌成真静止与多快塌才属收缩/热化动力学（`swap_not_frozen` 表明不由有限性保证）；② L272 §3 末句同上改口径；③ L274 新增段「动力学的最小构成（候选级登记，S624）」——动力学不需要第四原语，即 Rec/Sp/D 按固定次序读一遍（生成 `step` 非恒等 → 压缩 投影 `π` → 不动点 复合极限）；(i) 必然性层已机检、(ii) 收缩层仍开放、(iii) 速率层不可由现有公设内生（唯一候选 σ=1/15 已在 α 链承担比例语义，挪作动力学率会与既有数值链冲突，故不作升格，附证伪条件：若出现与 σ 链独立的压缩率通道则本段须重写）；结论“动力学对本文是解释性必要、预言性不必要”；④ §11 分层声明加一句动力学骨架四定理、§13 开放组件新增“动力学的收缩层”。同步更新全部构建计数：3824→3825、335/335→336/336、MODULES 335→336、CLOSURE 156→157（共 15 处，逐条 count 断言）。
   - 结论边界（写进论文的版本）：**“必然有尽头”由有限性给出、已可机检，不需要动力学；“尽头是不是静止”不必然，需收缩机制——这才是动力学的真正职责**。原措辞把可证的必然性与真正开放的收缩机制合并推给“耗散动力学”，是把两件事混为一谈。
   - 版式教训（本轮新增）：python `read_text()` 触发 universal-newlines，把 CRLF 折成 LF，随后 `write_bytes` 会静默把全文件行尾改掉（本次一度 CRLF=1517→0）。**改论文一律 `read_bytes()` + decode，写回前校验 `t.count('\r\n')`**；另发现引号统一脚本误伤两处与本题无关的「」（L458 `「为何 N_gen = 3 未导出」`、L1414 `「论文修订过程档案」`），已逐一还原，最终 diff 仅含预期 13 处。
+## S625（2026-11-10）收缩层与速率通道：σ ≡ S₄ 机检收口 + 几何收敛机检
+
+### 0. 本轮推翻的上一轮判断
+S624 在论文 §3 落了一句「(iii) 速率层不可由现有公设内生」，理由是「现有常数中唯一可充当压缩率角色的是 σ = 1/15，但它已在 α 链承担比例语义，挪作动力学率会与数值链冲突」。本轮用库内证据推翻该判断——不是「挪用被占用的常数」，而是**同一个常数的第三条语义链**。
+
+### 1. 证据链（三条，全部库内可查）
+1. `CoherenceToBranching.lean` L793–845（§10b）：IFS 收缩因子比 `c₁⁰:c₂⁰:c₃⁰ = S₃S₄ : S₄ : 1`，`S₃ = e⁻³`（N_active=3）、`S₄ = e^{−d}`；定义 `silent_factor_c1 d := Real.exp(-3) * Real.exp(-d)`、`silent_factor_c2 d := Real.exp(-d)`、`silent_factor_c3 := 1`；注释明写「**d = ln 15 为机器证明实例**」。
+2. `PublicResidueIdentity.lean` L46 `sigma : ℝ := 1/15`、L51 `sigma_eq_S4 : sigma = SpinorSilenceBranch.S4`（已机检）、L59 `sigma_value : sigma = 1/15`。`SpinorSilenceBranch.S4`、`TimeSpectrum.S4`、`EDRNCrossFramework.S4` 均 `:= 1/15`。
+3. 15 不是硬编码：`SpinorSilenceBranch.S4_eq_inv_two_pow_succ_minus_one`（`S₄ = 1/(2^(N_active+1) − 1)`）机检链 `N_active = 3 → k_max = 2^3 = 8 → 16 = 2·k_max → 15 = 16 − 1`。
+∴ `d = ln 15 ⟹ S₄ = e^{−ln 15} = 1/15 = σ`。收缩率与框架常数 σ 同一，σ 的三条语义链（比例 / 谱残差 / 收缩率）共用同一生成链。
+
+### 2. 新增 `RecOrbitContraction.lean`（八定理，零 sorry）
+1. `exp_neg_log_fifteen : Real.exp (-(Real.log 15)) = (1/15 : ℝ)`
+2. `silent_factor_c2_ln15 : silent_factor_c2 (Real.log 15) = 1/15`
+3. `silent_factor_c1_ln15 : silent_factor_c1 (Real.log 15) = Real.exp (-3) * (1/15)`
+4. `silent_factor_c2_ln15_eq_sigma : silent_factor_c2 (Real.log 15) = PublicResidueIdentity.sigma`（走 `rw [silent_factor_c2_ln15, sigma_value]`）
+5. `tendsto_sigma_pow_zero : Tendsto (fun n => (1/15)^n) atTop (𝓝 0)`
+6. `contraction_iterate_bound (hc : 0 ≤ c) (hstep : ∀ x, |step x − a| ≤ c*|x−a|) : ∀ x n, |step^[n] x − a| ≤ c^n * |x − a|`
+7. `contraction_iterate_tendsto (hc0 : 0 ≤ c) (hc1 : c < 1) (hstep) (x) : Tendsto (fun n => step^[n] x) atTop (𝓝 a)`
+8. `sigma_rate_contraction (hstep : ∀ x, |step x − a| ≤ (1/15)*|x−a|) (x) : (∀ n, |step^[n] x − a| ≤ (1/15)^n*|x−a|) ∧ Tendsto … (𝓝 a)`
+**边界（写进文件 docstring）**：本文件是**条件命题**——给定压缩条件则收敛；**不证明本框架的 `step` 满足该条件**。「压缩条件本身的来源」仍为候选级。σ 速率候选值本身已内生（第 4 条），不再需要新常数。
+
+### 3. 编译与工具链（本轮踩到的坑）
+- 首建失败（`%TEMP%\bc1.txt`）：`error: RecOrbitContraction.lean:105:86: Application type mismatch: The argument x has type ℝ but is expected to have type ℕ in the application Function.iterate_succ_apply' ?m.77 x`。原因：该引理的 `f` 是 `variable (f)`，**必须显式传 step**：`iterate_succ_apply' step k x`（源码 `Logic/Function/Iterate.lean:174`）。
+- 修复后 `%TEMP%\bc2.txt`：`✔ [3188/3188] Built MUFPFormalization.RecOrbitContraction (15s)`，`Build completed successfully (3188 jobs)`，exit 0。
+- **`lake env lean` 的 LEAN_PATH 是坏的**（`%TEMP%\leanpath.txt`）：mathlib 被解析到 `D:\tools\lean\.lake\packages\mathlib`（空目录）而非仓库内 `.lake\packages\mathlib`，任何 `import Mathlib` 的单文件检查都报 `object file … Mathlib.olean does not exist`。**结论：探测/单文件检查一律走 `lake build MUFPFormalization.<Module>`，弃用 `lake env lean`**（与 ENV_GUIDE v1.2 的「单文件检查 `lean src\…`」条冲突，以实测为准）。
+- 一次性 `import Mathlib` 探测拉满 ~5000 jobs（跑 20 分钟被 TaskStop 中止）。改走**读 mathlib 源码 grep 签名**，快一个数量级：
+  - `tendsto_pow_atTop_nhds_zero_of_lt_one`（`Analysis/SpecificLimits/Basic.lean:190`，两个假设 `0 ≤ r` 与 `r < 1`，**不是** `‖r‖<1`）
+  - `squeeze_zero`（`Topology/MetricSpace/Pseudo/Lemmas.lean:38`，`(hf : ∀ t, 0 ≤ f t) (hft : ∀ t, f t ≤ g t) (g0 : Tendsto g t₀ (𝓝 0)`）
+  - `Function.iterate_succ_apply'`（`Logic/Function/Iterate.lean:174`，`f` 为显式参数）
+  - `tendsto_zero_iff_norm_tendsto_zero` 广泛使用（`rw [tendsto_iff_norm_sub_tendsto_zero]` + `simpa only [Real.norm_eq_abs]` 收尾）
+
+### 4. 数值先证伪（模式 8，三轮）
+- `pre_s625.py`：`exp(-ln15)` vs `1/15` 残差 **0.000e+00**；σ^n（n=1..20）6.67e-2 → 3.01e-24 单调衰减。
+- `pre_s625b.py`：加 eps 地板后仍 1 组标 FAIL → 查明 `c^2000` 下溢到 1e-89，**低于机器 eps**，是浮点下溢不是数学失败。
+- `pre_s625c.py`：horizon 改 n=60，检验解析恒等式 `|z_n − a| = c^n|x − a|`，6 组里 5 组「FAIL」——但数值显示 c=0.3193 时 `|z−a|` 已被浮点吞成 0（解析界 1.18e-29），其余三组绝对差 1e-9~1e-3 且 rel 3.44e-14 / 8.31e-9 / 5.17e-8 逐位吻合。**结论：迭代精确按几何律收缩，解析恒等式成立；报 FAIL 的全是浮点吸收。教训：几何收敛的数值检验禁用相对残差判据，须把解析界与浮点地板比较、在高于地板时比对绝对值。**
+
+### 5. 入库与构建真值
+- 库根 `src/MUFPFormalization.lean` 追加 `import MUFPFormalization.RecOrbitContraction`（157→158 行）。
+- 删除探测残留 `src/MUFPFormalization/Probe2.lean`（3 个 example，未跑通、未提交、未入库根；olean 无残留）。
+- `lake build MUFPFormalization`：**3829 jobs**，Build completed successfully，exit 0，0 error，12 warning（全部为既有：SpCategory 427×2、SignatureFiber 342、ICVerification 82/86、RAP4 123/124、RAP5a 413、SpectralBundle/Core 69、PinchTopology 389/492、HallEmergence 1170——即 9 条 `haveI` + 3 条 `<;>`）。新模块零 warning。
+- `lake build`（全 default target，含 `mufpfformalization:exe`）：**7094 jobs**，exit 0。
+- 审计真值（新脚本 `%TEMP%\audit625c.py`，口径修正见下）：MODULES=336（源模块）/ CLOSURE=161（含库根）/ ORPHANS=176 / MAIN 直接 import 10 个、覆盖 orphan 9 个 / 其余 167 个逐模块点名构建 / DANGLING=0 / MISSING_OLEAN=0 / SORRY_LINES=0。
+- **审计口径勘误（本轮修正）**：旧记法「MODULES=336 / CLOSURE=157 / ORPHANS=179」混了口径（336 不含根、157 含根，故 336−157=179 的减法本身不成立）。统一为**含根口径**：337 个 Lean 文件 / CLOSURE=161 / ORPHANS=176（337−161=176 自洽）。另修一个真 bug：`import MUFPFormalization.SpectralBundle.Core` 的模块名用点号，直接拼路径会找不到文件，导致 9 个 `SpectralBundle.*` 模块被误判为 dangling、闭包少递归——脚本内须 `import 名 . → /` 归一化后再匹配。
+
+### 6. 论文落地（1518 行不变，20+3 处逐条 count 断言）
+- L272 §3 末句：「需收缩／耗散动力学」后改为「其速率通道的候选值已由既有生成链内生并机检（每步 σ，见下段），收缩条件本身的来源仍登记为开口」。
+- L274 段（标题去掉轮次标记）：(ii) 改为「收缩层的条件侧已机检、来源侧开放」，写入 `contraction_iterate_bound` / `contraction_iterate_tendsto` 与「仍开放的是本框架 step 是否满足该压缩条件」；(iii) 整条改写为「速率层已由既有生成链内生」——`silent_factor_c2_ln15`、`silent_factor_c2_ln15_eq_sigma`、生成链 `S4_eq_inv_two_pow_succ_minus_one`、`sigma_rate_contraction` / `tendsto_sigma_pow_zero`；旧的「不可内生」判断与「若出现独立压缩率通道则本段须重写」的证伪条件一并删除（新证伪条件：若 σ^n 与实际冻结时间标度出现可测冲突则速率链换通道）。按要求**不保留「此前…在此更正」类修订叙述**。
+- §11（L1168）：定理清单加收缩层八条（点名 7 个定理）；计数 3825→3829、7096→7094、336/336→337/337、MODULES 336→337、CLOSURE 157→161、ORPHANS 179→176。
+- §12.4 项 1（L1418）：同上计数；孤立模块「179 个 / 10 个由 Main / 169 个未被 import」→「176 个 / 9 个 / 167 个」；「库内模块共 336 个」补口径（含库根 337 个 Lean 文件）；`2026-11-09 实测 7096` → `2026-11-10 实测 7094`。
+- L1414 过时句「本稿改动…尚未提交」→「已提交至 develop（远端头见 §12.4 项 1）」。
+- §13（L1455）：开放组件「收缩率不可由 σ 链内生」→「速率候选值 σ^n 已由既有生成链内生并机检（收缩率与 §10b 的 S₄ 是同一常数）；仍开放的是本框架 step 是否满足压缩条件」。
+- 附录 C（L1497 / L1499 / L1506 / L1508 / L1510 周边 / L1513 / L1517）：3825→3829、7096→7094、336→337、157→161、179→176、169→167，L1508 改为「337/337 个 Lean 文件（336 源模块 + 库根）」。
+- L966 机检边界登记：olean 审计 336/336 → 337/337。
+- 版式自检：LINES=1518 / CRLF=1517 / `\_`=0 / `***`=0 / 无 BOM。
+
+### 7. 未做 / 仍开放（如实登记）
+- **未证明本框架的 step 满足压缩条件**（`RecOrbitContraction.lean` 是条件命题）——「压缩的来源」仍是动力学三层里唯一的开口，论文按候选级登记。
+- 论文 L1160「(a) 步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配尚未机检」**仍未改**：本轮机检的是 σ^n 的几何衰减与收敛，**不是**「偏移尺度耦合精确匹配」，二者不可混为一谈；若要关该项，需另立定理把 δ* 的域投影校正步与 σ^n 谱逐项对齐。
+- 远端哈希（`83240d4` → 本轮新提交）待提交后回填 3 处（L1168 / L1418 / L1513）。
+- `master` 仍非 `develop` 祖先（`41b3bb4`）；Paper II 的「当前 LHC 排除限 1300 GeV」未改；库外碎片未清。
