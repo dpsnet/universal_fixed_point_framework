@@ -12759,3 +12759,78 @@ MISSING_OLEAN=0   STALE_OLEAN=0   SORRY_LINES=0
 5. v1.3 约 15 条提交仍未推送双远端
 
 [状态]：库内机检口径修正为 328/328（169 点名构建）；库外预研项目修复后可构建（3894 jobs 零错误零警告零 sorry），归属判定为"内容属 MUFPF、主张不入检测矩阵"。
+
+---
+
+## 附录：论文修订过程档案（内部预审，已自正文迁出）
+
+> 裁决（2026-11-10）：`paper/paper_SM_endogenous_derivation.md` 正文只呈现最终成果；
+> 内部预审轮次、版本修订叙述、口径变更过程一律沉淀到本档，正文不再保留。
+
+### 一、预审轮次处置
+
+| 轮次 | 问题 | 处置 | 正文落点 |
+|---|---|---|---|
+| N1 | π_T 域曾用 Cs 反冲→事件过程、a_e g-2→统计分裂、Rb 反冲→概率通道作过程例子；三通道在 §9.1b 物理量身份判据下全属 π_Sig，同一批通道出现两套归属标准 | 撤销该三例；主表判据（物理量结构身份）为唯一判据；π_T 域只保留指数算术（假设性通道类型，目前无已观测 α⁻¹ 通道） | §9.1b |
+| N2 | δ* 域级分解核算失败：按候选级域标签（6σ³+4σ⁵↔π_Sig、8σ⁷↔π_T、5σ⁸↔π_μ），π_T+π_μ 贡献 24·8σ⁷+24·5σ⁸ ≈ 1.17×10⁻⁶，而 CODATA 2022 相对框架偏移仅 9.4×10⁻⁸——超 12.5 倍；且 8σ⁷、5σ⁸ 恒正，产生不了 Cs（−1.39σ_score）、Rb-2011（−0.51σ_score）的负偏移 | 登记为失败核算，保留记录、不升格；精确偏移机制仍为开放项 | §9.2e |
+| N3 | C1 的认识论地位被误读为"冻结对象被数学排除" | `DImAdjRIm`（活跃子范畴伴随存在）与 `no_global_right_adjoint`（全范畴不存在）都不推出"冻结对象在 SpImD 内不合法"；C1 = 定义域规定（框架把活跃层规定为 D⊣R 的定义域），非排除定理 | §4.1 + §4.7 分层表 |
+| N4 | 韦达方程指数记号不统一 | 指数一律以 N_active 计 | §5（C2 推导） |
+| — | sin²θ_W 构造仅被视为"有趣巧合" | 升级为可记账判别力：语法空间 C={2,3,4,5,7,8,15,16,24,42}，M∈{x·y}∪{x·(y+z)} 得 257 个，f=p/q 得 73 个，257×73=18761 组合、去重后 14694 个不同数值 | §9.2f |
+| — | 仓库可见性表述 | 不主张"自创建伊始即开源"；公开状态为待核实事实项，不由本文单方裁决 | §12.4 项 1 |
+
+### 二、版本变更记录（v1.2 → v1.3，正文已不保留版本号）
+
+- **jobs 口径**：v1.2 宣称"7096 全绿"当时不可复现（同命令实测 3048 / 3657 targets）。定位后确认：`lake build`（全 default target，含 `mufpfformalization:exe`）= 7096 jobs、`lake build MUFPFormalization`（库根闭包）= 3821 jobs，两者均 exit 0。故 7096 可引用，但强制与命令绑定；裸数字不可核验。
+- **审计口径**：旧 318/318 是审计脚本非递归 glob 的漏数（`SpectralBundle\` 下 9 个子模块与库根 `src\MUFPFormalization.lean` 未计入）。脚本改递归 v2 后 328 → 334（预研 6 模块并入）→ 335（`OccupiedTrace` 并入）；ORPHANS 恒为 179 = 10（由 exe 入口 `Main.lean` import）+ 169（需逐模块点名构建）。
+- **mtime 判据废弃**（2026-11-10）：lake 按**内容哈希**判重、不用 mtime。实测把 335 个源文件全部 touch 后 `lake build` 仍 0 rebuilt / 全 replay，证明 mtime 差异不代表 olean 与源不同步。故 olean 一致性的可靠判据是 `lake build` 全程 0 rebuilt + exit 0；审计脚本里的 `STALE_OLEAN_MTIME` 项降级为"仅供参考、不作结论"（touch 后会报 323 条假阳性）。
+- **"σ⁻¹ ∈ [1,64] 内唯一"为假**：σ⁻¹=7（根 {1,7}，D=36=6²）、12（根 {2,6}，D=16=4²）、16（根 {4,4}，D=0=0²）同为整数根且判别式完全平方。原 `vieta_discriminant_mersenne_unique`（其证明行 `interval_cases … with` 语法本身不成立）已撤销；族外反例改由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。唯一性只在 σ⁻¹ = 2^{N+1}−1 参数族**内**成立（族内仍依赖数值枚举，Lean 全枚举待补）。
+- **δ* 幂次谱 {3,5,7,8} 不是 Fibonacci**：7 的身份是 Involution。
+- **Rb-2020 不确定度**：1.1×10⁻⁸（v1.2 散文曾误印 10⁻¹⁰），比 Rb-2011 的 9.1×10⁻⁸ 好 8 倍。
+- **4 个模块从未编译通过**：`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily` 在 v1.2 期间无编译依据，commit `1f88c8b` 修复后首度通过。其中 `MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表"已机检"自该提交起才成立。
+- **预研迁入**：库外 6 模块（`SpinorSilenceBranch` 33 定理 / `TimeBranch` 6 / `TimeSpectrum` 3 / `LayerEntropy` 2 / `LuInvariant` 7 / `RUniqueness` 5）并入 `src`，合计 56 定理、零 sorry、零 axiom；命名空间统一 `MUFPFormalization.*`；接驳定理 `sigma_eq_S4` 使 `PublicResidueIdentity.sigma`（`1/15`）与 §⑧ 导出链对齐（只保证同值，不计入 56）。
+
+### 三、linter warning 清算（720 → 12，正文只登记最终状态）
+
+- 真基线：`lake build` 720 条 / 80 文件 / 0 error / 3824 jobs（`%TEMP%\warnfix_full.txt`、机读清单 `warn_items2.json`）。分类：未用变量 371、无用 simp 参数 149、死战术 76、never-executed 72、`<;>` 冗余 24、`Try this` 13、`simpa→simp` 11、其他 4。
+- 六模块批次（commit `3bf4af3`）：`SilenceModel` 355→0、`SpCategory` 167→2、`StaticTopologyFormalization` 22→0、`Silence` 6→0、`OperatorTheory` 3→0、`NoiseCategory` 16→0。
+- 全库机械批：未用变量 371 条由脚本改 369 处（66 文件，0 失败），3 处改错手工纠正（`TestOperatorTheory:101` 的 `x`/`_x` 互换、`FlavorFiber:252` 删 simp 参数、`TotalParameterFiber:314/452` functor 字段回落 `map f := f; map_id _X := rfl; map_comp _f _g := rfl`）。
+- 余 12 条全部论证为"建议在本处不等价"：9 条 `haveI`→`have`（这些位置作实例使用，改 `have` 或删行会中断实例合成；linter 自陈 proof irrelevance 下不影响证明）、3 条 `<;>`→`;`（`SpCategory:427`×2、`SignatureFiber:342`，改写后目标分配改变、产生 unsolved goals）。
+
+### 四、论文引言「认知佐证」三处的写作取舍（2026-11-10）
+
+- 佐证（一）跨系统 → 落 Sp 一侧；佐证（二）跨时刻（时间即递归）→ 落 Rec 一侧；佐证（三）跨尺度（消亡 = 某个尺度上的不动点）→ 落 D 一侧。三处合起来覆盖 Rec/Sp/D 全部三个原语。
+- 引言的载体规则：只留观察、归位、边界三件事，不出现公式与 Lean 定理名。（三）的首稿曾写成三段技术展开（含 π∘step=π 与三个定理名），已压缩为一段；技术细节下沉到 §4.1「C1 的尺度化（局部冻结）」。
+- 尺度消亡的机检锚（`SpectralBundle/Core.lean` §S，2026-11-10 新落，构建 0 error / 3824 jobs）：`vanishesAtScale`、`scaleDefect`、`step_eq_id_of_vanishesAtScale_injective`、`vanishesAtScale_comp`、`defectMeasure_zero_of_vanishesAtScale_injective`。
+- 如实标注的开口：为何粗粒化**必然**在某个尺度上杀掉自由度，需耗散/热化动力学；本框架只给结构、不给动力。
+
+### 五、版本—哈希登记表（内部过程，已自论文 §12.4 迁出）
+
+| 版本 | 内容 | git 哈希 | 提交日期 | 可核验性 |
+|---|---|---|---|---|
+| v1.2 基线 | 核心 Lean（含 V9 判别式锚、S610–S612、sin²θ_W 推导） | `e0cbb35` | 2026-11-09 | 仓库私有 → 外部不可检出，哈希仅本机可验 |
+| v1.2 基线 | 论文 v1.2 终稿 | `d424503` | 2026-11-09 | 同上 |
+| v1.2 基线 | M₈ bridge 层七个文件 | `ae02433` | 2026-11-09 | 同上 |
+| v1.2 基线 | 笔记 / RESEARCH_STATE | `e503722` | 2026-11-09 | 同上 |
+| v1.3 | 核心 Lean：V9 陈述撤销与三真断言、通道判据统一（MeasurementAlgebra） | `8a87aa1` | 2026-11-09 | 本机可验（`git show 8a87aa1`）；外部检出待仓库公开 |
+| v1.3 | 论文 v1.3 终稿（含版本—哈希表、§9.2f、§12.4.1–12.4.2） | `1c1bdb6` | 2026-11-09 | 本机可验；外部检出待仓库公开 |
+| v1.3 追加 | §1.2 认知佐证段（日常物理自相似：水波 / 湍流 / 晶体生长 / RG 不动点，作为 Rec/Sp/D 普适性的独立旁证） | `a4a2405` | 2026-11-09 | 同上 |
+| v1.3 追加 | 笔记层 V9 勘误（`RESEARCH_STATE.md` 追加条目 + `notes/generative_chain_map.md` §11.85 重写为族内唯一性） | `51926d2` | 2026-11-09 | 同上 |
+| v1.3 追加 | 记号统一（§9.2d 附近韦达方程备注的 N → N_active） | `bf99ef9` | 2026-11-09 | 同上 |
+| v1.3 追加 | `AlphaChain.lean` 机检边界修复（sin²θ_W 三定理的 autoImplicit 自由变量 → 局部 `open` 限定，首度真编译通过） | `9c2c4e4` | 2026-11-09 | 本机可验（`lake build …AlphaChain` → 3178 jobs, exit 0） |
+| v1.3 追加 | 4 个孤立模块首度编译通过（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）；olean 审计达 328/328（MISSING=0、STALE=0、sorry=0；v1.3 发行时记作 318/318，2026-11-09 审计 v2 校准） | `1f88c8b` | 2026-11-09 | 本机可验（`lake build MUFPFormalization` → 3821 jobs、`lake build` → 7096 jobs，均 exit 0） |
+| v1.3 审计校准 | 审计脚本改递归 v2；库内模块数 318→328（`SpectralBundle` 9 个 + 库根 1 个为原漏数），闭包 149 / 不在闭包 179（10 个由 exe 入口覆盖、169 个点名构建） | `746ac27` | 2026-11-09 | 本机可验（MODULES=328 / CLOSURE=149 / ORPHANS=179 / MISSING=0 / STALE=0 / SORRY=0） |
+| v1.3 追加 | 库外预研 6 模块并入 `src`（`SpinorSilenceBranch` 33 定理、`TimeBranch` 6、`TimeSpectrum` 3、`LayerEntropy` 2、`LuInvariant` 7、`RUniqueness` 5，共 56 定理，零 sorry 零 axiom）；模块数 328→334、闭包 149→155、ORPHANS 179 不变 | `9d6b9c7` | 2026-11-09 | 本机可验（MODULES=334 / CLOSURE=155 / ORPHANS=179 / MISSING=0） |
+
+说明：表中"可核验性"一行在仓库对外可检出前只能核对哈希字符串与日期，不能核对内容；此边界在论文 §12.4 项 1 与"哈希锚的使用边界"中保留。
+
+### 六、本表之后的演进（2026-11-09 → 2026-11-10，论文正文不保留）
+
+- `6069e3d`（S615c，23 files，+192/−92）：`OccupiedTrace.lean` 并入，模块 334→335、闭包 155→156。
+- `3bf4af3`（S615d，6 files，+397/−402）：六模块 linter warning 批（`SilenceModel` 355→0、`SpCategory` 167→2、`StaticTopologyFormalization` 22→0、`Silence` 6→0、`OperatorTheory` 3→0、`NoiseCategory` 16→0），全库 warning 720→12。
+- 未提交（HEAD 仍 `3bf4af3`）：66+ 个 `src\MUFPFormalization\*.lean` 清理、`SpectralBundle/Core.lean` §S 段（尺度消亡 5 声明）、`scripts/p7_lean_olean_audit.py` v3、论文全部改动。
+- 构建口径最终值：库根 `lake build MUFPFormalization` = 3824 jobs（335 模块 + §S 段后）、全 default target `lake build` = 7096 jobs，均 exit 0；olean 审计 MODULES=335 / CLOSURE=156 / ORPHANS=179 / MISSING_OLEAN=0 / SORRY_LINES=0。
+- 论文去修订痕迹共六轮脚本（2026-11-10）：rev.py（17 项）→ rev2（8 项）→ rev3（18 项，含版本—哈希表整块迁出）→ rev4（附录 C 构建记录统一）→ rev5（摘要与引言 §1 状态块重写）→ rev6（"328 → 334 → 335"链改为"库内模块共 335 个"）。第一轮 grep 曾报"0 命中"，实为假阴性（工具在超长中文行上漏匹配）；改用 python 逐行扫描后发现 18 处 `v1.x`、35 处日期，以及 1396 条 warning、3827 jobs、328/328 等旧口径与"本轮/首度/从未"过程词。
+
+- 论文形态整理（卷首与摘要，2026-11-10）：卷首五行元数据收缩为一行作者——删除"版本（日期+四基线哈希）""双平台仓库地址""Lean 形式化状态（3048/3824/7096 jobs + olean 335/335）""开放组件"；其中开放组件清单在 §13 结论本就完整存在（SU(3)/U(1) 五范畴化、宇宙常数、暗物质身份、15 的参数族论证、probabilistic/frozen 域通道、m_W/m_Z 组合规则），仓库与构建口径在 §12.4 项 1 与附录 C 本就完整登记，故卷首属重复。摘要按全文重写（原为单段 1500 字、含 jobs/olean/MODULES/commit 与九个 Lean 定理名堆砌）：改为"问题—方法—主要结果—判别力与边界—认识论分层—结构性结论"六段学术体例，保留 α⁻¹ = 72+24ln15+24δ*、δ* 四项、m_W/m_Z = 1286/1459、σ_score 三级判据、12/12 回溯 vs 唯一未注册外推 m_L4、CODATA 2018/2022 的 +0.027/+4.46σ_score、sin²θ_W 判别力弱（基础率 1/1.5×10⁴）等科学内容，剔除全部工程计数与哈希，新增关键词行。§1.4 贡献段的同类工程计数压缩为一句口径指引（构建/审计口径见 §12.4 项 1 与附录 C）。正文 §11（形式化资产）与附录 C 的技术登记保持不动——这两处是"可核验性"的家，不是元数据。
+
+- 论文头部体例对齐（2026-11-10）：比对同目录论文（paper1/17/40/46/48/57/58）后确认家族体例为「# 中文标题 / 英文标题 / **作者**：王斌（独立研究人），wang.bin@foxmail.com / **版本**：vX.Y（YYYY-MM-DD）/ **摘要** / **关键词** / 分隔线 / **稿态** / **前置依赖**」。据此重建本文头部：作者由占位式「MUFPF 框架」改为家族统一署名；恢复 **版本** 行（v1.0，2026-11-10，不带任何"新增/修正"括注——v1.0 表示对外首发版，内部 v1.2/v1.3 过程稿不进论文）；新增 **系列** 行但不写编号（paper46/48/58 这一批已弃用罗马数字前缀，LIX 编号未定）；新增 **稿态** 与 **前置依赖**，后者按正文实际引用反查列出 Paper I/XIX/XLVI/XVII/XL/XI/II/XX/XXXII。此前一轮误把"版本"判为非学术必需项删除，本轮据家族体例纠正：版本行是该系列既定元数据，只是不得携带修订过程说明。
