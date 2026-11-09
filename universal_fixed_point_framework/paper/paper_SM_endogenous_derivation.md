@@ -18,7 +18,7 @@
 
 标准模型的自由参数与群结构，长期被当作必须由实验输入的量。本文检验一个更强的可能：它们能否由单一范畴论起点内生导出，且不需新增连续可调参数。出发点只有三个原语——有限态递归范畴 $\mathbf{Rec}$、有限复矩阵谱范畴 $\mathbf{Sp}$，以及去递归函子 $D : \mathbf{Rec} \to \mathbf{Sp}$；四维 Clifford 代数结构不是预设，而由三层活跃态射与递归单向性联合导出。
 
-推导覆盖 SM 的主要骨架：Lorentz 时空 $Cl(3,1)$ 与时间方向的存在（$N_{active} = 3$ 由 $\mathbf{Sp}$ 的严格 4-范畴性唯一筛选，继而 $k_{max} = 2^{N_{active}} = 8$）；规范群 $SU(3)\times SU(2)\times U(1)$ 与电荷谱；三代费米子等同于活跃根个数；CKM 与 PMNS 混合参数；Higgs 扇区与真空期望值；以及无量纲耦合常数。其中强制的核心是韦达方程的整数根分裂 $\{3,5\}$——它同时锁定 $k_{max} = 8$ 与 $\sigma^{-1} = 15$，从而给出框架常数 $\sigma = 1/15$。
+推导覆盖 SM 的主要骨架：Lorentz 时空 $Cl(3,1)$ 与时间方向的存在（$N_{active} = 3$ 由 $\mathbf{Sp}$ 的层索引约定给出（$3$ 层活跃 $+\,1$ 层 coherence），再在既定参数族内由韦达整数根条件唯一闭合，继而 $k_{max} = 2^{N_{active}} = 8$）；规范群 $SU(3)\times SU(2)\times U(1)$ 与电荷谱；三代费米子等同于活跃根个数；CKM 与 PMNS 混合参数；Higgs 扇区与真空期望值；以及无量纲耦合常数。其中强制的核心是韦达方程的整数根分裂 $\{3,5\}$——它同时锁定 $k_{max} = 8$ 与 $\sigma^{-1} = 15$，从而给出框架常数 $\sigma = 1/15$。
 
 耦合常数的结果以 $\sigma$ 的四项幂次谱表达：$\alpha^{-1} = 72 + 24\ln 15 + 24\delta^{*}$，$\delta^{*} = 6\sigma^{3} + 4\sigma^{5} + 8\sigma^{7} + 5\sigma^{8}$，数值 $137.035999083426$；弱混合角由两个域尺度的配对约束给出 $m_W = 643/8$、$m_Z = 1459/16$，即 $m_W/m_Z = 1286/1459$。全部整数取自框架常数集，无自由参数。
 
@@ -95,7 +95,7 @@
 
 ### 1.4 本文贡献
 
-本文以**构造性推导**的方式，展示从三个范畴论构件到 SM 全部关键结构的完整路径。每个推导节点都标注其确定性来源（结构条件 / 唯一性推导 / 机检定理 / 候选级桥接规则 / 物理字典映射），不做跨级升格。框架的全部输入为三个原语，无自由参数；链上的桥接性假设逐条显式登记，其判别力边界在正文对应小节给出。关键节点已在 Lean 4 中机检（零 sorry、零 axiom），库外预研的六个模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`，合计 56 条定理）已并入主库。逐模块构建、olean 一致性、孤立模块覆盖与 warning 处置的技术口径见 §12.4 项 1 与附录 C——本文的机检主张与这些命令口径绑定，不能由单次库构建单独推出。
+本文以**构造性推导**的方式，展示从三个范畴论构件到 SM 全部关键结构的完整路径。每个推导节点都标注其确定性来源（结构条件 / 唯一性推导 / 机检定理 / 候选级桥接规则 / 物理字典映射），不做跨级升格。框架的输入为三个原语加一组显式登记的层索引约定（层 1–3 活跃、层 4 为 coherence），无自由参数；链上的桥接性假设逐条显式登记，其判别力边界在正文对应小节给出。关键节点已在 Lean 4 中机检（零 sorry、零 axiom），库外预研的六个模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`，合计 56 条定理）已并入主库。逐模块构建、olean 一致性、孤立模块覆盖与 warning 处置的技术口径见 §12.4 项 1 与附录 C——本文的机检主张与这些命令口径绑定，不能由单次库构建单独推出。
 
 ### 1.5 与主流纲领的定位对比
 
@@ -240,7 +240,7 @@ def trivial2 : RecObj :=
 SM 生成依赖六个结构条件。按其认识论地位分层：
 - **结构条件**（框架三层自然分层 + 唯一性推导的结论）：C1、C2、C3、C4、C5
 - **Lean 已机检**：C3（k_max_eq_two_pow_active）、C4（DImAdjRIm）、C5（vieta_roots_unique）、C1 的伴随存在性（DImAdjRIm ⊣ no_global_right_adjoint 联合）
-- **唯一性推导**（§5.5 韦达方程表）：C2 中 Sp 为严格 4-范畴——N_active=3 是唯一使韦达方程 x² − 2^{N_active} · x + (2^{N_active+1}−1) 有整数根的解（N_active=2 判别式 −12<0 无实根；N_active=3 根 {3,5}；N_active=4 判别式 132 非完全平方、根非整数）
+- **唯一性推导**（§5.5 韦达方程表）：C2 的层索引约定给出 N_active=3（约定，非推论）；韦达方程 x² − 2^{N_active} · x + (2^{N_active+1}−1) 在既定参数族内仅在 N_active=3 有整数根（N_active=2 判别式 −12<0 无实根；N_active=3 根 {3,5}；N_active=4 判别式 132 非完全平方、根非整数）
 - **结构性预测**：C6 跨尺度反对易不成立（Cl(3,1) 时空代数 × Cl(3,0) 内部对称空间——不同数学结构，本就不应统一，详见 §5.4b）
 
 ### 4.1 条件 C1：step ≠ id（Rec 不是全冻结）——伴随存在的定义域条件
@@ -271,9 +271,9 @@ Rec 全范畴 = Rec_active ⊔ Rec_id ⊔ Σ-Rec
 
 **C1 的尺度化（局部冻结）**：C1 的活跃/冻结二分是对 `step` 本身作 **全局** 判定。若把判定移到某个观测尺度 $\pi$ 上，会得到更细的一层结构：`vanishesAtScale X π`（$\forall x,\ \pi(\mathrm{step}\,x)=\pi x$）表示该尺度上不再产生可分辨的新状态，`scaleDefect X π` 计数该尺度上仍可见的非不动点。两条机检定其边界：`step_eq_id_of_vanishesAtScale_injective` 表明 **若 $\pi$ 单射（无损），该尺度上的消失即逼出全局 $\mathrm{step}=\mathrm{id}$** —— 故“局部冻结”必须依赖有损投影，只改名的“尺度”退化为全局判定；`vanishesAtScale_comp` 表明细尺度上消失则粗尺度上也消失，活跃/冻结的分界因而在尺度塔上单调移动，是阈值而非固定二分。这一层不改变 C1 的地位（C1 仍是定义域规定），只说明“活跃”本身可随尺度而变；至于为何粗粒化必然在某个尺度上杀掉自由度，需耗散/热化动力学，本框架只给结构——此处如实登记为开口。
 
-### 4.2 条件 C2：Sp 是严格 4-范畴
+### 4.2 条件 C2：Sp 的层索引（3 层活跃 + 1 层 coherence）
 
-严格 n-范畴的层结构定义：
+**术语约定（本节定义，非标准术语）**：本文用“严格 4-范畴”指如下层结构——层 0 对象、层 1–3 三种独立非平凡态射、层 4 为层 1–3 之间的 coherence 数据。**必须与标准术语区分**：标准范畴论中“严格 $n$-范畴”指恰有 $k=1,\dots,n$ 共 $n$ 层非平凡态射，且“严格”意味着结合律与单位律严格成立、**不需要 coherence 数据**；本约定与之不同，实质等价于“严格 3-范畴 + 外加上一层相干层标号”。采用这一非标准约定的唯一理由是它把 coherence 显式占一个层标号（层 4），使 $N_{total}=N_{active}+1$ 可以直接读出、并使 $\sigma^{-1}=2^{N_{total}}-1=15$ 中的指数与层标号对得上。层结构如下：
 
 | 层 | 类型 | 活跃/非活跃 |
 |---|---|---|
@@ -292,7 +292,7 @@ def ActiveLayers : Finset LayerIndex :=
 theorem active_layers_count : (ActiveLayers).card = 3 := by native_decide
 ```
 
-> **为什么层 1-3 是唯一的活跃生成层？** 这不是框架引入的约定，而是**严格 4-范畴的固有结构**。严格 n-范畴中恰好有 n 层非平凡的 k-态射（k=1,2,...,n），每层都有独立的定义和交换子条件：
+> **为什么活跃层恰是 1–3？** 这是上面那条**层索引约定的直接结果**：约定把层 1/2/3 定义为三种独立非平凡态射（各有定义与交换子条件），把层 4 定义为 coherence 层而不产生新态射类型。因此 $N_{active}=3$ 由约定给出，不是从范畴公理反推出来的定理——按标准术语，这三层态射构成的是**严格 3-范畴**，层 4 是我们额外加上的相干层标号。每层的定义与交换子条件如下：
 >
 > | 层 | 类型 | 定义（`HigherSpCategory.lean`） | 交换子条件 |
 > |---|---|---|---|
@@ -300,7 +300,7 @@ theorem active_layers_count : (ActiveLayers).card = 3 := by native_decide
 > | 层 2 | 2-态射 `α : P ⇒ Q` | SpTwoMorphism（同伦矩阵插值） | `Q·P - P·P = A_X·α.homotopy - α.homotopy·A_Y` |
 > | 层 3 | 3-态射 `Σ : α ⇛ β` | SpThreeMorphism（二阶同伦矩阵插值） | `β.homotopy - α.homotopy = A_X·Σ.secondHomotopy - Σ.secondHomotopy·A_Y` |
 >
-> 层 4 起是 coherence 条件（层 1-3 之间 coherence 同构的自然性条件），不产生新的独立态射类型。因此严格 4-范畴的非平凡态射层数恒为 3——这是严格 n-范畴的结构推论，不是选择。
+> 层 4 起是 coherence 条件（层 1–3 之间 coherence 同构的自然性条件），不产生新的独立态射类型，故非平凡态射层数恒为 3。**如实标注**：这个“恒为 3”是上述约定的一部分，不是“严格 4-范畴”在标准术语下的推论（标准术语下严格 4-范畴有 4 层非平凡态射，二者不能混用）。它同时给出 $N_{active}=3$ 与 $N_{total}=4$ 这一对层标号；$\sigma^{-1}=2^{N_{total}}-1=15$ 中的 4 就是这个层标号，与“范畴阶”无关。
 
 ### 4.3 条件 C3：N_active = 3 → k_max = 8
 
@@ -314,7 +314,7 @@ theorem k_max_eq_two_pow_active :
 
 k_max = 2³ = 8 是谱宽度的唯一确定值。
 
-**Bott 塔 vs Clifford 生成元总数**：k_max = 8 同时也是 M₈ 中三个 Clifford 子代数生成元数之和——Cl(3,1) 时空子代数 4 个（γ⁰-γ³）+ Cl(3,0) 内部对称子代数 3 个（γ⁴-γ⁶）+ Cl(4,1) 手征扩张 1 个（γ⁷=γ⁵）= 8。这不是一个统一的 8 生成元 Clifford 代数（跨尺度反对易结构性不成立，§5.4b），而是三个独立子代数的 union——它们恰好共享同一个 k_max 数值，这是 N_active = 3 的双重约束（活跃层三层 → 三次翻倍 = 8；三个子代数生成元数之和 = 4+3+1 = 8）。
+**Bott 塔 vs Clifford 生成元总数**：k_max = 8 同时也是 M₈ 中三个 Clifford 子代数生成元数之和——Cl(3,1) 时空子代数 4 个（γ⁰-γ³）+ Cl(3,0) 内部对称子代数 3 个（γ⁴-γ⁶）+ Cl(4,1) 手征扩张 1 个（γ⁷=γ⁵）= 8。这不是一个统一的 8 生成元 Clifford 代数（跨尺度反对易在所选 block 嵌入下不成立；该条不构成判别性预测，见 §5.4b），而是三个独立子代数的 union。两处都给出 8，这是一次**交叉核对而非独立验证**：$4+3+1$ 的分块本身由同一层索引约定确定，与 2³ 同源。
 
 **唯一性**：k_max = 2^N_active = 2³ = 8。如果 N_active ≠ 3，k_max 将是其他值，韦达方程根结构会不同，无法产生后续的活跃/静默二分。
 
@@ -387,10 +387,10 @@ PauliLorentzBridge
 
 ### 4.7 六条件联合总结（分层版）
 
-六个条件共同闭合 SM 生成链。按其认识论地位分层：C1（伴随定义域条件，框架三层结构推论）、C6（signature 翻转：核心桥接层已完整 Lean 化——Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0² = −1 显式构造 + Cl(3,1) 子代数反对易 6 对 + gamma7 = γ⁵ 手征扩张 4 对；结构性预测：跨 Dirac/Pauli 尺度反对易性不成立——时空代数与内部对称空间不同数学结构，详见 §5.4b）、C2（Sp 为严格 4-范畴，§5.5 韦达方程表唯一整数根推导——N=2 无实根、N=3 根 {3,5}、N=4 非整数根）、C3/C4/C5（全机检定理）：
+六个条件共同闭合 SM 生成链。按其认识论地位分层：C1（伴随定义域条件，框架三层结构推论）、C6（signature 翻转：核心桥接层已完整 Lean 化——Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0² = −1 显式构造 + Cl(3,1) 子代数反对易 6 对 + gamma7 = γ⁵ 手征扩张 4 对；结构性预测：跨 Dirac/Pauli 尺度反对易性不成立——时空代数与内部对称空间不同数学结构，详见 §5.4b）、C2（层索引约定：3 活跃层 + 1 coherence 层，N_active=3 由约定给出；§5.5 韦达方程在族内唯一整数根——N=2 无实根、N=3 根 {3,5}、N=4 非整数根）、C3/C4/C5（全机检定理）：
 
 ```
-严格 4-范畴（Sp 的结构）
+严格 4-范畴约定（Sp 的层结构）
     ├── N_active = 3（活跃层计数）
     │   └── k_max = 8（三次翻倍）
     └── D 函子 + SpImD 身份标记
@@ -431,11 +431,11 @@ N_active = 3 层活跃态射
 **完整 Lean 推导链**（五个模块联合，全机检）：
 
 ```
-HigherSpCategory.lean（严格 4-范畴的三层态射定义）
+HigherSpCategory.lean（层索引的三层态射定义）
     ↓
 Unified3Theorem.lean
     inductive ActiveMorphismLayer : Type | first | second | third
-    -- 三层构造器对应严格 4-范畴的三个非平凡态射层
+    -- 三层构造器对应层索引中的三个非平凡态射层
     theorem card_active_layers : Fintype.card ActiveMorphismLayer = 3
     ↓
 BottTower.lean
@@ -459,7 +459,7 @@ SpacetimeDimensionTwoPostulates.lean（下游计数层复述）
 
 | 模块 | Theorem | 陈述 |
 |---|---|---|
-| Unified3Theorem | `inductive ActiveMorphismLayer` | 三个构造器 = 严格 4-范畴的三个非平凡态射层 |
+| Unified3Theorem | `inductive ActiveMorphismLayer` | 三个构造器 = 层索引中的三个非平凡态射层 |
 | Unified3Theorem | `card_active_layers` | Fintype.card ActiveMorphismLayer = 3 |
 | Unified3Theorem | `each_layer_nonempty` | 每层非空（含恒等态射） |
 | BottTower | `doubling_steps_equal_active_layers` | 三层 = 三次翻倍 |
@@ -512,9 +512,9 @@ SpacetimeDimensionTwoPostulates.lean（下游计数层复述）
 7. ✅ **跨 Dirac/Pauli 尺度反对易性不成立**：gamma0-3 + gamma7（4×4 Dirac 两重复制尺度）与 gamma4-6（2×2 Pauli 四重复制尺度）跨尺度不反对易——**这是结构性预测**，不是缺陷：时空代数 Cl(3,1) 与内部对称代数 Cl(3,0) 是不同数学结构，本就不应统一；
 8. ✅ **gamma7 = γ⁵ 手征扩张**：gamma7 设计为手征算符 γ⁵ 的 4×4 两重复制（`anticomm_gamma08_gamma78` ... `anticomm_gamma38_gamma78` 4 对反对易全部机检），{γ⁰..γ³, γ⁷=γ⁵} 构成 Cl(4,1) 手征扩张；
 9. ⏳ **深层诠释桥接未闭合**：`c3_unique_silent_factor`（c₃ 时间分支唯一）+ `time_unique_and_signature_neg`（时间唯一 + signature 负号）+ `spacetime_dim_eq_four`（时空维数 = 4）均已机检，但"Rec 动力学 c₃ 分支 = 物理时间坐标"的语义对齐是候选级桥接规则，非 Lean 可派生；
-10. ⏳ **范畴-几何直接同构未闭合**：CategoryGeometryDictionary.lean 有法向↔V、水平↔H 字典映射，但严格 4-范畴三层态射 ↔ 3D 空间 + 1D 时间 的完整纤维丛层同构未形式化；k_max 加倍（2³）的几何机制未锚定。
+10. ⏳ **范畴-几何直接同构未闭合**：CategoryGeometryDictionary.lean 有法向↔V、水平↔H 字典映射，但层索引三层态射 ↔ 3D 空间 + 1D 时间 的完整纤维丛层同构未形式化；k_max 加倍（2³）的几何机制未锚定。
 
-**结论**：Lean 已机检从严格 4-范畴三层态射 → N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 → c₃ 时间分支唯一 → 三层 → Cℓ(3,0) → **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma 矩阵显式构造**的完整推导链。signature 翻转的核心桥接层（γ₀² = −1 + Cl(3,1) 子代数反对易 + γ⁵ 手征扩张）**已完整 Lean 化**。结构性预测：跨 Dirac/Pauli 尺度反对易性不成立（时空代数与内部对称空间不同数学结构）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐。
+**结论**：Lean 已机检从层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 → c₃ 时间分支唯一 → 三层 → Cℓ(3,0) → **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma 矩阵显式构造**的完整推导链。signature 翻转的核心桥接层（γ₀² = −1 + Cl(3,1) 子代数反对易 + γ⁵ 手征扩张）**已完整 Lean 化**。结构性预测：跨 Dirac/Pauli 尺度反对易性不成立（时空代数与内部对称空间不同数学结构）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐。
 
 ### 5.3  signature 翻转：Cℓ(3,0) → Lorentz signature (1,3)
 
@@ -637,7 +637,7 @@ gamma7_8 = diag(γ⁵, γ⁵)  ← γ⁵ = iγ⁰γ¹γ²γ³ = [[0,I],[I,0]]（
 - {gamma7_8, gamma0-3_8} = 0（4 对反对易）✅
 - → **{γ⁰,γ¹,γ²,γ³,γ⁷=γ⁵} 构成 5 个两两反对易生成元，签名 (−,+,+,+,+)，即 Cl(3,1) 的手征扩张 Cl(4,1) 复实现** ✅
 
-**结构性预测：跨尺度反对易性不成立**
+**构造性质：所选 block 对角嵌入下跨尺度反对易不成立**
 
 gamma0-3（4×4 Dirac 两重复制，Cl(3,1) 时空代数）与 gamma4-6（2×2 Pauli 四重复制，Cl(3,0) 内部对称空间）跨尺度反对易性**结构性不成立**——
 
@@ -665,7 +665,7 @@ Clifford 代数的 signature 负号对应 Lorentz 时间度量（γ⁰² = −I 
 | **Cl(3,0) signature** | M₈ 矩阵代数：gamma4-6² = +I（全正定） | 无时间方向的内部对称空间 | 韦达方程**要求存在**（根 5 = 静默层数） |
 | **静默层 / 静默窗口** | 谱测度论：Hausdorff 维数 < 环境维数 / 谱隙消失 | 谱结构冻结在分形支撑上 | Silence 13 模块**机检**（Diss 溶解的就是权重 < 1 的静默分量） |
 
-跨尺度反对易不成立（✅ 结构性预测 B1）恰恰说明 Cl(3,1) 时空代数和 Cl(3,0) 内部代数是**不同的数学结构**，本就不应强行塞进同一个 Clifford 代数——框架正确识别了物理世界中"时空 vs 内部对称"的本质区分。
+跨尺度反对易不成立是**所选 block 对角嵌入的性质**，不是 $M_8(\mathbb{C})$ 的结构必然：$M_8(\mathbb{C})\cong Cl_6(\mathbb{C})$，其中存在 6 个两两反对易生成元，再加体积元 $\omega=e_1\cdots e_6$ 共 7 个两两反对易的 $8\times8$ 复矩阵；统一嵌入亦为已知结构（如 $Spin(10)\supset Spin(3,1)\times Spin(6)$ 的 16 维旋量把时空与内部自由度装进同一个 Clifford 代数）。因此本项**判别力为零**——同一 $M_8$ 上的不同嵌入可以把这个性质随意翻转，它既不能作为预测，也不能作为“框架正确识别时空 vs 内部对称”的证据。
 
 **M₈ 机检确认与结构性发现**：
 
@@ -674,11 +674,11 @@ Clifford 代数的 signature 负号对应 Lorentz 时间度量（γ⁰² = −I 
 | Cl(3,1) 子代数（gamma0-3）6 对反对易 | 完整机检 | 4D Lorentz 时空的 Clifford 代数结构 |
 | Cl(4,1) 手征扩张（gamma7 = γ⁵ × gamma0-3）4 对反对易 | 完整机检 | 手征对称性是 Cl(3,1) 时空代数的固有扩张 |
 | Cl(3,0) 子代数（gamma4-6）3 对反对易 | 完整机检 | 内部对称空间的正定 Clifford 代数结构 |
-| 跨尺度反对易（{0-3,7} × {4-6}）| **结构性不成立** | 时空代数与内部对称空间是**不同数学结构**，本就不应统一——这不是框架缺陷，而是框架正确识别了物理中"时空 vs 内部对称"的本质区分 |
+| 跨尺度反对易（{0-3,7} × {4-6}）| **在本 block 嵌入下不成立** | 所选对角块嵌入的直接结果；非 $M_8$ 的结构必然（见正文），判别力为零 |
 
-以上均在 Lean 中通过 theorem 显式登记，如实报告。跨尺度不反对易**不属于边界**（框架缺陷），而是框架的**结构性预测**——Cl(3,1) 和 Cl(3,0) 在 M₈(ℂ) 中作为独立子代数共存，各自代表物理世界的不同层级（时空 vs 内部对称），这正是标准模型代数结构在框架内的内生体现。
+以上均在 Lean 中通过 theorem 显式登记，如实报告。跨尺度不反对易**既不构成边界（框架缺陷），也不构成结构性预测**：它是所选 block 嵌入的直接性质，Lean 登记证明的是“这一构造如此”，不是“物理必须如此”。Cl(3,1) 与 Cl(3,0) 在本构造中作为独立子代数共存，这一事实本身合法，但不携带对 SM 的判别力。
 
-**结构性预测的可观测后果**：如果跨尺度反对易成立，理论上应该存在一个"统一 Dirac 方程"同时包含时空和内部对称的 gamma 矩阵——费米子可以用一个单一的 8×8 旋量表示，时空对称性和内部对称性可以被一个更大的 Clifford 代数统一。**但标准模型不是这样的**——SM 的费米子表示是**时空旋量 ⊗ 内部对称表示**的张量积（如 ψ_L: (2, 1/2, -1)、ψ_R: (2, 0, -2/3)），时空自由度和内部对称自由度始终独立变换。这个张量积结构本身就是"跨尺度反对易不成立"的可观测后果——它不是预言某个实验数值，而是预言**理论表示结构**，已被 SM 的实际代数结构确认。
+**与 SM 表示结构的关系（不作确认）**：SM 的费米子按“时空旋量 $\otimes$ 内部表示”张量积变换（如 $\psi_L:(2,1/2,-1)$、$\psi_R:(2,0,-2/3)$），这与本构造把两类 gamma 分块放置是**相容**的；但相容不等于确认：张量积表示同样可由统一 Clifford 结构经分支规则得到（$Spin(10)$ 的 16 维旋量在 $Spin(3,1)\times Spin(6)$ 下分支即得 SM 一代费米子），历史与逻辑方向恰恰相反。故本段**不主张**“被 SM 确认”，只主张“本构造与 SM 的表示分块相容”。
 
 **边界**：虽然跨尺度不反对易有可观测后果（SM 张量积表示结构），但**从 Rec→Sp→Cl(3,1)×Cl(3,0) 的完整推导链仍有未闭合的语义对齐**——深层几何同构（三层态射↔空间+时间方向）和 c₃↔物理时间坐标对齐需要额外的桥接假设。这部分已在 §4 候选级桥接规则中如实登记。
 
@@ -686,13 +686,13 @@ Clifford 代数的 signature 负号对应 Lorentz 时间度量（γ⁰² = −I 
 
 **唯一性论证**：
 
-| N_active | 严格 n-范畴 | k_max = 2^N | σ⁻¹ = 2^{N+1}−1 | 韦达方程 x²−k_max·x+σ⁻¹=0 的根 | 结果 |
+| N_active | N_total = N_active+1（含 coherence 层） | k_max = 2^N | σ⁻¹ = 2^{N+1}−1 | 韦达方程 x²−k_max·x+σ⁻¹=0 的根 | 结果 |
 |---|---|---|---|---|---|
-| 2 | 严格 3-范畴 | 4 | 7 | x²−4x+7：判别式 −12 < 0，无实根 | ❌ 无活跃/静默谱分解 |
-| **3** | **严格 4-范畴** | **8** | **15** | **x²−8x+15 = (x−3)(x−5)：整数根 {3,5}** | **✅ 活跃/静默二分 + signature 翻转** |
-| 4 | 严格 5-范畴 | 16 | 31 | x²−16x+31：根 = (16±√132)/2 ≈ {2.26, 13.74}，非整数 | ❌ 根不落在层计数上 |
+| 2 | 3 | 4 | 7 | x²−4x+7：判别式 −12 < 0，无实根 | ❌ 无活跃/静默谱分解 |
+| **3** | **4** | **8** | **15** | **x²−8x+15 = (x−3)(x−5)：整数根 {3,5}** | **✅ 活跃/静默二分 + signature 翻转** |
+| 4 | 5 | 16 | 31 | x²−16x+31：根 = (16±√132)/2 ≈ {2.26, 13.74}，非整数 | ❌ 根不落在层计数上 |
 
-**唯一性推导**：严格 4-范畴的活跃层数为 N_active = 3（非平凡 k-态射层 k=1..3，层 4 为 coherence），韦达方程统一写成 x² − 2^{N_active}·x + (2^{N_active+1}−1) = 0，指数一律以 N_active 计。判别式检查：N_active=2 → x²−4x+7 判别式 −12<0 无实根；**N_active=3 → x²−8x+15=(x−3)(x−5) 整数根 {3,5}**；N_active=4 → x²−16x+31 判别式 132 非完全平方，根 (16±√132)/2 非整数。因此 Sp 的严格范畴阶唯一确定为 4（N_active=3）——这是韦达方程整数根条件的唯一解，不是选择。
+**唯一性推导**：按 §4.2 的层索引约定，活跃层数 N_active = 3（层 1–3），层标号总数 N_total = N_active+1 = 4（含 coherence 层），韦达方程统一写成 x² − 2^{N_active}·x + (2^{N_active+1}−1) = 0，指数一律以 N_active 计。判别式检查：N_active=2 → x²−4x+7 判别式 −12<0 无实根；**N_active=3 → x²−8x+15=(x−3)(x−5) 整数根 {3,5}**；N_active=4 → x²−16x+31 判别式 132 非完全平方，根 (16±√132)/2 非整数。因此在 $N_{active}\in\{2,3,4\}$ 上，整数根条件只在 $N_{active}=3$ 成立，层标号总数随之确定为 $N_{total}=4$。**边界（必须一并陈述）**：这一“唯一”是**既定参数族内**的唯一——参数族形状 $k_{max}=2^{N_{active}}$、$\sigma^{-1}=2^{N_{active}+1}-1$ 本身尚未独立推导（§12.4 项 3）；族内 $D(N)$ 对一切 $N\ge4$ 非完全平方已有解析证明（§12.4 项 3），不依赖枚举。
 
 ---
 
@@ -740,6 +740,8 @@ Cl(1,7) 旋量（16 维实旋量）
 - SU(2) 二重态（弱相互作用的左手/右手结构）
 - SU(3) 三重态（色荷的 3 重对称性）
 - 整数或 1/3 整数超荷（排除任意分数电荷）
+
+**与 §10.1 时空排他性的关系（如实登记）**：$Cl(1,7)$ 在此**不是时空代数**，而是味/内部扇区的载体——$16$ 维实旋量做 4D Weyl 分解是为了读超荷谱，其 signature 中的那个负方向不是第五个物理时间方向。但“**为什么内部扇区恰是 $Cl(1,7)$**”尚未由框架层计数给出：§10.1 的排他性只作用于时空扇区，内部扇区沿用 Paper XVII 的构造。此处登记为开口，不以“内部对称”的重新贴签充当论证。
 
 ### 6.4 规范群力程约束
 
@@ -1119,7 +1121,7 @@ sin²θ_W = 1 − (1286/1459)² = 474885/2128681 ≈ 0.22309
 ### 10.1 时空唯一性
 
 4D Lorentz signature 在框架内是唯一的：
-- Sp 为严格 4-范畴（§5.5 韦达方程唯一整数根推导）→ N_active = 3（严格 4-范畴的结构推论，见 §4.2）
+- 层索引约定给出 N_active = 3（§4.2；**结构规定，非结构推论**）→ 韦达方程在既定参数族内唯一给出整数根 {3,5}（§5.5）
 - 韦达方程 x² - 8x + 15 = 0 根唯一分裂为整数 {3, 5}（§5.5 表：N_active=2 无实根、N_active=4 非整数根）
 - 递归单向性 = 时间方向数 1（Lean 已机检：`spacetimeDim = 4` + `c3_unique_silent_factor` + `time_unique_and_signature_neg` + Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数反对易 6 对 + γ⁵ 手征扩张 4 对——signature 翻转核心桥接层已完整 Lean 化）
 
@@ -1141,9 +1143,11 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 - SU(5)：大统一群 → 预言质子衰变 → 实验排除
 - SO(10)：同大统一 → 与 SM 电荷谱不完全匹配
 
+> **唯一性的边界（如实登记）**：上述“唯一”是**在上述前提下唯一**，不是“规范群乘积已被本文独立证明唯一”。它依赖三组本文之外的推导——SU(2) 的五范畴约束（Paper XX）、Cl(1,7) 旋量三重对称与超荷缠绕数（Paper XVII）、以及本文 §4.2 的层索引约定；前两者在本仓库内没有 Lean 锚，§12.1 亦自认 SU(3)/U(1) 的唯一性尚未五范畴化。逐项归位：SU(2) 与 U(1) 的锁定属**库外唯一性推导**，电荷谱属**库外定理**，唯一属本文的是层计数约定与韦达根分裂。
+
 ### 10.3 费米子代唯一性
 
-三代费米子 = N_active = 3 = 韦达活跃根个数。σ⁻¹ = 2^{N+1}−1 随 N 变化，判别标准统一为整数根分裂：N_active = 2 → x²−4x+7 判别式 < 0 无实根；N_active = 4 → 根非整数 → N_active = 3 是唯一整数根解。**三代是"Sp 为严格 4-范畴"这一框架公设的结构推论**。
+三代费米子 = N_active = 3 = 韦达活跃根个数。σ⁻¹ = 2^{N+1}−1 随 N 变化，判别标准统一为整数根分裂：N_active = 2 → x²−4x+7 判别式 < 0 无实根；N_active = 4 → 根非整数 → N_active = 3 是唯一整数根解。**三代是“Sp 层索引约定（N_active=3）”这一框架规定的直接结果**。
 
 ### 10.4 耦合常数唯一性
 
@@ -1179,7 +1183,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 | Theorem | 文件 | 陈述 |
 |---|---|---|
-| `inductive ActiveMorphismLayer` | Unified3Theorem | 三个构造器 = 严格 4-范畴的三个非平凡态射层 |
+| `inductive ActiveMorphismLayer` | Unified3Theorem | 三个构造器 = 层索引中的三个非平凡态射层 |
 | `card_active_layers` | Unified3Theorem | Fintype.card ActiveMorphismLayer = 3 |
 | `each_layer_nonempty` | Unified3Theorem | 每层非空（含恒等态射） |
 | `doubling_steps_equal_active_layers` | BottTower | 三层 = 三次翻倍 |
@@ -1207,9 +1211,9 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | `spacetime_dimension_chain` | SpectralGap | 4=3+1 ∧ 8=2×4 ∧ 16=2⁴ ∧ 5=8−3 ∧ 15=3×5（`decide` 闭合） |
 
 > **分层声明**（五个模块 + Bridge 层联合后的完整状态）：
-> - ✅ 已机检：严格 4-范畴三层态射结构 → N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义（Unified3Theorem + BottTower + KMaxAlgebra + SpacetimeDimensionTwoPostulates + SpectralGap）→ **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**（RecActiveSignatureBridge + DirectionalCliffordBridge + NoiseSignatureBridge + PauliLorentzBridge + BoundaryEntropyBridge，详见 §11.6）
+> - ✅ 已机检：层索引约定（3 活跃层）→ N_active = 3（`ActiveLayers` 字面量计数 + `k_max = 8` 定义，属定义展开与算术核对，非范畴推导） → k_max = 8 → 时空维数 = 4 → 时间坐标良定义（Unified3Theorem + BottTower + KMaxAlgebra + SpacetimeDimensionTwoPostulates + SpectralGap）→ **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**（RecActiveSignatureBridge + DirectionalCliffordBridge + NoiseSignatureBridge + PauliLorentzBridge + BoundaryEntropyBridge，详见 §11.6）
 > - ✅ 结构性预测：**跨 Dirac/Pauli 尺度反对易性不成立**（时空代数 Cl(3,1) × 内部对称空间 Cl(3,0)——不同数学结构，本就不应统一，详见 §5.4b）
-> - ⏳ **深层几何同构未闭合**：严格 4-范畴三层态射 ↔ 3D 空间方向 + 1D 时间方向 的**直接几何同构**（CategoryGeometryDictionary.lean 有范畴-几何字典映射，但完整纤维丛层同构未形式化）；Rec 动力学 c₃ 时间分支 ↔ 物理时间坐标 的**完整诠释桥接**（`c3_unique_silent_factor` + `time_unique_and_signature_neg` + `spacetime_dim_eq_four` 已机检，但"c₃ = 物理时间坐标"的语义对齐是候选级桥接规则，非 Lean 可派生）。
+> - ⏳ **深层几何同构未闭合**：层索引三层态射 ↔ 3D 空间方向 + 1D 时间方向 的**直接几何同构**（CategoryGeometryDictionary.lean 有范畴-几何字典映射，但完整纤维丛层同构未形式化）；Rec 动力学 c₃ 时间分支 ↔ 物理时间坐标 的**完整诠释桥接**（`c3_unique_silent_factor` + `time_unique_and_signature_neg` + `spacetime_dim_eq_four` 已机检，但"c₃ = 物理时间坐标"的语义对齐是候选级桥接规则，非 Lean 可派生）。
 
 ### 11.4 耦合常数 + H6' 测量代数
 
@@ -1370,15 +1374,15 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | `c3_not_in_diss_image` | c₃ 不在 Diss 像中（c₃ 是唯一 contraction = 1 分支） |
 | **`diss_noise_robustness_time_arrow`** | **Diss 噪声系统不影响时间箭头结构** |
 
-#### 11.6.8 Bridge 层边界与结构性预测（显式登记）
+#### 11.6.8 Bridge 层边界与构造性质登记（显式）
 
 | # | 项目 | 类型 | Lean 登记方式 |
 |---|---|---|---|
-| B1 | 跨 Dirac/Pauli 尺度反对易（{gamma0-3, gamma7} × gamma4-6） | ✅ **结构性预测** | 时空代数与内部对称空间是不同数学结构，框架正确识别（详见 §5.4b） |
+| B1 | 跨 Dirac/Pauli 尺度反对易（{gamma0-3, gamma7} × gamma4-6） | ⚠️ **构造性质（预测地位已撤回）** | 所选 block 对角嵌入的结果，非 $M_8$ 结构必然、判别力为零（详见 §5.4b） |
 | B3 | Hom_Rec(Sel N, R) ≅ SigmaRecHom N (Diss R data) 的显式对应 | ✅ 已闭合 | 收缩 `selDissFrom_to` + canonical 支撑子类型双射 `selDissHomEquiv` 机检；完整 SigmaRecHom 字面双射结构性不成立，如实登记 |
 | B4 | boundaryDefect 8·ln 2 的 G_N 物理识别 | ✅ **数学层已闭合 / 物理层字典映射** | 一般 g 比例 `boundaryDefect_eq_4_entropyOfRange` + 显式常量 `holographicProportionalityConstant=4` + `lorentz_holographic_union` 四元联合机检；4 = 4G_N 为物理字典映射（codim=2 + M_Pl=1 预设），如实登记 |
 
-> **分层声明**：Bridge 层 theorem 分为两类——（a）双向等价、显式构造的 theorem（`unidir_iff_active`、`directional_with_lorentz_compatible`、`gamma0_8_sq_neg_I8`、13 对反对易、`boundaryDefect_eq_4_entropyOfRange`、`lorentz_holographic_union`、`sel_dissSilent_is_R`、`selDissFrom_to`、`selDissHomEquiv` 等）由 `rw`/`ring`/`matrix` 策略闭合，**有实质物理内容**；（b）结构签名确认（`m8_cl31_signature_verified`、`cl31_vs_cl30_structure_signature`、`holographicProportionalityConstant_val`）由显式值展开 + `norm_num` 闭合，证明的是"我们构造的这些常量确实取该值"。两类均非算术恒等式机检。结构性预测 B1（跨尺度不反对易 = 时空 vs 内部对称的本质区分）+ 边界 B4（物理字典映射 4 = 4G_N）如实登记；B3 已闭合。
+> **分层声明**：Bridge 层 theorem 分为两类——（a）双向等价、显式构造的 theorem（`unidir_iff_active`、`directional_with_lorentz_compatible`、`gamma0_8_sq_neg_I8`、13 对反对易、`boundaryDefect_eq_4_entropyOfRange`、`lorentz_holographic_union`、`sel_dissSilent_is_R`、`selDissFrom_to`、`selDissHomEquiv` 等）由 `rw`/`ring`/`matrix` 策略闭合，**有实质物理内容**；（b）结构签名确认（`m8_cl31_signature_verified`、`cl31_vs_cl30_structure_signature`、`holographicProportionalityConstant_val`）由显式值展开 + `norm_num` 闭合，证明的是"我们构造的这些常量确实取该值"。两类均非算术恒等式机检。B1（跨尺度不反对易）已从“结构性预测”撤回为**构造性质**——判别力为零，理由见 §5.4b；边界 B4（物理字典映射 4 = 4G_N）如实登记；B3 已闭合。
 
 ---
 
@@ -1411,8 +1415,10 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。**可见性边界如实登记**：仓库当前不可公开检出，故哈希的可核验性为零——本文不主张“自创建伊始即开源”，公开状态是待核实的事实项，不由本文单方裁决。**jobs 计数必须与命令绑定**：`lake build MUFPFormalization`（库根闭包）与 `lake build`（全 default target，含 `mufpfformalization:exe`，2026-11-09 实测 7096 jobs）均返回 Build completed successfully、exit 0；lake 的 job 计数含 mathlib 重放、随缓存浮动，离开命令的裸数字不可核验。**机检主张的三项判据**：`lake build` 返回 Build completed successfully、行首 sorry = 0、模块 olean 与源同版本。**olean 一致性判据**：lake 按内容哈希判重、不用 mtime，故一致性由 `lake build` 全程 0 rebuilt + exit 0 保证（审计脚本中的 mtime 项仅供参考、不作结论）。**当前状态（2026-11-10 实测）**：Build completed successfully（3824 jobs，库根）、行首 sorry = 0、审计 MODULES=335 / CLOSURE=156 / ORPHANS=179 / MISSING_OLEAN=0 / SORRY_LINES=0。**孤立模块的机检边界**：335 个源文件中 179 个不在库根 import 闭包——10 个由 exe 入口 `Main.lean` import、被全 default target 覆盖，余 169 个未被任何模块 import，`lake build` 与库根命令都不会自动覆盖，故逐个点名构建（`lake build MUFPFormalization.<Module>`）补齐；其中 4 个模块（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）曾存在实质证明错误，改正后通过（commit `1f88c8b`）——`MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表“已机检”自该提交起才有编译依据。**linter warning 现状**：全库 0 error、12 条 warning，两类——9 条为 `haveI`→`have` 的风格建议（这些位置作实例使用，改写会中断实例合成；proof irrelevance 下不影响证明），3 条为 `<;>`→`;` 的等价建议（改写后目标分配改变、产生 unsolved goals）；均属“建议在本处不等价”，不作债处理。**预研迁入与 σ 接驳**：库外 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已并入 `src`，56 条定理、零 sorry、零 axiom；连同 `OccupiedTrace`，库内模块共 335 个。主库 `PublicResidueIdentity.sigma`（L38 的 `1 / 15`）已登记取值溯源链（`N_active = 3 → k_max = 8 → 16 = 2^(N_active+1) → 15 = 16 − 1 → S₄ = 1/(2^(N_active+1) − 1)`），并新增接驳定理 `sigma_eq_S4`（`sigma = SpinorSilenceBranch.S4`），使 σ 与 §⑧ 导出链在主库内部对齐；该定理只保证两处同值，“为何是 15”仍由 §⑧ 的链式陈述承担，不计入迁入的 56 条。
 2. **m_{L4} ≈ 1470 GeV 预注册**：这是附录 A 中唯一的真外推。需带日期登记其量子数（电荷/弱荷/稳定性），并逐通道对照 LHC 重轻子搜索与 LZ/XENON 直接探测的现有限制——若现有数据已排除该候选，框架应立即记录一次否决，而不是等实验收紧。
-3. **15 的 Mersenne 必要性推导（族内枚举）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。枚举 N=1..12：仅 N=3 时 D(3) = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是唯一整数根。**两级边界**：(a) Lean 侧机检的是 D(N) 的 12 项具体值（`vieta_discriminant_family_values`）与 N=3 见证（`vieta_discriminant_mersenne_witness`）；"其余 N 的 D 非完全平方"是**数值枚举**，其 Lean 全枚举尚未机检，登记为待补；(b) 把唯一性写成"σ⁻¹ ∈ [1,64] 内唯一"，该陈述为**假**：σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、12（根 {2,6}，D = 16 = 4²）、16（根 {4,4}，D = 0 = 0²）同为整数根且判别式为完全平方；`vieta_discriminant_mersenne_unique` 不成立（其证明行 `interval_cases … with` 语法本身不成立），不再引用，族外反例由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。故唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**族内唯一性**——σ⁻¹ = 2^{N+1}−1 是族内唯一让韦达方程在 N=3 时有互异整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取"2 的幂减 1"这个参数族（而不是其他参数化）仍未独立推导——族内唯一解已数值闭合，Lean 全枚举待补。
+3. **15 的 Mersenne 必要性推导（族内解析证明）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。数值核验 N=1..12：仅 N=3 时 D(3) = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是族内唯一整数根；对一切 N≥4 的非平方性由下述解析证明给出，不再依赖枚举。**两级边界**：(a) Lean 侧机检的是 D(N) 的 12 项具体值（`vieta_discriminant_family_values`）与 N=3 见证（`vieta_discriminant_mersenne_witness`）；“其余 $N$ 的 $D$ 非完全平方”已给出**解析证明**（无需枚举）：$D(N)=4^N-2^{N+3}+4=(2^N-4)^2-12$；对 $N\ge4$ 有 $(2^N-5)^2<D(N)<(2^N-4)^2$（左端差 $2^{N+1}-21\ge11>0$，右端差 $12>0$），即 $D(N)$ 严格夹在两个**相邻**平方之间，故永不等于平方；$N=1,2$ 时 $D<0$；$N=3$ 时 $D=4=2^2$。**边界**：该证明为纸面解析证明（已数值核验 $N=1..12$），Lean 机检待补（原 12 项枚举定理仍保留）；(b) 把唯一性写成"σ⁻¹ ∈ [1,64] 内唯一"，该陈述为**假**：σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、12（根 {2,6}，D = 16 = 4²）、16（根 {4,4}，D = 0 = 0²）同为整数根且判别式为完全平方；`vieta_discriminant_mersenne_unique` 不成立（其证明行 `interval_cases … with` 语法本身不成立），不再引用，族外反例由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。故唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**族内唯一性**——σ⁻¹ = 2^{N+1}−1 是族内唯一让韦达方程在 N=3 时有互异整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取“2 的幂减 1”这个参数族（而不是其他参数化）仍未独立推导——族内唯一解已**解析闭合**（夹逼不等式见上），Lean 全枚举待补；参数族形状的来历是本文最后一级开口。
 4. **α⁻¹ 对 CODATA 2022 的 +4.46σ_score 处置**：要么从零推导修正项（来源、阶数、系数，不允许新连续参数），要么承认公式被否决。δ* 域级分解的失败核算（§9.2e）已排除"域分解即解释"的退路——这是框架第一条真实的"预言—否决—应答"记录，其处理方式将定义框架的证据标准；判决协议见 §12.4.1。
+
+> **判决执行承诺（先于数据固定，单列以便对照）**：CODATA 2026 发布后，(i) 若 $|\Delta|>3\sigma_{\text{score}}$，本文执行**否决**——$\alpha^{-1}$ 公式作废或按零参数修正重述，**不接受**以 $\pi_{Sig}$ 双向域机制吸收该偏差；(ii) 若 $\leq 1\sigma_{\text{score}}$，公开记为通过；(iii) $1$–$3\sigma_{\text{score}}$ 记为提示，不作通过。此承诺为 §12.4.1 预注册协议的执行面，二者不一致时以更严格者为准。
 
 #### 12.4.1 CODATA 2026 判决协议（预注册文本，2026-11-09）
 
@@ -1435,9 +1441,9 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 本文展示了从三个范畴论基础构件（RecObj + SpObj + DFunctor）到标准模型主要结构的**内生推导路径及其完整的审计链**：
 
-1. **N_active = 3** 是严格 4-范畴 Sp 的结构推论（层 1-3 为非平凡态射层，层 4 为 coherence，见 §4.2）；并由韦达方程整数根分裂唯一筛选（§5.5：N_active=2 无实根、N_active=4 非整数根）
+1. **N_active = 3** 由 Sp 的层索引约定给出（层 1–3 为非平凡态射层，层 4 为 coherence，见 §4.2；**结构规定，非结构推论**），并按韦达方程整数根条件在既定参数族内唯一闭合（§5.5：N_active=2 无实根、N_active=4 非整数根）
 2. **韦达方程 x² - 8x + 15 = 0 根分裂为 {3, 5}** 是 (k_max, σ⁻¹) = (2³, 2⁴−1) 的算术推论；15 的独立链 = 2^{N_active+1}−1（§4.5）
-3. **递归单向性 = 时间方向数 1 + 时空维数 = 4**（Lean 已机检完整推导链：严格 4-范畴三层态射 → N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 + c₃ 时间分支唯一 + Moran 结构封闭 → **Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**——signature 翻转核心桥接层已完整 Lean 化；跨 Dirac/Pauli 尺度反对易性不成立是结构性预测（时空代数与内部对称空间不同数学结构，详见 §5.4b））
+3. **递归单向性 = 时间方向数 1 + 时空维数 = 4**（Lean 已机检完整推导链：层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 + c₃ 时间分支唯一 + Moran 结构封闭 → **Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**——signature 翻转核心桥接层已完整 Lean 化；跨 Dirac/Pauli 尺度反对易性不成立是结构性预测（时空代数与内部对称空间不同数学结构，详见 §5.4b））
 4. **SU(2) 五范畴约束唯一锁定**；SU(3)/U(1) 的唯一性约束尚未五范畴化（§12.1）
 5. **三代费米子 = N_active = 韦达活跃根个数**——N_active = 3 是唯一整数根解（§10.3）
 6. **无量纲耦合常数**（α⁻¹、sin²θ_W、α_s、CKM/PMNS 参数）是 Cl(3,1) 分级 + σ=1/15 + 24=4! + k_max=8 的结构推论。**sin²θ_W 域配对约束推导**（§9.2）：活跃域尺度 M_active = FullState×Silence = 16×5=80、对合域尺度 M_inv = Involution×(Kmax+Silence) = 7×13=91，配对约束唯一给出 m_W = 80+3/8=643/8、m_Z = 91+3/16=1459/16——所有整数全来自框架常数集 C，无自由参数。数值结果 sin²θ_W = 474885/2128681 ≈ 0.22309 ≈ 实验 on-shell 0.22321（0.47σ_score），**误差 ≈ 0.05%**（sin²θ_W 判别力记账见 §9.2f：数值本身基础率约 1/1.5×10⁴，独立判别力弱；可记账判据是比值 0.03% 阈值）。δ* 配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 计算式 = 72 + 24·ln15 + 24·δ*（δ* 四项全含；域级分解失败核算见 §9.2e），CODATA 2022 的 +4.46σ_score 差解释为 Rb-2020 新数据的加权中心移动（两期 CODATA 输入通道全属 π_Sig，spatiotemporal 双向域真机检 ✅）
@@ -1462,9 +1468,11 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | m_b | 4.18 GeV | 4.18(3) GeV [PDG] | 0σ_score | 谱流指数（Yukawa 纯数 × v 锚点） | Paper XVII |
 | m_τ | 1776.86 MeV | 1776.86(12) MeV | 0σ_score | 全冻结端点（E_τ 纯数 × M_Pl 锚点） | `tau_full_freeze_entropy` |
 | Λ_QCD | 0.388 GeV | 0.385(5) GeV [PDG] | 0.6σ_score | 形变锁定（**SM 自身锚点**） | Paper XL |
-| T_c | 0.729 Λ_QCD ≈ 153 MeV | 155(10) MeV [lattice] | 1.1% | 禁闭谱判据 | Paper XL |
+| T_c | 0.729 Λ_QCD^(210) ≈ 153 MeV | 155(10) MeV [lattice] | 1.1% | 禁闭谱判据（系数 0.729 内生；**Λ 取 210 MeV 约定、外部锚定**） | Paper XL；Paper XVII |
 | m_H | 124.95 GeV | 125.1(2) GeV [ATLAS/CMS] | 0.12% | 电弱谱关系（Higgs 耦合纯数 × v 锚点） | Paper XI §8.2 |
 | v_H | 246 GeV | 246(2) GeV [PDG] | 0σ_score | 四层静默（**SM 自身锚点**，框架内导出开放） | `spectral_Higgs_silence_analysis` |
+
+> **附录 A 的两点口径说明**：(i) **T_c 行**的 $\Lambda_{\text{QCD}}$ 取 $210$ MeV 约定，与上行 $\Lambda_{\text{QCD}}=388$ MeV 是同一尺度在不同 $n_f$/重整化方案下的常用值——**两者不可混用**：$0.729\times388\ \text{MeV}=283$ MeV，与 lattice $155(10)$ MeV 相差约 $13\sigma$；$0.729\times210\ \text{MeV}=153.1$ MeV 才给出表中的 1.1%。系数 $0.729$ 由谱织约束内生确定，$\Lambda$ 本身是外部锚定，故 **T_c 是半预言**（系数内生 + 尺度外锚），不计入零参数预言。(ii) 除 T_c 与两处标注“SM 自身锚点”的行（$\Lambda_{\text{QCD}}$、$v_H$）之外，其余各行的框架值均为纯框架输出。
 
 ## 附录 B：规范拓扑七等价定理
 
