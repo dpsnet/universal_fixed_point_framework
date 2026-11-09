@@ -220,7 +220,7 @@ theorem energy_gamma_layered (n : ℕ) (m φ θ : ℝ)
     ——n 层递归的偏转时间轴代价非负（K_n = m(γ_n−1) ≥ 0，γ_n=cosh(n·φ)≥1）。 -/
 theorem deflection_cost_layered_nonneg {n : ℕ} {m φ : ℝ} (hm : 0 ≤ m) :
     0 ≤ m * Real.cosh (n • φ) - m :=
-  kinetic_energy_nonneg (n := n • φ) (m := m) hm
+  kinetic_energy_nonneg (m := m) (φ := n • φ) hm
 
 /-! ## 质量-光锥边界 + 分层红移（物理读出完整合成）
 
@@ -263,7 +263,7 @@ theorem redshift_layered_form (n : ℕ) (ω₀ φ : ℝ) :
     ——质量壳的 Clifford 表述：Dirac 平方的本征值恰为 m²
     （mass_shell 代数 + clifford_dirac_square 合成，"质量=谱流不动点"的 Dirac 形态）。 -/
 theorem clifford_dirac_mass_shell (m φ : ℝ) :
-    (m * Real.cosh φ • e_10 (rfl : 2 = 2) - m * Real.sinh φ • e_01 (rfl : 2 = 2)) ^ 2
+    ((m * Real.cosh φ) • e_10 (rfl : 2 = 2) - (m * Real.sinh φ) • e_01 (rfl : 2 = 2)) ^ 2
       = m ^ 2 • (1 : Matrix (Fin 2) (Fin 2) ℝ) := by
   have hsq := MinkowskiBoost.clifford_dirac_square (m * Real.cosh φ) (m * Real.sinh φ)
   rw [hsq]
@@ -273,9 +273,9 @@ theorem clifford_dirac_mass_shell (m φ : ℝ) :
     ——Dirac 算符在谱流质量壳上分解为 ±m 核（质量=Dirac 核 ±m；
     与 clifford_dirac_mass_shell 并列：质量既是 Dirac 平方本征值又是核参数）。 -/
 theorem clifford_dirac_mass_factorization (m φ : ℝ) :
-    (m * Real.cosh φ • e_10 (rfl : 2 = 2) - m * Real.sinh φ • e_01 (rfl : 2 = 2)
+    ((m * Real.cosh φ) • e_10 (rfl : 2 = 2) - (m * Real.sinh φ) • e_01 (rfl : 2 = 2)
         - m • (1 : Matrix (Fin 2) (Fin 2) ℝ))
-      * (m * Real.cosh φ • e_10 (rfl : 2 = 2) - m * Real.sinh φ • e_01 (rfl : 2 = 2)
+      * ((m * Real.cosh φ) • e_10 (rfl : 2 = 2) - (m * Real.sinh φ) • e_01 (rfl : 2 = 2)
         + m • (1 : Matrix (Fin 2) (Fin 2) ℝ))
       = 0 := by
   exact MinkowskiBoost.clifford_dirac_factorization (m * Real.cosh φ) (m * Real.sinh φ) m
@@ -290,7 +290,7 @@ gA/(id−gA) 同构：同一投影对结构在粗粒化层与 Dirac 谱层分别
 
 /-- 1+1 Dirac 算符（谱流参数化）：D = E·e_10 − p·e_01，E=m·coshφ、p=m·sinhφ。 -/
 noncomputable def DiracOp (m φ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  m * Real.cosh φ • e_10 (rfl : 2 = 2) - m * Real.sinh φ • e_01 (rfl : 2 = 2)
+  (m * Real.cosh φ) • e_10 (rfl : 2 = 2) - (m * Real.sinh φ) • e_01 (rfl : 2 = 2)
 
 /-- Dirac 算符壳平方：DiracOp² = m²·1（#49 的 DiracOp 形态）。 -/
 theorem diracOp_sq (m φ : ℝ) : (DiracOp m φ) ^ 2 = m ^ 2 • (1 : Matrix (Fin 2) (Fin 2) ℝ) := by
@@ -300,23 +300,27 @@ theorem diracOp_sq (m φ : ℝ) : (DiracOp m φ) ^ 2 = m ^ 2 • (1 : Matrix (Fi
 /-- ★★ 质量投影 Π₊ 幂等（分子版）：(D+m·1)² = 2m·(D+m·1) ⟹ Π₊²=Π₊。 -/
 theorem dirac_mass_projector_idem_plus (m φ : ℝ) :
     (DiracOp m φ + m • (1 : Matrix (Fin 2) (Fin 2) ℝ)) ^ 2
-      = 2 * m • (DiracOp m φ + m • (1 : Matrix (Fin 2) (Fin 2) ℝ)) := by
+      = (2 * m) • (DiracOp m φ + m • (1 : Matrix (Fin 2) (Fin 2) ℝ)) := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [DiracOp, e_01, e_10, Matrix.mul_fin_two, smul_eq_mul]
-    nlinarith [mass_shell m φ]
+    simp [DiracOp, e_01, e_10, pow_two]
+    repeat (dsimp only [Matrix.mul_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply]; simp)
+    try ring_nf
+    try nlinarith [mass_shell m φ, Real.cosh_sq_sub_sinh_sq φ]
 
 /-- ★★ 质量投影 Π₋ 幂等（分子版）：(m·1−D)² = 2m·(m·1−D) ⟹ Π₋²=Π₋
     ——注意符号：Π₋=(m·1−D)/(2m)（(D−m·1)/(2m) 平方=−自身，非投影）。 -/
 theorem dirac_mass_projector_idem_minus (m φ : ℝ) :
     (m • (1 : Matrix (Fin 2) (Fin 2) ℝ) - DiracOp m φ) ^ 2
-      = 2 * m • (m • (1 : Matrix (Fin 2) (Fin 2) ℝ) - DiracOp m φ) := by
+      = (2 * m) • (m • (1 : Matrix (Fin 2) (Fin 2) ℝ) - DiracOp m φ) := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [DiracOp, e_01, e_10, Matrix.mul_fin_two, smul_eq_mul]
-    nlinarith [mass_shell m φ]
+    simp [DiracOp, e_01, e_10, pow_two]
+    repeat (dsimp only [Matrix.mul_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply]; simp)
+    try ring_nf
+    try nlinarith [mass_shell m φ, Real.cosh_sq_sub_sinh_sq φ]
 
 /-- ★★ 质量投影对相互湮灭（正交）：(D+m·1)·(m·1−D) = 0 ⟹ Π₊·Π₋=0。 -/
 theorem dirac_mass_projectors_annihilate (m φ : ℝ) :
@@ -326,20 +330,23 @@ theorem dirac_mass_projectors_annihilate (m φ : ℝ) :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [DiracOp, e_01, e_10, Matrix.mul_fin_two, smul_eq_mul]
-    nlinarith [mass_shell m φ]
+    simp [DiracOp, e_01, e_10, pow_two]
+    repeat (dsimp only [Matrix.mul_apply, Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply]; simp)
+    try ring_nf
+    try nlinarith [mass_shell m φ, Real.cosh_sq_sub_sinh_sq φ]
 
 /-- ★★ 质量投影对互补：(D+m·1)+(m·1−D) = 2m·1 ⟹ Π₊+Π₋=1
     ——谱 ±m 的两个投影覆盖全空间（恒等式，无需壳条件）。 -/
 theorem dirac_mass_projectors_complement (m φ : ℝ) :
     (DiracOp m φ + m • (1 : Matrix (Fin 2) (Fin 2) ℝ))
       + (m • (1 : Matrix (Fin 2) (Fin 2) ℝ) - DiracOp m φ)
-      = 2 * m • (1 : Matrix (Fin 2) (Fin 2) ℝ) := by
+      = (2 * m) • (1 : Matrix (Fin 2) (Fin 2) ℝ) := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [DiracOp, e_01, e_10, smul_eq_mul]
-    ring
+    simp [DiracOp, e_01, e_10]
+    repeat (dsimp only [Matrix.add_apply, Matrix.sub_apply, Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply]; simp)
+    try ring
 
 /-! ## 每步 Δφ 候选：翻倍说（Δφ=ln2）⟹ 3-4-5 勾股（#64，候选 C1 代数核心）
 
@@ -354,13 +361,15 @@ C4（ln15/4）与 C1 近亲（15^{1/4}≈2，差 1.6%）登记观察。
 
 /-- ★★ 翻倍说核心恒等：cosh(ln 2) = 5/4 ⟹ 一步翻倍的膨胀因子 γ=5/4。 -/
 theorem cosh_log_two : Real.cosh (Real.log 2) = 5 / 4 := by
-  rw [Real.cosh_def]
-  simp [Real.exp_log, div_eq_mul_inv]
+  have h2 : (0 : ℝ) < 2 := by norm_num
+  rw [Real.cosh_eq, Real.exp_neg, Real.exp_log h2]
+  norm_num
 
 /-- ★★ 翻倍说核心恒等：sinh(ln 2) = 3/4（一步翻倍的谱流位移）。 -/
 theorem sinh_log_two : Real.sinh (Real.log 2) = 3 / 4 := by
-  rw [Real.sinh_def]
-  simp [Real.exp_log, div_eq_mul_inv]
+  have h2 : (0 : ℝ) < 2 := by norm_num
+  rw [Real.sinh_eq, Real.exp_neg, Real.exp_log h2]
+  norm_num
 
 /-- ★★ 翻倍说核心恒等：tanh(ln 2) = 3/5 ⟹ 一步翻倍的 v/c = 3/5（3-4-5 勾股）。 -/
 theorem tanh_log_two : Real.tanh (Real.log 2) = 3 / 5 := by

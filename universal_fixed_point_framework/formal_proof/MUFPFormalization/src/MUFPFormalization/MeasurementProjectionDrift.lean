@@ -239,17 +239,15 @@ theorem sigma_base_vieta_decomp :
     σⁿ 与 d_H 对数线性关联（同对数底）。 -/
 theorem sigma_pow_log_decomp (n : ℕ) :
     (1 / 15 : ℝ) ^ n = Real.exp (-(n : ℝ) * Real.log 15) := by
-  have h1 : (1 / 15 : ℝ) ^ n = (15 : ℝ) ^ (-n) := by
-    have h2 : (1 / 15 : ℝ) = (15 : ℝ)⁻¹ := by ring
-    rw [h2]
-    rw [inv_pow]
-    <;> ring
-  have h3 : (15 : ℝ) ^ (-n) = Real.exp ((-n : ℝ) * Real.log 15) := by
-    rw [Real.exp_log ((show (0 : ℝ) < 15 by norm_num) : 0 < (15 : ℝ))]
-    rw [mul_comm]
-    rw [Real.log_pow (show (0 : ℝ) < 15 by norm_num) (-n : ℝ)]
-    <;> ring
-  linarith
+  have h15 : (0 : ℝ) < 15 := by norm_num
+  have hkey : Real.exp ((n : ℝ) * Real.log 15) = (15 : ℝ) ^ n := by
+    rw [Real.exp_nat_mul, Real.exp_log h15]
+  calc (1 / 15 : ℝ) ^ n = (1 : ℝ) ^ n / (15 : ℝ) ^ n := by rw [div_pow]
+    _ = 1 / ((15 : ℝ) ^ n) := by rw [one_pow]
+    _ = ((15 : ℝ) ^ n)⁻¹ := by rw [one_div]
+    _ = (Real.exp ((n : ℝ) * Real.log 15))⁻¹ := by rw [← hkey]
+    _ = Real.exp (-((n : ℝ) * Real.log 15)) := by rw [← Real.exp_neg]
+    _ = Real.exp (-(n : ℝ) * Real.log 15) := by rw [neg_mul]
 
 /-- ★★ S610 RG 尺度 vs σ 尺度衰减速度比较：
     (1/15)ⁿ < (1/2)ⁿ 对 n ≥ 1——
@@ -362,7 +360,6 @@ theorem sig_projection_characteristic_scale :
     rw [active_silent_prod]
   have h2 : SigmaInv = 15 := rfl
   rw [h1, h2]
-  norm_num
 
 /-- ★★ S611 候选级投影特征声明 G2：
     π_T 温度域 → e^{-(全态 + 框架层数常量)}。
@@ -437,8 +434,6 @@ theorem sin2theta_denominator_rationalization :
     不是"框架独立推导出 m_W/m_Z"（后者是开放项）。 -/
 theorem sin2theta_onshell_framework_denominators :
     1 - ((643 : ℝ) / 8 / ((1459 : ℝ) / 16)) ^ 2 = 474885 / 2128681 := by
-  ring_nf
   norm_num
-  <;> ring
 
 end MUFPF

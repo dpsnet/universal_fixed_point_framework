@@ -200,15 +200,17 @@ theorem delta_pauli_zx {n : ℕ} (hn : n = 2) :
 theorem one_by_one_commutes {R : Type*} [CommRing R] (a b : R) :
     (!![a] : Matrix (Fin 1) (Fin 1) R) * !![b] = !![b] * !![a] := by
   ext i j
-  fin_cases i <;> fin_cases j
-  simp [Matrix.mul_apply]
+  fin_cases i
+  fin_cases j
+  simp [Matrix.mul_apply, mul_comm]
 
 /-- ★★ 1×1 换位子恒零：标量域换位子 = 0（非交换性在 1×1 不可能——
     Δ≠0 要求 ≥ 2×2 表示——最小矩阵实现 2×2——2² = 4 维）。 -/
 theorem one_by_one_commutator_zero {R : Type*} [CommRing R] (a b : R) :
     commutator (!![a] : Matrix (Fin 1) (Fin 1) R) !![b] = 0 := by
   ext i j
-  fin_cases i <;> fin_cases j
-  simp [commutator, Matrix.mul_apply]
+  fin_cases i
+  fin_cases j
+  simp [commutator, Matrix.mul_apply, sub_eq_zero, mul_comm]
 
 end MUFPF.CommutatorLie

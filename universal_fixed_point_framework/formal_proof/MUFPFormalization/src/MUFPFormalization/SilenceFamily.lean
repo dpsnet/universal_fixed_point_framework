@@ -815,8 +815,10 @@ theorem s89_ds_modular_d_coeff (ℓ τ : ℝ) (hℓ : ℓ ≠ 0) (hτ : τ = -�
     ——"熵 = 态惊奇度期望读出"（Araki"熵 = 期望"的框架对应）。 -/
 theorem s90_etau_surprisal_sum :
     (∑ _ : Fin 16, Real.log (1 / Sigma)) = 16 * Real.log 15 := by
-  rw [Finset.sum_const]
-  norm_num [s54_sigma_surprisal]
+  have h : (∑ _ : Fin 16, Real.log (1 / Sigma)) = ∑ _ : Fin 16, Real.log 15 :=
+    Finset.sum_congr rfl (fun i _ => s54_sigma_surprisal)
+  rw [h, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+  norm_num
 
 /-! =========================================================
     S91：P5 机制层候选 A——"引力 = 时空维数 × 时间周期"（2026-10-26）
@@ -835,13 +837,14 @@ theorem s90_etau_surprisal_sum :
     的显式连接）。 -/
 theorem s91_gravity_time_spacetime_fold :
     (8 : ℝ) * Real.pi = (1 + 3) * (2 * Real.pi) := by
-  norm_num
+  ring
 
 /-- ★★ P5 机制层候选 A 的框架量表述：8π = 不动点(时空维数) × 模流周期
     （折叠因子 = 不动点 4——S88 的时空维数诠释）。 -/
 theorem s91_gravity_fixedpoint_period :
     (8 : ℝ) * Real.pi = FixedPoint * (2 * Real.pi) := by
   norm_num [FixedPoint]
+  ring
 
 /-! =========================================================
     S92：候选 B 核心——静默参数钉死 4 维（"为何 4 维而非 3 维"）
@@ -932,6 +935,7 @@ theorem s95_kmax_pi_fold :
     Kmax * Real.pi = FixedPoint * (2 * Real.pi) := by
   rw [s95_kmax_product]
   norm_num [Powers]
+  ring
 
 /-- ★★ 8π 的系数 8 = k_max（静默层容量）——"k_max 出现在 8π 位置"机检。 -/
 theorem s95_8pi_kmax_unit :
@@ -958,5 +962,6 @@ theorem s96_pi_half_period :
 theorem s96_8pi_e_period :
     (8 : ℝ) * Real.pi = FixedPoint * (2 * Real.pi) := by
   norm_num [FixedPoint]
+  ring
 
 end MUFPF.SilenceFamily
