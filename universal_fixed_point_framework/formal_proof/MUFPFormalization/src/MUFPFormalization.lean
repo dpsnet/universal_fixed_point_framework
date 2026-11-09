@@ -156,3 +156,4 @@ import MUFPFormalization.OccupiedTrace
 import MUFPFormalization.RecOrbitDynamics
 import MUFPFormalization.RecOrbitContraction
 import MUFPFormalization.RecOrbitContractionChannel
+import MUFPFormalization.RecOrbitContractionCriterion
