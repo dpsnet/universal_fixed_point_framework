@@ -4,6 +4,12 @@
 `external_theory_lineage_presurvey.md` §7.15（"恰 1 个零权重分支"公理化证明）的 Lean 4 机器形式化
 及其候选前提 A3/A5 的严格化。基于 **Lean 4.34.0-rc2 + mathlib4**（2026-11-09 由 4.31.0 对齐主框架版本，以复用主框架 mathlib olean）。
 
+> **2026-11-09 状态变更（v0.37）**：本目录的 6 个模块已**整体并入主库**
+> `MUFPFormalization/src/MUFPFormalization/`（commit `9d6b9c7`），命名空间统一改为 `MUFPFormalization.*`
+> 并接入库根 import（闭包 149 → 155、模块数 328 → 334）。本目录自即日起降级为**归档与溯源**用途，
+> 不再是机检主张的独立来源——主张改由主库的 334/334 口径承担（构建 3827 jobs、全 default target 7096 jobs、
+> 审计 MISSING/STALE/SORRY 全 0）。
+
 ## 项目结构
 
 ```
@@ -13,7 +19,7 @@ PresurveyFormalization/
 ├── PresurveyFormalization.lean   # 库入口
 ├── Main.lean                     # 可执行入口
 └── PresurveyFormalization/
-    ├── SpinorSilenceBranch.lean  # §7.15 全部形式化（§①–§⑥）
+    ├── SpinorSilenceBranch.lean  # §7.15 全部形式化（§①–§⑧；33 定理）
     ├── TimeBranch.lean           # §7.34 时间分支双指标刻画（w=0 ∧ c₃=1 ∧ t）
     ├── LuInvariant.lean          # §7.35/§7.62 LU 引理 1 部分迹变换律（完整机证）
     ├── LayerEntropy.lean         # §7.53 熵分解恒等式
@@ -92,6 +98,38 @@ lake build
 | 指标③ | `TimeEvolution.directional` | **方向性**：t₁<t*<t₂ ⟹ 静默单向 1→0（bifurcation_directional 同构） |
 | 综合 | `time_branch_carries_evolution` | 时间分支（谱权重 0）同时承载单向演化（三指标叠加） |
 
+## 定理清单（SpinorSilenceBranch §⑦/§⑧：S₄ 导出链）
+
+§7.15 曾把"15 与 S₄ 互为定义"留在外观上（S₄ = 1/15 与 k_max = 8 → 15 = 16 − 1 互为引用）。§⑦/§⑧ 用主库已有锚点把链条焊死，8 条定理：
+
+| 节 | 定理 | 内容 |
+|----|------|------|
+| §⑦ | `spinorDim_eq_two_pow_succ` | spinorDim = 2^(k+3)（对应主库 `BottTower.spinorDim_eq_pow`） |
+| §⑦ | `spinorDim_eq_two_mul_kmax` | 16 = 2·k_max（k_max = 8） |
+| §⑦ | `presurvey_anchor_correction` | 预研锚点与主库 k_max 层级的对齐修正 |
+| §⑦ | `distinctBranchSpectrum_satisfiable` | A3 分支谱互异性可满足（闭合 A3 剩余显式前提的可行性面） |
+| §⑧ | `fullState_from_active` | N_active = 3 ⟹ 16 = 2·2^Nact ∧ 16 = 2^(Nact+1) |
+| §⑧ | `unit_correction_same_rule` | 8 − 1 = 7 ∧ 16 − 1 = 15（与主库二分链 `bisection_unit_correction` 同规则） |
+| §⑧ | `S4_eq_inv_two_pow_succ_minus_one` | **S₄ = 1/(2^(Nact+1) − 1)**（Nact = 3 ⟹ 1/15），使 S₄ 不再是硬编码 def 的孤立取值 |
+| §⑧ | `window_forces_k_le_from_active` | 窗口条件 S₄ ≤ 1/k 反推 k ≤ 2^(Nact+1) − 1 |
+
+导出链（一条链，非两个互为定义的数）：N_active = 3 → k_max = 2³ = 8 → 16 = 2·k_max = 2^(Nact+1) → 15 = 16 − 1（与 7 = 8 − 1 同规则）→ S₄ = 1/(2^(Nact+1) − 1) = 1/15。
+
+## 六模块总表（迁入主库后实测，2026-11-09）
+
+| 模块 | 有效行数 | 定理数 | 对应预研章节 |
+|---|---|---|---|
+| SpinorSilenceBranch | 465 | 33 | §7.15 全部 + §⑦/§⑧ 导出链 |
+| TimeBranch | 74 | 6 | §7.32 / §7.34 |
+| TimeSpectrum | 54 | 3 | §7.68 / §7.69 |
+| LayerEntropy | 76 | 2 | §7.53 |
+| LuInvariant | 222 | 7 | §7.35 / §7.62 |
+| RUniqueness | 87 | 5 | §7.56 / §7.64 |
+| **合计** | — | **56** | 零 sorry / 零 axiom |
+
+> 有效行数为剔除块注释后的行数；`SpinorSilenceBranch.lean` 文件总行数 601（含注释头）。
+> `TimeSpectrum` / `LuInvariant` 中出现 3 处 "sorry" 字样均在注释内，行首 sorry 为 0（审计 `SORRY_LINES=0`）。
+
 ## 候选前提状态与诚实边界
 
 - **A5（最大熵 ⟹ 均匀）**：从候选前提**升级为已证定理**（v0.27，§⑤）——KL/熵上界引理机器证明（证实，非否定）；
@@ -102,7 +140,13 @@ lake build
 
 ## 与主框架关系
 
-零改动主框架 `formal_proof`；仅环境复用 + 锚点引用；符合预研"先内后外"保护原则。
+原状态（v0.26–v0.36）：零改动主框架 `formal_proof`；仅环境复用 + 锚点引用；符合预研"先内后外"保护原则。
+
+**2026-11-09 起（v0.37）**：按"预研成果应自包含进主库"的裁决，6 模块已**物理迁入**主库
+`src/MUFPFormalization/`，命名空间改为 `MUFPFormalization.*`，并接入库根 `src/MUFPFormalization.lean` 的 import
+（import 闭包 149 → 155、模块数 328 → 334）。主库实测：6 模块点名构建 1952 jobs、库根 3827 jobs、全 default target
+（含 exe）7096 jobs，均 exit 0；`p7_lean_olean_audit.py` → MODULES=334 / CLOSURE=155 / ORPHANS=179 /
+MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0。本目录保留原件作溯源与归档，不再承担独立机检主张。
 
 ## 版本记录
 
@@ -117,3 +161,4 @@ lake build
 - **v0.34**（2026-08-17）：**RUniqueness 谱投影层完整形式化（§7.64 机证闭合）**——`branchProjection`（分支 i 谱投影 E_ii）+ `spectral_projection_unique`（像条件 ∧ 零化条件 ⟹ P = E_ii——**特征子空间直和 ⟹ 谱投影唯一**）+ `spectral_projection_exists_unique`（存在且唯一）；§7.56"特征子空间直和 ⟹ 投影唯一"开放项闭合，R 唯一性三层机证齐备（算子/投影/分支结构），3834 jobs 零错误零警告。
 - **v0.35**（2026-08-17）：**TimeSpectrum 形式化（§7.69 t*_i 分布代数核心机器化）**——新文件 `TimeSpectrum.lean`，lake build **3836 jobs 零错误零警告**：`layerWeight`/`S4`/`dH`/`tstar` 核心定义 + `tstar_eq_log`（**t*_k = ln(S_k/S₄) 权重比形式机证**：`Real.log_mul` + `Real.log_exp` + `ring`）+ `tstar_window_endpoint`（**t*_1 = ln(15/e)** 观测窗口终点：`Real.log_div` + `Real.log_exp`）+ `tstar_ordering`（**t*_1 > t*_2 > t*_3** 层序严格降序：`linarith`）；§7.68"非对角分量未分析"闭合（非对角-对角完全解耦，权重比仅依赖对角初始值与静态谱值——t*_i 对非对角扰动鲁棒）。
 - **v0.36**（2026-11-09）：**环境迁移修复并首次在当前工作区重建**——① `lakefile.lean` / `lake-manifest.json` 9 条依赖路径由 `D:/trae-work/.../UFPFormalization/.lake/packages/*` 改为 `E:/workspace/hyper-resolution/.../MUFPFormalization/.lake/packages/*`（`UFPFormalization` = `MUFPFormalization` 旧名，旧盘符不存在）；② `lean-toolchain` v4.31.0 → v4.34.0-rc2，与主框架 mathlib olean 版本对齐（跨版本读取 olean 会失败）；③ `LuInvariant.lean` L72/74/94/95 共 4 处弃用 API `if_pos`/`if_neg` 改为 `ite_eq_left`/`ite_eq_right`（4.34 已弃用，否则产生 8 条 warning）；结果 **`lake build` 3894 jobs 零错误、零警告、零 sorry、零 axiom**——v0.26–v0.35 的机检声明自本次起在当前工作区可复现。
+- **v0.37**（2026-11-09）：**S₄ 导出链补齐 + 全量并入主库**——① `SpinorSilenceBranch.lean` 新增 §⑦（4 条）与 §⑧（4 条）共 8 条定理，把 `N_active = 3 → k_max = 8 → 16 = 2^(Nact+1) → 15 = 16 − 1 → S₄ = 1/(2^(Nact+1) − 1)` 焊成一条链（新增 §⑦ 4 条 + §⑧ 4 条，文件 497 → 601 行，定理总数达 33），§7.15"15 与 S₄ 互为定义"的外观消失；② 6 模块（56 定理）整体迁入主库 `MUFPFormalization/src/MUFPFormalization/`，命名空间改为 `MUFPFormalization.*`，接入库根 import（闭包 149 → 155、模块 328 → 334），commit `9d6b9c7`；主库构建 3827 jobs / 全 default target 7096 jobs / 审计全 0；③ 本目录转归档，主张由主库口径承担。

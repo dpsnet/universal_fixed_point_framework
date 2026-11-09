@@ -1,5 +1,6 @@
 import MUFPFormalization.AlphaChain
 import MUFPFormalization.AdjunctionUnitNorm
+import MUFPFormalization.SpinorSilenceBranch
 
 /-! # PublicResidueIdentity.lean — 公共残差恒等 Lean 化（S505，2026-10-29）
 
@@ -34,8 +35,22 @@ noncomputable def powBase : ℝ := 2
 /-- 不动点（框架常数 FixedPoint=4）。 -/
 noncomputable def fixedPoint : ℝ := 4
 
-/-- 框架常数 σ = 1/15（SigmaInv=15 的倒数）。 -/
+/-- 框架常数 σ = 1/15（SigmaInv=15 的倒数）。
+
+    取值溯源（2026-11-09 登记）：σ 不是自由参数，也不是孤立硬编码——其 15 由生成链
+    `N_active = 3 → k_max = 2^3 = 8 → 16 = 2·k_max = 2^(N_active+1) → 15 = 16 − 1`
+    （与二分链 7 = 8 − 1 同规则）给出，机检见
+    `MUFPFormalization.SpinorSilenceBranch.S4_eq_inv_two_pow_succ_minus_one`
+    （S₄ = 1/(2^(N_active+1) − 1)，N_active = 3 ⟹ 1/15）。
+    下方 `sigma_eq_S4` 把本 def 与该导出链的 S₄ 接驳。 -/
 noncomputable def sigma : ℝ := 1 / 15
+
+/-- 主库 σ 与 S₄ 导出链接驳：σ = S₄（两处取同一生成链终点值 1/15）。
+    本定理只保证两处常数同值、不各说各话；"为何是 15"由
+    `SpinorSilenceBranch.S4_eq_inv_two_pow_succ_minus_one` 的链式陈述承担。 -/
+theorem sigma_eq_S4 : sigma = MUFPFormalization.SpinorSilenceBranch.S4 := by
+  unfold sigma MUFPFormalization.SpinorSilenceBranch.S4
+  norm_num
 
 /-- 公共残差（S496）：30σ⁵(1−12σ³)——轻子三通道共享残差标度。 -/
 noncomputable def publicResidue : ℝ := 30 * sigma ^ 5 * (1 - 12 * sigma ^ 3)

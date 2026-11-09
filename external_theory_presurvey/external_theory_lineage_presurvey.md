@@ -176,15 +176,23 @@ UFPF（生成侧：递归 → 谱，谱的起源 + 静默压制）
 - Jones 子因子血缘链 + 量子霍尔交汇（§5）→ 外部理论关系调研结论；
 - 共同核等效判定 + 垂直结构=时空横向描述（见既有对话，可提炼为正式笔记）。
 
-## 9.5 形式化总结（2026-08-17，v0.26–v0.29）
+## 9.5 形式化总结（2026-08-17，v0.26–v0.29；2026-11-09 v0.37 已并入主库）
+
+> **2026-11-09 状态变更**：本节 6 个模块已整体迁入主库 `MUFPFormalization/src/MUFPFormalization/`（commit `9d6b9c7`），
+> 命名空间改为 `MUFPFormalization.*` 并接入库根 import（闭包 149 → 155、模块 328 → 334）。下方"环境/构建"记录为
+> 2026-08-17 的历史快照，**现状以主库口径为准**（库根 3827 jobs、全 default target 7096 jobs、审计 334/334 零缺失零陈旧零 sorry）。
+> 预研目录保留原件作溯源归档。
 
 **形式化根目录**：`external_theory_presurvey/formal_proof/PresurveyFormalization/`
-- 环境：**复用**主框架 UFPFormalization 的 `.elan`（用户级 elan，Lean 4.31.0 + Lake 5.0.0）与 `.lake`（mathlib 及 8 个传递依赖以**绝对路径**引用，零拷贝、零改动主框架源码）；
-- 构建：`lake build` **3830 jobs 通过，零 `sorry` 零 `axiom` 零警告**；
-- 文件：
-  - `PresurveyFormalization/SpinorSilenceBranch.lean`（§7.15 全部形式化，§①–§⑥）；
-  - `PresurveyFormalization/TimeBranch.lean`（§7.34 时间分支双指标刻画）；
-  - `PresurveyFormalization/LuInvariant.lean`（§7.35 LU 引理 1 矩阵代数核心——部分完成，见诚实边界）。
+- 环境（历史快照，2026-08-17）：复用主框架 `UFPFormalization`（= 现 `MUFPFormalization` 旧名）的 `.elan`（用户级 elan，Lean 4.31.0 + Lake 5.0.0）与 `.lake`（mathlib 及 8 个传递依赖以绝对路径引用）。**2026-11-09 修复后现状**：工具链 v4.34.0-rc2、elan 在本机 `D:\tools\lean\.elan`（`C:\Users\qinxi\.elan` 属旧机器环境，已不适用）、依赖路径改指 `E:/workspace/hyper-resolution/.../MUFPFormalization/.lake/packages/*`；
+- 构建（历史快照）：`lake build` 3830 jobs；**2026-11-09 实测** `lake build` **3894 jobs 通过，零 `sorry` 零 `axiom` 零警告**；迁入主库后由主库口径承担；
+- 文件（6 模块 56 定理，详见 `formal_proof/PresurveyFormalization/README.md` 总表）：
+  - `SpinorSilenceBranch.lean`（§7.15 全部形式化 §①–§⑥ + §⑦/§⑧ 共 8 条 S₄ 导出链定理，33 定理）；
+  - `TimeBranch.lean`（§7.34 时间分支双指标刻画，6 定理）；
+  - `TimeSpectrum.lean`（§7.68/§7.69，3 定理）；
+  - `LayerEntropy.lean`（§7.53，2 定理）；
+  - `LuInvariant.lean`（§7.35/§7.62 部分迹变换律完整机证，7 定理）；
+  - `RUniqueness.lean`（§7.56/§7.64 三层唯一性，5 定理）。
 
 **定理清单（§7.15：按证明步骤与严格化）**：
 - §① 观测窗口：`observableWindow_forces_k_le_15`（1/k ≥ S₄ ⟹ k ≤ 15 ⟹ m ≥ 1）、`silent_count_ge_one`；
