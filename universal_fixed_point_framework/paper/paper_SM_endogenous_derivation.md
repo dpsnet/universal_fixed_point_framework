@@ -1196,12 +1196,12 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 > **分层声明**：H6' 的 Lean 机检定理覆盖六个层级——步骤 1 分类器 `MeasurementAlgebraType` inductive；步骤 2 域映射 `algebraToProjectionDomain` + 通道绑定 `channelType` + 全划分 `algebraDomainPartitionComplete`；步骤 2b 符号规则 + 通道→域归属：spatiotemporal 双向 真机检 `dH_coef_sign_split`/`log_range_surj`（S463）——d_H 系数正负两侧都非空，这是真双向，所有 π_Sig 通道的正负偏移都是正常输出；probabilistic e 只+ `boltzmann_weight_pos`（S426）——机检的是玻尔兹曼权重 e^(-βE) ≥ 0，不是 α⁻¹ 偏移方向非负；frozen σ 只+ `rg_scale_tends_zero`（S426）——机检的是 RG 尺度 (1/2)ⁿ 单调收敛；probabilistic/frozen 域目前没有 α⁻¹ 通道，它们的单向正声明还未被实验检验。通道→域归属采用先于数据的物理量判据：通道测量的物理量属于哪个框架域，不看任何偏差方向（§9.1b 详细说明）；步骤 2c 先验预言（P1 Sr/Yb 反冲可检验域归属、P2 寻找 π_T/π_μ 通道）；步骤 2d e⁻ⁿ 指数步进 + 系数规则全机检（S464-S465）；**步骤 3 偏移尺度耦合**拆分为三层——**① 纯算术（已机检，S610 F 节 12 theorem）**：d_H=ln(3×5) 韦达根乘积、e⁻ⁿ 指数=全态 16+活跃步 3/幂基步 2、σⁿ=(1/15)ⁿ 衰减快于 RG (1/2)ⁿ、框架常数集 C 算术闭包；**② 候选级结构断言（已声明，S611 G 节 4 theorem）**：三个投影域各自特征尺度恰好锚定框架常数——theorem 纯算术闭合但陈述本身是候选级框架末端断言；**③ 物理诠释层（非数学，§9.1b 三域论证链）**：SignatureFiber Hausdorff 维数 = log(韦达根分支数)、TempRGFiber 指数步进 = 活跃/幂基步、根→σ^r 冻结代数——框架末端物理诠释，非 Lean 可纯派生。**H6' 整体状态**：结构约束（域划分、指数步进、常数闭包）全机检 ✅；spatiotemporal 双向符号真机检 ✅；probabilistic/frozen 单向正声明机检的是域内数学性质，尚未被 α⁻¹ 通道检验 ⚠️；通道→域归属先于数据 ✅（Lean `channelType` 已与主表同步：v1.3 撤销 Rb→probabilistic、CODATA→frozen 旧分类）；CODATA 2022 的 +4.46σ_score 差解释为实验加权中心移动，不是通道代数域变化 ✅；δ* 域级分解核算失败见 §9.2e。
 
-### 11.5 冻结代数 + Fibonacci
+### 11.5 冻结代数 + 幂次分解递推
 
 | Theorem | 文件 | 陈述 |
 |---|---|---|
-| `sigma5_fib_rec` | SilenceSecondOrder | σ⁵ Fibonacci 递归 |
-| `sigma3_fib_rec` | SilenceSecondOrder | σ³ Fibonacci 递归 |
+| `sigma5_fib_rec` | SilenceSecondOrder | σ⁵ = σ³·σ² 幂分解（定理名沿用 `fib_rec`，实为幂加法恒等式，与 Fibonacci 数列无关） |
+| `sigma3_fib_rec` | SilenceSecondOrder | σ³ = σ²·σ¹ 幂分解（同上，非 Fibonacci 数列） |
 | `fifteen_unique_factorization` | SpectralGap | 15 = 3×5 唯一分解 |
 | `sigma_inv_square_minus_one` | SpectralGap | 15 = 4² - 1 |
 
