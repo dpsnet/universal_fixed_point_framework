@@ -13047,7 +13047,7 @@ S624 在论文 §3 落了一句「(iii) 速率层不可由现有公设内生」�
 ## 3. 新模块 `RecOrbitContractionCriterion.lean`（143 行 / 10 定理 / 零 sorry）
 
 - 路径：`...\src\MUFPFormalization\RecOrbitContractionCriterion.lean`。
-- import：`Mathlib.Analysis.SpecificLimits.Basic`、`Mathlib.Topology.MetricSpace.Pseudo.Lemmas`、`MUFPFormalization.CompositeDepth`、`MUFPFormalization.RecOrbitContraction`。
+- import（五条）：`Mathlib.Analysis.SpecificLimits.Basic`、`Mathlib.Topology.MetricSpace.Pseudo.Lemmas`、`Mathlib.Logic.Function.Iterate`、`MUFPFormalization.CompositeDepth`、`MUFPFormalization.RecOrbitContraction`。
 - docstring 三段：动机（抽象层 `step` 无实现，故须判据化）/ 判据覆盖范围边界（**只覆盖乘子型 `step`；仿射带平移、分段、非线性不覆盖**）/ 十条定理清单。
 - 定理清单（10）：
 1. `linear_step_contracts_iff` — **充要判据**：`(∀ x, |k * x - 0| ≤ σ * |x - 0|) ↔ |k| ≤ σ`。
@@ -13083,7 +13083,7 @@ S624 在论文 §3 落了一句「(iii) 速率层不可由现有公设内生」�
 - 含根 Lean 文件数 338→**339**（源模块 338 + 库根）。
 - `ORPHANS` 与 `ORPHANS_NEITHER` 不变，正是本模块**确实进入了库根闭包**（新模块被库根 import，故不进孤立集合）；`NEVER_IMPORTED` +1 是分母随源模块数增加所致，非新增孤立文件。
 
-## 6. 论文落地（1526 行；15 处行内改写 + 附录 C 两行插入）
+## 6. 论文落地（1526 行；13 行行内改写（21 组子替换）+ 附录 C 两行插入；git diff +15/−13）
 
 脚本：`%TEMP%\fix627a.py`（15 组 `count == 1` 断言，全 OK；含版式自检）。
 
