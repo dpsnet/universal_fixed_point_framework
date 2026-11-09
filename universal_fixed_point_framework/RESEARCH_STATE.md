@@ -12918,3 +12918,98 @@ S624 在论文 §3 落了一句「(iii) 速率层不可由现有公设内生」�
 - 论文 L1160「(a) 步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配尚未机检」**仍未改**：本轮机检的是 σ^n 的几何衰减与收敛，**不是**「偏移尺度耦合精确匹配」，二者不可混为一谈；若要关该项，需另立定理把 δ* 的域投影校正步与 σ^n 谱逐项对齐。
 - 远端哈希已回填：内容提交 `7500a92` 写入 3 处锚点（L1168 / L1418 / L1513，共 4 个哈希字面）；L1418 区间改为 `fec4051..7500a92`，并注明「其后另有一次仅改哈希、正文不变的提交」。提交 7500a92 = 4 files / +220 / −16；随后一次仅哈希回填的提交另计。
 - `master` 仍非 `develop` 祖先（`41b3bb4`）；Paper II 的「当前 LHC 排除限 1300 GeV」未改；库外碎片未清。
+
+---
+
+# S626 — 压缩来源通道（冻结闭合 σ 乘子：等式级收缩、唯一不动点、判别力）
+
+**2026-11-10｜承接 S625：把「压缩的来源」从「完全开放」降为「一般 `step` 的实现是否按 σ 收缩」**
+
+## 0. 本轮判别目标与被替换的判断
+
+- 被替换的判断（S625 §7 第一条）：「未证明本框架的 `step` 满足压缩条件」——压缩的来源被登记为动力学三层唯一开口。
+- 本轮换问法：不问「抽象的 `step` 是否满足」，而问「本框架内是否**已存在**一条已机检、可直接充当该 `step` 的压缩通道」。若存在，则「压缩条件」在本框架内不是外加假设。
+- 判别结论：**存在**。压缩率与压缩实现都是库内既有对象（§10b 的 S₄ 与 `CompositeDepth.freezeClosure`），故论文按「条件侧 + 数值通道来源均已机检」升格登记，仅「一般 `step`（抽象态射）的实现」保留为残余开口。
+- 本轮性质：**接线（wiring）**，不重证。σ 的生成链、S₄ 的机检恒等、收缩迭代的收敛定理均已在 S625 落地；本轮只把它们接到 `CompositeDepth` 的冻结闭包上。
+
+## 1. 库内既有结构（本轮直接接线）
+
+- **压缩率**：`CoherenceToBranching.lean` L798–803 §10b 注释给出 IFS 收缩因子比 c₁⁰:c₂⁰:c₃⁰ = S₃S₄ : S₄ : 1（S₃ = e⁻³、S₄ = e^{−d}，**d = ln15 为机器证明实例**）；L809 `silent_factor_c2 d := exp(-d)`；S625 已机检 `silent_factor_c2_ln15_eq_sigma`（该因子 = 1/15 = σ）。
+- **压缩实现**：`CompositeDepth.lean` L205 `noncomputable def freezeClosure : ℝ → ℝ := fun x => sigma * x`。来源链：S563 C1（每静默层乘 σ，L155 `freezeFactor : Nat → ℝ := fun _ => sigma`、L171 `cascade_exponentiation`）+ S568/S569 φ 双通道分离（数值通道 φ_metric = σ 乘子为内生，机制通道 φ_mech = e^{−t·a} 不参与 σ 数值）。
+- 配套既有定理：L215 `freezeClosure_unit`、L221 `freezeClosureIterate_mul`、L237 `freezeClosureIterate_sigma`、**L243 `freezeClosure_cascade (n) : freezeClosureIterate n 1 = sigma ^ n`**、L255 `freezeClosure_mul`；L209–211 `freezeClosureIterate` 为**自定义迭代**（`Nat → ℝ → ℝ`），非库 `Function.iterate`。
+- 未采用但已确认存在的另一条 contraction 线索：`CoherenceToBranching.lean` L497 `⟨r_uniform_lt_one, LipschitzWith.of_dist_le_mul …⟩`（IFS 收缩装配）、`HutchinsonAttractor.lean` L61（`edist` 口径）。本轮未使用，理由是它们给的是 Lipschitz 距离口径而非「σ 乘子的等式级收缩」，与 §3 的开口不同构。
+
+## 2. 数值先证伪（模式 8，五组全 PASS）
+
+脚本 `%TEMP%\pre_s626.py` → `pre_s626.txt`；Python = `D:\pyenv\pyenv-win\versions\3.11.8\python.exe`。
+
+- **A（几何律等式）**：`|σ^n x| = σ^n |x|`，6 个 x（含 ±、0.5、1e-3、1e3）× n=0..20，共 126 样本，worst_rel = 0.000e+00，violations = 0。
+- **B（判别力）**：`|2x| / (σ|x|) = 2/σ = 30.000000`；x=1 处 `2 <= 0.066667` 为 False —— 说明「不收缩的 step」确实被该条件排除。
+- **C（严格收缩）**：`|σx|/|x| = 0.066666666667 < 1`，6 组全成立。
+- **D（唯一不动点）**：`σx = x ⟹ (σ−1)x = 0 ⟹ x = 0`（σ−1 = −0.933333…≠ 0），样本中无第二个不动点。
+- **E（幅值序列）**：σ¹ = 6.667e−02 / σ¹⁰ = 1.734e−12 / σ²⁰ = 3.007e−24。
+- 沿用 S625 教训：**几何收敛的数值检验禁用相对残差**（浮点吸收区必然报 1.00 假阳性），本轮全部比对绝对值与浮点地板，A 组残差恰为 0 亦因等式两端同源。
+
+## 3. 新模块 `RecOrbitContractionChannel.lean`（154 行 / 12 定理 / 零 sorry）
+
+- 路径：`...\src\MUFPFormalization\RecOrbitContractionChannel.lean`。
+- import：`Mathlib.Analysis.SpecificLimits.Basic`、`Mathlib.Topology.MetricSpace.Pseudo.Lemmas`、`Mathlib.Logic.Function.Iterate`、`MUFPFormalization.CompositeDepth`、`MUFPFormalization.PublicResidueIdentity`、`MUFPFormalization.RecOrbitContraction`；`namespace MUFPF`、`open Filter`、`open scoped Topology`。
+- docstring 四段：动机 / 本轮查证（来源存在且已在库内机检，本文件只做**接线**不重证）/ 结论 / 边界（**不声称一般 `step` 满足**该条件）。
+- 定理清单（12）：
+
+1. `composite_sigma_eq_public_sigma` — `CompositeDepth.sigma = PublicResidueIdentity.sigma`（两条 σ 语义链同一常数）。
+2. `freezeClosure_pos` — `0 < σ`。
+3. `freezeClosure_lt_one` — `σ < 1`。
+4. `freezeClosure_abs_eq` — `|freezeClosure x| = σ|x|`（σ 乘子的幅值作用）。
+5. `freezeClosure_contracts` — `|freezeClosure x − 0| = σ|x − 0|`，即 S625 `hstep` 形状在该通道上以**等式**成立。
+6. `freezeClosure_iterate_abs_eq` — `|freezeClosure^[n] x| = σ^n|x|`：**等式级**几何律，强于 S625 的 `≤ c^n|x−a|`。
+7. `freezeClosure_iterate_tendsto` — `Tendsto (fun n => freezeClosure^[n] x) atTop (𝓝 0)`（实例化 S625 `contraction_iterate_tendsto`）。
+8. `freezeClosure_fixed_iff` — `freezeClosure x = x ↔ x = 0`（唯一不动点即「周期塌成不动点」的具体机制）。
+9. `freezeClosureIterate_eq_iterate` — 自定义 `freezeClosureIterate` 与标准 `Function.iterate` 一致（桥接，使 §6 可用库迭代引理）。
+10. `double_step_refutes_contraction` — `¬(∀ x, |2x − 0| ≤ (1/15)|x − 0|)`，取 x=1 反例（`norm_num` 判假）。
+11. `sigma_contraction_channel_realized` — ∃ `step`、`a`：等式级压缩 ∧ `Tendsto (fun n => step^[n] 1) atTop (𝓝 a)`（非空）。
+12. `contraction_condition_discriminating` — 既存在实现（`freezeClosure`/0）又存在反例（`2x`/0），条件具判别力。
+
+## 4. 编译与构建真值
+
+- 首建失败 1 处：`%TEMP%\bc626.txt` 报 `RecOrbitContractionChannel.lean:123:53: Tactic rewrite failed: Did not find an occurrence of the pattern CompositeDepth.freezeClosureIterate k x`（`freezeClosureIterate_eq_iterate` 的 succ 步）。修法：改 `induction n generalizing x`，succ 步三段重写 `rw [freezeClosureIterate]` → `rw [ih (freezeClosure x)]` → `rw [Function.iterate_succ_apply freezeClosure k x]`。
+- 单模块：`lake build MUFPFormalization.RecOrbitContractionChannel` → **3192 jobs，exit 0**（`%TEMP%\bc626b.txt`）。
+- 库根：`src\MUFPFormalization.lean` 由 157 行追加末行 import（→ **158 行**，LF，无 BOM）；`lake build MUFPFormalization` → **3833 jobs，exit 0，0 error，12 warning**（`%TEMP%\b626.txt`，`chk626.py` 核验 BUILD_COMPLETED=True）。
+  - 12 warning 全为既有，新模块 0：9 条 `haveI`（`ICVerification` 82/86、`RAP4_silence_strictification` 123/124、`RAP5a_explicit_adjunction` 413、`SpectralBundle/Core` 69、`HallEmergence` 1170、`SpectralBundle/PinchTopology` 389/492）+ 3 条 `<;>`（`SpCategory` 427×2、`SignatureFiber` 342）。
+- 全 default target：`lake build` → **7094 jobs，exit 0**（`%TEMP%\ball626.txt`）。**数值不变**，因 `Main.lean`（在仓库根，10 条 import）不 import新模块 —— 新模块只经库根进入 olean 审计，不进 exe 入口。
+- 提交：`229a21f`（3 files，+176/−15：新模块 + 库根 + 论文）。**过程记录**：该提交首次成型时 message 写「11 定理」，经 `%TEMP%\cnt626.py` 实数核对为 **12 条**（`theorem` 声明逐一枚举），因尚未推送，用 `commit --amend` 就地纠正为 12 条，哈希由 `d549e27` 变为 `229a21f`，论文 4 处锚点随之二次回填至 `229a21f`。
+
+## 5. 审计口径刷新（复用权威 `audit625c.py`）
+
+`%TEMP%\audit625c.py` → `%TEMP%\audit626.txt`：
+
+- **MODULES=337**（源模块，336→337）、**CLOSURE_INCL_ROOT=165**（161→165）、**ORPHANS=173**（176→173）。
+- MAIN_IMPORTS=10 / ORPHANS_COVERED_BY_MAIN=9 / ORPHANS_NEITHER=**164**（167→164）/ DANGLING=0 / NEVER_IMPORTED_BY_ANY_MODULE=160 / NEW_IN_CLOSURE=True。
+- 含根 Lean 文件数 337→**338**（源模块 337 + 库根）。旧 `audit624.py` 口径有误，勿再用。
+
+## 6. 论文落地（1523 行；20 处逐条 count 断言 + 附录 C 两行插入）
+
+脚本：`%TEMP%\fix626a.py`（20 处，20 条全 OK）、`%TEMP%\fix626b.py`（附录两行 + 残余/新值计数）、`%TEMP%\hs626b.py`（哈希回填）、`%TEMP%\hs626c.py`（amend 后二次回填）。
+
+- **L272 §3 末句**：「收缩条件本身的来源仍登记为开口」→「收缩条件在数值（度量）通道上已机检且为等式级（`RecOrbitContractionChannel.lean`：`freezeClosure` 即 σ 乘子，|freezeClosure^n(x)| = σ^n|x|、唯一不动点为 0），一般 `step` 是否满足该条件仍登记为残余开口」。
+- **L274 (ii) 小标题**：「条件侧已机检、来源侧开放」→「**条件侧与数值通道来源均已机检**」；**(ii) 末句**整句替换为：压缩来源在数值通道上非外加假设（G1 冻结闭合 = σ 乘子 `CompositeDepth.freezeClosure`），迭代按等式收缩（`freezeClosure_iterate_abs_eq`），条件在该通道上是等式（`freezeClosure_contracts`），除 0 外无不动点（`freezeClosure_fixed_iff`），且具判别力（`step x = 2x` 不满足 / `contraction_condition_discriminating`）；**仍开放的是「一般 `step`（抽象态射）的实现是否按 σ 收缩」**——降级后的唯一残余开口；机制通道 e^{−t a}（`MinkowskiBoost.scalar_contraction`）另计、不参与 σ 数值。
+- **L966**：olean 审计 337/337 → **338/338**。
+- **L1168**：3829→**3833**、337/337→**338/338**、MODULES/CLOSURE/ORPHANS 337/161/176→**337/165/173**；`sigma_rate_contraction` 之后新增 `RecOrbitContractionChannel.lean` 十定理点名清单（`composite_sigma_eq_public_sigma` / `freezeClosure_abs_eq` / `freezeClosure_contracts` / `freezeClosure_iterate_abs_eq` / `freezeClosure_iterate_tendsto` / `freezeClosure_fixed_iff` / `freezeClosureIterate_eq_iterate` / `double_step_refutes_contraction` / `sigma_contraction_channel_realized` / `contraction_condition_discriminating`；`freezeClosure_pos` / `freezeClosure_lt_one` 属显然界，未逐条列举）。
+- **L1249**：3829→3833。
+- **L1418**：3829→3833；MODULES/CLOSURE/ORPHANS 同上；「336 个源文件中 176 个不在库根 import 闭包…余 167 个」→「**337 个源文件中 173 个**…余 **164 个**」；「动力学两模块（`RecOrbitDynamics` / `RecOrbitContraction`），库内源模块共 336 个（含库根 337 个 Lean 文件）」→「**动力学三模块**（+`RecOrbitContractionChannel`），共 **337** 个（含库根 **338** 个 Lean 文件）」。整节 §12.4 项 1 的「收缩层已机检 + 动力学三模块」叙述与 S625/S626 一致，未再改动判断句。
+- **L1455 §13 开放组件**：收缩层整条改为「必然性层、条件侧、速率 σ^n 与**数值通道来源**均已机检——收缩率与 §10b 的 S₄ 同一常数，冻结闭包 σ 乘子按等式收缩且唯一不动点为 0；仍开放的是**一般 `step`（抽象态射）的实现**是否按 σ 收缩」。
+- **附录 C**：L1497 3829→3833、337 个模块→**338 个 Lean 文件**；L1502/L1503 167→**164**；L1506 → **MODULES=337 / CLOSURE=165 / ORPHANS=173**；L1508 → **338/338**（337 源模块 + 库根；165 在闭包 + 173 不在闭包；164 逐模块补齐）；L1510 336 文件全扫→**337**；L1513 3829→3833；L1519（原 1513，插行后顺移）内容头→`229a21f`；L1517 3833/7094、338/338、173、164、338（源模块 337 + 库根）；**新增两行** 单模块构建记录：`RecOrbitContraction` → 3188 jobs、`RecOrbitContractionChannel` → 3192 jobs（插在 `ActiveSilentVieta` 的 3048 jobs 之后）。
+- **版式自检**：LINES=**1523** / CRLF=**1523** / 无 BOM / `\_`=0 / `***`=0。残余旧值全为 0（`3829`、`7096`、`337/337`、`CLOSURE=161`、`ORPHANS=176`、`336 源模块`、`167 个`、`336 个源文件`）；新值 `3833`=6、`338/338`=4、`CLOSURE=165`=3、`ORPHANS=173`=3、`337 源模块`=1、`164 个`=5、`RecOrbitContractionChannel`=4、`229a21f`=4。
+- **用户立牌遵守**：本轮所有新增论文文字均为「最终成果 + 残余开口」表述，不含轮次编号、不含「此前登记被推翻」类修订叙述；过程、勘误、amend 记录全部落在本笔记。
+
+## 7. 未做 / 仍开放（如实登记）
+
+- **一般 `step`（抽象态射）的实现是否按 σ 收缩仍未证**。本轮关闭的是「本框架内是否存在已机检的 σ 压缩通道」（答：存在，`freezeClosure`），未关闭的是「抽象 `step` 与该通道是否同一映射」。论文按「残余开口」单条登记，不作定案级升格。
+- **机制通道 e^{−t a} 未纳入 σ 数值链**：`MinkowskiBoost.scalar_contraction`（L1451/L1459）只锚「机制通道会收缩」，其速率不参与 σ=1/15 的数值；两通道分离沿用 S568–S570 口径，本轮未重新判别。
+- **L1160「δ* 域投影校正步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配尚未机检」仍未改**：本轮机检的是 σ^n 的等式级几何律与 σ 乘子收缩，**不是**「偏移尺度耦合逐项精确匹配」。若要关该项，需另立定理把 δ* 的域投影校正步与 σ^n 谱逐项对齐（S625 已立同一条注）。
+- **`CoherenceToBranching` 的 Lipschitz/IFS 收缩（L497、L307 `dH_from_coherence_and_contraction`）未与本通道对齐**：二者口径不同（距离 Lipschitz vs 幅值乘子），若要对齐需另立桥定理。
+- **未做 `#print axioms`**：本模块未引入新 axiom，但未逐条核验依赖公理集（全库同此）。
+- **未做 from-scratch 普查**：清 `.lake\build` 后重跑未做，故 3192/3833/7094 均在既有缓存上取得。
+- `master` 仍非 `develop` 祖先（`41b3bb4`）；Paper II 的「当前 LHC 排除限 1300 GeV」未改；库外碎片未清（`ProbeTraceMain.lean` 原件、`ProbeLog.lean` 两处 `example … sorry`、预研根 13 个碎片）。
+- `SilenceSecondOrder.lean`（747 行）中 vieta 相关定理未细读，与 `ActiveSilentVieta.lean` 是否重复仍未知。
+- 12 条既有警告未处置（9 条 `haveI` 有「整类关 linter」与「保持现状」两路；3 条 `<;>` 有「保留」与「重构」两路）。
