@@ -251,74 +251,55 @@ theorem involution_not_vieta_root : Involution ^ 2 - Kmax * Involution + SigmaIn
     ——σ⁻¹ = 2^{N+1} − 1 是唯一让判别式为完全平方的参数选择
    ========================================================= -/
 
-/-- ★★ V9：当 k_max = 2^3 = 8 时，σ⁻¹ = 2^4 − 1 = 15 是唯一使
-    判别式 k_max² − 4σ⁻¹ 为完全平方的正整数 σ⁻¹（枚举 [1, 64]）。
+/-! ★★ V9（v1.3 修正，评审 #1 处置 + 本轮自检）：真实判别式族
+    D(N) = 4^N − 2^{N+3} + 4（对应 k_max = 2^N、σ⁻¹ = 2^{N+1} − 1）。
 
-    数学原理：判别式 D = k_max² − 4σ⁻¹ 必须为完全平方才有整数根。
-    D = 64 − 4σ⁻¹ = d² → σ⁻¹ = (64 − d²)/4。
-    当 d = 2 时 σ⁻¹ = (64 − 4)/4 = 15 = 2^4 − 1（Mersenne）。
-    对于其他 σ⁻¹ ∈ [1, 64]，判别式要么 < 0 要么不是完全平方。
+    修正历史（两级）：
+    (1) v1.2 原陈述"σ⁻¹ ∈ [1,64] 唯一使判别式 k_max² − 4σ⁻¹ 为完全平方"为**假**：
+        σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、σ⁻¹ = 12（根 {2,6}，D = 16 = 4²）、
+        σ⁻¹ = 16（根 {4,4}，D = 0 = 0²）都给整数根且判别式为完全平方。
+    (2) 因此唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述（族内唯一解 = N = 3）。
+        该族内全枚举（N = 1..12 逐一排除非平方）尚未机检，登记为待补（§12.4 项 3）。
 
-    方案 B（σ⁻¹ = 2^{N+1} + 1 = 17）：D = 64 − 68 = −4 < 0，无实根。
-    方案 C（σ⁻¹ = 3^N − 1 = 26）：D = 64 − 104 = −40 < 0，无实根。
-    故 σ⁻¹ = 2^{N+1} − 1（Mersenne）是框架唯一选择。 -/
-theorem vieta_discriminant_mersenne_unique :
-    ∀ (σ_inv : ℕ), 1 ≤ σ_inv → σ_inv ≤ 64 →
-    (∃ a b : ℕ, a + b = 8 ∧ a * b = σ_inv) →
-    (∃ d : ℕ, (8 : ℕ)^2 - 4 * σ_inv = d^2) →
-    σ_inv = SigmaInv := by
-  intro σ_inv h1 h2 hab hdisc
-  interval_cases σ_inv with hσ
-  · -- σ_inv = 1: 检查是否存在 a+b=8, ab=1 (a=1,b=7 → ab=7≠1, a=7,b=1 → 7≠1, a=2,b=6→12≠1...)
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 2
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 3
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 4 → a+b=8, ab=4 → a=2,b=6 ab=12≠4; a=4,b=4 ab=16≠4
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 5
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 6 → a+b=8, ab=6 → a=2,b=6 ab=12≠6; a=1,b=7 ab=7≠6; a=3,b=5 ab=15≠6
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 7 → a+b=8, ab=7 → a=1,b=7 ✅ (1+7=8, 1*7=7)，但判别式=36=6²（完全平方但 σ≠15）
-    rcases hdisc with ⟨d, hd⟩
-    norm_num at hd; omega
-  · -- σ_inv = 8
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 9
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 10
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 11
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 12 → a+b=8, ab=12 → a=2,b=6 ✅ (2+6=8, 2*6=12)，判别式=16=4²（完全平方但 σ≠15）
-    rcases hdisc with ⟨d, hd⟩
-    norm_num at hd; omega
-  · -- σ_inv = 13
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 14
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
-  · -- σ_inv = 15（= SigmaInv）→ a+b=8, ab=15 → a=3,b=5 ✅ (3+5=8, 3*5=15)，判别式=4=2² ✅
-    norm_num [SigmaInv]
-  · -- σ_inv = 16 → a+b=8, ab=16 → a=4,b=4 ✅ 判别式=0=0²
-    rcases hdisc with ⟨d, hd⟩
-    norm_num at hd; omega
-  · -- σ_inv ≥ 17：在 ℕ 中 (8)^2 - 4*σ_inv = 0，只有 d=0 满足，但不存在 a+b=8, ab=σ_inv 的自然数
-    rcases hab with ⟨a, b, hab1, hab2⟩
-    interval_cases a <;> omega
+    本文件机检的是可判定的三部分：D(N) 的 12 项具体值、N = 3 见证、族外反例。 -/
+
+/-- V9-a：D(N) = 4^N − 2^{N+3} + 4 在 N = 1..12 的具体值（算术恒等，机检）。 -/
+theorem vieta_discriminant_family_values :
+    (4 : ℤ)^1 - (2 : ℤ)^4 + 4 = -8 ∧
+    (4 : ℤ)^2 - (2 : ℤ)^5 + 4 = -12 ∧
+    (4 : ℤ)^3 - (2 : ℤ)^6 + 4 = 4 ∧
+    (4 : ℤ)^4 - (2 : ℤ)^7 + 4 = 132 ∧
+    (4 : ℤ)^5 - (2 : ℤ)^8 + 4 = 772 ∧
+    (4 : ℤ)^6 - (2 : ℤ)^9 + 4 = 3588 ∧
+    (4 : ℤ)^7 - (2 : ℤ)^10 + 4 = 15364 ∧
+    (4 : ℤ)^8 - (2 : ℤ)^11 + 4 = 63492 ∧
+    (4 : ℤ)^9 - (2 : ℤ)^12 + 4 = 258052 ∧
+    (4 : ℤ)^10 - (2 : ℤ)^13 + 4 = 1040388 ∧
+    (4 : ℤ)^11 - (2 : ℤ)^14 + 4 = 4177924 ∧
+    (4 : ℤ)^12 - (2 : ℤ)^15 + 4 = 16744452 := by
+  refine ⟨by norm_num, by norm_num, by norm_num, by norm_num, by norm_num,
+          by norm_num, by norm_num, by norm_num, by norm_num, by norm_num,
+          by norm_num, by norm_num⟩
+
+/-- V9-b：N = 3 见证——D(3) = 4 = 2²，韦达根 {3,5} 互异。 -/
+theorem vieta_discriminant_mersenne_witness :
+    (∃ d : ℤ, (4 : ℤ)^3 - (2 : ℤ)^6 + 4 = d ^ 2) ∧
+    (∃ a b : ℕ, a + b = 8 ∧ a * b = 15 ∧ a ≠ b) := by
+  refine ⟨⟨2, by norm_num⟩, ⟨3, 5, by norm_num, by norm_num, by norm_num⟩⟩
+
+/-- V9-c 族外反例登记：σ⁻¹ = 7（{1,7}，D = 36 = 6²）、12（{2,6}，D = 16 = 4²）、
+    16（{4,4} 重根，D = 0 = 0²）都满足整数根 + 判别式完全平方，
+    故"σ⁻¹ ∈ [1,64] 唯一"不成立；唯一性只在 Mersenne 参数族内成立。 -/
+theorem vieta_discriminant_out_of_family_counterexamples :
+    (∃ a b : ℕ, a + b = 8 ∧ a * b = 7 ∧ a ≠ b) ∧
+    (∃ d : ℤ, (8 : ℤ) ^ 2 - 4 * 7 = d ^ 2) ∧
+    (∃ a b : ℕ, a + b = 8 ∧ a * b = 12 ∧ a ≠ b) ∧
+    (∃ d : ℤ, (8 : ℤ) ^ 2 - 4 * 12 = d ^ 2) ∧
+    (∃ a b : ℕ, a + b = 8 ∧ a * b = 16 ∧ a = b) ∧
+    (∃ d : ℤ, (8 : ℤ) ^ 2 - 4 * 16 = d ^ 2) := by
+  refine ⟨⟨1, 7, by norm_num, by norm_num, by norm_num⟩, ⟨6, by norm_num⟩,
+          ⟨2, 6, by norm_num, by norm_num, by norm_num⟩, ⟨4, by norm_num⟩,
+          ⟨4, 4, by norm_num, by norm_num, rfl⟩, ⟨0, by norm_num⟩⟩
 
 /-- V9 推论：方案 B（σ⁻¹ = 17 = 2^4 + 1）的判别式 = −4 < 0 无实根。 -/
 theorem vieta_discriminant_optionB_negative :

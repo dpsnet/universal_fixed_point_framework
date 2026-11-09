@@ -37,17 +37,22 @@ MUFPF Rec/Sp/静默 三分结构的哪个域——通道→域 映射不是任�
 - 物理输入"通道→投影侧"不可纯形式化——映射本身是物理诠释层
 - 步骤 3 偏移链耦合开放——候选级，非封闭定理
 
-## 通道分类验证（S423，已用数据）
+## 通道分类验证（v1.3 判据统一：物理量结构身份，不看偏差符号）
 
-  Cs 反冲（Parker 2018）→ spatiotemporal → π_Sig → d_H 负偏
-  a_e (g-2)          → spatiotemporal → π_Sig → d_H 正偏
-  Rb 反冲（Morel 2020）→ probabilistic → π_T  → e 正偏
-  CODATA 2022 综合   → frozen         → π_μ  → σ 正偏
+  Cs 反冲（Parker 2018）→ spatiotemporal → π_Sig → d_H（双向可±）
+  a_e (g-2)          → spatiotemporal → π_Sig → d_H（双向可±）
+  Rb 反冲（Morel 2020）→ spatiotemporal → π_Sig → d_H（双向可±）
+  CODATA 2022 综合   → 数据集，不携带独立域标签；输入通道继承 π_Sig
 
 先验预言（待未来数据裁决）：
   Sr/Yb 反冲          → spatiotemporal → π_Sig → d_H（可±）
-  muon g-2（FNAL）    → spatiotemporal → π_Sig → d_H 正偏
-  CODATA 2026 合并    → frozen         → π_μ  → σ 正偏
+  muon g-2（FNAL）    → spatiotemporal → π_Sig → d_H（可±）
+  CODATA 2026 合并    → 数据集，输入通道继承 π_Sig（若纳入 π_T/π_μ
+                        通道则域归属随输入改变，见 P3）
+
+v1.2 旧分类（Rb→probabilistic、CODATA→frozen）按"读数代数操作类型"
+判定（加权平均→frozen），与主表按物理量结构身份的判据双轨；v1.3 撤销
+旧分类，统一为物理量结构身份判据（论文 §9.1b）。
 -/
 
 namespace MUFPF.MeasurementAlgebra
@@ -56,15 +61,17 @@ namespace MUFPF.MeasurementAlgebra
     Step 1: MeasurementAlgebraType — 测量代数分类器
    =========================================================
 
-H6' 主张：物理测量通道按其"读数代数本质"归入三类之一：
+H6' 主张：物理测量通道按其"所测物理量的结构身份"归入三类之一
+（v1.3 起统一判据：不看偏差符号、不看读数操作类型）：
   spatiotemporal  —— 时空代数：测量对象是时空结构的响应
-    （反冲动量、自旋动力学、磁场相互作用）
+    （反冲动量、自旋动力学、磁场相互作用、g-2 量子修正）
   probabilistic   —— 统计代数：测量对象是概率振幅的干涉
-    （LKB 干涉相位、粒子计数、统计加权平均）
-  frozen          —— 冻结代数：测量对象是多组读数的合并冻结
-    （CODATA 综合加权、多次测量平均、数值冻结）
+    （LKB 干涉相位、粒子计数）
+  frozen          —— 冻结代数：测量对象是冻结的粗粒化谱量
+    （RG 冻结态质量；注意：数据集本身不携带独立域标签，
+      域归属继承其输入通道——CODATA 输入为原子反冲 + g-2，属 π_Sig）
 
-这个分类是 inductive——不依赖具体通道名称，而是通道的代数性质。
+这个分类是 inductive——不依赖具体通道名称，而是所测物理量的结构身份。
 -/
 
 /-- 测量代数类型：三类互不相交的 inductive 分类器。 -/
@@ -74,15 +81,20 @@ inductive MeasurementAlgebraType where
   | frozen          -- 冻结代数：静默侧投影
 deriving Repr, DecidableEq, Hashable, BEq, Ord
 
-/-- 通道名称 → 测量代数类型映射（已观测 + 先验预言通道）。 -/
+/-- 通道名称 → 测量代数类型映射（已观测 + 先验预言通道）。
+    判据（v1.3 起）：所测物理量的结构身份（论文 §9.1b），不看偏差符号。
+    数据集（CODATA）不携带独立域标签，域归属继承其输入通道
+    （CODATA 的输入为原子反冲 + g-2 → π_Sig）。
+    v1.2 旧分类（Rb→probabilistic、CODATA→frozen）按"读数代数操作类型"
+    判定（加权平均→frozen），与主表判据双轨，已撤销（评审 N1 处置）。 -/
 def channelType : String → MeasurementAlgebraType
   | "Cs 反冲" => MeasurementAlgebraType.spatiotemporal
   | "a_e g-2" => MeasurementAlgebraType.spatiotemporal
-  | "Rb 反冲" => MeasurementAlgebraType.probabilistic
-  | "CODATA 2022" => MeasurementAlgebraType.frozen
+  | "Rb 反冲" => MeasurementAlgebraType.spatiotemporal
+  | "CODATA 2022" => MeasurementAlgebraType.spatiotemporal
   | "Sr/Yb 反冲" => MeasurementAlgebraType.spatiotemporal
   | "muon g-2" => MeasurementAlgebraType.spatiotemporal
-  | "CODATA 2026" => MeasurementAlgebraType.frozen
+  | "CODATA 2026" => MeasurementAlgebraType.spatiotemporal
   | _ => MeasurementAlgebraType.spatiotemporal  -- 默认占位
 
 /-! =========================================================
@@ -150,14 +162,14 @@ theorem z2_even_odd_eight_citation :
     (1 + 6 + 1 : ℕ) = 8 ∧ (4 + 4 : ℕ) = 8 := by
   exact MUFPF.AlphaChain.z2_even_odd_eight
 
-/-- 已观测通道符号与域映射一致性验证（候选级——四通道自洽）：
-    Cs(spatiotemporal)负 ✓ / Rb(probabilistic)正 ✓ /
-    CODATA2022(frozen)正 ✓ -/
+/-- 已观测通道域映射一致性验证（v1.3 判据统一后：四观测通道全属 π_Sig）：
+    Cs(spatiotemporal) / a_e(spatiotemporal) / Rb(spatiotemporal) /
+    CODATA 2022（数据集，继承输入通道 π_Sig）——全部 spatiotemporal。 -/
 theorem observed_channel_consistency :
     channelType "Cs 反冲" = MeasurementAlgebraType.spatiotemporal
     ∧ channelType "a_e g-2" = MeasurementAlgebraType.spatiotemporal
-    ∧ channelType "Rb 反冲" = MeasurementAlgebraType.probabilistic
-    ∧ channelType "CODATA 2022" = MeasurementAlgebraType.frozen := by
+    ∧ channelType "Rb 反冲" = MeasurementAlgebraType.spatiotemporal
+    ∧ channelType "CODATA 2022" = MeasurementAlgebraType.spatiotemporal := by
   simp [channelType]
 
 /-! =========================================================
@@ -169,11 +181,12 @@ theorem observed_channel_consistency :
   P1：Sr/Yb 反冲 → spatiotemporal → d_H 族（可±——不预测符号）
       证伪：Sr/Yb 落入 probabilistic 或 frozen 族
 
-  P2：muon g-2 → spatiotemporal → d_H 族正偏（先验符号预测）
-      证伪：muon g-2 落入 probabilistic/frozen 族或负偏
+  P2：muon g-2 → spatiotemporal → d_H 族（可±）
+      证伪：muon g-2 落入 probabilistic/frozen 族
 
-  P3：CODATA 2026 → frozen → σ 族正偏
-      证伪：CODATA 2026 落入 spatiotemporal/probabilistic 族或负偏
+  P3：CODATA 2026 的输入通道继承 spatiotemporal（数据集无独立域标签）
+      证伪：CODATA 2026 若纳入 π_T/π_μ 通道（热辐射 h/k_B 比、
+            冻结态质量），其域归属随之改变——届时须按新输入重新判定
 -/
 
 /-- 先验预言 P2：muon g-2 → spatiotemporal（分类归属声明）。 -/
@@ -181,9 +194,10 @@ theorem muon_g2_spatiotemporal :
     channelType "muon g-2" = MeasurementAlgebraType.spatiotemporal := by
   simp [channelType]
 
-/-- 先验预言 P3：CODATA 2026 → frozen（分类归属声明）。 -/
-theorem codata2026_frozen :
-    channelType "CODATA 2026" = MeasurementAlgebraType.frozen := by
+/-- 先验预言 P3：CODATA 2026 的输入通道按 §9.1b 判据继承 spatiotemporal
+    （数据集本身不是测量通道，不携带独立域标签）。 -/
+theorem codata2026_inputs_spatiotemporal :
+    channelType "CODATA 2026" = MeasurementAlgebraType.spatiotemporal := by
   simp [channelType]
 
 /-! =========================================================
