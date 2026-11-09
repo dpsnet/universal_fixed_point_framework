@@ -241,7 +241,7 @@ SM 生成依赖六个结构条件。按其认识论地位分层：
 - **结构条件**（框架三层自然分层 + 唯一性推导的结论）：C1、C2、C3、C4、C5
 - **Lean 已机检**：C3（k_max_eq_two_pow_active）、C4（DImAdjRIm）、C5（vieta_roots_unique）、C1 的伴随存在性（DImAdjRIm ⊣ no_global_right_adjoint 联合）
 - **唯一性推导**（§5.5 韦达方程表）：C2 的层索引约定给出 N_active=3（约定，非推论）；韦达方程 x² − 2^{N_active} · x + (2^{N_active+1}−1) 在既定参数族内仅在 N_active=3 有整数根（N_active=2 判别式 −12<0 无实根；N_active=3 根 {3,5}；N_active=4 判别式 132 非完全平方、根非整数）
-- **结构性预测**：C6 跨尺度反对易不成立（Cl(3,1) 时空代数 × Cl(3,0) 内部对称空间——不同数学结构，本就不应统一，详见 §5.4b）
+- **构造性质**：C6 跨尺度反对易不成立（Cl(3,1) 时空代数 × Cl(3,0) 内部对称空间——取决于所选 block 对角嵌入、判别力为零，详见 §5.4b）
 
 ### 4.1 条件 C1：step ≠ id（Rec 不是全冻结）——伴随存在的定义域条件
 
@@ -387,7 +387,7 @@ PauliLorentzBridge
 
 ### 4.7 六条件联合总结（分层版）
 
-六个条件共同闭合 SM 生成链。按其认识论地位分层：C1（伴随定义域条件，框架三层结构推论）、C6（signature 翻转：核心桥接层已完整 Lean 化——Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0² = −1 显式构造 + Cl(3,1) 子代数反对易 6 对 + gamma7 = γ⁵ 手征扩张 4 对；结构性预测：跨 Dirac/Pauli 尺度反对易性不成立——时空代数与内部对称空间不同数学结构，详见 §5.4b）、C2（层索引约定：3 活跃层 + 1 coherence 层，N_active=3 由约定给出；§5.5 韦达方程在族内唯一整数根——N=2 无实根、N=3 根 {3,5}、N=4 非整数根）、C3/C4/C5（全机检定理）：
+六个条件共同闭合 SM 生成链。按其认识论地位分层：C1（伴随定义域条件，框架三层结构推论）、C6（signature 翻转：核心桥接层已完整 Lean 化——Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0² = −1 显式构造 + Cl(3,1) 子代数反对易 6 对 + gamma7 = γ⁵ 手征扩张 4 对；构造性质：跨 Dirac/Pauli 尺度反对易性不成立——取决于所选 block 对角嵌入、判别力为零，详见 §5.4b）、C2（层索引约定：3 活跃层 + 1 coherence 层，N_active=3 由约定给出；§5.5 韦达方程在族内唯一整数根——N=2 无实根、N=3 根 {3,5}、N=4 非整数根）、C3/C4/C5（全机检定理）：
 
 ```
 严格 4-范畴约定（Sp 的层结构）
@@ -509,12 +509,12 @@ SpacetimeDimensionTwoPostulates.lean（下游计数层复述）
 4. ✅ **c₃ 时间分支唯一 + 静默分层已完整机检**：`c3_unique_silent_factor` + `c3_silent_factor_unique` + `c3_silent_factor_exists`（CoherenceToBranching §10b）；
 5. ✅ **三层 → Cℓ(3,0) 已完整机检**：`pauli_anticomm_closure` + `layer_anticomm_assembly`（LayerCliffordBridge）；
 6. ✅ **signature 翻转核心桥接层已完整 Lean 化**：Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈（`gamma0_8_sq_neg_I8`）+ Cl(3,1) 子代数 6 对反对易——**这已不是工程缺口**，是完整机检链；
-7. ✅ **跨 Dirac/Pauli 尺度反对易性不成立**：gamma0-3 + gamma7（4×4 Dirac 两重复制尺度）与 gamma4-6（2×2 Pauli 四重复制尺度）跨尺度不反对易——**这是结构性预测**，不是缺陷：时空代数 Cl(3,1) 与内部对称代数 Cl(3,0) 是不同数学结构，本就不应统一；
+7. ✅ **跨 Dirac/Pauli 尺度反对易性不成立**：gamma0-3 + gamma7（4×4 Dirac 两重复制尺度）与 gamma4-6（2×2 Pauli 四重复制尺度）跨尺度不反对易——**这是构造性质**，不是缺陷：它取决于所选 block 对角嵌入——M₈(ℂ)≅Cl₆(ℂ) 另有多组两两反对易生成元，换嵌入即可翻转，判别力为零（§5.4b）；
 8. ✅ **gamma7 = γ⁵ 手征扩张**：gamma7 设计为手征算符 γ⁵ 的 4×4 两重复制（`anticomm_gamma08_gamma78` ... `anticomm_gamma38_gamma78` 4 对反对易全部机检），{γ⁰..γ³, γ⁷=γ⁵} 构成 Cl(4,1) 手征扩张；
 9. ⏳ **深层诠释桥接未闭合**：`c3_unique_silent_factor`（c₃ 时间分支唯一）+ `time_unique_and_signature_neg`（时间唯一 + signature 负号）+ `spacetime_dim_eq_four`（时空维数 = 4）均已机检，但"Rec 动力学 c₃ 分支 = 物理时间坐标"的语义对齐是候选级桥接规则，非 Lean 可派生；
 10. ⏳ **范畴-几何直接同构未闭合**：CategoryGeometryDictionary.lean 有法向↔V、水平↔H 字典映射，但层索引三层态射 ↔ 3D 空间 + 1D 时间 的完整纤维丛层同构未形式化；k_max 加倍（2³）的几何机制未锚定。
 
-**结论**：Lean 已机检从层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 → c₃ 时间分支唯一 → 三层 → Cℓ(3,0) → **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma 矩阵显式构造**的完整推导链。signature 翻转的核心桥接层（γ₀² = −1 + Cl(3,1) 子代数反对易 + γ⁵ 手征扩张）**已完整 Lean 化**。结构性预测：跨 Dirac/Pauli 尺度反对易性不成立（时空代数与内部对称空间不同数学结构）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐。
+**结论**：Lean 已机检从层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 → c₃ 时间分支唯一 → 三层 → Cℓ(3,0) → **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma 矩阵显式构造**的完整推导链。signature 翻转的核心桥接层（γ₀² = −1 + Cl(3,1) 子代数反对易 + γ⁵ 手征扩张）**已完整 Lean 化**。构造性质：跨 Dirac/Pauli 尺度反对易性不成立（取决于所选 block 对角嵌入，判别力为零，见 §5.4b）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐。
 
 ### 5.3  signature 翻转：Cℓ(3,0) → Lorentz signature (1,3)
 
@@ -574,7 +574,7 @@ c₃ 时间分支是**永不静默**的静默因子 = 1 的唯一分支——它
 - gamma1-3_8² = +1（三个空间生成元，来自三层活跃态射的 Pauli 结构）
 - {gamma0_8, gamma1-3_8} = 0（Cl(3,1) 子代数反对易，共 6 对已机检）
 
-**结构性预测**：gamma0-3 是 4×4 Dirac 矩阵两重复制（Cl(3,1) 时空代数），gamma4-6 是 2×2 Pauli 矩阵四重复制（Cl(3,0) 内部对称空间）。同一尺度内部反对易自动保持，**跨尺度结构性不成立**——时空代数与内部对称空间是不同数学结构，本就不应统一（详见 §5.4b）。
+**构造性质**：gamma0-3 是 4×4 Dirac 矩阵两重复制（Cl(3,1) 时空代数），gamma4-6 是 2×2 Pauli 矩阵四重复制（Cl(3,0) 内部对称空间）。同一尺度内部反对易自动保持，**跨尺度不反对易**是所选 block 对角嵌入的结果——M₈(ℂ)≅Cl₆(ℂ) 另有多组两两反对易生成元，换嵌入即可翻转，判别力为零（详见 §5.4b）。
 
 **Lean 当前状态更新**（原 "桥接层未机检" → 现完整机检）：
 
@@ -583,7 +583,7 @@ c₃ 时间分支是**永不静默**的静默因子 = 1 的唯一分支——它
 | 计数层：时空维数 = 4，c₃ 时间分支唯一，静默分层 | ✅ 全机检 | CoherenceToBranching §9 + §10b |
 | 代数层：三层 → Pauli 三件套 → Cℓ(3,0) | ✅ 全机检 | LayerCliffordBridge |
 | **桥接层：Rec→单向性→方向性→M₈ gamma0_8² = −1 + Cl(3,1) 子代数反对易** | ✅ **全机检** | **RecActiveSignatureBridge + DirectionalCliffordBridge + NoiseSignatureBridge + PauliLorentzBridge + BoundaryEntropyBridge** |
-| **结构性预测：跨 Dirac/Pauli 尺度反对易性不成立** | ✅ 已识别 | **时空代数与内部对称代数是不同数学结构，本就不应统一（详见 §5.4b）** |
+| **构造性质：跨 Dirac/Pauli 尺度反对易性不成立** | ⚠️ 构造性质 | **取决于所选 block 对角嵌入、判别力为零（详见 §5.4b）** |
 
 ### 5.4 16 维分级结构
 
@@ -1163,7 +1163,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 ## 11. 形式化资产：Lean 定理清单
 
-以下定理通过 `lake build` 验证（零 sorry；库根 3824 jobs / 全 default target 7096 jobs 均 Build completed successfully、exit 0；olean 审计 335/335 齐备——MODULES=335 / CLOSURE=156 / ORPHANS=179、MISSING_OLEAN=0、SORRY_LINES=0，口径见 §12.4 项 1）。**分层声明**：部分定理是算术恒等式或定义展开（如 `vieta_factorization`、`surprisal_sigma_eq_ln15`）——机检通过证明的是算术库正确，物理内容在定义的选择里；signature 翻转（γ₀² = −1 的 M₈ 显式构造 + Cl(3,1) 子代数反对易）、Rec→方向性→Cl(3,1) 五步诠释链、boundaryDefect/entropyOfRange 全息比例常数、Sel ⊣ Diss 选择-溶解伴随均已机检（详见 §11.6）；跨 Dirac/Pauli 尺度反对易性不成立是结构性预测（时空代数与内部对称空间不同数学结构，详见 §5.4b）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐；七等价定理、SU(2) 五约束、电荷谱、CKM/PMNS 等锚定的 Paper XI/XVII/XX/XL/XLVI/XXXII 未随稿附上。仓库公开前，本清单的外部可核验性为零（§12.4）。
+以下定理通过 `lake build` 验证（零 sorry；库根 3824 jobs / 全 default target 7096 jobs 均 Build completed successfully、exit 0；olean 审计 335/335 齐备——MODULES=335 / CLOSURE=156 / ORPHANS=179、MISSING_OLEAN=0、SORRY_LINES=0，口径见 §12.4 项 1）。**分层声明**：部分定理是算术恒等式或定义展开（如 `vieta_factorization`、`surprisal_sigma_eq_ln15`）——机检通过证明的是算术库正确，物理内容在定义的选择里；signature 翻转（γ₀² = −1 的 M₈ 显式构造 + Cl(3,1) 子代数反对易）、Rec→方向性→Cl(3,1) 五步诠释链、boundaryDefect/entropyOfRange 全息比例常数、Sel ⊣ Diss 选择-溶解伴随均已机检（详见 §11.6）；跨 Dirac/Pauli 尺度反对易性不成立是**构造性质**（取决于所选 block 对角嵌入、判别力为零，见 §5.4b）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐；七等价定理、SU(2) 五约束、电荷谱、CKM/PMNS 等锚定的 Paper XI/XVII/XX/XL/XLVI/XXXII 未随稿附上。两仓库已于 2026-11-10 公开可匿名检出，本清单所列提交在两远端 `develop` 分支可核验（远端头 = `83240d4`，§12.4 项 1）；Paper XI/XVII/XX/XL/XLVI/XXXII 六个锚定论文仍未随稿附上，该部分的外部可核验性仍为零。
 
 ### 11.1 伴随边界（RAP5a + AdjunctionAnchor）
 
@@ -1212,7 +1212,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 > **分层声明**（五个模块 + Bridge 层联合后的完整状态）：
 > - ✅ 已机检：层索引约定（3 活跃层）→ N_active = 3（`ActiveLayers` 字面量计数 + `k_max = 8` 定义，属定义展开与算术核对，非范畴推导） → k_max = 8 → 时空维数 = 4 → 时间坐标良定义（Unified3Theorem + BottTower + KMaxAlgebra + SpacetimeDimensionTwoPostulates + SpectralGap）→ **Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**（RecActiveSignatureBridge + DirectionalCliffordBridge + NoiseSignatureBridge + PauliLorentzBridge + BoundaryEntropyBridge，详见 §11.6）
-> - ✅ 结构性预测：**跨 Dirac/Pauli 尺度反对易性不成立**（时空代数 Cl(3,1) × 内部对称空间 Cl(3,0)——不同数学结构，本就不应统一，详见 §5.4b）
+> - ✅ 构造性质：**跨 Dirac/Pauli 尺度反对易性不成立**（时空代数 Cl(3,1) × 内部对称空间 Cl(3,0)——取决于所选 block 对角嵌入、判别力为零，详见 §5.4b）
 > - ⏳ **深层几何同构未闭合**：层索引三层态射 ↔ 3D 空间方向 + 1D 时间方向 的**直接几何同构**（CategoryGeometryDictionary.lean 有范畴-几何字典映射，但完整纤维丛层同构未形式化）；Rec 动力学 c₃ 时间分支 ↔ 物理时间坐标 的**完整诠释桥接**（`c3_unique_silent_factor` + `time_unique_and_signature_neg` + `spacetime_dim_eq_four` 已机检，但"c₃ = 物理时间坐标"的语义对齐是候选级桥接规则，非 Lean 可派生）。
 
 ### 11.4 耦合常数 + H6' 测量代数
@@ -1413,7 +1413,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 **哈希锚的使用边界**：上述哈希提供的是"某内容不晚于该提交日存在"的**日期锚**，不是内容正确性的证明；在仓库对外可检出之前，任何外部读者只能核对日期与哈希字符串，不能核对内容——这一点在 §12.4 项 1 中如实登记，不因上述哈希锚的存在而改变。
 
-1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。**可见性边界如实登记**：仓库当前不可公开检出，故哈希的可核验性为零——本文不主张“自创建伊始即开源”，公开状态是待核实的事实项，不由本文单方裁决。**jobs 计数必须与命令绑定**：`lake build MUFPFormalization`（库根闭包）与 `lake build`（全 default target，含 `mufpfformalization:exe`，2026-11-09 实测 7096 jobs）均返回 Build completed successfully、exit 0；lake 的 job 计数含 mathlib 重放、随缓存浮动，离开命令的裸数字不可核验。**机检主张的三项判据**：`lake build` 返回 Build completed successfully、行首 sorry = 0、模块 olean 与源同版本。**olean 一致性判据**：lake 按内容哈希判重、不用 mtime，故一致性由 `lake build` 全程 0 rebuilt + exit 0 保证（审计脚本中的 mtime 项仅供参考、不作结论）。**当前状态（2026-11-10 实测）**：Build completed successfully（3824 jobs，库根）、行首 sorry = 0、审计 MODULES=335 / CLOSURE=156 / ORPHANS=179 / MISSING_OLEAN=0 / SORRY_LINES=0。**孤立模块的机检边界**：335 个源文件中 179 个不在库根 import 闭包——10 个由 exe 入口 `Main.lean` import、被全 default target 覆盖，余 169 个未被任何模块 import，`lake build` 与库根命令都不会自动覆盖，故逐个点名构建（`lake build MUFPFormalization.<Module>`）补齐；其中 4 个模块（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）曾存在实质证明错误，改正后通过（commit `1f88c8b`）——`MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表“已机检”自该提交起才有编译依据。**linter warning 现状**：全库 0 error、12 条 warning，两类——9 条为 `haveI`→`have` 的风格建议（这些位置作实例使用，改写会中断实例合成；proof irrelevance 下不影响证明），3 条为 `<;>`→`;` 的等价建议（改写后目标分配改变、产生 unsolved goals）；均属“建议在本处不等价”，不作债处理。**预研迁入与 σ 接驳**：库外 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已并入 `src`，56 条定理、零 sorry、零 axiom；连同 `OccupiedTrace`，库内模块共 335 个。主库 `PublicResidueIdentity.sigma`（L38 的 `1 / 15`）已登记取值溯源链（`N_active = 3 → k_max = 8 → 16 = 2^(N_active+1) → 15 = 16 − 1 → S₄ = 1/(2^(N_active+1) − 1)`），并新增接驳定理 `sigma_eq_S4`（`sigma = SpinorSilenceBranch.S4`），使 σ 与 §⑧ 导出链在主库内部对齐；该定理只保证两处同值，“为何是 15”仍由 §⑧ 的链式陈述承担，不计入迁入的 56 条。
+1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。**可见性（2026-11-10 实测）**：两仓库均为公开可匿名检出——GitHub API 返回 `visibility=public` / `private=false`（`created_at` 2026-07-17、license CC-BY-4.0），Gitee 仓库页匿名 HTTP 200。默认分支为 `master`，本文引用的提交位于 `develop`，2026-11-10 已推送至两远端（`a4a2405..83240d4`，远端 `develop` 头即 `83240d4`），故本节所引哈希均可在远端直接核验。仓库是否自创建即公开属可见性历史，当前 API 不提供该字段，本文不作此主张。**jobs 计数必须与命令绑定**：`lake build MUFPFormalization`（库根闭包）与 `lake build`（全 default target，含 `mufpfformalization:exe`，2026-11-09 实测 7096 jobs）均返回 Build completed successfully、exit 0；lake 的 job 计数含 mathlib 重放、随缓存浮动，离开命令的裸数字不可核验。**机检主张的三项判据**：`lake build` 返回 Build completed successfully、行首 sorry = 0、模块 olean 与源同版本。**olean 一致性判据**：lake 按内容哈希判重、不用 mtime，故一致性由 `lake build` 全程 0 rebuilt + exit 0 保证（审计脚本中的 mtime 项仅供参考、不作结论）。**当前状态（2026-11-10 实测）**：Build completed successfully（3824 jobs，库根）、行首 sorry = 0、审计 MODULES=335 / CLOSURE=156 / ORPHANS=179 / MISSING_OLEAN=0 / SORRY_LINES=0。**孤立模块的机检边界**：335 个源文件中 179 个不在库根 import 闭包——10 个由 exe 入口 `Main.lean` import、被全 default target 覆盖，余 169 个未被任何模块 import，`lake build` 与库根命令都不会自动覆盖，故逐个点名构建（`lake build MUFPFormalization.<Module>`）补齐；其中 4 个模块（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）曾存在实质证明错误，改正后通过（commit `1f88c8b`）——`MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表“已机检”自该提交起才有编译依据。**linter warning 现状**：全库 0 error、12 条 warning，两类——9 条为 `haveI`→`have` 的风格建议（这些位置作实例使用，改写会中断实例合成；proof irrelevance 下不影响证明），3 条为 `<;>`→`;` 的等价建议（改写后目标分配改变、产生 unsolved goals）；均属“建议在本处不等价”，不作债处理。**预研迁入与 σ 接驳**：库外 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已并入 `src`，56 条定理、零 sorry、零 axiom；连同 `OccupiedTrace`，库内模块共 335 个。主库 `PublicResidueIdentity.sigma`（L38 的 `1 / 15`）已登记取值溯源链（`N_active = 3 → k_max = 8 → 16 = 2^(N_active+1) → 15 = 16 − 1 → S₄ = 1/(2^(N_active+1) − 1)`），并新增接驳定理 `sigma_eq_S4`（`sigma = SpinorSilenceBranch.S4`），使 σ 与 §⑧ 导出链在主库内部对齐；该定理只保证两处同值，“为何是 15”仍由 §⑧ 的链式陈述承担，不计入迁入的 56 条。
 2. **m_{L4} ≈ 1470 GeV 预注册（量子数已定、限制已复核，2026-11-10）**：这是附录 A 中唯一的真外推。**量子数**：Paper II 命题 4.7 已定其为**矢量型（vector-like）SU(2) 双态**，不是手征第四代——手征情形已由电弱精密检验与 Higgs 信号强度排除（$\Delta S \approx 0.053$，$S$–$T$ 强相关下联合拟合 $\chi^2 = 13.9$）。**对撞机限制复核**：ATLAS 对第一/二代双态矢量轻子排除至 $1220$ GeV（$e$）/ $1270$ GeV（$\mu$）（arXiv:2411.07143，$139\ \mathrm{fb}^{-1}$，$\sqrt{s}=13$ TeV）；CMS 对第三代双态排除至 $1045$ GeV（arXiv:2202.08676）。**裁决**：$1470$ GeV **未被现有数据排除**，最小余量约 $200$ GeV（相对 $1270$ GeV）；Paper II 所记“当前 LHC 排除限 1300 GeV”应更新为本条所列值。**未决**：稳定性与自旋无关截面 $\sigma_{SI}$ 仍未登记，故 LZ/XENON 直接探测路径**无法判定排除与否**——此处如实登记“截面预测缺失”，不以“未排除”充当支持。若后续任一通道排除至 1470 GeV 以下，按本协议立即记录一次否决。
 3. **15 的 Mersenne 必要性推导（族内解析证明）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。数值核验 N=1..12：仅 N=3 时 D(3) = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是族内唯一整数根；对一切 N≥4 的非平方性由下述解析证明给出，不再依赖枚举。**两级边界**：(a) Lean 侧机检的是 D(N) 的 12 项具体值（`vieta_discriminant_family_values`）与 N=3 见证（`vieta_discriminant_mersenne_witness`）；“其余 $N$ 的 $D$ 非完全平方”已给出**解析证明**（无需枚举）：$D(N)=4^N-2^{N+3}+4=(2^N-4)^2-12$；对 $N\ge4$ 有 $(2^N-5)^2<D(N)<(2^N-4)^2$（左端差 $2^{N+1}-21\ge11>0$，右端差 $12>0$），即 $D(N)$ 严格夹在两个**相邻**平方之间，故永不等于平方；$N=1,2$ 时 $D<0$；$N=3$ 时 $D=4=2^2$。**边界**：该证明已 Lean 机检——`vieta_discriminant_family_nonsquare`（对一切 $N\ge4$ 给出夹逼不等式），原 12 项枚举定理作为数值对照保留；(b) 把唯一性写成"σ⁻¹ ∈ [1,64] 内唯一"，该陈述为**假**：σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、12（根 {2,6}，D = 16 = 4²）、16（根 {4,4}，D = 0 = 0²）同为整数根且判别式为完全平方；`vieta_discriminant_mersenne_unique` 不成立（其证明行 `interval_cases … with` 语法本身不成立），不再引用，族外反例由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。故唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**族内唯一性**——σ⁻¹ = 2^{N+1}−1 是族内唯一让韦达方程在 N=3 时有互异整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取“2 的幂减 1”这个参数族（而不是其他参数化）仍未独立推导——族内唯一解已**解析闭合并机检**（夹逼不等式见上，Lean `vieta_discriminant_family_nonsquare`）；参数族形状的来历是本文最后一级开口。
 4. **α⁻¹ 对 CODATA 2022 的 +4.46σ_score 处置**：要么从零推导修正项（来源、阶数、系数，不允许新连续参数），要么承认公式被否决。δ* 域级分解的失败核算（§9.2e）已排除"域分解即解释"的退路——这是框架第一条真实的"预言—否决—应答"记录，其处理方式将定义框架的证据标准；判决协议见 §12.4.1。
@@ -1443,14 +1443,14 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 1. **N_active = 3** 由 Sp 的层索引约定给出（层 1–3 为非平凡态射层，层 4 为 coherence，见 §4.2；**结构规定，非结构推论**），并按韦达方程整数根条件在既定参数族内唯一闭合（§5.5：N_active=2 无实根、N_active=4 非整数根）
 2. **韦达方程 x² - 8x + 15 = 0 根分裂为 {3, 5}** 是 (k_max, σ⁻¹) = (2³, 2⁴−1) 的算术推论；15 的独立链 = 2^{N_active+1}−1（§4.5）
-3. **递归单向性 = 时间方向数 1 + 时空维数 = 4**（Lean 已机检完整推导链：层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 + c₃ 时间分支唯一 + Moran 结构封闭 → **Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**——signature 翻转核心桥接层已完整 Lean 化；跨 Dirac/Pauli 尺度反对易性不成立是结构性预测（时空代数与内部对称空间不同数学结构，详见 §5.4b））
+3. **递归单向性 = 时间方向数 1 + 时空维数 = 4**（Lean 已机检完整推导链：层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 + c₃ 时间分支唯一 + Moran 结构封闭 → **Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**——signature 翻转核心桥接层已完整 Lean 化；跨 Dirac/Pauli 尺度反对易性不成立是构造性质（取决于所选 block 对角嵌入、判别力为零，详见 §5.4b））
 4. **SU(2) 五范畴约束唯一锁定**；SU(3)/U(1) 的唯一性约束尚未五范畴化（§12.1）
 5. **三代费米子 = N_active = 韦达活跃根个数**——N_active = 3 是唯一整数根解（§10.3）
 6. **无量纲耦合常数**（α⁻¹、sin²θ_W、α_s、CKM/PMNS 参数）是 Cl(3,1) 分级 + σ=1/15 + 24=4! + k_max=8 的结构推论。**sin²θ_W 域配对约束推导**（§9.2）：活跃域尺度 M_active = FullState×Silence = 16×5=80、对合域尺度 M_inv = Involution×(Kmax+Silence) = 7×13=91，配对约束唯一给出 m_W = 80+3/8=643/8、m_Z = 91+3/16=1459/16——所有整数全来自框架常数集 C，无自由参数。数值结果 sin²θ_W = 474885/2128681 ≈ 0.22309 ≈ 实验 on-shell 0.22321（0.47σ_score），**误差 ≈ 0.05%**（sin²θ_W 判别力记账见 §9.2f：数值本身基础率约 1/1.5×10⁴，独立判别力弱；可记账判据是比值 0.03% 阈值）。δ* 配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 计算式 = 72 + 24·ln15 + 24·δ*（δ* 四项全含；域级分解失败核算见 §9.2e），CODATA 2022 的 +4.46σ_score 差解释为 Rb-2020 新数据的加权中心移动（两期 CODATA 输入通道全属 π_Sig，spatiotemporal 双向域真机检 ✅）
 
 **SM 不是从 scratch 导出的拉格朗日量**——框架不给出拉格朗日量的具体形式，而是给出**生成它的递归动力系统结构**。SM 拉格朗日量是这个谱形变循环语言在低能的有效场论近似，两者的数学结构（群、联络、曲率、耦合）通过规范拓扑七等价定理对应（等价性的严格化程度见 §11 分层声明）。
 
-**开放组件**：SU(3)/U(1) 唯一性约束五范畴化、宇宙常数压低机制、暗物质粒子身份、仓库公开、**15 的独立参数族论证**（判别式完全平方的族内唯一性已数值闭合、Lean 已机检族值/见证/族外反例/族内全称非平方（§12.4 项 3），"为什么取 2 的幂族"仍未独立推导）、**寻找 probabilistic/frozen 域的 α⁻¹ 通道**（热辐射 h/k_B 比、冻结态质量测量——框架三域分类器的判别性检验）、**m_W/m_Z 框架常数组合规则的结构性推导**（"全态×静默"和"对合×(k_max+静默)"的配对候选级声明——为何是这两个组合而非其他）。
+**开放组件**：SU(3)/U(1) 唯一性约束五范畴化、宇宙常数压低机制、暗物质粒子身份、**15 的独立参数族论证**（判别式完全平方的族内唯一性已数值闭合、Lean 已机检族值/见证/族外反例/族内全称非平方（§12.4 项 3），"为什么取 2 的幂族"仍未独立推导）、**寻找 probabilistic/frozen 域的 α⁻¹ 通道**（热辐射 h/k_B 比、冻结态质量测量——框架三域分类器的判别性检验）、**m_W/m_Z 框架常数组合规则的结构性推导**（"全态×静默"和"对合×(k_max+静默)"的配对候选级声明——为何是这两个组合而非其他）。
 
 ---
 
@@ -1508,7 +1508,7 @@ sorry 扫描（src/MUFPFormalization 递归全扫，行首 sorry）
     → 0（零 sorry，335 文件全扫，2026-11-10 实测）
 ```
 
-**注**：2080 / 2079 / ≈720 / 3817 / 6376 等 jobs 数不可复现，不予引用；7096 已按同口径（`lake build` 全 default target）**实测复现**（7096 jobs，exit 0），故该数恢复为可引用，但必须与命令绑定（`lake build` 而非 `lake build MUFPFormalization`，后者为 3824）。jobs 计数随缓存浮动，**离开命令的裸数字不可核验**（见 §12.4 项 1）。仓库公开状态是待核实事实项（§12.4 项 1），本文不单方主张"已双平台公开"；基线 commit `e503722`；内容提交见 §12.4 哈希锚；外部独立复现待仓库可检出后确认。
+**注**：2080 / 2079 / ≈720 / 3817 / 6376 等 jobs 数不可复现，不予引用；7096 已按同口径（`lake build` 全 default target）**实测复现**（7096 jobs，exit 0），故该数恢复为可引用，但必须与命令绑定（`lake build` 而非 `lake build MUFPFormalization`，后者为 3824）。jobs 计数随缓存浮动，**离开命令的裸数字不可核验**（见 §12.4 项 1）。仓库已于 2026-11-10 在两远端公开可匿名检出、`develop` 头为 `83240d4`（§12.4 项 1）；基线 commit `e503722`；内容提交见 §12.4 哈希锚；外部独立复现可由任一方在 `develop` 分支直接执行。
 
 ---
 
