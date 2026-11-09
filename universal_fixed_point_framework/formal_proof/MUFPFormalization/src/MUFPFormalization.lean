@@ -146,3 +146,9 @@ import MUFPFormalization.TwoCategoryLaws
 import MUFPFormalization.WeierstrassGap
 import MUFPFormalization.WindowCountBounds
 import MUFPFormalization.MeasurementAlgebra
+import MUFPFormalization.SpinorSilenceBranch
+import MUFPFormalization.TimeBranch
+import MUFPFormalization.TimeSpectrum
+import MUFPFormalization.LayerEntropy
+import MUFPFormalization.LuInvariant
+import MUFPFormalization.RUniqueness

@@ -12696,7 +12696,7 @@ S614 ○ 判别对扩展（开放项①推进）：
 
 ### 一、旧"318/318"是漏数（会计勘误，非新增修复）
 
-全仓 `.lean` 共 **353** 个、**7** 个目录。旧口径 318 来自 `p7_lean_olean_audit.py` v1：`SRC` 指向 `...\src\MUFPFormalization` 且用 `glob(SRC\*.lean)` **非递归**，漏掉：
+全仓 `.lean` 共 **359** 个、**7** 个目录（预研 6 模块迁入 `src` 后 353 → 359；预研原件保留，故主库与预研现为双份）。旧口径 318 来自 `p7_lean_olean_audit.py` v1：`SRC` 指向 `...\src\MUFPFormalization` 且用 `glob(SRC\*.lean)` **非递归**，漏掉：
 
 - `...\src\MUFPFormalization\SpectralBundle\` 下 **9** 个模块（Core / PinchTopology / DeltaSector / QuantumGravity / CausalSet / Cosmology / CMB / LargeScaleStructure / DefectDensity，合计约 200 KB）
 - `...\src\MUFPFormalization.lean` **1** 个库根文件（6366 B），其 L141 `import MUFPFormalization.SpectralBundle`，hub 文件 L19–27 再逐条 import 上述 9 个 → 9 个子模块**确在库根 import 闭包内**（3821/7096 jobs 早已编译它们）
@@ -12705,21 +12705,21 @@ S614 ○ 判别对扩展（开放项①推进）：
 脚本已改写为**递归版 v2**（从 `src` 根部 `glob(..., recursive=True)`，模块名按相对路径映射 olean，并额外计算库根 import 闭包与孤立集），实跑输出：
 
 ```
-MODULES=328   CLOSURE=149   ORPHANS=179
+MODULES=334   CLOSURE=155   ORPHANS=179
 MISSING_OLEAN=0   STALE_OLEAN=0   SORRY_LINES=0
 ```
 
-即 **328/328 全绿**（强于旧"318/318"）。另有独立 Python 一次性脚本 `%TEMP%\audit_rec.py` 交叉验证：`RECURSIVE_SRC_MODULES=328 / MISSING=0 / STALE=0 / SORRY=0`。
+即 **334/334 全绿**（强于旧"318/318"；328 → 334 的 +6 来自库外预研 6 模块并入，见本节末与 §四）。另有独立 Python 一次性脚本 `%TEMP%\audit_rec.py` 交叉验证旧口径：`RECURSIVE_SRC_MODULES=328 / MISSING=0 / STALE=0 / SORRY=0`。
 
 ### 二、孤立集精确化（179 = 169 + 10）
 
-- 库根 `MUFPFormalization.lean` 的 import 闭包 = **149**（库根自身 + SpectralBundle hub + 9 子模块 + 138 顶层模块）
-- 原 318 顶层中闭包外 = **179**
+- 库根 `MUFPFormalization.lean` 的 import 闭包 = **155**（库根自身 + SpectralBundle hub + 9 子模块 + 144 顶层模块；含预研并入的 6 模块）
+- 原 318 顶层中闭包外 = **179**（迁入 324 顶层后闭包外仍 179：新增 6 模块全部进闭包）
 - 179 中有 **10** 个只被 `Main.lean`（exe 目标）import：`BoundaryEntropyBridge`、`DirectionalCliffordBridge`、`HolographicEntropyDegeneration`、`LorentzSignatureBridge`、`NoiseSignatureBridge`、`NoiseSystemTheory`、`PauliLorentzBridge`、`RecActiveSignatureBridge`、`SelDissBridge`、`SignatureTimeBridge`（`Main.lean` L15–24），由 `lake build`（全 default target，7096 jobs）覆盖
 - 余下 **169** 才是库根与 exe 两目标都不覆盖、必须逐个点名构建的（165 首轮 + 4 修复后全通过）
 - 历史名单 `%TEMP%\orphan_list.txt`（169 行）与实时孤立集比对：差集正是上述 10 个 Bridge，反向误差 0 → 历史名单无误，只是旧定义未计入 exe 覆盖
 
-**口径更新**：旧主张"318/318 源文件逐个机检通过"→ 新主张 **"328/328 模块机检通过（含库根 import 闭包与 exe 目标覆盖），169 个需逐模块点名构建"**。论文 8 处 318 表述（卷首 L8 / 摘要 / §1.4 / §11.4 / §12.4 项 1 / 附录 C / 两处尾注）**尚未同步为 328**，登记为待办。
+**口径更新**：旧主张"318/318 源文件逐个机检通过"→ 新主张 **"334/334 模块机检通过（含库根 import 闭包与 exe 目标覆盖），169 个需逐模块点名构建"**（预研并入后由 328/328 增至 334/334，ORPHANS 179 不变）。论文中 318 / 328 口径已于 2026-11-09 全部同步为 **334**（§1.4、§12.4 项 1、尾注、正文口径块），历史"318 → 328"仅作为口径沿革保留在审计记录中。
 
 ### 三、库外资产处置（事实登记）
 
@@ -12740,6 +12740,8 @@ MISSING_OLEAN=0   STALE_OLEAN=0   SORRY_LINES=0
 **修复（2026-11-09 本轮）**：① 9 条依赖路径（lakefile）+ 9 条 manifest `dir` 改指 `E:/workspace/hyper-resolution/.../MUFPFormalization/.lake/packages/*`；② `lean-toolchain` v4.31.0 → v4.34.0-rc2（跨版本读 mathlib olean 必然失败）；③ `LuInvariant.lean` L72/74/94/95 共 4 处弃用 API `if_pos` / `if_neg` 改 `ite_eq_left` / `ite_eq_right`。结果 **`lake build` = 3894 jobs，零错误、零警告、零 sorry、零 axiom**（`%TEMP%\pres_build1.txt` 首建 8 条 warning，`pres_build2.txt` 修后 0 条）。文本层统计：9 文件 / 35 theorem / 0 axiom / 0 real sorry（3 处 "sorry" 均在注释）。
 
 **归属裁决结论**：这批文件**是 MUFPF 理论的内容**，但**不是 MUFPF 的机检主张**——不在主库、独立工具链、独立项目、按预研自述不进检测矩阵。正确登记方式："库外独立预研项目，内容属 MUFPF，2026-11-09 起在当前工作区可复现（3894 jobs 零错误零警告），不计入 v1.3 的 328/328 主张范围"。
+
+**迁入更新（2026-11-09 第二轮，用户裁决：预研成果应自包含进主库）**：上述 6 个模块已**整体迁入** `MUFPFormalization\src\MUFPFormalization\`，命名空间由 `PresurveyFormalization.*` 改为 `MUFPFormalization.*`，并加入库根 `src\MUFPFormalization.lean` 的 import 列表（在 `import MUFPFormalization.MeasurementAlgebra` 之后）。迁移手法：逐文件字节读写、无 BOM、全文替换命名空间前缀，替换计数 SpinorSilenceBranch 2 / TimeBranch 4 / TimeSpectrum 2 / LayerEntropy 2 / LuInvariant 2 / RUniqueness 2。实测：6 模块点名构建 1952 jobs、exit 0；库根全量 3827 jobs、exit 0、0 error（1396 条既有 warning 全在 80 个历史模块，新 6 模块零 warning）；全 default target 7096 jobs、exit 0；审计 **MODULES=334 / CLOSURE=155 / ORPHANS=179 / MISSING=0 / STALE=0 / SORRY=0**。定理计数（迁入后实测）：SpinorSilenceBranch 33、TimeBranch 6、TimeSpectrum 3、LuInvariant 7、LayerEntropy 2、RUniqueness 5，合计 **56 条**（预研文本层旧口径 35 条已作废——§⑦/§⑧ 的 8 条与后续补齐使 SpinorSilenceBranch 独占 33 条）。故"不计入 v1.3 主张范围"的旧登记**自本轮起作废**：这 6 模块现计入 334/334 口径，预研目录保留原件（双份并存，定位待拍板：可标注"已并入主库"转为归档）。
 
 ### 五、本轮改动与待办
 

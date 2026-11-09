@@ -55,7 +55,13 @@
 
 三个原语 Rec/Sp/D 至此全部浮现——**没有一个是先验选择的公理**，它们是"递归系统如何加速"这个具体工程问题的最小抽象。
 
-**认知佐证**：抽象完成后，日常物理现象的观察为这个结构的普遍性提供了信心——水波、湍流、晶体生长、相变、重整化群不动点……这些系统分属完全不同的尺度和底层机制，但共同特征都是"在有限自由度上反复施加同一变换 → 有限步后谱性质收敛 → 递归被不动点吸收"。这让我确信 Rec/Sp/D 不是 SNN 特有的数学游戏，而是自然中递归动力系统的普遍结构。
+**认知佐证（一）——跨系统的结构普适**：抽象完成后，日常物理现象的观察为这个结构的普遍性提供了信心——水波、湍流、晶体生长、相变、重整化群不动点……这些系统分属完全不同的尺度和底层机制，但共同特征都是"在有限自由度上反复施加同一变换 → 有限步后谱性质收敛 → 递归被不动点吸收"。这让我确信 Rec/Sp/D 不是 SNN 特有的数学游戏，而是自然中递归动力系统的普遍结构。
+
+**认知佐证（二）——跨时刻的演化普适：时间即递归**：另一处观察更接近框架起点本身：年复一年、日复一日，任何环境、任何事物在每一时刻都与上一时刻相似——不是相同，而是相似。按字面读，这正是"把递归本身视为一个维度"的日常表述：时间的每一步都是对同一变换的再一次施加，相邻时刻因此互为自相似，而非互为复制。上一段的普适性是**跨系统**的（不同尺度、不同机制共享同一谱结构，落在 Sp 一侧），这一处的普适性是**跨时刻**的（任何系统在自己的演化序列上都呈现同一递推形，落在 Rec 一侧）；两者合起来，才是 Rec/Sp 对偶在日常观察层面的完整对应，而不只是其中一半。
+
+这一观察与框架内已机检的部件在结构上吻合，而非仅是措辞相近：递归的"相似而非相同"意味着相邻时刻的差异按固定比例衰减，该比例在框架内即均匀收缩率 $r=e^{-1}$（形式化中作为定义 `BranchCounting.r` 引入；文中称其为定理 R1 的结论，形式化本身并不证明该取值）；自相似结构的维数在"$B=15$ 且 $r=e^{-1}$"条件下给出 $d_H=\ln 15$，由 Moran 方程 $15\cdot r^{d_H}=1$ 锁定（条件定理）。二者与观察的差别只在一处：形式化中不动点位于无穷远处（有限步不可达），而谱性质在有限步即已定型——这正是"日复一日相似、却从不重复"的精确说法。
+
+其认识论地位须如实标明：这是作者的时间直觉与机检件的吻合，不是"时间必然是递归"的证明。它支撑的是框架的**起点选择**——为何把递归当作原语、为何框架以"不动点"命名——而不产生新的物理结论。
 
 抽象完成后，从 D⊣R 的伴随结构 + 一个显式的定义域规定（C1：把活跃层（step ≠ id）规定为伴随的定义域，见 §4.1）**推出四维时空的 Clifford 代数 Cl(3,1)**。这里须如实说明：C1 是框架对定义域的规定，不是伴随数学的自然后果（v1.3 已按第四轮评审 N3 修正其认识论地位），故这一步是“结构条件 + 定义域规定”的推论，而非“仅由伴随性质唯一导出”；它同样不是为了拟合物理数据而设计的，来自 SNN 不动点加速问题的范畴论闭包。
 
@@ -71,7 +77,7 @@
 
 ### 1.4 本文贡献
 
-本文以**构造性推导**的方式，展示从三个范畴论构件到 SM 全部关键结构的完整路径。每个推导节点都附带 Lean 4 形式化定理和数值预言。形式化状态按 v1.3 实测口径登记（见卷首与 §12.4 项 1）：单模块 `ActiveSilentVieta` 构建全绿（3048 jobs、exit 0），库根 `MUFPFormalization` 与全 default target（含 exe）分别返回 Build completed successfully（3821 / 7096 jobs、exit 0，2026-11-09 实跑），全库零 sorry。**边界如实登记**：328 个源文件中 179 个不在库根 import 闭包——10 个由 exe 入口 `Main.lean` import、被全 default target 构建覆盖，其余 169 个是未被任何模块 import 的孤立模块，不由库根与全 default target 构建自动覆盖。本版已用 `lake build MUFPFormalization.<Module>` 逐个点名构建补齐：165 个首轮通过，4 个（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）此前从未编译过、修复后全部通过（commit `1f88c8b`），复跑 olean 审计为 328/328 齐备。因此本文主张“328 个源文件逐个都已机检通过 + 全库零 sorry”，但这一主张**必须与逐模块点名构建的命令口径绑定**，它不能由 `lake build` 或 `lake build MUFPFormalization` 单独推出。
+本文以**构造性推导**的方式，展示从三个范畴论构件到 SM 全部关键结构的完整路径。每个推导节点都附带 Lean 4 形式化定理和数值预言。形式化状态按 v1.3 实测口径登记（见卷首与 §12.4 项 1）：单模块 `ActiveSilentVieta` 构建全绿（3048 jobs、exit 0），库根 `MUFPFormalization` 返回 Build completed successfully（3827 jobs、exit 0，2026-11-09 实跑），全库零 sorry、零 axiom。**本次口径变更（库外预研并入）**：预研项目 `PresurveyFormalization` 的六个模块已整体迁入 `src`——`SpinorSilenceBranch`（33 定理：§7.15 静默唯一性、KL 熵上界三引理、A3 分支谱可满足性、以及 §⑧ 的 `S₄ = 1/(2^{N_active+1}−1)` 导出链）、`TimeBranch`（6）、`TimeSpectrum`（3）、`LuInvariant`（7）、`LayerEntropy`（2）、`RUniqueness`（5），合计 56 条定理，零 sorry、零 axiom；库根 import 闭包由 149 增至 155，模块总数 328 → 334（324 个顶层 + `SpectralBundle` 9 + 库根 1）。**边界如实登记**：334 个源文件中 179 个不在库根 import 闭包——10 个由 exe 入口 `Main.lean` import、被全 default target 构建覆盖，其余 169 个是未被任何模块 import 的孤立模块，不由库根与全 default target 构建自动覆盖。本版已用 `lake build MUFPFormalization.<Module>` 逐个点名构建补齐：165 个首轮通过，4 个（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）此前从未编译过、修复后全部通过（commit `1f88c8b`），复跑 olean 审计为 334/334 齐备（MISSING / STALE / SORRY 均为 0）。**warning 口径如实登记**：全库构建 0 error，但存在 1396 条既有 linter warning，集中在 80 个历史模块（以 unused simp 参数为主：`SilenceModel` 355 条、`SpCategory` 167 条、`GWPolarization` 80 条居前），本次新增的 6 个模块零 warning；这些 warning 属既有技术债，不影响定理成立性，也不构成"全库零 warning"的主张。因此本文主张“334 个源文件逐个都已机检通过 + 全库零 sorry”，但这一主张**必须与逐模块点名构建的命令口径绑定**，它不能由 `lake build` 或 `lake build MUFPFormalization` 单独推出。
 
 ### 1.5 与主流纲领的定位对比
 
@@ -1396,6 +1402,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | v1.3 追加 | `AlphaChain.lean` 机检边界修复（sin²θ_W 三定理的 autoImplicit 自由变量 → 局部 `open` 限定，首度真编译通过） | `9c2c4e4` | 2026-11-09 | 本机可验（`lake build …AlphaChain` → 3178 jobs, exit 0） |
 | v1.3 追加 | 4 个孤立模块首度编译通过（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）；olean 审计达 328/328（MISSING=0、STALE=0、sorry=0；v1.3 发行时记作 318/318，2026-11-09 审计 v2 校准） | `1f88c8b` | 2026-11-09 | 本机可验（`lake build MUFPFormalization` → 3821 jobs、`lake build` → 7096 jobs，均 exit 0；`p7_lean_olean_audit.py` → MISSING_OLEAN=0） |
 | v1.3 审计校准 | 审计脚本改递归 v2；库内模块数 318→328（`SpectralBundle` 9 个 + 库根 1 个为原漏数），闭包 149 / 不在闭包 179（10 个由 exe 入口覆盖、169 个点名构建） | `746ac27` | 2026-11-09 | 本机可验（`p7_lean_olean_audit.py` → MODULES=328 / CLOSURE=149 / ORPHANS=179 / MISSING=0 / STALE=0 / SORRY=0） |
+| v1.3 追加 | 库外预研 6 模块并入 `src`（`SpinorSilenceBranch` 33 定理、`TimeBranch` 6、`TimeSpectrum` 3、`LayerEntropy` 2、`LuInvariant` 7、`RUniqueness` 5，共 56 定理，零 sorry 零 axiom）；模块数 328→334、闭包 149→155、ORPHANS 179 不变；库根 3827 jobs / 全 default target 7096 jobs | `（本次提交，见 §12.4 项 1 末段）` | 2026-11-09 | 本机可验（`p7_lean_olean_audit.py` → MODULES=334 / CLOSURE=155 / ORPHANS=179 / MISSING=0 / STALE=0 / SORRY=0；`lake build` → 7096 jobs, exit 0） |
 
 本表的任何后续修订本身都会产生新提交，故“终稿哈希”只能指向某一版：读者应以 `git log` 中最新一条 v1.3 论文提交为准，表中 `1c1bdb6` 是包含本表首个完整版本的那次提交。清单只向后追加，不覆盖旧行。
 
@@ -1403,6 +1410,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。v1.2 基线 commit `e503722` 含 V9 韦达唯一性、S610-S612 域特征尺度、sin²θ_W 纯框架推导、M₈ bridge 层等全部形式化工作；v1.3 内容提交哈希见本节登记表。**可见性边界如实登记**：外部评审指出当前仓库不可公开检出，故哈希的可核验性为零——本文在仓库对外可检出之前，不主张"自创建伊始即开源"；仓库公开状态（公开/私有）是待核实的事实项，不由本文单方裁决。**jobs 计数的口径说明（v1.3 两次修订）**：v1.2 宣称的"7096 jobs 全绿"当时无法复现（同一命令实测 3048 / 3657 targets，且 lake 的 job 计数含 mathlib 重放，随缓存浮动），v1.3 首版因此撤回该数字并改为三项判据：`lake build …` 返回 Build completed successfully、零 sorry、模块 olean 与源文件同版本（审计脚本 `scripts/p7_lean_olean_audit.py`）。**2026-11-09 21:04–21:08 实测后修订**：同一台机器上 `lake build MUFPFormalization`（库根闭包）= 3821 jobs、`lake build`（全 default target，含 `mufpfformalization:exe`）= **7096 jobs**，两者均 Build completed successfully、exit 0——即 7096 是真实可达的，只是它对应**全 default target** 口径而非库根口径；故本版恢复该数字但**强制与命令绑定**（离开命令的裸数字不可核验）。**当前状态（2026-11-09 21:08 实测）**：三项判据在构建闭包内全部成立——Build completed successfully（3821 / 7096 jobs，exit 0）、行首 sorry = 0（328 文件全扫）、闭包内 149 个模块 olean 与源同版本（STALE_OLEAN = 0）。**残留边界（v1.3 已清除，2026-11-09 22:06 更新；审计口径见本节末）**：328 个源文件中 179 个不在库根 import 闭包——其中 10 个由 exe 入口 `Main.lean` import、被全 default target 构建覆盖，余 169 个是**未被任何模块 import 的孤立文件**，`lake build` 与 `lake build MUFPFormalization` 都不会自动覆盖它们，v1.3 首版据此登记“不作机检主张”。本轮回补：169 个逐个点名构建（`lake build MUFPFormalization.<Module>`，日志 `%TEMP%\orph_batch.txt`），首轮 165 通过、4 失败（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）；4 个模块存在实质证明错误，逐一改正后全部通过（commit `1f88c8b`），复跑审计为 **MODULES=328 / CLOSURE=149 / ORPHANS=179 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0**。故“328 个源文件逐个都已机检通过”这一陈述**自 v1.3 起成立**，但只在“逐模块点名构建 + olean 审计”的命令口径下成立，不构成对 `lake build` 单命令的推论。**必须同时登记的会计事实**：这 4 个模块在 v1.2 期间从未编译通过，其中 `MeasurementProjectionDrift.lean` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件——该表此前标注的“已机检”在 v1.2 版本上无编译依据，自 `1f88c8b` 起才有；`RapidityTimeLayering`（Dirac 质量投影四定理）、`SilenceFamily`（s90/s91/s95/s96）、`CommutatorLieAlgebra` 同理。
 **审计口径修正（2026-11-09 22:40）**：旧 318 为审计脚本非递归 glob 的漏数——`src\MUFPFormalization\SpectralBundle\` 下 9 个模块与库根 `src\MUFPFormalization.lean` 未被计入（9 个子模块实际早经库根 import 闭包编译，olean 齐备）。脚本已改递归 v2，实测 MODULES=328 / CLOSURE=149 / ORPHANS=179 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0；孤立集精确化为 179 = 10（由 exe 入口 `Main.lean` import、被全 default target 覆盖）+ 169（需逐模块点名构建），与历史 169 名单的差集正好是这 10 个。**故 318/318 口径作废，以 328/328 为准**；本项其余结论（169 个点名构建、4 个模块修复起点 `1f88c8b`）不变。
+**预研并入口径变更（2026-11-09）**：按"预研成果应自包含进主库"的裁决，库外预研项目 `PresurveyFormalization` 的 6 个模块整体迁入 `src\MUFPFormalization\`——`SpinorSilenceBranch`（33 定理）、`TimeBranch`（6）、`TimeSpectrum`（3）、`LayerEntropy`（2）、`LuInvariant`（7）、`RUniqueness`（5），合计 56 条定理，零 sorry、零 axiom，命名空间统一改为 `MUFPFormalization.*`，并加入库根 `MUFPFormalization.lean` 的 import 列表。实测（2026-11-09）：6 模块点名构建 1952 jobs、exit 0；库根闭包 3821 → **3827 jobs**（+6）；全 default target（含 exe）**7096 jobs**、exit 0（与迁入前同数）；审计 → **MODULES=334 / CLOSURE=155 / ORPHANS=179 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0**。ORPHANS 保持 179 的原因：新增 6 模块全部进入库根闭包（149 → 155），原有 169 个孤立模块与 10 个 exe 覆盖模块不变。**同时如实登记一条全局事实（首次量化）**：全库构建 0 error，但存在 1396 条既有 linter warning，分布在 80 个历史模块（`SilenceModel` 355、`SpCategory` 167、`GWPolarization` 80 居前，主体为 unused simp 参数），新增 6 模块零 warning；此前"零 warning"的说法只适用于预研工程口径，不适用于主库，本项据此更正。
 2. **m_{L4} ≈ 1470 GeV 预注册**：这是附录 A 中唯一的真外推。需带日期登记其量子数（电荷/弱荷/稳定性），并逐通道对照 LHC 重轻子搜索与 LZ/XENON 直接探测的现有限制——若现有数据已排除该候选，框架应立即记录一次否决，而不是等实验收紧。
 3. **15 的 Mersenne 必要性推导（族内枚举，v1.3 修正表述）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。枚举 N=1..12：仅 N=3 时 D(3) = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是唯一整数根。**v1.3 两级撤账**：(a) Lean 侧机检的是 D(N) 的 12 项具体值（`vieta_discriminant_family_values`）与 N=3 见证（`vieta_discriminant_mersenne_witness`）；"其余 N 的 D 非完全平方"是**数值枚举**，其 Lean 全枚举尚未机检，登记为待补；(b) v1.2 曾把唯一性写成"σ⁻¹ ∈ [1,64] 内唯一"，该陈述为**假**：σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、12（根 {2,6}，D = 16 = 4²）、16（根 {4,4}，D = 0 = 0²）同为整数根且判别式为完全平方；原引用的 `vieta_discriminant_mersenne_unique`（且其证明行 `interval_cases … with` 语法本身不成立）已撤销，族外反例改由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。故唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**族内唯一性**——σ⁻¹ = 2^{N+1}−1 是族内唯一让韦达方程在 N=3 时有互异整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取"2 的幂减 1"这个参数族（而不是其他参数化）仍未独立推导——族内唯一解已数值闭合，Lean 全枚举待补。
 4. **α⁻¹ 对 CODATA 2022 的 +4.46σ_score 处置**：要么从零推导修正项（来源、阶数、系数，不允许新连续参数），要么承认公式被否决。δ* 域级分解的失败核算（§9.2e）已排除"域分解即解释"的退路——这是框架第一条真实的"预言—否决—应答"记录，其处理方式将定义框架的证据标准；判决协议见 §12.4.1。
@@ -1477,21 +1485,23 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 lake build MUFPFormalization.ActiveSilentVieta
     → Build completed successfully（3048 jobs，exit 0，2026-11-09 实跑）
 lake build MUFPFormalization          # 库根模块闭包
-    → Build completed successfully（3821 jobs，exit 0，2026-11-09 22:05 复跑）
+    → Build completed successfully（3827 jobs，exit 0，2026-11-09 复跑；3821 → 3827 的 +6 来自预研 6 模块并入闭包）
 lake build                            # 全 default target（含 mufpfformalization:exe）
-    → Build completed successfully（7096 jobs，exit 0，2026-11-09 22:06 复跑）
+    → Build completed successfully（7096 jobs，exit 0，2026-11-09 复跑；迁入后复跑仍为 7096）
+lake build MUFPFormalization.{SpinorSilenceBranch,TimeBranch,TimeSpectrum,LayerEntropy,LuInvariant,RUniqueness}
+    → Build completed successfully（1952 jobs，exit 0，2026-11-09 实跑；预研迁入的 6 个模块）
 lake build MUFPFormalization.<Module>（逐个点名，169 个孤立模块，2026-11-09 21:11-22:00 分批实跑）
     → 首轮 165 通过 / 4 失败（CommutatorLieAlgebra、MeasurementProjectionDrift、
       RapidityTimeLayering、SilenceFamily）；4 个修复后逐个通过（commit 1f88c8b）
-olean 审计（scripts/p7_lean_olean_audit.py，修复后复跑）
-    → MODULES=328 / CLOSURE=149 / ORPHANS=179 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0
-    → 即 328/328 源文件均有与源同版本 olean：149 个在库根闭包内 + 179 个不在闭包（10 个由 exe 入口 Main.lean import、被全 default target 覆盖；169 个逐模块点名构建补齐）
+olean 审计（scripts/p7_lean_olean_audit.py，预研并入后复跑）
+    → MODULES=334 / CLOSURE=155 / ORPHANS=179 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0
+    → 即 334/334 源文件均有与源同版本 olean：155 个在库根闭包内 + 179 个不在闭包（10 个由 exe 入口 Main.lean import、被全 default target 覆盖；169 个逐模块点名构建补齐）
 sorry 扫描（src/MUFPFormalization 递归全扫，行首 sorry）
-    → 0（零 sorry，328 文件全扫，2026-11-09 实测）
+    → 0（零 sorry，334 文件全扫，2026-11-09 实测）
 ```
 
 **注**：v1.2 附录中的 2080 / 2079 / ≈720 / 3817 / 6376 / 7096 等 jobs 数均为当时**未复验的自报数**。本版中 7096 已按同口径（`lake build` 全 default target）**实测复现**（7096 jobs，exit 0），故该数恢复为可引用，但必须与命令绑定（`lake build` 而非 `lake build MUFPFormalization`，后者为 3821）。jobs 计数随缓存浮动，**离开命令的裸数字不可核验**（见 §12.4 项 1）。仓库公开状态是待核实事实项（§12.4 项 1），本文不单方主张"已双平台公开"；v1.2 基线 commit `e503722`；v1.3 内容提交哈希见 §12.4 登记表；外部独立复现待仓库可检出后确认。
 
 ---
 
-*本文档基于 MUFPF 框架 Lean 形式化库（零 sorry；库根与全 default target 构建均 Build completed successfully（3821 / 7096 jobs，exit 0），olean 审计 328/328 齐备（MISSING_OLEAN=0、STALE=0、行首 sorry=0；其中 179 个不在库根 import 闭包（10 个由 exe 入口 `Main.lean` 覆盖、169 个未被 import，经逐模块点名构建补齐），4 个从未编译的模块于 commit `1f88c8b` 修复后首度通过），见 §12.4 项 1）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
+*本文档基于 MUFPF 框架 Lean 形式化库（零 sorry；库根与全 default target 构建均 Build completed successfully（3827 / 7096 jobs，exit 0），olean 审计 334/334 齐备（MISSING_OLEAN=0、STALE=0、行首 sorry=0；其中 179 个不在库根 import 闭包（10 个由 exe 入口 `Main.lean` 覆盖、169 个未被 import，经逐模块点名构建补齐），4 个从未编译的模块于 commit `1f88c8b` 修复后首度通过；库外预研 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已迁入 `src`，贡献 56 条定理、零 sorry、零 axiom，构成 328 → 334 的增量），见 §12.4 项 1）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
