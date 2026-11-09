@@ -13013,3 +13013,102 @@ S624 在论文 §3 落了一句「(iii) 速率层不可由现有公设内生」�
 - `master` 仍非 `develop` 祖先（`41b3bb4`）；Paper II 的「当前 LHC 排除限 1300 GeV」未改；库外碎片未清（`ProbeTraceMain.lean` 原件、`ProbeLog.lean` 两处 `example … sorry`、预研根 13 个碎片）。
 - `SilenceSecondOrder.lean`（747 行）中 vieta 相关定理未细读，与 `ActiveSilentVieta.lean` 是否重复仍未知。
 - 12 条既有警告未处置（9 条 `haveI` 有「整类关 linter」与「保持现状」两路；3 条 `<;>` 有「保留」与「重构」两路）。
+
+# S627 — 收缩判据：把「一般 `step` 是否按 σ 收缩」从待定改写为可判定命题
+
+**2026-11-10｜承接 S626：残余开口不是「未知事实」，而是「抽象层面已被否证、须按实现判别」**
+
+## 0. 本轮判别目标与被替换的判断
+
+- 被替换的判断（S626 §7 第一条）：「一般 `step`（抽象态射）的实现是否按 σ 收缩仍未证」——被登记为动力学三层降级后的唯一残余开口。
+- 本轮的关键观察：重读 `RecOrbitDynamics.lean`（105 行）全文，`step` 在该模块里只是 **任意自映射** `step : α → α`，四条定理全是「任意 `step` 均成立的有限性结论」或「存在反例」。既然抽象层面 `step` 没有任何具体实现，「一般 `step` 是否按 σ 收缩」就**不是一条待查的事实**，而是一个**已被否证的普遍命题**：S626 的 `double_step_refutes_contraction` 取 `step x = 2x`、`x = 1` 即证 `¬(∀ x, |2x| ≤ σ|x|)`。
+- 因此开口的正确改写形态是：**按实现判别**。乘子型实现 `x ↦ k x` 上「是否按 σ 收缩」等价于一个关于标量 `k` 的**可判定条件** `|k| ≤ σ`，且该条件等价于 `k ∈ [-σ, σ]`（闭区间刻画）；通过判据的全部乘子共享同一个速率界 `σ^n` 与收敛结论，与 `k` 的具体取值无关。
+- 本轮性质：**判据化（criterialization）**，不引入新假设、不改 S625/S626 已闭合的等式级结论；只把「是否满足」这一问法替换为「满足者集合是什么、速率界是否统一、边界在哪里」。
+- 明确不做的事：不声称判据覆盖一切实现。非乘子型（仿射带平移、分段、非线性）实现无一般判据；通道完备性（「框架内不存在第三条通道」）未证，不作断言。
+
+## 1. 判别所依据的库内结构（本轮逐行复核）
+
+- **抽象层**：`RecOrbitDynamics.lean` 四定理——`exists_iterate_eq_of_fintype`、`exists_visible_repetition`（只要求观测值域 Y 有限）、`eventually_periodic_of_fintype`、`swap_not_frozen`（`Bool.not` 反例：周期塌成不动点不必然）。四条均对**任意** `step : α → α` 成立，这正是「抽象层无具体实现」的形式证据。
+- **条件层签名**（`RecOrbitContraction.lean`，142 行 / 8 定理）：`contraction_iterate_bound` / `contraction_iterate_tendsto` 的签名是 `{step : ℝ → ℝ} {a c : ℝ} (hc : 0 ≤ c) (hstep : ∀ x, |step x - a| ≤ c * |x - a|)`——**压缩因子 `c` 是显式参数**，故可统一取 `c = σ`；`sigma_rate_contraction` 已固定 `(hstep : ∀ x, |step x - a| ≤ (1/15) * |x - a|)`。该文件头注释自认边界：「本文件证明的是**条件命题**…不证明「本框架的 `step` 满足该条件」」——S627 承接的正是这条自认边界。
+- **数值通道的乘子**：`CompositeDepth.lean` L205 `freezeClosure := fun x => sigma * x`——它是**乘子型实现**，乘子 `k = σ`；S626 已机检其幅值作用为等式级（`freezeClosure_abs_eq` / `freezeClosure_iterate_abs_eq`）。
+
+## 2. 数值先证伪（模式 8；`fractions.Fraction` 精确算术）
+
+脚本 `%TEMP%\pre_s627.py` → `pre_s627.txt`；Python = `D:\pyenv\pyenv-win\versions\3.11.8\python.exe`。
+
+- 全部有理数运算改用 `Fraction`，**彻底规避 S625 踩到的浮点陷阱**（`c^2000` 下溢至 1e-89、n=60 时 `|z−a|` 被浮点吞成 0 而解析界为 1.18e-29）。
+- **样本**：13 个乘子 `k`（0、±σ、±σ/2、±1001σ/1000、±2、±1、±1/2、−1/20）× 9 个 `x`（0、±1、±1/2、3、±1/1000、1000、7/3）。
+- **A（判据等价）**：标量条件 `|k| ≤ σ` 与逐点条件 `∀x, |k·x| ≤ σ|x|` 在全部样本上 **mismatches = 0**。
+- **B（判据紧致度）**：`k = 1001/15000` 仅超界 **0.0999%**，A 与 B 同时判 False —— 判据**紧到 0.1%**，不存在可再放宽的余量。
+- **C（端点等号）**：`k = ±σ` 处 `|k·x| / (σ|x|)` 恒等于 1，两端 max ratio 同为 `Fraction(200, 3)`，等号成立。
+- **D（判别力反例）**：`k = 2, x = 1` → A=False / B=False，`2/σ = 30` 倍超界。
+- **E（统一速率界）**：任一通过判据的 `k`，对 `n ∈ {0, 1, 5, 20}` 均有 `|k^n x| ≤ σ^n |x|`，全成立；`-(1/15) ∈ Icc(-σ, σ)` 判 True。
+
+## 3. 新模块 `RecOrbitContractionCriterion.lean`（143 行 / 10 定理 / 零 sorry）
+
+- 路径：`...\src\MUFPFormalization\RecOrbitContractionCriterion.lean`。
+- import：`Mathlib.Analysis.SpecificLimits.Basic`、`Mathlib.Topology.MetricSpace.Pseudo.Lemmas`、`MUFPFormalization.CompositeDepth`、`MUFPFormalization.RecOrbitContraction`。
+- docstring 三段：动机（抽象层 `step` 无实现，故须判据化）/ 判据覆盖范围边界（**只覆盖乘子型 `step`；仿射带平移、分段、非线性不覆盖**）/ 十条定理清单。
+- 定理清单（10）：
+1. `linear_step_contracts_iff` — **充要判据**：`(∀ x, |k * x - 0| ≤ σ * |x - 0|) ↔ |k| ≤ σ`。
+2. `contracting_multipliers_eq_Icc` — 收缩乘子族恰等于闭区间：`{k | ∀x, |k*x| ≤ σ|x|} = Set.Icc (-σ) σ`。
+3. `sigma_mem_contracting_multipliers` — `σ` 本身在判据族内（端点、等号成立）。
+4. `neg_sigma_mem_contracting_multipliers` — `-σ` 也在族内（判据是双侧的，非只对正号）。
+5. `two_not_mem_contracting_multipliers` — `2 ∉` 该族。
+6. `two_fails_criterion` — `¬(|2| ≤ σ)`，与 5 互为集合/标量两视图。
+7. `linear_step_iterate_bound` — **统一速率界**：对任一满足 `|k| ≤ σ` 的 `k`、任一 `x`、任一 `n`，`|k^n * x| ≤ σ^n * |x|`，**与 `k` 具体取值无关**。
+8. `linear_step_converges` — 同一条件下 `Tendsto (fun n => k^n * x) atTop (𝓝 0)`。
+9. `linear_step_criterion_and_rate` — 判据与速率合并陈述（过判据 ⟹ 界 + 收敛，一条引）。
+10. `freezeClosure_multiplier_at_endpoint` — 数值通道的乘子恰为区间右端点：`freezeClosure` 的乘子 `= σ ∈ Icc(-σ, σ)`，故该通道取到「可通过判定的最大乘子」。
+- 未采用：`Mathlib.Data.Set.Intervals.Basic`——**该路径在本版 mathlib 4.34 不存在**（`Data/Set/Intervals/` 目录整个不存在，8412 个 `.lean` 中无 `def Icc` 行首模式）；删掉该 import 后 `Set.Icc` 与 `Set.mem_Icc` 经既有 import 传递可用。
+
+## 4. 编译与构建真值
+
+- **三错三修**：
+  - (a) `constructor <> norm_num` 笔误（应为 `<;>`）→ 改 `<;>`。
+  - (b) `bad import 'Mathlib.Data.Set.Intervals.Basic'` → 删该 import（见 §3 末）。
+  - (c) 两处 `show |k * y| ≤ ...` 报 `'show' tactic failed, pattern ...`——根因是 `|y - 0|` 与 `|y|` 不是 defeq（`sub_zero` 是引理而非 rfl）→ 两处统一改 `simp only [sub_zero, abs_mul]` 后 `exact mul_le_mul_of_nonneg_right hk (abs_nonneg y)`。
+  - 过程日志：`bc627.txt`（bad import）→ `bc627b.txt` / `bc627c.txt`（show failed，剩 2）→ **`bc627d.txt`（3192 jobs，exit 0，0 error，0 sorry）**。
+- 单模块：`lake build MUFPFormalization.RecOrbitContractionCriterion` → **3192 jobs，exit 0**（与 `RecOrbitContractionChannel` 同 jobs，依赖闭包一致）。
+- 库根：`src\MUFPFormalization.lean` 由 159 行追加第 159 行 import（→ **160 行**，136 条 import，LF，无 BOM）；`lake build MUFPFormalization` → **3834 jobs，exit 0，0 error，12 warning**（`%TEMP%\b627.txt`，`chk627.py` 核验）。12 warning **全为既有**，新模块 0 warning。
+- 全 default target：`lake build` → **7094 jobs，exit 0**（`%TEMP%\ball627.txt`，无 sorry 命中）。数值不变，因 `Main.lean`（仓库根，10 条 import）不 import 新模块。
+- 提交：**`b381ac0`**（2 files，+144/−0：新模块 143 行 + 库根 1 行）。
+
+## 5. 审计口径刷新（复用权威 `audit625c.py`）
+
+`%TEMP%\audit625c.py` → `%TEMP%\audit627.txt`：
+
+- **MODULES=338**（源模块，337→338）、**CLOSURE_INCL_ROOT=166**（165→166）、**ORPHANS=173**（不变）。
+- MAIN_IMPORTS=10 / ORPHANS_COVERED_BY_MAIN=9 / ORPHANS_NEITHER=164（不变）/ DANGLING=0 / NEVER_IMPORTED_BY_ANY_MODULE=**161**（160→161）/ NEW_IN_CLOSURE=True。
+- 含根 Lean 文件数 338→**339**（源模块 338 + 库根）。
+- `ORPHANS` 与 `ORPHANS_NEITHER` 不变，正是本模块**确实进入了库根闭包**（新模块被库根 import，故不进孤立集合）；`NEVER_IMPORTED` +1 是分母随源模块数增加所致，非新增孤立文件。
+
+## 6. 论文落地（1526 行；15 处行内改写 + 附录 C 两行插入）
+
+脚本：`%TEMP%\fix627a.py`（15 组 `count == 1` 断言，全 OK；含版式自检）。
+
+- **L272 §3 末句**（核心改写）：「…一般 `step` 是否满足该条件仍登记为残余开口」→「抽象层面的 `step` 是任意自映射，故「一般 `step` 满足该条件」不是待定事实而是**假**（`step x = 2x` 即反例，`double_step_refutes_contraction`），判定改按实现进行：乘子型 `x ↦ kx` 有充要判据 `|k| ≤ σ`（⇔ `k ∈ [-σ, σ]`，`linear_step_contracts_iff` / `contracting_multipliers_eq_Icc`），数值通道的 `k = σ` 恰为该区间右端点（`freezeClosure_multiplier_at_endpoint`），任一通过判据的乘子共享同一速率界 `σ^n` 并收敛（`linear_step_iterate_bound` / `linear_step_converges`）；残余缩至**非乘子型实现**（仿射带平移、分段、非线性）无一般判据，且通道完备性未证」。
+- **L274 (ii) 小标题**：「条件侧与数值通道来源均已机检」→「**条件侧、数值通道来源与实现判据均已机检**」；**(ii) 末句**整句替换为上条同一结论的完整版（含「为假而非未知」「缩小后的残余是非乘子型实现」「『不存在第三条通道』的完备性未证，不作断言」）。
+- **L966**：olean 审计 338/338 → **339/339**。
+- **L1168**：3833→**3834**、338/338→**339/339**、MODULES/CLOSURE 337/165→**338/166**；在 `contraction_condition_discriminating` 之后**新增 `RecOrbitContractionCriterion.lean` 十定理点名清单**；「内容提交 = `229a21f`」→「**`b381ac0`**」。
+- **L1249**：库根 3833→**3834**（7094 不变）。
+- **L1418 §12.4 项 1**：区间 `7500a92..229a21f` → `7500a92..b381ac0`、远端内容头 → `b381ac0`；3833→**3834**；MODULES/CLOSURE/ORPHANS 337/165/173 → **338/166/173**；「337 个源文件中 173 个」→「**338 个**…173 个」；「动力学**三**模块（…/`RecOrbitContractionChannel`），库内源模块共 **337** 个（含库根 **338** 个 Lean 文件）」→「动力学**四**模块（+`RecOrbitContractionCriterion`），共 **338** 个（含库根 **339** 个 Lean 文件）」。
+- **L1455 §13 开放组件**：收缩层整条末句改为「「一般 `step` 按 σ 收缩」已由 `step x = 2x` 反例证否…改按实现判定：乘子型充要判据 `|k| ≤ σ`…数值通道 `k = σ` 取到右端点并享统一速率界与收敛…残余缩至非乘子型实现无一般判据、通道完备性未证」。
+- **附录 C**：L1503 库根 3833→**3834**、338→**339** 个 Lean 文件；L1512 MODULES/CLOSURE → **338/166**；L1514 338/338→**339/339**、337→**338** 源模块、165→**166** 在闭包内；L1516 337→**338** 文件全扫；L1519 3833→**3834**、内容头 `229a21f`→`b381ac0`；L1523 3833→**3834**、338/338→**339/339**、338（源模块 337 + 库根）→**339（源模块 338 + 库根）**；**新增两行** 单模块构建记录：`RecOrbitContractionCriterion` → 3192 jobs（插在 `RecOrbitContractionChannel` 的 3192 jobs 之后）。
+- **版式自检**：LINES=**1526**（原 1524，+2 附录行）/ CRLF=**1525** / 无 BOM / `\_`=0 / `***`=0。残余旧值全 0（`残余开口`、`3833`、`MODULES=337`、`338/338`、`229a21f`）；新值 `RecOrbitContractionCriterion`=3、`b381ac0`=4、`3834`=6、`MODULES=338`=3、`339/339`=4。
+- **用户立牌遵守**：新增文字只含「最终成果 + 残余（缩小后）」，不含轮次编号、不含「此前登记被推翻」类修订叙述；三错三修、判据覆盖面、工具链坑全部落在本笔记。
+
+## 7. 未做 / 仍开放（如实登记）
+
+- **判据只覆盖乘子型 `step`**：`linear_step_contracts_iff` 针对 `x ↦ kx`（不动点 0）。**仿射带平移** `x ↦ kx + b`（`b ≠ 0`）、**分段**、**非线性**实现均无判据——这是 S627 缩小后**仍然开放**的部分，论文与本节同处登记，不作「已知」处理。仿射情形的闭式（`k^n x + b(1−k^n)/(1−k)`）在数学上显然，但库内未立定理，故不计入。
+- **通道完备性未证**：本轮只证「乘子族 = `[-σ, σ]`」与「数值通道取到右端点」，**不**证明「框架内不存在第三条收缩通道」。论文明确写「不作断言」。
+- **L1160「δ* 域投影校正步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配尚未机检」仍未改**：本轮与 S625/S626 机检的是 σ^n 几何衰减、σ 乘子等式级收缩、乘子充要判据，**均不是**「偏移尺度耦合逐项精确匹配」。要关该项需另立定理把 δ* 的域投影校正步与 σ^n 谱逐项对齐（第三次登记）。
+- **`abs_le` 的本体行号未确认**：`^(theorem|lemma)\s+abs_le` 行首模式只能搜到派生引理（`abs_le_one_iff`、`abs_le_iff_mul_self_le`、`abs_le_of_sq_le_sq(_sq')`、`abs_le_sqrt` 等），本体不在行首模式里；决定性证据是 `Algebra\Order\Ring\Abs.lean:137` 的 `abs_le_of_sq_le_sq'` 证明中出现 `abs_le.1 <|`。结论：`abs_le` 可用、形如 `|a| ≤ b ↔ -b ≤ a ∧ a ≤ b`、可 `.1` / `.2` 投影——**已在编译中实证通过**（`contracting_multipliers_eq_Icc` 内 `abs_le.1` / `abs_le.2` 均被 Lean 接受）。
+- **`lake env lean` 的 LEAN_PATH 仍是坏的**（S625 已记）：mathlib 被解析到 `D:\tools\lean\.lake\packages\mathlib` 空目录，任何 `import Mathlib` 单文件检查都报 `Mathlib.olean does not exist`。本轮所有探测与检查一律走 `lake build MUFPFormalization.<Module>`。
+- **机制通道 `e^{−t·a}` 未纳入 σ 数值链**（`MinkowskiBoost.scalar_contraction` L1451/L1459）：按 S568–S570 双通道分离口径另计，本轮未重新判别。
+- **`CoherenceToBranching` 的 Lipschitz/IFS 收缩（L497、L307 `dH_from_coherence_and_contraction`）未对齐**：距离 Lipschitz 与幅值乘子不同口径，对齐需另立桥定理。
+- **未做 `#print axioms`**：本模块未引入新 axiom，但未逐条核验依赖公理集（全库同此）。
+- **未做 from-scratch 普查**：未清 `.lake\build` 重跑，故 3192/3834/7094 均在既有缓存上取得。
+- `master` 仍非 `develop` 祖先（`41b3bb4`）；Paper II 的「当前 LHC 排除限 1300 GeV」未改；库外碎片未清（`ProbeTraceMain.lean` 原件、`ProbeLog.lean` 两处 `example … sorry`、预研根 13 个碎片）。
+- `SilenceSecondOrder.lean`（747 行）中 vieta 相关定理未细读，与 `ActiveSilentVieta.lean` 是否重复仍未知。
+- 12 条既有警告未处置（9 条 `haveI`、3 条 `<;>`，两条路各未择）。
