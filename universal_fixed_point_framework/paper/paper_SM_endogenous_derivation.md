@@ -3,9 +3,10 @@
 ## SM as an Endogenous Derivation from Categorical Primitives
 
 > **作者**：MUFPF 框架  
-> **版本**：v1.2 — 2026-11-11（git 预注册：`e0cbb35` 核心 Lean / `d424503` 论文 / `ae02433` M₈ bridge 层）  
-> **Lean 形式化状态**：7096 jobs 全绿，零 sorry（全库）；M₈ gamma 矩阵 Cl(3,1) 子代数（gamma0-3）+ 手征扩张 Cl(4,1)（gamma7 = γ⁵ 与 gamma0-3 全反对易）+ Cl(3,0) 子代数（gamma4-6）已机检；Rec→单向性→方向性→Cl(3,1) 五步诠释链完整 Lean 化；H6' 测量代数机制：`MeasurementAlgebra.lean` 步骤 1-2c + `MeasurementProjection.lean` S426（e 只+/σ 只+）+ `MeasurementProjectionDrift.lean` S463-S465（d_H 双向/e⁻ⁿ 指数步进/系数规则）+ **S610 F 节（域特征尺度↔框架常数数论绑定：ln15=ln(3×5) 韦达根分解、e⁻ⁿ 指数步进=全态+活跃/幂基步、σⁿ↔d_H 对数线性关联、σ 衰减快于 RG）** 全部 Lean 化；步骤 3 候选级投影特征定理（"为何每个域的投影特征尺度恰好是这个"）仍属物理诠释层非 Lean 可纯派生  
-> **开放组件**：SU(3)/U(1) 唯一性五范畴约束、宇宙常数压低机制、暗物质粒子身份、仓库公开、H6' α⁻¹ 步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配（域偏移解释已给出，§12）
+> **版本**：v1.2 — 2026-11-11（git 预注册：`e0cbb35` 核心 Lean / `d424503` 论文 / `ae02433` M₈ bridge 层 / `e503722` 笔记落档）  
+> **仓库**：本项目自创建伊始即双平台开源——GitHub：`https://github.com/dpsnet/universal_fixed_point_framework`、Gitee：`https://gitee.com/dpsnet/universal_fixed_point_framework`。所有 Lean 形式化文件、论文草稿、笔记与路线图均公开可复现。  
+> **Lean 形式化状态**：7096 jobs 全绿，零 sorry（全库）；M₈ gamma 矩阵 Cl(3,1) 子代数（gamma0-3）+ 手征扩张 Cl(4,1)（gamma7 = γ⁵ 与 gamma0-3 全反对易）+ Cl(3,0) 子代数（gamma4-6）已机检；Rec→单向性→方向性→Cl(3,1) 五步诠释链完整 Lean 化；H6' 测量代数机制：`MeasurementAlgebra.lean` 步骤 1-2c + `MeasurementProjection.lean` S426（e 只+/σ 只+）+ `MeasurementProjectionDrift.lean` S463-S465（d_H 双向/e⁻ⁿ 指数步进/系数规则）+ **S610 F 节（域特征尺度↔框架常数数论绑定：ln15=ln(3×5) 韦达根分解、e⁻ⁿ 指数步进=全态+活跃/幂基步、σⁿ↔d_H 对数线性关联、σ 衰减快于 RG）** + S612 sin²θ_W 分母锚点 + V9 韦达判别式 Mersenne 唯一性 全部 Lean 化；步骤 3 候选级投影特征定理（"为何每个域的投影特征尺度恰好是这个"）仍属物理诠释层非 Lean 可纯派生  
+> **开放组件**：SU(3)/U(1) 唯一性五范畴约束、宇宙常数压低机制、暗物质粒子身份、H6' α⁻¹ 步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配（域偏移解释已给出，§12）、δ* 骨架选择机制（为什么是四项而非其他？为什么幂次缺 Fib 里的 1,2？）、sin²θ_W 配对规则的完整 Lean 形式化
 
 ---
 
@@ -1343,7 +1344,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 这是比 §12.1–12.3 更优先的四个行动项：
 
-1. **Lean 仓库公开（GitHub + CI）**：当前仓库未公开，本文全部"已机检"声明的外部可核验性为零；定理/定义需分层标注（区分"算术恒等式机检"与"有物理内容的定理"）。判据：外部 `lake build` 独立复现 jobs 数。
+1. **Lean 仓库已公开（双平台）**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`），自创建伊始即公开。当前 develop 分支最新 commit `e503722`（2026-11-11）含 V9 韦达唯一性、S610-S612 域特征尺度、sin²θ_W 纯框架推导、M₈ bridge 层等全部形式化工作。定理/定义需分层标注（区分"算术恒等式机检"与"有物理内容的定理"）——这是下一阶段开放组件。判据：外部 `lake build MUFPFormalization` 独立复现 7096 jobs。
 2. **m_{L4} ≈ 1470 GeV 预注册**：这是附录 A 中唯一的真外推。需带日期登记其量子数（电荷/弱荷/稳定性），并逐通道对照 LHC 重轻子搜索与 LZ/XENON 直接探测的现有限制——若现有数据已排除该候选，框架应立即记录一次否决，而不是等实验收紧。
 3. **15 的 Mersenne 必要性推导（枚举闭合，V9 Lean 形式化）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。枚举 N=1..12：仅 N=3 时 D(3) = 4³ − 2⁶ + 4 = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是唯一整数根（`vieta_discriminant_mersenne_unique`，`interval_cases` + `omega` 闭合）。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**这是唯一性推导**——σ⁻¹ = 2^{N+1}−1 是唯一让韦达方程在 N=3 时有整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取"2 的幂减 1"这个参数族（而不是其他参数化）仍未独立推导——但族内唯一解已证。
 4. **α⁻¹ 对 CODATA 2022 的 −4.5σ_score 处置**：要么从零推导修正项（来源、阶数、系数，不允许新连续参数），要么承认公式被否决。这是框架第一条真实的"预言—否决—应答"记录，其处理方式将定义框架的证据标准。
@@ -1408,7 +1409,7 @@ lake build
     → 全库零 sorry
 ```
 
-**注**：早期里程碑曾记 3817 jobs，中间迭代 6376 jobs，当前全库为 7096 jobs（版本迭代中 jobs 数增加属正常）。仓库尚未公开；公开 + CI 外部复现是框架升级为可核验资产的必要步骤（§12.4）。
+**注**：早期里程碑曾记 3817 jobs，中间迭代 6376 jobs，当前全库为 7096 jobs（版本迭代中 jobs 数增加属正常）。仓库已双平台公开（GitHub + Gitee），最新 commit `e503722`，外部可独立复现 `lake build`。
 
 ---
 
