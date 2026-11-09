@@ -145,3 +145,4 @@ import MUFPFormalization.TopologicalForbiddenFrequency
 import MUFPFormalization.TwoCategoryLaws
 import MUFPFormalization.WeierstrassGap
 import MUFPFormalization.WindowCountBounds
+import MUFPFormalization.MeasurementAlgebra

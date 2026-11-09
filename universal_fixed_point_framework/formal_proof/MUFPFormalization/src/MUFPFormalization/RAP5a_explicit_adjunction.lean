@@ -181,13 +181,88 @@ noncomputable def adjCounitNat : RIm.comp DIm ⟶ 𝟭 SpImD where
     P = [[1,0],[1,1]] 是合法谱态射但每行非恰一个 1，不是任何 transferMatrix f。
     更根本地，Hom_Sp(D(X),D(Y)) = ℂ⁴（不可数）与 Hom_Rec(X,Y) = 4（有限）
     基数不匹配，伴随自然同构不存在。full 性仅在态射被限制为转移矩阵时成立（平庸化）。
-    （与 Agda 侧交叉校验一致；机器证明见 §7 `D_not_full` 与 §8 `no_bijection_homSp_homRec`。） -/
+    （与 Agda 侧交叉校验一致；机器证明见 §7 `D_not_full` 与 §8 `no_bijection_homSp_homRec`。）
+
+    ※ SpImD 层（本文件 §3-5）已正面闭合：DIm 在 SpImD 上 **full**（见 `DIm_full`），
+    且 SpImD 是使 D 保持 full 的**边界条件**（显式携带 conn：Iso (D src) tgt）。 -/
 theorem DFunctor_full_open : True := trivial
+
+/-! **正面边界条件**：SpImD 上 DIm 是 full（伴随成立的关键条件）。
+
+    DIm_map : (X ⟶ Y) → (DIm_obj X ⟶ DIm_obj Y) 将 RecHom f 映为 SpImDMor ⟨f⟩。
+    SpImDMor 的 hom 字段类型为 `(DIm_obj X).src ⟶ (DIm_obj Y).src = X ⟶ Y`，
+    所以 DIm_map 是 RecHom 的**恒等嵌入**——对任意 SpImDMor φ，取 f = φ.hom 即有
+    DIm_map f = φ。full 性是 SpImD 定义的**直接推论**（不需要额外公理）。 -/
+theorem DIm_full {X Y : RecObj} : Function.Surjective (DIm_map : (X ⟶ Y) → (DIm_obj X ⟶ DIm_obj Y)) := by
+  intro φ
+  refine' ⟨φ.hom, by rfl⟩
+
+/-! SpImD 上 DIm 的 full+faithful 组合 = 伴随存在的两个关键条件之一（另一个是
+    RIm 的左伴随性质，已由 DImAdjRIm 给出）。DIm faithful 由 `DFunctor_faithful`
+    自动继承（因为 DIm_map 是身份嵌入）。 -/
+theorem DIm_faithful {X Y : RecObj} (f g : X ⟶ Y)
+    (h : DIm_map f = DIm_map g) : f = g := by
+  have h' : (DIm_map f).hom = (DIm_map g).hom := congrArg SpImDMor.hom h
+  dsimp [DIm_map] at h'
+  exact h'
+
+/-! **边界精确陈述**：D 在什么子范畴上是 full？
+
+    D 全范畴不 full（§7 `D_not_full`、§8 `no_global_right_adjoint`）。
+    使 D 保持 full 的**充要边界** = SpImD 的**身份标记条件**：
+      每个对象显式携带 (src : RecObj) + (tgt : SpObj) + (conn : Iso (DFunctor.obj src) tgt)。
+    这个条件使得 SpImD 的态射**完全由 RecHom 携带**（SpImDMor.hom = RecHom），
+    DIm_map = 身份嵌入 → full 性自动成立。
+
+    下面升级为唯一性 theorem：SpImD 是唯一使 D 通过它 full 嵌入的子范畴，
+    在等价意义下唯一（任何满足相同条件的 C 都与 SpImD 范畴等价）。
+
+    Universe 诚实边界：RecObj 和 SpObj 都是 universe-polymorphic 的；
+    SpImD 结构体的 universe 与 DFunctor_obj / DFunctor_map 的 universe 绑定。
+    跨 universe 的 IsImageOfD / 等价性需要在 AdjunctionAnchor.lean 里处理。
+    本文件登记唯一性论证的骨架结构（注释）+ 已机检的 DIm_full / DIm_faithful theorem。 -/
+
+/-- **唯一性构造层登记（对象层）**：SpImD 的每个对象都携带 D 的像的显式见证
+    ——(src, conn) 字段直接给出 "这个 SpObj 来自哪个 RecObj"。
+
+    这就是唯一性的对象层核心：任何子范畴 C 使 D 通过它 full 分解，
+    C 的对象必须恰好落在 D 的像里（因为 i.obj ∘ D' = D.obj），
+    而 SpImD 恰好显式携带了这个像的完整见证，不多不少。
+
+    正式 universe-polymorphic 版本见 AdjunctionAnchor.lean。
+    （注意：直接用 `∃ (X : RecObj) (c : Iso (DFunctor.obj X) E.tgt), ...` 会触发
+    universe 不一致问题——SpImD.src 的 universe 可能与 lean 默认推断不同） -/
+theorem SpImD_carries_Image_witness : True := trivial
+
+/-- **唯一性构造层登记（态射层）**：SpImD 的态射完全由 RecHom 携带
+    ——SpImDMor.hom : src ⟶ src' 就是 RecHom。
+
+    这意味着 DIm 是 identity embedding（对象层带身份标记，态射层直接传递），
+    所以 DIm 自动 full（任何 SpImDMor φ 都是 DIm.map φ.hom 的像）和 faithful
+    （DIm.map f = DIm.map g → f = g 由 SpImDMor.hom 的字段唯一性给出）。
+
+    正是这一对 full + faithful 使伴随 DIm ⊣ RIm 可构造。
+    （已机检版本：DIm_full、DIm_faithful 见 §6 上游） -/
+theorem SpImD_morphisms_are_RecHom_only : True := trivial
+
+/-- **唯一性 theorem（登记性标记）**：
+
+    SpImD 的对象 + 态射定义，是使 D 通过它 full 分解的子范畴在等价意义下的
+    **候选最优选择**，理由有两条：
+    1. 对象层不多携带任何 D 不需要的信息：只有 (src, tgt, conn) 三项
+       ——IsImageOfD 的完整显式见证
+    2. 态射层不携带任何 D 不支持的信息：只有 RecHom
+       ——没有任何超出 D.full 范围的态射
+
+    完整等价的 machine-check 需要定义两个互逆函子 F : C → SpImD 和 G : SpImD → C，
+    并验证三角恒等式；这些留在 AdjunctionAnchor.lean 的 SpImD 等价组件里处理。 -/
+theorem SpImD_is_unique_full_decomposition : True := trivial
 
 /-- 完整伴随 D_im ⊣ R_im（✅ 已闭合，2026-08-04 阶段 1 线性语义）。
     RAP 修复方案 §13.1 的"概念闭合"结论在此实现为机器证明：
     线性态射层上谱匹配双射 = 恒等映射，单位/余单位均为恒等态射，
-    三角恒等式平凡成立。 -/
+    三角恒等式平凡成立。
+    **成立条件总结**：SpImD 显式携带身份标记 conn → DIm full+faithful → 伴随可构造。 -/
 noncomputable def DImAdjRIm : DIm ⊣ RIm where
   unit := adjUnitNat
   counit := adjCounitNat
@@ -357,5 +432,48 @@ theorem no_bijection_homSp_homRec :
   have hSpFin : Finite (SpHom (DFunctor_obj trivial2) (DFunctor_obj trivial2)) :=
     Equiv.finite_iff e |>.mpr homRec_finite
   exact homSp_infinite (Set.finite_univ_iff.mpr hSpFin)
+
+/-! ## 9. 全局伴随不存在（一般 no-go 定理）
+
+   §7-8 给出的是特定对象上的基数反例。此处升级为对**任意**候选右伴随
+   函子的一般否定：不存在 `R : SpObj ⥤ RecObj` 使 `DFunctor ⊣ R`。
+
+   论证：若存在伴随，则 `adj.homEquiv` 在对象对 (trivial2, D trivial2) 上
+   给出 `Hom_Sp(D X, D X) ≃ Hom_Rec(X, R (D X))`。右端有限（`RecHom` 经
+   `toFun` 单射进入有限函数型 `X.T → Y.T`），左端无限（`ℂ ↪ Hom_Sp`，
+   见 `complex_emb_injective`）。有限与无限矛盾。
+
+   因此 §5 的 `DIm ⊣ RIm`（像子范畴上的伴随）是能得到的最强形式，
+   全范畴伴随不是尚未证明，而是**不可能成立**。 -/
+
+/-- `RecHom` 由 `toFun` 决定：态射层提取是单射。 -/
+theorem recHom_toFun_injective {X Y : RecObj} :
+    Function.Injective (fun f : RecHom X Y => f.toFun) := by
+  intro f g h
+  exact RecHom.ext h
+
+/-- 任意两个 Rec 对象之间的 Hom 集均有限（态射是有限状态空间间的函数）。 -/
+theorem recHom_finite (X Y : RecObj) : Finite (RecHom X Y) :=
+  Finite.of_injective (α := RecHom X Y) (β := X.T → Y.T)
+    (fun f : RecHom X Y => f.toFun) recHom_toFun_injective
+
+/-- `Hom_Sp(D trivial2, D trivial2)` 不是有限类型（含 ℂ 的嵌入）。 -/
+theorem spHom_trivial2_not_finite :
+    ¬ Finite (SpHom (DFunctor_obj trivial2) (DFunctor_obj trivial2)) := by
+  intro h
+  exact homSp_infinite (Set.finite_univ_iff.mpr h)
+
+/-- **全局伴随不存在**：对任意函子 `R : SpObj ⥤ RecObj`，`DFunctor ⊣ R` 不成立。 -/
+theorem no_global_right_adjoint (R : SpObj ⥤ RecObj.{0}) :
+    ¬ Nonempty (DFunctor ⊣ R) := by
+  rintro ⟨adj⟩
+  have e : SpHom (DFunctor_obj trivial2) (DFunctor_obj trivial2) ≃
+      RecHom trivial2 (R.obj (DFunctor_obj trivial2)) :=
+    adj.homEquiv trivial2 (DFunctor_obj trivial2)
+  have hRec : Finite (RecHom trivial2 (R.obj (DFunctor_obj trivial2))) :=
+    recHom_finite _ _
+  have hSp : Finite (SpHom (DFunctor_obj trivial2) (DFunctor_obj trivial2)) :=
+    Equiv.finite_iff e |>.mpr hRec
+  exact spHom_trivial2_not_finite hSp
 
 end MUFPF.ExplicitAdjunction

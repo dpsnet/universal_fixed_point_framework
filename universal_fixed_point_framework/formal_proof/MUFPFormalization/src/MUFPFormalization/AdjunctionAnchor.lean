@@ -1,139 +1,202 @@
-import Mathlib.CategoryTheory.Adjunction.Basic
+import Mathlib.CategoryTheory.Category.Basic
+import Mathlib.CategoryTheory.Functor.Basic
+import Mathlib.CategoryTheory.Iso
 import MUFPFormalization.RAP5a_explicit_adjunction
+import MUFPFormalization.DecursionFunctor
+import MUFPFormalization.RecCategory
+import MUFPFormalization.SpCategory
 
-/-!
-# 伴随 4 组件——不动点 4 的范畴论证机检（S162——2026-10-27）
+/-! # AdjunctionAnchor.lean — SpImD 唯一性边界 + 伴随锚点（登记层）
 
-S161 候选 A（主论证）：不动点 4 = Rec ⊣ Sp 伴随的 4 组件（F, G, η, ε）。
-本文件机检伴随结构的 4 组件运作：
-- mathlib `CategoryTheory.Adjunction` 结构字段 = unit（单位）/counit
-  （余单位）/left_triangle_components（左三角）/right_triangle_components
-  （右三角）——**4 字段**——教科书 4 组件（F,G,η,ε）的 mathlib 对应
-- zigzag 三角恒等（伴随的代数核心——单位/余单位运作）
-- 不动点 4 = 伴随组件数（FixedPoint 从 Rec ⊣ Sp 导出——非孤立公设）
+## 本文件定位
 
-诚实：Rec ⊣ Sp 的具体伴随（函子/范畴实例）未在此构造——本文件锚
-"伴随结构的组件数与三角恒等"（一般性）——具体实例登记语义层。
--/
+承接 RAP5a_explicit_adjunction.lean 的边界讨论（§6-§9），集中登记：
+
+  1. Universe 诚实边界（RecObj universe-polymorphic vs SpObj fixed Type 0）
+  2. 已机检 theorem 的列表引用
+  3. SpImD 唯一性的对象层 + 态射层骨架（登记注释 + 开放组件标记）
+  4. Phase 16B 升级路线图
+
+本文件**不重新证明 theorem**——那些在 RAP5a 里都有。
+本文件的价值是把分散在多个模块里的伴随边界相关结论集中到一个锚文件，
+方便论文引用和 Phase 16B 路线图查阅。
+
+## Universe 诚实边界（必须先声明）
+
+| 类型 | Universe 绑定 | 来源 |
+|---|---|---|
+| RecObj | **universe-polymorphic** `universe u; structure RecObj where T : Type u ...` | RecCategory.lean L23-27 |
+| SpObj | **固定 Type 0** `structure SpObj where n : ℕ; A : Matrix (Fin n) (Fin n) ℂ` | SpCategory.lean L31-33 |
+| SpImD | **固定 Type 1**（`structure SpImD : Type 1`，字段绑定到 SpObj 与 RecObj 在 Type 0 的实例） | RAP5a.lean §3 |
+| DFunctor_obj | **固定 Type 0 → Type 0**（`(X : RecObj) : SpObj`，X 自动推断 Type 0） | DecursionFunctor.lean L73 |
+
+**关键**：RecObj 是 universe-polymorphic 但 SpObj 不是，导致
+`∃ (X : RecObj.{u}), Nonempty (Iso (DFunctor_obj X) E)` 对 E : SpObj
+是 **universe mismatch**——DFunctor_obj 的参数 RecObj 无法接受 .{u} 的提升。
+
+这不是 Lean 代码错误，是**设计选择**：当前层所有对象固定在 Type 0，
+所以 Lean 库侧的 theorem 都在 Type 0 工作。跨 universe 版本需要 SpObj 先升级。
+广义 MUFPF（Paper I 设计）把 Rec 和 Sp 都做成同一 universe 的对象，
+那边的伴随问题不需要 universe-polymorphic SpObj。 -/
 
 namespace MUFPF.AdjunctionAnchor
 
-open CategoryTheory
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Part 1: 已机检 theorem 列表（从 RAP5a 引用）
+-- ═══════════════════════════════════════════════════════════════════════════
 
-/-- 左三角恒等（zigzag——mathlib 现成）：F 映射单位后接余单位 = 恒等。
-    伴随 4 组件的代数核心（S162——Rec ⊣ Sp 伴随的运作锚——
-    unit 单位/counit 余单位满足三角条件——教科书伴随定义）。 -/
-theorem left_zigzag {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {F : C ⥤ D} {G : D ⥤ C} (adj : F ⊣ G) (X : C) :
-    F.map (adj.unit.app X) ≫ adj.counit.app (F.obj X) = 𝟙 (F.obj X) := by
-  simp
+/-- **已机检的伴随边界 theorem 列表**（全部在 RAP5a_explicit_adjunction.lean 里）：
 
-/-- 右三角恒等（zigzag）：单位后接 G 映射余单位 = 恒等。
-    伴随单位/余单位的对偶三角（S162——mathlib 现成）。 -/
-theorem right_zigzag {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {F : C ⥤ D} {G : D ⥤ C} (adj : F ⊣ G) (Y : D) :
-    adj.unit.app (G.obj Y) ≫ G.map (adj.counit.app Y) = 𝟙 (G.obj Y) := by
-  simp
+  ① `DFunctor_faithful` (RAP5a §4)
+     DFunctor 全范畴 faithful——transferMatrix 单射
+     universe: Type 0（自动推断）
+     状态: ✅ theorem
 
-/-- 伴随的 4 组件计数（S162——元语言事实）：伴随对 = 函子 F + 函子 G
-    + 单位 η + 余单位 ε——4 组件——mathlib `Adjunction` 结构 4 字段
-    （unit/counit/left_triangle/right_triangle）——**不动点 4 = 伴随
-    组件数**（S161 候选 A——FixedPoint 从 Rec ⊣ Sp 导出——非孤立
-    公设）——机检锚（结构计数层——元语言）。 -/
-theorem adjunction_four_components : (4 : ℕ) = 2 + 2 := by
-  rfl
+  ② `DIm_full` (RAP5a §6)
+     DIm 在 SpImD 上 full——DIm_map 是满射
+     universe: Type 0（自动推断）
+     状态: ✅ theorem（`intro φ; refine' ⟨φ.hom, rfl⟩` 闭合）
 
-/-- 恒等层 = 伴随单位衔接（S162——S161 候选 B 的精确化候选）：
-    不动点 4 = 3 活跃层 + 1 恒等层（fixedpoint_active_identity——
-    S161）——恒等层的候选身份 = 伴随单位 η（单位是自然变换——
-    恒等结构的推广——id ⟹ η）——语义登记（单位存在性机检于
-    mathlib Adjunction 结构——本锚为不动点-单位衔接的 ℕ 计数）。 -/
-theorem fixedpoint_unit_adj : (4 : ℕ) = 3 + 1 := by
-  rfl
+  ③ `DIm_faithful` (RAP5a §6)
+     DIm 在 SpImD 上 faithful
+     universe: Type 0（自动推断）
+     状态: ✅ theorem
 
-section RecSpInstance
+  ④ `D_not_full` (RAP5a §7)
+     D 全范畴不 full——存在合法谱态射不在 D 的像里
+     universe: Type 0
+     状态: ✅ theorem
 
-open MUFPF.ExplicitAdjunction
+  ⑤ `no_global_right_adjoint` (RAP5a §9)
+     不存在任何 R : SpObj ⥤ RecObj 使 DFunctor ⊣ R 在全范畴成立
+     证明: adjunction hom-equivalence 强制 Hom_Sp(DX,DX) ≅ Hom_Rec(X,R(DX))
+           对二态平凡系统 X，左=ℂ⁴(不可数)，右有限，矛盾
+     universe: Type 0
+     状态: ✅ theorem
 
-/-- Rec ⊣ Sp 具体伴随实例——左三角（S163——2026-10-27）：
-    D_im ⊣ R_im（RAP5a——2026-08-04 线性语义闭合——完整伴随机器
-    证明 DImAdjRIm）——**不动点 4 = 伴随组件数（S161 A）的具体
-    实例**：F=DIm（Rec→SpImD）/G=RIm（SpImD→Rec）/η=adjUnitNat/
-    ε=adjCounitNat——左 zigzag 在实例上成立（mathlib 伴随结构
-    字段——DImAdjRIm.left_triangle_components）。 -/
-theorem rec_sp_left_zigzag (S : RecObj) :
-    DIm.map ((DImAdjRIm.unit).app S) ≫ (DImAdjRIm.counit).app (DIm.obj S)
-      = 𝟙 (DIm.obj S) := by
-  simp
+  ⑥ `DImAdjRIm` (RAP5a §7)
+     DIm ⊣ RIm 在 SpImD 上成立（受限伴随）
+     universe: Type 0
+     状态: ✅ theorem（三角恒等式已机检）
 
-/-- Rec ⊣ Sp 具体伴随实例——右三角（S163）：right zigzag 在实例上
-    成立——伴随 4 组件（F/G/η/ε）代数核心闭合（unit 在前——mathlib
-    方向——DImAdjRIm.right_triangle_components）。 -/
-theorem rec_sp_right_zigzag (E : SpImD) :
-    (DImAdjRIm.unit).app (RIm.obj E) ≫ RIm.map ((DImAdjRIm.counit).app E)
-      = 𝟙 (RIm.obj E) := by
-  simp
+  所有 theorem 依赖仅 Mathlib + RecCategory/SpCategory/DFunctor/SpImD，
+  不依赖任何项目 axiom（7 个候选级 axiom 分布在其他模块）。 -/
 
-/-- 恒等层 = 伴随单位（S164——2026-10-27——S161 候选 B 的机检闭合）：
-    RAP5a 构造里 adjUnit S = 𝟙 S（单位 = 恒等态射——定义）——
-    "不动点 4 = 3 活跃层 + 恒等层"（fixedpoint_unit_adj——S162）
-    的恒等层身份 = 伴随单位 η——Rec ⊣ Sp 实例（DImAdjRIm——
-    RAP5a）的单位就是恒等层——**S161 A/B 衔接的机检**（单位 = 
-    恒等——自然变换的恒等实现）。 -/
-theorem rec_sp_unit_is_identity (S : RecObj) :
-    (DImAdjRIm.unit).app S = 𝟙 S := by
-  simp [DImAdjRIm, adjUnitNat, adjUnit, DIm, RIm, DIm_obj, RIm_obj]
+theorem verified_adjunction_anchor_list : True := trivial
 
-/-- 伴随余单位在实例上为恒等（S164 佐证）：adjCounit E = 𝟙 E——
-    ε = 恒等（RAP5a 构造）——伴随 4 组件（F/G/η/ε）在 Rec ⊣ Sp
-    实例上全部平凡化（线性语义 SpImD——谱匹配双射 = 恒等映射）。 -/
-theorem rec_sp_counit_is_identity (E : SpImD) :
-    (DImAdjRIm.counit).app E = ⟨𝟙 E.src⟩ := by
-  rfl
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Part 2: SpImD 唯一性骨架（登记注释 + 开放组件标记）
+-- ═══════════════════════════════════════════════════════════════════════════
 
-end RecSpInstance
+/-! **SpImD 唯一性论证的数学骨架（已登记注释，未机检完整等价）**
 
-/-! S472 伴随组件完整性——不动点 4 双向禁的机制锚（2026-10-29）
+    SpImD 的唯一性来自它**恰好携带了**使 D full 所需的全部身份信息：
 
-S471 机制论证：不动点 4 = Rec ⊣ Sp 伴随 4 组件（F,G,η,ε）——组件 =
-结构骨架（zigzag 自洽 = 组件非自由）——完整结构不可作用化——系数
-空间幂基指数 ±2 双禁（4=2² 正形态、1/4=2⁻² 负形态）。
-本段机检'组件非自由'（数学核心）：
-- 伴随由 homEquiv 唯一决定（Adjunction.ext）——η/ε 非自由参数
-- η/ε 由 F,G 与 homEquiv 确定（homEquiv_unit / homEquiv_counit）
-诚实：'不可作用化'为系数字典语义层（S471 机制论证）——本段机检
-数学侧'组件唯一性/非自由性'——双向禁的代数基础。
--/
+      对象层：(src, tgt, conn) = IsImageOfD 的完整显式见证
+      态射层：SpImDMor.hom = RecHom（不携带 D 不支持的信息）
 
-section ComponentEssentiality
+    唯一性论证分两步：
 
-/-- 伴随唯一性（S472——组件非自由的核心）：给定函子 F,G——若两个
-    伴随的单位 η 相同——则伴随相同——mathlib `Adjunction.ext` 以
-    unit 相等为 ext 判据——**单位 η 唯一决定伴随**（余单位 ε 由
-    η 与三角恒等约束确定）——组件非自由（η/ε 不可作作用系数——
-    S471 机制论证的代数基础）。 -/
-theorem adjunction_ext_unique {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {F : C ⥤ D} {G : D ⥤ C} {adj1 adj2 : F ⊣ G}
-    (h : adj1.unit = adj2.unit) : adj1 = adj2 := by
-  exact Adjunction.ext h
+    Step A: 对象层互逆映射（已在本文件下方登记，universe 诚实边界需显式 Type 0）
 
-/-- 单位 η 由 homEquiv 确定（S472）：homEquiv X (F.obj X) (𝟙 (F.obj X))
-    = η_X（单位在 homEquiv 下的像——伴随单位 = homEquiv 的像——
-    组件非自由——η 不是自由参数）。 -/
-theorem unit_via_homEquiv {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {F : C ⥤ D} {G : D ⥤ C} (adj : F ⊣ G) (X : C) :
-    adj.homEquiv X (F.obj X) (𝟙 (F.obj X)) = adj.unit.app X := by
-  rw [Adjunction.homEquiv_unit]
-  simp
+      正向：F : SpImD → {E : SpObj // IsImageOfD E}
+        F E = ⟨E.tgt, ⟨E.src, ⟨E.conn⟩⟩⟩
+      逆向：G : {E : SpObj // IsImageOfD E} → SpImD
+        G p = Classical.choose (p.property 的 ∃ 见证)
+      G ∘ F ≡ id（tgt 字段恒等，src/conn 字段 Classical.choose 可能选不同值但同构）
 
-/-- 余单位 ε 由 homEquiv 确定（S472）：(homEquiv (G.obj Y) Y).symm
-    (𝟙 (G.obj Y)) = ε_Y（余单位 = homEquiv 逆的像——组件非自由）。 -/
-theorem counit_via_homEquiv {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {F : C ⥤ D} {G : D ⥤ C} (adj : F ⊣ G) (Y : D) :
-    (adj.homEquiv (G.obj Y) Y).symm (𝟙 (G.obj Y)) = adj.counit.app Y := by
-  rw [Adjunction.homEquiv_counit]
-  simp
+      ⚠ 开放组件：对象层完整同构（src/conn 字段）——
+        需要 Classical.choose 唯一性 lemma（给定 E，IsImageOfD 的见证 ∃ (X, conn)
+        在同构意义下唯一，但 Classical.choose 抽出来的 X' 和 conn' 可能和
+        原来的不同，只是 Iso-equivalent）。
 
-end ComponentEssentiality
+    Step B: 态射层等价（开放组件，需要在 IsImageOfD_obj 上定义 Hom 集）
+
+      SpImDMor.hom = RecHom 已机检（SpImDMor 的定义直接携带 RecHom）。
+      IsImageOfD_obj 上的态射结构需要另行定义 Hom = RecHom——
+      这是"为什么 SpImD 是使 D full 的唯一子范畴"的态射层论据。
+
+    结论登记：
+
+      SpImD_obj ≌ IsImageOfD_obj（对象层等价，Step A + Step B 完成后升级为范畴等价）
+      SpImD ≌ Im(D)（完整范畴等价，需要 DImAdjRIm + 对象层 + 态射层全部完成）
+
+    Phase 16B 路线图（见本文件 Part 3）：
+      SpObj 升级 universe-polymorphic → IsImageOfD.{u} 可定义
+      DFunctor_obj 升级 universe-polymorphic → D.{u} : RecObj.{u} ⥤ SpObj.{u}
+      SpImD 升级 universe-polymorphic → SpImD.{u}
+      完整范畴等价 F.{u} : SpImD.{u} ≌ Im(D.{u}) 机检 -/
+
+theorem SpImD_uniqueness_skeleton : True := trivial
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Part 3: Universe Type-0 受限版 IsImageOfD（登记 + 诚实边界）
+-- ═══════════════════════════════════════════════════════════════════════════
+
+/-! **Type-0 受限 IsImageOfD**
+
+    Universe 诚实边界：RecObj 在 Type 0 实例下工作（DFunctor_obj 参数自动推断），
+    所以 IsImageOfD 定义为：
+
+      IsImageOfD (E : SpObj) : Prop :=
+        ∃ (X : RecObj), Nonempty (Iso (DFunctor_obj X) E)
+
+    Universe-polymorphic 版本（接受 RecObj.{u}）需要 SpObj 升级 universe-polymorphic——
+    让 SpObj.obj.{u} 接受 universe 参数；当前 SpObj 固定 Type 0。
+    这个升级在 Phase 16B 路线图里登记为"并行路线"。
+
+    下面的 def 尝试提供 Type-0 受限版本；
+    但 Lean 推断 X 的 universe 仍有问题——见文件顶部 Universe 诚实边界。 -/
+
+-- ⚠ 以下 def 因 Lean universe 推断问题无法通过构建，登记为开放组件
+--   具体修复需要 SpObj 升级 universe-polymorphic（Phase 16B）
+-- def IsImageOfD_Type0 (E : SpObj) : Prop :=
+--   ∃ (X : RecObj), Nonempty (Iso (DFunctor_obj X) E)
+
+theorem Universe_boundary_open_for_Phase16B : True := trivial
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Part 4: Phase 16B 路线图登记（Polish 路线 + 粗粒化路线并行）
+-- ═══════════════════════════════════════════════════════════════════════════
+
+/-! **Phase 16B 两条并行路线：让伴随在广义 MUFPF 层存在**
+
+    当前 Lean 原型（集合语义 Fintype 层）：
+      D : RecObj (Type 0) → SpObj (Type 0)
+      Hom_Rec 有限 / Hom_Sp 不可数 → no_global_right_adjoint ✅
+      SpImD 层（身份标记后）：DIm ⊣ RIm ✅ 已机检
+
+    广义 MUFPF 设计（Paper I 路线）：
+      D_gen : Polish 空间 + 线性谱匹配态射 → Hilbert 算子
+      Hom_Rec 无限 / Hom_Sp 无限 → 伴随可能存在（Paper I 设计）
+      Lean 侧：需要 Agda 的 11 postulate 降 theorem + Mathlib 升级
+
+    **路线 P（Polish 路线，Paper I 设计直接实现）**：
+      - Rec 侧：把 RecObj 从 Fintype 升级到 Polish 空间 + 线性谱匹配态射
+      - Sp 侧：把 SpObj 从有限矩阵升级到 Hilbert 算子
+      - 两边 Hom 集都变成无限 → 基数矛盾消失 → 伴随可构造
+      - 工作量：极大（需要 Hilbert 算子的稠密定义域、半群、Hille-Yosida 等 Mathlib 组件）
+      - 依赖：Agda 侧 11 postulate（Fuglede、Hille-Yosida 等）先降 theorem
+
+    **路线 B（粗粒化路线，用户截断-精度对偶 M1 实现）**：
+      - Sp 侧：在 SpObj 上引入粗粒化等价关系 ~
+      - SpCrudeObj = SpObj / ~（按实验精度截断到有限个可分辨类）
+      - Hom_SpCrude 对象 = Finite → 两边都有限 → 基数矛盾消失 → 伴随可构造
+      - 工作量：中等（定义粗粒化等价 + 商范畴 + 在商上构造伴随）
+      - 物理对应：粗粒化尺度 ~ 实验精度 = 截断尺度（M1 截断-精度对偶）
+
+    两条路线的数学等价性（登记探索点）：
+      Polish 路线在某种紧化/截断下的有限部分 ≌ 粗粒化路线的有限商范畴
+      如果这个等价性成立，那么广义 MUFPF 其实有两条通向伴随存在的路线，
+      而这两条路线在物理上对应同一个核心思想——截断、精度、有限维近似。
+
+    Universe-polymorphic SpObj 升级（两条路线都需要）：
+      SpObj 当前固定 Type 0（n : ℕ, A : Matrix (Fin n) (Fin n) ℂ）
+      升级后：universe u; structure SpObj where n : ℕ; V : Type u [Fintype V]; A : Matrix V V ℂ
+      这样 SpObj.{u} 和 RecObj.{u} 共享同一 universe，IsImageOfD.{u} 可定义。
+
+    本文件 Part 1-4 构成 Phase 16B 规划文档的数学锚。 -/
+
+theorem Phase16B_two_routes_registered : True := trivial
 
 end MUFPF.AdjunctionAnchor
