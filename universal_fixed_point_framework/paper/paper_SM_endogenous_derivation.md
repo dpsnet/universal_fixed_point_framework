@@ -1091,7 +1091,7 @@ sin²θ_W = 1 − (1286/1459)² = 474885/2128681 ≈ 0.22309
 
 4D Lorentz signature 在框架内是唯一的：
 - Sp 为严格 4-范畴（§5.5 韦达方程唯一整数根推导）→ N_active = 3（严格 4-范畴的结构推论，见 §4.2）
-- 韦达方程 x² - 8x + 15 = 0 根唯一分裂为整数 {3, 5}（§5.5 表：N=2 无实根、N=4 非整数根）
+- 韦达方程 x² - 8x + 15 = 0 根唯一分裂为整数 {3, 5}（§5.5 表：N_active=2 无实根、N_active=4 非整数根）
 - 递归单向性 = 时间方向数 1（Lean 已机检：`spacetimeDim = 4` + `c3_unique_silent_factor` + `time_unique_and_signature_neg` + Rec→方向性→Cl(3,1) 五步诠释链 + M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数反对易 6 对 + γ⁵ 手征扩张 4 对——signature 翻转核心桥接层已完整 Lean 化）
 
 **signature 排除**：
