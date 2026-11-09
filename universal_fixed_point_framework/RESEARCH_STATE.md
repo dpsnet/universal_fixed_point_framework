@@ -12651,3 +12651,39 @@ S614 ○ 判别对扩展（开放项①推进）：
 >   - 配对物理意义：全态×静默（冻结态的最大组合）→ W，对合×跨根求和（结构常数）→ Z
 >   - 这解释了为什么 m_W 和 m_Z 不同：它们测量的框架常数组合完全不同
 > [状态]：sin²θ_W 纯框架独立推导成功——登记任务 #638。
+
+
+---
+
+## [2026-11-09 22:15] 4 个孤立模块修复完成 → 318/318 源文件逐个机检通过
+
+**触发**：v1.3 审计发现 318 个源文件中 169 个是孤立文件（无任何模块 import，`lake build` 与 `lake build MUFPFormalization` 都不覆盖），其中 4 个是实打实的编译失败：`CommutatorLieAlgebra`、`MeasurementProjectionDrift`、`RapidityTimeLayering`、`SilenceFamily`（此前 165/169 通过，仅这 4 个失败）。
+
+**修复结果（commit `1f88c8b`）**：
+
+- `CommutatorLieAlgebra`：`ext` + 分行 `fin_cases i` / `fin_cases j` + `simp [Matrix.mul_apply, mul_comm]`；换位子条补 `sub_eq_zero`
+- `MeasurementProjectionDrift`：`sigma_pow_log_decomp` 改 calc 链 + 桥接引理 `hkey : Real.exp ((n:ℝ) * Real.log 15) = 15^n`（`Real.exp_nat_mul` **必须正向**用；用 `←` 报 "Did not find an occurrence of pattern `Real.exp ?x ^ ?n`"）；删两处多余收尾 tactic；`sin2theta_onshell_framework_denominators` 收为单 `norm_num`
+- `RapidityTimeLayering`：关键语法坑——`2 * m • X` 与 `(2 * m) • X` 解析不同（`2` 被推成 ℕ，产生 `2 0 0` 型畸形项，矩阵元素无法被 `Matrix.*_apply` 化简、`nlinarith` 完全失效）；三处质量投影定理陈述改为 `(2 * m) • X` 后四条定理一次打通；`cosh_log_two` / `sinh_log_two` 改用 `Real.cosh_eq` / `Real.sinh_eq`（`Real.cosh_def` / `Real.sinh_def` 在本版 mathlib **不存在**，原写法必然失败）
+- `SilenceFamily`：`s90_etau_surprisal_sum` 改 `Finset.sum_congr rfl (fun i _ => s54_sigma_surprisal)` + `sum_const` / `card_univ`；`s91` / `s95` / `s96` 在 `norm_num [FixedPoint]`（`s95` 用 `[Powers]`）后补 `ring`
+
+**复验（本机实测，2026-11-09）**：
+
+- `lake build MUFPFormalization.RapidityTimeLayering` → 3463 jobs, exit 0
+- `lake build MUFPFormalization` → 3821 jobs, exit 0（22:05 复跑）
+- `lake build`（全 default target，含 exe）→ 7096 jobs, exit 0（22:06 复跑）
+- `p7_lean_olean_audit.py` → `MODULES=318 / MISSING_OLEAN=0 / STALE_OLEAN=0 / SORRY_LINES=0`（22:05）
+
+**边界更新（重要，旧边界失效）**：旧主张"169 个孤立模块不作机检主张"**不再成立**。新主张为"318/318 源文件逐个机检通过 + 全库零 sorry"，但**必须绑定**"逐模块点名构建（`lake build MUFPFormalization.<Module>`）+ olean 审计"这一命令口径——它不能由 `lake build` 或库根构建单独推出（这两个命令根本不覆盖那 169 个文件）。
+
+**必须登记的会计事实**：`MeasurementProjectionDrift.lean` 正是论文 §9.2e 的 S463–S465 / S610–S611 所在文件，在 v1.2 期间**从未编译通过**——该表此前标注的"已机检"在 v1.2 版本上无编译依据，自 `1f88c8b` 起才有。`RapidityTimeLayering`（Dirac 质量投影四定理）、`SilenceFamily`（s90/s91/s95/s96）、`CommutatorLieAlgebra`（one_by_one 对易性）同理。
+
+**论文同步（commit `b1ec32b`）**：卷首 L8 / 摘要 / §1.4 / §11.4 / §12.4 项 1 / 附录 C / 尾注全部改为 318/318 口径；§9.2e 新增"机检边界登记"引块；§12.4 登记表追加 `1f88c8b` 行；附录 C 时间戳刷新为本轮复跑值。
+
+**方法学教训（复用价值）**：
+
+1. Lean 解析优先级：`•` 结合力低于 `*`，`常数 × 变量 • 矩阵` 必须给标量乘加括号，否则数字被推成 `ℕ` 并引入 `HMul ℕ` 实例，目标里出现 `2 0 0` 这类不可化简项。
+2. `repeat (dsimp only [...]; simp only [...])` 在本工具链（Lean 4.34.0-rc2）**必须单行**；括号内换行 + `;` 报 `unexpected identifier; expected ')'`。
+3. `try ring_nf` / `try nlinarith [...]` 可在同一模板里同时兼顾"已闭合"与"需收尾"两种分支，是打通一族相似定理的低成本手段。
+4. 修一个模块时反复只报"linarith failed"，往往是**陈述形状**问题而不是证明策略问题——先看 goal 里有没有 `2 0 0`、`HMul` 之类的畸形项。
+
+[状态]：4 个孤立模块修复并提交（`1f88c8b`）、论文口径同步并提交（`b1ec32b`）；318/318 源文件机检通过。
