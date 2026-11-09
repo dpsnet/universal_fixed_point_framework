@@ -12687,3 +12687,73 @@ S614 ○ 判别对扩展（开放项①推进）：
 4. 修一个模块时反复只报"linarith failed"，往往是**陈述形状**问题而不是证明策略问题——先看 goal 里有没有 `2 0 0`、`HMul` 之类的畸形项。
 
 [状态]：4 个孤立模块修复并提交（`1f88c8b`）、论文口径同步并提交（`b1ec32b`）；318/318 源文件机检通过。
+
+---
+
+## [2026-11-09 22:40] 机检口径修正：库内真实 328 模块；库外预研项目修复后可构建
+
+**触发**：用户两连问——①"所有形式化是否已经都在 MUFPFormalization 下？"②"`external_theory_presurvey\` 下的形式化文件是 MUFPF 理论的内容吗？"
+
+### 一、旧"318/318"是漏数（会计勘误，非新增修复）
+
+全仓 `.lean` 共 **353** 个、**7** 个目录。旧口径 318 来自 `p7_lean_olean_audit.py` v1：`SRC` 指向 `...\src\MUFPFormalization` 且用 `glob(SRC\*.lean)` **非递归**，漏掉：
+
+- `...\src\MUFPFormalization\SpectralBundle\` 下 **9** 个模块（Core / PinchTopology / DeltaSector / QuantumGravity / CausalSet / Cosmology / CMB / LargeScaleStructure / DefectDensity，合计约 200 KB）
+- `...\src\MUFPFormalization.lean` **1** 个库根文件（6366 B），其 L141 `import MUFPFormalization.SpectralBundle`，hub 文件 L19–27 再逐条 import 上述 9 个 → 9 个子模块**确在库根 import 闭包内**（3821/7096 jobs 早已编译它们）
+- 9 个 olean 全部存在（`.lake\build\lib\lean\MUFPFormalization\SpectralBundle\`，11/09 18:58–19:01，195KB–758KB），源码 mtime 早于 olean → **无 STALE，属审计漏数而非构建失败**
+
+脚本已改写为**递归版 v2**（从 `src` 根部 `glob(..., recursive=True)`，模块名按相对路径映射 olean，并额外计算库根 import 闭包与孤立集），实跑输出：
+
+```
+MODULES=328   CLOSURE=149   ORPHANS=179
+MISSING_OLEAN=0   STALE_OLEAN=0   SORRY_LINES=0
+```
+
+即 **328/328 全绿**（强于旧"318/318"）。另有独立 Python 一次性脚本 `%TEMP%\audit_rec.py` 交叉验证：`RECURSIVE_SRC_MODULES=328 / MISSING=0 / STALE=0 / SORRY=0`。
+
+### 二、孤立集精确化（179 = 169 + 10）
+
+- 库根 `MUFPFormalization.lean` 的 import 闭包 = **149**（库根自身 + SpectralBundle hub + 9 子模块 + 138 顶层模块）
+- 原 318 顶层中闭包外 = **179**
+- 179 中有 **10** 个只被 `Main.lean`（exe 目标）import：`BoundaryEntropyBridge`、`DirectionalCliffordBridge`、`HolographicEntropyDegeneration`、`LorentzSignatureBridge`、`NoiseSignatureBridge`、`NoiseSystemTheory`、`PauliLorentzBridge`、`RecActiveSignatureBridge`、`SelDissBridge`、`SignatureTimeBridge`（`Main.lean` L15–24），由 `lake build`（全 default target，7096 jobs）覆盖
+- 余下 **169** 才是库根与 exe 两目标都不覆盖、必须逐个点名构建的（165 首轮 + 4 修复后全通过）
+- 历史名单 `%TEMP%\orphan_list.txt`（169 行）与实时孤立集比对：差集正是上述 10 个 Bridge，反向误差 0 → 历史名单无误，只是旧定义未计入 exe 覆盖
+
+**口径更新**：旧主张"318/318 源文件逐个机检通过"→ 新主张 **"328/328 模块机检通过（含库根 import 闭包与 exe 目标覆盖），169 个需逐模块点名构建"**。论文 8 处 318 表述（卷首 L8 / 摘要 / §1.4 / §11.4 / §12.4 项 1 / 附录 C / 两处尾注）**尚未同步为 328**，登记为待办。
+
+### 三、库外资产处置（事实登记）
+
+- `ProbeTraceMain.lean` 有 **6 条真定理未入库**：`occFn_mem`、`occFn_term_eq2`、`sumOcc_eq_count2`、`trace_spec_diag`、`occupiedProjection_trace_eq_count2`、`occupiedProjection_trace_int2`（`namespace MUFPF`，依赖 `MUFPFormalization.HallEmergence`）。逐名在 `src` 全树检索**零命中** → 无 olean、无机检依据
+- `ProbeLog.lean` 含 **2 处 `example ... sorry`**（mathlib API 探测：`Complex.exists_pow_mul_eq_exp`、`unit_circle`）→ 是"全库零 sorry"主张之外的盲点，须处置或登记
+- `frag26_14..20`（7 个）+ `frag_iso_test.lean`：逐条定理比对，**全部已并入 `DiscreteCovariantBianchi.lean` / `BerryChern.lean`**，无独有内容；`_probe_erase.lean` / `_probe_finset.lean` 为空壳；`_tmp_test_clearvalue.lean` import 已不存在的 `MUFPFormalization._p252`
+- `backups\MinkowskiBoost_lean_before_fix_20261025.lean`（53500 B）纯备份，不参与构建
+- `MUFPFormalization` 项目根 15 个 `.lean`：仅 `Main.lean`（exe 入口）与 `lakefile.lean` 属正式工程文件，其余 13 个不进任何构建目标
+
+### 四、`external_theory_presurvey` 形式化：内容属 MUFPF，定位属预研外围，工程属独立项目
+
+**内容归属（属 MUFPF，非外部理论）**：6 个模块（`SpinorSilenceBranch` / `TimeBranch` / `LuInvariant` / `LayerEntropy` / `RUniqueness` / `TimeSpectrum`，35 theorem）锁定的全是 MUFPF 自身常数与结构——`S4 = 1/15`（框架常数 σ）、`Branch := Fin 16`、`exactly_one_silent_branch`（m=1 ∧ k=15）、`ln15 = −ln S₄ = d_H`、`dual_indicators_consistent`（paper33 c₃ 双义）、`tstar_eq_log`（t*_k = ln(S_k/S₄)）、谱投影唯一（R∘D≠id 的 R 唯一性）；旋量 16 维明确**引用**主库 `BottTower`/`Unified3Theorem` 不重证。主库检索 `exactly_one` / `silent_branch` **零命中** → 属主库未覆盖的独立证法（熵上界 A5 + 谱分解 A3），不是重复形式化。
+
+**定位（不构成 MUFPF 正式结论）**：`external_theory_lineage_presurvey.md` v0.75 原文自述——"预研参照（启发/方向），**非对接目标**；理论直觉，**非框架结论**；独立文件管理……**不进入检测矩阵**；本目录独立于 notes 治理体系，不参与 notes 备案/目录统计"，"不引入新推导、不新增 UFPF 结论"；§8 五条保护原则（先内后外 / 对照≠对接 / 不推进融合 / 非对接目标 / 同名不同内涵警示）。用途是借外部工具（Connes 谱作用 + Gilkey 系数等）服务 MUFPF 缺口（如 §7.44 g² = 8π²/(S₄·f₂) ∝ 1/S₄）。
+
+**工程（原状态：独立项目、从未在本机构建）**：独立 `lakefile.lean` / `lean-toolchain`，Lean 4.31.0（主库 4.34.0-rc2），`lakefile.lean` 与 `lake-manifest.json` 共 18 条依赖 `dir` 指向 `D:/trae-work/.../formal_proof/UFPFormalization/.lake/packages/*` —— **`UFPFormalization` 为 `MUFPFormalization` 改名前的旧名**，失效原因是旧盘符 `D:\trae-work`（实测不存在），非项目名。项目内无 `.lake`、无 olean；README 的"3834 jobs 通过"是 2026-08-17 在旧机器（`C:\Users\qinxi\.elan`）的记录，本机不可复现。
+
+**修复（2026-11-09 本轮）**：① 9 条依赖路径（lakefile）+ 9 条 manifest `dir` 改指 `E:/workspace/hyper-resolution/.../MUFPFormalization/.lake/packages/*`；② `lean-toolchain` v4.31.0 → v4.34.0-rc2（跨版本读 mathlib olean 必然失败）；③ `LuInvariant.lean` L72/74/94/95 共 4 处弃用 API `if_pos` / `if_neg` 改 `ite_eq_left` / `ite_eq_right`。结果 **`lake build` = 3894 jobs，零错误、零警告、零 sorry、零 axiom**（`%TEMP%\pres_build1.txt` 首建 8 条 warning，`pres_build2.txt` 修后 0 条）。文本层统计：9 文件 / 35 theorem / 0 axiom / 0 real sorry（3 处 "sorry" 均在注释）。
+
+**归属裁决结论**：这批文件**是 MUFPF 理论的内容**，但**不是 MUFPF 的机检主张**——不在主库、独立工具链、独立项目、按预研自述不进检测矩阵。正确登记方式："库外独立预研项目，内容属 MUFPF，2026-11-09 起在当前工作区可复现（3894 jobs 零错误零警告），不计入 v1.3 的 328/328 主张范围"。
+
+### 五、本轮改动与待办
+
+**已改（未提交前状态）**：
+- `external_theory_presurvey/formal_proof/PresurveyFormalization/{lakefile.lean, lake-manifest.json, lean-toolchain, README.md}` + `PresurveyFormalization/LuInvariant.lean`：路径/工具链/弃用 API/文档同步
+- `external_theory_presurvey/external_theory_lineage_presurvey.md`：头版本 v0.75 → v0.76，§11 追加 v0.76 修复记录（不改任何推导结论）
+- `universal_fixed_point_framework/scripts/p7_lean_olean_audit.py`：v2 递归版（328/149/179）
+- 本文件追加本块
+
+**待办（须后续处理）**：
+1. 论文 8 处"318/318"改为"328/328"，"169 孤立"精确化为"179 不在库根闭包，其中 10 个由 exe 目标覆盖、169 个需点名构建"（`b1ec32b` 是旧口径）
+2. `ProbeTraceMain.lean` 6 条真定理：并入 `src` 或登记"库外未机检"（未拍板）
+3. `ProbeLog.lean` 2 处 `example ... sorry`：删除或登记（未拍板）
+4. 项目根 13 个碎片文件清理（frag 系列内容已确认全在 src）
+5. v1.3 约 15 条提交仍未推送双远端
+
+[状态]：库内机检口径修正为 328/328（169 点名构建）；库外预研项目修复后可构建（3894 jobs 零错误零警告零 sorry），归属判定为"内容属 MUFPF、主张不入检测矩阵"。

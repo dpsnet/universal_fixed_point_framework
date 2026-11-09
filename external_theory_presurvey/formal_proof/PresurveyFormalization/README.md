@@ -2,31 +2,39 @@
 
 **定位**：`external_theory_presurvey/`（外部理论预研）阶段的形式化根目录。当前内容为预研笔记
 `external_theory_lineage_presurvey.md` §7.15（"恰 1 个零权重分支"公理化证明）的 Lean 4 机器形式化
-及其候选前提 A3/A5 的严格化。基于 **Lean 4.31.0 + mathlib4**。
+及其候选前提 A3/A5 的严格化。基于 **Lean 4.34.0-rc2 + mathlib4**（2026-11-09 由 4.31.0 对齐主框架版本，以复用主框架 mathlib olean）。
 
 ## 项目结构
 
 ```
 PresurveyFormalization/
-├── lakefile.lean                 # Lake 配置：绝对路径复用主框架共享 mathlib
-├── lean-toolchain                # leanprover/lean4:v4.31.0
+├── lakefile.lean                 # Lake 配置：绝对路径复用主框架 MUFPFormalization 共享 mathlib
+├── lean-toolchain                # leanprover/lean4:v4.34.0-rc2
 ├── PresurveyFormalization.lean   # 库入口
 ├── Main.lean                     # 可执行入口
 └── PresurveyFormalization/
     ├── SpinorSilenceBranch.lean  # §7.15 全部形式化（§①–§⑥）
-    └── TimeBranch.lean           # §7.34 时间分支双指标刻画（w=0 ∧ c₃=1 ∧ t）
+    ├── TimeBranch.lean           # §7.34 时间分支双指标刻画（w=0 ∧ c₃=1 ∧ t）
+    ├── LuInvariant.lean          # §7.35/§7.62 LU 引理 1 部分迹变换律（完整机证）
+    ├── LayerEntropy.lean         # §7.53 熵分解恒等式
+    ├── RUniqueness.lean          # §7.56/§7.64 R 重构唯一性（算子/投影/分支三层）
+    └── TimeSpectrum.lean         # §7.68/§7.69 t*_i 层谱分布代数核心
 ```
 
 ## 环境复用（不改动主框架）
 
 本项目的 `.elan`（工具链）与 `.lake`（mathlib 及 8 个传递依赖）**复用**主框架
-`universal_fixed_point_framework/formal_proof/UFPFormalization/` 的既有环境：
+`universal_fixed_point_framework/formal_proof/MUFPFormalization/` 的既有环境（`UFPFormalization` 为该目录改名前的旧名）：
 
-- `.elan`：使用用户级 elan（`C:\Users\qinxi\.elan`，Lean 4.31.0 + Lake 5.0.0）——本地
-  `.elan` 的 toolchain junction 不可用，故直接用用户级工具链；
+- `.elan`：使用本机 elan（`D:\tools\lean\.elan`，Lean 4.34.0-rc2 + Lake 5.0.0）；原记录的用户级 elan 路径
+  `C:\Users\qinxi\.elan` 属旧机器环境，2026-11-09 迁移后不再适用；
 - `.lake`：[lakefile.lean](lakefile.lean) 以**绝对路径**引用共享
-  `.lake/packages/{mathlib,batteries,aesop,Qq,proofwidgets,plausible,Cli,importGraph,LeanSearchClient}`，
+  `.../MUFPFormalization/.lake/packages/{mathlib,batteries,aesop,Qq,proofwidgets,plausible,Cli,importGraph,LeanSearchClient}`，
   零拷贝、离线可用、**不改动主框架任何源码**。
+
+> 2026-11-09 修复：`lakefile.lean` 与 `lake-manifest.json` 内 9 条依赖路径原指向 `D:/trae-work/.../UFPFormalization/...`
+> （旧盘符 + 旧名），该路径在本机不存在；已改为 `E:/workspace/hyper-resolution/.../MUFPFormalization/...`。
+> `lean-toolchain` 同步由 v4.31.0 改为 v4.34.0-rc2——跨版本读 mathlib olean 会因版本不匹配失败，故对齐主框架。
 
 ## 构建
 
@@ -34,12 +42,14 @@ PresurveyFormalization/
 离线时 `cache get` 失败属正常；mathlib 已预编译，**重新运行一次 `lake build` 即跳过钩子并正常构建**）：
 
 ```powershell
-$env:PATH = "C:\Users\qinxi\.elan\bin;$env:PATH"
-cd d:\trae-work\hyper-resolution\external_theory_presurvey\formal_proof\PresurveyFormalization
+$env:ELAN_HOME = "D:\tools\lean\.elan"
+$env:ELAN_NO_SELF_UPDATE = "1"
+$env:PATH = "D:\tools\lean\.elan\bin;" + $env:PATH
+cd E:\workspace\hyper-resolution\external_theory_presurvey\formal_proof\PresurveyFormalization
 lake build
 ```
 
-当前状态：**3834 jobs 全量通过，零 `sorry` 零 `axiom` 零警告**。
+当前状态（2026-11-09 在本工作区重建）：**3894 jobs 全量通过，零 `sorry` 零 `axiom` 零警告**。
 
 ## 定理清单（SpinorSilenceBranch.lean）
 
@@ -106,3 +116,4 @@ lake build
 - **v0.33**（2026-08-17）：**LuInvariant 完整机证（§7.62 机证闭合）**——`partialTrace_conj_kron`（部分迹变换律 Tr_B[(U⊗V)ρ(U⊗V)ᵀ] = U(Tr_B ρ)Uᵀ）**完整机器证明成功**：新增 `sum_reorder_b_inner`（三重求和 b 移入最内层，显式 `conv_lhs` 限定 `Finset.sum_comm`）+ 主定理约 90 行证明脚本（kron 展开 ⟹ 求和重排 ⟹ V 正交吸收 ⟹ δ 吸收 ⟹ partialTrace 识别 ⟹ RHS 展开匹配）；§7.61 开放项闭合，3834 jobs 零错误零警告；组件 b（谱熵幺正不变）仍开放（诚实标注）。
 - **v0.34**（2026-08-17）：**RUniqueness 谱投影层完整形式化（§7.64 机证闭合）**——`branchProjection`（分支 i 谱投影 E_ii）+ `spectral_projection_unique`（像条件 ∧ 零化条件 ⟹ P = E_ii——**特征子空间直和 ⟹ 谱投影唯一**）+ `spectral_projection_exists_unique`（存在且唯一）；§7.56"特征子空间直和 ⟹ 投影唯一"开放项闭合，R 唯一性三层机证齐备（算子/投影/分支结构），3834 jobs 零错误零警告。
 - **v0.35**（2026-08-17）：**TimeSpectrum 形式化（§7.69 t*_i 分布代数核心机器化）**——新文件 `TimeSpectrum.lean`，lake build **3836 jobs 零错误零警告**：`layerWeight`/`S4`/`dH`/`tstar` 核心定义 + `tstar_eq_log`（**t*_k = ln(S_k/S₄) 权重比形式机证**：`Real.log_mul` + `Real.log_exp` + `ring`）+ `tstar_window_endpoint`（**t*_1 = ln(15/e)** 观测窗口终点：`Real.log_div` + `Real.log_exp`）+ `tstar_ordering`（**t*_1 > t*_2 > t*_3** 层序严格降序：`linarith`）；§7.68"非对角分量未分析"闭合（非对角-对角完全解耦，权重比仅依赖对角初始值与静态谱值——t*_i 对非对角扰动鲁棒）。
+- **v0.36**（2026-11-09）：**环境迁移修复并首次在当前工作区重建**——① `lakefile.lean` / `lake-manifest.json` 9 条依赖路径由 `D:/trae-work/.../UFPFormalization/.lake/packages/*` 改为 `E:/workspace/hyper-resolution/.../MUFPFormalization/.lake/packages/*`（`UFPFormalization` = `MUFPFormalization` 旧名，旧盘符不存在）；② `lean-toolchain` v4.31.0 → v4.34.0-rc2，与主框架 mathlib olean 版本对齐（跨版本读取 olean 会失败）；③ `LuInvariant.lean` L72/74/94/95 共 4 处弃用 API `if_pos`/`if_neg` 改为 `ite_eq_left`/`ite_eq_right`（4.34 已弃用，否则产生 8 条 warning）；结果 **`lake build` 3894 jobs 零错误、零警告、零 sorry、零 axiom**——v0.26–v0.35 的机检声明自本次起在当前工作区可复现。

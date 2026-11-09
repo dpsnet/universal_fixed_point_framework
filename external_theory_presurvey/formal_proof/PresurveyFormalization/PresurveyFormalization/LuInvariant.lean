@@ -69,9 +69,9 @@ lemma ortho_inner (V : Matrix (Fin m) (Fin m) ℝ) (hV : Vᵀ * V = 1)
       rw [Matrix.one_apply]
       by_cases h : y2 = y1
       · have h' : y1 = y2 := h.symm
-        rw [if_pos h, if_pos h']
+        rw [ite_eq_left h, ite_eq_left h']
       · have h' : y1 ≠ y2 := fun h12 => h h12.symm
-        rw [if_neg h, if_neg h']
+        rw [ite_eq_right h, ite_eq_right h']
 
 /-- δ 吸收：Σ_y2 (if y1 = y2 then 1 else 0) * f y2 = f y1。 -/
 lemma sum_delta_mul (y1 : Fin m) (f : Fin m → ℝ) :
@@ -91,8 +91,8 @@ lemma sum_delta_mul (y1 : Fin m) (f : Fin m → ℝ) :
             apply Finset.sum_congr rfl
             intro y2 _
             by_cases h : y1 = y2
-            · rw [if_pos h, if_pos h.symm]
-            · rw [if_neg h, if_neg (fun h2 : y2 = y1 => h h2.symm)]
+            · rw [ite_eq_left h, ite_eq_left h.symm]
+            · rw [ite_eq_right h, ite_eq_right (fun h2 : y2 = y1 => h h2.symm)]
           ]
           simp
 

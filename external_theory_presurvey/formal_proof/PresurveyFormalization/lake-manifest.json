@@ -7,7 +7,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/LeanSearchClient",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/LeanSearchClient",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -15,7 +15,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/importGraph",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/importGraph",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -23,7 +23,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/Cli",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/Cli",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -31,7 +31,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/plausible",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/plausible",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -39,7 +39,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/proofwidgets",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/proofwidgets",
    "configFile": "lakefile.lean"},
   {"type": "path",
    "scope": "",
@@ -47,7 +47,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/Qq",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/Qq",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -55,7 +55,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/aesop",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/aesop",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -63,7 +63,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/batteries",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/batteries",
    "configFile": "lakefile.toml"},
   {"type": "path",
    "scope": "",
@@ -71,7 +71,7 @@
    "manifestFile": "lake-manifest.json",
    "inherited": false,
    "dir":
-   "D:/trae-work/hyper-resolution/universal_fixed_point_framework/formal_proof/UFPFormalization/.lake/packages/mathlib",
+   "E:/workspace/hyper-resolution/universal_fixed_point_framework/formal_proof/MUFPFormalization/.lake/packages/mathlib",
    "configFile": "lakefile.lean"}],
  "name": "PresurveyFormalization",
  "lakeDir": ".lake",
