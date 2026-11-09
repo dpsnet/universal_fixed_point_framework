@@ -12,7 +12,7 @@
 
 ## 摘要
 
-本文给出从三个范畴论基础构件到标准模型（SM）主要结构的**内生推导路径及其完整审计链**：四维 Lorentz 时空结构、规范群 SU(3)×SU(2)×U(1)、电荷谱、三代费米子、CKM/PMNS 混合矩阵、Higgs 扇区与无量纲耦合常数。框架的唯一输入是：（1）有限态递归范畴 $\mathbf{Rec}$，（2）有限复矩阵谱范畴 $\mathbf{Sp}$，（3）去递归函子 $D : \mathbf{Rec} \to \mathbf{Sp}$。四维时空的 Clifford 代数结构不是预设，而是由三层活跃态射 + 递归单向性 = 时间联合推导的结果。**认识论分层**（§4）：推导链按确定性来源分为**结构条件**（C1-C5，框架固有推论）、**唯一性推导**（C2 Sp 为严格 4-范畴——韦达方程 x²−2^{N_active}·x+2^{N_active+1}−1=0 仅 N_active=3 有整数根 {3,5}（N_active=2 判别式 −12<0；N_active=4 根非整数，§5.5 表），非选择）、**Lean 已机检**（C1 伴随存在性 / C3 k_max=2³ / C4 活跃层计数 / C5 韦达根分裂 / C6 signature 翻转核心桥接——Rec→方向性→Cl(3,1) 五步 + M₈ gamma0_8²=−I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 Cl(4,1) 4 对反对易）、**结构性预测**（跨 Dirac/Pauli 尺度反对易性不成立——时空代数 Cl(3,1) × 内部对称空间 Cl(3,0) 是不同数学结构，本就不应统一）、**候选级桥接规则**（深层几何同构：三层态射↔空间+时间方向直接几何同构未形式化、c₃ 时间分支↔物理时间坐标语义对齐）、**物理字典映射**（boundaryDefect 8·ln2 = 4×2·ln2 中 4=4G_N 为预设，非 Lean 可派生）。**α⁻¹ 对 CODATA 2022 偏差 +4.46σ_score**（全文 σ_score ≡ (实验−框架)/合成不确定度，符号约定统一）：通道→域归属判据升级后（§9.1b 详细说明），所有已观测 α⁻¹ 通道全属 π_Sig（spatiotemporal）域——两期 CODATA 的输入通道都是 π_Sig，2022 均值正偏是 Rb-2020 新数据（不确定度比 Rb-2011 好 8 倍）拉动加权中心移动，不是通道代数域变化；框架值 137.035999083426 = 72 + 24·ln15 + 24·δ*（计算式唯一，δ* 四项全含；δ* 各项的域标签为候选级语义归属，按该标签做的域级量级核算见 §9.2e 失败登记）。H6' probabilistic/frozen 域的单向正声明机检的是域内数学性质（权重非负、RG 收敛），目前无 α⁻¹ 通道检验。**全部数值主张中仅 m_{L4} 为真外推，其余为回溯**。**Lean 形式化总览**（全库构建通过、零 sorry；jobs 计数口径见 §12.4 项 1）：伴随边界 `no_global_right_adjoint`、活跃层计数 `k_max_eq_two_pow_active`、韦达根分裂 `vieta_root_split`、Rec→方向性→Cl(3,1) 五步诠释链（`unidir_iff_active` / `directional_with_lorentz_compatible`）、M₈ gamma 矩阵两种 block 尺度（Cl(3,1) 子代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6）、boundaryDefect/entropyOfRange 全息比例常数 `lorentz_holographic_union`、Sel ⊣ Diss 选择-溶解伴随 `selDissFrom_to` + `selDissHomEquiv`、H6' 通道分类等关键节点已形式化。仓库公开与外部复现登记为必要步骤（§12.4）。
+本文给出从三个范畴论基础构件到标准模型（SM）主要结构的**内生推导路径及其完整审计链**：四维 Lorentz 时空结构、规范群 SU(3)×SU(2)×U(1)、电荷谱、三代费米子、CKM/PMNS 混合矩阵、Higgs 扇区与无量纲耦合常数。框架的唯一输入是：（1）有限态递归范畴 $\mathbf{Rec}$，（2）有限复矩阵谱范畴 $\mathbf{Sp}$，（3）去递归函子 $D : \mathbf{Rec} \to \mathbf{Sp}$。四维时空的 Clifford 代数结构不是预设，而是由三层活跃态射 + 递归单向性 = 时间联合推导的结果。**认识论分层**（§4）：推导链按确定性来源分为**结构条件**（C1-C5，框架固有推论）、**唯一性推导**（C2 Sp 为严格 4-范畴——韦达方程 x²−2^{N_active}·x+2^{N_active+1}−1=0 仅 N_active=3 有整数根 {3,5}（N_active=2 判别式 −12<0；N_active=4 根非整数，§5.5 表），非选择）、**Lean 已机检**（C1 伴随存在性 / C3 k_max=2³ / C4 活跃层计数 / C5 韦达根分裂 / C6 signature 翻转核心桥接——Rec→方向性→Cl(3,1) 五步 + M₈ gamma0_8²=−I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 Cl(4,1) 4 对反对易）、**结构性预测**（跨 Dirac/Pauli 尺度反对易性不成立——时空代数 Cl(3,1) × 内部对称空间 Cl(3,0) 是不同数学结构，本就不应统一）、**候选级桥接规则**（深层几何同构：三层态射↔空间+时间方向直接几何同构未形式化、c₃ 时间分支↔物理时间坐标语义对齐）、**物理字典映射**（boundaryDefect 8·ln2 = 4×2·ln2 中 4=4G_N 为预设，非 Lean 可派生）。**α⁻¹ 对 CODATA 2022 偏差 +4.46σ_score**（全文 σ_score ≡ (实验−框架)/合成不确定度，符号约定统一）：通道→域归属判据升级后（§9.1b 详细说明），所有已观测 α⁻¹ 通道全属 π_Sig（spatiotemporal）域——两期 CODATA 的输入通道都是 π_Sig，2022 均值正偏是 Rb-2020 新数据（不确定度比 Rb-2011 好 8 倍）拉动加权中心移动，不是通道代数域变化；框架值 137.035999083426 = 72 + 24·ln15 + 24·δ*（计算式唯一，δ* 四项全含；δ* 各项的域标签为候选级语义归属，按该标签做的域级量级核算见 §9.2e 失败登记）。H6' probabilistic/frozen 域的单向正声明机检的是域内数学性质（权重非负、RG 收敛），目前无 α⁻¹ 通道检验。**全部数值主张中仅 m_{L4} 为真外推，其余为回溯**。**Lean 形式化总览**（零 sorry；单模块 `ActiveSilentVieta` 构建全绿 3048 jobs、exit 0，全库构建同日仍在进行且无 error——状态与口径见 §12.4 项 1）：伴随边界 `no_global_right_adjoint`、活跃层计数 `k_max_eq_two_pow_active`、韦达根分裂 `vieta_root_split`、Rec→方向性→Cl(3,1) 五步诠释链（`unidir_iff_active` / `directional_with_lorentz_compatible`）、M₈ gamma 矩阵两种 block 尺度（Cl(3,1) 子代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6）、boundaryDefect/entropyOfRange 全息比例常数 `lorentz_holographic_union`、Sel ⊣ Diss 选择-溶解伴随 `selDissFrom_to` + `selDissHomEquiv`、H6' 通道分类等关键节点已形式化。仓库公开与外部复现登记为必要步骤（§12.4）。
 
 ---
 
@@ -1456,19 +1456,19 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | 6 | 禁闭判据 ∂Rec_D | 拓扑边界穿越 | 夸克禁闭 = 无法跨越边界 |
 | 7 | 规范耦合 α | 拓扑强度 | α = Δλ_min/(4π) |
 
-## 附录 C：Lean 构建状态
+## 附录 C：Lean 构建状态（v1.3 实测口径）
 
 ```
-lake build
-    → 全库构建通过（jobs 计数随缓存浮动，实测 3048–3657 targets）
-    → AdjunctionAnchor.lean 单独构建 2080 jobs 通过
-    → RAP5a_explicit_adjunction.lean 单独构建 2079 jobs 通过
-    → DirectionalCliffordBridge + NoiseSignatureBridge + PauliLorentzBridge + BoundaryEntropyBridge + SelDissBridge + NoiseSystemTheory + RecActiveSignatureBridge 新增 bridge 层 ≈ 720 jobs
-    → 全库零 sorry
+lake build MUFPFormalization.ActiveSilentVieta
+    → Build completed successfully（3048 jobs，exit 0，2026-11-09 实跑）
+lake build MUFPFormalization
+    → 进行中：3696/3821 targets，日志无 error（2026-11-09 19:01 观测；完成状态待补登）
+sorry 扫描（src/MUFPFormalization/*.lean 行首 sorry）
+    → 0（零 sorry，2026-11-09 实测）
 ```
 
-**注**：jobs 计数历史记录（3817 → 6376 → 7096）均为当时未复验的自报数，v1.3 实跑同一命令得 3048–3657 targets 且随缓存状态浮动，故 **jobs 数不作为可核验指标，v1.3 撤回 7096 口径**（见 §12.4 项 1）。仓库公开状态是待核实事实项（§12.4 项 1），本文不单方主张"已双平台公开"；v1.2 基线 commit `e503722`；v1.3 内容提交哈希见 §12.4 登记表；外部独立复现待仓库可检出后确认。
+**注**：v1.2 附录中的 2080 / 2079 / ≈720 / 3817 / 6376 / 7096 等 jobs 数均为当时**未复验的自报数**，v1.3 不以它们主张任何构建状态；jobs 计数随缓存浮动（同一命令实测 3048–3821），**不作为可核验指标，v1.3 撤回 7096 口径**（见 §12.4 项 1）。仓库公开状态是待核实事实项（§12.4 项 1），本文不单方主张"已双平台公开"；v1.2 基线 commit `e503722`；v1.3 内容提交哈希见 §12.4 登记表；外部独立复现待仓库可检出后确认。
 
 ---
 
-*本文档基于 MUFPF 框架 Lean 形式化库（全库构建通过、零 sorry）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
+*本文档基于 MUFPF 框架 Lean 形式化库（零 sorry；单模块构建全绿，全库构建同日在建，见 §12.4 项 1）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
