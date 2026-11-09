@@ -259,9 +259,10 @@ theorem involution_not_vieta_root : Involution ^ 2 - Kmax * Involution + SigmaIn
         σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、σ⁻¹ = 12（根 {2,6}，D = 16 = 4²）、
         σ⁻¹ = 16（根 {4,4}，D = 0 = 0²）都给整数根且判别式为完全平方。
     (2) 因此唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述（族内唯一解 = N = 3）。
-        该族内全枚举（N = 1..12 逐一排除非平方）尚未机检，登记为待补（§12.4 项 3）。
+        族内全称非平方已机检：`vieta_discriminant_family_nonsquare`——对一切 N ≥ 4，
+        (2^N − 5)^2 < D(N) < (2^N − 4)^2 夹逼闭合，无需枚举；N = 1,2 时 D < 0，N = 3 得 4 = 2²。
 
-    本文件机检的是可判定的三部分：D(N) 的 12 项具体值、N = 3 见证、族外反例。 -/
+    本文件机检的是四部分：D(N) 的 12 项具体值、N = 3 见证、族外反例、族内全称非平方（N ≥ 4）。 -/
 
 /-- V9-a：D(N) = 4^N − 2^{N+3} + 4 在 N = 1..12 的具体值（算术恒等，机检）。 -/
 theorem vieta_discriminant_family_values :
@@ -310,5 +311,49 @@ theorem vieta_discriminant_optionB_negative :
 theorem vieta_discriminant_optionC_negative :
     (8 : ℝ)^2 - 4 * ((3 : ℝ)^3 - 1) < 0 := by
   norm_num
+
+/-- V9-d 族内全称非平方（解析证明的 Lean 化，2026-11-10）：对一切 `N ≥ 4`，
+    `D(N) = 4^N − 2^(N+3) + 4 = (2^N − 4)^2 − 12` 不是完全平方。
+
+    证明（夹逼，不依赖枚举）：令 `X = 2^N ≥ 16`，则
+    `(X − 5)^2 < D < (X − 4)^2`——左端差 `2X − 21 ≥ 11 > 0`、右端差 `12 > 0`。
+    即 `D` 严格夹在两个**相邻**平方之间，故永不等于平方。
+    与 `vieta_discriminant_family_values`（12 项具体值）互补：本定理覆盖 `N ≥ 4` 全体。 -/
+theorem vieta_discriminant_family_nonsquare (N : ℕ) (hN : 4 ≤ N) :
+    ¬ ∃ m : ℤ, (4 : ℤ) ^ N - (2 : ℤ) ^ (N + 3) + 4 = m ^ 2 := by
+  intro h
+  obtain ⟨m, hm⟩ := h
+  set X : ℤ := (2 : ℤ) ^ N with hXdef
+  have h4 : (4 : ℤ) ^ N = X ^ 2 := by
+    rw [hXdef, show (4 : ℤ) = (2 : ℤ) ^ 2 by norm_num, ← pow_mul, Nat.mul_comm 2 N, pow_mul]
+  have h8 : (2 : ℤ) ^ (N + 3) = 8 * X := by
+    rw [hXdef, pow_add, show (2 : ℤ) ^ 3 = 8 by norm_num]
+    ring
+  have hD : (4 : ℤ) ^ N - (2 : ℤ) ^ (N + 3) + 4 = (X - 4) ^ 2 - 12 := by
+    rw [h4, h8]
+    ring
+  have hX : X ≥ 16 := by
+    rw [hXdef]
+    have hsplit : (2 : ℤ) ^ N = (2 : ℤ) ^ 4 * (2 : ℤ) ^ (N - 4) := by
+      rw [← pow_add]
+      congr 1
+      omega
+    have hpos : (0 : ℤ) < (2 : ℤ) ^ (N - 4) := pow_pos (by norm_num) _
+    have hp1 : (1 : ℤ) ≤ (2 : ℤ) ^ (N - 4) := by omega
+    nlinarith [hsplit, hp1]
+  rw [hD] at hm
+  have hlo : (X - 5) ^ 2 < m ^ 2 := by nlinarith [hX, hm]
+  have hhi : m ^ 2 < (X - 4) ^ 2 := by nlinarith [hm]
+  have habs : (X - 5) < |m| := by
+    have h1 : |X - 5| < |m| := by
+      rw [← sq_lt_sq]
+      exact hlo
+    rw [abs_of_nonneg (by nlinarith [hX])] at h1
+    exact h1
+  have hmge : X - 4 ≤ |m| := by omega
+  have hsq : (X - 4) ^ 2 ≤ m ^ 2 := by
+    rw [sq_le_sq, abs_of_nonneg (by nlinarith [hX])]
+    exact hmge
+  linarith [hhi, hsq]
 
 end MUFPF.ActiveSilentVieta
