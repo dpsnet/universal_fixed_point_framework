@@ -111,7 +111,7 @@ The state space is a finite sample of points on the attractor,
 and the step function simulates the IFS dynamics.
 -/
 noncomputable def IFSToRecObj' {X : Type} [MetricSpace X] [CompleteSpace X]
-    (ifs : IFS X) (attractor : Attractor ifs) (nSamples : ℕ) (hSamples : nSamples ≥ 1) : RecObj :=
+    (ifs : IFS X) (_attractor : Attractor ifs) (nSamples : ℕ) (_hSamples : nSamples ≥ 1) : RecObj :=
   { T := Fin nSamples
     fin := inferInstance
     dec := inferInstance
@@ -169,7 +169,7 @@ The full root-finding is deferred to the numerical Python prototype
 and the implicit function theorem.
 -/
 noncomputable def multifractalSpectrum {X : Type} [MetricSpace X] [CompleteSpace X]
-    {ifs : IFS X} {attractor : Attractor ifs} (measure : SelfSimilarMeasure ifs attractor)
+    {ifs : IFS X} {attractor : Attractor ifs} (_measure : SelfSimilarMeasure ifs attractor)
     (q : ℝ) : ℝ :=
   -- τ(q) is defined implicitly by Σ p_i^q · c_i^{τ(q)} = 1
   -- Prototype placeholder: τ(q) = q - 1, which satisfies the key special

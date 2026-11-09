@@ -138,15 +138,15 @@ lemma RGHom.comp_s {X Y Z : RGObj} (f : X ⟶ Y) (g : Y ⟶ Z) :
 noncomputable def TFunctor : TempObj ⥤ RGObj where
   obj X := ⟨X.T, X.pos⟩
   map f := ⟨f.r, f.r_pos, f.eq⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The inverse functor 𝒯⁻¹ : RGCat → TempCat, also acting identically. -/
 noncomputable def TInvFunctor : RGObj ⥤ TempObj where
   obj X := ⟨X.μ, X.pos⟩
   map f := ⟨f.s, f.s_pos, f.eq⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- Unit of the isomorphism: 𝟭 Temp ≅ 𝒯 ⋙ 𝒯⁻¹. -/
 noncomputable def TUnitIso : 𝟭 TempObj ≅ TFunctor ⋙ TInvFunctor where
@@ -321,15 +321,15 @@ lemma BundleRGHom.comp_baseMap {X Y Z : SpectralBundleRG} (f : X ⟶ Y) (g : Y �
 abbrev π_T : SpectralBundleTemp ⥤ TempObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- Projection π_μ : Bun(RG, Spec) → RGCat. -/
 abbrev π_μ : SpectralBundleRG ⥤ RGObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 5: Cartesian Lifts (Grothendieck Fibration)
@@ -451,14 +451,14 @@ noncomputable def T_hat_Riem : SpectralBundleTemp ⥤ SpectralBundleRG where
     apply BundleRGHom.ext
     · -- base map: TFunctor.map (𝟙 X.base) = 𝟙 (T_hat_Riem.obj X).base
       apply RGHom.ext
-      simp [TFunctor, RGHom.id_s]
+      simp [RGHom.id_s]
     · -- fiber map
       rfl
   map_comp f g := by
     apply BundleRGHom.ext
     · -- base map commutes with composition
       apply RGHom.ext
-      simp [TFunctor, RGHom.comp_s]
+      simp [RGHom.comp_s]
     · -- fiber map
       rfl
 
@@ -837,15 +837,15 @@ instance grothCategoryFT : Category GrothObjFT where
 noncomputable def grothFTToBundle : GrothObjFT ⥤ SpectralBundleTemp where
   obj X := { base := X.T, fiberData := X.X }
   map f := { baseMap := f.baseMap, fiberMap := f.fiberMap, commut := f.commut }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The canonical functor from Bun(Temp, Spec) to ∫F_T. -/
 noncomputable def bundleToGrothFT : SpectralBundleTemp ⥤ GrothObjFT where
   obj X := { T := X.base, X := X.fiberData }
   map f := { baseMap := f.baseMap, fiberMap := f.fiberMap, commut := f.commut }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The equivalence ∫F_T ≌ Bun(Temp, Spec) (Prop 5.1). -/
 noncomputable def grothFTEquivBundle : GrothObjFT ≌ SpectralBundleTemp :=
@@ -910,14 +910,14 @@ instance grothCategoryFμ : Category GrothObjFμ where
 noncomputable def grothFμToBundle : GrothObjFμ ⥤ SpectralBundleRG where
   obj X := { base := X.μ, fiberData := X.X }
   map f := { baseMap := f.baseMap, fiberMap := f.fiberMap, commut := f.commut }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 noncomputable def bundleToGrothFμ : SpectralBundleRG ⥤ GrothObjFμ where
   obj X := { μ := X.base, X := X.fiberData }
   map f := { baseMap := f.baseMap, fiberMap := f.fiberMap, commut := f.commut }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The equivalence ∫F_μ ≌ Bun(RG, Spec) (Prop 5.2). -/
 noncomputable def grothFμEquivBundle : GrothObjFμ ≌ SpectralBundleRG :=
@@ -1006,7 +1006,7 @@ noncomputable def FiberedNatTrans.vcomp {p : SpectralBundleTemp ⥤ TempObj} {q 
   { base_map_eq := α.base_map_eq.trans β.base_map_eq
     η := α.η ≫ β.η
     fiber_restricted := fun X => by
-      simp [α.fiber_restricted X, β.fiber_restricted X, Category.assoc]
+      simp [α.fiber_restricted X, β.fiber_restricted X]
   }
 
 /-
@@ -1023,25 +1023,25 @@ theorem twoBun_vcomp_assoc {p q} {F G H K : FiberedFunctor p q}
     (γ : FiberedNaturalTransformation p q H K) :
     FiberedNatTrans.vcomp (FiberedNatTrans.vcomp α β) γ =
     FiberedNatTrans.vcomp α (FiberedNatTrans.vcomp β γ) := by
-  ext <;> simp [FiberedNatTrans.vcomp]
+  ext; simp [FiberedNatTrans.vcomp]
 
 /-- Theorem 7.1 (identity 2-cell is a left unit for vertical composition). -/
 theorem twoBun_vcomp_id_left {p q} {F G : FiberedFunctor p q}
     (α : FiberedNaturalTransformation p q F G) :
     FiberedNatTrans.vcomp (idFiberedNatTrans F) α = α := by
-  ext <;> simp [FiberedNatTrans.vcomp, idFiberedNatTrans]
+  ext; simp [FiberedNatTrans.vcomp, idFiberedNatTrans]
 
 /-- Theorem 7.1 (identity 2-cell is a right unit for vertical composition). -/
 theorem twoBun_vcomp_id_right {p q} {F G : FiberedFunctor p q}
     (α : FiberedNaturalTransformation p q F G) :
     FiberedNatTrans.vcomp α (idFiberedNatTrans G) = α := by
-  ext <;> simp [FiberedNatTrans.vcomp, idFiberedNatTrans]
+  ext; simp [FiberedNatTrans.vcomp, idFiberedNatTrans]
 
 /-- T̂_Riem as a fibration-preserving functor (1-cell in 2Bun from π_T to π_μ). -/
 noncomputable def T_hat_Riem_fibered : FiberedFunctor π_T π_μ :=
   { F := T_hat_Riem
     base_map := fun X => TFunctor.obj (π_T.obj X)
-    base_commutes := fun X => rfl
+    base_commutes := fun _X => rfl
   }
 
 /- 定理 7.2（twoT_hat_Riem_preserves_vcomp）与定理 7.3 相关声明依赖

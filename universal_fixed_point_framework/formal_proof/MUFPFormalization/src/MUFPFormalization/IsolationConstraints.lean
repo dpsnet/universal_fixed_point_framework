@@ -41,23 +41,23 @@ Phase 16B functional analysis formalization.
 
 /-- Spectral radius of a finite complex matrix (max |eigenvalue|).
     In the finite-dimensional prototype, we compute this via the spectral norm. -/
-noncomputable def spectralRadius {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ := 0
+noncomputable def spectralRadius {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : ℝ := 0
   -- Placeholder: actual spectral radius requires spectral theorem (eigenvalue
   -- analysis), deferred to Phase 16B. Returns 0 as a stand-in.
 
 /-- IC Condition 1: Spectral scale compatibility.
     The ratio of spectral radii ρ(σ(-log U_{R1})) / ρ(σ(-log U_{R2})) is bounded. -/
-def spectralScaleCompatible (R1 R2 : RecObj) : Prop :=
+def spectralScaleCompatible (_R1 _R2 : RecObj) : Prop :=
   True  -- Placeholder: requires spectral analysis of infinite-dimensional operators
 
 /-- IC Condition 2: Morphism extendability.
     For any Rec morphism f : R1 → R2, ‖D(f)‖ is controlled by a constant depending only on R1,R2. -/
-def morphismExtendable (R1 R2 : RecObj) : Prop :=
+def morphismExtendable (_R1 _R2 : RecObj) : Prop :=
   True  -- Placeholder: requires operator norm bounds
 
 /-- IC Condition 3: Topological compatibility.
     D preserves weak-to-weak continuity between state spaces. -/
-def topologicallyCompatible (R1 R2 : RecObj) : Prop :=
+def topologicallyCompatible (_R1 _R2 : RecObj) : Prop :=
   True  -- Placeholder: requires weak topology formalization
 
 /-- The full Isolation Constraint IC(R1, R2) is the conjunction of all three conditions.
@@ -71,7 +71,7 @@ def isolationConstraint (R1 R2 : RecObj) : Prop :=
 /-- Theorem C3.2: Under IC(R1, R2), the functor D preserves spectral interweaving.
     In the finite-dimensional prototype, this holds automatically because
     D is a faithful functor preserving all finite spectral data. -/
-theorem ic_implies_spectral_preservation (R1 R2 : RecObj) (hIC : isolationConstraint R1 R2) :
+theorem ic_implies_spectral_preservation (R1 R2 : RecObj) (_hIC : isolationConstraint R1 R2) :
     ∀ (f : R1 ⟶ R2), DFunctor.map f = DFunctor.map f := by
   intro f
   rfl

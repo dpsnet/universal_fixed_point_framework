@@ -91,7 +91,7 @@ theorem circular_never_zero (r₀ : ℝ) (hr₀ : r₀ > 0) :
   intro θ; exact hr₀
 
 /-- 定理：线偏振在 θ = π/2, 3π/2 处穿过原点 -/
-theorem linear_crosses_origin (r₀ : ℝ) (hr₀ : r₀ > 0) :
+theorem linear_crosses_origin (r₀ : ℝ) (_hr₀ : r₀ > 0) :
     linear_r r₀ (Real.pi / 2) = 0 := by
   simp [linear_r, Real.cos_pi_div_two]
 
@@ -184,7 +184,7 @@ inductive MimeticPhase
   | discrete     -- 离散拓扑转变阶段（光子发射）
 
 /-- 形变循环振幅 A(t) -/
-def deformation_amplitude (t : ℝ) : ℝ := 0  -- 简化占位
+def deformation_amplitude (_t : ℝ) : ℝ := 0  -- 简化占位
 
 /-- 谱间隙演化：DeltaL_gap(A) = DeltaL_0 - f(A) -/
 def spectral_gap_evolution (DeltaL_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : ℝ :=
@@ -201,8 +201,8 @@ def at_closure_critical (DeltaL_0 : ℝ) (f : ℝ → ℝ) (A : ℝ) : Prop :=
 /-- 定理：连续仿形→离散跳变统一链 -/
 theorem continuous_to_discrete_chain
     (DeltaL_0 : ℝ) (hDeltaL : DeltaL_0 > 0)
-    (f : ℝ → ℝ) (hf_mono : ∀ a₁ a₂, a₁ < a₂ → f a₁ < f a₂)
-    (hf_zero : f 0 = 0)
+    (f : ℝ → ℝ) (_hf_mono : ∀ a₁ a₂, a₁ < a₂ → f a₁ < f a₂)
+    (_hf_zero : f 0 = 0)
     (hf_ub : ∀ A ≥ 0, A < DeltaL_0 → f A < DeltaL_0)
     (hf_crit : f DeltaL_0 = DeltaL_0) :
     -- 1. 连续阶段：振幅累积，谱间隙收缩
@@ -283,7 +283,7 @@ noncomputable def natural_linewidth (ℏ τ : ℝ) : ℝ :=
     这是海森堡能量-时间不确定关系 ΔE·τ ≥ ℏ/2 的频率形式。
     由 natural_linewidth 定义 Γ = ℏ/τ 和 δν ≥ Γ/(2π) 直接推出。 -/
 theorem frequency_precision_bound
-    (Γ δν : ℝ) (hΓ : Γ > 0) (hδν : δν > 0) :
+    (Γ δν : ℝ) (hΓ : Γ > 0) (_hδν : δν > 0) :
     δν ≥ Γ / (2 * Real.pi) →
     -- 频率精度下界成立：δν·2π ≥ Γ（即 δν ≥ Γ/(2π)）
     δν * (2 * Real.pi) ≥ Γ := by
@@ -300,7 +300,7 @@ theorem frequency_precision_bound
     即 ΔE·τ ≥ ℏ（能量-时间不确定关系的频率形式）。
     证明：代入 Γ = ℏ/τ 后直接化简。 -/
 theorem frequency_precision_lifetime_relation
-    (ℏ τ δν : ℝ) (hℏ : ℏ > 0) (hτ : τ > 0) :
+    (ℏ τ δν : ℝ) (_hℏ : ℏ > 0) (hτ : τ > 0) :
     let Γ := natural_linewidth ℏ τ
     δν ≥ Γ / (2 * Real.pi) →
     -- 等价于 δν·2π·τ ≥ ℏ（能量-时间不确定关系）
@@ -329,7 +329,7 @@ noncomputable def gravitational_phase_correction (GM rcSq DeltaL_min : ℝ) : �
     故将修正因子拆为两个前提界 hGM（GM/rcSq < 1e-9）与 hD（Δλ_min/(2π) < 1e-2），
     乘积 < 1e-9·1e-2 = 1e-11。登记于 RESEARCH_STATE。 -/
 theorem phase_correction_negligible_weak_field
-    (GM rcSq DeltaL_min : ℝ) (hGM : GM / rcSq < 1e-9) (hGM_pos : 0 < GM / rcSq)
+    (GM rcSq DeltaL_min : ℝ) (hGM : GM / rcSq < 1e-9) (_hGM_pos : 0 < GM / rcSq)
     (hD : DeltaL_min / (2 * Real.pi) < 1e-2) (hD_pos : 0 < DeltaL_min / (2 * Real.pi)) :
     gravitational_phase_correction GM rcSq DeltaL_min < 1e-11 := by
   unfold gravitational_phase_correction
@@ -356,7 +356,7 @@ theorem distortion_ratio_bounds (δr r₀ : ℝ) (hr₀ : r₀ > 0) (hδr : abs 
     rwa [div_self (ne_of_gt hr₀)] at h
 
 /-- 定理：ε=0 ⟹ 完美闭合 -/
-theorem zero_distortion_closed (r₀ : ℝ) (hr₀ : r₀ > 0) :
+theorem zero_distortion_closed (r₀ : ℝ) (_hr₀ : r₀ > 0) :
     distortion_ratio 0 r₀ = 0 := by
   simp [distortion_ratio]
 
@@ -377,7 +377,7 @@ theorem no_decay_when_all_closed (ε : ℝ) (n : ℕ) :
   simp [mimetic_memory_decay]
 
 /-- 定理：全部失真时最大衰减 -/
-theorem max_decay_when_all_distorted (ε : ℝ) (hε : 0 < ε ∧ ε < 1) (n : ℕ) :
+theorem max_decay_when_all_distorted (ε : ℝ) (_hε : 0 < ε ∧ ε < 1) (n : ℕ) :
     mimetic_memory_decay ε 0 n = (1 - ε) ^ n := by
   simp [mimetic_memory_decay]
 

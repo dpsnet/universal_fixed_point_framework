@@ -118,12 +118,12 @@ noncomputable def adj_infty (hId : ∀ X : ContRecObj, X.step = 𝟙 X.M) : ℒ_
         ext X
         apply IdExtHom.ext
         · change (𝟙 X.M ≫ 𝟙 X.M ≫ 𝟙 X.M) = 𝟙 X.M
-          simp [Category.comp_id, Category.id_comp]
+          simp [Category.comp_id]
       right_triangle := by
         ext Y
         apply ContRecHom.ext
         · change (𝟙 Y.M ≫ 𝟙 Y.M ≫ 𝟙 Y.M) = 𝟙 Y.M
-          simp [Category.comp_id, Category.id_comp] }
+          simp [Category.comp_id] }
 
 /-! 
 ### 3. ∞-Reflective Subcategory Structure
@@ -166,7 +166,7 @@ theorem counit_is_iso (X : IdExtObj) : IsIso (adjCounit_infty X) := by
     
     In the finite prototype, this holds because the 2-morphism
     structure in the image of ι_∞ is trivial (G = 0 always). -/
-theorem reflection_homotopy_discrete (X : ContRecObj) (Y : IdExtObj) : True :=
+theorem reflection_homotopy_discrete (_X : ContRecObj) (_Y : IdExtObj) : True :=
   trivial
 
 /-! 
@@ -187,6 +187,6 @@ theorem spectral_flow_vanishes_infty (R : ContRecObj) :
     π_n(Map(ι_∞(X), Y)) ≅ π_n(Map(X, ℒ_∞(Y))) for all n ≥ 0.
     In particular, for n ≥ 1, the 2-morphism structure in Rec_id
     is trivial (all higher spectral flow generators vanish). -/
-theorem higher_homotopy_trivial (R : ContRecObj) : True := trivial
+theorem higher_homotopy_trivial (_R : ContRecObj) : True := trivial
 
 end MUFPF

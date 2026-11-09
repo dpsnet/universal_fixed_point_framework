@@ -51,7 +51,7 @@ noncomputable def bhMassCubed (ev : BHEvol) (t : ℝ) : ℝ :=
   ev.M₀^3 - 3 * ev.α * t
 
 /-- Black hole mass M(t) = Δ(t)^(1/3). -/
-noncomputable def bhMass (ev : BHEvol) (t : ℝ) (h : 0 ≤ bhMassCubed ev t) : ℝ :=
+noncomputable def bhMass (ev : BHEvol) (t : ℝ) (_h : 0 ≤ bhMassCubed ev t) : ℝ :=
   Real.rpow (bhMassCubed ev t) (1 / 3)
 
 /-- bhMass is positive when cubed mass is positive. -/
@@ -100,7 +100,7 @@ theorem bhEvaporationTime_condition (ev : BHEvol) :
   have h : ev.M₀^3 - 3 * ev.α * (ev.M₀^3 / (3 * ev.α)) = 0 := by
     field_simp
     ring
-    <;> linarith
+
   simpa [bhMassCubed, bhEvaporationTime] using h
 
 /-- Mass = 0 at evaporation time. -/
@@ -112,7 +112,7 @@ theorem bhMass_at_evaporation_time (ev : BHEvol) :
   have h13_pos : (0 : ℝ) < (1 / 3 : ℝ) := by norm_num
   have hz : Real.rpow (0 : ℝ) (1 / 3) = 0 := by
     exact Real.zero_rpow (ne_of_gt h13_pos)
-  simpa [bhMass, hΔ0, hz]
+  simp [bhMass, hΔ0]
 
 /-!
 ## §1b: Spectral Cutoff Termination (Planck scale)
@@ -333,7 +333,6 @@ theorem bhEntropySchwarzschild_increasing (M₁ M₂ : ℝ) (hM₁ : M₁ > 0)
     nlinarith
   unfold bekensteinHawkingEntropySchwarzschild
   have hgt : 4 * Real.pi * M₁^2 < 4 * Real.pi * M₂^2 := by
-    change (4 * Real.pi : ℝ) * M₁^2 < (4 * Real.pi) * M₂^2
     exact mul_lt_mul_of_pos_left hsq_lt h4pi_pos
   exact hgt
 

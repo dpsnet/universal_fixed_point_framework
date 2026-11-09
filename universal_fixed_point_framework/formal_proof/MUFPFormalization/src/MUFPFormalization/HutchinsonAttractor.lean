@@ -56,6 +56,7 @@ theorem maxRatio_lt_one (ifs : IFS X) (hn : 0 < ifs.n) : maxRatio ifs hn < 1 := 
   rw [← hi]
   exact ifs.hRatiosLtOne i
 
+omit [CompleteSpace X] in
 /-- Hausdorff 距离的达到引理：非空紧集 B 中，infEDist 由某点达到。 -/
 theorem exists_edist_eq_infEDist_of_isCompact {B : Set X} (hB : B.Nonempty)
     (hBc : IsCompact B) (z : X) : ∃ w ∈ B, edist z w = infEDist z B := by

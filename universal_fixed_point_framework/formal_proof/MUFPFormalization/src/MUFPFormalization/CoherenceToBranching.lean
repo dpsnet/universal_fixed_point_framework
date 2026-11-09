@@ -452,7 +452,7 @@ theorem layerIndex_independent (l₁ l₂ : LayerIndex) (hne : l₁ ≠ l₂) :
       | LayerIndex.three => 3 | LayerIndex.four => 4) := by
   intro h
   apply hne
-  cases l₁ <;> cases l₂ <;> simp_all <;> try { exact rfl }
+  cases l₁ <;> cases l₂ <;> simp_all
 
 /-- 主动层独立性：不同 ActiveMorphismLayer 的态射类型不同。
     SpHom（1-态射）、SpTwoMorphism（2-态射）、SpThreeMorphism（3-态射）
@@ -768,7 +768,7 @@ theorem moran_closed_s_eq_exp_neg_one (s : ℝ) (hs0 : 0 < s)
     have he : Real.exp (Real.log (15 : ℝ)) = Real.exp 0 := by rw [hlog]
     have h15 : (15 : ℝ) = 1 := by
       rw [Real.exp_log (by norm_num : 0 < (15 : ℝ))] at he
-      simpa using he
+      simp at he
     norm_num at h15
   -- ln s = -1（heq 除以 ln15）
   have hlns : Real.log s = -1 := by
@@ -807,7 +807,7 @@ theorem moran_closed_unique {s : ℝ} (hs0 : 0 < s)
     2026-10-24：依赖 Real.exp → noncomputable。 -/
 noncomputable def silent_factor_c1 (d : ℝ) : ℝ := Real.exp (-3) * Real.exp (-d)
 noncomputable def silent_factor_c2 (d : ℝ) : ℝ := Real.exp (-d)
-def silent_factor_c3 (d : ℝ) : ℝ := 1
+def silent_factor_c3 (_d : ℝ) : ℝ := 1
 
 /-- T1：c₃ 是唯一静默因子 = 1 的分支——
     c₁ 双重静默 < 1、c₂ 单重静默 < 1、c₃ 无静默 = 1（权重排序 S₃S₄ < S₄ < 1）。 -/

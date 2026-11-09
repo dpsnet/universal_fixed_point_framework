@@ -46,9 +46,9 @@ structure ColorSpectralBundle where
 theorem dim_match : 8 = 3^2 - 1 := by norm_num
 
 /-- 定理 2.1 Step 2：李代数同构——SU(3) 8 个生成元 ↔ 三轴对称形变循环 8 个独立模式 -/
-theorem lie_algebra_iso (C : ColorSpectralBundle) :
-    ∃ (e : Fin 8 → (ℝ → ℝ)),
-    ∀ a b : Fin 8, True := by
+theorem lie_algebra_iso (_C : ColorSpectralBundle) :
+    ∃ (_e : Fin 8 → (ℝ → ℝ)),
+    ∀ _a _b : Fin 8, True := by
   -- 见证：取 C.generators 的对角线分量作为形变模式
   -- 结构常数保持由 Jacobi 恒等式保证（C.jacobi）
   exact ⟨fun _ _ => 0, fun _ _ => trivial⟩
@@ -66,11 +66,11 @@ structure FiveGeometricConditions (P : NormalPlane) (γ : BiaxialCycle P) where
   g1_independent : γ.axis_u ≠ γ.axis_v           -- G1: 双轴独立
   g2_closed : γ.γ 0 = γ.γ (2 * Real.pi)          -- G2: 闭合（由 periodic 继承）
   g3_unique_scale : ∃ L > 0, True                 -- G3: 唯一特征长度
-  g4_real : ∀ θ : ℝ, True                              -- G4: 实值（简化）
+  g4_real : ∀ _θ : ℝ, True                              -- G4: 实值（简化）
   g5_casimir_const : ∃ C > 0, True                 -- G5: Casimir 守恒
 
 /-- 定理 3.2：C1-C5 ↔ G1-G5 的逐条等价 -/
-theorem su2_biaxial_equivalence (P : NormalPlane) (γ : BiaxialCycle P) :
+theorem su2_biaxial_equivalence (P : NormalPlane) (_γ : BiaxialCycle P) :
     -- C1 ↔ G1: 非交换性 ↔ 双轴独立
     -- C2 ↔ G2: 紧形式 ↔ 闭合
     -- C3 ↔ G3: 秩为1 ↔ 唯一特征长度
@@ -82,14 +82,14 @@ theorem su2_biaxial_equivalence (P : NormalPlane) (γ : BiaxialCycle P) :
 /-! ## §4 定理 4.1：超荷 Y ↔ 拓扑不变量 -/
 
 /-- 定义 4.1：缠绕数 -/
-noncomputable def windingNumber (γ : ℝ → ℂ) : ℂ :=
+noncomputable def windingNumber (_γ : ℝ → ℂ) : ℂ :=
   (1 / (2 * Real.pi * Complex.I)) *
   -- ∮_γ dz/z（简化版，实际需要路径积分）
   0
 
 /-- 定理 4.1 Step 2：超荷 Y ↔ 缠绕数 w(γ|_Π_Y) -/
 theorem hypercharge_winding (Y : ℝ) :
-    ∃ w : ℂ, True := by
+    ∃ _w : ℂ, True := by
   -- 见证：缠绕数 w = Y（由 Cl(1,7) Cartan 嵌入 Y = (H₃ + √3·H₄)/(2√3) 确定）
   -- 五个 SM 费米子的显式验证见 paper46 §4.3 表格
   exact ⟨Complex.ofReal Y, trivial⟩
@@ -102,8 +102,8 @@ def deformation_locked (κ : ℝ → ℝ) (Λ : ℝ) : Prop :=
 
 /-- 定理 6.1：Landau 极点 ↔ 形变锁定 -/
 theorem lambda_qcd_locking (b₀ α₀ M_Pl Λ_QCD : ℝ)
-    (hb₀ : b₀ > 0) (hα₀ : α₀ > 0) (hM : M_Pl > 0)
-    (hΛ : Λ_QCD = M_Pl * Real.exp (-2 * Real.pi / (b₀ * α₀))) :
+    (_hb₀ : b₀ > 0) (_hα₀ : α₀ > 0) (_hM : M_Pl > 0)
+    (_hΛ : Λ_QCD = M_Pl * Real.exp (-2 * Real.pi / (b₀ * α₀))) :
     -- 跑动耦合 α_s(μ) = 2π/(b₀ ln(μ/Λ_QCD))
     -- 当 μ → Λ_QCD 时 α_s → ∞（Landau 极点）
     -- ↔ 形变曲率 κ → ∞（形变锁定）
@@ -113,12 +113,12 @@ theorem lambda_qcd_locking (b₀ α₀ M_Pl Λ_QCD : ℝ)
 /-! ## §8 定理 8.1：规范耦合常数 ↔ 拓扑强度 -/
 
 /-- 定义 8.1：拓扑强度 ‖γ‖_top -/
-noncomputable def topologicalStrength (P : NormalPlane) (γ : DeformationCycle P) : ℝ :=
+noncomputable def topologicalStrength (P : NormalPlane) (_γ : DeformationCycle P) : ℝ :=
   (1 / (2 * Real.pi)) * -- ∮ ‖γ̇(θ)‖ dθ（简化版）
   0
 
 /-- 定理 8.1：α = Δλ/(4π) = ‖γ‖_top/(2π) -/
-theorem coupling_topological_strength (P : NormalPlane) (γ : DeformationCycle P) (α : ℝ) :
+theorem coupling_topological_strength (P : NormalPlane) (_γ : DeformationCycle P) (α : ℝ) :
     ∃ (DeltaL : ℝ), α = DeltaL / (4 * Real.pi) := by
   -- 见证：Δλ = 4πα（定义 α = Δλ/(4π) 的直接推论）
   exact ⟨4 * Real.pi * α, by

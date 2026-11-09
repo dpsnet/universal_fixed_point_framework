@@ -118,7 +118,7 @@ theorem test_universal_IC : ∀ (R₁ R₂ : RecObj), isolationConstraint R₁ R
 -- 3.1. The Moran equation is correctly defined
 theorem test_hausdorffDimensionEq_def (c : ℝ) (hpos : 0 < c) (hlt : c < 1) (d : ℝ) :
     hausdorffDimensionEq (IFS.mk 1 (fun _ => fun x : ℝ => c * x) (fun _ => ⟨c, le_of_lt hpos⟩) (by
-      intro i
+      intro _i
       refine ⟨?_, ?_⟩
       · exact_mod_cast hlt
       · apply LipschitzWith.of_dist_le_mul
@@ -127,7 +127,7 @@ theorem test_hausdorffDimensionEq_def (c : ℝ) (hpos : 0 < c) (hlt : c < 1) (d 
         rw [Real.dist_eq, Real.dist_eq]
         rw [← mul_sub]
         rw [abs_mul, abs_of_nonneg (le_of_lt hpos)])
-      (by intro i; exact_mod_cast hpos) (by intro i; exact_mod_cast hlt)) d = c ^ d - 1 := by
+      (by intro _i; exact_mod_cast hpos) (by intro _i; exact_mod_cast hlt)) d = c ^ d - 1 := by
   -- ⟨c, _⟩ : ℝ≥0 的强制转换定义性等于 c，指数为变量时 rfl 直接闭合
   simp [hausdorffDimensionEq]
   rfl
@@ -150,7 +150,7 @@ theorem test_legendreTransform_convex (f : ℝ → ℝ) (hf : ConvexOn ℝ Set.u
 theorem test_pressure_at_zero_simple : topologicalPressure
     (IFS.mk 1 (fun _ => fun x : ℝ => 0.5 * x) (fun _ => ⟨0.5, by norm_num⟩)
       (by
-        intro i
+        intro _i
         refine ⟨?_, ?_⟩
         · exact_mod_cast (by norm_num : (0.5 : ℝ) < 1)
         · apply LipschitzWith.of_dist_le_mul
@@ -159,8 +159,8 @@ theorem test_pressure_at_zero_simple : topologicalPressure
           rw [Real.dist_eq, Real.dist_eq]
           rw [← mul_sub]
           rw [abs_mul, abs_of_nonneg (by norm_num)])
-      (by intro i; exact_mod_cast (by norm_num : (0 : ℝ) < 0.5))
-      (by intro i; exact_mod_cast (by norm_num : (0.5 : ℝ) < 1))) 0 = Real.log 1 := by
+      (by intro _i; exact_mod_cast (by norm_num : (0 : ℝ) < 0.5))
+      (by intro _i; exact_mod_cast (by norm_num : (0.5 : ℝ) < 1))) 0 = Real.log 1 := by
   simp [topologicalPressure]
 
 -- 4.3. pressure ↔ Hausdorff dimension connection

@@ -124,7 +124,7 @@ theorem dual_channel_both_periodic {X EM GW : RecObj} (dc : DualChannel X EM GW)
     证明：RecHom 的迭代交换性 φ(step^[n] x) = step^[n](φ(x))，
     若 step^[n] x = x 则 step^[n](φ(x)) = φ(x)。 -/
 theorem dual_channel_shared_period {X EM GW : RecObj} (dc : DualChannel X EM GW)
-    (x : X.T) (n : ℕ) (hn : n ≥ 1) (hp : (X.step^[n]) x = x) :
+    (x : X.T) (n : ℕ) (_hn : n ≥ 1) (hp : (X.step^[n]) x = x) :
     (EM.step^[n]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x ∧
     (GW.step^[n]) (dc.gw_channel.toFun x) = dc.gw_channel.toFun x := by
   have h_em : (EM.step^[n]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x := by
@@ -220,7 +220,7 @@ inductive BranchingType where
 theorem T04_branching_invariance {X EM GW : RecObj}
     (C : FixedPointCluster X) (hEcc : C.isEccentric)
     (dc : DualChannel X EM GW) :
-    ∀ (bt : BranchingType),
+    ∀ (_bt : BranchingType),
     ∃ (x : X.T), x ∈ C.carrier ∧
     ∃ (n : ℕ), n ≥ 1 ∧
     (EM.step^[n]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x ∧
@@ -287,7 +287,7 @@ theorem T04_dual_eventually_periodic {X EM GW : RecObj}
 theorem T04_periodic_state_dual_transmit {X EM GW : RecObj}
     (dc : DualChannel X EM GW)
     (C : FixedPointCluster X) (x : X.T)
-    (hIn : x ∈ C.carrier) (hPer : X.isPeriodic x) :
+    (_hIn : x ∈ C.carrier) (hPer : X.isPeriodic x) :
     ∃ (n : ℕ), n ≥ 1 ∧
     (EM.step^[n]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x ∧
     (GW.step^[n]) (dc.gw_channel.toFun x) = dc.gw_channel.toFun x := by
@@ -301,7 +301,7 @@ theorem T04_periodic_state_dual_transmit {X EM GW : RecObj}
     物理对应：EM 和 GW 信号的倍频分量保持同步。 -/
 theorem T04_harmonic_sync {X EM GW : RecObj}
     (dc : DualChannel X EM GW) (x : X.T) (n : ℕ)
-    (hn : n ≥ 1) (hp : (X.step^[n]) x = x) (k : ℕ) :
+    (_hn : n ≥ 1) (hp : (X.step^[n]) x = x) (k : ℕ) :
     (EM.step^[n*k]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x ∧
     (GW.step^[n*k]) (dc.gw_channel.toFun x) = dc.gw_channel.toFun x := by
   have h_em : (EM.step^[n*k]) (dc.em_channel.toHom.toFun x) = dc.em_channel.toHom.toFun x := by
@@ -531,8 +531,8 @@ theorem branching_ratio_continuous {cc₁ cc₂ : ChannelCoupling}
     cc₁.branchingRatio.value = cc₂.branchingRatio.value := by
   unfold ChannelCoupling.branchingRatio
   by_cases hc : cc₁.em_strength + cc₁.gw_strength = 0
-  · simp [hc, h_em, h_gw]
-  · simp [hc, h_em, h_gw]
+  · simp [h_em, h_gw]
+  · simp [h_em, h_gw]
 
 -- ============================================================
 -- §10. 三通道耦合系统（EM + GW + Neutrino）
@@ -617,7 +617,7 @@ inductive TripleBranchingType where
 theorem triple_branching_invariance {X EM GW Neutrino : RecObj}
     (C : FixedPointCluster X) (hEcc : C.isEccentric)
     (tc : TripleChannel X EM GW Neutrino) :
-    ∀ (bt : TripleBranchingType),
+    ∀ (_bt : TripleBranchingType),
     (∃ (x : X.T), x ∈ C.carrier ∧
      ∃ (n : ℕ), n ≥ 1 ∧
      (EM.step^[n]) (tc.em_channel.toHom.toFun x) = tc.em_channel.toHom.toFun x ∧

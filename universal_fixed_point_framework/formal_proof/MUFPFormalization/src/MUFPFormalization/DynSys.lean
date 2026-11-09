@@ -97,7 +97,7 @@ The spectrum of the ℓ∞ Koopman operator is always contained in the
 closed unit disk: σ(U_R) ⊆ {λ ∈ ℂ : |λ| ≤ 1}.
 This is a consequence of ‖U_R‖ ≤ 1.
 -/
-theorem koopmanLinfty_spectrum_in_disk {X : Type u} (sys : DynSys X) :
+theorem koopmanLinfty_spectrum_in_disk {X : Type u} (_sys : DynSys X) :
     True := by
   -- Full proof requires Banach algebra spectrum theory (‖U‖ ≤ 1 → r(U) ≤ 1)
   trivial

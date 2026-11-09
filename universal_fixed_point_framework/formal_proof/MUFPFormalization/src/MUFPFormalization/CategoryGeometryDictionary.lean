@@ -127,7 +127,7 @@ structure CategoryGeometryDictionary (E : Type u) [AddCommGroup E] [Module ℝ E
 /-- **逐层方向类 → 子空间映射**（字典核心）：对任意层 ℓ（1/2/3/4），
     法向 ↦ V（垂直）、水平 ↦ H（水平）——字典对四层一致成立。 -/
 def CategoryGeometryDictionary.directionMap {E : Type u} [AddCommGroup E] [Module ℝ E]
-    (D : CategoryGeometryDictionary E) (ℓ : LayerIndex) : CellDirection → Submodule ℝ E
+    (D : CategoryGeometryDictionary E) (_ℓ : LayerIndex) : CellDirection → Submodule ℝ E
   | CellDirection.normal => D.V
   | CellDirection.horizontal => D.H
 

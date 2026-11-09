@@ -154,8 +154,8 @@ instance bundleProdCategory : Category SpectralBundleProd where
 abbrev π_Tμ : SpectralBundleProd ⥤ TempRGObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 4: Cartesian Lifts (Grothendieck Fibration)
@@ -189,7 +189,7 @@ noncomputable instance π_Tμ_fibration : GrothendieckFibration π_Tμ :=
 /-- Pullback functor along ι_T (fix μ): restricts a product bundle to Temp.
     Note (2026-08-04): obj 的 base 应为原始 Temp 坐标 X.base.T（原代码误用
     嵌入对象 (ι_T μ₀).obj X.base.T : TempRGObj，与陪域 SpectralBundleTemp 不符）。 -/
-noncomputable def pullback_ι_T (μ₀ : RGObj) : SpectralBundleProd ⥤ SpectralBundleTemp where
+noncomputable def pullback_ι_T (_μ₀ : RGObj) : SpectralBundleProd ⥤ SpectralBundleTemp where
   obj X :=
     { base := X.base.T
       fiberData := { n := X.fiberData.n, A := X.fiberData.A }
@@ -210,7 +210,7 @@ noncomputable def pullback_ι_T (μ₀ : RGObj) : SpectralBundleProd ⥤ Spectra
 
 /-- Pullback functor along ι_μ (fix T): restricts a product bundle to RG.
     Note (2026-08-04): obj 的 base 应为原始 RG 坐标 X.base.μ（同 pullback_ι_T 的修正）。 -/
-noncomputable def pullback_ι_μ (T₀ : TempObj) : SpectralBundleProd ⥤ SpectralBundleRG where
+noncomputable def pullback_ι_μ (_T₀ : TempObj) : SpectralBundleProd ⥤ SpectralBundleRG where
   obj X :=
     { base := X.base.μ
       fiberData := { n := X.fiberData.n, A := X.fiberData.A }
@@ -346,8 +346,8 @@ theorem diagObjEmbedding_isDiag (D : DiagObj) : isDiag (diagObjEmbedding.obj D) 
 noncomputable def diagProjection : DiagObj ⥤ TempObj where
   obj D := D.T
   map f := f.tempMap
-  map_id D := rfl
-  map_comp f g := rfl
+  map_id _D := rfl
+  map_comp _f _g := rfl
 
 /-- The diagonal embedding followed by projection gives identity on Temp. -/
 theorem diag_projection_section (T : TempObj) :
@@ -531,7 +531,7 @@ noncomputable def constWeaveSection : WeaveSection :=
 /-- A parameterized weave section with tunable spectral data (n, A).
     This generalizes the BCS section to arbitrary matrix data. -/
 noncomputable def paramWeaveSection (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ)
-    (hA : A * A = A) : WeaveSection :=
+    (_hA : A * A = A) : WeaveSection :=
   { σ :=
       { obj := fun (X : TempRGObj) => 
           { base := X, fiberData := { n := n, A := A } }

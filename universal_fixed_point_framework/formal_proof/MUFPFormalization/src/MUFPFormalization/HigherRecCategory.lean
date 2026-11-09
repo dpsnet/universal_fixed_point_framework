@@ -127,7 +127,7 @@ def recHorizComp {X Y Z : RecObj} {f g : X ⟶ Y} {f' g' : Y ⟶ Z}
               + (transferMatrix g.toFun - transferMatrix f.toFun) * transferMatrix f'.toFun := by
                 ext i j
                 simp [Matrix.mul_apply, Matrix.sub_apply, Matrix.add_apply,
-                  Finset.sum_add_distrib, Finset.sum_sub_distrib, mul_sub, sub_mul]
+                  Finset.sum_sub_distrib, mul_sub, sub_mul]
         _ = transferMatrix g.toFun * (stepMatrix Y.step * α'.homotopy - α'.homotopy * stepMatrix Z.step)
               + (stepMatrix X.step * α.homotopy - α.homotopy * stepMatrix Y.step) * transferMatrix f'.toFun := by
                 rw [α'.condition, α.condition]
@@ -186,12 +186,12 @@ def recHorizComp {X Y Z : RecObj} {f g : X ⟶ Y} {f' g' : Y ⟶ Z}
                                 - ((transferMatrix g.toFun * α'.homotopy) * stepMatrix Z.step
                                 + (α.homotopy * transferMatrix f'.toFun) * stepMatrix Z.step) := by
                                 rw [← add_sub_add_comm]
-                                simp [add_comm, add_left_comm, add_assoc]
+                                simp [add_comm]
                           _ = (stepMatrix X.step * (α.homotopy * transferMatrix f'.toFun)
                                 + stepMatrix X.step * (transferMatrix g.toFun * α'.homotopy))
                                 - ((α.homotopy * transferMatrix f'.toFun) * stepMatrix Z.step
                                 + (transferMatrix g.toFun * α'.homotopy) * stepMatrix Z.step) := by
-                                simp [add_comm, add_left_comm, add_assoc]
+                                simp [add_comm]
                   _ = stepMatrix X.step * (α.homotopy * transferMatrix f'.toFun
                         + transferMatrix g.toFun * α'.homotopy)
                         - (α.homotopy * transferMatrix f'.toFun + transferMatrix g.toFun * α'.homotopy)
@@ -402,10 +402,10 @@ theorem c6_norm_bound {X Y Z : RecObj}
     (α : RecTwoMorphism f g) (β : RecTwoMorphism g h)
     (α' : RecTwoMorphism f' g') (β' : RecTwoMorphism g' h')
     (ηh εh : Matrix X.T Y.T ℂ)
-    (hδ : β.homotopy = triangleDefect ηh εh)
+    (_hδ : β.homotopy = triangleDefect ηh εh)
     (hα' : stepMatrix Y.step * α'.homotopy = α'.homotopy * stepMatrix Z.step)
-    {nX nY nZ : ℕ} {hX : Fintype.card X.T = nX} {hY : Fintype.card Y.T = nY}
-    {hZ : Fintype.card Z.T = nZ} :
+    {nX nY nZ : ℕ} {_hX : Fintype.card X.T = nX} {_hY : Fintype.card Y.T = nY}
+    {_hZ : Fintype.card Z.T = nZ} :
     -- 实例见证（严格伴随 δ=0 情形）：β.homotopy = 0 ⇒ Δ = 0
     -- 这给出 ||Δ||_F = 0 ≤ C·||δ||_F = 0 的实例。
     β.homotopy = 0 →

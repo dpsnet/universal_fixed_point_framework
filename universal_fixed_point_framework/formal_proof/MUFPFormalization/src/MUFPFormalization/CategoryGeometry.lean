@@ -48,7 +48,7 @@ universe u
 A Rec object R is on the boundary ∂𝐑𝐞𝐜_D if its spectral condition is marginal:
 the Koopman operator U_R has an eigenvalue at 1 (so -log|μ| = 0).
 -/
-def isBoundaryOfRecD (R : RecObj) : Prop :=
+def isBoundaryOfRecD (_R : RecObj) : Prop :=
   True  -- Marginal spectral condition (full definition requires operator theory)
 
 /--
@@ -63,7 +63,7 @@ in the finite prototype.
 Note: The perturbation δR is a modification of the step function.
 The linearity holds because stepMatrix ∘ (step + ε·δstep) = stepMatrix(step) + ε·stepMatrix(δstep).
 -/
-noncomputable def directionalDerivative (R δR : RecObj) : Matrix (Fin (Fintype.card δR.T)) (Fin (Fintype.card δR.T)) ℂ :=
+noncomputable def directionalDerivative (_R δR : RecObj) : Matrix (Fin (Fintype.card δR.T)) (Fin (Fintype.card δR.T)) ℂ :=
   let stepδR := Fintype.equivFin δR.T ∘ δR.step ∘ (Fintype.equivFin δR.T).symm
   stepMatrix stepδR
 

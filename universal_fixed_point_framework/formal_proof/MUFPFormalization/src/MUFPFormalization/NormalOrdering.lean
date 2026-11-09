@@ -133,9 +133,9 @@ theorem normalOrderedFlow_finite {n : ℕ} [NeZero n] (Â₀ Ĝ : Matrix (Fin n)
           NormedSpace.exp (t • Ĝ : Matrix (Fin n) (Fin n) ℂ)
           = NormedSpace.exp ((-t • Ĝ) + (t • Ĝ) : Matrix (Fin n) (Fin n) ℂ) := by
               have hc : Commute ((-t) • Ĝ : Matrix (Fin n) (Fin n) ℂ) (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) := by
-                simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • Ĝ : Matrix (Fin n) (Fin n) ℂ)).neg_left
+                simp [Commute, SemiconjBy, smul_neg]
               rw [Matrix.exp_add_of_commute ((-t) • Ĝ : Matrix (Fin n) (Fin n) ℂ) (t • Ĝ : Matrix (Fin n) (Fin n) ℂ) hc]
-      _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by simp [smul_neg]
+      _ = NormedSpace.exp (0 : Matrix (Fin n) (Fin n) ℂ) := by simp []
       _ = 1 := by simp
 
 /--
@@ -144,7 +144,7 @@ The normal ordering removes divergent contributions,
 leaving only the physical β-function that matches SM values.
 -/
 noncomputable def normalOrderedBeta {n : ℕ} (g : ℂ) (A_F : Matrix (Fin n) (Fin n) ℂ) : ℂ :=
-  let Ĝ := g • A_F
+  let _Ĝ := g • A_F
   -- The normal-ordered commutator :[Ĝ, Â_t]: = [Ĝ, Â_t] - ⟨[Ĝ, Â_t]⟩_0
   -- The contraction ⟨[Ĝ, Â_t]⟩_0 = 0 for commutators of gauge generators
   -- So normal ordering does not modify the β-function at one-loop order

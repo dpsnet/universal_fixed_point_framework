@@ -190,8 +190,8 @@ theorem contraction_volume_decreasing (cs : CosmicState)
     (cs.evolve min_volume h_min_pos).volume < cs.volume := by
   rw [CosmicState.evolve, h_contracting]
   rw [dite_eq_left h_above_min]
-  <;> simp
-  <;> omega
+  all_goals simp
+  all_goals omega
 
 /-- 反弹的存在性：当体积达到最小值时，方向从收缩变为膨胀。
     物理含义：宇宙不会坍缩到奇点，而是在最小体积处反弹。
@@ -209,8 +209,8 @@ theorem bounce_exists (cs : CosmicState)
     linarith
   rw [CosmicState.evolve, h_contracting]
   rw [dite_eq_right h_not_above]
-  <;> simp [h_at_min]
-  <;> omega
+  all_goals simp [h_at_min]
+
 
 /-- 膨胀相中的体积单调递增。
     在膨胀阶段，每一步体积都增大。 -/
@@ -219,8 +219,8 @@ theorem expansion_volume_increasing (cs : CosmicState)
     (h_expanding : cs.evolution_dir = CosmicEvolutionDirection.expansion) :
     (cs.evolve min_volume h_min_pos).volume > cs.volume := by
   rw [CosmicState.evolve, h_expanding]
-  <;> simp
-  <;> omega
+  all_goals simp
+
 
 /-- 演化保持体积正性（不变量）。
     单步演化后体积仍然为正。 -/
@@ -271,15 +271,15 @@ theorem minimum_volume_invariant (cs : CosmicState)
         by_cases h_above : cs_n.volume > min_volume
         · -- 收缩且体积 > min_volume：体积 - 1，但仍然 ≥ min_volume
           rw [dite_eq_left h_above]
-          <;> simp <;> omega
+          all_goals simp; omega
         · -- 收缩且体积 = min_volume：反弹 → 膨胀，体积 + 1
           have h_eq : cs_n.volume = min_volume := by omega
           rw [dite_eq_right h_above]
-          <;> simp [h_eq] <;> omega
+          all_goals simp [h_eq]
       | expansion =>
         -- 膨胀相：体积 + 1 > 前一步 ≥ min_volume
         simp
-        <;> omega
+        all_goals omega
     unfold CosmicState.evolveN
     exact h_main
 
@@ -344,8 +344,8 @@ theorem bounce_entropy_non_decreasing (cs : CosmicState)
 
     注：完整形式化需要因果结构的"连续性"定义，
     这里给出概念性表述。 -/
-theorem bounce_causalStructure_continuous (cs : CosmicState)
-    (min_volume : ℕ) (h_min_pos : 0 < min_volume) :
+theorem bounce_causalStructure_continuous (_cs : CosmicState)
+    (min_volume : ℕ) (_h_min_pos : 0 < min_volume) :
     -- 反弹前后因果结构连续演化
     -- 没有信息丢失，物理定律全程有效
     True := by trivial
@@ -356,8 +356,8 @@ theorem bounce_causalStructure_continuous (cs : CosmicState)
 
     这与黑洞信息佯谬的精神一致——
     在量子引力中信息应该是守恒的。 -/
-theorem bounce_information_conservation (cs : CosmicState)
-    (min_volume : ℕ) (h_min_pos : 0 < min_volume) :
+theorem bounce_information_conservation (_cs : CosmicState)
+    (min_volume : ℕ) (_h_min_pos : 0 < min_volume) :
     -- 反弹前后信息守恒（无信息丢失）
     -- 这是量子引力的基本要求
     True := by trivial
@@ -615,7 +615,7 @@ theorem cascade_expansion_gt_one_of_exists (pc : PinchCascade)
 
     关键点：`List.foldr_cons` 确保 RHS 的 `foldr (pe :: ps)` 被展开，
     否则 `linarith` 无法识别未展开的 `foldr` 项。 -/
-noncomputable def cascade_eFolds_additive (pc : PinchCascade) :
+theorem cascade_eFolds_additive (pc : PinchCascade) :
     pc.eFolds =
     pc.events.foldr (fun pe acc => acc + Real.log pe.expansion_factor) 0 := by
   unfold PinchCascade.eFolds PinchCascade.totalExpansion
@@ -653,7 +653,7 @@ noncomputable def cascade_eFolds_additive (pc : PinchCascade) :
 
     这是优雅退出的基础——
     暴胀不是无限进行的，而是在有限层后自然停止。 -/
-theorem cascade_finite (pc : PinchCascade) :
+theorem cascade_finite (_pc : PinchCascade) :
     True := by trivial
 
 /-- 优雅退出：当级联耗尽时，暴胀结束。
@@ -663,7 +663,7 @@ theorem cascade_finite (pc : PinchCascade) :
     - 标准暴胀需要 reheating 或慢滚结束
     - MUFPF 暴胀由级联有限性自然结束
     - 无需引入额外机制来终止暴胀 -/
-theorem elegant_exit (pc : PinchCascade) :
+theorem elegant_exit (_pc : PinchCascade) :
     -- 级联有限 → 暴胀有限持续 → 自然结束
     -- 不需要 reheating 或慢滚近似
     True := by trivial
@@ -676,7 +676,7 @@ theorem elegant_exit (pc : PinchCascade) :
     当每层膨胀因子 ~ e（自然底）时，
     N ≈ cascade_length（级联层数 ≈ e-folds 数）。
     因此约 60 层捏点即可满足宇宙学要求。 -/
-theorem inflation_duration_determined (pc : PinchCascade) :
+theorem inflation_duration_determined (_pc : PinchCascade) :
     -- eFolds = sum of ln(f_i)
     -- 若每层 f_i ~ e，则 eFolds ~ cascade_length
     -- 约 60 层即可满足 N ≥ 60
@@ -727,7 +727,7 @@ theorem cascade_totalFluctuation_nonneg (pc : PinchCascade) :
 
     注：完整形式化需要功率谱的精确定义，
     这里给出概念性表述。 -/
-theorem cascade_scale_invariance (pc : PinchCascade) :
+theorem cascade_scale_invariance (_pc : PinchCascade) :
     -- 级联自相似结构 → 近似标度不变谱
     -- P(k) ∝ k^{n_s - 1}，n_s ≈ 1
     -- 与 Planck 观测一致（n_s = 0.965 ± 0.004）
@@ -883,7 +883,7 @@ theorem darkMatter_plus_darkEnergy_eq_total (cdd : CosmicDefectDistribution) :
   simp [CosmicDefectDistribution.darkMatter,
         CosmicDefectDistribution.darkEnergy,
         CosmicDefectDistribution.total]
-  <;> rfl
+
 
 /-- 暗物质 = 束缚态缺陷。
     物理含义：暗物质的本质是聚集在引力势阱中的结构性缺陷。
@@ -927,7 +927,7 @@ theorem darkEnergy_eq_diffuseDefect (cdd : CosmicDefectDistribution) :
 
     这是暗物质 → 暗能量的转化机制。 -/
 def defectPhaseTransition_bound_to_diffuse (cdd : CosmicDefectDistribution)
-    (released : ℕ) (h_released : released ≤ cdd.bound_defect) :
+    (released : ℕ) (_h_released : released ≤ cdd.bound_defect) :
     CosmicDefectDistribution :=
   {
     bound_defect := cdd.bound_defect - released,
@@ -944,7 +944,7 @@ def defectPhaseTransition_bound_to_diffuse (cdd : CosmicDefectDistribution)
 
     这是暗能量 → 暗物质的转化机制。 -/
 def defectPhaseTransition_diffuse_to_bound (cdd : CosmicDefectDistribution)
-    (captured : ℕ) (h_captured : captured ≤ cdd.diffuse_defect) :
+    (captured : ℕ) (_h_captured : captured ≤ cdd.diffuse_defect) :
     CosmicDefectDistribution :=
   {
     bound_defect := cdd.bound_defect + captured,
@@ -966,7 +966,7 @@ theorem phaseTransition_conserves_total (cdd : CosmicDefectDistribution)
     cdd.total := by
   simp [CosmicDefectDistribution.total,
         defectPhaseTransition_bound_to_diffuse]
-  <;> omega
+  all_goals omega
 
 /-- 相变保持总缺陷量不变（弥散→束缚方向）。
     物理含义：暗能量 → 暗物质的转化也守恒。 -/
@@ -976,7 +976,7 @@ theorem phaseTransition_conserves_total_reverse (cdd : CosmicDefectDistribution)
     cdd.total := by
   simp [CosmicDefectDistribution.total,
         defectPhaseTransition_diffuse_to_bound]
-  <;> omega
+  all_goals omega
 
 /-- 暗物质→暗能量转化：束缚态减少，弥散态增加。 -/
 theorem bound_to_diffuse_decreases_bound (cdd : CosmicDefectDistribution)
@@ -984,7 +984,7 @@ theorem bound_to_diffuse_decreases_bound (cdd : CosmicDefectDistribution)
     (defectPhaseTransition_bound_to_diffuse cdd released h_released).bound_defect <
     cdd.bound_defect := by
   simp [defectPhaseTransition_bound_to_diffuse]
-  <;> omega
+  all_goals omega
 
 /-- 暗物质→暗能量转化：弥散态增加。 -/
 theorem bound_to_diffuse_increases_diffuse (cdd : CosmicDefectDistribution)
@@ -992,7 +992,7 @@ theorem bound_to_diffuse_increases_diffuse (cdd : CosmicDefectDistribution)
     (defectPhaseTransition_bound_to_diffuse cdd released h_released).diffuse_defect >
     cdd.diffuse_defect := by
   simp [defectPhaseTransition_bound_to_diffuse]
-  <;> omega
+  all_goals omega
 
 -- ============================================================
 -- §20.3 巧合问题与宇宙学常数问题

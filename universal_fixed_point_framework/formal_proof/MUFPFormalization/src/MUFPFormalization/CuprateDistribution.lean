@@ -89,8 +89,8 @@ theorem YBCO_params_valid : validCuprateParams YBCO_params := by
     w_n(T) = ((T-T_c)/(T*-T_c))^β  for T_c ≤ T ≤ T*
     w_n(T) = 1                     for T > T* -/
 noncomputable def weight_normal (p : CuprateParams) (T : ℝ) : ℝ :=
-  if hT : T < p.T_c then 0
-  else if hT' : T > p.T_star then 1
+  if _hT : T < p.T_c then 0
+  else if _hT' : T > p.T_star then 1
   else ((T - p.T_c) / (p.T_star - p.T_c)) ^ p.β_PG
 
 /-- Gap component weight w_g(T) = 1 - w_n(T): fraction of spectral weight
@@ -167,8 +167,8 @@ theorem weight_normal_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : 
     μ_T = Δλ_min^(c)·(1-(T-T_c)/(T*-T_c))  for T_c ≤ T ≤ T*
     μ_T = 0                   for T > T* -/
 noncomputable def mu_T (p : CuprateParams) (T : ℝ) : ℝ :=
-  if hT : T < p.T_c then p.dlam_min_c
-  else if hT' : T > p.T_star then 0
+  if _hT : T < p.T_c then p.dlam_min_c
+  else if _hT' : T > p.T_star then 0
   else p.dlam_min_c * (1 - (T - p.T_c) / (p.T_star - p.T_c))
 
 /-- Standard deviation σ_T of the Gaussian envelope.

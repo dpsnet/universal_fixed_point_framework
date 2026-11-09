@@ -39,7 +39,7 @@ to a common value g_U, reflecting the Cl(1,7) algebraic unification.
 
 /-- Running coupling constant as a function of energy scale t.
     In the spectral framework, t = ln(M_Pl / μ) where μ is the RG scale. -/
-noncomputable def runningCoupling (g₀ α β : ℝ) (t : ℝ) : ℝ :=
+noncomputable def runningCoupling (g₀ α _β : ℝ) (t : ℝ) : ℝ :=
   g₀ / (1 + α * g₀ * t / (2 * Real.pi))
 
 /-- Unified force generator: a linear combination of individual force generators.
@@ -101,9 +101,9 @@ noncomputable def multiForceSpectralFlow {n : ℕ} (A₀ : Matrix (Fin n) (Fin n
     数学内容：A(t) = exp(tG)·A₀·exp(-tG)，Tr(A_S·A(t)) = Tr(A_S·A₀)。
     阻塞：需要 A_S 与 exp(tG) 交换的证明（由 hComm 对所有生成元成立推导）。
     当前以 True 登记，等待矩阵指数交换性基础设施。 -/
-theorem noether_conservation_unified {n : ℕ} (A₀ : Matrix (Fin n) (Fin n) ℂ)
-    (A_S : Matrix (Fin n) (Fin n) ℂ) (generators : List (ℝ × Matrix (Fin n) (Fin n) ℂ))
-    (hComm : ∀ (g_A : ℝ × Matrix (Fin n) (Fin n) ℂ), g_A.2 * A_S = A_S * g_A.2) (t : ℝ) : True :=
+theorem noether_conservation_unified {n : ℕ} (_A₀ : Matrix (Fin n) (Fin n) ℂ)
+    (A_S : Matrix (Fin n) (Fin n) ℂ) (_generators : List (ℝ × Matrix (Fin n) (Fin n) ℂ))
+    (_hComm : ∀ (g_A : ℝ × Matrix (Fin n) (Fin n) ℂ), g_A.2 * A_S = A_S * g_A.2) (_t : ℝ) : True :=
   trivial
 
 end MUFPF

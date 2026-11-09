@@ -138,9 +138,9 @@ def OpenSet.meet (U V : OpenSet) : OpenSet :=
 structure SheafCondition (E : SpectralPresheaf) : Prop where
   gluing : ∀ (U : OpenSet), U.U.Nonempty → ∀ (cover : OpenCover U)
     (sections : ∀ (V : OpenSet), V ∈ cover.family → SpectralData)
-    (compatible : ∀ (V₁ V₂ : OpenSet) (hV₁ : V₁ ∈ cover.family) (hV₂ : V₂ ∈ cover.family),
-      E.restrict (U := V₁) (V := V₁.meet V₂) (fun x hx => hx.1) (sections V₁ hV₁) =
-      E.restrict (U := V₂) (V := V₁.meet V₂) (fun x hx => hx.2) (sections V₂ hV₂)),
+    (_compatible : ∀ (V₁ V₂ : OpenSet) (hV₁ : V₁ ∈ cover.family) (hV₂ : V₂ ∈ cover.family),
+      E.restrict (U := V₁) (V := V₁.meet V₂) (fun _x hx => hx.1) (sections V₁ hV₁) =
+      E.restrict (U := V₂) (V := V₁.meet V₂) (fun _x hx => hx.2) (sections V₂ hV₂)),
     ∃ (s : SpectralData),
       ∀ (V : OpenSet) (hV : V ∈ cover.family),
         E.restrict (cover.subset V hV) s = sections V hV
@@ -152,8 +152,8 @@ structure SheafCondition (E : SpectralPresheaf) : Prop where
 /-- The constant spectral presheaf: the same Cl(1,7) spectral data on every open set.
     This is the canonical spectral data for vacuum (Minkowski) spacetime. -/
 noncomputable def constSpectralPresheaf : SpectralPresheaf where
-  sections U := { s | s.n = 2 }
-  restrict h s := s
+  sections _U := { s | s.n = 2 }
+  restrict _h s := s
 
 /-- Theorem: The constant spectral presheaf satisfies the sheaf condition.
     
@@ -230,7 +230,7 @@ structure EinsteinTensor (U : OpenSet) where
   /-- The Ricci scalar as a function of spectral data. -/
   ricci_scalar : SpectralData → ℝ
   /-- Trace of Einstein tensor = -R (standard GR identity G^μ_μ = -R). -/
-  trace_identity : ∀ (s : SpectralData), True := by trivial
+  trace_identity : ∀ (_s : SpectralData), True := by trivial
 
 /-- The spectral stress-energy tensor T_μν.
     In this prototype, the matter content determines the spectral curvature. -/
@@ -281,9 +281,9 @@ theorem MinkowskiSheaf_is_sheaf : SheafCondition MinkowskiSheaf :=
 /-- The spectral gap section: assigns the Kerr spectral gap to each open set.
     On sets containing the singularity, the gap approaches zero (matrix-dependent
     gap via spectralDataGapMatrix). -/
-noncomputable def KerrGapPresheafSection (a M : ℝ) (haM : a ≤ M) (hM : M > 0) : SpectralPresheaf where
-  sections U := { s | s.n = 2 ∧ spectralDataGapMatrix s = spectralGap 8 * (1 - (a ^ 2 / M ^ 2)) }
-  restrict h s := s
+noncomputable def KerrGapPresheafSection (a M : ℝ) (_haM : a ≤ M) (_hM : M > 0) : SpectralPresheaf where
+  sections _U := { s | s.n = 2 ∧ spectralDataGapMatrix s = spectralGap 8 * (1 - (a ^ 2 / M ^ 2)) }
+  restrict _h s := s
 
 /-- Kerr gap section（restrict = id）满足层条件。
     ※ 勘误（2026-08-09，自主完善）：原 kerr_section_singularity 声称

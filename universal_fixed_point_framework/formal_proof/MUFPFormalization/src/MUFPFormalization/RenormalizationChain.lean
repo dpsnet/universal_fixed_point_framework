@@ -45,7 +45,7 @@ theorem adG_preserves_hermitian {n : ℕ} (G A : Matrix (Fin n) (Fin n) ℂ)
     (G * A - A * G).IsHermitian := by
   unfold Matrix.IsHermitian
   rw [Matrix.conjTranspose_sub, Matrix.conjTranspose_mul, Matrix.conjTranspose_mul, hA, hG]
-  simp [mul_neg, neg_mul, sub_eq_add_neg, add_comm, add_left_comm, add_assoc]
+  simp [mul_neg, neg_mul, sub_eq_add_neg, add_comm]
 
 /-- F2: 所有阶迭代对易子 ad_G^n(A) 保 Hermitian——
     圈数-对易子阶数对应 β^(n) ↔ ad_G^n(A_t) 的代数闭合（定理 3.2）。 -/

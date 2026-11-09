@@ -193,7 +193,7 @@ def tridiagonalEigenvalueProblem {n : ℕ} (d : TridiagonalData n) (ev : ℂ) (v
     1. Thomas algorithm solves (M - σI)·w = v in O(N) per iteration
     2. Inverse iteration converges in constant number of iterations
     3. Total: O(N) per eigenvalue × O(1) iterations = O(N) -/
-theorem twoStringComplexity {n : ℕ} (d : TridiagonalData n) (σ : ℂ) :
+theorem twoStringComplexity {n : ℕ} (_d : TridiagonalData n) (_σ : ℂ) :
     True := by
   -- The full formal proof would show:
   -- 1. Thomas forward sweep: n-1 operations (O(N))
@@ -207,7 +207,7 @@ theorem twoStringComplexity {n : ℕ} (d : TridiagonalData n) (σ : ℂ) :
 /-- Comparison with full eigenvalue decomposition: O(N^3).
     When N ≫ 1, the O(N) two-string method is significantly faster
     than O(N^3) full decomposition for single eigenvalue extraction. -/
-theorem complexityComparison {n : ℕ} (h : n > 10) : True := by
+theorem complexityComparison {n : ℕ} (_h : n > 10) : True := by
   -- O(N) << O(N^3) for large N
   trivial
 

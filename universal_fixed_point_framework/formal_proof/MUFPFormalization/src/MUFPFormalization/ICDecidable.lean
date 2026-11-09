@@ -55,7 +55,7 @@ it reduces to computing and comparing spectral radii.
 noncomputable def spectralScaleCompatibleDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) : Bool :=
   let r₁ := spectralRadius A₁
   let r₂ := spectralRadius A₂
-  if h : r₂ = 0 then true
+  if _h : r₂ = 0 then true
   else r₁ / r₂ ≤ 1
 
 /--
@@ -66,7 +66,7 @@ This is a linear system in n² variables, decidable by Gaussian elimination.
 For the general case, this is semi-decidable: existence of bounded
 solutions to operator equations is not computable in general.
 -/
-def morphismExtendableDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) : Bool :=
+def morphismExtendableDecidable {n : ℕ} (_A₁ _A₂ : Matrix (Fin n) (Fin n) ℂ) : Bool :=
   -- In the finite prototype, T = 0 always works (trivial solution).
   -- The non-trivial case requires solving A₁T - TA₂ = 0.
   true
@@ -75,7 +75,7 @@ def morphismExtendableDecidable {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) �
 Topological compatibility is trivially decidable in the finite prototype
 (所有有限维空间都是 Polish 空间，拓扑性质自动可判定；spectralRadius 已在 IsolationConstraints 中声明)。
 -/
-def topologicallyCompatibleDecidable {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Bool :=
+def topologicallyCompatibleDecidable {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : Bool :=
   true
 
 end MUFPF

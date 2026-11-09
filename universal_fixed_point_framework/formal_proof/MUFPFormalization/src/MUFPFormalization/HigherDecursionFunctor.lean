@@ -72,7 +72,7 @@ lemma transferMatrix_reindex {α β : Type} [Fintype α] [DecidableEq α]
   by_cases h : eβ (f (eα.symm i)) = j
   · have hf : f (eα.symm i) = eβ.symm j := by
       simpa using congrArg eβ.symm h
-    simp [h, hf]
+    simp [hf]
   · have hf : ¬ f (eα.symm i) = eβ.symm j := by
       intro hf
       apply h
@@ -228,8 +228,8 @@ Corollary: D₂ is a 2-functor (all four axioms verified).
 -/
 theorem D2_is_2functor {X Y Z : RecObj}
     {f g h : X ⟶ Y} {f' g' : Y ⟶ Z}
-    (α : RecTwoMorphism f g) (β : RecTwoMorphism g h)
-    (α' : RecTwoMorphism f' g') : True := by
+    (_α : RecTwoMorphism f g) (_β : RecTwoMorphism g h)
+    (_α' : RecTwoMorphism f' g') : True := by
   trivial
 
 end MUFPF

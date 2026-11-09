@@ -123,8 +123,7 @@ theorem strict_implies_asymptotic {n : ℕ} (Df : Matrix (Fin n) (Fin n) ℝ)
   haveI : Invertible (det Df) := invertibleOfNonzero h_det_ne_zero'
   haveI : Invertible Df := Matrix.invertibleOfDetInvertible (A := Df)
   have h_inv : Df * (Df⁻¹) = 1 := by
-    simpa using (Matrix.mul_inv_cancel_right_of_invertible
-      (B := (1 : Matrix (Fin n) (Fin n) ℝ)))
+    simp
   -- P * Df = 0 右乘 Df⁻¹
   have hP_mul : (P * Df) * Df⁻¹ = 0 * Df⁻¹ := by rw [hstrict]
   -- 左侧：P * (Df * Df⁻¹) = P * 1 = P
@@ -164,7 +163,7 @@ theorem asymptotic_not_implies_strict :
     refine {
       is_proj := {
         idempotent := by
-          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_fin_two]
+          funext i j; fin_cases i <;> fin_cases j <;> simp [P]
         symmetric := by
           funext i j; fin_cases i <;> fin_cases j <;> simp [P]
       }
@@ -180,7 +179,7 @@ theorem asymptotic_not_implies_strict :
     unfold strictSilence
     intro hzero
     have h01 : (P * Df) 0 1 = 0 := by rw [hzero]; rfl
-    have hcalc : (P * Df) 0 1 = 1 := by simp [P, Df, Matrix.mul_fin_two]
+    have hcalc : (P * Df) 0 1 = 1 := by simp [P, Df]
     rw [hcalc] at h01
     norm_num at h01
 
@@ -240,7 +239,7 @@ theorem silence_not_right_ideal :
     refine {
       is_proj := {
         idempotent := by
-          funext i j; fin_cases i <;> fin_cases j <;> simp [P, Matrix.mul_fin_two]
+          funext i j; fin_cases i <;> fin_cases j <;> simp [P]
         symmetric := by
           funext i j; fin_cases i <;> fin_cases j <;> simp [P]
       }
@@ -251,7 +250,7 @@ theorem silence_not_right_ideal :
     }
   · -- strictSilence Df P
     unfold strictSilence
-    funext i j; fin_cases i <;> fin_cases j <;> simp [P, Df, Matrix.mul_fin_two]
+    funext i j; fin_cases i <;> fin_cases j <;> simp [P, Df]
   · -- ¬strictSilence (Dg * Df) P
     unfold strictSilence
     intro hzero
@@ -261,7 +260,7 @@ theorem silence_not_right_ideal :
     -- P·([[1,0],[0,0]]) = [[1,0],[0,0]]·[[1,0],[0,0]] = [[1,0],[0,0]]
     -- 所以 (P·(Dg·Df))[0,0] = 1
     have hcalc : (P * (Dg * Df)) 0 0 = 1 := by
-      simp [P, Dg, Df, Matrix.mul_fin_two]
+      simp [P, Dg, Df]
     rw [hcalc] at h00
     norm_num at h00
 
@@ -274,14 +273,14 @@ theorem silence_not_right_ideal :
     严格静默 = 1，原二值判据的连续推广。 -/
 noncomputable def silenceDegree {m n : ℕ} (Df : Matrix (Fin m) (Fin n) ℝ)
     (P : Matrix (Fin m) (Fin m) ℝ) : ℝ :=
-  if h : Df = 0 then 1
+  if _h : Df = 0 then 1
   else 1 - (Matrix.frobeniusNorm (P * Df)) / (Matrix.frobeniusNorm Df)
 
 /-- 可见性函数（定义 R7）：v(f) = ||P_V D(f)|| / ||D(f)|| ∈ [0,1]。
     v(f) = 1 - S_mor(f)。 -/
 noncomputable def visibility {m n : ℕ} (Df : Matrix (Fin m) (Fin n) ℝ)
     (P : Matrix (Fin m) (Fin m) ℝ) : ℝ :=
-  if h : Df = 0 then 0
+  if _h : Df = 0 then 0
   else (Matrix.frobeniusNorm (P * Df)) / (Matrix.frobeniusNorm Df)
 
 /-- 三级分层的类型定义：静默严格性分级（strict/asymptotic/epsilon）。
@@ -317,8 +316,8 @@ def contractiveSemigroup {n : ℕ} (Df : ℕ → Matrix (Fin n) (Fin n) ℝ) : P
     这一额外假设。本形式化中给出的是无条件成立的算子范数衰减版本。 -/
 theorem semigroup_closure_asymptotic_silence {n : ℕ} (Df : ℕ → Matrix (Fin n) (Fin n) ℝ)
     (P : Matrix (Fin n) (Fin n) ℝ) (hsemigroup : semigroupLaw Df)
-    (hcontractive : contractiveSemigroup Df)
-    (C γ : ℝ) (hpos_γ : 0 < γ)
+    (_hcontractive : contractiveSemigroup Df)
+    (C γ : ℝ) (_hpos_γ : 0 < γ)
     (hbound : ∀ t : ℕ, Matrix.frobeniusNorm (P * Df t) ≤ C * Real.exp (-γ * (t : ℝ)) *
       Matrix.frobeniusNorm (Df t)) :
     ∀ t s : ℕ, Matrix.frobeniusNorm (P * Df (t + s)) ≤
@@ -418,7 +417,7 @@ theorem mechanism_I_contraction_entrywise {k : ℕ} [NeZero k] (c : Fin k → �
       rw [← Matrix.mul_assoc]
       rfl
     _ = |∑ l : Fin k, (P i l * (c l) ^ n) * T l j| := by
-      simp [Matrix.mul_apply, Matrix.diagonal_apply, Matrix.diagonal_apply_eq]
+      simp [Matrix.mul_apply, Matrix.diagonal_apply]
     -- P 只在 i 行 i 列非零（由 hP_diagonal_proj）：求和仅剩 l = i 项
     _ = |(P i i * (c i) ^ n) * T i j| := by
       have hsum : (∑ l : Fin k, (P i l * (c l) ^ n) * T l j) = (P i i * (c i) ^ n) * T i j := by

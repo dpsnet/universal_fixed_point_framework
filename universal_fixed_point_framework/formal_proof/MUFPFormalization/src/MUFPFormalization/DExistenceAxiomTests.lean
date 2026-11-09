@@ -98,12 +98,12 @@ def systemT5_multiFail : GeneralRecObj where
 /-- **T1a**: T1 系统在盲区1 中 -/
 theorem T1a_in_blindSpot1 : inBlindSpot1 systemT1_spectralFail := by
   unfold inBlindSpot1 generalHypotheses systemT1_spectralFail
-  simp [false_and]
+  simp []
 
 /-- **T1b**: D 对 T1 系统无定义 -/
 theorem DET_T1b_D_undefined : DUndefined systemT1_spectralFail := by
   unfold DUndefined DPartial systemT1_spectralFail
-  simp [false_and]
+  simp []
 
 /-- **T1c**: 谱静默对 T1 系统不成立 -/
 theorem T1c_silence_not_applicable :
@@ -111,7 +111,7 @@ theorem T1c_silence_not_applicable :
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial systemT1_spectralFail at h_eq
-  simp [false_and] at h_eq
+  simp [] at h_eq
 
 #eval IO.println "[DExistenceTests] ✅ T1: 谱不可分解 → D 无定义 + 静默不适用"
 
@@ -149,13 +149,13 @@ theorem T3a_in_blindSpot1 : inBlindSpot1 systemT3_correspondenceFail := by
   unfold inBlindSpot1 generalHypotheses systemT3_correspondenceFail
   -- generalHypotheses = True ∧ True ∧ False = False
   -- ¬False = True
-  simp [true_and, and_false]
+  simp [and_false]
 
 /-- **T3b**: D 对 T3 系统无定义 -/
 theorem T3b_D_undefined : DUndefined systemT3_correspondenceFail := by
   unfold DUndefined DPartial systemT3_correspondenceFail
   -- 条件: True ∧ True ∧ False = False
-  simp [true_and, and_false]
+  simp [and_false]
 
 /-- **T3c**: 谱静默对 T3 系统不成立 -/
 theorem T3c_silence_not_applicable :
@@ -163,7 +163,7 @@ theorem T3c_silence_not_applicable :
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial systemT3_correspondenceFail at h_eq
-  simp [true_and, and_false] at h_eq
+  simp [and_false] at h_eq
 
 #eval IO.println "[DExistenceTests] ✅ T3: 无谱对应 → D 无定义 + 静默不适用"
 
@@ -174,13 +174,13 @@ theorem T3c_silence_not_applicable :
 /-- **T4a**: T4 系统不在盲区1 中 -/
 theorem T4a_not_in_blindSpot1 : ¬ inBlindSpot1 systemT4_allPass := by
   unfold inBlindSpot1 generalHypotheses systemT4_allPass
-  simp [true_and]
+  simp []
 
 /-- **T4b**: D 对 T4 系统有定义 -/
 theorem T4b_D_defined : DDefined systemT4_allPass := by
   unfold DDefined DPartial systemT4_allPass
   -- 条件: True ∧ True ∧ True = True → some ... ≠ none
-  simp [true_and]
+  simp []
 
 /-- **T4c**: 谱静默对 T4 系统可判定（D 存在时静默有意义） -/
 theorem T4c_silence_decidable :
@@ -199,12 +199,12 @@ theorem T4c_silence_decidable :
 theorem T5a_in_blindSpot1 : inBlindSpot1 systemT5_multiFail := by
   unfold inBlindSpot1 generalHypotheses systemT5_multiFail
   -- generalHypotheses = False ∧ False ∧ True = False
-  simp [false_and, and_false]
+  simp []
 
 /-- **T5b**: D 对 T5 系统无定义 -/
 theorem T5b_D_undefined : DUndefined systemT5_multiFail := by
   unfold DUndefined DPartial systemT5_multiFail
-  simp [false_and, and_false]
+  simp []
 
 #eval IO.println "[DExistenceTests] ✅ T5: 多重失败 → D 无定义"
 

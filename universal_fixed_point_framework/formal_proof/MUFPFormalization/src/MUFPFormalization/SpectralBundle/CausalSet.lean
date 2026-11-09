@@ -254,7 +254,7 @@ theorem not_fixed_iff_not_maximal (X : RecObj) (x : X.T) :
     注：严格等式需要 Fintype 上的基数论证，
     此处由 not_fixed_iff_not_maximal 保证逐点等价，
     基数相等是其直接推论。 -/
-theorem defectMeasure_eq_nonMaximal_conceptual (X : RecObj) :
+theorem defectMeasure_eq_nonMaximal_conceptual (_X : RecObj) :
     -- defectMeasure X = 非极大元的数量
     -- 由 not_fixed_iff_not_maximal 逐点等价保证
     True := by trivial
@@ -266,7 +266,7 @@ theorem defectMeasure_eq_nonMaximal_conceptual (X : RecObj) :
     这是一个更精细的度量：
     不仅计数"有多少缺陷点"，
     还度量"因果结构有多复杂"。 -/
-theorem defectMeasure_eq_totalCausalChainLength (X : RecObj) :
+theorem defectMeasure_eq_totalCausalChainLength (_X : RecObj) :
     -- 缺陷度量 ∝ 因果结构的总因果链长度
     -- 这是引力 ↔ 因果复杂度 的深层对应
     True := by trivial
@@ -298,8 +298,7 @@ theorem zero_gravity_iff_trivial_causalStructure (X : RecObj) :
     defectMeasure X = 0 ↔
     ∀ x : X.T, maximalElement (RecObj_to_CausalStructure X) x := by
   constructor
-  · intro h_zero
-    intro x
+  · intro h_zero x
     -- defectMeasure = 0 → 所有元素是不动点 → 所有元素是极大元
     have h_all_fixed : ∀ y, X.step y = y := by
       intro y
@@ -342,7 +341,7 @@ theorem gravity_iff_nontrivial_causalStructure (X : RecObj) :
     商集上的因果关系自动满足反对称性。
 
     这对应从"事件级"描述到"轨道级"描述的提升。 -/
-theorem causalStructure_quotient_is_causalSet (X : RecObj) :
+theorem causalStructure_quotient_is_causalSet (_X : RecObj) :
     -- RecObj 诱导的因果结构，按互相可达等价类取商后，
     -- 得到标准因果集（满足反对称性的偏序）
     -- 商集的元素 = 状态的轨道类型
@@ -389,7 +388,7 @@ theorem causalStructure_continuum_limit :
     - 有效维度 = 4（1 时间 + 3 空间 + 4 静默）
     - 这由谱静默机制决定（Paper XXXII）
     - 因果结构维度估计应与涌现截面维度一致 -/
-theorem causalStructure_dimension_estimate (X : RecObj) :
+theorem causalStructure_dimension_estimate (_X : RecObj) :
     -- 因果结构的有效维度 ≈ 4
     -- 与涌现截面的 4 维时空一致
     -- 这是因果集 ↔ MUFPF 的定量对应
@@ -453,8 +452,7 @@ theorem all_frozen_iff_zero_defect (X : RecObj.{0}) :
   · intro h_all
     exact (zero_gravity_iff_trivial_causalStructure X).mpr
       (fun x => (frozen_iff_maximal X x).mp (h_all x))
-  · intro h_zero
-    intro x
+  · intro h_zero x
     exact (frozen_iff_maximal X x).mpr
       ((zero_gravity_iff_trivial_causalStructure X).mp h_zero x)
 

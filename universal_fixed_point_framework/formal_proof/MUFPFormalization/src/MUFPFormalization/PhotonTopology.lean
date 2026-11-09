@@ -497,7 +497,7 @@ theorem adjoint_unique {n : ℕ} {M B1 B2 : Matrix (Fin n) (Fin n) ℂ}
 theorem conjTranspose_satisfies_adjoint {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
     IsAdjoint M M.conjTranspose := by
   intro v w
-  simp [IsAdjoint, stdInner, Matrix.mulVec, dotProduct, map_sum, map_mul,
+  simp [stdInner, Matrix.mulVec, dotProduct, 
     Finset.mul_sum, Finset.sum_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl

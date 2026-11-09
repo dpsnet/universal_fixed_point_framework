@@ -72,7 +72,7 @@ theorem test_contractive_dual_exists (n : ℕ) (eifs : ExpansiveIFS n) :
 -- ============================================================
 
 -- Lyapunov exponent is defined (finite-dimensional prototype)
-theorem test_lyapunovExponent_def (R : RecObj) (v : R.T) :
+theorem test_lyapunovExponent_def (R : RecObj) (_v : R.T) :
     Nonempty ℝ := by
   -- In finite-dimensional case, the Lyapunov exponent is approximated
   -- by the log of step matrix eigenvalues
@@ -87,7 +87,7 @@ theorem test_lyapunovExponent_def (R : RecObj) (v : R.T) :
 theorem test_hausdorffDimensionEq_formula (c : ℝ) (hpos : 0 < c) (hlt : c < 1) (d : ℝ) :
     hausdorffDimensionEq (IFS.mk 1 (fun _ => fun x : ℝ => c * x) (fun _ => ⟨c, hpos.le⟩)
       (by
-        intro i
+        intro _i
         refine ⟨?_, ?_⟩
         · exact hlt
         · apply LipschitzWith.of_dist_le_mul
@@ -96,7 +96,7 @@ theorem test_hausdorffDimensionEq_formula (c : ℝ) (hpos : 0 < c) (hlt : c < 1)
           rw [Real.dist_eq, Real.dist_eq]
           rw [← mul_sub]
           rw [abs_mul, abs_of_nonneg (le_of_lt hpos)])
-      (by intro i; exact hpos) (by intro i; exact hlt)) d = c ^ d - 1 := by
+      (by intro _i; exact hpos) (by intro _i; exact hlt)) d = c ^ d - 1 := by
   simp [hausdorffDimensionEq]
   rfl
 
@@ -240,7 +240,7 @@ theorem test_SU_N_antisymm (A B : Matrix (Fin 2) (Fin 2) ℂ) :
   abel
 
 -- The D functor preserves commutators (trivial in finite prototype)
-theorem test_D_preserves_commutator_statement (f g : RecObj ⟶ RecObj) : True := by
+theorem test_D_preserves_commutator_statement (_f _g : RecObj ⟶ RecObj) : True := by
   trivial
 
 -- ============================================================
@@ -250,7 +250,7 @@ theorem test_D_preserves_commutator_statement (f g : RecObj ⟶ RecObj) : True :
 -- Specific domain-pair IC verification
 theorem test_IC_Kerr_IFS_trivial :
     isolationConstraint (KerrToRecObj (KerrConfig.mk 0.5 2 ⟨by norm_num, by norm_num⟩ (by omega)))
-      (IFSToRecObj (IFSConfig.mk 2 (fun _ => 0.5) (by norm_num) (fun i => ⟨by norm_num, by norm_num⟩))) := by
+      (IFSToRecObj (IFSConfig.mk 2 (fun _ => 0.5) (by norm_num) (fun _i => ⟨by norm_num, by norm_num⟩))) := by
   apply universal_IC_coverage_finite
 
 -- ============================================================

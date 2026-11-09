@@ -79,9 +79,9 @@ instance scaleCategory : Category EnergyScale where
           _ = g.r * Y.Λ := by rw [f.eq]
           _ = Z.Λ := g.eq
     }
-  id_comp := by intro X Y f; apply ScaleHom.ext <;> simp
-  comp_id := by intro X Y f; apply ScaleHom.ext <;> simp
-  assoc := by intro W X Y Z f g h; apply ScaleHom.ext <;> ring
+  id_comp := by intro X Y f; apply ScaleHom.ext; simp
+  comp_id := by intro X Y f; apply ScaleHom.ext; simp
+  assoc := by intro W X Y Z f g h; apply ScaleHom.ext; ring
 
 /- Note: The energy scale category Λ is isomorphic to RGObj via the identity map on the
     positive reals. Full functorial identification is deferred — the EFT slice category
@@ -138,8 +138,8 @@ instance eftSliceCategory : Category EFTSliceObj where
 abbrev cod_functor : EFTSliceObj ⥤ EnergyScale where
   obj X := X.Λ
   map f := f.scaleMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 4: Grothendieck Fibration Structure
@@ -199,8 +199,8 @@ theorem S1_section_is_section (Λ : EnergyScale) :
 
     ※ 开放项登记：mathlib 的 IsCartesian 为三参数形式（p f φ），严格陈述依赖
     FiberedCategory 的复合结构；此处以 True 占位（预存伪证的诚实处理）。 -/
-theorem S2_cartesian_characterization (X Y : EFTSliceObj) (g : X ⟶ Y)
-    (hScale : X.Λ = Y.Λ) : True := by
+theorem S2_cartesian_characterization (X Y : EFTSliceObj) (_g : X ⟶ Y)
+    (_hScale : X.Λ = Y.Λ) : True := by
   trivial
 
 /-- S3: Braiding silence. At boundary scales (Λ → 0 or Λ → ∞), the fiber structure
@@ -264,7 +264,7 @@ noncomputable def D_hat_functor : EFTSliceObj ⥤ SpectralBundleRG where
 
     ※ 开放项登记（2026-08-07）：max 到 Λ₁/Λ₂ 的投影态射需 r = Λ₁/max ≤ 1，
     仅在 Λ₁ ≥ Λ₂ 时成立；一般情形的拉回投影以占位声明。 -/
-noncomputable def scalePullback (Λ₁ Λ₂ Λ : EnergyScale) (f : Λ₁ ⟶ Λ) (g : Λ₂ ⟶ Λ) :
+noncomputable def scalePullback (Λ₁ Λ₂ Λ : EnergyScale) (_f : Λ₁ ⟶ Λ) (_g : Λ₂ ⟶ Λ) :
     EnergyScale :=
   { Λ := max Λ₁.Λ Λ₂.Λ
     pos := by
@@ -307,8 +307,8 @@ noncomputable def scalePullback_snd (Λ₁ Λ₂ Λ : EnergyScale) (f : Λ₁ �
     cod(g) : Λ₁ → Λ₂ is an isomorphism in Λ, i.e., Λ₁ = Λ₂.
 
     ※ 开放项登记：同 S2_cartesian_characterization，占位声明。 -/
-theorem S2_cartesian_proper (X Y : EFTSliceObj) (g : X ⟶ Y)
-    (hScale_eq : X.Λ.Λ = Y.Λ.Λ) : True := by
+theorem S2_cartesian_proper (X Y : EFTSliceObj) (_g : X ⟶ Y)
+    (_hScale_eq : X.Λ.Λ = Y.Λ.Λ) : True := by
   trivial
 
 /-- S3: Physical boundary singularities.
@@ -318,7 +318,7 @@ theorem S2_cartesian_proper (X Y : EFTSliceObj) (g : X ⟶ Y)
 theorem S3_boundary_IR (Λ : EnergyScale) (hIR : Λ.Λ ≤ 0) : False := by
   linarith [Λ.pos]
 
-theorem S3_boundary_UV (Λ : EnergyScale) : True := by
+theorem S3_boundary_UV (_Λ : EnergyScale) : True := by
   -- At arbitrarily high scales, the EFT description eventually requires
   -- UV completion. In the spectral framework, this corresponds to the
   -- M_Pl-scale cutoff where the Cl(1,7) spectral gap becomes relevant.

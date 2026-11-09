@@ -38,7 +38,7 @@ Numerical bounds (0.121 < Δλ_min < 0.123) are verified in `paper36_spectral_ga
 /-- Normalized A_GR eigenvalues from SU(2) representation theory.
     λ_k = √{k(k+1)} / √{k_max(k_max+1)} for k = 1, ..., k_max. -/
 noncomputable def agEigenvalue (k k_max : ℕ) : ℝ :=
-  if h : k ≥ 1 ∧ k ≤ k_max then
+  if _h : k ≥ 1 ∧ k ≤ k_max then
     Real.sqrt ((k : ℝ) * ((k : ℝ) + 1)) / Real.sqrt ((k_max : ℝ) * ((k_max : ℝ) + 1))
   else
     0
@@ -54,7 +54,7 @@ theorem spectralGap_at_kmax8 : spectralGap 8 = (Real.sqrt 6 - Real.sqrt 2) / Rea
   unfold spectralGap agEigenvalue
   have h72pos : Real.sqrt (72 : ℝ) ≠ 0 := by positivity
   simp [show Real.sqrt ((2 : ℝ) * ((2 : ℝ) + 1)) = Real.sqrt 6 by norm_num,
-        show Real.sqrt ((1 : ℝ) * ((1 : ℝ) + 1)) = Real.sqrt 2 by norm_num,
+        
         show Real.sqrt ((8 : ℝ) * ((8 : ℝ) + 1)) = Real.sqrt 72 by norm_num]
   field_simp [h72pos]
   ring

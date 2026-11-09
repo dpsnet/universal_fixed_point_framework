@@ -109,7 +109,7 @@ def scaleInvariantSpectrum (A : ℝ) (h_pos : 0 < A) : PowerSpectrum :=
     谱指数偏离 1 一个小量 ε > 0。
 
     与 Planck 2018 一致：n_s = 0.9649 → ε ≈ 0.035。 -/
-noncomputable def nearScaleInvariantSpectrum (A ε : ℝ) (h_A : 0 < A) (h_ε : 0 < ε) : PowerSpectrum :=
+noncomputable def nearScaleInvariantSpectrum (A ε : ℝ) (h_A : 0 < A) (_h_ε : 0 < ε) : PowerSpectrum :=
   {
     P := fun k => A * k^(-ε),
     spectral_index := 1 - ε,
@@ -165,7 +165,7 @@ noncomputable def pinchCascade_to_perturbations (pc : PinchCascade)
     - 幅度 A_s = 平均涨落幅度
     - P(k) = A_s × k^{n_s - 1} -/
 noncomputable def pinchCascade_to_powerSpectrum (pc : PinchCascade)
-    (ε : ℝ) (h_ε : 0 ≤ ε) : PowerSpectrum :=
+    (ε : ℝ) (_h_ε : 0 ≤ ε) : PowerSpectrum :=
   let avg_fluct : ℝ :=
     if pc.events.isEmpty then 0
     else pc.totalFluctuation / pc.events.length
@@ -193,8 +193,8 @@ noncomputable def pinchCascade_to_powerSpectrum (pc : PinchCascade)
     物理含义：没有捏点就没有扰动。 -/
 theorem empty_cascade_zero_amplitude :
     (pinchCascade_to_powerSpectrum emptyCascade 0 (by linarith)).amplitude_s = 0 := by
-  simp [pinchCascade_to_powerSpectrum, emptyCascade, PinchCascade.totalFluctuation]
-  <;> rfl
+  simp [pinchCascade_to_powerSpectrum, emptyCascade]
+
 
 -- ============================================================
 -- §21.3 功率谱标度不变性
@@ -218,10 +218,10 @@ theorem empty_cascade_zero_amplitude :
     物理含义：当级联严格自相似时（每层涨落幅度相同，
     膨胀因子相同），谱指数 n_s = 1。 -/
 theorem exactly_scale_invariant (pc : PinchCascade)
-    (h_uniform : ∀ pe ∈ pc.events, pe.fluctuation = pe.fluctuation) :
+    (_h_uniform : ∀ pe ∈ pc.events, pe.fluctuation = pe.fluctuation) :
     (pinchCascade_to_powerSpectrum pc 0 (by linarith)).spectral_index = 1 := by
   simp [pinchCascade_to_powerSpectrum]
-  <;> rfl
+
 
 /-- 谱指数偏离 1 的量 = ε。
     物理含义：n_s = 1 - ε，
@@ -234,7 +234,7 @@ theorem spectral_index_deviation (pc : PinchCascade)
     (ε : ℝ) (h_ε : 0 ≤ ε) :
     (pinchCascade_to_powerSpectrum pc ε h_ε).spectral_index = 1 - ε := by
   simp [pinchCascade_to_powerSpectrum]
-  <;> rfl
+
 
 /-- ε ≥ 0 时谱指数 ≤ 1（红斜或标度不变）。
     物理含义：MUFPF 预言红斜谱（n_s ≤ 1），
@@ -321,8 +321,8 @@ structure PrimordialGravitationalWave where
     MUFPF 预言：r = 引力波产生效率 × 捏点幅度比 -/
 noncomputable def tensorToScalarRatio (gw : PrimordialGravitationalWave)
     (pp : PrimordialPerturbation)
-    (h_same_k : gw.k = pp.k)
-    (h_pp_pos : 0 < pp.amplitude) : ℝ :=
+    (_h_same_k : gw.k = pp.k)
+    (_h_pp_pos : 0 < pp.amplitude) : ℝ :=
   gw.tensor_amplitude / pp.amplitude
 
 /-- 张标比非负。
@@ -523,7 +523,7 @@ structure CMBAngularPowerSpectrum where
     C_l ≈ A_s × T₀² × l(l+1) / (2π)
     其中 A_s 是原初功率谱幅度，T₀ 是转移函数值。 -/
 noncomputable def primordial_to_CMBAngular (ps : PowerSpectrum) (tf : TransferFunction)
-    (D_A : ℝ) (h_DA : 0 < D_A) (h_amp_pos : 0 < ps.amplitude_s) : CMBAngularPowerSpectrum :=
+    (D_A : ℝ) (_h_DA : 0 < D_A) (h_amp_pos : 0 < ps.amplitude_s) : CMBAngularPowerSpectrum :=
   {
     Cl := fun l => if l ≥ 2 then ps.amplitude_s * (tf.T 1)^2 * l * (l + 1) / (2 * Real.pi) else 0,
     Cl_nonneg := fun l => by

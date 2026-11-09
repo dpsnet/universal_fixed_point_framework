@@ -84,8 +84,8 @@ For a coupling g with force generator A_F:
 In the finite prototype, this is the group-theoretic core of the
 SM β-function, encoding the SU(N) structure constants.
 -/
-noncomputable def betaFunction {n : ℕ} (g : ℂ) (A_F : Matrix (Fin n) (Fin n) ℂ) : ℂ :=
-  let comm := A_F * A_F - A_F * A_F  -- [A_F, A_F] = 0 trivially
+noncomputable def betaFunction {n : ℕ} (_g : ℂ) (A_F : Matrix (Fin n) (Fin n) ℂ) : ℂ :=
+  let _comm := A_F * A_F - A_F * A_F  -- [A_F, A_F] = 0 trivially
   -- The non-trivial β-function requires the quantized commutator
   -- [A_F, A_F]_q where A_F is promoted to an operator-valued field.
   -- In the finite prototype, we return 0 and note the full theory.

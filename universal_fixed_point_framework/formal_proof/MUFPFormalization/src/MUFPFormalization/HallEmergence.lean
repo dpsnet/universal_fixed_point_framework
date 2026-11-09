@@ -86,7 +86,7 @@ import MUFPFormalization.BerryChern
 
 namespace MUFPF
 
-open Matrix Complex
+open _root_.Matrix _root_.Complex
 
 variable {n : ℕ}
 
@@ -106,7 +106,7 @@ private theorem conj_omega_pow_mul_self (n : ℕ) (i : Fin n) :
     rw [Complex.ext_iff]
     refine ⟨?_, ?_⟩
     · simp [omegaArg]
-    · simp [omegaArg, div_neg, neg_div]
+    · simp [omegaArg, neg_div]
   have hone : omega n ^ (i : ℕ) ≠ 0 := pow_ne_zero _ (Complex.exp_ne_zero _)
   rw [star_pow, hstar, inv_pow, inv_mul_cancel₀ hone]
 
@@ -120,7 +120,7 @@ theorem omega_pow (hn : 1 ≤ n) : (omega n) ^ n = 1 := by
     simp only [omegaArg]
     field_simp
   rw [hz]
-  simpa using (Complex.exp_nat_mul_two_pi_mul_I 1)
+  simp
 
 /-- 降幂引理：ω^a = ω^(a % n)（n ≥ 1）——Weyl 关系指数模约化的基础。 -/
 theorem omega_pow_mod (hn : 1 ≤ n) (a : ℕ) : omega n ^ a = omega n ^ (a % n) := by
@@ -154,7 +154,7 @@ theorem clock_shift_weyl {n : ℕ} [NeZero n] (hn : 2 ≤ n) :
 theorem clock_star_mul_self (n : ℕ) : star (clock n) * clock n = 1 := by
   ext i j
   simp only [Matrix.mul_apply, Matrix.one_apply, clock, Matrix.star_apply,
-    Matrix.diagonal_apply, apply_ite star, star_one, star_zero, mul_ite, mul_one,
+    Matrix.diagonal_apply, apply_ite star, star_zero, mul_ite, 
     mul_zero]
   have hsum : (∑ j_1 : Fin n,
         if j_1 = j then (if j_1 = i then star (omega n ^ (j_1 : ℕ)) else 0)
@@ -418,7 +418,7 @@ private theorem clock_pow (n : ℕ) (a : ℕ) :
     simp only [pow_zero, Matrix.one_apply, Matrix.diagonal_apply, zero_mul]
   | succ b ih =>
     rw [pow_succ, ih]
-    simp only [clock, Matrix.diagonal_mul_diagonal, Pi.mul_apply, Nat.succ_mul, pow_add]
+    simp only [clock, Matrix.diagonal_mul_diagonal, Nat.succ_mul, pow_add]
 
 /-- Fin 加法交换引理：j + 1 + ofNat b = j + ofNat (b+1)（val 层的模同余搬移，
     Nat.ModEq 按定义即 % 相等，故可直接搬运 % 等式）。 -/
@@ -576,7 +576,7 @@ private theorem clock_shift_weyl_gen {n : ℕ} [NeZero n] :
       · rw [ite_eq_right hij, ite_eq_right (fun h => hij (hjj.symm ▸ h))]
     rw [hc, hs]
     have hw : omega 1 = 1 := by
-      simpa [omega, omegaArg] using (Complex.exp_nat_mul_two_pi_mul_I 1)
+      simp [omega, omegaArg]
     rw [hw]
     simp
 
@@ -769,10 +769,10 @@ theorem weyl_span_top {n : ℕ} [NeZero n] :
 -- ============================================================
 
 /-- 磁平移自由生成元：商代数 ℂ⟨U,V⟩ 的两个生成元（Fin 2 标记）。 -/
-private noncomputable def magX (n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
+private noncomputable def magX (_n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
   FreeAlgebra.ι ℂ (0 : Fin 2)
 
-private noncomputable def magY (n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
+private noncomputable def magY (_n : ℕ) : FreeAlgebra ℂ (Fin 2) :=
   FreeAlgebra.ι ℂ (1 : Fin 2)
 
 /-- 磁平移关系：XY ~ ω·YX、Xⁿ ~ 1、Yⁿ ~ 1（Landau 规范磁通对合的生成关系，
@@ -969,14 +969,14 @@ private theorem magL_mul_mem {n : ℕ} [NeZero n] {x y : magneticAlgebra n}
       exact Submodule.smul_mem _ _
         (Submodule.subset_span (Set.mem_range_self
           (magAddIdx n ((p.1 : ℕ) + (q.1 : ℕ)) ((p.2 : ℕ) + (q.2 : ℕ)))))
-    · simpa using (Submodule.zero_mem (magL n))
+    · simp
     · intro a b _ _ iha ihb
       rw [mul_add]
       exact add_mem iha ihb
     · intro r a _ iha
       rw [mul_smul_comm]
       exact Submodule.smul_mem _ _ iha
-  · simpa using (Submodule.zero_mem (magL n))
+  · simp
   · intro a b _ _ iha ihb
     rw [add_mul]
     exact add_mem iha ihb

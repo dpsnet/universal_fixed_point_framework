@@ -160,19 +160,19 @@ instance bundleKerrCategory : Category SpectralBundleKerr where
 abbrev π_Ma : SpectralBundleKerr ⥤ KerrObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 3: Horizon and Spectral Gap Functions
    ========================================================= -/
 
 /-- Outer horizon radius r₊(M, a) = M + √(M² - a²). -/
-noncomputable def horizon_r_plus (M a : ℝ) (haM : a ≤ M) : ℝ :=
+noncomputable def horizon_r_plus (M a : ℝ) (_haM : a ≤ M) : ℝ :=
   M + Real.sqrt (M ^ 2 - a ^ 2)
 
 /-- Inner horizon radius r₋(M, a) = M - √(M² - a²). -/
-noncomputable def horizon_r_minus (M a : ℝ) (haM : a ≤ M) : ℝ :=
+noncomputable def horizon_r_minus (M a : ℝ) (_haM : a ≤ M) : ℝ :=
   M - Real.sqrt (M ^ 2 - a ^ 2)
 
 /-- In the Schwarzschild limit (a = 0): r₊ = 2M, r₋ = 0. -/
@@ -196,7 +196,7 @@ theorem horizon_schwarzschild_limit (M : ℝ) (hM : M > 0) :
     ring
 
 /-- In the extreme limit (a = M): r₊ = r₋ = M (horizon degeneracy). -/
-theorem horizon_extreme_limit (M : ℝ) (hM : M > 0) :
+theorem horizon_extreme_limit (M : ℝ) (_hM : M > 0) :
     horizon_r_plus M M (le_refl _) = M ∧
     horizon_r_minus M M (le_refl _) = M := by
   constructor
@@ -206,7 +206,7 @@ theorem horizon_extreme_limit (M : ℝ) (hM : M > 0) :
     simp
 
 /-- Kerr spectral gap: Δλ_min^(Kerr) = Δλ_min⁰ · (1 - a²/M²) for slow rotation. -/
-noncomputable def kerrGap (M a : ℝ) (haM : a ≤ M) (hM : M > 0) : ℝ :=
+noncomputable def kerrGap (M a : ℝ) (_haM : a ≤ M) (_hM : M > 0) : ℝ :=
   spectralGap 8 * (1 - (a ^ 2 / (M ^ 2)))
 
 /-- At a = 0 (Schwarzschild): Δλ_min^(Kerr) = Δλ_min⁰ = spectralGap 8. -/
@@ -222,7 +222,7 @@ theorem kerrGap_extreme (M : ℝ) (hM : M > 0) :
   ring
 
 /-- The spectral gap closes linearly in (M - a) near the extreme limit. -/
-theorem kerrGap_near_extreme (M a : ℝ) (haM : a ≤ M) (hM : M > 0) (hNear : 0 < M - a) :
+theorem kerrGap_near_extreme (M a : ℝ) (haM : a ≤ M) (hM : M > 0) (_hNear : 0 < M - a) :
     kerrGap M a haM hM = spectralGap 8 * ((M - a) / M) * (1 + a / M) := by
   unfold kerrGap
   field_simp [hM.ne.symm]
@@ -286,8 +286,8 @@ noncomputable def KerrGapSection : KerrObj ⥤ SpectralBundleKerr where
       fiberMap := id
       commut := rfl
     }
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- KerrGapSection is a section of π_Ma. -/
 theorem KerrGapSection_is_section (X : KerrObj) :
@@ -440,8 +440,8 @@ noncomputable def H_functor_spin : SpinPreservingKerrObj ⥤ TempObj where
 noncomputable def forgetSpin : SpinPreservingKerrObj ⥤ KerrObj where
   obj X := X.kerr
   map f := f.kerrHom
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- Spin-preserving spectral Kerr bundle: a spectral bundle whose
     base morphisms are restricted to spin-preserving ones (r_a = r_M),

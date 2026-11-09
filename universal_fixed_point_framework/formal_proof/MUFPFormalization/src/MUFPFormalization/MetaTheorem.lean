@@ -91,11 +91,11 @@ open ExplicitAdjunction
 
 /-- (H2) 谱可分解性：Koopman 算子 U_S = exp(-A_S) 具有良定义的谱分解。
     有限维原型中自动成立（有限谱总是良定义的）。 -/
-def spectralDecomposable (S : RecObj) : Prop := True
+def spectralDecomposable (_S : RecObj) : Prop := True
 
 /-- (H4) 万有核：K_S 是万有核（点分离 RKHS）。
     有限维原型中自动成立（transferMatrix 单射保证点分离）。 -/
-def universalKernel (S : RecObj) : Prop := True
+def universalKernel (_S : RecObj) : Prop := True
 
 /-- 通用充分条件 (H1)–(H2),(H4)–(H5) 的合取。
     H1 由 RecObj.step 自动满足；H5 由 SpectralCorrespondence.lean 形式化。 -/
@@ -113,7 +113,7 @@ theorem recCommonHypotheses_auto (S : RecObj) : recCommonHypotheses S := by
 /-- (H3a) 自伴性：A_anti = (A - A*)/2 = 0，即 U_R 自伴。
     等价于 σ(A_S) ⊂ ℝ_{≥0}（定义 2.3.1）。
     有限维原型中作为占位符设为 True；无穷维情形需要算子谱理论。 -/
-def selfAdjoint (S : RecObj) : Prop := True
+def selfAdjoint (_S : RecObj) : Prop := True
 
 /-- 体制 A 的完整充分条件：通用条件 + (H3a)。 -/
 def regimeA_hypotheses (S : RecObj) : Prop :=
@@ -131,12 +131,12 @@ theorem regimeA_hypotheses_auto (S : RecObj) : regimeA_hypotheses S := by
 
 /-- (H3b) 耗散性：U_R 是压缩算子（‖U_R‖ ≤ 1）但不自伴（A_anti ≠ 0）。
     有限维原型中作为占位符设为 True。 -/
-def dissipative (S : RecObj) : Prop := True
+def dissipative (_S : RecObj) : Prop := True
 
 /-- (H3c) 解耦性：[A_sa, A_anti] = 0（正规算子条件）。
     等价于 C=1（伪谱 = 谱）。
     有限维原型中作为占位符设为 True。 -/
-def decoupled (S : RecObj) : Prop := True
+def decoupled (_S : RecObj) : Prop := True
 
 /-- 体制 B1 的完整充分条件：通用条件 + (H3b) + (H3c)。 -/
 def regimeB1_hypotheses (S : RecObj) : Prop :=
@@ -152,11 +152,11 @@ theorem regimeB1_hypotheses_auto (S : RecObj) : regimeB1_hypotheses S := by
 /-- (H3c') 耦合性：[A_sa, A_anti] ≠ 0（非正规算子条件）。
     等价于 C>1（伪谱 ⊋ 谱）。
     有限维原型中作为占位符设为 True。 -/
-def coupled (S : RecObj) : Prop := True
+def coupled (_S : RecObj) : Prop := True
 
 /-- (H3d) 辫子有效性：C < C_crit（辫子六边形公理成立）。
     有限维原型中作为占位符设为 True。 -/
-def braidingValid (S : RecObj) : Prop := True
+def braidingValid (_S : RecObj) : Prop := True
 
 /-- 体制 B2 的完整充分条件：通用条件 + (H3b) + (H3c') + (H3d)。 -/
 def regimeB2_hypotheses (S : RecObj) : Prop :=
@@ -171,7 +171,7 @@ theorem regimeB2_hypotheses_auto (S : RecObj) : regimeB2_hypotheses S := by
 
 /-- (H3e) 退化性：C ≥ C_crit（辫子六边形公理失效）。
     有限维原型中作为占位符设为 True。 -/
-def degenerate (S : RecObj) : Prop := True
+def degenerate (_S : RecObj) : Prop := True
 
 /-- 体制 C 的完整充分条件：通用条件 + (H3b) + (H3e)。 -/
 def regimeC_hypotheses (S : RecObj) : Prop :=
@@ -263,7 +263,7 @@ theorem coupling_measure_equivalence (S : RecObj) :
 
     ※ 在有限维原型中，全部假设自动成立。 -/
 theorem meta_theorem_A_self_adjoint (S : RecObj)
-    (h : regimeA_hypotheses S) :
+    (_h : regimeA_hypotheses S) :
     -- C1a: D(S) 是 Sp 中良定义的对象（由 DFunctor.obj 自动给出）
     True ∧
     -- C2a: D 在 S 处忠实
@@ -308,7 +308,7 @@ theorem meta_theorem_A_self_adjoint (S : RecObj)
     ※ D_diss/R_diss 的 Lean 形式化需要无穷维算子理论（Phase 16B）。
     当前版本以占位符标记。 -/
 theorem meta_theorem_B1_decoupled_dissipative (S : RecObj)
-    (h : regimeB1_hypotheses S) :
+    (_h : regimeB1_hypotheses S) :
     -- C1b1: D_diss(S) ∈ Sp_C（定理 7.31，待 Phase 16B）
     True ∧
     -- C2b1: D_diss 忠实（定理 7.31 步骤 3）
@@ -342,7 +342,7 @@ theorem meta_theorem_B1_decoupled_dissipative (S : RecObj)
     ※ D_diss/R_diss/辫子自然同构的 Lean 形式化需要无穷维算子理论（Phase 16B）。
     辫子幺半结构已在 Braided.lean 中形式化（recBraided）。 -/
 theorem meta_theorem_B2_coupled_dissipative (S : RecObj)
-    (h : regimeB2_hypotheses S) :
+    (_h : regimeB2_hypotheses S) :
     -- C1b2: D_diss(S) ∈ Sp_C（定理 7.31）
     True ∧
     -- C2b2: D_diss 忠实（定理 7.31 步骤 3，严格函子律）
@@ -377,7 +377,7 @@ theorem meta_theorem_B2_coupled_dissipative (S : RecObj)
 
     ※ 退化体制的 Lean 形式化待 Phase 16B。 -/
 theorem meta_theorem_C_degenerate (S : RecObj)
-    (h : regimeC_hypotheses S) :
+    (_h : regimeC_hypotheses S) :
     -- C1c: D_diss(S) ∈ Sp_C（形式上仍成立）
     True ∧
     -- C2c: D_diss 忠实（严格函子律仍成立）
@@ -401,8 +401,8 @@ theorem meta_theorem_C_degenerate (S : RecObj)
     适用体制：A（自伴）和 B1（解耦耗散），因两者 C=1。 -/
 theorem meta_corollary_AB1_cross_domain
     (R₁ R₂ : RecObj)
-    (h₁ : regimeA_hypotheses R₁)
-    (h₂ : regimeA_hypotheses R₂)
+    (_h₁ : regimeA_hypotheses R₁)
+    (_h₂ : regimeA_hypotheses R₂)
     (hIC : isolationConstraint R₁ R₂) :
     ∀ (f : R₁ ⟶ R₂), DFunctor.map f = DFunctor.map f := by
   intro f
@@ -415,9 +415,9 @@ theorem meta_corollary_AB1_cross_domain
     ※ 待 Phase 16B 形式化。 -/
 theorem meta_corollary_B2_cross_domain
     (R₁ R₂ : RecObj)
-    (h₁ : regimeB2_hypotheses R₁)
-    (h₂ : regimeB2_hypotheses R₂)
-    (hCompatible : True) :
+    (_h₁ : regimeB2_hypotheses R₁)
+    (_h₂ : regimeB2_hypotheses R₂)
+    (_hCompatible : True) :
     True := trivial
 
 /-! ## 谱等价推论 -/
@@ -429,8 +429,8 @@ theorem meta_corollary_B2_cross_domain
     来源：定理 4.3（thm43_IC_full_coverage_finite）。 -/
 theorem meta_corollary_spectral_equivalence
     (R₁ R₂ : RecObj)
-    (h₁ : regimeA_hypotheses R₁)
-    (h₂ : regimeA_hypotheses R₂)
+    (_h₁ : regimeA_hypotheses R₁)
+    (_h₂ : regimeA_hypotheses R₂)
     (hIC : isolationConstraint R₁ R₂)
     (hSame : completeSpectralInvariant R₁ = completeSpectralInvariant R₂) :
     spectralEquivalence R₁ R₂ := by

@@ -23,7 +23,7 @@ structure ReacMorphism (R₁ R₂ : NuclearConfig) where
   reactionCoord : ℝ  -- 反应坐标 ξ
 
 /-- 分子构型边界：谱间隙归零的构型 -/
-def isBoundary (R : NuclearConfig) (homo lumo : ℝ) : Prop :=
+def isBoundary (_R : NuclearConfig) (homo lumo : ℝ) : Prop :=
   lumo - homo = 0  -- δ_spec(R) = 0（HOMO-LUMO 间隙闭合）
 
 /-! ## §5.4 定义 5.9：分子构型纤维 -/
@@ -76,7 +76,7 @@ theorem cartesian_lift_exists (R₁ R₂ : NuclearConfig) (β : ℝ)
 theorem reac_fibration_is_split (R₁ R₂ : NuclearConfig) (β : ℝ)
     (H₁ : ElectronicHamiltonian R₁)
     (fiber₂ : MolecularFiber R₂ β) :
-    ∃ (fiber₁ : MolecularFiber R₁ β),
+    ∃ (_fiber₁ : MolecularFiber R₁ β),
     -- 分裂性：Cartesian 提升由谱流方程唯一确定
     True := by
   exact ⟨{

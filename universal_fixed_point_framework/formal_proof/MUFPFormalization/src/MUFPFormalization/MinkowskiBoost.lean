@@ -130,7 +130,7 @@ theorem e01_mul_e10_anticomm :
       = -(e_10 (rfl : 2 = 2) * e_01 (rfl : 2 = 2)) := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e_01, e_10, Matrix.mul_fin_two, Matrix.neg_apply]
+    simp [e_01, e_10, Matrix.neg_apply]
 
 /-- ★★ Cl(1,1) 交换子生成双曲生成元：[e_01,e_10] = e_01·e_10 − e_10·e_01 = 2·J'
     ——时空生成元交换子恰为 boost 生成元（Δ⟹群作用在时空层的实现：
@@ -148,13 +148,11 @@ theorem cl11_commutator_generates_boost :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [Jprime, Matrix.mul_apply, Pi.add_apply, Pi.smul_apply, Fin.sum_univ_two]
+    simp [Jprime, Matrix.mul_apply, Fin.sum_univ_two]
   all_goals
     try norm_num
   all_goals
     try rfl
-  all_goals
-    try native_decide
 
 /-- ★★ Dirac 平方（1+1）：(E·e_10 − p·e_01)² = (E²−p²)·1
     ——Clifford 代数表述：E²−p² 是 Dirac 算符平方的标量系数（e_10²=+1、e_01²=−1、
@@ -166,7 +164,7 @@ theorem clifford_dirac_square (E p : ℝ) :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [e_01, e_10, Matrix.mul_fin_two, smul_eq_mul]
+    simp [e_01, e_10, smul_eq_mul]
     ring
 
 /-! ## Dirac 质量谱分解（#50）
@@ -180,7 +178,7 @@ Dirac 算符在壳上分解为 ±m 两个核，质量 = Dirac 核，两互补投
     ——谱以 0 对称（±λ 本征值对；质量壳上 λ²=m² ⟹ 谱恰为 ±m）。 -/
 theorem clifford_dirac_trace_zero (E p : ℝ) :
     Matrix.trace (E • e_10 (rfl : 2 = 2) - p • e_01 (rfl : 2 = 2)) = 0 := by
-  simp [Matrix.trace, Matrix.diag, sum_fin_two, e_01, e_10, smul_eq_mul]
+  simp [Matrix.trace, Matrix.diag, e_01, e_10, smul_eq_mul]
 
 /-- ★★ 壳上零因子分解：E²−p²=m² ⟹ (D−m·1)(D+m·1)=0
     ——Dirac 算符在质量壳上分解为 ±m 两个核（零因子对；质量=Dirac 核 ±m，
@@ -192,7 +190,7 @@ theorem clifford_dirac_factorization (E p m : ℝ) (hsq : E ^ 2 - p ^ 2 = m ^ 2)
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [e_01, e_10, Matrix.mul_fin_two, smul_eq_mul, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [e_01, e_10, smul_eq_mul, Matrix.mul_apply, Fin.sum_univ_two]
     nlinarith [hsq]
 
 /-! ## 1+3 洛伦兹 boost 层（#52，SO(1,3) 显式化第一步）
@@ -339,7 +337,7 @@ theorem lorentz_commutator_Kx_Jz : K_x * J_z - J_z * K_x = -K_y := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [K_x, J_z, K_y, Matrix.mul_apply]
+    simp [K_x, J_z, K_y]
 
 /-- ★★ 洛伦兹代数非交换：[K_x,J_z] ≠ 0
     ——洛伦兹生成元非交换（与 commutator_ne_zero_iff_ne_mul 同构：
@@ -347,7 +345,7 @@ theorem lorentz_commutator_Kx_Jz : K_x * J_z - J_z * K_x = -K_y := by
 theorem lorentz_generators_nontrivial : K_x * J_z - J_z * K_x ≠ 0 := by
   intro h
   have h1 := congrArg (fun M : Matrix (Fin 4) (Fin 4) ℝ => M 0 2) h
-  simp [K_x, J_z, K_y] at h1
+  simp [K_x, J_z] at h1
 
 /-! ## Cl(1,3) 六生成元完整李代数（#54）
 
@@ -384,7 +382,7 @@ theorem so3_commutator_Jx_Jy : J_x * J_y - J_y * J_x = J_z := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [J_x, J_y, J_z, Matrix.mul_apply]
+    simp [J_x, J_y, J_z]
 
 /-- ★★ 混合交换子：[J_x,K_y]=K_z（旋转×boost = boost）
     ——洛伦兹混合代数的正环（与 #53 [K_x,J_z]=−K_y 同为 ε_ijk·K_k 形态）。 -/
@@ -392,7 +390,7 @@ theorem lorentz_commutator_Jx_Ky : J_x * K_y - K_y * J_x = K_z := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [J_x, K_y, K_z, Matrix.mul_apply]
+    simp [J_x, K_y, K_z]
 
 /-- ★★ boost 交换子：[K_x,K_y]=−J_z（**boost×boost = 旋转**）
     ——两 boost 复合产生旋转：Wigner 转动/Thomas 进化的代数根；
@@ -401,7 +399,7 @@ theorem lorentz_commutator_Kx_Ky : K_x * K_y - K_y * K_x = -J_z := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [K_x, K_y, J_z, Matrix.mul_apply]
+    simp [K_x, K_y, J_z]
 
 /-- ★★ 同轴交换：[J_x,K_x]=0
     ——同一轴上的旋转与 boost 生成元交换（不相交块：J_x 作用 y-z、K_x 作用 t-x）。 -/
@@ -409,7 +407,7 @@ theorem lorentz_commutator_Jx_Kx : J_x * K_x - K_x * J_x = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [J_x, K_x, Matrix.mul_apply]
+    simp [J_x, K_x]
 
 /-! ## boost 共轭层（#55，缺口②第一环）
 
@@ -494,7 +492,7 @@ theorem boost_window3_avg_traceless_form (a b φ : ℝ) :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [boost, Matrix.mul_apply, Real.cosh_neg, Real.sinh_neg, Fin.sum_univ_succ,
+    simp [boost, Real.cosh_neg, Real.sinh_neg, 
           Matrix.vecMul, Matrix.vecHead, Matrix.vecTail]
     try ring_nf
     try rw [show Real.cosh φ ^ 2 = 1 + Real.sinh φ ^ 2 by
@@ -594,42 +592,42 @@ theorem gamma0_gamma1_anticomm : gamma0 * gamma1 + gamma1 * gamma0 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma0, gamma1, Matrix.mul_apply, Fin.sum_univ_succ]
+    simp [gamma0, gamma1]
 
 /-- 时空反对易：γ⁰γ²+γ²γ⁰=0。 -/
 theorem gamma0_gamma2_anticomm : gamma0 * gamma2 + gamma2 * gamma0 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma0, gamma2, Matrix.mul_apply, Fin.sum_univ_succ, Complex.I_mul_I]
+    simp [gamma0, gamma2]
 
 /-- 时空反对易：γ⁰γ³+γ³γ⁰=0。 -/
 theorem gamma0_gamma3_anticomm : gamma0 * gamma3 + gamma3 * gamma0 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma0, gamma3, Matrix.mul_apply, Fin.sum_univ_succ]
+    simp [gamma0, gamma3]
 
 /-- ★★ 空间间反对易：γ¹γ²+γ²γ¹=0（空间生成元两两反对易）。 -/
 theorem gamma1_gamma2_anticomm : gamma1 * gamma2 + gamma2 * gamma1 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma1, gamma2, Matrix.mul_apply]
+    simp [gamma1, gamma2]
 
 /-- 空间间反对易：γ¹γ³+γ³γ¹=0。 -/
 theorem gamma1_gamma3_anticomm : gamma1 * gamma3 + gamma3 * gamma1 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma1, gamma3, Matrix.mul_apply]
+    simp [gamma1, gamma3]
 
 /-- 空间间反对易：γ²γ³+γ³γ²=0。 -/
 theorem gamma2_gamma3_anticomm : gamma2 * gamma3 + gamma3 * gamma2 = 0 := by
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [gamma2, gamma3, Matrix.mul_apply]
+    simp [gamma2, gamma3]
 
 /-- ★★ 完整 Clifford 关系：γᵃγᵇ+γᵇγᵃ = 2ηᵃᵇ（∀ a b : Fin 4）
     ——Cl(1,3) 的代数定义（Dirac 表示机检）：时间平方 +1、空间平方 −1、
@@ -652,17 +650,13 @@ theorem gamma_clifford_relation (a b : Fin 4) :
     try
       ext i j
       fin_cases i <;> fin_cases j
-      simp [Matrix.mul_apply, Matrix.one_apply, Pi.add_apply, Pi.one_apply,
-            Pi.zero_apply, Pi.smul_apply, Fin.sum_univ_succ, gamma0, gamma1,
+      simp [
+            gamma0, gamma1,
             gamma2, gamma3]
   all_goals
     try norm_num
   all_goals
     try norm_num [Matrix.mul_apply, gamma0, gamma1, gamma2, gamma3, Fin.sum_univ_succ]
-  all_goals
-    try native_decide
-  all_goals
-    try rfl
 
 /-- ★★ 质量壳代数（谱流参数化，ℝ）：(m·coshφ)² − (m·sinhφ)² = m²
     ——cosh²−sinh²=1 的质量加权形态（#42 质量壳的谱流参数化）。 -/
@@ -736,9 +730,7 @@ theorem diracOp4_mass_factorization (m φ : ℝ) :
         ring]
       ring
   all_goals
-    try simp [Matrix.one_apply, Pi.one_apply]
-  all_goals
-    try ring
+    try simp [Matrix.one_apply]
 
 /-! ## 4×4 质量投影对幂等化（#59，Π± 完整签名版）
 
@@ -767,7 +759,7 @@ theorem diracOp4_mass_projector_idem_plus (m φ : ℝ) :
         ring]
       ring
   all_goals
-    try simp [Matrix.one_apply, Pi.one_apply]
+    try simp [Matrix.one_apply]
   all_goals
     try ring
 
@@ -790,7 +782,7 @@ theorem diracOp4_mass_projector_idem_minus (m φ : ℝ) :
         ring]
       ring
   all_goals
-    try simp [Matrix.one_apply, Pi.one_apply]
+    try simp [Matrix.one_apply]
   all_goals
     try ring
 
@@ -890,7 +882,7 @@ theorem diracOp4full_mass_factorization (E p₁ p₂ p₃ m : ℝ)
   fin_cases i <;> fin_cases j
   all_goals
     simp [DiracOp4Full, gamma0, gamma1, gamma2, gamma3, Matrix.mul_apply, Fin.sum_univ_succ,
-          Matrix.one_apply, Pi.one_apply]
+          Matrix.one_apply]
   all_goals
     try ring_nf
   all_goals
@@ -922,7 +914,7 @@ theorem diracOp4full_mass_projector_idem_plus (E p₁ p₂ p₃ m : ℝ)
   fin_cases i <;> fin_cases j
   all_goals
     simp [DiracOp4Full, gamma0, gamma1, gamma2, gamma3, Matrix.mul_apply, Fin.sum_univ_succ,
-          Matrix.one_apply, Pi.one_apply]
+          Matrix.one_apply]
   all_goals
     try ring_nf
   all_goals
@@ -946,7 +938,7 @@ theorem diracOp4full_mass_projector_idem_minus (E p₁ p₂ p₃ m : ℝ)
   fin_cases i <;> fin_cases j
   all_goals
     simp [DiracOp4Full, gamma0, gamma1, gamma2, gamma3, Matrix.mul_apply, Fin.sum_univ_succ,
-          Matrix.one_apply, Pi.one_apply]
+          Matrix.one_apply]
   all_goals
     try ring_nf
   all_goals
@@ -996,7 +988,7 @@ theorem Jx_Jy_sym_form :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [J_x, J_y, Matrix.mul_apply]
+    simp [J_x, J_y]
     try ring_nf
 
 /-- ★★ boost 生成元乘积的对称尾巴：K_x·K_y+K_y·K_x = 与 J 族**同形**
@@ -1009,7 +1001,7 @@ theorem Kx_Ky_sym_form :
   ext i j
   fin_cases i <;> fin_cases j
   all_goals
-    simp [K_x, K_y, Matrix.mul_apply]
+    simp [K_x, K_y]
     try ring_nf
 
 /-- ★★ 乘积分解：J_x·J_y = (J_z + Sym)/2——**半交换子（李括号）+半对称尾巴（冗余）**，
@@ -1039,7 +1031,7 @@ bᵢ∈{0,1}）——**字积字典与 (Fin 4 → Fin 2) 同构**：4 个时空�
     ——4 个时空维（1+3）各 2 态（双值生成元）⟹ 2⁴=16 个字积
     （Clifford 代数标准事实 dim Cℓ(p,q)=2^{p+q} 的计数层：p+q=4）。 -/
 theorem cl13_algebra_dim_sixteen : Fintype.card (Fin 4 → Fin 2) = 16 := by
-  simp [Fintype.card_fun]
+  simp []
 
 /-- ★★ 非标量字积计数：除标量 1（全零指数 b=0）外全部字积 = 15
     ——**15 = 16−1**（唯一标量除外），与 orbitCount=15 解集定理、
@@ -1250,25 +1242,25 @@ theorem gamma3_trace_zero : Matrix.trace gamma3 = 0 := by
 
 /-- ★★ γ⁰ 与 γ¹ 正交：Tr(γ⁰·γ¹) = 0（Frobenius 内积 ⟨γ⁰,γ¹⟩=0，γ⁰†=γ⁰）。 -/
 theorem gamma0_ortho_gamma1 : Matrix.trace (gamma0 * gamma1) = 0 := by
-  simp [Matrix.trace, gamma0, gamma1, Matrix.mul_apply, Fin.sum_univ_four]
+  simp [Matrix.trace, gamma0, gamma1, Fin.sum_univ_four]
 
 /-- ★★ γ¹ 与 γ² 正交：Tr(γ¹·γ²) = 0。 -/
 theorem gamma1_ortho_gamma2 : Matrix.trace (gamma1 * gamma2) = 0 := by
-  simp [Matrix.trace, gamma1, gamma2, Matrix.mul_apply, Fin.sum_univ_four]
+  simp [Matrix.trace, gamma1, gamma2, Fin.sum_univ_four]
 
 /-- ★★ γ⁰ 自内积范数：Tr(γ⁰·γ⁰) = 4（γ⁰²=1 ⟹ 迹=4，字积对角范数 +4）。 -/
 theorem gamma0_sq_trace_four : Matrix.trace (gamma0 * gamma0) = 4 := by
-  simp [Matrix.trace, gamma0, Matrix.mul_apply, Fin.sum_univ_four]
+  simp [Matrix.trace, gamma0, Fin.sum_univ_four]
   norm_num
 
 /-- ★★ γ¹ 自内积范数：Tr(γ¹·γ¹) = −4（γ¹²=−1 ⟹ 迹=−4，字积对角范数 −4）。 -/
 theorem gamma1_sq_trace_four : Matrix.trace (gamma1 * gamma1) = -4 := by
-  simp [Matrix.trace, gamma1, Matrix.mul_apply, Fin.sum_univ_four]
+  simp [Matrix.trace, gamma1, Fin.sum_univ_four]
   norm_num
 
 /-- ★★ 伪标量字积无迹：Tr(γ⁰·γ¹·γ²·γ³) = 0（γ₅ 型字积在 4×4 中无迹）。 -/
 theorem pseudoscalar_word_trace_zero : Matrix.trace (gamma0 * gamma1 * gamma2 * gamma3) = 0 := by
-  simp [Matrix.trace, gamma0, gamma1, gamma2, gamma3, Matrix.mul_apply, Fin.sum_univ_four]
+  simp [Matrix.trace, gamma0, gamma1, gamma2, gamma3, Fin.sum_univ_four]
 
 /-! ## 翻倍勾股族补翼（#69：cosh/sinh 实例——三层桥能量/动量侧）
 
@@ -1465,7 +1457,7 @@ theorem scalar_contraction (a : ℝ) (ha : 0 < a) (t : ℝ) (ht : 0 < t) :
     exp(−t·a) 随 t 严格递减到 0——"失去表达窗口"的算子表述——
     静默 = 闭合冻结零测度（S151）。 -/
 theorem scalar_contraction_mono (a : ℝ) (ha : 0 < a) (t₁ t₂ : ℝ)
-    (ht₁ : 0 ≤ t₁) (ht₂ : t₁ < t₂) :
+    (_ht₁ : 0 ≤ t₁) (ht₂ : t₁ < t₂) :
     Real.exp (-(t₂ * a)) < Real.exp (-(t₁ * a)) := by
   rw [Real.exp_lt_exp]
   nlinarith

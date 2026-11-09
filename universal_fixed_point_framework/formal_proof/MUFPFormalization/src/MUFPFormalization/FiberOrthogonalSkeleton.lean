@@ -129,7 +129,6 @@ theorem sup_orthogonal_eq_top [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
     （mathlib `isCompl_orthogonal`，有限维下正交投影存在）。 -/
 theorem isCompl_orthogonal_standard [FiniteDimensional ℝ E] (V : Submodule ℝ E) :
     IsCompl V Vᗮ := by
-  haveI : V.HasOrthogonalProjection := inferInstance
   exact V.isCompl_orthogonal
 
 /-- 与 VerticalHorizontalSplitting 的衔接：g-正交分解 (V, Vᗮ) 满足代数骨架的全部断言

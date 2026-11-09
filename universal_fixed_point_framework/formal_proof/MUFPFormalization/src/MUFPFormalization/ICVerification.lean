@@ -77,7 +77,7 @@ IC Condition 1 verification for IFS ↔ IFS (self-pair).
 Any two IFS systems with bounded contraction ratio ratios satisfy SSC.
 -/
 theorem IFS_IC_self (cfg₁ cfg₂ : IFSConfig)
-    (hBound : ∃ C : ℝ, (Finset.sup' (Finset.univ : Finset (Fin cfg₁.numMaps))
+    (_hBound : ∃ C : ℝ, (Finset.sup' (Finset.univ : Finset (Fin cfg₁.numMaps))
       (by
         haveI : Nonempty (Fin cfg₁.numMaps) := ⟨⟨0, cfg₁.hNonempty⟩⟩
         exact Finset.univ_nonempty) (fun i => cfg₁.contractionRatios i)) /

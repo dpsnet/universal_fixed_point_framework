@@ -315,9 +315,9 @@ theorem attractor_diam_le_one (d : ℝ) (hd : 1 ≤ d) (ax : AttractorAxioms d h
     O9 闭合（2026-08-04）：f₂ 平移归一化后吸引子 ⊆ [0,1]（§3.5），
     `Metric.diam A ≤ 1` 获机器证明（零 sorry）。 -/
 lemma exists_attractorAxioms (d : ℝ) (hd : 1 ≤ d) [Nonempty ℝ] :
-    ∃ (A : Set ℝ) (hNonempty : A.Nonempty) (hCompact : IsCompact A)
-      (hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A)
-      (hDiamLeOne : Metric.diam A ≤ 1), True := by
+    ∃ (A : Set ℝ) (_hNonempty : A.Nonempty) (_hCompact : IsCompact A)
+      (_hFixedPoint : A = ⋃ i : Fin 3, (physicalIFS d hd).maps i '' A)
+      (_hDiamLeOne : Metric.diam A ≤ 1), True := by
   set ifs := physicalIFS d hd
   have hn : 0 < ifs.n := by
     have h : ifs.n = 3 := rfl; rw [h]; norm_num

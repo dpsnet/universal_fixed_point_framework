@@ -45,7 +45,7 @@ section OseledetsLyapunov
     For the Koopman operator framework, this connects to the spectrum of A_R.
     λ_μ(f) = lim_{n→∞} (1/n) log ‖Df^n(x)‖  (a.e. x, when ergodic). -/
 noncomputable def lyapunovExponent {X : Type*} [MetricSpace X] [MeasurableSpace X]
-    (f : X → X) (μ : Measure X) (h : MeasurePreserving f μ μ) : ℝ :=
+    (f : X → X) (μ : Measure X) (_h : MeasurePreserving f μ μ) : ℝ :=
   0  -- Placeholder: full definition requires Oseledets theorem's multiplicative ergodic theorem
 
 /-- Oseledets splitting: the tangent space at each point splits into
@@ -61,7 +61,7 @@ structure OseledetsSplitting {X : Type*} [MetricSpace X] (f : X → X) where
 
 /-- Connection to Koopman operator: For a RecObj with Koopman operator U_R = exp(-A_R),
     the Lyapunov exponents of R are the eigenvalues of -A_R (or their real parts). -/
-theorem koopmanLyapunovConnection {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+theorem koopmanLyapunovConnection {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) :
     True := by
   -- The Lyapunov exponents of the dynamical system encoded by A
   -- are given by Re(σ(-A)) = -Re(σ(A)), where σ(A) is the spectrum of A.
@@ -84,13 +84,13 @@ where h_μ is the measure-theoretic entropy (Kolmogorov-Sinai entropy),
 /-- Measure-theoretic (Kolmogorov-Sinai) entropy of f w.r.t. μ.
     mathlib provides this via `Dynamics.Ergodic.MeasurePreserving`. -/
 noncomputable def measureEntropy {X : Type*} [MeasurableSpace X]
-    (f : X → X) (μ : Measure X) (h : MeasurePreserving f μ μ) : ℝ :=
+    (f : X → X) (μ : Measure X) (_h : MeasurePreserving f μ μ) : ℝ :=
   0  -- Placeholder: invokes mathlib's entropy definition
 
 /-- Hausdorff dimension of a measure μ.
     dim_H(μ) = inf{dim_H(A) : μ(A) = 1}. -/
 noncomputable def hausdorffDimensionMeasure {X : Type*} [MetricSpace X] [MeasurableSpace X]
-    (μ : Measure X) : ℝ :=
+    (_μ : Measure X) : ℝ :=
   0  -- Placeholder: requires measure-theoretic Hausdorff dimension
 
 /-- Theorem HD-D (Ledrappier-Young dimension decomposition).
@@ -111,7 +111,7 @@ noncomputable def hausdorffDimensionMeasure {X : Type*} [MetricSpace X] [Measura
     of the Kerr geodesic flow. -/
 theorem theoremHD_D {X : Type*} [MetricSpace X] [MeasurableSpace X] (f : X → X) (μ : Measure X)
     (hErgodic : Ergodic f μ) (hPosLyap : lyapunovExponent f μ hErgodic.toMeasurePreserving > 0)
-    (hNegLyap : lyapunovExponent f μ hErgodic.toMeasurePreserving < 0) :
+    (_hNegLyap : lyapunovExponent f μ hErgodic.toMeasurePreserving < 0) :
     hausdorffDimensionMeasure μ =
       measureEntropy f μ hErgodic.toMeasurePreserving / lyapunovExponent f μ hErgodic.toMeasurePreserving +
       measureEntropy f μ hErgodic.toMeasurePreserving / |lyapunovExponent f μ hErgodic.toMeasurePreserving| :=
@@ -150,13 +150,13 @@ of the Koopman/Perron-Frobenius operator.
 /-- Topological entropy of a dynamical system f : X → X.
     mathlib provides this via `Dynamics.TopologicalEntropy`. -/
 noncomputable def topologicalEntropy {X : Type*} [MetricSpace X] [CompactSpace X]
-    (f : X → X) : ℝ :=
+    (_f : X → X) : ℝ :=
   0  -- Placeholder: invokes mathlib's topological entropy
 
 /-- Spectral gap of the Koopman operator U_R = exp(-A_R).
     γ = 1 - |λ₂|/|λ₁| where λ₁ is the leading eigenvalue and λ₂ is the second. -/
-noncomputable def koopmanSpectralGap {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  if h : n = 0 then 0 else
+noncomputable def koopmanSpectralGap {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
+  if _h : n = 0 then 0 else
     1  -- Placeholder: requires eigenvalue computation
 
 /-- Theorem TE-G-M (Topological entropy - Spectral gap universal inequality).
@@ -172,7 +172,7 @@ noncomputable def koopmanSpectralGap {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) 
     In the framework's context, this constrains the Kerr QNM spectral
     gap and relates it to the topological entropy of the geodesic flow. -/
 theorem theoremTE_GM {X : Type*} [MetricSpace X] [CompactSpace X]
-    (f : X → X) {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (h : n > 0) :
+    (f : X → X) {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (_h : n > 0) :
     topologicalEntropy f * koopmanSpectralGap A ≤ 1 := by
   -- 在有限维占位定义（topologicalEntropy := 0）下平凡成立；
   -- 完整证明需要 Perron-Frobenius 定理 + 变分原理（开放项）。
@@ -182,7 +182,7 @@ theorem theoremTE_GM {X : Type*} [MetricSpace X] [CompactSpace X]
     implies a universal bound on the ringdown SNR. -/
 theorem kerrSpectralGapConstraint {n : ℕ} [MetricSpace (Fin n)] [CompactSpace (Fin n)]
     (A : Matrix (Fin n) (Fin n) ℂ)
-    (h : koopmanSpectralGap A > 0) (hTop : topologicalEntropy (id : Fin n → Fin n) > 0) :
+    (h : koopmanSpectralGap A > 0) (_hTop : topologicalEntropy (id : Fin n → Fin n) > 0) :
     topologicalEntropy (id : Fin n → Fin n) * koopmanSpectralGap A ≤ 1 := by
   -- Direct consequence of Theorem TE-G-M
   exact theoremTE_GM (id : Fin n → Fin n) A (by
@@ -203,14 +203,14 @@ section HausdorffDimension
 /-- The Hausdorff dimension of a compact set K in a metric space.
     (mathlib 定义了 Hausdorff 测度 `hausdorffMeasure`，集合维数的完整
     形式化为开放项；当前原型返回 0 占位。) -/
-noncomputable def hausdorffDimSet {X : Type*} [MetricSpace X] (K : Set X) : ℝ :=
+noncomputable def hausdorffDimSet {X : Type*} [MetricSpace X] (_K : Set X) : ℝ :=
   0
 
 /-- Moran equation: for a self-similar IFS with contraction ratios {c_i},
     the Hausdorff dimension d_H satisfies Σ c_i^{d_H} = 1.
     This is the key equation linking the IFS structure to the spectrum. -/
-theorem moranEquation {d : ℕ} (contractionRatios : List ℝ) (dH : ℝ)
-    (h : (contractionRatios.map (fun c => c ^ dH)).sum = 1) : True := by
+theorem moranEquation {_d : ℕ} (contractionRatios : List ℝ) (dH : ℝ)
+    (_h : (contractionRatios.map (fun c => c ^ dH)).sum = 1) : True := by
   trivial
 
 end HausdorffDimension

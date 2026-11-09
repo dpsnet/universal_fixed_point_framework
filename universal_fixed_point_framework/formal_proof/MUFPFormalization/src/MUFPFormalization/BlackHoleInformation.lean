@@ -47,9 +47,9 @@ private lemma matrix_exp_smul_neg {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (t 
     NormedSpace.exp ((-t) • A) * NormedSpace.exp (t • A) =
       (1 : Matrix (Fin n) (Fin n) ℂ) := by
   have hc : Commute ((-t) • A) (t • A) := by
-    simpa [Commute, SemiconjBy, smul_neg] using (Commute.refl (t • A)).neg_right
+    simp [Commute, SemiconjBy, smul_neg]
   rw [← Matrix.exp_add_of_commute ((-t) • A) (t • A) hc]
-  simp [smul_neg]
+  simp []
 
 /-- Spectral flow half-group property: flowing back by -t returns to A₀. -/
 theorem spectralFlow_inv {n : ℕ} (A₀ A_F : Matrix (Fin n) (Fin n) ℂ) (t : ℝ) :

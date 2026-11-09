@@ -178,7 +178,7 @@ functions p ↦ p·x - f(x), and the supremum of convex functions is convex.
 （占位 τ(q) = q-1 下 p ≠ 1 时无界），故将原无假设陈述改为**条件定理**：
 加 `hBdd` 假设后逐点 `csSup_le` 论证，零 `sorry`。
 -/
-theorem legendreTransform_convex {f : ℝ → ℝ} (hf : ConvexOn ℝ Set.univ f)
+theorem legendreTransform_convex {f : ℝ → ℝ} (_hf : ConvexOn ℝ Set.univ f)
     (hBdd : ∀ p : ℝ, BddAbove (range fun z : ℝ => p * z - f z)) :
     ConvexOn ℝ Set.univ (legendreTransform f) := by
   refine ⟨convex_univ, ?_⟩
@@ -463,7 +463,7 @@ theorem pressure_spectral_link {X : Type} [MetricSpace X] [CompleteSpace X]
             (fun i : Fin ifs.n => (ifs.ratios i : ℝ) ^ t) ≥
           Finset.sum (Finset.univ : Finset (Fin ifs.n)) (fun _ : Fin ifs.n => (1 : ℝ)) :=
             Finset.sum_le_sum (fun i hi => h_ge_one i)
-          _ = (ifs.n : ℝ) := by simp [Finset.sum_const, nsmul_eq_mul, Finset.card_fin]
+          _ = (ifs.n : ℝ) := by simp [Finset.sum_const, nsmul_eq_mul]
       have hn2 : (2 : ℝ) ≤ (ifs.n : ℝ) := by exact_mod_cast hNonempty
       linarith
     -- Construct HausdorffDimensionSolution with dH = t

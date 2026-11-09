@@ -106,8 +106,6 @@ noncomputable def ι_Noise (T₀ : TempObj) (μ₀ : RGObj) (M₀ : KerrObj)
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_Temp (η₀ : NoiseObj) (μ₀ : RGObj) (M₀ : KerrObj)
     (Λ₀ : EnergyScale) (f₀ : FlavorSector) (U₀ : OpenSet) : TempObj ⥤ TotalParamObj where
@@ -123,8 +121,6 @@ noncomputable def ι_Temp (η₀ : NoiseObj) (μ₀ : RGObj) (M₀ : KerrObj)
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_RG (η₀ : NoiseObj) (T₀ : TempObj) (M₀ : KerrObj)
     (Λ₀ : EnergyScale) (f₀ : FlavorSector) (U₀ : OpenSet) : RGObj ⥤ TotalParamObj where
@@ -140,8 +136,6 @@ noncomputable def ι_RG (η₀ : NoiseObj) (T₀ : TempObj) (M₀ : KerrObj)
         | change 𝟙 T₀ = 𝟙 T₀ ≫ 𝟙 T₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_Kerr (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
     (Λ₀ : EnergyScale) (f₀ : FlavorSector) (U₀ : OpenSet) : KerrObj ⥤ TotalParamObj where
@@ -157,8 +151,6 @@ noncomputable def ι_Kerr (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
         | change 𝟙 T₀ = 𝟙 T₀ ≫ 𝟙 T₀; simp
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_Scale (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
     (M₀ : KerrObj) (f₀ : FlavorSector) (U₀ : OpenSet) : EnergyScale ⥤ TotalParamObj where
@@ -174,8 +166,6 @@ noncomputable def ι_Scale (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
         | change 𝟙 T₀ = 𝟙 T₀ ≫ 𝟙 T₀; simp
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_Flavor (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
     (M₀ : KerrObj) (Λ₀ : EnergyScale) (U₀ : OpenSet) : FlavorSector ⥤ TotalParamObj where
@@ -192,7 +182,6 @@ noncomputable def ι_Flavor (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 U₀ = 𝟙 U₀ ≫ 𝟙 U₀; simp
 
 noncomputable def ι_Spacetime (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGObj)
     (M₀ : KerrObj) (Λ₀ : EnergyScale) (f₀ : FlavorSector) : OpenSet ⥤ TotalParamObj where
@@ -209,7 +198,6 @@ noncomputable def ι_Spacetime (η₀ : NoiseObj) (T₀ : TempObj) (μ₀ : RGOb
         | change 𝟙 μ₀ = 𝟙 μ₀ ≫ 𝟙 μ₀; simp
         | change 𝟙 M₀ = 𝟙 M₀ ≫ 𝟙 M₀; simp
         | change 𝟙 Λ₀ = 𝟙 Λ₀ ≫ 𝟙 Λ₀; simp
-        | change 𝟙 f₀ = 𝟙 f₀ ≫ 𝟙 f₀; simp
 
 /-! =========================================================
     Section 3: Total Bundle Bun(Param, Spec) + Fibration
@@ -235,15 +223,12 @@ instance totalBundleCategory : Category TotalSpectralBundle where
     f ≫ g
   id_comp := by
     intro X Y f
-    change (𝟙 X.base) ≫ f = f
     exact Category.id_comp (f := f)
   comp_id := by
     intro X Y f
-    change f ≫ (𝟙 Y.base) = f
     exact Category.comp_id (f := f)
   assoc := by
     intro W X Y Z f g h
-    change (f ≫ g) ≫ h = f ≫ (g ≫ h)
     exact Category.assoc (f := f) (g := g) (h := h)
 
 /-- Projection π_Param : Bun(Param, Spec) → Param。 -/
@@ -311,7 +296,7 @@ noncomputable def T_hat_total : TotalSpectralBundle ⥤ TotalSpectralBundle wher
           flavor_f := X.base.flavor_f
           spacetime_U := X.base.spacetime_U }
       fiberData := { n := X.fiberData.n, A := X.fiberData.A } }
-  map f := f; map_id X := rfl; map_comp f g := rfl
+  map f := f; map_id _X := rfl; map_comp _f _g := rfl
 
 /-- N_hat on the total bundle (Noise ↔ Temp).
 
@@ -449,7 +434,7 @@ noncomputable def D_hat_total : TotalSpectralBundle ⥤ TotalSpectralBundle wher
           flavor_f := X.base.flavor_f
           spacetime_U := X.base.spacetime_U }
       fiberData := { n := X.fiberData.n, A := X.fiberData.A } }
-  map f := f; map_id X := rfl; map_comp f g := rfl
+  map f := f; map_id _X := rfl; map_comp _f _g := rfl
 
 /-- Theorem: 全丛态射网络的分量行为（真实闭合，原 True 占位）。
     T̂/D̂ 保持底点不变；N̂ 交换噪声/温度分量且为对合（两次作用还原）；

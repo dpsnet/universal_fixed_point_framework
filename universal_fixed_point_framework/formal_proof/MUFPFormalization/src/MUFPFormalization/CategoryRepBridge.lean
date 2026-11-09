@@ -65,10 +65,10 @@ noncomputable def pauliSU2 {n : ℕ} (hn : n = 2) : SU2Generators n := by
     L₃ := (1/2 : ℂ) • pauliZ rfl
     comm_L₁_L₂ := by
       funext i j
-      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
+      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf
     comm_L₂_L₃ := by
       funext i j
-      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
+      fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf
     comm_L₃_L₁ := by
       funext i j
       fin_cases i <;> fin_cases j <;> simp [pauliX, pauliY, pauliZ] <;> ring_nf <;> simp [Complex.I_sq] <;> ring
@@ -109,7 +109,7 @@ theorem casimir_eigenvalue_spin_half {n : ℕ} (hn : n = 2) (c : ℂ) :
       fin_cases a <;> fin_cases b <;> simp
     rw [h_scalar] at h
     have h_det : det ((((3/4 : ℂ) - c) • (1 : Matrix (Fin 2) (Fin 2) ℂ))) = ((3/4 : ℂ) - c) ^ 2 := by
-      simp [Matrix.det_fin_two]
+      simp []
     rw [h_det] at h
     have h_eq : (3/4 : ℂ) - c = 0 := by
       by_contra hne
@@ -156,7 +156,7 @@ theorem casimir_spin_zero {n : ℕ} (hn : n = 1) :
     = (0 : ℂ) • (1 : Matrix (Fin n) (Fin n) ℂ) := by
   subst hn
   funext i j
-  fin_cases i <;> fin_cases j <;> simp [J0_matrix]
+  fin_cases i; fin_cases j; simp [J0_matrix]
 
 /-- Spin-1 J_z generator（通用 Fin n + hn:n=3）。
     当 n=3 时退化为标准 diag(1, 0, -1)。 -/
@@ -193,19 +193,18 @@ noncomputable def spin1SU2 {n : ℕ} (hn : n = 3) : SU2Generators n := by
       fin_cases i <;> fin_cases j <;>
         simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
         field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
-        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
+        ring_nf <;> simp []
     comm_L₂_L₃ := by
       funext i j
       fin_cases i <;> fin_cases j <;>
         simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
-        field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
-        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
+        field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
     comm_L₃_L₁ := by
       funext i j
       fin_cases i <;> fin_cases j <;>
         simp [Jx_spin1, Jy_spin1, Jz_spin1] <;>
         field_simp [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)] <;>
-        ring_nf <;> simp [Complex.I_sq] <;> ring_nf
+        ring_nf <;> simp [Complex.I_sq]
   }
 
 /-- Casimir for spin-1（通用 Fin n + hn:n=3）：C₂ = J_x² + J_y² + J_z² = 2·I₃。
@@ -234,7 +233,7 @@ theorem casimir_eigenvalue_spin_one {n : ℕ} (hn : n = 3) (c : ℂ) :
       fin_cases a <;> fin_cases b <;> simp
     rw [h_scalar] at h
     have h_det : det ((((2 : ℂ) - c) • (1 : Matrix (Fin 3) (Fin 3) ℂ))) = ((2 : ℂ) - c) ^ 3 := by
-      simp [Matrix.det_fin_three]
+      simp []
     rw [h_det] at h
     have h_eq : (2 : ℂ) - c = 0 := by
       by_contra hne

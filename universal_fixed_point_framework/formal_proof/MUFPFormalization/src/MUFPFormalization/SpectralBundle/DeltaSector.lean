@@ -45,7 +45,7 @@ universe u
 
     在离散框架中，二阶修正由 δ 的平方决定。 -/
 def secondOrderCorrection {n : ℕ}
-    (A_X A_Y A_Z δ : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
+    (_A_X A_Y _A_Z δ : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   -- Δ₂ = δ · (A_Y · δ - δ · A_Y) · δ
   -- 这是 δ² 项的最简单非平凡形式
   δ * (A_Y * δ - δ * A_Y) * δ
@@ -61,7 +61,7 @@ theorem secondOrderCorrection_trace {n : ℕ}
 /-- 二阶修正的范数上界：||Δ₂|| ≤ ||δ||³ · ||A_Y||。
     物理含义：二阶修正的幅度由 δ 的三次方控制。 -/
 theorem secondOrderCorrection_norm_bound {n : ℕ}
-    (A_X A_Y A_Z δ : Matrix (Fin n) (Fin n) ℂ) :
+    (_A_X _A_Y _A_Z _δ : Matrix (Fin n) (Fin n) ℂ) :
     -- 骨架：||Δ₂|| ≤ ||δ||³ · ||A_Y||
     -- 完整证明需要矩阵范数库
     True := by
@@ -83,7 +83,7 @@ def totalDeviation {n : ℕ}
 /-- 总偏差的一阶近似：当 δ → 0 时，Δ ≈ Δ₁。
     物理含义：在弱引力极限下，二阶修正可忽略。 -/
 theorem totalDeviation_firstOrder_approx {n : ℕ}
-    (A_X A_Y A_Z δ : Matrix (Fin n) (Fin n) ℂ) :
+    (_A_X _A_Y _A_Z _δ : Matrix (Fin n) (Fin n) ℂ) :
     -- 当 δ → 0 时，Δ₂ → 0（因为 Δ₂ ∝ δ³）
     -- 所以 Δ ≈ Δ₁
     True := by
@@ -176,7 +176,7 @@ theorem structuralDefect_has_mass (X : RecObj)
 
     注：这是一个概念性论证，完整证明需要定义"电荷"概念。 -/
 theorem structuralDefect_no_em_coupling (X : RecObj)
-    (h : hasStructuralDefect X) :
+    (_h : hasStructuralDefect X) :
     -- 结构性缺陷不通过电磁通道传播
     -- 这是一个概念性声明，需要更精确的形式化
     True := by

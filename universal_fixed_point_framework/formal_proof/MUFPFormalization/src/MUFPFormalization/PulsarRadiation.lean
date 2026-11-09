@@ -278,7 +278,7 @@ structure GaugeChannel (X Y : RecObj) where
     这是脉冲星周期性辐射的理论基础。 -/
 theorem gauge_channel_preserves_periodicity
     {X Y : RecObj} (gc : GaugeChannel X Y)
-    (x : X.T) (h_periodic : X.isPeriodic x) :
+    (x : X.T) (_h_periodic : X.isPeriodic x) :
     -- 规范场响应的振幅在源信号的周期内保持不变
     ∀ k : ℕ, (gc.response ((gc.toHom.toFun x))).amplitude =
              (gc.response ((Y.step^[k]) (gc.toHom.toFun x))).amplitude := by
@@ -340,9 +340,9 @@ theorem T02_pulsar_radiation {X Y : RecObj}
 /-- T-02 推论：通道输出端的周期信号。
     若偏心子集群中存在周期态，则通道输出端也是周期态。 -/
 theorem T02_periodic_signal {X Y : RecObj}
-    (C : FixedPointCluster X) (hEcc : C.isEccentric)
+    (C : FixedPointCluster X) (_hEcc : C.isEccentric)
     (ch : MagneticChannel X Y) (x : X.T)
-    (hIn : x ∈ C.carrier) (hPer : X.isPeriodic x) :
+    (_hIn : x ∈ C.carrier) (hPer : X.isPeriodic x) :
     Y.isPeriodic (ch.toHom.toFun x) := by
   exact ch.toHom.maps_periodic x hPer
 
@@ -505,7 +505,7 @@ def hasAxisObliquity (X Y : RecObj) (φ : X ⟶ Y) : Prop :=
 
     注：需要 φ 单射假设——若 φ 非单射，多个不同状态可映射到同一不动点。 -/
 theorem T02_axis_obliquity {X Y : RecObj} (φ : X ⟶ Y) (x : X.T)
-    (hx_periodic : ∃ n : ℕ, n ≥ 1 ∧ (X.step^[n]) x = x)
+    (_hx_periodic : ∃ n : ℕ, n ≥ 1 ∧ (X.step^[n]) x = x)
     (hx_eccentric : X.step x ≠ x)
     (y : Y.T) (hy_fixed : Y.step y = y)
     (h_inj : Function.Injective φ.toFun) :
@@ -536,8 +536,8 @@ def hasMultiBandSpectrum (X : RecObj) : Prop :=
     7. 若 m = 1：step^[n] x₁ 是不动点，不动点有周期 2，取 n₁ = 1, n₂ = 2，1 ≠ 2 ✓
     8. 因此存在多波段辐射 -/
 theorem T02_multi_band_spectrum {X : RecObj} (C : FixedPointCluster X)
-    (x₀ : X.T) (hx₀ : x₀ ∈ C.carrier) (h_fixed : X.step x₀ = x₀)
-    (x₁ : X.T) (hx₁ : x₁ ∈ C.carrier) (h_ecc : X.step x₁ ≠ x₁) :
+    (x₀ : X.T) (_hx₀ : x₀ ∈ C.carrier) (h_fixed : X.step x₀ = x₀)
+    (x₁ : X.T) (_hx₁ : x₁ ∈ C.carrier) (_h_ecc : X.step x₁ ≠ x₁) :
     hasMultiBandSpectrum X := by
   unfold hasMultiBandSpectrum
   -- x₀ 是不动点，周期为 1

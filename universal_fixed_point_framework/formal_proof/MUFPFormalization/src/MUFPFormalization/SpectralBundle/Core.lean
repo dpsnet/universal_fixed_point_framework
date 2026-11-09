@@ -194,9 +194,9 @@ theorem structuralDefect_iff_gravity (X : RecObj) :
     在连续框架中，这对应 G_N ∝ ||Δ||_F² ∝ ||δ||_F²。
     在离散框架中，这对应 defectMeasure ∝ 偏心子集群数量。 -/
 theorem gravity_strength_monotone (X Y : RecObj)
-    (hX : hasStructuralDefect X)
-    (hY : hasStructuralDefect Y)
-    (h_lt : defectMeasure X < defectMeasure Y) :
+    (_hX : hasStructuralDefect X)
+    (_hY : hasStructuralDefect Y)
+    (_h_lt : defectMeasure X < defectMeasure Y) :
     -- 缺陷度量越大，系统偏离严格结构越远
     -- 在连续框架中，这对应 ||δ||_F 更大
     -- 在离散框架中，这对应更多偏心子集群
@@ -229,6 +229,54 @@ theorem critical_phase_transition (X : RecObj)
 
     完整等价链条：Δ ≠ 0 ⟺ δ ≠ 0 ⟺ defectMeasure > 0 ⟺ 结构性缺陷 ⟺ G_N > 0
     -/
+
+-- ============================================================
+-- §S. 尺度消亡：投影下的不动点
+-- ============================================================
+
+/-- 「在尺度 `π` 上消失」：演化在该尺度的像上恒等。
+
+    物理读法：粗粒化到 `π` 的分辨率之后，系统不再产生可观测的新状态；
+    但底层 `X.step` 仍可非平凡（更细的尺度上仍有循环在走）。
+    因此「消亡」是**尺度相对**的，而非绝对停止——这正是把
+    「消亡那一刻是时间在某个局部的不动点」写成可机检命题的最小形式：
+    「局部」= 尺度（投影），不是空间子集，也不是单个状态点。 -/
+def vanishesAtScale {Y : Type*} (X : RecObj) (π : X.T → Y) : Prop :=
+  ∀ x, π (X.step x) = π x
+
+/-- 尺度缺陷计数：在该尺度上仍可观测到的非不动点个数。
+    与全局 `defectMeasure` 的关系：`defectMeasure` 是 `π = id` 的特例，
+    因此尺度缺陷永远不大于全局缺陷的概念强度——
+    粗粒化只会减少可见的缺陷，不会增加。 -/
+noncomputable def scaleDefect {Y : Type*} (X : RecObj) (π : X.T → Y) : ℕ :=
+  letI := Classical.decEq Y
+  Fintype.card {x : X.T // π (X.step x) ≠ π x}
+
+/-- 无损尺度上不可能出现「局部消失」：若 `π` 单射，则该尺度上的消失
+    逼出全局强终止（`step = id`）。
+
+    这条定理是本概念非平凡的凭证：它说明「在某个尺度上消失」必须依赖
+    **有损投影**（真正丢弃信息的粗粒化），而不能只是等价重标号。
+    一个只改名字、不合并状态的「尺度」是杀不掉任何演化的。 -/
+theorem step_eq_id_of_vanishesAtScale_injective {Y : Type*} (X : RecObj)
+    (π : X.T → Y) (hπ : Function.Injective π) (h : vanishesAtScale X π) :
+    ∀ x, X.step x = x :=
+  fun x => hπ (h x)
+
+/-- 粗化单调性：更细尺度上已经消失，则更粗尺度上也必然消失。
+    这给出「在某个尺度上消失」的层级结构——越粗越早消失，
+    消亡总表现为一个尺度塔上的阈值。 -/
+theorem vanishesAtScale_comp {Y Z : Type*} (X : RecObj) (π : X.T → Y) (q : Y → Z)
+    (h : vanishesAtScale X π) : vanishesAtScale X (q ∘ π) :=
+  fun x => congrArg q (h x)
+
+/-- 无损尺度上的消失蕴含全局缺陷归零（全局强终止）。
+    与 `step_eq_id_of_vanishesAtScale_injective` 一并说明：
+    只有经由有损投影，才可能出现「局部消亡而全局仍在演化」。 -/
+theorem defectMeasure_zero_of_vanishesAtScale_injective {Y : Type*} (X : RecObj)
+    (π : X.T → Y) (hπ : Function.Injective π) (h : vanishesAtScale X π) :
+    defectMeasure X = 0 :=
+  defectMeasure_zero_of_all_fixed X (step_eq_id_of_vanishesAtScale_injective X π hπ h)
 
 -- ============================================================
 

@@ -104,10 +104,10 @@ noncomputable def recBinaryLimitCone (X Y : RecObj.{u}) : LimitCone (pair X Y) w
         funext x
         apply Prod.ext
         · have h1 := congrFun (congrArg RecHom.toFun hf) x
-          simp only [RecHom.comp_toFun, recFst, Function.comp_apply] at h1
+          simp only [recFst] at h1
           exact h1
         · have h2 := congrFun (congrArg RecHom.toFun hg) x
-          simp only [RecHom.comp_toFun, recSnd, Function.comp_apply] at h2
+          simp only [recSnd] at h2
           exact h2)
 
 instance recHasLimit_pair (X Y : RecObj.{u}) : HasLimit (pair X Y) :=
@@ -129,7 +129,7 @@ noncomputable def recTerminalIsTerminal : IsTerminal recTerminal :=
     intro X m
     apply RecHom.ext
     funext x
-    cases m.toFun x <;> rfl)
+    cases m.toFun x; rfl)
 
 instance recHasTerminal : HasTerminal RecObj.{u} :=
   IsTerminal.hasTerminal (X := recTerminal) recTerminalIsTerminal

@@ -104,7 +104,7 @@ structure SpObj2d where
     证明：纯矩阵代数 + 交织条件（与 SpCategory.lean 的 spectral_flow_preserves_intertwine 同构）。 -/
 lemma mode_isomorphism_preserved_under_flow
     (P : Matrix (Fin 2) (Fin 2) ℂ) (A_E A_B : Matrix (Fin 2) (Fin 2) ℂ)
-    (U V : Matrix (Fin 2) (Fin 2) ℂ) (hUV : U * V = 1) (hVU : V * U = 1)
+    (U V : Matrix (Fin 2) (Fin 2) ℂ) (_hUV : U * V = 1) (hVU : V * U = 1)
     (h : isModeIsomorphism P A_E A_B) :
     isModeIsomorphism (U * P * V) (U * A_E * V) (U * A_B * V) := by
   -- 目标：(U*P*V) * (U*A_B*V) = (U*A_E*V) * (U*P*V)
@@ -119,7 +119,7 @@ lemma mode_isomorphism_preserved_under_flow
     _ = (U * A_E * V) * (U * P * V) := by
       rw [show (U * A_E * V) * (U * P * V) =
         U * A_E * (V * U) * P * V by simp [Matrix.mul_assoc]]
-      rw [hVU]; simp [Matrix.mul_one, Matrix.mul_assoc]
+      rw [hVU]; simp [Matrix.mul_assoc]
 
 /-- M1 代数层定理：模式同构在谱流下不变。
     这是 M1 公理的代数核心——法拉第/安培定律的联立性
@@ -149,7 +149,7 @@ theorem m1_algebraic_invariance
     "三步骤中有两步给出机器可查骨架 + 完整数学链条"。
     三项剩余边界登记为 Paper 44 §7.5 开放问题 11 的子阻塞。 -/
 theorem m1_geometric_diffeomorphism (P : MimNormalPlane) (γ : DeformationCycle P)
-    (hw : windingNumber P γ = 1 ∨ windingNumber P γ = -1)
+    (_hw : windingNumber P γ = 1 ∨ windingNumber P γ = -1)
     (hPoincare' : ∃ (A : DeRhamBridge.VectorPotential), Differentiable ℝ A ∧
       ∀ p, (fun (_ : DeRhamBridge.R2) => ![0, 0]) p = DeRhamBridge.curlOfPotential A p)
     (hconvex' : Convex ℝ (Set.univ : Set DeRhamBridge.R2))
@@ -214,7 +214,7 @@ noncomputable def fiber_base_coupling (c : ℝ) : ℝ :=
 
 /-- M4 定理：标度对应可推导
     c 是粘合拓扑的同胚不变量（Paper 44 定理 3.1） -/
-theorem m4_scale_correspondence (c : ℝ) (hc : c > 0) :
+theorem m4_scale_correspondence (c : ℝ) (_hc : c > 0) :
     fiber_base_coupling c = 1 / (c * c) := by
   rfl
 
@@ -318,7 +318,7 @@ theorem distortion_to_topological_jump (P : MimNormalPlane) (Γ : TimeDeformatio
     M3: 手性对应（参数化方向显式化）
     M4: 标度对应（纤维化结构确认）
     全部为 Paper 44 已有结果的公理化重构，非独立假设 -/
-theorem mimetic_axioms_derivable (P : MimNormalPlane) (γ : DeformationCycle P) (c : ℝ) (hc : c > 0) :
+theorem mimetic_axioms_derivable (P : MimNormalPlane) (γ : DeformationCycle P) (c : ℝ) (_hc : c > 0) :
     (windingNumber P γ = 1 ∨ windingNumber P γ = -1) ∧  -- M1+M3: 环绕数 ±1
     (mimeticFitError ⟨λ _ => 0, λ _ => 0, λ _ => 0, λ _ => 0⟩ 0 = 0) ∧  -- M2: 零误差
     (fiber_base_coupling c = 1 / (c * c)) := by  -- M4: 标度对应

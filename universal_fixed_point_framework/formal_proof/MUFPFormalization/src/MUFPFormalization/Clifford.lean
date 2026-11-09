@@ -65,14 +65,14 @@ theorem e_01_sq {n : ℕ} (hn : n = 2) : e_01 hn * e_01 hn = -1 := by
   subst hn
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e_01, Matrix.mul_fin_two, Matrix.neg_apply, Matrix.one_apply]
+    simp [e_01, Matrix.neg_apply]
 
 /-- Verification that e_10 (Cl(1,0)) squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e_10_sq {n : ℕ} (hn : n = 2) : e_10 hn * e_10 hn = 1 := by
   subst hn
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e_10, Matrix.mul_fin_two, Matrix.neg_apply, Matrix.one_apply]
+    simp [e_10]
 
 /-- The two Cl(2,0) generators anticommute（通用 Fin n + hn:n=2 版本）。 -/
 theorem e_20_anticomm {n : ℕ} (hn : n = 2) :
@@ -80,21 +80,21 @@ theorem e_20_anticomm {n : ℕ} (hn : n = 2) :
   subst hn
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e1_20, e2_20, Matrix.mul_fin_two, Matrix.neg_apply]
+    simp [e1_20, e2_20, Matrix.neg_apply]
 
 /-- Verification that e1_20 squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e1_20_sq {n : ℕ} (hn : n = 2) : e1_20 hn * e1_20 hn = 1 := by
   subst hn
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e1_20, Matrix.mul_fin_two, Matrix.one_apply]
+    simp [e1_20]
 
 /-- Verification that e2_20 squares to the identity（通用 Fin n + hn:n=2 版本）。 -/
 theorem e2_20_sq {n : ℕ} (hn : n = 2) : e2_20 hn * e2_20 hn = 1 := by
   subst hn
   funext i j
   fin_cases i <;> fin_cases j <;>
-    simp [e2_20, Matrix.mul_fin_two, Matrix.one_apply]
+    simp [e2_20]
 
 /-!
 ### Cl(1,7) Classification

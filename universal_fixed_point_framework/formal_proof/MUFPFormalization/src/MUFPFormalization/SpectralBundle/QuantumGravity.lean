@@ -85,9 +85,9 @@ structure SpinNetwork where
     - 不动点映射为孤立节点（无出边）
     - 周期态映射为环形结构 -/
 def RecObj_to_SpinNetwork (X : RecObj) : SpinNetwork :=
-  let nodes := List.map (fun x => { spin := 0, volume_quantum := 1 })
+  let nodes := List.map (fun _x => { spin := 0, volume_quantum := 1 })
     (List.finRange (Fintype.card X.T))
-  let edges := List.map (fun x =>
+  let edges := List.map (fun _x =>
     { spin := 0,
       source_node := { spin := 0, volume_quantum := 1 },
       target_node := { spin := 0, volume_quantum := 1 } })
@@ -98,13 +98,13 @@ def RecObj_to_SpinNetwork (X : RecObj) : SpinNetwork :=
 theorem spinNetwork_node_count (X : RecObj) :
     (RecObj_to_SpinNetwork X).node_count = Fintype.card X.T := by
   unfold RecObj_to_SpinNetwork
-  simp [List.length_map, List.length_finRange]
+  simp [List.length_finRange]
 
 /-- 自旋网络的边数量等于 RecObj 的状态空间基数（每个状态一条出边）。 -/
 theorem spinNetwork_edge_count (X : RecObj) :
     (RecObj_to_SpinNetwork X).edge_count = Fintype.card X.T := by
   unfold RecObj_to_SpinNetwork
-  simp [List.length_map, List.length_finRange]
+  simp [List.length_finRange]
 
 /-- 面积算符对应 defectMeasure：
     在圈量子引力中，面积算符测量曲面的量子化面积。
@@ -371,7 +371,7 @@ theorem spectral_discreteness_eq_string_quantization (sv : StringVibration) :
   have h := sv.harmonic_relation
   rw [h (k + 1), h k]
   simp [add_mul]
-  <;> ring
+
 
 -- ============================================================
 -- §16.4 D⊣R 伴随 ↔ 弦-膜耦合
@@ -429,7 +429,7 @@ theorem RFunctor_eq_string_reconstruction :
     - η_X : X → R(D(X)) ↔ 弦端点 ↪ D-膜
     - η 的范数 ↔ 耦合强度
     - 非零伴随余留 ↔ 非平凡耦合 -/
-theorem adjunction_eq_stringMembraneCoupling (X : RecObj) :
+theorem adjunction_eq_stringMembraneCoupling (_X : RecObj) :
     -- D⊣R 伴随的单位/余单位
     -- 对应弦-膜耦合的结构
     -- 这是 Paper IV 结果的推广
@@ -445,8 +445,8 @@ theorem adjunction_eq_stringMembraneCoupling (X : RecObj) :
     - adjunctionResidual ≠ 0 ↔ 非零耦合（相互作用弦）
     - ||adjunctionResidual|| ↔ coupling_strength -/
 theorem adjunctionResidual_eq_couplingStrength {n : ℕ}
-    (A_X A_Z : Matrix (Fin n) (Fin n) ℂ)
-    (δ : Matrix (Fin n) (Fin n) ℂ) (etaH : ℝ) :
+    (_A_X _A_Z : Matrix (Fin n) (Fin n) ℂ)
+    (_δ : Matrix (Fin n) (Fin n) ℂ) (_etaH : ℝ) :
     -- 伴随余留的范数对应弦-膜耦合强度
     -- 这是引力（Δ非零）与弦论耦合的深层联系
     True := by trivial
@@ -463,8 +463,8 @@ theorem adjunctionResidual_eq_couplingStrength {n : ℕ}
     - 有引力（Δ≠0）：伴随不完美，弦与膜存在非平凡耦合
     - 引力越强（Δ越大）：弦-膜耦合越强 -/
 theorem delta_nonzero_iff_coupling_nonzero {n : ℕ}
-    (A_X A_Z : Matrix (Fin n) (Fin n) ℂ)
-    (δ : Matrix (Fin n) (Fin n) ℂ) (etaH : ℝ) :
+    (_A_X _A_Z : Matrix (Fin n) (Fin n) ℂ)
+    (_δ : Matrix (Fin n) (Fin n) ℂ) (_etaH : ℝ) :
     -- 概念性对应：
     -- Δ ≠ 0 ⟺ 伴随余留 ≠ 0 ⟺ 弦-膜耦合 ≠ 0
     -- 这是 MUFPF 引力 ↔ 弦论耦合 的等价表述

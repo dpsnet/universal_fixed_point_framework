@@ -200,7 +200,7 @@ theorem kleinBottle_has_pinch :
     ∃ x y : KleinState, x ≠ y ∧ kleinGeometricPoint x = kleinGeometricPoint y := by
   refine ⟨KleinState.s0, KleinState.s2, ?_⟩
   constructor
-  · intro h; simp [KleinState] at h
+  · intro h; simp [] at h
   · rfl
 
 /-- 捏点与缺陷度量的关系：存在捏点 ⟺ 缺陷度量 > 0。
@@ -244,7 +244,7 @@ theorem connectedSum_structuralDefect (n : ℕ) (hn : n > 0) :
 /-- 临界阶次：当 n 超过临界值 n_* 时，结构性缺陷穿透时空界面。
     在离散框架中，这对应 K > K_c 时对称构型不存在。
     连续版本的 n_* 需要额外的物理假设来确定。 -/
-theorem criticalOrder_threshold (n : ℕ) (hn : n > 0) :
+theorem criticalOrder_threshold (n : ℕ) (_hn : n > 0) :
     ∃ K > criticalThreshold (connectedSumRecObj n),
     ¬ HasSymmetricFamily (connectedSumRecObj n) K := by
   use criticalThreshold (connectedSumRecObj n) + 1
@@ -254,7 +254,7 @@ theorem criticalOrder_threshold (n : ℕ) (hn : n > 0) :
 
 /-- 拓扑阶次递推：每增加一个克莱因瓶副本，缺陷度量增加。
     这对应 χ(K^{#n}) = -2(n-1) 的离散版本。 -/
-theorem defectMeasure_increases_with_n (n : ℕ) (hn : n > 0) :
+theorem defectMeasure_increases_with_n (n : ℕ) (_hn : n > 0) :
     defectMeasure (connectedSumRecObj n) ≥ 4 * n := by
   -- 所有状态都是非不动点（周期为4，非平凡）
   -- defectMeasure = card({x // step x ≠ x}) = card(ConnectedSumState n) = 4n
@@ -514,7 +514,7 @@ theorem connectedSum_euler_characteristic_approx (n : ℕ) :
 
 /-- 连通和的不可定向性保持：每个克莱因瓶副本保持不可定向性。
     离散版本：所有状态都是非不动点（周期为4，非平凡）。 -/
-theorem connectedSum_non_orientable (n : ℕ) (hn : n > 0) :
+theorem connectedSum_non_orientable (n : ℕ) (_hn : n > 0) :
     ∀ x : ConnectedSumState n, (connectedSumRecObj n).step x ≠ x := by
   intro ⟨i, s⟩
   cases s <;> simp [connectedSumRecObj, connectedSumStep, kleinStep] <;>

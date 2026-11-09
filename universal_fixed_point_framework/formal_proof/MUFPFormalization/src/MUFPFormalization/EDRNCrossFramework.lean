@@ -98,7 +98,7 @@ theorem Rsupp_two : Rsupp 2 = S4 ^ 2 := by
   simp [Rsupp]
 
 /-- R_supp 的指数衰减：N 增大 → R_supp 减小（抑制增强） -/
-theorem Rsupp_decreasing {N : ℕ} (hN : 0 < N) : Rsupp (N + 1) < Rsupp N := by
+theorem Rsupp_decreasing {N : ℕ} (_hN : 0 < N) : Rsupp (N + 1) < Rsupp N := by
   unfold Rsupp
   rw [pow_succ]
   calc
@@ -130,7 +130,7 @@ noncomputable def Ncrit (θ : ℝ) : ℤ :=
     - k_自旋(N) 随 N 增大趋于 0，无法外推到 k_原子=5
     - 换算律不成立，3 层差为结构固有差异 -/
 axiom layer2_statistical_spectral_correspondence_open :
-    ∀ (N : ℕ), True  -- 登记开放，待后续闭合
+    ∀ (_N : ℕ), True  -- 登记开放，待后续闭合
 
 /-! ## 第 3 层开放项：S3 谱静默 ↔ 沉默失谐完整等价（登记） -/
 

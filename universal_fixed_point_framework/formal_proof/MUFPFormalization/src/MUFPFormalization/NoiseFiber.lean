@@ -100,15 +100,15 @@ lemma NoiseHom.comp_r {X Y Z : NoiseObj} (f : X ⟶ Y) (g : Y ⟶ Z) :
 noncomputable def NFunctor : NoiseObj ⥤ TempObj where
   obj X := ⟨X.η, X.pos⟩
   map f := ⟨f.r, f.r_pos, f.eq⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The inverse functor 𝒩⁻¹ : Temp → Noise, acting identically. -/
 noncomputable def NInvFunctor : TempObj ⥤ NoiseObj where
   obj X := ⟨X.T, X.pos⟩
   map f := ⟨f.r, f.r_pos, f.eq⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- The category equivalence NoiseCat ≌ TempCat.
 
@@ -186,8 +186,8 @@ instance bundleNoiseCategory : Category SpectralBundleNoise where
 abbrev π_η : SpectralBundleNoise ⥤ NoiseObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 5: Cartesian Lifts (Grothendieck Fibration)
@@ -341,13 +341,13 @@ theorem twoByTwo_lambda_plus_characteristic (l₁ l₂ : ℝ) (V : ℂ) (η : �
     6. Result: lam'₀ = ψ₀†·δA_N·ψ₀ -/
 theorem feynman_hellmann_abstract {n : ℕ}
     (A_R δA_N : Matrix (Fin n) (Fin n) ℂ)
-    (hA_hermitian : A_Rᴴ = A_R) (hδ_hermitian : δA_Nᴴ = δA_N)
+    (_hA_hermitian : A_Rᴴ = A_R) (_hδ_hermitian : δA_Nᴴ = δA_N)
     (ψ : ℝ → Matrix (Fin n) (Fin 1) ℂ) (lam : ℝ → ℂ)
-    (h_eigen : ∀ η : ℝ, (A_R + η • δA_N) * ψ η = lam η • ψ η)
-    (h_norm : ∀ η : ℝ, (ψ η)ᴴ * ψ η = 1)
-    (h_psi_diff : ∀ η : ℝ, DifferentiableAt ℝ ψ η)
-    (h_lambda_diff : ∀ η : ℝ, DifferentiableAt ℝ lam η)
-    (η₀ : ℝ) :
+    (_h_eigen : ∀ η : ℝ, (A_R + η • δA_N) * ψ η = lam η • ψ η)
+    (_h_norm : ∀ η : ℝ, (ψ η)ᴴ * ψ η = 1)
+    (_h_psi_diff : ∀ η : ℝ, DifferentiableAt ℝ ψ η)
+    (_h_lambda_diff : ∀ η : ℝ, DifferentiableAt ℝ lam η)
+    (_η₀ : ℝ) :
     True := by
   -- ※ 开放项登记（2026-08-07）：FH 公式的严格陈述需将 1×1 矩阵 (ψ†·δA_N·ψ) 投影为
   -- 标量（取 (0,0) 条目），完整证明需微分与 Hermitian 谱分析；此处以 True 占位
@@ -496,7 +496,7 @@ noncomputable def cl17_V : ℝ := 1/8
 /-- 2×2 Cl(1,7) spectral gap function: Δ(η) = √((Δlam_min)² + 4·η²·V²).
     For the off-diagonal perturbation with V = 1/8, this gives the exact η-dependence
     of the gap between the two lowest eigenvalues. -/
-theorem cl17_subspace_gap_function (η : ℝ) (hV : cl17_V = 1/8) :
+theorem cl17_subspace_gap_function (η : ℝ) (_hV : cl17_V = 1/8) :
     (cl17_l2 - cl17_l1)^2 + 4 * η^2 * (cl17_V)^2 ≥ (cl17_l2 - cl17_l1)^2 := by
   have h_nonneg : 0 ≤ 4 * η^2 * ((1/8 : ℝ)^2) := by nlinarith
   nlinarith
@@ -509,7 +509,7 @@ theorem cl17_subspace_gap_function (η : ℝ) (hV : cl17_V = 1/8) :
     Cl(1,7) 2×2 模型的特征方程 det(A(η) - λI) = 0（经
     twoByTwo_lambda_plus_characteristic，l₁/l₂ = cl17_l1/cl17_l2，
     V = cl17_V，即 FH 公式的显式验证核心）。 -/
-theorem cl17_eigenvalue_formula (η : ℝ) (hV : cl17_V = 1/8) :
+theorem cl17_eigenvalue_formula (η : ℝ) (_hV : cl17_V = 1/8) :
     Matrix.det (!![(cl17_l1 : ℂ), η * (cl17_V : ℂ); η * conj (cl17_V : ℂ), (cl17_l2 : ℂ)] -
       (twoByTwo_lambda_plus cl17_l1 cl17_l2 (cl17_V : ℂ) η : ℂ) •
         (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 0 :=
@@ -566,7 +566,7 @@ noncomputable def N_hat : SpectralBundleTemp ⥤ SpectralBundleNoise where
     abbrev 投影，NInvFunctor 为构造性函子），结构外延 + 证明无关性即证。 -/
 theorem N_hat_base_commutes (X : SpectralBundleTemp) :
     π_η.obj (N_hat.obj X) = NInvFunctor.obj (π_T.obj X) := by
-  simp [N_hat, π_T, NInvFunctor]
+  simp [N_hat, NInvFunctor]
 
 /-! =========================================================
     Section 8: Physical Noise Section with η_c Singularity
@@ -632,7 +632,7 @@ noncomputable def criticalNoiseEta_from_cl17 : NoiseObj :=
     勘误（2026-08-09）：原前提 η.η = 0 与 NoiseObj 的 η > 0 矛盾（且与 η_c
     语义不符）；改为 η.η = η_c（criticalNoiseEta_from_cl17）。 -/
 theorem eta_c_singularity (n : ℕ) (A : Matrix (Fin n) (Fin n) ℂ) (η : NoiseObj)
-    (h : η.η = criticalNoiseEta_from_cl17.η) :
+    (_h : η.η = criticalNoiseEta_from_cl17.η) :
     π_η.obj ((NoiseSection n A).obj η) = η := rfl
 
 /-- Theorem: η_c (from Cl(1,7)) relates to the spectral gap via η_c = (k_max/2) · Δlam_min.

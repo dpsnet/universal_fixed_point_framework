@@ -185,7 +185,7 @@ structure CosmoBAOScale where
     物理含义：BAO 特征尺度是真实存在的物理量。
     构造性证明：取 r_s ≈ 150 Mpc（Planck/BOSS 观测值）。 -/
 theorem bao_scale_exists :
-    ∃ b : CosmoBAOScale, True := by
+    ∃ _b : CosmoBAOScale, True := by
   refine ⟨{
     scale := 150
     scale_pos := by norm_num

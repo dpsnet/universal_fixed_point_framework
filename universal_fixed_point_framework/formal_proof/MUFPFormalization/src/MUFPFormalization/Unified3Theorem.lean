@@ -132,9 +132,9 @@ def layerToGenSpaceBasis : ActiveMorphismLayer → GenSpace := λ
 /-- 从 ActiveMorphismLayer 到 GenSpace 的投影表示。
     每个层映射到 ℂ³ 中的一个坐标投影。 -/
 def layerRepFunctor : ActiveMorphismLayer → (GenSpace → GenSpace) := λ
-  | ActiveMorphismLayer.first  => λ (x, y, z) => (x, 0, 0)
-  | ActiveMorphismLayer.second => λ (x, y, z) => (0, y, 0)
-  | ActiveMorphismLayer.third  => λ (x, y, z) => (0, 0, z)
+  | ActiveMorphismLayer.first  => λ (x, _y, _z) => (x, 0, 0)
+  | ActiveMorphismLayer.second => λ (_x, y, _z) => (0, y, 0)
+  | ActiveMorphismLayer.third  => λ (_x, _y, z) => (0, 0, z)
 
 /-- layerRepFunctor 在基向量上的作用是投影到对应坐标。 -/
 theorem layerRep_on_basis (l : ActiveMorphismLayer) :

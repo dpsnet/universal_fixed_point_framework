@@ -209,7 +209,7 @@ noncomputable def PMPresheaf : TruthPresheaf PMContextCover where
       | PMContext.Col2 => v.v PMObservable.A2 * v.v PMObservable.B2 * v.v PMObservable.C2 = 1
       | PMContext.Col3 => v.v PMObservable.A3 * v.v PMObservable.B3 * v.v PMObservable.C3 = 0
     }
-  restrict C₁ C₂ h v := v
+  restrict _C₁ _C₂ _h v := v
 
 /-! =========================================================
     Section 5: K-S Theorem — Proven for PM Square

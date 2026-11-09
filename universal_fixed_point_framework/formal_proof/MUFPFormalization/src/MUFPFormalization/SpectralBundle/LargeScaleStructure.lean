@@ -331,7 +331,7 @@ theorem mass_function_from_defect_distribution
     gmf.total = cdd.diffuse_defect / 10 + cdd.bound_defect / 2 +
                 cdd.bound_defect / 5 + cdd.bound_defect / 20 := by
   simp [GalaxyMassFunction.total, massFunctionFromDefect]
-  <;> rfl
+
 
 -- ============================================================
 -- §23.5 暗物质晕
@@ -394,7 +394,7 @@ theorem darkMatter_halo_from_bound_defects
     物理含义：只要有束缚态缺陷，就存在暗物质晕。 -/
 theorem darkMatter_halo_exists (cdd : CosmicDefectDistribution) :
     0 < cdd.bound_defect →
-    ∃ halo : DarkMatterHalo, True := by
+    ∃ _halo : DarkMatterHalo, True := by
   intro h
   exact ⟨{ bound_defects := cdd.bound_defect
            radius := 1
@@ -429,7 +429,7 @@ theorem darkMatter_halo_exists (cdd : CosmicDefectDistribution) :
 
 /-- 大尺度结构的统一描述。
     物理含义：MUFPF 提供了大尺度结构的完整因果起源。 -/
-theorem large_scale_structure_unified (cs : CausalStructure) :
+theorem large_scale_structure_unified (_cs : CausalStructure) :
     -- 因果集粗粒化 → 物质密度场
     -- 因果链网络 → 宇宙网骨架
     -- 缺陷统计分布 → 星系质量函数

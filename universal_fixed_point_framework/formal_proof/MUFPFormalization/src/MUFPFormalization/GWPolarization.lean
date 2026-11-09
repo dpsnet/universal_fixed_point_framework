@@ -104,15 +104,15 @@ lemma sigmaZ_hermitian : (sigmaZ rfl).conjTranspose = sigmaZ rfl := by
 
 /-- 辅助：2×2 恒等矩阵的迹为 2 -/
 private lemma trace_one_fin2 : Matrix.trace (1 : Matrix (Fin 2) (Fin 2) ℂ) = 2 := by
-  simp [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply, Matrix.one_apply]
+  simp [Matrix.trace, Matrix.diag_apply]
 
 /-- 辅助：σ_x 的迹为 0 -/
 private lemma trace_sigmaX : Matrix.trace (sigmaX rfl) = 0 := by
   simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply]
   dsimp only [sigmaX]
   set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
-  have h00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h00 : sx 0 0 = 0 := by simp [hsx]
+  have h11 : sx 1 1 = 0 := by simp [hsx]
   rw [h00, h11]
   norm_num
 
@@ -121,8 +121,8 @@ private lemma trace_sigmaY : Matrix.trace (sigmaY rfl) = 0 := by
   simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply]
   dsimp only [sigmaY]
   set sy : Matrix (Fin 2) (Fin 2) ℂ := ![![0, -Complex.I], ![Complex.I, 0]] with hsy
-  have h00 : sy 0 0 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h11 : sy 1 1 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h00 : sy 0 0 = 0 := by simp [hsy]
+  have h11 : sy 1 1 = 0 := by simp [hsy]
   rw [h00, h11]
   norm_num
 
@@ -168,10 +168,10 @@ theorem plusAmplitude_swap :
   -- tr(σ_x * σ_x) = tr(I) = 2
   dsimp only [sigmaX]
   set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
-  have h_sx00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx01 : sx 0 1 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx10 : sx 1 0 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sx00 : sx 0 0 = 0 := by simp [hsx]
+  have h_sx01 : sx 0 1 = 1 := by simp [hsx]
+  have h_sx10 : sx 1 0 = 1 := by simp [hsx]
+  have h_sx11 : sx 1 1 = 0 := by simp [hsx]
   -- (sx * sx) 0 0 = sx 0 0 * sx 0 0 + sx 0 1 * sx 1 0 = 0*0 + 1*1 = 1
   have h_mul_00 : (sx * sx) 0 0 = (1 : ℂ) := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx00, h_sx01, h_sx10]
@@ -191,14 +191,14 @@ theorem crossAmplitude_swap :
   dsimp only [sigmaX, sigmaY]
   set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
   set sy : Matrix (Fin 2) (Fin 2) ℂ := ![![0, -Complex.I], ![Complex.I, 0]] with hsy
-  have h_sx00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx01 : sx 0 1 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx10 : sx 1 0 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sy00 : sy 0 0 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy01 : sy 0 1 = -Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy10 : sy 1 0 = Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy11 : sy 1 1 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
+  have h_sx00 : sx 0 0 = 0 := by simp [hsx]
+  have h_sx01 : sx 0 1 = 1 := by simp [hsx]
+  have h_sx10 : sx 1 0 = 1 := by simp [hsx]
+  have h_sx11 : sx 1 1 = 0 := by simp [hsx]
+  have h_sy00 : sy 0 0 = 0 := by simp [hsy]
+  have h_sy01 : sy 0 1 = -Complex.I := by simp [hsy]
+  have h_sy10 : sy 1 0 = Complex.I := by simp [hsy]
+  have h_sy11 : sy 1 1 = 0 := by simp [hsy]
   -- (sy * sx) 0 0 = sy 0 0 * sx 0 0 + sy 0 1 * sx 1 0 = 0 + (-I)*1 = -I
   have h_mul_00 : (sy * sx) 0 0 = -Complex.I := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy00, h_sx00, h_sy01, h_sx10]
@@ -216,8 +216,8 @@ theorem monopole_swap :
     monopoleComponent (sigmaX rfl) = 0 := by
   dsimp only [sigmaX, monopoleComponent]
   set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
-  have h_sx00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
+  have h_sx00 : sx 0 0 = 0 := by simp [hsx]
+  have h_sx11 : sx 1 1 = 0 := by simp [hsx]
   simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag_apply]
   rw [h_sx00, h_sx11]
   norm_num
@@ -238,7 +238,7 @@ structure PolarizationProjection (Y : RecObj) where
     这是平凡的：函数应用保持相等性。
     但物理意义非平凡：周期信号在两个极化通道中同时保持周期。 -/
 theorem polarization_periodic {Y : RecObj} (pp : PolarizationProjection Y)
-    (y : Y.T) (n : ℕ) (hn : n ≥ 1) (hp : (Y.step^[n]) y = y) :
+    (y : Y.T) (n : ℕ) (_hn : n ≥ 1) (hp : (Y.step^[n]) y = y) :
     ∀ k : ℕ,
       pp.plus_proj ((Y.step^[n*k]) y) = pp.plus_proj y ∧
       pp.cross_proj ((Y.step^[n*k]) y) = pp.cross_proj y := by
@@ -250,7 +250,7 @@ theorem polarization_periodic {Y : RecObj} (pp : PolarizationProjection Y)
 /-- 周期态的极化投影在每步都确定。
     若 Y.step^n y = y，则 plus_proj(Y.step^k y) 的周期整除 n。 -/
 theorem polarization_step_periodic {Y : RecObj} (pp : PolarizationProjection Y)
-    (y : Y.T) (n : ℕ) (hn : n ≥ 1) (hp : (Y.step^[n]) y = y) :
+    (y : Y.T) (n : ℕ) (_hn : n ≥ 1) (hp : (Y.step^[n]) y = y) :
     ∀ k : ℕ,
       pp.plus_proj ((Y.step^[n + k]) y) = pp.plus_proj ((Y.step^[k]) y) ∧
       pp.cross_proj ((Y.step^[n + k]) y) = pp.cross_proj ((Y.step^[k]) y) := by
@@ -293,7 +293,7 @@ theorem monopole_no_radiation {Y : RecObj} (pp : PolarizationProjection Y)
     物理对应：内部形变（偏心子集群）→ 四极矩非零 → 引力波辐射。
     Sp 层实例验证见 G3_monopole_vs_quadrupole_instance。 -/
 theorem quadrupole_radiates_conditional {Y : RecObj} (pp : PolarizationProjection Y)
-    (y : Y.T) (hecc : Y.step y ≠ y)
+    (y : Y.T) (_hecc : Y.step y ≠ y)
     (h_varies : ∃ k : ℕ,
       pp.plus_proj ((Y.step^[k]) y) ≠ pp.plus_proj y ∨
       pp.cross_proj ((Y.step^[k]) y) ≠ pp.cross_proj y) :
@@ -321,7 +321,7 @@ theorem quadrupole_radiates_conditional {Y : RecObj} (pp : PolarizationProjectio
 /-- 四极辐射的逆否形式：若极化投影恒为零，则无四极辐射。
     这是单极不辐射的另一面：零极化振幅 = 无辐射。 -/
 theorem zero_polarization_no_radiation {Y : RecObj} (pp : PolarizationProjection Y)
-    (y : Y.T) (h_zero : ∀ k : ℕ,
+    (y : Y.T) (_h_zero : ∀ k : ℕ,
       pp.plus_proj ((Y.step^[k]) y) = 0 ∧ pp.cross_proj ((Y.step^[k]) y) = 0) :
     True := by
   trivial
@@ -442,8 +442,8 @@ theorem T_G2_zero_defect_zero_delay
     完整的"δ ≠ 0 → E_residual ≠ 0"需要额外非退化假设。 -/
 theorem T_G2_weak_adjunction_sublight
     {n : ℕ} (A_X A_Z : Matrix (Fin n) (Fin n) ℂ)
-    (δ : Matrix (Fin n) (Fin n) ℂ) (etaH : Matrix (Fin n) (Fin n) ℂ)
-    (hδ_neq : δ ≠ 0) (h_nondeg : A_X ≠ A_Z) :
+    (δ : Matrix (Fin n) (Fin n) ℂ) (_etaH : Matrix (Fin n) (Fin n) ℂ)
+    (_hδ_neq : δ ≠ 0) (_h_nondeg : A_X ≠ A_Z) :
     True := by
   trivial
 
@@ -601,7 +601,7 @@ theorem quadrupole_cross_equals_original (M : Matrix (Fin 2) (Fin 2) ℂ) :
     证明：star(Σ M_ii) = Σ star(M_ii) = Σ (M†)_ii = trace(M†) -/
 private lemma conj_trace_eq_trace_conjTranspose {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ) :
     star (Matrix.trace M) = Matrix.trace M.conjTranspose := by
-  simp only [Matrix.trace, Matrix.conjTranspose_apply]
+  simp only [Matrix.trace]
   rw [star_sum]
   rfl
 
@@ -651,7 +651,7 @@ theorem couplingShapeMatrix_hermitian {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin
 theorem couplingShapeMatrix_trace {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) :
     Matrix.trace (couplingShapeMatrix A₁ A₂) =
     hilbertSchmidtInnerProduct A₁ A₁ + hilbertSchmidtInnerProduct A₂ A₂ := by
-  simp only [Matrix.trace, Fin.sum_univ_two, couplingShapeMatrix, ite_true, ite_false]
+  simp only [Matrix.trace, Fin.sum_univ_two]
   rfl
 
 /-- 耦合矩阵的对角元是实数（Frobenius 范数平方）。 -/
@@ -757,7 +757,7 @@ theorem T_G2_strict_adjunction_zero_residual {n : ℕ}
     这建立了 Rec 层 (BinaryCoupling) → Sp 层 (couplingShapeMatrix) 的直接连接。
     维度对齐：利用 h_same 将 X₂ 的谱算子类型对齐到 X₁ 的维度。 -/
 noncomputable def binaryCouplingShapeMatrix {X₁ X₂ Y : RecObj}
-    (bc : BinaryCoupling X₁ X₂ Y)
+    (_bc : BinaryCoupling X₁ X₂ Y)
     (h_same : Fintype.card X₁.T = Fintype.card X₂.T) :
     Matrix (Fin 2) (Fin 2) ℂ :=
   couplingShapeMatrix
@@ -1083,7 +1083,7 @@ theorem velocity_positive (delay : CouplingDelay) :
     物理意义：引力波传播速度=c。
     对应 GW170817 约束 |v_gw-c|/c<10^-15。 -/
 theorem T_G2_strict_velocity_light_speed
-    {n : ℕ} (A_X A_Z ηH : Matrix (Fin n) (Fin n) ℂ) (em : EmergenceMetric) :
+    {n : ℕ} (A_X A_Z ηH : Matrix (Fin n) (Fin n) ℂ) (_em : EmergenceMetric) :
     adjunctionResidual A_X A_Z (0 : Matrix (Fin n) (Fin n) ℂ) ηH = 0 ∧
     velocityFromDelay CouplingDelay.zero = 1 := by
   refine ⟨c5_zero_defect_zero_residual A_X A_Z ηH, rfl⟩
@@ -1094,8 +1094,8 @@ theorem T_G2_strict_velocity_light_speed
     2. delay=positive → v=1/2<1=c（速度定义）
     替换原 T_G2_weak_adjunction_sublight 的 trivial (True) 版本。 -/
 theorem T_G2_weak_velocity_sublight
-    {n : ℕ} (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ) (em : EmergenceMetric)
-    (h_nonzero : adjunctionResidual A_X A_Z δ ηH ≠ 0) :
+    {n : ℕ} (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ) (_em : EmergenceMetric)
+    (_h_nonzero : adjunctionResidual A_X A_Z δ ηH ≠ 0) :
     velocityFromDelay CouplingDelay.positive < 1 := by
   show (1/2 : ℝ) < 1
   norm_num
@@ -1103,8 +1103,8 @@ theorem T_G2_weak_velocity_sublight
 /-- 速度亏损定理：非零余留 → 1-v > 0。
     物理意义：伴随偏差导致引力波速度低于光速。 -/
 theorem T_G2_velocity_deficit_nonzero
-    {n : ℕ} (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ) (em : EmergenceMetric)
-    (h_nonzero : adjunctionResidual A_X A_Z δ ηH ≠ 0) :
+    {n : ℕ} (A_X A_Z δ ηH : Matrix (Fin n) (Fin n) ℂ) (_em : EmergenceMetric)
+    (_h_nonzero : adjunctionResidual A_X A_Z δ ηH ≠ 0) :
     1 - velocityFromDelay CouplingDelay.positive > 0 := by
   show (1 : ℝ) - 1/2 > 0
   norm_num
@@ -1127,7 +1127,7 @@ theorem T_G2_velocity_residual_correspondence
 
 /-- BinaryCoupling 传播速度：严格伴随→光速。 -/
 theorem T_G2_binary_coupling_light_speed
-    {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X₁ X₂ Y) (em : EmergenceMetric) :
+    {X₁ X₂ Y : RecObj} (_bc : BinaryCoupling X₁ X₂ Y) (_em : EmergenceMetric) :
     velocityFromDelay CouplingDelay.zero = 1 := rfl
 
 /-- 涌现度规速度约束：d/Δt=c=1。 -/
@@ -1535,13 +1535,13 @@ theorem couplingPolarizationRadius_nonneg {n : ℕ}
 
 /-- 耦合形状矩阵谱半径 SO(2) 不变性。 -/
 theorem couplingPolarizationRadius_SO2_invariant {n : ℕ}
-    (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) (r : SO2Elem) :
+    (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) (_r : SO2Elem) :
     couplingPolarizationRadius A₁ A₂ =
     couplingPolarizationRadius A₁ A₂ := rfl
 
 /-- BinaryCoupling 耦合矩阵的极化谱半径。 -/
 noncomputable def binaryCouplingPolarizationRadius {X₁ X₂ Y : RecObj}
-    (bc : BinaryCoupling X₁ X₂ Y)
+    (_bc : BinaryCoupling X₁ X₂ Y)
     (h_same : Fintype.card X₁.T = Fintype.card X₂.T) : ℝ :=
   couplingPolarizationRadius
     (stepMatrix (Fintype.equivFin X₁.T ∘ X₁.step ∘ (Fintype.equivFin X₁.T).symm))

@@ -60,7 +60,7 @@ theorem test_laci_nonneg {X : SpObj} (f : X ⟶ X) : 0 ≤ laciIndex f.P := by
   dsimp [laciIndex]
   -- LACI 的有限原型实现恒为 0，非负性直接成立；
   -- 完整证明需要奇异值分解（Phase 16B）。
-  simp [laciIndex]
+  simp []
 
 -- ============================================================
 -- SpectralCorrespondence Tests
@@ -98,7 +98,7 @@ theorem test_RecObj_to_DynSys (R : RecObj) (f : R.T → ℂ) (x : R.T) :
 
 -- DynSys Koopman is always a contraction
 theorem test_DynSys_contraction (X : Type) [Nonempty X] (sys : DynSys X) :
-    iSup (fun x : X => norm (koopmanLinfty sys (fun _ => (0 : ℂ)) x)) ≤ iSup (fun x : X => norm ((0 : ℂ))) :=
+    iSup (fun x : X => norm (koopmanLinfty sys (fun _ => (0 : ℂ)) x)) ≤ iSup (fun _x : X => norm ((0 : ℂ))) :=
   koopmanLinfty_norm_le_one sys (fun _ => 0) (by
     refine ⟨0, ?_⟩
     intro y hy

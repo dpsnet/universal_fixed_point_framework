@@ -119,7 +119,7 @@ theorem binary_coupling_oscillates {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X
     映到 Y 中的同一状态，则该状态同时具有两个周期。
     物理对应：引力波信号叠加——两个源的波在同一时空点叠加。 -/
 theorem signal_superposition {X₁ X₂ Y : RecObj} (bc : BinaryCoupling X₁ X₂ Y)
-    (x₁ : X₁.T) (x₂ : X₂.T) (n₁ n₂ : ℕ) (hn₁ : n₁ ≥ 1) (hn₂ : n₂ ≥ 1)
+    (x₁ : X₁.T) (x₂ : X₂.T) (n₁ n₂ : ℕ) (_hn₁ : n₁ ≥ 1) (_hn₂ : n₂ ≥ 1)
     (hp₁ : (X₁.step^[n₁]) x₁ = x₁) (hp₂ : (X₂.step^[n₂]) x₂ = x₂)
     (h_same : bc.ch₁.toFun x₁ = bc.ch₂.toFun x₂) :
     (Y.step^[n₁]) (bc.ch₁.toFun x₁) = bc.ch₁.toFun x₁ ∧

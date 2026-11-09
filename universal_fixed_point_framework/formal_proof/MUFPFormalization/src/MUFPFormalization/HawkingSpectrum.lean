@@ -136,7 +136,7 @@ theorem qnmRealPart_pos (l n : ℝ) (hl : 0 ≤ l) (hn : 0 ≤ n) :
 
 /-- QNM real part is increasing in n. -/
 theorem qnmRealPart_increasing_n (l n₁ n₂ : ℝ)
-    (hn : n₁ < n₂) (hl_nonneg : 0 ≤ l) :
+    (hn : n₁ < n₂) (_hl_nonneg : 0 ≤ l) :
     qnmRealPart l n₁ < qnmRealPart l n₂ := by
   unfold qnmRealPart qnmRealFreqIndex
   have hgap_pos : 0 < spectralGap 8 := spectralGap8_pos
@@ -145,7 +145,7 @@ theorem qnmRealPart_increasing_n (l n₁ n₂ : ℝ)
 
 /-- QNM real part is increasing in l. -/
 theorem qnmRealPart_increasing_l (l₁ l₂ n : ℝ)
-    (hl : l₁ < l₂) (hn_nonneg : 0 ≤ n) :
+    (hl : l₁ < l₂) (_hn_nonneg : 0 ≤ n) :
     qnmRealPart l₁ n < qnmRealPart l₂ n := by
   unfold qnmRealPart qnmRealFreqIndex
   have hgap_pos : 0 < spectralGap 8 := spectralGap8_pos

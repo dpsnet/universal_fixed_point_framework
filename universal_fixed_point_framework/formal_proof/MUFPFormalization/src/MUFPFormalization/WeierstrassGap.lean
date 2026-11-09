@@ -154,7 +154,7 @@ noncomputable def weierstrassGraphDimension (a b : ℝ) : ℝ :=
     a↑ ⇒ ln a↑ ⇒ d(a)↑——笔记 S5"a 越大维数越高"的 Lean 侧结构支撑
     （谱隙随维数单调递减的方向为 gap↓，见开放项登记）。 -/
 theorem weierstrassGraphDimension_strictMono_a (a₁ a₂ b : ℝ) (hb : 1 < b)
-    (ha₁ : 0 < a₁) (ha₂ : 0 < a₂) (h : a₁ < a₂) :
+    (ha₁ : 0 < a₁) (_ha₂ : 0 < a₂) (h : a₁ < a₂) :
     weierstrassGraphDimension a₁ b < weierstrassGraphDimension a₂ b := by
   unfold weierstrassGraphDimension
   have hlog : Real.log a₁ < Real.log a₂ := Real.log_lt_log ha₁ h

@@ -142,14 +142,14 @@ theorem counterexample_in_blindSpot1 :
   unfold inBlindSpot1 generalHypotheses counterexampleSystem
   -- generalHypotheses = False ∧ True ∧ True = False
   -- ¬False = True
-  simp [false_and]
+  simp []
 
 /-- 反例验证 2：D 对该系统无定义 -/
 theorem counterexample_D_undefined :
     DUndefined counterexampleSystem := by
   unfold DUndefined DPartial counterexampleSystem
   -- 条件: False ∧ True ∧ True = False → if False then ... else none = none
-  simp [false_and]
+  simp []
 
 /-- **核心定理：谱静默不覆盖盲区1**
     反例系统在盲区1 中，但谱静默对该系统不成立。
@@ -165,7 +165,7 @@ theorem spectralSilence_does_NOT_cover_blindSpot1 :
   intro h
   obtain ⟨sp, h_eq, _⟩ := h
   unfold DPartial counterexampleSystem at h_eq
-  simp [false_and] at h_eq
+  simp [] at h_eq
 
 -- ============================================================
 -- 第五部分：逻辑独立性

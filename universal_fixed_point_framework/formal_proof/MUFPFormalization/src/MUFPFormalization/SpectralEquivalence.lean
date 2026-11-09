@@ -142,7 +142,7 @@ is vacuous in the finite prototype, since the IC conditions are defined as
 as the provable content of the coverage theorem.)
 -/
 theorem thm43_IC_full_coverage_finite (R₁ R₂ : RecObj)
-    (hIC : isolationConstraint R₁ R₂)
+    (_hIC : isolationConstraint R₁ R₂)
     (hSame : completeSpectralInvariant R₁ = completeSpectralInvariant R₂) :
     spectralEquivalence R₁ R₂ := by
   exact ⟨eqToIso hSame⟩

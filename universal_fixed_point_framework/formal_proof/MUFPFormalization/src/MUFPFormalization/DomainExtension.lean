@@ -47,7 +47,7 @@ structure ExpansiveIFS (n : ℕ) where
 
 /-- Contractive dual: the inverse system of an expansive IFS is contractive.
     If Φ_i(x) = c_i·x with c_i > 1, then Φ_i⁻¹(y) = (1/c_i)·y with 1/c_i < 1. -/
-def contractiveDual {n : ℕ} (eifs : ExpansiveIFS n) : RecObj :=
+def contractiveDual {n : ℕ} (_eifs : ExpansiveIFS n) : RecObj :=
   { T := Fin n
     fin := inferInstance
     dec := inferInstance
@@ -71,7 +71,7 @@ theorem expansive_spectral_correspondence {n : ℕ} (eifs : ExpansiveIFS n) :
     the original D and the extended D give the same result (up to a sign).
     由 expansive_spectral_correspondence 的符号对偶性直接推导：
     D_ext = -D_dual，故在收缩极限下 D_ext → -D（符号翻转一致性）。 -/
-theorem contractive_limit_consistency {n : ℕ} (d : TridiagonalData n) :
+theorem contractive_limit_consistency {n : ℕ} (_d : TridiagonalData n) :
     -- 扩展 D 函子在收缩极限下与原始 D 函子一致（符号翻转）
     ∀ (eifs : ExpansiveIFS n), (D_ext_expansive eifs).A = -(DFunctor.obj (contractiveDual eifs)).A :=
   fun eifs => expansive_spectral_correspondence eifs
@@ -90,7 +90,7 @@ structure NonCompressiveRGFlow where
 
 /-- Extended D for non-compressive RG flows.
     Uses the adjoint (backward) RG flow as the contractive dual. -/
-noncomputable def D_ext_rg (rg : NonCompressiveRGFlow) : SpObj :=
+noncomputable def D_ext_rg (_rg : NonCompressiveRGFlow) : SpObj :=
   -- Placeholder: detailed construction requires RG-specific analysis
   ⟨1, fun _ _ => 0⟩
 
@@ -98,7 +98,7 @@ noncomputable def D_ext_rg (rg : NonCompressiveRGFlow) : SpObj :=
     completing the coverage of Rec\Rec_D ∪ Rec_diss.
     Together with the existing D: Rec_D → Spec and D_diss: Rec_diss → Spec_C,
     this establishes that D can be (canonically) extended to ALL Rec objects. -/
-theorem domain_coverage_complete {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : True := by
+theorem domain_coverage_complete {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : True := by
   -- Any recursive system, whether contractive, expansive, compressive, or dissipative,
   -- can be assigned a canonical spectral image via D, D_diss, or D_ext.
   trivial

@@ -907,7 +907,7 @@ theorem single_zero_family_time_div_decomp
     hS 2 1, hS 3 1, hS 3 2,
     c11, c22, c33, a11, a22, a33,
     mul_zero, zero_mul, add_zero, zero_add, neg_zero, sub_zero, zero_sub,
-    mul_one, one_mul, one_div, mul_neg, neg_mul, neg_neg]
+    mul_one, one_mul, one_div, mul_neg, neg_mul]
   ring
 
 -- ============================================================
@@ -1265,7 +1265,7 @@ theorem discrete_second_bianchi_tensor (F : FrameRecObj) (Γf : GammaField F)
         + ((covDiffOp F Γf ν) ((curvatureOp F Γf lam μ) (fun _ => v)) x r
           - (curvatureOp F Γf lam μ) ((covDiffOp F Γf ν) (fun _ => v)) x r) := by
     simp only [naiveNablaCurv, bianchiCorr, naiveCurv, sum4,
-      covDiffOp_apply, curvature_op_apply, curvature_op_const_apply, hU]
+      covDiffOp_apply, curvature_op_apply, hU]
     ring
   rw [e, hcomp]
 
@@ -1778,7 +1778,7 @@ theorem discrete_metric_compatible (F : FrameRecObj)
               = sum4 (fun l => (if l = a then 1 else 0) * T l) := by
             apply sum4_congr; intro l
             by_cases h : a = l
-            · simp [h, eq_comm]
+            · simp [h]
             · simp [h, eq_comm]
           rw [flip, sum4_ite_eq' a T]
   have key : ∀ (a : Fin 4) (T : Fin 4 → ℝ),
@@ -2041,7 +2041,7 @@ theorem metric_term_divergence (F : FrameRecObj) (Γf : GammaField F)
           * (scalarCurvature F Γf ginv (F.stepD μ x) - scalarCurvature F Γf ginv x)) := by
       apply sum4_congr; intro μ
       by_cases h : ν = μ
-      · simp [h, eq_comm]
+      · simp [h]
       · simp [h, eq_comm]
     rw [flip, sum4_ite_eq' ν (fun μ =>
       scalarCurvature F Γf ginv (F.stepD μ x) - scalarCurvature F Γf ginv x)]
@@ -2070,7 +2070,7 @@ def conn02 (F : FrameRecObj) (Γf : GammaField F)
     EinsteinDivergenceFree 显式陈述的最后一个纯代数构件。
     数值（phase16b_beta8）：2.1e-14。 -/
 theorem connric_curvature_expand (F : FrameRecObj) (Γf : GammaField F)
-    (g ginv : F.X.T → Fin 4 → Fin 4 → ℝ) (ν : Fin 4) (x : F.X.T) :
+    (_g ginv : F.X.T → Fin 4 → Fin 4 → ℝ) (ν : Fin 4) (x : F.X.T) :
     sum4 (fun μ => sum4 (fun a => ginv x μ a *
         conn02 F Γf (fun y c d => ricciTensor F Γf c d y) μ a ν x))
     = sum4 (fun μ => sum4 (fun a => ginv x μ a * sum4 (fun b => sum4 (fun r =>

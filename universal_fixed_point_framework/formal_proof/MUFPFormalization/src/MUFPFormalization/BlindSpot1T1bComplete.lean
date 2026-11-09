@@ -106,7 +106,7 @@ theorem T1b_generalHypotheses_false :
     ¬ generalHypotheses systemT1b := by
   unfold generalHypotheses systemT1b
   -- False ∧ True ∧ True = False
-  simp [false_and]
+  simp []
 
 /-- **T1b-D-2**: T1b 系统在盲区 1 中。
 
@@ -128,7 +128,7 @@ theorem T1b_D_undefined :
   unfold DUndefined DPartial systemT1b
   -- 条件: False ∧ True ∧ True = False
   -- if False then some ... else none = none
-  simp [false_and]
+  simp []
 
 /-- **T1b-D-3a**: DPartial T1b = none（DUndefined 的展开形式） -/
 theorem T1b_DPartial_eq_none :
@@ -281,7 +281,7 @@ theorem T1b_axiom_necessity :
     -- 谱静默不适用
     ¬ spectralSilenceGeneral systemT1b ∧
     -- 逻辑独立性：谱静默 ⟹ D 有定义，但 T1b 的 D 无定义
-    (∀ h : spectralSilenceGeneral systemT1b, False) := by
+    (∀ _h : spectralSilenceGeneral systemT1b, False) := by
   refine ⟨T1b_in_blindSpot1, T1b_D_undefined, T1b_silence_not_applicable, ?_⟩
   -- 第四个分量：谱静默对 T1b 导出矛盾
   intro h
@@ -345,7 +345,7 @@ theorem T1b_complete_chain :
     -- 步骤 6: 谱静默不成立
     ¬ spectralSilenceGeneral systemT1b ∧
     -- 步骤 7: 谱静默排斥盲区 1（通用定理）
-    (∀ h : spectralSilenceGeneral systemT1b,
+    (∀ _h : spectralSilenceGeneral systemT1b,
      inBlindSpot1 systemT1b → False) ∧
     -- 步骤 8: 元公理必要性
     (DUndefined systemT1b ∧ ¬ spectralSilenceGeneral systemT1b) := by
@@ -433,8 +433,8 @@ theorem T1b_logical_independence :
     -- 谱静默不成立
     ¬ spectralSilenceGeneral systemT1b ∧
     -- 二者互斥
-    (∀ h1 : DUndefined systemT1b,
-     ∀ h2 : spectralSilenceGeneral systemT1b, False) := by
+    (∀ _h1 : DUndefined systemT1b,
+     ∀ _h2 : spectralSilenceGeneral systemT1b, False) := by
   refine ⟨T1b_D_undefined, T1b_silence_not_applicable, ?_⟩
   intro _ h2
   exact T1b_silence_not_applicable h2

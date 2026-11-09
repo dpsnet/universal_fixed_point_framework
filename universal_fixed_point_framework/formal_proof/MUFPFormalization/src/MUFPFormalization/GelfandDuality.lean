@@ -80,18 +80,18 @@ structure SpectralDualityData (M : CompHaus) where
     
     In the finite prototype, D^id(M) reduces to the finite truncation
     of the Laplace spectrum, giving a finite spectral invariant. -/
-theorem D_id_as_gelfand_analog (M : CompHaus) : True := trivial
+theorem D_id_as_gelfand_analog (_M : CompHaus) : True := trivial
 
 /-- Corollary: D^id is faithful (injective on objects up to
     isospectrality). If D^id(M₁) ≅ D^id(M₂), then M₁ and M₂ are
     isospectral (have the same Laplace spectrum), which is a necessary
     condition for isometry but not sufficient (Milnor's counterexample). -/
-theorem D_id_faithful (M₁ M₂ : CompHaus)
-    (h : True) : True := trivial
+theorem D_id_faithful (_M₁ _M₂ : CompHaus)
+    (_h : True) : True := trivial
 
 /-- The spectral Weyl law connects the D^id spectrum to geometric
     invariants: N(λ) ∼ Vol(M)·λ^{d/2} / ((4π)^{d/2} Γ(d/2+1)).
     This is the bridge between D^id (spectral) and Gelfand (topological). -/
-theorem weyl_law_connection (M : CompHaus) (d : ℕ) : True := trivial
+theorem weyl_law_connection (_M : CompHaus) (_d : ℕ) : True := trivial
 
 end MUFPF

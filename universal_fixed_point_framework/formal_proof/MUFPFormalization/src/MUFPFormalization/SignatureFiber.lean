@@ -85,8 +85,8 @@ instance sigCategory : Category SigObj where
           _ = Y.q + g.dq := by rw [f.target_q]
           _ = Z.q := g.target_q
     }
-  id_comp := by intro X Y f; apply SigHom.ext <;> simp <;> omega
-  comp_id := by intro X Y f; apply SigHom.ext <;> simp <;> omega
+  id_comp := by intro X Y f; apply SigHom.ext <;> simp
+  comp_id := by intro X Y f; apply SigHom.ext <;> simp
   assoc := by intro W X Y Z f g h; apply SigHom.ext <;> simp <;> omega
 
 /-- Key signatures in the Clifford hierarchy. -/
@@ -201,8 +201,8 @@ instance bundleSigCategory : Category SignatureBundle where
 abbrev π_Sig : SignatureBundle ⥤ SigObj where
   obj b := b.base
   map f := f.baseMap
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 5: Cartesian Lifts (Grothendieck Fibration)
@@ -280,7 +280,7 @@ theorem IC_base_change_commutes (X : SignatureBundle) :
     of π_Sig over (1,7), the pullback ι^*σ along ι: (1,7) → (9,1) is a section
     over (9,1). This corresponds to IC condition C1 (spectral scale compatibility). -/
 theorem IC_preserves_sections (σ : SigObj ⥤ SignatureBundle)
-    (h_section : ∀ σ' : SigObj, π_Sig.obj (σ.obj σ') = σ') : True := by
+    (_h_section : ∀ σ' : SigObj, π_Sig.obj (σ.obj σ') = σ') : True := by
   trivial
 
 /-! =========================================================
@@ -308,7 +308,7 @@ theorem sig_17_rep_dim_equals_kmax :
     （BottTower 约定：Level 0 基准旋量 8 × 2^k）；标准 Cl(1,7) ≅ M₁₆(ℝ) 旋量即 16，
     Cl(9,1) ≅ M₃₂(ℝ)。三重投影的纤维层体现：Cl(9,1) → Cl(1,7) 对应 M₃₂(ℝ) → M₁₆(ℝ)
     块压缩。 -/
-theorem ic_rep_dim_doubling (X : SignatureBundle) (h : X.base = sig_17) :
+theorem ic_rep_dim_doubling (X : SignatureBundle) (_h : X.base = sig_17) :
     (IC_base_change.obj X).fiberData.rep_dim = 2 * X.fiberData.rep_dim := by
   change X.fiberData.rep_dim * 2 = 2 * X.fiberData.rep_dim
   rw [Nat.mul_comm]
@@ -337,15 +337,15 @@ theorem bottTower_rep_dim (n : ℕ) : ∃ d : ℕ, d = 8 * 2^n :=
 
 /-- Successor morphism in the Bott tower: M_d → M_{2d} via block embedding. -/
 noncomputable def bottTower_succ (n : ℕ) : bottTower n ⟶ bottTower (n+1) :=
-  ⟨8, 0, by cases n <;> simp [bottTower, sig_17] <;> try omega,
+  ⟨8, 0, by cases n <;> simp [bottTower, sig_17],
+        by cases n <;> simp [bottTower, sig_17],
         by cases n <;> simp [bottTower, sig_17] <;> try omega,
-        by cases n <;> simp [bottTower, sig_17] <;> try omega,
-        by cases n <;> simp [bottTower, sig_17] <;> try omega⟩
+        by cases n <;> simp [bottTower, sig_17]⟩
 
 /-- The partial trace π: M_{2d} → M_d for any Bott tower level.
     This is the projection map in the ι⊣π adjunction at each level. -/
 noncomputable def bottTower_partial_trace (X : SignatureBundle) (n : ℕ)
-    (h : X.base = bottTower (n+1)) : SignatureBundle :=
+    (_h : X.base = bottTower (n+1)) : SignatureBundle :=
   { base := bottTower n
     fiberData := { rep_dim := X.fiberData.rep_dim / 2 } }
 
@@ -568,7 +568,7 @@ noncomputable def rgStepProjection (X : SignatureBundle) (n : ℕ)
 /-- The RG flow inclusion at scale n: embed a level-n bundle into level n+1.
     This is the ι side of the ι⊣π adjunction at the Bott tower level. -/
 noncomputable def rgStepInclusion (X : SignatureBundle) (n : ℕ)
-    (h : X.base = bottTower n) : SignatureBundle :=
+    (_h : X.base = bottTower n) : SignatureBundle :=
   { base := bottTower (n+1)
     fiberData := { rep_dim := X.fiberData.rep_dim * 2 } }
 

@@ -56,7 +56,7 @@ Object silence: R ∈ 𝐑𝐞𝐜 \ 𝐑𝐞𝐜_D.
 In the finite-dimensional prototype, all RecObj satisfy the positivity
 condition, so object silence is vacuously false.
 -/
-def objectSilence (R : RecObj) : Prop :=
+def objectSilence (_R : RecObj) : Prop :=
   -- R is NOT in 𝐑𝐞𝐜_D, i.e., σ(-log U_R) ⊄ ℝ_{≥0}
   -- In the finite prototype, all objects satisfy this, so we define the
   -- complement: R is object-silent if it is excluded from the decursion domain.
@@ -86,7 +86,7 @@ A morphism f: R₁ → R₂ is morphism-silent if D(f)* is NOT an isometric embe
 满足谱静默（有限原型中 D(f)* 等距性未形式化，谱静默对象的所有态射均为
 态射静默——即层级包含的方向本身）。完整"非等距嵌入"判据需连续谱
 （Phase 16C-III）。 -/
-def morphismSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂) : Prop :=
+def morphismSilence {R₁ R₂ : RecObj} (_f : R₁ ⟶ R₂) : Prop :=
   spectralSilenceSimple (DFunctor.obj R₁).A
 
 /--
@@ -96,7 +96,7 @@ the braided silence criteria B1–B3.
 In the finite prototype, braided categories exist but non-trivial
 braided silence requires non-zero crossing numbers (Kerr QNM case).
 -/
-def braidedSilence (R₁ R₂ : RecObj) : Prop :=
+def braidedSilence (_R₁ _R₂ : RecObj) : Prop :=
   -- braided crossing invisible under D_diss
   -- Requires recBraiding with non-zero crossing + B1-B3 criteria
   False
@@ -126,7 +126,7 @@ R₁ ∈ 𝐑𝐞𝐜 \ 𝐑𝐞𝐜_D.
 axiom 声明（将与 spectralSilence_implies_morphismSilence 一并推导 False
 使理论不一致），此处以占位定理（True）登记研究状态。 -/
 theorem morphismSilence_implies_objectSilence {R₁ R₂ : RecObj} (f : R₁ ⟶ R₂)
-    (h : morphismSilence f) : True := by
+    (_h : morphismSilence f) : True := by
   trivial
 
 /--
@@ -149,7 +149,7 @@ Neither implies the other. Proof sketch:
     braided silence.
 -/
 theorem braidedSilence_independent_of_morphismSilence {R₁ R₂ : RecObj}
-    (hBraided : braidedSilence R₁ R₂) (hMorphism : morphismSilence (𝟙 R₁)) : True := by
+    (_hBraided : braidedSilence R₁ R₂) (_hMorphism : morphismSilence (𝟙 R₁)) : True := by
   trivial
 
 end MUFPF

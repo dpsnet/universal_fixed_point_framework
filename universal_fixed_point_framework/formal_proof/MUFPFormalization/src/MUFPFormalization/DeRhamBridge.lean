@@ -58,7 +58,7 @@ noncomputable def curlOfPotential (A : VectorPotential) : BVectorField :=
     d∘d = 0（Poincaré 引理 0 阶版本）。
     数学原因：∂_x(∂_y A) - ∂_y(∂_x A) = 0（混合偏导可交换）。 -/
 theorem curl_has_zero_div (A : VectorPotential)
-    (hA : ContDiff ℝ 2 A)
+    (_hA : ContDiff ℝ 2 A)
     (hcomm : ∀ (p : R2),
         fderiv ℝ (curlOfPotential A) p 0 0 +
         fderiv ℝ (curlOfPotential A) p 1 1 = 0)
@@ -71,7 +71,7 @@ theorem curl_has_zero_div (A : VectorPotential)
 /-- ℝ² = Fin 2 → ℝ 是凸集。 -/
 theorem R2_is_convex : Convex ℝ (Set.univ : Set R2) := by
   intro x _ y _ a ha b hb _
-  simpa [Set.subset_univ] using Set.mem_univ (a • x + b • y)
+  simp
 
 /-! ## Poincaré 引理（凸集闭 1-形式 ⟹ 恰当）
     Mathlib 现有：MeasureTheory.Integral.CurveIntegral.Poincare 中
@@ -92,8 +92,8 @@ theorem R2_is_convex : Convex ℝ (Set.univ : Set R2) := by
     改写为 ℝ² 向量场 div B = 0 的形式（等价于 1-形式 ω = -B_y dx + B_x dy 闭）。 -/
 theorem poincare_2d_potential_exists
     (B : BVectorField)
-    (hB : Differentiable ℝ B)
-    (hDiv : ∀ p, div2 B p = 0)
+    (_hB : Differentiable ℝ B)
+    (_hDiv : ∀ p, div2 B p = 0)
     (hω_closed : ∀ (p : R2) (u v : R2),
         fderiv ℝ (fun q : R2 => -(B q 1) * u 0 + (B q 0) * u 1) p v =
         fderiv ℝ (fun q : R2 => -(B q 1) * v 0 + (B q 0) * v 1) p u)
@@ -118,7 +118,7 @@ theorem poincare_2d_potential_exists
   refine ⟨A, hA_diff, fun p => ?_⟩
   have h_comp : B p = curlOfPotential A p := by
     funext i
-    fin_cases i <;> simp [curlOfPotential, hA_fderiv, ω] <;> ring_nf
+    fin_cases i <;> simp [curlOfPotential, hA_fderiv, ω]
   exact h_comp
 
 /-! ## 环绕数非零 ⟹ 局部微分同胚
@@ -152,9 +152,9 @@ noncomputable def polarMap (r : ℝ → ℝ) (θ : ℝ) : R2 :=
     并将其作为线性映射 ℝ → ℝ² 的矩阵表示与 (ṙ cos θ - r sin θ, ṙ sin θ + r cos θ) 关联。 -/
 theorem polarMap_jacobian_nonzero
     (r : ℝ → ℝ) (θ₀ : ℝ)
-    (hr_pos : r θ₀ > 0)
-    (hr' : HasDerivAt r (deriv r θ₀) θ₀)
-    (hdr_nonzero : deriv r θ₀ ≠ 0)
+    (_hr_pos : r θ₀ > 0)
+    (_hr' : HasDerivAt r (deriv r θ₀) θ₀)
+    (_hdr_nonzero : deriv r θ₀ ≠ 0)
     (hfderiv1 : fderiv ℝ (polarMap r) θ₀ (1 : ℝ) ≠ 0) :
     fderiv ℝ (polarMap r) θ₀ ≠ 0 := by
   /- 诚实骨架（2026-10-24 前提化升级）：fderiv 的方向导数分量计算
@@ -162,7 +162,7 @@ theorem polarMap_jacobian_nonzero
      完整机器证明（HasFDerivAt.comp 对接）登记于 RESEARCH_STATE。
      本定理的 Lean 证明本身完整（无 sorry/admit）。 -/
   intro h
-  exact hfderiv1 (by simpa [h])
+  exact hfderiv1 (by simp [h])
 
 /-- M1 几何层主定理（严格化，2026-09-02 结构化升级）：
     给定形变循环 γ : ℝ → R2（极坐标参数化，r > 0，周期 2π），
@@ -174,13 +174,13 @@ theorem polarMap_jacobian_nonzero
 theorem m1_geometric_layer
     (B : BVectorField)
     (r : ℝ → ℝ) (γ : ℝ → R2)
-    (hγ_def : ∀ θ, γ θ = polarMap r θ)
+    (_hγ_def : ∀ θ, γ θ = polarMap r θ)
     (hB : Differentiable ℝ B)
     (hDiv : ∀ p, div2 B p = 0)
-    (hr_pos : ∀ θ, r θ > 0)
-    (hr_diff : Differentiable ℝ r)
-    (hperiodic : r (2 * Real.pi) = r 0)
-    (hwinding_nonzero :
+    (_hr_pos : ∀ θ, r θ > 0)
+    (_hr_diff : Differentiable ℝ r)
+    (_hperiodic : r (2 * Real.pi) = r 0)
+    (_hwinding_nonzero :
       (1 / (2 * Real.pi)) * ∫ θ in (0)..(2 * Real.pi), deriv r θ ≠ 0)
     (hω_closed : ∀ (p : R2) (u v : R2),
         fderiv ℝ (fun q : R2 => -(B q 1) * u 0 + (B q 0) * u 1) p v =

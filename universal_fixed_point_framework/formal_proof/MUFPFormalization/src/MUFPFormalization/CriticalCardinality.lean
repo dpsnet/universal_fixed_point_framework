@@ -492,7 +492,7 @@ theorem totalOverlap_le_card_sq {X : RecObj} {K : ℕ}
     (∑ i : Fin K, ∑ j : Fin K, if i < j then overlapDegree (cf.clusters i) (cf.clusters j) else 0)
         ≤ (∑ _i : Fin K, ∑ _j : Fin K, Fintype.card X.T) := h_sum
     _ = K * K * Fintype.card X.T := by
-      simp [Finset.sum_const, Finset.card_fin, Nat.nsmul_eq_mul, mul_assoc]
+      simp [Finset.sum_const, mul_assoc]
 
 /-- **鸽巢重叠定理**：若 K 个子集群的基数之和 > card(X.T) · K，
     则必然存在重叠（某个交集非空）。

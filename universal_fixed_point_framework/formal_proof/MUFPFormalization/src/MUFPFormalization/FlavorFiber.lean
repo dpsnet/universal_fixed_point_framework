@@ -170,9 +170,9 @@ instance flavorBundleHomSubsingleton (X Y : FlavorBundle) : Subsingleton (X ⟶ 
 /-- Projection π_Flt : Bun(Flt, ℂ³_gen) → Flt. -/
 abbrev π_Flt : FlavorBundle ⥤ FlavorSector where
   obj b := b.base
-  map f := ()
-  map_id X := rfl
-  map_comp f g := rfl
+  map _f := ()
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-! =========================================================
     Section 4: Transfer Matrix V_{f₁f₂} = J_{f₁}⁻¹ J_{f₂}
@@ -242,14 +242,14 @@ theorem holonomy_flat_if_commuting (F_u : FlavorFiber FlavorSector.u)
     (F_d : FlavorFiber FlavorSector.d) (F_e : FlavorFiber FlavorSector.e)
     (F_ν : FlavorFiber FlavorSector.ν)
     (h_comm_ud : ∀ v, F_u.J.map (F_d.J.map v) = F_d.J.map (F_u.J.map v))
-    (h_comm_de : ∀ v, F_d.J.map (F_e.J.map v) = F_e.J.map (F_d.J.map v))
+    (_h_comm_de : ∀ v, F_d.J.map (F_e.J.map v) = F_e.J.map (F_d.J.map v))
     (h_comm_eν : ∀ v, F_e.J.map (F_ν.J.map v) = F_ν.J.map (F_e.J.map v))
     (h_comm_νu : ∀ v, F_ν.J.map (F_u.J.map v) = F_u.J.map (F_ν.J.map v))
     (h_comm_dν : ∀ v, F_ν.J.map (F_d.J.map v) = F_d.J.map (F_ν.J.map v))
     (h_comm_eu : ∀ v, F_e.J.map (F_u.J.map v) = F_u.J.map (F_e.J.map v))
     (v : GenSpace) : holonomy F_u F_d F_e F_ν v = v := by
   unfold holonomy flavorTransferMatrix
-  simp [h_comm_ud, h_comm_de, h_comm_eν, h_comm_νu, h_comm_dν, h_comm_eu,
+  simp [h_comm_ud, h_comm_eν, h_comm_νu, h_comm_dν, h_comm_eu,
     F_u.J.involutive, F_d.J.involutive, F_e.J.involutive, F_ν.J.involutive]
 
 /-! =========================================================
