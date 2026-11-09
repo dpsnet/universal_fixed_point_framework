@@ -116,15 +116,15 @@ identity step adds no extra data.
 def compHausToIdExt : CompHaus ⥤ IdExtObj where
   obj X := ⟨X⟩
   map f := ⟨f⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- Functor from IdExtObj to CompHaus. -/
 def idExtToCompHaus : IdExtObj ⥤ CompHaus where
   obj X := X.M
   map f := f.toFun
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-- Theorem 14.3: Explicit equivalence of categories. -/
 def idExtCompHausEquiv : IdExtObj ≌ CompHaus :=
@@ -143,14 +143,14 @@ flow equation d/dt D(R) = 0 holds identically.
 
 /-- Degenerate spectral image: D^id(M) = (ℂ, 0, {0}).
     The zero operator has spectrum {0} and generates trivial dynamics. -/
-noncomputable def D_id (X : IdExtObj) : SpObj :=
+noncomputable def D_id (_X : IdExtObj) : SpObj :=
   { n := 1, A := 0 }
 
 /-- Theorem 14.4: D_id produces zero spectral flow. -/
 theorem D_id_spectral_flow_zero (X : IdExtObj) : D_id X = D_id X := rfl
 
 /-- Corollary 14.1: D ⊣ R restricts trivially on IdExtObj. -/
-theorem D_id_adjunction_trivial (X : IdExtObj) : True := trivial
+theorem D_id_adjunction_trivial (_X : IdExtObj) : True := trivial
 
 
 /-! 
@@ -168,20 +168,20 @@ Matches §12.3:
     For non-compact manifolds (e.g. ℍ²/Γ), may hold due to continuous spectral components.
     Note (2026-08-04): 改名 idExtSilenceS1 以避开 Silence.lean 中同命名空间的
     `silenceS1`（矩阵参数版本），消除重复声明。 -/
-def idExtSilenceS1 (X : IdExtObj) : Prop := False
+def idExtSilenceS1 (_X : IdExtObj) : Prop := False
 
 /-- S2: Zero Lebesgue measure condition.
     Holds because any countable (discrete) spectrum has zero Lebesgue measure. -/
-def idExtSilenceS2 (X : IdExtObj) : Prop := True
+def idExtSilenceS2 (_X : IdExtObj) : Prop := True
 
 /-- S3: Spectral gap vanishing (局部吸引子捕获指数 Local Attractor Capture Index LACI high → no gap).
     Fails for compact manifolds (discrete spectrum has finite gaps, e.g. S¹: λ_{n+1} - λ_n = (2n+1)/R²).
     Holds for non-compact hyperbolic manifolds (continuous spectrum [¼,∞) has no gap). -/
-def idExtSilenceS3 (X : IdExtObj) : Prop := True
+def idExtSilenceS3 (_X : IdExtObj) : Prop := True
 
 /-- S4: Zero orbital weight condition.
     Holds because identity orbits O(x) = {x} are singleton zero-measure sets. -/
-def idExtSilenceS4 (X : IdExtObj) : Prop := True
+def idExtSilenceS4 (_X : IdExtObj) : Prop := True
 
 /-- Silence count for **non-compact** identity extensions.
     Returns 3 (S2+S3+S4), matching ℍ²/Γ-type hyperbolic surfaces.
@@ -260,8 +260,8 @@ def ιFunctor : IdExtObj ⥤ ContRecObj where
 def ℒFunctor : ContRecObj ⥤ IdExtObj where
   obj X := ⟨X.M⟩
   map f := ⟨f.toFun⟩
-  map_id X := rfl
-  map_comp f g := rfl
+  map_id _X := rfl
+  map_comp _f _g := rfl
 
 /-
 Theorem 15.2: Rec_id (IdExtObj) is a reflective subcategory of ContRec.
@@ -356,8 +356,8 @@ theorem ℒ_𝒟yn_proj (X : IdExtObj) (d : DynData) :
     its spectrum is equivalent to the static background's spectral geometry.
     
     Formalized as: fully silent dynamics → spectrum equals D_id(M). -/
-theorem spectral_equivalence_bridge (X : ContRecObj) (hS1 : idExtSilenceS1 ⟨X.M⟩)
-    (hS2 : idExtSilenceS2 ⟨X.M⟩) (hS3 : idExtSilenceS3 ⟨X.M⟩) (hS4 : idExtSilenceS4 ⟨X.M⟩) :
+theorem spectral_equivalence_bridge (X : ContRecObj) (_hS1 : idExtSilenceS1 ⟨X.M⟩)
+    (_hS2 : idExtSilenceS2 ⟨X.M⟩) (_hS3 : idExtSilenceS3 ⟨X.M⟩) (_hS4 : idExtSilenceS4 ⟨X.M⟩) :
     ℒFunctor.obj X = ⟨X.M⟩ := by
   rfl
 
@@ -446,13 +446,13 @@ theorem ℒιMonad_EM_iso : ℒιMonad = 𝟭 IdExtObj := ℒιMonad_eq_id
       Gelfand: C(M) ←→ M
       D_id:    (ℋ_M, Δ_M, σ(Δ_M)) ←→ M
 -/
-noncomputable def D_id_spec (X : IdExtObj) : SpObj :=
+noncomputable def D_id_spec (_X : IdExtObj) : SpObj :=
   { n := 1, A := 0 }
 
 /-- Corollary 16.2: D_id is surjective in the sense that each compact manifold
     maps to a unique spectral object (up to spectral equivalence).
     This connects to Mark Kac's "Can you hear the shape of a drum?" problem. -/
-theorem D_id_surjectivity (M : CompHaus) : ∃ (X : IdExtObj) (S : SpObj), D_id_spec ⟨M⟩ = S :=
+theorem D_id_surjectivity (M : CompHaus) : ∃ (_X : IdExtObj) (S : SpObj), D_id_spec ⟨M⟩ = S :=
   ⟨⟨M⟩, D_id_spec ⟨M⟩, rfl⟩
 
 /-- Theorem 16.5 (Morphism Classification): Morphisms in IdExtObj are classified by
@@ -472,7 +472,7 @@ inductive MorphismType : Type where
   | productProjection
 
 /-- Classification predicate: a morphism f : X → Y in IdExtObj has type t. -/
-def classifyMorphism (X Y : IdExtObj) (f : X ⟶ Y) : MorphismType :=
+def classifyMorphism (X Y : IdExtObj) (_f : X ⟶ Y) : MorphismType :=
   MorphismType.productProjection
 
 end MUFPF

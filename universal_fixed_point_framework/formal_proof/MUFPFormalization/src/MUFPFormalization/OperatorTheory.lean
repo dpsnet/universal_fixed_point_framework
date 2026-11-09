@@ -63,7 +63,7 @@ theorem koopmanSemigroup {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (t s : ℂ) 
     the spectral radius of exp(-A) is ≤ 1.
     In the finite-dimensional case, this implies ‖exp(-A)‖ ≤ 1 for the spectral norm. -/
 theorem koopmanContraction {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ)
-    (hPos : ∀ (v : Fin n → ℂ), v ≠ 0 → 0 ≤ (dotProduct (star v) (A *ᵥ v)).re) : True :=
+    (_hPos : ∀ (v : Fin n → ℂ), v ≠ 0 → 0 ≤ (dotProduct (star v) (A *ᵥ v)).re) : True :=
   -- Placeholder: The full contraction proof requires the spectral theorem
   -- and is deferred to Phase 16B functional analysis.
   trivial
@@ -92,7 +92,7 @@ theorem selfAdjointNonneg_implies_mAccretive {n : ℕ} (A : Matrix (Fin n) (Fin 
     σ(exp(-A)) = exp(-σ(A)).
     In the finite-dimensional prototype, this reduces to the spectral mapping
     for the matrix exponential of diagonalizable matrices. -/
-theorem spectralMappingExp {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : True :=
+theorem spectralMappingExp {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : True :=
   trivial
 
 end AccretiveGenerator
@@ -109,7 +109,7 @@ inductive SpectralType
 
 /-- Spectral measure of a normal matrix: finite sum of Dirac measures at eigenvalues.
     Placeholder for the full Lebesgue decomposition (Phase 16B). -/
-noncomputable def spectralMeasure {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) :
+noncomputable def spectralMeasure {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) :
     SpectralType :=
   SpectralType.point
 

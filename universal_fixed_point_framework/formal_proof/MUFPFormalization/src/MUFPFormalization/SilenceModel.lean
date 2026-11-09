@@ -933,129 +933,129 @@ lemma layer3_partial_silent_not_periodic (S : Finset (Fin 15)) {x : Fin 15}
 lemma active_step1_ne_l2x4 (S : Finset (Fin 15)) (h4S : (4 : Fin 15) ∉ S) :
     (silentStep S)^[1] (4 : Fin 15) ≠ 4 := by
   change silentStep S ((4 : Fin 15)) ≠ (4 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h4S]
+  simp [silentStep, layeredStep, layer1, layer2, h4S]
 
 lemma active_step2_ne_l2x4 (S : Finset (Fin 15)) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) :
     (silentStep S)^[2] (4 : Fin 15) ≠ 4 := by
   change silentStep S (silentStep S ((4 : Fin 15))) ≠ (4 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S]
+  simp [silentStep, layeredStep, layer1, layer2, h4S, h5S]
 
 lemma active_step3_ne_l2x4 (S : Finset (Fin 15)) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) :
     (silentStep S)^[3] (4 : Fin 15) ≠ 4 := by
   change silentStep S (silentStep S (silentStep S ((4 : Fin 15)))) ≠ (4 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S]
+  simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S]
 
 lemma active_step4_ne_l2x4 (S : Finset (Fin 15)) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) :
     (silentStep S)^[4] (4 : Fin 15) ≠ 4 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((4 : Fin 15))))) ≠ (4 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S, h7S]
+  simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S]
 
 lemma active_step1_ne_l2x5 (S : Finset (Fin 15)) (h5S : (5 : Fin 15) ∉ S) :
     (silentStep S)^[1] (5 : Fin 15) ≠ 5 := by
   change silentStep S ((5 : Fin 15)) ≠ (5 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h5S]
+  simp [silentStep, layeredStep, layer1, layer2, h5S]
 
 lemma active_step2_ne_l2x5 (S : Finset (Fin 15)) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) :
     (silentStep S)^[2] (5 : Fin 15) ≠ 5 := by
   change silentStep S (silentStep S ((5 : Fin 15))) ≠ (5 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S]
+  simp [silentStep, layeredStep, layer1, layer2, h5S, h6S]
 
 lemma active_step3_ne_l2x5 (S : Finset (Fin 15)) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) :
     (silentStep S)^[3] (5 : Fin 15) ≠ 5 := by
   change silentStep S (silentStep S (silentStep S ((5 : Fin 15)))) ≠ (5 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S]
+  simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S]
 
 lemma active_step4_ne_l2x5 (S : Finset (Fin 15)) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) :
     (silentStep S)^[4] (5 : Fin 15) ≠ 5 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((5 : Fin 15))))) ≠ (5 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S, h8S]
+  simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S, h8S]
 
 lemma active_step1_ne_l2x6 (S : Finset (Fin 15)) (h6S : (6 : Fin 15) ∉ S) :
     (silentStep S)^[1] (6 : Fin 15) ≠ 6 := by
   change silentStep S ((6 : Fin 15)) ≠ (6 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h6S]
+  simp [silentStep, layeredStep, layer1, layer2, h6S]
 
 lemma active_step2_ne_l2x6 (S : Finset (Fin 15)) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) :
     (silentStep S)^[2] (6 : Fin 15) ≠ 6 := by
   change silentStep S (silentStep S ((6 : Fin 15))) ≠ (6 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S]
+  simp [silentStep, layeredStep, layer1, layer2, h6S, h7S]
 
 lemma active_step3_ne_l2x6 (S : Finset (Fin 15)) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) :
     (silentStep S)^[3] (6 : Fin 15) ≠ 6 := by
   change silentStep S (silentStep S (silentStep S ((6 : Fin 15)))) ≠ (6 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S]
+  simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S]
 
 lemma active_step4_ne_l2x6 (S : Finset (Fin 15)) (h6S : (6 : Fin 15) ∉ S) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) :
     (silentStep S)^[4] (6 : Fin 15) ≠ 6 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((6 : Fin 15))))) ≠ (6 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S, h9S]
+  simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S, h9S]
 
 lemma active_step1_ne_l2x7 (S : Finset (Fin 15)) (h7S : (7 : Fin 15) ∉ S) :
     (silentStep S)^[1] (7 : Fin 15) ≠ 7 := by
   change silentStep S ((7 : Fin 15)) ≠ (7 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h7S]
+  simp [silentStep, layeredStep, layer1, layer2, h7S]
 
 lemma active_step2_ne_l2x7 (S : Finset (Fin 15)) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) :
     (silentStep S)^[2] (7 : Fin 15) ≠ 7 := by
   change silentStep S (silentStep S ((7 : Fin 15))) ≠ (7 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S]
+  simp [silentStep, layeredStep, layer1, layer2, h7S, h8S]
 
 lemma active_step3_ne_l2x7 (S : Finset (Fin 15)) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) :
     (silentStep S)^[3] (7 : Fin 15) ≠ 7 := by
   change silentStep S (silentStep S (silentStep S ((7 : Fin 15)))) ≠ (7 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S]
+  simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S]
 
 lemma active_step4_ne_l2x7 (S : Finset (Fin 15)) (h7S : (7 : Fin 15) ∉ S) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) :
     (silentStep S)^[4] (7 : Fin 15) ≠ 7 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((7 : Fin 15))))) ≠ (7 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S, h4S]
+  simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S, h4S]
 
 lemma active_step1_ne_l2x8 (S : Finset (Fin 15)) (h8S : (8 : Fin 15) ∉ S) :
     (silentStep S)^[1] (8 : Fin 15) ≠ 8 := by
   change silentStep S ((8 : Fin 15)) ≠ (8 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h8S]
+  simp [silentStep, layeredStep, layer1, layer2, h8S]
 
 lemma active_step2_ne_l2x8 (S : Finset (Fin 15)) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) :
     (silentStep S)^[2] (8 : Fin 15) ≠ 8 := by
   change silentStep S (silentStep S ((8 : Fin 15))) ≠ (8 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S]
+  simp [silentStep, layeredStep, layer1, layer2, h8S, h9S]
 
 lemma active_step3_ne_l2x8 (S : Finset (Fin 15)) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) :
     (silentStep S)^[3] (8 : Fin 15) ≠ 8 := by
   change silentStep S (silentStep S (silentStep S ((8 : Fin 15)))) ≠ (8 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S]
+  simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S]
 
 lemma active_step4_ne_l2x8 (S : Finset (Fin 15)) (h8S : (8 : Fin 15) ∉ S) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) :
     (silentStep S)^[4] (8 : Fin 15) ≠ 8 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((8 : Fin 15))))) ≠ (8 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S, h5S]
+  simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S, h5S]
 
 lemma active_step1_ne_l2x9 (S : Finset (Fin 15)) (h9S : (9 : Fin 15) ∉ S) :
     (silentStep S)^[1] (9 : Fin 15) ≠ 9 := by
   change silentStep S ((9 : Fin 15)) ≠ (9 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h9S]
+  simp [silentStep, layeredStep, layer1, layer2, h9S]
 
 lemma active_step2_ne_l2x9 (S : Finset (Fin 15)) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) :
     (silentStep S)^[2] (9 : Fin 15) ≠ 9 := by
   change silentStep S (silentStep S ((9 : Fin 15))) ≠ (9 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S]
+  simp [silentStep, layeredStep, layer1, layer2, h9S, h4S]
 
 lemma active_step3_ne_l2x9 (S : Finset (Fin 15)) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) :
     (silentStep S)^[3] (9 : Fin 15) ≠ 9 := by
   change silentStep S (silentStep S (silentStep S ((9 : Fin 15)))) ≠ (9 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S]
+  simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S]
 
 lemma active_step4_ne_l2x9 (S : Finset (Fin 15)) (h9S : (9 : Fin 15) ∉ S) (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∉ S) (h6S : (6 : Fin 15) ∉ S) :
     (silentStep S)^[4] (9 : Fin 15) ≠ 9 := by
   change silentStep S (silentStep S (silentStep S (silentStep S ((9 : Fin 15))))) ≠ (9 : Fin 15)
-  simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S, h6S]
+  simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S, h6S]
 /-- 吸收实例（层 2，x=4 活跃、m=5 静默、路径 4→5 吸收，n=1）。 -/
 lemma layer2_absorb_4_5 (S : Finset (Fin 15))
     (h4S : (4 : Fin 15) ∉ S) (h5S : (5 : Fin 15) ∈ S) :
     ¬ periodicPoint (silenceRec15_layered S) (4 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((4 : Fin 15)) = (5 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h4S])
+        simp [silentStep, layeredStep, layer1, layer2, h4S])
     (by simp [silentStep, h5S])
     (hpre_empty S (4 : Fin 15)) (by decide)
 
@@ -1065,10 +1065,10 @@ lemma layer2_absorb_4_6 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (4 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S ((4 : Fin 15)) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((4 : Fin 15))) = (6 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S])
+        simp [silentStep, layeredStep, layer1, layer2, h4S, h5S])
     (by simp [silentStep, h6S])
     (hpre_single S (4 : Fin 15) hpre1) (by decide)
 
@@ -1078,13 +1078,13 @@ lemma layer2_absorb_4_7 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (4 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S ((4 : Fin 15)) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S]
   have hpre2 : (silentStep S)^[2] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S ((4 : Fin 15))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((4 : Fin 15)))) = (7 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S])
+        simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S])
     (by simp [silentStep, h7S])
     (hpre_double S (4 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1094,16 +1094,16 @@ lemma layer2_absorb_4_8 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (4 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S ((4 : Fin 15)) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S]
   have hpre2 : (silentStep S)^[2] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S ((4 : Fin 15))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S]
   have hpre3 : (silentStep S)^[3] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((4 : Fin 15)))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((4 : Fin 15))))) = (8 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S, h7S])
+        simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S])
     (by simp [silentStep, h8S])
     (hpre_triple S (4 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1113,19 +1113,19 @@ lemma layer2_absorb_4_9 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (4 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S ((4 : Fin 15)) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S]
   have hpre2 : (silentStep S)^[2] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S ((4 : Fin 15))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S]
   have hpre3 : (silentStep S)^[3] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((4 : Fin 15)))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S]
   have hpre4 : (silentStep S)^[4] (4 : Fin 15) ≠ (4 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((4 : Fin 15))))) ≠ (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((4 : Fin 15)))))) = (9 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h4S, h5S, h6S, h7S, h8S])
+        simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S])
     (by simp [silentStep, h9S])
     (hpre_quad S (4 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1135,19 +1135,19 @@ lemma layer2_absorb_5_4 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (5 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S ((5 : Fin 15)) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S]
   have hpre2 : (silentStep S)^[2] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S ((5 : Fin 15))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S]
   have hpre3 : (silentStep S)^[3] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((5 : Fin 15)))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S]
   have hpre4 : (silentStep S)^[4] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((5 : Fin 15))))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S, h8S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((5 : Fin 15)))))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S, h8S, h9S])
+        simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S, h8S, h9S])
     (by simp [silentStep, h4S])
     (hpre_quad S (5 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1157,7 +1157,7 @@ lemma layer2_absorb_5_6 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (5 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((5 : Fin 15)) = (6 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h5S])
+        simp [silentStep, layeredStep, layer1, layer2, h5S])
     (by simp [silentStep, h6S])
     (hpre_empty S (5 : Fin 15)) (by decide)
 
@@ -1167,10 +1167,10 @@ lemma layer2_absorb_5_7 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (5 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S ((5 : Fin 15)) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((5 : Fin 15))) = (7 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S])
+        simp [silentStep, layeredStep, layer1, layer2, h5S, h6S])
     (by simp [silentStep, h7S])
     (hpre_single S (5 : Fin 15) hpre1) (by decide)
 
@@ -1180,13 +1180,13 @@ lemma layer2_absorb_5_8 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (5 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S ((5 : Fin 15)) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S]
   have hpre2 : (silentStep S)^[2] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S ((5 : Fin 15))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((5 : Fin 15)))) = (8 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S])
+        simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S])
     (by simp [silentStep, h8S])
     (hpre_double S (5 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1196,16 +1196,16 @@ lemma layer2_absorb_5_9 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (5 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S ((5 : Fin 15)) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S]
   have hpre2 : (silentStep S)^[2] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S ((5 : Fin 15))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S]
   have hpre3 : (silentStep S)^[3] (5 : Fin 15) ≠ (5 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((5 : Fin 15)))) ≠ (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((5 : Fin 15))))) = (9 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h5S, h6S, h7S, h8S])
+        simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S, h8S])
     (by simp [silentStep, h9S])
     (hpre_triple S (5 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1215,16 +1215,16 @@ lemma layer2_absorb_6_4 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (6 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S ((6 : Fin 15)) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S]
   have hpre2 : (silentStep S)^[2] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S ((6 : Fin 15))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S]
   have hpre3 : (silentStep S)^[3] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((6 : Fin 15)))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((6 : Fin 15))))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S, h9S])
+        simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S, h9S])
     (by simp [silentStep, h4S])
     (hpre_triple S (6 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1234,19 +1234,19 @@ lemma layer2_absorb_6_5 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (6 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S ((6 : Fin 15)) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S]
   have hpre2 : (silentStep S)^[2] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S ((6 : Fin 15))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S]
   have hpre3 : (silentStep S)^[3] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((6 : Fin 15)))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S]
   have hpre4 : (silentStep S)^[4] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((6 : Fin 15))))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S, h9S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((6 : Fin 15)))))) = (5 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S, h9S, h4S])
+        simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S, h9S, h4S])
     (by simp [silentStep, h5S])
     (hpre_quad S (6 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1256,7 +1256,7 @@ lemma layer2_absorb_6_7 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (6 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((6 : Fin 15)) = (7 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h6S])
+        simp [silentStep, layeredStep, layer1, layer2, h6S])
     (by simp [silentStep, h7S])
     (hpre_empty S (6 : Fin 15)) (by decide)
 
@@ -1266,10 +1266,10 @@ lemma layer2_absorb_6_8 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (6 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S ((6 : Fin 15)) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((6 : Fin 15))) = (8 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S])
+        simp [silentStep, layeredStep, layer1, layer2, h6S, h7S])
     (by simp [silentStep, h8S])
     (hpre_single S (6 : Fin 15) hpre1) (by decide)
 
@@ -1279,13 +1279,13 @@ lemma layer2_absorb_6_9 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (6 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S ((6 : Fin 15)) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S]
   have hpre2 : (silentStep S)^[2] (6 : Fin 15) ≠ (6 : Fin 15) := by
     change silentStep S (silentStep S ((6 : Fin 15))) ≠ (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h6S, h7S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((6 : Fin 15)))) = (9 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h6S, h7S, h8S])
+        simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S])
     (by simp [silentStep, h9S])
     (hpre_double S (6 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1295,13 +1295,13 @@ lemma layer2_absorb_7_4 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (7 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S ((7 : Fin 15)) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S]
   have hpre2 : (silentStep S)^[2] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S ((7 : Fin 15))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((7 : Fin 15)))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S])
+        simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S])
     (by simp [silentStep, h4S])
     (hpre_double S (7 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1311,16 +1311,16 @@ lemma layer2_absorb_7_5 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (7 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S ((7 : Fin 15)) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S]
   have hpre2 : (silentStep S)^[2] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S ((7 : Fin 15))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S]
   have hpre3 : (silentStep S)^[3] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((7 : Fin 15)))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((7 : Fin 15))))) = (5 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S, h4S])
+        simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S, h4S])
     (by simp [silentStep, h5S])
     (hpre_triple S (7 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1330,19 +1330,19 @@ lemma layer2_absorb_7_6 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (7 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S ((7 : Fin 15)) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S]
   have hpre2 : (silentStep S)^[2] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S ((7 : Fin 15))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S]
   have hpre3 : (silentStep S)^[3] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((7 : Fin 15)))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S]
   have hpre4 : (silentStep S)^[4] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((7 : Fin 15))))) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S, h4S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((7 : Fin 15)))))) = (6 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S, h9S, h4S, h5S])
+        simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S, h4S, h5S])
     (by simp [silentStep, h6S])
     (hpre_quad S (7 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1352,7 +1352,7 @@ lemma layer2_absorb_7_8 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (7 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((7 : Fin 15)) = (8 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h7S])
+        simp [silentStep, layeredStep, layer1, layer2, h7S])
     (by simp [silentStep, h8S])
     (hpre_empty S (7 : Fin 15)) (by decide)
 
@@ -1362,10 +1362,10 @@ lemma layer2_absorb_7_9 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (7 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (7 : Fin 15) ≠ (7 : Fin 15) := by
     change silentStep S ((7 : Fin 15)) ≠ (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h7S]
+    simp [silentStep, layeredStep, layer1, layer2, h7S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((7 : Fin 15))) = (9 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h7S, h8S])
+        simp [silentStep, layeredStep, layer1, layer2, h7S, h8S])
     (by simp [silentStep, h9S])
     (hpre_single S (7 : Fin 15) hpre1) (by decide)
 
@@ -1375,10 +1375,10 @@ lemma layer2_absorb_8_4 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (8 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S ((8 : Fin 15)) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((8 : Fin 15))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S])
+        simp [silentStep, layeredStep, layer1, layer2, h8S, h9S])
     (by simp [silentStep, h4S])
     (hpre_single S (8 : Fin 15) hpre1) (by decide)
 
@@ -1388,13 +1388,13 @@ lemma layer2_absorb_8_5 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (8 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S ((8 : Fin 15)) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S]
   have hpre2 : (silentStep S)^[2] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S ((8 : Fin 15))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((8 : Fin 15)))) = (5 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S])
+        simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S])
     (by simp [silentStep, h5S])
     (hpre_double S (8 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1404,16 +1404,16 @@ lemma layer2_absorb_8_6 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (8 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S ((8 : Fin 15)) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S]
   have hpre2 : (silentStep S)^[2] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S ((8 : Fin 15))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S]
   have hpre3 : (silentStep S)^[3] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((8 : Fin 15)))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((8 : Fin 15))))) = (6 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S, h5S])
+        simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S, h5S])
     (by simp [silentStep, h6S])
     (hpre_triple S (8 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1423,19 +1423,19 @@ lemma layer2_absorb_8_7 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (8 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S ((8 : Fin 15)) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S]
   have hpre2 : (silentStep S)^[2] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S ((8 : Fin 15))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S]
   have hpre3 : (silentStep S)^[3] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((8 : Fin 15)))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S]
   have hpre4 : (silentStep S)^[4] (8 : Fin 15) ≠ (8 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((8 : Fin 15))))) ≠ (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S, h5S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((8 : Fin 15)))))) = (7 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h8S, h9S, h4S, h5S, h6S])
+        simp [silentStep, layeredStep, layer1, layer2, h8S, h9S, h4S, h5S, h6S])
     (by simp [silentStep, h7S])
     (hpre_quad S (8 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1445,7 +1445,7 @@ lemma layer2_absorb_8_9 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (8 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((8 : Fin 15)) = (9 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h8S])
+        simp [silentStep, layeredStep, layer1, layer2, h8S])
     (by simp [silentStep, h9S])
     (hpre_empty S (8 : Fin 15)) (by decide)
 
@@ -1455,7 +1455,7 @@ lemma layer2_absorb_9_4 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (9 : Fin 15) := by
   exact not_periodic_of_reaches_fixed S 1
     (by change silentStep S ((9 : Fin 15)) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h9S])
+        simp [silentStep, layeredStep, layer1, layer2, h9S])
     (by simp [silentStep, h4S])
     (hpre_empty S (9 : Fin 15)) (by decide)
 
@@ -1465,10 +1465,10 @@ lemma layer2_absorb_9_5 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (9 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S ((9 : Fin 15)) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S]
   exact not_periodic_of_reaches_fixed S 2
     (by change silentStep S (silentStep S ((9 : Fin 15))) = (5 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S])
+        simp [silentStep, layeredStep, layer1, layer2, h9S, h4S])
     (by simp [silentStep, h5S])
     (hpre_single S (9 : Fin 15) hpre1) (by decide)
 
@@ -1478,13 +1478,13 @@ lemma layer2_absorb_9_6 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (9 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S ((9 : Fin 15)) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S]
   have hpre2 : (silentStep S)^[2] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S ((9 : Fin 15))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S]
   exact not_periodic_of_reaches_fixed S 3
     (by change silentStep S (silentStep S (silentStep S ((9 : Fin 15)))) = (6 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S])
+        simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S])
     (by simp [silentStep, h6S])
     (hpre_double S (9 : Fin 15) hpre1 hpre2) (by decide)
 
@@ -1494,16 +1494,16 @@ lemma layer2_absorb_9_7 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (9 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S ((9 : Fin 15)) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S]
   have hpre2 : (silentStep S)^[2] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S ((9 : Fin 15))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S]
   have hpre3 : (silentStep S)^[3] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((9 : Fin 15)))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S]
   exact not_periodic_of_reaches_fixed S 4
     (by change silentStep S (silentStep S (silentStep S (silentStep S ((9 : Fin 15))))) = (7 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S, h6S])
+        simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S, h6S])
     (by simp [silentStep, h7S])
     (hpre_triple S (9 : Fin 15) hpre1 hpre2 hpre3) (by decide)
 
@@ -1513,19 +1513,19 @@ lemma layer2_absorb_9_8 (S : Finset (Fin 15))
     ¬ periodicPoint (silenceRec15_layered S) (9 : Fin 15) := by
   have hpre1 : (silentStep S)^[1] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S ((9 : Fin 15)) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S]
   have hpre2 : (silentStep S)^[2] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S ((9 : Fin 15))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S]
   have hpre3 : (silentStep S)^[3] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S ((9 : Fin 15)))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S]
   have hpre4 : (silentStep S)^[4] (9 : Fin 15) ≠ (9 : Fin 15) := by
     change silentStep S (silentStep S (silentStep S (silentStep S ((9 : Fin 15))))) ≠ (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S, h6S]
+    simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S, h6S]
   exact not_periodic_of_reaches_fixed S 5
     (by change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((9 : Fin 15)))))) = (8 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, h9S, h4S, h5S, h6S, h7S])
+        simp [silentStep, layeredStep, layer1, layer2, h9S, h4S, h5S, h6S, h7S])
     (by simp [silentStep, h8S])
     (hpre_quad S (9 : Fin 15) hpre1 hpre2 hpre3 hpre4) (by decide)
 
@@ -1722,89 +1722,89 @@ lemma layer_cycle1 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer1)
   · have h0S : (0 : Fin 15) ∉ S := by
       intro h0
       have : (0 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h0⟩
-      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h1S : (1 : Fin 15) ∉ S := by
       intro h1
       have : (1 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h1⟩
-      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h2S : (2 : Fin 15) ∉ S := by
       intro h2
       have : (2 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h2⟩
-      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h3S : (3 : Fin 15) ∉ S := by
       intro h3
       have : (3 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h3⟩
-      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (0 : Fin 15)))) = (0 : Fin 15)
     simp [silentStep, layeredStep, layer1, h0S, h1S, h2S, h3S]
   · have h0S : (0 : Fin 15) ∉ S := by
       intro h0
       have : (0 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h0⟩
-      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h1S : (1 : Fin 15) ∉ S := by
       intro h1
       have : (1 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h1⟩
-      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h2S : (2 : Fin 15) ∉ S := by
       intro h2
       have : (2 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h2⟩
-      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h3S : (3 : Fin 15) ∉ S := by
       intro h3
       have : (3 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h3⟩
-      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (1 : Fin 15)))) = (1 : Fin 15)
     simp [silentStep, layeredStep, layer1, h0S, h1S, h2S, h3S]
   · have h0S : (0 : Fin 15) ∉ S := by
       intro h0
       have : (0 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h0⟩
-      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h1S : (1 : Fin 15) ∉ S := by
       intro h1
       have : (1 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h1⟩
-      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h2S : (2 : Fin 15) ∉ S := by
       intro h2
       have : (2 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h2⟩
-      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h3S : (3 : Fin 15) ∉ S := by
       intro h3
       have : (3 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h3⟩
-      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (2 : Fin 15)))) = (2 : Fin 15)
     simp [silentStep, layeredStep, layer1, h0S, h1S, h2S, h3S]
   · have h0S : (0 : Fin 15) ∉ S := by
       intro h0
       have : (0 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h0⟩
-      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (0 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h1S : (1 : Fin 15) ∉ S := by
       intro h1
       have : (1 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h1⟩
-      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (1 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h2S : (2 : Fin 15) ∉ S := by
       intro h2
       have : (2 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h2⟩
-      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (2 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h3S : (3 : Fin 15) ∉ S := by
       intro h3
       have : (3 : Fin 15) ∈ layer1 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer1], h3⟩
-      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (3 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (3 : Fin 15)))) = (3 : Fin 15)
     simp [silentStep, layeredStep, layer1, h0S, h1S, h2S, h3S]
 /-- 层 2 循环闭合：完全活跃层 2（6 窗）经 6 步回到自身 -/
@@ -1816,200 +1816,200 @@ lemma layer_cycle2 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer2)
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((4 : Fin 15))))))) = (4 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
   ·
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((5 : Fin 15))))))) = (5 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
   ·
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((6 : Fin 15))))))) = (6 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
   ·
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((7 : Fin 15))))))) = (7 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
   ·
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((8 : Fin 15))))))) = (8 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
   ·
     have h4S : (4 : Fin 15) ∉ S := by
       intro h4
       have : (4 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h4⟩
-      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (4 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h5S : (5 : Fin 15) ∉ S := by
       intro h5
       have : (5 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h5⟩
-      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (5 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h6S : (6 : Fin 15) ∉ S := by
       intro h6
       have : (6 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h6⟩
-      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (6 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h7S : (7 : Fin 15) ∉ S := by
       intro h7
       have : (7 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h7⟩
-      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (7 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h8S : (8 : Fin 15) ∉ S := by
       intro h8
       have : (8 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h8⟩
-      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (8 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h9S : (9 : Fin 15) ∉ S := by
       intro h9
       have : (9 : Fin 15) ∈ layer2 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer2], h9⟩
-      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (9 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (silentStep S ((9 : Fin 15))))))) = (9 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
 
 /-- 层 3 循环闭合：完全活跃层 3（4 窗）经 4 步回到自身 -/
 lemma layer_cycle3 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer3)
@@ -2020,94 +2020,94 @@ lemma layer_cycle3 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer3)
     have h10S : (10 : Fin 15) ∉ S := by
       intro h10
       have : (10 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h10⟩
-      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h11S : (11 : Fin 15) ∉ S := by
       intro h11
       have : (11 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h11⟩
-      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h12S : (12 : Fin 15) ∉ S := by
       intro h12
       have : (12 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h12⟩
-      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h13S : (13 : Fin 15) ∉ S := by
       intro h13
       have : (13 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h13⟩
-      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S ((10 : Fin 15))))) = (10 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h10S, h11S, h12S, h13S]
   ·
     have h10S : (10 : Fin 15) ∉ S := by
       intro h10
       have : (10 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h10⟩
-      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h11S : (11 : Fin 15) ∉ S := by
       intro h11
       have : (11 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h11⟩
-      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h12S : (12 : Fin 15) ∉ S := by
       intro h12
       have : (12 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h12⟩
-      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h13S : (13 : Fin 15) ∉ S := by
       intro h13
       have : (13 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h13⟩
-      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S ((11 : Fin 15))))) = (11 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h10S, h11S, h12S, h13S]
   ·
     have h10S : (10 : Fin 15) ∉ S := by
       intro h10
       have : (10 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h10⟩
-      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h11S : (11 : Fin 15) ∉ S := by
       intro h11
       have : (11 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h11⟩
-      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h12S : (12 : Fin 15) ∉ S := by
       intro h12
       have : (12 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h12⟩
-      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h13S : (13 : Fin 15) ∉ S := by
       intro h13
       have : (13 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h13⟩
-      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S ((12 : Fin 15))))) = (12 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h10S, h11S, h12S, h13S]
   ·
     have h10S : (10 : Fin 15) ∉ S := by
       intro h10
       have : (10 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h10⟩
-      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (10 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h11S : (11 : Fin 15) ∉ S := by
       intro h11
       have : (11 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h11⟩
-      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (11 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h12S : (12 : Fin 15) ∉ S := by
       intro h12
       have : (12 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h12⟩
-      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (12 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     have h13S : (13 : Fin 15) ∉ S := by
       intro h13
       have : (13 : Fin 15) ∈ layer3 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer3], h13⟩
-      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (13 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S (silentStep S (silentStep S (silentStep S ((13 : Fin 15))))) = (13 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h10S, h11S, h12S, h13S]
 
 /-- 层 4 循环闭合：完全活跃层 4（单窗 14）一步不动 -/
 lemma layer_cycle4 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer4)
@@ -2118,10 +2118,10 @@ lemma layer_cycle4 (S : Finset (Fin 15)) (x : Fin 15) (hx : x ∈ layer4)
     have h14S : (14 : Fin 15) ∉ S := by
       intro h14
       have : (14 : Fin 15) ∈ layer4 ∩ S := by exact Finset.mem_inter.mpr ⟨by simp [layer4], h14⟩
-      have : (14 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simpa [hLe] using this
-      simpa using this
+      have : (14 : Fin 15) ∈ (∅ : Finset (Fin 15)) := by simp [hLe] at this
+      simp at this
     change silentStep S ((14 : Fin 15)) = (14 : Fin 15)
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h14S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h14S]
 
 /-- 谱层集合（层 1..4）。 -/
 def layers : Finset (Finset (Fin 15)) :=
@@ -2186,7 +2186,7 @@ lemma layer_mem_not_in_S_of_disjoint (S : Finset (Fin 15)) {L : Finset (Fin 15)}
     {a : Fin 15} (ha : a ∈ L) (hLe : L ∩ S = ∅) : a ∉ S := by
   intro hS
   have : a ∈ L ∩ S := Finset.mem_inter.mpr ⟨ha, hS⟩
-  simpa [hLe] using this
+  simp [hLe] at this
 
 /-- 层 1 全元素不在 S（层 1 完全活跃）。 -/
 lemma layer1_disjoint_all (S : Finset (Fin 15)) (hLe : layer1 ∩ S = ∅) :
@@ -2238,7 +2238,7 @@ lemma layer1_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer1)
   rcases hx with rfl | rfl | rfl | rfl
   all_goals
     rcases layer1_disjoint_all S hLe with ⟨h0S, h1S, h2S, h3S⟩
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h0S, h1S, h2S, h3S]
+    simp [silentStep, layeredStep, layer1, h0S, h1S, h2S, h3S]
 
 /-- 层 2 单步封闭。 -/
 lemma layer2_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer2)
@@ -2247,7 +2247,7 @@ lemma layer2_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer2)
   rcases hx with rfl | rfl | rfl | rfl | rfl | rfl
   all_goals
     rcases layer2_disjoint_all S hLe with ⟨h4S, h5S, h6S, h7S, h8S, h9S⟩
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+    simp [silentStep, layeredStep, layer1, layer2, h4S, h5S, h6S, h7S, h8S, h9S]
 
 /-- 层 3 单步封闭。 -/
 lemma layer3_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer3)
@@ -2256,7 +2256,7 @@ lemma layer3_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer3)
   rcases hx with rfl | rfl | rfl | rfl
   all_goals
     rcases layer3_disjoint_all S hLe with ⟨h10S, h11S, h12S, h13S⟩
-    simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+    simp [silentStep, layeredStep, layer1, layer2, layer3, h10S, h11S, h12S, h13S]
 
 /-- 层 4 单步封闭（14 不动）。 -/
 lemma layer4_step_mem (S : Finset (Fin 15)) {x : Fin 15} (hx : x ∈ layer4)
@@ -2307,7 +2307,7 @@ lemma S_mem_not_in_layer_of_disjoint (S : Finset (Fin 15)) {L : Finset (Fin 15)}
     {a : Fin 15} (ha : a ∈ S) (hLe : L ∩ S = ∅) : a ∉ L := by
   intro hL
   have : a ∈ L ∩ S := Finset.mem_inter.mpr ⟨hL, ha⟩
-  simpa [hLe] using this
+  simp [hLe] at this
 
 /-- RecObj.step 与 silentStep 的迭代定义性相等（桥）。 -/
 lemma silenceRec15_layered_iterate (S : Finset (Fin 15)) (n : ℕ) (x : Fin 15) :
@@ -2346,7 +2346,7 @@ lemma orbitRepSet_mem_iff (S : Finset (Fin 15)) (r : Fin 15) : r ∈ orbitRepSet
   unfold orbitRepSet
   by_cases h1 : layer1 ∩ S = ∅ <;> by_cases h2 : layer2 ∩ S = ∅ <;>
     by_cases h3 : layer3 ∩ S = ∅ <;> by_cases h4 : layer4 ∩ S = ∅ <;>
-      simp [h1, h2, h3, h4, Finset.mem_singleton] <;> tauto
+      simp [h1, h2, h3, h4] <;> tauto
 
 /-- 代表集元素都是周期点。 -/
 lemma orbitRepSet_per (S : Finset (Fin 15)) (r : Fin 15) (hr : r ∈ orbitRepSet S) :
@@ -2391,13 +2391,13 @@ lemma orbitRepSet_surj (S : Finset (Fin 15)) (x : Fin 15)
       · exact ⟨0, rfl⟩
       · refine ⟨3, ?_⟩
         change silentStep S (silentStep S (silentStep S (1 : Fin 15))) = (0 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h0S, h1S, h2S, h3S]
+        simp [silentStep, layeredStep, layer1, h1S, h2S, h3S]
       · refine ⟨2, ?_⟩
         change silentStep S (silentStep S (2 : Fin 15)) = (0 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h0S, h1S, h2S, h3S]
+        simp [silentStep, layeredStep, layer1, h2S, h3S]
       · refine ⟨1, ?_⟩
         change silentStep S (3 : Fin 15) = (0 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h0S, h1S, h2S, h3S]
+        simp [silentStep, layeredStep, layer1, h3S]
     · refine ⟨(4 : Fin 15), (orbitRepSet_mem_iff S (4 : Fin 15)).mpr
         (Or.inr (Or.inr (Or.inl ⟨hLem, rfl⟩))), ?_⟩
       rcases layer2_disjoint_all S hLem with ⟨h4S, h5S, h6S, h7S, h8S, h9S⟩
@@ -2406,19 +2406,19 @@ lemma orbitRepSet_surj (S : Finset (Fin 15)) (x : Fin 15)
       · exact ⟨0, rfl⟩
       · refine ⟨5, ?_⟩
         change silentStep S (silentStep S (silentStep S (silentStep S (silentStep S (5 : Fin 15))))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+        simp [silentStep, layeredStep, layer1, layer2, h5S, h6S, h7S, h8S, h9S]
       · refine ⟨4, ?_⟩
         change silentStep S (silentStep S (silentStep S (silentStep S (6 : Fin 15)))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+        simp [silentStep, layeredStep, layer1, layer2, h6S, h7S, h8S, h9S]
       · refine ⟨3, ?_⟩
         change silentStep S (silentStep S (silentStep S (7 : Fin 15))) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+        simp [silentStep, layeredStep, layer1, layer2, h7S, h8S, h9S]
       · refine ⟨2, ?_⟩
         change silentStep S (silentStep S (8 : Fin 15)) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+        simp [silentStep, layeredStep, layer1, layer2, h8S, h9S]
       · refine ⟨1, ?_⟩
         change silentStep S (9 : Fin 15) = (4 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h4S, h5S, h6S, h7S, h8S, h9S]
+        simp [silentStep, layeredStep, layer1, layer2, h9S]
     · refine ⟨(10 : Fin 15), (orbitRepSet_mem_iff S (10 : Fin 15)).mpr
         (Or.inr (Or.inr (Or.inr (Or.inl ⟨hLem, rfl⟩)))), ?_⟩
       rcases layer3_disjoint_all S hLem with ⟨h10S, h11S, h12S, h13S⟩
@@ -2427,13 +2427,13 @@ lemma orbitRepSet_surj (S : Finset (Fin 15)) (x : Fin 15)
       · exact ⟨0, rfl⟩
       · refine ⟨3, ?_⟩
         change silentStep S (silentStep S (silentStep S (11 : Fin 15))) = (10 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+        simp [silentStep, layeredStep, layer1, layer2, layer3, h11S, h12S, h13S]
       · refine ⟨2, ?_⟩
         change silentStep S (silentStep S (12 : Fin 15)) = (10 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+        simp [silentStep, layeredStep, layer1, layer2, layer3, h12S, h13S]
       · refine ⟨1, ?_⟩
         change silentStep S (13 : Fin 15) = (10 : Fin 15)
-        simp [silentStep, layeredStep, layer1, layer2, layer3, layer4, h10S, h11S, h12S, h13S]
+        simp [silentStep, layeredStep, layer1, layer2, layer3, h13S]
     · refine ⟨(14 : Fin 15), (orbitRepSet_mem_iff S (14 : Fin 15)).mpr
         (Or.inr (Or.inr (Or.inr (Or.inr ⟨hLem, rfl⟩)))), ?_⟩
       simp [layer4] at hxL
@@ -2458,7 +2458,7 @@ lemma orbitRepSet_inj (S : Finset (Fin 15)) (r₁ : Fin 15) (hr₁ : r₁ ∈ or
     rcases (orbitRepSet_mem_iff S r₂).mp hr₂ with hS2 | h12 | h22 | h32 | h42
     · exact (S_mem_not_in_layer_of_disjoint S hS2 hLe1) (by simpa [hn] using hcl)
     · rcases h12 with ⟨_, hEq⟩
-      exact hne (by simpa [hEq])
+      exact hne (by simp [hEq])
     · rcases h22 with ⟨_, hEq⟩
       have hr2L : r₂ ∉ layer1 := by simp [layer1, hEq]
       exact hr2L (by simpa [hn] using hcl)
@@ -2479,7 +2479,7 @@ lemma orbitRepSet_inj (S : Finset (Fin 15)) (r₁ : Fin 15) (hr₁ : r₁ ∈ or
       have hr2L : r₂ ∉ layer2 := by simp [layer2, hEq]
       exact hr2L (by simpa [hn] using hcl)
     · rcases h22 with ⟨_, hEq⟩
-      exact hne (by simpa [hEq])
+      exact hne (by simp [hEq])
     · rcases h32 with ⟨_, hEq⟩
       have hr2L : r₂ ∉ layer2 := by simp [layer2, hEq]
       exact hr2L (by simpa [hn] using hcl)
@@ -2500,7 +2500,7 @@ lemma orbitRepSet_inj (S : Finset (Fin 15)) (r₁ : Fin 15) (hr₁ : r₁ ∈ or
       have hr2L : r₂ ∉ layer3 := by simp [layer3, hEq]
       exact hr2L (by simpa [hn] using hcl)
     · rcases h32 with ⟨_, hEq⟩
-      exact hne (by simpa [hEq])
+      exact hne (by simp [hEq])
     · rcases h42 with ⟨_, hEq⟩
       have hr2L : r₂ ∉ layer3 := by simp [layer3, hEq]
       exact hr2L (by simpa [hn] using hcl)
@@ -2521,7 +2521,7 @@ lemma orbitRepSet_inj (S : Finset (Fin 15)) (r₁ : Fin 15) (hr₁ : r₁ ∈ or
       have hr2L : r₂ ∉ layer4 := by simp [layer4, hEq]
       exact hr2L (by simpa [hn] using hcl)
     · rcases h42 with ⟨_, hEq⟩
-      exact hne (by simpa [hEq])
+      exact hne (by simp [hEq])
 
 /-- foldl 单例并集计数：互异且均不在 S 的列表元素逐个并入后，card = S.card + 长度。 -/
 lemma card_union_singleton_foldl (S : Finset (Fin 15)) (A : List (Fin 15))
@@ -2561,7 +2561,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 4 (insert 10 (insert 14 (S)))) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 4, 10, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 4, 10, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl | rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2572,7 +2572,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 4 (insert 10 (S))) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 4, 10] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 4, 10] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2582,7 +2582,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 4 (insert 14 (S))) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 4, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 4, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2592,7 +2592,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 4 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 4] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 4] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2601,7 +2601,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 10 (insert 14 (S))) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 10, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 10, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2611,7 +2611,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 10 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 10] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 10] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2620,7 +2620,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (insert 14 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1
@@ -2629,7 +2629,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 0 (S) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [0] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [0] (by
         intro a ha; simp at ha; rcases ha with rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer1]) h1) (by decide)
@@ -2637,7 +2637,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 4 (insert 10 (insert 14 (S))) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [4, 10, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [4, 10, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer2]) h2
@@ -2647,7 +2647,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 4 (insert 10 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [4, 10] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [4, 10] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer2]) h2
@@ -2656,7 +2656,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 4 (insert 14 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [4, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [4, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer2]) h2
@@ -2665,7 +2665,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 4 (S) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [4] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [4] (by
         intro a ha; simp at ha; rcases ha with rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer2]) h2) (by decide)
@@ -2673,7 +2673,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 10 (insert 14 (S)) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [10, 14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [10, 14] (by
         intro a ha; simp at ha; rcases ha with rfl | rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer3]) h3
@@ -2682,7 +2682,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 10 (S) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [10] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [10] (by
         intro a ha; simp at ha; rcases ha with rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer3]) h3) (by decide)
@@ -2690,7 +2690,7 @@ lemma orbitRepSet_card (S : Finset (Fin 15)) : (orbitRepSet S).card = S.card + f
     rw [show (insert 14 (S) : Finset (Fin 15)) =
         List.foldl (fun acc a => acc ∪ {a}) S [14] by
       ext x
-      simp [List.foldl, Finset.mem_union, Finset.mem_insert]]
+      simp [List.foldl, Finset.mem_insert]]
     exact card_union_singleton_foldl S [14] (by
         intro a ha; simp at ha; rcases ha with rfl
         · exact layer_mem_not_in_S_of_disjoint S (by simp [layer4]) h4) (by decide)
@@ -2728,7 +2728,7 @@ lemma orbitCount_eq_card {X : RecObj} (R : Finset X.T)
     _ = Fintype.card {r : X.T // r ∈ R} :=
       (Fintype.card_congr (Equiv.ofBijective f ⟨hf_inj, hf_surj⟩)).symm
     _ = R.card := by
-      simpa using (Finset.card_coe R).symm
+      simp
 
 /-- 主定理：静默分层模型的周期轨道数 = 静默窗大小 + 完全活跃层数。
     含两端点：S=∅ → orbitCount = 4（无静默，每层一条循环轨道）；
@@ -2817,7 +2817,7 @@ lemma inter_disjoint_of_layer_disjoint (S A B : Finset (Fin 15))
   rcases (Finset.mem_inter.mp hxB) with ⟨_, hB⟩
   have : x ∈ A ∩ B := Finset.mem_inter.mpr ⟨hA, hB⟩
   rw [h] at this
-  simpa using this
+  simp at this
 
 /-- 层分区：S.card = Σ_i card (layer_i ∩ S)（层互斥并覆盖 univ）。 -/
 lemma card_eq_sum_layer_inter (S : Finset (Fin 15)) :
@@ -2839,15 +2839,15 @@ lemma card_eq_sum_layer_inter (S : Finset (Fin 15)) :
     · rcases (Finset.mem_inter.mp hx2) with ⟨_, hx2'⟩
       have : x ∈ layer1 ∩ layer2 := Finset.mem_inter.mpr ⟨hx1, hx2'⟩
       rw [layer1_disjoint_layer2] at this
-      simpa using this
+      simp at this
     · rcases (Finset.mem_inter.mp hx3) with ⟨_, hx3'⟩
       have : x ∈ layer1 ∩ layer3 := Finset.mem_inter.mpr ⟨hx1, hx3'⟩
       rw [layer1_disjoint_layer3] at this
-      simpa using this
+      simp at this
     · rcases (Finset.mem_inter.mp hx4) with ⟨_, hx4'⟩
       have : x ∈ layer1 ∩ layer4 := Finset.mem_inter.mpr ⟨hx1, hx4'⟩
       rw [layer1_disjoint_layer4] at this
-      simpa using this
+      simp at this
   have hd2 : Disjoint (S ∩ layer2) ((S ∩ layer3) ∪ (S ∩ layer4)) := by
     rw [Finset.disjoint_left]
     intro x hx hrest
@@ -2857,11 +2857,11 @@ lemma card_eq_sum_layer_inter (S : Finset (Fin 15)) :
     · rcases (Finset.mem_inter.mp hx3) with ⟨_, hx3'⟩
       have : x ∈ layer2 ∩ layer3 := Finset.mem_inter.mpr ⟨hx2, hx3'⟩
       rw [layer2_disjoint_layer3] at this
-      simpa using this
+      simp at this
     · rcases (Finset.mem_inter.mp hx4) with ⟨_, hx4'⟩
       have : x ∈ layer2 ∩ layer4 := Finset.mem_inter.mpr ⟨hx2, hx4'⟩
       rw [layer2_disjoint_layer4] at this
-      simpa using this
+      simp at this
   have hd3 : Disjoint (S ∩ layer3) (S ∩ layer4) := by
     rw [Finset.disjoint_left]
     intro x hx hx4
@@ -2869,7 +2869,7 @@ lemma card_eq_sum_layer_inter (S : Finset (Fin 15)) :
     rcases (Finset.mem_inter.mp hx4) with ⟨_, hx4'⟩
     have : x ∈ layer3 ∩ layer4 := Finset.mem_inter.mpr ⟨hx3, hx4'⟩
     rw [layer3_disjoint_layer4] at this
-    simpa using this
+    simp at this
   calc
     S.card = (S ∩ Finset.univ).card := by rw [Finset.inter_univ]
     _ = (S ∩ (layer1 ∪ layer2 ∪ layer3 ∪ layer4)).card := by rw [huniv]
@@ -3471,7 +3471,7 @@ lemma card_add_fullActive_eq_15_iff (S : Finset (Fin 15)) :
               intro h14
               have hmem : (14 : Fin 15) ∈ layer4 ∩ S := Finset.mem_inter.mpr ⟨by simp [layer4], h14⟩
               rw [hb4] at hmem
-              simpa using hmem
+              simp at hmem
             apply Or.inr
             apply Finset.eq_of_subset_of_card_le
             · intro x hx

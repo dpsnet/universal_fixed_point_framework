@@ -148,7 +148,7 @@ theorem spectral_flow_morphism {X Y : SpObj}
     即 spectralFlowTransform X 1 1 ... = X（对象层面）。 -/
 theorem spectralFlowTransform_id (X : SpObj) :
     (spectralFlowTransform X 1 1 (Matrix.mul_one 1) (Matrix.one_mul 1)).A = X.A := by
-  simp [spectralFlowTransform, Matrix.one_mul, Matrix.mul_one]
+  simp [spectralFlowTransform]
 
 /-- 谱流变换保持维度不变。 -/
 theorem spectralFlowTransform_dim (X : SpObj)
@@ -260,7 +260,7 @@ theorem c5_zero_defect_zero_residual {n : ℕ}
     (A_X A_Z : Matrix (Fin n) (Fin n) ℂ)
     (etaH : Matrix (Fin n) (Fin n) ℂ) :
     adjunctionResidual A_X A_Z (0 : Matrix (Fin n) (Fin n) ℂ) etaH = 0 := by
-  simp [adjunctionResidual, Matrix.zero_mul, Matrix.mul_zero]
+  simp [adjunctionResidual]
 
 /-- C5 量级估计：|E_residual| ≤ ||A_X - A_Z||_op · ||δ||_F · ||etaH||_F（骨架）。
     即 |E_residual| ≤ C · ||δ||_F，其中 C = ||A_X - A_Z||_op · ||etaH||_F。
@@ -324,60 +324,60 @@ lemma commutator_sigmaX_sigmaY {n : ℕ} (hn : n = 2) :
   set sx : Matrix (Fin 2) (Fin 2) ℂ := ![![0, 1], ![1, 0]] with hsx
   set sy : Matrix (Fin 2) (Fin 2) ℂ := ![![0, -Complex.I], ![Complex.I, 0]] with hsy
   set sz : Matrix (Fin 2) (Fin 2) ℂ := ![![1, 0], ![0, -1]] with hsz
-  have h_sx00 : sx 0 0 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx01 : sx 0 1 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx10 : sx 1 0 = 1 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sx11 : sx 1 1 = 0 := by simp [hsx, Matrix.of_apply] <;> rfl
-  have h_sy00 : sy 0 0 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy01 : sy 0 1 = -Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy10 : sy 1 0 = Complex.I := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sy11 : sy 1 1 = 0 := by simp [hsy, Matrix.of_apply] <;> rfl
-  have h_sz00 : sz 0 0 = 1 := by simp [hsz, Matrix.of_apply] <;> rfl
-  have h_sz01 : sz 0 1 = 0 := by simp [hsz, Matrix.of_apply] <;> rfl
-  have h_sz10 : sz 1 0 = 0 := by simp [hsz, Matrix.of_apply] <;> rfl
-  have h_sz11 : sz 1 1 = -1 := by simp [hsz, Matrix.of_apply] <;> rfl
+  have h_sx00 : sx 0 0 = 0 := by simp [hsx]
+  have h_sx01 : sx 0 1 = 1 := by simp [hsx]
+  have h_sx10 : sx 1 0 = 1 := by simp [hsx]
+  have h_sx11 : sx 1 1 = 0 := by simp [hsx]
+  have h_sy00 : sy 0 0 = 0 := by simp [hsy]
+  have h_sy01 : sy 0 1 = -Complex.I := by simp [hsy]
+  have h_sy10 : sy 1 0 = Complex.I := by simp [hsy]
+  have h_sy11 : sy 1 1 = 0 := by simp [hsy]
+  have h_sz00 : sz 0 0 = 1 := by simp [hsz]
+  have h_sz01 : sz 0 1 = 0 := by simp [hsz]
+  have h_sz10 : sz 1 0 = 0 := by simp [hsz]
+  have h_sz11 : sz 1 1 = -1 := by simp [hsz]
   have h_mul_xy00 : (sx * sy) 0 0 = Complex.I := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx00, h_sy00, h_sx01, h_sy10]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_xy01 : (sx * sy) 0 1 = 0 := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx00, h_sy01, h_sx01, h_sy11]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_xy10 : (sx * sy) 1 0 = 0 := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx10, h_sy00, h_sx11, h_sy10]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_xy11 : (sx * sy) 1 1 = -Complex.I := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sx10, h_sy01, h_sx11, h_sy11]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_yx00 : (sy * sx) 0 0 = -Complex.I := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy00, h_sx00, h_sy01, h_sx10]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_yx01 : (sy * sx) 0 1 = 0 := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy00, h_sx01, h_sy01, h_sx11]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_yx10 : (sy * sx) 1 0 = 0 := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy10, h_sx00, h_sy11, h_sx10]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   have h_mul_yx11 : (sy * sx) 1 1 = Complex.I := by
     rw [Matrix.mul_apply, Fin.sum_univ_two, h_sy10, h_sx01, h_sy11, h_sx11]
-    <;> apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num
+    apply Complex.ext <;> simp
   ext i j
   fin_cases i <;> fin_cases j
   · -- (0,0)
     apply Complex.ext
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00] <;> ring_nf <;> norm_num
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00] <;> ring_nf <;> norm_num
+    · simp [Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00]
+    · simp [Matrix.smul_apply, h_mul_xy00, h_mul_yx00, h_sz00]; ring_nf
   · -- (0,1)
     apply Complex.ext
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01] <;> ring_nf <;> norm_num
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01] <;> ring_nf <;> norm_num
+    · simp [Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01]
+    · simp [Matrix.smul_apply, h_mul_xy01, h_mul_yx01, h_sz01]
   · -- (1,0)
     apply Complex.ext
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10] <;> ring_nf <;> norm_num
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10] <;> ring_nf <;> norm_num
+    · simp [Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10]
+    · simp [Matrix.smul_apply, h_mul_xy10, h_mul_yx10, h_sz10]
   · -- (1,1)
     apply Complex.ext
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11] <;> ring_nf <;> norm_num
-    · simp [Pi.sub_apply, Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11] <;> ring_nf <;> norm_num
+    · simp [Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11]
+    · simp [Matrix.smul_apply, h_mul_xy11, h_mul_yx11, h_sz11]; ring_nf
 
 /-! ### C2：ℏ/2 = 最小非平凡谱交织实现
     代数内容：有限维标准化下，最小非零对易子 ‖[P, A]‖_F ≥ ℏ/2 · ‖P‖·‖A‖
@@ -409,15 +409,14 @@ theorem c2_pauli_instance_lower_bound {n : ℕ} (hn : n = 2) :
       rw [div_mul_div_comm, one_mul]
     rw [h1]
     have h2 : (↑(Real.sqrt 2) : ℂ) * (↑(Real.sqrt 2)) = (2 : ℂ) := by
-      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
-      <;> norm_num
-    rw [h2] <;> norm_num
+      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]; norm_num
+    rw [h2]
   have h1 : c • sx * c • sy = (c * c) • (sx * sy) := by
     rw [smul_mul_smul]
-    <;> ring
+
   have h2 : c • sy * c • sx = (c * c) • (sy * sx) := by
     rw [smul_mul_smul]
-    <;> ring
+
   have h_comm : c • sx * c • sy - c • sy * c • sx = Complex.I • sz := by
     rw [h1, h2, h_coeff]
     rw [← smul_sub]
@@ -426,17 +425,14 @@ theorem c2_pauli_instance_lower_bound {n : ℕ} (hn : n = 2) :
     rw [h3]
     rw [smul_smul]
     <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-      simp [hsz, Matrix.smul_apply, Matrix.of_apply] <;>
-      (try { apply Complex.ext <;> simp [Complex.mul_re, Complex.mul_im] <;> ring_nf <;> norm_num })
+      simp [hsz]
   have h_frob_sz : frobSq sz = 2 := by
-    simp [frobSq, hsz, Matrix.of_apply, Fin.sum_univ_two, Complex.normSq]
-    <;> norm_num
+    simp [frobSq, hsz, Fin.sum_univ_two, Complex.normSq]; norm_num
   have h_main : frobSq (c • sx * c • sy - c • sy * c • sx) = 2 := by
     rw [h_comm]
     have h4 : frobSq (Complex.I • sz) = Complex.normSq (Complex.I) * frobSq sz := by
       exact frobSq_smul Complex.I sz
-    rw [h4, h_frob_sz, Complex.normSq_I]
-    <;> norm_num
+    rw [h4, h_frob_sz, Complex.normSq_I]; norm_num
   exact h_main
 
 /-- 2×2 无迹矩阵的反对易子恒等式（Cayley-Hamilton 推论）：
@@ -456,18 +452,17 @@ private lemma anticomm_traceless_2x2 (P A : Matrix (Fin 2) (Fin 2) ℂ)
       _ = 0 - A 0 0 := by rw [hTrA]
       _ = -A 0 0 := by ring
   have hTrPA : (P * A).trace = P 0 0 * A 0 0 + P 0 1 * A 1 0 + P 1 0 * A 0 1 + P 1 1 * A 1 1 := by
-    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two]
-    <;> ring
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two]; ring
   ext i j
   fin_cases i <;> fin_cases j
   · -- (0,0)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
   · -- (0,1)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
   · -- (1,0)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
   · -- (1,1)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hP11, hA11, hTrPA, Matrix.smul_apply] <;> ring
 
 /-- 2×2 无迹矩阵的平方恒等式（Cayley-Hamilton）：
     tr(M)=0 ⟹ M² = (tr(M²)/2)·I。
@@ -481,17 +476,17 @@ private lemma sq_traceless_2x2 (M : Matrix (Fin 2) (Fin 2) ℂ)
       _ = 0 - M 0 0 := by rw [hTr]
       _ = -M 0 0 := by ring
   have hTrM2 : (M * M).trace = 2 * (M 0 0 * M 0 0) + M 0 1 * M 1 0 + M 1 0 * M 0 1 := by
-    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two, h11] <;> ring
+    simp [Matrix.trace, Matrix.mul_apply, Matrix.diag_apply, Fin.sum_univ_two, h11]; ring
   ext i j
   fin_cases i <;> fin_cases j
   · -- (0,0)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, hTrM2, Matrix.smul_apply] <;> ring
   · -- (0,1)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
   · -- (1,0)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
   · -- (1,1)
-    apply Complex.ext <;> simp [Matrix.mul_apply, Matrix.one_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
+    apply Complex.ext <;> simp [Matrix.mul_apply, Fin.sum_univ_two, h11, hTrM2, Matrix.smul_apply] <;> ring
 
 /-- 辅助引理：Hermitian 矩阵 P 满足 tr(P * A).re = ⟨P, A⟩_HS.re。 -/
 private lemma trace_mul_re_of_hermitian {n : ℕ}
@@ -621,12 +616,12 @@ theorem c2_commutator_orthonormal_traceless {n : ℕ} (hn : n = 2)
     谱间隙下界 Δλ = 0 ≤ 1/(2·Δt) 自动保持 Δλ·Δt ≥ 1/2 的宽松形式。
     完整 Weyl 形式（非平凡谱间隙非零情形）需 Mathlib Fourier 分析+带宽定理基础设施。 -/
 theorem c3_time_energy_uncertainty
-    (X : SpObj) (h_pos : 0 < X.n)
+    (X : SpObj) (_h_pos : 0 < X.n)
     (deltaLam : ℝ) (hDeltaLam : deltaLam > 0)
     (Δt : ℝ) (hΔt : Δt > 0)
-    (h_gap : ∀ (i j : Fin X.n), i ≠ j →
+    (_h_gap : ∀ (i j : Fin X.n), i ≠ j →
       (X.A i i - X.A j j).re ≥ deltaLam ∨ (X.A j j - X.A i i).re ≥ deltaLam)
-    (h_support : ∀ t : ℝ, |t| > Δt →
+    (_h_support : ∀ t : ℝ, |t| > Δt →
       Matrix.trace (X.A ^ (0 : ℕ)) = 0) :
     -- 实例见证：若 X.A = 0（平凡算子），h_support 对任何 Δt 成立（trace 0^n = 0）
     -- 此时 Δλ·Δt 下界以假设形式给出的通用 Δλ>0, Δt>0 为非空方向
@@ -665,8 +660,8 @@ theorem c7_spectral_flow_adjunction_infinitesimal
     {X : SpObj}
     (H : Matrix (Fin X.n) (Fin X.n) ℂ)
     (ε : ℂ)
-    (hUV : (1 + ε • H) * (1 - ε • H) = 1)
-    (hVU : (1 - ε • H) * (1 + ε • H) = 1)
+    (_hUV : (1 + ε • H) * (1 - ε • H) = 1)
+    (_hVU : (1 - ε • H) * (1 + ε • H) = 1)
     (hε : ε * ε = 0) :
     let U := 1 + ε • H
     let V := 1 - ε • H
@@ -674,7 +669,7 @@ theorem c7_spectral_flow_adjunction_infinitesimal
   -- 展开 let 定义
   simp only []
   -- 展开乘法 + 标量乘法分配律
-  simp only [add_mul, mul_sub, one_mul, mul_one, one_smul,
+  simp only [add_mul, mul_sub, one_mul, mul_one, 
     smul_mul_assoc, mul_smul_comm, smul_add, smul_sub, smul_smul]
   -- 用 ε² = 0 消去高阶项
   rw [hε]

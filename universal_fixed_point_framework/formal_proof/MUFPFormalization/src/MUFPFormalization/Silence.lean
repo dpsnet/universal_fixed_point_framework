@@ -56,14 +56,14 @@ References:
 /-- S1: Fractal support condition.
     In the finite-dimensional case, all spectra have Hausdorff dimension 0 < dim_amb,
     so S1 holds automatically. The full condition requires fractal geometry (Phase 16C). -/
-def silenceS1 {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+def silenceS1 {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   True
 
 /-- S2: No continuous component condition.
     In the finite-dimensional case, all spectra are pure point (discrete),
     so S2 holds automatically. The full condition requires the Lebesgue decomposition
     theorem for self-adjoint operators on Hilbert spaces (Phase 16B). -/
-def silenceS2 {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+def silenceS2 {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   True
 
 /-- 局部吸引子捕获指数（Local Attractor Capture Index, LACI）: a simplified measure
@@ -71,8 +71,8 @@ def silenceS2 {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
     where λ₁ is the largest eigenvalue and λ₂ is the second largest.
     A value of LACI ≥ τ indicates spectral gap vanishing.
     Standard correspondence: spectral gap in operator theory. -/
-noncomputable def laciIndex {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
-  if h : n = 0 then 0 else
+noncomputable def laciIndex {n : ℕ} (_A : Matrix (Fin n) (Fin n) ℂ) : ℝ :=
+  if _h : n = 0 then 0 else
     -- Placeholder: requires eigenvalue computation
     0
 
@@ -84,7 +84,7 @@ def silenceS3 {n : ℕ} (τ : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
 /-- S4: Gauge group constraint.
     max probability weight ≤ w.
     In the finite-dimensional prototype, orbit weights are bounded by group order. -/
-def silenceS4 {n : ℕ} (w : ℝ) (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+def silenceS4 {n : ℕ} (_w : ℝ) (_A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
   True
 
 /-- The full spectral silence condition: conjunction of S1-S4.

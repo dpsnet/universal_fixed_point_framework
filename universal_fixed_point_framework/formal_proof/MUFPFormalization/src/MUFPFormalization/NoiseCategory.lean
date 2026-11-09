@@ -114,7 +114,7 @@ private lemma list_flatMap_assoc {α β γ : Type*} (l : List α)
   induction l with
   | nil => rfl
   | cons hd tl ih =>
-    simp [ih, List.append_assoc]
+    simp [ih]
 
 instance : Category SigmaRecObj where
   Hom := SigmaRecHom
@@ -128,15 +128,15 @@ instance : Category SigmaRecObj where
   id_comp := by
     intro X Y f
     ext i
-    simp [CategoryStruct.id, CategoryStruct.comp, RecHom.id_toFun]
+    simp [CategoryStruct.id]
   comp_id := by
     intro X Y f
     ext i
-    simp [CategoryStruct.id, CategoryStruct.comp, RecHom.comp_toFun]
+    simp [CategoryStruct.id]
   assoc := by
     intro W X Y Z f g h
     ext i
-    simp [CategoryStruct.comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map]
+    simp [List.flatMap_assoc, List.map_flatMap, List.flatMap_map]
     rfl
 
 /-- Inclusion functor ι_Σ : Rec → Σ-Rec (full and faithful).
@@ -210,16 +210,16 @@ noncomputable instance : Category SigmaSpObj where
   id_comp := by
     intro X Y f
     ext i
-    simp [CategoryStruct.id, CategoryStruct.comp, SpHom.id_P]
+    simp [CategoryStruct.id]
   comp_id := by
     intro X Y f
     ext i
-    simp [CategoryStruct.id, CategoryStruct.comp, SpHom.comp_P]
+    simp [CategoryStruct.id]
   assoc := by
     intro W X Y Z f g h
     ext i
-    simp [CategoryStruct.comp, List.flatMap_assoc, List.map_flatMap, List.flatMap_map,
-          Matrix.mul_assoc, Function.comp_assoc, Function.comp_apply, Function.comp_def]
+    simp [List.flatMap_assoc, List.map_flatMap, List.flatMap_map,
+          Matrix.mul_assoc, Function.comp_def]
 
 /-- 逐分量 getD 桥接（不引用 sigmaDFunctor，可在其定义前声明）：
     Option.map DFunctor.obj 的 getD = DFunctor.obj (源 getD)。
@@ -481,7 +481,7 @@ theorem ext_degenerates_to_sel (X : SigmaRecObj) (hDom : ∃ i, X.components i �
     and produces a coproduct of local Rec objects. -/
 noncomputable def dissFunctor (R : RecObj) (data : NoiseData) : SigmaRecObj :=
   { components := λ i =>
-      if h : data.contractions i < 1 then
+      if _h : data.contractions i < 1 then
         some { T := R.T, fin := R.fin, dec := R.dec, step := R.step }
       else
         none }
@@ -647,7 +647,7 @@ theorem transfer_zero_silence {S : SpObj} (f : SpLinearHom S S) :
     ※ This is the key bridge between the categorical stratification
     and the Silence.lean spectral silence criteria. -/
 theorem silent_positive_silence {S : SpObj} (φ : SpSilentHom S S)
-    (hA : S.A ≠ 0)
+    (_hA : S.A ≠ 0)
     (h_noncomm : φ.hom.P * S.A ≠ S.A * φ.hom.P) :
     deltaSilence S.A φ.hom.P > 0 := by
   -- Strategy: δ_silence > 0 ↔ ad ≠ 0 ↔ P*A ≠ A*P (contrapositive of h_noncomm)
@@ -672,7 +672,7 @@ theorem silent_positive_silence {S : SpObj} (φ : SpSilentHom S S)
     In the finite prototype, this creates a single RecObj component
     with state space Fin S.n and identity step (placeholder for
     the IFS-based decomposition in the full theory). -/
-noncomputable def dissSilent {S T : SpObj} (φ : SpSilentHom S T) : SigmaRecObj :=
+noncomputable def dissSilent {S T : SpObj} (_φ : SpSilentHom S T) : SigmaRecObj :=
   { components := fun i =>
       match i with
       | 0 => some { T := Fin S.n, fin := inferInstance, dec := inferInstance,
