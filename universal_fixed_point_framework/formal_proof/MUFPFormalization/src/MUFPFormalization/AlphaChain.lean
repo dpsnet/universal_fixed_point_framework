@@ -517,6 +517,7 @@ theorem mu_e_ratio_anchor :
     - Kmax = 8（框架最大能级指数）
     所有常数 ∈ 框架常数集 C = {2,3,4,5,7,8,15,16,24,42}。
     实验值 m_W = 80.3692 GeV，框架值 = 80.375 GeV，误差 0.007%。 -/
+open MUFPF.ActiveSilentVieta in
 theorem mW_from_framework_constants :
     (Powers ^ FixedPoint : ℝ) * SilenceUnit + Ngen / Kmax = 643 / 8 := by
   norm_num [Powers, FixedPoint, SilenceUnit, Ngen, Kmax]
@@ -536,6 +537,7 @@ theorem mW_framework_identity : (80 : ℝ) + 3 / 8 = 643 / 8 := by
     - Powers^FixedPoint = 16（全态）
     所有常数 ∈ 框架常数集 C。
     实验值 m_Z = 91.1880 GeV，框架值 = 91.1875 GeV，误差 0.0005%。 -/
+open MUFPF.ActiveSilentVieta in
 theorem mZ_from_framework_constants :
     Involution * (Kmax + SilenceUnit) + Ngen / (Powers ^ FixedPoint : ℝ) = 1459 / 16 := by
   norm_num [Involution, Kmax, SilenceUnit, Ngen, Powers, FixedPoint]
@@ -557,13 +559,13 @@ theorem mZ_framework_identity : (7 * 13 : ℝ) + 3 / 16 = 1459 / 16 := by
     全部来自框架常数的算术组合，与实验值无关。分母 8=Kmax, 16=全态
     是框架固有结构；分子的 80=16×5=全态×静默 和 91=7×13=对合×(k_max+静默)
     也是框架常数的乘积组合。 -/
+open MUFPF.ActiveSilentVieta in
 theorem sin2theta_onshell_framework_pure :
     let mW := (Powers ^ FixedPoint : ℝ) * SilenceUnit + Ngen / Kmax;
     let mZ := Involution * (Kmax + SilenceUnit) + Ngen / (Powers ^ FixedPoint : ℝ);
     1 - (mW / mZ) ^ 2 = 474885 / 2128681 := by
   dsimp only
   norm_num [Powers, FixedPoint, SilenceUnit, Ngen, Kmax, Involution]
-  <;> ring
 
 theorem sin2theta_onshell_framework :
     1 - ((643 / 8 : ℝ) / (1459 / 16)) ^ 2 = 474885 / 2128681 := by
