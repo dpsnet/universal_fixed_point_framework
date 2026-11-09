@@ -11,7 +11,7 @@ import MUFPFormalization.SpectralGap
 import MUFPFormalization.PulsarRadiation
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import MUFPFormalization.SpectralBundle.Core

@@ -11,7 +11,7 @@ import MUFPFormalization.SpectralGap
 import MUFPFormalization.PulsarRadiation
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import MUFPFormalization.SpectralBundle.Cosmology
@@ -181,7 +181,7 @@ noncomputable def pinchCascade_to_powerSpectrum (pc : PinchCascade)
           cascade_totalFluctuation_nonneg pc
         have h_len : 0 < pc.events.length := by
           by_contra h_len
-          push_neg at h_len
+          push Not at h_len
           have h_len0 : pc.events.length = 0 := Nat.eq_zero_of_le_zero h_len
           rw [List.length_eq_zero_iff] at h_len0
           rw [h_len0] at h_empty

@@ -480,7 +480,7 @@ theorem DFunctor_swap_traceless {X : RecObj}
     have h_step : X.step ((Fintype.equivFin X.T).symm i) = (Fintype.equivFin X.T).symm i :=
       (Fintype.equivFin X.T).injective (h.trans h_self.symm)
     exact h_no_fixed _ h_step
-  · rw [if_neg h]
+  · rw [ite_eq_right h]
 
 /-- Sp 层极化振幅与 Rec 层极化投影的对应。
     当 Y 有 2 态且 step = swap 时：
@@ -651,7 +651,7 @@ theorem couplingShapeMatrix_hermitian {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin
 theorem couplingShapeMatrix_trace {n : ℕ} (A₁ A₂ : Matrix (Fin n) (Fin n) ℂ) :
     Matrix.trace (couplingShapeMatrix A₁ A₂) =
     hilbertSchmidtInnerProduct A₁ A₁ + hilbertSchmidtInnerProduct A₂ A₂ := by
-  simp only [Matrix.trace, Fin.sum_univ_two, couplingShapeMatrix, if_true, if_false]
+  simp only [Matrix.trace, Fin.sum_univ_two, couplingShapeMatrix, ite_true, ite_false]
   rfl
 
 /-- 耦合矩阵的对角元是实数（Frobenius 范数平方）。 -/

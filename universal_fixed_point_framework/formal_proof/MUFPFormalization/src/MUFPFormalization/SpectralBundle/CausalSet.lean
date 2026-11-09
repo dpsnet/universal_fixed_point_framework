@@ -11,7 +11,7 @@ import MUFPFormalization.SpectralGap
 import MUFPFormalization.PulsarRadiation
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import MUFPFormalization.SpectralBundle.Core
@@ -332,7 +332,7 @@ theorem gravity_iff_nontrivial_causalStructure (X : RecObj) :
   · intro ⟨x, hx_not_max⟩
     -- x 不是极大元 → x 不是不动点 → defectMeasure > 0
     by_contra h_fixed
-    push_neg at h_fixed
+    push Not at h_fixed
     have h_max := fixed_point_is_maximal X x (h_fixed x)
     exact hx_not_max h_max
 

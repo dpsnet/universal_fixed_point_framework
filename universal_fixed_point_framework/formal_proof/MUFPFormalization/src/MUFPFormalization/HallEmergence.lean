@@ -168,13 +168,13 @@ theorem clock_star_mul_self (n : ℕ) : star (clock n) * clock n = 1 := by
       Finset.sum_eq_single (s := Finset.univ)
         (f := fun j_1 : Fin n => if j_1 = j then
           (if j_1 = i then star (omega n ^ (j_1 : ℕ)) else 0) * omega n ^ (j_1 : ℕ) else 0)
-        (a := j) (fun k _ hkj => by rw [if_neg hkj])
+        (a := j) (fun k _ hkj => by rw [ite_eq_right hkj])
         (fun hcontra => absurd (Finset.mem_univ j) hcontra)
-    rw [hs, if_pos rfl]
+    rw [hs, ite_eq_left rfl]
     by_cases hij : i = j
     · subst hij
-      rw [if_pos rfl, if_pos rfl]
-    · rw [if_neg (fun h => hij h.symm), zero_mul, if_neg hij]
+      rw [ite_eq_left rfl, ite_eq_left rfl]
+    · rw [ite_eq_right (fun h => hij h.symm), zero_mul, ite_eq_right hij]
   rw [hsum]
   split_ifs
   · exact conj_omega_pow_mul_self n i
@@ -244,13 +244,13 @@ private theorem shift_sum_ite {n : ℕ} [NeZero n] (a b : Fin n) :
           change k + 1
             = a + (⟨(n : ℕ) - 1, Nat.sub_lt (Fin.pos a) Nat.zero_lt_one⟩ : Fin n) + 1
           rw [← hka, hkp])
-        rw [if_neg hna, zero_mul])
+        rw [ite_eq_right hna, zero_mul])
       (fun hcontra => absurd (Finset.mem_univ _) hcontra)
-  rw [hs, hkp, if_pos rfl, one_mul]
+  rw [hs, hkp, ite_eq_left rfl, one_mul]
   by_cases hab : a = b
   · subst hab
-    rw [if_pos rfl]
-  · rw [if_neg (fun h => hab h.symm), if_neg hab]
+    rw [ite_eq_left rfl]
+  · rw [ite_eq_right (fun h => hab h.symm), ite_eq_right hab]
 
 /-- shift 求和核（翻转形）：∑ₖ δ_{k,a+1} δ_{k,b+1} = δ_{ab}（star 在左侧时的形态）。 -/
 private theorem shift_sum_ite' {n : ℕ} [NeZero n] (a b : Fin n) :
@@ -262,13 +262,13 @@ private theorem shift_sum_ite' {n : ℕ} [NeZero n] (a b : Fin n) :
     Finset.sum_eq_single (s := Finset.univ)
       (f := fun k : Fin n => ((if k = a + 1 then 1 else 0) * (if k = b + 1 then 1 else 0) : ℂ))
       (a := a + 1)
-      (fun k _ hkk₀ => by rw [if_neg hkk₀, zero_mul])
+      (fun k _ hkk₀ => by rw [ite_eq_right hkk₀, zero_mul])
       (fun hcontra => absurd (Finset.mem_univ _) hcontra)
-  rw [hs, if_pos rfl, one_mul]
+  rw [hs, ite_eq_left rfl, one_mul]
   by_cases hab : a = b
   · subst hab
-    rw [if_pos rfl, if_pos rfl]
-  · rw [if_neg (fun h => hab (fin_add_one_injective h)), if_neg hab]
+    rw [ite_eq_left rfl, ite_eq_left rfl]
+  · rw [ite_eq_right (fun h => hab (fin_add_one_injective h)), ite_eq_right hab]
 
 /-- shift 幺正：V†V = 1（循环置换矩阵）。 -/
 theorem shift_star_mul_self {n : ℕ} [NeZero n] : star (shift n) * shift n = 1 := by
@@ -460,9 +460,9 @@ private theorem shift_pow {n : ℕ} [NeZero n] (b : ℕ) :
         = (shift n ^ b) i (j + 1) * (if j + 1 = j + 1 then (1 : ℂ) else 0) :=
       Finset.sum_eq_single (s := Finset.univ)
         (f := fun k : Fin n => (shift n ^ b) i k * (if k = j + 1 then (1 : ℂ) else 0))
-        (a := j + 1) (fun k _ hkj => by rw [if_neg hkj, mul_zero])
+        (a := j + 1) (fun k _ hkj => by rw [ite_eq_right hkj, mul_zero])
         (fun hcontra => absurd (Finset.mem_univ _) hcontra)
-    rw [hs, ih, if_pos rfl, mul_one, fin_add_nat_succ j b]
+    rw [hs, ih, ite_eq_left rfl, mul_one, fin_add_nat_succ j b]
 
 /-- ωₙ 是 n 次本原单位根（磁通量子的代数地位：生成全体 n 次单位根）。 -/
 private theorem omega_primitive {n : ℕ} [NeZero n] : IsPrimitiveRoot (omega n) n := by
@@ -477,12 +477,12 @@ private theorem omega_geom_sum {n : ℕ} [NeZero n] (a : ℕ) :
   rw [Fin.sum_univ_eq_sum_range]
   have hprim := omega_primitive (n := n)
   by_cases ha : a % n = 0
-  · rw [if_pos ha]
+  · rw [ite_eq_left ha]
     have h1 : omega n ^ a = 1 := by
       obtain ⟨m, hm⟩ := (Nat.dvd_iff_mod_eq_zero).2 ha
       rw [hm, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)), one_pow]
     simp [h1]
-  · rw [if_neg ha]
+  · rw [ite_eq_right ha]
     have hne : omega n ^ a ≠ 1 := by
       have hiff := hprim.pow_eq_one_iff_dvd a
       rw [Nat.dvd_iff_mod_eq_zero] at hiff
@@ -512,19 +512,19 @@ theorem weyl_trace_orth {n : ℕ} [NeZero n] (a b : ℕ) :
         (f := fun k : Fin n => (clock n ^ a) i k * (shift n ^ b) k i)
         (a := i)
         (fun k _ hki => by
-          rw [clock_pow, Matrix.diagonal_apply, if_neg (fun h => hki h.symm), zero_mul])
+          rw [clock_pow, Matrix.diagonal_apply, ite_eq_right (fun h => hki h.symm), zero_mul])
         (fun hcontra => absurd (Finset.mem_univ _) hcontra)
-    rw [hs, clock_pow, Matrix.diagonal_apply, if_pos rfl]
+    rw [hs, clock_pow, Matrix.diagonal_apply, ite_eq_left rfl]
   rw [Finset.sum_congr rfl fun i _ => hmul i]
   have hdiag : ∀ i : Fin n, (shift n ^ b) i i = if b % n = 0 then (1 : ℂ) else 0 := by
     intro i
     rw [shift_pow b i i]
     by_cases hb : b % n = 0
-    · rw [if_pos hb, if_pos]
+    · rw [ite_eq_left hb, ite_eq_left]
       apply Fin.ext
       rw [Fin.val_add, (show (Fin.ofNat n b).val = b % n from rfl), hb, Nat.add_zero,
         Nat.mod_eq_of_lt i.2]
-    · rw [if_neg hb, if_neg]
+    · rw [ite_eq_right hb, ite_eq_right]
       rintro he
       have hval := congrArg Fin.val he
       rw [Fin.val_add, (show (Fin.ofNat n b).val = b % n from rfl)] at hval
@@ -540,13 +540,13 @@ theorem weyl_trace_orth {n : ℕ} [NeZero n] (a b : ℕ) :
       exact hb hc
   rw [Finset.sum_congr rfl fun i _ => by rw [hdiag i]]
   by_cases hb : b % n = 0
-  · rw [Finset.sum_congr rfl fun i _ => by rw [if_pos hb, mul_one],
+  · rw [Finset.sum_congr rfl fun i _ => by rw [ite_eq_left hb, mul_one],
       Finset.sum_congr rfl fun i _ => by rw [pow_mul], omega_geom_sum a]
     by_cases ha : a % n = 0
-    · rw [if_pos (show a % n = 0 ∧ b % n = 0 from ⟨ha, hb⟩), if_pos ha]
-    · rw [if_neg (show ¬(a % n = 0 ∧ b % n = 0) from fun h => ha h.1), if_neg ha]
-  · rw [Finset.sum_congr rfl fun i _ => by rw [if_neg hb, mul_zero],
-      if_neg (show ¬(a % n = 0 ∧ b % n = 0) from fun h => hb h.2)]
+    · rw [ite_eq_left (show a % n = 0 ∧ b % n = 0 from ⟨ha, hb⟩), ite_eq_left ha]
+    · rw [ite_eq_right (show ¬(a % n = 0 ∧ b % n = 0) from fun h => ha h.1), ite_eq_right ha]
+  · rw [Finset.sum_congr rfl fun i _ => by rw [ite_eq_right hb, mul_zero],
+      ite_eq_right (show ¬(a % n = 0 ∧ b % n = 0) from fun h => hb h.2)]
     simp
 
 /-- Weyl 关系（n ≥ 1 全情形）：n = 1 时 U = V = 1、ω₁ = 1 退化情形并入。 -/
@@ -554,7 +554,7 @@ private theorem clock_shift_weyl_gen {n : ℕ} [NeZero n] :
     clock n * shift n = (omega n) • (shift n * clock n) := by
   by_cases hn : 2 ≤ n
   · exact clock_shift_weyl hn
-  · push_neg at hn
+  · push Not at hn
     have hn0 : n ≠ 0 := NeZero.ne n
     have hn1 : n = 1 := by omega
     subst hn1
@@ -572,8 +572,8 @@ private theorem clock_shift_weyl_gen {n : ℕ} [NeZero n] :
         apply Fin.ext
         rw [Fin.val_add, Fin.val_one', Nat.mod_self, Nat.add_zero, Nat.mod_eq_of_lt j.2]
       by_cases hij : i = j + 1
-      · rw [if_pos hij, if_pos (hjj ▸ hij)]
-      · rw [if_neg hij, if_neg (fun h => hij (hjj.symm ▸ h))]
+      · rw [ite_eq_left hij, ite_eq_left (hjj ▸ hij)]
+      · rw [ite_eq_right hij, ite_eq_right (fun h => hij (hjj.symm ▸ h))]
     rw [hc, hs]
     have hw : omega 1 = 1 := by
       simpa [omega, omegaArg] using (Complex.exp_nat_mul_two_pi_mul_I 1)
@@ -699,18 +699,18 @@ private theorem weyl_pairing {n : ℕ} [NeZero n] (p q : Fin n × Fin n) :
   dsimp only
   by_cases heq : a = a' ∧ b = b'
   · obtain ⟨rfl, rfl⟩ := heq
-    rw [if_pos rfl, weyl_mul_dual, Matrix.trace_smul, weyl_trace_orth]
+    rw [ite_eq_left rfl, weyl_mul_dual, Matrix.trace_smul, weyl_trace_orth]
     have han : (a : ℕ) + (n - (a : ℕ)) = n := Nat.add_sub_cancel' (Nat.le_of_lt a.2)
     have hbn : (b : ℕ) + (n - (b : ℕ)) = n := Nat.add_sub_cancel' (Nat.le_of_lt b.2)
     rw [han, hbn, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)), one_pow,
-      one_smul, Nat.mod_self, if_pos (show (0 : ℕ) = 0 ∧ (0 : ℕ) = 0 from ⟨rfl, rfl⟩)]
-  · rw [if_neg (show ¬(⟨a, b⟩ : Fin n × Fin n) = ⟨a', b'⟩ from fun h => by
+      one_smul, Nat.mod_self, ite_eq_left (show (0 : ℕ) = 0 ∧ (0 : ℕ) = 0 from ⟨rfl, rfl⟩)]
+  · rw [ite_eq_right (show ¬(⟨a, b⟩ : Fin n × Fin n) = ⟨a', b'⟩ from fun h => by
         rw [Prod.mk.injEq] at h; exact heq h)]
     rw [weyl_mul_dual, Matrix.trace_smul, weyl_trace_orth]
     have hcond : ¬(((a : ℕ) + (n - (a' : ℕ))) % n = 0 ∧ ((b : ℕ) + (n - (b' : ℕ))) % n = 0) :=
       fun h => heq ⟨Fin.ext (nat_add_sub_mod_eq_zero (NeZero.pos n) a.2 a'.2 h.1),
         Fin.ext (nat_add_sub_mod_eq_zero (NeZero.pos n) b.2 b'.2 h.2)⟩
-    rw [if_neg hcond, smul_zero]
+    rw [ite_eq_right hcond, smul_zero]
 
 /-- trace 的有限和-标量引理：Tr(∑ g p • M p) = ∑ g p · Tr(M p)。 -/
 private theorem trace_sum_smul_fin {n : ℕ} {ι : Type*} [Fintype ι]
@@ -745,9 +745,9 @@ theorem weyl_basis_linearIndependent {n : ℕ} [NeZero n] :
   have h2 := Finset.sum_eq_single (s := Finset.univ)
     (f := fun p : Fin n × Fin n => g p * (if p = q then (n : ℂ) else 0))
     (a := q)
-    (fun p _ hpq => by rw [if_neg hpq, mul_zero])
+    (fun p _ hpq => by rw [ite_eq_right hpq, mul_zero])
     (fun hcontra => absurd (Finset.mem_univ _) hcontra)
-  rw [h2, if_pos rfl] at htr
+  rw [h2, ite_eq_left rfl] at htr
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne n
   rcases mul_eq_zero.1 htr with h | h
   · exact h
@@ -1012,9 +1012,9 @@ private theorem clock_pow_one {n : ℕ} [NeZero n] : clock n ^ n = 1 := by
   simp only [Matrix.diagonal_apply, Matrix.one_apply]
   by_cases hij : i = j
   · subst hij
-    rw [if_pos rfl, if_pos rfl, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)),
+    rw [ite_eq_left rfl, ite_eq_left rfl, pow_mul, omega_pow (Nat.one_le_iff_ne_zero.2 (NeZero.ne n)),
       one_pow]
-  · rw [if_neg hij, if_neg hij]
+  · rw [ite_eq_right hij, ite_eq_right hij]
 
 /-- shift 的幂终结：Vⁿ = 1（循环移 n 步 = 恒等）。 -/
 private theorem shift_pow_one {n : ℕ} [NeZero n] : shift n ^ n = 1 := by
@@ -1105,7 +1105,7 @@ private theorem magSum_single {n : ℕ} [NeZero n] (p0 : Fin n × Fin n) (r : �
       = ∑ p : Fin n × Fin n, (if p = p0 then r • magWeylElem n p else 0) := by
     refine Finset.sum_congr rfl fun p _ => ?_
     by_cases h : p = p0 <;> simp [h]
-  rw [h1, Finset.sum_ite_eq', if_pos (Finset.mem_univ _)]
+  rw [h1, Finset.sum_ite_eq', ite_eq_left (Finset.mem_univ _)]
 
 /-- **Weyl 基展开满射**：magBasisMap 满射（商代数张成定理 + 单点支撑坐标）。 -/
 theorem magBasisMap_surjective {n : ℕ} [NeZero n] :

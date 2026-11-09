@@ -136,7 +136,7 @@ theorem weight_normal_at_Tc (p : CuprateParams) (h : validCuprateParams p) : wei
   have hβ : p.β_PG ≠ 0 := by
     rcases h with ⟨_, _, hβ, _, _⟩
     exact ne_of_gt hβ
-  rw [dif_neg hTclt, dif_neg hTcgt]
+  rw [dite_eq_right hTclt, dite_eq_right hTcgt]
   have h0 : p.T_c - p.T_c = 0 := by ring
   rw [h0]
   simp [Real.zero_rpow hβ]
@@ -149,7 +149,7 @@ theorem weight_normal_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : 
     rcases h with ⟨_, hlt, _, _, _⟩
     exact lt_asymm hlt
   have hTsgt : ¬ p.T_star > p.T_star := lt_irrefl p.T_star
-  rw [dif_neg hTslt, dif_neg hTsgt]
+  rw [dite_eq_right hTslt, dite_eq_right hTsgt]
   have hden : p.T_star - p.T_c ≠ 0 := by
     rcases h with ⟨_, hlt, _, _, _⟩
     exact sub_ne_zero.mpr (ne_of_lt hlt).symm
@@ -214,7 +214,7 @@ theorem mu_T_at_Tc (p : CuprateParams) (h : validCuprateParams p) : mu_T p p.T_c
   have hTcgt : ¬ p.T_c > p.T_star := by
     rcases h with ⟨_, hlt, _, _, _⟩
     exact lt_asymm hlt
-  rw [dif_neg hTclt, dif_neg hTcgt]
+  rw [dite_eq_right hTclt, dite_eq_right hTcgt]
   have h0 : p.T_c - p.T_c = 0 := by ring
   rw [h0]
   simp
@@ -227,7 +227,7 @@ theorem mu_T_at_Tstar (p : CuprateParams) (h : validCuprateParams p) : mu_T p p.
     rcases h with ⟨_, hlt, _, _, _⟩
     exact lt_asymm hlt
   have hTsgt : ¬ p.T_star > p.T_star := lt_irrefl p.T_star
-  rw [dif_neg hTslt, dif_neg hTsgt]
+  rw [dite_eq_right hTslt, dite_eq_right hTsgt]
   have hden : p.T_star - p.T_c ≠ 0 := by
     rcases h with ⟨_, hlt, _, _, _⟩
     exact sub_ne_zero.mpr (ne_of_lt hlt).symm

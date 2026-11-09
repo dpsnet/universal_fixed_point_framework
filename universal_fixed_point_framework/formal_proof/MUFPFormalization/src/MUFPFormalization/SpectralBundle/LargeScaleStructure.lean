@@ -9,7 +9,7 @@ import MUFPFormalization.SpectralBundle.CausalSet
 import MUFPFormalization.SpectralBundle.Cosmology
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 
 namespace MUFPF

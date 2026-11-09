@@ -516,7 +516,7 @@ lemma skeleton_ricci_symmetric (γ : Fin 4 → Fin 4 → Fin 4 → ℝ)
           = (if r = r then (1:ℝ) else 0) * skCurv γ r r ν σ :=
         Finset.sum_eq_single (s := Finset.univ)
           (f := fun a => (if r = a then (1:ℝ) else 0) * skCurv γ a r ν σ) r
-          (fun b _ hb => by rw [if_neg (Ne.symm hb), zero_mul])
+          (fun b _ hb => by rw [ite_eq_right (Ne.symm hb), zero_mul])
           (fun h => absurd (Finset.mem_univ r) h)
       have hdelta : ∀ a : Fin 4, (if r = a then (1:ℝ) else 0)
           = ∑ c : Fin 4, ginv r c * g c a := by
@@ -525,7 +525,7 @@ lemma skeleton_ricci_symmetric (γ : Fin 4 → Fin 4 → Fin 4 → ℝ)
         rw [sum4_eq_finset_sum] at h
         exact h.symm
       calc skCurv γ r r ν σ
-          = (if r = r then (1:ℝ) else 0) * skCurv γ r r ν σ := by rw [if_pos rfl, one_mul]
+          = (if r = r then (1:ℝ) else 0) * skCurv γ r r ν σ := by rw [ite_eq_left rfl, one_mul]
         _ = ∑ a : Fin 4, (if r = a then (1:ℝ) else 0) * skCurv γ a r ν σ := h1.symm
         _ = ∑ a : Fin 4, (∑ c : Fin 4, ginv r c * g c a) * skCurv γ a r ν σ :=
           Finset.sum_congr rfl (fun a _ => by rw [hdelta a])
@@ -594,11 +594,11 @@ lemma sum4_ite_eq' (μ : Fin 4) (X : Fin 4 → ℝ) :
       = (if μ = μ then (1:ℝ) else 0) * X μ :=
     Finset.sum_eq_single (s := Finset.univ)
       (f := fun σ => (if σ = μ then (1:ℝ) else 0) * X σ) μ
-      (fun b _ hb => by rw [if_neg hb, zero_mul])
+      (fun b _ hb => by rw [ite_eq_right hb, zero_mul])
       (fun h => absurd (Finset.mem_univ μ) h)
   calc (∑ σ : Fin 4, (if σ = μ then (1:ℝ) else 0) * X σ)
       = (if μ = μ then (1:ℝ) else 0) * X μ := h1
-    _ = X μ := by rw [if_pos rfl, one_mul]
+    _ = X μ := by rw [ite_eq_left rfl, one_mul]
 
 /-- g–ginv 缩并（交换序）：Σ_a g_{μa} ginv^{aσ} = δ_{σμ}。
     由逆对 hinv（ginv·g 序）经 g/ginv 对称逐项换位。 -/
@@ -1217,7 +1217,7 @@ lemma sum4_coeff_zero {B : Fin 4 → ℝ} (h : ∀ v : Fin 4 → ℝ, sum4 (fun 
     have step : (∑ s : Fin 4, B s * (if s = s₀ then (1:ℝ) else 0))
         = ∑ s : Fin 4, (if s = s₀ then B s else 0) :=
       Finset.sum_congr rfl (fun s _ => by simp only [mul_ite, mul_one, mul_zero])
-    rw [step, Finset.sum_ite_eq', if_pos (Finset.mem_univ s₀)]
+    rw [step, Finset.sum_ite_eq', ite_eq_left (Finset.mem_univ s₀)]
   rw [e] at h'
   exact h'
 

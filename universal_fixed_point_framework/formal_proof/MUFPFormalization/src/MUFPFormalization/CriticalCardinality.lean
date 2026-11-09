@@ -18,9 +18,9 @@ import MUFPFormalization.SpCategory
 import Mathlib.GroupTheory.Perm.Basic
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Set.Lattice
+import Mathlib.Data.Set.Lattice.Bounded
 import Mathlib.Order.Lattice
-import Mathlib.Data.Nat.Lattice
+import Mathlib.Data.Finset.Attr
 
 namespace MUFPF
 
@@ -459,10 +459,10 @@ theorem totalOverlap_disjoint {X : RecObj} {K : ℕ}
   apply Finset.sum_eq_zero
   intro j _
   by_cases hlt : i < j
-  · rw [if_pos hlt]
+  · rw [ite_eq_left hlt]
     have hne : i ≠ j := ne_of_lt hlt
     exact overlapDegree_zero_of_disjoint dcf i j hne
-  · rw [if_neg hlt]
+  · rw [ite_eq_right hlt]
 
 /-- 子集群族的重叠度上界：总重叠度 ≤ K² · card(X.T)。
     这给出了重叠度的一个粗略上界。 -/
@@ -473,14 +473,14 @@ theorem totalOverlap_le_card_sq {X : RecObj} {K : ℕ}
   have h_bound : ∀ i j : Fin K, (if i < j then overlapDegree (cf.clusters i) (cf.clusters j) else 0) ≤ Fintype.card X.T := by
     intro i j
     by_cases hlt : i < j
-    · rw [if_pos hlt]
+    · rw [ite_eq_left hlt]
       unfold overlapDegree
       have h_subset : (cf.clusters i).carrier ∩ (cf.clusters j).carrier ⊆ Set.univ := Set.subset_univ _
       have h_ncard : Set.ncard ((cf.clusters i).carrier ∩ (cf.clusters j).carrier) ≤ Set.ncard (Set.univ : Set X.T) :=
         Set.ncard_le_ncard h_subset
       rw [Set.ncard_univ] at h_ncard
       simpa [Nat.card_eq_fintype_card] using h_ncard
-    · rw [if_neg hlt]
+    · rw [ite_eq_right hlt]
       exact Nat.zero_le _
   have h_sum : (∑ i : Fin K, ∑ j : Fin K, if i < j then overlapDegree (cf.clusters i) (cf.clusters j) else 0) ≤ ∑ _i : Fin K, ∑ _j : Fin K, Fintype.card X.T := by
     apply Finset.sum_le_sum
@@ -502,7 +502,7 @@ theorem overlap_pigeonhole {X : RecObj} {K : ℕ}
     (hK : K > Fintype.card X.T) :
     ∃ i j : Fin K, i ≠ j ∧ hasOverlap (cf.clusters i) (cf.clusters j) := by
   by_contra h_no_overlap
-  push_neg at h_no_overlap
+  push Not at h_no_overlap
   -- 如果没有重叠，所有子集群两两不相交
   have h_disjoint : ∀ i j : Fin K, i ≠ j → (cf.clusters i).carrier ∩ (cf.clusters j).carrier = ∅ := by
     intro i j hne

@@ -11,7 +11,7 @@ import MUFPFormalization.SpectralGap
 import MUFPFormalization.PulsarRadiation
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import MUFPFormalization.SpectralBundle.Core
@@ -189,7 +189,7 @@ theorem contraction_volume_decreasing (cs : CosmicState)
     (h_above_min : cs.volume > min_volume) :
     (cs.evolve min_volume h_min_pos).volume < cs.volume := by
   rw [CosmicState.evolve, h_contracting]
-  rw [dif_pos h_above_min]
+  rw [dite_eq_left h_above_min]
   <;> simp
   <;> omega
 
@@ -208,7 +208,7 @@ theorem bounce_exists (cs : CosmicState)
   have h_not_above : ¬ (cs.volume > min_volume) := by
     linarith
   rw [CosmicState.evolve, h_contracting]
-  rw [dif_neg h_not_above]
+  rw [dite_eq_right h_not_above]
   <;> simp [h_at_min]
   <;> omega
 
@@ -270,11 +270,11 @@ theorem minimum_volume_invariant (cs : CosmicState)
       | contraction =>
         by_cases h_above : cs_n.volume > min_volume
         · -- 收缩且体积 > min_volume：体积 - 1，但仍然 ≥ min_volume
-          rw [dif_pos h_above]
+          rw [dite_eq_left h_above]
           <;> simp <;> omega
         · -- 收缩且体积 = min_volume：反弹 → 膨胀，体积 + 1
           have h_eq : cs_n.volume = min_volume := by omega
-          rw [dif_neg h_above]
+          rw [dite_eq_right h_above]
           <;> simp [h_eq] <;> omega
       | expansion =>
         -- 膨胀相：体积 + 1 > 前一步 ≥ min_volume
@@ -331,7 +331,7 @@ theorem bounce_entropy_non_decreasing (cs : CosmicState)
   dsimp only
   have h_not_above : ¬ (cs.volume > min_volume) := by linarith
   rw [CosmicState.entropy, CosmicState.evolve, h_contracting]
-  rw [dif_neg h_not_above]
+  rw [dite_eq_right h_not_above]
   simp [CosmicState.entropy, h_at_min]
 
 /-- 因果结构的连续性：反弹前后因果结构连续演化。

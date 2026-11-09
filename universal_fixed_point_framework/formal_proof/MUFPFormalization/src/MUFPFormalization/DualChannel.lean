@@ -501,18 +501,18 @@ theorem T04_branching_ratio_quantitative
   · intro h
     change (cc.branchingRatio).toType = BranchingType.em_dominant
     unfold BranchingRatio.toType
-    rw [if_pos h]
+    rw [ite_eq_left h]
   constructor
   · intro h
     change (cc.branchingRatio).toType = BranchingType.gw_dominant
     unfold BranchingRatio.toType
-    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
-    rw [if_pos h]
+    rw [ite_eq_right (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
+    rw [ite_eq_left h]
   · intro ⟨h1, h2⟩
     change (cc.branchingRatio).toType = BranchingType.balanced
     unfold BranchingRatio.toType
-    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
-    rw [if_neg (by linarith : ¬ (cc.branchingRatio).value > 2/3)]
+    rw [ite_eq_right (by linarith : ¬ (cc.branchingRatio).value < 1/3)]
+    rw [ite_eq_right (by linarith : ¬ (cc.branchingRatio).value > 2/3)]
 
 /-- GW170817 约束：在双中子星并合事件中，分支比接近 1/2（balanced）。
     这对应于 EM 和 GW 通道同时可观测的情形。 -/

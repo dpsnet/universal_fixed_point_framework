@@ -194,7 +194,7 @@ theorem spectralSilence_excludes_blindSpot1 (S : GeneralRecObj) :
     · -- h : generalHypotheses S 为真，但 hBlind 说它为假 → 矛盾
       exact absurd h hBlind
     · -- h : ¬ generalHypotheses S，if 条件为假 → 取 else = none
-      rw [if_neg h]
+      rw [ite_eq_right h]
   -- 步骤 4：矛盾——DPartial S ≠ none（hDefined）且 DPartial S = none（h_none）
   exact hDefined h_none
 

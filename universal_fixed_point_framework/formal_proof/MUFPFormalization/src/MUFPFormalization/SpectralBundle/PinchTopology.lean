@@ -11,7 +11,7 @@ import MUFPFormalization.SpectralGap
 import MUFPFormalization.PulsarRadiation
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Real.Sqrt
+import Mathlib.Analysis.Real.Sqrt
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import MUFPFormalization.SpectralBundle.Core
@@ -210,7 +210,7 @@ theorem pinchPoint_iff_defect (X : RecObj) :
   intro ⟨x, y, hneq, heq⟩
   -- 如果 step x = step y 且 x ≠ y，则 x 或 y 必为非不动点
   by_contra h_zero
-  push_neg at h_zero
+  push Not at h_zero
   have h_eq_zero : defectMeasure X = 0 := by omega
   unfold defectMeasure at h_eq_zero
   have h_all_fixed : ∀ z : X.T, X.step z = z := by
@@ -302,7 +302,7 @@ theorem rankDegeneration_implies_defectPositive (X : RecObj) :
     hasRankDegeneration X → defectMeasure X > 0 := by
   intro ⟨x, y, hneq, heq⟩
   by_contra h_zero
-  push_neg at h_zero
+  push Not at h_zero
   have h_eq_zero : defectMeasure X = 0 := by omega
   unfold defectMeasure at h_eq_zero
   have h_all_fixed : ∀ z : X.T, X.step z = z := by
@@ -352,7 +352,7 @@ theorem criticalThreshold_iff_blackHole (X : RecObj) (h_card : 2 ≤ Fintype.car
   intro h
   unfold hasStructuralDefect
   by_contra h_zero
-  push_neg at h_zero
+  push Not at h_zero
   have h_eq : defectMeasure X = 0 := by omega
   omega
 
@@ -381,7 +381,7 @@ theorem connectedSum_criticalOrder_iff (n : ℕ) :
   constructor
   · intro h
     by_contra hn
-    push_neg at hn
+    push Not at hn
     -- n = 0 时，ConnectedSumState 0 = Fin 0 × KleinState 为空，故 defectMeasure = 0
     have hn0 : n = 0 := by omega
     subst hn0
@@ -484,7 +484,7 @@ theorem connectedSum_structuralDefect_implies_positive (n : ℕ) :
     hasStructuralDefect (connectedSumRecObj n) → n > 0 := by
   intro h
   by_contra hn
-  push_neg at hn
+  push Not at hn
   have hn0 : n = 0 := by omega
   subst hn0
   -- ConnectedSumState 0 为空，defectMeasure = 0，与 hasStructuralDefect 矛盾

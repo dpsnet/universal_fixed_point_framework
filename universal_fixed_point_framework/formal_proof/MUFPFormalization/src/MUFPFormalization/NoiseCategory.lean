@@ -18,7 +18,7 @@ import MUFPFormalization.DecursionFunctor
 import MUFPFormalization.Adjunction
 import MUFPFormalization.Silence
 import MUFPFormalization.StaticTopologyFormalization
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts
+import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts.ProdComparison
 -- mathlib 4.31 中 `Shapes.Coproducts` 模块已不存在（coproduct 定义并入
 -- `Shapes.Products`/`Colimits` 体系），且本文件未使用任何 Limits API，删除该 import。
 import Mathlib.CategoryTheory.Functor.Basic

@@ -262,7 +262,7 @@ theorem symbolicTransferMatrix_trace_eq_one (n L : ℕ) (hn : 1 ≤ n) (hL : 1 �
     calc
       Finset.sum (Finset.univ : Finset (Fin L → Fin n)) F = F z :=
         Finset.sum_eq_single z h₀ h₁
-      _ = 1 := if_pos hz_fix
+      _ = 1 := ite_eq_left hz_fix
   exact hsingle
 
 end

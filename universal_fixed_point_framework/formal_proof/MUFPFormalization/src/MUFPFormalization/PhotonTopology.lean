@@ -88,13 +88,13 @@ noncomputable def sigmaS3 (t tStar : ℝ) : Bool :=
 theorem sigmaS3_before (t tStar : ℝ) (h : t < tStar) :
     sigmaS3 t tStar = true := by
   unfold sigmaS3 chiPhi TopologicalClass.silent
-  rw [if_pos h]
+  rw [ite_eq_left h]
 
 /-- 过程性（后段）：t ≥ t\* 开放拓扑类，静默解除。 -/
 theorem sigmaS3_after (t tStar : ℝ) (h : tStar ≤ t) :
     sigmaS3 t tStar = false := by
   unfold sigmaS3 chiPhi TopologicalClass.silent
-  rw [if_neg (not_lt_of_ge h)]
+  rw [ite_eq_right (not_lt_of_ge h)]
 
 /-- 方向性（公理 A4）：t₁ < t\* < t₂ ⟹ 静默指标单向 1 → 0（分岔瞬间完成）。 -/
 theorem bifurcation_directional (t₁ t₂ tStar : ℝ)
@@ -110,9 +110,9 @@ theorem no_intermediate_class (t tStar : ℝ) :
     chiPhi t tStar = TopologicalClass.opened := by
   by_cases h : t < tStar
   · left
-    exact if_pos h
+    exact ite_eq_left h
   · right
-    exact if_neg h
+    exact ite_eq_right h
 
 /-! ## 公理 A1 分岔映射与 A4 方向性（不可逆性） -/
 
@@ -130,7 +130,7 @@ theorem no_spontaneous_recovery (tStar t₀ t : ℝ) (h₀ : t₀ ≥ tStar) (ht
     TopologicalClass.silent (spontaneousEvolution tStar t) = false := by
   unfold spontaneousEvolution
   have htStar : t ≥ tStar := h₀.trans ht
-  rw [if_pos htStar]
+  rw [ite_eq_left htStar]
   rfl
 
 /-! ## 命题 2.3：Bohr 条件（代数骨架） -/

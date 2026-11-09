@@ -127,7 +127,7 @@ theorem RecObj.eventually_periodic (X : RecObj) (x : X.T) :
     ∃ (n m : ℕ), m ≥ 1 ∧ (X.step^[n+m]) x = (X.step^[n]) x := by
   let card := Fintype.card X.T
   by_contra h_no
-  push_neg at h_no
+  push Not at h_no
   have h_inj : Function.Injective (fun (k : Fin (card + 1)) => (X.step^[k.val]) x) := by
     intro a₁ a₂ hxy
     by_contra hne
@@ -562,7 +562,7 @@ theorem T02_multi_band_spectrum {X : RecObj} (C : FixedPointCluster X)
       congr_fun (Function.iterate_add X.step n m) x₁
     rw [← h_iter, h_per]
   · -- 情况 2：m = 1，step^[n] x₁ 是不动点
-    push_neg at hm2
+    push Not at hm2
     have hm1 : m = 1 := by omega
     rw [hm1] at h_per
     -- h_per : step^[n+1] x₁ = step^[n] x₁
