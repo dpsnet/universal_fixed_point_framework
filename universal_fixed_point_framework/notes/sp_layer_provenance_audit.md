@@ -207,3 +207,23 @@ $p="universal_fixed_point_framework/formal_proof/UFPFormalization/UFPFormalizati
 - `5d4bdc2`、`a3df3c5`、`9cbffe1`、`2135296` 只核对了存在性与提交消息，未逐行核对其新增定理的实质内容。
 - 本台账不判断「链复形」作为一种读法是否仍有价值，只判断它能否承担层数结论——结论是不能。
 - `N_total` 存在两套并行口径：`27cdf8d` 的 `BranchCounting` 用 `N_total := 5`（B = 3×5），论文 §4.2 用 `N_total = 4`（2⁴−1 = 15）。两者都得 15，权威性未裁决，此处如实并列。
+
+## 12. 链复形的实体性扫描（2026-11-10，HEAD `f1efcb2`）
+
+扫描范围 `src/**/*.lean`，344 个文件（含库根）：
+
+| 检索项 | 命中 | 说明 |
+|---|---|---|
+| `ChainComplex` | 1 | 仅库根 `import MUFPFormalization.SpChainComplexAudit`（模块名），非 Mathlib 链复形对象的构造 |
+| `Homology` | 0 | 全库无同调/上同调对象 |
+| `cochain` | 0 | 无 |
+| `d_comp_d` / `d_squared` | 0 | 无微分复合为零的引理 |
+| `链复形`（中文） | 22 | 全部在注释或 docstring：CategoryGeometryDictionary L47–59、CoherenceToBranching L205、HigherSpCategory L236/L351、Unified3Theorem L183–186、SpChainComplexAudit 的边界说明 |
+
+历史侧：`git log -S"ChainComplex" -- '*.lean'` 只命中 `e21d084`（本轮审计模块）；`-S"Homology"` 零命中——建库以来从未引用过 Mathlib 的同调机制。
+
+能力侧：本地 Mathlib 具备该设施（`Mathlib/Algebra/Homology/HomologySequence.lean`、`ShortComplex/Homology.lean`、`SpectralObject/Homology.lean` 等均在），故缺的不是工具，是构造。
+
+结论：库中**不存在**链复形实体；「链复形」是注释层的自述。其微分前提 `d² = 0` 由 `SpChainComplexAudit.lean` 的 `dJ_dJ_E21_ne_zero` 否证（`d_A²(E₂₁) = −2J ≠ 0`），故该自述在代数前提上不成立。
+
+仍真实存在的弱结构：层 k 的条件形如「层 k−1 的 homotopy 之差 = `d_A`(层 k 的 datum)」（层 2/3/4 同型），这是一串**逐层同形条件**，不是链复形——缺 `d² = 0`、缺复合相容，故无 `H_n`、也无「第 3 阶后塌缩」这类链复形推论。
