@@ -13580,3 +13580,45 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 * L305 句改写为「层 4 按本节约定登记为 coherence 层标号……载体与层 3 形式同型，其'不产生新类型'由约定规定而非结构排除」。
 * 新增段「溯源核查：`d_A` 不是链复形微分（`SpChainComplexAudit.lean`）」，含 commit 事实、`dJ_dJ_E21_ne_zero` 机检锚、数值互斥判据、以及「层结构与计数同一次提交落地」的时序说明。
 * 计数同步：库根 3839→3840、MODULES 343→344、CLOSURE 171→172、文件 343→344（源模块 342→343）。论文 160844→162905 B，CRLF 1535→1537。
+
+# S633 — 十提交溯源台账：事实层可靠，归因层不成立
+
+## 1. 台账（全部 git 实测，2026-11-10）
+
+| 短哈希 | 日期 | 核验要点 |
+|---|---|---|
+| 8012c4f | 07-17 | 创建 HigherSpecCategory.lean，106 行，SpecTwoMorphism 15 / SpecThreeMorphism 0 / 链复形 0 |
+| f0a3455 | 07-21 | 108 行，Three 仍 0；该文件 73+/71−（144 行改写，net +2），非「+144 插入」 |
+| 80f2d92 | 07-26 | 108 行，纯术语 |
+| 27cdf8d | 07-27 | 185 行，Two 22 / Three 9 / **Four 0** / 链复形 1 / coherence 2 / sorry 1；文件 81+/4−；提交 7 文件 2109+/4− |
+| 463df34 | 07-28 | 174 行，**10+/21−**（31 行改动，净 −11），非「+31 插入」；Four 0 |
+| fb0f259 | 07-28 | HigherSpecCategory −174（整删）、HigherSpCategory +299（新建） |
+| 5d4bdc2 | 07-28 | 存在 |
+| a3df3c5 | 07-29 | 存在 |
+| 9cbffe1 | 08-07 | 存在 |
+| 2135296 | 09-05 | 存在 |
+
+五个新文件行数：Unified3Theorem 233 / BottTower 196 / BranchCounting 203 / CoherenceToBranching 253 / DHStructuralAnalysis 485，与清单一致。
+
+## 2. 三条关键新证据
+
+1. **同提交 docstring 自陈层计数口径**（`27cdf8d` 的 `specExchangeLaw`，L96–127）：`Layer counting depends only on the number of distinct morphism layers, not on the exchange law`，并把 `B = N_active × N_total = 15` 称为 `the layer-counting argument`。即 15 在同一提交里已是论证目标，不是事后匹配。
+2. **层 4 的时点差**：`27cdf8d` 里层 4 只有文字（Unified3Theorem L43/L45/L157、BottTower L151、BranchCounting L38、paper17 L59、notes L470），`SpecFourMorphism` 为 0；`SpFourMorphism` 与 `thirdHomotopy` 首现于 `ffc2b56`（2026-08-13），**17 天后**。BottTower L150–152 的论证结构是「若加第 4 层则 k_max ≥ 16，但它是 coherence，故不加」——为保住 k_max=8 而作的排除，不是链复形推论。
+3. **N_active 的定义性**：`ActiveMorphismLayer` 是恰 3 个构造子的 `inductive`（first/second/third），`numActiveLayers := 3`，`card_active_layers = 3` 由 `simp` 闭合。3 是类型定义的结果。
+
+## 3. 引文核校（对上一轮的更正）
+
+以 `git show 27cdf8d:<path>` 直接取文为准：L136 用 `Σ.二阶同伦`（非 `secondHomotopy`），L135 用 `Q.P - P.P`（非 `Q·P - P·P`）；`%TEMP%\n633hist.lean` 与该 blob 逐行一致（Compare-Object DIFF_LINES=0），故此前「逐字一致」应降为「语义逐条对应、非逐字节一致」。同批三处「原文」（Unified3Theorem / BottTower / BranchCounting）均为转写，非逐字。
+
+## 4. 判定
+
+事实层（提交、日期、行数、文件、层类型首现时点）成立；归因层全部不成立：
+
+* 「三层态射由链复形结构推出」——只有一段以「模式：」自陈的注释，无算子、无 d∘d=0、无截断证明；且 d²≠0 已机检（S632）。
+* 「结构先行、数值后继」——被同提交 docstring 与 L45 的「层 4 排除以保住 k_max=8」双向否证。
+* 「SpecThreeMorphism 先于 N_active 术语」——同 commit 内先后不构成时序证据。
+
+## 5. 产物
+
+* 新增 `universal_fixed_point_framework/notes/sp_layer_provenance_audit.md`（台账全文，含复现命令）。
+* 论文 §4.2 溯源段补两句：层 4 结构时点 `ffc2b56`（2026-08-13）；docstring 自陈 `the layer-counting argument`。论文 162905 → 163461 B，CRLF 1537 不变。
