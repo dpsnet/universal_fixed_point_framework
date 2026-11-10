@@ -1118,3 +1118,69 @@ Hurwitz 路线给了一个具体候选：**「生成新方向」⟺「代数可�
 
 此候选与 L346「层 4（coherence）：不生成空间自由度」在语义上对齐，但**尚未在库内找到任何「可除性」或「零因子」的编码**（全库 `Hurwitz`/`Octonion`/`除法代数` 零命中）。是否立项，须由用户裁定。
 
+## 16 路 C 机检可行性核查：Mathlib 支持止于 ℍ（D18，2026-11-10）
+
+针对 §15.7 的候选（「生成新方向」⟺「代数可除」），核查 Mathlib（`MUFPFormalization\.lake\packages\mathlib`）能否支撑机检。
+
+### 16.1 检索结果
+
+| 检索项 | 结果 |
+|---|---|
+| 文件名含 `Quaternion` | **6 个**：`Algebra/Quaternion.lean`、`Algebra/QuaternionBasis.lean`、`Algebra/DualQuaternion.lean`、`Analysis/Quaternion.lean`、`Analysis/Normed/Algebra/QuaternionExponential.lean`、`GroupTheory/SpecificGroups/Quaternion.lean` |
+| 文件名含 `Octonion` | **0** |
+| 内容含 `Octonion` / `CompositionAlgebra` / `CayleyDickson` | **0** |
+| 内容含 `Hurwitz` | 18 文件命中，**全部为 Hurwitz ζ 函数**（`NumberTheory/LSeries/HurwitzZeta*.lean`、`HurwitzZetaValues/Odd/Even` 等），与可除代数无关 |
+| 「ℝ 上有限维可除代数维数 ∈ {1,2,4,8}」的定理 | **不存在** |
+| 相关环论内容（`WedderburnArtin.lean`、`JacobsonNoether.lean`） | 讲「有限维单代数 ≅ 矩阵代数 `Mₙ(D)`」，**不含维数限制**，与 Hurwitz 无关 |
+
+### 16.2 可机检段恰好给 2，不是 3
+
+Cayley–Dickson 翻倍链在 Mathlib 上的可机检覆盖：
+
+| 步 | 代数 | 维数 | `log₂` | Mathlib 支持 |
+|---|---|---|---|---|
+| 1 | ℝ | 1 | 0 | ✓ |
+| 2 | ℂ | 2 | 1 | ✓ |
+| 3 | ℍ | 4 | **2** | ✓（`Algebra/Quaternion.lean` + `QuaternionBasis.lean` 提供基） |
+| 4 | 𝕆 | 8 | **3** | ✗ 无八元数 |
+| — | sedenion | 16 | 4 | ✗ 无，且「不可除」需 Hurwitz |
+
+⇒ **能机检的翻倍链止于 ℍ，给出 `log₂ 4 = 2`。第 4 步（𝕆, 8, 给 3）与「16 维不可除」两步都缺。**
+
+⇒ **这条路线在可机检范围内的结论是「2」，不是「3」；要得到 3，必须自建八元数与 Hurwitz 弱版本。**
+
+### 16.3 判决
+
+**路 C（可除性判据）在现有 Mathlib 支持下不可机检。** 三条：
+
+1. **无八元数**：`𝕆` 的机检需 8×8 非结合代数表示 + 非结合性证明，成本远高于库内已有的 `QuaternionSpinOrigin.lean`（2×2 复表示）；
+2. **无 Hurwitz 定理**：「16 维起有零因子」需绝对幂等 / 非退化二次型的整套理论，Mathlib 无 `CompositionAlgebra` 概念；
+3. **可机检段给 2**：即便自建到 𝕆，「3」仍需 `log₂` 桥，该桥已由 D15 否（Sp 塔不翻倍）。
+
+⇒ **不建议把路 C 立为 Lean 任务。** 保留为语义候选：`3 = log₂ 8` 的 8 有真实数学锚（Hurwitz / Bott 周期），但锚与 Sp 层数之间的桥不可机检，且桥本身被 D15 否证。
+
+### 16.4 若强行立项的成本
+
+| 交付物 | 内容 | 规模估计 |
+|---|---|---|
+| `OctonionBasic.lean` | 𝕆 的 8×8 表示、非结合性、`x·x̄ = \|x\|²`（composition property） | 大（需自建非结合代数框架） |
+| `HurwitzWeak.lean` | 「维数 16 的 composition algebra 存在零因子」仅弱版 | 大（Mathlib 无前置） |
+| 桥 | `Sp` 塔层数 ↔ 翻倍索引 | **已被 D15 否，无法建** |
+
+⇒ 前两项可做但收益仅是把「8 有数学锚」变成机检，第三项——也是真正决定「3」的那一项——已被否。**投入产出不成比例。**
+
+### 16.5 全局收敛
+
+至此，「`N_active = 3` 能否升格」的全部候选（§14 D16 的 4 条 + §15 D17 的 11 条 + §16 D18 的 Mathlib 核查）已穷尽检验。
+
+**唯一仍成立的事实链：**
+
+```
+d = 3 是全库的输入端公设（SpObj.n 任意，GenSpace 写成三元组）
+      ↓（下游，非上游）
+Cl(1,7) ⊃ Cl(0,3) 偶部 ≅ ℍ ⇒ SU(2) 表示维数 2（QuaternionSpinOrigin L26–32，自陈以 d=3 为输入）
+Clifford 分级数字（1,4,6,4,1；8=6+1+1；15=1+4+6+4）均为 d=3 之后的回溯匹配
+```
+
+⇒ **`N_active = 3` 只能是公设（E3）。** 数值上与 Hurwitz/Bott 的 8 一致，这是可检验的巧合，不是推导。
+
