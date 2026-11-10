@@ -13622,3 +13622,24 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 
 * 新增 `universal_fixed_point_framework/notes/sp_layer_provenance_audit.md`（台账全文，含复现命令）。
 * 论文 §4.2 溯源段补两句：层 4 结构时点 `ffc2b56`（2026-08-13）；docstring 自陈 `the layer-counting argument`。论文 162905 → 163461 B，CRLF 1537 不变。
+
+# S634 — 「五重静默压制层 4」路线：不成立
+
+## 1. 术语归位
+
+paper1 §5.7 定义 5.11 的「五层静默体系」= S0 表示静默 + 对象静默 + 态射静默 + 谱静默（S1–S4）+ 辫子静默（B1–B3）。这五者是**五类不可见性**（表示 / 对象 / 关系 / 属性 / 辫子同伦），不是五个层号；判据中不含层索引参数。
+
+## 2. 四条否决
+
+1. **判据域不带层索引**。S1–S4 作用于谱子集 Σ ⊆ σ_E；M1–M4 作用于 D(f)* 的等距性；B1–B3 作用于辫子交叉数 k。同一判据对层 3 与层 4 不可分辨——要么同时命中，要么同时放过，做不出「k ≤ 3 不静默、k ≥ 4 静默」的阶梯。
+2. **唯一针对 Sp 态射的 S0 会过度杀伤**。S0 判据为 P_{Im(D)}(φ)=0；而 paper1 注 2.4.5a 已写明 D 不 full（A=I 时 Hom_Sp(DX,DY)=ℂ⁴ 不可数）。即层 2/3 的绝大多数态射同样落在 Im(D) 之外，S0 会把它们与层 4 一起判为静默。
+3. **静默 ≠ 不存在，且静默会被破缺**。定义 5.20 / 命题 5.21：圈修正使 δμ_silent ≠ 0，零测自由度在量子层面恢复可见。以「不可见」冒充「不存在」是概念替换；即使压制成立也不稳定，无法承担「恰三层」这类结构性结论。
+4. **Lean 侧仍为占位级**（`SilenceHierarchy.lean`）：`objectSilence := False`、`braidedSilence := False`、`morphismSilence := spectralSilenceSimple (DFunctor.obj R₁).A`（自陈「层级编码定义」，为使包含可证而改写）、`silence_hierarchy_strict` 的证明即 `hObj`（前提本身是 `False`）、`morphismSilence_implies_objectSilence` 与 `braidedSilence_independent_of_morphismSilence` 的结论字面是 `True`、`by trivial`。库中不存在能对具体对象判定静默的机器可检验谓词，故无法承载层 4 判定。
+
+## 3. 真正决定「层 4 是否存在」的判据
+
+层 k+1 有解 ⟺ 层 k−1 与层 k 的 homotopy 之差 ∈ im(d_A)。`ker ∩ im` 维数随谱型变化：幂零 Jordan（2×2）= 1、可对角化 = 0。`d_A² ≠ 0` 已机检（S632），故不存在「塔自动塌缩」。结论：后层存在与否随谱型变化，**不是**「一律静默」——这组随谱型变化的反例即静默压制路线的反例集。
+
+## 4. 结论与路线调整
+
+静默是观测层概念（在 D 下是否可见），N_active 是生成层计数（是否生成物理自由度），两者不同域，不能互推。第三条路线改走「三生成元不可约」（存在性 + 不可约性），不再尝试静默压制。
