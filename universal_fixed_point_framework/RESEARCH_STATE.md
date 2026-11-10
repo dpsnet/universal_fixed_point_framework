@@ -13429,13 +13429,79 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 
 | 项 | 值 | 命令 / 脚本 |
 | --- | --- | --- |
-| 库根构建 | `Build completed successfully (3838 jobs)`，exit 0 | `lake build MUFPFormalization` |
+| 库根构建 | `Build completed successfully (3839 jobs)`，exit 0 | `lake build MUFPFormalization` |
 | 全 default target | `Build completed successfully (7094 jobs)`，exit 0 | `lake build` |
-| MODULES | 342（递归 `src/**/*.lean`，含库根） | `scripts/p7_lean_olean_audit.py` |
-| CLOSURE | 170（含根） | 同上 |
+| MODULES | 343（递归 `src/**/*.lean`，含库根） | `scripts/p7_lean_olean_audit.py` |
+| CLOSURE | 171（含根） | 同上 |
 | ORPHANS | 172（不变；9 个由 exe 入口覆盖，163 个逐模块点名构建） | 同上 |
 | MISSING_OLEAN | 0 | 同上 |
 | SORRY_LINES | 0 | 同上 |
 
-论文口径换算：**341 源模块 + 库根 = 342 个 Lean 文件**，olean 342/342 齐备。论文 5 个位置、10 个替换点已同步（`341/341`→`342/342`、`MODULES=340`→`341`、`CLOSURE=169`→`170`、`3837 jobs`→`3838`），字节数保持不变（158948），CRLF 计数保持 1528。
+论文口径换算：**342 源模块 + 库根 = 343 个 Lean 文件**，olean 343/343 齐备（S630 时为 341+根=342；S631 新增 `SpLayerNonCollapse` 后 +1）。论文计数位置（§12 定理清单前言、§12.4 项 1、附录 C、文末总结）已同步为本轮实测值，CRLF 计数由 1528 变为 1535（新增 §4.2 段落 7 行），字节数 158948 → 160844。
 
+# S631 — H³=0 升格路线机检证伪（`SpLayerNonCollapse`）
+
+## 1. 被检验的路线
+
+把 `N_active = 3` 从「层索引约定」升格为范畴定理的一条候选路径：证明层塔在第 3 阶之后必然塌缩（记作 $H^3=0$），即层 4 的右端项恒落在交换子 $d_A(H)=A_X H - H A_Y$ 的像内，从而层 4 永远自动可解。
+
+## 2. 数值先证伪（模式 8）
+
+`%TEMP%\probe_h3.py`：按 Lean 定义逐字翻译，`np.kron` 构造列优先 `vec(d_A H)=L·vec(H)`，SVD 取核与像，秩判交：
+
+| 案例 | dim ker | dim im | dim(ker∩im) |
+|---|---|---|---|
+| 1×1 `A_X=A_Y=[1]` | 1 | 0 | 0 |
+| 1×1 `A_X=[0], A_Y=[1]` | 0 | 1 | 0 |
+| 2×2 对角同谱 | 2 | 2 | 0 |
+| 2×2 `diag(0,1)` vs `diag(1,2)` | 1 | 3 | 0 |
+| **2×2 幂零 Jordan** | 2 | 2 | **1** |
+| 2×2 Jordan vs `diag(0,1)` | 1 | 3 | **1** |
+| **3×3 幂零 Jordan** | 3 | 6 | **2** |
+| 3×3 对角同谱 | 3 | 6 | 0 |
+| 随机 8 组（2×2 / 3×3，实 / 复） | 0 | 满 | 0 |
+
+判别特征：`ker ∩ im ≠ 0` 恰在 A 不可对角化（幂零 Jordan）时出现；对角同谱、谱不交、随机样本一律为 0。
+
+## 3. Lean 机检结论（`SpLayerNonCollapse.lean`，窄导入 `HigherSpCategory`）
+
+| 定理 / 定义 | 内容 |
+|---|---|
+| `layer4_gap_in_kernel` | 两条 3-态射 `secondHomotopy` 之差恒在 `d_A` 核内 |
+| `jordanObj`（`abbrev`） | `A = [[0,1],[0,0]]` 的 2×2 幂零 Jordan 对象 |
+| `jordan_commutator_apply H` | `J·H − H·J = !![H10, H11−H00; 0, −H10]` |
+| `jordan_E12_in_ker` / `jordan_E22_maps_to_E12` | `E₁₂ ∈ ker`、`E₂₂ ↦ E₁₂` |
+| `twoA` / `twoB`（`SpTwoMorphism homZero homE12`） | `homotopy = E₂₂` / `E₂₂ + E₁₂` |
+| `threeA` / `threeB`（`SpThreeMorphism twoA twoB`） | `secondHomotopy = E₂₂` / `E₂₂ + E₁₂` |
+| `threeA_ne_threeB` | 两条 3-态射不等 |
+| `fourAB : SpFourMorphism threeA threeB` | 层 4 态射显式构造（`thirdHomotopy = E₂₂`） |
+| `layer4_noncollapse` | `threeA ≠ threeB ∧ Nonempty (SpFourMorphism threeA threeB)` |
+
+## 4. 结构判据（不只依赖数值）
+
+两条 3-态射的 `secondHomotopy` 之差恒在 `d_A` 核内（同一非齐次方程的两个解之差被 `d_A` 抹平），故层 4 有解 ⟺ 该差 ∈ `ker d_A ∩ im d_A`。`ker ∩ im ≠ 0` 时层 4 及更高可无限延续；`= 0` 时塔自层 2 起全部塌缩。因此「恰 3 层」不落在 `d_A` 代数结构的自然终止里。
+
+## 5. 结论与边界
+
+- `H³ = 0` 作为 `N_active = 3` 的升格路线**已被机检证伪**，如实登记，不作正面断言。
+- `N_active = 3` 仍按层索引约定登记；论文 §4.2 已补入该否证（标注为「已证伪的升格路径」）。
+- 替代性截断原则未提出，不宣称。`N_total` 双口径（论文 4 / `DHStructuralAnalysis.lean` 5）张力仍未裁决。
+
+## 6. 构建与审计（本轮实测）
+
+| 项 | 值 |
+|---|---|
+| 单模块 `lake build MUFPFormalization.SpLayerNonCollapse` | `[2034/2034] Built`，32s，零 warning、零 sorry |
+| 库根 `lake build MUFPFormalization` | `Build completed successfully (3839 jobs)`，exit 0 |
+| 全 default `lake build` | `Build completed successfully (7094 jobs)`，exit 0 |
+| MODULES / CLOSURE / ORPHANS | 343 / 171 / 172 |
+| MISSING_OLEAN / SORRY_LINES | 0 / 0 |
+
+## 7. Lean 踩坑（本轮新增，避免重犯）
+
+- `def jordanObj : SpObj := ⟨2, ...⟩` 时 `Matrix (Fin jordanObj.n)` 不归约到 `Fin 2`，`rw [Matrix.mul_fin_two]` / `rw [add_sub_cancel_left]` / `Matrix.sub_apply` 全失效（报 target not type-correct under implicit transparency）→ 必须写成 `abbrev`。
+- `Matrix.mul_fin_two` 只匹配纯字面量 `!![..] * !![..]`；`jordanObj.A * matE22` 即使 `simp only [jordanObj]` 也匹配不上（`Matrix.mul` 有 `Matrix.of` 包装）→ 绕开矩阵乘法展开，改走已机检的交换子展开引理 + `ext i j; fin_cases`.
+- `attribute [local simp] X` 紧跟 `/-- -/` doc-comment 报 `unexpected token 'attribute'; expected 'lemma'` → 该注释写 `/- -/` 或整块删除。
+- `all_goals (try ring_nf)` 对已闭合目标触发 `unreachableTactic` + `unusedTactic` 双 warning → 删行。
+- `simp [mat]` 停在 `!![0,0;0,0] = 0` → 需 `ext i j; fin_cases i <;> fin_cases j <;> simp [mat, Matrix.zero_apply]`。
+- `simp only [...] at h01` 得 `(1:ℂ) = 0` 类矛盾 → 补 `norm_num at h01` 闭合。

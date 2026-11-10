@@ -160,3 +160,4 @@ import MUFPFormalization.RecOrbitContractionCriterion
 import MUFPFormalization.AlphaGaugeCoding
 import MUFPFormalization.DeltaMechanismAudit
 import MUFPFormalization.RecSpHomSeparation
+import MUFPFormalization.SpLayerNonCollapse
