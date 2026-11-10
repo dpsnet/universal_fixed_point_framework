@@ -20,9 +20,9 @@
 
 推导覆盖 SM 的主要骨架：Lorentz 时空 $Cl(3,1)$ 与时间方向的存在（$N_{active} = 3$ 由 $\mathbf{Sp}$ 的层索引约定给出（$3$ 层活跃 $+\,1$ 层 coherence），再在既定参数族内由韦达整数根条件唯一闭合，继而 $k_{max} = 2^{N_{active}} = 8$）；规范群 $SU(3)\times SU(2)\times U(1)$ 与电荷谱；三代费米子等同于活跃根个数；CKM 与 PMNS 混合参数；Higgs 扇区与真空期望值；以及无量纲耦合常数。其中强制的核心是韦达方程的整数根分裂 $\{3,5\}$——它同时锁定 $k_{max} = 8$ 与 $\sigma^{-1} = 15$，从而给出框架常数 $\sigma = 1/15$。
 
-耦合常数的结果以 $\sigma$ 的四项幂次谱表达：$\alpha^{-1} = 72 + 24\ln 15 + 24\delta^{*}$，$\delta^{*} = 6\sigma^{3} + 4\sigma^{5} + 8\sigma^{7} + 5\sigma^{8}$，数值 $137.035999083426$；弱混合角由两个域尺度的配对约束给出 $m_W = 643/8$、$m_Z = 1459/16$，即 $m_W/m_Z = 1286/1459$。全部整数取自框架常数集，无自由参数。
+耦合常数的预言级结果分两层登记：机制唯一层 $\alpha^{-1}_{\text{mech}} = 24(\ln 15 + 3) = 136.9932$，零自由参数，落在 $(136.992,\,137)$（Lean 机检 `alphaMech_bounds`）；其上的修正项 $\delta^{*} = 6\sigma^{3} + 4\sigma^{5} + 8\sigma^{7} + 5\sigma^{8}$ 是在 $\sigma$ 幂基下对该期实验值 $\alpha^{-1}_{\text{exp}}$ 的逐层数字展开——CODATA 2018 给出 $(6,4,8,5)$、2022 给出 $(6,4,9,0)$，登记为数据编码而非机制量；其 12 位数值 $137.035999083426$ 对 CODATA 2022 为 $+4.46\sigma_{\text{score}}$，按 §12.4.1 已执行否决（§9.1）。$\alpha^{-1}$ 的框架结构为 $\alpha^{-1} = 72 + 24\,d_{H}$，$\delta^{*}$ 与 $d_{H}$ 的偏差 $\delta$ 是同一个量（$\delta = 0.0017831$），其机制来源已登记为收缩率非均匀性（BranchCounting）——这是 §9.1 的归位结论。弱混合角由两个域尺度的配对约束给出 $m_W = 643/8$、$m_Z = 1459/16$，即 $m_W/m_Z = 1286/1459$。全部整数取自框架常数集，无自由参数。
 
-判别力与边界一并记账：本文以 $\sigma_{\text{score}} \equiv (\text{实验}-\text{框架})/u$ 为唯一的符合度口径（$\leq 1$ 达标、$1$–$3$ 提示、$>3$ 否决），不以百分比容差替代。附录 A 的十二项数值均为回溯，另有唯一一项尚未注册的外推 $m_{L4} \approx 1470$ GeV。$\alpha^{-1}$ 对 CODATA 2018 为 $+0.027\sigma_{\text{score}}$，对 CODATA 2022 为 $+4.46\sigma_{\text{score}}$——后者已构成一次否决记录，其应答（零参数修正或承认公式被否决）按预注册协议处置。$\sin^{2}\theta_W$ 的数值虽吻合，但目标空间的基础率约 $1/1.5\times10^{4}$，独立判别力弱，故不计为主要证据。
+判别力与边界一并记账：本文以 $\sigma_{\text{score}} \equiv (\text{实验}-\text{框架})/u$ 为唯一的符合度口径（$\leq 1$ 达标、$1$–$3$ 提示、$>3$ 否决），不以百分比容差替代。附录 A 的十二项数值均为回溯，另有唯一一项尚未注册的外推 $m_{L4} \approx 1470$ GeV。$\alpha^{-1}$ 对 CODATA 2018 为 $+0.027\sigma_{\text{score}}$，对 CODATA 2022 为 $+4.46\sigma_{\text{score}}$——后者已构成一次否决记录，本文按预注册协议执行了该否决（§9.1、§12.4.1）：被否决的是「由 $\delta^{*}$ 四项式给出的 12 位数值命中」，$\alpha^{-1}$ 的预言级断言重述为零参数机制唯一层 $24(\ln 15+3)\in(136.992,\,137)$，其 $\sigma_{\text{score}}$ 级资格以 $\delta$ 的机制导出为前置，现挂起。$\sin^{2}\theta_W$ 的数值虽吻合，但目标空间的基础率约 $1/1.5\times10^{4}$，独立判别力弱，故不计为主要证据。
 
 推导链的每个节点标注确定性来源：结构条件、唯一性推导、机检定理、候选级桥接规则、物理字典映射五级，跨级升格一律不作。关键节点已在 Lean 4 中机检（零 sorry、零 axiom）；模块覆盖边界、构建口径与审计判据登记于 §12.4 与附录 C。
 
@@ -861,8 +861,8 @@ m_H = 124.95 GeV（电弱谱关系）
 ### 9.1 精细结构常数 α⁻¹
 
 **输入**：Cl(3,1) 分级结构 + σ = 1/15 + 24 = 4! + k_max = 8  
-**输出**：α⁻¹ = 137.035999083426（CODATA 2018 偏差 +0.027σ_score；**CODATA 2022 偏差 +4.46σ_score——两期全为 π_Sig 通道，2022 被 Rb-2020 新数据正偏拉动，见下方注记；σ_score ≡ (实验−框架)/合成不确定度**）  
-**Lean 锚**：`delta_star_rational_decomp`（`AlphaChain.lean`）
+**输出（分层）**：预言级 $\alpha^{-1}_{\text{mech}} = 24(\ln 15 + 3) = 136.9932 \in (136.992,\,137)$（零参数）；编码级 $\alpha^{-1}_{\text{enc}} = 137.035999083426$（$\delta^{*}$ 四项为 $\sigma$ 幂基数字展开，2018 组 $(6,4,8,5)$）——对 CODATA 2018 偏差 $+0.027\sigma_{\text{score}}$，对 CODATA 2022 偏差 **$+4.46\sigma_{\text{score}}$**，按 §12.4.1 判为**否决**（σ_score ≡ (实验−框架)/合成不确定度）  
+**Lean 锚**：`delta_star_rational_decomp`（`AlphaChain.lean`）；分层判据 `alphaMech_bounds`、`gauge_coding_dichotomy`（`AlphaGaugeCoding.lean`）
 
 #### 完整推导链
 
@@ -876,18 +876,21 @@ m_H = 124.95 GeV（电弱谱关系）
     ← 24 = 4!（四次迭代的固定点数）
     ← ln15 = d_H（Hausdorff 维数 = 分支数对数）
 
-    = 137.035999083426
-    vs CODATA 2018: 137.035999084(21) → 0.027σ_score ✅
-    vs CODATA 2022: 137.035999177(21) → **+4.46σ_score** ❌
+    = 137.035999083426        ← 编码级：δ* 四项在 σ 幂基下对该期实验值的数字展开
+    vs CODATA 2018: 137.035999084(21) → 0.027σ_score（编码层一致，不是预言命中）
+    vs CODATA 2022: 137.035999177(21) → **+4.46σ_score** ❌（否决：编码层随数据更新失效）
+    预言级: α⁻¹_mech = 24(ln15+3) = 136.9932 < 137 < α⁻¹_exp   ← 零参数；只与实验整数位一致，δ 层未导出
 ```
 
-> **CODATA 2022 对照**：现行 CODATA 2022 世界平均值 α⁻¹ = 137.035999177(21)，实验高于框架 +9.4×10⁻⁸ ≈ **+4.46σ_score**（σ_score ≡ (实验−框架)/u）。解释：
+> **CODATA 2022 对照与判决**：CODATA 2022 世界平均值 α⁻¹ = 137.035999177(21)，高于编码级框架值 +9.4×10⁻⁸ ≈ **+4.46σ_score**（σ_score ≡ (实验−框架)/u）。按 §12.4.1 (i) 执行否决，并给出分叉诊断：
 >
-> 1. 所有已观测 α⁻¹ 通道（Cs/Rb 原子反冲 + a_e g-2）全属于 **π_Sig（spatiotemporal）域**——它们测量的物理量在框架里都是签名域的结构量。
-> 2. **π_Sig 双向性质已机检**（`dH_coef_sign_split` + `log_range_surj`，S463）——正负偏移都是签名域双向性质的正常输出。
-> 3. **框架计算式唯一**：α⁻¹ = 72 + 24·ln15 + 24·δ*（δ* = 6σ³+4σ⁵+8σ⁷+5σ⁸，四项全含于 137.035999083426）。δ* 各项的域标签（6σ³/4σ⁵↔π_Sig、8σ⁷↔π_T、5σ⁸↔π_μ）是候选级语义归属，不改变计算式；按该标签做的域级量级核算与 CODATA 2022 偏移相差 12.5 倍且符号不符，已在 §9.2e 登记为失败核算——本文不再主张"域分解解释了量级"。
-> 4. **CODATA 2018 → 2022 的差**：两期输入通道全是 π_Sig。2018 均值（+0.027σ_score）恰落框架基准（各通道系统误差修正近似抵消）。2022 均值（+4.46σ_score）被 Morel 2020 Rb 新数据拉动（其不确定度比 Rb-2011 好 8 倍，成为加权主导项）。这是**实验进步导致的加权中心移动**。
-> 5. probabilistic / frozen 域目前无 α⁻¹ 通道——寻找 π_T/π_μ 的 α⁻¹ 通道是开放项。
+> 1. **被否决的断言**：δ* 四项式给出的 12 位数值 137.035999083426 构成预言命中。α⁻¹ 的机制计算（24(ln15+3)，零参数）不随之作废。
+> 2. **错误分叉的定位**：σ⁸ 被登记为谱的独立成员（层标号 k_max = 8 被当作第 5 个谱层），使最低位量子 24σ⁸ = 9.364×10⁻⁹ 落到 u = 2.1×10⁻⁸ 之下（每单位 0.45σ_score）。该位在 1σ_score 判据下不被唯一锁定（±2 单位自由度）；再往高阶 24σ⁹ = 6.24×10⁻¹⁰ 更低于 u，级数可无限续项而无痕迹微调。**谱的终止标号不是谱的独立成员**——这是分叉的全部错误所在（Lean：`sigma8_bit_free_within_one_sigma`、`sigma9_bit_invisible`）。
+> 3. **系数是编码，不是机制量**：δ* 的目标值在 {σ³, σ⁵, σ⁷, σ⁸} 基上逐层展开，CODATA 2018 给 (6,4,8,5)、2022 给 (6,4,9,0)；两套系数之差 = (2/3)σ⁷，经 24 倍放大为 16σ⁷ = 9.364×10⁻⁸ > 3u。任一系数组必对另一版超 3σ_score——同一机制结构不可能同时命中两版（Lean：`two_digit_sets_differ`、`two_digit_sets_gap_exceeds_three_sigma`）。
+> 4. **两版之差即编码位移**：137.035999177 − 137.035999084 = 9.3×10⁻⁸ ≈ 10×(24σ⁸)，残差 6.4×10⁻¹⁰，折合 4.43σ_score。数据一更新，该位数字即翻（Lean：`codata_gap_ten_quanta`、`codata_gap_exceeds_three_sigma`）。
+> 5. **结构恒等是拟合的伴生巧合**：原式 Σ系数 = Σ幂次 = 23 = 7×3+2、守恒配对 (3+8)=11=6+5、(5+7)=12=4+8 在 (6,4,9,0) 下全部失效（Σ系数 19、Σ幂次 15）。终止层折叠恒等 σ⁷ = 15σ⁸ 严格成立，但 8σ⁷ + 5σ⁸ = (25/3)σ⁷ 不是整层；只有 c₈ = 15 时才有 8σ⁷ + 15σ⁸ = 9σ⁷（Lean：`eight_plus_fifteen_folds_to_nine`、`five_sigma8_is_fractional_layer`）。
+> 6. **正确路径（归位到 d_H 的偏差 δ）**：α⁻¹ 的框架结构不是「主项 + 独立修正项」，而是 **α⁻¹ = 72 + 24·d_H**（24 = 4!，d_H = 分支维数）。δ* 与 d_H 的偏差 δ 是同一个量：ln15 + δ* = 2.7098332，24× 后 +72 = 137.0359968 ≈ 137.036。故 α⁻¹ 的全部超机制层偏差（0.0428）都归于 δ = 0.0017831，而 δ 的机制来源已由库内登记为**收缩率非均匀性**（`BranchCounting`：递归不产生 δ，只能来自分支非等权；`DHStructural`：d_H = ln15 + δ 中 δ 结构待推导）。正确路径因而是「攻 δ 的机制」，不是「改 α 的系数」。
+> 7. **预言资格的当前状态（如实登记）**：机制层 24(ln15+3) = 136.9932 < 137 < α⁻¹_exp，零参数但与实验只一致到整数位（相对偏差 3.1×10⁻⁴）。α⁻¹ 的 σ_score 级预言资格**当前不成立**，它以 δ 的机制导出为前置。这一登记与 §12.4.1 的否决执行一致：否决的是 12 位命中，不作废机制计算，也不以域机制吸收偏差。
 >
 > 注：α 的数值拟合在"小整数阶乘 + 对数 + 多项式"空间中先验概率不低（对照：4π³+π²+π = 137.0363，零框架三符号即达 3×10⁻⁴ 精度），因此 α⁻¹ 单点吻合在任何数据版本下都不构成决定性证据——判别力只能来自多项独立预言联合与真外推（如 m_{L4} ≈ 1470 GeV）。
 
@@ -904,7 +907,7 @@ m_H = 124.95 GeV（电弱谱关系）
 
 **Lean 形式化**：`MeasurementAlgebra.lean`（步骤 1-2 已机检，步骤 3 开放）
 
-H6' 机制解释**为什么不同实验通道给出不一致的 α⁻¹ 数值**——理论升级后，所有已观测通道全属 π_Sig（spatiotemporal 双向域），正负偏移都是签名域双向性质的正常输出（`dH_coef_sign_split` 真机检）。CODATA 2018 vs 2022 的 4.46σ_score 差是 Rb-2020 新数据的加权中心移动，不是通道代数域变化（§9.1b 详细论证）；δ* 域级分解的核算失败见 §9.2e。
+H6' 说明**不同实验通道给出不一致的 α⁻¹ 数值**的来源：样本内通道离散（Cs 反冲 −1.39σ_score、Rb-2021 −0.51、Rb-2020 +11.14、a_e g−2 +2.02，见 §9.1b 表）是各测量路径独立系统误差的展开；样本间（2018→2022）的 +4.46σ_score 位移则被判为**编码层失效**——两版之差 9.3×10⁻⁸ 恰为 10 个 σ⁸ 数字单位（§9.1），即 δ* 的拟合位数随数据集更新而移动。π_Sig 域机制**不用于**吸收该偏差（§12.4 预注册条款）；δ* 域级分解的核算失败见 §9.2e。
 
 #### 核心主张（Lean 机检部分）
 
@@ -920,26 +923,26 @@ H6' 机制解释**为什么不同实验通道给出不一致的 α⁻¹ 数值**
 
 #### 9.1b 已观测通道的完整数据表（先于数据的域判据 + H6' 机检验证）
 
-框架 α⁻¹ 计算值 = **137.035999083426**（72 + 24·ln15 + 24·δ*；δ* 域标签与失败核算见 §9.2e）
+框架 α⁻¹ 分层值：预言级 **24(ln15+3) = 136.9932 ∈ (136.992, 137)**（零参数）；编码级 **137.035999083426**（72 + 24·ln15 + 24·δ*，δ* 为 σ 幂基数字展开，§9.1）。下表 σ_score 一律以编码级值为基准。
 
 > **通道→域的先于数据判据**：通道测量的物理量本身属于框架哪个域——不看任何偏差符号，只看物理量的结构身份：
 > - **π_Sig（spatiotemporal）**：签名域时空结构——原子反冲（h/m_原子 → 签名域质量谱）、电子 g-2（QED 时空量子修正 → d_H 双向性质）。所有已观测的 α⁻¹ 通道全属于 π_Sig。
 > - **π_T（probabilistic）**：温度域统计力学——黑体辐射 h/k_B 比、热力学涨落。目前无 α⁻¹ 通道。
 > - **π_μ（frozen）**：冻结域 RG 粗粒化——冻结态质量（m_τ、强子基态）。目前无 α⁻¹ 通道。
 
-| 测量通道 | 代数类型 | 投影域 | 实验 α⁻¹ ± 不确定度 | 相对框架 σ_score 偏差 | H6' 域性质 | Lean 锚 |
+| 测量通道 | 代数类型 | 投影域 | 实验 α⁻¹ ± 不确定度 | 相对编码级框架值 σ_score 偏差 | H6' 域性质 | Lean 锚 |
 |---|---|---|---|---|---|---|
 | Cs 反冲（Parker 2018） | **spatiotemporal** | π_Sig → d_H | 137.035999046 ± 2.7×10⁻⁸ | **−1.39σ_score** | 双向可± | `channelType "Cs 反冲"` |
 | Rb 反冲（Bouchendira 2011） | **spatiotemporal** | π_Sig → d_H | 137.035999037 ± 9.1×10⁻⁸ | **−0.51σ_score** | 双向可± | `channelType "Rb 反冲"` |
 | Rb 反冲（Morel 2020） | **spatiotemporal** | π_Sig → d_H | 137.035999206 ± 1.1×10⁻⁸ | **+11.14σ_score** | 双向可± | `channelType "Rb 反冲"` |
 | a_e g−2 | spatiotemporal | π_Sig → d_H | 137.035999152 ± 3.4×10⁻⁸ | **+2.02σ_score** | 双向可± | `channelType "a_e g-2"` |
-| **CODATA 2018** | **多源加权** | **全部 π_Sig 通道** | **137.035999084 ± 2.1×10⁻⁸** | **+0.03σ_score** | 均值 ≈ 框架基准 ✅ | — |
-| **CODATA 2022** | **多源加权** | **全部 π_Sig 通道** | **137.035999177 ± 2.1×10⁻⁸** | **+4.46σ_score** | 均值被 Rb-2020 正偏拉动 | — |
+| **CODATA 2018** | **多源加权** | **全部 π_Sig 通道** | **137.035999084 ± 2.1×10⁻⁸** | **+0.03σ_score** | 编码层吻合（对 137.035999083426），非预言层 | — |
+| **CODATA 2022** | **多源加权** | **全部 π_Sig 通道** | **137.035999177 ± 2.1×10⁻⁸** | **+4.46σ_score** | 编码层失效（两版差 = 10 个 σ⁸ 单位，§9.1） | — |
 
 
 π_Sig 的双向性质由 Lean `dH_coef_sign_split` 真机检（d_H 系数正负两侧都非空）——正负偏移都是签名域双向性质的正常输出。
 
-**CODATA 2018 vs 2022 的 4.46σ_score 差解释**：两期输入通道全是 π_Sig。2018 均值 137.035999084（+0.027σ_score）恰落框架基准——各通道系统误差修正近似抵消。2022 均值 137.035999177（+4.46σ_score）被 Morel 2020 Rb 新数据拉动——Rb-2020 不确定度 1.1×10⁻⁸（比 Rb-2011 的 9.1×10⁻⁸ 好 8 倍）成为加权主导项。这是**实验进步导致的加权中心移动**，不是通道代数性质变化。框架计算式唯一：α⁻¹ = 72 + 24·ln15 + 24·δ*（δ* 四项全含）；δ* 各项域标签为候选级语义归属，不改变计算式（§9.2e 失败核算登记）。
+**CODATA 2018 vs 2022 的 4.46σ_score 位移判为编码层失效**：两版之差 137.035999177 − 137.035999084 = 9.3×10⁻⁸，恰为 10 个 σ⁸ 数字单位（24σ⁸ = 9.364×10⁻⁹），残差 6.4×10⁻¹⁰，折合 4.43σ_score，远超统计涨落。δ* 四项的系数在 σ 幂基下随该期实验值逐层展开（2018 → (6,4,8,5)、2022 → (6,4,9,0)），故其数值随数据集更新而移动——这是编码的性质，不是机制的性质。样本内通道离散（Cs −1.39σ_score … a_e +2.02σ_score）源于各测量路径的独立系统误差；样本间均值移动源于加权主导项的替换（Rb-2020，u = 1.1×10⁻⁸）。π_Sig 域机制不用于吸收该偏差（§12.4 预注册条款）；δ* 域级分解的失败核算见 §9.2e。归位结论：α⁻¹ = 72 + 24·d_H，δ* = δ（d_H 相对 ln15 的偏差），其机制出路在收缩率非均匀性（§9.1 第 6 条）。
 
 #### 先验预言（判别力审计）
 
@@ -1083,7 +1086,7 @@ sin²θ_W = 1 − (1286/1459)² = 474885/2128681 ≈ 0.22309
 
 1. **m_W/m_Z 比值精度锁定（带日期登记，2026-11-09）**：框架给出 1286/1459 = 0.881425634。当前实验比值 80.3692/91.1880 = 0.8813572（偏差 0.0078%，判据留约 4 倍余量）。若 ILC/CLIC 以 ~10⁻⁵ 精度测得比值偏离 1286/1459 超过 0.03%，直接构成框架域结构约束的证伪；裁判为实验公开值，阈值不改。
 
-2. **下一个零参数无量纲预言**：框架的 α 表达式 = 137 + δ*，其中 δ* = 6σ³ + 4σ⁵ + 8σ⁷ + 5σ⁸（**系数和幂次全部是框架常数，无自由参数**，家族检验 10⁵ 组合零命中，删项最弱偏 2.3σ_score）。这是框架另一个零参数纯数——α⁻¹ = 137.035999083...，CODATA 2022 = 137.035999177（+4.46σ_score）。**δ* 域级分解的核算失败登记**：按候选级域标签（6σ³+4σ⁵↔π_Sig、8σ⁷↔π_T、5σ⁸↔π_μ），π_T+π_μ 贡献 = 24·8σ⁷ + 24·5σ⁸ ≈ 1.17×10⁻⁶，而 CODATA 2022 相对框架的偏移仅 9.4×10⁻⁸——**超出 12.5 倍**；且 8σ⁷、5σ⁸ 两项恒正，产生不了 Cs（−1.39σ_score）、Rb-2011（−0.51σ_score）的负偏移。故该分解**不构成量级解释**，登记为失败核算（保留记录，不升格）；精确偏移机制仍属开放项。
+2. **下一个零参数无量纲断言**：框架的 α 预言级断定为机制唯一层 24(ln15+3) = 136.9932 ∈ (136.992, 137)（零参数）。原 δ* = 6σ³+4σ⁵+8σ⁷+5σ⁸ 的 12 位表达式登记为编码层：其系数由该期实验值在 σ 幂基下逐层展开得到（2018 组 (6,4,8,5)、2022 组 (6,4,9,0)），不构成零参数预言——σ⁸ 位单位量子 24σ⁸ = 9.364×10⁻⁹ < u，故该位系数在 1σ_score 内不被锁定（§9.1）。α⁻¹ 与 d_H 是同一量的两种写法（α⁻¹ = 72 + 24·d_H），故 α 的精度继承 d_H 的精度，δ 未导出即 α 未闭合。**δ* 域级分解的核算失败登记**：按候选级域标签（6σ³+4σ⁵↔π_Sig、8σ⁷↔π_T、5σ⁸↔π_μ），π_T+π_μ 贡献 = 24·8σ⁷ + 24·5σ⁸ ≈ 1.17×10⁻⁶，而 CODATA 2022 相对框架的偏移仅 9.4×10⁻⁸——超出 12.5 倍；且 8σ⁷、5σ⁸ 两项恒正，产生不了 Cs（−1.39σ_score）、Rb-2011（−0.51σ_score）的负偏移。故该分解不构成量级解释，登记为失败核算（保留记录，不升格）。
 
 #### 9.2f 构造语法空间的族检验（判别力记账）
 
@@ -1159,13 +1162,13 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 - 24 = 4!（四次迭代固定点数）
 - k_max = 8（Bott 塔截断）
 
-联合确定。**注意**：公式结构固定后无连续可调参数，但 δ* 的系数—幂次配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 对 CODATA 2022 的 +4.46σ_score 偏差**尚无机制解释**：CODATA 的输入通道按 §9.1b 判据全属 π_Sig（不是 frozen 通道投影），δ* 域级分解已按 §9.2e 登记为失败核算（12.5 倍 + 符号不符）；处置选项 (a) 域投影校正 / (b) 公式高阶修正 / (c) 公式错误 全部保留，其中 (a) 的步骤 3 偏移尺度耦合 {ln15, e⁻ⁿ, σⁿ} 精确匹配尚未机检（§9.1）。
+联合确定。**注意**：公式结构固定后无连续可调参数，但 δ* 的系数—幂次配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 对 CODATA 2022 的 +4.46σ_score 偏差**已判为编码层失效而非机制偏差**（§9.1）：被否决的是「δ* 四项式的 12 位数值构成预言命中」，α⁻¹ 的预言级断言重述为零参数机制唯一层 24(ln15+3) ∈ (136.992, 137)。判据为三条：(i) σ⁸ 位单位量子 24σ⁸ = 9.364×10⁻⁹ < u，该位系数在 1σ_score 内不被锁定；(ii) 两版数据之差 = 10 个 σ⁸ 单位；(iii) 两套系数 (6,4,8,5)/(6,4,9,0) 之差经 24 倍放大 > 3u，互斥。结构归位：α⁻¹ = 72 + 24·d_H，δ* = δ，δ 的机制待由收缩率非均匀性导出。δ* 域级分解的失败核算见 §9.2e。
 
 ---
 
 ## 11. 形式化资产：Lean 定理清单
 
-以下定理通过 `lake build` 验证（零 sorry；库根 3834 jobs / 全 default target 7094 jobs 均 Build completed successfully、exit 0；olean 审计 339/339 齐备——MODULES=338 / CLOSURE=166 / ORPHANS=173、MISSING_OLEAN=0、SORRY_LINES=0，口径见 §12.4 项 1）。**分层声明**：部分定理是算术恒等式或定义展开（如 `vieta_factorization`、`surprisal_sigma_eq_ln15`）——机检通过证明的是算术库正确，物理内容在定义的选择里；signature 翻转（γ₀² = −1 的 M₈ 显式构造 + Cl(3,1) 子代数反对易）、Rec→方向性→Cl(3,1) 五步诠释链、boundaryDefect/entropyOfRange 全息比例常数、Sel ⊣ Diss 选择-溶解伴随均已机检（详见 §11.6）；§3 尺度化的动力学骨架亦已机检并纳入库根闭包（`RecOrbitDynamics.lean`：有限轨道必重复 `exists_iterate_eq_of_fintype`、有限观测下可观测重复必现 `exists_visible_repetition`、重复即周期 `eventually_periodic_of_fintype`、二循环非冻结反例 `swap_not_frozen`）；收缩层随之为条件命题与内生速率（`RecOrbitContraction.lean`：$e^{-\ln 15}=1/15$ `exp_neg_log_fifteen`、静默收缩因子在 $d=\ln 15$ 处即 $1/15$ 与 $e^{-3}/15$ `silent_factor_c2_ln15` / `silent_factor_c1_ln15`、收缩率与 σ 同一 `silent_factor_c2_ln15_eq_sigma`、$\sigma^{n}\to0$ `tendsto_sigma_pow_zero`、几何界 `contraction_iterate_bound`、收敛 `contraction_iterate_tendsto`、σ 速率特例 `sigma_rate_contraction`）；压缩来源通道随之机检（`RecOrbitContractionChannel.lean`：`CompositeDepth` 与 `PublicResidueIdentity` 的 σ 同一 `composite_sigma_eq_public_sigma`、σ 乘子幅值作用 `freezeClosure_abs_eq`、等式级压缩 `freezeClosure_contracts`、等式级几何律 `freezeClosure_iterate_abs_eq`、收敛 `freezeClosure_iterate_tendsto`、唯一不动点 `freezeClosure_fixed_iff`、自定义迭代与标准迭代一致 `freezeClosureIterate_eq_iterate`、`2x` 反例 `double_step_refutes_contraction`、通道实现 `sigma_contraction_channel_realized`、判别力 `contraction_condition_discriminating`）；收缩判据随之为乘子型充要条件（`RecOrbitContractionCriterion.lean`：乘子收缩 ⟺ $|k|\le\sigma$ `linear_step_contracts_iff`、乘子族即闭区间 $[-\sigma,\sigma]$ `contracting_multipliers_eq_Icc`、σ 与 $-\sigma$ 均通过 `sigma_mem_contracting_multipliers` / `neg_sigma_mem_contracting_multipliers`、统一速率界 $\sigma^{n}$ `linear_step_iterate_bound`、收敛 `linear_step_converges`、二者合并 `linear_step_criterion_and_rate`、数值通道乘子取区间右端点 `freezeClosure_multiplier_at_endpoint`、$2$ 不通过 `two_not_mem_contracting_multipliers` / `two_fails_criterion`）；跨 Dirac/Pauli 尺度反对易性不成立是**构造性质**（取决于所选 block 对角嵌入、判别力为零，见 §5.4b）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐；七等价定理、SU(2) 五约束、电荷谱、CKM/PMNS 等锚定的 Paper XI/XVII/XX/XL/XLVI/XXXII 未随稿附上。两仓库已于 2026-11-10 公开可匿名检出，本清单所列提交在两远端 `develop` 分支可核验（内容提交 = `b381ac0`，远端头见 §12.4 项 1）；Paper XI/XVII/XX/XL/XLVI/XXXII 六个锚定论文仍未随稿附上，该部分的外部可核验性仍为零。
+以下定理通过 `lake build` 验证（零 sorry；库根 3836 jobs / 全 default target 7094 jobs 均 Build completed successfully、exit 0；olean 审计 340/340 齐备——MODULES=339 / CLOSURE=168 / ORPHANS=172、MISSING_OLEAN=0、SORRY_LINES=0，口径见 §12.4 项 1）。**分层声明**：部分定理是算术恒等式或定义展开（如 `vieta_factorization`、`surprisal_sigma_eq_ln15`）——机检通过证明的是算术库正确，物理内容在定义的选择里；signature 翻转（γ₀² = −1 的 M₈ 显式构造 + Cl(3,1) 子代数反对易）、Rec→方向性→Cl(3,1) 五步诠释链、boundaryDefect/entropyOfRange 全息比例常数、Sel ⊣ Diss 选择-溶解伴随均已机检（详见 §11.6）；§3 尺度化的动力学骨架亦已机检并纳入库根闭包（`RecOrbitDynamics.lean`：有限轨道必重复 `exists_iterate_eq_of_fintype`、有限观测下可观测重复必现 `exists_visible_repetition`、重复即周期 `eventually_periodic_of_fintype`、二循环非冻结反例 `swap_not_frozen`）；收缩层随之为条件命题与内生速率（`RecOrbitContraction.lean`：$e^{-\ln 15}=1/15$ `exp_neg_log_fifteen`、静默收缩因子在 $d=\ln 15$ 处即 $1/15$ 与 $e^{-3}/15$ `silent_factor_c2_ln15` / `silent_factor_c1_ln15`、收缩率与 σ 同一 `silent_factor_c2_ln15_eq_sigma`、$\sigma^{n}\to0$ `tendsto_sigma_pow_zero`、几何界 `contraction_iterate_bound`、收敛 `contraction_iterate_tendsto`、σ 速率特例 `sigma_rate_contraction`）；压缩来源通道随之机检（`RecOrbitContractionChannel.lean`：`CompositeDepth` 与 `PublicResidueIdentity` 的 σ 同一 `composite_sigma_eq_public_sigma`、σ 乘子幅值作用 `freezeClosure_abs_eq`、等式级压缩 `freezeClosure_contracts`、等式级几何律 `freezeClosure_iterate_abs_eq`、收敛 `freezeClosure_iterate_tendsto`、唯一不动点 `freezeClosure_fixed_iff`、自定义迭代与标准迭代一致 `freezeClosureIterate_eq_iterate`、`2x` 反例 `double_step_refutes_contraction`、通道实现 `sigma_contraction_channel_realized`、判别力 `contraction_condition_discriminating`）；收缩判据随之为乘子型充要条件（`RecOrbitContractionCriterion.lean`：乘子收缩 ⟺ $|k|\le\sigma$ `linear_step_contracts_iff`、乘子族即闭区间 $[-\sigma,\sigma]$ `contracting_multipliers_eq_Icc`、σ 与 $-\sigma$ 均通过 `sigma_mem_contracting_multipliers` / `neg_sigma_mem_contracting_multipliers`、统一速率界 $\sigma^{n}$ `linear_step_iterate_bound`、收敛 `linear_step_converges`、二者合并 `linear_step_criterion_and_rate`、数值通道乘子取区间右端点 `freezeClosure_multiplier_at_endpoint`、$2$ 不通过 `two_not_mem_contracting_multipliers` / `two_fails_criterion`）；跨 Dirac/Pauli 尺度反对易性不成立是**构造性质**（取决于所选 block 对角嵌入、判别力为零，见 §5.4b）；深层几何同构未闭合：三层态射 ↔ 空间+时间方向 的直接几何同构、c₃ 时间分支 ↔ 物理时间坐标 的语义对齐；七等价定理、SU(2) 五约束、电荷谱、CKM/PMNS 等锚定的 Paper XI/XVII/XX/XL/XLVI/XXXII 未随稿附上。两仓库已于 2026-11-10 公开可匿名检出，本清单所列提交在两远端 `develop` 分支可核验（内容提交 = `a45c8f7`，远端头见 §12.4 项 1）；Paper XI/XVII/XX/XL/XLVI/XXXII 六个锚定论文仍未随稿附上，该部分的外部可核验性仍为零。
 
 ### 11.1 伴随边界（RAP5a + AdjunctionAnchor）
 
@@ -1233,7 +1236,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 | `muon_g2_spatiotemporal` | MeasurementAlgebra | P2：muon g-2 归 spatiotemporal（simp 闭合） |
 | `codata2026_inputs_spatiotemporal` | MeasurementAlgebra | P3：CODATA 2026 输入通道继承 spatiotemporal（数据集无独立域标签） |
 
-> **分层声明**：H6' 的 Lean 机检定理覆盖六个层级——步骤 1 分类器 `MeasurementAlgebraType` inductive；步骤 2 域映射 `algebraToProjectionDomain` + 通道绑定 `channelType` + 全划分 `algebraDomainPartitionComplete`；步骤 2b 符号规则 + 通道→域归属：spatiotemporal 双向 真机检 `dH_coef_sign_split`/`log_range_surj`（S463）——d_H 系数正负两侧都非空，这是真双向，所有 π_Sig 通道的正负偏移都是正常输出；probabilistic e 只+ `boltzmann_weight_pos`（S426）——机检的是玻尔兹曼权重 e^(-βE) ≥ 0，不是 α⁻¹ 偏移方向非负；frozen σ 只+ `rg_scale_tends_zero`（S426）——机检的是 RG 尺度 (1/2)ⁿ 单调收敛；probabilistic/frozen 域目前没有 α⁻¹ 通道，它们的单向正声明还未被实验检验。通道→域归属采用先于数据的物理量判据：通道测量的物理量属于哪个框架域，不看任何偏差方向（§9.1b 详细说明）；步骤 2c 先验预言（P1 Sr/Yb 反冲可检验域归属、P2 寻找 π_T/π_μ 通道）；步骤 2d e⁻ⁿ 指数步进 + 系数规则全机检（S464-S465）；**步骤 3 偏移尺度耦合**拆分为三层——**① 纯算术（已机检，S610 F 节 12 theorem）**：d_H=ln(3×5) 韦达根乘积、e⁻ⁿ 指数=全态 16+活跃步 3/幂基步 2、σⁿ=(1/15)ⁿ 衰减快于 RG (1/2)ⁿ、框架常数集 C 算术闭包；**② 候选级结构断言（已声明，S611 G 节 4 theorem）**：三个投影域各自特征尺度恰好锚定框架常数——theorem 纯算术闭合但陈述本身是候选级框架末端断言；**③ 物理诠释层（非数学，§9.1b 三域论证链）**：SignatureFiber Hausdorff 维数 = log(韦达根分支数)、TempRGFiber 指数步进 = 活跃/幂基步、根→σ^r 冻结代数——框架末端物理诠释，非 Lean 可纯派生。**H6' 整体状态**：结构约束（域划分、指数步进、常数闭包）全机检 ✅；spatiotemporal 双向符号真机检 ✅；probabilistic/frozen 单向正声明机检的是域内数学性质，尚未被 α⁻¹ 通道检验 ⚠️；通道→域归属先于数据 ✅（Lean `channelType` 已与主表同步）；CODATA 2022 的 +4.46σ_score 差解释为实验加权中心移动，不是通道代数域变化 ✅；δ* 域级分解核算失败见 §9.2e。
+> **分层声明**：H6' 的 Lean 机检定理覆盖六个层级——步骤 1 分类器 `MeasurementAlgebraType` inductive；步骤 2 域映射 `algebraToProjectionDomain` + 通道绑定 `channelType` + 全划分 `algebraDomainPartitionComplete`；步骤 2b 符号规则 + 通道→域归属：spatiotemporal 双向 真机检 `dH_coef_sign_split`/`log_range_surj`（S463）——d_H 系数正负两侧都非空，这是真双向，所有 π_Sig 通道的正负偏移都是正常输出；probabilistic e 只+ `boltzmann_weight_pos`（S426）——机检的是玻尔兹曼权重 e^(-βE) ≥ 0，不是 α⁻¹ 偏移方向非负；frozen σ 只+ `rg_scale_tends_zero`（S426）——机检的是 RG 尺度 (1/2)ⁿ 单调收敛；probabilistic/frozen 域目前没有 α⁻¹ 通道，它们的单向正声明还未被实验检验。通道→域归属采用先于数据的物理量判据：通道测量的物理量属于哪个框架域，不看任何偏差方向（§9.1b 详细说明）；步骤 2c 先验预言（P1 Sr/Yb 反冲可检验域归属、P2 寻找 π_T/π_μ 通道）；步骤 2d e⁻ⁿ 指数步进 + 系数规则全机检（S464-S465）；**步骤 3 偏移尺度耦合**拆分为三层——**① 纯算术（已机检，S610 F 节 12 theorem）**：d_H=ln(3×5) 韦达根乘积、e⁻ⁿ 指数=全态 16+活跃步 3/幂基步 2、σⁿ=(1/15)ⁿ 衰减快于 RG (1/2)ⁿ、框架常数集 C 算术闭包；**② 候选级结构断言（已声明，S611 G 节 4 theorem）**：三个投影域各自特征尺度恰好锚定框架常数——theorem 纯算术闭合但陈述本身是候选级框架末端断言；**③ 物理诠释层（非数学，§9.1b 三域论证链）**：SignatureFiber Hausdorff 维数 = log(韦达根分支数)、TempRGFiber 指数步进 = 活跃/幂基步、根→σ^r 冻结代数——框架末端物理诠释，非 Lean 可纯派生。**H6' 整体状态**：结构约束（域划分、指数步进、常数闭包）全机检 ✅；spatiotemporal 双向符号真机检 ✅；probabilistic/frozen 单向正声明机检的是域内数学性质，尚未被 α⁻¹ 通道检验 ⚠️；通道→域归属先于数据 ✅（Lean `channelType` 已与主表同步）；CODATA 2022 的 +4.46σ_score 差判为编码层失效（两版之差 = 10 个 σ⁸ 数字单位，δ* 系数随数据集更新而移动，§9.1），不作域机制吸收 ✅；δ* 域级分解核算失败见 §9.2e。
 
 ### 11.5 冻结代数 + 幂次分解递推
 
@@ -1246,7 +1249,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 ### 11.6 Bridge 层：Rec→方向性→Cl(3,1) 五步诠释链 + M₈ 显式构造
 
-七个 bridge 文件闭合从 Rec 活跃态到 M₈ gamma 矩阵的诠释链。零 sorry；构建状态见 §12.4 项 1（库根 3834 / 全 default target 7094 jobs 均 exit 0）。
+七个 bridge 文件闭合从 Rec 活跃态到 M₈ gamma 矩阵的诠释链。零 sorry；构建状态见 §12.4 项 1（库根 3836 / 全 default target 7094 jobs 均 exit 0）。
 
 #### 11.6.1 RecActiveSignatureBridge：活跃 ↔ 单向双向等价
 
@@ -1415,20 +1418,20 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 **哈希锚的使用边界**：上述哈希提供的是"某内容不晚于该提交日存在"的**日期锚**，不是内容正确性的证明；在仓库对外可检出之前，任何外部读者只能核对日期与哈希字符串，不能核对内容——这一点在 §12.4 项 1 中如实登记，不因上述哈希锚的存在而改变。
 
-1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。**可见性（2026-11-10 实测）**：两仓库均为公开可匿名检出——GitHub API 返回 `visibility=public` / `private=false`（`created_at` 2026-07-17、license CC-BY-4.0），Gitee 仓库页匿名 HTTP 200。默认分支为 `master`，本文引用的提交位于 `develop`，2026-11-10 已推送至两远端（内容提交区间 `7500a92..2065011`，其后另有哈希锚回填与研究笔记勘误的提交；远端 `develop` 头即该链最新提交），故本节所引哈希均可在远端直接核验。仓库是否自创建即公开属可见性历史，当前 API 不提供该字段，本文不作此主张。**jobs 计数必须与命令绑定**：`lake build MUFPFormalization`（库根闭包）与 `lake build`（全 default target，含 `mufpfformalization:exe`，2026-11-10 实测 7094 jobs）均返回 Build completed successfully、exit 0；lake 的 job 计数含 mathlib 重放、随缓存浮动，离开命令的裸数字不可核验。**机检主张的三项判据**：`lake build` 返回 Build completed successfully、行首 sorry = 0、模块 olean 与源同版本。**olean 一致性判据**：lake 按内容哈希判重、不用 mtime，故一致性由 `lake build` 全程 0 rebuilt + exit 0 保证（审计脚本中的 mtime 项仅供参考、不作结论）。**当前状态（2026-11-10 实测）**：Build completed successfully（3834 jobs，库根）、行首 sorry = 0、审计 MODULES=338 / CLOSURE=166 / ORPHANS=173 / MISSING_OLEAN=0 / SORRY_LINES=0。**孤立模块的机检边界**：338 个源文件中 173 个不在库根 import 闭包——9 个由 exe 入口 `Main.lean` import、被全 default target 覆盖，余 164 个未被任何模块 import，`lake build` 与库根命令都不会自动覆盖，故逐个点名构建（`lake build MUFPFormalization.<Module>`）补齐；其中 4 个模块（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）曾存在实质证明错误，改正后通过（commit `1f88c8b`）——`MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表“已机检”自该提交起才有编译依据。**linter warning 现状**：全库 0 error、12 条 warning，两类——9 条为 `haveI`→`have` 的风格建议（这些位置作实例使用，改写会中断实例合成；proof irrelevance 下不影响证明），3 条为 `<;>`→`;` 的等价建议（改写后目标分配改变、产生 unsolved goals）；均属“建议在本处不等价”，不作债处理。**预研迁入与 σ 接驳**：库外 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已并入 `src`，56 条定理、零 sorry、零 axiom；连同 `OccupiedTrace` 与动力学四模块（`RecOrbitDynamics` / `RecOrbitContraction` / `RecOrbitContractionChannel` / `RecOrbitContractionCriterion`），库内源模块共 338 个（含库根 339 个 Lean 文件）。主库 `PublicResidueIdentity.sigma`（L38 的 `1 / 15`）已登记取值溯源链（`N_active = 3 → k_max = 8 → 16 = 2^(N_active+1) → 15 = 16 − 1 → S₄ = 1/(2^(N_active+1) − 1)`），并新增接驳定理 `sigma_eq_S4`（`sigma = SpinorSilenceBranch.S4`），使 σ 与 §⑧ 导出链在主库内部对齐；该定理只保证两处同值，“为何是 15”仍由 §⑧ 的链式陈述承担，不计入迁入的 56 条。
+1. **Lean 仓库（双平台地址）与可核验性**：GitHub（`https://github.com/dpsnet/universal_fixed_point_framework`）+ Gitee（`https://gitee.com/dpsnet/universal_fixed_point_framework`）。**可见性（2026-11-10 实测）**：两仓库均为公开可匿名检出——GitHub API 返回 `visibility=public` / `private=false`（`created_at` 2026-07-17、license CC-BY-4.0），Gitee 仓库页匿名 HTTP 200。默认分支为 `master`，本文引用的提交位于 `develop`，2026-11-10 已推送至两远端（内容提交区间 `7500a92..a45c8f7`，其后另有哈希锚回填与研究笔记勘误的提交；远端 `develop` 头即该链最新提交），故本节所引哈希均可在远端直接核验。仓库是否自创建即公开属可见性历史，当前 API 不提供该字段，本文不作此主张。**jobs 计数必须与命令绑定**：`lake build MUFPFormalization`（库根闭包）与 `lake build`（全 default target，含 `mufpfformalization:exe`，2026-11-10 实测 7094 jobs）均返回 Build completed successfully、exit 0；lake 的 job 计数含 mathlib 重放、随缓存浮动，离开命令的裸数字不可核验。**机检主张的三项判据**：`lake build` 返回 Build completed successfully、行首 sorry = 0、模块 olean 与源同版本。**olean 一致性判据**：lake 按内容哈希判重、不用 mtime，故一致性由 `lake build` 全程 0 rebuilt + exit 0 保证（审计脚本中的 mtime 项仅供参考、不作结论）。**当前状态（2026-11-10 实测）**：Build completed successfully（3836 jobs，库根）、行首 sorry = 0、审计 MODULES=339 / CLOSURE=168 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_LINES=0。**孤立模块的机检边界**：339 个源文件中 172 个不在库根 import 闭包——9 个由 exe 入口 `Main.lean` import、被全 default target 覆盖，余 163 个未被任何模块 import，`lake build` 与库根命令都不会自动覆盖，故逐个点名构建（`lake build MUFPFormalization.<Module>`）补齐；其中 4 个模块（`CommutatorLieAlgebra` / `MeasurementProjectionDrift` / `RapidityTimeLayering` / `SilenceFamily`）曾存在实质证明错误，改正后通过（commit `1f88c8b`）——`MeasurementProjectionDrift` 正是 §9.2e 的 S463–S465 / S610–S611 所在文件，该表“已机检”自该提交起才有编译依据。**linter warning 现状**：全库 0 error、12 条 warning，两类——9 条为 `haveI`→`have` 的风格建议（这些位置作实例使用，改写会中断实例合成；proof irrelevance 下不影响证明），3 条为 `<;>`→`;` 的等价建议（改写后目标分配改变、产生 unsolved goals）；均属“建议在本处不等价”，不作债处理。**预研迁入与 σ 接驳**：库外 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已并入 `src`，56 条定理、零 sorry、零 axiom；连同 `OccupiedTrace` 与动力学四模块（`RecOrbitDynamics` / `RecOrbitContraction` / `RecOrbitContractionChannel` / `RecOrbitContractionCriterion`），库内源模块共 339 个（含库根 340 个 Lean 文件）。主库 `PublicResidueIdentity.sigma`（L38 的 `1 / 15`）已登记取值溯源链（`N_active = 3 → k_max = 8 → 16 = 2^(N_active+1) → 15 = 16 − 1 → S₄ = 1/(2^(N_active+1) − 1)`），并新增接驳定理 `sigma_eq_S4`（`sigma = SpinorSilenceBranch.S4`），使 σ 与 §⑧ 导出链在主库内部对齐；该定理只保证两处同值，“为何是 15”仍由 §⑧ 的链式陈述承担，不计入迁入的 56 条。
 2. **m_{L4} ≈ 1470 GeV 预注册（量子数已定、限制已复核，2026-11-10）**：这是附录 A 中唯一的真外推。**量子数**：Paper II 命题 4.7 已定其为**矢量型（vector-like）SU(2) 双态**，不是手征第四代——手征情形已由电弱精密检验与 Higgs 信号强度排除（$\Delta S \approx 0.053$，$S$–$T$ 强相关下联合拟合 $\chi^2 = 13.9$）。**对撞机限制复核**：ATLAS 对第一/二代双态矢量轻子排除至 $1220$ GeV（$e$）/ $1270$ GeV（$\mu$）（arXiv:2411.07143，$139\ \mathrm{fb}^{-1}$，$\sqrt{s}=13$ TeV）；CMS 对第三代双态排除至 $1045$ GeV（arXiv:2202.08676）。**裁决**：$1470$ GeV **未被现有数据排除**，最小余量约 $200$ GeV（相对 $1270$ GeV）；Paper II 所记“当前 LHC 排除限 1300 GeV”应更新为本条所列值。**未决**：稳定性与自旋无关截面 $\sigma_{SI}$ 仍未登记，故 LZ/XENON 直接探测路径**无法判定排除与否**——此处如实登记“截面预测缺失”，不以“未排除”充当支持。若后续任一通道排除至 1470 GeV 以下，按本协议立即记录一次否决。
 3. **15 的 Mersenne 必要性推导（族内解析证明）**：选择 σ⁻¹ = 2^{N+1}−1 不是自由参数——韦达方程 x² − k_max·x + σ⁻¹ = 0 要有整数根，判别式 k_max² − 4σ⁻¹ 必须是完全平方。代入 k_max = 2^N 和 σ⁻¹ = 2^{N+1}−1，**真实判别式** D(N) = (2^N)² − 4(2^{N+1}−1) = 4^N − 2^{N+3} + 4。数值核验 N=1..12：仅 N=3 时 D(3) = 64 − 64 + 4 = 4 = 2² 为完全平方，根 {3, 5} 是族内唯一整数根；对一切 N≥4 的非平方性由下述解析证明给出，不再依赖枚举。**两级边界**：(a) Lean 侧机检的是 D(N) 的 12 项具体值（`vieta_discriminant_family_values`）与 N=3 见证（`vieta_discriminant_mersenne_witness`）；“其余 $N$ 的 $D$ 非完全平方”已给出**解析证明**（无需枚举）：$D(N)=4^N-2^{N+3}+4=(2^N-4)^2-12$；对 $N\ge4$ 有 $(2^N-5)^2<D(N)<(2^N-4)^2$（左端差 $2^{N+1}-21\ge11>0$，右端差 $12>0$），即 $D(N)$ 严格夹在两个**相邻**平方之间，故永不等于平方；$N=1,2$ 时 $D<0$；$N=3$ 时 $D=4=2^2$。**边界**：该证明已 Lean 机检——`vieta_discriminant_family_nonsquare`（对一切 $N\ge4$ 给出夹逼不等式），原 12 项枚举定理作为数值对照保留；(b) 把唯一性写成"σ⁻¹ ∈ [1,64] 内唯一"，该陈述为**假**：σ⁻¹ = 7（根 {1,7}，D = 36 = 6²）、12（根 {2,6}，D = 16 = 4²）、16（根 {4,4}，D = 0 = 0²）同为整数根且判别式为完全平方；`vieta_discriminant_mersenne_unique` 不成立（其证明行 `interval_cases … with` 语法本身不成立），不再引用，族外反例由 `vieta_discriminant_out_of_family_counterexamples` 机检登记。故唯一性只能在 σ⁻¹ = 2^{N+1}−1 的参数族**内**陈述。方案 B（σ⁻¹ = 2^{N+1}+1）在 N=3 时 D = 64 − 68 = −4 < 0 无实根；方案 C（σ⁻¹ = 3^N−1）在 N=3 时 D = 64 − 104 = −40 < 0。**族内唯一性**——σ⁻¹ = 2^{N+1}−1 是族内唯一让韦达方程在 N=3 时有互异整数根且判别式为完全平方的参数选择。残余边界：为什么 σ⁻¹ 必须取“2 的幂减 1”这个参数族（而不是其他参数化）仍未独立推导——族内唯一解已**解析闭合并机检**（夹逼不等式见上，Lean `vieta_discriminant_family_nonsquare`）；参数族形状的来历是本文最后一级开口。
-4. **α⁻¹ 对 CODATA 2022 的 +4.46σ_score 处置**：要么从零推导修正项（来源、阶数、系数，不允许新连续参数），要么承认公式被否决。δ* 域级分解的失败核算（§9.2e）已排除"域分解即解释"的退路——这是框架第一条真实的"预言—否决—应答"记录，其处理方式将定义框架的证据标准；判决协议见 §12.4.1。
+4. **α⁻¹ 对 CODATA 2022 的 +4.46σ_score 处置（已执行）**：按本条两条路径，本文选择「按零参数修正重述」并同时登记否决——被否决的是 $\delta^{*}$ 四项式的 12 位数值命中；$\alpha^{-1}$ 的预言级断言重述为零参数机制唯一层 $24(\ln 15+3)\in(136.992,\,137)$。判定依据是编码判据（$\sigma^{8}$ 位单位量子低于 $u$、两版系数互斥、两版之差为 10 个 $\sigma^{8}$ 单位），见 §9.1 与 `AlphaGaugeCoding.lean`。δ* 域级分解的失败核算（§9.2e）已排除「域分解即解释」的退路；$\delta$ 的机制化（收缩率非均匀性）是 §12.4 项 3 之下唯一的剩余开放项。
 
 > **判决执行承诺（先于数据固定，单列以便对照）**：CODATA 2026 发布后，(i) 若 $|\Delta|>3\sigma_{\text{score}}$，本文执行**否决**——$\alpha^{-1}$ 公式作废或按零参数修正重述，**不接受**以 $\pi_{Sig}$ 双向域机制吸收该偏差；(ii) 若 $\leq 1\sigma_{\text{score}}$，公开记为通过；(iii) $1$–$3\sigma_{\text{score}}$ 记为提示，不作通过。此承诺为 §12.4.1 预注册协议的执行面，二者不一致时以更严格者为准。
 
 #### 12.4.1 CODATA 2026 判决协议（预注册文本，2026-11-09）
 
 - **对象**：CODATA 2026 发布的 α⁻¹ 世界平均值及其不确定度（若未发布，本协议挂起）。
-- **判据（唯一口径）**：σ_score = (α⁻¹_exp − 137.035999083426) / u_exp；**≤1σ_score 判命中；1–3σ_score 判提示（不计命中也不计否决）；>3σ_score 判否决**。禁用百分比容差。
+- **判据（唯一口径，分两级）**：**编码级** $\sigma_{\text{score}} = (\alpha^{-1}_{\text{exp}} - 137.035999083426)/u_{\text{exp}}$（$\leq 1$ 命中；$1$–$3$ 提示；$>3$ 否决——本条款下 CODATA 2022 已判否决）；**预言级**为机制层一致性判据：整数位与 $24(\ln 15+3) = 136.9932$ 一致，且 $\delta = \alpha^{-1}_{\text{exp}}/24 - 3 - \ln 15$ 与框架导出的 $\delta$ 在 $\sigma_{\text{score}}$ 内一致（$\delta$ 尚未导出，故预言级判据当前挂起）。禁用百分比容差。
 - **通道归类**：若 CODATA 2026 纳入非 π_Sig 通道，须先按 §9.1b 判据归类；数据集不携带独立域标签，其域归属继承输入通道。
 - **裁判**：CODATA 公开发布值；框架不得在数据发布后修改判据或阈值。
-- **现状**：CODATA 2022 已给 +4.46σ_score，**已构成一次否决记录**（框架须应答：零参数修正或承认公式被否决，见 §12.4 项 4）。
+- **现状**：CODATA 2022 已给 +4.46σ_score，**已构成一次否决记录并已执行**（§12.4 项 4 / §9.1）：被否决的是 $\delta^{*}$ 四项式的 12 位命中；$\alpha^{-1}$ 的预言级断言重述为零参数机制唯一层 $24(\ln 15+3)\in(136.992,\,137)$，其 $\sigma_{\text{score}}$ 级资格以 $\delta$ 的机制导出为前置，现挂起。
 
 #### 12.4.2 m_W/m_Z 比值判据（带日期登记，2026-11-09）
 
@@ -1448,7 +1451,7 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 3. **递归单向性 = 时间方向数 1 + 时空维数 = 4**（Lean 已机检完整推导链：层索引约定（3 活跃层）→ N_active = 3 → k_max = 8 → 时空维数 = 4 → 时间坐标良定义 + c₃ 时间分支唯一 + Moran 结构封闭 → **Rec→单向性（`unidir_iff_active`）→ 方向性（`directional_with_lorentz_compatible`）→ M₈ gamma0_8² = −I₈ + Cl(3,1) 子代数 6 对反对易 + γ⁵ 手征扩张 4 对反对易（Cl(4,1)）**——signature 翻转核心桥接层已完整 Lean 化；跨 Dirac/Pauli 尺度反对易性不成立是构造性质（取决于所选 block 对角嵌入、判别力为零，详见 §5.4b））
 4. **SU(2) 五范畴约束唯一锁定**；SU(3)/U(1) 的唯一性约束尚未五范畴化（§12.1）
 5. **三代费米子 = N_active = 韦达活跃根个数**——N_active = 3 是唯一整数根解（§10.3）
-6. **无量纲耦合常数**（α⁻¹、sin²θ_W、α_s、CKM/PMNS 参数）是 Cl(3,1) 分级 + σ=1/15 + 24=4! + k_max=8 的结构推论。**sin²θ_W 域配对约束推导**（§9.2）：活跃域尺度 M_active = FullState×Silence = 16×5=80、对合域尺度 M_inv = Involution×(Kmax+Silence) = 7×13=91，配对约束唯一给出 m_W = 80+3/8=643/8、m_Z = 91+3/16=1459/16——所有整数全来自框架常数集 C，无自由参数。数值结果 sin²θ_W = 474885/2128681 ≈ 0.22309 ≈ 实验 on-shell 0.22321（0.47σ_score），**误差 ≈ 0.05%**（sin²θ_W 判别力记账见 §9.2f：数值本身基础率约 1/1.5×10⁴，独立判别力弱；可记账判据是比值 0.03% 阈值）。δ* 配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 计算式 = 72 + 24·ln15 + 24·δ*（δ* 四项全含；域级分解失败核算见 §9.2e），CODATA 2022 的 +4.46σ_score 差解释为 Rb-2020 新数据的加权中心移动（两期 CODATA 输入通道全属 π_Sig，spatiotemporal 双向域真机检 ✅）
+6. **无量纲耦合常数**（α⁻¹、sin²θ_W、α_s、CKM/PMNS 参数）是 Cl(3,1) 分级 + σ=1/15 + 24=4! + k_max=8 的结构推论。**sin²θ_W 域配对约束推导**（§9.2）：活跃域尺度 M_active = FullState×Silence = 16×5=80、对合域尺度 M_inv = Involution×(Kmax+Silence) = 7×13=91，配对约束唯一给出 m_W = 80+3/8=643/8、m_Z = 91+3/16=1459/16——所有整数全来自框架常数集 C，无自由参数。数值结果 sin²θ_W = 474885/2128681 ≈ 0.22309 ≈ 实验 on-shell 0.22321（0.47σ_score），**误差 ≈ 0.05%**（sin²θ_W 判别力记账见 §9.2f：数值本身基础率约 1/1.5×10⁴，独立判别力弱；可记账判据是比值 0.03% 阈值）。δ* 配对规则、κ=40、δ_CP 的 δ 项等桥接自由度已逐条显式声明（§8/§9）；α⁻¹ 的框架结构 = 72 + 24·d_H（d_H = ln15 + δ，δ* 与 δ 同量；δ 的机制待由收缩率非均匀性导出，§9.1），其 12 位编码式 137.035999083426 对 CODATA 2022 的 +4.46σ_score 判为编码层失效并执行否决（两版之差 = 10 个 σ⁸ 单位；域级分解失败核算见 §9.2e）
 
 **SM 不是从 scratch 导出的拉格朗日量**——框架不给出拉格朗日量的具体形式，而是给出**生成它的递归动力系统结构**。SM 拉格朗日量是这个谱形变循环语言在低能的有效场论近似，两者的数学结构（群、联络、曲率、耦合）通过规范拓扑七等价定理对应（等价性的严格化程度见 §11 分层声明）。
 
@@ -1460,8 +1463,8 @@ SU(3)×SU(2)×U(1) 是唯一同时满足：
 
 | 预言 | 框架值 | 实验值 | σ_score 偏差 | 来源 | Lean 锚 |
 |---|---|---|---|---|---|
-| α⁻¹ | 137.035999083426 | 137.035999084(21) [CODATA 2018] | 0.027σ_score | Cl(3,1) 分级（无量纲纯数） | `delta_star_rational_decomp` |
-| α⁻¹（同上） | 137.035999083426 | **137.035999177(21) [CODATA 2022]** | **+4.46σ_score** | 同上 | 同上（处置见 §9.1；δ* 域分解失败核算 §9.2e） |
+| α⁻¹（预言级） | 24(ln15+3) = 136.9932 ∈ (136.992, 137) | 137.035999084(21) [CODATA 2018] | 整数位一致；相对偏差 3.1×10⁻⁴（δ 层未导出） | Cl(3,1) 分级 + Moran d_H（无量纲纯数） | `alphaMech_bounds` |
+| α⁻¹（编码级，被否决） | 137.035999083426 | **137.035999177(21) [CODATA 2022]** | **+4.46σ_score → 执行否决** | δ* 四项 = σ 幂基数字展开（非机制量） | 同上（§9.1 判决；δ 归位到 d_H 偏差） |
 | sin²θ_W | 0.2230889 | 0.22321(26) [on-shell, m_W/m_Z 直算] | 0.47σ_score | ✅ 纯框架推导（无量纲，比值 1286/1459，§9.2） | `sin2theta_onshell_framework_pure` |
 | m_ρ/m_μ | 7.3386 | 7.33742(218) [PDG m_ρ = 775.26±0.23 MeV 直算] | 0.54σ_score | Λ_QCD 锁定（质量比值，无量纲） | Paper XVII |
 | Δλ_min | (√6−√2)/√72 ≈ 0.157 | — | 谱间隙 | Cl(3,1) 谱隙（无量纲） | `spectralGap_positive` |
@@ -1502,24 +1505,24 @@ lake build MUFPFormalization.RecOrbitContractionChannel
 lake build MUFPFormalization.RecOrbitContractionCriterion
     → Build completed successfully（3192 jobs，exit 0；收缩判据族）
 lake build MUFPFormalization          # 库根模块闭包
-    → Build completed successfully（3834 jobs，exit 0；339 个 Lean 文件，含 Core.lean §S 段）
+    → Build completed successfully（3836 jobs，exit 0；340 个 Lean 文件，含 Core.lean §S 段）
 lake build                            # 全 default target（含 mufpfformalization:exe）
     → Build completed successfully（7094 jobs，exit 0）
 lake build MUFPFormalization.{SpinorSilenceBranch,TimeBranch,TimeSpectrum,LayerEntropy,LuInvariant,RUniqueness}
     → Build completed successfully（1952 jobs，exit 0；预研迁入的 6 个模块）
-lake build MUFPFormalization.<Module>（164 个孤立模块逐个点名构建，分批实跑）
-    → 164 个全部通过；其中 4 个（CommutatorLieAlgebra、MeasurementProjectionDrift、
+lake build MUFPFormalization.<Module>（163 个孤立模块逐个点名构建，分批实跑）
+    → 163 个全部通过；其中 4 个（CommutatorLieAlgebra、MeasurementProjectionDrift、
       RapidityTimeLayering、SilenceFamily）曾存在实质证明错误，修复后通过（commit 1f88c8b）
 olean 审计（scripts/p7_lean_olean_audit.py，预研并入后复跑）
-    → MODULES=338 / CLOSURE=166 / ORPHANS=173 / MISSING_OLEAN=0 / SORRY_LINES=0
+    → MODULES=339 / CLOSURE=168 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_LINES=0
     → olean 与源同版本不另设 mtime 判据：lake 按内容哈希判重，一致性由 `lake build` 全程 0 rebuilt、exit 0 保证
-    → 即 339/339 个 Lean 文件（338 源模块 + 库根）均有与源同版本 olean：166 个在库根闭包内（含根）+ 173 个不在闭包（9 个由 exe 入口 Main.lean import、被全 default target 覆盖；164 个逐模块点名构建补齐）
+    → 即 340/340 个 Lean 文件（339 源模块 + 库根）均有与源同版本 olean：168 个在库根闭包内（含根）+ 172 个不在闭包（9 个由 exe 入口 Main.lean import、被全 default target 覆盖；163 个逐模块点名构建补齐）
 sorry 扫描（src/MUFPFormalization 递归全扫，行首 sorry）
-    → 0（零 sorry，338 文件全扫，2026-11-10 实测）
+    → 0（零 sorry，339 文件全扫，2026-11-10 实测）
 ```
 
-**注**：2080 / 2079 / ≈720 / 3817 / 6376 等 jobs 数不可复现，不予引用；7094 已按同口径（`lake build` 全 default target）**实测复现**（7094 jobs，exit 0），故该数恢复为可引用，但必须与命令绑定（`lake build` 而非 `lake build MUFPFormalization`，后者为 3834）。jobs 计数随缓存浮动，**离开命令的裸数字不可核验**（见 §12.4 项 1）。仓库已于 2026-11-10 在两远端公开可匿名检出、`develop` 上内容提交为 `2065011`（其后另有哈希锚回填与笔记勘误提交）（§12.4 项 1）；基线 commit `e503722`；内容提交见 §12.4 哈希锚；外部独立复现可由任一方在 `develop` 分支直接执行。
+**注**：2080 / 2079 / ≈720 / 3817 / 6376 等 jobs 数不可复现，不予引用；7094 已按同口径（`lake build` 全 default target）**实测复现**（7094 jobs，exit 0），故该数恢复为可引用，但必须与命令绑定（`lake build` 而非 `lake build MUFPFormalization`，后者为 3836）。jobs 计数随缓存浮动，**离开命令的裸数字不可核验**（见 §12.4 项 1）。仓库已于 2026-11-10 在两远端公开可匿名检出、`develop` 上内容提交为 `a45c8f7`（其后另有哈希锚回填与笔记勘误提交）（§12.4 项 1）；基线 commit `e503722`；内容提交见 §12.4 哈希锚；外部独立复现可由任一方在 `develop` 分支直接执行。
 
 ---
 
-*本文档基于 MUFPF 框架 Lean 形式化库（零 sorry；库根与全 default target 构建均 Build completed successfully（3834 / 7094 jobs，exit 0），olean 审计 339/339 齐备（MISSING_OLEAN=0、行首 sorry=0；其中 173 个不在库根 import 闭包（9 个由 exe 入口 `Main.lean` 覆盖、164 个未被 import，经逐模块点名构建补齐），4 个曾未编译的模块经 commit `1f88c8b` 修复后通过；库外预研 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已迁入 `src`，贡献 56 条定理、零 sorry、零 axiom，`OccupiedTrace` 与动力学三模块并入后 Lean 文件数为 339（源模块 338 + 库根）），见 §12.4 项 1）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
+*本文档基于 MUFPF 框架 Lean 形式化库（零 sorry；库根与全 default target 构建均 Build completed successfully（3836 / 7094 jobs，exit 0），olean 审计 340/340 齐备（MISSING_OLEAN=0、行首 sorry=0；其中 172 个不在库根 import 闭包（9 个由 exe 入口 `Main.lean` 覆盖、163 个未被 import，经逐模块点名构建补齐），4 个曾未编译的模块经 commit `1f88c8b` 修复后通过；库外预研 6 模块（`SpinorSilenceBranch` / `TimeBranch` / `TimeSpectrum` / `LayerEntropy` / `LuInvariant` / `RUniqueness`）已迁入 `src`，贡献 56 条定理、零 sorry、零 axiom，`OccupiedTrace` 与动力学三模块并入后 Lean 文件数为 340（源模块 339 + 库根）），见 §12.4 项 1）构建。推导节点的认识论分层（机检定理 / 唯一性推导 / 候选级桥接规则 / 边界）在正文逐条标注；数值主张的判别力边界（回溯 vs 外推、CODATA 2022 的 +4.46σ_score（σ_score ≡ (实验−框架)/u））如实登记；M₈ gamma 矩阵的两种 block 尺度（Cl(3,1) 时空代数 gamma0-3 + γ⁵ 手征扩张 gamma7 → Cl(4,1) + Cl(3,0) 内部对称代数 gamma4-6，跨尺度结构性不成立 = 框架对物理"时空 vs 内部对称"本质区分的正确预测）在 §5.4 登记。框架的物理立场是：SM 是递归动力系统的谱形变循环语言在低能的有效场论近似，而非一个自由选择的拉格朗日量。*
