@@ -13505,3 +13505,78 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 - `all_goals (try ring_nf)` 对已闭合目标触发 `unreachableTactic` + `unusedTactic` 双 warning → 删行。
 - `simp [mat]` 停在 `!![0,0;0,0] = 0` → 需 `ext i j; fin_cases i <;> fin_cases j <;> simp [mat, Matrix.zero_apply]`。
 - `simp only [...] at h01` 得 `(1:ℂ) = 0` 类矛盾 → 补 `norm_num at h01` 闭合。
+
+# S632 — 「链复形必然性」溯源核查：`d_A` 不是微分（SpChainComplexAudit）
+
+## 1. 溯源事实（git 实测）
+
+* `27cdf8d` | `2026-07-27 19:04:50 +0800` | `feat(formal_proof): 新增完整形式化体系，闭合统一3定理缺口`。
+* 同提交 7 文件：`HigherSpecCategory.lean`(+85/-4)、`Unified3Theorem`(+233)、`BottTower`(+196)、`BranchCounting`(+203)、`CoherenceToBranching`(+253)、`DHStructuralAnalysis`(+485)、一份 `结构分析.md`(+658)。
+* 路径注意：当时库名仍为 `UFPFormalization`，文件在 `formal_proof/UFPFormalization/UFPFormalization/HigherSpecCategory.lean`（双层目录）；单层路径 `git show` 返回 exit 128。
+* 历史全文 186 行已提取（`%TEMP%\n633hist.lean`，10117 B）。注释块 L129-137 以「模式：」开头，逐条列出层 1/2/3 的交换子条件，措辞与用户引用一致（`𝐒𝐩` 粗体、`二阶同伦`）。
+* 该文件当时**只到层 3**（`SpecThreeMorphism`），**没有**层 4；注释里也**没有**「层 4+ 是 coherence 条件」这句话。
+
+## 2. 与「先有结构、后见数值巧合」叙事的差异（三条实证）
+
+1. 注释是模式声明（自写「模式：」），不是定理；文件内无链复形算子、无 `d ∘ d = 0`、无上同调类定义、无层 4 截断证明。
+2. 同一提交一次性写入 5 个 N 计数文件（`Unified3Theorem` / `BottTower` / `BranchCounting` / `CoherenceToBranching` / `DHStructuralAnalysis`）+ 层结构与层 3 定义 → 层结构与 N 计数在同一次提交内一并落地，提交拓扑不支持「先结构、后巧合」的时序。
+3. 历史 `specExchangeLaw` 为 `sorry`（L116-127），docstring 明确写「Spec₂ 是 weak（bicategory）非 strict」，并写 `Layer counting depends only on the number of distinct morphism layers, not on the exchange law` —— 作者当时已自认层计数依赖「写下了几层」。
+4. 现行 `HigherSpCategory.lean` L350-360 注释列了「层 4（4-态射）：`Τ.secondHomotopy - Ξ.secondHomotopy = A_X·Φ.thirdHomotopy - Φ.thirdHomotopy·A_Y`」，即层 4 的载体 `SpFourMorphism` 与层 3 **形式同型**（自由 `thirdHomotopy` + 同一交换子条件），代码层面是独立态射层；「coherence 层」是标号约定，不是结构自动排除。全库无 `SpFiveMorphism` / `5-态射` —— 塔在层 4 之后**没有定义**，截断是定义行为。
+
+## 3. 数值先证伪（模式 8）：`d_A² = 0` 是否成立
+
+`d_A(H) = A_X·H - H·A_Y`；若为链复形微分须 `d_A² = 0`。基底 {E11,E12,E21,E22} + 8 组随机矩阵，取 `max|d²|`：
+
+| A_X / A_Y | max&#124;d²&#124; |
+|---|---|
+| J / J（2×2 幂零 Jordan） | 5.891 |
+| diag(0,1) / diag(0,1)（同谱） | 2.945 |
+| diag(0,1) / diag(1,2) | 8.328 |
+| I / I（同一标量） | **0.000** |
+| 2I / 3I（不同标量） | 2.945 |
+| diag(1,3) / diag(1,3) | 11.780 |
+| 1.0·I / 1.0·I | 0.000 |
+| 2.5·I / 2.5·I | 0.000 |
+
+解析：`A_X=A_Y=A=J` 时 `d²(H) = A²H - 2AHA + HA² = -2·J·H·J`（J²=0）。取 `H=E₂₁`：`d(E₂₁)=diag(1,-1)`，`d²(E₂₁)=-2J ≠ 0`（数值残差 0.0 与解析一致）。
+判据：`d² = 0` 只在 `A_X = A_Y = c·1`（同一标量）时成立，而该情形 `d_A ≡ 0`，层 2 右端项只能为 0、`P=Q`，无非平凡 2-态射。**「d²=0」与「存在非平凡高阶态射」互斥。**
+
+## 4. Lean 机检（`SpChainComplexAudit.lean`，窄导入 `SpLayerNonCollapse`）
+
+| 定理 | 陈述 | 状态 |
+|---|---|---|
+| `dJ_E21` | `dJ matE21 = !![1,0;0,-1]` | ✔ |
+| `dJ_dJ_E21` | `dJ (dJ matE21) = -(2:ℂ) • jordanMat` | ✔ |
+| `dJ_dJ_E21_ne_zero` | `dJ (dJ matE21) ≠ 0` | ✔ |
+| `dJ_not_differential` | `∃ H, dJ (dJ H) ≠ 0` | ✔ |
+
+`dJ H := jordanMat * H - H * jordanMat`（`A_X = A_Y = J` 的一元化）。库根已加 `import MUFPFormalization.SpChainComplexAudit`（第 164 行）。
+
+## 5. 结论与边界
+
+* 「链复形结构必然给出恰三层非平凡态射」在代数前提上不成立：`d² ≠ 0`，`d_A` 不是微分，核与像不构成上同调复形。
+* 层数来自**层类型的定义停止**（层 5 未定义），不来自微分结构自然终止；这与 S631 的 `layer4_noncollapse`（`ker ∩ im ≠ 0` 时层 4 可解）方向一致：层 4 不是 coherence，是一个有条件可解的独立层。
+* 登记：`N_active = 3` 仍按层索引约定；「链复形」保留为层缺陷的组织读法，不作层数依据。`H³=0`（S631）与本条（`d²≠0`，S632）是两条各自独立的已证伪升格路线。
+* 不作正面断言：替代性截断原则本节不提出。
+
+## 6. 构建与审计（本轮实测）
+
+| 项 | 结果 |
+|---|---|
+| `lake build MUFPFormalization.SpChainComplexAudit` | 2035 jobs / 26s / exit 0，本模块零 warning 零 sorry |
+| `lake build MUFPFormalization`（库根） | 3840 jobs / 39s / exit 0 |
+| `lake build`（全 default） | 7094 jobs / exit 0（靶集未变） |
+| olean 审计 | MODULES=344 / CLOSURE=172 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_LINES=0 |
+
+## 7. Lean 踩坑（本轮新增）
+
+1. `<;>` 无法用 `<<` 代替——脚本里写 `fin_cases i << fin_cases j << simp` 会直接编译失败，必须 `<;>`。
+2. ℂ 上的 `-1 - 1 = -2` 这类目标 `simp` 不收，需 `simp [...] <;> norm_num`（`<;>` 在 simp 已闭合时不触发，安全）。
+3. `simp [jordanMat, Matrix.smul_apply, Matrix.zero_apply] at h01` 能自行发现 `-2 = 0` 并关闭目标，后面再跟 `norm_num at h01` 会报 `No goals to be solved`。
+
+## 8. 论文改动（§4.2）
+
+* 层表层 4 行改为「coherence 层标号（约定）｜非活跃（不计入活跃层；载体 `SpFourMorphism` 与层 3 同型，见下段机检）」。
+* L305 句改写为「层 4 按本节约定登记为 coherence 层标号……载体与层 3 形式同型，其'不产生新类型'由约定规定而非结构排除」。
+* 新增段「溯源核查：`d_A` 不是链复形微分（`SpChainComplexAudit.lean`）」，含 commit 事实、`dJ_dJ_E21_ne_zero` 机检锚、数值互斥判据、以及「层结构与计数同一次提交落地」的时序说明。
+* 计数同步：库根 3839→3840、MODULES 343→344、CLOSURE 171→172、文件 343→344（源模块 342→343）。论文 160844→162905 B，CRLF 1535→1537。

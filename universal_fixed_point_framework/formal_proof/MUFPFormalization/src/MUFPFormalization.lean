@@ -161,3 +161,4 @@ import MUFPFormalization.AlphaGaugeCoding
 import MUFPFormalization.DeltaMechanismAudit
 import MUFPFormalization.RecSpHomSeparation
 import MUFPFormalization.SpLayerNonCollapse
+import MUFPFormalization.SpChainComplexAudit
