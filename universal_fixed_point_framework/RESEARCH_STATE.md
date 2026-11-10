@@ -13370,3 +13370,58 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 5. `DeltaStarSpectrum.lean` 9 条重言式仍未处置；`AlphaChain.lean` 结构恒等失效未登记。
 6. `d_H_fit := 2.7095` 与 α⁻¹ 链的隔离只在本笔记与论文备注层面，
    库内未加"禁止用于 α 链"的注释/断言。
+
+# S630 — Rec ≠ Sp 的 Hom 基数不变量（机检通过）
+
+## 1. 问题（用户裁决：与 δ/α⁻¹ 完全解耦）
+
+`N_active = 3` 目前全是约定：`DHStructuralAnalysis.lean` L92/L95/L98 三个 `def`，`Unified3Theorem.lean` L85 `numActiveLayers := 3`。升格须补三条件：(a) Ob 至少两元且 Rec ≠ Sp；(b) 非恒等 Hom 存在性；(c) 三生成元不可约。本节只做 (a) 的**非退化**版本，明确排除「类型不同即不等」这类平凡论据。
+
+## 2. 用户点名的判据
+
+「Rec = Sp 是否矛盾」不能靠结构字段差异回答——Lean 里一句 `≠` 可得，但那只是类型层的平凡事实，不排除两个范畴**等价**。要支撑 Rec ≇ Sp 必须给范畴不变量。
+
+## 3. 采用的不变量：Hom 集基数
+
+- Sp 侧：`SpObj` 的 `A` 是任意方阵。取一维零算子 `spZero1`（`n=1, A=0`），任意标量 `c : ℂ` 给出自态射 `P := Matrix.of (fun _ _ => c)`，交换条件 `P * 0 = 0 * P` 恒成立。故 `Hom(spZero1, spZero1)` 含 `ℂ` 的单射像 ⇒ 无限。
+- Rec 侧：`RecObj` 的 `T` 是 `Fintype`，态射由 `toFun : X.T → Y.T` 唯一决定（交换条件是命题）⇒ `RecHom X Y` 有限。
+- 范畴等价要求 Hom 集之间存在双射；有限与无限不可被双射消除 ⇒ 两者不可能等价。这是范畴不变量，不是类型层断言。
+
+## 4. 落盘
+
+新增 `src/MUFPFormalization/RecSpHomSeparation.lean`，零 sorry，五条结论：
+
+| 定理 | 陈述 |
+| --- | --- |
+| `spHomOfScalar_injective` | `c ↦ spHomOfScalar c` 单射 |
+| `spHom_infinite` | `Infinite (spZero1 ⟶ spZero1)` |
+| `recHom_toFun_injective` | 态射由底层映射唯一决定 |
+| `recHomFintype`（noncomputable instance） | `Fintype (RecHom X Y)` |
+| `recHomUnit_finite` | `Finite (RecHom.{0,0} recUnit recUnit)` |
+| `hom_cardinality_separation` | 上述无限 ∧ 有限并置 |
+
+已加入库根 `src/MUFPFormalization.lean`（第 163 行）。
+
+## 5. 导入与构建代价（本轮实测，写入以免重犯）
+
+- 首版第 1 行写 `import Mathlib`，依赖闭包 = Mathlib 全库，单模块构建 job 总数 **8479**（跑约 90 分钟到 8441 仍未到本模块）。
+- 本库体例是窄导入：`SpCategory.lean` 9 条具体子模块、`RecCategory.lean` 3 条。
+- 改窄导入（`MUFPFormalization.SpCategory` + `MUFPFormalization.RecCategory` + `Mathlib.Data.Fintype.Card` + `Mathlib.Analysis.Complex.Basic` + `Mathlib.Tactic.Ext`）后 job 总数 **2106**，36 秒编完。
+- 坏 import 定位：此依赖中**不存在** `Mathlib/LinearAlgebra/Matrix/Basic.lean`（报 `bad import` / error 4058）；`import Mathlib` 时被聚合入口掩盖，窄导入让它在 1 分钟内暴露。
+- 缓存事实：11-09 两次全量构建均未收尾（`.lake_build_clean.log` 止于 `308/7096`；`.lake_build.log` 末行 `lake : error: build failed`），故本轮首跑必须补齐大量 Mathlib 模块——这与 import 写法无关，`import Mathlib` 只是把范围放大到最大。本轮把 Mathlib 补到 8441/8479 后切窄导入。
+
+## 6. 调试序列（保留，供后续复用）
+
+1. `bad import 'Mathlib.LinearAlgebra.Matrix.Basic'` → 删该行。
+2. `OfNat (Fin spZero1.n) 0` 失败 → 索引改 `⟨0, by simp [spZero1]⟩`。
+3. `Infinite ℂ` 无法合成 → 加 `Mathlib.Analysis.Complex.Basic`。
+4. `(fun _ _ => c) * Matrix` 的 `HMul` 失败 → `P := Matrix.of (fun _ _ => c)` 显式化。
+5. `recHom_finite (u := 0)` 参数名非法 → 改 `(X := recUnit) (Y := recUnit)`，由 `recUnit : RecObj.{0}` 定宇宙。
+
+## 7. 未完成（不宣布升格）
+
+- (b) 非恒等 Hom 存在性：一行未写。
+- (c) 三生成元不可约：一行未写。
+- `N_total := 5`、`k_max := 8` 仍为约定；`CoherenceToBranching.lean` L230 `commutator_levels_disjoint : True` 仍是重言式。
+- 结论边界：本节只证「Rec 与 Sp 作为范畴不可能等价」，**不**推出 N_active = 3。
+

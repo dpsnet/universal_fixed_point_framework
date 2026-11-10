@@ -159,3 +159,4 @@ import MUFPFormalization.RecOrbitContractionChannel
 import MUFPFormalization.RecOrbitContractionCriterion
 import MUFPFormalization.AlphaGaugeCoding
 import MUFPFormalization.DeltaMechanismAudit
+import MUFPFormalization.RecSpHomSeparation
