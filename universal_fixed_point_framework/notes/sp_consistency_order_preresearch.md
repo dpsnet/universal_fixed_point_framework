@@ -965,6 +965,16 @@ D10/D12 的全部样本都用**对角**（可对角化）`A`，只覆盖 `ker∩
 
 ⇒ 库内**不存在**「Sp 塔层数 = `Fintype.card ActiveMorphismLayer`」这样的连接定理。
 
+**【D19 复查勘误，2026-11-10】** 上段两处不准确，复查后修正：
+
+- **「只有三条定理」错**：该文件共 13 条 `theorem` —— `card_active_layers`(L88)、`each_layer_nonempty`(L106)、`layerRep_on_basis`(L140)、`layer_orthogonality`(L147)、`genSpace_dim_is_three`(L174)、`genSpace_dim_equals_active_layers_count`(L178)、`layer1/2/3_condition`(L197/203/208)、`unified_3_theorem`(L218)、`origin_of_three_generations`(L224)、`k_max_value`(L246)、`bott_truncation_index`(L252)、`unified_3_theorem_full_conjecture`(L258)。「三条」仅指 Sp 侧的 condition 重述。
+- **「不存在桥」错**：桥存在，在 `BottTower.lean` —— `truncation_by_active_layers`（L175–177），陈述 `Nat.log 2 k_max = Fintype.card ActiveMorphismLayer`。
+- **但该桥是算术恒等，不是结构推论**：证明链 `k_max_eq_two_pow_active`（L147）→ `rw [k_max_value, card_active_layers]; norm_num`，即验算 `8 = 2^3`。两端都是字面量：`k_max := spinorDim 0`（L139）+ `spinorDim (k) : ℕ := 8 * 2 ^ k`（L76，字面量 8）；`card = 3` 来自三构造子。
+- **`BottTower` L171 的声称与证明不符**：「此证明将 Bott 截断指数从『数值巧合』升级为『范畴结构推论』」——证明内容是 `norm_num`，仍是数值巧合。
+- **两个同名 `k_max` 并列而非引用**：`BottTower.k_max := spinorDim 0`（L139）与 `Unified3Theorem.k_max : ℕ := 8`（L243，字面量）；后者注释（L241）「结构性定义见 BottTower.k_max」不成立。
+- **满射定理前提硬编码**：`layerToDoublingIndex`（L111–115）把三构造子映到 0/1/2；`doublingIndex_surjective`（L119）前提为 `i < 3`。
+- **注释比定理宽**：`unified_3_theorem_full_conjecture`（L258）与 `BottTower.unified_3_theorem_fully_closed`（L196）都是三项字面量恒等的合取；后者注释（L187–195）声称 `d = N_gen = log₂(k_max) = N_active = 3` 四个数相等，但定理陈述只含三项，`d` 与 `N_gen` 不在其中。
+
 **事实 2：`GenSpace := ℂ × ℂ × ℂ`（L123）。** `genSpace_dim_is_three`（L174）由 `simp [GenSpace, Module.finrank_prod, Module.finrank_self]` 得 3 ⇒ **3 来自三元组写法**。
 
 **事实 3：`ActiveMorphismLayer`（L69–72）恰三构造子**（`first` / `second` / `third`），`card_active_layers`（L88）⇒ **3 来自 inductive 构造子个数**。
@@ -997,6 +1007,23 @@ GenSpace = ℂ³（三元组写法）  ↔  ActiveMorphismLayer（三构造子�
 若要为 `3` 建桥，唯一候选是「Sp 塔在某相下的层数 = 3」。D15 三相表给出 **1 / 2 / ∞**，**无一为 3**。
 
 ⇒ 桥不可能成立 ⇒ 升格在现有 Lean 结构里**不可能完成**，不是「尚未完成」。
+
+**【D19 复查勘误】** 上段把「塔高」与「`N_active`」混为一谈——与 §13.10 已撤回的同类错误同源。复跑 `pr634d15lean2.py`（输出 `pr634d15recheck.txt`）后的精确值：
+
+| 谱型 | `dim ker` | 层 2 | 层 3 | 层 4 | 塔高 | `N_active`（层 4 不计） |
+|---|---|---|---|---|---|---|
+| A 同谱·可对角 | 3 | 非平凡 | 平凡 | 平凡 | 2 | 2 |
+| B 同谱·Jordan | 3 | 非平凡 | 非平凡 | 非平凡 | 4（结构上可无限延伸） | **3** |
+| C 异谱·不交 | 0 | 平凡 | 平凡 | 平凡 | 1 | 1 |
+
+⇒ **「无一为 3」错：B 相（同谱 + 含 Jordan 块）恰好给出 `N_active = 3`。**
+
+但 `N_active = 3` 仍不是纯代数结论：
+- 代数事实是「`ker∩im ≠ 0` ⇒ 层 2, 3, 4, … 全部非平凡 ⇒ 塔高 ∞」；
+- 要截断到 3，必须附加「第 4 层起为 coherence、不计入 active」的指派；
+- 该指派在库内**无代数判据**（§14.2），且与 `SpFourMorphism.condition`（L370）同形。
+
+⇒ **判决修正为**：`N_active = 3` 可作**条件定理**（「在 `ker∩im ≠ 0` 相、并假定第 4 层起为 coherence，则 `N_active = 3`」）；不可作无条件定理（A 相 2、C 相 1）；不可称「由 Sp 结构推出」（Bott 桥是 `8 = 2³` 的算术恒等）。
 
 ### 14.4 判决
 
@@ -1046,7 +1073,7 @@ GenSpace = ℂ³（三元组写法）  ↔  ActiveMorphismLayer（三构造子�
 | 1 | `H³ = 0` | `ker∩im` 由同调给出 | ✗ `72eefc9` | 机检反例：幂零 Jordan 时 `dim(ker∩im) = 1` |
 | 2 | 链复形必然性 | `d_A` 是链复形微分 | ✗ `e21d084` | `d² ≠ 0`（`dJ (dJ matE21) = -(2:ℂ) • jordanMat`） |
 | 3 | 五重静默压制层 4 | 静默体系压制第 4 层 | ✗ `23a54cc` | 判据不带层索引，对层 3/4 不可分辨 |
-| 4 | 塔高（48 例 `k_A`） | 相容阶 = 3 | ✗ D15 | 三相 1 / 2 / ∞ 无 3；且网格层 3/4 构造违背 Lean |
+| 4 | 塔高（48 例 `k_A`） | 相容阶 = 3 | ✗ D15（**D19 已部分修正**） | 塔高 2 / 4（可 ∞）/ 1；但 `N_active` 在 B 相 = **3**（见 §14.3 勘误）；网格层 3/4 构造违背 Lean |
 | 5 | 可持续性 ⇒ 3 | 幂有界 ⇒ 可对角 ⇒ 相容阶 3 | ✗ D1 | 4 例反证（`U2 I+J2` / `U3 I+J3`：`ker∩im > 0`、`k_A = 4`、`‖U^200‖ ≈ 2.8e-85`） |
 | 6 | `M1–M4 ⇒ 可对角化` | 测度/紧致判据给半单 | ✗ D3 | `id_{J2}` 即反例；M1–M4（paper1 L985–992）不含半单性 |
 | 7 | `k_max = 8` ⇒ `log₂ = 3` | Bott 塔截断指数 | ✗ 本轮 | `spinorDim (k) : ℕ := 8 * 2 ^ k`（`BottTower.lean` L76）**硬写字面量 8**；文档 L31–33 已勘误标准 `Cl(1,7)` 旋量应为 16 ⇒ `log₂ 16 = 4 ≠ 3` |
@@ -1183,4 +1210,59 @@ Clifford 分级数字（1,4,6,4,1；8=6+1+1；15=1+4+6+4）均为 d=3 之后的�
 ```
 
 ⇒ **`N_active = 3` 只能是公设（E3）。** 数值上与 Hurwitz/Bott 的 8 一致，这是可检验的巧合，不是推导。
+
+## 17 复查记录：三处勘误与修正后的终局（D19，2026-11-10）
+
+按「再仔细复查、确保无误」要求，对 D16–D18 的全部断言重做一次独立复核。
+
+### 17.1 复核项清单
+
+| # | 原断言 | 复核方法 | 结果 |
+|---|---|---|---|
+| 1 | `Unified3Theorem.lean` Sp 侧只有三条定理 | `Grep ^(theorem\|lemma\|def\|abbrev\|inductive\|structure)` 全文件 | **✗ 错**：共 13 条 theorem（详见 §14.1 勘误） |
+| 2 | 库内不存在「3 的桥定理」 | 同上 + 读 `BottTower.lean` L92–218 | **✗ 错**：`truncation_by_active_layers`（L175）存在 |
+| 3 | 桥是结构推论 | 读 `k_max_eq_two_pow_active`（L147–149）证明体 | **✗ 不成立**：证明是 `rw [k_max_value, card_active_layers]; norm_num`，验算 `8 = 2³` |
+| 4 | `GenSpace := ℂ × ℂ × ℂ`（L123）、`finrank = 3`（L174） | `Grep` 定位 + 读原文 | ✓ 正确 |
+| 5 | `ActiveMorphismLayer` 三构造子（L69–72）、`card = 3`（L88） | 同上 | ✓ 正确 |
+| 6 | L186–189「不可能有第 4 个主动生成层」是循环 | 读 L182–212 原文 | ✓ 正确（但见 #7） |
+| 7 | `SpFourMorphism.condition`（L370）与层 1/2/3 同形 | 读 `HigherSpCategory.lean` L364–384 | ✓ 正确（正是循环的破口） |
+| 8 | D15 三相「1 / 2 / ∞，无一为 3」 | **复跑** `pr634d15lean2.py` | **✗ 错**：塔高 2 / 4（可 ∞）/ 1，而 `N_active` 在 B 相 = 3 |
+| 9 | `spinorDim (k) := 8 * 2 ^ k`（L76），字面量 8 | 读 L68–90 | ✓ 正确 |
+| 10 | 库内勘误称工作基准 8、标准 `Cl(1,7)` 旋量 16 | 读 L31–33、L71–75 | ✓ 正确（但「不依赖基准值」的自陈与结论矛盾） |
+| 11 | `QuaternionSpinOrigin` 以 `d = 3` 为输入 | 读 L26–32、L38–39 | ✓ 正确（自陈「步 1 依赖 Unified3Theorem」） |
+| 12 | Mathlib 无 `Octonion` | `Get-ChildItem -Filter *Octonion*`（0）+ `Grep Octonion`（0） | ✓ 正确 |
+| 13 | Mathlib `Hurwitz` 命中全为 ζ 函数 | `Grep Hurwitz`（**207 处**）逐条抽看 | ✓ 正确（`HurwitzZeta*` / `HurwitzKernelBounds`） |
+| 14 | Mathlib 有 6 个 `Quaternion` 文件 | `Get-ChildItem -Filter *Quaternion*` | ✓ 正确 |
+| 15 | Mathlib 无「可除代数维数 ∈ {1,2,4,8}」 | 上述检索 + 看 `WedderburnArtin` / `JacobsonNoether` | ✓ 正确（只讲 `A ≅ Mₙ(D)`，无维数限制） |
+
+⇒ **15 项复核：10 项正确，3 项需勘误（#1、#2/#3、#8），2 项附带矛盾（#6/#7 保留但需并读、#10 的自陈矛盾）。**
+
+### 17.2 三处勘误（均已就地标注，原文保留以便审计）
+
+1. **§14.1 事实 1**：磨去「只有三条定理」「不存在桥」两个断言，补入 13 条 theorem 全表、`truncation_by_active_layers` 的存在、其算术证明体、两个同名 `k_max` 并列事实。
+2. **§14.3**：磨去「三相 1 / 2 / ∞ 无一为 3」，改列精确三相表并区分塔高与 `N_active`；判决由「不可能升格」改为「可作条件定理、不可作无条件定理」。
+3. **§15.1 表 #4**：同步改为「塔高 2 / 4 / 1；`N_active` 在 B 相 = 3」。
+
+### 17.3 修正后的终局
+
+| 命题 | 状态 | 依据 |
+|---|---|---|
+| 「`N_active = 3` 是无条件定理」 | **✗ 否** | A 相 `N_active = 2`、C 相 = 1 |
+| 「`N_active = 3` 由 Sp 结构推出」 | **✗ 否** | 桥 `truncation_by_active_layers` 是 `8 = 2³` 的算术恒等，`8` 与 `3` 皆字面量 |
+| 「`N_active = 3` 可作条件定理」 | **✓ 可，但条件含非代数项** | 条件 = `ker∩im ≠ 0`（同谱 + Jordan，可机检）+ 「第 4 层起为 coherence 不计入」（**无代数判据**） |
+| 「Bott 截断指数 `log₂ k_max = 3`」 | **✓ 真，但平凡** | `norm_num` 验 `8 = 2³` |
+| 「`d = 3` 是输入端公设」 | **✓ 成立** | `SpObj.n` 任意；`GenSpace` 写成三元组；全库 Clifford/Bott 数字链均在其下游 |
+
+**⇒ 最终的诚实表述（建议的论文措辞）**：
+
+> `N_active = 3` 并非由 𝐒𝐩 4-范畴的态射塔结构推出。代数上可机检的事实是：`ker∩im ≠ 0` 时层 2 起全部非平凡（塔高 ∞），`ker∩im = 0` 时塔高 2，`ker = 0` 时塔高 1。把 `N_active` 取为 3，需要额外规定「第 4 层起为 coherence 层、不计入主动生成层」——该规定在库内**没有代数判据**（`SpFourMorphism.condition` 与层 1/2/3 同形）。因此 `N_active = 3` 应按**公设 + 一条显式约定**登记：公设 E3（`3` 由 `GenSpace = ℂ³` 与三构造子编码给出），约定 C1（层 4 起不计入 `active`）。数值上 `3 = log₂ 8` 与 Hurwitz 上限 / Bott 周期一致，此为可检验的巧合，不作推导。
+
+### 17.4 仍未被否证、但也不能升格的残余
+
+- **D15 的三相分离**（`ker∩im` 决定塔高）—— 可机检，已被精确有理算术验证（三情形，`Fraction` 全程）；
+- **`ker∩im = 0 ⟺ 可对角化`** —— D2 双向违例 0（310 例）；
+- **`Δ ≠ 0 ⟺ ker∩im > 0`（C1′）** —— D12 精确算术 20/20 + D14 反例；
+- **`dim ker = Σ m_i²`** —— D3 30/30。
+
+⇒ 这四条是这一系列工作真正沉淀下来的东西，与「3 能否升格」无关，但都可独立使用。
 
