@@ -13425,3 +13425,17 @@ L1426 承诺：|Δ| > 3σ_score 则「α⁻¹ 公式作废或按零参数修正�
 - `N_total := 5`、`k_max := 8` 仍为约定；`CoherenceToBranching.lean` L230 `commutator_levels_disjoint : True` 仍是重言式。
 - 结论边界：本节只证「Rec 与 Sp 作为范畴不可能等价」，**不**推出 N_active = 3。
 
+## 8. 审计与构建计数（已同步论文）
+
+| 项 | 值 | 命令 / 脚本 |
+| --- | --- | --- |
+| 库根构建 | `Build completed successfully (3838 jobs)`，exit 0 | `lake build MUFPFormalization` |
+| 全 default target | `Build completed successfully (7094 jobs)`，exit 0 | `lake build` |
+| MODULES | 342（递归 `src/**/*.lean`，含库根） | `scripts/p7_lean_olean_audit.py` |
+| CLOSURE | 170（含根） | 同上 |
+| ORPHANS | 172（不变；9 个由 exe 入口覆盖，163 个逐模块点名构建） | 同上 |
+| MISSING_OLEAN | 0 | 同上 |
+| SORRY_LINES | 0 | 同上 |
+
+论文口径换算：**341 源模块 + 库根 = 342 个 Lean 文件**，olean 342/342 齐备。论文 5 个位置、10 个替换点已同步（`341/341`→`342/342`、`MODULES=340`→`341`、`CLOSURE=169`→`170`、`3837 jobs`→`3838`），字节数保持不变（158948），CRLF 计数保持 1528。
+
