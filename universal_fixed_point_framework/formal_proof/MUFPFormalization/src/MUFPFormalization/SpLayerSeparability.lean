@@ -47,8 +47,13 @@ def AdTraversable (A : Matrix ι ι ℂ) : Prop :=
 
 /-! ### 具体对象：A 相 `diag(1,2,3)` 与 B 相 `J₃` -/
 
-/-- A 相代表：可对角、谱互异 `diag(1,2,3)`。 -/
-abbrev diag3 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.diagonal ![1, 2, 3]
+/-- A 相的谱值 `(1, 2, 3)`。 -/
+abbrev diag3Val : Fin 3 → ℂ := ![1, 2, 3]
+
+/-- A 相代表：可对角、谱互异 `diag(1,2,3)`。
+    写成显式 `Matrix.of`（而非 `Matrix.diagonal`），使元素级证明可复用
+    `Matrix.of_apply` + `Fin.sum_univ_succ` 的化简链。 -/
+abbrev diag3 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![1, 0, 0], ![0, 2, 0], ![0, 0, 3]]
 
 /-- B 相代表：单个 3×3 Jordan 块（`ker(ad) ∩ im(ad) ≠ 0`）。 -/
 abbrev jordan3 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![0, 1, 0], ![0, 0, 1], ![0, 0, 0]]
@@ -85,5 +90,86 @@ theorem jordan3_has_two_morphism : HasNontrivialTwoMorphism jordan3 := by
     exact jordan3_mem_ker
   rw [Submodule.mem_bot] at hmem
   exact jordan3_ne_zero hmem
+
+/-! ### A 相判定：层 2 非平凡、层 3 不可穿越 -/
+
+/-- 对角矩阵从左侧作用的元素式：`(diag3 * X) i j = d i * X i j`。 -/
+lemma diag3_mul_apply (X : Matrix (Fin 3) (Fin 3) ℂ) (i j : Fin 3) :
+    (diag3 * X) i j = diag3Val i * X i j := by
+  rw [Matrix.mul_apply]
+  fin_cases i
+  all_goals simp [Matrix.of_apply, Fin.sum_univ_succ]
+
+/-- 对角矩阵从右侧作用的元素式：`(X * diag3) i j = X i j * d j`。 -/
+lemma mul_diag3_apply (X : Matrix (Fin 3) (Fin 3) ℂ) (i j : Fin 3) :
+    (X * diag3) i j = X i j * diag3Val j := by
+  rw [Matrix.mul_apply]
+  fin_cases j
+  all_goals simp [Matrix.of_apply, Fin.sum_univ_succ]
+
+/-- A 相层 2 非平凡：`diag(1,0,0) ∈ ker(ad_{diag3})` 且非零。 -/
+theorem diag3_has_two_morphism : HasNontrivialTwoMorphism diag3 := by
+  intro hbot
+  set D : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![1, 0, 0], ![0, 0, 0], ![0, 0, 0]] with hDdef
+  have hDker : D ∈ LinearMap.ker (adLin diag3) := by
+    rw [LinearMap.mem_ker]
+    change diag3 * D - D * diag3 = 0
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [hDdef, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.sub_apply,
+        Matrix.zero_apply]
+  have hDne : D ≠ 0 := by
+    intro hz
+    have h00 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) hz
+    simp [hDdef, Matrix.of_apply, Matrix.zero_apply] at h00
+  have hmem : D ∈ (⊥ : Submodule ℂ (Matrix (Fin 3) (Fin 3) ℂ)) := by
+    rw [← hbot]
+    exact hDker
+  rw [Submodule.mem_bot] at hmem
+  exact hDne hmem
+
+/-- **A 相层 3 不可穿越**（层 3 分离 A/B 的 Lean 侧判据）：
+    `ker(ad_{diag3}) ⊓ range(ad_{diag3}) = ⊥`，故不存在非零可穿越 defect。
+
+    论证结构：`R ∈ ker ⊓ range` 时，`R = ad_{diag3}(X)`；对角位 `d_i * X_ii - X_ii * d_i = 0`
+    强制 `R_ii = 0`，非对角位 `(d_i - d_j) * R_ij = 0` 且 `d_i ≠ d_j` 强制 `R_ij = 0`。 -/
+theorem diag3_ker_inf_range_eq_bot :
+    LinearMap.ker (adLin diag3) ⊓ LinearMap.range (adLin diag3) = ⊥ := by
+  rw [Submodule.eq_bot_iff]
+  intro R hR
+  rw [Submodule.mem_inf] at hR
+  obtain ⟨hker, hrange⟩ := hR
+  obtain ⟨X, hX⟩ := hrange
+  have hker' : adLin diag3 R = 0 := LinearMap.mem_ker.mp hker
+  have hXe : ∀ i j : Fin 3, diag3Val i * X i j - X i j * diag3Val j = R i j := by
+    intro i j
+    have h := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i j) hX
+    simpa [adLin, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Matrix.sub_apply,
+      diag3_mul_apply, mul_diag3_apply] using h
+  have hKe : ∀ i j : Fin 3, diag3Val i * R i j - R i j * diag3Val j = 0 := by
+    intro i j
+    have h := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i j) hker'
+    simpa [adLin, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Matrix.sub_apply,
+      diag3_mul_apply, mul_diag3_apply, Matrix.zero_apply] using h
+  ext i j
+  by_cases hij : i = j
+  · subst hij
+    have h0 := hXe i i
+    have hz : R i i = 0 := by
+      rw [← h0]
+      ring
+    simpa [Matrix.zero_apply] using hz
+  · have h0 := hKe i j
+    have hd : diag3Val i - diag3Val j ≠ 0 := by
+      revert hij
+      fin_cases i <;> fin_cases j <;> simp [diag3Val] <;> norm_num
+    have hmul : (diag3Val i - diag3Val j) * R i j = 0 := by
+      calc (diag3Val i - diag3Val j) * R i j
+          = diag3Val i * R i j - diag3Val j * R i j := by ring
+        _ = diag3Val i * R i j - R i j * diag3Val j := by ring
+        _ = 0 := h0
+    rcases mul_eq_zero.mp hmul with h | h
+    · exact absurd h hd
+    · simpa [Matrix.zero_apply] using h
 
 end MUFPFormalization

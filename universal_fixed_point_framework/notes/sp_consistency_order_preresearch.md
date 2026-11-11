@@ -1547,20 +1547,31 @@ theorem spFourExchangeLaw_strict {X Y Z : SpObj}
 
 ⇒ **B 相（`N_active = 3`、塔高 4/∞）的层 2、层 3 判定已从「R1 数据重排」升为 Lean 定理**。
 
-**未完成（A 相）**：`diag3_has_two_morphism`（`HasNontrivialTwoMorphism (diag(1,2,3))`）与 `diag3_ker_inf_range_eq_bot`（`ker(ad_{diag3}) ⊓ range(ad_{diag3}) = ⊥`）两条已写出证明骨架但未过机检，已从工作树撤回，不留在库内。失败原因是**工程层**而非数学层：
+**A 相也已机检（工程障碍已排除）**。两条判据与两条元素级乘法引理：
 
-- `(Matrix.diagonal d * X) i j` 的元素级展开需 `Matrix.mul_apply` → `Matrix.diagonal_apply` → `Finset.sum_eq_single` 三步配合，本版本 Mathlib 上 `simp only` 之后 `rw` 的子目标顺序与形态不稳定（`sum_eq_single` 的 `a ∉ s` 分支被前置）；
-- ℂ 上 `ring` 收口后 RHS 残留 `0 i i`（`Matrix.zero_apply` 未被默认 simp 集覆盖）；
-- `diag3` 为 `abbrev`，展开后成 `![1,2,3] i`，使 `rw [Matrix.diagonal_apply_ne]` 模式不匹配。
+| 定理 / 引理 | 内容 | 相 |
+|---|---|---|
+| `diag3_mul_apply` | `(diag3 * X) i j = d i * X i j` | A（工具引理） |
+| `mul_diag3_apply` | `(X * diag3) i j = X i j * d j` | A（工具引理） |
+| `diag3_has_two_morphism` | `HasNontrivialTwoMorphism diag3`，见证 `diag(1,0,0)` | A |
+| `diag3_ker_inf_range_eq_bot` | `ker(ad_{diag3}) ⊓ range(ad_{diag3}) = ⊥`（层 3 defect 不可穿越） | A |
 
-⇒ A 相（层 3 不可穿越）目前仍只有 `pr634r1highn.py` 的精确有理算术支撑（n = 2..7 零违例），**未 Lean 化**。
+**排除障碍的关键手段**：把 `diag3` 从 `Matrix.diagonal ![1,2,3]` 改写为**等价的显式矩阵** `Matrix.of ![![1,0,0],![0,2,0],![0,0,3]]`，并把谱值单列为 `diag3Val : Fin 3 → ℂ := ![1,2,3]`。两者是同一个 3×3 对角 (1,2,3)，但显式写法使元素级证明可以复用 `jordan3` 已验证的化简链（`Matrix.of_apply` + `Fin.sum_univ_succ` + `fin_cases`），完全绕开 `Matrix.diagonal` 那条路线上的三个坑（`Finset.sum_eq_single` 子目标顺序不稳、ℂ 上 `ring` 残留 `0 i i`、`diagonal_apply_ne` 因 `abbrev` 展开成 `![1,2,3] i` 而模式不匹配）。
 
-**已知环境噪声**：`jordan3_mem_range` 的 `simp` 集合触发 Lean 内部 `Lean.Expr.appArg!` / `appFn!` PANIC（`info` 级，不影响 olean 生成与定理正确性）。收窄为 `simp only` 会因缺 `![…] 2` 这类向量下标引理而无法收口，故保留原证法并登记。
+`diag3_ker_inf_range_eq_bot` 的论证结构（不再依赖元素级求和，而是走已机检的乘法引理）：
 
-**对 R5.1 分级的影响**：R5.1 原为 A（精确算术数据）。现 B 侧（可穿越）另有 Lean 机检，A 侧（不可穿越）仍只有数据 ⇒ 级别保持 A，但引用时须区分两栏（见结构结果清单 R5.1 新增段）。
+1. `R ∈ ker ⊓ range` ⇒ `R = ad_{diag3}(X)` 且 `ad_{diag3}(R) = 0`；
+2. 对角位：`d_i * X_ii - X_ii * d_i = 0` 直接给出 `R_ii = ad_{diag3}(X)_ii = 0`；
+3. 非对角位：`d_i * R_ij - R_ij * d_j = 0` ⇒ `(d_i - d_j) * R_ij = 0`，而 `d_i ≠ d_j`（`(1,2,3)` 互异）⇒ `R_ij = 0`。
+
+⇒ **A 相（层 3 不可穿越）已从 `pr634r1highn.py` 的精确算术升为 Lean 定理**。至此 R5.1 表中 A / B / C 三相的层 2、层 3 判定全部有 Lean 侧依据（C 相 `ker = 0` 属平凡情形，可由 `ker = ⊥` 直接给出，未单列定理）。
+
+**已知环境噪声**：`jordan3_mem_range`、`diag3_has_two_morphism`、`diag3_ker_inf_range_eq_bot` 中的 `simp` 集合会触发 Lean 内部 `Lean.Expr.appArg!` / `appFn!` PANIC（`info` 级，不影响 olean 生成与定理正确性，实测构建 1215 jobs 通过、模块零 warning）。收窄为 `simp only` 会因缺 `![…] 2` 这类向量下标引理而无法收口，故保留现证法并登记。
+
+**对 R5.1 分级的影响**：R5.1 原为 A（精确算术数据），现在 A / B 两相的关键判定均有 Lean 机检支撑，级别维持 **A**，但支撑来源升级为「机检为主、数据为辅」（见结构结果清单 R5.1 的 Lean 侧状态表）。
 
 ### 21.6 全库复验口径
 
-- 单模块：`lake build MUFPFormalization.SpLayerSeparability` → 1215 jobs 通过，无 `error`，仅上述 PANIC `info`。
-- 全库：`lake build MUFPFormalization`（新增 import 后）→ 见 `pr634fullbuild2.txt`；既有 12 条警告位置不变（`SpCategory:427×2`、`ICVerification:82/86`、`RAP4_silence_strictification:123/124`、`RAP5a_explicit_adjunction:413`、`SignatureFiber:342`、`SpectralBundle/Core:69`、`PinchTopology:389/492`、`HallEmergence:1170`），均非本模块引入。
+- 单模块：`lake build MUFPFormalization.SpLayerSeparability` → 1215 jobs 通过，`EXIT=0`，模块 **0 warning**（PANIC 为 `info` 级，不影响 olean）。
+- 全库：`lake build MUFPFormalization`（A 相加入后）→ **3841 jobs 通过，`EXIT=0`，12 条警告，0 error**（`pr634fullbuild3.txt` / `pr634fullbuild3sum.txt`）；12 条警告位置与 D26 前完全一致（`SpCategory:427×2`、`ICVerification:82/86`、`RAP4_silence_strictification:123/124`、`RAP5a_explicit_adjunction:413`、`SignatureFiber:342`、`SpectralBundle/Core:69`、`PinchTopology:389/492`、`HallEmergence:1170`），**均非本模块引入**。
 
