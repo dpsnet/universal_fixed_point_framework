@@ -2393,6 +2393,40 @@ fin_cases i <;> fin_cases j <;> simp [hsz]
 
 仓库根历史日志（`.lake_*.log`、`_ans_*.txt`、`_fcz_*.txt`、`frag26_*.lean`、`_probe_*.lean`）经 `git ls-files` 核验 **JUNK_TRACKED=0**（未被跟踪，全库 TRACKED_TOTAL=5731），故只补 `.gitignore` 规则防误提交，不做 `git rm --cached`（避免改索引影响他人）。
 
-### 21.20.10 本轮未完成（继续开口）
+### 21.20.10 C 相（`diag4`）单对象判据补齐（第 2 批，2026-11-11）
 
-`SpHerm` 受限伴随、C 相塔高陈述、R1–R4 Lean 化、`Hurwitz` 计数口径、ε 下游脚本、`RESEARCH_STATE.md` 全量同步、论文 §3/§6 重述——均未在本批处理。
+此前 C 相只有**跨对象**判据 `diag4_diag3_ker_eq_bot`（谱不交 ⇒ `adLin2 diag4 diag3` 的 `ker = ⊥`，即「无 defect 可承接」）。**单对象**判据（`adLin diag4` 自身）未立。本批补 4 定理 + 1 lemma：
+
+| 名字 | 内容 | 与 A 相（`diag3`）关系 |
+|---|---|---|
+| `mul_diag4_apply` | `(X * diag4) i j = X i j * diag4Val j` | 与 `mul_diag3_apply` 同形 |
+| `diag4_has_two_morphism` | `HasNontrivialTwoMorphism diag4`（`diag(1,0,0) ∈ ker`） | 与 `diag3_has_two_morphism` **逐行同构** |
+| `diag4_ker_inf_range_eq_bot` | 谱互异（`4,5,6`）⇒ `ker ⊓ range = ⊥` | 与 `diag3_ker_inf_range_eq_bot` 同构 |
+| `diag4_not_traversable` | `¬ AdTraversable diag4` | 与 `diag3_not_traversable` 同构 |
+| `diag4_same_single_object_verdict` | 两相判决完全相同：层 2 都非平凡、层 3 都不可穿越 | — |
+
+**由此得到一条边界结论（本批最有价值的负结果）**：
+「C 相塔高 1」**不能**由 `HasNontrivialTwoMorphism` / `AdTraversable` 表达——这两个判据是**对象自身**的性质，对 `diag4` 与 `diag3` 给出完全相同的判决。塔高 1 指的是三相过渡链（A `diag(1,2,3)` → B `J₃` → C `diag(4,5,6)`）中 C 被跳过的**组合意义**；要形式化它，须先定义三相过渡格与「跳过」关系——本库尚无，**登记为缺口**，不是「补一个定理」能关的。
+
+构建：单模块 `pr634sep2.txt` **EXIT 0 / 零警告**；全库 `pr634full13.txt` **3853 jobs / EXIT 0 / 0 error / 10 警告**（与第 1 批同集）。
+
+踩坑：Edit 写入时 `<;>` 被写成 `<<`，Lean 报 `unexpected token '<'; expected term`（`SpLayerSeparability.lean:421:35`，`pr634sep1.txt` L290）。已修，并全文件扫 `<<|>>` 确认 0 残留。
+
+### 21.20.11 `Hurwitz` 计数口径：不是矛盾，是度量不同（裁决，关闭）
+
+此前登记为「口径不一致，未裁决」：§16.1 表写「18 文件」，D19 复查「207 处」。复核后裁决：**两者不矛盾**——18 是**文件数**（命中 `Hurwitz` 的文件个数），207 是**命中处数**（同一 grep 的行/处计数）。两处记录也都正确限定「全部为 Hurwitz ζ 函数，与可除代数无关」（`NumberTheory/LSeries/HurwitzZeta*`、`HurwitzZetaValues/Odd`、`HurwitzZetaValues/Even`、`HurwitzKernelBounds`）。
+
+⇒ 该条**关闭**，不需改任何一个数；日后引用须同时写清度量（「18 个文件 / 207 处命中」）。
+
+### 21.20.12 本批仍未关闭（诚实清单）
+
+- `SpHerm` 受限伴随：前置判据（自伴化保函子性）已数值 + Lean 双证伪；要做须换「`D` 的像 ∩ 自伴层」子范畴路线，**未做**。
+- R1–R4 与 PR-634-L1 的 Lean 化：**未做**。
+- R2 在非对角相的 `dim(ker ∩ im)` 通式：**未做**。
+- ε 归处与下游 10+ 脚本硬编码 `8.12e-17`：**未改**。
+- `RESEARCH_STATE.md` 全量同步（现 13645 行，多处历史口径 MODULES=334/335/336/337/338/344）：**未做**。
+- 论文 §3/§6 对 §1 48 例根基问题的重述：**未做**。
+- §2.4 级联改动清单 8 处、§8 四条出路、§14.6 论文影响登记 4 条：**未做**。
+- 论文 §5「层 1/2/3 ↔ 3D 空间 + 1D 时间的直接几何同构」：**未闭合**。
+- `N_total := 5` / `k_max := 8` 的约定身份：已在 Lean 注释标注（§21.20.2 / §21.20.3），但**未在论文侧**改述。
+- 12 条未决问题（用户拍板类）：**未动**。

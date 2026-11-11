@@ -351,4 +351,102 @@ theorem dev_zero_iff_selfadjoint_layer :
         dev ∈ LinearMap.ker (adLin jordan3) ⊓ LinearMap.range (adLin jordan3) ∧ dev ≠ 0) :=
   ⟨diag3_dev_eq_zero, ⟨jordan3, jordan3_dev_can_be_nonzero⟩⟩
 
+/-! ### C 相（`diag4`）的单对象判据：与 A 相同结论（2026-11-11 补） -/
+
+/- 说明：此前 C 相只有跨对象判据 `diag4_diag3_ker_eq_bot`（谱不交 ⇒ `adLin2 diag4 diag3` 的
+   `ker = ⊥`，即「无 defect 可承接」）。单对象判据（`adLin diag4` 自身的 `ker ≠ ⊥` /
+   `ker ⊓ range = ⊥`）此前未立。本节补上，并由此得出一个**边界结论**（见本节末定理）：
+   单对象判据对 `diag4` 与 `diag3` 给出**完全相同**的判决，故「C 相塔高 1」不能由它表达。 -/
+
+/-- `diag4` 从右侧作用的元素式（与 `mul_diag3_apply` 同形）。 -/
+lemma mul_diag4_apply (X : Matrix (Fin 3) (Fin 3) ℂ) (i j : Fin 3) :
+    (X * diag4) i j = X i j * diag4Val j := by
+  rw [Matrix.mul_apply]
+  fin_cases j
+  all_goals simp [Matrix.of_apply, Fin.sum_univ_succ]
+
+/-- **C 相层 2 非平凡**（与 `diag3_has_two_morphism` 逐行同构）：
+    `diag(1,0,0) ∈ ker(ad_{diag4})` 且非零。 -/
+theorem diag4_has_two_morphism : HasNontrivialTwoMorphism diag4 := by
+  intro hbot
+  set D : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![1, 0, 0], ![0, 0, 0], ![0, 0, 0]] with hDdef
+  have hDker : D ∈ LinearMap.ker (adLin diag4) := by
+    rw [LinearMap.mem_ker]
+    change diag4 * D - D * diag4 = 0
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      simp [hDdef, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.sub_apply,
+        Matrix.zero_apply]
+  have hDne : D ≠ 0 := by
+    intro hz
+    have h00 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 0) hz
+    simp [hDdef, Matrix.of_apply, Matrix.zero_apply] at h00
+  have hmem : D ∈ (⊥ : Submodule ℂ (Matrix (Fin 3) (Fin 3) ℂ)) := by
+    rw [← hbot]
+    exact hDker
+  rw [Submodule.mem_bot] at hmem
+  exact hDne hmem
+
+/-- **C 相层 3 不可穿越**（与 `diag3_ker_inf_range_eq_bot` 逐行同构）：
+    谱互异（`4,5,6`）⇒ `ker ⊓ range = ⊥`。 -/
+theorem diag4_ker_inf_range_eq_bot :
+    LinearMap.ker (adLin diag4) ⊓ LinearMap.range (adLin diag4) = ⊥ := by
+  rw [Submodule.eq_bot_iff]
+  intro R hR
+  rw [Submodule.mem_inf] at hR
+  obtain ⟨hker, hrange⟩ := hR
+  obtain ⟨X, hX⟩ := hrange
+  have hker' : adLin diag4 R = 0 := LinearMap.mem_ker.mp hker
+  have hXe : ∀ i j : Fin 3, diag4Val i * X i j - X i j * diag4Val j = R i j := by
+    intro i j
+    have h := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i j) hX
+    simpa [adLin, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Matrix.sub_apply,
+      diag4_mul_apply, mul_diag4_apply] using h
+  have hKe : ∀ i j : Fin 3, diag4Val i * R i j - R i j * diag4Val j = 0 := by
+    intro i j
+    have h := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i j) hker'
+    simpa [adLin, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Matrix.sub_apply,
+      diag4_mul_apply, mul_diag4_apply, Matrix.zero_apply] using h
+  ext i j
+  by_cases hij : i = j
+  · subst hij
+    have h0 := hXe i i
+    have hz : R i i = 0 := by
+      rw [← h0]
+      ring
+    simpa [Matrix.zero_apply] using hz
+  · have h0 := hKe i j
+    have hd : diag4Val i - diag4Val j ≠ 0 := by
+      revert hij
+      fin_cases i <;> fin_cases j <;> simp [diag4Val] <;> norm_num
+    have hmul : (diag4Val i - diag4Val j) * R i j = 0 := by
+      calc (diag4Val i - diag4Val j) * R i j
+          = diag4Val i * R i j - diag4Val j * R i j := by ring
+        _ = diag4Val i * R i j - R i j * diag4Val j := by ring
+        _ = 0 := h0
+    rcases mul_eq_zero.mp hmul with h | h
+    · exact absurd h hd
+    · simpa [Matrix.zero_apply] using h
+
+/-- **C 相层 3 不可穿越**（判据形式）。 -/
+theorem diag4_not_traversable : ¬ AdTraversable diag4 := by
+  rintro ⟨R, hne, hmem⟩
+  rw [diag4_ker_inf_range_eq_bot] at hmem
+  rw [Submodule.mem_bot] at hmem
+  exact hne hmem
+
+/-- **C 相「塔高 1」的判据边界（本轮新增的诚实结论）**：
+    单对象判据（`HasNontrivialTwoMorphism` / `AdTraversable`）对 C 相与 A 相给出
+    **完全相同**的判决——层 2 都非平凡、层 3 都不可穿越。
+
+    ⇒ 「C 相塔高 1」因此**不能**由这两个判据表达：它指的是三相过渡链
+    （A `diag(1,2,3)` → B `J₃` → C `diag(4,5,6)`）中 C 被跳过的**组合意义**，
+    而不是 `diag4` 自身的对象层性质。若要形式化「塔高 1」，须先定义三相过渡格
+    与「跳过」关系——本库尚无，登记为缺口。 -/
+theorem diag4_same_single_object_verdict :
+    (HasNontrivialTwoMorphism diag4 ∧ ¬ AdTraversable diag4) ∧
+    (HasNontrivialTwoMorphism diag3 ∧ ¬ AdTraversable diag3) :=
+  ⟨⟨diag4_has_two_morphism, diag4_not_traversable⟩,
+    ⟨diag3_has_two_morphism, diag3_not_traversable⟩⟩
+
 end MUFPFormalization
