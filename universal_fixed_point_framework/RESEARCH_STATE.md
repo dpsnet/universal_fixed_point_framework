@@ -2,7 +2,7 @@
 
 > **本节为口径权威；以下全部正文为历史记录，其中的模块数 / jobs 数 / 警告数 / sorry 数均为当时快照，不可直接引用。**
 >
-> - **HEAD = `6459de8`**（`develop`，本地未推送；PR-634 预研累计 **58 版本地提交**，最近十批：`5c0c1c3` → `1482bd1` → `d514422` → `eee48ef` → `5b5b3c8` → `0e812b9` → `5f1eb2b` → `dadf846` → `f4ba30d` → `6459de8`）。
+> - **HEAD = `718f82d`**（`develop`，**已推送**：`github-origin` 与 `origin`（Gitee）两个远端均指向 `718f82d`，与本地一致，双方无 ahead/behind 差；推送范围 `23a54cc..718f82d`，含 PR-634 预研 **60 版提交**。最近十批：`d514422` → `eee48ef` → `5b5b3c8` → `0e812b9` → `5f1eb2b` → `dadf846` → `f4ba30d` → `6459de8` → `b8b5059` → `718f82d`）。
 > - **全库构建：3856 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full18.txt`，第 20 批重建；`pr634full17.txt` 为第 18 批，jobs 同为 3856）。
 > - **库内模块：359**（不含库根自身；递归计 `*.lean` 得 360）；库根 `src/MUFPFormalization.lean` = **180 行**，`ROOT_IMPORTS = 157`。
 > - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。第 1–21 批**未新增任何警告**。
