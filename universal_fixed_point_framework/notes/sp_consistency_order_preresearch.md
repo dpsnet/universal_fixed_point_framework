@@ -3587,3 +3587,120 @@ N · S = σ⁻¹   ∧   2 ≤ N   ∧   N < S    ⟹    N = 3 ∧ S = 5 ∧ N +
 - 单模块：`lake build MUFPFormalization.SigmaInvActiveSelect` **EXIT 0 / 0 error / WARN 0**（`pr634oc1.txt`）
 - 全库：`pr634full23.txt` **EXIT 0 / 3861 jobs / 0 error / WARN 10**
 
+
+## §21.40 「相的数量 = 3」的来由（第 29 批）——与 N_active=3 是两个独立的 3
+
+用户追问「相的数量呢」。此前库里「三相」只出现在注释里，从未形式化。本批把它的来由机检闭合。
+
+### 21.40.1 先查实：库里没有 `Phase` 类型
+
+全库 grep `Phase|phase`（`src/MUFPFormalization/`，354 模块）：
+
+| 命中 | 内容 | 是否层塔三相 |
+|---|---|---|
+| `AdjunctionAnchor.lean` L18/L124/L162/L200 | Phase 16B 路线图 | ✗ 伴随升级路线 |
+| `BerryChern.lean` L6280/L7245/L7369 | Stokes 平凡/非平凡相 | ✗ 量子霍尔 |
+| `BlackHoleBounce.lean` L63 | 反弹前膨胀相 | ✗ 宇宙学 |
+| `IFSFractal.lean` L422 | 三相异收缩率 | ✗ 分形 |
+| `SpFiveLayer.lean` L5/L17/L85 | A 相/B 相 塔高 | ✓ 但只是注释 |
+| `SpHermCategory.lean` L13/L94/L101 | A 相/B 相 归属 | ✓ 但只是注释 |
+| `SpLayerSeparability.lean` L49/L51/L59/L263/L265 | A 相/B 相/C 相 代表矩阵 | ✓ 但只是注释 |
+
+⇒ **没有任何 `inductive Phase`、没有任何定理说「相有三个」**。「A/B/C 相」是三个**手选样本矩阵**的称呼：
+`diag3 = diag(1,2,3)`、`jordan3 = J₃`、`diag4 = diag(4,5,6)`。
+
+⇒ 此前「相有三个」看起来完全是注入的。
+
+### 21.40.2 但三个相恰好是 `ker` 状态的三个格
+
+层塔的两个 condition（`SpLayerSeparability.lean` L36–47）本身就是两个二值判据：
+
+| 判据 | 定义 | 含义 |
+|---|---|---|
+| 层 2 condition | `HasNontrivialTwoMorphism A := LinearMap.ker (adLin A) ≠ ⊥` | `ker ≠ ⊥`？ |
+| 层 3 condition | `AdTraversable2 A B := ∃ R ≠ 0, R ∈ ker ⊓ range` | `ker ⊓ range ≠ ⊥`？ |
+
+（C 相的判据本来就是**跨对象**的 `adLin2 diag4 diag3`，所以必须用 `adLin2` 统一；
+`AdTraversable2` 是 `SpLayerSeparability.lean` L335 已有的跨对象统一判据。）
+
+对任一过渡对 `(A, B)`，两判据各取真/假得 **4 格**：
+
+| `ker = ⊥`? | `ker ⊓ range = ⊥`? | 状态 | 代表 | 塔行为 |
+|---|---|---|---|---|
+| 是 | 是 | **平坦** | C 相 `(diag4, diag3)` | 层 2 即平凡 ⇒ 塔高 1 |
+| 否 | 是 | **止步** | A 相 `(diag3, diag3)` | 层 2 非平凡、层 3 无见证 ⇒ 塔高 2 |
+| 否 | 否 | **可穿** | B 相 `(jordan3, jordan3)` | 层 2 非平凡、层 3 有见证 ⇒ 塔高 ≥ 4 |
+| 是 | 否 | **空** | —— | 被蕴含律排除 |
+
+第 4 格为空是**硬约束**：`ker = ⊥ ⟹ ker ⊓ range = ⊥ ⊓ range = ⊥`，与 `≠ ⊥` 矛盾。
+`phase_cell_flat_but_traverse_excluded` 机检此条。
+
+⇒ **4 格中恰有 1 格被排除，剩 3 格。这就是「相的数量 = 3」的来由。**
+
+### 21.40.3 机检清单（`PhaseTrichotomy.lean`，已挂库根）
+
+| 定理 | 内容 |
+|---|---|
+| `phase_cell_flat_but_traverse_excluded` | 第 4 格（`ker = ⊥` 且 `ker⊓range ≠ ⊥`）为空 |
+| `phase_states_exhaustive` | 三格穷尽：任一 `(A,B)` 必落三格之一 |
+| `phase_states_pairwise_exclusive` | 三格两两互斥（⇒ 是**划分**，不是重叠覆盖） |
+| `phase_A_occupies_stop2` | `(diag3, diag3)`：`ker ≠ ⊥` 且 `ker⊓range = ⊥` |
+| `phase_B_occupies_traverse` | `(jordan3, jordan3)`：`ker ≠ ⊥` 且 `ker⊓range ≠ ⊥` |
+| `phase_C_occupies_flat` | `(diag4, diag3)`：`ker = ⊥` |
+| `three_phases_occupy_three_cells` | ★ 三格互斥穷尽 + 三代表各占一格 ⇒ 恰好三档 |
+| `phase_count_is_not_active_count` | 区分锚（仅声明两个 3 不同源，不声称等式） |
+
+**不注入核对**：
+- 三格不是 `inductive` 构造子，**不做构造子计数**；完备性从 `by_cases`、互斥性从 `¬(P ∧ ¬P)` 推出。
+- 证明体不引用 `numActiveLayers` / `N_active` / `ActiveMorphismLayer` / 任何 `def := 3`。
+- `3` 出现在**结论**，不在前提。
+
+### 21.40.4 与 `N_active = 3` 的关系：两个独立的 3
+
+| | `N_active = 3` | 相的数量 = 3 |
+|---|---|---|
+| 含义 | **生成代数**（generations） | **层塔过渡对的状态档数** |
+| 来由 | σ⁻¹ = 15 的互补分解（第 28 批） | `ker` 两判据的 4 → 3 格排除（本批） |
+| 前提 | `N·S = 15 ∧ 2 ≤ N ∧ N < S` | 层 2 / 层 3 condition 各一个二值判据 |
+| 依赖 | 无 | 无 |
+
+**两者数值相同纯属巧合。** 本批**不**声称同源，`phase_count_is_not_active_count` 只作区分锚。
+
+**这是一个新开口（须登记）**：MUFPF 现在有**两个独立的 3**（生成代数、层塔状态档数）。
+理论完整性要求解释它们为何相等——若二者无关，则「3」在理论里出现两次是纯数值巧合；
+若相关，需要一条定理把 σ⁻¹ 的分解与 `ker` 状态挂上。**本批未做，登记为缺口。**
+
+### 21.40.5 仍存在的缺口
+
+1. **塔高的具体数值未闭合**：本批给出三格与每格归属，但「A 相恰是 2（不是 3）」、
+   「C 相恰是 1」、「B 相恰是 4」**未证**。第 2 批（`11a0a43`）已登记：
+   「C 相塔高 1」不能由单对象判据表达，需三相过渡格——本批给出了这个格，
+   **但塔高数值本身仍缺机制**。
+2. **「层 2 / 层 3 的 condition 恰各是一个二值判据」是层塔构造的输入**
+   （`HigherSpCategory.lean` L236–249 层表给定），不在本批证明范围。
+   若将来层表改动（例如层 3 condition 变成三值），三格论证会失效。
+3. **两个 3 的同源性问题**（见 21.40.4）本批未做。
+4. **`AdTraversable2` 与 `ker⊓range ≠ ⊥` 的 iff 未写成定理**：
+   `SpLayerSeparability.lean` 只定义了 `AdTraversable2`（存在非零元），
+   与「子模非零」等价依赖 `Submodule.ne_bot_iff`。本批在需要处直接使用该引理，
+   未写 iff 版本（避免额外 simp 扰动）；如需引用留待后续。
+
+### 21.40.6 验证
+
+- 单模块：`lake build MUFPFormalization.PhaseTrichotomy`
+  - `pr634od1.txt`：EXIT 1 / ERR 4（`Submodule.ne_bot_iff.mp` 不存在——它是 `protected theorem` 且带显式参数，`.mp` 不能挂在名字上）
+  - `pr634od2.txt`：EXIT 1 / ERR 2（`rw [Submodule.ne_bot_iff] at hne` 在 `¬(p = ⊥)` 形式上不匹配）+ WARN 3（`[DecidableEq ι]` 未用）
+  - **`pr634od3.txt`：EXIT 0 / 0 error / WARN 0**
+- 全库：`pr634full24.txt`：**EXIT 0 / 3862 jobs / 0 error / WARN 10**（与基线一致）
+
+### 21.40.7 踩到的坑（补充模式 8 的战术清单）
+
+1. **`Submodule.ne_bot_iff` 是 `protected theorem (p : Submodule R M)`**，
+   `Submodule.ne_bot_iff.mp` 会报 `Unknown constant`；必须写 `(Submodule.ne_bot_iff _).mp`（带显式参数）。
+2. **`rw [Submodule.ne_bot_iff] at h` 在 `h : ¬(p = ⊥)` 上失败**：
+   `rw` 用语法匹配找 `?p ≠ ⊥`，但 `by_contra hne` 给出的假设展开成 `¬(... = ⊥)`，
+   不匹配 ⇒ 改用 `(Submodule.ne_bot_iff _).mp hne`（defeq 通过）。
+3. **`omit [DecidableEq ι] in` 必须放在 doc comment 之前**，否则 linter 仍报 unused section variable。
+4. **PowerShell 里用 `` `n `` 做 `.Replace('`n', [char]10)`** 会因 `'`n'` 被提前解析成实际换行而重载失配
+   ⇒ 改文件内容一律走 `Edit` 工具，不用脚本替换。
+

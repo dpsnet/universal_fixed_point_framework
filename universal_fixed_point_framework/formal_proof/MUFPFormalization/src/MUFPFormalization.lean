@@ -181,3 +181,4 @@ import MUFPFormalization.SpJ3IntersectionStructure
 import MUFPFormalization.ActiveLayerDerivation
 import MUFPFormalization.OverlapClosedLayerOrigin
 import MUFPFormalization.SigmaInvActiveSelect
+import MUFPFormalization.PhaseTrichotomy
