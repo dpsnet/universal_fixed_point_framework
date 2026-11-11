@@ -167,3 +167,4 @@ import MUFPFormalization.SpHermCategory
 import MUFPFormalization.SpSpectralBridge
 import MUFPFormalization.SpTowerCriterion
 import MUFPFormalization.SpDFunctorRange
+import MUFPFormalization.SpTowerLayer4

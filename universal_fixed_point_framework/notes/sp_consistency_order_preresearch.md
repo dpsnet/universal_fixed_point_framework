@@ -1776,3 +1776,32 @@ H : h ↦ A_X * h − h * A_Y        （A_X = 源对象矩阵，A_Y = 目标对�
 - `SpFiveMorphism` 缺失 ⇒ 塔高 ∞ 不入定理（本轮无新增）。
 - `SpHerm` 的**受限伴随存在性**：`AdjunctionAnchor.lean` L71 已机检「不存在 `R : SpObj ⥤ RecObj` 使 `DFunctor ⊣ R`」；本轮证明 `SpHerm` 不能承载 `DFunctor` 的值域，但「`SpHerm` 上是否存在受限伴随」**仍无 Lean 陈述**（需先定 `DFunctor` 在 `SpHerm` 内的替代物，本轮未做）。
 - n = 2 的 transfer matrix 全对称、无非自伴见证（D22 穷举已确认）⇒ `cyclic3SpObj` 是**最小**见证。
+## 21.12 D36：塔高 4 的数值侧（B 相层 4 非零见证）
+
+D35 只证了「层 3 与层 4 判据同形」（`SpTowerCriterion.lean`），即「塔高 3 → 4 不引入新代数条件」；但「B 相塔高确实是 4」在 Lean 侧没有数值见证。本轮补上。
+
+### 21.12.1 关键代数恒等式
+
+`ad_{J₃}(diag(0,1,2)) = J₃`——这是 R4 构造（`A_X = A_Y = A_Z = J_n`、`h = diag(0,…,n−1)`、`dev = J_n`）的 Lean 版，机检为 `adLin_jordan3_shiftDiag3`（`SpTowerLayer4.lean`）。
+
+### 21.12.2 四条机检定理
+
+| 定理 | 内容 | 级别变化 |
+|---|---|---|
+| `adLin_jordan3_shiftDiag3` | `adLin jordan3 shiftDiag3 = jordan3`（`shiftDiag3 := diag(0,1,2)`） | 新增 A |
+| `layer4_nontrivial_B` | 存在 `R ≠ 0` 使 `HasConditionForm jordan3 jordan3 R` 且 `adLin jordan3 R = 0`（取 `R = J₃`，见证 `L = shiftDiag3`） | 新增 A：B 相塔高 ≥ 4 |
+| `layer4_trivial_A` | 对角相下 `HasConditionForm diag3 diag3 R` 且 `adLin diag3 R = 0` 蕴含 `R = 0`（由 `diag3_ker_inf_range_eq_bot`） | 新增 A：A 相塔高 = 2 |
+| `tower_height_A2_B4` | 上述两者的合取 | 新增 A |
+
+### 21.12.3 塔高的机检边界（重要）
+
+- **能入定理的**：层 4 在 B 相有非零解、在 A 相只有零解 ⇒ `塔高(A) = 2`、`塔高(B) ≥ 4`。
+- **不能入定理的**：`塔高(B) = 4` 的等号形式，以及 `塔高(B) = ∞`。因为「层 5 不可穿越」需要 `SpFiveMorphism` 结构（`HigherSpCategory.lean` 止于 `SpFourMorphism` L362–370，`end` 在 L573），库内不存在 ⇒ 层 ≥5 的状态在本库中没有陈述可证。
+- 因此「塔高 4」的机检形式是 **`≥ 4`（下界）**，不是等号；「∞」仍只能由 `HasConditionForm` 同形性 + R5.2（34/34 行 0 差异）外推，不入定理。
+
+### 21.12.4 全库口径
+
+`lake build MUFPFormalization` = **3846 jobs / EXIT=0 / 12 警告 / 0 error**（日志 `pr634full3.txt`，509 行）。`SpTowerLayer4.lean` 自身零警告。
+
+构建过程（四轮）：`pr634lay1.txt` 失败（`namespace MUFPF` 下未 `open MUFPFormalization` ⇒ `adLin`/`jordan3` 未知；`Matrix.of ![[0,0,0],…]` 内层漏 `!` ⇒ 被当作 `List`）；`pr634lay2.txt` 失败（`adLin_apply` 只存在于 `SpSpectralBridge`，本模块未 import ⇒ 改用 `simpa [adLin]`）；`pr634lay3.txt` EXIT=0；随后 `pr634lay4/5` 逐条清 unused simp 参数（`Fin.sum_univ_succ`、`Matrix.mul_apply`），`pr634lay6.txt` EXIT=0 且零警告。
+注意：`norm_num` 在本证明中**必要**（残余子目标 `2 - 1 = 1` 在 `ℂ` 上），删掉会失败（`pr634lay4.txt`）。

@@ -268,7 +268,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | `diag3HermObj` | A 相在自伴层内 — 自伴层**非空** |
 | `jordan3_not_in_herm_layer` | **遗忘非满**：不存在以 `jordan3` 为底的自伴对象 |
 
-⇒ 方案③的**结构理由**已机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。函子层面、`SpHerm` 位置、`DFunctor` 值域三项已在 D35 落地（见 R6）。
+⇒ 方案③的**结构理由**已机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。函子层面、`SpHerm` 位置、`DFunctor` 值域三项已在 D35 落地（见 R6）；「塔高 4」的数值侧（B 相层 4 非零、A 相层 4 为零）在 D36 落地（`SpTowerLayer4.lean`，同样见 R6）。
 
 ### R6 Lean 机检现状（D35，2026-11-11）
 
@@ -285,10 +285,12 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | `SpHerm ⥤ SpC` 遗忘全忠实 | `forgetFunctor` + `forgetFunctor_full` + `forgetFunctor_faithful`（`SpHermCategory.lean`） | 新：**机检** |
 | `SpHerm` 是 `SpC` 的真子范畴（对象层面不满） | `forgetFunctor_not_surjective_on_objects`（`SpDFunctorRange.lean`） | 新：**机检** |
 | `SpC` 非全自伴 | `not_all_spObj_hermitian`（同上） | 新：**机检** |
+| 层 4 在 B 相有非零解 | `layer4_nontrivial_B` / `adLin_jordan3_shiftDiag3`（`SpTowerLayer4.lean`） | 新：**机检**（D36，B 相塔高 ≥ 4） |
+| 层 4 在 A 相只有零解 | `layer4_trivial_A` / `tower_height_A2_B4`（同上） | 新：**机检**（D36，A 相塔高 = 2） |
 
-口径：全库 `lake build MUFPFormalization` = **3845 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full1.txt`），零 `sorry`。
+口径：全库 `lake build MUFPFormalization` = **3846 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full3.txt`；D35 时 3845 jobs，见 `pr634full1.txt`），零 `sorry`。
 
-**仍未机检**：塔高 ∞（缺 `SpFiveMorphism`）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
+**仍未机检**：塔高 `= 4` 的等号形式与塔高 ∞（缺 `SpFiveMorphism`，`HigherSpCategory.lean` 止于 `SpFourMorphism`）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
 
 ### 符号约定（引用时必须守住）
 
@@ -306,7 +308,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 ## 4 建议引用措辞
 
-> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；**"层 5 起继续非平凡"不属可机检范围——Lean 层结构止于 `SpFourMorphism`，该项为同形外推论证**。）
+> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；层 4 的 A/B 二分另有 Lean 机检 `layer4_trivial_A` / `layer4_nontrivial_B`（`SpTowerLayer4.lean`，D36）；**"层 5 起继续非平凡"与"塔高恰为 4"不属可机检范围——Lean 层结构止于 `SpFourMorphism`，该项为同形外推论证**。）
 
 关于 `d_A` 的中心化子维数，可直接用的闭式是：
 
