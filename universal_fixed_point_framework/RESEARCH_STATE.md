@@ -2,14 +2,16 @@
 
 > **本节为口径权威；以下全部正文为历史记录，其中的模块数 / jobs 数 / 警告数 / sorry 数均为当时快照，不可直接引用。**
 >
-> - HEAD = `11a0a43`（`develop`，本地未推送；PR-634 预研累计 39 版本地提交）。
-> - 全库构建：**3853 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full13.txt`）。
+> - HEAD = `faff547`（`develop`，本地未推送；PR-634 预研累计 47 版本地提交，最近十批：`5b889ea` → `11a0a43` → `a50c13c` → `822a331` → `8f4c8ff` → `bcbca08` → `c1ff9ad` → `04b7b17` → `517f80d` → `faff547`）。
+> - 全库构建：**3853 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full14.txt`，第 7 批重建）。第 8–10 批**无 Lean 源码改动**（第 9 批的 Lean 增量已 `git checkout` 回退）⇒ 该构建口径对 HEAD 仍有效。
 > - 库内模块：**356**；库根 `src/MUFPFormalization.lean` = **177 行**，`ROOT_IMPORTS = 154`。
 > - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。
 > - olean / sorry 审计口径（D41 时点快照，**未刷新**）：`MODULES=354 / ROOT_IMPORTS=152 / CLOSURE=182 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_SITES=184 / SORRY_FILES=109`。`SORRY_LINES=0` **不是全库口径**；PR-634 新增 12 模块（含 `SpHermLayerDecision` / `SpHermProjectionLimit`）零 `sorry`。
-> - 论文 `paper1_fractal_spectral_derecursion.md` = **1682 行**（无 BOM）。
-> - 研究笔记权威：`notes/sp_consistency_order_preresearch.md`（§21.11–§21.19 为 D35–D41 与 D22③B；§21.20 为「推进所有开口」第 1–2 批）。
-> - 构建日志目录：`C:\Users\dps_n\AppData\Local\Temp\`（`pr634full13.txt` 最新全库；`pr634sep2.txt` / `pr634cat1.txt` 为单模块零警告记录）。
+> - **第 9 批 Lean 失败记录**：`SpLayerSeparability.lean` 加 5 条定理后单模块 EXIT 0，但产生 **774 条 `PANIC at Lean.Expr.appArg!`**（日志 `pr634sep3.txt`）；注释两条后仍 774（`pr634sep4.txt`）。定位到 `Matrix.of ![![...]]` 字面量与 `simp [Matrix.mul_apply, Fin.sum_univ_three]` 的组合 ⇒ 文件已回退至 HEAD。**该 tactic 组合今后在本库应避开。**
+> - 论文 `paper1_fractal_spectral_derecursion.md` = **1682 行**（无 BOM）；`MUFPF体系总序.md` 的 `k_max=8` / `d_H` 标签已于 `faff547` 从「结构确定量」订正为「约定 + 算术」/「约定链上的条件结论」。
+> - 研究笔记权威：`notes/sp_consistency_order_preresearch.md`（§21.11–§21.19 为 D35–D41 与 D22③B；§21.20 为「推进所有开口」第 1–2 批；§21.21 R2 非对角闭式；§21.22 `SpHerm` 受限伴随判死；§21.23 ε 归处；§21.24 `N_total` 双口径；§21.25 R2 单块特例与 Lean 失败；§21.26 论文标签订正）。
+> - 结构清单：`notes/sp_ker_im_structural_results.md` §R6–§R11（R11.6 列剩余开放项）。
+> - 构建日志目录：`C:\Users\dps_n\AppData\Local\Temp\`（`pr634full14.txt` 最新全库；`pr634sep2.txt` / `pr634cat1.txt` 为单模块零警告记录；`pr634sep3/4.txt` 为 PANIC 失败记录）。
 
 ---
 

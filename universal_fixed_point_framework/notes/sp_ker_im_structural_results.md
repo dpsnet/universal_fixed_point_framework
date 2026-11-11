@@ -638,3 +638,24 @@ dim( ker(ad_A) ⊓ range(ad_A) ) = n − #Jordan块
 已关闭：R11.2（`SpHerm` 判死）、R11.3（ε 归处登记）、R11.4（`N_total` 裁决）。
 
 仍开放：R1–R4 与 PR-634-L1 的 Lean 化；R2 闭式的 Lean 化（缺 Jordan 块数概念）；`same` 情形无闭式；论文 §2.4 级联 8 处 / §8 四条出路 / §14.6 四条；论文 §3 / §6 对 §1 48 例根基问题的重述；论文 §5「层 1/2/3 ↔ 3D+1D」几何同构；`RESEARCH_STATE.md` 正文历史数字（318/334/335/336/337/338/344）未改；仓库根已跟踪垃圾清除（`JUNK_TRACKED=0` ⇒ 无需 `git rm --cached`）。
+
+### R11.7 第 9–10 批（`517f80d` / `faff547`）
+
+**R11.7.1 R2 单块特例数值闭环（`scripts/pr634r2n3.py` → `notes/pr634r2n3_result.txt`）**
+
+| 量 | 值 | 口径 |
+|---|---|---|
+| `dim(ker(ad_J) ⊓ range(ad_J))` | **2** | 显式线性系统 12 未知 / 9 方程，`rank A = 7` ⇒ 解空间 5 ⇒ 非平凡维 2 |
+| 交集结构 | `span{J, J²}` | 非平凡解的 `(a,b,c)` 全部 `a = 0` |
+| `[J,X] = I` | 残差 1.732 ⇒ **不可解** | ⇒ `I ∉ range`（上界 `≤ 2` 的关键） |
+| `[J,X] = J` | 残差 4.6e-16 ⇒ 可解 | `X = diag(-1,0,1)`；库内 `jordan3_mem_range` 用 `diag(0,1,2)`，因 `I ∈ ker` 二者等价 |
+| `[J,X] = J²` | 残差 2.2e-16 ⇒ 可解 | **纯 0/1 见证** `X = [[0,0,0],[0,0,1],[0,0,0]]` |
+| 与 R2 闭式核对 | `3 − 1 = 2` | **一致**（独立方法复核，不用 SVD 秩） |
+
+两处订正：① 首次脚本 `dim = 4` 是 `kron` 列主序/行主序混淆的**假冲突**，作废；② `[J,X]` 通式实为 `X(i+1)j − X(i,j−1)`，误写 `X(i,j+1)` 会得出「`J ∉ range`」的假结论。
+
+**R11.7.2 Lean 尝试失败（未落地）**：5 条定理（`sq_eq` / `sq_mem_ker` / `sq_mem_range` / `sq_not_scalar_multiple` / `two_dim_lower`）单模块 EXIT 0 但 **774 条 `PANIC at Lean.Expr.appArg!`**；注释两条仍 774 ⇒ 来源是 `Matrix.of ![![...]]` 与 `simp [Matrix.mul_apply, Fin.sum_univ_three]` 组合 ⇒ 已回退。**`finrank = 2` 的等式与上界 `≤ 2` 仍未机检。**
+
+**R11.7.3 论文侧 `k_max = 8` 标签订正（`faff547`）**：`MUFPF体系总序.md` L90 `结构确定量` → **约定 + 算术**（`k_max := 8` 是模型选择；`2³=8` 等为算术恒等）；L92 `d_H` 追加依赖链说明（`ln15` 依赖 `B=15`，`B` 依赖 `N_total` 口径；论文独立链 `15=2^{N_active+1}−1`）；L97 预设清单追加 `k_max := 8`。与 Paper I L76「模型选择而非 Bott 唯一锁定」对齐。未改 `arxiv_mufpf_draft_zh.md` L228（「零自由参数——仅用框架结构常数 `k_max=8`」）⇒ **该张力登记为待裁决**。
+
+**R11.7.4 计数**：`MODULES=356` / `ROOT_IMPORTS=154` / `ROOT=177` 行 / `3853 jobs` / EXIT 0 / 0 error / **10 警告**（第 8–10 批无 Lean 改动 ⇒ 对 HEAD 仍有效）。
