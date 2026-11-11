@@ -178,3 +178,4 @@ import MUFPFormalization.SpHermProjectionLimit
 import MUFPFormalization.SpJ3TraceBound
 import MUFPFormalization.SpJ3KernelBound
 import MUFPFormalization.SpJ3IntersectionStructure
+import MUFPFormalization.ActiveLayerDerivation

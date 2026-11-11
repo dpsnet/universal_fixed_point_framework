@@ -73,7 +73,7 @@ lemma two_pow_subtwo_gt_sq : ∀ k : ℕ, 9 ≤ k → 2 ^ (k - 2) > k ^ 2 := by
 theorem kmax_unique : ∀ k : ℕ, 2 ≤ k → 2 ^ (k - 2) = k ^ 2 → k = 8 := by
   intro k hk hEq
   by_cases hle : k ≤ 8
-  · interval_cases k <;> norm_num at hEq <;> try omega
+  · interval_cases k <;> (norm_num at hEq; try omega)
   · have hge : 9 ≤ k := by omega
     have hgt : 2 ^ (k - 2) > k ^ 2 := two_pow_subtwo_gt_sq k hge
     omega
@@ -108,7 +108,7 @@ lemma two_pow_gt_linear : ∀ m : ℕ, 4 ≤ m → 2 ^ m > 2 * m + 2 := by
 theorem power_unique : ∀ m : ℕ, 2 ^ m = 2 * m + 2 → m = 3 := by
   intro m hEq
   by_cases hle : m ≤ 3
-  · interval_cases m <;> norm_num at hEq <;> try omega
+  · interval_cases m <;> (norm_num at hEq; try omega)
   · have hge : 4 ≤ m := by omega
     have hgt : 2 ^ m > 2 * m + 2 := two_pow_gt_linear m hge
     omega

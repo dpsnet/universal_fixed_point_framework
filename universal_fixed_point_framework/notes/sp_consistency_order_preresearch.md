@@ -3346,3 +3346,68 @@ L298/L302 的 `N_layers = 5` 与 L244 的 `n = 4` 现在是两个不同口径（
 - 早期四条升格路线已被机器检查否证（`72eefc9` / `e21d084` / `23a54cc` / D16 路线）。
 
 ⇒ 在现库里，正确的动作是**维持公设 E3**，而不是把它改标为定理。若强行改标签，会与 `tower_height_unbounded_B` 直接矛盾。
+
+## §21.37 「推出 3」：从两条不含 3 的结构前提唯一逼出 `m = 3`（第 26 批）
+
+用户要求（硬）：「`N_active = 3` 必须有来由，但不能是注入的」。本节给出**已机检**的来由链。
+
+### 21.37.1 先堵死的候选（复述）
+
+| 候选 | 为何不通 |
+|---|---|
+| 层总数 = 4 减 coherence | 层结构递归同形（`HigherSpCategory` L237–239 / L355–358，四层条件都是同一个 `[A,·]` 形状），`SpFiveLayer` 已补层 5 ⇒ 层总数无界 |
+| `LayerWitness` 数层 | 判据无层号变量（L27–28），`tower_height_unbounded_B` 机检任意层满足 ⇒ 数出 ∞ |
+| 交换律终止 | 层 3 **和层 4** 交换律都严格（`spThreeExchangeLaw_strict` L496、`spFourExchangeLaw_strict` L475）⇒ 只推出「偏差只有一个来源层」，不是 3 |
+| `dim(ker∩im)+1` | `n=3` 单块 `dim=2` ⇒ 3，但 `n=4` 得 4、`n=5` 得 5 ⇒ 依赖 `n=3`，而 `n=3` 来自 `GenSpace := ℂ³` ⇒ 循环 |
+| `k_max=8` 反推 `log₂` | `k_max := spinorDim 0 = 8` 是约定 ⇒ 循环 |
+
+### 21.37.2 新打开的一条：代数唯一性（库里早已机检）
+
+`KMaxAlgebra.power_unique : ∀ m : ℕ, 2 ^ m = 2 * m + 2 → m = 3`（L108–114，`interval_cases` + `norm_num` + `nlinarith`，零 sorry）。
+**前提里没有 3。** 这是此前未被当作「来由」使用的现成资产。
+
+### 21.37.3 两条结构前提（都不含 3）
+
+- **A｜Rec/Sp 幂-平方重合**：`RecSpOverlap k := 2 ^ (k - 2) = k ^ 2`（等价形式 `4·k² = 2^k`）。
+  读法：Rec 侧计数是 2 幂、Sp 侧几何是平方，两者在塔截断处重合。
+- **B｜Bott 翻倍**：`BottDoubling k m := k = 2 ^ m`（`m` = 翻倍步数）。
+
+### 21.37.4 主定理（机检）
+
+`ActiveLayerDerivation.active_layers_derived`：
+
+```
+{k m : ℕ} (hA : RecSpOverlap k) (hB : BottDoubling k m) (hk2 : 2 ≤ k) : m = 3
+```
+
+证明三步：`kmax_unique`（A ⇒ `k = 8`）→ 得 `2^m = 8` → `two_pow_gt_linear` 排 `m ≥ 4` → `interval_cases` 穷举 `m ≤ 3`。
+
+**不注入的核对**：证明体只引用 `RecSpOverlap`、`BottDoubling`、`hk2` 与 `KMaxAlgebra` 的两条引理；**没有一处**引用 `numActiveLayers` / `N_active` / `ActiveMorphismLayer`。⇒ 3 不是写死的，是被方程逼出来的。
+
+### 21.37.5 退化解（本批自抓的反例）
+
+`k = 1` 时 Nat 截断使 `1 - 2 = 0`，`2^0 = 1 = 1²` 满足 A，B 给 `m = 0` ⇒ **A ∧ B 有第二解 `(k,m) = (1,0)`**。
+数值脚本 `pr634na_derive.py` 扫 `k = 2..64` 时漏掉了它（这正是「数值扫描 ≠ 全称陈述」的典型缺口）；Lean 陈述用 `hk2 : 2 ≤ k` 显式排除，并写进模块头「边界」段。
+
+### 21.37.6 附带成果：`k_max = 8` 不再是纯约定
+
+`kmax_forced_by_overlap : 2 ≤ k → RecSpOverlap k → k = k_max`。
+⇒ A 一旦成立，`k_max = 8` 是 A 的**唯一**解。约定仍在（`def k_max := spinorDim 0`），但 A 给出独立强制路径。与第 1 / 10 批「`k_max = 8` 是约定」的判定**不矛盾**，是加强。
+
+### 21.37.7 边界（必须与结论同时陈述）
+
+1. A、B 是**结构前提**，本模块不证明它们、也不 axiom 化。证的是「**若** A ∧ B，**则** `m = 3` 唯一」。
+2. 本模块不涉及态射塔高：`tower_height_unbounded_B`（∞）说的是「层结构可递归构造到任意层」，与「翻倍步数 = 3」不是同一件事，两条不冲突。
+3. **A 的范畴地位仍未闭合**：为什么 Rec/Sp 的幂-平方必在截断处重合？本批只给代数形式，未给范畴论证。这是整条链最软的一环，如实登记为未闭合，不冒充已证。
+
+### 21.37.8 验证
+
+- 数值（模式 8）：`scripts/pr634na_derive.py` → `notes/pr634na_derive_result.txt`
+  - `k = 2..64`：`2^(k-2) = k²` 唯一解 **8**
+  - `m = 1..32`：`2^m = 2m+2` 唯一解 **3**
+  - A ∧ (`k = 2^m`)：唯一 `(8, 3)`
+  - 等价形式 `4k² = 2^k`：唯一解 8
+  - 邻域反证 `k = 7 / 9 / 16 / 32`：全部不等
+  - `VERDICT_ALL_OK = True`
+- 单模块：`lake build MUFPFormalization.ActiveLayerDerivation` **EXIT 0 / 0 error**
+- 全库：`pr634full19.txt`
