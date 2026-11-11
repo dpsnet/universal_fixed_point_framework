@@ -462,6 +462,25 @@ theorem spFourHorizComp_homotopy_assoc {X Y Z W : SpObj}
       (spFourHorizComp Φ (spFourHorizComp Φ' Φ'')).thirdHomotopy := by
   simp [spFourHorizComp, Matrix.add_mul, Matrix.mul_add, Matrix.mul_assoc, add_assoc]
 
+/-- **层 4 交换律严格成立（无假设）**：4-态射横复合与竖复合的互换精确成立
+    （偏差恒为 0）——与层 3 的 `spThreeExchangeLaw_strict` 同构。原因是层 4
+    的复合算子已是矩阵加法（`spFourVertComp` = `+`、`spFourHorizComp` 的
+    thirdHomotopy = `mul * P + Q * mul`，展开后全为加法项），交换律自动成立。
+
+    据此「coherence 偏差不再出现于层 4 及更高层」从注释外推升为机检：
+    层 2 是唯一复合含 `Matrix.mul` 的层，故是唯一可产生非零交换律偏差的层。 -/
+theorem spFourExchangeLaw_strict {X Y Z : SpObj}
+    {P Q : X ⟶ Y} {P' Q' : Y ⟶ Z}
+    {α β : SpTwoMorphism P Q} {α' β' : SpTwoMorphism P' Q'}
+    {Ξ Τ Υ : SpThreeMorphism α β} {Ξ' Τ' Υ' : SpThreeMorphism α' β'}
+    (Φ : SpFourMorphism Ξ Τ) (Ψ : SpFourMorphism Τ Υ)
+    (Φ' : SpFourMorphism Ξ' Τ') (Ψ' : SpFourMorphism Τ' Υ') :
+    spFourHorizComp (spFourVertComp Φ Ψ) (spFourVertComp Φ' Ψ') =
+      spFourVertComp (spFourHorizComp Φ Φ') (spFourHorizComp Ψ Ψ') := by
+  ext
+  simp [spFourHorizComp, spFourVertComp, Matrix.add_mul, Matrix.mul_add]
+  abel
+
 /-! ## Δ coherence 衔接：层 3 交换律严格成立（coherence 偏差定位于层 2 Δ） -/
 
 /-- **层 3 交换律严格成立（无假设）**：3-态射横复合与竖复合的互换精确成立
