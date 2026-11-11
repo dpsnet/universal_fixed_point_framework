@@ -175,3 +175,4 @@ import MUFPFormalization.SpDFunctorDichotomy
 import MUFPFormalization.SpTowerUnbounded
 import MUFPFormalization.SpHermLayerDecision
 import MUFPFormalization.SpHermProjectionLimit
+import MUFPFormalization.SpJ3TraceBound

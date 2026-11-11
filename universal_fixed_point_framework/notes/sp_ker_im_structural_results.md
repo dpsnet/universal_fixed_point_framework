@@ -749,6 +749,28 @@ IGNORED: pr634r2off_result.txt (3884)
 
 ⇒ `ker ⊓ range` 维数 **`≥ 2` 已机检**（数值侧 `dim = 2` 的下界方向）。
 
-**R12.7.3 仍未机检**：上界 `≤ 2`（`I ∉ range`）。数值依据 `‖K @ vec I‖ = 1.732 = √3 = ‖vec I‖`；Lean 侧是**否定存在性**命题（不存在 `X` 使 `[J, X] = I`），比正向构造难一档，登记开放。
+**R12.7.3 仍未机检**：上界 `≤ 2`。分两步看——
+- `I₃ ∉ range(ad_{J₃})`：**已机检**（见 R12.8，迹论证，零浮点）；
+- `ker(ad_{J₃}) ⊆ span{I₃, J₃, J₃²}`（`dim ker ≤ 3`）：**未机检**。
+补上第二条才能把「交集 ⊆ span{J₃, J₃²}」接成 `dim ≤ 2`。
 
 **R12.7.4 验证**：`pr634sep6.txt` — EXIT 0 / 1237 jobs / **PANIC 504**（既有基线噪音）/ **error 0** / **warning 0**。探针模块 `ProbeJ3Tactic.lean` 测完即删，未入库根、未留在 `src/`。
+
+### R12.8 第 17 批：上界的迹论证（独立模块 `SpJ3TraceBound.lean`）
+
+**R12.8.1 零浮点替代**：交换子迹恒零（循环性）+ `tr(I₃) = 3 ≠ 0` ⇒ `I₃ ∉ range(ad_{J₃})`。把第 15 批的数值结论（`‖K @ vec I‖ = 1.732 = √3 = ‖vec I‖`）升级为机检，且不需要任何浮点计算。
+
+**R12.8.2 为什么单独建模块（实测 simp 扰动）**：直接在主模块加 `import Mathlib.LinearAlgebra.Matrix.Trace` 导致 `SpLayerSeparability` 既有化简链 6 处 `Type mismatch: After simplification`（L251/L256/L334/L506/L511）+ 8 条 `unused simp argument`（L79×2/L131×2/L145×2/L223×2）。⇒ 隔离到新模块，主模块回到第 16 批状态。
+
+**R12.8.3 两条定理**：
+
+| 定理 | 内容 |
+|---|---|
+| `adLin_trace_eq_zero` | `∀ A X, trace(adLin A X) = 0` |
+| `jordan3_identity_not_mem_range` | `(1 : Matrix (Fin 3) (Fin 3) ℂ) ∉ range(adLin jordan3)` |
+
+Mathlib 位置（`LinearAlgebra/Matrix/Trace.lean`）：`trace_sub` L132、`trace_one` L146、`trace_mul_comm` L158。已挂库根 ⇒ `ROOT_IMPORTS=155`、`MODULES=357`。
+
+**R12.8.4 验证**：`pr634trace1.txt` — EXIT 0 / 1243 jobs / WARN 0 / ERROR 0；`pr634full16.txt` — EXIT 0 / 3854 jobs / **WARN 10（基线一致，无新增）** / ERROR 0。
+
+**R12.8.5 距离 `dim = 2` 等式仍缺**：`ker ⊆ span{I₃, J₃, J₃²}`（`dim ker ≤ 3`，等价于「与 `J₃` 交换者皆 `J₃` 的多项式」）。数值侧由 `rank ad_J = 6` 给出，Lean 侧需处理 9 元线性方程组，登记开放。

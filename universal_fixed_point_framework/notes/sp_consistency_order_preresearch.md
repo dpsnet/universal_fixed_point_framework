@@ -2943,3 +2943,55 @@ simp [jordan3, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_three, ...]
 - 用 `let` 绑定见证矩阵（`let E : Matrix ... := Matrix.of ![...]`）后 `change ... E ...`，避免 `change` 里重复字面量。
 - `simp` 已闭合时多余的 `all_goals norm_num` 会触发 `linter.unusedTactic` 双重警告 ⇒ 逐处删除（本轮清掉 3 处、6 条警告）。
 - `simp [... , smul_eq_mul]` 足以处理 `(c • J) i j`，**不需要** `Matrix.smul_apply`。
+
+### 21.29.8 上界方向：迹论证（第 17 批，独立模块 `SpJ3TraceBound.lean`）
+
+#### 21.29.8.1 为什么不需要数值
+
+第 15 批的数值依据是 `‖K @ vec I‖ = 1.732 = √3 = ‖vec I‖`，即 `I` 在 `range` 上的投影**全被投掉**。这条其实有一条**初等、零浮点**的替代：
+
+> 交换子的迹恒为 0（循环性 `tr(AX) = tr(XA)`），而 `tr(I₃) = 3 ≠ 0` ⇒ `I₃ ∉ range(ad_{J₃})`。
+
+⇒ `ker ⊓ range` 中 `I₃` 方向的系数必为 0 ⇒ 交集落在 `span{J₃, J₃²}` 内。
+
+#### 21.29.8.2 必须隔离模块（实测 simp 扰动）
+
+第一次尝试把迹论证直接加进 `SpLayerSeparability`（并加 `import Mathlib.LinearAlgebra.Matrix.Trace`），结果主模块既有的化简链被扰动：
+
+```
+EXIT=1 / ERROR=6 / WARN=10
+error: SpLayerSeparability.lean:251:4 Type mismatch: After simplification, term
+error: SpLayerSeparability.lean:256:4 同上
+error: SpLayerSeparability.lean:334:4 同上
+error: SpLayerSeparability.lean:506:4 同上
+error: SpLayerSeparability.lean:511:4 同上
+warning: L79:51 / L79:69 / L131:55 / L131:73 / L145:58 / L145:76 / L223:36 / L223:54
+         This simp argument is unused
+```
+
+⇒ **`Matrix.Trace` 把 `trace_*` 系列引理带进 simp 集，改变了原有 `simpa` 的化简结果。** 处置：把迹论证隔离到新模块 `SpJ3TraceBound.lean`（`import SpLayerSeparability` + `import Mathlib.LinearAlgebra.Matrix.Trace`），主模块删除那一行 import 与整块内容，回到第 16 批状态。
+
+**这是本批最可复用的教训**：往既有模块加 import 前，先确认它会带来哪些 simp 引理；`Mathlib.LinearAlgebra.Matrix.Trace` 对矩阵元素级化简链有实质影响。
+
+#### 21.29.8.3 落地内容（`SpJ3TraceBound.lean`，44 行）
+
+| 定理 | 内容 | 依据 |
+|---|---|---|
+| `adLin_trace_eq_zero` | `∀ A X, trace(adLin A X) = 0` | `change` → `trace_sub` → `trace_mul_comm` → `simp` |
+| `jordan3_identity_not_mem_range` | `(1 : Matrix (Fin 3) (Fin 3) ℂ) ∉ range(adLin jordan3)` | `mem_range.mp` → `rw [hX] at htr` → `trace_one` → `norm_num at htr` |
+
+Mathlib 引理位置（`Mathlib/LinearAlgebra/Matrix/Trace.lean`）：`trace_sub` L132、`trace_one` L146（`= Fintype.card n`）、`trace_mul_comm` L158（`(A : Matrix m n R) (B : Matrix n m R)`）。
+
+已挂库根（`src/MUFPFormalization.lean` 末行 `import MUFPFormalization.SpJ3TraceBound`）⇒ `ROOT_IMPORTS` 155、`MODULES` 357。
+
+#### 21.29.8.4 验证
+
+```
+单模块 pr634trace1.txt：EXIT 0 / 1243 jobs / WARN 0 / ERROR 0
+全库   pr634full16.txt：EXIT 0 / 3854 jobs / WARN 10（与基线一致，无新增）/ ERROR 0
+```
+
+#### 21.29.8.5 距离 `dim = 2` 完整等式还差什么
+
+已机检：`dim ≥ 2`（第 16 批 5 条定理）+ `I₃ ∉ range`（本批）。
+**仍缺**：`ker(ad_{J₃}) ⊆ span{I₃, J₃, J₃²}`（即 `dim ker ≤ 3`）。补上它才能把「交集 ⊆ `span{J₃, J₃²}`」⇒ `dim ≤ 2` 接成等式。这条等价于「与 `J₃` 交换的矩阵都是 `J₃` 的多项式（次数 ≤ 2）」，即中心化子维数 3 —— Lean 侧需处理 9 元线性方程组，数值侧已由 `rank ad_J = 9 − 3 = 6` 给出，登记开放。
