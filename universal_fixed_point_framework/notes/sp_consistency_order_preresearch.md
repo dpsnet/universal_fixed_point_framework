@@ -1343,3 +1343,56 @@ Clifford 分级数字（1,4,6,4,1；8=6+1+1；15=1+4+6+4）均为 d=3 之后的�
 
 本轮**未改 Lean**（未加 `IsHermitian` 谓词）、**未改论文**（未加层级标注），受既有「不改 Lean / 不改论文」约束。两个动作都只在笔记内登记。`pr634dfun.py` 为精确有理算术穷举，非 Lean 机检，n ≤ 6。
 
+## 19 层塔终止判据：层 2 是唯一偏差层（D23）
+
+### 19.1 机检事实
+
+`spThreeExchangeLaw_strict`（`HigherSpCategory.lean` L474–483）：3-态射的横复合与竖复合互换**精确成立，无任何假设**。证明体为
+
+```
+ext
+simp [spThreeHorizComp, spThreeVertComp, Matrix.add_mul, Matrix.mul_add]
+abel
+```
+
+`abel` 只对**加法交换群**有效 ⇒ 证明体能走通，本身就说明层 3 的复合已是矩阵 `add`，不含 `mul`。这不是巧合，是可从证明体读出的结构。
+
+### 19.2 复合算子对照
+
+| 层 | 复合算子 | 交换律 | 偏差 | 机检依据 |
+|---|---|---|---|---|
+| 层 1 | 交织等式约束 `P·A_Y = A_X·P` | — | 无 | `SpHom.intertwine`（`SpCategory.lean` L37–39） |
+| 层 2 | `Matrix.mul` | **不交换** | **Δ ≠ 0** | `spExchangeLaw_homotopy_deviation` L151、`spExchangeLaw_deviation_partial_commutator` L172、`spExchangeLaw_deviation_strict_limit` L202 |
+| 层 3 | `Matrix.add` | 交换 | 0 | `spThreeExchangeLaw_strict` L474 |
+| 层 4 | `Matrix.add`（`spFourHorizComp` L402 / `spFourVertComp` L373） | 应交换 | 应为 0 | **不存在** `spFourExchangeLaw_strict` |
+| 层 ≥5 | 同层 4 | — | — | 无定义（全库 0 个 `SpFiveMorphism`） |
+
+⇒ **层 2 是唯一复合含乘法的层，因此是唯一能产生非零交换律偏差的层。** 层 1 是等式约束（无偏差概念），层 3 起为加法（缺陷自动为零）。
+
+### 19.3 推论分级
+
+| 命题 | 级别 | 依据 / 缺口 |
+|---|---|---|
+| 层 3 及以上复合退化为加法 | **A**（层 3 机检；层 4 看定义 + 证法同构） | L474 证明体；L402/L373 定义 |
+| 层 2 是唯一非零偏差层 | **A** | 上表 |
+| `N_active ≤ 3`（只有三层能提供新内容） | **B（上界）** | 需补 `spFourExchangeLaw_strict` 才可升 A |
+| `N_active = 3` 恰为 3（下界） | **C** | 需证三层各有不可约内容；`each_layer_nonempty`（`Unified3Theorem.lean` L106）只给存在性，不足 |
+| 层 4 的 `condition` 有独立代数判据 | **✗** | L370 与 L354 形式完全相同，判据不存在 |
+
+### 19.4 对 D16/D19 的影响：局部松动，不改结论
+
+D16/D19 的核心判决「`N_active = 3` 不能从 Sp 层塔推出」须按命题拆分：
+
+- **「层 4 无独立代数判据」** —— 成立，不变。L370 与 L354 同形，这条是硬事实。
+- **「3 完全无结构支撑」** —— 需收窄为「**恰好 3** 无结构支撑；**3 作为上界**有结构支撑」，因为层 2 唯一偏差层这一事实是机检的。
+
+⇒ 现行登记（公设 E3 + 约定 C1）**不改**；但登记理由从「完全无判据」改为「**上界有结构支撑、下界仍缺**」。这是表述精度的修正，不是结论翻转。
+
+### 19.5 一个便宜可以补的空定理
+
+`spFourExchangeLaw_strict`：照抄 L480–483 的证法（`ext; simp [spFourHorizComp, spFourVertComp, Matrix.add_mul, Matrix.mul_add]; abel`）。若成立，「层 4 起严格」即从同构外推升为机检，19.3 的上界随之从 B 升 A。
+
+### 19.6 未做
+
+未补 `spFourExchangeLaw_strict`（受「不改 Lean」约束）；未证下界（三层各有不可约内容）。
+
