@@ -773,4 +773,26 @@ Mathlib 位置（`LinearAlgebra/Matrix/Trace.lean`）：`trace_sub` L132、`trac
 
 **R12.8.4 验证**：`pr634trace1.txt` — EXIT 0 / 1243 jobs / WARN 0 / ERROR 0；`pr634full16.txt` — EXIT 0 / 3854 jobs / **WARN 10（基线一致，无新增）** / ERROR 0。
 
-**R12.8.5 距离 `dim = 2` 等式仍缺**：`ker ⊆ span{I₃, J₃, J₃²}`（`dim ker ≤ 3`，等价于「与 `J₃` 交换者皆 `J₃` 的多项式」）。数值侧由 `rank ad_J = 6` 给出，Lean 侧需处理 9 元线性方程组，登记开放。
+**R12.8.5 距离 `dim = 2` 等式仍缺**：`ker ⊆ span{I₃, J₃, J₃²}`（`dim ker ≤ 3`，等价于「与 `J₃` 交换者皆 `J₃` 的多项式」）。数值侧由 `rank ad_J = 6` 给出，Lean 侧需处理 9 元线性方程组，登记开放 → **已于 R12.9 补齐并闭合**。
+
+### R12.9 第 18 批：R2 单块 `dim = 2` 等式闭合（结构版，零浮点）
+
+**R12.9.1 `ker ⊆ span{I, J, J²}`**（`SpJ3KernelBound.lean`，1 条定理）：`[J₃, X] = 0` 的 6 个有效元素方程恰好给出 `X = X₀₀ • I + X₀₁ • J + X₀₂ • J²`。首次构建 EXIT 0。
+
+**R12.9.2 交集结构**（`SpJ3IntersectionStructure.lean`，1 条定理）：`∀ R ∈ ker ⊓ range, ∃ b c, R = b • J₃ + c • J₃²`。三块拼接：`ker` 给多项式形式 → `range` 给 `trace R = 0` → 展开算 `trace R = 3 * R₀₀` → `R₀₀ = 0` → 得 `span{J, J²}`。
+
+**R12.9.3 `dim = 2` 闭合状态**：
+
+| 方向 | 依据 | 状态 |
+|---|---|---|
+| `dim ≥ 2` | `jordan3_ker_inf_range_contains_two_independent`（第 16 批） | **机检 A** |
+| `dim ≤ 2` | `jordan3_identity_not_mem_range`（第 17 批）+ `jordan3_ker_mem_span` + `jordan3_ker_inf_range_mem_span`（本批） | **机检 A** |
+| `= 2` | 两者合并 | **机检 A（结构版）** |
+| 数值互证 | `rank ad_J = 6`、闭式 `n − #blocks = 3 − 1 = 2` | 数值 A |
+
+**R12.9.4 两条新陷阱**：
+
+1. `rw [hspan]` 会重写目标里右侧的同名子项（目标 `R = R 0 1 • J + R 0 2 • J²` 中 `R` 出现 3 次）⇒ **必须 `conv_lhs => rw [...]`**。
+2. `(3 : ℂ) ≠ 0` 走 `mul_eq_zero.mp ... resolve_left h3`，`h3` 单独立一条 `by norm_num`。
+
+**R12.9.5 验证**：`pr634ker2.txt` — EXIT 0 / WARN 2（unused simp，已删）/ ERROR 0；`pr634full17.txt` — EXIT 0 / 3856 jobs / **WARN 10（基线一致，无新增）** / ERROR 0。`ROOT_IMPORTS=157`、`MODULES=359`。

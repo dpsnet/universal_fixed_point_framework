@@ -2995,3 +2995,63 @@ Mathlib 引理位置（`Mathlib/LinearAlgebra/Matrix/Trace.lean`）：`trace_sub
 
 已机检：`dim ≥ 2`（第 16 批 5 条定理）+ `I₃ ∉ range`（本批）。
 **仍缺**：`ker(ad_{J₃}) ⊆ span{I₃, J₃, J₃²}`（即 `dim ker ≤ 3`）。补上它才能把「交集 ⊆ `span{J₃, J₃²}`」⇒ `dim ≤ 2` 接成等式。这条等价于「与 `J₃` 交换的矩阵都是 `J₃` 的多项式（次数 ≤ 2）」，即中心化子维数 3 —— Lean 侧需处理 9 元线性方程组，数值侧已由 `rank ad_J = 9 − 3 = 6` 给出，登记开放。
+
+### 21.29.9 R2 单块 `dim = 2` 等式闭合（第 18 批，两个新模块）
+
+#### 21.29.9.1 `ker ⊆ span{I, J, J²}`：手推先定时机检一次通过
+
+`[J₃, X] = 0` 的元素式是 `X(i+1)j = X(i,j−1)`（越界为 0）。9 个方程中 6 个有效：
+
+| 位置 | 方程 | 结果 |
+|---|---|---|
+| (0,0) | `X₁₀ = 0` | `X₁₀ = 0` |
+| (0,1) | `X₁₁ = X₀₀` | `X₁₁ = X₀₀` |
+| (0,2) | `X₁₂ = X₀₁` | `X₁₂ = X₀₁` |
+| (1,0) | `X₂₀ = 0` | `X₂₀ = 0` |
+| (1,1) | `X₂₁ = X₁₀` | `X₂₁ = 0`（用 `X₁₀ = 0`） |
+| (1,2) | `X₂₂ = X₁₁` | `X₂₂ = X₀₀`（用 `X₁₁ = X₀₀`） |
+| (2,*) | 恒等 | 3 条非约束 |
+
+⇒ `X = X₀₀ • I + X₀₁ • J + X₀₂ • J²`，维数 3。
+
+`SpJ3KernelBound.lean`（`import SpLayerSeparability`，**不** import `Matrix.Trace`）：
+
+| 定理 | 内容 |
+|---|---|
+| `jordan3_ker_mem_span` | `X ∈ ker ⇒ X = X₀₀ • I + X₀₁ • J + X₀₂ • J²` |
+
+证明路径：`LinearMap.mem_ker` → `sub_eq_zero.mp` 得 `J * X = X * J`；6 次 `congrArg (fun M => M i j)` + `simp [Matrix.mul_apply, jordan3, Matrix.of_apply, Fin.sum_univ_succ]` 提方程；`ext + fin_cases i <;> fin_cases j + all_goals simp [...]` 收 9 个分支。**首次构建即 EXIT 0**，只剩 1 条 `unused simp argument: Matrix.one_apply`（删掉即 0 警告）。
+
+#### 21.29.9.2 交集结构：三块拼接
+
+`SpJ3IntersectionStructure.lean`（`import SpJ3TraceBound` + `import SpJ3KernelBound`）：
+
+**`jordan3_ker_inf_range_mem_span`**：`∀ R ∈ ker ⊓ range, ∃ b c, R = b • J₃ + c • J₃²`。
+
+拼接逻辑：
+1. `R ∈ ker` ⇒ `R = R₀₀ • I + R₀₁ • J + R₀₂ • J²`（21.29.9.1）；
+2. `R ∈ range` ⇒ `trace R = 0`（`adLin_trace_eq_zero`，21.29.8）；
+3. 由 (1) 展开算 `trace R = 3 * R₀₀`（`trace_add`×2 + `trace_smul`×3 + `trace_one`，`trace I = 3`、`trace J = trace J² = 0`）；
+4. `3 * R₀₀ = 0` 且 `(3 : ℂ) ≠ 0` ⇒ `R₀₀ = 0`（`mul_eq_zero.mp ... resolve_left`）；
+5. 代入得 `R = R₀₁ • J + R₀₂ • J²`。
+
+**⇒ `ker ⊓ range ⊆ span{J₃, J₃²}` ⇒ `dim ≤ 2`；与第 16 批 `dim ≥ 2` 合起来给出 `dim = 2`。** 这是 R2 单块 `n = 3` 的**结构版等式闭合**，全程零浮点，与数值侧（`rank ad_J = 6`、闭式 `n − #blocks = 3 − 1 = 2`）一致。
+
+#### 21.29.9.3 两条新踩到的陷阱（可复用）
+
+1. **`rw [hspan]` 会把目标里右侧的同名子项也重写**。目标 `R = R 0 1 • J + R 0 2 • J²` 中，`R` 出现 3 次（左侧 1 次 + 右侧的系数 2 次），`rw [hspan]` 会把 3 处全替换成多项式展开式。**必须用 `conv_lhs => rw [hspan]` 只改左侧**。`trace R = 3 * R 0 0` 那条同理（右侧含 `R 0 0`）。
+2. **`(3 : ℂ) ≠ 0` 不能用 `norm_num` 直接得出时**，改走 `mul_eq_zero.mp`：
+   ```lean
+   have h0 : (3 : ℂ) * R 0 0 = 0 := by rw [← htr2, htr]
+   exact (mul_eq_zero.mp h0).resolve_left h3
+   ```
+   其中 `h3 : (3 : ℂ) ≠ 0 := by norm_num` 单独立一条（`norm_num` 对 `≠ 0` 比 `3 = 0` 更好用）。
+
+#### 21.29.9.4 验证
+
+```
+单模块 pr634ker2.txt：EXIT 0 / WARN 2 / ERROR 0（2 条均为 unused simp argument，已删）
+全库   pr634full17.txt：EXIT 0 / 3856 jobs / WARN 10（与基线一致，无新增）/ ERROR 0
+```
+
+已挂库根 ⇒ `ROOT_IMPORTS = 157`、`MODULES = 359`（本轮新增 3 个模块：`SpJ3TraceBound`、`SpJ3KernelBound`、`SpJ3IntersectionStructure`）。

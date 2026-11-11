@@ -176,3 +176,5 @@ import MUFPFormalization.SpTowerUnbounded
 import MUFPFormalization.SpHermLayerDecision
 import MUFPFormalization.SpHermProjectionLimit
 import MUFPFormalization.SpJ3TraceBound
+import MUFPFormalization.SpJ3KernelBound
+import MUFPFormalization.SpJ3IntersectionStructure
