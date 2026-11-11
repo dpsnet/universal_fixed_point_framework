@@ -509,3 +509,60 @@ R7 的 `MODULES=354` / 「新增 9 个模块」是 **D41 时点快照**，不改
 - **`SpHerm` 受限伴随**仍无 Lean 陈述。R9 未给出它的构造，只给出了「自伴化路径不通」这一前置判据。若要做，须换到「`D` 的像 ∩ 自伴层」子范畴路线（与 `DImAdjRIm` 的定义域限制方向不同）。
 - **`−log U_R` 模型未做**（R9.4）。`U_R` 与对数分支在本库无定义。
 - 论文「§7 的 `D_diss` 与 §2 的 `D` 是否同一函子」仍无显式正文回答；现仅在 L852 括注与 L211 证明点明「两层不同」（详见主笔记 §21.19.7）。
+
+---
+
+## R10 「推进所有开口」第 1–2 批（2026-11-11，`5b889ea` / `11a0a43`）
+
+### R10.1 结构标签诚实化（`5b889ea`，9 files / +162/−53）
+
+| 位置 | 原标签 | 已改为 | 机检依据 |
+|---|---|---|---|
+| `BottTower` 模块头 | 「升级为范畴结构推论」 | 「约定 + 算术 `8 = 2³`」 | `def k_max := spinorDim 0`；`def spinorDim k := 8 * 2^k` ⇒ `k_max = 8` 是约定 |
+| `BottTower` L42 | 「旋量维数从 1 起经 `N_active` 次翻倍到达 8」 | 删（与 `8 * 2^k` 直接矛盾：`k=0` 已是 8、`k=3` 是 64） | 定义展开 |
+| `BottTower` L172–174 | 「第 4 个主动生成层则 `k_max ≥ 2⁴ = 16`」 | 删（未证） | — |
+| `BottTower` `truncation_by_active_layers` doc | 「范畴截断」 | 「约定参数 + 算术事实 `8 = 2³`」 | `rw [k_max_value, card_active_layers]; norm_num` |
+| `Unified3Theorem` `k_max` | 结构量 | 「约定参数，不是结构导出量」 | `def k_max : ℕ := 8` |
+| `Unified3Theorem` `bott_truncation_index` | 结构定理 | 「算术事实 `Nat.log 2 8 = 3`（`native_decide`）」 | — |
+| `CoherenceToBranching` `commutator_levels_disjoint` | `theorem ... : True := by trivial` | **删除**（Lean 里每项类型唯一，「跨层不能重用」写不成非平凡 `Prop`；`coherence_implies_B_15` 证明体从未引用它） | 证明体 `refine ⟨card_active_layers, total_layers_count, layerPair_card⟩` |
+| `CoherenceToBranching` `B = 15` | 结构必然 | 「依赖 `N_total = 5` 这一约定」 | 论文 §4.2 用 `N_total = 4`、`15 = 2⁴ − 1`；Lean 用 `N_total := 5`、`15 = 3×5` |
+| `HigherSpCategory` L351 | 「链复形」 | 「同一交换子 `[A, ·]` 给出，但**不是链复形**：`d_A ∘ d_A ≠ 0`」 | `SpChainComplexAudit.lean` 机检 |
+
+### R10.2 基线警告清理（`5b889ea`）
+
+`SpCategory.lean` L454–455 的 `rw [smul_smul] <;> ext i j <;> fin_cases ...` 改为三行 `rw` / `ext` / `fin_cases ... <;> simp [hsz]`，清除 `SpCategory:455:4`、`:455:16` 两条 linter 警告。**基线 12 → 10**，剩余 10 条全在历史模块（`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492）。
+
+### R10.3 C 相（`diag4`）单对象判据（`11a0a43`）
+
+此前 C 相只有跨对象判据 `diag4_diag3_ker_eq_bot`（谱不交 ⇒ `adLin2 diag4 diag3` 的 `ker = ⊥`）。本批补 4 定理 + 1 lemma，全部与 `diag3` 版**逐行同构**：
+
+| 名字 | 内容 |
+|---|---|
+| `mul_diag4_apply` | `(X * diag4) i j = X i j * diag4Val j` |
+| `diag4_has_two_morphism` | `HasNontrivialTwoMorphism diag4`（`diag(1,0,0) ∈ ker`） |
+| `diag4_ker_inf_range_eq_bot` | 谱互异（`4,5,6`）⇒ `ker ⊓ range = ⊥` |
+| `diag4_not_traversable` | `¬ AdTraversable diag4` |
+| `diag4_same_single_object_verdict` | C 与 A 判决完全相同（层 2 都非平凡、层 3 都不可穿越） |
+
+**负结果（本批核心）**：「C 相塔高 1」**不能**由 `HasNontrivialTwoMorphism` / `AdTraversable` 表达——这两个判据是**对象自身**的性质，对 `diag4` 与 `diag3` 判决相同。塔高 1 是三相过渡链（A `diag(1,2,3)` → B `J₃` → C `diag(4,5,6)` 中被跳过）的**组合意义**；库内无三相过渡格与「跳过」关系定义 ⇒ 登记为缺口。
+
+### R10.4 `Hurwitz` 计数口径裁决（关闭）
+
+§16.1 表「18 文件」与 D19「207 处」**不是矛盾**：18 = 文件数，207 = 命中处数。两处均正确限定「全为 Hurwitz ζ 函数」（`NumberTheory/LSeries/HurwitzZeta*`、`HurwitzZetaValues/Odd`、`HurwitzZetaValues/Even`、`HurwitzKernelBounds`），与可除代数无关。日后引用须同时写清度量（「18 个文件 / 207 处命中」）。
+
+### R10.5 计数更新（相对 R9.5）
+
+| 项 | R9 | R10 |
+|---|---|---|
+| 模块数 | 356 | **356** |
+| 库根行数 | 177 | **177** |
+| `ROOT_IMPORTS` | 154 | **154** |
+| 全库 jobs | 3853 | **3853** |
+| 全库警告 | 12 | **10** |
+| 全库 error | 0 | **0** |
+
+单模块零警告记录：`pr634cat1.txt`（`SpCategory`）、`pr634sep2.txt`（`SpLayerSeparability`）。全库最新日志 `pr634full13.txt`（584 行）。
+
+### R10.6 仍存在的缺口
+
+见主笔记 §21.20.12 的 10 条：`SpHerm` 受限伴随、R1–R4 与 PR-634-L1 Lean 化、R2 非对角相通式、ε 归处与下游 10+ 脚本硬编码、`RESEARCH_STATE.md` 正文历史口径、论文 §3/§6 重述、§2.4 级联 8 处 / §8 四条出路 / §14.6 四条、论文 §5 几何同构、`N_total` / `k_max` 论文侧改述、12 条待拍板问题。

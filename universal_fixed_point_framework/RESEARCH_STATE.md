@@ -1,3 +1,18 @@
+# 当前口径（2026-11-11，权威）
+
+> **本节为口径权威；以下全部正文为历史记录，其中的模块数 / jobs 数 / 警告数 / sorry 数均为当时快照，不可直接引用。**
+>
+> - HEAD = `11a0a43`（`develop`，本地未推送；PR-634 预研累计 39 版本地提交）。
+> - 全库构建：**3853 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full13.txt`）。
+> - 库内模块：**356**；库根 `src/MUFPFormalization.lean` = **177 行**，`ROOT_IMPORTS = 154`。
+> - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。
+> - olean / sorry 审计口径（D41 时点快照，**未刷新**）：`MODULES=354 / ROOT_IMPORTS=152 / CLOSURE=182 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_SITES=184 / SORRY_FILES=109`。`SORRY_LINES=0` **不是全库口径**；PR-634 新增 12 模块（含 `SpHermLayerDecision` / `SpHermProjectionLimit`）零 `sorry`。
+> - 论文 `paper1_fractal_spectral_derecursion.md` = **1682 行**（无 BOM）。
+> - 研究笔记权威：`notes/sp_consistency_order_preresearch.md`（§21.11–§21.19 为 D35–D41 与 D22③B；§21.20 为「推进所有开口」第 1–2 批）。
+> - 构建日志目录：`C:\Users\dps_n\AppData\Local\Temp\`（`pr634full13.txt` 最新全库；`pr634sep2.txt` / `pr634cat1.txt` 为单模块零警告记录）。
+
+---
+
 > **2310.12185 文献意外惊喜扫描（2026-10-26，第二轮精读——literature_
 > surprise_scan.py——已落档 notes\04_lorentz_gravity\2310.12185_MUFPF
 > 对照表.md §9）**：**① ★★ 强呼应——时空维数内生新候选**：de Sitter
