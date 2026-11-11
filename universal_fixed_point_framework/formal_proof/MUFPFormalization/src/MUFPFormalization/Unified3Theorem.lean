@@ -14,6 +14,20 @@
 定理陈述：在 𝐒𝐩 严格 4-范畴中，以下四个数相等：
     d = N_gen = log₂ k_max = N_active = 3
 
+**等式链分级（重要）**——链上各项的地位并不相同：
+
+| 项 | 地位 |
+|---|---|
+| `k_max := 8` | **约定**（`BottTower.spinorDim 0`，见 `BottTower.lean` 模块头） |
+| `log₂ 8 = 3` | **算术恒等**（`k_max_eq_two_pow_active` 的证明体就是 `rw` + `norm_num`） |
+| `card ActiveMorphismLayer = 3` | **构造子计数**（`native_decide`；该类型恰三构造子） |
+| `N_active = 3` | **公设 E3** —— 库内从未被证明；`numActiveLayers := 3` 是定义 |
+| `N_gen = d = 3` | **由 `GenSpace := ℂ × ℂ × ℂ` 写死** |
+
+⇒ 这条链**不是**一条从范畴公设推出的定理链：可机检的只有「约定之下的算术」与「构造子计数」。
+   要成为定理链，缺的正是 `N_active = 3` 本身——早期四条升格路线已被机器检查否证
+   （`72eefc9` / `e21d084` / `23a54cc` / D16 记录）。故诚实登记为**公设**，不记作定理。
+
 本文件形式化：
   1. 𝐒𝐩 4-范畴的主动生成层计数 → N_active = 3
   2. 主动生成层与 GenSpace (ℂ³) 的表示等价
@@ -83,6 +97,9 @@ instance : Fintype ActiveMorphismLayer where
     cases x <;> simp
 
 /-- 主动生成层的基数 = 3。
+
+    **地位：公设（E3），不是定理。** `numActiveLayers := 3` 只是把 `3` 写进定义；
+    库内没有一条证明从范畴公设推出「`ker ∩ im ≠ 0` ⟹ 层数 = 3」。
 
     **口径**：`3` 是**层类型定义停止**的结果——`ActiveMorphismLayer` 恰有三个构造子
     （`first` / `second` / `third`），故 `numActiveLayers` 与 `card_active_layers` 是
