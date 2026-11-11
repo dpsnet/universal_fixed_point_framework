@@ -3704,3 +3704,126 @@ N · S = σ⁻¹   ∧   2 ≤ N   ∧   N < S    ⟹    N = 3 ∧ S = 5 ∧ N +
 4. **PowerShell 里用 `` `n `` 做 `.Replace('`n', [char]10)`** 会因 `'`n'` 被提前解析成实际换行而重载失配
    ⇒ 改文件内容一律走 `Edit` 工具，不用脚本替换。
 
+
+## §21.41 塔高 1 / 2 / 无界由三相格决定（第 30 批）——并订正第 29 批一处错述
+
+### 21.41.1 先订正：第 29 批把 B 相塔高写成「≥ 4」是错的
+
+第 29 批（`PhaseTrichotomy.lean`）模块头三格表里我写了：
+
+> 「B 相（可穿）| 层 2 非平凡、层 3 有见证 ⇒ 塔高 ≥ 4」
+
+并在边界段写「塔高具体值（A=2、**B=4**、C=1）」。**这是旧口径，且已被库内否证。**
+
+库内塔高的权威口径是 **1 / 2 / 无界**：
+
+| 出处 | 内容 | 地位 |
+|---|---|---|
+| `SpTowerLayer4.lean` L63 `tower_height_A2_B4` | A = 2、B **≥ 4** | 阶段性结论（层 3/4 为止） |
+| `SpTowerWitness.lean` L125 `tower_height_at_least_five_B` | B **≥ 5** | 层 5 具体实例链（`fourthHomotopy = diag(0,1,2) ≠ 0`） |
+| **`SpTowerUnbounded.lean` L62 `tower_height_trichotomy`** | **塔高只取 1 / 2 / 无界；「恰为 4」「恰为 5」不成立** | 权威 |
+
+`tower_height_trichotomy` 的否决理由清楚：层 5 沿用同一 `HasConditionForm`，故 `R = J₃`
+在层 5 同样被允许 ⇒ 一旦层 3 可穿，此后每层都可穿 ⇒ 塔高**无界**，不可能「恰为 4」。
+
+⇒ 第 29 批的「B 相塔高 ≥ 4」既过时（应说无界）又误导（暗示 4 是终点）。
+
+**本批已订正** `PhaseTrichotomy.lean` 的该行与边界段，并加入订正记录（指向 `57b1105` 的初版）。
+
+**另有一处第 29 批未读到的既有结论**：`SpLayerSeparability.lean` L510–517
+`diag4_same_single_object_verdict` 明确「单对象判据（`HasNontrivialTwoMorphism` / `AdTraversable`）
+对 C 相与 A 相给出**完全相同**判决」⇒ 单对象口径下 C 相的「塔高 1」**根本无法表达**。
+第 29 批只说「塔高数值未闭合」，没指出这一层；本批用跨对象口径把它表达出来（见 21.41.2）。
+
+### 21.41.2 塔高 = f(三相格)：跨对象口径
+
+要让「塔高」成为三格的函数，层 2 判据必须也取**跨对象**算子 `adLin2 A B`。
+这不是本批发明，`SpLayerSeparability.lean` L332–334 已裁决：
+
+> 「这是层 3 condition 的原始形态（源对象 `A`、目标对象 `B` 各出一个矩阵给出右端），
+>  因此 `AdTraversable2` 是三相判据的统一形式；`AdTraversable A` 只是 `A = B`（同谱）的退化特例。」
+
+同一裁决也由 `AdTraversable2_self_iff` 机检（`adLin2 A A = adLin A`）。
+
+于是三格直接给出塔高：
+
+| 格 | `ker(adLin2 A B)` | `ker ⊓ range` | 层 2 见证 | 层 3 见证 | 塔高 |
+|---|---|---|---|---|---|
+| 平坦 | `= ⊥` | `= ⊥`（自动） | **无** | 无 | **1** |
+| 止步 | `≠ ⊥` | `= ⊥` | 有 | **无** | **2** |
+| 可穿 | `≠ ⊥` | `≠ ⊥` | 有 | 有 | **无界** |
+
+**四个判据把三档钉死**：第 1、2 条分开「1」与「2」；第 3、4 条分开「2」与「无界」。
+没有第四档。
+
+### 21.41.3 机检清单（`TowerHeightFromPhase.lean`，已挂库根）
+
+| 定理 | 内容 |
+|---|---|
+| `AdTraversable2_iff_inf_ne_bot` | 补第 29 批未写的 iff：`AdTraversable2 ↔ ker⊓range ≠ ⊥` |
+| `flat_cell_no_layer2_witness` | `ker = ⊥` ⇒ 无任何非零层 2 见证（= 塔高 1） |
+| `stop_cell_layer2_witness` | `ker ≠ ⊥` ⇒ 有层 2 见证 |
+| `stop_cell_not_traversable2` | `ker⊓range = ⊥` ⇒ `¬ AdTraversable2`（层 3 无见证） |
+| `traverse_cell_traversable2` | `ker⊓range ≠ ⊥` ⇒ `AdTraversable2`（层 3 有见证） |
+| `tower_height_from_phase_cell` | ★ 三格 ⇒ 四判据打包（塔高三档由格决定） |
+| `phase_C_height_one` | ★ `(diag4, diag3)` 跨对象 `ker = ⊥` ⇒ 无层 2 见证 |
+| `phase_A_height_two` | `(diag3, diag3)` 层 2 有 ∧ 层 3 无 |
+| `phase_B_height_unbounded` | `(jordan3, jordan3)` 层 3 有 ⇒ `AdTraversable2` |
+| `three_phases_heights` | ★ 三相塔高 = 1 / 2 / 无界，打包 |
+| `object_vs_cross_agreement` | 同对象时两套判据一致（A/B 相不受口径改动影响） |
+
+**关键**：`phase_C_height_one` 是 `SpLayerSeparability.lean` L510–517 登记缺口的**实际填补**——
+C 相塔高 1 此前被判「不能由单对象判据表达」，本批用跨对象 `diag4_diag3_ker_eq_bot` 表达出来了。
+
+### 21.41.4 与既有同对象口径的关系
+
+`tower_height_trichotomy : LayerWitness jordan3 ∧ ¬ LayerWitness diag3` 是**同对象**口径
+（`LayerWitness` 用 `HasConditionForm A A R` + `adLin A R = 0`），它只说「A 止步、B 不停」。
+
+本批是**跨对象**口径，能**额外分出 C 相的 1**——这是同对象口径做不到的（见 21.41.1）。
+两者不冲突：同对象是跨对象在 `A = B` 的退化（`object_vs_cross_agreement` 机检）。
+
+### 21.41.5 边界（必须一并陈述）
+
+1. **「塔高 1」的准确含义是「层 2 判据落空，故无任何非零层 2 见证」**，不是数字 1 的算术。
+   若要读成「层数 = 1」，需另给「层数」的类型定义——库内**没有**层索引类型
+   （层是结构嵌套，不是编号）。本批不提供。
+2. **「无界」仍是 `SpFiveLayer.lean` L14–18 的口径**：「判据层号无关 + 缺陷决定塔高」，
+   **不是**「塔有无穷多层」（那是结构公设，库内层结构只到层 5）。
+3. **把层 2 判据提升为跨对象 `ker(adLin2 A B)` 是口径选择**，依据是库内既有裁决。
+   若将来坚持层 2 必须单对象，则 C 相塔高 1 会退回不可表达状态——这是该选择的代价，
+   已在此登记。
+4. 本批**不**证「层 6 起结构存在」。
+
+### 21.41.6 验证
+
+- 单模块 `lake build MUFPFormalization.TowerHeightFromPhase`
+  - `pr634oe1.txt`：EXIT 1 / ERR 9（`omit [DecidableEq ι] in` 被写在 doc comment **之后**）
+  - `pr634oe2.txt`：EXIT 1 / ERR 2（`AdTraversable2_iff_inf_ne_bot.mpr` 缺显式参数 A B）
+  - **`pr634oe3.txt`：EXIT 0 / 0 error / WARN 0**
+- 全库 `pr634full25.txt`：**EXIT 0 / 3863 jobs / 0 error / WARN 10**（与基线一致）
+
+### 21.41.7 新增战术坑（+2）
+
+1. **`omit [DecidableEq ι] in` 必须写在 `/-- doc -/` 之前**，不能写在之后。
+   写在之后会报 `unexpected token 'omit'; expected 'lemma'`——而这条错误报在 doc 的末行，
+   容易误读为 doc 有问题。第 29 批我写对了（omit 在前），第 30 批写反了，本批已修。
+2. **带显式参数的 iff 定理不能直接挂 `.mpr`**：`AdTraversable2_iff_inf_ne_bot` 形如
+   `(A B) → (P ↔ Q)`，`AdTraversable2_iff_inf_ne_bot.mpr` 报 `Unknown constant`
+   ⇒ 必须 `(AdTraversable2_iff_inf_ne_bot A B).mpr`。
+3. **`hI : p = ⊥` 与 `h : p ≠ ⊥` 不可 `hI h`**：前者是等式不是函数，须 `h hI`。
+
+### 21.41.8 推进分级（本批后）
+
+| 命题 | 级别 |
+|---|---|
+| 「相的数量 = 3」= `ker` 两判据 4→3 格 | Lean A（第 29 批） |
+| `AdTraversable2 ↔ ker⊓range ≠ ⊥` | Lean A（第 30 批） |
+| 三格 ⇒ 塔高三档（1 / 2 / 无界），四判据钉死 | Lean A（第 30 批） |
+| **C 相塔高 1 可表达（跨对象口径）** | **Lean A（第 30 批，填补第 2 批缺口）** |
+| A 相塔高 2（= 层2有 ∧ 层3无） | Lean A（第 30 批） |
+| B 相塔高无界 | Lean A（第 30 批；与 `tower_height_trichotomy` 一致） |
+| 「塔高 = 4」 | **✗ 已判不成立**（`tower_height_trichotomy`）；第 29 批误述已订正 |
+| 「塔高」的层数类型定义 | ✗ 库内无层索引类型，未做 |
+| 两个 3（`N_active` / 相数）的同源性 | ✗ 未做（第 29 批登记） |
+
