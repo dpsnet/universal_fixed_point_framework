@@ -1,0 +1,26 @@
+rank ad_J (exact construction) = 6
+dim ker = 3
+[J,X] = I         residual = 1.732e+00  NOT solvable
+[J,X] = J         residual = 4.578e-16  solvable
+   X = [[-1.  0.  0.]
+ [ 0.  0.  0.]
+ [ 0.  0.  1.]]
+[J,X] = J^2       residual = 2.220e-16  solvable
+   X = [[ 0.  -0.5  0. ]
+ [ 0.   0.   0.5]
+ [ 0.   0.   0. ]]
+[J,X] = J+J^2     residual = 5.439e-16  solvable
+   X = [[-1.  -0.5  0. ]
+ [ 0.   0.   0.5]
+ [ 0.   0.   1. ]]
+[J,X] = 2J-J^2    residual = 1.018e-15  solvable
+   X = [[-2.   0.5  0. ]
+ [ 0.   0.  -0.5]
+ [ 0.   0.   2. ]]
+
+intersection system: rank = 7 , solution dim = 5 , nontrivial dim = 2
+  nontrivial (a,b,c) = [-0.       -0.151317 -0.034268]  ->  -0.0 I + -0.151317 J + -0.034268 J^2
+  nontrivial (a,b,c) = [-0.       -0.190028 -0.070225]  ->  -0.0 I + -0.190028 J + -0.070225 J^2
+  nontrivial (a,b,c) = [ 0.        0.209984 -0.560417]  ->  0.0 I + 0.209984 J + -0.560417 J^2
+  nontrivial (a,b,c) = [0.       0.315703 0.551024]  ->  0.0 I + 0.315703 J + 0.551024 J^2
+  nontrivial (a,b,c) = [-0.       -0.361337  0.207041]  ->  -0.0 I + -0.361337 J + 0.207041 J^2

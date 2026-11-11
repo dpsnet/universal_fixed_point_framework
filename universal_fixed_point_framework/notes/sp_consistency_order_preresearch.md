@@ -2800,3 +2800,100 @@ R2 已机检（107/107）：`ker ∩ im = 0 ⟺ A 可对角化`。但这是**二
 ### 21.28.4 验证
 
 `lake build MUFPFormalization.Unified3Theorem`：**EXIT 0 / 3124 jobs / PANIC 0 / 0 error / 0 warning**（`pr634uni3.txt`）。
+
+---
+
+## 21.29 第 9 批补记：R2 单块 n=3 的 `dim(ker∩im)=2` 数值仲裁 + Lean 化失败原因（第 15 批）
+
+第 9 批（2026-11-11 早段）曾尝试把 R2 闭式的单块特例 Lean 化，因构建日志被 774 条 `PANIC` 污染而主动撤回，**当时结论未写入任何文件**。本节补记。
+
+### 21.29.1 三个脚本与作废说明
+
+| 脚本 | 结论 | 状态 |
+|---|---|---|
+| `pr634r2n3.py` | 报 `dim(ker∩range) = 4` | **作废**。成因是 `np.kron` 造 `ad_J` 时行主序 `vec` 与列主序公式混用（`kron(I,A) − kron(Aᵀ,I)` 是列主序版） |
+| `pr634r2n3b.py` | 显式 12 未知 / 9 方程线性系统：`rank = 7`、解空间 5、**非平凡维 = 2** | 有效 |
+| `pr634r2n3c.py` | 精确逐元素 `ad_mat_exact` + `lstsq` 残差 | 有效 |
+
+### 21.29.2 2026-11-11 复跑结果（本节数字均为本轮重跑所得）
+
+`pr634r2n3b.py`：
+
+```
+rank ad_J = 6    dim ker = 3
+||K@vec(I)||, ||K@vec(J)||, ||K@vec(J²)|| = 1.7320508, 0.0, 0.0
+system rank = 7 of 9 equations, 12 unknowns
+solution space dim = 5
+nontrivial (a,b,c ≠ 0) solution dim = 2
+全部 5 个非平凡解的 (a,b,c) 中，a（I 的系数）恒为 0
+```
+
+`pr634r2n3c.py`：
+
+```
+rank ad_J (exact) = 6    dim ker = 3
+[J,X] = I      residual 1.732e+00   NOT solvable
+[J,X] = J      residual 4.578e-16   solvable   X = diag(−1, 0, 1)
+[J,X] = J²     residual 2.220e-16   solvable   X = [[0,−0.5,0],[0,0,0.5],[0,0,0]]
+[J,X] = J+J²   residual 5.439e-16   solvable
+[J,X] = 2J−J²  residual 1.018e-15   solvable
+intersection: rank 7, solution dim 5, nontrivial dim 2
+```
+
+**两处必须说明的细节**：
+
+1. `‖K@vec(I)‖ = 1.732` 恰等于 `‖vec(I)‖ = √3`，即 `I` 在 `range(ad_J)` 上的投影全被投影掉 ⇒ **`I ∉ range`**；而 `J`、`J²` 的残差 0 ⇒ 都在 `range` 内。故 `ker ∩ range = span{J, J²}`，`dim = 2`，与 R2 闭式 `n − #blocks = 3 − 1 = 2` **完全一致**。
+2. `[J,X] = J²` 的见证**不唯一**：脚本给出 `[[0,−0.5,0],[0,0,0.5],[0,0,0]]`，而 `X = E₂₃ = [[0,0,0],[0,0,1],[0,0,0]]` 同样成立（差一个中心化子元素）。**Lean 化取 `E₂₃`**，因为它是纯 0/1 矩阵，无需分数与 `noncomputable`。
+
+### 21.29.3 元素级通式（第 9 批中途一度算错方向，此处为修正版）
+
+对 `J = [[0,1,0],[0,0,1],[0,0,0]]`（即 `J[i][j] = 1 ⟺ j = i+1`）：
+
+```
+[J,X] i j = X (i+1) j − X i (j−1)
+```
+
+越界项取 0。**易错点**：`XJ` 项是 `X i (j−1)` 而非 `X i (j+1)`——因为 `J[k][j] = 1` 当且仅当 `j = k+1`，所以 `Σ_k X[i][k] J[k][j]` 只在 `k = j−1` 处非零。此点手推时极易翻向，导致误判「无解」。
+
+### 21.29.4 Lean 化尝试与失败原因（第 9 批）
+
+在 `SpLayerSeparability.lean` 的 `jordan3_has_two_morphism` 之后插入 5 条（doc + 4 定理 + 1 下界方向）：
+
+- `jordan3_sq_eq`｜`J² = [[0,0,1],[0,0,0],[0,0,0]]`
+- `jordan3_sq_mem_ker`｜`J² ∈ ker(adLin J)`
+- `jordan3_sq_mem_range`｜`J² ∈ range(adLin J)`，见证 `E₂₃`
+- `jordan3_sq_not_scalar_multiple`｜`∀ c, J² ≠ c • J`
+- `jordan3_ker_inf_range_two_dim_lower`｜`∃ R S ∈ ker ⊓ range, ∀ c, S ≠ c • R`（即 `finrank ≥ 2` 的下界方向）
+
+**构建结果**：`lake build MUFPFormalization.SpLayerSeparability` → **EXIT 0 / 1237 jobs / 0 error / 0 warning**，但日志出现 **774 条 `PANIC at Lean.Expr.appArg!` / `appFn!`**（`pr634sep3.txt`，776 行）。
+
+**二分定位**：把 `jordan3_sq_not_scalar_multiple` 与 `jordan3_ker_inf_range_two_dim_lower` 用 `/- ... -/` 注释掉重建（`pr634sep4.txt`）⇒ **PANIC 仍为 774，未减少**。
+
+⇒ 问题**不在具体定理**，而在剩余三条共用的 tactic 组合：
+
+```
+simp [jordan3, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_three, ...]
+```
+
+即 `Matrix.of ![![...]]` 字面量 + `simp` 的组合本身触发 `Lean.Expr.appArg!` panic（这是 Lean 4.34.0-rc2 的 kernel/elaborator 内部问题，不是证明逻辑错误——因为 `0 error / 0 warning`）。
+
+**处置**：774 行 PANIC 污染不可接受 ⇒ `git checkout -- SpLayerSeparability.lean` 回退，核验 `status --porcelain` 空、`--numstat` 空 ⇒ 文件干净无遗留。
+
+### 21.29.5 本批对 R2 单块特例的结论口径
+
+| 命题 | 级别 |
+|---|---|
+| `J₃` 的 `dim(ker∩im) = 2` | **数值 A**（显式 12×9 系统 `rank 7` ⇒ 维 2；两脚本互证；与闭式 `n−#blocks` 一致） |
+| `≥ 1`（即 `J² ∈ ker ⊓ range`） | **Lean A**（`jordan3_mem_ker` / `jordan3_mem_range` / `jordan3_traversable` 已机检，`04b7b17` 内） |
+| `≥ 2` | **Lean 未成**（第 9 批撤回）；数值 A |
+
+**结论**：`= 2` 的精确等式目前只有数值支撑，Lean 侧只有 `≥ 1`。若要 Lean 化 `≥ 2`，需先绕开 `Matrix.of` 字面量与 `simp` 的组合（候选路径见 21.29.6）。
+
+### 21.29.6 绕开 PANIC 的候选路径（未验证，登记）
+
+1. **不用 `simp`**：先证元素级引理 `jordan3_apply`，再 `rw [Matrix.mul_apply, Fin.sum_univ_three]`（`rw` 而非 `simp`），最后逐元素 `norm_num`。
+2. **换求和展开器**：用 `Fin.sum_univ_succ` 逐步展开，避开 `Fin.sum_univ_three`。
+3. **`decide` + 有限枚举**：把 `∑` 显式写成三项相加减（`Fin.sum_univ_three` 的结论手写成 `f 0 + f 1 + f 2`）。
+4. **隔离测试模块**：新建不加入库根的 `J3PanicProbe.lean`，只 build 它，快速试 tactic 组合而不污染主模块。
+
+**未做原因**：本轮优先把三张待办清单（§2.4 八条、§14.6 四条、第 9 批补记）清完；上述路径需多次 20–36 s 构建试错，留下轮。
