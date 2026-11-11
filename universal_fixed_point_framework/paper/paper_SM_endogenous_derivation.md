@@ -285,6 +285,8 @@ Rec 全范畴 = Rec_active ⊔ Rec_id ⊔ Σ-Rec
 | 层 3 | 3-态射（SpThreeMorphism 二阶同伦插值） | ✅ 活跃 |
 | 层 4 | coherence 层标号（约定） | ❌ 非活跃（不计入活跃层；其载体 `SpFourMorphism` 与层 3 同型，见下段机检） |
 
+**与「塔高」的区分（重要）**：上表的层数是**索引约定**，与「塔高」不是同一个量。塔高由相容阶判据（$\ker\cap\mathrm{im}$）决定：可对角化相（$\ker\cap\mathrm{im}=0$）塔高为 3；**含 Jordan 块**时 $\ker\cap\mathrm{im}\neq 0$，塔高可达 4 以上。因此「层 4 非活跃」**不**推出「塔高不可能超过 3」——两者分别回答「层有几个标号」与「相容阶能推进几步」。
+
 **Lean 锚**（`BranchCounting.lean` + `HigherSpCategory.lean`）：
 
 ```lean
