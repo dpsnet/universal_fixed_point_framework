@@ -3296,3 +3296,53 @@ L298/L302 的 `N_layers = 5` 与 L244 的 `n = 4` 现在是两个不同口径（
 
 - `master` 是否对齐 `develop`、是否切默认分支 —— 仍未表态（OPEN_ITEMS 第 9 项其余分项）。
 - 论文系列编号是否加前缀、226 关闭与否、`ProbeTraceMain.lean` 原件去留 —— 均未动。
+
+## §21.36 `N_active = 3` 的地位终审：公设，且库里有一处仍在说「推论」（第 25 批）
+
+用户问「`N_active = 3` 还是公设？」——本节给全库实测依据，并修掉一处矛盾的 doc。
+
+### 21.36.1 实测（全库 grep `numActiveLayers` 与 `\bN_active\b`）
+
+**定义层**（只有两条，都是 `def := 3`）：
+
+| 位置 | 形式 |
+|---|---|
+| `Unified3Theorem.lean` L112 | `def numActiveLayers : ℕ := 3`，doc 明写「**地位：公设（E3），不是定理**」 |
+| `DHStructuralAnalysis.lean` L92 | `def N_active : ℕ := 3` |
+
+**唯一的「像定理」的东西**：
+
+`Unified3Theorem.card_active_layers : Fintype.card ActiveMorphismLayer = 3 := by native_decide`
+
+它说的是「`ActiveMorphismLayer` 这个**类型**有几个构造子」——该归纳类型 L84–88 只声明了 `first` / `second` / `third` 三个，故这是**定义的直接读数**，不是范畴推论。`native_decide` 只是把这句话算出来。
+
+**结论：全库没有任何一条定理从范畴公设推出 `N_active = 3`。** 所有下游用法（`BottTower.log2_k_max_eq_active_layers`、`CoherenceToBranching` L285 `have h_active : N_active = 3 := card_active_layers`、`BranchCounting.B_eq_15`、`SilenceCriticalLayer` 等 30 余处）都是**引用这个 3**，而非**证明这个 3**。
+
+### 21.36.2 修掉的一处矛盾
+
+`DHStructuralAnalysis.lean` L91 原 doc 写：
+
+> `/-- 𝐒𝐩 4-范畴的主动生成层数（统一 3 定理推论）。 -/`
+
+**「推论」二字与公设标签直接冲突**，而且它下面 40 行处就是第 21 批加的口径警告（讲 `N_total` 双口径）——同一文件的 doc 群里，一个说"推论"、一个说"口径不同"，读者无从判断。
+
+处置：改写为「**地位：公设（E3），不是定理**（与 `Unified3Theorem.numActiveLayers` 同一声明）」，并明写「本 doc 原写『统一 3 定理推论』——该表述不成立」，给出不成立的理由（`card_active_layers` 只数构造子）。**零代码改动，纯 doc。**
+
+### 21.36.3 顺带登记的两点（未处置）
+
+1. **重复定义**：`numActiveLayers`（`Unified3Theorem`）与 `N_active`（`DHStructuralAnalysis`）是两个独立的 `def := 3`，语义同一。**未合并**——合并会牵动 30 余处引用与库根 import 顺序，收益只是少一个名字。
+2. **另一处身份断言未核查**：`SilenceUnitConservation.lean` L30 doc 写「活跃代 `N_active = N_c = 3`」，把 `N_active` 与 `N_c` 等同。这条**本批未核**（`N_c` 的定义来源与是否与 `N_active` 同义需单独查），如实登记为未查项，不作默认判定。
+
+### 21.36.4 验证
+
+`lake build MUFPFormalization.DHStructuralAnalysis`：**EXIT 0 / 3169 jobs / 0 error / 0 warning**（`pr634na1.txt`）。
+
+### 21.36.5 对「由约定转定理」（task #633）的现状判断
+
+该目标目前**不具备可动的形式化前提**：要把它变成定理，必须先有一条从范畴公设（而非类型构造子个数）推出「`ker ∩ im ≠ 0 ⟹ 附加层数 = 3`」的证明链。已知障碍：
+
+- `N_active ≥ 3` 的下界在库里是**论证（B 级）不是机检**；上界 `N_active ≤ 3` 是 A 级机检。
+- 含 Jordan 块的 B 相塔高是 **≥ 4 且无界**（`tower_height_unbounded_B` 已机检）⇒ 结构层不提供 3，提供的是 ∞。
+- 早期四条升格路线已被机器检查否证（`72eefc9` / `e21d084` / `23a54cc` / D16 路线）。
+
+⇒ 在现库里，正确的动作是**维持公设 E3**，而不是把它改标为定理。若强行改标签，会与 `tower_height_unbounded_B` 直接矛盾。

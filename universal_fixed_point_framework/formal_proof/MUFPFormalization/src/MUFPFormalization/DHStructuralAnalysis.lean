@@ -88,7 +88,14 @@ noncomputable def delta_fit : ℝ := d_H_fit - ln15
    本文件的"条件定理"形式化该推论的逻辑：若前提成立，则结论成立。
 -/
 
-/-- 𝐒𝐩 4-范畴的主动生成层数（统一 3 定理推论）。 -/
+/-- 𝐒𝐩 4-范畴的主动生成层数。
+
+    **地位：公设（E3），不是定理**（与 `Unified3Theorem.numActiveLayers` 同一声明）。
+    `N_active := 3` 只是把 `3` 写进定义；库内没有一条证明从范畴公设推出它。
+
+    本 doc 原写「统一 3 定理推论」——该表述**不成立**，2026-11-12 订正：
+    `card_active_layers` 只数 `ActiveMorphismLayer` 的构造子个数（`first` / `second` /
+    `third`），是「该类型有几个构造子」的读法，不构成范畴推论。 -/
 def N_active : ℕ := 3
 
 /-- 𝐒𝐩 严格 4-范畴的总层数（对象层 + 4 个态射层）= 5。
