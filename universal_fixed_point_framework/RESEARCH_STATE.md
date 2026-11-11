@@ -2,16 +2,17 @@
 
 > **本节为口径权威；以下全部正文为历史记录，其中的模块数 / jobs 数 / 警告数 / sorry 数均为当时快照，不可直接引用。**
 >
-> - HEAD = `faff547`（`develop`，本地未推送；PR-634 预研累计 47 版本地提交，最近十批：`5b889ea` → `11a0a43` → `a50c13c` → `822a331` → `8f4c8ff` → `bcbca08` → `c1ff9ad` → `04b7b17` → `517f80d` → `faff547`）。
-> - 全库构建：**3853 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full14.txt`，第 7 批重建）。第 8–10 批**无 Lean 源码改动**（第 9 批的 Lean 增量已 `git checkout` 回退）⇒ 该构建口径对 HEAD 仍有效。
-> - 库内模块：**356**；库根 `src/MUFPFormalization.lean` = **177 行**，`ROOT_IMPORTS = 154`。
-> - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。
-> - olean / sorry 审计口径（D41 时点快照，**未刷新**）：`MODULES=354 / ROOT_IMPORTS=152 / CLOSURE=182 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_SITES=184 / SORRY_FILES=109`。`SORRY_LINES=0` **不是全库口径**；PR-634 新增 12 模块（含 `SpHermLayerDecision` / `SpHermProjectionLimit`）零 `sorry`。
-> - **第 9 批 Lean 失败记录**：`SpLayerSeparability.lean` 加 5 条定理后单模块 EXIT 0，但产生 **774 条 `PANIC at Lean.Expr.appArg!`**（日志 `pr634sep3.txt`）；注释两条后仍 774（`pr634sep4.txt`）。定位到 `Matrix.of ![![...]]` 字面量与 `simp [Matrix.mul_apply, Fin.sum_univ_three]` 的组合 ⇒ 文件已回退至 HEAD。**该 tactic 组合今后在本库应避开。**
-> - 论文 `paper1_fractal_spectral_derecursion.md` = **1682 行**（无 BOM）；`MUFPF体系总序.md` 的 `k_max=8` / `d_H` 标签已于 `faff547` 从「结构确定量」订正为「约定 + 算术」/「约定链上的条件结论」。
-> - 研究笔记权威：`notes/sp_consistency_order_preresearch.md`（§21.11–§21.19 为 D35–D41 与 D22③B；§21.20 为「推进所有开口」第 1–2 批；§21.21 R2 非对角闭式；§21.22 `SpHerm` 受限伴随判死；§21.23 ε 归处；§21.24 `N_total` 双口径；§21.25 R2 单块特例与 Lean 失败；§21.26 论文标签订正）。
-> - 结构清单：`notes/sp_ker_im_structural_results.md` §R6–§R11（R11.6 列剩余开放项）。
-> - 构建日志目录：`C:\Users\dps_n\AppData\Local\Temp\`（`pr634full14.txt` 最新全库；`pr634sep2.txt` / `pr634cat1.txt` 为单模块零警告记录；`pr634sep3/4.txt` 为 PANIC 失败记录）。
+> - **HEAD = `6459de8`**（`develop`，本地未推送；PR-634 预研累计 **58 版本地提交**，最近十批：`5c0c1c3` → `1482bd1` → `d514422` → `eee48ef` → `5b5b3c8` → `0e812b9` → `5f1eb2b` → `dadf846` → `f4ba30d` → `6459de8`）。
+> - **全库构建：3856 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full18.txt`，第 20 批重建；`pr634full17.txt` 为第 18 批，jobs 同为 3856）。
+> - **库内模块：359**（不含库根自身；递归计 `*.lean` 得 360）；库根 `src/MUFPFormalization.lean` = **180 行**，`ROOT_IMPORTS = 157`。
+> - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。第 1–21 批**未新增任何警告**。
+> - olean / sorry 审计口径（D41 时点快照，**未刷新**；第 18 批后模块已增至 359，需重跑审计）：`MODULES=354 / ROOT_IMPORTS=152 / CLOSURE=182 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_SITES=184 / SORRY_FILES=109`。`SORRY_LINES=0` **不是全库口径**；PR-634 新增模块（`SpHermLayerDecision`、`SpHermProjectionLimit`、`SpJ3TraceBound`、`SpJ3KernelBound`、`SpJ3IntersectionStructure`）零 `sorry`。
+> - **`PANIC at Lean.Expr.appArg!` 的判据已订正（第 16 批）**：第 9 批据「774 条 PANIC」判「不可接受并回退」，其隐含假设是基线无 PANIC；复查同环境历史日志，第 2 批提交（`11a0a43`）当时就已有 **288 条 PANIC / 6 个锚点**，只是当时只统计 `error`/`warning`、未统计 `info` 级 PANIC。该现象是本 Mathlib 版本上 `Matrix.of ![![...]]` + `simp [Matrix.mul_apply, Fin.sum_univ_succ]` 的**固有 info 噪音**，`EXIT 0 / error 0 / warning 0` 不受影响。**不得用作合入否决线**；`Matrix.of ![![...]]` 也因此不是「应避开」的写法——第 16/18 批的成功证明正是用它。
+> - 论文 `paper1_fractal_spectral_derecursion.md` = **1682 行**（无 BOM）；`MUFPF体系总序.md` 的 `k_max=8` / `d_H` 标签已于 `517f80d` 从「结构确定量」订正为「约定 + 算术」/「约定链上的条件结论」。`paper18_spectral_newtonian.md` = **704 行**，层计数断言已于 `dadf846` 自洽化（`N_IFS = 3` = 可生成的态射层数；层次总数 5 = 1 对象 + 4 态射）。
+> - 研究笔记权威：`notes/sp_consistency_order_preresearch.md`（§21.11–§21.19 D35–D41 与 D22③B；§21.20 第 1–2 批；§21.21 R2 非对角闭式；§21.22 `SpHerm` 受限伴随判死；§21.23 ε 归处；§21.24 `N_total` 双口径；§21.25 R2 单块特例与 Lean 失败；§21.26 论文标签订正；§21.27 §2.4 级联清单；§21.28 §14.6 四条 + §8 出路；§21.29 R2 单块 n=3 全链 21.29.1–21.29.9；§21.30 `paper18` 层计数；§21.31 `N_active` 公设地位；§21.32 `N_total` 论文内部双值）。
+> - 结构清单：`notes/sp_ker_im_structural_results.md` §R6–§R12.9（R12.9.3 为 R2 单块 `dim = 2` 闭合状态表）。
+> - 构建日志目录：`C:\Users\dps_n\AppData\Local\Temp\`（**`pr634full18.txt` 最新全库**；`pr634full17/16.txt` 为此前两批；`pr634uni4.txt` / `pr634ker2.txt` / `pr634trace1.txt` 为单模块零警告记录；`pr634sep2/3/4/6.txt` 为 PANIC 判据证据链）。
+> - **正文历史数字的位置（仅登记，未改写）**：模块计数旧值 `318`（L12674）、`334`（L12708）、`335`（L12831）、`336`（L12856）、`337`（L12893）、`338`（L13081）、`344`（L13569）——这些是**当时快照**，请勿引用；当前值见上「库内模块」条。正文保留原样以不破坏历史记录的时序性。
 
 ---
 
