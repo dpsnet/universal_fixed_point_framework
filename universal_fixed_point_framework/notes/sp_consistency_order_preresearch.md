@@ -2897,3 +2897,49 @@ simp [jordan3, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_three, ...]
 4. **隔离测试模块**：新建不加入库根的 `J3PanicProbe.lean`，只 build 它，快速试 tactic 组合而不污染主模块。
 
 **未做原因**：本轮优先把三张待办清单（§2.4 八条、§14.6 四条、第 9 批补记）清完；上述路径需多次 20–36 s 构建试错，留下轮。
+
+### 21.29.7 PANIC 判据订正与 `finrank ≥ 2` 落地（第 16 批，`SpLayerSeparability`）
+
+#### 21.29.7.1 先证伪旧判据：PANIC 不是新增定理引入的
+
+§21.29.4 与 §R11.7.2 的结论是「774 条 PANIC 与具体定理无关，来源是 `Matrix.of ![![...]]` 与 `simp` 组合本身」，并据此判「不可接受、撤回」。**该结论方向对，但判据不成立**——它隐含假设「基线无 PANIC」。
+
+复查历史日志（同一环境、同一工具链）：
+
+| 日志 | 时点 | 行数 | **PANIC** | 锚点数 | 当时报告 |
+|---|---|---|---|---|---|
+| `pr634sep2.txt` | 第 2 批落库前 | 290 | **288** | 6 | 「EXIT 0 / 零警告」 |
+| `pr634sep1.txt` | 第 2 批失败版 | 314 | **288** | 6 | 报 token 错 |
+| `pr634sep3.txt` | 第 9 批 | 776 | **774** | 9 | 「不可接受」 |
+| `pr634sep4.txt` | 第 9 批二分 | 776 | **774** | 9 | 同上 |
+| `pr634sep6.txt` | 本轮 | 506 | **504** | 8 | EXIT 0 / **0 警告** |
+
+⇒ **第 2 批提交（`11a0a43`）时库里就已有 288 条 PANIC、6 个锚点**，当时只统计 `error` / `warning`，未统计 `info` 级的 PANIC ⇒ 记录成「零警告」。第 9 批把 288 变 774 就判「不可接受」，是**拿一个从未被设为基线的指标当否决线**。
+
+锚点分布（`sep6`）：72（`jordan3_mem_range`，第 2 批既有）、116/123/133/169/183（本轮新增 5 条）、283/314/440（diag3/diag4 那批既有）。既有 6 锚点 ≈ 288 条，每条锚点约 48 条 ⇒ 增量来自新增定理的**条数**，不是新增机制。
+
+**订正后的口径**：`PANIC at Lean.Expr.appArg!/appFn!` 是本 Mathlib 版本上 `Matrix.of ![![...]]` + `simp [Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ]` 的**固有 info 噪音**，`EXIT 0` / `error 0` / `warning 0` 不受影响。**不得用它作合入否决线**；只登记为日志噪音。
+
+#### 21.29.7.2 `finrank ≥ 2` 方向的 Lean 化（已机检）
+
+`SpLayerSeparability.lean` 新增 5 条定理 + 1 个 `abbrev`（接在 `jordan3_has_two_morphism` 之后）：
+
+| 定理 | 内容 | 见证/判据 |
+|---|---|---|
+| `jordan3_sq_eq` | `J₃ * J₃ = J₃²` | 逐元素 `fin_cases` + `norm_num` |
+| `jordan3_sq_mem_ker` | `J₃² ∈ ker(ad_{J₃})` | `[J, J²] = 0` |
+| `jordan3_sq_mem_range` | `J₃² ∈ im(ad_{J₃})` | **`X = E₂₃`**（纯 0/1，无分数） |
+| `jordan3_sq_not_scalar_multiple` | `∀ c, J₃² ≠ c • J₃` | `(0,2)` 元：`1 ≠ 0` |
+| `jordan3_ker_inf_range_contains_two_independent` | `ker ⊓ range` 含两个不成比例元素 | `R = J₃²`、`S = J₃` |
+
+⇒ 交集维数 `≥ 2` 的**下界方向已机检**；与数值侧 `dim = 2` 的下界一致。
+
+**未做**：上界 `≤ 2`（即 `I ∉ range`）。数值依据是 `‖K @ vec I‖ = 1.732 = √3 = ‖vec I‖`（投影全被投掉），但 Lean 侧需「证明不存在 `X` 使 `[J, X] = I`」，是**否定存在性**命题，比正向构造难一个档；登记为开放项。
+
+#### 21.29.7.3 关键 tactic 参数（供后续复用）
+
+- `change` 是必需的：`adLin J X` 在 `ext` 前不可拆元素，须先 `change jordan3 * X - X * jordan3 = ...`（`adLin` 的 `toFun` 是 `rfl`，`change` 能过）。
+- `Fin.sum_univ_succ` 与 `Fin.sum_univ_three` **都能用**（`three` 不是 PANIC 源，实测探针模块用 `three` 时 PANIC = 0）。
+- 用 `let` 绑定见证矩阵（`let E : Matrix ... := Matrix.of ![...]`）后 `change ... E ...`，避免 `change` 里重复字面量。
+- `simp` 已闭合时多余的 `all_goals norm_num` 会触发 `linter.unusedTactic` 双重警告 ⇒ 逐处删除（本轮清掉 3 处、6 条警告）。
+- `simp [... , smul_eq_mul]` 足以处理 `(c • J) i j`，**不需要** `Matrix.smul_apply`。

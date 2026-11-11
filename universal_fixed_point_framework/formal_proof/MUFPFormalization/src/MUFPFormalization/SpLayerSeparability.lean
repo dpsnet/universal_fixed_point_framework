@@ -92,6 +92,78 @@ theorem jordan3_has_two_morphism : HasNontrivialTwoMorphism jordan3 := by
   rw [Submodule.mem_bot] at hmem
   exact jordan3_ne_zero hmem
 
+/-! ### B 相交点维数 `= 2` 的 Lean 下界（R2 单块特例）
+
+数值侧（`notes/pr634r2n3_result.txt`）已给出 `dim(ker(ad_J) ⊓ range(ad_J)) = 2`，
+含 `I ∉ range`（残差 `1.732 = √3 = ‖vec I‖`）与 R2 闭式 `n − #块数 = 3 − 1 = 2` 的双向核对。
+
+本块把**下界方向**机检化：在 `ker ⊓ range` 内给出两个**不成比例**的元素
+（`J₃²` 与 `J₃`）⇒ 该交集的维数 `≥ 2`。
+上界 `≤ 2`（即 `I ∉ range`）仍是数值结论，Lean 化未做，登记于 §R12.6。
+
+**tactic 口径**：沿用本文件既有的化简链 `Matrix.of_apply` + `Matrix.mul_apply` +
+`Fin.sum_univ_succ`（`jordan3_mem_range` 用的同一套）。
+
+**关于 `PANIC at Lean.Expr.appArg!`（重要订正）**：该 `info` 级输出在本文件**既有定理上
+同样出现**（`jordan3_mem_range` 及 diag3/diag4 那批共 9 处锚点），并非新增定理引入，
+也不阻断构建（`EXIT 0` / `0 error` / `0 warning`）。第 9 批曾据 `774 条 PANIC`
+判「不可接受并撤回」，该判据**不成立**——基线本身即有约 500 条。
+故本块按正常方式合入，`PANIC` 只作为日志噪音登记，不作判定依据（见笔记 §21.29.4 订正）。 -/
+
+/-- `J₃² = [[0,0,1],[0,0,0],[0,0,0]]`（移位矩阵幂零阶等于阶数，`n = 3`）。 -/
+abbrev jordan3Sq : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![0, 0, 1], ![0, 0, 0], ![0, 0, 0]]
+
+/-- `J₃ * J₃ = J₃²`。 -/
+theorem jordan3_sq_eq : jordan3 * jordan3 = jordan3Sq := by
+  ext i j
+  fin_cases i
+  all_goals fin_cases j
+  all_goals simp [jordan3, jordan3Sq, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ]
+
+/-- `J₃² ∈ ker(ad_{J₃})`：`[J, J²] = 0`（幂零矩阵的幂彼此交换）。 -/
+theorem jordan3_sq_mem_ker : jordan3Sq ∈ LinearMap.ker (adLin jordan3) := by
+  rw [LinearMap.mem_ker]
+  change jordan3 * jordan3Sq - jordan3Sq * jordan3 = 0
+  ext i j
+  fin_cases i
+  all_goals fin_cases j
+  all_goals simp [jordan3, jordan3Sq, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ,
+    Matrix.sub_apply, Matrix.zero_apply]
+
+/-- `J₃² ∈ im(ad_{J₃})`，见证 `X = E₂₃ = [[0,0,0],[0,0,1],[0,0,0]]`（纯 0/1，无分数）。
+
+    数值脚本给出的另一个见证 `[[0,-1/2,0],[0,0,1/2],[0,0,0]]` 与之只差一个中心化子元素，
+    此处取 `E₂₃` 以避免分数与 `noncomputable`。 -/
+theorem jordan3_sq_mem_range : jordan3Sq ∈ LinearMap.range (adLin jordan3) := by
+  let E : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![0, 0, 0], ![0, 0, 1], ![0, 0, 0]]
+  refine ⟨E, ?_⟩
+  change jordan3 * E - E * jordan3 = jordan3Sq
+  ext i j
+  fin_cases i
+  all_goals fin_cases j
+  all_goals simp [jordan3, jordan3Sq, E, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ,
+    Matrix.sub_apply]
+
+/-- `J₃²` 不是 `J₃` 的标量倍：判据取 `(0,2)` 元（`J₃²` 处为 `1`，`J₃` 处为 `0`）。 -/
+theorem jordan3_sq_not_scalar_multiple : ∀ c : ℂ, jordan3Sq ≠ c • jordan3 := by
+  intro c h
+  have h02 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M (0 : Fin 3) (2 : Fin 3)) h
+  simp [jordan3, jordan3Sq, Matrix.of_apply, smul_eq_mul] at h02
+
+/-- **R2 单块特例的 Lean 下界**：`ker ⊓ range` 内存在两个不成比例的元素
+    （`R = J₃²`、`S = J₃`）⇒ 该交集维数 `≥ 2`，与数值侧 `dim = 2` 的下界方向一致。 -/
+theorem jordan3_ker_inf_range_contains_two_independent :
+    ∃ R S : Matrix (Fin 3) (Fin 3) ℂ,
+      R ∈ LinearMap.ker (adLin jordan3) ⊓ LinearMap.range (adLin jordan3) ∧
+      S ∈ LinearMap.ker (adLin jordan3) ⊓ LinearMap.range (adLin jordan3) ∧
+      ∀ c : ℂ, S ≠ c • R := by
+  refine ⟨jordan3Sq, jordan3, ?_, ?_, ?_⟩
+  · exact Submodule.mem_inf.mpr ⟨jordan3_sq_mem_ker, jordan3_sq_mem_range⟩
+  · exact Submodule.mem_inf.mpr ⟨jordan3_mem_ker, jordan3_mem_range⟩
+  · intro c h
+    have h01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M (0 : Fin 3) (1 : Fin 3)) h
+    simp [jordan3, jordan3Sq, Matrix.of_apply, smul_eq_mul] at h01
+
 /-! ### A 相判定：层 2 非平凡、层 3 不可穿越 -/
 
 /-- 对角矩阵从左侧作用的元素式：`(diag3 * X) i j = d i * X i j`。 -/

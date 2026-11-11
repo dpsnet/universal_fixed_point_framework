@@ -723,4 +723,32 @@ IGNORED: pr634r2off_result.txt (3884)
 
 - Lean：`Unified3Theorem` 四次构建均 EXIT 0 / 3124 jobs / PANIC 0 / 0 error / 0 warning（`pr634uni1/2/3.txt`）；无新增模块 ⇒ `MODULES=356` / `ROOT_IMPORTS=154` / `ROOT=177` 不变。
 - **已关闭**：§2.4 八条、§14.6 四条、证据文件入仓。
-- **仍开放**：等式链 `N_active` 的「公设」字样；B 路观测口径分离；E1′ W 版本（判无必要，登记）；R2 `same` 情形闭式；R2 闭式整体 Lean 化（缺 Jordan 块数概念）；R1–R4 与 PR-634-L1 Lean 化；`finrank = 2` 的 Lean 上界（PANIC 未绕开）；论文 §3/§6 对 §1 48 例根基的重述；论文 §5 几何同构；`RESEARCH_STATE.md` 正文历史数字。
+- **仍开放**：等式链 `N_active` 的「公设」字样；B 路观测口径分离；E1′ W 版本（判无必要，登记）；R2 `same` 情形闭式；R2 闭式整体 Lean 化（缺 Jordan 块数概念）；R1–R4 与 PR-634-L1 Lean 化；`finrank = 2` 的**上界 `≤ 2`**（见 R12.7）；论文 §3/§6 对 §1 48 例根基的重述；论文 §5 几何同构；`RESEARCH_STATE.md` 正文历史数字。
+
+### R12.7 第 16 批：PANIC 判据订正 + `finrank ≥ 2` 落地
+
+**R12.7.1 旧判据被证伪**：第 2 批提交（`11a0a43`）时该文件**已有 288 条 PANIC / 6 个锚点**（`pr634sep2.txt`），当时只统计 `error`/`warning`，记成「零警告」。第 9 批把 288 变 774 即判「不可接受并撤回」，是把一个**从未设为基线的指标**当否决线。
+
+| 日志 | 时点 | 行数 | PANIC | 锚点 |
+|---|---|---|---|---|
+| `pr634sep2.txt` | 第 2 批落库前 | 290 | **288** | 6 |
+| `pr634sep3/4.txt` | 第 9 批 | 776 | **774** | 9 |
+| `pr634sep6.txt` | 第 16 批 | 506 | **504** | 8 |
+
+⇒ `PANIC at Lean.Expr.appArg!/appFn!` 是 `Matrix.of ![![...]]` + `simp [Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_succ]` 在本 Mathlib 版本的**固有 info 噪音**，`EXIT 0` / `error 0` / `warning 0` 不受影响。**不得用作合入否决线**。
+
+**R12.7.2 `SpLayerSeparability` 新增 5 条 + 1 个 `abbrev`**（接在 `jordan3_has_two_morphism` 之后）：
+
+| 定理 | 判据 |
+|---|---|
+| `jordan3_sq_eq` | `J₃ * J₃ = J₃²` |
+| `jordan3_sq_mem_ker` | `[J, J²] = 0` |
+| `jordan3_sq_mem_range` | 见证 **`E₂₃`**（纯 0/1，无分数，无需 `noncomputable`） |
+| `jordan3_sq_not_scalar_multiple` | `(0,2)` 元 `1 ≠ 0` |
+| `jordan3_ker_inf_range_contains_two_independent` | `R = J₃²`、`S = J₃` 不成比例 |
+
+⇒ `ker ⊓ range` 维数 **`≥ 2` 已机检**（数值侧 `dim = 2` 的下界方向）。
+
+**R12.7.3 仍未机检**：上界 `≤ 2`（`I ∉ range`）。数值依据 `‖K @ vec I‖ = 1.732 = √3 = ‖vec I‖`；Lean 侧是**否定存在性**命题（不存在 `X` 使 `[J, X] = I`），比正向构造难一档，登记开放。
+
+**R12.7.4 验证**：`pr634sep6.txt` — EXIT 0 / 1237 jobs / **PANIC 504**（既有基线噪音）/ **error 0** / **warning 0**。探针模块 `ProbeJ3Tactic.lean` 测完即删，未入库根、未留在 `src/`。
