@@ -164,3 +164,6 @@ import MUFPFormalization.SpLayerNonCollapse
 import MUFPFormalization.SpChainComplexAudit
 import MUFPFormalization.SpLayerSeparability
 import MUFPFormalization.SpHermCategory
+import MUFPFormalization.SpSpectralBridge
+import MUFPFormalization.SpTowerCriterion
+import MUFPFormalization.SpDFunctorRange

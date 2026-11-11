@@ -1702,3 +1702,77 @@ H : h ↦ A_X * h − h * A_Y        （A_X = 源对象矩阵，A_Y = 目标对�
 
 **未做（方案③后续）**：`forgetObj` 只在对象层面（未证 `Functor`）；`SpHerm` 在伴随中的位置未定；`DFunctor` 的值域重定向未做。
 
+⇒ **三项均已落地，见 §21.11（D35）**。
+
+### 21.11 谱定理整链、塔高判据、遗忘函子与 `DFunctor` 值域（D35）
+
+本节把 §21.10 结尾登记的三项未完成项全部落地。四个模块：`SpSpectralBridge.lean`（新）、`SpTowerCriterion.lean`（新）、`SpDFunctorRange.lean`（新）、`SpHermCategory.lean`（增补）。均已挂库根 import，全库 `lake build MUFPFormalization` = **3845 jobs / EXIT=0 / 12 警告 / 0 error**（日志 `pr634full1.txt`；此前口径 3842 jobs）。
+
+#### 21.11.1 谱定理整链（第一项）
+
+此前只有后两环（`ker ∩ im = 0 ⇒ dev ≡ 0`）机检，前环「自伴 ⇒ 可酉对角化」空白，且 `diag3_dev_eq_zero` 隐含「已对角」前提。现在整链闭合：
+
+| 定理 | 内容 | 角色 |
+|---|---|---|
+| `hermitian_unitary_diagonalizable` | `Matrix.IsHermitian A ⇒ ∃ U ∈ unitaryGroup, ∃ d : Fin n → ℝ, A = U * diagonal d * star U` | 从 Mathlib `spectral_theorem`（`Analysis/Matrix/Spectrum.lean` L143）转接 |
+| `spObj_hermitian_unitary_diagonalizable` | `MUFPF.IsHermitian E ⇒ 同上` | 经 `isHermitian_iff_matrixIsHermitian` 转接；两谓词差一个 `Eq.symm` |
+| `diagonal_adLin_ker_inf_range_eq_bot` | `ker(adLin (diagonal d)) ⊓ range(adLin (diagonal d)) = ⊥`，**对任意对角 `d`**（不要求谱互异、不要求实） | 基座 |
+| `unitary_diagonalizable_adLin_ker_inf_range_eq_bot` | 酉共轭把 `x` 搬到对角侧后同一结论 | 中间环 |
+| **`hermitian_adLin_ker_inf_range_eq_bot`** | `Matrix.IsHermitian A ⇒ ker(adLin A) ⊓ range(adLin A) = ⊥` | **闭合「自伴 ⇒ 零交」** |
+| **`hermitian_dev_eq_zero`** | `hA ∧ dev ∈ ker ∧ dev ∈ range ⇒ dev = 0` | **无条件版** |
+| **`spObj_hermitian_dev_eq_zero`** | `MUFPF.IsHermitian E` 版 | **取代 `diag3_dev_eq_zero` 的隐含前提** |
+
+辅助五条：`adLin_apply`（`rfl`；`simp only [adLin, …]` 不展开 `toFun`，必须先用它）、`diagonal_mul_apply`、`mul_diagonal_apply`（**故意不带 `ring`**，否则下游 `adLin_diagonal_apply` 报 `No goals`）、`adLin_diagonal_apply`（须 `Matrix.sub_apply` + `ring`）、`adLin_conj_apply`（两块 `calc … := by noncomm_ring`）。
+
+⇒ **`自伴 ⇒ 可酉对角化 ⇒ ker ∩ im = 0 ⇒ dev ≡ 0` 四步全机检**（`pr634spec7.txt` EXIT=0）。
+
+#### 21.11.2 塔高判据（第二项）
+
+`SpTowerCriterion.lean`（import `HigherSpCategory` + `SpLayerSeparability`）：
+
+| 定理 | 内容 |
+|---|---|
+| `HasConditionForm A B R` | `∃ L : Matrix (Fin m) (Fin n) ℂ, R = A * L − L * B`；`L` **允许矩形**，与 `HigherSpCategory` 字段类型一致，`adLin2` 是其方形特例 |
+| `spThreeMorphism_condition_form` | L245 字段实例化 ⇒ 层 3 condition 就是 `HasConditionForm` |
+| `spFourMorphism_condition_form` | L370 字段实例化 ⇒ 层 4 condition **同形** |
+| `conditionForm_zero` | `HasConditionForm A B 0` 恒成立 |
+| `conditionForm_reuse` | `h₄ : R₄ = R₃` ∧ `h₃ : R₃ = A * L₃ − L₃ * B` ⇒ `HasConditionForm A B R₄` |
+
+⇒ **层 3 与层 4 共用同一个判据**，塔高 3→4 不引入新代数条件。`conditionForm_zero` 同时说明挡越层的不是 condition 而是 `R ≠ 0`（与 §21.4 D25 对齐）。
+
+**不入定理的边界**：层 ≥ 5 需 `SpFiveMorphism`，全库不存在（`HigherSpCategory.lean` 止于 `SpFourMorphism` L362–370）。「塔高 4」可机检到层 4；**「塔高 ∞」不入定理**——只能由 `HasConditionForm` 的逐层同形性（R5.2 34/34 行 0 差异）外推，属论证而非机检。
+
+#### 21.11.3 遗忘函子与 `SpHerm` 位置（第三项前半）
+
+`SpHermCategory.lean` 增补（import 加 `Mathlib.CategoryTheory.Functor.FullyFaithful`——`Functor.Basic` 单独 import **不给** `Functor.Full`/`Faithful`）：
+
+| 定理 | 内容 |
+|---|---|
+| `forgetFunctor` | `SpHermObj ⥤ SpObj`；`obj X := X.toSp`、`map f := ⟨f.P, f.intertwine⟩`；`map_id`/`map_comp` 均 `SpHom.ext; rfl` |
+| `forgetFunctor_faithful` | `map_injective`：`congrArg SpHom.P h` 后 `SpHermHom.ext` |
+| `forgetFunctor_full` | `map_surjective`：`⟨⟨g.P, g.intertwine⟩, rfl⟩` |
+
+**满性为何成立**：自伴条件只约束**对象**、不约束态射（`SpHermHom` 与 `SpHom` 同形）⇒ 遗忘在态射层面是满的。这修正了此前把 D22 笼统表述为「`SpHerm → SpC` 遗忘非满」的说法——**非满只发生在对象层面**。
+
+#### 21.11.4 `DFunctor` 值域重定向（第三项后半）
+
+`SpDFunctorRange.lean`（import `DecursionFunctor` + `SpHermCategory`）：
+
+| 定理 | 内容 |
+|---|---|
+| `cyclicStep3` | `Fin 3 → Fin 3`，`![1,2,0]`（`0 ↦ 1 ↦ 2 ↦ 0`） |
+| `cyclic3SpObj` | `⟨3, stepMatrix cyclicStep3⟩`（`abbrev`；`DFunctor_obj` 的矩阵原型） |
+| `cyclic3SpObj_not_hermitian` | `¬ IsHermitian`：`(0,1)` 元为 1、`(1,0)` 元为 0 |
+| `not_all_spObj_hermitian` | **`SpC` 不是全自伴层** |
+| **`forgetFunctor_not_surjective_on_objects`** | `∃ E, ¬ ∃ X : SpHermObj, X.toSp = E` ⇒ **`SpHerm` 是 `SpC` 的真子范畴** |
+
+合起来：`forgetFunctor` **全忠实但对象不满** ⇒ `SpHerm` 的位置是「全忠实的真子范畴嵌入」；`DFunctor` 的像含非自伴算子 ⇒ 值域只能是 `SpC`。
+
+**未机检的边界**：`DFunctor_obj X` 的 `A` 是 `stepMatrix` 在 `Fintype.equivFin X.T` 重标号下的形式。把 `cyclic3SpObj` 逐字对上 `DFunctor_obj cyclicRec3` 需展开 `Fintype.equivFin (Fin 3)` 的具体实现（三轮构建 `pr634range1/2/3.txt` 均卡在此），本模块只机检「该算子族的原型确实非自伴」。因此「`DFunctor` 值域 ≠ `SpHerm`」的机检形式是**两个独立事实的合成**（`SpC` 有非自伴对象 + `SpHerm` 对象不满），而非「`DFunctor` 的每个像都非自伴」。强形式未证，登记为缺口。
+
+#### 21.11.5 登记（替换关系与仍未完成项）
+
+- `diag3_dev_eq_zero`（旧，带「已对角」前提）**未删除**，保留为对角相特例。无条件替代是 `hermitian_dev_eq_zero` / `spObj_hermitian_dev_eq_zero`。引用时须注明用哪个；论文侧应引无条件版。
+- `SpFiveMorphism` 缺失 ⇒ 塔高 ∞ 不入定理（本轮无新增）。
+- `SpHerm` 的**受限伴随存在性**：`AdjunctionAnchor.lean` L71 已机检「不存在 `R : SpObj ⥤ RecObj` 使 `DFunctor ⊣ R`」；本轮证明 `SpHerm` 不能承载 `DFunctor` 的值域，但「`SpHerm` 上是否存在受限伴随」**仍无 Lean 陈述**（需先定 `DFunctor` 在 `SpHerm` 内的替代物，本轮未做）。
+- n = 2 的 transfer matrix 全对称、无非自伴见证（D22 穷举已确认）⇒ `cyclic3SpObj` 是**最小**见证。

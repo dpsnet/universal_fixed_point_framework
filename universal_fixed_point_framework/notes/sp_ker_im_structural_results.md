@@ -268,7 +268,27 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | `diag3HermObj` | A 相在自伴层内 — 自伴层**非空** |
 | `jordan3_not_in_herm_layer` | **遗忘非满**：不存在以 `jordan3` 为底的自伴对象 |
 
-⇒ 方案③的**结构理由**已机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。函子层面（`forgetObj` 未证为 `Functor`）、`SpHerm` 的伴随位置、`DFunctor` 值域重定向均未做。
+⇒ 方案③的**结构理由**已机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。函子层面、`SpHerm` 位置、`DFunctor` 值域三项已在 D35 落地（见 R6）。
+
+### R6 Lean 机检现状（D35，2026-11-11）
+
+§0 的四级（A/B/C/D）是数值与精确算术层面的证据。D35 之后其中一部分**同时具备 Lean 机检**；引用时仍须区分「精确算术验证」与「Lean 形式化证明」。
+
+| 结论 | Lean 定理 | 级别变化 |
+|---|---|---|
+| 自伴 ⇒ 可酉对角化 | `MUFPF.hermitian_unitary_diagonalizable`（`SpSpectralBridge.lean`） | 新：**机检**（由 Mathlib `spectral_theorem` 转接） |
+| 可酉对角化 ⇒ `ker ∩ im = 0` | `hermitian_adLin_ker_inf_range_eq_bot`（同上） | 新：**机检** |
+| 自伴层内 `dev ≡ 0`（**无条件**） | `hermitian_dev_eq_zero` / `spObj_hermitian_dev_eq_zero` | 取代 D34 的「已对角」前提版 |
+| 任意对角 `d` 下 `ker ⊓ range = ⊥` | `diagonal_adLin_ker_inf_range_eq_bot` | 新：**机检**（不需谱互异） |
+| 层 3 / 层 4 condition 同形 | `HasConditionForm` + `spThreeMorphism_condition_form` / `spFourMorphism_condition_form`（`SpTowerCriterion.lean`） | 新：**机检** |
+| condition 恒可满足 ⇒ 挡越层的是 `R ≠ 0` | `conditionForm_zero`（同上） | 新：**机检** |
+| `SpHerm ⥤ SpC` 遗忘全忠实 | `forgetFunctor` + `forgetFunctor_full` + `forgetFunctor_faithful`（`SpHermCategory.lean`） | 新：**机检** |
+| `SpHerm` 是 `SpC` 的真子范畴（对象层面不满） | `forgetFunctor_not_surjective_on_objects`（`SpDFunctorRange.lean`） | 新：**机检** |
+| `SpC` 非全自伴 | `not_all_spObj_hermitian`（同上） | 新：**机检** |
+
+口径：全库 `lake build MUFPFormalization` = **3845 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full1.txt`），零 `sorry`。
+
+**仍未机检**：塔高 ∞（缺 `SpFiveMorphism`）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
 
 ### 符号约定（引用时必须守住）
 

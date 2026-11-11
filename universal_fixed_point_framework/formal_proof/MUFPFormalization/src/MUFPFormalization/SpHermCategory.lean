@@ -16,6 +16,7 @@
 
 import MUFPFormalization.SpCategory
 import MUFPFormalization.SpLayerSeparability
+import Mathlib.CategoryTheory.Functor.FullyFaithful
 
 namespace MUFPF
 
@@ -55,6 +56,40 @@ instance spHermCategory : Category.{0, 0} SpHermObj where
 
 /-- 遗忘到复谱层（对象层面）：`SpHerm → SpC`。 -/
 def forgetObj : SpHermObj → SpObj := SpHermObj.toSp
+
+/-- **遗忘函子**：`SpHerm ⥤ SpC`。对象遗忘到 `SpObj`，态射遗忘到 `SpHom`。
+    函子律（`map_id` / `map_comp`）在此闭合——`SpHermHom` 与 `SpHom` 同形，
+    差异只在对象的自伴见证上，而见证不参与态射。 -/
+def forgetFunctor : SpHermObj ⥤ SpObj where
+  obj X := X.toSp
+  map f := ⟨f.P, f.intertwine⟩
+  map_id X := by
+    apply SpHom.ext
+    rfl
+  map_comp f g := by
+    apply SpHom.ext
+    rfl
+
+@[simp]
+lemma forgetFunctor_obj (X : SpHermObj) : forgetFunctor.obj X = X.toSp := rfl
+
+@[simp]
+lemma forgetFunctor_map_P {X Y : SpHermObj} (f : X ⟶ Y) : (forgetFunctor.map f).P = f.P := rfl
+
+/-- **遗忘函子忠实**：`SpHermHom` 到 `SpHom` 的映射在态射上是单射
+    （`P` 忘记后可直接还原交织等式：它是命题，不携带数据）。 -/
+instance forgetFunctor_faithful : forgetFunctor.Faithful where
+  map_injective := by
+    intro X Y f g h
+    apply SpHermHom.ext
+    exact congrArg SpHom.P h
+
+/-- **遗忘函子满**：任给 `SpHom X.toSp Y.toSp`，其 `P` 与 `intertwine` 直接构成
+    `SpHermHom X Y`，因为自伴条件只约束对象、不约束态射。 -/
+instance forgetFunctor_full : forgetFunctor.Full where
+  map_surjective := by
+    intro X Y g
+    exact ⟨⟨g.P, g.intertwine⟩, rfl⟩
 
 /-- A 相代表（自伴、塔高 2）是自伴层内的对象。 -/
 def diag3HermObj : SpHermObj where
