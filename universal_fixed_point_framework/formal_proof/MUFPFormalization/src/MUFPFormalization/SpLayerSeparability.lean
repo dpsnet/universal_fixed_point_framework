@@ -187,4 +187,53 @@ theorem layer3_separates_A_B :
     AdTraversable jordan3 ∧ ¬ AdTraversable diag3 :=
   ⟨jordan3_traversable, diag3_not_traversable⟩
 
+/-! ### C 相判定：谱不交 ⇒ 层 2 平凡（跨对象算子） -/
+
+/-- C 相代表：谱 `(4,5,6)`，与 `diag3` 的 `(1,2,3)` 不相交。 -/
+abbrev diag4Val : Fin 3 → ℂ := ![4, 5, 6]
+
+/-- C 相矩阵 `diag(4,5,6)`（显式矩阵，同 `diag3` 的理由）。 -/
+abbrev diag4 : Matrix (Fin 3) (Fin 3) ℂ := Matrix.of ![![4, 0, 0], ![0, 5, 0], ![0, 0, 6]]
+
+/-- **跨对象交换子作用**：`X ↦ A * X - X * B`（源对象 `A`、目标对象 `B`）。
+    这才是层塔 condition 的真实形态——`β.homotopy - α.homotopy = X.A * h - h * Y.A`
+    （`HigherSpCategory.lean` L246）源、目标各出一个矩阵；`adLin A` 只是 `A = B` 的退化特例。 -/
+def adLin2 (A B : Matrix ι ι ℂ) : Matrix ι ι ℂ →ₗ[ℂ] Matrix ι ι ℂ where
+  toFun X := A * X - X * B
+  map_add' X Y := by
+    rw [Matrix.mul_add, Matrix.add_mul]
+    abel
+  map_smul' c X := by
+    rw [Matrix.mul_smul, Matrix.smul_mul, ← smul_sub]
+    rfl
+
+lemma diag4_mul_apply (X : Matrix (Fin 3) (Fin 3) ℂ) (i j : Fin 3) :
+    (diag4 * X) i j = diag4Val i * X i j := by
+  rw [Matrix.mul_apply]
+  fin_cases i
+  all_goals simp [Matrix.of_apply, Fin.sum_univ_succ]
+
+/-- 谱 `(4,5,6)` 与 `(1,2,3)` 不交 ⇒ 任意分量差非零（Sylvester 可逆性的全部内容）。 -/
+lemma diag4Val_sub_diag3Val_ne_zero (i j : Fin 3) : diag4Val i - diag3Val j ≠ 0 := by
+  fin_cases i <;> fin_cases j <;> (simp [diag4Val, diag3Val]; norm_num)
+
+/-- **C 相层 2 平凡**：`ker(adLin2 diag4 diag3) = ⊥`。
+    即不存在非零 `h` 满足 `diag4 * h - h * diag3 = 0`——这正是「谱不交 ⇒ 层 2 无 defect 可承接」。
+    与 R1 表第一行（C 相塔高 1）一致，且把「`ker H = 0`」的判据落到跨对象算子本身，而非 `A` 自身可逆。 -/
+theorem diag4_diag3_ker_eq_bot : LinearMap.ker (adLin2 diag4 diag3) = ⊥ := by
+  rw [Submodule.eq_bot_iff]
+  intro R hR
+  rw [LinearMap.mem_ker] at hR
+  ext i j
+  have h : diag4Val i * R i j - R i j * diag3Val j = 0 := by
+    have h0 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M i j) hR
+    simpa [adLin2, LinearMap.coe_mk, AddHom.coe_mk, Pi.sub_apply, Matrix.sub_apply,
+      diag4_mul_apply, mul_diag3_apply, Matrix.zero_apply] using h0
+  have hmul : (diag4Val i - diag3Val j) * R i j = 0 := by
+    calc (diag4Val i - diag3Val j) * R i j
+        = diag4Val i * R i j - diag3Val j * R i j := by ring
+      _ = diag4Val i * R i j - R i j * diag3Val j := by ring
+      _ = 0 := h
+  exact (mul_eq_zero.mp hmul).resolve_left (diag4Val_sub_diag3Val_ne_zero i j)
+
 end MUFPFormalization

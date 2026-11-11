@@ -1568,7 +1568,7 @@ theorem spFourExchangeLaw_strict {X Y Z : SpObj}
 2. 对角位：`d_i * X_ii - X_ii * d_i = 0` 直接给出 `R_ii = ad_{diag3}(X)_ii = 0`；
 3. 非对角位：`d_i * R_ij - R_ij * d_j = 0` ⇒ `(d_i - d_j) * R_ij = 0`，而 `d_i ≠ d_j`（`(1,2,3)` 互异）⇒ `R_ij = 0`。
 
-⇒ **A 相（层 3 不可穿越）已从 `pr634r1highn.py` 的精确算术升为 Lean 定理**。至此 R5.1 表中 A / B / C 三相的层 2、层 3 判定全部有 Lean 侧依据（C 相 `ker = 0` 属平凡情形，可由 `ker = ⊥` 直接给出，未单列定理）。
+⇒ **A 相（层 3 不可穿越）已从 `pr634r1highn.py` 的精确算术升为 Lean 定理**。至此 R5.1 表中 **A / B 两相**的层 2、层 3 判定全部有 Lean 侧依据；**C 相**由跨对象算子 `adLin2` 另行机检（见 §21.7）。
 
 **已知环境噪声**：`jordan3_mem_range`、`diag3_has_two_morphism`、`diag3_ker_inf_range_eq_bot` 中的 `simp` 集合会触发 Lean 内部 `Lean.Expr.appArg!` / `appFn!` PANIC（`info` 级，不影响 olean 生成与定理正确性，实测构建 1215 jobs 通过、模块零 warning）。收窄为 `simp only` 会因缺 `![…] 2` 这类向量下标引理而无法收口，故保留现证法并登记。
 
@@ -1577,5 +1577,40 @@ theorem spFourExchangeLaw_strict {X Y Z : SpObj}
 ### 21.6 全库复验口径
 
 - 单模块：`lake build MUFPFormalization.SpLayerSeparability` → 1215 jobs 通过，`EXIT=0`，模块 **0 warning**（PANIC 为 `info` 级，不影响 olean）。
-- 全库：`lake build MUFPFormalization`（A 相加入后）→ **3841 jobs 通过，`EXIT=0`，12 条警告，0 error**（`pr634fullbuild3.txt` / `pr634fullbuild3sum.txt`）；12 条警告位置与 D26 前完全一致（`SpCategory:427×2`、`ICVerification:82/86`、`RAP4_silence_strictification:123/124`、`RAP5a_explicit_adjunction:413`、`SignatureFiber:342`、`SpectralBundle/Core:69`、`PinchTopology:389/492`、`HallEmergence:1170`），**均非本模块引入**。
+- 全库：`lake build MUFPFormalization` → **3841 jobs 通过，`EXIT=0`，12 条警告，0 error**（两轮实测：A 相加入后 `pr634fullbuild3.txt` / `pr634fullbuild3sum.txt`；合成定理 `layer3_separates_A_B` 加入后 `pr634fullbuild4.txt`）。12 条警告位置与 D26 前完全一致（`SpCategory:427×2`、`ICVerification:82/86`、`RAP4_silence_strictification:123/124`、`RAP5a_explicit_adjunction:413`、`SignatureFiber:342`、`SpectralBundle/Core:69`、`PinchTopology:389/492`、`HallEmergence:1170`），**均非本模块引入**。
+
+### 21.7 勘误：三相判据中的 `ker` 是跨对象算子（D30）
+
+R1 表把三相写成 `ker = 0` / `ker ≠ 0` / `ker ∩ im ≠ 0`，其中 `ker` 指**跨对象算子**
+
+```
+H : h ↦ A_X * h − h * A_Y        （A_X = 源对象矩阵，A_Y = 目标对象矩阵）
+```
+
+的核，**不是** `A` 自身的核 `ker(A)`。三相其实是同一个 `H` 的两个整数：`dim ker H` 与 `dim(ker H ∩ im H)`。
+
+**为什么必须是跨对象**：层 3 的 condition 是 `β.homotopy − α.homotopy = X.A * secondHomotopy − secondHomotopy * Y.A`（`HigherSpCategory.lean` L244–249），右端天然是 `H` 对 `secondHomotopy` 的作用，源对象与目标对象各出一个矩阵，不可能写成单对象的 `ad_A = [A, ·]`。`ker H = 0` 的充要条件正是 `spec(A_X) ∩ spec(A_Y) = ∅`（Sylvester 方程：两谱不交 ⇒ `H` 可逆），这就是 R1 表「`ker = 0`（**谱不交**）」括号注的来源。
+
+**误述更正**：§18.4 / §19.3 / §20.5 中把第一相简写为「`ker(A) = 0`」，与第二相的 `ker(ad_A)` 并列，读起来像在说两个不同算子。正确读法是三相共用 `H`：
+
+| 相 | 判据（都用 `H`） | 塔高 |
+|---|---|---|
+| C | `ker H = 0`（谱不交） | 1 |
+| A | `ker H ≠ 0` 且 `ker H ∩ im H = 0` | 2 |
+| B | `ker H ∩ im H ≠ 0` | 4 / ∞ |
+
+`A` 自身是否可逆**不参与**判据；参与判据的是 `spec(A_X) ∩ spec(A_Y)` 是否为空。
+
+**对 Lean 侧的覆盖边界（已补齐）**：`SpLayerSeparability.lean` 的 `adLin A : X ↦ A * X − X * A` 是 `A_X = A_Y = A` 的**退化特例**（同对象 ⇒ 同谱），因此只覆盖 A 相与 B 相。本轮的补救是新增跨对象版 `adLin2 A B : X ↦ A * X − X * B`，并对 C 相代表（`A = diag(4,5,6)`、`B = diag(1,2,3)`）机检：
+
+| 定理 / 引理 | 内容 | 相 |
+|---|---|---|
+| `adLin2` | 跨对象交换子 `X ↦ A * X − X * B`，ℂ-线性 | 工具定义 |
+| `diag4_mul_apply` | `(diag4 * X) i j = e i * X i j` | C（工具引理） |
+| `diag4Val_sub_diag3Val_ne_zero` | 任意 `i j`：`e i − d j ≠ 0`（谱不交的全部内容） | C |
+| `diag4_diag3_ker_eq_bot` | `ker(adLin2 diag4 diag3) = ⊥`（层 2 无法承接 defect） | C |
+
+⇒ **C 相（谱不交、塔高 1）也已机检**。至此 R5.1 三相（C/A/B）的层 2 判定全部有 Lean 依据，且判据统一落在同一个算子族 `{adLin2 A B}` 上（`adLin A = adLin2 A A`）。
+
+**分级影响**：R5.1 的 A/B 两相不受影响（同谱设定下 `H = ad_A` 退化为 `adLin`）；C 相由「Sylvester 可逆（经典定理，未机检）」升为「机检」，故三相表整行现在都是 A 级机检。
 

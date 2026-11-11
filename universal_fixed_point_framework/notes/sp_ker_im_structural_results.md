@@ -35,6 +35,8 @@
 
 **「平凡」的准确含义（D25）**：本表中「平凡」= 「**该层不能承接非零 defect**」，即不存在非零右端 `R ∈ im(ad_A)`；**不是**「该层没有态射」。层 3/4 在 A 相仍有态射（右端取 `R = 0` 时可解，`x ∈ ker` 可非零），但那是层内 loop，不承接上一层 defect，不延长链条，故不计入塔高。判据实现见 `pr634r1highn.py` L7 / L99 / L131（`R != 0 and in_im(M, R)`）。
 
+**「`ker` 是跨对象算子」（D30）**：本表三行的 `ker` / `im` 指**跨对象算子** `H : h ↦ A_X · h − h · A_Y`（源对象 `A_X`、目标对象 `A_Y`），**不是** `A` 自身的核 `ker(A)`。三相是同一个 `H` 的判据：`ker H = 0` ⟺ `spec(A_X) ∩ spec(A_Y) = ∅`（Sylvester 可逆）。`A` 是否可逆不参与判据。Lean 侧 `adLin A : X ↦ A*X − X*A` 是同对象特例，只覆盖 A/B 两相，C 相未机检（详见主笔记 §21.7）。
+
 在 `A_X = A_Y = A`（同谱）或两谱不交的设定下：
 
 | 条件 | 层 2 | 层 3 | 层 4 | 塔高 |
@@ -169,7 +171,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 | 相 | 层 2 defect 可穿越 | 层 3 defect 可穿越 | 单看层 2 能否分辨 |
 |---|---|---|---|
-| C（`ker = 0`） | 不可（层 2 平凡） | — | 可与其余两相分离 ✔ |
+| C（`ker = 0`） | 不可（层 2 平凡，`ker H = ⊥`） | — | 可与其余两相分离 ✔ |
 | A（`ker ∩ im = 0`） | **可**（层 2 非平凡） | **不可**（层 3 平凡） | 与 B **不可分** ✘ |
 | B（`ker ∩ im ≠ 0`） | **可** | **可** | — |
 
@@ -183,7 +185,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 |---|---|---|---|
 | B（`J₃`） | 非平凡 ✔ | 可穿越 ✔ | `jordan3_has_two_morphism`、`jordan3_traversable`（**机检**） |
 | A（`diag(1,2,3)`） | 非平凡 ✔ | 不可穿越 ✔ | `diag3_has_two_morphism`、`diag3_ker_inf_range_eq_bot`（**机检**） |
-| C（`ker = 0`） | 平凡 | — | 未单列（`ker = ⊥` 直接给出） |
+| C（`ker = 0`） | 平凡 ✔ | — | `diag4_diag3_ker_eq_bot`（`ker(adLin2 diag4 diag3) = ⊥`，**机检**） |
 
 谓词定义见 `SpLayerSeparability.lean`：`AdTraversable A := ∃ R ≠ 0, R ∈ ker(ad_A) ⊓ range(ad_A)`；`HasNontrivialTwoMorphism A := ker(ad_A) ≠ ⊥`。构造 `J₃` 为 `Matrix.of ![![0,1,0],![0,0,1],![0,0,0]]`，`diag3` 为 `Matrix.of ![![1,0,0],![0,2,0],![0,0,3]]`（与 `Matrix.diagonal ![1,2,3]` 等价，改写为显式矩阵是为复用 `Matrix.of_apply` + `Fin.sum_univ_succ` 的元素级化简链），谱值单列 `diag3Val : Fin 3 → ℂ := ![1,2,3]`。
 
