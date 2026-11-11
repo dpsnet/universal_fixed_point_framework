@@ -452,8 +452,8 @@ theorem c2_pauli_instance_lower_bound {n : ℕ} (hn : n = 2) :
       commutator_sigmaX_sigmaY rfl
     rw [h3]
     rw [smul_smul]
-    <;> ext i j <;> fin_cases i <;> fin_cases j <;>
-      simp [hsz]
+    ext i j
+    fin_cases i <;> fin_cases j <;> simp [hsz]
   have h_frob_sz : frobSq sz = 2 := by
     simp [frobSq, hsz, Fin.sum_univ_two, Complex.normSq]; norm_num
   have h_main : frobSq (c • sx * c • sy - c • sy * c • sx) = 2 := by

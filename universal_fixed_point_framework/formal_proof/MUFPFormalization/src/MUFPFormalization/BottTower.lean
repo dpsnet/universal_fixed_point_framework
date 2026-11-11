@@ -33,23 +33,30 @@ Level 3:  Cl(25,1) ≅  M₁₂₈(ℝ)   旋量 128 （工作基准 spinorDim(3
 论证仅依赖翻倍指数 N_active 次翻倍，不依赖基准值（见 §3 勘误注）。
 每层旋量维数翻倍：spinorDim(k+1) = 2 × spinorDim(k)。
 
-## 核心定理（缺口 2 闭合）
+## 核心结果与它的真实强度（2026-11-11 复核后改写）
 
-Bott 塔截断参数 k_max 取基础层（Level 0）的翻倍工作基准旋量 spinorDim(0) = 8
-（标准 Cl(1,7) 旋量 16，见 §1 勘误注；k_max = 8 亦由统一 3 定理 2^{N_active} 独立确定）。
-log₂(k_max) = 3 的**结构性原因**：
-  1. 主动生成层数 N_active = 3（𝐒𝐩 4-范畴的非平凡态射层层数）
-  2. k_max = 2^{N_active}（因为旋量维数从 1 开始经 N_active 次翻倍到达 8）
-  3. 因此 log₂(k_max) = N_active = 3
+`k_max` 取基础层的翻倍**工作基准**旋量 `spinorDim(0) = 8`
+（标准 Cl(1,7) 旋量 16，见 §1 勘误注），这是**约定**，不是结构导出。
 
-关键证明是建立一个从主动生成层到 Bott 塔翻倍索引的满射，
-显示 k_max 的指数就是主动生成层数。
+`log₂(k_max) = 3` 的真实论证链只有三步，全部是定义展开与算术：
+  1. `k_max := spinorDim 0`，而 `spinorDim k := 8 * 2^k`，故 `k_max = 8`（定义 + `spinorDim_zero`）
+  2. `N_active = 3` 来自 `ActiveMorphismLayer` 恰有三个构造子（类型定义，不是结构推论）
+  3. `8 = 2^3`，故 `log₂ k_max = 3`（`norm_num` / `native_decide`）
+
+**因此本文件不证明「`k_max` 的取值由 𝐒𝐩 4-范畴结构必然决定」。** `k_max = 8` 与标准
+Bott 值 16 相差 2 倍，选 8 的理由是它能写成 `2^{N_active}`，而不是 Bott 塔结构要求 8。
+`doublingIndex_surjective` 只是一个恒真的满射（三个构造子映到 0,1,2），不携带结构信息。
+
+⇒ 早先版本把这段写成「从数值巧合升级为范畴结构推论」是**措辞超出证明内容**，
+本轮复核已改正。真正的结构性缺口登记为：`k_max` 取值的范畴必然性未证。
 
 ## 关系链
 
 Unified3Theorem.lean 定义了 ActiveMorphismLayer 和 GenSpace。
-本文件建立 Bott 塔结构与 ActiveMorphismLayer 的联系，
-从而将 bott_truncation_index 从"数值验证"升级为"结构推导"。
+本文件**只**建立「两个数相等」这一算术事实；Bott 塔结构与 ActiveMorphismLayer
+之间的结构对应（为什么翻倍步数必须等于主动层数）**未证**。
+另注意：`SpChainComplexAudit.lean` 机检 `d_A² ≠ 0`，故层塔**不是**链复形，
+参见该文件对 `HigherSpCategory` 链复形叙述的否证。
 -/
 
 import MUFPFormalization.Unified3Theorem
@@ -160,18 +167,20 @@ theorem log2_k_max_eq_active_layers :
     §4 核心定理：Bott 截断指数由主动生成层决定
    ========================================================= -/
 
-/-- **定理（缺口 2 闭合）**：Bott 塔截断指数 log₂(k_max) = N_active。
+/-- **定理（诚实版）**：`log₂(k_max) = N_active`。
 
-    证明基于以下结构性事实：
-    1. k_max = spinorDim(0) = 8（Bott 塔基础层旋量维数）
-    2. spinorDim(k) = 8 × 2^k 每层翻倍
-    3. k_max = 2^{N_active}（因为 N_active = 3）
-    4. 因此 log₂(k_max) = N_active
+    它的证明链是：
+    1. `k_max = spinorDim 0 = 8`（定义展开）
+    2. `spinorDim k = 8 × 2^k`（定义）
+    3. `N_active = card ActiveMorphismLayer = 3`（三构造子）
+    4. `Nat.log 2 8 = 3`（算术）
 
-    此证明将 Bott 截断指数从"数值巧合"升级为"范畴结构推论"。
-    翻倍次数由主动生成层数决定——若有第 4 个主动生成层，
-    则应有 k_max ≥ 2⁴ = 16，但 4-态射是 coherence 层，
-    不产生翻倍。 -/
+    ⇒ **这不是「范畴结构推论」**：`k_max = 8` 是约定的工作基准，而 `N_active = 3`
+    是类型定义给的。两者数值同步（`8 = 2³`）成立，但「前者由后者决定」未证。
+    早先版本写「从数值巧合升级为范畴结构推论」，属措辞超出证明内容，已改正。
+
+    原稿另有「若有第 4 个主动生成层则应有 k_max ≥ 2⁴ = 16」一句——该句未证，
+    且与本文件 `spinorDim k = 8 × 2^k` 冲突（后者在 k=3 已给 64），已删。 -/
 theorem truncation_by_active_layers :
     Nat.log 2 k_max = Fintype.card ActiveMorphismLayer :=
   log2_k_max_eq_active_layers
@@ -184,15 +193,18 @@ theorem truncation_index_is_three : Nat.log 2 k_max = 3 := by
     §5 统一 3 定理的完整形式（缺口 2 闭合后）
    ========================================================= -/
 
-/-- 统一 3 定理的完整陈述（含 Bott 截断的范畴结构证明）。
+/-- 统一 3 定理的完整陈述（**注意：三部分强度不同**）。
 
-    定理：在 𝐒𝐩 严格 4-范畴中，以下四个数相等：
-      d = N_gen = log₂(k_max) = N_active = 3
+    定理：以下三个数相等：
+      N_gen = log₂(k_max) = N_active = 3
 
-    证明分为三部分：
-    1. N_active = 3（card_active_layers）
-    2. dim(GenSpace) = N_active = 3（genSpace_dim_is_three）
-    3. log₂(k_max) = N_active = 3（truncation_by_active_layers） -/
+    三部分的证据强度：
+    1. `N_active = 3`（`card_active_layers`）——类型定义（三构造子），机检但非结构推论
+    2. `dim(GenSpace) = 3`（`genSpace_dim_is_three`）——由 `GenSpace := ℂ × ℂ × ℂ` 的
+       定义算出，同样是**定义**驱动，不是结构导出
+    3. `log₂(k_max) = 3`（`truncation_by_active_layers`）——算术 `Nat.log 2 8 = 3`
+
+    ⇒ 三者相等是**三条独立事实的数值巧合对齐**，不是「一个结构决定的三个侧面」。 -/
 theorem unified_3_theorem_fully_closed :
     Fintype.card ActiveMorphismLayer = 3 ∧
     Module.finrank ℂ GenSpace = 3 ∧

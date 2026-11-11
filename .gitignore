@@ -80,3 +80,11 @@ universal_fixed_point_framework/backups/
 universal_fixed_point_framework/formal_proof/MUFPFormalization/_probe_*.lean
 # scripts 下 _ 前缀参考/下载物（pdf/tsv/tar/png/光谱目录等）
 universal_fixed_point_framework/scripts/_*
+
+# ===== 仓库根历史日志与临时脚本（未跟踪，防误提交；2026-11-11 补）=====
+/.lake_*.log
+/_ans_*.txt
+/_fcz_*.txt
+/frag26_*.lean
+/_probe_*.lean
+/*滨*.txt

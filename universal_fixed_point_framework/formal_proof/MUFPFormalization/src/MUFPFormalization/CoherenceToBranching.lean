@@ -215,20 +215,16 @@ theorem branchIndex_moran_solution :
    这是严格 4-范畴在代数层面上的体现。
 -/
 
-/-- 三层的态射类型互不相交。
+/- 三层的态射类型互不相交（**本条不构成定理**，故用普通块注释而非 doc comment）。
 
-    在 𝐒𝐩 严格 4-范畴中，每一层的态射类型不同：
-    - 层 1：SpHom（矩阵 + 交织条件）
-    - 层 2：SpTwoMorphism（同伦矩阵 + 交换子条件）
-    - 层 3：SpThreeMorphism（二阶同伦矩阵 + 高阶交换子条件）
+    层 1：`SpHom`、层 2：`SpTwoMorphism`、层 3：`SpThreeMorphism` 在 Lean 中是
+    三个不同的归纳类型，因此不存在「同一项同时属于两层」的可能。
 
-    由于这些是 Lean 中不同的归纳类型，类型系统本身保证了
-    不存在跨层重用：一个 SpTwoMorphism 不能当做 SpHom 使用，
-    一个 SpThreeMorphism 不能当做 SpTwoMorphism 使用。
-    
-    此定理的"证明"由类型系统自动完成。 -/
-theorem commutator_levels_disjoint : True := by
-  trivial
+    ⇒ 这是**类型论事实**，不是可陈述为 `Prop` 的数学命题：Lean 里每个项的类型唯一，
+    「不能跨层重用」无需也无法证明成非平凡命题。
+    原稿的 `theorem commutator_levels_disjoint : True := trivial` 是占位重言，
+    2026-11-11 复核时删除：保留它会让本文件与 `coherence_implies_B_15` 的注释
+    看起来引用了一个真命题，实际只引用了 `True`。 -/
 
 /-! =========================================================
    第四章 Coherence → 分支计数原理
@@ -265,7 +261,10 @@ theorem commutator_levels_disjoint : True := by
     证明概要：
     1. N_active = 3（统一 3 定理：card_active_layers）
     2. N_total = 5（总层数：total_layers_count）
-    3. 严格性保证各层独立（layers_distinct + commutator_levels_disjoint）
+    3. 严格性保证各层独立（`layers_distinct`）；跨层类型不相交是类型论事实，
+       不构成可陈述命题（原 `commutator_levels_disjoint : True` 占位已删）。
+       另注：`B = 15` 依赖 `N_total = 5` 这一**约定**（`total_layers_count`），
+       不是由 coherence 结构推出的层数。
     4. 因此有效分支数 = 3 × 5 = 15（layerPair_card） -/
 theorem coherence_implies_B_15 :
     Fintype.card ActiveMorphismLayer = 3 ∧

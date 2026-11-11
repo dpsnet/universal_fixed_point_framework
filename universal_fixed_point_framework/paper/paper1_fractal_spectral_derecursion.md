@@ -1328,6 +1328,7 @@ $$\boxed{D \dashv R \;\subset\; \mathcal{L} \dashv \iota \;\subset\; \mathcal{S}
 
 **8. D 函子定义域扩展**（已解决）。
    已建立**定理 7.31**（D 函子非自伴谱扩展）：构造函子 $D_{\text{diss}}: \mathbf{Rec}_{\text{diss}} \to \mathbf{Sp}_{\mathbb{C}}$，将耗散递归系统映射到含复谱的谱对象，满足伪谱保持、半群相容性与广义伴随条件。进一步扩展到**非正规算子**（数值半径 $w(A)$、非正规性指标 $\|AA^* - A^*A\|/\|A\|^2$、谱变分）和**无界算子**（定义域管理、图范数 $\|x\|_A = \|x\| + \|Ax\|$）。主框架 `decursion_functor.py` 已整合这些扩展，支持 `non_normality_index` 和 `domain_mask` 属性的递归对象。14 项测试全部通过，广义伴随验证误差 < 1e-16。
+   $D_{\text{diss}}$ 与 §2 的 $D$ **不是同一个函子**：两者定义域不同（$\mathbf{Rec}_{\text{diss}}$ 与 $\mathbf{Rec}$），余定义域也不同（复谱层 $\mathbf{Sp}_{\mathbb{C}}$ 与自伴子层 $\mathbf{Sp}$，两层非同一层，见定义 5.11 的层口径与命题 2.4.4 的证明）。$D_{\text{diss}}$ 是 $D$ 在耗散扩展上的对应物，但不能与 $D$ 等同；$D \dashv R$ 的伴随结构（定理 2.4.5）只对 $D$ 成立。
 
 **9. 纤维丛非零曲率联络整合**（已解决）。
    已建立**CurvedDecursionFunctor**：将非零曲率纤维丛信息整合到 D 函子框架中。构造了 `CurvedRecObject`（含联络与曲率的递归对象）、`CurvedDecursionFunctor`（曲率感知的谱化函子）、`KerrFiberBundle`（Kerr 时空纤维丛模型）。实现了含联络的 Koopman 矩阵计算 $K = \exp(-A - iA_{\text{gauge}})$、曲率修正的谱对象构造 $A = -\log(K) + R_{\text{curv}}$。Kerr 黑洞纤维丛测试通过，验证了 Levi-Civita 曲率（范数 ~3.6）、规范场曲率（范数 ~1e-3）、标量曲率（~2.68）非零，证明框架能够正确处理弯曲时空几何。

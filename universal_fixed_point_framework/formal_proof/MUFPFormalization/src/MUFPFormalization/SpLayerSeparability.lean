@@ -322,7 +322,12 @@ theorem tower_continues_or_stops :
 /-- **自伴层内 `Δ` 恒为零（元素级形式）**：任何落在 `ker ∩ im` 中的矩阵必为零。
     原因链：`diag3` 自伴且已在特征基（对角、谱互异）⇒ `ker = 对角、im = 对角元为零` ⇒ 交为零。
     论文命题 2.4.4 L211 的自伴层 `Sp` 内正对应此情形，故「自伴层内 `Δ ≡ 0` 是定理」.
-    未机检环节：`自伴 ⇒ 可酉对角化`（谱定理量级），故此处以「已对角」为前提。 -/
+    未机检环节：`自伴 ⇒ 可酉对角化`（谱定理量级），故此处以「已对角」为前提。
+
+    **替换关系（2026-11-11 登记）**：`SpSpectralBridge.hermitian_dev_eq_zero`（L165）与
+    `SpSpectralBridge.spObj_hermitian_dev_eq_zero`（L176）是本定理的**无条件推广**——
+    它们用谱定理路径消去了「已对角」前提，对任意 Hermitian `A` 直接给出 `dev = 0`。
+    本定理保留在库内作为「已对角情形」的短证明，不删除；两者不重复登记为同一结论。 -/
 theorem diag3_dev_eq_zero (dev : Matrix (Fin 3) (Fin 3) ℂ)
     (h : dev ∈ LinearMap.ker (adLin diag3) ⊓ LinearMap.range (adLin diag3)) :
     dev = 0 := by

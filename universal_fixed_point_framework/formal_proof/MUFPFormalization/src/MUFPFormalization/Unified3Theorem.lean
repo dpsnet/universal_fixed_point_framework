@@ -238,17 +238,20 @@ theorem origin_of_three_generations :
    本节的 k_max / bott_truncation_index 保持数值兼容。
 -/
 
-/-- Bott 塔的截断参数 k_max = 8 = 2^3。
-    结构性定义见 BottTower.k_max（spinorDim 0 = 8）。 -/
+/-- Bott 塔的截断参数 `k_max = 8 = 2^3`。
+    **这是约定参数，不是结构导出量**：此处以字面量 `8` 定义；
+    `BottTower.k_max` 侧以 `spinorDim 0` 定义，二者数值相同。
+    「为什么是 8」在库内没有结构证明（见 `BottTower.lean` 模块头 2026-11-11 复核段）。 -/
 def k_max : ℕ := 8
 
-/-- k_max = 8（结构性的：Bott 塔基础层旋量维数）。 -/
+/-- `k_max = 8`：只是定义展开，不携带结构信息。 -/
 theorem k_max_value : k_max = 8 := by rfl
 
-/-- Bott 截断指数：log₂(k_max) = 3。
-    结构性证明：log₂(k_max) = log₂(2^{N_active}) = N_active = 3
-    因为 k_max = spinorDim(0) = 8 = 2³，3 = N_active（主动生成层数）。
-    完整证明链见 BottTower.truncation_by_active_layers。 -/
+/-- Bott 截断指数：`log₂(k_max) = 3`。
+    **真实强度**：这是算术事实 `Nat.log 2 8 = 3`（`native_decide`），
+    不是「由主动生成层数推出」的结构定理。`N_active = 3` 与 `8 = 2^3` 两件事
+    在数值上凑巧同步，库内未证前者决定后者。
+    结构化版本的同一弱点见 `BottTower.truncation_by_active_layers`。 -/
 theorem bott_truncation_index :
     Nat.log 2 k_max = 3 := by
   native_decide

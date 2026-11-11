@@ -348,7 +348,10 @@ theorem spThreeHorizComp_homotopy_assoc {X Y Z W : SpObj}
     层 2（2-态射）：空间 y 方向——正交于 Δ
     层 1（1-态射）：空间 x 方向——正交于 Δ
 
-  链复形模式延续（每层"缺陷"由同一个交换子 [A, ·] 给出）：
+  层间「缺陷」由同一个交换子 [A, ·] 给出——**但这不是链复形结构**：
+  `d_A ∘ d_A ≠ 0`，见 `SpChainComplexAudit.lean` 的机检否证（取 2×2 幂零 Jordan 块
+  给出 `dJ (dJ E₂₁) = -2 • J ≠ 0`）。本处只沿用「同一交换子」这一定义模式，
+  不沿用「链复形」标签，也不主张层塔由微分结构的自然终止给出：
     层 1（1-态射）：SpHom P    满足  P·A_Y = A_X·P
     层 2（2-态射）：α: P⇒Q    满足  Q.P - P.P = A_X·α.homotopy - α.homotopy·A_Y
     层 3（3-态射）：Σ: α⇛β    满足  β.homotopy - α.homotopy = A_X·Σ.secondHomotopy - Σ.secondHomotopy·A_Y

@@ -2317,4 +2317,82 @@ L852 原文：「在谱化函子 `D: Rec_D → Sp` 与耗散拓展函子 `D_diss
 
 `git diff --numstat` 该文件 = **`1 1`**（1 行插入 / 1 行删除），1682 行其余零扰动。
 
-**仍然开口的一条**：论文现只在 L852 括注与 L211 证明两处点明「两层不同」，**没有一处显式回答「§7 的 `D_diss` 与 §2 的 `D` 是不是同一个函子」**。若要加，最合适的位置是 §7.9.1 `D_diss` 定义处加一句「`D` 与 `D_diss` 定义域不同（`Rec_D` vs `Rec_diss`），故是两个函子，非同一函子的扩张」——本轮**未加**，记为开放项。
+**已关闭（2026-11-11，见 §21.20.8）**：此前记录的开放项「论文无一处显式回答 §7 的 `D_diss` 与 §2 的 `D` 是否同一函子」，已在 §8.2.2 第 8 条（L1330）末尾补一句显式回答。原拟位置（§7.9.1 `D_diss` 定义处）未采用——该处已在 L852 补过括注，再补会重复；改放在定理 7.31 条目，因为那里正是 `D_diss : Rec_diss → Sp_ℂ` 的论文侧定义性出处，读者在此处最需要「它与 §2 的 `D` 不是一个」的判据。
+
+---
+
+## §21.20 「推进所有开口」第 1 批：结构标签诚实化（2026-11-11）
+
+### 21.20.1 触发与范围
+
+用户指令「推进所有开口，不能跳过」。本节记录第一批量（可机检、低风险）：把库内**措辞超出证明内容**的标签逐条改为与实际强度相符，并清掉一条基线 linter 警告、一个占位重言、补一处论文回答。
+
+### 21.20.2 `BottTower.lean` 伪桥诚实化
+
+复核确认的链条（全部是定义展开 + 算术）：
+
+| 环节 | 内容 | 性质 |
+|---|---|---|
+| `k_max` 定义 | `def k_max := spinorDim 0`，而 `spinorDim k := 8 * 2^k` | **约定**（L31–33 勘误注已自承 8 是「翻倍工作基准」，标准 `Cl(1,7)` 旋量 16） |
+| `k_max_value` | `k_max = 8` | 定义展开 |
+| `k_max_eq_two_pow_active` | `k_max = 2 ^ card ActiveMorphismLayer`，证明 `rw [k_max_value, card_active_layers]; norm_num` | **算术 `8 = 2³`** |
+| `log2_k_max_eq_active_layers` | 同上 + `native_decide` | 算术 |
+| `doublingIndex_surjective` | `∀ i < 3, ∃ l, layerToDoublingIndex l = i` | **恒真**（3 个构造子映到 0,1,2） |
+| `truncation_by_active_layers` | 引用上述 | 无新增结构信息 |
+
+**原 doc 的三处不实**：
+
+1. L171「此证明将 Bott 截断指数从"数值巧合"升级为"范畴结构推论"」⇒ 与证明内容不符；
+2. L42「旋量维数从 1 开始经 N_active 次翻倍到达 8」⇒ 与 L76 `spinorDim k = 8 * 2^k` **直接矛盾**（后者 k=0 已是 8、k=3 是 64）；
+3. L172–174「若有第 4 个主动生成层则应有 k_max ≥ 2⁴ = 16」⇒ 未证，且与上述定义冲突。
+
+**已改**：模块头「核心定理」段重写为「核心结果与它的真实强度」；`truncation_by_active_layers` doc 改诚实版并删去第 4 层断言；`unified_3_theorem_fully_closed` doc 改「三部分强度不同，是三条独立事实的数值巧合对齐」。
+
+### 21.20.3 `Unified3Theorem.lean`
+
+`def k_max : ℕ := 8` 加注「**约定参数，不是结构导出量**」；`bott_truncation_index` doc 改为「算术事实 `Nat.log 2 8 = 3`（`native_decide`），不是由主动生成层数推出的结构定理」。
+
+### 21.20.4 `CoherenceToBranching.lean` 占位重言
+
+`theorem commutator_levels_disjoint : True := by trivial` **已删**。理由：Lean 里每个项类型唯一，「跨层不能重用」是类型论事实，写不成非平凡 `Prop`；保留 `True` 会让 `coherence_implies_B_15` 的 doc 看起来引用了真命题——实际只引用 `True`，且其证明体 `refine ⟨card_active_layers, total_layers_count, layerPair_card⟩` 从未使用它。
+
+删除后该处改为**普通块注释** `/- ... -/`（非 doc comment）。踩坑记录：doc comment 后若无声明而直接接 `/-!` 段注释，Lean 报 `unexpected token '/-!'; expected 'lemma'`（`pr634full11.txt` L510，`CoherenceToBranching.lean:227:33`）。
+
+`coherence_implies_B_15` doc 补注：「`B = 15` 依赖 `N_total = 5` 这一**约定**（`total_layers_count`），不是由 coherence 结构推出的层数」。
+
+### 21.20.5 `HigherSpCategory.lean` 链复形叙述冲突
+
+L351「链复形模式延续」→ 改为「层间缺陷由同一交换子 `[A, ·]` 给出——**但这不是链复形结构**：`d_A ∘ d_A ≠ 0`，见 `SpChainComplexAudit.lean` 机检否证（`dJ (dJ E₂₁) = -2 • J ≠ 0`）」。只保留「同一交换子」这一定义模式，不再沿用「链复形」标签。
+
+### 21.20.6 `SpCategory.lean` 基线警告清理
+
+`frobSq` 证明内 `<;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [hsz]` 的 linter 提示（`SpCategory:455:4` 与 `:455:16`）来源已消除，改为
+
+```
+rw [smul_smul]
+ext i j
+fin_cases i <;> fin_cases j <;> simp [hsz]
+```
+
+单模块 `lake build MUFPFormalization.SpCategory` = **EXIT 0 / 零警告**（`pr634cat1.txt`）。
+全库复建 **3853 jobs / EXIT 0 / 0 error / 506 行 / 警告 12 → 10**（`pr634full12.txt`）——剩余 10 条全在历史模块（`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492），均 `Try this` 风格，本轮未动。
+
+### 21.20.7 `diag3_dev_eq_zero` ↔ `hermitian_dev_eq_zero` 替换登记（Lean 侧）
+
+`SpLayerSeparability.diag3_dev_eq_zero`（L326，带「已对角」前提）doc 补一段：`SpSpectralBridge.hermitian_dev_eq_zero`（L165）与 `spObj_hermitian_dev_eq_zero`（L176）是其**无条件推广**，用谱定理消去「已对角」前提；两者并存、不重复登记为同一结论。此前该替换关系只登记在 §21.11.5，Lean 侧无记录——本次补齐。
+
+### 21.20.8 论文补句：`D` 与 `D_diss` 是否同一函子
+
+在 §8.2.2 第 8 条（定理 7.31，L1330）末尾加一句：
+
+> `D_diss` 与 §2 的 `D` **不是同一个函子**：两者定义域不同（`Rec_diss` 与 `Rec`），余定义域也不同（复谱层 `Sp_ℂ` 与自伴子层 `Sp`，两层非同一层，见定义 5.11 的层口径与命题 2.4.4 的证明）。`D_diss` 是 `D` 在耗散扩展上的对应物，但不能与 `D` 等同；`D ⊣ R` 的伴随结构（定理 2.4.5）只对 `D` 成立。
+
+保守取舍：只陈述「定义域不同 + 余定义域不同 + 两层不同 ⇒ 非同一函子」，不加「自然延拓」等未证断言。`git diff --numstat` = **`1 0`**，1682 行其余零扰动。
+
+### 21.20.9 `.gitignore`
+
+仓库根历史日志（`.lake_*.log`、`_ans_*.txt`、`_fcz_*.txt`、`frag26_*.lean`、`_probe_*.lean`）经 `git ls-files` 核验 **JUNK_TRACKED=0**（未被跟踪，全库 TRACKED_TOTAL=5731），故只补 `.gitignore` 规则防误提交，不做 `git rm --cached`（避免改索引影响他人）。
+
+### 21.20.10 本轮未完成（继续开口）
+
+`SpHerm` 受限伴随、C 相塔高陈述、R1–R4 Lean 化、`Hurwitz` 计数口径、ε 下游脚本、`RESEARCH_STATE.md` 全量同步、论文 §3/§6 重述——均未在本批处理。
