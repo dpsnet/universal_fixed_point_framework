@@ -201,7 +201,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 归一化结果：相同 34 行 / 不同 0 行 → 完全同形
 ```
 
-（`pr634r5homo.py`，输出 `pr634r5homo.txt`。）
+（`pr634r5homo.py`，输出 `pr634r5homo.txt`；**复跑确认**：`pr634r5homo2.txt`，在 `spFourExchangeLaw_strict` 插入之后重跑，脚本按 `def` 符号名定位而非行号，两块未被插入点影响，仍为 L285–L318 / L408–L441，34/34 同形、0 差异 ⇒ 结论可复现。）
 
 `def` 层同样逐项同形：
 
@@ -209,7 +209,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 |---|---|---|
 | 横复合 datum | `Ξ.secondHomotopy * P'.P + Q.P * Ξ'.secondHomotopy` | `Φ.thirdHomotopy * P'.P + Q.P * Φ'.thirdHomotopy` |
 | 竖复合 datum | `Ξ.secondHomotopy + Τ.secondHomotopy` | `Φ.thirdHomotopy + Ψ.thirdHomotopy` |
-| 交换律定理 | `spThreeExchangeLaw_strict`（L496 起） | `spFourExchangeLaw_strict`（证法逐字同构） |
+| 交换律定理 | `spThreeExchangeLaw_strict`（L493 起） | `spFourExchangeLaw_strict`（L472 起，证法逐字同构） |
 
 ⇒ 层提升是「字段改名 + 类型升级」的机械操作，**不含新代数步骤**。层 5、层 6 若写出，提升算子固定，必同样同形——这是主笔记 §19「可写但无内容的空塔」的严格依据：不是"推测同形"，而是"提升算子已被机检为固定"。
 

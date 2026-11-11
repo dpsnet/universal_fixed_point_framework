@@ -1347,7 +1347,7 @@ Clifford 分级数字（1,4,6,4,1；8=6+1+1；15=1+4+6+4）均为 d=3 之后的�
 
 ### 19.1 机检事实
 
-`spThreeExchangeLaw_strict`（`HigherSpCategory.lean` L474–483）：3-态射的横复合与竖复合互换**精确成立，无任何假设**。证明体为
+`spThreeExchangeLaw_strict`（`HigherSpCategory.lean` L493–502）：3-态射的横复合与竖复合互换**精确成立，无任何假设**。证明体为
 
 ```
 ext
@@ -1363,7 +1363,7 @@ abel
 |---|---|---|---|---|
 | 层 1 | 交织等式约束 `P·A_Y = A_X·P` | — | 无 | `SpHom.intertwine`（`SpCategory.lean` L37–39） |
 | 层 2 | `Matrix.mul` | **不交换** | **Δ ≠ 0** | `spExchangeLaw_homotopy_deviation` L151、`spExchangeLaw_deviation_partial_commutator` L172、`spExchangeLaw_deviation_strict_limit` L202 |
-| 层 3 | `Matrix.add` | 交换 | 0 | `spThreeExchangeLaw_strict` L474 |
+| 层 3 | `Matrix.add` | 交换 | 0 | `spThreeExchangeLaw_strict` L493 |
 | 层 4 | `Matrix.add`（`spFourHorizComp` L402 / `spFourVertComp` L373） | 交换 | **0** | `spFourExchangeLaw_strict`（**已补，紧随 `spFourHorizComp_homotopy_assoc` 之后**） |
 | 层 ≥5 | 同层 4 | — | — | 无定义（全库 0 个 `SpFiveMorphism`） |
 
@@ -1373,7 +1373,7 @@ abel
 
 | 命题 | 级别 | 依据 / 缺口 |
 |---|---|---|
-| 层 3 与层 4 复合退化为加法、交换律严格 | **A（均机检）** | `spThreeExchangeLaw_strict` L474；`spFourExchangeLaw_strict`（新增） |
+| 层 3 与层 4 复合退化为加法、交换律严格 | **A（均机检）** | `spThreeExchangeLaw_strict` L493；`spFourExchangeLaw_strict` L472 |
 | 层 2 是唯一非零偏差层 | **A** | 上表 |
 | `N_active ≤ 3`（只有三层能提供新内容） | **A（上界）** | 层 3 + 层 4 两条交换律严格均已机检 |
 | `N_active = 3` 恰为 3（下界） | **C** | 需证三层各有不可约内容；`each_layer_nonempty`（`Unified3Theorem.lean` L106）只给存在性，不足 |
