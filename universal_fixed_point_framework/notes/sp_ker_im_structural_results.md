@@ -177,6 +177,18 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 ⇒ 层 2 只提供二分能力（{C} 与 {A,B}），**A 与 B 的分离必须依靠层 3**。数据：`pr634r1highn.py`，`Fraction` 精确，n = 2..7 零违例（A 相层 3 右端非零但 ∉ `im` ⇒ 平凡；B 相右端取 `J_n ∈ ker ∩ im` ⇒ 可填）。
 
+**Lean 侧状态（D26，部分机检）**：表右两列的 B 相一行已有 Lean 定理支撑，A/C 相仍为数据支撑。
+
+| 行的相 | 层 2 | 层 3 | Lean 定理 |
+|---|---|---|---|
+| B（`J₃`） | 非平凡 ✔ | 可穿越 ✔ | `jordan3_has_two_morphism`、`jordan3_traversable`（**机检**） |
+| A（`diag(1,2,3)`） | 非平凡 | 不可穿越 | 未机检（仅 `pr634r1highn.py`） |
+| C（`ker = 0`） | 平凡 | — | 未机检（仅数据） |
+
+谓词定义见 `SpLayerSeparability.lean`：`AdTraversable A := ∃ R ≠ 0, R ∈ ker(ad_A) ⊓ range(ad_A)`；`HasNontrivialTwoMorphism A := ker(ad_A) ≠ ⊥`。构造 `J₃` 为 `Matrix.of ![![0,1,0],![0,0,1],![0,0,0]]`，`diag3` 为 `Matrix.diagonal ![1,2,3]`。
+
+**引用时的分寸**：B 相可以写「已 Lean 机检」；A 相「不可穿越」只能写「n = 2..7 精确有理算术验证」，不得写成机检定理。
+
 #### R5.2 层 k → k+1 是机械同形提升，不引入新代数步骤（A）
 
 `spFourHorizComp` 与 `spThreeHorizComp` 的 `condition` 证明体，经**层级偏移归一化**（层 2 字段 / 层 3 字段 → 同一占位 `F`，层 2 复合 / 层 3 复合 → 同一占位 `COMP`，层 k 对象 → 同一占位）后**逐字相同**：

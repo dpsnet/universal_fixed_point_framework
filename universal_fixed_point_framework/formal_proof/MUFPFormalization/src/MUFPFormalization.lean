@@ -162,3 +162,4 @@ import MUFPFormalization.DeltaMechanismAudit
 import MUFPFormalization.RecSpHomSeparation
 import MUFPFormalization.SpLayerNonCollapse
 import MUFPFormalization.SpChainComplexAudit
+import MUFPFormalization.SpLayerSeparability

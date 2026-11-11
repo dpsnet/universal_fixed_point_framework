@@ -1523,7 +1523,44 @@ theorem spFourExchangeLaw_strict {X Y Z : SpObj}
 | §20.3 | 「层 3 分离 A/B」精化为「层 3 分离 defect 可穿越性」 |
 | §19.2 复合算子表 | 无影响（该表讲算子类型，不讲穿越性） |
 
-### 21.5 未做
+### 21.5 形式化进展（部分完成，D26）
 
-「defect 可穿越性」未形式化为 Lean 谓词。形式化须把 `ad_A` 从 `Matrix` 乘法转成 `LinearMap`，再用 `LinearMap.range` / `Submodule` 判 `R ∈ im`；工作量中等，且 Mathlib `Matrix.toLin'` 族 API 存在已知坑（`Matrix.mul_apply` 为 `rfl` 导致 `simp` 匹配失败），暂列为待办。
+「defect 可穿越性」已形式化为 Lean 谓词，落在新模块 `SpLayerSeparability.lean`（独立新增模块，不改 `SpCategory.lean` / `HigherSpCategory.lean`，已加入库根 `MUFPFormalization.lean` 的 import 列表）：
+
+| 谓词 / 定义 | 内容 |
+|---|---|
+| `adLin A` | `LinearMap (Matrix ι ι ℂ) (Matrix ι ι ℂ)`，`toFun X = A * X - X * A` |
+| `AdTraversable A` | `∃ R : Matrix ι ι ℂ, R ≠ 0 ∧ R ∈ LinearMap.ker (adLin A) ⊓ LinearMap.range (adLin A)` |
+| `HasNontrivialTwoMorphism A` | `LinearMap.ker (adLin A) ≠ ⊥` |
+
+**关键修正（本轮结构结论）**：初版 `AdTraversable` 只写 `R ∈ range`，与层 3 condition 的语义不符。层 3 的右端 `R` 由两个 2-态射 homotopy 之差给出，而这两个 2-态射各自已满足层 2 condition，其差天然落在 `ker(ad_A)`。故判据必须是 `ker ⊓ range`——否则会把 A 相（`ker ≠ 0`、`range` 亦非平凡但两者交为零）误判为「可穿越」，直接推翻 R5.1 的三相分辨表。
+
+**已机检**（`lake build MUFPFormalization.SpLayerSeparability`，1215 jobs 通过；全库 `lake build MUFPFormalization` 复验见 §21.6）：
+
+| 定理 | 内容 | 相 |
+|---|---|---|
+| `jordan3_ne_zero` | `J₃ ≠ 0` | B |
+| `jordan3_mem_ker` | `J₃ ∈ ker(ad_{J₃})` | B |
+| `jordan3_mem_range` | `J₃ ∈ range(ad_{J₃})`，见证 `h = diag(0,1,2)` | B |
+| `jordan3_traversable` | `AdTraversable J₃`（层 3 defect 可穿越） | B |
+| `jordan3_has_two_morphism` | `HasNontrivialTwoMorphism J₃`（层 2 非平凡） | B |
+
+⇒ **B 相（`N_active = 3`、塔高 4/∞）的层 2、层 3 判定已从「R1 数据重排」升为 Lean 定理**。
+
+**未完成（A 相）**：`diag3_has_two_morphism`（`HasNontrivialTwoMorphism (diag(1,2,3))`）与 `diag3_ker_inf_range_eq_bot`（`ker(ad_{diag3}) ⊓ range(ad_{diag3}) = ⊥`）两条已写出证明骨架但未过机检，已从工作树撤回，不留在库内。失败原因是**工程层**而非数学层：
+
+- `(Matrix.diagonal d * X) i j` 的元素级展开需 `Matrix.mul_apply` → `Matrix.diagonal_apply` → `Finset.sum_eq_single` 三步配合，本版本 Mathlib 上 `simp only` 之后 `rw` 的子目标顺序与形态不稳定（`sum_eq_single` 的 `a ∉ s` 分支被前置）；
+- ℂ 上 `ring` 收口后 RHS 残留 `0 i i`（`Matrix.zero_apply` 未被默认 simp 集覆盖）；
+- `diag3` 为 `abbrev`，展开后成 `![1,2,3] i`，使 `rw [Matrix.diagonal_apply_ne]` 模式不匹配。
+
+⇒ A 相（层 3 不可穿越）目前仍只有 `pr634r1highn.py` 的精确有理算术支撑（n = 2..7 零违例），**未 Lean 化**。
+
+**已知环境噪声**：`jordan3_mem_range` 的 `simp` 集合触发 Lean 内部 `Lean.Expr.appArg!` / `appFn!` PANIC（`info` 级，不影响 olean 生成与定理正确性）。收窄为 `simp only` 会因缺 `![…] 2` 这类向量下标引理而无法收口，故保留原证法并登记。
+
+**对 R5.1 分级的影响**：R5.1 原为 A（精确算术数据）。现 B 侧（可穿越）另有 Lean 机检，A 侧（不可穿越）仍只有数据 ⇒ 级别保持 A，但引用时须区分两栏（见结构结果清单 R5.1 新增段）。
+
+### 21.6 全库复验口径
+
+- 单模块：`lake build MUFPFormalization.SpLayerSeparability` → 1215 jobs 通过，无 `error`，仅上述 PANIC `info`。
+- 全库：`lake build MUFPFormalization`（新增 import 后）→ 见 `pr634fullbuild2.txt`；既有 12 条警告位置不变（`SpCategory:427×2`、`ICVerification:82/86`、`RAP4_silence_strictification:123/124`、`RAP5a_explicit_adjunction:413`、`SignatureFiber:342`、`SpectralBundle/Core:69`、`PinchTopology:389/492`、`HallEmergence:1170`），均非本模块引入。
 
