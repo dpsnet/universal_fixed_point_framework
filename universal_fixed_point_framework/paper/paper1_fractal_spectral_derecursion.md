@@ -849,7 +849,7 @@ $$\delta(R, \Lambda) = \|\mu_{\text{KK}} - \mu_{\text{silent}}\|_{TV} \le C \cdo
 
 #### 5.7.1 五层静默的定义
 
-**定义 5.11**（五层静默体系）。在谱化函子 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 与耗散拓展函子 $D_{\text{diss}}:\mathbf{Rec}_{\text{diss}}\to\mathbf{Sp}$ 的作用下，$\mathbf{Rec}$ 与 $\mathbf{Sp}$ 中存在五类被"静默"的元素：
+**定义 5.11**（五层静默体系）。在谱化函子 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 与耗散拓展函子 $D_{\text{diss}}:\mathbf{Rec}_{\text{diss}}\to\mathbf{Sp}_{\mathbb{C}}$ 的作用下，$\mathbf{Rec}$ 与 $\mathbf{Sp}$ 中存在五类被"静默"的元素（$D_{\text{diss}}$ 的余定义域是复谱层 $\mathbf{Sp}_{\mathbb{C}}$，见定理 7.31；$\mathbf{Sp}$ 是其自伴子层，两者非同一层，见命题 2.4.4 的证明）：
 
 | 静默层次 | 静默对象 | 现象 | 判据 |
 |----------|----------|------|------|
