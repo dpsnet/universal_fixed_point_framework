@@ -1,15 +1,10 @@
 -- ============================================================
--- UFPF → MUFPF 更名通知
+-- 术语口径（已执行）
 -- ============================================================
--- 本文件属于 Universal Fixed Point Framework (UFPF)。
--- 该框架已计划更名为 Meta-Universal Fixed-Point Functorial Framework (MUFPF)。
--- 更名计划详见：roadmap/mu_renaming_plan.md
---
--- 原因：UFPF 缩写与 IEEE 生物图像识别框架冲突，影响学术检索。
--- 新名称 MUFPF 具有全球唯一性，且更好地体现框架的元数学特性。
---
--- 本文件中 UFPF 相关引用数量：4
--- 更名将在计划确认后统一执行，当前代码不做修改。
+-- 本框架正式名 = MUFPF（Meta-Universal Fixed-Point Functorial Framework）。
+-- UFPF（Universal Fixed Point Framework）为**已废弃**旧名，仅存于历史注释与提交记录
+-- （裁决日期 2026-10-23）。本文件正文与定理陈述统一使用 MUFPF，
+-- 若发现遗留 UFPF 字样，按废弃旧名处理，不作为现行术语。
 -- ============================================================
 
 /-
@@ -30,6 +25,9 @@
       （注释层勘误 2026-08-07：spinorDim(0)=8 为工作基准；标准 Cl(1,7) ≅ M₁₆(ℝ)
        旋量 16 维（paper20）；引理 3 论证仅依赖翻倍指数 = 主动层数，不依赖基准）
       证明 k_max = 2^{N_active}，因此 log₂(k_max) = N_active = 3。
+      **口径**：此处「已闭合」的是算术——`k_max := 8`（`BottTower.spinorDim 0`）是
+      约定，`8 = 2³` 是算术恒等，故 `log₂ k_max = N_active` 不构成范畴必然性；
+      详见 `BottTower.lean` 模块头。
       统一 3 定理的完整形式（含所有三个等式）见 BottTower.unified_3_theorem_fully_closed。
 -/
 
@@ -63,6 +61,9 @@ universe u
    │ 层 4：4-态射（coherence）—— 不生成物理自由度       │
    └────────────────────────────────────────────────────┘
    主动生成层 = 层 1, 2, 3（排除对象层和 coherence 层）。
+
+   **限定**：「层 4 不生成物理自由度」只在可对角化相成立。含 Jordan 块时
+   `ker ∩ im ≠ 0`，层 4 及更高层可由塔高见证（见 §5 与 `SpTowerUnbounded`）。
 -/
 
 /-- 主动生成层类型，对应 𝐒𝐩 4-范畴中三个非平凡的态射层。 -/
@@ -81,7 +82,16 @@ instance : Fintype ActiveMorphismLayer where
     intro x
     cases x <;> simp
 
-/-- 主动生成层的基数。 -/
+/-- 主动生成层的基数 = 3。
+
+    **口径**：`3` 是**层类型定义停止**的结果——`ActiveMorphismLayer` 恰有三个构造子
+    （`first` / `second` / `third`），故 `numActiveLayers` 与 `card_active_layers` 是
+    「该类型有几个构造子」的读法，**不是**由 `ker ∩ im` 判据推出的结论。
+
+    后者（`HasNontrivialTwoMorphism` / `AdTraversable`，见 `SpLayerSeparability`）
+    只在**可对角化相**给出 3；含 Jordan 块时 `ker ∩ im ≠ 0`，塔高可达 4 以上
+    （`SpTowerUnbounded` 的 `tower_height_unbounded_B` 已机检）。
+    因此「主动生成层 = 3」与「塔高 = 3 在可对角化相」是两个不同断言，勿混。 -/
 def numActiveLayers : ℕ := 3
 
 /-- 主动生成层基数等于 3。 -/
@@ -180,12 +190,18 @@ theorem genSpace_dim_equals_active_layers_count :
   rw [genSpace_dim_is_three, card_active_layers]
 
 /-! =========================================================
-    §5 𝐒𝐩 态射层链复形结构（统一 3 定理的核心论据）
+    §5 𝐒𝐩 态射层的「缺陷塔」读法（**不是**链复形）
    =========================================================
 
-   𝐒𝐩 高阶范畴的链复形结构：每层的"缺陷"由同一个交换子 [A, ·] 给出。
-   这意味着所有 3 个主动生成层共享相同的代数结构，
-   且不可能有第 4 个主动生成层（coherence 层不是主动生成元）。
+   每层的缺陷由同一个交换子 [A, ·] 给出——但这不是链复形：
+   `d_A ∘ d_A ≠ 0`（`SpChainComplexAudit.lean` 已机检 `dJ_dJ_E21_ne_zero`；
+   取 A_X = A_Y = J₂、H = E₂₁ 得 d_A²(H) = −2J₂），故核与像不构成上同调链复形。
+
+   共享交换子只说明三个主动生成层形式同型，**不**是「层数终止于 3」的依据。
+   层数来自层类型的定义停止（`HigherSpCategory` 止于层 5）。
+   且「不可能有第 4 个主动生成层」只在**可对角化相**成立：含 Jordan 块时
+   `ker ∩ im ≠ 0`，塔高可达 4 以上（`SpTowerUnbounded.lean` 的
+   `tower_height_unbounded_B` / `layerWitness_at_every_level` 已机检）。
 -/
 
 /-- 统一 "微分" d_A(H) = A·H - H·A，所有三个主动层共享此结构。 -/
