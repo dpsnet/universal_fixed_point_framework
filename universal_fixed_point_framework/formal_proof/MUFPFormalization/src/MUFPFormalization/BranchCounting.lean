@@ -73,7 +73,16 @@ instance : Fintype LayerIndex where
     intro x
     rcases x <;> simp
 
-/-- 总层数 = 5。 -/
+/-- 总层数 = 5（`LayerIndex` 的基数：层 0..4）。
+
+    **口径警告（2026-11-11 补注）**：本库的 `N_total = 5` 是 `LayerIndex` 的**层标号基数**
+    （对象层 0 + 4 个态射层），与论文 `paper_SM_endogenous_derivation.md` §5.5 的
+    `N_total = N_active + 1 = 4`（含 coherence 层、不含对象层）**不是同一口径**。
+
+    ⇒ `B = N_active × N_total = 3 × 5 = 15` 与论文的 `15 = 2^{N_active+1} − 1 = 2⁴ − 1`
+    数值相同、来源不同：前者是**层对计数**（`CoherenceToBranching.layerPair_card`），
+    后者是**独立幂链**。论文 L353 已明确弃用 `15 = 3 × 5`（该路线引用韦达根，构成循环），
+    本库保留 `N_active × N_total` 仅作层对计数恒等式，**不**作为 15 的结构导出。 -/
 def N_total : ℕ := 5
 
 /-- 总层数等于 5 的验证。 -/
