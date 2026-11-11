@@ -173,3 +173,4 @@ import MUFPFormalization.SpTowerWitness
 import MUFPFormalization.SpDFunctorStrong
 import MUFPFormalization.SpDFunctorDichotomy
 import MUFPFormalization.SpTowerUnbounded
+import MUFPFormalization.SpHermLayerDecision

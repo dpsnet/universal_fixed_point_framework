@@ -296,8 +296,11 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | `DFunctor` 值域内**自伴像与非自伴像并存** | `DFunctor_range_dichotomy` + `DFunctor_obj_cyclic_nonhermitian`（`SpDFunctorDichotomy.lean`） | 新：**机检**（D40，非自伴半由 `step = cyclicStep3` 给出；n=3 全部 6 个置换数值确认） |
 | **B 相塔高无界（判据口径）**：`jordan3` 每层都有非零缺陷见证 | `layerWitness_jordan3` / `tower_height_unbounded_B`（`SpTowerUnbounded.lean`） | 新：**机检**（D41，见证 `R = J₃`、`L = shiftDiag3`） |
 | **A 相无缺陷见证**：`diag3` 一层都没有 | `not_layerWitness_diag3` / `tower_height_trichotomy`（同上） | 新：**机检**（D41，承接 `layer4_trivial_A`） |
+| `D` 的像**越出**自伴层（存在非自伴像） | `DFunctor_range_escapes_hermitian_layer`（`SpHermLayerDecision.lean`） | 新：**机检**（D22③B，值域层包装，源 `DFunctor_obj_cyclic_nonhermitian`） |
+| **`D` 不能被提升进自伴层**：不存在 `F : RecObj ⥤ SpHerm` 使对象像与 `DFunctor` 逐点相同 | `no_functor_lifts_DFunctor_into_SpHerm`（同上） | 新：**机检**（D22③B，函子层判死，强于值域反例） |
+| 两个 `Sp` 层不同（层内/层外各一代表） | `two_Sp_layers_are_distinct`（同上） | 新：**机检**（D22③B，`diag3` ∈ 自伴层、`cyclic3` ∉ 自伴层） |
 
-口径：全库 `lake build MUFPFormalization` = **3851 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full8.txt`；D40 时 3850 jobs 见 `pr634full7.txt`，D39 时 3849 jobs 见 `pr634full6.txt`，D38 时 3848 jobs 见 `pr634full5.txt`，D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`）。**sorry 口径须分开读**：本次新增的 9 个模块零 sorry；全库有 184 处 sorry 散在 109 个文件（见 R7），不得写成「全库零 sorry」。
+口径：全库 `lake build MUFPFormalization` = **3852 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full9.txt`，D22③B 落地后）。D41 时 3851 jobs 见 `pr634full8.txt`，D40 时 3850 jobs 见 `pr634full7.txt`，D39 时 3849 jobs 见 `pr634full6.txt`，D38 时 3848 jobs 见 `pr634full5.txt`，D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`。**sorry 口径须分开读**：本次新增的 9 个模块零 sorry；全库有 184 处 sorry 散在 109 个文件（见 R7），不得写成「全库零 sorry」。
 
 **仍未机检**：塔高 `= 4` 的等号形式（D37 后更不可能成立——层 5 用同一判据同样允许 `R = J₃`，"层 5 不可穿越"无法成立）；塔高 `= 5` 的等号形式（同一理由，层 6 无结构）；层 6 起的层结构（库内止于层 5，继续延伸属**结构公设**，非定理）；`SpHerm` 上的受限伴随存在性。
 
@@ -383,3 +386,51 @@ PR-634 新增的 9 个模块 —— `SpSpectralBridge`、`SpTowerCriterion`、`S
 #### R7.4 `MODULES` 差 1 未归因
 
 344 + 9 = 353，实测 354。旧口径 344 本身是 D35 前的快照，中间可能有一处模块拆分或重命名。**记此差异，不擅自归因**。
+
+### R8 `Sp` 语义分层裁决（D22 ③B，2026-11-11）
+
+#### R8.1 裁决内容
+
+论文命题 2.4.4 证明 L211 原句「$A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Sp}$ 中」在同名的两个 `Sp` 之间滑动了：
+
+| 层 | 论文出处 | 定义 | Lean 对应 |
+|---|---|---|---|
+| 自伴层 `Sp` | 命题 2.4.4 L207 | $A_R=\frac12(-\log U_R+(-\log U_R)^\ast)$，自伴 | `SpHermObj`（`SpObj` + `IsHermitian` 见证） |
+| 复谱层 `Sp_ℂ` | 定义 5.11 L852、定理 7.31 L1330（`D_diss : Rec_diss → Sp_ℂ`） | 只有 `n` 与 `A`，无自伴约束 | `SpObj` |
+
+**裁决 = ③B**：走方案③（双范畴 `SpHerm`/`SpC`，不改 `SpCategory.lean`，只叠一层）+ 论文 B 写法（L211 明确为 `Sp_ℂ` 并引机检依据）。用户 2026-11-11 拍板。
+
+#### R8.2 论文侧改动（终稿口径，不留修订痕迹）
+
+L211 改为：按 L207 的自伴化口径 $A_R$ 自伴 ⇒ `D` 的**自伴化像**落在自伴层 $\mathbf{Sp}$；而 `D` 作为复谱函子的像落在 $\mathbf{Sp}_\mathbb{C}$，该层 ≠ 自伴层——不作自伴化时像可非自伴（有限维实现中转移步取 3-循环 $\mathrm{step}=(1,2,0)$ 即给出 $(e_0,e_1)$ 元 $=1$、$(e_1,e_0)$ 元 $=0$）。⇒ 原句「像始终在 $\mathbf{Sp}$ 中」应读作**自伴化口径下的陈述**。
+
+git diff：`1 file changed, 1 insertion(+), 1 deletion(-)`，只动 L211 一行，全文其余 1681 行零扰动。
+
+#### R8.3 Lean 侧三条（`SpHermLayerDecision.lean`）
+
+| 结论 | 定理 | 依赖 |
+|---|---|---|
+| `D` 的像越出自伴层（值域层） | `DFunctor_range_escapes_hermitian_layer` | `DFunctor_obj_cyclic_nonhermitian`（D40） |
+| **`D` 不能被提升进自伴层**（函子层，最强形式） | `no_functor_lifts_DFunctor_into_SpHerm`：`¬ ∃ F : RecObj ⥤ SpHermObj, ∀ X, (F.obj X).toSp = DFunctor.obj X` | 同上；反证取 `cyclicRec` 把 `isHerm` 搬过去即矛盾 |
+| 两层不同（层内/层外各一代表） | `two_Sp_layers_are_distinct` | `diag3HermObj`（层内）/ `cyclic3SpObj_not_hermitian`（层外） |
+
+构建：单模块 `2049 jobs / EXIT=0 / 模块零警告`（`pr634hermlay1.txt`）；全库 `3852 jobs / EXIT=0 / 12 警告（全为既有基线）/ 0 error`（`pr634full9.txt`）。
+
+`no_functor_lifts_DFunctor_into_SpHerm` 的意义：它把「`D` 的像始终在自伴层」从「尚未证明」降格为「**与机检结论不相容**」。这比「值域里挑一个非自伴反例」强一层——后者只否证全称断言，前者否证**任何函子层重写**（含重新定义 `D` 后仍取原对象像的路子）。B 写法的形式化依据落在这条上。
+
+#### R8.4 方案②为何被否决（精确到一句）
+
+若给 `SpObj` 加自伴字段，则 `DFunctor.obj cyclicRec` **构造不出来**——D40 已机检该像非自伴（`step = cyclicStep3`），而字段要求它自伴。⇒ `DFunctor` 不再是全定义函子，整个 `Rec → Sp` 侧塌掉。反例来源就是 D40 的二分定理，**不是工程难度，是数学不可能**。
+
+同理 `jordan3SpObj := ⟨3, jordan3⟩`、`cyclic3SpObj` 全部构造失败（`jordan3_conjTranspose_ne` 机检于 `SpLayerSeparability.lean` L253）。
+
+#### R8.5 仍存在的缺口
+
+- **`SpHerm` 上的受限伴随**（未做，③B 未要求）。注意与已有的 `DImAdjRIm` 不是同一件事：`SpImD` 限制**定义域**（`D` 的像），`SpHerm` 限制**余定义域**（自伴对象），方向不同。要做须先判 `D` 的像 ∩ 自伴层是否够大。
+- 全局伴随仍不可能（`no_global_right_adjoint`，`AdjunctionAnchor.lean` L71），③B 不改这一条。
+
+#### R8.6 计数更新（相对 R7）
+
+R7 的 `MODULES=354` / 「新增 9 个模块」是 **D41 时点快照**，不改历史。③B 追加 `SpHermLayerDecision` 后：`MODULES=355`、新增 10 个模块、库根 `ROOT_IMPORTS` 由 152 增至 153、全库 jobs 由 3851 增至 3852。
+
+> R7.4 的「344+9=353 vs 354 差 1 未归因」仍未归因；现在 355 是 354 的直接 +1，不改变该差异的性质。

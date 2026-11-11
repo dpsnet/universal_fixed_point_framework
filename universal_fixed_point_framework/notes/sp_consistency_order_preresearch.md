@@ -2131,3 +2131,74 @@ STALE_OLEAN_MTIME=227
 **`MODULES` 差 1 的说明**：344 + 9 = 353，实测 354。原因未逐条核对（旧口径 344 本身是 D35 前的快照，中间可能有一处模块拆分或重命名）。记在此处，不擅自归因。
 
 **全库构建**：`lake build MUFPFormalization` = **3851 jobs / EXIT=0 / 12 警告（全为既有基线）/ 0 error**（`pr634full8.txt`，509 行）。`SpTowerUnbounded.lean` 自身零警告、零 `sorry`；单模块 2037 jobs（`pr634unb1.txt`）。库根 174→175 行。
+
+## 21.18 D22 裁决落地：「③B」（2026-11-11）
+
+### 21.18.1 裁决与它真正在拍什么
+
+用户问「如何拍板？不同选择有何区别？」，回答先归到三条**已机检**的硬事实上：
+
+1. `SpObj` 只有 `n` 与 `A`（`SpCategory.lean` L31–33）⇒ 它对应的是 `Sp_ℂ`（定义 5.11 L852、定理 7.31 L1330 的 `D_diss`），**不是**命题 2.4.4 L211 那个自伴层；
+2. `DFunctor` 在 `SpObj` 上全定义**必然**产生非自伴像（D40 二分定理）；
+3. `no_global_right_adjoint`（`AdjunctionAnchor.lean` L71）已机检，全局伴随不可能。
+
+⇒ 于是要拍的不是「哪个方案更忠于论文」，而是：**L211 那句话要不要被正式判为不成立，判决写在哪里**。
+
+用户回「**③B**」：方案③（双范畴 `SpHerm`/`SpC`）+ 论文 B 写法（L211 明写为 `Sp_ℂ`）。
+
+### 21.18.2 方案②为何是硬否决（一句话版）
+
+给 `SpObj` 加自伴字段 ⇒ `DFunctor.obj cyclicRec` **构造不出来**——D40 已机检该像非自伴（`step = cyclicStep3`），字段却要求它自伴 ⇒ `DFunctor` 不再是全定义函子，整个 `Rec → Sp` 侧塌掉。`jordan3SpObj := ⟨3, jordan3⟩`、`cyclic3SpObj` 同样构造失败（`jordan3_conjTranspose_ne`，`SpLayerSeparability.lean` L253）。
+
+⇒ **反例来源就是 D40 的二分定理，不是工程难度，是数学不可能。**
+
+⇒ ① 与 ③ 也不是竞争而是**层级关系**：`SpHermObj := { toSp : SpObj, isHerm : IsHermitian toSp }`（`SpHermCategory.lean` L26–28），① 是 ③ 的组件，③ 已经把 ① 吃进去了。所以真正的选择只落在「停在哪一层」。
+
+### 21.18.3 论文 B 写法的实际改动
+
+改动对象是命题 2.4.4 证明里的第三句。原文：
+
+> 对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Sp}$ 中。
+
+改为（终稿口径，不留修订痕迹）：
+
+> 对任意 $R \in \mathbf{Rec}_D$，按 L207 的自伴化口径 $A_R=\frac{1}{2}(-\log U_R+(-\log U_R)^{\ast})$ 自伴，故 $D$ 的**自伴化像**落在自伴层 $\mathbf{Sp}$ 内；而 $D$ 作为复谱函子的像落在 $\mathbf{Sp}_{\mathbb{C}}$（定义 5.11、定理 7.31 的 $D_{\mathrm{diss}}$ 所用层），该层不等于自伴层——不作自伴化时像可非自伴，有限维实现中转移步取 3-循环（$\mathrm{step}=(1,2,0)$）即给出 $(e_0,e_1)$ 元为 $1$、$(e_1,e_0)$ 元为 $0$ 的非自伴像。故本句"像始终在 $\mathbf{Sp}$ 中"应读作**自伴化口径下的陈述**；复谱口径下 $\mathbf{Sp}$ 有两层，非同一层。
+
+`git diff --numstat`：`1  1` ⇒ `1 file changed, 1 insertion(+), 1 deletion(-)`。全文其余 1681 行零扰动（这是本轮唯一一次动论文正文）。
+
+⇒ 一处刻意取舍：**Lean 定理名只留在本笔记与结构清单，不写进论文**。论文里只留口径陈述与物理理由，符合「论文不保留内部预审/评审/修订过程」的立牌；机检锚点在笔记侧可查。
+
+### 21.18.4 Lean 侧三条定理（`SpHermLayerDecision.lean`）
+
+| 定理 | 陈述 | 层次 | 意义 |
+|---|---|---|---|
+| `DFunctor_range_escapes_hermitian_layer` | `∃ Y : RecObj.{0}, ¬ IsHermitian (DFunctor.obj Y)` | 值域 | `D` 的像不全在自伴层 |
+| `no_functor_lifts_DFunctor_into_SpHerm` | `¬ ∃ F : RecObj.{0} ⥤ SpHermObj, ∀ X, (F.obj X).toSp = DFunctor.obj X` | **函子** | **任何**提升都不可能 |
+| `two_Sp_layers_are_distinct` | `(∃ E : SpObj, IsHermitian E) ∧ (∃ E : SpObj, ¬ IsHermitian E)` | 对象 | 两层不同，各给一个代表（`diag3` 层内 / `cyclic3` 层外） |
+
+第二条的证明体（一轮过，未加任何辅助引理）：
+
+```
+rintro ⟨F, hF⟩
+have hcomp := hF cyclicRec
+have hherm : IsHermitian (F.obj cyclicRec).toSp := (F.obj cyclicRec).isHerm
+rw [hcomp] at hherm
+exact DFunctor_obj_cyclic_nonhermitian hherm
+```
+
+⇒ `rw [hcomp] at hherm` 是本轮唯一预判过的坑：`IsHermitian` 是 `SpObj` 上的谓词，被 `E` 依赖，按 skill 坑① 理论上报 `motive is not type correct`。**实测没报**——`IsHermitian E` 展开成 `E.A = conjTranspose E.A` 后，Lean 4.34 能在这个形态上按 `hcomp` 重写 `E` 位置。⇒ 记为「不一定报，真报就换 `Eq.subst hcomp hherm`」，不必预先绕路。
+
+⇒ 这条的意义：把「`D` 的像始终在自伴层」从「尚未证明」降格为「**与机检结论不相容**」。它比值域反例强一层——后者只否证一个全称断言，前者否证**任何函子层重写**（包括重新定义 `D` 之后仍取原对象像的那些路子）。B 写法的形式化依据就落在这一条上，而不只是「我们能找到一个非自伴像」。
+
+### 21.18.5 构建与计数
+
+- 单模块 `SpHermLayerDecision`：**2049 jobs / EXIT=0 / 模块零警告**（`pr634hermlay1.txt`，226 行；2 条 `warning:` 均为 `SpCategory.lean:455` 既有基线）
+- 全库 `lake build MUFPFormalization`：**3852 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full9.txt`，509 行）
+- 12 条警告与 D41 **完全同集**，新增模块未引入任何新警告
+- 库根 175→176 行（`ROOT_IMPORTS` 152→153）；模块数 354→355（PR-634 新增累计 10 个）
+
+### 21.18.6 裁决后仍存在的缺口
+
+1. **`SpHerm` 上的受限伴随**（未做，③B 未要求）。与已有的 `DImAdjRIm` 不是同一件事：`SpImD` 限制的是**定义域**（`D` 的像），`SpHerm` 限制的是**余定义域**（自伴对象），方向不同。要做须先判 `D` 的像 ∩ 自伴层是否够大；不做则 ③ 停在「两层 + 遗忘对象不满 + `D` 无法提升」，已够支撑 D22。
+2. 全局伴随仍不可能（`no_global_right_adjoint`），③B 不改这一条，也不该被引作「因此 ③ 修好了伴随问题」。
+3. 论文侧只改了 L211 一句。**其余与 `Sp_ℂ` / `D_diss` 相关的表述未逐条复核**（定义 5.11、定理 7.31、注 2.4.6 的 §7.9.1 引用），如果后续审稿追问「那 §7 的 `D_diss` 与 §2 的 `D` 是不是同一个」，现有正文尚未显式回答——这一条记在此处，未处理。

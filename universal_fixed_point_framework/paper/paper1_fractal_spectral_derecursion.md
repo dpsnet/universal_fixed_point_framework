@@ -208,7 +208,7 @@ $$(\varepsilon D) \circ (D \eta) = \mathrm{id}_D, \quad (R \varepsilon) \circ (\
 2. 对任意 $E \in \mathbf{Sp}$，余单位态射 $\varepsilon_E: D(R(E)) \to E$ 是同构，因为 $A_{D(R(E))} = A_E$（由 $A_E$ 的自伴性保证）；
 3. 单子 $(R \circ D, \eta, \mu)$ 编码了从一般 Koopman 算子的自伴投影到其生成元谱的全过程。
 
-**证明**。(1) 由 $R$ 的定义，$\mathbf{Sp}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，$D(R)$ 的算子 $A_R$ 已取为 Hermitian（自伴），故 $D$ 的像始终在 $\mathbf{Sp}$ 中。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
+**证明**。(1) 由 $R$ 的定义，$\mathbf{Sp}$ 的对象 $E$ 经 $R$ 映射为 Koopman 矩阵 $K = e^{-A_E}$。$K$ 自伴（因 $A_E$ 自伴），故 $R$ 的像落在 $\mathbf{Rec}_D$ 中。对任意 $R \in \mathbf{Rec}_D$，按 L207 的自伴化口径 $A_R=\frac{1}{2}(-\log U_R+(-\log U_R)^{\ast})$ 自伴，故 $D$ 的**自伴化像**落在自伴层 $\mathbf{Sp}$ 内；而 $D$ 作为复谱函子的像落在 $\mathbf{Sp}_{\mathbb{C}}$（定义 5.11、定理 7.31 的 $D_{\mathrm{diss}}$ 所用层），该层不等于自伴层——不作自伴化时像可非自伴，有限维实现中转移步取 3-循环（$\mathrm{step}=(1,2,0)$）即给出 $(e_0,e_1)$ 元为 $1$、$(e_1,e_0)$ 元为 $0$ 的非自伴像。故本句"像始终在 $\mathbf{Sp}$ 中"应读作**自伴化口径下的陈述**；复谱口径下 $\mathbf{Sp}$ 有两层，非同一层。(2) $\varepsilon_E$ 在实现中为恒等矩阵，是显式同构。(3) 单子的乘法 $\mu = R(\varepsilon_{D(R)})$ 将两次自伴投影压缩为一次。□
 
 **定理 2.4.5**（$D \dashv R$ 在 $\mathbf{Rec}_D$ 上严格成立，有限维限定）。设 $D:\mathbf{Rec}_D\to\mathbf{Sp}$ 为谱化函子，$R:\mathbf{Sp}\to\mathbf{Rec}_D$ 为构造 C2.2 给出的显式余伴随。则 $D\dashv R$ 在**对象层与受限态射层**（态射限制为转移矩阵 $D(f)$）上严格成立。
 
