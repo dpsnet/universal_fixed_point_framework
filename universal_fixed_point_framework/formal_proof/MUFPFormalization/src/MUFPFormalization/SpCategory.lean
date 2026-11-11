@@ -32,6 +32,34 @@ structure SpObj where
   n : ℕ
   A : Matrix (Fin n) (Fin n) ℂ
 
+/-- **自伴谓词（D22 方案①）**：判 `SpObj` 是否落在论文定义的自伴层 `Sp` 内。
+
+论文 `paper1_fractal_spectral_derecursion.md` 命题 2.4.4 L207 定义
+`A_R = ½(−log U_R + (−log U_R)*)`、L211 明写「`A_R` 已取为 Hermitian，故 `D` 的像始终在 `Sp` 中」。
+而本库的 `SpObj` 只有 `n` 与 `A` 两个字段、不带自伴字段，因此它对应的是论文的第二个 Sp
+（`Sp_ℂ`，见定义 5.11 L852、定理 7.31 L1330 的 `D_diss`）。
+
+本谓词**不改 `SpObj` 结构**，因此 `DFunctor` 的像仍是 `SpObj` 内的态射，
+`AdjunctionAnchor.lean` L71 的「不存在 `R` 使 `DFunctor ⊣ R`」结论不受影响。 -/
+def IsHermitian (E : SpObj) : Prop := E.A = Matrix.conjTranspose E.A
+
+lemma IsHermitian.conjTranspose_eq {E : SpObj} (h : IsHermitian E) :
+    Matrix.conjTranspose E.A = E.A := h.symm
+
+lemma isHermitian_mk {n : ℕ} {A : Matrix (Fin n) (Fin n) ℂ} (h : A = Matrix.conjTranspose A) :
+    IsHermitian ⟨n, A⟩ := h
+
+/-- 自伴性的元素级判据：`IsHermitian E` 等价于「对所有 `i j`，`E.A i j = conj (E.A j i)`」。 -/
+lemma isHermitian_iff_entries {E : SpObj} :
+    IsHermitian E ↔ ∀ i j, E.A i j = star (E.A j i) := by
+  constructor
+  · intro h i j
+    have h' := congrArg (fun M : Matrix (Fin E.n) (Fin E.n) ℂ => M i j) h
+    simpa [Matrix.conjTranspose_apply] using h'
+  · intro h
+    ext i j
+    simpa [Matrix.conjTranspose_apply] using h i j
+
 /-- Morphism in the spectral category: a matrix intertwining the operators. -/
 @[ext]
 structure SpHom (X Y : SpObj) where

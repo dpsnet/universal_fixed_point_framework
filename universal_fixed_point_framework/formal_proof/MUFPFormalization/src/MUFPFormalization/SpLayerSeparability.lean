@@ -7,6 +7,7 @@ PR-634 · R5.1 机检化（第一步）
 本模块**只新增**定义，不改动 `SpCategory.lean` / `HigherSpCategory.lean`。
 -/
 import Mathlib.Data.Complex.Basic
+import Mathlib.LinearAlgebra.Matrix.ConjTranspose
 import Mathlib.Data.Matrix.Basic
 import Mathlib.Data.Matrix.Diagonal
 import Mathlib.Data.Fin.VecNotation
@@ -235,5 +236,23 @@ theorem diag4_diag3_ker_eq_bot : LinearMap.ker (adLin2 diag4 diag3) = ⊥ := by
       _ = diag4Val i * R i j - R i j * diag3Val j := by ring
       _ = 0 := h
   exact (mul_eq_zero.mp hmul).resolve_left (diag4Val_sub_diag3Val_ne_zero i j)
+
+/-! ### 三相代表与论文自伴层 `Sp` 的归属（D31） -/
+
+/-- **A 相代表落在自伴层内**：`diag3` 等于自身的共轭转置。
+    即 A 相（`ker H ≠ 0`、`ker H ∩ im H = 0`、塔高 2）的代表满足论文命题 2.4.4 L211 的自伴条件，
+    故 `⟨3, diag3⟩` 满足 `MUFPF.IsHermitian`（`SpCategory.lean`）。 -/
+theorem diag3_conjTranspose_eq : diag3 = Matrix.conjTranspose diag3 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [diag3, Matrix.conjTranspose_apply, Matrix.of_apply]
+
+/-- **B 相代表不在自伴层内**：`jordan3` 不等于自身的共轭转置。
+    `(0,1)` 位为 `1`，而共轭转置的 `(0,1)` 位取 `jordan3 1 0` 的共轭，即 `0`。
+    ⇒ `AdTraversable jordan3` 成立，但 `⟨3, jordan3⟩` 不满足 `MUFPF.IsHermitian`：
+    B 相的对象属于 `Sp_ℂ`（复谱层），不属于论文 `Sp`（自伴层）。 -/
+theorem jordan3_conjTranspose_ne : jordan3 ≠ Matrix.conjTranspose jordan3 := by
+  intro h
+  have h01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) h
+  simp [jordan3, Matrix.conjTranspose_apply, Matrix.of_apply] at h01
 
 end MUFPFormalization

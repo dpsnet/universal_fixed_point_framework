@@ -1614,3 +1614,35 @@ H : h ↦ A_X * h − h * A_Y        （A_X = 源对象矩阵，A_Y = 目标对�
 
 **分级影响**：R5.1 的 A/B 两相不受影响（同谱设定下 `H = ad_A` 退化为 `adLin`）；C 相由「Sylvester 可逆（经典定理，未机检）」升为「机检」，故三相表整行现在都是 A 级机检。
 
+### 21.8 自伴谓词落地（D31，方案①执行完毕）
+
+§18.6 列的三条出路里，方案②（给 `SpObj` 加 `isHermitian` 字段）**不可单独执行**——会使 `DFunctor` 的像不再是 `SpObj` 内的态射，`AdjunctionAnchor.lean` L71 的结论连带崩塌。方案①（加谓词、不改结构）本轮执行完毕。
+
+**`SpCategory.lean` 新增（`SpObj` 结构一字未动）**：
+
+| 名称 | 内容 |
+|---|---|
+| `IsHermitian E` | `def IsHermitian (E : SpObj) : Prop := E.A = Matrix.conjTranspose E.A` |
+| `IsHermitian.conjTranspose_eq` | `h : IsHermitian E` ⇒ `conjTranspose E.A = E.A` |
+| `isHermitian_mk` | 由矩阵等式给出 `IsHermitian ⟨n, A⟩` |
+| `isHermitian_iff_entries` | 元素级判据：`IsHermitian E ↔ ∀ i j, E.A i j = star (E.A j i)` |
+
+**`SpLayerSeparability.lean` 新增（三相代表的自伴归属）**：
+
+| 定理 | 内容 | 含义 |
+|---|---|---|
+| `diag3_conjTranspose_eq` | `diag3 = conjTranspose diag3` | A 相代表（塔高 2）**在**自伴层内 |
+| `jordan3_conjTranspose_ne` | `jordan3 ≠ conjTranspose jordan3`（`(0,1)` 位 `1` 对 `0`） | B 相代表（塔高 4/∞）**不在**自伴层内 |
+
+⇒ D22 的核心分野第一次落到**具体相**上：**A 相（可对角、`ker H ∩ im H = 0`）的对象满足论文 `Sp` 的自伴条件；B 相（含 Jordan 块、`ker H ∩ im H ≠ 0`）的对象只属于 `Sp_ℂ`**。这同时解释了此前看起来矛盾的两句话——「自伴层内 `Δ ≡ 0` 是定理」与「B 相能产生 `Δ`」——它们分属两个层：有引力相根本不在自伴 `Sp` 里。
+
+**三处工具链事实（本轮实测，已入经验口径）**：
+
+1. `ᴴ` 后缀记法在本工具链（Lean 4.34.0-rc2）**不是有效 token**：`E.Aᴴ` 直接报 `expected token` ⇒ 一律写 `Matrix.conjTranspose E.A`。
+2. 把 `import MUFPFormalization.SpCategory` 加进 `SpLayerSeparability.lean` 会**打乱既有已过证明**：`simpa [..., diag3_mul_apply]` 的 LHS 会先被新引入的 simp 集展开成 `vecCons ((![1,0,0] ᵥ* X) j) ...`，`diag3_mul_apply` 不再匹配，三处 `simpa` 同时崩（`hXe` / `hKe` / `diag4` 段）。故本模块保持**零库内依赖**，只额外加 `Mathlib.LinearAlgebra.Matrix.ConjTranspose`。
+3. `conj` 在本库不是可用的全局名 ⇒ 元素级判据一律用 `star`。
+
+**复验口径**：单模块 `EXIT=0`、**0 warning**（`pr634sep24e.txt`）；全库 **3841 jobs、`EXIT=0`、12 条既有警告、0 error**（`pr634fullbuild6.txt`）。
+
+**边界（未做，明确登记）**：谓词目前只是「可以问」。`IsHermitian ⇒ 可酉对角化 ⇒ ker H ∩ im H = 0 ⇒ dev ≡ 0` 这条链**尚未机检**——它需要谱定理（Mathlib 侧 `Matrix.IsHermitian` 谱分解量级），不在本轮范围。方案③（双范畴 `SpHerm` / `SpC`）继续开放。
+
