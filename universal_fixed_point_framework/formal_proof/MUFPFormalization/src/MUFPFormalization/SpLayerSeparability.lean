@@ -172,4 +172,19 @@ theorem diag3_ker_inf_range_eq_bot :
     · exact absurd h hd
     · simpa [Matrix.zero_apply] using h
 
+/-- A 相层 3 **不可穿越**：`¬ AdTraversable diag3`。
+    直接由 `diag3_ker_inf_range_eq_bot` 与「非零」矛盾推出。 -/
+theorem diag3_not_traversable : ¬ AdTraversable diag3 := by
+  rintro ⟨R, hne, hmem⟩
+  rw [diag3_ker_inf_range_eq_bot] at hmem
+  rw [Submodule.mem_bot] at hmem
+  exact hne hmem
+
+/-- **层 3 是 A 相与 B 相的分离判据**（D24 甲的 Lean 侧定理化）：
+    同一塔结构下，`J₃` 的层 3 defect 可穿越、`diag(1,2,3)` 的不可穿越。
+    这是「层 2 无法区分 A/B、层 3 才行」的合成命题，把原子级判定连成一条可引用定理。 -/
+theorem layer3_separates_A_B :
+    AdTraversable jordan3 ∧ ¬ AdTraversable diag3 :=
+  ⟨jordan3_traversable, diag3_not_traversable⟩
+
 end MUFPFormalization

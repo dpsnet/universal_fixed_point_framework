@@ -187,7 +187,9 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 谓词定义见 `SpLayerSeparability.lean`：`AdTraversable A := ∃ R ≠ 0, R ∈ ker(ad_A) ⊓ range(ad_A)`；`HasNontrivialTwoMorphism A := ker(ad_A) ≠ ⊥`。构造 `J₃` 为 `Matrix.of ![![0,1,0],![0,0,1],![0,0,0]]`，`diag3` 为 `Matrix.of ![![1,0,0],![0,2,0],![0,0,3]]`（与 `Matrix.diagonal ![1,2,3]` 等价，改写为显式矩阵是为复用 `Matrix.of_apply` + `Fin.sum_univ_succ` 的元素级化简链），谱值单列 `diag3Val : Fin 3 → ℂ := ![1,2,3]`。
 
-**引用时的分寸**：A/B 两相均可写「已 Lean 机检」；C 相（`ker = 0` ⇒ 层 2 平凡）仍为数据 + 定义直接推得，不写成机检定理。
+**引用时的分寸**：A/B 两相均可写「已 Lean 机检」。合成命题 `layer3_separates_A_B : AdTraversable jordan3 ∧ ¬ AdTraversable diag3` 已机检，可直接作为「层 3 分离 A/B」的定理引用；C 相（`ker = 0` ⇒ 层 2 平凡）仍为数据 + 定义直接推得，不写成机检定理。
+
+**仍不可写成机检的部分**：上述两条只证明「同一塔结构下 `J₃` 可穿越、`diag(1,2,3)` 不可穿越」，即**判据的区分能力**。它不等价于「塔必须 ≥ 3 层」（R5.3），后者仍是推理：`n = 3` 的具体对照不能替代「删到 2 层会怎样」的一般命题，而 Lean 里删层的对照模型不存在。
 
 #### R5.2 层 k → k+1 是机械同形提升，不引入新代数步骤（A）
 

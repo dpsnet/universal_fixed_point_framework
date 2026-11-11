@@ -1555,6 +1555,10 @@ theorem spFourExchangeLaw_strict {X Y Z : SpObj}
 | `mul_diag3_apply` | `(X * diag3) i j = X i j * d j` | A（工具引理） |
 | `diag3_has_two_morphism` | `HasNontrivialTwoMorphism diag3`，见证 `diag(1,0,0)` | A |
 | `diag3_ker_inf_range_eq_bot` | `ker(ad_{diag3}) ⊓ range(ad_{diag3}) = ⊥`（层 3 defect 不可穿越） | A |
+| `diag3_not_traversable` | `¬ AdTraversable diag3`（由上式 + 非零矛盾） | A |
+| `layer3_separates_A_B` | `AdTraversable jordan3 ∧ ¬ AdTraversable diag3`（**合成定理**） | A/B |
+
+`layer3_separates_A_B` 是 D24 甲（「层 2 无法分离 A/B、层 3 才行」）的**直接 Lean 命题化**：它不再依赖原子级判定的人为拼接，而是一条可被后续定理引用的命题。至此 D24 甲的结论从「R1 数据重排 + 推理」升为「机检合成定理」。
 
 **排除障碍的关键手段**：把 `diag3` 从 `Matrix.diagonal ![1,2,3]` 改写为**等价的显式矩阵** `Matrix.of ![![1,0,0],![0,2,0],![0,0,3]]`，并把谱值单列为 `diag3Val : Fin 3 → ℂ := ![1,2,3]`。两者是同一个 3×3 对角 (1,2,3)，但显式写法使元素级证明可以复用 `jordan3` 已验证的化简链（`Matrix.of_apply` + `Fin.sum_univ_succ` + `fin_cases`），完全绕开 `Matrix.diagonal` 那条路线上的三个坑（`Finset.sum_eq_single` 子目标顺序不稳、ℂ 上 `ring` 残留 `0 i i`、`diagonal_apply_ne` 因 `abbrev` 展开成 `![1,2,3] i` 而模式不匹配）。
 
