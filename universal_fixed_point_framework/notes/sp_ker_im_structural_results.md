@@ -287,10 +287,13 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | `SpC` 非全自伴 | `not_all_spObj_hermitian`（同上） | 新：**机检** |
 | 层 4 在 B 相有非零解 | `layer4_nontrivial_B` / `adLin_jordan3_shiftDiag3`（`SpTowerLayer4.lean`） | 新：**机检**（D36，B 相塔高 ≥ 4） |
 | 层 4 在 A 相只有零解 | `layer4_trivial_A` / `tower_height_A2_B4`（同上） | 新：**机检**（D36，A 相塔高 = 2） |
+| 层 5 结构存在（层结构补到层 5） | `SpFiveMorphism` / `spFiveVertComp` / `spIdFiveMorphism`（`SpFiveLayer.lean`） | 新：**机检**（D37） |
+| 判据不含层号（层 3/4/5 同形） | `LevelFreeCondition` / `layer_condition_level_free`（同上） | 新：**机检**（D37，塔高 ∞ 的代数侧闭合） |
+| 塔高由缺陷决定（跨层合取） | `tower_height_determined_by_defect`（同上） | 新：**机检**（D37） |
 
-口径：全库 `lake build MUFPFormalization` = **3846 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full3.txt`；D35 时 3845 jobs，见 `pr634full1.txt`），零 `sorry`。
+口径：全库 `lake build MUFPFormalization` = **3847 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full4.txt`；D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`），零 `sorry`。
 
-**仍未机检**：塔高 `= 4` 的等号形式与塔高 ∞（缺 `SpFiveMorphism`，`HigherSpCategory.lean` 止于 `SpFourMorphism`）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
+**仍未机检**：塔高 `= 4` 的等号形式（D37 后更不可能成立——层 5 用同一判据同样允许 `R = J₃`，"层 5 不可穿越"无法成立）；层 6 起的层结构（库内止于层 5，继续延伸属**结构公设**，非定理）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
 
 ### 符号约定（引用时必须守住）
 
@@ -308,7 +311,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 ## 4 建议引用措辞
 
-> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；层 4 的 A/B 二分另有 Lean 机检 `layer4_trivial_A` / `layer4_nontrivial_B`（`SpTowerLayer4.lean`，D36）；**"层 5 起继续非平凡"与"塔高恰为 4"不属可机检范围——Lean 层结构止于 `SpFourMorphism`，该项为同形外推论证**。）
+> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；层 4 的 A/B 二分另有 Lean 机检 `layer4_trivial_A` / `layer4_nontrivial_B`（`SpTowerLayer4.lean`，D36）；层 5 结构已补入、判据层号无关已机检（`layer_condition_level_free` / `tower_height_determined_by_defect`，`SpFiveLayer.lean`，D37）⇒ **"层号不进入判据"是定理**，**"层 6 起继续非平凡"是结构公设**，**"塔高恰为 4"不成立**——层 5 用同一判据同样允许 `R = J₃`。）
 
 关于 `d_A` 的中心化子维数，可直接用的闭式是：
 

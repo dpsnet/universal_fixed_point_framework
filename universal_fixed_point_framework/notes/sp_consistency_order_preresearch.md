@@ -1805,3 +1805,44 @@ D35 只证了「层 3 与层 4 判据同形」（`SpTowerCriterion.lean`），�
 
 构建过程（四轮）：`pr634lay1.txt` 失败（`namespace MUFPF` 下未 `open MUFPFormalization` ⇒ `adLin`/`jordan3` 未知；`Matrix.of ![[0,0,0],…]` 内层漏 `!` ⇒ 被当作 `List`）；`pr634lay2.txt` 失败（`adLin_apply` 只存在于 `SpSpectralBridge`，本模块未 import ⇒ 改用 `simpa [adLin]`）；`pr634lay3.txt` EXIT=0；随后 `pr634lay4/5` 逐条清 unused simp 参数（`Fin.sum_univ_succ`、`Matrix.mul_apply`），`pr634lay6.txt` EXIT=0 且零警告。
 注意：`norm_num` 在本证明中**必要**（残余子目标 `2 - 1 = 1` 在 `ℂ` 上），删掉会失败（`pr634lay4.txt`）。
+## 21.13 D37：层 5 结构补入与「判据层号无关」（塔高 ∞ 的机检形式）
+
+D36 之后剩两个硬边界：塔高 `= 4` 的等号形式，与塔高 ∞。二者的共同障碍不是判据，而是**结构缺口**——`HigherSpCategory.lean` 止于 `SpFourMorphism`（L362–370，`end` 在 L573），层 5 起没有结构就没有 condition 可写。本轮补这个缺口。
+
+### 21.13.1 结构补入（`SpFiveLayer.lean`）
+
+按层 3/4 的同形模式逐字扩一层：
+
+| 定义 | 内容 |
+|---|---|
+| `SpFiveMorphism Χ Ω` | `Χ Ω : SpFourMorphism Ξ Τ`；字段 `fourthHomotopy`（`Matrix (Fin X.n) (Fin Y.n) ℂ`）+ `condition : Ω.thirdHomotopy − Χ.thirdHomotopy = X.A * L − L * Y.A`；`@[ext]` |
+| `spFiveVertComp` | 第四层 homotopy 取 `Φ.fourthHomotopy + Ψ.fourthHomotopy`；证明 `abel` + `Matrix.mul_add`/`add_mul` |
+| `spIdFiveMorphism` | `fourthHomotopy := 0`、`condition := by simp` |
+
+⇒ 库内层结构现在写到**层 5**，层 5 的 condition 第一次在库内有定义。
+
+### 21.13.2 判据层号无关（本轮核心）
+
+`LevelFreeCondition`（`def … : Prop`）把「层 3、4、5 的 condition 全部化为同一个 `HasConditionForm X.A Y.A R`」写成一个命题；`layer_condition_level_free` 机检它。
+
+**这条定理价值不在"又证一遍同形"，而在把层号从判据里彻底消掉**：`HasConditionForm` 只依赖 `X.A`、`Y.A`、右端 `R` 三者，不含层号。⇒「某层能否穿越」不取决于它是第几层，只取决于该相下 `ker ∩ im` 是否非零。
+
+⇒ **塔高 ∞ 的可机检形式就是这个**：不是"塔无限高"（那是结构公设），而是"**延伸与否不由判据决定**"。判据在层 3、4、5 上完全相同、可传递（`conditionForm_reuse`，D35），所以只要承认层结构能按同一形态继续写，塔高就完全由缺陷决定。
+
+### 21.13.3 `tower_height_determined_by_defect`
+
+一条跨层合取：`LevelFreeCondition ∧ (∃ R ≠ 0, HasConditionForm jordan3 jordan3 R ∧ adLin jordan3 R = 0) ∧ (∀ R, HasConditionForm diag3 diag3 R → adLin diag3 R = 0 → R = 0)`。
+即「判据层号无关 ∧ B 相非零解 ∧ A 相零解」。这是"塔高由缺陷决定"的全部机检内容。
+
+### 21.13.4 仍然不成立的（必须一起引）
+
+- **「塔高恰为 4」仍不可证**：需要"层 5 不可穿越"这一否定命题，而层 5 的 condition 与层 4 完全相同、同样允许 `R = J₃` ⇒ 一旦层 4 能过，层 5 用同一判据也能过。故等号形式在 D37 之后**更不可能成立**，正确表述是下界 `塔高 ≥ 4`（层 4 有非零解）。
+- **「层 6 起存在」是结构公设，不是定理**：库内只写到层 5。∞ 的结论是"判据层面无限延伸不引入新条件"，不是"库内有无穷多层"。
+- **完整 `SpFiveMorphism` 实例链未构造**：D37 只给了结构、垂直复合、单位与判据同形，未在 B 相把层 2/3/4/5 的实例逐层串起来（该链需要 `Ξ`/`Τ`/`Χ`/`Ω` 的具体 homotopy 取值，属下一步）。
+
+### 21.13.5 全库口径
+
+`lake build MUFPFormalization` = **3847 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full4.txt`，509 行）。`SpFiveLayer.lean` 自身零警告、零 `sorry`。
+
+构建过程（四轮）：`pr634fiv1.txt` 失败（`layer_condition_level_free` 的三个 `∀` 绑定名未在体内引用，触发 unused 警告；且 `⟨lclf, B, E⟩` 报 `Application type mismatch`）；`pr634fiv2.txt` 同错（`And.intro` 亦然）；`pr634fiv3.txt` 同错（`refine ⟨?_, ?_, ?_⟩` 亦然）。
+**根因**：陈述里把**定理名**写在了**命题位置**（`theorem X : layer_condition_level_free ∧ …`）——Lean 在该位置期望一个 `Prop`（`Prop : Type`），而定理名是 sort `Prop` 的**项**，故报「of sort Prop but expected Prop of sort Type」。修法：抽 `def LevelFreeCondition : Prop`，让类型位置引用 `def` 而非定理。
