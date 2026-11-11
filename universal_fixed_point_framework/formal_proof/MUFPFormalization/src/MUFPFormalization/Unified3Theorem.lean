@@ -230,13 +230,21 @@ theorem layer3_condition {X Y : SpObj} {P Q : X ⟶ Y} {α β : SpTwoMorphism P 
     §6 与修复方案 §4 的桥梁：N_gen = 3 的范畴论理由
    ========================================================= -/
 
-/-- 定理 R3 的补充：Cl(1,7) 不能提供三代，但 3 来自 𝐒𝐩 4-范畴的主动生成层数。 -/
+/-- 定理 R3 的补充：Cl(1,7) 不能提供三代；`3` 与 𝐒𝐩 4-范畴的主动生成层数相同
+    ——但须注意该层数是**层索引约定**（见 `numActiveLayers` 的 doc），不是被推出的。 -/
 theorem unified_3_theorem :
     Fintype.card ActiveMorphismLayer = 3 :=
   card_active_layers
 
-/-- 三代费米子的"3"的来源：𝐒𝐩 4-范畴的主动生成层数。
-    此定理将外加代空间 ℂ³_fam 的维数 3 从"实验输入"升级为"范畴结构推论"。 -/
+/-- 三代费米子的 `3` 与 `ActiveMorphismLayer` 的基数 `3` 是**同一个数**。
+
+    **口径（重要，勿过度解读）**：这**不是**「把外加代空间 ℂ³_fam 的维数 3 从实验输入
+    升级为范畴结构推论」。`card_active_layers` 是 `native_decide` 数构造子，
+    而「`ActiveMorphismLayer` 恰有三个构造子」本身是**层索引约定**
+    （见 `numActiveLayers` 的 doc 与 `paper_SM_endogenous_derivation.md` §4.2）。
+
+    本定理只建立「两个 3 相等」这一事实，**不**建立 3 的必然性；
+    称其为范畴结构推论会越过本库能支撑的范围。 -/
 theorem origin_of_three_generations :
     Fintype.card ActiveMorphismLayer = 3 :=
   unified_3_theorem
