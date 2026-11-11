@@ -292,10 +292,13 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | 塔高由缺陷决定（跨层合取） | `tower_height_determined_by_defect`（同上） | 新：**机检**（D37） |
 | B 相层 2–5 实例链（逐层串接） | `two0`/`two1`/`three0`/`three1`/`four0`/`four1`/`five0`（`SpTowerWitness.lean`） | 新：**机检**（D38） |
 | 层 5 存在非零态射 ⇒ **B 相塔高 ≥ 5** | `tower_height_at_least_five_B`（同上） | 新：**机检**（D38，下界由 4 升到 5） |
+| `DFunctor` 每个像都非自伴（强形式）**被否证** | `not_all_DFunctor_objects_nonhermitian` + `DFunctor_obj_idRec1_isHermitian`（`SpDFunctorStrong.lean`） | 新：**机检**（D39，值域内存在自伴像：`step = id` ⇒ `A = 1`） |
 
-口径：全库 `lake build MUFPFormalization` = **3848 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full5.txt`；D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`），零 `sorry`。
+口径：全库 `lake build MUFPFormalization` = **3849 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full6.txt`；D38 时 3848 jobs 见 `pr634full5.txt`，D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`），零 `sorry`。
 
-**仍未机检**：塔高 `= 4` 的等号形式（D37 后更不可能成立——层 5 用同一判据同样允许 `R = J₃`，"层 5 不可穿越"无法成立）；塔高 `= 5` 的等号形式（同一理由，层 6 无结构）；层 6 起的层结构（库内止于层 5，继续延伸属**结构公设**，非定理）；`DFunctor` 每个像都非自伴的强形式（`Fintype.equivFin` 的具体实现未展开）；`SpHerm` 上的受限伴随存在性。
+**仍未机检**：塔高 `= 4` 的等号形式（D37 后更不可能成立——层 5 用同一判据同样允许 `R = J₃`，"层 5 不可穿越"无法成立）；塔高 `= 5` 的等号形式（同一理由，层 6 无结构）；层 6 起的层结构（库内止于层 5，继续延伸属**结构公设**，非定理）；**「值域内自伴与非自伴并存」的二分定理**（D39 已否证「每个像都非自伴」，但非自伴那一半还没落成 `DFunctor` 像——`cyclic3SpObj` 目前是直接构造 `⟨3, stepMatrix cyclicStep3⟩`，不是 `obj` 调用）；`SpHerm` 上的受限伴随存在性。
+
+> `DFunctor` 每个像都非自伴的强形式在 D39 已**机检否证**（`not_all_DFunctor_objects_nonhermitian`），不得再写入结论表。与之相容的两条事实是：`SpC` 非全自伴（`not_all_spObj_hermitian`，全空间口径）、`DFunctor` 值域内并非全非自伴（D39，值域口径）。
 
 ### 符号约定（引用时必须守住）
 
@@ -313,7 +316,7 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 ## 4 建议引用措辞
 
-> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；层 4 的 A/B 二分另有 Lean 机检 `layer4_trivial_A` / `layer4_nontrivial_B`（`SpTowerLayer4.lean`，D36）；层 5 结构已补入、判据层号无关已机检（`layer_condition_level_free` / `tower_height_determined_by_defect`，`SpFiveLayer.lean`，D37），且 B 相层 2–5 实例链已逐层串接、层 5 存在非零态射（`tower_height_at_least_five_B`，`SpTowerWitness.lean`，D38）⇒ **"层号不进入判据"是定理**，**"B 相塔高 ≥ 5"是定理**，**"层 6 起继续非平凡"是结构公设**，**"塔高恰为 4（或恰为 5）"不成立**——层 5 用同一判据同样允许 `R = J₃`，层 6 同理。）
+> 在 𝐒𝐩 层塔的缺陷条件 `d_A(h) = A_X h − h A_Y = R` 之下，层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker(d_A) ∩ im(d_A)` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。（前两个相与"层 2–4 非平凡"在 n = 2..7 精确有理算术验证；层 4 的 A/B 二分另有 Lean 机检 `layer4_trivial_A` / `layer4_nontrivial_B`（`SpTowerLayer4.lean`，D36）；层 5 结构已补入、判据层号无关已机检（`layer_condition_level_free` / `tower_height_determined_by_defect`，`SpFiveLayer.lean`，D37），且 B 相层 2–5 实例链已逐层串接、层 5 存在非零态射（`tower_height_at_least_five_B`，`SpTowerWitness.lean`，D38）⇒ **"层号不进入判据"是定理**，**"B 相塔高 ≥ 5"是定理**，**"层 6 起继续非平凡"是结构公设**，**"塔高恰为 4（或恰为 5）"不成立**——层 5 用同一判据同样允许 `R = J₃`，层 6 同理。另：**"`DFunctor` 的每个像都非自伴"不成立**（`SpDFunctorStrong.lean`，D39）——`step = id` 时像为 `A = 1`，自伴；值域内自伴与非自伴是否并存尚无完整二分定理。）
 
 关于 `d_A` 的中心化子维数，可直接用的闭式是：
 

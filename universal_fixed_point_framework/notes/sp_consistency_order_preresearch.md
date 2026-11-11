@@ -1900,3 +1900,70 @@ theorem tower_height_at_least_five_B :
 构建过程（四轮）：`pr634wit1.txt` 失败——①`jordan3_mul_self` 停在 `∑ x, ![0,1,0] x * vecCons 0 (…) x = 0`（缺 `Fin.sum_univ_three`，且该命题本身为假）；②`qJ3` 的 `rw` 已闭合后多余 `abel`（`No goals`）；③七处 `simpa [adLin] using adLin_jordan3_shiftDiag3(_add)` 方向反（目标 `J₃ = …`，定理 `… = J₃`）。`pr634wit2.txt` 失败——`replace_all` 把 `adLin_jordan3_shiftDiag3_add.symm` 二次替换成 `adLin_jordan3_shiftDiag3.symm_add.symm`（`symm_add` 字段不存在）；且 `jordan3_mul_self` 的真值问题暴露（`⊢ False`）。`pr634wit3.txt` 失败——`qJ3` 的 `abel`。`pr634wit4.txt` EXIT=0。
 
 **仍不成立的**（与 §21.13.4 同一口径，下界升级后仍适用）：塔高 `= 5` 的等号形式同样证不出来（层 6 无结构）；层 6 起属结构公设；∞ 仍是"判据不引入新条件"，不是"库内有无穷多层"。
+## §21.15 D39：`DFunctor` 值域上的强形式证伪
+
+### 21.15.1 待检命题与判断
+
+D35 遗留的未机检项之一：「`DFunctor` 的每个像都非自伴」
+
+```lean
+∀ X : RecObj, ¬ IsHermitian (DFunctor.obj X)
+```
+
+D35 之后六轮构建全部卡在同一处：`DFunctor_obj X` 的 `A` 里含 `Fintype.equivFin` 的具体实现，`simp` 停在 `sorry ()` 占位，无法归约出元素级形态。
+
+**本轮判断：该强形式是假命题**，且证伪不需要展开 `equivFin`。
+
+### 21.15.2 证伪路径
+
+`DFunctor_obj X := ⟨Fintype.card X.T, stepMatrix (e ∘ X.step ∘ e.symm)⟩`（`DecursionFunctor.lean` L73–74），其中 `e := Fintype.equivFin X.T`。
+
+取 `X.step = id`，则复合 `e ∘ id ∘ e.symm` 恒等于 `id`（`e ∘ e.symm = id`）；而 `stepMatrix id = 1`（单位转移矩阵）。单位阵自伴 ⇒ 值域内**存在**自伴像。
+
+关键动作是**不把 `A` 拆成元素级**，而保持 `stepMatrix f` 的抽象形态：
+
+```lean
+change stepMatrix (Fintype.equivFin idRec1.T ∘ idRec1.step
+    ∘ (Fintype.equivFin idRec1.T).symm) = 1
+rw [hcomp, stepMatrix_id]
+```
+
+`change` 走 defeq 取出 `stepMatrix (复合)` 的字面形态——**先 `change` 再 `rw`** 是绕开 `DFunctor.obj` 不展开的唯一路径（直接 `rw [hcomp]` 报 `Did not find an occurrence`）。
+
+### 21.15.3 五条机检项（`SpDFunctorStrong.lean`）
+
+| 名称 | 内容 |
+|---|---|
+| `stepMatrix_id` | `stepMatrix (id : α → α) = 1` |
+| `idRec1` | `⟨T := Fin 1, step := id⟩` |
+| `DFunctor_obj_idRec1_A` | `(DFunctor.obj idRec1).A = 1` |
+| `DFunctor_obj_idRec1_isHermitian` | `IsHermitian (DFunctor.obj idRec1)` |
+| `not_all_DFunctor_objects_nonhermitian` | `¬ ∀ X : RecObj.{0}, ¬ IsHermitian (DFunctor.obj X)` |
+
+### 21.15.4 四条错误的诊断
+
+| # | 报错 | 根因 | 修法 |
+|---|---|---|---|
+| 1 | `stepMatrix_id` 停在 `⊢ (if i = j then 1 else 0) = 1 i j` | `Matrix.one_apply` 未进 simp 集 | 加 `Matrix.one_apply` |
+| 2 | `hcomp` 停在 `(⇑equivFin ∘ ⇑equivFin.symm) x = id x` | `simp` 不消 `Equiv` 的 `symm` 复合 | `exact Equiv.apply_symm_apply _ x`（`idRec1.step = id` 由 defeq 隐去） |
+| 3 | `rw [hcomp]` → `Did not find an occurrence` | `(DFunctor.obj idRec1).A` 未 defeq 展开 | 先 `change` 成 `stepMatrix (复合)` |
+| 4 | `h idRec1` 类型不匹配：`RecObj.{0}` vs `RecObj.{u_1}` | `RecObj` 的 `T : Type u` 是 universe 多态 | 陈述里钉 `∀ X : RecObj.{0}` |
+
+另有一次警告：`simp only [idRec1, Function.comp_apply, id_eq]` 的后两项被 linter 判 unused ⇒ 删成 `exact Equiv.apply_symm_apply _ x`。
+
+第一次尝试（`pr634strong1.txt`）走的是另一条路：`T := PUnit` + 用 `Subsingleton (Fin …)` 归约 `stepMatrix = 1`。失败在 `Fintype.card PUnit.{?u+1} = 1` 不闭合、`Subsingleton (Fin (DFunctor.obj idRec1).n)` 无法 synth（`n` 不是字面 `1`）。⇒ 教训：**不要用 `Subsingleton (Fin n)` 当类**，`n` 只要不是字面量就搜不到。
+
+### 21.15.5 结论与口径
+
+**强形式被否证**。正确表述只能是：
+
+- 值域内**存在**自伴像（`X.step = id` 的情形，`A = 1`）；
+- 值域内**存在**非自伴像（D35 `cyclic3SpObj` 那一类 3-循环）——但**尚未**把它落成 `DFunctor` 像，见下。
+
+⇒ 「`DFunctor` 每个像都非自伴」不能写进任何结论表。「`SpC` 非全自伴」（`not_all_spObj_hermitian`，任意 `SpObj`）与「值域内并非全非自伴」（本轮）是两条**相容**事实，前者说的是全空间，后者说的只是 `DFunctor` 值域的一角。
+
+**仍未机检**：把 `cyclic3SpObj` 落成某个 `RecObj` 的 `DFunctor` 像（`e ∘ cyclicStep3 ∘ e.symm` 仍是 3-循环，其转移矩阵仍非自伴——需证置换共轭既保持也反射自伴性），据此才能给出「值域内自伴与非自伴**并存**」的二分定理。`cyclic3SpObj` 目前是直接构造 `⟨3, stepMatrix cyclicStep3⟩`（`SpDFunctorRange.lean` L33），不是 `obj` 调用。
+
+**全库口径**：`lake build MUFPFormalization` = **3849 jobs / EXIT=0 / 12 警告（基线）/ 0 error**（`pr634full6.txt`，509 行）。`SpDFunctorStrong.lean` 自身零警告、零 `sorry`；单模块 2038 jobs。库根 172→173 行，末尾加 `import MUFPFormalization.SpDFunctorStrong`。
+
+**构建轮次**：`pr634strong1.txt`（`PUnit` + `Subsingleton` 路径，3 错）→ `pr634strong2.txt`（`Fin 1` + `stepMatrix_id` 路径，4 错，见 §21.15.4）→ `pr634strong3.txt`（EXIT=0，2 条 unused simp warn）→ `pr634strong4.txt`（EXIT=0，零模块警告）。

@@ -170,3 +170,4 @@ import MUFPFormalization.SpDFunctorRange
 import MUFPFormalization.SpTowerLayer4
 import MUFPFormalization.SpFiveLayer
 import MUFPFormalization.SpTowerWitness
+import MUFPFormalization.SpDFunctorStrong
