@@ -1846,3 +1846,57 @@ D36 之后剩两个硬边界：塔高 `= 4` 的等号形式，与塔高 ∞。�
 
 构建过程（四轮）：`pr634fiv1.txt` 失败（`layer_condition_level_free` 的三个 `∀` 绑定名未在体内引用，触发 unused 警告；且 `⟨lclf, B, E⟩` 报 `Application type mismatch`）；`pr634fiv2.txt` 同错（`And.intro` 亦然）；`pr634fiv3.txt` 同错（`refine ⟨?_, ?_, ?_⟩` 亦然）。
 **根因**：陈述里把**定理名**写在了**命题位置**（`theorem X : layer_condition_level_free ∧ …`）——Lean 在该位置期望一个 `Prop`（`Prop : Type`），而定理名是 sort `Prop` 的**项**，故报「of sort Prop but expected Prop of sort Type」。修法：抽 `def LevelFreeCondition : Prop`，让类型位置引用 `def` 而非定理。
+## 21.14 D38：B 相层 2–5 实例链（塔高 ≥ 5 落成定理）
+
+§21.13.4 第三条留的缺口是这个：层 5 有结构、判据层号无关也证了，但层 2/3/4/5 从未在 B 相被**逐层串起来**，所以「塔高 ≥ 5」只能靠判据同形外推。本轮把 R4 构造在 Lean 里显式落地，让外推变成定理。
+
+### 21.14.1 实例链构造（`SpTowerWitness.lean`）
+
+R4 构造：`A_X = A_Y = A_Z = J₃`、`P = P′ = I`、`Q = Q′ = I + J₃`、`h = diag(0,1,2)`。逐层落地：
+
+| 层 | 定义 | 取值 |
+|---|---|---|
+| 对象 | `jordan3SpObj` | `⟨3, jordan3⟩`（`abbrev`） |
+| 1 | `idJ3` | `P := 1`，`intertwine := by simp` |
+| 1 | `qJ3` | `P := 1 + J₃`，展开后两侧同为 `J₃ + J₃²` ⇒ 交换性**不需要幂零性** |
+| 2 | `two0` / `two1` | `homotopy := shiftDiag3` / `shiftDiag3 + J₃` |
+| 3 | `three0` / `three1` | `secondHomotopy` 取同一对取值 |
+| 4 | `four0` / `four1` | `thirdHomotopy` 取同一对取值 |
+| 5 | `five0` | `fourthHomotopy := shiftDiag3 ≠ 0` |
+
+### 21.14.2 关键代数事实
+
+```
+ad_{J₃}(diag(0,1,2)) = J₃              （D36，`adLin_jordan3_shiftDiag3`）
+ad_{J₃}(J₃) = 0                       （`jordan3_mem_ker`）
+⇒ ad_{J₃}(diag(0,1,2) + J₃) = J₃       （`adLin_jordan3_shiftDiag3_add`，本轮新增）
+```
+
+这一条把层 2 的两个态射 `two0`、`two1` 的 condition 同时满足掉：它们的 homotopy 不同（`shiftDiag3` vs `shiftDiag3 + J₃`），但经 `ad` 后落到同一个 `J₃`。层 3–5 完全复用这同一对取值，因为每层的 condition 左端都是「上行 − 下行 = J₃」。
+
+### 21.14.3 `tower_height_at_least_five_B`
+
+```lean
+theorem tower_height_at_least_five_B :
+    ∃ Ψ : SpFiveMorphism four0 four1, Ψ.fourthHomotopy ≠ 0
+```
+
+`Ψ := five0`，`fourthHomotopy = diag(0,1,2)`，非零性用 `(1,1)` 元（值 1）证（`shiftDiag3_ne_zero`）。
+
+⇒ **B 相塔高下界由 4 升到 5**，且这条是具体实例链，不是判据同形的外推。
+
+### 21.14.4 一个必须记的错误：`J₃² ≠ 0`
+
+本轮第一版写了 `jordan3_mul_self : jordan3 * jordan3 = 0` 并据此证 `qJ3` 的交换性。构建在 `case «0».«2» ⊢ False` 处失败——**`J₃` 是 3×3 移位矩阵，`J₃² = [[0,0,1],[0,0,0],[0,0,0]] ≠ 0`，只有 `J₃³ = 0`**。幂零阶算错一层。
+
+修正后的事实是：`(1 + J₃) * J₃ = J₃ + J₃²` 与 `J₃ * (1 + J₃) = J₃ + J₃²` 恒等相同，**交换性本就是恒等式，不依赖幂零**。所以该引理整个删掉，`qJ3.intertwine` 只用 `Matrix.mul_add`/`add_mul`/`one_mul`/`mul_one`；`abel` 在 `rw` 已闭合后多余（`No goals`），删掉。
+
+⇒ 教训：n×n 移位矩阵的幂零阶是 n，不是 n−1 或 2；先算清再写引理。
+
+### 21.14.5 全库口径
+
+`lake build MUFPFormalization` = **3848 jobs / EXIT=0 / 12 警告（基线）/ 0 error**（`pr634full5.txt`，509 行；汇总 `full5sum.txt`）。`SpTowerWitness.lean` 自身零警告、零 `sorry`；单模块 2038 jobs。库根 171→172 行，末尾加 `import MUFPFormalization.SpTowerWitness`。
+
+构建过程（四轮）：`pr634wit1.txt` 失败——①`jordan3_mul_self` 停在 `∑ x, ![0,1,0] x * vecCons 0 (…) x = 0`（缺 `Fin.sum_univ_three`，且该命题本身为假）；②`qJ3` 的 `rw` 已闭合后多余 `abel`（`No goals`）；③七处 `simpa [adLin] using adLin_jordan3_shiftDiag3(_add)` 方向反（目标 `J₃ = …`，定理 `… = J₃`）。`pr634wit2.txt` 失败——`replace_all` 把 `adLin_jordan3_shiftDiag3_add.symm` 二次替换成 `adLin_jordan3_shiftDiag3.symm_add.symm`（`symm_add` 字段不存在）；且 `jordan3_mul_self` 的真值问题暴露（`⊢ False`）。`pr634wit3.txt` 失败——`qJ3` 的 `abel`。`pr634wit4.txt` EXIT=0。
+
+**仍不成立的**（与 §21.13.4 同一口径，下界升级后仍适用）：塔高 `= 5` 的等号形式同样证不出来（层 6 无结构）；层 6 起属结构公设；∞ 仍是"判据不引入新条件"，不是"库内有无穷多层"。
