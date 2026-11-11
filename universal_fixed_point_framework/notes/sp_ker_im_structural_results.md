@@ -590,7 +590,7 @@ dim( ker(ad_A) ⊓ range(ad_A) ) = n − #Jordan块
 
 **`same` 情形已否证的候选式**（保留记录，不再重试）：`dim ker − 1`（`(2,1)` 给 4≠3）、`dim ker − #blocks`（`(2,1)` 给 3✔ 但 `(2,2)` 给 6≠4）、`Σ(nᵢ−1) + Σ_{i<j} min(nᵢ,nⱼ)`（`(2,1)` 给 2≠3）。成因猜测（同特征值块间额外耦合）**明标为猜测**。
 
-**Lean 化缺口**：闭式需「Jordan 块数」概念；库内 `Matrix` 层无 Jordan 标准形。最近一步是单块特例 `finrank = 2`，未做。
+**Lean 化缺口**：闭式需「Jordan 块数」概念；库内 `Matrix` 层无 Jordan 标准形。单块特例 `finrank = 2` 本批做了数值核实但 **Lean 未落地**：手写 5 条定理后单模块 EXIT 0 却产生 774 条 `PANIC at Lean.Expr.appArg!`（来源：`Matrix.of ![![...]]` 字面量与 `simp [Matrix.mul_apply, Fin.sum_univ_three]` 组合），日志污染不可接受 ⇒ 已 `git checkout` 回退。衍生结论（已记入主笔记 §21.25）：① `dim = 2` 经**显式线性系统**（12 未知 / 9 方程，`rank A = 7` ⇒ 非平凡维 2）独立复核，与闭式一致；② `I ∉ range`（残差 1.732）而 `J, J² ∈ range`（后者的见证是纯 0/1 矩阵 `[[0,0,0],[0,0,1],[0,0,0]]`）；③ 元素级通式 `[J,X] i j = X(i+1)j − X(i,j−1)`，我最初误写为 `X(i,j+1)` 因而一度得出「`J ∉ range`」的假结论，已订正。**首次 SVD 脚本的 `dim = 4` 是 Kronecker 列主序/行主序混淆造成的假冲突，作废**。
 
 ### R11.2 `SpHerm` 受限伴随：判死（`8f4c8ff`）
 

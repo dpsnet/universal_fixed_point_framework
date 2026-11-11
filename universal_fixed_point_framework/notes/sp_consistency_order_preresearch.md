@@ -2603,3 +2603,76 @@ R2 已机检（107/107）：`ker ∩ im = 0 ⟺ A 可对角化`。但这是**二
 - Lean 的 `N_total := 5` **未改为 4**：改它会推翻 `LayerIndex` 的 5 个构造子与 `layerPair_card`，
   是另一项结构性工程，且当前 5 的口径（含对象层）自身自洽。
 - 两口径的**统一命名**未做（若要统一，建议论文加下标区分 `N_total^{obj}` 与 `N_total^{coh}`，属论文侧改动，等用户裁决）。
+
+---
+
+## 21.25 R2 单块特例（`jordan3`）：数值完全核实，Lean 化受阻于 tactic panic（第 9 批）
+
+### 21.25.1 目标
+
+`finrank (ker(ad_jordan3) ⊓ range(ad_jordan3)) = 2`（这是 R2 闭式 `n − #Jordan块 = 3 − 1 = 2` 在单块情形的实例）。
+
+### 21.25.2 数值核实（三次，前两次的错都已排除）
+
+**第一次（错，作废）**：用 `kron(I,A) − kron(Aᵀ,I)` 构造 `ad_A`，得 `dim(ker ∩ range) = 4`，与闭式冲突。
+**错因**：该 Kronecker 公式是**列主序**的 `vec` 约定；行主序应为 `vec(AX) = (A ⊗ I)vec(X)` 的转置版。⇒ 该冲突是**假冲突**，不是闭式被证伪。
+
+**第二次（显式逐元素 9×9，`pr634r2n3c.py`）**：
+
+| 量 | 结果 |
+|---|---|
+| `rank ad_J` | 6 |
+| `dim ker` | 3 |
+| `[J, X] = I` | 残差 **1.732** ⇒ **不可解** ⇒ `I ∉ range` |
+| `[J, X] = J` | 残差 4.6e-16 ⇒ 可解，`X = diag(-1,0,1)`（等价于库内 `diag(0,1,2)` 加 `cI` 平移，因 `I ∈ ker`） |
+| `[J, X] = J²` | 残差 2.2e-16 ⇒ 可解 |
+| `[J, X] = J + J²` / `2J − J²` | 残差 5.4e-16 / 1.0e-15 ⇒ 可解（线性叠加） |
+
+**第三次（显式线性系统，12 未知 / 9 方程）**：`rank A = 7` ⇒ 解空间 5 维 ⇒ 减去 3 维「`X` 中心化子（`a=b=c=0`）」⇒ **非平凡维 = 2**，且非平凡解的 `(a,b,c)` 全部 `a = 0` ⇒ **`ker ∩ range = span{J, J²}`，维恰 2**。
+
+⇒ 与 R2 闭式 `3 − 1 = 2` **完全一致**；闭式在 `n = 3` 单块下经独立方法（不用 SVD 秩、用显式线性系统）复核通过。
+
+### 21.25.3 一处手算订正（重要）
+
+`[J, X]` 的元素级通式是
+
+```
+[J, X] i j = X (i+1) j − X i (j−1)
+```
+
+（越界项取 0）。我最初误写成 `X (i+1) j − X i (j+1)`，据此得出「`J ∉ range`」的**假结论**，
+与库内已机检的 `jordan3_mem_range`（见证 `diag(0,1,2)`）直接矛盾。订正后：
+`J ∈ range`、`J² ∈ range`（**纯 0/1 见证** `X = [[0,0,0],[0,0,1],[0,0,0]]`）、`I ∉ range`。
+
+⇒ `I ∉ range` 是上界 `≤ 2` 的关键（`ker` 三维中只有迹零方向可能落在 `range`）。
+
+### 21.25.4 Lean 尝试与失败
+
+写了 5 条（`jordan3_sq_eq` / `jordan3_sq_mem_ker` / `jordan3_sq_mem_range` /
+`jordan3_sq_not_scalar_multiple` / `jordan3_ker_inf_range_two_dim_lower`）。
+单模块 `lake build MUFPFormalization.SpLayerSeparability` **EXIT 0**，但日志产生
+**774 条 `PANIC at Lean.Expr.appArg! / appFn!`**。
+
+**定位**：注释掉后两条（唯一使用 `Matrix.smul_apply` 的两条）后重编，PANIC **仍为 774**
+⇒ 来源在前三条，即 `Matrix.of ![![...]]` 字面量与
+`simp [jordan3, Matrix.of_apply, Matrix.mul_apply, Fin.sum_univ_three]` 的组合。
+
+**为什么必须撤**：EXIT 0 但日志被 774 行 PANIC 污染，等同把构建日志的可用性破坏；
+全库日志会从 600 行膨胀且无法区分真实告警 ⇒ 数据点（「0 error / 10 警告」）的可读性被毁。
+
+**处置**：`git checkout -- SpLayerSeparability.lean` 回到 HEAD，**不留污染**。
+数值结论不因此丢失（见 §21.25.2），但 Lean 侧的「下界 ≥ 2」**本批未落地**。
+
+### 21.25.5 下一步可行路径（登记，不是承诺）
+
+避开 `simp` 展开 `Matrix.of` 字面量的三条路：
+
+1. `Matrix.ext` + 对每个 `(i,j)` 用 `show` 写具体值再 `norm_num`（不把整矩阵交给 `simp`）；
+2. 改述为**元素级命题**（`(jordan3 * jordan3) 0 2 = 1 ∧ …`），不做矩阵等式；
+3. 在独立小模块里用 `native_decide`（需 `ℂ` 元素级 `DecidableEq` 可归约，风险未验）。
+
+### 21.25.6 仍缺的上界
+
+`finrank ≤ 2` 需「`I ∉ range`」的 Lean 化，即 `tr[J, X] = 0` 而 `tr I = 3`。
+库内 `Matrix.trace` 与 `trace_mul_comm` 可用，但要接 `LinearMap.range` 的成员判定，
+本批未做 ⇒ **`finrank = 2` 的等式尚未机检，只有数值与显式线性系统**。
