@@ -44,6 +44,15 @@ import MUFPFormalization.KMaxAlgebra
   数值扫描（`pr634na_derive.py`）曾漏掉 k=1，本模块把该反例显式钉在前提里。
 - 本模块**不涉及**态射塔高（`SpTowerUnbounded.tower_height_unbounded_B` 仍是 ∞）——
   那说的是「层结构可递归构造到任意层」，与「翻倍步数 = 3」不是同一件事。
+- **A 的候选空间已归位（第 27 批）**：新模块 `OverlapClosedLayerOrigin.lean` 机检了
+  `OverlapClosedLayer.overlap_on_closed_layers`。依据是库里一条与本模块无关的既有定理
+  `SigmaIntersectionBottTower.sigma_intersection_closed`：σ 交汇方程
+  `N·(2j − N) = 2^j − 1` 的解只有 `j ∈ {1,2,4}`，即 `k_max = 2j ∈ {2,4,8}`。
+  A 在该集合上**唯一**于 `k = 8` 成立（`overlap_neg_two` / `overlap_neg_four` /
+  `overlap_pos_eight`）。⇒ A 从「对任意 k 的假设」降为「在三候选中筛选」。
+  该定理配套的 `bound_prod : N·(2j−N) = j² − (N−j)² ≤ j²` 同时给出「Sp 侧平方」的
+  代数来源：`j²` 是二次型的极大值，等号取在对称点 `N = j`。
+  **A 仍未证**，且「为什么框架必须要求『二次型极值 = Rec 2 幂』」仍未闭合。
 -/
 
 namespace MUFPF.ActiveLayerDerivation

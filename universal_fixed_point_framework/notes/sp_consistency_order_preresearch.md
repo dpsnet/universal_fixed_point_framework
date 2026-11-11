@@ -3411,3 +3411,85 @@ L298/L302 的 `N_layers = 5` 与 L244 的 `n = 4` 现在是两个不同口径（
   - `VERDICT_ALL_OK = True`
 - 单模块：`lake build MUFPFormalization.ActiveLayerDerivation` **EXIT 0 / 0 error**
 - 全库：`pr634full19.txt`
+
+## §21.38 A 的候选空间归位：从「孤立假设」降为「三候选中筛选」（第 27 批）
+
+第 26 批把 A（`RecSpOverlap`）登记为「整条链最软一环」。本批没有证出 A，但把 A 的**候选空间限死了**——依据是库里一条早已机检、且与第 26 批无关的定理。
+
+### 21.38.1 发现：`sigma_intersection_closed` 早已机检
+
+`SigmaIntersectionBottTower.lean`（159 行）的核心内容：
+
+| 项 | 内容 |
+|---|---|
+| 交汇方程 | `N·(2j − N) = 2^j − 1`，其中 `k_max = 2j`（j 为半指数） |
+| `sigma_intersection_closed` | 该方程的整数解 `j ∈ {1, 2, 4}` ⇒ **`k_max ∈ {2, 4, 8}`**（三个封闭层） |
+| `bound_prod` | `N·(2j − N) = j² − (N − j)² ≤ j²` |
+| `sq_add_one_lt_two_pow` | `j ≥ 5 ⇒ j² + 1 < 2^j` |
+
+**`bound_prod` 就是「Sp 侧平方」的真正来源**：`j²` 不是凭空出现的平方，而是二次型 `N·(2j−N)` 的极大值，等号取在对称点 `N = j`。这条恒等式把「平方」接到一个具体的代数结构上。
+
+### 21.38.2 A 的作用：在三个封闭层里筛一个
+
+| `k_max` | `2^(k−2)` | `k²` | A 成立？ |
+|---|---|---|---|
+| 2 | 1 | 4 | ✗ |
+| 4 | 4 | 16 | ✗ |
+| 8 | 64 | 64 | ✓ 唯一 |
+
+⇒ A 不是「假设一个巧合」，而是「在独立机检的三候选中筛一个」。
+
+### 21.38.3 更强的读法：`j² = 2^j` 的退化分支被 A 排掉
+
+交汇方程的每个解都满足 `|N − j| = 1`（`N` 取 `j ± 1`），于是 `(j−1)(j+1) = j² − 1 = 2^j − 1` ⇒ `j² = 2^j`，其解为 `j ∈ {2, 4}`。所以：
+
+- 封闭层 4（`j = 2`）与 8（`j = 4`）**都**满足「Sp 二次型极值 = Rec 2 幂」的弱形式；
+- A 用的是 `2^(k−2)` 而非对称形式，在 `j = 2` 处给 `2^0 = 1 ≠ 4`，**把退化分支排掉**；
+- 剩下 `j = 4` ⇒ `k_max = 8`。
+
+⇒ A 的强度恰好等于「区分『平方 = 平方』的退化重合与『平方 = 2 幂』的真重合」。两者的差只由 `2j − 4 = j ⟺ j = 4` 这一恒等给出（见 21.38.6 第 2 条）。
+
+### 21.38.4 机检清单（`OverlapClosedLayerOrigin.lean`，新模块，已挂库根）
+
+| 定理 | 内容 |
+|---|---|
+| `closed_kmax_candidates` | 引用 `sigma_intersection_closed`，导出 `2j ∈ {2,4,8}` |
+| `overlap_neg_two` | `¬ RecSpOverlap 2` |
+| `overlap_neg_four` | `¬ RecSpOverlap 4` |
+| `overlap_pos_eight` | `RecSpOverlap 8` |
+| `overlap_on_closed_layers` | 在 `{2,4,8}` 上 `RecSpOverlap k → k = 8` |
+| `overlap_selects_max_closed` | 上述三者的合并陈述 |
+| `vieta_step_gives_pow_sq` | `(j−1)(j+1)+1 = 2^j → j² = 2^j`（弱形式桥） |
+| `overlap_lies_on_max_closed_layer` | `2 ≤ k → RecSpOverlap k → k = 8 ∧ k ∈ {2,4,8}` |
+
+### 21.38.5 这批到底推进了什么（诚实分级）
+
+| 项 | 之前（第 26 批） | 现在（第 27 批） |
+|---|---|---|
+| A 的地位 | 孤立假设，对任意 `k` | 候选空间被独立机检定理限成 `{2,4,8}`，A 唯一选 8 |
+| A 的强度 | 未知 | 已知：恰好足以排掉 `j = 2` 退化分支 |
+| 「Sp 侧平方」的来源 | 未说 | `bound_prod`：二次型极值（对称点取等） |
+| 「为什么必须要求这个相等」 | 未说 | **仍未说 —— 缺口留下** |
+
+**没有证出 A**。这批把 A 从「凭空巧合」降为「在三候选中筛选」，且筛选依据完全来自库内既有定理，不是本轮注入。
+
+### 21.38.6 仍存在的缺口
+
+1. **「为什么框架必须要求 Sp 二次型极值 = Rec 2 幂」**——本批不给理由。这是 A 的真正内核，仍未闭合。
+2. A 在 `k_max = 8` 处与 `j² = 2^j` 重合，纯粹因为 `2j − 4 = j ⟺ j = 4`；这被登记为**恒等巧合**而非机制。
+3. 交汇方程本身的物理/范畴来由（为什么 `N·(2j−N) = 2^j − 1` 是「σ 交汇」）本批未复核，沿用 `SigmaIntersectionBottTower.lean` 文件头既有叙述。
+
+### 21.38.7 验证
+
+- 数值（模式 8）：`scripts/pr634ob_falsify.py` → `notes/pr634ob_falsify_result.txt`
+  - 交汇解集 `k_max ∈ {2,4,8}`
+  - A 在 `k = 1..16` 仅 `k = 1`（退化）与 `k = 8` 成立
+  - 三个封闭层上只有 `k_max = 8` 满足 A
+  - `bound_prod` 恒等式抽查 6/6 命中
+  - `|N−j| = 1` ⇒ `j² = 2^j` 在 `j = 2, 4` 均成立
+  - `j² = 2^j` 的解 `{2, 4}`
+  - A 半指数形式 `j² = 2^(2j−4)` 仅 `j = 4`
+  - `VERDICT_ALL_OK = True`
+- 单模块：`lake build MUFPFormalization.OverlapClosedLayerOrigin` **EXIT 0 / 0 error / WARN 0**（`pr634ob3.txt`）
+- 全库：`pr634full21.txt`
+

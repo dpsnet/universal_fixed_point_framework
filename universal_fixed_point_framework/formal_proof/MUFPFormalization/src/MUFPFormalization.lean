@@ -179,3 +179,4 @@ import MUFPFormalization.SpJ3TraceBound
 import MUFPFormalization.SpJ3KernelBound
 import MUFPFormalization.SpJ3IntersectionStructure
 import MUFPFormalization.ActiveLayerDerivation
+import MUFPFormalization.OverlapClosedLayerOrigin
