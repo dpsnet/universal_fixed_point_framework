@@ -1967,3 +1967,82 @@ rw [hcomp, stepMatrix_id]
 **全库口径**：`lake build MUFPFormalization` = **3849 jobs / EXIT=0 / 12 警告（基线）/ 0 error**（`pr634full6.txt`，509 行）。`SpDFunctorStrong.lean` 自身零警告、零 `sorry`；单模块 2038 jobs。库根 172→173 行，末尾加 `import MUFPFormalization.SpDFunctorStrong`。
 
 **构建轮次**：`pr634strong1.txt`（`PUnit` + `Subsingleton` 路径，3 错）→ `pr634strong2.txt`（`Fin 1` + `stepMatrix_id` 路径，4 错，见 §21.15.4）→ `pr634strong3.txt`（EXIT=0，2 条 unused simp warn）→ `pr634strong4.txt`（EXIT=0，零模块警告）。
+## §21.16 D40：`DFunctor` 值域的二分定理
+
+### 21.16.1 目标与数值侧先行
+
+D39 否证了「每个像都非自伴」，但只立了自伴那一半（`step = id` ⇒ `A = 1`）。非自伴那一半当时还是空的：D35 的 `cyclic3SpObj` 是直接构造 `⟨3, stepMatrix cyclicStep3⟩`，**不是** `obj` 调用，所以它非自伴这件事并不自动属于 `DFunctor` 值域。
+
+本轮把它补上并焊成二分定理。
+
+按模式 8，先做数值真值检验（`pr634dich.py`，n = 3，6 个置换穷举）：
+
+```
+C = stepMatrix(cyclicStep3) 自伴？False
+e=(0,1,2)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+e=(0,2,1)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+e=(1,0,2)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+e=(1,2,0)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+e=(2,0,1)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+e=(2,1,0)  Pᴴ=P⁻¹:True  PᴴP=I:True  A 自伴:False
+⇒ 6/6：Pᴴ=P⁻¹、PᴴP=I、A 非自伴
+```
+
+⇒ 结论与 `equivFin` 的具体实现无关，任意置换共轭都保不住自伴性。
+
+### 21.16.2 为什么改走元素级判定
+
+本来打算走矩阵共轭链：`A = Pᴴ C P` ⇒ 若 `A` 自伴则 `Pᴴ C P = Pᴴ Cᴴ P` ⇒ 左乘 `P` 右乘 `Pᴴ` ⇒ `C = Cᴴ` ⇒ 与 `cyclicSpObj_not_hermitian` 矛盾。这条链要 4–5 条辅助引理（`stepMatrix_equiv_conjTranspose`、两组 `stepMatrix_conjTranspose_mul`、sandwich 保自伴），每条都要在 `Matrix.conjTranspose` 与 `if` 分支上磨。
+
+改走**元素级**：`SpCategory.lean` L53 已经有现成的 `isHermitian_iff_entries`
+
+```lean
+lemma isHermitian_iff_entries {E : SpObj} :
+    IsHermitian E ↔ ∀ i j, E.A i j = star (E.A j i)
+```
+
+取两个具体指标 `i := e 0`、`j := e 1`（`e := Fintype.equivFin cyclicRec.T`），算得
+
+```
+A (e 0) (e 1) = 1        （因为 (e ∘ c ∘ e.symm) (e 0) = e (c 0) = e 1）
+A (e 1) (e 0) = 0        （因为 (e ∘ c ∘ e.symm) (e 1) = e (c 1) = e 2 ≠ e 0）
+```
+
+⇒ 自伴要求的 `A (e 0)(e 1) = star (A (e 1)(e 0))` 退化成 `1 = star 0 = 0`，直接矛盾。
+
+⇒ 只用了 `Equiv.symm_apply_apply`（由 `simp` 自动）与 `e.injective` + `decide`，**完全绕开矩阵乘**。
+
+### 21.16.3 两条机检定理（`SpDFunctorDichotomy.lean`）
+
+| 定理 | 内容 |
+|---|---|
+| `cyclicRec`（`abbrev`） | `⟨T := Fin 3, step := cyclicStep3⟩` |
+| `DFunctor_obj_cyclic_nonhermitian` | `¬ IsHermitian (DFunctor.obj cyclicRec)` |
+| `DFunctor_range_dichotomy` | `(∃ X, IsHermitian (DFunctor.obj X)) ∧ (∃ Y, ¬ IsHermitian (DFunctor.obj Y))` |
+
+二分定理的两个见证分别是 `idRec1`（D39）与 `cyclicRec`（本轮）。
+
+### 21.16.4 一个错误：`def` 包装把 `OfNat` 弄坏
+
+第一版把 `cyclicRec` 写成 `def`，构建在 13 处 `failed to synthesize instance OfNat cyclicRec.T 0` 上炸开，并连带在 `h01` 里留下 `(Fintype.equivFin cyclicRec.T) sorry` 占位。
+
+根因：`def cyclicRec : RecObj where T := Fin 3 …` 的 `T` **不可归约**，所以 `Fintype.equivFin cyclicRec.T 0` 里的 `0` 期望类型是 `cyclicRec.T` 而 Lean 不知道它是 `Fin 3` ⇒ `OfNat` 搜不到。
+
+⇒ 改 `abbrev`（reducible），全部错误消失。
+
+这是 D35 那条老坑的第二次出现（当时是 `def cyclic3SpObj` 导致 `Fin cyclic3SpObj.n` 上 `OfNat` 无法 synth）——**凡是用结构字面量包住 `Fin n` 的指标，一律 `abbrev`**。
+
+### 21.16.5 结论与口径
+
+**二分定理成立**（机检）：
+
+- 值域内**存在**自伴像（`step = id`，`A = 1`）；
+- 值域内**存在**非自伴像（`step = cyclicStep3`，`A (e 0)(e 1) = 1 ≠ 0 = A (e 1)(e 0)`）。
+
+⇒ 至此 D22「`Sp` 有两层」在**值域层面**闭口：`DFunctor` 的像既不全在自伴层、也不全在复谱层；「论文命题 2.4.4 L211 说 `D` 的像始终在 `Sp` 中」这件事，在 Lean 的 `SpObj` 口径下**不成立**，而这正是 D22 判 `DFunctor` 实际对应论文 `D_diss`（定理 7.31 L1330）的机检理由的补强。
+
+**仍未机检**（承接 §21.15.5）：`SpHerm` 上的受限伴随存在性；塔高 `= 4` / `= 5` 的等号形式（已判不可成立）；层 6 起的层结构（结构公设）。
+
+**全库口径**：`lake build MUFPFormalization` = **3850 jobs / EXIT=0 / 12 警告（基线）/ 0 error**（`pr634full7.txt`，509 行）。`SpDFunctorDichotomy.lean` 自身零警告、零 `sorry`；单模块 2048 jobs。库根 173→174 行，末尾加 `import MUFPFormalization.SpDFunctorDichotomy`。
+
+**构建轮次**：`pr634dich1.txt`（`def` 路径，13 处 `OfNat` 错 + 2 处 `sorry` 残留）→ `pr634dich2.txt`（改 `abbrev` 后 EXIT=0，零模块警告）。
