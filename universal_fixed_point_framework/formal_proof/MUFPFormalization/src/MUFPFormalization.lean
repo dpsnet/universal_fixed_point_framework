@@ -163,3 +163,4 @@ import MUFPFormalization.RecSpHomSeparation
 import MUFPFormalization.SpLayerNonCollapse
 import MUFPFormalization.SpChainComplexAudit
 import MUFPFormalization.SpLayerSeparability
+import MUFPFormalization.SpHermCategory

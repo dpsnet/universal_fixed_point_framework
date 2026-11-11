@@ -255,4 +255,95 @@ theorem jordan3_conjTranspose_ne : jordan3 ≠ Matrix.conjTranspose jordan3 := b
   have h01 := congrArg (fun M : Matrix (Fin 3) (Fin 3) ℂ => M 0 1) h
   simp [jordan3, Matrix.conjTranspose_apply, Matrix.of_apply] at h01
 
+/-! ### 判据的跨对象统一（D32） -/
+
+/-- **跨对象版可穿越判据**：见证 `R` 同时落在 `ker` 与 `im` 中。
+    这是层 3 condition 的原始形态（源对象 `A`、目标对象 `B` 各出一个矩阵给出右端），
+    因此 `AdTraversable2` 是三相判据的统一形式；`AdTraversable A` 只是 `A = B`（同谱）的退化特例。 -/
+def AdTraversable2 (A B : Matrix ι ι ℂ) : Prop :=
+  ∃ R, R ≠ 0 ∧ R ∈ LinearMap.ker (adLin2 A B) ⊓ LinearMap.range (adLin2 A B)
+
+/- 同对象退化：`adLin2 A A = adLin A`。 -/
+omit [DecidableEq ι] in
+lemma adLin2_self (A : Matrix ι ι ℂ) : adLin2 A A = adLin A := by
+  apply LinearMap.ext
+  intro X
+  rfl
+
+/- 判据的一致性：同谱（`A = B`）时跨对象判据退化为原判据，两套定义不冲突。 -/
+omit [DecidableEq ι] in
+theorem AdTraversable2_self_iff (A : Matrix ι ι ℂ) :
+    AdTraversable2 A A ↔ AdTraversable A := by
+  unfold AdTraversable2 AdTraversable
+  rw [adLin2_self]
+
+/-- B 相在跨对象判据下仍可穿越。 -/
+theorem jordan3_traversable2 : AdTraversable2 jordan3 jordan3 :=
+  (AdTraversable2_self_iff jordan3).mpr jordan3_traversable
+
+/-- A 相在跨对象判据下仍不可穿越。 -/
+theorem diag3_not_traversable2 : ¬ AdTraversable2 diag3 diag3 := by
+  rw [AdTraversable2_self_iff]
+  exact diag3_not_traversable
+
+/-- 跨对象统一判据下的层 3 分离性（与 `layer3_separates_A_B` 同内容，判据侧已统一到 `adLin2`）。 -/
+theorem layer3_separates_A_B_cross :
+    AdTraversable2 jordan3 jordan3 ∧ ¬ AdTraversable2 diag3 diag3 :=
+  ⟨jordan3_traversable2, diag3_not_traversable2⟩
+
+/-! ### 塔高判定的机检二分（D33） -/
+
+/-- **B 相：塔越过层 2**。层 2 有非平凡 2-态射，且层 3 存在非零可穿越见证。 -/
+theorem jordan3_extends_past_layer2 :
+    HasNontrivialTwoMorphism jordan3 ∧ AdTraversable jordan3 :=
+  ⟨jordan3_has_two_morphism, jordan3_traversable⟩
+
+/-- **A 相：塔止于层 2**。层 2 有非平凡 2-态射，但层 3 无任何非零可穿越见证。 -/
+theorem diag3_stops_at_layer2 :
+    HasNontrivialTwoMorphism diag3 ∧ ¬ AdTraversable diag3 :=
+  ⟨diag3_has_two_morphism, diag3_not_traversable⟩
+
+/-- 跨对象判据下的同一二分（B 相侧）。 -/
+theorem jordan3_extends_past_layer2_cross :
+    HasNontrivialTwoMorphism jordan3 ∧ AdTraversable2 jordan3 jordan3 :=
+  ⟨jordan3_has_two_morphism, jordan3_traversable2⟩
+
+/-- **塔高的机检二分**（同一层 2 判据之下）：B 相能继续上升、A 相不能。
+    这是「判据能区分 A/B」与「塔高数值不同」之间的第一段连接。
+    层 3 以上（直到层 4）的重复适用由 R5.2 的逐层同形性承接（34/34 行、0 差异，`pr634r5homo2.txt`），
+    Lean 侧机检覆盖到层 3。 -/
+theorem tower_continues_or_stops :
+    (HasNontrivialTwoMorphism jordan3 ∧ AdTraversable jordan3) ∧
+    (HasNontrivialTwoMorphism diag3 ∧ ¬ AdTraversable diag3) :=
+  ⟨jordan3_extends_past_layer2, diag3_stops_at_layer2⟩
+
+/-! ### 自伴层内 `dev ≡ 0` 与非自伴层 `dev ≠ 0`（D34） -/
+
+/-- **自伴层内 `Δ` 恒为零（元素级形式）**：任何落在 `ker ∩ im` 中的矩阵必为零。
+    原因链：`diag3` 自伴且已在特征基（对角、谱互异）⇒ `ker = 对角、im = 对角元为零` ⇒ 交为零。
+    论文命题 2.4.4 L211 的自伴层 `Sp` 内正对应此情形，故「自伴层内 `Δ ≡ 0` 是定理」.
+    未机检环节：`自伴 ⇒ 可酉对角化`（谱定理量级），故此处以「已对角」为前提。 -/
+theorem diag3_dev_eq_zero (dev : Matrix (Fin 3) (Fin 3) ℂ)
+    (h : dev ∈ LinearMap.ker (adLin diag3) ⊓ LinearMap.range (adLin diag3)) :
+    dev = 0 := by
+  rw [diag3_ker_inf_range_eq_bot] at h
+  rw [Submodule.mem_bot] at h
+  exact h
+
+/-- **非自伴层 `Δ` 可以非零**：`jordan3` 自身就落在 `ker ∩ im` 中且不为零。
+    这是 D22 分野的对称侧：B 相（含 Jordan 块、非自伴，属 `Sp_ℂ`）确有非零 `Δ`。 -/
+theorem jordan3_dev_can_be_nonzero :
+    jordan3 ∈ LinearMap.ker (adLin jordan3) ⊓ LinearMap.range (adLin jordan3) ∧
+      jordan3 ≠ 0 :=
+  ⟨Submodule.mem_inf.mpr ⟨jordan3_mem_ker, jordan3_mem_range⟩, jordan3_ne_zero⟩
+
+/-- **两层的对比合成**：自伴层内 `dev ≡ 0`，非自伴层存在非零 `dev`。
+    两条并列即 D22「`Sp` 有两层」在 `Δ` 上的机检形式。 -/
+theorem dev_zero_iff_selfadjoint_layer :
+    (∀ dev : Matrix (Fin 3) (Fin 3) ℂ,
+        dev ∈ LinearMap.ker (adLin diag3) ⊓ LinearMap.range (adLin diag3) → dev = 0) ∧
+      (∃ dev : Matrix (Fin 3) (Fin 3) ℂ,
+        dev ∈ LinearMap.ker (adLin jordan3) ⊓ LinearMap.range (adLin jordan3) ∧ dev ≠ 0) :=
+  ⟨diag3_dev_eq_zero, ⟨jordan3, jordan3_dev_can_be_nonzero⟩⟩
+
 end MUFPFormalization

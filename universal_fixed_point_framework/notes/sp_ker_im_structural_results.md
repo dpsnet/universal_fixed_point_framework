@@ -249,6 +249,27 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 
 **边界**：`IsHermitian ⇒ 可酉对角化 ⇒ ker H ∩ im H = 0 ⇒ dev ≡ 0` 这条链**未机检**（需谱定理量级），只可作推理引用。
 
+#### R5.5 塔高判定与 `dev` 的双重机检（A，机检）
+
+| 定理 | 内容 |
+|---|---|
+| `jordan3_extends_past_layer2` | 层 2 非平凡 ∧ 层 3 可穿越 — B 相塔**越过**层 2 |
+| `diag3_stops_at_layer2` | 层 2 非平凡 ∧ 层 3 不可穿越 — A 相塔**止于**层 2 |
+| `dev_zero_iff_selfadjoint_layer` | 自伴层内 `∀ dev ∈ ker∩im, dev = 0` ∧ 非自伴层 `∃ dev ∈ ker∩im, dev ≠ 0` |
+
+这是「判据能区分 A/B」到「塔高数值不同」之间的第一段连接，也是命题 2.4.4 L211「自伴层内 `Δ ≡ 0`」的元素级形式。Lean 侧机检**覆盖到层 3**；层 4 及以上的重复适用由 R5.2 的逐层同形性承接，故塔高数值（4 / ∞）仍不外推为定理。
+
+#### R5.6 双范畴骨架 `SpHerm` / `SpC`（A，机检）
+
+模块 `SpHermCategory.lean`：`SpHermObj`（`SpObj` + `IsHermitian`）、`SpHermHom`（与 `SpHom` 同形）、`Category.{0,0}` 实例、`forgetObj : SpHermObj → SpObj`。
+
+| 定理 | 内容 |
+|---|---|
+| `diag3HermObj` | A 相在自伴层内 — 自伴层**非空** |
+| `jordan3_not_in_herm_layer` | **遗忘非满**：不存在以 `jordan3` 为底的自伴对象 |
+
+⇒ 方案③的**结构理由**已机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。函子层面（`forgetObj` 未证为 `Functor`）、`SpHerm` 的伴随位置、`DFunctor` 值域重定向均未做。
+
 ### 符号约定（引用时必须守住）
 
 - `Δ ≠ 0` ⟺ 有引力（`notes/08_first_principles/04_gravity_analysis.md` L362；`09_dimension_freedom_saturation.md` L83；`generative_chain_map.md` L26）。

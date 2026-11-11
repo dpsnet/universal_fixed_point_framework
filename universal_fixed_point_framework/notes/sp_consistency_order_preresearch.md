@@ -1646,3 +1646,59 @@ H : h ↦ A_X * h − h * A_Y        （A_X = 源对象矩阵，A_Y = 目标对�
 
 **边界（未做，明确登记）**：谓词目前只是「可以问」。`IsHermitian ⇒ 可酉对角化 ⇒ ker H ∩ im H = 0 ⇒ dev ≡ 0` 这条链**尚未机检**——它需要谱定理（Mathlib 侧 `Matrix.IsHermitian` 谱分解量级），不在本轮范围。方案③（双范畴 `SpHerm` / `SpC`）继续开放。
 
+### 21.9 跨对象判据统一、塔高二分、`dev` 的双重机检（D32–D34）
+
+本轮四项依次推进，前三项均已机检并合入本模块。
+
+**D32 跨对象判据**：`AdTraversable2 A B := ∃ R, R ≠ 0 ∧ R ∈ ker(adLin2 A B) ⊓ range(adLin2 A B)`。这是层 3 condition 的原始形态（源、目标各出一个矩阵给出右端），故它才是三相判据的统一形式。
+
+| 定理 | 内容 |
+|---|---|
+| `adLin2_self` | `adLin2 A A = adLin A`（同对象退化） |
+| `AdTraversable2_self_iff` | `AdTraversable2 A A ↔ AdTraversable A` — 两套定义不冲突 |
+| `jordan3_traversable2` | B 相在跨对象判据下仍可穿越 |
+| `diag3_not_traversable2` | A 相在跨对象判据下仍不可穿越 |
+| `layer3_separates_A_B_cross` | 上述两条的合成 |
+
+⇒ **判据侧已统一到 `adLin2`**，与 R1 表的跨对象算子 `H` 同形；`AdTraversable A` 只是 `A = B`（同谱）特例。C 相（`diag4`/`diag3` 谱不交）仍由 `diag4_diag3_ker_eq_bot` 直接给出「无任何非零见证」，未另立否定式。
+
+**D33 塔高判定的机检二分**：
+
+| 定理 | 内容 | 结论 |
+|---|---|---|
+| `jordan3_extends_past_layer2` | 层 2 非平凡 ∧ 层 3 可穿越 | B 相塔**越过**层 2 |
+| `diag3_stops_at_layer2` | 层 2 非平凡 ∧ 层 3 不可穿越 | A 相塔**止于**层 2 |
+| `jordan3_extends_past_layer2_cross` | 跨对象判据侧同一结论 | — |
+| `tower_continues_or_stops` | 上述两条并列 | 二分成立 |
+
+⇒ 这是「判据能区分 A/B」与「塔高数值不同」之间的**第一段连接**。层 3 以上到层 4 的重复适用由 R5.2 的逐层同形性（34/34 行、0 差异）承接；**Lean 侧机检覆盖到层 3**。塔高的具体数值（4 / ∞）仍需把判据逐层反复适用，而本库只有到层 4 的态射定义，故数值不外推为定理。
+
+**D34 `dev` 的双重机检**（D22 结论在 `Δ` 上的元素级形式）：
+
+| 定理 | 内容 |
+|---|---|
+| `diag3_dev_eq_zero` | 自伴层内：任何 `dev ∈ ker ∩ im` 必为 `0` |
+| `jordan3_dev_can_be_nonzero` | 非自伴层：`jordan3 ∈ ker ∩ im` 且 `≠ 0` |
+| `dev_zero_iff_selfadjoint_layer` | 两条并列（`∀ … → 0` ∧ `∃ … ≠ 0`） |
+
+⇒ 命题 2.4.4 L211「`D` 的像始终在 `Sp` 中」加上「自伴层内 `Δ ≡ 0`」这两句，在 `diag3` 这一具体相上成为**元素级定理**；同时 B 相有非零见证，两者构成对称的双重机检。
+
+**仍缺的一环（明确登记）**：`自伴 ⇒ 可酉对角化` 这一步未证（谱定理量级）。`diag3_dev_eq_zero` 因此以「已在特征基（对角、谱互异）」为隐含前提；一般自伴矩阵需先对角化，此步不在本轮。
+
+### 21.10 双范畴骨架 `SpHerm` / `SpC`（方案③第一段）
+
+新模块 `SpHermCategory.lean` 叠在 `SpCategory` 上，**不改** 后者：
+
+| 名称 | 内容 |
+|---|---|
+| `SpHermObj` | `toSp : SpObj` + `isHerm : IsHermitian toSp` — 即论文自伴层 `Sp` |
+| `SpHermHom` | `P` + `intertwine : P * Y.A = X.A * P`（与 `SpHom` 同形，自伴性不约束态射） |
+| `spHermCategory` | `Category.{0,0} SpHermObj` 实例，`id`/`comp`/`assoc` 证法照抄 `spCategory` |
+| `forgetObj` | `SpHermObj → SpObj`（对象层面遗忘，本库 `SpObj` = `Sp_ℂ`） |
+| `diag3HermObj` | A 相代表在自伴层内 — **非空** |
+| `jordan3_not_in_herm_layer` | **遗忘非满**：不存在以 `jordan3` 为底的对象 |
+
+⇒ 方案③的**结构理由**已被机检：`SpHerm → SpC` 的对象遗忘不是满的，正因有引力相只属 `Sp_ℂ`。这也给 D22 一个范畴级表述：论文 `Sp` 是 `Sp_ℂ` 的真子集，而 `D` 的像（`D_diss`）落在补集里。
+
+**未做（方案③后续）**：`forgetObj` 只在对象层面（未证 `Functor`）；`SpHerm` 在伴随中的位置未定；`DFunctor` 的值域重定向未做。
+
