@@ -2046,3 +2046,88 @@ A (e 1) (e 0) = 0        （因为 (e ∘ c ∘ e.symm) (e 1) = e (c 1) = e 2 �
 **全库口径**：`lake build MUFPFormalization` = **3850 jobs / EXIT=0 / 12 警告（基线）/ 0 error**（`pr634full7.txt`，509 行）。`SpDFunctorDichotomy.lean` 自身零警告、零 `sorry`；单模块 2048 jobs。库根 173→174 行，末尾加 `import MUFPFormalization.SpDFunctorDichotomy`。
 
 **构建轮次**：`pr634dich1.txt`（`def` 路径，13 处 `OfNat` 错 + 2 处 `sorry` 残留）→ `pr634dich2.txt`（改 `abbrev` 后 EXIT=0，零模块警告）。
+## §21.17 D41：塔高无界（判据口径）+ 审计口径复跑
+
+### 21.17.1 先说口径为什么必须收窄
+
+结构清单里「塔高无界」的原话是：
+
+> 层 k ≥ 3 的右端恒属 `ker(d_A)`。因此层 k ≥ 3 的非平凡性由 `ker ∩ im` 是否非零决定：`ker = 0` 时塔高 1，`ker ∩ im = 0` 时塔高 2，`ker ∩ im ≠ 0` 时塔高无界。
+
+「无界」在这里**不是**「层 k 的结构对每个 k 都存在」——库内层结构只到层 5（`HigherSpCategory.lean` 止于 `SpFourMorphism`，`SpFiveLayer.lean` 补 `SpFiveMorphism`），层 6 起没有结构，所以「层结构无限存在」是不可证的。
+
+「无界」的准确内容是：**判据本身不含层号，所以一个固定的非零缺陷可以在每一层复用**。这一点 D37 已机检（`layer_condition_level_free`：层 2/3/4/5 的 condition 逐层给出 homotopy 字段，判据形态一致）。
+
+⇒ 所以 D41 只能、也只应在**判据层**落「无界」。
+
+### 21.17.2 `LayerWitness`：把「有非零缺陷」定义出来
+
+```lean
+def LayerWitness {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) : Prop :=
+  ∃ R : Matrix (Fin n) (Fin n) ℂ, R ≠ 0 ∧ HasConditionForm A A R ∧ adLin A R = 0
+```
+
+三个条件合起来就是「`ker ∩ im ≠ 0` 的非零见证」：非零、具有层 condition 形态（`R = A * L − L * A`）、且在 `ker(adLin A)` 内。
+
+**注意这里故意不放层号变量**——放进去就等于预设了 D37 的结论。
+
+### 21.17.3 五条机检项（`SpTowerUnbounded.lean`，约 85 行）
+
+| 项 | 内容 |
+|---|---|
+| `LayerWitness` | 上述定义 |
+| `layerWitness_jordan3` | B 相有见证：`R = J₃`、`L = shiftDiag3`（复用 D36 的 `adLin_jordan3_shiftDiag3` 与 `jordan3_mem_ker`） |
+| `layerWitness_at_every_level` | `LayerWitness A → ∀ k, 2 ≤ k → LayerWitness A` |
+| `tower_height_unbounded_B` | `∀ k, 2 ≤ k → LayerWitness jordan3` |
+| `not_layerWitness_diag3` | `¬ LayerWitness diag3`（由 `layer4_trivial_A` 承接，即 `diag3_ker_inf_range_eq_bot`） |
+| `tower_height_trichotomy` | `LayerWitness jordan3 ∧ ¬ LayerWitness diag3` |
+
+**`layerWitness_at_every_level` 的证明体是 `fun h _ _ => h`**——字面上是重言。这一点必须写进文件（已写在 doc comment 里）：它之所以只能是重言，**恰恰因为 `LayerWitness` 里没有层号变量**，而这正是 D37 机检的结论。把「无界」说成「对每个 k 都成立」时，若假装这是个大定理，就是把 D37 的功劳重复领了一遍。
+
+⇒ 它的价值在**语义钉死**：把「无界」约束在判据层，堵住「层结构无限存在」的误读。
+
+### 21.17.4 塔高三分
+
+`tower_height_trichotomy` 与 D35/D36 的既有结果合起来给出完整分档：
+
+| 相 | `ker` | `ker ∩ im` | 塔高 | 机检依据 |
+|---|---|---|---|---|
+| — | `= 0` | — | 1 | R1/R2 数值（`pr634r2exact.txt` 107/107） |
+| A（`diag3`） | `≠ 0` | `= 0` | 2 | `layer4_trivial_A`（D36）/ `not_layerWitness_diag3`（D41） |
+| B（`jordan3`） | `≠ 0` | `≠ 0` | 无界 | `layerWitness_jordan3` + `tower_height_unbounded_B`（D41） |
+
+⇒ 「塔高恰为 4」「恰为 5」两栏**永久空着**：D37 已判层 5 用同一判据同样允许 `R = J₃`，层 6 同理。三分表是这张表的**最终形态**。
+
+### 21.17.5 审计口径复跑——以及一处必须纠正的口径
+
+D35 之前记的审计口径是 `MODULES=344 / CLOSURE=172 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_LINES=0 / STALE_OLEAN_MTIME=317`，此后新增 9 个模块一直没复跑。本轮补上。
+
+**第一次跑出的数全错**，两个脚本 bug：
+
+1. `MISSING_OLEAN=354`（等于模块总数）——`-replace '.', '\'` 里 `.` 是**正则通配符**，把模块名逐字符替换成了反斜杠，拼出的 olean 路径全部不存在。
+2. `SORRY_LINES=129`——正则没有剥离注释，把 `## 已闭合（零 sorry）`「零 sorry 目标」这类**文档字样**全数进去了。
+
+修法：olean 路径改 `-replace '\.', '\'`；sorry 计数先 `(?s)/-.*?-/'` 剥块注释、再 `(?m)--.*$` 剥行注释，最后数 `\bsorry\b`。
+
+**修正后的权威口径（`pr634audit2.txt`）**：
+
+```
+MODULES=354          （D35 前 344，新增 9 模块 + 1 处口径差异）
+ROOT_IMPORTS=152     （库根 175 行里 152 条 import）
+CLOSURE=182
+ORPHANS=172
+MISSING_OLEAN=0      ✔ 齐备
+SORRY_SITES=184      184 处真 sorry，分布 109 个文件
+SORRY_FILES=109
+STALE_OLEAN_MTIME=227
+```
+
+**必须纠正的一条**：旧记的 `SORRY_LINES=0` **不是全库口径**。全库实际有 **184 处 `sorry`，散在 109 个文件**。而 PR-634 新增的 9 个模块（`SpSpectralBridge`、`SpTowerCriterion`、`SpDFunctorRange`、`SpTowerLayer4`、`SpFiveLayer`、`SpTowerWitness`、`SpDFunctorStrong`、`SpDFunctorDichotomy`、`SpTowerUnbounded`）**一个都不在那 109 个文件里**，即新增部分确实零 `sorry`。
+
+⇒ 结论：**「零 sorry 政策」在 PR-634 新增面上成立，在全库面上不成立**。以后写「零 sorry」必须带口径限定（「本次新增模块零 sorry」），不能写成「全库零 sorry」。这是本轮审计最有价值的一条——它不是新定理，是防止一个错误口径继续传下去。
+
+**`STALE_OLEAN_MTIME=227` 的使用限制**：`lake` 用 trace hash 判定是否重编，mtime 旧但内容未变就不重编。所以 mtime 旧 **不代表** olean 过期，这个指标不能当「需重编」判据。真正的齐备判据只有 `MISSING_OLEAN=0`。
+
+**`MODULES` 差 1 的说明**：344 + 9 = 353，实测 354。原因未逐条核对（旧口径 344 本身是 D35 前的快照，中间可能有一处模块拆分或重命名）。记在此处，不擅自归因。
+
+**全库构建**：`lake build MUFPFormalization` = **3851 jobs / EXIT=0 / 12 警告（全为既有基线）/ 0 error**（`pr634full8.txt`，509 行）。`SpTowerUnbounded.lean` 自身零警告、零 `sorry`；单模块 2037 jobs（`pr634unb1.txt`）。库根 174→175 行。

@@ -294,8 +294,10 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 | 层 5 存在非零态射 ⇒ **B 相塔高 ≥ 5** | `tower_height_at_least_five_B`（同上） | 新：**机检**（D38，下界由 4 升到 5） |
 | `DFunctor` 每个像都非自伴（强形式）**被否证** | `not_all_DFunctor_objects_nonhermitian` + `DFunctor_obj_idRec1_isHermitian`（`SpDFunctorStrong.lean`） | 新：**机检**（D39，值域内存在自伴像：`step = id` ⇒ `A = 1`） |
 | `DFunctor` 值域内**自伴像与非自伴像并存** | `DFunctor_range_dichotomy` + `DFunctor_obj_cyclic_nonhermitian`（`SpDFunctorDichotomy.lean`） | 新：**机检**（D40，非自伴半由 `step = cyclicStep3` 给出；n=3 全部 6 个置换数值确认） |
+| **B 相塔高无界（判据口径）**：`jordan3` 每层都有非零缺陷见证 | `layerWitness_jordan3` / `tower_height_unbounded_B`（`SpTowerUnbounded.lean`） | 新：**机检**（D41，见证 `R = J₃`、`L = shiftDiag3`） |
+| **A 相无缺陷见证**：`diag3` 一层都没有 | `not_layerWitness_diag3` / `tower_height_trichotomy`（同上） | 新：**机检**（D41，承接 `layer4_trivial_A`） |
 
-口径：全库 `lake build MUFPFormalization` = **3850 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full7.txt`；D39 时 3849 jobs 见 `pr634full6.txt`，D38 时 3848 jobs 见 `pr634full5.txt`，D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`），零 `sorry`。
+口径：全库 `lake build MUFPFormalization` = **3851 jobs / EXIT=0 / 12 警告 / 0 error**（`pr634full8.txt`；D40 时 3850 jobs 见 `pr634full7.txt`，D39 时 3849 jobs 见 `pr634full6.txt`，D38 时 3848 jobs 见 `pr634full5.txt`，D37 时 3847 jobs 见 `pr634full4.txt`，D36 时 3846 jobs 见 `pr634full3.txt`，D35 时 3845 jobs 见 `pr634full1.txt`）。**sorry 口径须分开读**：本次新增的 9 个模块零 sorry；全库有 184 处 sorry 散在 109 个文件（见 R7），不得写成「全库零 sorry」。
 
 **仍未机检**：塔高 `= 4` 的等号形式（D37 后更不可能成立——层 5 用同一判据同样允许 `R = J₃`，"层 5 不可穿越"无法成立）；塔高 `= 5` 的等号形式（同一理由，层 6 无结构）；层 6 起的层结构（库内止于层 5，继续延伸属**结构公设**，非定理）；`SpHerm` 上的受限伴随存在性。
 
@@ -341,3 +343,43 @@ dev = A_X·(β.h·α′.h) − 2•(β.h·(A_Y·α′.h)) + (β.h·α′.h)·A_Z
 Python 环境：`D:\pyenv\pyenv-win\versions\3.11.8\python.exe`（numpy 2.4.4 / scipy 1.17.1）。
 
 **废弃脚本（勿引用）**：`pr634d15lean.py`（核/像判定混在一个表达式）、`pr634d15lean2.txt`、`pr634d12.py`（判据符号写反）、`pr634d9.py`（非法态射）。
+
+### R7 审计口径（D41 复跑，2026-11-11）
+
+D35 之前的审计快照是 `MODULES=344 / CLOSURE=172 / ORPHANS=172 / MISSING_OLEAN=0 / SORRY_LINES=0 / STALE_OLEAN_MTIME=317`。此后连续新增 9 个模块，一直未复跑；本轮（D41）补上，并纠出一处**必须废弃的旧口径**。
+
+权威结果（`pr634audit2.txt`，脚本 `pr634audit2.ps1`）：
+
+| 指标 | 值 | 说明 |
+|---|---|---|
+| `MODULES` | **354** | `src/MUFPFormalization/**.lean` 递归计数（含 `SpectralBundle/` 子目录） |
+| `ROOT_IMPORTS` | **152** | 库根 `src/MUFPFormalization.lean` 的 175 行里有 152 条 `import` |
+| `CLOSURE` | **182** | 从库根出发的 import 闭包可达模块数 |
+| `ORPHANS` | **172** | 不在闭包内的模块（历史留档/工具/已并入别处的模块） |
+| `MISSING_OLEAN` | **0** | ✔ 齐备：每个 `.lean` 都有对应 `.olean` |
+| `SORRY_SITES` | **184** | 剥掉块注释与行注释后数 `\\bsorry\\b` |
+| `SORRY_FILES` | **109** | 含 `sorry` 的文件数 |
+| `STALE_OLEAN_MTIME` | **227** | mtime 口径，**非**「需重编」判据 |
+
+#### R7.1 必须废弃的旧口径：`SORRY_LINES=0`
+
+旧记的「零 `sorry`」**不是全库口径**。全库实际有 **184 处 `sorry`，散在 109 个文件**（`TwoCategoryLaws.lean`、`N5` 家族、`Silence` 家族、`BerryChern`、`WeaveBCS` 等历史模块均在其中）。
+
+PR-634 新增的 9 个模块 —— `SpSpectralBridge`、`SpTowerCriterion`、`SpDFunctorRange`、`SpTowerLayer4`、`SpFiveLayer`、`SpTowerWitness`、`SpDFunctorStrong`、`SpDFunctorDichotomy`、`SpTowerUnbounded` —— **一个都不在那 109 个文件里**。
+
+⇒ **「零 sorry 政策」在 PR-634 新增面上成立，在全库面上不成立。** 以后凡是写「零 `sorry`」必须带口径限定（「本次新增模块零 `sorry`」），不得写成「全库零 `sorry`」。这是本轮审计最该记住的一条：它不是新定理，而是防止一个错误口径继续被引用。
+
+#### R7.2 两个脚本 bug（第一次跑出的数全错）
+
+1. `MISSING_OLEAN=354`（等于模块总数）——`-replace '.', '\\'` 里 `.` 是**正则通配符**，把模块名逐字符替换成反斜杠，拼出的 olean 路径全部不存在。改 `-replace '\\.', '\\'`。
+2. `SORRY_LINES=129`——正则没剥注释，把 `## 已闭合（零 sorry）`、`零 sorry 目标`这类**文档字样**全数了进去。改为先 `(?s)/-.*?-/'` 剥块注释、再 `(?m)--.*$` 剥行注释，最后数 `\\bsorry\\b`。
+
+两处都是「指标看起来像结论、其实是实现 bug」。⇒ 审计数字落档前必须先抽样本验真（本轮即用 `TwoCategoryLaws.lean` 第 31 行、`N5SingleMode1.lean` 第 14 行做了反查）。
+
+#### R7.3 `STALE_OLEAN_MTIME` 不能用来看「是否需要重编」
+
+`lake` 用 trace hash 判定重编，mtime 旧但内容未变就不重编。所以 227 这个数**不代表** olean 过期。齐备的唯一判据是 `MISSING_OLEAN=0`。
+
+#### R7.4 `MODULES` 差 1 未归因
+
+344 + 9 = 353，实测 354。旧口径 344 本身是 D35 前的快照，中间可能有一处模块拆分或重命名。**记此差异，不擅自归因**。
