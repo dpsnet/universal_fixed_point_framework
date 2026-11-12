@@ -207,3 +207,4 @@ import MUFPFormalization.SignatureCliffordBridge
 import MUFPFormalization.DepthExistence
 import MUFPFormalization.SelfRefUniqueness
 import MUFPFormalization.DepthDataConstruction
+import MUFPFormalization.SigmaFormOrigin
