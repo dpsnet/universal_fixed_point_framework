@@ -7230,3 +7230,204 @@ theorem signature_functor_on_chain4 :
 `ρ` 的存在性）与三条代数侧不变量缺口（惯性律、号差约定、不同构判定）。
 即：**第 47 批说的「唯一新注入点 `|Fix| = 1`」在范畴论层面已被吃干净，
 本批之后范畴论层面不再有未形式化的一步。**
+
+## §21.63 第 50 批：深度函数 `ρ` 从「结构要求」升格为「判据」（`DepthExistence.lean`）
+
+**日期**：2026-11-12
+**模块**：`src/MUFPFormalization/DepthExistence.lean`（330 行 / 16 定理 / 1 def / 0 sorry / 0 axiom；
+其中 2 条为 `: True` 登记位，实际证明 14 条）
+**机检**：单模块 `pr634pb9.txt` EXIT 0 / 0 error / 0 WARN；全库 `pr634full50.txt` **3894 jobs / EXIT 0 / 0 error / 10 WARN**
+**库根**：207 → **208 行**，`ROOT_IMPORTS` 183 → **184**（末行新增 `import MUFPFormalization.DepthExistence`）
+
+### 21.63.1 本批要解决的问题
+
+第 48 批把 `|Fix| = 1` 从条件降为「时间单向」的推论，但把 `ρ`（深度函数）的存在性
+登记为**结构要求**而非推论：
+
+```lean
+-- UniqueTerminalNecessity.lean L24-26（第 48 批原文）
+本批不证 ρ（深度函数）的存在性。它是一条结构要求：
+```
+
+第 49 批裁决把剩余缺口归为「两条自指方程来由」+「`ρ` 为什么必须存在」。
+本批的目标就是把手写的那句「结构要求」换成**可判定的数学命题**。
+
+### 21.63.2 一个必须先纠正的定义陷阱（本批最重要的发现）
+
+第一版把「时间不折返」写成
+
+```lean
+def NoNontrivialCycle (R : RecObj) : Prop :=
+  ∀ k : ℕ, 2 ≤ k → ∀ x : R.T, (R.step)^[k] x ≠ x
+```
+
+主定理 `depth_exists` 在这条定义下**机检通过**，但它是**空谈**：`chain4` 的终点 3 是固定点，
+`step^[2] 3 = 3`，于是 `chain4` 本身就不满足前提——而 `chain4` 恰恰是库内唯一的
+「时间单向」标准样本（第 44/47/48 批一直用它）。前提在库内所有样本上恒假，定理即无内容。
+
+修正后的定义：
+
+```lean
+def NoNontrivialCycle (R : RecObj) : Prop :=
+  ∀ k : ℕ, 2 ≤ k → ∀ x : R.T, (R.step)^[k] x = x → R.step x = x
+```
+
+即：**回到自身只允许因为已经停住**。不动点算「停住」，不算「折返」。
+`chain4` 满足它（`step^[2] 3 = 3` 且 `step 3 = 3`）；`r3cycle`（`ZMod 3` 上的 `x+1`）违反它
+（`step^[3] x = x` 而 `step x ≠ x`）。⇒ 定义这才对得上「3 是停住而非周期」（第 44 批裁决）。
+
+**教训**：把「没有周期」写成 `≠` 是最自然的写法，也是最容易把定理做成空谈的写法。
+必须先用手上的标准样本（`chain4` / `r3cycle`）代入检验前提是否可满足，再谈证明。
+
+### 21.63.3 A 段：严格递增深度在有限对象上根本不存在
+
+```lean
+theorem strict_depth_impossible (R : RecObj) (hne : Nonempty R.T) :
+    ¬ ∃ ρ : R.T → ℕ, ∀ x, ρ x < ρ (R.step x)
+```
+
+取 `ρ` 的最大点 `x₀`（`Finset.exists_max_image` + `Finset.univ_nonempty`）：
+`h x₀` 给 `ρ x₀ < ρ (step x₀)`，最大性给 `ρ (step x₀) ≤ ρ x₀`，`omega` 出矛盾。
+推论 `strict_depth_impossible_of_card_pos` 用 `Fintype.card_pos_iff.mp` 换出 `Nonempty`。
+
+**这条对本批的意义**：第 48 批 `DepthData` 的
+
+```lean
+hstep : ∀ x, ρ x < ρ (R.step x) ∨ R.step x = x
+```
+
+其中 `∨ R.step x = x` 分支**不是**可省的宽松写法，也不是为了 `chain4` 特意开的后门，
+而是有限状态空间逼出来的**唯一可行形状**。第 48 批文档里「ρ 是结构要求」这句，
+现在可以精确化为：**「每步严格前进」的 ρ 在有限对象上是不存在的数学对象**。
+
+### 21.63.4 B 段：2-循环与严格递增不相容（不依赖有限性）
+
+```lean
+theorem no_strict_pair (R : RecObj) (ρ : R.T → ℕ) (hx : R.step x = y) (hy : R.step y = x) :
+    ¬ (ρ x < ρ (R.step x) ∧ ρ y < ρ (R.step y))
+theorem loop_two_no_depth (R : RecObj) (hx : R.step x = y) (hy : R.step y = x) :
+    ¬ ∃ ρ : R.T → ℕ, ∀ z, ρ z < ρ (R.step z)
+```
+
+纯序矛盾（`rho x < rho y < rho x`），**不需要 Fintype**。
+这是第 48 批 `cycle_no_depth`（针对 `cyc3` 的具体三步回环、靠 `omega` 展开三步）的一般形式。
+
+### 21.63.5 C 段：有限对象上轨道必首次重复（带界）
+
+```lean
+theorem exists_repetition (R : RecObj) (x : R.T) :
+    ∃ i j : Fin (Fintype.card R.T + 1), i ≠ j ∧ step^[i.val] x = step^[j.val] x
+theorem exists_repetition_lt (R : RecObj) (x : R.T) :
+    ∃ n m : ℕ, n < m ∧ m ≤ Fintype.card R.T ∧ step^[n] x = step^[m] x
+theorem exists_return (R : RecObj) (x : R.T) :
+    ∃ n p : ℕ, n ≤ Fintype.card R.T ∧ 0 < p ∧ step^[p] (step^[n] x) = step^[n] x
+```
+
+`Fintype.exists_ne_map_eq_of_card_lt` + `Fintype.card_fin`（抽屉原理）。
+**界 `m ≤ card T` 是本批特意带上的**：它是 C 段能推出 `Nat.find ≤ card T` 的唯一来源，
+也是主定理里 `ρ := card T - find` 不出现 `Nat` 减法截断的来源。
+
+### 21.63.6 D 段：主定理——无折返 ⇒ 存在深度函数
+
+```lean
+theorem exists_fix_at (R : RecObj) (h : NoNontrivialCycle R) (x : R.T) :
+    ∃ n : ℕ, n ≤ Fintype.card R.T ∧ R.step (step^[n] x) = step^[n] x
+
+theorem depth_exists (R : RecObj) (h : NoNontrivialCycle R) :
+    ∃ ρ : R.T → ℕ, ∀ x, ρ x < ρ (R.step x) ∨ R.step x = x
+```
+
+构造：`ρ x := card T - Nat.find (hex x)`，`hex x` 是「从 `x` 出发首次到达不动点的步数」的存在性
+（由 `exists_fix_at` 提供，且带界 `≤ card T`）。
+
+- `ρ x = 0` 分支：`Nat.find = 0` ⇒ `step (step^[0] x) = step^[0] x` ⇒ 右侧 `step x = x`；
+- `ρ x > 0` 分支：证 `Nat.find (hex (step x)) = Nat.find (hex x) - 1`
+  - 上界（`Nat.find_min'`）：`n - 1` 已满足谓词，靠 `iterate_shift` 把
+    `step^[n-1] (step x)` 换成 `step^[n] x`，再用 `Nat.find_spec` 的等式；
+  - 下界（`by_contra` + `Nat.find_min`）：若有更小的 `m` 满足，则 `m + 1 < n` 也满足，
+    与 `n` 的最小性矛盾。
+- 于是 `ρ (step x) = card T - (n - 1) = ρ x + 1 > ρ x`。
+
+**方向约定**：`ρ := card T - find` 是**递增**的（沿 `step` 变大），与第 48 批
+`DepthData.hprog : ρ x < ρ (R.step x)` 同约定。第一版曾写成 `ρ := find`（递减），
+机检同样通过但在陈述层面与 `DepthData` 反号，已改正。
+
+### 21.63.7 E 段：`ρ` 沿轨道单调不减（刻度的物理读法）
+
+```lean
+theorem depth_mono (R : RecObj) (ρ : R.T → ℕ)
+    (h : ∀ x, ρ x < ρ (R.step x) ∨ R.step x = x) :
+    ∀ (x : R.T) (i : ℕ), ρ x ≤ ρ (step^[i] x)
+```
+
+沿整条轨道归纳：停住时相等，前进时严格变大。⇒ **时间不会让刻度倒退**。
+这把 `ρ` 从「任意 ℕ 值函数」升格为「时间刻度」的最小结构条件——
+第 46 批「`TimeArrow` 的 `d` 自由 ⇒ `d=3` 与 `d=7` 同样成立」的缺口，
+在这里得到一条可机检的替代：**刻度必须单调**。
+
+### 21.63.8 F 段：反向判据——`ρ` 存在 ⇒ 时间不折返
+
+```lean
+theorem no_cycle_of_depth (R : RecObj) (ρ : R.T → ℕ)
+    (h : ∀ x, ρ x < ρ (R.step x) ∨ R.step x = x) :
+    NoNontrivialCycle R
+```
+
+证明链（全部机检）：
+1. 取 `x` 的最小正周期 `p := Nat.find (∃ n, 0 < n ∧ step^[n] x = x)`，由 `2 ≤ k` 得 `p ≥ 2`；
+2. **周期内任何点都不是不动点**：若 `i < p` 且 `step (step^[i] x) = step^[i] x`，
+   则由 `iterate_of_fix` 得 `step^[p-i] (step^[i] x) = step^[i] x`，而
+   `iterate_add_shift` + `step^[p] x = x` 给同式左侧 `= x`，故 `step^[i] x = x`；
+   `i > 0` 时与 `p` 最小矛盾，`i = 0` 时 `step x = x` 与假设矛盾；
+3. 于是周期内 `p` 步步步严格增大 `ρ`（`hstrict`），归纳得 `ρ x + i ≤ ρ (step^[i] x)`；
+4. 取 `i = p`：`ρ x + p ≤ ρ (step^[p] x) = ρ x`，而 `p ≥ 2 > 0`，`omega` 出矛盾。
+
+⇒ 与 `depth_exists` 合起来：**`ρ` 的存在 ⟺ 时间无 `k ≥ 2` 的折返**。
+
+### 21.63.9 这一批改动意味着什么
+
+1. **第 48 批的登记位被实质替换**。原登记 `depth_is_a_requirement_not_a_consequence`
+   （`: True`）现在有了双向机检：正向 `depth_exists`，反向 `no_cycle_of_depth`。
+   `ρ` 不再是「要求」，而是**可判定的性质**——给定一个 `RecObj`，是否存在深度函数
+   是一个可以算的命题（等价于检查其 `step` 是否有非平凡周期）。
+2. **第 48 批「诚实边界」被收窄了一条**。原话「`ρ` 存在性无法从 `step : T → T` 推出」
+   现在精确化为：从 `step` 加上「无折返」可以推出；而从 `step` 单独推不出**严格递增**的 `ρ`
+   （`strict_depth_impossible`）——这两句是不同的话，前者是条件推论，后者是数学不可能性。
+3. **注入点清单变化**：
+   - `ρ` 的存在性：从「未动的注入点」降为「**已闭合**（等价于可检查的 `step` 性质）」；
+   - 剩下真正未动的**原始注入点只有两条**：`f = b²` 与 `f² = b^f` 自身的来由。
+
+### 21.63.10 未做与边界（诚实登记）
+
+| 项 | 状态 |
+|---|---|
+| 把 `depth_exists` 的 `ρ` 直接构造为 `DepthData` 实例 | ✗ 登记 `depth_exists_meets_depthdata_deferred`（缺 `hinj` / `htop` 两条：`ρ` 只保证单调与有界，不保证单射与达最大） |
+| `strict_depth_is_the_only_feasible_shape` 的物理读法 | ✗ 仍需裁决：它说明「时间必须逐格前进」在有限状态空间上不可实现 |
+| 「签名不同 ⇒ 代数不同构」 | ✗ 仍登记（第 49 批 `form_neq_implies_algebra_neq_admitted`） |
+| `Cl(1,3)` vs `Cl(3,1)` 号差约定 | ✗ 仍登记（第 49 批 `signature_convention_unchecked`） |
+| 泛性质不筛选签名 | ✗ 仍登记（第 49 批 `generic_property_does_not_select_signature`） |
+| 两条自指方程 `f = b²`、`f² = b^f` 自身的来由 | ✗ 唯一残留的原始注入点 |
+
+### 21.63.11 注入点清单更新（第 50 批后）
+
+| 命题 | 级别 |
+|---|---|
+| **严格递增深度在有限对象上不存在**（`strict_depth_impossible`） | **Lean A（第 50 批）★★★ 新增（负面）** |
+| **2-循环与严格递增不相容，不依赖有限性**（`no_strict_pair` / `loop_two_no_depth`） | **Lean A（第 50 批）★★★ 新增** |
+| **有限对象上轨道必首次重复，且界为 `card T`**（`exists_repetition_lt` / `exists_return`） | **Lean A（第 50 批）★★★ 新增** |
+| **无折返 ⇒ 轨道必到不动点，步数 ≤ `card T`**（`exists_fix_at`） | **Lean A（第 50 批）★★★ 新增** |
+| **无折返 ⇒ 存在深度函数 `ρ`**（`depth_exists`） | **Lean A（第 50 批）★★★ 新增** |
+| **`ρ` 沿轨道单调不减**（`depth_mono`） | **Lean A（第 50 批）★★★ 新增** |
+| **`ρ` 存在 ⇒ 无折返**（`no_cycle_of_depth`） | **Lean A（第 50 批）★★★ 新增（反向）** |
+| `ρ`（深度函数）为什么存在 | ✅ **第 50 批闭合为「⟺ 无 `k ≥ 2` 折返」** |
+| `|Fix| = 1` | ✅ 第 48 批降为时间单向推论（充分不必要） |
+| `DepthData` 直接由 `depth_exists` 构造 | ✗ 登记 `depth_exists_meets_depthdata_deferred` |
+| 两条自指方程 `f = b²`、`f² = b^f` 自身的来由 | ✗ 唯一残留的原始注入点，未动 |
+
+**裁决（本批）**：`ρ` 的存在性从「结构要求」变成「判据」——这是第 48 批之后
+**第一个被彻底吃掉的注入点**。第 49 批说「剩下不是范畴论缺口，而是两条更上游的输入
+（自指方程来由、`ρ` 的存在性）」，本批之后这句话要改成：**只剩一条上游输入（自指方程来由）**。
+即：把 `N_active = 3` 从「公设 E3」推到「定理」这条路上，
+**上游注入点从两处降到一处**；而这一处（`f = b²`、`f² = b^f` 为什么取这两个方程）
+是本批与第 45/49 批都无法再接力的地方——它不是「再从 `step` 推出什么」的问题，
+而是「为什么恰好是这两条自指方程」的问题。
