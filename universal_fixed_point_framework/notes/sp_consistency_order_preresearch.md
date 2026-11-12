@@ -7655,3 +7655,161 @@ N_active = spaceLayerDim = 3
    本批闭合了 `f = 4` 的唯一性 ⇒ 这一条的注入点实际也随之下移到「为什么 σ 是 1/(f²−1)」）。
 4. **论文侧未同步**。本批是纯库内推进，`paper33_origin_of_3.md` 等论文正文未改
    （用户既定：Lean 定理名不进论文正文）。
+
+## §21.65 第 52 批：`DepthData` 从结构要求降为可构造判据产物
+
+**批次定位**：PR-634 主线「推出 3」，第 52 批。功能提交 `DepthDataConstruction.lean`（365 行 / 11 定理 / 3 def / 0 sorry / 0 axiom / `TRIVIAL_TRUE=0`），库根接入（`ROOT_IMPORTS` 185 → 186，库根 209 行）。方向承接第 50 批自留登记位 `depth_exists_meets_depthdata_deferred`（`: True`），把第 48 批 `structure DepthData` 的八个字段全部构造出来，并把「`DepthData` 是结构要求」这句话降为「它是无折返 + 唯一终点的推论」。
+
+### 21.65.1 方向自定与用户约束
+
+用户本轮三连「继续，且必须实现证明」，且此前已多次否决以 `: True` 登记位收尾。第 50 批留下两处 `: True`：
+
+| 登记位 | 第 52 批处置 |
+|---|---|
+| `depth_exists_meets_depthdata_deferred`（`DepthExistence.lean` L327） | **本批实质闭合**（`depthdata_exists` 主定理） |
+| `strict_depth_is_the_only_feasible_shape`（L331） | 保留（物理读法仍需裁决，见 21.65.11） |
+
+选定本方向的三条理由：
+1. 第 48 批把 `ρ` 的存在性写成「结构要求」（`UniqueTerminalNecessity.lean` L24–26 原文自认），第 50 批只给出了**存在性**与**双向判据**，但没有把 `DepthData` 的八字段凑齐——尤其 `hinj` 与 `hmax` 从未被构造过。
+2. 第 50 批的 `ρ x = card T - h x` 只记**层号**，层内多点必然碰撞，故 `hinj` 在该编码下**做不到**。这不是「结构难证」，而是「编码选错」。
+3. 该方向完全可机检（不像「建模层为什么从自指方程出发」，后者不可机检）。用户要求的「必须实现证明」只有这一条能真正满足。
+
+**未选**：「建模层为什么从自指方程出发」。理由：不可机检，任何 Lean 陈述都只能是 `: True` 或公设，与用户「必须实现证明」直接冲突。
+
+### 21.65.2 数值先证伪（模式 8，全绿）
+
+编码设计：`ρ x = (card - h x) * (card + 1) + idx x`，`M = ρ m`，其中 `h` 是第 50 批的首次重复步数、`idx` 是 `Fintype.equivFin` 给出的层内编号。
+
+`pr634qd_falsify.py` + `.txt` 逐字按 Lean 定义翻译，实测：
+
+| 检验项 | 结果 |
+|---|---|
+| `TOTAL_MAPS`（`|T| ≤ 4` 全部映射） | 3413 |
+| `NNC_AND_UNIQUE_FIX`（无折返 + 唯一不动点） | 701 |
+| `BUILD_OK` / `BUILD_FAILS`（八字段能否造出） | 701 / 0 |
+| `VERDICT_A` / `VERDICT_B` | True / True |
+| 随机 `n = 6..9`：`RANDOM_NNC_UNIQ` / `RANDOM_OK` / `RANDOM_FAILS` | 542 / 542 / 0 |
+| `TWOFIX_NNC` / `TWOFIX_FIX` / `TWOFIX_NO_DEPTHDATA` | True / 2 / True |
+| `LOOPONE_NNC` / `LOOPONE_WITNESS` / `LOOPONE_FIX` | False / (0,2) / 1 |
+| `CHAIN4_NNC` / `CHAIN4_FIX` / `CHAIN4_RHO` / `CHAIN4_M` | True / 1 / {0:5, 1:11, 2:17, 3:23} / 23 |
+| `VERDICT_ALL_OK` | True |
+
+⇒ 两个结论在数值层先行确认：(A) 八字段在「无折返 + 唯一不动点」下**恒可构造**（701/701）；(B) `twofix`（`(2,2)` 签名）虽有唯一…**不**，`twofix` 有两个不动点，故不满足前提，八字段造不出（`TWOFIX_NO_DEPTHDATA=True`）。⇒ 唯一终点确实是不可去掉的关节。
+
+### 21.65.3 定义陷阱（第二次）：`Nat.find` 与名字层 `rw` 不相容
+
+第 50 批已记过一次「定义陷阱」（`NoNontrivialCycle` 第一版让主定理空谈）。本批是**第二次**，性质不同：不是定义错，而是**证明技术**。
+
+`def hnat R h x := Nat.find (exists_fix_at R h x)`。所有引理最初都在 `hnat` 名字层写 `rw`，结果 `rw [h0] at hspec` 里 `hspec` 的项是 `Nat.find ⋯`（`⋯` 是 elaborator 隐藏的 proof 项），而 `h0` 的类型被 `show`/类型标注转成了 `hnat ⋯` 形式——**类型标注不改变项**，于是 `rw` 找不到模式。第 3–5 轮 6→2 个 error 的多数消耗在这里。
+
+**解法（已固化，坑 175 的加强版）**：定理体第一行写 `show Nat.find (exists_fix_at R h x) = 0 ↔ R.step x = x`，把**目标整体**换成 `Nat.find` 展开式，此后全程只在 `Nat.find` 层用 `Nat.find_spec` / `Nat.find_min'` / `Nat.find_min` 操作，最后靠 `show` 的 defeq 转换回 `hnat` 陈述。这样任何 `rw` 都作用在同一语法项上。
+
+`hnat_step`（`h (step x) = h x - 1`）是唯一一处真正需要「双向」的引理：
+- `≤` 方向：`Nat.find_min'` + 轨道拼接 `iterate_add_shift R (h x - 1) 1 x`，得到 `[h x - 1] (step x) = [h x] x`，再套 `Nat.find_spec` 的 `.2`。
+- `≥` 方向：反证 `h (step x) + 1 < h x`，用 `Nat.find_min` 对 `h x` 的谓词取反，得矛盾。
+
+### 21.65.4 编码设计与 `hinj`
+
+`ρ x = (card T - h x) * (card T + 1) + idx x`。
+
+- **`card T + 1` 是进制**：`idx x < card T < card T + 1`（`idx_lt`），故层内编号严格小于进制。
+- **`card T - h x` 是层号**：第 50 批已证 `h x ≤ card T`，非顶层 `h x ≥ 1`，故层号落在 `[1, card T - 1]`；顶层 `h = 0` 给层号 `card T`（最大）。
+- **单射**（`depthRho_inj`）：由纯算术 `enc_inj`（`A * c + p = B * c + q`，`p, q < c > 0` ⇒ `A = B ∧ p = q`，两次反证 + `calc` 造 `<`）加 `idx_inj`（`Fintype.equivFin` 的单射性 + `Fin.ext`）。⇒ 这正是第 50 批「做不到」的那一项，问题不在命题而在编码：层号单独作值必然碰撞，必须补层内编号。
+
+### 21.65.5 主定理 `depthdata_exists`（八字段全齐）
+
+```lean
+theorem depthdata_exists (R : RecObj) (h : NoNontrivialCycle R)
+    (m : R.T) (hm : R.step m = m) (huniq : ∀ x : R.T, R.step x = x → x = m) :
+    Nonempty (DepthData R)
+```
+
+八字段的构造与来源：
+
+| 字段 | 取值 | 依据 |
+|---|---|---|
+| `ρ` | `depthRho R h` | 21.65.4 |
+| `M` | `depthRho R h m` | 顶层取最大值 |
+| `m` | `m` | 前提给出 |
+| `hinj` | `depthRho_inj R h` | `enc_inj` + `idx_inj` |
+| `hmax` | `hmax_aux` | 非顶层层号 `≤ card - 1`、`idx x < card + 1` ⇒ `A + i < card * (card + 1)`；顶层 `= card * (card + 1) + idx m` ⇒ 弱不等 |
+| `htop` | `rfl` | 定义即取等 |
+| `hprog` | `hprog_aux` | `hnat_step` 使层号 `+1`，`idx` 项的增量被 `card + 1` 吸收 |
+| `hstep` | `by_cases` | `hprog` 与「已停住」两支合并 |
+
+`hmax_aux` 的关键一步是**严格性来源**：`depthRho x < depthRho m` 必须靠 `<` 而非 `≤` 传递——`h2` 写成严格式（`base + idx x < card * (card + 1)`，由 `Nat.add_lt_add_left hpx` 给出），否则 `calc` 全链只有 `≤`，末步 `h3.symm` 会把目标退化为 `depthRho m < depthRho m`。这是第 6 轮唯一的 error。
+
+### 21.65.6 双向判据与「结构要求」的降级
+
+```lean
+theorem depthdata_nonempty_iff (R : RecObj) (h : NoNontrivialCycle R)
+    (m : R.T) (hm : R.step m = m) :
+    Nonempty (DepthData R) ↔ ∀ x : R.T, R.step x = x → x = m
+```
+
+- 正向 = `depthdata_exists`（21.65.5）。
+- 反向 = `depthdata_implies_unique_terminal`（`fun _ hx => eq_top_of_fixpoint D hx`）加一处移位：`eq_top_of_fixpoint` 给 `x = D.m`，而右侧要 `x = m`，须补 `D.m = m`（由 `(eq_top_of_fixpoint D hm).symm`）。
+
+⇒ **裁决级结论**：`DepthData` 不是「时间单向」的**额外公设**，而是「时间无 `k ≥ 2` 折返 + 唯一终点」的**等价刻画**。第 48 批 L24–26「本批不证 `ρ` 的存在性。它是一条结构要求」与第 50 批「八个字段缺两项」两句**均过时**。
+
+### 21.65.7 `twofix` 反例：唯一终点是真正的额外结构
+
+```lean
+theorem twofix_no_depthdata : ¬ Nonempty (DepthData twofix)
+```
+
+证法（第二轮改法）：`fixCount_eq_one D`（第 48 批）给 `fixCount twofix = 1`，`twofix_fix_two`（第 48 批，`decide`）给 `fixCount twofix = 2`，`omega` 收口。
+
+⇒ 这一条的意义不是「`twofix` 特殊」，而是：`DepthData` 的八个字段**不能**由 `RecObj` 的四字段（`T`、`fin`、`dec`、`step`）推出；唯一终点是必须显式带上的东西。`twofix` 与 `chain4` 在 `RecObj` 层面完全同型（`T = Fin 4`），差别只在 `step` 的形状。
+
+### 21.65.8 工程事故：`--dir` 位置错误污染全局 mathlib
+
+**事故**：首次 build 写成 `lake build MUFPFormalization.DepthDataConstruction --dir $root`。`--dir` 位置错误使 Lake 实际在 **mathlib 包内**运行，并用 mathlib 自带的 **v4.31.0** toolchain 重建全局共享 mathlib（日志 `pr634qd1.txt`，18588 B / 157.4 s / 14 error）。
+
+**污染范围实测**：`D:\tools\lean\.lake\packages\mathlib\.lake\build` 下 139877 个文件中，520 个文件在 23:12–23:14 被改写，覆盖 37 个模块的 olean/ilean/ir/c/trace/hash；`Mathlib/Lean/Expr/Basic.olean` 被删。项目 `$root\.lake\packages\mathlib` 是 **Junction** 指向同一实体，故污染同时影响本项目。
+
+**修复（未 clean、未删 `.lake`，遵守用户硬约束）**：`pr634qd_fix.py` 只删除那 39 个模块在 `lib/lean` 与 `ir` 下的全部产物（`REMOVED_FILES 729 / STILL_PRESENT_OLEAN 0`），随后 `Set-Location $root` + `lake build` 用 v4.34.0-rc2 增量重建 mathlib（`pr634qd2.txt`，218 jobs / 238.6 s / 14 error 全在本模块）。日志 trace 行确认 `d:\tools\lean\.elan\toolchains\leanprover--lean4---v4.34.0-rc2\bin\lean.exe`。
+
+**结论（坑 174）**：`lake build X --dir <root>` 的 `--dir` 必须在 `build` **之前**；正确用法是 `Set-Location -LiteralPath $root` 后 `& lake build MUFPFormalization.<Module>`。`--dir` 写在模块名之后会静默改变 Lake 的工作根，后果是全局 mathlib 被错误 toolchain 覆盖——**不报错，只报错在本地模块上**，极难归因。
+
+### 21.65.9 库根接入与全库验收
+
+- 接入：`src/MUFPFormalization.lean` 在 `import MUFPFormalization.SelfRefUniqueness` 后加 `import MUFPFormalization.DepthDataConstruction`。`ROOT_IMPORTS` **185 → 186**，库根行数 **208 → 209**（`(split "`n").Count` 口径），纯 LF、末尾换行、无 BOM。
+- 模块计数：`src/MUFPFormalization/**/*.lean` **387 → 388**（顶层 378 → 379 + `SpectralBundle/` 9）；含库根 389。
+- 单模块：`pr634qd8.txt`，41.7 s，**0 error / 0 WARN**。
+- 全库：`pr634full52.txt`，53.2 s，**0 error / 10 WARN / 增量 1 job**。10 条警告与第 51 批完全同址（`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492）——**本批未新增任何警告**。
+- 口径说明：本次为**增量构建**，`JOBS=1` 只表示本次待构建 1 个模块，**不是**全库 job 总数。累计 job 数按第 51 批基线 3895 推算为 3896，**未做 clean 全量复验**（用户约束：不得清理已构建缓存）。
+
+### 21.65.10 与第 48 / 50 批的接口：三处过时陈述
+
+| 位置 | 原文 | 现状 |
+|---|---|---|
+| `UniqueTerminalNecessity.lean` L24–26 | 「本批不证 `ρ` 的存在性。它是一条结构要求」 | **过时**：第 50 批证存在性，本批证八字段可构造 |
+| `DepthExistence.lean` L327 | `depth_exists_meets_depthdata_deferred : True` | **已被实质闭合**，但旧登记位仍在文件里（未删、未改写） |
+| `DepthExistence.lean` L331 | `strict_depth_is_the_only_feasible_shape : True` | 保留（需物理裁决） |
+
+跨模块 doc 更新**本批未做**（只在新模块文档块里写明），理由是避免在功能批里改动三个已验收模块的正文；登记为下一批或状态批的清理项。
+
+### 21.65.11 本批边界与剩余开口
+
+**已证（本批新增，全部 0 sorry / 0 axiom）**：
+
+1. `enc_inj`：`A * c + p = B * c + q`，`p, q < c > 0` ⇒ 商与余数唯一。
+2. `idx_lt` / `idx_inj`：层内编号落在 `[0, card T)` 且单射。
+3. `hnat_zero_iff`：`h x = 0 ↔ step x = x`。
+4. `hnat_step`：非停住时 `h (step x) = h x - 1`。
+5. `depthRho_apply` / `depthRho_inj`：编码的取值式与单射。
+6. **`depthdata_exists`**：无折返 + 唯一终点 ⇒ 八字段全齐。
+7. `depthdata_implies_unique_terminal`：`DepthData` ⇒ 唯一终点。
+8. **`depthdata_nonempty_iff`**：`Nonempty (DepthData R) ↔ 唯一不动点`（无折返前提下，双向）。
+9. **`twofix_no_depthdata`**：`twofix` 不满足前提 ⇒ 无 `DepthData`。
+
+**未做（诚实登记）**：
+
+- 建模层「为什么从自指方程出发」仍不可机检（`modeling_choice_still_open`）。
+- 退化格 `b = 1` 或 `f ∈ {0,1}` 仍未覆盖（`degenerate_cells_not_covered`）。
+- 三处跨模块过时 doc 未改（21.65.10）。
+- `RESEARCH_STATE.md` 的 SORRY 审计口径仍是 D41 时点快照，本批只更新模块计数，未重跑审计。
+- 全库 job 总数为推算值，未 clean 全量复验。
+
+**本批对「推出 3」主线的净贡献**：`ρ` 与 `DepthData` 这两个曾被视为「额外结构要求」的对象，现在完全落在「时间无折返 + 唯一终点」之内。⇒ 注入点进一步收缩为四个：建模层两条自指方程、`σ = 1/(f²-1)` 的函数形式、`N_total = 5`、`r = e⁻¹`。本批没有推进这四个中的任何一个。
