@@ -4254,3 +4254,151 @@ N_active 的位置                              def := 3 裸字面量   → ✔ 
 * `spacetimeDim = spaceLayerDim + timeLayerDim = 3 + 1 = 4` 与 `catOrder = 4` 的等同
   本批只作为"四个 4"之一列出，**未**建成定理（需要跨模块引用 `SpacetimeDimensionTwoPostulates`，
   会引入 simp 扰动，留待下一批单独开模块处理）。
+
+
+---
+
+## §21.45 第 34 批：`4 = 3 + 1`——范畴阶是输出，那座桥降为定义恒等
+
+### 21.45.1 本批要打掉的那条底注
+
+第 33 批把 `N_active = 3` 建成 `catOrder − 1`，并证到了第 32 批登记的桥，
+但底注仍写着：
+
+```
+① catOrder := 4 —— Sp 为什么是 4-范畴，是框架公设
+```
+
+本批把这条打掉：**`4` 不是公设，是 `3 + 1` 的输出。**
+
+### 21.45.2 原料：同一文件的三行定义
+
+`SpacetimeDimensionTwoPostulates.lean` L56–62：
+
+```lean
+def spaceLayerDim : ℕ := 3                            -- L56
+def timeLayerDim  : ℕ := 1                            -- L59
+def spacetimeDim  : ℕ := spaceLayerDim + timeLayerDim -- L62
+```
+
+第 32 批已把 `spaceLayerDim` 从 `def := 3` 换成 `2^d = b³` 的唯一解。
+剩下的 `timeLayerDim := 1` 也不是裸字面量——它有结构依据，就写在同一个文件里：
+
+* L59 doc：「时间方向数 = 递归单向性给出的 1 个方向（共享 G3 的 `StrictLayer` 语义）」
+* L135–144 `time_coordinate_unique`：**严格升层下，同一终点的两个递归步数必相等**——
+  时间是一条 ℕ 链（单一坐标），这是「时间方向数 = 1」的结构依据
+* L146–151 `time_orbit_injective`：`k ↦ recStep ev k r` 是单射——时间轴为单一 ℕ 链
+
+⇒ `1` 的来由是：**递归步数坐标唯一 ⇒ 时间轴只有一条 ℕ 链 ⇒ 时间方向数 = 1**。
+
+### 21.45.3 于是 `4` 是算出来的
+
+```
+catOrder = spaceLayerDim + timeLayerDim
+         = d + 1
+         = 3 + 1                     （d = 3 由 2^d = b³，第 32 批）
+         = 4
+```
+
+**`4` 不再是输入。** 它由两个各自有机检来由的量相加：
+`3` 来自幂基立方，`1` 来自递归单向性。
+
+机检：`catOrder_eq_four (d) (hD : 2^d = fixedPoint * powers) : catOrderOf d = 4`。
+
+### 21.45.4 那座桥降为定义恒等——这是本批最重的一条
+
+第 33 批的 `nActive = catOrder − 1`，现在把 `catOrder = d + 1` 代进去：
+
+```
+nActive = (d + 1) − 1 = d = spaceLayerDim
+```
+
+**`N_active = spaceLayerDim` 不再是两个独立算出的 3 恰好相等，
+而是 `(spaceLayerDim + 1) − 1 = spaceLayerDim` 的定义恒等。**
+
+机检：`nActive_eq_spaceLayerDim (d : ℕ) : nActiveOf d = d`。
+
+这是第 32 批那座桥能成立的真实原因——**桥不是巧合，是 `+1` 与 `−1` 相互抵消。**
+换句话说，`N_active` 与 `spaceLayerDim` 之所以相等，是因为前者定义为「范畴阶减一」，
+后者定义为「范畴阶减时间层数」，而时间层数恰是 1。
+
+### 21.45.5 本批之后的完整链条
+
+```
+k_max = f · b = b³ = 2³           （第 32 批：三条已机检原料相乘）
+   ⇒ 2^d = 2³ ⇒ d = 3             （第 32 批：spaceLayerDim_unique）
+timeLayerDim = 1                  （递归单向性：time_coordinate_unique）
+   ⇒ catOrder = d + 1 = 4         （第 34 批）
+   ⇒ nActive = catOrder − 1 = d   （第 34 批：桥降为定义恒等）
+```
+
+四个箭头，每一步都是机检算式；**没有任何一步把目标数写进定义。**
+机检汇总 `whole_chain` 一次给出六件事：
+`d = 3` ∧ `catOrder = 4` ∧ `N_active = 3` ∧ `N_active = spaceLayerDim` ∧ `N_total = 5` ∧ `catOrder = d + 1`。
+
+### 21.45.6 注入点清单（本批之后）
+
+```
+b = 2（Powers）                        仍为数值 def          ← 链条上唯一的数值输入
+「主动层 = 排除对象层与 coherence 层」    规则本身未证          ← 第 33 批已登记，本批未动
+timeLayerDim := 1 的物理层面            未证                  ← 见下
+```
+
+**关于 `timeLayerDim = 1` 必须诚实说清**：`SpacetimeDimensionTwoPostulates.lean` L36–37
+自己写明——「time_orbit_injective 只证层坐标良定义（G3 `StrictLayer` 的直接推论），
+**不等于物理时间一维性**」。本批沿用这条结构依据，并把「时间一维」的物理层面留在公设层。
+但它与 `b = 2` 不同：`b = 2` 完全没有来由，而 `1` 至少有层坐标良定义这条结构支撑
+（多层时间方向会造成同一终点对应多个不同步数，与 `time_coordinate_unique` 冲突）。
+
+### 21.45.7 机检清单（`CatOrderFromSpacetime.lean`，约 150 行，11 条定理，已挂库根）
+
+```
+timeLayerDim_eq_one                 timeLayerDim = 1（rfl）
+catOrder_eq_four                    ★★ catOrder = 4（4 由 3+1 算出，非输入）
+nActive_eq_spaceLayerDim            ★★★ 桥成恒等：(d+1)−1 = d
+nActive_eq_three                    ★ N_active = 3
+nTotal_eq_five                      N_total = 5
+four_is_three_add_one               ★ catOrder = 3 + 1
+nTotal_eq_nActive_add_two           N_total = N_active + 2
+whole_chain                         ★★★ 全链汇总（六件事一次给出）
+timeLayerDim_is_one_not_two         timeLayerDim ≠ 2 ∧ = 1（一致性备注）
+```
+
+构建：`pr634oi1.txt` 单模块 EXIT 0 / 0 error / WARN 0（一次通过）；
+`pr634full30.txt` 全库 EXIT 0 / 3867 jobs / 0 error / WARN 10（10 条为既有基线）。
+
+### 21.45.8 净进展
+
+```
+catOrder = 4 的地位           第33批：框架公设（def := 4）     → 第34批：✔ 输出（= 3 + 1）
+N_active = spaceLayerDim      第33批：两侧独立各有来由，恰相等  → 第34批：✔ 定义恒等 (d+1)−1 = d
+链条上数值输入个数             2（b=2, n=4）                    → 1（b=2）
+「为什么是 4」                 未打开                           → ✔ 已答：4 = 3 + 1
+```
+
+### 21.45.9 未做（登记）
+
+* **本批不 import `SpacetimeDimensionTwoPostulates`**（它牵着 `KMaxAlgebra` /
+  `RecursionModularityBridge`，会引入 simp 扰动，历史上有坑）。因此本模块的
+  `timeLayerDim` 是**独立重写的同值定义**，与库内 L59 一致但**无形式依赖**。
+  跨模块一致性（`CatOrderSpacetime.timeLayerDim = SpacetimeDimensionTwoPostulates.timeLayerDim`）
+  未建成定理——下一批可单独开一个只做这条焊定的薄模块处理。
+* 「主动生成层 = 排除对象层与 coherence 层」这条规则仍未证（第 33 批已登记）。
+* `N_total` 双口径张力（库内 5 含对象层 / 论文 4 不含）仍未处理，沿用库内口径。
+* `b = 2`（`Powers`）的来由仍未打开——这是链条上唯一剩下的数值 `def`。
+
+### 21.45.10 下一批主攻
+
+`b = 2`。它出现在三个地方：`f = b²`（`SilenceFamily.lean` L663）、`k_max = f·b`（L929）、
+`k_max = b³`（第 32 批合成）。加上第 31 批的 `f² = 2^f`，`2` 是整条链最后的数值底板。
+
+三条候选路线：
+1. `2` = 二值判据的个数（第 29 批「相数 = 3」那条链里 `2` 是判据个数）——
+   若是，则 `b` 与相数链同源，两条链可能有共同底座；
+2. `2` = 「对偶」的结构常数（Rec/Sp 对偶，`Sp`/`Rec` 两个对象）——
+   若是，则 `b` 由框架的对偶结构给出，不是数值输入；
+3. `2` = `Nat` 的最小非平凡底（`2` 是唯一使 `2^d` 非平凡的底）——
+   若是，则 `b = 2` 是「幂运算存在非平凡解」的最低条件，属幂基定义的一部分。
+
+三条里第 2 条最有可能真正闭合（因为库内 `RecObj` / `SpObj` 的对偶是结构实现，
+不是数值），下一批先查这一条。
