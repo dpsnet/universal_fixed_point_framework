@@ -2,7 +2,7 @@
 
 > **本节为口径权威；以下全部正文为历史记录，其中的模块数 / jobs 数 / 警告数 / sorry 数均为当时快照，不可直接引用。**
 >
-- **HEAD = `1fe4716`**（`develop`，**已推送**：`github-origin` 与 `origin`（Gitee）两个远端均指向 `1fe4716`，与本地一致，双方无 ahead/behind 差；推送范围 `7d05a47..1fe4716`，含 PR-634 预研全程提交。最近十批：`3b0bb19` → `3ba79dd` → `eb26fde` → `c667e30` → `4fc12de` → `1f926bb` → `c80ccb4` → `8c08b91` → `7d05a47` → `1fe4716`）。
+- **HEAD = `1fe4716`**（`develop`，**已推送**：`github-origin` 与 `origin`（Gitee）两个远端均指向 `1fe4716`，与本地一致，双方无 ahead/behind 差；推送范围 `7d05a47..1fe4716`，含 PR-634 预研全程提交。最近十批：`3b0bb19` → `3ba79dd` → `eb26fde` → `c667e30` → `4fc12de` → `1f926bb` → `c80ccb4` → `8c08b91` → `7d05a47` → `1fe4716`）；紧随其后的状态刷新提交只改本文件 L1–L15，不改任何模块）。
 - **全库构建：3894 jobs / EXIT 0 / 0 error / 10 警告**（权威日志 `pr634full50.txt`，第 50 批；`pr634full49.txt` 为第 49 批 3893 jobs，`pr634full48.txt` 为第 48 批 3884 jobs，`pr634full47.txt` 为第 47 批 3883 jobs，`pr634full46.txt` 为第 46 批 3882 jobs，第 20 批重建时为 3856）。
 - **库内模块：386**（`src/MUFPFormalization/**/*.lean`，不含库根；顶层 377 + `SpectralBundle/` 9；含库根计 387）；库根 `src/MUFPFormalization.lean` = **208 行**，`ROOT_IMPORTS = 184`（末四行为 `UniqueTerminalNecessity`、`SignatureClifford`、`SignatureCliffordBridge`、`DepthExistence`）。
 > - 警告基线 10 条（全在历史模块）：`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、`HallEmergence` 1170、`SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492。`SpCategory:455` 两条已于 `5b889ea` 清除（基线 12 → 10）。第 1–21 批**未新增任何警告**。
