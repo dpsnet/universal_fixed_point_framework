@@ -185,3 +185,4 @@ import MUFPFormalization.PhaseTrichotomy
 import MUFPFormalization.TowerHeightFromPhase
 import MUFPFormalization.FixedPointFactorOrigin
 import MUFPFormalization.ActiveFromPowersCube
+import MUFPFormalization.ActiveFromCategoryOrder

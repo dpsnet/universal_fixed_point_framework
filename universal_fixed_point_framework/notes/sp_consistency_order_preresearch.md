@@ -4095,3 +4095,162 @@ N_active = 3 的上游  →  已推到 spaceLayerDim（本批）  →  spaceLaye
 **同时登记**：`b = 2`（`Powers`）仍是 `def`，是本批链上唯一剩下的数值输入。
 如果要继续往上游推，下一步就是 `Powers = 2` 的来由——它与 `b² = f`、`k_max = b³` 是同一族。
 
+
+
+---
+
+## §21.44 第 33 批：`N_active = n − 1`——范畴阶路面，第 32 批登记的桥证到了
+
+### 21.44.1 上一批留下的那一座桥
+
+第 32 批把 `spaceLayerDim = 3` 建成了方程 `2^d = b³` 的唯一解（`spaceLayerDim_unique`），
+但同时登记了一条未证的桥：
+
+```
+还差：N_active = spaceLayerDim
+```
+
+并说明这是"一个纯命名问题，不含任何数值选择，但仍未证"。
+本批就是来证它的。
+
+### 21.44.2 桥的原料：`Unified3Theorem.lean` 的层表（L69–77）
+
+全库扫描（`pr634oh_scan.txt`）确认三件事：
+
+1. `N_active` 与 `spaceLayerDim` 在全库**零交叉引用**（除第 32 批自己写的 doc）；
+2. `N_active` 与 `numActiveLayers` 共现的全部 6 处都是"声明不引用"的 doc；
+3. `SpacetimeDimensionTwoPostulates.lean` L13 有唯一文字等同——「空间方向数 = 三层态射层数
+   （spaceLayerDim = 3 = N_gen）」——但只是注释，不是定理。
+
+⇒ 三座 `def := 3` 之间一条桥都没有。`card_active_layers`（`Unified3Theorem.lean` L115–116）
+只把 `numActiveLayers` 焊到 `Fintype.card ActiveMorphismLayer`（三构造子计数），
+不焊到 `spaceLayerDim`，也不构成范畴推论（`DHStructuralAnalysis.lean` L96–98 已订正过这条表述）。
+
+于是转向层表本身。`Unified3Theorem.lean` L69–77 给出一张完完整整的层清单：
+
+```
+层 0：SpObj（对象）—— 不生成动力学自由度
+层 1：SpHom（1-态射）—— 谱流，生成第一代
+层 2：SpTwoMorphism（2-态射）—— 同伦，生成第二代
+层 3：SpThreeMorphism（3-态射）—— 高阶变换，生成第三代
+层 4：4-态射（coherence）—— 不生成物理自由度
+主动生成层 = 层 1, 2, 3（排除对象层和 coherence 层）。
+```
+
+`Sp` 是**严格 4-范畴**，而且不是空口声明：`HigherSpCategory.lean`（576 行）里
+`SpTwoMorphism`（L242–249）、`SpFourMorphism`（L365–373）、`SpDelta2Cell`（L522–557）
+都是结构实现。
+
+于是：
+
+```
+范畴阶        n = 4                 （Sp 的阶，框架公设）
+总层数        N_total = n + 1 = 5    （对象层 0 到层 4）
+主动生成层    N_active = n − 1 = 3    （排除对象层 0 与 coherence 层 4，共两层）
+```
+
+**`N_active = 3` 在这里是「4-范畴去掉两层」的算术结果，不是写进定义的字面量。**
+
+### 21.44.3 桥成立
+
+两侧各自独立：
+
+| 侧 | 值 | 来由 |
+|---|---|---|
+| `spaceLayerDim` | 3 | `2^d = b³ = fixedPoint * powers` 的唯一解（第 32 批） |
+| `N_active` | 3 | `catOrder − 1 = 4 − 1`（本批） |
+
+两条都等于 3 ⇒ 相等于。机检：
+
+```lean
+theorem spaceLayerDim_eq_active (d : ℕ) (hD : 2 ^ d = fixedPoint * powers) :
+    d = nActive
+```
+
+**第 32 批登记的那座桥，本批证到了。**
+
+### 21.44.4 更深一层：`n = f`
+
+`catOrder = 4`，而 `fixedPoint = 4`（第 31/32 批的 `f = b² = 2²`）。两者是**同一个 4**：
+
+| 4 的身份 | 出处 | 表达式 |
+|---|---|---|
+| 范畴阶 `n` | `Unified3Theorem.lean` L69–77 层表 | `Sp` 严格 4-范畴 |
+| 不动点 `f` | `SilenceFamily.lean` L663 | `f = b² = 2²` |
+| 时空维数 | `SpacetimeDimensionTwoPostulates.lean` L62 | `3 + 1` |
+
+⇒ **`N_active = n − 1 = f − 1`**（机检 `nActive_eq_fixedpoint_sub_one`）。
+
+### 21.44.5 三条独立路径收敛到同一个 `f − 1`
+
+| 路径 | `N` 的表达 | 中间量 | 批次 |
+|---|---|---|---|
+| 平方差因子 | `f − 1` | `σ⁻¹ = (f−1)(f+1) = f²−1` | 第 31 批 |
+| 幂次指数 | `f − 1` | `k_max = 2^(f−1)`，`σ⁻¹ + 1 = 2^f` | 第 32 批 |
+| 范畴阶减一 | `n − 1` | `N_total = n + 1`，主动层 = 去两层 | 第 33 批 |
+
+**三条的中间量互不相同，三条都给出同一个 `f − 1`。** 这是目前最强的收敛证据：
+它不再依赖"恰好都能凑出 3"，而是三条不同结构面（谱的平方差、幂塔的指数、范畴的阶）
+给出同一个形式。
+
+机检：`three_paths_converge`、`four_is_one`（四个 4 的身份同一）。
+
+### 21.44.6 注入点移到了哪
+
+`N_active := 3`（裸字面量）→ `catOrder := 4` + 「主动层 = 去两层」的规则。
+
+诚实地说，这仍是注入，但性质变了：
+
+* 第 26–32 批的注入是**数值输入**（`b = 2`、`f = 4`、"σ⁻¹ 恰为 M_4"）；
+* 本批的注入是**两条范畴公设**：Sp 的阶 = 4，主动层 = 排除对象层与 coherence 层。
+  第二条在 `Unified3Theorem.lean` L69–77 是框架自述，在 `HigherSpCategory.lean` 有结构实现。
+
+⇒ 「4」这个数在框架里有三个彼此独立的位置（范畴阶 / 不动点 / 时空维数），
+而 `N_active = 4 − 1` 是其中最不需要额外选择的那一条：五层去两层，算术上只有 3。
+
+### 21.44.7 机检清单（`ActiveFromCategoryOrder.lean`，约 150 行，11 条定理，已挂库根）
+
+```
+catOrder_eq_fixedpoint            n = f（4 = 4）
+nTotal_eq_five                    N_total = 5
+nActive_eq_catOrder_sub_one       N_active = n − 1（rfl）
+nActive_eq_nTotal_sub_two         N_active = N_total − 2（等价写法）
+nActive_eq_three                  ★ N_active = 3（由 n = 4 算出）
+nActive_eq_fixedpoint_sub_one     ★ N_active = f − 1（与 31/32 批合流）
+nTotal_eq_nActive_add_two         N_total = N_active + 2
+spaceLayerDim_eq_active           ★★ 桥：spaceLayerDim = N_active（第 32 批登记，本批证到）
+three_paths_converge              ★ 三条路径收敛
+four_is_one                       ★ 四个 4 的身份同一
+```
+
+构建：`pr634oh1.txt` 单模块 EXIT 0 / 0 error / WARN 0（一次通过）；
+`pr634full29.txt` 全库 EXIT 0 / 3866 jobs / 0 error / WARN 10（10 条为既有基线）。
+
+### 21.44.8 净进展与新的剩余注入点
+
+```
+第 32 批登记的桥 N_active = spaceLayerDim     ✗ 库内无定理        → ✔ 本批证到
+N_active 的位置                              def := 3 裸字面量   → ✔ 等于 catOrder − 1 = n − 1
+路径条数（收敛到同一个 f − 1）               2                   → 3
+注入点性质                                  数值输入（b=2, f=4） → 范畴公设（n=4 + 去两层规则）
+```
+
+**剩余注入点（本批之后）**：
+
+1. `catOrder := 4` —— Sp 为什么是 4-范畴，是框架公设，库内有结构实现但无阶数推导；
+2. 「主动生成层 = 排除对象层与 coherence 层」这条规则本身未被证明，是层表的读法；
+3. `b = 2`（`Powers`）—— 仍是第 32 批链上唯一的数值 `def`。
+
+**下一批主攻方向**：`n = 4` 与 `f = 4` 是同一个 4（本批已机检 `catOrder_eq_fixedpoint`），
+但"为什么是 4"这一层仍未打开。若 `Sp` 的阶数 4 本身能由某条公设推出（例如从
+`Sp` 的 n-范畴闭合条件或 `D ⊣ R` 伴随的结构约束），则整条链的最底层就只剩 `Powers = 2`。
+
+### 21.44.9 未做（登记）
+
+* 本批**未修改** `Unified3Theorem.lean` / `DHStructuralAnalysis.lean` 的 `def := 3`
+  字面量——改动会牵动 30 余处引用，且与其 doc 中的公设声明冲突。本批只在新模块里
+  给出等价且更上游的表达式。
+* `N_total` 双口径张力（库内 5 含对象层 / 论文 4 不含）未处理，沿用库内口径。
+* `spacetimeDim = spaceLayerDim + timeLayerDim = 3 + 1 = 4` 与 `catOrder = 4` 的等同
+  本批只作为"四个 4"之一列出，**未**建成定理（需要跨模块引用 `SpacetimeDimensionTwoPostulates`，
+  会引入 simp 扰动，留待下一批单独开模块处理）。
