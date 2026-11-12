@@ -208,3 +208,4 @@ import MUFPFormalization.DepthExistence
 import MUFPFormalization.SelfRefUniqueness
 import MUFPFormalization.DepthDataConstruction
 import MUFPFormalization.SigmaFormOrigin
+import MUFPFormalization.ConstantDualForms
