@@ -188,3 +188,4 @@ import MUFPFormalization.ActiveFromPowersCube
 import MUFPFormalization.ActiveFromCategoryOrder
 import MUFPFormalization.CatOrderFromSpacetime
 import MUFPFormalization.PowersSelfPinned
+import MUFPFormalization.ActiveLayerIsSpaceLayer

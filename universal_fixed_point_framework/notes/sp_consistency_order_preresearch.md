@@ -4587,3 +4587,182 @@ timeLayerDim = 1（递归单向性）
    它只编码层 1,2,3，看能否证明「层 0 与层 4 无法编码进该类型」是结构性的。
 
 第 3 条最可机检（`Fintype.card` 与构造子计数），下一批先查第 3 条，再看第 1 条。
+
+
+---
+
+## §21.47 第 36 批：`−1` 的身份是 `timeLayerDim`——`N_active` 摆脱 `t = 1` 依赖
+
+### 21.47.1 先读层表原文：那条规则本是分相的
+
+第 35 批 §21.46.11 拟攻「主动生成层 = 排除对象层与 coherence 层」。本批先读
+`Unified3Theorem.lean` L69–77 原文，发现必须先说清一件事——那段**自带一条限定**（L79–80）：
+
+```
+层 0：SpObj（对象）            —— 不生成动力学自由度
+层 1：SpHom（1-态射）          —— 谱流，生成第一代
+层 2：SpTwoMorphism（2-态射）  —— 同伦，生成第二代
+层 3：SpThreeMorphism（3-态射）—— 高阶变换，生成第三代
+层 4：4-态射（coherence）      —— 不生成物理自由度
+主动生成层 = 层 1, 2, 3（排除对象层和 coherence 层）。
+
+**限定**：「层 4 不生成物理自由度」只在可对角化相成立。含 Jordan 块时
+ker ∩ im ≠ 0，层 4 及更高层可由塔高见证（见 §5 与 SpTowerUnbounded）。
+```
+
+⇒ 「主动层 = 排除对象层与 coherence 层」这条规则**是分相成立的，不是普遍规则**。
+把它当公设去证明，方向是错的。**路线 3 勘破**（原打算从 `ActiveMorphismLayer`
+三构造子反向证明「层 0/4 无法编码进该类型」——但该类型本身就是按这条分相规则手写的，
+反向证明只会是同义反复）。
+
+§21.46.11 的三条候选路线至此全部勘破（路线 1、2 在第 34 批已登记为"查库里有无定理"，
+扫过之后无命中；路线 3 本批勘破）。
+
+### 21.47.2 换角度：`−1` 是什么
+
+第 34 批的 `CatOrderFromSpacetime.lean` 里写的是
+
+```lean
+def nActiveOf (d : ℕ) : ℕ := catOrderOf d - 1
+```
+
+那个 `1` 是**字面量**。它恰好等于 `timeLayerDim`，但代码里没写成 `timeLayerDim`。
+**这与第 33 批那座桥同属一类问题：两个数碰巧相等，看不出为什么。**
+
+把 `− 1` 改写成 `− timeLayerDim`：
+
+```
+nActiveOfTime d t = (d + t) − t
+```
+
+于是
+
+```
+(d + t) − t = d        （对任意 t 成立，Nat.add_sub_cancel）
+```
+
+**这是恒等式，不依赖 `t = 1`。**
+
+### 21.47.3 三条结论
+
+**结论一：`N_active = spaceLayerDim` 与 `timeLayerDim` 无关。**
+第 34 批的 `nActive_eq_spaceLayerDim` 依赖 `timeLayerDim = 1`（因为写死 `− 1`）。
+本批的 `nActiveOfTime_eq_space` 对任意 `t` 成立。
+`N_active` 之所以等于空间层数，是因为「**总数减去时间层 = 空间层**」，不是因为有 1 恰好可减。
+
+**结论二：`N_active = 3` 不再需要 `timeLayerDim = 1`。**
+`N_active = spaceLayerDim`（本批，无关 `t`）+ `spaceLayerDim = 3`（第 32 批）⇒ `N_active = 3`。
+⇒ **注入点 ②（`timeLayerDim = 1` 物理层面未证）不再影响 `N_active = 3`。**
+它只影响 `catOrder = 4`（`catOrder = d + t` 需要 `t = 1` 才得 4）。
+机检：`nActive_eq_three_no_time (d t) (hD) : nActiveOfTime d t = 3`；
+更强形式 `nactive_needs_only_space`：`∀ t', nActiveOfTime d t' = 3`。
+
+**结论三：`SpacetimeDimensionTwoPostulates.lean` L13 那条文字等同升格为定理。**
+第 33 批全库扫描（`pr634oh_scan.txt`）登记过：L13 有唯一一处文字等同
+
+```
+空间方向数 = 三层态射层数（spaceLayerDim = 3 = N_gen）
+```
+
+但"只是注释不是定理"。本批给出其定理形式 `active_layer_is_space_layer`：
+
+```
+nActiveOfTime d t = 3 ∧ nActiveOfTime d t = d ∧ d = 3
+```
+
+⇒ 那条注释现在有机器检查的后盾：**主动层数 = 空间方向数**，成立且不依赖时间层数。
+
+### 21.47.4 本批没有做到什么（必须说清）
+
+**本批没有证明「主动生成层 = 排除对象层与 coherence 层」。**
+
+本批证明的是**另一件事**：`N_active` 里的减数身份是「时间层」而不是「对象层」。
+两种口径都给 3，但减掉的东西不同：
+
+| 口径 | 总层数 | 减掉什么 | 得数 |
+|---|---|---|---|
+| `Unified3Theorem` 层表 | 5（层 0–4） | 对象层 + coherence 层 | 3 |
+| 第 34 批 / 本批 | `d + t` = 4 | 时间层 | `d` = 3 |
+
+**两套分层是两套不同的分层，不能混。** 前者按态射阶数分（对象 / 1- / 2- / 3- / 4-），
+后者按「空间 vs 时间」分。两套都给出 3 这件事本身，是**两个不同的 3**——与第 29 批
+「相的数量 = 3」与 `N_active = 3` 不同源，属同一类问题的**第三次出现**。
+
+已登记为一个独立定理 `two_stratifications_same_value`：
+`(5 : ℕ) - 2 = 3 ∧ ∀ d t, nActiveOfTime d t + t = d + t`——只登记数值对照，不声称同源。
+
+### 21.47.5 机检清单（`ActiveLayerIsSpaceLayer.lean`，约 175 行，8 条定理，已挂库根）
+
+```
+nActiveOfTime_eq_space            ★★★ 主动层数 = 空间层数（对任意 t）
+nActiveOfTime_eq_nActiveOf        ★★ 与第 34 批写死 −1 的版本在 t = 1 时一致
+nActive_eq_three_no_time          ★★ N_active = 3 不需要 t = 1
+active_layer_is_space_layer       ★★★ 主动层 = 空间层（L13 文字等同的定理形式）
+two_conventions_agree             ★ 两版口径同值
+time_zero_degenerate              t = 0 退化情形仍成立
+large_time_ok                     t = 100 仍成立（无上界约束）
+two_stratifications_same_value    ★ 两套分层口径数值对照（诚实登记差异）
+nactive_needs_only_space          ★★★ 只留一条前提（spaceLayerDim = 3）即得 3
+```
+
+构建：`pr634ok2.txt` 单模块 EXIT 0 / 0 error / WARN 0；
+`pr634full32.txt` 全库 EXIT 0 / 3869 jobs / 0 error / WARN 10（10 条为既有基线）。
+（首次构建 `pr634ok1.txt` 有 6 个错误：`spaceLayerDim_unique` 未 open `MUFPF.PowersCube`；
+`omega` 多余；`h1 ▸ h2 ▸ rfl` 写法错。）
+
+### 21.47.6 净进展：注入点从 2 降到 1.5
+
+```
+注入点 ②（timeLayerDim = 1 物理层面未证）
+  第35批：影响 N_active = 3（间接，经 catOrder − 1）
+  第36批：✔ 不影响 N_active = 3；只影响 catOrder = 4
+注入点 ①（主动层 = 去两层规则）
+  第35批：未证，拟三条路线
+  第36批：✔ 三条路线全部勘破；并指出该规则**分相成立**，不能当普遍公设证
+  ⇒ 改为「减数身份 = 时间层」这条真命题，机检通过
+```
+
+**`N_active = 3` 现在只需要一条前提：`spaceLayerDim = 3`（第 32 批方程的解）。**
+
+### 21.47.7 完整链条（第 36 批后，七步）
+
+```
+① f = b² ∧ f² = b^f ∧ b ≥ 2 ⇒ b = 2 ∧ f = 4 ∧ k_max = 8      （第 35 批）
+② k_max = f·b = b³ = 2³                                       （第 32 批）
+③ 2^d = 2³ ⇒ d = 3                                            （第 32 批）
+④ N_active = (d + t) − t = d = spaceLayerDim                   （第 36 批，无关 t）
+⑤ ⇒ N_active = 3                                               （第 32 + 36 批）
+⑥ catOrder = d + t = 4（需 t = 1）                             （第 34 批）
+⑦ timeLayerDim = 1（递归单向性）                                （第 34 批）
+```
+
+注意 **④ 在 ⑥⑦ 之前**——`N_active = 3` 的推导顺序上先于 `catOrder = 4`，
+这是本批带来的次序变化：`N_active` 不再挂在 `catOrder` 上。
+
+### 21.47.8 边界（四条）
+
+1. `Nat.add_sub_cancel` 只在 `ℕ` 上成立；`ℕ` 截断减法在此恰好不需要额外条件（`d ≥ 0`）。
+2. 本批**不改**第 34 批的 `nActiveOf`（已提交，改动会动到既有 11 条定理）。
+   本批新开 `nActiveOfTime` 并证明两者在 `t = 1` 时一致（`nActiveOfTime_eq_nActiveOf`）。
+3. `N_active = 3` 的独立性只针对 `t`；`spaceLayerDim = 3` 仍来自第 32 批方程。
+4. 「主动层 = 去两层」这条规则**未被证，且已判不可按普遍规则证**（它分相成立）。
+   本批给的是它的**替代**：`N_active` = 空间层数，减的是时间层。两者数值同、语义不同。
+
+### 21.47.9 下一批主攻
+
+**`timeLayerDim = 1`（注入点 ② 的最后残部）。** 它现在只影响 `catOrder = 4`，
+不影响 `N_active = 3`。三条候选：
+
+1. 从 `time_coordinate_unique`（`SpacetimeDimensionTwoPostulates.lean` L135–144）正向出发：
+   「同一终点两个递归步数必相等」⇒ 时间坐标唯一 ⇒ 时间方向数 = 1。这条已在第 34 批
+   引用为「结构依据」，但**未形式化成定理**（跨模块焊定未建）。
+2. 从 `Nat` 链的对偶结构出发：`ℕ` 的线性序是否是「时间方向数 = 1」的充要条件。
+3. 反证：若 `t ≥ 2`，`catOrder = d + t ≥ 5`，与 `Sp` 是严格 4-范畴冲突
+   （`HigherSpCategory.lean` 有 4-范畴结构实现）——这条最可行，因为它把
+   `timeLayerDim = 1` 变成「4-范畴结构 + spaceLayerDim = 3」的推论。
+
+第 3 条最可机检：`catOrder = 4` ∧ `spaceLayerDim = 3` ⇒ `timeLayerDim = 1`（`omega` 一步）。
+但要注意：这会给 `catOrder = 4` 与 `timeLayerDim = 1` 之间造成**互相依赖**——
+若 `catOrder = 4` 来自 `Sp` 的 4-范畴结构（第 33 批已登记为结构实现而非公设），
+则 `timeLayerDim = 1` 是它的推论，链条方向就变成「4-范畴 ⇒ t = 1 ⇒ N_active = d」。
+下一批先查这个方向是否构成循环。
