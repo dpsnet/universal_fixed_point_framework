@@ -202,3 +202,5 @@ import MUFPFormalization.LayersNotRecursive
 import MUFPFormalization.ThreeCliffordGap
 import MUFPFormalization.ActiveFixSignature
 import MUFPFormalization.UniqueTerminalNecessity
+import MUFPFormalization.SignatureClifford
+import MUFPFormalization.SignatureCliffordBridge

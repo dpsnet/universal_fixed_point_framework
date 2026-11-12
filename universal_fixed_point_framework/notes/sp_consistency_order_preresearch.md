@@ -7036,3 +7036,197 @@ abbrev r3cycle : RecObj where
 ⇒ 注入点从「对象必须有唯一终点」下移到「时间必须有刻度且只能向前」——这是「时间」一词的定义性特征，不是新公设。
 ⇒ 剩余的唯一硬核是：**本理论为什么必须取单向对象**（`depth_is_a_requirement_not_a_consequence`），以及第 47 批遗留的
 「签名 → `Cl(p,q)` 泛构造」未形式化（`clifford_generic_still_admitted`）。**
+
+## §21.62 第 49 批：签名 `(p, q)` → `Cl(p, q)` 的泛性质已机检（`SignatureClifford` + `SignatureCliffordBridge`）
+
+### 21.62.1 本批任务与前一状态
+
+第 47 批给出三步路径：①对象分解 `T = A ⊔ Fix`；②签名函子 `(|A|, |Fix|)`；③Clifford 泛性质。
+①、②在第 47 批机检闭合（`ActiveFixSignature`，215 行 / 20 定理）；③在第 47 批、第 48 批
+两次登记为 `: True`（`clifford_free_on_signature_admitted`、`clifford_generic_still_admitted`）。
+第 48 批把 `|Fix| = 1` 降为「时间单向」的推论（`UniqueTerminalNecessity`，246 行 / 17 定理）。
+
+本批唯一目标：把③从登记位变成真定理——在 Lean 里实际构造出「签名 `(p, q)` → `Cl(p, q)`」，
+并把 `chain4` 的签名 `(3, 1)` 真正送进该构造。
+
+### 21.62.2 Mathlib API 实测（三条决定性事实，逐字核读原文）
+
+探查结论（`Mathlib\LinearAlgebra\QuadraticForm\Basic.lean` 与
+`Mathlib\LinearAlgebra\CliffordAlgebra\Basic.lean`）：
+
+1. `QuadraticForm` 在本 Mathlib 版本是类型别名：`Basic.lean` L164
+   `abbrev QuadraticForm : Type _ := QuadraticMap R M R`；`structure QuadraticMap` 在 L150–157，
+   字段 `toFun` / `toFun_smul` / `exists_companion'`。
+2. 有现成的「按权重对角」构造：L1418
+   `weightedSumSquares (w : ι → S) : QuadraticMap R (ι → R) R := ∑ i, w i • proj i i`，
+   配 L1425 `@[simp] weightedSumSquares_apply (w) (v) : weightedSumSquares R w v = ∑ i, w i • (v i * v i)`。
+3. `CliffordAlgebra` 泛性质是一个 `Equiv` 而非函数：L139–160
+   `lift : { f : M →ₗ[R] A // ∀ m, f m * f m = algebraMap _ _ (Q m) } ≃ (CliffordAlgebra Q →ₐ[R] A)`；
+   配套 L122 `@[simp] ι_sq_scalar`、L163 `ι_comp_lift`、L173 `lift_unique`、L179 `lift_comp_ι`、L185 `hom_ext`。
+   即**自由对象已经存在**，本批要做的是把它实例化到签名二次型上并写成可机检的 `∃!`。
+
+对应地，第 49 批的诚实定位是：**泛性质本身不是本批发明的**，本批证的是「签名二次型 → 该泛性质」
+这一段的具体化。这条边界写进了模块文档块。
+
+### 21.62.3 模块一 `SignatureClifford`（289 行 / 25 定理 / 3 def / 1 abbrev / 0 sorry / 0 axiom / 0 警告）
+
+命名空间 `MUFPF.SignatureClifford`，`open QuadraticMap`，import `Mathlib.Tactic` +
+`Mathlib.LinearAlgebra.CliffordAlgebra.Basic` + `Mathlib.LinearAlgebra.QuadraticForm.Basic`。
+六段结构：
+
+- 号差权重 `sigWeight (n p) : Fin n → ℝ := fun i => if (i:ℕ) < p then 1 else -1`；
+- 二次型 `sigQ (n p) := weightedSumSquares ℝ (sigWeight n p)`；
+- 显式展开 `sigQ_apply`（`∑ i, sigWeight i * (v i * v i)`）；
+- 基向量读数 `sigQ_single : sigQ n p (Pi.single i 1) = sigWeight n p i`；
+- 正／负部判据 `sigQ_positive_part` / `sigQ_negative_part`；
+- Clifford 段 `sigCl n p := CliffordAlgebra (sigQ n p)` 与泛性质。
+
+### 21.62.4 核心一：`sigQ_inj`——签名 ⟺ 二次型（双向）
+
+```
+theorem sigQ_inj (n p p' : ℕ) (hp : p < n) (hp' : p' < n) :
+    sigQ n p = sigQ n p' ↔ p = p'
+```
+
+正向证明思路（不是套已知定理，是**取坐标读数**）：若 `p ≠ p'`，不妨 `p < p'`。
+把两个二次型同时作用在标准基向量 `Pi.single ⟨p, hp⟩ 1` 上：左式由
+`sigWeight_eq_neg_one_iff` 得 `−1`，右式由 `sigWeight_eq_one_iff` 得 `+1`；
+二次型是函数，故不可能相等，`norm_num` 收矛盾。反向由 `sigQ_eq_of_eq` 直接给出。
+
+这条是本批**新的数学内容**：Mathlib 没有「加权平方和的权重被其取值谱唯一确定」这一条。
+
+派生 `sigQ_ne`（否定形式）：`p ≠ p' ⇒ sigQ n p ≠ sigQ n p'`。
+
+### 21.62.5 核心二：`sigQ_pos_card`——签名的数值读出
+
+```
+theorem card_filter_lt (n p : ℕ) (hp : p ≤ n) :
+    (Finset.univ.filter (fun i : Fin n => (i:ℕ) < p)).card = p
+theorem sigQ_pos_card (n p : ℕ) (hp : p ≤ n) :
+    (Finset.univ.filter (fun i : Fin n => 0 < sigQ n p (Pi.single i 1))).card = p
+```
+
+`card_filter_lt` 经 `finSubtypeEquivFin`（`{i : Fin n // i < p} ≃ Fin p`）+
+`Fintype.card_congr` 给出；`sigQ_pos_card` 用 `sigQ_positive_part` 把「二次型取正」
+换成「坐标落在正部」，再用上一条。这在数值上把签名 `p` 从二次型里**读出来**，
+是第 47 批「活跃集基数 = Cl 签名正部维数」这条对应的右侧机检地基。
+
+### 21.62.6 核心三：泛性质落地为 `∃!`
+
+```
+theorem sigCl_lift_existsUnique (n p : ℕ) {A} [Semiring A] [Algebra ℝ A]
+    (f : (Fin n → ℝ) →ₗ[ℝ] A) (hf : ∀ v, f v * f v = algebraMap ℝ A (sigQ n p v)) :
+    ∃! g : sigCl n p →ₐ[ℝ] A, g.toLinearMap ∘ₗ CliffordAlgebra.ι (sigQ n p) = f
+```
+
+构造取 `CliffordAlgebra.lift (sigQ n p) ⟨f, hf⟩`，存在性由 `ι_comp_lift`，唯一性由
+`lift_unique` 的 `.mp`。配 `sigCl_iota_sq`（Clifford 关系 `ι v * ι v = algebraMap (Q v)`）、
+`sigCl_hom_ext`（同态由生成元取值唯一决定）、`sigCl_lift_iota`。
+
+意义：`Cl(p, q)` 不是被签名**选取**的某个具体矩阵实现，而是被签名**唯一决定**的自由对象——
+任何别的实现只要满足同一条 Clifford 关系，就都经由这个唯一同态与 `Cl` 相连。
+这正好回答了第 46 批提出的问题「3 未和范畴的相或态射产生关联时，范畴论层面如何与
+`Cl(3,1)` 产生关系」：关系不在于「同一个 3」，而在于**签名的二次型是 `Cl` 的泛性质的输入**。
+
+### 21.62.7 模块二 `SignatureCliffordBridge`（64 行 / 5 定理 / 0 sorry / 0 警告）
+
+把第 47–48 批的 `chain4` 接上：
+
+```
+theorem chain4_active_is_three : activeCount chain4 = 3
+theorem chain4_fix_is_one : fixCount chain4 = 1
+theorem chain4_sigCl_is_cl31 :
+    sigCl (activeCount chain4 + fixCount chain4) (activeCount chain4) = sigCl 4 3
+theorem activeCount_eq_cl31_positive :
+    activeCount chain4 = (Finset.univ.filter (fun i : Fin 4 => 0 < sigQ 4 3 (Pi.single i 1))).card
+theorem signature_functor_on_chain4 :
+    (activeCount chain4, fixCount chain4) = (3, 1) ∧ … = sigCl 4 3
+```
+
+前两条由 `chain4_signature`（`(activeCount chain4, fixCount chain4) = (3, 1)`）经
+`congrArg Prod.fst` / `Prod.snd` 投影得到——这是**从签名对里取出分量**，不是重算。
+第三条把签名送入 `sigCl`，`rw` 后 `sigCl (3+1) 3` 与 `sigCl 4 3` defeq 自动闭合。
+第四条左边是第 47 批的机检值、右边是本批 `cl31_pos_card` 的机检值，两侧独立算出后相等。
+
+### 21.62.8 机检数据
+
+| 项 | 数值 |
+|---|---|
+| `SignatureClifford.lean` | 289 行 / 25 定理 / 3 def / 1 abbrev / 0 sorry / 0 admit / 0 axiom |
+| `SignatureCliffordBridge.lean` | 64 行 / 5 定理 / 0 sorry / 0 admit / 0 axiom |
+| 登记位（`: True := trivial`） | 3 条（全在模块一末尾的「边界登记」段） |
+| 单模块构建 | `SignatureClifford` 4 轮至 EXIT 0 / 0 error / 0 warning；`Bridge` 2 轮至同 |
+| 全库构建 | `pr634full49.txt`：`Build completed successfully (3893 jobs)` / EXIT 0 / 0 error / 10 warning |
+| 警告归属 | 10 条全属既有文件（`ICVerification` 82/86、`SignatureFiber` 342、`RAP4` 123/124、`RAP5a` 413、`SpectralBundle/Core` 69、`PinchTopology` 389/492、`HallEmergence` 1170）；两个新模块 **0 警告** |
+| 库根 | 205 → **207 行**，`ROOT_IMPORTS` 181 → **183**，末三行 `UniqueTerminalNecessity` / `SignatureClifford` / `SignatureCliffordBridge` |
+| 全库 jobs | 3884 → **3893**（+9） |
+| 模块总数 | 383 → **385**（递归计 386） |
+
+四轮修错记录（供后续复用）：
+
+1. `sigQ_single` 里 `rw [Pi.single_eq_of_ne hji]` 报「Did not find an occurrence of the pattern
+   `Pi.single j ?x i`」——该定理结论形为 `(Pi.single j a) i = 0`（前提 `i ≠ j`），
+   要证 `(Pi.single i 1) j = 0` 必须传 `hj : j ≠ i`（**方向反了**，坑 151）。
+2. `absurd` 方向：`absurd : a → ¬a → b`，当 `h : ↑i < p`、`hc : ¬↑i < p` 时必须写
+   `absurd h hc`（把正的当 `a`）；写 `absurd hc h` 报「`h` has type `↑i < p` but is expected
+   to have type `¬¬↑i < p`」（坑 152）。四处同类，只有两处方向不同，必须按 `split_ifs`
+   的 then/else 分支逐一核对——**不能批量替换**。
+3. `⟨p, hp⟩` 作 `Fin n` 需 `hp : p < n`；若前提写 `p ≤ n` 报「`hp` has type `p ≤ n` but is
+   expected to have type `p < n`」（坑 153）。⇒ `sigQ_inj` / `sigQ_ne` 前提改为 `p < n`，
+   `sigQ_pos_card` 仍用 `p ≤ n`。
+4. `rw` 后 defeq 已闭合时再加 `norm_num` 报「No goals to be solved」（坑 144）——`Bridge`
+   的 `chain4_sigCl_is_cl31` 删掉多余 `norm_num`。
+
+### 21.62.9 三条登记位（诚实边界，仍为 `: True`）
+
+- `form_neq_implies_algebra_neq_admitted`：**二次型不同 ⇒ Clifford 代数不同构**本批未证。
+  证明缺「号差是不变量」（Sylvester 惯性律 Lean 化）与「中心单代数被 Clifford 不变量分类」，
+  Mathlib 两块都没有。⇒ 本批只证到「签名 ⟺ 二次型」，**没有**证到「签名 ⟺ 代数」。
+- `signature_convention_unchecked`：`Cl(1,3)`（`+,−,−,−`）与 `Cl(3,1)`（`+,+,+,−`）的号差
+  约定差异未核对（承第 46 批同名登记）。二者作为实代数同构，但本批未机检该同构，
+  只登记「坐标约定」这一层。
+- `generic_property_does_not_select_signature`：**泛性质不筛选签名**。`sigCl n p` 对任何
+  `p ≤ n` 都存在，包括 `Cl(7,0)`（`cl70_exists`）。与第 46 批「`d = 3` 与 `d = 7` 同样能构造
+  `TimeArrow`」同型：泛性质只保证「给定签名得到自由对象」，不保证「只有某个签名才配得上物理」。
+
+### 21.62.10 这一步到底闭合了什么、没闭合什么
+
+**闭合的**：
+
+1. 三步路径的第三步从 `: True` 变成真定理——「签名 `(p, q)` → `Cl(p, q)`」现在有
+   可执行的构造（`sigQ`）+ 唯一性（`sigQ_inj`）+ 泛性质（`sigCl_lift_existsUnique`）。
+2. `chain4` 的签名 `(3, 1)` 与 `Cl(3, 1)` 之间不再是并置：`chain4_sigCl_is_cl31` 是
+   「把签名送进构造得到该代数」的**合成**，`activeCount_eq_cl31_positive` 是两侧数值
+   各自独立算出后相等。
+3. 「活跃集基数 = Cl 签名正部维数」这条第 47 批裁决，现在两侧都有机检锚点
+   （`chain4_active_is_three` / `cl31_pos_card`），不再是 `3 = 3` 传递。
+
+**没闭合的**（三条，全部登记）：
+
+1. 「签名不同 ⇒ 代数不同构」——缺 Sylvester 惯性律与中心单代数分类；
+2. `Cl(1,3)` 与 `Cl(3,1)` 的号差约定同一性；
+3. 泛性质**不筛选**签名，因此它给的是「签名 → 代数」的函数性，而不是「物理必须取
+   `(3, 1)`」的必然性。⇒ 若要把 `(3, 1)` 变成唯一，仍需「时间单向 + `|Fix| = 1`」
+   （第 48 批）+ 「两条自指方程来由」这两处尚未闭合的注入点。
+
+### 21.62.11 注入点清单更新（第 49 批后）
+
+| 命题 | 级别 |
+|---|---|
+| 签名 ⟺ 二次型（`sigQ_inj`，双向） | **Lean A（第 49 批）★★★ 新增** |
+| 正部基数 = `p`（`sigQ_pos_card`） | **Lean A（第 49 批）★★★ 新增** |
+| 泛性质 `∃!`（`sigCl_lift_existsUnique`） | **Lean A（第 49 批）★★★ 新增** |
+| `chain4` 签名送入 `sigCl` 得 `Cl(3,1)` | **Lean A（第 49 批）★★★ 新增** |
+| 活跃集基数 = `Cl(3,1)` 正部维数 | **Lean A（第 49 批）★★★ 两侧独立机检** |
+| 签名 ⟺ 代数（不同签名不同构） | ✗ 登记 `form_neq_implies_algebra_neq_admitted` |
+| `Cl(1,3)` vs `Cl(3,1)` 号差约定 | ✗ 登记 `signature_convention_unchecked` |
+| 泛性质不筛选签名（`Cl(7,0)` 同样合法） | **Lean A（第 49 批，负面上界）** |
+| `|Fix| = 1` | ✅ 第 48 批降为时间单向推论（充分不必要） |
+| `ρ`（深度函数）为什么存在 | ✗ 第 48 批新注入点，未动 |
+| 两条自指方程 `f = b²`、`f² = b^f` 自身的来由 | ✗ 唯一残留的原始注入点，未动 |
+
+**裁决（本批）**：三步路径的**范畴论构造已经补齐到最后一步**——「分解 → 签名 → `Cl` 泛性质」
+三步全部有机检证明。剩下的不是范畴论缺口，而是两条更上游的输入（自指方程来由、
+`ρ` 的存在性）与三条代数侧不变量缺口（惯性律、号差约定、不同构判定）。
+即：**第 47 批说的「唯一新注入点 `|Fix| = 1`」在范畴论层面已被吃干净，
+本批之后范畴论层面不再有未形式化的一步。**
