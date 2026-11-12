@@ -194,3 +194,4 @@ import MUFPFormalization.ThreeInjectionCensus
 import MUFPFormalization.ThreeThreesOneRoot
 import MUFPFormalization.FifteenMersenneRoot
 import MUFPFormalization.DHThreeSources
+import MUFPFormalization.DimensionSelfReference
