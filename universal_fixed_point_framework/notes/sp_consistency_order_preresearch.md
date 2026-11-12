@@ -6880,3 +6880,159 @@ abbrev r3cycle : RecObj where
 机检结果：`chain4` 签名 `(3,1)`、`r3cycle` 签名 `(3,0)` 且 `≠ (3,1)` ⇒ 「3 不是周期」与「周期/链不可互换」在签名层面成立。
 ⇒ `3 ↔ Cl(3,1)` 从「`3 = 3` 并置」变为「活跃集基数 = Cl 签名正部维数」的结构对应。
 ⇒ 新的注入点：`|Fix| = 1`（唯一终点）为什么必然。这一步没有证明，本批只证明「若它是 1，则 3 唯一」。**
+
+## §21.61 第 48 批：唯一终点的必然性 —— `|Fix| = 1` 的来由（`UniqueTerminalNecessity`）
+
+### 21.61.1 承上：第 47 批自己登记的注入点
+
+第 47 批（`ActiveFixSignature`，`4fc12de`）提出「分解 → 签名 → Clifford 泛性质」三步路径，并把两条必然性分别落在
+「算术唯一」（`|T| = 4 ∧ |Fix| = 1 ⇒ |A| = 3`）与「泛性质唯一」（`Cl(p,q)` 由签名自由生成）。该批同时把自己的
+剩余注入点写死在 §21.60.10：**`|Fix| = 1`（唯一终点）为什么必然** —— 当时只机检了「若它是 1，则 3 唯一」
+（`active_count_three`），没有机检「它为什么是 1」。
+
+第 48 批攻这一条。要求来自用户第 47 批原话「需有一个合理必然的范畴论的构造路径解决这个问题」，
+以及第 44 批判据「3 一定不是递归的某种周期，递归是指向时间的」。
+
+### 21.61.2 本批答案的三段（第二段是负结论）
+
+| # | 命题 | 机检 |
+|---|---|---|
+| 一 | **`|Fix| = 1` 不必然**：存在 `|T| = 4`、`|Fix| = 2` 的合法 `RecObj`（`twofix`，签名 `(2,2)`） | `twofix_fix_two` / `twofix_signature` / `twofix_not_cl31` |
+| 二 | **若要求「时间单向」，则必然**：有深度函数 `ρ` ⇒ 不动点集恰为单元素集 ⇒ `|Fix| = 1` ⇒ 签名 `(3,1)` | `fixFinset_eq_singleton` / `fixCount_eq_one` / `signature_eq_three_one` |
+| 三 | **但「唯一终点」反推不出「单向」**：`loopOne` 签名同样是 `(3,1)`，却含一个 2-循环 ⇒ 无深度函数 | `loopOne_fix_one` / `loopOne_signature_three_one` / `loopOne_depth_absent` / `loopOne_signature_eq_chain4` |
+
+三段合起来的判词：**`|Fix| = 1` 的来由是「时间单向」，而「时间单向」不是「唯一终点」的推论，反过来是它的充分条件。**
+⇒ 注入点从「对象必须有唯一终点」**再上移一层**到「时间必须有刻度且只能向前」。
+
+### 21.61.3 深度函数 `DepthData` 的设计与语义
+
+`DepthData R` 是一个 `structure`，给 `RecObj` 装备一条「有刻度、单向、到顶停住」的深度链：
+
+| 字段 | 类型 | 语义 |
+|---|---|---|
+| `ρ` | `R.T → ℕ` | 深度函数：给每个状态一个刻度 |
+| `M` | `ℕ` | 深度上界（状态空间有限，故必然存在） |
+| `m` | `R.T` | 达到上界的那个状态 |
+| `hinj` | `Function.Injective ρ` | 不同状态占不同刻度（**无并列**） |
+| `hmax` | `∀ x, ρ x ≤ M` | 有界（`RecObj` 的 `Fintype` 使这条几乎白给） |
+| `htop` | `ρ m = M` | `m` 在最高刻度 |
+| `hprog` | `∀ x, ρ x ≠ M → ρ x < ρ (R.step x)` | **非最高层必须严格前进**（单向） |
+| `hstep` | `∀ x, ρ x < ρ (R.step x) ∨ R.step x = x` | **每一点要么前进、要么停住**（不许折返） |
+
+语义上，`hinj + hprog + hstep` 三条正好是用户第 44 批「递归是指向时间的」所指的时间要件：
+**有刻度**（`hinj`，否则「几层」不可数）、**只能向前**（`hprog`，排除周期）、**到顶停住**（`hstep` 的第二支，排除无限推进）。
+⇒ 这三条无法从 `step : T → T` 推出（`twofix` 与 `loopOne` 都是合法 `step` 却不满足），所以它们是**结构要求**而非定理。
+
+### 21.61.4 主定理链（四步，全部机检）
+
+1. **`top_is_fixpoint`**（★★★）：`R.step D.m = D.m`。
+   反证：若 `step m ≠ m`，由 `hstep` 取第一支得 `ρ m < ρ (step m)`；由 `hmax` 得 `ρ (step m) ≤ M`；
+   由 `htop` 把 `M` 换成 `ρ m` 得 `ρ (step m) ≤ ρ m` ⇒ 与 `ρ m < ρ (step m)` 矛盾（`omega`）。
+   ⇒ **最高层必然是终点，唯一终点存在**。
+2. **`eq_top_of_fixpoint`**（★★★）：任何不动点 `x` 满足 `x = D.m`。
+   若 `ρ x ≠ M`，由 `hprog` 得 `ρ x < ρ (step x)`，再用 `hx : step x = x` 替换得 `ρ x < ρ x`（`Nat.lt_irrefl`）。
+   ⇒ 故 `ρ x = M = ρ m`，由 `hinj` 得 `x = m`。
+   ⇒ **没有第二个不动点**。
+3. **`fixFinset_eq_singleton`**：`fixFinset R = {D.m}`（`Finset.ext` + `mem_fixFinset_iff` + 上两条）。
+4. **`fixCount_eq_one`**：`fixCount R = 1`（`unfold fixCount` + `card_singleton`）。
+5. **`signature_eq_three_one`**（★★★）：`(activeCount R, fixCount R) = (3,1)`，前提 `Fintype.card R.T = 4`，
+   用第 47 批 `active_count_three`（`|T| = 4 ∧ |Fix| = 1 ⇒ |A| = 3`）。
+
+⇒ 这条链的意义：**`|Fix| = 1` 现在是「存在深度函数」的推论**，而不再是第 47 批的那个裸前提。
+
+### 21.61.5 `chain4` 沿深度路径重导签名（与第 47 批的 `decide` 路径独立）
+
+第 47 批 `chain4_signature` 是逐点计算（`decide`，签名 `(3,1)`）。本批给出**结构路径**：
+
+`chain4Depth : DepthData chain4`，其中 `ρ x = x.val`、`M = 3`、`m = ⟨3⟩`、
+`hinj` 用 `Fin.ext`、`hmax` 用 `x.isLt` 加 `omega`、`htop` 为 `rfl`、`hprog` 与 `hstep` 用 `revert x; decide`。
+
+⇒ **`chain4_signature_via_depth : (activeCount chain4, fixCount chain4) = (3,1)`**，由 `signature_eq_three_one` 直接得出。
+⇒ 同一数值 `(3,1)` 现在有两条互相独立的机检路径：一条计数（第 47 批），一条结构（本批）。
+⇒ 这是「3 不是数出来的、是推出来的」在 `chain4` 上的第二份证据。
+
+### 21.61.6 周期对象没有深度函数
+
+`cycle_no_depth : ¬ ∃ ρ : ZMod 3 → ℕ, ∀ x, ρ x < ρ (cyc3 x)`。
+证明只用三步回环：`ρ 0 < ρ (cyc3 0)`、`ρ (cyc3 0) < ρ (cyc3 (cyc3 0))`、
+`ρ (cyc3 (cyc3 0)) < ρ (cyc3 (cyc3 (cyc3 0)))`，再用 `cyc3^[3] 0 = 0`（`decide`）把第三式右端换成 `ρ 0`，
+`omega` 收出循环不等式矛盾。
+
+⇒ **周期结构在「深度」这把尺子上根本不存在**。这给第 44 批的「3 一定不是递归的某种周期」提供了
+比第 47 批更强的理由：第 47 批只能区分签名（`(3,0) ≠ (3,1)`），本批直接证明**周期对象没有深度函数**，
+即它在「时间」这个范畴里连门槛都过不了。
+
+### 21.61.7 反例一：`twofix` —— `|Fix| = 2` 的合法对象
+
+`twofix : RecObj`（`T := Fin 4`）：`0 ↦ 1 ↦ 1`、`2 ↦ 3 ↦ 3`。
+⇒ 不动点 `{1, 3}`（2 个），活跃点 `{0, 2}`（2 个）。
+⇒ `twofix_fix_two : fixCount twofix = 2`；`twofix_signature : (activeCount twofix, fixCount twofix) = (2,2)`；
+`twofix_not_cl31 : … ≠ (3,1)`。
+
+⇒ 裁决：**同样是 `|T| = 4`，`|Fix|` 可以是 2，签名可以是 `(2,2)`（对应 `Cl(2,2)`）。**
+⇒ `|Fix| = 1` 不能由 `RecObj` 的 `T`、`fin`、`dec`、`step` 四个字段推出，它是额外的结构要求。
+⇒ 第 47 批「算术唯一」那一步之所以显得必然，是因为它已经把 `|Fix| = 1` 当前提拿进来了。
+
+### 21.61.8 反例二：`loopOne` —— 唯一终点但含周期
+
+`loopOne : RecObj`（`T := Fin 4`）：`0 ↦ 1 ↦ 0`（2-循环）、`2 ↦ 3 ↦ 3`。
+⇒ 唯一不动点是 `3`（`loopOne_fix_one : fixCount loopOne = 1`），活跃点 `{0,1,2}`（3 个）。
+⇒ **签名同样是 `(3,1)`**（`loopOne_signature_three_one`），而且
+`loopOne_signature_eq_chain4 : (activeCount loopOne, fixCount loopOne) = (activeCount chain4, fixCount chain4)`
+⇒ `loopOne` 与 `chain4` 在签名层**完全不可区分**。
+⇒ 但 `loopOne_depth_absent : ¬ ∃ ρ : loopOne.T → ℕ, ∀ x, ρ x < ρ (loopOne.step x)`
+（用 `0 → 1 → 0` 两段不等式直接让 `omega` 出矛盾）。
+
+⇒ 裁决：**签名 `(3,1)` 本身不是「时间」的证据。** 要「时间」，必须在签名之外**另外**要求单向性。
+⇒ 这是本批最重要、也最不讨好的一条：第 47 批把 `3 ↔ Cl(3,1)` 升级为「活跃集基数 = Cl 签名正部维数」，
+这一步是成立的，但它只给出**号差**，给不出**方向**。方向必须来自 `DepthData`。
+
+### 21.61.9 裁决与注入点上移
+
+| 项 | 第 47 批之后 | 第 48 批之后 |
+|---|---|---|
+| `|Fix| = 1` 的地位 | 条件（`unique_terminal_is_the_condition`，登记为 `True`） | **「存在深度函数」的推论**（`fixCount_eq_one`），且已机检「不必然」（`twofix`） |
+| 唯一终点的来由 | 「对象必须有唯一终点」（公设式） | 「时间必须有刻度、只能向前、到顶停住」（`DepthData` 四条字段） |
+| 新的注入点 | `|Fix| = 1` 为什么必然 | **`ρ` 为什么存在**（即「本理论为什么必须取单向对象」） |
+| 3 与 `Cl(3,1)` | 结构对应（活跃集基数 = 签名正部维数） | 结构对应**成立但不含方向**（`loopOne` 反例） |
+
+⇒ 注入点的移动是**向下而非向上**：从「对象必须有唯一终点」（听起来像公设）落到
+「时间必须有刻度且单向」（这是**时间这个词本身的定义性特征**，不是额外假设）。
+⇒ 但这一步仍然不是「证明」，因为「本理论的对象必须是时间对象」这一条仍未被推出 —— 它是 MUFPF 的**研究纲领假设**，
+不是 Lean 定理。本批把它写成 `depth_is_a_requirement_not_a_consequence`（登记为 `True`），并明确其逻辑方向：
+**有 `ρ` ⇒ 唯一终点（充分，已证）；唯一终点 ⇒ 有 `ρ`（不成立，`loopOne` 反证）。**
+
+### 21.61.10 机检过程与数据
+
+单模块两轮：
+
+| 轮 | 文件 | 结果 |
+|---|---|---|
+| 1 | `pr634oy1.txt` | EXIT 1，2 条 `error:`（实为同一处 + build failed），`UniqueTerminalNecessity.lean:80:6` `rewrite` 失败：目标是 `D.ρ (R.step D.m) ≤ D.M`，`rw [D.htop]` 找不到 `D.ρ D.m` 的模式 |
+| 2 | `pr634oy2.txt` | **EXIT 0 / 0 error / 0 WARN** |
+
+修法：`D.htop : ρ m = M`，要把 `hle : ρ (step m) ≤ M` 里的 `M` 换成 `ρ m`，方向必须反过来 ⇒ `rw [← D.htop] at hle`。
+⇒ 第 48 批唯一一个 Lean 坑：**`rw [h]` 改的是 `h` 的左式到右式，想用它把右式换成左式必须写 `← h`**（与第 47 批坑 (143) 同族）。
+
+规模与全库：
+
+| 项 | 数值 |
+|---|---|
+| 新模块行数 | **246** |
+| 定理 | **17**（14 真 + 3 登记位 `: True`） |
+| `def` | **3**（`chain4Depth`、`twofix`、`loopOne`） |
+| `structure` | **1**（`DepthData`） |
+| `sorry` / `axiom` | **0 / 0** |
+| 库根 `src/MUFPFormalization.lean` | 204 → **205** 行，`ROOT_IMPORTS` 180 → **181** |
+| 全库构建 `pr634full48.txt` | **`Build completed successfully (3884 jobs)`** / EXIT 0 / **0 error** / 10 WARN |
+| 警告归属 | 全部是既有文件（`ICVerification`×2、`RAP4`×2、`RAP5a`、`SignatureFiber`、`SpectralBundle/Core`、`SpectralBundle/PinchTopology`×2、`HallEmergence`），**新模块 0 警告** |
+
+### 21.61.11 一句话总结
+
+**第 47 批登记的唯一注入点「`|Fix| = 1` 为什么必然」，本批的答案是：它不必然，它是「时间单向」的推论。**
+`twofix` 证明 `|T| = 4` 的对象可以有 `|Fix| = 2`（签名 `(2,2)`）⇒ 唯一终点不能由 `RecObj` 字段推出；
+`DepthData`（单射 + 有界 + 非顶必增 + 推进或停住）⇒ `fixFinset = {m}` ⇒ `fixCount = 1` ⇒ 签名 `(3,1)`，全部机检；
+`loopOne` 证明反方向不成立：签名 `(3,1)` 与 `chain4` 完全相同，却含 2-循环、没有深度函数。
+⇒ 注入点从「对象必须有唯一终点」下移到「时间必须有刻度且只能向前」——这是「时间」一词的定义性特征，不是新公设。
+⇒ 剩余的唯一硬核是：**本理论为什么必须取单向对象**（`depth_is_a_requirement_not_a_consequence`），以及第 47 批遗留的
+「签名 → `Cl(p,q)` 泛构造」未形式化（`clifford_generic_still_admitted`）。**
