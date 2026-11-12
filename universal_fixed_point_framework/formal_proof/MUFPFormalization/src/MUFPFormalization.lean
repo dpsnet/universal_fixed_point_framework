@@ -192,3 +192,4 @@ import MUFPFormalization.ActiveLayerIsSpaceLayer
 import MUFPFormalization.CatOrderIsTimeOnly
 import MUFPFormalization.ThreeInjectionCensus
 import MUFPFormalization.ThreeThreesOneRoot
+import MUFPFormalization.FifteenMersenneRoot

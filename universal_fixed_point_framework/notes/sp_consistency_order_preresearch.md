@@ -5300,3 +5300,163 @@ f² = 2^f   ⟺   f = 2^(f/2)
 8. **`f = 4` 是「非退化解」而非「唯一解」**，`f = 2` 是另一支（`N = 1` 退化）。已在 21.50.12 补正。
 9. **「`f` 是 `g(x) = 2^(x/2)` 的不动点」是分析层结论**，与 Lambek 的范畴不动点不同层。已在 21.50.13 划界。
 10. **「自由度计数 = `g` 的不动点集在 `μF` 上的像」是候选形式，未形式化。**
+
+---
+
+## §21.51 第 40 批：裁决「两个 15」—— 一个 `M_4` 的两条 Mersenne 递归
+
+### 21.51.1 起因
+
+第 39 批（`3ba79dd` / `3851687`）把 `N_active = 3` 的三条路径上溯到 `f = 4`，留下候选 A / B / C。用户选 **B：裁决「两个 15」是否同源**。
+
+### 21.51.2 库里「两个 15」的四条原文
+
+| # | 出处 | 定理 / 定义 | 原文数值 | doc 口径 |
+|---|---|---|---|---|
+| 1 | `SilenceFamily.lean` L405–409 | `s48_residue_domain_full_minus_unit` | `Powers^FixedPoint − 1 = Ngen * SilenceUnit`，即 `2^4 − 1 = 3 × 5 = 15` | 「余态域 = 全态−单位」「`σ⁻¹ = 15` —— F_耦合 基」 |
+| 2 | `SilenceFamily.lean` L418–422 | `s49_algebra_layer_completion` | `Kmax + Involution = Ngen * SilenceUnit`，即 `8 + 7 = 15` | 「代数层补全：空间全态+对合域 = 余态域」「基 15 —— `σ⁻¹`」 |
+| 3 | `SpectralGap.lean` L313–318 | `involution_via_freeze_spectrum` | `7 = 15 − 8` | 「对合 = 冻结中非谱的部分」（**对 7 是反解**） |
+| 4 | `SpectralGap.lean` L349–358 | `sigma_inv_square_minus_one` | `15 = 4² − 1` | 「完美平方差」「`σ⁻¹` 的代数根源」 |
+
+**关键发现：`ActiveSilentVieta.lean` L52–53 的 `SigmaInv := 15` 的 doc 早已把三条并列**：
+
+```
+/-- σ⁻¹ = 15（对合域 + k_max；N_gen×静默；不动点²−1）。 -/
+noncomputable def SigmaInv : ℝ := 15
+```
+
+⇒ **前批记成「两个 15」，其实库里从未把它们当作两个数** —— 是同一个 `σ⁻¹` 的**三条算术表示**。
+
+**但这三条在 Lean 里都是各自 `norm_num` 独立闭合的，互相之间没有定理。** 这正是第 38 批诊断的形态（「`3 = 3` 传递、内容为零」）在 15 上的重演。
+
+### 21.51.3 裁决：不是两个 15，是同一个 `M_4 = 15` 的三条递归表示
+
+记 `M_n := 2^n − 1`（`n ≥ 1`；二进制形恰为 `n` 个 1）。则：
+
+| 表示 | 递归 | 在 `n = 4` 处 | 对应上表 |
+|---|---|---|---|
+| (I) | **`M_n = 2^(n−1) + M_(n−1)`** | `M_4 = 2^3 + M_3` ⇒ **`15 = 8 + 7`** | 表 #2 |
+| (II) | **`M_(n+1) = 2 M_n + 1`** | `M_4 = 2 M_3 + 1` ⇒ **`15 = 2·7 + 1`** | 本批新增 |
+| (III) | **`M_4 = f² − 1`**（因 `f² = 2^f` 使 `f² − 1 = 2^4 − 1`） | **`15 = 4² − 1`** | 表 #4 |
+
+**三条互通的枢纽是一条恒等式：**
+
+```
+k_max = Involution + 1       即   2^(n−1) = M_(n−1) + 1
+```
+
+因为 `M_(n−1) = 2^(n−1) − 1`，移项即得。于是：
+
+```
+σ⁻¹ = k_max + Involution                                  （表 #2 = 递归 I）
+    ⟺ σ⁻¹ = (Involution + 1) + Involution = 2 Involution + 1   （递归 II）
+    ⟺ σ⁻¹ = 2^(n−1) + 2^(n−1) − 1 = 2^n − 1 = M_n             （递归 I 的展开）
+    ⟺ σ⁻¹ = f² − 1                                          （因 f² = 2^f，表 #4）
+```
+
+**⇒ 三条表示是同一个 `M_n` 的三种展开，`n = 4`**（因 `k_max = 2^(n−1) = 8` ⇒ `n = 4`）。
+
+**⇒ 表 #3 的 `7 = 15 − 8` 之所以成立，是因为 `M_3 = M_4 − 2^3`，即 `M_(n−1) = M_n − 2^(n−1)`。这是 Mersenne 递归 I 的移项，不是反解。**
+
+### 21.51.4 对主链的重大更新：`k_max` 的两条写法 + `N_active = N_gen = f − 1`
+
+`k_max` 有两条等价写法，**它们的相等正是 `f² = 2^f` 的直接推论**：
+
+```
+k_max = f²/2 = 4²/2 = 8
+k_max = 2^(f−1) = 2^3 = 8
+```
+
+因为 `f² = 2^f` ⇒ 两边除以 2 ⇒ `f²/2 = 2^(f−1)`。
+
+于是本轮链变成：
+
+```
+f² = 2^f（不动点方程，f = 4 是其非退化解）
+  ├─ k_max        = f²/2 = 2^(f−1) = 8
+  ├─ N_gen        = f − 1 = 3        （数值吻合，见 21.51.6 边界）
+  ├─ SilenceUnit  = f + 1 = 5        （韦达另一根，数值吻合）
+  ├─ Involution   = k_max − 1 = 2^(f−1) − 1 = M_3 = 7
+  └─ σ⁻¹          = f² − 1 = 2^f − 1 = M_4 = 2·k_max − 1 = k_max + Involution = 15
+        ⇒ k_max = 2^(N_active) ⇒ N_active = f − 1 = 3
+```
+
+**⇒ `N_active = N_gen = f − 1`。** 第 29/31 批记为「两个 3 不同源」的那一对（`N_active` 与 `N_gen`），**在本批出现共同的表达式 `f − 1`**。
+**相数 3 仍是独立的第四个 3**，走判据格路线（`PhaseTrichotomy.lean`，第 29 批），不在本链内。
+
+### 21.51.5 新模块：`FifteenMersenneRoot.lean`（22 定理）
+
+`ns MUFPF.FifteenMersenne`；import `Mathlib.Tactic` + `MUFPFormalization.ThreeThreesOneRoot`；`open MUFPF.OneRoot`。
+
+| 组 | 定理 | 内容 |
+|---|---|---|
+| **一般 Mersenne** | `mersenne_recursion (n) (_hn)` | `2^n − 1 = 2^(n−1) + (2^(n−1) − 1)` |
+| | `mersenne_recursion_two (n)` | `2^(n+1) − 1 = 2 (2^n − 1) + 1` |
+| | **`leading_bit_eq_mersenne_add_one (n) (_hn)`** | **`2^(n−1) = (2^(n−1) − 1) + 1`**（枢纽约恒等式的一般形式） |
+| **k_max 双写法** | `kmax_eq_two_pow_fixedpoint_sub_one` | `8 = 2^(4−1)` |
+| | `kmax_eq_fixedpoint_sq_div_two` | `8 = 4²/2` |
+| | **`two_kmax_forms_agree`** | **`2^(4−1) = 4²/2`** |
+| **Mersenne 量** | `involution_is_mersenne_three` | `7 = 2^3 − 1` |
+| | `kmax_eq_involution_add_one` | `8 = 7 + 1` |
+| | `sigmaInv_is_mersenne_four` | `15 = 2^4 − 1` |
+| **σ⁻¹ 三表示** | `sigmaInv_eq_two_kmax_sub_one` | `15 = 2·8 − 1` |
+| | `sigmaInv_eq_kmax_add_involution` | `15 = 8 + 7` |
+| | `sigmaInv_eq_two_involution_add_one` | `15 = 2·7 + 1` |
+| | `sigmaInv_eq_fixedpoint_sq_sub_one` | `15 = 4² − 1` |
+| | `mersenne_four_decomp` | `15 = 2^3 + (2^3 − 1)` |
+| | `sigmaInv_eq_two_pow_nactive_add_one_sub_one` | `15 = 2^(3+1) − 1` |
+| **韦达根** | `ngen_eq_fixedpoint_sub_one` | `3 = 4 − 1` |
+| | `silence_unit_eq_fixedpoint_add_one` | `5 = 4 + 1` |
+| | `vieta_from_fixedpoint` | `(4−1)+(4+1) = 8 ∧ (4−1)(4+1) = 15` |
+| **`N_active` 唯一性** | **`nactive_eq_fixedpoint_sub_one (a) (h)`** | **`2^a = 2^(4−1) ⇒ a = 4 − 1`** |
+| **合取** | `both_fifteens_hold` | `15 = 8+7 ∧ 15 = 4²−1` |
+| | `three_sigma_inv_forms` | 三条表示合取 |
+| | **`two_fifteens_one_root`** | **`15 = 8+7 ∧ 15 = 2·7+1 ∧ 8 = 7+1`** |
+| | **`mersenne_chain_from_fixedpoint`** | **`8=2^(4−1) ∧ 3=4−1 ∧ 5=4+1 ∧ 15=4²−1 ∧ 7=8−1`** |
+| | **`nactive_and_ngen_same_root`** | **`3=4−1 ∧ 3=4−1 ∧ 8=2^(4−1)`** |
+
+### 21.51.6 边界（诚实登记）
+
+1. **`N_gen := 3`、`Involution := 7`、`Kmax := 8`、`SilenceUnit := 5` 在 `ActiveSilentVieta.lean` 里都是 `noncomputable def`（ℝ 上的字面量），没有从 `f = 4` 推出来。** 本模块证明的是**数值相等**（`3 = 4 − 1` 等），不是「从 `f` 的定义推出 `N_gen`」。
+   **⇒ `N_active` 与 `N_gen` 的「同源」是数值同源（共同表达式 `f − 1`），不是推导同源。** `N_active` 有真推导（经 `k_max = 2^(N_active)` 与 `k_max = 2^(f−1)` 及 `2^·` 单射），`N_gen` 只是定义。
+2. **「为什么框架常数恰好取这五个函数（`f−1` / `f+1` / `2^(f−1)` / `2^(f−1)−1` / `f²−1`）」仍是选择，不是定理。** 本批只证这五个函数在 `f = 4` 处给出的值与库内常数一致，**不证「必须取这五个函数」**。
+3. **`Involution = 2^(f−1) − 1` 的「对合」语义未证。** `σ² = 1` 的折叠算子与 Mersenne 低位全 1 之间是否有结构对应，**未触及**。
+4. **本模块全部在 `ℕ` 上做算术。** 与 `ActiveSilentVieta` 的 ℝ 版只做数值对照，不做 ℝ/ℕ 转换的形式化。
+5. **`f² = 2^f ⇒ f²/2 = 2^(f−1)` 的一般形式未证**，只机检 `f = 4` 处的实例（`two_kmax_forms_agree`）。一般形式需 `f` 偶性讨论（`f` 偶时 `f²/2` 为整）。
+6. **`mersenne_recursion` 的 `_hn : 1 ≤ n` 是必需前提**（`n = 0` 时命题为假：左 `0`、右 `1`）。linter 报「未使用」是因为 `omega` 在 `zero` 分支靠 `hn` 制造矛盾、但 linter 看不见。**参数保留、仅加下划线前缀消警告，语义未变。**
+
+### 21.51.7 构建与机检清单
+
+| 日志 | 结果 |
+|---|---|
+| `pr634oo1.txt` | **EXIT 0** / 0 error / **WARN 1**（`mersenne_recursion` 的 `hn` 未用，linter 误报）/ 3157 jobs |
+| **`pr634oo2.txt`** | **EXIT 0 / 0 error / 0 WARN** / 3157 jobs（改名 `_hn` 后） |
+| **`pr634full36.txt`** | **EXIT 0 / 3873 jobs / 0 error / WARN 10（既有基线，无新增）** |
+
+库根 `MUFPFormalization.lean`：L195 `ThreeThreesOneRoot` → 追加 L196 `FifteenMersenneRoot`（**现 196 行**）。
+
+### 21.51.8 对第 39 批的更新
+
+| 项 | 第 39 批 | 第 40 批 |
+|---|---|---|
+| 「两个 15」 | ✗ 未裁决 | **✔ 已裁决：同一个 `M_4 = 15` 的三条 Mersenne 表示** |
+| `k_max` 的写法 | 一条（`f·b = b³ = 8`） | **两条等价：`f²/2` 与 `2^(f−1)`，其相等即 `f² = 2^f`** |
+| `N_active` 与 `N_gen` | 「两个 3 不同源」 | **共同表达式 `f − 1`（数值同源；`N_active` 有推导，`N_gen` 是定义）** |
+| `N_active` 路径数 | 2（方程 + 维数） | **2，但方程路径现在有 Mersenne 机制**（`k_max = 2^(f−1)` ⇒ `N_active = f − 1`） |
+| 注入点 | `σ = 1/15` | **`σ = 1/15`（仍在），但 `σ⁻¹` 现在可写成 `M_(N_active+1)`，与 `k_max` 焊上** |
+| 范畴闭合（`μF`） | ✗ 缺 | **✗ 仍缺**（本批全是 Mersenne 算术，仍未触及 `μF` 自由度计数） |
+
+### 21.51.9 下一批候选
+
+| 候选 | 内容 | 成本 |
+|---|---|---|
+| **A** | 定向读完早期 6 份大文档，找是否有比 `⌈d_H⌉` 更强的层数论证 | 中（文本） |
+| **C** | 补范畴闭合：把 `g(x) = 2^(x/2)` 升格为自函子，试证 `F(μF) ≅ μF` | 高 |
+| **D（新增）** | **`M_n` 的二进制视角形式化**：`M_n` = `n` 位全 1；`k_max = 2^(n−1)` 是最高位；`Involution = M_(n−1)` 是低 `n−1` 位。若「层数 = 二进制位数减一」能成为定理，则「层数」有了位运算理由 | 中 |
+| **E（新增）** | **`σ⁻¹ = M_(N_active+1)` 的独立验证**：若 `σ⁻¹` 能由 `N_active` 正向给出（而非反过来），则注入点真正消解 | 高 |
+
+**建议顺序：A（先确认早期资料有无更强论证，成本可控）→ D（把 Mersenne 结构升格为「位」结构）→ C。**
+
+### 21.51.10 一句话总结
+
+**「两个 15」的答案是：只有一个 15，它是 `M_4`，三条表示分别是 `M_n = 2^(n−1) + M_(n−1)`、`M_(n+1) = 2 M_n + 1`、`M_4 = f² − 1` 在 `n = 4` 处的值；三条互通的枢纽是 `2^(n−1) = M_(n−1) + 1`，即 `k_max = Involution + 1`。副产品是 `k_max` 的两条等价写法 `f²/2 = 2^(f−1)`，其相等即 `f² = 2^f`；以及 `N_active = N_gen = f − 1`（数值同源，`N_active` 有推导、`N_gen` 是定义）。范畴闭合仍未触及。**
