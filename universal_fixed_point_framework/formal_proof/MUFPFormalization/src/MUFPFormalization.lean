@@ -199,3 +199,4 @@ import MUFPFormalization.RecOrderExtraction
 import MUFPFormalization.RecTimeDepth
 import MUFPFormalization.RecTimeDecision
 import MUFPFormalization.LayersNotRecursive
+import MUFPFormalization.ThreeCliffordGap

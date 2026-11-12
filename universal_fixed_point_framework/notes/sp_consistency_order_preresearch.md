@@ -6536,3 +6536,174 @@ k_max = f·b = b³ = 8       （kmax_eq_powers_cube / powers_cube_eq_eight，第
 
 **用户说「几层与时间无关即与递归无关」——这句话在库里早已被机检：给出 `N_active = 3` 的整条链（13 条定理，`ActiveFromPowersCube` 仅 import `Mathlib.Tactic`）全部是 `ℕ` 算术，零 `RecObj`。所以第 43–44 批在 `Rec` 侧（周期/深度/半群）找 3，是范畴错位，不是缺证据；修复时间字段对「推出 3」毫无帮助，连间接帮助都没有。真正的来由链是「两条自指方程 `f = b²`、`f² = b^f` ⇒ `b = 2` ⇒ `k_max = b³ = 8` ⇒ `2^d = 8` ⇒ `d = 3` ⇒ `N_active = 3`」，唯一残留注入点是这两条方程自身的来由。**
 
+## §21.59 第 46 批：3 与 Clifford(3,1) 之间有没有范畴桥
+
+### 21.59.1 用户问题
+
+用户原话：**「3 如果未和范畴的某种相或态射产生关联, 范畴论层面如何和 Clifford(3,1) 产生关系?」**
+
+这是对第 45 批结论的直接追问：第 45 批已机检「给出 3 的整条链零 `RecObj`」，
+即 3 在库内确实没有与相（phase）或态射（morphism）产生关联。那么它靠什么连到 `Cl(3,1)`？
+
+### 21.59.2 库里那条桥：`DirectionalCliffordBridge`
+
+全库 44 个文件提到 Clifford。名字最直接的桥有三个：
+`RecActiveSignatureBridge`（17 命中）、`DirectionalCliffordBridge`（Rec▸Cl 四步链）、
+`LorentzSignatureBridge`（14 命中，提供 `I4`、`gamma0..gamma3` 与 `gamma*_sq_*`）。
+
+`DirectionalCliffordBridge.lean`（**210 行，仅 2 条定理**）是唯一以「方向性 → Cl(3,1)」为内容的模块。
+主定理原文（L136–150）：
+
+```
+theorem activeFin2_directional_full_chain (d : ℝ) (hd : 0 < d) :
+    IsUniDirectional activeFin2 ∧
+    silent_factor_c3 d = 1 ∧
+    (∀ x : ℝ, (x = silent_factor_c1 d ∨ …) → x = 1 → x = silent_factor_c3 d) ∧
+    (gamma0 * gamma0 = -1 • I4) ∧
+    (gamma1 * gamma1 = 1 • I4) ∧
+    (gamma2 * gamma2 = 1 • I4) ∧
+    (gamma3 * gamma3 = 1 • I4) ∧
+    (gamma0 * gamma1 + gamma1 * gamma0 = 0) ∧ …（另 4 条反对易）
+```
+
+**⇒ 13 项合取里，Cl 侧的 10 项既不出现 `d` 也不出现 `R`。** 它们是纯矩阵恒等式。
+
+⇒ 所以这条「链」是**合取（并置）**，不是**蕴涵（必然）**。
+
+### 21.59.3 文件自己承认了缺口
+
+`DirectionalCliffordBridge.lean` L109–110 原文：
+
+> 「这个『方向性 → Cl(3,1)』的 conditional statement **不是数学 theorem，而是物理诠释声明**。
+> 数学上我们确认兼容性即可。」
+
+L37–39 原文：
+
+> 「不声称『为什么方向性必须选 Cl(3,1)』——这是物理诠释跳跃。
+> 数学上我们只确认：**`IsDirectional` 接口的所有字段和 `Cl(3,1)` 签名可以联合表达为合取，无矛盾**。」
+
+L102–107 原文：
+
+> 「`Cl(4,0)` 的最小不可约表示维度 = 8（需 M₈(ℂ)）
+> `Cl(4,0)` 的四个生成元都是正定的（γᵢ² = +I₈）
+> `Cl(4,0)` 可以实现为 `Cl(3,1)` 的一个子代数或中心扩张」
+
+⇒ **库里自己写下：`Cl(4,0)` 也可实现。** 所以「3 空间 + 1 时间」不是必然选择。
+
+### 21.59.4 两个结构性缺陷（本批机检）
+
+**缺陷一：活跃性是 `Prop`（存在），层数是 `ℕ`（计数）**
+
+`RecActiveSignatureBridge.lean` L35 原文：
+
+```
+def IsRecActive (R : RecObj) : Prop := ∃ x : R.T, R.step x ≠ x
+```
+
+⇒ 说的是「**至少有一个**非不动点」。而 `N_active = 3` 说的是「**恰好 3 个**」。
+⇒ 一个说 `≥ 1`，一个说 `= 3`。**类型上不同类，`Prop` 里取不出计数。**
+
+机检 `active_prop_does_not_fix_card`：`IsRecActive` 对 `|T| = 2` 与 `|T| = 4` 的对象**都成立**，
+而 `Fintype.card (Fin 2) ≠ Fintype.card (Fin 4)` ⇒ 同一个 `Prop` 覆盖两个不同基数、
+不携带基数信息。
+
+**缺陷二：`TimeArrow` 的 `d` 是自由实数**
+
+`RecActiveSignatureBridge.lean` L83 / L92 原文：
+
+```
+structure TimeArrow (R : RecObj) (d : ℝ) where ...
+theorem TimeArrow.ofActive (R : RecObj) (d : ℝ) (_hd : 0 < d) (hR : IsRecActive R) : TimeArrow R d
+```
+
+⇒ 只要求 `_hd : 0 < d`。**任何正实数 `d` 都能造出 `TimeArrow`。**
+
+机检：
+- `d_is_free`：`(R) (hR) (d : ℝ) (hd : 0 < d) → TimeArrow R d`；
+- **`three_and_seven_both_work`：`d = 3` 与 `d = 7` 同样能构造 `TimeArrow`。**
+
+⇒ **若 `d = 3` 被称为「时空的空间维数」，则 `d = 7` 同样可以。3 没有被范畴结构选中。**
+
+### 21.59.5 最强的一条：Cl 部分不含 `d`
+
+机检 `clifford_part_carries_no_d`：
+
+```
+theorem clifford_part_carries_no_d :
+    (gamma0 * gamma0 = -1 • I4) ∧ (gamma1 * gamma1 = 1 • I4) ∧
+      (gamma2 * gamma2 = 1 • I4) ∧ (gamma3 * gamma3 = 1 • I4)
+```
+
+⇒ **陈述里既无 `R` 也无 `d`。** 它在库里是**无前提恒等式**（`gamma0_sq_neg_I4` 等均为无前提定理）。
+
+⇒ **一个不含 `d` 的恒真式不可能表达「层数 `d` 与 `Cl(3,1)` 的关系」。**
+
+配套逻辑机检 `compatibility_is_weaker_than_necessity`：
+`¬(False ∧ True) ∧ (False → True)` ⇒ **合取可满足比蕴涵成立弱**，兼容不承载必然。
+
+⇒ 库里给的是合取（兼容），不是蕴涵（必然）。
+
+### 21.59.6 答案
+
+**问题：3 未与范畴的相或态射关联，范畴论层面如何与 `Cl(3,1)` 产生关系？**
+
+**答案（分三层）：**
+
+**第一层（正面）：关系在库内确实存在，但只是并置。**
+`activeFin2_directional_full_chain` 把「`Rec` 侧单向性」与「`Cl(3,1)` 签名恒等式」
+写成 13 项合取。两条事实**同时成立**、**无矛盾**。
+
+**第二层（负面）：并置不是关系。**
+- Cl 侧 10 项不含 `d` 也不含 `R` ⇒ 与层数零交互；
+- `d` 自由 ⇒ `d = 3` 与 `d = 7` 同样成立 ⇒ 3 未被选中；
+- `IsRecActive` 是 `Prop` ⇒ 取不出「3 个活跃层」；
+- 文件自己写「不是数学 theorem，而是物理诠释声明」；
+- 文件自己写 `Cl(4,0)` 也可实现。
+
+⇒ **所以库里「3 ↔ Cl(3,1)」目前只有 `3 = 3` 数值传递，与第 38 批结论一致。**
+
+**第三层（构造建议）：真要建立关系，必须做两件事，二者库里都还没有。**
+1. **把「活跃」从 `Prop` 换成可计数结构**（`ker` 的维数、`fix(step)` 的补集基数），
+   使「活跃层数」成为范畴对象的量而不是存在命题；
+2. **让 `d` 从自由参数变成被推出来的量**（由自指方程给出 `f = 4` ⇒ `d = 3`），
+   而这一步第 45 批已机检：它走纯数论，不经范畴。
+
+⇒ **⇒ 关键结论：第 1 条给出「范畴侧的量」，第 2 条给出「数论侧的 3」。
+两条路在库内**互不相交**——而把它们接起来的那条定理，库里没有。**
+
+⇒ 这正是用户问题的答案：**3 要进入 `Cl(3,1)` 的范畴论关系，缺的不是 3 的来由（第 45 批已闭合），
+而是「活跃性的可计数化」。** 这个缺口在 `RecObj` 层，不在自指方程层。
+
+### 21.59.7 对理论的影响
+
+| 层面 | 影响 |
+|---|---|
+| 数学内容 | 新增 5 条机检：`active_prop_does_not_fix_card`、`d_is_free`、`three_and_seven_both_work`、`clifford_part_carries_no_d`、`compatibility_is_weaker_than_necessity`。 |
+| 认识论地位 | **「3 ↔ Cl(3,1)」从「未登记」改成「已登记为并置而非蕴涵」。** 这是把一条隐含的桥标成了断桥。 |
+| 路径排序 | 第 45 批说「`Rec` 侧全部作废」——本批修正为：**`Rec` 侧作废的是「用递归推 3」；但 `Rec` 侧仍有一个活的缺口——「活跃性的可计数化」。** 这两个不是同一件事。 |
+| 框架完整性 | `Cl(3,1)` 侧完全健全（10 项恒等式全机检）。断在 `Rec` 侧的 `IsRecActive : Prop`。 |
+
+⇒ **本批最重要的修正：第 45 批「`Rec` 侧全部作废」说得过宽。**
+准确的表述是：**`Rec` 侧推不出 3（第 45 批已机检），但 `Rec` 侧有一个独立缺口——
+「活跃层数」这个量在库内根本还没被定义成计数。** 前者关闭，后者是新开口。
+
+### 21.59.8 边界（五条）
+
+1. 本模块**不证明**「3 与 `Cl(3,1)` 必然无关」——只证现有的桥不足以提供范畴来由
+   （`only_gap_not_impossibility`）。
+2. **不构造**「可计数的活跃性」。
+3. **不核对** `Cℓ(1,3)` 与 `Cl(3,1)` 的号差约定差异（`signature_convention_unchecked`）：
+   `s94_even_subalgebra_dim` 用的是 `Cℓ(1,3)`（1 空间 + 3 时间），用户问的是 `Cl(3,1)`。
+4. `Cl(4,0)` 可实现一条只登记文件原文，未独立机检（`cl40_also_realizable_admitted`）。
+5. 不修改 `DirectionalCliffordBridge` / `RecActiveSignatureBridge` / `LorentzSignatureBridge`
+   / `RecCategory` / `LorentzSignatureBridge`——全部只读。
+
+### 21.59.9 一句话总结
+
+**用户问「3 未与范畴的相或态射关联，怎么和 `Cl(3,1)` 产生关系」——答案是：库内只有并置，没有关系。
+`DirectionalCliffordBridge` 的 13 项合取里，Cl 侧 10 项是既不含 `R` 也不含 `d` 的无前提恒等式；
+`TimeArrow` 的 `d` 自由（`d = 3` 与 `d = 7` 同样成立）；`IsRecActive` 是 `Prop`（`∃ x, step x ≠ x`），
+取不出「3 个活跃层」。文件自己写下「不是数学 theorem，而是物理诠释声明」，并写下 `Cl(4,0)` 也可实现。
+⇒ 缺的不是 3 的来由（第 45 批已在纯数论闭合），而是**「活跃性的可计数化」**——这个缺口在 `RecObj` 层，
+不在自指方程层。第 43–44 批方向错了，但 `Rec` 侧并非全部作废：它还欠一个计数定义。**
+
