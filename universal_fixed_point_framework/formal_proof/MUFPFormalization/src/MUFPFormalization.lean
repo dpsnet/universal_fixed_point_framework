@@ -198,3 +198,4 @@ import MUFPFormalization.DimensionSelfReference
 import MUFPFormalization.RecOrderExtraction
 import MUFPFormalization.RecTimeDepth
 import MUFPFormalization.RecTimeDecision
+import MUFPFormalization.LayersNotRecursive
