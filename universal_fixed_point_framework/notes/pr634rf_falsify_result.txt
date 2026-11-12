@@ -1,0 +1,27 @@
+== A. 归约等价性（f = 1..400）==
+A_REDUCE_FAILS []
+B_REDUCE_FAILS []
+C_IDENTITY_FAILS []
+A_HOLDS True
+B_HOLDS True
+C_HOLDS True
+== B. 三形式同值点（f = 3..400）==
+SET_SUB1 [4]
+SET_HALF [4]
+SET_SELFREF [4]
+ALL_SAME_SET True
+== C. k_max 双形式（实数，避免 Nat 截断）==
+KMAX_COINCIDE [4]
+KMAX_ONLY_FOUR True
+F 3  KMAX_SQ 9/2  KMAX_EXP 4  EQ False
+F 4  KMAX_SQ 8  KMAX_EXP 8  EQ True
+F 5  KMAX_SQ 25/2  KMAX_EXP 16  EQ False
+F 6  KMAX_SQ 18  KMAX_EXP 32  EQ False
+== D. 三常数在 f=4 的双表示 ==
+TOTAL16 f^2= 16 2^f= 16
+KMAX8 f^2/2= 8 2^(f-1)= 8
+SIGMA15 f^2-1= 15 2^f-1= 15
+VERDICT_A True
+VERDICT_B True
+VERDICT_C True
+VERDICT_ALL_OK True
