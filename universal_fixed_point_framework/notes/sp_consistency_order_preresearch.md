@@ -7408,6 +7408,13 @@ theorem no_cycle_of_depth (R : RecObj) (ρ : R.T → ℕ)
 | 泛性质不筛选签名 | ✗ 仍登记（第 49 批 `generic_property_does_not_select_signature`） |
 | 两条自指方程 `f = b²`、`f² = b^f` 自身的来由 | ✗ 唯一残留的原始注入点 |
 
+**登记位数量变化**：设计阶段列了三条登记位（`depth_exists_meets_depthdata_deferred`、
+`depth_exists_increasing_deferred`、`strict_depth_is_the_only_feasible_shape`），但
+`depth_exists_increasing_deferred` 已在改写中并入第一条——因为 `ρ` 的方向在本批已定
+（递增，与第 48 批 `DepthData.hprog` 一致），不再是一个待定议题。最终文件里只有两条登记位
+（L324 `depth_exists_meets_depthdata_deferred` / L328 `strict_depth_is_the_only_feasible_shape`），
+这是**有意合并**而非遗漏，写在此处以免后人误判为丢失。
+
 ### 21.63.11 注入点清单更新（第 50 批后）
 
 | 命题 | 级别 |

@@ -318,9 +318,12 @@ theorem no_cycle_of_depth (R : RecObj) (ρ : R.T → ℕ)
 
 /-! ## 七、登记：本批的边界 -/
 
-/-- 登记位：本批给的主定理用「所需步数」而非层级，故 rho 是递减还是递增取决于是否翻转。
-上面 depth_exists 已用翻转形式（rho x = card T - 所需步数），与第 48 批
-DepthData.hprog 的递增约定一致。未做的部分：把两者直接对接成 DepthData 实例。 -/
+/-- 登记位：本批主定理给的是「所需步数」的补（`ρ x = card T - 所需步数`），属**递增**形式，
+与第 48 批 `DepthData.hprog : ρ x < ρ (R.step x)` 的约定一致。第一版曾写成递减形式
+（`ρ := 所需步数`），机检同样通过但与 `DepthData` 反号，已改正。方向既然已定，
+原先单列的 `depth_exists_increasing_deferred` 不再需要，其内容并入本条。
+未做的部分：把 `depth_exists` 的 `ρ` 直接对接成 `DepthData` 实例
+（缺 `hinj` 与 `htop`：`ρ` 只保证单调与有界，不保证单射与达最大）。 -/
 theorem depth_exists_meets_depthdata_deferred : True := trivial
 
 /-- 登记位：strict_depth_impossible 说明「严格递增深度」在有限对象上完全不可能，
