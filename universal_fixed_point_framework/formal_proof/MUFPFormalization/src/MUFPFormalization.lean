@@ -205,3 +205,4 @@ import MUFPFormalization.UniqueTerminalNecessity
 import MUFPFormalization.SignatureClifford
 import MUFPFormalization.SignatureCliffordBridge
 import MUFPFormalization.DepthExistence
+import MUFPFormalization.SelfRefUniqueness
