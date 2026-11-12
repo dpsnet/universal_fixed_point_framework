@@ -4402,3 +4402,188 @@ N_active = spaceLayerDim      第33批：两侧独立各有来由，恰相等  �
 
 三条里第 2 条最有可能真正闭合（因为库内 `RecObj` / `SpObj` 的对偶是结构实现，
 不是数值），下一批先查这一条。
+
+
+---
+
+## §21.46 第 35 批：`b = 2` 是方程的解——链条上最后一个数值输入的取消
+
+### 21.46.1 本批要打掉什么
+
+第 34 批把注入点收到三个，其中第一个是：
+
+```
+b = 2（Powers）—— 仍为数值 def，链条上唯一的数值输入
+```
+
+本批打掉它。结论：**`b` 不是自由参数，它是自己那条方程在「f = b²」约束下的唯一解。**
+
+### 21.46.2 先扫：10 处 `def Powers := 2`，无一给出论证
+
+全库扫描（`pr634oj_scan.txt`，14 行）列出 `Powers` / `powBase` 的全部定义：
+
+```
+ActiveFromPowersCube.lean:87      def powers : ℕ := 2
+ActiveSilentVieta.lean:38         def Powers : ℝ := 2
+AdjunctionUnitNorm.lean:28        def powBase : ℝ := 2
+CorrectionFactorSpectrum.lean:34  def powBase : ℝ := 2
+FixedPointFactorOrigin.lean:101   def powers : ℕ := 2
+NFamilyTheorems.lean:36           def Powers : ℝ := 2
+NGKMOneIdentity.lean:34           def Powers : ℝ := 2
+PublicResidueIdentity.lean:33     def powBase : ℝ := 2
+RatioClosureIdentity.lean:29      def powBase : ℝ := 2
+Sqrt2Identity.lean:30             def Powers : ℝ := 2
+```
+
+**10 处，全部 `:= 2`，没有一处给出论证。** 唯一与「对偶」相关的行是
+`SilenceFamily.lean:595` `kappa * kappaDual = Involution ^ 2 / (Powers * SilenceUnit ^ 2)`——
+`Powers` 出现在分母，不构成对 `2` 的论证。
+
+⇒ **第 34 批 §21.45.10 的路线 2（「`2` = Rec/Sp 对偶的结构常数」）在库里找不到任何依据。**
+`RecObj` / `SpObj` 的对偶是结构实现，但没有一条定理把这个 `2` 数出来。那条路**不通**，勘破。
+
+### 21.46.3 换角度：`b` 被它自己的方程钉住
+
+库里已有两条关于 `b` 与 `f` 的机检事实：
+
+| 事实 | 出处 | 内容 |
+|---|---|---|
+| `s76_fixedpoint_powers_sq` | `SilenceFamily.lean` L663 | `f = b²`（`4 = 2²`） |
+| `fixedpoint_sq_eq_pow` | 第 31 批 `FixedPointFactorOrigin.lean` | `f² = 2^f`（`16 = 2^4`） |
+
+**关键在于：第二式里的那个 `2` 就是 `b`**（`Powers`）。所以第二式的正确写法是 `f² = b^f`。
+
+把第一式 `f = b²` 代进去：
+
+```
+(b²)² = b^(b²)
+⇒ b^4 = b^(b²)
+⇒ 4 = b²            （b ≥ 2 时 b^· 单射，Nat.pow_right_injective）
+⇒ b = 2
+```
+
+**三条等式互相锁定：`f = b²`、`f² = b^f`、`b ≥ 2` ⇒ `b = 2`。没有一个是外部输入。**
+
+机检：`powers_self_pinned {b f} (hb : 2 ≤ b) (hf : f = b ^ 2) (hSq : f ^ 2 = b ^ f) : b = 2`。
+
+### 21.46.4 这个推导不需要 `σ⁻¹ = 15`
+
+值得单独写清楚：`f² = b^f` 来自 `σ⁻¹` 的两个等价表达相减（第 31 批）：
+
+```
+σ⁻¹ = f² − 1 = b^4 − 1
+σ⁻¹ + 1 = b^f = b^(b²)
+两式相减 ⇒ b^4 − 1 = b^(b²) − 1 ⇒ b^4 = b^(b²) ⇒ 4 = b² ⇒ b = 2
+```
+
+**`σ⁻¹` 在推导中被消掉。** 本批不需要知道 `σ⁻¹ = 15`，只需要它有两个表达形式。
+这比第 31 批的处境更好：第 31 批的循环风险是「`σ⁻¹` 由 `spaceLayerDim` 定义，反推 3 是同义反复」；
+而本批从 `σ⁻¹` 只取「两种写法相等」这一条结构信息，**不取它的具体数值**。
+
+### 21.46.5 `b ≥ 2` 是什么
+
+唯一前置条件 `b ≥ 2`。这不是数值选择，而是**幂基非平凡的界定**：
+
+* `b = 0`：`0^d` 恒为 0（`d ≥ 1`），`k_max = 0`，幂塔退化；
+* `b = 1`：`1^d` 恒为 1，`k_max = 1`，无增长，同样退化。
+
+⇒ 「幂基」一词本身就要求 `b ≥ 2`（`b^d` 必须随 `d` 严格增长）。这正是
+`Nat.pow_right_injective` 所需的 `1 < b`。所以 `b ≥ 2` 是**幂基存在的定义性条件**，
+不是额外假设。
+
+### 21.46.6 反向证伪：`b = 3` 被方程本身排除
+
+若取 `b = 3`：`f = b² = 9`，则 `f² = 81` 而 `b^f = 3^9 = 19683`，81 ≠ 19683。
+⇒ `b = 3` 不满足方程组，**被方程排除，不是被人为排除**。
+
+机检两条：
+* `three_fails : ¬ (3 ^ 2 ^ 2 = 3 ^ (3 ^ 2))`（具体反例，`norm_num` 关闭）
+* `powers_ne_three {f} (hf : f = 3 ^ 2) (hSq : f ^ 2 = 3 ^ f) : False`（结构形式）
+
+这解释了一个此前含糊的点：`b = 2` 之所以是 2，不是因为有人选了 2，
+而是因为**只有 2 能让 `b²` 与 `b^(b²)` 这两个量同时成立**。
+
+### 21.46.7 机检清单（`PowersSelfPinned.lean`，约 180 行，9 条定理，已挂库根）
+
+```
+powers_min_nontrivial        2 ≤ b → 1 < b（幂基非平凡的技术形式）
+powers_self_pinned           ★★★ b = 2（三条方程的解，本批主定理）
+powers_unique                ★ 唯一性形式（f' 参数占位）
+three_fails                  反证：81 ≠ 19683
+powers_ne_three              ★ 结构反证：b = 3 不可能
+fixedpoint_eq_four           ★ f = 4（由 b = 2 与 f = b²）
+kmax_eq_eight                ★ k_max = f·b = 8
+all_constants_pinned         ★★ 全部常数归位：b=2 ∧ f=4 ∧ f·b=8 ∧ f²=b^f ∧ b^4=f²
+library_instance_checks      库内实例：powers=2 ∧ fixedPoint=4 ∧ f²=b^f ∧ f·b=8
+```
+
+构建：`pr634oj4.txt` 单模块 EXIT 0 / 0 error / WARN 0（第四次通过，前三次见 21.46.10）；
+`pr634full31.txt` 全库 EXIT 0 / 3868 jobs / 0 error / WARN 10（10 条为既有基线）。
+
+### 21.46.8 净进展：链条上的数值 `def` 清零
+
+```
+b = 2 的地位    第34批：数值 def（10 处字面量，无一论证）  → 第35批：✔ 方程的唯一解
+链条上数值输入   1（b = 2）                              → ✔ 0（b 由三条等式解出）
+「为什么是 2」   未打开                                    → ✔ 已答：只有 2 满足 b^4 = b^(b²)
+```
+
+**第 34 批 §21.45.5 那条链条，现在四步全部是方程：**
+
+```
+f = b²  ∧  f² = b^f  ∧  b ≥ 2   ⇒   b = 2  ∧  f = 4  ∧  k_max = 8      （本批）
+k_max = f·b = b³ = 2³                                                  （第 32 批）
+  ⇒ 2^d = 2³ ⇒ d = 3                                                   （第 32 批）
+timeLayerDim = 1（递归单向性）
+  ⇒ catOrder = d + 1 = 4                                               （第 34 批）
+  ⇒ nActive = catOrder − 1 = d                                         （第 34 批）
+```
+
+**六步，没有一步把目标数写进定义，也没有一步引入外部数值输入。**
+
+### 21.46.9 边界（诚实，四条）
+
+1. **本批是条件式闭合**：`b ≥ 2 ∧ f = b² ∧ f² = b^f ⇒ b = 2`。它没有证明
+   `f² = b^f` 本身，只把它当方程组的一条。`f² = b^f` 的来由是第 31 批从 `σ⁻¹` 两面相减——
+   本批已说明该推导**只需 `σ⁻¹` 的两种写法相等，不需其数值**，但仍属同一上游。
+2. **`f = b²` 在库里是 `rfl`**（`def fixedPoint := powers ^ 2`），不是被证出来的结构事实。
+   本批把它当作方程的一条，而不是当作「已证的结构关系」。这一点必须标明：
+   `f = b²` 的真实地位是**定义**，不是定理。
+3. **本批不改 10 处 `def Powers := 2`**（改动面跨 10 个模块，风险大）。本批给的是：
+   那 10 个 `2` 恰好是方程的唯一解，因此它们的**「注入」性质取消**——从「任意选定的数」
+   变成「被方程锁定的数」。字面量还在，但地位变了。
+4. **只做 `ℕ` 侧**。`SilenceFamily` / `ActiveSilentVieta` 侧的 `Powers : ℝ` 是实数版，
+   实数上的 `b^4 = b^(b²)` 解集更大（`b = 0, ±1` 也满足），故 `b ≥ 2` 在实数侧必须先
+   加「幂基」界定才有唯一性。本批未做实数侧。
+
+### 21.46.10 过程记录：四次构建才通过（供后续避坑）
+
+| 次 | 错误 | 修法 |
+|---|---|---|
+| 1 | `interval_cases b << norm_num` — `<<` 非法 token | 改 `<;>`，后又改三分支 |
+| 2 | `rw [pow_mul]` 方向错（目标是 `(b^2)^2 = b^4`，`pow_mul` 是 `a^(m*n) → (a^m)^n`） | 改 `rw [← pow_mul]` |
+| 3 | 两处 `norm_num` 多余（`rw` 已 defeq 关闭） | 删 |
+| 4 | ✔ EXIT 0 |
+
+教训：`pow_mul` 在这版 Mathlib 的方向是 `a^(m*n) = (a^m)^n`（从右往左用需 `←`）；
+`rw` 后用 `norm_num` 前先看是否已关闭（`No goals to be solved`）。
+另外**一次 `Edit` 因 `old_string` 跨到下一段注释头，把 `/-!` 行吞掉并拼坏了 `norm_num` 行**，
+读回才发现——`Edit` 的 `old_string` 不要跨到 doc comment 开头。
+
+### 21.46.11 下一批主攻
+
+**「主动生成层 = 排除对象层与 coherence 层」这条规则（第 34 批注入点 ②）。**
+它是 `n = 4` 与 `N_active = n − 1 = 3` 之间的最后一道语义缝：
+
+* 现况：`catOrder = 4` 是 `Sp` 的层数（结构实现支持），`N_active = catOrder − 1 = 3`。
+* 缺的：**为什么减 1 减的是「对象层」而不是别的**。库里 `Unified3Theorem.lean` L69–77
+  的层表说「主动生成层 = 层 1,2,3（排除层 0 对象层与层 4 coherence）」，但这是**叙述**，
+  不是定理。
+
+三条候选路线：
+1. 从 `SpObj` 的「不生成动力学自由度」属性出发——查库里有没有关于对象层不生成自由度的定理；
+2. 从 `layerToSpType`（`Unified3Theorem.lean` L122）出发——层→类型的映射是否在层 0 退化；
+3. 从 `ActiveMorphismLayer`（三构造子 `first`/`second`/`third`）反向出发——
+   它只编码层 1,2,3，看能否证明「层 0 与层 4 无法编码进该类型」是结构性的。
+
+第 3 条最可机检（`Fintype.card` 与构造子计数），下一批先查第 3 条，再看第 1 条。

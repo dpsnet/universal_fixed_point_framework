@@ -187,3 +187,4 @@ import MUFPFormalization.FixedPointFactorOrigin
 import MUFPFormalization.ActiveFromPowersCube
 import MUFPFormalization.ActiveFromCategoryOrder
 import MUFPFormalization.CatOrderFromSpacetime
+import MUFPFormalization.PowersSelfPinned
