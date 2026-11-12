@@ -6707,3 +6707,176 @@ theorem clifford_part_carries_no_d :
 ⇒ 缺的不是 3 的来由（第 45 批已在纯数论闭合），而是**「活跃性的可计数化」**——这个缺口在 `RecObj` 层，
 不在自指方程层。第 43–44 批方向错了，但 `Rec` 侧并非全部作废：它还欠一个计数定义。**
 
+
+## §21.60 第 47 批：活跃／静默分解 —— 3 与 `Cl(3,1)` 的范畴论构造路径（`ActiveFixSignature`）
+
+**本批新模块**：`src\MUFPFormalization\ActiveFixSignature.lean`，215 行 / 20 定理 / 4 def / 1 abbrev / 0 sorry，
+ns `MUFPF.ActiveFixSignature`，import `Mathlib.Tactic` + `Mathlib.Data.ZMod.Basic` + `RecCategory` + `RecTimeDepth` + `RecActiveSignatureBridge`，`open MUFPF.RecTime` + `open MUFPF.RecActiveSignatureBridge`。
+库根 203 → **204 行**（L203 `ActiveFixSignature`）。
+第 47 批单模块 **6 轮**机检：`pr634ox1.txt` 7 error → `pr634ox2.txt` 3 error → `pr634ox3.txt` EXIT 0 / 4 WARN → `pr634ox4.txt` 1 error（实例不统一）→ `pr634ox5.txt` 1 error（doc comment 后接 `attribute`）→ **`pr634ox6.txt` EXIT 0 / 0 error / 0 WARN**。
+
+### 21.60.1 用户要求与第 46 批留下的准确缺口
+
+用户本批要求：**「需有一个合理必然的范畴论的构造路径解决这个问题」** ——「这个问题」指第 46 批（`c667e30`）的裁决：
+「`N_active = 3` 与 `Cl(3,1)` 在库内只有**并置**，没有关系」。
+
+第 46 批把缺口定位到一句话：**缺的不是 3 的来由，而是「活跃性的可计数化」**。
+证据是 `RecActiveSignatureBridge.lean` L35 的定义原文：
+
+```
+def IsRecActive (R : RecObj) : Prop := ∃ x : R.T, R.step x ≠ x
+```
+
+这是一个**存在命题**：它只说「至少有一个点不在动点上」，取不出「3 个活跃层」。
+本批要做的正是把「活跃」变成**计数**，再让这个计数与 `Cl(3,1)` 的签名对齐 ⇒ 关系不是 `3 = 3` 传递，而是「活跃集基数 = Cl 签名正部维数」。
+
+### 21.60.2 三步路径（写在模块头部 doc，逐字保留设计意图）
+
+```
+(1) 对象分解    每个 `RecObj` 的 `T` 分解为 `A ⊔ Fix`
+                （`A` = 非不动点 = 活跃集，`Fix` = 不动点 = 静默集），
+                这是对象层的结构分解，不需要额外公设。
+(2) 签名函子    分解给出二元组 `(|A|, |Fix|)`。这是从 `Rec` 到 `ℕ × ℕ` 的函子性对应。
+(3) Clifford    签名 `(p, q)` 经 Clifford 代数泛性质唯一确定 `Cl(p, q)`。
+```
+
+必然性的两处来源：
+
+- **算术唯一**：`|T| = 4 ∧ |Fix| = 1` ⇒ `|A| = 3`，这是加减法，没有第二解；
+- **泛性质唯一**：`Cl(p, q)` 由 `(p, q)` 自由生成，同签名只有一个 Clifford 代数。
+
+⇒ 「3 ↔ Cl(3,1)」于是不再靠数值传递，而是「活跃集基数 = Cl 签名的正部维数」这一个**结构对应**。
+
+### 21.60.3 第一步落地：对象分解 `T = A ⊔ Fix`
+
+四个定义全部只用 `RecObj` 已有字段（`T` / `fin` / `dec` / `step`），没有引入新公设：
+
+| 定义 | 内容 |
+|---|---|
+| `activeFinset R` | `Finset.univ.filter (fun x => R.step x ≠ x)` |
+| `fixFinset R` | `Finset.univ.filter (fun x => ¬ (R.step x ≠ x))` |
+| `activeCount R` | `(activeFinset R).card` —— **这就是第 46 批缺失的那个计数** |
+| `fixCount R` | `(fixFinset R).card` —— 「时间层数」`timeLayerDim` 的候选出处 |
+
+两个辅助定理：
+
+- `mem_fixFinset_iff (R) (x) : x ∈ fixFinset R ↔ R.step x = x`（确认 `fixFinset` 真是不动点集）；
+- **★ `active_add_fix (R) : activeCount R + fixCount R = Fintype.card R.T`** —— **分解律**。
+  两个集合互斥且穷尽，基数相加恰好是全域基数 ⇒ 这一步把「层数」从存在命题变成**可加的整数**。
+  证明用 `Finset.card_filter_add_card_filter_not`（`p` 与 `s` 均命名传入），`rw [Finset.card_univ] at h` 后 `exact h`。
+
+实现要点（第三次踩到的实例坑）：`RecObj.fin` / `RecObj.dec` 是**字段**，不是全局 instance。
+若在各子证明里用 `haveI := R.fin` 局部注册，`Finset.univ` 会取到这个新建的实例，
+而 `unfold activeFinset` 展开出的 term 内部是 **`R.fin` 本身** ⇒ `exact h` 报
+`{x ∈ @Finset.univ R.T this✝ | …}` 与 `{x ∈ @Finset.univ R.T R.fin | …}` 类型不匹配。
+⇒ 正确做法是在模块内一次性 `attribute [local instance] RecObj.fin RecObj.dec`，让全文件的
+`Finset.univ` / `Finset.filter` / `Fintype.card` 都取同一个实例；各 def 也不需要再写 `letI`。
+
+### 21.60.4 第二步必然性①：算术唯一 —— 3 没有第二个解
+
+- **★★ `active_count_three (R) (hT : Fintype.card R.T = 4) (hFix : fixCount R = 1) : activeCount R = 3`**
+  ⇒ 给定 `|T| = 4` 与「恰一个不动点」，活跃层数**唯一**是 3。这是加减法，不是选择。
+- **★★★ `signature_pair_three_one (R) (hT) (hFix) : (activeCount R, fixCount R) = (3, 1)`**
+  ⇒ 这个 `(3, 1)` 正是 `Cl(3,1)` 的号差。**关系在这里第一次成为等式，而等式两边是从同一个分解出来的**。
+- **`split_card_eq_cl_index (R) (hT : Fintype.card R.T = 4) : activeCount R + fixCount R = Fintype.card (Fin 4)`**
+  ⇒ 分解给出的基数对，恰好等于 `Cl(3,1)` 所用 `Matrix (Fin 4) (Fin 4)` 的指标基数。
+  ⇒ 分解与 `Cl` 用的是**同一个 4 = 3 + 1**。
+
+这三条合起来，就是「3 与 `Cl(3,1)` 之间有一条结构关系」的机检形态：
+不是 `def N_active := 3` 与 `gamma0 * gamma0 = -1 • I4` 并列在两处，
+而是「`|T| = 4` 的对象，扣掉那一个不动点，剩下的活跃维数正是 Clifford 签名的正部」。
+
+### 21.60.5 缺口补上：`Prop` 升格为计数
+
+- **★★ `active_iff_count_pos (R) : IsRecActive R ↔ 0 < activeCount R`**
+  ⇒ 「活跃」这个第 46 批判为「不可数」的 `Prop`，在此与「活跃层数为正」**等价**。
+  ⇒ 第 46 批登记的「缺活跃性的可计数化」，在本批被这条定理闭合。
+  证明：`unfold` 后 `rw [Finset.card_pos]`，两个方向分别 `rintro ⟨x, hx⟩` 与 `rintro ⟨x, hx⟩`。
+- **`static_iff_count_zero (R) : IsRecStatic R ↔ activeCount R = 0`**
+  ⇒ 静态对象 ⇔ 活跃层数为零。正向走 `by_contra` + `Nat.pos_of_ne_zero` + `obtain ⟨x, hx⟩ := hA`（用 `.mpr`），
+  反向走 `by_contra` + `(active_iff_count_pos R).mp ⟨x, hne⟩` + `omega`。
+  （注意方向：`.mp` 是 `IsRecActive → 0 < count`，`.mpr` 是 `0 < count → IsRecActive`；两者在第一版里写反过一次。）
+
+### 21.60.6 单向链对象 `chain4` 给出 `(3, 1)`
+
+`chain4` 取自 `RecTimeDepth.lean`（L54，`def` 而非 `abbrev`，`T := Fin 4`，`step := fun x => ⟨min (x.val + 1) 3, …⟩`，单向链，唯一终点）。
+
+- **★ `chain4_active_count : activeCount chain4 = 3`**（`decide` 直接通过）
+- **★ `chain4_fix_one : fixCount chain4 = 1`**（`decide`）
+- **★★★ `chain4_signature : (activeCount chain4, fixCount chain4) = (3, 1)`**
+  ⇒ `chain4` 就是给出 `Cl(3,1)` 的那个 `RecObj`。这条是本批最强的单条：对象、分解、签名、Cl 号差四者在一条定理里对齐。
+- `chain4_gives_cl31 : activeCount chain4 = 3 ∧ fixCount chain4 = 1 ∧ activeCount chain4 + fixCount chain4 = 4`
+
+`decide` 能通吃 `Fin 4` 上的 `Finset.filter` / `Fintype.card` 计算（第 47 批实测：本模块 4 条 `decide` 全部一次通过）。
+
+### 21.60.7 周期对象 `r3cycle` 给出 `(3, 0)` —— 周期给不出 `Cl(3,1)`
+
+把 `RecTimeDepth.lean` L93 的周期映射 `cyc3 : ZMod 3 → ZMod 3 := fun x => x + 1` 包成对象：
+
+```
+abbrev r3cycle : RecObj where
+  T := ZMod 3
+  fin := inferInstance
+  dec := inferInstance
+  step := cyc3
+```
+
+- `r3cycle_active_three : activeCount r3cycle = 3`（`decide`）
+- **★★ `r3cycle_fix_zero : fixCount r3cycle = 0`** —— 周期**零不动点**：`x + 1 ≠ x` 对每个 `x` 成立。
+  ⇒ 周期没有终点，也就是没有「时间方向」。
+- **★★★ `cycle_signature_is_three_zero : (activeCount r3cycle, fixCount r3cycle) = (3, 0)`**
+- **★★★ `cycle_signature_not_cl31 : (activeCount r3cycle, fixCount r3cycle) ≠ (3, 1)`**
+  ⇒ **周期不可能给出 `Cl(3,1)`**：同一个活跃 3，签名 `(3,0)` 与 `(3,1)` 不同。
+  ⇒ 用户第 44 批的判断「3 一定不是递归的某种周期」在**签名层面**得到机检：周期对象即使有 3 个活跃元素，也缺那 1 个静默方向。
+- `same_active_different_signature : activeCount r3cycle = activeCount chain4 ∧ fixCount r3cycle ≠ fixCount chain4`
+  ⇒ 同一个「活跃 3」，单向链有静默维 1，周期对象静默维 0 ⇒ **两者不可互换**（承接第 44 批）。
+
+这一组的价值在于它把「周期 vs 链」的差别从语义直觉（第 44 批）变成了**两个不同的签名**：
+`(3,0)` 对 `Cl(3,0)`；`(3,1)` 对 `Cl(3,1)`。签名不同 ⇒ 不可互换，这是范畴论意义上的不可互换，不是措辞上的。
+
+### 21.60.8 第三步：Clifford 泛性质唯一 —— 只登记，未形式化
+
+`Cl(p,q)` 由签名 `(p,q)` 自由生成，同签名只有一个 Clifford 代数（标准结论）。
+**但库内没有任何「签名 → Clifford 代数」的泛构造**：只有 `LorentzSignatureBridge` 里 `Cl(3,1)` 的一个具体 4×4 矩阵实现（`gamma0 * gamma0 = -1 • I4` 等四条无前提定理）。
+
+⇒ 登记位 `clifford_free_on_signature_admitted : True`。
+**这是本批路径唯一没有机检的一步，也是它有别于第 46 批的地方：第 46 批连「签名」都没有，本批有了签名，缺的只是「签名 → 代数」这一步的泛性质形式化。**
+
+### 21.60.9 四条边界登记位
+
+| 登记位 | 内容 |
+|---|---|
+| `clifford_free_on_signature_admitted` | 「签名 → `Cl(p,q)`」的泛构造库内未形式化（见 21.60.8） |
+| `unique_terminal_is_the_condition` | `|Fix| = 1` 是**条件**不是定理，语义是「唯一终点」；`chain4` 满足，`cyc3` 不满足；但「哪些 `RecObj` 必有唯一终点」本批不证 |
+| `f_four_still_from_selfref` | `|T| = 4` 仍来自自指方程 `f² = 2^f` 的非退化解 `f = 4`（第 31/35/45 批）；本批没有为它提供新来由，只是当作已知前提 |
+| `fix_two_gives_cl22_admitted` | 本批只证「给定 `|T| = 4` 与 `|Fix| = 1`，签名唯一是 `(3,1)`」；**不证**「本理论必须取 `|Fix| = 1`」。若取 `|Fix| = 2`，签名是 `(2,2)`，对应 `Cl(2,2)` |
+
+### 21.60.10 裁决：这条路径满足到什么程度
+
+**已机检（16 条真定理）**：
+
+1. 「活跃层数」在库内**第一次成为计数**（`activeCount`），且与 `IsRecActive` 等价（`active_iff_count_pos`）⇒ 第 46 批判定的缺口闭合；
+2. 分解律 `|A| + |Fix| = |T|` 成立 ⇒ 层数可加；
+3. `|T| = 4 ∧ |Fix| = 1 ⇒ |A| = 3`，唯一（`active_count_three`、`signature_pair_three_one`）⇒ **必然性①算术唯一成立**；
+4. `chain4` 的签名实测为 `(3,1)`（`chain4_signature`、`chain4_gives_cl31`）⇒ 给出 `Cl(3,1)` 的对象**在库内存在且被机检**；
+5. `r3cycle` 的签名实测为 `(3,0)`，且 `≠ (3,1)`（`cycle_signature_not_cl31`）⇒ **「3 不是周期」在签名层面成立**，且「周期与链不可互换」有两套不同签名作证。
+
+**未机检（1 条，且是决定性的）**：
+
+- 「签名 `(p,q)` → `Cl(p,q)`」的泛构造。这是本路径的第三步，借的是标准结论。
+- 但要注意：**这一步即便形式化，也只是把 `(3,1)` 变成 `Cl(3,1)`，不会再改变 3 的来源。3 的来源现在是 `|T| = 4 ∧ |Fix| = 1`，即 `f = 4` 加「唯一终点」。**
+
+**本批没有解决的（诚实边界）**：
+
+1. `|Fix| = 1` 为什么必然 —— 这是本路径新的、也是唯一新的条件。第 46 批要求的是「活跃性的可计数化」（已解决）；本批把「3」的来由从「计数缺失」推进到「`|Fix| = 1` 这个条件」。⇒ 注入点从 `N_active := 3` **上移**到「对象必须有唯一终点」。
+2. `f = 4` 的来由仍是自指方程（第 45 批已机检、第 46 批已登记为唯一残留注入点）。
+3. `Cl(4,0)` 同样可实现（第 46 批 `cl40_also_realizable_admitted`）⇒ 本路径给出的是「**若**取 `(3,1)` 则与 `Cl(3,1)` 对齐」，「为什么取 3 个正部而不是 4 个正部」仍未闭合；但本路径至少有 `r3cycle` 的反例：`(3,0)` 与 `(3,1)` 不同 ⇒ 可以区分，而第 46 批连区分都做不到。
+
+### 21.60.11 一句话总结
+
+**用户要求「合理必然的范畴论构造路径」——本批给出的路径是：`RecObj` 的 `T` 分解为活跃集与静默集（对象层，零新公设），
+分解给出签名 `(|A|, |Fix|)`（第 46 批缺的那个计数），签名经 Clifford 泛性质唯一确定 `Cl(|A|, |Fix|)`。
+必然性来自两处：算术唯一（`|T| = 4 ∧ |Fix| = 1 ⇒ |A| = 3`，无第二解，已机检）与泛性质唯一（`Cl(p,q)` 由签名自由生成，未形式化）。
+机检结果：`chain4` 签名 `(3,1)`、`r3cycle` 签名 `(3,0)` 且 `≠ (3,1)` ⇒ 「3 不是周期」与「周期/链不可互换」在签名层面成立。
+⇒ `3 ↔ Cl(3,1)` 从「`3 = 3` 并置」变为「活跃集基数 = Cl 签名正部维数」的结构对应。
+⇒ 新的注入点：`|Fix| = 1`（唯一终点）为什么必然。这一步没有证明，本批只证明「若它是 1，则 3 唯一」。**
