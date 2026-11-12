@@ -4910,3 +4910,169 @@ catOrderOfTime_eq_catOrderOf       ★ 与第 34 批口径一致
 3. **`N < S` 因子有序无证明**（第 28 批留，影响 σ⁻¹ 互补分解 `15 = 3 × 5` 的定向）。
 
 第 1 条最可行（穷举 + 定理图），第 2 条最硬。
+
+## §21.49 第 38 批：「3」的注入普查与焊接诊断
+
+### 21.49.1 起因：一个概念问题暴露了链条的性质
+
+用户本轮问：「范畴 / 对象 / 态射 / 函子 是不是范畴论的最核心的定义基础？」
+
+回答的要点（已写入正文，此处记录其结论）：
+
+1. **对象不是独立实体。** 范畴是 `(Ob, Hom, id, ∘)`，`Ob` 的唯一作用是给态射标定
+   domain / codomain。对象不承载结构。⇒ `Unified3Theorem.lean` L71「层 0 `SpObj`
+   不生成动力学自由度」在范畴论上是正确的：对象本来就不承载结构，是端点标签。
+2. **函子是第二阶。** 函子 = 范畴范畴里的态射，逻辑上晚于对象与态射。
+3. **真正的基础是「泛性质 + 伴随」。** 泛性质：对象由它与所有别的对象的关系定义，
+   不由内部元素定义。伴随 `F ⊣ G` 是范畴论唯一别处没有的核心概念（Mac Lane：
+   adjoint functors arise everywhere）。交换图是推理形式，不是基础。
+4. **MUFPF 的范畴论根系是「初始代数 + 伴随」，不是「对象 / 态射 / 函子」这层表述。**
+   - 「不动点」= 自函子的初始代数 `μF`，Lambek 定理 `F(μF) ≅ μF`。
+   - 「Rec / Sp 对偶」= 一个伴随对。
+
+**这一问直接点中了当前链条的缺口。** 第 37 批的六步链条：
+
+```
+① b = 2 是 f = b² ∧ f² = b^f 的唯一解      （第 35 批）
+② k_max = f·b = b³                          （第 32 批）
+③ 2^d = 2³ ⇒ d = 3                          （第 32 批）
+④ N_active = (d + t) − t = d                （第 36 批，任意 t）
+⑤ ⇒ N_active = 3
+⑥ catOrder = 4 ⟺ t = 1（旁支）              （第 34 + 37 批）
+```
+
+**六步全是算术，没有一步用到范畴论内容。** 这条链条的性质是**方程闭合**，
+不是范畴闭合。`N_active = 3` 的来由是「某个方程组的唯一解」，不是「范畴结构上的
+自由度计数」。
+
+### 21.49.2 全库注入普查：21 处，5 个概念
+
+**方法订正。** 先用 Grep 正则 `def \w+ : ℕ := 3$` 得 6 处、`def \w+ := 3` 得 25 处。
+但 **Grep 会把 doc comment 里的代码块当成真定义**：`FixedPointFactorOrigin.lean` L23
+与 `CatOrderFromSpacetime.lean` L23 都在说明里的 ``` 代码块中引用别人的定义
+（第 31 批引用 `SpacetimeDimensionTwoPostulates.lean` L56–74 展示循环路径，
+第 34 批 `-- L56` 是行号标注），**不是 Lean 定义**。
+
+改用词法解析（`scripts/pr634om_scan3.py`）：逐字符剥离块注释（doc comment 与可嵌套的
+块注释同属一类，需按深度配对）与行注释，保留行号，再匹配真实定义行。
+
+**准确结果：真实 `def ... := 3` 共 21 处（ℕ 侧 6、ℝ 侧 15）。**
+
+**自我审计：第 31–37 批新增的 8 个模块均未引入新的 `def := 3`。** 两处 `spaceLayerDim`
+全在 doc 代码块内。
+
+21 处按概念分组：
+
+| 组 | 概念 | 出现位置 | 类型 |
+|---|---|---|---|
+| **A** | 主动层数 | `N_active`（DHStructuralAnalysis L99）、`numActiveLayers`（Unified3Theorem L112） | ℕ × 2 |
+| **A′** | 空间方向数 | `spaceLayerDim`（SpacetimeDimensionTwoPostulates L56） | ℕ × 1 |
+| **B** | 世代数 `N_gen` | `nGen`（DivisorClosureIdentities L25、KMaxTwoPowerUnique L24）、`n_gen`（PellIdentity L32）、`Ngen`（ActiveSilentVieta L32、LambdaGapIdentity L36、MassChainConstants L36、NFamilyTheorems L30、NGKMOneIdentity L28） | ℕ × 3 + ℝ × 5 |
+| **C** | 色数 | `Nc`（LambdaGapIdentity L30、MassChainConstants L30、SilenceDeltaIdentity L20）、`Nf`（LambdaGapIdentity L33、MassChainConstants L33） | ℝ × 5 |
+| **D** | `N_active` 的 ℝ 镜像 | `active`（AdjunctionUnitNorm L25、CorrectionFactorSpectrum L31、PublicResidueIdentity L30、RatioClosureIdentity L26）、`Nactive`（SilenceCriticalLayer L30） | ℝ × 5 |
+
+**⇒ 「两个不同的 3」的精确形式不是「两个」，是「5 个概念、21 份副本」。**
+
+这一条澄清了三次出现：
+
+* 第 29 批「相数 3 vs `N_active` 3」——相数 3 是**输出型**（格排除推出来的），
+  不在 21 处「输入型」清单里。**这才是「def 3」与「推导 3」的区别。**
+* 第 33 批「`N_active` 3 vs `spaceLayerDim` 3」——组 A vs 组 A′，且第 34 批已焊成同一
+  变量 `d`（定义恒等 `(d+1)−1 = d`，**这一条有内容**）。
+* 第 36 批「5 层去两层 vs `d + t` 去 `t`」——**两套分层**，不是两个 3。
+
+组 B（世代数）与组 C（色数）是**恰好也等于 3 的不同物理量**；组 D 是组 A 的 ℝ 重写。
+
+### 21.49.3 焊接诊断：库内所有焊接都只是 3 = 3 换皮
+
+查「有没有定理同时含两个 3」，结论：
+
+**库内所有把两处 `3` 连起来的定理，中间一步都是 `3 = 3` 的传递，没有结构内容。**
+
+```
+weld_requires_both_three (d) (hD : 2^d = fixedPoint*powers) : d = card ActiveMorphismLayer
+```
+
+这条定理的两条前提里**已经有 `3`**（`spaceLayerDim_unique` 给 `d = 3`，
+`card_active_layers` 给 `card = 3`），结论是传递。**内容为零。** 写成定理不是为了
+证明什么，是为了把「现有材料只够这样」固定下来。
+
+**有内容的焊接长什么样：前提只有指数等式，不带 3。**
+
+```
+exponential_weld (d c) (h : 2^d = 2^c) : d = c      -- Nat.pow_right_injective，1 < 2
+```
+
+它不写成 `= 3` 的形式，故不携带 3。若库内能提供 `2^d = 2^card`，焊接就有内容。
+
+**但库里不能。** 两条候选等式都存在：
+
+* `k_max = 2^spaceLayerDim`（`SpacetimeDimensionTwoPostulates.lean` L68）——
+  这里的 `spaceLayerDim` 是 `def := 3`（组 A′ 的字面量）；
+* `k_max = 2^(card ActiveMorphismLayer)`（`BottTower.lean` L155）——
+  这里由 `rw [k_max_value, card_active_layers]; norm_num` 得到，也是 3。
+
+⇒ 两条右边都是 `2^3`，**喂给 `exponential_weld` 的仍是 `2^3 = 2^3`**。
+
+顺带登记 `BottTower.lean` 的三条：「`card_active_layers` — 类型定义（三构造子），
+机检但非结构推论」（L202）、`L209–212` 三合一、`L160–162` `Nat.log 2 k_max = card`。
+以及 `SignatureTimeBridge.lean` L371–377 自承「`e⁻³` 中的 3 = `card_active_layers`
+（硬编码，未绑定变量）」。
+
+### 21.49.4 结论：「两个 3 的同源性」不可能用现有材料闭合
+
+需要的不是更多传递定理，而是一条**新结构**：让「主动层数」与「空间方向数」由**同一个
+代数对象**算出，而不是各自被赋 3。
+
+按 §21.49.1 的诊断，那条约定理的形状应是：
+
+```
+初始代数（自函子 F 的不动点 μF）上的自由度计数 = 该层的空间方向数
+```
+
+**库里没有这条。** 本批只把「要找什么」说清，不假装找到。
+
+### 21.49.5 新模块 ThreeInjectionCensus.lean
+
+`ns MUFPF.Census3`，5 条定理：
+
+| 定理 | 内容 | 有无内容 |
+|---|---|---|
+| `exponential_weld (d c) (h : 2^d = 2^c) : d = c` | ★★★ 可复用焊接工具 | **有** |
+| `card_eq_spaceDim_of_pow (d) (h : 2^d = 2^card) : d = card` | ★★ 工具应用 | **有**（前提库里没有） |
+| `weld_requires_both_three (d) (hD)` | ★★ 现有材料只能这样焊 | **零**（登记） |
+| `three_sources_independent` | ★★ 三处来源各自独立 | 登记 |
+| `numActiveLayers_eq_card` | ★★ 组 A 内部是同一 3 的两种写法 | `rfl` 层面 |
+
+**明确不做的事：** 不改任何 `def := 3`。21 处分布在 21 个主题模块，合并风险远大于收益；
+组 B / C 是物理常数，与 `N_active` 无关。
+
+### 21.49.6 机检清单
+
+```
+单模块 pr634om2.txt   EXIT 0 / 0 error / WARN 0
+全库   pr634full34.txt EXIT 0 / 3871 jobs / 0 error / WARN 10（既有基线）
+```
+
+失败史：`pr634om1.txt` ERR 2 —— `unterminated comment`。原因是 doc 说明里写了
+`/- -/`，Lean 词法把 `/-` 当嵌套注释开始，但 `- /` 中间有空格无法闭合，
+**整个文件后半段被吞掉**。改为文字描述后通过。
+（坑：写嵌套注释的示范必须避开真实注释符。）
+
+### 21.49.7 边界（诚实）
+
+1. 21 处普查是**脚本 + 词法解析**结果，不是 Lean 定理（Lean 内无法表达「库内有 21 处
+   `def := 3`」）。脚本 `scripts/pr634om_scan3.py` 入库。
+2. `card_eq_spaceDim_of_pow` 有内容但**库内没有前提**，登记为「工具已备、弹药未到」。
+3. 组 D（`active` / `Nactive` 的 ℝ 镜像）是否为组 A 的有意重写，**未核语义**，
+   只按名字与数值归组。待核。
+4. 「相数 3 是输出型」这一判断依据第 29 批的格排除结论，未在本批重核。
+5. 本批**未**在 Lean 内证明「范畴结构给不出 3」，只证明「现有焊接无内容」。
+
+### 21.49.8 下一批三候选
+
+1. **初始代数路线的可形式化程度评估。** 库内有无 `Functor` / `InitialAlgebra` /
+   `Lambek` 相关结构？若 `Mathlib.CategoryTheory.Limits` 可用，可试把「主动层数 =
+   空间方向数」写成「`μF` 的自由度计数」——**这是唯一能真正闭合「两个 3」的路线。**
+2. `f² = b^f` 自身的框架来由（链条第 ① 步的方程为什么被要求）。
+3. `N < S` 因子有序（影响 `15 = 3 × 5` 定向）。

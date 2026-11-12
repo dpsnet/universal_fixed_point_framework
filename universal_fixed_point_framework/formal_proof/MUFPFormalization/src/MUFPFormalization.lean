@@ -190,3 +190,4 @@ import MUFPFormalization.CatOrderFromSpacetime
 import MUFPFormalization.PowersSelfPinned
 import MUFPFormalization.ActiveLayerIsSpaceLayer
 import MUFPFormalization.CatOrderIsTimeOnly
+import MUFPFormalization.ThreeInjectionCensus
