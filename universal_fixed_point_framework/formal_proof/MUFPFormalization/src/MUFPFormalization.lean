@@ -193,3 +193,4 @@ import MUFPFormalization.CatOrderIsTimeOnly
 import MUFPFormalization.ThreeInjectionCensus
 import MUFPFormalization.ThreeThreesOneRoot
 import MUFPFormalization.FifteenMersenneRoot
+import MUFPFormalization.DHThreeSources
