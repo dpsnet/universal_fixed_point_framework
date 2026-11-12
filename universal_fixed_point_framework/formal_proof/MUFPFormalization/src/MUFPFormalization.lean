@@ -183,3 +183,4 @@ import MUFPFormalization.OverlapClosedLayerOrigin
 import MUFPFormalization.SigmaInvActiveSelect
 import MUFPFormalization.PhaseTrichotomy
 import MUFPFormalization.TowerHeightFromPhase
+import MUFPFormalization.FixedPointFactorOrigin
