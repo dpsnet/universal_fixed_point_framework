@@ -189,3 +189,4 @@ import MUFPFormalization.ActiveFromCategoryOrder
 import MUFPFormalization.CatOrderFromSpacetime
 import MUFPFormalization.PowersSelfPinned
 import MUFPFormalization.ActiveLayerIsSpaceLayer
+import MUFPFormalization.CatOrderIsTimeOnly

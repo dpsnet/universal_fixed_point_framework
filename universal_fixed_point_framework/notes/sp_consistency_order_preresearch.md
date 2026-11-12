@@ -4766,3 +4766,147 @@ nactive_needs_only_space          ★★★ 只留一条前提（spaceLayerDim =
 若 `catOrder = 4` 来自 `Sp` 的 4-范畴结构（第 33 批已登记为结构实现而非公设），
 则 `timeLayerDim = 1` 是它的推论，链条方向就变成「4-范畴 ⇒ t = 1 ⇒ N_active = d」。
 下一批先查这个方向是否构成循环。
+
+
+---
+
+## §21.48 第 37 批：`catOrder = 4` 与 `t = 1` 是同一处输入（注入点从 1.5 降到 1）
+
+### 21.48.1 路线 3 勘破：`Sp` 不是严格 4-范畴
+
+第 36 批 §21.47.9 拟的路线 3 是：若 `t ≥ 2` 则 `catOrder = d + t ≥ 5`，与 `Sp` 是严格
+4-范畴冲突 ⇒ `t = 1`。**这条已勘破**，依据是库内自查：
+
+```
+SpFiveLayer.lean L33        structure SpFiveMorphism（层 5 结构，逐字同形于 SpFourMorphism）
+SpTowerWitness.lean L110    def five0 : SpFiveMorphism four0 four1        （实例存在）
+SpTowerWitness.lean L126    ∃ Ψ : SpFiveMorphism four0 four1, Ψ.fourthHomotopy ≠ 0 （非退化）
+MUFPFormalization.lean L171 import MUFPFormalization.SpFiveLayer        （在库根闭包内）
+MUFPFormalization.lean L172 import MUFPFormalization.SpTowerWitness     （在库根闭包内）
+```
+
+⇒ **「`Sp` 是严格 4-范畴」在库里不成立：层 5 有结构、有非退化实例。**
+「`catOrder ≥ 5` 冲突」这个反证无效。
+
+### 21.48.2 顺带查出两处注释已过时
+
+```
+SpTowerCriterion.lean L4
+-- 背景：库内没有 `SpFiveMorphism`，层 4 是现存的最高层。
+
+SpFiveLayer.lean L4
+-- 库内层结构止于 `SpFourMorphism`（…），（下一行说明本文件补层 5）
+```
+
+第一处的「库内没有」在 `SpFiveLayer.lean` 落地后已不成立；第二处是同文件自述，已由自身否证。
+`SpTowerLayer4.lean` L61–62「本库不存在该结构」同属此列。
+
+**本批不改这些注释**（改一行 doc 也触发全库重编，且 `SpTowerCriterion` 的其余论证不依赖这行），
+登记于此，留待后续批次统一订正。这条登记是"注意到就必须落档"的兑现，不是遗漏。
+
+### 21.48.3 主结果：`catOrder = 4` ⟺ `t = 1`
+
+第 33 批 `ActiveFromCategoryOrder.lean` 写 `def catOrder : ℕ := 4`，doc 说「`n = 4` 由层表算出」。
+第 34 批重写为 `catOrderOf d := d + timeLayerDim`。本批把两件事一起说清：
+
+**（一）`catOrder` 不是 `Sp` 的结构读数。** 层 5 存在（21.48.1 四条证据）⇒「`Sp` 恰好 4 层」为假
+⇒ `catOrder = 4` 只能来自 `d + t`，而 `d = 3` 是第 32 批方程的解。
+
+**（二）`catOrder = 4` ⟺ `t = 1`（在 `d = 3` 下）**，机检 `catOrder_four_iff_time_one`：
+
+```lean
+catOrder_four_iff_time_one (d t) (hD : 2 ^ d = fixedPoint * powers) :
+    catOrderOfTime d t = 4 ↔ t = 1
+```
+
+既然两者等价，`catOrder = 4` **不能作为独立的结构输入**去推 `t = 1`——那是把同一个 `1` 数两遍。
+
+⇒ **注入点清单里「`catOrder = 4`」与「`timeLayerDim = 1`」是同一处，不是两处。**
+第 36 批记的「`catOrder = 4`（需 t = 1）」与「`timeLayerDim = 1`」本批合并。
+
+### 21.48.4 解耦：`N_active` 不知道 `t` 存在，`catOrder` 随 `t` 漂移
+
+两条一正一反，构成完整机检：
+
+```lean
+nactive_decoupled_from_time (d t₁ t₂) : (d+t₁)−t₁ = (d+t₂)−t₂          ★★★
+catorder_not_decoupled (d t₁ t₂) (h : t₁ ≠ t₂) : d+t₁ ≠ d+t₂          ★★★
+nactive_three_while_catorder_moves (d t) (hD) :
+    nActiveOfTime d t = 3 ∧ catOrderOfTime d t = 3 + t                ★★★
+```
+
+⇒ **`N_active` 恒等于 `d`，与 `t` 无关；`catOrder` 严格随 `t` 变。**
+所以 `catOrder` 那条链的不稳定性（依赖 `t = 1`，而 `t = 1` 未证）**不传染到 `N_active`**。
+
+### 21.48.5 注入点清点：只剩一处
+
+| # | 注入点 | 状态 |
+|---|---|---|
+| ① | 「主动层 = 排除对象层与 coherence 层」 | 第 36 批判不可普遍证，已替换为真命题 |
+| ② | `timeLayerDim = 1` | 不影响 `N_active`；本批证明它与 `catOrder = 4` 是同一处 |
+| — | `catOrder = 4` | **本批并入 ②，不再独立计数** |
+| ③ | `spaceLayerDim = 3` | 第 32 批：`2^d = b³` 的唯一解；`b` 由第 35 批方程钉住 |
+
+⇒ **`N_active = 3` 的链条上只剩 ③ 一处，而 ③ 不是字面量，是方程 `2^d = 2³` 的唯一解。**
+
+### 21.48.6 机检清单（`CatOrderIsTimeOnly.lean`，约 160 行，8 条定理，已挂库根）
+
+```
+catOrderOfTime_eq                  rfl
+catOrder_eq_three_add_time         ★★ catOrder = 3 + t
+catOrder_four_iff_time_one         ★★★ catOrder = 4 ⟺ t = 1（核心）
+catorder_not_decoupled             ★★ catOrder 随 t 漂
+nactive_decoupled_from_time        ★★★ N_active 不知 t 存在
+nactive_three_while_catorder_moves ★★★ 一个固定 3、一个 3 + t
+only_one_input_left                ★★★ 只剩一处前提
+catOrderOfTime_eq_catOrderOf       ★ 与第 34 批口径一致
+```
+
+构建：`pr634ol3.txt` 单模块 EXIT 0 / 0 error / WARN 0（第三次通过）；
+`pr634full33.txt` 全库 EXIT 0 / 3870 jobs / 0 error / WARN 10（既有基线）。
+（首次 `pr634ol1.txt` 3 错：缺 `open MUFPF.CatOrderSpacetime`；`pr634ol2.txt` 1 错：`omega` 多余。）
+
+### 21.48.7 完整链条（第 37 批后，六步）
+
+```
+① f = b² ∧ f² = b^f ∧ b ≥ 2 ⇒ b = 2 ∧ f = 4 ∧ k_max = 8      （第 35 批，方程的唯一解）
+② k_max = f·b = b³ = 2³                                       （第 32 批）
+③ 2^d = 2³ ⇒ d = 3                                            （第 32 批，方程的唯一解）
+④ N_active = (d + t) − t = d                                  （第 36 批，任意 t）
+⑤ ⇒ N_active = 3                                              （第 32 + 36 批）
+⑥ catOrder = d + t = 4（⟺ t = 1，与 ④⑤ 无关）                  （第 34 批 + 第 37 批）
+```
+
+**每一步都是方程或恒等式，没有字面量进定义。** ⑥ 已被本批判为旁支：它与 `t = 1` 同一处，
+且不影响 ④⑤。
+
+注意：第 36 批记的七步里有「⑦ timeLayerDim = 1」独立一步；本批把它与 ⑥ 合并
+（21.48.3），故链条从七步收为六步。
+
+### 21.48.8 边界（四条）
+
+1. **本批不 import `HigherSpCategory` / `SpFiveLayer`**——会引入 simp 扰动（已知坑）。
+   「层 5 存在」以 Grep 行号作事实引用，**未在 Lean 内机检为定理**。这一条是文字论证 +
+   行号证据，不是形式化反证。
+2. `catOrder_four_iff_time_one` 需要 `d = 3`（`hD`）。无 `hD` 时
+   `d + t = 4` 有 5 组解 `(4,0)(3,1)(2,2)(1,3)(0,4)`，本批不展开。
+3. 本批**不改** `ActiveFromCategoryOrder.lean` 的 `def catOrder : ℕ := 4`（已提交）。
+   只证明它与 `t = 1` 等价，从而取消其独立输入地位。第 33 批那句「`n = 4` 由层表算出」
+   应读作「`n = 4` 是 `d + t` 在 `d = 3, t = 1` 下的值」——**是复合值，不是结构读数**。
+4. 「层 5 存在 ⇒ `catOrder` 是约定」是**语义推理**（Grep 证据 + 结构实现语义），
+   不是 Lean 定理。它给出的是「第 33 批那句应改口径」，不是形式化反证。
+
+### 21.48.9 下一批主攻
+
+主线（`N_active = 3`）的注入点已压到一处，且那处是方程的唯一解。
+下一批转向**未闭合的实质问题**，按"两个不同的 3"的优先级排序：
+
+1. **「两个不同的 3」的同源性**（第 29 / 33 / 36 批三次出现：相数 3 vs `N_active` 3；
+   `N_active` 3 vs `spaceLayerDim` 3；5 层去两层 vs `d + t` 去 t）。
+   当前状态：三条都机检为「数值同、来源不同」。要闭合需要一条**把两套结构连起来的定理**，
+   而库内没有。下一批先做穷举：把库内所有「等于 3」的量列全，看有无任何一条定理同时含两个。
+2. **`f² = 2^f` 自身的框架来由**（第 31 批留）。它现在以 `f² = b^f` 形式使用（第 35 批），
+   定理成立，但「为什么框架要求这条方程」未答。
+3. **`N < S` 因子有序无证明**（第 28 批留，影响 σ⁻¹ 互补分解 `15 = 3 × 5` 的定向）。
+
+第 1 条最可行（穷举 + 定理图），第 2 条最硬。
