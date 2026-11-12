@@ -195,3 +195,4 @@ import MUFPFormalization.ThreeThreesOneRoot
 import MUFPFormalization.FifteenMersenneRoot
 import MUFPFormalization.DHThreeSources
 import MUFPFormalization.DimensionSelfReference
+import MUFPFormalization.RecOrderExtraction
