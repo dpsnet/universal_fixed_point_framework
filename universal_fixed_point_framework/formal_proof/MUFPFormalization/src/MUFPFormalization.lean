@@ -184,3 +184,4 @@ import MUFPFormalization.SigmaInvActiveSelect
 import MUFPFormalization.PhaseTrichotomy
 import MUFPFormalization.TowerHeightFromPhase
 import MUFPFormalization.FixedPointFactorOrigin
+import MUFPFormalization.ActiveFromPowersCube

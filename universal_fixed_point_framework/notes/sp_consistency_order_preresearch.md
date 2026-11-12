@@ -3968,3 +3968,130 @@ f² = 2^f  ∧  f ≥ 3（非退化）
 使注入点 2 消失、注入点 1 换形。但**没有**消除循环风险，因为库内公设 `spaceLayerDim := 3`
 还在。下一批的主攻目标是 `f = 4` 的来由，与 `spaceLayerDim` 公设的替换。
 
+
+## §21.43 `spaceLayerDim = 3` 作为「幂基三次方」的指数（第 32 批）——换通道绕开 σ⁻¹
+
+### 21.43.1 本批换通道：不再走 `σ⁻¹`
+
+第 31 批把上游推到 `f² = 2^f`，但同时指认了循环风险：
+`SpacetimeDimensionTwoPostulates.lean` L56–74 里 `σ⁻¹` 由 `spaceLayerDim := 3` 定义，
+于是任何「从 `σ⁻¹` 得 3」的论证都可能被读成同义反复。
+
+**本批不修那条公设，而是另开一条不经过 `σ⁻¹` 的通道。** 原料是库里三条各自独立机检的事实。
+
+### 21.43.2 三条原料（都不含 3）
+
+| 事实 | 出处 | 内容 |
+|---|---|---|
+| `s76_fixedpoint_powers_sq` | `SilenceFamily.lean` L663 | `f = b²`（`4 = 2²`） |
+| `s95_kmax_product` | `SilenceFamily.lean` L929 | `k_max = f · b`（`8 = 4·2`） |
+| `def kMax : ℕ := 2 ^ spaceLayerDim` | `SpacetimeDimensionTwoPostulates.lean` L68 | `k_max = 2^d` |
+
+（另有一条备用：`s94_even_subalgebra_dim`（`SilenceFamily.lean` L913）`2^(f−1) = k_max`。）
+
+### 21.43.3 相乘得到 `k_max = b³`
+
+```
+k_max = f · b = b² · b = b³
+```
+
+`b = 2` ⇒ `b³ = 8`。**`k_max` 的三个因子全部是幂基本身。** 这是第 31 批完全没看到的一层。
+
+### 21.43.4 于是 `spaceLayerDim` 的值被唯一钉住
+
+```
+k_max = 2^d            （定义面）
+k_max = b³ = 2³        （乘法面）
+⇒ 2^d = 2³ ⇒ d = 3     （唯一性，不是 rfl）
+```
+
+机检：`spaceLayerDim_unique (d : ℕ) (h : 2 ^ d = FixedPoint * Powers) : d = 3`。
+
+**这是本批对循环风险的正面回应**：`spaceLayerDim` 的值从此不再是 `def := 3` 的裸字面量，
+而是「幂基三次方」这条乘法恒等式钉出的**唯一解**。
+
+即使 `σ⁻¹` 仍由 `spaceLayerDim` 定义，`spaceLayerDim` 本身已有独立来由——
+第 31 批登记的循环风险，在**这一侧**被切开。
+
+需注意：本批**没有修改** `SpacetimeDimensionTwoPostulates.lean`，字面量 `3` 还写着；
+但既然它已被证明是方程的唯一解，它的「注入」性质就取消了：
+**值仍然是 3，但这个 3 不再是独立输入，而是被两条机制逼出的。**
+
+### 21.43.5 三条路径收敛
+
+| 路径 | 链路 | 经过 `σ⁻¹`？ | 本轮地位 |
+|---|---|---|---|
+| ① 立方 | `k_max = f·b = b³`，`k_max = 2^d` | **否** | 本批新增 |
+| ② 偶部维数 | `2^(f−1) = k_max = 2^d` | **否** | 本批新增（用 L913） |
+| ③ 平方差 | `σ⁻¹ = f²−1 = (f−1)(f+1)`，`N = f−1` | 是 | 第 31 批 |
+
+①② 都不经 `σ⁻¹`，因而**不受 `spaceLayerDim := 3` 那条反向定义的传染**；③ 受。
+
+三条都给同一个数 3。
+
+### 21.43.6 关键边界：本批给的是 `spaceLayerDim = 3`，不是 `N_active = 3`
+
+这是本批最重要的一条诚实声明。
+
+库内有两个互不引用的 `def := 3`：
+
+```
+DHStructuralAnalysis.lean L92          def N_active : ℕ := 3
+SpacetimeDimensionTwoPostulates.lean L56   def spaceLayerDim : ℕ := 3
+Unified3Theorem.lean L112              def numActiveLayers : ℕ := 3
+```
+
+（实为三个。）库内**没有任何定理把 `N_active` 与 `spaceLayerDim` 等同**。
+
+所以本批的净结果是：
+
+```
+N_active = 3 的上游  →  已推到 spaceLayerDim（本批）  →  spaceLayerDim = 3 已由幂基立方唯一确定
+                                                                          ↓
+                                                    还差一条桥：N_active = spaceLayerDim
+```
+
+**这条桥库内没有，本批不造。** 这是新的、明确登记的注入点——
+它比原来的「`σ⁻¹` 恰为 `M_4` 是数值观测」更轻，因为它只是**两个命名的等同**，
+不涉及任何数值选择；但它确实还没证。
+
+### 21.43.7 机检清单（`ActiveFromPowersCube.lean`，150 行，13 条定理，已挂库根）
+
+| 定理 | 内容 |
+|---|---|
+| `fixedpoint_is_powers_sq` | `f = b²`（`rfl`，按定义） |
+| `fixedpoint_eq_four` | `f = 4` |
+| `kmax_eq_fixedpoint_mul_powers` | `f · b = 8` |
+| `kmax_eq_powers_cube` | ★ `f · b = b³`（相乘面） |
+| `powers_cube_eq_eight` | `b³ = 8` |
+| `active_is_powers_cube_exponent` | ★★ `2^N = b³ ⇒ N = 3` |
+| `active_from_kmax_two_forms` | ★★ `2^N = f·b ⇒ N = 3`（主定理） |
+| **`spaceLayerDim_unique`** | ★★ `2^d = f·b ⇒ d = 3`（循环风险的正面回应） |
+| `active_eq_fixedpoint_minus_one` | `2^N = 2^(f−1) ⇒ N = f−1`（路径 ②） |
+| `active_from_even_subalgebra` | 路径 ② 实例：`N = 3` |
+| `three_paths_agree` | ★ 三条路径收敛 |
+| `active_value_agrees` | `f−1 = 3 ∧ b³ = 8 ∧ 2³ = 8` |
+| `kmax_four_forms` | `k_max` 的四个等价表达式（都 = 8） |
+
+### 21.43.8 净进展
+
+| 项 | 第 31 批后 | 第 32 批后 |
+|---|---|---|
+| `spaceLayerDim = 3` 的地位 | `def := 3` 裸字面量（公设） | ✔ **方程 `2^d = b³` 的唯一解** |
+| 第 31 批循环风险（σ⁻¹ 侧） | 已指认，未消除 | ✔ **在这一侧切开**（`spaceLayerDim` 已有独立来由） |
+| 不经 `σ⁻¹` 的推导路径数量 | 0 | **2**（立方、偶部维数） |
+| `N_active = 3` 还缺什么 | `f = 4` 的来由 | ✔ 换成一条**命名等同桥** `N_active = spaceLayerDim` |
+| `b = 2` 的来由 | 未登记 | 明确登记为本批链上唯一剩余的数值输入 |
+
+**净结论**：
+
+本批把「`N_active = 3`」这条主线的缺口从「`f = 4` 是哪来的」换成了
+「`N_active` 与 `spaceLayerDim` 是不是同一个量」。
+
+后者是一个**纯命名问题**，不含任何数值选择——这比前者轻得多，
+但它是一个必须被证或被裁决的桥。下一批的主攻方向就是这条桥：
+在库内找 `N_active` 与 `spaceLayerDim` 的既有交叉引用，或证明二者由同一结构量（世代数）定义。
+
+**同时登记**：`b = 2`（`Powers`）仍是 `def`，是本批链上唯一剩下的数值输入。
+如果要继续往上游推，下一步就是 `Powers = 2` 的来由——它与 `b² = f`、`k_max = b³` 是同一族。
+
