@@ -8628,3 +8628,186 @@ recStep_layer (hlayer : StrictLayer ev layerOf) :
 - 单模块 `pr634ri2.txt`：**23.1 s / 0 error / 0 WARN**（首轮 `pr634ri1.txt` 60.1 s / 7 error，全部源于 `MUFPF.CatOrderIsTimeOnly` 命名空间写错，实际为 `MUFPF.CatOrderTimeOnly`）
 - 全库 `pr634full57.txt`：**49.3 s / 0 error / 10 WARN / 55341 B / 3903 jobs**（10 条 WARN 与第 52–56 批完全同址）
 - 模块 392 → **393**（顶层 384 + `SpectralBundle/` 9），含库根 394
+
+## §21.71 第 58 批：「时空总量 = 4」的地位审计——它与 `catOrder = 4` 是同一定义式
+
+### 21.71.1 方向：审第 57 批裁决（三）自己留下的承诺
+
+第 57 批裁决（三）写：
+
+> `catOrder = 4` 这一支的归属从「递归单向性」改为「**总量 4**」。
+> ⇒ 若未来能导出「时空总量 = 4」，则 `timeLayerDim = 1`、`catOrder = 4`、`N_total = 5`、`B = 15` **四者一并成为推论**。
+
+这句把「总量 4」当成一个尚未被导出的**上游**。本轮就审这个上游：
+它在库里是什么？能不能被「导出」？把它当上游是否成立？
+
+### 21.71.2 勘察一：`spacetimeDim` 是定义式，`4` 不是命题
+
+`SpacetimeDimensionTwoPostulates.lean`：
+
+```
+L56  def spaceLayerDim : ℕ := 3
+L59  def timeLayerDim  : ℕ := 1
+L62  def spacetimeDim  : ℕ := spaceLayerDim + timeLayerDim
+```
+
+⇒ `spacetimeDim = 4` 是 `3 + 1` 的**定义展开**，不是一条可以被证明或证伪的独立命题。
+「导出总量 4」这句话在库里没有对应对象：要能导出，它必须先是命题；而它是定义。
+
+本批把它固化为定理 `total_is_sum`（`spacetimeDim = spaceLayerDim + timeLayerDim`，`rfl`）
+与 `total_eq_four`（`spacetimeDim = 4`）。
+
+### 21.71.3 勘察二（本批最强发现）：`catOrder` 与 `spacetimeDim` 是同一个定义式
+
+`CatOrderFromSpacetime.lean` L102：
+
+```
+def catOrderOf (d : ℕ) : ℕ := d + timeLayerDim
+```
+
+把它取 `d := spaceLayerDim`，就得到 `spaceLayerDim + timeLayerDim`，
+与 `spacetimeDim` 的定义**逐字相同**。本批主定理：
+
+```
+catOrder_is_spacetimeDim : MUFPF.CatOrderSpacetime.catOrderOf spaceLayerDim = spacetimeDim   （rfl）
+```
+
+⇒ 第 57 批说的「把 `catOrder = 4` 归位到 `spacetimeDim = 4`」，不是把一个结论归到一个更上游
+的前提，而是**把它归到它自己**——两个名字指同一个定义式。
+
+⇒ **「归位」是重命名，不是归约。** 这一步没有减少任何东西。
+
+### 21.71.4 三条等价：`time_dim_forced` 的前提与结论等价
+
+`SpacetimeDimensionTwoPostulates.lean` L121：
+
+```
+time_dim_forced (q : ℕ) (h : spaceLayerDim + q = 4) : q = 1
+```
+
+第 57 批把它当作 `timeLayerDim = 1` 的**唯一机检来源**。本批补上逆向，得到三条等价：
+
+| 定理 | 内容 |
+|---|---|
+| `total_four_iff_time_one` | `spacetimeDim = 4 ↔ timeLayerDim = 1` |
+| `total_forces_q_iff (q)` | `spaceLayerDim + q = 4 ↔ q = timeLayerDim` |
+| `forced_is_no_new_information (q)` | `spaceLayerDim + q = 4 ↔ q = 1` |
+
+⇒ 前提与结论**逻辑等价** ⇒ `time_dim_forced` 没有信息增量：它只是在说
+「`3 + q = 3 + 1` 等价于 `q = 1`」。它看起来是「从总量解出时间层数」，
+实际是「从总量解出时间层数」这句话的算术重述。
+
+更彻底的一条是 `total_constraint_is_definitional`：
+
+```
+spaceLayerDim + q = spacetimeDim   ↔   q = timeLayerDim
+```
+
+⇒ `timeLayerDim` 在库里能遇到的**唯一约束**就是 `spacetimeDim`，而 `spacetimeDim` 的定义
+**用到了 `timeLayerDim` 本身**。⇒ 该约束是自指的，不能反过来钉住 `timeLayerDim`。
+
+### 21.71.5 `4` 在库里有四条互不引用的定义路径
+
+| 路径 | 定义 | 出处 |
+|---|---|---|
+| ① | `fixedPoint := powers ^ 2`（`2²`） | `ActiveFromPowersCube.lean` L90 |
+| ② | `fixedPoint : ℕ := 4`（裸字面量） | `FixedPointFactorOrigin.lean` L98 |
+| ③ | `fixedPoint : ℕ := 4`（裸字面量） | `DivisorClosureIdentities.lean` L27 |
+| ④ | `spacetimeDim := spaceLayerDim + timeLayerDim`（`3 + 1`） | `SpacetimeDimensionTwoPostulates.lean` L62 |
+
+（另有两条 ℝ 版 `noncomputable def fixedPoint : ℝ := 4`，在 `CorrectionFactorSpectrum` L37、
+`PublicResidueIdentity` L36、`RatioClosureIdentity` L32。）
+
+本批证 ① 与 ④ 同值（`total_eq_fixedpoint : spacetimeDim = fixedPoint`），但这个同值是
+**数值巧合，不是结构同一**：两条定义互不引用，库内没有任何定理把「不动点 `f`」与
+「时空维数」挂上。⇒ 「总量 4」不能借 `f = 4` 的来由。
+
+### 21.71.6 `3` 有源、`1` 无源 ⇒ `4` 的地位等于 `1` 的地位
+
+**`3` 有源**（`three_is_pinned`，借第 32 批 `spaceLayerDim_unique`）：
+
+```
+2 ^ d = fixedPoint * powers  ⟹  d = spaceLayerDim
+```
+
+⇒ `spaceLayerDim` 是这条非平凡方程的唯一解，它是被钉住的。
+
+**`1` 无源**（`strictLayer_does_not_pin_layer_count`）：
+
+```
+¬ ∀ (f : ℕ → ℕ), (∃ ev, StrictLayer ev f) → ∀ n m, (∃ s, f s = n) → (∃ s, f s = m) → n = m
+```
+
+反例：`f = id`、`ev = succ` 的系统里 0 与 1 同时是层值 ⇒ 不存在唯一的层值。
+⇒ **任何以 `StrictLayer` 为前提的定理都推不出「时间层数 = 1」。**
+
+⇒ 相加得到 `4` 的两个数里，`3` 被钉住，`1` 自由（除自指约束外）。
+⇒ **`spacetimeDim = 4` 的 `4` 只继承到 `3` 那一半的来由；`1` 那一半仍是注入。**
+
+### 21.71.7 顺带闭合第 34 批自认的一处洞
+
+`CatOrderFromSpacetime.lean` 模块头边界 2：
+
+> 本批不 import `SpacetimeDimensionTwoPostulates`（它牵着 `KMaxAlgebra` /
+> `RecursionModularityBridge`，会引入 simp 扰动，历史上有坑）。因此本模块的
+> `timeLayerDim` 是**独立重写**的同值定义，与库内 L59 一致但无形式依赖。
+> 跨模块一致性未建成定理——登记为未做项。
+
+本批 `cross_module_timeLayerDim_agrees` 把它闭合：
+
+```
+MUFPF.CatOrderSpacetime.timeLayerDim = MUFPF.SpacetimeDimensionTwoPostulates.timeLayerDim   （rfl）
+```
+
+同时也实测了那条「simp 扰动」顾虑：本模块 import 了 `CatOrderFromSpacetime` 与
+`SpacetimeDimensionTwoPostulates` 两者，全库仍 0 error / 10 警告（基线不变）。
+⇒ 该顾虑在「不用 `simp` 而用 `rfl` / `omega` / `norm_num`」的写法下不成立。
+
+### 21.71.8 裁决（五条）
+
+- **(一) 「时空总量 = 4」不是注入点，也不是上游。** 它是 `3 + 1` 的定义展开；
+  把它当上游是负债转移，不是消去。
+- **(二) 第 57 批裁决（三）的承诺是空的。** 「若导出总量 4 ⇒ 四者成为推论」不成立：
+  「总量 4」不可独立导出（它是定义），且它与 `catOrder = 4` 是同一个定义式
+  （`catOrder_is_spacetimeDim`）。
+- **(三) 注入点净数不变，且仍是「一项」而不是「两项」。** `timeLayerDim = 1` 与
+  「`spacetimeDim = 4`」是同一个东西的两个名字（`total_four_iff_time_one`），
+  不能各记一项。⇒ 第 56 批的两项表在此处**不分裂**。
+- **(四) `4` 的另一条来由（`f = 4`）不能挪用。** `spacetimeDim = fixedPoint` 只是
+  数值同值；要挪用须另建结构桥（「不动点 = 时空维数」），库内没有，本批不造。
+- **(五) 未就地改 Lean doc。** `CatOrderFromSpacetime` L68 / L96 与
+  `SpacetimeDimensionTwoPostulates` L136 三处偏强标注仍按「只登记、不就地改」保留，
+  待裁决。
+
+### 21.71.9 边界与剩余开口 / 产物与验证
+
+**本批未做：**
+
+1. 「不动点 = 时空维数」的结构桥——本批只证数值同值，未给结构理由。
+   登记为 `fixedpoint_equals_spacetime_unbridged`。
+2. 「方向数」概念的形式化（第 57 批登记 `direction_count_undefined`）——沿用未做。
+3. 三处偏强 doc 的就地修改（同裁决五）。
+4. `FifteenMersenneRoot.lean`（254 行，第 40 批）仍未读——第 56/57 批已登记，本批沿用。
+5. `paper18` L298 `N_layers = 5` 与 L244 `n = 4` 的下标补齐（第 56 批登记）。
+
+**新增登记：**
+
+- `fixedpoint_equals_spacetime_unbridged`：`spacetimeDim = fixedPoint` 已机检为
+  **数值同值**；「时空维数 = 自指方程不动点」这条**结构**命题仍未成立。
+- `spacetime_total_is_definitional`：`spacetimeDim` 是定义式，不可作为注入点，
+  也不可记为 `catOrder = 4` 的上游。**此条替换第 57 批的
+  `total_spacetime_dim_four_is_injection`**（后者登记为「唯一上游」，方向记反了）。
+
+**产物：**
+
+- `src/MUFPFormalization/SpacetimeTotalAudit.lean`（283 行 / 14 theorem / 0 def / 0 sorry / 0 axiom）
+- 库根 `src/MUFPFormalization.lean` 215 → **216 行**，`ROOT_IMPORTS` 191 → **192**，
+  末行 `import MUFPFormalization.SpacetimeTotalAudit`
+- `scripts/pr634rj_falsify.py`（74 行）+ `notes/pr634rj_falsify_result.txt`
+
+**验证：**
+
+- 单模块 `pr634rj1.txt`：**84.3 s / 0 error / 0 WARN**（一次通过，无返工）
+- 全库 `pr634full58.txt`：**69.1 s / 0 error / 10 WARN / 55341 B / 3904 jobs**
+  （10 条 WARN 与第 52–57 批完全同址；job 数 3903 → 3904，+1 与新增 1 模块一致）
+- 模块 393 → **394**（顶层 385 + `SpectralBundle/` 9），含库根 395
