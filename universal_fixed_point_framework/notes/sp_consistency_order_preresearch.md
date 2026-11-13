@@ -8811,3 +8811,169 @@ MUFPF.CatOrderSpacetime.timeLayerDim = MUFPF.SpacetimeDimensionTwoPostulates.tim
 - 全库 `pr634full58.txt`：**69.1 s / 0 error / 10 WARN / 55341 B / 3904 jobs**
   （10 条 WARN 与第 52–57 批完全同址；job 数 3903 → 3904，+1 与新增 1 模块一致）
 - 模块 393 → **394**（顶层 385 + `SpectralBundle/` 9），含库根 395
+
+## §21.72 第 59 批：时空维数「加法」那一环的地位——`+` 是三条 `4` 的公共前提且承重
+
+### 21.72.1 方向：第 56–58 批一路把注入点收窄到「一项」，但那个 `+` 从未被审
+
+第 56 批把注入点从两项半收到两项，第 57 批把 `catOrder = 4` 归位到「总量 4」，
+第 58 批证「总量 4」与 `catOrder = 4` 是同一定义式、把计数回到一项。三批都默认了同一件事：
+
+```
+spacetimeDim := spaceLayerDim + timeLayerDim
+```
+
+那个 `+` 从未被审。本轮审它，问题拆成三问：
+
+1. 库内通往 `4` 的路径是否都依赖同一个 `+`？
+2. 把 `+` 换掉，`4` 还在不在？⇒ `+` 是不是**承重**的？
+3. 「总量 = 4」这个数值本身能否钉住 `+`？
+
+### 21.72.2 发现一：三条通往 `4` 的定义路径逐字共用同一个 `+`
+
+| 定义 | 写法 | 出处 |
+|---|---|---|
+| `spacetimeDim` | `spaceLayerDim + timeLayerDim` | `SpacetimeDimensionTwoPostulates` L62 |
+| `catOrderOf d` | `d + timeLayerDim` | `CatOrderFromSpacetime` L102 |
+| `catOrderOfTime d t` | `d + t` | `CatOrderIsTimeOnly` L103 |
+
+`three_routes_all_use_add` 把四个分量（含两两相等）用 `⟨rfl, rfl, rfl, rfl⟩` 一次证完：
+
+```
+catOrderOf spaceLayerDim = spacetimeDim
+catOrderOfTime spaceLayerDim timeLayerDim = spacetimeDim
+spacetimeDim = spaceLayerDim + timeLayerDim
+catOrderOfTime spaceLayerDim timeLayerDim = catOrderOf spaceLayerDim
+```
+
+⇒ 三者不是三个独立巧合，而是**同一个 `d + t` 的三个门牌号**。
+
+⇒ **`+` 是三条 `4` 的公共前提，也是至今唯一从未被任何批次审过的一环。**
+
+### 21.72.3 发现二：`+` 是承重的 —— 换掉它 `4` 就消失
+
+五种组合律在 `(spaceLayerDim, timeLayerDim) = (3, 1)` 处的取值：
+
+| 组合律 | 取值 | 定理 |
+|---|---|---|
+| `+` | **4** | `total_eq_four`（第 58 批） |
+| `*` | 3 | `mul_reading_gives_three` |
+| `^` | 3 | `pow_reading_gives_three` |
+| `max` | 3 | `max_reading_gives_three` |
+| `succ`（只看空间） | **4** | `total_is_succ` |
+
+`combination_law_is_load_bearing : spaceLayerDim * timeLayerDim ≠ spacetimeDim`（3 ≠ 4）。
+
+⇒ **`4` 不是由 `3` 与 `1` 一对数唯一决定的，还依赖组合律。**
+⇒ `catOrder = 4`、`N_total = 5`、`B = 15` 全部挂在 `+` 上。
+
+注意第 5 行：`succ` 也给 4——因为 `timeLayerDim = 1` 时 `d + 1 = Nat.succ d`。
+⇒ 从这个角度看，「加时间维数」与「推进一格」是同一个运算（见 21.72.5）。
+
+### 21.72.4 发现三：换掉 `+` 的后果在库内**可观测**
+
+`clStateCount := 2 ^ spacetimeDim`（L65），`cl31_state_count : clStateCount = 16`（L89）。
+
+若组合律是 `*`，`clStateCount` 会变成 `2 ^ (3 * 1) = 8`：
+
+```
+mul_reading_breaks_clifford_count : 2 ^ (spaceLayerDim * timeLayerDim) ≠ clStateCount   -- 8 ≠ 16
+```
+
+⇒ `+` 的选择不是「记法」，它把 `Cl(3,1)` 的态数从 8 改成 16。**库内有一个具体的被观测量
+随 `+` 变动**——这比「换掉 4 就没了」更硬：不只是数值改名，而是下游常数跟着变。
+
+同时 `sigmaInv := spaceLayerDim * silenceUnit`（L74）用的是**乘法**，`sigmaInv = 15`
+（`sigmaInv_uses_mul`，`rfl`）。⇒ 库内 `+` 与 `*` 是分工的（维数用 `+`、乘积计数用 `*`），
+`+` 不是随手写的记号。
+
+### 21.72.5 发现四：时间层数 = 1 的全部算术内容就是「加一」
+
+```
+total_is_succ          : spacetimeDim = Nat.succ spaceLayerDim
+catOrder_is_succ       : catOrderOf spaceLayerDim = Nat.succ spaceLayerDim
+time_layer_is_the_gap  : spacetimeDim - spaceLayerDim = timeLayerDim
+```
+
+⇒ `timeLayerDim = 1` 的算术作用只是把空间层数**推进一格**——与第 57 批
+`StrictLayer` 的 `layerOf (ev r) = layerOf r + 1` 是同一件事。
+
+⇒ 「时空四维」= 「空间三维再进一层」。这是**结构性较好的读法**（时间的全部贡献是一个
+`StrictLayer` 步），但它不增加也不减少注入：`1` 仍是 `1`。本批不把它当消去，
+只把它当**说明**。
+
+### 21.72.6 发现五：「总量 = 4」对组合律**零约束**
+
+`add_not_pinned_by_value_at_one_point`：
+
+```
+¬ ∀ (⊕ : ℕ → ℕ → ℕ), ⊕ 3 1 = 4 → ∀ b : ℕ, ⊕ 3 b = 3 + b
+```
+
+反例 `⊕ a b := a + 2 * b - 1`：在 `(3, 1)` 处恰给 `4`，在 `(3, 2)` 处给 `6 ≠ 5`。
+
+⇒ **单点值 `⊕ 3 1 = 4` 不能钉出 `⊕` 是加法。** 知道「总量 = 4」对「总量怎么算出来的」
+一无所知。⇒ 第 57/58 批反复讨论的「总量 4」这个数值，**对运算形态没有任何判别力**。
+
+### 21.72.7 裁决（六条）
+
+- **(一) `+` 是三条 `4` 的公共前提，此前从未被任何批次审过。** 第 56–58 批把 `+`
+  当透明背景，本批证明它不透明。
+- **(二) `+` 是承重的、且库内可观测**（`clStateCount` 16 vs 8）。⇒ 它不是记法选择。
+- **(三) `+` 不是「无源」型注入，而是「有物理含义、未形式化」型假设。**
+  「维数在直积下可加」(`dim (X × Y) = dim X + dim Y`) 是唯一合法依据；然而
+  `SpObj` 只有 `(n, A)`（第 43 批：`RecObj` 只有 `(T, fin, dec, step)`、
+  `SpObj` 只有 `(n, A)`），库内**没有** `Sp` 的积分解，也没有 `dim : Type → ℕ`。
+  ⇒ 登记 `additivity_lacks_product_witness`。
+- **(四) 注入点计数因此修正为「两项」**：`{timeLayerDim = 1, 组合律 = 加法}`。
+  第 56–58 批的「一项」**漏算了 `+`**。若日后把「维数积可加」建成结构（给出 `Sp`
+  的积分解 + 加法性 `dim`），则 `+` 可免、回到一项；在此之前应按两项记。
+- **(五) 「总量 = 4」不能替代对 `+` 的说明**（发现五）：数值对运算零约束。
+- **(六) 未就地改 Lean doc。** 同第 57/58 批策略，`CatOrderFromSpacetime` L68 / L96、
+  `SpacetimeDimensionTwoPostulates` L136 三处偏强标注仍只登记不改，待裁决。
+
+### 21.72.8 与本批方向的关系：为什么审「加法」而不是继续审「3」
+
+第 26–41 批已经把三处裸 `:= 3` 逐条机检升格；第 42–55 批把注入点逐层下移到
+「时间必须有刻度且只能向前」；第 56–58 批把刻度 `1` 收成一项。到第 58 批结束时，
+**剩下的唯一没被看过的符号是 `+`**——它不是数值，所以前面所有「数值审计」都跳过了它。
+
+本批的结论是**结构性负面且带一次计数上修**：注入点由一项变两项。这与第 47 批
+「唯一新注入点是 `|Fix| = 1` 的必然性」、第 52 批「`DepthData` 由结构要求降为判据产物」
+的**减项**方向相反，是第 49–59 批里第一次由审计**发现新注入点**。
+
+### 21.72.9 边界与剩余开口 / 产物与验证
+
+**本批未做：**
+
+1. `Sp` 的积分解 + 加法性 `dim`（`additivity_lacks_product_witness` 的唯一消去路径）——
+   本批只给出「缺什么」，没有构造。构造它需要先在 `SpObj` 上加积分解字段，
+   而第 43 批已定「不动 `step`、加字段」的破坏面评估方式，故可行但工作量大，留待后续。
+2. 「不动点 = 时空维数」的结构桥（第 58 批 `fixedpoint_equals_spacetime_unbridged`）——沿用未做。
+3. 「方向数」概念的形式化（`direction_count_undefined`，第 57 批登记）——沿用未做。
+4. 三处偏强 doc 的就地修改（裁决六）。
+5. `FifteenMersenneRoot.lean`（254 行，第 40 批）仍未读——第 56/57/58 批已登记，本批沿用。
+6. `paper18` L298 `N_layers = 5` 与 L244 `n = 4` 的下标补齐（第 56 批登记）——沿用未做。
+
+**新增登记：**
+
+- `additivity_lacks_product_witness`：`spacetimeDim := spaceLayerDim + timeLayerDim`
+  的 `+` 在库内无结构依据（无 `Sp` 积分解、无 `dim : Type → ℕ`）；
+  「维数在直积下可加」是唯一合法依据但未形式化。**此条把注入点计数从一项上修为两项。**
+- `succ_reading_equivalent_at_one`：`timeLayerDim = 1` 时 `d + 1 = Nat.succ d`
+  ⇒ 「加时间维数」与「推进一格」在该点上同一。**这不是新注入点，只是读法说明。**
+
+**产物：**
+
+- `src/MUFPFormalization/SpacetimeAdditivityAudit.lean`
+  （219 行 / 7376 B / 13 theorem / 0 def / 0 sorry / 0 axiom）
+- 库根 `src/MUFPFormalization.lean` 216 → **217 行**，`ROOT_IMPORTS` 192 → **193**，
+  末行 `import MUFPFormalization.SpacetimeAdditivityAudit`
+- `scripts/pr634rk_falsify.py` + `notes/pr634rk_falsify_result.txt`
+
+**验证：**
+
+- 单模块 `pr634rk1.txt`：**87.6 s / 0 error / 0 WARN**（一次通过，无返工）
+- 全库 `pr634full59.txt`：**75.8 s / 0 error / 10 WARN / 55341 B / 3905 jobs**
+  （10 条 WARN 与第 52–58 批完全同址；job 数 3904 → 3905，+1 与新增 1 模块一致）
+- 模块 394 → **395**（顶层 386 + `SpectralBundle/` 9），含库根 396
