@@ -8465,3 +8465,166 @@ B = (c − 1)(c + 1) = c² − 1
   10 条 WARN 与第 52–55 批完全同址。
 - 数值先证伪：`pr634rh_falsify.py`（74 行）+ `pr634rh_falsify_result.txt`（30 行），
   `VERDICT_ALL_OK True`。
+
+## §21.70 第 57 批：`timeLayerDim = 1` 的地位——`time_coordinate_unique` 不能作为它的依据
+
+### 21.70.1 方向
+
+第 56 批把 `N_total = 5` 归约到 `catOrder + 1` 之后，注入点表剩两项：建模层（`f² = 2^f` 的出发理由，登记为不可机检）与 `{r = e⁻¹, d_H = ln 15}`（第 55 批已证同一条件）。
+
+本轮把镜头对准 `catOrder = 4`，理由是它是 `N_total = 5` 与 `B = 15` 共同的直接上游：
+
+- `B = catOrder² − 1`（第 56 批 `branch_sq_form`）；
+- `N_total = catOrder + 1`（第 56 批 `ntotal_not_free`）；
+- `catOrder = spaceLayerDim + timeLayerDim`（第 34 批 `CatOrderFromSpacetime` L41）。
+
+`spaceLayerDim = 3` 已由第 32 批的 `2^d = b³` 唯一解锁定（`d` 唯一为 3），故 `catOrder` 完全由 `timeLayerDim` 决定；第 37 批 `catOrder_four_iff_time_one`（`CatOrderTimeOnly` L118）已证
+
+```
+catOrderOfTime d t = 4  ↔  t = 1     （d 满足 2^d = fixedPoint * powers）
+```
+
+⇒ **消去 `catOrder = 4` 等价于消去 `timeLayerDim = 1`。**
+
+### 21.70.2 勘察一：库里给 `timeLayerDim = 1` 标了三条「依据」，而它们与文件头的自认互相矛盾
+
+| 位置 | 标注原文 |
+|---|---|
+| `CatOrderFromSpacetime.lean` L68 | `timeLayerDim = 1`（递归单向性：`time_coordinate_unique`） |
+| `CatOrderFromSpacetime.lean` L96 | 结构依据：同文件 L135–144 `time_coordinate_unique` 与 L146–151 `time_orbit_injective` |
+| `SpacetimeDimensionTwoPostulates.lean` L136 | 本定理「是『时间方向数 = 1』的结构依据」 |
+
+同一文件 `SpacetimeDimensionTwoPostulates.lean` 的模块头 L36–37 却自认：
+
+> `time_orbit_injective` 只证层坐标良定义（G3 `StrictLayer` 的直接推论），**不等于物理时间一维性**；
+
+而 `time_coordinate_unique` 自己的 doc L137 末句也写「此处**只做坐标良定义**」。
+
+⇒ 同一组定理被文件头判为「不等于一维性」，又被另两处标为「一维性的依据」。三处标注不能同时为真。
+
+注意 `SpacetimeDimensionTwoPostulates.lean` L96 的 doc（`def timeLayerDim` 上方，L58）另有一句：
+
+> 时间方向数 = 递归单向性给出的 1 个方向（共享 G3 的 `StrictLayer` 语义）。
+
+⇒ 即 `timeLayerDim : ℕ := 1` 本身是**裸 `def`**，「1 个方向」是 doc 里追加的语义，代码里没有任何命题把它与 `StrictLayer` 连起来。
+
+### 21.70.3 勘察二：`StrictLayer` 的定义只约束「每步升一层」
+
+`RecursionModularityBridge.lean` L51–52：
+
+```
+StrictLayer ev layerOf  :=  ∀ r : R, layerOf (ev r) = layerOf r + 1
+```
+
+它只说「每步升一层」。**不约束 `layerOf` 的绝对值，也不约束层集的大小。**⇒ 这是本批全部结论的起点。
+
+配套已有结果（同文件 L54–57）：
+
+```
+recStep_layer (hlayer : StrictLayer ev layerOf) :
+    ∀ (k : ℕ) (r : R), layerOf (recStep ev k r) = layerOf r + k
+```
+
+⇒ 从任一 `r` 出发，`k` 步后必在 `layerOf r + k` 层。
+
+### 21.70.4 关键发现：前提蕴含结论的反面
+
+把 21.70.3 的第二条直接取 `k := N`：
+
+> **任何满足 `StrictLayer` 的系统，其层函数必无上界**：`∀ N, ∃ s, layerOf s = layerOf r + N`。
+
+而「时间层数 = 1」要求层集是**单元集**。
+
+⇒ 二者**结构上不相容**：`StrictLayer` 越被满足，层数越无界。
+
+⇒ 所以「`timeLayerDim = 1` 由 `time_coordinate_unique` 推出」不是措辞偏弱，而是**前提与结论直接矛盾**。`time_coordinate_unique` 的前提 `hlayer : StrictLayer ev layerOf` 成立时，其结论（步数唯一）成立，而「层数 = 1」同时为假。
+
+⇒ 另有一个更直接的推论：`StrictLayer` 排除「所有元素同层」——因为 `layerOf (ev r) = layerOf r + 1 ≠ layerOf r`（只要有一个 `r`，层集就至少有两个值）。
+
+### 21.70.5 数值先证伪（模式 8）
+
+`scripts/pr634ri_falsify.py`（纯标准库，无 numpy），按 Lean 定义逐字翻译 `recStep` 与 `StrictLayer`，系统取 `R = ℕ ∩ [0, 40]`、`ev = n ↦ n + 1`、`layerOf = n ↦ n`：
+
+| 检查 | 结果 |
+|---|---|
+| `A_STRICTLAYER_NAT_SUCC` | True（该系统确满足 `StrictLayer`） |
+| `A_UNBOUNDED_OK` | True（`N` 扫 0..20，`layerOf (recStep ev N 0) = 0 + N` 全成立） |
+| `A_SAMPLES` / `A_LAST` | `(0,0,0)…(5,5,5)` / `(20,20,20)` |
+| `B_LAYER_5` / `B_LAYER_10` | True / True（**同一系统里层取到 5 也取到 10**） |
+| `B_BOTH_IN_ONE_SYSTEM` | True |
+| `C_Q_SET` / `C_UNIQUE` | `[1]` / True（`3 + q = 4` 唯一给 `q = 1`） |
+| `D_ROWS` / `D_OK` | `t = 0..10 → 3 + t` / True |
+| `E_COORD_UNIQUE_OK` | True（该系统「步数相等 ⇒ 步数相同」，即 `time_coordinate_unique` 结论成立） |
+| `F_STEP_RAISES` | True（单步必升层） |
+| `G_ORBIT` | `N=1` 像 2 跨 1；`N=2` 像 3 跨 2；`N=5` 像 6 跨 5；`N=10` 像 11 跨 10；`N=20` 像 21 跨 20 ⇒ **层集大小随步数线性无界增长** ★ |
+| `H_MIN_IMG_2` | True（两层点层必不同） |
+| `I_SINGLETON_CLAIM_ON_S` | **False**（「层集为单元集」在该系统为假） |
+| `VERDICT_ALL_OK` | **True** |
+
+⇒ `G_ORBIT` 是本批最直接的数值证据：同一个满足「时间坐标唯一」的系统，层集大小随可用步数一路涨到 21，跨度 20。⇒ 它不可能是「时间层数 = 1」。
+
+### 21.70.6 主定理与模块
+
+新模块 `TimeDirectionAudit.lean`（ns `MUFPF.TimeDirection`，**9 theorem / 0 def / 0 sorry / 0 axiom**），import `Mathlib.Tactic` + `SpacetimeDimensionTwoPostulates` + `CatOrderIsTimeOnly`；`open MUFPF.RecursionModularityBridge (recStep StrictLayer recStep_layer)`、`open MUFPF.SpacetimeDimensionTwoPostulates (spaceLayerDim timeLayerDim)`、`open MUFPF.CatOrderTimeOnly (catOrderOfTime)`。
+
+| 序 | 定理 | 内容 |
+|---|---|---|
+| 1 | **`strictLayer_forces_unbounded_layers`** ★★★ | `StrictLayer ev layerOf → ∀ N, ∃ s, layerOf s = layerOf r + N` |
+| 2 | **`strictLayer_not_single_layer`** ★★★ | `StrictLayer ev layerOf → ¬ ∀ s, layerOf s = layerOf r` |
+| 3 | `strictLayer_step_raises` ★ | `layerOf (ev r) ≠ layerOf r` |
+| 4 | `nat_succ_strictLayer` ★ | 后继推进在 `ℕ` 上满足 `StrictLayer`（把既有 `example` 升为可引用定理） |
+| 5 | `nat_succ_coordinate_unique` ★★ | 该系统「时间坐标唯一」成立（借 `time_coordinate_unique`） |
+| 6 | **`coordinate_unique_with_unbounded_layers`** ★★★ | 反例四合取：`StrictLayer ∧ 步数唯一 ∧ 层无上界 ∧ 同系统取到 5 与 10` |
+| 7 | **`timeLayerDim_forced_by_total`** ★★ | `spaceLayerDim + q = 4 → q = timeLayerDim` |
+| 8 | `catOrder_from_time_one` ★★ | `t = 1 → catOrderOfTime 3 t = 4` |
+| 9 | **`time_direction_verdict`** ★★★ | 三合取：反例系统存在 ∧ 总量 4 强制 `q = timeLayerDim` ∧ `catOrder = 3 + t` |
+
+证明要点：定理 1 一行（`⟨recStep ev N r, recStep_layer …⟩`）；定理 2 用 `hlayer r` 与 `h (ev r)` 交 `omega`；定理 4 `intro n; simp`；定理 7 借 `time_dim_forced` 落 `q = 1` 再 `simp [timeLayerDim]`；定理 8 `simp [catOrderOfTime, ht]`；定理 9 组合前几项。
+
+### 21.70.7 反例说明了什么
+
+`coordinate_unique_with_unbounded_layers` 的四项合取同时成立：
+
+1. `StrictLayer (fun n => n + 1) (fun n => n)`；
+2. `∀ k₁ k₂ r, recStep succ k₁ r = recStep succ k₂ r → k₁ = k₂`（**「时间坐标唯一」成立**）；
+3. `∀ N, ∃ s, layerOf s = N`（层无上界）；
+4. `∃ s, layerOf s = 5 ∧ ∃ s', layerOf s' = 10`（**同一系统两层**）。
+
+⇒ 一个完全满足「时间坐标唯一」的系统，层数不是 1。因此该定理**不筛选 `catOrder`**，也就不可能作为 `catOrder = 4` 的依据。
+
+⇒ 顺带把第 50 批的 `ρ` 判据也定位清楚：第 50 批证的是「`ρ` 存在 ⟺ 时间无 `k ≥ 2` 折返」。而 `StrictLayer` 本身已经蕴含「无周期」（`p1a_no_cycle`，同文件 L72–77）。所以「无折返 / 有 `ρ`」与「层数 = 1」**不是同一件事**——前者是动力学的单向性，后者是层的**计数**。本批的反例正是「单向但层无限」这一格的见证。⇒ 「`t = 1` 由『无折返』推出」不成立。
+
+### 21.70.8 裁决（五条）
+
+- **(一) `timeLayerDim = 1` 仍是独立注入点，本批没有减少它。** 但它现在有了确切的名字与位置：它是「**时空总量 = 4**」的下游，而不是「递归单向性」的下游。
+- **(二) `time_coordinate_unique` / `time_orbit_injective` 的作用被重新定位。** 它们是「时间坐标良定义」的定理，**不是**「时间方向数 = 1」的定理。二者不能互换；把它们当作后者的依据，是**前提蕴含结论的反面**，不是措辞瑕疵。
+- **(三) 注入点表不变（两项），但 `catOrder = 4` 这一支的归属改变。** 原先记在「递归单向性」名下，现改记在「总量 4」名下。⇒ 若未来能导出「时空总量 = 4」，则 `timeLayerDim = 1`、`catOrder = 4`、`N_total = 5`、`B = 15` **四者一并成为推论**。
+- **(四) 「`t = 1` 与 `ρ` 判据」不是同一条。** 第 50 批的「`ρ` 存在 ⟺ 无 `k ≥ 2` 折返」不蕴含层计数为 1；本批反例是「单向但层无限」的见证。⇒ 两条线索不能合并，第 50 批的判据不能用来消去 `timeLayerDim = 1`。
+- **(五) 本批未就地改 Lean doc。** `CatOrderFromSpacetime` L68 / L96 与 `SpacetimeDimensionTwoPostulates` L136 三处标注仍偏强（其中 L136 与同文件 L36–37 自认直接冲突）。按第 55/56 批一致的「只登记、不就地改」策略，登记待裁决。
+
+### 21.70.9 边界与剩余开口 / 产物与验证
+
+**本批未做：**
+
+1. 「时空总量 = 4」的导出——这是本批把 `catOrder = 4` 归位之后的唯一上游，仍未机检。
+2. 「方向数」这个概念在库内的形式化——`spaceLayerDim` / `timeLayerDim` 都是裸 `ℕ` 读数，「方向数」本身没有类型；⇒ 登记为 `direction_count_undefined`。
+3. 三处偏强 doc 的就地修改（同裁决五）。
+4. `FifteenMersenneRoot.lean`（254 行，第 40 批）仍未读——第 56 批已登记，本批沿用。
+5. `paper18` L298 `N_layers = 5` 与 L244 `n = 4` 的下标补齐（第 56 批登记）。
+
+**新增登记：**
+
+- `time_coordinate_unique_does_not_imply_time_dim_one`：本批已机检其反面（前提蕴含结论的反面），登记为**已证伪的主张**，不是待办。
+- `total_spacetime_dim_four_is_injection`：`catOrder = 4` → `B = 15` 整条链的唯一上游。
+
+**产物：**
+
+- `src/MUFPFormalization/TimeDirectionAudit.lean`（9 theorem / 0 def / 0 sorry / 0 axiom）
+- 库根 `src/MUFPFormalization.lean` 214 → **215 行**，`ROOT_IMPORTS` 190 → **191**，末行 `import MUFPFormalization.TimeDirectionAudit`
+- `scripts/pr634ri_falsify.py`（74 行）+ `notes/pr634ri_falsify_result.txt`
+
+**验证：**
+
+- 单模块 `pr634ri2.txt`：**23.1 s / 0 error / 0 WARN**（首轮 `pr634ri1.txt` 60.1 s / 7 error，全部源于 `MUFPF.CatOrderIsTimeOnly` 命名空间写错，实际为 `MUFPF.CatOrderTimeOnly`）
+- 全库 `pr634full57.txt`：**49.3 s / 0 error / 10 WARN / 55341 B / 3903 jobs**（10 条 WARN 与第 52–56 批完全同址）
+- 模块 392 → **393**（顶层 384 + `SpectralBundle/` 9），含库根 394
