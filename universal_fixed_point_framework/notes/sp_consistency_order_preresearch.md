@@ -8237,3 +8237,231 @@ theorem weight_uniqueness (w : ℕ → ℝ) (s : ℝ) (h_cauchy : CauchyExponent
 
 **本批对「推出 3」主线的净贡献**：注入点从三项减为**两项半**，且减的方式与第 54 批同构——不是「解决不了」，而是「证明这两项本来就是一句话」。同时发现并机检了库内一处**误标**（`r = e⁻¹` 被写成「定理 R1」，而 R1 实际只锁形式），这是主线推进过程中第一次触及「文档标记与代码事实不一致」这类问题。
 
+
+## §21.69 第 56 批：`N_total = 5` 的地位审计
+
+### 21.69.1 本批方向
+
+第 55 批把「推出 3」主线的注入点表由三项收窄为**两项半**：
+
+1. 建模层（为什么从自指方程 `f² = 2^f` 出发）——已登记为不可机检（`modeling_choice_still_open`）；
+2. **`N_total = 5`**；
+3. `{r = e⁻¹, d_H = ln 15}`——第 55 批已证二者是同一条件的两种写法，计为半项。
+
+其中第 2 项是本批目标：它是唯一未审计、且带明确结构性张力的一项——库内文档
+早已写明「本库把对象层 0 计入 `N_total`，故取 5；论文 §5.5 取 4（不含对象层）」，
+并自注「两者是不同口径的计数」。而 `15 = 3 × 5` 是整个 `d_H` 链的算术起点。
+
+本批提出的问题不是「5 从哪来」，而是：
+
+> **`3 × 5` 到底是不是一个独立的前提？**
+
+### 21.69.2 勘察一：`N_total` 在库内是两套互不相接的定义
+
+**（A）`DHStructuralAnalysis.lean` L109 —— 裸字面量。**
+
+```
+def N_total : ℕ := 5
+def B : ℕ := N_active * N_total        -- L112
+theorem B_eq_15 : B = 15 := by native_decide   -- L115
+```
+
+同文件 L101–108 的 doc 已写明来源为「对象层 + 4 个态射层 = 5」，并附口径警告
+（本库 5 计入对象层 vs 论文 4 不含）、`B = 15` 与论文 `15 = 2^{N_active+1} − 1` 数值一致
+但来源不同、以及论文 L353 已弃用 `3 × 5` 路线（引用韦达根 ⇒ 循环）。
+
+⇒ 关键在于：**`5` 在这个文件里是纯字面量**，`B_eq_15` 只是 `native_decide` 算出的
+`3 × 5 = 15`，不含任何结构推导。
+
+**（B）`ActiveFromCategoryOrder.lean` —— 同一个量是算出来的。**
+
+```
+def catOrder : ℕ := 4                    -- L93
+def nTotal : ℕ := catOrder + 1           -- L96   「对象层 0 到层 4」
+def nActive : ℕ := catOrder - 1          -- L101  「4-范畴减两层」
+theorem nTotal_eq_five : nTotal = 5 := by norm_num [nTotal, catOrder]   -- L108
+theorem nActive_eq_three : nActive = 3 := by norm_num [nActive, catOrder]  -- L119
+theorem nTotal_eq_nActive_add_two : nTotal = nActive + 2 := ...        -- L127
+```
+
+⇒ 在这套口径下，`nTotal = 5` **本来就是定理**（`catOrder + 1`），不是约定。
+
+**（C）`CatOrderFromSpacetime.lean` L105 / L136 —— 参数化版本。**
+
+```
+def nTotalOf (d : ℕ) : ℕ := catOrderOf d + 1
+theorem catOrder_eq_four (d) (hD : 2 ^ d = fixedPoint * powers) : catOrderOf d = 4
+/-- `N_total = 5`（`catOrder + 1 = 4 + 1`）。 -/
+```
+
+⇒ `catOrder = 4` 由方程 `2^d = b³` 的唯一解 `d = 3` 给出（第 32 批 `spaceLayerDim_unique`），
+再加 `timeLayerDim = 1`（第 34 批）。
+
+⇒ 所以库内**已有一条完整的机检链**：`2^d = b³ → d = 3 → catOrder = 4 → nTotal = 5`。
+问题只剩一点：**这条链与 (A) 的裸 `def N_total := 5` 从未桥接**。
+
+### 21.69.3 勘察二：两套定义合起来给出一个未被注意的因式分解
+
+`nActive = c − 1`、`nTotal = c + 1`（`c := catOrder`）⇒
+
+```
+B = N_active · N_total = (c − 1)(c + 1) = c² − 1
+```
+
+而 `c = 4` 时 `c² − 1 = 16 − 1 = 15`，同时 `M_4 = 2^4 − 1 = 15`。于是本批的核心命题是：
+
+> **`(c − 1)(c + 1) = 2^c − 1 ⟺ c = 4`（`c ≥ 3`）**
+
+⇒ 若成立，则 `B = 15` 的「层对计数」与「Mersenne `M_4`」**不是两条独立路线，
+而是 `c² − 1` 与 `2^c − 1` 在自指方程 `c² = 2^c` 唯一非平凡解处的同值**。
+第 51 批（`sq_eq_pow_iff`）与第 54 批（`sq_selfref_iff_four`）已证 `c ≥ 3` 时
+`c² = 2^c ⟺ c = 4`，本批只需把 `c²` 换成它的因式分解形式。
+
+### 21.69.4 数值先证伪（模式 8）
+
+脚本 `scripts/pr634rh_falsify.py`（纯 `math`，无 numpy），结果 `notes/pr634rh_falsify_result.txt`。
+`c` 扫 0..40：
+
+```
+A_HITS [2, 4]          ← 全域解集
+B_HITS [4]             ← c ≥ 3 后唯一
+C_SOL [4]              ← 由 B = 15 反解 c
+E_IDENTITY_OK True     ← (c−1)(c+1) = c² − 1 对 c ∈ [1,40] 全称
+```
+
+偏离表：
+
+| c | `(c−1)(c+1)` | `2^c − 1` | 差 |
+|---|---|---|---|
+| 2 | 3 | 3 | 0 |
+| 3 | 8 | 7 | **+1** |
+| 4 | **15** | **15** | **0** |
+| 5 | 24 | 31 | −7 |
+| 6 | 35 | 63 | −28 |
+| 8 | 63 | 255 | −192 |
+| 10 | 99 | 1023 | −924 |
+
+⇒ **全域解集是 `{2, 4}`**，`c = 2` 是自指方程的平凡解（与第 51 批 `f = 2` 同源），
+所以全部陈述必须带 `3 ≤ c` 前提。这与第 54 批 `sq_selfref_iff_four` 的前提一致，
+不是本批新增的限制。
+
+⇒ `c = 3` 处差 `+1`（8 vs 7）：`N_active · N_total = 2 · 4 = 8` 比 `M_3 = 7` 大 1；
+`c = 5` 起差距反向并迅速发散（`c = 10` 已差 924）。⇒ 两形式**只在 `c = 4` 相交**。
+
+### 21.69.5 新模块 `BranchCountOrigin.lean`
+
+`namespace MUFPF.BranchCountOrigin`，import `Mathlib.Tactic` + `ActiveFromCategoryOrder`
++ `DHStructuralAnalysis` + `ConstantDualForms`；`open MUFPF.CategoryOrder (catOrder nTotal nActive)`、
+`open MUFPF.ConstantDualForms (sq_selfref_iff_four)`、`open MUFPF.SigmaFormOrigin (sub_one_injective)`。
+
+| 序 | 定理 | 内容 |
+|---|---|---|
+| 1 | `pair_product_eq_sq_sub_one (c)` | `(c−1)(c+1) = c² − 1`（无前提，Nat 截断下对 `c = 0` 亦真） |
+| 2 | `ntotal_is_catOrder_add_one` | `nTotal = catOrder + 1`（`rfl`） |
+| 3 | `branch_sq_form` | `nActive * nTotal = catOrder ^ 2 − 1` |
+| 4 | `branch_eq_mer` | `nActive * nTotal = 2 ^ catOrder − 1` |
+| 5 | `branch_eq_fifteen` | `nActive * nTotal = 15` |
+| 6 | ▣ **`pair_product_mer_iff (c) (3 ≤ c)`** | `(c−1)(c+1) = 2^c − 1 ↔ c = 4` |
+| 7 | `mer_pair_at_four` | `3 × 5 = 2^4 − 1` |
+| 8 | `catOrder_pinned_by_branch (c) (3 ≤ c)` | `(c−1)(c+1) = 2^c − 1 → c = 4` |
+| 9 | ▣ `dhstructural_B_bridge` | `MUFPF.DHStructural.B = nActive * nTotal` |
+| 10 | ▣ `branch_count_verdict` | 五合取：`B = 15 ∧ B = 3·5 ∧ B = 2^catOrder−1 ∧ B = catOrder²−1 ∧ catOrder = 4` |
+| 11 | `ntotal_not_free` | `nTotal = catOrder + 1 ∧ nActive = catOrder − 1 ∧ 乘积 = catOrder² − 1` |
+
+证明要点：
+
+- 定理 1 走 `Nat.sub_mul → Nat.one_mul → Nat.mul_add → Nat.add_comm → Nat.add_sub_add_right → pow_two`
+  的六步 `calc`；**不需要 `1 ≤ c` 前提**（`Nat` 截断使 `c = 0` 也成立，数值先证伪 F 行确认）。
+- 定理 6 三段合成：`pair_product_eq_sq_sub_one` 改写 → `sub_one_injective`（两侧 `≥ 1`）
+  → `sq_selfref_iff_four`（`c ≥ 3`）。
+- 定理 9 借 `B_eq_15` 落脚到 `15`，再 `norm_num` 把 `nActive * nTotal` 算成 `15`。
+
+模块计数：**11 theorem / 0 def / 0 sorry / 0 axiom**。
+
+### 21.69.6 裁决：`B = 15` 的真身是 `catOrder² − 1`，不是 `3 × 5`
+
+**（一）`N_total = 5` 不再是裸约定。** 在 `CategoryOrder` 口径下 `nTotal := catOrder + 1`
+是定义，`nTotal_eq_five` 是定理，而 `catOrder = 4` 由 `2^d = b³` 的唯一解给出
+（第 32/34 批）。本批的 `dhstructural_B_bridge` 把 `DHStructuralAnalysis` 的
+裸 `N_total` / `B` 与这条链接上 ⇒ **`N_total = 5` 的地位从「公设级字面量」
+升为「`catOrder + 1` 的输出」**。
+
+**（二）`3 × 5` 不是前提，是 `c² − 1` 在 `c = 4` 的取值。** 因为 `N_active = c − 1`、
+`N_total = c + 1` 都是 `catOrder` 的相邻整数，所以
+
+```
+B = (c − 1)(c + 1) = c² − 1
+```
+
+`3 × 5` 只是这个因式分解在 `c = 4` 处展开成具体数字的样子。**把它当独立前提，
+等于把「`c = 4`」数了两遍。**
+
+**（三）「层对计数」与「Mersenne」是同一条方程的两个写法。**
+`pair_product_mer_iff` 证明两者同值 ⟺ `c = 4`，而同值的判据是 `c² = 2^c`——
+这正是第 51/54 批的主方程。⇒ 论文 L353 弃用 `3 × 5` 路线（理由是引用韦达根 ⇒ 循环）
+与本库的 `B_eq_15` **并不冲突**：后者不是一条独立路线，而是 `c² − 1` 的展开，
+其真身已被 `c² = 2^c ⟺ c = 4` 覆盖。⇒ **第 53 批「数值 15 不能定函数形式」
+的负面结论在此进一步收窄：15 的两种写法本就同源，不存在「需要选哪条」的问题。**
+
+### 21.69.7 口径张力（5 vs 4）的解除
+
+`DHStructuralAnalysis` L103–105 记的张力是「本库 5 计入对象层 vs 论文 4 不含」。
+本批给出它能被解除的确切方式：
+
+```
+本库：  N_total^{obj} = 对象层 1 + 态射层 4 = 5 = catOrder + 1
+论文：  N_total^{mor} = N_active + 1   = 3 + 1 = 4 = catOrder
+```
+
+⇒ 两者的差恰好是 **1，且这 1 就是对象层**。⇒ `5 − 4 = 1` 不是两个不同的量，
+而是**同一个 `catOrder + 1` 是否把对象层这一格计入**。
+
+⇒ 因此口径警告本身是正确的（「不同口径的计数」），但它的**代价被高估了**：
+因为 `B = N_active · N_total` 在两种口径下分别是
+
+```
+计入对象层：B = 3 × 5 = 15  ✓（框架值）
+不计对象层：B = 3 × 4 = 12  ✗（d_H = ln 12 = 2.4849，与实测 2.7095 差 0.225）
+```
+
+⇒ 只有计入对象层的口径给出 15。而本批证明这个 15 等于 `catOrder² − 1`，
+**并非「多算了一层」凑出来的**——它是 `c² − 1` 在 `c = 4` 的值。⇒ 口径选择因此
+不是任意的：它必须让 `N_total` 取 `c + 1`（而不是 `c`），否则 `B` 落到 `c² − c = 12`，
+既不是 Mersenne 也不是框架值。
+
+### 21.69.8 边界与剩余开口
+
+1. **本批没有消去 `catOrder = 4` 本身。** `catOrder = 4` 在 `CatOrderIsTimeOnly.lean`
+   被证为 `t = 1` 的等价陈述（`catOrder_four_iff_time_one`，第 37 批），即
+   「`catOrder = 4`」与「`timeLayerDim = 1`」是同一处注入，不是两处。⇒ 本批只是把
+   `N_total = 5` 归约到 `catOrder + 1`，**并未新增或减少注入点**。
+2. **`c = 2` 解的存在。** 全域解集 `{2, 4}`，框架域 `c ≥ 3` 排除 `c = 2`。⇒ 与第 51 批
+   全域解集 `{(2,2),(2,4)}` 中 `f = 2` 的自指平凡解同源。⇒ 若未来有 `c < 3` 的物理情形，
+   本批定理需重述。
+3. **`N_active` 仍有独立来源。** `nActive = catOrder − 1` 是定义，但 `N_active = 3` 的
+   「主动生成层」语义（排除对象层与 coherence 层）仍是文字论证，未机检。⇒ 第 38 批
+   「21 处 `def := 3` 未合并」的登记不受本批影响。
+4. **`N_layers` 缺下标未解决。** `paper18_spectral_newtonian.md` L298 `N_layers = 5`
+   与 L244 `n = 4` 各有说明但无下标区分。本批给出 `5 = c + 1` / `4 = c` 的口径换算，
+   但论文侧的下标补齐仍待裁决（与第 55 批登记的口径问题同批）。
+5. **`B_eq_15` 本身的 doc 需订正（待裁决）。** `DHStructuralAnalysis` L107 现写
+   「本库的 `B_eq_15` 只是层对计数」——本批证明它同时是 `catOrder² − 1 = M_4`，
+   该措辞已偏弱。本批**未改**该 doc（保持与第 55 批一致的「只登记、不就地改」策略）。
+6. **注入点表的净变化：两项半 → 两项。** `N_total = 5` 一项由「未审计的结构性张力」
+   变为「已归约到 `catOrder + 1`，与 `catOrder = 4` 同一处」。⇒ 剩余：
+   建模层（`f² = 2^f` 的出发理由，不可机检）+ `{r = e⁻¹, d_H = ln 15}`（合一，第 55 批）。
+   但**这不等于又少了一个物理自由度**：`catOrder = 4 ⟺ t = 1` 的注入仍然在，
+   只是它不再以「`N_total = 5`」的名字出现第二次。
+
+### 21.69.9 本批产物与验证
+
+- 新模块：`src/MUFPFormalization/BranchCountOrigin.lean`（11 theorem / 0 def / 0 sorry / 0 axiom）。
+- 库根：`src/MUFPFormalization.lean` 213 → **214 行**，`ROOT_IMPORTS` 189 → **190**，
+  末行 `import MUFPFormalization.BranchCountOrigin`。
+- 模块基数：391 → **392**（顶层 383 + `SpectralBundle/` 9）；含库根 **393**。
+- 单模块构建：`pr634rh1.txt` 48.3 s / 3 error（`Nat.pow_pos` 参数序 + `hc` 未引用）；
+  `pr634rh2.txt` 38.0 s / 0 error / 0 WARN。
+- 全库构建：`pr634full56.txt` **30.3 s / 0 error / 10 WARN / 55341 B**，
+  10 条 WARN 与第 52–55 批完全同址。
+- 数值先证伪：`pr634rh_falsify.py`（74 行）+ `pr634rh_falsify_result.txt`（30 行），
+  `VERDICT_ALL_OK True`。
