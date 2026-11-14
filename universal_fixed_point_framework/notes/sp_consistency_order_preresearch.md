@@ -8977,3 +8977,212 @@ time_layer_is_the_gap  : spacetimeDim - spaceLayerDim = timeLayerDim
 - 全库 `pr634full59.txt`：**75.8 s / 0 error / 10 WARN / 55341 B / 3905 jobs**
   （10 条 WARN 与第 52–58 批完全同址；job 数 3904 → 3905，+1 与新增 1 模块一致）
 - 模块 394 → **395**（顶层 386 + `SpectralBundle/` 9），含库根 396
+---
+
+## §21.73 第 60 批：层边界的 `±1` —— `N_total := catOrder + 1` 与 `N_active := catOrder − 1` 的地位审计
+
+（代码 HEAD `6626b69`；模块 `LayerBoundaryAudit.lean` 208 行 / 9 theorem / 0 def / 0 sorry / 0 axiom；
+证据 `pr634rl_falsify.py` + `pr634rl_falsify_result.txt`；
+日志 `pr634rl1.txt`（0-0 / 3182 jobs）、`pr634rl2.txt`（0-0 / 3182 jobs）、`pr634full60.txt`（0 error / 10 WARN / 3906 jobs）。）
+
+### 21.73.1 本批方向与范围
+
+第 59 批判定「`+` 一直是透明背景」，并把注入点修正为两项 `{timeLayerDim = 1, 复合律 = 加法}`。
+沿同一条方法（专审从未被审的符号），本批审 `N_total` 与 `N_active` 的**那一对 `±1`**：
+
+```
+nTotal := catOrder + 1      -- ActiveFromCategoryOrder.lean L96
+nActive := catOrder - 1     -- ActiveFromCategoryOrder.lean L101
+```
+
+第 56 批把 `B` 归约到 `(c−1)(c+1) = c² − 1 = M₄`，但没有审这两个 offset 各自的地位。
+本批三问：
+
+1. 「`N_active` 去掉两层（对象层 0 + coherence 层 n）」是不是一个独立的结构事实？
+2. `+1` 与 `−1` 是 `catOrder` 的两个独立计数，还是一个对称包装？
+3. `+1` 声称「顶层停在层 4」——库内层结构停在哪里？
+
+范围：只审这两个 offset 及其与 `B`、`LayerIndex`、`SpFiveMorphism` 的关系。不改任何既有模块的 doc，
+不改论文正文，不重跑 sorry 审计（`RESEARCH_STATE` L9 口径仍是 D41 快照）。
+
+### 21.73.2 本批现场原文（均已原文核实）
+
+- `ActiveFromCategoryOrder.lean`（169 行 / ns `MUFPF.CategoryOrder`）
+  - L93 `def catOrder : ℕ := 4`；L96 `def nTotal : ℕ := catOrder + 1`；L101 `def nActive : ℕ := catOrder - 1`
+  - L108 `nTotal_eq_five`；L112 `nActive_eq_catOrder_sub_one := rfl`
+  - L115–116 `nActive_eq_nTotal_sub_two : nActive = nTotal - 2`（doc：「等价写法：去掉对象层与 coherence 层」）
+  - L127 `nTotal_eq_nActive_add_two : nTotal = nActive + 2`（doc：「两条被去掉的层：对象层 + coherence 层」）
+  - **L76「『主动生成层 = 排除对象层与 coherence 层』这条规则本身未被证明」**（第 33 批已登记）
+  - L79–80 「`N_total = 5` 的口径：本库把对象层 0 计入；论文侧 `N_total = N_active + 1 = 4` 不含对象层，两者是不同口径」
+- `BranchCounting.lean`（ns `MUFPF.BranchCounting`）
+  - L61–67 `inductive LayerIndex`，恰 5 个构造子（`obj` / `one` / `two` / `three` / `four`）
+  - L70–74 手动 `Fintype` 实例；L89–91 `total_layers_count : Fintype.card LayerIndex = 5`（`native_decide`）
+  - **L86 `def N_total : ℕ := 5`（裸字面量）** + L78–85 口径警告：「本库保留 `N_active × N_total` 仅作层对计数恒等式，**不**作为 15 的结构导出」「论文 L353 已明确弃用 `15 = 3 × 5`」
+  - L131 `def B : ℕ := (ActiveLayers : Finset LayerIndex).card * N_total`
+- `CoherenceToBranching.lean`
+  - L266–267 **「另注：`B = 15` 依赖 `N_total = 5` 这一**约定**（`total_layers_count`），不是由 coherence 结构推出的层数。」**
+  - L269–273 `coherence_implies_B_15`（三合取）；L279–288 `branch_combination_principle`
+- `CatOrderFromSpacetime.lean` L105 `def nTotalOf (d) : ℕ := catOrderOf d + 1`；L137 `nTotal_eq_five (d) (hD)`
+- `DHStructuralAnalysis.lean` L109 `def N_total : ℕ := 5`（裸字面量）
+- `BranchCountOrigin.lean`（第 56 批）L91 `ntotal_is_catOrder_add_one := rfl`；L94 `branch_sq_form`；L146 `dhstructural_B_bridge`
+- `SpFiveLayer.lean` **L33 `structure SpFiveMorphism`**（逐字同形于 `SpFourMorphism`）；L4 自称「库内层结构止于 `SpFourMorphism`」
+- `SpTowerWitness.lean` L89 `four0` / L98 `four1`（`SpFourMorphism three0 three1`）；**L110 `five0 : SpFiveMorphism four0 four1`**（`fourthHomotopy = shiftDiag3 ≠ 0`）；L125–127 `tower_height_at_least_five_B`
+- `SpLayerNonCollapse.lean` L183–202 `threeA ≠ threeB ∧ Nonempty (SpFourMorphism threeA threeB)`（层 4 非平凡）
+- `SpTowerUnbounded.lean` L48 `tower_height_unbounded_B : ∀ k, 2 ≤ k → LayerWitness jordan3`（B 相层数无界）
+- `CatOrderIsTimeOnly.lean` L13/L34：列出 `SpFiveLayer.lean` L33 的 `SpFiveMorphism`，并明确「`SpFiveLayer.lean` L4『库内层结构止于 SpFourMorphism』已由本文件自身否证」
+
+### 21.73.3 发现一：`±1` 是一对代数对称包装，「去两层」不携带信息
+
+三条恒等式（本批机检，`LayerBoundaryAudit`）：
+
+```
+sub_one_eq_add_one_sub_two (c : ℕ) : c - 1 = (c + 1) - 2          -- ωmega，对一切 c
+pm_one_sum (c) (h : 1 ≤ c)       : (c + 1) + (c - 1) = 2 * c      -- 两端关于 c 对称
+pm_one_product_add_one (c) (h : 1 ≤ c) : (c - 1) * (c + 1) + 1 = c * c
+```
+
+推论：
+
+1. `nActive = nTotal − 2` **不是**「去掉对象层与 coherence 层」这个结构操作的结果，
+   而是 `(c + 1) - 2 = c - 1` 这个对任意 `c` 成立的恒等式。
+   ⇒ 库内 `nActive_eq_nTotal_sub_two`（L115）虽被写成「等价写法：去掉…」，
+   但它是**定义的改写**，不是推导。与第 58 批 `catOrderOf spaceLayerDim = spacetimeDim`（`rfl`）同型。
+2. `(c−1)(c+1) + 1 = c²` 对一切 `c ≥ 1` 成立 ⇒ **`B = c² − 1` 完全由 `c` 决定**，
+   两个 offset 对 `B` 的信息贡献为零。`±1` 只是把 `c² − 1` 拆成两个因子。
+   库内实例 `branch_is_bracketed_square : nActive * nTotal + 1 = catOrder ^ 2`。
+3. 「两条被去掉的层」（L126 的 doc）与「`nTotal = nActive + 2`」（L127）是同一句话的两个写法：
+   2 = (+1) − (−1)。它不指定哪两层，也不证明那两层存在。
+
+⇒ **结论一：`±1` 的语义主张（对象层 + coherence 层）在库内始终未证**
+（`ActiveFromCategoryOrder` L76 自认、第 33 批登记、`ActiveLayerIsSpaceLayer` L32 自认「分相成立」）。
+本批把它钉死为「算术恒等式的伪装」，而不是留下一个「待证规则」。
+
+### 21.73.4 发现二：库内有四个 `N_total`，其中两个是裸常量
+
+| 位置 | 定义 | 类型 |
+|---|---|---|
+| `CategoryOrder.nTotal`（L96） | `catOrder + 1` | 函数 |
+| `CatOrderSpacetime.nTotalOf d`（L105） | `catOrderOf d + 1` | 函数 |
+| `BranchCounting.N_total`（L86） | `:= 5` | **裸常量** |
+| `DHStructural.N_total`（L109） | `:= 5` | **裸常量** |
+
+数值先证伪（`pr634rl_falsify_result.txt` 的 `E` 行）：
+
+```
+E FUNCTION_VS_LITERAL (c, c+1, 5, c-1, 3) : [(1,2,5,0,3) (2,3,5,1,3) (3,4,5,2,3) (4,5,5,3,3) (5,6,5,4,3) …]
+E_AGREE_ON_NTOTAL [4]   E_AGREE_ON_NACTIVE [4]
+```
+
+⇒ 函数口径 `c + 1` 与裸常量 `5` **只在 `c = 4` 重合**；`c = 5` 时函数给 6、常量仍是 5。
+⇒ **裸常量 `5` 不可能是 `catOrder` 的函数，它只在 `c = 4` 处与结构口径偶然同值。**
+
+这与第 58 批「数值同值非结构同一」（`total_eq_fixedpoint`）同型，且更强：
+不仅两处同值，而且**其中一侧根本不是函数**（对 `c` 无常量以外的依赖）。
+
+补桥：此前 `Fintype.card LayerIndex = 5`（`total_layers_count`）与 `nTotal = 5`（`nTotal_eq_five`）
+是两条互不引用的定理。本批建立
+
+```
+layerIndex_card_eq_nTotal : Fintype.card LayerIndex = nTotal
+```
+
+但必须一起说：**桥只接数值**。左端是「该 `inductive` 有几个构造子」（`layerIndex_stops_at_four`），
+右端是 `catOrder + 1`（算术）。两端相等不解释 `+1` 的来源，也不解释「5 层」是不是真的 5 层。
+
+### 21.73.5 发现三：`+1` 的「顶层停在层 4」被库内**自身反证**
+
+`nTotal = catOrder + 1` 的 doc 写「对象层 0 到层 4」（L95），`LayerIndex` 也恰有 5 个构造子。
+但库内四条事实同时成立：
+
+1. **层 5 结构已存在**：`SpFiveLayer.lean` L33 `structure SpFiveMorphism`，逐字同形于
+   `SpFourMorphism`（`thirdHomotopy → fourthHomotopy`，同一 `R = A*L - L*A` 判据）。
+   `SpFiveLayer.lean` L4 自称「库内层结构止于 `SpFourMorphism`」——该文件自身否证了这句话
+   （`CatOrderIsTimeOnly` L34 已登记）。
+2. **层 5 有非平凡态射（本批机检）**：`five0 : SpFiveMorphism four0 four1`，
+   `fourthHomotopy = diag(0,1,2) ≠ 0` ⇒ `layer_five_structure_exists`（复用 `tower_height_at_least_five_B`）。
+3. **层 4 本身就不「只含退化态射」**：`SpLayerNonCollapse` L183–202 已机检
+   `SpFourMorphism threeA threeB` 非空且 `threeA ≠ threeB`。
+4. **B 相层数无界**：`SpTowerUnbounded` L48 `tower_height_unbounded_B : ∀ k, 2 ≤ k → LayerWitness jordan3`。
+
+⇒ `Fintype.card LayerIndex = 5` 是**类型定义停止**（该 `inductive` 只有 5 个构造子），
+不是「结构上只有 5 层」。本批机检合成命题：
+
+```
+index_does_not_track_structure :
+  Fintype.card LayerIndex = 5 ∧ (∃ Ψ : SpFiveMorphism four0 four1, Ψ.fourthHomotopy ≠ 0)
+```
+
+⇒ **`+1` 的「顶层」是 A 相（可对角化、`ker ∩ im = 0`）读法，不是普遍结论。**
+`Unified3Theorem` L79–80（「层 4 不生成物理自由度」只在可对角化相成立）与
+`ActiveLayerIsSpaceLayer` L32（「这条规则是分相成立的」）是库内同一件事的两次自认。
+
+### 21.73.6 本批机检清单（`LayerBoundaryAudit.lean`，9 theorem / 0 sorry / 0 axiom）
+
+| 定理 | 内容 |
+|---|---|
+| `sub_one_eq_add_one_sub_two` | ★★★ `∀ c, c - 1 = (c + 1) - 2` |
+| `pm_one_sum` | ★★ `(c+1) + (c-1) = 2c`（`c ≥ 1`） |
+| `pm_one_product_add_one` | ★★★ `(c-1)(c+1) + 1 = c*c`（`c ≥ 1`） |
+| `branch_is_bracketed_square` | ★★★ 库内实例：`nActive * nTotal + 1 = catOrder ^ 2` |
+| `layerIndex_card_eq_nTotal` | ★★ 新桥：`Fintype.card LayerIndex = nTotal` |
+| `layerIndex_stops_at_four` | ★★ `Fintype.card LayerIndex = 5`（定义停止） |
+| `layer_five_structure_exists` | ★★★ `∃ Ψ : SpFiveMorphism four0 four1, Ψ.fourthHomotopy ≠ 0` |
+| `index_does_not_track_structure` | ★★★ 合取：标号停在 4，结构没停 |
+| `boundary_verdict` | ★★★ 五合取总述 |
+
+单模块构建：`pr634rl2.txt`，0 error / 0 WARN / 3182 jobs / 42.7 s
+（`pr634rl1.txt` 为首次失败：`Unknown identifier nTotal_eq_five.symm`——`nTotal_eq_five` 未列入 `open`，
+补 `open MUFPF.CategoryOrder (… nTotal_eq_five)` 后通过）。
+全库：`pr634full60.txt`，0 error / 10 WARN / **3906 jobs**（41.0 s，`Build completed successfully (3906 jobs)` 直读）。
+10 条 WARN 与第 52–59 批同址，未新增。
+
+### 21.73.7 裁决（五条）
+
+1. **`±1` 不是两个独立的结构计数，而是 `catOrder` 的一个对称包装。**
+   `nActive = nTotal - 2` 是恒等式，`(c−1)(c+1) + 1 = c²` 对一切 `c ≥ 1` 成立
+   ⇒ 两个 offset 对 `B` 的信息贡献为零，`B` 是 `c` 的一元函数。
+2. **「去两层」的语义主张（对象层 + coherence 层）在库内始终未证**（L76 自认）。
+   本批把它定性为「算术恒等式的伪装」，不再作为「待证规则」挂在账上。
+3. **`+1` 的「5 层」与 `LayerIndex` 的 5 个构造子是同值巧合，不同源。**
+   本批建了 `layerIndex_card_eq_nTotal`，但桥只接数值。
+   ⇒ 登记 `layer_index_stops_at_four_without_structural_witness`。
+4. **`+1` 的顶层在 B 相被库内自身反证**（层 5 结构 + 层 5 非平凡态射 + 层数无界）
+   ⇒ `N_total = 5` 是 A 相读法；`B = 15` 作为 `c² − 1` 的数值无条件，
+   但「15 = 层对数」只在 A 相成立。
+5. **注入点计数不变，仍两项** `{timeLayerDim = 1, 复合律 = 加法}`：
+   `±1` 由 `catOrder` 决定（`nTotal = c + 1` 就是定义，`nActive_eq_catOrder_sub_one := rfl`），
+   不构成第三个独立注入。但**新增一个适用范围限制**：`B = 15` 的层对读法限于 A 相。
+
+### 21.73.8 与第 56 / 58 / 59 批的关系
+
+- **第 56 批**：`B = (c−1)(c+1) = c² − 1 = M₄`，数值上对。本批补上两件：
+  (a) 那个 `−1` 来自 `±1` 的代数对称，**不是**来自「去掉两层」；
+  (b) `(c−1)(c+1)` 与 `2^c − 1` 只在 `c ∈ {2, 4}` 重合（`c ≥ 3` 唯一 `4`，本批数值复算：
+  `F_COINCIDE [2, 4]`、`F_COINCIDE_GE3 [4]`）⇒ `15` 的真身仍是 `M₄`，
+  `(c−1)(c+1)` 只是 `M₄` 在 `c = 4` 处的另一条因式写法。
+- **第 58 批**：本批的 `±1` 与它的 `catOrderOf spaceLayerDim = spacetimeDim`（`rfl`）同型——
+  都是「两个名字同一个定义式」。差别在于本批多了一条**反证**（层 5 结构），
+  即语义读法不只是「未证」，而且是「在 B 相为假」。
+- **第 59 批**：注入点两项 `{timeLayerDim = 1, 复合律 = 加法}`。本批确认 `±1` 不进这个集合。
+  第 59 批发现「`+` 承重且库内可观测」；本批发现「`±1` 不承重且库内可观测」
+  （换 offset 会改 `B`：`D OFFSET_TABLE` 里 `(1,1) → 15`，`(0,1) → 12`，`(1,2) → 10`，
+  `(2,1) → 18`）——但那个敏感性完全由 `c` 决定，不是由 offset 各自的结构含义决定。
+
+### 21.73.9 本批未做 / 边界
+
+1. **未改任何既有模块的 doc**：`ActiveFromCategoryOrder` L79–80（口径）、L95（「对象层 0 到层 4」）、
+   `SpFiveLayer` L4（「止于 SpFourMorphism」）、`BranchCounting` L78–85（口径警告）均保持原样，
+   只在本节与本批模块 doc 里登记。按「只登记、不就地改」策略，待裁决。
+2. **未重跑 sorry / olean 审计**：`RESEARCH_STATE` L9 仍是 D41 时点快照，本批只更新模块数（395 → 396）。
+3. **未做「`N_total` 的论文侧 `N_active + 1 = 4` 与库内 `5` 的双口径统一」**：
+   第 56 批已给出解除方式（`5 − 4 = 1` 即对象层），本批不重复；本批新增的只是
+   「`5` 的层对读法限于 A 相」。
+4. **未形式化「A 相 / B 相」本身**：库内没有 `Phase` 类型，本批只能说「层 5 存在且非平凡」
+   与「层数无界」，不能说「在 B 相 `N_total` 不是 5」——那需要先有相的判据（
+   `ker ∩ im = 0` 的 `Prop` 形式），属下一批候选。
+5. **`LayerIndex` 是否应补 `five` 构造子**：这会改 `Fintype.card LayerIndex = 6`，
+   进而改 `B = 3 × 6 = 18`。本批**不动**（那会把既有定理全推翻），但把问题登记出来：
+   若层 5 结构确实算一层，则 `N_total = 5` 是一个冻结的选择，而不是当时的结构读数。
+6. **未核**：`SpTowerUnbounded` 中 `LayerWitness` / `jordan3` 的确切定义（只读签名与注释）；
+   `CoherenceToBranching` 的 `LayerPair` 定义（本批只用到 `layerPair_card` 的结论与
+   `branch_combination_principle` 的形式）。
