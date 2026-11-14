@@ -1,0 +1,13 @@
+A SUB_IS_ADD_SUB_TWO True
+A_AT_CATORDER 3 3
+B SYMMETRIC_SUM True
+C BRACKETED_SQUARE True
+D OFFSET_TABLE (top,bot,N_total,N_active,B): [(0, 0, 4, 4, 16), (0, 1, 4, 3, 12), (0, 2, 4, 2, 8), (1, 0, 5, 4, 20), (1, 1, 5, 3, 15), (1, 2, 5, 2, 10), (2, 0, 6, 4, 24), (2, 1, 6, 3, 18), (2, 2, 6, 2, 12)]
+D_BASELINE_15 True
+E FUNCTION_VS_LITERAL (c, c+1, 5, c-1, 3): [(1, 2, 5, 0, 3), (2, 3, 5, 1, 3), (3, 4, 5, 2, 3), (4, 5, 5, 3, 3), (5, 6, 5, 4, 3), (6, 7, 5, 5, 3), (7, 8, 5, 6, 3), (8, 9, 5, 7, 3), (9, 10, 5, 8, 3)]
+E_AGREE_ON_NTOTAL [4] E_AGREE_ON_NACTIVE [4]
+F B_VS_MERSENNE (c, (c-1)(c+1), 2^c-1): [(2, 3, 3), (3, 8, 7), (4, 15, 15), (5, 24, 31), (6, 35, 63), (7, 48, 127), (8, 63, 255), (9, 80, 511), (10, 99, 1023)]
+F_COINCIDE [2, 4]
+F_COINCIDE_GE3 [4]
+G_LITERAL_B 15
+VERDICT_ALL_OK True
