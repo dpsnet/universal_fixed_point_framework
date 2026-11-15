@@ -9186,3 +9186,164 @@ index_does_not_track_structure :
 6. **未核**：`SpTowerUnbounded` 中 `LayerWitness` / `jordan3` 的确切定义（只读签名与注释）；
    `CoherenceToBranching` 的 `LayerPair` 定义（本批只用到 `layerPair_card` 的结论与
    `branch_combination_principle` 的形式）。
+
+---
+
+## §21.74 标号 5 与三相塔高：`N_total` 是不是相盲的？（第 61 批）
+
+**结论先行**：不是「A 相读法」。库内「相」早在第 29 批机检，三相塔高是 **1 / 2 / 无界**；
+`N_total = 5` 与三者**全部不等**，且与三者**全部相容**。标号 5 是**相盲**的。
+第 60 批有四处措辞需据此订正（§21.74.1）。
+
+### 21.74.1 起点：第 60 批四处措辞需订正
+
+| 第 60 批原文（行号见笔记内） | 库内实情 | 判定 |
+|---|---|---|
+| L9180「未形式化『A 相 / B 相』本身：库内没有 `Phase` 类型」 | `PhaseTrichotomy.lean`（第 29 批，187 行）已有三相判据，`TowerHeightFromPhase.lean`（第 30 批，225 行）已把三格接到塔高 | **误**（缺的只是名为 `Phase` 的 `inductive`，不是判据） |
+| L9150「`N_total = 5` 是 A 相读法」 | A 相塔高 = **2**（`phase_A_height_two`）；5 与 1 / 2 / 无界**全不等** | **误**（双重错误：既不是 A 相读数，也不是任何一相读数） |
+| L9154 / L9179「`B = 15` 的层对读法限于 A 相」「`5` 的层对读法限于 A 相」 | `B = N_active × N_total = 3 × 5 = 15` 只依赖两个计数，二者均与相无关（§21.74.5、§21.74.6） | **误**（不是「限于 A 相」，而是**与相无关**） |
+| L9115「`+1` 的『顶层』是 A 相读法」 | `catOrder + 1 = 5` 对任何相都成立；「顶层 = 层 4」已被 `SpFiveMorphism` 反证（第 60 批自身结论） | **误**（`+1` 同样相盲） |
+
+⇒ 第 60 批的方向（`±1` 是代数包装、`B` 是 `c` 的一元函数、`+1` 顶层被反证）**成立**；
+错的是它给这三条结论配的**相归属**：它们不是「A 相限定」，而是**相无关**。
+
+### 21.74.2 库内「相」的既有形式化（原文核实）
+
+判据建立在 `adLin2 A B`（`SpLayerSeparability.lean` L274）之上，是 `Submodule` 逻辑命题的组合，
+**没有** `inductive` 构造子计数：
+
+| 相 | 判据 | 塔高 | 代表实例 | 机检定理 |
+|---|---|---|---|---|
+| C 相（平坦 flat） | `ker = ⊥` | **1** | `(diag4, diag3)` | `phase_C_height_one` |
+| A 相（止步 stop） | `ker ≠ ⊥ ∧ ker ⊓ range = ⊥` | **2** | `(diag3, diag3)` | `phase_A_height_two` |
+| B 相（可穿 traverse） | `ker ≠ ⊥ ∧ ker ⊓ range ≠ ⊥` | **无界** | `(jordan3, jordan3)` | `phase_B_height_unbounded` |
+| 第 4 格 | `ker = ⊥ ∧ ker ⊓ range ≠ ⊥` | 必空（被蕴含律排除） | —— | `phase_cell_flat_but_traverse_excluded` |
+
+`PhaseTrichotomy.lean` 另有 `phase_states_exhaustive`（L111）、`phase_states_pairwise_exclusive`（L127）、
+`three_phases_occupy_three_cells`（L169）、`phase_count_is_not_active_count`（L182）。
+L44–52 明文：「`N_active = 3` 与「相的数量 = 3」是两个不同的 3，不该合并」——第 29 批当时就
+预见了本批要处理的口径混淆，但第 60 批仍未引用它。
+
+### 21.74.3 塔高 1 / 2 / 无界：机检形态与边界
+
+`TowerHeightFromPhase.lean`（第 30 批）给出 `tower_height_from_phase_cell`（四合取，L153）、
+`phase_C_height_one`（L174）、`phase_A_height_two`（L182，形态 `∃ R ≠ 0 ∧ R ∈ ker ∧ ¬ AdTraversable2 diag3 diag3`）、
+`phase_B_height_unbounded`（L196，`AdTraversable2 jordan3 jordan3`）。
+
+`SpTowerUnbounded.lean`（65 行）的 `LayerWitness`（L27）**不含层号变量**：
+`∃ R, R ≠ 0 ∧ HasConditionForm A A R ∧ adLin A R = 0`。
+`layerWitness_at_every_level`（L43）的证明是 `fun h _ _ => h` —— **重言式**；
+故「无界」的机检形态是 `tower_height_unbounded_B : ∀ k ≥ 2, LayerWitness jordan3`（L48），
+**不是** `∞` 的算术，也**不是**「层结构无限存在」（L4–9 口径：库内层结构只到层 5）。
+
+两条边界（第 30 批 L64–72，须一并引用）：
+- 塔高 1 的含义是「层 2 判据落空」，不是数字 1 本身；
+- 「无界」是「判据与层号无关 + 由 defect 决定塔高」，不是「层数无限」。
+
+### 21.74.4 四个互不相同的「层数」读数
+
+| 读数 | 值 | 口径 | 出处 |
+|---|---|---|---|
+| 标号计数 | **5** | `Fintype.card LayerIndex`（`obj`/`one`/`two`/`three`/`four`） | `BranchCounting.total_layers_count` |
+| C 相塔高 | **1** | 无层 2 见证 | `phase_C_height_one` |
+| A 相塔高 | **2** | 层 2 有、层 3 无 | `phase_A_height_two` |
+| B 相塔高 | **无界** | `∀ k ≥ 2` 均有同一判据的见证 | `tower_height_unbounded_B` |
+
+`{5, 1, 2}` 互异，且「无界」不与任何有限数相等（本批 `no_finite_readout_matches`）。
+⇒ 凡出现「层数」必须声明是**标号**还是**塔高**，两者不可互推。
+
+### 21.74.5 标号 5 是相盲的（本批主定理）
+
+`label_five_coexists_with_every_phase`（`PhaseCountReadout.lean`）：
+
+```
+(card LayerIndex = 5 ∧ InFlatPhase diag4 diag3)
+∧ (card LayerIndex = 5 ∧ InStopPhase diag3 diag3)
+∧ (card LayerIndex = 5 ∧ InTraversePhase jordan3 jordan3)
+```
+
+三个合取项**同时为真** ⇒ 同一个标号 5 与三相全部相容 ⇒ 标号不筛选相、不携带相信息。
+
+配套 `phase_criterion_is_partition`：三判据穷尽（`phase_criterion_exhaustive`，承接第 29 批
+`phase_states_exhaustive`）+ 两两互斥（`phase_criterion_exclusive`）⇒ 三相判据是
+`Matrix ι ι ℂ × Matrix ι ι ℂ` 上的一个**划分**；而标号计数是该划分**之外**的另一维读数。
+
+### 21.74.6 `B = 15` 的两个因子都不是塔高
+
+`fifteen_needs_generation_count_not_height`：
+`3 × 5 = 15 ∧ 2 × 5 = 10 ∧ 1 × 5 = 5 ∧ 15 ≠ 10 ∧ 15 ≠ 5`。
+
+把 `N_active = 3` 换成 A 相塔高 2 得 **10**，换成 C 相塔高 1 得 **5**，
+只有**生成代数计数** 3 给 15。
+⇒ `B = 15` 是「生成代数计数 × 标号计数」，与「塔高」无关，也与**哪一个相**无关。
+
+这条把第 56 批「层对计数」里的「层」定性为**标号层**：`B` 的第二个因子 `N_total` 是
+`LayerIndex` 的构造子数，不是任何一相的塔高。第 60 批的「限于 A 相」应改为「**相无关**」。
+
+### 21.74.7 无界不能被有限数封顶
+
+- `no_nat_caps_unbounded_tower : ¬ ∃ N : ℕ, ∀ k : ℕ, 2 ≤ k → k ≤ N`（取 `k = N + 2`，`omega`）。
+- `no_finite_readout_matches : ¬ ∃ N, (N = 1 ∨ N = 2 ∨ N = 5) ∧ ∀ k ≥ 2, k ≤ N`（取 `k = 6`，三支 `omega`）。
+
+第二条把「库内的三个有限读数（1 / 2 / 5）都不足以描述 B 相」写成否命题：
+**不存在**某个候选读数 `N ∈ {1, 2, 5}` 同时充当全层上界。
+这是本批对第 60 批「5 层」说法的最终定性：5 不是上界，1、2 也不是。
+
+### 21.74.8 数值先证伪记录（模式 8）
+
+脚本 `scripts/pr634rm_falsify.py`（纯 `math`，无第三方依赖），证据
+`notes/pr634rm_falsify_result.txt`（17 行 / 670 B / 纯 LF / 无 BOM / `VERDICT_ALL_OK True`）：
+
+```
+A LABELS_IN_HEIGHT_SET []            HEIGHT_VALUES [1, 2]
+A_CARD_FIVE_IN_SET False            A_ACTIVE_THREE_IN_SET False
+B FACTOR_TABLE [(3, 5, 15), (2, 5, 10), (1, 5, 5)]   B_ONLY_THREE_GIVES_15 [(3, 5, 15)]
+C NO_NAT_BOUND True                 SAMPLES (2,3) … (20,21)
+D_LABEL_NOT_A_HEIGHT ['A_stop','B_traverse','C_flat']  D_COEXIST 5↔三相全部
+E_FIVE_BREAKS True (N,k)=(5,6)
+F CELLS 4 EXCLUDED 1 REMAIN 3       G_PAIRS_DISTINCT True
+VERDICT_ALL_OK True
+```
+
+七项检查全过 ⇒ 才投入 Lean 证明（与本批 9 条 theorem 一一对应）。
+
+### 21.74.9 机检证据
+
+- 单模块 `lake build MUFPFormalization.PhaseCountReadout`：**0 error / 0 WARN / 3183 jobs**。
+  修程两步：① 裸名 `LayerIndex` 触发的 `Fintype` 合成失败（改为全限定
+  `MUFPF.BranchCounting.LayerIndex` 消除；实例 `instFintypeLayerIndex` 本已全局可见，
+  由临时探针 `#synth` 证实，探针已删）；② `linter.unusedSectionVars` 2 条（泛型判据误带 `ι`
+  ⇒ 改为显式参数，**未关 linter**）。
+- 全库 `lake build MUFPFormalization`：**0 error / 10 WARN / 3907 jobs / 28.4 s**
+  （第 60 批 3906 jobs ⇒ **+1 恰为新模块**）。10 条 WARN 与第 52–60 批**同址**
+  （`ICVerification` 82/86、`RAP4` 123/124、`RAP5a` 413、`SignatureFiber` 342、
+  `SpectralBundle/Core` 69、`SpectralBundle/PinchTopology` 389/492、`HallEmergence` 1170）⇒ **零新增**。
+- 库根 `src/MUFPFormalization.lean`：218 → **219 行 / 9434 B / `ROOT_IMPORTS = 195`**，
+  末行 `import MUFPFormalization.PhaseCountReadout`，纯 LF / 无 BOM / TAILNL。
+- 模块 `PhaseCountReadout.lean`：**210 行 / 10116 B / 9 theorem / 3 def / 0 sorry / 0 axiom**，
+  ns `MUFPF.PhaseCountReadout`，import `Mathlib.Tactic` + `PhaseTrichotomy` + `TowerHeightFromPhase`
+  + `SpTowerUnbounded` + `BranchCounting` + `ActiveFromCategoryOrder`。
+
+### 21.74.10 裁决与登记
+
+1. **订正第 60 批四处措辞**（§21.74.1 表）：核心是「不是 A 相限定，而是**相无关**」。
+2. **标号 5 相盲**：`label_five_coexists_with_every_phase` 机检。
+3. **`B` 的因子 3 只能是生成代数计数**：`fifteen_needs_generation_count_not_height`；
+   第 56 批「层对计数」的「层」= 标号层。
+4. **无界不可有限封顶**：`no_nat_caps_unbounded_tower` + `no_finite_readout_matches`。
+5. **注入点计数不变**：仍两项 `{timeLayerDim = 1, 组合律 = 加法}`（第 59 批）。本批不新增注入项，
+   但**新增一条适用范围限制**：任何用到「层数」的论证必须先声明用的是标号还是塔高。
+6. **登记**：`phase_readout_wording_corrected`（第 60 批四处措辞已订正于本批）；
+   新增 `layer_count_four_readouts`（库内四个互不相同的层数读数，禁止混用）。
+7. **边界**：本批不证「相只有三个」（第 29 批）；不改 `N_total` 的值；B 相「无界」仍是判据口径；
+   第 60 批模块 `LayerBoundaryAudit.lean` 内的 doc **未就地改写**（按「只登记、不就地改」待裁决）。
+
+### 21.74.11 下一批候选（按序处理，不必请示）
+
+1. **`N_active = 3` 是否同样相盲**：`nActive = catOrder − 1 = 3` 与三相判据并置检验
+   （预计：相容，且与塔高无关 ⇒ 与标号 5 同性质的相盲）。若成立，则 `N_active` 与 `N_total`
+   **两个因子都相盲**，`B = 15` 与「层塔」彻底解耦。
+2. **`layer_index_stops_at_four_without_structural_witness`（第 60 批登记）**：补结构见证或证明其不存在。
+3. **三处偏强 doc 就地订正**（`CatOrderFromSpacetime` L68/L96、`SpacetimeDimensionTwoPostulates` L136）。
+4. **`N < S` 因子有序**：`B = N_active × N_total` 的乘法交换使「3 × 5」与「5 × 3」不可区分；
+   若要论证「层对」的**序**，需要一个非交换构造。
