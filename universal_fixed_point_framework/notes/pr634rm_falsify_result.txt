@@ -1,0 +1,16 @@
+A LABELS_IN_HEIGHT_SET []
+A HEIGHT_VALUES [1, 2]
+A_CARD_FIVE_IN_SET False
+A_ACTIVE_THREE_IN_SET False
+B FACTOR_TABLE (first_factor, label, product) [(3, 5, 15), (2, 5, 10), (1, 5, 5)]
+B_ONLY_THREE_GIVES_15 [(3, 5, 15)]
+C NO_NAT_BOUND True
+C SAMPLES (N, k): [(2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 8)] ... [(19, 20), (20, 21)]
+D_LABEL_NOT_A_HEIGHT ['A_stop', 'B_traverse', 'C_flat']
+D_COEXIST (label, phase) : [(5, 'A_stop'), (5, 'B_traverse'), (5, 'C_flat')]
+E_FIVE_BREAKS True (N,k)= (5, 6)
+F CELLS 4 EXCLUDED 1 REMAIN 3
+F REMAIN_CELLS [(True, True), (False, True), (False, False)]
+G READOUTS label=5 C=1 A=2 B= unbounded
+G_PAIRS_DISTINCT True
+VERDICT_ALL_OK True
