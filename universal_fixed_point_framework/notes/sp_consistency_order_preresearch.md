@@ -9347,3 +9347,150 @@ VERDICT_ALL_OK True
 3. **三处偏强 doc 就地订正**（`CatOrderFromSpacetime` L68/L96、`SpacetimeDimensionTwoPostulates` L136）。
 4. **`N < S` 因子有序**：`B = N_active × N_total` 的乘法交换使「3 × 5」与「5 × 3」不可区分；
    若要论证「层对」的**序**，需要一个非交换构造。
+
+---
+
+## §21.75 `N_active` 与「相的数量」：两个 3 只在 `catOrder = 4` 处重合（第 62 批）
+
+**结论先行**：`N_active = 3` 是 `catOrder − 1` 的**算术结果**，随 `catOrder` 变（`c = 5` 时给 4）；
+「相的数量 = 3」是两条二值判据 4 格排除 1 格的**格数**，与 `catOrder` 无关。
+两者只在 `catOrder = 4` 取同一值 ⇒ **同值是巧合，不同源**。
+连同第 61 批：`B = N_active × N_total` 的两个因子**都相盲**，`B = 15` 与「层塔」彻底解耦。
+
+### 21.75.1 起点：第 61 批留下的半个问题
+
+第 61 批（§21.74）证明 `N_total = 5` 是相盲的，于是 `B = 3 × 5` 的**第二个因子**相盲。
+第一个因子 `N_active = 3` 是否也相盲？它与「相的数量 = 3」的同值是同源还是巧合？
+
+这个问题在库内有**文档断言但没有机检**：
+`PhaseTrichotomy.lean` L44–52 明文「`N_active = 3` 与「相的数量 = 3」是两个不同的 3，不该合并」。
+第 29 批写下这句话时没有把它变成定理；第 60/61 批也没回头检查它。本批把它机检化。
+
+### 21.75.2 库内两条既有事实（本批读原文核实）
+
+| 事实 | 原文 | 含义 |
+|---|---|---|
+| `N_active` 是 `catOrder` 的函数 | `ActiveFromCategoryOrder.lean` L101 `def nActive : ℕ := catOrder - 1`；L112 `nActive_eq_catOrder_sub_one := rfl` | 「4-范畴减两层」的算术 |
+| `N_active` 的可变性证据 | `BranchCounting.lean` L94–104：`isActive obj = false`、`isActive four = false`，`ActiveLayers = {one, two, three}` | 活跃集是构造子集的固定子集，card = 3 |
+| 相判据与 `catOrder` 无耦合 | `PhaseTrichotomy.lean` L100–L169 全部定理的参数是 `A B : Matrix ι ι ℂ`，**不含任何层数/阶数变量** | 判据只看 `ker` / `range` |
+| 自认缺口（仍在） | `ActiveFromCategoryOrder.lean` L76 | 「排除对象层与 coherence 层这条规则本身未被证明」 |
+
+⇒ 一条是 `c` 的函数，一条是矩阵的函数；两者在类型层面就已经分开，只是数值上在 `c = 4` 相遇。
+
+### 21.75.3 本批机检结果（11 theorem / 1 def）
+
+| 定理 | 内容 | 级别 |
+|---|---|---|
+| `nActiveOf` | `def nActiveOf (c : ℕ) : ℕ := c - 1`（库内定义的参数化） | — |
+| `nActive_eq_nActiveOf` | `nActive = nActiveOf catOrder`（`rfl`） | ★ |
+| `nActiveOf_four` | `nActiveOf 4 = 3` | — |
+| `nActive_varies` | `nActiveOf 5 = 4 ∧ nActiveOf 6 = 5 ∧ nActiveOf 5 ≠ 3` | ★ |
+| `one_witness_all_catOrder` | `∀ c, InStopPhase diag3 diag3 ∧ nActiveOf c = c - 1`（**同一见证**对任意 `c`） | ★★ |
+| `phase_partition_independent_of_catOrder` | 对任意 `c` 与任意矩阵对，三相划分成立且 `nActiveOf c = c − 1` | ★ |
+| `nActive_eq_three_iff_catOrder_four` | `c ≥ 1 ⇒ (nActiveOf c = 3 ↔ c = 4)` | ★★★ |
+| `two_threes_coincide_only_at_four` | 唯一性 + 三相同存 | ★★★ |
+| `B_factors_both_phase_blind` | `B = 15 ∧ ActiveLayers.card = 3 ∧ N_total = 5 ∧ nActive = 3 ∧ 三相同存` | ★★★ |
+| `nActive_not_a_height` | `nActive ≠ 1 ∧ nActive ≠ 2 ∧ nActive = 3` | ★ |
+| `nActive_cannot_cap_unbounded_tower` | `¬ ∃ N, (N=1∨N=2∨N=3∨N=5) ∧ ∀ k≥2, k ≤ N` | ★ |
+| `active_phase_verdict` | 8 项合取总述 | ★★★ |
+
+### 21.75.4 核心机制：一条随 `c` 变、一条不随
+
+`one_witness_all_catOrder` 是本批最有信息量的一条：它说的是**同一个矩阵对** `(diag3, diag3)`
+在**任意** `c` 下都仍是 A 相。也就是说相判据的见证不引用 `c`，而 `nActiveOf c` 的每个值都由 `c` 决定。
+两者能写进同一个合取式，恰恰因为它们**互不约束**——这不是「耦合」，是「正交」。
+
+`phase_partition_independent_of_catOrder` 把这一点推到划分层面：划分定理对任意 `c` 与任意矩阵对成立。
+
+### 21.75.5 `N_active = 3` 唯一钉住 `catOrder = 4`
+
+`nActive_eq_three_iff_catOrder_four : c ≥ 1 ⇒ (c − 1 = 3 ↔ c = 4)`。
+
+这条把第 56/60 批的「`B` 是 `c` 的一元函数」补上一个**反问题**：
+读数 3 反过来唯一确定 `c = 4`。⇒ 在 `c ≥ 1` 范围内，`N_active = 3` 与 `catOrder = 4` 互相锁定。
+而相数 3 **不**参与这个锁定：`c = 5` 时相数仍是 3，`N_active` 却是 4。
+
+### 21.75.6 两个 3 只在 `c = 4` 处重合
+
+`two_threes_coincide_only_at_four` 把三件事并列：
+① 对所有 `c ≥ 1`，`c − 1 = 3` 当且仅当 `c = 4`；
+② `(diag4, diag3)` 是 C 相；
+③ `(diag3, diag3)` 是 A 相；
+④ `(jordan3, jordan3)` 是 B 相。
+
+②③④ 与 ① 无关（它们对任何 `c` 都成立）⇒ 「N_active = 3」与「相数 = 3」在同一处相等，
+是 `c = 4` 这一点的**数值巧合**。第 29 批的文档断言在此得到机检形态。
+
+### 21.75.7 `B` 的两个因子都相盲 ⇒ `B = 15` 与层塔彻底解耦
+
+`B_factors_both_phase_blind`：`B = 15`、`ActiveLayers.card = 3`、`N_total = 5`、`nActive = 3`
+与三相**全部**可同时实例化。
+
+⇒ 第 61 批只证明了第二个因子相盲，本批补齐第一个。合起来的后果：
+`B = 15` 的全部信息来自 `catOrder = 4` 这**一个数**（第 56 批已给 `B = c² − 1`），
+它不携带任何「层塔」信息，也不携带任何「相」信息。
+`BranchCounting.lean` L78–85 的「层对计数」说法因此必须严格读成「标号层 × 标号层的计数」。
+
+### 21.75.8 `N_active = 3` 也不能封顶无界塔高
+
+`nActive_cannot_cap_unbounded_tower`：候选集 `{1, 2, 3, 5}` 全部失败（取 `k = 6`，四支 `omega`）。
+这是第 61 批 `no_finite_readout_matches`（候选 `{1, 2, 5}`）的扩展：
+把 `N_active = 3` 也加进候选，仍被 B 相的反例 `k = 6` 一次击穿。
+⇒ 库内**四个**有限读数（1 / 2 / 3 / 5）没有一个能当塔高。
+
+### 21.75.9 数值先证伪记录（模式 8）
+
+脚本 `scripts/pr634rn_falsify.py`（纯 `math`），证据 `notes/pr634rn_falsify_result.txt`
+（14 行 / 525 B / 纯 LF / 无 BOM / `VERDICT_ALL_OK True`）：
+
+```
+A_NACTIVE_FUNC_OK [(1,0) … (10,9)]      A_NACTIVE_AT_FOUR 3      A_NACTIVE_AT_THREE 2
+B_UNIQUE_SOLUTION [4]                   B_OTHERS_DIFFER 19
+C_CELLS_CONST [3]                       C_CELLS_ALL_C 20
+D_NO_CAP [{N:1,k:2},{N:2,k:3},{N:3,k:4},{N:5,k:6}] 全部 k_le_N False
+E_B_CONST [15]                          F_NACTIVE_NOT_HEIGHT [1,2]
+F_READOUTS_DISTINCT [1,2,3,5]
+G_COINCIDENCE_ONLY_AT_FOUR {c4:(3,3), c5:(4,3,True)}
+VERDICT_ALL_OK True
+```
+
+七项全过（A 函数形态 / B 唯一解 / C 格数恒定 / D 无封顶 / E 常数 / F 读数互异 / G 巧合）
+⇒ 才投入 Lean 证明。
+
+### 21.75.10 机检证据
+
+- 单模块 `lake build MUFPFormalization.ActivePhaseCoincidence`：**0 error / 0 WARN / 3184 jobs / 35 s**
+  （首建即通过，无修程；第 61 批 3183 ⇒ **+1 恰为新模块**）。
+- 全库 `lake build MUFPFormalization`：**0 error / 10 WARN / 3908 jobs / 22 s / 55849 B**
+  （第 61 批 3907 ⇒ +1）。10 条 WARN 与第 52–61 批**逐址一致**
+  （`ICVerification` 82/86、`SignatureFiber` 342、`RAP4` 123/124、`RAP5a` 413、
+  `SpectralBundle/Core` 69、`PinchTopology` 389/492、`HallEmergence` 1170）⇒ **零新增**。
+- 库根：219 → **220 行 / 9482 B / 9136 字符 / `ROOT_IMPORTS = 196`**，
+  末行 `import MUFPFormalization.ActivePhaseCoincidence`，纯 LF / 无 BOM / TAILNL。
+- 模块：**178 行 / 8350 B / 11 theorem / 1 def / 0 sorry / 0 axiom**，ns `MUFPF.ActivePhaseCoincidence`。
+- 模块数：397 → **398**（顶层 389 + `SpectralBundle/` 9；含库根 399）。
+
+### 21.75.11 裁决与登记
+
+1. **`N_active` 相盲**：它是 `catOrder` 的函数，相判据是矩阵的函数，两者正交
+   （`one_witness_all_catOrder` + `phase_partition_independent_of_catOrder`）。
+2. **第 29 批文档断言已机检化**：「两个不同的 3，不该合并」现在是定理
+   （`two_threes_coincide_only_at_four`），不再只是 doc。
+3. **`B` 两因子全相盲**：`B = 15` 不含层塔信息、不含相信息，只含 `catOrder = 4`。
+4. **注入点不变**：仍两项 `{timeLayerDim = 1, 组合律 = 加法}`（第 59 批）。
+   本批不新增注入项；**新增一条读数约束**：库内四个有限读数 `{1, 2, 3, 5}` 都不能当塔高上界。
+5. **登记**：`active_count_phase_blind`（`N_active` 与相判据正交，已机检）；
+   `two_threes_coincidence_at_four`（两个 3 的同值是 `c = 4` 的数值巧合）。
+6. **边界**：本批不证「相数对任意对象恒 3」（只证「同一判据对任意 `c` 可实例化」）；
+   不改 `catOrder` / `N_active` / `B`；`ActiveFromCategoryOrder` L76 的自认缺口**仍在**。
+
+### 21.75.12 下一批候选（按序处理，不必请示）
+
+1. **`layer_index_stops_at_four_without_structural_witness`（第 60 批登记，仍未做）**：
+   现在更紧迫——标号层 5 与三相塔高**都已相盲**，那么 `LayerIndex` 的层号**为什么停在 4**？
+   库内有 `SpFiveMorphism`（层 4 有态射见证）与 `layer_five_structure_exists`，
+   但「停在 4」本身是否需要结构见证仍未判定。
+2. **`N < S` 因子有序**：`B = N_active × N_total` 是乘法，交换 ⇒「3 × 5」与「5 × 3」不可区分；
+   要论证「层对」的**序**需要一个非交换构造。
+3. **三处偏强 doc 就地订正**（`CatOrderFromSpacetime` L68/L96、`SpacetimeDimensionTwoPostulates` L136）。
+4. **`modeling_choice_still_open`**：建模层「为什么从自指方程出发」仍未证。
