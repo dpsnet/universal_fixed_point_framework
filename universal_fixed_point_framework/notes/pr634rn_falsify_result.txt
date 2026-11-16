@@ -1,0 +1,13 @@
+A_NACTIVE_FUNC_OK [(1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5), (7, 6), (8, 7), (9, 8), (10, 9)]
+A_NACTIVE_AT_FOUR 3
+A_NACTIVE_AT_THREE 2
+B_UNIQUE_SOLUTION [4]
+B_OTHERS_DIFFER 19
+C_CELLS_CONST [3]
+C_CELLS_ALL_C 20
+D_NO_CAP [{'N': 1, 'k': 2, 'k_le_N': False}, {'N': 2, 'k': 3, 'k_le_N': False}, {'N': 3, 'k': 4, 'k_le_N': False}, {'N': 5, 'k': 6, 'k_le_N': False}]
+E_B_CONST [15]
+F_NACTIVE_NOT_HEIGHT [1, 2]
+F_READOUTS_DISTINCT [1, 2, 3, 5]
+G_COINCIDENCE_ONLY_AT_FOUR {'c4': (3, 3), 'c5': (4, 3, True)}
+VERDICT_ALL_OK True
