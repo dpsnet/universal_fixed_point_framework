@@ -9494,3 +9494,181 @@ VERDICT_ALL_OK True
    要论证「层对」的**序**需要一个非交换构造。
 3. **三处偏强 doc 就地订正**（`CatOrderFromSpacetime` L68/L96、`SpacetimeDimensionTwoPostulates` L136）。
 4. **`modeling_choice_still_open`**：建模层「为什么从自指方程出发」仍未证。
+---
+
+## §21.76 第 63 批：层标号有限性的结构见证审查与 `B = 3 × 5` 的交叉项解剖
+
+**问题（承接第 60/61/62 批）**：第 60 批证明了「层标号停在 4、层结构没停」
+（`index_does_not_track_structure`），并登记待办 `layer_index_stops_at_four_without_structural_witness`。
+第 61 批证明标号 5 与三相塔高**全等且相容（相盲）**；第 62 批证明 `N_active = 3` 与
+「相的数量 = 3」只在 `catOrder = 4` 重合。⇒ 剩下一个没答的问题：
+
+> **「层标号有限」这件事本身能不能约束结构？**
+
+本批三问：(1) `Fintype.card LayerIndex = 5` 是不是结构上界？(2) 「5」是不是唯一可实现的
+层标号基数？(3) `B = 3 × 5 = 15` 这 15 个组合里，包含了哪些**本不该有分支**的组合？
+
+### 21.76.1 现场读原文（`BranchCounting.lean`）
+
+- L61–67：`inductive LayerIndex` 五个构造子 —— `obj`（层 0 对象层）、`one`（层 1 1-态射）、
+  `two`（层 2 2-态射）、`three`（层 3 3-态射）、`four`（层 4 coherence）；`deriving DecidableEq`。
+- L70–74：`instance : Fintype LayerIndex`（`elems := {obj, one, two, three, four}`）。
+- L76–85 doc：已定性「`N_total = 5` 是 `LayerIndex` 的**层标号基数**（对象层 0 + 4 个态射层）」，
+  并明说与论文 §5.5 的 `N_total = N_active + 1 = 4` 不是同一口径，且论文 L353 已弃用 `15 = 3 × 5`。
+- L86：`def N_total : ℕ := 5`。L89–91：`total_layers_count : Fintype.card LayerIndex = 5`。
+- **L94–100：`def isActive (l : LayerIndex) : Bool`** —— `obj => false`、`one/two/three => true`、
+  **`four => false`**。L103–104：`def ActiveLayers := {one, two, three}`，L107–108：`card = 3`。
+- **L119–128 doc：`B = 3 × 5 = 15` 自称「核心假设（分支组合原理）」**，理由逐字为：
+  「每个主动生成层（1-态射、2-态射、3-态射）产生一个独立的 IFS 收缩映射，而**该映射在
+  5 个范畴层次上各有独立的固定点分支**。由于 𝐒𝐩 是严格 n-范畴……这些分支在范畴等价意义下互不重叠」。
+- L131：`def B : ℕ := ActiveLayers.card * N_total`；L134–135：`B_eq_15 : B = 15`。
+
+### 21.76.2 本批主发现：五个构造子里只有三个是主动生成层
+
+`isActive` 逐字给出：`obj → false`、`four → false`，其余三个 `true`。即：
+
+- **主动生成层 = {one, two, three}，3 个**；
+- **非主动层 = {obj, four}，2 个** —— 对象层 0 与 coherence 层 4 **都不是生成层**。
+
+于是 `|All| = |Active| + |NonActive| = 3 + 2`，`B` 的乘积逐字展开：
+
+```
+B = |Active| × |All| = 3 × 5
+  = 3 × 3 + 3 × 2
+  = 9 + 6 = 15
+```
+
+⇒ **15 里有 6 个是「生成层 × 非生成层」的交叉组合**。而 L124–127 的理由说「该映射在
+5 个范畴层次上各有独立的固定点分支」——这条理由对对象层与 coherence 层**不适用**：
+对象层是对象不是态射，coherence 层被 `isActive` 判为**非**主动生成层，两者都不产生
+「该主动层映射的固定点分支」。
+
+**这是本批的核心新发现**：`B` 的 doc 把 3 与 5 相乘，但 5 中有 2 个不是生成层；
+6/15 = 40% 的乘积来自语义上没有依据的组合。
+
+### 21.76.3 四个候选口径
+
+| 口径 | 构造 | 读数 | 依据 |
+|---|---|---|---|
+| 全部层对 | `3 × 5` | **15** | 库内采用（`B := ActiveLayers.card * N_total`） |
+| 去掉对象层 | `3 × (5 − 1)` | **12** | 第 56 批登记张力（`d_H = ln 12 = 2.4849`） |
+| 只数生成层之间的层对 | `3 × 3` | **9** | 非生成层不产生分支 |
+| 生成层 × 非生成层 | `3 × 2` | **6** | 本不该有分支的交叉项 |
+
+⇒ `B` 不是「结构逼出的 15」，而是**在四个可选口径里选了一个**。
+第 56 批只指出「只有计入对象层给 15，否则 12」；本批把 9 与 6 也列出来，并给出
+机制：`15 = 9 + 6`、`12 = 9 + 3`，两个口径的差都落在「非生成层」这一侧。
+
+### 21.76.4 数值先证伪（模式 8，`pr634ro_falsify.py`，纯标准库）
+
+七项全过（证据 `notes/pr634ro_falsify_result.txt` = 9 行 / 323 B / 纯 LF / 无 BOM）：
+
+```
+A_PARTITION_OK [(active,3),(non_active,2),(total,5)]
+B_DECOMP_OK [15 = 9 + 6]
+C_READOUTS_DISTINCT [15, 12, 9, 6]
+D_OBJECT_REMOVED [12]
+E_NO_OTHER_CARD [n=2..20 异常项 []]
+F_NO_CAP [(5, 6), (12, 13), (9, 10), (6, 7)]
+G_DIFFS_OK [(15,12,3),(15,9,6),(15,6,9),(12,9,3),(12,6,6),(9,6,3)]
+VERDICT_ALL_OK True
+```
+
+`E_NO_OTHER_CARD` 是「换基数给不出 15」的直接扫描：`n ∈ [2,20]` 里除 `n = 5` 外
+没有任何 `n` 使 `3n = 15`。`F_NO_CAP` 说明四个候选读数**都不封顶**（每个 `N` 都有更大的 `k`）。
+
+### 21.76.5 Lean 模块 `LayerPairReadoutAudit.lean`（11 theorem / 1 def）
+
+ns `MUFPF.LayerPairReadout`；import `Mathlib.Tactic` + `MUFPFormalization.BranchCounting`
++ `MUFPFormalization.SpTowerUnbounded`（窄导入，未拉入 `LayerBoundaryAudit` 的重链）。
+204 行 / 9623 B / 0 sorry / 0 axiom / 纯 LF / 无 BOM / TAILNL。
+
+| # | 定理 | 等级 | 内容 |
+|---|---|---|---|
+| 1 | `layer_exhaustive` | ★ | 五构造子穷举（`cases l <;> simp`） |
+| 2 | `NonActiveLayers`（def） | — | `{obj, four}`，与 `isActive` 的 `false` 两支一致 |
+| 3 | `non_active_layers_count` | ★★ | `card = 2`（`native_decide`） |
+| 4 | `layer_partition` | ★★ | `3 + 2 = card LayerIndex` |
+| 5 | `B_decomposition` | ★★★ | `B = 3 × 3 + 3 × 2` |
+| 6 | `object_layer_removed_readout` | ★★ | `3 × (5 − 1) = 12` |
+| 7 | `four_readouts_distinct` | ★★ | `15 ≠ 12 ≠ 9 ≠ 6` 型四读数互异 |
+| 8 | `finite_index_coexists_with_unbounded_tower` | ★★★ | `card = 5 ∧ ∀ k ≥ 2, LayerWitness jordan3` |
+| 9 | `index_card_not_a_tower_bound` | ★★★ | `¬ ∀ k ≥ 2, k ≤ card LayerIndex` |
+| 10 | `any_card_realizable` | ★★ | `∀ n, Fintype.card (Fin n) = n` |
+| 11 | `alt_card_changes_B` | ★★ | `n ≥ 2 ∧ n ≠ 5 ⇒ 3n ≠ B` |
+| 12 | `layer_pair_verdict` | ★★★ | 十合取总述 |
+
+构建：单模块 **0 error / 0 WARN / 3179 jobs**；全库 **0 error / 10 WARN / 3909 jobs / 55846 B**，
+10 条 WARN 与第 62 批基准**逐址一致、零新增**。
+
+### 21.76.6 结论甲：层标号有限**不能**约束结构
+
+- `finite_index_coexists_with_unbounded_tower`（★★★）：`card LayerIndex = 5` 与
+  「B 相每层 `k ≥ 2` 都有 `LayerWitness`」**同时成立** ⇒ 两者无矛盾。
+  这是第 60 批 `layer_five_structure_exists` 的加强版：不只层 5 有结构，**任意** `k ≥ 2` 都有，
+  而标号仍停在 5 个。
+- `index_card_not_a_tower_bound`（★★★）：`¬ ∀ k ≥ 2, k ≤ card LayerIndex`，反例 `k = 6`。
+  ⇒ 把 `N_total = 5` 当「塔高最多 5」是**错的**；第 60 批登记的
+  `layer_index_stops_at_four_without_structural_witness` 由此得到**反面回答**：
+  「停在 4」不是结构定理，而是类型设计的后果。
+
+### 21.76.7 结论乙：「5」是可替换的设计参数
+
+- `any_card_realizable`（★★）：`∀ n, Fintype.card (Fin n) = n` ⇒ 任何 `n` 都能做成层标号基数。
+- `alt_card_changes_B`（★★）：`n ≥ 2 ∧ n ≠ 5 ⇒ 3n ≠ B` ⇒ 同一公式换基数就给不出 15。
+  ⇒ `B = 15` **继承了「层标号取 5」这个选择**；第 60 批「`N_total` 是裸常量」的观察
+  在本批有了定量后果：裸常量换掉，`B` 必换。
+
+### 21.76.8 与第 60/61/62 批的关系
+
+- **第 60 批**：`±1` 是 `catOrder` 的对称包装；`B = c² − 1` 由 `c` 一元决定；去两层是算术伪装。
+  本批把 `3 × 5` 拆成 `3 × 3 + 3 × 2`，指出其中 6 个组合**语义上没有依据** —— 这是「算术伪装」
+  的定量版。
+- **第 61 批**：标号 5 相盲（与三相塔高全等相容）。本批补充：标号不只相盲，**连层次数本身都可换**。
+- **第 62 批**：`N_active = 3` 相盲、两个 3 只在 `c = 4` 重合。本批补充：`B` 的「15」不是唯一的
+  乘积读数，而是四选一。
+
+⇒ **三批连起来的一条线**：`N_active` 相盲（62）→ `N_total` 相盲（61）→ 连 `B = N_active × N_total`
+都不唯一（63）。乘积不唯一 ⇒ 下游 `d_H = ln B` 的数值也随口径走。
+
+### 21.76.9 边界与未机检项（必须一并陈述）
+
+1. 本批**不**新增 `LayerIndex` 构造子，不改 `B`、不改 `N_total`、不改 `isActive`；
+   `BranchCounting.lean` 的「核心假设」措辞**未就地订正**（是否订正待裁）。
+2. **「哪个口径才对」不是本批结论**。本批只证四个读数互异、且库内选择无结构依据。
+   口径裁决需要额外结构论证：`B` 的「分支」到底由谁产生（是主动层的像，还是层的笛卡尔积）。
+3. **`d_H` 随口径变化未机检**：本批只证整数读数 `15 ≠ 12 ≠ 9 ≠ 6`。
+   「`ln` 在 `(0,∞)` 严格单调 ⇒ `d_H` 也随之不同」这一步**未机检**——为避免一行推论拉入
+   `Mathlib.Analysis.SpecialFunctions.Log` 依赖链，登记为未机检推论。
+4. `LayerWitness` 的**无层号变量**（第 61 批发现）仍是本批「无界」一侧的语义软肋：
+   `∀ k ≥ 2, LayerWitness jordan3` 里 `k` 不进入见证内容 ⇒ 「每层都有见证」是同一见证的重复计数，
+   而非逐层新结构。这一点本批**未解决**，且它直接影响第 21.76.4 节 `F_NO_CAP` 的解释力。
+5. 第 56 批的 `12 vs 15` 张力**仍未裁决**，本批只把它并入四口径表。
+
+### 21.76.10 裁决
+
+1. **「层标号有限」是类型设计，不是结构定理**（`index_card_not_a_tower_bound` 机检）。
+2. **`B = 15` 是四个可选口径（15 / 12 / 9 / 6）之一，选择无结构依据**（`four_readouts_distinct` 机检）。
+3. **15 里有 6 个是「生成层 × 非生成层」的交叉组合**（`B_decomposition` 机检）。
+4. **「5」是可替换参数**（`any_card_realizable` + `alt_card_changes_B` 机检）。
+5. 注入点**仍两项** `{timeLayerDim = 1, 组合律 = 加法}`，本批**不增不减** ——
+   本批否证的是「`B = 15` 有结构必然性」，属现有两项注入点的**后果**，不是新注入点。
+
+### 21.76.11 新登记
+
+- `B_readout_not_unique`：`B` 的乘积读数四选一（15/12/9/6），选择无结构依据。
+- `layer_index_card_is_design_parameter`：「5」是可替换设计参数，非结构约束。
+- `cross_term_six_has_no_semantics`：15 中 6 个「生成层 × 非生成层」组合无分支语义。
+- `layer_witness_lacks_level_variable`（承第 61 批，本批加重）：`LayerWitness` 无层号变量，
+  ⇒「无界」是同一见证的重复，逐层新结构**未证**。
+
+### 21.76.12 下一批候选（按序处理，不必请示）
+
+1. **`layer_witness_lacks_level_variable`（本批加重，优先）**：给 `LayerWitness` 加层号参数
+   （`LayerWitnessAt k`），看「无界」能否升格为真正的逐层新结构。若不能，第 60–63 批的
+   「层结构没停」整条论证要降级为「同一见证可重复实例化」。
+2. **`B_readout_not_unique` 的口径裁决**：需要「分支由谁产生」的结构论证 ——
+   是「主动层的像在每层上的截面」（⇒ 3 × 5 或 3 × 4）还是「层对的笛卡尔积」（⇒ 3 × 3）。
+3. `N < S` 因子有序（第 62 批遗留）：`B = N_active × N_total` 乘法交换，序未定。
+4. 三处偏强 doc 就地订正（`CatOrderFromSpacetime` L68/L96、`SpacetimeDimensionTwoPostulates` L136）。
+5. `modeling_choice_still_open`：建模层「为什么从自指方程出发」仍未证。
