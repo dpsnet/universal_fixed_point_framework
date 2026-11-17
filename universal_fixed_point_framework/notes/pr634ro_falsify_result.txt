@@ -1,0 +1,8 @@
+A_PARTITION_OK [(active,3),(non_active,2),(total,5)]
+B_DECOMP_OK [15 = 9 + 6]
+C_READOUTS_DISTINCT [15, 12, 9, 6]
+D_OBJECT_REMOVED [12]
+E_NO_OTHER_CARD [n=2..20 异常项 []]
+F_NO_CAP [(5, 6), (12, 13), (9, 10), (6, 7)]
+G_DIFFS_OK [(15, 12, 3), (15, 9, 6), (15, 6, 9), (12, 9, 3), (12, 6, 6), (9, 6, 3)]
+VERDICT_ALL_OK True
