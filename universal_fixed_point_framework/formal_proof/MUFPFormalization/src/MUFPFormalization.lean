@@ -232,3 +232,4 @@ import MUFPFormalization.QuotientBridgeAudit
 import MUFPFormalization.LayeredCarrierAudit
 import MUFPFormalization.BranchCaliberAudit
 import MUFPFormalization.CaliberCompatibilityAudit
+import MUFPFormalization.CouplingDecompAudit
