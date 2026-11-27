@@ -261,3 +261,64 @@ deflectionStep4Coeff : ℝ := Real.cosh ((windowSteps : ℝ) * Real.log 2) - 1
 - 「窗口长度为什么是 4（从而等于 `catOrder`）」仍是公设。模块只证明「一旦取定 `catOrder`，所有相关等式成立」，没有证明「物理必须用范畴阶」。
 - `B = catOrder² − 1` 是**数值合流**，不是导出：`B` 的定义仍走 `ActiveLayers.card * N_total`，其中 3 与 5 是两个独立读法。第 63 批的四口径（15 / 12 / 9 / 6）不受影响，本模块只钉住 `N_active × N_total` 这一支。
 - **逆向唯一性仍是空白**。下一步真正该攻的不是「再写几条等式」，而是「给定 `K₄/m` 的读数，能否反定 `catOrder`」。按现有结构答案应为**否**：读数 `225/32` 只对应 `n = 4` 这一支，`n = 2` 给的是 `(4−1)²/8 = 9/8`，不同 `n` 给出不同读数，但读数本身不携带「来自哪一层」的信息。要把「不可反推」从判断变成机检结论，需要一条**多解显式化**定理：构造两个不同的范畴参数赋值，使物理读数完全相同。这是 §14 的入口。
+
+---
+
+## 14. R-c″：逆向读数审计（机检裁决，预测被证伪）
+
+§13 结尾留了一个**预测**：「构造两个不同的范畴参数赋值，使物理读数完全相同」。本节做机检裁决，结果**预测的前半被证伪**——在连续读数这一支上，读数唯一反定参数，不存在第二个赋值。
+
+**产物**：`src/MUFPFormalization/ReverseReadoutAudit.lean`（14 theorem / 3 def / 0 sorry / 0 warning）。
+
+### ① 连续读数唯一反定参数：成立
+
+读数定义 `stepCoeff n = (2^n − 1)² / 2^(n+1)`，且 `deflectionStep4Coeff = stepCoeff catOrder`（`readout_eq`）。
+
+机检链：
+
+| 命题 | 内容 |
+|:--|:--|
+| `stepCoeff_succ_sub` | `f(n+1) − f(n) = (2·(2^n)² − 1) / (4·2^n)` |
+| `stepCoeff_succ_gt` | 分子在 `2^n ≥ 1` 时恒正 ⟹ `f(n) < f(n+1)` |
+| `stepCoeff_strictMono` | `StrictMono stepCoeff` |
+| `stepCoeff_injective` | `Function.Injective stepCoeff` |
+| `readout_recovers_order` | `stepCoeff n = K₄/m → n = catOrder` |
+| `readout_recovers_four` | `stepCoeff n = 225/32 → n = 4` |
+
+⇒ **「多解」预测在这一支上不成立**：读数 `225/32` 唯一反定 4 步窗口，没有第二个 n 给出同一读数。预测记录保留，不删。
+
+### ② 离散读数 15 在层对路线下四解：成立
+
+`routeLayerPair (1,15) = routeLayerPair (3,5) = routeLayerPair (5,3) = routeLayerPair (15,1) = 15`（`routeLayerPair_fiber_four`）；
+`routeLayerPair_not_injective : ¬ Function.Injective routeLayerPair`；
+`layer_route_underdetermined : ∃ p ≠ (3,5), routeLayerPair p = routeLayerPair (3,5)`。
+
+⇒ 15 这个**数字**不携带「3 主动 + 5 总层」的语义：`(1,15)` 给出同一读数，语义完全不同。
+
+### ③ 离散读数 15 在阶路线下唯一：成立
+
+`routeOrder n = n² − 1`（ℝ 值口径）；`routeOrder_inj : n, m ≥ 1 ⟹ routeOrder n = routeOrder m ⟹ n = m`；`routeOrder_recovers_four : routeOrder n = 15 → n = 4`。
+
+### 汇总裁决
+
+`reverse_readout_verdict : Injective stepCoeff ∧ ¬ Injective routeLayerPair ∧ (阶路线在 n ≥ 1 上单射)`
+
+`reversibility_is_route_dependent : (routeLayerPair (3,5) : ℝ) = routeOrder 4 ∧ ¬ Injective routeLayerPair ∧ (阶路线单射)`
+
+**结论：同一个读数 15，走因子路线四解，走阶路线单解。逆向的可逆性由路线决定，不由读数决定。** 这是「逆向 = 约化，不是重构」的机检版本：读数能把参数压到唯一，压不出「参数从哪条路线产生」。
+
+### 对第 63 批的直接后果
+
+② 给「6 个交叉项」一个解释：15 在层对路线下有四个原像，任何从「15」直接读出层结构的尝试都注定多解。层语义（主动层 3、总层 5）只能来自 `isActive` 的定义，不能来自数值。这与第 63 批「层标号有限性是类型设计而非结构定理」同向。
+
+### 诚实边界
+
+1. **预测被证伪，记录保留**：§13 预期「读数相同 ⟹ 参数不同」可构造，机检在连续支上给出否定。
+2. ① 只证「读数 ⟹ 窗口长度唯一」，**不证**「读数 ⟹ 范畴结构唯一」。窗口长度取 `catOrder` 仍是定义选择。
+3. ③ 用 ℝ 值口径 `routeOrder : ℕ → ℝ`，因 ℕ 截断减法在 n = 0 处使 `0² − 1 = 1² − 1 = 0`；对 n ≥ 1 两者数值一致。这是口径选择，写明以免被读作偷换。
+4. ② 的多解是算术事实，不是物理新发现。
+5. 本模块不含任何「物理必须如此」的断言。
+
+### 下一个可做
+
+把 ② 与第 63 批的 `isActive` 计数接起来：证明四原像中**只有 `(3,5)` 满足层表判据**（第一分量 = `ActiveLayers.card` = 3，第二分量 = `N_total` = 5），即语义筛选在机检层把四解压到一解。这是「结构信息不在读数里、在判据里」的正面构造——比继续找多解更有价值。
