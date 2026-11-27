@@ -532,3 +532,75 @@ A2 的证明链是纯算术：`2^n − 1 = B = 15` ⟹ `2^n = 16 = 2^4` ⟹ 指�
    比较对象从「同一读数的不同原像」换成「同一数值的不同结构来源」。
 4. 本节不新增常数、不新增公设；结论强度限于 `norm_num` / `rfl` / `rw`。
 
+
+## 19. R-c：充分性骨架的效力判定（交织 ⟹ 谱相等）——条件式成立，但前提更强
+
+前十八节全是否定结论（§11 依赖图二分、§18 唯一入口只钉数值）。本节做**正向**尝试：
+不问「能不能逆向」，而问「若物理侧真的给出交织条件 `A_GR · T = T · A_SM`，
+它能不能把范畴侧的谱不变量钉住」。
+
+模块 `IntertwineSufficiencyAudit.lean`（`MUFPF.IntertwineSufficiencyAudit`，
+4 theorem / 1 def / 0 sorry / 0 warning）。
+
+### 19.1 形式化设定
+
+    Intertwines A B T  :≡  A * T = T * B          （n 维实方阵）
+
+`A` = 引力侧 `A_GR`，`B` = 标准模型侧 `A_SM`，`T` = 谱交织。
+
+### 19.2 机检结果
+
+| 定理 | 内容 | 判定 |
+|:--|:--|:--|
+| `intertwine_trace_eq` | `T*S = 1 ∧ S*T = 1 ∧ Intertwines A B T ⟹ A.trace = B.trace` | 成立 |
+| `intertwine_charpoly_eq` | 同前提 ⟹ `A.charpoly = B.charpoly`（**全谱转移**） | 成立 |
+| `no_inverse_no_trace` | `n=1`、`A=1`、`B=0`、`T=0`：`Intertwines` 成立而 `trace 1 ≠ trace 0` | 反例成立 |
+| `sufficiency_skeleton_verdict` | ① ∧ ③ | 骨架是条件式 |
+
+证明链（两处同构）：`A = T·B·S`（由 `A·(T·S) = A`、结合律、交织移项），再
+`charpoly(T·B·S) = charpoly(S·(T·B)) = charpoly((S·T)·B) = charpoly(1·B) = charpoly B`
+（`Matrix.charpoly_mul_comm`、`mul_assoc`、`one_mul`）；迹链同法用 `Matrix.trace_mul_comm`。
+
+### 19.3 判决
+
+**骨架成立，但它的前提比「T 存在」更强。**
+
+- 判① 成立：只要 `T` 有双侧逆，**整个特征多项式**（不止迹）从 `A` 搬到 `B`。
+- 判③ 成立：`T = 0` 时交织照样成立（`1*0 = 0*0`），而迹不等。故「交织」自身不含逆。
+- ⇒ 骨架的假设是「`T` 可逆」；框架内登记的只是「`T` 存在」（CONJECTURE，清单 C1）。
+  可逆严格强于存在。R-c 把待证项**换成一个更强的待证项**，因此不构成
+  「从物理侧推出范畴侧」的通路。
+
+### 19.4 与主线的收敛
+
+即使判① 完整成立（全谱转移），转移到的也只是**特征多项式 / 迹**这类数值型谱不变量。
+§18 已机检：同一数值可有三个互不相同的结构来源。故「谱相等」不传递「这是哪个范畴结构」。
+
+于是三节在同一处收敛：
+- §11：不含常数 ⟹ 逆向约束力零；含常数 ⟹ 污染；
+- §18：唯一干净入口只钉数值，不钉结构；
+- §19：正向骨架能搬的也只是谱（数值型不变量），且前提更强。
+
+**谱是数值层，结构不在谱里。** 这条现在是三处机检共同支撑的结论，而不是立场。
+
+### 19.5 过程记录（三处实现订正）
+
+1. `Intertwines` 初版写成 `def Intertwines {n : Type} (...) : Prop := A * T = T * B`，
+   漏了 `[Fintype n] [DecidableEq n]`，矩阵乘法实例无法合成（`HMul` 合成失败）。
+2. `rw [h]`（`h : Intertwines A B T`）不被接受——`rw` 要的是等式而非自定义谓词；
+   先 `have hEq : A * T = T * B := h`（定义展开）再 `rw [hEq]`。
+3. 反例的 `simp [Intertwines]` 未闭合；改为 `show 1 * 0 = 0 * 0` + `simp`，
+   迹不等式改 `norm_num [Matrix.trace_one, Matrix.trace_zero]`。
+4. `sufficiency_skeleton_verdict` 的 lambda 绑定 `m` 未使用触发 linter 警告，改 `_ _ _` 后 0 warning。
+
+### 19.6 诚实边界
+
+1. 只在 `Matrix n n ℝ` 上做，不在一般交换环/一般范畴上做：`charpoly_mul_comm`、
+   `trace_mul_comm` 在 ℝ 上直接可用；非交换情形未覆盖。
+2. 「双侧逆」用显式 `S`（`T*S = 1 ∧ S*T = 1`），不用 `IsUnit det`；两者在此设定下等价
+   （`Matrix.mul_nonsing_inv` 已核存在），但本模块只证显式版。
+3. 反例只给 `n = 1`——判③ 只需一个反例即可否掉无条件命题。
+4. 「可逆严格强于存在」是元层判断（Lean 中未形式化「存在 vs 可逆」的强度比较），
+   本模块只机检「可逆 ⟹ 转移」与「不可逆 ⟹ 可能失效」两侧。
+5. 本节不新增常数、不新增公设。
+
