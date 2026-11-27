@@ -457,3 +457,78 @@ A2 的证明链是纯算术：`2^n − 1 = B = 15` ⟹ `2^n = 16 = 2^4` ⟹ 指�
 2. 「物理侧」的定义沿用 R-b：模块**直接** import 常数定义模块。间接依赖未计入，故 12 这个数偏小。
 3. 12 条的归类（4 条钉住 / 8 条恒等式）是人工判读，判读依据写在表中，可复核。
 4. 本批**没有**新增 Lean 模块，全部是脚本 + 笔记；不产生新定理，只改口径。
+
+## 18. 唯一干净入口的效力判定：钉数值 ≠ 钉结构（机检）
+
+§17 把「形式承载常数」的独立入口收窄到**一个**：`(c−1)(c+1) = 2^c − 1 ⟹ c = 4`
+（`BranchCountOrigin.catOrder_pinned_by_branch`）。本节判它的效力：它钉住的到底是
+「数值 4」，还是「范畴阶 `catOrder` 这个结构」。
+
+### 18.1 判据设计
+
+三条判据，全部可机检，全部落在 `EntryEfficacyAudit.lean`
+（`MUFPF.EntryEfficacyAudit`，5 theorem / 0 sorry / 0 warning）：
+
+| 编号 | 命题 | 判什么 |
+|:--|:--|:--|
+| ① | 4 在库内**至少三个结构来源** | 数值 4 是否多源 |
+| ② | 三个来源的**定义形式互不相同** | 来源是三条路，还是同一 def 的别名 |
+| ③ | 任一 `ℕ → ℕ` 函数在三个来源上取同值 | 只拿数值的判别力是否为零 |
+
+### 18.2 三个来源（已核实定义位置）
+
+| 来源 | 定义 | 位置 |
+|:--|:--|:--|
+| `MUFPF.CategoryOrder.catOrder` | `:= 4`（字面） | `ActiveFromCategoryOrder.lean:93` |
+| `MUFPF.PowersCube.fixedPoint` | `:= powers ^ 2`（平方，`powers := 2`） | `ActiveFromPowersCube.lean:90`（`:87`） |
+| `MUFPF.SpacetimeDimensionTwoPostulates.spacetimeDim` | `:= spaceLayerDim + timeLayerDim`（求和，`3 + 1`） | `SpacetimeDimensionTwoPostulates.lean:62` |
+
+三条定义形式分别是**字面 / 平方 / 求和**，命名空间互不相同，不是同一 def 的别名。
+
+### 18.3 机检结果
+
+| 定理 | 内容 |
+|:--|:--|
+| `numeral_four_has_three_sources` | 三个来源全等于 4 |
+| `three_sources_defined_differently` | `catOrder = 4` ∧ `fixedPoint = powers ^ 2` ∧ `spacetimeDim = spaceLayerDim + timeLayerDim` |
+| `numeral_blind_across_sources` | `∀ f : ℕ → ℕ`，`f catOrder = f fixedPoint ∧ f fixedPoint = f spacetimeDim` |
+| `entry_premise_self_satisfied` | `(catOrder−1)(catOrder+1) = 2^catOrder − 1` 在框架内自动成立 |
+| `entry_efficacy_verdict` | ① ∧ ③ |
+
+### 18.4 判决
+
+**唯一干净入口钉住的是数值 4，不是结构。**
+
+- 观测到「4」，无法判断来源是范畴阶、不动点还是时空维数（判③，`numeral_blind_across_sources`）。
+- 入口前提 `(c−1)(c+1) = 2^c − 1` 在 `c = catOrder` 处**自动成立**
+  （`entry_premise_self_satisfied`）：它不是外部输入，而是框架已放进去的 4 的恒等重写。
+  从这条前提取到的信息，只能是「框架里已经有 4」。
+
+对本轮主问题（「能否从物理层逆向推出范畴结构」）的意义：§11 的二分（不含常数 ⟹ 零约束力；
+含常数 ⟹ 污染）**在唯一入口上被独立复核一次**，并且拿到了比二分更强的局部结论——
+即使把常数从定理里挤出去（§17 的「形式承载」），剩下的也只是数值，不是结构。
+
+### 18.5 过程记录：两处实现错误与订正
+
+1. **命名空间误判。** 初稿引用 `MUFPF.CatOrderSpacetime.spacetimeDim`，首轮构建
+   **15 error**：`CatOrderFromSpacetime.lean` L23–25 的三个 def 位于**命名空间之外**
+   （`namespace MUFPF.CatOrderSpacetime` 从 L89 起），故不存在该受限名；同文件
+   `FixedPointFactorOrigin.lean` L23 的 `spaceLayerDim` 同样在命名空间外。
+   订正：改用 `MUFPF.SpacetimeDimensionTwoPostulates.spacetimeDim`（L62，命名空间 L49–207 内）。
+2. **定义形式误记。** 初稿以为「不动点」来源是 `MUFPF.FixedPointOrigin.fixedPoint`，
+   实际该 def（L98）是**字面 `:= 4`**，不是平方；平方形式在 `MUFPF.PowersCube.fixedPoint`
+   （`:= powers ^ 2`）。若沿用前者，判②会退化成「两个来源都是字面」，结论作废。
+   订正后判②成立。
+3. 首轮修正后仍有 1 error（`rw` 把目标化成 `f 4 = f 4 ∧ f 4 = f 4` 未收尾），补
+   `exact ⟨rfl, rfl⟩` 通过。全库 **0 error / 10 warning / 3914 jobs**。
+
+### 18.6 诚实边界
+
+1. 本模块不证「三个来源互不相关」。「三者都是 4」可能本身就是框架设计的后果
+   （`fixedPoint = powers² = 4` 与 `catOrder = 4` 的数值合流在第 64 批已登记为合流、非导出）。
+   本模块只主张：**在定义层面它们是三条不同的路径**。
+2. 判②是「定义形式不同」的句法陈述（`rfl` 级），不是「语义独立」的证明。
+3. 判③是 `readout_value_blind`（§16 / `PhysicsImpliesCategory`）的同型推广：
+   比较对象从「同一读数的不同原像」换成「同一数值的不同结构来源」。
+4. 本节不新增常数、不新增公设；结论强度限于 `norm_num` / `rfl` / `rw`。
+

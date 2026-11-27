@@ -222,3 +222,4 @@ import MUFPFormalization.CategoryPhysicsCoupling
 import MUFPFormalization.ReverseReadoutAudit
 import MUFPFormalization.SemanticFilterAudit
 import MUFPFormalization.PhysicsImpliesCategory
+import MUFPFormalization.EntryEfficacyAudit
