@@ -220,3 +220,4 @@ import MUFPFormalization.ActivePhaseCoincidence
 import MUFPFormalization.LayerPairReadoutAudit
 import MUFPFormalization.CategoryPhysicsCoupling
 import MUFPFormalization.ReverseReadoutAudit
+import MUFPFormalization.SemanticFilterAudit
