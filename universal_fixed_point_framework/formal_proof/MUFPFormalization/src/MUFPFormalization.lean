@@ -224,3 +224,4 @@ import MUFPFormalization.SemanticFilterAudit
 import MUFPFormalization.PhysicsImpliesCategory
 import MUFPFormalization.EntryEfficacyAudit
 import MUFPFormalization.IntertwineSufficiencyAudit
+import MUFPFormalization.GNBridgeAudit
