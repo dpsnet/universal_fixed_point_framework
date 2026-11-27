@@ -225,3 +225,4 @@ import MUFPFormalization.PhysicsImpliesCategory
 import MUFPFormalization.EntryEfficacyAudit
 import MUFPFormalization.IntertwineSufficiencyAudit
 import MUFPFormalization.GNBridgeAudit
+import MUFPFormalization.AlphaCrisisAudit
