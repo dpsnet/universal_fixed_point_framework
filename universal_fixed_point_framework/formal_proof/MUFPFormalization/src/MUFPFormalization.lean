@@ -228,3 +228,4 @@ import MUFPFormalization.GNBridgeAudit
 import MUFPFormalization.AlphaCrisisAudit
 import MUFPFormalization.IntertwinerExistenceAudit
 import MUFPFormalization.IntertwinerRepairAudit
+import MUFPFormalization.QuotientBridgeAudit
