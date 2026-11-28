@@ -247,3 +247,4 @@ import MUFPFormalization.SchurCarrierAudit
 import MUFPFormalization.TwoWayCarrierAudit
 import MUFPFormalization.QuantizedDetAudit
 import MUFPFormalization.ThreeVersusActiveAudit
+import MUFPFormalization.SlotVersusTraceAudit
