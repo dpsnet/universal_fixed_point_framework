@@ -237,3 +237,4 @@ import MUFPFormalization.DeltaInvarianceAudit
 import MUFPFormalization.LengthConstraintAudit
 import MUFPFormalization.QuarterTurnQuantizationAudit
 import MUFPFormalization.ChiralityGradingAudit
+import MUFPFormalization.SignPinningAudit
