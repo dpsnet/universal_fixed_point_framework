@@ -239,3 +239,4 @@ import MUFPFormalization.QuarterTurnQuantizationAudit
 import MUFPFormalization.ChiralityGradingAudit
 import MUFPFormalization.SignPinningAudit
 import MUFPFormalization.OrientationBreakingAudit
+import MUFPFormalization.DiscreteCouplingTraceAudit

@@ -1971,3 +1971,50 @@ import `QuarterTurnQuantizationAudit` + `ForceAverageIsotropy`。
 3. 不把 `F` 的写法解释为物理定向；`F` 的破缺性只是矩阵定义层的事实。
 4. 若将来框架引入**生成标号**的机制（例如层序由 `Rec/Sp` 次序生成，而非由 `Fin` 索引给出），
    则本链末端会从「定义」上移为「定理」；本批明确记录这条升级路径仍空。
+
+## §35 R-s：离散化不救迹差 —— §31 的量化与 §23–§25 的迹阻塞正交
+
+§31 把耦合块压成四个值 `{1, −1, rotGen, −rotGen}`；§25 的分层载体把「相似（迹相等）」换成
+「共存（迹相加）」。这两条线此前从未交叉检查：**量化耦合块能不能把迹差补上？**
+
+模块 `src/MUFPFormalization/DiscreteCouplingTraceAudit.lean`（94 行 / 5 theorem / 0 def /
+0 sorry / 0 warning / 5149 B），命名空间 `MUFPF.DiscreteCouplingTraceAudit`，
+import `LayeredCarrierAudit` + `ChiralityGradingAudit`。
+
+### 35.1 判①：迹里没有耦合块
+
+`coupling_absent_from_trace (A B C D) : trace (blk A B C D) = trace A + trace D`
+（对**任意** `B C`）。这是 §25 `trace_blk` 的审计锚：耦合块不在对角线上，故不进迹。
+
+### 35.2 判②：四个量化值都不动迹
+
+`quantized_couplings_do_not_move_trace (A C D)` 四重合取：`B` 取 `1`、`−1`、`rotGen`、`−rotGen`
+给出**同一个** `trace A + trace D`。
+
+### 35.3 判③：框架两层迹差仍在
+
+`framework_layer_traces_differ : trace diag(0,2) ≠ trace diag(1, 1+Δλ_min)`。
+数值侧：`2` 对 `2 + Δλ_min`，而 `Δλ_min > 0`（`GNBridgeAudit.dlmin_pos`）。
+
+### 35.4 判④：四个值给出**一个**迹
+
+`framework_trace_same_for_all_four`：载体 `blk (diag 0 2) B 0 (diag 1 (1+δ))` 在 `B` 取四个值时
+迹都等于 `4 + Δλ_min`。**一个重要旁证**：`4` 这个数与 §31 的「载体槽数 4」在数值上重合，
+但此处它来自 `trace diag(0,2) + trace diag(1,1) = 2 + 2`——**巧合，不是同源**（§26 禁互推的口径继续有效）。
+
+### 35.5 判⑤（判决）
+
+`discrete_coupling_trace_verdict` 三重合取 ⟹
+
+> §31 的量化与 §23–§24 的迹阻塞**正交**：
+> 把耦合块从 4 个实参数压到 1 个比特，**没有**给 §19 的谱交织 / §23–§24 的迹等式提供任何新的可解分支。
+
+一句话口径：**量化改变的是自由度，不是可解性。**
+
+### 35.6 诚实边界
+
+1. 只查迹这一条判据（§23 用迹相等判可分、§24 用迹相等判商桥）；没有查 `det` 等其他判据在
+   四值离散化下是否出现新分支——`det` 对 `±1` 与 `±rotGen` 都是 `1`，但本批未机检，
+   **不声称已查**。
+2. `4 + Δλ_min` 与「槽数 4」数值重合已点明，未做任何同源断言。
+3. 不把「量化不救迹差」扩大为「量化对 §19 完全无用」——它只说明迹判据这一路没被打开。
