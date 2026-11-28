@@ -233,3 +233,5 @@ import MUFPFormalization.LayeredCarrierAudit
 import MUFPFormalization.BranchCaliberAudit
 import MUFPFormalization.CaliberCompatibilityAudit
 import MUFPFormalization.CouplingDecompAudit
+import MUFPFormalization.DeltaInvarianceAudit
+import MUFPFormalization.LengthConstraintAudit
