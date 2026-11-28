@@ -241,3 +241,4 @@ import MUFPFormalization.SignPinningAudit
 import MUFPFormalization.OrientationBreakingAudit
 import MUFPFormalization.DiscreteCouplingTraceAudit
 import MUFPFormalization.DetCriterionAudit
+import MUFPFormalization.QuantizationResidueAudit
