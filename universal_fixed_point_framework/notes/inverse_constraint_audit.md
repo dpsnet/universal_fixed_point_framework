@@ -1767,3 +1767,72 @@ import `LengthConstraintAudit`（复用 `orth_forces_rotation_form`）与 `Inter
 4. 不把 `θ` 的四个离散值指认为任何物理相位；不做物理指认。
 5. 残余的「朝向」比特本批**不给出判据**——它是一个离散选择，不是数值缺口；
    是否可由框架内某处定向结构决定，属下一批开口。
+
+## §32 R-p：朝向比特的判据 —— 手性分级（框架内已有 `F`，缺的是赋号而非机制）
+
+§31 把耦合块收成 `B ∈ {1, −1, rotGen, −rotGen}`，剩下唯一开口是一个**符号位**。
+本批只查一件事：这个比特在框架内有没有判据，还是只能从外面赋号？
+
+模块 `src/MUFPFormalization/ChiralityGradingAudit.lean`（99 行 / 8 theorem / 0 def /
+0 sorry / 0 warning / 5098 B），命名空间 `MUFPF.ChiralityGradingAudit`，
+import `QuarterTurnQuantizationAudit` + `ForceAverageIsotropy`。
+
+**本批没有新对象、没有新数。** 唯一用的对象是框架早已有的反射生成元
+`Isotropy.F = diag(1, −1)`（`ForceAverageIsotropy` L607，原文即标为「手性/宇称翻转、
+`det = −1`、`O(2)\SO(2)` 代表元」）。
+
+### 32.1 判①：`F` 共轭固定标量类
+
+`conj_fixes_identity : F·1·F = 1`（因 `F² = 1`）。即 `α` 项在手性作用下不动。
+
+### 32.2 判②：`F` 共轭把耦合类翻号
+
+`conj_flips_rotGen : F·A·F = −A`（`A = rotGen`）。
+这是「手性翻转」在矩阵层的最小见证——反射与旋转**反交换**，不是同号复制。
+
+### 32.3 判③：手性作用是分级，不是一般线性变换
+
+`conj_preserves_decomposition (a d)`：
+
+```
+  F·(a·1 + d·A)·F = a·1 + (−d)·A
+```
+
+证明骨架（结构化重写，不用条目展开）：
+`Matrix.mul_add` → `Matrix.mul_smul`（×2）→ `Matrix.add_mul` → `Matrix.smul_mul`（×2）
+→ `conj_fixes_identity, conj_flips_rotGen` → `smul_neg, neg_smul`。
+（踩坑记录：条目级 `simp [Matrix.F, Matrix.mul_apply …]` 会把右乘 `F` 化成
+`![1,0] ᵥ* M` 的矢量形式，`ring` 收不掉；结构化重写直接绕开。）
+
+`chirality_involution`：作用两次复原（对合）。
+
+### 32.4 判④：两种朝向本来就都在框架里
+
+`J_eq_neg_rotGen : Isotropy.J = −rotGen`（`J = !![0,−1;1,0]`，`rotGen = !![0,1;−1,0]`）。
+`two_orientations_distinct`：二者**不相等**（比特非退化，不是同一对象换写法）。
+
+> 这一步是判决的支点：框架里同时存在 `J` 与 `−J`，所以「朝向」不是一个缺失的数，
+> 而是符号约定的二选一。
+
+### 32.5 判⑤：共轭交换对
+
+`conjugation_exchanges_nonrivial`：`F·A·F = −A` 且 `F·(−A)·F = A`。
+即 `F` 恰好把非平凡耦合的两个像互换——比特 = `F`-共轭下的二分类。
+
+### 32.6 判⑥（判决）
+
+`chirality_verdict` 四重合取 ⟹
+
+> 朝向比特的**判据机制在框架内已有**（反射共轭分级），
+> 但**哪个符号被实现**框架不偏置 —— 这是一条**赋号二分**，不是数值缺口。
+
+对照 §31 的结论，耦合块的开口清单到此为：0 个连续参数、0 个数值缺口、1 条赋号二分。
+
+### 32.7 诚实边界
+
+1. 只说「`F` 给出分级」，不声称 `F` 是**唯一**可用的分级算子（`SO(2)` 内其他反射同样
+   可以把 `±A` 互换）；判据的**存在性**是机检的，**唯一性**不是。
+2. `J = −rotGen` 是同一对象的相反数写法，不把它解释为「框架里有两个物理耦合」。
+3. 本批完全不涉及物理指认；「朝向」是否对应任何可观测量，不在本批范围。
+4. 赋号二分是否可由框架内某处定向结构（如层序、`Rec/Sp` 次序）决定，仍开放。
+5. 未证「`F`-共轭是 `span{1,A}` 上唯一的翻号对合」；只证存在一条这样的对合。
