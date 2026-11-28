@@ -235,3 +235,4 @@ import MUFPFormalization.CaliberCompatibilityAudit
 import MUFPFormalization.CouplingDecompAudit
 import MUFPFormalization.DeltaInvarianceAudit
 import MUFPFormalization.LengthConstraintAudit
+import MUFPFormalization.QuarterTurnQuantizationAudit
