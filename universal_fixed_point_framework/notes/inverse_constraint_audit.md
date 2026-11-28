@@ -2747,3 +2747,99 @@ Schur 补。§45.6 把这条登记为 `CARRIER_SPECTRUM_TWO_WAY`。本节落地�
 - `B_耦合` 内生判据（§26–§27）仍未攻；`b, c` 无来源，本批不涉。
 - §31 表述级订正（`B⁴ = 1` 依据写成「载体 4 维」）仍未改。
 - 仍未决（历史，待用户拍板）：`B⁴ = 1` 是否接受为第二条结构要求、§23.7 两出口、§24.6 三出口。
+
+## §48 退化点换主轴补读：`t = 1` 与 `t = 1 + Δλ_min`（第 99 批）
+
+### §48.1 问题与做法
+
+§46/§47 的三条耦合谱闭式都只在这两点**之外**机检。原因是它们用的 D 侧 Schur 形式
+`det(t•1₄ − blk A B C D) = det(t•1−D) · det(t•1−A − B·⅟(t•1−D)·C)` 要求 `t•1 − A_SM` 可逆，
+而 `A_SM = diag(1, 1+Δλ_min)` 的两个根恰好是 `1` 与 `1+Δλ_min`。§46 因此把
+`SPECTRUM_TWO_WAY_AT_SM_ROOT` 登记为开口：`t = 1+Δλ_min` 处 D 侧退化，读数只能由数值分工给出
+（`0.8631054658`），无法机检。
+
+本批换主轴：改用**对偶 Schur 形式**
+`det(blk A B C D) = det A · det(D − C·⅟A·B)`（Mathlib `det_fromBlocks₁₁`，需 `[Invertible A]`，
+源 `LinearAlgebra/Matrix/SchurComplement.lean:370`）。在两个退化点上
+`t•1 − A_GR = diag(t, t−2)` 分别为 `diag(1, −1)` 与 `diag(1+Δλ_min, Δλ_min−1)`，
+**两个对角元都非零**，A 侧始终可逆；退化的只是 D 侧。新工具引理 `det_blk_schur_left` 即此形式。
+
+配套把两个位移块写成显式形状，D 侧的奇异性也一并留证：
+`shift_gr_at_one`（`diag(1, −1)`）、`shift_sm_at_one`（`diag(0, −Δλ_min)`）、
+`shift_gr_at_sm_root`（`diag(1+h, h−1)`）、`shift_sm_at_sm_root`（`diag(h, 0)`）。
+
+### §48.2 机检结果（六条读数）
+
+| 耦合型（`B` / `C`） | `t = 1` 读数 | `t = 1 + Δλ_min` 读数 |
+| --- | --- | --- |
+| 纯标量 `diag(p,p)` / `diag(q,q)` | `pq·(pq − h)` | `pq·(pq − h − h²)` |
+| 纯转动 `b·A` / `c·A` | `bc·(bc − h)` | `bc·(bc − h + h²)` |
+| 混型 `diag(b,b)` / `c·A` | `(bc)²` | `(bc)²` |
+
+单位幅度（`p=q=b=c=1`）：
+
+- `t = 1`：标量 `1 − h = 0.8779915321`、转动同值 `0.8779915321`、混型 `1`；
+- `t = 1 + h`：标量 `1 − h − h² = 0.8631054658`、转动 `1 − h + h² = 0.8928775983`、混型 `1`。
+
+三条读数在两点全部非零 ⟹ `1` 与 `1 + Δλ_min` 都**不是**双向载体的特征根。
+
+机检清单（`SmRootAudit.lean`，307 行 / 19 theorem / 0 sorry）：
+`det_blk_schur_left`、`shift_gr_at_sm_root`、`shift_sm_at_sm_root`、`shift_gr_at_one`、
+`shift_sm_at_one`、`antidiag_mul_diag2`、`scalar_reading_at_sm_root`、`rotation_reading_at_sm_root`、
+`mixed_reading_at_sm_root`、`scalar_reading_at_one`、`rotation_reading_at_one`、
+`mixed_reading_at_one`、`dlmin_lt_half`、`unit_scalar_reading_ne_zero`、
+`unit_rotation_reading_ne_zero`、`unit_scalar_reading_at_one_ne_zero`、`sm_root_reading_verdict`、
+`both_degenerate_points_not_spectral`、`type_discrimination_at_degenerate_points`。
+
+### §48.3 判决
+
+1. **退化是主轴选择造成的工具退化，不是谱的奇点。** 换一条 Schur 分解，读数立刻干净；
+   因此 §46/§47 的闭式在这两点上可连续延拓，`SPECTRUM_TWO_WAY_AT_SM_ROOT` 关闭。
+2. 闭式在两点的值就是闭式自身的求值：混型的 `t(t−1)(t−2)(t−(1+h))` 项在两点分别被
+   `t−(1+h)` 与 `t(t−1)` 归零，只剩 `(bc)²`；纯型则是第二因子的整体塌缩（`−1` 或 `−pq`）。
+3. **新事实（型判别只在上面那个根出现）**：`t = 1` 处标量与转动读数同为 `1−h`，对"型"全盲；
+   `t = 1+h` 处两者相差恰为 `2h² ≈ 0.02977`——型判别是**二阶**效应（`h²`）。
+   混型两点都读 `(bc)²`，对 `h` 全盲。
+4. 与 §47 的 `h` 足迹一致：两类纯型的 `h²` 项符号相反（标量 `−h²`、转动 `+h²`），
+   判别强度 `2h²` 正是这一差；`h` 的线性项在两处都只以 `−h` 的公共形式出现。
+5. 交叉核对（不作结构主张）：`t = 1` 的读数 `1 − h = 0.87799153` 与 §44 记录的
+   `det(2•1 − A_SM) = (2−1)(2−1−h) = 0.87799153` 同值——同一个量在两个不同位置出现。
+
+### §48.4 诚实边界
+
+1. `det_blk_schur_left` 只在 A 可逆时可用；本批只在这两个点各实例化一次。
+   两边同时退化的 `t`（不存在于本载体：`A_GR` 根 `{0,2}`、`A_SM` 根 `{1,1+h}` 互不相交）未另证。
+2. 非零性只对**单位幅度**机检。一般幅度可使读数归零：标量型取 `pq = h`（`t=1`）或
+   `pq = h + h²`（`t=1+h`）即得零。故「SM 根不是特征根」限定为**框架量子化耦合**（`|bc| = 1`）下的结论。
+3. 读数 ≠ 谱。本批只补单点值，不主张谱结构；§45「谱给全部、只缺归属」与 §47「混型无闭式」
+   的结论均不变。
+4. 数值抽查 200 组随机幅度，最小 `|读数|` 为 `4.49e-05`（混型 `(bc)²`，`|bc|` 小时自然趋零），
+   与「一般幅度可归零」一致，不构成反例。
+
+### §48.5 数值复核
+
+`$env:TEMP\s48_check3.py`（numpy，pyenv 3.11.8，`h = (√3−1)/6`）：
+
+- A 侧 Schur 恒等式（60 组随机可逆 `A`）：最大残差 `1.78e-14`；
+- `t = 1` 三条公式：最大残差 `4.26e-14`；
+- `t = 1+h` 三条公式：最大残差 `3.55e-14`；
+- 与 §46/§47 闭式在这两点求值的一致残差：`4.26e-14`（200 组随机 `p,q,b,c ∈ [−3,3]`）；
+- 单位幅度读数：`0.8779915321`（`t=1`，标量与转动各一）、`1`；
+  `0.8631054658`、`0.8928775983`、`1`（`t=1+h`），与 `1−h`、`1−h±h²`、`1` 逐位吻合。
+
+### §48.6 机检锚
+
+- 模块 `SmRootAudit`：307 行 / 19 theorem / 0 sorry / 15329 B，库根 `src/MUFPFormalization.lean`
+  `ROOT_IMPORTS = 232`（末行 `import MUFPFormalization.SmRootAudit`）。
+- 全库 `lake build MUFPFormalization`：**3948 jobs / 0 error / 10 warning**（10 条全在历史模块）。
+- 关键数学引理（均已核实）：`Matrix.det_fromBlocks₁₁`（`SchurComplement.lean:370`）、
+  `Real.sqrt_lt'`（`Analysis/Real/Sqrt.lean:235`）、`dlmin_sq_eq`、`dlmin_in_unit_interval`。
+
+### §48.7 遗留开口
+
+- `B_耦合` 内生判据（§26–§27）仍未攻；`b, c` 幅度无来源，本批仍以符号 `p,q,b,c` 承载。
+- 一般幅度下读数归零点（`pq = h`、`pq = h + h²`）是否对应物理上可实现的耦合，未判。
+- §45「谱齐全缺归属」、§47 混型闭式的「不可约」仍只有 sympy 观察，未机检不可约性。
+- §31 表述级订正（`B⁴ = 1` 依据写成「载体 4 维」）仍未改。
+- 仍未决（历史，待用户拍板）：`B⁴ = 1` 是否接受为第二条结构要求、§23.7 两出口、§24.6 三出口、
+  `GOLDEN_FACTOR_IDENTITY` 的来源。

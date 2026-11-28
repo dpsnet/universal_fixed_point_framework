@@ -252,3 +252,4 @@ import MUFPFormalization.ScalarReadoutAudit
 import MUFPFormalization.CarrierSpectrumAudit
 import MUFPFormalization.TwoWaySpectrumAudit
 import MUFPFormalization.PureTypeSpectrumAudit
+import MUFPFormalization.SmRootAudit
