@@ -253,3 +253,4 @@ import MUFPFormalization.CarrierSpectrumAudit
 import MUFPFormalization.TwoWaySpectrumAudit
 import MUFPFormalization.PureTypeSpectrumAudit
 import MUFPFormalization.SmRootAudit
+import MUFPFormalization.ClosedFormSeparationAudit
