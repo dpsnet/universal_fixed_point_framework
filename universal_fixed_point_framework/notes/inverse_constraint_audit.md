@@ -2159,3 +2159,69 @@ import `LayeredCarrierAudit` + `ChiralityGradingAudit`。
 - 全库：3937 → **3938 jobs**（Δ = +1），**0 error / 10 warning**（警告集合与前批相同，全在历史模块）；
 - 笔记：§0–§37 → **§0–§38**；模块计数 423 → **424**（顶层 415 + `SpectralBundle/` 9；含库根计 425）。
 
+## §39 R-w：一般分块行列式（Schur 补）——§24「`det` ⟹ 0 比特」是**有条件**的判词
+
+**本批定性**：补上 §38 留下的开口 `DET_4x4_BLOCK_LAW` 的完整版（`C ≠ 0` 的一般情形），并因此**反向修正** §24 的一条判词。
+
+### 39.1 一般律（机检）
+
+`Mathlib` 已有 `Matrix.det_fromBlocks₂₂`（`LinearAlgebra/Matrix/SchurComplement.lean` L384，需 `[Invertible D]`）：
+
+> `det (fromBlocks A B C D) = det D · det (A − B·⅟D·C)`
+
+`SchurCarrierAudit.lean` 落两条：
+
+- `blk_eq_fromBlocks_gen`：`blk A B C D = Matrix.fromBlocks A B C D`（**任意**四块，不限 `C = 0`）。
+  §38 的 `blk_eq_fromBlocks` 只是 `C = 0` 特例。
+- `det_blk_schur`：`det (blk A B C D) = det D · det (A − B·⅟D·C)`（`D` 可逆）。
+
+这是 §38 三角律 `det (blk A B 0 D) = det A · det D` 的上位律。
+
+### 39.2 关键读数：耦合 `B` 只从 `A − B·⅟D·C` 一项进入
+
+一般律的右端里 `B` 只有一个入口，且**与 `C` 相乘**。于是
+
+- `C = 0` ⟹ 该项退化为 `A` ⟹ `B` 完全消失（`one_way_det_blind`：一般层数据下
+  `det (blk A B 0 D) = det (blk A B' 0 D)`，对任意 `B, B'` 相同）。
+- `C ≠ 0` ⟹ `B` 进入读数（`det_not_blind_when_reverse_nonzero`：同一组层数据 `A = D = 1`、`C = 1` 下，
+  `B = 1` 给 `det = 0`（`det_sees_coupling_zero`），`B = 0` 给 `det = 1`（`det_sees_coupling_unchanged`））。
+
+### 39.3 判决一：§38 的「载体 `det` 恒零」有两个**独立**零点
+
+框架实例 `blk A_GR B 0 A_SM`（`A_GR = diag(0,2)`、`A_SM = diag(1, 1+Δλ_min)`）中：
+
+1. `A_GR` 奇异 ⟹ `det A_GR = 0`，层数据被清零；
+2. `C = 0` ⟹ `B` 根本不进公式，耦合被清零。
+
+两者各自都能给出 `0`。`framework_det_zero_via_schur` 用 Schur 律复算了这个 `0`（与 §38 的三角律同值、同因）。
+所以 §38 那句「可乘量被奇异因子清零」只说对了一半：**另一半是 §25 把反向块设成 `0` 这个构造选择**。
+
+### 39.4 判决二（修正 §24）：`det` 不是普遍「0 比特」，而是「1 个混合标量」
+
+§24 判「换不变量 `det` ⟹ 0 比特，逃不掉」。本批机检显示这条判词**以单向下耦合为载体前提**。
+若载体换成双向耦合（`C ≠ 0`），`det` 会随 `B` 变，读到的不是 `0`，而是
+
+\[
+\det D \cdot \det(A - B\,\mathrm{⅟}D\,C)
+\]
+
+一个**把层数据与耦合乘在一起**的标量。所以 `det` 的问题不是「读不到」，而是「读到的是乘积」——
+它既不纯（分层与耦合不可分离），也不分（一个实数），因此在桥的作用上仍是 0 比特，但**理由换了**：
+不是免疫，而是混叠。
+
+### 39.5 诚实边界
+
+1. 一般律只在 `D` 可逆时成立（`det_fromBlocks₂₂` 的固有前提）；`A` 侧对称版 `det_fromBlocks₁₁` 需 `[Invertible A]`，
+   框架里 `A_GR` 奇异，故本批不用。
+2. 见证用的是最简载体（`A = D = 1`），**不是**框架实例。
+3. 框架实例的双向版本数值（`det = det A_SM · det(A_GR − B·⅟A_SM·C)` 具体等于多少）**未算**，
+   登记开口 `TWO_WAY_FRAMEWORK_DET`——须先显式构造 `⅟A_SM` 并算出 `A_GR − B·⅟A_SM·C` 的 2×2 行列式。
+4. 不声称「1 个混合标量能承担桥」；能否从中拆出 `2` 与 `2+Δλ_min` 未测。
+5. 本批不新增公设、不新增常数；`⅟A_SM` 的可逆实例只依赖 `Δλ_min > 0`（`framework_sm_det_ne_zero`）。
+
+### 39.6 与 §25 的接口
+
+§25 之所以能「造出」分层载体，正是因为允许 `C` 与 `B` 各自独立赋值；当时取 `C = 0` 是为简化，
+而 §36–§38 的 `det` 判据全建立在这个简化上。本批把它翻过来：**简化项恰好是 `det` 唯一的信息通道**，
+堵死它 `det` 就是常数。这是「载体不足」（§24 判决）在行列式语言下的重述：
+不是 `det` 无能，是载体只给了一条单向边。

@@ -243,3 +243,4 @@ import MUFPFormalization.DiscreteCouplingTraceAudit
 import MUFPFormalization.DetCriterionAudit
 import MUFPFormalization.QuantizationResidueAudit
 import MUFPFormalization.CarrierDetAudit
+import MUFPFormalization.SchurCarrierAudit
