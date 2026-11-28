@@ -2276,3 +2276,59 @@ import `LayeredCarrierAudit` + `ChiralityGradingAudit`。
 3. `⅟A_SM` 的显式值只对这一实例成立（`A_SM = diag(1, 1+Δλ_min)`），不推广到一般可逆对角块以外的情形。
 4. 未检查 `det` 与 §31 四值耦合（`1, −1, A, −A`）的交叉：本批的 `B` 不取 §31 的量化四值，故「量化后的双向载体 `det`」仍为开口 `TWO_WAY_QUANTIZED_DET`。
 5. 无新公设、无新常数；`Δλ_min > 0` 是唯一用到的外部事实（`dlmin_pos`）。
+
+## §41 R-y：量化耦合下的 `det` 读数——§40 开口 `TWO_WAY_QUANTIZED_DET` 收口
+
+§40 把双向载体的 `det` 算出了实值，但只测了两组**特定**耦合（恒等 `B=C=1`、第一槽投影 `B=C=diag(1,0)`），并在结尾把「量化后的双向载体 `det`」留成开口。§31 已把耦合量化成四个值 `1, −1, A, −A`（`A = rotGen`，四阶转动），§37 又已机检确认量化是保长度之外**真正独立**的第二条要求。本批把这四个值在 `B`、`C` 上**各自独立**铺开，跑完 16 个组合。
+
+### §41.1 设置与工具
+
+- 载体：`blk A_GR B C A_SM`，`A_GR = diag(0, 2)`（物理层，奇异），`A_SM = diag(1, h)`，`h` = 范畴层第二对角元，框架实例取 `h = 1 + Δλ_min ≈ 1.122008`。
+- 读数工具：§39 的 Schur 律 `det (blk A B C D) = det D · det (A − B·⅟D·C)`（需 `[Invertible D]`）。为让 `⅟` 对参数 `h` 直接归约，本批为 `diag(1,h)` 建 `instDiagOne`（`invOf = diag2 1 h⁻¹`，两个 `mul_*_self` 由 `diag2_mul_diag2` 点掉），使 `⅟D` 在证明中**按定义**就是 `diag2 1 h⁻¹`（用 `let` 会使其不透明、`rfl` 归约失效）。
+- 夹心块运算（全部机检）：`diag(a,b)·A = !![0,a;−b,0]`、`diag(a,b)·(−A) = !![0,−a;b,0]`、`A·diag(a,b) = !![0,b;−a,0]`、`(−A)·diag(a,b) = !![0,−b;a,0]`、`(∓1)·diag(a,b) = diag(∓a,∓b)`、`!![0,p;q,0]·(−1) = !![0,−p;−q,0]`、`diag(x,y) − !![0,p;q,0] = !![x,−p;−q,y]`。
+- 两条**换槽**夹心：`A·diag(a,b)·A = diag(−b,−a)`（`rot_sandwich`）、`A·diag(a,b)·(−A) = diag(b,a)`（`rot_anti_sandwich`）、`(−A)·diag(a,b)·A = diag(b,a)`（`negrot_rot_sandwich`）；以及「两块同取负 ⟹ 夹心不变」`(−B)·X·(−C) = B·X·C`（`neg_sandwich_gen`）。
+
+### §41.2 结果：16 组合只有 5 个读数
+
+| 耦合类（`B`, `C`） | 组合数 | `det` 读数 | 含 `Δλ_min`？ |
+| --- | --- | --- | --- |
+| 纯标量同号 `(1,1)`、`(−1,−1)` | 2 | `1 − 2h` | 含（只以 `2h` 出现） |
+| 纯标量异号 `(1,−1)`、`(−1,1)` | 2 | `1 + 2h` | 含（同上，符号反） |
+| 标量与转动混搭（八种次序/符号） | 8 | `1` | **不含**（精确常数） |
+| 转动同号 `(A,A)`、`(−A,−A)` | 2 | `3` | **不含**（精确常数） |
+| 转动异号 `(A,−A)`、`(−A,A)` | 2 | `−1` | **不含**（精确常数） |
+
+框架实例（`h = 1 + Δλ_min`）上的读数：`1 − 2(1+Δλ_min) = −1.24402`（复现 §40 的恒等耦合值）、`1 + 2(1+Δλ_min) = 3.24402`、`1`、`3`、`−1`。numpy 独立复核 16 组 × 6 个 `h`（0.1220084679、0.3、1.0、2.5、0.05、7.0）全部吻合，最大残差 `4.44e-16`。
+
+### §41.3 机制：`h` 被「换槽」打掉
+
+`det` 里 `h` 只能从两处进来：`det A_SM = h`，以及夹心项里 `⅟D = diag(1, h⁻¹)` 提供的 `h⁻¹`。于是 `h` 能否留下，取决于 `A_GR − B·⅟D·C` 是否**把 `h⁻¹` 放在第一槽**：
+
+- **转动夹心换槽**：`A·diag(1,h⁻¹)·A = diag(−h⁻¹, −1)`——`h⁻¹` 被搬到**第一槽**。而 `A_GR = diag(0,2)` 第一对角元是 `0`，减法后 `h⁻¹` 在第一槽**孤立出现一次**，行列式就带一个 `h⁻¹`，与 `det A_SM = h` 相乘恰好抵消 ⟹ `Δλ_min` 连根消失，读数只剩 `A_GR` 的整数对角元参与运算的结果。
+- **纯标量夹心不换槽**：`(±1)·diag(1,h⁻¹)·(±1) = diag(1,h⁻¹)`，`h⁻¹` 仍落**第二槽**，与 `2` 相加 ⟹ 行列式是 `(0∓1)·(2∓h⁻¹)`，乘上 `h` 只能得到 `1 ∓ 2h`，`h` 退不掉。
+- **混搭只换一槽**：如 `A·diag(1,h⁻¹)·1 = !![0,h⁻¹;−1,0]`，减法后矩阵成反对角形，行列式 `= ±h⁻¹`，乘 `h` 后为精确 `±1`。
+
+即：`det` 的 `Δλ_min` 盲性**不是普遍性质，而是分类型的**——凡夹心带转动（换槽）的组合，`Δλ_min` 恰好被 `h·h⁻¹` 抵消；凡两侧皆纯标量（不换槽）的组合，`Δλ_min` 才以 `2h` 的形式留在读数里。
+
+### §41.4 判决
+
+1. **§40 的「可读但混叠」再精确一层**：不是「`det` 恒为乘积、读数总带 `h`」，而是「`h` 只在**纯标量子空间**有支撑」。12/16 个量化组合上 `det` 给出精确整数（`1`、`3`、`−1`），对 `Δλ_min` 完全不敏感；只有 4/16 把 `2h` 带进读数。
+2. **加法可分性在任何分支上都不出现**：纯标量分支读 `1 ∓ 2h`（`h` 与 `1` 相加且被加倍），转动与混搭分支读整数（连 `h` 都没有）。桥要的 `2` 与 `2 + h` 的相加可分，无一条分支给出——与 §38–§40 的结论一致且更硬：连「带 `h` 的读数」都只出现在一个四元子空间里。
+3. **`det` 读得出相对符号、读不出量**：纯标量类 `1 − 2h ≠ 1 + 2h`、转动类 `3 ≠ −1`（`det_separates_relative_sign`）。这是对**给定**耦合的读数，不构成对耦合选择的约束 ⟹ 比特数仍为 0；但「`det` 全无信息」的说法要改述为「读得出相对符号、读不出量」。对量化耦合（`B`、`C` 各自四值），`det` 把 16 个组合压成 5 个读数，仍不足以反选出耦合。
+
+### §41.5 诚实边界
+
+1. `B`、`C` 的独立量化取自 §31 的四个值，**不是**框架内生的双向耦合判据（§26–§27 悬案未决：`B_计数` 四口径、`B_耦合` 无判据）。故这些读数不可读作「框架预言」，只是「框架载体在给定量化耦合下的读数」。
+2. 转动同号分支读出的 `3` 与 `N_active = catOrder − 1 = 3` 数值相同，本批**不主张同源**：`3` 的来源是 `2 − (−1)`（`A_GR` 的非零对角元 `2` 减去转动夹心在第二槽的 `−1`），与 `catOrder` 无结构联系。新开口 `DET_THREE_VS_N_ACTIVE`。
+3. 纯标量分支的 `1 ∓ 2h` 与 §40 的 `−1.24402`、`−2.24402` 不是同一族：§40 的第二组是「单向投影」`B=C=diag(1,0)`，其中 `⅟D` 落在 `A_SM` 的**第一槽**，不在本批四值之内。两批不冲突，但也不可混读。
+4. 不新增常数、不新增公设；`Δλ_min > 0` 仍是唯一用到的外部事实（`dlmin_pos`）。`h ≠ 0` 只作可逆性前提。
+
+### §41.6 机检锚
+
+模块 `QuantizedDetAudit.lean`（438 行 / 35 theorem / 0 warning）：`instDiagOne`、`diag2_mul_rot`、`diag2_mul_neg_rot`、`neg_one_mul_diag`、`diag_mul_neg_one`、`rot_mul_diag2`、`neg_rot_mul_diag2`、`rot_mul_diag2_neg_one`、`antidiag_mul_neg_one`、`rot_sandwich`、`rot_anti_sandwich`、`negrot_rot_sandwich`、`neg_one_sandwich`、`diag2_sub_antidiag`、`neg_sandwich_gen`；16 个读数定理 `det_scalar_aligned`、`det_scalar_both_neg`、`det_scalar_flipped`、`det_scalar_neg_pos`、`det_scalar_rot`、`det_neg_scalar_rot`、`det_scalar_neg_rot`、`det_neg_scalar_neg_rot`、`det_rot_scalar`、`det_neg_rot_scalar`、`det_rot_neg_scalar`、`det_neg_rot_neg_scalar`、`det_rot_aligned`、`det_rot_both_neg`、`det_rot_anti`、`det_rot_neg_pos`；汇总 `quantized_det_table`（16 合取）、`three_readings_dlmin_free`（`∀h≠0` 三读数 `1/3/−1`）、`det_separates_relative_sign`、`framework_reading_table`、`quantized_det_verdict`。全库 `lake build MUFPFormalization` = **3941 jobs / 0 error / 10 warning**（警告全为历史基线）。
+
+### §41.7 遗留开口
+
+- `TWO_WAY_QUANTIZED_DET`（§40 留）＝**本批收口**：16 组合读数全表已机检，`Δλ_min` 的支撑已定位到纯标量子空间。
+- 新开 `DET_THREE_VS_N_ACTIVE`：转动同号分支的 `3` 与 `N_active` 是否同源——本批判定「数值巧合、不同源」，留待与 §35 的「`4` 与槽数 4 系巧合」一并复核。
+- 仍未决：`B_耦合` 的内生判据（§26–§27）、§31 的 `B⁴ = 1` 是否接受为第二条结构要求（§37 已证其独立性）。
