@@ -2111,3 +2111,51 @@ import `LayeredCarrierAudit` + `ChiralityGradingAudit`。
 - 全库：3936 → **3937 jobs**（Δ = +1），**0 error / 10 warning**（警告集合与前批相同，全在历史模块）；
 - 笔记：§0–§36 → **§0–§37**；模块计数 422 → **423**（顶层 414 + `SpectralBundle/` 9；含库根计 424）。
 
+## §38 R-v：4×4 分块行列式律落地——载体层 `det` 被奇异层清零，`det` 这条路两级全死
+
+§36 在 2×2 耦合块上判 `det ≡ 1`；§37 收束量化的残余结构。两批都留了同一处开口：4×4 载体 `blk A B C D` 的整体 `det` **未查**，登记为 `DET_4x4_BLOCK_LAW`。本批把这条律落地，并就此给出载体层 `det` 的判决。同时订正我在 §37 报告里对它的一个猜测。
+
+模块 `CarrierDetAudit.lean`（148 行 / 11 theorem / 0 def / 0 sorry / 0 warning / 7706 B），import `LayeredCarrierAudit` + `QuarterTurnQuantizationAudit`。
+
+### 38.1 分块乘法律落地
+
+关键发现：**`fromBlocks` 系列引理本来就在 Mathlib 里**，§25 当时的「该名在本工具链下的引理集未核实」其实可以通过一次定向检索解决——问题不是引理不存在，而是没查。
+
+- `blk_eq_fromBlocks`：`blk A B 0 D = Matrix.fromBlocks A B 0 D`（逐条目，`fromBlocks_apply₁₁/₁₂/₂₁/₂₂` 都是 `rfl` 级 simp 引理）；
+- `det_blk_zero_lower_left`（= `DET_4x4_BLOCK_LAW`）：`det (blk A B 0 D) = det A · det D`，由上式 + Mathlib 的 `Matrix.det_fromBlocks_zero₂₁` 直接给出，对**任意** `A`、`B`、`D` 成立。
+
+于是 §36 与 §37 里那句「分块行列式律须自建」可以撤回：不需要自建，只需引用。
+
+### 38.2 载体层 `det` 的三条判决
+
+- `carrier_det_blind`：`det (blk A B 0 D) = det (blk A B' 0 D)`——**`B` 换成任意 `B'` 读数不变**。这比 §36 的 2×2 判决更强：不只是「量化后恒定」，而是「任何耦合值都读不到」。
+- `framework_gr_det_zero`：物理层 `A_GR = diag(0, 2)` 是**奇异的**，`det = 0`；`framework_sm_det`：`det A_SM = 1 + Δλ_min`。
+- `carrier_det_vanishes`：故框架实例上 `det (blk A_GR B 0 A_SM) = 0 · (1+Δλ_min) = 0`，与 `B` 无关；四值形态 `carrier_det_zero_for_four_values` 给四个量化耦合值同一个 `0`。
+
+### 38.3 订正（我上一轮的猜测错了）
+
+我在上一轮的报告里说「载体层 `det` 能读到层数据，乘积为 `2(1+Δλ_min)`」，并据此认为它可能开出一条新分支。**这个说法错了**：`det A_GR = 0·2 − 0·0 = 0`，乘积恒为 `0`。正确结论是相反的——载体层 `det` 比 2×2 层**更早死**：不是「恒定但非零」，而是「恒为零」。
+
+### 38.4 净结果：两条经典不变量在载体层不对称
+
+| 不变量 | 载体层读数 | 含层数据 | 含耦合 |
+| --- | --- | --- | --- |
+| `trace` | `4 + Δλ_min`（`carrier_trace_nonzero`，非零） | 含（`2` 与 `2+Δλ_min` 相加） | 不含 |
+| `det` | `0`（恒） | **不含**（被奇异层清零） | 不含 |
+
+`det_vs_trace_asymmetry` 机检这条不对称。机制上是干净的：**`trace` 是块可加的（§25 的 `trace_blk`），`det` 是块可乘的**——可加量在「共存」结构里活下来，可乘量被任一侧的奇异因子清零。这解释了 §24 为何只有 `trace` 那一路勉强可用，而它也只做到「共存」、做不到「传递」（§25 判决不变）。
+
+### 38.5 诚实边界
+
+1. 只证 `C = 0`（上块三角）的分块乘法律；`C ≠ 0` 的完整分块行列式（Schur 补）**不做**。
+2. 不判「框架物理层是否应当奇异」——`A_GR = diag(0,2)` 是既有登记（§20），本批只把它在 `det` 上的后果算出来。
+3. 不改 §24/§25 的判决，只补它们的适用范围：`det` 这条路的两级失败（2×2 恒 `1`、载体恒 `0`）现在都在机检里。
+4. 不新增常数、不新增公设。
+
+### 38.6 状态
+
+- 模块：`CarrierDetAudit.lean`，148 行 / 11 theorem / 0 def / 0 sorry / 0 warning / 7706 B；
+- 库根：244 → **245 行**，`ROOT_IMPORTS` 221 → **222**，末行 `import MUFPFormalization.CarrierDetAudit`；
+- 全库：3937 → **3938 jobs**（Δ = +1），**0 error / 10 warning**（警告集合与前批相同，全在历史模块）；
+- 笔记：§0–§37 → **§0–§38**；模块计数 423 → **424**（顶层 415 + `SpectralBundle/` 9；含库根计 425）。
+
