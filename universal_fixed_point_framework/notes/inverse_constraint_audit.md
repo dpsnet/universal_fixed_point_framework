@@ -2332,3 +2332,48 @@ import `LayeredCarrierAudit` + `ChiralityGradingAudit`。
 - `TWO_WAY_QUANTIZED_DET`（§40 留）＝**本批收口**：16 组合读数全表已机检，`Δλ_min` 的支撑已定位到纯标量子空间。
 - 新开 `DET_THREE_VS_N_ACTIVE`：转动同号分支的 `3` 与 `N_active` 是否同源——本批判定「数值巧合、不同源」，留待与 §35 的「`4` 与槽数 4 系巧合」一并复核。
 - 仍未决：`B_耦合` 的内生判据（§26–§27）、§31 的 `B⁴ = 1` 是否接受为第二条结构要求（§37 已证其独立性）。
+
+## §42 R-z：`det` 读数里的 `3` 与 `N_active` 是否同源——§41 开口 `DET_THREE_VS_N_ACTIVE` 收口
+
+§41 在转动同号分支（`B = C = A`）读出 `det` 精确为 `3`，而 `N_active = catOrder − 1 = 3`。两个 `3` 数值相同，本批判它们是否同源。判法不是比对字面，而是查 `det` 那个 `3` 的**生成式对什么敏感**。
+
+### §42.1 做法：把 `A_GR` 的第二对角元当参数
+
+`det` 在转动同号分支的读数是 `2 − (−1) = 3`，其中 `2` 是 `A_GR = diag(0,2)` 的非零对角元、`−1` 是转动夹心 `A·⅟A_SM·A = diag(−h⁻¹, −1)` 在第二槽的条目。于是把 `A_GR` 换成 `diag(0, k)`（`k` 是层数据的第二对角元，任取实数），保持耦合与 `A_SM` 不变，重算读数。
+
+### §42.2 结果
+
+- `rot_reading_general`：`det (blk (diag(0,k)) A A (diag(1,h))) = k + 1`，**对任意实数 `k`**（机制：夹心把 `h⁻¹` 打到第一槽，与 `det A_SM = h` 抵消，只剩第二槽的 `k + 1`）。
+- `framework_three_is_gr_plus_one`：框架实例（`k = 2`、`h = 1 + Δλ_min`）读 `2 + 1 = 3`，与 §41 一致。
+- `reading_varies_with_layer_entry`：`k = 0` 读 `1`、`k = 5` 读 `6`，两个读数不同 ⟹ 读数**不是常数**。
+- `reading_not_three_for_other_k`：`k = 5` 读 `6`，且 `6 ≠ 3`。
+- `nActive_as_real`：`N_active = 3`（由 `catOrder − 1`，`catOrder = 4` 由硬等式 `n² = 2ⁿ` 钉住：`catOrder_pinned_by_fixed_point`）。
+- `three_vs_nactive_verdict`：三合一（`N_active = 3` ∧ 读数对任意 `k` 为 `k + 1` ∧ 存在 `k` 使读数为 `6 ≠ 3`）。
+
+numpy 独立复核（`k ∈ {0, 2, 5, −3, 7.5, 1.25}` × 随机 `h ∈ [0.05, 9]` 各 4 个）全部吻合 `k + 1`，最大残差 `4.44e-16`。
+
+### §42.3 判决：数值相等、生成链不同源
+
+两条生成链的**输入类型不同**：
+
+- `det` 的 `3` 的输入是 `k`——层数据的一个**连续可调**条目。读数 `k + 1` 随 `k` 线性变，`3` 只是 `k = 2` 的特例；把 `k` 取 `0` 或 `5` 分别得 `1` 与 `6`。
+- `N_active` 的输入是 `catOrder`——由硬等式 `n² = 2ⁿ` 钉在 `4` 的**整数**，再减 `1` 得 `3`；它与层数据条目无关，且不能连续调。
+
+故 `DET_THREE_VS_N_ACTIVE` 判为**巧合，不得互推**：不能用 §41 的 `det` 读数去论证 `N_active = 3` 的必然性，也不能用 `N_active` 去预测 `det` 读数。这也把 §41 第三条判决「`det` 读得出相对符号、读不出量」补全为：`det` 的读数**整体是层数据的线性函数**，凡读到整数的地方都是层数据条目取特定值的产物。
+
+### §42.4 诚实边界
+
+1. 本批只判「`det` 读数不由 `catOrder` 决定」，**不**判「两个 3 在任何构造里都不可能同源」。若有别的构造让 `k` 与 `catOrder` 绑定，结论需重审。
+2. `k` 取 `0`、`5`、`−3`、`7.5` 只是见证（说明读数可变），**不代表**层数据的物理取值；框架实例仍取 `k = 2`。
+3. 不新增常数、不新增公设；`Δλ_min > 0` 仍是唯一外部事实。
+4. 复查边界：本批只处理转动同号分支（§41 中唯一读到整数且与框架量重合的分支）。§41 的 `1`（混搭）与 `−1`（转动异号）不与任何框架常数重合，无需判别。
+
+### §42.5 机检锚
+
+模块 `ThreeVersusActiveAudit.lean`（123 行 / 7 theorem / 0 warning）：`rot_reading_general`、`framework_three_is_gr_plus_one`、`reading_varies_with_layer_entry`、`reading_not_three_for_other_k`、`nActive_as_real`、`catOrder_pinned_by_fixed_point`、`three_vs_nactive_verdict`。全库 `lake build MUFPFormalization` = **3942 jobs / 0 error / 10 warning**（警告全为历史基线）。
+
+### §42.6 遗留开口
+
+- `DET_THREE_VS_N_ACTIVE` ＝**本批收口**（判巧合、不同源）。
+- 同类待判：§35 登记的「载体迹里的 `4 = 2 + 2` 与载体槽数 `4` 系巧合」目前只有散文结论、**未机检**（当时只做迹可加性与四值同一迹），可仿本批做法把槽数与迹的 `4` 拆成两个独立生成链再判。
+- 仍未决（历史）：`B_耦合` 内生判据（§26–§27）、§31 的 `B⁴ = 1` 是否接受为第二条结构要求、§23.7 / §24.6 的出口选择。
