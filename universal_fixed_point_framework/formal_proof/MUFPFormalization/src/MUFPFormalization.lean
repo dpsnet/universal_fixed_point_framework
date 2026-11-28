@@ -249,3 +249,4 @@ import MUFPFormalization.QuantizedDetAudit
 import MUFPFormalization.ThreeVersusActiveAudit
 import MUFPFormalization.SlotVersusTraceAudit
 import MUFPFormalization.ScalarReadoutAudit
+import MUFPFormalization.CarrierSpectrumAudit
