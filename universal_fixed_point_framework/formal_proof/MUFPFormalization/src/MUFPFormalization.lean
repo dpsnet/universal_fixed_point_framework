@@ -251,3 +251,4 @@ import MUFPFormalization.SlotVersusTraceAudit
 import MUFPFormalization.ScalarReadoutAudit
 import MUFPFormalization.CarrierSpectrumAudit
 import MUFPFormalization.TwoWaySpectrumAudit
+import MUFPFormalization.PureTypeSpectrumAudit
